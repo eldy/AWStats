@@ -8,11 +8,14 @@ AWStats Changelog
   AWStats 5.0 is still compatible with history files processed with 4.x.
   However if you use awstats 5.0 runtime to read statistics for old month
   build with 4.x, speed will be a little bit reduce but will works correctly.
-  If you want to benefit the speed improvement of 5.0 (4 times faster when
-  reading stats, less memory use) you can delete all your history files and
-  restart the update process with 5.0 from your old log files (if you kept
-  them).
+  If you want to benefit the speed improvement of 5.0 (2 to 10 times faster
+  when reading stats, less memory use) you can migrate your history files
+  with the command :
+    awstats.pl -migrate="/fullpath/awstatsMMYYYY.myconfigid.conf"
 - Fixed: pb when using several tags with different offset in LogFile name.
+- Fixed: Create of directory with CreateDataDirIfNotExists is made with 0766
+  instead of 0666.
+- New feature: Track detailed minor and major version for browsers.
 - New feature: Support DNS cache files for DNS lookup.
 - New feature: Added Plugins support and several working plugins:
   A GMT correcter, A hash file DNS cache saver/reader...
@@ -29,7 +32,10 @@ AWStats Changelog
 - Added slovak, spanish (catalan) language files and updated a lot of language
   files.
 - Added a lock for update process.
+- Made changes to allow FTP log analysis.
+- Made changes to prepare sendmail log analysis.
 - Updated belarus flag.
+- Updated os, browsers, robots, search engines database.
 - Other minor changes and bug fixes.
 
 
