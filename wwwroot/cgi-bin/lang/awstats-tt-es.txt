@@ -47,7 +47,7 @@ El programa #PROG# reconoce hasta <b>#RobotArray#</b> robots.
 <DIV CLASS="CTooltip" ID="tt408"> El servidor ha tardado <b>demasiado tiempo</b> para responder a una solicitud. Frecuentemente se debe ya sea a un programa CGI muy lento, el cual tuvo que ser abandonado por el servidor, o bien por un servidor sobre-saturado. </DIV>
 <DIV CLASS="CTooltip" ID="tt500"> Error interno. Este error generalmente es causado por una terminación anormal o prematura de un programa CGI (p.e., un CGI corrompido o dañado). </DIV>
 <DIV CLASS="CTooltip" ID="tt501"> Solicitud desconocida por el servidor. </DIV>
-<DIV CLASS="CTooltip" ID="tt502"> Código retornado por un servidor de protocolo HTTP el cual funge como proxy o puente (gateway) cuando el servidor objetivo no funciona o no interpreta adecuadamente la solicitud del cliente (o visitante). </DIV>
+<DIV CLASS="CTooltip" ID="tt502"> Código retornado por un servidor de protocolo HTTP el cual funciona como proxy o puente (gateway) cuando el servidor objetivo no funciona o no interpreta adecuadamente la solicitud del cliente (o visitante). </DIV>
 <DIV CLASS="CTooltip" ID="tt503"> Error interno del servidor. </DIV>
 <DIV CLASS="CTooltip" ID="tt504"> Pasarela fuera de linea. </DIV>
 <DIV CLASS="CTooltip" ID="tt505"> Versión de protocolo HTTP no soportada. </DIV>
