@@ -567,15 +567,17 @@ if ($in{'advanced'} == 4) {
 	print "<tr> <td>Loaded plugins</td> <td>Plugin's parameters</td> <td> &nbsp; </td> </tr>\n";
 	foreach my $key (0..(@pconfparam-1)) {
 		print "<tr> <td> <input size=10 name=plugin_$pconfparam[$key] type=checkbox ".($pconfactive[$key]?" checked":"")."><b>$pconfparam[$key]</b></td> <td> <input size=30 name=plugin_param_$pconfparam[$key] type=text value='$pconfvaluep[$key]'> ";
-        my ($p,$geoipdatafile)=();
-        if ($pconfparam[$key] =~ /^geoip$/) { $p="GeoIP Country"; $geoipdatafile=$config{'plugin_1_geoip'}||"/usr/local/share/GeoIP/GeoIP.dat"; }
-        if ($pconfparam[$key] =~ /^geoip_region_maxmind$/) { $p="GeoIP Region"; $geoipdatafile=$config{'plugin_2_geoip_region_maxmind'}||"/usr/local/share/GeoIP/GeoIPRegion.dat"; }
-        if ($pconfparam[$key] =~ /^geoip_city_maxmind$/) { $p="GeoIP City"; $geoipdatafile=$config{'plugin_3_geoip_city_maxmind'}||"/usr/local/share/GeoIP/GeoIPCity.dat"; }
+        my ($type,$p,$geoipdatafile)=();
+        if ($pconfparam[$key] =~ /^geoip$/) { $type="geoip_country"; $p="GeoIP Country"; $geoipdatafile=$config{'plugin_1_geoip'}||"/usr/local/share/GeoIP/GeoIP.dat"; }
+        if ($pconfparam[$key] =~ /^geoip_region_maxmind$/) { $type="geoip_region"; $p="GeoIP Region"; $geoipdatafile=$config{'plugin_2_geoip_region_maxmind'}||"/usr/local/share/GeoIP/GeoIPRegion.dat"; }
+        if ($pconfparam[$key] =~ /^geoip_city_maxmind$/) { $type="geoip_city"; $p="GeoIP City"; $geoipdatafile=$config{'plugin_3_geoip_city_maxmind'}||"/usr/local/share/GeoIP/GeoIPCity.dat"; }
+        if ($pconfparam[$key] =~ /^geoip_isp_maxmind$/) { $type="geoip_isp"; $p="GeoIP ISP"; $geoipdatafile=$config{'plugin_4_geoip_isp_maxmind'}||"/usr/local/share/GeoIP/GeoIPISP.dat"; }
+        if ($pconfparam[$key] =~ /^geoip_org_maxmind$/) { $type="geoip_org"; $p="GeoIP Organization"; $geoipdatafile=$config{'plugin_5_geoip_org_maxmind'}||"/usr/local/share/GeoIP/GeoIPOrg.dat"; }
         if ($p) {
             # If a geoip plugin
             my $datafile=$geoipdatafile;
             if ($pconfvaluep[$key] =~ /^\w+\s+(.+)$/) { $datafile=$1; }
-            print "<a href=\"geoip_version.pl?file=$datafile\">$p database version</a>";
+            print "<a href=\"geoip_info.cgi?file=$datafile&type=$type\">$p database version</a>";
         }
 		print " </td> <td> ";
 		print &hblink($text{'help_help'}, "help.cgi?param=plugin_$pconfparam[$key]")." </td> </tr>\n";
