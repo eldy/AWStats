@@ -182,14 +182,14 @@ $pos_vh = $pos_rc = $pos_logname = $pos_date = $pos_method = $pos_url = $pos_cod
 $pos_referer = $pos_agent = $pos_query = $pos_gzipin = $pos_gzipout = $pos_gzipratio = -1;
 use vars qw/
 $lowerval
-$FirstTime $LastTime
+$FirstTime $LastTime $LastLine $LastUpdate
 $TotalUnique $TotalVisits $TotalHostsKnown $TotalHostsUnknown
 $TotalPages $TotalHits $TotalBytes $TotalEntries $TotalExits $TotalBytesPages $TotalDifferentPages
 $TotalKeyphrases $TotalKeywords $TotalDifferentKeyphrases $TotalDifferentKeywords
 $TotalSearchEngines $TotalRefererPages $TotalDifferentSearchEngines $TotalDifferentRefererPages
 /;
 $lowerval = 0;
-$FirstTime = $LastTime = 0;
+$FirstTime = $LastTime = $LastLine = $LastUpdate = 0;
 $TotalUnique = $TotalVisits = $TotalHostsKnown = $TotalHostsUnknown = 0;
 $TotalPages = $TotalHits = $TotalBytes = $TotalEntries = $TotalExits = $TotalBytesPages = $TotalDifferentPages = 0;
 $TotalKeyphrases = $TotalKeywords = $TotalDifferentKeyphrases = $TotalDifferentKeywords = 0;
@@ -225,13 +225,14 @@ use vars qw/
 /;
 use vars qw/
 %ValidHTTPCodes %TrapInfosForHTTPErrorCodes %NotPageList %DayBytes %DayHits %DayPages %DayUnique %DayVisits
-%FirstTime %LastTime %LastLine %LastUpdate
-%MonthBytes %MonthHits %MonthHostsKnown %MonthHostsUnknown %MonthPages %MonthUnique %MonthVisits
+%FirstTime %LastTime
+%MonthUnique %MonthVisits %MonthPages %MonthHits %MonthBytes %MonthHostsKnown %MonthHostsUnknown
 %monthlib %monthnum
-%HistoryFileAlreadyRead
+%ListOfYears
 %_session %_browser_h %_domener_h %_domener_k %_domener_p %_errors_h
 %_filetypes_h %_filetypes_k %_filetypes_gz_in %_filetypes_gz_out
-%_host_h %_host_k %_host_l %_host_p %_host_s %_host_u
+%_host_p %_host_h %_host_k %_host_v %_host_l %_host_s %_host_u
+%_waithost_e %_waithost_l %_waithost_s %_waithost_u
 %_keyphrases %_keywords %_os_h %_pagesrefs_h %_robot_h %_robot_l
 %_login_h %_login_p %_login_k %_login_l
 %_se_referrals_h %_sider404_h %_referer404_h %_url_p %_url_k %_url_e %_url_x
@@ -244,13 +245,14 @@ use vars qw/
 %TrapInfosForHTTPErrorCodes=(); $TrapInfosForHTTPErrorCodes{404}=1;	# TODO Add this in config file
 %NotPageList=();
 %DayBytes = %DayHits = %DayPages = %DayUnique = %DayVisits = ();
-%FirstTime = %LastTime = %LastLine = %LastUpdate = ();
-%MonthBytes = %MonthHits = %MonthHostsKnown = %MonthHostsUnknown = %MonthPages = %MonthUnique = %MonthVisits = ();
+%FirstTime = %LastTime = ();
+%MonthUnique = %MonthVisits = %MonthPages = %MonthHits = %MonthBytes = %MonthHostsKnown = %MonthHostsUnknown = ();
 %monthlib = %monthnum = ();
-%HistoryFileAlreadyRead=();
+%ListOfYears = ();
 %_session = %_browser_h = %_domener_h = %_domener_k = %_domener_p = %_errors_h = ();
 %_filetypes_h = %_filetypes_k = %_filetypes_gz_in = %_filetypes_gz_out = ();
-%_host_h = %_host_k = %_host_l = %_host_p = %_host_s = %_host_u = ();
+%_host_p = %_host_h = %_host_k = %_host_v = %_host_l = %_host_s = %_host_u = ();
+%_waithost_e = %_waithost_l = %_waithost_s = %_waithost_u = ();
 %_keyphrases = %_keywords = %_os_h = %_pagesrefs_h = %_robot_h = %_robot_l = ();
 %_login_h = %_login_p = %_login_k = %_login_l = ();
 %_se_referrals_h = %_sider404_h = %_referer404_h = %_url_p = %_url_k = %_url_e = %_url_x = ();
@@ -262,6 +264,7 @@ use vars qw/
 #tie %_host_p, 'Tie::StdHash';
 #tie %_host_h, 'Tie::StdHash';
 #tie %_host_k, 'Tie::StdHash';
+#tie %_host_v, 'Tie::StdHash';
 #tie %_host_l, 'Tie::StdHash';
 #tie %_host_s, 'Tie::StdHash';
 #tie %_host_u, 'Tie::StdHash';
@@ -717,12 +720,12 @@ sub DateIsValid {
 # Output:		None
 # Return:		A string that identify the visit duration range
 #------------------------------------------------------------------------------
-sub SessionLastToSessionRange {
+sub GetSessionRange {
 	my $starttime = my $endtime;
-	if (shift =~ /(\d\d\d\d)(\d\d)(\d\d)(\d\d)(\d\d)(\d\d)/) { $endtime = Time::Local::timelocal($6,$5,$4,$3,$2-1,$1); }
 	if (shift =~ /(\d\d\d\d)(\d\d)(\d\d)(\d\d)(\d\d)(\d\d)/) { $starttime = Time::Local::timelocal($6,$5,$4,$3,$2-1,$1); }
+	if (shift =~ /(\d\d\d\d)(\d\d)(\d\d)(\d\d)(\d\d)(\d\d)/) { $endtime = Time::Local::timelocal($6,$5,$4,$3,$2-1,$1); }
 	my $delay=$endtime-$starttime;
-	if ($Debug) { debug("SessionLastToSessionRange $endtime - $starttime = $delay",4); }
+	if ($Debug) { debug("GetSessionRange $endtime - $starttime = $delay",4); }
 	if ($delay <= 30) { return $SessionsRange[0]; }
 	if ($delay > 30 && $delay <= 120) { return $SessionsRange[1]; }
 	if ($delay > 120 && $delay <= 300) { return $SessionsRange[2]; }
@@ -1436,1138 +1439,1396 @@ sub Read_Plugins {
 }
 
 #--------------------------------------------------------------------
-# Function:		Load an history file
-# Parameters:	year,month,0|1		(0=read only some part of 3 sections, 1=read needed sections completely)
-# Input:		$DirData $PROG $FileSuffix
+# Function:		Load and update history file
+# Parameters:	year,month,withupdate,withpurge,part to load
+# Input:		$DirData $PROG $FileSuffix $LastLine
 # Output:		None
 # Return:		None
 #--------------------------------------------------------------------
-sub Read_History_File {
-	my $year=sprintf("%04i",shift);
-	my $month=sprintf("%02i",shift);
-	my $part=shift;
+sub Read_History_File_With_Update {
+	my $year=sprintf("%04i",shift||0);
+	my $month=sprintf("%02i",shift||0);
+	my $withupdate=shift||0;
+	my $withpurge=shift||0;
+	my $part=shift||"";
 
+	my $withread=0;
+	
 	# In standard use of AWStats, the DayRequired variable is always empty
-	if ($DayRequired) { if ($Debug) { debug("Call to Read_History_File [$year,$month,$part] ($DayRequired)"); } }
-	else { if ($Debug) { debug("Call to Read_History_File [$year,$month,$part]"); } }
-	if ($HistoryFileAlreadyRead{"$year$month$DayRequired"}) {							# Protect code to invoke function only once for each month/year
-		if ($Debug) { debug(" Already loaded"); }
-		return 0;
-		}
-	if ($part ne "general") { $HistoryFileAlreadyRead{"$year$month$DayRequired"}=1; }	# Protect code to invoke function only once for each month/year
+	if ($DayRequired) { if ($Debug) { debug("Call to Read_History_File_With_Update [$year,$month,withupdate=$withupdate,withpurge=$withpurge,part=$part] ($DayRequired)"); } }
+	else { if ($Debug) { debug("Call to Read_History_File_With_Update [$year,$month,withupdate=$withupdate,withpurge=$withpurge,part=$part]"); } }
 
 	# Define value for historyfilename
 	my $historyfilename="$DirData/$PROG$DayRequired$month$year$FileSuffix.txt";
 	if ($Plugin_readgz) { $historyfilename.="\.gz"; }
-	if (! -s $historyfilename) {
-		# If file not exists, return
-		if ($Debug) { debug(" No history file $historyfilename"); }
-		$LastLine{$year.$month}=0;	# To avoid warning of undefinded value later (with 'use warnings')
-		return 0;
-	}
-	if ($Plugin_readgz) {	$historyfilename="gzip -d <\"$historyfilename\" |"; }
+	if ($Plugin_readgz) { $historyfilename="gzip -d <\"$historyfilename\" |"; }
 	if ($Debug) { debug(" History file is '$historyfilename'",2); }
 
-	open(HISTORY,$historyfilename) || error("Error: Couldn't open file \"$historyfilename\" for read: $!");	# Month before Year kept for backward compatibility
-
-	# Define which sections to load
-	# Not defined means do not load, value of 1 means load all section, 2 means load part of it
-	my %SectionsToLoad=();
-	if (! $part) {
-		# If part=0 we need only GENERAL section (LastUpdate, TotalVisits), part of TIME section and part of VISITOR section
+	# Define which sections to save and load (Not defined means do not load, value of 1 means load all section, 2 means load part of it)
+	my %SectionsToSave = my %SectionsToLoad = (); my %SectionsToLoadPartialy = ();
+	if ($withupdate) { %SectionsToSave=("general"=>1,"time"=>2,"visitor"=>3,"day"=>4,"login"=>5,"domain"=>6,"session"=>7,"browser"=>8,
+						"msiever"=>9,"nsver"=>10,"os"=>11,"unknownreferer"=>12,"unknownrefererbrowser"=>13,"robot"=>14,"sider"=>15,
+						"filetypes"=>16,"origin"=>17,"serefferals"=>18,"pagerefs"=>19,"searchwords"=>20,"keywords"=>21,"errors"=>22,"errors404"=>23); }
+	if ($part eq "all") {
+		# Load all sections
 		$SectionsToLoad{"general"}=1;
 		$SectionsToLoad{"time"}=2;
-		$SectionsToLoad{"visitor"}=2;
-	}
-	elsif ($part == 1) {
-		$SectionsToLoad{"general"}=1;
-		$SectionsToLoad{"time"}=1;
-		if ($UpdateStats || $HTMLOutput eq "main" || $HTMLOutput eq "allhosts" || $HTMLOutput eq "lasthosts" || $HTMLOutput eq "unknownip") { $SectionsToLoad{"visitor"}=1; }
-		if ($UpdateStats || $HTMLOutput eq "main" || $HTMLOutput eq "origin") { $SectionsToLoad{"origin"}=1; }
-		if ($UpdateStats || $HTMLOutput eq "main" || $HTMLOutput eq "days")   { $SectionsToLoad{"day"}=1; }
-		if ($UpdateStats || $HTMLOutput eq "main" || $HTMLOutput eq "logins") { $SectionsToLoad{"login"}=1; }
-		if ($UpdateStats || $HTMLOutput eq "main" || $HTMLOutput eq "domains") { $SectionsToLoad{"domain"}=1; }
-		if ($UpdateStats || $HTMLOutput eq "main" || $HTMLOutput eq "sessions") { $SectionsToLoad{"session"}=1; }
-		if ($UpdateStats || $HTMLOutput eq "main" || $HTMLOutput eq "browserdetail") { $SectionsToLoad{"browser"}=1; }
-		if ($UpdateStats || $HTMLOutput eq "main" || $HTMLOutput eq "browserdetail") { $SectionsToLoad{"msiever"}=1; }
-		if ($UpdateStats || $HTMLOutput eq "main" || $HTMLOutput eq "browserdetail") { $SectionsToLoad{"nsver"}=1; }
-		if ($UpdateStats || $HTMLOutput eq "main" || $HTMLOutput eq "os") { $SectionsToLoad{"os"}=1; }
-		if ($UpdateStats || $HTMLOutput eq "main" || $HTMLOutput eq "unknownos")      { $SectionsToLoad{"unknownreferer"}=1; }
-		if ($UpdateStats || $HTMLOutput eq "main" || $HTMLOutput eq "unknownbrowser") { $SectionsToLoad{"unknownrefererbrowser"}=1; }
-		if ($UpdateStats || $HTMLOutput eq "main" || $HTMLOutput eq "robots") { $SectionsToLoad{"robot"}=1; }
-		if ($UpdateStats || $HTMLOutput eq "main" || $HTMLOutput eq "urldetail") { $SectionsToLoad{"sider"}=1; }
-		if ($UpdateStats || $HTMLOutput eq "main" || $HTMLOutput eq "filetypes") { $SectionsToLoad{"filetypes"}=1; }
-		if ($UpdateStats || $HTMLOutput eq "main" || $HTMLOutput eq "refererse") { $SectionsToLoad{"sereferrals"}=1; }
-		if ($UpdateStats || $HTMLOutput eq "main" || $HTMLOutput eq "refererpages") { $SectionsToLoad{"pagerefs"}=1; }
-		if ($UpdateStats || $HTMLOutput eq "main" || $HTMLOutput eq "keyphrases" || $HTMLOutput eq "keywords") { $SectionsToLoad{"searchwords"}=1; }
-		if ($HTMLOutput eq "main") { $SectionsToLoad{"keywords"}=1; }
-		if ($UpdateStats || $HTMLOutput eq "main" || $HTMLOutput eq "errors") { $SectionsToLoad{"errors"}=1; }
-		if ($UpdateStats || $HTMLOutput eq "main" || $HTMLOutput eq "errors404") { $SectionsToLoad{"sider_404"}=1; }
+		if ($UpdateStats || $HTMLOutput eq "main" || $HTMLOutput eq "allhosts" || $HTMLOutput eq "lasthosts" || $HTMLOutput eq "unknownip") { $SectionsToLoad{"visitor"}=3; }
+		if ($UpdateStats || $HTMLOutput eq "main" || $HTMLOutput eq "days")   { $SectionsToLoad{"day"}=4; }
+		if ($UpdateStats || $HTMLOutput eq "main" || $HTMLOutput eq "logins") { $SectionsToLoad{"login"}=5; }
+		if ($UpdateStats || $HTMLOutput eq "main" || $HTMLOutput eq "domains") { $SectionsToLoad{"domain"}=6; }
+		if ($UpdateStats || $HTMLOutput eq "main" || $HTMLOutput eq "sessions") { $SectionsToLoad{"session"}=7; }
+		if ($UpdateStats || $HTMLOutput eq "main" || $HTMLOutput eq "browserdetail") { $SectionsToLoad{"browser"}=8; }
+		if ($UpdateStats || $HTMLOutput eq "main" || $HTMLOutput eq "browserdetail") { $SectionsToLoad{"msiever"}=9; }
+		if ($UpdateStats || $HTMLOutput eq "main" || $HTMLOutput eq "browserdetail") { $SectionsToLoad{"nsver"}=10; }
+		if ($UpdateStats || $HTMLOutput eq "main" || $HTMLOutput eq "os") { $SectionsToLoad{"os"}=11; }
+		if ($UpdateStats || $HTMLOutput eq "main" || $HTMLOutput eq "unknownos")      { $SectionsToLoad{"unknownreferer"}=12; }
+		if ($UpdateStats || $HTMLOutput eq "main" || $HTMLOutput eq "unknownbrowser") { $SectionsToLoad{"unknownrefererbrowser"}=12; }
+		if ($UpdateStats || $HTMLOutput eq "main" || $HTMLOutput eq "robots") { $SectionsToLoad{"robot"}=13; }
+		if ($UpdateStats || $HTMLOutput eq "main" || $HTMLOutput eq "urldetail") { $SectionsToLoad{"sider"}=14; }
+		if ($UpdateStats || $HTMLOutput eq "main" || $HTMLOutput eq "filetypes") { $SectionsToLoad{"filetypes"}=15; }
+		if ($UpdateStats || $HTMLOutput eq "main" || $HTMLOutput eq "origin") { $SectionsToLoad{"origin"}=16; }
+		if ($UpdateStats || $HTMLOutput eq "main" || $HTMLOutput eq "refererse") { $SectionsToLoad{"sereferrals"}=17; }
+		if ($UpdateStats || $HTMLOutput eq "main" || $HTMLOutput eq "refererpages") { $SectionsToLoad{"pagerefs"}=18; }
+		if ($UpdateStats || $HTMLOutput eq "main" || $HTMLOutput eq "keyphrases" || $HTMLOutput eq "keywords") { $SectionsToLoad{"searchwords"}=19; }
+		if ($HTMLOutput eq "main") { $SectionsToLoad{"keywords"}=20; }
+		if ($UpdateStats || $HTMLOutput eq "main" || $HTMLOutput eq "errors") { $SectionsToLoad{"errors"}=21; }
+		if ($UpdateStats || $HTMLOutput eq "main" || $HTMLOutput eq "errors404") { $SectionsToLoad{"sider_404"}=22; }
 	}
 	else {
-		$SectionsToLoad{$part}=1;
+		# Load only required sections
+		my $order=1;
+		foreach my $key (split(/\s+/,$part)) {
+			if ($key =~ /(\w+)_partialy/) { $SectionsToLoadPartialy{$1}=$order; $SectionsToLoad{$1}=$order++; }
+			else { $SectionsToLoad{$key}=$order++; }
+		}
 	}
 	if ($Debug) {
-		foreach my $section (sort keys %SectionsToLoad) {
-			debug(" Section $section is marked for load",2);
-		}	
+		foreach my $section (sort { $SectionsToLoad{$a} <=> $SectionsToLoad{$b} } keys %SectionsToLoad) { debug(" Section '$section' is marked for load".($SectionsToLoadPartialy{$section}?" (partialy)":""),2); }
+		foreach my $section (sort { $SectionsToSave{$a} <=> $SectionsToSave{$b} } keys %SectionsToSave) { debug(" Section '$section' is marked for save",2); }	
 	}
 
-	$MonthUnique{$year.$month}=0; $MonthPages{$year.$month}=0; $MonthHits{$year.$month}=0; $MonthBytes{$year.$month}=0; $MonthHostsKnown{$year.$month}=0; $MonthHostsUnknown{$year.$month}=0;
+	my $versionnum=0;
+	my $countlines=0;
+	if (-s $historyfilename) { $withread=1; }
 
-	my $versionnum=0; my $countlines=0;
-	while (<HISTORY>) {
-		chomp $_; s/\r//; $countlines++;
-		# Analyze config line
-		if ($_ =~ /^AWSTATS DATA FILE (\d+).(\d+)/) {
-			$versionnum=($1*1000)+$2;
-			if ($Debug) { debug(" Data file version is $versionnum",1); }
-			next;
-		}
-		my @field=split(/\s+/,$_);
-		if (! $field[0]) { next; }
+	# Open files
+	if ($withupdate) {
+		open(HISTORYTMP,">$DirData/$PROG$month$year$FileSuffix.tmp.$$") || error("Error: Couldn't open file \"$DirData/$PROG$month$year$FileSuffix.tmp.$$\" : $!");	# Month before Year kept for backward compatibility
+	}
+	if ($withread) {
+		open(HISTORY,$historyfilename) || error("Error: Couldn't open file \"$historyfilename\" for read: $!");	# Month before Year kept for backward compatibility
+	}
+		
+	if ($withupdate) {
+		print HISTORYTMP "AWSTATS DATA FILE $VERSION\n";
+		print HISTORYTMP "# If you remove this file, all statistics for date $year-$month will be lost/reset.\n";
+	}
 
-		# Some sections are expected to be fully loaded (GENERAL), some partially (TIME and VISITOR) whatever is $part parameter
-		# Some other sections are or not loaded depending on $part parameter
+	# Loop on read file
+	if ($withread) {
 
-		# BEGIN_GENERAL
-		if ($field[0] eq "BEGIN_GENERAL")      {
-			if ($Debug) { debug(" Begin of GENERAL section"); }
-			next;
-		}
-		if ($field[0] eq "LastLine")        { if ($LastLine{$year.$month}||0 < int($field[1])) { $LastLine{$year.$month}=int($field[1]); }; next; }
-		if ($field[0] eq "FirstTime")       { $FirstTime{$year.$month}=int($field[1]); next; }
-		if ($field[0] eq "LastTime")        { if ($LastTime{$year.$month}||0 < int($field[1])) { $LastTime{$year.$month}=int($field[1]); }; next; }
-		if ($field[0] eq "TotalVisits")     { $MonthVisits{$year.$month}=int($field[1]); next; }
-		if ($field[0] eq "LastUpdate")      {
-			if ($LastUpdate{$year.$month}||0 < $field[1]) {
-				$LastUpdate{$year.$month}=int($field[1]);
-				#$LastUpdateLinesRead{$year.$month}=int($field[2]);
-				#$LastUpdateNewLinesRead{$year.$month}=int($field[3]);
-				#$LastUpdateLinesCorrupted{$year.$month}=int($field[4]);
-			};
-			next;
-		}
-		if ($field[0] eq "END_GENERAL")      {
-			if ($Debug) { debug(" End of GENERAL section"); }
-			delete $SectionsToLoad{"general"};
-			if (! scalar %SectionsToLoad) { debug(" Stop reading config file. Got all we need."); last; }
-			next;
-		}
-
-		# BEGIN_ORIGIN
-		if ($field[0] eq "BEGIN_ORIGIN")      {
-			if ($Debug) { debug(" Begin of ORIGIN section"); }
-			next;
-		}
-		if ($SectionsToLoad{"origin"}) {
-			if ($field[0] eq "From0") { $_from_p[0]+=$field[1]; $_from_h[0]+=$field[2]; next; }
-			if ($field[0] eq "From1") { $_from_p[1]+=$field[1]; $_from_h[1]+=$field[2]; next; }
-			if ($field[0] eq "From2") { $_from_p[2]+=$field[1]; $_from_h[2]+=$field[2]; next; }
-			if ($field[0] eq "From3") { $_from_p[3]+=$field[1]; $_from_h[3]+=$field[2]; next; }
-			if ($field[0] eq "From4") { $_from_p[4]+=$field[1]; $_from_h[4]+=$field[2]; next; }
-			if ($field[0] eq "From5") { $_from_p[5]+=$field[1]; $_from_h[5]+=$field[2]; next; }
-			# Next lines are to read old awstats history files ("Fromx" section was "HitFromx" in such files)
-			if ($field[0] eq "HitFrom0") { $_from_p[0]+=0; $_from_h[0]+=$field[1]; next; }
-			if ($field[0] eq "HitFrom1") { $_from_p[1]+=0; $_from_h[1]+=$field[1]; next; }
-			if ($field[0] eq "HitFrom2") { $_from_p[2]+=0; $_from_h[2]+=$field[1]; next; }
-			if ($field[0] eq "HitFrom3") { $_from_p[3]+=0; $_from_h[3]+=$field[1]; next; }
-			if ($field[0] eq "HitFrom4") { $_from_p[4]+=0; $_from_h[4]+=$field[1]; next; }
-			if ($field[0] eq "HitFrom5") { $_from_p[5]+=0; $_from_h[5]+=$field[1]; next; }
-		}
-		if ($field[0] eq "END_ORIGIN")      {
-			if ($Debug) { debug(" End of ORIGIN section"); }
-			delete $SectionsToLoad{"origin"};
-			if (! scalar %SectionsToLoad) { debug(" Stop reading config file. Got all we need."); last; }
-			next;
-		}
-		# BEGIN_TIME
-		if ($field[0] eq "BEGIN_TIME")      {
-			if ($Debug) { debug(" Begin of TIME section"); }
-			$_=<HISTORY>;
-			chomp $_; s/\r//;
-			if (! $_) { error("Error: History file \"$historyfilename\" is corrupted (in section TIME). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
-			my @field=split(/\s+/,$_); $countlines++;
-			my $count=0;my $countloaded=0;
-			while ($field[0] ne "END_TIME") {
-				#if ($field[0]) {	# This test must not be here for TIME section (because field[0] is "0" for hour 0)
-					$count++;
-					# We always read this to build the month graph (MonthPages, MonthHits, MonthBytes)
-					$MonthPages{$year.$month}+=int($field[1]); $MonthHits{$year.$month}+=int($field[2]); $MonthBytes{$year.$month}+=int($field[3]);
-					if ($SectionsToLoad{"time"}==1) {	# TODO ? used to build total
-						$countloaded++;
-						if ($field[1]) { $_time_p[$field[0]]+=int($field[1]); }
-						if ($field[2]) { $_time_h[$field[0]]+=int($field[2]); }
-						if ($field[3]) { $_time_k[$field[0]]+=int($field[3]); }
-					}
-				#}
+		while (<HISTORY>) {
+			chomp $_; s/\r//; $countlines++;
+	
+			# Analyze config line
+			if ($_ =~ /^AWSTATS DATA FILE (\d+).(\d+)/) {
+				$versionnum=($1*1000)+$2;
+				if ($Debug) { debug(" Data file version is $versionnum",1); }
+				next;
+			}
+			
+			my @field=split(/\s+/,$_);
+			if (! $field[0]) { next; }
+	
+			# Some sections are expected to be fully loaded (GENERAL), some partially (TIME and VISITOR) whatever is $part parameter
+			# Some other sections are or not loaded depending on $part parameter
+	
+			# BEGIN_GENERAL
+			if ($field[0] eq "BEGIN_GENERAL")      {
+				if ($Debug) { debug(" Begin of GENERAL section"); }
+				next;
+			}
+			if ($field[0] eq "LastLine")        { if (! $LastLine || $LastLine < int($field[1])) { $LastLine=int($field[1]); }; next; }
+			if ($field[0] eq "FirstTime")       { if (! $FirstTime{$year.$month} || $FirstTime{$year.$month} > int($field[1])) { $FirstTime{$year.$month}=int($field[1]); }; next; }
+			if ($field[0] eq "LastTime")        { if (! $LastTime{$year.$month} || $LastTime{$year.$month} < int($field[1])) { $LastTime{$year.$month}=int($field[1]); }; next; }
+			if ($field[0] eq "LastUpdate")      {
+				if ($LastUpdate < $field[1]) {
+					$LastUpdate=int($field[1]);
+					#$LastUpdateLinesRead=int($field[2]);
+					#$LastUpdateNewLinesRead=int($field[3]);
+					#$LastUpdateLinesCorrupted=int($field[4]);
+				};
+				next;
+			}
+			if ($versionnum < 5000) { if ($field[0] eq "TotalVisits")     { $MonthVisits{$year.$month}+=int($field[1]); next; } }	# For backward compatibility
+			if ($field[0] eq "END_GENERAL")		{
+				if ($Debug) { debug(" End of GENERAL section"); }
+				delete $SectionsToLoad{"general"};
+				if ($SectionsToSave{"general"}) { Save_History("general",$year,$month); delete $SectionsToSave{"general"}; }
+				if (! scalar %SectionsToLoad) { debug(" Stop reading history file. Got all we need."); last; }
+				next;
+			}
+	
+			# BEGIN_ORIGIN
+			if ($field[0] eq "BEGIN_ORIGIN")	{
+				if ($Debug) { debug(" Begin of ORIGIN section"); }
+				next;
+			}
+			if ($SectionsToLoad{"origin"}) {
+				if ($field[0] eq "From0") { $_from_p[0]+=$field[1]; $_from_h[0]+=$field[2]; next; }
+				if ($field[0] eq "From1") { $_from_p[1]+=$field[1]; $_from_h[1]+=$field[2]; next; }
+				if ($field[0] eq "From2") { $_from_p[2]+=$field[1]; $_from_h[2]+=$field[2]; next; }
+				if ($field[0] eq "From3") { $_from_p[3]+=$field[1]; $_from_h[3]+=$field[2]; next; }
+				if ($field[0] eq "From4") { $_from_p[4]+=$field[1]; $_from_h[4]+=$field[2]; next; }
+				if ($field[0] eq "From5") { $_from_p[5]+=$field[1]; $_from_h[5]+=$field[2]; next; }
+				# Next lines are to read old awstats history files ("Fromx" section was "HitFromx" in such files)
+				if ($field[0] eq "HitFrom0") { $_from_p[0]+=0; $_from_h[0]+=$field[1]; next; }
+				if ($field[0] eq "HitFrom1") { $_from_p[1]+=0; $_from_h[1]+=$field[1]; next; }
+				if ($field[0] eq "HitFrom2") { $_from_p[2]+=0; $_from_h[2]+=$field[1]; next; }
+				if ($field[0] eq "HitFrom3") { $_from_p[3]+=0; $_from_h[3]+=$field[1]; next; }
+				if ($field[0] eq "HitFrom4") { $_from_p[4]+=0; $_from_h[4]+=$field[1]; next; }
+				if ($field[0] eq "HitFrom5") { $_from_p[5]+=0; $_from_h[5]+=$field[1]; next; }
+			}
+			if ($field[0] eq "END_ORIGIN")      {
+				if ($Debug) { debug(" End of ORIGIN section"); }
+				delete $SectionsToLoad{"origin"};
+				if ($SectionsToSave{"origin"}) {
+					Save_History("origin",$year,$month); delete $SectionsToSave{"origin"};
+					if ($withpurge) { @_from_p=(); @_from_h=(); }
+				}
+				if (! scalar %SectionsToLoad) { debug(" Stop reading history file. Got all we need."); last; }
+				next;
+			}
+			# BEGIN_TIME
+			if ($field[0] eq "BEGIN_TIME")      {
+				if ($Debug) { debug(" Begin of TIME section"); }
 				$_=<HISTORY>;
 				chomp $_; s/\r//;
 				if (! $_) { error("Error: History file \"$historyfilename\" is corrupted (in section TIME). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
-				@field=split(/\s+/,$_); $countlines++;
-			}
-			if ($Debug) { debug(" End of TIME section ($count entries, $countloaded loaded)"); }
-			delete $SectionsToLoad{"time"};
-			if (! scalar %SectionsToLoad) { debug(" Stop reading config file. Got all we need."); last; }
-			next;
-		}
-		# BEGIN_DAY
-		if ($field[0] eq "BEGIN_DAY")      {
-			if ($Debug) { debug(" Begin of DAY section"); }
-			$_=<HISTORY>;
-			chomp $_; s/\r//;
-			if (! $_) { error("Error: History file \"$historyfilename\" is corrupted (in section DAY). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
-			my @field=split(/\s+/,$_); $countlines++;
-			my $count=0;my $countloaded=0;
-			while ($field[0] ne "END_DAY" ) {
-				if ($field[0]) {
-					$count++;
-					if ($SectionsToLoad{"day"}) {
-						$countloaded++;
-						if ($field[1]) { $DayPages{$field[0]}=int($field[1]); }
-						if ($field[2]) { $DayHits{$field[0]}=int($field[2]); }
-						if ($field[3]) { $DayBytes{$field[0]}=int($field[3]); }
-						if ($field[4]) { $DayVisits{$field[0]}=int($field[4]); }
-						if ($field[5]) { $DayUnique{$field[0]}=int($field[5]); }
-					}
+				my @field=split(/\s+/,$_); $countlines++;
+				my $count=0;my $countloaded=0;
+				while ($field[0] ne "END_TIME") {
+					#if ($field[0]) {	# This test must not be here for TIME section (because field[0] is "0" for hour 0)
+						$count++;
+						# Always loaded
+						$MonthPages{$year.$month}+=int($field[1]);
+						$MonthHits{$year.$month}+=int($field[2]);
+						$MonthBytes{$year.$month}+=int($field[3]);
+						if ($SectionsToLoad{"time"} && ! $SectionsToLoadPartialy{"time"}) {
+							$countloaded++;
+							if ($field[1]) { $_time_p[$field[0]]+=int($field[1]); }
+							if ($field[2]) { $_time_h[$field[0]]+=int($field[2]); }
+							if ($field[3]) { $_time_k[$field[0]]+=int($field[3]); }
+						}
+					#}
+					$_=<HISTORY>;
+					chomp $_; s/\r//;
+					if (! $_) { error("Error: History file \"$historyfilename\" is corrupted (in section TIME). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
+					@field=split(/\s+/,$_); $countlines++;
 				}
+				if ($Debug) { debug(" End of TIME section ($count entries, $countloaded loaded)"); }
+				delete $SectionsToLoad{"time"};
+				if ($SectionsToSave{"time"}) {
+					Save_History("time",$year,$month); delete $SectionsToSave{"time"};
+					if ($withpurge) { @_time_p=(); @_time_h=(); @_time_k=(); }
+				}
+				if (! scalar %SectionsToLoad) { debug(" Stop reading history file. Got all we need."); last; }
+				next;
+			}
+			# BEGIN_DAY
+			if ($field[0] eq "BEGIN_DAY")      {
+				if ($Debug) { debug(" Begin of DAY section"); }
 				$_=<HISTORY>;
 				chomp $_; s/\r//;
 				if (! $_) { error("Error: History file \"$historyfilename\" is corrupted (in section DAY). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
-				@field=split(/\s+/,$_); $countlines++;
-			}
-			if ($Debug) { debug(" End of DAY section ($count entries, $countloaded loaded)"); }
-			delete $SectionsToLoad{"day"};
-			if (! scalar %SectionsToLoad) { debug(" Stop reading config file. Got all we need."); last; }
-			next;
-		}
-		# BEGIN_VISITOR
-		if ($field[0] eq "BEGIN_VISITOR")   {
-			if ($Debug) { debug(" Begin of VISITOR section"); }
-			$_=<HISTORY>;
-			chomp $_; s/\r//;
-			if (! $_) { error("Error: History file \"$historyfilename\" is corrupted (in section VISITOR). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
-			my @field=split(/\s+/,$_); $countlines++;
-			my $count=0;my $countloaded=0;
-			while ($field[0] ne "END_VISITOR") {
-				if ($field[0]) {
-					$count++;
-					# We always read this to build the month graph (MonthUnique, MonthHostsKnown, MonthHostsUnknown)
-					if (($field[1]||0) > 0) { $MonthUnique{$year.$month}++; }
-					if ($field[0] !~ /^\d+\.\d+\.\d+\.\d+$/) { $MonthHostsKnown{$year.$month}++; }
-					else { $MonthHostsUnknown{$year.$month}++; }
-					if ($SectionsToLoad{"visitor"}==1) {
-						# Data required:
-						# update 				 need to load all
-						# noupdate+
-						#  main page for year	 need to load all
-						#  main page for month	 need to load MaxNbOfHostsShown pages and >= MinHitHost
-						#  lastconnect for year  need to load all
-						#  lastconnect for month need to load all
-						#  unknownip for year	 need to load all ip
-						#  unknownip for month	 need to load ip with >= MinHitHost
-						my $loadrecord=0;
-						if ($UpdateStats) {
-							$loadrecord=1;
-						}
-						else {
-							if ($HTMLOutput eq "allhosts" || $HTMLOutput eq "lasthosts") { $loadrecord=1; }
-							elsif ($MonthRequired eq "year" || $field[2] >= $MinHitHost) {
-								if ($HTMLOutput eq "unknownip" && ($field[0] =~ /^\d+\.\d+\.\d+\.\d+$/)) { $loadrecord=1; }
-								elsif ($HTMLOutput eq "main" && ($MonthRequired eq "year" || $countloaded < $MaxNbOfHostsShown)) { $loadrecord=1; }
-							}
-						}
-						if ($loadrecord) {
-							if ($field[1]) { $_host_p{$field[0]}+=$field[1]; }
-							if ($field[2]) { $_host_h{$field[0]}+=$field[2]; }
-							if ($field[3]) { $_host_k{$field[0]}+=$field[3]; }
-							if ($field[4] && ! $_host_l{$field[0]}) {	# We save last connexion params if not already catched
-								$_host_l{$field[0]}=int($field[4]);
-								if ($UpdateStats) {		# field[5] and field[6] are used only for update
-									if ($field[5]) { $_host_s{$field[0]}=int($field[5]); }
-									if ($field[6]) { $_host_u{$field[0]}=$field[6]; }
-								}
-							}
+				my @field=split(/\s+/,$_); $countlines++;
+				my $count=0;my $countloaded=0;
+				while ($field[0] ne "END_DAY" ) {
+					if ($field[0]) {
+						$count++;
+						if ($SectionsToLoad{"day"}) {
 							$countloaded++;
+							if ($field[1]) { $DayPages{$field[0]}=int($field[1]); }
+							if ($field[2]) { $DayHits{$field[0]}=int($field[2]); }
+							if ($field[3]) { $DayBytes{$field[0]}=int($field[3]); }
+							if ($field[4]) { $DayVisits{$field[0]}=int($field[4]); }
+							if ($field[5]) { $DayUnique{$field[0]}=int($field[5]); }
 						}
 					}
+					$_=<HISTORY>;
+					chomp $_; s/\r//;
+					if (! $_) { error("Error: History file \"$historyfilename\" is corrupted (in section DAY). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
+					@field=split(/\s+/,$_); $countlines++;
 				}
+				if ($Debug) { debug(" End of DAY section ($count entries, $countloaded loaded)"); }
+				delete $SectionsToLoad{"day"};
+				#if ($SectionsToSave{"day"}) {	# Must be made after read of visitor
+				#	Save_History("day",$year,$month); delete $SectionsToSave{"day"};
+				#	if ($withpurge) { %DayPages=(); %DayHits=(); %DayBytes=(); %DayVisits=(); %DayUnique=(); }
+				#}
+				if (! scalar %SectionsToLoad) { debug(" Stop reading history file. Got all we need."); last; }
+				next;
+			}
+			# BEGIN_VISITOR
+			if ($field[0] eq "BEGIN_VISITOR")   {
+				if ($Debug) { debug(" Begin of VISITOR section"); }
 				$_=<HISTORY>;
 				chomp $_; s/\r//;
 				if (! $_) { error("Error: History file \"$historyfilename\" is corrupted (in section VISITOR). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
-				@field=split(/\s+/,$_); $countlines++;
-			}
-			if ($Debug) { debug(" End of VISITOR section ($count entries, $countloaded loaded)"); }
-			delete $SectionsToLoad{"visitor"};
-			if (! scalar %SectionsToLoad) { debug(" Stop reading config file. Got all we need."); last; }
-			next;
-		}
-		# BEGIN_LOGIN
-		if ($field[0] eq "BEGIN_LOGIN")   {
-			if ($Debug) { debug(" Begin of LOGIN section"); }
-			$_=<HISTORY>;
-			chomp $_; s/\r//;
-			if (! $_) { error("Error: History file \"$historyfilename\" is corrupted (in section LOGIN). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
-			my @field=split(/\s+/,$_); $countlines++;
-			my $count=0;my $countloaded=0;
-			while ($field[0] ne "END_LOGIN") {
-				if ($field[0]) {
-					$count++;
-					if ($SectionsToLoad{"login"}) {
-						$countloaded++;
-						if ($field[1]) { $_login_p{$field[0]}+=$field[1]; }
-						if ($field[2]) { $_login_h{$field[0]}+=$field[2]; }
-						if ($field[3]) { $_login_k{$field[0]}+=$field[3]; }
-						if (! $_login_l{$field[0]} && $field[4]) { $_login_l{$field[0]}=int($field[4]); }
-					}
-				}
-				$_=<HISTORY>;
-				chomp $_; s/\r//;
-				if (! $_) { error("Error: History file \"$historyfilename\" is corrupted (in section LOGIN). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
-				@field=split(/\s+/,$_); $countlines++;
-			}
-			if ($Debug) { debug(" End of LOGIN section ($count entries, $countloaded loaded)"); }
-			delete $SectionsToLoad{"login"};
-			if (! scalar %SectionsToLoad) { debug(" Stop reading config file. Got all we need."); last; }
-			next;
-		}
-		# BEGIN_DOMAIN
-		if ($field[0] eq "BEGIN_DOMAIN")   {
-			if ($Debug) { debug(" Begin of DOMAIN section"); }
-			$_=<HISTORY>;
-			chomp $_; s/\r//;
-			if (! $_) { error("Error: History file \"$historyfilename\" is corrupted (in section DOMAIN). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
-			my @field=split(/\s+/,$_); $countlines++;
-			my $count=0;my $countloaded=0;
-			while ($field[0] ne "END_DOMAIN") {
-				if ($field[0]) {
-					$count++;
-					if ($SectionsToLoad{"domain"}) {
-						$countloaded++;
-						if ($field[1]) { $_domener_p{$field[0]}+=$field[1]; }
-						if ($field[2]) { $_domener_h{$field[0]}+=$field[2]; }
-						if ($field[3]) { $_domener_k{$field[0]}+=$field[3]; }
-					}
-				}
-				$_=<HISTORY>;
-				chomp $_; s/\r//;
-				if (! $_) { error("Error: History file \"$historyfilename\" is corrupted (in section DOMAIN). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
-				@field=split(/\s+/,$_); $countlines++;
-			}
-			if ($Debug) { debug(" End of DOMAIN section ($count entries, $countloaded loaded)"); }
-			delete $SectionsToLoad{"domain"};
-			if (! scalar %SectionsToLoad) { debug(" Stop reading config file. Got all we need."); last; }
-			next;
-		}
-		# BEGIN_SESSION
-		if ($field[0] eq "BEGIN_SESSION")   {
-			if ($Debug) { debug(" Begin of SESSION section"); }
-			$_=<HISTORY>;
-			chomp $_; s/\r//;
-			if (! $_) { error("Error: History file \"$historyfilename\" is corrupted (in section SESSION). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
-			my @field=split(/\s+/,$_); $countlines++;
-			my $count=0;my $countloaded=0;
-			while ($field[0] ne "END_SESSION") {
-				if ($field[0]) {
-					$count++;
-					if ($SectionsToLoad{"session"}) {
-						$countloaded++;
-						if ($field[1]) { $_session{$field[0]}+=$field[1]; }
-					}
-				}
-				$_=<HISTORY>;
-				chomp $_; s/\r//;
-				if (! $_) { error("Error: History file \"$historyfilename\" is corrupted (in section SESSION). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
-				@field=split(/\s+/,$_); $countlines++;
-			}
-			if ($Debug) { debug(" End of SESSION section ($count entries, $countloaded loaded)"); }
-			delete $SectionsToLoad{"session"};
-			if (! scalar %SectionsToLoad) { debug(" Stop reading config file. Got all we need."); last; }
-			next;
-		}
-		# BEGIN_BROWSER
-		if ($field[0] eq "BEGIN_BROWSER")   {
-			if ($Debug) { debug(" Begin of BROWSER section"); }
-			$_=<HISTORY>;
-			chomp $_; s/\r//;
-			if (! $_) { error("Error: History file \"$historyfilename\" is corrupted (in section BROWSER). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
-			my @field=split(/\s+/,$_); $countlines++;
-			my $count=0;my $countloaded=0;
-			while ($field[0] ne "END_BROWSER") {
-				if ($field[0]) {
-					$count++;
-					if ($SectionsToLoad{"browser"}) {
-						$countloaded++;
-						if ($field[1]) { $_browser_h{$field[0]}+=$field[1]; }
-					}
-				}
-				$_=<HISTORY>;
-				chomp $_; s/\r//;
-				if (! $_) { error("Error: History file \"$historyfilename\" is corrupted (in section BROWSER). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
-				@field=split(/\s+/,$_); $countlines++;
-			}
-			if ($Debug) { debug(" End of BROWSER section ($count entries, $countloaded loaded)"); }
-			delete $SectionsToLoad{"browser"};
-			if (! scalar %SectionsToLoad) { debug(" Stop reading config file. Got all we need."); last; }
-			next;
-		}
-		# BEGIN_MSIEVER
-		if ($field[0] eq "BEGIN_MSIEVER")   {
-			if ($Debug) { debug(" Begin of MSIEVER section"); }
-			$_=<HISTORY>;
-			chomp $_; s/\r//;
-			if (! $_) { error("Error: History file \"$historyfilename\" is corrupted (in section MSIEVER). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
-			my @field=split(/\s+/,$_); $countlines++;
-			my $count=0;my $countloaded=0;
-			while ($field[0] ne "END_MSIEVER") {
-				if ($field[0]) {
-					$count++;
-					if ($SectionsToLoad{"msiever"}) {
-						$countloaded++;
-						if ($field[1]) { $_msiever_h[$field[0]]+=$field[1]; }
-					}
-				}
-				$_=<HISTORY>;
-				chomp $_; s/\r//;
-				if (! $_) { error("Error: History file \"$historyfilename\" is corrupted (in section MSIEVER). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
-				@field=split(/\s+/,$_); $countlines++;
-			}
-			if ($Debug) { debug(" End of MSIEVER section ($count entries, $countloaded loaded)"); }
-			delete $SectionsToLoad{"msiever"};
-			if (! scalar %SectionsToLoad) { debug(" Stop reading config file. Got all we need."); last; }
-			next;
-		}
-		# BEGIN_NSVER
-		if ($field[0] eq "BEGIN_NSVER")   {
-			if ($Debug) { debug(" Begin of NSVER section"); }
-			$_=<HISTORY>;
-			chomp $_; s/\r//;
-			if (! $_) { error("Error: History file \"$historyfilename\" is corrupted (in section NSVER). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
-			my @field=split(/\s+/,$_); $countlines++;
-			my $count=0;my $countloaded=0;
-			while ($field[0] ne "END_NSVER") {
-				if ($field[0]) {
-					$count++;
-					if ($SectionsToLoad{"nsver"}) {
-						$countloaded++;
-						if ($field[1]) { $_nsver_h[$field[0]]+=$field[1]; }
-					}
-				}
-				$_=<HISTORY>;
-				chomp $_; s/\r//;
-				if (! $_) { error("Error: History file \"$historyfilename\" is corrupted (in section NSVER). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
-				@field=split(/\s+/,$_); $countlines++;
-			}
-			if ($Debug) { debug(" End of NSVER section ($count entries, $countloaded loaded)"); }
-			delete $SectionsToLoad{"nsver"};
-			if (! scalar %SectionsToLoad) { debug(" Stop reading config file. Got all we need."); last; }
-			next;
-		}
-		# BEGIN_OS
-		if ($field[0] eq "BEGIN_OS")   {
-			if ($Debug) { debug(" Begin of OS section"); }
-			$_=<HISTORY>;
-			chomp $_; s/\r//;
-			if (! $_) { error("Error: History file \"$historyfilename\" is corrupted (in section OS). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
-			my @field=split(/\s+/,$_); $countlines++;
-			my $count=0;my $countloaded=0;
-			while ($field[0] ne "END_OS") {
-				if ($field[0]) {
-					$count++;
-					if ($SectionsToLoad{"os"}) {
-						$countloaded++;
-						if ($field[1]) { $_os_h{$field[0]}+=$field[1]; }
-					}
-				}
-				$_=<HISTORY>;
-				chomp $_; s/\r//;
-				if (! $_) { error("Error: History file \"$historyfilename\" is corrupted (in section OS). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
-				@field=split(/\s+/,$_); $countlines++;
-			}
-			if ($Debug) { debug(" End of OS section ($count entries, $countloaded loaded)"); }
-			delete $SectionsToLoad{"os"};
-			if (! scalar %SectionsToLoad) { debug(" Stop reading config file. Got all we need."); last; }
-			next;
-		}
-		# BEGIN_UNKNOWNREFERER
-		if ($field[0] eq "BEGIN_UNKNOWNREFERER")   {
-			if ($Debug) { debug(" Begin of UNKNOWNREFERER section"); }
-			$_=<HISTORY>;
-			chomp $_; s/\r//;
-			if (! $_) { error("Error: History file \"$historyfilename\" is corrupted (in section UNKNOWNREFERER). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
-			my @field=split(/\s+/,$_); $countlines++;
-			my $count=0;my $countloaded=0;
-			while ($field[0] ne "END_UNKNOWNREFERER") {
-				if ($field[0]) {
-					$count++;
-					if ($SectionsToLoad{"unknownreferer"}) {
-						$countloaded++;
-						if (! $_unknownreferer_l{$field[0]}) { $_unknownreferer_l{$field[0]}=int($field[1]); }
-					}
-				}
-				$_=<HISTORY>;
-				chomp $_; s/\r//;
-				if (! $_) { error("Error: History file \"$historyfilename\" is corrupted (in section UNKNOWNREFERER). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
-				@field=split(/\s+/,$_); $countlines++;
-			}
-			if ($Debug) { debug(" End of UNKNOWNREFERER section ($count entries, $countloaded loaded)"); }
-			delete $SectionsToLoad{"unknowreferer"};
-			if (! scalar %SectionsToLoad) { debug(" Stop reading config file. Got all we need."); last; }
-			next;
-		}
-		# BEGIN_UNKNOWNREFERERBROWSER
-		if ($field[0] eq "BEGIN_UNKNOWNREFERERBROWSER")   {
-			if ($Debug) { debug(" Begin of UNKNOWNREFERERBROWSER section"); }
-			$_=<HISTORY>;
-			chomp $_; s/\r//;
-			if (! $_) { error("Error: History file \"$historyfilename\" is corrupted (in section UNKNOWNREFERERBROWSER). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
-			my @field=split(/\s+/,$_); $countlines++;
-			my $count=0;my $countloaded=0;
-			while ($field[0] ne "END_UNKNOWNREFERERBROWSER") {
-				if ($field[0]) {
-					$count++;
-					if ($SectionsToLoad{"unknownrefererbrowser"}) {
-						$countloaded++;
-						if (! $_unknownrefererbrowser_l{$field[0]}) { $_unknownrefererbrowser_l{$field[0]}=int($field[1]); }
-					}
-				}
-				$_=<HISTORY>;
-				chomp $_; s/\r//;
-				if (! $_) { error("Error: History file \"$historyfilename\" is corrupted (in section UNKNOWNREFERERBROWSER). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
-				@field=split(/\s+/,$_); $countlines++;
-			}
-			if ($Debug) { debug(" End of UNKNOWNREFERERBROWSER section ($count entries, $countloaded loaded)"); }
-			delete $SectionsToLoad{"unknownrefererbrowser"};
-			if (! scalar %SectionsToLoad) { debug(" Stop reading config file. Got all we need."); last; }
-			next;
-		}
-		# BEGIN_ROBOT
-		if ($field[0] eq "BEGIN_ROBOT")   {
-			if ($Debug) { debug(" Begin of ROBOT section"); }
-			$_=<HISTORY>;
-			chomp $_; s/\r//;
-			if (! $_) { error("Error: History file \"$historyfilename\" is corrupted (in section ROBOT). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
-			my @field=split(/\s+/,$_); $countlines++;
-			my $count=0;my $countloaded=0;
-			while ($field[0] ne "END_ROBOT") {
-				if ($field[0]) {
-					$count++;
-					if ($SectionsToLoad{"robot"}) {
-						$countloaded++;
-						if ($field[1]) { $_robot_h{$field[0]}+=$field[1]; }
-						if (! $_robot_l{$field[0]}) { $_robot_l{$field[0]}=int($field[2]); }
-					}
-				}
-				$_=<HISTORY>;
-				chomp $_; s/\r//;
-				if (! $_) { error("Error: History file \"$historyfilename\" is corrupted (in section ROBOT). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
-				@field=split(/\s+/,$_); $countlines++;
-			}
-			if ($Debug) { debug(" End of ROBOT section ($count entries, $countloaded loaded)"); }
-			delete $SectionsToLoad{"robot"};
-			if (! scalar %SectionsToLoad) { debug(" Stop reading config file. Got all we need."); last; }
-			next;
-		}
-		# BEGIN_SIDER
-		if ($field[0] eq "BEGIN_SIDER")  {
-			if ($Debug) { debug(" Begin of SIDER section"); }
-			$_=<HISTORY>;
-			chomp $_; s/\r//;
-			if (! $_) { error("Error: History file \"$historyfilename\" is corrupted (in section SIDER). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
-			my @field=split(/\s+/,$_); $countlines++;
-			my $count=0;my $countloaded=0;
-			while ($field[0] ne "END_SIDER") {
-				if ($field[0]) {
-					$count++;
-					if ($SectionsToLoad{"sider"}) {
-						# Data required:
-						# update 				need to load all pages - TotalDiffetentPages could be counted but is not
-						# noupdate+
-						#  main page for year	need to load all pages - TotalDiffetentPages could be counted but is not
-						#  main page for month	need to load MaxNbOfPageShown pages and >= MinHitFile - TotalDiffetentPages can be counted and is
-						#  urldetail for year	need to load all pages with filter ok - TotalDiffetentPages could be counted if no filter but is not
-						#  urldetail for month	need to load all pages with filter ok and >= MinHitFile - TotalDiffetentPages can be counted and is
-						my $loadrecord=0;
-						if ($UpdateStats) {
-							$loadrecord=1;
-						}
-						else {
-							if ($HTMLOutput eq "main") {
-								if ($MonthRequired eq "year") { $loadrecord=1; }
-								else {
-									if ($countloaded < $MaxNbOfPageShown && $field[1] >= $MinHitFile) { $loadrecord=1; }
-									$TotalDifferentPages++;
+				my @field=split(/\s+/,$_); $countlines++;
+				my $count=0;my $countloaded=0;
+				while ($field[0] ne "END_VISITOR") {
+					if ($field[0]) {
+						$count++;
+						# We always read this to build the month graph (MonthUnique, MonthVisits, MonthHostsKnown, MonthHostsUnknown)
+						if (($field[1]||0) > 0) { $MonthUnique{$year.$month}++; }
+						if ($versionnum >= 5000 && ($field[4]||0) > 0) { $MonthVisits{$year.$month}+=$field[4]; }
+						if ($field[0] !~ /^\d+\.\d+\.\d+\.\d+$/) { $MonthHostsKnown{$year.$month}++; }
+						else { $MonthHostsUnknown{$year.$month}++; }
+
+						# Process data saved in 'wait' arrays
+						if ($_waithost_e{$field[0]}){
+							my $timehostl;
+							my $timehosts;
+							my $hostu;
+							if ($versionnum >= 5000) { $timehostl=int($field[5]); $timehosts=int($field[6]); $hostu=$field[7]; }
+							else { $timehostl=int($field[4]); $timehosts=int($field[5]); $hostu=$field[6]; }
+							my $newtimehosts=($_waithost_s{$field[0]}?$_waithost_s{$field[0]}:$_host_s{$field[0]});
+							my $newtimehostl=($_waithost_l{$field[0]}?$_waithost_l{$field[0]}:$_host_l{$field[0]});
+							if ($newtimehosts > $timehostl + $VisitTimeOut ) {
+								if ($Debug) { debug(" Visit in 'wait' arrays is a new visit different than last in history",3); }
+								$_host_v{$field[0]}++;
+								$_url_x{$hostu}++;
+								$_url_e{$_waithost_e{$field[0]}}++;
+								$newtimehosts =~ /^(\d\d\d\d\d\d)/; $DayVisits{$1}++;
+								if ($timehosts && $timehostl) { $_session{GetSessionRange($timehosts,$timehostl)}++; }
+								if ($_waithost_s{$field[0]}) {
+									# There was also a second session processed log
+									$_session{GetSessionRange($newtimehosts,$newtimehostl)}++;
 								}
-							}
-							elsif ($HTMLOutput eq "urldetail") {
-								if ($MonthRequired eq "year" ) {
-									if (!$URLFilter || $field[0] =~ /$URLFilter/) { $loadrecord=1; }
-								}
-								else {
-									if ((!$URLFilter || $field[0] =~ /$URLFilter/) && $field[1] >= $MinHitFile) { $loadrecord=1; }
-									$TotalDifferentPages++;
-								}
-							}
-							# Posssibilite de mettre if ($URLFilter && $field[0] =~ /$URLFilter/) mais il faut gerer TotalPages de la meme maniere
-							if ($versionnum < 4000) {	# For old history files
-								$TotalEntries+=($field[2]||0);
+								# Here $_host_l $_host_s and $_host_u are correctly defined
 							}
 							else {
-								$TotalBytesPages+=($field[2]||0);
-								$TotalEntries+=($field[3]||0);
-								$TotalExits+=($field[4]||0);
+								if ($Debug) { debug(" Visit in 'wait' arrays is following of last in history",3); }
+								if ($_waithost_s{$field[0]}) {
+									# There was also a second session processed log
+									$_session{GetSessionRange(Minimum($timehosts,$newtimehosts),$timehostl>$newtimehostl?$timehostl:$newtimehostl)}++;
+									# Here $_host_l $_host_s and $_host_u are correctly defined
+								}
+								else {
+									# We correct $_host_l $_host_s and $_host_u
+									if ($timehostl > $newtimehostl) {
+										$_host_l{$field[0]}=$timehostl;
+										$_host_u{$field[0]}=($versionnum>5000?$field[7]:$field[6]);
+									}
+									if ($timehosts > $newtimehosts) {
+										$_host_s{$field[0]}=$newtimehosts;
+									}
+								}
 							}
-						}
-						if ($loadrecord) {
-							if ($field[1]) { $_url_p{$field[0]}+=$field[1]; }
-							if ($versionnum < 4000) {	# For old history files
-								if ($field[2]) { $_url_e{$field[0]}+=$field[2]; }
-								$_url_k{$field[0]}=0;
+							delete $_waithost_e{$field[0]};
+							delete $_waithost_l{$field[0]};
+							delete $_waithost_s{$field[0]};
+							delete $_waithost_u{$field[0]};
+						} 
+
+						if ($SectionsToLoad{"visitor"} && ! $SectionsToLoadPartialy{"visitor"}) {
+							# Data required:
+							# update 				 need to load all
+							# noupdate+
+							#  main page for year	 need to load all
+							#  main page for month	 need to load MaxNbOfHostsShown pages and >= MinHitHost
+							#  lastconnect for year  need to load all
+							#  lastconnect for month need to load all
+							#  unknownip for year	 need to load all ip
+							#  unknownip for month	 need to load ip with >= MinHitHost
+							my $loadrecord=0;
+							if ($UpdateStats) {
+								$loadrecord=1;
 							}
 							else {
-								if ($field[2]) { $_url_k{$field[0]}+=$field[2]; }
-								if ($field[3]) { $_url_e{$field[0]}+=$field[3]; }
-								if ($field[4]) { $_url_x{$field[0]}+=$field[4]; }
-							}
-							$countloaded++;
-						}
-					}
-				}
-				$_=<HISTORY>;
-				chomp $_; s/\r//;
-				if (! $_) { error("Error: History file \"$historyfilename\" is corrupted (in section SIDER). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
-				@field=split(/\s+/,$_); $countlines++;
-			}
-			if ($Debug) { debug(" End of SIDER section ($count entries, $countloaded loaded)"); }
-			delete $SectionsToLoad{"sider"};
-			if (! scalar %SectionsToLoad) { debug(" Stop reading config file. Got all we need."); last; }
-			next;
-		}
-		# BEGIN_FILETYPES
-		if ($field[0] eq "BEGIN_FILETYPES")   {
-			if ($Debug) { debug(" Begin of FILETYPES section"); }
-			$_=<HISTORY>;
-			chomp $_; s/\r//;
-			if (! $_) { error("Error: History file \"$historyfilename\" is corrupted (in section FILETYPES). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
-			my @field=split(/\s+/,$_); $countlines++;
-			my $count=0;my $countloaded=0;
-			while ($field[0] ne "END_FILETYPES") {
-				if ($field[0]) {
-					$count++;
-					if ($SectionsToLoad{"filetypes"}) {
-						$countloaded++;
-						if ($field[1]) { $_filetypes_h{$field[0]}+=$field[1]; }
-						if ($field[2]) { $_filetypes_k{$field[0]}+=$field[2]; }
-						if ($field[3]) { $_filetypes_gz_in{$field[0]}+=$field[3]; }
-						if ($field[4]) { $_filetypes_gz_out{$field[0]}+=$field[4]; }
-					}
-				}
-				$_=<HISTORY>;
-				chomp $_; s/\r//;
-				if (! $_) { error("Error: History file \"$historyfilename\" is corrupted (in section FILETYPES). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
-				@field=split(/\s+/,$_); $countlines++;
-			}
-			if ($Debug) { debug(" End of FILETYPES section ($count entries, $countloaded loaded)"); }
-			delete $SectionsToLoad{"filetypes"};
-			if (! scalar %SectionsToLoad) { debug(" Stop reading config file. Got all we need."); last; }
-			next;
-		}
-		# BEGIN_SEREFERRALS
-		if ($field[0] eq "BEGIN_SEREFERRALS")   {
-			if ($Debug) { debug(" Begin of SEREFERRALS section"); }
-			$_=<HISTORY>;
-			chomp $_; s/\r//;
-			if (! $_) { error("Error: History file \"$historyfilename\" is corrupted (in section SEREFERRALS). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
-			my @field=split(/\s+/,$_); $countlines++;
-			my $count=0;my $countloaded=0;
-			while ($field[0] ne "END_SEREFERRALS") {
-				if ($field[0]) {
-					$count++;
-					if ($SectionsToLoad{"sereferrals"}) {
-						$countloaded++;
-						if ($field[1]) { $_se_referrals_h{$field[0]}+=$field[1]; }
-					}
-				}
-				$_=<HISTORY>;
-				chomp $_; s/\r//;
-				if (! $_) { error("Error: History file \"$historyfilename\" is corrupted (in section SEREFERRALS). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
-				@field=split(/\s+/,$_); $countlines++;
-			}
-			if ($Debug) { debug(" End of SEREFERRALS section ($count entries, $countloaded loaded)"); }
-			delete $SectionsToLoad{"sereferrals"};
-			if (! scalar %SectionsToLoad) { debug(" Stop reading config file. Got all we need."); last; }
-			next;
-		}
-		# BEGIN_PAGEREFS
-		if ($field[0] eq "BEGIN_PAGEREFS")   {
-			if ($Debug) { debug(" Begin of PAGEREFS section"); }
-			$_=<HISTORY>;
-			chomp $_; s/\r//;
-			if (! $_) { error("Error: History file \"$historyfilename\" is corrupted (in section PAGEREFS). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
-			my @field=split(/\s+/,$_); $countlines++;
-			my $count=0;my $countloaded=0;
-			while ($field[0] ne "END_PAGEREFS") {
-				if ($field[0]) {
-					$count++;
-					if ($SectionsToLoad{"pagerefs"}) {
-						$countloaded++;
-						if ($field[1]) { $_pagesrefs_h{$field[0]}+=int($field[1]); }
-					}
-				}
-				$_=<HISTORY>;
-				chomp $_; s/\r//;
-				if (! $_) { error("Error: History file \"$historyfilename\" is corrupted (in section PAGEREFS). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
-				@field=split(/\s+/,$_); $countlines++;
-			}
-			if ($Debug) { debug(" End of PAGEREFS section ($count entries, $countloaded loaded)"); }
-			delete $SectionsToLoad{"pagerefs"};
-			if (! scalar %SectionsToLoad) { debug(" Stop reading config file. Got all we need."); last; }
-			next;
-		}
-		# BEGIN_SEARCHWORDS
-		if ($field[0] eq "BEGIN_SEARCHWORDS")   {
-			if ($Debug) { debug(" Begin of SEARCHWORDS section ($MaxNbOfKeyphrasesShown,$MinHitKeyphrase)"); }
-			$_=<HISTORY>;
-			chomp $_; s/\r//;
-			if (! $_) { error("Error: History file \"$historyfilename\" is corrupted (in section SEARCHWORDS). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
-			my @field=split(/\s+/,$_); $countlines++;
-			my $count=0;my $countloaded=0;
-			while ($field[0] ne "END_SEARCHWORDS") {
-				if ($field[0]) {
-					$count++;
-					if ($SectionsToLoad{"searchwords"}) {
-						my $loadrecord=0;
-						if ($UpdateStats) {
-							$loadrecord=1;
-						}
-						else {
-							if ($HTMLOutput eq "main") {
-								if ($MonthRequired eq "year") { $loadrecord=1; }
-								else {
-									if ($countloaded < $MaxNbOfKeyphrasesShown && $field[1] >= $MinHitKeyphrase) { $loadrecord=1; }
-									$TotalDifferentKeyphrases++;
-									$TotalKeyphrases+=($field[1]||0);
+								if ($HTMLOutput eq "allhosts" || $HTMLOutput eq "lasthosts") { $loadrecord=1; }
+								elsif ($MonthRequired eq "year" || $field[2] >= $MinHitHost) {
+									if ($HTMLOutput eq "unknownip" && ($field[0] =~ /^\d+\.\d+\.\d+\.\d+$/)) { $loadrecord=1; }
+									elsif ($HTMLOutput eq "main" && ($MonthRequired eq "year" || $countloaded < $MaxNbOfHostsShown)) { $loadrecord=1; }
 								}
 							}
-							elsif ($HTMLOutput eq "keyphrases") {	# Load keyphrases for keyphrases chart
-								if ($MonthRequired eq "year" ) { $loadrecord=1; }
-								else {
-									if ($field[1] >= $MinHitKeyphrase) { $loadrecord=1; }
-									$TotalDifferentKeyphrases++;
-									$TotalKeyphrases+=($field[1]||0);
-								}
-							}
-							if ($HTMLOutput eq "keywords") {	# Load keyphrases for keywords chart
-								$loadrecord=2;
-							}
-						}
-						if ($loadrecord) {
-							if ($field[1]) {
-								if ($loadrecord==2) {
-									foreach my $word (split(/\+/,$field[0])) {
-										$_keywords{$word}+=$field[1];
+							if ($loadrecord) {
+								if ($field[1]) { $_host_p{$field[0]}+=$field[1]; }
+								if ($field[2]) { $_host_h{$field[0]}+=$field[2]; }
+								if ($field[3]) { $_host_k{$field[0]}+=$field[3]; }
+								if ($versionnum >= 5000) {
+									if ($field[4]) { $_host_v{$field[0]}+=$field[4]; }
+									if ($field[5] && ! $_host_l{$field[0]}) {	# We save last connexion params if not already catched
+										$_host_l{$field[0]}=int($field[5]);
+										if ($UpdateStats) {		# field[6] field[7] are used only for update
+											if ($field[6] && ! $_host_s{$field[0]}) { $_host_s{$field[0]}=int($field[6]); }
+											if ($field[7] && ! $_host_u{$field[0]}) { $_host_u{$field[0]}=$field[7]; }
+										}
 									}
 								}
 								else {
-									$_keyphrases{$field[0]}+=$field[1];
+									# To read old data files
+									if ($field[4] && ! $_host_l{$field[0]}) {	# We save last connexion params if not already catched
+										$_host_l{$field[0]}=int($field[4]);
+										if ($UpdateStats) {		# field[5] field[6] are used only for update
+											if ($field[5] && ! $_host_s{$field[0]}) { $_host_s{$field[0]}=int($field[5]); }
+											if ($field[6] && ! $_host_u{$field[0]}) { $_host_u{$field[0]}=$field[6]; }
+										}
+									}
 								}
+								$countloaded++;
 							}
-							$countloaded++;
 						}
 					}
+					$_=<HISTORY>;
+					chomp $_; s/\r//;
+					if (! $_) { error("Error: History file \"$historyfilename\" is corrupted (in section VISITOR). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
+					@field=split(/\s+/,$_); $countlines++;
 				}
+				if ($Debug) { debug(" End of VISITOR section ($count entries, $countloaded loaded)"); }
+				delete $SectionsToLoad{"visitor"};
+				#if ($SectionsToSave{"visitor"}) {
+				#	Save_History("visitor",$year,$month); delete $SectionsToSave{"visitor"};
+				#	if ($withpurge) { %_host_p=(); %_host_h=(); %_host_k=(); %_host_v=(); %_host_l=(); %_host_s=(); %_host_u=(); }
+				#}
+				if (! scalar %SectionsToLoad) { debug(" Stop reading history file. Got all we need."); last; }
+				next;
+			}
+			# BEGIN_LOGIN
+			if ($field[0] eq "BEGIN_LOGIN")   {
+				if ($Debug) { debug(" Begin of LOGIN section"); }
+				$_=<HISTORY>;
+				chomp $_; s/\r//;
+				if (! $_) { error("Error: History file \"$historyfilename\" is corrupted (in section LOGIN). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
+				my @field=split(/\s+/,$_); $countlines++;
+				my $count=0;my $countloaded=0;
+				while ($field[0] ne "END_LOGIN") {
+					if ($field[0]) {
+						$count++;
+						if ($SectionsToLoad{"login"}) {
+							$countloaded++;
+							if ($field[1]) { $_login_p{$field[0]}+=$field[1]; }
+							if ($field[2]) { $_login_h{$field[0]}+=$field[2]; }
+							if ($field[3]) { $_login_k{$field[0]}+=$field[3]; }
+							if (! $_login_l{$field[0]} && $field[4]) { $_login_l{$field[0]}=int($field[4]); }
+						}
+					}
+					$_=<HISTORY>;
+					chomp $_; s/\r//;
+					if (! $_) { error("Error: History file \"$historyfilename\" is corrupted (in section LOGIN). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
+					@field=split(/\s+/,$_); $countlines++;
+				}
+				if ($Debug) { debug(" End of LOGIN section ($count entries, $countloaded loaded)"); }
+				delete $SectionsToLoad{"login"};
+				if ($SectionsToSave{"login"}) {
+					Save_History("login",$year,$month); delete $SectionsToSave{"login"};
+					if ($withpurge) { %_login_p=(); %_login_h=(); %_login_k=(); %_login_l=(); }
+				}
+				if (! scalar %SectionsToLoad) { debug(" Stop reading history file. Got all we need."); last; }
+				next;
+			}
+			# BEGIN_DOMAIN
+			if ($field[0] eq "BEGIN_DOMAIN")   {
+				if ($Debug) { debug(" Begin of DOMAIN section"); }
+				$_=<HISTORY>;
+				chomp $_; s/\r//;
+				if (! $_) { error("Error: History file \"$historyfilename\" is corrupted (in section DOMAIN). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
+				my @field=split(/\s+/,$_); $countlines++;
+				my $count=0;my $countloaded=0;
+				while ($field[0] ne "END_DOMAIN") {
+					if ($field[0]) {
+						$count++;
+						if ($SectionsToLoad{"domain"}) {
+							$countloaded++;
+							if ($field[1]) { $_domener_p{$field[0]}+=$field[1]; }
+							if ($field[2]) { $_domener_h{$field[0]}+=$field[2]; }
+							if ($field[3]) { $_domener_k{$field[0]}+=$field[3]; }
+						}
+					}
+					$_=<HISTORY>;
+					chomp $_; s/\r//;
+					if (! $_) { error("Error: History file \"$historyfilename\" is corrupted (in section DOMAIN). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
+					@field=split(/\s+/,$_); $countlines++;
+				}
+				if ($Debug) { debug(" End of DOMAIN section ($count entries, $countloaded loaded)"); }
+				delete $SectionsToLoad{"domain"};
+				if ($SectionsToSave{"domain"}) {
+					Save_History("domain",$year,$month); delete $SectionsToSave{"domain"};
+					if ($withpurge) { %_domener_p=(); %_domener_h=(); %_domener_k=(); }
+				}
+				if (! scalar %SectionsToLoad) { debug(" Stop reading history file. Got all we need."); last; }
+				next;
+			}
+			# BEGIN_SESSION
+			if ($field[0] eq "BEGIN_SESSION")   {
+				if ($Debug) { debug(" Begin of SESSION section"); }
+				$_=<HISTORY>;
+				chomp $_; s/\r//;
+				if (! $_) { error("Error: History file \"$historyfilename\" is corrupted (in section SESSION). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
+				my @field=split(/\s+/,$_); $countlines++;
+				my $count=0;my $countloaded=0;
+				while ($field[0] ne "END_SESSION") {
+					if ($field[0]) {
+						$count++;
+						if ($SectionsToLoad{"session"}) {
+							$countloaded++;
+							if ($field[1]) { $_session{$field[0]}+=$field[1]; }
+						}
+					}
+					$_=<HISTORY>;
+					chomp $_; s/\r//;
+					if (! $_) { error("Error: History file \"$historyfilename\" is corrupted (in section SESSION). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
+					@field=split(/\s+/,$_); $countlines++;
+				}
+				if ($Debug) { debug(" End of SESSION section ($count entries, $countloaded loaded)"); }
+				delete $SectionsToLoad{"session"};
+				#if ($SectionsToSave{"session"}) {
+				#	Save_History("session",$year,$month); delete $SectionsToSave{"session"}; }
+				#	if ($withpurge) { %_session=(); }
+				#}
+				if (! scalar %SectionsToLoad) { debug(" Stop reading history file. Got all we need."); last; }
+				next;
+			}
+			# BEGIN_BROWSER
+			if ($field[0] eq "BEGIN_BROWSER")   {
+				if ($Debug) { debug(" Begin of BROWSER section"); }
+				$_=<HISTORY>;
+				chomp $_; s/\r//;
+				if (! $_) { error("Error: History file \"$historyfilename\" is corrupted (in section BROWSER). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
+				my @field=split(/\s+/,$_); $countlines++;
+				my $count=0;my $countloaded=0;
+				while ($field[0] ne "END_BROWSER") {
+					if ($field[0]) {
+						$count++;
+						if ($SectionsToLoad{"browser"}) {
+							$countloaded++;
+							if ($field[1]) { $_browser_h{$field[0]}+=$field[1]; }
+						}
+					}
+					$_=<HISTORY>;
+					chomp $_; s/\r//;
+					if (! $_) { error("Error: History file \"$historyfilename\" is corrupted (in section BROWSER). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
+					@field=split(/\s+/,$_); $countlines++;
+				}
+				if ($Debug) { debug(" End of BROWSER section ($count entries, $countloaded loaded)"); }
+				delete $SectionsToLoad{"browser"};
+				if ($SectionsToSave{"browser"}) {
+					Save_History("browser",$year,$month); delete $SectionsToSave{"browser"};
+					if ($withpurge) { %_browser_h=(); }
+				}
+				if (! scalar %SectionsToLoad) { debug(" Stop reading history file. Got all we need."); last; }
+				next;
+			}
+			# BEGIN_MSIEVER
+			if ($field[0] eq "BEGIN_MSIEVER")   {
+				if ($Debug) { debug(" Begin of MSIEVER section"); }
+				$_=<HISTORY>;
+				chomp $_; s/\r//;
+				if (! $_) { error("Error: History file \"$historyfilename\" is corrupted (in section MSIEVER). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
+				my @field=split(/\s+/,$_); $countlines++;
+				my $count=0;my $countloaded=0;
+				while ($field[0] ne "END_MSIEVER") {
+					if ($field[0]) {
+						$count++;
+						if ($SectionsToLoad{"msiever"}) {
+							$countloaded++;
+							if ($field[1]) { $_msiever_h[$field[0]]+=$field[1]; }
+						}
+					}
+					$_=<HISTORY>;
+					chomp $_; s/\r//;
+					if (! $_) { error("Error: History file \"$historyfilename\" is corrupted (in section MSIEVER). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
+					@field=split(/\s+/,$_); $countlines++;
+				}
+				if ($Debug) { debug(" End of MSIEVER section ($count entries, $countloaded loaded)"); }
+				delete $SectionsToLoad{"msiever"};
+				if ($SectionsToSave{"msiever"}) {
+					Save_History("msiever",$year,$month); delete $SectionsToSave{"msiever"};
+					if ($withpurge) { @_msiever_h=(); }
+				}
+				if (! scalar %SectionsToLoad) { debug(" Stop reading history file. Got all we need."); last; }
+				next;
+			}
+			# BEGIN_NSVER
+			if ($field[0] eq "BEGIN_NSVER")   {
+				if ($Debug) { debug(" Begin of NSVER section"); }
+				$_=<HISTORY>;
+				chomp $_; s/\r//;
+				if (! $_) { error("Error: History file \"$historyfilename\" is corrupted (in section NSVER). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
+				my @field=split(/\s+/,$_); $countlines++;
+				my $count=0;my $countloaded=0;
+				while ($field[0] ne "END_NSVER") {
+					if ($field[0]) {
+						$count++;
+						if ($SectionsToLoad{"nsver"}) {
+							$countloaded++;
+							if ($field[1]) { $_nsver_h[$field[0]]+=$field[1]; }
+						}
+					}
+					$_=<HISTORY>;
+					chomp $_; s/\r//;
+					if (! $_) { error("Error: History file \"$historyfilename\" is corrupted (in section NSVER). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
+					@field=split(/\s+/,$_); $countlines++;
+				}
+				if ($Debug) { debug(" End of NSVER section ($count entries, $countloaded loaded)"); }
+				delete $SectionsToLoad{"nsver"};
+				if ($SectionsToSave{"nsver"}) {
+					Save_History("nsver",$year,$month); delete $SectionsToSave{"nsver"};
+					if ($withpurge) { @_nsver_h=(); }
+				}
+				if (! scalar %SectionsToLoad) { debug(" Stop reading history file. Got all we need."); last; }
+				next;
+			}
+			# BEGIN_OS
+			if ($field[0] eq "BEGIN_OS")   {
+				if ($Debug) { debug(" Begin of OS section"); }
+				$_=<HISTORY>;
+				chomp $_; s/\r//;
+				if (! $_) { error("Error: History file \"$historyfilename\" is corrupted (in section OS). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
+				my @field=split(/\s+/,$_); $countlines++;
+				my $count=0;my $countloaded=0;
+				while ($field[0] ne "END_OS") {
+					if ($field[0]) {
+						$count++;
+						if ($SectionsToLoad{"os"}) {
+							$countloaded++;
+							if ($field[1]) { $_os_h{$field[0]}+=$field[1]; }
+						}
+					}
+					$_=<HISTORY>;
+					chomp $_; s/\r//;
+					if (! $_) { error("Error: History file \"$historyfilename\" is corrupted (in section OS). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
+					@field=split(/\s+/,$_); $countlines++;
+				}
+				if ($Debug) { debug(" End of OS section ($count entries, $countloaded loaded)"); }
+				delete $SectionsToLoad{"os"};
+				if ($SectionsToSave{"os"}) {
+					Save_History("os",$year,$month); delete $SectionsToSave{"os"};
+					if ($withpurge) { %_os_h=(); }
+				}
+				if (! scalar %SectionsToLoad) { debug(" Stop reading history file. Got all we need."); last; }
+				next;
+			}
+			# BEGIN_UNKNOWNREFERER
+			if ($field[0] eq "BEGIN_UNKNOWNREFERER")   {
+				if ($Debug) { debug(" Begin of UNKNOWNREFERER section"); }
+				$_=<HISTORY>;
+				chomp $_; s/\r//;
+				if (! $_) { error("Error: History file \"$historyfilename\" is corrupted (in section UNKNOWNREFERER). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
+				my @field=split(/\s+/,$_); $countlines++;
+				my $count=0;my $countloaded=0;
+				while ($field[0] ne "END_UNKNOWNREFERER") {
+					if ($field[0]) {
+						$count++;
+						if ($SectionsToLoad{"unknownreferer"}) {
+							$countloaded++;
+							if (! $_unknownreferer_l{$field[0]}) { $_unknownreferer_l{$field[0]}=int($field[1]); }
+						}
+					}
+					$_=<HISTORY>;
+					chomp $_; s/\r//;
+					if (! $_) { error("Error: History file \"$historyfilename\" is corrupted (in section UNKNOWNREFERER). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
+					@field=split(/\s+/,$_); $countlines++;
+				}
+				if ($Debug) { debug(" End of UNKNOWNREFERER section ($count entries, $countloaded loaded)"); }
+				delete $SectionsToLoad{"unknowreferer"};
+				if ($SectionsToSave{"unknownreferer"}) {
+					Save_History("unknownreferer",$year,$month); delete $SectionsToSave{"unknownreferer"};
+					if ($withpurge) { %_unknownreferer_l=(); }
+				}
+				if (! scalar %SectionsToLoad) { debug(" Stop reading history file. Got all we need."); last; }
+				next;
+			}
+			# BEGIN_UNKNOWNREFERERBROWSER
+			if ($field[0] eq "BEGIN_UNKNOWNREFERERBROWSER")   {
+				if ($Debug) { debug(" Begin of UNKNOWNREFERERBROWSER section"); }
+				$_=<HISTORY>;
+				chomp $_; s/\r//;
+				if (! $_) { error("Error: History file \"$historyfilename\" is corrupted (in section UNKNOWNREFERERBROWSER). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
+				my @field=split(/\s+/,$_); $countlines++;
+				my $count=0;my $countloaded=0;
+				while ($field[0] ne "END_UNKNOWNREFERERBROWSER") {
+					if ($field[0]) {
+						$count++;
+						if ($SectionsToLoad{"unknownrefererbrowser"}) {
+							$countloaded++;
+							if (! $_unknownrefererbrowser_l{$field[0]}) { $_unknownrefererbrowser_l{$field[0]}=int($field[1]); }
+						}
+					}
+					$_=<HISTORY>;
+					chomp $_; s/\r//;
+					if (! $_) { error("Error: History file \"$historyfilename\" is corrupted (in section UNKNOWNREFERERBROWSER). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
+					@field=split(/\s+/,$_); $countlines++;
+				}
+				if ($Debug) { debug(" End of UNKNOWNREFERERBROWSER section ($count entries, $countloaded loaded)"); }
+				delete $SectionsToLoad{"unknownrefererbrowser"};
+				if ($SectionsToSave{"unknownrefererbrowser"}) {
+					Save_History("unknownrefererbrowser",$year,$month); delete $SectionsToSave{"unknownrefererbrowser"};
+					if ($withpurge) { %_unknownrefererbrowser_l=(); }
+				}
+				if (! scalar %SectionsToLoad) { debug(" Stop reading history file. Got all we need."); last; }
+				next;
+			}
+			# BEGIN_ROBOT
+			if ($field[0] eq "BEGIN_ROBOT")   {
+				if ($Debug) { debug(" Begin of ROBOT section"); }
+				$_=<HISTORY>;
+				chomp $_; s/\r//;
+				if (! $_) { error("Error: History file \"$historyfilename\" is corrupted (in section ROBOT). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
+				my @field=split(/\s+/,$_); $countlines++;
+				my $count=0;my $countloaded=0;
+				while ($field[0] ne "END_ROBOT") {
+					if ($field[0]) {
+						$count++;
+						if ($SectionsToLoad{"robot"}) {
+							$countloaded++;
+							if ($field[1]) { $_robot_h{$field[0]}+=$field[1]; }
+							if (! $_robot_l{$field[0]}) { $_robot_l{$field[0]}=int($field[2]); }
+						}
+					}
+					$_=<HISTORY>;
+					chomp $_; s/\r//;
+					if (! $_) { error("Error: History file \"$historyfilename\" is corrupted (in section ROBOT). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
+					@field=split(/\s+/,$_); $countlines++;
+				}
+				if ($Debug) { debug(" End of ROBOT section ($count entries, $countloaded loaded)"); }
+				delete $SectionsToLoad{"robot"};
+				if ($SectionsToSave{"robot"}) {
+					Save_History("robot",$year,$month); delete $SectionsToSave{"robot"};
+					if ($withpurge) { %_robot_h=(); %_robot_l=(); }
+				}
+				if (! scalar %SectionsToLoad) { debug(" Stop reading history file. Got all we need."); last; }
+				next;
+			}
+			# BEGIN_SIDER
+			if ($field[0] eq "BEGIN_SIDER")  {
+				if ($Debug) { debug(" Begin of SIDER section"); }
+				$_=<HISTORY>;
+				chomp $_; s/\r//;
+				if (! $_) { error("Error: History file \"$historyfilename\" is corrupted (in section SIDER). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
+				my @field=split(/\s+/,$_); $countlines++;
+				my $count=0;my $countloaded=0;
+				while ($field[0] ne "END_SIDER") {
+					if ($field[0]) {
+						$count++;
+						if ($SectionsToLoad{"sider"}) {
+							# Data required:
+							# update 				need to load all pages - TotalDiffetentPages could be counted but is not
+							# noupdate+
+							#  main page for year	need to load all pages - TotalDiffetentPages could be counted but is not
+							#  main page for month	need to load MaxNbOfPageShown pages and >= MinHitFile - TotalDiffetentPages can be counted and is
+							#  urldetail for year	need to load all pages with filter ok - TotalDiffetentPages could be counted if no filter but is not
+							#  urldetail for month	need to load all pages with filter ok and >= MinHitFile - TotalDiffetentPages can be counted and is
+							my $loadrecord=0;
+							if ($UpdateStats) {
+								$loadrecord=1;
+							}
+							else {
+								if ($HTMLOutput eq "main") {
+									if ($MonthRequired eq "year") { $loadrecord=1; }
+									else {
+										if ($countloaded < $MaxNbOfPageShown && $field[1] >= $MinHitFile) { $loadrecord=1; }
+										$TotalDifferentPages++;
+									}
+								}
+								elsif ($HTMLOutput eq "urldetail") {
+									if ($MonthRequired eq "year" ) {
+										if (!$URLFilter || $field[0] =~ /$URLFilter/) { $loadrecord=1; }
+									}
+									else {
+										if ((!$URLFilter || $field[0] =~ /$URLFilter/) && $field[1] >= $MinHitFile) { $loadrecord=1; }
+										$TotalDifferentPages++;
+									}
+								}
+								# Posssibilite de mettre if ($URLFilter && $field[0] =~ /$URLFilter/) mais il faut gerer TotalPages de la meme maniere
+								if ($versionnum < 4000) {	# For old history files
+									$TotalEntries+=($field[2]||0);
+								}
+								else {
+									$TotalBytesPages+=($field[2]||0);
+									$TotalEntries+=($field[3]||0);
+									$TotalExits+=($field[4]||0);
+								}
+							}
+							if ($loadrecord) {
+								if ($field[1]) { $_url_p{$field[0]}+=$field[1]; }
+								if ($versionnum < 4000) {	# For old history files
+									if ($field[2]) { $_url_e{$field[0]}+=$field[2]; }
+									$_url_k{$field[0]}=0;
+								}
+								else {
+									if ($field[2]) { $_url_k{$field[0]}+=$field[2]; }
+									if ($field[3]) { $_url_e{$field[0]}+=$field[3]; }
+									if ($field[4]) { $_url_x{$field[0]}+=$field[4]; }
+								}
+								$countloaded++;
+							}
+						}
+					}
+					$_=<HISTORY>;
+					chomp $_; s/\r//;
+					if (! $_) { error("Error: History file \"$historyfilename\" is corrupted (in section SIDER). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
+					@field=split(/\s+/,$_); $countlines++;
+				}
+				if ($Debug) { debug(" End of SIDER section ($count entries, $countloaded loaded)"); }
+				delete $SectionsToLoad{"sider"};
+				#if ($SectionsToSave{"sider"}) {
+				#	Save_History("sider",$year,$month); delete $SectionsToSave{"sider"};
+				#	if ($withpurge) { %_url_p=(); %_url_k=(); %_url_e=(); %_url_x=(); }
+				#}
+				if (! scalar %SectionsToLoad) { debug(" Stop reading history file. Got all we need."); last; }
+				next;
+			}
+			# BEGIN_FILETYPES
+			if ($field[0] eq "BEGIN_FILETYPES")   {
+				if ($Debug) { debug(" Begin of FILETYPES section"); }
+				$_=<HISTORY>;
+				chomp $_; s/\r//;
+				if (! $_) { error("Error: History file \"$historyfilename\" is corrupted (in section FILETYPES). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
+				my @field=split(/\s+/,$_); $countlines++;
+				my $count=0;my $countloaded=0;
+				while ($field[0] ne "END_FILETYPES") {
+					if ($field[0]) {
+						$count++;
+						if ($SectionsToLoad{"filetypes"}) {
+							$countloaded++;
+							if ($field[1]) { $_filetypes_h{$field[0]}+=$field[1]; }
+							if ($field[2]) { $_filetypes_k{$field[0]}+=$field[2]; }
+							if ($field[3]) { $_filetypes_gz_in{$field[0]}+=$field[3]; }
+							if ($field[4]) { $_filetypes_gz_out{$field[0]}+=$field[4]; }
+						}
+					}
+					$_=<HISTORY>;
+					chomp $_; s/\r//;
+					if (! $_) { error("Error: History file \"$historyfilename\" is corrupted (in section FILETYPES). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
+					@field=split(/\s+/,$_); $countlines++;
+				}
+				if ($Debug) { debug(" End of FILETYPES section ($count entries, $countloaded loaded)"); }
+				delete $SectionsToLoad{"filetypes"};
+				if ($SectionsToSave{"filetypes"}) {
+					Save_History("filetypes",$year,$month); delete $SectionsToSave{"filetypes"};
+					if ($withpurge) { %_filetypes_h=(); %_filetypes_k=(); %_filetypes_gz_in=(); %_filetypes_gz_out=(); }
+				}
+				if (! scalar %SectionsToLoad) { debug(" Stop reading history file. Got all we need."); last; }
+				next;
+			}
+			# BEGIN_SEREFERRALS
+			if ($field[0] eq "BEGIN_SEREFERRALS")   {
+				if ($Debug) { debug(" Begin of SEREFERRALS section"); }
+				$_=<HISTORY>;
+				chomp $_; s/\r//;
+				if (! $_) { error("Error: History file \"$historyfilename\" is corrupted (in section SEREFERRALS). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
+				my @field=split(/\s+/,$_); $countlines++;
+				my $count=0;my $countloaded=0;
+				while ($field[0] ne "END_SEREFERRALS") {
+					if ($field[0]) {
+						$count++;
+						if ($SectionsToLoad{"sereferrals"}) {
+							$countloaded++;
+							if ($field[1]) { $_se_referrals_h{$field[0]}+=$field[1]; }
+						}
+					}
+					$_=<HISTORY>;
+					chomp $_; s/\r//;
+					if (! $_) { error("Error: History file \"$historyfilename\" is corrupted (in section SEREFERRALS). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
+					@field=split(/\s+/,$_); $countlines++;
+				}
+				if ($Debug) { debug(" End of SEREFERRALS section ($count entries, $countloaded loaded)"); }
+				delete $SectionsToLoad{"sereferrals"};
+				if ($SectionsToSave{"sereferrals"}) {
+					Save_History("sereferrals",$year,$month); delete $SectionsToSave{"sereferrals"};
+					if ($withpurge) { %_se_referrals_h=(); }
+				}
+				if (! scalar %SectionsToLoad) { debug(" Stop reading history file. Got all we need."); last; }
+				next;
+			}
+			# BEGIN_PAGEREFS
+			if ($field[0] eq "BEGIN_PAGEREFS")   {
+				if ($Debug) { debug(" Begin of PAGEREFS section"); }
+				$_=<HISTORY>;
+				chomp $_; s/\r//;
+				if (! $_) { error("Error: History file \"$historyfilename\" is corrupted (in section PAGEREFS). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
+				my @field=split(/\s+/,$_); $countlines++;
+				my $count=0;my $countloaded=0;
+				while ($field[0] ne "END_PAGEREFS") {
+					if ($field[0]) {
+						$count++;
+						if ($SectionsToLoad{"pagerefs"}) {
+							$countloaded++;
+							if ($field[1]) { $_pagesrefs_h{$field[0]}+=int($field[1]); }
+						}
+					}
+					$_=<HISTORY>;
+					chomp $_; s/\r//;
+					if (! $_) { error("Error: History file \"$historyfilename\" is corrupted (in section PAGEREFS). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
+					@field=split(/\s+/,$_); $countlines++;
+				}
+				if ($Debug) { debug(" End of PAGEREFS section ($count entries, $countloaded loaded)"); }
+				delete $SectionsToLoad{"pagerefs"};
+				if ($SectionsToSave{"pagerefs"}) {
+					Save_History("pagerefs",$year,$month); delete $SectionsToSave{"pagerefs"};
+					if ($withpurge) { %_pagesrefs_h=(); }
+				}
+				if (! scalar %SectionsToLoad) { debug(" Stop reading history file. Got all we need."); last; }
+				next;
+			}
+			# BEGIN_SEARCHWORDS
+			if ($field[0] eq "BEGIN_SEARCHWORDS")   {
+				if ($Debug) { debug(" Begin of SEARCHWORDS section ($MaxNbOfKeyphrasesShown,$MinHitKeyphrase)"); }
 				$_=<HISTORY>;
 				chomp $_; s/\r//;
 				if (! $_) { error("Error: History file \"$historyfilename\" is corrupted (in section SEARCHWORDS). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
-				@field=split(/\s+/,$_); $countlines++;
-			}
-			if ($Debug) { debug(" End of SEARCHWORDS section ($count entries, $countloaded loaded)"); }
-			delete $SectionsToLoad{"searchwords"};
-			if (! scalar %SectionsToLoad) { debug(" Stop reading config file. Got all we need."); last; }
-			next;
-		}
-		# BEGIN_KEYWORDS
-		if ($field[0] eq "BEGIN_KEYWORDS")   {
-			if ($Debug) { debug(" Begin of KEYWORDS section ($MaxNbOfKeywordsShown,$MinHitKeyword)"); }
-			$_=<HISTORY>;
-			chomp $_; s/\r//;
-			if (! $_) { error("Error: History file \"$historyfilename\" is corrupted (in section KEYWORDS). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
-			my @field=split(/\s+/,$_); $countlines++;
-			my $count=0;my $countloaded=0;
-			while ($field[0] ne "END_KEYWORDS") {
-				if ($field[0]) {
-					$count++;
-					if ($SectionsToLoad{"keywords"}) {
-						my $loadrecord=0;
-						if ($MonthRequired eq "year") { $loadrecord=1; }
-						else {
-							if ($countloaded < $MaxNbOfKeywordsShown && $field[1] >= $MinHitKeyword) { $loadrecord=1; }
-							$TotalDifferentKeywords++;
-							$TotalKeywords+=($field[1]||0);
-						}
-						if ($loadrecord) {
-							if ($field[1]) { $_keywords{$field[0]}+=$field[1]; }
-							$countloaded++;
+				my @field=split(/\s+/,$_); $countlines++;
+				my $count=0;my $countloaded=0;
+				while ($field[0] ne "END_SEARCHWORDS") {
+					if ($field[0]) {
+						$count++;
+						if ($SectionsToLoad{"searchwords"}) {
+							my $loadrecord=0;
+							if ($UpdateStats) {
+								$loadrecord=1;
+							}
+							else {
+								if ($HTMLOutput eq "main") {
+									if ($MonthRequired eq "year") { $loadrecord=1; }
+									else {
+										if ($countloaded < $MaxNbOfKeyphrasesShown && $field[1] >= $MinHitKeyphrase) { $loadrecord=1; }
+										$TotalDifferentKeyphrases++;
+										$TotalKeyphrases+=($field[1]||0);
+									}
+								}
+								elsif ($HTMLOutput eq "keyphrases") {	# Load keyphrases for keyphrases chart
+									if ($MonthRequired eq "year" ) { $loadrecord=1; }
+									else {
+										if ($field[1] >= $MinHitKeyphrase) { $loadrecord=1; }
+										$TotalDifferentKeyphrases++;
+										$TotalKeyphrases+=($field[1]||0);
+									}
+								}
+								if ($HTMLOutput eq "keywords") {	# Load keyphrases for keywords chart
+									$loadrecord=2;
+								}
+							}
+							if ($loadrecord) {
+								if ($field[1]) {
+									if ($loadrecord==2) {
+										foreach my $word (split(/\+/,$field[0])) {
+											$_keywords{$word}+=$field[1];
+										}
+									}
+									else {
+										$_keyphrases{$field[0]}+=$field[1];
+									}
+								}
+								$countloaded++;
+							}
 						}
 					}
+					$_=<HISTORY>;
+					chomp $_; s/\r//;
+					if (! $_) { error("Error: History file \"$historyfilename\" is corrupted (in section SEARCHWORDS). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
+					@field=split(/\s+/,$_); $countlines++;
 				}
+				if ($Debug) { debug(" End of SEARCHWORDS section ($count entries, $countloaded loaded)"); }
+				delete $SectionsToLoad{"searchwords"};
+				if ($SectionsToSave{"searchwords"}) {
+					Save_History("searchwords",$year,$month); delete $SectionsToSave{"searchwords"};
+					if ($withpurge) { %_keywords=(); %_keyphrases=(); }
+				}
+				if (! scalar %SectionsToLoad) { debug(" Stop reading history file. Got all we need."); last; }
+				next;
+			}
+			# BEGIN_KEYWORDS
+			if ($field[0] eq "BEGIN_KEYWORDS")   {
+				if ($Debug) { debug(" Begin of KEYWORDS section ($MaxNbOfKeywordsShown,$MinHitKeyword)"); }
 				$_=<HISTORY>;
 				chomp $_; s/\r//;
 				if (! $_) { error("Error: History file \"$historyfilename\" is corrupted (in section KEYWORDS). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
-				@field=split(/\s+/,$_); $countlines++;
-			}
-			if ($Debug) { debug(" End of KEYWORDS section ($count entries, $countloaded loaded)"); }
-			delete $SectionsToLoad{"keywords"};
-			if (! scalar %SectionsToLoad) { debug(" Stop reading config file. Got all we need."); last; }
-			next;
-		}
-		# BEGIN_ERRORS
-		if ($field[0] eq "BEGIN_ERRORS")   {
-			if ($Debug) { debug(" Begin of ERRORS section"); }
-			$_=<HISTORY>;
-			chomp $_; s/\r//;
-			if (! $_) { error("Error: History file \"$historyfilename\" is corrupted (in section ERRORS). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
-			my @field=split(/\s+/,$_); $countlines++;
-			my $count=0;my $countloaded=0;
-			while ($field[0] ne "END_ERRORS") {
-				if ($field[0]) {
-					$count++;
-					if ($SectionsToLoad{"errors"}) {
-						$countloaded++;
-						if ($field[1]) { $_errors_h{$field[0]}+=$field[1]; }
+				my @field=split(/\s+/,$_); $countlines++;
+				my $count=0;my $countloaded=0;
+				while ($field[0] ne "END_KEYWORDS") {
+					if ($field[0]) {
+						$count++;
+						if ($SectionsToLoad{"keywords"}) {
+							my $loadrecord=0;
+							if ($MonthRequired eq "year") { $loadrecord=1; }
+							else {
+								if ($countloaded < $MaxNbOfKeywordsShown && $field[1] >= $MinHitKeyword) { $loadrecord=1; }
+								$TotalDifferentKeywords++;
+								$TotalKeywords+=($field[1]||0);
+							}
+							if ($loadrecord) {
+								if ($field[1]) { $_keywords{$field[0]}+=$field[1]; }
+								$countloaded++;
+							}
+						}
 					}
+					$_=<HISTORY>;
+					chomp $_; s/\r//;
+					if (! $_) { error("Error: History file \"$historyfilename\" is corrupted (in section KEYWORDS). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
+					@field=split(/\s+/,$_); $countlines++;
 				}
+				if ($Debug) { debug(" End of KEYWORDS section ($count entries, $countloaded loaded)"); }
+				delete $SectionsToLoad{"keywords"};
+				if ($SectionsToSave{"keywords"}) {
+					Save_History("keywords",$year,$month); delete $SectionsToSave{"keywords"};
+					if ($withpurge) { %_keywords=(); }
+				}
+				if (! scalar %SectionsToLoad) { debug(" Stop reading history file. Got all we need."); last; }
+				next;
+			}
+			# BEGIN_ERRORS
+			if ($field[0] eq "BEGIN_ERRORS")   {
+				if ($Debug) { debug(" Begin of ERRORS section"); }
 				$_=<HISTORY>;
 				chomp $_; s/\r//;
 				if (! $_) { error("Error: History file \"$historyfilename\" is corrupted (in section ERRORS). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
-				@field=split(/\s+/,$_); $countlines++;
-			}
-			if ($Debug) { debug(" End of ERRORS section ($count entries, $countloaded loaded)"); }
-			delete $SectionsToLoad{"errors"};
-			if (! scalar %SectionsToLoad) { debug(" Stop reading config file. Got all we need."); last; }
-			next;
-		}
-		# BEGIN_SIDER_404
-		if ($field[0] eq "BEGIN_SIDER_404")   {
-			if ($Debug) { debug(" Begin of SIDER_404 section"); }
-			$_=<HISTORY>;
-			chomp $_; s/\r//;
-			if (! $_) { error("Error: History file \"$historyfilename\" is corrupted (in section SIDER_404). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
-			my @field=split(/\s+/,$_); $countlines++;
-			my $count=0;my $countloaded=0;
-			while ($field[0] ne "END_SIDER_404") {
-				if ($field[0]) {
-					$count++;
-					if ($SectionsToLoad{"sider_404"}) {
-						$countloaded++;
-						if ($field[1]) { $_sider404_h{$field[0]}+=$field[1]; }
-						if ($UpdateStats || $HTMLOutput eq "errors404") {
-							if ($field[2]) { $_referer404_h{$field[0]}=$field[2]; }
+				my @field=split(/\s+/,$_); $countlines++;
+				my $count=0;my $countloaded=0;
+				while ($field[0] ne "END_ERRORS") {
+					if ($field[0]) {
+						$count++;
+						if ($SectionsToLoad{"errors"}) {
+							$countloaded++;
+							if ($field[1]) { $_errors_h{$field[0]}+=$field[1]; }
 						}
 					}
+					$_=<HISTORY>;
+					chomp $_; s/\r//;
+					if (! $_) { error("Error: History file \"$historyfilename\" is corrupted (in section ERRORS). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
+					@field=split(/\s+/,$_); $countlines++;
 				}
+				if ($Debug) { debug(" End of ERRORS section ($count entries, $countloaded loaded)"); }
+				delete $SectionsToLoad{"errors"};
+				if ($SectionsToSave{"errors"}) {
+					Save_History("errors",$year,$month); delete $SectionsToSave{"errors"};
+					if ($withpurge) { %_errors_h=(); }
+				}
+				if (! scalar %SectionsToLoad) { debug(" Stop reading history file. Got all we need."); last; }
+				next;
+			}
+			# BEGIN_SIDER_404
+			if ($field[0] eq "BEGIN_SIDER_404")   {
+				if ($Debug) { debug(" Begin of SIDER_404 section"); }
 				$_=<HISTORY>;
 				chomp $_; s/\r//;
 				if (! $_) { error("Error: History file \"$historyfilename\" is corrupted (in section SIDER_404). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
-				@field=split(/\s+/,$_); $countlines++;
+				my @field=split(/\s+/,$_); $countlines++;
+				my $count=0;my $countloaded=0;
+				while ($field[0] ne "END_SIDER_404") {
+					if ($field[0]) {
+						$count++;
+						if ($SectionsToLoad{"sider_404"}) {
+							$countloaded++;
+							if ($field[1]) { $_sider404_h{$field[0]}+=$field[1]; }
+							if ($UpdateStats || $HTMLOutput eq "errors404") {
+								if ($field[2]) { $_referer404_h{$field[0]}=$field[2]; }
+							}
+						}
+					}
+					$_=<HISTORY>;
+					chomp $_; s/\r//;
+					if (! $_) { error("Error: History file \"$historyfilename\" is corrupted (in section SIDER_404). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
+					@field=split(/\s+/,$_); $countlines++;
+				}
+				if ($Debug) { debug(" End of SIDER_404 section ($count entries, $countloaded loaded)"); }
+				delete $SectionsToLoad{"sider_404"};
+				if ($SectionsToSave{"sider_404"}) {
+					Save_History("sider_404",$year,$month); delete $SectionsToSave{"sider_404"};
+					if ($withpurge) { %_sider404_h=(); %_referer404_h=(); }
+				}
+				if (! scalar %SectionsToLoad) { debug(" Stop reading history file. Got all we need."); last; }
+				next;
 			}
-			if ($Debug) { debug(" End of SIDER_404 section ($count entries, $countloaded loaded)"); }
-			delete $SectionsToLoad{"sider_404"};
-			if (! scalar %SectionsToLoad) { debug(" Stop reading config file. Got all we need."); last; }
-			next;
 		}
 	}
-	close HISTORY || error("Command for pipe '$historyfilename' failed");
-	if (! $LastLine{$year.$month}) { $LastLine{$year.$month}=$LastTime{$year.$month}; }		# For backward compatibility, if LastLine does not exist
+
+	if ($withupdate) {
+
+		# Process rest of data saved in 'wait' arrays (data for hosts not in history file or no found history file)
+		if ($Debug) { debug(" Processing data in 'wait' arrays",3); }
+		foreach my $key (keys %_waithost_e) {
+	
+			$MonthUnique{$year.$month}++; 
+			if ($versionnum >= 5000) { $MonthVisits{$year.$month}++; }
+			
+			my $newtimehosts=($_waithost_s{$key}?$_waithost_s{$key}:$_host_s{$key});
+			my $newtimehostl=($_waithost_l{$key}?$_waithost_l{$key}:$_host_l{$key});
+	
+			if ($Debug) { debug("  Visit in 'wait' arrays is a new visit",3); }
+			$_host_v{$key}++;
+			$_url_e{$_waithost_e{$key}}++;
+			$newtimehosts =~ /^(\d\d\d\d\d\d\d\d)/; $DayVisits{$1}++;
+			if ($_waithost_s{$key}) {
+				# There was also a second session processed log
+				$_session{GetSessionRange($newtimehosts,$newtimehostl)}++;
+			}
+	
+			if ($key !~ /^\d+\.\d+\.\d+\.\d+$/) { $MonthHostsKnown{$year.$month}++; }
+			else { $MonthHostsUnknown{$year.$month}++; }
+		}
+
+	}
+
+	# Write all unwrote sections ('day','visitor','sider','session' and other...)
+	foreach my $key (sort { $SectionsToSave{$a} <=> $SectionsToSave{$b} } keys %SectionsToSave) {
+		Save_History("$key",$year,$month);
+	}
+	%SectionsToSave=();
+	# Purge loaded data for month
+	if ($withpurge) { &Init_HashArray($year,$month); }
+
+	# Close files
+	if ($withupdate) {
+		close(HISTORYTMP) || error("Failed to write temporary history file");
+	}
+	if ($withread) {
+		close HISTORY || error("Command for pipe '$historyfilename' failed");
+	}
+
+	# For backward compatibility, if LastLine does not exist
+	if (! $LastLine) { $LastLine=$LastTime{$year.$month}; }
 }
 
 #--------------------------------------------------------------------
-# Function:		Save History file for year month
-# Parameters:	year, month, [dateoflastlineknown]
-# Input:		$DirData $PROG $FileSuffix
+# Function:		Save a part of history file
+# Parameters:	part_to_save year month
+# Input:		None
 # Output:		None
 # Return:		None
 #--------------------------------------------------------------------
-sub Save_History_File {
-	my $year=sprintf("%04i",shift);
-	my $month=sprintf("%02i",shift);
-	my $dateoflastlineknown=shift||$LastLine{$year.$month};
+sub Save_History {
+	my $sectiontosave=shift||"";
+	my $year=shift||"";
+	my $month=shift||"";
 
-	if ($Debug) { debug("Call to Save_History_File [$year,$month,$dateoflastlineknown]"); }
-	open(HISTORYTMP,">$DirData/$PROG$month$year$FileSuffix.tmp.$$") || error("Error: Couldn't open file \"$DirData/$PROG$month$year$FileSuffix.tmp.$$\" : $!");	# Month before Year kept for backward compatibility
-
-	print HISTORYTMP "AWSTATS DATA FILE $VERSION\n";
-	print HISTORYTMP "# If you remove this file, all statistics for date $year-$month will be lost/reset.\n";
-
-	print HISTORYTMP "\n";
-	print HISTORYTMP "# LastLine    = Date of last record processed\n";
-	print HISTORYTMP "# FirstTime   = Date of first visit for history file\n";
-	print HISTORYTMP "# LastTime    = Date of last visit for history file\n";
-	print HISTORYTMP "# LastUpdate  = Date of last update - Nb of lines read - Nb of old records - Nb of new records - Nb of corrupted - Nb of dropped\n";
-	print HISTORYTMP "# TotalVisits = Number of visits\n";
-	print HISTORYTMP "BEGIN_GENERAL\n";
-	print HISTORYTMP "LastLine $LastLine{$year.$month}\n";
-	print HISTORYTMP "FirstTime $FirstTime{$year.$month}\n";
-	print HISTORYTMP "LastTime $LastTime{$year.$month}\n";
-	if (! $LastUpdate{$year.$month} || $LastUpdate{$year.$month} < int("$nowyear$nowmonth$nowday$nowhour$nowmin$nowsec")) { $LastUpdate{$year.$month}=int("$nowyear$nowmonth$nowday$nowhour$nowmin$nowsec"); }
-	print HISTORYTMP "LastUpdate $LastUpdate{$year.$month} $NbOfLinesRead $NbOfOldLines $NbOfNewLines $NbOfLinesCorrupted $NbOfLinesDropped\n";
-	print HISTORYTMP "TotalVisits $MonthVisits{$year.$month}\n";
-	print HISTORYTMP "END_GENERAL\n";
-
-	# When
-	print HISTORYTMP "\n";
-	print HISTORYTMP "# Date - Pages - Hits - Bandwith - Visits\n";
-	print HISTORYTMP "BEGIN_DAY\n";
-	foreach my $key (keys %DayHits) {
-		if ($key =~ /^$year$month/) {	# Found a day entry of the good month
-			my $page=$DayPages{$key}||0;
-			my $hits=$DayHits{$key}||0;
-			my $bytes=$DayBytes{$key}||0;
-			my $visits=$DayVisits{$key}||0;
-			my $unique=$DayUnique{$key}||"";
-			print HISTORYTMP "$key $page $hits $bytes $visits $unique\n";
-		}
-	}
-	print HISTORYTMP "END_DAY\n";
-	print HISTORYTMP "\n";
-	print HISTORYTMP "# Hour - Pages - Hits - Bandwith\n";
-	print HISTORYTMP "BEGIN_TIME\n";
-	for (my $ix=0; $ix<=23; $ix++) { print HISTORYTMP "$ix ".int($_time_p[$ix])." ".int($_time_h[$ix])." ".int($_time_k[$ix])."\n"; }
-	print HISTORYTMP "END_TIME\n";
-
-	# Who
-	print HISTORYTMP "\n";
-	print HISTORYTMP "# Domain - Pages - Hits - Bandwith\n";
-	print HISTORYTMP "BEGIN_DOMAIN\n";
-	foreach my $key (keys %_domener_h) {
-		my $page=$_domener_p{$key}||0;
-		my $bytes=$_domener_k{$key}||0;		# ||0 could be commented to reduce history file size
-		print HISTORYTMP "$key $page $_domener_h{$key} $bytes\n";
-	}
-	print HISTORYTMP "END_DOMAIN\n";
-	print HISTORYTMP "\n";
-	print HISTORYTMP "# Host - Pages - Hits - Bandwith - Last visit date - [Start of last visit date] - [Last page of last visit]\n";
-	print HISTORYTMP "# [Start of last visit date] and [Last page of last visit] are saved only if session is not finished\n";
-	print HISTORYTMP "# The $MaxNbOfHostsShown first Hits must be first (order not required for others)\n";
-	print HISTORYTMP "BEGIN_VISITOR\n";
-	&BuildKeyList($MaxNbOfHostsShown,$MinHitHost,\%_host_h,\%_host_p);
+	if ($Debug) { debug(" Save_History (sectiontosave=$sectiontosave year=$year month=$month)",3); }
 	my %keysinkeylist=();
-	foreach my $key (@keylist) {
-		$keysinkeylist{$key}=1;
-		my $page=$_host_p{$key}||0;
-		my $bytes=$_host_k{$key}||0;
-		if ($_host_l{$key} && $_host_s{$key} && $_host_u{$key}) {
-			if (($_host_l{$key}+$VisitTimeOut) < $dateoflastlineknown) {
-				# Session for this user is expired
-				$_url_x{$_host_u{$key}}++;
-				$_session{SessionLastToSessionRange($_host_l{$key},$_host_s{$key})}++;
-				delete $_host_s{$key};
-				delete $_host_u{$key};
-				print HISTORYTMP "$key $page $_host_h{$key} $bytes $_host_l{$key}\n";
-			}
-			else {
-				# If this user has started a new session that is not expired
-				print HISTORYTMP "$key $page $_host_h{$key} $bytes $_host_l{$key} $_host_s{$key} $_host_u{$key}\n";
-			}
-		}
-		else {
-			print HISTORYTMP "$key $page $_host_h{$key} $bytes $_host_l{$key}\n";
-		}
-	}
-	foreach my $key (keys %_host_h) {
-		if ($keysinkeylist{$key}) { next; }
-		my $page=$_host_p{$key}||0;
-		my $bytes=$_host_k{$key}||0;
-		if ($_host_l{$key} && $_host_s{$key} && $_host_u{$key}) {
-			if (($_host_l{$key}+$VisitTimeOut) < $dateoflastlineknown) {
-				# Session for this user is expired
-				$_url_x{$_host_u{$key}}++;
-				$_session{SessionLastToSessionRange($_host_l{$key},$_host_s{$key})}++;
-				delete $_host_s{$key};
-				delete $_host_u{$key};
-				print HISTORYTMP "$key $page $_host_h{$key} $bytes $_host_l{$key}\n";
-			}
-			else {
-				# If this user has started a new session that is not expired
-				print HISTORYTMP "$key $page $_host_h{$key} $bytes $_host_l{$key} $_host_s{$key} $_host_u{$key}\n";
-			}
-		}
-		else {
-			my $hostl=$_host_l{$key}||"";
-			print HISTORYTMP "$key $page $_host_h{$key} $bytes $hostl\n";
-		}
-	}
-	print HISTORYTMP "END_VISITOR\n";
-	print HISTORYTMP "\n";
-	print HISTORYTMP "# Session range - Number of visits\n";
-	print HISTORYTMP "BEGIN_SESSION\n";
-	foreach my $key (keys %_session) { print HISTORYTMP "$key ".int($_session{$key})."\n"; }
-	print HISTORYTMP "END_SESSION\n";
-	print HISTORYTMP "\n";
-	print HISTORYTMP "# Login - Pages - Hits - Bandwith\n";
-	print HISTORYTMP "BEGIN_LOGIN\n";
-	foreach my $key (keys %_login_h) { print HISTORYTMP "$key ".int($_login_p{$key})." ".int($_login_h{$key})." ".int($_login_k{$key})." $_login_l{$key}\n"; }
-	print HISTORYTMP "END_LOGIN\n";
-	print HISTORYTMP "\n";
-	print HISTORYTMP "# Robot ID - Hits - Last visit\n";
-	print HISTORYTMP "BEGIN_ROBOT\n";
-	foreach my $key (keys %_robot_h) { print HISTORYTMP "$key ".int($_robot_h{$key})." $_robot_l{$key}\n"; }
-	print HISTORYTMP "END_ROBOT\n";
 
+	if ($sectiontosave eq "general") {
+		print HISTORYTMP "\n";
+		print HISTORYTMP "# LastLine    = Date of last record processed\n";
+		print HISTORYTMP "# FirstTime   = Date of first visit for history file\n";
+		print HISTORYTMP "# LastTime    = Date of last visit for history file\n";
+		print HISTORYTMP "# LastUpdate  = Date of last update - Nb of lines read - Nb of old records - Nb of new records - Nb of corrupted - Nb of dropped\n";
+		#print HISTORYTMP "# TotalVisits = Number of visits\n";
+		print HISTORYTMP "BEGIN_GENERAL\n";
+		print HISTORYTMP "LastLine $LastLine\n";
+		print HISTORYTMP "FirstTime $FirstTime{$year.$month}\n";
+		print HISTORYTMP "LastTime $LastTime{$year.$month}\n";
+		if ($LastUpdate < int("$nowyear$nowmonth$nowday$nowhour$nowmin$nowsec")) { $LastUpdate=int("$nowyear$nowmonth$nowday$nowhour$nowmin$nowsec"); }
+		print HISTORYTMP "LastUpdate $LastUpdate $NbOfLinesRead $NbOfOldLines $NbOfNewLines $NbOfLinesCorrupted $NbOfLinesDropped\n";
+		print HISTORYTMP "END_GENERAL\n";
+	}
+	
+	# When
+	if ($sectiontosave eq "day") {
+		print HISTORYTMP "\n";
+		print HISTORYTMP "# Date - Pages - Hits - Bandwith - Visits\n";
+		print HISTORYTMP "BEGIN_DAY\n";
+		foreach my $key (keys %DayHits) {
+			if ($key =~ /^$year$month/) {	# Found a day entry of the good month
+				my $page=$DayPages{$key}||0;
+				my $hits=$DayHits{$key}||0;
+				my $bytes=$DayBytes{$key}||0;
+				my $visits=$DayVisits{$key}||0;
+				my $unique=$DayUnique{$key}||"";
+				print HISTORYTMP "$key $page $hits $bytes $visits $unique\n";
+			}
+		}
+		print HISTORYTMP "END_DAY\n";
+	}
+	if ($sectiontosave eq "time") {
+		print HISTORYTMP "\n";
+		print HISTORYTMP "# Hour - Pages - Hits - Bandwith\n";
+		print HISTORYTMP "BEGIN_TIME\n";
+		for (my $ix=0; $ix<=23; $ix++) { print HISTORYTMP "$ix ".int($_time_p[$ix])." ".int($_time_h[$ix])." ".int($_time_k[$ix])."\n"; }
+		print HISTORYTMP "END_TIME\n";
+	}
+	
+	# Who
+	if ($sectiontosave eq "domain") {
+		print HISTORYTMP "\n";
+		print HISTORYTMP "# Domain - Pages - Hits - Bandwith\n";
+		print HISTORYTMP "BEGIN_DOMAIN\n";
+		foreach my $key (keys %_domener_h) {
+			my $page=$_domener_p{$key}||0;
+			my $bytes=$_domener_k{$key}||0;		# ||0 could be commented to reduce history file size
+			print HISTORYTMP "$key $page $_domener_h{$key} $bytes\n";
+		}
+		print HISTORYTMP "END_DOMAIN\n";
+	}
+	if ($sectiontosave eq "visitor") {
+		print HISTORYTMP "\n";
+		print HISTORYTMP "# Host - Pages - Hits - Bandwith - Visits - Last visit date - [Start of last visit date] - [Last page of last visit]\n";
+		print HISTORYTMP "# [Start of last visit date] and [Last page of last visit] are saved only if session is not finished\n";
+		print HISTORYTMP "# The $MaxNbOfHostsShown first Hits must be first (order not required for others)\n";
+		print HISTORYTMP "BEGIN_VISITOR\n";
+		&BuildKeyList($MaxNbOfHostsShown,$MinHitHost,\%_host_h,\%_host_p);
+		my %keysinkeylist=();
+		foreach my $key (@keylist) {
+			$keysinkeylist{$key}=1;
+			my $page=$_host_p{$key}||0;
+			my $bytes=$_host_k{$key}||0;
+			my $timehostl=$_host_l{$key}||0;
+			my $visits=$_host_v{$key}||0;
+			my $timehosts=$_host_s{$key}||0;
+			my $lastpage=$_host_u{$key}||"";
+			if ($timehostl && $timehosts && $lastpage) {
+				if (($timehostl+$VisitTimeOut) < $LastLine) {
+					# Session for this user is expired
+					if ($timehosts) { $_session{GetSessionRange($timehosts,$timehostl)}++; }
+					if ($lastpage) { $_url_x{$lastpage}++; }
+					delete $_host_s{$key};
+					delete $_host_u{$key};
+					print HISTORYTMP "$key $page $_host_h{$key} $bytes $visits $timehostl\n";
+				}
+				else {
+					# If this user has started a new session that is not expired
+					print HISTORYTMP "$key $page $_host_h{$key} $bytes $visits $timehostl $timehosts $lastpage\n";
+				}
+			}
+			else {
+				my $hostl=$timehostl||"";
+				print HISTORYTMP "$key $page $_host_h{$key} $bytes $visits $hostl\n";
+			}
+		}
+		foreach my $key (keys %_host_h) {
+			if ($keysinkeylist{$key}) { next; }
+			my $page=$_host_p{$key}||0;
+			my $bytes=$_host_k{$key}||0;
+			my $timehostl=$_host_l{$key}||0;
+			my $visits=$_host_v{$key}||0;
+			my $timehosts=$_host_s{$key}||0;
+			my $lastpage=$_host_u{$key}||"";
+			if ($timehostl && $timehosts && $lastpage) {
+				if (($timehostl+$VisitTimeOut) < $LastLine) {
+					# Session for this user is expired
+					if ($timehosts) { $_session{GetSessionRange($timehosts,$timehostl)}++; }
+					if ($lastpage) { $_url_x{$lastpage}++; }
+					delete $_host_s{$key};
+					delete $_host_u{$key};
+					print HISTORYTMP "$key $page $_host_h{$key} $bytes $visits $timehostl\n";
+				}
+				else {
+					# If this user has started a new session that is not expired
+					print HISTORYTMP "$key $page $_host_h{$key} $bytes $visits $timehostl $timehosts $lastpage\n";
+				}
+			}
+			else {
+				my $hostl=$timehostl||"";
+				print HISTORYTMP "$key $page $_host_h{$key} $bytes $visits $hostl\n";
+			}
+		}
+		print HISTORYTMP "END_VISITOR\n";
+	}
+	if ($sectiontosave eq "session") {
+		print HISTORYTMP "\n";
+		print HISTORYTMP "# Session range - Number of visits\n";
+		print HISTORYTMP "BEGIN_SESSION\n";
+		foreach my $key (keys %_session) { print HISTORYTMP "$key ".int($_session{$key})."\n"; }
+		print HISTORYTMP "END_SESSION\n";
+	}
+	if ($sectiontosave eq "login") {
+		print HISTORYTMP "\n";
+		print HISTORYTMP "# Login - Pages - Hits - Bandwith\n";
+		print HISTORYTMP "BEGIN_LOGIN\n";
+		foreach my $key (keys %_login_h) { print HISTORYTMP "$key ".int($_login_p{$key})." ".int($_login_h{$key})." ".int($_login_k{$key})." $_login_l{$key}\n"; }
+		print HISTORYTMP "END_LOGIN\n";
+	}
+	if ($sectiontosave eq "robot") {
+		print HISTORYTMP "\n";
+		print HISTORYTMP "# Robot ID - Hits - Last visit\n";
+		print HISTORYTMP "BEGIN_ROBOT\n";
+		foreach my $key (keys %_robot_h) { print HISTORYTMP "$key ".int($_robot_h{$key})." $_robot_l{$key}\n"; }
+		print HISTORYTMP "END_ROBOT\n";
+	}
+	
 	# Navigation
 	# We save page list in score sorted order to get a -output faster and with less use of memory.
 	# This section must be saved after VISITOR section
-	print HISTORYTMP "\n";
-	print HISTORYTMP "# URL - Pages - Hits - Bandwith - Bandwith without compression - Bandwith after compression\n";
-	print HISTORYTMP "# The $MaxNbOfPageShown first Pages must be first (order not required for others)\n";
-	print HISTORYTMP "BEGIN_SIDER\n";
-	&BuildKeyList($MaxNbOfPageShown,$MinHitFile,\%_url_p,\%_url_p);
-	%keysinkeylist=();
-	foreach my $key (@keylist) {
-		$keysinkeylist{$key}=1;
-		my $newkey=$key;
-		$newkey =~ s/([^:])\/\//$1\//g;		# Because some targeted url were taped with 2 / (Ex: //rep//file.htm). We must keep http://rep/file.htm
-		print HISTORYTMP "$newkey ".int($_url_p{$key}||0)." ".int($_url_k{$key}||0)." ".int($_url_e{$key}||0)." ".int($_url_x{$key}||0)."\n";
+	if ($sectiontosave eq "sider") {
+		print HISTORYTMP "\n";
+		print HISTORYTMP "# URL - Pages - Bandwith - Entry - Exit\n";
+		print HISTORYTMP "# The $MaxNbOfPageShown first Pages must be first (order not required for others)\n";
+		print HISTORYTMP "BEGIN_SIDER\n";
+		&BuildKeyList($MaxNbOfPageShown,$MinHitFile,\%_url_p,\%_url_p);
+		%keysinkeylist=();
+		foreach my $key (@keylist) {
+			$keysinkeylist{$key}=1;
+			my $newkey=$key;
+			$newkey =~ s/([^:])\/\//$1\//g;		# Because some targeted url were taped with 2 / (Ex: //rep//file.htm). We must keep http://rep/file.htm
+			print HISTORYTMP "$newkey ".int($_url_p{$key}||0)." ".int($_url_k{$key}||0)." ".int($_url_e{$key}||0)." ".int($_url_x{$key}||0)."\n";
+		}
+		foreach my $key (keys %_url_p) {
+			if ($keysinkeylist{$key}) { next; }
+			my $newkey=$key;
+			$newkey =~ s/([^:])\/\//$1\//g;		# Because some targeted url were taped with 2 / (Ex: //rep//file.htm). We must keep http://rep/file.htm
+			print HISTORYTMP "$newkey ".int($_url_p{$key}||0)." ".int($_url_k{$key}||0)." ".int($_url_e{$key}||0)." ".int($_url_x{$key}||0)."\n";
+		}
+		print HISTORYTMP "END_SIDER\n";
 	}
-	foreach my $key (keys %_url_p) {
-		if ($keysinkeylist{$key}) { next; }
-		my $newkey=$key;
-		$newkey =~ s/([^:])\/\//$1\//g;		# Because some targeted url were taped with 2 / (Ex: //rep//file.htm). We must keep http://rep/file.htm
-		print HISTORYTMP "$newkey ".int($_url_p{$key}||0)." ".int($_url_k{$key}||0)." ".int($_url_e{$key}||0)." ".int($_url_x{$key}||0)."\n";
+	if ($sectiontosave eq "filetypes") {
+		print HISTORYTMP "\n";
+		print HISTORYTMP "# Files type - Hits - Bandwith - Bandwith without compression - Bandwith after compression\n";
+		print HISTORYTMP "BEGIN_FILETYPES\n";
+		foreach my $key (keys %_filetypes_h) {
+			my $hits=$_filetypes_h{$key}||0;
+			my $bytes=$_filetypes_k{$key}||0;
+			my $bytesbefore=$_filetypes_gz_in{$key}||0;
+			my $bytesafter=$_filetypes_gz_out{$key}||0;
+			print HISTORYTMP "$key $hits $bytes $bytesbefore $bytesafter\n";
+		}
+		print HISTORYTMP "END_FILETYPES\n";
 	}
-	print HISTORYTMP "END_SIDER\n";
-	print HISTORYTMP "\n";
-	print HISTORYTMP "# Files type - Hits - Bandwith - Bandwith without compression - Bandwith after compression\n";
-	print HISTORYTMP "BEGIN_FILETYPES\n";
-	foreach my $key (keys %_filetypes_h) {
-		my $hits=$_filetypes_h{$key}||0;
-		my $bytes=$_filetypes_k{$key}||0;
-		my $bytesbefore=$_filetypes_gz_in{$key}||0;
-		my $bytesafter=$_filetypes_gz_out{$key}||0;
-		print HISTORYTMP "$key $hits $bytes $bytesbefore $bytesafter\n";
+	if ($sectiontosave eq "browser") {
+		print HISTORYTMP "\n";
+		print HISTORYTMP "# Browser ID - Hits\n";
+		print HISTORYTMP "BEGIN_BROWSER\n";
+		foreach my $key (keys %_browser_h) { print HISTORYTMP "$key $_browser_h{$key}\n"; }
+		print HISTORYTMP "END_BROWSER\n";
 	}
-	print HISTORYTMP "END_FILETYPES\n";
-	print HISTORYTMP "\n";
-	print HISTORYTMP "# Browser ID - Hits\n";
-	print HISTORYTMP "BEGIN_BROWSER\n";
-	foreach my $key (keys %_browser_h) { print HISTORYTMP "$key $_browser_h{$key}\n"; }
-	print HISTORYTMP "END_BROWSER\n";
-	print HISTORYTMP "\n";
-	print HISTORYTMP "# IE Version - Hits\n";
-	print HISTORYTMP "BEGIN_NSVER\n";
-	for (my $i=1; $i<=$#_nsver_h; $i++) {
-		my $nb_h=$_nsver_h[$i]||"";
-		print HISTORYTMP "$i $nb_h\n";
+	if ($sectiontosave eq "nsver") {
+		print HISTORYTMP "\n";
+		print HISTORYTMP "# IE Version - Hits\n";
+		print HISTORYTMP "BEGIN_NSVER\n";
+		for (my $i=1; $i<=$#_nsver_h; $i++) {
+			my $nb_h=$_nsver_h[$i]||"";
+			print HISTORYTMP "$i $nb_h\n";
+		}
+		print HISTORYTMP "END_NSVER\n";
 	}
-	print HISTORYTMP "END_NSVER\n";
-	print HISTORYTMP "\n";
-	print HISTORYTMP "# Netscape Version - Hits\n";
-	print HISTORYTMP "BEGIN_MSIEVER\n";
-	for (my $i=1; $i<=$#_msiever_h; $i++) {
-		my $nb_h=$_msiever_h[$i]||"";
-		print HISTORYTMP "$i $nb_h\n";
+	if ($sectiontosave eq "msiever") {
+		print HISTORYTMP "\n";
+		print HISTORYTMP "# Netscape Version - Hits\n";
+		print HISTORYTMP "BEGIN_MSIEVER\n";
+		for (my $i=1; $i<=$#_msiever_h; $i++) {
+			my $nb_h=$_msiever_h[$i]||"";
+			print HISTORYTMP "$i $nb_h\n";
+		}
+		print HISTORYTMP "END_MSIEVER\n";
 	}
-	print HISTORYTMP "END_MSIEVER\n";
-	print HISTORYTMP "\n";
-	print HISTORYTMP "# OS ID - Hits\n";
-	print HISTORYTMP "BEGIN_OS\n";
-	foreach my $key (keys %_os_h) { print HISTORYTMP "$key $_os_h{$key}\n"; }
-	print HISTORYTMP "END_OS\n";
-
+	if ($sectiontosave eq "os") {
+		print HISTORYTMP "\n";
+		print HISTORYTMP "# OS ID - Hits\n";
+		print HISTORYTMP "BEGIN_OS\n";
+		foreach my $key (keys %_os_h) { print HISTORYTMP "$key $_os_h{$key}\n"; }
+		print HISTORYTMP "END_OS\n";
+	}
+	
 	# Referer
-	print HISTORYTMP "\n";
-	print HISTORYTMP "# Unknown referer OS - Last visit date\n";
-	print HISTORYTMP "BEGIN_UNKNOWNREFERER\n";
-	foreach my $key (keys %_unknownreferer_l) { print HISTORYTMP "$key $_unknownreferer_l{$key}\n"; }
-	print HISTORYTMP "END_UNKNOWNREFERER\n";
-	print HISTORYTMP "\n";
-	print HISTORYTMP "# Unknown referer Browser - Last visit date\n";
-	print HISTORYTMP "BEGIN_UNKNOWNREFERERBROWSER\n";
-	foreach my $key (keys %_unknownrefererbrowser_l) { print HISTORYTMP "$key $_unknownrefererbrowser_l{$key}\n"; }
-	print HISTORYTMP "END_UNKNOWNREFERERBROWSER\n";
-	print HISTORYTMP "\n";
-	print HISTORYTMP "# Origin - Pages - Hits \n";
-	print HISTORYTMP "BEGIN_ORIGIN\n";
-	print HISTORYTMP "From0 ".int($_from_p[0])." ".int($_from_h[0])."\n";
-	print HISTORYTMP "From1 ".int($_from_p[1])." ".int($_from_h[1])."\n";
-	print HISTORYTMP "From2 ".int($_from_p[2])." ".int($_from_h[2])."\n";
-	print HISTORYTMP "From3 ".int($_from_p[3])." ".int($_from_h[3])."\n";
-	print HISTORYTMP "From4 ".int($_from_p[4])." ".int($_from_h[4])."\n";		# Same site
-	print HISTORYTMP "From5 ".int($_from_p[5])." ".int($_from_h[5])."\n";		# News
-	print HISTORYTMP "END_ORIGIN\n";
-	print HISTORYTMP "\n";
-	print HISTORYTMP "# Search engine referers ID - Hits\n";
-	print HISTORYTMP "BEGIN_SEREFERRALS\n";
-	foreach my $key (keys %_se_referrals_h) { print HISTORYTMP "$key $_se_referrals_h{$key}\n"; }
-	print HISTORYTMP "END_SEREFERRALS\n";
-	print HISTORYTMP "\n";
-	print HISTORYTMP "# External page referers - Hits\n";
-	print HISTORYTMP "BEGIN_PAGEREFS\n";
-	foreach my $key (keys %_pagesrefs_h) {
-		my $newkey=$key;
-		$newkey =~ s/^http(s|):\/\/([^\/]+)\/$/http$1:\/\/$2/;	# Remove / at end of http://.../ but not at end of http://.../dir/
-		$newkey =~ s/\s/%20/g;
-		print HISTORYTMP "$newkey $_pagesrefs_h{$key}\n";
+	if ($sectiontosave eq "unknwonreferer") {
+		print HISTORYTMP "\n";
+		print HISTORYTMP "# Unknown referer OS - Last visit date\n";
+		print HISTORYTMP "BEGIN_UNKNOWNREFERER\n";
+		foreach my $key (keys %_unknownreferer_l) { print HISTORYTMP "$key $_unknownreferer_l{$key}\n"; }
+		print HISTORYTMP "END_UNKNOWNREFERER\n";
 	}
-	print HISTORYTMP "END_PAGEREFS\n";
-	print HISTORYTMP "\n";
-	print HISTORYTMP "# Search keyphrases - Number of search\n";
-	print HISTORYTMP "# The $MaxNbOfKeyphrasesShown first number of search must be first (order not required for others)\n";
-	print HISTORYTMP "BEGIN_SEARCHWORDS\n";
-	&BuildKeyList($MaxNbOfKeywordsShown,$MinHitKeyword,\%_keyphrases,\%_keyphrases);
-	%keysinkeylist=();
-	# We also build _keywords
-	%_keywords=();
-	foreach my $key (@keylist) {
-		$keysinkeylist{$key}=1;
-		my $keyphrase=$key;
-		print HISTORYTMP "$keyphrase $_keyphrases{$key}\n";
-		foreach my $word (split(/\+/,$key)) { $_keywords{$word}+=$_keyphrases{$key}; }	# To init %_keywords
+	if ($sectiontosave eq "unknownrefererbrowser") {
+		print HISTORYTMP "\n";
+		print HISTORYTMP "# Unknown referer Browser - Last visit date\n";
+		print HISTORYTMP "BEGIN_UNKNOWNREFERERBROWSER\n";
+		foreach my $key (keys %_unknownrefererbrowser_l) { print HISTORYTMP "$key $_unknownrefererbrowser_l{$key}\n"; }
+		print HISTORYTMP "END_UNKNOWNREFERERBROWSER\n";
 	}
-	foreach my $key (keys %_keyphrases) {
-		if ($keysinkeylist{$key}) { next; }
-		my $keyphrase=$key;
-		print HISTORYTMP "$keyphrase $_keyphrases{$key}\n";
-		foreach my $word (split(/\+/,$key)) { $_keywords{$word}+=$_keyphrases{$key}; }	# To init %_keywords
+	if ($sectiontosave eq "origin") {
+		print HISTORYTMP "\n";
+		print HISTORYTMP "# Origin - Pages - Hits \n";
+		print HISTORYTMP "BEGIN_ORIGIN\n";
+		print HISTORYTMP "From0 ".int($_from_p[0])." ".int($_from_h[0])."\n";
+		print HISTORYTMP "From1 ".int($_from_p[1])." ".int($_from_h[1])."\n";
+		print HISTORYTMP "From2 ".int($_from_p[2])." ".int($_from_h[2])."\n";
+		print HISTORYTMP "From3 ".int($_from_p[3])." ".int($_from_h[3])."\n";
+		print HISTORYTMP "From4 ".int($_from_p[4])." ".int($_from_h[4])."\n";		# Same site
+		print HISTORYTMP "From5 ".int($_from_p[5])." ".int($_from_h[5])."\n";		# News
+		print HISTORYTMP "END_ORIGIN\n";
 	}
-	print HISTORYTMP "END_SEARCHWORDS\n";
-	print HISTORYTMP "\n";
-	print HISTORYTMP "# Search keywords - Number of search\n";
-	print HISTORYTMP "# The $MaxNbOfKeywordsShown first number of search must be first (order not required for others)\n";
-	print HISTORYTMP "BEGIN_KEYWORDS\n";
-	&BuildKeyList($MaxNbOfKeywordsShown,$MinHitKeyword,\%_keywords,\%_keywords);
-	%keysinkeylist=();
-	foreach my $key (@keylist) {
-		$keysinkeylist{$key}=1;
-		my $keyword=$key;
-		print HISTORYTMP "$keyword $_keywords{$key}\n";
+	if ($sectiontosave eq "sereferrals") {
+		print HISTORYTMP "\n";
+		print HISTORYTMP "# Search engine referers ID - Hits\n";
+		print HISTORYTMP "BEGIN_SEREFERRALS\n";
+		foreach my $key (keys %_se_referrals_h) { print HISTORYTMP "$key $_se_referrals_h{$key}\n"; }
+		print HISTORYTMP "END_SEREFERRALS\n";
 	}
-	foreach my $key (keys %_keywords) {
-		if ($keysinkeylist{$key}) { next; }
-		my $keyword=$key;
-		print HISTORYTMP "$keyword $_keywords{$key}\n";
+	if ($sectiontosave eq "pagerefs") {
+		print HISTORYTMP "\n";
+		print HISTORYTMP "# External page referers - Hits\n";
+		print HISTORYTMP "BEGIN_PAGEREFS\n";
+		foreach my $key (keys %_pagesrefs_h) {
+			my $newkey=$key;
+			$newkey =~ s/^http(s|):\/\/([^\/]+)\/$/http$1:\/\/$2/;	# Remove / at end of http://.../ but not at end of http://.../dir/
+			$newkey =~ s/\s/%20/g;
+			print HISTORYTMP "$newkey $_pagesrefs_h{$key}\n";
+		}
+		print HISTORYTMP "END_PAGEREFS\n";
 	}
-	print HISTORYTMP "END_KEYWORDS\n";
-
+	if ($sectiontosave eq "searchwords") {
+		print HISTORYTMP "\n";
+		print HISTORYTMP "# Search keyphrases - Number of search\n";
+		print HISTORYTMP "# The $MaxNbOfKeyphrasesShown first number of search must be first (order not required for others)\n";
+		print HISTORYTMP "BEGIN_SEARCHWORDS\n";
+		&BuildKeyList($MaxNbOfKeywordsShown,$MinHitKeyword,\%_keyphrases,\%_keyphrases);
+		%keysinkeylist=();
+		# We also build _keywords
+		%_keywords=();
+		foreach my $key (@keylist) {
+			$keysinkeylist{$key}=1;
+			my $keyphrase=$key;
+			print HISTORYTMP "$keyphrase $_keyphrases{$key}\n";
+			foreach my $word (split(/\+/,$key)) { $_keywords{$word}+=$_keyphrases{$key}; }	# To init %_keywords
+		}
+		foreach my $key (keys %_keyphrases) {
+			if ($keysinkeylist{$key}) { next; }
+			my $keyphrase=$key;
+			print HISTORYTMP "$keyphrase $_keyphrases{$key}\n";
+			foreach my $word (split(/\+/,$key)) { $_keywords{$word}+=$_keyphrases{$key}; }	# To init %_keywords
+		}
+		print HISTORYTMP "END_SEARCHWORDS\n";
+	}
+	if ($sectiontosave eq "keywords") {
+		print HISTORYTMP "\n";
+		print HISTORYTMP "# Search keywords - Number of search\n";
+		print HISTORYTMP "# The $MaxNbOfKeywordsShown first number of search must be first (order not required for others)\n";
+		print HISTORYTMP "BEGIN_KEYWORDS\n";
+		&BuildKeyList($MaxNbOfKeywordsShown,$MinHitKeyword,\%_keywords,\%_keywords);
+		%keysinkeylist=();
+		foreach my $key (@keylist) {
+			$keysinkeylist{$key}=1;
+			my $keyword=$key;
+			print HISTORYTMP "$keyword $_keywords{$key}\n";
+		}
+		foreach my $key (keys %_keywords) {
+			if ($keysinkeylist{$key}) { next; }
+			my $keyword=$key;
+			print HISTORYTMP "$keyword $_keywords{$key}\n";
+		}
+		print HISTORYTMP "END_KEYWORDS\n";
+	}
+	
 	# Other
-	print HISTORYTMP "\n";
-	print HISTORYTMP "# Errors - Hits\n";
-	print HISTORYTMP "BEGIN_ERRORS\n";
-	foreach my $key (keys %_errors_h) { print HISTORYTMP "$key $_errors_h{$key}\n"; }
-	print HISTORYTMP "END_ERRORS\n";
-	print HISTORYTMP "\n";
-	print HISTORYTMP "# URL with 404 errors - Hits - Last URL referer\n";
-	print HISTORYTMP "BEGIN_SIDER_404\n";
-	foreach my $key (keys %_sider404_h) {
-		my $newkey=$key;
-		my $newreferer=$_referer404_h{$key}||"";
-		$newreferer =~ s/\s/%20/g;
-		print HISTORYTMP "$newkey ".int($_sider404_h{$key})." $newreferer\n";
+	if ($sectiontosave eq "errors") {
+		print HISTORYTMP "\n";
+		print HISTORYTMP "# Errors - Hits\n";
+		print HISTORYTMP "BEGIN_ERRORS\n";
+		foreach my $key (keys %_errors_h) { print HISTORYTMP "$key $_errors_h{$key}\n"; }
+		print HISTORYTMP "END_ERRORS\n";
 	}
-	print HISTORYTMP "END_SIDER_404\n";
-
+	if ($sectiontosave eq "sider_404") {
+		print HISTORYTMP "\n";
+		print HISTORYTMP "# URL with 404 errors - Hits - Last URL referer\n";
+		print HISTORYTMP "BEGIN_SIDER_404\n";
+		foreach my $key (keys %_sider404_h) {
+			my $newkey=$key;
+			my $newreferer=$_referer404_h{$key}||"";
+			$newreferer =~ s/\s/%20/g;
+			print HISTORYTMP "$newkey ".int($_sider404_h{$key})." $newreferer\n";
+		}
+		print HISTORYTMP "END_SIDER_404\n";
+	}
+	
 	%keysinkeylist=();
-	close(HISTORYTMP);
 }
 
 #------------------------------------------------------------------------------
@@ -2700,8 +2961,6 @@ sub Init_HashArray {
 	my $year=sprintf("%04i",shift||0);
 	my $month=sprintf("%02i",shift||0);
 	if ($Debug) { debug("Call to Init_HashArray [$year,$month]"); }
-	# We start a new month, so we reset tags saying data for this month already loaded
-	$HistoryFileAlreadyRead{"$year$month"}=0;
 	# Reset all arrays with name beginning by _
 	@_msiever_h = @_nsver_h = ();
 	for (my $ix=0; $ix<6; $ix++)  { $_from_p[$ix]=0; $_from_h[$ix]=0; }
@@ -2709,11 +2968,12 @@ sub Init_HashArray {
 	# Reset all hash arrays with name beginning by _
 	%_session = %_browser_h = %_domener_h = %_domener_k = %_domener_p = %_errors_h =
 	%_filetypes_h = %_filetypes_k = %_filetypes_gz_in = %_filetypes_gz_out =
-	%_host_h = %_host_k = %_host_p = %_host_l = %_host_s = %_host_u =
+	%_host_p = %_host_h = %_host_k = %_host_v = %_host_l = %_host_s = %_host_u =
 	%_keyphrases = %_keywords = %_os_h = %_pagesrefs_h = %_robot_h = %_robot_l =
 	%_login_h = %_login_p = %_login_k = %_login_l =
 	%_se_referrals_h = %_sider404_h = %_referer404_h = %_url_p = %_url_k = %_url_e = %_url_x =
 	%_unknownreferer_l = %_unknownrefererbrowser_l = ();
+	%_waithost_e = %_waithost_l = %_waithost_s = %_waithost_u = ();
 }
 
 #------------------------------------------------------------------------------
@@ -2919,29 +3179,29 @@ sub AddInTree {
 #	$countaddintree++;
 #	if ($countaddintree % 100 == 1) { if ($Debug) { debug(" AddInTree Start of 100 (lowerval=$lowerval)",3); } }
 	if ($firstadd==1) {			# Val is the first one
-		if ($Debug) { debug(" firstadd",4); }
+		if ($Debug) { debug("  firstadd",4); }
 		$val{$keyval}=$keytoadd;
 		$lowerval=$keyval;
-		if ($Debug) { debug(" lowerval=$lowerval, nb elem val=".(scalar keys %val).", nb elem egal=".(scalar keys %egal).".",4); }
+		if ($Debug) { debug("  lowerval=$lowerval, nb elem val=".(scalar keys %val).", nb elem egal=".(scalar keys %egal).".",4); }
 		return;
 	}
 	if ($val{$keyval}) { 		# Val is already in tree
-		if ($Debug) { debug(" val is already in tree",4); }
+		if ($Debug) { debug("  val is already in tree",4); }
 		$egal{$keytoadd}=$val{$keyval};
 		$val{$keyval}=$keytoadd;
-		if ($Debug) { debug(" lowerval=$lowerval, nb elem val=".(scalar keys %val).", nb elem egal=".(scalar keys %egal).".",4); }
+		if ($Debug) { debug("  lowerval=$lowerval, nb elem val=".(scalar keys %val).", nb elem egal=".(scalar keys %egal).".",4); }
 		return;
 	}
 	if ($keyval <= $lowerval) {	# Val is a new one lower (should happens only when tree is not full)
-		if ($Debug) { debug(" keytoadd val=$keyval is lower or equal to lowerval=$lowerval",4); }
+		if ($Debug) { debug("  keytoadd val=$keyval is lower or equal to lowerval=$lowerval",4); }
 		$val{$keyval}=$keytoadd;
 		$nextval{$keyval}=$lowerval;
 		$lowerval=$keyval;
-		if ($Debug) { debug(" lowerval=$lowerval, nb elem val=".(scalar keys %val).", nb elem egal=".(scalar keys %egal).".",4); }
+		if ($Debug) { debug("  lowerval=$lowerval, nb elem val=".(scalar keys %val).", nb elem egal=".(scalar keys %egal).".",4); }
 		return;
 	}
 	# Val is a new one higher
-	if ($Debug) { debug(" keytoadd val=$keyval is higher than lowerval=$lowerval",4); }
+	if ($Debug) { debug("  keytoadd val=$keyval is higher than lowerval=$lowerval",4); }
 	$val{$keyval}=$keytoadd;
 	my $valcursor=$lowerval;	# valcursor is value just before keyval
 	while ($nextval{$valcursor} && ($nextval{$valcursor} < $keyval)) { $valcursor=$nextval{$valcursor}; }
@@ -2949,7 +3209,7 @@ sub AddInTree {
 		$nextval{$keyval}=$nextval{$valcursor};
 	}
 	$nextval{$valcursor}=$keyval;
-	if ($Debug) { debug(" lowerval=$lowerval, nb elem val=".(scalar keys %val).", nb elem egal=".(scalar keys %egal).".",4); }
+	if ($Debug) { debug("  lowerval=$lowerval, nb elem val=".(scalar keys %val).", nb elem egal=".(scalar keys %egal).".",4); }
 #	if ($countaddintree % 100 == 0) { if ($Debug) { debug(" AddInTree End of 100",3); } }
 }
 
@@ -2962,7 +3222,7 @@ sub AddInTree {
 #--------------------------------------------------------------------
 sub Removelowerval {
 	my $keytoremove=$val{$lowerval};	# This is lower key
-	if ($Debug) { debug("  remove for lowerval=$lowerval: key=$keytoremove",4); }
+	if ($Debug) { debug("   remove for lowerval=$lowerval: key=$keytoremove",4); }
 	if ($egal{$keytoremove}) {
 		$val{$lowerval}=$egal{$keytoremove};
 		delete $egal{$keytoremove};
@@ -2973,11 +3233,11 @@ sub Removelowerval {
 		$lowerval=$nextval{$lowerval};	# Set new lowerval
 		#delete $nextval{$templowerval};
 	}
-	if ($Debug) { debug("  new lower value=$lowerval, val size=".(scalar keys %val).", egal size=".(scalar keys %egal),4); }
+	if ($Debug) { debug("   new lower value=$lowerval, val size=".(scalar keys %val).", egal size=".(scalar keys %egal),4); }
 }
 
 #--------------------------------------------------------------------
-# Function:     Return the lower value between 2
+# Function:     Return the lower value between 2 but exclude value if 0
 # Parameters:   Val1 and Val2
 # Input:        None
 # Output:       None
@@ -2985,8 +3245,9 @@ sub Removelowerval {
 #--------------------------------------------------------------------
 sub Minimum {
 	my ($val1,$val2)=@_;
-	return ($val1<$val2?$val1:$val2);
+	return ($val1&&($val1<$val2||!$val2)?$val1:$val2);
 }
+
 
 #--------------------------------------------------------------------
 # Function:     Build @keylist array
@@ -3003,7 +3264,7 @@ sub BuildKeyList {
 	my $MinValue=shift;
 	my $hashforselect=shift;
 	my $hashfororder=shift;
-	if ($Debug) { debug("BuildKeyList($ArraySize,$MinValue,$hashforselect with size=".(scalar keys %$hashforselect).",$hashfororder with size=".(scalar keys %$hashfororder).")",2); }
+	if ($Debug) { debug(" BuildKeyList($ArraySize,$MinValue,$hashforselect with size=".(scalar keys %$hashforselect).",$hashfororder with size=".(scalar keys %$hashfororder).")",2); }
 	delete $hashforselect->{0};delete $hashforselect->{""};		# Those is to protect from infinite loop when hash array has incorrect keys
 	my $count=0;
 	$lowerval=0;	# Global because used in AddInTree and Removelowerval
@@ -3012,7 +3273,7 @@ sub BuildKeyList {
 		if ($count < $ArraySize) {
 			if ($hashforselect->{$key} >= $MinValue) {
 				$count++;
-				if ($Debug) { debug(" Add in tree entry $count : $key (value=".($hashfororder->{$key}||0).", tree not full)",4); }
+				if ($Debug) { debug("  Add in tree entry $count : $key (value=".($hashfororder->{$key}||0).", tree not full)",4); }
 				AddInTree($key,$hashfororder->{$key}||0,$count);
 			}
 			next;
@@ -3022,20 +3283,20 @@ sub BuildKeyList {
 			next;
 		}
 		$count++;
-		if ($Debug) { debug(" Add in tree entry $count : $key (value=".($hashfororder->{$key}||0)." > lowerval=$lowerval)",4); }
+		if ($Debug) { debug("  Add in tree entry $count : $key (value=".($hashfororder->{$key}||0)." > lowerval=$lowerval)",4); }
 		AddInTree($key,$hashfororder->{$key}||0);
-		if ($Debug) { debug(" Removelower in tree",4); }
+		if ($Debug) { debug("  Removelower in tree",4); }
 		Removelowerval();
 	}
 
 	# Build key list and sort it
-	if ($Debug) { debug(" Build key list and sort it. lowerval=$lowerval, nb elem val=".(scalar keys %val).", nb elem egal=".(scalar keys %egal).".",2); }
+	if ($Debug) { debug("  Build key list and sort it. lowerval=$lowerval, nb elem val=".(scalar keys %val).", nb elem egal=".(scalar keys %egal).".",2); }
 	my %notsortedkeylist=();
 	foreach my $key (values %val) {	$notsortedkeylist{$key}=1; }
 	foreach my $key (values %egal) { $notsortedkeylist{$key}=1; }
 	@keylist=();
 	@keylist=(sort {$hashfororder->{$b} <=> $hashfororder->{$a} } keys %notsortedkeylist);
-	if ($Debug) { debug("BuildKeyList End (keylist size=".(@keylist).")",2); }
+	if ($Debug) { debug(" BuildKeyList End (keylist size=".(@keylist).")",2); }
 	return;
 }
 
@@ -3093,7 +3354,7 @@ if ($QueryString =~ /output/i) {
 	if (! $ENV{"GATEWAY_INTERFACE"} && $QueryString !~ /update/i) { $UpdateStats=0; }	# If output only, on command line, no update
 	if ($QueryString =~ /output=([^\s&:]+)/i) { $HTMLOutput=$1; $HTMLOutput =~ tr/A-Z/a-z/; }
 }
-$QueryString=~s/output&//; $QueryString=~s/output$//;	# -output with no = is same than nothing
+$QueryString=~s/&{0,1}output&//; $QueryString=~s/&{0,1}output$//;	# -output with no = is same than nothing
 # A filter on URL list can be defined with output=urldetail:filter to reduce number of lines read and showed
 if ($QueryString =~ /output=urldetail:([^\s&]+)/i)	{ $URLFilter=&DecodeEncodedString($1); }
 # A filter on URL list can also be defined with urlfilter=filter
@@ -3313,7 +3574,7 @@ if ($FrameName eq "index") {
 	$NewLinkParams =~ s/framename[=]*[^\s&]*//i;
 	if ($NewLinkParams) { $NewLinkParams="${NewLinkParams}&"; }
 	# Exit if main frame
-	print "<frameset cols=\"$FRAMEWIDTH,*\" border=2 framespacing=2 frameborder=0>\n";
+	print "<frameset cols=\"$FRAMEWIDTH,*\" border=0 framespacing=2 frameborder=0>\n";
 	print "<frame name=\"mainleft\"  src=\"$AWScript?${NewLinkParams}framename=mainleft\" noresize scrolling=\"NO\" noborder>\n";
 	print "<frame name=\"mainright\" src=\"$AWScript?${NewLinkParams}framename=mainright\" noresize scrolling=\"YES\" noborder>\n";
 	print "<noframes><body>Your browser does not support frames. Change AWStats UseFramesWhenCGI parameter to see your reports</body></noframes>\n";
@@ -3325,20 +3586,47 @@ if ($FrameName eq "index") {
 # Init global variables required for output and update process
 %monthlib = ("01","$Message[60]","02","$Message[61]","03","$Message[62]","04","$Message[63]","05","$Message[64]","06","$Message[65]","07","$Message[66]","08","$Message[67]","09","$Message[68]","10","$Message[69]","11","$Message[70]","12","$Message[71]");
 %monthnum = ("Jan","01","jan","01","Feb","02","feb","02","Mar","03","mar","03","Apr","04","apr","04","May","05","may","05","Jun","06","jun","06","Jul","07","jul","07","Aug","08","aug","08","Sep","09","sep","09","Oct","10","oct","10","Nov","11","nov","11","Dec","12","dec","12");	# monthnum must be in english because used to translate log date in apache log files
+
+# Build ListOfYears list with all existing years
+my $lastyearbeforeupdate=0;
+opendir(DIR,"$DirData");
+foreach (grep /^$PROG(\d\d)(\d\d\d\d)$FileSuffix\.txt(|\.gz)$/, sort readdir DIR) {
+	/^$PROG(\d\d)(\d\d\d\d)$FileSuffix\.txt(|\.gz)$/;
+	if (! $ListOfYears{"$2"} || "$1" gt $ListOfYears{"$2"}) {
+		$ListOfYears{"$2"}="$1";	# ListOfYears contains max month found
+		if ("$2" gt $lastyearbeforeupdate) { $lastyearbeforeupdate="$2"; }
+	}
+}
+close DIR;
+
+# Get FirstTime, LastTime, LastUpdate and LastLine
+if ($lastyearbeforeupdate) {
+	# Read 'general' section of last history file for LastUpdate and LastLine
+	&Read_History_File_With_Update($lastyearbeforeupdate,$ListOfYears{$lastyearbeforeupdate},0,0,"general");
+}
+if ($Debug) {
+	debug("Last year=$lastyearbeforeupdate - Last month=$ListOfYears{$lastyearbeforeupdate}");
+	debug("LastLine=$LastLine");
+	debug("LastUpdate=$LastUpdate");
+}
+
+# Init vars
+&Init_HashArray;	# Should be useless in perl (except with mod_perl that keep variables in memory)
 for (my $ix=1; $ix<=12; $ix++) {
-	my $monthix=$ix;if ($monthix < 10) { $monthix  = "0$monthix"; }
-	$LastLine{$YearRequired.$monthix}=0;$FirstTime{$YearRequired.$monthix}=0;$LastTime{$YearRequired.$monthix}=0;$LastUpdate{$YearRequired.$monthix}=0;
+	my $monthix=sprintf("%02s",$ix);
+	$FirstTime{$YearRequired.$monthix}=0;$LastTime{$YearRequired.$monthix}=0;
 	$MonthVisits{$YearRequired.$monthix}=0;$MonthUnique{$YearRequired.$monthix}=0;$MonthPages{$YearRequired.$monthix}=0;$MonthHits{$YearRequired.$monthix}=0;$MonthBytes{$YearRequired.$monthix}=0;$MonthHostsKnown{$YearRequired.$monthix}=0;$MonthHostsUnknown{$YearRequired.$monthix}=0;
 }
-&Init_HashArray;	# Should be useless in perl (except with mod_perl that keep variables in memory).
 
 
 #------------------------------------------
 # UPDATE PROCESS
 #------------------------------------------
 if ($Debug) { debug("UpdateStats is $UpdateStats",2); }
-if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {
-	# Update only on index page or when not framed to avoid update twice
+if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {	# Update only on index page or when not framed to avoid update twice
+	my $lastprocessedyear=$lastyearbeforeupdate;
+	my $lastprocessedmonth=$ListOfYears{$lastyearbeforeupdate}||0;
+	my $lastprocessedyearmonth=sprintf("%04i%02i",$lastprocessedyear,$lastprocessedmonth);
 
 	# Init RobotsSearchIDOrder required for update process
 	my @RobotArrayList;
@@ -3389,11 +3677,11 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {
 			$PerlParsingFormat="([^\\s]+ [^\\s]+) ([^\\s]+) ([^\\s]+) ([^\\s]+) ([^\\s]+) ([\\d|-]+) ([\\d|-]+) [^\\s]+ ([^\\s]+) ([^\\s]+)";
 			$pos_date=0;$pos_rc=1;$pos_logname=2;$pos_method=3;$pos_url=4;$pos_code=5;$pos_size=6;$pos_agent=7;$pos_referer=8;
 		}
-		elsif ($LogFormat eq "3") {	# Same than "%h %l %u %t \"%r\" %>s %b"
+		elsif ($LogFormat eq "3") {
 			$PerlParsingFormat="([^\\t]*\\t[^\\t]*)\\t([^\\t]*)\\t([\\d]*)\\t([^\\t]*)\\t([^\\t]*)\\t([^\\t]*)\\t[^\\t]*\\t.*:([^\\t]*)\\t([\\d]*)";
 			$pos_date=0;$pos_method=1;$pos_code=2;$pos_rc=3;$pos_agent=4;$pos_referer=5;$pos_url=6;$pos_size=7;
 		}
-		elsif ($LogFormat eq "4") {
+		elsif ($LogFormat eq "4") {	# Same than "%h %l %u %t \"%r\" %>s %b"
 			$PerlParsingFormat="([^\\s]+) [^\\s]+ ([^\\s]+) \\[([^\\s]+) [^\\s]+\\] \\\"([^\\s]+) ([^\\s]+) [^\\\"]+\\\" ([\\d|-]+) ([\\d|-]+)";
 			$pos_rc=0;$pos_logname=1;$pos_date=2;$pos_method=3;$pos_url=4;$pos_code=5;$pos_size=6;
 		}
@@ -3571,38 +3859,10 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {
 		&Read_DNS_Cache_File(\%TmpDNSLookup,"$DNSLastUpdateCacheFile","$FileSuffix",0);	# Load with no save into a second plugin file. Use FileSuffix
 	}
 
-	if ($Debug) { debug("Start Update process"); }
-
-	# READING THE LAST PROCESSED HISTORY FILE
+	# Processing log
 	#------------------------------------------
-	my $monthtoprocess=0; my $yeartoprocess=0; my $yearmonthtoprocess="";
-
-	# Search last history file $PROG(MM)(YYYY)$FileSuffix.txt
-	my $yearmonthmax=0;
-	opendir(DIR,"$DirData");
-	foreach (grep /^$PROG(\d\d)(\d\d\d\d)$FileSuffix\.txt(|\.gz)$/, sort readdir DIR) {
-		/^$PROG(\d\d)(\d\d\d\d)$FileSuffix\.txt(|\.gz)$/;
-		if (int("$2$1") > $yearmonthmax) { $yearmonthmax=int("$2$1"); }
-	}
-	close DIR;
-	# We read last history file if found
-	if ($yearmonthmax =~ /^(\d\d\d\d)(\d\d)$/) {
-		$monthtoprocess=int($2);$yeartoprocess=int($1);
-		# We read all data in this last history file.
-		&Read_History_File($yeartoprocess,$monthtoprocess,1);
-	}
-	else {
-		$LastLine{"000000"}=0;
-	}
-
-	# PROCESSING CURRENT LOG
-	#------------------------------------------
-	$yearmonthtoprocess=sprintf("%04i%02i",$yeartoprocess,$monthtoprocess);
+	if ($Debug) { debug("Start Update process (lastprocessedmonth=$lastprocessedmonth, lastprocessedyear=$lastprocessedyear)"); }
 	$NbOfLinesRead=$NbOfLinesDropped=$NbOfLinesCorrupted=$NbOfOldLines=$NbOfNewLines=0;
-	if ($Debug) {
-		debug("Start of processing log file (monthtoprocess=$monthtoprocess, yeartoprocess=$yeartoprocess)");
-		debug("LastLine{$yearmonthtoprocess}=$LastLine{$yearmonthtoprocess}");
-	}
 
 	# Open log file
 	if ($Debug) { debug("Open log file \"$LogFile\""); }
@@ -3621,18 +3881,33 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {
 		if ($ShowSteps && ($NbOfLinesRead % $NBOFLINESFORBENCHMARK == 0)) {
 			my $delay=GetDelaySinceStart(0);
 			print "$NbOfLinesRead lines processed ($delay ms, ".int(1000*$NbOfLinesRead/($delay>0?$delay:1))." lines/second)\n";
+#			if ($Debug) {
+#				print " _host_p:".(scalar keys %_host_p)." _host_h:".(scalar keys %_host_h)." _host_k:".(scalar keys %_host_k)." _host_v:".(scalar keys %_host_v)." _host_l:".(scalar keys %_host_l)." _host_s:".(scalar keys %_host_s)." _host_u:".(scalar keys %_host_u)."\n";
+#				print " _url_p:".(scalar keys %_url_p)." _url_k:".(scalar keys %_url_k)." _url_e:".(scalar keys %_url_e)." _url_x:".(scalar keys %_url_x)."\n";
+#				print " _waithost_e:".(scalar keys %_waithost_e)." _waithost_l:".(scalar keys %_waithost_l)." _waithost_s:".(scalar keys %_waithost_s)." _waithost_u:".(scalar keys %_waithost_u)."\n";
+#			}
+		}
+
+		if ($_ =~ /^#/ || $_ =~ /^!/ || $_ =~ /^\s*$/) {
+			$NbOfLinesDropped++;
+			if ($ShowDropped) { print "Dropped record (comment or blank line) : $_\n"; }
+			next;		
 		}
 
 		# Parse line record to get all required fields
 		@field=map(/^$PerlParsingFormat/,$_);
-
 		if (! @field) {
-			$NbOfLinesCorrupted++;
-			if ($ShowCorrupted && ($_ =~ /^#/ || $_ =~ /^!/ || $_ =~ /^\s*$/)) { print "Corrupted record line $NbOfLinesRead (comment or blank line)\n"; }
-			if ($ShowCorrupted && $_ !~ /^\s*$/) { print "Corrupted record line $NbOfLinesRead (record format does not match LogFormat parameter): $_\n"; }
+			if ($_ !~ /^\s*$/) {
+				$NbOfLinesCorrupted++;
+				if ($ShowCorrupted) { print "Corrupted record line $NbOfLinesRead (record format does not match LogFormat parameter): $_\n"; }
+			}
+			else { 
+				$NbOfLinesDropped++;
+			}
 			if ($NbOfLinesRead >= $NbOfLinesForCorruptedLog && $NbOfLinesCorrupted == $NbOfLinesRead) { error("Format error",$_,$LogFile); }	# Exit with format error
 			next;
 		}
+
 
 		if ($Debug) { debug(" Correct format line $NbOfLinesRead : host=\"$field[$pos_rc]\", logname=\"$field[$pos_logname]\", date=\"$field[$pos_date]\", method=\"$field[$pos_method]\", url=\"$field[$pos_url]\", code=\"$field[$pos_code]\", size=\"$field[$pos_size]\", referer=\"$field[$pos_referer]\", agent=\"$field[$pos_agent]\"",4); }
 		#if ($Debug) { debug("$field[$pos_vh] - $field[$pos_gzipin] - $field[$pos_gzipout] - $field[$pos_gzipratio]\n",4); }
@@ -3692,14 +3967,14 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {
 		# Skip if not a new line
 		#-----------------------
 		if ($NewLinePhase) {
-			if ($timerecord < ($LastLine{$yearmonthtoprocess} - $NotSortedRecordTolerance)) {
+			if ($timerecord < ($LastLine - $NotSortedRecordTolerance)) {
 					# Should not happen, kept in case of parasite/corrupted old line
 					$NbOfLinesCorrupted++;
-					if ($ShowCorrupted) { print "Corrupted record (date $timerecord lower than $LastLine{$yearmonthtoprocess}-$NotSortedRecordTolerance): $_\n"; } next;
+					if ($ShowCorrupted) { print "Corrupted record (date $timerecord lower than $LastLine-$NotSortedRecordTolerance): $_\n"; } next;
 			}
 		}
 		else {
-			if ($timerecord <= $LastLine{$yearmonthtoprocess}) {
+			if ($timerecord <= $LastLine) {
 				$NbOfOldLines++;
 				next;
 			}	# Already processed
@@ -3714,7 +3989,7 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {
 
 		# We found a new line
 		#----------------------------------------
-		$LastLine{$yearmonthtoprocess} = $timerecord;	# !!
+		if ($timerecord > $LastLine) { $LastLine = $timerecord; }	# Test should always be true except with not sorted log files.
 
 		# TODO. Add robot in a list if URL is robots.txt (Note: robot referer value can be same than a normal browser)
 
@@ -3735,15 +4010,14 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {
 
 		# Is it in a new month section ?
 		#-------------------------------
-		if ((($monthrecord > $monthtoprocess) && ($yearrecord >= $yeartoprocess)) || ($yearrecord > $yeartoprocess)) {
-			# Yes, a new month to process
-			if ($monthtoprocess) {
-				&Save_History_File($yeartoprocess,$monthtoprocess,$timerecord);		# We save data of current processed month
-				&Init_HashArray($yeartoprocess,$monthtoprocess);		# Start init for next one
+		if ((($monthrecord > $lastprocessedmonth) && ($yearrecord >= $lastprocessedyear)) || ($yearrecord > $lastprocessedyear)) {
+			# A new month to process
+			if ($lastprocessedmonth) {
+				# We save data of processed month
+				&Read_History_File_With_Update($lastprocessedyear,$lastprocessedmonth,1,1,"all");
 			}
-			$monthtoprocess=$monthrecord;$yeartoprocess=$yearrecord;
-			$yearmonthtoprocess=sprintf("%04i%02i",$yeartoprocess,$monthtoprocess);
-			&Read_History_File($yeartoprocess,$monthtoprocess,1);		# This should be useless (file must not exist)
+			$lastprocessedmonth=$monthrecord;$lastprocessedyear=$yearrecord;
+			$lastprocessedyearmonth=sprintf("%04i%02i",$lastprocessedyear,$lastprocessedmonth);
 		}
 
 		# Check return code
@@ -3766,22 +4040,13 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {
 			}
 		}
 
-		# Clean Tmp hash arrays to avoid speed decrease when using too large hash arrays
-		if ($counter++ > 1000000) {
-			$counter=0;
-			#%TmpDNSLookup=();	# No clean for this one
-			%TmpOS = %TmpRefererServer = %TmpRobot = %TmpBrowser =();
-			# TODO Add a warning
-			# warning("Try to made AWStats update more frequently to process log files with less than 1 000 000 records.");
-		}
-
 		$field[$pos_agent] =~ tr/\+ /__/;		# Same Agent with different writing syntax have now same name
 		$field[$pos_agent] =~ s/%20/_/g;		# This is to support servers (like Roxen) that writes user agent with %20 in it
 		$UserAgent = $field[$pos_agent];
 		$UserAgent =~ tr/A-Z/a-z/;
 
-		# Robot ?
-		#-------------------------------------------------------------------------
+		# Analyze: Robot
+		#---------------
 		if ($LevelForRobotsDetection) {
 
 			my $uarobot=$TmpRobot{$UserAgent};
@@ -3827,15 +4092,16 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {
 		}
 		# urlwithnoquery=/mypage.ext
 
-		# Analyze file type and compression
-		#----------------------------------
+		# Analyze: File type and compression
+		#-----------------------------------
 		my $PageBool=1;
 		my $extension;
 		# Extension
-		if ($urlwithnoquery =~ /\.(\w{1,6})$/) {
+		if ($urlwithnoquery =~ /\.(\w{1,6})$/ || ($urlwithnoquery =~ /[\\\/]$/ && $DefaultFile[0] =~ /\.(\w{1,6})$/)) {
 			$extension=$1; $extension =~ tr/A-Z/a-z/;
 			if ($NotPageList{$extension}) { $PageBool=0; }
-		} else {
+		}
+		else {
 			$extension="Unknown";
 		}
 		$_filetypes_h{$extension}++;
@@ -3863,20 +4129,20 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {
 			else { $field[$pos_url] =~ s/\/$DefaultFile[0]$/\//; }
 
 			# FirstTime and LastTime are First and Last human visits (so changed if access to a page)
-			if (! $FirstTime{$yearmonthtoprocess}) { $FirstTime{$yearmonthtoprocess}=$timerecord; }
-			$LastTime{$yearmonthtoprocess} = $timerecord;
+			if (! $FirstTime{$lastprocessedyearmonth}) { $FirstTime{$lastprocessedyearmonth}=$timerecord; }
+			$LastTime{$lastprocessedyearmonth} = $timerecord;
 			$DayPages{$yearmonthdayrecord}++;
-			$MonthPages{$yearmonthtoprocess}++;
+			$MonthPages{$lastprocessedyearmonth}++;
 			$_time_p[$hourrecord]++;											#Count accesses for hour (page)
 			$_url_p{$field[$pos_url]}++; 										#Count accesses for page (page)
 			$_url_k{$field[$pos_url]}+=$field[$pos_size];
 		}
-		$_time_h[$hourrecord]++; $MonthHits{$yearmonthtoprocess}++; $DayHits{$yearmonthdayrecord}++;	#Count accesses for hour (hit)
-		$_time_k[$hourrecord]+=$field[$pos_size]; $MonthBytes{$yearmonthtoprocess}+=$field[$pos_size]; $DayBytes{$yearmonthdayrecord}+=$field[$pos_size];	#Count accesses for hour (kb)
+		$_time_h[$hourrecord]++; $MonthHits{$lastprocessedyearmonth}++; $DayHits{$yearmonthdayrecord}++;	#Count accesses for hour (hit)
+		$_time_k[$hourrecord]+=$field[$pos_size]; $MonthBytes{$lastprocessedyearmonth}+=$field[$pos_size]; $DayBytes{$yearmonthdayrecord}+=$field[$pos_size];	#Count accesses for hour (kb)
 
-		# Analyze login
-		#--------------
-		if ($field[$pos_logname] && $field[$pos_logname] ne "-") {
+		# Analyze: Login
+		#---------------
+		if ($pos_logname>=0 && $field[$pos_logname] && $field[$pos_logname] ne "-") {
 			# We found an authenticated user
 			if ($PageBool) {
 				$_login_p{$field[$pos_logname]}++;								#Count accesses for page (page)
@@ -3886,8 +4152,8 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {
 			$_login_l{$field[$pos_logname]}=$timerecord;
 		}
 
-		# Analyze: IP-address
-		#--------------------
+		# Do DNS lookup
+		#--------------
 		my $Host=$field[$pos_rc];
 		my $HostResolved="";
 		if ($DNSLookup) {			# DNS lookup is 1 or 2
@@ -3932,6 +4198,8 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {
 			if ($Debug) { debug(" No DNS lookup asked.",4); }
 		}
 
+		# Analyze: Top-level domain
+		#--------------------------
 		my $Domain="ip";
 		if ($HostResolved eq "ip") {
 			# $Host is an IP address and is not resolved or resolution gives an IP address
@@ -3943,48 +4211,86 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {
 			tr/A-Z/a-z/;
 			if (/\.(\w+)$/) { $Domain=$1; }
 		}
+		if ($PageBool) { $_domener_p{$Domain}++; }
+		$_domener_h{$Domain}++;
+		$_domener_k{$Domain}+=$field[$pos_size];
 
+		# Analyze: Host, URL and Session
+		#-------------------------------
 		if ($PageBool) {
-			my $timehostl=$_host_l{$_}||0;
-			if ($timerecord > ($timehostl+$VisitTimeOut)) {
-				# This is a new visit
-				if ($_host_l{$_} && $_host_s{$_}) {	# If there was a preceding session running
-					# Session for $_ is expired so we close and count it
-					$_url_x{$_host_u{$_}}++;	# Increase exit page
-					$_session{&SessionLastToSessionRange($_host_l{$_},$_host_s{$_})}++;
-					#delete $_host_s{$_};	# delete useless because set later
-					#delete $_host_u{$_};	# delete useless because set later
-				}
-
-				$MonthVisits{$yearmonthtoprocess}++;
-				$DayVisits{$yearmonthdayrecord}++;
-				if (! $_host_l{$_}) { $MonthUnique{$yearmonthtoprocess}++; }
-				$_url_e{$field[$pos_url]}++; 		# Increase 'entry' page
-				$_host_s{$_}=$timerecord;	# Save start of first visit
-			}
 			$_host_p{$_}++;
-			if ($timerecord < $timehostl) {
-				# Record is before last record of visit
-				# This occurs when log file is not correctly sorted but just 'nearly' sorted
-				if ($timerecord < $_host_s{$_}) {	# This should not happens because first page of visits rarely logged after another page of same visit
-					# Record is before record used for start of visit
+			my $timehostl=$_host_l{$_};
+			if ($timehostl) {
+				if ($timerecord > ($timehostl+$VisitTimeOut)) {
+					# This is a second visit or more
+					if (! $_waithost_s{$_}) {
+						# This is a second visit or more
+						# We count 'visit','exit','entry','DayVisits'
+						if ($Debug) { debug("  This is a second visit for $_.",4); }
+						my $timehosts=$_host_s{$_};
+						my $page=$_host_u{$_};
+						$_host_v{$_}++;
+						if ($page) { $_url_x{$page}++; }
+						$_url_e{$field[$pos_url]}++;
+						$timerecord =~ /^(\d\d\d\d\d\d\d\d)/; $DayVisits{$1}++;
+						# We can't count session yet because we don't have the start so
+						# we save save params of first 'wait' session
+						$_waithost_s{$_}=$_host_s{$_};
+						$_waithost_l{$_}=$_host_l{$_};
+						$_waithost_u{$_}=$_host_u{$_};
+					}
+					else {
+						# This is third visit or more
+						# We count 'session','visit','exit','entry','DayVisits'
+						if ($Debug) { debug("  This is a third visit or more for $_.",4); }
+						my $timehosts=$_host_s{$_};
+						my $page=$_host_u{$_};
+						$_host_v{$_}++;
+						if ($page) { $_url_x{$page}++; }
+						$_url_e{$field[$pos_url]}++;
+						$timerecord =~ /^(\d\d\d\d\d\d\d\d)/; $DayVisits{$1}++;
+						if ($timehosts) { $_session{GetSessionRange($timehosts,$timehostl)}++; }
+					}
+					# Save new session properties
 					$_host_s{$_}=$timerecord;
-					# TODO Change entry page _url_e counter (not possible yet)
+					$_host_l{$_}=$timerecord;
+					$_host_u{$_}=$field[$pos_url];
+				}
+				elsif ($timerecord >= $timehostl) {
+					# This is a same visit we can count
+					if ($Debug) { debug("  This is same visit still running for $_. host_l/host_u changed to $timerecord/$field[$pos_url]",4); }
+					$_host_l{$_}=$timerecord;
+					$_host_u{$_}=$field[$pos_url];
+				}
+				elsif ($timerecord < $_host_s{$_}) {
+					# Should happens with not correctly sorted log files
+					if ($Debug) { debug("  This is same visit still running for $_ with start not in order. host_s changed to $timerecord",4); }
+					if (! $_waithost_s{$_}) {
+						# We can change entry page not yet counted as the save entry page was waithost_e if $_waithost_s{$_} is not defined
+						$_waithost_e{$_}=$field[$pos_url];
+					}
+					else {
+						# We can't change entry counted as we dont't know what was the url counted as entry	
+					}
+					$_host_s{$_}=$timerecord;
+				}
+				else {
+					if ($Debug) { debug("  This is same visit still running for $_ with hit between start and last hits. No change",4); }
 				}
 			}
 			else {
-				# This is a new visit or record is after last record of visit
+				# This is a new visit (may be). First new visits found for this host
+				if ($Debug) { debug("  New session (may be) for $_. Save in wait array to see later",3); }
+				# We save in wait array the entry page to count later
+				$_waithost_e{$_}=$field[$pos_url];
+				# Save new session properties
+				$_host_s{$_}=$timerecord;
 				$_host_l{$_}=$timerecord;
 				$_host_u{$_}=$field[$pos_url];
 			}
 		}
-		if (! $_host_h{$_}++) { $MonthHostsUnknown{$yearmonthtoprocess}++; }
+		$_host_h{$_}++;
 		$_host_k{$_}+=$field[$pos_size];
-
-		# Count top-level domain
-		if ($PageBool) { $_domener_p{$Domain}++; }
-		$_domener_h{$Domain}++;
-		$_domener_k{$Domain}+=$field[$pos_size];
 
 		if ($UserAgent) {	 # Made on each record -> -100 rows/seconds
 
@@ -4220,6 +4526,23 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {
 			$_from_h[1]++;
 		}
 
+
+		# Clean too large hash arrays to free memory when possible
+		if ($counter++ > 500000) {
+			$counter=0;
+			debug("We clean some hash arrays",2);
+			#%TmpDNSLookup=();	# Do we clean this one ?
+			%TmpOS = %TmpRefererServer = %TmpRobot = %TmpBrowser =();
+			# TODO Add a warning
+			# warning("Try to made AWStats update more frequently to process log files with less than 1 000 000 records.");
+		}
+
+#			if ($Debug) {
+#				print " _host_p:".(scalar keys %_host_p)." _host_h:".(scalar keys %_host_h)." _host_k:".(scalar keys %_host_k)." _host_v:".(scalar keys %_host_v)." _host_l:".(scalar keys %_host_l)." _host_s:".(scalar keys %_host_s)." _host_u:".(scalar keys %_host_u)."\n";
+#				print " _url_p:".(scalar keys %_url_p)." _url_k:".(scalar keys %_url_k)." _url_e:".(scalar keys %_url_e)." _url_x:".(scalar keys %_url_x)."\n";
+#				print " _waithost_e:".(scalar keys %_waithost_e)." _waithost_l:".(scalar keys %_waithost_l)." _waithost_s:".(scalar keys %_waithost_s)." _waithost_u:".(scalar keys %_waithost_u)."\n";
+#			}
+
 		# End of processing new record.
 	}
 
@@ -4228,14 +4551,12 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {
 
 	if ($Debug) { debug("End of processing log file (AWStats memory cache is TmpDNSLookup=".(scalar keys %TmpDNSLookup)." TmpBrowser=".(scalar keys %TmpBrowser)." TmpOS=".(scalar keys %TmpOS)." TmpRefererServer=".(scalar keys %TmpRefererServer)." TmpRobot=".(scalar keys %TmpRobot).")",1); }
 
-	# DNSLookup warning
-	if ($DNSLookup && $DNSLookupAlreadyDone) { warning("Warning: <b>$PROG</b> has detected that some hosts names were already resolved in your logfile <b>$DNSLookupAlreadyDone</b>.<br>\nIf DNS lookup was already made by the logger (web server), you should change your setup DNSLookup=1 into DNSLookup=0 to increase $PROG speed."); }
-
-	# Save current processed month $monthtoprocess
-	if ($UpdateStats && $monthtoprocess) {	# If monthtoprocess is still 0, it means there was no history files and we found no valid lines in log file
-		&Save_History_File($yeartoprocess,$monthtoprocess);		# We save data for this month,year
-		if (($MonthRequired ne "year") && ($monthtoprocess != $MonthRequired)) { &Init_HashArray($yeartoprocess,$monthtoprocess); }	# Not a desired month (wrong month), so we clean data arrays
-		if (($MonthRequired eq "year") && ($yeartoprocess != $YearRequired)) { &Init_HashArray($yeartoprocess,$monthtoprocess); }	# Not a desired month (wrong year), so we clean data arrays
+	# Save current processed month $lastprocessedmonth
+	if ($lastprocessedmonth) {		# If lastprocessedmonth is still 0, it means we found no valid lines in log file
+		my $withpurge=0;
+		if (($MonthRequired ne "year") && ($lastprocessedmonth != $MonthRequired)) { $withpurge=1; }	# Not a desired month (wrong month), so we purge data arrays
+		if (($MonthRequired eq "year") && ($lastprocessedyear != $YearRequired)) { $withpurge=1; }		# Not a desired month (wrong year), so we purge data arrays
+		&Read_History_File_With_Update($lastprocessedyear,$lastprocessedmonth,1,$withpurge,"all");		# We save data for this month,year
 	}
 
 	# Process the Rename - Archive - Purge phase
@@ -4309,7 +4630,15 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {
 		close(LOG);
 	}
 
-	if ($NbOfNewLines) {
+
+	if ($DNSLookup && $DNSLookupAlreadyDone) {
+		# DNSLookup warning
+		my $bold=($ENV{"GATEWAY_INTERFACE"}?"<b>":"");
+		my $unbold=($ENV{"GATEWAY_INTERFACE"}?"</b>":"");
+		my $br=($ENV{"GATEWAY_INTERFACE"}?"<br>":"");
+		warning("Warning: $bold$PROG$unbold has detected that some hosts names were already resolved in your logfile $bold$DNSLookupAlreadyDone$unbold.$br\nIf DNS lookup was already made by the logger (web server), you should change your setup DNSLookup=1 into DNSLookup=0 to increase $PROG speed.");
+	}
+	if ($DNSLookup && $NbOfNewLines) {
 		# Save new DNS last update cache file
 		Save_DNS_Cache_File(\%TmpDNSLookup,"$DirData/$DNSLastUpdateCacheFile","$FileSuffix");	# Save into file using FileSuffix
 	}
@@ -4323,8 +4652,6 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {
 
 if ($HTMLOutput) {
 
-	my %listofyears;
-	my $lastupdate=0;
 	my $max_p; my $max_h; my $max_k; my $max_v;
 	my $rest_p; my $rest_h; my $rest_k; my $rest_e; my $rest_x; my $rest_s;
 	my $total_p; my $total_h; my $total_k; my $total_e; my $total_x; my $total_s;
@@ -4391,49 +4718,28 @@ if ($HTMLOutput) {
 
 EOF
 	
-		# BUILD listofyears LIST
-		#-----------------------
-	
-		# Get list of all possible years
-		my $maxyear=0;
-		opendir(DIR,"$DirData");
-		foreach (grep /^$PROG(\d\d)(\d\d\d\d)$FileSuffix\.txt$/, sort readdir DIR) {
-			/^$PROG(\d\d)(\d\d\d\d)$FileSuffix\.txt$/;
-			if (! $listofyears{"$2"} || "$1" gt $listofyears{"$2"}) {
-				$listofyears{"$2"}="$1";	# listofyear contains max month found
-				if ("$2" gt $maxyear) { $maxyear="$2"; }
-			}
-		}
-		close DIR;
-		
-	
 		# Here, first part of data for processed month (old and current) are still in memory
 		# If a month was already processed, then $HistoryFileAlreadyRead{"MMYYYY"} value is 1
 	
-		# READING NOW ALL NOT ALREADY READ HISTORY FILES FOR THE MONTHS CHART
-		#--------------------------------------------------------------------
-		# Loop on each month of year but only existing and not already read will be read by Read_History_File function
+		# READING DATA
+		#-------------
+		# Loop on each month of year but only existing and not already read will be read by Read_History_File_With_Update function
+		&Init_HashArray;
+		for (my $ix=1; $ix<=12; $ix++) {
+			my $monthix=sprintf("%02s",$ix);
+			$FirstTime{$YearRequired.$monthix}=0;$LastTime{$YearRequired.$monthix}=0;
+			$MonthVisits{$YearRequired.$monthix}=0;$MonthUnique{$YearRequired.$monthix}=0;$MonthPages{$YearRequired.$monthix}=0;$MonthHits{$YearRequired.$monthix}=0;$MonthBytes{$YearRequired.$monthix}=0;$MonthHostsKnown{$YearRequired.$monthix}=0;$MonthHostsUnknown{$YearRequired.$monthix}=0;
+		}
 		for (my $ix=12; $ix>=1; $ix--) {
 			my $monthix=sprintf("%02s",$ix);
 			if ($MonthRequired eq "year" || $monthix eq $MonthRequired) {
-				&Read_History_File($YearRequired,$monthix,1);	# Read full history file
+				&Read_History_File_With_Update($YearRequired,$monthix,0,0,"all");										# Read full history file
 			}
 			else {
-				# TODO We can store nb of hits,pages,bandwith and visits,visitors for month in general section to avoid reading time and visitor section here
-				# However this duplicate info and can create incorrect sync.
-				&Read_History_File($YearRequired,$monthix,0);	# Read first part of history file is enough (general, time, partialy visitor)
+				&Read_History_File_With_Update($YearRequired,$monthix,0,0,"general time_partialy visitor_partialy");	# Read general and partialy visitor
 			}
 		}
-		# If LastUpdate still no initialized, we read last existing history file
-		foreach my $key (sort keys %LastUpdate) { if ($lastupdate < $LastUpdate{$key}) { $lastupdate = $LastUpdate{$key}; } }
-		if (! $lastupdate) {
-			# Read 'general' section of this history file for LastUpdate
-			&Read_History_File($maxyear,$listofyears{$maxyear},"general");
-			$lastupdate=$LastUpdate{$maxyear.$listofyears{$maxyear}};
-		}
-	
 	}
-
 
 	# HTMLHeadSection
 	if ($FrameName ne "index" && $FrameName ne "mainleft") {
@@ -4473,7 +4779,7 @@ EOF
 			# Print LastUpdate
 			print "<tr><th class=AWL valign=top>$Message[35] :</th>";
 			print "<td class=AWL><font style=\"font-size: 14px;\">";
-			if ($lastupdate) { print Format_Date($lastupdate,0); }
+			if ($LastUpdate) { print Format_Date($LastUpdate,0); }
 			else { print " <font color=#880000>$Message[24]</font>"; }
 			print "</font>";
 			# Print selected period of analysis
@@ -4578,25 +4884,21 @@ EOF
 		exit 0;
 	}
 
-	# FirstTime LastTime TotalVisits TotalUnique TotalHostsKnown TotalHostsUnknown
-	$FirstTime=$LastTime=$TotalUnique=$TotalVisits=$TotalHostsKnown=$TotalHostsUnknown=0;
+	# FirstTime LastTime TotalVisits TotalUnique TotalPages TotalHits TotalBytes TotalHostsKnown TotalHostsUnknown
+	$FirstTime=$LastTime=$TotalUnique=$TotalVisits=$TotalPages=$TotalHits=$TotalBytes=$TotalHostsKnown=$TotalHostsUnknown=0;
 	my $beginmonth=$MonthRequired;my $endmonth=$MonthRequired;
 	if ($MonthRequired eq "year") { $beginmonth=1;$endmonth=12; }
 	for (my $monthix=$beginmonth; $monthix<=$endmonth; $monthix++) {
 		$monthix=$monthix+0; if ($monthix < 10) { $monthix  = "0$monthix"; }	# Good trick to change $month into "MM" format
 		if ($FirstTime{$YearRequired.$monthix} && ($FirstTime == 0 || $FirstTime > $FirstTime{$YearRequired.$monthix})) { $FirstTime = $FirstTime{$YearRequired.$monthix}; }
 		if ($LastTime < $LastTime{$YearRequired.$monthix}) { $LastTime = $LastTime{$YearRequired.$monthix}; }
-		$TotalUnique+=$MonthUnique{$YearRequired.$monthix};					# Wrong in year view
-		$TotalVisits+=$MonthVisits{$YearRequired.$monthix};
+		$TotalUnique+=$MonthUnique{$YearRequired.$monthix}||0;					# Wrong in year view
+		$TotalVisits+=$MonthVisits{$YearRequired.$monthix}||0;
+		$TotalPages+=$MonthPages{$YearRequired.$monthix}||0;
+		$TotalHits+=$MonthHits{$YearRequired.$monthix}||0;
+		$TotalBytes+=$MonthBytes{$YearRequired.$monthix}||0;
 		$TotalHostsKnown+=$MonthHostsKnown{$YearRequired.$monthix}||0;		# Wrong in year view
 		$TotalHostsUnknown+=$MonthHostsUnknown{$YearRequired.$monthix}||0;	# Wrong in year view
-	}
-	# TotalPages TotalHits TotalBytes
-	$TotalPages=$TotalHits=$TotalBytes=0;
-	for (my $ix=0; $ix<=23; $ix++) {
-		$TotalPages+=$_time_p[$ix];
-		$TotalHits+=$_time_h[$ix];
-		$TotalBytes+=$_time_k[$ix];
 	}
 	# TotalErrors
 	my $TotalErrors=0;
@@ -5088,7 +5390,7 @@ EOF
 		my $NewLinkTarget="";
 		if ($FrameName eq "mainright") { $NewLinkTarget=" target=_parent"; }
 
-		foreach my $key (sort keys %listofyears) {
+		foreach my $key (sort keys %ListOfYears) {
 			if ($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks) {
 				print "<a href=\"$AWScript?${NewLinkParams}year=$key&month=year\"$NewLinkTarget>$Message[6] $key</a> &nbsp; ";
 			}
@@ -5180,6 +5482,9 @@ EOF
 #		print "</TR></font>\n";
 #		print "<TR valign=middle><td class=\"ROWH\">$Message[57]</td>";
 #		for (my $ix=1; $ix<=12; $ix++) { my $monthix=($ix<10?"0$ix":"$ix"); print "<TD class=\"ROWH\">$MonthHits{$YearRequired.$monthix}</TD>\n";	}
+#		print "</TR>\n";
+#		print "<TR valign=middle><td class=\"ROWH\">$Message[57]</td>";
+#		for (my $ix=1; $ix<=12; $ix++) { my $monthix=($ix<10?"0$ix":"$ix"); print "<TD class=\"ROWH\">$MonthBytes{$YearRequired.$monthix}</TD>\n";	}
 #		print "</TR>\n";
 		print "</TABLE>\n<br>\n";
 
