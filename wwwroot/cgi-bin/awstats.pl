@@ -3799,7 +3799,7 @@ sub Read_DNS_Cache {
 	if (! scalar keys %$hashtoload) {
 		open(DNSFILE,"$filetoload") or error("Couldn't open DNS Cache file \"$filetoload\": $!");
 		# This is the fastest way to load with regexp that I know
-		%$hashtoload = map(/^\d{0,10}\s*([0-9A-F:\.]+)\s+([^\s]+)$/oi,<DNSFILE>);
+		%$hashtoload = map(/^(?:\d{0,10}\s+)?([0-9A-F:\.]+)\s+([^\s]+)$/oi,<DNSFILE>);
 		close DNSFILE;
 		if ($savetohash) {
 			# Plugin call : Save hash file (all records) with test if up to date to save
