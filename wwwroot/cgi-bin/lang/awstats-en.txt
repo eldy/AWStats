@@ -158,3 +158,4 @@ message154=Codes shown here gave hits or traffic "not viewed" by visitors, so th
 message155=Cluster
 message156=Robots shown here gave hits or traffic "not viewed" by visitors, so thay are not included in other charts.
 message157=Numbers after + are successful hits on "robots.txt" files.
+message158=Worms shown here gave hits or traffic "not viewed" by visitors, so thay are not included in other charts.

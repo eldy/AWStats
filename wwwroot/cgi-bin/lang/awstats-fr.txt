@@ -158,3 +158,4 @@ message154=Les codes présentées ici sont à l'origine de hits ou de traffic "non 
 message155=Cluster
 message156=Les robots présentés ici sont à l'origine de hits ou de traffic "non vus" par les visiteurs donc non représentés dans les autres tableaux.
 message157=Les nombres après le + indiquent les hits avec succès sur les fichiers "robots.txt".
+message158=Les vers présentés ici sont à l'origine de hits ou de traffic "non vus" par les visiteurs donc non représentés dans les autres tableaux.

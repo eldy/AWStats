@@ -23,6 +23,7 @@ Fixes:
 - Other minor bugs (814970,823064,823323,831438,836315 ).
 - Fixed bug in counting hits for miscellanous and clusters chart when
   a temporary flush was done on disk during a long update.
+- ExtraSections now works on all records whatever is the error code.
 
 New features/improvements:
 - Increased speed by 10 to 20%.
@@ -49,16 +50,22 @@ New features/improvements:
   tai64nlocal tool.
 - maillogconvert.pl: Added support for MDaemon mail server log files.
   
-
 Other/Documentation:
-- Prepare code for decodeUTFkeys plugin.
+- A httpd.conf sample to configure AWStats is provided.
+- Added example for analyzing awredir.pl hits with ExtraSections.
 - Updated database:
   wget is known as a "grabber" browser, no more as a robots.
   netcaptor and apt-get added in browser database.
 - asmx and aspx added in mime.pm file.
 - Microsoft URL Control added in robot list.
-- Debian icon added.
+- Debian icon and some missing country flags added.
+- Prepare code for decodeUTFkeys plugin.
 - Added Hebrew and Galician language.
+
+Note 1: When migrating to 6.x series, if you use the ExtraSections feature,
+  you must check that the parameter(s) ExtraSectionConditionX use a full
+  REGEX syntax (with 5.x series, this parameter could contain simple string
+  values). If not, feature will be broken.
 
 
 5.9
@@ -96,7 +103,6 @@ New features/improvements:
   plugins separated by comma.
 - Support mail errors for qmail log files.
 - Added the -diricons option from awstats_buildstaticpages.pl
-
 
 Other/Documentation:
 - Added rpm, deb and msi mime types

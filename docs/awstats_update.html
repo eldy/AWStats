@@ -47,11 +47,15 @@ be in old config files, AWStats will use default values to work as it did when t
 did not exists, so there is no way to add them, only if you want to use differently the new
 feature.<br>
 <br>
+<u>Note:</u> When migrating to 6.x series, if you use the ExtraSections feature,
+you must check that the parameter(s) ExtraSectionConditionX use a full REGEX syntax (with 5.x series, this
+parameter could contain simple string values). If not, feature will be broken.<br>
+<br>
 - <b>Your old analyzed data should not be lost</b> since your 'history files' are saved in the
 directory defined in DirData parameter in your AWStats config file and 'history files' format is
 compatible with each new version of AWStats since 5.x series. If you upgrade from 3.x or 4.x
-series to 5.x, 6.x or higher, AWStats will still be able to 'read' your old history files,
-however a warning will appear to ask you to run the 'migrate' process on your old data files.
+series to 5.x, 6.x or higher, AWStats will still be able to 'read' your old history files but
+a warning will appear to ask you to run the 'migrate' process on your old data files.
 Just run the command that will appear in warning message.
 This warning will appear only after upgrade from 3.x or 4.x series to a 5.x, 6.x or higher version
 and only if 'migrate' is necessary.<br>

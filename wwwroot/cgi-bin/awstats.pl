@@ -14,7 +14,7 @@ use strict;no strict "refs";
 use Time::Local;	# use Time::Local 'timelocal_nocheck' is faster but not supported by all Time::Local modules
 use Socket;
 
-
+$|=1;
 
 #------------------------------------------------------------------------------
 # Defines
@@ -175,12 +175,13 @@ $AddDataArrayMonthStats, $AddDataArrayShowDaysOfMonthStats, $AddDataArrayShowDay
 (1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1);
 use vars qw/
 $AllowFullYearView 
-$LevelForRobotsDetection $LevelForBrowsersDetection $LevelForOSDetection $LevelForRefererAnalyze
+$LevelForRobotsDetection $LevelForWormsDetection $LevelForBrowsersDetection $LevelForOSDetection $LevelForRefererAnalyze
 $LevelForFileTypesDetection $LevelForSearchEnginesDetection $LevelForKeywordsDetection
 /;
-($AllowFullYearView, $LevelForRobotsDetection, $LevelForBrowsersDetection, $LevelForOSDetection, $LevelForRefererAnalyze,
+($AllowFullYearView,
+$LevelForRobotsDetection, $LevelForWormsDetection, $LevelForBrowsersDetection, $LevelForOSDetection, $LevelForRefererAnalyze,
 $LevelForFileTypesDetection, $LevelForSearchEnginesDetection, $LevelForKeywordsDetection)=
-(2,2,2,2,2,2,2,2);
+(2,2,2,2,2,2,2,2,2);
 use vars qw/
 $DirLock $DirCgi $DirConfig $DirData $DirIcons $DirLang $AWScript $ArchiveFileName
 $AllowAccessFromWebToFollowingIPAddresses $HTMLHeadSection $HTMLEndSection $LinksToWhoIs $LinksToIPWhoIs
@@ -1483,6 +1484,7 @@ sub Check_Config {
 	if ($DecodeUA !~ /[0-1]/)						{ $DecodeUA=0; }
 	$MiscTrackerUrl||=quotemeta('/js/awstats_misc_tracker.js');
 	# Optional accuracy setup section
+	if ($LevelForWormsDetection !~ /^\d+/)       	{ $LevelForWormsDetection=2; }
 	if ($LevelForRobotsDetection !~ /^\d+/)       	{ $LevelForRobotsDetection=2; }
 	if ($LevelForBrowsersDetection !~ /^\d+/)     	{ $LevelForBrowsersDetection=2; }
 	if ($LevelForOSDetection !~ /^\d+/)    			{ $LevelForOSDetection=2; }
@@ -1531,7 +1533,7 @@ sub Check_Config {
 	if ($AddDataArrayShowDaysOfWeekStats !~ /[01]/)       	{ $AddDataArrayShowDaysOfWeekStats=1; }
 	if ($AddDataArrayShowHoursStats !~ /[01]/)          	{ $AddDataArrayShowHoursStats=1; }
 	my @maxnboflist=('Domain','HostsShown','LoginShown','RobotShown','WormsShown','PageShown','OsShown','BrowsersShown','ScreenSizesShown','RefererShown','KeyphrasesShown','KeywordsShown','EMailsShown');
-	my @maxnboflistdefaultval=(10,10,10,10,10,10,10,10,5,10,10,10,20);
+	my @maxnboflistdefaultval=(10,10,10,10,5,10,10,10,5,10,10,10,20);
 	foreach my $i (0..(@maxnboflist-1)) {
 		if (! $MaxNbOf{$maxnboflist[$i]} || $MaxNbOf{$maxnboflist[$i]} !~ /^\d+$/ || $MaxNbOf{$maxnboflist[$i]}<1) 	{ $MaxNbOf{$maxnboflist[$i]}=$maxnboflistdefaultval[$i]; }
 	}
@@ -1597,17 +1599,23 @@ sub Check_Config {
 		foreach my $conditioncouple (split(/\s\|\s/, $ExtraCondition[$extranum])) {
 	 		my ($conditiontype, $conditiontypeval)=split(/,/,$conditioncouple,2);
 	 		$ExtraConditionType[$extranum][$part]=$conditiontype;
-	 		$ExtraConditionTypeVal[$extranum][$part]=($URLNotCaseSensitive?lc($conditiontypeval):$conditiontypeval);
+			if ($conditiontypeval =~ /^REGEX\[(.*)\]$/i) { $conditiontypeval=$1; }
+			#else { $conditiontypeval=quotemeta($conditiontypeval); }
+	 		$ExtraConditionTypeVal[$extranum][$part]=qr/$conditiontypeval/i;
 			$part++;
 	 	}
 		$part=0;
 		foreach my $rowkeycouple (split(/\s\|\s/, $ExtraFirstColumnValues[$extranum])) {
 	 		my ($rowkeytype, $rowkeytypeval)=split(/,/,$rowkeycouple,2);
 	 		$ExtraFirstColumnValuesType[$extranum][$part]=$rowkeytype;
-	 		$ExtraFirstColumnValuesTypeVal[$extranum][$part]=($URLNotCaseSensitive?lc($rowkeytypeval):$rowkeytypeval);
+			if ($rowkeytype =~ /^REGEX\[(.*)\]$/i) { $rowkeytype=$1; }
+			#else { $rowkeytype=quotemeta($rowkeytype); }
+	 		$ExtraFirstColumnValuesTypeVal[$extranum][$part]=qr/$rowkeytypeval/i;
 			$part++;
 	 	}
 	}
+
+
 
 	# Show definitive value for major parameters
 	if ($Debug) {
@@ -4189,10 +4197,10 @@ sub IsAscii {
 	my $string=shift;
 	if ($Debug) { debug("IsAscii($string)",5); }
 	if ($string =~ /^[\w\+\-\/\\\.%,;:=\"\'&?!\s]+$/) {
-		if ($Debug) { debug(" Yes",5); }
+		if ($Debug) { debug(" Yes",6); }
 		return 1;		# Only alphanum chars (and _) or + - / \ . % , ; : = " ' & ? space \t
 	}
-	if ($Debug) { debug(" No",5); }
+	if ($Debug) { debug(" No",6); }
 	return 0;
 }
 
@@ -5270,8 +5278,9 @@ if ($FrameName ne 'index') {
 	if ($FrameName ne 'mainleft') {
 		my %datatoload=();
 		if ($UpdateStats) {				# If update
-			if ($LevelForFileTypesDetection<2)	{ $datatoload{'mime'}=1; }	# Only if need to filter on known extensions
+			if ($LevelForFileTypesDetection<2)	{ $datatoload{'mime'}=1; }		# Only if need to filter on known extensions
 			if ($LevelForRobotsDetection) 		{ $datatoload{'robots'}=1; }	# ua
+			if ($LevelForWormsDetection) 		{ $datatoload{'worms'}=1; }		# url
 			if ($LevelForBrowsersDetection)		{ $datatoload{'browsers'}=1; }	# ua
 			if ($LevelForOSDetection)			{ $datatoload{'operating_systems'}=1; }	# ua
 			if ($LevelForRefererAnalyze)		{ $datatoload{'search_engines'}=1; }	# referer
@@ -5282,6 +5291,7 @@ if ($FrameName ne 'index') {
 			if ($ShowDomainsStats) 				{ $datatoload{'domains'}=1; }
 			if ($ShowFileTypesStats) 			{ $datatoload{'mime'}=1; }
 			if ($ShowRobotsStats) 				{ $datatoload{'robots'}=1; }
+			if ($ShowWormsStats) 				{ $datatoload{'worms'}=1; }
 			if ($ShowBrowsersStats) 			{ $datatoload{'browsers'}=1; }
 			if ($ShowOSStats) 					{ $datatoload{'operating_systems'}=1; }
 			if ($ShowOriginStats) 				{ $datatoload{'search_engines'}=1; }
@@ -5561,24 +5571,26 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 	my @field=();
 	my $counterforflushtest=0;
 	my $qualifdrop='';
+	my $countedtraffic=0;
 	# Reset chrono for benchmark (first call to GetDelaySinceStart)
 	&GetDelaySinceStart(1);
 	if (! scalar keys %HTMLOutput) { print "Phase 1 : First bypass old records, searching new record...\n"; }
 
 	# Can we try a direct seek access in log ?
+	my $line;
 	if ($LastLine && $LastLineNumber && $LastLineOffset && $LastLineChecksum) {
 		# Try a direct seek access to save time
 		if ($Debug) { debug("Try a direct access to LastLine=$LastLine, LastLineNumber=$LastLineNumber, LastLineOffset=$LastLineOffset, LastLineChecksum=$LastLineChecksum"); }
 		seek(LOG,$LastLineOffset,0);
-		if ($_=<LOG>) {
-			chomp $_; s/\r$//;
-			@field=map(/$PerlParsingFormat/,$_);
+		if ($line=<LOG>) {
+			chomp $line; $line =~ s/\r$//;
+			@field=map(/$PerlParsingFormat/,$line);
 			if ($Debug) {
 				my $string='';
 				foreach (0..@field-1) {	$string.="$fieldlib[$_]=$field[$_] "; }
 				debug(" Read line after direct access: $string",1);
 			}
-			my $checksum=&CheckSum($_);
+			my $checksum=&CheckSum($line);
 			debug(" LastLineChecksum=$LastLineChecksum, Read line checksum=$checksum",1);
 			if ($checksum == $LastLineChecksum ) {
 				if (! scalar keys %HTMLOutput) { print "Direct access after last updated record successfull (after line $LastLineNumber)\n"; }
@@ -5610,9 +5622,9 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 		$lastlineoffset=0;
 		$lastlineoffsetnext=0;
 	}
-	
-	while (<LOG>) {
-		chomp $_; s/\r$//;
+
+	while ($line=<LOG>) {
+		chomp $line; $line =~ s/\r$//;
 		if ($UpdateFor && $NbOfLinesParsed >= $UpdateFor) { last; }
 		$NbOfLinesParsed++;
 
@@ -5626,15 +5638,15 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 		}
 
 		# Parse line record to get all required fields
-		if (! (@field=map(/$PerlParsingFormat/,$_))) {
+		if (! (@field=map(/$PerlParsingFormat/,$line))) {
 			$NbOfLinesCorrupted++;
 			if ($ShowCorrupted) {
-				if ($_ =~ /^#/ || $_ =~ /^!/) { print "Corrupted record line ".($lastlinenumber+$NbOfLinesParsed)." (comment line): $_\n"; }
-				elsif ($_ =~ /^\s*$/) { print "Corrupted record line ".($lastlinenumber+$NbOfLinesParsed)." (blank line)\n"; }
-				else { print "Corrupted record line ".($lastlinenumber+$NbOfLinesParsed)." (record format does not match LogFormat parameter): $_\n"; }
+				if ($line =~ /^#/ || $line =~ /^!/) { print "Corrupted record line ".($lastlinenumber+$NbOfLinesParsed)." (comment line): $line\n"; }
+				elsif ($line =~ /^\s*$/) { print "Corrupted record line ".($lastlinenumber+$NbOfLinesParsed)." (blank line)\n"; }
+				else { print "Corrupted record line ".($lastlinenumber+$NbOfLinesParsed)." (record format does not match LogFormat parameter): $line\n"; }
 			}
-			if ($NbOfLinesParsed >= $NbOfLinesForCorruptedLog && $NbOfLinesParsed == $NbOfLinesCorrupted) { error("Format error",$_,$LogFile); }	# Exit with format error
-			if ($_ =~ /^__end_of_file__/) { last; }	# For test purpose only
+			if ($NbOfLinesParsed >= $NbOfLinesForCorruptedLog && $NbOfLinesParsed == $NbOfLinesCorrupted) { error("Format error",$line,$LogFile); }	# Exit with format error
+			if ($line =~ /^__end_of_file__/) { last; }	# For test purpose only
 			next;
 		}
 
@@ -5653,7 +5665,7 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 			}
 			if ($skip) {
 				$NbOfLinesDropped++;
-				if ($ShowDropped) { print "Dropped record (virtual hostname '$field[$pos_vh]' does not match SiteDomain='$SiteDomain' nor HostAliases parameters): $_\n"; }
+				if ($ShowDropped) { print "Dropped record (virtual hostname '$field[$pos_vh]' does not match SiteDomain='$SiteDomain' nor HostAliases parameters): $line\n"; }
 				next;
 			}
 		}
@@ -5678,7 +5690,7 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 		}
 		else {
 			$NbOfLinesDropped++;
-			if ($ShowDropped) { print "Dropped record (method/protocol '$field[$pos_method]' not qualified in a file with LogType=$LogType): $_\n"; }
+			if ($ShowDropped) { print "Dropped record (method/protocol '$field[$pos_method]' not qualified when LogType=$LogType): $line\n"; }
 			next;
 		}
 		
@@ -5701,7 +5713,7 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 		#-----------------------
 		if ($timerecord < 10000000000000 || $timerecord > $tomorrowtime) {
 			$NbOfLinesCorrupted++;
-			if ($ShowCorrupted) { print "Corrupted record (invalid date, timerecord=$timerecord): $_\n"; }
+			if ($ShowCorrupted) { print "Corrupted record (invalid date, timerecord=$timerecord): $line\n"; }
 			next;		# Should not happen, kept in case of parasite/corrupted line
 		}
 		if ($NewLinePhase) {
@@ -5709,7 +5721,7 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 			if ($timerecord < ($LastLine - $NOTSORTEDRECORDTOLERANCE)) {
 				# Should not happen, kept in case of parasite/corrupted old line
 				$NbOfLinesCorrupted++;
-				if ($ShowCorrupted) { print "Corrupted record (date $timerecord lower than $LastLine-$NOTSORTEDRECORDTOLERANCE): $_\n"; } next;
+				if ($ShowCorrupted) { print "Corrupted record (date $timerecord lower than $LastLine-$NOTSORTEDRECORDTOLERANCE): $line\n"; } next;
 			}
 		}
 		else {
@@ -5754,8 +5766,8 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 		elsif (@OnlyUserAgents && ! &OnlyUserAgent($field[$pos_agent]))  { $qualifdrop="Dropped record (user agent '$field[$pos_agent]' not qualified by OnlyUserAgents)"; }
 		if ($qualifdrop) {
 			$NbOfLinesDropped++;
-			if ($Debug) { debug("$qualifdrop: $_",4); }
-			if ($ShowDropped) { print "$qualifdrop: $_\n"; }
+			if ($Debug) { debug("$qualifdrop: $line",4); }
+			if ($ShowDropped) { print "$qualifdrop: $line\n"; }
 			$qualifdrop='';
 			next;
 		}
@@ -5769,12 +5781,13 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 			# A new month to process
 			if ($lastprocessedmonth) {
 				# We save data of processed month
-				&Read_History_With_TmpUpdate($lastprocessedyear,$lastprocessedmonth,1,1,"all",($lastlinenumber+$NbOfLinesParsed),$lastlineoffset,&CheckSum($_));
+				&Read_History_With_TmpUpdate($lastprocessedyear,$lastprocessedmonth,1,1,"all",($lastlinenumber+$NbOfLinesParsed),$lastlineoffset,&CheckSum($line));
 				$counterforflushtest=0;	# We reset counterforflushtest
 			}
 			$lastprocessedyearmonth=sprintf("%04i%02i",$lastprocessedyear=$yearrecord,$lastprocessedmonth=$monthrecord);
 		}
 
+		$countedtraffic=0;
 		$NbOfNewLines++;
 
 		# Convert $field[$pos_size]
@@ -5782,7 +5795,7 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 
 		# Check misc tracker (must be before return code)
 		#------------------------------------------------
-		if ($field[$pos_url] =~ /$MiscTrackerUrl/) {
+		if ($field[$pos_url] =~ /$MiscTrackerUrl/o) {
 			my $query=$field[$pos_url];
 			if ($pos_query >=0 && $field[$pos_query]) { $query=$field[$pos_query]; } # For this fucking IIS in pos_query mode
 			my $foundparam=0;
@@ -5807,48 +5820,47 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 				# If error not on root, another hit will be made on root. If not MSIE, hit are made not only for "Adding".
 				$_misc_h{'AddToFavourites'}++;	# Hit on favicon on root or without error, we count it
 			}
-			# TODO Add option in the ShowFaviconInURL to exclude favicon from output. This allow to remove this.
-			next;
+			$countedtraffic=1;	# favicon is the only case not counted anywhere
 		}
-		
+
+		# Analyze: Worms
+		#---------------
+		if ($LevelForWormsDetection) {
+
+
+#			$countedtraffic=1;
+		}
+				
 		# Check return status code
 		#-------------------------
+		if (! $countedtraffic) {
 		if ($LogType eq 'W' || $LogType eq 'S') {		# HTTP record or Stream record
 			if ($ValidHTTPCodes{$field[$pos_code]}) {	# Code is valid
 				if ($field[$pos_code] == 304) { $field[$pos_size]=0; }
 			}
 			else {										# Code is not valid
-				if ($field[$pos_code] =~ /^\d\d\d$/) {  # Keep error code and next
-					$_errors_h{$field[$pos_code]}++;
-					$_errors_k{$field[$pos_code]}+=int($field[$pos_size]);
-					foreach my $code (keys %TrapInfosForHTTPErrorCodes) {
-						if ($field[$pos_code] == $code) {
-							my $newurl=substr($field[$pos_url],0,$MaxLengthOfStoredURL);
-							$newurl =~ s/[$URLQuerySeparators].*$//;
-							$_sider404_h{$newurl}++;
-							my $newreferer=$field[$pos_referer];
-							if (! $URLReferrerWithQuery) { $newreferer =~ s/[$URLQuerySeparators].*$//; }
-							$_referer404_h{$newurl}=$newreferer;
-							last;
-						}
-					}
-					next;
-				}
-				else {									# Bad format record (should not happen but when using MSIndex server), next
-					# Second test avoid error when using MS IndexServer that returns non standard HTTP code on 1 char
-					if ($field[$pos_code] !~ /^\d$/) { 
-						$NbOfLinesCorrupted++; $NbOfNewLines--;
-						if ($ShowCorrupted) { print "Corrupted record (HTTP code not on 3 digits): $_\n"; }
-						next;
+				if ($field[$pos_code] !~ /^\d\d\d$/) { $field[$pos_code]=999; }
+				$_errors_h{$field[$pos_code]}++;
+				$_errors_k{$field[$pos_code]}+=int($field[$pos_size]);
+				foreach my $code (keys %TrapInfosForHTTPErrorCodes) {
+					if ($field[$pos_code] == $code) {
+						my $newurl=substr($field[$pos_url],0,$MaxLengthOfStoredURL);
+						$newurl =~ s/[$URLQuerySeparators].*$//;
+						$_sider404_h{$newurl}++;
+						my $newreferer=$field[$pos_referer];
+						if (! $URLReferrerWithQuery) { $newreferer =~ s/[$URLQuerySeparators].*$//; }
+						$_referer404_h{$newurl}=$newreferer;
+						last;
 					}
 				}
+				$countedtraffic=1;
 			}
 		}
 		elsif ($LogType eq 'M') {						# Mail record
 			if (! $ValidSMTPCodes{$field[$pos_code]}) {	# Code is not valid
 				$_errors_h{$field[$pos_code]}++;
 				#$_errors_k{$field[$pos_code]}+=int($field[$pos_size]);	# Useless since pos_size is often 0 or ? when error
-				next;	# Next log record
+				$countedtraffic=1;
 			}
 		}
 		elsif ($LogType eq 'F') {						# FTP record
@@ -5869,7 +5881,7 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 						if ($UserAgent =~ /$_/) {
 							my $bot=&UnCompileRegex($_);
 							$TmpRobot{$UserAgent}=$uarobot="$bot";	# Last time, we won't search if robot or not. We know it is.
-							if ($Debug) { debug(" UserAgent '$UserAgent' is added to TmpRobot with value '$bot'",2); }
+							if ($Debug) { debug("  UserAgent '$UserAgent' is added to TmpRobot with value '$bot'",2); }
 							last;
 						}
 					}
@@ -5879,28 +5891,30 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 				}
 				if ($uarobot ne '-') {
 					# If robot, we stop here
-					if ($Debug) { debug(" UserAgent '$UserAgent' contains robot ID '$uarobot'",2); }
+					if ($Debug) { debug("  UserAgent '$UserAgent' contains robot ID '$uarobot'",2); }
 					$_robot_h{$uarobot}++;
 					$_robot_k{$uarobot}+=int($field[$pos_size]);
 					$_robot_l{$uarobot}=$timerecord;
 					if ($field[$pos_url] =~ /$regrobot/o) { $_robot_r{$uarobot}++; }
-					next;
+					$countedtraffic=1;
 				}
 			}
 		}
-		# It's not a known robot or robot detection disabled
+		# It's not a known robot or robot detection disabled. Check if hit on robots.txt file
 		if ($field[$pos_url] =~ /$regrobot/o) {
+			if ($Debug) { debug("  It's an unknown robot",2); }
 			$_robot_h{'unknown'}++;
 			$_robot_k{'unknown'}+=int($field[$pos_size]);
 			$_robot_l{'unknown'}=$timerecord;
 			$_robot_r{'unknown'}++;
-			next;
+			$countedtraffic=1;
+		}
 		}
 
-		# Canonize and clean target URL and referrer URL
-		# to keep a clean $field[$pos_url]
-		# and to store original value for urlwithnoquery, tokenquery and standalonequery
-		#-------------------------------------------------------------------------------
+		# Define a clean target URL and referrer URL
+		# We keep a clean $field[$pos_url] and
+		# we store original value for urlwithnoquery, tokenquery and standalonequery
+		#---------------------------------------------------------------------------
 		if ($URLNotCaseSensitive) { $field[$pos_url]=lc($field[$pos_url]); }
 		# Possible URL syntax for $field[$pos_url]: /mydir/mypage.ext?param1=x&param2=y#aaa, /mydir/mypage.ext#aaa, /
 		my $urlwithnoquery; my $tokenquery; my $standalonequery; my $anchor='';
@@ -5935,7 +5949,7 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 					foreach my $p (split(/&/,$standalonequery)) {
 						my $found=0;
 						foreach (@URLWithQueryWithout) {
-							debug("  Recherche de '$_=' dans param '$p'");
+							#debug("  Check if '$_=' is param '$p' to remove it from query",5);
 							if ($URLNotCaseSensitive) { if ($p =~ /^$_=/i) { $found=1; last; } }
 							else { if ($p =~ /^$_=/) { $found=1; last; } }
 						}
@@ -5961,8 +5975,8 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 		# Here now tokenquery is '' or '?' or ';'
 		# Here now standalonequery is '' or 'param1=x'
 
-		# Analyze: File type - Compression
-		#-----------------------------------
+		# Define page and extension
+		#--------------------------
 		my $PageBool=1;
 		# Extension
 		my $extension;
@@ -5973,6 +5987,10 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 		else {
 			$extension='Unknown';
 		}
+
+		# Analyze: File type - Compression
+		#---------------------------------
+		if (! $countedtraffic) {
 		if ($LevelForFileTypesDetection) {
 			$_filetypes_h{$extension}++;
 			$_filetypes_k{$extension}+=int($field[$pos_size]);	# TODO can cause a warning
@@ -6026,21 +6044,14 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 			$_login_k{$field[$pos_logname]}+=int($field[$pos_size]);			#Count accesses for page (kb)
 			$_login_l{$field[$pos_logname]}=$timerecord;
 		}
-
-		# Check cluster
-		#--------------
-		if ($pos_cluster>=0) {
-			if ($PageBool) {
-				$_cluster_p{$field[$pos_cluster]}++;							#Count accesses for page (page)
-			}
-			$_cluster_h{$field[$pos_cluster]}++;								#Count accesses for page (hit)
-			$_cluster_k{$field[$pos_cluster]}+=int($field[$pos_size]);			#Count accesses for page (kb)
 		}
-
+		
 		# Do DNS lookup
 		#--------------
 		my $Host=$field[$pos_host];
 		my $HostResolved='';
+
+		if (! $countedtraffic) {
 		my $ip=0;
 		if ($DNSLookup) {			# DNS lookup is 1 or 2
 			if ($Host =~ /$regipv4/o) { $ip=4; }	# IPv4
@@ -6488,6 +6499,17 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 			$_emailr_k{lc($field[$pos_emailr])}+=int($field[$pos_size]);			#Count accesses for receiver email (kb)
 			$_emailr_l{lc($field[$pos_emailr])}=$timerecord;
 		}
+		}
+
+		# Check cluster
+		#--------------
+		if ($pos_cluster>=0) {
+			if ($PageBool) {
+				$_cluster_p{$field[$pos_cluster]}++;							#Count accesses for page (page)
+			}
+			$_cluster_h{$field[$pos_cluster]}++;								#Count accesses for page (hit)
+			$_cluster_k{$field[$pos_cluster]}+=int($field[$pos_size]);			#Count accesses for page (kb)
+		}
 
 		# Analyze: Extra
 		#---------------
@@ -6498,26 +6520,26 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
  			my $conditionok=0;
  			foreach my $condnum (0..@{$ExtraConditionType[$extranum]}-1) {
  				my $conditiontype=$ExtraConditionType[$extranum][$condnum];
- 				my $conditiontypeval=qr/$ExtraConditionTypeVal[$extranum][$condnum]/i;
+ 				my $conditiontypeval=$ExtraConditionTypeVal[$extranum][$condnum];
  				if ($conditiontype eq 'URL') {
 					if ($Debug) { debug("  Check condition '$conditiontype' must contain '$conditiontypeval' in $urlwithnoquery.",5); }
- 					if ($urlwithnoquery =~ /$conditiontypeval/o) { $conditionok=1; last; }
+ 					if ($urlwithnoquery =~ /$conditiontypeval/) { $conditionok=1; last; }
  				}
  				elsif ($conditiontype eq 'QUERY_STRING') {
 					if ($Debug) { debug("  Check condition '$conditiontype' must contain '$conditiontypeval' in $standalonequery.",5); }
- 					if ($standalonequery =~ /$conditiontypeval/o) {	$conditionok=1; last; }
+ 					if ($standalonequery =~ /$conditiontypeval/) {	$conditionok=1; last; }
  				}
  				elsif ($conditiontype eq 'REFERER') {
 					if ($Debug) { debug("  Check condition '$conditiontype' must contain '$conditiontypeval' in $field[$pos_referer]",5); }
- 					if ($field[$pos_referer] =~ /$conditiontypeval/o) { $conditionok=1; last; }
+ 					if ($field[$pos_referer] =~ /$conditiontypeval/) { $conditionok=1; last; }
  				}
  				elsif ($conditiontype eq 'UA') {
 					if ($Debug) { debug("  Check condition '$conditiontype' must contain '$conditiontypeval' in $field[$pos_agent]",5); }
- 					if ($field[$pos_agent] =~ /$conditiontypeval/o) { $conditionok=1; last; }
+ 					if ($field[$pos_agent] =~ /$conditiontypeval/) { $conditionok=1; last; }
  				}
  				elsif ($conditiontype eq 'HOST') {
 					if ($Debug) { debug("  Check condition '$conditiontype' must contain '$conditiontypeval' in $field[$pos_host]",5); }
- 					if ($HostResolved =~ /$conditiontypeval/o) { $conditionok=1; last; }
+ 					if ($HostResolved =~ /$conditiontypeval/) { $conditionok=1; last; }
  				}
  				else { error("Wrong value of parameter ExtraSectionCondition$extranum"); }
  			}
@@ -6530,21 +6552,22 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 			my $rowkeyok=0;
  			foreach my $rowkeynum (0..@{$ExtraFirstColumnValuesType[$extranum]}-1) {
  				my $rowkeytype=$ExtraFirstColumnValuesType[$extranum][$rowkeynum];
- 				my $rowkeytypeval=qr/$ExtraFirstColumnValuesTypeVal[$extranum][$rowkeynum]/i;
+ 				my $rowkeytypeval=$ExtraFirstColumnValuesTypeVal[$extranum][$rowkeynum];
 				if ($rowkeytype eq 'URL') { 
-					if ($urlwithnoquery =~ /$rowkeytypeval/o) { $rowkeyval = "$1"; $rowkeyok = 1; last; }
+					if ($urlwithnoquery =~ /$rowkeytypeval/) { $rowkeyval = "$1"; $rowkeyok = 1; last; }
 				} 
  				elsif ($rowkeytype eq 'QUERY_STRING') {
- 					if ($standalonequery =~ /$rowkeytypeval/o) { $rowkeyval = "$1"; $rowkeyok = 1; last; }
+					if ($Debug) { debug("  Extract value from '$standalonequery' with regex '$rowkeytypeval'.",5); }
+ 					if ($standalonequery =~ /$rowkeytypeval/) { $rowkeyval = "$1"; $rowkeyok = 1; last; }
  				}
  				elsif ($rowkeytype eq 'REFERER') {
- 					if ($field[$pos_referer] =~ /$rowkeytypeval/o) { $rowkeyval = "$1"; $rowkeyok = 1; last; }
+ 					if ($field[$pos_referer] =~ /$rowkeytypeval/) { $rowkeyval = "$1"; $rowkeyok = 1; last; }
  				}
  				elsif ($rowkeytype eq 'UA') {
- 					if ($field[$pos_agent] =~ /$rowkeytypeval/o) { $rowkeyval = "$1"; $rowkeyok = 1; last; }
+ 					if ($field[$pos_agent] =~ /$rowkeytypeval/) { $rowkeyval = "$1"; $rowkeyok = 1; last; }
  				}
  				elsif ($rowkeytype eq 'HOST') {
- 					if ($HostResolved =~ /$rowkeytypeval/o) { $rowkeyval = "$1"; $rowkeyok = 1; last; }
+ 					if ($HostResolved =~ /$rowkeytypeval/) { $rowkeyval = "$1"; $rowkeyok = 1; last; }
  				}
  				else { error("Wrong value of parameter ExtraSectionFirstColumnValues$extranum"); }
  			}
@@ -6608,14 +6631,14 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 	if ($lastprocessedmonth) {	# TODO: Do not save if we are sure a flush was just already done
 		# Get last line
 		seek(LOG,$lastlineoffset,0);
-		$_=<LOG>;
- 		chomp $_; s/\r$//;
+		my $line=<LOG>;
+ 		chomp $line; $line =~ s/\r$//;
 		if (! $NbOfLinesParsed) {
 			# TODO If there was no lines parsed (log was empty), we only update LastUpdate line with YYYYMMDDHHMMSS 0 0 0 0 0
-			&Read_History_With_TmpUpdate($lastprocessedyear,$lastprocessedmonth,1,1,"all",($lastlinenumber+$NbOfLinesParsed),$lastlineoffset,&CheckSum($_));
+			&Read_History_With_TmpUpdate($lastprocessedyear,$lastprocessedmonth,1,1,"all",($lastlinenumber+$NbOfLinesParsed),$lastlineoffset,&CheckSum($line));
 		}
 		else {
-			&Read_History_With_TmpUpdate($lastprocessedyear,$lastprocessedmonth,1,1,"all",($lastlinenumber+$NbOfLinesParsed),$lastlineoffset,&CheckSum($_));
+			&Read_History_With_TmpUpdate($lastprocessedyear,$lastprocessedmonth,1,1,"all",($lastlinenumber+$NbOfLinesParsed),$lastlineoffset,&CheckSum($line));
 		}
 	}
 
@@ -7751,7 +7774,8 @@ if (scalar keys %HTMLOutput) {
 		&BuildKeyList(MinimumButNoZero(scalar keys %_os_h,500),1,\%_os_h,\%_os_h);
 		my %keysinkeylist=();
 		$max_h=1;
-		OSLOOP: foreach my $key (@keylist) {
+		OSLOOP:
+		foreach my $key (@keylist) {
 			$Total+=$_os_h{$key};
 			if ($_os_h{$key} > $max_h) { $max_h = $_os_h{$key}; }
 			foreach my $family (@OSFamily) { if ($key =~ /^$family/i) { $totalfamily_h{$family}+=$_os_h{$key}; next OSLOOP; } }
@@ -7832,7 +7856,8 @@ if (scalar keys %HTMLOutput) {
 		&BuildKeyList(MinimumButNoZero(scalar keys %_browser_h,500),1,\%_browser_h,\%_browser_h);
 		my %keysinkeylist=();
 		$max_h=1;
-		BROWSERLOOP: foreach my $key (@keylist) {
+		BROWSERLOOP:
+		foreach my $key (@keylist) {
 			$Total+=$_browser_h{$key};
 			if ($_browser_h{$key} > $max_h) { $max_h = $_browser_h{$key}; }
 			foreach my $family (keys %BrowsersFamily) { if ($key =~ /^$family/i) { $totalfamily_h{$family}+=$_browser_h{$key}; next BROWSERLOOP; } }
@@ -8958,7 +8983,7 @@ if (scalar keys %HTMLOutput) {
 			print "$Center<a name=\"sessions\">&nbsp;</a><br />\n";
 			my $title="$Message[117]";
 			&tab_head($title,19,0,'sessions');
-			my $Totals=0; foreach my $key (@SessionsRange) { $average_s+=($_session{$key}||0)*$SessionsAverage{$key}; $Totals+=$_session{$key}||0; }
+			my $Totals=0; foreach (@SessionsRange) { $average_s+=($_session{$_}||0)*$SessionsAverage{$_}; $Totals+=$_session{$_}||0; }
 			if ($Totals) { $average_s=int($average_s/$Totals); }
 			else { $average_s='?'; }
 			print "<tr bgcolor=\"#$color_TableBGRowTitle\"".($TOOLTIPON?" onmouseover=\"ShowTip(1);\" onmouseout=\"HideTip(1);\"":"")."><th>$Message[10]: $TotalVisits - $Message[96]: $average_s s</th><th bgcolor=\"#$color_s\" width=\"80\">$Message[10]</th><th bgcolor=\"#$color_s\" width=\"80\">$Message[15]</th></tr>\n";
@@ -9002,6 +9027,7 @@ if (scalar keys %HTMLOutput) {
 			if ($ShowFileTypesStats =~ /B/i) { print "<th bgcolor=\"#$color_k\" width=\"80\">$Message[75]</th><th bgcolor=\"#$color_k\" width=\"80\">$Message[15]</th>"; }
 			if ($ShowFileTypesStats =~ /C/i) { print "<th bgcolor=\"#$color_k\" width=\"120\">$Message[100]</th><th bgcolor=\"#$color_k\" width=\"120\">$Message[101]</th><th bgcolor=\"#$color_k\" width=\"120\">$Message[99]</th>"; }
 			print "</tr>\n";
+			my $total_con=0; my $total_cre=0;
 			my $count=0;
 			&BuildKeyList($MaxRowsInHTMLOutput,1,\%_filetypes_h,\%_filetypes_h);
 			foreach my $key (@keylist) {
@@ -9023,6 +9049,8 @@ if (scalar keys %HTMLOutput) {
 					if ($_filetypes_gz_in{$key}) {
 						my $percent=int(100*(1-$_filetypes_gz_out{$key}/$_filetypes_gz_in{$key}));
 						printf("<td>%s</td><td>%s</td><td>%s (%s%)</td>",Format_Bytes($_filetypes_gz_in{$key}),Format_Bytes($_filetypes_gz_out{$key}),Format_Bytes($_filetypes_gz_in{$key}-$_filetypes_gz_out{$key}),$percent);
+						$total_con+=$_filetypes_gz_in{$key};
+						$total_cre+=$_filetypes_gz_out{$key};
 					}
 					else {
 						print "<td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>";
@@ -9031,8 +9059,24 @@ if (scalar keys %HTMLOutput) {
 				print "</tr>\n";
 				$count++;
 			}
-			# TODO Add a total
-			
+			# Add total (only usefull if compression is enabled)
+			if ($ShowFileTypesStats =~ /C/i) {	
+				my $colspan=3;
+	 			if ($ShowFileTypesStats =~ /H/i) { $colspan+=2; }
+	 			if ($ShowFileTypesStats =~ /B/i) { $colspan+=2; }
+	 			print "<tr>";
+	 			print "<td class=\"aws\" colspan=\"$colspan\"><b>$Message[98]</b></td>";
+	 			if ($ShowFileTypesStats =~ /C/i) {
+					if ($total_con) {
+						my $percent=int(100*(1-$total_cre/$total_con));
+						printf("<td>%s</td><td>%s</td><td>%s (%s%)</td>",Format_Bytes($total_con),Format_Bytes($total_cre),Format_Bytes($total_con-$total_cre),$percent);
+					}
+					else {
+						print "<td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>";
+					}
+	 			}
+	 			print "</tr>\n";
+			}
 			&tab_end;
 		}
 	
@@ -9695,20 +9739,23 @@ else {
 #     So it's new line approved
 #     If other month/year, create/update tmp file and purge data arrays with
 #       &Read_History_With_TmpUpdate(lastprocessedyear,lastprocessedmonth,UPDATE,PURGE,"all",lastlinenumber,lastlineoffset,CheckSum($_));
-#     Check misc tracker --> next on loop
-#     Check add to favorites --> next on loop
-#     Check status code and complete %_error_, %_sider404 and %_referrer404 --> next on loop
-#     Check robot and complete %_robot --> next on loop
-#     Clean Url and Query (to define urlwithnoquery, tokenquery and standalonequery and $field[$pos_url])
-#     Analyze: File types - Compression
-#     Analyze: Date - Hour - Pages - Hits - Kilo
-#     Analyze: Login
-#     Analyze: Lookup
-#     Analyze: Country
-#     Analyze: Host - Url - Session
-#     Analyze: Browser - OS
-#     Analyze: Referer
-#     Analyze: EMail
+#     Check misc tracker
+#     Check add to favorites --> countedtraffic=1
+#     Check worms --> countedtraffic=1
+#     If (!countedtraffic) Check status code and complete %_error_, %_sider404 and %_referrer404 --> countedtraffic=1
+#     If (!countedtraffic) Check robot and complete %_robot --> countedtraffic=1
+#     Define a clean Url and Query (to define urlwithnoquery, tokenquery and standalonequery and $field[$pos_url])
+#     Define PageBool and extension
+#     If (!countedtraffic) Analyze: File types - Compression
+#     If (!countedtraffic) Analyze: Date - Hour - Pages - Hits - Kilo
+#     If (!countedtraffic) Analyze: Login
+#     If (!countedtraffic) Analyze: Lookup
+#     If (!countedtraffic) Analyze: Country
+#     If (!countedtraffic) Analyze: Host - Url - Session
+#     If (!countedtraffic) Analyze: Browser - OS
+#     If (!countedtraffic) Analyze: Referer
+#     If (!countedtraffic) Analyze: EMail
+#     Analyze: Cluster
 #     Analyze: Extra (must be after 'Clean Url and Query')
 #     If too many records, we flush data arrays with
 #       &Read_History_With_TmpUpdate($lastprocessedyear,$lastprocessedmonth,UPDATE,PURGE,"all",lastlinenumber,lastlineoffset,CheckSum($_));
