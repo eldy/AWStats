@@ -676,7 +676,10 @@
 # Generic root ID
 'robot', 'Unknown robot (identified by \'robot\')',
 'crawl', 'Unknown robot (identified by \'crawl\')',
-'spider', 'Unknown robot (identified by \'spider\')'
+'spider', 'Unknown robot (identified by \'spider\')',
+
+# Unknown robots identified by hit on robots.txt
+'unknown', 'Unknown robot (identified by hit on \'robots.txt\')'
 );
 
 

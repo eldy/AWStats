@@ -296,7 +296,7 @@ use vars qw/
 %_filetypes_h %_filetypes_k %_filetypes_gz_in %_filetypes_gz_out
 %_host_p %_host_h %_host_k %_host_l %_host_s %_host_u
 %_waithost_e %_waithost_l %_waithost_s %_waithost_u
-%_keyphrases %_keywords %_os_h %_pagesrefs_p %_pagesrefs_h %_robot_h %_robot_k %_robot_l
+%_keyphrases %_keywords %_os_h %_pagesrefs_p %_pagesrefs_h %_robot_h %_robot_k %_robot_l %_robot_r
 %_worm_h %_worm_l %_login_h %_login_p %_login_k %_login_l %_screensize_h
 %_misc_p %_misc_h %_misc_k
 %_cluster_p %_cluster_h %_cluster_k
@@ -312,7 +312,7 @@ use vars qw/
 #%_filetypes_h = %_filetypes_k = %_filetypes_gz_in = %_filetypes_gz_out = ();
 #%_host_p = %_host_h = %_host_k = %_host_l = %_host_s = %_host_u = ();
 #%_waithost_e = %_waithost_l = %_waithost_s = %_waithost_u = ();
-#%_keyphrases = %_keywords = %_os_h = %_pagesrefs_p = %_pagesrefs_h = %_robot_h = %_robot_k = %_robot_l = ();
+#%_keyphrases = %_keywords = %_os_h = %_pagesrefs_p = %_pagesrefs_h = %_robot_h = %_robot_k = %_robot_l = %_robot_r = ();
 #%_worm_h = %_worm_l = %_login_h = %_login_p = %_login_k = %_login_l = %_screensize_h = ();
 #%_misc_p = %_misc_h = %_misc_k = ();
 #%_cluster_p = %_cluster_h = %_cluster_k = ();
@@ -1286,7 +1286,7 @@ sub Read_Ref_Data {
 	if (@OSSearchIDOrder != scalar keys %OSHashID) { error("Not same number of records of OSSearchIDOrder (".(@OSSearchIDOrder)." entries) and OSHashID (".(scalar keys %OSHashID)." entries) in OS database. Check your file ".$FilePath{"operating_systems.pm"}); }
 	if (@BrowsersSearchIDOrder != scalar keys %BrowsersHashIDLib) { error("Not same number of records of BrowsersSearchIDOrder (".(@BrowsersSearchIDOrder)." entries) and BrowsersHashIDLib (".(scalar keys %BrowsersHashIDLib)." entries) in Browsers database. Check your file ".$FilePath{"browsers.pm"}); }
 	if ((@SearchEnginesSearchIDOrder_list1+@SearchEnginesSearchIDOrder_list2+@SearchEnginesSearchIDOrder_listgen) != scalar keys %SearchEnginesHashID) { error("Not same number of records of SearchEnginesSearchIDOrder_listx (total is ".(@SearchEnginesSearchIDOrder_list1+@SearchEnginesSearchIDOrder_list2+@SearchEnginesSearchIDOrder_listgen)." entries) and SearchEnginesHashID (".(scalar keys %SearchEnginesHashID)." entries) in Search Engines database. Check your file ".$FilePath{"search_engines.pm"}); }
-	if ((@RobotsSearchIDOrder_list1+@RobotsSearchIDOrder_list2+@RobotsSearchIDOrder_listgen) != scalar keys %RobotsHashIDLib) { error("Not same number of records of RobotsSearchIDOrder_listx (total is ".(@RobotsSearchIDOrder_list1+@RobotsSearchIDOrder_list2+@RobotsSearchIDOrder_listgen)." entries) and RobotsHashIDLib (".(scalar keys %RobotsHashIDLib)." entries) in Robots database. Check your file ".$FilePath{"robots.pm"}); }
+	if ((@RobotsSearchIDOrder_list1+@RobotsSearchIDOrder_list2+@RobotsSearchIDOrder_listgen) != (scalar keys %RobotsHashIDLib) - 1) { error("Not same number of records of RobotsSearchIDOrder_listx (total is ".(@RobotsSearchIDOrder_list1+@RobotsSearchIDOrder_list2+@RobotsSearchIDOrder_listgen)." entries) and RobotsHashIDLib (".(scalar keys %RobotsHashIDLib)." entries) in Robots database. Check your file ".$FilePath{"robots.pm"}); }
 }
 
 
@@ -2590,6 +2590,7 @@ sub Read_History_With_TmpUpdate {
 								$_robot_k{$field[0]}+=$field[2];
 								if (! $_robot_l{$field[0]}) { $_robot_l{$field[0]}=int($field[3]); }
 							}
+							if ($field[4]) { $_robot_r{$field[0]}+=$field[4]; }
 						}
 					}
 					$_=<HISTORY>;
@@ -2602,7 +2603,7 @@ sub Read_History_With_TmpUpdate {
 				delete $SectionsToLoad{'robot'};
 				if ($SectionsToSave{'robot'}) {
 					Save_History('robot',$year,$month); delete $SectionsToSave{'robot'};
-					if ($withpurge) { %_robot_h=(); %_robot_k=(); %_robot_l=(); }
+					if ($withpurge) { %_robot_h=(); %_robot_k=(); %_robot_l=(); %_robot_r=(); }
 				}
 				if (! scalar %SectionsToLoad) { debug(" Stop reading history file. Got all we need."); last; }
 				next;
@@ -3387,7 +3388,7 @@ sub Save_History {
 	}
 	if ($sectiontosave eq 'robot') {
 		print HISTORYTMP "\n";
-		print HISTORYTMP "# Robot ID - Hits - Bandwidth - Last visit\n";
+		print HISTORYTMP "# Robot ID - Hits - Bandwidth - Last visit - Hits on robots.txt\n";
 		print HISTORYTMP "# The $MaxNbOf{'RobotShown'} first Hits must be first (order not required for others)\n";
 		$ValueInFile{$sectiontosave}=tell HISTORYTMP;
 		print HISTORYTMP "BEGIN_ROBOT ".(scalar keys %_robot_h)."\n";
@@ -3396,11 +3397,11 @@ sub Save_History {
 		my %keysinkeylist=();
 		foreach my $key (@keylist) {
 			$keysinkeylist{$key}=1;
-			print HISTORYTMP "$key ".int($_robot_h{$key})." ".int($_robot_k{$key})." $_robot_l{$key}\n";
+			print HISTORYTMP "$key ".int($_robot_h{$key})." ".int($_robot_k{$key})." $_robot_l{$key} ".int($_robot_r{$key})." \n";
 		}
 		foreach my $key (keys %_robot_h) {
 			if ($keysinkeylist{$key}) { next; }
-			print HISTORYTMP "$key ".int($_robot_h{$key})." ".int($_robot_k{$key})." $_robot_l{$key}\n";
+			print HISTORYTMP "$key ".int($_robot_h{$key})." ".int($_robot_k{$key})." $_robot_l{$key} ".int($_robot_r{$key})." \n";
 		}
 		print HISTORYTMP "END_ROBOT\n";
 	}
@@ -3916,7 +3917,7 @@ sub Init_HashArray {
 	%_filetypes_h = %_filetypes_k = %_filetypes_gz_in = %_filetypes_gz_out = ();
 	%_host_p = %_host_h = %_host_k = %_host_l = %_host_s = %_host_u = ();
 	%_waithost_e = %_waithost_l = %_waithost_s = %_waithost_u = ();
-	%_keyphrases = %_keywords = %_os_h = %_pagesrefs_p = %_pagesrefs_h = %_robot_h = %_robot_k = %_robot_l = ();
+	%_keyphrases = %_keywords = %_os_h = %_pagesrefs_p = %_pagesrefs_h = %_robot_h = %_robot_k = %_robot_l = %_robot_r = ();
 	%_worm_h = %_worm_l = %_login_p = %_login_h = %_login_k = %_login_l = %_screensize_h = ();
  	%_misc_p = %_misc_h = %_misc_k = ();
 	%_cluster_p = %_cluster_h = %_cluster_k = ();
@@ -5502,23 +5503,24 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 	@OSSearchIDOrder=map{qr/$_/i} @OSSearchIDOrder;
 	@SearchEnginesSearchIDOrder=map{qr/$_/i} @SearchEnginesSearchIDOrder;
 	my $defquoted=quotemeta("/$DefaultFile[0]");
-	my ($sregtruncanchor,$sregtruncurl,$sregext,$sregdefault,$segipv4,$segipv6)=();
-	my ($segvermsie,$segvernetscape,$segvermozilla,$segother1,$segother2,$segreferer,$segreferernoquery)=();
-	$sregtruncanchor=qr/#(\w*)$/;
-	$sregtruncurl=qr/([$URLQuerySeparators])(.*)$/;
-	$sregext=qr/\.(\w{1,6})$/;
-	if ($URLNotCaseSensitive) { $sregdefault=qr/$defquoted$/i; }
-	else { $sregdefault=qr/$defquoted$/; }
-	$segipv4=qr/^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/;
-	$segipv6=qr/^[0-9A-F]*:/i;
-	$segvermsie=qr/msie([+_ ]|)([\d\.]*)/i;
-	$segvernetscape=qr/netscape.?\/([\d\.]*)/i;
-	$segvermozilla=qr/mozilla(\/|)([\d\.]*)/i;
-	$segother1=qr/webtv|omniweb|opera/i;
-	$segother2=qr/gecko|compatible|opera|galeon|safari/i;
-	$segreferer=qr/^(\w+):\/\/([^\/:]+)(:\d+|)/;
-	$segreferernoquery=qr/^([^$URLQuerySeparators]+)/;
-
+	my ($regrobot,$regtruncanchor,$regtruncurl,$regext,$regdefault,$regipv4,$regipv6)=();
+	my ($regvermsie,$regvernetscape,$regvermozilla,$regother1,$regother2,$regreferer,$regreferernoquery)=();
+	$regrobot=qr/^\/robots\.txt$/i;
+	$regtruncanchor=qr/#(\w*)$/;
+	$regtruncurl=qr/([$URLQuerySeparators])(.*)$/;
+	$regext=qr/\.(\w{1,6})$/;
+	if ($URLNotCaseSensitive) { $regdefault=qr/$defquoted$/i; }
+	else { $regdefault=qr/$defquoted$/; }
+	$regipv4=qr/^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/;
+	$regipv6=qr/^[0-9A-F]*:/i;
+	$regvermsie=qr/msie([+_ ]|)([\d\.]*)/i;
+	$regvernetscape=qr/netscape.?\/([\d\.]*)/i;
+	$regvermozilla=qr/mozilla(\/|)([\d\.]*)/i;
+	$regother1=qr/webtv|omniweb|opera/i;
+	$regother2=qr/gecko|compatible|opera|galeon|safari/i;
+	$regreferer=qr/^(\w+):\/\/([^\/:]+)(:\d+|)/;
+	$regreferernoquery=qr/^([^$URLQuerySeparators]+)/;
+	
 	# Define value of $PerlParsingFormat and @fieldlib
 	&DefinePerlParsingFormat();
 
@@ -5741,11 +5743,6 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 		#----------------------------------------
 		if ($timerecord > $LastLine) { $LastLine = $timerecord; }	# Test should always be true except with not sorted log files
 
-		# Skip for robot init
-		if ($field[$pos_url] =~ /^\/robots\.txt$/i) {
-			# TODO. Add robot in a list if URL is robots.txt (Note: robot referer value can be same than a normal browser)
-			$qualifdrop="Dropped record (URL $field[$pos_url] is a robot init check)";
-		}
 		# Skip for some client host IP addresses, some URLs, other URLs
 		elsif (@SkipHosts && (&SkipHost($field[$pos_host]) || ($pos_hostr && &SkipHost($field[$pos_host]))))   { $qualifdrop="Dropped record (host $field[$pos_host] not qualified by SkipHosts)"; }
 		elsif (@SkipFiles && &SkipFile($field[$pos_url]))    { $qualifdrop="Dropped record (URL $field[$pos_url] not qualified by SkipFiles)"; }
@@ -5808,6 +5805,7 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 				# If error not on root, another hit will be made on root. If not MSIE, hit are made not only for "Adding".
 				$_misc_h{'AddToFavourites'}++;	# Hit on favicon on root or without error, we count it
 			}
+			# TODO Add option in the ShowFaviconInURL to exclude favicon from output. This allow to remove this.
 			next;
 		}
 		
@@ -5877,28 +5875,37 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 						$TmpRobot{$UserAgent}=$uarobot='-';
 					}
 				}
-				# If robot, we stop here
 				if ($uarobot ne '-') {
+					# If robot, we stop here
 					if ($Debug) { debug(" UserAgent '$UserAgent' contains robot ID '$uarobot'",2); }
 					$_robot_h{$uarobot}++;
 					$_robot_k{$uarobot}+=int($field[$pos_size]);
 					$_robot_l{$uarobot}=$timerecord;
+					if ($field[$pos_url] =~ /$regrobot/o) { $_robot_r{$uarobot}++; }
 					next;
 				}
-
 			}
+		}
+		# It's not a known robot or robot detection disabled
+		if ($field[$pos_url] =~ /$regrobot/o) {
+			$_robot_h{'unknown'}++;
+			$_robot_k{'unknown'}+=int($field[$pos_size]);
+			$_robot_l{'unknown'}=$timerecord;
+			$_robot_r{'unknown'}++;
+			next;
 		}
 
 		# Canonize and clean target URL and referrer URL
-		# to define urlwithnoquery, tokenquery and standalonequery and $field[$pos_url]
-		#-----------------------------------------------
+		# to keep a clean $field[$pos_url]
+		# and to store original value for urlwithnoquery, tokenquery and standalonequery
+		#-------------------------------------------------------------------------------
 		if ($URLNotCaseSensitive) { $field[$pos_url]=lc($field[$pos_url]); }
 		# Possible URL syntax for $field[$pos_url]: /mydir/mypage.ext?param1=x&param2=y#aaa, /mydir/mypage.ext#aaa, /
 		my $urlwithnoquery; my $tokenquery; my $standalonequery; my $anchor='';
-		if ($field[$pos_url] =~ s/$sregtruncanchor//o) { $anchor=$1; }	# Remove and save anchor
+		if ($field[$pos_url] =~ s/$regtruncanchor//o) { $anchor=$1; }	# Remove and save anchor
 		if ($URLWithQuery) {
 			$urlwithnoquery=$field[$pos_url];
-			my $foundparam=($urlwithnoquery =~ s/$sregtruncurl//o);
+			my $foundparam=($urlwithnoquery =~ s/$regtruncurl//o);
 			$tokenquery=$1||'';
 			$standalonequery=$2||'';
 			# For IIS setup, if pos_query is enabled we need to combine the URL to query strings
@@ -5911,20 +5918,18 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 			}
  			if ($foundparam) {
 				# Keep only params that are defined in URLWithQueryWithOnlyFollowingParameters
+				my $newstandalonequery='';
 				if (@URLWithQueryWithOnly) {
-					my $newstandalonequery='';
 					foreach (@URLWithQueryWithOnly) {
 						foreach my $p (split(/&/,$standalonequery)) {
 							if ($URLNotCaseSensitive) { if ($p =~ /^$_=/i) { $newstandalonequery.="$p&"; last; } }
 							else { if ($p =~ /^$_=/) { $newstandalonequery.="$p&"; last; } }
 						}
 					}
-	 				$standalonequery=$newstandalonequery;
-	 				chop $standalonequery;
+	 				chop $newstandalonequery;
 		 		}
 	 			# Remove params that are marked to be ignored in URLWithQueryWithoutFollowingParameters
 				elsif (@URLWithQueryWithout) {
-					my $newstandalonequery='';
 					foreach my $p (split(/&/,$standalonequery)) {
 						my $found=0;
 						foreach (@URLWithQueryWithout) {
@@ -5934,17 +5939,17 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 						}
 						if (! $found) { $newstandalonequery.="$p&"; }
 					}
-	 				$standalonequery=$newstandalonequery;
-	 				chop $standalonequery;
+	 				chop $newstandalonequery;
 				}
+				else { $newstandalonequery=$standalonequery; }
 				# Define query
 				$field[$pos_url]=$urlwithnoquery;
-				if ($standalonequery) { $field[$pos_url].="$tokenquery$standalonequery"; }
+				if ($newstandalonequery) { $field[$pos_url].="$tokenquery$newstandalonequery"; }
 			}
 		}
 		else {
 			# Trunc parameters of URL
-			$field[$pos_url] =~ s/$sregtruncurl//o;
+			$field[$pos_url] =~ s/$regtruncurl//o;
 			$urlwithnoquery=$field[$pos_url];
 			$tokenquery=$1||'';
 			$standalonequery=$2||'';
@@ -5959,7 +5964,7 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 		my $PageBool=1;
 		# Extension
 		my $extension;
-		if ($urlwithnoquery =~ /$sregext/o || ($urlwithnoquery =~ /[\\\/]$/ && $DefaultFile[0] =~ /$sregext/o)) {
+		if ($urlwithnoquery =~ /$regext/o || ($urlwithnoquery =~ /[\\\/]$/ && $DefaultFile[0] =~ /$regext/o)) {
 			$extension=($LevelForFileTypesDetection>=2 || $MimeHashFamily{$1})?lc($1):'Unknown';
 			if ($NotPageList{$extension}) { $PageBool=0; }
 		}
@@ -5991,7 +5996,7 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 		if ($PageBool) {
 			# Replace default page name with / only ('if' is to increase speed when only 1 value in @DefaultFile)
 			if (@DefaultFile > 1) { foreach my $elem (@DefaultFile) { if ($field[$pos_url] =~ s/\/$elem$/\//) { last; } } }
-			else { $field[$pos_url] =~ s/$sregdefault/\//; }
+			else { $field[$pos_url] =~ s/$regdefault/\//; }
 			# FirstTime and LastTime are First and Last human visits (so changed if access to a page)
 			$FirstTime{$lastprocessedyearmonth}||=$timerecord;
 			$LastTime{$lastprocessedyearmonth}=$timerecord;
@@ -6036,8 +6041,8 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 		my $HostResolved='';
 		my $ip=0;
 		if ($DNSLookup) {			# DNS lookup is 1 or 2
-			if ($Host =~ /$segipv4/o) { $ip=4; }	# IPv4
-			elsif ($Host =~ /$segipv6/o) { $ip=6; }						# IPv6
+			if ($Host =~ /$regipv4/o) { $ip=4; }	# IPv4
+			elsif ($Host =~ /$regipv6/o) { $ip=6; }						# IPv6
 			if ($ip) {
 				# Check in static DNS cache file
 				$HostResolved=$MyDNSTable{$Host};
@@ -6055,7 +6060,7 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 						else {
 							if ($ip == 4) {
 								my $lookupresult=gethostbyaddr(pack("C4",split(/\./,$Host)),AF_INET);	# This is very slow, may spend 20 seconds
-								if (! $lookupresult || $lookupresult =~ /$segipv4/o || ! IsAscii($lookupresult)) {
+								if (! $lookupresult || $lookupresult =~ /$regipv4/o || ! IsAscii($lookupresult)) {
 									$TmpDNSLookup{$Host}=$HostResolved='*';
 								}
 								else {
@@ -6092,8 +6097,8 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 			}
 		}
 		else {
-			if ($Host =~ /$segipv4/o) { $HostResolved='*'; $ip=4; }	# IPv4
-			elsif ($Host =~ /$segipv6/o) { $HostResolved='*'; $ip=6; }						# IPv6
+			if ($Host =~ /$regipv4/o) { $HostResolved='*'; $ip=4; }	# IPv4
+			elsif ($Host =~ /$regipv6/o) { $HostResolved='*'; $ip=6; }						# IPv6
 			if ($Debug) { debug("  No DNS lookup asked.",4); }
 		}
 
@@ -6224,17 +6229,17 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 				if (! $uabrowser) {
 					my $found=1;
 					# IE
-					if ($UserAgent =~ /$segvermsie/o && $UserAgent !~ /$segother1/o) {
+					if ($UserAgent =~ /$regvermsie/o && $UserAgent !~ /$regother1/o) {
 						$_browser_h{"msie$2"}++;
 						$TmpBrowser{$UserAgent}="msie$2";
 					}
 					# Netscape 6.x, 7.x ...
-					elsif ($UserAgent =~ /$segvernetscape/o) {
+					elsif ($UserAgent =~ /$regvernetscape/o) {
 						$_browser_h{"netscape$1"}++;
 						$TmpBrowser{$UserAgent}="netscape$1";
 					}
 					# Netscape 3.x, 4.x ...
-					elsif ($UserAgent =~ /$segvermozilla/o && $UserAgent !~ /$segother2/o) {
+					elsif ($UserAgent =~ /$regvermozilla/o && $UserAgent !~ /$regother2/o) {
 						$_browser_h{"netscape$2"}++;
 						$TmpBrowser{$UserAgent}="netscape$2";
 					}
@@ -6323,7 +6328,7 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 				$found=1;
 			}
 			else {
-				$field[$pos_referer] =~ /$segreferer/o;
+				$field[$pos_referer] =~ /$regreferer/o;
 				my $refererprot=$1;
 				my $refererserver=$2.($3 eq ':80'?'':$3);	# refererserver is www.xxx.com or www.xxx.com:81 but not www.xxx.com:80
 
@@ -6436,7 +6441,7 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 						}
 						else {
 							# We discard query for referer
-							if ($field[$pos_referer]=~/$segreferernoquery/o) {
+							if ($field[$pos_referer]=~/$regreferernoquery/o) {
 								if ($PageBool) { $_pagesrefs_p{"$1"}++; }
 								$_pagesrefs_h{"$1"}++;
 							}
@@ -6689,9 +6694,9 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 if (scalar keys %HTMLOutput) {
 
 	my $max_p; my $max_h; my $max_k; my $max_v;
-	my $total_u; my $total_v; my $total_p; my $total_h; my $total_k; my $total_e; my $total_x; my $total_s; my $total_l;
+	my $total_u; my $total_v; my $total_p; my $total_h; my $total_k; my $total_e; my $total_x; my $total_s; my $total_l; my $total_r;
 	my $average_u; my $average_v; my $average_p; my $average_h; my $average_k; my $average_s;
-	my $rest_p; my $rest_h; my $rest_k; my $rest_e; my $rest_x; my $rest_s; my $rest_l;
+	my $rest_p; my $rest_h; my $rest_k; my $rest_e; my $rest_x; my $rest_s; my $rest_l; my $rest_r;
 	my $average_nb;
 
 	# Define the NewLinkParams for main chart
@@ -8902,25 +8907,28 @@ if (scalar keys %HTMLOutput) {
 			&BuildKeyList($MaxNbOf{'RobotShown'},$MinHit{'Robot'},\%_robot_h,\%_robot_h);
 			foreach my $key (@keylist) {
 				print "<tr><td class=\"aws\">".($RobotsHashIDLib{$key}?$RobotsHashIDLib{$key}:$key)."</td>";
-				if ($ShowRobotsStats =~ /H/i) { print "<td>$_robot_h{$key}</td>"; }
+				if ($ShowRobotsStats =~ /H/i) { print "<td>".($_robot_h{$key}-$_robot_r{$key})."</td>"; }
 				if ($ShowRobotsStats =~ /B/i) { print "<td>".Format_Bytes($_robot_k{$key})."</td>"; }
 				if ($ShowRobotsStats =~ /L/i) { print "<td>".($_robot_l{$key}?Format_Date($_robot_l{$key},1):'-')."</td>"; }
 				print "</tr>\n";
 				#$total_p += $_robot_p{$key};
 				$total_h += $_robot_h{$key};
 				$total_k += $_robot_k{$key};
+				$total_r += $_robot_r{$key};
 				$count++;
 				}
 			# For bots we need to count Totals
 			my $TotalPagesRobots = 0; #foreach my $val (values %_robot_p) { $TotalPagesRobots+=$val; }
-			my $TotalHitsRobots = 0; foreach my $val (values %_robot_h) { $TotalHitsRobots+=$val; }
-			my $TotalBytesRobots = 0; foreach my $val (values %_robot_k) { $TotalBytesRobots+=$val; }
+			my $TotalHitsRobots = 0; foreach (values %_robot_h) { $TotalHitsRobots+=$_; }
+			my $TotalBytesRobots = 0; foreach (values %_robot_k) { $TotalBytesRobots+=$_; }
+			my $TotalRRobots = 0; foreach (values %_robot_r) { $TotalRRobots+=$_; }
 			$rest_p=0;	#$rest_p=$TotalPagesRobots-$total_p;
 			$rest_h=$TotalHitsRobots-$total_h;
 			$rest_k=$TotalBytesRobots-$total_k;
-			if ($rest_p > 0 || $rest_h > 0 || $rest_k > 0) {	# All other robots
+			$rest_r=$TotalRRobots-$total_r;
+			if ($rest_p > 0 || $rest_h > 0 || $rest_k > 0 || $rest_r > 0) {	# All other robots
 				print "<tr><td class=\"aws\"><span style=\"color: #$color_other\">$Message[2]</span></td>";
-				if ($ShowRobotsStats =~ /H/i) { print "<td>$rest_h</td>"; }
+				if ($ShowRobotsStats =~ /H/i) { print "<td>".($rest_h-$rest_r)."</td>"; }
 				if ($ShowRobotsStats =~ /B/i) { print "<td>".(Format_Bytes($rest_k))."</td>"; }
 				if ($ShowRobotsStats =~ /L/i) { print "<td>&nbsp;</td>"; }
 				print "</tr>\n";
