@@ -119,6 +119,7 @@ require valid-user<br>
 </i><br>
 Then edit each config/domain file you want to be protected to set <a href="awstats_config.html#AllowAccessFromWebToAuthenticatedUsersOnly">AllowAccessFromWebToAuthenticatedUsersOnly</a> to 1.<br>
 You can also edit list of authorized users in the <a href="awstats_config.html#AllowAccessFromWebToFollowingAuthenticatedUsers">AllowAccessFromWebToFollowingAuthenticatedUsers</a> parameter.<br>
+You can also specify a range of allowed browsers IP Addresses with the <a href="awstats_config.html#AllowAccessFromWebToFollowingIPAddresses">AllowAccessFromWebToFollowingIPAddresses</a> parameter.<br>
 <br>
 Other tip: If you define <b>AWSTATS_CONFIG</b> environment variable in your web server environment (Adding
 <i>SetEnv AWSTATS_CONFIG myconfigvalueformydomain</i> with other directives in your Apache VirtualHost config), AWStats
@@ -137,7 +138,7 @@ Setup is very easy (No need of particular setup). Statistics are dynamic.<br>
 No way to prevent stats for config/domain to be seen by a user that known the
 config/domain name and the url syntax to see stats of a particular config/domain.<br>
 <font color=blue><b>How</b></font>:<br>
-No particular things to do.<br>
+No particular things to do (You can however use <a href="awstats_config.html#AllowAccessFromWebToFollowingIPAddresses">AllowAccessFromWebToFollowingIPAddresses</a> parameter).<br>
 <br>
 <br>
 <br>
