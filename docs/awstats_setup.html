@@ -97,7 +97,7 @@ Install and Setup is finished. You can jump to the <a href="#BUILD_UPDATE">Build
 your own log format but setup is easier if made like suggested). So, for
 this, start the IIS Snap-in, select the web site and look at its
 Properties. Choose W3C Extended Log Format, then Properties, then the
-Tab Extended Properties and uncheck everything under Extended Properties.<br>
+Tab Extended Properties and uncheck everything under Extended Properties.
 Once they are all unchecked, check all following fields:<br>
 <i>
 date<br>
@@ -117,7 +117,7 @@ your homepage. This is an example of records you should get then in the new log 
 <i>2000-07-19 14:14:14 62.161.78.73 - GET / 200 1234 HTTP/1.1 Mozilla/4.0+(compatible;+MSIE+5.01;+Windows+NT+5.0) http://www.from.com/from.htm</i>
 <br>
 * Copy all the content of provided AWStats cgi-bin directory into your web 
-server cgi-bin directory (this includes <b>awstats.pl</b>, <b>awstats.model.conf</b>, and the <b>lang</b> and <b>lib</b> sub-directories).<br>
+server cgi-bin directory (this includes <b>awstats.pl</b>, <b>awstats.model.conf</b>, and the <b>lang</b>, <b>lib</b> and <b>plugins</b> sub-directories).<br>
 <br>	
 * Move all AWStats <b>icon sub-directories</b> into a directory readable by your
 web server, for example C:\yourwwwroot\icon.<br>
@@ -158,7 +158,7 @@ process may be long :<br>
 <br>
 AWStats will read the config file (awstats.virtualhostname.conf, or, if not found, awstats.conf)
 and create/update its database with all summary information issued from analyzed log file.<br>
-AWStats database files are saved in directory defined by <i>DirData</i> parameter in config file.<br>
+AWStats database files are saved in directory defined by <a href="awstats_config.html#DirData">DirData</a> parameter in config file.<br>
 When update is finished, you should get a result like this:<br>
 <i>Lines in file: 225730<br>
 Found 5 dropped records,<br>
@@ -173,12 +173,13 @@ If you want to see which lines were dropped, you can add the <b>-showdropped</b>
 <b>Corrupted records</b> are records that does not match log format defined by "LogFormat" parameter in AWStats config/domain file.
 With all webservers you can experience a little bit corrupted records (<5%) even when everythings work correctly.
 This can be the result of several reasons: Web server internal bugs, bad requests made by buggy browsers, web server brutal stop...<br>
-If all your lines are corrupted and "LogFormat" parameter in AWStats config/domain file is correct, it may be the log
-format setup in your web server that is wrong. Don't forget that you "LogFormat" parameter in AWStats config/domain
-file MUST match the log file format you analyze.<br>
+If all your lines are corrupted and <a href="awstats_config.html#LogFormat">LogFormat</a> parameter in AWStats config/domain file is
+correct, it may be the log format setup in your web server that is wrong. Don't forget that
+you <a href="awstats_config.html#OnlyFiles">LogFormat</a> parameter in AWStats config/domain file MUST match
+the log file format you analyze.<br>
 If you want to see which lines are corrupted, you can add the <b>-showcorrupted</b> option on command line.<br>
 <b>Old records</b> are simply records that were already processed by a previous update process. So it's not necessary to
-purge your log file after each update process even if it's HIGHLY recommended to do it as soon as possible.<br>
+purge your log file after each update process even if it's HIGHLY recommended to do it as often as possible.<br>
 <b>New records</b> are records in your log file that were successfully used to build/update statistics.<br>
 <br>
 Note : A log analysis process is slow (one second for each 4100 lines of your
@@ -188,7 +189,7 @@ See <a href="awstats_benchmark.html">Benchmark page</a> for more accurate inform
 <br>
 
 <br>
-* Then new updates should be made from an automatic process.<br>
+* Then, new updates should be made from an automatic (command is same than first process)<br>
 You can add instructions in your <b>crontab</b> (Unix/Linux) or your <b>task scheduler</b> (for
 Windows), to launch frequently this Awstats update process.<br>
 For sites with:<br>
@@ -212,28 +213,28 @@ To see results of analyze, you have several solutions depending on your <a href=
 <br>
 
 * You can build the main report, in a static HTML page, from the command line, like this :<br>
-<b><i>awstats.pl -config=virtualhostname -output -staticlinks > awstats.virtualhostname.html</i></b><br>
+<b><i>perl awstats.pl -config=virtualhostname -output -staticlinks > awstats.virtualhostname.html</i></b><br>
 <br>
 You can also use all other output options (each of them give you another report).
 This is how to use all other possible output options:<br>
-<b><i>awstats.pl -config=virtualhostname -output=allhosts -staticlinks > awstats.virtualhostname.allhosts.html</i></b><br>
-<b><i>awstats.pl -config=virtualhostname -output=lasthosts -staticlinks > awstats.virtualhostname.lasthosts.html</i></b><br>
-<b><i>awstats.pl -config=virtualhostname -output=unknownip -staticlinks > awstats.virtualhostname.unknownip.html</i></b><br>
-<b><i>awstats.pl -config=virtualhostname -output=urldetail -staticlinks > awstats.virtualhostname.urldetail.html</i></b><br>
-<b><i>awstats.pl -config=virtualhostname -output=urldetail:</b>filter<b> -staticlinks > awstats.virtualhostname.urldetailfiltered.html</i></b><br>
-<b><i>awstats.pl -config=virtualhostname -output=browserdetail -staticlinks > awstats.virtualhostname.browserdetail.html</i></b><br>
-<b><i>awstats.pl -config=virtualhostname -output=unknownbrowsers -staticlinks > awstats.virtualhostname.unknownbrowsers.html</i></b><br>
-<b><i>awstats.pl -config=virtualhostname -output=unknownos -staticlinks > awstats.virtualhostname.unknownos.html</i></b><br>
-<b><i>awstats.pl -config=virtualhostname -output=refererse -staticlinks > awstats.virtualhostname.refererse.html</i></b><br>
-<b><i>awstats.pl -config=virtualhostname -output=refererpages -staticlinks > awstats.virtualhostname.refererpages.html</i></b><br>
-<b><i>awstats.pl -config=virtualhostname -output=keyphrases -staticlinks > awstats.virtualhostname.keyphrases.html</i></b><br>
-<b><i>awstats.pl -config=virtualhostname -output=keywords -staticlinks > awstats.virtualhostname.keywords.html</i></b><br>
-<b><i>awstats.pl -config=virtualhostname -output=errors404 -staticlinks > awstats.virtualhostname.errors404.html</i></b><br>
+<b><i>perl awstats.pl -config=virtualhostname -output=allhosts -staticlinks > awstats.virtualhostname.allhosts.html</i></b><br>
+<b><i>perl awstats.pl -config=virtualhostname -output=lasthosts -staticlinks > awstats.virtualhostname.lasthosts.html</i></b><br>
+<b><i>perl awstats.pl -config=virtualhostname -output=unknownip -staticlinks > awstats.virtualhostname.unknownip.html</i></b><br>
+<b><i>perl awstats.pl -config=virtualhostname -output=urldetail -staticlinks > awstats.virtualhostname.urldetail.html</i></b><br>
+<b><i>perl awstats.pl -config=virtualhostname -output=urldetail:</b>filter<b> -staticlinks > awstats.virtualhostname.urldetailfiltered.html</i></b><br>
+<b><i>perl awstats.pl -config=virtualhostname -output=browserdetail -staticlinks > awstats.virtualhostname.browserdetail.html</i></b><br>
+<b><i>perl awstats.pl -config=virtualhostname -output=unknownbrowsers -staticlinks > awstats.virtualhostname.unknownbrowsers.html</i></b><br>
+<b><i>perl awstats.pl -config=virtualhostname -output=unknownos -staticlinks > awstats.virtualhostname.unknownos.html</i></b><br>
+<b><i>perl awstats.pl -config=virtualhostname -output=refererse -staticlinks > awstats.virtualhostname.refererse.html</i></b><br>
+<b><i>perl awstats.pl -config=virtualhostname -output=refererpages -staticlinks > awstats.virtualhostname.refererpages.html</i></b><br>
+<b><i>perl awstats.pl -config=virtualhostname -output=keyphrases -staticlinks > awstats.virtualhostname.keyphrases.html</i></b><br>
+<b><i>perl awstats.pl -config=virtualhostname -output=keywords -staticlinks > awstats.virtualhostname.keywords.html</i></b><br>
+<b><i>perl awstats.pl -config=virtualhostname -output=errors404 -staticlinks > awstats.virtualhostname.errors404.html</i></b><br>
 <br>
 Note: If you prefer, you can use <a href="awstats_tools.html#awstats_buildstaticpages">awstats_buildstaticpages</a> tool to
 build all those pages in one command.<br>
 <br>
-* You can also view dynamically your statistics from a browser.<br>
+* If you prefer, you can also view dynamically your statistics from a browser.<br>
 If you named your config file awstats.<i>virtualhostname</i>.conf, use URL:<br>
 <b><i>http://www.myserver.mydomain/cgi-bin/awstats.pl?config=virtualhostname</i></b><br>
 where <i>virtualhostname</i> is used to know which config file to use (AWStats
