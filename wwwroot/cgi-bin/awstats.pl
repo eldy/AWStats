@@ -973,7 +973,7 @@ sub Read_Config {
 	
 	# If parameter NotPageList not found, init for backward compatibility
 	if (! $FoundNotPageList) {
-		$NotPageList{"gif"}=$NotPageList{"jpg"}=$NotPageList{"jpeg"}=$NotPageList{"png"}=$NotPageList{"bmp"}=1;
+		$NotPageList{'gif'}=$NotPageList{'jpg'}=$NotPageList{'jpeg'}=$NotPageList{'png'}=$NotPageList{'bmp'}=1;
 	}
 	# If parameter ValidHTTPCodes not found, init for backward compatibility
 	if (! $FoundValidHTTPCodes) {
