@@ -8169,7 +8169,7 @@ if (scalar keys %HTMLOutput) {
 				print "<TR>";
 				print "<TD CLASS=AWS>$key</TD>";
 				&ShowHostInfo($key);
-				if ($ShowHostsStats =~ /P/i) { print "<TD>".($_host_p{$key}||"&nbsp")."</TD>"; }
+				if ($ShowHostsStats =~ /P/i) { print "<TD>".($_host_p{$key}||"&nbsp;")."</TD>"; }
 				if ($ShowHostsStats =~ /H/i) { print "<TD>$_host_h{$key}</TD>"; }
 				if ($ShowHostsStats =~ /B/i) { print "<TD>".Format_Bytes($_host_k{$key})."</TD>"; }
 				if ($ShowHostsStats =~ /L/i) { print "<TD>".($_host_l{$key}?Format_Date($_host_l{$key},1):'-')."</TD>"; }
