@@ -1706,7 +1706,7 @@ if ($UpdateStats) {
 				$i++;
 				$PerlParsingFormat .= "([^\\s]*) ";
 			}
-			if ($f =~ /%code$/ || $f =~ /%.*>s$/ || $f =~ /cs-status$/) {
+			if ($f =~ /%code$/ || $f =~ /%.*>s$/ || $f =~ /sc-status$/) {
 				$found=1; 
 				$pos_code = $i;
 				$i++;
