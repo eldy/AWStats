@@ -256,7 +256,7 @@ use vars qw/
 use vars qw/
 %HTMLOutput %NoLoadPlugin %FilterIn %FilterEx
 %BadFormatWarning
-%MonthLib %MonthNum
+%MonthNumLib
 %ValidHTTPCodes %ValidSMTPCodes
 %TrapInfosForHTTPErrorCodes %NotPageList %DayBytes %DayHits %DayPages %DayVisits
 %MaxNbOf %MinHit
@@ -278,7 +278,7 @@ use vars qw/
 /;
 %HTMLOutput = %NoLoadPlugin = %FilterIn = %FilterEx = ();
 %BadFormatWarning = ();
-%MonthLib = %MonthNum = ();
+%MonthNumLib = ();
 %ValidHTTPCodes = %ValidSMTPCodes = ();
 %TrapInfosForHTTPErrorCodes=(); $TrapInfosForHTTPErrorCodes{404}=1;	# TODO Add this in config file
 %NotPageList=();
@@ -1342,6 +1342,8 @@ sub Read_Language_Data {
 sub Check_Config {
 	if ($Debug) { debug("Call to Check_Config"); }
 
+	my %MonthNumLibEn = ("01","Jan","02","Feb","03","Mar","04","Apr","05","May","06","Jun","07","Jul","08","Aug","09","Sep","10","Oct","11","Nov","12","Dec");
+
 	# Show initial values of main parameters before check
 	if ($Debug) {
 		debug(" LogFile='$LogFile'",2);
@@ -1359,7 +1361,7 @@ sub Check_Config {
 	}
 
 	# Main section
-	while ($LogFile =~ /%([ymdhwYMDHWNS]+)-(\d+)/) {
+	while ($LogFile =~ /%([ymdhwYMDHWNSO]+)-(\d+)/) {
 		my $timetag=$1;
 		my $timephase=$2;
 		if ($Debug) { debug(" Found a time phase of $timephase hour in log file name",1); }
@@ -1386,6 +1388,7 @@ sub Check_Config {
 		if ($timetag =~ /YYYY/i) { $LogFile =~ s/%YYYY-$timephase/$olderyear/ig; next; }
 		if ($timetag =~ /YY/i)   { $LogFile =~ s/%YY-$timephase/$oldersmallyear/ig; next; }
 		if ($timetag =~ /MM/i)   { $LogFile =~ s/%MM-$timephase/$oldermonth/ig; next; }
+		if ($timetag =~ /MO/i)   { $LogFile =~ s/%MO-$timephase/$MonthNumLibEn{$oldermonth}/ig; next; }
 		if ($timetag =~ /DD/i)   { $LogFile =~ s/%DD-$timephase/$olderday/ig; next; }
 		if ($timetag =~ /HH/i)   { $LogFile =~ s/%HH-$timephase/$olderhour/ig; next; }
 		if ($timetag =~ /NS/i)   { $LogFile =~ s/%NS-$timephase/$olderns/ig; next; }
@@ -1402,6 +1405,7 @@ sub Check_Config {
 	$LogFile =~ s/%YYYY/$nowyear/ig;
 	$LogFile =~ s/%YY/$nowsmallyear/ig;
 	$LogFile =~ s/%MM/$nowmonth/ig;
+	$LogFile =~ s/%MO/$MonthNumLibEn{$nowmonth}/ig;
 	$LogFile =~ s/%DD/$nowday/ig;
 	$LogFile =~ s/%HH/$nowhour/ig;
 	$LogFile =~ s/%NS/$nowns/ig;
@@ -4015,7 +4019,7 @@ sub Format_Date {
 	}
 	$dateformat =~ s/yyyy/$year/g;
 	$dateformat =~ s/yy/$year/g;
-	$dateformat =~ s/mmm/$MonthLib{$month}/g;
+	$dateformat =~ s/mmm/$MonthNumLib{$month}/g;
 	$dateformat =~ s/mm/$month/g;
 	$dateformat =~ s/dd/$day/g;
 	$dateformat =~ s/HH/$hour/g;
@@ -5041,9 +5045,7 @@ if ($FrameName eq 'index') {
 	exit 0;
 }
 
-# Init global variables required for output and update process
-%MonthLib = ("01","$Message[60]","02","$Message[61]","03","$Message[62]","04","$Message[63]","05","$Message[64]","06","$Message[65]","07","$Message[66]","08","$Message[67]","09","$Message[68]","10","$Message[69]","11","$Message[70]","12","$Message[71]");
-%MonthNum = ("Jan","01","jan","01","Feb","02","feb","02","Mar","03","mar","03","Apr","04","apr","04","May","05","may","05","Jun","06","jun","06","Jul","07","jul","07","Aug","08","aug","08","Sep","09","sep","09","Oct","10","oct","10","Nov","11","nov","11","Dec","12","dec","12");	# MonthNum must be in english because used to translate log date in apache log files
+%MonthNumLib = ("01","$Message[60]","02","$Message[61]","03","$Message[62]","04","$Message[63]","05","$Message[64]","06","$Message[65]","07","$Message[66]","08","$Message[67]","09","$Message[68]","10","$Message[69]","11","$Message[70]","12","$Message[71]");
 
 # Build ListOfYears list with all existing years
 my $lastyearbeforeupdate=0;
@@ -5081,6 +5083,8 @@ my $lastlinenumber=0; my $lastlineoffset=0; my $lastlineoffsetnext=0;
 
 if ($Debug) { debug("UpdateStats is $UpdateStats",2); }
 if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Update only on index page or when not framed to avoid update twice
+
+	my %MonthNum = ("Jan","01","jan","01","Feb","02","feb","02","Mar","03","mar","03","Apr","04","apr","04","May","05","may","05","Jun","06","jun","06","Jul","07","jul","07","Aug","08","aug","08","Sep","09","sep","09","Oct","10","oct","10","Nov","11","nov","11","Dec","12","dec","12");	# MonthNum must be in english because used to translate log date in apache log files
 
 	if (! scalar keys %HTMLOutput) {
 		print "Update for config \"$FileConfig\"\n";
@@ -6369,7 +6373,7 @@ if (scalar keys %HTMLOutput) {
 			print "<td class=AWS valign=middle>";
 			if ($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks) {
 				print "<select class=AWS_FORMFIELD name=\"month\">\n";
-				foreach my $ix (1..12) { my $monthix=sprintf("%02s",$ix); print "<option".($MonthRequired eq "$monthix"?" selected":"")." value=\"$monthix\">$MonthLib{$monthix}\n"; }
+				foreach my $ix (1..12) { my $monthix=sprintf("%02s",$ix); print "<option".($MonthRequired eq "$monthix"?" selected":"")." value=\"$monthix\">$MonthNumLib{$monthix}\n"; }
 				print "<option".($MonthRequired eq 'all'?" selected":"")." value='all'>---\n";
 				print "</select>\n";
 				print "<select class=AWS_FORMFIELD name=\"year\">\n";
@@ -6387,7 +6391,7 @@ if (scalar keys %HTMLOutput) {
 			else {
 				print "<font style=\"font-size: 14px;\">";
 				if ($MonthRequired eq 'all') { print "$Message[6] $YearRequired"; }
-				else { print "$Message[5] $MonthLib{$MonthRequired} $YearRequired"; }
+				else { print "$Message[5] $MonthNumLib{$MonthRequired} $YearRequired"; }
 				print "</font>";
 			}
 			print "</td></tr>\n";
@@ -6671,7 +6675,7 @@ if (scalar keys %HTMLOutput) {
 #			my $monthix=($ix<10?"0$ix":"$ix");
 #			print "<TD>";
 #			if (($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks) && ! $HTMLOutput{'alldays'}) { print "<a href=\"$AWScript?${NewLinkParams}year=$YearRequired&month=$monthix\"$NewLinkTarget>"; }
-#			print "$MonthLib{$monthix}";
+#			print "$MonthNumLib{$monthix}";
 #			if (($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks) && ! $HTMLOutput{'alldays'}) { print "</a>"; }
 #			print "</TD>\n";
 #		}
@@ -6690,7 +6694,7 @@ if (scalar keys %HTMLOutput) {
 #		for (my $ix=1; $ix<=12; $ix++) {
 #			my $monthix=($ix<10?"0$ix":"$ix");
 #			print "<TR>";
-#			print "<TD>",$MonthLib{$monthix},"</TD>";
+#			print "<TD>",$MonthNumLib{$monthix},"</TD>";
 #			if ($ShowMonthDayStats =~ /U/i) { print "<TD>",$MonthUnique{$YearRequired.$monthix}?$MonthUnique{$YearRequired.$monthix}:"0","</TD>"; }
 #			if ($ShowMonthDayStats =~ /V/i) { print "<TD>",$MonthVisits{$YearRequired.$monthix}?$MonthVisits{$YearRequired.$monthix}:"0","</TD>"; }
 #			if ($ShowMonthDayStats =~ /P/i) { print "<TD>",$MonthPages{$YearRequired.$monthix}?$MonthPages{$YearRequired.$monthix}:"0","</TD>"; }
@@ -6794,7 +6798,7 @@ if (scalar keys %HTMLOutput) {
 #			my $dayofweekcursor=DayOfWeek($day,$month,$year);
 #			print "<TD valign=middle".($dayofweekcursor=~/[06]/?" bgcolor=\"#$color_weekend\"":"").">";
 #			print ($day==$nowday && $month==$nowmonth && $year==$nowyear?'<b>':'');
-#			print "$day<br><font style=\"font-size: ".($FrameName ne 'mainright'?"10":"9")."px;\">".$MonthLib{$month}."</font>";
+#			print "$day<br><font style=\"font-size: ".($FrameName ne 'mainright'?"10":"9")."px;\">".$MonthNumLib{$month}."</font>";
 #			print ($day==$nowday && $month==$nowmonth && $year==$nowyear?'</b>':'');
 #			print "</TD>\n";
 #		}
@@ -7728,7 +7732,7 @@ if (scalar keys %HTMLOutput) {
 			if ($FirstTime) { print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TD>".Format_Date($FirstTime,0)."</TD>"; }
 			else { print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TD>NA</TD>"; }
 			print "<TD colspan=3><b>";
-			print ($MonthRequired eq 'all'?"$Message[6] $YearRequired":"$Message[5] ".$MonthLib{$MonthRequired}." $YearRequired");
+			print ($MonthRequired eq 'all'?"$Message[6] $YearRequired":"$Message[5] ".$MonthNumLib{$MonthRequired}." $YearRequired");
 			print "</b></TD>";
 			if ($LastTime) { print "<TD>".Format_Date($LastTime,0)."</TD></TR>\n"; }
 			else { print "<TD>NA</TD></TR>\n"; }
@@ -7805,10 +7809,10 @@ if (scalar keys %HTMLOutput) {
 			for (my $ix=1; $ix<=12; $ix++) {
 				my $monthix=sprintf("%02s",$ix);
 #				if ($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks) {
-#					print "<TD><a href=\"$AWScript?${NewLinkParams}month=$monthix&year=$YearRequired\">$MonthLib{$monthix}<br>$YearRequired</a></TD>";
+#					print "<TD><a href=\"$AWScript?${NewLinkParams}month=$monthix&year=$YearRequired\">$MonthNumLib{$monthix}<br>$YearRequired</a></TD>";
 #				}
 #				else {
-					print "<TD>$MonthLib{$monthix}<br>$YearRequired</TD>";
+					print "<TD>$MonthNumLib{$monthix}<br>$YearRequired</TD>";
 #				}
 			}
 #			if ($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks) {
@@ -7833,7 +7837,7 @@ if (scalar keys %HTMLOutput) {
 				for (my $ix=1; $ix<=12; $ix++) {
 					my $monthix=sprintf("%02s",$ix);
 					print "<TR>";
-					print "<TD>$MonthLib{$monthix} $YearRequired</TD>";
+					print "<TD>$MonthNumLib{$monthix} $YearRequired</TD>";
 					if ($ShowMonthStats =~ /U/i) { print "<TD>",$MonthUnique{$YearRequired.$monthix}?$MonthUnique{$YearRequired.$monthix}:"0","</TD>"; }
 					if ($ShowMonthStats =~ /V/i) { print "<TD>",$MonthVisits{$YearRequired.$monthix}?$MonthVisits{$YearRequired.$monthix}:"0","</TD>"; }
 					if ($ShowMonthStats =~ /P/i) { print "<TD>",$MonthPages{$YearRequired.$monthix}?$MonthPages{$YearRequired.$monthix}:"0","</TD>"; }
@@ -7971,7 +7975,7 @@ if (scalar keys %HTMLOutput) {
 				my $dayofweekcursor=DayOfWeek($day,$month,$year);
 				print "<TD".($dayofweekcursor=~/[06]/?" bgcolor=\"#$color_weekend\"":"").">";
 				print ($day==$nowday && $month==$nowmonth && $year==$nowyear?'<b>':'');
-				print "$day<br><font style=\"font-size: ".($FrameName ne 'mainright'?"9":"8")."px;\">".$MonthLib{$month}."</font>";
+				print "$day<br><font style=\"font-size: ".($FrameName ne 'mainright'?"9":"8")."px;\">".$MonthNumLib{$month}."</font>";
 				print ($day==$nowday && $month==$nowmonth && $year==$nowyear?'</b>':'');
 				print "</TD>\n";
 			}
