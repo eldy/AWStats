@@ -9,14 +9,17 @@ AWStats Changelog
    logresolvemerge.pl
 - Fixed: Reduce nb of dropped records for log files not 'completely' sorted.
 - New tag for logfile: %virtualname allows you to share same log file for
-   several virtual servers
+   several virtual servers.
 - New feature: A 'pipe' can be used in LogFile name parameter.
-- New feature: Report exit pages
-- New feature: Report visits duration
+- New feature: Added full list for refering search engines and refering pages.
+- New feature: Report keywords AND keyphrases. No need to choose one or else.
+- New feature: Report exit pages.
+- New feature: Report visits duration.
 - New option: Added -dir option to choose destination directory for
    awstats_buildstaticpages.pl
-- Updated AWStats databases (renamed into .pm files and moved to lib dir)
-- Updated documentation
+- New option: Added AWStats common options to awstats_buildstaticpages.pl
+- Updated AWStats databases (renamed into .pm files and moved to lib dir).
+- Updated documentation.
 
 
 
