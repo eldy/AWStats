@@ -8,6 +8,7 @@ Fixes:
 - Fixed bug 816267.
 - Fixed minor typo errors.
 - Fixed value for ValueSMTPCodes if not defined in config file.
+- Replaced Kb/visits to Kb/mails for mail log analysis.
 
 New features/improvements:
 - logresolvemerge.pl: can use several threads for reverse DNS lookup
