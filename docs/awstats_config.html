@@ -80,6 +80,7 @@ when reading it), follow the example:<br>
 <li><a href="#OnlyFiles">OnlyFiles</a>
 <li><a href="#NotPageList">NotPageList</a>
 <li><a href="#ValidHTTPCodes">ValidHTTPCodes</a>
+<li><a href="#URLCaseSensitive">URLCaseSensitive</a>
 <li><a href="#URLWithQuery">URLWithQuery</a>
 <li><a href="#URLWithQueryWithoutFollowingParameters">URLWithQueryWithoutFollowingParameters</a>
 <li><a href="#WarningMessages">WarningMessages</a>
@@ -179,6 +180,11 @@ when reading it), follow the example:<br>
 <li><a href="#LoadPlugin">LoadPlugin</a>
 </ul>
 
+<br><b>INLUDES</b><br>
+<ul>
+<li><a href="#include">#include</a>
+</ul>
+
 
 
 <br><br><hr>
@@ -211,7 +217,7 @@ when reading it), follow the example:<br>
 <br># Example: "/var/log/access_log.%YYYY-0%MM-0%DD-0.log"
 <br># Example: "C:/WINNT/system32/LogFiles/W3SVC1/ex%YY-24%MM-24%DD-24.log"
 <br># You can also use a pipe if log file come from a pipe.
-<br># Example: "gzip -d </var/log/apache/access.log.gz |"
+<br># Example: "gzip -d &lt;/var/log/apache/access.log.gz |"
 <br>#
 <br>LogFile="/var/log/httpd/mylog.log"
 
@@ -227,13 +233,14 @@ when reading it), follow the example:<br>
 <br># Enter here your log format (Must agree with your web server. See setup
 <br># instructions in README.txt to know how to configure your web server to have
 <br># the required log format).
-<br># Possible values: 1,2,3,4,5 or "your_own_personalized_log_format"
-<br># 1 = Apache native combined log format (NCSA combined/XLF/ELF log format)
-<br># 2 = IIS log format (W3C log format)
-<br># 3 = Webstar native log format
-<br># 4 = Apache or Squid native common log format (NCSA common log format)
+<br># Possible values: 1,2,3,4,5,6 or "your_own_personalized_log_format"
+<br># 1 - Apache native combined log format (NCSA combined/XLF/ELF log format)
+<br># 2 - IIS log format (W3C log format)
+<br># 3 - Webstar native log format
+<br># 4 - Apache or Squid native common log format (NCSA common log format)
 <br>#     With LogFormat=4, some features (browsers, os, keywords...) can't work.
-<br># 5 = ISA server standard log format
+<br># 5 - ISA server standard log format
+<br># 6 - Lotus Notes combined log format
 <br># "your_own_personalized_log_format" = If your log is a personalized format,
 <br>#   you must use the following syntax keys to define the log format string:
 <br>#   %host             Host client name or IP address
@@ -738,7 +745,19 @@ when reading it), follow the example:<br>
 
 <br><br><hr>
 
-<a name="URLWithQuery"><b>URLWithquery</b></a><br>
+<a name="URLCaseSensitive"><b>URLCaseSensitive</b></a><br>
+<b>Version : </b>5.1 +<br>
+<br># Some web servers on some Operating systems (IIS-Windows) considers that two
+<br># URLs with same value but different case are the same URL. To tell AWStats to
+<br># also considers them as one, set this parameter to 1.
+<br># Possible values: 0 or 1
+<br># Default: 0
+<br># 
+<br>URLCaseSensitive=0
+
+<br><br><hr>
+
+<a name="URLWithQuery"><b>URLWithQuery</b></a><br>
 <b>Version : </b>3.2 +<br>
 <br># Keep or attach the query string to the URL in the statistics for individual
 <br># pages. This is primarily used to differentiate between the URLs of dynamic
@@ -757,7 +776,7 @@ when reading it), follow the example:<br>
 
 <br><br><hr>
 
-<a name="URLWithQueryWithoutFollowingParameters"><b>URLWithqueryWithoutFollowingParameters</b></a><br>
+<a name="URLWithQueryWithoutFollowingParameters"><b>URLWithQueryWithoutFollowingParameters</b></a><br>
 <b>Version : </b>5.1 +<br>
 <br># When URLWithQuery is on, you will get the full URL with all parameters in
 <br># URL reports. But among thoose parameters, sometimes you don't need a
@@ -1233,6 +1252,20 @@ color_u,color_v,color_p,color_h,color_k,color_s<br>
 <br># Perl modules required: ...
 <br>#
 <br>LoadPlugin="pluginname"
+
+<br><br><hr>
+
+<a name="include"><b>#include</b></a><br>
+<b>Version : </b>5.1 +<br>
+<br># You can include other config files using the directive with the name of the
+<br># config file (like Apache, so you must keep the '#' before 'include').
+<br># This is particularly usefull for users who have a lot of virtual servers, so
+<br># a lot of config files and want to maintain common values in only one file.
+<br># Note that when a variable is defined both in a config file and in an
+<br># included file, AWStats will use the last value read.
+<br>#
+<br>#include ""
+
 
 <!-- -------------------------------------------------------------------------------------- -->
 

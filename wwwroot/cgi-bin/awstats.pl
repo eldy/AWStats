@@ -109,7 +109,7 @@ $NbOfLinesShowsteps $NewLinePhase $NbOfLinesForCorruptedLog $PurgeLogFile
 $ShowAuthenticatedUsers $ShowFileSizesStats
 $ShowDropped $ShowCorrupted $ShowUnknownOrigin $ShowLinksToWhoIs
 $ShowEMailSenders $ShowEMailReceivers
-$Expires $UpdateStats $MigrateStats $URLWithQuery $UseFramesWhenCGI $DecodeUA
+$Expires $UpdateStats $MigrateStats $URLCaseSensitive $URLWithQuery $UseFramesWhenCGI $DecodeUA
 /;
 ($EnableLockForUpdate, $DNSLookup, $AllowAccessFromWebToAuthenticatedUsersOnly,
 $BarHeight, $BarWidth, $CreateDirDataIfNotExists, $KeepBackupOfHistoricFiles, $MaxLengthOfURL,
@@ -122,8 +122,8 @@ $NbOfLinesShowsteps, $NewLinePhase, $NbOfLinesForCorruptedLog, $PurgeLogFile,
 $ShowAuthenticatedUsers, $ShowFileSizesStats,
 $ShowDropped, $ShowCorrupted, $ShowUnknownOrigin, $ShowLinksToWhoIs,
 $ShowEMailSenders, $ShowEMailReceivers,
-$Expires, $UpdateStats, $MigrateStats, $URLWithQuery, $UseFramesWhenCGI, $DecodeUA)=
-(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
+$Expires, $UpdateStats, $MigrateStats, $URLCaseSensitive, $URLWithQuery, $UseFramesWhenCGI, $DecodeUA)=
+(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
 use vars qw/
 $AllowToUpdateStatsFromBrowser $ArchiveLogRecords $DetailedReportsOnNewWindows
 $FirstDayOfWeek $KeyWordsNotSensitive $SaveDatabaseFilesWithPermissionsForEveryone
@@ -1097,6 +1097,7 @@ sub Parse_Config {
 			$FoundValidHTTPCodes=1;
 			next;
 			}
+		if ($param =~ /^URLCaseSensitive$/)		{ $URLCaseSensitive=$value; next; }
 		if ($param =~ /^URLWithQuery$/)			{ $URLWithQuery=$value; next; }
 		if ($param =~ /^URLWithQueryWithoutFollowingParameters$/)	{
 			foreach my $elem (split(/\s+/,$value))	{ push @URLWithQueryWithoutFollowingParameters,$elem; }
@@ -1452,6 +1453,7 @@ sub Check_Config {
 	if ($ArchiveLogRecords !~ /[0-1]/)            	{ $ArchiveLogRecords=1; }
 	if ($KeepBackupOfHistoricFiles !~ /[0-1]/)     	{ $KeepBackupOfHistoricFiles=0; }
 	if (! $DefaultFile[0])                          { $DefaultFile[0]="index.html"; }
+	if ($URLCaseSensitive !~ /[0-1]/)              	{ $URLCaseSensitive=0; }
 	if ($URLWithQuery !~ /[0-1]/)                 	{ $URLWithQuery=0; }
 	if ($WarningMessages !~ /[0-1]/)              	{ $WarningMessages=1; }
 	if ($NbOfLinesForCorruptedLog !~ /^\d+/ || $NbOfLinesForCorruptedLog<1)	{ $NbOfLinesForCorruptedLog=50; }
@@ -4617,6 +4619,7 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {	# Updat
 		# Possible URL syntax for $field[$pos_url]: /mydir/mypage.ext?param1=x&param2=y#aaa, /mydir/mypage.ext#aaa, /
 		my $urlwithnoquery;
 		if ($URLWithQuery) {
+			if ($URLCaseSensitive) { $field[$pos_url] =~ tr/A-Z/a-z/; }
 			$urlwithnoquery=$field[$pos_url];
 			my $foundparam=($urlwithnoquery =~ s/\?.*//);
 			# We combine the URL and query strings (for some IIS setup).
@@ -4626,7 +4629,8 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {	# Updat
 			}
  			# Remove params that are marked to be ignored in URLWithQueryWithoutFollowingParameters
 			if ($foundparam && @URLWithQueryWithoutFollowingParameters) {
- 				map {$field[$pos_url] =~ s/$_=[^&]*//;} @URLWithQueryWithoutFollowingParameters;
+				if ($URLCaseSensitive) { map {$field[$pos_url] =~ s/$_=[^&]*//i;} @URLWithQueryWithoutFollowingParameters; }
+				else { map {$field[$pos_url] =~ s/$_=[^&]*//;} @URLWithQueryWithoutFollowingParameters; }
  				# Cut starting or trailing ? or &
  				$field[$pos_url] =~ tr/&/&/s;
  				$field[$pos_url] =~ s/\?&/\?/;
@@ -4636,6 +4640,7 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {	# Updat
 		else {
 			# Trunc CGI parameters in URL
 			$field[$pos_url] =~ s/\?.*//;
+			if ($URLCaseSensitive) { $field[$pos_url] =~ tr/A-Z/a-z/; }
 			$urlwithnoquery=$field[$pos_url];
 		}
 		# Here now urlwithnoquery is /mydir/mypage.ext, /mydir, /
