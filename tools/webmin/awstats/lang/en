@@ -10,11 +10,6 @@ index_type=Type
 index_size=Size
 index_create=Created/Modified
 index_noconfig=No config files were found or have been added for analysis.
-index_empty=Empty
-index_type1=Apache
-index_type2=Squid
-index_type3=FTP
-index_sched=Scheduled?
 index_edit=Edit/Delete config
 index_del=Delete config
 index_update=Update stats 
@@ -22,19 +17,17 @@ index_view=View stats
 index_return=Config files list
 index_eversion=The AWStats command $1 on your system is version $2, but this module only supports versions $3 and above.
 index_egetversion=Failed to get the version of AWStats. Command $1 returned : $2.<br>May be your <a href='$3'>module configuration</a> is incorrect.
-index_advanced=Show other setup options 
-index_hideadvanced=Show main setup options only
+index_advanced=Show optional setup directives
+index_advanced2=Show plugins setup directives
+index_advanced3=Show ExtraSections setup directives
+index_hideadvanced=Show only main setup directives
 
 edit_title1=Add config File
 edit_title2=Edit config File
 edit_header=Config file Builder for $1
 edit_file=File content
 edit_add=Config file name to create
-edit_dir=Write report to directory
-edit_user=Run awstats as user
-edit_view=View Report
-edit_run=Generate Report
-edit_return=log details
+edit_user=Run AWStats as user
 edit_ecannot=You are not allowed to edit this config file
 edit_efilecannot=The config file is not in an allowed directory
 
@@ -45,10 +38,10 @@ save_ecfile=Missing or non-existant other config file
 save_edir=Config directory was not entered or does not exist
 save_ecannot=You are only allowed to view or generate reports for config under $1
 save_errLogFile=Error in LogFile parameter. Log file $1 does not exists or is not readable
+save_errLogFormat=Error in LogFormat parameter. Parameter is nto defined
 save_errSiteDomain=Error in SiteDomain parameter. Parameter is not defined
 save_errDirData=Error in DirData parameter. Parameter is not defined or directory does not exists
 
-view_epath=Invalid PATH_INFO
 view_efile=Invalid report filename
 view_elog=Invalid log file
 view_ecannot=You are not allowed to view this report
@@ -62,8 +55,6 @@ log_create_log=Created AWStats config file $1
 log_modify_log=Modified AWStats config file $1
 log_delete_log=Deleted AWStats config file $1
 log_generate_log=Update AWStats statistics for $1
-log_global_log=Modified AWStats setup
-log_global2_log=Modified AWStats setup
 
 acl_view=Can view reports for existing config files?
 acl_global=Can edit awstats config files?

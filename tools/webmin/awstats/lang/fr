@@ -1,0 +1,69 @@
+index_title=Analyseur de log AWStats
+index_version=AWStats version $1
+index_eawstats=La commande du log analyseur $1 n'a pas été trouvée sur le système. Peut-etre AWStats n'est-il pas installé, ou la <a href='$2'>configuration du module</a> est incorrecte.
+index_econfdir=Le répertoire des fichiers de configuration AWStats $1 n'a pas été trouvé sur le système. Peut-etre AWStats n'est-il pas installé, ou la <a href='$2'>configuration du module</a> est incorrecte.
+index_econf=Le fichier de configuration modèle $1 n'a pas été trouvé sur le système. Peut-etre AWStats n'est-il pas installé, ou la <a href='$2'>configuration du module</a> est incorrecte.
+index_cgi=<a href='$1'>CGI path non configuré</a>
+index_add=Ajout d'un nouveau fichier config d'analyse
+index_path=Fichier configuration
+index_type=Type
+index_size=Taille
+index_create=Créé/Modifié
+index_noconfig=Aucun fichier de configuration n'a été trouvé ou ajouté pour analyse.
+index_edit=Edition/Suppression
+index_del=Suppression config
+index_update=Mise à jour stats 
+index_view=Voir les stats
+index_return=Liste des fichiers de configuration
+index_eversion=La commande AWStats $1 sur votre système est en version $2, mais ce module ne gère que les version $3 ou supérieures.
+index_egetversion=Echec de la récupération de la varsion d'AWStats. La command $1 a retourné : $2.<br>Peut-etre la <a href='$3'>configuration du module</a> est incorrecte.
+index_advanced=Voir le paramétrage optionnel
+index_advanced2=Voir le paramétrage des plugins
+index_advanced3=Voir le paramétrage des ExtraSections
+index_hideadvanced=Voir uniquement le paramétrage principal
+
+edit_title1=Ajout d'un fichier de config
+edit_title2=Edition d'un fichier de config
+edit_header=Constructeur de fichier de configuration pour $1
+edit_file=Contenu du fichier
+edit_add=Nom du fichier de config à créer
+edit_user=Lancer AWStats sous l'utilisateur
+edit_ecannot=Vous n'êtes pas autorisés à éditer ce fichier de configuration
+edit_efilecannot=Le fichier de configuration n'est pas dans un répertoire autorisé
+
+save_err=Erreur dans la construction du fichier de configuration
+save_efile=Le nom du fichier de configuration n'a pas été entré
+save_fileexists=Fichier de configuration déjà existant
+save_ecfile=Missing or non-existant other config file
+save_edir=Répertoire des fichiers de configuration non renseigné ou inexistant
+save_ecannot=Vous n'êtes autorisés à voir ou générer des rapports que pour des fichiers de config dans $1
+save_errLogFile=Erreur sur le paramètre LogFile. Le fichier de log $1 n'existe pas ou n'est pas lisible
+save_errLogFormat=Erreur sur le paramètre LogFormat. Paramètre non défini
+save_errSiteDomain=Erreur sur le paramètre SiteDomain. Paramètre non défini
+save_errDirData=Erreur sur le paramètre DirData. Paramètre non défini ou répertoire inexistant
+
+view_efile=Invalid report filename
+view_elog=Invalid log file
+view_ecannot=You are not allowed to view this report
+view_eopen=Failed to open report file
+view_title=View Report
+
+update_title=Mise à jour des statistiques
+update_ecannot=You are only allowed to update statistics for config $1
+
+log_create_log=Fichier de config AWStats $1 créé
+log_modify_log=Fichier de config AWStats $1 modifié
+log_delete_log=Fichier de config AWStats $1 effacé
+log_generate_log=Mise à jour statistiques AWStats pour $1
+
+acl_view=Peut voir les stats pour les fichiers config existant?
+acl_global=Peut editer les fichiers config AWStats?
+acl_add=Peut ajouter/supprimer les fichiersCan add and delete config files?
+acl_update=Peut mettre à jour les stats pour les fichiers config existant?
+acl_user=Lancer AWStats sour l'utilisateur Unix
+acl_this=Utilisateur webmin actuel
+acl_any=Tout utilisateur
+acl_dir=Autorise la vue de stats et l'édition de fichier de config pour les fichiers config dans
+
+help_title=Page d'aide
+
