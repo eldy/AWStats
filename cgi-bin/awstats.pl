@@ -6,12 +6,33 @@
 # use diagnostics;
 # use strict;
 #-Description-------------------------------------------
-# Free realtime web server logfile analyzer (Perl script) working from
-# command line or as a CGI to show advanced web statistics.
-# For better performances, you must use this script as often as necessary
-# (from a scheduler for example).
+# Free realtime web server logfile analyzer (Perl script) to show advanced web
+# statistics. Works from command line or as a CGI.
+# You must use this script as often as necessary from your scheduler to update
+# your statistics.
 # See README.TXT file for setup and benchmark informations.
 # See COPYING.TXT file about AWStats GNU General Public License.
+#-------------------------------------------------------
+# Algorithm SUMMARY
+# Read config file
+# If 'update'
+#   Get last history file name
+#   Read this last history file (LastTime, data arrays, ...)
+#   Loop on each new line in log file
+#     If line older than Lastime, skip
+#     If new line
+#        If other month/year, save data arrays, reset them
+#        Analyse record and complete data arrays
+#     End of new line
+#   End of loop
+# End of 'update'
+# Save data arrays
+# Reset data arrays if not required month/year
+# Loop for each month of current year
+#   If required month, read 1st and 2nd part of history file for this month
+#   If not required month, read 1st part of history file for this month
+# End of loop
+# Show data arrays in HTML page
 #-------------------------------------------------------
 
 
@@ -66,7 +87,7 @@ $word, $yearcon, $yearfile, $yearmonthfile, $yeartoprocess) = ();
 @sortsearchwords = @sortsereferrals = @sortsider404 = @sortsiders = @sortunknownip =
 @sortunknownreferer = @sortunknownrefererbrowser = @wordlist = ();
 
-$VERSION="2.5 (build 11)";
+$VERSION="2.5 (build 13)";
 $Lang=0;
 
 # Default value
@@ -142,6 +163,7 @@ $BarImageHorizontal_k = "barrehk.png";
 "ilse\.","Ilse","vindex\.","Vindex\.nl",	# Minor dutch search engines
 "nomade\.fr/","Nomade", "ctrouve\.","C'est trouvé", "francite\.","Francité", "\.lbb\.org", "LBB", "rechercher\.libertysurf\.fr", "Libertysurf",	# Minor french search engines
 "fireball\.de","Fireball", "suche\.web\.de","Web.de", "meta\.ger","MetaGer",	# Minor german search engines
+"engine\.exe","Cade", "miner\.bol\.com\.br","Meta Miner",	# Minor brazilian search engine
 "search\..*com","Other search engines"
 );
 
@@ -170,14 +192,14 @@ $BarImageHorizontal_k = "barrehk.png";
 "euroseek\.","query=",
 "excite\.","search=",
 "spray\.","string=",
-"francite\.","name=",
 "nbci\.com/search","keyword=",
 "askjeeves\.","ask=",
 "mamma\.","query=",
 "search\.dogpile\.com", "q=",
 "ilse\.","search_for=", "vindex\.","in=",
-"nomade\.fr/","s=",
-"fireball\.de","q=", "suche\.web\.de","su="
+"nomade\.fr/","s=", "francite\.","name=",
+"fireball\.de","q=", "suche\.web\.de","su=",
+"engine\.exe","p1=", "miner\.bol\.com\.br","q="
 );
 @WordsToCleanSearchUrl= ("act=","annuaire=","btng=","categoria=","cfg=","cou=","dd=","domain=","dt=","dw=","exec=","geo=","hc=","height=","hl=","hs=","kl=","lang=","loc=","lr=","matchmode=","medor=","message=","meta=","mode=","order=","page=","par=","pays=","pg=","pos=","prg=","qc=","refer=","sa=","safe=","sc=","sort=","src=","start=","stype=","tag=","temp=","theme=","url=","user=","width=","what=","\\.x=","\\.y=");
 # Never put the following exclusion ("ask=","claus=","general=","kw=","keyword=","MT","p=","q=","qr=","qt=","query=","s=","search=","searchText=","string=","su=") because they are strings that contain keywords we're looking for.
@@ -1752,6 +1774,9 @@ sub Check_Config {
 }
 
 sub Read_History_File {
+#--------------------------------------------------------------------
+# Input: year,month,0|1|2	(0=read only 1st part, 1=read all file, 2=read only LastUpdate)
+#--------------------------------------------------------------------
 	&debug("Call to Read_History_File [$_[0],$_[1],$_[2]]");
 	if ($HistoryFileAlreadyRead{"$_[0]$_[1]"}) { return 0; }			# Protect code to invoke function only once for each month/year
 	$HistoryFileAlreadyRead{"$_[0]$_[1]"}=1;							# Protect code to invoke function only once for each month/year
@@ -1760,12 +1785,15 @@ sub Read_History_File {
 	$readdomain=0;$readvisitor=0;$readunknownip=0;$readsider=0;$readtime=0;$readbrowser=0;$readnsver=0;$readmsiever=0;
 	$reados=0;$readrobot=0;$readunknownreferer=0;$readunknownrefererbrowser=0;$readpagerefs=0;$readse=0;
 	$readsearchwords=0;$readerrors=0;$readerrors404=0; $readday=0;
+	$MonthUnique{$_[0].$_[1]}=0; $MonthPage{$_[0].$_[1]}=0; $MonthHits{$_[0].$_[1]}=0; $MonthBytes{$_[0].$_[1]}=0;
 	while (<HISTORY>) {
 		chomp $_; s/\r//;
 		@field=split(/ /,$_);
+
+		# FIRST PART: Always read
 		if ($field[0] eq "FirstTime")       { $FirstTime{$_[0].$_[1]}=$field[1]; next; }
 	    if ($field[0] eq "LastTime")        { if ($LastTime{$_[0].$_[1]} < $field[1]) { $LastTime{$_[0].$_[1]}=$field[1]; }; next; }
-		if ($field[0] eq "TotalVisits")     { $MonthVisits{$_[0].$_[1]}+=$field[1]; next; }
+		if ($field[0] eq "TotalVisits")     { $MonthVisits{$_[0].$_[1]}=$field[1]; next; }
 	    if ($field[0] eq "LastUpdate")      { if ($LastUpdate{$_[0].$_[1]} < $field[1]) { $LastUpdate{$_[0].$_[1]}=$field[1]; }; next; }
 	    if ($field[0] eq "BEGIN_VISITOR")   { $readvisitor=1; next; }
 	    if ($field[0] eq "END_VISITOR")     { $readvisitor=0; next; }
@@ -1787,10 +1815,10 @@ sub Read_History_File {
 			}
 		if ($readday)
 		{
-			$DayPage{$field[0]}+=$field[1]; $DayHits{$field[0]}+=$field[2]; $DayBytes{$field[0]}+=$field[3]; $DayVisits{$field[0]}+=$field[4]; $DayUnique{$field[0]}+=$field[5];
+			$DayPage{$field[0]}=$field[1]; $DayHits{$field[0]}=$field[2]; $DayBytes{$field[0]}=$field[3]; $DayVisits{$field[0]}=$field[4]; $DayUnique{$field[0]}=$field[5];
 		}
 
-		# If $_[2] == 0, it means we don't need second part of history file.
+		# SECOND PART: If $_[2] == 0, it means we don't need second part of history file.
 		if ($_[2]) {
 	        if ($field[0] eq "BEGIN_DOMAIN") { $readdomain=1; next; }
 			if ($field[0] eq "END_DOMAIN")   { $readdomain=0; next; }
@@ -1865,10 +1893,13 @@ sub Read_History_File {
 	        if ($readsearchwords) { $_keywords{$field[0]}+=$field[1]; next; }
 	        if ($readerrors) { $_errors_h{$field[0]}+=$field[1]; next; }
 	        if ($readerrors404) { $_sider404_h{$field[0]}+=$field[1]; $_referer404_h{$field[0]}=$field[2]; next; }
-
-			}
 		}
+	}
 	close HISTORY;
+	if ($readdomain || $readvisitor || $readunknownip || $readsider || $readtime || $readbrowser || $readnsver || $readmsiever || $reados || $readrobot || $readunknownreferer || $readunknownrefererbrowser || $readpagerefs || $readse || $readsearchwords || $readerrors || $readerrors404 || $readday) {
+		# History file is corrupted
+		error("Error: History file \"$DirData/$PROG$_[1]$_[0]$FileSuffix.txt\" is corrupted. Restore a backup of this file, or remove it (data for this month will be lost).");
+	}
 }
 
 sub Save_History_File {
@@ -1973,6 +2004,8 @@ sub Save_History_File {
 }
 
 sub Init_HashArray {
+	# We purge data read for year $_[0] and month $_[1] so it's like we never read it
+	$HistoryFileAlreadyRead{"$_[0]$_[1]"}=0;
 	# Delete all hash arrays with name beginning by _
 	%_browser_h = %_domener_h = %_domener_k = %_domener_p =
 	%_errors_h = %_hostmachine_h = %_hostmachine_k = %_hostmachine_l = %_hostmachine_p =
@@ -2293,7 +2326,7 @@ if ($UpdateStats) {
 			# Yes, a new month to process
 			if ($monthtoprocess > 0) {
 				&Save_History_File($yeartoprocess,$monthtoprocess);		# We save data of current processed month
- 				&Init_HashArray;										# Start init for next one
+ 				&Init_HashArray($yeartoprocess,$monthtoprocess);		# Start init for next one
 				}
 			$monthtoprocess=$dateparts[1];$yeartoprocess=$dateparts[2];
 			&Read_History_File($yeartoprocess,$monthtoprocess,1);		# This should be useless (file must not exist)
@@ -2580,10 +2613,10 @@ if ($UpdateStats) {
 	# DNSLookup warning
 	if ($DNSLookup && !$NewDNSLookup) { warning("Warning: <b>$PROG</b> has detected that hosts names are already resolved in your logfile <b>$LogFile</b>.<br>\nIf this is true, you should change your setup DNSLookup=1 into DNSLookup=0 to increase $PROG speed."); }
 
-	# Save for month $monthtoprocess
+	# Save current processed month $monthtoprocess
 	if ($UpdateStats && $monthtoprocess) {	# If monthtoprocess is still 0, it means there was no history files and we found no valid lines in log file
 		&Save_History_File($yeartoprocess,$monthtoprocess);		# We save data for this month,year
-		if (($MonthRequired ne "year") && ($monthtoprocess != $MonthRequired)) { &Init_HashArray; }	# Not a desired month, so we clean data
+		if (($MonthRequired ne "year") && ($monthtoprocess != $MonthRequired)) { &Init_HashArray($yeartoprocess,$monthtoprocess); }	# Not a desired month, so we clean data
 	}
 
 	# Archive LOG file into ARCHIVELOG
@@ -3258,13 +3291,13 @@ print "</td></tr></table>";
 print "<br>\n";
 print "<table>\n";
 print "<tr><td class=LEFT><font style=\"font: 14px arial,verdana,helvetica; font-weight: bold\">Traffic:</td>";
-print "<td class=LEFT><a href=\"#DOMAINS\">$message[17][$Lang]</a> <a href=\"#VISITOR\">".ucfirst($message[26][$Lang])."</a> <a href=\"#ROBOTS\">$message[53][$Lang]</a> <a href=\"#HOUR\">$message[20][$Lang]</a> <a href=\"$DirCgi$PROG.$Extension?action=unknownip&site=$SiteToAnalyze&year=$YearRequired&month=$MonthRequired&lang=$Lang\">$message[45][$Lang]</a><br></td></tr>\n";
+print "<td class=LEFT><a href=\"#DOMAINS\">$message[17][$Lang]</a> &nbsp; <a href=\"#VISITOR\">".ucfirst($message[26][$Lang])."</a> &nbsp; <a href=\"#ROBOTS\">$message[53][$Lang]</a> &nbsp; <a href=\"#HOUR\">$message[20][$Lang]</a> &nbsp; <a href=\"$DirCgi$PROG.$Extension?action=unknownip&site=$SiteToAnalyze&year=$YearRequired&month=$MonthRequired&lang=$Lang\">$message[45][$Lang]</a><br></td></tr>\n";
 print "<tr><td class=LEFT><font style=\"font: 14px arial,verdana,helvetica; font-weight: bold\">Navigation:</td>";
-print "<td class=LEFT><a href=\"#PAGE\">$message[19][$Lang]</a> <a href=\"#BROWSER\">$message[21][$Lang]</a> <a href=\"#OS\">$message[59][$Lang]</a> <a href=\"$DirCgi$PROG.$Extension?action=browserdetail&site=$SiteToAnalyze&year=$YearRequired&month=$MonthRequired&lang=$Lang\">$message[33][$Lang]</a> <a href=\"$DirCgi$PROG.$Extension?action=browserdetail&site=$SiteToAnalyze&year=$YearRequired&month=$MonthRequired&lang=$Lang\">$message[34][$Lang]</a><br></td></tr>\n";
+print "<td class=LEFT><a href=\"#PAGE\">$message[19][$Lang]</a> &nbsp; <a href=\"#BROWSER\">$message[21][$Lang]</a> &nbsp; <a href=\"#OS\">$message[59][$Lang]</a> &nbsp; <a href=\"$DirCgi$PROG.$Extension?action=browserdetail&site=$SiteToAnalyze&year=$YearRequired&month=$MonthRequired&lang=$Lang\">$message[33][$Lang]</a> &nbsp; <a href=\"$DirCgi$PROG.$Extension?action=browserdetail&site=$SiteToAnalyze&year=$YearRequired&month=$MonthRequired&lang=$Lang\">$message[34][$Lang]</a><br></td></tr>\n";
 print "<tr><td class=LEFT><font style=\"font: 14px arial,verdana,helvetica; font-weight: bold\">$message[23][$Lang]</td>";
-print "<td class=LEFT><a href=\"#REFERER\">$message[37][$Lang]</a> <a href=\"#SEARCHWORDS\">$message[24][$Lang]</a><br></td></tr>\n";
+print "<td class=LEFT><a href=\"#REFERER\">$message[37][$Lang]</a> &nbsp; <a href=\"#SEARCHWORDS\">$message[24][$Lang]</a><br></td></tr>\n";
 print "<tr><td class=LEFT><font style=\"font: 14px arial,verdana,helvetica; font-weight: bold\">$message[2][$Lang]:</td>";
-print "<td class=LEFT> <a href=\"#ERRORS\">$message[22][$Lang]</a> <a href=\"$DirCgi$PROG.$Extension?action=notfounderror&site=$SiteToAnalyze&year=$YearRequired&month=$MonthRequired&lang=$Lang\">$message[31][$Lang]</a><br></td></tr>\n";
+print "<td class=LEFT> <a href=\"#ERRORS\">$message[22][$Lang]</a> &nbsp; <a href=\"$DirCgi$PROG.$Extension?action=notfounderror&site=$SiteToAnalyze&year=$YearRequired&month=$MonthRequired&lang=$Lang\">$message[31][$Lang]</a><br></td></tr>\n";
 print "</table>\n";
 print "<br>\n\n";
 
