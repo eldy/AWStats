@@ -184,7 +184,7 @@ sub BuildFullHTMLOutput_hostinfo {
 		print "<tr><td class=\"aws\"><pre>".($w->response())."</pre></td></tr>\n";
 	}
 	else {
-		print "<tr><td><br />The Whois command failed.<br />Did the server running AWStats is allowed to send WhoIs queries ?<br /><br /></td></tr>\n";
+		print "<tr><td><br />The Whois command failed.<br />Did the server running AWStats is allowed to send WhoIs queries (If a firewall is running, port 43 should be opened from inside to outside) ?<br /><br /></td></tr>\n";
 	}
 	&tab_end;
 
