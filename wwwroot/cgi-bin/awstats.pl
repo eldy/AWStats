@@ -11,15 +11,15 @@
 #-------------------------------------------------------
 # $Revision$ - $Author$ - $Date$
 
-use strict;no strict "refs";
 #use warnings;		# Must be used in test mode only. This reduce a little process speed
 #use diagnostics;	# Must be used in test mode only. This reduce a lot of process speed
+use strict;no strict "refs";
 use Socket;
 use Time::Local;	# use Time::Local 'timelocal_nocheck' is faster but not supported by all Time::Local modules
 
 use vars qw/ $UseHiRes $UseCompress /;
 # Next 'use' can be uncommented to get miliseconds time in showsteps option
-#use Time::HiRes qw( gettimeofday ); $UseHiRes=1;
+use Time::HiRes qw( gettimeofday ); $UseHiRes=1;
 # Next 'use' can be uncommented to allow read/write of gz compressed log or history files (not working yet)
 #use Compress::Zlib; $UseCompress=1;
 
@@ -35,45 +35,41 @@ my $VERSION="4.1 (build $REVISION)";
 
 # ---------- Init variables -------
 use vars qw/
+$DIR $PROG $Extension
 $Debug
 $ShowSteps
+$Lang
 $AWScript
-$DIR
-$PROG
-$Extension
-$DNSLookup
 $DirCgi
 $DirData
 $DirIcons
 $DirLang
-$DNSLookupAlreadyDone
-$Lang
-$DEBUGFORCED
+$LogSeparator
 $KeyWordsNotSensitive
+$DNSLookup
+$DNSLookupAlreadyDone
+$DEBUGFORCED
 $MaxRowsInHTMLOutput
 $VisitTimeOut
 $VisitTolerance
 $NbOfLinesForBenchmark
 $WIDTH
 $CENTER
-$PreviousHost
 /;
-# TODO $PreviousHost Check if this enhance speed
+$DIR=$PROG=$Extension="";
 $Debug=0;
 $ShowSteps=0;
+$Lang="en";
 $AWScript="";
-$DIR="";
-$PROG="";
-$Extension="";
-$DNSLookup=0;
 $DirCgi="";
 $DirData="";
 $DirIcons="";
 $DirLang="";
-$DNSLookupAlreadyDone=0;
-$Lang="en";
-$DEBUGFORCED   = 0;				# Force debug level to log lesser level into debug.log file (Keep this value to 0)
+$LogSeparator="\\s";
 $KeyWordsNotSensitive = 1;		# Keywords are not case sensitive
+$DNSLookup=0;
+$DNSLookupAlreadyDone=0;
+$DEBUGFORCED   = 0;				# Force debug level to log lesser level into debug.log file (Keep this value to 0)
 $MaxRowsInHTMLOutput = 1000;	# Max number of rows for not limited HTML arrays
 $VisitTimeOut  = 10000;			# Laps of time to consider a page load as a new visit. 10000 = 1 hour (Default = 10000)
 $VisitTolerance= 10000;			# Laps of time to accept a record if not in correct order. 10000 = 1 hour (Default = 10000)
@@ -112,9 +108,6 @@ $nowtime $tomorrowtime
 $nowweekofmonth $nowdaymod $nowsmallyear
 $nowsec $nowmin $nowhour $nowday $nowmonth $nowyear $nowwday $nowns
 /;
-$nowtime = $tomorrowtime = 0;
-$nowweekofmonth = $nowdaymod = $nowsmallyear = 0;
-$nowsec = $nowmin = $nowhour = $nowday = $nowmonth = $nowyear = $nowwday = $nowns = 0;
 use vars qw/
 $AllowAccessFromWebToAuthenticatedUsersOnly $BarHeight $BarWidth $DebugResetDone
 $Expires $CreateDirDataIfNotExists $KeepBackupOfHistoricFiles $MaxLengthOfURL
@@ -191,13 +184,13 @@ $color_h, $color_k, $color_p, $color_e, $color_x, $color_s, $color_u, $color_v)=
 ("","","","","","","","","","","","","","","","","","","","","");
 use vars qw/
 $HTMLOutput $FileConfig $FileSuffix $Host $DayRequired $MonthRequired $YearRequired
-$QueryString $SiteConfig $StaticLinks $URLFilter $PageCode $LogFormatString $PerlParsingFormat
+$QueryString $SiteConfig $StaticLinks $URLFilter $PageCode $PerlParsingFormat
 $SiteToAnalyze $SiteToAnalyzeWithoutwww $UserAgent
 /;
 ($HTMLOutput, $FileConfig, $FileSuffix, $Host, $DayRequired, $MonthRequired, $YearRequired,
-$QueryString, $SiteConfig, $StaticLinks, $URLFilter, $PageCode, $LogFormatString, $PerlParsingFormat,
-$SiteToAnalyze, $SiteToAnalyzeWithoutwww, $UserAgent, $PreviousHost)=
-("","","","","","","","","","","","","","","","","","");
+$QueryString, $SiteConfig, $StaticLinks, $URLFilter, $PageCode, $PerlParsingFormat,
+$SiteToAnalyze, $SiteToAnalyzeWithoutwww, $UserAgent)=
+("","","","","","","","","","","","","","","","");
 use vars qw/
 $pos_vh $pos_rc $pos_logname $pos_date $pos_method $pos_url $pos_code $pos_size
 $pos_referer $pos_agent $pos_query $pos_gzipin $pos_gzipout $pos_gzipratio
@@ -416,6 +409,11 @@ use vars qw/ %httpcodewithtooltips /;
 # Functions
 #-------------------------------------------------------
 
+#------------------------------------------------------------------------------
+# Function:     Write on ouput header of HTML page
+# Input:		$HTMLOutput $PageCode $Expires
+# Output:		-
+#------------------------------------------------------------------------------
 sub html_head {
 	if ($HTMLOutput) {
 		# Write head section
@@ -454,7 +452,6 @@ DIV { font: 12px arial,verdana,helvetica; text-align:justify; }
 \@media projection {
 .tablecontainer { page-break-before: always; }
 }
-
 //-->
 </STYLE>
 EOF
@@ -486,6 +483,11 @@ EOF
 }
 
 
+#------------------------------------------------------------------------------
+# Function:     Write on ouput end of HTML page
+# Input:		-
+# Output:		-
+#------------------------------------------------------------------------------
 sub html_end {
 	if ($HTMLOutput) {
 		print "$CENTER<br><br><br>\n";
@@ -528,6 +530,11 @@ sub tab_end {
 	print "</div>\n\n";
 }
 
+#------------------------------------------------------------------------------
+# Function:     Write error message and exit
+# Input:		-
+# Output:		-
+#------------------------------------------------------------------------------
 sub error {
 	my $message=shift||"";
 	my $secondmessage=shift||"";
@@ -594,6 +601,11 @@ sub error {
 	exit 1;
 }
 
+#------------------------------------------------------------------------------
+# Function:     Write a warning message
+# Input:		-
+# Output:		-
+#------------------------------------------------------------------------------
 sub warning {
 	my $messagestring=shift;
 	if ($Debug) { debug("$messagestring",1); }
@@ -608,8 +620,12 @@ sub warning {
 	}
 }
 
-# Parameters : $string $level
-# Input      : $Debug = required level   $DEBUGFORCED = required level forced
+#------------------------------------------------------------------------------
+# Function:     Write error message and exit
+# Parameters:   $string $level
+# Input:        $Debug = required level   $DEBUGFORCED = required level forced
+# Output:		-
+#------------------------------------------------------------------------------
 sub debug {
 	my $level = $_[1] || 1;
 	if ($level <= $DEBUGFORCED) {
@@ -626,26 +642,51 @@ sub debug {
 	}
 }
 
+#------------------------------------------------------------------------------
+# Function:     Check if parameter is in SkiHosts array
+# Input:		host @SkipHosts
+# Output:		0 Not found, 1 Found
+#------------------------------------------------------------------------------
 sub SkipHost {
 	foreach my $match (@SkipHosts) { if ($_[0] =~ /$match/i) { return 1; } }
 	0; # Not in @SkipHosts
 }
 
+#------------------------------------------------------------------------------
+# Function:     Check if parameter is in SkiFiles array
+# Input:		url @SkipFiles
+# Output:		0 Not found, 1 Found
+#------------------------------------------------------------------------------
 sub SkipFile {
 	foreach my $match (@SkipFiles) { if ($_[0] =~ /$match/i) { return 1; } }
 	0; # Not in @SkipFiles
 }
 
+#------------------------------------------------------------------------------
+# Function:     Check if parameter is in OnlyFiles array
+# Input:		host @SkipHosts
+# Output:		0 Not found, 1 Found
+#------------------------------------------------------------------------------
 sub OnlyFile {
 	foreach my $match (@OnlyFiles) { if ($_[0] =~ /$match/i) { return 1; } }
 	0; # Not in @OnlyFiles
 }
 
+#------------------------------------------------------------------------------
+# Function:     Check if parameter is in SkiHosts array
+# Input:		host @SkipHosts
+# Output:		0 Not found, 1 Found
+#------------------------------------------------------------------------------
 sub SkipDNSLookup {
 	foreach my $match (@SkipDNSLookupFor) { if ($_[0] =~ /$match/i) { return 1; } }
 	0; # Not in @SkipDNSLookupFor
 }
 
+#------------------------------------------------------------------------------
+# Function:     Return day of week of a day
+# Input:		$day $month $year
+# Output:		0-6
+#------------------------------------------------------------------------------
 sub DayOfWeek {
 	my ($day, $month, $year) = @_;
 	if ($Debug) { debug("DayOfWeek for $day $month $year",4); }
@@ -756,8 +797,7 @@ sub Read_Config_File {
 		# Read optional setup section
 		if ($param =~ /^AllowAccessFromWebToAuthenticatedUsersOnly/)	{ $AllowAccessFromWebToAuthenticatedUsersOnly=$value; next; }
 		if ($param =~ /^AllowAccessFromWebToFollowingAuthenticatedUsers/) {
-			my @felter=split(/\s+/,$value);
-			foreach my $elem (@felter)	  { push @AllowAccessFromWebToFollowingAuthenticatedUsers,$elem; }
+			foreach my $elem (split(/\s+/,$value))	  { push @AllowAccessFromWebToFollowingAuthenticatedUsers,$elem; }
 			next;
 			}
 		if ($param =~ /^CreateDirDataIfNotExists/)   { $CreateDirDataIfNotExists=$value; next; }
@@ -768,37 +808,31 @@ sub Read_Config_File {
 		if ($param =~ /^DefaultFile/)           { $DefaultFile=$value; next; }
 		if ($param =~ /^SkipHosts/) {
 			$value =~ s/\\\./\./g; $value =~ s/([^\\])\./$1\\\./g; $value =~ s/^\./\\\./;	# Replace . into \.
-			my @felter=split(/\s+/,$value);
-			foreach my $elem (@felter)    { push @SkipHosts,$elem; }
+			foreach my $elem (split(/\s+/,$value))    { push @SkipHosts,$elem; }
 			next;
 			}
 		if ($param =~ /^SkipDNSLookupFor/) {
 			$value =~ s/\\\./\./g; $value =~ s/([^\\])\./$1\\\./g; $value =~ s/^\./\\\./;	# Replace . into \.
-			my @felter=split(/\s+/,$value);
-			foreach my $elem (@felter)    { push @SkipDNSLookupFor,$elem; }
+			foreach my $elem (split(/\s+/,$value))    { push @SkipDNSLookupFor,$elem; }
 			next;
 			}
 		if ($param =~ /^SkipFiles/) {
 			$value =~ s/\\\./\./g; $value =~ s/([^\\])\./$1\\\./g; $value =~ s/^\./\\\./;	# Replace . into \.
-			my @felter=split(/\s+/,$value);
-			foreach my $elem (@felter)    { push @SkipFiles,$elem; }
+			foreach my $elem (split(/\s+/,$value))    { push @SkipFiles,$elem; }
 			next;
 			}
 		if ($param =~ /^OnlyFiles/) {
 			$value =~ s/\\\./\./g; $value =~ s/([^\\])\./$1\\\./g; $value =~ s/^\./\\\./;	# Replace . into \.
-			my @felter=split(/\s+/,$value);
-			foreach my $elem (@felter)    { push @OnlyFiles,$elem; }
+			foreach my $elem (split(/\s+/,$value))    { push @OnlyFiles,$elem; }
 			next;
 			}
 		if ($param =~ /^NotPageList/) {
-			my @felter=split(/\s+/,$value);
-			foreach my $elem (@felter)    { $NotPageList{$elem}=1; }
+			foreach my $elem (split(/\s+/,$value))    { $NotPageList{$elem}=1; }
 			$foundNotPageList=1;
 			next;
 			}
 		if ($param =~ /^ValidHTTPCodes/) {
-			my @felter=split(/\s+/,$value);
-			foreach my $elem (@felter)    { $ValidHTTPCodes{$elem}=1; }
+			foreach my $elem (split(/\s+/,$value))    { $ValidHTTPCodes{$elem}=1; }
 			$foundValidHTTPCodes=1;
 			next;
 			}
@@ -1335,7 +1369,7 @@ sub Check_Config {
 sub Read_History_File {
 	my $year=sprintf("%04i",shift);
 	my $month=sprintf("%02i",shift);
-	my $part=shift;	# If part=0 wee need only TotalVisits, LastUpdate, TIME section and VISITOR section
+	my $part=shift;	# If part=0 wee need only LastUpdate, TotalVisits, TIME section and VISITOR section
 
 	# In standard use of AWStats, the DayRequired variable is always empty
 	if ($DayRequired) { if ($Debug) { debug("Call to Read_History_File [$year,$month,$part] ($DayRequired)"); } }
@@ -1358,7 +1392,6 @@ sub Read_History_File {
 	if ($UseCompress) {	$historyfilename="gzip -d <\"$historyfilename\" |"; }
 	if ($Debug) { debug(" History file is '$historyfilename'",2); }
 
-	# TODO If session for read (no update), file can be open with share. So POSSIBLE CHANGE HERE
 	# TODO Whith particular option file reading can be stopped if section all read
 	open(HISTORY,$historyfilename) || error("Error: Couldn't open file \"$historyfilename\" for read: $!");	# Month before Year kept for backward compatibility
 	$MonthUnique{$year.$month}=0; $MonthPages{$year.$month}=0; $MonthHits{$year.$month}=0; $MonthBytes{$year.$month}=0; $MonthHostsKnown{$year.$month}=0; $MonthHostsUnknown{$year.$month}=0;
@@ -1939,7 +1972,7 @@ sub Read_History_File {
 						if ($loadrecord) {
 							if ($field[1]) {
 								if ($loadrecord==2) {
-									my @wordarray=split(/\+/,$field[0]); foreach my $word (@wordarray) {
+									foreach my $word (split(/\+/,$field[0])) {
 										$_keywords{$word}+=$field[1];
 									}
 								}
@@ -2286,13 +2319,13 @@ sub Save_History_File {
 		$keysinkeylist{$key}=1;
 		my $keyphrase=$key;
 		print HISTORYTMP "$keyphrase $_keyphrases{$key}\n";
-		my @wordarray=split(/\+/,$key); foreach my $word (@wordarray) { $_keywords{$word}+=$_keyphrases{$key}; }	# To init %_keywords
+		foreach my $word (split(/\+/,$key)) { $_keywords{$word}+=$_keyphrases{$key}; }	# To init %_keywords
 	}
 	foreach my $key (keys %_keyphrases) {
 		if ($keysinkeylist{$key}) { next; }
 		my $keyphrase=$key;
 		print HISTORYTMP "$keyphrase $_keyphrases{$key}\n";
-		my @wordarray=split(/\+/,$key); foreach my $word (@wordarray) { $_keywords{$word}+=$_keyphrases{$key}; }	# To init %_keywords
+		foreach my $word (split(/\+/,$key)) { $_keywords{$word}+=$_keyphrases{$key}; }	# To init %_keywords
 	}
 	print HISTORYTMP "END_SEARCHWORDS\n";
 	print HISTORYTMP "\n";
@@ -2336,18 +2369,16 @@ sub Save_History_File {
 
 #--------------------------------------------------------------------
 # Function:     Return time elapsed since last call in miliseconds
-# Input:        None
+# Input:        0|1 (0 reset counter, 1 no reset)
 # Return:       Number of miliseconds elapsed since last call
 #--------------------------------------------------------------------
 sub GetDelaySinceStart {
-	my $option=shift;
-	if ($option) { $StartSeconds=0;	}	# Reset counter
+	if (shift) { $StartSeconds=0;	}	# Reset counter
 	my ($newseconds, $newmicroseconds)=(0,0);
 	if ($UseHiRes) { ($newseconds, $newmicroseconds) = &gettimeofday; }
 	else { $newseconds=time(); }
 	if (! $StartSeconds) { $StartSeconds=$newseconds; $StartMicroseconds=$newmicroseconds; }
-	my $nbms=$newseconds*1000+int($newmicroseconds/1000)-$StartSeconds*1000-int($StartMicroseconds/1000);
-	return ($nbms);
+	return ($newseconds*1000+int($newmicroseconds/1000)-$StartSeconds*1000-int($StartMicroseconds/1000));
 }
 
 #--------------------------------------------------------------------
@@ -2542,6 +2573,11 @@ sub IsAscii {
 }
 
 
+#--------------------------------------------------------------------
+# Function:     Add a val from sorting tree
+# Input:        
+# Return:       
+#--------------------------------------------------------------------
 sub AddInTree {
 	my $keytoadd=shift;
 	my $keyval=shift;
@@ -2583,6 +2619,11 @@ sub AddInTree {
 #	if ($countaddintree % 100 == 0) { if ($Debug) { debug(" AddInTree End of 100",3); } }
 }
 
+#--------------------------------------------------------------------
+# Function:     Remove a val from sorting tree
+# Input:        
+# Return:       
+#--------------------------------------------------------------------
 sub Removelowerval {
 	my $keytoremove=$val{$lowerval};	# This is lower key
 	if ($Debug) { debug("  remove for lowerval=$lowerval: key=$keytoremove",4); }
@@ -2950,8 +2991,6 @@ if ($UpdateStats) {
 	if ($Debug) { debug("HostAliases is now @HostAliases",1); }
 	if ($Debug) { debug("SkipFiles is now @SkipFiles",1); }
 
-	if ($Debug) { debug("Start Update process"); }
-
 	# GENERATING PerlParsingFormat
 	#------------------------------------------
 	# Log example records
@@ -2965,105 +3004,103 @@ if ($UpdateStats) {
 	# LogFormat "%h %l %u %t \"%r\" %>s %b mod_gzip: %{mod_gzip_compression_ratio}npct." common_with_mod_gzip_info1
 	# LogFormat "%h %l %u %t \"%r\" %>s %b mod_gzip: %{mod_gzip_result}n In:%{mod_gzip_input_size}n Out:%{mod_gzip_output_size}n:%{mod_gzip_compression_ratio}npct." common_with_mod_gzip_info2
 
-	$LogFormatString=$LogFormat;
-	if ($LogFormat eq "1") { $LogFormatString="%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\""; }
-	if ($LogFormat eq "2") { $LogFormatString="date time c-ip cs-username cs-method cs-uri-stem sc-status sc-bytes cs-version cs(User-Agent) cs(Referer)"; }
-	if ($LogFormat eq "4") { $LogFormatString="%h %l %u %t \"%r\" %>s %b"; }
-	if ($LogFormat eq "5") { $LogFormatString="c-ip cs-username c-agent sc-authenticated date time s-svcname s-computername cs-referred r-host r-ip r-port time-taken cs-bytes sc-bytes cs-protocol cs-transport s-operation cs-uri cs-mime-type s-object-source sc-status s-cache-info"; }
-	# Replacement for Apache format string
-	$LogFormatString =~ s/%v(\s)/%virtualname$1/g; $LogFormatString =~ s/%v$/%virtualname/g;
-	$LogFormatString =~ s/%h(\s)/%host$1/g; $LogFormatString =~ s/%h$/%host/g;
-	$LogFormatString =~ s/%l(\s)/%other$1/g; $LogFormatString =~ s/%l$/%other/g;
-	$LogFormatString =~ s/%u(\s)/%logname$1/g; $LogFormatString =~ s/%u$/%logname/g;
-	$LogFormatString =~ s/%t(\s)/%time1$1/g; $LogFormatString =~ s/%t$/%time1/g;
-	$LogFormatString =~ s/\"%r\"/%methodurl/g;
-	$LogFormatString =~ s/%>s/%code/g;
-	$LogFormatString =~ s/%b(\s)/%bytesd$1/g;	$LogFormatString =~ s/%b$/%bytesd/g;
-	$LogFormatString =~ s/\"%{Referer}i\"/%refererquot/g;
-	$LogFormatString =~ s/\"%{User-Agent}i\"/%uaquot/g;
-	$LogFormatString =~ s/%{mod_gzip_input_size}n/%gzipin/g;
-	$LogFormatString =~ s/%{mod_gzip_output_size}n/%gzipout/g;
-	$LogFormatString =~ s/%{mod_gzip_compression_ratio}n/%gzipratio/g;
-	# Replacement for a IIS and ISA format string
-	$LogFormatString =~ s/date\stime/%time2/g;
-	$LogFormatString =~ s/c-ip/%host/g;
-	$LogFormatString =~ s/cs-username/%logname/g;
-	$LogFormatString =~ s/cs-method/%method/g;
-	$LogFormatString =~ s/cs-uri-stem/%url/g; $LogFormatString =~ s/cs-uri/%url/g;
-	$LogFormatString =~ s/sc-status/%code/g;
-	$LogFormatString =~ s/sc-bytes/%bytesd/g;
-	$LogFormatString =~ s/cs-version/%other/g;	# Protocol
-	$LogFormatString =~ s/cs\(User-Agent\)/%ua/g; $LogFormatString =~ s/c-agent/%ua/g;
-	$LogFormatString =~ s/cs\(Referer\)/%referer/g; $LogFormatString =~ s/cs-referred/%referer/g;
-	$LogFormatString =~ s/cs-uri-query/%host/g;
-	$LogFormatString =~ s/sc-authenticated/%other/g;
-	$LogFormatString =~ s/s-svcname/%other/g;
-	$LogFormatString =~ s/s-computername/%other/g;
-	$LogFormatString =~ s/r-host/%other/g;
-	$LogFormatString =~ s/r-ip/%other/g;
-	$LogFormatString =~ s/r-port/%other/g;
-	$LogFormatString =~ s/time-taken/%other/g;
-	$LogFormatString =~ s/cs-bytes/%other/g;
-	$LogFormatString =~ s/cs-protocol/%other/g;
-	$LogFormatString =~ s/cs-transport/%other/g;
-	$LogFormatString =~ s/s-operation/%other/g;
-	$LogFormatString =~ s/cs-mime-type/%other/g;
-	$LogFormatString =~ s/s-object-source/%other/g;
-	$LogFormatString =~ s/s-cache-info/%other/g;
-	# Generate PerlParsingFormat
-	if ($Debug) { debug("Generate PerlParsingFormat from LogFormatString=$LogFormatString"); }
+	if ($Debug) { debug("Generate PerlParsingFormat from LogFormat=$LogFormat"); }
 	$PerlParsingFormat="";
-	if ($LogFormat eq "1") {
-		$PerlParsingFormat="([^\\s]+) [^\\s]+ ([^\\s]+) \\[([^\\s]+) [^\\s]+\\] \\\"([^\\s]+) ([^\\s]+) [^\\\"]+\\\" ([\\d|-]+) ([\\d|-]+) \\\"(.*)\\\" \\\"([^\\\"]*)\\\"";	# referer and ua might be ""
-		$pos_rc=1;$pos_logname=2;$pos_date=3;$pos_method=4;$pos_url=5;$pos_code=6;$pos_size=7;$pos_referer=8;$pos_agent=9;
-		$lastrequiredfield=9;
+	if ($LogFormat =~ /^[1-5]$/) {	# Pre-defined log format
+		if ($LogFormat eq "1") {	# Same than "%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\""
+			$PerlParsingFormat="([^\\s]+) [^\\s]+ ([^\\s]+) \\[([^\\s]+) [^\\s]+\\] \\\"([^\\s]+) ([^\\s]+) [^\\\"]+\\\" ([\\d|-]+) ([\\d|-]+) \\\"(.*)\\\" \\\"([^\\\"]*)\\\"";	# referer and ua might be ""
+			$pos_rc=1;$pos_logname=2;$pos_date=3;$pos_method=4;$pos_url=5;$pos_code=6;$pos_size=7;$pos_referer=8;$pos_agent=9;
+			$lastrequiredfield=9;
+		}
+		elsif ($LogFormat eq "2") {	# Same than "date time c-ip cs-username cs-method cs-uri-stem sc-status sc-bytes cs-version cs(User-Agent) cs(Referer)"
+			$PerlParsingFormat="([^\\s]+ [^\\s]+) ([^\\s]+) ([^\\s]+) ([^\\s]+) ([^\\s]+) ([\\d|-]+) ([\\d|-]+) [^\\s]+ ([^\\s]+) ([^\\s]+)";
+			$pos_date=1;$pos_rc=2;$pos_logname=3;$pos_method=4;$pos_url=5;$pos_code=6;$pos_size=7;$pos_agent=8;$pos_referer=9;
+			$lastrequiredfield=9;
+		}
+		elsif ($LogFormat eq "3") {	# Same than "%h %l %u %t \"%r\" %>s %b"
+			$PerlParsingFormat="([^\\t]*\\t[^\\t]*)\\t([^\\t]*)\\t([\\d]*)\\t([^\\t]*)\\t([^\\t]*)\\t([^\\t]*)\\t[^\\t]*\\t.*:([^\\t]*)\\t([\\d]*)";
+			$pos_date=1;$pos_method=2;$pos_code=3;$pos_rc=4;$pos_agent=5;$pos_referer=6;$pos_url=7;$pos_size=8;
+			$lastrequiredfield=8;
+		}
+		elsif ($LogFormat eq "4") {
+			$PerlParsingFormat="([^\\s]*) [^\\s]* ([^\\s]*) \\[([^\\s]*) [^\\s]*\\] \\\"([^\\s]*) ([^\\s]*) [^\\\"]*\\\" ([\\d|-]*) ([\\d|-]*)";
+			$pos_rc=1;$pos_logname=2;$pos_date=3;$pos_method=4;$pos_url=5;$pos_code=6;$pos_size=7;
+			$lastrequiredfield=7;
+		}
+		elsif ($LogFormat eq "5") {	# Same than "c-ip cs-username c-agent sc-authenticated date time s-svcname s-computername cs-referred r-host r-ip r-port time-taken cs-bytes sc-bytes cs-protocol cs-transport s-operation cs-uri cs-mime-type s-object-source sc-status s-cache-info"
+			$PerlParsingFormat="([^\\t]*)\\t([^\\t]*)\\t([^\\t]*)\\t[^\\t]*\\t([^\\t]*\\t[^\\t]*)\\t[^\\t]*\\t[^\\t]*\\t([^\\t]*)\\t[^\\t]*\\t[^\\t]*\\t[^\\t]*\\t[^\\t]*\\t[^\\t]*\\t([^\\t]*)\\t[^\\t]*\\t[^\\t]*\\t([^\\t]*)\\t([^\\t]*)\\t[^\\t]*\\t[^\\t]*\\t([^\\t]*)\\t[^\\t]*";
+			$pos_rc=1;$pos_logname=2;$pos_agent=3;$pos_date=4;$pos_referer=5;$pos_size=6;$pos_method=7;$pos_url=8;$pos_code=9;
+			$lastrequiredfield=9;
+		}
 	}
-	if ($LogFormat eq "2") {
-		$PerlParsingFormat="([^\\s]+ [^\\s]+) ([^\\s]+) ([^\\s]+) ([^\\s]+) ([^\\s]+) ([\\d|-]+) ([\\d|-]+) [^\\s]+ ([^\\s]+) ([^\\s]+)";
-		$pos_date=1;$pos_rc=2;$pos_logname=3;$pos_method=4;$pos_url=5;$pos_code=6;$pos_size=7;$pos_agent=8;$pos_referer=9;
-		$lastrequiredfield=9;
-	}
-	if ($LogFormat eq "3") {
-		$PerlParsingFormat="([^\\t]*\\t[^\\t]*)\\t([^\\t]*)\\t([\\d]*)\\t([^\\t]*)\\t([^\\t]*)\\t([^\\t]*)\\t[^\\t]*\\t.*:([^\\t]*)\\t([\\d]*)";
-		$pos_date=1;$pos_method=2;$pos_code=3;$pos_rc=4;$pos_agent=5;$pos_referer=6;$pos_url=7;$pos_size=8;
-		$lastrequiredfield=8;
-	}
-	if ($LogFormat eq "4") {
-		$PerlParsingFormat="([^\\s]*) [^\\s]* ([^\\s]*) \\[([^\\s]*) [^\\s]*\\] \\\"([^\\s]*) ([^\\s]*) [^\\\"]*\\\" ([\\d|-]*) ([\\d|-]*)";
-		$pos_rc=1;$pos_logname=2;$pos_date=3;$pos_method=4;$pos_url=5;$pos_code=6;$pos_size=7;
-		$lastrequiredfield=7;
-	}
-	if ($LogFormat eq "5") {
-		$PerlParsingFormat="([^\\t]*)\\t([^\\t]*)\\t([^\\t]*)\\t[^\\t]*\\t([^\\t]*\\t[^\\t]*)\\t[^\\t]*\\t[^\\t]*\\t([^\\t]*)\\t[^\\t]*\\t[^\\t]*\\t[^\\t]*\\t[^\\t]*\\t[^\\t]*\\t([^\\t]*)\\t[^\\t]*\\t[^\\t]*\\t([^\\t]*)\\t([^\\t]*)\\t[^\\t]*\\t[^\\t]*\\t([^\\t]*)\\t[^\\t]*";
-		$pos_rc=1;$pos_logname=2;$pos_agent=3;$pos_date=4;$pos_referer=5;$pos_size=6;$pos_method=7;$pos_url=8;$pos_code=9;
-		$lastrequiredfield=9;
-	}
-	if ($LogFormat !~ /^[1-5]$/) {
-		# Scan $LogFormat to found all required fields and generate PerlParsing
-		my @fields = split(/\s+/, $LogFormatString); # make array of entries
+	else {							# Personalized log format
+		my $LogFormatString=$LogFormat;
+		# Replacement for Apache format string
+		$LogFormatString =~ s/%v(\s)/%virtualname$1/g; $LogFormatString =~ s/%v$/%virtualname/g;
+		$LogFormatString =~ s/%h(\s)/%host$1/g; $LogFormatString =~ s/%h$/%host/g;
+		$LogFormatString =~ s/%l(\s)/%other$1/g; $LogFormatString =~ s/%l$/%other/g;
+		$LogFormatString =~ s/%u(\s)/%logname$1/g; $LogFormatString =~ s/%u$/%logname/g;
+		$LogFormatString =~ s/%t(\s)/%time1$1/g; $LogFormatString =~ s/%t$/%time1/g;
+		$LogFormatString =~ s/\"%r\"/%methodurl/g;
+		$LogFormatString =~ s/%>s/%code/g;
+		$LogFormatString =~ s/%b(\s)/%bytesd$1/g;	$LogFormatString =~ s/%b$/%bytesd/g;
+		$LogFormatString =~ s/\"%{Referer}i\"/%refererquot/g;
+		$LogFormatString =~ s/\"%{User-Agent}i\"/%uaquot/g;
+		$LogFormatString =~ s/%{mod_gzip_input_size}n/%gzipin/g;
+		$LogFormatString =~ s/%{mod_gzip_output_size}n/%gzipout/g;
+		$LogFormatString =~ s/%{mod_gzip_compression_ratio}n/%gzipratio/g;
+		# Replacement for a IIS and ISA format string
+		$LogFormatString =~ s/date\stime/%time2/g;
+		$LogFormatString =~ s/c-ip/%host/g;
+		$LogFormatString =~ s/cs-username/%logname/g;
+		$LogFormatString =~ s/cs-method/%method/g;
+		$LogFormatString =~ s/cs-uri-stem/%url/g; $LogFormatString =~ s/cs-uri/%url/g;
+		$LogFormatString =~ s/sc-status/%code/g;
+		$LogFormatString =~ s/sc-bytes/%bytesd/g;
+		$LogFormatString =~ s/cs-version/%other/g;	# Protocol
+		$LogFormatString =~ s/cs\(User-Agent\)/%ua/g; $LogFormatString =~ s/c-agent/%ua/g;
+		$LogFormatString =~ s/cs\(Referer\)/%referer/g; $LogFormatString =~ s/cs-referred/%referer/g;
+		$LogFormatString =~ s/cs-uri-query/%host/g;
+		$LogFormatString =~ s/sc-authenticated/%other/g;
+		$LogFormatString =~ s/s-svcname/%other/g;
+		$LogFormatString =~ s/s-computername/%other/g;
+		$LogFormatString =~ s/r-host/%other/g;
+		$LogFormatString =~ s/r-ip/%other/g;
+		$LogFormatString =~ s/r-port/%other/g;
+		$LogFormatString =~ s/time-taken/%other/g;
+		$LogFormatString =~ s/cs-bytes/%other/g;
+		$LogFormatString =~ s/cs-protocol/%other/g;
+		$LogFormatString =~ s/cs-transport/%other/g;
+		$LogFormatString =~ s/s-operation/%other/g;
+		$LogFormatString =~ s/cs-mime-type/%other/g;
+		$LogFormatString =~ s/s-object-source/%other/g;
+		$LogFormatString =~ s/s-cache-info/%other/g;
+		if ($Debug) { debug("LogFormatString=$LogFormatString"); }
+		# Scan $LogFormatString to found all required fields and generate PerlParsingFormat
+		my @fields = split(/\s+/,$LogFormatString); # make array of entries
 		my $i = 1;
 		foreach my $f (@fields) {
 			my $found=0;
 			if ($f =~ /%virtualname$/) {
 				$found=1;
 				$pos_vh = $i; $i++;
-				$PerlParsingFormat .= "([^\\s]*)";
+				$PerlParsingFormat .= "([^$LogSeparator]*)";
 			}
 			elsif ($f =~ /%host$/) {
 				$found=1;
 				$pos_rc = $i; $i++;
-				$PerlParsingFormat .= "([^\\s]*)";
+				$PerlParsingFormat .= "([^$LogSeparator]*)";
 			}
 			elsif ($f =~ /%logname$/) {
 				$found=1;
 				$pos_logname = $i; $i++;
-				$PerlParsingFormat .= "([^\\s]*)";
+				$PerlParsingFormat .= "([^$LogSeparator]*)";
 			}
 			elsif ($f =~ /%time1b$/) {
 				$found=1;
 				$pos_date = $i;
 				$i++;
-				$PerlParsingFormat .= "\\[([^\\s]*)\\]";
+				$PerlParsingFormat .= "\\[([^$LogSeparator]*)\\]";
 			}
 			elsif ($f =~ /%time1$/) {
 				$found=1;
@@ -3071,13 +3108,13 @@ if ($UpdateStats) {
 				$i++;
 				#$pos_zone = $i;
 				$i++;
-				$PerlParsingFormat .= "\\[([^\\s]*) ([^\\s]*)\\]";
+				$PerlParsingFormat .= "\\[([^$LogSeparator]*) ([^$LogSeparator]*)\\]";
 			}
 			elsif ($f =~ /%time2$/) {
 				$found=1;
 				$pos_date = $i;
 				$i++;
-				$PerlParsingFormat .= "([^\\s]* [^\\s]*)";
+				$PerlParsingFormat .= "([^$LogSeparator]* [^$LogSeparator]*)";
 			}
 			elsif ($f =~ /%methodurl$/) {
 				$found=1;
@@ -3085,7 +3122,7 @@ if ($UpdateStats) {
 				$i++;
 				$pos_url = $i;
 				$i++;
-				$PerlParsingFormat .= "\\\"([^\\s]*) ([^\\s]*) [^\\\"]*\\\"";
+				$PerlParsingFormat .= "\\\"([^$LogSeparator]*) ([^$LogSeparator]*) [^\\\"]*\\\"";
 			}
 			elsif ($f =~ /%methodurlnoprot$/) {
 				$found=1;
@@ -3093,25 +3130,25 @@ if ($UpdateStats) {
 				$i++;
 				$pos_url = $i;
 				$i++;
-				$PerlParsingFormat .= "\\\"([^\\s]*) ([^\\s]*)\\\"";
+				$PerlParsingFormat .= "\\\"([^$LogSeparator]*) ([^$LogSeparator]*)\\\"";
 			}
 			elsif ($f =~ /%method$/) {
 				$found=1;
 				$pos_method = $i;
 				$i++;
-				$PerlParsingFormat .= "([^\\s]*)";
+				$PerlParsingFormat .= "([^$LogSeparator]*)";
 			}
 			elsif ($f =~ /%url$/) {
 				$found=1;
 				$pos_url = $i;
 				$i++;
-				$PerlParsingFormat .= "([^\\s]*)";
+				$PerlParsingFormat .= "([^$LogSeparator]*)";
 			}
 			elsif ($f =~ /%query$/) {
 				$found=1;
 				$pos_query = $i;
 				$i++;
-				$PerlParsingFormat .= "([^\\s]*)";
+				$PerlParsingFormat .= "([^$LogSeparator]*)";
 			}
 			elsif ($f =~ /%code$/) {
 				$found=1;
@@ -3132,7 +3169,7 @@ if ($UpdateStats) {
 			elsif ($f =~ /%referer$/) {
 				$found=1;
 				$pos_referer = $i; $i++;
-				$PerlParsingFormat .= "([^\\s]*)";
+				$PerlParsingFormat .= "([^$LogSeparator]*)";
 			}
 			elsif ($f =~ /%uaquot$/) {
 				$found=1;
@@ -3142,31 +3179,31 @@ if ($UpdateStats) {
 			elsif ($f =~ /%ua$/) {
 				$found=1;
 				$pos_agent = $i; $i++;
-				$PerlParsingFormat .= "([^\\s]*)";
+				$PerlParsingFormat .= "([^$LogSeparator]*)";
 			}
 			elsif ($f =~ /%gzipin$/ ) {
 				$found=1;
 				$pos_gzipin=$i;$i++;
-				$PerlParsingFormat .= "([^\\s]*)";
+				$PerlParsingFormat .= "([^$LogSeparator]*)";
 			}
 			elsif ($f =~ /%gzipout/ ) {		# Compare $f to /%gzipout/ and not to /%gzipout$/ like other fields
 				$found=1;
 				$pos_gzipout=$i;$i++;
-				$PerlParsingFormat .= "([^\\s]*)";
+				$PerlParsingFormat .= "([^$LogSeparator]*)";
 			}
 			elsif ($f =~ /%gzipratio/ ) {	# Compare $f to /%gzipratio/ and not to /%gzipratio$/ like other fields
 				$found=1;
 				$pos_gzipratio=$i;$i++;
-				$PerlParsingFormat .= "([^\\s]*)";
+				$PerlParsingFormat .= "([^$LogSeparator]*)";
 			}
 			elsif ($f =~ /%syslog$/) { # Added for syslog time and host stamp, fields are skipped and not analyzed
 				 $found=1;
 				 $PerlParsingFormat .= "[A-Z][a-z][a-z] .[0-9] ..:..:.. [A-Za-z]+";
 			}
-			if (! $found) { $found=1; $PerlParsingFormat .= "[^\\s]*"; }
-			$PerlParsingFormat.="\\s";
+			if (! $found) { $found=1; $PerlParsingFormat .= "[^$LogSeparator]*"; }
+			$PerlParsingFormat.=$LogSeparator;
 		}
-		if (! $PerlParsingFormat) { error("Error: No recognised format tag in personalized LogFormat string"); }
+		if (! $PerlParsingFormat) { error("Error: No recognized format tag in personalized LogFormat string"); }
 		chop($PerlParsingFormat); chop($PerlParsingFormat);		# Remove last separator char "\s"
 		$lastrequiredfield=$i--;
 	}
@@ -3178,6 +3215,8 @@ if ($UpdateStats) {
 	if (! $pos_size) { error("Error: Your personalized LogFormat does not include all fields required by AWStats (Add \%bytesd in your LogFormat string)."); }
 	if ($Debug) { debug("PerlParsingFormat is $PerlParsingFormat"); }
 
+
+	if ($Debug) { debug("Start Update process"); }
 
 	# READING THE LAST PROCESSED HISTORY FILE
 	#------------------------------------------
@@ -3213,7 +3252,9 @@ if ($UpdateStats) {
 	if ($Debug) { debug("Open log file \"$LogFile\""); }
 	open(LOG,"$LogFile") || error("Error: Couldn't open server log file \"$LogFile\" : $!");
 
-	my @field=(); my $counter=0;
+	my @field=();
+	my $counter=0;
+	my $PreviousHost="";
 	# Reset counter for benchmark (first call to GetDelaySinceStart)
 	GetDelaySinceStart(1);
 	if ($ShowSteps) { print "Phase 1 : First bypass old records\n"; }
@@ -3237,8 +3278,6 @@ if ($UpdateStats) {
 		}
 		foreach my $i (1..$lastrequiredfield) { $field[$i]=$$i; }	# !!!!!
 
-#		@field=Parse($_);
-
 		if ($Debug) { debug(" Correct format line $NbOfLinesRead : host=\"$field[$pos_rc]\", logname=\"$field[$pos_logname]\", date=\"$field[$pos_date]\", method=\"$field[$pos_method]\", url=\"$field[$pos_url]\", code=\"$field[$pos_code]\", size=\"$field[$pos_size]\", referer=\"$field[$pos_referer]\", agent=\"$field[$pos_agent]\"",3); }
 		#if ($Debug) { debug("$field[$pos_vh] - $field[$pos_gzipin] - $field[$pos_gzipout] - $field[$pos_gzipratio]\n"); }
 		
@@ -3256,7 +3295,7 @@ if ($UpdateStats) {
 		if ($field[$pos_method] eq 'GET' || $field[$pos_method] eq 'POST' || $field[$pos_method] eq 'HEAD' || $field[$pos_method] =~ /OK/) {
 			# HTTP request.	Keep only GET, POST, HEAD, *OK* with Webstar but not OPTIONS
 			$protocol=1;
-			}
+		}
 		elsif ($field[$pos_method] =~ /sent/ || $field[$pos_method] =~ /get/) {
 			# FTP request.
 			$protocol=2;
@@ -3337,7 +3376,6 @@ if ($UpdateStats) {
 		# Record is approved
 		#-------------------
 		$NbOfNewLines++;
-
 
 		# Is it in a new month section ?
 		#-------------------------------
@@ -3444,9 +3482,9 @@ if ($UpdateStats) {
 		$_filetypes_h{$extension}++;
 		$_filetypes_k{$extension}+=$field[$pos_size];
 		# Compression
-		if ($pos_gzipin && $field[$pos_gzipin]) {	# Si in et out present
-			my ($notused,$in)=split(":",$field[$pos_gzipin]);
-			my ($notused1,$out,$notused2)=split(":",$field[$pos_gzipout]);
+		if ($pos_gzipin && $field[$pos_gzipin]) {	# If in and out in log
+			my ($notused,$in)=split(/:/,$field[$pos_gzipin]);
+			my ($notused1,$out,$notused2)=split(/:/,$field[$pos_gzipout]);
 			if ($out) {
 				$_filetypes_gz_in{$extension}+=$in;
 				$_filetypes_gz_out{$extension}+=$out;
@@ -3573,7 +3611,7 @@ if ($UpdateStats) {
 #		if (! $_hostmachine_h{$_}) { $MonthHostsUnknown{$yearmonthtoprocess}++; }
 		$_hostmachine_h{$_}++;
 		$_hostmachine_k{$_}+=$field[$pos_size];
-		${PreviousHost}=$_;
+		$PreviousHost=$_;
 
 		# Count top-level domain
 		if ($PageBool) { $_domener_p{$Domain}++; }
