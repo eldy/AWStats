@@ -21,7 +21,7 @@ use vars qw(%DomainsHashIDLib @RobotsSearchIDOrder_list1 @RobotsSearchIDOrder_li
 #-------------------------------------------------------
 # Defines
 #-------------------------------------------------------
-my $VERSION="4.0 (build 36)";
+my $VERSION="4.0 (build 37)";
 
 # ---------- Init variables -------
 my $Debug=0;
@@ -37,13 +37,13 @@ my $DirLang="";
 my $DNSLookupAlreadyDone=0;
 my $Lang="en";
 my $DEBUGFORCED   = 0;				# Force debug level to log lesser level into debug.log file (Keep this value to 0)
-my $MaxRowsInHTMLOutput = 1000;	# Max number of rows for not limited HTML arrays
+my $MaxRowsInHTMLOutput = 1000;		# Max number of rows for not limited HTML arrays
 my $VisitTimeOut  = 10000;			# Laps of time to consider a page load as a new visit. 10000 = one hour (Default = 10000)
 my $FullHostName  = 1;				# 1 = Use name.domain.zone to refer host clients, 0 = all hosts in same domain.zone are one host (Default = 1, 0 never tested)
 my $NbOfLinesForBenchmark=5000;
 my $ShowBackLink  = 1;
+my $WIDTH         = 600;
 my $CENTER        = "";
-my $WIDTH         = "600";
 # Images for graphics
 my $BarImageVertical_v   = "barrevv.png";
 #$BarImageHorizontal_v = "barrehv.png";
@@ -57,16 +57,12 @@ my $BarImageVertical_h   = "barrevh.png";
 my $BarImageHorizontal_h = "barrehh.png";
 my $BarImageVertical_k   = "barrevk.png";
 my $BarImageHorizontal_k = "barrehk.png";
-
-my $AddOn=0;
-#require "${DIR}addon.pl"; $AddOn=1; 		# Keep this line commented in standard version
-
 my $nowtime = my $nowweekofmonth = my $nowdaymod = my $nowsmallyear = 0; 
 my $nowsec = my $nowmin = my $nowhour = my $nowday = my $nowmonth = my $nowyear = my $nowwday = 0;
 my $tomorrowtime = my $tomorrowsmallyear = 0; 
 my $tomorrowsec = my $tomorrowmin = my $tomorrowhour = my $tomorrowday = my $tomorrowmonth = my $tomorrowyear = my $tomorrowwday = 0;
-my ($AllowToUpdateStatsFromBrowser,$BarHeight,$BarWidth,$DebugResetDone,$Expires, 
-$CreateDirDataIfNotExists, $KeepBackupOfHistoricFiles,$MaxLengthOfURL,
+my ($BarHeight,$BarWidth,$DebugResetDone,$Expires, 
+$CreateDirDataIfNotExists, $KeepBackupOfHistoricFiles, $MaxLengthOfURL,
 $NbOfLinesRead, $NbOfNewLinesProcessed, $NbOfLinesCorrupted, $NowNewLinePhase,
 $MaxNbOfDomain, $MaxNbOfHostsShown, $MaxNbOfKeywordsShown, $MaxNbOfLoginShown,
 $MaxNbOfPageShown, $MaxNbOfRefererShown, $MaxNbOfRobotShown,
@@ -76,15 +72,15 @@ $NbOfLinesForCorruptedLog, $PurgeLogFile,
 $ShowAuthenticatedUsers, $ShowCompressionStats, $ShowFileSizesStats,
 $ShowCorrupted, $SplitSearchString, $StartSeconds, $StartMicroseconds,
 $StaticLinks, $UpdateStats, $URLWithQuery)=
-(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
-my ($ArchiveLogRecords, $DetailedReportsOnNewWindows, $FirstDayOfWeek,
-$ShowHeader, $ShowMenu, $ShowMonthDayStats, $ShowDaysOfWeekStats,
+(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
+my ($AllowToUpdateStatsFromBrowser, $ArchiveLogRecords, $DetailedReportsOnNewWindows,
+$FirstDayOfWeek, $ShowHeader, $ShowMenu, $ShowMonthDayStats, $ShowDaysOfWeekStats,
 $ShowHoursStats, $ShowDomainsStats, $ShowHostsStats, 
 $ShowRobotsStats, $ShowPagesStats, $ShowFileTypesStats, 
 $ShowBrowsersStats, $ShowOSStats, $ShowOriginStats, $ShowKeyphrasesStats,
 $ShowKeywordsStats,  $ShowHTTPErrorsStats,
 $ShowFlagLinks, $ShowLinksOnUrl, $WarningMessages)=
-(1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1);
+(1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1);
 my ($ArchiveFileName, $DayRequired, $DefaultFile, $FileConfig, $FileSuffix, 
 $HTMLHeadSection, $HTMLEndSection, $HTMLOutput, $Host,
 $LastUpdate, $LogFile, $LogFormat, $LogFormatString, $Logo, $LogoLink,
@@ -171,13 +167,16 @@ my %TmpHashDNSLookup = my %TmpHashOS = my %TmpHashRefererServer = my %TmpHashRob
 #tie %_unknownreferer_l, 'Tie::StdHash';
 #tie %_unknownrefererbrowser_l, 'Tie::StdHash';
 
+my $AddOn=0;
+#require "${DIR}addon.pl"; $AddOn=1; 		# Keep this line commented in standard version
+
 # Those addresses are shown with those lib (First column is full exact relative URL, second column is text to show instead of URL)
 my %Aliases = (
-			"/",                                    "<b>HOME PAGE</b>",
-			"/cgi-bin/awstats.pl",					"<b>AWStats stats page</b>",
-			"/cgi-bin/awstats/awstats.pl",			"<b>AWStats stats page</b>",
+			"/",                            "<b>HOME PAGE</b>",
+			"/cgi-bin/awstats.pl",			"<b>AWStats stats page</b>",
+			"/cgi-bin/awstats/awstats.pl",	"<b>AWStats stats page</b>",
 			# Following the same example, you can put here HTML text you want to see in links instead of URL text.
-			"/YourRelativeUrl",						"<b>Your HTML text</b>"
+			"/YourRelativeUrl",				"<b>Your HTML text</b>"
 			);
 
 # These table is used to make fast reverse DNS lookup for particular IP adresses. You can add your own IP addresses resolutions.
@@ -792,7 +791,7 @@ sub Check_Config {
 	# Main section
 	if ($LogFormat =~ /^[\d]$/ && $LogFormat !~ /[1-5]/)  { error("Error: LogFormat parameter is wrong. Value is '$LogFormat' (should be 1,2,3,4,5 or a 'personalised AWtats log format string')"); }
 	if ($DNSLookup !~ /[0-1]/)                            { error("Error: DNSLookup parameter is wrong. Value is '$DNSLookup' (should be 0 or 1)"); }
-	if ($AllowToUpdateStatsFromBrowser !~ /[0-1]/) 	{ $AllowToUpdateStatsFromBrowser=1; }	# For compatibility, is 1 if not defined
+	if ($AllowToUpdateStatsFromBrowser !~ /[0-1]/) 	{ $AllowToUpdateStatsFromBrowser=0; }
 	# Optional section
 	if ($CreateDirDataIfNotExists !~ /[0-1]/)      	{ $CreateDirDataIfNotExists=0; }
 	if ($PurgeLogFile !~ /[0-1]/)                 	{ $PurgeLogFile=0; }
@@ -2350,7 +2349,7 @@ debug("YearRequired=$YearRequired MonthRequired=$MonthRequired",2);
 &html_head;
 
 # Security check
-if ($UpdateStats && ($AllowToUpdateStatsFromBrowser==0) && ($ENV{"GATEWAY_INTERFACE"})) {
+if ($UpdateStats && (! $AllowToUpdateStatsFromBrowser) && ($ENV{"GATEWAY_INTERFACE"})) {
 	error("Error: Update of statistics is not allowed from a browser.");
 }
 
