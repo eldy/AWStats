@@ -46,7 +46,7 @@ of them. You don't need that your customer have "real-time" statistics.<br>
 This is a very good choice for web hosting providers with few but very large web sites of important customers.<br>
 <font color=blue><b>Advantage</b></font>:<br>
 Very highly secured.<br>
-<font color=blue><b>Disavdantage</b></font>:<br>
+<font color=blue><b>Disadvantage</b></font>:<br>
 Statistics are static, no dynamic update/view.<br>
 <font color=blue><b>How</b></font>:<br>
 All statistics pages for a config/domain file are built in static html files using <b>-output -staticlinks</b> option.<br>
@@ -72,9 +72,9 @@ be made (if allowed) on-line.<br>
 No way to have 2 configurations files for 1 particular domain.<br>
 <font color=blue><b>How</b></font>:<br>
 First, AWStats must be placed in its own cgi-bin-awstats directory with no way for users to
-put in it a hacked verion of AWStats (a not writeable directory).<br>
+put in it a hacked version of AWStats (a not writable directory).<br>
 Then, you must add an environment variable called <b>AWSTATS_CONFIG</b> in the web server environment
-for each domain to say wich config file to use for a particular domain.<br>
+for each domain to say which config file to use for a particular domain.<br>
 <u>With Apache web server, you must use the '<i>SetEnv</i>' directive. This is an example:</u><br><i>
 &lt;VirtualHost www.xxx.yyy.zzz&gt;<br>
 &nbsp; ServerAdmin  webmaster@mydomain.com<br>
@@ -90,10 +90,10 @@ even if a visitor try to force the config file with the URL '<i>http://mydomain.
 <br>
 
 <u>3) MEDIUM SECURED</u><br>
-!!! This policy is not possible yet as the use of file awstatsusers is not yet developped. !!!<br>
+!!! This policy is not possible yet as the use of file awstatsusers is not yet developed. !!!<br>
 <font color=blue><b>Policy</b></font>:<br>
-You have several config/domain and several users. You want to specify (using a <b>awstatsusers</b> file) wich user can see
-or update dinamically statistics for each config/domain.<br>
+You have several config/domain and several users. You want to specify (using a <b>awstatsusers</b> file) which user can see
+or update dynamically statistics for each config/domain.<br>
 <font color=blue><b>Advantage</b></font>:<br>
 Statistics are dynamic. High level of manageability.<br>
 <font color=blue><b>Disadvantage</b></font>:<br>
