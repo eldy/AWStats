@@ -18,9 +18,10 @@ Fixes:
 - "&nbsp" changed to "&nbsp;" in miscellanous chart.
 
 New features/improvments:
-- None
+- Added support for Darwin streaming server.
 
 Other/Documentation:
+- Added mp4 mime type.
 - Updated documentation.
 
 

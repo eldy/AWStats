@@ -51,7 +51,7 @@ FAQ-COM025 <a href="#NOLOG">How to use AWStats with no server log</a><br>
 FAQ-COM050 <a href="#LIMITLOG">What is the log size limit AWStats can analyze ?</a><br>
 FAQ-COM090 <a href="#FTP">Setup for FTP server log files.</a><br>
 FAQ-COM100 <a href="#MAIL">Setup for MAIL log files (Sendmail, Postfix, QMail, Exchange).</a><br>
-FAQ-COM110 <a href="#MEDIASERVER">Setup for MEDIA SERVER log files (Realmedia, Windows media server).</a><br>
+FAQ-COM110 <a href="#MEDIASERVER">Setup for MEDIA SERVER log files (Realmedia, Windows media, Darwin streaming server).</a><br>
 FAQ-COM120 <a href="#ROTATE">How to rotate my logs without loosing data.</a><br>
 FAQ-COM130 <a href="#CRONTAB">How to run AWStats frequently ?</a><br>
 FAQ-COM140 <a href="#EXCLUDEHOSTS">How to exclude my IP address (or whole subnet mask) from stats ?</a><br>
@@ -117,7 +117,7 @@ Examples of used platforms (bold means 'tested by author', others were reported 
 <b>Windows 2000</b>, <b>Windows NT 4.0</b>, Windows Me, <b>Linux</b>, Macintosh, <b>Solaris</b>, <b>Aix</b>, BeOS, ...<br>
 <u>Web/Wap/Proxy/FTP/Mails/Streaming servers</u><br>
 <b>Apache 1.3.x and 2</b>, <b>IIS 5.0</b>, WebStar, WebLogic, WebSite, <b>Windows Media Server</b>, Tomcat, <b>Squid</b>, <b>Sendmail</b>, <b>Postfix</b>, QMail,
-Roxen, Resin, <b>ProFTP</b>, Lotus Notes/Domino, IPlanet, IceCast, ZeroBrand, Zeus, Zope, Abyss, www4mail, ...<br>
+Roxen, Resin, <b>ProFTP</b>, Lotus Notes/Domino, Darwin, IPlanet, IceCast, ZeroBrand, Zeus, Zope, Abyss, www4mail, ...<br>
 <u>Perl interpreters:</u><br>
 <b>ActivePerl 5.6</b>, <b>Perl 5.8</b>, <b>Perl 5.6</b>, <b>Perl 5.0</b>, <b>mod_perl for Apache</b>, ...<br>
 </td></tr></table>
@@ -404,9 +404,9 @@ Modify this new config file:
 Now you can use AWStats as usual (run the update process and read statistics).<br>
 <br>
 <br>
-<u>For Windows Media Server</u><br>
+<u>For Windows Media Server / Darwin Streaming Server</u><br>
 <br>
-1- If your Windows Media Server version allows it, setup your log format to write the following fields:
+1- If your Windows Media / Darwin streaming Server version allows it, setup your log format to write the following fields:
 <i>
 <br>c-ip
 <br>date
@@ -444,9 +444,10 @@ Listen to streaming files and check that your new log file looks like this:<br>
 </i>
 <br>
 <br>
-If your Windows Media Server version does not allow to define your log format:<br>
-Just follow instructions in step 2 directly but use the log format string found in first
-lines of your log files as value for AWStats LogFormat parameter, for example:<br>
+If your Windows Media/Darwin Streaming Server version does not allow to define your log format:<br>
+Just follow instructions in step 2 directly but use the log format string found in first lines
+of your log files (Just after the "<i>#Fields:</i>" string) as value for AWStats LogFormat
+parameter. For example, you could have a LogFormat defined like this:<br>
 <i>
 LogFormat="c-ip date time c-dns cs-uri-stem c-starttime x-duration c-rate
 c-status c-playerid c-playerversion c-playerlanguage cs(User-Agent)
@@ -468,6 +469,7 @@ Modify this new config file:
 <i>
 LogFile="/pathtomediaserver/mediaserverlog"
 <br>LogFormat="c-ip date time cs-uri-stem c-starttime x-duration c-rate c-status c-playerid c-playerversion c-playerlanguage cs(User-Agent) cs(Referer) c-hostexe c-hostexever c-os c-osversion c-cpu filelength filesize avgbandwidth protocol transport audiocodec videocodec channelURL sc-bytes"
+<br>DecodeUA=1
 <br>ShowMenu=1
 <br>ShowMonthStats=UHB
 <br>ShowDaysOfMonthStats=HB

@@ -5175,7 +5175,7 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 			$protocol=1;
 		}
 		elsif ($field[$pos_method] eq 'SMTP') {
-			# Mail request ('SMTP' for sendmail with sma)
+			# Mail request ('SMTP' for mail log with maillogconvert.pl preprocessor)
 			$protocol=3;
 		}
 		elsif ($field[$pos_method] eq 'RETR' || $field[$pos_method] =~ /get/i) {
@@ -5186,8 +5186,8 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 			# FTP SENT request
 			$protocol=2;
 		}
-		elsif ($field[$pos_method] eq 'mms') {
-			# Streaming request
+		elsif ($field[$pos_method] eq 'mms' || $field[$pos_method] eq 'RTP') {
+			# Streaming request (windows media server or darwin streaming server)
 			$protocol=4;
 		}
 		elsif ($field[$pos_method] =~ /\d\d\d\d/) {
