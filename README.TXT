@@ -51,9 +51,9 @@ I - 1) Features
 	* Tooltips and explanations for each informations pointed by mouse,
 	* Multi-named web sites supported,
 	* Informations are since the start of your web site and month by month,
-	* 7 languages: English, French, Dutch (Christtian Langeveld), Spanish
+	* 8 languages: English, French, Dutch (Christtian Langeveld), Spanish
 	  (Rodrigo Villarreal), Italian (Vittore Zen), German (Ulf Moench), Polish
-	  (Tomasz Ciemnoczulowski).
+	  (Tomasz Ciemnoczulowski), Greek (Simos Xenitellis)
 	* Colored graphics,
 	* Free and distributed with sources (perl script).
 	
@@ -234,7 +234,7 @@ II - 2) With IIS Server
 III - BENCHMARK
 -----------------------------------
 
-In version 2.23, AWStats processes 570 lines by seconds (Pentium 300Mhz).
+With version 2.23, AWStats processes 570 lines by seconds (Pentium 300Mhz).
 If we consider 10 hits by page and 5 pages for one visits, it means that
 AWStats is able to analyze 11 visits in one second.
 If your site has 70 visits each hour (50,000 visits a month), you should
