@@ -9,8 +9,8 @@ search engines, keywords used to find your site, broken links, robots and
 more. It works with IIS 5.0+, Apache and other web/wap/proxy server log files.
 
 License: GNU GPL (GNU General Public License. See COPYING.TXT)
-Version : 3.1 
-Release date: 15 August 2001
+Version : 3.2
+Release date: 15 September 2001
 Platforms: All (Linux, NT, SCO, BSD, Solaris and other *NIX's, BeOS, OS/2...)
 Author: Laurent Destailleur <eldy@users.sourceforge.net>
 AWStats web site: http://awstats.sourceforge.net
@@ -103,9 +103,9 @@ II - 1) With Apache Server (on Unix/Linux or Windows)
       CustomLog /yourlogpath/yourlogfile common
         into
       CustomLog /yourlogpath/yourlogfile combined
-      See your apache manual for more information. Don't forget to restart
-      apache to activate changes.
-      This is an example of what you should get then in your log file:
+      See your apache manual for more information.
+      Stop Apache, remove old log file and restart Apache.
+      This is an example of records you should get in new log file:
       62.161.78.73 - - [dd/mmm/yyyy:hh:mm:ss +0000] "GET / HTTP/1.1" 200 1234 "http://www.from.com/from.htm" "Mozilla/4.0 (compatible; MSIE 5.01; Windows NT 5.0)"
 
     * Put awstats.pl file in your cgi-bin directory (or other cgi directory).
@@ -119,7 +119,7 @@ II - 1) With Apache Server (on Unix/Linux or Windows)
       With Apache for Windows and Activeperl interpreter, it might be
       #!c:/program files/activeperl/bin/perl
 
-    * Move all awstats icons sub-directories into a directory readable by your
+    * Move all awstats icon sub-directories into a directory readable by your
       web server, for example /yourwwwroot/icon.
 
     * Copy awstats.model.conf into awstats.virtualhostname.conf or awstats.conf
@@ -127,18 +127,20 @@ II - 1) With Apache Server (on Unix/Linux or Windows)
       awstats.virtualhostname.conf, and, if not found, will look for
       awstats.conf).
       Whatever the name you choose, this new file must be stored in
-      - /etc/opt/awstats for unix/linux users.
+      - /etc/opt/awstats or /etc/awstats or /etc for unix/linux users.
       - same directory than awstats.pl (so cgi-bin) for Windows and other OS.
       Edit this new config file with your own setup :
       - Change "LogFile" value with full path of your web server log file (You
         can also use a relative path from your awstats.pl directory).
       - Check if "LogFormat" has the value "1" (it means "NCSA apache
         combined/ELF/XLF log format").
-      - Change the "DirIcons" parameter to reflect URL of icons directory.
+      - Change the "DirIcons" parameter to reflect URL of icon directory.
       - Edit "SiteDomain" parameter with the main domain name or the intranet
         web server name used to reach the web site to analyze.
       - You can change other parameters if you want.
 
+	SETUP IS FINISHED
+	
     * To update statistics, launch awstats.pl from the command line interface
       like this (the first time, process may be long) :
         awstats.pl -config=virtualhostname -update
@@ -173,32 +175,49 @@ II - 1) With Apache Server (on Unix/Linux or Windows)
 
 II - 2) With IIS Server
 
-    * Configure IIS to have "Extended W3C log format" with following fields:
-      date time c-ip cs-username cs-method cs-uri-stem sc-status sc-bytes cs-version cs(User-Agent) cs(Referer)
-      This is an example of what you should get:
+    * Configure IIS to log in "Extended W3C log format" (You can still use
+      your own log format but setup is easier if made like suggested). So, for
+      this, start the IIS Snap-in, select the web site and look at its
+      Properties. Choose W3C Extended Log Format, then Properties, then the
+      Tab Extended Properties and uncheck everything under Extended Properties.
+      Once they are all unchecked, check all following fields:
+      date
+      time
+      c-ip
+      cs-username
+      cs-method
+      cs-uri-stem
+      sc-status
+      sc-bytes
+      cs-version
+      cs(User-Agent)
+      cs(Referer)
+      Stop IIS, remove old log file and restart IIS.
+      This is an example of records you should get in new log file:
       2000-07-19 14:14:14 62.161.78.73 - GET / 200 1234 HTTP/1.1 Mozilla/4.0+(compatible;+MSIE+5.01;+Windows+NT+5.0) http://www.from.com/from.htm
 
     * Put awstats.pl file in your cgi-bin directory (or other cgi directory).
 
-    * Move all awstats icons sub-directories into a directory readable by your
-      web server, for example C:\yourwwwroot\icon and change the "DirIcons"
-      parameter in configure file to reflect this directory (Ie: /icon).
+    * Move all awstats icon sub-directories into a directory readable by your
+      web server, for example C:\yourwwwroot\icon.
 
     * Copy awstats.model.conf into awstats.virtualhostname.conf or awstats.conf
       (when you will run AWStats, it will first look for a config file named
       awstats.virtualhostname.conf, and, if not found, will look for
       awstats.conf).
-      Whatever the name you choose, this new file must be stored in same
-      directory than awstats.pl (so cgi-bin).
+      Whatever the name you choose, this new file must be stored in
+      - same directory than awstats.pl (so cgi-bin)
       Edit this new config file with your own setup :
       - Change "LogFile" value with full path of your web server log file (You
         can also use a relative path from your awstats.pl directory).
       - Change "LogFormat" to value "2" (it means "IIS W3C log format").
-      - Change the "DirIcons" parameter to reflect URL of icons directory.
+      - Change the "DirIcons" parameter to reflect URL of icon directory.
       - Edit "SiteDomain" parameter with the main domain name or the intranet
         web server name used to reach the web site to analyze.
       - You can change other parameters if you want.
 
+	SETUP IS FINISHED
+	
     * To update statistics, launch awstats.pl from the command line interface
       like this (the first time, process may be long) :
         awstats.pl -config=virtualhostname -update
@@ -250,7 +269,7 @@ However, benchmarks of log analyzer are made without reverse DNS lookup
 because this depends on your system, networks and Internet and not on the
 log analyzer you use. But, the reverse DNS lookup can take 95% of the time
 of a log analysis.
-So, let's have a look on AWStats FAQs (benchmark question) to:
+So, have a look on AWStats FAQs ("Benchmark" question) to:
 - Get more real ideas on benchmarks results
 - Get more information and advice on a good setup for your site.
 
