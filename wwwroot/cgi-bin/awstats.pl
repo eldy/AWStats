@@ -614,6 +614,46 @@ sub debug {
 }
 
 #------------------------------------------------------------------------------
+# Function:     Optimize an array removing duplicate entries
+# Parameters:	@Array
+# Input:        None
+# Output:		None
+# Return:		None
+#------------------------------------------------------------------------------
+sub OptimizeArray {
+	my $array=shift;
+	my $notcasesensitive=shift;
+	my $mustbeequal=shift;
+	my $searchlist=0;
+	if ($Debug) { debug("OptimizeArray (notcasesensitive=$notcasesensitive,mustbeequal=$mustbeequal)",4); }
+	while ($searchlist>-1 && @$array) {
+		my $elemtoremove=-1;
+		OPTIMIZELOOP: foreach my $i ($searchlist..(scalar @$array)-1) {
+			# Search if $i elem is already treated by another elem
+			foreach my $j (0..(scalar @$array)-1) {
+				if ($i == $j) { next; }
+				my $parami=$notcasesensitive?lc(@$array[$i]):@$array[$i];
+				my $paramj=$notcasesensitive?lc(@$array[$j]):@$array[$j];
+				if ($Debug) { debug("Compare $i ($parami) to $j ($paramj)",4); }
+				if (($mustbeequal && $parami eq $paramj) || (! $mustbeequal && index($parami,$paramj)>-1)) {
+					if ($Debug) { debug("Elem $i (@$array[$i]) already treated with elem $j (@$array[$j])",4); }
+					$elemtoremove=$i;
+					last OPTIMIZELOOP;
+				}
+			}
+		}
+		if ($elemtoremove > -1) {
+			if ($Debug) { debug("Remove elem $elemtoremove - @$array[$elemtoremove]",4); }
+			splice @$array, $elemtoremove, 1;
+			$searchlist=$elemtoremove;
+		}
+		else {
+			$searchlist=-1;			
+		}
+	}
+}
+
+#------------------------------------------------------------------------------
 # Function:     Check if parameter is in SkiHosts array
 # Parameters:	host @SkipHosts
 # Return:		0 Not found, 1 Found
@@ -966,7 +1006,7 @@ sub Read_Ref_Data {
 
 #------------------------------------------------------------------------------
 # Function:     Get the messages for a specified language
-# Parameters:	Language ID
+# Parameters:	Language id
 # Input:		$DirLang $DIR
 # Output:		$Message table is defined in memory
 # Return:		None
@@ -1543,6 +1583,7 @@ sub Read_History_With_Update {
 	if ($withread) {
 		my $countlines=0;
 		my $versionnum=0;
+		my @field=();
 		while (<HISTORY>) {
 			chomp $_; s/\r//; $countlines++;
 	
@@ -1552,8 +1593,8 @@ sub Read_History_With_Update {
 				if ($Debug) { debug(" Data file version is $versionnum",1); }
 				next;
 			}
-			
-			my @field=split(/\s+/,$_);
+
+			@field=split(/\s+/,$_);
 			if (! $field[0]) { next; }
 	
 			# BEGIN_GENERAL
@@ -3013,7 +3054,6 @@ sub ChangeWordSeparatorsIntoSpace {
 	$_[0] =~ tr/\+\'\(\)\"\*,:/        /s;								# "&" and "=" must not be in this list
 }
 
-
 #--------------------------------------------------------------------
 # Function:     Decode an URL encoded string
 # Parameters:   stringtodecode
@@ -3028,7 +3068,6 @@ sub DecodeEncodedString {
 	return $stringtodecode;
 }
 
-
 #--------------------------------------------------------------------
 # Function:     Clean a string of all HTML code to avoid 'Cross Site Scripting attacks'
 # Parameters:   stringtodecode
@@ -3041,7 +3080,6 @@ sub CleanFromCSSA {
 	$stringtoclean =~ s/[<>].*$//;
 	return $stringtoclean;
 }
-
 
 #--------------------------------------------------------------------
 # Function:     Copy one file into another
@@ -3265,7 +3303,6 @@ sub MinimumButNoZero {
 	my ($val1,$val2)=@_;
 	return ($val1&&($val1<$val2||!$val2)?$val1:$val2);
 }
-
 
 #--------------------------------------------------------------------
 # Function:     Build @keylist array
@@ -3709,21 +3746,19 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {	# Updat
 		if ($Debug) { debug("Add ".@{"RobotsSearchIDOrder_$key"}." elements from RobotsSearchIDOrder_$key into RobotsSearchIDOrder",2); }
 	}
 	if ($Debug) { debug("RobotsSearchIDOrder has now ".@RobotsSearchIDOrder." elements",1); }
-	# Init HostAliases array
+
+	# Complete HostAliases array
 	if (! @HostAliases) {
 		warning("Warning: HostAliases parameter is not defined, $PROG choose \"$SiteDomain localhost 127.0.0.1\".");
 		push @HostAliases,"$SiteToAnalyze"; push @HostAliases,"localhost"; push @HostAliases,"127\.0\.0\.1";
 	}
-	# Add SiteToAnalyze in HostAliases if not inside
-	my $SiteToAnalyzeIsInHostAliases=0;
-	foreach my $elem (@HostAliases) { if ($elem eq $SiteToAnalyze) { $SiteToAnalyzeIsInHostAliases=1; last; } }
-	if (! $SiteToAnalyzeIsInHostAliases) {
-		# Add SiteToAnalyze at beginning of HostAliases Array
-		if ($Debug) { debug("SiteToAnalyze '$SiteToAnalyze' not in HostAliases, so added"); }
-		unshift @HostAliases,"$SiteToAnalyze";
-	}
-	if ($Debug) { debug("HostAliases is now @HostAliases",1); }
-	if ($Debug) { debug("SkipFiles is now @SkipFiles",1); }
+	unshift @HostAliases,"$SiteToAnalyze";	# Add SiteToAnalyze
+
+	# Optimize HostAliases, SkipHosts, SkipFiles, OnlyFiles array
+	&OptimizeArray(\@HostAliases,1,1); if ($Debug) { debug("HostAliases is now @HostAliases",1); }
+	&OptimizeArray(\@SkipHosts,1,0); if ($Debug) { debug("SkipHosts is now @SkipHosts",1); }
+	&OptimizeArray(\@SkipFiles,0,0); if ($Debug) { debug("SkipFiles is now @SkipFiles",1); }
+	&OptimizeArray(\@OnlyFiles,0,0); if ($Debug) { debug("OnlyFiles is now @OnlyFiles",1); }
 
 	# GENERATING PerlParsingFormat
 	#------------------------------------------
@@ -3915,7 +3950,7 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {	# Updat
 	# Load DNS Cache Files
 	#------------------------------------------
 	if ($DNSLookup) {
-		&Read_DNS_Cache(\%MyDNSTable,"$DNSStaticCacheFile","",1);					# Load with save into a second plugin file if plugin enabled and second file not up to date. No use of FileSuffix
+		&Read_DNS_Cache(\%MyDNSTable,"$DNSStaticCacheFile","",1);						# Load with save into a second plugin file if plugin enabled and second file not up to date. No use of FileSuffix
 		if ($DNSLookup == 1) {		# System DNS lookup required
 			#if (! eval("use Socket;")) { &error("Failed to load perl module Socket."); }
 			#use Socket;
@@ -3953,11 +3988,6 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {	# Updat
 		if ($ShowSteps && ($NbOfLinesRead % $NBOFLINESFORBENCHMARK == 0)) {
 			my $delay=GetDelaySinceStart(0);
 			print "$NbOfLinesRead lines processed ($delay ms, ".int(1000*$NbOfLinesRead/($delay>0?$delay:1))." lines/second)\n";
-			#if ($Debug) {
-			#	print " _host_p:".(scalar keys %_host_p)." _host_h:".(scalar keys %_host_h)." _host_k:".(scalar keys %_host_k)." _host_l:".(scalar keys %_host_l)." _host_s:".(scalar keys %_host_s)." _host_u:".(scalar keys %_host_u)."\n";
-			#	print " _url_p:".(scalar keys %_url_p)." _url_k:".(scalar keys %_url_k)." _url_e:".(scalar keys %_url_e)." _url_x:".(scalar keys %_url_x)."\n";
-			#	print " _waithost_e:".(scalar keys %_waithost_e)." _waithost_l:".(scalar keys %_waithost_l)." _waithost_s:".(scalar keys %_waithost_s)." _waithost_u:".(scalar keys %_waithost_u)."\n";
-			#}
 		}
 
 		# Parse line record to get all required fields
@@ -3992,7 +4022,10 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {	# Updat
 
 		# Check protocol
 		#----------------------------------------------------------------------
+
 		# TODO Use a TmpProtocol
+#		my $protocol=$TmpProtocol{$field[$pos_method]};
+
 		my $protocol=0;
 		if ($field[$pos_method] eq 'GET' || $field[$pos_method] eq 'POST' || $field[$pos_method] eq 'HEAD' || $field[$pos_method] =~ /OK/i) {
 			# HTTP request.	Keep only GET, POST, HEAD, *OK* with Webstar but not OPTIONS
@@ -4007,6 +4040,8 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {	# Updat
 			if ($ShowDropped) { print "Dropped record (method/protocol '$field[$pos_method]' not qualified): $_\n"; }
 			next;
 		}
+
+
 
 		# Split DD/Month/YYYY:HH:MM:SS or YYYY-MM-DD HH:MM:SS or MM/DD/YY\tHH:MM:SS
 		$field[$pos_date] =~ tr/-\/ \t/::::/;			# " \t" is used instead of "\s" not known with tr
@@ -4050,7 +4085,7 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {	# Updat
 			# We found a new line. This will stop comparison "<=" between timerecord and LastLine (we should have only new lines now)
 			$NewLinePhase=1;
 			if ($ShowSteps) { print "Phase 2 : Now process new records\n"; }
-			#GetDelaySinceStart(1); If time counter is reset, we need to reset also the lines counter used in 'modulo' test
+			#GetDelaySinceStart(1); $NbOfLinesRead=0;
 		}
 
 		# Here, field array, timerecord and yearmonthdayrecord are initialized for log record
@@ -4332,7 +4367,7 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {	# Updat
 					$_host_u{$_}=$field[$pos_url];
 				}
 				elsif ($timerecord < $_host_s{$_}) {
-					# Should happens with not correctly sorted log files
+					# Should happens only with not correctly sorted log files
 					#if ($Debug) { debug("  This is same visit still running for $_ with start not in order. host_s changed to $timerecord",4); }
 					if (! $_waithost_s{$_}) {
 						# We can change entry page not yet counted as the save entry page was waithost_e if $_waithost_s{$_} is not defined
@@ -4348,7 +4383,7 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {	# Updat
 				}
 			}
 			else {
-				# This is a new visit (may be). First new visits found for this host
+				# This is a new visit (may be). First new visit found for this host.
 				#if ($Debug) { debug("  New session (may be) for $_. Save in wait array to see later",3); }
 				# We save in wait array the entry page to count later
 				$_waithost_e{$_}=$field[$pos_url];
@@ -4596,15 +4631,21 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {	# Updat
 			$_from_h[1]++;
 		}
 
-
-		# Every 200,000 approved lines we test to clean too large hash arrays to free memory when possible
-		if ($counter++ > 200000) {
+		# Every 100,000 approved lines we test to clean too large hash arrays to free memory when possible
+		if ($counter++ >= 100000) {
+			if ((scalar keys %_host_u) > 2000 || (scalar keys %_url_p) > 4000) {
+				if ($Debug) {
+					debug("End of set of ".($counter-1)." records: Some hash arrays are too large. We clean some.",2);
+					print " _host_p:".(scalar keys %_host_p)." _host_h:".(scalar keys %_host_h)." _host_k:".(scalar keys %_host_k)." _host_l:".(scalar keys %_host_l)." _host_s:".(scalar keys %_host_s)." _host_u:".(scalar keys %_host_u)."\n";
+					print " _url_p:".(scalar keys %_url_p)." _url_k:".(scalar keys %_url_k)." _url_e:".(scalar keys %_url_e)." _url_x:".(scalar keys %_url_x)."\n";
+					print " _waithost_e:".(scalar keys %_waithost_e)." _waithost_l:".(scalar keys %_waithost_l)." _waithost_s:".(scalar keys %_waithost_s)." _waithost_u:".(scalar keys %_waithost_u)."\n";
+				}
+				#%TmpDNSLookup=();	# Do we clean this one ?
+				#%TmpOS = %TmpRefererServer = %TmpRobot = %TmpBrowser =();
+				# TODO Add a warning
+				# warning("Try to made AWStats update more frequently to process log files with less than 1 000 000 records.");
+			}
 			$counter=0;
-			if ($Debug) { debug("We clean some hash arrays",2); }
-			#%TmpDNSLookup=();	# Do we clean this one ?
-			#%TmpOS = %TmpRefererServer = %TmpRobot = %TmpBrowser =();
-			# TODO Add a warning
-			# warning("Try to made AWStats update more frequently to process log files with less than 1 000 000 records.");
 		}
 
 		# End of processing new record.
