@@ -2660,7 +2660,6 @@ sub Save_DNS_Cache_File {
 			warning("Warning: Failed to open for writing last update DNS Cache file \"$filetosave\": $!");
 			return 1;
 		}
-		# TODO Limit size of save
 		foreach my $key (keys %$hashtosave) {
 #			if ($hashtosave->{$key} ne "ip") {
 				#print DNSFILE "0\t$key\t$hashtosave->{$key}\n";

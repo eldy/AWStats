@@ -389,19 +389,31 @@ when reading it), follow the example:<br>
 
 <br><br><hr>
 
-<a name="DNSCacheFile"><b>DNSCacheFile</b></a><br>
+<a name="DNSStaticCacheFile"><b>DNSStaticCacheFile</b></a><br>
 <b>Version : </b>5.0 +<br>
-<br># AWStats can do reverse DNS lookups through a DNS cache file that is either
-<br># created/updated at run-time, or has been previously created, either by a
-<br># previous run of AWStats, or other tools using same format of DNS cache file.
-<br># If no path is gave in DNS cache file name, AWStats will search DirData
-<br># directory.
+<br># AWStats can do reverse DNS lookups through a static DNS cache file that was
+<br># previously created manually. If no path is gave in static DNS cache file
+<br># name, AWStats will search DirData directory. This file is never changed.
 <br># This option is not used if DNSLookup=0.
-<br># Note: DNS cache file must have format: no ipaddress resolved_hostname
+<br># Note: DNS cache file must have format:  ipaddress  resolved_hostname
 <br># Example: "/mydnscachedir/dnscache"
-<br># Default: "dnscachefile.txt"
+<br># Default: "dnscache.txt"
 <br>#
-<br>DNSCacheFile="dnscachefile.txt"
+<br>DNSStaticCacheFile="dnscache.txt"
+
+<br><br><hr>
+
+<a name="DNSLastUpdateCacheFile"><b>DNSLastUpdateCacheFile</b></a><br>
+<b>Version : </b>5.0 +<br>
+<br># AWStats can do reverse DNS lookups through a DNS cache file that was created
+<br># by a previous run of AWStats. This file is erased and recreated after each
+<br># statistics update process. You don't need to create and/or edit it.
+<br># AWStats will read and save this file in DirData directory.
+<br># This option is not used if DNSLookup=0.
+<br># Example: "/mydnscachedir/dnscachelastupdate"
+<br># Default: "dnscachelastupdate.txt"
+<br>#
+<br>DNSLastUpdateCacheFile="dnscachelastupdate.txt"
 
 <br><br><hr>
 
