@@ -3,10 +3,11 @@
 	 Advanced Web Statistics
 ------------------------------------
 
-AWStats (Advanced Web Statistics) is a powerfull and featurefull web server
-logfile analyzer that shows you all your Web statistics including visitors,
+AWStats (Advanced Web Statistics) is a powerful, full-featured web server
+logfile analyzer which shows you all your Web statistics including: visitors,
 pages, hits, hours, search engines, keywords used to find your site, broken
-links, robots and more...
+links, robots and many more...
+
 It works with IIS 5.0+, Apache and all major web, wap, proxy, streaming
 server log files (and even ftp servers or mail logs) on all Operating Systems.
 
@@ -34,53 +35,53 @@ I - FEATURES AND REQUIREMENTS
 I - 1) Features
 
 	A full log analysis enables AWStats to show you the following information:
-	* Number of VISITS and UNIQUE VISITORS,
-	* Visits duration and last visits,
-	* Authenticated users, and last authenticated visits,
-	* Days of week and rush hours (pages, hits, KB for each day and hour),
-	* Domains/countries of hosts visitors (pages, hits, KB),
-	* Hosts list, last visits and unresolved IP addresses list,
-	* Most viewed, entry and exit pages,
-	* File types,
-	* Web compression statistics (for mod_gzip or mod_deflate),
-	* Browsers used (pages, hits, kb for each browser),
-	* OS used (pages, hits, KB for each OS),
-	* Visits of robots,
-	* Worms attacks,
-	* Search engines, keyphrases and keywords used to find your site,
-	* HTTP errors (Page not found with last referer, ...),
-	* Other personalized reports,
-	* Screen size report,
-	* Number of times your site is "added to favourites bookmarks",
+	* Number of VISITS and UNIQUE VISITORS
+	* Visits duration and last visits
+	* Authenticated users, and last authenticated visits
+	* Days of week and rush hours (pages, hits, KB for each day and hour)
+	* Domains/countries of hosts visitors (pages, hits, KB)
+	* Hosts list, last visits and unresolved IP addresses list
+	* Most viewed, entry and exit pages
+	* File types
+	* Web compression statistics (for mod_gzip or mod_deflate)
+	* Browsers used (pages, hits, kb for each browser)
+	* OS used (pages, hits, KB for each OS)
+	* Robot visits
+	* Worm attacks
+	* Search engines, keyphrases and keywords used to find your site
+	* HTTP errors (Page not found with last referer, etc,)
+	* Screen size report
+	* Number of times your site is "added to favourites bookmarks"
 	* Ratio of Browsers that support: Java, Flash, RealG2 reader,
 	  Quicktime reader, WMA reader, PDF reader
-	* Cluster report for load balanced servers ratio.
+	* Cluster report for load balanced servers ratio
+	* Other personalized reports...
 
 	It supports the following features as well:
-	* Can analyze all log formats.
+	* Can analyze all log formats
 	* Works from command line and from a browser as a CGI (with dynamic
-	  filters capabilities for some charts),
+	  filters capabilities for some charts)
 	* Update of statistics can be made on demand from the web interface and
-	  not only from your scheduler,
-	* Unlimited log file size, support split log files (load balancing system),
-	* Support 'nearly sorted' log files even for entry and exit pages,
-	* Reverse DNS lookup before or during analysis, support DNS cache files,
-	* Country detection from IP location or domain name.
-	* WhoIS Links,
-	* A lot of options/filters and plugins can be used,
-	* Multi-named web sites supported (virtual servers),
-	* Cross Site Scripting Attacks protection,
-	* Several languages,
-	* No need of rare perl libraries,
-	* Dynamic reports as CGI output.<br>
-	* Static reports in one or framed HTML/XML pages, experimental PDF export,
-	* Look and colors can match your site design, can use CSS,
-	* Help and tooltips on HTML reported pages,
-	* Experimental PDF export,
-	* Easy to use (Just one configuration file to edit),
-	* Free (GNU GPL), with sources (perl scripts),
-	* A Webmin module also provided,
-	* Available on all platforms.
+	  not only from your scheduler
+	* Unlimited log file size, support split log files (load balancing system)
+	* Support 'nearly sorted' log files even for entry and exit pages
+	* Reverse DNS lookup before or during analysis, supports DNS cache files
+	* Country detection from IP location or domain name
+	* WhoIS links
+	* A lot of options/filters and plugins can be used
+	* Multi-named web sites supported (virtual servers)
+	* Cross Site Scripting Attacks protection
+	* Several languages
+	* No need of rare perl libraries
+	* Dynamic reports as CGI output
+	* Static reports in one or framed HTML/XML pages, experimental PDF export
+	* Look and colors can match your site design (CSS)
+	* Help and tooltips on HTML reported pages
+	* Experimental PDF export
+	* Easy to use (Just one configuration file to edit)
+	* Free (GNU GPL) with sources (perl scripts)
+	* A Webmin module
+	* Available on all platforms
 
 
 I - 2) Requirements
@@ -88,7 +89,9 @@ I - 2) Requirements
 	To use AWStats CGI script, you need the following requirements:
 	* Your server must log web access in a log file you can read.
 	* To run awstats, from command line, your operating system must be able
-	  to run perl scripts (.pl files). To run awstats as a CGI (for real-time
+	  to run perl scripts (.pl files).
+	  
+	To run awstats as a CGI (for real-time
 	  statistics), your web server must also be able to run such scripts.
 	  If not, you can solve this by downloading last Perl version at:
 	  http://www.activestate.com/ActivePerl/ (Windows)
@@ -102,29 +105,30 @@ I - 3) Files
 	docs/LICENSE                        GNU General Public Licence
 	docs/*                              AWStats documentation (setup/usage...)
 	wwwroot/cgi-bin/awstats.pl          THE MAIN AWSTATS PROGRAM (CLI/CGI)
-	wwwroot/cgi-bin/awredir.pl          A tool to track click that exit site
-	wwwroot/cgi-bin/awstats.model.conf  An example of AWStats configure file
+	wwwroot/cgi-bin/awredir.pl          A tool to track exit clicks
+	wwwroot/cgi-bin/awstats.model.conf  An model configuration file
 	wwwroot/cgi-bin/lang                Directory with languages files
 	wwwroot/cgi-bin/lib                 Directory with awstats reference info
 	wwwroot/cgi-bin/plugins             Directory with optional plugins
 	wwwroot/icon/browser                Directory with browsers icons
-	wwwroot/icon/clock                  Directory with clocks icons
+	wwwroot/icon/clock                  Directory with clock icons
 	wwwroot/icon/cpu                    Directory with cpu icons
-	wwwroot/icon/flags                  Directory with country flags icons
-	wwwroot/icon/os                     Directory with os icons
+	wwwroot/icon/flags                  Directory with country flag icons
+	wwwroot/icon/os                     Directory with OS icons
 	wwwroot/icon/other                  Directory with all others icons
 	wwwroot/css                         Samples of CSS files
 	wwwroot/js                          Javascript sources for "Misc" feature
 	tools/*                             Other provided tools
-	tools/webmin/awstats-x.x.wbm        A webmin module for AWStats
+	tools/webmin/awstats-x.x.wbm        A Webmin module for AWStats
 
 
 
 II - INSTALL, SETUP AND USE AWSTATS
 -----------------------------------
 
-The documentation available as of the date of this release is included, in
-HTML format, in the docs/ directory.
+The documentation available for this release in HTML format is
+in the docs/ directory.
+
 You can find a most up-to-date documentation at:
 http://awstats.sourceforge.net
 
