@@ -10,7 +10,7 @@ links, robots and more. It works with IIS 5.0+ or Apache webserver log files.
 
 License: GNU GPL (GNU General Public License. See COPYING.TXT)
 Version : 2.24
-Release date: 20 January 2001
+Release date: 20 April 2001
 Platforms: All (Linux, NT, SCO, BSD, Solaris and other *NIX's, BeOS, OS/2...)
 Author: Laurent Destailleur <eldy@users.sourceforge.net>
 AWStats web site: http://awstats.sourceforge.net
@@ -53,7 +53,7 @@ I - 1) Features
 	* Informations are since the start of your web site and month by month,
 	* 8 languages: English, French, Dutch (Christtian Langeveld), Spanish
 	  (Rodrigo Villarreal), Italian (Vittore Zen), German (Ulf Moench), Polish
-	  (Tomasz Ciemnoczulowski), Greek (Simos Xenitellis)
+	  (Tomasz Ciemnoczulowski), Greek (Simos Xenitellis), Portuguese
 	* Colored graphics,
 	* Free and distributed with sources (perl script).
 	
@@ -68,7 +68,7 @@ I - 2) Requirements
 	  work differently, but slower than with read/write access).
 	* To run awstats, from command line, your operating system must be able to
 	  run perl scripts (.pl files). To run awstats as a CGI (for real-time
-	  statistics), your web server must be able to run such scripts.
+	  statistics), your web server must also be able to run such scripts.
 	  If not, you can solve this by downloading last Perl version at:
 	  http://www.activestate.com/ActivePerl/ (Win32)
 	  http://www.perl.com/pub/language/info/software.html (Unix/Linux/Other)
@@ -132,7 +132,7 @@ II - 1) With Apache Server
 	
 	* Before using AWStats from your browser, launch awstats.pl from the
 	  command line (the first time, process may be long), like this:
-	> awstats.pl -h www.myserver.mydomain
+	> awstats.pl site=www.myserver.mydomain
 	  where www.myserver.mydomain is the URL you use to access your web site.
 	  AWStats will use awstats.www.myserver.mydomain.conf config file, and, if
 	  not found, will use awstats.conf.
@@ -151,7 +151,7 @@ II - 1) With Apache Server
 
 	* Add something in your crontab (Unix/Linux), or something else, to launch
 	  the following command :
-	> awstats.pl -h www.myserver.mydomain
+	> awstats.pl site=www.myserver.mydomain
 	  where www.myserver.mydomain is the URL used to access your web site.
 	  For sites with:
 	  - 1,000 visits a month     Launch AWStats once a day (23h55 for example)
@@ -192,7 +192,7 @@ II - 2) With IIS Server
 
 	* Before using AWStats from you're browser, launch awstats.pl from the
 	  command line:
-	> awstats.pl -h www.myserver.mydomain
+	> awstats.pl site=www.myserver.mydomain
 	  where www.myserver.mydomain is the URL you use to access your web site.
 	  AWStats will use awstats.www.myserver.mydomain.conf config file, and, if
 	  not found, will use awstats.conf.
@@ -211,7 +211,7 @@ II - 2) With IIS Server
 
 	* Add something in a task scheduler, or something else, to launch at the
 	  following command :
-	> awstats.pl -h www.myserver.mydomain
+	> awstats.pl site=www.myserver.mydomain
 	  where www.myserver.mydomain is the URL used to access your web site.
 	  For sites with:
 	  - 1,000 visits a month     Launch AWStats once a day (23h55 for example)

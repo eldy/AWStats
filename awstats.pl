@@ -39,14 +39,13 @@ $h, $hourcon, $hr, $internal_link, $ix, $keep, $key, $kilo, $lien, $line,
 $max, $max_h, $max_k, $max_p, $max_v, $mincon, $monthcon, $monthfile, $monthix,
 $monthtoprocess, $nameicon, $new, $nompage, $nowday, $nowisdst, $nowmin, $nowmonth,
 $nowsec, $nowsmallyear, $nowwday, $nowyday, $nowyear, $p, $page, $param,
-$paramtoexclude, $readbrowser, $readdomain, $readerrors, $readerrors404,
-$readmsiever, $readnsver, $reados, $readpagerefs, $readrobot, $readse,
-$readsearchwords, $readsider, $readtime, $readunknownip, $readunknownreferer,
-$readunknownrefererbrowser, $readvisitor, $rest, $rest_h, $rest_k, $rest_p,
+$paramtoexclude, $rest, $rest_h, $rest_k, $rest_p,
 $savetime, $savetmp, $tab_titre, $timeconnexion, $total_h, $total_k, $total_p,
-$word, $yearcon, $yearfile, $yearmonth, $yearmonthchoosed, $yeartoprocess) = ();
+$word, $yearcon, $yearfile, $yearmonthfile, $yeartoprocess) = ();
 # ---------- Init arrays --------
-%FirstTime = %HistoryFileAlreadyRead = %LastTime = %MonthBytes = %MonthHits = %MonthPage = %MonthUnique = %MonthVisits =
+%DayBytes = %DayHits = %DayPage = %DayUnique = %DayVisits =
+%FirstTime = %HistoryFileAlreadyRead = %LastTime =
+%MonthBytes = %MonthHits = %MonthPage = %MonthUnique = %MonthVisits =
 %TmpHashDNSLookup = %TmpHashNotRobot = %TmpHashOS = %_browser_h = %_domener_h = %_domener_k = %_domener_p =
 %_errors_h = %_hostmachine_h = %_hostmachine_k = %_hostmachine_l = %_hostmachine_p =
 %_keywords = %_os_h = %_pagesrefs_h = %_robot_h = %_robot_l = %_se_referrals_h =
@@ -62,7 +61,7 @@ $word, $yearcon, $yearfile, $yearmonth, $yearmonthchoosed, $yeartoprocess) = ();
 @sortsearchwords = @sortsereferrals = @sortsider404 = @sortsiders = @sortunknownip =
 @sortunknownreferer = @sortunknownrefererbrowser = @wordlist = ();
 
-$VERSION="2.24 (build 26)";
+$VERSION="2.24 (build 27)";
 $Lang=0;
 
 # Default value
@@ -134,8 +133,9 @@ $BarImageHorizontal_k = "barrehk.png";
 "mamma\.","Mamma",
 "dejanews\.","DejaNews",
 "search\.dogpile\.com","Dogpile",
-"nomade\.fr/","Nomade", "ctrouve\.","C'est trouvé", "francite\.","Francité", "\.lbb\.org", "LBB", "rechercher\.libertysurf\.fr", "Libertysurf",
-"fireball\.de","Fireball", "suche\.web\.de","Web.de", "meta\.ger","MetaGer",
+"ilse\.","Ilse","vindex\.","Vindex\.nl",	# Minor dutch search engines
+"nomade\.fr/","Nomade", "ctrouve\.","C'est trouvé", "francite\.","Francité", "\.lbb\.org", "LBB", "rechercher\.libertysurf\.fr", "Libertysurf",	# Minor french search engines
+"fireball\.de","Fireball", "suche\.web\.de","Web.de", "meta\.ger","MetaGer",	# Minor german search engines
 "search\..*com","Other search engines"
 );
 
@@ -167,6 +167,7 @@ $BarImageHorizontal_k = "barrehk.png";
 "askjeeves\.","ask=",
 "mamma\.","query=",
 "search\.dogpile\.com", "q=",
+"ilse\.","search_for=", "vindex\.","in=",
 "nomade\.fr/","s=",
 "fireball\.de","q=", "suche\.web\.de","su="
 );
@@ -688,6 +689,7 @@ $message[69][0]="Oct";
 $message[70][0]="Nov";
 $message[71][0]="Dec";
 $message[72][0]="English us.png";
+$message[73][0]="Day statistics";
 
 # French
 $message[0][1]="Inconnus";
@@ -763,6 +765,7 @@ $message[69][1]="Oct";
 $message[70][1]="Nov";
 $message[71][1]="Déc";
 $message[72][1]="French fr.png";
+$message[73][1]="Statistiques par jour";
 
 # Dutch
 $message[0][2]="Onbekend";
@@ -838,6 +841,7 @@ $message[69][2]="Oct";
 $message[70][2]="Nov";
 $message[71][2]="Dec";
 $message[72][2]="Dutch nl.png";
+$message[73][2]="Dag statistieken";
 
 # Spanish
 $message[0][3]="Desconocido";
@@ -913,6 +917,7 @@ $message[69][3]="Oct";
 $message[70][3]="Nov";
 $message[71][3]="Dic";
 $message[72][3]="Spanish es.png";
+$message[73][3]="Dia estadísticas";
 
 # Italian
 $message[0][4]="Sconosciuto";
@@ -988,6 +993,7 @@ $message[69][4]="Oct";
 $message[70][4]="Nov";
 $message[71][4]="Dic";
 $message[72][4]="Italian it.png";
+$message[73][4]="Giorno statistiche";
 
 # German
 $message[0][5]="Unbekannt";
@@ -1063,6 +1069,7 @@ $message[69][5]="Oct";
 $message[70][5]="Nov";
 $message[71][5]="Dez";
 $message[72][5]="German de.png";
+$message[73][5]="Tag statistik";
 
 # Polish
 $PageCode[6]="<META HTTP-EQUIV=\"content-type\" CONTENT=\"text/html; charset=iso-8859-2\">";
@@ -1139,6 +1146,7 @@ $message[69][6]="Pa¼dziernik";
 $message[70][6]="Listopad";
 $message[71][6]="Grudzieñ";
 $message[72][6]="Polish pl.png";
+$message[73][6]="Dzieñ Statystyki";
 
 # Greek (simos@hellug.gr)
 $PageCode[7]="<META HTTP-EQUIV=\"content-type\" CONTENT=\"text/html; charset=iso-8859-7\">";
@@ -1215,6 +1223,7 @@ $message[69][7]="Ïêô";
 $message[70][7]="ÍïÝ";
 $message[71][7]="Äåê";
 $message[72][7]="Greek gr.png";
+$message[73][7]="Daily statistics";
 
 # Czech (js@fsid.cvut.cz)
 $PageCode[8]="<META HTTP-EQUIV=\"content-type\" CONTENT=\"text/html; charset=iso-8859-2\">";
@@ -1291,6 +1300,7 @@ $message[69][8]="Øíj";
 $message[70][8]="Lis";
 $message[71][8]="Pro";
 $message[72][8]="Czech cz.png";
+$message[73][8]="Daily statistics";
 
 # Portuguese
 $message[0][9]="Desconhecido";
@@ -1366,6 +1376,7 @@ $message[69][9]="Out";
 $message[70][9]="Nov";
 $message[71][9]="Dez";
 $message[72][9]="Portuguese pt.png";
+$message[73][9]="Daily statistics";
 
 
 
@@ -1495,7 +1506,7 @@ sub Read_Config_File {
 	$FileConfig="";$DirConfig=$DIR;if (($DirConfig ne "") && (!($DirConfig =~ /\/$/)) && (!($DirConfig =~ /\\$/)) ) { $DirConfig .= "/"; }
 	if (open(CONFIG,"$DirConfig$PROG.$LocalSite.conf")) { $FileConfig="$DirConfig$PROG.$LocalSite.conf"; $FileSuffix=".$LocalSite"; }
 	if ($FileConfig eq "") { if (open(CONFIG,"$DirConfig$PROG.conf"))  { $FileConfig="$DirConfig$PROG.conf"; $FileSuffix=""; } }
-	if ($FileConfig eq "") { $FileConfig="$PROG.conf"; error("Error: Couldn't open config file [$PROG.$LocalSite.conf] nor [$PROG.conf]: $!"); }
+	if ($FileConfig eq "") { $FileConfig="$PROG.conf"; error("Error: Couldn't open config file \"$PROG.$LocalSite.conf\" nor \"$PROG.conf\" : $!"); }
 	while (<CONFIG>) {
 		chomp $_; s/\r//;
 		$_ =~ s/#.*//;								# Remove comments
@@ -1620,10 +1631,10 @@ sub Check_Config {
 sub Read_History_File {
 if ($HistoryFileAlreadyRead{"$_[0]$_[1]"}) { return 0; }	# Protect code to invoke function only once for each month/year
 $HistoryFileAlreadyRead{"$_[0]$_[1]"}=1;
-if (open(HISTORY,"$DirData/$PROG$_[0]$_[1]$FileSuffix.txt")) {
+if (open(HISTORY,"$DirData/$PROG$_[1]$_[0]$FileSuffix.txt")) {	# Month before Year kept for backward compatibility
 	$readdomain=0;$readvisitor=0;$readunknownip=0;$readsider=0;$readtime=0;$readbrowser=0;$readnsver=0;$readmsiever=0;
 	$reados=0;$readrobot=0;$readunknownreferer=0;$readunknownrefererbrowser=0;$readpagerefs=0;$readse=0;
-	$readsearchwords=0;$readerrors=0;$readerrors404=0;
+	$readsearchwords=0;$readerrors=0;$readerrors404=0; $readday=0;
 	while (<HISTORY>) {
 		chomp $_; s/\r//;
 		@field=split(/ /,$_);
@@ -1636,6 +1647,8 @@ if (open(HISTORY,"$DirData/$PROG$_[0]$_[1]$FileSuffix.txt")) {
         if ($field[0] eq "END_UNKNOWNIP")   { $readunknownip=0; next; }
         if ($field[0] eq "BEGIN_TIME")      { $readtime=1; next; }
         if ($field[0] eq "END_TIME")        { $readtime=0; next; }
+        if ($field[0] eq "BEGIN_DAY")       { $readday=1; next; }
+        if ($field[0] eq "END_DAY")         { $readday=0; next; }
 
         if ($readvisitor) {
         	if (($field[0] ne "Unknown") && ($field[1] > 0)) { $MonthUnique{$_[0].$_[1]}++; }
@@ -1646,6 +1659,10 @@ if (open(HISTORY,"$DirData/$PROG$_[0]$_[1]$FileSuffix.txt")) {
         if ($readtime) {
         	$MonthPage{$_[0].$_[1]}+=$field[1]; $MonthHits{$_[0].$_[1]}+=$field[2]; $MonthBytes{$_[0].$_[1]}+=$field[3];
 			}
+		if ($readday)
+		{
+			$DayPage{$field[0]}+=$field[1]; $DayHits{$field[0]}+=$field[2]; $DayBytes{$field[0]}+=$field[3]; $DayVisits{$field[0]}+=$field[4]; $DayUnique{$field[0]}+=$field[5];
+		}	
 
 		# If $_[2] == 0, it means we don't need second part of history file
 		if ($_[2]) {
@@ -1677,6 +1694,8 @@ if (open(HISTORY,"$DirData/$PROG$_[0]$_[1]$FileSuffix.txt")) {
 	        if ($field[0] eq "END_ERRORS") { $readerrors=0; next; }
 	        if ($field[0] eq "BEGIN_SIDER_404") { $readerrors404=1; next; }
 	        if ($field[0] eq "END_SIDER_404") { $readerrors404=0; next; }
+      		if ($field[0] eq "BEGIN_DAY")       { $readday=1; next; }
+        	if ($field[0] eq "END_DAY")         { $readday=0; next; }
 
 	        if ($readvisitor) {
 	        	$_hostmachine_p{$field[0]}+=$field[1];
@@ -1728,7 +1747,7 @@ close HISTORY;
 }
 
 sub Save_History_File {
-	open(HISTORYTMP,">$DirData/$PROG$_[0]$_[1]$FileSuffix.tmp.$$") || error("Couldn't open file $DirData/$PROG$_[0]$_[1]$FileSuffix.tmp.$$: $!");
+	open(HISTORYTMP,">$DirData/$PROG$_[1]$_[0]$FileSuffix.tmp.$$") || error("Error: Couldn't open file \"$DirData/$PROG$_[1]$_[0]$FileSuffix.tmp.$$\" : $!");	# Month before Year kept for backward compatibility
 
 	print HISTORYTMP "FirstTime $FirstTime{$_[0].$_[1]}\n";
 	print HISTORYTMP "LastTime $LastTime{$_[0].$_[1]}\n";
@@ -1763,6 +1782,14 @@ sub Save_History_File {
 	print HISTORYTMP "BEGIN_TIME\n";
 	for ($ix=0; $ix<=23; $ix++) { print HISTORYTMP "$ix $_time_p[$ix] $_time_h[$ix] $_time_k[$ix]\n"; next; }
 	print HISTORYTMP "END_TIME\n";
+
+	print HISTORYTMP "BEGIN_DAY\n";
+    foreach $key (keys %DayPages) {
+    	 if ($key =~ /^$_[0]$_[1]/) {	# Found a day entry of the good month
+    	 	print HISTORYTMP "$key $DayPages{$key} $DayHits{$key} $DayBytes{$key} $DayVisits{$key} $DayUnique{$key}\n"; next;
+    	 	}
+    	 }
+    print HISTORYTMP "END_DAY\n";
 
 	print HISTORYTMP "BEGIN_BROWSER\n";
 	foreach $key (keys %_browser_h) { print HISTORYTMP "$key $_browser_h{$key}\n"; next; }
@@ -1826,45 +1853,50 @@ sub Init_HashArray {
 #-------------------------------------------------------
 # MAIN
 #-------------------------------------------------------
-$Lang=0;
 if ($ENV{"GATEWAY_INTERFACE"} ne "") {
-	$QueryString = $ENV{"QUERY_STRING"};
-	if ($QueryString =~ /site=/) { $LocalSite=$QueryString; $LocalSite =~ s/.*site=//; $LocalSite =~ s/&.*//; }
-	else { $LocalSite = $ENV{"SERVER_NAME"}; }
 	print("Content-type: text/html\n\n\n");
+	$QueryString = $ENV{"QUERY_STRING"};
+	if ($QueryString =~ /site=/) { $LocalSite=$QueryString; $LocalSite =~ s/.*site=//; $LocalSite =~ s/&.*//; $LocalSite =~ s/ .*//; }
+	else { $LocalSite = $ENV{"SERVER_NAME"}; }
 }
 else {
-	$LocalSite = $ARGV[1];
+	if ($ARGV[0] eq "-h") { $LocalSite = $ARGV[1]; }	# Kept for backward compatibility but useless
+	$QueryString=""; for (0..@ARGV-1) { $QueryString .= "$ARGV[$_] "; }
+	if ($QueryString =~ /site=/) { $LocalSite=$QueryString; $LocalSite =~ s/.*site=//; $LocalSite =~ s/&.*//; $LocalSite =~ s/ .*//; }
 }
 ($DIR=$0) =~ s/([^\/\\]*)$//; ($PROG=$1) =~ s/\.([^\.]*)$//; $Extension=$1;
 $LocalSite =~ tr/A-Z/a-z/;
 $LocalSite =~ s/<//g; $LocalSite =~ s/%//g;		# This is to avoid 'Cross Site Scripting attacks'
 $LocalSiteWithoutwww = $LocalSite; $LocalSiteWithoutwww =~ s/www\.//;
-if (($ENV{"GATEWAY_INTERFACE"} eq "") && ($ARGV[0] eq "" || $ARGV[0] ne "-h" || $ARGV[1] eq "")) {
+if (($ENV{"GATEWAY_INTERFACE"} eq "") && ($LocalSite eq "")) {
 	print "----- $PROG $VERSION (c) Laurent Destailleur -----\n";
 	print "$PROG is a free web server logfile analyzer (in Perl) to show you advanced\n";
 	print "web statistics. Distributed under GNU General Public Licence.\n";
-	print "Syntax: $PROG.$Extension -h www.host.com\n";
-	print " Runs $PROG from command line to have statistics of www.host.com web site.\n";
-	print " First, $PROG tries to use $PROG.www.host.com.conf as the config file, if\n";
-	print " not found, $PROG will use $PROG.conf.\n";
-	print " See README.TXT file to know how to configure this file.\n";
+	print "\n";
+	print "Syntax: $PROG.$Extension site=www.host.com\n";
+	print "  Runs $PROG from command line to have statistics of www.host.com web site.\n";
+	print "  First, $PROG tries to read $PROG.www.host.com.conf as the config file, if\n";
+	print "  not found, $PROG will read $PROG.conf.\n";
+	print "  See README.TXT file to know how to configure this file.\n";
+	print "\n";
+	print "Advanced options: month=MM year=YYYY lang=X to generate a page of statistics\n";
+	print "  for month=MM, year=YYYY, in language number X\n";
+	print "\n";
 	print "Now supports/detects:\n";
-	print " Number of visits and unique visitors\n";
-	print " Rush hours\n";
-	print " Most often viewed pages\n";
+	print "  Number of visits and unique visitors\n";
+	print "  Rush hours\n";
+	print "  Most often viewed pages\n";
 	@DomainsArray=keys %DomainsHash;
-	print " ".(@DomainsArray)." domains/countries\n";
+	print "  ".(@DomainsArray)." domains/countries\n";
 	@BrowserArray=keys %BrowsersHash;
-	print " ".(@BrowserArray)." browsers\n";
+	print "  ".(@BrowserArray)." browsers\n";
 	@OSArray=keys %OSHash;
-	print " ".(@OSArray)." Operating Systems\n";
+	print "  ".(@OSArray)." Operating Systems\n";
 	@RobotArray=keys %RobotHash;
-	print " ".(@RobotArray)." robots\n";
+	print "  ".(@RobotArray)." robots\n";
 	@SearchEnginesArray=keys %SearchEnginesHash;
-	print " ".(@SearchEnginesArray)." search engines (and keywords used from them)\n";
-	print " All HTTP errors\n";
-	print " and more...\n";
+	print "  ".(@SearchEnginesArray)." search engines (and keywords or keyphrases used from them)\n";
+	print "  All HTTP errors\n";
 	print "New versions and support at http://awstats.sourceforge.net\n";
 	exit 0;
 	}
@@ -1874,7 +1906,7 @@ if (($ENV{"GATEWAY_INTERFACE"} eq "") && ($ARGV[0] eq "" || $ARGV[0] ne "-h" || 
 
 # Print html header and correct some parameters
 if ($ENV{"GATEWAY_INTERFACE"} ne "") {
-	if ($QueryString =~ /lang=/) { $Lang=$QueryString; $Lang =~ s/.*lang=//; $Lang =~ s/&.*//; }
+	if ($QueryString =~ /lang=/) { $Lang=$QueryString; $Lang =~ s/.*lang=//; $Lang =~ s/&.*//;  $Lang =~ s/ .*//; }
 	&Check_Config;	# Check if parameters are OK
 	&html_head;
 	$DirCgi="";
@@ -1903,9 +1935,9 @@ if (++$nowmonth < 10) { $nowmonth = "0$nowmonth"; }
 if ($nowday < 10) { $nowday = "0$nowday"; }
 
 # Check year and month parameters (check is very restrictive to avoid 'cross site scripting attacks')
-if ($QueryString =~ /year=/) 	{ $YearRequired=$QueryString; $YearRequired =~ s/.*year=//; $YearRequired =~ s/&.*//; }
+if ($QueryString =~ /year=/) 	{ $YearRequired=$QueryString; $YearRequired =~ s/.*year=//; $YearRequired =~ s/&.*//;  $YearRequired =~ s/ .*//; }
 if ($YearRequired !~ /^[\d][\d][\d][\d]$/) { $YearRequired=$nowyear; }
-if ($QueryString =~ /month=/)	{ $MonthRequired=$QueryString; $MonthRequired =~ s/.*month=//; $MonthRequired =~ s/&.*//; }
+if ($QueryString =~ /month=/)	{ $MonthRequired=$QueryString; $MonthRequired =~ s/.*month=//; $MonthRequired =~ s/&.*//; $MonthRequired =~ s/ .*//; }
 if ($MonthRequired ne "year" && $MonthRequired !~ /^[\d][\d]$/) { $MonthRequired=$nowmonth; }
 
 $BrowsersHash{"netscape"}="<font color=blue>Netscape</font> <a href=\"$DirCgi$PROG.$Extension?action=browserdetail&site=$LocalSite&year=$YearRequired&month=$MonthRequired&lang=$Lang\">($message[58][$Lang])</a>";
@@ -1925,8 +1957,8 @@ if (@SkipFiles == 0) {
 $FirstTime=0;$LastTime=0;$TotalVisits=0;$TotalHosts=0;$TotalUnique=0;$TotalDifferentPages=0;$TotalDifferentKeywords=0;$TotalKeywords=0;
 for ($ix=1; $ix<=12; $ix++) {
 	$monthix=$ix;if ($monthix < 10) { $monthix  = "0$monthix"; }
-	$FirstTime{$monthix.$YearRequired}=0;$LastTime{$monthix.$YearRequired}=0;
-	$MonthVisits{$monthix.$YearRequired}=0;$MonthUnique{$monthix.$YearRequired}=0;$MonthPage{$monthix.$YearRequired}=0;$MonthHits{$monthix.$YearRequired}=0;$MonthBytes{$monthix.$YearRequired}=0;
+	$FirstTime{$YearRequired.$monthix}=0;$LastTime{$YearRequired.$monthix}=0;
+	$MonthVisits{$YearRequired.$monthix}=0;$MonthUnique{$YearRequired.$monthix}=0;$MonthPage{$YearRequired.$monthix}=0;$MonthHits{$YearRequired.$monthix}=0;$MonthBytes{$YearRequired.$monthix}=0;
 	}
 for ($ix=0; $ix<5; $ix++) {	$_from_h[$ix]=0; }
 
@@ -1952,36 +1984,36 @@ print "<BR><BR>\n";
 if (($YearRequired == $nowyear) && ($MonthRequired eq "year" || $MonthRequired == $nowmonth)) {
 
 	#------------------------------------------
-	# READING LAST PROCESSED HISTORY FILE
+	# READING THE LAST PROCESSED HISTORY FILE
 	#------------------------------------------
 
 	# Search last file
 	opendir(DIR,"$DirData");
 	@filearray = sort readdir DIR;
 	close DIR;
-	$yearmonthchoosed=0;
+	$yearmonthmax=0;
 	foreach $i (0..$#filearray) {
 		if ("$filearray[$i]" =~ /^$PROG[\d][\d][\d][\d][\d][\d]$FileSuffix\.txt$/) {
-			$yearmonth=$filearray[$i]; $yearmonth =~ s/^$PROG//; $yearmonth =~ s/\..*//;
-			# Reverse year and month
-			$yearfile=$yearmonth; $monthfile=$yearmonth; $yearfile =~ s/^..//; $monthfile =~ s/....$//;
-			$yearmonth="$yearfile$monthfile";
-			if ($yearmonth > $yearmonthchoosed) { $yearmonthchoosed=$yearmonth; }
+			$yearmonthfile=$filearray[$i]; $yearmonthfile =~ s/^$PROG//; $yearmonthfile =~ s/\..*//;
+			$yearfile=$yearmonthfile; $yearfile =~ s/^..//;
+			$monthfile=$yearmonthfile; $monthfile =~ s/....$//;
+			$yearmonthfile="$yearfile$monthfile";	# year and month have been inversed
+			if ($yearmonthfile > $yearmonthmax) { $yearmonthmax=$yearmonthfile; }
 		}
 	};
 
 	$monthtoprocess=0;$yeartoprocess=0;
-	if ($yearmonthchoosed) {
-		# We found last history file
-		$yeartoprocess=$yearmonthchoosed; $monthtoprocess=$yearmonthchoosed;
+	if ($yearmonthmax) {	# We found last history file
+		$yeartoprocess=$yearmonthmax; $monthtoprocess=$yearmonthmax;
 		$yeartoprocess =~ s/..$//; $monthtoprocess =~ s/^....//;
-		# We read LastTime in this last file
-		&Read_History_File($monthtoprocess,$yeartoprocess,1);
+		# We read LastTime in this last history file
+		&Read_History_File($yeartoprocess,$monthtoprocess,1);
 	}
 
 	#------------------------------------------
 	# PROCESSING CURRENT LOG
 	#------------------------------------------
+
 	if ($BenchMark) { print "Start of processing log file: ".time."<br>\n"; }
 	# Try with $LogFile
 	# If not found try $LogFile$nowsmallyear$nowmonth.log
@@ -1989,7 +2021,7 @@ if (($YearRequired == $nowyear) && ($MonthRequired eq "year" || $MonthRequired =
 	$OpenFileError=1;     if (open(LOG,"$LogFile")) { $OpenFileError=0; }
 	if ($OpenFileError) { if (open(LOG,"$LogFileWithoutLog$nowsmallyear$nowmonth.log"))        { $LogFile="$LogFileWithoutLog$nowsmallyear$nowmonth.log"; $OpenFileError=0; } }
 	if ($OpenFileError) { if (open(LOG,"$LogFileWithoutLog$nowsmallyear$nowmonth$nowday.log")) { $LogFile="$LogFileWithoutLog$nowsmallyear$nowmonth$nowday.log"; $OpenFileError=0; } }
-	if ($OpenFileError) { error("Error: Couldn't open server log file $LogFile: $!"); }
+	if ($OpenFileError) { error("Error: Couldn't open server log file \"$LogFile\" : $!"); }
 	$CheckFormatNotDone=1;$NowNewLinePhase=0;
 	while (<LOG>)
 	{
@@ -2071,10 +2103,10 @@ if (($YearRequired == $nowyear) && ($MonthRequired eq "year" || $MonthRequired =
 		# Skip if not a new line
 		#-----------------------
 		if ($NowNewLinePhase) {
-			if ($timeconnexion < $LastTime{$monthtoprocess.$yeartoprocess}) { next; }	# Should not happen, kept in case of parasite old lines
+			if ($timeconnexion < $LastTime{$yeartoprocess.$monthtoprocess}) { next; }	# Should not happen, kept in case of parasite old lines
 			}
 		else {
-			if ($timeconnexion <= $LastTime{$monthtoprocess.$yeartoprocess}) { next; }	# Already processed
+			if ($timeconnexion <= $LastTime{$yeartoprocess.$monthtoprocess}) { next; }	# Already processed
 			$NowNewLinePhase=1;	# This will stop comparison "<=" between timeconnexion and LastTime (we should have only new lines now)
 			}
 
@@ -2086,11 +2118,11 @@ if (($YearRequired == $nowyear) && ($MonthRequired eq "year" || $MonthRequired =
 		if ((($dateparts[1] > $monthtoprocess) && ($dateparts[2] >= $yeartoprocess)) || ($dateparts[2] > $yeartoprocess)) {
 			# Yes, a new month to process
 			if ($monthtoprocess > 0) {
-				&Save_History_File($monthtoprocess,$yeartoprocess);		# We save data of current processed month
+				&Save_History_File($yeartoprocess,$monthtoprocess);		# We save data of current processed month
  				&Init_HashArray;										# Start init for next one
 				}
 			$monthtoprocess=$dateparts[1];$yeartoprocess=$dateparts[2];
-			&Read_History_File($monthtoprocess,$yeartoprocess,1);
+			&Read_History_File($yeartoprocess,$monthtoprocess,1);		# This should be useless (file must not exist)
 			}
 
 		# Check return code
@@ -2102,7 +2134,7 @@ if (($YearRequired == $nowyear) && ($MonthRequired eq "year" || $MonthRequired =
 				next;
 				}
 			else {												# Bad format record (should not happen but when using MSIndex server), next
-				next;
+				$_corrupted++; next;
 				}
 		}
 
@@ -2139,14 +2171,14 @@ if (($YearRequired == $nowyear) && ($MonthRequired eq "year" || $MonthRequired =
 
 		# Analyze: Date - Hour - Pages - Hits - Kilo
 		#-------------------------------------------
-		if ($FirstTime{$monthtoprocess.$yeartoprocess} == 0) { $FirstTime{$monthtoprocess.$yeartoprocess}=$timeconnexion; }
-		$LastTime{$monthtoprocess.$yeartoprocess} = $timeconnexion;
+		if ($FirstTime{$yeartoprocess.$monthtoprocess} == 0) { $FirstTime{$yeartoprocess.$monthtoprocess}=$timeconnexion; }
+		$LastTime{$yeartoprocess.$monthtoprocess} = $timeconnexion;
 		if ($PageBool) {
-			$_time_p[$dateparts[3]]++; $MonthPage{$monthtoprocess.$yeartoprocess}++;	#Count accesses per hour (page)
+			$_time_p[$dateparts[3]]++; $MonthPage{$yeartoprocess.$monthtoprocess}++;	#Count accesses per hour (page)
 			$_sider_p{$felter[6]}++; 									#Count accesses per page (page)
 			}
-		$_time_h[$dateparts[3]]++; $MonthHits{$monthtoprocess.$yeartoprocess}++;		#Count accesses per hour (hit)
-		$_time_k[$dateparts[3]]+=$felter[9]; $MonthBytes{$monthtoprocess.$yeartoprocess}+=$felter[9];	#Count accesses per hour (kb)
+		$_time_h[$dateparts[3]]++; $MonthHits{$yeartoprocess.$monthtoprocess}++;		#Count accesses per hour (hit)
+		$_time_k[$dateparts[3]]+=$felter[9]; $MonthBytes{$yeartoprocess.$monthtoprocess}+=$felter[9];	#Count accesses per hour (kb)
 		$_sider_h{$felter[6]}++;										#Count accesses per page (hit)
 		$_sider_k{$felter[6]}+=$felter[9];								#Count accesses per page (kb)
 
@@ -2172,8 +2204,8 @@ if (($YearRequired == $nowyear) && ($MonthRequired eq "year" || $MonthRequired =
 		    # If we're not doing lookup or if it failed, we still have an IP address in $Host
 		    if (!$NewDNSLookup || $new eq "ip") {
 				  if ($PageBool) {
-				  		if (int($timeconnexion) > int($_unknownip_l{$Host}+$VisitTimeOut)) { $MonthVisits{$monthtoprocess.$yeartoprocess}++; }
-						if ($_unknownip_l{$Host} eq "") { $MonthUnique{$monthtoprocess.$yeartoprocess}++; }
+				  		if (int($timeconnexion) > int($_unknownip_l{$Host}+$VisitTimeOut)) { $MonthVisits{$yeartoprocess.$monthtoprocess}++; }
+						if ($_unknownip_l{$Host} eq "") { $MonthUnique{$yeartoprocess.$monthtoprocess}++; }
 						$_unknownip_l{$Host}=$timeconnexion;		# Table of (all IP if !NewDNSLookup) or (all unknown IP) else
 						$_hostmachine_p{"Unknown"}++;
 						$_domener_p{"ip"}++;
@@ -2195,8 +2227,8 @@ if (($YearRequired == $nowyear) && ($MonthRequired eq "year" || $MonthRequired =
 			# Count hostmachine
 			if (!$FullHostName) { s/^[\w\-]+\.//; };
 			if ($PageBool) {
-				if (int($timeconnexion) > int($_hostmachine_l{$_}+$VisitTimeOut)) { $MonthVisits{$monthtoprocess.$yeartoprocess}++; }
-				if ($_hostmachine_l{$_} eq "") { $MonthUnique{$monthtoprocess.$yeartoprocess}++; }
+				if (int($timeconnexion) > int($_hostmachine_l{$_}+$VisitTimeOut)) { $MonthVisits{$yeartoprocess.$monthtoprocess}++; }
+				if ($_hostmachine_l{$_} eq "") { $MonthUnique{$yeartoprocess.$monthtoprocess}++; }
 				$_hostmachine_p{$_}++;
 				$_hostmachine_l{$_}=$timeconnexion;
 				}
@@ -2384,7 +2416,7 @@ if (($YearRequired == $nowyear) && ($MonthRequired eq "year" || $MonthRequired =
 
 	# Save for month $monthtoprocess
 	if ($monthtoprocess) {	# If monthtoprocess is 0, it means there was no history files and we found no valid lines in log file
-		&Save_History_File($monthtoprocess,$yeartoprocess);		# We save data for this month
+		&Save_History_File($yeartoprocess,$monthtoprocess);		# We save data for this month
 		if (($MonthRequired ne "year") && ($monthtoprocess != $MonthRequired)) { &Init_HashArray; }	# Not a desired month, so we clean data
 	}
 
@@ -2392,8 +2424,8 @@ if (($YearRequired == $nowyear) && ($MonthRequired eq "year" || $MonthRequired =
 	if (($PurgeLogFile == 1) && ($ArchiveLogRecords == 1)) {
 		if ($BenchMark) { print "Start of archiving log file: ".time."<br>\n"; }
 		$ArchiveFileName="$DirData/${PROG}_archive$FileSuffix.log";
-		open(LOG,"+<$LogFile") || error("Error: Enable to archive log records of $LogFile into $ArchiveFileName because source can't be opened for read and write: $!<br>\n");
-		open(ARCHIVELOG,">>$ArchiveFileName") || error("Error: Couldn't open file $ArchiveFileName to archive current log: $!");
+		open(LOG,"+<$LogFile") || error("Error: Enable to archive log records of \"$LogFile\" into \"$ArchiveFileName\" because source can't be opened for read and write: $!<br>\n");
+		open(ARCHIVELOG,">>$ArchiveFileName") || error("Error: Couldn't open file \"$ArchiveFileName\" to archive current log: $!");
 		while (<LOG>) {	print ARCHIVELOG $_; }
 		close(ARCHIVELOG);
 		chmod 438,"$ArchiveFileName";
@@ -2410,20 +2442,20 @@ if (($YearRequired == $nowyear) && ($MonthRequired eq "year" || $MonthRequired =
 	close DIR;
 	foreach $i (0..$#filearray) {
 		if ("$filearray[$i]" =~ /^$PROG[\d][\d][\d][\d][\d][\d]$FileSuffix\.tmp\..*$/) {
-			$yearmonth=$filearray[$i]; $yearmonth =~ s/^$PROG//; $yearmonth =~ s/\..*//;
-			if (-R "$DirData/$PROG$yearmonth$FileSuffix.tmp.$$") {
-				if (rename("$DirData/$PROG$yearmonth$FileSuffix.tmp.$$", "$DirData/$PROG$yearmonth$FileSuffix.txt")==0) {
-					$allok=0;	# At least on error in renaming working files
+			$yearmonthfile=$filearray[$i]; $yearmonthfile =~ s/^$PROG//; $yearmonthfile =~ s/\..*//;
+			if (-R "$DirData/$PROG$yearmonthfile$FileSuffix.tmp.$$") {
+				if (rename("$DirData/$PROG$yearmonthfile$FileSuffix.tmp.$$", "$DirData/$PROG$yearmonthfile$FileSuffix.txt")==0) {
+					$allok=0;	# At least one error in renaming working files
 					last;
 				}
-				chmod 438,"$DirData/$PROG$yearmonth$FileSuffix.txt";
+				chmod 438,"$DirData/$PROG$yearmonthfile$FileSuffix.txt";
 			}
 		}
 	}
 
 	# Purge Log file if all renaming are ok and option is on
 	if (($allok > 0) && ($PurgeLogFile == 1)) {
-		truncate(LOG,0) || warning("Warning: <b>$PROG</b> couldn't purge logfile <b>$LogFile</b>.<br>\nChange your logfile permissions to allow write for your web server<br>\nor change PurgeLofFile=1 into PurgeLogFile=0 in configure file<br>\n(and think to purge sometines your logile. Launch $PROG just before this to save in $PROG history text files all informations logfile contains).");
+		truncate(LOG,0) || warning("Warning: <b>$PROG</b> couldn't purge logfile \"<b>$LogFile</b>\".<br>\nChange your logfile permissions to allow write for your web server<br>\nor change PurgeLofFile=1 into PurgeLogFile=0 in configure file<br>\n(and think to purge sometines your logile. Launch $PROG just before this to save in $PROG history text files all informations logfile contains).");
 	}
 	close(LOG);
 
@@ -2436,14 +2468,14 @@ opendir(DIR,"$DirData");
 close DIR;
 foreach $i (0..$#filearray) {
 	if ("$filearray[$i]" =~ /^$PROG[\d][\d][\d][\d][\d][\d]$FileSuffix\.txt$/) {
-		$yearmonth=$filearray[$i]; $yearmonth =~ s/^$PROG//; $yearmonth =~ s/\..*//;
-		$yearfile=$yearmonth; $yearfile =~ s/^..//;
+		$yearmonthfile=$filearray[$i]; $yearmonthfile =~ s/^$PROG//; $yearmonthfile =~ s/\..*//;
+		$yearfile=$yearmonthfile; $yearfile =~ s/^..//;
 		$listofyears{$yearfile}=1;
 	}
 }
 
 
-# Here, first part of data for all processed month (old or current) are is still in memory
+# Here, first part of data for all processed month (old and current) are still in memory
 # If a month was already processed, then $HistoryFileAlreadyRead{"MMYYYY"} value is 1
 
 
@@ -2455,10 +2487,10 @@ foreach $i (0..$#filearray) {
 for ($ix=12; $ix>=1; $ix--) {
 	$monthix=$ix+0; if ($monthix < 10) { $monthix  = "0$monthix"; }	# Good trick to change $monthix into "MM" format
 	if ($MonthRequired eq "year" || $monthix == $MonthRequired) {
-		&Read_History_File($monthix,$YearRequired,1);	# Read full history file
+		&Read_History_File($YearRequired,$monthix,1);	# Read full history file
 	}
 	else {
-		&Read_History_File($monthix,$YearRequired,0);	# Read first part of history file
+		&Read_History_File($YearRequired,$monthix,0);	# Read first part of history file
 	}
 }
 
@@ -2619,7 +2651,7 @@ if (($Lang != 1) && ($Lang != 2) && ($Lang != 3) && ($Lang != 6)) {
 	This piece of information refers to the amount of data downloaded by all <b>pages</b>, <b>images</b> and <b>files</b> within your site measured in KBs.
 	</DIV>
 	<DIV CLASS=\"classTooltip\" ID=\"tt13\">
-	This program, $PROG, recognizes each access to your site after a <b>search</b> from the <b>".(@SearchEnginesArray)." most popular Internet Search Engines and Directories</b> (such as Yahoo, Altavista, Lycos, Google, Voila, etc...).
+	$PROG recognizes each access to your site after a <b>search</b> from the <b>".(@SearchEnginesArray)." most popular Internet Search Engines and Directories</b> (such as Yahoo, Altavista, Lycos, Google, Voila, etc...).
 	</DIV>
 	<DIV CLASS=\"classTooltip\" ID=\"tt14\">
 	List of all <b>external pages</b> which were used to link (or eneter) to your site (Only the <b>$MaxNbOfRefererShown</b> most often used external pages are shown.\n
@@ -2631,7 +2663,7 @@ if (($Lang != 1) && ($Lang != 2) && ($Lang != 3) && ($Lang != 6)) {
 	</DIV>
 	<DIV CLASS=\"classTooltip\" ID=\"tt16\">
 	Robots (sometimes refer to Spiders) are <b>automatic computer visitors</b> used by many search engines that scan your web site to (1) index it and rank it, (2) collect statistics on Internet Web sites and/or (3) see if your site is still online.<br>
-	This program, $PROG, is able to recognize up to <b>".(@RobotArray)."</b> robots.
+	$PROG is able to recognize up to <b>".(@RobotArray)."</b> robots.
 	</DIV>";
 
 	print "
@@ -3093,9 +3125,9 @@ $beginmonth=$MonthRequired;$endmonth=$MonthRequired;
 if ($MonthRequired eq "year") { $beginmonth=1;$endmonth=12; }
 for ($monthix=$beginmonth; $monthix<=$endmonth; $monthix++) {
 	$monthix=$monthix+0; if ($monthix < 10) { $monthix  = "0$monthix"; }	# Good trick to change $month into "MM" format
-	if ($FirstTime{$monthix.$YearRequired} > 0 && ($FirstTime == 0 || $FirstTime > $FirstTime{$monthix.$YearRequired})) { $FirstTime = $FirstTime{$monthix.$YearRequired}; }
-	if ($LastTime  < $LastTime{$monthix.$YearRequired}) { $LastTime = $LastTime{$monthix.$YearRequired}; }
-	$TotalVisits+=$MonthVisits{$monthix.$YearRequired};
+	if ($FirstTime{$YearRequired.$monthix} > 0 && ($FirstTime == 0 || $FirstTime > $FirstTime{$YearRequired.$monthix})) { $FirstTime = $FirstTime{$YearRequired.$monthix}; }
+	if ($LastTime  < $LastTime{$YearRequired.$monthix}) { $LastTime = $LastTime{$YearRequired.$monthix}; }
+	$TotalVisits+=$MonthVisits{$YearRequired.$monthix};
 }
 # TotalUnique TotalHosts
 foreach $key (keys %_hostmachine_p) { if ($key ne "Unknown") { if ($_hostmachine_p{$key} > 0) { $TotalUnique++; }; $TotalHosts++; } }
@@ -3147,27 +3179,27 @@ print "<TR valign=bottom>";
 $max_v=1;$max_p=1;$max_h=1;$max_k=1;
 for ($ix=1; $ix<=12; $ix++) {
 	$monthix=$ix; if ($monthix < 10) { $monthix="0$monthix"; }
-	if ($MonthVisits{$monthix.$YearRequired} > $max_v) { $max_v=$MonthVisits{$monthix.$YearRequired}; }
-	if ($MonthUnique{$monthix.$YearRequired} > $max_v) { $max_v=$MonthUnique{$monthix.$YearRequired}; }
-	if ($MonthPage{$monthix.$YearRequired} > $max_p)   { $max_p=$MonthPage{$monthix.$YearRequired}; }
-	if ($MonthHits{$monthix.$YearRequired} > $max_h)   { $max_h=$MonthHits{$monthix.$YearRequired}; }
-	if ($MonthBytes{$monthix.$YearRequired} > $max_k)  { $max_k=$MonthBytes{$monthix.$YearRequired}; }
+	if ($MonthVisits{$YearRequired.$monthix} > $max_v) { $max_v=$MonthVisits{$YearRequired.$monthix}; }
+	if ($MonthUnique{$YearRequired.$monthix} > $max_v) { $max_v=$MonthUnique{$YearRequired.$monthix}; }
+	if ($MonthPage{$YearRequired.$monthix} > $max_p)   { $max_p=$MonthPage{$YearRequired.$monthix}; }
+	if ($MonthHits{$YearRequired.$monthix} > $max_h)   { $max_h=$MonthHits{$YearRequired.$monthix}; }
+	if ($MonthBytes{$YearRequired.$monthix} > $max_k)  { $max_k=$MonthBytes{$YearRequired.$monthix}; }
 }
 
 for ($ix=1; $ix<=12; $ix++) {
 	$monthix=$ix; if ($monthix < 10) { $monthix="0$monthix"; }
-	$bredde_v=$MonthVisits{$monthix.$YearRequired}/$max_v*$BarHeight/2;
-	$bredde_u=$MonthUnique{$monthix.$YearRequired}/$max_v*$BarHeight/2;
-	$bredde_p=$MonthPage{$monthix.$YearRequired}/$max_h*$BarHeight/2;
-	$bredde_h=$MonthHits{$monthix.$YearRequired}/$max_h*$BarHeight/2;
-	$bredde_k=$MonthBytes{$monthix.$YearRequired}/$max_k*$BarHeight/2;
-	$kilo=int(($MonthBytes{$monthix.$YearRequired}/1024)*100)/100;
+	$bredde_v=$MonthVisits{$YearRequired.$monthix}/$max_v*$BarHeight/2;
+	$bredde_u=$MonthUnique{$YearRequired.$monthix}/$max_v*$BarHeight/2;
+	$bredde_p=$MonthPage{$YearRequired.$monthix}/$max_h*$BarHeight/2;
+	$bredde_h=$MonthHits{$YearRequired.$monthix}/$max_h*$BarHeight/2;
+	$bredde_k=$MonthBytes{$YearRequired.$monthix}/$max_k*$BarHeight/2;
+	$kilo=int(($MonthBytes{$YearRequired.$monthix}/1024)*100)/100;
 	print "<TD>";
-	print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_v\" HEIGHT=$bredde_v WIDTH=8 ALT=\"$message[10][$Lang]: $MonthVisits{$monthix.$YearRequired}\" title=\"$message[10][$Lang]: $MonthVisits{$monthix.$YearRequired}\">";
-	print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_u\" HEIGHT=$bredde_u WIDTH=8 ALT=\"$message[11][$Lang]: $MonthUnique{$monthix.$YearRequired}\" title=\"$message[11][$Lang]: $MonthUnique{$monthix.$YearRequired}\">";
+	print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_v\" HEIGHT=$bredde_v WIDTH=8 ALT=\"$message[10][$Lang]: $MonthVisits{$YearRequired.$monthix}\" title=\"$message[10][$Lang]: $MonthVisits{$YearRequired.$monthix}\">";
+	print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_u\" HEIGHT=$bredde_u WIDTH=8 ALT=\"$message[11][$Lang]: $MonthUnique{$YearRequired.$monthix}\" title=\"$message[11][$Lang]: $MonthUnique{$YearRequired.$monthix}\">";
 	print "&nbsp;";
-	print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_p\" HEIGHT=$bredde_p WIDTH=8 ALT=\"$message[56][$Lang]: $MonthPage{$monthix.$YearRequired}\" title=\"$message[56][$Lang]: $MonthPage{$monthix.$YearRequired}\">";
-	print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_h\" HEIGHT=$bredde_h WIDTH=8 ALT=\"$message[57][$Lang]: $MonthHits{$monthix.$YearRequired}\" title=\"$message[57][$Lang]: $MonthHits{$monthix.$YearRequired}\">";
+	print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_p\" HEIGHT=$bredde_p WIDTH=8 ALT=\"$message[56][$Lang]: $MonthPage{$YearRequired.$monthix}\" title=\"$message[56][$Lang]: $MonthPage{$YearRequired.$monthix}\">";
+	print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_h\" HEIGHT=$bredde_h WIDTH=8 ALT=\"$message[57][$Lang]: $MonthHits{$YearRequired.$monthix}\" title=\"$message[57][$Lang]: $MonthHits{$YearRequired.$monthix}\">";
 	print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_k\" HEIGHT=$bredde_k WIDTH=8 ALT=\"$message[44][$Lang]: $kilo\" title=\"$message[44][$Lang]: $kilo\">";
 	print "</TD>\n";
 }
