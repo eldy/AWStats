@@ -5133,7 +5133,12 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 
 		# Check screen size
 		#------------------
-		if ($field[$pos_url] =~ /$LogScreenSizeUrl\?w=(\d+)&h=(\d+)/) { $_screensize_h{"$1x$2"}++; next; }
+		if ($field[$pos_url] =~ /$LogScreenSizeUrl/) {
+			if ($pos_query >=0 && $field[$pos_query]) { # For this fucking IIS in pos_query mode
+				if ($field[$pos_query] =~ /w=(\d+)&h=(\d+)/) { $_screensize_h{"$1x$2"}++; next; }
+			}
+			elsif ($field[$pos_url] =~ /w=(\d+)&h=(\d+)/) { $_screensize_h{"$1x$2"}++; next; }
+		}
 		
 		# Check return status code
 		#-------------------------
