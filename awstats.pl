@@ -14,7 +14,7 @@
 #-------------------------------------------------------
 # Defines
 #-------------------------------------------------------
-$VERSION="2.24 (build 21)";
+$VERSION="2.24 (build 22)";
 $Lang=0;
 
 # Default value
@@ -67,6 +67,7 @@ $BarImageHorizontal_k = "barrehk.png";
 "netscape\.","Netscape",		
 "northernlight\.","NorthernLight",	
 "dmoz\.org","DMOZ",
+"search\.aol\.co","AOL",
 # Others
 "nomade\.fr/","Nomade",
 "hotbot\.","Hotbot",
@@ -102,6 +103,7 @@ $BarImageHorizontal_k = "barrehk.png";
 "netscape\.","search=",
 "northernlight\.","qr=",
 "dmoz\.org","search=",
+"search\.aol\.co","query=",
 # Others
 "nomade\.fr/","s=",
 "hotbot\.","mt=",
