@@ -11,7 +11,7 @@
 # <-----
 push @INC, "${DIR}/plugins";
 # ENTER HERE THE USE COMMAND FOR ALL REQUIRED PERL MODULES
-if (!eval ('require "Net/XWhoIs.pm";')) { return $@?"Error: $@":"Error: Need Perl module Net::XWhoIs"; }
+if (!eval ('require "Net/XWhois.pm";')) { return $@?"Error: $@":"Error: Need Perl module Net::XWhois"; }
 # ----->
 use strict;no strict "refs";
 
