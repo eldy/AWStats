@@ -725,9 +725,9 @@ sub error {
 		#print "\n";
 	}
 	else {
-		print (scalar keys %HTMLOutput?'<br><font color=#880000>':'');
+		print (scalar keys %HTMLOutput?"<br><font color=#880000>\n":"");
 		print ($ErrorMessages?"$ErrorMessages":"Error: $message");
-		print (scalar keys %HTMLOutput?'</font><br>':'');
+		print (scalar keys %HTMLOutput?"\n</font><br>":"");
 		print "\n";
 	}
 	if (! $ErrorMessages && ! $donotshowsetupinfo) {
@@ -1502,9 +1502,9 @@ sub Check_Config {
 	if (! $LogFormat) { error("LogFormat parameter is not defined in config/domain file"); }
 	if ($LogFormat =~ /^\d$/ && $LogFormat !~ /[1-6]/)  { error("LogFormat parameter is wrong in config/domain file. Value is '$LogFormat' (should be 1,2,3,4,5 or a 'personalized AWStats log format string')"); }
 	if (! $LogSeparator) { $LogSeparator="\\s"; }
-	if (! $DirData)   { $DirData="."; }
-	if (! $DirCgi)    { $DirCgi="/cgi-bin"; }
-	if (! $DirIcons)  { $DirIcons="/icon"; }
+	if (! $DirData)   { $DirData='.'; }
+	if (! $DirCgi)    { $DirCgi='/cgi-bin'; }
+	if (! $DirIcons)  { $DirIcons='/icon'; }
 	if ($DNSLookup !~ /[0-2]/)                      { error("DNSLookup parameter is wrong in config/domain file. Value is '$DNSLookup' (should be 0 or 1)"); }
 	if (! $SiteDomain)                              { error("SiteDomain parameter not found in your config/domain file. You must add it for using this version."); }
 	if ($AllowToUpdateStatsFromBrowser !~ /[0-1]/) 	{ $AllowToUpdateStatsFromBrowser=0; }
@@ -1999,7 +1999,7 @@ sub Read_History_With_TmpUpdate {
 					#if ($field[0]) {	# This test must not be here for TIME section (because field[0] is "0" for hour 0)
 						$count++;
 						if ($SectionsToLoad{'time'}) {
-							if ($withupdate || $MonthRequired eq 'year' || $MonthRequired eq "$month") {	# Still required
+							if ($withupdate || $MonthRequired eq 'all' || $MonthRequired eq "$month") {	# Still required
 								$countloaded++;
 								if ($field[1]) { $_time_p[$field[0]]+=int($field[1]); }
 								if ($field[2]) { $_time_h[$field[0]]+=int($field[2]); }
@@ -2107,7 +2107,7 @@ sub Read_History_With_TmpUpdate {
 						# For backward compatibility
 						if ($readvisitorforbackward) {
 							if ($field[1]) { $MonthUnique{$year.$month}++; }
-							if ($MonthRequired ne 'year') {
+							if ($MonthRequired ne 'all') {
 								if ($field[0] !~ /^\d+\.\d+\.\d+\.\d+$/ && $field[0] !~ /^[0-9A-F]*:/i) { $MonthHostsKnown{$year.$month}++; }
 								else { $MonthHostsUnknown{$year.$month}++; }
 							}
@@ -2165,9 +2165,9 @@ sub Read_History_With_TmpUpdate {
 								if ($HTMLOutput{'allhosts'} || $HTMLOutput{'lasthosts'}) {
 									if (!$HostFilter || $field[0] =~ /$HostFilter/) { $loadrecord=1; }
 								}
-								elsif ($MonthRequired eq 'year' || $field[2] >= $MinHitHost) {
+								elsif ($MonthRequired eq 'all' || $field[2] >= $MinHitHost) {
 									if ($HTMLOutput{'unknownip'} && ($field[0] =~ /^\d+\.\d+\.\d+\.\d+$/ || $field[0] =~ /^[0-9A-F]*:/i)) { $loadrecord=1; }
-									elsif ($HTMLOutput{'main'} && ($MonthRequired eq 'year' || $countloaded < $MaxNbOfHostsShown)) { $loadrecord=1; }
+									elsif ($HTMLOutput{'main'} && ($MonthRequired eq 'all' || $countloaded < $MaxNbOfHostsShown)) { $loadrecord=1; }
 								}
 							}
 							if ($loadrecord) {
@@ -2573,14 +2573,14 @@ sub Read_History_With_TmpUpdate {
 							}
 							else {
 								if ($HTMLOutput{'main'}) {
-									if ($MonthRequired eq 'year') { $loadrecord=1; }
+									if ($MonthRequired eq 'all') { $loadrecord=1; }
 									else {
 										if ($countloaded < $MaxNbOfPageShown && $field[1] >= $MinHitFile) { $loadrecord=1; }
 										$TotalDifferentPages++;
 									}
 								}
 								else {	# This is for $HTMLOutput = urldetail, urlentry or urlexit
-									if ($MonthRequired eq 'year' ) {
+									if ($MonthRequired eq 'all' ) {
 										if (!$URLFilter || $field[0] =~ /$URLFilter/) { $loadrecord=1; }
 									}
 									else {
@@ -2748,7 +2748,7 @@ sub Read_History_With_TmpUpdate {
 							}
 							else {
 								if ($HTMLOutput{'main'}) {
-									if ($MonthRequired eq 'year') { $loadrecord=1; }
+									if ($MonthRequired eq 'all') { $loadrecord=1; }
 									else {
 										if ($countloaded < $MaxNbOfKeyphrasesShown && $field[1] >= $MinHitKeyphrase) { $loadrecord=1; }
 										$TotalDifferentKeyphrases++;
@@ -2756,7 +2756,7 @@ sub Read_History_With_TmpUpdate {
 									}
 								}
 								elsif ($HTMLOutput{'keyphrases'}) {	# Load keyphrases for keyphrases chart
-									if ($MonthRequired eq 'year' ) { $loadrecord=1; }
+									if ($MonthRequired eq 'all' ) { $loadrecord=1; }
 									else {
 										if ($field[1] >= $MinHitKeyphrase) { $loadrecord=1; }
 										$TotalDifferentKeyphrases++;
@@ -2809,7 +2809,7 @@ sub Read_History_With_TmpUpdate {
 						$count++;
 						if ($SectionsToLoad{'keywords'}) {
 							my $loadrecord=0;
-							if ($MonthRequired eq 'year') { $loadrecord=1; }
+							if ($MonthRequired eq 'all') { $loadrecord=1; }
 							else {
 								if ($countloaded < $MaxNbOfKeywordsShown && $field[1] >= $MinHitKeyword) { $loadrecord=1; }
 								$TotalDifferentKeywords++;
@@ -3818,10 +3818,10 @@ sub Show_Flag_Links {
 	my $NewLinkParams=$QueryString;
 	my $NewLinkTarget='';
 	if ($ENV{'GATEWAY_INTERFACE'}) {
-		$NewLinkParams =~ s/update(=\w*|$|[ &]+)//i;
-		$NewLinkParams =~ s/staticlinks(=\w*|$|[ &]+)//i;
-		$NewLinkParams =~ s/framename=[^ &]*//i;
-		$NewLinkParams =~ s/lang=[^ &]*//i;
+		$NewLinkParams =~ s/(^|&)update(=\w*|$)//i;
+		$NewLinkParams =~ s/(^|&)staticlinks(=\w*|$)//i;
+		$NewLinkParams =~ s/(^|&)framename=[^&]*//i;
+		$NewLinkParams =~ s/(^|&)lang=[^&]*//i;
 		if ($FrameName eq 'mainleft') { $NewLinkTarget=" target=\"_parent\""; }
 		$NewLinkParams =~ tr/&/&/s; $NewLinkParams =~ s/^&//; $NewLinkParams =~ s/&$//;
 		if ($NewLinkParams) { $NewLinkParams="${NewLinkParams}&"; }
@@ -4166,9 +4166,9 @@ sub ShowFormFilter() {
 	my $fieldfiltervalue=shift;
 	if (! $StaticLinks) {
 		my $NewLinkParams=${QueryString};
-		$NewLinkParams =~ s/update(=\w*|$|[ &]+)//i;
-		$NewLinkParams =~ s/output(=\w*|$|[ &]+)//i;
-		$NewLinkParams =~ s/staticlinks(=\w*|$|[ &]+)//i;
+		$NewLinkParams =~ s/(^|&)update(=\w*|$)//i;
+		$NewLinkParams =~ s/(^|&)output(=\w*|$)//i;
+		$NewLinkParams =~ s/(^|&)staticlinks(=\w*|$)//i;
 		$NewLinkParams =~ tr/&/&/s; $NewLinkParams =~ s/^&//; $NewLinkParams =~ s/&$//;
 		if ($NewLinkParams) { $NewLinkParams="${NewLinkParams}&"; }
 		print "\n<FORM name=\"FormFilter\" action=\"$AWScript?${NewLinkParams}\" class=\"TABLEFRAME\">\n";
@@ -4176,11 +4176,11 @@ sub ShowFormFilter() {
 		print "<TD>&nbsp; &nbsp; $Message[79] : &nbsp; &nbsp;\n";
 		print "<input type=hidden name=\"output\" value=\"".join(',',keys %HTMLOutput)."\">\n";
 		if ($SiteConfig) { print "<input type=hidden name=\"config\" value=\"$SiteConfig\">\n"; }
-		if ($QueryString =~ /year=(\d\d\d\d)/i) { print "<input type=hidden name=\"year\" value=\"$1\">\n"; }
-		if ($QueryString =~ /month=(\d\d)/i || $QueryString =~ /month=(year)/i) { print "<input type=hidden name=\"month\" value=\"$1\">\n"; }
-		if ($QueryString =~ /lang=(\w+)/i) { print "<input type=hidden name=\"lang\" value=\"$1\">\n"; }
-		if ($QueryString =~ /debug=(\d+)/i) { print "<input type=hidden name=\"debug\" value=\"$1\">\n"; }
-		if ($QueryString =~ /framename=(\w+)/i) { print "<input type=hidden name=\"framename\" value=\"$1\">\n"; }
+		if ($QueryString =~ /(^|&)year=(\d\d\d\d)/i) { print "<input type=hidden name=\"year\" value=\"$2\">\n"; }
+		if ($QueryString =~ /(^|&)month=(\d\d)/i || $QueryString =~ /(^|&)month=(all)/i) { print "<input type=hidden name=\"month\" value=\"$2\">\n"; }
+		if ($QueryString =~ /(^|&)lang=(\w+)/i) { print "<input type=hidden name=\"lang\" value=\"$2\">\n"; }
+		if ($QueryString =~ /(^|&)debug=(\d+)/i) { print "<input type=hidden name=\"debug\" value=\"$2\">\n"; }
+		if ($QueryString =~ /(^|&)framename=(\w+)/i) { print "<input type=hidden name=\"framename\" value=\"$2\">\n"; }
 		print "</TD>\n";
 		print "<TD><input type=text name=\"$fieldfiltername\" value=\"$fieldfiltervalue\" class=\"CFormFields\"></TD>\n";
 		print "<TD><input type=submit value=\"$Message[115]\" class=\"CFormFields\">\n";
@@ -4461,7 +4461,39 @@ sub DefinePerlParsingFormat() {
 #--------------------------------------------------------------------
 # MAIN
 #--------------------------------------------------------------------
+($DIR=$0) =~ s/([^\/\\]*)$//; ($PROG=$1) =~ s/\.([^\.]*)$//; $Extension=$1;
+
 $starttime=time;
+
+# Get current time (time when AWStats was started)
+($nowsec,$nowmin,$nowhour,$nowday,$nowmonth,$nowyear,$nowwday,$nowyday) = localtime($starttime);
+$nowweekofmonth=int($nowday/7);
+$nowweekofyear=int(($nowyday-1+6-($nowwday==0?6:$nowwday-1))/7)+1; if ($nowweekofyear > 52) { $nowweekofyear = 1; }
+$nowdaymod=$nowday%7;
+$nowwday++;
+$nowns=Time::Local::timelocal(0,0,0,$nowday,$nowmonth,$nowyear);
+if ($nowdaymod <= $nowwday) { if (($nowwday != 7) || ($nowdaymod != 0)) { $nowweekofmonth=$nowweekofmonth+1; } }
+if ($nowdaymod >  $nowwday) { $nowweekofmonth=$nowweekofmonth+2; }
+# Change format of time variables
+$nowweekofmonth="0$nowweekofmonth";
+if ($nowweekofyear < 10) { $nowweekofyear = "0$nowweekofyear"; }
+if ($nowyear < 100) { $nowyear+=2000; } else { $nowyear+=1900; }
+$nowsmallyear=$nowyear;$nowsmallyear =~ s/^..//;
+if (++$nowmonth < 10) { $nowmonth = "0$nowmonth"; }
+if ($nowday < 10) { $nowday = "0$nowday"; }
+if ($nowhour < 10) { $nowhour = "0$nowhour"; }
+if ($nowmin < 10) { $nowmin = "0$nowmin"; }
+if ($nowsec < 10) { $nowsec = "0$nowsec"; }
+$nowtime=int($nowyear.$nowmonth.$nowday.$nowhour.$nowmin.$nowsec);
+# Get tomorrow time (will be used to discard some record with corrupted date (future date))
+my ($tomorrowsec,$tomorrowmin,$tomorrowhour,$tomorrowday,$tomorrowmonth,$tomorrowyear) = localtime($starttime+86400);
+if ($tomorrowyear < 100) { $tomorrowyear+=2000; } else { $tomorrowyear+=1900; }
+if (++$tomorrowmonth < 10) { $tomorrowmonth = "0$tomorrowmonth"; }
+if ($tomorrowday < 10) { $tomorrowday = "0$tomorrowday"; }
+if ($tomorrowhour < 10) { $tomorrowhour = "0$tomorrowhour"; }
+if ($tomorrowmin < 10) { $tomorrowmin = "0$tomorrowmin"; }
+if ($tomorrowsec < 10) { $tomorrowsec = "0$tomorrowsec"; }
+$tomorrowtime=int($tomorrowyear.$tomorrowmonth.$tomorrowday.$tomorrowhour.$tomorrowmin.$tomorrowsec);
 
 my @AllowedArgs=('-site','-config','-showsteps','-showdropped','-showcorrupted',
 '-showunknownorigin','-logfile','-output','-staticlinks','-lang',
@@ -4488,7 +4520,7 @@ if ($ENV{'GATEWAY_INTERFACE'}) {	# Run from a browser
 	$UpdateStats=($QueryString=~/update=1/i?1:0);
 
 	if ($QueryString =~ /config=([^&]+)/i)				{ $SiteConfig=&DecodeEncodedString("$1"); }
-	if ($QueryString =~ /logfile=([^&]+)/i )			{ $LogFile=&DecodeEncodedString("$1"); }
+	if ($QueryString =~ /logfile=([^&]+)/i)				{ $LogFile=&DecodeEncodedString("$1"); }
 	# All filters
 	if ($QueryString =~ /hostfilter=([^&]+)/i)			{ $HostFilter=&DecodeEncodedString("$1"); }			# Filter on host list can also be defined with hostfilter=filter
 	if ($QueryString =~ /urlfilter=([^&]+)/i)			{ $URLFilter=&DecodeEncodedString("$1"); }			# Filter on URL list can also be defined with urlfilter=filter
@@ -4500,19 +4532,19 @@ if ($ENV{'GATEWAY_INTERFACE'}) {	# Run from a browser
 	if ($QueryString =~ /output=refererpages:([^&]+)/i)	{ $RefererPagesFilter=&DecodeEncodedString("$1"); }	# Filter on referer list can be defined with output=refererpages:filter to reduce number of lines read and showed
 
 	# If migrate
-	if ($QueryString =~ /migrate=([^\s&]+)/i)	{
-		$MigrateStats=&DecodeEncodedString("$1"); 
+	if ($QueryString =~ /(^|-|&)migrate=([^&]+)/i)	{
+		$MigrateStats=&DecodeEncodedString("$2"); 
 		$MigrateStats =~ /^(.*)$PROG(\d{0,2})(\d\d)(\d\d\d\d)(.*)\.txt$/;
-		$SiteConfig=$5?$5:'xxx'; $SiteConfig =~ s/^\.//;		# SiteConfig is not required for migrate
+		$SiteConfig=$5?$5:'xxx'; $SiteConfig =~ s/^\.//;		# SiteConfig is used to find config file
 	}
 }
 else {								# Run from command line
 	# Prepare QueryString
 	for (0..@ARGV-1) {
-		if ($ARGV[$_] =~ /^(-|)migrate=/) {
-			$MigrateStats=$ARGV[$_];
+		if ($ARGV[$_] =~ /(^|-|&)migrate=([^&]+)/i) {
+			$MigrateStats="$2";
 			$MigrateStats =~ /^(.*)$PROG(\d{0,2})(\d\d)(\d\d\d\d)(.*)\.txt$/;
-			$SiteConfig=$5?$5:'xxx'; $SiteConfig =~ s/^\.//;	# SiteConfig is not required for migrate
+			$SiteConfig=$5?$5:'xxx'; $SiteConfig =~ s/^\.//;	# SiteConfig is used to find config file
 			next;
 		}
 		# TODO Check if ARGV is in @AllowedArg
@@ -4526,7 +4558,7 @@ else {								# Run from command line
 	$UpdateStats=1;
 
 	if ($QueryString =~ /config=([^&]+)/i)				{ $SiteConfig="$1"; }
-	if ($QueryString =~ /logfile=([^&]+)/i )			{ $LogFile="$1"; }
+	if ($QueryString =~ /logfile=([^&]+)/i)				{ $LogFile="$1"; }
 	# All filters
 	if ($QueryString =~ /hostfilter=([^&]+)/i)			{ $HostFilter="$1"; }			# Filter on host list can also be defined with hostfilter=filter
 	if ($QueryString =~ /urlfilter=([^&]+)/i)			{ $URLFilter="$1"; }			# Filter on URL list can also be defined with urlfilter=filter
@@ -4543,16 +4575,15 @@ else {								# Run from command line
 	if ($QueryString =~ /showdropped/i)					{ $ShowDropped=1; $QueryString=~s/showdropped[^&]*//i; }
 	if ($QueryString =~ /showunknownorigin/i)			{ $ShowUnknownOrigin=1; $QueryString=~s/showunknownorigin[^&]*//i; }
 }
-
-if ($QueryString =~ /staticlinks/i) 			{ $StaticLinks=".$SiteConfig"; }
-if ($QueryString =~ /staticlinks=([^&]+)/i) 	{ $StaticLinks=".$1"; }		# When ran from awstatsbuildstaticpages.pl
-if ($QueryString =~ /framename=([^&]+)/i)		{ $FrameName=$1; }
-if ($QueryString =~ /debug=(\d+)/i)				{ $Debug=$1; }
+if ($QueryString =~ /(^|&)staticlinks/i) 			{ $StaticLinks=".$SiteConfig"; }
+if ($QueryString =~ /(^|&)staticlinks=([^&]+)/i) 	{ $StaticLinks=".$2"; }		# When ran from awstatsbuildstaticpages.pl
+if ($QueryString =~ /(^|&)framename=([^&]+)/i)		{ $FrameName="$2"; }
+if ($QueryString =~ /(^|&)debug=(\d+)/i)			{ $Debug=$2; }
 # Get/Define output
-if ($QueryString =~ /output=.*output=/i) { error("Only 1 output option is allowed"); }
-if ($QueryString =~ /output(=[^&]*|)(&|$)/i) {
+if ($QueryString =~ /(^|&)output(=[^&]*|)(.*)&output(=[^&]*|)(&|$)/i) { error("Only 1 output option is allowed","","",1); }
+if ($QueryString =~ /(^|&)output(=[^&]*|)(&|$)/i) {
 	# At least one output expected. We define %HTMLOutput
-	my $outputlist="$1";
+	my $outputlist="$2";
 	if ($outputlist) {
 		$outputlist =~ s/^=//;
 		foreach my $outputparam (split(/,/,$outputlist)) {
@@ -4568,9 +4599,16 @@ if ($QueryString =~ /output(=[^&]*|)(&|$)/i) {
 if ($ENV{'GATEWAY_INTERFACE'} && ! scalar keys %HTMLOutput) { $HTMLOutput{'main'}=1; }
 	
 # Remove -output option with no = from QueryString
-$QueryString=~s/output(&|$)//i;	$QueryString=~s/&$//;
+$QueryString=~s/(^|&)output(&|$)//i; $QueryString=~s/&+$//;
 
-($DIR=$0) =~ s/([^\/\\]*)$//; ($PROG=$1) =~ s/\.([^\.]*)$//; $Extension=$1;
+# Check year and month parameters
+if ($QueryString =~ /(^|&)month=(year)/i) { error("month=year is a deprecated option. Use month=all instead."); }
+if ($QueryString =~ /(^|&)year=(\d\d\d\d)/i) { $YearRequired="$2"; }
+else { $YearRequired="$nowyear"; }
+if ($QueryString =~ /(^|&)month=(\d\d)/i || $QueryString =~ /(^|&)month=(all)/i) { $MonthRequired="$2"; }
+else { $MonthRequired="$nowmonth"; }
+if ($QueryString =~ /(^|&)day=(\d\d)/i) { $DayRequired="$2"; }	# day is a hidden option. Must not be used (Make results not understandable). Available for users that rename history files with day.
+else { $DayRequired=''; }
 
 # Force SiteConfig if AWSTATS_CONFIG is defined
 if ($ENV{'AWSTATS_CONFIG'}) {
@@ -4671,53 +4709,10 @@ if ((! $ENV{'GATEWAY_INTERFACE'}) && (! $SiteConfig)) {
 if (! $SiteConfig) { $SiteConfig=$ENV{'SERVER_NAME'}; }
 #if (! $ENV{'SERVER_NAME'}) { $ENV{'SERVER_NAME'} = $SiteConfig; }	# For thoose who use __SERVER_NAME__ in conf file and use CLI.
 
-# Get current time (time when AWStats was started)
-($nowsec,$nowmin,$nowhour,$nowday,$nowmonth,$nowyear,$nowwday,$nowyday) = localtime($starttime);
-$nowweekofmonth=int($nowday/7);
-$nowweekofyear=int(($nowyday-1+6-($nowwday==0?6:$nowwday-1))/7)+1; if ($nowweekofyear > 52) { $nowweekofyear = 1; }
-$nowdaymod=$nowday%7;
-$nowwday++;
-$nowns=Time::Local::timelocal(0,0,0,$nowday,$nowmonth,$nowyear);
-if ($nowdaymod <= $nowwday) { if (($nowwday != 7) || ($nowdaymod != 0)) { $nowweekofmonth=$nowweekofmonth+1; } }
-if ($nowdaymod >  $nowwday) { $nowweekofmonth=$nowweekofmonth+2; }
-# Change format of time variables
-$nowweekofmonth="0$nowweekofmonth";
-if ($nowweekofyear < 10) { $nowweekofyear = "0$nowweekofyear"; }
-if ($nowyear < 100) { $nowyear+=2000; } else { $nowyear+=1900; }
-$nowsmallyear=$nowyear;$nowsmallyear =~ s/^..//;
-if (++$nowmonth < 10) { $nowmonth = "0$nowmonth"; }
-if ($nowday < 10) { $nowday = "0$nowday"; }
-if ($nowhour < 10) { $nowhour = "0$nowhour"; }
-if ($nowmin < 10) { $nowmin = "0$nowmin"; }
-if ($nowsec < 10) { $nowsec = "0$nowsec"; }
-$nowtime=int($nowyear.$nowmonth.$nowday.$nowhour.$nowmin.$nowsec);
-# Get tomorrow time (will be used to discard some record with corrupted date (future date))
-my ($tomorrowsec,$tomorrowmin,$tomorrowhour,$tomorrowday,$tomorrowmonth,$tomorrowyear) = localtime($starttime+86400);
-if ($tomorrowyear < 100) { $tomorrowyear+=2000; } else { $tomorrowyear+=1900; }
-if (++$tomorrowmonth < 10) { $tomorrowmonth = "0$tomorrowmonth"; }
-if ($tomorrowday < 10) { $tomorrowday = "0$tomorrowday"; }
-if ($tomorrowhour < 10) { $tomorrowhour = "0$tomorrowhour"; }
-if ($tomorrowmin < 10) { $tomorrowmin = "0$tomorrowmin"; }
-if ($tomorrowsec < 10) { $tomorrowsec = "0$tomorrowsec"; }
-$tomorrowtime=int($tomorrowyear.$tomorrowmonth.$tomorrowday.$tomorrowhour.$tomorrowmin.$tomorrowsec);
-
 # Read config file (here SiteConfig is defined)
 &Read_Config;
-if ($QueryString =~ /lang=([^\s&]+)/i)	{ $Lang=$1; }
+if ($QueryString =~ /(^|&)lang=([^&]+)/i)	{ $Lang="$2"; }
 if (! $Lang) { $Lang='en'; }
-
-# For backward compatibility
-if ($Lang eq '0') { $Lang='en'; }
-if ($Lang eq '1') { $Lang='fr'; }
-if ($Lang eq '2') { $Lang='nl'; }
-if ($Lang eq '3') { $Lang='es'; }
-if ($Lang eq '4') { $Lang='it'; }
-if ($Lang eq '5') { $Lang='de'; }
-if ($Lang eq '6') { $Lang='pl'; }
-if ($Lang eq '7') { $Lang='gr'; }
-if ($Lang eq '8') { $Lang='cz'; }
-if ($Lang eq '9') { $Lang='pt'; }
-if ($Lang eq '10') { $Lang='kr'; }
 
 # Check and correct bad parameters
 &Check_Config;
@@ -4742,8 +4737,8 @@ if ($FrameName ne 'index') {
 $NBOFLINESFORBENCHMARK--;
 if ($ENV{'GATEWAY_INTERFACE'}) { $DirCgi=''; }
 if ($DirCgi && !($DirCgi =~ /\/$/) && !($DirCgi =~ /\\$/)) { $DirCgi .= '/'; }
-if (! $DirData || $DirData eq '.') { $DirData=$DIR; }	# If not defined or chosen to "." value then DirData is current dir
-if (! $DirData)  { $DirData='.'; }						# If current dir not defined then we put it to "."
+if (! $DirData || $DirData eq '.') { $DirData="$DIR"; }	# If not defined or chosen to '.' value then DirData is current dir
+if (! $DirData)  { $DirData='.'; }						# If current dir not defined then we put it to '.'
 $DirData =~ s/\/$//; $DirData =~ s/\\$//;
 # Define SiteToAnalyze and SiteToAnalyzeWithoutwww for regex operations
 $SiteToAnalyze=lc($SiteDomain); $SiteToAnalyze =~ s/\./\\\./g;
@@ -4761,22 +4756,14 @@ $AWScript=($WrapperScript?"$WrapperScript":"$DirCgi$PROG.$Extension");
 if ($Debug) {
 	debug(ucfirst($PROG)." - $VERSION - Perl $^X $]",1);
 	debug("QUERY_STRING=$QueryString",2);
-	debug("HTMLOutput: ".join(',',keys %HTMLOutput));
-	debug("Site domain to analyze: $SiteDomain");
+	debug("HTMLOutput=".join(',',keys %HTMLOutput));
+	debug("YearRequired=$YearRequired, MonthRequired=$MonthRequired",2);
+	debug("Site domain to analyze=$SiteDomain");
 }
-
-# Check year and month parameters
-if ($QueryString =~ /year=(\d\d\d\d)/i) { $YearRequired="$1"; }
-else { $YearRequired="$nowyear"; }
-if ($QueryString =~ /month=(\d\d)/i || $QueryString =~ /month=(year)/i) { $MonthRequired="$1"; }
-else { $MonthRequired="$nowmonth"; }
-if ($QueryString =~ /day=(\d\d)/i) { $DayRequired="$1"; }	# day is a hidden option. Must not be used (Make results not understandable). Available for users that rename history files with day.
-else { $DayRequired=''; }
-if ($Debug) { debug("YearRequired=$YearRequired MonthRequired=$MonthRequired",2); }
 
 # Security check
 if ($AllowAccessFromWebToAuthenticatedUsersOnly && $ENV{'GATEWAY_INTERFACE'}) {
-	if ($Debug) { debug("REMOTE_USER is ".$ENV{"REMOTE_USER"}); }
+	if ($Debug) { debug("REMOTE_USER=".$ENV{"REMOTE_USER"}); }
 	if (! $ENV{"REMOTE_USER"}) {
 		error("Access to statistics is only allowed from an authenticated session to authenticated users.");
 	}
@@ -4810,20 +4797,21 @@ if (($UpdateStats || $MigrateStats) && (! $AllowToUpdateStatsFromBrowser) && $EN
 #------------------------------------------
 if ($MigrateStats) {
 	if ($Debug) { debug("MigrateStats is $MigrateStats",2); }
-	$MigrateStats =~ s/^(-|)migrate=//;
-	$MigrateStats =~ /^(.*)$PROG(\d{0,2})(\d\d)(\d\d\d\d)(.*)\.txt$/;
-	$DirData=$1;
-	$DayRequired=$2;
-	$MonthRequired=$3;
-	$YearRequired=$4;
-	$FileSuffix=$5;
+	if ($MigrateStats !~ /^(.*)$PROG(\d{0,2})(\d\d)(\d\d\d\d)(.*)\.txt$/) {
+		error("AWStats history file name must match following syntax: ${PROG}MMYYYY[.config].txt","","",1);
+	}
+	$DirData="$1";
+	$DayRequired="$2";
+	$MonthRequired="$3";
+	$YearRequired="$4";
+	$FileSuffix="$5";
 	# Correct DirData
-	if (! $DirData || $DirData eq ".") { $DirData=$DIR; }	# If not defined or chosen to "." value then DirData is current dir
-	if (! $DirData)  { $DirData="."; }						# If current dir not defined then we put it to "."
+	if (! $DirData || $DirData eq '.') { $DirData="$DIR"; }	# If not defined or chosen to '.' value then DirData is current dir
+	if (! $DirData)  { $DirData='.'; }						# If current dir not defined then we put it to '.'
 	$DirData =~ s/\/$//; $DirData =~ s/\\$//;
 	print "Start migration for file '$MigrateStats'."; print $ENV{'GATEWAY_INTERFACE'}?"<br>\n":"\n";
 	if ($EnableLockForUpdate) {	&Lock_Update(1); }
-	my $newhistory=&Read_History_With_TmpUpdate($YearRequired,$MonthRequired,1,0,"all");
+	my $newhistory=&Read_History_With_TmpUpdate($YearRequired,$MonthRequired,1,0,'all');
 	if (rename("$newhistory","$MigrateStats")==0) {
 		unlink "$newhistory";
 		error("Failed to rename \"$newhistory\" into \"$MigrateStats\".\nWrite permissions on \"$MigrateStats\" might be wrong".($ENV{'GATEWAY_INTERFACE'}?" for a 'migration from web'":"")." or file might be opened.");
@@ -4837,7 +4825,7 @@ if ($MigrateStats) {
 if ($FrameName eq 'index') {
 	# Define the NewLinkParams for main chart
 	my $NewLinkParams=${QueryString};
-	$NewLinkParams =~ s/framename=[^ &]*//i;
+	$NewLinkParams =~ s/(^|&)framename=[^&]*//i;
 	$NewLinkParams =~ tr/&/&/s; $NewLinkParams =~ s/^&//; $NewLinkParams =~ s/&$//;
 	if ($NewLinkParams) { $NewLinkParams="${NewLinkParams}&"; }
 	# Exit if main frame
@@ -5893,10 +5881,10 @@ if (scalar keys %HTMLOutput) {
 
 	# Define the NewLinkParams for main chart
 	my $NewLinkParams=${QueryString};
-	$NewLinkParams =~ s/update(=\w*|$|[ &]+)//i;
-	$NewLinkParams =~ s/output(=\w*|$|[ &]+)//i;
-	$NewLinkParams =~ s/staticlinks(=\w*|$|[ &]+)//i;
-	$NewLinkParams =~ s/framename=[^ &]*//i;
+	$NewLinkParams =~ s/(^|&)update(=\w*|$)//i;
+	$NewLinkParams =~ s/(^|&)output(=\w*|$)//i;
+	$NewLinkParams =~ s/(^|&)staticlinks(=\w*|$)//i;
+	$NewLinkParams =~ s/(^|&)framename=[^&]*//i;
 	my $NewLinkTarget='';
 	if ($DetailedReportsOnNewWindows) { $NewLinkTarget=" target=\"awstatsbis\""; }
 	if (($FrameName eq 'mainleft' || $FrameName eq 'mainright') && $DetailedReportsOnNewWindows < 2) {
@@ -5961,7 +5949,7 @@ EOF
 		# Loop on each month of year
 		for (my $ix=12; $ix>=1; $ix--) {
 			my $monthix=sprintf("%02s",$ix);
-			if ($MonthRequired eq 'year' || $monthix eq $MonthRequired) {
+			if ($MonthRequired eq 'all' || $monthix eq $MonthRequired) {
 				&Read_History_With_TmpUpdate($YearRequired,$monthix,0,0,"all");				# Read full history file
 			}
 			elsif (($HTMLOutput{'main'} && $ShowMonthDayStats) || $HTMLOutput{'alldays'}) {
@@ -6003,11 +5991,11 @@ EOF
 
 		if ($FrameName ne 'mainleft') {
 			my $NewLinkParams=${QueryString};
-			$NewLinkParams =~ s/update(=\w*|$|[ &]+)//i;
-			$NewLinkParams =~ s/staticlinks(=\w*|$|[ &]+)//i;
-			$NewLinkParams =~ s/year=[^ &]*//i;
-			$NewLinkParams =~ s/month=[^ &]*//i;
-			$NewLinkParams =~ s/framename=[^ &]*//i;
+			$NewLinkParams =~ s/(^|&)update(=\w*|$)//i;
+			$NewLinkParams =~ s/(^|&)staticlinks(=\w*|$)//i;
+			$NewLinkParams =~ s/(^|&)year=[^&]*//i;
+			$NewLinkParams =~ s/(^|&)month=[^&]*//i;
+			$NewLinkParams =~ s/(^|&)framename=[^&]*//i;
 			$NewLinkParams =~ tr/&/&/s; $NewLinkParams =~ s/^&//; $NewLinkParams =~ s/&$//;
 			my $NewLinkTarget='';
 			if ($FrameName eq 'mainright') { $NewLinkTarget=" target=_parent"; }
@@ -6036,9 +6024,9 @@ EOF
 			# Print Update Now link
 			if ($AllowToUpdateStatsFromBrowser && ! $StaticLinks) {
 				my $NewLinkParams=${QueryString};
-				$NewLinkParams =~ s/update(=\w*|$|[ &]+)//i;
-				$NewLinkParams =~ s/staticlinks(=\w*|$|[ &]+)//i;
-				$NewLinkParams =~ s/framename=[^ &]*//i;
+				$NewLinkParams =~ s/(^|&)update(=\w*|$)//i;
+				$NewLinkParams =~ s/(^|&)staticlinks(=\w*|$)//i;
+				$NewLinkParams =~ s/(^|&)framename=[^&]*//i;
 				if ($FrameName eq 'mainright') { $NewLinkParams.="&framename=mainright"; }
 				$NewLinkParams =~ tr/&/&/s; $NewLinkParams =~ s/^&//; $NewLinkParams =~ s/&$//;
 				if ($NewLinkParams) { $NewLinkParams="${NewLinkParams}&"; }
@@ -6052,7 +6040,7 @@ EOF
 			if ($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks) {
 				print "<select class=CFormFields name=\"month\">\n";
 				foreach my $ix (1..12) { my $monthix=sprintf("%02s",$ix); print "<option".($MonthRequired eq "$monthix"?" selected":"")." value=\"$monthix\">$MonthLib{$monthix}\n"; }
-				print "<option".($MonthRequired eq 'year'?" selected":"")." value=\"year\">-\n";
+				print "<option".($MonthRequired eq 'all'?" selected":"")." value='all'>-\n";
 				print "</select>\n";
 				print "<select class=CFormFields name=\"year\">\n";
 				# Add YearRequired in list if not in ListOfYears
@@ -6068,7 +6056,7 @@ EOF
 			}
 			else {
 				print "<font style=\"font-size: 14px;\">";
-				if ($MonthRequired eq 'year') { print "$Message[6] $YearRequired"; }
+				if ($MonthRequired eq 'all') { print "$Message[6] $YearRequired"; }
 				else { print "$Message[5] $MonthLib{$MonthRequired} $YearRequired"; }
 				print "</font>";
 			}
@@ -6168,9 +6156,9 @@ EOF
 		# Print Back link
 		elsif (! $HTMLOutput{'main'}) {
 			print "<table>\n";
-			$NewLinkParams =~ s/hostfilter=[^\s&]*//i;
-			$NewLinkParams =~ s/urlfilter=[^\s&]*//i;
-			$NewLinkParams =~ s/refererpagesfilter=[^\s&]*//i;
+			$NewLinkParams =~ s/(^|&)hostfilter=[^&]*//i;
+			$NewLinkParams =~ s/(^|&)urlfilter=[^&]*//i;
+			$NewLinkParams =~ s/(^|&)refererpagesfilter=[^&]*//i;
 			$NewLinkParams =~ tr/&/&/s; $NewLinkParams =~ s/&$//;
 			if (! $DetailedReportsOnNewWindows || $FrameName eq 'mainright') {
 				print "<tr><td class=AWL><a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript".(${NewLinkParams}?"?${NewLinkParams}":""):"$PROG$StaticLinks.html")."\">$Message[76]</a></td></tr>\n";
@@ -6194,7 +6182,7 @@ EOF
 	my $LastTime=0;
 	$TotalUnique=$TotalVisits=$TotalPages=$TotalHits=$TotalBytes=$TotalHostsKnown=$TotalHostsUnknown=0;
 	my $beginmonth=$MonthRequired;my $endmonth=$MonthRequired;
-	if ($MonthRequired eq 'year') { $beginmonth=1;$endmonth=12; }
+	if ($MonthRequired eq 'all') { $beginmonth=1;$endmonth=12; }
 	for (my $month=$beginmonth; $month<=$endmonth; $month++) {
 		my $monthix=sprintf("%02s",$month);
 		if ($FirstTime{$YearRequired.$monthix} && ($FirstTime == 0 || $FirstTime > $FirstTime{$YearRequired.$monthix})) { $FirstTime = $FirstTime{$YearRequired.$monthix}; }
@@ -6240,11 +6228,11 @@ EOF
 	my $firstdaytoshowtime=$nowyear.$nowmonth."01";					# Set day cursor to 1st day of month
 	my $lastdaytocountaverage=$nowyear.$nowmonth.$nowday;			# Set day cursor to today
 	my $lastdaytoshowtime=$nowyear.$nowmonth."31";					# Set day cursor to last day of month
-	if ($MonthRequired eq 'year') {
+	if ($MonthRequired eq 'all') {
 		$firstdaytocountaverage=$YearRequired."0101";				# Set day cursor to 1st day of the required year
 	}
-	if (($MonthRequired ne $nowmonth && $MonthRequired ne 'year') || $YearRequired ne $nowyear) {
-		if ($MonthRequired eq 'year') {
+	if (($MonthRequired ne $nowmonth && $MonthRequired ne 'all') || $YearRequired ne $nowyear) {
+		if ($MonthRequired eq 'all') {
 			$firstdaytocountaverage=$YearRequired."0101";			# Set day cursor to 1st day of the required year
 			$firstdaytoshowtime=$YearRequired."1201";				# Set day cursor to 1st day of last month of required year
 			$lastdaytocountaverage=$YearRequired."1231";			# Set day cursor to last day of the required year
@@ -6269,11 +6257,11 @@ EOF
 #		&tab_head("$Message[5]",0);
 #
 #		my $NewLinkParams=${QueryString};
-#		$NewLinkParams =~ s/update(=\w*|$|[ &]+)//i;
-#		$NewLinkParams =~ s/staticlinks(=\w*|$|[ &]+)//i;
-#		$NewLinkParams =~ s/year=[^ &]*//i;
-#		$NewLinkParams =~ s/month=[^ &]*//i;
-#		$NewLinkParams =~ s/framename=[^ &]*//i;
+#		$NewLinkParams =~ s/(^|&)update(=\w*|$)//i;
+#		$NewLinkParams =~ s/(^|&)staticlinks(=\w*|$)//i;
+#		$NewLinkParams =~ s/(^|&)year=[^&]*//i;
+#		$NewLinkParams =~ s/(^|&)month=[^&]*//i;
+#		$NewLinkParams =~ s/(^|&)framename=[^&]*//i;
 #		$NewLinkParams =~ tr/&/&/s; $NewLinkParams =~ s/^&//; $NewLinkParams =~ s/&$//;
 #		if ($NewLinkParams) { $NewLinkParams="${NewLinkParams}&"; }
 #		my $NewLinkTarget="";
@@ -6551,12 +6539,12 @@ EOF
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>";
 		if ($HostFilter) {
 			print "$Message[79] <b>$HostFilter</b>: $cpt $Message[81]";
-			if ($MonthRequired ne 'year') {
+			if ($MonthRequired ne 'all') {
 				if ($HTMLOutput{'allhosts'} || $HTMLOutput{'lasthosts'}) { print "<br>$Message[102]: $TotalHostsKnown $Message[82], $TotalHostsUnknown $Message[1] - $TotalUnique $Message[11]"; }
 			}
 		}
 		else {
-			if ($MonthRequired ne 'year') { print "$Message[102] : $TotalHostsKnown $Message[82], $TotalHostsUnknown $Message[1] - $TotalUnique $Message[11]"; }
+			if ($MonthRequired ne 'all') { print "$Message[102] : $TotalHostsKnown $Message[82], $TotalHostsUnknown $Message[1] - $TotalUnique $Message[11]"; }
 			else { print "$Message[102] : ".(scalar keys %_host_h); }
 		}
 		print "</TH>";
@@ -6846,7 +6834,7 @@ EOF
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>";
 		if ($URLFilter) {
 			print "$Message[79] <b>$URLFilter</b>: $cpt $Message[28]";
-			if ($MonthRequired ne 'year') {
+			if ($MonthRequired ne 'all') {
 				if ($HTMLOutput{'urldetail'}) { print "<br>$Message[102]: $TotalDifferentPages $Message[28]"; }
 			}
 		}
@@ -7040,7 +7028,7 @@ EOF
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>";
 		if ($RefererPagesFilter) {
 			print "$Message[79] <b>$RefererPagesFilter</b>: $cpt $Message[28]";
-			#if ($MonthRequired ne 'year') {
+			#if ($MonthRequired ne 'all') {
 			#	if ($HTMLOutput{'refererpages'}) { print "<br>$Message[102]: $TotalDifferentPages $Message[28]"; }
 			#}
 		}
@@ -7168,11 +7156,11 @@ EOF
 		&tab_head("$title",0);
 
 		my $NewLinkParams=${QueryString};
-		$NewLinkParams =~ s/update(=\w*|$|[ &]+)//i;
-		$NewLinkParams =~ s/staticlinks(=\w*|$|[ &]+)//i;
-		$NewLinkParams =~ s/year=[^ &]*//i;
-		$NewLinkParams =~ s/month=[^ &]*//i;
-		$NewLinkParams =~ s/framename=[^ &]*//i;
+		$NewLinkParams =~ s/(^|&)update(=\w*|$)//i;
+		$NewLinkParams =~ s/(^|&)staticlinks(=\w*|$)//i;
+		$NewLinkParams =~ s/(^|&)year=[^&]*//i;
+		$NewLinkParams =~ s/(^|&)month=[^&]*//i;
+		$NewLinkParams =~ s/(^|&)framename=[^&]*//i;
 		$NewLinkParams =~ tr/&/&/s; $NewLinkParams =~ s/^&//; $NewLinkParams =~ s/&$//;
 		if ($NewLinkParams) { $NewLinkParams="${NewLinkParams}&"; }
 		my $NewLinkTarget='';
@@ -7191,7 +7179,7 @@ EOF
 		if ($FirstTime) { print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TD>".Format_Date($FirstTime,0)."</TD>"; }
 		else { print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TD>NA</TD>"; }
 		print "<TD colspan=3>";
-		print ($MonthRequired eq 'year'?"$Message[6] $YearRequired":"$Message[5] ".$MonthLib{$MonthRequired}." $YearRequired");
+		print ($MonthRequired eq 'all'?"$Message[6] $YearRequired":"$Message[5] ".$MonthLib{$MonthRequired}." $YearRequired");
 		print "</TD>";
 		if ($LastTime) { print "<TD>".Format_Date($LastTime,0)."</TD></TR>\n"; }
 		else { print "<TD>NA</TD></TR>\n"; }
@@ -7204,7 +7192,7 @@ EOF
 		if ($ShowMonthDayStats =~ /B/i) { print "<TD width=\"20%\" bgcolor=\"#$color_k\" onmouseover=\"ShowTip(5);\" onmouseout=\"HideTip(5);\">$Message[75]</TD>"; } else { print "<TD width=\"20%\">&nbsp;</TD>"; }
 		print "</TR>\n";
 		print "<TR>";
-		if ($ShowMonthDayStats =~ /U/i) { print "<TD>".($MonthRequired eq 'year'?"<b><= $TotalUnique</b><br>$Message[129]":"<b>$TotalUnique</b><br>&nbsp;")."</TD>"; } else { print "<TD>&nbsp;</TD>"; }
+		if ($ShowMonthDayStats =~ /U/i) { print "<TD>".($MonthRequired eq 'all'?"<b><= $TotalUnique</b><br>$Message[129]":"<b>$TotalUnique</b><br>&nbsp;")."</TD>"; } else { print "<TD>&nbsp;</TD>"; }
 		if ($ShowMonthDayStats =~ /V/i) { print "<TD><b>$TotalVisits</b><br>($RatioVisits&nbsp;$Message[52])</TD>"; } else { print "<TD>&nbsp;</TD>"; }
 		if ($ShowMonthDayStats =~ /P/i) { print "<TD><b>$TotalPages</b><br>($RatioPages&nbsp;".lc($Message[56]."/".$Message[12]).")</TD>"; } else { print "<TD>&nbsp;</TD>"; }
 		if ($ShowMonthDayStats =~ /H/i) { print "<TD><b>$TotalHits</b><br>($RatioHits&nbsp;".lc($Message[57]."/".$Message[12]).")</TD>"; } else { print "<TD>&nbsp;</TD>"; }
@@ -7684,7 +7672,7 @@ EOF
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\">";
 #		print "<TH".($PluginsLoaded{'GetCountryCodeByAddr'}{'geoip'}?" colspan=2":"").">";
 		print "<TH>";
-		if ($MonthRequired ne 'year') { print "$Message[81] : $TotalHostsKnown $Message[82], $TotalHostsUnknown $Message[1] - $TotalUnique $Message[11]</TH>"; }
+		if ($MonthRequired ne 'all') { print "$Message[81] : $TotalHostsKnown $Message[82], $TotalHostsUnknown $Message[1] - $TotalUnique $Message[11]</TH>"; }
 		else { print "$Message[81] : ".(scalar keys %_host_h)."</TH>"; }
 		if ($ShowLinksToWhoIs && $LinksToWhoIs) { print "<TH width=80>$Message[114]</TH>"; }
 		if ($ShowHostsStats =~ /P/i) { print "<TH bgcolor=\"#$color_p\" width=80>$Message[56]</TH>"; }
