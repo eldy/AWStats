@@ -99,9 +99,9 @@ $URLFilter, $UserAgent, $YearRequired)=
 ();
 my ($color_Background, $color_TableBG, $color_TableBGRowTitle,
 $color_TableBGTitle, $color_TableBorder, $color_TableRowTitle, $color_TableTitle,
-$color_text, $color_titletext, $color_weekend, $color_link, $color_hover,
+$color_text, $color_textpercent, $color_titletext, $color_weekend, $color_link, $color_hover,
 $color_h, $color_k, $color_p, $color_s, $color_u, $color_v)=
-("","","","","","","","","","","","","","","","","","");
+("","","","","","","","","","","","","","","","","","","");
 my $pos_rc = my $pos_logname = my $pos_date = my $pos_method = my $pos_url = my $pos_code = my $pos_size = 0;
 my $pos_referer = my $pos_agent = my $pos_query = my $pos_gzipin = my $pos_gzipout = my $pos_gzipratio = 0;
 my $lastrequiredfield = my $lowerval = 0;
@@ -343,7 +343,7 @@ sub error {
 			print ($HTMLOutput?"</i></font><br><br>":"");
 		}
 		if ($LogFormat != 1 && $LogFormat != 2 && $LogFormat != 3 && $LogFormat != 4) {
-			print "the following personalised log format:<br>\n";
+			print "the following personalized log format:<br>\n";
 			print ($HTMLOutput?"<font color=#888888><i>":"");
 			print "$LogFormat\n";
 			print ($HTMLOutput?"</i></font><br><br>":"");
@@ -379,10 +379,10 @@ sub warning {
 	if ($WarningMessages) {
 		if ($HTMLOutput) {
 			$messagestring =~ s/\n/\<br\>/g;
-			print "$messagestring<br>\n";
+			print "\n$messagestring<br>\n";
 		}
 		else {
-			print "$messagestring\n";
+			print "\n$messagestring\n";
 		}
 	}
 }
@@ -622,6 +622,7 @@ sub Read_Config_File {
 		if ($param =~ /^color_TableBGRowTitle/) { $color_TableBGRowTitle=$value; next; }
 		if ($param =~ /^color_TableBG/)         { $color_TableBG=$value; next; }
 		if ($param =~ /^color_TableBorder/)     { $color_TableBorder=$value; next; }
+		if ($param =~ /^color_textpercent/)     { $color_textpercent=$value; next; }
 		if ($param =~ /^color_text/)            { $color_text=$value; next; }
 		if ($param =~ /^color_titletext/)       { $color_titletext=$value; next; }
 		if ($param =~ /^color_weekend/)         { $color_weekend=$value; next; }
@@ -809,8 +810,12 @@ sub Check_Config {
 	$LogFile =~ s/%DD/$nowday/ig;
 	$LogFile =~ s/%HH/$nowhour/ig;
 	$LogFile =~ s/%WM/$nowweekofmonth/ig;
-	if ($Debug) { debug(" LogFile=$LogFile",1); }
-	if ($LogFormat =~ /^[\d]$/ && $LogFormat !~ /[1-5]/)  { error("Error: LogFormat parameter is wrong. Value is '$LogFormat' (should be 1,2,3,4,5 or a 'personalised AWtats log format string')"); }
+	$LogFormat =~ s/\\//g;
+	if ($Debug) {
+		debug(" LogFile=$LogFile",1);
+		debug(" LogFormat=$LogFormat",1);
+	}
+	if ($LogFormat =~ /^[\d]$/ && $LogFormat !~ /[1-5]/)  { error("Error: LogFormat parameter is wrong. Value is '$LogFormat' (should be 1,2,3,4,5 or a 'personalized AWtats log format string')"); }
 	if ($DNSLookup !~ /[0-1]/)                            { error("Error: DNSLookup parameter is wrong. Value is '$DNSLookup' (should be 0 or 1)"); }
 	if ($AllowToUpdateStatsFromBrowser !~ /[0-1]/) 	{ $AllowToUpdateStatsFromBrowser=0; }
 	# Optional setup section
@@ -883,6 +888,7 @@ sub Check_Config {
 	$color_TableBGRowTitle =~ s/#//g; if ($color_TableBGRowTitle !~ /^[0-9|A-Z]+$/i) { $color_TableBGRowTitle="ECECEC"; }
 	$color_TableBorder =~ s/#//g; if ($color_TableBorder !~ /^[0-9|A-Z]+$/i)         { $color_TableBorder="ECECEC"; }
 	$color_text =~ s/#//g; if ($color_text !~ /^[0-9|A-Z]+$/i)           			 { $color_text="000000"; }
+	$color_textpercent =~ s/#//g; if ($color_textpercent !~ /^[0-9|A-Z]+$/i)  		 { $color_textpercent="606060"; }
 	$color_titletext =~ s/#//g; if ($color_titletext !~ /^[0-9|A-Z]+$/i) 			 { $color_titletext="000000"; }
 	$color_weekend =~ s/#//g; if ($color_weekend !~ /^[0-9|A-Z]+$/i)     			 { $color_weekend="EAEAEA"; }
 	$color_link =~ s/#//g; if ($color_link !~ /^[0-9|A-Z]+$/i)           			 { $color_link="0011BB"; }
@@ -994,8 +1000,8 @@ sub Check_Config {
 	if (! $Message[97]) { $Message[97]="Max"; }
 	if (! $Message[98]) { $Message[98]="Web compression"; }
 	if (! $Message[99]) { $Message[99]="Bandwith saved"; }
-	if (! $Message[100]) { $Message[100]="Before compression"; }
-	if (! $Message[101]) { $Message[101]="After compression"; }
+	if (! $Message[100]) { $Message[100]="Compression on"; }
+	if (! $Message[101]) { $Message[101]="Compression result"; }
 	if (! $Message[102]) { $Message[102]="Total"; }
 	if (! $Message[103]) { $Message[103]="different keyphrases"; }
 	if (! $Message[104]) { $Message[104]="Entry pages"; }
@@ -2287,7 +2293,7 @@ if ((! $ENV{"GATEWAY_INTERFACE"}) && (! $SiteConfig)) {
 	print "  -update        to update statistics (default)\n";
 	print "  -showsteps     to add benchmark information every $NbOfLinesForBenchmark lines processed\n";
 	print "  -showcorrupted to add output for each corrupted lines found, with reason\n";
-	print "  -logfile=x     to force log to analyse whatever is 'LogFile' in config file\n";
+	print "  -logfile=x     to force log to analyze whatever is 'LogFile' in config file\n";
 	print "  Be care to process log files in chronological order when updating statistics.\n";
 	print "\n";
 	print "Options to show statistics:\n";
@@ -2491,15 +2497,15 @@ if ($UpdateStats) {
 	if ($LogFormat eq "4") { $LogFormatString="%h %l %u %t \"%r\" %>s %b"; }
 	if ($LogFormat eq "5") { $LogFormatString="c-ip cs-username c-agent sc-authenticated date time s-svcname s-computername cs-referred r-host r-ip r-port time-taken cs-bytes sc-bytes cs-protocol cs-transport s-operation cs-uri cs-mime-type s-object-source sc-status s-cache-info"; }
 	# Replacement for Apache format string
-	$LogFormatString =~ s/%h([\s])/%host$1/g; $LogFormatString =~ s/%h$/%host/g;
-	$LogFormatString =~ s/%l([\s])/%other$1/g; $LogFormatString =~ s/%l$/%other/g;
-	$LogFormatString =~ s/%u([\s])/%logname$1/g; $LogFormatString =~ s/%u$/%logname/g;
-	$LogFormatString =~ s/%t([\s])/%time1$1/g; $LogFormatString =~ s/%t$/%time1/g;
+	$LogFormatString =~ s/%h(\s)/%host$1/g; $LogFormatString =~ s/%h$/%host/g;
+	$LogFormatString =~ s/%l(\s)/%other$1/g; $LogFormatString =~ s/%l$/%other/g;
+	$LogFormatString =~ s/%u(\s)/%logname$1/g; $LogFormatString =~ s/%u$/%logname/g;
+	$LogFormatString =~ s/%t(\s)/%time1$1/g; $LogFormatString =~ s/%t$/%time1/g;
 	$LogFormatString =~ s/\"%r\"/%methodurl/g;
 	$LogFormatString =~ s/%>s/%code/g;
-	$LogFormatString =~ s/%b([\s])/%bytesd$1/g;	$LogFormatString =~ s/%b$/%bytesd/g;
-	$LogFormatString =~ s/\"%\(Referer\)i\"/%refererquot/g;
-	$LogFormatString =~ s/\"%\(User-Agent\)i\"/%uaquot/g;
+	$LogFormatString =~ s/%b(\s)/%bytesd$1/g;	$LogFormatString =~ s/%b$/%bytesd/g;
+	$LogFormatString =~ s/\"%{Referer}i\"/%refererquot/g;
+	$LogFormatString =~ s/\"%{User-Agent}i\"/%uaquot/g;
 	$LogFormatString =~ s/%{mod_gzip_input_size}n/%gzipin/g;
 	$LogFormatString =~ s/%{mod_gzip_output_size}n/%gzipout/g;
 	$LogFormatString =~ s/%{mod_gzip_compression_ratio}n/%gzipratio/g;
@@ -2657,12 +2663,12 @@ if ($UpdateStats) {
 				$pos_gzipin=$i;$i++;
 				$PerlParsingFormat .= "([^\\s]*)";
 			}
-			elsif ($f =~ /%gzipout$/ ) {
+			elsif ($f =~ /%gzipout/ ) {		# Compare $f to /%gzipout/ and not to /%gzipout$/ like other fields
 				$found=1;
 				$pos_gzipout=$i;$i++;
 				$PerlParsingFormat .= "([^\\s]*)";
 			}
-			elsif ($f =~ /%gzipratio$/ ) {
+			elsif ($f =~ /%gzipratio/ ) {	# Compare $f to /%gzipratio/ and not to /%gzipratio$/ like other fields
 				$found=1;
 				$pos_gzipratio=$i;$i++;
 				$PerlParsingFormat .= "([^\\s]*)";
@@ -2670,16 +2676,16 @@ if ($UpdateStats) {
 			if (! $found) { $found=1; $PerlParsingFormat .= "[^\\s]*"; }
 			$PerlParsingFormat.="\\s";
 		}
-		if (! $PerlParsingFormat) { error("Error: No recognised format tag in personalised LogFormat string"); }
+		if (! $PerlParsingFormat) { error("Error: No recognised format tag in personalized LogFormat string"); }
 		chop($PerlParsingFormat); chop($PerlParsingFormat);		# Remove last separator char "\s"
 		$lastrequiredfield=$i--;
 	}
-	if (! $pos_rc) { error("Error: Your personalised LogFormat does not include all fields required by AWStats (Add \%host in your LogFormat string)."); }
-	if (! $pos_date) { error("Error: Your personalised LogFormat does not include all fields required by AWStats (Add \%time1 or \%time2 in your LogFormat string)."); }
-	if (! $pos_method) { error("Error: Your personalised LogFormat does not include all fields required by AWStats (Add \%methodurl or \%method in your LogFormat string)."); }
-	if (! $pos_url) { error("Error: Your personalised LogFormat does not include all fields required by AWStats (Add \%methodurl or \%url in your LogFormat string)."); }
-	if (! $pos_code) { error("Error: Your personalised LogFormat does not include all fields required by AWStats (Add \%code in your LogFormat string)."); }
-	if (! $pos_size) { error("Error: Your personalised LogFormat does not include all fields required by AWStats (Add \%bytesd in your LogFormat string)."); }
+	if (! $pos_rc) { error("Error: Your personalized LogFormat does not include all fields required by AWStats (Add \%host in your LogFormat string)."); }
+	if (! $pos_date) { error("Error: Your personalized LogFormat does not include all fields required by AWStats (Add \%time1 or \%time2 in your LogFormat string)."); }
+	if (! $pos_method) { error("Error: Your personalized LogFormat does not include all fields required by AWStats (Add \%methodurl or \%method in your LogFormat string)."); }
+	if (! $pos_url) { error("Error: Your personalized LogFormat does not include all fields required by AWStats (Add \%methodurl or \%url in your LogFormat string)."); }
+	if (! $pos_code) { error("Error: Your personalized LogFormat does not include all fields required by AWStats (Add \%code in your LogFormat string)."); }
+	if (! $pos_size) { error("Error: Your personalized LogFormat does not include all fields required by AWStats (Add \%bytesd in your LogFormat string)."); }
 	if ($Debug) { debug("PerlParsingFormat is $PerlParsingFormat"); }
 
 
@@ -2724,17 +2730,7 @@ if ($UpdateStats) {
 	while (<LOG>)
 	{
 		$NbOfLinesRead++;
-
-# A virer
-#		if ($ShowSteps && ($NbOfLinesRead % $NbOfLinesForBenchmark == 0)) {
-#			my $delay=GetDelaySinceStart(0);
-#			print "$NbOfLinesRead lines processed ($delay ms, ".int(1000*$NbOfLinesRead/($delay>0?$delay:1))." lines/seconds)\n";
-#		}
-# Fin A virer
-
 		chomp $_; s/\r$//;
-
-		if ($Debug) { debug(" Record $NbOfLinesRead is ($lastrequiredfield fields read) : host=\"$field[$pos_rc]\", logname=\"$field[$pos_logname]\", date=\"$field[$pos_date]\", method=\"$field[$pos_method]\", url=\"$field[$pos_url]\", code=\"$field[$pos_code]\", size=\"$field[$pos_size]\", referer=\"$field[$pos_referer]\", agent=\"$field[$pos_agent]\"",3); }
 
 		# Parse line record to get all required fields
 		if (! /^$PerlParsingFormat/) {	# !!!!!!!!!
@@ -2745,7 +2741,9 @@ if ($UpdateStats) {
 			next;
 		}
 		foreach my $i (1..$lastrequiredfield) { $field[$i]=$$i; }	# !!!!!
-
+		if ($Debug) { debug(" Correct format line $NbOfLinesRead : host=\"$field[$pos_rc]\", logname=\"$field[$pos_logname]\", date=\"$field[$pos_date]\", method=\"$field[$pos_method]\", url=\"$field[$pos_url]\", code=\"$field[$pos_code]\", size=\"$field[$pos_size]\", referer=\"$field[$pos_referer]\", agent=\"$field[$pos_agent]\"",3); }
+		#debug("$field[$pos_gzipin] - $field[$pos_gzipout] - $field[$pos_gzipratio]\n");
+		
 		# Check filters
 		#----------------------------------------------------------------------
 		my $protocol=0;
@@ -2954,7 +2952,7 @@ if ($UpdateStats) {
 		$_time_h[$hourrecord]++; $MonthHits{$yearmonth}++; $DayHits{$yearmonthdayrecord}++;	#Count accesses for hour (hit)
 		$_time_k[$hourrecord]+=$field[$pos_size]; $MonthBytes{$yearmonth}+=$field[$pos_size]; $DayBytes{$yearmonthdayrecord}+=$field[$pos_size];	#Count accesses for hour (kb)
 
-		# Analize login
+		# Analyze login
 		#--------------
 		if ($field[$pos_logname] && $field[$pos_logname] ne "-") {
 			# We found an authenticated user
@@ -3350,7 +3348,7 @@ if ($UpdateStats) {
 						if ($Debug) { debug(" Make a backup of old historic file into $PROG$1$FileSuffix.bak before",1); }
 						#if (FileCopy("$DirData/$PROG$1$FileSuffix.txt","$DirData/$PROG$1$FileSuffix.bak")) {
 						if (rename("$DirData/$PROG$1$FileSuffix.txt", "$DirData/$PROG$1$FileSuffix.bak")==0) {
-							warning("Warning: Failed to make a backup of \"$DirData/$PROG$1$FileSuffix.txt\" into \"$DirData/$PROG$1$FileSuffix.bak\".\n");
+							warning("Warning: Failed to make a backup of \"$DirData/$PROG$1$FileSuffix.txt\" into \"$DirData/$PROG$1$FileSuffix.bak\".");
 						}
 						if ($SaveDatabaseFilesWithPermissionsForEveryone) {
 							chmod 0666,"$DirData/$PROG$1$FileSuffix.bak";
@@ -3376,7 +3374,7 @@ if ($UpdateStats) {
 
 	# Purge Log file if all renaming are ok and option is on
 	if (($allok > 0) && ($PurgeLogFile == 1)) {
-		truncate(LOG,0) || warning("Warning: <b>$PROG</b> couldn't purge logfile \"<b>$LogFile</b>\".<br>\nChange your logfile permissions to allow write for your web server<br>\nor change PurgeLofFile=1 into PurgeLogFile=0 in configure file<br>\n(and think to purge sometines your logile. Launch $PROG just before this to save in $PROG history text files all informations logfile contains).");
+		truncate(LOG,0) || warning("Warning: <b>$PROG</b> couldn't purge logfile \"<b>$LogFile</b>\".\nChange your logfile permissions to allow write for your web server CGI process or change PurgeLogFile=1 into PurgeLogFile=0 in configure file and think to purge sometines manually your logfile (just after running an update process to not loose any not already processed records your log file contains).");
 	}
 	close(LOG);
 
@@ -4402,7 +4400,7 @@ EOF
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[73]</TH>";
 		print "<TH bgcolor=\"#$color_h\" width=80>&nbsp;$Message[57]&nbsp;</TH><TH bgcolor=\"#$color_h\" width=80>$Message[15]</TH>";
 		if ($ShowCompressionStats) {
-			print "<TH bgcolor=\"#$color_k\" width=120>$Message[100]</TH><TH bgcolor=\"#$color_k\" width=120>$Message[101]</TH><TH bgcolor=\"#$color_k\" width=120>$Message[99]</TH>";
+			print "<TH bgcolor=\"#$color_k\" width=80>$Message[75]</TH><TH bgcolor=\"#$color_k\" width=120>$Message[100]</TH><TH bgcolor=\"#$color_k\" width=120>$Message[101]</TH><TH bgcolor=\"#$color_k\" width=120>$Message[99]</TH>";
 		}
 		else {
 			print "<TH bgcolor=\"#$color_k\" width=80>$Message[75]</TH>";
@@ -4421,7 +4419,7 @@ EOF
 			if ($ShowCompressionStats) {
 				if ($_filetypes_gz_in{$key}) {
 					my $percent=int(100*(1-$_filetypes_gz_out{$key}/$_filetypes_gz_in{$key}));
-					printf("<TD>%s</TD><TD>%s</TD><TD>%s (%s%)</TD>",Format_Bytes($_filetypes_gz_in{$key}),Format_Bytes($_filetypes_k{$key}),Format_Bytes($_filetypes_gz_in{$key}-$_filetypes_gz_out{$key}),$percent);
+					printf("<TD>%s</TD><TD>%s</TD><TD>%s</TD><TD>%s (%s%)</TD>",Format_Bytes($_filetypes_k{$key}),Format_Bytes($_filetypes_gz_in{$key}),Format_Bytes($_filetypes_gz_out{$key}),Format_Bytes($_filetypes_gz_in{$key}-$_filetypes_gz_out{$key}),$percent);
 				}
 				else {
 					printf("<TD>%s</TD><TD>&nbsp;</TD><TD>&nbsp;</TD>",Format_Bytes($_filetypes_k{$key}));
