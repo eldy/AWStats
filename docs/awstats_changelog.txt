@@ -5,7 +5,7 @@ $Revision$ - $Author$ - $Date$
 6.2
 
 New features/improvements:
-- None
+- New: awstats_updateall.pl: Added -excludeconf option
 
 Fixes:
 - Fix not recognized %time3 tag in LogFormat

@@ -64,11 +64,13 @@ sub debug {
 
 # Change default value if options are used
 my $helpfound=0;my $nowfound=0;
+my %confexcluded=();
 for (0..@ARGV-1) {
 	if ($ARGV[$_] =~ /^-*h/i)     		  	 { $helpfound=1; last; }
 	if ($ARGV[$_] =~ /^-*awstatsprog=(.*)/i) { $Awstats="$1"; next; }
 	if ($ARGV[$_] =~ /^-*configdir=(.*)/i)   { $DIRCONFIG="$1"; next; }
-	if ($ARGV[$_] =~ /^-*debug=(\d+)/i)  	 { $debug=$1; next; }
+	if ($ARGV[$_] =~ /^-*excludeconf=(.*)/i) { $confexcluded{"$1"}=1; next; }
+	if ($ARGV[$_] =~ /^-*debug=(\d+)/i)  	 { $Debug=$1; next; }
 	if ($ARGV[$_] =~ /^now/i)     		  	 { $nowfound=1; next; }
 }
 
@@ -86,14 +88,33 @@ if (!$nowfound || $helpfound || ! @ARGV) {
 	print "Where options are:\n";
 	print "  -awstatsprog=pathtoawstatspl\n";
 	print "  -configdir=directorytoscan\n";
+	print "  -excludeconf=conftoexclude (Note: awstats.model.conf is always excluded)\n";
 	print "\n";
 	exit 0;
 }
 
+debug("Scan directory $DIRCONFIG");
+
 # Scan directory $DIRCONFIG 
 opendir(DIR, $DIRCONFIG) || error("Can't scan directory $DIRCONFIG");
-my @files = grep { /^awstats\.(.*)conf$/ } sort readdir(DIR);
+my @filesindir = grep { /^awstats\.(.*)conf$/ } sort readdir(DIR);
 closedir(DIR);
+
+debug("List of files found :".join(",",@filesindir));
+
+# Build file list
+my @files=();
+foreach my $file (@filesindir) {
+    if ($confexcluded{$file}) { next; }         # Should be useless
+    if ($file =~ /^awstats\.(.*)conf$/) {
+        my $conf=$1; $conf =~ s/\.$//;
+		if ($conf eq 'model') { next; }
+        if ($confexcluded{$conf}) { next; }
+    }
+    push @files, $file;
+}
+
+debug("List of files qualified :".join(",",@files));
 
 # Run update process for each config file found
 if (@files) {
@@ -117,7 +138,6 @@ if (@files) {
 	foreach (@files) {
 		if ($_ =~ /^awstats\.(.*)conf$/) {
 			my $domain = $1||"default"; $domain =~ s/\.$//;
-			if ($domain eq 'model') { next; }
 			# Define command line
 			my $command="\"$AwstatsDir/$AwstatsProg\" -update -config=$domain";
 			$command.=" -configdir=\"$DIRCONFIG\"";
