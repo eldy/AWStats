@@ -45,9 +45,9 @@ Ici les données rapportées sont des: <b>valeurs moyennes</b> (calculées à partir
 Ici les données rapportées sont des: <b>sommes cumulées</b> (calculées à partir des données entre la première et dernière visite)
 </DIV>
 <DIV CLASS="CTooltip" ID="tt20">
-Certains <b>Durée de visites</b> sont 'inconnues' car elles ne peuvent pas toujours etre calculées. En voici les raisons principales:<br>
+Certaines <b>Durée de visites</b> sont 'inconnues' car elles ne peuvent pas toujours etre calculées. En voici les raisons principales:<br>
 - La visite n'étaient pas terminée lorsque la mise à jour eut lieu (Sera comptée à la prochaine mise à jour).<br>
-- La visite a commencé la derniere heure (après 23:00) du dernier jour du mois (Un raison technique empêche #PROG# de calculer la durée des visites de telles sessions)
+- La visite a commencé la derniere heure (après 23:00) du dernier jour du mois (Un raison technique empêche #PROG# de calculer la durée des visites de telles sessions).
 </DIV>
 
 <DIV CLASS="CTooltip" ID="tt201"> Contenu partiel renvoyé. </DIV>
