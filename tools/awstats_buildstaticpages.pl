@@ -37,6 +37,13 @@ my $Awstats="awstats.pl";
 my $OutputDir="";
 my $OutputSuffix;
 my $OutputFile;
+my @OutputList=(
+"allhosts","lasthosts","unknownip","urldetail",
+"unknownos","unknownbrowser","browserdetail",
+"refererse","refererpages",
+#"referersites",
+"allkeyphrases","allkeywords","errors404"
+);
 
 
 #-------------------------------------------------------
@@ -93,19 +100,22 @@ if ($OutputDir) { if ($OutputDir !~ /[\\\/]$/) { $OutputDir.="/"; } }
 if (! $Config) {
 	print "----- $PROG $VERSION (c) Laurent Destailleur -----\n";
 	print "$PROG allows you to launch AWStats with -staticlinks option to\n";
-	print "build all possible pages allowed by option -output.\n";
+	print "build all possible pages allowed by AWStats -output option.\n";
 	print "\n";
 	print "Usage:\n";
-	print "  $PROG.$Extension -config=configvalue -awstatsprog=pathtoawstatspl [-dir=outputdir] [-date] [-update] \n";
+	print "  $PROG.$Extension (awstats_options) [awstatsbuildstaticpages_options]\n";
 	print "\n";
-	print "  where configvalue  is value for config option of AWStats software.\n";
-	print "        pathtoawstatspl is name of AWStats software with path (awstats.pl).\n";
-	print "        outputdir    is name of output directory for generated pages.\n";
-	print "        -date        option is used to add build date in built files name.\n";
-	print "        -update      option is used to update statistics before generate pages.\n";
-	print "        -lang=LL     to output a HTML report in language LL (en,de,es,fr,it,nl,...)\n";
-	print "        -month=MM    to output a HTML report for an old month=MM\n";
-	print "        -year=YYYY   to output a HTML report for an old year=YYYY\n";
+	print "  where awstats_options are any option known by AWStats\n";
+	print "   -config=configvalue is value for -config parameter (REQUIRED)\n";
+	print "   -update             option used to update statistics before to generate pages\n";
+	print "   -lang=LL            to output a HTML report in language LL (en,de,es,fr,...)\n";
+	print "   -month=MM           to output a HTML report for an old month=MM\n";
+	print "   -year=YYYY          to output a HTML report for an old year=YYYY\n";
+	print "\n";
+	print "  and awstatsbuildstaticpages_options can be\n";
+	print "   -awstatsprog=pathtoawstatspl gives AWStats software (awstats.pl) path\n";
+	print "   -dir=outputdir               to set output directory for generated pages\n";
+	print "   -date                        used to add build date in built pages file name\n";
 	print "\n";
 	print "New versions and FAQ at http://awstats.sourceforge.net\n";
 	exit 0;
@@ -156,7 +166,6 @@ close("OUTPUT");
 $cpt++;
 
 # Launch all other awstats output
-my @OutputList=("allhosts","lasthosts","unknownip","urldetail","unknownos","unknownbrowser","browserdetail","allkeyphrases","allkeywords","errors404");
 for my $output (@OutputList) {
 	my $command="$smallcommand -output=$output";
 	print "Build $output page: $command\n";

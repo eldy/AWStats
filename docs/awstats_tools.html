@@ -40,16 +40,22 @@ All those tools are available in <b>tools</b> directory of AWStats distribution.
 
 <br><a name="awstats_buildstaticpages"><H2 style="font: 22px Times; color: #606060"><u>awstats_buildstaticpages</u></H2></a>
 <br>awstats_buildstaticpages allows you to launch AWStats with -staticlinks option to
-<br>build all possible pages allowed by option -output.
+<br>build all possible pages allowed by AWStats -output option.
 <br>
 <br>Usage:
-<br>  awstats_buildstaticpages.pl -config=configvalue -awstatsprog=pathtoawstatspl [-dir=outputdir] [-date] [-update]
+<br>  awstats_buildstaticpages.pl (awstats_options) [awstatsbuildstaticpages_options]
 <br>
-<br>  where configvalue is value for config option of AWStats software.
-<br>        pathtoawstatspl is name of AWStats software with path (awstats.pl).
-<br>        outputdir is name of output directory for generated pages.
-<br>        -date option is used to add build date in built files name.
-<br>        -update option is used to update statistics before generate pages.
+<br>  where awstats_options are any option known by AWStats
+<br>   -config=configvalue is value for -config parameter (REQUIRED)
+<br>   -update             option used to update statistics before to generate pages
+<br>   -lang=LL            to output a HTML report in language LL (en,de,es,fr,...)
+<br>   -month=MM           to output a HTML report for an old month=MM
+<br>   -year=YYYY          to output a HTML report for an old year=YYYY
+<br>
+<br>  and awstatsbuildstaticpages_options can be
+<br>   -awstatsprog=pathtoawstatspl gives AWStats software (awstats.pl) path
+<br>   -dir=outputdir               to set output directory for generated pages
+<br>   -date                        used to add build date in built pages file name
 <br>
 <br>New versions and FAQ at http://awstats.sourceforge.net
 <br>

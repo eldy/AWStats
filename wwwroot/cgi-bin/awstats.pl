@@ -189,30 +189,32 @@ $color_text, $color_textpercent, $color_titletext, $color_weekend, $color_link, 
 $color_h, $color_k, $color_p, $color_e, $color_x, $color_s, $color_u, $color_v)=
 ("","","","","","","","","","","","","","","","","","","","","");
 use vars qw/
-$FileConfig $FileSuffix $Host $LastUpdate $DayRequired $MonthRequired $YearRequired
+$FileConfig $FileSuffix $Host $DayRequired $MonthRequired $YearRequired
 $QueryString $SiteConfig $StaticLinks $URLFilter $PageCode $LogFormatString $PerlParsingFormat
 $SiteToAnalyze $SiteToAnalyzeWithoutwww $UserAgent
 /;
-($FileConfig, $FileSuffix, $Host, $LastUpdate, $DayRequired, $MonthRequired, $YearRequired,
+($FileConfig, $FileSuffix, $Host, $DayRequired, $MonthRequired, $YearRequired,
 $QueryString, $SiteConfig, $StaticLinks, $URLFilter, $PageCode, $LogFormatString, $PerlParsingFormat,
 $SiteToAnalyze, $SiteToAnalyzeWithoutwww, $UserAgent)=
-("","","","","","","","","","","","","","","","","","");
+("","","","","","","","","","","","","","","","");
 use vars qw/
 $pos_vh $pos_rc $pos_logname $pos_date $pos_method $pos_url $pos_code $pos_size
 $pos_referer $pos_agent $pos_query $pos_gzipin $pos_gzipout $pos_gzipratio
 $lastrequiredfield $lowerval
 $FirstTime $LastTime
 $TotalUnique $TotalVisits $TotalHostsKnown $TotalHostsUnknown
-$TotalPages $TotalHits $TotalBytes $TotalEntries $TotalExits $TotalBytesPages
-$TotalKeyphrases $TotalKeywords $TotalDifferentPages $TotalDifferentKeyphrases $TotalDifferentKeywords
+$TotalPages $TotalHits $TotalBytes $TotalEntries $TotalExits $TotalBytesPages $TotalDifferentPages
+$TotalKeyphrases $TotalKeywords $TotalDifferentKeyphrases $TotalDifferentKeywords
+$TotalSearchEngines $TotalRefererPages $TotalDifferentSearchEngines $TotalDifferentRefererPages
 /;
 $pos_vh = $pos_rc = $pos_logname = $pos_date = $pos_method = $pos_url = $pos_code = $pos_size = 0;
 $pos_referer = $pos_agent = $pos_query = $pos_gzipin = $pos_gzipout = $pos_gzipratio = 0;
 $lastrequiredfield = $lowerval = 0;
 $FirstTime = $LastTime = 0;
 $TotalUnique = $TotalVisits = $TotalHostsKnown = $TotalHostsUnknown = 0;
-$TotalPages = $TotalHits = $TotalBytes = $TotalEntries = $TotalExits = $TotalBytesPages = 0;
-$TotalKeyphrases = $TotalKeywords = $TotalDifferentPages = $TotalDifferentKeyphrases = $TotalDifferentKeywords = 0;
+$TotalPages = $TotalHits = $TotalBytes = $TotalEntries = $TotalExits = $TotalBytesPages = $TotalDifferentPages = 0;
+$TotalKeyphrases = $TotalKeywords = $TotalDifferentKeyphrases = $TotalDifferentKeywords = 0;
+$TotalSearchEngines = $TotalRefererPages = $TotalDifferentSearchEngines = $TotalDifferentRefererPages = 0;
 # ---------- Init arrays --------
 use vars qw/
 @RobotsSearchIDOrder_list1 @RobotsSearchIDOrder_list2 @RobotsSearchIDOrder_list3
@@ -1145,6 +1147,8 @@ sub Check_Config {
 	if ($MinHitFile !~ /^\d+/ || $MinHitFile<1)              			{ $MinHitFile=1; }
 	if ($MaxNbOfRefererShown !~ /^\d+/ || $MaxNbOfRefererShown<1)    	{ $MaxNbOfRefererShown=25; }
 	if ($MinHitRefer !~ /^\d+/ || $MinHitRefer<1)             			{ $MinHitRefer=1; }
+	if ($MaxNbOfKeyphrasesShown !~ /^\d+/ || $MaxNbOfKeyphrasesShown<1)	{ $MaxNbOfKeyphrasesShown=25; }
+	if ($MinHitKeyphrase !~ /^\d+/ || $MinHitKeyphrase<1)           	{ $MinHitKeyphrase=1; }
 	if ($MaxNbOfKeywordsShown !~ /^\d+/ || $MaxNbOfKeywordsShown<1)		{ $MaxNbOfKeywordsShown=25; }
 	if ($MinHitKeyword !~ /^\d+/ || $MinHitKeyword<1)           		{ $MinHitKeyword=1; }
 	if ($FirstDayOfWeek !~ /[0-1]/)               	{ $FirstDayOfWeek=1; }
@@ -1300,6 +1304,10 @@ sub Check_Config {
 	if (! $Message[119]) { $Message[119]="Bytes"; }
 	if (! $Message[120]) { $Message[120]="Search&nbsp;Keyphrases"; }
 	if (! $Message[121]) { $Message[121]="Search&nbsp;Keywords"; }
+	if (! $Message[122]) { $Message[122]="different refering search engines"; }
+	if (! $Message[123]) { $Message[123]="different refering sites"; }
+	if (! $Message[124]) { $Message[124]="Other phrases"; }
+
 	# Refuse LogFile if contains a pipe and PurgeLogFile || ArchiveLogRecords set on
 	if (($PurgeLogFile || $ArchiveLogRecords) && $LogFile =~ /\|\s*$/) {
 		error("Error: A pipe in log file name is not allowed if PurgeLogFile and ArchiveLogRecords are not set to 0");
@@ -1394,7 +1402,7 @@ sub Read_History_File {
 			if ($Debug) { debug(" Begin of TIME section"); }
 			$_=<HISTORY>;
 			chomp $_; s/\r//;
-			if (! $_) { error("Error: History file \"$DirData/$PROG$month$year$FileSuffix.txt\" is corrupted (in section TIME). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
+			if (! $_) { error("Error: History file \"$historyfilename\" is corrupted (in section TIME). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
 			my @field=split(/\s+/,$_); $countlines++;
 			my $count=0;my $countloaded=0;
 			while ($field[0] ne "END_TIME") {
@@ -1411,7 +1419,7 @@ sub Read_History_File {
 				#}
 				$_=<HISTORY>;
 				chomp $_; s/\r//;
-				if (! $_) { error("Error: History file \"$DirData/$PROG$month$year$FileSuffix.txt\" is corrupted (in section TIME). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
+				if (! $_) { error("Error: History file \"$historyfilename\" is corrupted (in section TIME). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
 				@field=split(/\s+/,$_); $countlines++;
 			}
 			if ($Debug) { debug(" End of TIME section ($count entries, $countloaded loaded)"); }
@@ -1421,7 +1429,7 @@ sub Read_History_File {
 			if ($Debug) { debug(" Begin of DAY section"); }
 			$_=<HISTORY>;
 			chomp $_; s/\r//;
-			if (! $_) { error("Error: History file \"$DirData/$PROG$month$year$FileSuffix.txt\" is corrupted (in section DAY). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
+			if (! $_) { error("Error: History file \"$historyfilename\" is corrupted (in section DAY). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
 			my @field=split(/\s+/,$_); $countlines++;
 			my $count=0;my $countloaded=0;
 			while ($field[0] ne "END_DAY" ) {
@@ -1438,7 +1446,7 @@ sub Read_History_File {
 				}
 				$_=<HISTORY>;
 				chomp $_; s/\r//;
-				if (! $_) { error("Error: History file \"$DirData/$PROG$month$year$FileSuffix.txt\" is corrupted (in section DAY). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
+				if (! $_) { error("Error: History file \"$historyfilename\" is corrupted (in section DAY). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
 				@field=split(/\s+/,$_); $countlines++;
 			}
 			if ($Debug) { debug(" End of DAY section ($count entries, $countloaded loaded)"); }
@@ -1448,7 +1456,7 @@ sub Read_History_File {
 			if ($Debug) { debug(" Begin of VISITOR section"); }
 			$_=<HISTORY>;
 			chomp $_; s/\r//;
-			if (! $_) { error("Error: History file \"$DirData/$PROG$month$year$FileSuffix.txt\" is corrupted (in section VISITOR). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
+			if (! $_) { error("Error: History file \"$historyfilename\" is corrupted (in section VISITOR). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
 			my @field=split(/\s+/,$_); $countlines++;
 			my $count=0;my $countloaded=0;
 			while ($field[0] ne "END_VISITOR") {
@@ -1500,7 +1508,7 @@ sub Read_History_File {
 				}
 				$_=<HISTORY>;
 				chomp $_; s/\r//;
-				if (! $_) { error("Error: History file \"$DirData/$PROG$month$year$FileSuffix.txt\" is corrupted (in section VISITOR). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
+				if (! $_) { error("Error: History file \"$historyfilename\" is corrupted (in section VISITOR). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
 				@field=split(/\s+/,$_); $countlines++;
 			}
 			if ($Debug) { debug(" End of VISITOR section ($count entries, $countloaded loaded)"); }
@@ -1510,7 +1518,7 @@ sub Read_History_File {
 			if ($Debug) { debug(" Begin of LOGIN section"); }
 			$_=<HISTORY>;
 			chomp $_; s/\r//;
-			if (! $_) { error("Error: History file \"$DirData/$PROG$month$year$FileSuffix.txt\" is corrupted (in section LOGIN). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
+			if (! $_) { error("Error: History file \"$historyfilename\" is corrupted (in section LOGIN). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
 			my @field=split(/\s+/,$_); $countlines++;
 			my $count=0;my $countloaded=0;
 			while ($field[0] ne "END_LOGIN") {
@@ -1526,7 +1534,7 @@ sub Read_History_File {
 				}
 				$_=<HISTORY>;
 				chomp $_; s/\r//;
-				if (! $_) { error("Error: History file \"$DirData/$PROG$month$year$FileSuffix.txt\" is corrupted (in section LOGIN). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
+				if (! $_) { error("Error: History file \"$historyfilename\" is corrupted (in section LOGIN). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
 				@field=split(/\s+/,$_); $countlines++;
 			}
 			if ($Debug) { debug(" End of LOGIN section ($count entries, $countloaded loaded)"); }
@@ -1536,7 +1544,7 @@ sub Read_History_File {
 			if ($Debug) { debug(" Begin of DOMAIN section"); }
 			$_=<HISTORY>;
 			chomp $_; s/\r//;
-			if (! $_) { error("Error: History file \"$DirData/$PROG$month$year$FileSuffix.txt\" is corrupted (in section DOMAIN). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
+			if (! $_) { error("Error: History file \"$historyfilename\" is corrupted (in section DOMAIN). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
 			my @field=split(/\s+/,$_); $countlines++;
 			my $count=0;my $countloaded=0;
 			while ($field[0] ne "END_DOMAIN") {
@@ -1551,7 +1559,7 @@ sub Read_History_File {
 				}
 				$_=<HISTORY>;
 				chomp $_; s/\r//;
-				if (! $_) { error("Error: History file \"$DirData/$PROG$month$year$FileSuffix.txt\" is corrupted (in section DOMAIN). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
+				if (! $_) { error("Error: History file \"$historyfilename\" is corrupted (in section DOMAIN). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
 				@field=split(/\s+/,$_); $countlines++;
 			}
 			if ($Debug) { debug(" End of DOMAIN section ($count entries, $countloaded loaded)"); }
@@ -1561,7 +1569,7 @@ sub Read_History_File {
 			if ($Debug) { debug(" Begin of SESSION section"); }
 			$_=<HISTORY>;
 			chomp $_; s/\r//;
-			if (! $_) { error("Error: History file \"$DirData/$PROG$month$year$FileSuffix.txt\" is corrupted (in section SESSION). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
+			if (! $_) { error("Error: History file \"$historyfilename\" is corrupted (in section SESSION). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
 			my @field=split(/\s+/,$_); $countlines++;
 			my $count=0;my $countloaded=0;
 			while ($field[0] ne "END_SESSION") {
@@ -1574,7 +1582,7 @@ sub Read_History_File {
 				}
 				$_=<HISTORY>;
 				chomp $_; s/\r//;
-				if (! $_) { error("Error: History file \"$DirData/$PROG$month$year$FileSuffix.txt\" is corrupted (in section SESSION). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
+				if (! $_) { error("Error: History file \"$historyfilename\" is corrupted (in section SESSION). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
 				@field=split(/\s+/,$_); $countlines++;
 			}
 			if ($Debug) { debug(" End of SESSION section ($count entries, $countloaded loaded)"); }
@@ -1584,7 +1592,7 @@ sub Read_History_File {
 			if ($Debug) { debug(" Begin of BROWSER section"); }
 			$_=<HISTORY>;
 			chomp $_; s/\r//;
-			if (! $_) { error("Error: History file \"$DirData/$PROG$month$year$FileSuffix.txt\" is corrupted (in section BROWSER). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
+			if (! $_) { error("Error: History file \"$historyfilename\" is corrupted (in section BROWSER). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
 			my @field=split(/\s+/,$_); $countlines++;
 			my $count=0;my $countloaded=0;
 			while ($field[0] ne "END_BROWSER") {
@@ -1597,7 +1605,7 @@ sub Read_History_File {
 				}
 				$_=<HISTORY>;
 				chomp $_; s/\r//;
-				if (! $_) { error("Error: History file \"$DirData/$PROG$month$year$FileSuffix.txt\" is corrupted (in section BROWSER). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
+				if (! $_) { error("Error: History file \"$historyfilename\" is corrupted (in section BROWSER). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
 				@field=split(/\s+/,$_); $countlines++;
 			}
 			if ($Debug) { debug(" End of BROWSER section ($count entries, $countloaded loaded)"); }
@@ -1607,7 +1615,7 @@ sub Read_History_File {
 			if ($Debug) { debug(" Begin of MSIEVER section"); }
 			$_=<HISTORY>;
 			chomp $_; s/\r//;
-			if (! $_) { error("Error: History file \"$DirData/$PROG$month$year$FileSuffix.txt\" is corrupted (in section MSIEVER). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
+			if (! $_) { error("Error: History file \"$historyfilename\" is corrupted (in section MSIEVER). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
 			my @field=split(/\s+/,$_); $countlines++;
 			my $count=0;my $countloaded=0;
 			while ($field[0] ne "END_MSIEVER") {
@@ -1620,7 +1628,7 @@ sub Read_History_File {
 				}
 				$_=<HISTORY>;
 				chomp $_; s/\r//;
-				if (! $_) { error("Error: History file \"$DirData/$PROG$month$year$FileSuffix.txt\" is corrupted (in section MSIEVER). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
+				if (! $_) { error("Error: History file \"$historyfilename\" is corrupted (in section MSIEVER). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
 				@field=split(/\s+/,$_); $countlines++;
 			}
 			if ($Debug) { debug(" End of MSIEVER section ($count entries, $countloaded loaded)"); }
@@ -1630,7 +1638,7 @@ sub Read_History_File {
 			if ($Debug) { debug(" Begin of NSVER section"); }
 			$_=<HISTORY>;
 			chomp $_; s/\r//;
-			if (! $_) { error("Error: History file \"$DirData/$PROG$month$year$FileSuffix.txt\" is corrupted (in section NSVER). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
+			if (! $_) { error("Error: History file \"$historyfilename\" is corrupted (in section NSVER). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
 			my @field=split(/\s+/,$_); $countlines++;
 			my $count=0;my $countloaded=0;
 			while ($field[0] ne "END_NSVER") {
@@ -1643,7 +1651,7 @@ sub Read_History_File {
 				}
 				$_=<HISTORY>;
 				chomp $_; s/\r//;
-				if (! $_) { error("Error: History file \"$DirData/$PROG$month$year$FileSuffix.txt\" is corrupted (in section NSVER). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
+				if (! $_) { error("Error: History file \"$historyfilename\" is corrupted (in section NSVER). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
 				@field=split(/\s+/,$_); $countlines++;
 			}
 			if ($Debug) { debug(" End of NSVER section ($count entries, $countloaded loaded)"); }
@@ -1653,7 +1661,7 @@ sub Read_History_File {
 			if ($Debug) { debug(" Begin of OS section"); }
 			$_=<HISTORY>;
 			chomp $_; s/\r//;
-			if (! $_) { error("Error: History file \"$DirData/$PROG$month$year$FileSuffix.txt\" is corrupted (in section OS). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
+			if (! $_) { error("Error: History file \"$historyfilename\" is corrupted (in section OS). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
 			my @field=split(/\s+/,$_); $countlines++;
 			my $count=0;my $countloaded=0;
 			while ($field[0] ne "END_OS") {
@@ -1666,7 +1674,7 @@ sub Read_History_File {
 				}
 				$_=<HISTORY>;
 				chomp $_; s/\r//;
-				if (! $_) { error("Error: History file \"$DirData/$PROG$month$year$FileSuffix.txt\" is corrupted (in section OS). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
+				if (! $_) { error("Error: History file \"$historyfilename\" is corrupted (in section OS). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
 				@field=split(/\s+/,$_); $countlines++;
 			}
 			if ($Debug) { debug(" End of OS section ($count entries, $countloaded loaded)"); }
@@ -1676,7 +1684,7 @@ sub Read_History_File {
 			if ($Debug) { debug(" Begin of UNKNOWNREFERER section"); }
 			$_=<HISTORY>;
 			chomp $_; s/\r//;
-			if (! $_) { error("Error: History file \"$DirData/$PROG$month$year$FileSuffix.txt\" is corrupted (in section UNKNOWNREFERER). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
+			if (! $_) { error("Error: History file \"$historyfilename\" is corrupted (in section UNKNOWNREFERER). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
 			my @field=split(/\s+/,$_); $countlines++;
 			my $count=0;my $countloaded=0;
 			while ($field[0] ne "END_UNKNOWNREFERER") {
@@ -1689,7 +1697,7 @@ sub Read_History_File {
 				}
 				$_=<HISTORY>;
 				chomp $_; s/\r//;
-				if (! $_) { error("Error: History file \"$DirData/$PROG$month$year$FileSuffix.txt\" is corrupted (in section UNKNOWNREFERER). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
+				if (! $_) { error("Error: History file \"$historyfilename\" is corrupted (in section UNKNOWNREFERER). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
 				@field=split(/\s+/,$_); $countlines++;
 			}
 			if ($Debug) { debug(" End of UNKNOWNREFERER section ($count entries, $countloaded loaded)"); }
@@ -1699,7 +1707,7 @@ sub Read_History_File {
 			if ($Debug) { debug(" Begin of UNKNOWNREFERERBROWSER section"); }
 			$_=<HISTORY>;
 			chomp $_; s/\r//;
-			if (! $_) { error("Error: History file \"$DirData/$PROG$month$year$FileSuffix.txt\" is corrupted (in section UNKNOWNREFERERBROWSER). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
+			if (! $_) { error("Error: History file \"$historyfilename\" is corrupted (in section UNKNOWNREFERERBROWSER). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
 			my @field=split(/\s+/,$_); $countlines++;
 			my $count=0;my $countloaded=0;
 			while ($field[0] ne "END_UNKNOWNREFERERBROWSER") {
@@ -1712,7 +1720,7 @@ sub Read_History_File {
 				}
 				$_=<HISTORY>;
 				chomp $_; s/\r//;
-				if (! $_) { error("Error: History file \"$DirData/$PROG$month$year$FileSuffix.txt\" is corrupted (in section UNKNOWNREFERERBROWSER). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
+				if (! $_) { error("Error: History file \"$historyfilename\" is corrupted (in section UNKNOWNREFERERBROWSER). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
 				@field=split(/\s+/,$_); $countlines++;
 			}
 			if ($Debug) { debug(" End of UNKNOWNREFERERBROWSER section ($count entries, $countloaded loaded)"); }
@@ -1722,7 +1730,7 @@ sub Read_History_File {
 			if ($Debug) { debug(" Begin of ROBOT section"); }
 			$_=<HISTORY>;
 			chomp $_; s/\r//;
-			if (! $_) { error("Error: History file \"$DirData/$PROG$month$year$FileSuffix.txt\" is corrupted (in section ROBOT). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
+			if (! $_) { error("Error: History file \"$historyfilename\" is corrupted (in section ROBOT). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
 			my @field=split(/\s+/,$_); $countlines++;
 			my $count=0;my $countloaded=0;
 			while ($field[0] ne "END_ROBOT") {
@@ -1736,7 +1744,7 @@ sub Read_History_File {
 				}
 				$_=<HISTORY>;
 				chomp $_; s/\r//;
-				if (! $_) { error("Error: History file \"$DirData/$PROG$month$year$FileSuffix.txt\" is corrupted (in section ROBOT). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
+				if (! $_) { error("Error: History file \"$historyfilename\" is corrupted (in section ROBOT). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
 				@field=split(/\s+/,$_); $countlines++;
 			}
 			if ($Debug) { debug(" End of ROBOT section ($count entries, $countloaded loaded)"); }
@@ -1746,7 +1754,7 @@ sub Read_History_File {
 			if ($Debug) { debug(" Begin of SIDER section"); }
 			$_=<HISTORY>;
 			chomp $_; s/\r//;
-			if (! $_) { error("Error: History file \"$DirData/$PROG$month$year$FileSuffix.txt\" is corrupted (in section SIDER). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
+			if (! $_) { error("Error: History file \"$historyfilename\" is corrupted (in section SIDER). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
 			my @field=split(/\s+/,$_); $countlines++;
 			my $count=0;my $countloaded=0;
 			while ($field[0] ne "END_SIDER") {
@@ -1808,7 +1816,7 @@ sub Read_History_File {
 				}
 				$_=<HISTORY>;
 				chomp $_; s/\r//;
-				if (! $_) { error("Error: History file \"$DirData/$PROG$month$year$FileSuffix.txt\" is corrupted (in section SIDER). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
+				if (! $_) { error("Error: History file \"$historyfilename\" is corrupted (in section SIDER). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
 				@field=split(/\s+/,$_); $countlines++;
 			}
 			if ($Debug) { debug(" End of SIDER section ($count entries, $countloaded loaded)"); }
@@ -1818,7 +1826,7 @@ sub Read_History_File {
 			if ($Debug) { debug(" Begin of FILETYPES section"); }
 			$_=<HISTORY>;
 			chomp $_; s/\r//;
-			if (! $_) { error("Error: History file \"$DirData/$PROG$month$year$FileSuffix.txt\" is corrupted (in section FILETYPES). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
+			if (! $_) { error("Error: History file \"$historyfilename\" is corrupted (in section FILETYPES). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
 			my @field=split(/\s+/,$_); $countlines++;
 			my $count=0;my $countloaded=0;
 			while ($field[0] ne "END_FILETYPES") {
@@ -1834,63 +1842,63 @@ sub Read_History_File {
 				}
 				$_=<HISTORY>;
 				chomp $_; s/\r//;
-				if (! $_) { error("Error: History file \"$DirData/$PROG$month$year$FileSuffix.txt\" is corrupted (in section FILETYPES). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
+				if (! $_) { error("Error: History file \"$historyfilename\" is corrupted (in section FILETYPES). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
 				@field=split(/\s+/,$_); $countlines++;
 			}
 			if ($Debug) { debug(" End of FILETYPES section ($count entries, $countloaded loaded)"); }
-			next;
-		}
-		if ($field[0] eq "BEGIN_PAGEREFS")   {
-			if ($Debug) { debug(" Begin of PAGEREFS section"); }
-			$_=<HISTORY>;
-			chomp $_; s/\r//;
-			if (! $_) { error("Error: History file \"$DirData/$PROG$month$year$FileSuffix.txt\" is corrupted (in section PAGEREFS). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
-			my @field=split(/\s+/,$_); $countlines++;
-			my $count=0;my $countloaded=0;
-			while ($field[0] ne "END_PAGEREFS") {
-				if ($field[0]) {
-					$count++;
-					if ($part && ($UpdateStats || $QueryString !~ /output=/i || $QueryString =~ /output=externalreferers/i)) {
-						$countloaded++;
-						if ($field[1]) { $_pagesrefs_h{$field[0]}+=int($field[1]); }
-					}
-				}
-				$_=<HISTORY>;
-				chomp $_; s/\r//;
-				if (! $_) { error("Error: History file \"$DirData/$PROG$month$year$FileSuffix.txt\" is corrupted (in section PAGEREFS). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
-				@field=split(/\s+/,$_); $countlines++;
-			}
-			if ($Debug) { debug(" End of PAGEREFS section ($count entries, $countloaded loaded)"); }
 			next;
 		}
 		if ($field[0] eq "BEGIN_SEREFERRALS")   {
 			if ($Debug) { debug(" Begin of SEREFERRALS section"); }
 			$_=<HISTORY>;
 			chomp $_; s/\r//;
-			if (! $_) { error("Error: History file \"$DirData/$PROG$month$year$FileSuffix.txt\" is corrupted (in section SEREFERRALS). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
+			if (! $_) { error("Error: History file \"$historyfilename\" is corrupted (in section SEREFERRALS). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
 			my @field=split(/\s+/,$_); $countlines++;
 			my $count=0;my $countloaded=0;
 			while ($field[0] ne "END_SEREFERRALS") {
 				if ($field[0]) {
 					$count++;
-					if ($part && ($UpdateStats || $QueryString !~ /output=/i || $QueryString =~ /output=xxx/i)) {
+					if ($part && ($UpdateStats || $QueryString !~ /output=/i || $QueryString =~ /output=refererse/i)) {
 						$countloaded++;
 						if ($field[1]) { $_se_referrals_h{$field[0]}+=$field[1]; }
 					}
 				}
 				$_=<HISTORY>;
 				chomp $_; s/\r//;
-				if (! $_) { error("Error: History file \"$DirData/$PROG$month$year$FileSuffix.txt\" is corrupted (in section SEREFERRALS). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
+				if (! $_) { error("Error: History file \"$historyfilename\" is corrupted (in section SEREFERRALS). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
 				@field=split(/\s+/,$_); $countlines++;
 			}
 			if ($Debug) { debug(" End of SEREFERRALS section ($count entries, $countloaded loaded)"); }
+			next;
+		}
+		if ($field[0] eq "BEGIN_PAGEREFS")   {
+			if ($Debug) { debug(" Begin of PAGEREFS section"); }
+			$_=<HISTORY>;
+			chomp $_; s/\r//;
+			if (! $_) { error("Error: History file \"$historyfilename\" is corrupted (in section PAGEREFS). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
+			my @field=split(/\s+/,$_); $countlines++;
+			my $count=0;my $countloaded=0;
+			while ($field[0] ne "END_PAGEREFS") {
+				if ($field[0]) {
+					$count++;
+					if ($part && ($UpdateStats || $QueryString !~ /output=/i || $QueryString =~ /output=refererpages/i)) {
+						$countloaded++;
+						if ($field[1]) { $_pagesrefs_h{$field[0]}+=int($field[1]); }
+					}
+				}
+				$_=<HISTORY>;
+				chomp $_; s/\r//;
+				if (! $_) { error("Error: History file \"$historyfilename\" is corrupted (in section PAGEREFS). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
+				@field=split(/\s+/,$_); $countlines++;
+			}
+			if ($Debug) { debug(" End of PAGEREFS section ($count entries, $countloaded loaded)"); }
 			next;
 		}
 		if ($field[0] eq "BEGIN_SEARCHWORDS")   {
 			if ($Debug) { debug(" Begin of SEARCHWORDS section ($MaxNbOfKeyphrasesShown,$MinHitKeyphrase)"); }
 			$_=<HISTORY>;
 			chomp $_; s/\r//;
-			if (! $_) { error("Error: History file \"$DirData/$PROG$month$year$FileSuffix.txt\" is corrupted (in section SEARCHWORDS). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
+			if (! $_) { error("Error: History file \"$historyfilename\" is corrupted (in section SEARCHWORDS). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
 			my @field=split(/\s+/,$_); $countlines++;
 			my $count=0;my $countloaded=0;
 			while ($field[0] ne "END_SEARCHWORDS") {
@@ -1920,14 +1928,14 @@ sub Read_History_File {
 							}
 							if ($QueryString =~ /output=allkeywords/i) {	# Load keyphrases for keywords chart
 								$loadrecord=2;
-								$TotalDifferentKeywords++;
-								$TotalKeywords+=($field[1]||0);
 							}
 						}
 						if ($loadrecord) {
 							if ($field[1]) {
 								if ($loadrecord==2) {
-									my @wordarray=split(/\+/,$field[0]); foreach my $word (@wordarray) { $_keywords{$word}+=$field[1]; }
+									my @wordarray=split(/\+/,$field[0]); foreach my $word (@wordarray) {
+										$_keywords{$word}+=$field[1];
+									}
 								}
 								else {
 									$_keyphrases{$field[0]}+=$field[1];
@@ -1939,7 +1947,7 @@ sub Read_History_File {
 				}
 				$_=<HISTORY>;
 				chomp $_; s/\r//;
-				if (! $_) { error("Error: History file \"$DirData/$PROG$month$year$FileSuffix.txt\" is corrupted (in section SEARCHWORDS). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
+				if (! $_) { error("Error: History file \"$historyfilename\" is corrupted (in section SEARCHWORDS). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
 				@field=split(/\s+/,$_); $countlines++;
 			}
 			if ($Debug) { debug(" End of SEARCHWORDS section ($count entries, $countloaded loaded)"); }
@@ -1949,7 +1957,7 @@ sub Read_History_File {
 			if ($Debug) { debug(" Begin of KEYWORDS section ($MaxNbOfKeywordsShown,$MinHitKeyword)"); }
 			$_=<HISTORY>;
 			chomp $_; s/\r//;
-			if (! $_) { error("Error: History file \"$DirData/$PROG$month$year$FileSuffix.txt\" is corrupted (in section KEYWORDS). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
+			if (! $_) { error("Error: History file \"$historyfilename\" is corrupted (in section KEYWORDS). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
 			my @field=split(/\s+/,$_); $countlines++;
 			my $count=0;my $countloaded=0;
 			while ($field[0] ne "END_KEYWORDS") {
@@ -1978,7 +1986,7 @@ sub Read_History_File {
 				}
 				$_=<HISTORY>;
 				chomp $_; s/\r//;
-				if (! $_) { error("Error: History file \"$DirData/$PROG$month$year$FileSuffix.txt\" is corrupted (in section KEYWORDS). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
+				if (! $_) { error("Error: History file \"$historyfilename\" is corrupted (in section KEYWORDS). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
 				@field=split(/\s+/,$_); $countlines++;
 			}
 			if ($Debug) { debug(" End of KEYWORDS section ($count entries, $countloaded loaded)"); }
@@ -1988,7 +1996,7 @@ sub Read_History_File {
 			if ($Debug) { debug(" Begin of ERRORS section"); }
 			$_=<HISTORY>;
 			chomp $_; s/\r//;
-			if (! $_) { error("Error: History file \"$DirData/$PROG$month$year$FileSuffix.txt\" is corrupted (in section ERRORS). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
+			if (! $_) { error("Error: History file \"$historyfilename\" is corrupted (in section ERRORS). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
 			my @field=split(/\s+/,$_); $countlines++;
 			my $count=0;my $countloaded=0;
 			while ($field[0] ne "END_ERRORS") {
@@ -2001,7 +2009,7 @@ sub Read_History_File {
 				}
 				$_=<HISTORY>;
 				chomp $_; s/\r//;
-				if (! $_) { error("Error: History file \"$DirData/$PROG$month$year$FileSuffix.txt\" is corrupted (in section ERRORS). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
+				if (! $_) { error("Error: History file \"$historyfilename\" is corrupted (in section ERRORS). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
 				@field=split(/\s+/,$_); $countlines++;
 			}
 			if ($Debug) { debug(" End of ERRORS section ($count entries, $countloaded loaded)"); }
@@ -2011,7 +2019,7 @@ sub Read_History_File {
 			if ($Debug) { debug(" Begin of SIDER_404 section"); }
 			$_=<HISTORY>;
 			chomp $_; s/\r//;
-			if (! $_) { error("Error: History file \"$DirData/$PROG$month$year$FileSuffix.txt\" is corrupted (in section SIDER_404). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
+			if (! $_) { error("Error: History file \"$historyfilename\" is corrupted (in section SIDER_404). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
 			my @field=split(/\s+/,$_); $countlines++;
 			my $count=0;my $countloaded=0;
 			while ($field[0] ne "END_SIDER_404") {
@@ -2027,7 +2035,7 @@ sub Read_History_File {
 				}
 				$_=<HISTORY>;
 				chomp $_; s/\r//;
-				if (! $_) { error("Error: History file \"$DirData/$PROG$month$year$FileSuffix.txt\" is corrupted (in section SIDER_404). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
+				if (! $_) { error("Error: History file \"$historyfilename\" is corrupted (in section SIDER_404). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
 				@field=split(/\s+/,$_); $countlines++;
 			}
 			if ($Debug) { debug(" End of SIDER_404 section ($count entries, $countloaded loaded)"); }
@@ -2272,23 +2280,28 @@ sub Save_History_File {
 		$keysinkeylist{$key}=1;
 		my $keyphrase=$key;
 		print HISTORYTMP "$keyphrase $_keyphrases{$key}\n";
-		my @wordarray=split(/\+/,$key); foreach my $word (@wordarray) { $_keywords{$word}+=$_keyphrases{$key}; }
+		my @wordarray=split(/\+/,$key); foreach my $word (@wordarray) { $_keywords{$word}+=$_keyphrases{$key}; }	# To init %_keywords
 	}
 	foreach my $key (keys %_keyphrases) {
 		if ($keysinkeylist{$key}) { next; }
 		my $keyphrase=$key;
 		print HISTORYTMP "$keyphrase $_keyphrases{$key}\n";
-		my @wordarray=split(/\+/,$key); foreach my $word (@wordarray) { $_keywords{$word}+=$_keyphrases{$key}; }
+		my @wordarray=split(/\+/,$key); foreach my $word (@wordarray) { $_keywords{$word}+=$_keyphrases{$key}; }	# To init %_keywords
 	}
 	print HISTORYTMP "END_SEARCHWORDS\n";
 	print HISTORYTMP "\n";
 	print HISTORYTMP "# Search keywords - Number of search\n";
-	print HISTORYTMP "# Only the $MaxNbOfKeywordsShown first number of search are saved\n";
+	print HISTORYTMP "# The $MaxNbOfKeywordsShown first number of search must be first (order not required for others)\n";
 	print HISTORYTMP "BEGIN_KEYWORDS\n";
 	&BuildKeyList($MaxNbOfKeywordsShown,$MinHitKeyword,\%_keywords,\%_keywords);
 	%keysinkeylist=();
 	foreach my $key (@keylist) {
 		$keysinkeylist{$key}=1;
+		my $keyword=$key;
+		print HISTORYTMP "$keyword $_keywords{$key}\n";
+	}
+	foreach my $key (keys %_keywords) {
+		if ($keysinkeylist{$key}) { next; }
 		my $keyword=$key;
 		print HISTORYTMP "$keyword $_keywords{$key}\n";
 	}
@@ -2743,10 +2756,14 @@ if ((! $ENV{"GATEWAY_INTERFACE"}) && (! $SiteConfig)) {
 	print "               unknownip        to build page of all unresolved IP\n";
 	print "               urldetail        to list most often viewed pages \n";
 	print "               urldetail:filter to list most often viewed pages matching filter\n";
-	print "               unknownos        to list 'User Agents' with unknown OS\n";
-	print "               unknownbrowser   to list 'User Agents' with unknown browser\n";
 	print "               browserdetail    to build page with browsers detailed versions\n";
+	print "               unknownbrowser   to list 'User Agents' with unknown browser\n";
+	print "               unknownos        to list 'User Agents' with unknown OS\n";
+	print "               refererse        to build page of all refering search engines\n";
+	print "               refererpages     to build page of all refering pages\n";
+#	print "               referersites     to build page of all refering sites\n";
 	print "               allkeyphrases    to list all keyphrases used on search engines\n";
+	print "               allkeywords      to list all keywords used on search engines\n";
 	print "               errors404        to list 'Referers' for 404 errors\n";
 	print "  -staticlinks to have static links in HTML report page\n";
 	print "  -lang=LL     to output a HTML report in language LL (en,de,es,fr,it,nl,...)\n";
@@ -2886,8 +2903,6 @@ if ($UpdateStats && (! $AllowToUpdateStatsFromBrowser) && $ENV{"GATEWAY_INTERFAC
 # Init global variables required for output and update process
 %monthlib = ("01","$Message[60]","02","$Message[61]","03","$Message[62]","04","$Message[63]","05","$Message[64]","06","$Message[65]","07","$Message[66]","08","$Message[67]","09","$Message[68]","10","$Message[69]","11","$Message[70]","12","$Message[71]");
 %monthnum = ("Jan","01","jan","01","Feb","02","feb","02","Mar","03","mar","03","Apr","04","apr","04","May","05","may","05","Jun","06","jun","06","Jul","07","jul","07","Aug","08","aug","08","Sep","09","sep","09","Oct","10","oct","10","Nov","11","nov","11","Dec","12","dec","12");	# monthnum must be in english because used to translate log date in apache log files
-$LastUpdate=0;
-$TotalEntries=0; $TotalExits=0; $TotalBytesPages=0; $TotalKeyphrases=0; $TotalDifferentPages=0; $TotalDifferentKeyphrases=0;
 for (my $ix=1; $ix<=12; $ix++) {
 	my $monthix=$ix;if ($monthix < 10) { $monthix  = "0$monthix"; }
 	$LastLine{$YearRequired.$monthix}=0;$FirstTime{$YearRequired.$monthix}=0;$LastTime{$YearRequired.$monthix}=0;$LastUpdate{$YearRequired.$monthix}=0;
@@ -3984,12 +3999,20 @@ EOF
 	if (!$TotalKeyphrases) { foreach my $key (keys %_keyphrases) { $TotalKeyphrases+=$_keyphrases{$key}; } }
 	# TotalKeywords (if not already specifically counted, we init it from _keywords hash table)
 	if (!$TotalKeywords) { foreach my $key (keys %_keywords) { $TotalKeywords+=$_keywords{$key}; } }
+	# TotalSearchEngines (if not already specifically counted, we init it from _se_referrals_h hash table)
+	if (!$TotalSearchEngines) { foreach my $key (keys %_se_referrals_h) { $TotalSearchEngines+=$_se_referrals_h{$key}; } }
+	# TotalRefererPages (if not already specifically counted, we init it from _pagesrefs_h hash table)
+	if (!$TotalRefererPages) { foreach my $key (keys %_pagesrefs_h) { $TotalRefererPages+=$_pagesrefs_h{$key}; } }
 	# TotalDifferentPages (if not already specifically counted, we init it from _url_p hash table)
 	if (!$TotalDifferentPages) { $TotalDifferentPages=scalar keys %_url_p; }
 	# TotalDifferentKeyphrases (if not already specifically counted, we init it from _keyphrases hash table)
 	if (!$TotalDifferentKeyphrases) { $TotalDifferentKeyphrases=scalar keys %_keyphrases; }
 	# TotalDifferentKeywords (if not already specifically counted, we init it from _keywords hash table)
 	if (!$TotalDifferentKeywords) { $TotalDifferentKeywords=scalar keys %_keywords; }
+	# TotalDifferentSearchEngines (if not already specifically counted, we init it from _se_referrals_h hash table)
+	if (!$TotalDifferentSearchEngines) { $TotalDifferentSearchEngines=scalar keys %_se_referrals_h; }
+	# TotalDifferentRefererPages (if not already specifically counted, we init it from _pagesrefs_h hash table)
+	if (!$TotalDifferentRefererPages) { $TotalDifferentRefererPages=scalar keys %_pagesrefs_h; }
 	# Define firstdaytocountaverage, lastdaytocountaverage, firstdaytoshowtime, lastdaytoshowtime
 	my $firstdaytocountaverage=$nowyear.$nowmonth."01";				# Set day cursor to 1st day of month
 	my $firstdaytoshowtime=$nowyear.$nowmonth."01";					# Set day cursor to 1st day of month
@@ -4026,8 +4049,10 @@ EOF
 		print "<tr><th class=AWL>$Message[7] : </th><td class=AWL><font style=\"font-size: 14px;\">$SiteDomain</font></th></tr>";
 		print "<tr><th class=AWL valign=top>$Message[35] : </th>";
 		print "<td class=AWL><font style=\"font-size: 14px;\">";
-		foreach my $key (sort keys %LastUpdate) { if ($LastUpdate < $LastUpdate{$key}) { $LastUpdate = $LastUpdate{$key}; } }
-		if ($LastUpdate) { print Format_Date($LastUpdate,0); }
+		# Search max of %LastUpdate
+		my $lastupdate=0;
+		foreach my $key (sort keys %LastUpdate) { if ($lastupdate < $LastUpdate{$key}) { $lastupdate = $LastUpdate{$key}; } }
+		if ($lastupdate) { print Format_Date($lastupdate,0); }
 		else { print "<font color=#880000>Never updated</font>"; }
 		print "</font>&nbsp; &nbsp; &nbsp; &nbsp;";
 		if ($AllowToUpdateStatsFromBrowser && ! $StaticLinks) {
@@ -4351,6 +4376,70 @@ EOF
 				$h=$_msiever_h[$i]; $p=int($_msiever_h[$i]/$_browser_h{"msie"}*1000)/10; $p="$p&nbsp;%";
 			}
 			print "<TR><TD CLASS=AWL>MSIE/$i.xx</TD><TD>$h</TD><TD>$p</TD></TR>\n";
+		}
+		&tab_end;
+		&html_end;
+		exit(0);
+	}
+	if ($QueryString =~ /output=refererse/i) {
+		print "$CENTER<a name=\"REFERERSE\">&nbsp;</a><BR>";
+		&tab_head($Message[40],19);
+		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$TotalDifferentSearchEngines $Message[122]</TH>";
+		#print "<TH bgcolor=\"#$color_p\" width=80>$Message[56]</TH><TH bgcolor=\"#$color_p\" width=80>$Message[15]</TH>";
+		print "<TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[15]</TH></TR>\n";
+		$total_s=0;
+		my $count=0;
+		&BuildKeyList($MaxRowsInHTMLOutput,$MinHitRefer,\%_se_referrals_h,\%_se_referrals_h);
+		foreach my $key (@keylist) {
+			my $newreferer=CleanFromCSSA($SearchEnginesHashIDLib{$key}||$key);
+			my $p;
+			if ($TotalSearchEngines) { $p=int($_se_referrals_h{$key}/$TotalSearchEngines*1000)/10; }
+			print "<TR><TD CLASS=AWL>$newreferer</TD><TD>$_se_referrals_h{$key}</TD><TD>$p&nbsp;%</TD></TR>\n";
+			$total_s += $_se_referrals_h{$key};
+			$count++;
+		}
+		if ($Debug) { debug("Total real / shown : $TotalSearchEngines / $total_s",2); }
+		$rest_s=$TotalSearchEngines-$total_s;
+		if ($rest_s > 0) {
+			my $p;
+			if ($TotalSearchEngines) { $p=int($rest_s/$TotalSearchEngines*1000)/10; }
+			print "<TR><TD CLASS=AWL><font color=blue>$Message[2]</TD><TD>$rest_s</TD>";
+			print "<TD>$p&nbsp;%</TD></TR>\n";
+		}
+		&tab_end;
+		&html_end;
+		exit(0);
+	}
+	if ($QueryString =~ /output=refererpages/i) {
+		print "$CENTER<a name=\"REFERERPAGES\">&nbsp;</a><BR>";
+		&tab_head($Message[41],19);
+		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$TotalDifferentRefererPages $Message[28]</TH>";
+		#print "<TH bgcolor=\"#$color_p\" width=80>$Message[56]</TH><TH bgcolor=\"#$color_p\" width=80>$Message[15]</TH>";
+		print "<TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[15]</TH></TR>\n";
+		$total_s=0;
+		my $count=0;
+		&BuildKeyList($MaxRowsInHTMLOutput,$MinHitRefer,\%_pagesrefs_h,\%_pagesrefs_h);
+		foreach my $key (@keylist) {
+			my $nompage=CleanFromCSSA($key);
+			if (length($nompage)>$MaxLengthOfURL) { $nompage=substr($nompage,0,$MaxLengthOfURL)."..."; }
+			my $p;
+			if ($TotalRefererPages) { $p=int($_pagesrefs_h{$key}/$TotalRefererPages*1000)/10; }
+			if ($ShowLinksOnUrl && ($key =~ /^http(s|):/i)) {
+				my $newkey=CleanFromCSSA($key);
+				print "<TR><TD CLASS=AWL><A HREF=\"$newkey\" target=\"awstatsbis\">$nompage</A></TD><TD>$_pagesrefs_h{$key}</TD><TD>$p&nbsp;%</TD></TR>\n";
+			} else {
+				print "<TR><TD CLASS=AWL>$nompage</TD><TD>$_pagesrefs_h{$key}</TD><TD>$p&nbsp;%</TD></TR>\n";
+			}
+			$total_s += $_pagesrefs_h{$key};
+			$count++;
+		}
+		if ($Debug) { debug("Total real / shown : $TotalRefererPages / $total_s",2); }
+		$rest_s=$TotalRefererPages-$total_s;
+		if ($rest_s > 0) {
+			my $p;
+			if ($TotalRefererPages) { $p=int($rest_s/$TotalRefererPages*1000)/10; }
+			print "<TR><TD CLASS=AWL><font color=blue>$Message[2]</TD><TD>$rest_s</TD>";
+			print "<TD>$p&nbsp;%</TD></TR>\n";
 		}
 		&tab_end;
 		&html_end;
@@ -5118,18 +5207,24 @@ EOF
 		#------- Referrals by news group
 		print "<TR><TD CLASS=AWL><b>$Message[107]</b></TD><TD>$_from_p[5]&nbsp;</TD><TD>$p_p[5]&nbsp;%</TD><TD>$_from_h[5]&nbsp;</TD><TD>$p_h[5]&nbsp;%</TD></TR>\n";
 		#------- Referrals by search engine
-		print "<TR onmouseover=\"ShowTooltip(13);\" onmouseout=\"HideTooltip(13);\"><TD CLASS=AWL><b>$Message[40]</b><br>\n";
+		print "<TR onmouseover=\"ShowTooltip(13);\" onmouseout=\"HideTooltip(13);\"><TD CLASS=AWL><b>$Message[40]</b> - <a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=refererse":"$PROG$StaticLinks.refererse.html")."\"".($DetailedReportsOnNewWindows?" target=\"awstatsbis\"":"").">$Message[80]</a><br>\n";
 		print "<TABLE>\n";
 		my $count=0;
+		$rest_h=0;
 		foreach my $key (sort { $_se_referrals_h{$b} <=> $_se_referrals_h{$a} } keys (%_se_referrals_h)) {
+			if ($count>=$MaxNbOfRefererShown) { $rest_h+=$_se_referrals_h{$key}; next; }
+			if ($_se_referrals_h{$key}<$MinHitRefer) { $rest_h+=$_se_referrals_h{$key}; next; }
 			my $newreferer=CleanFromCSSA($SearchEnginesHashIDLib{$key}||$key);
 			print "<TR><TD CLASS=AWL>- $newreferer</TD><TD align=right> $_se_referrals_h{$key} </TD></TR>\n";
 			$count++;
 		}
+		if ($rest_h > 0) {
+			print "<TR><TD CLASS=AWL><font color=blue>- $Message[2]</TD><TD>$rest_h</TD>";
+		}
 		print "</TABLE></TD>\n";
 		print "<TD valign=top>$_from_p[2]&nbsp;</TD><TD valign=top>$p_p[2]&nbsp;%</TD><TD valign=top>$_from_h[2]&nbsp;</TD><TD valign=top>$p_h[2]&nbsp;%</TD></TR>\n";
 		#------- Referrals by external HTML link
-		print "<TR onmouseover=\"ShowTooltip(14);\" onmouseout=\"HideTooltip(14);\"><TD CLASS=AWL><b>$Message[41]</b><br>\n";
+		print "<TR onmouseover=\"ShowTooltip(14);\" onmouseout=\"HideTooltip(14);\"><TD CLASS=AWL><b>$Message[41]</b> - <a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=refererpages":"$PROG$StaticLinks.refererpages.html")."\"".($DetailedReportsOnNewWindows?" target=\"awstatsbis\"":"").">$Message[80]</a><br>\n";
 		print "<TABLE>\n";
 		$count=0;
 		$rest_h=0;
@@ -5183,7 +5278,7 @@ EOF
 		if ($rest_s > 0) {
 			my $p;
 			if ($TotalKeyphrases) { $p=int($rest_s/$TotalKeyphrases*1000)/10; }
-			print "<TR><TD CLASS=AWL><font color=blue>$Message[30]</TD><TD>$rest_s</TD>";
+			print "<TR><TD CLASS=AWL><font color=blue>$Message[124]</TD><TD>$rest_s</TD>";
 			print "<TD>$p&nbsp;%</TD></TR>\n";
 		}
 		&tab_end;
