@@ -78,7 +78,7 @@ $WarningMessages= 1;
 %MonthBytes = %MonthHits = %MonthHostsKnown = %MonthHostsUnknown = %MonthPages = %MonthUnique = %MonthVisits =
 %monthlib = %monthnum = ();
 
-$VERSION="3.2 (build 15)";
+$VERSION="3.2 (build 16)";
 $Lang="en";
 
 # Default value
@@ -1932,7 +1932,7 @@ if ($UpdateStats) {
 		
 				# Other ?
 				if (!$found) {
-					foreach my $key (keys %BrowsersHashIDLib) {
+					foreach my $key (@BrowsersArrayID) {
 				    	if ($UserAgent =~ /$key/) { $_browser_h{$key}++; $found=1; $TmpHashBrowser{$UserAgent}=$key; last; }
 					}
 				}
@@ -2875,7 +2875,7 @@ EOF
 	if ($ShowFileSizesStats) {
 		
 	}
-		
+
 	
 	# BY BROWSER
 	#----------------------------
