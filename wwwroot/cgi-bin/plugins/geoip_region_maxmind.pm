@@ -282,7 +282,23 @@ sub ShowInfoHost_geoip_region_maxmind {
     my $param="$_[0]";
 	# <-----
 	if ($param eq '__title__') {
-		print "<th width=\"80\">GeoIP<br>Region</th>";
+    	my $NewLinkParams=${QueryString};
+    	$NewLinkParams =~ s/(^|&)update(=\w*|$)//i;
+    	$NewLinkParams =~ s/(^|&)output(=\w*|$)//i;
+    	$NewLinkParams =~ s/(^|&)staticlinks(=\w*|$)//i;
+    	$NewLinkParams =~ s/(^|&)framename=[^&]*//i;
+    	my $NewLinkTarget='';
+    	if ($DetailedReportsOnNewWindows) { $NewLinkTarget=" target=\"awstatsbis\""; }
+    	if (($FrameName eq 'mainleft' || $FrameName eq 'mainright') && $DetailedReportsOnNewWindows < 2) {
+    		$NewLinkParams.="&framename=mainright";
+    		$NewLinkTarget=" target=\"mainright\"";
+    	}
+    	$NewLinkParams =~ tr/&/&/s; $NewLinkParams =~ s/^&//; $NewLinkParams =~ s/&$//;
+    	if ($NewLinkParams) { $NewLinkParams="${NewLinkParams}&"; }
+
+		print "<th width=\"80\">";
+        print "<a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?XMLEncode("$AWScript?${NewLinkParams}output=plugin_geoip_region_maxmind"):"$PROG$StaticLinks.plugin_geoip_region_maxmind.$StaticExt")."\"$NewLinkTarget>GeoIP<br>Region</a>";
+        print "</th>";
 	}
 	elsif ($param) {
         my $ip=0;

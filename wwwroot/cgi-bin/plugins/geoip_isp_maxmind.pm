@@ -104,8 +104,8 @@ sub AddHTMLGraph_geoip_isp_maxmind {
 	my $rest_p; my $rest_h; my $rest_k;
 
 	if ($Debug) { debug(" Plugin geoip_isp_maxmind: AddHTMLGraph $categ $menu $menulink $menutext"); }
-	my $title='Cities';
-	&tab_head("$title",19,0,'cities');
+	my $title='ISP';
+	&tab_head("$title",19,0,'isp');
 	print "<tr bgcolor=\"#$color_TableBGRowTitle\"><th>ISP : ".((scalar keys %_isp_h)-($_isp_h{'unknown'}?1:0))."</th>";
 	if ($ShowISP =~ /P/i) { print "<th bgcolor=\"#$color_p\" width=\"80\">$Message[56]</th>"; }
 	if ($ShowISP =~ /P/i) { print "<th bgcolor=\"#$color_p\" width=\"80\">$Message[15]</th>"; }
@@ -185,7 +185,23 @@ sub ShowInfoHost_geoip_isp_maxmind {
     my $param="$_[0]";
 	# <-----
 	if ($param eq '__title__') {
-		print "<th width=\"80\">GeoIP<br>ISP</th>";
+    	my $NewLinkParams=${QueryString};
+    	$NewLinkParams =~ s/(^|&)update(=\w*|$)//i;
+    	$NewLinkParams =~ s/(^|&)output(=\w*|$)//i;
+    	$NewLinkParams =~ s/(^|&)staticlinks(=\w*|$)//i;
+    	$NewLinkParams =~ s/(^|&)framename=[^&]*//i;
+    	my $NewLinkTarget='';
+    	if ($DetailedReportsOnNewWindows) { $NewLinkTarget=" target=\"awstatsbis\""; }
+    	if (($FrameName eq 'mainleft' || $FrameName eq 'mainright') && $DetailedReportsOnNewWindows < 2) {
+    		$NewLinkParams.="&framename=mainright";
+    		$NewLinkTarget=" target=\"mainright\"";
+    	}
+    	$NewLinkParams =~ tr/&/&/s; $NewLinkParams =~ s/^&//; $NewLinkParams =~ s/&$//;
+    	if ($NewLinkParams) { $NewLinkParams="${NewLinkParams}&"; }
+
+		print "<th width=\"80\">";
+        print "<a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?XMLEncode("$AWScript?${NewLinkParams}output=plugin_geoip_isp_maxmind"):"$PROG$StaticLinks.plugin_geoip_isp_maxmind.$StaticExt")."\"$NewLinkTarget>GeoIP<br>ISP</a>";
+        print "</th>";
 	}
 	elsif ($param) {
         my $ip=0;
