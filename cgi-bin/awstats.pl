@@ -87,7 +87,7 @@ $word, $yearcon, $yearfile, $yearmonthfile, $yeartoprocess) = ();
 @sortsearchwords = @sortsereferrals = @sortsider404 = @sortsiders = @sortunknownip =
 @sortunknownreferer = @sortunknownrefererbrowser = @wordlist = ();
 
-$VERSION="2.5 (build 21)";
+$VERSION="2.5 (build 23)";
 $Lang=0;
 
 # Default value
@@ -270,17 +270,18 @@ $BarImageHorizontal_k = "barrehk.png";
 # Music only browsers
 "real","RealAudio or compatible player",
 "winamp","WinAmp",				# Works for winampmpeg and winamp3httprdr
-"xmms","XMMS",
+"windows-media-player","Windows Media Player",
 "audion","Audion",
 "freeamp","FreeAmp",
-"windows-media-player","Windows Media Player",
-"jetaudio","JetAudio",
-"uplayer","Ultra Player",
 "itunes","Apple iTunes",
-"xaudio","Some XAudio Engine based MPEG player",
-"nsplayer","NetShow Player",
+"jetaudio","JetAudio",
 "mint_audio","Mint Audio",
 "mpg123","mpg123",
+"nsplayer","NetShow Player",
+"sonique","Sonique media player",
+"uplayer","Ultra Player",
+"xmms","XMMS",
+"xaudio","Some XAudio Engine based MPEG player",
 # Other kind of browsers
 "webzip","WebZIP"
 );
@@ -2466,9 +2467,9 @@ if ($UpdateStats) {
 				$new=$TmpHashDNSLookup{$Host};	# TmpHashDNSLookup is a temporary hash table to increase speed
 				if (!$new) {					# if $new undefined, $Host not yet resolved
 					&debug("Start of reverse DNS lookup for $Host",4);
-					if ($MyTableDNS{$Host}) {
-						&debug("End of reverse DNS lookup, found resolution of $Host in local MyTableDNS",4);
-	  					$new = $MyTableDns{$Host};
+					if ($MyDNSTable{$Host}) {
+						&debug("End of reverse DNS lookup, found resolution of $Host in local MyDNSTable",4);
+	  					$new = $MyDNSTable{$Host};
 					}
 					else {
 						$new=gethostbyaddr(pack("C4",split(/\./,$Host)),AF_INET);	# This is very slow may took 20 seconds
