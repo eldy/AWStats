@@ -166,7 +166,7 @@ sub AddHTMLMenuLink_geoip_region_maxmind {
 	# <-----
 	if ($Debug) { debug(" Plugin geoip_region_maxmind: AddHTMLMenuLink"); }
     if ($categ eq 'who') {
-        $menu->{'plugin_geoip_region_maxmind'}=1;               # Pos
+        $menu->{'plugin_geoip_region_maxmind'}=2.1;               # Pos
         $menulink->{'plugin_geoip_region_maxmind'}=2;           # Type of link
         $menutext->{'plugin_geoip_region_maxmind'}="Regions";   # Text
     }

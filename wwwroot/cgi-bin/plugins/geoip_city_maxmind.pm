@@ -168,7 +168,7 @@ sub AddHTMLMenuLink_geoip_city_maxmind {
 	# <-----
 	if ($Debug) { debug(" Plugin geoip_city_maxmind: AddHTMLMenuLink"); }
     if ($categ eq 'who') {
-        $menu->{'plugin_geoip_city_maxmind'}=1;               # Pos
+        $menu->{'plugin_geoip_city_maxmind'}=2.2;               # Pos
         $menulink->{'plugin_geoip_city_maxmind'}=2;           # Type of link
         $menutext->{'plugin_geoip_city_maxmind'}="Cities";    # Text
     }

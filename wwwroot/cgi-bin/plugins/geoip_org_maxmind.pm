@@ -55,7 +55,7 @@ sub Init_geoip_org_maxmind {
 	debug(" Plugin geoip_org_maxmind: InitParams=$InitParams",1);
 #    if ($UpdateStats) {
     	my ($mode,$datafile)=split(/\s+/,$InitParams,2);
-    	if (! $datafile) { $datafile="GeoIPCity.dat"; }
+    	if (! $datafile) { $datafile="GeoIPOrg.dat"; }
     	if ($mode eq '' || $mode eq 'GEOIP_MEMORY_CACHE')  { $mode=Geo::IP::GEOIP_MEMORY_CACHE(); }
     	else { $mode=Geo::IP::GEOIP_STANDARD(); }
     	debug(" Plugin geoip_org_maxmind: GeoIP initialized in mode $mode",1);
@@ -79,9 +79,9 @@ sub AddHTMLMenuLink_geoip_org_maxmind {
 	# <-----
 	if ($Debug) { debug(" Plugin geoip_org_maxmind: AddHTMLMenuLink"); }
     if ($categ eq 'who') {
-        $menu->{'plugin_geoip_org_maxmind'}=1;               # Pos
+        $menu->{'plugin_geoip_org_maxmind'}=0.5;               # Pos
         $menulink->{'plugin_geoip_org_maxmind'}=2;           # Type of link
-        $menutext->{'plugin_geoip_org_maxmind'}="Cities";    # Text
+        $menutext->{'plugin_geoip_org_maxmind'}="Organizations";    # Text
     }
 	# ----->
 	return 0;
@@ -123,7 +123,8 @@ sub AddHTMLGraph_geoip_org_maxmind {
    			if ($TotalPages) { $p_p=int($_org_p{$key}/$TotalPages*1000)/10; }
    			if ($TotalHits)  { $p_h=int($_org_h{$key}/$TotalHits*1000)/10; }
    		    print "<tr>";
-   		    print "<td class=\"aws\">".ucfirst($key)."</td>";
+   		    my $org=$key; $org =~ s/_/ /g;
+   		    print "<td class=\"aws\">".ucfirst($org)."</td>";
     		if ($ShowISP =~ /P/i) { print "<td>".($_org_p{$key}?$_org_p{$key}:"&nbsp;")."</td>"; }
     		if ($ShowISP =~ /P/i) { print "<td>".($_org_p{$key}?"$p_p %":'&nbsp;')."</td>"; }
     		if ($ShowISP =~ /H/i) { print "<td>".($_org_h{$key}?$_org_h{$key}:"&nbsp;")."</td>"; }

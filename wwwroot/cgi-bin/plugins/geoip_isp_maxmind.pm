@@ -55,7 +55,7 @@ sub Init_geoip_isp_maxmind {
 	debug(" Plugin geoip_isp_maxmind: InitParams=$InitParams",1);
 #    if ($UpdateStats) {
     	my ($mode,$datafile)=split(/\s+/,$InitParams,2);
-    	if (! $datafile) { $datafile="GeoIPCity.dat"; }
+    	if (! $datafile) { $datafile="GeoIPISP.dat"; }
     	if ($mode eq '' || $mode eq 'GEOIP_MEMORY_CACHE')  { $mode=Geo::IP::GEOIP_MEMORY_CACHE(); }
     	else { $mode=Geo::IP::GEOIP_STANDARD(); }
     	debug(" Plugin geoip_isp_maxmind: GeoIP initialized in mode $mode",1);
@@ -79,9 +79,9 @@ sub AddHTMLMenuLink_geoip_isp_maxmind {
 	# <-----
 	if ($Debug) { debug(" Plugin geoip_isp_maxmind: AddHTMLMenuLink"); }
     if ($categ eq 'who') {
-        $menu->{'plugin_geoip_isp_maxmind'}=1;               # Pos
-        $menulink->{'plugin_geoip_isp_maxmind'}=2;           # Type of link
-        $menutext->{'plugin_geoip_isp_maxmind'}="Cities";    # Text
+        $menu->{'plugin_geoip_isp_maxmind'}=0.6;              # Pos
+        $menulink->{'plugin_geoip_isp_maxmind'}=2;          # Type of link
+        $menutext->{'plugin_geoip_isp_maxmind'}="ISP";      # Text
     }
 	# ----->
 	return 0;
@@ -123,7 +123,8 @@ sub AddHTMLGraph_geoip_isp_maxmind {
    			if ($TotalPages) { $p_p=int($_isp_p{$key}/$TotalPages*1000)/10; }
    			if ($TotalHits)  { $p_h=int($_isp_h{$key}/$TotalHits*1000)/10; }
    		    print "<tr>";
-   		    print "<td class=\"aws\">".ucfirst($key)."</td>";
+   		    my $isp=$key; $isp =~ s/_/ /g;
+   		    print "<td class=\"aws\">".ucfirst($isp)."</td>";
     		if ($ShowISP =~ /P/i) { print "<td>".($_isp_p{$key}?$_isp_p{$key}:"&nbsp;")."</td>"; }
     		if ($ShowISP =~ /P/i) { print "<td>".($_isp_p{$key}?"$p_p %":'&nbsp;')."</td>"; }
     		if ($ShowISP =~ /H/i) { print "<td>".($_isp_h{$key}?$_isp_h{$key}:"&nbsp;")."</td>"; }
