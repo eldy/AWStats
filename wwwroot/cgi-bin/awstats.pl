@@ -46,9 +46,9 @@ use vars qw/
 $DIR $PROG $Extension
 $Debug $ShowSteps
 $DebugResetDone $DNSLookupAlreadyDone
-$RunAsCli $UpdateFor $lowerval
-$LastLine $LastLineNumber $LastLineOffset $LastLineChecksum
-$LastUpdate
+$RunAsCli $UpdateFor $HeadShown
+$LastLine $LastLineNumber $LastLineOffset $LastLineChecksum $LastUpdate
+$lowerval
 $PluginMode
 $TotalUnique $TotalVisits $TotalHostsKnown $TotalHostsUnknown
 $TotalPages $TotalHits $TotalBytes $TotalEntries $TotalExits $TotalBytesPages $TotalDifferentPages
@@ -62,12 +62,11 @@ $pos_referer $pos_agent $pos_query $pos_gzipin $pos_gzipout $pos_compratio
 $pos_cluster $pos_emails $pos_emailr $pos_hostr
 /;
 $DIR=$PROG=$Extension='';
-$Debug=$ShowSteps=0;
-$DebugResetDone=$DNSLookupAlreadyDone=0;
-$RunAsCli = 0; $UpdateFor=0;
+$Debug = $ShowSteps = 0;
+$DebugResetDone = $DNSLookupAlreadyDone = 0;
+$RunAsCli = $UpdateFor = $HeadShown = 0;
+$LastLine = $LastLineNumber = $LastLineOffset = $LastLineChecksum = $LastUpdate = 0;
 $lowerval = 0;
-$LastLine = $LastLineNumber = $LastLineOffset = $LastLineChecksum = 0;
-$LastUpdate = 0;
 $PluginMode = '';
 $TotalUnique = $TotalVisits = $TotalHostsKnown = $TotalHostsUnknown = 0;
 $TotalPages = $TotalHits = $TotalBytes = $TotalEntries = $TotalExits = $TotalBytesPages = $TotalDifferentPages = 0;
@@ -497,7 +496,8 @@ use vars qw/ @Message /;
 sub html_head {
 	my $dir=$PageDir?'right':'left';
 	if (scalar keys %HTMLOutput || $PluginMode) {
-		my $AllowIndex=0;
+		my $MetaRobot=0;	# meta robots
+		$HeadShown=1;
 		# Write head section
 		if ($BuildReportFormat eq 'xml') {
 			if ($PageCode) { print "<?xml version=\"1.0\" encoding=\"$PageCode\"?>\n"; }
@@ -511,7 +511,7 @@ sub html_head {
 			print "<html lang='$Lang'".($PageDir?" dir='rtl'":"").">\n";
 		}
 		print "<head>\n";
-		if ($AllowIndex) { print "<meta name=\"robots\" content=\"".($FrameName eq 'mainleft'?'no':'')."index,nofollow\" />\n"; }
+		if ($MetaRobot) { print "<meta name=\"robots\" content=\"".($FrameName eq 'mainleft'?'no':'')."index,nofollow\" />\n"; }
 		else { print "<meta name=\"robots\" content=\"noindex,nofollow\" />\n"; }
 
 		# Affiche tag meta content-type
@@ -520,7 +520,7 @@ sub html_head {
 
 		if ($Expires)  { print "<meta http-equiv=\"expires\" content=\"".(gmtime($starttime+$Expires))."\" />\n"; }
 		print "<meta http-equiv=\"description\" content=\"".ucfirst($PROG)." - Advanced Web Statistics for $SiteDomain\" />\n";
-		if ($AllowIndex && $FrameName ne 'mainleft') { print "<meta http-equiv=\"keywords\" content=\"$SiteDomain, free, advanced, realtime, web, server, logfile, log, analyzer, analysis, statistics, stats, perl, analyse, performance, hits, visits\" />\n"; }
+		if ($MetaRobot && $FrameName ne 'mainleft') { print "<meta http-equiv=\"keywords\" content=\"$SiteDomain, free, advanced, realtime, web, server, logfile, log, analyzer, analysis, statistics, stats, perl, analyse, performance, hits, visits\" />\n"; }
 		print "<title>$Message[7] $SiteDomain</title>\n";
 		if ($FrameName ne 'index') {
 
@@ -607,7 +607,7 @@ sub html_end {
 		}
 		print "\n";
 		if ($FrameName ne 'index') {
-			if ($BuildReportFormat eq 'html') { print "<br />"; }
+			if ($BuildReportFormat eq 'html') { print "<br />\n"; }
 			print "</body>\n";
 		}
 		print "</html>\n";
@@ -668,6 +668,8 @@ sub error {
 	my $secondmessage=shift||'';
 	my $thirdmessage=shift||'';
 	my $donotshowsetupinfo=shift||0;
+
+	if (! $HeadShown && scalar keys %HTMLOutput) { print "<body><html>\n"; }
 	if ($Debug) { debug("$message $secondmessage $thirdmessage",1); }
 	my $tagbold=''; my $tagunbold=''; my $tagbr=''; my $tagfontred=''; my $tagfontgrey=''; my $tagunfont='';
 	if (scalar keys %HTMLOutput) {
@@ -761,7 +763,7 @@ sub error {
 	}
 	# Remove lock if not a lock message 
 	if ($EnableLockForUpdate && $message !~ /lock file/) { &Lock_Update(0); }
-	if (scalar keys %HTMLOutput) { print "</body>\n</html>\n"; }
+	if (scalar keys %HTMLOutput) { print "</body></html>\n"; }
 	exit 1;
 }
 
@@ -7779,23 +7781,23 @@ if (scalar keys %HTMLOutput) {
 		print "<th bgcolor=\"#$color_h\" width=\"80\">$Message[57]</th><th bgcolor=\"#$color_h\" width=\"80\">$Message[15]</th>";
 		print "<th>&nbsp;</th>";
 		print "</tr>\n";
-		# Count Total by family
-		my %totalfamily_h=();
-		my $Total=0;
+		$total_h=0;
 		my $count=0;
 		&BuildKeyList(MinimumButNoZero(scalar keys %_os_h,500),1,\%_os_h,\%_os_h);
 		my %keysinkeylist=();
 		$max_h=1;
-		OSLOOP:
-		foreach my $key (@keylist) {
-			$Total+=$_os_h{$key};
+		# Count total by family
+		my %totalfamily_h=();
+		my $TotalFamily=0;
+		OSLOOP: foreach my $key (@keylist) {
+			$total_h+=$_os_h{$key};
 			if ($_os_h{$key} > $max_h) { $max_h = $_os_h{$key}; }
-			foreach my $family (@OSFamily) { if ($key =~ /^$family/i) { $totalfamily_h{$family}+=$_os_h{$key}; next OSLOOP; } }
+			foreach my $family (@OSFamily) { if ($key =~ /^$family/i) { $totalfamily_h{$family}+=$_os_h{$key}; $TotalFamily+=$_os_h{$key}; next OSLOOP; } }
 		}
 		# Write records grouped in a browser family
 		foreach my $family (@OSFamily) {
 			my $p='&nbsp;';
-			if ($Total) { $p=int($totalfamily_h{$family}/$Total*1000)/10; $p="$p %"; }
+			if ($total_h) { $p=int($totalfamily_h{$family}/$total_h*1000)/10; $p="$p %"; }
 			my $familyheadershown=0;
 			foreach my $key (reverse sort keys %_os_h) {
 				if ($key =~ /^$family(.*)/i) {
@@ -7808,7 +7810,7 @@ if (scalar keys %HTMLOutput) {
 					$keysinkeylist{$key}=1;
 					my $ver=$1;
 					my $p='&nbsp;';
-					if ($Total) { $p=int($_os_h{$key}/$Total*1000)/10; $p="$p %"; }
+					if ($total_h) { $p=int($_os_h{$key}/$total_h*1000)/10; $p="$p %"; }
 					print "<tr>";
 					print "<td".($count?"":" width=\"$WIDTHCOLICON\"")."><img src=\"$DirIcons\/os\/$key.png\"".AltTitle("")." /></td>";
 					print "<td class=\"aws\">$OSHashLib{$key}</td>";
@@ -7830,13 +7832,15 @@ if (scalar keys %HTMLOutput) {
 		foreach my $key (@keylist) {
 			if ($keysinkeylist{$key}) { next; }
 			if (! $familyheadershown) {
+				my $p='&nbsp;';
+				if ($total_h) { $p=int(($total_h-$TotalFamily)/$total_h*1000)/10; $p="$p %"; }
 				print "<tr bgcolor=\"#F6F6F6\"><td class=\"aws\" colspan=\"2\"><b>".uc($Message[2])."</b></td>";
-				print "<td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>";
+				print "<td><b>".($total_h-$TotalFamily)."</b></td><td><b>$p</b></td><td>&nbsp;</td>";
 				print "</tr>\n";
 				$familyheadershown=1;
 			}
 			my $p='&nbsp;';
-			if ($Total) { $p=int($_os_h{$key}/$Total*1000)/10; $p="$p %"; }
+			if ($total_h) { $p=int($_os_h{$key}/$total_h*1000)/10; $p="$p %"; }
 			print "<tr>";
 			if ($key eq 'Unknown') {
 				print "<td".($count?"":" width=\"$WIDTHCOLICON\"")."><img src=\"$DirIcons\/browser\/unknown.png\"".AltTitle("")." /></td><td class=\"aws\"><span style=\"color: #$color_other\">$Message[0]</span></td>";
@@ -7869,23 +7873,23 @@ if (scalar keys %HTMLOutput) {
 		print "<th width=\"80\">$Message[111]</th><th bgcolor=\"#$color_h\" width=\"80\">$Message[57]</th><th bgcolor=\"#$color_h\" width=\"80\">$Message[15]</th>";
 		print "<th>&nbsp;</th>";
 		print "</tr>\n";
-		# Count Total by family
-		my %totalfamily_h=();
-		my $Total=0;
+		$total_h=0;
 		my $count=0;
 		&BuildKeyList(MinimumButNoZero(scalar keys %_browser_h,500),1,\%_browser_h,\%_browser_h);
 		my %keysinkeylist=();
 		$max_h=1;
-		BROWSERLOOP:
-		foreach my $key (@keylist) {
-			$Total+=$_browser_h{$key};
+		# Count total by family
+		my %totalfamily_h=();
+		my $TotalFamily=0;
+		BROWSERLOOP: foreach my $key (@keylist) {
+			$total_h+=$_browser_h{$key};
 			if ($_browser_h{$key} > $max_h) { $max_h = $_browser_h{$key}; }
-			foreach my $family (keys %BrowsersFamily) { if ($key =~ /^$family/i) { $totalfamily_h{$family}+=$_browser_h{$key}; next BROWSERLOOP; } }
+			foreach my $family (keys %BrowsersFamily) { if ($key =~ /^$family/i) { $totalfamily_h{$family}+=$_browser_h{$key}; $TotalFamily+=$_browser_h{$key}; next BROWSERLOOP; } }
 		}
 		# Write records grouped in a browser family
 		foreach my $family (sort { $BrowsersFamily{$a} <=> $BrowsersFamily{$b} } keys %BrowsersFamily) {
 			my $p='&nbsp;';
-			if ($Total) { $p=int($totalfamily_h{$family}/$Total*1000)/10; $p="$p %"; }
+			if ($total_h) { $p=int($totalfamily_h{$family}/$total_h*1000)/10; $p="$p %"; }
 			my $familyheadershown=0;
 			foreach my $key (reverse sort keys %_browser_h) {
 				if ($key =~ /^$family(.*)/i) {
@@ -7898,7 +7902,7 @@ if (scalar keys %HTMLOutput) {
 					$keysinkeylist{$key}=1;
 					my $ver=$1;
 					my $p='&nbsp;';
-					if ($Total) { $p=int($_browser_h{$key}/$Total*1000)/10; $p="$p %"; }
+					if ($total_h) { $p=int($_browser_h{$key}/$total_h*1000)/10; $p="$p %"; }
 					print "<tr>";
 					print "<td".($count?"":" width=\"$WIDTHCOLICON\"")."><img src=\"$DirIcons\/browser\/$family.png\"".AltTitle("")." /></td>";
 					print "<td class=\"aws\">".ucfirst($family)." ".($ver?"$ver":"?")."</td>";
@@ -7921,13 +7925,15 @@ if (scalar keys %HTMLOutput) {
 		foreach my $key (@keylist) {
 			if ($keysinkeylist{$key}) { next; }
 			if (! $familyheadershown) {
+				my $p='&nbsp;';
+				if ($total_h) { $p=int(($total_h-$TotalFamily)/$total_h*1000)/10; $p="$p %"; }
 				print "<tr bgcolor=\"#F6F6F6\"><td class=\"aws\" colspan=\"2\"><b>".uc($Message[2])."</b></td>";
-				print "<td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>";
+				print "<td>&nbsp;</td><td><b>".($total_h-$TotalFamily)."</b></td><td><b>$p</b></td><td>&nbsp;</td>";
 				print "</tr>\n";
 				$familyheadershown=1;
 			}
 			my $p='&nbsp;';
-			if ($Total) { $p=int($_browser_h{$key}/$Total*1000)/10; $p="$p %"; }
+			if ($total_h) { $p=int($_browser_h{$key}/$total_h*1000)/10; $p="$p %"; }
 			print "<tr>";
 			if ($key eq 'Unknown') {
 				print "<td".($count?"":" width=\"$WIDTHCOLICON\"")."><img src=\"$DirIcons\/browser\/unknown.png\"".AltTitle("")." /></td><td class=\"aws\"><span style=\"color: #$color_other\">$Message[0]</span></td><td width=\"80\">?</td>";
