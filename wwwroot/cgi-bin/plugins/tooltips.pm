@@ -160,10 +160,10 @@ EOF
 #------------------------------------------------------------------------------
 sub _ReadAndOutputTooltipFile {
 	# Check lang files in common possible directories :
-	# Windows :                           		"${DIR}lang" (lang in same dir than awstats.pl)
+	# Windows and standard package:         	"$DIR/lang" (lang in same dir than awstats.pl)
 	# Debian package :                    		"/usr/share/awstats/lang"
 	# Other possible directories :        		"./lang"
-	my @PossibleLangDir=("$DirLang","${DIR}lang","/usr/share/awstats/lang","./lang");
+	my @PossibleLangDir=("$DirLang","${DIR}/lang","/usr/share/awstats/lang","./lang");
 
 	my $FileLang='';
 	my $logtype=lc($LogType ne 'S'?$LogType:'W');
