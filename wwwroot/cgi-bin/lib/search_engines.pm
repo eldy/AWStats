@@ -77,8 +77,11 @@
 # Minor french search engines
 'recherche\.aol\.fr','ctrouve\.','francite\.','\.lbb\.org','rechercher\.libertysurf\.fr', 'search\w+\.free\.fr', 'recherche\.club-internet\.fr',
 # Minor german search engines
-'fireball\.de','infoseek\.de','suche\.web\.de','meta\.ger',
+'sucheaol\.aol\.de',
+'fireball\.de','infoseek\.de','suche\d?\.web\.de','[a-z]serv\.rrzn\.uni-hannover\.de',
 'suchen\.abacho\.de','brisbane\.t-online\.de','allesklar\.de','meinestadt\.de',
+'212\.227\.33\.241',
+'(161\.58\.227\.204|161\.58\.247\.101|212\.40\.165\.90|213\.133\.108\.202|217\.160\.108\.151|217\.160\.111\.99|217\.160\.131\.108|217\.160\.142\.227|217\.160\.176\.42)',
 # Minor hungarian search engines
 'heureka\.hu','vizsla\.origo\.hu','lapkereso\.hu','goliat\.hu','index\.hu','wahoo\.hu','freeweb\.hu','webmania\.hu','search\.internetto\.hu',
 # Minor italian search engines
@@ -207,14 +210,17 @@
 'search\w+\.free\.fr','free',
 'recherche\.club-internet\.fr','clubinternet',
 # Minor german search engines
+'sucheaol\.aol\.de','aolde',
 'fireball\.de','fireball',
 'infoseek\.de','infoseek',
-'suche\.web\.de','webde',
-'meta\.ger','meta',
+'suche\d?\.web\.de','webde',
+'[a-z]serv\.rrzn\.uni-hannover\.de','meta',
 'suchen\.abacho\.de','abacho',
 'brisbane\.t-online\.de','t-online',
 'allesklar\.de','allesklar',
 'meinestadt\.de','meinestadt',
+'212\.227\.33\.241','metaspinner',
+'(161\.58\.227\.204|161\.58\.247\.101|212\.40\.165\.90|213\.133\.108\.202|217\.160\.108\.151|217\.160\.111\.99|217\.160\.131\.108|217\.160\.142\.227|217\.160\.176\.42)','metacrawler_de',
 # Minor hungarian search engines
 'heureka\.hu','heureka',
 'vizsla\.origo\.hu','origo',
@@ -311,8 +317,11 @@
 # Minor french search engines
 'francite','name=', 'clubinternet', 'q=',
 # Minor german search engines
+'aolde','q=',
 'fireball','q=', 'infoseek','qt=', 'webde','su=',
 'abacho','q=', 't-online','q=', 
+'metaspinner','qry=',
+'metacrawler_de','qry=',
 # Minor hungarian search engines
 'heureka','heureka=', 'origo','(q|search)=', 'goliat','KERESES=', 'wahoo','q=', 'freeweb','KERESES=', 'internetto','searchstr=',
 # Minor norvegian search engines
@@ -417,9 +426,12 @@
 # Minor french search engines
 'aolfr','AOL', 'ctrouve','C\'est trouvé', 'francite','Francité', 'lbb', 'LBB', 'libertysurf', 'Libertysurf', 'free', 'Free.fr', 'clubinternet', 'Club-internet',
 # Minor german search engines
-'fireball','Fireball', 'infoseek','Infoseek', 'webde','Web.de', 'meta','MetaGer',
+'aolde','AOL',
+'fireball','Fireball', 'infoseek','Infoseek', 'webde','Web.de',
 'abacho','Abacho', 't-online','T-Online', 
 'allesklar','allesklar.de', 'meinestadt','meinestadt.de', 
+'metaspinner','metaspinner',
+'metacrawler_de','metacrawler.de',
 # Minor hungarian search engines
 'heureka','Heureka', 'origo','Origo-Vizsla', 'lapkereso','Startlapkeresõ', 'goliat','Góliát', 'indexhu','Index', 'wahoo','Wahoo', 'freeweb','FreeWeb', 'webmania','webmania.hu', 'internetto','Internetto Keresõ',
 # Minor italian search engines
@@ -439,7 +451,9 @@
 );
 
 
-# Sanity check
+# Sanity check.
+# Enable this code and run perl search_engines.pm to check file entries are ok
+#-----------------------------------------------------------------------------
 #foreach my $key (@SearchEnginesSearchIDOrder) { if (! $SearchEnginesHashID{$key}) { error("Entry '$key' has been found in SearchEnginesSearchIDOrder with no value in SearchEnginesHashID"); } }
 #foreach my $key (keys %NotSearchEnginesKeys) { if (! $SearchEnginesHashID{$key}) { error("Entry '$key' has been found in NotSearchEnginesKeys with no value in SearchEnginesHashID"); } }
 #foreach my $key (keys %SearchEnginesKnownUrl) {
@@ -447,14 +461,14 @@
 #	foreach my $key2 (values %SearchEnginesHashID) {
 #		if ($key eq $key2) { $found=1; last; }
 #	}
-#	if (! $found) { error("Entry '$key' has been found in SearchEnginesKnownUrl with no value in SearchEnginesHashID"); }
+#	if (! $found) { die "Entry '$key' has been found in SearchEnginesKnownUrl with no value in SearchEnginesHashID"; }
 #}
 #foreach my $key (keys %SearchEnginesHashLib) {
 #	my $found=0;
 #	foreach my $key2 (values %SearchEnginesHashID) {
 #		if ($key eq $key2) { $found=1; last; }
 #	}
-#	if (! $found) { error("Entry '$key' has been found in SearchEnginesHashLib with no value in SearchEnginesHashID"); }
+#	if (! $found) { die "Entry '$key' has been found in SearchEnginesHashLib with no value in SearchEnginesHashID"; }
 #}
 
 
