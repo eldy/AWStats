@@ -14,7 +14,7 @@
 #-------------------------------------------------------
 # Defines
 #-------------------------------------------------------
-$VERSION="2.24 (build 18)";
+$VERSION="2.24 (build 20)";
 $Lang=0;
 
 # Default value
@@ -733,80 +733,81 @@ $message[71][7]="Äĺę";
 $message[72][7]="Greek gr.png";
 
 # Czech (js@fsid.cvut.cz)
-$PageCode[8]="<META HTTP-EQUIV=\"content-type\" CONTENT=\"text/html; charset=ISO-8859-2\">";
+$PageCode[8]="<META HTTP-EQUIV=\"content-type\" CONTENT=\"text/html; charset=iso-8859-2\">";
 $message[0][8]="Neznámý";
-$message[1][8]="Neznámý (nepřeloená IP)";
+$message[1][8]="Neznámý (nepřeložená IP)";
 $message[2][8]="Ostatní";
 $message[3][8]="Prohlédnout detaily";
 $message[4][8]="Den";
 $message[5][8]="Měsíc";
 $message[6][8]="Rok";
 $message[8][8]="Statistika pro";
-$message[8][8]="První návtěva";
-$message[9][8]="Poslední návtěva";
-$message[10][8]="Počet návtěv";
-$message[11][8]="Unikátní návtěvy";
-$message[12][8]="Návtěva";
+$message[8][8]="První návštěva";
+$message[9][8]="Poslední návštěva";
+$message[10][8]="Počet návštěv";
+$message[11][8]="Unikátní návštěvy";
+$message[12][8]="Návštěva";
 $message[13][8]="Výrazy";
 $message[14][8]="Hledání";
 $message[15][8]="Procenta";
 $message[16][8]="Provoz celkem";
 $message[17][8]="Domény / země";
-$message[18][8]="Návtěvy";
+$message[18][8]="Návštěvy";
 $message[19][8]="Stránky/URL";
 $message[20][8]="Hodiny";
-$message[21][8]="Browsery (prohlíeče)";
+$message[21][8]="Browsery (prohlížeče)";
 $message[22][8]="HTTP Chyby";
 $message[23][8]="Reference";
 $message[24][8]="Hledané výrazy";
-$message[25][8]="Návtěvy domény/země";
+$message[25][8]="Návštěvy domény/země";
 $message[26][8]="hosts";
 $message[27][8]="stránek";
-$message[28][8]="r;zné stránky";
+$message[28][8]="různé stránky";
 $message[29][8]="Přistup";
 $message[30][8]="Jiná slova";
-$message[31][8]="Pouité browsery (prohlíeče)";
+$message[31][8]="Použité browsery (prohlížeče)";
 $message[32][8]="Chybové kódy HTTP ";
 $message[33][8]="Verze Netscape";
 $message[34][8]="Verze MS Internet Explorer";
-$message[35][8]="Pouitý OS";
+$message[35][8]="Použitý OS";
 $message[36][8]="Konekce z";
 $message[37][8]="Původ";
 $message[38][8]="Přímá adresa / Oblíbené (Bookmark)";
 $message[39][8]="Odkaz z Newsgroup";
 $message[40][8]="Odkaz z Internetového vyhledávače";
-$message[41][8]="Odkaz z jiné stránky (jiné stránky ne vyhledávače)";
+$message[41][8]="Odkaz z jiné stránky (jiné stránky než vyhledávače)";
 $message[42][8]="Odkaz z vlastní stránky (jiná stránka na serveru)";
-$message[43][8]="výrazy pouité ve vyhledávači";
+$message[43][8]="výrazy použité ve vyhledávači";
 $message[44][8]="Kb";
-$message[45][8]="NepřeloenáIP adresa";
-$message[46][8]="Neznámy OS (poloka Referer)";
-$message[47][8]="Poadované, ale nenalezené URL (HTTP 404)";
+$message[45][8]="Nepřeložená IP adresa";
+$message[46][8]="Neznámy OS (položka Referer)";
+$message[47][8]="Požadované, ale nenalezené URL (HTTP 404)";
 $message[48][8]="IP Addresa";
 $message[49][8]="Chyba&nbsp;Dotazů";
-$message[50][8]="neznámý browser (prohlíeč) č (poloka Referer)";
-$message[51][8]="Návtěvnost robotů";
-$message[52][8]="návtěv/návtěvníka";
+$message[50][8]="neznámý browser (prohlížeč) (položka Referer)";
+$message[51][8]="Návštěvnost robotů";
+$message[52][8]="návštěv/návštěvníka";
 $message[53][8]="Roboti";
-$message[54][8]="Volně iřitelný nástroj pro analýzu web statistik";
+$message[54][8]="Volně šiřitelný nástroj pro analýzu web statistik";
 $message[55][8]="z";
 $message[56][8]="Stránek";
-$message[57][8]="Dotazů";
+$message[57][8]="Hity";
 $message[58][8]="Verze";
 $message[59][8]="OS";
-$message[60][8]="Leden";
-$message[61][8]="Únor";
-$message[62][8]="Březen";
-$message[63][8]="Duben";
-$message[64][8]="Kveten";
-$message[65][8]="Červen";
-$message[66][8]="Červenec";
-$message[67][8]="Srpen";
-$message[68][8]="Září";
-$message[69][8]="Říjen";
-$message[70][8]="Listopad";
-$message[71][8]="Prosinec";
+$message[60][8]="Led";
+$message[61][8]="Úno";
+$message[62][8]="Bře";
+$message[63][8]="Dub";
+$message[64][8]="Kvě";
+$message[65][8]="Čer";
+$message[66][8]="Čvc";
+$message[67][8]="Srp";
+$message[68][8]="Zář";
+$message[69][8]="Říj";
+$message[70][8]="Lis";
+$message[71][8]="Pro";
 $message[72][8]="Czech cz.png";
+
 
 
 # ---------- Browser lists ----------------
@@ -825,6 +826,7 @@ $message[72][8]="Czech cz.png";
 "antfresco","ANT Fresco",
 "bpftp","BPFTP",
 "cyberdog","Cyberdog",
+"dreamcast","Dreamcast",
 "downloadagent","DownloadAgent",
 "ecatch", "eCatch",
 "emailsiphon","EmailSiphon",
@@ -1250,7 +1252,7 @@ $message[72][8]="Czech cz.png";
 sub html_head {
 	print "<html>\n";
 	print "<head>\n";
-	if ($PageCode[$Lang] ne "") { print "$PageCode[$Lang]\n"; }
+	if ($PageCode[$Lang] ne "") { print "$PageCode[$Lang]\n"; }		# If not defined, iso-8859-1 is used in major countries
 	print "<meta http-equiv=\"description\" content=\"$PROG - Advanced Web Statistics for $LocalSite\">\n";
 	print "<meta http-equiv=\"keywords\" content=\"$LocalSite, free, advanced, realtime, web, server, logfile, log, analyzer, analysis, statistics, stats, perl, analyse, performance, hits, visits\">\n";
 	print "<meta name=\"robots\" content=\"index,follow\">\n";
@@ -1712,6 +1714,7 @@ else {
 }
 ($DIR=$0) =~ s/([^\/\\]*)$//; ($PROG=$1) =~ s/\.([^\.]*)$//; $Extension=$1;
 $LocalSite =~ tr/A-Z/a-z/;
+$LocalSite =~ s/<//;		# This is to avoid 'Cross Site Scripting attacks'
 $LocalSiteWithoutwww = $LocalSite; $LocalSiteWithoutwww =~ s/www\.//;
 if (($ENV{"GATEWAY_INTERFACE"} eq "") && ($ARGV[0] eq "" || $ARGV[0] ne "-h" || $ARGV[1] eq "")) {
 	print "----- $PROG $VERSION (c) Laurent Destailleur -----\n";
@@ -1775,10 +1778,11 @@ $nowsmallyear=$nowyear;$nowsmallyear =~ s/^..//;
 if (++$nowmonth < 10) { $nowmonth = "0$nowmonth"; }
 if ($nowday < 10) { $nowday = "0$nowday"; }
 
-if ($QueryString =~ /year=[\d][\d][\d][\d]/) { $YearRequired=$QueryString; $YearRequired =~ s/.*year=//; $YearRequired =~ s/&.*//; }
-if ($YearRequired eq "")  { $YearRequired=$nowyear; }
-if ($QueryString =~ /month=/)                { $MonthRequired=$QueryString; $MonthRequired =~ s/.*month=//; $MonthRequired =~ s/&.*//; }
-if ($MonthRequired eq "") { $MonthRequired=$nowmonth; }
+# Check year and month parameters (check is very restrictive to avoid 'cross site scripting attacks')
+if ($QueryString =~ /year=/) 	{ $YearRequired=$QueryString; $YearRequired =~ s/.*year=//; $YearRequired =~ s/&.*//; }
+if ($YearRequired !~ /^[\d][\d][\d][\d]$/) { $YearRequired=$nowyear; }
+if ($QueryString =~ /month=/)	{ $MonthRequired=$QueryString; $MonthRequired =~ s/.*month=//; $MonthRequired =~ s/&.*//; }
+if ($MonthRequired ne "year" && $MonthRequired !~ /^[\d][\d]$/) { $MonthRequired=$nowmonth; }
 
 $BrowsersHash{"netscape"}="<font color=blue>Netscape</font> <a href=\"$DirCgi$PROG.$Extension?action=browserdetail&site=$LocalSite&year=$YearRequired&month=$MonthRequired&lang=$Lang\">($message[58][$Lang])</a>";
 $BrowsersHash{"msie"}="<font color=blue>MS Internet Explorer</font> <a href=\"$DirCgi$PROG.$Extension?action=browserdetail&site=$LocalSite&year=$YearRequired&month=$MonthRequired&lang=$Lang\">($message[58][$Lang])</a>";
