@@ -1573,6 +1573,7 @@ $LogFileWithoutLog=$LogFile;$LogFileWithoutLog =~ s/\.log$//;
 if ($nowyear < 100) { $nowyear+=2000; } else { $nowyear+=1900; }
 $nowsmallyear=$nowyear;$nowsmallyear =~ s/^..//;
 $nowmonth++;if ($nowmonth < 10) { $nowmonth  = "0$nowmonth"; }
+if ($nowday < 10) { $nowday  = "0$nowday"; }
 
 if ($QueryString =~ /year=[\d][\d][\d][\d]/) { $YearRequired=$QueryString; $YearRequired =~ s/.*year=//; $YearRequired =~ s/&.*//; }
 if ($YearRequired eq "")  { $YearRequired=$nowyear; }
