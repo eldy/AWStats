@@ -995,8 +995,8 @@ sub Read_Config {
 
 	# Open config file
 	$FileConfig=$FileSuffix='';
-	foreach my $dir (@PossibleConfigDir) {
-		my $searchdir=$dir;
+	foreach (@PossibleConfigDir) {
+		my $searchdir=$_;
 		if ($searchdir && $searchdir !~ /[\\\/]$/) { $searchdir .= "/"; }
 		if (open(CONFIG,"$searchdir$PROG.$SiteConfig.conf")) 	{ $FileConfig="$searchdir$PROG.$SiteConfig.conf"; $FileSuffix=".$SiteConfig"; last; }
 		if (open(CONFIG,"$searchdir$PROG.conf"))  				{ $FileConfig="$searchdir$PROG.conf"; $FileSuffix=''; last; }
@@ -1124,7 +1124,7 @@ sub Parse_Config {
 			next;
 			}
 		if ($param =~ /^AllowAccessFromWebToFollowingAuthenticatedUsers/) {
-			foreach my $elem (split(/\s+/,$value))	{ push @AllowAccessFromWebToFollowingAuthenticatedUsers,$elem; }
+			foreach (split(/\s+/,$value))	{ push @AllowAccessFromWebToFollowingAuthenticatedUsers,$_; }
 			next;
 			}
 		if ($param =~ /^DefaultFile/)           {
@@ -1185,17 +1185,17 @@ sub Parse_Config {
 			next;
 			}
 		if ($param =~ /^NotPageList/) {
-			foreach my $elem (split(/\s+/,$value))	{ $NotPageList{$elem}=1; }
+			foreach (split(/\s+/,$value))	{ $NotPageList{$_}=1; }
 			$FoundNotPageList=1;
 			next;
 			}
 		if ($param =~ /^ValidHTTPCodes/) {
-			foreach my $elem (split(/\s+/,$value))	{ $ValidHTTPCodes{$elem}=1; }
+			foreach (split(/\s+/,$value))	{ $ValidHTTPCodes{$_}=1; }
 			$FoundValidHTTPCodes=1;
 			next;
 			}
 		if ($param =~ /^ValidSMTPCodes/) {
-			foreach my $elem (split(/\s+/,$value))	{ $ValidSMTPCodes{$elem}=1; }
+			foreach (split(/\s+/,$value))	{ $ValidSMTPCodes{$_}=1; }
 			$FoundValidSMTPCodes=1;
 			next;
 			}
@@ -1298,15 +1298,15 @@ sub Read_Language_Data {
 	my @PossibleLangDir=("$DirLang","${DIR}lang","/usr/share/awstats/lang","./lang");
 
 	my $FileLang='';
-	foreach my $dir (@PossibleLangDir) {
-		my $searchdir=$dir;
+	foreach (@PossibleLangDir) {
+		my $searchdir=$_;
 		if ($searchdir && (!($searchdir =~ /\/$/)) && (!($searchdir =~ /\\$/)) ) { $searchdir .= "/"; }
 		if (open(LANG,"${searchdir}awstats-$_[0].txt")) { $FileLang="${searchdir}awstats-$_[0].txt"; last; }
 	}
 	# If file not found, we try english
 	if (! $FileLang) {
-		foreach my $dir (@PossibleLangDir) {
-			my $searchdir=$dir;
+		foreach (@PossibleLangDir) {
+			my $searchdir=$_;
 			if ($searchdir && (!($searchdir =~ /\/$/)) && (!($searchdir =~ /\\$/)) ) { $searchdir .= "/"; }
 			if (open(LANG,"${searchdir}awstats-en.txt")) { $FileLang="${searchdir}awstats-en.txt"; last; }
 		}
@@ -1613,8 +1613,8 @@ sub Check_Config {
 		debug(" DirCgi='$DirCgi'",2);
 		debug(" DirIcons='$DirIcons'",2);
 		debug(" SiteDomain=$SiteDomain",2);
-		foreach my $key (keys %MaxNbOf) { debug(" MaxNbOf{$key}=$MaxNbOf{$key}",2); }
-		foreach my $key (keys %MinHit)  { debug(" MinHit{$key}=$MinHit{$key}",2); }
+		foreach (keys %MaxNbOf) { debug(" MaxNbOf{$_}=$MaxNbOf{$_}",2); }
+		foreach (keys %MinHit)  { debug(" MinHit{$_}=$MinHit{$_}",2); }
 		foreach my $extranum (1..@ExtraName-1) {
 			debug(" ExtraConditionType[$extranum] is array ".join(',',@{$ExtraConditionType[$extranum]}),2);
 			debug(" ExtraConditionTypeVal[$extranum] is array ".join(',',@{$ExtraConditionTypeVal[$extranum]}),2);
@@ -1829,8 +1829,8 @@ sub Read_History_With_TmpUpdate {
 					 'searchwords'=>24,'keywords'=>25,
 					 'errors'=>26);
 	my $order=(scalar keys %allsections)+1;
-	foreach my $code (keys %TrapInfosForHTTPErrorCodes) { $allsections{"sider_$code"}=$order++; }
-	foreach my $extranum (1..@ExtraName-1) { $allsections{"extra_$extranum"}=$order++; }
+	foreach (keys %TrapInfosForHTTPErrorCodes) { $allsections{"sider_$_"}=$order++; }
+	foreach (1..@ExtraName-1) { $allsections{"extra_$_"}=$order++; }
 	my $withread=0;
 
 	# Variable used to read old format history files
@@ -1874,17 +1874,17 @@ sub Read_History_With_TmpUpdate {
 		# Others
 		if ($UpdateStats || $MigrateStats || ($HTMLOutput{'main'} && $ShowMiscStats)) { $SectionsToLoad{'misc'}=$order++; }
 		if ($UpdateStats || $MigrateStats || ($HTMLOutput{'main'} && ($ShowHTTPErrorsStats || $ShowSMTPErrorsStats)) || $HTMLOutput{'errors'}) { $SectionsToLoad{'errors'}=$order++; }
-		foreach my $code (keys %TrapInfosForHTTPErrorCodes) {
-			if ($UpdateStats || $MigrateStats || $HTMLOutput{"errors$code"}) { $SectionsToLoad{"sider_$code"}=$order++; }
+		foreach (keys %TrapInfosForHTTPErrorCodes) {
+			if ($UpdateStats || $MigrateStats || $HTMLOutput{"errors$_"}) { $SectionsToLoad{"sider_$_"}=$order++; }
 		}
 		if ($UpdateStats || $MigrateStats || ($HTMLOutput{'main'} && $ShowClusterStats)) { $SectionsToLoad{'cluster'}=$order++; }
-		foreach my $extranum (1..@ExtraName-1) {
-			if ($UpdateStats || $MigrateStats || ($HTMLOutput{'main'} && $ExtraStatTypes[$extranum]) || $HTMLOutput{"extra$extranum"}) { $SectionsToLoad{"extra_$extranum"}=$order++; }
+		foreach (1..@ExtraName-1) {
+			if ($UpdateStats || $MigrateStats || ($HTMLOutput{'main'} && $ExtraStatTypes[$_]) || $HTMLOutput{"extra$_"}) { $SectionsToLoad{"extra_$_"}=$order++; }
 		}
 	}
 	else {					# Load only required sections
 		my $order=1;
-		foreach my $key (split(/\s+/,$part)) { $SectionsToLoad{$key}=$order++; }
+		foreach (split(/\s+/,$part)) { $SectionsToLoad{$_}=$order++; }
 	}
 
 	# Define SectionsToSave (which sections to save)
@@ -1892,8 +1892,8 @@ sub Read_History_With_TmpUpdate {
 	if ($withupdate) { %SectionsToSave=%allsections; }
 
 	if ($Debug) {
-		foreach my $section (sort { $SectionsToLoad{$a} <=> $SectionsToLoad{$b} } keys %SectionsToLoad) { debug(" Section '$section' is marked for load",2); }
-		foreach my $section (sort { $SectionsToSave{$a} <=> $SectionsToSave{$b} } keys %SectionsToSave) { debug(" Section '$section' is marked for save",2); }
+		foreach (sort { $SectionsToLoad{$a} <=> $SectionsToLoad{$b} } keys %SectionsToLoad) { debug(" Section '$_' is marked for load",2); }
+		foreach (sort { $SectionsToSave{$a} <=> $SectionsToSave{$b} } keys %SectionsToSave) { debug(" Section '$_' is marked for save",2); }
 	}
 
 	# Define value for filetowrite and filetoread (Month before Year kept for backward compatibility)
@@ -2322,11 +2322,11 @@ sub Read_History_With_TmpUpdate {
 				if ($Debug) { debug(" End of UNKOWNIP section ($count entries, $countloaded loaded)"); }
 				delete $SectionsToLoad{'visitor'};
 				# THIS SECTION IS NEVER SAVED. ONLY READ FOR MIGRATE AND CONVERTED INTO VISITOR SECTION
-				foreach my $key (keys %iptomigrate) {
-					$_host_p{$key}+=int($_host_p{'Unknown'}/$countloaded);
-					$_host_h{$key}+=int($_host_h{'Unknown'}/$countloaded);
-					$_host_k{$key}+=int($_host_k{'Unknown'}/$countloaded);
-					if ($iptomigrate{$key} > 0) { $_host_l{$key}=$iptomigrate{$key} };
+				foreach (keys %iptomigrate) {
+					$_host_p{$_}+=int($_host_p{'Unknown'}/$countloaded);
+					$_host_h{$_}+=int($_host_h{'Unknown'}/$countloaded);
+					$_host_k{$_}+=int($_host_k{'Unknown'}/$countloaded);
+					if ($iptomigrate{$_} > 0) { $_host_l{$_}=$iptomigrate{$_} };
 				}
 				delete $_host_p{'Unknown'};
 				delete $_host_h{'Unknown'};
@@ -2896,8 +2896,8 @@ sub Read_History_With_TmpUpdate {
 							if ($loadrecord) {
 								if ($field[1]) {
 									if ($loadrecord==2) {
-										foreach my $word (split(/\+/,$field[0])) {	# val1+val2
-											$_keywords{$word}+=$field[1];
+										foreach (split(/\+/,$field[0])) {	# field[0] is "val1+val2+..."
+											$_keywords{$_}+=$field[1];
 										}
 									}
 									else {
@@ -3072,13 +3072,13 @@ sub Read_History_With_TmpUpdate {
 		# Process rest of data saved in 'wait' arrays (data for hosts that are not in history file or no history file found)
 		# This can change some values for day, sider and session sections
 		if ($Debug) { debug(" Processing data in 'wait' arrays",3); }
-		foreach my $key (keys %_waithost_e) {
-			if ($Debug) { debug("  Visit in 'wait' array for $key is a new visit",4); }
-			my $newtimehosts=($_waithost_s{$key}?$_waithost_s{$key}:$_host_s{$key});
-			my $newtimehostl=($_waithost_l{$key}?$_waithost_l{$key}:$_host_l{$key});
-			$_url_e{$_waithost_e{$key}}++;
+		foreach (keys %_waithost_e) {
+			if ($Debug) { debug("  Visit in 'wait' array for $_ is a new visit",4); }
+			my $newtimehosts=($_waithost_s{$_}?$_waithost_s{$_}:$_host_s{$_});
+			my $newtimehostl=($_waithost_l{$_}?$_waithost_l{$_}:$_host_l{$_});
+			$_url_e{$_waithost_e{$_}}++;
 			$newtimehosts =~ /^(\d\d\d\d\d\d\d\d)/; $DayVisits{$1}++;
-			if ($_waithost_s{$key}) {
+			if ($_waithost_s{$_}) {
 				# There was also a second session in processed log
 				$_session{GetSessionRange($newtimehosts,$newtimehostl)}++;
 			}
@@ -3094,10 +3094,10 @@ sub Read_History_With_TmpUpdate {
 	# Update offset in map section and last data in general section then close files
 	if ($withupdate) {
 		# Update offset of sections in the MAP section
-		foreach my $key (sort { $PosInFile{$a} <=> $PosInFile{$b} } keys %ValueInFile) {
-			debug(" Update offset of section $key=$ValueInFile{$key} in file at offset $PosInFile{$key}");
-			if ($PosInFile{"$key"}) {
-				seek(HISTORYTMP,$PosInFile{"$key"},0); print HISTORYTMP $ValueInFile{"$key"};
+		foreach (sort { $PosInFile{$a} <=> $PosInFile{$b} } keys %ValueInFile) {
+			debug(" Update offset of section $_=$ValueInFile{$_} in file at offset $PosInFile{$_}");
+			if ($PosInFile{"$_"}) {
+				seek(HISTORYTMP,$PosInFile{"$_"},0); print HISTORYTMP $ValueInFile{"$_"};
 			}
 		}
 		# Save last data in general sections
@@ -3203,11 +3203,11 @@ sub Save_History {
 		print HISTORYTMP "POS_MISC ";$PosInFile{"misc"}=tell HISTORYTMP;print HISTORYTMP "$spacebar\n";
 		print HISTORYTMP "POS_ERRORS ";$PosInFile{"errors"}=tell HISTORYTMP;print HISTORYTMP "$spacebar\n";
 		print HISTORYTMP "POS_CLUSTER ";$PosInFile{"cluster"}=tell HISTORYTMP;print HISTORYTMP "$spacebar\n";
-		foreach my $code (keys %TrapInfosForHTTPErrorCodes) {
-			print HISTORYTMP "POS_SIDER_$code ";$PosInFile{"sider_$code"}=tell HISTORYTMP;print HISTORYTMP "$spacebar\n";
+		foreach (keys %TrapInfosForHTTPErrorCodes) {
+			print HISTORYTMP "POS_SIDER_$_ ";$PosInFile{"sider_$_"}=tell HISTORYTMP;print HISTORYTMP "$spacebar\n";
 		}
-		foreach my $extranum (1..@ExtraName-1) {
-			print HISTORYTMP "POS_EXTRA_$extranum ";$PosInFile{"extra_$extranum"}=tell HISTORYTMP;print HISTORYTMP "$spacebar\n";
+		foreach (1..@ExtraName-1) {
+			print HISTORYTMP "POS_EXTRA_$_ ";$PosInFile{"extra_$_"}=tell HISTORYTMP;print HISTORYTMP "$spacebar\n";
 		}
 		print HISTORYTMP "END_MAP\n";
 	}
@@ -3252,13 +3252,13 @@ sub Save_History {
 		$ValueInFile{$sectiontosave}=tell HISTORYTMP;
 		print HISTORYTMP "BEGIN_DAY ".(scalar keys %DayHits)."\n";
 		my $monthvisits=0;
-		foreach my $key (sort keys %DayHits) {
-			if ($key =~ /^$year$month/i) {	# Found a day entry of the good month
-				my $page=$DayPages{$key}||0;
-				my $hits=$DayHits{$key}||0;
-				my $bytes=$DayBytes{$key}||0;
-				my $visits=$DayVisits{$key}||0;
-				print HISTORYTMP "$key $page $hits $bytes $visits\n";
+		foreach (sort keys %DayHits) {
+			if ($_ =~ /^$year$month/i) {	# Found a day entry of the good month
+				my $page=$DayPages{$_}||0;
+				my $hits=$DayHits{$_}||0;
+				my $bytes=$DayBytes{$_}||0;
+				my $visits=$DayVisits{$_}||0;
+				print HISTORYTMP "$_ $page $hits $bytes $visits\n";
 				$monthvisits+=$visits;
 			}
 		}
@@ -3276,17 +3276,17 @@ sub Save_History {
 		# We save page list in score sorted order to get a -output faster and with less use of memory.
 		&BuildKeyList($MaxNbOf{'Domain'},$MinHit{'Domain'},\%_domener_h,\%_domener_p);
 		my %keysinkeylist=();
-		foreach my $key (@keylist) {
-			$keysinkeylist{$key}=1;
-			my $page=$_domener_p{$key}||0;
-			my $bytes=$_domener_k{$key}||0;		# ||0 could be commented to reduce history file size
-			print HISTORYTMP "$key $page $_domener_h{$key} $bytes\n";
+		foreach (@keylist) {
+			$keysinkeylist{$_}=1;
+			my $page=$_domener_p{$_}||0;
+			my $bytes=$_domener_k{$_}||0;		# ||0 could be commented to reduce history file size
+			print HISTORYTMP "$_ $page $_domener_h{$_} $bytes\n";
 		}
-		foreach my $key (keys %_domener_h) {
-			if ($keysinkeylist{$key}) { next; }
-			my $page=$_domener_p{$key}||0;
-			my $bytes=$_domener_k{$key}||0;		# ||0 could be commented to reduce history file size
-			print HISTORYTMP "$key $page $_domener_h{$key} $bytes\n";
+		foreach (keys %_domener_h) {
+			if ($keysinkeylist{$_}) { next; }
+			my $page=$_domener_p{$_}||0;
+			my $bytes=$_domener_k{$_}||0;		# ||0 could be commented to reduce history file size
+			print HISTORYTMP "$_ $page $_domener_h{$_} $bytes\n";
 		}
 		print HISTORYTMP "END_DOMAIN\n";
 	}
@@ -3369,13 +3369,13 @@ sub Save_History {
 		# We save login list in score sorted order to get a -output faster and with less use of memory.
 		&BuildKeyList($MaxNbOf{'LoginShown'},$MinHit{'Login'},\%_login_h,\%_login_p);
 		my %keysinkeylist=();
-		foreach my $key (@keylist) {
-			$keysinkeylist{$key}=1;
-			print HISTORYTMP "$key ".int($_login_p{$key}||0)." ".int($_login_h{$key}||0)." ".int($_login_k{$key}||0)." ".($_login_l{$key}||'')."\n";
+		foreach (@keylist) {
+			$keysinkeylist{$_}=1;
+			print HISTORYTMP "$_ ".int($_login_p{$_}||0)." ".int($_login_h{$_}||0)." ".int($_login_k{$_}||0)." ".($_login_l{$_}||'')."\n";
 		}
-		foreach my $key (keys %_login_h) {
-			if ($keysinkeylist{$key}) { next; }
-			print HISTORYTMP "$key ".int($_login_p{$key}||0)." ".int($_login_h{$key}||0)." ".int($_login_k{$key}||0)." ".($_login_l{$key}||'')."\n";
+		foreach (keys %_login_h) {
+			if ($keysinkeylist{$_}) { next; }
+			print HISTORYTMP "$_ ".int($_login_p{$_}||0)." ".int($_login_h{$_}||0)." ".int($_login_k{$_}||0)." ".($_login_l{$_}||'')."\n";
 		}
 		print HISTORYTMP "END_LOGIN\n";
 	}
@@ -3388,13 +3388,13 @@ sub Save_History {
 		# We save robot list in score sorted order to get a -output faster and with less use of memory.
 		&BuildKeyList($MaxNbOf{'RobotShown'},$MinHit{'Robot'},\%_robot_h,\%_robot_h);
 		my %keysinkeylist=();
-		foreach my $key (@keylist) {
-			$keysinkeylist{$key}=1;
-			print HISTORYTMP "$key ".int($_robot_h{$key})." ".int($_robot_k{$key})." $_robot_l{$key} ".int($_robot_r{$key})." \n";
+		foreach (@keylist) {
+			$keysinkeylist{$_}=1;
+			print HISTORYTMP "$_ ".int($_robot_h{$_})." ".int($_robot_k{$_})." $_robot_l{$_} ".int($_robot_r{$_})." \n";
 		}
-		foreach my $key (keys %_robot_h) {
-			if ($keysinkeylist{$key}) { next; }
-			print HISTORYTMP "$key ".int($_robot_h{$key})." ".int($_robot_k{$key})." $_robot_l{$key} ".int($_robot_r{$key})." \n";
+		foreach (keys %_robot_h) {
+			if ($keysinkeylist{$_}) { next; }
+			print HISTORYTMP "$_ ".int($_robot_h{$_})." ".int($_robot_k{$_})." $_robot_l{$_} ".int($_robot_r{$_})." \n";
 		}
 		print HISTORYTMP "END_ROBOT\n";
 	}
@@ -3407,13 +3407,13 @@ sub Save_History {
 		# We save robot list in score sorted order to get a -output faster and with less use of memory.
 		&BuildKeyList($MaxNbOf{'WormsShown'},$MinHit{'Worm'},\%_worm_h,\%_worm_h);
 		my %keysinkeylist=();
-		foreach my $key (@keylist) {
-			$keysinkeylist{$key}=1;
-			print HISTORYTMP "$key ".int($_worm_h{$key})." $_worm_l{$key}\n";
+		foreach (@keylist) {
+			$keysinkeylist{$_}=1;
+			print HISTORYTMP "$_ ".int($_worm_h{$_})." $_worm_l{$_}\n";
 		}
-		foreach my $key (keys %_worm_h) {
-			if ($keysinkeylist{$key}) { next; }
-			print HISTORYTMP "$key ".int($_worm_h{$key})." $_worm_l{$key}\n";
+		foreach (keys %_worm_h) {
+			if ($keysinkeylist{$_}) { next; }
+			print HISTORYTMP "$_ ".int($_worm_h{$_})." $_worm_l{$_}\n";
 		}
 		print HISTORYTMP "END_WORMS\n";
 	}
@@ -3426,13 +3426,13 @@ sub Save_History {
 		# We save sender email list in score sorted order to get a -output faster and with less use of memory.
 		&BuildKeyList($MaxNbOf{'EMailsShown'},$MinHit{'EMail'},\%_emails_h,\%_emails_h);
 		my %keysinkeylist=();
-		foreach my $key (@keylist) {
-			$keysinkeylist{$key}=1;
-			print HISTORYTMP "$key ".int($_emails_h{$key}||0)." ".int($_emails_k{$key}||0)." $_emails_l{$key}\n";
+		foreach (@keylist) {
+			$keysinkeylist{$_}=1;
+			print HISTORYTMP "$_ ".int($_emails_h{$_}||0)." ".int($_emails_k{$_}||0)." $_emails_l{$_}\n";
 		}
-		foreach my $key (keys %_emails_h) {
-			if ($keysinkeylist{$key}) { next; }
-			print HISTORYTMP "$key ".int($_emails_h{$key}||0)." ".int($_emails_k{$key}||0)." $_emails_l{$key}\n";
+		foreach (keys %_emails_h) {
+			if ($keysinkeylist{$_}) { next; }
+			print HISTORYTMP "$_ ".int($_emails_h{$_}||0)." ".int($_emails_k{$_}||0)." $_emails_l{$_}\n";
 		}
 		print HISTORYTMP "END_EMAILSENDER\n";
 	}
@@ -3445,13 +3445,13 @@ sub Save_History {
 		# We save receiver email list in score sorted order to get a -output faster and with less use of memory.
 		&BuildKeyList($MaxNbOf{'EMailsShown'},$MinHit{'EMail'},\%_emailr_h,\%_emailr_h);
 		my %keysinkeylist=();
-		foreach my $key (@keylist) {
-			$keysinkeylist{$key}=1;
-			print HISTORYTMP "$key ".int($_emailr_h{$key}||0)." ".int($_emailr_k{$key}||0)." $_emailr_l{$key}\n";
+		foreach (@keylist) {
+			$keysinkeylist{$_}=1;
+			print HISTORYTMP "$_ ".int($_emailr_h{$_}||0)." ".int($_emailr_k{$_}||0)." $_emailr_l{$_}\n";
 		}
-		foreach my $key (keys %_emailr_h) {
-			if ($keysinkeylist{$key}) { next; }
-			print HISTORYTMP "$key ".int($_emailr_h{$key}||0)." ".int($_emailr_k{$key}||0)." $_emailr_l{$key}\n";
+		foreach (keys %_emailr_h) {
+			if ($keysinkeylist{$_}) { next; }
+			print HISTORYTMP "$_ ".int($_emailr_h{$_}||0)." ".int($_emailr_k{$_}||0)." $_emailr_l{$_}\n";
 		}
 		print HISTORYTMP "END_EMAILRECEIVER\n";
 	}
@@ -3462,7 +3462,7 @@ sub Save_History {
 		print HISTORYTMP "# Session range - Number of visits\n";
 		$ValueInFile{$sectiontosave}=tell HISTORYTMP;
 		print HISTORYTMP "BEGIN_SESSION ".(scalar keys %_session)."\n";
-		foreach my $key (keys %_session) { print HISTORYTMP "$key ".int($_session{$key})."\n"; }
+		foreach (keys %_session) { print HISTORYTMP "$_ ".int($_session{$_})."\n"; }
 		print HISTORYTMP "END_SESSION\n";
 	}
 	if ($sectiontosave eq 'sider') {	# This section must be saved after VISITOR section is read
@@ -3474,17 +3474,17 @@ sub Save_History {
 		# We save page list in score sorted order to get a -output faster and with less use of memory.
 		&BuildKeyList($MaxNbOf{'PageShown'},$MinHit{'File'},\%_url_p,\%_url_p);
 		%keysinkeylist=();
-		foreach my $key (@keylist) {
-			$keysinkeylist{$key}=1;
-			my $newkey=$key;
+		foreach (@keylist) {
+			$keysinkeylist{$_}=1;
+			my $newkey=$_;
 			$newkey =~ s/([^:])\/\//$1\//g;		# Because some targeted url were taped with 2 / (Ex: //rep//file.htm). We must keep http://rep/file.htm
-			print HISTORYTMP "$newkey ".int($_url_p{$key}||0)." ".int($_url_k{$key}||0)." ".int($_url_e{$key}||0)." ".int($_url_x{$key}||0)."\n";
+			print HISTORYTMP "$newkey ".int($_url_p{$_}||0)." ".int($_url_k{$_}||0)." ".int($_url_e{$_}||0)." ".int($_url_x{$_}||0)."\n";
 		}
-		foreach my $key (keys %_url_p) {
-			if ($keysinkeylist{$key}) { next; }
-			my $newkey=$key;
+		foreach (keys %_url_p) {
+			if ($keysinkeylist{$_}) { next; }
+			my $newkey=$_;
 			$newkey =~ s/([^:])\/\//$1\//g;		# Because some targeted url were taped with 2 / (Ex: //rep//file.htm). We must keep http://rep/file.htm
-			print HISTORYTMP "$newkey ".int($_url_p{$key}||0)." ".int($_url_k{$key}||0)." ".int($_url_e{$key}||0)." ".int($_url_x{$key}||0)."\n";
+			print HISTORYTMP "$newkey ".int($_url_p{$_}||0)." ".int($_url_k{$_}||0)." ".int($_url_e{$_}||0)." ".int($_url_x{$_}||0)."\n";
 		}
 		print HISTORYTMP "END_SIDER\n";
 	}
@@ -3493,12 +3493,12 @@ sub Save_History {
 		print HISTORYTMP "# Files type - Hits - Bandwidth - Bandwidth without compression - Bandwidth after compression\n";
 		$ValueInFile{$sectiontosave}=tell HISTORYTMP;
 		print HISTORYTMP "BEGIN_FILETYPES ".(scalar keys %_filetypes_h)."\n";
-		foreach my $key (keys %_filetypes_h) {
-			my $hits=$_filetypes_h{$key}||0;
-			my $bytes=$_filetypes_k{$key}||0;
-			my $bytesbefore=$_filetypes_gz_in{$key}||0;
-			my $bytesafter=$_filetypes_gz_out{$key}||0;
-			print HISTORYTMP "$key $hits $bytes $bytesbefore $bytesafter\n";
+		foreach (keys %_filetypes_h) {
+			my $hits=$_filetypes_h{$_}||0;
+			my $bytes=$_filetypes_k{$_}||0;
+			my $bytesbefore=$_filetypes_gz_in{$_}||0;
+			my $bytesafter=$_filetypes_gz_out{$_}||0;
+			print HISTORYTMP "$_ $hits $bytes $bytesbefore $bytesafter\n";
 		}
 		print HISTORYTMP "END_FILETYPES\n";
 	}
@@ -3507,7 +3507,7 @@ sub Save_History {
 		print HISTORYTMP "# OS ID - Hits\n";
 		$ValueInFile{$sectiontosave}=tell HISTORYTMP;
 		print HISTORYTMP "BEGIN_OS ".(scalar keys %_os_h)."\n";
-		foreach my $key (keys %_os_h) { print HISTORYTMP "$key $_os_h{$key}\n"; }
+		foreach (keys %_os_h) { print HISTORYTMP "$_ $_os_h{$_}\n"; }
 		print HISTORYTMP "END_OS\n";
 	}
 	if ($sectiontosave eq 'browser') {
@@ -3515,7 +3515,7 @@ sub Save_History {
 		print HISTORYTMP "# Browser ID - Hits\n";
 		$ValueInFile{$sectiontosave}=tell HISTORYTMP;
 		print HISTORYTMP "BEGIN_BROWSER ".(scalar keys %_browser_h)."\n";
-		foreach my $key (keys %_browser_h) { print HISTORYTMP "$key $_browser_h{$key}\n"; }
+		foreach (keys %_browser_h) { print HISTORYTMP "$_ $_browser_h{$_}\n"; }
 		print HISTORYTMP "END_BROWSER\n";
 	}
 	if ($sectiontosave eq 'screensize') {
@@ -3523,7 +3523,7 @@ sub Save_History {
 		print HISTORYTMP "# Screen size - Hits\n";
 		$ValueInFile{$sectiontosave}=tell HISTORYTMP;
 		print HISTORYTMP "BEGIN_SCREENSIZE ".(scalar keys %_screensize_h)."\n";
-		foreach my $key (keys %_screensize_h) { print HISTORYTMP "$key $_screensize_h{$key}\n"; }
+		foreach (keys %_screensize_h) { print HISTORYTMP "$_ $_screensize_h{$_}\n"; }
 		print HISTORYTMP "END_SCREENSIZE\n";
 	}
 
@@ -3533,7 +3533,7 @@ sub Save_History {
 		print HISTORYTMP "# Unknown referer OS - Last visit date\n";
 		$ValueInFile{$sectiontosave}=tell HISTORYTMP;
 		print HISTORYTMP "BEGIN_UNKNOWNREFERER ".(scalar keys %_unknownreferer_l)."\n";
-		foreach my $key (keys %_unknownreferer_l) { print HISTORYTMP "$key $_unknownreferer_l{$key}\n"; }
+		foreach (keys %_unknownreferer_l) { print HISTORYTMP "$_ $_unknownreferer_l{$_}\n"; }
 		print HISTORYTMP "END_UNKNOWNREFERER\n";
 	}
 	if ($sectiontosave eq 'unknownrefererbrowser') {
@@ -3541,7 +3541,7 @@ sub Save_History {
 		print HISTORYTMP "# Unknown referer Browser - Last visit date\n";
 		$ValueInFile{$sectiontosave}=tell HISTORYTMP;
 		print HISTORYTMP "BEGIN_UNKNOWNREFERERBROWSER ".(scalar keys %_unknownrefererbrowser_l)."\n";
-		foreach my $key (keys %_unknownrefererbrowser_l) { print HISTORYTMP "$key $_unknownrefererbrowser_l{$key}\n"; }
+		foreach (keys %_unknownrefererbrowser_l) { print HISTORYTMP "$_ $_unknownrefererbrowser_l{$_}\n"; }
 		print HISTORYTMP "END_UNKNOWNREFERERBROWSER\n";
 	}
 	if ($sectiontosave eq 'origin') {
@@ -3562,7 +3562,7 @@ sub Save_History {
 		print HISTORYTMP "# Search engine referers ID - Pages - Hits\n";
 		$ValueInFile{$sectiontosave}=tell HISTORYTMP;
 		print HISTORYTMP "BEGIN_SEREFERRALS ".(scalar keys %_se_referrals_h)."\n";
-		foreach my $key (keys %_se_referrals_h) { print HISTORYTMP "$key ".int($_se_referrals_p{$key}||0)." $_se_referrals_h{$key}\n"; }
+		foreach (keys %_se_referrals_h) { print HISTORYTMP "$_ ".int($_se_referrals_p{$_}||0)." $_se_referrals_h{$_}\n"; }
 		print HISTORYTMP "END_SEREFERRALS\n";
 	}
 	if ($sectiontosave eq 'pagerefs') {
@@ -3574,19 +3574,19 @@ sub Save_History {
 		# We save page list in score sorted order to get a -output faster and with less use of memory.
 		&BuildKeyList($MaxNbOf{'RefererShown'},$MinHit{'Refer'},\%_pagesrefs_h,\%_pagesrefs_p);
 		%keysinkeylist=();
-		foreach my $key (@keylist) {
-			$keysinkeylist{$key}=1;
-			my $newkey=$key;
+		foreach (@keylist) {
+			$keysinkeylist{$_}=1;
+			my $newkey=$_;
 			$newkey =~ s/^http(s|):\/\/([^\/]+)\/$/http$1:\/\/$2/i;	# Remove / at end of http://.../ but not at end of http://.../dir/
 			$newkey =~ s/\s/%20/g;
-			print HISTORYTMP "$newkey ".int($_pagesrefs_p{$key}||0)." $_pagesrefs_h{$key}\n";
+			print HISTORYTMP "$newkey ".int($_pagesrefs_p{$_}||0)." $_pagesrefs_h{$_}\n";
 		}
-		foreach my $key (keys %_pagesrefs_h) {
-			if ($keysinkeylist{$key}) { next; }
-			my $newkey=$key;
+		foreach (keys %_pagesrefs_h) {
+			if ($keysinkeylist{$_}) { next; }
+			my $newkey=$_;
 			$newkey =~ s/^http(s|):\/\/([^\/]+)\/$/http$1:\/\/$2/i;	# Remove / at end of http://.../ but not at end of http://.../dir/
 			$newkey =~ s/\s/%20/g;
-			print HISTORYTMP "$newkey ".int($_pagesrefs_p{$key}||0)." $_pagesrefs_h{$key}\n";
+			print HISTORYTMP "$newkey ".int($_pagesrefs_p{$_}||0)." $_pagesrefs_h{$_}\n";
 		}
 		print HISTORYTMP "END_PAGEREFS\n";
 	}
@@ -3605,13 +3605,13 @@ sub Save_History {
 			$keysinkeylist{$key}=1;
 			my $keyphrase=$key;
 			print HISTORYTMP "$keyphrase $_keyphrases{$key}\n";
-			foreach my $word (split(/\+/,$key)) { $_keywords{$word}+=$_keyphrases{$key}; }	# To init %_keywords
+			foreach (split(/\+/,$key)) { $_keywords{$_}+=$_keyphrases{$key}; }	# To init %_keywords
 		}
 		foreach my $key (keys %_keyphrases) {
 			if ($keysinkeylist{$key}) { next; }
 			my $keyphrase=$key;
 			print HISTORYTMP "$keyphrase $_keyphrases{$key}\n";
-			foreach my $word (split(/\+/,$key)) { $_keywords{$word}+=$_keyphrases{$key}; }	# To init %_keywords
+			foreach (split(/\+/,$key)) { $_keywords{$_}+=$_keyphrases{$key}; }	# To init %_keywords
 		}
 		print HISTORYTMP "END_SEARCHWORDS\n";
 		# Now save keywords section
@@ -3623,15 +3623,15 @@ sub Save_History {
 		# We save key list in score sorted order to get a -output faster and with less use of memory.
 		&BuildKeyList($MaxNbOf{'KeywordsShown'},$MinHit{'Keyword'},\%_keywords,\%_keywords);
 		%keysinkeylist=();
-		foreach my $key (@keylist) {
-			$keysinkeylist{$key}=1;
-			my $keyword=$key;
-			print HISTORYTMP "$keyword $_keywords{$key}\n";
+		foreach (@keylist) {
+			$keysinkeylist{$_}=1;
+			my $keyword=$_;
+			print HISTORYTMP "$keyword $_keywords{$_}\n";
 		}
-		foreach my $key (keys %_keywords) {
-			if ($keysinkeylist{$key}) { next; }
-			my $keyword=$key;
-			print HISTORYTMP "$keyword $_keywords{$key}\n";
+		foreach (keys %_keywords) {
+			if ($keysinkeylist{$_}) { next; }
+			my $keyword=$_;
+			print HISTORYTMP "$keyword $_keywords{$_}\n";
 		}
 		print HISTORYTMP "END_KEYWORDS\n";
 	}
@@ -3642,7 +3642,7 @@ sub Save_History {
 		print HISTORYTMP "# Cluster ID - Pages - Hits - Bandwidth\n";
 		$ValueInFile{$sectiontosave}=tell HISTORYTMP;
 		print HISTORYTMP "BEGIN_CLUSTER ".(scalar keys %_cluster_h)."\n";
-		foreach my $key (keys %_cluster_h) { print HISTORYTMP "$key ".int($_cluster_p{$key}||0)." ".int($_cluster_h{$key}||0)." ".int($_cluster_k{$key}||0)."\n"; }
+		foreach (keys %_cluster_h) { print HISTORYTMP "$_ ".int($_cluster_p{$_}||0)." ".int($_cluster_h{$_}||0)." ".int($_cluster_k{$_}||0)."\n"; }
 		print HISTORYTMP "END_CLUSTER\n";
 	}
 	if ($sectiontosave eq 'misc') {
@@ -3650,7 +3650,7 @@ sub Save_History {
 		print HISTORYTMP "# Misc ID - Pages - Hits - Bandwidth\n";
 		$ValueInFile{$sectiontosave}=tell HISTORYTMP;
 		print HISTORYTMP "BEGIN_MISC ".(scalar keys %MiscListCalc)."\n";
-		foreach my $key (keys %MiscListCalc) { print HISTORYTMP "$key ".int($_misc_p{$key}||0)." ".int($_misc_h{$key}||0)." ".int($_misc_k{$key}||0)."\n"; }
+		foreach (keys %MiscListCalc) { print HISTORYTMP "$_ ".int($_misc_p{$_}||0)." ".int($_misc_h{$_}||0)." ".int($_misc_k{$_}||0)."\n"; }
 		print HISTORYTMP "END_MISC\n";
 	}
 	if ($sectiontosave eq 'errors') {
@@ -3658,7 +3658,7 @@ sub Save_History {
 		print HISTORYTMP "# Errors - Hits - Bandwidth\n";
 		$ValueInFile{$sectiontosave}=tell HISTORYTMP;
 		print HISTORYTMP "BEGIN_ERRORS ".(scalar keys %_errors_h)."\n";
-		foreach my $key (keys %_errors_h) { print HISTORYTMP "$key $_errors_h{$key} ".int($_errors_k{$key}||0)."\n"; }
+		foreach (keys %_errors_h) { print HISTORYTMP "$_ $_errors_h{$_} ".int($_errors_k{$_}||0)."\n"; }
 		print HISTORYTMP "END_ERRORS\n";
 	}
  	# Other - Trapped errors
@@ -3668,10 +3668,10 @@ sub Save_History {
 			print HISTORYTMP "# URL with $code errors - Hits - Last URL referer\n";
 			$ValueInFile{$sectiontosave}=tell HISTORYTMP;
 			print HISTORYTMP "BEGIN_SIDER_$code ".(scalar keys %_sider404_h)."\n";
-			foreach my $key (keys %_sider404_h) {
-				my $newkey=$key;
-				my $newreferer=$_referer404_h{$key}||''; $newreferer =~ s/\s/%20/g;
-				print HISTORYTMP "$newkey $_sider404_h{$key} $newreferer\n";
+			foreach (keys %_sider404_h) {
+				my $newkey=$_;
+				my $newreferer=$_referer404_h{$_}||''; $newreferer =~ s/\s/%20/g;
+				print HISTORYTMP "$newkey $_sider404_h{$_} $newreferer\n";
 			}
 			print HISTORYTMP "END_SIDER_$code\n";
 		}
@@ -3685,19 +3685,19 @@ sub Save_History {
 	 		print HISTORYTMP "BEGIN_EXTRA_$extranum\n";
 	 		&BuildKeyList($MaxNbOfExtra[$extranum],$MinHitExtra[$extranum],\%{'_section_' . $extranum . '_h'},\%{'_section_' . $extranum . '_p'});
 	 		%keysinkeylist=();
-	 		foreach my $key (@keylist) {
-	 			$keysinkeylist{$key}=1;
-	 			my $page=${'_section_' . $extranum . '_p'}{$key}||0;
-	 			my $bytes=${'_section_' . $extranum . '_k'}{$key}||0;
-	 			my $lastaccess=${'_section_' . $extranum . '_l'}{$key}||'';
-	 			print HISTORYTMP "$key $page ", ${'_section_' . $extranum . '_h'}{$key}, " $bytes $lastaccess\n"; next;
+	 		foreach (@keylist) {
+	 			$keysinkeylist{$_}=1;
+	 			my $page=${'_section_' . $extranum . '_p'}{$_}||0;
+	 			my $bytes=${'_section_' . $extranum . '_k'}{$_}||0;
+	 			my $lastaccess=${'_section_' . $extranum . '_l'}{$_}||'';
+	 			print HISTORYTMP "$_ $page ", ${'_section_' . $extranum . '_h'}{$_}, " $bytes $lastaccess\n"; next;
 	 		}
-	 		foreach my $key (keys %{'_section_' . $extranum . '_h'}) {
-	 			if ($keysinkeylist{$key}) { next; }
-	 			my $page=${'_section_' . $extranum . '_p'}{$key}||0;
-	 			my $bytes=${'_section_' . $extranum . '_k'}{$key}||0;
-	 			my $lastaccess=${'_section_' . $extranum . '_l'}{$key}||'';
-	 			print HISTORYTMP "$key $page ", ${'_section_' . $extranum . '_h'}{$key}, " $bytes $lastaccess\n"; next;
+	 		foreach (keys %{'_section_' . $extranum . '_h'}) {
+	 			if ($keysinkeylist{$_}) { next; }
+	 			my $page=${'_section_' . $extranum . '_p'}{$_}||0;
+	 			my $bytes=${'_section_' . $extranum . '_k'}{$_}||0;
+	 			my $lastaccess=${'_section_' . $extranum . '_l'}{$_}||'';
+	 			print HISTORYTMP "$_ $page ", ${'_section_' . $extranum . '_h'}{$_}, " $bytes $lastaccess\n"; next;
 	 		}
 	 		print HISTORYTMP "END_EXTRA_$extranum\n";
 		}
@@ -4540,8 +4540,8 @@ sub DefinePerlParsingFormat {
 	if ($LogFormat =~ /^[1-6]$/) {	# Pre-defined log format
 		if ($LogFormat eq '1' || $LogFormat eq '6') {	# Same than "%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\"".
 			# %u (user) is "([^\\[]+)" instead of "[^ ]+" because can contain space (Lotus Notes). referer and ua might be "".
-			$PerlParsingFormat="([^ ]+) [^ ]+ ([^\\[]+) \\[([^ ]+) [^ ]+\\] \\\"([^ ]+) (.+) [^\\\"]+\\\" ([\\d|-]+) ([\\d|-]+) \\\"(.*?)\\\" \\\"([^\\\"]*)\\\"";
-#			$PerlParsingFormat="([^ ]+) [^ ]+ ([^\\[]+) \\[([^ ]+) [^ ]+\\] \\\"([^ ]+) ([^ ]+) [^\\\"]+\\\" ([\\d|-]+) ([\\d|-]+) \\\"(.*?)\\\" \\\"([^\\\"]*)\\\"";
+#			$PerlParsingFormat="([^ ]+) [^ ]+ ([^\\[]+) \\[([^ ]+) [^ ]+\\] \\\"([^ ]+) (.+) [^\\\"]+\\\" ([\\d|-]+) ([\\d|-]+) \\\"(.*?)\\\" \\\"([^\\\"]*)\\\"";
+			$PerlParsingFormat="([^ ]+) [^ ]+ ([^\\[]+) \\[([^ ]+) [^ ]+\\] \\\"([^ ]+) ([^ ]+) [^\\\"]+\\\" ([\\d|-]+) ([\\d|-]+) \\\"(.*?)\\\" \\\"([^\\\"]*)\\\"";
 			$pos_host=0;$pos_logname=1;$pos_date=2;$pos_method=3;$pos_url=4;$pos_code=5;$pos_size=6;$pos_referer=7;$pos_agent=8;
 			@fieldlib=('host','logname','date','method','url','code','size','referer','ua');
 		}
@@ -4808,8 +4808,8 @@ sub ShowEmailSendersChart {
 	print "</tr>\n";
 	print "<tr bgcolor=\"#$color_TableBGRowTitle\"><th width=\"30%\">Local</th><th>&nbsp;</th><th width=\"30%\">External</th></tr>";
 	$total_p=$total_h=$total_k=0;
-	$max_h=1; foreach my $key (values %_emails_h) { if ($key > $max_h) { $max_h = $key; } }
-	$max_k=1; foreach my $key (values %_emails_k) { if ($key > $max_k) { $max_k = $key; } }
+	$max_h=1; foreach (values %_emails_h) { if ($_ > $max_h) { $max_h = $_; } }
+	$max_k=1; foreach (values %_emails_k) { if ($_ > $max_k) { $max_k = $_; } }
 	my $count=0;
 	if (! $HTMLOutput{'allemails'} && ! $HTMLOutput{'lastemails'}) { &BuildKeyList($MaxNbOf{'EMailsShown'},$MinHit{'EMail'},\%_emails_h,\%_emails_h); }
 	if ($HTMLOutput{'allemails'})  { &BuildKeyList($MaxRowsInHTMLOutput,$MinHit{'EMail'},\%_emails_h,\%_emails_h); }
@@ -4881,8 +4881,8 @@ sub ShowEmailReceiversChart {
 	print "</tr>\n";
 	print "<tr bgcolor=\"#$color_TableBGRowTitle\"><th width=\"30%\">Local</th><th>&nbsp;</th><th width=\"30%\">External</th></tr>";
 	$total_p=$total_h=$total_k=0;
-	$max_h=1; foreach my $key (values %_emailr_h) { if ($key > $max_h) { $max_h = $key; } }
-	$max_k=1; foreach my $key (values %_emailr_k) { if ($key > $max_k) { $max_k = $key; } }
+	$max_h=1; foreach (values %_emailr_h) { if ($_ > $max_h) { $max_h = $_; } }
+	$max_k=1; foreach (values %_emailr_k) { if ($_ > $max_k) { $max_k = $_; } }
 	my $count=0;
 	if (! $HTMLOutput{'allemailr'} && ! $HTMLOutput{'lastemailr'}) { &BuildKeyList($MaxNbOf{'EMailsShown'},$MinHit{'EMail'},\%_emailr_h,\%_emailr_h); }
 	if ($HTMLOutput{'allemailr'})  { &BuildKeyList($MaxRowsInHTMLOutput,$MinHit{'EMail'},\%_emailr_h,\%_emailr_h); }
@@ -5071,8 +5071,8 @@ if ($QueryString =~ /(^|&)staticlinksext=([^&]+)/i) { $StaticExt="$2"; }
 if ($QueryString =~ /(^|&)framename=([^&]+)/i)		{ $FrameName="$2"; }
 if ($QueryString =~ /(^|&)debug=(\d+)/i)			{ $Debug=$2; }
 if ($QueryString =~ /(^|&)updatefor=(\d+)/i)		{ $UpdateFor=$2; }
-if ($QueryString =~ /(^|&)noloadplugin=([^&]+)/i)		{ foreach my $plugin (split(/,/,$2)) { $NoLoadPlugin{"$plugin"}=1; } }
-if ($QueryString =~ /(^|&)forceloadplugin=([^&]+)/i)	{ foreach my $plugin (split(/,/,$2)) { $NoLoadPlugin{"$plugin"}=-1; } }
+if ($QueryString =~ /(^|&)noloadplugin=([^&]+)/i)		{ foreach (split(/,/,$2)) { $NoLoadPlugin{"$_"}=1; } }
+if ($QueryString =~ /(^|&)forceloadplugin=([^&]+)/i)	{ foreach (split(/,/,$2)) { $NoLoadPlugin{"$_"}=-1; } }
 if ($QueryString =~ /(^|&)limitflush=(\d+)/i)		{ $LIMITFLUSH=$2; }
 # Get/Define output
 if ($QueryString =~ /(^|&)output(=[^&]*|)(.*)&output(=[^&]*|)(&|$)/i) { error("Only 1 output option is allowed","","",1); }
@@ -5631,7 +5631,7 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 
 		if ($Debug) {
 			my $string='';
-			foreach my $key (0..@field-1) {	$string.="$fieldlib[$key]=$field[$key] "; }
+			foreach (0..@field-1) {	$string.="$fieldlib[$_]=$field[$_] "; }
 			debug(" Correct format line ".($lastlinenumber+$NbOfLinesParsed).": $string",4);
 		}
 
@@ -5663,11 +5663,9 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 		}
 		elsif ($LogType eq 'F' && ($field[$pos_method] eq 'RETR' || $field[$pos_method] eq 'o' || $field[$pos_method] =~ /get/i)) {
 			# FTP GET request
-#			$field[$pos_url] =~ s/\s/%20/g;
 		}
 		elsif ($LogType eq 'F' && ($field[$pos_method] eq 'STOR' || $field[$pos_method] eq 'i' || $field[$pos_method] =~ /sent/i)) {
 			# FTP SENT request
-#			$field[$pos_url] =~ s/\s/%20/g;
 		}
 		else {
 			$NbOfLinesDropped++;
@@ -5779,16 +5777,16 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 			my $query=$field[$pos_url];
 			if ($pos_query >=0 && $field[$pos_query]) { $query=$field[$pos_query]; } # For this fucking IIS in pos_query mode
 			my $foundparam=0;
-			foreach my $param (split(/&/,$query)) {
-				if ($param =~ /SCREEN=(\d+)x(\d+)/) { $foundparam++; $_screensize_h{"$1x$2"}++; next; }
-#				if ($param =~ /CDI=(\d+)/) 			{ $foundparam++; $_screendepth_h{"$1"}++; next; }
-				if ($param =~ /JAVA=(\w+)/) 		{ $foundparam++; if ($1 eq 'true') { $_misc_h{"JavaEnabled"}++; } next; }
-				if ($param =~ /SHK=(\w+)/) 			{ $foundparam++; if ($1 eq 'Y')    { $_misc_h{"DirectorSupport"}++; } next; }
-				if ($param =~ /FLA=(\w+)/) 			{ $foundparam++; if ($1 eq 'Y')    { $_misc_h{"FlashSupport"}++; } next; }
-				if ($param =~ /RP=(\w+)/) 			{ $foundparam++; if ($1 eq 'Y')    { $_misc_h{"RealPlayerSupport"}++; } next; }
-				if ($param =~ /MOV=(\w+)/) 			{ $foundparam++; if ($1 eq 'Y')    { $_misc_h{"QuickTimeSupport"}++; } next; }
-				if ($param =~ /WMA=(\w+)/) 			{ $foundparam++; if ($1 eq 'Y')    { $_misc_h{"WindowsMediaPlayerSupport"}++; } next; }
-				if ($param =~ /PDF=(\w+)/) 			{ $foundparam++; if ($1 eq 'Y')    { $_misc_h{"PDFSupport"}++; } next; }
+			foreach (split(/&/,$query)) {
+				if ($_ =~ /SCREEN=(\d+)x(\d+)/) { $foundparam++; $_screensize_h{"$1x$2"}++; next; }
+#				if ($_ =~ /CDI=(\d+)/) 			{ $foundparam++; $_screendepth_h{"$1"}++; next; }
+				if ($_ =~ /JAVA=(\w+)/) 		{ $foundparam++; if ($1 eq 'true') { $_misc_h{"JavaEnabled"}++; } next; }
+				if ($_ =~ /SHK=(\w+)/) 			{ $foundparam++; if ($1 eq 'Y')    { $_misc_h{"DirectorSupport"}++; } next; }
+				if ($_ =~ /FLA=(\w+)/) 			{ $foundparam++; if ($1 eq 'Y')    { $_misc_h{"FlashSupport"}++; } next; }
+				if ($_ =~ /RP=(\w+)/) 			{ $foundparam++; if ($1 eq 'Y')    { $_misc_h{"RealPlayerSupport"}++; } next; }
+				if ($_ =~ /MOV=(\w+)/) 			{ $foundparam++; if ($1 eq 'Y')    { $_misc_h{"QuickTimeSupport"}++; } next; }
+				if ($_ =~ /WMA=(\w+)/) 			{ $foundparam++; if ($1 eq 'Y')    { $_misc_h{"WindowsMediaPlayerSupport"}++; } next; }
+				if ($_ =~ /PDF=(\w+)/) 			{ $foundparam++; if ($1 eq 'Y')    { $_misc_h{"PDFSupport"}++; } next; }
 			}
 			if ($foundparam) { $_misc_h{"TotalMisc"}++; }
 		}
@@ -5990,8 +5988,8 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 		my $hourrecord=int($dateparts[3]);
 		if ($PageBool) {
 			# Replace default page name with / only ('if' is to increase speed when only 1 value in @DefaultFile)
-			if (@DefaultFile > 1) { foreach my $elem (@DefaultFile) { if ($field[$pos_url] =~ s/\/$elem$/\//) { last; } } }
-			else { $field[$pos_url] =~ s/$regdefault/\//; }
+			if (@DefaultFile > 1) { foreach my $elem (@DefaultFile) { if ($field[$pos_url] =~ s/\/$elem$/\//o) { last; } } }
+			else { $field[$pos_url] =~ s/$regdefault/\//o; }
 			# FirstTime and LastTime are First and Last human visits (so changed if access to a page)
 			$FirstTime{$lastprocessedyearmonth}||=$timerecord;
 			$LastTime{$lastprocessedyearmonth}=$timerecord;
@@ -6834,7 +6832,7 @@ if (scalar keys %HTMLOutput) {
 			print "<td class=\"aws\" valign=\"middle\">";
 			if ($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks) {
 				print "<select class=\"aws_formfield\" name=\"month\">\n";
-				foreach my $ix (1..12) { my $monthix=sprintf("%02s",$ix); print "<option".($MonthRequired eq "$monthix"?" selected=\"true\"":"")." value=\"$monthix\">$MonthNumLib{$monthix}</option>\n"; }
+				foreach (1..12) { my $monthix=sprintf("%02s",$_); print "<option".($MonthRequired eq "$monthix"?" selected=\"true\"":"")." value=\"$monthix\">$MonthNumLib{$monthix}</option>\n"; }
 				if ($AllowFullYearView >= 2) {
 					print "<option".($MonthRequired eq 'all'?" selected=\"true\"":"")." value='all'>- $Message[6] -</option>\n";
 				}
@@ -6842,7 +6840,7 @@ if (scalar keys %HTMLOutput) {
 				print "<select class=\"aws_formfield\" name=\"year\">\n";
 				# Add YearRequired in list if not in ListOfYears
 				$ListOfYears{$YearRequired}||=$MonthRequired;
-				foreach my $key (sort keys %ListOfYears) { print "<option".($YearRequired eq "$key"?" selected=\"true\"":"")." value=\"$key\">$key</option>\n"; }
+				foreach (sort keys %ListOfYears) { print "<option".($YearRequired eq "$_"?" selected=\"true\"":"")." value=\"$_\">$_</option>\n"; }
 				print "</select>\n";
 				print "<input type=\"hidden\" name=\"output\" value=\"".join(',',keys %HTMLOutput)."\" />\n";
 				if ($SiteConfig) { print "<input type=\"hidden\" name=\"config\" value=\"$SiteConfig\" />\n"; }
@@ -6958,8 +6956,8 @@ if (scalar keys %HTMLOutput) {
 				if ($ShowFileTypesStats =~ /C/i)	 { print ($frame?"<tr><td class=\"aws\">":""); print "<a href=\"$linkanchor#filetypes\"$targetpage>$Message[98]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
 				if ($ShowMiscStats)	 		 { print ($frame?"<tr><td class=\"aws\">":""); print "<a href=\"$linkanchor#misc\"$targetpage>$Message[139]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
 				if ($ShowHTTPErrorsStats)	 { print ($frame?"<tr><td class=\"aws\">":""); print "<a href=\"$linkanchor#errors\"$targetpage>$Message[32]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
-				foreach my $code (keys %TrapInfosForHTTPErrorCodes) {
-					if ($ShowHTTPErrorsStats)	 { print ($frame?"<tr><td class=\"aws\"> &nbsp; <img height=\"8\" width=\"9\" src=\"$DirIcons/other/page.png\" alt=\"...\" /> ":""); print "<a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?XMLEncode("$AWScript?${NewLinkParams}output=errors$code"):"$PROG$StaticLinks.errors$code.$StaticExt")."\"$NewLinkTarget>$Message[31]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
+				foreach (keys %TrapInfosForHTTPErrorCodes) {
+					if ($ShowHTTPErrorsStats)	 { print ($frame?"<tr><td class=\"aws\"> &nbsp; <img height=\"8\" width=\"9\" src=\"$DirIcons/other/page.png\" alt=\"...\" /> ":""); print "<a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?XMLEncode("$AWScript?${NewLinkParams}output=errors$_"):"$PROG$StaticLinks.errors$_.$StaticExt")."\"$NewLinkTarget>$Message[31]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
 				}
 				if ($ShowSMTPErrorsStats)	 { print ($frame?"<tr><td class=\"aws\">":""); print "<a href=\"$linkanchor#errors\"$targetpage>$Message[147]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
 				if ($ShowClusterStats)	 	 { print ($frame?"<tr><td class=\"aws\">":""); print "<a href=\"$linkanchor#clusters\"$targetpage>$Message[155]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
@@ -6968,8 +6966,8 @@ if (scalar keys %HTMLOutput) {
 			 	$linetitle=&AtLeastOneNotNull(@ExtraStatTypes);
 				if ($linetitle) { print "<tr><td class=\"aws\"".($frame?"":" valign=\"top\"")."><b>$Message[134]:</b></td>\n"; }
 				if ($linetitle) { print ($frame?"</tr>\n":"<td class=\"aws\">"); }
-				foreach my $extranum (1..@ExtraName-1) {
-					print ($frame?"<tr><td class=\"aws\">":""); print "<a href=\"$linkanchor#extra$extranum\"$targetpage>$ExtraName[$extranum]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; ");
+				foreach (1..@ExtraName-1) {
+					print ($frame?"<tr><td class=\"aws\">":""); print "<a href=\"$linkanchor#extra$_\"$targetpage>$ExtraName[$_]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; ");
 				}
 				if ($linetitle) { print ($frame?"":"</td></tr>\n"); }
 				print "</table>\n";
@@ -7031,25 +7029,25 @@ if (scalar keys %HTMLOutput) {
 	}
 	# TotalHitsErrors TotalBytesErrors
 	my $TotalHitsErrors=0; my $TotalBytesErrors=0;
-	foreach my $key (keys %_errors_h) { $TotalHitsErrors+=$_errors_h{$key}; $TotalBytesErrors+=$_errors_k{$key}; }
+	foreach (keys %_errors_h) { $TotalHitsErrors+=$_errors_h{$_}; $TotalBytesErrors+=$_errors_k{$_}; }
 	# TotalEntries (if not already specifically counted, we init it from _url_e hash table)
-	if (!$TotalEntries) { foreach my $key (keys %_url_e) { $TotalEntries+=$_url_e{$key}; } }
+	if (!$TotalEntries) { foreach (keys %_url_e) { $TotalEntries+=$_url_e{$_}; } }
 	# TotalExits (if not already specifically counted, we init it from _url_x hash table)
-	if (!$TotalExits) { foreach my $key (keys %_url_x) { $TotalExits+=$_url_x{$key}; } }
+	if (!$TotalExits) { foreach (keys %_url_x) { $TotalExits+=$_url_x{$_}; } }
 	# TotalBytesPages (if not already specifically counted, we init it from _url_k hash table)
-	if (!$TotalBytesPages) { foreach my $key (keys %_url_k) { $TotalBytesPages+=$_url_k{$key}; } }
+	if (!$TotalBytesPages) { foreach (keys %_url_k) { $TotalBytesPages+=$_url_k{$_}; } }
 	# TotalKeyphrases (if not already specifically counted, we init it from _keyphrases hash table)
-	if (!$TotalKeyphrases) { foreach my $key (keys %_keyphrases) { $TotalKeyphrases+=$_keyphrases{$key}; } }
+	if (!$TotalKeyphrases) { foreach (keys %_keyphrases) { $TotalKeyphrases+=$_keyphrases{$_}; } }
 	# TotalKeywords (if not already specifically counted, we init it from _keywords hash table)
-	if (!$TotalKeywords) { foreach my $key (keys %_keywords) { $TotalKeywords+=$_keywords{$key}; } }
+	if (!$TotalKeywords) { foreach (keys %_keywords) { $TotalKeywords+=$_keywords{$_}; } }
 	# TotalSearchEnginesPages (if not already specifically counted, we init it from _se_referrals_p hash table)
-	if (!$TotalSearchEnginesPages) { foreach my $key (keys %_se_referrals_p) { $TotalSearchEnginesPages+=$_se_referrals_p{$key}; } }
+	if (!$TotalSearchEnginesPages) { foreach (keys %_se_referrals_p) { $TotalSearchEnginesPages+=$_se_referrals_p{$_}; } }
 	# TotalSearchEnginesHits (if not already specifically counted, we init it from _se_referrals_h hash table)
-	if (!$TotalSearchEnginesHits) { foreach my $key (keys %_se_referrals_h) { $TotalSearchEnginesHits+=$_se_referrals_h{$key}; } }
+	if (!$TotalSearchEnginesHits) { foreach (keys %_se_referrals_h) { $TotalSearchEnginesHits+=$_se_referrals_h{$_}; } }
 	# TotalRefererPages (if not already specifically counted, we init it from _pagesrefs_p hash table)
-	if (!$TotalRefererPages) { foreach my $key (keys %_pagesrefs_p) { $TotalRefererPages+=$_pagesrefs_p{$key}; } }
+	if (!$TotalRefererPages) { foreach (keys %_pagesrefs_p) { $TotalRefererPages+=$_pagesrefs_p{$_}; } }
 	# TotalRefererHits (if not already specifically counted, we init it from _pagesrefs_h hash table)
-	if (!$TotalRefererHits) { foreach my $key (keys %_pagesrefs_h) { $TotalRefererHits+=$_pagesrefs_h{$key}; } }
+	if (!$TotalRefererHits) { foreach (keys %_pagesrefs_h) { $TotalRefererHits+=$_pagesrefs_h{$_}; } }
 	# TotalDifferentPages (if not already specifically counted, we init it from _url_p hash table)
 	$TotalDifferentPages||=scalar keys %_url_p;
 	# TotalDifferentKeyphrases (if not already specifically counted, we init it from _keyphrases hash table)
@@ -7320,8 +7318,8 @@ if (scalar keys %HTMLOutput) {
 		print "<th>&nbsp;</th>";
 		print "</tr>\n";
 		$total_p=$total_h=$total_k=0;
-		$max_h=1; foreach my $key (values %_domener_h) { if ($key > $max_h) { $max_h = $key; } }
-		$max_k=1; foreach my $key (values %_domener_k) { if ($key > $max_k) { $max_k = $key; } }
+		$max_h=1; foreach (values %_domener_h) { if ($_ > $max_h) { $max_h = $_; } }
+		$max_k=1; foreach (values %_domener_k) { if ($_ > $max_k) { $max_k = $_; } }
 		my $count=0;
 		&BuildKeyList($MaxRowsInHTMLOutput,1,\%_domener_h,\%_domener_p);
 		foreach my $key (@keylist) {
@@ -8729,8 +8727,8 @@ if (scalar keys %HTMLOutput) {
 			print "<th>&nbsp;</th>";
 			print "</tr>\n";
 			$total_p=$total_h=$total_k=0;
-			$max_h=1; foreach my $key (values %_domener_h) { if ($key > $max_h) { $max_h = $key; } }
-			$max_k=1; foreach my $key (values %_domener_k) { if ($key > $max_k) { $max_k = $key; } }
+			$max_h=1; foreach (values %_domener_h) { if ($_ > $max_h) { $max_h = $_; } }
+			$max_k=1; foreach (values %_domener_k) { if ($_ > $max_k) { $max_k = $_; } }
 			my $count=0;
 			&BuildKeyList($MaxNbOf{'Domain'},$MinHit{'Domain'},\%_domener_h,\%_domener_p);
 			foreach my $key (@keylist) {
@@ -8854,8 +8852,8 @@ if (scalar keys %HTMLOutput) {
 			if ($ShowAuthenticatedUsers =~ /L/i) { print "<th width=\"120\">$Message[9]</th>"; }
 			print "</tr>\n";
 			$total_p=$total_h=$total_k=0;
-			$max_h=1; foreach my $key (values %_login_h) { if ($key > $max_h) { $max_h = $key; } }
-			$max_k=1; foreach my $key (values %_login_k) { if ($key > $max_k) { $max_k = $key; } }
+			$max_h=1; foreach (values %_login_h) { if ($_ > $max_h) { $max_h = $_; } }
+			$max_k=1; foreach (values %_login_k) { if ($_ > $max_k) { $max_k = $_; } }
 			my $count=0;
 			&BuildKeyList($MaxNbOf{'LoginShown'},$MinHit{'Login'},\%_login_h,\%_login_p);
 			foreach my $key (@keylist) {
@@ -8978,8 +8976,8 @@ if (scalar keys %HTMLOutput) {
 		if ($ShowFileTypesStats) {
 			if ($Debug) { debug("ShowFileTypesStatsCompressionStats",2); }
 			print "$Center<a name=\"filetypes\">&nbsp;</a><br />\n";
-			my $Totalh=0; foreach my $key (keys %_filetypes_h) { $Totalh+=$_filetypes_h{$key}; }
-			my $Totalk=0; foreach my $key (keys %_filetypes_k) { $Totalk+=$_filetypes_k{$key}; }
+			my $Totalh=0; foreach (keys %_filetypes_h) { $Totalh+=$_filetypes_h{$_}; }
+			my $Totalk=0; foreach (keys %_filetypes_k) { $Totalk+=$_filetypes_k{$_}; }
 			my $title="$Message[73]";
 			if ($ShowFileTypesStats =~ /C/i) { $title.=" - $Message[98]"; }
 			&tab_head("$title",19,0,'filetypes');
@@ -9209,7 +9207,7 @@ if (scalar keys %HTMLOutput) {
 		if ($ShowScreenSizeStats) {
 			if ($Debug) { debug("ShowScreenSizeStats",2); }
 			print "$Center<a name=\"screensizes\">&nbsp;</a><br />\n";
-			my $Totalh=0; foreach my $key (keys %_screensize_h) { $Totalh+=$_screensize_h{$key}; }
+			my $Totalh=0; foreach (keys %_screensize_h) { $Totalh+=$_screensize_h{$_}; }
 			my $title="$Message[135] ($Message[77] $MaxNbOf{'ScreenSizesShown'})";
 			&tab_head("$title",0,0,'screensizes');
 			print "<tr bgcolor=\"#$color_TableBGRowTitle\"><th>$Message[135]</th><th bgcolor=\"#$color_h\" width=\"80\">$Message[15]</th></tr>\n";
@@ -9251,8 +9249,8 @@ if (scalar keys %HTMLOutput) {
 		if ($ShowOriginStats) {
 			if ($Debug) { debug("ShowOriginStats",2); }
 			print "$Center<a name=\"referer\">&nbsp;</a><br />\n";
-			my $Totalp=0; foreach my $i (0..5) { $Totalp+=$_from_p[$i]; }
-			my $Totalh=0; foreach my $i (0..5) { $Totalh+=$_from_h[$i]; }
+			my $Totalp=0; foreach (0..5) { $Totalp+=$_from_p[$_]; }
+			my $Totalh=0; foreach (0..5) { $Totalh+=$_from_h[$_]; }
 			&tab_head($Message[36],19,0,'referer');
 			my @p_p=(0,0,0,0,0,0);
 			if ($Totalp > 0) {
@@ -9573,8 +9571,8 @@ if (scalar keys %HTMLOutput) {
 	 		if ($ExtraStatTypes[$extranum] =~ m/L/i) { print "<th width=\"120\">$Message[9]</th>"; }
 	 		print "</tr>\n";
 	 		$total_p=$total_h=$total_k=0;
-	 		#$max_h=1; foreach my $key (values %_login_h) { if ($key > $max_h) { $max_h = $key; } }
-	 		#$max_k=1; foreach my $key (values %_login_k) { if ($key > $max_k) { $max_k = $key; } }
+	 		#$max_h=1; foreach (values %_login_h) { if ($_ > $max_h) { $max_h = $_; } }
+	 		#$max_k=1; foreach (values %_login_k) { if ($_ > $max_k) { $max_k = $_; } }
 	 		my $count=0;
 	 		if ($ExtraStatTypes[$extranum] =~ m/P/i) { 
 	 			&BuildKeyList($MaxNbOfExtra[$extranum],$MinHitExtra[$extranum],\%{'_section_' . $extranum . '_h'},\%{'_section_' . $extranum . '_p'});
