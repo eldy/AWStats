@@ -80,3 +80,5 @@ message77=Top
 message78=dd mmm yyyy - HH:MM
 message79=Filter
 message80=Full list
+message81=Hosts
+message82=Known

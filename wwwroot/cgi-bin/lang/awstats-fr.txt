@@ -1,6 +1,6 @@
 # French message file
 message0=Inconnus
-message1=Inconnu (IP non résolue)
+message1=Inconnus (IP non résolue)
 message2=Autres
 message3=Voir détails
 message4=Jour
@@ -80,3 +80,5 @@ message77=Top
 message78=dd mmm yyyy - HH:MM
 message79=Filtre
 message80=Liste complète
+message81=Hôtes
+message82=Connus
