@@ -30,11 +30,11 @@ $LogFormat, $LogFormatString, $Logo, $MaxNbOfHostsShown, $MaxNbOfKeywordsShown,
 $MaxNbOfPageShown, $MaxNbOfRefererShown, $MaxNbOfRobotShown, $MinHitFile,
 $MinHitHost, $MinHitKeyword, $MinHitRefer, $MinHitRobot, $MonthRequired,
 $NewDNSLookup, $NowNewLinePhase, $OpenFileError, $PROG, $PageBool, $PurgeLogFile,
-$QueryString, $RatioBytes, $RatioHits, $RatioHosts, $RatioPages, 
+$QueryString, $RatioBytes, $RatioHits, $RatioHosts, $RatioPages,
 $ShowFlagLinks, $ShowLinksOnURL, $ShowLinksOnUrl, $TotalBytes,
 $TotalDifferentKeywords, $TotalDifferentPages, $TotalErrors, $TotalHits,
 $TotalHosts, $TotalKeywords, $TotalPages, $TotalUnique, $TotalVisits, $UserAgent,
-$WarningMessages, $YearRequired, 
+$WarningMessages, $YearRequired,
 $allok, $beginmonth, $bredde, $bredde_h, $bredde_k, $bredde_p, $bredde_u,
 $bredde_v, $color_Background, $color_TableBG, $color_TableBGRowTitle,
 $color_TableBGTitle, $color_TableBorder, $color_TableRowTitle,
@@ -66,7 +66,7 @@ $word, $yearcon, $yearfile, $yearmonthfile, $yeartoprocess) = ();
 @sortsearchwords = @sortsereferrals = @sortsider404 = @sortsiders = @sortunknownip =
 @sortunknownreferer = @sortunknownrefererbrowser = @wordlist = ();
 
-$VERSION="2.5 (build 8)";
+$VERSION="2.5 (build 9)";
 $Lang=0;
 
 # Default value
@@ -698,6 +698,7 @@ $message[70][0]="Nov";
 $message[71][0]="Dec";
 $message[72][0]="English us.png";
 $message[73][0]="Day statistics";
+$message[74][0]="Update";
 
 # French
 $message[0][1]="Inconnus";
@@ -774,6 +775,7 @@ $message[70][1]="Nov";
 $message[71][1]="Déc";
 $message[72][1]="French fr.png";
 $message[73][1]="Statistiques par jour";
+$message[74][1]="Mise à jour";
 
 # Dutch
 $message[0][2]="Onbekend";
@@ -850,6 +852,7 @@ $message[70][2]="Nov";
 $message[71][2]="Dec";
 $message[72][2]="Dutch nl.png";
 $message[73][2]="Dag statistieken";
+$message[74][2]="Update";
 
 # Spanish
 $message[0][3]="Desconocido";
@@ -926,6 +929,7 @@ $message[70][3]="Nov";
 $message[71][3]="Dic";
 $message[72][3]="Spanish es.png";
 $message[73][3]="Dia estadísticas";
+$message[74][3]="Update";
 
 # Italian
 $message[0][4]="Sconosciuto";
@@ -1002,6 +1006,7 @@ $message[70][4]="Nov";
 $message[71][4]="Dic";
 $message[72][4]="Italian it.png";
 $message[73][4]="Giorno statistiche";
+$message[74][4]="Update";
 
 # German
 $message[0][5]="Unbekannt";
@@ -1078,6 +1083,7 @@ $message[70][5]="Nov";
 $message[71][5]="Dez";
 $message[72][5]="German de.png";
 $message[73][5]="Tag statistik";
+$message[74][5]="Update";
 
 # Polish
 $PageCode[6]="<META HTTP-EQUIV=\"content-type\" CONTENT=\"text/html; charset=iso-8859-2\">";
@@ -1155,6 +1161,7 @@ $message[70][6]="Listopad";
 $message[71][6]="Grudzieñ";
 $message[72][6]="Polish pl.png";
 $message[73][6]="Dzieñ Statystyki";
+$message[74][6]="Update";
 
 # Greek (simos@hellug.gr)
 $PageCode[7]="<META HTTP-EQUIV=\"content-type\" CONTENT=\"text/html; charset=iso-8859-7\">";
@@ -1232,6 +1239,7 @@ $message[70][7]="ÍïÝ";
 $message[71][7]="Äåê";
 $message[72][7]="Greek gr.png";
 $message[73][7]="Daily statistics";
+$message[74][7]="Update";
 
 # Czech (js@fsid.cvut.cz)
 $PageCode[8]="<META HTTP-EQUIV=\"content-type\" CONTENT=\"text/html; charset=iso-8859-2\">";
@@ -1309,6 +1317,7 @@ $message[70][8]="Lis";
 $message[71][8]="Pro";
 $message[72][8]="Czech cz.png";
 $message[73][8]="Daily statistics";
+$message[74][8]="Update";
 
 # Portuguese
 $message[0][9]="Desconhecido";
@@ -1385,7 +1394,85 @@ $message[70][9]="Nov";
 $message[71][9]="Dez";
 $message[72][9]="Portuguese pt.png";
 $message[73][9]="Daily statistics";
+$message[74][9]="Update";
 
+# Korean
+$PageCode[10]="<META HTTP-EQUIV=\"content-type\" CONTENT=\"text/html; charset=euc-kr\">";
+$message[0][10]="¾Ë¼ö¾øÀ½";
+$message[1][10]="¾Ë¼ö¾øÀ½(¾Ë¼ö¾ø´Â ip)";
+$message[2][10]="±âÅ¸";
+$message[3][10]="ÀÚ¼¼È÷ º¸±â";
+$message[4][10]="ÀÏ";
+$message[5][10]="&nbsp;";
+$message[6][10]="³â";
+$message[7][10]="Åë°è";
+$message[8][10]="Ã³À½ Á¢¼Ó";
+$message[9][10]="¸¶Áö¸· Á¢¼Ó";
+$message[10][10]="Á¢¼Ó È¸¼ö";
+$message[11][10]="Á¢¼ÓÀÚº°";
+$message[12][10]="Á¢¼Ó";
+$message[13][10]="Å°¿öµå";
+$message[14][10]="Ã£±â";
+$message[15][10]="ÆÛ¼¾Æ®";
+$message[16][10]="À¥ Åë°è ¿ä¾à";
+$message[17][10]="µµ¸ÞÀÎ/±¹°¡";
+$message[18][10]="¹æ¹®ÀÚ";
+$message[19][10]="ÆäÀÌÁö/URL";
+$message[20][10]="½Ã°£";
+$message[21][10]="ºê¶ó¿ìÀú";
+$message[22][10]="HTTP ¿¡·¯";
+$message[23][10]="·¹ÆÛ·¯";
+$message[24][10]="Ã£±â&nbsp;Å°¿öµå";
+$message[25][10]="¹æ¹®ÀÚ µµ¸ÞÀÎ/±¹°¡";
+$message[26][10]="È£½ºÆ®";
+$message[27][10]="ÆäÀÌÁö";
+$message[28][10]="´Ù¸¥ ÆäÀÌÁö";
+$message[29][10]="ÀÐ±â È¸¼ö";
+$message[30][10]="´Ù¸¥ ´Ü¾î";
+$message[31][10]="»ç¿ëÇÑ ºê¶ó¿ìÀú";
+$message[32][10]="HTTP ¿¡·¯ ÄÚµå";
+$message[33][10]="³Ý½ºÄÉÀÌÇÁ ¹öÀü";
+$message[34][10]="MS ÀÎÅÍ³Ý ÀÍ½ºÇÃ·Î·¯ ¹öÀü";
+$message[35][10]="Last Update";
+$message[36][10]="Á¢¼Ó »çÀÌÆ®º° Åë°è";
+$message[37][10]="ÁÖ¼Ò";
+$message[38][10]="Á÷Á¢ ÁÖ¼Ò / ºÏ¸¶Å©";
+$message[39][10]="´º½ºÅ©·ì¿¡¼­ ¿¬°á";
+$message[40][10]="³»ºÎ °Ë»ö ¿£Áø¿¡¼­ ¿¬°á";
+$message[41][10]="¿ÜºÎÆäÀÌÁö¿¡¼­ ¿¬°á (°Ë»ö¿£ÁøÀ» Á¦¿ÜÇÑ ´Ù¸¥ À¥»çÀÌÆ®)";
+$message[42][10]="³»ºÎÆäÀÌÁö¿¡¼­ ¸µÅ©(°°Àº »çÀÌÆ®ÀÇ ´Ù¸¥ ÆäÀÌÁö)";
+$message[43][10]="°Ë»ö¿£Áø¿¡¼­ »ç¿ëµÈ Å°¿öµå";
+$message[44][10]="»ç¿ë·®(Kb)";
+$message[45][10]="¾Ë¼ö¾ø´Â IP ÁÖ¼Ò";
+$message[46][10]="¾Ë¼ö¾ø´Â OS (Æä·¯ÆÛ ÇÊµå)";
+$message[47][10]="Á¸ÀçÇÏÁö ¾Ê´Â URL Á¢¼Ó½Ãµµ (HTTP ÄÚµå 404)";
+$message[48][10]="IP ÁÖ¼Ò";
+$message[49][10]="Á¢¼Ó¿À·ù È¸¼ö";
+$message[50][10]="¾Ë¼ö¾ø´Â ºê¶ó¿ìÀú (·¹ÆÛ·¯ ÇÊµå)";
+$message[51][10]="¹æ¹®ÁßÀÎ ·Î¹öÆ®";
+$message[52][10]="Á¢¼Ó/¹æ¹®ÀÚ";
+$message[53][10]="·Î¹öÆ®/½ºÆÄÀÌ´õ ¹æ¹®ÀÚ";
+$message[54][10]="Áøº¸ÀûÀÎ À¥ Åë°è¸¦ À§ÇÑ ÀÚÀ¯·Î¿î ½Ç½Ã°£ ·Î±×ÆÄÀÏ";
+$message[55][10]="-";
+$message[56][10]="ÀÐÀº ÆäÀÌÁö";
+$message[57][10]="Á¶È¸¼ö";
+$message[58][10]="¹öÀü";
+$message[59][10]="OS";
+$message[60][10]="1¿ù";
+$message[61][10]="2¿ù";
+$message[62][10]="3¿ù";
+$message[63][10]="4¿ù";
+$message[64][10]="5¿ù";
+$message[65][10]="6¿ù";
+$message[66][10]="7¿ù";
+$message[67][10]="8¿ù";
+$message[68][10]="9¿ù";
+$message[69][10]="10¿ù";
+$message[70][10]="11¿ù";
+$message[71][10]="12¿ù";
+$message[72][10]="Korean kr.png";
+$message[73][10]="ÀÏÀÏ Åë°è";
+$message[74][10]="Update";
 
 
 #-------------------------------------------------------
@@ -1675,7 +1762,7 @@ sub Read_History_File {
 	    if ($field[0] eq "END_TIME")        { $readtime=0; next; }
 	    if ($field[0] eq "BEGIN_DAY")       { $readday=1; next; }
 	    if ($field[0] eq "END_DAY")         { $readday=0; next; }
-	
+
 	    if ($readvisitor) {
 	    	if (($field[0] ne "Unknown") && ($field[1] > 0)) { $MonthUnique{$_[0].$_[1]}++; }
 	    	}
@@ -1688,8 +1775,8 @@ sub Read_History_File {
 		if ($readday)
 		{
 			$DayPage{$field[0]}+=$field[1]; $DayHits{$field[0]}+=$field[2]; $DayBytes{$field[0]}+=$field[3]; $DayVisits{$field[0]}+=$field[4]; $DayUnique{$field[0]}+=$field[5];
-		}	
-	
+		}
+
 		# If $_[2] == 0, it means we don't need second part of history file.
 		if ($_[2]) {
 	        if ($field[0] eq "BEGIN_DOMAIN") { $readdomain=1; next; }
@@ -1722,7 +1809,7 @@ sub Read_History_File {
 	        if ($field[0] eq "END_SIDER_404") { $readerrors404=0; next; }
 	  		if ($field[0] eq "BEGIN_DAY")       { $readday=1; next; }
 	    	if ($field[0] eq "END_DAY")         { $readday=0; next; }
-	
+
 	        if ($readvisitor) {
 	        	$_hostmachine_p{$field[0]}+=$field[1];
 	        	$_hostmachine_h{$field[0]}+=$field[2];
@@ -1765,7 +1852,7 @@ sub Read_History_File {
 	        if ($readsearchwords) { $_keywords{$field[0]}+=$field[1]; next; }
 	        if ($readerrors) { $_errors_h{$field[0]}+=$field[1]; next; }
 	        if ($readerrors404) { $_sider404_h{$field[0]}+=$field[1]; $_referer404_h{$field[0]}=$field[2]; next; }
-	
+
 			}
 		}
 	close HISTORY;
@@ -1879,7 +1966,7 @@ sub Init_HashArray {
 	%_keywords = %_os_h = %_pagesrefs_h = %_robot_h = %_robot_l = %_se_referrals_h =
 	%_sider404_h = %_sider_h = %_sider_k = %_sider_p = %_unknownip_l = %_unknownreferer_l =
 	%_unknownrefererbrowser_l = ();
-	reset _;		
+	reset _;
 }
 
 
@@ -1960,7 +2047,7 @@ if ($nowmin < 10) { $nowmin = "0$nowmin"; }
 if ($QueryString =~ /lang=/i) { $Lang=$QueryString; $Lang =~ s/.*lang=//; $Lang =~ s/&.*//;  $Lang =~ s/ .*//; }
 
 # Check and correct bad parameters
-&Check_Config;	
+&Check_Config;
 
 # Print html header
 &html_head;
@@ -2068,7 +2155,7 @@ if ($UpdateStats) {
 	# 62.161.78.73 user - [dd/mmm/yyyy:hh:mm:ss +0000] "GET / HTTP/1.1" 200 1234 "http://www.from.com/from.htm" "Mozilla/4.0 (compatible; MSIE 5.01; Windows NT 5.0)"
 	# my.domain.com - user [09/Jan/2001:11:38:51 -0600] "OPTIONS /mime-tmp/xxx file.doc HTTP/1.1" 408 - "-" "-"
     # 2000-07-19 14:14:14 62.161.78.73 - GET / 200 1234 HTTP/1.1 Mozilla/4.0+(compatible;+MSIE+5.01;+Windows+NT+5.0) http://www.from.com/from.htm
-	# 05/21/00	00:17:31	OK  	200	212.242.30.6	Mozilla/4.0 (compatible; MSIE 5.0; Windows 98; DigExt)	http://www.cover.dk/	"www.cover.dk"	:Documentation:graphics:starninelogo.white.gif	1133	
+	# 05/21/00	00:17:31	OK  	200	212.242.30.6	Mozilla/4.0 (compatible; MSIE 5.0; Windows 98; DigExt)	http://www.cover.dk/	"www.cover.dk"	:Documentation:graphics:starninelogo.white.gif	1133
 	$LogFormatString=$LogFormat;
 	if ($LogFormat == 1) { $LogFormatString="%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\""; }
 	if ($LogFormat == 2) { $LogFormatString="date time c-ip cs-username cs-method cs-uri-stem sc-status cs-bytes cs-version cs(User-Agent) cs(Referer)"; }
@@ -2107,7 +2194,7 @@ if ($UpdateStats) {
 		error("Error: Your personalized LogFormat does not include all fields required by AWStats");
 		}
 	&debug("PerlParsingFormat is $PerlParsingFormat");
-	
+
 
 	#------------------------------------------
 	# PROCESSING CURRENT LOG
@@ -2160,7 +2247,7 @@ if ($UpdateStats) {
 				error("");	# Exit with format error
 			}
 		}
-		
+
 		# Check filters
 		#----------------------------------------------------------------------
 		if ($field[$pos_method] ne 'GET' && $field[$pos_method] ne 'POST') { next; }	# Keep only GET, POST but not HEAD, OPTIONS
@@ -2547,11 +2634,11 @@ foreach $i (0..$#filearray) {
 
 
 #-------------------------------------------------------------------------------
-# READING NOW ALL NOT ALREADY READ HISTORY FILES FOR ALL MONTHS OF REQUIRED YEAR 
+# READING NOW ALL NOT ALREADY READ HISTORY FILES FOR ALL MONTHS OF REQUIRED YEAR
 #-------------------------------------------------------------------------------
 
 # Loop on each month of year but only existing and not already read will be read by Read_History_File function
-for ($ix=12; $ix>=1; $ix--) {	
+for ($ix=12; $ix>=1; $ix--) {
 	$monthix=$ix+0; if ($monthix < 10) { $monthix  = "0$monthix"; }	# Good trick to change $monthix into "MM" format
 	if ($MonthRequired eq "year" || $monthix == $MonthRequired) {
 		&Read_History_File($YearRequired,$monthix,1);	# Read full history file
@@ -2697,7 +2784,7 @@ if ($QueryString =~ /action=info/i) {
 &debug("End of sorting hash arrays");
 
 # English tooltips
-if (($Lang != 1) && ($Lang != 2) && ($Lang != 3) && ($Lang != 6)) {
+if (($Lang != 1) && ($Lang != 2) && ($Lang != 3) && ($Lang != 4) && ($Lang != 6) && ($Lang != 10)) {
 	print "
 	<DIV CLASS=\"CTooltip\" ID=\"tt1\">
 	A new visits is defined as each new <b>incoming visitor</b> (viewing or browsing a page) who was not connected to your site during last <b>".($VisitTimeOut/10000*60)." mn</b>.
@@ -2734,61 +2821,23 @@ if (($Lang != 1) && ($Lang != 2) && ($Lang != 3) && ($Lang != 6)) {
 	</DIV>";
 
 	print "
-	<DIV CLASS=\"CTooltip\" ID=\"tt201\">
-	No description for this error.
-	</DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt202\">
-	Request was understood by server but will be processed later.
-	</DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt204\">
-	Server has processed the request but there is no document to send.
-	</DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt206\">
-	Partial content.
-	</DIV>
-
-	<DIV CLASS=\"CTooltip\" ID=\"tt301\">
-	Requested document was moved and is now at another address given in awnswer.
-	</DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt302\">
-	No description for this error.
-	</DIV>
-
-	<DIV CLASS=\"CTooltip\" ID=\"tt400\">
-	Syntax error, server didn\'t understand request.
-	</DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt401\">
-	Tried to reach an <b>URL where a login/password pair was required</b>.<br>
-	A high number within this item could mean that someone (such as a hacker) is attempting to crack, or enter into your site (hoping to enter a secured area by trying different login/password pairs, for instance).
-	</DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt403\">
-	Tried to reach an <b>URL not configured to be reachable, even with an login/password pair</b> (for example, an URL within a directory not defined as \"browsable\".).
-	</DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt404\">
-	Tried to reach a <b>non existing URL</b>. This error often means that there is an invalid link somewhere in your site or that a visitor mistyped a certain URL.
-	</DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt408\">
-	Server has taken <b>too much time</b> to respond to a request. This error frequently involves either a slow CGI script which the server was required to kill or an extremely congested web server.
-	</DIV>
-
-	<DIV CLASS=\"CTooltip\" ID=\"tt500\">
-	Internal error. This error is often caused by a CGI program that had finished abnormally (coredump for example).
-	</DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt501\">
-	Unknown requested action.
-	</DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt502\">
-	Code returned by a HTTP server that works as a proxy or gateway when a real, targeted server doesn\'t answer successfully to the client\'s request.
-	</DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt503\">
-	Internal server error.
-	</DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt504\">
-	Gateway Time-out.
-	</DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt505\">
-	HTTP Version Not Supported.
-	</DIV>
+	<DIV CLASS=\"CTooltip\" ID=\"tt201\"> No description for this error. </DIV>
+	<DIV CLASS=\"CTooltip\" ID=\"tt202\"> Request was understood by server but will be processed later. </DIV>
+	<DIV CLASS=\"CTooltip\" ID=\"tt204\"> Server has processed the request but there is no document to send. </DIV>
+	<DIV CLASS=\"CTooltip\" ID=\"tt206\"> Partial content. </DIV>
+	<DIV CLASS=\"CTooltip\" ID=\"tt301\"> Requested document was moved and is now at another address given in awnswer. </DIV>
+	<DIV CLASS=\"CTooltip\" ID=\"tt302\"> No description for this error. </DIV>
+	<DIV CLASS=\"CTooltip\" ID=\"tt400\"> Syntax error, server didn\'t understand request. </DIV>
+	<DIV CLASS=\"CTooltip\" ID=\"tt401\"> Tried to reach an <b>URL where a login/password pair was required</b>.<br>A high number within this item could mean that someone (such as a hacker) is attempting to crack, or enter into your site (hoping to enter a secured area by trying different login/password pairs, for instance). </DIV>
+	<DIV CLASS=\"CTooltip\" ID=\"tt403\"> Tried to reach an <b>URL not configured to be reachable, even with an login/password pair</b> (for example, an URL within a directory not defined as \"browsable\".). </DIV>
+	<DIV CLASS=\"CTooltip\" ID=\"tt404\"> Tried to reach a <b>non existing URL</b>. This error often means that there is an invalid link somewhere in your site or that a visitor mistyped a certain URL. </DIV>
+	<DIV CLASS=\"CTooltip\" ID=\"tt408\"> Server has taken <b>too much time</b> to respond to a request. This error frequently involves either a slow CGI script which the server was required to kill or an extremely congested web server. </DIV>
+	<DIV CLASS=\"CTooltip\" ID=\"tt500\"> Internal error. This error is often caused by a CGI program that had finished abnormally (coredump for example). </DIV>
+	<DIV CLASS=\"CTooltip\" ID=\"tt501\"> Unknown requested action. </DIV>
+	<DIV CLASS=\"CTooltip\" ID=\"tt502\"> Code returned by a HTTP server that works as a proxy or gateway when a real, targeted server doesn\'t answer successfully to the client\'s request. </DIV>
+	<DIV CLASS=\"CTooltip\" ID=\"tt503\"> Internal server error. </DIV>
+	<DIV CLASS=\"CTooltip\" ID=\"tt504\"> Gateway Time-out. </DIV>
+	<DIV CLASS=\"CTooltip\" ID=\"tt505\"> HTTP Version Not Supported. </DIV>
 	";
 }
 
@@ -2831,61 +2880,23 @@ if ($Lang == 1) {
 	</DIV>";
 
 	print "
-	<DIV CLASS=\"CTooltip\" ID=\"tt201\">
-	Contenu partiel renvoyé.
-	</DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt202\">
-	La requête a été enregistrée par le serveur mais sera exécutée plus tard.
-	</DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt204\">
-	Le serveur a traité la demande mais il n existe aucun document à renvoyer.
-	</DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt206\">
-	Contenu partiel renvoyé.
-	</DIV>
-
-	<DIV CLASS=\"CTooltip\" ID=\"tt301\">
-	Le document réclamé a été déplacé et se trouve maintenant à une autre adresse mentionnée dans la réponse.
-	</DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt302\">
-	Aucun descriptif pour cette erreur.
-	</DIV>
-
-	<DIV CLASS=\"CTooltip\" ID=\"tt400\">
-	Erreur de syntaxe, le serveur n a pas compris la requête.
-	</DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt401\">
-	Tentatives d accès à une <b>URL nécessitant identification avec un login/mot de passe invalide</b>.<br>
-	Un nombre trop élévé peut mettre en évidence une tentative de crackage brute du site (par accès répété de différents logins/mots de passe).
-	</DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt403\">
-	Tentatives d accès à une <b>URL non configurée pour etre accessible, même avec une identification</b> (par exemple, une URL d un répertoire non défini comme étant \"listable\").
-	</DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt404\">
-	Tentatives d accès à une <b>URL inexistante</b>. Il s agit donc d un lien invalide sur le site ou d une faute de frappe d un visiteur qui a saisie une mauvaise URL directement.
-	</DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt408\">
-	Le serveur mis un <b>temps trop important</b> pour répondre à la requête. Il peut s agir d un script CGI trop lent sur le serveur forcé d abandonner le traitement ou d une saturation du site.
-	</DIV>
-
-	<DIV CLASS=\"CTooltip\" ID=\"tt500\">
-	Erreur interne au serveur. Cette erreur est le plus souvant renvoyé lors de l arrêt anormal d un script CGI (par exemple suite à un coredump du CGI).
-	</DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt501\">
-	Le serveur ne prend pas en charge l action demandée.
-	</DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt502\">
-	Code renvoyé par un serveur HTTP qui fonctionne comme proxy ou gateway lorsque le serveur réel consulté ne réagit pas avec succès à la demande du client.
-	</DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt503\">
-	Erreur interne au serveur.
-	</DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt504\">
-	Gateway Time-out.
-	</DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt505\">
-	Version HTTP non supporté.
-	</DIV>
+	<DIV CLASS=\"CTooltip\" ID=\"tt201\"> Contenu partiel renvoyé. </DIV>
+	<DIV CLASS=\"CTooltip\" ID=\"tt202\"> La requête a été enregistrée par le serveur mais sera exécutée plus tard. </DIV>
+	<DIV CLASS=\"CTooltip\" ID=\"tt204\"> Le serveur a traité la demande mais il n existe aucun document à renvoyer. </DIV>
+	<DIV CLASS=\"CTooltip\" ID=\"tt206\"> Contenu partiel renvoyé. </DIV>
+	<DIV CLASS=\"CTooltip\" ID=\"tt301\"> Le document réclamé a été déplacé et se trouve maintenant à une autre adresse mentionnée dans la réponse. </DIV>
+	<DIV CLASS=\"CTooltip\" ID=\"tt302\"> Aucun descriptif pour cette erreur. </DIV>
+	<DIV CLASS=\"CTooltip\" ID=\"tt400\"> Erreur de syntaxe, le serveur n a pas compris la requête. </DIV>
+	<DIV CLASS=\"CTooltip\" ID=\"tt401\"> Tentatives d accès à une <b>URL nécessitant identification avec un login/mot de passe invalide</b>.<br>Un nombre trop élévé peut mettre en évidence une tentative de crackage brute du site (par accès répété de différents logins/mots de passe). </DIV>
+	<DIV CLASS=\"CTooltip\" ID=\"tt403\"> Tentatives d accès à une <b>URL non configurée pour etre accessible, même avec une identification</b> (par exemple, une URL d un répertoire non défini comme étant \"listable\"). </DIV>
+	<DIV CLASS=\"CTooltip\" ID=\"tt404\"> Tentatives d accès à une <b>URL inexistante</b>. Il s agit donc d un lien invalide sur le site ou d une faute de frappe d un visiteur qui a saisie une mauvaise URL directement. </DIV>
+	<DIV CLASS=\"CTooltip\" ID=\"tt408\"> Le serveur mis un <b>temps trop important</b> pour répondre à la requête. Il peut s agir d un script CGI trop lent sur le serveur forcé d abandonner le traitement ou d une saturation du site. </DIV>
+	<DIV CLASS=\"CTooltip\" ID=\"tt500\"> Erreur interne au serveur. Cette erreur est le plus souvant renvoyé lors de l arrêt anormal d un script CGI (par exemple suite à un coredump du CGI). </DIV>
+	<DIV CLASS=\"CTooltip\" ID=\"tt501\"> Le serveur ne prend pas en charge l action demandée. </DIV>
+	<DIV CLASS=\"CTooltip\" ID=\"tt502\"> Code renvoyé par un serveur HTTP qui fonctionne comme proxy ou gateway lorsque le serveur réel consulté ne réagit pas avec succès à la demande du client. </DIV>
+	<DIV CLASS=\"CTooltip\" ID=\"tt503\"> Erreur interne au serveur. </DIV>
+	<DIV CLASS=\"CTooltip\" ID=\"tt504\"> Gateway Time-out. </DIV>
+	<DIV CLASS=\"CTooltip\" ID=\"tt505\"> Version HTTP non supporté. </DIV>
 	";
 }
 
@@ -2930,64 +2941,25 @@ if ($Lang == 2) {
 	</DIV>";
 
 	print "
-	<DIV CLASS=\"CTooltip\" ID=\"tt201\">
-	Geen beschrijving voor deze foutmelding.
-	</DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt202\">
-	De server heeft het verzoek begrepen, maar zal deze later behandelen.
-	</DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt204\">
-	De server heeft het verzoek verwerkt, maar er is geen document om te verzenden.
-	</DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt206\">
-	Gedeeltelijke inhoud.
-	</DIV>
-
-	<DIV CLASS=\"CTooltip\" ID=\"tt301\">
-	Het aangevraagde document is verplaatst en is nu op een andere locatie die in het antwoord gegeven is.
-	</DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt302\">
-	Geen beschrijving voor deze foutmelding.
-	</DIV>
-
-	<DIV CLASS=\"CTooltip\" ID=\"tt400\">
-	\"Taalfout\", de server begreep het verzoek niet.
-	</DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt401\">
-	Er is gepoogd een <b>URL waarvoor een usernaam/wachtwoord noodzakelijk is</b> te benaderen.<br>
-	Een hoog aantal van deze meldingen kan betekenen dat iemand (zoals een hacker) probeert uw site te kraken, of uw site binnen te komen (pogend een beveiligd onderdeel van uw site te benaderen door verschillende usernamen/wachtwoorden te proberen, bijvoorbeeld).
-	</DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt403\">
-	Er is gepoogd een <b>URL die is ingesteld om niet benaderbaar te zijn, zelfs met usernaam/wachtwoord</b> te benaderen (bijvoorbeeld, een URL in een directory die niet \"doorbladerbaar\" is).
-	</DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt404\">
-	Er is gepoogd een <b>niet bestaande URL</b> te benaderen. Deze fout betekent vaak dat er een ongeldige link in uw site zit of dat een bezoeker een URL foutief heeft ingevoerd.
-	</DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt408\">
-	De server heeft er <b>te lang</b> over gedaan om een antwoord op een aanvraag te geven. Het kan een CGI script zijn dat zo traag is dat de server hem heeft moeten afbreken of een overbelaste web server.
-	</DIV>
-
-	<DIV CLASS=\"CTooltip\" ID=\"tt500\">
-	Interne fout. Deze error wordt vaak veroorzaakt door een CGI programma dat abnormaal is beeindigd (een core dump, bijvoorbeeld).
-	</DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt501\">
-	Onbekende actie aangevraagd.
-	</DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt502\">
-	Melding die door een proxy of gateway HTTP server wordt gegeven als een echte doelserver niet succesvol op de aanvraag van een client antwoordt.
-	</DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt503\">
-	Interne server fout.
-	</DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt504\">
-	Gateway time-out.
-	</DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt505\">
-	HTTP versie niet ondersteund.
-	</DIV>
+	<DIV CLASS=\"CTooltip\" ID=\"tt201\"> Geen beschrijving voor deze foutmelding. </DIV>
+	<DIV CLASS=\"CTooltip\" ID=\"tt202\"> De server heeft het verzoek begrepen, maar zal deze later behandelen. </DIV>
+	<DIV CLASS=\"CTooltip\" ID=\"tt204\"> De server heeft het verzoek verwerkt, maar er is geen document om te verzenden. </DIV>
+	<DIV CLASS=\"CTooltip\" ID=\"tt206\"> Gedeeltelijke inhoud. </DIV>
+	<DIV CLASS=\"CTooltip\" ID=\"tt301\"> Het aangevraagde document is verplaatst en is nu op een andere locatie die in het antwoord gegeven is. </DIV>
+	<DIV CLASS=\"CTooltip\" ID=\"tt302\"> Geen beschrijving voor deze foutmelding. </DIV>
+	<DIV CLASS=\"CTooltip\" ID=\"tt400\"> \"Taalfout\", de server begreep het verzoek niet. </DIV>
+	<DIV CLASS=\"CTooltip\" ID=\"tt401\"> Er is gepoogd een <b>URL waarvoor een usernaam/wachtwoord noodzakelijk is</b> te benaderen.<br>Een hoog aantal van deze meldingen kan betekenen dat iemand (zoals een hacker) probeert uw site te kraken, of uw site binnen te komen (pogend een beveiligd onderdeel van uw site te benaderen door verschillende usernamen/wachtwoorden te proberen, bijvoorbeeld). </DIV>
+	<DIV CLASS=\"CTooltip\" ID=\"tt403\"> Er is gepoogd een <b>URL die is ingesteld om niet benaderbaar te zijn, zelfs met usernaam/wachtwoord</b> te benaderen (bijvoorbeeld, een URL in een directory die niet \"doorbladerbaar\" is). </DIV>
+	<DIV CLASS=\"CTooltip\" ID=\"tt404\"> Er is gepoogd een <b>niet bestaande URL</b> te benaderen. Deze fout betekent vaak dat er een ongeldige link in uw site zit of dat een bezoeker een URL foutief heeft ingevoerd. </DIV>
+	<DIV CLASS=\"CTooltip\" ID=\"tt408\"> De server heeft er <b>te lang</b> over gedaan om een antwoord op een aanvraag te geven. Het kan een CGI script zijn dat zo traag is dat de server hem heeft moeten afbreken of een overbelaste web server. </DIV>
+	<DIV CLASS=\"CTooltip\" ID=\"tt500\"> Interne fout. Deze error wordt vaak veroorzaakt door een CGI programma dat abnormaal is beeindigd (een core dump, bijvoorbeeld). </DIV>
+	<DIV CLASS=\"CTooltip\" ID=\"tt501\"> Onbekende actie aangevraagd. </DIV>
+	<DIV CLASS=\"CTooltip\" ID=\"tt502\"> Melding die door een proxy of gateway HTTP server wordt gegeven als een echte doelserver niet succesvol op de aanvraag van een client antwoordt. </DIV>
+	<DIV CLASS=\"CTooltip\" ID=\"tt503\"> Interne server fout. </DIV>
+	<DIV CLASS=\"CTooltip\" ID=\"tt504\"> Gateway time-out. </DIV>
+	<DIV CLASS=\"CTooltip\" ID=\"tt505\"> HTTP versie niet ondersteund. </DIV>
 	";
 }
-
 
 # Spanish tooltips
 if ($Lang == 3) {
@@ -3028,61 +3000,82 @@ if ($Lang == 3) {
 	</DIV>";
 
 	print "
-	<DIV CLASS=\"CTooltip\" ID=\"tt201\">
-	Error sin descripción.
-	</DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt202\">
-	La solicitud ha sido computada pero el servidor la procesará más tarde.
-	</DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt204\">
-	El servidor ha procesado la solicitud pero no existen documentos para enviar.
-	</DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt206\">
-	Contenido parcial.
-	</DIV>
+	<DIV CLASS=\"CTooltip\" ID=\"tt201\"> Error sin descripción. </DIV>
+	<DIV CLASS=\"CTooltip\" ID=\"tt202\"> La solicitud ha sido computada pero el servidor la procesará más tarde. </DIV>
+	<DIV CLASS=\"CTooltip\" ID=\"tt204\"> El servidor ha procesado la solicitud pero no existen documentos para enviar. </DIV>
+	<DIV CLASS=\"CTooltip\" ID=\"tt206\"> Contenido parcial. </DIV>
+	<DIV CLASS=\"CTooltip\" ID=\"tt301\"> El documento solicitado ha sido reubicado y se encuentra en un URL proporcionado en la misma respuesta. </DIV>
+	<DIV CLASS=\"CTooltip\" ID=\"tt302\"> Error sin descripción. </DIV>
+	<DIV CLASS=\"CTooltip\" ID=\"tt400\"> Error de sintaxis, el servidor no ha comprendido su solicitud. </DIV>
+	<DIV CLASS=\"CTooltip\" ID=\"tt401\"> Número de intentos por acceder un <b>URL que exige una combinación usuario/contraseña que ha sido invalida.</b>.<br>Un número de intentos muy elevado pudiera sugerir la posibilidad de que un hacker (o pirata) ha intentado entrar a una zona restringida del sitio (p.e., intentando múltiples combinaciones de usuario/contraseña). </DIV>
+	<DIV CLASS=\"CTooltip\" ID=\"tt403\"> Número de intentos por acceder un <b>URL configurado para no ser accesible, aún con una combinación usuario/contraseña</b> (p.e., un URL previamente definido como \"no navegable\"). </DIV>
+	<DIV CLASS=\"CTooltip\" ID=\"tt404\"> Número de intentos por acceder un <b>URL inexistente</b>. Frecuentemente, éstos se refieren ya sea a un enlace (link) inválido o a un error mecanográfico cuando el visitante tecleó el URL equivocado. </DIV>
+	<DIV CLASS=\"CTooltip\" ID=\"tt408\"> El servidor ha tomado <b>demasiado tiempo</b> para responder a una solicitud. Frecuentemente se debe ya sea a un programa CGI muy lento, el cual tuvo que ser abandonado por el servidor, o bien por un servidor sobre-saturado. </DIV>
+	<DIV CLASS=\"CTooltip\" ID=\"tt500\"> Error interno. Este error generalmente es causado por una terminación anormal o prematura de un programa CGI (p.e., un CGI corrompido o dañado). </DIV>
+	<DIV CLASS=\"CTooltip\" ID=\"tt501\"> Solicitud desconocida por el servidor. </DIV>
+	<DIV CLASS=\"CTooltip\" ID=\"tt502\"> Código retornado por un servidor de protocolo HTTP el cual funge como proxy o puente (gateway) cuando el servidor objetivo no funciona o no interpreta adecuadamente la solicitud del cliente (o visitante). </DIV>
+	<DIV CLASS=\"CTooltip\" ID=\"tt503\"> Error interno del servidor. </DIV>
+	<DIV CLASS=\"CTooltip\" ID=\"tt504\"> Gateway time-out. </DIV>
+	<DIV CLASS=\"CTooltip\" ID=\"tt505\"> Versión de protocolo HTTP no soportada. </DIV>
+	";
+}
 
-	<DIV CLASS=\"CTooltip\" ID=\"tt301\">
-	El documento solicitado ha sido reubicado y se encuentra en un URL proporcionado en la misma respuesta.
+# Italian tooltips
+if ($Lang == 4) {
+	print "
+	<DIV CLASS=\"CTooltip\" ID=\"tt1\">
+	Si considera una nuova visita per <b>ogni arrivo</b> di un visitatore che visualizza o consulta una pagina e non si è connesso negli ultimi <b>".($VisitTimeOut/10000*60)." minuti</b>.
 	</DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt302\">
-	Error sin descripción.
+	<DIV CLASS=\"CTooltip\" ID=\"tt2\">
+	Numero di client hosts (<b>indirizzi IP</b>) utilizzati per accedere al sito (e visualizzare almeno una <b>pagina</b>).<br>
+	Questa cifra riflette il numero di <b>persone fisiche</b> differenti che un giorno hanno visitato il sito.
 	</DIV>
+	<DIV CLASS=\"CTooltip\" ID=\"tt3\">
+	Numero di volte che una <b>pagina</b> del sito è stata <b>vista</b> (somma di tutti i visitatori, per tutte le visite).<br>
+	Questo valore è diverso dagli \"hits\" perchè considera solamente le pagine HTML e non le immagini o gli altri elementi.
+	</DIV>
+	<DIV CLASS=\"CTooltip\" ID=\"tt4\">
+	Numero di volte che una <b>pagina, immagine o elemento</b> del sito è <b>visto</b> o <b>scaricato</b> da un visitatore.<br>
+	Questo valore è indicativo, in quanto il contatore \"pagine\" a volte é più significativo ai fini commerciali.
+	</DIV>
+	<DIV CLASS=\"CTooltip\" ID=\"tt5\">
+	Numero totale di <b>kilobytes</b> scaricati dal sito durante le visite.<br>
+	Indica il volume di traffico dovute alle richieste di caricamento delle <b>pagine</b>, delle <b>immagini</b> e degli altri <b>elementi</b> scaricati.
+	</DIV>
+	<DIV CLASS=\"CTooltip\" ID=\"tt13\">
+	$PROG è capace di riconoscere gli accessi al sito provenienti dalle <b>ricerche</b> dei <b>".(@SearchEnginesArray)." motori di ricerca Internet</b> più conosciuti (Yahoo, Altavista, Lycos, Google, Voila, ecc...).
+	</DIV>
+	<DIV CLASS=\"CTooltip\" ID=\"tt14\">
+	Elenco delle <b>pagine di siti esterni</b> contenenti un link che è stato seguito per accedere a questo sito (solo le <b>$MaxNbOfRefererShown</b> pagine esterne più utilizzate sono visualizzate).\n
+	I link risultanti da una ricerca di un motore conosciuto non appaiono qui, dato che sono conteggiati a parte sulla linea subito sopra.
+	</DIV>
+	<DIV CLASS=\"CTooltip\" ID=\"tt15\">
+	Questa tabella offre la lista delle <b>parole</b> più frequentemente utilizzate per rintracciare e accedere al sito a partire da
+	un motore di ricerca Internet (sono riconosciute le ricerche dei <b>".(@SearchEnginesArray)."</b> motori di ricerca più popolari, come Yahoo, Altavista, Lycos, Google, Voila, ecc...).
+	</DIV>
+	<DIV CLASS=\"CTooltip\" ID=\"tt16\">
+	I robots sono dei <b>visitatori automatici</b> che perlustrano il sito al fine di indicizzarlo, di ottenere delle statistiche sui siti Web Internet o di verificarne l'accessibilità.<br>
+	$PROG riconosce <b>".(@RobotArray)."</b> robots.
+	</DIV>";
 
-	<DIV CLASS=\"CTooltip\" ID=\"tt400\">
-	Error de sintaxis, el servidor no ha comprendido su solicitud.
-	</DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt401\">
-	Número de intentos por acceder un <b>URL que exige una combinación usuario/contraseña que ha sido invalida.</b>.<br>
-	Un número de intentos muy elevado pudiera sugerir la posibilidad de que un hacker (o pirata) ha intentado entrar a una zona restringida del sitio (p.e., intentando múltiples combinaciones de usuario/contraseña).
-	</DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt403\">
-	Número de intentos por acceder un <b>URL configurado para no ser accesible, aún con una combinación usuario/contraseña</b> (p.e., un URL previamente definido como \"no navegable\").
-	</DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt404\">
-	Número de intentos por acceder un <b>URL inexistente</b>. Frecuentemente, éstos se refieren ya sea a un enlace (link) inválido o a un error mecanográfico cuando el visitante tecleó el URL equivocado.
-	</DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt408\">
-	El servidor ha tomado <b>demasiado tiempo</b> para responder a una solicitud. Frecuentemente se debe ya sea a un programa CGI muy lento, el cual tuvo que ser abandonado por el servidor, o bien por un servidor sobre-saturado.
-	</DIV>
-
-	<DIV CLASS=\"CTooltip\" ID=\"tt500\">
-	Error interno. Este error generalmente es causado por una terminación anormal o prematura de un programa CGI (p.e., un CGI corrompido o dañado).
-	</DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt501\">
-	Solicitud desconocida por el servidor.
-	</DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt502\">
-	Código retornado por un servidor de protocolo HTTP el cual funge como proxy o puente (gateway) cuando el servidor objetivo no funciona o no interpreta adecuadamente la solicitud del cliente (o visitante).
-	</DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt503\">
-	Error interno del servidor.
-	</DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt504\">
-	Gateway time-out.
-	</DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt505\">
-	Versión de protocolo HTTP no soportada.
-	</DIV>
+	print "
+	<DIV CLASS=\"CTooltip\" ID=\"tt201\"> Contenuto parziale ritornato. </DIV>
+	<DIV CLASS=\"CTooltip\" ID=\"tt202\"> La richiesta è stata registrata del server ma sarà eseguita più tardi. </DIV>
+	<DIV CLASS=\"CTooltip\" ID=\"tt204\"> Il server ha processato la richiesta ma non esiste alcun documento da ritornare. </DIV>
+	<DIV CLASS=\"CTooltip\" ID=\"tt206\"> Contenuto parziale ritornato. </DIV>
+	<DIV CLASS=\"CTooltip\" ID=\"tt301\"> Il documento richiesto è stato spostato e si trova al momento a un altro indirizzo, indicato nella risposta. </DIV>
+	<DIV CLASS=\"CTooltip\" ID=\"tt302\"> Nessuna descrizione per questo errore. </DIV>
+	<DIV CLASS=\"CTooltip\" ID=\"tt400\"> Errore di sintassi, il server non ha compreso la richiesta. </DIV>
+	<DIV CLASS=\"CTooltip\" ID=\"tt401\"> Tentativo di accesso non autorizzato a un <b>URL che richiede un'autenticazione con un login o una parola di accesso</b>.<br>Un numero troppo elevato può evidenziare un tentativo di accesso mediante forza bruta al sito (a seguito di accesso ripetuto con differenti nomi di login o parole di accesso).</DIV>
+	<DIV CLASS=\"CTooltip\" ID=\"tt403\"> Tentativo di accesso a un <b>URL non configurato per essere accessibile, anche se corretto</b> (ad esempio, un URL di una directory indicata come non \"listabile\"). </DIV>
+	<DIV CLASS=\"CTooltip\" ID=\"tt404\"> Tentativo di accesso a una risorsa o <b>URL inesistente</b>. SI tratta dunque di un link non valido sul sito o di un errore di battitura del visitatore che ha indicato un URL non corretto. </DIV>
+	<DIV CLASS=\"CTooltip\" ID=\"tt408\"> Il server ha impiegato un <b>tempo troppo lungo</b> per rispondere alla richiesta. Può trattarsi di uno script CGI troppo lento obbligato ad abbandonare la richiesta, o di un timeout dato dalla saturazione del sito. </DIV>
+	<DIV CLASS=\"CTooltip\" ID=\"tt500\"> Errore interno del server. Questo errore è quello ritornato più di frequente durante la terminazione anormale di uno script CGI (per esempio in seguito a un coredump del CGI). </DIV>
+	<DIV CLASS=\"CTooltip\" ID=\"tt501\"> Il server non prende in carico l'azione richiesta. </DIV>
+	<DIV CLASS=\"CTooltip\" ID=\"tt502\"> Codice ritornato da un server HTTP che funziona da proxy o gateway quando il server reale chiamato non risponde alla richiesta del client. </DIV>
+	<DIV CLASS=\"CTooltip\" ID=\"tt503\"> Errore interno del server. </DIV>
+	<DIV CLASS=\"CTooltip\" ID=\"tt504\"> Time-out del gateway. </DIV>
+	<DIV CLASS=\"CTooltip\" ID=\"tt505\"> Versione HTTP non supportata. </DIV>
 	";
 }
 
@@ -3126,28 +3119,15 @@ if ($Lang == 6) {
 	print "
 	<DIV CLASS=\"CTooltip\" ID=\"tt201\"> Zlecenie POST zosta³o zrealizowane pomy¶lnie. </DIV>
 	<DIV CLASS=\"CTooltip\" ID=\"tt202\"> ¯±danie zosta³o odebrane poprawnie, lecz jeszcze siê nie zakoñczy³o. </DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt203\"> Zwrócona informacja na temat obiektu jest nieaktualna. </DIV>
 	<DIV CLASS=\"CTooltip\" ID=\"tt204\"> Serwer przetworzy³ ¿±danie, lecz nie posiada ¿adnych danych do wys³ania. </DIV>
 	<DIV CLASS=\"CTooltip\" ID=\"tt206\"> Czê¶ciowa zawarto¶æ.</DIV>
 	<DIV CLASS=\"CTooltip\" ID=\"tt301\"> Dokument zosta³ przeniesiony pod inny adres.</DIV>
 	<DIV CLASS=\"CTooltip\" ID=\"tt302\"> Dokument zosta³ czasowo przeniesiony pod iiny adres.</DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt303\"> W celu pobrania dokumentu konieczne jest sprawdzenie innego URL-a. </DIV>
 	<DIV CLASS=\"CTooltip\" ID=\"tt400\"> Zlecenie by³o b³êdne, lub niemo¿liwe do zrealizowania przez serwer.<BR>B³±d powstaje wtedy, kiedy serwer WWW otrzymuje do wykonania instrukcjê, której nie rozumie.</DIV>
 	<DIV CLASS=\"CTooltip\" ID=\"tt401\"> B³±d autoryzacji. Strona wymaga podania has³a i loginu - b³±d pokazuje siê wtedy, gdy które¶ z tych danych siê nie zgadza lub zosta³y podane niew³a¶ciwiwe.<BR>Je¶li liczba ta jest du¿a, jest to sygna³ dla webmastera, i¿ kto¶ próbuje z³amaæ has³o do strony nim zabezpieczonej.</DIV>
 	<DIV CLASS=\"CTooltip\" ID=\"tt403\"> B³±d wystêpuje wtedy, gdy katalog/strona do którego siê odwo³ywano nie ma ustawionych w³a¶ciwych praw dostêpu, lub prawa te nie pozwalaj± na obejrzenie zawarto¶ci katalogu/strony.</DIV>
 	<DIV CLASS=\"CTooltip\" ID=\"tt404\"> Spróbuj wpisaæ <b>nie istniej±cy adres URL</b> (np. adres tej strony ze skasowan± jedn± literk±). Znaczy to, ¿e posiadasz gdzie¶ na swoich stronach b³êdny link, lub link odnosz±cy siê do nieistniej±cej strony.</DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt405\"> Metoda wskazana w <B>nag³ówku ¿±dania</B> jest niedozwolona przy odnoszeniu siê do zasobu, na który wskazuje. </DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt406\"> Zasób identyfikowany przez ¿±danie jest generuje odpowiedzi zawieraj±ce charakterystyczn± zawarto¶æ nie akceptowaln± wed³ug nag³ówka ¿±dania. </DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt407\"> Kod podobny do Error 401 (brak autoryzacji), lecz nakazuje on, i¿ musisz dokonaæ wpierw <B>autoryzacji na serwerze proxy</B> (serwer proxy wysy³a wtedy do strony nag³ówek <B>Proxy-Authentificate</B>, dziêki któremu autoryzacja jest mo¿liwa). </DIV>
 	<DIV CLASS=\"CTooltip\" ID=\"tt408\"> Przegl±darka nie wys³a³a ¿±dañ do serwera w czasie jego oczekiwania. Mo¿esz powtórzyæ ¿±danie bez jego modyfikacji w czasie pó¼niejszym. </DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt409\"> ¯±danie nie mog³o zostaæ spe³nione, poniewa¿ wyst±pi³ konflikt stanu ¿±danego obiektu. </DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt410\"> Dosyæ ciekawy b³±d - jeszcze siê z nim nie spotka³em. B³±d jest wy¶wietlany, gdy <B>trwale uzuniêto stronê</B> i jej autorzy chc± o tym fakcie poinformowaæ (zazwyczaj praktykuje siê kasacjê konta bez uprzedzenia :). Oznacza to, i¿ inni webmasterzy powinni usun±æ na swoich stronach odwo³ania do strony z Error410. </DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt411\"> Serwer odrzuci³ ¿adanie poniewa¿ nie zawiera³o ono nag³ówka <B>Content-Length</B>. </DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt412\"> Jeden lub wiêcej <B>warunków</B> przes³anych w <b>nag³ówku ¿±dania</b> nie spe³ni³ warunków i zosta³ odrzucony (np. gdy wa¿no¶æ strony okre¶lona w nag³ówku <B>Expiration</B> wygas³a). </DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt413\"> Serwer odrzuci³ ¿±danie poniewa¿ dane wejsciowe s± zbyt du¿e ni¿ mo¿na je obs³u¿yæ (np. przy próbie wys³ania przez formularz pliku o du¿ej objêto¶ci). Serwer zakoñczy po³±czenie w celu ochrony klienta.</DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt414\"> Serwer odrzuci³ ¿±danie, poniewa¿ <B>URI</B> zasobu jest d³u¿sze ni¿ serwer mo¿e zinterpretowaæ.</DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt415\"> Serwer odrzuci³ ¿±danie, poniewa¿ ¿±danie jest w formacie nie obs³ugiwanym przez serwer.</DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt408\"> Serwer czeka³ <b>zbyt d³ugo</b> na odpowied¼. Prawdopodobnie skrypt CGI pracuje zbyt wolno (ma za du¿o danych do przetworzenia). </DIV>
 	<DIV CLASS=\"CTooltip\" ID=\"tt500\"> B³±d wewnêtrzny. Ten b³±d czêsto pojawia siê, gdy aplikacja CGI nie zakoñczy³a siê normalnie (podobno ka¿dy program zawiera przynajmniej jeden b³±d...:-). </DIV>
 	<DIV CLASS=\"CTooltip\" ID=\"tt501\"> Serwer nie umo¿liwia obs³ugi mechanizmu. </DIV>
 	<DIV CLASS=\"CTooltip\" ID=\"tt502\"> Serwer jest chwilowo przeci±¿ony i nie mo¿e obs³u¿yæ zlecenia.</DIV>
@@ -3156,6 +3136,74 @@ if ($Lang == 6) {
 	<DIV CLASS=\"CTooltip\" ID=\"tt505\"> Nie obs³ugiwana wesja protoko³u HTTP. </DIV>
 	";
 }
+
+# Korean tooltips
+if ($Lang == 10) {
+	print "
+	<DIV CLASS=\"classTooltip\" ID=\"tt1\">
+	»õ·Î¿î ¹æ¹®Àº ÀÌÀü¿¡(<b>\".($VisitTimeOut/10000*60).\" ºÐÀÌ³»</b>)
+	´ç½ÅÀÇ »çÀÌÆ®¿¡ Á¢¼ÓÇÏÁö ¾ÊÀº(º¸°Å³ª ºê¶ó¿ìÂ¡ ÇÏÁö ¾ÊÀº) »õ·Î¿î
+	<b>¹æ¹®ÀÚ</b>¸¦ ³ªÅ¸³À´Ï´Ù.
+	</DIV>
+	<DIV CLASS=\"classTooltip\" ID=\"tt2\">
+	Å¬¶óÀÌ¾ðÆ® È£½ºÆ® ¼ö(<b>IP ÁÖ¼Ò</b>)´Â ¹æ¹®ÇÑ »çÀÌÆ® ¼ö¸¦ ³ªÅ¸³À´Ï´Ù.(ÃÖ¼ÒÇÑ <b>ÇÑ ÆäÀÌÁö</b>¶óµµ º» »çÀÌÆ®)<br>
+	ÀÌ ÀÚ·á´Â ÀÏº° <b>¹°¸®ÀûÀ¸·Î ´Ù¸¥ »ç¿ëÀÚ</b>¼ö¸¦ ³ªÅ¸³À´Ï´Ù.
+	</DIV>
+	<DIV CLASS=\"classTooltip\" ID=\"tt3\">
+	»çÀÌÆ®¿¡¼­ <b>º»(view) ÆäÀÌÁö</b> È¸¼ö¸¦ ³ªÅ¸³À´Ï´Ù.
+	(¸ðµç ¹æ¹®ÀÚÀÇ ÇÔ)<br>
+        ÀÌ ÀÚ·á´Â ÀÌ¹ÌÁö, ÆÄÀÏ°ú ´Þ¸® HTML ÆäÀÌÁö¿¡¼­ÀÇ \"Á¶È¸¼ö(hit)\"¿Í´Â ´Ù¸¨´Ï´Ù.
+	</DIV>
+	<DIV CLASS=\"classTooltip\" ID=\"tt4\">
+	<b>ÆäÀÌÁö, ÀÌ¹ÌÁö, ÆÄÀÏ</b>À» <b>º¸°Å³ª ´Ù¿î·Îµå</b>ÇÑ È¸¼ö¸¦ ³ªÅ¸³À´Ï´Ù.<br>
+	ÀÌ ÀÚ·á´Â ÂüÁ¶¿ëÀ¸·Î¸¸ Á¦°øµË´Ï´Ù. ¿Ö³ÄÇÏ¸é º» \"ÆäÀÌÁö\"´Â Á¾Á¾ ½ÃÀåÁ¶»ç ¸ñÀûÀ¸·Î »ç¿ëµÉ ¼ö ÀÖ±â ¶§¹®ÀÔ´Ï´Ù.
+	</DIV>
+	<DIV CLASS=\"classTooltip\" ID=\"tt5\">
+	ÀÌ Á¤º¸µéÀº ´Ù¿î·ÎµåÇÑ ¸ðµç <b>ÆäÀÌÁö</b>, <b>ÀÌ¹ÌÁö</b>, <b>ÆÄÀÏ</b> µéÀ» Kb´ÜÀ§·Î ³ªÅ¸³À´Ï´Ù.
+	</DIV>
+	<DIV CLASS=\"classTooltip\" ID=\"tt13\">
+	$PROG ´Â <b>".(@SearchEnginesArray)."</b>ÀÇ <b>°Ë»ö</b>À¸·Î ´ç½ÅÀÇ »çÀÌÆ®¿¡ ´ëÇÑ Á¢±ÙÀ» ½Äº°ÇÒ ¼ö ÀÖ½À´Ï´Ù.
+	</DIV>
+	<DIV CLASS=\"classTooltip\" ID=\"tt14\">
+	´ç½ÅÀÇ »çÀÌÆ®¿¡ ¸µÅ©µÈ ¸ðµç <b>¿ÜºÎ ÆäÀÌÁö</b><br>
+	(<b>$MaxNbOfRefereShown</b>´Â °¡Àå ÀÚÁÖ »ç¿ëµÇ´Â ¿ÜºÎ ÆäÀÌÁö¸¦ ³ªÅ¸³À´Ï´Ù.)
+        °Ë»ö ¿£Áø¿¡ ÀÇÇÑ °á°úÆäÀÌÁö¿¡ »ç¿ëµÈ ¸µÅ©´Â ¿©±â¿¡¼­ Á¦¿ÜµË´Ï´Ù.
+        (ÀÌ Å×ÀÌºíÀÇ ÀÌÀü¿¡ ÀÌ¹Ì ³ª¿Í ÀÖ½À´Ï´Ù.)
+	</DIV>
+	<DIV CLASS=\"CTooltip\" ID=\"tt15\">
+	ÀÌ Å×ÀÌºíÀº ´ç½ÅÀÇ »çÀÌÆ®¿¡¼­ °¡Àå ¸¹ÀÌ »ç¿ëµÇ´Â <b>Å°¿öµå</b> ¸ñ·ÏÀ» º¸¿©ÁÝ´Ï´Ù.
+        (°¡Àå ¾ÖÈ£ÇÏ´Â °Ë»ö¿£Áø Yahoo, Altavista, Lycos, Google, Voilaµî°ú °°Àº
+	<b>".(@SearchEnginesArray)."</b>ÀÇ Å°¿öµå¸¦ $PROG´Â ½Äº°ÇÒ ¼ö ÀÖ½À´Ï´Ù.
+	</DIV>
+	<DIV CLASS=\"CTooltip\" ID=\"tt16\">
+	·Îº¸Æ® (¶§·Î´Â ½ºÆÄÀÌ´õ¸¦ ¶æÇÔ)´Â ¸¹Àº °Ë»ö ¿£Áø¿¡¼­ »ç¿ëµÇ´Â
+	<b>ÀÚµ¿È­µÈ À¥Á¢¼Ó µµ±¸</b>ÀÔ´Ï´Ù. ÀÌ ¿£ÁøÀº (1) À¥»çÀÌÆ®¸¦ ¸ñ·ÏÈ­ÇÏ°í
+	¼ø¼­¸¦ ºÎ¿©ÇÏ°í (2) ÀÎÅÍ³Ý À¥ »çÀÌÆ®ÀÇ Åë°è¸¦ ¼öÁýÇÏ°í (3) ´ç½ÅÀÇ
+	»çÀÌÆ®°¡ ¿©ÀüÈ÷ »ç¿ë°¡´ÉÇÑÁö Á¶»çÇÕ´Ï´Ù.<br>
+	$PROG´Â <b>".(@RobotArra)."</b> ·Îº¸Æ®¸¦ ½Äº°ÇÒ ¼ö ÀÖ½À´Ï´Ù.
+	</DIV>";
+
+	print "
+	<DIV CLASS=\"CTooltip\" ID=\"tt201\"> ÀÌ ¿À·ù¿¡ ´ëÇÑ ¼³¸íÀÌ ¾ø½À´Ï´Ù. </DIV>
+	<DIV CLASS=\"CTooltip\" ID=\"tt202\"> ¿äÃ»ÀÌ ¼­¹ö¿¡ ÀÇÇØ ´õÀÌ»ó ÁøÇàµÉ ¼ö ¾ø½À´Ï´Ù. </DIV>
+	<DIV CLASS=\"CTooltip\" ID=\"tt204\"> ¼­¹ö°¡ ¿äÃ»À» Ã³¸®ÇßÁö¸¸ Àü¼ÛÇÒ ¹®¼­°¡ ¾ø½À´Ï´Ù. </DIV>
+	<DIV CLASS=\"CTooltip\" ID=\"tt206\"> ÀÏºÎ ³»¿ë. </DIV>
+	<DIV CLASS=\"CTooltip\" ID=\"tt301\"> ¿äÃ»µÈ ¹®¼­´Â ¿Å°ÜÁ®¼­ ´Ù¸¥ ÁÖ¼Ò¸¦ »ç¿ëÇÕ´Ï´Ù. </DIV>
+	<DIV CLASS=\"CTooltip\" ID=\"tt302\"> ÀÌ ¿À·ù¿¡ ´ëÇÑ ¼³¸íÀÌ ¾ø½À´Ï´Ù. </DIV>
+	<DIV CLASS=\"CTooltip\" ID=\"tt400\"> ±¸¹® ¿À·ù, ¼­¹ö°¡ ÀÌ ¿äÃ»À» ¾Ë ¼ö ¾ø½À´Ï´Ù. </DIV>
+	<DIV CLASS=\"CTooltip\" ID=\"tt401\"> <b>URL¿¡ Á¢¼ÓÀ» À§ÇØ¼­´Â ·Î±×ÀÎ/ÆÐ½º¿öµå °¡ ÇÊ¿äÇÕ´Ï´Ù.</b><br>ÀÌ Ç×¸ñÀÇ ÃÖ°í°ªÀº ´©±º°¡ Å©·¢À» ½ÃµµÇÏ°Å³ª ´ç½ÅÀÇ »çÀÌÆ®¿¡ Á¢¼ÓÀ» ½ÃµµÇÏ°í ÀÖ´Â °Í(´Ù¸¥ ·Î±×ÀÎ/ÆÐ½º¿öµå¸¦ »ç¿ëÇÏ¿© ½ÃµµÇÏ´Â°Í) À» ÀÇ¹ÌÇÕ´Ï´Ù. </DIV>
+	<DIV CLASS=\"CTooltip\" ID=\"tt403\"> <b>»ç¿ë°¡´ÉÇÏ°Ô ¼³Á¤µÇ¾î ÀÖÁö ¾Ê´Â URL</b>¿¡ ´ëÇÑ Á¢¼Ó½Ãµµ ¿À·ù ÀÔ´Ï´Ù. (¿¹¸¦ µé¾î, µð·ºÅä¸®¿¡¤Ô´ëÇÑ \"ºê¶ó¿ìÂ¡\"ÀÌ Á¤ÀÇµÇÁö ¾ÊÀº °æ¿ìÀÔ´Ï´Ù.) </DIV>
+	<DIV CLASS=\"CTooltip\" ID=\"tt404\"> <b>Á¸ÀçÇÏÁö ¾Ê´Â URL</b>¿¡ ´ëÇÑ Á¢¼Ó ½Ãµµ ¿À·ùÀÔ´Ï´Ù. ÀÌ ¿À·ù´Â Á¾Á¾ ´ç½ÅÀÇ »çÀÌÆ® ¾îµò°¡¿¡¼­ Àß¸øµÈ ¸µÅ©°¡ ÀÖ¾î ¹æ¹®ÀÚµéÀÌ Àß¸øµÈ URL·Î Á¢¼ÓÇÏ´Â °æ¿ì¿¡ ¹ß»ýÇÕ´Ï´Ù. </DIV>
+	<DIV CLASS=\"CTooltip\" ID=\"tt408\"> ¼­¹ö¿¡°Ô ¿äÃ»µÈ °ÍÀÌ <b>³Ê¹« ¸¹Àº ÀÀ´ä ½Ã°£</b>À» ¿ä±¸ÇÕ´Ï´Ù.	ÀÌ ¿À·ù´Â Á¾Á¾ ´À¸° CGI ½ºÅ©¸³Æ® ¹®Á¦ÀÌ°Å³ª À¥¼­¹ö »ç¿ë·®ÀÌ ¸¹Àº °æ¿ì¿¡ ¹ß»ýÇÕ´Ï´Ù. </DIV>
+	<DIV CLASS=\"CTooltip\" ID=\"tt500\"> ³»ºÎ ¿À·ù. ÀÌ ¿À·ù´Â Á¾Á¾ CGIÇÁ·Î±×·¥ÀÌ ºñÁ¤»óÀûÀ¸·Î Á¾·áµÇ¾úÀ» ¶§ ¹ß»ýÇÕ´Ï´Ù. </DIV>
+	<DIV CLASS=\"CTooltip\" ID=\"tt501\"> ¿äÃ»µÈ µ¿ÀÛÀ» ¾Ë¼ö ¾ø½À´Ï´Ù. </DIV>
+	<DIV CLASS=\"CTooltip\" ID=\"tt502\"> HTTP ¼­¹ö¿¡ ÀÇÇØ ¹Ý¼ÛµÈ ÄÚµå°¡ ÇÁ¶ô½Ã³ª °ÔÀÌÆ®¿þÀÌ·Î µ¿ÀÛÇÕ´Ï´Ù.  ´ë»ó ¼­¹ö°¡ Å¬¶óÀÌ¾ðÆ®ÀÇ ¿äÃ»¿¡ Á¤È®ÇÏ°Ô ÀÀ´äÀ» ÇÏÁö ¸øÇÕ´Ï´Ù. </DIV>
+	<DIV CLASS=\"CTooltip\" ID=\"tt503\"> ³»ºÎ ¼­¹ö ¿À·ù. </DIV>
+	<DIV CLASS=\"CTooltip\" ID=\"tt504\"> °ÔÀÌÆ®¿þÀÌ ½Ã°£ÃÊ°ú. </DIV>
+	<DIV CLASS=\"CTooltip\" ID=\"tt505\"> HTTP ¹öÀüÀÌ Áö¿øÇÏÁö ¾Ê½À´Ï´Ù. </DIV>
+	";
+}
+
 
 
 print "
@@ -3193,7 +3241,7 @@ $yearcon=substr($LastUpdate,0,4);$monthcon=substr($LastUpdate,4,2);$daycon=subst
 if ($LastUpdate != 0) { print "$daycon&nbsp;$monthlib{$monthcon}&nbsp;$yearcon&nbsp;-&nbsp;$hourcon:$mincon"; }
 else { print "<font color=#880000>Never updated</font>"; }
 print "</font></td><td valign=center><font size=1>&nbsp;";
-if ($AllowToUpdateStatsFromBrowser) { print "<a href=\"$DirCgi$PROG.$Extension?update=1&site=$SiteToAnalyze&year=$YearRequired&month=$MonthRequired&lang=$Lang\">Update</a>"; }
+if ($AllowToUpdateStatsFromBrowser) { print "<a href=\"$DirCgi$PROG.$Extension?update=1&site=$SiteToAnalyze&year=$YearRequired&month=$MonthRequired&lang=$Lang\">$message[74][$Lang]</a>"; }
 print "</td></tr></table>";
 print "<br>\n";
 print "<table>\n";
