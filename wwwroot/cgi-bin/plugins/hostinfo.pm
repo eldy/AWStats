@@ -23,7 +23,7 @@ use strict;no strict "refs";
 # <-----
 # ENTER HERE THE MINIMUM AWSTATS VERSION REQUIRED BY YOUR PLUGIN
 # AND THE NAME OF ALL FUNCTIONS THE PLUGIN MANAGE.
-my $PluginNeedAWStatsVersion="5.7";
+my $PluginNeedAWStatsVersion="6.0";
 my $PluginHooksFunctions="ShowInfoHost AddHTMLBodyHeader BuildFullHTMLOutput";
 # ----->
 
@@ -62,13 +62,16 @@ sub AddHTMLBodyHeader_hostinfo {
 	my $WIDTHINFO=640;
 	my $HEIGHTINFO=480;
 
+	my $urlparam="pluginmode=hostinfo&config=$SiteConfig";
+	$urlparam.=($DirConfig?"&configdir=$DirConfig":"");
+	
 	print <<EOF;
 
 <script language="javascript" type="text/javascript">
 function neww(a,b) {
 	var wfeatures="directories=0,menubar=1,status=0,resizable=1,scrollbars=1,toolbar=0,width=$WIDTHINFO,height=$HEIGHTINFO,left=" + eval("(screen.width - $WIDTHINFO)/2") + ",top=" + eval("(screen.height - $HEIGHTINFO)/2");
-	if (b==1) { fen=window.open('$AWScript?pluginmode=hostinfo&host='+a,'whois',wfeatures); }
-	if (b==2) { fen=window.open('$AWScript?pluginmode=hostinfo&host='+a,'whois',wfeatures); }
+	if (b==1) { fen=window.open('$AWScript?$urlparam&host='+a,'whois',wfeatures); }
+	if (b==2) { fen=window.open('$AWScript?$urlparam&host='+a,'whois',wfeatures); }
 }
 </script>
 
@@ -131,9 +134,6 @@ sub ShowInfoHost_hostinfo {
 #-----------------------------------------------------------------------------
 sub BuildFullHTMLOutput_hostinfo {
 	# <-----
-#	my $regipv4=qr/^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/;
-#	my $regipv6=qr/^[0-9A-F]*:/i;
-
 	my $Host='';
 	if ($QueryString =~ /host=([^&]+)/i) {
 		$Host=lc(&DecodeEncodedString("$1"));
@@ -141,6 +141,8 @@ sub BuildFullHTMLOutput_hostinfo {
 
 	my $ip='';
 	my $HostResolved='';
+#	my $regipv4=qr/^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/;
+#	my $regipv6=qr/^[0-9A-F]*:/i;
 #	if ($Host =~ /$regipv4/o) { $ip=4; }
 #	elsif ($Host =~ /$regipv6/o) { $ip=6; }
 #	if ($ip == 4) {
@@ -156,27 +158,34 @@ sub BuildFullHTMLOutput_hostinfo {
 	if (! $ip) { $HostResolved=$Host; }
 
 	if ($Debug) { debug("  DirData=$DirData Host=$Host HostResolved=$HostResolved ",4); }
-	my $w = new Net::XWhois Verbose=>$Debug, Cache=>$DirData, NoCache=>0, Timeout=>30, Domain=>$HostResolved;
+	my $w = new Net::XWhois Verbose=>$Debug, Cache=>$DirData, NoCache=>0, Timeout=>10, Domain=>$HostResolved;
 
 	print "<br>\n";
 	
-	&tab_head("Common Whois Fields",0,0,'whois');
-	print "<tr bgcolor=\"#$color_TableBGRowTitle\"><th>Common field info</th><th>Value</th></tr>\n";
-	print "<tr><td>Name</td><td>".($w->name())."&nbsp;</td></tr>";
-	print "<tr><td>Status</td><td>".($w->status())."&nbsp;</td></tr>";
-	print "<tr><td>NameServers</td><td>".($w->nameservers())."&nbsp;</td></tr>";
-	print "<tr><td>Registrant</td><td>".($w->registrant())."&nbsp;</td></tr>";
-	print "<tr><td>Contact Admin</td><td>".($w->contact_admin())."&nbsp;</td></tr>";
-	print "<tr><td>Contact Tech</td><td>".($w->contact_tech())."&nbsp;</td></tr>";
-	print "<tr><td>Contact Billing</td><td>".($w->contact_billing())."&nbsp;</td></tr>";
-	print "<tr><td>Contact Zone</td><td>".($w->contact_zone())."&nbsp;</td></tr>";
-	print "<tr><td>Contact Emails</td><td>".($w->contact_emails())."&nbsp;</td></tr>";
-	print "<tr><td>Contact Handles</td><td>".($w->contact_handles())."&nbsp;</td></tr>";
-	print "<tr><td>Domain Handles</td><td>".($w->domain_handles())."&nbsp;</td></tr>";
-	&tab_end;
+	if ($w && $w->response()) {
+		&tab_head("Common Whois Fields",0,0,'whois');
+		print "<tr bgcolor=\"#$color_TableBGRowTitle\"><th>Common field info</th><th>Value</th></tr>\n";
+		print "<tr><td>Name</td><td>".($w->name())."&nbsp;</td></tr>";
+		print "<tr><td>Status</td><td>".($w->status())."&nbsp;</td></tr>";
+		print "<tr><td>NameServers</td><td>".($w->nameservers())."&nbsp;</td></tr>";
+		print "<tr><td>Registrant</td><td>".($w->registrant())."&nbsp;</td></tr>";
+		print "<tr><td>Contact Admin</td><td>".($w->contact_admin())."&nbsp;</td></tr>";
+		print "<tr><td>Contact Tech</td><td>".($w->contact_tech())."&nbsp;</td></tr>";
+		print "<tr><td>Contact Billing</td><td>".($w->contact_billing())."&nbsp;</td></tr>";
+		print "<tr><td>Contact Zone</td><td>".($w->contact_zone())."&nbsp;</td></tr>";
+		print "<tr><td>Contact Emails</td><td>".($w->contact_emails())."&nbsp;</td></tr>";
+		print "<tr><td>Contact Handles</td><td>".($w->contact_handles())."&nbsp;</td></tr>";
+		print "<tr><td>Domain Handles</td><td>".($w->domain_handles())."&nbsp;</td></tr>";
+		&tab_end;
+	}
 
 	&tab_head("Full Whois Field",0,0,'whois');
-	print "<tr><td class=\"aws\"><pre>".($w->response())."</pre></td></tr>\n";
+	if ($w && $w->response()) {
+		print "<tr><td class=\"aws\"><pre>".($w->response())."</pre></td></tr>\n";
+	}
+	else {
+		print "<tr><td><br />The Whois command failed.<br />Did the server running AWStats is allowed to send WhoIs queries ?<br /><br /></td></tr>\n";
+	}
 	&tab_end;
 
 	return 1;
