@@ -6,17 +6,31 @@ $Revision$ - $Author$ - $Date$
 ***** 6.3 *****
 
 New features/improvements:
-- Added the geoip_isp_maxmind and geoip_org_maxmind plugin.
+- Added the geoip_isp_maxmind and geoip_org_maxmind plugin to allow
+  rrports by ISP and Organizations.
 - Details firefox versions.
+- webmin module: Report GeoIP databases versions.
+- Support keywords detection for search engines that store search key
+  inside url instead of parameters. This means AWStats can now detect
+  keywords from search engines like a9.com
 
 Fixes:
+- Removed an unknown security hole.
+- Removed an other unknown major security hole (found by iDEFENSE).
 - The geoip_city_maxmind plugin was sometimes bind and towns with
   space in names are reported correctly.
-- Removed an unknown security hole.
-- Removed an other unknown security hole (found by iDEFENSE).
-- Restart of apache works correctly on debian.
+- Restart of apache on debian failed in awstats_configure.pl
+- Better look for file types tables.
+- Fix: [ 1066468 ] Translated word gets corupted (&OUML instead of Ö)
+- Fix: [ 1074810 ] XML Parsing Error
+- Fix: [ 991768 ] "Created by awstats" not localized
+- Fix: [ 1092048 ] flash(.swf) in NotPageList(default)
+- Fix pb when there is spaces in key of ExtraSections
+
 
 Other/Documentation:
+- SaveDatabaseFilesWithPermissionsForEveryone is 0 by default instead
+  of 1 for security reasons.
 - Updated documentation
 - Updated language files
 
