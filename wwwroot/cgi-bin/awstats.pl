@@ -71,7 +71,7 @@ $found, $internal_link, $new) = ();
 %MonthBytes = %MonthHits = %MonthHostsKnown = %MonthHostsUnknown = %MonthPages = %MonthUnique = %MonthVisits =
 %monthlib = %monthnum = ();
 
-$VERSION="3.1 (build 37)";
+$VERSION="3.1 (build 38)";
 $Lang="en";
 
 # Default value
@@ -129,6 +129,7 @@ $AddOn=0;
 # Search engines names database (update the 10th january 2001)
 # To add a search engine, add a new line:
 # "match_string_in_url_that_identify_engine", "search_engine_name",
+#-------------------------------------------------------
 %SearchEnginesHash=(
 # Most common search engines
 "yahoo\.","Yahoo",
@@ -177,6 +178,7 @@ $AddOn=0;
 );
 
 # Search engines known URLs rules to find keywords (update the 10th january 2001)
+#-------------------------------------------------------
 %SearchEnginesKnownUrl=(
 # Most common search engines
 "yahoo\.","p=",
@@ -221,17 +223,8 @@ $AddOn=0;
 @WordsToCleanSearchUrl= ("act=","annuaire=","btng=","categoria=","cfg=","cou=","cp=","dd=","domain=","dt=","dw=","exec=","geo=","hc=","height=","hl=","hq=","hs=","id=","kl=","lang=","loc=","lr=","matchmode=","medor=","message=","meta=","mode=","order=","page=","par=","pays=","pg=","pos=","prg=","qc=","refer=","sa=","safe=","sc=","sort=","src=","start=","stype=","sum=","tag=","temp=","theme=","url=","user=","width=","what=","\\.x=","\\.y=","y=","look=");
 # Never put the following exclusion ("ask=","claus=","general=","kw=","keyword=","MT","p=","q=","qr=","qt=","query=","s=","search=","searchText=","string=","su=") because they are strings that contain keywords we're looking for.
 
-# HTTP codes with tooltip
-%httpcode = (
-"201", "Partial Content", "202", "Request recorded, will be executed later", "204", "Request executed", "206", "Partial Content",
-"301", "Moved Permanently", "302", "Found",
-"400", "Bad Request", "401", "Unauthorized", "403", "Forbidden", "404", "Not Found", "408", "Request Timeout",
-"500", "Internal Error", "501", "Not implemented", "502", "Received bad response from real server", "503", "Server busy", "504", "Gateway Time-Out", "505", "HTTP version not supported",
-
-"200", "OK", "304", "Not Modified"	# 200 and 304 are not errors
-);
-
 # Browser name list ("browser id in lower case", "browser text")
+#-------------------------------------------------------
 %BrowsersHashIDLib = (
 "msie","defined_later",
 "netscape","defined_later",
@@ -308,8 +301,10 @@ $AddOn=0;
 );
 
 # OS name list ("os id","os clear text")
+#-------------------------------------------------------
 %OSHashLib      = (
 # Windows family OS
+"winxp","Windows XP",
 "winme","Windows Me",
 "win2000","Windows 2000",
 "winnt","Windows NT",
@@ -344,32 +339,19 @@ $AddOn=0;
 );
 
 # OSHashID ("text that match in log after changing ' ' or '+' into '_' ", "osid")
+#-------------------------------------------------------
 %OSHashID	= (
 # Windows OS family
+"windows_nt_5\.1","winxp",
 "win_9x_4\.9","winme",
-"windows2000","win2000",
-"windows_2000","win2000",
-"windows_nt_5","win2000",
-"winnt","winnt",
-"windows_nt","winnt",
-"windows-nt","winnt",
-"win32","winnt",
-"win98","win98",
-"windows_98","win98",
-"windows98","win98",
-"win95","win95",
-"windows_95","win95",
-"win16","win16",
-"windows_3","win16",
-"windows;i;16","win16",
-"wince","wince",
-"windows_ce","wince",
+"windows2000","win2000","windows_2000","win2000","windows_nt_5","win2000",
+"winnt","winnt","windows_nt","winnt","windows-nt","winnt","win32","winnt",
+"win98","win98","windows_98","win98","windows98","win98",
+"win95","win95","windows_95","win95",
+"win16","win16","windows_3","win16","windows;i;16","win16",
+"wince","wince","windows_ce","wince",
 # Macintosh OS family
-"mac_p","macintosh",
-"mac_68","macintosh",
-"macppc","macintosh",
-"macweb","macintosh",
-"macintosh","macintosh",
+"mac_p","macintosh","mac_68","macintosh","macppc","macintosh","macweb","macintosh","macintosh","macintosh",
 # Other famous OS
 "beos","beos",
 "os/2","os/2",
@@ -394,26 +376,18 @@ $AddOn=0;
 "webtv","webtv"
 );
 
+# OSArrayID
+#-------------------------------------------------------
 @OSArrayID	= (
 # Windows OS family
+"windows_nt_5\.1",
 "win_9x_4\.9",			# Must be before windows_98
-"windows2000",
-"windows_2000",
-"windows_nt_5",
-"winnt",
-"windows_nt",
-"windows-nt",
-"win32",
-"win98",
-"windows_98",
-"windows98",
-"win95",
-"windows_95",
-"win16",
-"windows_3",			# This works for windows_31 and windows_3.1
-"windows;i;16",
-"wince",
-"windows_ce",
+"windows2000","windows_2000","windows_nt_5",
+"winnt","windows_nt","windows-nt","win32",
+"win98","windows_98","windows98",
+"win95","windows_95",
+"win16","windows_3","windows;i;16",			# This works for windows_31 and windows_3.1
+"wince","windows_ce",
 # Macintosh OS family
 "mac_p",				# This works for mac_ppc and mac_powerpc
 "mac_68",				# This works for mac_6800 and mac_68k
@@ -446,7 +420,7 @@ $AddOn=0;
 
 
 # Robot name list ("os id","os clear text")
-%RobotHashIDLib   = (
+#-------------------------------------------------------
 # Main list of robots (found at http://info.webcrawler.com/mak/projects/robots/active.html)
 # This command show how to generate tab list from this file: cat robotslist.txt | sed 's/:/ /' | awk ' /robot-id/ { name=tolower($2); } /robot-name/ { print "\""name"\", \""$0"\"," } ' | sed 's/robot-name *//g' > file
 # Rem: To avoid bad detection, some robots id were removed from this list:
@@ -454,6 +428,7 @@ $AddOn=0;
 #      - Robot called "webs"
 # Rem: directhit is changed into direct_hit (its real id)
 # Rem: calif is changed into calif[^r] to avoid confusion between tiscalifreenet browser
+%RobotHashIDLib   = (
 "acme.spider", "Acme.Spider",
 "ahoythehomepagefinder", "Ahoy! The Homepage Finder",
 "alkaline", "Alkaline",
@@ -719,6 +694,7 @@ $AddOn=0;
 );
 
 # Domains name list ("domain id", "Domain name")
+#-------------------------------------------------------
 %DomainsHash = (
 "localhost","localhost",
 
@@ -786,6 +762,16 @@ $AddOn=0;
 "ws","Samoa","ye","Yemen","yt","Mayotte","yu","Yugoslavia","za","South Africa",
 "zm","Zambia","zr","Zaire","zw","Zimbabwe"
 );
+
+# HTTP codes with tooltip
+%httpcode = (
+"201", "Partial Content", "202", "Request recorded, will be executed later", "204", "Request executed", "206", "Partial Content",
+"301", "Moved Permanently", "302", "Found",
+"400", "Bad Request", "401", "Unauthorized", "403", "Forbidden", "404", "Not Found", "408", "Request Timeout",
+"500", "Internal Error", "501", "Not implemented", "502", "Received bad response from real server", "503", "Server busy", "504", "Gateway Time-Out", "505", "HTTP version not supported",
+"200", "OK", "304", "Not Modified"	# 200 and 304 are not errors
+);
+
 
 
 #-------------------------------------------------------
@@ -2114,11 +2100,12 @@ if ($UpdateStats) {
 	$starttime=time();
 	while (<LOG>)
 	{
-		$NbOfLinesRead++;
 		if (/^#/) { next; }									# Ignore comment lines (ISS writes such comments)
 		if (/^!/) { next; }									# Ignore comment lines (Webstar writes such comments)
 		#if (/^$/) { next; }								# Ignore blank lines (With ISS: happens sometimes, with Apache: possible when editing log file)
 		chomp $_; s/\r//;
+
+		$NbOfLinesRead++;
 
 		# Parse line record to get all required fields
 		/^$PerlParsingFormat/;
