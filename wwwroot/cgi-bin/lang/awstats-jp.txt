@@ -1,5 +1,6 @@
-# Japanese message file (translation was done by Mayumi Sugiyama (KDDI))
-PageCode=iso-2022-jp
+# Japanese message file (by Mayumi Sugiyama - KDDI)
+# $Revision$ - $Date$
+PageCode=MS_Kanji
 message0=•s–¾
 message1=•s–¾(ip‚ª‰ð‚è‚Ü‚¹‚ñ)
 message2=‚»‚Ì‘¼
