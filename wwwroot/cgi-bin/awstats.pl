@@ -982,8 +982,8 @@ sub Read_Config {
 # Return:		None
 #------------------------------------------------------------------------------
 sub Parse_Config {
-    my( $config ) = @_[0];
-	my $level = @_[1];
+    my( $config ) = $_[0];
+	my $level = $_[1];
 	my $versionnum=0;
 
 	if ($Debug) { debug("Call to Parse_Config level $level",2); }
