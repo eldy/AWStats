@@ -32,7 +32,7 @@ $WIDTHCOLICON $TOOLTIPON
 $DEBUGFORCED=0;						# Force debug level to log lesser level into debug.log file (Keep this value to 0)
 $NBOFLINESFORBENCHMARK=8192;		# Benchmark info are printing every NBOFLINESFORBENCHMARK lines (Must be a power of 2)
 $FRAMEWIDTH=230;					# Width of left frame when UseFramesWhenCGI is on
-$NBOFLASTUPDATELOOKUPTOSAVE=200;	# Nb of records to save in DNS last update cache file
+$NBOFLASTUPDATELOOKUPTOSAVE=500;	# Nb of records to save in DNS last update cache file
 $LIMITFLUSH=5000;					# Nb of records in data arrays after how we need to flush data on disk
 $NEWDAYVISITTIMEOUT=764041;			# Delay between 01-23:59:59 and 02-00:00:00
 $VISITTIMEOUT=10000;				# Laps of time to consider a page load as a new visit. 10000 = 1 hour (Default = 10000)
@@ -5558,7 +5558,7 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 				# Check in static DNS cache file
 				$HostResolved=$MyDNSTable{$Host};
 				if ($HostResolved) {
-					if ($Debug) { debug("  DNS lookup asked for $Host and found in DNS cache file: $HostResolved",4); }
+					if ($Debug) { debug("  DNS lookup asked for $Host and found in static DNS cache file: $HostResolved",4); }
 				}
 				elsif ($DNSLookup==1) {
 					# Check in session cache (dynamic DNS cache file + session DNS cache)
@@ -5599,7 +5599,7 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 				}
 				else {
 					$HostResolved='*';
-					if ($Debug) { debug("  DNS lookup by file asked for $Host but not found in DNS cache file.",4); }
+					if ($Debug) { debug("  DNS lookup by static DNS cache file asked for $Host but not found.",4); }
 				}
 			}
 			else {
@@ -6146,15 +6146,14 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 		close(LOG);
 	}
 
-
-	if ($DNSLookup && $DNSLookupAlreadyDone) {
+	if ($DNSLookup==1 && $DNSLookupAlreadyDone) {
 		# DNSLookup warning
 		my $bold=($ENV{'GATEWAY_INTERFACE'}?'<b>':'');
 		my $unbold=($ENV{'GATEWAY_INTERFACE'}?'</b>':'');
 		my $br=($ENV{'GATEWAY_INTERFACE'}?'<br>':'');
 		warning("Warning: $bold$PROG$unbold has detected that some hosts names were already resolved in your logfile $bold$DNSLookupAlreadyDone$unbold.$br\nIf DNS lookup was already made by the logger (web server), you should change your setup DNSLookup=$DNSLookup into DNSLookup=0 to increase $PROG speed.");
 	}
-	if ($DNSLookup && $NbOfNewLines) {
+	if ($DNSLookup==1 && $NbOfNewLines) {
 		# Save new DNS last update cache file
 		Save_DNS_Cache_File(\%TmpDNSLookup,"$DirData/$DNSLastUpdateCacheFile","$FileSuffix");	# Save into file using FileSuffix
 	}
