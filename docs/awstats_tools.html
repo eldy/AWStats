@@ -145,15 +145,28 @@ All those tools are available in <b>tools</b> directory of AWStats distribution.
 <br>
 <br>This runs logresolvemerge in command line to open one or several web
 <br>server log files to merge them (sorted on date) and/or to make a reverse
-<br>DNS lookup. The result log file is sent on standard output.
+<br>DNS lookup (if wanted). The result log file is sent on standard output.
 <br>Note: logresolvemerge is not a 'sort' tool to sort one file. It's a
 <br>software able to output sorted log records (with a reverse DNS lookup
-<br>made if wanted) even if log records are shaked in several files.
-<br>However each of thoose files must be already independently sorted itself
-<br>(but that is the case in all web server log files).
-<br>logresolvemerge is particularly usefull when you want to merge large log
-<br>files in a fast process and with a low use of memory getting records in a
-<br>chronological order through a pipe (for use by third tool, like log analyzer).
+<br>included or not) even if log records are dispatched in several files.
+<br>Each of thoose files must be already independently sorted itself
+<br>(but that is the case in all web server log files). So you can use it
+<br>for load balanced log files or to process several old log files.
+<br>
+<br>Don't forget that the main goal of logresolvemerge is to send log records to
+<br>a log analyzer in a sorted order without merging files on disk (NO NEED
+<br>OF DISK SPACE AT ALL) and without loading files into memory (NO NEED
+<br>OF MORE MEMORY). Choose of output records is done on the fly.
+<br>
+<br>So logresolvemerge is particularly usefull when you want to output several
+<br>and/or large log files in a fast process, with no use of disk or
+<br>more memory and in a chronological order through a pipe (to be used by a log
+<br>analyzer.
+<br>
+<br>Note: If input records are not 'exactly' sorted but 'nearly' sorted (this
+<br>occurs with heavy servers), this is not a problem, the output will also
+<br>be 'nearly' sorted but a few log analyzers (like AWStats) knowns how to deal
+<br>with such logs.
 <br>
 <br>WARNING: If log files are old MAC text files (lines ended with CR char), you
 <br>can't run this tool on Win or Unix platforms.
