@@ -7297,13 +7297,13 @@ EOF
 		if ($Debug) { debug("ShowHostsStats",2); }
 		print "$Center<a name=\"VISITOR\">&nbsp;</a><BR>\n";
 		&tab_head("$Message[81] ($Message[77] $MaxNbOfHostsShown) &nbsp; - &nbsp; <a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=allhosts":"$PROG$StaticLinks.allhosts.html")."\"$NewLinkTarget>$Message[80]</a> &nbsp; - &nbsp; <a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=lasthosts":"$PROG$StaticLinks.lasthosts.html")."\"$NewLinkTarget>$Message[9]</a> &nbsp; - &nbsp; <a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=unknownip":"$PROG$StaticLinks.unknownip.html")."\"$NewLinkTarget>$Message[45]</a>",19);
-		if ($MonthRequired ne "year") { print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[81] : $TotalHostsKnown $Message[82], $TotalHostsUnknown $Message[1] - $TotalUnique $Message[11]</TH>"; }
+		if ($MonthRequired ne 'year') { print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[81] : $TotalHostsKnown $Message[82], $TotalHostsUnknown $Message[1] - $TotalUnique $Message[11]</TH>"; }
 		else { print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[81] : ".(scalar keys %_host_h)."</TH>"; }
 		if ($ShowLinksToWhoIs && $LinksToWhoIs) { print "<TH width=80>$Message[114]</TH>"; }
-		if ($ShowHoursStats =~ /P/i) { print "<TH bgcolor=\"#$color_p\" width=80>$Message[56]</TH>"; }
-		if ($ShowHoursStats =~ /H/i) { print "<TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH>"; }
-		if ($ShowHoursStats =~ /B/i) { print "<TH bgcolor=\"#$color_k\" width=80>$Message[75]</TH>"; }
-		if ($ShowHoursStats =~ /L/i) { print "<TH width=120>$Message[9]</TH>"; }
+		if ($ShowHostsStats =~ /P/i) { print "<TH bgcolor=\"#$color_p\" width=80>$Message[56]</TH>"; }
+		if ($ShowHostsStats =~ /H/i) { print "<TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH>"; }
+		if ($ShowHostsStats =~ /B/i) { print "<TH bgcolor=\"#$color_k\" width=80>$Message[75]</TH>"; }
+		if ($ShowHostsStats =~ /L/i) { print "<TH width=120>$Message[9]</TH>"; }
 		print "</TR>\n";
 		$total_p=$total_h=$total_k=0;
 		my $count=0;
@@ -7312,10 +7312,10 @@ EOF
 			print "<tr>";
 			print "<td CLASS=AWL>$key</td>";
 			if ($ShowLinksToWhoIs && $LinksToWhoIs) { ShowWhoIsCell($key); }
-			if ($ShowHoursStats =~ /P/i) { print "<TD>".($_host_p{$key}||"&nbsp")."</TD>"; }
-			if ($ShowHoursStats =~ /H/i) { print "<TD>$_host_h{$key}</TD>"; }
-			if ($ShowHoursStats =~ /B/i) { print "<TD>".Format_Bytes($_host_k{$key})."</TD>"; }
-			if ($ShowHoursStats =~ /L/i) { print "<TD>".($_host_l{$key}?Format_Date($_host_l{$key},1):"-")."</TD>"; }
+			if ($ShowHostsStats =~ /P/i) { print "<TD>".($_host_p{$key}||"&nbsp")."</TD>"; }
+			if ($ShowHostsStats =~ /H/i) { print "<TD>$_host_h{$key}</TD>"; }
+			if ($ShowHostsStats =~ /B/i) { print "<TD>".Format_Bytes($_host_k{$key})."</TD>"; }
+			if ($ShowHostsStats =~ /L/i) { print "<TD>".($_host_l{$key}?Format_Date($_host_l{$key},1):"-")."</TD>"; }
 			print "</tr>\n";
 			$total_p += $_host_p{$key};
 			$total_h += $_host_h{$key};
@@ -7328,10 +7328,10 @@ EOF
 		if ($rest_p > 0 || $rest_h > 0 || $rest_k > 0) {	# All other visitors (known or not)
 			print "<TR><TD CLASS=AWL><font color=\"#$color_other\">$Message[2]</font></TD>";
 			if ($ShowLinksToWhoIs && $LinksToWhoIs) { print "<TD>&nbsp;</TD>"; }
-			if ($ShowHoursStats =~ /P/i) { print "<TD>$rest_p</TD>"; }
-			if ($ShowHoursStats =~ /H/i) { print "<TD>$rest_h</TD>"; }
-			if ($ShowHoursStats =~ /B/i) { print "<TD>".Format_Bytes($rest_k)."</TD>"; }
-			if ($ShowHoursStats =~ /L/i) { print "<TD>&nbsp;</TD>"; }
+			if ($ShowHostsStats =~ /P/i) { print "<TD>$rest_p</TD>"; }
+			if ($ShowHostsStats =~ /H/i) { print "<TD>$rest_h</TD>"; }
+			if ($ShowHostsStats =~ /B/i) { print "<TD>".Format_Bytes($rest_k)."</TD>"; }
+			if ($ShowHostsStats =~ /L/i) { print "<TD>&nbsp;</TD>"; }
 			print "</TR>\n";
 		}
 		&tab_end;
