@@ -1,5 +1,5 @@
 <!--SR by tomo@inecco.net, bojans@teol.net, mst@mikis.org -->
-<!-- $Version: 1.2 $ - $Date$ -->
+<!-- $Revision$ - $Date$ -->
 <DIV CLASS="CTooltip" ID="tt1">
 Нова посета се дефинише као сваки нови <b>посетилац</b> који се није повезао на ваш сајт у току последњих <b>#VisitTimeOut# минута</b>.
 </DIV>
