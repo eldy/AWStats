@@ -28,7 +28,7 @@ New features/improvements:
 - Added LevelForFileTypesDetection parameter.
 - Added percent column for file types.
 - Added experimental graphapplet plugin (graph are built by applet).
-- Webmin module updated to 1.2
+- Webmin module updated to 1.210
 - Better setup error messages for newbie
 - configure.pl: A new script to configure AWStats and Apache and
   build a simple config file.
