@@ -18,6 +18,7 @@
 'script','Dynamic Html page or Script file',
 'image','Image',
 'document','Document',
+'package','Package',
 'archive','Archive',
 'audio','Audio',
 'video','Video',
@@ -79,6 +80,10 @@
 'sxd','other',
 'csv','other',
 'xsl','html',
+# Package
+'rpm','archive',
+'deb','archive',
+'msi','archive',
 # Archive
 '7z','archive',
 'ace','archive',
@@ -158,6 +163,10 @@
 'sxd','document',
 'csv','csv',
 'xsl','xsl',
+# Package
+'rpm','package',
+'deb','package',
+'msi','package',
 # Archive
 '7z','archive',
 'ace','archive',
