@@ -14,14 +14,14 @@ use vars qw(%DomainsHashIDLib @RobotsSearchIDOrder_list1 @RobotsSearchIDOrder_li
 #use diagnostics;
 # Uncomment following line and a line into GetDelaySinceStart function to get
 # miliseconds time in showsteps option
-#use Time::HiRes qw( gettimeofday );
+use Time::HiRes qw( gettimeofday );
 
 
 
 #-------------------------------------------------------
 # Defines
 #-------------------------------------------------------
-my $VERSION="4.0 (build 45)";
+my $VERSION="4.0 (build 47)";
 
 # ---------- Init variables -------
 my $Debug=0;
@@ -39,7 +39,7 @@ my $Lang="en";
 my $DEBUGFORCED   = 0;				# Force debug level to log lesser level into debug.log file (Keep this value to 0)
 my $MaxRowsInHTMLOutput = 1000;		# Max number of rows for not limited HTML arrays
 my $VisitTimeOut  = 10000;			# Laps of time to consider a page load as a new visit. 10000 = one hour (Default = 10000)
-my $FullHostName  = 1;				# 1 = Use name.domain.zone to refer host clients, 0 = all hosts in same domain.zone are one host (Default = 1, 0 never tested)
+#my $FullHostName  = 1;				# 1 = Use name.domain.zone to refer host clients, 0 = all hosts in same domain.zone are one host (Default = 1, 0 never tested)
 my $NbOfLinesForBenchmark=5000;
 my $ShowBackLink  = 1;
 my $WIDTH         = 600;
@@ -63,25 +63,27 @@ my $tomorrowtime = my $tomorrowsmallyear = 0;
 my $tomorrowsec = my $tomorrowmin = my $tomorrowhour = my $tomorrowday = my $tomorrowmonth = my $tomorrowyear = my $tomorrowwday = 0;
 my ($BarHeight,$BarWidth,$DebugResetDone,$Expires,
 $CreateDirDataIfNotExists, $KeepBackupOfHistoricFiles, $MaxLengthOfURL,
-$NbOfLinesRead, $NbOfNewLinesProcessed, $NbOfLinesCorrupted, $NowNewLinePhase,
 $MaxNbOfDomain, $MaxNbOfHostsShown, $MaxNbOfKeywordsShown, $MaxNbOfLoginShown,
 $MaxNbOfPageShown, $MaxNbOfRefererShown, $MaxNbOfRobotShown,
 $MinHitFile, $MinHitHost, $MinHitKeyword,
 $MinHitLogin, $MinHitRefer, $MinHitRobot,
-$NbOfLinesForCorruptedLog, $PurgeLogFile,
+$NbOfLinesRead, $NbOfLinesDropped, $NbOfLinesEmpty, $NbOfLinesCorrupted, $NbOfNewLinesProcessed,
+$NowNewLinePhase, $NbOfLinesForCorruptedLog, $PurgeLogFile,
 $ShowAuthenticatedUsers, $ShowCompressionStats, $ShowFileSizesStats,
-$ShowCorrupted, $SplitSearchString, $StartSeconds, $StartMicroseconds,
+$ShowDropped, $ShowCorrupted, $ShowUnknownOrigin, $SplitSearchString, $StartSeconds, $StartMicroseconds,
 $StaticLinks, $UpdateStats, $URLWithQuery)=
-(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
+(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
 my ($AllowToUpdateStatsFromBrowser, $ArchiveLogRecords, $DetailedReportsOnNewWindows,
 $FirstDayOfWeek, $SaveDatabaseFilesWithPermissionsForEveryone,
+$LevelForRobotsDetection, $LevelForBrowsersDetection, $LevelForOSDetection,
+$LevelForSearchEnginesDetection, $LevelForKeywordsDetection, $LevelForRefererAnalyze,
 $ShowHeader, $ShowMenu, $ShowMonthDayStats, $ShowDaysOfWeekStats,
 $ShowHoursStats, $ShowDomainsStats, $ShowHostsStats,
 $ShowRobotsStats, $ShowPagesStats, $ShowFileTypesStats,
 $ShowBrowsersStats, $ShowOSStats, $ShowOriginStats, $ShowKeyphrasesStats,
 $ShowKeywordsStats,  $ShowHTTPErrorsStats,
 $ShowFlagLinks, $ShowLinksOnUrl, $WarningMessages)=
-(1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1);
+(1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1);
 my ($ArchiveFileName, $DayRequired, $DefaultFile, $FileConfig, $FileSuffix,
 $HTMLHeadSection, $HTMLEndSection, $HTMLOutput, $Host,
 $LastUpdate, $LogFile, $LogFormat, $LogFormatString, $Logo, $LogoLink,
@@ -103,7 +105,6 @@ my $TotalPages = my $TotalHits = my $TotalBytes = 0;
 # ---------- Init arrays --------
 my @Message=();
 my @HostAliases=();
-my @NotPageList=();
 my @ValidHTTPCodes=();
 my @OnlyFiles = my @SkipDNSLookupFor = my @SkipFiles = my @SkipHosts = ();
 my @DOWIndex=();
@@ -119,6 +120,7 @@ my @keylist=();
 my %DayBytes = my %DayHits = my %DayPages = my %DayUnique = my %DayVisits = ();
 my %FirstTime = my %LastTime = my %LastLine = my %LastUpdate = ();
 my %MonthBytes = my %MonthHits = my %MonthHostsKnown = my %MonthHostsUnknown = my %MonthPages = my %MonthUnique = my %MonthVisits = ();
+my %NotPageList=();
 my %monthlib = my %monthnum = ();
 my %HistoryFileAlreadyRead=();
 #my %BrowsersHereAreGrabbers = my %BrowsersHashIcon = my %BrowsersHashIDLib = ();
@@ -500,14 +502,12 @@ sub Read_Config_File {
 			foreach my $elem (@felter)	  { push @HostAliases,$elem; }
 			next;
 			}
-		# Read optional section
+		# Read optional setup section
 		if ($param =~ /^CreateDirDataIfNotExists/)   { $CreateDirDataIfNotExists=$value; next; }
 		if ($param =~ /^SaveDatabaseFilesWithPermissionsForEveryone/)   { $SaveDatabaseFilesWithPermissionsForEveryone=$value; next; }
 		if ($param =~ /^PurgeLogFile/)          { $PurgeLogFile=$value; next; }
 		if ($param =~ /^ArchiveLogRecords/)     { $ArchiveLogRecords=$value; next; }
 		if ($param =~ /^KeepBackupOfHistoricFiles/)     { $KeepBackupOfHistoricFiles=$value; next; }
-		if ($param =~ /^Lang/)                  { $Lang=$value; next; }
-		if ($param =~ /^DirLang/)               { $DirLang=$value; next; }
 		if ($param =~ /^DefaultFile/)           { $DefaultFile=$value; next; }
 		if ($param =~ /^SkipHosts/) {
 			$value =~ s/\\\./\./g; $value =~ s/([^\\])\./$1\\\./g; $value =~ s/^\./\\\./;	# Replace . into \.
@@ -535,7 +535,7 @@ sub Read_Config_File {
 			}
 		if ($param =~ /^NotPageList/) {
 			my @felter=split(/\s+/,$value);
-			foreach my $elem (@felter)    { push @NotPageList,$elem; }
+			foreach my $elem (@felter)    { $NotPageList{$elem}=1; }
 			$foundNotPageList=1;
 			next;
 			}
@@ -545,25 +545,21 @@ sub Read_Config_File {
 			$foundValidHTTPCodes=1;
 			next;
 			}
-		if ($param =~ /^URLWithQuery/)          { $URLWithQuery=$value; next; }
+		if ($param =~ /^URLWithQuery/)			{ $URLWithQuery=$value; next; }
 		if ($param =~ /^WarningMessages/)       { $WarningMessages=$value; next; }
 		if ($param =~ /^NbOfLinesForCorruptedLog/) { $NbOfLinesForCorruptedLog=$value; next; }
-		if ($param =~ /^FirstDayOfWeek/)       	{ $FirstDayOfWeek=$value; next; }
-		if ($param =~ /^MaxNbOfDomain/)         { $MaxNbOfDomain=$value; next; }
-		if ($param =~ /^MaxNbOfHostsShown/)     { $MaxNbOfHostsShown=$value; next; }
-		if ($param =~ /^MinHitHost/)            { $MinHitHost=$value; next; }
-		if ($param =~ /^MaxNbOfRobotShown/)     { $MaxNbOfRobotShown=$value; next; }
-		if ($param =~ /^MinHitRobot/)           { $MinHitRobot=$value; next; }
-		if ($param =~ /^MaxNbOfLoginShown/)     { $MaxNbOfLoginShown=$value; next; }
-		if ($param =~ /^MinHitLogin/)           { $MinHitLogin=$value; next; }
-		if ($param =~ /^MaxNbOfPageShown/)      { $MaxNbOfPageShown=$value; next; }
-		if ($param =~ /^MinHitFile/)            { $MinHitFile=$value; next; }
-		if ($param =~ /^MaxNbOfRefererShown/)   { $MaxNbOfRefererShown=$value; next; }
-		if ($param =~ /^MinHitRefer/)           { $MinHitRefer=$value; next; }
-		if ($param =~ /^MaxNbOfKeywordsShown/)  { $MaxNbOfKeywordsShown=$value; next; }
-		if ($param =~ /^MinHitKeyword/)         { $MinHitKeyword=$value; next; }
 		if ($param =~ /^SplitSearchString/)     { $SplitSearchString=$value; next; }
 		if ($param =~ /^Expires/)               { $Expires=$value; next; }
+		# Read optional accuracy setup section
+		if ($param =~ /^LevelForRobotsDetection/)			{ $LevelForRobotsDetection=$value; next; }			# Not used yet
+		if ($param =~ /^LevelForBrowsersDetection/)			{ $LevelForBrowsersDetection=$value; next; }		# Not used yet
+		if ($param =~ /^LevelForOSDetection/)				{ $LevelForOSDetection=$value; next; }				# Not used yet
+		if ($param =~ /^LevelForSearchEnginesDetection/)	{ $LevelForSearchEnginesDetection=$value; next; }	# Not used yet
+		if ($param =~ /^LevelForRefererAnalyze/)			{ $LevelForRefererAnalyze=$value; next; }			# Not used yet
+		if ($param =~ /^LevelForKeywordsDetection/)			{ $LevelForKeywordsDetection=$value; next; }		# Not used yet
+		# Read optional appearance setup section
+		if ($param =~ /^Lang/)                  { $Lang=$value; next; }
+		if ($param =~ /^DirLang/)               { $DirLang=$value; next; }
 		if ($param =~ /^ShowHeader/)             { $ShowHeader=$value; next; }
 		if ($param =~ /^ShowMenu/)               { $ShowMenu=$value; next; }
 		if ($param =~ /^ShowMonthDayStats/)      { $ShowMonthDayStats=$value; next; }
@@ -583,11 +579,25 @@ sub Read_Config_File {
 		if ($param =~ /^ShowKeywordsStats/)      { $ShowKeywordsStats=$value; next; }
 		if ($param =~ /^ShowCompressionStats/)   { $ShowCompressionStats=$value; next; }
 		if ($param =~ /^ShowHTTPErrorsStats/)    { $ShowHTTPErrorsStats=$value; next; }
+		if ($param =~ /^FirstDayOfWeek/)       	{ $FirstDayOfWeek=$value; next; }
+		if ($param =~ /^DetailedReportsOnNewWindows/) { $DetailedReportsOnNewWindows=$value; next; }
 		if ($param =~ /^ShowFlagLinks/)         { $ShowFlagLinks=$value; next; }
 		if ($param =~ /^ShowLinksOnUrl/)        { $ShowLinksOnUrl=$value; next; }
 		if ($param =~ /^MaxLengthOfURL/)        { $MaxLengthOfURL=$value; next; }
-		if ($param =~ /^MaxRowsInHTMLOutput/)   { $MaxRowsInHTMLOutput=$value; next; }
-		if ($param =~ /^DetailedReportsOnNewWindows/) { $DetailedReportsOnNewWindows=$value; next; }
+		if ($param =~ /^MaxRowsInHTMLOutput/)   { $MaxRowsInHTMLOutput=$value; next; }	# Not used yet
+		if ($param =~ /^MaxNbOfDomain/)         { $MaxNbOfDomain=$value; next; }
+		if ($param =~ /^MaxNbOfHostsShown/)     { $MaxNbOfHostsShown=$value; next; }
+		if ($param =~ /^MinHitHost/)            { $MinHitHost=$value; next; }
+		if ($param =~ /^MaxNbOfRobotShown/)     { $MaxNbOfRobotShown=$value; next; }
+		if ($param =~ /^MinHitRobot/)           { $MinHitRobot=$value; next; }
+		if ($param =~ /^MaxNbOfLoginShown/)     { $MaxNbOfLoginShown=$value; next; }
+		if ($param =~ /^MinHitLogin/)           { $MinHitLogin=$value; next; }
+		if ($param =~ /^MaxNbOfPageShown/)      { $MaxNbOfPageShown=$value; next; }
+		if ($param =~ /^MinHitFile/)            { $MinHitFile=$value; next; }
+		if ($param =~ /^MaxNbOfRefererShown/)   { $MaxNbOfRefererShown=$value; next; }
+		if ($param =~ /^MinHitRefer/)           { $MinHitRefer=$value; next; }
+		if ($param =~ /^MaxNbOfKeywordsShown/)  { $MaxNbOfKeywordsShown=$value; next; }
+		if ($param =~ /^MinHitKeyword/)         { $MinHitKeyword=$value; next; }
 		if ($param =~ /^HTMLHeadSection/)       { $HTMLHeadSection=$value; next; }
 		if ($param =~ /^HTMLEndSection/)        { $HTMLEndSection=$value; next; }
 		if ($param =~ /^BarWidth/)              { $BarWidth=$value; next; }
@@ -615,14 +625,13 @@ sub Read_Config_File {
 	}
 	close CONFIG;
 	# If parameter NotPageList not found, init for backward compatibility
-	if (! $foundNotPageList) {
-		push @NotPageList,"gif"; push @NotPageList,"jpg"; push @NotPageList,"jpeg"; push @NotPageList,"png"; push @NotPageList,"bmp";
-	}
+	$NotPageList{"gif"}=$NotPageList{"jpg"}=$NotPageList{"jpeg"}=$NotPageList{"png"}=$NotPageList{"bmp"}=1;
+
 	# If ValidHTTPCodes not found, init for backward compatibility
 	if (! $foundValidHTTPCodes) {
 		push @ValidHTTPCodes,"200"; push @ValidHTTPCodes,"304";
 	}
-	debug(" NotPageList ".@NotPageList);
+	debug(" NotPageList ".(scalar keys %NotPageList));
 	debug(" ValidHTTPCodes ".@ValidHTTPCodes);
 }
 
@@ -792,7 +801,7 @@ sub Check_Config {
 	if ($LogFormat =~ /^[\d]$/ && $LogFormat !~ /[1-5]/)  { error("Error: LogFormat parameter is wrong. Value is '$LogFormat' (should be 1,2,3,4,5 or a 'personalised AWtats log format string')"); }
 	if ($DNSLookup !~ /[0-1]/)                            { error("Error: DNSLookup parameter is wrong. Value is '$DNSLookup' (should be 0 or 1)"); }
 	if ($AllowToUpdateStatsFromBrowser !~ /[0-1]/) 	{ $AllowToUpdateStatsFromBrowser=0; }
-	# Optional section
+	# Optional setup section
 	if ($CreateDirDataIfNotExists !~ /[0-1]/)      	{ $CreateDirDataIfNotExists=0; }
 	if ($SaveDatabaseFilesWithPermissionsForEveryone !~ /[0-1]/)	{ $SaveDatabaseFilesWithPermissionsForEveryone=1; }
 	if ($PurgeLogFile !~ /[0-1]/)                 	{ $PurgeLogFile=0; }
@@ -802,23 +811,16 @@ sub Check_Config {
 	if ($URLWithQuery !~ /[0-1]/)                 	{ $URLWithQuery=0; }
 	if ($WarningMessages !~ /[0-1]/)              	{ $WarningMessages=1; }
 	if ($NbOfLinesForCorruptedLog !~ /[\d]+/ || $NbOfLinesForCorruptedLog<1)	{ $NbOfLinesForCorruptedLog=50; }
-	if ($FirstDayOfWeek !~ /[0-1]/)               	{ $FirstDayOfWeek=1; }
-	if ($MaxNbOfDomain !~ /^[\d]+/ || $MaxNbOfDomain<1)           		{ $MaxNbOfDomain=25; }
-	if ($MaxNbOfHostsShown !~ /^[\d]+/ || $MaxNbOfHostsShown<1)       	{ $MaxNbOfHostsShown=25; }
-	if ($MinHitHost !~ /^[\d]+/ || $MinHitHost<1)              			{ $MinHitHost=1; }
-	if ($MaxNbOfLoginShown !~ /^[\d]+/ || $MaxNbOfLoginShown<1)       	{ $MaxNbOfLoginShown=10; }
-	if ($MinHitLogin !~ /^[\d]+/ || $MinHitLogin<1)             		{ $MinHitLogin=1; }
-	if ($MaxNbOfRobotShown !~ /^[\d]+/ || $MaxNbOfRobotShown<1)       	{ $MaxNbOfRobotShown=25; }
-	if ($MinHitRobot !~ /^[\d]+/ || $MinHitRobot<1)             		{ $MinHitRobot=1; }
-	if ($MaxNbOfPageShown !~ /^[\d]+/ || $MaxNbOfPageShown<1)        	{ $MaxNbOfPageShown=25; }
-	if ($MinHitFile !~ /^[\d]+/ || $MinHitFile<1)              			{ $MinHitFile=1; }
-	if ($MaxNbOfRefererShown !~ /^[\d]+/ || $MaxNbOfRefererShown<1)     { $MaxNbOfRefererShown=25; }
-	if ($MinHitRefer !~ /^[\d]+/ || $MinHitRefer<1)             		{ $MinHitRefer=1; }
-	if ($MaxNbOfKeywordsShown !~ /^[\d]+/ || $MaxNbOfKeywordsShown<1)	{ $MaxNbOfKeywordsShown=25; }
-	if ($MinHitKeyword !~ /^[\d]+/ || $MinHitKeyword<1)           		{ $MinHitKeyword=1; }
-	if ($MaxRowsInHTMLOutput !~ /^[\d]+/ || $MaxRowsInHTMLOutput<1)     { $MaxRowsInHTMLOutput=1000; }
 	if ($SplitSearchString !~ /[0-1]/)          	{ $SplitSearchString=0; }
 	if ($Expires !~ /^[\d]+/)                 		{ $Expires=0; }
+	# Optional accuracy setup section
+	if ($LevelForRobotsDetection !~ /^[\d]+/)       	{ $LevelForRobotsDetection=1; }
+	if ($LevelForBrowsersDetection !~ /^[\d]+/)     	{ $LevelForBrowsersDetection=1; }
+	if ($LevelForOSDetection !~ /^[\d]+/)      			{ $LevelForOSDetection=1; }
+	if ($LevelForSearchEnginesDetection !~ /^[\d]+/)	{ $LevelForSearchEnginesDetection=1; }
+	if ($LevelForRefererAnalyze !~ /^[\d]+/)			{ $LevelForRefererAnalyze=1; }
+	if ($LevelForKeywordsDetection !~ /^[\d]+/)    		{ $LevelForKeywordsDetection=1; }
+	# Optional appearance setup section
 	if ($ShowHeader !~ /[0-1]/)                   	{ $ShowHeader=1; }
 	if ($ShowMenu !~ /[0-1]/)                     	{ $ShowMenu=1; }
 	if ($ShowMonthDayStats !~ /[0-1]/)            	{ $ShowMonthDayStats=1; }
@@ -839,7 +841,22 @@ sub Check_Config {
 	if ($ShowCompressionStats !~ /[0-1]/)         	{ $ShowCompressionStats=1; }
 	if ($ShowHTTPErrorsStats !~ /[0-1]/)          	{ $ShowHTTPErrorsStats=1; }
 	if ($ShowLinksOnUrl !~ /[0-1]/)               	{ $ShowLinksOnUrl=1; }
+	if ($MaxNbOfDomain !~ /^[\d]+/ || $MaxNbOfDomain<1)           		{ $MaxNbOfDomain=25; }
+	if ($MaxNbOfHostsShown !~ /^[\d]+/ || $MaxNbOfHostsShown<1)       	{ $MaxNbOfHostsShown=25; }
+	if ($MinHitHost !~ /^[\d]+/ || $MinHitHost<1)              			{ $MinHitHost=1; }
+	if ($MaxNbOfLoginShown !~ /^[\d]+/ || $MaxNbOfLoginShown<1)       	{ $MaxNbOfLoginShown=10; }
+	if ($MinHitLogin !~ /^[\d]+/ || $MinHitLogin<1)             		{ $MinHitLogin=1; }
+	if ($MaxNbOfRobotShown !~ /^[\d]+/ || $MaxNbOfRobotShown<1)       	{ $MaxNbOfRobotShown=25; }
+	if ($MinHitRobot !~ /^[\d]+/ || $MinHitRobot<1)             		{ $MinHitRobot=1; }
+	if ($MaxNbOfPageShown !~ /^[\d]+/ || $MaxNbOfPageShown<1)        	{ $MaxNbOfPageShown=25; }
+	if ($MinHitFile !~ /^[\d]+/ || $MinHitFile<1)              			{ $MinHitFile=1; }
+	if ($MaxNbOfRefererShown !~ /^[\d]+/ || $MaxNbOfRefererShown<1)     { $MaxNbOfRefererShown=25; }
+	if ($MinHitRefer !~ /^[\d]+/ || $MinHitRefer<1)             		{ $MinHitRefer=1; }
+	if ($MaxNbOfKeywordsShown !~ /^[\d]+/ || $MaxNbOfKeywordsShown<1)	{ $MaxNbOfKeywordsShown=25; }
+	if ($MinHitKeyword !~ /^[\d]+/ || $MinHitKeyword<1)           		{ $MinHitKeyword=1; }
+	if ($MaxRowsInHTMLOutput !~ /^[\d]+/ || $MaxRowsInHTMLOutput<1)     { $MaxRowsInHTMLOutput=1000; }
 	if ($MaxLengthOfURL !~ /^[\d+]/ || $MaxLengthOfURL<1) { $MaxLengthOfURL=72; }
+	if ($FirstDayOfWeek !~ /[0-1]/)               	{ $FirstDayOfWeek=1; }
 	if ($DetailedReportsOnNewWindows !~ /[0-1]/)  	{ $DetailedReportsOnNewWindows=1; }
 	if ($BarWidth !~ /^[\d]+/ || $BarWidth<1) 		{ $BarWidth=260; }
 	if ($BarHeight !~ /^[\d]+/ || $BarHeight<1)		{ $BarHeight=180; }
@@ -1645,7 +1662,7 @@ sub Save_History_File {
 	print HISTORYTMP "FirstTime $FirstTime{$year.$month}\n";
 	print HISTORYTMP "LastTime $LastTime{$year.$month}\n";
 	if ($LastUpdate{$year.$month} < int("$nowyear$nowmonth$nowday$nowhour$nowmin$nowsec")) { $LastUpdate{$year.$month}=int("$nowyear$nowmonth$nowday$nowhour$nowmin$nowsec"); }
-	print HISTORYTMP "LastUpdate $LastUpdate{$year.$month} $NbOfLinesRead $NbOfNewLinesProcessed $NbOfLinesCorrupted\n";
+	print HISTORYTMP "LastUpdate $LastUpdate{$year.$month} $NbOfLinesRead $NbOfNewLinesProcessed $NbOfLinesCorrupted $NbOfLinesEmpty $NbOfLinesDropped\n";
 	print HISTORYTMP "TotalVisits $MonthVisits{$year.$month}\n";
 
 	# When
@@ -1816,7 +1833,7 @@ sub GetDelaySinceStart {
 	if ($option) { $StartSeconds=0;	}	# Reset counter
 	my ($newseconds, $newmicroseconds)=(0,0);
 	my $usedTimeHires=0;
-#	($newseconds, $newmicroseconds) = gettimeofday; $usedTimeHires=1;	# Uncomment to use Time::HiRes function (provide milliseconds)
+	($newseconds, $newmicroseconds) = gettimeofday; $usedTimeHires=1;	# Uncomment to use Time::HiRes function (provide milliseconds)
 	if ((! $usedTimeHires) || ($newseconds eq "gettimeofday")) { $newseconds=time(); }
 	if (! $StartSeconds) { $StartSeconds=$newseconds; $StartMicroseconds=$newmicroseconds; }
 	my $nbms=$newseconds*1000+int($newmicroseconds/1000)-$StartSeconds*1000-int($StartMicroseconds/1000);
@@ -2188,10 +2205,14 @@ else {								# Run from command line
 	if ($QueryString =~ /output/i)    { $UpdateStats=0; $HTMLOutput=1; }   # Report and no update if an output is required
 	if ($QueryString =~ /update/i)    { $UpdateStats=1; }                  # Except if -update specified
 	$QueryString=~s/output&//; $QueryString=~s/output$//;
-	if ($QueryString =~ /showsteps/i) { $ShowSteps=1; } else { $ShowSteps=0; }
+	if ($QueryString =~ /showsteps/i) { $ShowSteps=1; }
 	$QueryString=~s/showsteps[^&]*//;
-	if ($QueryString =~ /showcorrupted/i) { $ShowCorrupted=1; } else { $ShowCorrupted=0; }
+	if ($QueryString =~ /showcorrupted/i) 		{ $ShowCorrupted=1; }
 	$QueryString=~s/showcorrupted[^&]*//;
+	if ($QueryString =~ /showdropped/i)			{ $ShowDropped=1; }
+	$QueryString=~s/showdropped[^&]*//;
+	if ($QueryString =~ /showunknownorigin/i)	{ $ShowUnknownOrigin=1; }
+	$QueryString=~s/showunknownorigin[^&]*//;
 }
 if ($QueryString =~ /logfile=([^\s&]+)$/i) 	{ $LogFile=$1; }
 if ($QueryString =~ /staticlinks/i) 		{ $StaticLinks=1; }
@@ -2412,7 +2433,7 @@ if ($UpdateStats) {
 	}
 	debug("HostAliases is now @HostAliases",2);
 	# Init SkipFiles array
-	if (! @SkipFiles) { $SkipFiles[0]="\.css\$";$SkipFiles[1]="\.js\$";$SkipFiles[2]="\.class\$";$SkipFiles[3]="robots\.txt\$"; }
+	if (! @SkipFiles) { $SkipFiles[0]="robots\.txt\$"; $SkipFiles[1]="favicon\.ico\$"; }
 	debug("SkipFiles is now @SkipFiles",2);
 
 	debug("Start Update process");
@@ -2648,7 +2669,7 @@ if ($UpdateStats) {
 	#------------------------------------------
 	&debug("Start of processing log file (monthtoprocess=$monthtoprocess, yeartoprocess=$yeartoprocess)");
 	my $yearmonth=sprintf("%04i%02i",$yeartoprocess,$monthtoprocess);
-	$NbOfLinesRead=0; $NbOfNewLinesProcessed=0; $NbOfLinesCorrupted=0;
+	$NbOfLinesRead=$NbOfLinesEmpty=$NbOfLinesDropped=$NbOfLinesCorrupted=$NbOfNewLinesProcessed=0;
 	$NowNewLinePhase=0;
 
 	# Open log file
@@ -2660,12 +2681,14 @@ if ($UpdateStats) {
 
 	while (<LOG>)
 	{
-		if (/^#/) { next; }									# Ignore comment lines (ISS writes such comments)
-		if (/^!/) { next; }									# Ignore comment lines (Webstar writes such comments)
-		#if (/^$/) { next; }								# Ignore blank lines (With ISS: happens sometimes, with Apache: possible when editing log file)
-		chomp $_; s/\r//;
-
 		$NbOfLinesRead++;
+
+		if (/^#/ || /^!/) {
+			$NbOfLinesEmpty++;				# Ignore comment lines (ISS writes such comments)
+			next;							# Ignore comment lines (Webstar writes such comments)
+		}					
+		#if (/^$/) { $NbOfLinesEmpty++; next; }	# Ignore blank lines (With ISS: happens sometimes, with Apache: possible when editing log file)
+		chomp $_; s/\r//;
 
 		# Parse line record to get all required fields
 		/^$PerlParsingFormat/;
@@ -2686,15 +2709,19 @@ if ($UpdateStats) {
 		# Check filters
 		#----------------------------------------------------------------------
 		my $protocol=0;
-		if ($field[$pos_method] eq 'GET' || $field[$pos_method] eq 'POST' || $field[$pos_method] =~ /OK/) {
-			# HTTP request.	Keep only GET, POST, *OK* with Webstar but not HEAD, OPTIONS
+		if ($field[$pos_method] eq 'GET' || $field[$pos_method] eq 'POST' || $field[$pos_method] eq 'HEAD' || $field[$pos_method] =~ /OK/) {
+			# HTTP request.	Keep only GET, POST, HEAD, *OK* with Webstar but not OPTIONS
 			$protocol=1;
 			}
 		elsif ($field[$pos_method] =~ /sent/ || $field[$pos_method] =~ /get/) {
 			# FTP request.
 			$protocol=2;
 		}
-		if (! $protocol) { next; }
+		if (! $protocol) {
+			$NbOfLinesDropped++;
+			if ($ShowDropped) { print "Dropped record (not qualified method): $_\n"; }
+			next;
+		}
 
 		# Split DD/Month/YYYY:HH:MM:SS or YYYY-MM-DD HH:MM:SS or MM/DD/YY\tHH:MM:SS
 		$field[$pos_date] =~ tr/-\/ \t/::::/;
@@ -2729,21 +2756,27 @@ if ($UpdateStats) {
 		# Here, field array, datepart array, timeconnexion and dayconnexion are init for log record
 		&debug(" This is a not already processed record",3);
 
-		# Record is approved. We found a new line
+
+		# We found a new line
 		#----------------------------------------
+		$LastLine{$yearmonth} = $timeconnexion;
+
+		# TODO. Add as a robot if URL is robots.txt
+
+		# Skip for some client host IP addresses, some URLs, other URLs
+		if ( &SkipFile($field[$pos_url]) || &SkipHost($field[$pos_rc]) || ! &OnlyFile($field[$pos_url]) ) {
+			$NbOfLinesDropped++;
+			if ($ShowDropped) { print "Dropped record (not qualified record): $_\n"; }
+			next;
+		}
+
+		# Record is approved
+		#-------------------
 		$NbOfNewLinesProcessed++;
 		if ($ShowSteps && ($NbOfNewLinesProcessed % $NbOfLinesForBenchmark == 0)) {
 			my $delay=GetDelaySinceStart(0);
 			print "$NbOfNewLinesProcessed lines processed ($delay ms, ".int(1000*$NbOfNewLinesProcessed/($delay>0?$delay:1))." lines/seconds)\n";
 		}
-
-		$LastLine{$yearmonth} = $timeconnexion;
-
-		# TODO. Add as a robot if URL is robots.txt
-
-		if (&SkipHost($field[$pos_rc])) { next; }		# Skip with some client host IP addresses
-		if (&SkipFile($field[$pos_url])) { next; }		# Skip with some URLs
-		if (! &OnlyFile($field[$pos_url])) { next; }	# Skip with other URLs
 
 		# Is it in a new month section ?
 		#-------------------------------
@@ -2787,26 +2820,28 @@ if ($UpdateStats) {
 
 		# Robot ?
 		#-------------------------------------------------------------------------
-		if (!$TmpHashRobot{$UserAgent}) {	# TmpHashRobot is a temporary hash table to increase speed
-			# If made on each record -> -1300 rows/seconds
-			my $foundrobot=0;
-			# study $UserAgent
-			foreach my $bot (@RobotsSearchIDOrder) {
-				if ($UserAgent =~ /$bot/) {
-					$foundrobot=1;
-					$TmpHashRobot{$UserAgent}="$bot";	# Last time, we won't search if robot or not. We know it's is.
-					last;
+		if ($LevelForRobotsDetection) {
+			if (!$TmpHashRobot{$UserAgent}) {	# TmpHashRobot is a temporary hash table to increase speed
+				# If made on each record -> -1300 rows/seconds
+				my $foundrobot=0;
+				# study $UserAgent
+				foreach my $bot (@RobotsSearchIDOrder) {
+					if ($UserAgent =~ /$bot/) {
+						$foundrobot=1;
+						$TmpHashRobot{$UserAgent}="$bot";	# Last time, we won't search if robot or not. We know it's is.
+						last;
+					}
+				}
+				if (! $foundrobot) {						# Last time, we won't search if robot or not. We know it's not.
+					$TmpHashRobot{$UserAgent}="-";
 				}
 			}
-			if (! $foundrobot) {						# Last time, we won't search if robot or not. We know it's not.
-				$TmpHashRobot{$UserAgent}="-";
+			# If robot, we stop here
+			if ($TmpHashRobot{$UserAgent} ne "-") {
+				debug("UserAgent $UserAgent contains robot ID '$TmpHashRobot{$UserAgent}'",2);
+				$_robot_h{$TmpHashRobot{$UserAgent}}++; $_robot_l{$TmpHashRobot{$UserAgent}}=$timeconnexion;
+				next;
 			}
-		}
-		# If robot, we stop here
-		if ($TmpHashRobot{$UserAgent} ne "-") {
-			debug("UserAgent $UserAgent contains robot ID '$TmpHashRobot{$UserAgent}'",2);
-			$_robot_h{$TmpHashRobot{$UserAgent}}++; $_robot_l{$TmpHashRobot{$UserAgent}}=$timeconnexion;
-			next;
 		}
 
 		# Canonize and clean target URL and referrer URL. Possible URL syntax for $field[$pos_url]:
@@ -2826,18 +2861,15 @@ if ($UpdateStats) {
 			$urlwithnoquery=$field[$pos_url];
 		}
 		# urlwithnoquery=/mypage.ext
-		$field[$pos_url] =~ s/\/$DefaultFile$/\//;	# Replace default page name with / only
 
 		# Analyze file type and compression
 		#----------------------------------
 		my $PageBool=1;
 		my $extension;
-
 		# Extension
 		if ($urlwithnoquery =~ /\.(\w{1,6})$/) {
 			$extension=$1; $extension =~ tr/A-Z/a-z/;
-			# Check if not a page
-			foreach my $cursor (@NotPageList) { if ($extension eq $cursor) { $PageBool=0; last; } }
+			if ($NotPageList{$extension}) { $PageBool=0; }
 		} else {
 			$extension="Unknown";
 		}
@@ -2857,6 +2889,9 @@ if ($UpdateStats) {
 		# Analyze: Date - Hour - Pages - Hits - Kilo
 		#-------------------------------------------
 		if ($PageBool) {
+
+			$field[$pos_url] =~ s/\/$DefaultFile$/\//;	# Replace default page name with / only
+
 			# FirstTime and LastTime are First and Last human visits (so changed if access to a page)
 			if (! $FirstTime{$yearmonth}) { $FirstTime{$yearmonth}=$timeconnexion; }
 			$LastTime{$yearmonth} = $timeconnexion;
@@ -2865,7 +2900,7 @@ if ($UpdateStats) {
 			$_time_p[int($dateparts[3])]++;												#Count accesses for hour (page)
 			$_url_p{$field[$pos_url]}++; 												#Count accesses for page (page)
 			$_url_k{$field[$pos_url]}+=$field[$pos_size];
-			}
+		}
 		$_time_h[int($dateparts[3])]++; $MonthHits{$yearmonth}++; $DayHits{$dayconnexion}++;	#Count accesses for hour (hit)
 		$_time_k[int($dateparts[3])]+=$field[$pos_size]; $MonthBytes{$yearmonth}+=$field[$pos_size]; $DayBytes{$dayconnexion}+=$field[$pos_size];	#Count accesses for hour (kb)
 
@@ -2921,15 +2956,15 @@ if ($UpdateStats) {
 		if ($HostIsIp && ((! $TmpHashDNSLookup{$Host}) || ($TmpHashDNSLookup{$Host} eq "ip"))) {
 			# Here $Host = IP address not resolved
 			if ($PageBool) {
-					if ($timeconnexion > (($_hostmachine_l{$Host}||0)+$VisitTimeOut)) {
-						$MonthVisits{$yearmonth}++;
-						$DayVisits{$dayconnexion}++;
-						if (! $_hostmachine_l{$Host}) { $MonthUnique{$yearmonth}++; }
-						$_url_e{$field[$pos_url]}++; 	# Increase 'entry' page
-					}
-					$_hostmachine_p{$Host}++;
-					$_hostmachine_l{$Host}=$timeconnexion;
-					$_domener_p{"ip"}++;
+				if ($timeconnexion > (($_hostmachine_l{$Host}||0)+$VisitTimeOut)) {
+					$MonthVisits{$yearmonth}++;
+					$DayVisits{$dayconnexion}++;
+					if (! $_hostmachine_l{$Host}) { $MonthUnique{$yearmonth}++; }
+					$_url_e{$field[$pos_url]}++; 	# Increase 'entry' page
+				}
+				$_hostmachine_p{$Host}++;
+				$_hostmachine_l{$Host}=$timeconnexion;
+				$_domener_p{"ip"}++;
 			}
 			if (! $_hostmachine_h{$Host}) {	$MonthHostsUnknown{$yearmonth}++; }
 			$_hostmachine_h{$Host}++;
@@ -2938,10 +2973,10 @@ if ($UpdateStats) {
 			$_domener_k{"ip"}+=$field[$pos_size];
 		}
 		else {
-			# Here $TmpHashDNSLookup{$Host} is $Host resolved or undefined if $Host already resolved
+			# Here $TmpHashDNSLookup{$Host} is $Host resolved or undefined if $Host was already a host name
 			$_ = ($TmpHashDNSLookup{$Host}?$TmpHashDNSLookup{$Host}:$Host);
 			tr/A-Z/a-z/;
-			if (!$FullHostName) { s/^[\w\-]+\.//; };
+			#if (!$FullHostName) { s/^[\w\-]+\.//; };
 			if ($PageBool) {
 				if ($timeconnexion > (($_hostmachine_l{$_}||0)+$VisitTimeOut)) {
 					# This is a new visit
@@ -2958,7 +2993,7 @@ if ($UpdateStats) {
 			$_hostmachine_k{$_}+=$field[$pos_size];
 
 			# Count top-level domain
-			if (/\.([\w]+)$/) { $_=$1; }
+			if (/\.(\w+)$/) { $_=$1; }
 			if ($DomainsHashIDLib{$_}) {
 				 if ($PageBool) { $_domener_p{$_}++; }
 				 $_domener_h{$_}++;
@@ -2973,10 +3008,12 @@ if ($UpdateStats) {
 
 		if ($UserAgent) {	 # Made on each record -> -100 rows/seconds
 
+			if ($LevelForBrowsersDetection) {
+
 			# Analyze: Browser
 			#-----------------
 			my $found=0;
-			if (!$TmpHashBrowser{$UserAgent}) {
+			if (! $TmpHashBrowser{$UserAgent}) {
 				# IE ? (For higher speed, we start whith IE, the most often used. This avoid other tests if found)
 				if (($UserAgent =~ /msie/) && ($UserAgent !~ /webtv/) && ($UserAgent !~ /omniweb/) && ($UserAgent !~ /opera/)) {
 					$_browser_h{"msie"}++;
@@ -3015,7 +3052,7 @@ if ($UpdateStats) {
 				if (!$found) {
 					$_browser_h{"Unknown"}++;
 					$_unknownrefererbrowser_l{$field[$pos_agent]}=$timeconnexion;
-#					$TmpHashBrowser{$UserAgent}="Unknown";
+					$TmpHashBrowser{$UserAgent}="Unknown";
 				}
 			}
 			else {
@@ -3024,9 +3061,13 @@ if ($UpdateStats) {
 				if (!$found) { $_browser_h{$TmpHashBrowser{$UserAgent}}++; }
 			}
 
+			}
+
+			if ($LevelForOSDetection) {
+		
 			# Analyze: OS
 			#------------
-			if (!$TmpHashOS{$UserAgent}) {
+			if (! $TmpHashOS{$UserAgent}) {
 				my $found=0;
 				# in OSHashID list ?
 				foreach my $key (@OSSearchIDOrder) {	# Searchin ID in order of OSSearchIDOrder
@@ -3041,12 +3082,15 @@ if ($UpdateStats) {
 				if (!$found) {
 					$_os_h{"Unknown"}++;
 					$_unknownreferer_l{$field[$pos_agent]}=$timeconnexion;
-#					$TmpHashOS{$UserAgent}="Unknown";
+					$TmpHashOS{$UserAgent}="Unknown";
 				}
 			}
 			else {
 				$_os_h{$TmpHashOS{$UserAgent}}++;
 			}
+	
+			}
+
 		}
 		else {
 			$_browser_h{"Unknown"}++;
@@ -3056,16 +3100,16 @@ if ($UpdateStats) {
 		# Analyze: Referer
 		#-----------------
 		my $found=0;
-		if ($field[$pos_referer]) {
+		if ($field[$pos_referer] && $LevelForRefererAnalyze) {
 
 			# Direct ?
-			if ($field[$pos_referer] eq "-") {
+			if ($field[$pos_referer] eq "-" || $field[$pos_referer] eq "bookmarks") {	# "bookmarks" is sent by Netscape
 				if ($PageBool) { $_from_p[0]++; }
 				$_from_h[0]++;
 				$found=1;
 			}
 			else {
-				$field[$pos_referer] =~ /^(\w+):\/\/([^\/]*)\//;
+				$field[$pos_referer] =~ /^(\w+):\/\/([^\/]+)/;
 				my $refererprot=$1;
 				my $refererserver=$2;
 
@@ -3093,6 +3137,9 @@ if ($UpdateStats) {
 						}
 						if (! $found) {
 							# Extern (This hit came from an external web site).
+
+							if ($LevelForSearchEnginesDetection) {
+								
 							# If made on each record -> -1700 rows/seconds (should be made on 10% of records only)
 							foreach my $key (keys %SearchEnginesHashIDLib) {
 								# This hit came from the search engine $key
@@ -3100,8 +3147,12 @@ if ($UpdateStats) {
 									debug("Server $refererserver is added to TmpHashRefererServer with value '$key'",2);
 									$TmpHashRefererServer{$refererserver}="$key";
 									$found=1;
+									last;
 								}
 							}
+
+							}
+							
 						}
 					}
 
@@ -3110,6 +3161,7 @@ if ($UpdateStats) {
 							# Intern (This hit came from another page of the site)
 							if ($PageBool) { $_from_p[4]++; }
 							$_from_h[4]++;
+							$found=1;
 						}
 						else {
 							# This hit came from the search engine
@@ -3194,6 +3246,7 @@ if ($UpdateStats) {
 
 		# Origin not found
 		if (!$found) {
+			if ($ShowUnknownOrigin) { print "Unknown origin: $field[$pos_referer]\n"; }
 			if ($PageBool) { $_from_p[1]++; }
 			$_from_h[1]++;
 		}
@@ -4487,8 +4540,10 @@ EOF
 }
 else {
 	print "Lines in file: $NbOfLinesRead\n";
-	print "Found $NbOfNewLinesProcessed new records,\n";
-	print "Found $NbOfLinesCorrupted corrupted records.\n";
+	print "Found $NbOfLinesEmpty empty records,\n";
+	print "Found $NbOfLinesDropped dropped records,\n";
+	print "Found $NbOfLinesCorrupted corrupted records,\n";
+	print "Found $NbOfNewLinesProcessed new records.\n";
 }
 
 0;	# Do not remove this line
