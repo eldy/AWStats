@@ -502,7 +502,7 @@ use vars qw/ @Message /;
 "Data value arrays",
 "Sender EMail",
 "Receiver EMail",
-"Analyzed period"
+"Report period"
 );
 
 
@@ -3632,6 +3632,7 @@ sub Show_Flag_Links {
 	else {
 		$NewLinkParams=($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&";
 	}
+	if ($FrameName eq 'mainleft') { $NewLinkParams.='framename=index&'; }
 
 	print "<br>\n";
 	foreach my $flag (split(/\s+/,$ShowFlagLinks)) {
