@@ -1069,7 +1069,7 @@ sub Read_Language_Tooltip {
 
 
 #--------------------------------------------------------------------
-# Input: All lobal variables
+# Input: All global variables
 # Ouput: Change on some global variables
 #--------------------------------------------------------------------
 sub Check_Config {
@@ -1369,7 +1369,7 @@ sub Check_Config {
 sub Read_History_File {
 	my $year=sprintf("%04i",shift);
 	my $month=sprintf("%02i",shift);
-	my $part=shift;	# If part=0 wee need only LastUpdate, TotalVisits, TIME section and VISITOR section
+	my $part=shift;	# If part=0 we need only LastUpdate, TotalVisits, TIME section and VISITOR section
 
 	# In standard use of AWStats, the DayRequired variable is always empty
 	if ($DayRequired) { if ($Debug) { debug("Call to Read_History_File [$year,$month,$part] ($DayRequired)"); } }
@@ -1392,7 +1392,7 @@ sub Read_History_File {
 	if ($UseCompress) {	$historyfilename="gzip -d <\"$historyfilename\" |"; }
 	if ($Debug) { debug(" History file is '$historyfilename'",2); }
 
-	# TODO Whith particular option file reading can be stopped if section all read
+	# TODO With particular option file reading can be stopped if section all read
 	open(HISTORY,$historyfilename) || error("Error: Couldn't open file \"$historyfilename\" for read: $!");	# Month before Year kept for backward compatibility
 	$MonthUnique{$year.$month}=0; $MonthPages{$year.$month}=0; $MonthHits{$year.$month}=0; $MonthBytes{$year.$month}=0; $MonthHostsKnown{$year.$month}=0; $MonthHostsUnknown{$year.$month}=0;
 
@@ -1404,6 +1404,7 @@ sub Read_History_File {
 		if ($_ =~ /^AWSTATS DATA FILE (\d+).(\d+)/) {
 			$versionmaj=$1; $versionmin=$2;
 			if ($Debug) { debug(" data file version is $versionmaj.$versionmin",2); }
+			next;
 		}
 		my @field=split(/\s+/,$_);
 		if (! $field[0]) { next; }
@@ -2093,7 +2094,7 @@ sub Save_History_File {
 	my $year=sprintf("%04i",shift);
 	my $month=sprintf("%02i",shift);
 	my $dateoflastlineknown=shift||$LastLine{$year.$month};
-	
+
 	if ($Debug) { debug("Call to Save_History_File [$year,$month,$dateoflastlineknown]"); }
 	open(HISTORYTMP,">$DirData/$PROG$month$year$FileSuffix.tmp.$$") || error("Error: Couldn't open file \"$DirData/$PROG$month$year$FileSuffix.tmp.$$\" : $!");	# Month before Year kept for backward compatibility
 
@@ -2112,7 +2113,7 @@ sub Save_History_File {
 	if (! $LastUpdate{$year.$month} || $LastUpdate{$year.$month} < int("$nowyear$nowmonth$nowday$nowhour$nowmin$nowsec")) { $LastUpdate{$year.$month}=int("$nowyear$nowmonth$nowday$nowhour$nowmin$nowsec"); }
 	print HISTORYTMP "LastUpdate $LastUpdate{$year.$month} $NbOfLinesRead $NbOfOldLines $NbOfNewLines $NbOfLinesCorrupted $NbOfLinesDropped\n";
 	print HISTORYTMP "TotalVisits $MonthVisits{$year.$month}\n";
-	
+
 	# When
 	print HISTORYTMP "\n";
 	print HISTORYTMP "# Date - Pages - Hits - Bandwith - Visits\n";
@@ -2275,12 +2276,12 @@ sub Save_History_File {
 
 	# Referer
 	print HISTORYTMP "\n";
-	print HISTORYTMP "# Unknwon referer OS - Last visit date\n";
+	print HISTORYTMP "# Unknown referer OS - Last visit date\n";
 	print HISTORYTMP "BEGIN_UNKNOWNREFERER\n";
 	foreach my $key (keys %_unknownreferer_l) { print HISTORYTMP "$key $_unknownreferer_l{$key}\n"; }
 	print HISTORYTMP "END_UNKNOWNREFERER\n";
 	print HISTORYTMP "\n";
-	print HISTORYTMP "# Unknwon referer Browser - Last visit date\n";
+	print HISTORYTMP "# Unknown referer Browser - Last visit date\n";
 	print HISTORYTMP "BEGIN_UNKNOWNREFERERBROWSER\n";
 	foreach my $key (keys %_unknownrefererbrowser_l) { print HISTORYTMP "$key $_unknownrefererbrowser_l{$key}\n"; }
 	print HISTORYTMP "END_UNKNOWNREFERERBROWSER\n";
@@ -2382,22 +2383,24 @@ sub GetDelaySinceStart {
 }
 
 #--------------------------------------------------------------------
-# Input: Global variables
+# Function:     Reset all variables whose name start with _ because a new month start
+# Input:        All variables whose name start with _
+# Output:       All variables whose name start with _
 #--------------------------------------------------------------------
 sub Init_HashArray {
 	my $year=sprintf("%04i",shift||0);
 	my $month=sprintf("%02i",shift||0);
 	if ($Debug) { debug("Call to Init_HashArray [$year,$month]"); }
-	# We purge data read for $year and $month so it's like we never read it
+	# We start a new month, so we reset tags saying data for this month already loaded
 	$HistoryFileAlreadyRead{"$year$month"}=0;
-	# Delete/Reinit all arrays with name beginning by _
+	# Reset all arrays with name beginning by _
 	@_msiever_h = @_nsver_h = ();
 	for (my $ix=0; $ix<6; $ix++)  { $_from_p[$ix]=0; $_from_h[$ix]=0; }
 	for (my $ix=0; $ix<24; $ix++) { $_time_h[$ix]=0; $_time_k[$ix]=0; $_time_p[$ix]=0; }
-	# Delete/Reinit all hash arrays with name beginning by _
+	# Reset all hash arrays with name beginning by _
 	%_session = %_browser_h = %_domener_h = %_domener_k = %_domener_p = %_errors_h =
 	%_filetypes_h = %_filetypes_k = %_filetypes_gz_in = %_filetypes_gz_out =
-	%_hostmachine_h = %_hostmachine_k = %_hostmachine_p = %_hostmachine_l = %_hostmachine_s = %_hostmachine_u = 
+	%_hostmachine_h = %_hostmachine_k = %_hostmachine_p = %_hostmachine_l = %_hostmachine_s = %_hostmachine_u =
 	%_keyphrases = %_keywords = %_os_h = %_pagesrefs_h = %_robot_h = %_robot_l =
 	%_login_h = %_login_p = %_login_k = %_login_l =
 	%_se_referrals_h = %_sider404_h = %_referer404_h = %_url_p = %_url_k = %_url_e = %_url_x =
@@ -2575,8 +2578,8 @@ sub IsAscii {
 
 #--------------------------------------------------------------------
 # Function:     Add a val from sorting tree
-# Input:        
-# Return:       
+# Input:
+# Return:
 #--------------------------------------------------------------------
 sub AddInTree {
 	my $keytoadd=shift;
@@ -2621,8 +2624,8 @@ sub AddInTree {
 
 #--------------------------------------------------------------------
 # Function:     Remove a val from sorting tree
-# Input:        
-# Return:       
+# Input:
+# Return:
 #--------------------------------------------------------------------
 sub Removelowerval {
 	my $keytoremove=$val{$lowerval};	# This is lower key
@@ -2851,7 +2854,7 @@ if (! $SiteConfig) { $SiteConfig=$ENV{"SERVER_NAME"}; }
 $nowweekofmonth=int($nowday/7);
 $nowdaymod=$nowday%7;
 $nowwday++;
-$nowns=Time::Local::timelocal(0,0,0,$nowday,$nowmonth,$nowyear); 
+$nowns=Time::Local::timelocal(0,0,0,$nowday,$nowmonth,$nowyear);
 if ($nowdaymod <= $nowwday) { if (($nowwday != 7) || ($nowdaymod != 0)) { $nowweekofmonth=$nowweekofmonth+1; } }
 if ($nowdaymod >  $nowwday) { $nowweekofmonth=$nowweekofmonth+2; }
 $nowweekofmonth = "0$nowweekofmonth";
@@ -3247,7 +3250,7 @@ if ($UpdateStats) {
 
 		if ($ShowSteps && ($NbOfLinesRead % $NbOfLinesForBenchmark == 0)) {
 			my $delay=GetDelaySinceStart(0);
-			print "$NbOfLinesRead lines processed ($delay ms, ".int(1000*$NbOfLinesRead/($delay>0?$delay:1))." lines/seconds)\n";
+			print "$NbOfLinesRead lines processed ($delay ms, ".int(1000*$NbOfLinesRead/($delay>0?$delay:1))." lines/second)\n";
 		}
 
 		# Parse line record to get all required fields
@@ -3262,7 +3265,7 @@ if ($UpdateStats) {
 
 		if ($Debug) { debug(" Correct format line $NbOfLinesRead : host=\"$field[$pos_rc]\", logname=\"$field[$pos_logname]\", date=\"$field[$pos_date]\", method=\"$field[$pos_method]\", url=\"$field[$pos_url]\", code=\"$field[$pos_code]\", size=\"$field[$pos_size]\", referer=\"$field[$pos_referer]\", agent=\"$field[$pos_agent]\"",3); }
 		#if ($Debug) { debug("$field[$pos_vh] - $field[$pos_gzipin] - $field[$pos_gzipout] - $field[$pos_gzipratio]\n"); }
-		
+
 		# Check virtual host name
 		#----------------------------------------------------------------------
 		if ($pos_vh && $field[$pos_vh] ne $SiteDomain) {
@@ -3273,6 +3276,7 @@ if ($UpdateStats) {
 
 		# Check protocol
 		#----------------------------------------------------------------------
+		# TODO Use a TmpProtocol
 		my $protocol=0;
 		if ($field[$pos_method] eq 'GET' || $field[$pos_method] eq 'POST' || $field[$pos_method] eq 'HEAD' || $field[$pos_method] =~ /OK/) {
 			# HTTP request.	Keep only GET, POST, HEAD, *OK* with Webstar but not OPTIONS
@@ -3300,7 +3304,7 @@ if ($UpdateStats) {
 		#--- TZ START : Uncomment following 3 lines to made a timezone adjustment. Warning this reduce seriously AWStats speed.
 #		my $TZ=+2;
 #		my ($nsec,$nmin,$nhour,$nmday,$nmon,$nyear,$nwday) = localtime(Time::Local::timelocal($dateparts[5], $dateparts[4], $dateparts[3], $dateparts[0], $dateparts[1], $dateparts[2]) + (3600*$TZ));
-#		@dateparts = split(/:/, sprintf("%02u:%02u:%04u:%02u:%02u:%02u", $nmday, $nmon, $nyear+1900, $nhour, $nmin, $nsec)); 
+#		@dateparts = split(/:/, sprintf("%02u:%02u:%04u:%02u:%02u:%02u", $nmday, $nmon, $nyear+1900, $nhour, $nmin, $nsec));
 		#--- TZ END : Uncomment following three lines to made a timezone adjustement. Warning this reduce seriously AWStats speed.
 #		my $yearmonthdayrecord="$dateparts[2]$dateparts[1]$dateparts[0]";
 		my $yearmonthdayrecord=sprintf("$dateparts[2]%02i%02i",$dateparts[1],$dateparts[0]);
@@ -3476,7 +3480,7 @@ if ($UpdateStats) {
 			$_filetypes_gz_in{$extension}+=$field[$pos_size];
 			$_filetypes_gz_out{$extension}+=int($field[$pos_size]*(1-$1/100));	# out size calculated from pct.
 		}
-		
+
 		# Analyze: Date - Hour - Pages - Hits - Kilo
 		#-------------------------------------------
 		my $hourrecord=int($dateparts[3]);
@@ -3606,9 +3610,9 @@ if ($UpdateStats) {
 
 				# Analyze: Browser
 				#-----------------
-				my $found=0;
 				if (! $TmpBrowser{$UserAgent}) {
-					# IE ? (For higher speed, we start whith IE, the most often used. This avoid other tests if found)
+					my $found=0;
+					# IE ? (For higher speed, we start with IE, the most often used. This avoid other tests if found)
 					if (($UserAgent =~ /msie/) && ($UserAgent !~ /webtv/) && ($UserAgent !~ /omniweb/) && ($UserAgent !~ /opera/)) {
 						$_browser_h{"msie"}++;
 						if ($UserAgent =~ /msie_(\d)\./) {  # $1 now contains IE major version no
@@ -3617,7 +3621,7 @@ if ($UpdateStats) {
 							$TmpBrowser{$UserAgent}="msie_$1";
 						}
 					}
-	
+
 					# Netscape ?
 					if (!$found) {
 						if (($UserAgent =~ /mozilla/) && ($UserAgent !~ /compatible/) && ($UserAgent !~ /opera/) && ($UserAgent !~ /galeon/)) {
@@ -3629,7 +3633,7 @@ if ($UpdateStats) {
 							}
 						}
 					}
-	
+
 					# Other ?
 					if (!$found) {
 						foreach my $key (@BrowsersSearchIDOrder) {	# Search ID in order of BrowsersSearchIDOrder
@@ -3641,7 +3645,7 @@ if ($UpdateStats) {
 							}
 						}
 					}
-	
+
 					# Unknown browser ?
 					if (!$found) {
 						$_browser_h{"Unknown"}++;
@@ -3650,15 +3654,15 @@ if ($UpdateStats) {
 					}
 				}
 				else {
-					if ($TmpBrowser{$UserAgent} =~ /^msie_(\d)/) { $_browser_h{"msie"}++; $_msiever_h[$1]++; $found=1; }
-					if (!$found && $TmpBrowser{$UserAgent} =~ /^netscape_(\d)/) { $_browser_h{"netscape"}++; $_nsver_h[$1]++; $found=1; }
-					if (!$found) { $_browser_h{$TmpBrowser{$UserAgent}}++; }
+					if ($TmpBrowser{$UserAgent} =~ /^msie_(\d)/) { $_browser_h{"msie"}++; $_msiever_h[$1]++; }
+					elsif ($TmpBrowser{$UserAgent} =~ /^netscape_(\d)/) { $_browser_h{"netscape"}++; $_nsver_h[$1]++; }
+					else { $_browser_h{$TmpBrowser{$UserAgent}}++; }
 				}
 
 			}
 
 			if ($LevelForOSDetection) {
-		
+
 				# Analyze: OS
 				#------------
 				if (! $TmpOS{$UserAgent}) {
@@ -3682,7 +3686,7 @@ if ($UpdateStats) {
 				else {
 					$_os_h{$TmpOS{$UserAgent}}++;
 				}
-	
+
 			}
 
 		}
@@ -3733,7 +3737,7 @@ if ($UpdateStats) {
 							# Extern (This hit came from an external web site).
 
 							if ($LevelForSearchEnginesDetection) {
-								
+
 								# If made on each record -> -1700 rows/seconds (should be made on 10% of records only)
 								foreach my $key (@SearchEnginesSearchIDOrder) {		# Search ID in order of SearchEnginesSearchIDOrder
 									if ($refererserver =~ /$key/i) {
