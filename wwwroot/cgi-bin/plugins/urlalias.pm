@@ -72,7 +72,7 @@ sub ReplaceURL_urlalias {
 		elsif (open(URLALIASFILE,"$PluginDir/urlalias.txt"))  							{ $filetoload="$PluginDir/urlalias.txt"; }
 		else { error("Couldn't open UrlAlias file \"$PluginDir/urlalias.txt\": $!"); }
 		# This is the fastest way to load with regexp that I know
-		%UrlAliases = map(/^([^\t]+)\t+([^\t]+)$/o,<URLALIASFILE>);
+		%UrlAliases = map(/^([^\t]+)\t+([^\t]+)/o,<URLALIASFILE>);
 		close URLALIASFILE;
 		debug("UrlAlias file loaded: ".(scalar keys %UrlAliases)." aliases found.");
 		$urlaliasloaded=1;
