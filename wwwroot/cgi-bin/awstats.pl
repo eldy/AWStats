@@ -82,7 +82,7 @@ $WarningMessages= 1;
 %MonthBytes = %MonthHits = %MonthHostsKnown = %MonthHostsUnknown = %MonthPages = %MonthUnique = %MonthVisits =
 %monthlib = %monthnum = ();
 
-$VERSION="3.2 (build 52)";
+$VERSION="3.2 (build 53)";
 $Lang="en";
 
 # Default value
@@ -3459,15 +3459,3 @@ else {
 
 0;	# Do not remove this line
 
-
-
-
-# Informations from microsoft for detecting windows version
-#  Windows 95 retail, OEM     4.00.950                     7/11/95
-#  Windows 95 retail SP1      4.00.950A                    7/11/95-12/31/95
-#  OEM Service Release 2      4.00.1111* (4.00.950B)       8/24/96
-#  OEM Service Release 2.1    4.03.1212-1214* (4.00.950B)  8/24/96-8/27/97  
-#  OEM Service Release 2.5    4.03.1214* (4.00.950C)       8/24/96-11/18/97
-#  Windows 98 retail, OEM     4.10.1998                    5/11/98
-#  Windows 98 Second Edition  4.10.2222A                   4/23/99
-#  Windows Me                 4.90.3000 
