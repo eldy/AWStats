@@ -95,7 +95,7 @@ $color_h, $color_k, $color_p, $color_s, $color_u, $color_v)=
 %monthlib = %monthnum = ();
 
 
-$VERSION="3.2 (build 83)";
+$VERSION="3.2 (build 84)";
 $Lang="en";
 
 # Default value
@@ -1698,7 +1698,7 @@ if ((! $ENV{"GATEWAY_INTERFACE"}) && (! $SiteConfig)) {
 	print "  Report by day/month/year\n";
 	print "  And a lot of other advanced options...\n";
 	print "New versions and FAQ at http://awstats.sourceforge.net\n";
-	exit 0;
+	exit 2;
 }
 
 # Get current time
