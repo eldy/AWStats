@@ -6794,8 +6794,10 @@ if (scalar keys %HTMLOutput) {
 			print "<td class=\"aws\" valign=\"middle\">";
 			if ($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks) {
 				print "<select class=\"aws_formfield\" name=\"month\">\n";
-				foreach my $ix (1..12) { my $monthix=sprintf("%02s",$ix); print "<option".($MonthRequired eq "$monthix"?" selected":"")." value=\"$monthix\">$MonthNumLib{$monthix}\n"; }
-				print "<option".($MonthRequired eq 'all'?" selected":"")." value='all'>---\n";
+				foreach my $ix (1..12) { my $monthix=sprintf("%02s",$ix); print "<option".($MonthRequired eq "$monthix"?" selected":"")." value=\"$monthix\">$MonthNumLib{$monthix}</option>\n"; }
+				if ($AllowFullYearView >= 2) {
+					print "<option".($MonthRequired eq 'all'?" selected":"")." value='all'>- Year -</option>\n";
+				}
 				print "</select>\n";
 				print "<select class=\"aws_formfield\" name=\"year\">\n";
 				# Add YearRequired in list if not in ListOfYears
