@@ -1,8 +1,8 @@
 # AWSTATS WORMS ADATABASE
-#-------------------------------------------------------
+#-----------------------------------------------------------------------------
 # If you want to add worms to extend AWStats database detection capabilities,
 # you must add an entry in WormsSearchIDOrder, WormsHashID and WormsHashLib.
-#-------------------------------------------------------
+#-----------------------------------------------------------------------------
 # $Revision$ - $Author$ - $Date$
 
 
@@ -11,17 +11,18 @@
 
 
 # WormsSearchIDOrder
-# This list is used to know in which order to search Robot IDs.
+# This list is used to know in which order to search Worm IDs.
 # This array is array of Worms matching criteria found in URL submitted
-# to web server.
-#-------------------------------------------------------
+# to web server. This is a not case sensitive ID.
+#-----------------------------------------------------------------------------
 @WormsSearchIDOrder = (
 '\/default\.ida',
 '\/null\.idq',
 'exe\?\/c\+dir',
 'root\.exe',
-'Admin\.dll',
-'Admin\.dll',
+'admin\.dll',
+'\/nsiislog\.dll',
+'\/sumthin',
 '\/winnt\/system32\/cmd\.exe',
 '\/_vti_inf\.html',
 '\/_vti_bin\/shtml\.exe\/_vti_rpc'
@@ -29,14 +30,15 @@
 
 # WormsHashID
 # Each Worms search ID is associated to a string that is unique name of worm.
-#--------------------------------------------------------------------------
+#-----------------------------------------------------------------------------
 %WormsHashID = (
 '\/default\.ida','code_red',
 '\/null\.idq','code_red',
 'exe\?\/c\+dir','nimba',
 'root\.exe','nimba',
-'Admin\.dll','nimba',
-'Admin\.dll','nimba',
+'admin\.dll','nimba',
+'\/nsiislog\.dll','mpex',
+'\/sumthin','sumthin',
 '\/winnt\/system32\/cmd\.exe','nimba',
 '\/_vti_inf\.html','unknown',
 '\/_vti_bin\/shtml\.exe\/_vti_rpc','unknown'
@@ -47,10 +49,12 @@
 # WormsHashLib
 # Worms name list ('worm unique id in lower case','worm clear text')
 # Each unique ID string is associated to a label
-#-------------------------------------------------------
+#-----------------------------------------------------------------------------
 %WormsHashLib = (
 'code_red','Code Red family worm',
+'mpex','IIS Exploit worm',
 'nimba','Nimba family worm',
+'sumthin','Sumthin worm',
 'unknown','Unknown worm'
 );
 
