@@ -59,11 +59,9 @@ $StartSeconds $StartMicroseconds
 $StartSeconds=$StartMicroseconds=0;
 # Vars for config file reading
 use vars qw/
-$FoundNotPageList
-$FoundValidHTTPCodes
+$FoundNotPageList $FoundValidHTTPCodes $FoundValidSMTPCodes
 /;
-$FoundNotPageList = 0;
-$FoundValidHTTPCodes = 0;
+$FoundNotPageList=$FoundValidHTTPCodes=$FoundValidSMTPCodes=0;
 # Config vars
 use vars qw/
 $DNSStaticCacheFile
@@ -160,13 +158,13 @@ use vars qw/
 $DirLock $DirCgi $DirData $DirIcons $DirLang $AWScript $ArchiveFileName
 $AllowAccessFromWebToFollowingIPAddresses $HTMLHeadSection $HTMLEndSection $LinksToWhoIs $LinksToIPWhoIs
 $LogFile $LogFormat $LogSeparator $Logo $LogoLink $StyleSheet $WrapperScript $SiteDomain
-$URLQuerySeparators $ErrorMessages
+$UseHTTPSLinkForUrl $URLQuerySeparators $ErrorMessages
 /;
 ($DirLock, $DirCgi, $DirData, $DirIcons, $DirLang, $AWScript, $ArchiveFileName,
 $AllowAccessFromWebToFollowingIPAddresses, $HTMLHeadSection, $HTMLEndSection, $LinksToWhoIs, $LinksToIPWhoIs,
 $LogFile, $LogFormat, $LogSeparator, $Logo, $LogoLink, $StyleSheet, $WrapperScript, $SiteDomain,
-$URLQuerySeparators, $ErrorMessages)=
-('','','','','','','','','','','','','','','','','','','','','','');
+$UseHTTPSLinkForUrl, $URLQuerySeparators, $ErrorMessages)=
+('','','','','','','','','','','','','','','','','','','','','','','');
 use vars qw/
 $color_Background $color_TableBG $color_TableBGRowTitle
 $color_TableBGTitle $color_TableBorder $color_TableRowTitle $color_TableTitle
@@ -180,13 +178,15 @@ $color_h, $color_k, $color_p, $color_e, $color_x, $color_s, $color_u, $color_v)=
 ('','','','','','','','','','','','','','','','','','','','','','');
 use vars qw/
 $HTMLOutput $FrameName $Center $FileConfig $FileSuffix $Host $DayRequired $MonthRequired $YearRequired
-$QueryString $SiteConfig $StaticLinks $URLFilter $PageCode $PerlParsingFormat
+$QueryString $SiteConfig $StaticLinks $PageCode $PerlParsingFormat
+$HostFilter $URLFilter $RefererPagesFilter
 $SiteToAnalyze $SiteToAnalyzeWithoutwww $UserAgent
 /;
 ($HTMLOutput, $FrameName, $Center, $FileConfig, $FileSuffix, $Host, $DayRequired, $MonthRequired,
-$YearRequired, $QueryString, $SiteConfig, $StaticLinks, $URLFilter, $PageCode,
+$YearRequired, $QueryString, $SiteConfig, $StaticLinks, $PageCode,
+$HostFilter, $URLFilter, $RefererPagesFilter,
 $PerlParsingFormat, $SiteToAnalyze, $SiteToAnalyzeWithoutwww, $UserAgent)=
-('','','','','','','','','','','','','','','','','','');
+('','','','','','','','','','','','','','','','','','','','');
 use vars qw/
 $pos_vh $pos_host $pos_logname $pos_date $pos_method $pos_url $pos_code $pos_size
 $pos_referer $pos_agent $pos_query $pos_gzipin $pos_gzipout $pos_gzipratio
@@ -228,7 +228,7 @@ use vars qw/
 @SkipHosts @SkipUserAgents @SkipFiles
 @OnlyHosts @OnlyFiles 
 @URLWithQueryWithoutFollowingParameters
-@ExtraSectionName @ExtraSectionConditional @ExtraSectionStatTypes @MaxNbOfExtra @MinHitExtra
+@ExtraSectionName @ExtraSectionCondition @ExtraSectionStatTypes @MaxNbOfExtra @MinHitExtra
 @ExtraSectionFirstColumnTitle @ExtraSectionFirstColumnValues
 @PluginsToLoad 
 /;
@@ -239,7 +239,7 @@ use vars qw/
 @SkipHosts = @SkipUserAgents = @SkipFiles = ();
 @OnlyHosts = @OnlyFiles = ();
 @URLWithQueryWithoutFollowingParameters = ();
-@ExtraSectionName = @ExtraSectionConditional = @ExtraSectionStatTypes = @MaxNbOfExtra = @MinHitExtra = ();
+@ExtraSectionName = @ExtraSectionCondition = @ExtraSectionStatTypes = @MaxNbOfExtra = @MinHitExtra = ();
 @ExtraSectionFirstColumnTitle = @ExtraSectionFirstColumnValues = ();
 @PluginsToLoad = ();
 # ---------- Init hash arrays --------
@@ -252,7 +252,8 @@ use vars qw/
 use vars qw/
 %BadFormatWarning
 %MonthLib %MonthNum
-%ValidHTTPCodes %TrapInfosForHTTPErrorCodes %NotPageList %DayBytes %DayHits %DayPages %DayVisits
+%ValidHTTPCodes %ValidSMTPCodes
+%TrapInfosForHTTPErrorCodes %NotPageList %DayBytes %DayHits %DayPages %DayVisits
 %FirstTime %LastTime
 %MonthUnique %MonthVisits %MonthPages %MonthHits %MonthBytes %MonthHostsKnown %MonthHostsUnknown
 %ListOfYears %HistoryAlreadyFlushed %PosInFile %ValueInFile
@@ -271,7 +272,7 @@ use vars qw/
 /;
 %BadFormatWarning = ();
 %MonthLib = %MonthNum = ();
-%ValidHTTPCodes=();
+%ValidHTTPCodes = %ValidSMTPCodes = ();
 %TrapInfosForHTTPErrorCodes=(); $TrapInfosForHTTPErrorCodes{404}=1;	# TODO Add this in config file
 %NotPageList=();
 %DayBytes = %DayHits = %DayPages = %DayVisits = ();
@@ -970,7 +971,7 @@ sub Read_Config {
 	if (! $FileConfig) { error("Error: Couldn't open config file \"$PROG.$SiteConfig.conf\" nor \"$PROG.conf\" : $!"); }
 
 	# Analyze config file content
-	&Parse_Config( *CONFIG , 1 );
+	&Parse_Config( *CONFIG , 1 , $FileConfig);
 
 	# Close config file
 	close CONFIG;
@@ -983,6 +984,10 @@ sub Read_Config {
 	if (! $FoundValidHTTPCodes) {
 		$ValidHTTPCodes{"200"}=$ValidHTTPCodes{"304"}=1;
 	}
+	# If parameter ValidSMTPCodes not found, init for backward compatibility
+	if (! $FoundValidSMTPCodes) {
+		$ValidSMTPCodes{"1"}=1;
+	}
 }
 
 #------------------------------------------------------------------------------
@@ -993,15 +998,16 @@ sub Read_Config {
 # Return:		None
 #------------------------------------------------------------------------------
 sub Parse_Config {
-    my( $config ) = $_[0];
+    my ( $confighandle ) = $_[0];
 	my $level = $_[1];
+	my $configFile = $_[2];
 	my $versionnum=0;
 
 	if ($level > 10) {
 		error("Error: $PROG can't read down more than 10 level of includes. Check that no 'included' config files include their parent config file (this cause infinite loop).");
 	}
 
-   	while (<$config>) {
+   	while (<$confighandle>) {
 		chomp $_; s/\r//;
 
 		# Extract version from first line
@@ -1024,7 +1030,7 @@ sub Parse_Config {
 				$includeFile = "$configDir$includeFile";
 		    }
 		    if ( open( CONFIG_INCLUDE, $includeFile ) ) {
-				&Parse_Config( *CONFIG_INCLUDE , ++$level);
+				&Parse_Config( *CONFIG_INCLUDE , $level+1, $includeFile);
 				close( CONFIG_INCLUDE );
 		    }
 		    else {
@@ -1127,6 +1133,11 @@ sub Parse_Config {
 			$FoundValidHTTPCodes=1;
 			next;
 			}
+		if ($param =~ /^ValidSMTPCodes/) {
+			foreach my $elem (split(/\s+/,$value))	{ $ValidSMTPCodes{$elem}=1; }
+			$FoundValidSMTPCodes=1;
+			next;
+			}
 		if ($param =~ /^URLNotCaseSensitive$/)		{ $URLNotCaseSensitive=$value; next; }
 		if ($param =~ /^URLQuerySeparators$/)		{ $URLQuerySeparators=$value; $URLQuerySeparators =~ s/\s//g; next; }
 		if ($param =~ /^URLWithQuery$/)				{ $URLWithQuery=$value; next; }
@@ -1151,7 +1162,7 @@ sub Parse_Config {
 		if ($param =~ /^LevelForKeywordsDetection/)			{ $LevelForKeywordsDetection=$value; next; }
  		# Read extra stats setup section
  		if ($param =~ /^ExtraSectionName(\d+)/)			{ $ExtraSectionName[$1]=$value; next; }
- 		if ($param =~ /^ExtraSectionConditional(\d+)/)  { $ExtraSectionConditional[$1]=$value; next; }
+ 		if ($param =~ /^ExtraSectionCondition(\d+)/)  	{ $ExtraSectionCondition[$1]=$value; next; }
  		if ($param =~ /^ExtraSectionStatTypes(\d+)/)    { $ExtraSectionStatTypes[$1]=$value; next; }
  		if ($param =~ /^ExtraSectionFirstColumnTitle(\d+)/) 	{ $ExtraSectionFirstColumnTitle[$1]=$value; next; }
  		if ($param =~ /^ExtraSectionFirstColumnValues(\d+)/) 	{ $ExtraSectionFirstColumnValues[$1]=$value; next; }
@@ -1204,6 +1215,7 @@ sub Parse_Config {
 		if ($param =~ /^DetailedReportsOnNewWindows/) { $DetailedReportsOnNewWindows=$value; next; }
 		if ($param =~ /^ShowFlagLinks/)         { $ShowFlagLinks=$value; next; }
 		if ($param =~ /^ShowLinksOnUrl/)        { $ShowLinksOnUrl=$value; next; }
+		if ($param =~ /^UseHTTPSLinkForUrl/)    { $UseHTTPSLinkForUrl=$value; next; }
 		if ($param =~ /^MaxLengthOfURL/)        { $MaxLengthOfURL=$value; next; }
 		if ($param =~ /^ShowLinksToWhoIs/)      { $ShowLinksToWhoIs=$value; next; }
 		if ($param =~ /^LinksToWhoIs/)          { $LinksToWhoIs=$value; next; }
@@ -1239,12 +1251,12 @@ sub Parse_Config {
 		if ($param =~ /^color_x/)               { $color_x=$value; next; }
 		if ($param =~ /^LoadPlugin/)           	{ push @PluginsToLoad, $value; next; }
 	}
-	close CONFIG;
+	close $confighandle;
 
 	# For backward compatibility
 	if ($versionnum < 5001) { $BarHeight=$BarHeight>>1; }
 
-	if ($Debug) { debug("Config file read was [FileConfig=\"$FileConfig\"] (level $level)"); }
+	if ($Debug) { debug("Config file read was \"$configFile\" (level $level)"); }
 }
 
 
@@ -1474,6 +1486,7 @@ sub Check_Config {
 		debug(" DirIcons='$DirIcons'",2);
 		debug(" NotPageList ".(scalar keys %NotPageList));
 		debug(" ValidHTTPCodes ".(scalar keys %ValidHTTPCodes));
+		debug(" ValidSMTPCodes ".(scalar keys %ValidSMTPCodes));
 		debug(" UseFramesWhenCGI=$UseFramesWhenCGI");
 	}
 	if (! $LogFile)   { error("Error: LogFile parameter is not defined in config/domain file"); }
@@ -1522,12 +1535,12 @@ sub Check_Config {
 	if ($LevelForRefererAnalyze !~ /^\d+/)			{ $LevelForRefererAnalyze=1; }
 	if ($LevelForSearchEnginesDetection !~ /^\d+/)	{ $LevelForSearchEnginesDetection=1; }
 	if ($LevelForKeywordsDetection !~ /^\d+/)  		{ $LevelForKeywordsDetection=1; }
-	# Read extra stats setup section
+	# Optional extra setup section
 	foreach my $extracpt (1..@ExtraSectionName-1) {
-		if ($ExtraSectionStatTypes[$extracpt] !~ /[PHBL]/)  { $ExtraSectionStatTypes[$extracpt]="PHBL"; }
+		if ($ExtraSectionStatTypes[$extracpt] !~ /[PHBL]/)  { $ExtraSectionStatTypes[$extracpt]='PHBL'; }
 		if ($MaxNbOfExtra[$extracpt] !~ /^\d+$/ || $MaxNbOfExtra[$extracpt]<1) { $MaxNbOfExtra[$extracpt]=20; }
 		if ($MinHitExtra[$extracpt] !~ /^\d+$/ || $MinHitExtra[$extracpt]<1) { $MinHitExtra[$extracpt]=1; }
-		if (! $ExtraSectionFirstColumnValues[$extracpt]) { error("Error: An extra section number $extracpt is defined without ExtraSectionFirstColumnValues$extracpt parameter"); }
+		if (! $ExtraSectionFirstColumnValues[$extracpt]) { error("Error: Extra section number $extracpt is defined without ExtraSectionFirstColumnValues$extracpt parameter"); }
 	}
 	# Optional appearance setup section
 	if ($MaxRowsInHTMLOutput !~ /^\d+/ || $MaxRowsInHTMLOutput<1)     { $MaxRowsInHTMLOutput=1000; }
@@ -2054,7 +2067,7 @@ sub Read_History_With_TmpUpdate {
 						# For backward compatibility
 						if ($readvisitorforbackward) {
 							if ($field[1]) { $MonthUnique{$year.$month}++; }
-							if ($MonthRequired ne "year") {
+							if ($MonthRequired ne 'year') {
 								if ($field[0] !~ /^\d+\.\d+\.\d+\.\d+$/) { $MonthHostsKnown{$year.$month}++; }
 								else { $MonthHostsUnknown{$year.$month}++; }
 							}
@@ -2102,13 +2115,16 @@ sub Read_History_With_TmpUpdate {
 							delete $_waithost_u{$field[0]};
 						}
 
+						# Load records
 						if ($readvisitorforbackward!=2 && $SectionsToLoad{"visitor"}) { # if readvisitorforbackward==2 we do not load
 							my $loadrecord=0;
 							if ($withupdate) {
 								$loadrecord=1;
 							}
 							else {
-								if ($HTMLOutput eq 'allhosts' || $HTMLOutput eq 'lasthosts') { $loadrecord=1; }
+								if ($HTMLOutput eq 'allhosts' || $HTMLOutput eq 'lasthosts') {
+									if (!$HostFilter || $field[0] =~ /$HostFilter/) { $loadrecord=1; }
+								}
 								elsif ($MonthRequired eq 'year' || $field[2] >= $MinHitHost) {
 									if ($HTMLOutput eq 'unknownip' && ($field[0] =~ /^\d+\.\d+\.\d+\.\d+$/)) { $loadrecord=1; }
 									elsif ($HTMLOutput eq 'main' && ($MonthRequired eq 'year' || $countloaded < $MaxNbOfHostsShown)) { $loadrecord=1; }
@@ -2647,8 +2663,17 @@ sub Read_History_With_TmpUpdate {
 					if ($field[0]) {
 						$count++;
 						if ($SectionsToLoad{"pagerefs"}) {
-							$countloaded++;
-							if ($field[1]) { $_pagesrefs_h{$field[0]}+=int($field[1]); }
+							my $loadrecord=0;
+							if ($withupdate) {
+								$loadrecord=1;
+							}
+							else {
+								if (!$RefererPagesFilter || $field[0] =~ /$RefererPagesFilter/) { $loadrecord=1; }
+							}
+							if ($loadrecord) {
+								if ($field[1]) { $_pagesrefs_h{$field[0]}+=int($field[1]); }
+								$countloaded++;
+							}
 						}
 					}
 					$_=<HISTORY>;
@@ -2850,7 +2875,7 @@ sub Read_History_With_TmpUpdate {
 							$count++;
 							if ($SectionsToLoad{"extra_$extranum"}) {
 								if ($ExtraSectionStatTypes[$extranum] =~ m/P/i && $field[1]) { ${'_section_' . $extranum . '_p'}{$field[0]}+=$field[1]; }
-								if ($ExtraSectionStatTypes[$extranum] =~ m/H/i && $field[2]) { ${'_section_' . $extranum . '_h'}{$field[0]}+=$field[2]; }
+								${'_section_' . $extranum . '_h'}{$field[0]}+=$field[2];
 								if ($ExtraSectionStatTypes[$extranum] =~ m/B/i && $field[3]) { ${'_section_' . $extranum . '_k'}{$field[0]}+=$field[3]; }
 								if ($ExtraSectionStatTypes[$extranum] =~ m/L/i && ! ${'_section_' . $extranum . '_l'}{$field[0]} && $field[4]) { ${'_section_' . $extranum . '_l'}{$field[0]}=int($field[4]); }
 								$countloaded++;
@@ -4087,6 +4112,74 @@ sub AtLeastOneNotNull() {
 	return 0;
 }
 
+#--------------------------------------------------------------------
+# Function:     Insert a form filter
+# Parameters:   name of filter field, default value for filter field
+# Input:        $StaticLinks, $queryString
+# Output:       HTML Form
+# Return:       None
+#--------------------------------------------------------------------
+sub ShowFormFilter() {
+	my $fieldfiltername=shift;
+	my $fieldfiltervalue=shift;
+	if (! $StaticLinks) {
+		my $NewLinkParams=${QueryString};
+		$NewLinkParams =~ s/update(=\w*|$|[ &]+)//i;
+		$NewLinkParams =~ s/output(=\w*|$|[ &]+)//i;
+		$NewLinkParams =~ s/staticlinks(=\w*|$|[ &]+)//i;
+		$NewLinkParams =~ tr/&/&/s; $NewLinkParams =~ s/^&//; $NewLinkParams =~ s/&$//;
+		if ($NewLinkParams) { $NewLinkParams="${NewLinkParams}&"; }
+		print "\n<FORM name=\"FormFilter\" action=\"$AWScript?${NewLinkParams}\" class=\"TABLEFRAME\">\n";
+		print "<TABLE valign=middle><TR>\n";
+		print "<TD>&nbsp; &nbsp; $Message[79] : &nbsp; &nbsp;\n";
+		print "<input type=hidden name=\"output\" value=\"$HTMLOutput\">\n";
+		if ($SiteConfig) { print "<input type=hidden name=\"config\" value=\"$SiteConfig\">\n"; }
+		if ($QueryString =~ /year=(\d\d\d\d)/i) { print "<input type=hidden name=\"year\" value=\"$1\">\n"; }
+		if ($QueryString =~ /month=(\d\d)/i || $QueryString =~ /month=(year)/i) { print "<input type=hidden name=\"month\" value=\"$1\">\n"; }
+		if ($QueryString =~ /lang=(\w+)/i) { print "<input type=hidden name=\"lang\" value=\"$1\">\n"; }
+		if ($QueryString =~ /debug=(\d+)/i) { print "<input type=hidden name=\"debug\" value=\"$1\">\n"; }
+		if ($QueryString =~ /framename=(\w+)/i) { print "<input type=hidden name=\"framename\" value=\"$1\">\n"; }
+		print "</TD>\n";
+		print "<TD><input type=text name=\"$fieldfiltername\" value=\"$fieldfiltervalue\" class=\"CFormFields\"></TD>\n";
+		print "<TD><input type=submit value=\"$Message[115]\" class=\"CFormFields\">\n";
+		print "</TR></TABLE>\n";
+		print "</FORM>\n\n";
+	}
+}
+
+#--------------------------------------------------------------------
+# Function:     Write URL with HTML link or not
+# Parameters:   $url
+# Input:        %Aliases $MaxLengthOfURL $ShowLinksOnUrl $SiteDomain $UseHTTPSLinkForUrl
+# Output:       URL link
+# Return:       None
+#--------------------------------------------------------------------
+sub ShowURL() {
+	my $url=shift;
+	my $nompage=$Aliases{$url}?$Aliases{$url}:CleanFromCSSA($url);
+	if (length($nompage)>$MaxLengthOfURL) { $nompage=substr($nompage,0,$MaxLengthOfURL)."..."; }
+	if ($ShowLinksOnUrl) {
+		my $newkey=CleanFromCSSA($url);
+		if ($newkey =~ /^http(s|):/i) {	# URL seems to be extracted from a ftp or proxy log file
+			print "<A HREF=\"$newkey\" target=\"url\">$nompage</A>";
+		}
+		elsif ($newkey =~ /^\//) {		# URL seems to be an url extracted from a web or wap server log file
+			$newkey =~ s/^\/$SiteDomain//;
+			# Define http or https
+			my $httplink='http';
+			if ($UseHTTPSLinkForUrl && $newkey =~ /^$UseHTTPSLinkForUrl/) { $httplink='https'; }
+			print "<A HREF=\"$httplink://$SiteDomain$newkey\" target=\"url\">$nompage</A>";
+		}
+		else {
+			print "$nompage";
+		}
+	}
+	else {
+		print "$nompage";
+	}
+}
+
+
 
 #--------------------------------------------------------------------
 # MAIN
@@ -4094,7 +4187,8 @@ sub AtLeastOneNotNull() {
 $starttime=time;
 
 my @AllowedArgs=('-site','-config','-showsteps','-showdropped','-showcorrupted',
-'-showunknownorigin','-logfile','-output','-urlfilter','-staticlinks','-lang',
+'-showunknownorigin','-logfile','-output','-staticlinks','-lang',
+'-hostfilter','-urlfilter','-refererpagesfilter',
 '-month','-year','-framename','-debug');
 
 if ($ENV{"GATEWAY_INTERFACE"}) {	# Run from a browser
@@ -4118,8 +4212,14 @@ if ($ENV{"GATEWAY_INTERFACE"}) {	# Run from a browser
 		$SiteConfig=$5?$5:"xxx"; $SiteConfig =~ s/^\.//;		# SiteConfig is not required for migrate
 	}
 	if ($QueryString =~ /logfile=([^\s&]+)/i )	{ $LogFile=&DecodeEncodedString("$1"); }
-	if ($QueryString =~ /output=urldetail:([^\s&]+)/i)	{ $URLFilter=&DecodeEncodedString("$1"); }	# Filter on URL list can be defined with output=urldetail:filter to reduce number of lines read and showed
-	if ($QueryString =~ /urlfilter=([^\s&]+)/i)	{ $URLFilter=&DecodeEncodedString("$1"); }			# Filter on URL list can also be defined with urlfilter=filter
+	# All filters
+	if ($QueryString =~ /output=allhosts:([^\s&]+)/i)		{ $HostFilter=&DecodeEncodedString("$1"); }			# Filter on URL list can be defined with output=allhosts:filter to reduce number of lines read and showed
+	if ($QueryString =~ /output=lasthosts:([^\s&]+)/i)		{ $HostFilter=&DecodeEncodedString("$1"); }			# Filter on URL list can be defined with output=lasthosts:filter to reduce number of lines read and showed
+	if ($QueryString =~ /output=urldetail:([^\s&]+)/i)		{ $URLFilter=&DecodeEncodedString("$1"); }			# Filter on URL list can be defined with output=urldetail:filter to reduce number of lines read and showed
+	if ($QueryString =~ /output=refererpages:([^\s&]+)/i)	{ $RefererPagesFilter=&DecodeEncodedString("$1"); }	# Filter on URL list can be defined with output=refererpages:filter to reduce number of lines read and showed
+	if ($QueryString =~ /hostfilter=([^\s&]+)/i)			{ $HostFilter=&DecodeEncodedString("$1"); }			# Filter on URL list can also be defined with hostfilter=filter
+	if ($QueryString =~ /urlfilter=([^\s&]+)/i)				{ $URLFilter=&DecodeEncodedString("$1"); }			# Filter on URL list can also be defined with urlfilter=filter
+	if ($QueryString =~ /refererpagesfilter=([^\s&]+)/i)	{ $RefererPagesFilter=&DecodeEncodedString("$1"); }	# Filter on URL list can also be defined with refererpagesfilter=filter
 }
 else {								# Run from command line
 	if ($ARGV[0] && $ARGV[0] eq "-h")			{ $SiteConfig = $ARGV[1]; }					# For backward compatibility but useless
@@ -4148,8 +4248,14 @@ else {								# Run from command line
 	if ($QueryString =~ /showunknownorigin/i)	{ $ShowUnknownOrigin=1; }
 	$QueryString=~s/showunknownorigin[^&]*//i;
 	if ($QueryString =~ /logfile=([^&]+)/i )	{ $LogFile="$1"; }
-	if ($QueryString =~ /output=urldetail:([^&]+)/i)	{ $URLFilter="$1"; }	# Filter on URL list can be defined with output=urldetail:filter to reduce number of lines read and showed
-	if ($QueryString =~ /urlfilter=([^&]+)/i)	{ $URLFilter="$1"; }			# Filter on URL list can also be defined with urlfilter=filter
+	# All filters
+	if ($QueryString =~ /output=allhosts:([^&]+)/i)		{ $HostFilter="$1"; }			# Filter on URL list can be defined with output=allhosts:filter to reduce number of lines read and showed
+	if ($QueryString =~ /output=lasthosts:([^&]+)/i)	{ $HostFilter="$1"; }			# Filter on URL list can be defined with output=lasthosts:filter to reduce number of lines read and showed
+	if ($QueryString =~ /output=urldetail:([^&]+)/i)	{ $URLFilter="$1"; }			# Filter on URL list can be defined with output=urldetail:filter to reduce number of lines read and showed
+	if ($QueryString =~ /output=refererpages:([^&]+)/i)	{ $RefererPagesFilter="$1"; }	# Filter on URL list can be defined with output=refererpages:filter to reduce number of lines read and showed
+	if ($QueryString =~ /hostfilter=([^&]+)/i)			{ $HostFilter="$1"; }			# Filter on URL list can also be defined with hostfilter=filter
+	if ($QueryString =~ /urlfilter=([^&]+)/i)			{ $URLFilter="$1"; }			# Filter on URL list can also be defined with urlfilter=filter
+	if ($QueryString =~ /refererpagesfilter=([^&]+)/i)	{ $RefererPagesFilter="$1"; }	# Filter on URL list can also be defined with refererpagesfilter=filter
 }
 
 if ($QueryString =~ /staticlinks/i) 			{ $StaticLinks=".$SiteConfig"; }
@@ -4945,7 +5051,7 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 			}
 		}
 		elsif ($protocol == 3 || $protocol == 5) {						# Mail record
-			if ($field[$pos_code] != ($protocol==3?1:0)) {				# Code is not valid
+			if ($field[$pos_code] != $ValidSMTPCodes{$field[$pos_code]}) {	# Code is not valid
 				$field[$pos_size]=0;
 				$_errors_h{$field[$pos_code]}++;
 				$_errors_k{$field[$pos_code]}+=int($field[$pos_size]);
@@ -5482,97 +5588,86 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 		# Analyze: Extra
 		#---------------
  		foreach my $extranum (1..@ExtraSectionName-1) {
-			if ($Debug) { debug("Process extra analyze",4); }
- 			# Check conditional (assume that it is a valid configuration)
- 			# ExtraSectionConditional0="QUERY_STRING,'sn=';REFERER,'sn='"
- 			my $condition_fsa = 0;
- 			foreach my $conditional_full (split(/\s*?\|\s*?/, $ExtraSectionConditional[$extranum])) {
- 				my ($conditional_type, $conditional_opt);
- 				if ($conditional_full =~ m/(.+?)\s*?,\s*?'(.+?)'/) {
- 					$conditional_type = $1;
- 					$conditional_opt  = $2;
- 				} else {
- 					last;
- 				}
- 				
- 				# Check if does not pass condition, move to next condition if exists.
- 				if ($conditional_type eq 'QUERY_STRING') {
-					if ($Debug) { debug("Check condition '$conditional_type' must contain '$conditional_opt' on $standalonequery.",5); }
- 					if ($standalonequery =~ m/$conditional_opt/) {
- 						$condition_fsa = 1;
- 						last;
- 					}
- 				} elsif ($conditional_type eq 'REFERER') {
-					if ($Debug) { debug("Check condition '$conditional_type' must contain '$conditional_opt' on $field[$pos_referer]",5); }
- 					if ($field[$pos_referer] =~ m/$conditional_opt/) {
- 						$condition_fsa = 1;
- 						last;
- 					}
- 				# Other imlementations of different conditionals would go here.
- 				} else {
- 					# All other conditional types that are not
- 					# implemented get ignored.
- 					next;
- 				}
- 			}
- 			next unless $condition_fsa;
+			if ($Debug) { debug("Process extra analyze $extranum",4); }
 
-			if ($Debug) { debug(" All conditions are OK. Now we extract value for first column of extra chart.",5); }
-
+ 			# Check conditions
+ 			my $conditionok = 0;
+ 			if ($ExtraSectionCondition[$extranum]) {
+	 			foreach my $conditioncouple (split(/\|/, $ExtraSectionCondition[$extranum])) {
+	 				my ($conditiontype, $conditiontypeval)=split(/,/,$conditioncouple,2);
+	 				# Check if does not pass condition, move to next condition if exists.
+	 				if ($conditiontype eq 'URL') {
+						if ($Debug) { debug(" Check condition '$conditiontype' must contain '$conditiontypeval' in $urlwithnoquery.",5); }
+	 					if ($urlwithnoquery =~ m/$conditiontypeval/) {
+	 						$conditionok = 1;
+	 						last;
+	 					}
+	 				}
+	 				elsif ($conditiontype eq 'QUERY_STRING') {
+						if ($Debug) { debug(" Check condition '$conditiontype' must contain '$conditiontypeval' in $standalonequery.",5); }
+	 					if ($standalonequery =~ m/$conditiontypeval/) {
+	 						$conditionok = 1;
+	 						last;
+	 					}
+	 				}
+	 				elsif ($conditiontype eq 'REFERER') {
+						if ($Debug) { debug(" Check condition '$conditiontype' must contain '$conditiontypeval' in $field[$pos_referer]",5); }
+	 					if ($field[$pos_referer] =~ m/$conditiontypeval/) {
+	 						$conditionok = 1;
+	 						last;
+	 					}
+	 				}
+	 				else { error("Wrong value of parameter ExtraSectionCondition$extranum"); }
+	 			}
+	 			next unless $conditionok;
+				if ($Debug) { debug(" Condition is OK. Now we extract value for first column of extra chart.",5); }
+			}
+			else {
+				if ($Debug) { debug(" No condition. Now we extract value for first column of extra chart.",5); }
+			}
+			
  			# Determine actual column value to use.
- 			#ExtraSectionFirstColumnValues0="QUERY_STRING,'sn=([^&]+)'"
- 			my $col_value = '';
- 			my $col_method = '';
- 			
- 			my $conditional_value_passed = 0;
- 			foreach my $conditional_full (split(/\s*?\|\s*?/, $ExtraSectionFirstColumnValues[$extranum])) {
- 				my ($col_cond_type, $col_cond_opt);
- 
- 				if ($conditional_full =~ m/(.+?)\s*?,\s*?'(.+?)'/) {
- 					$col_cond_type = $1;
- 					$col_cond_opt = $2;
- 				} else {
- 					# Invalid configuration we skip section completely even if other
- 					# conditionals may be valid, so people have incentive to keep confs valid.
- 					last;
+			my $rowkeyval='';
+ 			my $rowkeyok = 0;
+ 			foreach my $rowkeycouple (split(/\|/, $ExtraSectionFirstColumnValues[$extranum])) {
+ 				my ($rowkeytype, $rowkeytypeval)=split(/,/,$rowkeycouple,2);
+ 				if ($rowkeytype eq 'QUERY_STRING') {
+ 					if ($standalonequery =~ m/$rowkeytypeval/) {
+ 						$rowkeyval = "$1";
+ 						$rowkeyok = 1;
+ 						last;
+ 					}
+					next;
  				}
- 			
- 				# Check if record passes condition to be able to retrieve a column name, if not
- 				# move to the next condition.
- 				if ($col_cond_type eq 'QUERY_STRING') {
- 					if ($standalonequery =~ m/$col_cond_opt/) {
- 						$col_value = $1;
- 						$col_value =~ s/%20/+/g;
- 						$conditional_value_passed = 1;
- 						last;
- 					} else {
- 						next;
- 					}
- 				} elsif ($col_cond_type eq 'REFERER') {
- 					if ($field[$pos_referer] =~ m/$col_cond_opt/) {
- 						$col_value = $1;
- 						$col_value =~ s/%20/+/g;
- 						$conditional_value_passed = 1;
+ 				elsif ($rowkeytype eq 'REFERER') {
+ 					if ($field[$pos_referer] =~ m/$rowkeytypeval/) {
+ 						$rowkeyval = "$1";
+ 						$rowkeyok = 1;
  						last;
  					}
- 					# Other imlementations of different conditionals would go here.
- 				} else {
- 					# Invalid configuration we skip section completely even if other
- 					# conditionals may be valid, so people have incentive to keep confs valid.
+					next;
+ 				}
+ 				else {
+					# Failed to extract rowkey value
  					last;
  				}
  						
  			}
- 			next unless $conditional_value_passed;
- 			
- 			# If interpreter reaches this point means we got all values to increase counters
- 			# Needs to be tested because this is most likely a huge resource hog (cpu).
- 			if ($ExtraSectionStatTypes[$extranum] =~ m/P/i && $PageBool) { ${'_section_' . $extranum . '_p'}{$col_value}++; }
- 			if ($ExtraSectionStatTypes[$extranum] =~ m/H/i) { ${'_section_' . $extranum . '_h'}{$col_value}++; }
- 			if ($ExtraSectionStatTypes[$extranum] =~ m/B/i) { ${'_section_' . $extranum . '_k'}{$col_value}+=int($field[$pos_size]); }
+ 			next unless $rowkeyok;
+			if ($Debug) { debug(" Key val was found: $rowkeyval",5); }
+
+ 			# Here we got all values to increase counters
+ 			if ($PageBool && $ExtraSectionStatTypes[$extranum] =~ m/P/i) { ${'_section_' . $extranum . '_p'}{$rowkeyval}++; }
+ 			${'_section_' . $extranum . '_h'}{$rowkeyval}++;	# Must be set
+ 			if ($ExtraSectionStatTypes[$extranum] =~ m/B/i) { ${'_section_' . $extranum . '_k'}{$rowkeyval}+=int($field[$pos_size]); }
  			if ($ExtraSectionStatTypes[$extranum] =~ m/L/i) {
- 				if (${'_section_' . $extranum . '_l'}{$col_value} < $timerecord) { ${'_section_' . $extranum . '_l'}{$col_value}=$timerecord; }
+ 				if (${'_section_' . $extranum . '_l'}{$rowkeyval} < $timerecord) { ${'_section_' . $extranum . '_l'}{$rowkeyval}=$timerecord; }
  			}
+			# Check to avoid too large extra sections
+			my $MaxDiffExtra=500;
+			if (scalar keys %{'_section_' . $extranum . '_h'} > $MaxDiffExtra) {
+				error("Too many (more than $MaxDiffExtra) different values for row keys of extra section $extranum. Your setup is probably wrong.");
+			}
  		}
 
 		# Every 20,000 approved lines we test to clean too large hash arrays to flush data in tmp file
@@ -5953,6 +6048,9 @@ EOF
 			foreach my $code (keys %TrapInfosForHTTPErrorCodes) {
 				if ($ShowHTTPErrorsStats)	 { print ($frame?"<tr><td class=AWL> &nbsp; <img height=8 width=9 src=\"$DirIcons/other/page.png\" alt=\"...\"> ":""); print "<a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=errors$code":"$PROG$StaticLinks.errors$code.html")."\"$NewLinkTarget>$Message[31]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
 			}
+		 	foreach my $extranum (1..@ExtraSectionName-1) {
+				print ($frame?"<tr><td class=AWL>":""); print "<a href=\"$linkanchor#EXTRA$extranum\"$targetpage>$ExtraSectionName[$extranum]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; ");
+			}
 			if ($linetitle) { print ($frame?"":"</td></tr>\n"); }
 			print "</table>\n";
 			print ($frame?"":"<br>\n");
@@ -5961,7 +6059,9 @@ EOF
 		# Print Back link
 		elsif ($HTMLOutput ne 'main') {
 			print "<table>\n";
-			$NewLinkParams =~ s/urlfilter=[^ &]*//i;
+			$NewLinkParams =~ s/hostfilter=[^\s&]*//i;
+			$NewLinkParams =~ s/urlfilter=[^\s&]*//i;
+			$NewLinkParams =~ s/refererpagesfilter=[^\s&]*//i;
 			$NewLinkParams =~ tr/&/&/s; $NewLinkParams =~ s/&$//;
 			if (! $DetailedReportsOnNewWindows || $FrameName eq 'mainright') {
 				print "<tr><td class=AWL><a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript".(${NewLinkParams}?"?${NewLinkParams}":""):"$PROG$StaticLinks.html")."\">$Message[76]</a></td></tr>\n";
@@ -6271,12 +6371,25 @@ EOF
 #	}
 	if ($HTMLOutput eq 'allhosts' || $HTMLOutput eq 'lasthosts') {
 		print "$Center<a name=\"HOSTSLIST\">&nbsp;</a><BR>\n";
-		my $title="";
-		if ($HTMLOutput eq 'allhosts')  { $title.="$Message[81]"; }
-		if ($HTMLOutput eq 'lasthosts') { $title.="$Message[9]"; }
+		# Show filter form
+		&ShowFormFilter("hostfilter",$HostFilter);
+		# Show hosts list
+		my $title=''; my $cpt=0;
+		if ($HTMLOutput eq 'allhosts')  { $title.="$Message[81]"; $cpt=(scalar keys %_host_h); }
+		if ($HTMLOutput eq 'lasthosts') { $title.="$Message[9]"; $cpt=(scalar keys %_host_h); }
 		&tab_head("$title",19);
-		if ($MonthRequired ne "year") { print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[81] : $TotalHostsKnown $Message[82], $TotalHostsUnknown $Message[1] - $TotalUnique $Message[11]</TH>"; }
-		else { print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[81] : ".(scalar keys %_host_h)."</TH>"; }
+		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>";
+		if ($HostFilter) {
+			print "$Message[79] <b>$HostFilter</b>: $cpt $Message[81]";
+			if ($MonthRequired ne 'year') {
+				if ($HTMLOutput eq 'allhosts' || $HTMLOutput eq 'lasthosts') { print "<br>$Message[102]: $TotalHostsKnown $Message[82], $TotalHostsUnknown $Message[1] - $TotalUnique $Message[11]"; }
+			}
+		}
+		else {
+			if ($MonthRequired ne 'year') { print "$Message[102] : $TotalHostsKnown $Message[82], $TotalHostsUnknown $Message[1] - $TotalUnique $Message[11]"; }
+			else { print "$Message[102] : ".(scalar keys %_host_h); }
+		}
+		print "</TH>";
 		if ($ShowLinksToWhoIs && $LinksToWhoIs) { print "<TH width=80>$Message[114]</TH>"; }
 		print "<TH bgcolor=\"#$color_p\" width=80>$Message[56]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH bgcolor=\"#$color_k\" width=80>$Message[75]</TH><TH width=120>$Message[9]</TH></TR>\n";
 		$total_p=$total_h=$total_k=0;
@@ -6355,7 +6468,7 @@ EOF
 	}
 	if ($HTMLOutput eq 'alllogins' || $HTMLOutput eq 'lastlogins') {
 		print "$Center<a name=\"LOGINSLIST\">&nbsp;</a><BR>\n";
-		my $title="";
+		my $title='';
 		if ($HTMLOutput eq 'alllogins') { $title.="$Message[94]"; }
 		if ($HTMLOutput eq 'lastlogins') { $title.="$Message[9]"; }
 		&tab_head("$title",19);
@@ -6399,7 +6512,7 @@ EOF
 	}
 	if ($HTMLOutput eq 'allrobots' || $HTMLOutput eq 'lastrobots') {
 		print "$Center<a name=\"ROBOTSLIST\">&nbsp;</a><BR>\n";
-		my $title="";
+		my $title='';
 		if ($HTMLOutput eq 'allrobots')  { $title.="$Message[53]"; }
 		if ($HTMLOutput eq 'lastrobots') { $title.="$Message[9]"; }
 		&tab_head("$title",19);
@@ -6447,31 +6560,9 @@ EOF
 		}
 		print "$Center<a name=\"URLDETAIL\">&nbsp;</a><BR>\n";
 		# Show filter form
-		if (! $StaticLinks) {
-			my $NewLinkParams=${QueryString};
-			$NewLinkParams =~ s/update(=\w*|$|[ &]+)//i;
-			$NewLinkParams =~ s/output(=\w*|$|[ &]+)//i;
-			$NewLinkParams =~ s/staticlinks(=\w*|$|[ &]+)//i;
-			$NewLinkParams =~ tr/&/&/s; $NewLinkParams =~ s/^&//; $NewLinkParams =~ s/&$//;
-			if ($NewLinkParams) { $NewLinkParams="${NewLinkParams}&"; }
-			print "\n<FORM name=\"FormUrlFilter\" action=\"$AWScript?${NewLinkParams}\" class=\"TABLEFRAME\">\n";
-			print "<TABLE valign=middle><TR>\n";
-			print "<TD>&nbsp; &nbsp; $Message[79] : &nbsp; &nbsp;\n";
-			print "<input type=hidden name=\"output\" value=\"$HTMLOutput\">\n";
-			if ($SiteConfig) { print "<input type=hidden name=\"config\" value=\"$SiteConfig\">\n"; }
-			if ($QueryString =~ /year=(\d\d\d\d)/i) { print "<input type=hidden name=\"year\" value=\"$1\">\n"; }
-			if ($QueryString =~ /month=(\d\d)/i || $QueryString =~ /month=(year)/i) { print "<input type=hidden name=\"month\" value=\"$1\">\n"; }
-			if ($QueryString =~ /lang=(\w+)/i) { print "<input type=hidden name=\"lang\" value=\"$1\">\n"; }
-			if ($QueryString =~ /debug=(\d+)/i) { print "<input type=hidden name=\"debug\" value=\"$1\">\n"; }
-			if ($QueryString =~ /framename=(\w+)/i) { print "<input type=hidden name=\"framename\" value=\"$1\">\n"; }
-			print "</TD>\n";
-			print "<TD><input type=text name=\"urlfilter\" value=\"$URLFilter\" class=\"CFormFields\"></TD>\n";
-			print "<TD><input type=submit value=\"$Message[115]\" class=\"CFormFields\">\n";
-			print "</TR></TABLE>\n";
-			print "</FORM>\n\n";
-		}
+		&ShowFormFilter("urlfilter",$URLFilter);
 		# Show URL list
-		my $title=""; my $cpt=0;
+		my $title=''; my $cpt=0;
 		if ($HTMLOutput eq 'urldetail') { $title=$Message[19]; $cpt=(scalar keys %_url_p); }
 		if ($HTMLOutput eq 'urlentry')  { $title=$Message[104]; $cpt=(scalar keys %_url_e); }
 		if ($HTMLOutput eq 'urlexit')   { $title=$Message[116]; $cpt=(scalar keys %_url_x); }
@@ -6506,28 +6597,8 @@ EOF
 			if ($_url_k{$key}/($_url_p{$key}||1) > $max_k) { $max_k = $_url_k{$key}/($_url_p{$key}||1); }
 		}
 		foreach my $key (@keylist) {
-			my $nompage=$Aliases{$key}?$Aliases{$key}:CleanFromCSSA($key);
 			print "<TR><TD CLASS=AWL>";
-			if (length($nompage)>$MaxLengthOfURL) { $nompage=substr($nompage,0,$MaxLengthOfURL)."..."; }
-			if ($ShowLinksOnUrl) {
-				my $newkey=CleanFromCSSA($key);
-				if ($newkey =~ /^http(s|):/i) {
-					# URL seems to be extracted from a ftp or proxy log file
-					print "<A HREF=\"$newkey\" target=\"url\">$nompage</A>";
-				}
-				else {
-					# URL seems to be an url extracted from a web or wap server log file
-					if ($newkey =~ /^\//) {
-						print "<A HREF=\"http://$SiteDomain$newkey\" target=\"url\">$nompage</A>";
-					}
-					else {
-						print "$nompage";
-					}
-				}
-			}
-			else {
-				print "$nompage";
-			}
+			&ShowURL($key);
 			print "</TD>";
 			my $bredde_p=0; my $bredde_e=0; my $bredde_x=0; my $bredde_k=0;
 			if ($max_p > 0) { $bredde_p=int($BarWidth*($_url_p{$key}||0)/$max_p)+1; }
@@ -6583,7 +6654,8 @@ EOF
 	}
 	if ($HTMLOutput eq 'unknownos') {
 		print "$Center<a name=\"UNKOWNOS\">&nbsp;</a><BR>\n";
-		&tab_head($Message[46],19);
+		my $title="$Message[46]";
+		&tab_head("$title",19);
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>User agent (".(scalar keys %_unknownreferer_l).")</TH><TH>$Message[9]</TH></TR>\n";
 		my $count=0;
 		&BuildKeyList($MaxRowsInHTMLOutput,1,\%_unknownreferer_l,\%_unknownreferer_l);
@@ -6598,7 +6670,8 @@ EOF
 	}
 	if ($HTMLOutput eq 'unknownbrowser') {
 		print "$Center<a name=\"UNKOWNBROWSER\">&nbsp;</a><BR>\n";
-		&tab_head($Message[50],19);
+		my $title="$Message[50]";
+		&tab_head("$title",19);
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>User agent (".(scalar keys %_unknownrefererbrowser_l).")</TH><TH>$Message[9]</TH></TR>\n";
 		my $count=0;
 		&BuildKeyList($MaxRowsInHTMLOutput,1,\%_unknownrefererbrowser_l,\%_unknownrefererbrowser_l);
@@ -6620,7 +6693,8 @@ EOF
 		}
 		# Show msie and netscape arrays
 		print "$Center<a name=\"MSIE\">&nbsp;</a><BR>";
-		&tab_head("$Message[34]<br><img src=\"$DirIcons/browser/msie_large.png\">",19);
+		my $title="$Message[34]<br><img src=\"$DirIcons/browser/msie_large.png\">";
+		&tab_head("$title",19);
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[58]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[15]</TH></TR>\n";
 		foreach my $key (reverse sort keys %_browser_h) {
 			if ($key =~ /^msie(.*)/i) {
@@ -6646,7 +6720,8 @@ EOF
 	}
 	if ($HTMLOutput eq 'refererse') {
 		print "$Center<a name=\"REFERERSE\">&nbsp;</a><BR>\n";
-		&tab_head($Message[40],19);
+		my $title="$Message[40]";
+		&tab_head("$title",19);
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$TotalDifferentSearchEngines $Message[122]</TH>";
 		#print "<TH bgcolor=\"#$color_p\" width=80>$Message[56]</TH><TH bgcolor=\"#$color_p\" width=80>$Message[15]</TH>";
 		print "<TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[15]</TH></TR>\n";
@@ -6675,10 +6750,24 @@ EOF
 	}
 	if ($HTMLOutput eq 'refererpages') {
 		print "$Center<a name=\"REFERERPAGES\">&nbsp;</a><BR>\n";
-		&tab_head($Message[41],19);
-		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$TotalDifferentRefererPages $Message[28]</TH>";
+		# Show filter form
+		&ShowFormFilter("refererpagesfilter",$RefererPagesFilter);
+		my $title="$Message[41]"; my $cpt=0;
+		$cpt=(scalar keys %_pagesrefs_h);
+		&tab_head("$title",19);
+		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>";
+		if ($RefererPagesFilter) {
+			print "$Message[79] <b>$RefererPagesFilter</b>: $cpt $Message[28]";
+			#if ($MonthRequired ne 'year') {
+			#	if ($HTMLOutput eq 'refererpages') { print "<br>$Message[102]: $TotalDifferentPages $Message[28]"; }
+			#}
+		}
+		else { print "$Message[102]: $cpt $Message[28]"; }
+		print "</TH>";
 		#print "<TH bgcolor=\"#$color_p\" width=80>$Message[56]</TH><TH bgcolor=\"#$color_p\" width=80>$Message[15]</TH>";
-		print "<TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[15]</TH></TR>\n";
+		print "<TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH>";
+		print "<TH bgcolor=\"#$color_h\" width=80>$Message[15]</TH>";
+		print "</TR>\n";
 		$total_s=0;
 		my $count=0;
 		&BuildKeyList($MaxRowsInHTMLOutput,$MinHitRefer,\%_pagesrefs_h,\%_pagesrefs_h);
@@ -6687,12 +6776,11 @@ EOF
 			if (length($nompage)>$MaxLengthOfURL) { $nompage=substr($nompage,0,$MaxLengthOfURL)."..."; }
 			my $p;
 			if ($TotalRefererPages) { $p=int($_pagesrefs_h{$key}/$TotalRefererPages*1000)/10; }
-			if ($ShowLinksOnUrl && ($key =~ /^http(s|):/i)) {
-				my $newkey=CleanFromCSSA($key);
-				print "<TR><TD CLASS=AWL><A HREF=\"$newkey\" target=\"url\">$nompage</A></TD><TD>$_pagesrefs_h{$key}</TD><TD>$p %</TD></TR>\n";
-			} else {
-				print "<TR><TD CLASS=AWL>$nompage</TD><TD>$_pagesrefs_h{$key}</TD><TD>$p %</TD></TR>\n";
-			}
+			print "<TR><TD CLASS=AWL>";
+			&ShowURL($key);
+			print "</TD>";
+			print "<TD>$_pagesrefs_h{$key}</TD><TD>$p %</TD>";
+			print "</TR>\n";
 			$total_s += $_pagesrefs_h{$key};
 			$count++;
 		}
@@ -7507,28 +7595,8 @@ EOF
 			if ($_url_k{$key}/($_url_p{$key}||1) > $max_k) { $max_k = $_url_k{$key}/($_url_p{$key}||1); }
 		}
 		foreach my $key (@keylist) {
-			my $nompage=$Aliases{$key}?$Aliases{$key}:CleanFromCSSA($key);
 			print "<TR><TD CLASS=AWL>";
-			if (length($nompage)>$MaxLengthOfURL) { $nompage=substr($nompage,0,$MaxLengthOfURL)."..."; }
-			if ($ShowLinksOnUrl) {
-				my $newkey=CleanFromCSSA($key);
-				if ($newkey =~ /^http(s|):/i) {
-					# URL seems to be extracted from a ftp or proxy log file
-					print "<A HREF=\"$newkey\" target=\"bis\">$nompage</A>";
-				}
-				else {
-					# URL seems to be an url extracted from a web or wap server log file
-					if ($newkey =~ /^\//) {
-						print "<A HREF=\"http://$SiteDomain$newkey\" target=\"awstatsbis\">$nompage</A>";
-					}
-					else {
-						print "$nompage";
-					}
-				}
-			}
-			else {
-				print "$nompage";
-			}
+			&ShowURL($key);
 			print "</TD>";
 			my $bredde_p=0; my $bredde_e=0; my $bredde_x=0; my $bredde_k=0;
 			if ($max_p > 0) { $bredde_p=int($BarWidth*($_url_p{$key}||0)/$max_p)+1; }
@@ -7759,14 +7827,11 @@ EOF
 		$count=0;
 		&BuildKeyList($MaxNbOfRefererShown,$MinHitRefer,\%_pagesrefs_h,\%_pagesrefs_h);
 		foreach my $key (@keylist) {
-			my $nompage=CleanFromCSSA($key);
-			if (length($nompage)>$MaxLengthOfURL) { $nompage=substr($nompage,0,$MaxLengthOfURL)."..."; }
-			if ($ShowLinksOnUrl && ($key =~ /^http(s|):/i)) {
-				my $newkey=CleanFromCSSA($key);
-				print "<TR><TD CLASS=AWL>- <A HREF=\"$newkey\" target=\"awstatsbis\">$nompage</A></TD><TD>$_pagesrefs_h{$key}</TD></TR>\n";
-			} else {
-				print "<TR><TD CLASS=AWL>- $nompage</TD><TD>$_pagesrefs_h{$key}</TD></TR>\n";
-			}
+			print "<TR><TD CLASS=AWL>- ";
+			&ShowURL($key);
+			print "</TD>";
+			print "<TD>$_pagesrefs_h{$key}</TD>";
+			print "</TR>\n";
 			$total_h += $_pagesrefs_h{$key};
 			$count++;
 		}
@@ -7997,7 +8062,12 @@ EOF
  		#$max_h=1; foreach my $key (values %_login_h) { if ($key > $max_h) { $max_h = $key; } }
  		#$max_k=1; foreach my $key (values %_login_k) { if ($key > $max_k) { $max_k = $key; } }
  		my $count=0;
- 		&BuildKeyList($MaxNbOfExtra[$extranum],$MinHitExtra[$extranum],\%{'_section_' . $extranum . '_h'},\%{'_section_' . $extranum . '_p'});
+ 		if ($ExtraSectionStatTypes[$extranum] =~ m/P/i) { 
+ 			&BuildKeyList($MaxNbOfExtra[$extranum],$MinHitExtra[$extranum],\%{'_section_' . $extranum . '_h'},\%{'_section_' . $extranum . '_p'});
+ 		}
+ 		else {
+ 			&BuildKeyList($MaxNbOfExtra[$extranum],$MinHitExtra[$extranum],\%{'_section_' . $extranum . '_h'},\%{'_section_' . $extranum . '_h'});
+ 		}
 		foreach my $key (@keylist) {
  			my $firstcol = DecodeEncodedString(CleanFromCSSA($key));
  			print "<TR><TD CLASS=AWL>$firstcol</TD>";
