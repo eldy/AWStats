@@ -126,7 +126,7 @@ $color_h, $color_k, $color_p, $color_s, $color_u, $color_v)=
 
 
 
-$VERSION="4.0 (build 19)";
+$VERSION="4.0 (build 20)";
 $Lang="en";
 
 # Default value
@@ -1010,20 +1010,22 @@ sub Read_History_File {
 	    	next;
 	    }
 
-        if ($field[0] eq "From0") { $_from_p[0]+=$field[1]; $_from_h[0]+=$field[2]; next; }
-        if ($field[0] eq "From1") { $_from_p[1]+=$field[1]; $_from_h[1]+=$field[2]; next; }
-        if ($field[0] eq "From2") { $_from_p[2]+=$field[1]; $_from_h[2]+=$field[2]; next; }
-        if ($field[0] eq "From3") { $_from_p[3]+=$field[1]; $_from_h[3]+=$field[2]; next; }
-        if ($field[0] eq "From4") { $_from_p[4]+=$field[1]; $_from_h[4]+=$field[2]; next; }
-        if ($field[0] eq "From5") { $_from_p[5]+=$field[1]; $_from_h[5]+=$field[2]; next; }
-		# Next lines are to read old awstats history files ("Fromx" section was "HitFromx" in such files)
-        if ($field[0] eq "HitFrom0") { $_from_p[0]+=0; $_from_h[0]+=$field[1]; next; }
-        if ($field[0] eq "HitFrom1") { $_from_p[1]+=0; $_from_h[1]+=$field[1]; next; }
-        if ($field[0] eq "HitFrom2") { $_from_p[2]+=0; $_from_h[2]+=$field[1]; next; }
-        if ($field[0] eq "HitFrom3") { $_from_p[3]+=0; $_from_h[3]+=$field[1]; next; }
-        if ($field[0] eq "HitFrom4") { $_from_p[4]+=0; $_from_h[4]+=$field[1]; next; }
-        if ($field[0] eq "HitFrom5") { $_from_p[5]+=0; $_from_h[5]+=$field[1]; next; }
-
+		# Following data are loaded or not depending on $part parameter
+		if ($part && ($UpdateStats || $QueryString !~ /output=/i || $QueryString =~ /output=xxx/i)) {
+	        if ($field[0] eq "From0") { $_from_p[0]+=$field[1]; $_from_h[0]+=$field[2]; next; }
+	        if ($field[0] eq "From1") { $_from_p[1]+=$field[1]; $_from_h[1]+=$field[2]; next; }
+	        if ($field[0] eq "From2") { $_from_p[2]+=$field[1]; $_from_h[2]+=$field[2]; next; }
+	        if ($field[0] eq "From3") { $_from_p[3]+=$field[1]; $_from_h[3]+=$field[2]; next; }
+	        if ($field[0] eq "From4") { $_from_p[4]+=$field[1]; $_from_h[4]+=$field[2]; next; }
+	        if ($field[0] eq "From5") { $_from_p[5]+=$field[1]; $_from_h[5]+=$field[2]; next; }
+			# Next lines are to read old awstats history files ("Fromx" section was "HitFromx" in such files)
+	        if ($field[0] eq "HitFrom0") { $_from_p[0]+=0; $_from_h[0]+=$field[1]; next; }
+	        if ($field[0] eq "HitFrom1") { $_from_p[1]+=0; $_from_h[1]+=$field[1]; next; }
+	        if ($field[0] eq "HitFrom2") { $_from_p[2]+=0; $_from_h[2]+=$field[1]; next; }
+	        if ($field[0] eq "HitFrom3") { $_from_p[3]+=0; $_from_h[3]+=$field[1]; next; }
+	        if ($field[0] eq "HitFrom4") { $_from_p[4]+=0; $_from_h[4]+=$field[1]; next; }
+	        if ($field[0] eq "HitFrom5") { $_from_p[5]+=0; $_from_h[5]+=$field[1]; next; }
+		}
 	    if ($field[0] eq "BEGIN_TIME")      {
 			&debug(" Begin of TIME section");
 			$_=<HISTORY>;
@@ -1762,7 +1764,7 @@ sub Init_HashArray {
 	$HistoryFileAlreadyRead{"$year$month"}=0;
 	# Delete/Reinit all arrays with name beginning by _
 	@_msiever_h = @_nsver_h = ();
-	for (my $ix=0; $ix<6; $ix++) {	$_from_p[$ix]=0; $_from_h[$ix]=0; }
+	for (my $ix=0; $ix<6; $ix++)  { $_from_p[$ix]=0; $_from_h[$ix]=0; }
 	for (my $ix=0; $ix<24; $ix++) { $_time_h[$ix]=0; $_time_k[$ix]=0; $_time_p[$ix]=0; }
 	# Delete/Reinit all hash arrays with name beginning by _
 	%_browser_h = %_domener_h = %_domener_k = %_domener_p = %_errors_h =
@@ -4300,24 +4302,26 @@ EOF
 	if ($ShowOriginStats) {
 		debug("ShowOriginStats",2);
 		print "$CENTER<a name=\"REFERER\">&nbsp;</a><BR>";
+		my $Totalp=0; foreach my $i (0..5) { $Totalp+=$_from_p[$i]; }
+		my $Totalh=0; foreach my $i (0..5) { $Totalh+=$_from_h[$i]; }
 		&tab_head($Message[36],19);
 		my @p_p=(0,0,0,0,0,0);
-		if ($TotalPages > 0) {
-			$p_p[0]=int($_from_p[0]/$TotalPages*1000)/10;
-			$p_p[1]=int($_from_p[1]/$TotalPages*1000)/10;
-			$p_p[2]=int($_from_p[2]/$TotalPages*1000)/10;
-			$p_p[3]=int($_from_p[3]/$TotalPages*1000)/10;
-			$p_p[4]=int($_from_p[4]/$TotalPages*1000)/10;
-			$p_p[5]=int($_from_p[5]/$TotalPages*1000)/10;
+		if ($Totalp > 0) {
+			$p_p[0]=int($_from_p[0]/$Totalp*1000)/10;
+			$p_p[1]=int($_from_p[1]/$Totalp*1000)/10;
+			$p_p[2]=int($_from_p[2]/$Totalp*1000)/10;
+			$p_p[3]=int($_from_p[3]/$Totalp*1000)/10;
+			$p_p[4]=int($_from_p[4]/$Totalp*1000)/10;
+			$p_p[5]=int($_from_p[5]/$Totalp*1000)/10;
 		}
 		my @p_h=(0,0,0,0,0,0);
-		if ($TotalHits > 0) {
-			$p_h[0]=int($_from_h[0]/$TotalHits*1000)/10;
-			$p_h[1]=int($_from_h[1]/$TotalHits*1000)/10;
-			$p_h[2]=int($_from_h[2]/$TotalHits*1000)/10;
-			$p_h[3]=int($_from_h[3]/$TotalHits*1000)/10;
-			$p_h[4]=int($_from_h[4]/$TotalHits*1000)/10;
-			$p_h[5]=int($_from_h[5]/$TotalHits*1000)/10;
+		if ($Totalh > 0) {
+			$p_h[0]=int($_from_h[0]/$Totalh*1000)/10;
+			$p_h[1]=int($_from_h[1]/$Totalh*1000)/10;
+			$p_h[2]=int($_from_h[2]/$Totalh*1000)/10;
+			$p_h[3]=int($_from_h[3]/$Totalh*1000)/10;
+			$p_h[4]=int($_from_h[4]/$Totalh*1000)/10;
+			$p_h[5]=int($_from_h[5]/$Totalh*1000)/10;
 		}
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[37]</TH><TH bgcolor=\"#$color_p\" width=80>$Message[56]</TH><TH bgcolor=\"#$color_p\" width=80>$Message[15]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[15]</TH></TR>\n";
 		#------- Referrals by direct address/bookmarks
