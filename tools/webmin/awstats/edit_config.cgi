@@ -46,6 +46,11 @@ function Submit_onClick() {
 		document.editconfig.LogFormat.focus();
 		return false;
 	}
+	if (document.editconfig.LogFile.value.match(/maillogconvert.pl/)!=null && document.editconfig.LogType.value != 'M') {
+		alert('Your log file is preprocessed by maillogconvert.pl but is not defined as a "Mail" log type.\\nChange LogFile or LogType parameter.');
+		document.editconfig.LogType.focus();
+		return false;
+	}
 	if (document.editconfig.SiteDomain.value=='') {
 		alert('$text{save_errSiteDomain}');
 		document.editconfig.SiteDomain.focus();

@@ -10,16 +10,19 @@ Fixes:
 - Fixed wrong value saved for LogSeparator parameter.
 - Better check of old versions incompatibility.
 - Fix help page for parameters not found in model config file.
+- Fixed check of logfile for piped values.
 - Minor bug fixes.
 
 New features/improvements:
 - All AWStats config parameters can be edited.
+- Added management of plugins
 - Added a file/dir selector for parameters that are files or directories.
 - Added javascript test in edit config pages.
+- Added a check that LogFile used with maillogconvert.pl has a 'Mail' type.
 
 Other/Documentation:
 - Added French translation.
-- Removed unused language message files.
+- Removed unused files.
 
 
 
