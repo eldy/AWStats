@@ -34,7 +34,7 @@ Merk at talet på søkjeord kan vera høgare enn talet på søkjeuttrykk, for når to 
 Robotar blir brukt av mange søkjemotorar som besøkjer nettstaden din for å indeksera og rangera han, samla statistikk om nettstader, og/eller sjå om nettstaden framleis er tilgjengeleg.<br>
 #PROG# kjenner til <b>#RobotArray#</b> robotar.
 </div>
-<div class="CTooltip" ID="tt17">
+<div class="CTooltip" id="tt17">
 All tidsrelatert statistikk er basert på tenartida.<br>
 </div>
 <div class="CTooltip" id="tt18">

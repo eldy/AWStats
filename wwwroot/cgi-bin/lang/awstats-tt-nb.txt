@@ -33,7 +33,7 @@ Denne tabellen viser de mest brukte <b>søkeordene</b> brukt til å finna nettsted
 Roboter blir brukt av mange søkemotorer som besøker nettstedet ditt for å indeksere og rangere det, samle statistikk om nettsteder, og/eller se om nettstedet fremdeles er tilgjengelig.<br>
 #PROG# kjenner til <b>#RobotArray#</b> roboter.
 </div>
-<div class="CTooltip" ID="tt17">
+<div class="CTooltip" id="tt17">
 All tidsrelatert statistikk er basert på tjenertid.<br>
 </div>
 <div class="CTooltip" id="tt18">
