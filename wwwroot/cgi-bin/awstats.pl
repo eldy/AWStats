@@ -4277,11 +4277,24 @@ sub UnCompileRegex {
 }
 
 #------------------------------------------------------------------------------
-# Function:     Clean a string of HTML tags to avoid 'Cross Site Scripting attacks'
-# Parameters:   stringtodecode
+# Function:     Clean a string of all chars that are not char or _
+# Parameters:   stringtoclean
 # Input:        None
 # Output:       None
-# Return:		decodedstring
+# Return:		cleanedstring
+#------------------------------------------------------------------------------
+sub CleanPluginName {
+	my $stringtoclean=shift;
+	$stringtoclean =~ s/[^\w_].*$//g;
+	return $stringtoclean;
+}
+
+#------------------------------------------------------------------------------
+# Function:     Clean a string of HTML tags to avoid 'Cross Site Scripting attacks'
+# Parameters:   stringtoclean
+# Input:        None
+# Output:       None
+# Return:		cleanedstring
 #------------------------------------------------------------------------------
 sub CleanFromCSSA {
 	my $stringtoclean=shift;
@@ -5339,7 +5352,7 @@ if ($ENV{'GATEWAY_INTERFACE'}) {	# Run from a browser as CGI
 
 	if ($QueryString =~ /config=([^&]+)/i)				{ $SiteConfig=&DecodeEncodedString("$1"); }
 	if ($QueryString =~ /diricons=([^&]+)/i)			{ $DirIcons=&DecodeEncodedString("$1"); }
-	if ($QueryString =~ /pluginmode=([^&]+)/i)			{ $PluginMode=&DecodeEncodedString("$1"); }
+	if ($QueryString =~ /pluginmode=([^&]+)/i)			{ $PluginMode=CleanPluginName(&DecodeEncodedString("$1")); }
 	if ($QueryString =~ /configdir=([^&]+)/i)			{ $DirConfig=&DecodeEncodedString("$1"); }
 	# All filters
 	if ($QueryString =~ /hostfilter=([^&]+)/i)			{ $FilterIn{'host'}=&DecodeEncodedString("$1"); }			# Filter on host list can also be defined with hostfilter=filter
@@ -5387,7 +5400,7 @@ else {								# Run from command line
 
 	if ($QueryString =~ /config=([^&]+)/i)				{ $SiteConfig="$1"; }
 	if ($QueryString =~ /diricons=([^&]+)/i)			{ $DirIcons="$1"; }
-	if ($QueryString =~ /pluginmode=([^&]+)/i)			{ $PluginMode="$1"; }
+	if ($QueryString =~ /pluginmode=([^&]+)/i)			{ $PluginMode=CleanPluginName("$1"); }
 	if ($QueryString =~ /configdir=([^&]+)/i)			{ $DirConfig="$1"; }
 	# All filters
 	if ($QueryString =~ /hostfilter=([^&]+)/i)			{ $FilterIn{'host'}="$1"; }			# Filter on host list can also be defined with hostfilter=filter
@@ -5416,8 +5429,8 @@ if ($QueryString =~ /(^|&)staticlinksext=([^&]+)/i) { $StaticExt="$2"; }
 if ($QueryString =~ /(^|&)framename=([^&]+)/i)		{ $FrameName="$2"; }
 if ($QueryString =~ /(^|&)debug=(\d+)/i)			{ $Debug=$2; }
 if ($QueryString =~ /(^|&)updatefor=(\d+)/i)		{ $UpdateFor=$2; }
-if ($QueryString =~ /(^|&)noloadplugin=([^&]+)/i)	{ foreach (split(/,/,$2)) { $NoLoadPlugin{"$_"}=1; } }
-if ($QueryString =~ /(^|&)loadplugin=([^&]+)/i)		{ foreach (split(/,/,$2)) { $NoLoadPlugin{"$_"}=-1; } }
+if ($QueryString =~ /(^|&)noloadplugin=([^&]+)/i)	{ foreach (split(/,/,$2)) { $NoLoadPlugin{CleanPluginName("$_")}=1; } }
+if ($QueryString =~ /(^|&)loadplugin=([^&]+)/i)		{ foreach (split(/,/,$2)) { $NoLoadPlugin{CleanPluginName("$_")}=-1; } }
 if ($QueryString =~ /(^|&)limitflush=(\d+)/i)		{ $LIMITFLUSH=$2; }
 # Get/Define output
 if ($QueryString =~ /(^|&)output(=[^&]*|)(.*)&output(=[^&]*|)(&|$)/i) { error("Only 1 output option is allowed","","",1); }
