@@ -14,6 +14,7 @@ use Socket;
 use Time::Local;	# use Time::Local 'timelocal_nocheck' is faster but not supported by all Time::Local modules
 
 
+
 #-----------------------------------------------------------------------------
 # Defines
 #-----------------------------------------------------------------------------
@@ -24,9 +25,10 @@ my $VERSION="5.0 (build $REVISION)";
 # ---------- Init variables -------
 # Constants
 use vars qw/
-$DEBUGFORCED $NBOFLINESFORBENCHMARK $FRAMEWIDTH $NBOFLASTUPDATELOOKUPTOSAVE
+$DEBUGFORCED $SAVECOUNT $NBOFLINESFORBENCHMARK $FRAMEWIDTH $NBOFLASTUPDATELOOKUPTOSAVE
 /;
 $DEBUGFORCED=0;						# Force debug level to log lesser level into debug.log file (Keep this value to 0)
+$SAVECOUNT=0;						# Set to 1 to get number of records for each section in history file
 $NBOFLINESFORBENCHMARK=5000;		# Benchmark info are printing every NBOFLINESFORBENCHMARK lines
 $FRAMEWIDTH=260;					# Width of left frame when UseFramesWhenCGI is on
 $NBOFLASTUPDATELOOKUPTOSAVE=200;	# Nb of records to save in DNS last update cache file
@@ -260,41 +262,11 @@ use vars qw/
 %val = %nextval = %egal = ();
 %TmpDNSLookup = %TmpOS = %TmpRefererServer = %TmpRobot = %TmpBrowser = ();
 # ---------- Init Tie::hash arrays --------
-#use Tie::Hash;
+# Didn't find a tie that increase speed
+#use Tie::StdHash;
+#use Tie::Cache::LRU;
 #tie %_host_p, 'Tie::StdHash';
-#tie %_host_h, 'Tie::StdHash';
-#tie %_host_k, 'Tie::StdHash';
-#tie %_host_l, 'Tie::StdHash';
-#tie %_host_s, 'Tie::StdHash';
-#tie %_host_u, 'Tie::StdHash';
-#tie %_url_p, 'Tie::StdHash';
-#tie %_url_k, 'Tie::StdHash';
-#tie %_url_e, 'Tie::StdHash';
-#tie %_url_x, 'Tie::StdHash';
-#
-#tie %_browser_h, 'Tie::StdHash';
-#tie %_domener_p, 'Tie::StdHash';
-#tie %_domener_h, 'Tie::StdHash';
-#tie %_domener_k, 'Tie::StdHash';
-#tie %_errors_h, 'Tie::StdHash';
-#tie %_filetypes_h, 'Tie::StdHash';
-#tie %_filetypes_k, 'Tie::StdHash';
-#tie %_filetypes_gz_in, 'Tie::StdHash';
-#tie %_filetypes_gz_out, 'Tie::StdHash';
-#tie %_keyphrases, 'Tie::StdHash';
-#tie %_keywords, 'Tie::StdHash';
-#tie %_os_h, 'Tie::StdHash';
-#tie %_pagesrefs_h, 'Tie::StdHash';
-#tie %_robot_h, 'Tie::StdHash';
-#tie %_robot_l, 'Tie::StdHash';
-#tie %_login_p, 'Tie::StdHash';
-#tie %_login_h, 'Tie::StdHash';
-#tie %_login_k, 'Tie::StdHash';
-#tie %_login_l, 'Tie::StdHash';
-#tie %_se_referrals_h, 'Tie::StdHash';
-#tie %_sider404_h, 'Tie::StdHash';
-#tie %_unknownreferer_l, 'Tie::StdHash';
-#tie %_unknownrefererbrowser_l, 'Tie::StdHash';
+#tie %TmpOS, 'Tie::Cache::LRU';
 
 # Those addresses are shown with those lib (First column is full exact relative URL, second column is text to show instead of URL)
 use vars qw/ %Aliases /;
@@ -1418,6 +1390,7 @@ sub Read_Plugins {
 						my $ret;	# To get init return
 						my $initfunction="\$ret=Init_$pluginname($pluginparam)";
 						if (! eval("$initfunction")) { &error("Plugin init for plugin '$pluginname' fails."); }
+						else { my $pluginvar="\$Plugin_$pluginname=1"; eval($pluginvar); }
 						# Plugin load and init successfull
 						if ($Debug) { debug(" Init of plugin '$pluginname' ($pluginpath) with param '$pluginparam' is OK"); }
 						$FilePath{$pluginname}=1;
@@ -1468,7 +1441,7 @@ sub Read_History_File_With_Update {
 	my %SectionsToSave = my %SectionsToLoad = (); my %SectionsToLoadPartialy = ();
 	if ($withupdate) { %SectionsToSave=("general"=>1,"time"=>2,"visitor"=>3,"day"=>4,"login"=>5,"domain"=>6,"session"=>7,"browser"=>8,
 						"msiever"=>9,"nsver"=>10,"os"=>11,"unknownreferer"=>12,"unknownrefererbrowser"=>13,"robot"=>14,"sider"=>15,
-						"filetypes"=>16,"origin"=>17,"serefferals"=>18,"pagerefs"=>19,"searchwords"=>20,"keywords"=>21,"errors"=>22,"errors404"=>23); }
+						"filetypes"=>16,"origin"=>17,"serefferals"=>18,"pagerefs"=>19,"searchwords"=>20,"keywords"=>21,"errors"=>22,"sider_404"=>23); }
 	if ($part eq "all") {
 		# Load all sections
 		$SectionsToLoad{"general"}=1;
@@ -2509,6 +2482,7 @@ sub Save_History {
 		if ($LastUpdate < int("$nowyear$nowmonth$nowday$nowhour$nowmin$nowsec")) { $LastUpdate=int("$nowyear$nowmonth$nowday$nowhour$nowmin$nowsec"); }
 		print HISTORYTMP "LastUpdate $LastUpdate $NbOfLinesRead $NbOfOldLines $NbOfNewLines $NbOfLinesCorrupted $NbOfLinesDropped\n";
 		print HISTORYTMP "END_GENERAL\n";
+		if ($SAVECOUNT) { print HISTORYTMP "4\n"; }
 	}
 	
 	# When
@@ -2516,7 +2490,7 @@ sub Save_History {
 		print HISTORYTMP "\n";
 		print HISTORYTMP "# Date - Pages - Hits - Bandwith - Visits\n";
 		print HISTORYTMP "BEGIN_DAY\n";
-		foreach my $key (keys %DayHits) {
+		foreach my $key (sort keys %DayHits) {
 			if ($key =~ /^$year$month/i) {	# Found a day entry of the good month
 				my $page=$DayPages{$key}||0;
 				my $hits=$DayHits{$key}||0;
@@ -2526,6 +2500,7 @@ sub Save_History {
 			}
 		}
 		print HISTORYTMP "END_DAY\n";
+		if ($SAVECOUNT) { print HISTORYTMP (scalar keys %DayHits)."\n"; }
 	}
 	if ($sectiontosave eq "time") {
 		print HISTORYTMP "\n";
@@ -2533,6 +2508,7 @@ sub Save_History {
 		print HISTORYTMP "BEGIN_TIME\n";
 		for (my $ix=0; $ix<=23; $ix++) { print HISTORYTMP "$ix ".int($_time_p[$ix])." ".int($_time_h[$ix])." ".int($_time_k[$ix])."\n"; }
 		print HISTORYTMP "END_TIME\n";
+		if ($SAVECOUNT) { print HISTORYTMP "24\n"; }
 	}
 	
 	# Who
@@ -2546,6 +2522,7 @@ sub Save_History {
 			print HISTORYTMP "$key $page $_domener_h{$key} $bytes\n";
 		}
 		print HISTORYTMP "END_DOMAIN\n";
+		if ($SAVECOUNT) { print HISTORYTMP (scalar keys %_domener_h)."\n"; }
 	}
 	if ($sectiontosave eq "visitor") {
 		print HISTORYTMP "\n";
@@ -2608,6 +2585,7 @@ sub Save_History {
 			}
 		}
 		print HISTORYTMP "END_VISITOR\n";
+		if ($SAVECOUNT) { print HISTORYTMP (scalar keys %_host_h)."\n"; }
 	}
 	if ($sectiontosave eq "session") {
 		print HISTORYTMP "\n";
@@ -2615,6 +2593,7 @@ sub Save_History {
 		print HISTORYTMP "BEGIN_SESSION\n";
 		foreach my $key (keys %_session) { print HISTORYTMP "$key ".int($_session{$key})."\n"; }
 		print HISTORYTMP "END_SESSION\n";
+		if ($SAVECOUNT) { print HISTORYTMP (scalar keys %_session)."\n"; }
 	}
 	if ($sectiontosave eq "login") {
 		print HISTORYTMP "\n";
@@ -2622,6 +2601,7 @@ sub Save_History {
 		print HISTORYTMP "BEGIN_LOGIN\n";
 		foreach my $key (keys %_login_h) { print HISTORYTMP "$key ".int($_login_p{$key})." ".int($_login_h{$key})." ".int($_login_k{$key})." $_login_l{$key}\n"; }
 		print HISTORYTMP "END_LOGIN\n";
+		if ($SAVECOUNT) { print HISTORYTMP (scalar keys %_login_h)."\n"; }
 	}
 	if ($sectiontosave eq "robot") {
 		print HISTORYTMP "\n";
@@ -2629,6 +2609,7 @@ sub Save_History {
 		print HISTORYTMP "BEGIN_ROBOT\n";
 		foreach my $key (keys %_robot_h) { print HISTORYTMP "$key ".int($_robot_h{$key})." $_robot_l{$key}\n"; }
 		print HISTORYTMP "END_ROBOT\n";
+		if ($SAVECOUNT) { print HISTORYTMP (scalar keys %_robot_h)."\n"; }
 	}
 	
 	# Navigation
@@ -2654,6 +2635,7 @@ sub Save_History {
 			print HISTORYTMP "$newkey ".int($_url_p{$key}||0)." ".int($_url_k{$key}||0)." ".int($_url_e{$key}||0)." ".int($_url_x{$key}||0)."\n";
 		}
 		print HISTORYTMP "END_SIDER\n";
+		if ($SAVECOUNT) { print HISTORYTMP (scalar keys %_url_p)."\n"; }
 	}
 	if ($sectiontosave eq "filetypes") {
 		print HISTORYTMP "\n";
@@ -2667,6 +2649,7 @@ sub Save_History {
 			print HISTORYTMP "$key $hits $bytes $bytesbefore $bytesafter\n";
 		}
 		print HISTORYTMP "END_FILETYPES\n";
+		if ($SAVECOUNT) { print HISTORYTMP (scalar keys %_filetypes_h)."\n"; }
 	}
 	if ($sectiontosave eq "browser") {
 		print HISTORYTMP "\n";
@@ -2674,6 +2657,7 @@ sub Save_History {
 		print HISTORYTMP "BEGIN_BROWSER\n";
 		foreach my $key (keys %_browser_h) { print HISTORYTMP "$key $_browser_h{$key}\n"; }
 		print HISTORYTMP "END_BROWSER\n";
+		if ($SAVECOUNT) { print HISTORYTMP (scalar keys %_browser_h)."\n"; }
 	}
 	if ($sectiontosave eq "nsver") {
 		print HISTORYTMP "\n";
@@ -2684,6 +2668,7 @@ sub Save_History {
 			print HISTORYTMP "$i $nb_h\n";
 		}
 		print HISTORYTMP "END_NSVER\n";
+		if ($SAVECOUNT) { print HISTORYTMP ($#_nsver_h)."\n"; }
 	}
 	if ($sectiontosave eq "msiever") {
 		print HISTORYTMP "\n";
@@ -2694,6 +2679,7 @@ sub Save_History {
 			print HISTORYTMP "$i $nb_h\n";
 		}
 		print HISTORYTMP "END_MSIEVER\n";
+		if ($SAVECOUNT) { print HISTORYTMP ($#_msiever_h)."\n"; }
 	}
 	if ($sectiontosave eq "os") {
 		print HISTORYTMP "\n";
@@ -2701,6 +2687,7 @@ sub Save_History {
 		print HISTORYTMP "BEGIN_OS\n";
 		foreach my $key (keys %_os_h) { print HISTORYTMP "$key $_os_h{$key}\n"; }
 		print HISTORYTMP "END_OS\n";
+		if ($SAVECOUNT) { print HISTORYTMP (scalar keys %_os_h)."\n"; }
 	}
 	
 	# Referer
@@ -2710,6 +2697,7 @@ sub Save_History {
 		print HISTORYTMP "BEGIN_UNKNOWNREFERER\n";
 		foreach my $key (keys %_unknownreferer_l) { print HISTORYTMP "$key $_unknownreferer_l{$key}\n"; }
 		print HISTORYTMP "END_UNKNOWNREFERER\n";
+		if ($SAVECOUNT) { print HISTORYTMP (scalar keys %_unknownreferer_l)."\n"; }
 	}
 	if ($sectiontosave eq "unknownrefererbrowser") {
 		print HISTORYTMP "\n";
@@ -2717,6 +2705,7 @@ sub Save_History {
 		print HISTORYTMP "BEGIN_UNKNOWNREFERERBROWSER\n";
 		foreach my $key (keys %_unknownrefererbrowser_l) { print HISTORYTMP "$key $_unknownrefererbrowser_l{$key}\n"; }
 		print HISTORYTMP "END_UNKNOWNREFERERBROWSER\n";
+		if ($SAVECOUNT) { print HISTORYTMP (scalar keys %_unknownrefererbrowser_l)."\n"; }
 	}
 	if ($sectiontosave eq "origin") {
 		print HISTORYTMP "\n";
@@ -2729,6 +2718,7 @@ sub Save_History {
 		print HISTORYTMP "From4 ".int($_from_p[4])." ".int($_from_h[4])."\n";		# Same site
 		print HISTORYTMP "From5 ".int($_from_p[5])." ".int($_from_h[5])."\n";		# News
 		print HISTORYTMP "END_ORIGIN\n";
+		if ($SAVECOUNT) { print HISTORYTMP "6\n"; }
 	}
 	if ($sectiontosave eq "sereferrals") {
 		print HISTORYTMP "\n";
@@ -2736,6 +2726,7 @@ sub Save_History {
 		print HISTORYTMP "BEGIN_SEREFERRALS\n";
 		foreach my $key (keys %_se_referrals_h) { print HISTORYTMP "$key $_se_referrals_h{$key}\n"; }
 		print HISTORYTMP "END_SEREFERRALS\n";
+		if ($SAVECOUNT) { print HISTORYTMP (scalar keys %_se_referrals_h)."\n"; }
 	}
 	if ($sectiontosave eq "pagerefs") {
 		print HISTORYTMP "\n";
@@ -2748,6 +2739,7 @@ sub Save_History {
 			print HISTORYTMP "$newkey $_pagesrefs_h{$key}\n";
 		}
 		print HISTORYTMP "END_PAGEREFS\n";
+		if ($SAVECOUNT) { print HISTORYTMP (scalar keys %_pagesrefs_h)."\n"; }
 	}
 	if ($sectiontosave eq "searchwords") {
 		print HISTORYTMP "\n";
@@ -2771,6 +2763,7 @@ sub Save_History {
 			foreach my $word (split(/\+/,$key)) { $_keywords{$word}+=$_keyphrases{$key}; }	# To init %_keywords
 		}
 		print HISTORYTMP "END_SEARCHWORDS\n";
+		if ($SAVECOUNT) { print HISTORYTMP (scalar keys %_keyphrases)."\n"; }
 	}
 	if ($sectiontosave eq "keywords") {
 		print HISTORYTMP "\n";
@@ -2790,6 +2783,7 @@ sub Save_History {
 			print HISTORYTMP "$keyword $_keywords{$key}\n";
 		}
 		print HISTORYTMP "END_KEYWORDS\n";
+		if ($SAVECOUNT) { print HISTORYTMP (scalar keys %_keywords)."\n"; }
 	}
 	
 	# Other
@@ -2799,6 +2793,7 @@ sub Save_History {
 		print HISTORYTMP "BEGIN_ERRORS\n";
 		foreach my $key (keys %_errors_h) { print HISTORYTMP "$key $_errors_h{$key}\n"; }
 		print HISTORYTMP "END_ERRORS\n";
+		if ($SAVECOUNT) { print HISTORYTMP (scalar keys %_errors_h)."\n"; }
 	}
 	if ($sectiontosave eq "sider_404") {
 		print HISTORYTMP "\n";
@@ -2811,6 +2806,7 @@ sub Save_History {
 			print HISTORYTMP "$newkey ".int($_sider404_h{$key})." $newreferer\n";
 		}
 		print HISTORYTMP "END_SIDER_404\n";
+		if ($SAVECOUNT) { print HISTORYTMP (scalar keys %_sider404_h)."\n"; }
 	}
 	
 	%keysinkeylist=();
@@ -3888,6 +3884,7 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {	# Updat
 				}
 			}
 			if ($NbOfLinesRead >= $NbOfLinesForCorruptedLog && $NbOfLinesCorrupted == $NbOfLinesRead) { error("Format error",$_,$LogFile); }	# Exit with format error
+			if ($_ =~ /^__end_of_file__/) { last; }	# For test purpose only
 			next;
 		}
 
@@ -4515,9 +4512,9 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {	# Updat
 		# Clean too large hash arrays to free memory when possible
 		if ($counter++ > 500000) {
 			$counter=0;
-			debug("We clean some hash arrays",2);
+			if ($Debug) { debug("We clean some hash arrays",2); }
 			#%TmpDNSLookup=();	# Do we clean this one ?
-			%TmpOS = %TmpRefererServer = %TmpRobot = %TmpBrowser =();
+#			%TmpOS = %TmpRefererServer = %TmpRobot = %TmpBrowser =();
 			# TODO Add a warning
 			# warning("Try to made AWStats update more frequently to process log files with less than 1 000 000 records.");
 		}
@@ -5638,7 +5635,9 @@ EOF
 	if ($ShowHoursStats) {
 		if ($Debug) { debug("ShowHoursStats",2); }
 		print "$Center<a name=\"HOUR\">&nbsp;</a><BR>\n";
-		&tab_head($Message[20],19);
+		my $title=$Message[20];
+		if ($Plugin_timezone) { $title.=($Plugin_timezoneSeconds?" (GMT ".($Plugin_timezoneSeconds>=0?"+":"").int($Plugin_timezoneSeconds/3600).")":"i"); }
+		&tab_head($title,19);
 		print "<TR><TD align=center><center><TABLE><TR>\n";
 		$max_h=$max_k=1;
 		for (my $ix=0; $ix<=23; $ix++) {
