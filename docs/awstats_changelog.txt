@@ -8,7 +8,10 @@ AWStats Changelog
 - Removed "Bytes" text when values is 0.
 - Reduced main page size.
 - New parameter: Added OnlyHosts parameter.
-
+- Fixed a bug when using IIS and %query or cs-query-string tag in LogFormat
+  and URLWithQuery=1.
+- Records with bad http code for Microsoft Index Servers (on 1 digit instead
+  of 3) are no more reported as corrupted records.
 
 
 5.1

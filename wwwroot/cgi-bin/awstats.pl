@@ -4559,6 +4559,7 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 		$LogFormatString =~ s/%{mod_gzip_output_size}n/%gzipout/g;
 		$LogFormatString =~ s/%{mod_gzip_compression_ratio}n/%gzipratio/g;
 		# Replacement for a IIS and ISA format string
+		$LogFormatString =~ s/cs-uri-query/%query/g;	# Must be before cs-uri
 		$LogFormatString =~ s/date\stime/%time2/g;
 		$LogFormatString =~ s/c-ip/%host/g;
 		$LogFormatString =~ s/cs-username/%logname/g;
@@ -4569,7 +4570,6 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 		$LogFormatString =~ s/cs-version/%other/g;		# Protocol
 		$LogFormatString =~ s/cs\(User-Agent\)/%ua/g; $LogFormatString =~ s/c-agent/%ua/g;
 		$LogFormatString =~ s/cs\(Referer\)/%referer/g; $LogFormatString =~ s/cs-referred/%referer/g;
-		$LogFormatString =~ s/cs-uri-query/%host/g;
 		$LogFormatString =~ s/sc-authenticated/%other/g;
 		$LogFormatString =~ s/s-svcname/%other/g;
 		$LogFormatString =~ s/s-computername/%other/g;
@@ -4910,12 +4910,12 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 		
 		# Check return status code
 		#-------------------------
-		if ($protocol == 1 || $protocol == 4) {		# HTTP record or Stream record
+		if ($protocol == 1 || $protocol == 4) {			# HTTP record or Stream record
 			if ($ValidHTTPCodes{$field[$pos_code]}) {	# Code is valid
 				if ($field[$pos_code] == 304) { $field[$pos_size]=0; }
 			}
 			else {										# Code is not valid
-				if ($field[$pos_code] =~ /^\d\d\d$/) { 					# Keep error code and next
+				if ($field[$pos_code] =~ /^\d\d\d$/) {  # Keep error code and next
 					$_errors_h{$field[$pos_code]}++;
 					$_errors_k{$field[$pos_code]}+=int($field[$pos_size]);
 					foreach my $code (keys %TrapInfosForHTTPErrorCodes) {
@@ -4923,14 +4923,17 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 					}
 					next;
 				}
-				else {													# Bad format record (should not happen but when using MSIndex server), next
-					$NbOfLinesCorrupted++; $NbOfNewLines--;
-					if ($ShowCorrupted) { print "Corrupted record (HTTP code not on 3 digits): $_\n"; }
-					next;
+				else {									# Bad format record (should not happen but when using MSIndex server), next
+					# Second test avoid error when using MS IndexServer that returns non standard HTTP code on 1 char
+					if ($field[$pos_code] !~ /^\d$/) { 
+						$NbOfLinesCorrupted++; $NbOfNewLines--;
+						if ($ShowCorrupted) { print "Corrupted record (HTTP code not on 3 digits): $_\n"; }
+						next;
+					}
 				}
 			}
 		}
-		elsif ($protocol == 3) {					# SMTP record
+		elsif ($protocol == 3) {						# SMTP record
 			if ($field[$pos_code] != 1) {				# Code is not valid
 				$field[$pos_size]=0;
 				$_errors_h{$field[$pos_code]}++;
