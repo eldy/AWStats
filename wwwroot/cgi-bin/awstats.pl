@@ -2755,9 +2755,10 @@ sub Show_Flag_Links {
 sub Format_Bytes {
 	my $bytes = shift||0;
 	my $fudge = 1;
-	if ($bytes >= $fudge * exp(3*log(1024))) { return sprintf("%.2f", $bytes/exp(3*log(1024)))." $Message[110]"; }
-	if ($bytes >= $fudge * exp(2*log(1024))) { return sprintf("%.2f", $bytes/exp(2*log(1024)))." $Message[109]"; }
-	if ($bytes >= $fudge * exp(1*log(1024))) { return sprintf("%.2f", $bytes/exp(1*log(1024)))." $Message[108]"; }
+	# Do not use exp/log function to calculate 1024power, function make segfault on some unix/perl versions
+	if ($bytes >= $fudge * 1073741824) { return sprintf("%.2f", $bytes/1073741824)." $Message[110]"; }
+	if ($bytes >= $fudge * 1048576)    { return sprintf("%.2f", $bytes/1048576)." $Message[109]"; }
+	if ($bytes >= $fudge * 1024)       { return sprintf("%.2f", $bytes/1024)." $Message[108]"; }
 	if ($bytes < 0) { $bytes="?"; }
 	return int($bytes)." $Message[119]";
 }
