@@ -83,7 +83,7 @@ $color_h, $color_k, $color_p, $color_s, $color_u, $color_v)=
 ($DirCgi, $DirData, $DirIcons, $DirLang)=
 ("","","","");
 # ---------- Init arrays --------
-@HostAliases = @Message = @OnlyFiles = @SkipDNSLookupFor = @SkipFiles = @SkipHosts = @DOWIndex = ();
+@ValidHTTPCodes = @HostAliases = @Message = @OnlyFiles = @SkipDNSLookupFor = @SkipFiles = @SkipHosts = @DOWIndex = ();
 @RobotArrayID=();
 @WordsToCleanSearchUrl = ();
 # ---------- Init hash arrays --------
@@ -126,7 +126,7 @@ $color_h, $color_k, $color_p, $color_s, $color_u, $color_v)=
 
 
 
-$VERSION="4.0 (build 24)";
+$VERSION="4.0 (build 25)";
 $Lang="en";
 
 # Default value
@@ -557,6 +557,12 @@ sub Read_Config_File {
 			$foundNotPageList=1;
 			next;
 			}
+		if ($param =~ /^ValidHTTPCodes/) {
+			my @felter=split(/\s+/,$value);
+			foreach my $elem (@felter)    { push @ValidHTTPCodes,$elem; }
+			$foundValidHTTPCodes=1;
+			next;
+			}
 		if ($param =~ /^URLWithQuery/)          { $URLWithQuery=$value; next; }
 		if ($param =~ /^WarningMessages/)       { $WarningMessages=$value; next; }
 		if ($param =~ /^NbOfLinesForCorruptedLog/) { $NbOfLinesForCorruptedLog=$value; next; }
@@ -626,14 +632,16 @@ sub Read_Config_File {
 		if ($param =~ /^color_s/)               { $color_s=$value; next; }
 	}
 	close CONFIG;
-	# If parameter NotPageList not found. Init for backward compatibility
+	# If parameter NotPageList not found, init for backward compatibility
 	if (! $foundNotPageList) {
-		$NotPageList[0]="gif";
-		$NotPageList[1]="jpg";
-		$NotPageList[2]="jpeg";
-		$NotPageList[3]="png";
-		$NotPageList[4]="bmp";
+		push @NotPageList,"gif"; push @NotPageList,"jpg"; push @NotPageList,"jpeg"; push @NotPageList,"png"; push @NotPageList,"bmp";
 	}
+	# If ValidHTTPCodes not found, init for backward compatibility
+	if (! $foundValidHTTPCodes) {
+		push @ValidHTTPCodes,"200"; push @ValidHTTPCodes,"302";	
+	}
+	debug(" NotPageList ".@NotPageList);
+	debug(" ValidHTTPCodes ".@ValidHTTPCodes);
 }
 
 
@@ -2689,22 +2697,22 @@ if ($UpdateStats) {
 
 		# Check return code
 		#------------------
-		if ($protocol == 1) {
-			if ($field[$pos_code]==304) {
-				$field[$pos_size]=0;
+		if ($protocol == 1) {	# HTTP record
+			my $codeisvalid=0;
+			foreach my $cursor (@ValidHTTPCodes) { if ($field[$pos_code] == $cursor) { $codeisvalid=1; last; } }
+			if ($codeisvalid) {	# Code is valid
+				if ($field[$pos_code]==304) { $field[$pos_size]=0; }
 			}
-			else {
-				if ($field[$pos_code] != 200) {	# Stop if HTTP server return code != 200 and 304
-					if ($field[$pos_code] =~ /^[\d][\d][\d]$/) { 				# Keep error code and next
-						$_errors_h{$field[$pos_code]}++;
-						if ($field[$pos_code] == 404) { $_sider404_h{$field[$pos_url]}++; $_referer404_h{$field[$pos_url]}=$field[$pos_referer]; }
-						next;
-					}
-					else {														# Bad format record (should not happen but when using MSIndex server), next
-						$NbOfLinesCorrupted++;
-						if ($ShowCorrupted) { print "Corrupted record (HTTP code not on 3 digits): $_\n"; }
-						next;
-					}
+			else {				# Code is not valid
+				if ($field[$pos_code] =~ /^[\d][\d][\d]$/) { 				# Keep error code and next
+					$_errors_h{$field[$pos_code]}++;
+					if ($field[$pos_code] == 404) { $_sider404_h{$field[$pos_url]}++; $_referer404_h{$field[$pos_url]}=$field[$pos_referer]; }
+					next;
+				}
+				else {														# Bad format record (should not happen but when using MSIndex server), next
+					$NbOfLinesCorrupted++;
+					if ($ShowCorrupted) { print "Corrupted record (HTTP code not on 3 digits): $_\n"; }
+					next;
 				}
 			}
 		}
@@ -3819,7 +3827,7 @@ EOF
 		print "<TABLE>";
 		print "<TR valign=bottom>";
 		# Get max_v, max_h and max_k values
-		$max_v=$max_h=$max_k=1;
+		$max_v=$max_h=$max_k=0;		# Start from 0 because can be lower than 1
 		foreach my $daycursor ($firstdaytoshowtime..$lastdaytoshowtime) {
 			$daycursor =~ /^(\d\d\d\d)(\d\d)(\d\d)/;
 			my $year=$1; my $month=$2; my $day=$3;
@@ -3847,6 +3855,7 @@ EOF
 			$avg_day_h=sprintf("%.2f",$avg_day_h/$avg_day_nb);
 			$avg_day_k=sprintf("%.2f",$avg_day_k/$avg_day_nb);
 			if ($avg_day_v > $max_v) { $max_v=$avg_day_v; }
+			#if ($avg_day_p > $max_p) { $max_p=$avg_day_p; }
 			if ($avg_day_h > $max_h) { $max_h=$avg_day_h; }
 			if ($avg_day_k > $max_k) { $max_k=$avg_day_k; }
 		}
@@ -3915,7 +3924,7 @@ EOF
 		print "<TR>";
 		print "<TD align=center><center><TABLE>";
 		print "<TR valign=bottom>\n";
-		$max_h=$max_k=$max_v=1;
+		$max_h=$max_k=0;	# Start from 0 because can be lower than 1
 		# Get average value for day of week
 		foreach my $daycursor ($firstdaytocountaverage..$lastdaytocountaverage) {
 			$daycursor =~ /^(\d\d\d\d)(\d\d)(\d\d)/;
@@ -3927,7 +3936,7 @@ EOF
 			$avg_dayofweek_h[$dayofweekcursor]+=($DayHits{$daycursor}||0);
 			$avg_dayofweek_k[$dayofweekcursor]+=($DayBytes{$daycursor}||0);
 		}
-		for (0..6) {
+		for (@DOWIndex) {
 			if ($avg_dayofweek_nb[$_]) { 
 				$avg_dayofweek_p[$_]=sprintf("%.2f",$avg_dayofweek_p[$_]/$avg_dayofweek_nb[$_]);
 				$avg_dayofweek_h[$_]=sprintf("%.2f",$avg_dayofweek_h[$_]/$avg_dayofweek_nb[$_]);
