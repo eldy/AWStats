@@ -10,7 +10,7 @@ links, robots and more. It works with IIS 5.0+ or Apache webserver log files.
 
 License: GNU GPL (GNU General Public License. See COPYING.TXT)
 Version : 2.5
-Release date: 05 June 2001
+Release date: 05 July 2001
 Platforms: All (Linux, NT, SCO, BSD, Solaris and other *NIX's, BeOS, OS/2...)
 Author: Laurent Destailleur <eldy@users.sourceforge.net>
 AWStats web site: http://awstats.sourceforge.net
@@ -79,19 +79,18 @@ I - 2) Requirements
 
 I - 3) Files
 
-    The distribution of AWStats include the following files:
-    awstats.pl         The main CGI/command line perl script
-    awstats.model.conf A sample of AWStats configure file
-    COPYING.TXT        Information file on GNU General Public Licence
-    README.TXT         This file
-    INSTALL.TXT        To say setup manual is in README.TXT file
-    robotslist.txt     Information file on robots (useless for AWStats)
-    browser            Directory with browsers icons
-    clock              Directory with clocks icons
-    cpu                Directory with cpu icons
-    flags              Directory with country flags icons
-    os                 Directory with os icons
-    other              Directory with all others icons
+    The distribution of AWStats package includes the following files:
+    README.TXT                           This file
+    INSTALL.TXT                          Same as README.txt
+    COPYING.TXT                          GNU General Public Licence
+    wwwroot/cgi-bin/awstats.pl           The main CGI/command line perl script
+    wwwroot/cgi-bin/awstats.model.conf   An example of AWStats configure file
+    wwwroot/icon/browser                 Directory with browsers icons
+    wwwroot/icon/clock                   Directory with clocks icons
+    wwwroot/icon/cpu                     Directory with cpu icons
+    wwwroot/icon/flags                   Directory with country flags icons
+    wwwroot/icon/os                      Directory with os icons
+    wwwroot/icon/other                   Directory with all others icons
 
 
 II - HOW TO INSTALL AND USE AWSTATS
