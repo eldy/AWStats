@@ -525,7 +525,8 @@ sub html_head {
 		else { print "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Frameset//EN\">\n\n"; }
 		print "<html lang='$Lang'>\n";
 		print "<head>\n";
-		if ($PageCode) { print "<META HTTP-EQUIV=\"content-type\" CONTENT=\"text/html; charset=$PageCode\"\n"; }		# If not defined, iso-8859-1 is used in major countries
+		if ($PageCode) { print "<META HTTP-EQUIV=\"content-type\" CONTENT=\"text/html; charset=$PageCode\">\n"; }		# If not defined, iso-8859-1 is used in major countries
+		#else { print "<META HTTP-EQUIV=\"content-type\" CONTENT=\"text/html; charset=iso-8859-1\">\n"; }
 		if ($Expires)  { print "<META HTTP-EQUIV=\"expires\" CONTENT=\"".(gmtime(time()+$Expires))."\">\n"; }
 		print "<meta http-equiv=\"description\" content=\"".ucfirst($PROG)." - Advanced Web Statistics for $SiteDomain\">\n";
 		if ($FrameName ne "mainleft") { print "<meta http-equiv=\"keywords\" content=\"$SiteDomain, free, advanced, realtime, web, server, logfile, log, analyzer, analysis, statistics, stats, perl, analyse, performance, hits, visits\">\n"; }
