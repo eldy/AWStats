@@ -19,7 +19,7 @@ use Time::Local;	# use Time::Local 'timelocal_nocheck' is faster but not support
 
 use vars qw/ $UseHiRes $UseCompress /;
 # Next 'use' can be uncommented to get miliseconds time in showsteps option
-use Time::HiRes qw( gettimeofday ); $UseHiRes=1;
+#use Time::HiRes qw( gettimeofday ); $UseHiRes=1;
 # Next 'use' can be uncommented to allow read/write of gz compressed log or history files (not working yet)
 #use Compress::Zlib; $UseCompress=1;
 
