@@ -25,13 +25,16 @@ my $VERSION="5.0 (build $REVISION)";
 # ---------- Init variables -------
 # Constants
 use vars qw/
-$DEBUGFORCED $NBOFLINESFORBENCHMARK $FRAMEWIDTH $NBOFLASTUPDATELOOKUPTOSAVE $LIMITFLUSH
+$DEBUGFORCED $NBOFLINESFORBENCHMARK $FRAMEWIDTH $NBOFLASTUPDATELOOKUPTOSAVE
+$LIMITFLUSH $VISITTIMEOUT $NOTSORTEDRECORDTOLERANCE
 /;
 $DEBUGFORCED=0;						# Force debug level to log lesser level into debug.log file (Keep this value to 0)
 $NBOFLINESFORBENCHMARK=5000;		# Benchmark info are printing every NBOFLINESFORBENCHMARK lines
 $FRAMEWIDTH=260;					# Width of left frame when UseFramesWhenCGI is on
 $NBOFLASTUPDATELOOKUPTOSAVE=200;	# Nb of records to save in DNS last update cache file
 $LIMITFLUSH=4000;					# Nb of records in data arrays after how we need to flush data on disk
+$VISITTIMEOUT=10000;				# Laps of time to consider a page load as a new visit. 10000 = 1 hour (Default = 10000)
+$NOTSORTEDRECORDTOLERANCE=10000;	# Laps of time to accept a record if not in correct order. 10000 = 1 hour (Default = 10000)
 # Plugins variable
 use vars qw/ $Plugin_readgz $Plugin_graph3d $Plugin_hashfiles $Plugin_timehires $Plugin_timezone $Plugin_etf1 /;
 $Plugin_readgz=$Plugin_graph3d=$Plugin_hashfiles=$Plugin_timehires=$Plugin_timezone=$Plugin_etf1=0;
@@ -42,14 +45,10 @@ use vars qw/
 $DIR $PROG $Extension
 $Debug $ShowSteps
 $DebugResetDone $DNSLookupAlreadyDone
-$VisitTimeOut
-$NotSortedRecordTolerance
 /;
 $DIR=$PROG=$Extension="";
 $Debug=$ShowSteps=0;
 $DebugResetDone=$DNSLookupAlreadyDone=0;
-$VisitTimeOut=10000;				# Laps of time to consider a page load as a new visit. 10000 = 1 hour (Default = 10000)
-$NotSortedRecordTolerance=10000;	# Laps of time to accept a record if not in correct order. 10000 = 1 hour (Default = 10000)
 # Time vars
 use vars qw/
 $starttime
@@ -767,8 +766,15 @@ sub GetSessionRange {
 # Return:		Global variables
 #------------------------------------------------------------------------------
 sub Read_Config {
+	# Check config file in common possible directories :
+	# Windows :                                 "$DIR" (same dir than awstats.pl)
+	# FHS standard, Suse and Mandrake package : "/etc/opt/awstats"
+	# Debian package :                          "/etc/awstats"
+	# Other possible directories :              "/etc", "/usr/local/etc/awstats"
+	my @PossibleConfigDir=("$DIR","/etc/opt/awstats","/etc/awstats","/etc","/usr/local/etc/awstats");
+
 	$FileConfig=""; $FileSuffix="";
-	foreach my $dir ("$DIR","/etc/opt/awstats","/etc/awstats","/etc","/usr/local/etc/awstats") {
+	foreach my $dir (@PossibleConfigDir) {
 		my $searchdir=$dir;
 		if ($searchdir && (!($searchdir =~ /\/$/)) && (!($searchdir =~ /\\$/)) ) { $searchdir .= "/"; }
 		if (open(CONFIG,"$searchdir$PROG.$SiteConfig.conf")) 	{ $FileConfig="$searchdir$PROG.$SiteConfig.conf"; $FileSuffix=".$SiteConfig"; last; }
@@ -974,13 +980,19 @@ sub Read_Config {
 
 
 #------------------------------------------------------------------------------
-# Function:     Get the reference databases
+# Function:     Load the reference databases
 # Parameters:	None
-# Return value: None
 # Input:		$DIR
 # Output:		Arrays and Hash tables are defined
+# Return:       None
 #------------------------------------------------------------------------------
 sub Read_Ref_Data {
+	# Check lib files in common possible directories :
+	# Windows :                           		"${DIR}lib" (lib in same dir than awstats.pl)
+	# Debian package :                    		"/usr/share/awstats/lib"
+	# Other possible directories :        		"./lib"
+	my @PossibleLibDir=("${DIR}lib","/usr/share/awstats/lib","./lib");
+
 	my %FilePath=();
 	my @FileListToLoad=();
 	push @FileListToLoad, "browsers.pm";
@@ -989,9 +1001,8 @@ sub Read_Ref_Data {
 	push @FileListToLoad, "robots.pm";
 	push @FileListToLoad, "search_engines.pm";
 	push @FileListToLoad, "worms.pm";
-	#push @FileListToLoad, "xxx.pm";
 	foreach my $file (@FileListToLoad) {
-		foreach my $dir ("${DIR}lib","./lib") {
+		foreach my $dir (@PossibleLibDir) {
 			my $searchdir=$dir;
 			if ($searchdir && (!($searchdir =~ /\/$/)) && (!($searchdir =~ /\\$/)) ) { $searchdir .= "/"; }
 			if (! $FilePath{$file}) {
@@ -1005,7 +1016,7 @@ sub Read_Ref_Data {
 		}
 		if (! $FilePath{$file}) {
 			my $filetext=$file; $filetext =~ s/\.pm$//; $filetext =~ s/_/ /g;
-			&warning("Warning: Can't read file \"$file\" ($filetext detection will not work correctly).\nCheck if file is in ${DIR}lib directory and is readable.");
+			&warning("Warning: Can't read file \"$file\" ($filetext detection will not work correctly).\nCheck if file is in ".($PossibleLibDir[0])." directory and is readable.");
 		}
 	}
 	# Sanity check.
@@ -1017,21 +1028,27 @@ sub Read_Ref_Data {
 
 #------------------------------------------------------------------------------
 # Function:     Get the messages for a specified language
-# Parameters:	Language id
+# Parameters:	LanguageId
 # Input:		$DirLang $DIR
 # Output:		$Message table is defined in memory
 # Return:		None
 #------------------------------------------------------------------------------
 sub Read_Language_Data {
+	# Check lang files in common possible directories :
+	# Windows :                           		"${DIR}lang" (lang in same dir than awstats.pl)
+	# Debian package :                    		"/usr/share/awstats/lang"
+	# Other possible directories :        		"./lang"
+	my @PossibleLangDir=("$DirLang","${DIR}lang","/usr/share/awstats/lang","./lang");
+
 	my $FileLang="";
-	foreach my $dir ("$DirLang","${DIR}lang","./lang") {
+	foreach my $dir (@PossibleLangDir) {
 		my $searchdir=$dir;
 		if ($searchdir && (!($searchdir =~ /\/$/)) && (!($searchdir =~ /\\$/)) ) { $searchdir .= "/"; }
 		if (open(LANG,"${searchdir}awstats-$_[0].txt")) { $FileLang="${searchdir}awstats-$_[0].txt"; last; }
 	}
 	# If file not found, we try english
 	if (! $FileLang) {
-		foreach my $dir ("$DirLang","${DIR}lang","./lang") {
+		foreach my $dir (@PossibleLangDir) {
 			my $searchdir=$dir;
 			if ($searchdir && (!($searchdir =~ /\/$/)) && (!($searchdir =~ /\\$/)) ) { $searchdir .= "/"; }
 			if (open(LANG,"${searchdir}awstats-en.txt")) { $FileLang="${searchdir}awstats-en.txt"; last; }
@@ -1069,21 +1086,27 @@ sub Read_Language_Data {
 
 #------------------------------------------------------------------------------
 # Function:     Get the tooltip texts for a specified language
-# Parameters:	Language id
-# Input:		None
+# Parameters:	LanguageId
+# Input:		$DirLang $DIR
 # Output:		Full tooltips text
 # Return:		None
 #------------------------------------------------------------------------------
 sub Read_Language_Tooltip {
+	# Check lang files in common possible directories :
+	# Windows :                           		"${DIR}lang" (lang in same dir than awstats.pl)
+	# Debian package :                    		"/usr/share/awstats/lang"
+	# Other possible directories :        		"./lang"
+	my @PossibleLangDir=("$DirLang","${DIR}lang","/usr/share/awstats/lang","./lang");
+
 	my $FileLang="";
-	foreach my $dir ("$DirLang","${DIR}lang","./lang") {
+	foreach my $dir (@PossibleLangDir) {
 		my $searchdir=$dir;
 		if ($searchdir && (!($searchdir =~ /\/$/)) && (!($searchdir =~ /\\$/)) ) { $searchdir .= "/"; }
 		if (open(LANG,"${searchdir}awstats-tt-$_[0].txt")) { $FileLang="${searchdir}awstats-tt-$_[0].txt"; last; }
 	}
 	# If file not found, we try english
 	if (! $FileLang) {
-		foreach my $dir ("$DirLang","${DIR}lang","./lang") {
+		foreach my $dir (@PossibleLangDir) {
 			my $searchdir=$dir;
 			if ($searchdir && (!($searchdir =~ /\/$/)) && (!($searchdir =~ /\\$/)) ) { $searchdir .= "/"; }
 			if (open(LANG,"${searchdir}awstats-tt-en.txt")) { $FileLang="${searchdir}awstats-tt-en.txt"; last; }
@@ -1092,7 +1115,7 @@ sub Read_Language_Tooltip {
 	if ($Debug) { debug("Call to Read_Language_Tooltip [FileLang=\"$FileLang\"]"); }
 	if ($FileLang) {
 		my $aws_PROG=ucfirst($PROG);
-		my $aws_VisitTimeout = $VisitTimeOut/10000*60;
+		my $aws_VisitTimeout = $VISITTIMEOUT/10000*60;
 		my $aws_NbOfRobots = scalar keys %RobotsHashIDLib;
 		my $aws_NbOfSearchEngines = scalar keys %SearchEnginesHashIDLib;
 		while (<LANG>) {
@@ -1445,11 +1468,17 @@ sub Check_Config {
 #------------------------------------------------------------------------------
 # Function:     Load plugins files
 # Parameters:	None
-# Input:		@PluginsToLoad $DIR
+# Input:		$DIR @PluginsToLoad
 # Output:		None
 # Return: 		None
 #------------------------------------------------------------------------------
 sub Read_Plugins {
+	# Check plugin files in common possible directories :
+	# Windows :                           		"${DIR}plugins" (plugins in same dir than awstats.pl)
+	# Debian package :                    		"/usr/share/awstats/plugins"
+	# Other possible directories :        		"./lang"
+	my @PossiblePluginsDir=("${DIR}plugins","/usr/share/awstats/plugins","./plugins");
+
 	my %FilePath=();
 	if ($Debug) { debug("Call to Read_Plugins with list: @PluginsToLoad"); }
 	foreach my $plugininfo (@PluginsToLoad) {
@@ -1460,7 +1489,7 @@ sub Read_Plugins {
 		my $pluginname=$1;
 		if ($pluginname) {
 			if (! $FilePath{$pluginname}) {		# Plugin already loaded
-				foreach my $dir ("${DIR}plugins","./plugins","") {
+				foreach my $dir (@PossiblePluginsDir) {
 					my $searchdir=$dir;
 					if ($searchdir && (!($searchdir =~ /\/$/)) && (!($searchdir =~ /\\$/)) ) { $searchdir .= "/"; }
 					my $pluginpath="${searchdir}${pluginfile}.pm";
@@ -1477,7 +1506,7 @@ sub Read_Plugins {
 					}
 				}
 				if (! $FilePath{$pluginname}) {
-					&error("Can't open plugin file \"$pluginfile\" for read.\nCheck if file is in ${DIR}plugins directory and is readable.");
+					&error("Can't open plugin file \"$pluginfile\" for read.\nCheck if file is in ".($PossiblePluginsDir[0])." directory and is readable.");
 				}
 			}
 			else {
@@ -1804,7 +1833,7 @@ sub Read_History_With_TmpUpdate {
 							my $timehosts=int($field[5]||0);
 							my $newtimehosts=($_waithost_s{$field[0]}?$_waithost_s{$field[0]}:$_host_s{$field[0]});
 							my $newtimehostl=($_waithost_l{$field[0]}?$_waithost_l{$field[0]}:$_host_l{$field[0]});
-							if ($newtimehosts > $timehostl + $VisitTimeOut ) {
+							if ($newtimehosts > $timehostl + $VISITTIMEOUT ) {
 								if ($Debug) { debug(" Visit for $field[0] in 'wait' arrays is a new visit different than last in history",4); }
 								if ($field[6]) { $_url_x{$field[6]}++; }
 								$_url_e{$_waithost_e{$field[0]}}++;
@@ -2719,7 +2748,7 @@ sub Save_History {
 			my $timehosts=$_host_s{$key}||0;
 			my $lastpage=$_host_u{$key}||"";
 			if ($timehostl && $timehosts && $lastpage) {
-				if (($timehostl+$VisitTimeOut) < $LastLine) {
+				if (($timehostl+$VISITTIMEOUT) < $LastLine) {
 					# Session for this user is expired
 					if ($timehosts) { $_session{GetSessionRange($timehosts,$timehostl)}++; }
 					if ($lastpage) { $_url_x{$lastpage}++; }
@@ -2746,7 +2775,7 @@ sub Save_History {
 			my $timehosts=$_host_s{$key}||0;
 			my $lastpage=$_host_u{$key}||"";
 			if ($timehostl && $timehosts && $lastpage) {
-				if (($timehostl+$VisitTimeOut) < $LastLine) {
+				if (($timehostl+$VISITTIMEOUT) < $LastLine) {
 					# Session for this user is expired
 					if ($timehosts) { $_session{GetSessionRange($timehosts,$timehostl)}++; }
 					if ($lastpage) { $_url_x{$lastpage}++; }
@@ -4308,10 +4337,10 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {	# Updat
 		# Skip if not a new line
 		#-----------------------
 		if ($NewLinePhase) {
-			if ($timerecord < ($LastLine - $NotSortedRecordTolerance)) {
+			if ($timerecord < ($LastLine - $NOTSORTEDRECORDTOLERANCE)) {
 				# Should not happen, kept in case of parasite/corrupted old line
 				$NbOfLinesCorrupted++;
-				if ($ShowCorrupted) { print "Corrupted record (date $timerecord lower than $LastLine-$NotSortedRecordTolerance): $_\n"; } next;
+				if ($ShowCorrupted) { print "Corrupted record (date $timerecord lower than $LastLine-$NOTSORTEDRECORDTOLERANCE): $_\n"; } next;
 			}
 		}
 		else {
@@ -4577,7 +4606,7 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {	# Updat
 		if ($PageBool) {
 			my $timehostl=$_host_l{$_};
 			if ($timehostl) {
-				if ($timerecord > ($timehostl+$VisitTimeOut)) {
+				if ($timerecord > ($timehostl+$VISITTIMEOUT)) {
 					# This is a second visit or more
 					if (! $_waithost_s{$_}) {
 						# This is a second visit or more
