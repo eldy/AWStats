@@ -1673,7 +1673,7 @@ sub Check_Config {
 	 		my ($rowkeytype, $rowkeytypeval)=split(/[,:]/,$rowkeycouple,2);
 	 		$ExtraFirstColumnValuesType[$extranum][$part]=$rowkeytype;
 			if ($rowkeytypeval =~ /^REGEX\[(.*)\]$/i) { $rowkeytypeval=$1; }
-			#else { $rowkeytype=quotemeta($rowkeytype); }
+			#else { $rowkeytypeval=quotemeta($rowkeytypeval); }
 	 		$ExtraFirstColumnValuesTypeVal[$extranum][$part]=qr/$rowkeytypeval/i;
 			$part++;
 	 	}
