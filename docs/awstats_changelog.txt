@@ -29,9 +29,10 @@ Fixes:
 - Number of shown lines were one more than required (rawlog plugin).
 
 New features/improvements:
-- Added %time4 flag for LogFormat to support unix timestamp date format.
 - The BuildHistoryFormat can accept xml now to build the AWStats 
-  database in xml.
+  database in xml. The XML schema is available in tools/xslt directory.
+- Added an example of xslt style sheet to use AWStats XML database.
+- Added %time4 flag for LogFormat to support unix timestamp date format.
 - Added Firefox to browser database.
 - Added option IncludeInternalLinksInOriginSection (defined to 0 
   by default).
