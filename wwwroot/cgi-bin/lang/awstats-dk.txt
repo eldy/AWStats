@@ -74,3 +74,4 @@ message71=Dec
 message72=
 message73=Dag statistikker
 message74=Opdater
+message75=Bytes

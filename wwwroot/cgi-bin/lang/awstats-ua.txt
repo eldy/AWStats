@@ -75,3 +75,4 @@ message71=Гру
 message72=
 message73=Щоденна статистика
 message74=Оновити
+message75=Bytes

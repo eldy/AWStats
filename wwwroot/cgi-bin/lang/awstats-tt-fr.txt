@@ -14,7 +14,7 @@
 	Ce compteur est donné à titre indicatif, le compteur "pages" etant préféré.
 	</DIV>
 	<DIV CLASS="CTooltip" ID="tt5">
-	Nombre de <b>kilo octets</b> téléchargé lors des visites du site.<br>
+	Nombre d'<b>octets</b> téléchargés lors des visites du site.<br>
 	Il s agit aussi bien du volume de données du au chargement des <b>pages</b> et <b>images</b> que des <b>fichiers</b> téléchargés.
 	</DIV>
 	<DIV CLASS="CTooltip" ID="tt13">

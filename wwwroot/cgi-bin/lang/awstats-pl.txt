@@ -75,3 +75,4 @@ message71=Grudzieñ
 message72=
 message73=Dzieñ Statystyki
 message74=Update now
+message75=Bytes

@@ -75,3 +75,4 @@ message71=Δεκ
 message72=
 message73=Daily statistics
 message74=Update now
+message75=Bytes

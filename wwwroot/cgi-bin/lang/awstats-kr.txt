@@ -75,3 +75,4 @@ message71=12월
 message72=
 message73=일일 통계
 message74=Update now
+message75=Bytes

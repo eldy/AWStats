@@ -74,4 +74,5 @@ message71=Déc
 message72=Navigation
 message73=Statistiques par jour
 message74=Mise à jour immédiate
-message75=Dernière mise à jour
+message75=Octets
+message76=Dernière mise à jour
