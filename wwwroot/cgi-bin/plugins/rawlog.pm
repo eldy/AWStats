@@ -93,7 +93,7 @@ sub BuildFullHTMLOutput_rawlog {
 		if ($Filter) {
 			if ($_ !~ m/$Filter/i) { next; }
 		}
-		print "$_<br>";
+		print "$_<br>\n";
 		$i++;
 		if ($i > $MAXLINE) { last; }
 	}
