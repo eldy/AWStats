@@ -71,7 +71,7 @@ $total_h, $total_k, $total_p) = ();
 %MonthBytes = %MonthHits = %MonthHostsKnown = %MonthHostsUnknown = %MonthPages = %MonthUnique = %MonthVisits =
 %listofyears = %monthlib = %monthnum = ();
 
-$VERSION="3.1 (build 19)";
+$VERSION="3.1 (build 20)";
 $Lang="en";
 $Sort="";
 
@@ -718,24 +718,31 @@ sub html_head {
 		print "<meta http-equiv=\"keywords\" content=\"$sitetoanalyze, free, advanced, realtime, web, server, logfile, log, analyzer, analysis, statistics, stats, perl, analyse, performance, hits, visits\">\n";
 		print "<meta name=\"robots\" content=\"index,follow\">\n";
 		print "<title>$Message[7] $sitetoanalyze</title>\n";
+		# Do not use " for number in a style section
 		print <<EOF;
 <STYLE TYPE="text/css">
 <!--
 BODY { font: 12px arial, verdana, helvetica, sans-serif; background-color: #$color_Background; }
-TH { font: 12px arial, verdana, helvetica, sans-serif; text-align:center; color: #$color_titletext }
-TD { font: 12px arial, verdana, helvetica, sans-serif; text-align:center; color: #$color_text }
-TD.AWL { font: 12px arial, verdana, helvetica, sans-serif; text-align:left; color: #$color_text }
+TH { font: 12px arial, verdana, helvetica, sans-serif; text-align:center; color: #$color_titletext; }
+TD { font: 12px arial, verdana, helvetica, sans-serif; text-align:center; color: #$color_text; }
+TD.AWL { font: 12px arial, verdana, helvetica, sans-serif; text-align:left; color: #$color_text; }
 A { font: normal 12px arial, verdana, helvetica, sans-serif; }
 A:link    { color: #$color_link; text-decoration: none; }
 A:visited { color: #$color_link; text-decoration: none; }
 A:hover   { color: #$color_hover; text-decoration: underline; }
 DIV { font: 12px arial,verdana,helvetica; text-align:justify; }
 .TABLEBORDER { background-color: #$color_TableBorder; }
-.TABLEFRAME { background-color: #$color_TableBG; }
+.TABLEFRAME { background-color: #$color_TableBG; padding: 2px 2px  2px 2px; margin-top: 0 }
 .TABLEDATA { background-color: #$color_Background; }
-.TABLETITLEFULL  { font: bold 14px verdana, arial, helvetica, sans-serif; background-color: #$color_TableBGTitle; }
+.TABLETITLEFULL  { font: bold 14px verdana, arial, helvetica, sans-serif; background-color: #$color_TableBGTitle; text-align: center; width: 66%; margin-bottom: 0; padding: 2px; }
 .TABLETITLEBLANK { font: bold 14px verdana, arial, helvetica, sans-serif; background-color: #$color_Background; }
-.CTooltip { position:absolute; top:0px; left:0px; z-index:2; width:280; visibility:hidden; font: 8pt MS Comic Sans,arial,sans-serif; background-color:#FFFFE6; padding: 8px; border: 1px solid black; }
+.CTooltip { position:absolute; top:0px; left:0px; z-index:2; width:280; visibility:hidden; font: 8pt MS Comic Sans,arial,sans-serif; background-color: #FFFFE6; padding: 8px; border: 1px solid black; }
+
+.tablecontainer  { width: 100% }
+\@media projection {
+.tablecontainer { page-break-before: always; }
+}
+
 //-->
 </STYLE>
 EOF
@@ -770,18 +777,19 @@ sub html_end {
 sub tab_head {
 	my $title=shift;
 	print "
-		<TABLE BORDER=0 CELLPADDING=1 CELLSPACING=0 WIDTH=\"100%\">
-		<TR><TD>
-		<TABLE CLASS=TABLEFRAME BORDER=0 CELLPADDING=3 CELLSPACING=0 WIDTH=\"100%\">
-		<TR><TD class=TABLETITLEFULL align=center width=\"60%\">$title </TD><TD class=TABLETITLEBLANK> &nbsp; </TD></TR>
-		<TR><TD colspan=2>
-		<TABLE CLASS=TABLEDATA BORDER=1 BORDERCOLOR=\"#$color_TableBorder\" CELLPADDING=2 CELLSPACING=0 WIDTH=\"100%\">
-		";
+	<div class=\"tablecontainer\">
+	<TR><TD>
+	<TABLE CLASS=\"TABLEFRAME\" BORDER=0 CELLPADDING=2 CELLSPACING=0 WIDTH=\"100%\">
+	<TR><TD class=\"TABLETITLEFULL\">$title </TD><TD class=\"TABLETITLEBLANK\"> &nbsp; </TD></TR>
+	<TR><TD colspan=2>
+	<TABLE CLASS=\"TABLEDATA\" BORDER=1 BORDERCOLOR=\"#$color_TableBorder\" CELLPADDING=2 CELLSPACING=0 WIDTH=\"100%\">
+	";
 }
 
 sub tab_end {
 	print "\n</TABLE></TD></TR></TABLE>";
-	print "</TD></TR></TABLE>\n\n";
+	print "</TD></TR></TABLE>";
+	print "</div>\n\n";
 }
 
 sub UnescapeURLParam {
