@@ -5626,6 +5626,7 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 
 		# Analyze: Country (Top-level domain)
 		#------------------------------------
+		if ($Debug) { debug("  Search country (Host=$Host HostResolved=$HostResolved ip=$ip)",4); }
 		my $Domain='ip';
 		# Set $HostResolved to host and resolve domain
 		if ($HostResolved eq '*') {
@@ -5642,6 +5643,7 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 			if ($ip) {
 				if ($PluginsLoaded{'GetCountryCodeByAddr'}{'geoipfree'}) { $Domain=GetCountryCodeByAddr_geoipfree($Host); }
 				elsif ($PluginsLoaded{'GetCountryCodeByAddr'}{'geoip'}) { $Domain=GetCountryCodeByAddr_geoip($Host); }
+				elsif ($HostResolved =~ /\.(\w+)$/) { $Domain=$1; }
 			}
 			else {
 				if ($PluginsLoaded{'GetCountryCodeByName'}{'geoipfree'}) { $Domain=GetCountryCodeByName_geoipfree($HostResolved); }
