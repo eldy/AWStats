@@ -7,12 +7,13 @@ Advanced Web Statistics (AWStats) is a powerfull and featurefull web server
 logfile analyzer that shows you all your Web statistics including visitors,
 pages, hits, hours, search engines, keywords used to find your site, broken
 links, robots and more...
-It works with IIS 5.0+, Apache and all major web/wap/proxy server log files
-on all Operating Systems.
+It works with IIS 5.0+, Apache and all major web, wap, proxy, streaming
+server log files (and even syslog, ftp servers or mail logs) on all Operating
+Systems.
 
 License: GNU GPL (GNU General Public License. See LICENSE file)
-Version : 5.0
-Release date: September 2002
+Version : 5.1
+Release date: October 2002
 Platforms: All (Linux, NT, SCO, BSD, Solaris and other *NIX's, BeOS, OS/2...)
 Author: Laurent Destailleur <eldy@users.sourceforge.net>
 AWStats official web site and latest version: http://awstats.sourceforge.net
@@ -55,6 +56,7 @@ I - 1) Features
 	* Update of statistics can be made on demand from the web interface and
 	  not only from your scheduler,
 	* Unlimited log file size, support split log files (load balancing system),
+	* Support 'nearly sorted' log files even for entry and exit pages,
 	* Reverse DNS lookup before or during analysis, support DNS cache files,
 	* WhoIS Links,
 	* A lot of options/filters and plugins can be used,
@@ -62,11 +64,12 @@ I - 1) Features
 	* Cross Site Scripting Attacks protection,
 	* Several languages,
 	* No need of rare perl libraries,
-	* Graphical and framed reports,
+	* Graphical one page or framed reports,
 	* Look and colors can match your site design,
 	* Help and tooltips on HTML reported pages,
-	* Easy to use (No compilation, no extern databases),
-	* Free (GNU GPL),with sources (perl script).
+	* Easy to use (Just one configuration file to edit),
+	* Free (GNU GPL), with sources (perl script),
+	* Available on all platforms.
 
 
 I - 2) Requirements
@@ -78,7 +81,7 @@ I - 2) Requirements
 	  statistics), your web server must also be able to run such scripts.
 	  If not, you can solve this by downloading last Perl version at:
 	  http://www.activestate.com/ActivePerl/ (Windows)
-	  http://www.perl.com/pub/language/info/software.html (Unix/Linux/Other)
+	  http://www.perl.com/pub/language/info/software.html (All OS)
 
 
 I - 3) Files
