@@ -663,9 +663,25 @@ I want to process an old log file to include its data in my AWStats reports.<br>
 <font class=CSolution>SOLUTION:</font><br>
 You must change your <a href="awstats_config.html#LogFile">LogFile</a> parameter to point to the old log file and run
 the update (or use the -logfile option on command line to overwrite <a href="awstats_config.html#LogFile">LogFile</a> parameter).
-The update process can only accept files in chronological order, so if you have already processed a recent file,
-you must before reset all your statistics (see next FAQ) and restart all the update process for all past log files
-and in chronological order.<br>
+The update process can only accept files in chronological order for a particular month, so if you
+have already processed a recent file and forgot to run update
+on a log file that contains older data, you must before reset all
+your statistics (see <a href="#FAQ-COM120">FAQ-COM120</a>) and restart all the update processes
+for all past log files and in chronological order.<br>
+However, there is a "tip" that allow you to rebuild only the month were you missed data:<br>
+Imagine we are on 5th of July 2003, all your statistics are up to date except for the 10th of
+April 2003 (you forgot to run the update process for this day, so there is no visit for this
+day). You can :<br>
+- Reset the statistics for April only (this means remove the file <i>awstats042003.[config.]txt</i>
+as explained in <a href="#FAQ-COM120">FAQ-COM120</a>),
+- Move the statistics history files for month after April (file <i>awstats052003.[config.]txt</i>,
+<i>awstats062003.[config.]txt</i>,...) into a temp directory (so that it is no more in DirData
+directory as if they were deleted).<br>
+- Run update process on all log files for April (in chronological order). AWStats does not
+complain about "too old record" because there is no history files in DirData directory
+that contains compiled data more recent than records into log you process.<br>
+- Moved back the month history files you saved into your DirData directory.<br>
+Your statistics are up to date and the missing days are no more missing.<br>
 <br>
 
 <a name="MULTILOG"></a><br>
@@ -683,14 +699,15 @@ the <i>-logfile</i> command line option to overwrite <a href="awstats_config.htm
 <a name="RESET"></a><br>
 <b><u>FAQ-COM120 : HOW CAN I RESET ALL MY STATISTICS ?</u></b><br>
 <font class=CProblem>PROBLEM:</font><br>
-I want to reset all my statistics and restart my stats from now.<br>
+I want to reset all my statistics to restart the update process from the beginning.<br>
 <font class=CSolution>SOLUTION:</font><br>
-All analyzed data are stored by AWStats in files called <i>awstatsMMYYYY.[site.]txt</i> (one file each month).
+All analyzed data are stored by AWStats in history files called <i>awstatsMMYYYY.[config.]txt</i> (one file each month).
 You will find those files in directory defined by <a href="awstats_config.html#DirData">DirData</a> parameter (same directory than awstats.pl by default).<br>
-To reset your stats for a month, you just have to delete the file for the required month/year.<br>
-To reset all your stats, delete all files awstats*.txt<br>
-Warning, if you delete those data files, you won't be able to recover your stats back, unless you kept old log files somewhere.
-You will have to process all past log files (in chronological order) to get old statistics back.<br>
+To reset all your statistics, just delete all files <i>awstatsMMYYYY.txt</i><br>
+To reset all your statistics built for a particular config file, just delete all files <i>awstatsMMYYYY.myconfig.txt</i><br>
+Warning, if you delete those data files, you won't be able to recover your stats back, unless you
+kept old log files somewhere. You will have to process all past log files (in chronological order)
+to get your statistics back.<br>
 <br>
 
 <a name="EDITHISTORY"></a><br>
@@ -833,7 +850,7 @@ Note: Browsers, OS's, Keywords and Referers features are not available with a su
 </td></tr></table>
 
 <u>If your log records are EXACTLY like this (With some <b>Squid</b> versions, after setting <i>emulate_http_log</i> to on):</u><br>
-<i>200.135.30.181 - - [dd/mmm/yyyy:hh:mm:ss +0x00] "GET http://www.mysite.com/page.html HTTP/1.0" 200 456 TCP_CLIENT_REFRESH_MISS:DIRECT</i><br>
+<i>200.135.30.181 - - [dd/mmm/yyyy:hh:mm:ss +0x00] "GET http://www.mydomain.com/page.html HTTP/1.0" 200 456 TCP_CLIENT_REFRESH_MISS:DIRECT</i><br>
 You must use : <i>LogFormat="%host %other %logname %time1 %methodurl %code %bytesd %other"</i><br>
 
 <table bgcolor=#F0F0F0 width="100%" class=CFAQ><tr class=CFAQ><td class=CFAQ>
