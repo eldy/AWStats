@@ -650,15 +650,17 @@ $message[71][6]="Grudzieñ";
 "headdump","HeadDump",
 "hotjava","Sun HotJava",
 "ibrowse","IBrowse",
+"icab","iCab",
 "intergo","InterGO",
 "konqueror","Konqueror",
 "linemodebrowser","W3C Line Mode Browser",
 "lotus-notes","Lotus Notes web client",
-"macweb","MacWeb",
+"macweb","MacWeb",							#
 "ncsa_mosaic","NCSA Mosaic",
 "nutscrape", "Nutscrape",
 "mspie","MS Pocket Internet Explorer",
 "msfrontpageexpress","MS FrontPage Express",
+"omniweb","OmniWeb",
 "real","RealAudio or compatible player",
 "teleport","TelePort Pro (Site grabber)",
 "tzgeturl","TZGETURL",
@@ -700,7 +702,7 @@ $message[71][6]="Grudzieñ";
 "webtv","WebTV"
 );
 
-# ("text that match in log after changing space and plus into underscore","osid")
+# ("text that match in log after changing ' ' or '+' into '_' ","osid")
 %OSAlias     = (
 "windows_98","win98",
 "windows_nt","winnt",
@@ -710,9 +712,9 @@ $message[71][6]="Grudzieñ";
 "windows_3","win16",			# This works for windows_31 and windows_3.1
 "windows;i;16","win16",
 "windowsce","wince",
-"mac_powerpc","macintosh",
-"mac_ppc","macintosh",
+"mac_p","macintosh",			# This works for mac_ppc and mac_powerpc
 "mac_68","macintosh",			# This works for mac_6800 and mac_68k
+"macppc","macintosh",
 "macweb","macintosh"
 );
 
@@ -1912,16 +1914,18 @@ if (($YearRequired == $nowyear) && ($MonthRequired eq "year" || $MonthRequired =
 		$found=0;
 	
 		# IE ? (For higher speed, we start whith IE, the most often used. This avoid other tests if found)
-		if ($UserAgent =~ /msie/ && !($UserAgent =~ /webtv/)) {
-			$_browser_h{"msie"}++;
-			$UserAgent =~ /msie_(\d)\./;  # $1 now contains major version no
-			$_msiever_h[$1]++;
-			$found=1;
+		if ($UserAgent =~ /msie/) {
+			if (($UserAgent !~ /webtv/) && ($UserAgent !~ /omniweb/)) {
+				$_browser_h{"msie"}++;
+				$UserAgent =~ /msie_(\d)\./;  # $1 now contains major version no
+				$_msiever_h[$1]++;
+				$found=1;
+			}
 		}
 	
 		# Netscape ?
 		if (!$found) {
-			if ($UserAgent =~ /mozilla/ && !($UserAgent =~ /compatible/)) {
+			if ($UserAgent =~ /mozilla/ && $UserAgent !~ /compatible/) {
 		    	$_browser_h{"netscape"}++;
 		    	$UserAgent =~ /\/(\d)\./;  # $1 now contains major version no
 		    	$_nsver_h[$1]++;
