@@ -66,7 +66,6 @@ $ShowKeywordsStats,  $ShowHTTPErrorsStats,
 $ShowFlagLinks, $ShowLinksOnURL,
 $WarningMessages)=
 (1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1);
-#($pos_rc,$pos_logname,$pos_date,$pos_method,$pos_url,$pos_code,$pos_size,$pos_referer,$pos_agent,$pos_gzipin,$pos_gzipout,$pos_gzipres)=();
 ($ArchiveFileName, $DIR, $DayRequired, $DefaultFile,
 $DirCgi, $DirData, $DirIcons, $DirLang,
 $Extension, $FileConfig, $FileSuffix, 
@@ -85,6 +84,7 @@ $color_h, $color_k, $color_link, $color_p, $color_s, $color_u, $color_v, $color_
 ();
 # ---------- Init arrays --------
 @HostAliases = @Message = @OnlyFiles = @SkipDNSLookupFor = @SkipFiles = @SkipHosts = @DOWIndex = ();
+@RobotArrayID=();
 @WordsToCleanSearchUrl = ();
 # ---------- Init hash arrays --------
 %DayBytes = %DayHits = %DayPages = %DayUnique = %DayVisits =
@@ -93,7 +93,7 @@ $color_h, $color_k, $color_link, $color_p, $color_s, $color_u, $color_v, $color_
 %monthlib = %monthnum = ();
 
 
-$VERSION="3.2 (build 71)";
+$VERSION="3.2 (build 72)";
 $Lang="en";
 
 # Default value
@@ -1394,13 +1394,13 @@ sub Save_History_File {
 	foreach my $key (keys %_pagesrefs_h) {
 		$newkey=$key;
 		$newkey =~ s/^http(s|):\/\/([^\/]+)\/$/http$1:\/\/$2/;	# Remove / at end of http://.../ but not at end of http://.../dir/
+		$newkey =~ s/\s/%20/g;
 		print HISTORYTMP "$newkey $_pagesrefs_h{$key}\n"; next;
 	}
 	print HISTORYTMP "END_PAGEREFS\n";
 	print HISTORYTMP "BEGIN_SEARCHWORDS\n";
 	foreach my $key (keys %_keyphrases) { 
 		my $newkey=$key;
-		# if (! &IsAscii($newkey)) { $newkey="NonAsciiKeyphrase"; }
 		print HISTORYTMP "$newkey $_keyphrases{$key}\n";
 		next;
 	}
@@ -1414,8 +1414,7 @@ sub Save_History_File {
 	foreach my $key (keys %_sider404_h) { 
 		my $newkey=$key;
 		my $newreferer=$_referer404_h{$key}||"";
-		# if (! &IsAscii($newkey)) { $newkey="NonAsciiURL"; }
-		# if (! &IsAscii($newreferer)) { $newreferer="NonAsciiReferer"; }
+		$newreferer =~ s/\s/%20/g;
 		print HISTORYTMP "$newkey ".int($_sider404_h{$key})." $newreferer\n";
 		next;
 	}
@@ -1770,28 +1769,9 @@ if ($UpdateStats && ($AllowToUpdateStatsFromBrowser==0) && ($ENV{"GATEWAY_INTERF
 	error("Error: Update of statistics is not allowed from a browser.");
 }
 
-if ($DNSLookup) {
-#	eval { use Sockets; }; 
-#	if ($@){
-#		error("Error: The perl 'Socket' module is not installed. Install it from CPAN or use a more 'standard' perl interpreter.\n");
-#	}
-	use Socket;
-}
-
-$NewDNSLookup=$DNSLookup;
-%monthlib =  ( "01","$Message[60]","02","$Message[61]","03","$Message[62]","04","$Message[63]","05","$Message[64]","06","$Message[65]","07","$Message[66]","08","$Message[67]","09","$Message[68]","10","$Message[69]","11","$Message[70]","12","$Message[71]" );
-# monthnum must be in english because it's used to translate log date in apache log files which are always in english
-%monthnum =  ( "Jan","01","jan","01","Feb","02","feb","02","Mar","03","mar","03","Apr","04","apr","04","May","05","may","05","Jun","06","jun","06","Jul","07","jul","07","Aug","08","aug","08","Sep","09","sep","09","Oct","10","oct","10","Nov","11","nov","11","Dec","12","dec","12" );
-
-# Init all global variables
-if (! @HostAliases) {
-	warning("Warning: HostAliases parameter is not defined, $PROG choose \"$SiteToAnalyze localhost 127.0.0.1\".");
-	$HostAliases[0]="$SiteToAnalyze"; $HostAliases[1]="localhost"; $HostAliases[2]="127.0.0.1";
-}
-my $SiteToAnalyzeIsInHostAliases=0;
-foreach my $elem (@HostAliases) { if ($elem eq $SiteToAnalyze) { $SiteToAnalyzeIsInHostAliases=1; last; } }
-if ($SiteToAnalyzeIsInHostAliases == 0) { $HostAliases[@HostAliases]=$SiteToAnalyze; }
-if (! @SkipFiles) { $SkipFiles[0]="\.css\$";$SkipFiles[1]="\.js\$";$SkipFiles[2]="\.class\$";$SkipFiles[3]="robots\.txt\$"; }
+# Init global variables required for output and update process
+%monthlib = ("01","$Message[60]","02","$Message[61]","03","$Message[62]","04","$Message[63]","05","$Message[64]","06","$Message[65]","07","$Message[66]","08","$Message[67]","09","$Message[68]","10","$Message[69]","11","$Message[70]","12","$Message[71]");
+%monthnum = ("Jan","01","jan","01","Feb","02","feb","02","Mar","03","mar","03","Apr","04","apr","04","May","05","may","05","Jun","06","jun","06","Jul","07","jul","07","Aug","08","aug","08","Sep","09","sep","09","Oct","10","oct","10","Nov","11","nov","11","Dec","12","dec","12");	# monthnum must be in english because used to translate log date in apache log files
 $LastLine=0;$FirstTime=0;$LastTime=0;$LastUpdate=0;$TotalVisits=0;$TotalHostsKnown=0;$TotalHostsUnKnown=0;$TotalUnique=0;$TotalDifferentPages=0;
 for (my $ix=1; $ix<=12; $ix++) {
 	my $monthix=$ix;if ($monthix < 10) { $monthix  = "0$monthix"; }
@@ -1806,6 +1786,51 @@ for (my $ix=1; $ix<=12; $ix++) {
 #------------------------------------------
 
 if ($UpdateStats) {
+
+	if ($DNSLookup) {
+	#	eval { use Sockets; }; 
+	#	if ($@){
+	#		error("Error: The perl 'Socket' module is not installed. Install it from CPAN or use a more 'standard' perl interpreter.\n");
+	#	}
+		use Socket;
+	}
+	$NewDNSLookup=$DNSLookup;
+
+	# Init global variables required for update process
+	push @RobotArrayList,"major";
+	push @RobotArrayList,"other";
+	push @RobotArrayList,"generic";
+	foreach my $key (@RobotArrayList) {
+		if ($key ne "other") {
+			push @RobotArrayID,@{"RobotArrayID_$key"};
+			debug("Add ".@{"RobotArrayID_$key"}." elements from RobotArrayID_$key into RobotArrayID",2);
+		}
+		else {
+			my $added=0;
+			foreach my $robotid (keys %RobotHashIDLib) {
+				# Check if robotid already in RobotArrayID
+				my $alreadyin=0;
+				foreach my $robotin (@RobotArrayID) {
+					if ($robotid eq $robotin) { $alreadyin=1; last; }
+				}
+				if (! $alreadyin) {
+					push @RobotArrayID,$robotid;
+					$added++;
+				}
+			}	
+			debug("Add $added elements from RobotHashIDLib into RobotArrayID",2);
+		}
+	}
+	debug("RobotArrayID has now ".@RobotArrayID." elements",2);
+	if (! @HostAliases) {
+		warning("Warning: HostAliases parameter is not defined, $PROG choose \"$SiteToAnalyze localhost 127.0.0.1\".");
+		$HostAliases[0]="$SiteToAnalyze"; $HostAliases[1]="localhost"; $HostAliases[2]="127.0.0.1";
+	}
+	my $SiteToAnalyzeIsInHostAliases=0;
+	foreach my $elem (@HostAliases) { if ($elem eq $SiteToAnalyze) { $SiteToAnalyzeIsInHostAliases=1; last; } }
+	if (! $SiteToAnalyzeIsInHostAliases) { $HostAliases[@HostAliases]=$SiteToAnalyze; }
+	if (! @SkipFiles) { $SkipFiles[0]="\.css\$";$SkipFiles[1]="\.js\$";$SkipFiles[2]="\.class\$";$SkipFiles[3]="robots\.txt\$"; }
+
 	&debug("Start Update process");
 
 	# GENERATING PerlParsingFormat
@@ -2162,8 +2187,8 @@ if ($UpdateStats) {
 			# study $UserAgent
 
 			my $foundrobot=0;
-			foreach $bot (keys %RobotHashIDLib) { if ($UserAgent =~ /$bot/) { $_robot_h{$bot}++; $_robot_l{$bot}=$timeconnexion; $foundrobot=1; last; }	}
-			if ($foundrobot == 1) { next; }
+			foreach my $bot (@RobotArrayID) { if ($UserAgent =~ /$bot/) { $_robot_h{$bot}++; $_robot_l{$bot}=$timeconnexion; $foundrobot=1; last; } }
+			if ($foundrobot) { next; }
 			$TmpHashNotRobot{$UserAgent}=1;		# Last time, we won't search if robot or not. We know it's not.
 		}
 
@@ -2191,7 +2216,7 @@ if ($UpdateStats) {
 		if ($urlwithnoquery =~ /\.(\w{1,5})$/) {
 			$extension=$1; $extension =~ tr/A-Z/a-z/;
 			# Check if not a page
-			foreach $cursor (@NotPageList) { if ($extension eq $cursor) { $PageBool=0; last; } }
+			foreach my $cursor (@NotPageList) { if ($extension eq $cursor) { $PageBool=0; last; } }
 		} else {
 			$extension="Unknown";
 		}
@@ -2426,7 +2451,7 @@ if ($UpdateStats) {
 					}
 					else {	# If made on each record -> -1700 rows/seconds (should be made on 10% of records only)
 					    # Extern (This hit came from an external web site). 
-						my @refurl=split(/\?/,$refererwithouthttp);
+						my @refurl=split(/\?/,$refererwithouthttp,2);
 						$refurl[0] =~ tr/A-Z/a-z/;
 
 					    foreach my $key (keys %SearchEnginesHashIDLib) {
@@ -2436,56 +2461,58 @@ if ($UpdateStats) {
 								$_from_h[2]++;
 								$_se_referrals_h{$key}++;
 								$found=1;
-								# Extract keywords
-								$refurl[1] =~ tr/A-Z/a-z/;				# Full param string in lowcase
-								my @paramlist=split(/&/,$refurl[1]);
-								if ($SearchEnginesKnownUrl{$key}) {		# Search engine with known URL syntax
-									foreach my $param (@paramlist) {
-										#if ($param =~ /^$SearchEnginesKnownUrl{$key}/) { 	# We found good parameter
-										#	$param =~ s/^$SearchEnginesKnownUrl{$key}//;	# Cut "xxx="
-										if ($param =~ s/^$SearchEnginesKnownUrl{$key}//) { 	# We found good parameter
-											# Ok, "cache:mmm:www/zzz+aaa+bbb/ccc+ddd%20eee'fff,ggg" is a search parameter line
-											$param =~ s/^cache:[^\+]*//;
-											$param =~ s/^related:[^\+]*//;
-											&ChangeWordSeparatorsIntoSpace($param);			# Change [ aaa+bbb/ccc+ddd%20eee'fff,ggg ] into [ aaa bbb/ccc ddd eee fff ggg]
+								if ($refurl[1]) {								
+									# Extract keywords
+									$refurl[1] =~ tr/A-Z/a-z/;				# Full param string in lowcase
+									my @paramlist=split(/&/,$refurl[1]);
+									if ($SearchEnginesKnownUrl{$key}) {		# Search engine with known URL syntax
+										foreach my $param (@paramlist) {
+											#if ($param =~ /^$SearchEnginesKnownUrl{$key}/) { 	# We found good parameter
+											#	$param =~ s/^$SearchEnginesKnownUrl{$key}//;	# Cut "xxx="
+											if ($param =~ s/^$SearchEnginesKnownUrl{$key}//) { 	# We found good parameter
+												# Ok, "cache:mmm:www/zzz+aaa+bbb/ccc+ddd%20eee'fff,ggg" is a search parameter line
+												$param =~ s/^cache:[^\+]*//;
+												$param =~ s/^related:[^\+]*//;
+												&ChangeWordSeparatorsIntoSpace($param);			# Change [ aaa+bbb/ccc+ddd%20eee'fff,ggg ] into [ aaa bbb/ccc ddd eee fff ggg]
+												if ($SplitSearchString) {
+													my @wordlist=split(/ /,$param);	# Split aaa bbb ccc ddd eee fff into a wordlist array
+													foreach $word (@wordlist) {
+														if ((length $word) > 0) { $_keyphrases{$word}++; }
+													}
+												}
+												else {
+													$param =~ s/^ +//; $param =~ s/ +$//; $param =~ tr/ /\+/s;
+													if ((length $param) > 0) { $_keyphrases{$param}++; }
+												}
+												last;
+											}
+										}
+									}
+									else {									# Search engine with unknown URL syntax
+										foreach my $param (@paramlist) {
+											&ChangeWordSeparatorsIntoSpace($param);				# Change [ xxx=cache:www/zzz+aaa+bbb/ccc+ddd%20eee'fff,ggg ] into [ xxx=cache:www/zzz aaa bbb/ccc ddd eee fff ggg ]
+											my $foundparam=1;
+											foreach $paramtoexclude (@WordsToCleanSearchUrl) {
+												if ($param =~ /.*$paramtoexclude.*/) { $foundparam=0; last; } # Not the param with search criteria
+											}
+											if ($foundparam == 0) { next; }			# Do not keep this URL parameter because is in exclude list
+											# Ok, "xxx=cache:www/zzz aaa bbb/ccc ddd eee fff ggg" is a search parameter line
+											$param =~ s/.*=//;						# Cut "xxx="
+											$param =~ s/^cache:[^ ]*//;
+											$param =~ s/^related:[^ ]*//;
 											if ($SplitSearchString) {
-												my @wordlist=split(/ /,$param);	# Split aaa bbb ccc ddd eee fff into a wordlist array
+												my @wordlist=split(/ /,$param);		# Split aaa bbb ccc ddd eee fff into a wordlist array
 												foreach $word (@wordlist) {
-													if ((length $word) > 0) { $_keyphrases{$word}++; }
+													if ((length $word) > 2) { $_keyphrases{$word}++; }	# Keep word only if word length is 3 or more
 												}
 											}
 											else {
 												$param =~ s/^ +//; $param =~ s/ +$//; $param =~ tr/ /\+/s;
-												if ((length $param) > 0) { $_keyphrases{$param}++; }
-											}
-											last;
-										}
-									}
-								}
-								else {									# Search engine with unknown URL syntax
-									foreach my $param (@paramlist) {
-										&ChangeWordSeparatorsIntoSpace($param);				# Change [ xxx=cache:www/zzz+aaa+bbb/ccc+ddd%20eee'fff,ggg ] into [ xxx=cache:www/zzz aaa bbb/ccc ddd eee fff ggg ]
-										my $foundparam=1;
-										foreach $paramtoexclude (@WordsToCleanSearchUrl) {
-											if ($param =~ /.*$paramtoexclude.*/) { $foundparam=0; last; } # Not the param with search criteria
-										}
-										if ($foundparam == 0) { next; }			# Do not keep this URL parameter because is in exclude list
-										# Ok, "xxx=cache:www/zzz aaa bbb/ccc ddd eee fff ggg" is a search parameter line
-										$param =~ s/.*=//;						# Cut "xxx="
-										$param =~ s/^cache:[^ ]*//;
-										$param =~ s/^related:[^ ]*//;
-										if ($SplitSearchString) {
-											my @wordlist=split(/ /,$param);		# Split aaa bbb ccc ddd eee fff into a wordlist array
-											foreach $word (@wordlist) {
-												if ((length $word) > 2) { $_keyphrases{$word}++; }	# Keep word only if word length is 3 or more
+												if ((length $param) > 2) { $_keyphrases{$param}++; }
 											}
 										}
-										else {
-											$param =~ s/^ +//; $param =~ s/ +$//; $param =~ tr/ /\+/s;
-											if ((length $param) > 2) { $_keyphrases{$param}++; }
-										}
 									}
-								}
+								}	# End of if refurl[1]
 								last;
 							}
 						}
