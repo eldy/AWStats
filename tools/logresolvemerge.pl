@@ -270,9 +270,12 @@ if ($] < 5.008 && $MaxNbOfThread) {
 
 if (scalar @ParamFile == 0) {
 	print "----- $PROG $VERSION (c) Laurent Destailleur -----\n";
-	print "$PROG allows you to merge several log files into one output,\n";
-	print "sorted on date. It also makes a fast reverse DNS lookup to replace\n";
-	print "all IP addresses into host names in resulting log file.\n";
+	print "$PROG allows you to get one unique output log file, sorted on date,\n";
+	print "built from particular sources:\n";
+	print " - It can read several input log files,\n";
+	print " - It can read .gz/.bz2 log files,\n";
+	print " - It can also makes a fast reverse DNS lookup to replace\n";
+	print "   all IP addresses into host names in resulting log file.\n";
 	print "$PROG comes with ABSOLUTELY NO WARRANTY. It's a free software\n";
 	print "distributed with a GNU General Public License (See COPYING.txt file).\n";
 	print "$PROG is part of AWStats but can be used alone as a log merger\n";
@@ -290,18 +293,18 @@ if (scalar @ParamFile == 0) {
 	print "  -showsteps     print on stderr benchmark information every $NBOFLINESFORBENCHMARK lines\n";
 	print "  -addfilenum    if used with several files, file number can be added in first\n";
 	print "                 field of output file. This can be used to add a cluster id\n";
-	print "                 when log files comes from several load balanced computers.\n";
+	print "                 when log files come from several load balanced computers.\n";
 	print "\n";
 	
 	print "This runs $PROG in command line to open one or several\n";
 	print "server log files to merge them (sorted on date) and/or to make a reverse\n";
-	print "DNS lookup (if wanted). The result log file is sent on standard output.\n";
+	print "DNS lookup (if asked). The result log file is sent on standard output.\n";
 	print "Note: $PROG is not a 'sort' tool to sort one file. It's a\n";
 	print "software able to output sorted log records (with a reverse DNS lookup\n";
 	print "included or not) even if log records are dispatched in several files.\n";
 	print "Each of thoose files must be already independently sorted itself\n";
 	print "(but that is the case in all web server log files). So you can use it\n";
-	print "for load balanced log files or to process several old log files.\n";
+	print "for load balanced log files or to group several old log files.\n";
 	print "\n";
 	print "Don't forget that the main goal of logresolvemerge is to send log records to\n";
 	print "a log analyzer in a sorted order without merging files on disk (NO NEED\n";
@@ -310,8 +313,8 @@ if (scalar @ParamFile == 0) {
 	print "\n";
 	print "So logresolvemerge is particularly usefull when you want to output several\n";
 	print "and/or large log files in a fast process, with no use of disk or\n";
-	print "more memory and in a chronological order through a pipe (to be used by a log\n";
-	print "analyzer.\n";
+	print "more memory, and in a chronological order through a pipe (to be used by a log\n";
+	print "analyzer).\n";
 	print "\n";
 	print "Note: If input records are not 'exactly' sorted but 'nearly' sorted (this\n";
 	print "occurs with heavy servers), this is not a problem, the output will also\n";
@@ -324,7 +327,7 @@ if (scalar @ParamFile == 0) {
 	print "Now supports/detects:\n";
 	print "  Automatic detection of log format\n";
 	print "  Files can be .gz/.bz2 files if zcat/bzcat tools are available in PATH.\n";
-	print "  Multithreaded reverse DNS lookup (several parallel requests)\n";
+	print "  Multithreaded reverse DNS lookup (several parallel requests) with Perl 5.8+.\n";
 	print "New versions and FAQ at http://awstats.sourceforge.net\n";
 	exit 0;
 }
