@@ -234,7 +234,7 @@ use vars qw/
 @URLWithQueryWithOnly @URLWithQueryWithout
 @ExtraName @ExtraCondition @ExtraStatTypes @MaxNbOfExtra @MinHitExtra
 @ExtraFirstColumnTitle @ExtraFirstColumnValues @ExtraFirstColumnFormat
-@ExtraConditionType @ExtraConditionTypeVal
+@ExtraCodeFilter @ExtraConditionType @ExtraConditionTypeVal
 @ExtraFirstColumnValuesType @ExtraFirstColumnValuesTypeVal
 @ExtraAddAverageRow @ExtraAddSumRow
 @PluginsToLoad 
@@ -260,7 +260,7 @@ use vars qw/
 @URLWithQueryWithOnly = @URLWithQueryWithout = ();
 @ExtraName = @ExtraCondition = @ExtraStatTypes = @MaxNbOfExtra = @MinHitExtra = ();
 @ExtraFirstColumnTitle = @ExtraFirstColumnValues = @ExtraFirstColumnFormat = ();
-@ExtraConditionType = @ExtraConditionTypeVal = ();
+@ExtraCodeFilter = @ExtraConditionType = @ExtraConditionTypeVal = ();
 @ExtraFirstColumnValuesType = @ExtraFirstColumnValuesTypeVal = ();
 @ExtraAddAverageRow = @ExtraAddSumRow = ();
 @PluginsToLoad = ();
@@ -1277,6 +1277,7 @@ sub Parse_Config {
 			}
  		# Extra parameters
  		if ($param =~ /^ExtraSectionName(\d+)/)			{ $ExtraName[$1]=$value; next; }
+ 		if ($param =~ /^ExtraSectionCodeFilter(\d+)/)  	{ @{$ExtraCodeFilter[$1]}=split(/\s+/,$value); next; }
  		if ($param =~ /^ExtraSectionCondition(\d+)/)  	{ $ExtraCondition[$1]=$value; next; }
  		if ($param =~ /^ExtraSectionStatTypes(\d+)/)    { $ExtraStatTypes[$1]=$value; next; }
  		if ($param =~ /^ExtraSectionFirstColumnTitle(\d+)/) 	{ $ExtraFirstColumnTitle[$1]=$value; next; }
@@ -1659,7 +1660,7 @@ sub Check_Config {
 	foreach my $extranum (1..@ExtraName-1) {
 		my $part=0;
 		foreach my $conditioncouple (split(/\s*\|\s*/, $ExtraCondition[$extranum])) {
-	 		my ($conditiontype, $conditiontypeval)=split(/,/,$conditioncouple,2);
+	 		my ($conditiontype, $conditiontypeval)=split(/[,:]/,$conditioncouple,2);
 	 		$ExtraConditionType[$extranum][$part]=$conditiontype;
 			if ($conditiontypeval =~ /^REGEX\[(.*)\]$/i) { $conditiontypeval=$1; }
 			#else { $conditiontypeval=quotemeta($conditiontypeval); }
@@ -1668,7 +1669,7 @@ sub Check_Config {
 	 	}
 		$part=0;
 		foreach my $rowkeycouple (split(/\s*\|\s*/, $ExtraFirstColumnValues[$extranum])) {
-	 		my ($rowkeytype, $rowkeytypeval)=split(/,/,$rowkeycouple,2);
+	 		my ($rowkeytype, $rowkeytypeval)=split(/[,:]/,$rowkeycouple,2);
 	 		$ExtraFirstColumnValuesType[$extranum][$part]=$rowkeytype;
 			if ($rowkeytypeval =~ /^REGEX\[(.*)\]$/i) { $rowkeytypeval=$1; }
 			#else { $rowkeytype=quotemeta($rowkeytype); }
@@ -1691,6 +1692,7 @@ sub Check_Config {
 		foreach (keys %MaxNbOf) { debug(" MaxNbOf{$_}=$MaxNbOf{$_}",2); }
 		foreach (keys %MinHit)  { debug(" MinHit{$_}=$MinHit{$_}",2); }
 		foreach my $extranum (1..@ExtraName-1) {
+			debug(" ExtraCodeFilter[$extranum] is array ".join(',',@{$ExtraCodeFilter[$extranum]}),2);
 			debug(" ExtraConditionType[$extranum] is array ".join(',',@{$ExtraConditionType[$extranum]}),2);
 			debug(" ExtraConditionTypeVal[$extranum] is array ".join(',',@{$ExtraConditionTypeVal[$extranum]}),2);
 			debug(" ExtraFirstColumnValuesType[$extranum] is array ".join(',',@{$ExtraFirstColumnValuesType[$extranum]}),2);
@@ -1897,7 +1899,7 @@ sub Read_History_With_TmpUpdate {
 
 	my $xml=($BuildHistoryFormat eq 'xml'?1:0);
 	my $xmleb='</table><nu>'; my $xmlrb='<tr><td>';
-	
+
 	my $lastlinenb=shift||0;
 	my $lastlineoffset=shift||0;
 	my $lastlinechecksum=shift||0;
@@ -2007,6 +2009,7 @@ sub Read_History_With_TmpUpdate {
 	}
 
 	# Loop on read file
+	my $xmlold=0;
 	if ($withread) {
 		my $countlines=0;
 		my $versionnum=0;
@@ -2014,6 +2017,13 @@ sub Read_History_With_TmpUpdate {
 		while (<HISTORY>) {
 			chomp $_; s/\r//;
 			$countlines++;
+			
+			# Test if it's xml
+			if (! $xmlold && $_ =~ /^<xml/) {
+				$xmlold=1;
+				if ($Debug) { debug(" Data file format is 'xml'",1); }
+				next;
+			}
 			
 			# Extract version from first line
 			if (! $versionnum && $_ =~ /^AWSTATS DATA FILE (\d+).(\d+)/i) {
@@ -2023,7 +2033,7 @@ sub Read_History_With_TmpUpdate {
 			}
 
 			# Analyze fields
-			@field=split(/\s+/,($xml?&CleanFromTags($_):$_));
+			@field=split(/\s+/,($xmlold?CleanFromTags($_):$_));
 			if (! $field[0]) { next; }
 
 			# BEGIN_GENERAL
@@ -2121,7 +2131,7 @@ sub Read_History_With_TmpUpdate {
 					}
 					$_=<HISTORY>;
 					chomp $_; s/\r//;
-					@field=split(/\s+/,$_); $countlines++;
+					@field=split(/\s+/,($xmlold?CleanFromTags($_):$_)); $countlines++;
 				}
 				until ($field[0] eq 'END_MISC' || $field[0] eq "${xmleb}END_MISC" || ! $_);
 				if ($field[0] ne 'END_MISC' && $field[0] ne "${xmleb}END_MISC") { error("History file \"$filetoread\" is corrupted (End of section MISC not found).\nRestore a recent backup of this file (data for this month will be restored to backup date), remove it (data for month will be lost), or remove the corrupted section in file (data for at least this section will be lost).","","",1); }
@@ -2152,7 +2162,7 @@ sub Read_History_With_TmpUpdate {
 					}
 					$_=<HISTORY>;
 					chomp $_; s/\r//;
-					@field=split(/\s+/,$_); $countlines++;
+					@field=split(/\s+/,($xmlold?CleanFromTags($_):$_)); $countlines++;
 				}
 				until ($field[0] eq 'END_CLUSTER' || $field[0] eq "${xmleb}END_CLUSTER" || ! $_);
 				if ($field[0] ne 'END_CLUSTER' && $field[0] ne "${xmleb}END_CLUSTER") { error("History file \"$filetoread\" is corrupted (End of section CLUSTER not found).\nRestore a recent backup of this file (data for this month will be restored to backup date), remove it (data for month will be lost), or remove the corrupted section in file (data for at least this section will be lost).","","",1); }
@@ -2196,7 +2206,7 @@ sub Read_History_With_TmpUpdate {
 					}
 					$_=<HISTORY>;
 					chomp $_; s/\r//;
-					@field=split(/\s+/,$_); $countlines++;
+					@field=split(/\s+/,($xmlold?CleanFromTags($_):$_)); $countlines++;
 				}
 				until ($field[0] eq 'END_TIME' || $field[0] eq "${xmleb}END_TIME" || ! $_);
 				if ($field[0] ne 'END_TIME' && $field[0] ne "${xmleb}END_TIME") { error("History file \"$filetoread\" is corrupted (End of section TIME not found).\nRestore a recent backup of this file (data for this month will be restored to backup date), remove it (data for month will be lost), or remove the corrupted section in file (data for at least this section will be lost).","","",1); }
@@ -2235,7 +2245,7 @@ sub Read_History_With_TmpUpdate {
 					}
 					$_=<HISTORY>;
 					chomp $_; s/\r//;
-					@field=split(/\s+/,$_); $countlines++;
+					@field=split(/\s+/,($xmlold?CleanFromTags($_):$_)); $countlines++;
 				}
 				until ($field[0] eq 'END_ORIGIN' || $field[0] eq "${xmleb}END_ORIGIN" || ! $_);
 				if ($field[0] ne 'END_ORIGIN' && $field[0] ne "${xmleb}END_ORIGIN") { error("History file \"$filetoread\" is corrupted (End of section ORIGIN not found).\nRestore a recent backup of this file (data for this month will be restored to backup date), remove it (data for month will be lost), or remove the corrupted section in file (data for at least this section will be lost).","","",1); }
@@ -2266,7 +2276,7 @@ sub Read_History_With_TmpUpdate {
 					}
 					$_=<HISTORY>;
 					chomp $_; s/\r//;
-					@field=split(/\s+/,$_); $countlines++;
+					@field=split(/\s+/,($xmlold?CleanFromTags($_):$_)); $countlines++;
 				}
 				until ($field[0] eq 'END_DAY' || $field[0] eq "${xmleb}END_DAY" || ! $_);
 				if ($field[0] ne 'END_DAY' && $field[0] ne "${xmleb}END_DAY") { error("History file \"$filetoread\" is corrupted (End of section DAY not found).\nRestore a recent backup of this file (data for this month will be restored to backup date), remove it (data for month will be lost), or remove the corrupted section in file (data for at least this section will be lost).","","",1); }
@@ -2373,7 +2383,7 @@ sub Read_History_With_TmpUpdate {
 					}
 					$_=<HISTORY>;
 					chomp $_; s/\r//;
-					@field=split(/\s+/,$_); $countlines++;
+					@field=split(/\s+/,($xmlold?CleanFromTags($_):$_)); $countlines++;
 				}
 				until ($field[0] eq 'END_VISITOR' || $field[0] eq "${xmleb}END_VISITOR" || ! $_);
 				if ($field[0] ne 'END_VISITOR' && $field[0] ne "${xmleb}END_VISITOR") { error("History file \"$filetoread\" is corrupted (End of section VISITOR not found).\nRestore a recent backup of this file (data for this month will be restored to backup date), remove it (data for month will be lost), or remove the corrupted section in file (data for at least this section will be lost).","","",1); }
@@ -2403,7 +2413,7 @@ sub Read_History_With_TmpUpdate {
 					}
 					$_=<HISTORY>;
 					chomp $_; s/\r//;
-					@field=split(/\s+/,$_); $countlines++;
+					@field=split(/\s+/,($xmlold?CleanFromTags($_):$_)); $countlines++;
 				}
 				until ($field[0] eq 'END_UNKNOWNIP' || $field[0] eq "${xmleb}END_UNKNOWNIP" || ! $_);
 				if ($field[0] ne 'END_UNKNOWNIP' && $field[0] ne "${xmleb}END_UNKNOWNIP") { error("History file \"$filetoread\" is corrupted (End of section UNKOWNIP not found).\nRestore a recent backup of this file (data for this month will be restored to backup date), remove it (data for month will be lost), or remove the corrupted section in file (data for at least this section will be lost).","","",1); }
@@ -2441,7 +2451,7 @@ sub Read_History_With_TmpUpdate {
 					}
 					$_=<HISTORY>;
 					chomp $_; s/\r//;
-					@field=split(/\s+/,$_); $countlines++;
+					@field=split(/\s+/,($xmlold?CleanFromTags($_):$_)); $countlines++;
 				}
 				until ($field[0] eq 'END_LOGIN' || $field[0] eq "${xmleb}END_LOGIN" || ! $_);
 				if ($field[0] ne 'END_LOGIN' && $field[0] ne "${xmleb}END_LOGIN") { error("History file \"$filetoread\" is corrupted (End of section LOGIN not found).\nRestore a recent backup of this file (data for this month will be restored to backup date), remove it (data for month will be lost), or remove the corrupted section in file (data for at least this section will be lost).","","",1); }
@@ -2471,7 +2481,7 @@ sub Read_History_With_TmpUpdate {
 					}
 					$_=<HISTORY>;
 					chomp $_; s/\r//;
-					@field=split(/\s+/,$_); $countlines++;
+					@field=split(/\s+/,($xmlold?CleanFromTags($_):$_)); $countlines++;
 				}
 				until ($field[0] eq 'END_DOMAIN' || $field[0] eq "${xmleb}END_DOMAIN" || ! $_);
 				if ($field[0] ne 'END_DOMAIN' && $field[0] ne "${xmleb}END_DOMAIN") { error("History file \"$filetoread\" is corrupted (End of section DOMAIN not found).\nRestore a recent backup of this file (data for this month will be restored to backup date), remove it (data for month will be lost), or remove the corrupted section in file (data for at least this section will be lost).","","",1); }
@@ -2499,7 +2509,7 @@ sub Read_History_With_TmpUpdate {
 					}
 					$_=<HISTORY>;
 					chomp $_; s/\r//;
-					@field=split(/\s+/,$_); $countlines++;
+					@field=split(/\s+/,($xmlold?CleanFromTags($_):$_)); $countlines++;
 				}
 				until ($field[0] eq 'END_SESSION' || $field[0] eq "${xmleb}END_SESSION" || ! $_);
 				if ($field[0] ne 'END_SESSION' && $field[0] ne "${xmleb}END_SESSION") { error("History file \"$filetoread\" is corrupted (End of section SESSION not found).\nRestore a recent backup of this file (data for this month will be restored to backup date), remove it (data for month will be lost), or remove the corrupted section in file (data for at least this section will be lost).","","",1); }
@@ -2528,7 +2538,7 @@ sub Read_History_With_TmpUpdate {
 					}
 					$_=<HISTORY>;
 					chomp $_; s/\r//;
-					@field=split(/\s+/,$_); $countlines++;
+					@field=split(/\s+/,($xmlold?CleanFromTags($_):$_)); $countlines++;
 				}
 				until ($field[0] eq 'END_OS' || $field[0] eq "${xmleb}END_OS" || ! $_);
 				if ($field[0] ne 'END_OS' && $field[0] ne "${xmleb}END_OS") { error("History file \"$filetoread\" is corrupted (End of section OS not found).\nRestore a recent backup of this file (data for this month will be restored to backup date), remove it (data for month will be lost), or remove the corrupted section in file (data for at least this section will be lost).","","",1); }
@@ -2556,7 +2566,7 @@ sub Read_History_With_TmpUpdate {
 					}
 					$_=<HISTORY>;
 					chomp $_; s/\r//;
-					@field=split(/\s+/,$_); $countlines++;
+					@field=split(/\s+/,($xmlold?CleanFromTags($_):$_)); $countlines++;
 				}
 				until ($field[0] eq 'END_BROWSER' || $field[0] eq "${xmleb}END_BROWSER" || ! $_);
 				if ($field[0] ne 'END_BROWSER' && $field[0] ne "${xmleb}END_BROWSER") { error("History file \"$filetoread\" is corrupted (End of section BROWSER not found).\nRestore a recent backup of this file (data for this month will be restored to backup date), remove it (data for month will be lost), or remove the corrupted section in file (data for at least this section will be lost).","","",1); }
@@ -2584,7 +2594,7 @@ sub Read_History_With_TmpUpdate {
 					}
 					$_=<HISTORY>;
 					chomp $_; s/\r//;
-					@field=split(/\s+/,$_); $countlines++;
+					@field=split(/\s+/,($xmlold?CleanFromTags($_):$_)); $countlines++;
 				}
 				until ($field[0] eq 'END_UNKNOWNREFERER' || $field[0] eq "${xmleb}END_UNKNOWNREFERER" || ! $_);
 				if ($field[0] ne 'END_UNKNOWNREFERER' && $field[0] ne "${xmleb}END_UNKNOWNREFERER") { error("History file \"$filetoread\" is corrupted (End of section UNKNOWNREFERER not found).\nRestore a recent backup of this file (data for this month will be restored to backup date), remove it (data for month will be lost), or remove the corrupted section in file (data for at least this section will be lost).","","",1); }
@@ -2612,7 +2622,7 @@ sub Read_History_With_TmpUpdate {
 					}
 					$_=<HISTORY>;
 					chomp $_; s/\r//;
-					@field=split(/\s+/,$_); $countlines++;
+					@field=split(/\s+/,($xmlold?CleanFromTags($_):$_)); $countlines++;
 				}
 				until ($field[0] eq 'END_UNKNOWNREFERERBROWSER' || $field[0] eq "${xmleb}END_UNKNOWNREFERERBROWSER" || ! $_);
 				if ($field[0] ne 'END_UNKNOWNREFERERBROWSER' && $field[0] ne "${xmleb}END_UNKNOWNREFERERBROWSER") { error("History file \"$filetoread\" is corrupted (End of section UNKNOWNREFERERBROWSER not found).\nRestore a recent backup of this file (data for this month will be restored to backup date), remove it (data for month will be lost), or remove the corrupted section in file (data for at least this section will be lost).","","",1); }
@@ -2640,7 +2650,7 @@ sub Read_History_With_TmpUpdate {
 					}
 					$_=<HISTORY>;
 					chomp $_; s/\r//;
-					@field=split(/\s+/,$_); $countlines++;
+					@field=split(/\s+/,($xmlold?CleanFromTags($_):$_)); $countlines++;
 				}
 				until ($field[0] eq 'END_SCREENSIZE' || $field[0] eq "${xmleb}END_SCREENSIZE" || ! $_);
 				if ($field[0] ne 'END_SCREENSIZE' && $field[0] ne "${xmleb}END_SCREENSIZE") { error("History file \"$filetoread\" is corrupted (End of section SCREENSIZE not found).\nRestore a recent backup of this file (data for this month will be restored to backup date), remove it (data for month will be lost), or remove the corrupted section in file (data for at least this section will be lost).","","",1); }
@@ -2676,7 +2686,7 @@ sub Read_History_With_TmpUpdate {
 					}
 					$_=<HISTORY>;
 					chomp $_; s/\r//;
-					@field=split(/\s+/,$_); $countlines++;
+					@field=split(/\s+/,($xmlold?CleanFromTags($_):$_)); $countlines++;
 				}
 				until ($field[0] eq 'END_ROBOT' || $field[0] eq "${xmleb}END_ROBOT" || ! $_);
 				if ($field[0] ne 'END_ROBOT' && $field[0] ne "${xmleb}END_ROBOT") { error("History file \"$filetoread\" is corrupted (End of section ROBOT not found).\nRestore a recent backup of this file (data for this month will be restored to backup date), remove it (data for month will be lost), or remove the corrupted section in file (data for at least this section will be lost).","","",1); }
@@ -2706,7 +2716,7 @@ sub Read_History_With_TmpUpdate {
 					}
 					$_=<HISTORY>;
 					chomp $_; s/\r//;
-					@field=split(/\s+/,$_); $countlines++;
+					@field=split(/\s+/,($xmlold?CleanFromTags($_):$_)); $countlines++;
 				}
 				until ($field[0] eq 'END_WORMS' || $field[0] eq "${xmleb}END_WORMS" || ! $_);
 				if ($field[0] ne 'END_WORMS' && $field[0] ne "${xmleb}END_WORMS") { error("History file \"$filetoread\" is corrupted (End of section WORMS not found).\nRestore a recent backup of this file (data for this month will be restored to backup date), remove it (data for month will be lost), or remove the corrupted section in file (data for at least this section will be lost).","","",1); }
@@ -2736,7 +2746,7 @@ sub Read_History_With_TmpUpdate {
 					}
 					$_=<HISTORY>;
 					chomp $_; s/\r//;
-					@field=split(/\s+/,$_); $countlines++;
+					@field=split(/\s+/,($xmlold?CleanFromTags($_):$_)); $countlines++;
 				}
 				until ($field[0] eq 'END_EMAILSENDER' || $field[0] eq "${xmleb}END_EMAILSENDER" || ! $_);
 				if ($field[0] ne 'END_EMAILSENDER' && $field[0] ne "${xmleb}END_EMAILSENDER") { error("History file \"$filetoread\" is corrupted (End of section EMAILSENDER not found).\nRestore a recent backup of this file (data for this month will be restored to backup date), remove it (data for month will be lost), or remove the corrupted section in file (data for at least this section will be lost).","","",1); }
@@ -2766,7 +2776,7 @@ sub Read_History_With_TmpUpdate {
 					}
 					$_=<HISTORY>;
 					chomp $_; s/\r//;
-					@field=split(/\s+/,$_); $countlines++;
+					@field=split(/\s+/,($xmlold?CleanFromTags($_):$_)); $countlines++;
 				}
 				until ($field[0] eq 'END_EMAILRECEIVER' || $field[0] eq "${xmleb}END_EMAILRECEIVER" || ! $_);
 				if ($field[0] ne 'END_EMAILRECEIVER' && $field[0] ne "${xmleb}END_EMAILRECEIVER") { error("History file \"$filetoread\" is corrupted (End of section EMAILRECEIVER not found).\nRestore a recent backup of this file (data for this month will be restored to backup date), remove it (data for month will be lost), or remove the corrupted section in file (data for at least this section will be lost).","","",1); }
@@ -2839,7 +2849,7 @@ sub Read_History_With_TmpUpdate {
 					}
 					$_=<HISTORY>;
 					chomp $_; s/\r//;
-					@field=split(/\s+/,$_); $countlines++;
+					@field=split(/\s+/,($xmlold?CleanFromTags($_):$_)); $countlines++;
 				}
 				until ($field[0] eq 'END_SIDER' || $field[0] eq "${xmleb}END_SIDER" || ! $_);
 				if ($field[0] ne 'END_SIDER' && $field[0] ne "${xmleb}END_SIDER") { error("History file \"$filetoread\" is corrupted (End of section SIDER not found).\nRestore a recent backup of this file (data for this month will be restored to backup date), remove it (data for month will be lost), or remove the corrupted section in file (data for at least this section will be lost).","","",1); }
@@ -2871,7 +2881,7 @@ sub Read_History_With_TmpUpdate {
 					}
 					$_=<HISTORY>;
 					chomp $_; s/\r//;
-					@field=split(/\s+/,$_); $countlines++;
+					@field=split(/\s+/,($xmlold?CleanFromTags($_):$_)); $countlines++;
 				}
 				until ($field[0] eq 'END_FILETYPES' || $field[0] eq "${xmleb}END_FILETYPES" || ! $_);
 				if ($field[0] ne 'END_FILETYPES' && $field[0] ne "${xmleb}END_FILETYPES") { error("History file \"$filetoread\" is corrupted (End of section FILETYPES not found).\nRestore a recent backup of this file (data for this month will be restored to backup date), remove it (data for month will be lost), or remove the corrupted section in file (data for at least this section will be lost).","","",1); }
@@ -2921,7 +2931,7 @@ sub Read_History_With_TmpUpdate {
 					}
 					$_=<HISTORY>;
 					chomp $_; s/\r//;
-					@field=split(/\s+/,$_); $countlines++;
+					@field=split(/\s+/,($xmlold?CleanFromTags($_):$_)); $countlines++;
 				}
 				until ($field[0] eq 'END_SEREFERRALS' || $field[0] eq "${xmleb}END_SEREFERRALS" || ! $_);
 				if ($field[0] ne 'END_SEREFERRALS' && $field[0] ne "${xmleb}END_SEREFERRALS") { error("History file \"$filetoread\" is corrupted (End of section SEREFERRALS not found).\nRestore a recent backup of this file (data for this month will be restored to backup date), remove it (data for month will be lost), or remove the corrupted section in file (data for at least this section will be lost).","","",1); }
@@ -2964,7 +2974,7 @@ sub Read_History_With_TmpUpdate {
 					}
 					$_=<HISTORY>;
 					chomp $_; s/\r//;
-					@field=split(/\s+/,$_); $countlines++;
+					@field=split(/\s+/,($xmlold?CleanFromTags($_):$_)); $countlines++;
 				}
 				until ($field[0] eq 'END_PAGEREFS' || $field[0] eq "${xmleb}END_PAGEREFS" || ! $_);
 				if ($field[0] ne 'END_PAGEREFS' && $field[0] ne "${xmleb}END_PAGEREFS") { error("History file \"$filetoread\" is corrupted (End of section PAGEREFS not found).\nRestore a recent backup of this file (data for this month will be restored to backup date), remove it (data for month will be lost), or remove the corrupted section in file (data for at least this section will be lost).","","",1); }
@@ -3028,7 +3038,7 @@ sub Read_History_With_TmpUpdate {
 					}
 					$_=<HISTORY>;
 					chomp $_; s/\r//;
-					@field=split(/\s+/,$_); $countlines++;
+					@field=split(/\s+/,($xmlold?CleanFromTags($_):$_)); $countlines++;
 				}
 				until ($field[0] eq 'END_SEARCHWORDS' || $field[0] eq "${xmleb}END_SEARCHWORDS" || ! $_);
 				if ($field[0] ne 'END_SEARCHWORDS' && $field[0] ne "${xmleb}END_SEARCHWORDS") { error("History file \"$filetoread\" is corrupted (End of section SEARCHWORDS not found).\nRestore a recent backup of this file (data for this month will be restored to backup date), remove it (data for month will be lost), or remove the corrupted section in file (data for at least this section will be lost).","","",1); }
@@ -3065,7 +3075,7 @@ sub Read_History_With_TmpUpdate {
 					}
 					$_=<HISTORY>;
 					chomp $_; s/\r//;
-					@field=split(/\s+/,$_); $countlines++;
+					@field=split(/\s+/,($xmlold?CleanFromTags($_):$_)); $countlines++;
 				}
 				until ($field[0] eq 'END_KEYWORDS' || $field[0] eq "${xmleb}END_KEYWORDS" || ! $_);
 				if ($field[0] ne 'END_KEYWORDS' && $field[0] ne "${xmleb}END_KEYWORDS") { error("History file \"$filetoread\" is corrupted (End of section KEYWORDS not found).\nRestore a recent backup of this file (data for this month will be restored to backup date), remove it (data for month will be lost), or remove the corrupted section in file (data for at least this section will be lost).","","",1); }
@@ -3094,7 +3104,7 @@ sub Read_History_With_TmpUpdate {
 					}
 					$_=<HISTORY>;
 					chomp $_; s/\r//;
-					@field=split(/\s+/,$_); $countlines++;
+					@field=split(/\s+/,($xmlold?CleanFromTags($_):$_)); $countlines++;
 				}
 				until ($field[0] eq 'END_ERRORS' || $field[0] eq "${xmleb}END_ERRORS" || ! $_);
 				if ($field[0] ne 'END_ERRORS' && $field[0] ne "${xmleb}END_ERRORS") { error("History file \"$filetoread\" is corrupted (End of section ERRORS not found).\nRestore a recent backup of this file (data for this month will be restored to backup date), remove it (data for month will be lost), or remove the corrupted section in file (data for at least this section will be lost).","","",1); }
@@ -3126,7 +3136,7 @@ sub Read_History_With_TmpUpdate {
 						}
 						$_=<HISTORY>;
 						chomp $_; s/\r//;
-						@field=split(/\s+/,$_); $countlines++;
+						@field=split(/\s+/,($xmlold?CleanFromTags($_):$_)); $countlines++;
 					}
 					until ($field[0] eq "END_SIDER_$code" || $field[0] eq "${xmleb}END_SIDER_$code" || ! $_);
 					if ($field[0] ne "END_SIDER_$code" && $field[0] ne "${xmleb}END_SIDER_$code") { error("History file \"$filetoread\" is corrupted (End of section SIDER_$code not found).\nRestore a recent backup of this file (data for this month will be restored to backup date), remove it (data for month will be lost), or remove the corrupted section in file (data for at least this section will be lost).","","",1); }
@@ -3159,7 +3169,7 @@ sub Read_History_With_TmpUpdate {
 						}
 						$_=<HISTORY>;
 						chomp $_; s/\r//;
-						@field=split(/\s+/,$_); $countlines++;
+						@field=split(/\s+/,($xmlold?CleanFromTags($_):$_)); $countlines++;
 					}
 					until ($field[0] eq "END_EXTRA_$extranum" || $field[0] eq "${xmleb}END_EXTRA_$extranum" || ! $_);
 					if ($field[0] ne "END_EXTRA_$extranum" && $field[0] ne "${xmleb}END_EXTRA_$extranum") { error("History file \"$filetoread\" is corrupted (End of section EXTRA_$extranum not found).\nRestore a recent backup of this file (data for this month will be restored to backup date), remove it (data for month will be lost), or remove the corrupted section in file (data for at least this section will be lost).","","",1); }
@@ -3373,7 +3383,7 @@ sub Save_History {
 		print HISTORYTMP "# Hour - Pages - Hits - Bandwidth - Not viewed Pages - Not viewed Hits - Not viewed Bandwidth\n";
 		$ValueInFile{$sectiontosave}=tell HISTORYTMP;
 		print HISTORYTMP "${xmlbb}BEGIN_TIME ${xmlbs}24${xmlbe}\n";
-		for (my $ix=0; $ix<=23; $ix++) { print HISTORYTMP "$ix ".int($_time_p[$ix])." ".int($_time_h[$ix])." ".int($_time_k[$ix])." ".int($_time_nv_p[$ix])." ".int($_time_nv_h[$ix])." ".int($_time_nv_k[$ix])."\n"; }
+		for (my $ix=0; $ix<=23; $ix++) { print HISTORYTMP "${xmlrb}$ix ".int($_time_p[$ix])." ".int($_time_h[$ix])." ".int($_time_k[$ix])." ".int($_time_nv_p[$ix])." ".int($_time_nv_h[$ix])." ".int($_time_nv_k[$ix])."${xmlre}\n"; }
 		print HISTORYTMP "${xmleb}END_TIME${xmlee}\n";
 	}
 	if ($sectiontosave eq 'day') {	# This section must be saved after VISITOR section is read
@@ -3389,7 +3399,7 @@ sub Save_History {
 				my $hits=$DayHits{$_}||0;
 				my $bytes=$DayBytes{$_}||0;
 				my $visits=$DayVisits{$_}||0;
-				print HISTORYTMP "$_ $page $hits $bytes $visits\n";
+				print HISTORYTMP "${xmlrb}$_ $page $hits $bytes $visits${xmlre}\n";
 				$monthvisits+=$visits;
 			}
 		}
@@ -3412,13 +3422,13 @@ sub Save_History {
 			$keysinkeylist{$_}=1;
 			my $page=$_domener_p{$_}||0;
 			my $bytes=$_domener_k{$_}||0;		# ||0 could be commented to reduce history file size
-			print HISTORYTMP "$_ $page $_domener_h{$_} $bytes\n";
+			print HISTORYTMP "${xmlrb}$_ $page $_domener_h{$_} $bytes${xmlre}\n";
 		}
 		foreach (keys %_domener_h) {
 			if ($keysinkeylist{$_}) { next; }
 			my $page=$_domener_p{$_}||0;
 			my $bytes=$_domener_k{$_}||0;		# ||0 could be commented to reduce history file size
-			print HISTORYTMP "$_ $page $_domener_h{$_} $bytes\n";
+			print HISTORYTMP "${xmlrb}$_ $page $_domener_h{$_} $bytes${xmlre}\n";
 		}
 		print HISTORYTMP "${xmleb}END_DOMAIN${xmlee}\n";
 	}
@@ -3449,16 +3459,16 @@ sub Save_History {
 					if ($lastpage) { $_url_x{$lastpage}++; }
 					delete $_host_s{$key};
 					delete $_host_u{$key};
-					print HISTORYTMP "$key $page $_host_h{$key} $bytes $timehostl\n";
+					print HISTORYTMP "${xmlrb}$key $page $_host_h{$key} $bytes $timehostl${xmlre}\n";
 				}
 				else {
 					# If this user has started a new session that is not expired
-					print HISTORYTMP "$key $page $_host_h{$key} $bytes $timehostl $timehosts $lastpage\n";
+					print HISTORYTMP "${xmlrb}$key $page $_host_h{$key} $bytes $timehostl $timehosts $lastpage${xmlre}\n";
 				}
 			}
 			else {
 				my $hostl=$timehostl||'';
-				print HISTORYTMP "$key $page $_host_h{$key} $bytes $hostl\n";
+				print HISTORYTMP "${xmlrb}$key $page $_host_h{$key} $bytes $hostl${xmlre}\n";
 			}
 		}
 		foreach my $key (keys %_host_h) {
@@ -3476,16 +3486,16 @@ sub Save_History {
 					if ($lastpage) { $_url_x{$lastpage}++; }
 					delete $_host_s{$key};
 					delete $_host_u{$key};
-					print HISTORYTMP "$key $page $_host_h{$key} $bytes $timehostl\n";
+					print HISTORYTMP "${xmlrb}$key $page $_host_h{$key} $bytes $timehostl${xmlre}\n";
 				}
 				else {
 					# If this user has started a new session that is not expired
-					print HISTORYTMP "$key $page $_host_h{$key} $bytes $timehostl $timehosts $lastpage\n";
+					print HISTORYTMP "${xmlrb}$key $page $_host_h{$key} $bytes $timehostl $timehosts $lastpage${xmlre}\n";
 				}
 			}
 			else {
 				my $hostl=$timehostl||'';
-				print HISTORYTMP "$key $page $_host_h{$key} $bytes $hostl\n";
+				print HISTORYTMP "${xmlrb}$key $page $_host_h{$key} $bytes $hostl${xmlre}\n";
 			}
 		}
 		$MonthUnique{$year.$month}=(scalar keys %_host_p);
@@ -3505,11 +3515,11 @@ sub Save_History {
 		my %keysinkeylist=();
 		foreach (@keylist) {
 			$keysinkeylist{$_}=1;
-			print HISTORYTMP "$_ ".int($_login_p{$_}||0)." ".int($_login_h{$_}||0)." ".int($_login_k{$_}||0)." ".($_login_l{$_}||'')."\n";
+			print HISTORYTMP "${xmlrb}$_ ".int($_login_p{$_}||0)." ".int($_login_h{$_}||0)." ".int($_login_k{$_}||0)." ".($_login_l{$_}||'')."${xmlre}\n";
 		}
 		foreach (keys %_login_h) {
 			if ($keysinkeylist{$_}) { next; }
-			print HISTORYTMP "$_ ".int($_login_p{$_}||0)." ".int($_login_h{$_}||0)." ".int($_login_k{$_}||0)." ".($_login_l{$_}||'')."\n";
+			print HISTORYTMP "${xmlrb}$_ ".int($_login_p{$_}||0)." ".int($_login_h{$_}||0)." ".int($_login_k{$_}||0)." ".($_login_l{$_}||'')."${xmlre}\n";
 		}
 		print HISTORYTMP "${xmleb}END_LOGIN${xmlee}\n";
 	}
@@ -3525,11 +3535,11 @@ sub Save_History {
 		my %keysinkeylist=();
 		foreach (@keylist) {
 			$keysinkeylist{$_}=1;
-			print HISTORYTMP "$_ ".int($_robot_h{$_})." ".int($_robot_k{$_})." $_robot_l{$_} ".int($_robot_r{$_})." \n";
+			print HISTORYTMP "${xmlrb}$_ ".int($_robot_h{$_})." ".int($_robot_k{$_})." $_robot_l{$_} ".int($_robot_r{$_})."${xmlre}\n";
 		}
 		foreach (keys %_robot_h) {
 			if ($keysinkeylist{$_}) { next; }
-			print HISTORYTMP "$_ ".int($_robot_h{$_})." ".int($_robot_k{$_})." $_robot_l{$_} ".int($_robot_r{$_})." \n";
+			print HISTORYTMP "${xmlrb}$_ ".int($_robot_h{$_})." ".int($_robot_k{$_})." $_robot_l{$_} ".int($_robot_r{$_})."${xmlre}\n";
 		}
 		print HISTORYTMP "${xmleb}END_ROBOT${xmlee}\n";
 	}
@@ -3545,11 +3555,11 @@ sub Save_History {
 		my %keysinkeylist=();
 		foreach (@keylist) {
 			$keysinkeylist{$_}=1;
-			print HISTORYTMP "$_ ".int($_worm_h{$_})." ".int($_worm_k{$_})." $_worm_l{$_}\n";
+			print HISTORYTMP "${xmlrb}$_ ".int($_worm_h{$_})." ".int($_worm_k{$_})." $_worm_l{$_}${xmlre}\n";
 		}
 		foreach (keys %_worm_h) {
 			if ($keysinkeylist{$_}) { next; }
-			print HISTORYTMP "$_ ".int($_worm_h{$_})." ".int($_worm_k{$_})." $_worm_l{$_}\n";
+			print HISTORYTMP "${xmlrb}$_ ".int($_worm_h{$_})." ".int($_worm_k{$_})." $_worm_l{$_}${xmlre}\n";
 		}
 		print HISTORYTMP "${xmleb}END_WORMS${xmlee}\n";
 	}
@@ -3565,11 +3575,11 @@ sub Save_History {
 		my %keysinkeylist=();
 		foreach (@keylist) {
 			$keysinkeylist{$_}=1;
-			print HISTORYTMP "$_ ".int($_emails_h{$_}||0)." ".int($_emails_k{$_}||0)." $_emails_l{$_}\n";
+			print HISTORYTMP "${xmlrb}$_ ".int($_emails_h{$_}||0)." ".int($_emails_k{$_}||0)." $_emails_l{$_}${xmlre}\n";
 		}
 		foreach (keys %_emails_h) {
 			if ($keysinkeylist{$_}) { next; }
-			print HISTORYTMP "$_ ".int($_emails_h{$_}||0)." ".int($_emails_k{$_}||0)." $_emails_l{$_}\n";
+			print HISTORYTMP "${xmlrb}$_ ".int($_emails_h{$_}||0)." ".int($_emails_k{$_}||0)." $_emails_l{$_}${xmlre}\n";
 		}
 		print HISTORYTMP "${xmleb}END_EMAILSENDER${xmlee}\n";
 	}
@@ -3585,11 +3595,11 @@ sub Save_History {
 		my %keysinkeylist=();
 		foreach (@keylist) {
 			$keysinkeylist{$_}=1;
-			print HISTORYTMP "$_ ".int($_emailr_h{$_}||0)." ".int($_emailr_k{$_}||0)." $_emailr_l{$_}\n";
+			print HISTORYTMP "${xmlrb}$_ ".int($_emailr_h{$_}||0)." ".int($_emailr_k{$_}||0)." $_emailr_l{$_}${xmlre}\n";
 		}
 		foreach (keys %_emailr_h) {
 			if ($keysinkeylist{$_}) { next; }
-			print HISTORYTMP "$_ ".int($_emailr_h{$_}||0)." ".int($_emailr_k{$_}||0)." $_emailr_l{$_}\n";
+			print HISTORYTMP "${xmlrb}$_ ".int($_emailr_h{$_}||0)." ".int($_emailr_k{$_}||0)." $_emailr_l{$_}${xmlre}\n";
 		}
 		print HISTORYTMP "${xmleb}END_EMAILRECEIVER${xmlee}\n";
 	}
@@ -3601,7 +3611,7 @@ sub Save_History {
 		print HISTORYTMP "# Session range - Number of visits\n";
 		$ValueInFile{$sectiontosave}=tell HISTORYTMP;
 		print HISTORYTMP "${xmlbb}BEGIN_SESSION ${xmlbs}".(scalar keys %_session)."${xmlbe}\n";
-		foreach (keys %_session) { print HISTORYTMP "$_ ".int($_session{$_})."\n"; }
+		foreach (keys %_session) { print HISTORYTMP "${xmlrb}$_ ".int($_session{$_})."${xmlre}\n"; }
 		print HISTORYTMP "${xmleb}END_SESSION${xmlee}\n";
 	}
 	if ($sectiontosave eq 'sider') {	# This section must be saved after VISITOR section is read
@@ -3618,13 +3628,13 @@ sub Save_History {
 			$keysinkeylist{$_}=1;
 			my $newkey=$_;
 			$newkey =~ s/([^:])\/\//$1\//g;		# Because some targeted url were taped with 2 / (Ex: //rep//file.htm). We must keep http://rep/file.htm
-			print HISTORYTMP "$newkey ".int($_url_p{$_}||0)." ".int($_url_k{$_}||0)." ".int($_url_e{$_}||0)." ".int($_url_x{$_}||0)."\n";
+			print HISTORYTMP "${xmlrb}$newkey ".int($_url_p{$_}||0)." ".int($_url_k{$_}||0)." ".int($_url_e{$_}||0)." ".int($_url_x{$_}||0)."${xmlre}\n";
 		}
 		foreach (keys %_url_p) {
 			if ($keysinkeylist{$_}) { next; }
 			my $newkey=$_;
 			$newkey =~ s/([^:])\/\//$1\//g;		# Because some targeted url were taped with 2 / (Ex: //rep//file.htm). We must keep http://rep/file.htm
-			print HISTORYTMP "$newkey ".int($_url_p{$_}||0)." ".int($_url_k{$_}||0)." ".int($_url_e{$_}||0)." ".int($_url_x{$_}||0)."\n";
+			print HISTORYTMP "${xmlrb}$newkey ".int($_url_p{$_}||0)." ".int($_url_k{$_}||0)." ".int($_url_e{$_}||0)." ".int($_url_x{$_}||0)."${xmlre}\n";
 		}
 		print HISTORYTMP "${xmleb}END_SIDER${xmlee}\n";
 	}
@@ -3639,7 +3649,7 @@ sub Save_History {
 			my $bytes=$_filetypes_k{$_}||0;
 			my $bytesbefore=$_filetypes_gz_in{$_}||0;
 			my $bytesafter=$_filetypes_gz_out{$_}||0;
-			print HISTORYTMP "$_ $hits $bytes $bytesbefore $bytesafter\n";
+			print HISTORYTMP "${xmlrb}$_ $hits $bytes $bytesbefore $bytesafter${xmlre}\n";
 		}
 		print HISTORYTMP "${xmleb}END_FILETYPES${xmlee}\n";
 	}
@@ -3649,7 +3659,7 @@ sub Save_History {
 		print HISTORYTMP "# OS ID - Hits\n";
 		$ValueInFile{$sectiontosave}=tell HISTORYTMP;
 		print HISTORYTMP "${xmlbb}BEGIN_OS ${xmlbs}".(scalar keys %_os_h)."${xmlbe}\n";
-		foreach (keys %_os_h) { print HISTORYTMP "$_ $_os_h{$_}\n"; }
+		foreach (keys %_os_h) { print HISTORYTMP "${xmlrb}$_ $_os_h{$_}${xmlre}\n"; }
 		print HISTORYTMP "${xmleb}END_OS${xmlee}\n";
 	}
 	if ($sectiontosave eq 'browser') {
@@ -3658,7 +3668,7 @@ sub Save_History {
 		print HISTORYTMP "# Browser ID - Hits\n";
 		$ValueInFile{$sectiontosave}=tell HISTORYTMP;
 		print HISTORYTMP "${xmlbb}BEGIN_BROWSER ${xmlbs}".(scalar keys %_browser_h)."${xmlbe}\n";
-		foreach (keys %_browser_h) { print HISTORYTMP "$_ $_browser_h{$_}\n"; }
+		foreach (keys %_browser_h) { print HISTORYTMP "${xmlrb}$_ $_browser_h{$_}${xmlre}\n"; }
 		print HISTORYTMP "${xmleb}END_BROWSER${xmlee}\n";
 	}
 	if ($sectiontosave eq 'screensize') {
@@ -3667,7 +3677,7 @@ sub Save_History {
 		print HISTORYTMP "# Screen size - Hits\n";
 		$ValueInFile{$sectiontosave}=tell HISTORYTMP;
 		print HISTORYTMP "${xmlbb}BEGIN_SCREENSIZE ${xmlbs}".(scalar keys %_screensize_h)."${xmlbe}\n";
-		foreach (keys %_screensize_h) { print HISTORYTMP "$_ $_screensize_h{$_}\n"; }
+		foreach (keys %_screensize_h) { print HISTORYTMP "${xmlrb}$_ $_screensize_h{$_}${xmlre}\n"; }
 		print HISTORYTMP "${xmleb}END_SCREENSIZE${xmlee}\n";
 	}
 
@@ -3678,7 +3688,7 @@ sub Save_History {
 		print HISTORYTMP "# Unknown referer OS - Last visit date\n";
 		$ValueInFile{$sectiontosave}=tell HISTORYTMP;
 		print HISTORYTMP "${xmlbb}BEGIN_UNKNOWNREFERER ${xmlbs}".(scalar keys %_unknownreferer_l)."${xmlbe}\n";
-		foreach (keys %_unknownreferer_l) { print HISTORYTMP "$_ $_unknownreferer_l{$_}\n"; }
+		foreach (keys %_unknownreferer_l) { print HISTORYTMP "${xmlrb}$_ $_unknownreferer_l{$_}${xmlre}\n"; }
 		print HISTORYTMP "${xmleb}END_UNKNOWNREFERER${xmlee}\n";
 	}
 	if ($sectiontosave eq 'unknownrefererbrowser') {
@@ -3687,7 +3697,7 @@ sub Save_History {
 		print HISTORYTMP "# Unknown referer Browser - Last visit date\n";
 		$ValueInFile{$sectiontosave}=tell HISTORYTMP;
 		print HISTORYTMP "${xmlbb}BEGIN_UNKNOWNREFERERBROWSER ${xmlbs}".(scalar keys %_unknownrefererbrowser_l)."${xmlbe}\n";
-		foreach (keys %_unknownrefererbrowser_l) { print HISTORYTMP "$_ $_unknownrefererbrowser_l{$_}\n"; }
+		foreach (keys %_unknownrefererbrowser_l) { print HISTORYTMP "${xmlrb}$_ $_unknownrefererbrowser_l{$_}${xmlre}\n"; }
 		print HISTORYTMP "${xmleb}END_UNKNOWNREFERERBROWSER${xmlee}\n";
 	}
 	if ($sectiontosave eq 'origin') {
@@ -3696,12 +3706,12 @@ sub Save_History {
 		print HISTORYTMP "# Origin - Pages - Hits \n";
 		$ValueInFile{$sectiontosave}=tell HISTORYTMP;
 		print HISTORYTMP "${xmlbb}BEGIN_ORIGIN ${xmlbs}6"."${xmlbe}\n";
-		print HISTORYTMP "From0 ".int($_from_p[0])." ".int($_from_h[0])."\n";
-		print HISTORYTMP "From1 ".int($_from_p[1])." ".int($_from_h[1])."\n";
-		print HISTORYTMP "From2 ".int($_from_p[2])." ".int($_from_h[2])."\n";
-		print HISTORYTMP "From3 ".int($_from_p[3])." ".int($_from_h[3])."\n";
-		print HISTORYTMP "From4 ".int($_from_p[4])." ".int($_from_h[4])."\n";		# Same site
-		print HISTORYTMP "From5 ".int($_from_p[5])." ".int($_from_h[5])."\n";		# News
+		print HISTORYTMP "${xmlrb}From0 ".int($_from_p[0])." ".int($_from_h[0])."${xmlre}\n";
+		print HISTORYTMP "${xmlrb}From1 ".int($_from_p[1])." ".int($_from_h[1])."${xmlre}\n";
+		print HISTORYTMP "${xmlrb}From2 ".int($_from_p[2])." ".int($_from_h[2])."${xmlre}\n";
+		print HISTORYTMP "${xmlrb}From3 ".int($_from_p[3])." ".int($_from_h[3])."${xmlre}\n";
+		print HISTORYTMP "${xmlrb}From4 ".int($_from_p[4])." ".int($_from_h[4])."${xmlre}\n";		# Same site
+		print HISTORYTMP "${xmlrb}From5 ".int($_from_p[5])." ".int($_from_h[5])."${xmlre}\n";		# News
 		print HISTORYTMP "${xmleb}END_ORIGIN${xmlee}\n";
 	}
 	if ($sectiontosave eq 'sereferrals') {
@@ -3710,7 +3720,7 @@ sub Save_History {
 		print HISTORYTMP "# Search engine referers ID - Pages - Hits\n";
 		$ValueInFile{$sectiontosave}=tell HISTORYTMP;
 		print HISTORYTMP "${xmlbb}BEGIN_SEREFERRALS ${xmlbs}".(scalar keys %_se_referrals_h)."${xmlbe}\n";
-		foreach (keys %_se_referrals_h) { print HISTORYTMP "$_ ".int($_se_referrals_p{$_}||0)." $_se_referrals_h{$_}\n"; }
+		foreach (keys %_se_referrals_h) { print HISTORYTMP "${xmlrb}$_ ".int($_se_referrals_p{$_}||0)." $_se_referrals_h{$_}${xmlre}\n"; }
 		print HISTORYTMP "${xmleb}END_SEREFERRALS${xmlee}\n";
 	}
 	if ($sectiontosave eq 'pagerefs') {
@@ -3728,14 +3738,14 @@ sub Save_History {
 			my $newkey=$_;
 			$newkey =~ s/^http(s|):\/\/([^\/]+)\/$/http$1:\/\/$2/i;	# Remove / at end of http://.../ but not at end of http://.../dir/
 			$newkey =~ s/\s/%20/g;
-			print HISTORYTMP "$newkey ".int($_pagesrefs_p{$_}||0)." $_pagesrefs_h{$_}\n";
+			print HISTORYTMP "${xmlrb}$newkey ".int($_pagesrefs_p{$_}||0)." $_pagesrefs_h{$_}${xmlre}\n";
 		}
 		foreach (keys %_pagesrefs_h) {
 			if ($keysinkeylist{$_}) { next; }
 			my $newkey=$_;
 			$newkey =~ s/^http(s|):\/\/([^\/]+)\/$/http$1:\/\/$2/i;	# Remove / at end of http://.../ but not at end of http://.../dir/
 			$newkey =~ s/\s/%20/g;
-			print HISTORYTMP "$newkey ".int($_pagesrefs_p{$_}||0)." $_pagesrefs_h{$_}\n";
+			print HISTORYTMP "${xmlrb}$newkey ".int($_pagesrefs_p{$_}||0)." $_pagesrefs_h{$_}${xmlre}\n";
 		}
 		print HISTORYTMP "${xmleb}END_PAGEREFS${xmlee}\n";
 	}
@@ -3754,13 +3764,13 @@ sub Save_History {
 		foreach my $key (@keylist) {
 			$keysinkeylist{$key}=1;
 			my $keyphrase=$key;
-			print HISTORYTMP "$keyphrase $_keyphrases{$key}\n";
+			print HISTORYTMP "${xmlrb}$keyphrase $_keyphrases{$key}${xmlre}\n";
 			foreach (split(/\+/,$key)) { $_keywords{$_}+=$_keyphrases{$key}; }	# To init %_keywords
 		}
 		foreach my $key (keys %_keyphrases) {
 			if ($keysinkeylist{$key}) { next; }
 			my $keyphrase=$key;
-			print HISTORYTMP "$keyphrase $_keyphrases{$key}\n";
+			print HISTORYTMP "${xmlrb}$keyphrase $_keyphrases{$key}${xmlre}\n";
 			foreach (split(/\+/,$key)) { $_keywords{$_}+=$_keyphrases{$key}; }	# To init %_keywords
 		}
 		print HISTORYTMP "${xmleb}END_SEARCHWORDS${xmlee}\n";
@@ -3778,12 +3788,12 @@ sub Save_History {
 		foreach (@keylist) {
 			$keysinkeylist{$_}=1;
 			my $keyword=$_;
-			print HISTORYTMP "$keyword $_keywords{$_}\n";
+			print HISTORYTMP "${xmlrb}$keyword $_keywords{$_}${xmlre}\n";
 		}
 		foreach (keys %_keywords) {
 			if ($keysinkeylist{$_}) { next; }
 			my $keyword=$_;
-			print HISTORYTMP "$keyword $_keywords{$_}\n";
+			print HISTORYTMP "${xmlrb}$keyword $_keywords{$_}${xmlre}\n";
 		}
 		print HISTORYTMP "${xmleb}END_KEYWORDS${xmlee}\n";
 
@@ -3796,7 +3806,7 @@ sub Save_History {
 		print HISTORYTMP "# Cluster ID - Pages - Hits - Bandwidth\n";
 		$ValueInFile{$sectiontosave}=tell HISTORYTMP;
 		print HISTORYTMP "${xmlbb}BEGIN_CLUSTER ${xmlbs}".(scalar keys %_cluster_h)."${xmlbe}\n";
-		foreach (keys %_cluster_h) { print HISTORYTMP "$_ ".int($_cluster_p{$_}||0)." ".int($_cluster_h{$_}||0)." ".int($_cluster_k{$_}||0)."\n"; }
+		foreach (keys %_cluster_h) { print HISTORYTMP "${xmlrb}$_ ".int($_cluster_p{$_}||0)." ".int($_cluster_h{$_}||0)." ".int($_cluster_k{$_}||0)."${xmlre}\n"; }
 		print HISTORYTMP "${xmleb}END_CLUSTER${xmlee}\n";
 	}
 	if ($sectiontosave eq 'misc') {
@@ -3805,7 +3815,7 @@ sub Save_History {
 		print HISTORYTMP "# Misc ID - Pages - Hits - Bandwidth\n";
 		$ValueInFile{$sectiontosave}=tell HISTORYTMP;
 		print HISTORYTMP "${xmlbb}BEGIN_MISC ${xmlbs}".(scalar keys %MiscListCalc)."${xmlbe}\n";
-		foreach (keys %MiscListCalc) { print HISTORYTMP "$_ ".int($_misc_p{$_}||0)." ".int($_misc_h{$_}||0)." ".int($_misc_k{$_}||0)."\n"; }
+		foreach (keys %MiscListCalc) { print HISTORYTMP "${xmlrb}$_ ".int($_misc_p{$_}||0)." ".int($_misc_h{$_}||0)." ".int($_misc_k{$_}||0)."${xmlre}\n"; }
 		print HISTORYTMP "${xmleb}END_MISC${xmlee}\n";
 	}
 	if ($sectiontosave eq 'errors') {
@@ -3814,7 +3824,7 @@ sub Save_History {
 		print HISTORYTMP "# Errors - Hits - Bandwidth\n";
 		$ValueInFile{$sectiontosave}=tell HISTORYTMP;
 		print HISTORYTMP "${xmlbb}BEGIN_ERRORS ${xmlbs}".(scalar keys %_errors_h)."${xmlbe}\n";
-		foreach (keys %_errors_h) { print HISTORYTMP "$_ $_errors_h{$_} ".int($_errors_k{$_}||0)."\n"; }
+		foreach (keys %_errors_h) { print HISTORYTMP "${xmlrb}$_ $_errors_h{$_} ".int($_errors_k{$_}||0)."${xmlre}\n"; }
 		print HISTORYTMP "${xmleb}END_ERRORS${xmlee}\n";
 	}
  	# Other - Trapped errors
@@ -3828,7 +3838,7 @@ sub Save_History {
 			foreach (keys %_sider404_h) {
 				my $newkey=$_;
 				my $newreferer=$_referer404_h{$_}||''; $newreferer =~ s/\s/%20/g;
-				print HISTORYTMP "$newkey $_sider404_h{$_} $newreferer\n";
+				print HISTORYTMP "${xmlrb}$newkey $_sider404_h{$_} $newreferer${xmlre}\n";
 			}
 			print HISTORYTMP "${xmleb}END_SIDER_$code${xmlee}\n";
 		}
@@ -3849,14 +3859,14 @@ sub Save_History {
 	 			my $page=${'_section_' . $extranum . '_p'}{$_}||0;
 	 			my $bytes=${'_section_' . $extranum . '_k'}{$_}||0;
 	 			my $lastaccess=${'_section_' . $extranum . '_l'}{$_}||'';
-	 			print HISTORYTMP "$_ $page ", ${'_section_' . $extranum . '_h'}{$_}, " $bytes $lastaccess\n"; next;
+	 			print HISTORYTMP "${xmlrb}$_ $page ", ${'_section_' . $extranum . '_h'}{$_}, " $bytes $lastaccess${xmlre}\n"; next;
 	 		}
 	 		foreach (keys %{'_section_' . $extranum . '_h'}) {
 	 			if ($keysinkeylist{$_}) { next; }
 	 			my $page=${'_section_' . $extranum . '_p'}{$_}||0;
 	 			my $bytes=${'_section_' . $extranum . '_k'}{$_}||0;
 	 			my $lastaccess=${'_section_' . $extranum . '_l'}{$_}||'';
-	 			print HISTORYTMP "$_ $page ", ${'_section_' . $extranum . '_h'}{$_}, " $bytes $lastaccess\n"; next;
+	 			print HISTORYTMP "${xmlrb}$_ $page ", ${'_section_' . $extranum . '_h'}{$_}, " $bytes $lastaccess${xmlre}\n"; next;
 	 		}
 	 		print HISTORYTMP "${xmleb}END_EXTRA_$extranum${xmlee}\n";
 		}
@@ -4173,8 +4183,8 @@ sub CleanFromCSSA {
 #------------------------------------------------------------------------------
 sub CleanFromTags {
 	my $stringtoclean=shift;
-	$stringtoclean =~ s/<(\/?tr|td)>//ig;	# Remove <tr> </tr> <td>
-	$stringtoclean =~ s/<\/td>/ /ig;		# Remove </td> with space
+	$stringtoclean =~ s/<(\/?tr|td)>//ig;	# Remove <tr>,<td>,</tr>
+	$stringtoclean =~ s/<\/td>/ /ig;		# Replace </td> with space
 	return $stringtoclean;
 }
 
@@ -6724,40 +6734,44 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
  		foreach my $extranum (1..@ExtraName-1) {
 			if ($Debug) { debug("  Process extra analyze $extranum",4); }
 
+ 			# Check code
+ 			my $conditionok=0;
+ 			foreach my $condnum (0..@{$ExtraCodeFilter[$extranum]}-1) {
+				if ($Debug) { debug("  Check code '$field[$pos_code]' must be '$ExtraCodeFilter[$extranum][$condnum]'",5); }
+				if ($field[$pos_code] eq "$ExtraCodeFilter[$extranum][$condnum]") { $conditionok=1; last; }
+			}
+			if (! $conditionok && @{$ExtraCodeFilter[$extranum]}) { next; }	# End for this section
+			if ($Debug) { debug("  No check on code or code is OK. Now we check other conditions.",5); }
+
  			# Check conditions
  			my $conditionok=0;
  			foreach my $condnum (0..@{$ExtraConditionType[$extranum]}-1) {
  				my $conditiontype=$ExtraConditionType[$extranum][$condnum];
  				my $conditiontypeval=$ExtraConditionTypeVal[$extranum][$condnum];
  				if ($conditiontype eq 'URL') {
-					if ($Debug) { debug("  Check condition '$conditiontype' must contain '$conditiontypeval' in $urlwithnoquery.",5); }
+					if ($Debug) { debug("  Check condition '$conditiontype' must contain '$conditiontypeval' in '$urlwithnoquery'",5); }
  					if ($urlwithnoquery =~ /$conditiontypeval/) { $conditionok=1; last; }
  				}
  				elsif ($conditiontype eq 'QUERY_STRING') {
-					if ($Debug) { debug("  Check condition '$conditiontype' must contain '$conditiontypeval' in $standalonequery.",5); }
+					if ($Debug) { debug("  Check condition '$conditiontype' must contain '$conditiontypeval' in '$standalonequery'",5); }
  					if ($standalonequery =~ /$conditiontypeval/) {	$conditionok=1; last; }
  				}
  				elsif ($conditiontype eq 'REFERER') {
-					if ($Debug) { debug("  Check condition '$conditiontype' must contain '$conditiontypeval' in $field[$pos_referer]",5); }
+					if ($Debug) { debug("  Check condition '$conditiontype' must contain '$conditiontypeval' in '$field[$pos_referer]'",5); }
  					if ($field[$pos_referer] =~ /$conditiontypeval/) { $conditionok=1; last; }
  				}
  				elsif ($conditiontype eq 'UA') {
-					if ($Debug) { debug("  Check condition '$conditiontype' must contain '$conditiontypeval' in $field[$pos_agent]",5); }
+					if ($Debug) { debug("  Check condition '$conditiontype' must contain '$conditiontypeval' in '$field[$pos_agent]'",5); }
  					if ($field[$pos_agent] =~ /$conditiontypeval/) { $conditionok=1; last; }
  				}
  				elsif ($conditiontype eq 'HOST') {
-					if ($Debug) { debug("  Check condition '$conditiontype' must contain '$conditiontypeval' in $field[$pos_host]",5); }
+					if ($Debug) { debug("  Check condition '$conditiontype' must contain '$conditiontypeval' in '$field[$pos_host]'",5); }
  					if ($HostResolved =~ /$conditiontypeval/) { $conditionok=1; last; }
- 				}
- 				elsif ($conditiontype eq 'CODE') {
-					if ($Debug) { debug("  Check condition '$conditiontype' must be '$conditiontypeval' in $field[$pos_code]",5); }
- 					if ($field[$pos_code] eq "$conditiontypeval") { $conditionok=1; last; }
  				}
  				else { error("Wrong value of parameter ExtraSectionCondition$extranum"); }
  			}
 			if (! $conditionok && @{$ExtraConditionType[$extranum]}) { next; }	# End for this section
-			
-			if ($Debug) { debug("  No condition or Condition is OK. Now we extract value for first column of extra chart.",5); }
+			if ($Debug) { debug("  No condition or condition is OK. Now we extract value for first column of extra chart.",5); }
 			
  			# Determine actual column value to use.
  			my $rowkeyval;

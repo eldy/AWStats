@@ -58,12 +58,14 @@ user or agent, etc...<br>
 <br># In most cases, you don't need this feature.
 <br>#
 <br># ExtraSectionNameX is title of your personalized chart.
+<br># ExtraSectionCodeFilterX is list of codes the record code field must match.
+<br>#   Put an empty string for no test on code.
 <br># ExtraSectionConditionX are conditions you can use to count or not the hit,
-<br>#   Use one of the field condition (URL,QUERY_STRING,REFERER,UA,HOST,CODE),
+<br>#   Use one of the field condition (URL,QUERY_STRING,REFERER,UA,HOST)
 <br>#   and a regex to match, after a coma. Use "|" for "OR".
 <br># ExtraSectionFirstColumnTitleX is the first column title of the chart.
 <br># ExtraSectionFirstColumnValuesX is a Regex string to tell AWStats in which 
-<br>#   field to extract value from (URL, QUERY_STRING, REFERER, UA, HOST, CODE)
+<br>#   field to extract value from (URL,QUERY_STRING,REFERER,UA,HOST)
 <br>#   and how to extract the value (using regex syntax). Each different value
 <br>#   found will appear in first column of report on a different row. Be sure
 <br>#   that list of different possible values will not grow indefinitely.
@@ -104,6 +106,7 @@ file a hit that looks like this:<br>
 So this is how you need to setup your ExtraSection to track your product orders:<br>
 <i>
 <br>ExtraSectionName1="Product orders"
+<br>ExtraSectionCodeFilter1="200 304"
 <br>ExtraSectionCondition1="URL,\/cgi\-bin\/order\.cgi|URL,\/cgi\-bin\/order2\.cgi"
 <br>ExtraSectionFirstColumnTitle1="Product ID"
 <br>ExtraSectionFirstColumnValues1="QUERY_STRING,productid=([^&]+)"
@@ -122,6 +125,7 @@ So this is how you need to setup your ExtraSection to track your product orders:
 This is an example on how to setup your ExtraSection:<br>
 <i>
 <br>ExtraSectionName1="Bugzilla: Most frequently viewed bugs"
+<br>ExtraSectionCodeFilter1="200 304"
 <br>ExtraSectionCondition1="URL,\/bugzilla\/show_bug\.cgi"
 <br>ExtraSectionFirstColumnTitle1="Bug ID"
 <br>ExtraSectionFirstColumnValues1="QUERY_STRING,id=([^&]+)"
@@ -163,6 +167,7 @@ all external pages viewed by your visitor after exiting your site.<br>
 This is for this how you must setup your ExtraSection:<br>
 <i>
 <br>ExtraSectionName1="Redirected Hit"
+<br>ExtraSectionCodeFilter1="302"
 <br>ExtraSectionCondition1="URL,\/cgi\-bin\/awredir\.pl"
 <br>ExtraSectionFirstColumnTitle1="Url"
 <br>ExtraSectionFirstColumnValues1="QUERY_STRING,url=([^&]+)"
@@ -178,6 +183,7 @@ This is for this how you must setup your ExtraSection:<br>
 So this is how you need to setup your ExtraSection to add a chart for a such tracking:<br>
 <i>
 <br>ExtraSectionName1="List of top level 2 path under /mydir"
+<br>ExtraSectionCodeFilter1="200 304"
 <br>ExtraSectionCondition1="URL,^\/mydir\/.*"
 <br>ExtraSectionFirstColumnTitle1="Directory name"
 <br>ExtraSectionFirstColumnValues1="URL,^\/mydir\/([\w]+)\/"
