@@ -1,0 +1,34 @@
+<!-- Icelandic tooltips message file (throstur@bylur.net) -->
+<!-- $Revision$ - $Date$ -->
+<div class="CTooltip" id="tt1">
+</div>
+<div class="CTooltip" id="tt2">
+Fjöldi mismunandi véla (<b>IP-vistfanga</b>) sem notaðar voru til að tengjast.
+</div>
+<div class="CTooltip" id="tt3">
+</div>
+<div class="CTooltip" id="tt4">
+</div>
+<div class="CTooltip" id="tt5">
+Þetta er heildargagnamagn sem halað var niður með ftp.<br />
+Einingar eru í KB, MB eða GB (KílóBæti, MegaBæti eða GígaBæti)
+</div>
+<div class="CTooltip" id="tt13">
+</div>
+<div class="CTooltip" id="tt14">
+</div>
+<div class="CTooltip" id="tt15">
+</div>
+<div class="CTooltip" id="tt16">
+</div>
+<div class="CTooltip" id="tt17">
+Öll tímatengd tölfræði er byggð á klukku netþjóns.<br />
+</div>
+<div class="CTooltip" id="tt18">
+Gögn í þessari skýrslu eru: <b>meðalgildi</b> (reiknuð út frá öllum gögnum milli fyrsta og síðasta bréfs á greindu tímabili)
+</div>
+<div class="CTooltip" id="tt19">
+Gögn í þessari skýrslu eru: <b>samtölur</b> (reiknuð út frá öllum gögnum milli fyrsta og síðasta bréfs á greindu tímabili)
+</div>
+<div class="CTooltip" id="tt20">
+</div>

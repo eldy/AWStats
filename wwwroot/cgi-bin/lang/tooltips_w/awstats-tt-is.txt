@@ -1,69 +1,74 @@
-<!-- Icelandic tooltips message file (jonelias@hi.is) -->
+<!-- Icelandic tooltips message file (jonelias@hi.is, throstur@bylur.net) -->
 <!-- $Revision$ - $Date$ -->
 <div class="CTooltip" id="tt1">
-NÃ½tt innlit er skilgreint Ã¾annig: Gestur sem ekki hefur komiÃ° inn Ã¡ sÃ­Ã°ustu <b>#VisitTimeOut# mÃ­nÃºtum</b> (vafrandi eÃ°a lesandi). 
+Nıtt innlit er skilgreint sem hver nır gestur (sem skoğar síğu) sem var ekki tengdur viğ vefsvæği şitt síğustu <b>#VisitTimeOut# mínúturnar</b>
 </div>
 <div class="CTooltip" id="tt2">
-FjÃ¶ldi vÃ©la (</b>IP vistfanga</b>) sem litu inn Ã¡ vefinn (AÃ° lÃ¡gmarki ein <b>vefsÃ­Ã°a</b> sÃ³tt).<br />
-GÃ¶gnin gefa til kynna fjÃ¶lda <b>einkvÃ¦mra gesta</b> sem litu inn Ã¡ sÃ­Ã°una.
+Fjöldi véla (</b>IP-vistfanga</b>) sem litu inn á vefinn (og sóttu ağ lágmarki eina <b>síğu</b>.<br />
+Gögnin gefa til kynna fjölda <b>einstakra gesta</b> sem litu inn á síğuna.
 </div>
 <div class="CTooltip" id="tt3">
-Hversu oft <b>sÃ­Ã°a</b> hefur veriÃ° <b>skoÃ°uÃ°</b> (Samtals allir gestir og Ã¶ll innlit).<br />
-Munurinn Ã¡ Ã¾essu gÃ¶gnum og "skrÃ¡r" liggur Ã­ Ã¾vÃ­ aÃ° eingÃ¶ngu eru taldar HTML sÃ­Ã°ur en ekki myndir eÃ°a annars konar skrÃ¡r.
+Fjöldi skipta sem b>síğa</b> á şessu vefsvæği var <b>skoğuğ</b> (Samtölur allra gesta fyrir öll innlit).<br />
+Munurinn á şessum gögnum og "skrár" liggur í şví ağ eingöngu eru taldar HTML síğur en ekki myndir eğa annars konar skrár.
 </div>
 <div class="CTooltip" id="tt4">
-Hversu oft <b>sÃ­Ã°a, mynd eÃ°a skrÃ¡</b> Ã¡ vefnum er <b>skoÃ°uÃ°</b> eÃ°a <b>sÃ³tt</b> af einhverju(m).<br />
-Ãetta er einungis haft meÃ° til upplÃ½singar Ã¾ar sem fjÃ¶ldi "gesta" og fjÃ¶ldi "innlita" eru betri markaÃ°sgÃ¶gn.
+Fjöldi skipta sem <b>síğa, mynd eğa skrá</b> á vefsvæğinu var <b>skoğuğ</b> eğa <b>sótt</b> af einhverju(m).<br />
+Şessi gögn eru einungis höfğ meğ til hliğsjónar, şar sem fjöldi "síğna" sem skoğağar voru eru oft talin vera betri markağsgögn.
 </div>
 <div class="CTooltip" id="tt5">
-GÃ¶gnin gefa mynd af Ã¾vÃ­ gagnamagni sem sÃ³tt er af vefnum, <b>sÃ­Ã°um</b>, <b>myndum</b> og <b>skrÃ¡m</b>.<br />
-Einingar eru Ã­ KB, MB eÃ°a GB(KÃ­lÃ³bÃ¦ti, MegabÃ¦ti eÃ°a GÃ­gabÃ¦ti)
+Şessar upplısingar gefa mynd af şví gagnamagni sem sótt var af vefnum, <b>síğum</b>, <b>myndum</b> og <b>skrám</b>.<br />
+Einingar eru í KB, MB eğa GB (Kílóbæti, MegaBæti eğa GígaBæti)
 </div>
 <div class="CTooltip" id="tt13">
-#PROG# greinir hvert innlit Ã¡ vefinn eftir <b>leit</b> Ã­ <b>#SearchEnginesArray# vinsÃ¦lustu leitarvÃ©lunum</b> (Yahoo, Altavista, Lycos, Google, Voila, o.s.frv.).
+#PROG# greinir hvert innlit á vefinn eftir <b>leit</b> á <b>#SearchEnginesArray# vinsælustu leitarvélunum</b> (Yahoo, Altavista, Lycos, Google, Voila, o.s.frv.).
 </div>
 <div class="CTooltip" id="tt14">
-Listi yfir allar <b>utanvefs tilvÃ­sannir</b> Ã¡ Ã¶Ã°rum vefum sem notaÃ°ar hafa veriÃ° til aÃ° sÃ¦kja/lÃ­ta inn Ã¡ vefinn (Einungis <b>#MaxNbOfRefererShown#</b> oftast notuÃ°u tilvÃ­sanirnar).
-TilvÃ­sanir sem notaÃ°ar hafa veriÃ° viÃ° Ãºtreikninga Ã­ tengslum viÃ° innlit frÃ¡ leitarvÃ©lum eru ekki reiknaÃ°ar inn Ã­ Ã¾essar niÃ°urstÃ¶Ã°ur, Ã¾ar sem Ã¾eir hafa veriÃ° notaÃ°ir Ã­ lÃ­nunni fyrir ofan.
+Listi yfir allar <b>tilvísanir utan şessa vefsvæğis</b> sem notağar voru til ağ vísa til vefsvæğis şíns (Einungis <b>#MaxNbOfRefererShown#</b> oftast notuğu tilvísanirnar eru birtar hér).
+Links used by the results of the search engines are excluded here because they have already been included on the previous line within this table.
+Tilvísunum frá niğurstöğusíğum leitarvéla er sleppt hér şar sem şær hafa nú şegar veriğ notağar í línunni hér fyrir ofan.
 </div>
 <div class="CTooltip" id="tt15">
-Taflan sÃ½nir Ã¾au <b>leitarorÃ° og setningar</b> sem oftast hefur veriÃ° leitaÃ° eftir Ã¡ leitarvÃ©lum til aÃ° finna vefinn.
-LeitarorÃ° frÃ¡ <b>#SearchEnginesArray#</b> algengustu leitarvÃ©lunum sem #PROG# Ã¾ekkir, svo sem Yahoo, Altavista, Lycos, Google, Voila, o.s.frv.).<br />
-Ath ber aÃ° samtala leita meÃ° leitarorÃ°um getur veriÃ° hÃ¦rra en samtala leita meÃ° setningum (rÃ©ttur fjÃ¶ldi leita) Ã¾vÃ­ aÃ° ef notuÃ° eru tvÃ¶ orÃ° Ã­ leit er leitin talin tvisvar sem orÃ°aleit en einu sinni sem setningaleit.
+Taflan sınir şau <b>leitarorğ og setningar</b> sem oftast hafa veriğ notuğ á leitarvélum til ağ finna vefsvæği şitt.
+(Leitarorğ frá <b>#SearchEnginesArray#</b> algengustu leitarvélunum sem #PROG# şekkir, svo sem Yahoo, Altavista, Lycos, Google, Voila, o.s.frv.).<br />
+Athugiğ ağ heildarfjöldi leita meğ leitarorğum gæti veriğ hærri en heildarfjöldi leita eftir leitarsetningum (réttur fjöldi leita) şví ağ ef notuğ eru 2 leitarorğ í sömu leitinni er leitin talin tvisvar sem orğaleit en einu sinni sem setningaleit.
 </div>
 <div class="CTooltip" id="tt16">
-LeitarvÃ©lar(robots eÃ°a spiders) eru <b>'sjÃ¡lfvirkir gestir'</b> notaÃ°ir af mÃ¶rgum leitarvÃ©lum sem skoÃ°a, skrÃ¡setja og flokka innihald/gÃ¶gn vefsins.  Safna tÃ¶lulegum upplÃ½singum um tilvÃ­sannir og/eÃ°a hvort hÃ¦gt er aÃ° sÃ¦kja sÃ­Ã°una/vefinn.<br />
-#PROG# Ã¾ekkir <b>#RobotArray#</b> leitarvÃ©lar.
+Leitarormar ("robots" og "spiders") eru <b>'sjálfvirkir gestir'</b> notağir af mörgum leitarvélum sem skoğa, skrásetja og flokka innihald vefsins, safna tölulegum upplısingum um tilvísanir og/eğa hvort vefsvæğiğ sé enn nettengt.<br />
+#PROG# şekkir allt ağ <b>#RobotArray#</b> leitarorma.
 </div>
 <div class="CTooltip" id="tt17">
-Allar tÃ¶lulegar upplÃ½singar varÃ°andi tÃ­ma eru tengdar tÃ­ma Ã¾jÃ³nustuvÃ©lar.<br />
+Öll tímatengd tölfræği er byggğ á klukku netşjóns.<br />
 </div>
 <div class="CTooltip" id="tt18">
-NiÃ°urstaÃ°a samantektar: <b>meÃ°altal</b> (ReiknaÃ° Ãºt frÃ¡ Ã¶llum gÃ¶gnum frÃ¡ fyrsta innliti til Ã¾ess sÃ­Ã°asta)
+Gögn í şessari skırslu eru: <b>meğalgildi</b> (reiknuğ út frá öllum gögnum milli fyrsta og síğasta innlits á greindu tímabili)
 </div>
 <div class="CTooltip" id="tt19">
-NiÃ°urstaÃ°a samantektar: <b>samanteknar samtÃ¶luri</b> (ReiknaÃ° Ãºt frÃ¡ Ã¶llum gÃ¶gnum frÃ¡ fyrsta innliti til Ã¾ess sÃ­Ã°asta)
+Gögn í şessari skırslu eru: <b>samtölur</b> (reiknuğ út frá öllum gögnum milli fyrsta og síğasta innlits á greindu tímabili)
 </div>
 <div class="CTooltip" id="tt20">
-<b>Lengd innlita</b> er ekki alltaf hÃ¦gt aÃ° reikna.  Helstu Ã¡stÃ¦Ã°ur Ã¾ess eru eftirfarandi:<br />
-- Innliti var ekki lokiÃ° Ã¾egar tÃ¶lfrÃ¦Ã°in var reiknuÃ°.<br />
-- Innlit byrjar Ã¡ sÃ­Ã°asta klukkutÃ­ma (eftir kl 23:00) sÃ³larhrings sÃ­Ã°asta dags mÃ¡naÃ°ar (TÃ¦knileg Ã¡stÃ¦Ã°a innan #PROG# kemur Ã­ veg fyrir aÃ° slÃ­k innlit sÃ©u reiknuÃ°)
+Ekki er alltaf hægt ağ reikna út <b>Lengd innlita</b>. Helstu ástæğur şess eru eftirfarandi:<br />
+- Innliti var ekki lokiğ şegar tölfræğin var reiknuğ út.<br />
+- Innlit byrjaği á síğasta klukkutíma (eftir kl 23:00) sólarhrings síğasta dags mánağar (Tæknileg ástæğa í #PROG# hindrar útreikning slíkra innlita)
 </div>
-
-<div class="CTooltip" id="tt201">LÃ½singu Ã¡ villunni vantar.</div>
-<div class="CTooltip" id="tt202">ÃjÃ³nninn skildi beiÃ°nina en afgreiÃ°ir hana sÃ­Ã°ar.</div>
-<div class="CTooltip" id="tt204">ÃjÃ³nninn hefur afgreitt beiÃ°nina en Ã¾aÃ° vantar skrÃ¡nna til aÃ° senda.</div>
-<div class="CTooltip" id="tt206">Einungis hluti skrÃ¡ar afgreiddur.</div>
-<div class="CTooltip" id="tt301">UmbeÃ°in skrÃ¡ hefur veriÃ° fÃ¦rÃ° Ã¡ nÃ½tt veffang sem sent var meÃ° afgreiÃ°slunni.</div>
-<div class="CTooltip" id="tt302">LÃ½singu Ã¡ villunni vantar.</div>
-<div class="CTooltip" id="tt400">StÃ­lvilla, Ã¾jÃ³nninn skildi ekki beiÃ°nina.</div>
-<div class="CTooltip" id="tt401">BeÃ°iÃ° var um afgreiÃ°slu Ã¡ <b>sÃ­Ã°u Ã¾ar sem aÃ°gangsstÃ½ringar er krafist</b>.<br />Ef mikiÃ° er um Ã¾etta getur Ã¾aÃ° bent til Ã¾ess aÃ° tilraunir sÃ©u gerÃ°ar til aÃ° brjÃ³tast inn Ã¡ sÃ­Ã°u/skrÃ¡ meÃ° mÃ¶rgum samsetningum af notendanÃ¶fnum og lykilorÃ°um(til aÃ° fÃ¡ aÃ°gang aÃ° gÃ¶gnum sem hÃ¡Ã° aÃ°gangsstÃ½ringum).</div>
-<div class="CTooltip" id="tt403">BeÃ°iÃ° var um afgreiÃ°slu Ã¡ <b>sÃ­Ã°u/skrÃ¡ sem ekki Ã¡ aÃ° vera aÃ°gengilegt meÃ° eÃ°a Ã¡n aÃ°gangsstÃ½ringa(notendanafi og lykilorÃ°i)</b> (GÃ¦ti veriÃ° mappa sem ekki er merkt "vafranleg".).</div>
-<div class="CTooltip" id="tt404">BeÃ°iÃ° var um <b>sÃ­Ã°u/skrÃ¡ sem ekki er hÃ¦gt aÃ° afgreiÃ°a</b>. Villan kemur oft upp Ã¾egar hlekkur Ã¡ vefsÃ­Ã°u inniheldur stÃ­lvillu eÃ°a gestur slÃ¦r inn Ã­ vafrann sinn vitlausa slÃ³Ã°.</div>
-<div class="CTooltip" id="tt408">ÃjÃ³nninn hefur tekiÃ° of langann tÃ­ma Ã­ beiÃ°nina.  Ãessi villa getur gefiÃ° til kynna mikiÃ° Ã¡lag, hÃ¦gann CGI hugbÃºnaÃ°, timeout villur Ã¡ Ã¾jÃ³ni(stilla) eÃ°a illa skrifaÃ°an hugbÃºnaÃ°.</div>
-<div class="CTooltip" id="tt500">Innri villa hefur komiÃ° upp Ã¡ Ã¾jÃ³ni, villan gefur til kynna aÃ° hugbÃºnaÃ°ur hafi endaÃ° keyrslu Ã³eÃ°lilega.</div>
-<div class="CTooltip" id="tt501">UmbeÃ°in afgreiÃ°sla er ekki Ã¾ekkt.</div>
-<div class="CTooltip" id="tt502">VilluboÃ° sem skilaÃ° er af vefÃ¾jÃ³ni sem Ã¾jÃ³nar sem safnari eÃ°a gÃ¡tt Ã¾egar umbeÃ°in Ã¾jÃ³nustuvÃ©l svarar ekki fyrirspurnum frÃ¡ gestum.</div>
-<div class="CTooltip" id="tt503">Innri villa hefur komiÃ° upp Ã¡ Ã¾jÃ³ni.</div>
-<div class="CTooltip" id="tt504">Samband rofnaÃ°i viÃ° gÃ¡tt.</div>
-<div class="CTooltip" id="tt505">HTTP ÃºtgÃ¡fa er ekki studd.</div>
+<div class="CTooltip" id="tt21">
+Ormar eru <b>'sjálfvirkir gestir'/b> sem eru í raun ağrir netşjónar sem sıktir eru af vírusi, sem reyna ağ framkvæma ákveğnar heimsóknir á vefşjón şinn til ağ sıkja hann. Í flestum tilfellum nıta slíkir ormar sér öryggisholur í gömlum vefşjónum. Ef kerfi şitt er ekki <b>sıkjanlegt</b> af şessum ormi getur şú hunsağ şessi innlit.<br />
+Şağ eru mjög fáir 'netşjónaormar' til í heiminum en şeir eru mjög virkir á ákveğnum tímum. 
+#PROG# getur şekkt <b>#WormsArray#</b> mismunandi orma (Nimda, Code Red...).
+</div>
+<div class="CTooltip" id="tt201">Engin lısing er til á şessari villu.</div>
+<div class="CTooltip" id="tt202">Şjónninn skildi beiğnina en afgreiğir hana síğar.</div>
+<div class="CTooltip" id="tt204">Şjónninn hefur afgreitt beiğnina en şağ vantar skrána sem á ağ senda.</div>
+<div class="CTooltip" id="tt206">Einungis hluti skráar afgreiddur.</div>
+<div class="CTooltip" id="tt301">Umbeğin skrá hefur veriğ færğ á nıtt veffang sem sent var meğ í svarinu.</div>
+<div class="CTooltip" id="tt302">Engin lısing er til á şessari villu.</div>
+<div class="CTooltip" id="tt400">Stílvilla, şjónninn skildi ekki beiğnina.</div>
+<div class="CTooltip" id="tt401">Beğiğ var um <b>vefslóğ şar sem notandanafns er krafist</b>.<br />Ef mikiğ er um şetta getur şağ bent til şess ağ tilraunir séu gerğar til ağ brjótast inn á síğu á meğ mörgum samsetningum af notendanöfnum og lykilorğum (til ağ fá ağgang ağ gögnum sem eru háğ ağgangsstıringu).</div>
+<div class="CTooltip" id="tt403">Beğiğ var um afgreiğslu á <b>vefslóğ sem ekki á ağ vera ağgengileg jafnvel şótt rétt notendanafn og lykilorğ hafi veriğ notağ)</b> (Gæti veriğ mappa sem ekki er merkt "vafranleg".).</div>
+<div class="CTooltip" id="tt404">Beğiğ var um <b>vefslóğ sem ekki er til</b>. Şessi villa kemur oft upp şegar tengill á vefsíğu inniheldur villu eğa gestur slær vitlausa slóğ í vafrann sinn.</div>
+<div class="CTooltip" id="tt408">Şjónninn hefur tekiğ <b>of langan tíma</b> í afgreiğslu beiğninnar. Şessi villa gefur oft til kynna hæga CGI skriftu sem şjónninn neyddist til ağ drepa eğa mjög upptekinn vefşjón.</div>
+<div class="CTooltip" id="tt500">Innri villa hefur komiğ upp á şjóni. Şessi villa kemur oft upp ef CGI forrit hefur lokiğ keyrslu á óeğlilegan hátt.</div>
+<div class="CTooltip" id="tt501">Beiğni er ekki şekkt.</div>
+<div class="CTooltip" id="tt502">Villuboğ sem skilağ er af vefşjóni sem şjónar sem vefsel eğa gátt şegar umbeğin şjónustuvél svarar ekki fyrirspurnum frá gestum.</div>
+<div class="CTooltip" id="tt503">Innri villa kom upp á şjóni.</div>
+<div class="CTooltip" id="tt504">Samband rofnaği viğ gátt.</div>
+<div class="CTooltip" id="tt505">HTTP útgáfa er ekki studd.</div>

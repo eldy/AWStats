@@ -1,0 +1,64 @@
+<!-- Icelandic tooltips message file (throstur@bylur.net) -->
+<!-- $Revision$ - $Date$ -->
+<div class="CTooltip" id="tt1">
+</div>
+<div class="CTooltip" id="tt2">
+Fjöldi mismunandi véla (<b>IP-vistfanga</b>) sem sendu bréf.
+</div>
+<div class="CTooltip" id="tt3">
+</div>
+<div class="CTooltip" id="tt4">
+Fjöldi skipta sem <b>tölvupóstur</b> var giftusamlega sendur.<br />
+</div>
+<div class="CTooltip" id="tt5">
+Þetta er heildargagnamagn sem halað var niður sem póstur.<br />
+Einingar eru í KB, MB eða GB (KílóBæti, MegaBæti eða GígaBæti)
+</div>
+<div class="CTooltip" id="tt13">
+</div>
+<div class="CTooltip" id="tt14">
+</div>
+<div class="CTooltip" id="tt15">
+</div>
+<div class="CTooltip" id="tt16">
+</div>
+<div class="CTooltip" id="tt17">
+Öll tímatengd tölfræði er byggð á klukku netþjóns.<br />
+</div>
+<div class="CTooltip" id="tt18">
+Gögn í þessari skýrslu eru: <b>meðalgildi</b> (reiknuð út frá öllum gögnum milli fyrsta og síðasta bréfs á greindu tímabili)
+</div>
+<div class="CTooltip" id="tt19">
+Gögn í þessari skýrslu eru: <b>samtölur</b> (reiknuð út frá öllum gögnum milli fyrsta og síðasta bréfs á greindu tímabili)
+</div>
+<div class="CTooltip" id="tt20">
+</div>
+
+<div class="CTooltip" id="tt200"><b>Árangursríkt:</b> Óstaðlað jákvætt svar</div>
+<div class="CTooltip" id="tt211"><b>Árangursríkt:</b> Staða kerfis, eða svar við hjálparbeiðni</div>
+<div class="CTooltip" id="tt214"><b>Árangursríkt:</b> Hjálparskilaboð</div>
+<div class="CTooltip" id="tt220"><b>Árangursríkt:</b> <domain> Þjónusta tilbúin</div>
+<div class="CTooltip" id="tt221"><b>Árangursríkt:</b> <domain> Þjónusta lokaði flutningsrás</div>
+<div class="CTooltip" id="tt250"><b>Árangursríkt:</b> Póstþjónn netveitu þinnar hefur framkvæmt skipun giftusamlega og nafnaþjónninn gefur til kynna að bréfinu hafi verið komið til skila</div>
+<div class="CTooltip" id="tt251"><b>Árangursríkt:</b> Bréf þitt til ákveðins netfangs er ekki staðbundið við póstþjóninn, en hann samþykkir bréfið og sendir það áfram á annað netfang</div>
+<div class="CTooltip" id="tt252"><b>Árangursríkt:</b> Ekki var hægt að staðfesta tilveru móttakanda en póstþjónninn tók á móti bréfinu og reynir afhendingu</div>
+<div class="CTooltip" id="tt354"><b>Árangursríkt:</b> Gefur til kynna að póstþjónn er tilbúinn að taka á móti bréfinu eða segja póstforriti þínu að senda aðaltexta bréfsins eftur að póstþjónninn hefur tekið á móti hausum bréfsins.</div>
+<div class="CTooltip" id="tt421"><b>Tímabundin villa:</b> Þetta gæti verið villa við hvaða skipun sem er ef póstþjónninn veit að verið er að slökkva á honum.</div>
+<div class="CTooltip" id="tt450"><b>Tímabundin villa:</b> Póstþjónn netveitu þinnar gefur til kynna að netfang sé ekki til, pósthólf sé upptekið eða póst sé hafnað tímabundið. Mögulegt er að nettengingin hafi rofnað í miðri sendingu, eða ef hinn póstþjónninn vill ekki taka á móti bréfum frá þér einhverra hluta vegna. (T.d. IP-vistfang, Frá netfang, móttakandi, o.s.frv.)</div>
+<div class="CTooltip" id="tt451"><b>Tímabundin villa:</b> Póstþjónn netveitu þinnar gefur til kynna að póstflutningur var truflaður, venjulega vegna þess að of mörg bréf eru í vinnslu eða tímabundin villa kemur í veg fyrir að bréfið sé sent þótt bréfið sé gilt. Sending í framtíðinni gæti verið árangursrík.</div>
+<div class="CTooltip" id="tt452"><b>Tímabundin villa:</b> Póstþjónn netveitu þinnar gefur til kynna að of mikið álag sé á honum vegna of marga bréfa í vinnslu. Sending í framtíðinni gæti verið árangursrík.</div>
+<div class="CTooltip" id="tt453"><b>Tímabundin villa:</b> Sumir póstþjónar hafa stillingu sem takmarkar fjölda tenginga í einu og einnig fjölda sendra bréfa í hverri tengingu. Ef þú ert með mörg bréf í bið gætu þau farið yfir hámarksfjölda bréfa frá hverri tengingu. Til að athuga hvort þetta sé vandamálið getur þú prófað að senda örfá bréf til þessa léns í einu og síðan hækkað fjöldann þar til þú finnur út hver hámarksfjöldi samþykktur af netþjóninum er</div>
+<div class="CTooltip" id="tt500"><b>Varanleg villa:</b> Stílvilla, óþekkt skipun eða skipanalína of löng</div>
+<div class="CTooltip" id="tt501"><b>Varanleg villa:</b> Stílvilla í færibreytu</div>
+<div class="CTooltip" id="tt502"><b>Varanleg villa:</b> Skipun ekki útfærð</div>
+<div class="CTooltip" id="tt503"><b>Varanleg villa:</b> Þjónn rakst á ranga röð af skipunum</div>
+<div class="CTooltip" id="tt504"><b>Varanleg villa:</b> Færibreyta skipunar ekki útfærð</div>
+<div class="CTooltip" id="tt521"><b>Varanleg villa:</b> Þú verður að auðkenna þig með POP áður en þú getur notað þennan SMTP þjón og þú verður að nota netfang þitt úr Frá reitinum.</div>
+<div class="CTooltip" id="tt530"><b>Varanleg villa:</b> Aðgangi hafnað. Sendmail-hegðun ?</div>
+<div class="CTooltip" id="tt550"><b>Varanleg villa:</b> Sending bréfa til móttakanda fyrir utan lén þitt er ekki leyfð eða póstþjónn þinn veit ekki að þú hafir aðgang að honum til að senda bréf í gegnum hann og auðkenningar er krafist. Einnig er mögulegt að til að hindra sendingu RUSLPÓSTS leyfi sumir póstþjónar ekki sendingu bréfa ef notað er netkerfi annars fyrirtækis..</div>
+<div class="CTooltip" id="tt551"><b>Varanleg villa:</b> Notandi ekki staðbundinn: vinsamlegast reyndu <forward-path> eða Ógilt netfang: Beiðni um sendingu bréfs í gegnum þjóninn hafnað</div>
+<div class="CTooltip" id="tt552"><b>Varanleg villa:</b> Hætt við umbeðna póstskipun: ekki nóg pláss eftir. Póstþjónn netveitu gefur til kynna að pósthólf sé fullt, mögulega vegna of margra bréfa..</div>
+<div class="CTooltip" id="tt553"><b>Varanleg villa:</b> Umbeðin póstskipun ekki framkvæmd: nafn pósthólfs ekki leyft. Sumir póstþjónar hafa möguleika á því að takmarka fjölda tenginga í einu og einnig fjölda bréfa sendra í hverri tengingu. Ef þú er með mikinn fjölda bréfa í bið (í sendingu) fyrir ákveðið lén, gæti sending farið yfir hámarksfjölda bréfa í tengingu og/eða breytingu sé krafist á bréfinu og/eða áfanganetfangi svo bréfið geti komist til skila.</div>
+<div class="CTooltip" id="tt554"><b>Varanleg villa:</b> Umbeðinni póstskipun hafnað: aðgangi hafnað</div>
+<div class="CTooltip" id="tt557"><b>Varanleg villa:</b> Of mörg afrit af bréfi. Póstþjónn ekki aðgengilegur í augnablikinu. Gefur (sennilega) til kynna að það er einhvers konar vörn gegn ruslpósti á póstþjóninum.</div>
+<div class="CTooltip" id="tt999">Þetta er óþekkt villa. Þessi villa kemur ekki frá póstþjóni heldur frá maillogconvert.pl tólinu þegar það finnur að sending hafi ekki tekist en annállinn inniheldur engar upplýsingar um villuna..</div>
