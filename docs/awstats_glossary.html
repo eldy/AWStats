@@ -108,10 +108,10 @@ for example "teleport", "webcapture", "webcopier"...<br>
 This value, available in the "miscellanous chart", reports an estimated value of the number
 of times a visitor has added your web site into its favourite bookmarks.<br>
 The technical rules for that is the following:<br>
-<i>Number of Add to Favourites = round((x+y) * r)</i> where<br>
+<i>Number of Add to Favourites = round((x+y) / r)</i> where<br>
 x = Number of hits made by IE browsers for "/anydir/favicon.ico" with no 404 error<br>
 y = Number of hits made by IE browsers for "/favicon.ico" (with or without 404 error)<br>
-r = Ratio of hits made by IE browsers compared to hits made by all browsers<br>
+r = Ratio of hits made by IE browsers compared to hits made by all browsers (r <= 1)<br>
 <br>
 
 <hr>

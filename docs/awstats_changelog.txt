@@ -3,6 +3,22 @@ AWStats Changelog
 $Revision$ - $Author$ - $Date$ 
 
 
+5.7
+
+Fixes:
+- Count for add to favourites is done on hits to favicon.ico for IE only to
+  to count wrong "Add" done by browsers that hit the file even when no add is
+  done. Value reported is the count for IE / ratio of IE among all other
+  browsers.
+
+New features/improvments:
+- None
+
+Other/Documentation:
+- Updated documentation.
+
+
+
 5.6
 
 Fixes:

@@ -50,6 +50,7 @@ I - 1) Features
 	* HTTP errors (Page not found with last referer, ...),
 	* Other personalized reports,
 	* Screen size report,
+	* Number of times your site is "added to favourites bookmarks",
 	* Ratio of Browsers that support: Java, Flash, RealG2 reader,
 	  Quicktime reader, WMA reader, PDF reader
 
