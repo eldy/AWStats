@@ -29,6 +29,7 @@ New features/improvements:
 - A new search engine database to allow several "match id" for same
   search engine. Example: All google ip referer id are recognised.
 - Can use UA and HOST fields to build personalized ExtraSection reports.
+- Added support for AND conditions in personlaized ExtraSection config.
 - Support for right to left languages. Added 'he' language.
 - Added LevelForSearchEnginesDetection parameter to choose between 2 possible
   levels of detection for search engines (like LevelForRobotsDetection).

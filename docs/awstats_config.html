@@ -1660,7 +1660,8 @@ color_u,color_v,color_p,color_h,color_k,color_s<br>
 <br># ExtraSectionNameX is title of your personalized chart.
 <br># ExtraSectionConditionalX are conditions you can use to count or not the hit,
 <br>#   Use one of the field condition (URL, QUERY_STRING, REFERER, UA, HOST)
-<br>#   and string to match after a coma. Use "|" for "OR".
+<br>#   and string to match after a coma. Use "|" for "OR". If you can also use
+<br>#   several conditions, they will be combined as "AND".
 <br># ExtraSectionFirstColumnTitleX is the first column title of the chart.
 <br># ExtraSectionFirstColumnValuesX is a Regex string to tell AWStats in which 
 <br>#   field to extract value from (URL, QUERY_STRING, REFERER, UA, HOST) and how
@@ -1678,7 +1679,7 @@ color_u,color_v,color_p,color_h,color_k,color_s<br>
 <br>
 <br># Example to report the 20 products the most ordered by "order.cgi" script
 <br>ExtraSectionName1="Product orders"
-<br>ExtraSectionCondition1="URL,/cgi-bin/order.cgi"
+<br>ExtraSectionCondition1="URL,/cgi-bin/order.cgi|URL,/cgi-bin/order2.cgi"
 <br>ExtraSectionFirstColumnTitle1="Product ID"
 <br>ExtraSectionFirstColumnValues1="QUERY_STRING,productid=([^&amp;]+)"
 <br>ExtraSectionFirstColumnFormat1="%s"
