@@ -237,6 +237,7 @@
 # Site grabbers
 "teleport","TelePort Pro (site grabber)",
 "webcapture","Acrobat (site grabber)",
+"webcopier", "WebCopier (site grabber)",
 # Music only browsers
 "real","RealAudio or compatible (media player)",
 "winamp","WinAmp (media player)",				# Works for winampmpeg and winamp3httprdr
@@ -269,7 +270,6 @@
 "w3c_css_validator","W3C CSS Validator",
 "w3c_validator","W3C HTML Validator",
 "wdg_validator","WDG HTML Validator",
-"webcopier", "WebCopier",
 "webzip","WebZIP",
 "libwww","LibWWW",
 "staroffice","StarOffice"
