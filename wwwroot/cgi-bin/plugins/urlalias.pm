@@ -72,21 +72,20 @@ sub ShowInfoURL_urlalias {
 	# <-----
 	my $urltoshow="$_[0]";
 	my $found = 0;			# flag for testing for whether a match occurs.  unused at present 
-	my $key;				# used in iterating through potential matches
 	my $filetoload='';		# unused at present
 	my $filetoload2='';		# unused at present
-	my $iter;				# iteration variable
 	if ($urltoshow && ! $urlinfoloaded) {
 		# Load urlalias and match files
-		if ($SiteConfig && open(URLMATCHFILE,"$PluginDir/urlmatch.$SiteConfig.txt"))	{ $filetoload="$PluginDir/urlmatch.$SiteConfig.txt"; }
-		elsif (open(URLMATCHFILE,"$PluginDir/urlmatch.txt"))  						{ $filetoload="$PluginDir/urlmatch.txt"; }
-		else { error("Couldn't open UrlMatch file \"$PluginDir/urlmatch.txt\": $!"); }
-		if ($SiteConfig && open(URLALIASFILE,"$PluginDir/urlalias.$SiteConfig.txt"))	{ $filetoload2="$PluginDir/urlalias.$SiteConfig.txt"; }
-		elsif (open(URLALIASFILE,"$PluginDir/urlalias.txt"))  						{ $filetoload2="$PluginDir/urlalias.txt"; }
-		# This is the fastest way to load with regexp that I know
+		if ($SiteConfig && open(URLALIASFILE,"$DirData/urlalias.$SiteConfig.txt"))	{ $filetoload2="$PluginDir/urlalias.$SiteConfig.txt"; }
+		elsif (open(URLALIASFILE,"$DirData/urlalias.txt"))  						{ $filetoload2="$PluginDir/urlalias.txt"; }
+		else { error("Couldn't open UrlAlias file \"$DirData/urlalias.txt\": $!"); }
+		if ($SiteConfig && open(URLMATCHFILE,"$DirData/urlmatch.$SiteConfig.txt"))	{ $filetoload="$PluginDir/urlmatch.$SiteConfig.txt"; }
+		elsif (open(URLMATCHFILE,"$DirData/urlmatch.txt"))  						{ $filetoload="$PluginDir/urlmatch.txt"; }
+		# Load UrlAlias
 		%UrlAlias = map(/^([^\t]+)\t+([^\t]+)/o,<URLALIASFILE>);
-		$iter = 0;
-		foreach $key (<URLMATCHFILE>) {
+		# Load UrlMatch
+		my $iter = 0;
+		foreach my $key (<URLMATCHFILE>) {
 			$key =~ /^([^\t]+)\t+([^\t]+)/o;
 			$UrlMatch[$iter][0] = $1;
 			$UrlMatch[$iter][1] = $2;
@@ -104,8 +103,8 @@ sub ShowInfoURL_urlalias {
 			$found=1;
 		}
 		else {
-			for ($iter=0;$iter<@UrlMatch;$iter++) {
-				$key = $UrlMatch[$iter][0];
+			foreach my $iter (0..@UrlMatch-1) {
+				my $key = $UrlMatch[$iter][0];
 				if ( $urltoshow =~ /$key/ ) {
  					print "<font style=\"color: #$color_link; font-weight: bold\">$UrlMatch[$iter][1]</font><br>"; 
 					$UrlAlias{$urltoshow} = $UrlMatch[$iter][1];
