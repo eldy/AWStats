@@ -41,7 +41,6 @@ The period shown by AWStats reports is by default the current month.<br>
 However if you use AWStats as a CGI you can click on the "year" link to have a report for all the year.
 In a such report, period is full year, so Unique Visitors are number of hosts that have made at least 1 hit
 on 1 page of your web site during those year.<br>
-
 <hr>
 
 <a name="Visits"><b>Visits</b></a>:<br>
@@ -50,7 +49,6 @@ Think "session" here, say a unique IP accesses a page, and then requests three o
 between any of the requests, all of the "pages" are included in the visit, therefore you should expect
 multiple pages per visit and multiple visits per unique visitor (assuming that some of the unique IPs are
 logged with more than an hour between requests)<br>
-
 <hr>
 
 <a name="Pages"><b>Pages</b></a>:<br>
@@ -58,19 +56,16 @@ The number of "pages" logged. Only files that don't match an entry in the NotPag
 parameter (and match an entry of OnlyFiles config parameter if used) are counted as "Pages".
 Usually pages are reserved for HTML files or CGI files, not images nor other files requested as a result
 of loading a "Page" (like js,css... files).<br>
-
 <hr>
 
 <a name="Hits"><b>Hits</b></a>:<br>
 Any files requested from the server (including files that are "Pages") except those that match
 the SkipFiles config parameter.<br>
-
 <hr>
 
 
 <a name="Bandwidth"><b>Bandwidth</b></a>:<br>
 Total number of bytes downloaded.<br>
-
 <hr>
 
 <a name="Entry Page"><b>Entry Page</b></a>:<br>
@@ -78,7 +73,6 @@ First page viewed by a visitor during its visit.<br>
 Note: When a visit started at end of month to end at beginning of next month,
 you might have an Entry page for the month report and no Exit pages.<br>
 That's why Entry pages can be different than Exit pages.<br>
-
 <hr>
 
 <a name="Exit Page"><b>Exit Page</b></a>:<br>
@@ -86,7 +80,6 @@ Last page viewed by a visitor during its visit.<br>
 Note: When a visit started at end of month to end at beginning of next month,
 you might have an Entry page for the month report and no Exit pages.<br>
 That's why Entry pages can be different than Exit pages.<br>
-
 <hr>
 
 <a name="Session Duration"><b>Session Duration</b></a>:<br>
@@ -95,13 +88,11 @@ Some Visits durations are 'unknown' because they can't always be calculated. Thi
 - Visit was not finished when 'update' occured.<br>
 - Visit started the last hour (after 23:00) of the last day of a month (A technical reason prevents AWStats from
 calculating duration of such sessions).<br>
-
 <hr>
 
 <a name="Grabber"><b>Grabber</b></a>:<br>
 A browser that is used primarily for copying locally an entire site. These include
 for example "teleport", "webcapture", "webcopier"...<br>
-
 <hr>
 
 <a name="AddToFavourites"><b>Add To Favourites</b></a>:<br>
@@ -113,58 +104,53 @@ x = Number of hits made by IE browsers for "/anydir/favicon.ico" with no 404 err
 y = Number of hits made by IE browsers for "/favicon.ico" (with or without 404 error)<br>
 r = Ratio of hits made by IE browsers compared to hits made by all browsers (r <= 1)<br>
 <br>
-
 <hr>
 
-<a name="HTTP"><b>HTTP Status Codes</b><a>:<br>
 
-<font face="arial"><font size=-1>HTTP
-status codes are returned by web servers to indicate the status of a request.
-The status code is a 3-digit code indicating the particular response. The
-first digit of this code identifies the class of the status code. The remaining
-2 digits correspond to the specific condition within the response class.
-The following table outlines all status codes defined for the HTTP/1.1
-draft specification outlined in <a href="http://www.w3.org/Protocols/rfc2068/rfc2068">IETF
-rfc 2068</a>.&nbsp;</font></font>
+<a name="HTTP"><b>HTTP Status Codes</b><a>:<br>
+HTTP status codes are returned by web servers to indicate the status of a request.
+Codes <b>200</b> and <b>304</b> are used to tell the browser the page can be viewed.
+All other codes generates hits and traffic 'not seen' by the visitor. For example a return
+code 301 or 302 will tell the browser to ask another page. The browser will do another hit
+and should finaly receive the page with a return code <b>200</b> and <b>304</b>.
+All codes that are 'unseen' traffic are isolated by AWStats in the HTTP Status report chart,
+enabled by the directives <a href="awstats_config.html#Show">ShowHTTPErrorsStats</a>.
+in config file. You can also change value for 'not error' hits (set by default to <b>200</b> and <b>304</b>
+with the <a href="awstats_config.html#ValidHTTPcodes">ValidHTTPcodes</a> directive.
+The following table outlines all status codes defined for the HTTP/1.1 draft specification
+outlined in <a href="http://www.w3.org/Protocols/rfc2068/rfc2068">IETF rfc 2068</a>.<br>
+They are 3-digit codes where the first digit of this code identifies the class of the status
+code and the remaining 2 digits correspond to the specific condition within the response class.
 They are classified in 5 categories:<br>
 <ul>
 <li><font face="arial"><font size=-1><a href="#1">1xx - informational</a></font></font></li>
-
 <li><font face="arial"><font size=-1><a href="#2">2xx - successful</a></font></font></li>
-
 <li><font face="arial"><font size=-1><a href="#3">3xx - redirection</a></font></font></li>
-
-<li><font face="arial"><font size=-1><a href="#4">4xx - client
-error&nbsp;</a></font></font></li>
-
-<li><font face="arial"><font size=-1><a href="#5">5xx - server
-error&nbsp;</a></font></font></li>
+<li><font face="arial"><font size=-1><a href="#4">4xx - client error&nbsp;</a></font></font></li>
+<li><font face="arial"><font size=-1><a href="#5">5xx - server error&nbsp;</a></font></font></li>
 </ul>
 
 
-<table CELLSPACING=5 CELLPADDING=5 WIDTH="500" >
+<table WIDTH="90%" >
 <tr><td VALIGN=TOP BGCOLOR="#DADADA">
 
+<!-- HTTP 1xx codes -->
 <a NAME="1"></a><b><font face="arial">1xx class - Informational</font></b>
 <br><font face="arial"><font size=-1>Informational status codes are provisional
 responses from the web server... they give the client a heads-up on what
 the server is doing. Informational codes do not indicate an error condition.&nbsp;</font></font>
 
-<table CELLSPACING=5 CELLPADDING=5 WIDTH="460" >
+<table WIDTH="100%">
 <tr>
-<td VALIGN=TOP BGCOLOR="#EEEEEE"><b><font face="arial"><font size=-1>100</font></font></b></td>
-
-<td VALIGN=TOP BGCOLOR="#EEEEFF"><b><font face="arial"><font size=-1>100
-Continue</font></font></b>
+<td width=80 valign=top align=center BGCOLOR="#EEEEEE"><b><font face="arial"><font size=-1>100</font></font></b></td>
+<td VALIGN=TOP BGCOLOR="#EEEEFF"><b><font face="arial"><font size=-1>100 Continue</font></font></b>
 <br><font face="arial"><font size=-1>The continue status code tells the
 browser to continue sending a request to the server.&nbsp;</font></font></td>
 </tr>
 
 <tr>
-<td VALIGN=TOP BGCOLOR="#EEEEEE"><b><font face="arial"><font size=-1>101</font></font></b></td>
-
-<td VALIGN=TOP BGCOLOR="#EEEEFF"><b><font face="arial"><font size=-1>101
-Switching Protocols</font></font></b>
+<td width=80 valign=top align=center BGCOLOR="#EEEEEE"><b><font face="arial"><font size=-1>101</font></font></b></td>
+<td VALIGN=TOP BGCOLOR="#EEEEFF"><b><font face="arial"><font size=-1>101 Switching Protocols</font></font></b>
 <br><font face="arial"><font size=-1>The server sends this response when
 the client asks to switch from HTTP/1.0 to HTTP/1.1&nbsp;</font></font></td>
 </tr>
@@ -174,241 +160,187 @@ the client asks to switch from HTTP/1.0 to HTTP/1.1&nbsp;</font></font></td>
 <br><font face="arial"><font size=-1>This class of status code indicates
 that the client's request was received, understood, and successful.&nbsp;</font></font>
 
-<table CELLSPACING=5 CELLPADDING=5 WIDTH="460" >
+<table WIDTH="100%">
 <tr>
-<td VALIGN=TOP BGCOLOR="#EEEEEE"><b><font face="arial"><font size=-1>200</font></font></b></td>
-
-<td VALIGN=TOP BGCOLOR="#EEEEFF"><b><font face="arial"><font size=-1>200
-Successful</font></font></b></td>
+<td width=80 valign=top align=center BGCOLOR="#EEEEEE"><b><font face="arial"><font size=-1>200</font></font></b></td>
+<td VALIGN=TOP BGCOLOR="#EEEEFF"><b><font face="arial"><font size=-1>200 Successful</font></font></b></td>
 </tr>
 
 <tr>
-<td VALIGN=TOP BGCOLOR="#EEEEEE"><b><font face="arial"><font size=-1>201</font></font></b></td>
-
-<td VALIGN=TOP BGCOLOR="#EEEEFF"><b><font face="arial"><font size=-1>201
-Created</font></font></b></td>
+<td width=80 valign=top align=center BGCOLOR="#EEEEEE"><b><font face="arial"><font size=-1>201</font></font></b></td>
+<td VALIGN=TOP BGCOLOR="#EEEEFF"><b><font face="arial"><font size=-1>201 Created</font></font></b></td>
 </tr>
 
 <tr>
-<td VALIGN=TOP BGCOLOR="#EEEEEE"><b><font face="arial"><font size=-1>202</font></font></b></td>
-
-<td VALIGN=TOP BGCOLOR="#EEEEFF"><b><font face="arial"><font size=-1>202
-Accepted</font></font></b></td>
+<td width=80 valign=top align=center BGCOLOR="#EEEEEE"><b><font face="arial"><font size=-1>202</font></font></b></td>
+<td VALIGN=TOP BGCOLOR="#EEEEFF"><b><font face="arial"><font size=-1>202 Accepted</font></font></b></td>
 </tr>
 
 <tr>
-<td VALIGN=TOP BGCOLOR="#EEEEEE"><b><font face="arial"><font size=-1>203</font></font></b></td>
-
-<td VALIGN=TOP BGCOLOR="#EEEEFF"><b><font face="arial"><font size=-1>203
-Non-Authorative Information</font></font></b></td>
+<td width=80 valign=top align=center BGCOLOR="#EEEEEE"><b><font face="arial"><font size=-1>203</font></font></b></td>
+<td VALIGN=TOP BGCOLOR="#EEEEFF"><b><font face="arial"><font size=-1>203 Non-Authorative Information</font></font></b></td>
 </tr>
 
 <tr>
-<td VALIGN=TOP BGCOLOR="#EEEEEE"><b><font face="arial"><font size=-1>204</font></font></b></td>
-
-<td VALIGN=TOP BGCOLOR="#EEEEFF"><b><font face="arial"><font size=-1>204
-No Content</font></font></b></td>
+<td width=80 valign=top align=center BGCOLOR="#EEEEEE"><b><font face="arial"><font size=-1>204</font></font></b></td>
+<td VALIGN=TOP BGCOLOR="#EEEEFF"><b><font face="arial"><font size=-1>204 No Content</font></font></b></td>
 </tr>
 
 <tr>
-<td VALIGN=TOP BGCOLOR="#EEEEEE"><b><font face="arial"><font size=-1>205</font></font></b></td>
-
-<td VALIGN=TOP BGCOLOR="#EEEEFF"><b><font face="arial"><font size=-1>205
-Reset Content</font></font></b></td>
+<td width=80 valign=top align=center BGCOLOR="#EEEEEE"><b><font face="arial"><font size=-1>205</font></font></b></td>
+<td VALIGN=TOP BGCOLOR="#EEEEFF"><b><font face="arial"><font size=-1>205 Reset Content</font></font></b></td>
 </tr>
 
 <tr>
-<td VALIGN=TOP BGCOLOR="#EEEEEE"><b><font face="arial"><font size=-1>206</font></font></b></td>
-
-<td VALIGN=TOP BGCOLOR="#EEEEFF"><b><font face="arial"><font size=-1>206
-Partial Content</font></font></b>
+<td width=80 valign=top align=center BGCOLOR="#EEEEEE"><b><font face="arial"><font size=-1>206</font></font></b></td>
+<td VALIGN=TOP BGCOLOR="#EEEEFF"><b><font face="arial"><font size=-1>206 Partial Content</font></font></b>
 <br><font face="arial"><font size=-1>The partial content success code is
 issued when the server fulfills a partial GET request. This happens when
 the client is downloading a multi-part document or part of a larger file.&nbsp;</font></font></td>
 </tr>
+
 </table>
 
-<p><a NAME="3"></a><b><font face="arial">3xx class - Redirection</font></b>
+<!-- HTTP 3xx codes -->
+<a NAME="3"></a><b><font face="arial">3xx class - Redirection</font></b>
 <br><font face="arial"><font size=-1>This code tells the client that the
 browser should be redirected to another URL in order to complete the request.
 This is not an error condition.&nbsp;</font></font>
 
-<table CELLSPACING=5 CELLPADDING=5 WIDTH="460" >
+<table WIDTH="100%" >
 <tr>
-<td VALIGN=TOP BGCOLOR="#EEEEEE"><b><font face="arial"><font size=-1>300</font></font></b></td>
-
-<td VALIGN=TOP BGCOLOR="#EEEEFF"><b><font face="arial"><font size=-1>300
-Multiple Choices</font></font></b></td>
+<td width=80 valign=top align=center BGCOLOR="#EEEEEE"><b><font face="arial"><font size=-1>300</font></font></b></td>
+<td VALIGN=TOP BGCOLOR="#EEEEFF"><b><font face="arial"><font size=-1>300 Multiple Choices</font></font></b></td>
 </tr>
 
 <tr>
-<td VALIGN=TOP BGCOLOR="#EEEEEE"><b><font face="arial"><font size=-1>301</font></font></b></td>
-
-<td VALIGN=TOP BGCOLOR="#EEEEFF"><b><font face="arial"><font size=-1>301
-Moved Permanently</font></font></b></td>
+<td width=80 valign=top align=center BGCOLOR="#EEEEEE"><b><font face="arial"><font size=-1>301</font></font></b></td>
+<td VALIGN=TOP BGCOLOR="#EEEEFF"><b><font face="arial"><font size=-1>301 Moved Permanently</font></font></b></td>
 </tr>
 
 <tr>
-<td VALIGN=TOP BGCOLOR="#EEEEEE"><b><font face="arial"><font size=-1>302</font></font></b></td>
-
-<td VALIGN=TOP BGCOLOR="#EEEEFF"><b><font face="arial"><font size=-1>302
-Moved Temporarily</font></font></b></td>
+<td width=80 valign=top align=center BGCOLOR="#EEEEEE"><b><font face="arial"><font size=-1>302</font></font></b></td>
+<td VALIGN=TOP BGCOLOR="#EEEEFF"><b><font face="arial"><font size=-1>302 Moved Temporarily</font></font></b></td>
 </tr>
 
 <tr>
-<td VALIGN=TOP BGCOLOR="#EEEEEE"><b><font face="arial"><font size=-1>303</font></font></b></td>
-
-<td VALIGN=TOP BGCOLOR="#EEEEFF"><b><font face="arial"><font size=-1>303
-See Other</font></font></b></td>
+<td width=80 valign=top align=center BGCOLOR="#EEEEEE"><b><font face="arial"><font size=-1>303</font></font></b></td>
+<td VALIGN=TOP BGCOLOR="#EEEEFF"><b><font face="arial"><font size=-1>303 See Other</font></font></b></td>
 </tr>
 
 <tr>
-<td VALIGN=TOP BGCOLOR="#EEEEEE"><b><font face="arial"><font size=-1>304</font></font></b></td>
-
-<td VALIGN=TOP BGCOLOR="#EEEEFF"><b><font face="arial"><font size=-1>304
-Not Modified</font></font></b></td>
+<td width=80 valign=top align=center BGCOLOR="#EEEEEE"><b><font face="arial"><font size=-1>304</font></font></b></td>
+<td VALIGN=TOP BGCOLOR="#EEEEFF"><b><font face="arial"><font size=-1>304 Not Modified</font></font></b></td>
 </tr>
 
 <tr>
-<td VALIGN=TOP BGCOLOR="#EEEEEE"><b><font face="arial"><font size=-1>305</font></font></b></td>
-
-<td VALIGN=TOP BGCOLOR="#EEEEFF"><b><font face="arial"><font size=-1>305
-Use Proxy</font></font></b></td>
+<td width=80 valign=top align=center BGCOLOR="#EEEEEE"><b><font face="arial"><font size=-1>305</font></font></b></td>
+<td VALIGN=TOP BGCOLOR="#EEEEFF"><b><font face="arial"><font size=-1>305 Use Proxy</font></font></b></td>
 </tr>
+
 </table>
 
-<p><a NAME="4"></a><b><font face="arial">4xx class - Client Error</font></b>
+<!-- HTTP 4xx codes -->
+<a NAME="4"></a><b><font face="arial">4xx class - Client Error</font></b>
 <br><font face="arial"><font size=-1>This status code indicates that the
 client has sent bad data or a malformed request to the server. Client errors
 are generally issued by the webserver when a client tries to gain access
 to a protected area using a bad username and password.&nbsp;</font></font>
 
-<table CELLSPACING=5 CELLPADDING=5 WIDTH="460" >
+<table WIDTH="100%" >
 <tr>
-<td VALIGN=TOP BGCOLOR="#EEEEEE"><b><font face="arial"><font size=-1>400</font></font></b></td>
-
-<td VALIGN=TOP BGCOLOR="#EEEEFF"><b><font face="arial"><font size=-1>400
-Bad Request</font></font></b></td>
+<td width=80 valign=top align=center BGCOLOR="#EEEEEE"><b><font face="arial"><font size=-1>400</font></font></b></td>
+<td VALIGN=TOP BGCOLOR="#EEEEFF"><b><font face="arial"><font size=-1>400 Bad Request</font></font></b></td>
 </tr>
 
 <tr>
-<td VALIGN=TOP BGCOLOR="#EEEEEE"><b><font face="arial"><font size=-1>401</font></font></b></td>
-
-<td VALIGN=TOP BGCOLOR="#EEEEFF"><b><font face="arial"><font size=-1>401
-Unauthorized</font></font></b></td>
+<td width=80 valign=top align=center BGCOLOR="#EEEEEE"><b><font face="arial"><font size=-1>401</font></font></b></td>
+<td VALIGN=TOP BGCOLOR="#EEEEFF"><b><font face="arial"><font size=-1>401 Unauthorized</font></font></b></td>
 </tr>
 
 <tr>
-<td VALIGN=TOP BGCOLOR="#EEEEEE"><b><font face="arial"><font size=-1>402</font></font></b></td>
-
-<td VALIGN=TOP BGCOLOR="#EEEEFF"><b><font face="arial"><font size=-1>402
-Payment Required</font></font></b></td>
+<td width=80 valign=top align=center BGCOLOR="#EEEEEE"><b><font face="arial"><font size=-1>402</font></font></b></td>
+<td VALIGN=TOP BGCOLOR="#EEEEFF"><b><font face="arial"><font size=-1>402 Payment Required</font></font></b></td>
 </tr>
 
 <tr>
-<td VALIGN=TOP BGCOLOR="#EEEEEE"><b><font face="arial"><font size=-1>403</font></font></b></td>
-
-<td VALIGN=TOP BGCOLOR="#EEEEFF"><b><font face="arial"><font size=-1>403
-Forbidden</font></font></b></td>
+<td width=80 valign=top align=center BGCOLOR="#EEEEEE"><b><font face="arial"><font size=-1>403</font></font></b></td>
+<td VALIGN=TOP BGCOLOR="#EEEEFF"><b><font face="arial"><font size=-1>403 Forbidden</font></font></b></td>
 </tr>
 
 <tr>
-<td VALIGN=TOP BGCOLOR="#EEEEEE"><b><font face="arial"><font size=-1>404</font></font></b></td>
-
-<td VALIGN=TOP BGCOLOR="#EEEEFF"><b><font face="arial"><font size=-1>404
-Not Found</font></font></b></td>
+<td width=80 valign=top align=center BGCOLOR="#EEEEEE"><b><font face="arial"><font size=-1>404</font></font></b></td>
+<td VALIGN=TOP BGCOLOR="#EEEEFF"><b><font face="arial"><font size=-1>404 Not Found</font></font></b></td>
 </tr>
 
 <tr>
-<td VALIGN=TOP BGCOLOR="#EEEEEE"><b><font face="arial"><font size=-1>405</font></font></b></td>
-
-<td VALIGN=TOP BGCOLOR="#EEEEFF"><b><font face="arial"><font size=-1>400
-Method Not Allowed</font></font></b></td>
+<td width=80 valign=top align=center BGCOLOR="#EEEEEE"><b><font face="arial"><font size=-1>405</font></font></b></td>
+<td VALIGN=TOP BGCOLOR="#EEEEFF"><b><font face="arial"><font size=-1>400 Method Not Allowed</font></font></b></td>
 </tr>
 
 <tr>
-<td VALIGN=TOP BGCOLOR="#EEEEEE"><b><font face="arial"><font size=-1>406</font></font></b></td>
-
-<td VALIGN=TOP BGCOLOR="#EEEEFF"><b><font face="arial"><font size=-1>400
-Not Acceptable</font></font></b></td>
+<td width=80 valign=top align=center BGCOLOR="#EEEEEE"><b><font face="arial"><font size=-1>406</font></font></b></td>
+<td VALIGN=TOP BGCOLOR="#EEEEFF"><b><font face="arial"><font size=-1>400 Not Acceptable</font></font></b></td>
 </tr>
 
 <tr>
-<td VALIGN=TOP BGCOLOR="#EEEEEE"><b><font face="arial"><font size=-1>407</font></font></b></td>
-
-<td VALIGN=TOP BGCOLOR="#EEEEFF"><b><font face="arial"><font size=-1>400
-Proxy Authentication Required</font></font></b></td>
+<td width=80 valign=top align=center BGCOLOR="#EEEEEE"><b><font face="arial"><font size=-1>407</font></font></b></td>
+<td VALIGN=TOP BGCOLOR="#EEEEFF"><b><font face="arial"><font size=-1>400 Proxy Authentication Required</font></font></b></td>
 </tr>
 
 <tr>
-<td VALIGN=TOP BGCOLOR="#EEEEEE"><b><font face="arial"><font size=-1>408</font></font></b></td>
-
-<td VALIGN=TOP BGCOLOR="#EEEEFF"><b><font face="arial"><font size=-1>400
-Request Timeout</font></font></b></td>
+<td width=80 valign=top align=center BGCOLOR="#EEEEEE"><b><font face="arial"><font size=-1>408</font></font></b></td>
+<td VALIGN=TOP BGCOLOR="#EEEEFF"><b><font face="arial"><font size=-1>400 Request Timeout</font></font></b></td>
 </tr>
 
 <tr>
-<td VALIGN=TOP BGCOLOR="#EEEEEE"><b><font face="arial"><font size=-1>409</font></font></b></td>
-
-<td VALIGN=TOP BGCOLOR="#EEEEFF"><b><font face="arial"><font size=-1>409
-Conflict</font></font></b></td>
+<td width=80 valign=top align=center BGCOLOR="#EEEEEE"><b><font face="arial"><font size=-1>409</font></font></b></td>
+<td VALIGN=TOP BGCOLOR="#EEEEFF"><b><font face="arial"><font size=-1>409 Conflict</font></font></b></td>
 </tr>
 
 <tr>
-<td VALIGN=TOP BGCOLOR="#EEEEEE"><b><font face="arial"><font size=-1>410</font></font></b></td>
-
-<td VALIGN=TOP BGCOLOR="#EEEEFF"><b><font face="arial"><font size=-1>410
-Gone</font></font></b></td>
+<td width=80 valign=top align=center BGCOLOR="#EEEEEE"><b><font face="arial"><font size=-1>410</font></font></b></td>
+<td VALIGN=TOP BGCOLOR="#EEEEFF"><b><font face="arial"><font size=-1>410 Gone</font></font></b></td>
 </tr>
 
 <tr>
-<td VALIGN=TOP BGCOLOR="#EEEEEE"><b><font face="arial"><font size=-1>411</font></font></b></td>
-
-<td VALIGN=TOP BGCOLOR="#EEEEFF"><b><font face="arial"><font size=-1>411
-Length Required</font></font></b></td>
+<td width=80 valign=top align=center BGCOLOR="#EEEEEE"><b><font face="arial"><font size=-1>411</font></font></b></td>
+<td VALIGN=TOP BGCOLOR="#EEEEFF"><b><font face="arial"><font size=-1>411 Length Required</font></font></b></td>
 </tr>
 
 <tr>
-<td VALIGN=TOP BGCOLOR="#EEEEEE"><b><font face="arial"><font size=-1>412</font></font></b></td>
-
-<td VALIGN=TOP BGCOLOR="#EEEEFF"><b><font face="arial"><font size=-1>412
-Precondition Failed</font></font></b></td>
+<td width=80 valign=top align=center BGCOLOR="#EEEEEE"><b><font face="arial"><font size=-1>412</font></font></b></td>
+<td VALIGN=TOP BGCOLOR="#EEEEFF"><b><font face="arial"><font size=-1>412 Precondition Failed</font></font></b></td>
 </tr>
 
 <tr>
-<td VALIGN=TOP BGCOLOR="#EEEEEE"><b><font face="arial"><font size=-1>413</font></font></b></td>
-
-<td VALIGN=TOP BGCOLOR="#EEEEFF"><b><font face="arial"><font size=-1>413
-Request Entity Too Long</font></font></b></td>
+<td width=80 valign=top align=center BGCOLOR="#EEEEEE"><b><font face="arial"><font size=-1>413</font></font></b></td>
+<td VALIGN=TOP BGCOLOR="#EEEEFF"><b><font face="arial"><font size=-1>413 Request Entity Too Long</font></font></b></td>
 </tr>
 
 <tr>
-<td VALIGN=TOP BGCOLOR="#EEEEEE"><b><font face="arial"><font size=-1>414</font></font></b></td>
-
-<td VALIGN=TOP BGCOLOR="#EEEEFF"><b><font face="arial"><font size=-1>414
-Request-URI Too Long</font></font></b></td>
+<td width=80 valign=top align=center BGCOLOR="#EEEEEE"><b><font face="arial"><font size=-1>414</font></font></b></td>
+<td VALIGN=TOP BGCOLOR="#EEEEFF"><b><font face="arial"><font size=-1>414 Request-URI Too Long</font></font></b></td>
 </tr>
 
 <tr>
-<td VALIGN=TOP BGCOLOR="#EEEEEE"><b><font face="arial"><font size=-1>415</font></font></b></td>
-
-<td VALIGN=TOP BGCOLOR="#EEEEFF"><b><font face="arial"><font size=-1>415
-Unsupported Media Type</font></font></b></td>
+<td width=80 valign=top align=center BGCOLOR="#EEEEEE"><b><font face="arial"><font size=-1>415</font></font></b></td>
+<td VALIGN=TOP BGCOLOR="#EEEEFF"><b><font face="arial"><font size=-1>415 Unsupported Media Type</font></font></b></td>
 </tr>
+
 </table>
 
-<p><a NAME="5"></a><b><font face="arial">5xx class - Server Error</font></b>
+<!-- HTTP 5xx codes -->
+<a NAME="5"></a><b><font face="arial">5xx class - Server Error</font></b>
 <br><font face="arial"><font size=-1>This status code indicates that the
 client's request couldn't be succesfully processed due to some internal
 error in the web server. These error codes may indicate something is seriously
 wrong with the web server.&nbsp;</font></font>
 
-<table CELLSPACING=5 CELLPADDING=5 WIDTH="460" >
+<table WIDTH="100%" >
 <tr>
-<td VALIGN=TOP BGCOLOR="#EEEEEE"><b><font face="arial"><font size=-1>500</font></font></b></td>
-
-<td VALIGN=TOP BGCOLOR="#EEEEFF"><b><font face="arial"><font size=-1>500
-Internal Server Error</font></font></b>
+<td width=80 valign=top align=center BGCOLOR="#EEEEEE"><b><font face="arial"><font size=-1>500</font></font></b></td>
+<td VALIGN=TOP BGCOLOR="#EEEEFF"><b><font face="arial"><font size=-1>500 Internal Server Error</font></font></b>
 <br><font face="arial"><font size=-1>An internal server error has caused
 the server to abort your request. This is an error condition that may also
 indicate a misconfiguration with the web server. However, the most common
@@ -417,10 +349,8 @@ syntax errors.&nbsp;</font></font></td>
 </tr>
 
 <tr>
-<td VALIGN=TOP BGCOLOR="#EEEEEE"><b><font face="arial"><font size=-1>501</font></font></b></td>
-
-<td VALIGN=TOP BGCOLOR="#EEEEFF"><b><font face="arial"><font size=-1>501
-Not Implemented</font></font></b>
+<td width=80 valign=top align=center BGCOLOR="#EEEEEE"><b><font face="arial"><font size=-1>501</font></font></b></td>
+<td VALIGN=TOP BGCOLOR="#EEEEFF"><b><font face="arial"><font size=-1>501 Not Implemented</font></font></b>
 <br><font face="arial"><font size=-1>This code is generated by a webserver
 when the client requests a service that is not implemented on the server.
 Typically, not implemented codes are returned when a client attempts to
@@ -429,92 +359,254 @@ file).&nbsp;</font></font></td>
 </tr>
 
 <tr>
-<td VALIGN=TOP BGCOLOR="#EEEEEE"><b><font face="arial"><font size=-1>502</font></font></b></td>
-
-<td VALIGN=TOP BGCOLOR="#EEEEFF"><b><font face="arial"><font size=-1>502
-Bad Gateway</font></font></b>
+<td width=80 valign=top align=center BGCOLOR="#EEEEEE"><b><font face="arial"><font size=-1>502</font></font></b></td>
+<td VALIGN=TOP BGCOLOR="#EEEEFF"><b><font face="arial"><font size=-1>502 Bad Gateway</font></font></b>
 <br><font face="arial"><font size=-1>The server, when acting as a proxy,
 issues this response when it receives a bad response from an upstream or
 support server.&nbsp;</font></font></td>
 </tr>
 
 <tr>
-<td VALIGN=TOP BGCOLOR="#EEEEEE"><b><font face="arial"><font size=-1>503</font></font></b></td>
-
-<td VALIGN=TOP BGCOLOR="#EEEEFF"><b><font face="arial"><font size=-1>503
-Service Unavailable</font></font></b>
+<td width=80 valign=top align=center BGCOLOR="#EEEEEE"><b><font face="arial"><font size=-1>503</font></font></b></td>
+<td VALIGN=TOP BGCOLOR="#EEEEFF"><b><font face="arial"><font size=-1>503 Service Unavailable</font></font></b>
 <br><font face="arial"><font size=-1>The web server is too busy processing
 current requests to listen to a new client. This error represents a serious
 problem with the webserver (normally solved with a reboot).&nbsp;</font></font></td>
 </tr>
 
 <tr>
-<td VALIGN=TOP BGCOLOR="#EEEEEE"><b><font face="arial"><font size=-1>504</font></font></b></td>
-
-<td VALIGN=TOP BGCOLOR="#EEEEFF"><b><font face="arial"><font size=-1>504
-Gateway Timeout</font></font></b>
+<td width=80 valign=top align=center BGCOLOR="#EEEEEE"><b><font face="arial"><font size=-1>504</font></font></b></td>
+<td VALIGN=TOP BGCOLOR="#EEEEFF"><b><font face="arial"><font size=-1>504 Gateway Timeout</font></font></b>
 <br><font face="arial"><font size=-1>Gateway timeouts are normally issued
 by proxy servers when an upstream or support server doesn't respond to
 a request in a timely fashion.&nbsp;</font></font></td>
 </tr>
 
 <tr>
-<td VALIGN=TOP BGCOLOR="#EEEEEE"><b><font face="arial"><font size=-1>505</font></font></b></td>
-
-<td VALIGN=TOP BGCOLOR="#EEEEFF"><b><font face="arial"><font size=-1>505
-HTTP Version Not Supported</font></font></b>
+<td width=80 valign=top align=center BGCOLOR="#EEEEEE"><b><font face="arial"><font size=-1>505</font></font></b></td>
+<td VALIGN=TOP BGCOLOR="#EEEEFF"><b><font face="arial"><font size=-1>505 HTTP Version Not Supported</font></font></b>
 <br><font face="arial"><font size=-1>The server issues this status code
 when a client tries to talk using an HTTP protocol that the server doesn't
 support or is configured to ignore.</font></font></td>
 </tr>
+
 </table>
 </td>
 
 <td ALIGN=LEFT VALIGN=TOP></td>
 </tr>
 </table>
+<br>
 
 <hr>
 
 <a name="SMTP"><b>SMTP Status Codes</b><a>:<br>
 
-<font face="arial"><font size=-1>SMTP
-status codes are returned by mail servers to indicate the status of a sending/receiving mail.
+SMTP status codes are returned by mail servers to indicate the status of a sending/receiving mail.
 The status code depends on mail server and preprocessor used to analyze log file.<br>
-This is value reported for Postfix mail server when mail log file is preprocessing
-with maillogconvert:<br>
+All codes that are failure codes are isolated by AWStats in the SMTP Status report chart,
+enabled by the directives <a href="awstats_config.html#Show">ShowSMTPErrorsStats</a> in AWStats
+config file. You can decide which codes are successfull mail transfer that should not appear
+in this chart with the <a href="awstats_config.html#ValidSMTPCodes">ValidSMTPCodes</a> directive.<br>
+Here are values reported for most mail servers (This should also be values when mail log file
+is preprocessing with maillogconvert.pl).<br>
+SMTP Errors are classified in 3 categories:<br>
+<ul>
+<li><font face="arial"><font size=-1><a href="#SMTP23">2xx/3xx - successful</a></font></font></li>
+<li><font face="arial"><font size=-1><a href="#SMTP4">4xx - failure, asking sender to try later</a></font></font></li>
+<li><font face="arial"><font size=-1><a href="#SMTP5">5xx - permanent failure</a></font></font></li>
+</ul>
 
-<table CELLSPACING=5 CELLPADDING=5 WIDTH="500" >
+
+<table WIDTH="90%">
 <tr><td VALIGN=TOP BGCOLOR="#DADADA">
 
-<a NAME="1"></a><b><font face="arial">xxx class - Errors</font></b>
-<br><font face="arial"><font size=-1>&nbsp;</font></font>
+<!-- SMTP 2xx/3xx -->
 
-<table CELLSPACING=5 CELLPADDING=5 WIDTH="460" >
+<a NAME="SMTP23"></a><b><font face="arial">2xx/3xx class - Success</font></b>
+<br><font face="arial"><font size=-1>
+They are SMTP protocols successfull answers
+</font></font>
+
+<table WIDTH="100%">
 <tr>
-<td VALIGN=TOP BGCOLOR="#EEEEEE"><b><font face="arial"><font size=-1>450</font></font></b></td>
-
-<td VALIGN=TOP BGCOLOR="#EEEEFF"><b><font face="arial"><font size=-1>450
-User Unknown</font></font></b>
-<br><font face="arial"><font size=-1>The mail server has receive an email for an unknown user
-so mail was rejected.&nbsp;</font></font></td>
+<td width=80 valign=top align=center BGCOLOR="#EEEEEE"><b><font face="arial"><font size=-1>200</font></font></b></td>
+<td VALIGN=TOP BGCOLOR="#EEEEFF"><b><font face="arial"><font size=-1>200 Non standard success response</font></font></b>
+<br><font face="arial"><font size=-1>Non standard success response</font></font></td>
+</tr>
+<tr>
+<td width=80 valign=top align=center BGCOLOR="#EEEEEE"><b><font face="arial"><font size=-1>211</font></font></b></td>
+<td VALIGN=TOP BGCOLOR="#EEEEFF"><b><font face="arial"><font size=-1>211 System status, or system help reply</font></font></b>
+<br><font face="arial"><font size=-1>System status, or system help reply</font></font></td>
+</tr>
+<tr>
+<td width=80 valign=top align=center BGCOLOR="#EEEEEE"><b><font face="arial"><font size=-1>214</font></font></b></td>
+<td VALIGN=TOP BGCOLOR="#EEEEFF"><b><font face="arial"><font size=-1>214 Help message</font></font></b>
+<br><font face="arial"><font size=-1>Help message</font></font></td>
+</tr>
+<tr>
+<td width=80 valign=top align=center BGCOLOR="#EEEEEE"><b><font face="arial"><font size=-1>220</font></font></b></td>
+<td VALIGN=TOP BGCOLOR="#EEEEFF"><b><font face="arial"><font size=-1>220 <domain> Service ready</font></font></b>
+<br><font face="arial"><font size=-1><domain> Service ready</font></font></td>
+</tr>
+<tr>
+<td width=80 valign=top align=center BGCOLOR="#EEEEEE"><b><font face="arial"><font size=-1>221</font></font></b></td>
+<td VALIGN=TOP BGCOLOR="#EEEEFF"><b><font face="arial"><font size=-1>221 <domain> Service closing transmission channel</font></font></b>
+<br><font face="arial"><font size=-1><domain> Service closing transmission channel</font></font></td>
+</tr>
+<tr>
+<td width=80 valign=top align=center BGCOLOR="#EEEEEE"><b><font face="arial"><font size=-1>250</font></font></b></td>
+<td VALIGN=TOP BGCOLOR="#EEEEFF"><b><font face="arial"><font size=-1>250 Requested mail action taken and completed</font></font></b>
+<br><font face="arial"><font size=-1>Your ISP mail server have successfully executes a command and the DNS is reporting a positive delivery.</font></font></td>
+</tr>
+<tr>
+<td width=80 valign=top align=center BGCOLOR="#EEEEEE"><b><font face="arial"><font size=-1>251</font></font></b></td>
+<td VALIGN=TOP BGCOLOR="#EEEEFF"><b><font face="arial"><font size=-1>251 User not local: will forward to <forward-path></font></font></b>
+<br><font face="arial"><font size=-1>Your message to a specified email address is not local to the mail server, but it will accept and forward the message to a different recipient email address.</font></font></td>
+</tr>
+<tr>
+<td width=80 valign=top align=center BGCOLOR="#EEEEEE"><b><font face="arial"><font size=-1>252</font></font></b></td>
+<td VALIGN=TOP BGCOLOR="#EEEEFF"><b><font face="arial"><font size=-1>252 Recipient cannot be verified</font></font></b>
+<br><font face="arial"><font size=-1>Recipient cannot be verified but mail server accepts the message and attempts delivery</font></font></td>
+</tr>
+<tr>
+<td width=80 valign=top align=center BGCOLOR="#EEEEEE"><b><font face="arial"><font size=-1>354</font></font></b></td>
+<td VALIGN=TOP BGCOLOR="#EEEEFF"><b><font face="arial"><font size=-1>354 Start mail input and end with <CRLF>.<CRLF></font></font></b>
+<br><font face="arial"><font size=-1>Indicates mail server is ready to accept the message or instruct your mail client to send the message body after the mail server have received the message headers.</font></font></td>
 </tr>
 
-<tr>
-<td VALIGN=TOP BGCOLOR="#EEEEEE"><b><font face="arial"><font size=-1>554</font></font></b></td>
+</table>
 
-<td VALIGN=TOP BGCOLOR="#EEEEFF"><b><font face="arial"><font size=-1>554
-Relay denied</font></font></b>
-<br><font face="arial"><font size=-1>The SMTP server was used to send a mail from a user/ip/domain x
-to a user/ip/domain y with a path x to y that is not allowed&nbsp;</font></font></td>
+
+<!-- SMTP 4xx -->
+
+<a NAME="SMTP4"></a><b><font face="arial">4xx class - Temporary Errors</font></b>
+<br><font face="arial"><font size=-1>
+Those codes are temporary error message. They are used to tell client sender that
+an error occured but he can try to solve it but trying again, so in most cases, clients that
+receive such codes will keep the mail in their queue and will try again later.<br>
+</font></font>
+
+<table WIDTH="100%" >
+<tr>
+<td width=80 valign=top align=center BGCOLOR="#EEEEEE"><b><font face="arial"><font size=-1>421</font></font></b></td>
+<td VALIGN=TOP BGCOLOR="#EEEEFF"><b><font face="arial"><font size=-1>421 <domain> Service not available, closing transmission channel</font></font></b>
+<br><font face="arial"><font size=-1>This may be a reply to any command if the service knows it must shut down.</font></font></td>
 </tr>
+<tr>
+<td width=80 valign=top align=center BGCOLOR="#EEEEEE"><b><font face="arial"><font size=-1>450</font></font></b></td>
+<td VALIGN=TOP BGCOLOR="#EEEEFF"><b><font face="arial"><font size=-1>450 Requested mail action not taken: mailbox busy or access denied</font></font></b>
+<br><font face="arial"><font size=-1>Your ISP mail server indicates that an email address does not exist or the mailbox is busy. It could be the network connection went down while sending, or it could also happen if the remote mail server does not want to accept mail from you for some reason i.e. (IP address, From address, Recipient, etc.)</font></font></td>
+</tr>
+<tr>
+<td width=80 valign=top align=center BGCOLOR="#EEEEEE"><b><font face="arial"><font size=-1>451</font></font></b></td>
+<td VALIGN=TOP BGCOLOR="#EEEEFF"><b><font face="arial"><font size=-1>451 Requested mail action aborted: error in processing</font></font></b>
+<br><font face="arial"><font size=-1>Your ISP mail server indicates that the mailing has been interrupted, usually due to overloading from too many messages or transient failure is one in which the message sent is valid, but some temporary event prevents the successful sending of the message. Sending in the future may be successful.</font></font></td>
+</tr>
+<tr>
+<td width=80 valign=top align=center BGCOLOR="#EEEEEE"><b><font face="arial"><font size=-1>452</font></font></b></td>
+<td VALIGN=TOP BGCOLOR="#EEEEFF"><b><font face="arial"><font size=-1>452 Requested mail action not taken: insufficient system storage</font></font></b>
+<br><font face="arial"><font size=-1>Your ISP mail server indicates, probable overloading from too many messages and sending in the future may be successful.</font></font></td>
+</tr>
+<tr>
+<td width=80 valign=top align=center BGCOLOR="#EEEEEE"><b><font face="arial"><font size=-1>453</font></font></b></td>
+<td VALIGN=TOP BGCOLOR="#EEEEFF"><b><font face="arial"><font size=-1>453 Too many messages</font></font></b>
+<br><font face="arial"><font size=-1>Some mail servers have the option to reduce the number of concurrent connection and also the number of messages sent per connection. If you have a lot of messages queued up it could go over the max number of messages per connection. To see if this is the case you can try submitting only a few messages to that domain at a time and then keep increasing the number until you find the maximum number accepted by the server.</font></font></td>
+</tr>
+
+</table>
+
+<!-- SMTP 5xx -->
+
+<a NAME="SMTP5"></a><b><font face="arial">5xx class - Permanent Errors</font></b>
+<br><font face="arial"><font size=-1>
+This are permant error codes. Mail transfer is definitly a failure.
+</font></font>
+
+<table WIDTH="100%" >
+<tr>
+<td width=80 valign=top align=center BGCOLOR="#EEEEEE"><b><font face="arial"><font size=-1>500</font></font></b></td>
+<td VALIGN=TOP BGCOLOR="#EEEEFF"><b><font face="arial"><font size=-1>500 Syntax error, command unrecognized or command line too long</font></font></b>
+</tr>
+<tr>
+<td width=80 valign=top align=center BGCOLOR="#EEEEEE"><b><font face="arial"><font size=-1>501</font></font></b></td>
+<td VALIGN=TOP BGCOLOR="#EEEEFF"><b><font face="arial"><font size=-1>501 Syntax error in parameters or arguments</font></font></b>
+</tr>
+<tr>
+<td width=80 valign=top align=center BGCOLOR="#EEEEEE"><b><font face="arial"><font size=-1>502</font></font></b></td>
+<td VALIGN=TOP BGCOLOR="#EEEEFF"><b><font face="arial"><font size=-1>502 Command not implemented</font></font></b>
+</tr>
+<tr>
+<td width=80 valign=top align=center BGCOLOR="#EEEEEE"><b><font face="arial"><font size=-1>503</font></font></b></td>
+<td VALIGN=TOP BGCOLOR="#EEEEFF"><b><font face="arial"><font size=-1>503 Server encountered bad sequence of commands</font></font></b>
+</tr>
+<tr>
+<td width=80 valign=top align=center BGCOLOR="#EEEEEE"><b><font face="arial"><font size=-1>504</font></font></b></td>
+<td VALIGN=TOP BGCOLOR="#EEEEFF"><b><font face="arial"><font size=-1>504 Command parameter not implemented</font></font></b>
+</tr>
+<tr>
+<td width=80 valign=top align=center BGCOLOR="#EEEEEE"><b><font face="arial"><font size=-1>521</font></font></b></td>
+<td VALIGN=TOP BGCOLOR="#EEEEFF"><b><font face="arial"><font size=-1>521 <domain> does not accept mail or closing transmission channel</font></font></b>
+<br><font face="arial"><font size=-1>You must be pop-authenticated before you can use this SMTP server and you must use your mail address for the Sender/From field.</font></font></td>
+</tr>
+<tr>
+<td width=80 valign=top align=center BGCOLOR="#EEEEEE"><b><font face="arial"><font size=-1>530</font></font></b></td>
+<td VALIGN=TOP BGCOLOR="#EEEEFF"><b><font face="arial"><font size=-1>530 Access denied</font></font></b>
+<br><font face="arial"><font size=-1>A sendmailism ?</font></font></td>
+</tr>
+<tr>
+<td width=80 valign=top align=center BGCOLOR="#EEEEEE"><b><font face="arial"><font size=-1>550</font></font></b></td>
+<td VALIGN=TOP BGCOLOR="#EEEEFF"><b><font face="arial"><font size=-1>550 Requested mail action not taken (Relaying not allowed, Unknown recipient user, ...)</font></font></b>
+<br><font face="arial"><font size=-1>Sending an email to recipients outside of your domain are not allowed or your mail server does not know that you have access to use it for relaying messages and authentication is required. Or to prevent the sending of SPAM some mail servers will not allow (relay) send mail to any e-mail using another company’s network and computer resources.</font></font></td>
+</tr>
+<tr>
+<td width=80 valign=top align=center BGCOLOR="#EEEEEE"><b><font face="arial"><font size=-1>551</font></font></b></td>
+<td VALIGN=TOP BGCOLOR="#EEEEFF"><b><font face="arial"><font size=-1>551 User not local: please try <forward-path> or Invalid Address: Relay request denied</font></font></b>
+</tr>
+<tr>
+<td width=80 valign=top align=center BGCOLOR="#EEEEEE"><b><font face="arial"><font size=-1>552</font></font></b></td>
+<td VALIGN=TOP BGCOLOR="#EEEEFF"><b><font face="arial"><font size=-1>552 Requested mail action aborted: exceeded storage allocation</font></font></b>
+<br><font face="arial"><font size=-1>ISP mail server indicates, probable overloading from too many messages.</font></font></td>
+</tr>
+<tr>
+<td width=80 valign=top align=center BGCOLOR="#EEEEEE"><b><font face="arial"><font size=-1>553</font></font></b></td>
+<td VALIGN=TOP BGCOLOR="#EEEEFF"><b><font face="arial"><font size=-1>553 Requested mail action not taken: mailbox name not allowed</font></font></b>
+<br><font face="arial"><font size=-1>Some mail servers have the option to reduce the number of concurrent connection and also the number of messages sent per connection. If you have a lot of messages queued up (being sent) for a domain, it could go over the maximum number of messages per connection and/or some change to the message and/or destination must be made for successful delivery.</font></font></td>
+</tr>
+<tr>
+<td width=80 valign=top align=center BGCOLOR="#EEEEEE"><b><font face="arial"><font size=-1>554</font></font></b></td>
+<td VALIGN=TOP BGCOLOR="#EEEEFF"><b><font face="arial"><font size=-1>554 Requested mail action rejected: access denied</font></font></b>
+</tr>
+<tr>
+<td width=80 valign=top align=center BGCOLOR="#EEEEEE"><b><font face="arial"><font size=-1>557</font></font></b></td>
+<td VALIGN=TOP BGCOLOR="#EEEEFF"><b><font face="arial"><font size=-1>557 Too many duplicate messages</font></font></b>
+<br><font face="arial"><font size=-1>Resource temporarily unavailable Indicates (probable) that there is some kind of anti-spam system on the mail server.</font></font></td>
+</tr>
+<!--
+# Postfix code for access_map_reject_code (postfix default=554) with access_map_reject_code rule
+'570'=>'Access denied: access_map violation (on SMTP client or HELO hostname, sender or recipient email address)',
+# Postfix code for maps_rbl_reject_code (postfix default=554) with maps_rbl_code rule
+'571'=>'Access denied: SMTP client listed in RBL',
+# Postfix code for relay_domains_reject_code (postfix default=554) with relay_domains_reject rule
+'572'=>'Access denied: Relay not authorized or not local host not a gateway',
+# Postfix code for unknown_client_reject_code (postfix default=450) with reject_unknown_client rule
+'573'=>'Access denied: Unknown SMTP client hostname (without DNS A or MX record)',
+# Postfix code for invalid_hostname_reject_code (postfix default=501) with reject_invalid_hostname rule
+'574'=>'Access denied: Bad syntax for client HELO hostname (Not RFC compliant)',
+# Postfix code for reject_code (postfix default=554) with smtpd_client_restrictions
+'575'=>'Access denied: SMTP client hostname rejected',
+# Postfix code for unknown_address_reject_code (postfix default=450) with reject_unknown_sender_domain or reject_unknown_recipient_domain rule
+'576'=>'Access denied: Unknown domain for sender or recipient email address (without DNS A or MX record)',
+# Postfix code for unknown_hostname_reject_code (postfix default=501) with reject_unknown_hostname rule
+'577'=>'Access denied: Unknown client HELO hostname (without DNS A or MX record)',
+# Postfix code for non_fqdn_reject_code (Postfix default=504) with reject_non_fqdn_hostname, reject_non_fqdn_sender or reject_non_fqdn_recipient rule 
+'578'=>'Access denied: Invalid domain for client HELO hostname, sender or recipient email address (not FQDN)',
+-->
 </table>
 
 <td ALIGN=LEFT VALIGN=TOP></td>
 </tr>
 </table>
-
-
 
 
 
