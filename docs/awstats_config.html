@@ -323,8 +323,8 @@ when reading it), follow the example:<br>
 <br>#   %email_r          EMail receiver (for mail log)
 <br>#   %syslog           Syslog-specific time and host stamp with format: Mon dd hh:mm:ss hostname
 <br>#   %virtualname      Web sever virtual hostname. Use this tag when same log
-<br>#                     file contains data of several virtual web servers. The
-<br>#                     SiteDomain will be used to filter the one you want.
+<br>#                     contains data of several virtual web servers. AWStats
+<br>#                     will discard records not in SiteDomain nor HostAliases
 <br>#   If your log format has some fields not included in this list, use
 <br>#   %other            Means another field
 <br>#
