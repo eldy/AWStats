@@ -36,7 +36,9 @@
 #-------------------------------------------------------
 #use diagnostics;
 #use strict;
-#use Time::HiRes qw( gettimeofday tv_interval );		# Uncomment this to get miliseconds time in showsteps option
+# Uncomment following line and a line into GetDelaySinceStart function to get
+# miliseconds time in showsteps option
+#use Time::HiRes qw( gettimeofday );		
 
 
 #-------------------------------------------------------
@@ -46,29 +48,33 @@
 # ---------- Init variables (Variable $TmpHashxxx are not initialized) -------
 ($AddOn,$BarHeight,$BarWidth,$Debug,$DebugResetDone,$DNSLookup,$Expires, 
 $KeepBackupOfHistoricFiles,
-$NbOfLinesForCorruptedLog,$startseconds,$startmicroseconds)=
-(0,0,0,0,0,0,0,0,0,0,0);
-($ArchiveLogRecords, $FirstDayOfWeek,$WarningMessages)=
-(1,1,1);
+$MaxLengthOfURL,
+$MaxNbOfHostsShown, $MaxNbOfKeywordsShown, $MaxNbOfLastHosts, $MaxNbOfLoginShown,
+$MaxNbOfPageShown, $MaxNbOfRefererShown, $MaxNbOfRobotShown,
+$MinHitFile, $MinHitHost, $MinHitKeyword,
+$MinHitLogin, $MinHitRefer, $MinHitRobot,
+$NbOfLinesForCorruptedLog,
+$ShowAuthenticatedUsers, $ShowCompressionStats, $ShowFileSizesStats,
+$ShowSteps, $StartSeconds, $StartMicroseconds)=
+(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
+($ArchiveLogRecords, $DetailedReportsOnNewWindows, $FirstDayOfWeek,
+$ShowHeader, $ShowMenu, $ShowMonthDayStats, $ShowDaysOfWeekStats,
+$ShowHoursStats, $ShowDomainsStats, $ShowHostsStats, 
+$ShowRobotsStats, $ShowPagesStats, $ShowFileTypesStats, 
+$ShowBrowsersStats, $ShowOSStats, $ShowOriginStats, $ShowKeyphrasesStats,
+$ShowKeywordsStats,  $ShowHTTPErrorsStats,
+$ShowFlagLinks, $ShowLinksOnURL,
+$WarningMessages)=
+(1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1);
+#($pos_rc,$pos_logname,$pos_date,$pos_method,$pos_url,$pos_code,$pos_size,$pos_referer,$pos_agent,$pos_gzipin,$pos_gzipout,$pos_gzipres)=();
 ($ArchiveFileName, $DIR, $DayRequired, $DefaultFile,
 $DirCgi, $DirData, $DirIcons, $DirLang,
-$DetailedReportsOnNewWindows, $Extension, $FileConfig, $FileSuffix, 
+$Extension, $FileConfig, $FileSuffix, 
 $FirstTime, $HTMLHeadSection, $HTMLEndSection, $Host, $KeepBackupOfHistoricFiles,
 $LastTime, $LastUpdate, $LogFile, $LogFormat, $LogFormatString, $Logo, $LogoLink,
-$MaxNbOfDays, $MaxNbOfHostsShown, $MaxNbOfKeywordsShown, $MaxNbOfLoginShown,
-$MaxNbOfPageShown, $MaxNbOfRefererShown, $MaxNbOfRobotShown,
-$MinHitFile, $MinHitHost, $MinHitKeyword, $MinHitLogin, $MinHitRefer, $MinHitRobot,
 $MonthRequired,
 $HTMLOutput, $PROG, $PageCode,
 $PurgeLogFile, $QueryString, $RatioBytes, $RatioHits, $RatioHosts, $RatioPages,
-$ShowHeader, $ShowMenu, $ShowMonthDayStats,
-$ShowDaysOfWeekStats, $ShowHoursStats, 
-$ShowDomainsStats, $ShowHostsStats, $ShowAuthenticatedUsers, $ShowRobotsStats, 
-$ShowPagesStats, $ShowFileTypesStats, $ShowFileSizesStats,
-$ShowBrowsersStats, $ShowOSStats, $ShowOriginStats,
-$ShowKeyphrasesStats, $ShowKeywordsStats,
-$ShowCompressionStats, $ShowHTTPErrorsStats,
-$ShowFlagLinks, $ShowLinksOnURL, $ShowLinksOnUrl, $ShowSteps,
 $SiteConfig, $SiteDomain, $SiteToAnalyze, $SiteToAnalyzeWithoutwww,
 $TotalBytes, $TotalDifferentPages, $TotalErrors, $TotalHits,
 $TotalHostsKnown, $TotalHostsUnKnown, $TotalPages, $TotalUnique, $TotalVisits,
@@ -87,7 +93,7 @@ $color_h, $color_k, $color_link, $color_p, $color_s, $color_u, $color_v, $color_
 %monthlib = %monthnum = ();
 
 
-$VERSION="3.2 (build 67)";
+$VERSION="3.2 (build 68)";
 $Lang="en";
 
 # Default value
@@ -96,7 +102,6 @@ $MAXROWS       = 200000;	# Max number of rows for not limited HTML arrays
 $SortDir       = -1;		# -1 = Sort order from most to less, 1 = reverse order (Default = -1)
 $VisitTimeOut  = 10000;		# Laps of time to consider a page load as a new visit. 10000 = one hour (Default = 10000)
 $FullHostName  = 1;			# 1 = Use name.domain.zone to refer host clients, 0 = all hosts in same domain.zone are one host (Default = 1, 0 never tested)
-$MaxLengthOfURL= 72;		# Maximum length of URL shown on stats page. This affects only URL visible text, link still work (Default = 72)
 $MaxNbOfDays   = 31;
 $NbOfLinesForBenchmark=5000;
 $ShowBackLink  = 1;
@@ -357,7 +362,7 @@ sub SkipFile {
 }
 
 sub OnlyFile {
-	if ($OnlyFiles[0] eq "") { return 1; }
+	if (! $OnlyFiles[0]) { return 1; }
 	foreach my $match (@OnlyFiles) { if ($_[0] =~ /$match/i) { return 1; } }
 	0; # Not in @OnlyFiles
 }
@@ -421,7 +426,7 @@ sub Read_Config_File {
 		my @felter=split(/=/,$_,2);						
 		my $param=$felter[0]||next;				# If not a param=value, try with next line
 		my $value=$felter[1];
-		$param =~ s/^\s+//; $value =~ s/\s+$//;
+		$param =~ s/^\s+//; $param =~ s/\s+$//;
 		$value =~ s/^\s+//; $value =~ s/\s+$//;
 		$value =~ s/^\"//; $value =~ s/\"$//;
 		$value =~ s/__SITE__/$SiteConfig/s;		# You can use __SITE__ in config file, if you want to have one generic config file for several config
@@ -552,6 +557,7 @@ sub Read_Config_File {
 		if ($param =~ /^ShowHTTPErrorsStats/)    { $ShowHTTPErrorsStats=$value; next; }
 		if ($param =~ /^ShowFlagLinks/)         { $ShowFlagLinks=$value; next; }
 		if ($param =~ /^ShowLinksOnUrl/)        { $ShowLinksOnUrl=$value; next; }
+		if ($param =~ /^MaxLengthOfURL/)        { $MaxLengthOfURL=$value; next; }
 		if ($param =~ /^DetailedReportsOnNewWindows/) { $DetailedReportsOnNewWindows=$value; next; }
 		if ($param =~ /^HTMLHeadSection/)       { $HTMLHeadSection=$value; next; }
 		if ($param =~ /^HTMLEndSection/)        { $HTMLEndSection=$value; next; }
@@ -725,25 +731,25 @@ sub Check_Config {
 	if ($PurgeLogFile !~ /[0-1]/)                 	{ $PurgeLogFile=0; }
 	if ($ArchiveLogRecords !~ /[0-1]/)            	{ $ArchiveLogRecords=1; }
 	if ($KeepBackupOfHistoricFiles !~ /[0-1]/)     	{ $KeepBackupOfHistoricFiles=0; }
-	if ($DefaultFile eq "")                       	{ $DefaultFile="index.html"; }
+	if (! $DefaultFile)                       		{ $DefaultFile="index.html"; }
 	if ($URLWithQuery !~ /[0-1]/)                 	{ $URLWithQuery=0; }
 	if ($WarningMessages !~ /[0-1]/)              	{ $WarningMessages=1; }
-	if ($NbOfLinesForCorruptedLog !~ /[\d]+/) 	  	{ $NbOfLinesForCorruptedLog=50; }
+	if ($NbOfLinesForCorruptedLog !~ /[\d]+/ || $NbOfLinesForCorruptedLog<1) 	  	{ $NbOfLinesForCorruptedLog=50; }
 	if ($FirstDayOfWeek !~ /[0-1]/)               	{ $FirstDayOfWeek=1; }
-	if ($MaxNbOfDomain !~ /^[\d]+/)           		{ $MaxNbOfDomain=25; }
-	if ($MaxNbOfHostsShown !~ /^[\d]+/)       		{ $MaxNbOfHostsShown=25; }
-	if ($MinHitHost !~ /^[\d]+/)              		{ $MinHitHost=1; }
-	if ($MaxNbOfLoginShown !~ /^[\d]+/)       		{ $MaxNbOfLoginShown=10; }
-	if ($MinHitLogin !~ /^[\d]+/)             		{ $MinHitLogin=1; }
-	if ($MaxNbOfRobotShown !~ /^[\d]+/)       		{ $MaxNbOfRobotShown=25; }
-	if ($MinHitRobot !~ /^[\d]+/)             		{ $MinHitRobot=1; }
-	if ($MaxNbOfPageShown !~ /^[\d]+/)        		{ $MaxNbOfPageShown=25; }
-	if ($MinHitFile !~ /^[\d]+/)              		{ $MinHitFile=1; }
-	if ($MaxNbOfRefererShown !~ /^[\d]+/)     		{ $MaxNbOfRefererShown=25; }
-	if ($MinHitRefer !~ /^[\d]+/)             		{ $MinHitRefer=1; }
-	if ($MaxNbOfKeywordsShown !~ /^[\d]+/)    		{ $MaxNbOfKeywordsShown=25; }
-	if ($MinHitKeyword !~ /^[\d]+/)           		{ $MinHitKeyword=1; }
-	if ($MaxNbOfLastHosts !~ /^[\d]+/)        		{ $MaxNbOfLastHosts=1000; }
+	if ($MaxNbOfDomain !~ /^[\d]+/ || $MaxNbOfDomain<1)           		{ $MaxNbOfDomain=25; }
+	if ($MaxNbOfHostsShown !~ /^[\d]+/ || $MaxNbOfHostsShown<1)       		{ $MaxNbOfHostsShown=25; }
+	if ($MinHitHost !~ /^[\d]+/ || $MinHitHost<1)              		{ $MinHitHost=1; }
+	if ($MaxNbOfLoginShown !~ /^[\d]+/ || $MaxNbOfLoginShown<1)       		{ $MaxNbOfLoginShown=10; }
+	if ($MinHitLogin !~ /^[\d]+/ || $MinHitLogin<1)             		{ $MinHitLogin=1; }
+	if ($MaxNbOfRobotShown !~ /^[\d]+/ || $MaxNbOfRobotShown<1)       		{ $MaxNbOfRobotShown=25; }
+	if ($MinHitRobot !~ /^[\d]+/ || $MinHitRobot<1)             		{ $MinHitRobot=1; }
+	if ($MaxNbOfPageShown !~ /^[\d]+/ || $MaxNbOfPageShown<1)        		{ $MaxNbOfPageShown=25; }
+	if ($MinHitFile !~ /^[\d]+/ || $MinHitFile<1)              		{ $MinHitFile=1; }
+	if ($MaxNbOfRefererShown !~ /^[\d]+/ || $MaxNbOfRefererShown<1)     		{ $MaxNbOfRefererShown=25; }
+	if ($MinHitRefer !~ /^[\d]+/ || $MinHitRefer<1)             		{ $MinHitRefer=1; }
+	if ($MaxNbOfKeywordsShown !~ /^[\d]+/ || $MaxNbOfKeywordsShown<1)    		{ $MaxNbOfKeywordsShown=25; }
+	if ($MinHitKeyword !~ /^[\d]+/ || $MinHitKeyword<1)           		{ $MinHitKeyword=1; }
+	if ($MaxNbOfLastHosts !~ /^[\d]+/ || $MaxNbOfLastHosts<1)        		{ $MaxNbOfLastHosts=1000; }
 	if ($SplitSearchString !~ /[0-1]/)          	{ $SplitSearchString=0; }
 	if ($Expires !~ /^[\d]+/)                 		{ $Expires=0; }
 	if ($ShowHeader !~ /[0-1]/)                   	{ $ShowHeader=1; }
@@ -766,11 +772,12 @@ sub Check_Config {
 	if ($ShowCompressionStats !~ /[0-1]/)         	{ $ShowCompressionStats=1; }
 	if ($ShowHTTPErrorsStats !~ /[0-1]/)          	{ $ShowHTTPErrorsStats=1; }
 	if ($ShowLinksOnURL !~ /[0-1]/)               	{ $ShowLinksOnURL=1; }
+	if ($MaxLengthOfURL !~ /^[\d+]/ || $MaxLengthOfURL<1) { $MaxLengthOfURL=72; }
 	if ($DetailedReportsOnNewWindows !~ /[0-1]/)  	{ $DetailedReportsOnNewWindows=1; }
-	if ($BarWidth !~ /^[\d]+/)                		{ $BarWidth=260; }
-	if ($BarHeight !~ /^[\d]+/)               		{ $BarHeight=180; }
-	if ($Logo eq "")                              	{ $Logo="awstats_logo1.png"; }
-	if ($LogoLink eq "")                          	{ $LogoLink="http://awstats.sourceforge.net"; }
+	if ($BarWidth !~ /^[\d]+/ || $BarWidth<1) 		{ $BarWidth=260; }
+	if ($BarHeight !~ /^[\d]+/ || $BarHeight<1)		{ $BarHeight=180; }
+	if (! $Logo)    	                          	{ $Logo="awstats_logo1.png"; }
+	if (! $LogoLink)  	                        	{ $LogoLink="http://awstats.sourceforge.net"; }
 	$color_Background =~ s/#//g; if ($color_Background !~ /^[0-9|A-Z]+$/i)           { $color_Background="FFFFFF";	}
 	$color_TableBGTitle =~ s/#//g; if ($color_TableBGTitle !~ /^[0-9|A-Z]+$/i)       { $color_TableBGTitle="CCCCDD"; }
 	$color_TableTitle =~ s/#//g; if ($color_TableTitle !~ /^[0-9|A-Z]+$/i)           { $color_TableTitle="000000"; }
@@ -953,11 +960,11 @@ sub Read_History_File {
 			my $count=0;
 			while ($field[0] ne "END_VISITOR") {
 				$count++;
-		    	if ($field[0] ne "Unknown") { if ($field[1] > 0) { $MonthUnique{$year.$month}++; } $MonthHostsKnown{$year.$month}++; }
+		    	if ($field[0] ne "Unknown") { if (($field[1]||0) > 0) { $MonthUnique{$year.$month}++; } $MonthHostsKnown{$year.$month}++; }
 				if ($part && ($UpdateStats || $QueryString !~ /output=/i || $QueryString =~ /output=lasthosts/i)) {
-		        	if ($field[1] > 0) { $_hostmachine_p{$field[0]}+=$field[1]; }
-		        	if ($field[2] > 0) { $_hostmachine_h{$field[0]}+=$field[2]; }
-		        	if ($field[3] > 0) { $_hostmachine_k{$field[0]}+=$field[3]; }
+		        	if ($field[1]) { $_hostmachine_p{$field[0]}+=$field[1]; }
+		        	if ($field[2]) { $_hostmachine_h{$field[0]}+=$field[2]; }
+		        	if ($field[3]) { $_hostmachine_k{$field[0]}+=$field[3]; }
 		        	if (! $_hostmachine_l{$field[0]} && $field[4]) { $_hostmachine_l{$field[0]}=int($field[4]); }
 				}
 				$_=<HISTORY>;
@@ -999,10 +1006,10 @@ sub Read_History_File {
 			while ($field[0] ne "END_LOGIN") {
 				$count++;
 				if ($part && ($UpdateStats || $QueryString !~ /output=/i)) {
-			    	if ($field[1] > 0) { $_login_p{$field[0]}+=$field[1]; }
-			    	if ($field[2] > 0) { $_login_h{$field[0]}+=$field[2]; }
-			    	if ($field[3] > 0) { $_login_k{$field[0]}+=$field[3]; }
-		        	if (! $_login_l{$field[0]} && $field[4] > 0) { $_login_l{$field[0]}=int($field[4]); }
+			    	if ($field[1]) { $_login_p{$field[0]}+=$field[1]; }
+			    	if ($field[2]) { $_login_h{$field[0]}+=$field[2]; }
+			    	if ($field[3]) { $_login_k{$field[0]}+=$field[3]; }
+		        	if (! $_login_l{$field[0]} && $field[4]) { $_login_l{$field[0]}=int($field[4]); }
 				}
 				$_=<HISTORY>;
 				chomp $_; s/\r//;
@@ -1021,11 +1028,11 @@ sub Read_History_File {
 			my $count=0;
 			while ($field[0] ne "END_TIME") {
 				$count++;
-		    	$MonthPages{$year.$month}+=$field[1]; $MonthHits{$year.$month}+=$field[2]; $MonthBytes{$year.$month}+=$field[3];
+		    	$MonthPages{$year.$month}+=int($field[1]); $MonthHits{$year.$month}+=int($field[2]); $MonthBytes{$year.$month}+=int($field[3]);
 				if ($part && ($UpdateStats || $QueryString !~ /output=/i)) {
-		        	$_time_p[$field[0]]+=$field[1];
-		        	$_time_h[$field[0]]+=$field[2];
-		        	$_time_k[$field[0]]+=$field[3];
+		        	if ($field[1]) { $_time_p[$field[0]]+=int($field[1]); }
+		        	if ($field[2]) { $_time_h[$field[0]]+=int($field[2]); }
+		        	if ($field[3]) { $_time_k[$field[0]]+=int($field[3]); }
 				}
 				$_=<HISTORY>;
 				chomp $_; s/\r//;
@@ -1045,11 +1052,11 @@ sub Read_History_File {
 			while ($field[0] ne "END_DAY" ) {
 				$count++;
 				if ($UpdateStats || $QueryString !~ /output=/i) {
-					$DayPages{$field[0]}=int($field[1]||0);
-					$DayHits{$field[0]}=int($field[2]||0);
-					$DayBytes{$field[0]}=int($field[3]||0);
-					$DayVisits{$field[0]}=int($field[4]||0);
-					$DayUnique{$field[0]}=int($field[5]||0);
+					if ($field[1]) { $DayPages{$field[0]}=int($field[1]); }
+					if ($field[2]) { $DayHits{$field[0]}=int($field[2]); }
+					if ($field[3]) { $DayBytes{$field[0]}=int($field[3]); }
+					if ($field[4]) { $DayVisits{$field[0]}=int($field[4]); }
+					if ($field[5]) { $DayUnique{$field[0]}=int($field[5]); }
 				}
 				$_=<HISTORY>;
 				chomp $_; s/\r//;
@@ -1081,8 +1088,8 @@ sub Read_History_File {
 					}
 					if ($addsider) {					
 						$countadd++;
-						if ($field[1] > 0) { $_url_p{$field[0]}+=$field[1]; }
-						if ($field[2] > 0) { $_url_e{$field[0]}+=$field[2]; }
+						if ($field[1]) { $_url_p{$field[0]}+=$field[1]; }
+						if ($field[2]) { $_url_e{$field[0]}+=$field[2]; }
 					}
 				}
 				$_=<HISTORY>;
@@ -1103,7 +1110,7 @@ sub Read_History_File {
 			while ($field[0] ne "END_PAGEREFS") {
 				$count++;
 				if ($part && ($UpdateStats || $QueryString !~ /output=/i)) {
-					$_pagesrefs_h{$field[0]}+=$field[1];
+					if ($field[1]) { $_pagesrefs_h{$field[0]}+=int($field[1]); }
 				}
 				$_=<HISTORY>;
 				chomp $_; s/\r//;
@@ -1123,10 +1130,10 @@ sub Read_History_File {
 			while ($field[0] ne "END_FILETYPES") {
 				$count++;
 				if ($part && ($UpdateStats || $QueryString !~ /output=/i)) {
-					$_filetypes_h{$field[0]}+=$field[1];
-					$_filetypes_k{$field[0]}+=$field[2];
-					$_filetypes_gz_in{$field[0]}+=$field[3];
-					$_filetypes_gz_out{$field[0]}+=$field[4];
+					if ($field[1]) { $_filetypes_h{$field[0]}+=$field[1]; }
+					if ($field[2]) { $_filetypes_k{$field[0]}+=$field[2]; }
+					if ($field[3]) { $_filetypes_gz_in{$field[0]}+=$field[3]; }
+					if ($field[4]) { $_filetypes_gz_out{$field[0]}+=$field[4]; }
 				}
 				$_=<HISTORY>;
 				chomp $_; s/\r//;
@@ -1146,7 +1153,7 @@ sub Read_History_File {
 			while ($field[0] ne "END_SEARCHWORDS") {
 				$count++;
 				if ($part && ($UpdateStats || $QueryString !~ /output=/i)) {
-					$_keyphrases{$field[0]}+=$field[1];
+					if ($field[1]) { $_keyphrases{$field[0]}+=$field[1]; }
 				}
 				$_=<HISTORY>;
 				chomp $_; s/\r//;
@@ -1166,9 +1173,9 @@ sub Read_History_File {
 			while ($field[0] ne "END_SIDER_404") {
 				$count++;
 				if ($part && ($UpdateStats || $QueryString !~ /output=/i || $QueryString =~ /output=notfounderror/i)) {
-					$_sider404_h{$field[0]}+=$field[1];
+					if ($field[1]) { $_sider404_h{$field[0]}+=$field[1]; }
 					if ($UpdateStats || $QueryString =~ /output=notfounderror/i) {
-						$_referer404_h{$field[0]}=$field[2];
+						if ($field[2]) { $_referer404_h{$field[0]}=$field[2]; }
 					}
 				}
 				$_=<HISTORY>;
@@ -1207,17 +1214,29 @@ sub Read_History_File {
 	        	next;
 	        }
 			if ($readdomain) {
-				$_domener_p{$field[0]}+=$field[1];
-				$_domener_h{$field[0]}+=$field[2];
-				$_domener_k{$field[0]}+=$field[3];
+				if ($field[1]) { $_domener_p{$field[0]}+=$field[1]; }
+				if ($field[2]) { $_domener_h{$field[0]}+=$field[2]; }
+				if ($field[3]) { $_domener_k{$field[0]}+=$field[3]; }
 				next;
 			}
-	        if ($readbrowser) { $_browser_h{$field[0]}+=$field[1]; next; }
-	        if ($readnsver) { $_nsver_h[$field[0]]+=$field[1]; next; }
-	        if ($readmsiever) { $_msiever_h[$field[0]]+=$field[1]; next; }
-	        if ($reados) { $_os_h{$field[0]}+=$field[1]; next; }
+	        if ($readbrowser) { 
+	        	if ($field[1]) { $_browser_h{$field[0]}+=$field[1]; }
+	        	next;
+	        }
+	        if ($readnsver) {
+	        	if ($field[1]) { $_nsver_h[$field[0]]+=$field[1]; }
+	        	next;
+	        }
+	        if ($readmsiever) {
+	        	if ($field[1]) { $_msiever_h[$field[0]]+=$field[1]; }
+	        	next;
+	        }
+	        if ($reados) {
+	        	if ($field[1]) { $_os_h{$field[0]}+=$field[1]; }
+	        	next;
+	        }
 	        if ($readrobot) {
-				$_robot_h{$field[0]}+=$field[1];
+				if ($field[1]) { $_robot_h{$field[0]}+=$field[1]; }
 	        	if (! $_robot_l{$field[0]}) { $_robot_l{$field[0]}=int($field[2]); }
 				next;
 			}
@@ -1236,8 +1255,14 @@ sub Read_History_File {
 	        if ($field[0] eq "HitFrom2") { $_from_p[2]+=0; $_from_h[2]+=$field[1]; next; }
 	        if ($field[0] eq "HitFrom3") { $_from_p[3]+=0; $_from_h[3]+=$field[1]; next; }
 	        if ($field[0] eq "HitFrom4") { $_from_p[4]+=0; $_from_h[4]+=$field[1]; next; }
-	        if ($readse) { $_se_referrals_h{$field[0]}+=$field[1]; next; }
-	        if ($readerrors) { $_errors_h{$field[0]}+=$field[1]; next; }
+	        if ($readse) {
+	        	if ($field[1]) { $_se_referrals_h{$field[0]}+=$field[1]; }
+	        	next;
+	        }
+	        if ($readerrors) {
+	        	if ($field[1]) { $_errors_h{$field[0]}+=$field[1]; }
+	        	next;
+	        }
 		}
 	}
 	close HISTORY;
@@ -1268,38 +1293,45 @@ sub Save_History_File {
 	# When
 	print HISTORYTMP "BEGIN_DAY\n";
     foreach my $key (keys %DayHits) {
-    	 if ($key =~ /^$year$month/) {	# Found a day entry of the good month
-    	 	print HISTORYTMP "$key $DayPages{$key} $DayHits{$key} $DayBytes{$key} $DayVisits{$key} $DayUnique{$key}\n"; next;
-    	 	}
-    	 }
+    	if ($key =~ /^$year$month/) {	# Found a day entry of the good month
+			my $page=$DayPages{$key}||0;
+			my $hits=$DayHits{$key}||0;
+			my $bytes=$DayBytes{$key}||0;
+			my $visits=$DayVisits{$key}||0;
+			my $unique=$DayUnique{$key}||"";
+    		print HISTORYTMP "$key $page $hits $bytes $visits $unique\n";
+    		next;
+    	}
+   	}
     print HISTORYTMP "END_DAY\n";
 	print HISTORYTMP "BEGIN_TIME\n";
-	for (my $ix=0; $ix<=23; $ix++) { print HISTORYTMP "$ix $_time_p[$ix] $_time_h[$ix] $_time_k[$ix]\n"; next; }
+	for (my $ix=0; $ix<=23; $ix++) { print HISTORYTMP "$ix ".int($_time_p[$ix])." ".int($_time_h[$ix])." ".int($_time_k[$ix])."\n"; next; }
 	print HISTORYTMP "END_TIME\n";
 
 	# Who
 	print HISTORYTMP "BEGIN_DOMAIN\n";
 	foreach my $key (keys %_domener_h) {
-		my $page=$_domener_p{$key}; if ($page eq "") {$page=0;}
-		my $bytes=$_domener_k{$key}; if ($bytes eq "") {$bytes=0;}		# Could be commented to reduce history file size
+		my $page=$_domener_p{$key}||0;
+		my $bytes=$_domener_k{$key}||0;		# ||0 could be commented to reduce history file size
 		print HISTORYTMP "$key $page $_domener_h{$key} $bytes\n"; next;
 	}
 	print HISTORYTMP "END_DOMAIN\n";
 	print HISTORYTMP "BEGIN_VISITOR\n";
 	foreach my $key (keys %_hostmachine_h) {
-		my $page=$_hostmachine_p{$key}; if ($page eq "") {$page=0;}
-		my $bytes=$_hostmachine_k{$key}; if ($bytes eq "") {$bytes=0;}
-		print HISTORYTMP "$key $page $_hostmachine_h{$key} $bytes $_hostmachine_l{$key}\n"; next;
+		my $page=$_hostmachine_p{$key}||0;
+		my $bytes=$_hostmachine_k{$key}||0;
+		my $lastaccess=$_hostmachine_l{$key}||"";
+		print HISTORYTMP "$key $page $_hostmachine_h{$key} $bytes $lastaccess\n"; next;
 	}
 	print HISTORYTMP "END_VISITOR\n";
 	print HISTORYTMP "BEGIN_UNKNOWNIP\n";
 	foreach my $key (keys %_unknownip_l) { print HISTORYTMP "$key $_unknownip_l{$key}\n"; next; }
 	print HISTORYTMP "END_UNKNOWNIP\n";
 	print HISTORYTMP "BEGIN_LOGIN\n";
-	foreach my $key (keys %_login_h) { print HISTORYTMP "$key $_login_p{$key} $_login_h{$key} $_login_k{$key} $_login_l{$key}\n"; next; }
+	foreach my $key (keys %_login_h) { print HISTORYTMP "$key ".int($_login_p{$key})." ".int($_login_h{$key})." ".int($_login_k{$key})." $_login_l{$key}\n"; next; }
 	print HISTORYTMP "END_LOGIN\n";
 	print HISTORYTMP "BEGIN_ROBOT\n";
-	foreach my $key (keys %_robot_h) { print HISTORYTMP "$key $_robot_h{$key} $_robot_l{$key}\n"; next; }
+	foreach my $key (keys %_robot_h) { print HISTORYTMP "$key ".int($_robot_h{$key})." $_robot_l{$key}\n"; next; }
 	print HISTORYTMP "END_ROBOT\n";
 
 	# Navigation
@@ -1308,20 +1340,36 @@ sub Save_History_File {
 	foreach my $key (sort {$SortDir*$_url_p{$a} <=> $SortDir*$_url_p{$b}} keys %_url_p) {
 		$newkey=$key;
 		$newkey =~ s/([^:])\/\//$1\//g;		# Because some targeted url were taped with 2 / (Ex: //rep//file.htm). We must keep http://rep/file.htm
-		print HISTORYTMP "$newkey $_url_p{$key} $_url_e{$key}\n"; next;
+		my $entry=$_url_e{$key}||"";
+		print HISTORYTMP "$newkey ".int($_url_p{$key})." $entry\n"; next;
 	}
 	print HISTORYTMP "END_SIDER\n";
 	print HISTORYTMP "BEGIN_FILETYPES\n";
-	foreach my $key (keys %_filetypes_h) { print HISTORYTMP "$key $_filetypes_h{$key} $_filetypes_k{$key} $_filetypes_gz_in{$key} $_filetypes_gz_out{$key}\n"; next; }
+	foreach my $key (keys %_filetypes_h) {
+		my $hits=$_filetypes_h{$key}||0;
+		my $bytes=$_filetypes_k{$key}||0;
+		my $bytesbefore=$_filetypes_gz_in{$key}||0;
+		my $bytesafter=$_filetypes_gz_out{$key}||0;
+		print HISTORYTMP "$key $hits $bytes $bytesbefore $bytesafter\n";
+		next;
+	}
 	print HISTORYTMP "END_FILETYPES\n";
 	print HISTORYTMP "BEGIN_BROWSER\n";
 	foreach my $key (keys %_browser_h) { print HISTORYTMP "$key $_browser_h{$key}\n"; next; }
 	print HISTORYTMP "END_BROWSER\n";
 	print HISTORYTMP "BEGIN_NSVER\n";
-	for (my $i=1; $i<=$#_nsver_h; $i++) { print HISTORYTMP "$i $_nsver_h[$i]\n"; next; }
+	for (my $i=1; $i<=$#_nsver_h; $i++) {
+		my $nb_h=$_nsver_h[$i]||"";
+		print HISTORYTMP "$i $nb_h\n";
+		next;
+	}
 	print HISTORYTMP "END_NSVER\n";
 	print HISTORYTMP "BEGIN_MSIEVER\n";
-	for (my $i=1; $i<=$#_msiever_h; $i++) { print HISTORYTMP "$i $_msiever_h[$i]\n"; next; }
+	for (my $i=1; $i<=$#_msiever_h; $i++) {
+		my $nb_h=$_msiever_h[$i]||"";
+		print HISTORYTMP "$i $nb_h\n";
+		next;
+	}
 	print HISTORYTMP "END_MSIEVER\n";
 	print HISTORYTMP "BEGIN_OS\n";
 	foreach my $key (keys %_os_h) { print HISTORYTMP "$key $_os_h{$key}\n"; next; }
@@ -1334,11 +1382,11 @@ sub Save_History_File {
 	print HISTORYTMP "BEGIN_UNKNOWNREFERERBROWSER\n";
 	foreach my $key (keys %_unknownrefererbrowser_l) { print HISTORYTMP "$key $_unknownrefererbrowser_l{$key}\n"; next; }
 	print HISTORYTMP "END_UNKNOWNREFERERBROWSER\n";
-	print HISTORYTMP "From0 $_from_p[0] $_from_h[0]\n";
-	print HISTORYTMP "From1 $_from_p[1] $_from_h[1]\n";
-	print HISTORYTMP "From2 $_from_p[2] $_from_h[2]\n";
-	print HISTORYTMP "From3 $_from_p[3] $_from_h[3]\n";
-	print HISTORYTMP "From4 $_from_p[4] $_from_h[4]\n";
+	print HISTORYTMP "From0 ".int($_from_p[0])." ".int($_from_h[0])."\n";
+	print HISTORYTMP "From1 ".int($_from_p[1])." ".int($_from_h[1])."\n";
+	print HISTORYTMP "From2 ".int($_from_p[2])." ".int($_from_h[2])."\n";
+	print HISTORYTMP "From3 ".int($_from_p[3])." ".int($_from_h[3])."\n";
+	print HISTORYTMP "From4 ".int($_from_p[4])." ".int($_from_h[4])."\n";
 	print HISTORYTMP "BEGIN_SEREFERRALS\n";
 	foreach my $key (keys %_se_referrals_h) { print HISTORYTMP "$key $_se_referrals_h{$key}\n"; next; }
 	print HISTORYTMP "END_SEREFERRALS\n";
@@ -1365,10 +1413,10 @@ sub Save_History_File {
 	print HISTORYTMP "BEGIN_SIDER_404\n";
 	foreach my $key (keys %_sider404_h) { 
 		my $newkey=$key;
-		my $newreferer=$_referer404_h{$key};
+		my $newreferer=$_referer404_h{$key}||"";
 		# if (! &IsAscii($newkey)) { $newkey="NonAsciiURL"; }
 		# if (! &IsAscii($newreferer)) { $newreferer="NonAsciiReferer"; }
-		print HISTORYTMP "$newkey $_sider404_h{$key} $newreferer\n";
+		print HISTORYTMP "$newkey ".int($_sider404_h{$key})." $newreferer\n";
 		next;
 	}
 	print HISTORYTMP "END_SIDER_404\n";
@@ -1382,10 +1430,12 @@ sub Save_History_File {
 # Return:       Number of miliseconds elapsed since last call
 #--------------------------------------------------------------------
 sub GetDelaySinceStart {
-	my ($newseconds, $newmicroseconds) = gettimeofday;			# Try to use Time::HiRes function (provide milliseconds)
-	if ($newseconds eq "gettimeofday") { $newseconds=time(); }	# If not available use standard time function
-	if (! $startseconds) { $startseconds=$newseconds; $startmicroseconds=$newmicroseconds; }
-	my $nbms=$newseconds*1000+int($newmicroseconds/1000)-$startseconds*1000-int($startmicroseconds/1000);
+	my $usedTimeHires=0;
+	my ($newseconds, $newmicroseconds)=(0,0);
+	#($newseconds, $newmicroseconds) = gettimeofday; $usedTimeHires=1;	# Uncomment to use Time::HiRes function (provide milliseconds)
+	if ((! $usedTimeHires) || ($newseconds eq "gettimeofday")) { $newseconds=time(); }
+	if (! $StartSeconds) { $StartSeconds=$newseconds; $StartMicroseconds=$newmicroseconds; }
+	my $nbms=$newseconds*1000+int($newmicroseconds/1000)-$StartSeconds*1000-int($StartMicroseconds/1000);
 	return ($nbms);
 }
 
@@ -1393,8 +1443,8 @@ sub GetDelaySinceStart {
 # Input: Global variables
 #--------------------------------------------------------------------
 sub Init_HashArray {
-	my $year=sprintf("%04i",shift);
-	my $month=sprintf("%02i",shift);
+	my $year=sprintf("%04i",shift||0);
+	my $month=sprintf("%02i",shift||0);
 	&debug("Call to Init_HashArray [$year,$month]");
 	# We purge data read for $year and $month so it's like we never read it
 	$HistoryFileAlreadyRead{"$year$month"}=0;
@@ -1551,11 +1601,11 @@ sub IsAscii {
 #--------------------------------------------------------------------
 if ($ENV{"GATEWAY_INTERFACE"}) {	# Run from a browser
 	print("Content-type: text/html\n\n\n");
-	if ($ENV{"CONTENT_LENGTH"} ne "") {
+	if ($ENV{"CONTENT_LENGTH"}) {
 		binmode STDIN;
 		read(STDIN, $QueryString, $ENV{'CONTENT_LENGTH'});
 	}
-	if ($ENV{"QUERY_STRING"} ne "") {
+	if ($ENV{"QUERY_STRING"}) {
 		$QueryString = $ENV{"QUERY_STRING"};
 	}
 	$QueryString =~ s/<script.*$//i;						# This is to avoid 'Cross Site Scripting attacks'
@@ -1689,7 +1739,7 @@ if ($Lang eq "10") { $Lang="kr"; }
 &Check_Config;
 
 # Init other parameters
-if ($ENV{"GATEWAY_INTERFACE"} ne "") { $DirCgi=""; }
+if ($ENV{"GATEWAY_INTERFACE"}) { $DirCgi=""; }
 if (($DirCgi ne "") && !($DirCgi =~ /\/$/) && !($DirCgi =~ /\\$/)) { $DirCgi .= "/"; }
 if ($DirData eq "" || $DirData eq ".") { $DirData=$DIR; }	# If not defined or chosen to "." value then DirData is current dir
 if ($DirData eq "")  { $DirData="."; }						# If current dir not defined then we put it to "."
@@ -1703,17 +1753,18 @@ else { @DOWIndex = (0,1,2,3,4,5,6); }
 
 # Check year and month parameters
 if ($QueryString =~ /year=/i) 	{ $YearRequired=$QueryString; $YearRequired =~ s/.*year=//; $YearRequired =~ s/&.*//;  $YearRequired =~ s/ .*//; }
-if ($YearRequired !~ /^\d\d\d\d$/) { $YearRequired=$nowyear; }
+if ((! $YearRequired) || ($YearRequired !~ /^\d\d\d\d$/)) { $YearRequired=$nowyear; }
 if ($QueryString =~ /month=/i)	{ $MonthRequired=$QueryString; $MonthRequired =~ s/.*month=//; $MonthRequired =~ s/&.*//; $MonthRequired =~ s/ .*//; }
-if ($MonthRequired ne "year" && $MonthRequired !~ /^[\d][\d]$/) { $MonthRequired=$nowmonth; }
+if ((! $MonthRequired) || ($MonthRequired ne "year" && $MonthRequired !~ /^[\d][\d]$/)) { $MonthRequired=$nowmonth; }
 # day is a hidden option. Must not be used (Make results not understandable). Available for users that rename historic files with day.
 if ($QueryString =~ /day=/i)	{ $DayRequired=$QueryString; $DayRequired =~ s/.*day=//; $DayRequired =~ s/&.*//; $DayRequired =~ s/ .*//; }
+if ((! $DayRequired) || ($DayRequired !~ /^[\d][\d]$/)) { $DayRequired=""; }
 
 # Print html header
 &html_head;
 
 # Security check
-if ($UpdateStats && ($AllowToUpdateStatsFromBrowser==0) && ($ENV{"GATEWAY_INTERFACE"} ne "")) {
+if ($UpdateStats && ($AllowToUpdateStatsFromBrowser==0) && ($ENV{"GATEWAY_INTERFACE"})) {
 	error("Error: Update of statistics is not allowed from a browser.");
 }
 
@@ -1928,17 +1979,17 @@ if ($UpdateStats) {
 			}
 			if ($f =~ /%gzipin$/ ) {
 				$found=1;
-				$gzipin=$i;$i++;
+				$pos_gzipin=$i;$i++;
 				$PerlParsingFormat .= "([^\\s]*) ";
 			}
 			if ($f =~ /%gzipout$/ ) {
 				$found=1;
-				$gzipout=$i;$i++;
+				$pos_gzipout=$i;$i++;
 				$PerlParsingFormat .= "([^\\s]*) ";
 			}
 			if ($f =~ /%gzipres$/ ) {
 				$found=1;
-				$gzipres=$i;$i++;
+				$pos_gzipres=$i;$i++;
 				$PerlParsingFormat .= "([^\\s]*) ";
 			}
 			if (! $found) { $found=1; $PerlParsingFormat .= "[^\\s]* "; }
@@ -1946,12 +1997,12 @@ if ($UpdateStats) {
 		($PerlParsingFormat) ? chop($PerlParsingFormat) : error("Error: No recognised format tag in personalised LogFormat string"); 
 		$lastrequiredfield=$i--;
 	}
-	if ($pos_rc eq "") { error("Error: Your personalised LogFormat does not include all fields required by AWStats (Add \%host in your LogFormat string)."); }
-	if ($pos_date eq "") { error("Error: Your personalised LogFormat does not include all fields required by AWStats (Add \%time1 or \%time2 in your LogFormat string)."); }
-	if ($pos_method eq "") { error("Error: Your personalised LogFormat does not include all fields required by AWStats (Add \%methodurl or \%method in your LogFormat string)."); }
-	if ($pos_url eq "") { error("Error: Your personalised LogFormat does not include all fields required by AWStats (Add \%methodurl or \%url in your LogFormat string)."); }
-	if ($pos_code eq "") { error("Error: Your personalised LogFormat does not include all fields required by AWStats (Add \%code in your LogFormat string)."); }
-	if ($pos_size eq "") { error("Error: Your personalised LogFormat does not include all fields required by AWStats (Add \%bytesd in your LogFormat string)."); }
+	if (! $pos_rc) { error("Error: Your personalised LogFormat does not include all fields required by AWStats (Add \%host in your LogFormat string)."); }
+	if (! $pos_date) { error("Error: Your personalised LogFormat does not include all fields required by AWStats (Add \%time1 or \%time2 in your LogFormat string)."); }
+	if (! $pos_method) { error("Error: Your personalised LogFormat does not include all fields required by AWStats (Add \%methodurl or \%method in your LogFormat string)."); }
+	if (! $pos_url) { error("Error: Your personalised LogFormat does not include all fields required by AWStats (Add \%methodurl or \%url in your LogFormat string)."); }
+	if (! $pos_code) { error("Error: Your personalised LogFormat does not include all fields required by AWStats (Add \%code in your LogFormat string)."); }
+	if (! $pos_size) { error("Error: Your personalised LogFormat does not include all fields required by AWStats (Add \%bytesd in your LogFormat string)."); }
 	&debug("PerlParsingFormat is $PerlParsingFormat");
 
 
@@ -2006,7 +2057,7 @@ if ($UpdateStats) {
 
 		# Check parsed parameters
 		#----------------------------------------------------------------------
-		if ($field[$pos_code] eq "") {
+		if (! $field[$pos_code]) {
 			$NbOfLinesCorrupted++;
 			if ($NbOfLinesRead >= $NbOfLinesForCorruptedLog && $NbOfLinesCorrupted == $NbOfLinesRead) { error("Format error",$_,$LogFile); }	# Exit with format error
 			next;
@@ -2036,8 +2087,8 @@ if ($UpdateStats) {
 		else {
 			if ($timeconnexion <= $LastLine{$yearmonth}) {
 				if ($ShowSteps && ($NbOfLinesRead % $NbOfLinesForBenchmark == 0)) {
-					my $delay=GetDelaySinceStart();
-					print "$NbOfLinesRead lines read already processed ($delay ms, ".int(1000*$NbOfLinesRead/($delay>0?$delay:1))." lines/seconds)\n";
+					my $delay=GetDelaySinceStart(); if ($delay < 1) { $delay=1000; }
+					print "$NbOfLinesRead lines read already processed ($delay ms, ".int(1000*$NbOfLinesRead/$delay)." lines/seconds)\n";
 				}
 				next;
 			}	# Already processed
@@ -2077,14 +2128,19 @@ if ($UpdateStats) {
 
 		# Check return code
 		#------------------
-		if (($field[$pos_code] != 200) && ($field[$pos_code] != 304)) {	# Stop if HTTP server return code != 200 and 304
-			if ($field[$pos_code] =~ /^[\d][\d][\d]$/) { 				# Keep error code and next
-				$_errors_h{$field[$pos_code]}++;
-				if ($field[$pos_code] == 404) { $_sider404_h{$field[$pos_url]}++; $_referer404_h{$field[$pos_url]}=$field[$pos_referer]; }
-				next;
-			}
-			else {														# Bad format record (should not happen but when using MSIndex server), next
-				$NbOfLinesCorrupted++; next;
+		if ($field[$pos_code]==304) {
+			$field[$pos_size]=0;
+		}
+		else {
+			if ($field[$pos_code] != 200) {	# Stop if HTTP server return code != 200 and 304
+				if ($field[$pos_code] =~ /^[\d][\d][\d]$/) { 				# Keep error code and next
+					$_errors_h{$field[$pos_code]}++;
+					if ($field[$pos_code] == 404) { $_sider404_h{$field[$pos_url]}++; $_referer404_h{$field[$pos_url]}=$field[$pos_referer]; }
+					next;
+				}
+				else {														# Bad format record (should not happen but when using MSIndex server), next
+					$NbOfLinesCorrupted++; next;
+				}
 			}
 		}
 
@@ -2136,10 +2192,10 @@ if ($UpdateStats) {
 		$_filetypes_h{$extension}++;
 		$_filetypes_k{$extension}+=$field[$pos_size];
 		# Compression
-		if ($field[$gzipin]) {
-			my ($a,$b)=split(":",$field[$gzipres]);
-			my ($notused,$in)=split(":",$field[$gzipin]);
-			my ($notused1,$out,$notused2)=split(":",$field[$gzipout]);
+		if ($pos_gzipin && $field[$pos_gzipin]) {
+			my ($a,$b)=split(":",$field[$pos_gzipres]);
+			my ($notused,$in)=split(":",$field[$pos_gzipin]);
+			my ($notused1,$out,$notused2)=split(":",$field[$pos_gzipout]);
 			if ($out) {
 				$_filetypes_gz_in{$extension}+=$in;
 				$_filetypes_gz_out{$extension}+=$out;
@@ -2206,7 +2262,7 @@ if ($UpdateStats) {
 		    # If we don't do lookup or if it failed, we still have an IP address in $Host
 		    if (!$NewDNSLookup || $newip eq "ip") {
 				  if ($PageBool) {
-				  		if ($timeconnexion > ($_unknownip_l{$Host}+$VisitTimeOut)) {
+				  		if ($timeconnexion > (($_unknownip_l{$Host}||0)+$VisitTimeOut)) {
 				  			$MonthVisits{$yearmonth}++;
 				  			$DayVisits{$dayconnexion}++;
 							if (! $_unknownip_l{$Host}) { $MonthUnique{$yearmonth}++; $MonthHostsUnknown{$yearmonth}++; }
@@ -2506,7 +2562,7 @@ if ($UpdateStats) {
 					$allok=0;	# At least one error in renaming working files
 					# Remove file
 					unlink "$DirData/$PROG$1$FileSuffix.tmp.$$";
-					warning("Warning: Failed to rename \"$DirData/$PROG$1$FileSuffix.tmp.$$\" into \"$DirData/$PROG$1$FileSuffix.txt\".\nWrite permissions on \"$PROG$1$FileSuffix.txt\" might be wrong".($ENV{"GATEWAY_INTERFACE"} ne ""?" for an 'update from web'":"")." or file might be opened.");
+					warning("Warning: Failed to rename \"$DirData/$PROG$1$FileSuffix.tmp.$$\" into \"$DirData/$PROG$1$FileSuffix.txt\".\nWrite permissions on \"$PROG$1$FileSuffix.txt\" might be wrong".($ENV{"GATEWAY_INTERFACE"}?" for an 'update from web'":"")." or file might be opened.");
 					last;
 				}
 				chmod 0666,"$DirData/$PROG$1$FileSuffix.txt";
