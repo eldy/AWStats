@@ -49,8 +49,8 @@ $SiteToAnalyzeIsInHostAliases, $SiteToAnalyzeWithoutwww, $LogFile,
 $LogFormat, $LogFormatString, $Logo, $MaxNbOfHostsShown, $MaxNbOfKeywordsShown,
 $MaxNbOfPageShown, $MaxNbOfRefererShown, $MaxNbOfRobotShown, $MinHitFile,
 $MinHitHost, $MinHitKeyword, $MinHitRefer, $MinHitRobot, $MonthRequired,
-$NewDNSLookup, $NowNewLinePhase, $OpenFileError, $PROG, $PageBool, $PurgeLogFile,
-$QueryString, $RatioBytes, $RatioHits, $RatioHosts, $RatioPages,
+$NewDNSLookup, $NowNewLinePhase, $OpenFileError, $PROG, $PageBool, $PageCode,
+$PurgeLogFile, $QueryString, $RatioBytes, $RatioHits, $RatioHosts, $RatioPages,
 $ShowFlagLinks, $ShowLinksOnURL, $ShowLinksOnUrl, $TotalBytes,
 $TotalDifferentKeywords, $TotalDifferentPages, $TotalErrors, $TotalHits,
 $TotalHosts, $TotalKeywords, $TotalPages, $TotalUnique, $TotalVisits, $UserAgent,
@@ -64,29 +64,25 @@ $h, $hourcon, $hr, $internal_link, $ix, $keep, $key, $kilo, $lien, $line,
 $max, $max_h, $max_k, $max_p, $max_v, $mincon, $monthcon, $monthfile, $monthix,
 $monthtoprocess, $nameicon, $new, $nompage, $p, $page, $param,
 $paramtoexclude, $rest, $rest_h, $rest_k, $rest_p,
-$tab_titre, $timeconnexion, $total_h, $total_k, $total_p,
+$tab_titre, $total_h, $total_k, $total_p,
 $word, $yearcon, $yearfile, $yearmonthfile, $yeartoprocess) = ();
 # ---------- Init arrays --------
-%DayBytes = %DayHits = %DayPage = %DayUnique = %DayVisits =
-%FirstTime = %HistoryFileAlreadyRead = %LastTime =
-%MonthBytes = %MonthHits = %MonthPage = %MonthUnique = %MonthVisits =
-%_browser_h = %_domener_h = %_domener_k = %_domener_p =
-%_errors_h = %_hostmachine_h = %_hostmachine_k = %_hostmachine_l = %_hostmachine_p =
-%_keywords = %_os_h = %_pagesrefs_h = %_robot_h = %_robot_l = %_se_referrals_h =
-%_sider404_h = %_sider_h = %_sider_k = %_sider_p = %_unknownip_l = %_unknownreferer_l =
-%_unknownrefererbrowser_l = %listofyears = %monthlib = %monthnum = ();
-# ---------- Init hash arrays --------
-@BrowserArray = @DomainsArray = @FirstTime = @HostAliases = @LastTime = @LastUpdate =
-@OnlyFiles = @OSArray = @PageCode = @RobotArray =
+@BrowserArray = @DomainsArray = @HostAliases =
+@OnlyFiles = @OSArray = @RobotArray =
 @SearchEnginesArray = @SkipFiles = @SkipHosts =
-@_from_h = @_msiever_h = @_nsver_h = @_time_h = @_time_k = @_time_p =
-@datep = @dateparts = @felter = @field = @filearray = @message =
+@_from_h = @_from_p = @_msiever_h = @_nsver_h = @_time_h = @_time_k = @_time_p =
+@dateparts = @felter = @field = @filearray = @message =
 @paramlist = @refurl = @sortbrowsers = @sortdomains_h = @sortdomains_k =
 @sortdomains_p = @sorterrors = @sorthosts_p = @sortos = @sortpagerefs = @sortrobot =
 @sortsearchwords = @sortsereferrals = @sortsider404 = @sortsiders = @sortunknownip =
 @sortunknownreferer = @sortunknownrefererbrowser = @wordlist = ();
+# ---------- Init hash arrays --------
+%DayBytes = %DayHits = %DayPages = %DayUnique = %DayVisits =
+%FirstTime = %HistoryFileAlreadyRead = %LastTime = %LastUpdate =
+%MonthBytes = %MonthHits = %MonthPages = %MonthUnique = %MonthVisits =
+%listofyears = %monthlib = %monthnum = ();
 
-$VERSION="2.5 (build 30)";
+$VERSION="2.5 (build 31)";
 $Lang=0;
 
 # Default value
@@ -241,6 +237,7 @@ $BarImageHorizontal_k = "barrehk.png";
 "emailsiphon","EmailSiphon",
 "friendlyspider","FriendlySpider",
 "getright","GetRight",
+"go!zilla","Go!Zilla",
 "headdump","HeadDump",
 "hotjava","Sun HotJava",
 "ibrowse","IBrowse",
@@ -1096,7 +1093,7 @@ sub Read_History_File {
 	$readdomain=0;$readvisitor=0;$readunknownip=0;$readsider=0;$readtime=0;$readbrowser=0;$readnsver=0;$readmsiever=0;
 	$reados=0;$readrobot=0;$readunknownreferer=0;$readunknownrefererbrowser=0;$readpagerefs=0;$readse=0;
 	$readsearchwords=0;$readerrors=0;$readerrors404=0; $readday=0;
-	$MonthUnique{$_[0].$_[1]}=0; $MonthPage{$_[0].$_[1]}=0; $MonthHits{$_[0].$_[1]}=0; $MonthBytes{$_[0].$_[1]}=0;
+	$MonthUnique{$_[0].$_[1]}=0; $MonthPages{$_[0].$_[1]}=0; $MonthHits{$_[0].$_[1]}=0; $MonthBytes{$_[0].$_[1]}=0;
 	while (<HISTORY>) {
 		chomp $_; s/\r//;
 		@field=split(/ /,$_);
@@ -1122,11 +1119,11 @@ sub Read_History_File {
 	    	$MonthUnique{$_[0].$_[1]}++;
 			}
 	    if ($readtime) {
-	    	$MonthPage{$_[0].$_[1]}+=$field[1]; $MonthHits{$_[0].$_[1]}+=$field[2]; $MonthBytes{$_[0].$_[1]}+=$field[3];
+	    	$MonthPages{$_[0].$_[1]}+=$field[1]; $MonthHits{$_[0].$_[1]}+=$field[2]; $MonthBytes{$_[0].$_[1]}+=$field[3];
 			}
 		if ($readday)
 		{
-			$DayPage{$field[0]}=$field[1]; $DayHits{$field[0]}=$field[2]; $DayBytes{$field[0]}=$field[3]; $DayVisits{$field[0]}=$field[4]; $DayUnique{$field[0]}=$field[5];
+			$DayPages{$field[0]}=$field[1]; $DayHits{$field[0]}=$field[2]; $DayBytes{$field[0]}=$field[3]; $DayVisits{$field[0]}=$field[4]; $DayUnique{$field[0]}=$field[5];
 		}
 
 		# SECOND PART: If $_[2] == 0, it means we don't need second part of history file.
@@ -1194,11 +1191,17 @@ sub Read_History_File {
 	        if ($readunknownrefererbrowser) {
 	        	if ($_unknownrefererbrowser_l{$field[0]} eq "") { $_unknownrefererbrowser_l{$field[0]}=$field[1]; }
 	        	next; }
-	        if ($field[0] eq "HitFrom0") { $_from_h[0]+=$field[1]; next; }
-	        if ($field[0] eq "HitFrom1") { $_from_h[1]+=$field[1]; next; }
-	        if ($field[0] eq "HitFrom2") { $_from_h[2]+=$field[1]; next; }
-	        if ($field[0] eq "HitFrom3") { $_from_h[3]+=$field[1]; next; }
-	        if ($field[0] eq "HitFrom4") { $_from_h[4]+=$field[1]; next; }
+	        if ($field[0] eq "From0") { $_from_p[0]+=$field[1]; $_from_h[0]+=$field[2]; next; }
+	        if ($field[0] eq "From1") { $_from_p[1]+=$field[1]; $_from_h[1]+=$field[2]; next; }
+	        if ($field[0] eq "From2") { $_from_p[2]+=$field[1]; $_from_h[2]+=$field[2]; next; }
+	        if ($field[0] eq "From3") { $_from_p[3]+=$field[1]; $_from_h[3]+=$field[2]; next; }
+	        if ($field[0] eq "From4") { $_from_p[4]+=$field[1]; $_from_h[4]+=$field[2]; next; }
+			# Next 5 lines are to read old awstats history files ("Fromx" section was "HitFromx" in such files)
+	        if ($field[0] eq "HitFrom0") { $_from_p[0]=0; $_from_h[0]+=$field[1]; next; }
+	        if ($field[0] eq "HitFrom1") { $_from_p[1]=0; $_from_h[1]+=$field[1]; next; }
+	        if ($field[0] eq "HitFrom2") { $_from_p[2]=0; $_from_h[2]+=$field[1]; next; }
+	        if ($field[0] eq "HitFrom3") { $_from_p[3]=0; $_from_h[3]+=$field[1]; next; }
+	        if ($field[0] eq "HitFrom4") { $_from_p[4]=0; $_from_h[4]+=$field[1]; next; }
 	        if ($readpagerefs) { $_pagesrefs_h{$field[0]}+=$field[1]; next; }
 	        if ($readse) { $_se_referrals_h{$field[0]}+=$field[1]; next; }
 	        if ($readsearchwords) { $_keywords{$field[0]}+=$field[1]; next; }
@@ -1288,11 +1291,11 @@ sub Save_History_File {
 	foreach $key (keys %_unknownrefererbrowser_l) { print HISTORYTMP "$key $_unknownrefererbrowser_l{$key}\n"; next; }
 	print HISTORYTMP "END_UNKNOWNREFERERBROWSER\n";
 
-	print HISTORYTMP "HitFrom0 $_from_h[0]\n";
-	print HISTORYTMP "HitFrom1 $_from_h[1]\n";
-	print HISTORYTMP "HitFrom2 $_from_h[2]\n";
-	print HISTORYTMP "HitFrom3 $_from_h[3]\n";
-	print HISTORYTMP "HitFrom4 $_from_h[4]\n";
+	print HISTORYTMP "From0 $_from_p[0] $_from_h[0]\n";
+	print HISTORYTMP "From1 $_from_p[1] $_from_h[1]\n";
+	print HISTORYTMP "From2 $_from_p[2] $_from_h[2]\n";
+	print HISTORYTMP "From3 $_from_p[3] $_from_h[3]\n";
+	print HISTORYTMP "From4 $_from_p[4] $_from_h[4]\n";
 
 	print HISTORYTMP "BEGIN_SEREFERRALS\n";
 	foreach $key (keys %_se_referrals_h) { print HISTORYTMP "$key $_se_referrals_h{$key}\n"; next; }
@@ -1324,12 +1327,13 @@ sub Init_HashArray {
 	# We purge data read for year $_[0] and month $_[1] so it's like we never read it
 	$HistoryFileAlreadyRead{"$_[0]$_[1]"}=0;
 	# Delete all hash arrays with name beginning by _
-	%_browser_h = %_domener_h = %_domener_k = %_domener_p =
-	%_errors_h = %_hostmachine_h = %_hostmachine_k = %_hostmachine_l = %_hostmachine_p =
+	%_browser_h = %_domener_h = %_domener_k = %_domener_p = %_errors_h = 
+	%_hostmachine_h = %_hostmachine_k = %_hostmachine_l = %_hostmachine_p =
 	%_keywords = %_os_h = %_pagesrefs_h = %_robot_h = %_robot_l = %_se_referrals_h =
-	%_sider404_h = %_sider_h = %_sider_k = %_sider_p = %_unknownip_l = %_unknownreferer_l =
-	%_unknownrefererbrowser_l = ();
-	reset _;
+	%_sider404_h = %_sider_h = %_sider_k = %_sider_p = %_unknownip_l = %_unknownreferer_l =	%_unknownrefererbrowser_l = ();
+	for ($ix=0; $ix<5; $ix++) {	$_from_p[$ix]=0; $_from_h[$ix]=0; }
+	for ($ix=0; $ix<=23; $ix++) { $_time_h[$ix]=0; $_time_k[$ix]=0; $_time_p[$ix]=0; }
+#	reset _;
 }
 
 #------------------------------------------------------------------------------
@@ -1422,7 +1426,8 @@ if (($ENV{"GATEWAY_INTERFACE"} eq "") && ($SiteToAnalyze eq "")) {
 	}
 
 # Get current time
-($nowsec,$nowmin,$nowhour,$nowday,$nowmonth,$nowyear) = localtime(time);
+$nowtime=time;
+($nowsec,$nowmin,$nowhour,$nowday,$nowmonth,$nowyear) = localtime($nowtime);
 if ($nowyear < 100) { $nowyear+=2000; } else { $nowyear+=1900; }
 $nowsmallyear=$nowyear;$nowsmallyear =~ s/^..//;
 if (++$nowmonth < 10) { $nowmonth = "0$nowmonth"; }
@@ -1430,7 +1435,7 @@ if ($nowday < 10) { $nowday = "0$nowday"; }
 if ($nowhour < 10) { $nowhour = "0$nowhour"; }
 if ($nowmin < 10) { $nowmin = "0$nowmin"; }
 # Get tomorrow time (will be used to discard some record with corrupted date (future date))
-($tomorrowsec,$tomorrowmin,$tomorrowhour,$tomorrowday,$tomorrowmonth,$tomorrowyear) = localtime(time+86400);
+($tomorrowsec,$tomorrowmin,$tomorrowhour,$tomorrowday,$tomorrowmonth,$tomorrowyear) = localtime($nowtime+86400);
 if ($tomorrowyear < 100) { $tomorrowyear+=2000; } else { $tomorrowyear+=1900; }
 $tomorrowsmallyear=$tomorrowyear;$tomorrowsmallyear =~ s/^..//;
 if (++$tomorrowmonth < 10) { $tomorrowmonth = "0$tomorrowmonth"; }
@@ -1488,11 +1493,11 @@ if ($MonthRequired ne "year" && $MonthRequired !~ /^[\d][\d]$/) { $MonthRequired
 $BrowsersHash{"netscape"}="<font color=blue>Netscape</font> <a href=\"$DirCgi$PROG.$Extension?action=browserdetail&site=$SiteToAnalyze&year=$YearRequired&month=$MonthRequired&lang=$Lang\">($message[58])</a>";
 $BrowsersHash{"msie"}="<font color=blue>MS Internet Explorer</font> <a href=\"$DirCgi$PROG.$Extension?action=browserdetail&site=$SiteToAnalyze&year=$YearRequired&month=$MonthRequired&lang=$Lang\">($message[58])</a>";
 
+# Init all global variables
 if (@HostAliases == 0) {
 	warning("Warning: HostAliases parameter is not defined, $PROG will choose \"$SiteToAnalyze localhost 127.0.0.1\".");
 	$HostAliases[0]=$SiteToAnalyze; $HostAliases[1]="localhost"; $HostAliases[2]="127.0.0.1";
 	}
-
 $SiteToAnalyzeIsInHostAliases=0;
 foreach $elem (@HostAliases) { if ($elem eq $SiteToAnalyze) { $SiteToAnalyzeIsInHostAliases=1; last; } }
 if ($SiteToAnalyzeIsInHostAliases == 0) { $HostAliases[@HostAliases]=$SiteToAnalyze; }
@@ -1501,9 +1506,9 @@ $FirstTime=0;$LastTime=0;$LastUpdate=0;$TotalVisits=0;$TotalHosts=0;$TotalUnique
 for ($ix=1; $ix<=12; $ix++) {
 	$monthix=$ix;if ($monthix < 10) { $monthix  = "0$monthix"; }
 	$FirstTime{$YearRequired.$monthix}=0;$LastTime{$YearRequired.$monthix}=0;$LastUpdate{$YearRequired.$monthix}=0;
-	$MonthVisits{$YearRequired.$monthix}=0;$MonthUnique{$YearRequired.$monthix}=0;$MonthPage{$YearRequired.$monthix}=0;$MonthHits{$YearRequired.$monthix}=0;$MonthBytes{$YearRequired.$monthix}=0;
+	$MonthVisits{$YearRequired.$monthix}=0;$MonthUnique{$YearRequired.$monthix}=0;$MonthPages{$YearRequired.$monthix}=0;$MonthHits{$YearRequired.$monthix}=0;$MonthBytes{$YearRequired.$monthix}=0;
 	}
-for ($ix=0; $ix<5; $ix++) {	$_from_h[$ix]=0; }
+&Init_HashArray;
 
 # Show logo
 print "<table WIDTH=$WIDTH>\n";
@@ -1733,10 +1738,11 @@ if ($UpdateStats) {
 		if ($field[$pos_date] =~ /^..:..:..:/) { $dateparts[2]+=2000; $tmp=$dateparts[0]; $dateparts[0]=$dateparts[1]; $dateparts[1]=$tmp; }
 		if ($monthnum{$dateparts[1]}) { $dateparts[1]=$monthnum{$dateparts[1]}; }	# Change lib month in num month if necessary
 		# Create $timeconnexion like YYYYMMDDHHMMSS
-		$timeconnexion=$dateparts[2].$dateparts[1].$dateparts[0].$dateparts[3].$dateparts[4].$dateparts[5];
+		my $timeconnexion=$dateparts[2].$dateparts[1].$dateparts[0].$dateparts[3].$dateparts[4].$dateparts[5];
+		my $dayconnexion=$dateparts[2].$dateparts[1].$dateparts[0];
 		if ($timeconnexion < 10000000000000) { $corrupted++; next; }				# Should not happen, kept in case of parasite/corrupted line
 		if ($timeconnexion > $timetomorrow) { $corrupted++; next; }					# Should not happen, kept in case of parasite/corrupted line
-
+		
 		# Skip if not a new line
 		#-----------------------
 		if ($NowNewLinePhase) {
@@ -1791,8 +1797,8 @@ if ($UpdateStats) {
 
 		# Canonize and clean target URL and referrer URL
 		$field[$pos_url] =~ s/\/$DefaultFile$/\//;	# Replace default page name with / only
-		$field[$pos_url] =~ s/\?.*//;					# Trunc CGI parameters in URL get
-		$field[$pos_url] =~ s/\/\//\//g;				# Because some targeted url were taped with 2 / (Ex: //rep//file.htm)
+		$field[$pos_url] =~ s/\?.*//;				# Trunc CGI parameters in URL get
+		$field[$pos_url] =~ s/\/\//\//g;			# Because some targeted url were taped with 2 / (Ex: //rep//file.htm)
 
 		# Check if page or not
 		$PageBool=1;
@@ -1803,13 +1809,15 @@ if ($UpdateStats) {
 		if ($FirstTime{$yeartoprocess.$monthtoprocess} == 0) { $FirstTime{$yeartoprocess.$monthtoprocess}=$timeconnexion; }
 		$LastTime{$yeartoprocess.$monthtoprocess} = $timeconnexion;
 		if ($PageBool) {
-			$_time_p[$dateparts[3]]++; $MonthPage{$yeartoprocess.$monthtoprocess}++;	#Count accesses per hour (page)
-			$_sider_p{$field[$pos_url]}++; 									#Count accesses per page (page)
+			$_time_p[$dateparts[3]]++;													#Count accesses per hour (page)
+			$DayPages{$dayconnexion}++;
+			$MonthPages{$yeartoprocess.$monthtoprocess}++;
+			$_sider_p{$field[$pos_url]}++; 												#Count accesses per page (page)
 			}
-		$_time_h[$dateparts[3]]++; $MonthHits{$yeartoprocess.$monthtoprocess}++;		#Count accesses per hour (hit)
-		$_time_k[$dateparts[3]]+=$field[$pos_size]; $MonthBytes{$yeartoprocess.$monthtoprocess}+=$field[$pos_size];	#Count accesses per hour (kb)
-		$_sider_h{$field[$pos_url]}++;										#Count accesses per page (hit)
-		$_sider_k{$field[$pos_url]}+=$field[$pos_size];								#Count accesses per page (kb)
+		$_time_h[$dateparts[3]]++; $MonthHits{$yeartoprocess.$monthtoprocess}++; $DayHits{$dayconnexion}++;	#Count accesses per hour (hit)
+		$_time_k[$dateparts[3]]+=$field[$pos_size]; $MonthBytes{$yeartoprocess.$monthtoprocess}+=$field[$pos_size]; $DayBytes{$dayconnexion}+=$field[$pos_size];	#Count accesses per hour (kb)
+		$_sider_h{$field[$pos_url]}++;													#Count accesses per page (hit)
+		$_sider_k{$field[$pos_url]}+=$field[$pos_size];									#Count accesses per page (kb)
 
 		# Analyze: IP-address
 		#--------------------
@@ -1948,7 +1956,11 @@ if ($UpdateStats) {
 		$found=0;
 
 		# Direct ?
-		if ($field[$pos_referer] eq "-") { $_from_h[0]++; $found=1; }
+		if ($field[$pos_referer] eq "-") { 
+			if ($PageBool) { $_from_p[0]++; }
+			$_from_h[0]++;
+			$found=1;
+		}
 
 		# HTML link ?
 		if (!$found) {
@@ -1963,6 +1975,7 @@ if ($UpdateStats) {
 
 				if ($internal_link) {
 				    # Intern (This hit came from another page of the site)
+					if ($PageBool) { $_from_p[4]++; }
 				    $_from_h[4]++;
 					$found=1;
 				}
@@ -1973,6 +1986,7 @@ if ($UpdateStats) {
 				    foreach $key (keys %SearchEnginesHash) {
 						if ($refurl[0] =~ /$key/) {
 							# This hit came from the search engine $key
+							if ($PageBool) { $_from_p[2]++; }
 							$_from_h[2]++;
 							$_se_referrals_h{$key}++;
 							$found=1;
@@ -2030,6 +2044,7 @@ if ($UpdateStats) {
 					}
 					if (!$found) {
 						# This hit came from a site other than a search engine
+						if ($PageBool) { $_from_p[3]++; }
 						$_from_h[3]++;
 						if ($field[$pos_referer] =~ /http:\/\/[^\/]*\/$/i) { $field[$pos_referer] =~ s/\/$//; }	# To make htpp://www.mysite.com and http://www.mysite.com/ as same referer
 						$_pagesrefs_h{$field[$pos_referer]}++;
@@ -2042,6 +2057,7 @@ if ($UpdateStats) {
 		# News link ?
 		if (!$found) {
 			if ($field[$pos_referer] =~ /^news/i) {
+				if ($PageBool) { $_from_p[1]++; }
 				$_from_h[1]++;
 				$found=1;
 			}
@@ -2399,6 +2415,7 @@ $kilo=int($TotalBytes/1024*100)/100;
 print "<TR><TD><b>$TotalVisits</b><br>&nbsp;</TD><TD><b>$TotalUnique</b><br>($RatioHosts&nbsp;$message[52])</TD><TD><b>$TotalPages</b><br>($RatioPages&nbsp;".lc $message[56]."/".lc $message[12].")</TD>";
 print "<TD><b>$TotalHits</b><br>($RatioHits&nbsp;".lc $message[57]."/".lc $message[12].")</TD><TD><b>$kilo $message[44]</b><br>($RatioBytes&nbsp;$message[44]/".lc $message[12].")</TD></TR>\n";
 print "<TR valign=bottom><TD colspan=5 align=center><center>";
+# Show monthly stats
 print "<TABLE>";
 print "<TR valign=bottom>";
 $max_v=1;$max_p=1;$max_h=1;$max_k=1;
@@ -2406,7 +2423,7 @@ for ($ix=1; $ix<=12; $ix++) {
 	$monthix=$ix; if ($monthix < 10) { $monthix="0$monthix"; }
 	if ($MonthVisits{$YearRequired.$monthix} > $max_v) { $max_v=$MonthVisits{$YearRequired.$monthix}; }
 	if ($MonthUnique{$YearRequired.$monthix} > $max_v) { $max_v=$MonthUnique{$YearRequired.$monthix}; }
-	if ($MonthPage{$YearRequired.$monthix} > $max_p)   { $max_p=$MonthPage{$YearRequired.$monthix}; }
+	if ($MonthPages{$YearRequired.$monthix} > $max_p)  { $max_p=$MonthPages{$YearRequired.$monthix}; }
 	if ($MonthHits{$YearRequired.$monthix} > $max_h)   { $max_h=$MonthHits{$YearRequired.$monthix}; }
 	if ($MonthBytes{$YearRequired.$monthix} > $max_k)  { $max_k=$MonthBytes{$YearRequired.$monthix}; }
 }
@@ -2415,7 +2432,7 @@ for ($ix=1; $ix<=12; $ix++) {
 	$bredde_u=0;$bredde_v=0;$bredde_p=0;$bredde_h=0;$bredde_k=0;
 	if ($max_v > 0) { $bredde_v=$MonthVisits{$YearRequired.$monthix}/$max_v*$BarHeight/2; }
 	if ($max_v > 0) { $bredde_u=$MonthUnique{$YearRequired.$monthix}/$max_v*$BarHeight/2; }
-	if ($max_h > 0) { $bredde_p=$MonthPage{$YearRequired.$monthix}/$max_h*$BarHeight/2; }
+	if ($max_h > 0) { $bredde_p=$MonthPages{$YearRequired.$monthix}/$max_h*$BarHeight/2; }
 	if ($max_h > 0) { $bredde_h=$MonthHits{$YearRequired.$monthix}/$max_h*$BarHeight/2; }
 	if ($max_k > 0) { $bredde_k=$MonthBytes{$YearRequired.$monthix}/$max_k*$BarHeight/2; }
 	$kilo=int(($MonthBytes{$YearRequired.$monthix}/1024)*100)/100;
@@ -2423,7 +2440,7 @@ for ($ix=1; $ix<=12; $ix++) {
 	print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_v\" HEIGHT=$bredde_v WIDTH=8 ALT=\"$message[10]: $MonthVisits{$YearRequired.$monthix}\" title=\"$message[10]: $MonthVisits{$YearRequired.$monthix}\">";
 	print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_u\" HEIGHT=$bredde_u WIDTH=8 ALT=\"$message[11]: $MonthUnique{$YearRequired.$monthix}\" title=\"$message[11]: $MonthUnique{$YearRequired.$monthix}\">";
 	print "&nbsp;";
-	print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_p\" HEIGHT=$bredde_p WIDTH=8 ALT=\"$message[56]: $MonthPage{$YearRequired.$monthix}\" title=\"$message[56]: $MonthPage{$YearRequired.$monthix}\">";
+	print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_p\" HEIGHT=$bredde_p WIDTH=8 ALT=\"$message[56]: $MonthPages{$YearRequired.$monthix}\" title=\"$message[56]: $MonthPages{$YearRequired.$monthix}\">";
 	print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_h\" HEIGHT=$bredde_h WIDTH=8 ALT=\"$message[57]: $MonthHits{$YearRequired.$monthix}\" title=\"$message[57]: $MonthHits{$YearRequired.$monthix}\">";
 	print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_k\" HEIGHT=$bredde_k WIDTH=8 ALT=\"$message[44]: $kilo\" title=\"$message[44]: $kilo\">";
 	print "</TD>\n";
@@ -2433,9 +2450,47 @@ for ($ix=1; $ix<=12; $ix++) {
 	$monthix=$ix; if ($monthix < 10) { $monthix="0$monthix"; }
 	print "<TD valign=center><a href=\"$DirCgi$PROG.$Extension?site=$SiteToAnalyze&year=$YearRequired&month=$monthix&lang=$Lang\">$monthlib{$monthix}</a></TD>";
 }
+print "</TR></TABLE><br>";
+# Show daily stats
+print "<TABLE>";
+print "<TR valign=bottom>";
+$max_v=1;$max_p=1;$max_h=1;$max_k=1;
+for ($ix=14; $ix>=0; $ix--) {
+	my ($oldsec,$oldmin,$oldhour,$oldday,$oldmonth,$oldyear) = localtime($nowtime-($ix*86400));
+	if ($oldyear < 100) { $oldyear+=2000; } else { $oldyear+=1900; }
+	if (++$oldmonth < 10) { $oldmonth="0$oldmonth"; }
+	if ($oldday < 10) { $oldday="0$oldday"; }
+	if ($DayPages{$oldyear.$oldmonth.$oldday} > $max_p)  { $max_p=$DayPages{$oldyear.$oldmonth.$oldday}; }
+	if ($DayHits{$oldyear.$oldmonth.$oldday} > $max_h)   { $max_h=$DayHits{$oldyear.$oldmonth.$oldday}; }
+	if ($DayBytes{$oldyear.$oldmonth.$oldday} > $max_k)  { $max_k=$DayBytes{$oldyear.$oldmonth.$oldday}; }
+}
+for ($ix=14; $ix>=0; $ix--) {
+	my ($oldsec,$oldmin,$oldhour,$oldday,$oldmonth,$oldyear) = localtime($nowtime-($ix*86400));
+	if ($oldyear < 100) { $oldyear+=2000; } else { $oldyear+=1900; }
+	if (++$oldmonth < 10) { $oldmonth="0$oldmonth"; }
+	if ($oldday < 10) { $oldday="0$oldday"; }
+	$bredde_u=0;$bredde_v=0;$bredde_p=0;$bredde_h=0;$bredde_k=0;
+	if ($max_h > 0) { $bredde_p=$DayPages{$oldyear.$oldmonth.$oldday}/$max_h*$BarHeight/2; }
+	if ($max_h > 0) { $bredde_h=$DayHits{$oldyear.$oldmonth.$oldday}/$max_h*$BarHeight/2; }
+	if ($max_k > 0) { $bredde_k=$DayBytes{$oldyear.$oldmonth.$oldday}/$max_k*$BarHeight/2; }
+	$kilo=int(($DayBytes{$oldyear.$oldmonth.$oldday}/1024)*100)/100;
+	print "<TD>";
+	print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_p\" HEIGHT=$bredde_p WIDTH=8 ALT=\"$message[56]: $DayPages{$oldyear.$oldmonth.$oldday}\" title=\"$message[56]: $DayPages{$oldyear.$oldmonth.$oldday}\">";
+	print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_h\" HEIGHT=$bredde_h WIDTH=8 ALT=\"$message[57]: $DayHits{$oldyear.$oldmonth.$oldday}\" title=\"$message[57]: $DayHits{$oldyear.$oldmonth.$oldday}\">";
+	print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_k\" HEIGHT=$bredde_k WIDTH=8 ALT=\"$message[44]: $kilo\" title=\"$message[44]: $kilo\">";
+	print "</TD>\n";
+}
+print "</TR><TR>";
+for ($ix=14; $ix>=0; $ix--) {
+	my ($oldsec,$oldmin,$oldhour,$oldday,$oldmonth,$oldyear) = localtime($nowtime-($ix*86400));
+	if ($oldyear < 100) { $oldyear+=2000; } else { $oldyear+=1900; }
+	if (++$oldmonth < 10) { $oldmonth="0$oldmonth"; }
+	if ($oldday < 10) { $oldday="0$oldday"; }
+	print "<TD valign=center>$oldday ".$monthlib{$oldmonth}."</TD>";
+}
+print "</TR></TABLE><br>";
 
-print "</TR></TABLE></center>";
-print "</TD></TR>";
+print "</center></TD></TR>";
 &tab_end;
 
 print "<br><hr>\n";
@@ -2664,22 +2719,34 @@ foreach $key (@sortos) {
 print "$CENTER<a name=\"REFERER\"></a><BR>";
 $tab_titre="$message[36]";
 &tab_head;
-print "<TR bgcolor=#$color_TableBGRowTitle><TH>$message[37]</TH><TH bgcolor=#$color_h width=40>$message[57]</TH><TH bgcolor=#$color_h width=40>$message[15]</TH></TR>\n";
-if ($TotalHits > 0) { $_=int($_from_h[0]/$TotalHits*1000)/10; }
-print "<TR><TD CLASS=LEFT><b>$message[38]:</b></TD><TD>$_from_h[0]&nbsp;</TD><TD>$_&nbsp;%</TD></TR>\n";
-if ($TotalHits > 0) { $_=int($_from_h[1]/$TotalHits*1000)/10; }
-print "<TR><TD CLASS=LEFT><b>$message[39]:</b></TD><TD>$_from_h[1]&nbsp;</TD><TD>$_&nbsp;%</TD></TR>\n";
+@p_p=();
+if ($TotalPages > 0) {
+	$p_p[0]=int($_from_p[0]/$TotalPages*1000)/10;
+	$p_p[1]=int($_from_p[1]/$TotalPages*1000)/10;
+	$p_p[2]=int($_from_p[2]/$TotalPages*1000)/10;
+	$p_p[3]=int($_from_p[3]/$TotalPages*1000)/10;
+	$p_p[4]=int($_from_p[4]/$TotalPages*1000)/10;
+}
+@p_h=();
+if ($TotalHits > 0) {
+	$p_h[0]=int($_from_h[0]/$TotalHits*1000)/10;
+	$p_h[1]=int($_from_h[1]/$TotalHits*1000)/10;
+	$p_h[2]=int($_from_h[2]/$TotalHits*1000)/10;
+	$p_h[3]=int($_from_h[3]/$TotalHits*1000)/10;
+	$p_h[4]=int($_from_h[4]/$TotalHits*1000)/10;
+}
+print "<TR bgcolor=#$color_TableBGRowTitle><TH>$message[37]</TH><TH bgcolor=#$color_p width=40>$message[56]</TH><TH bgcolor=#$color_p width=40>$message[15]</TH><TH bgcolor=#$color_h width=40>$message[57]</TH><TH bgcolor=#$color_h width=40>$message[15]</TH></TR>\n";
+print "<TR><TD CLASS=LEFT><b>$message[38]:</b></TD><TD>$_from_p[0]&nbsp;</TD><TD>$p_p[0]&nbsp;%</TD><TD>$_from_h[0]&nbsp;</TD><TD>$p_h[0]&nbsp;%</TD></TR>\n";
+print "<TR><TD CLASS=LEFT><b>$message[39]:</b></TD><TD>$_from_p[1]&nbsp;</TD><TD>$p_p[1]&nbsp;%</TD><TD>$_from_h[1]&nbsp;</TD><TD>$p_h[1]&nbsp;%</TD></TR>\n";
 #------- Referrals by search engine
-if ($TotalHits > 0) { $_=int($_from_h[2]/$TotalHits*1000)/10; }
 print "<TR onmouseover=\"ShowTooltip(13);\" onmouseout=\"HideTooltip(13);\"><TD CLASS=LEFT><b>$message[40] :</b><br>\n";
 print "<TABLE>\n";
 foreach $se (@sortsereferrals) {
 	print "<TR><TD CLASS=LEFT>- $SearchEnginesHash{$se} </TD><TD align=right>$_se_referrals_h{\"$se\"}</TD></TR>\n";
 }
 print "</TABLE></TD>\n";
-print "<TD valign=top>$_from_h[2]&nbsp;</TD><TD valign=top>$_&nbsp;%</TD>\n</TR>\n";
+print "<TD valign=top>$_from_p[2]&nbsp;</TD><TD valign=top>$p_p[2]&nbsp;%</TD><TD valign=top>$_from_h[2]&nbsp;</TD><TD valign=top>$p_h[2]&nbsp;%</TD></TR>\n";
 #------- Referrals by external HTML link
-if ($TotalHits > 0) { $_=(int($_from_h[3]/$TotalHits*1000)/10); }
 print "<TR onmouseover=\"ShowTooltip(14);\" onmouseout=\"HideTooltip(14);\"><TD CLASS=LEFT><b>$message[41] :</b><br>\n";
 print "<TABLE>\n";
 $count=0;
@@ -2694,15 +2761,13 @@ foreach $from (@sortpagerefs) {
 		} else {
 			print "<TR><TD CLASS=LEFT>- $lien</TD><TD>$_pagesrefs_h{$from}</TD></TR>\n";
 		}
-
 		$count++;
 	}
 }
 print "</TABLE></TD>\n";
-print "<TD valign=top>$_from_h[3]&nbsp;</TD><TD valign=top>$_&nbsp;%</TD>\n</TR>\n";
-
-if ($TotalHits > 0) { $_=(int($_from_h[4]/$TotalHits*1000)/10); }
-print "<TR><TD CLASS=LEFT><b>$message[42] :</b></TD><TD>$_from_h[4]&nbsp;</TD><TD>$_&nbsp;%</TD></TR>\n";
+print "<TD valign=top>$_from_p[3]&nbsp;</TD><TD valign=top>$p_p[3]&nbsp;%</TD><TD valign=top>$_from_h[3]&nbsp;</TD><TD valign=top>$p_h[3]&nbsp;%</TD></TR>\n";
+#------- Referrals by internal HTML link
+print "<TR><TD CLASS=LEFT><b>$message[42] :</b></TD><TD>$_from_p[4]&nbsp;</TD><TD>$p_p[4]&nbsp;%</TD><TD>$_from_h[4]&nbsp;</TD><TD>$p_h[4]&nbsp;%</TD></TR>\n";
 &tab_end;
 
 
