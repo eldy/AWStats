@@ -226,7 +226,7 @@ use vars qw/
 use vars qw/
 @MiscListOrder %MiscListCalc
 @OSFamily %BrowsersFamily @SessionsRange %SessionsAverage
-%LangBrowserToLangAwstats %LangAWStatsToCountryAwstats
+%LangBrowserToLangAwstats %LangAWStatsToFlagAwstats
 @HostAliases @AllowAccessFromWebToFollowingAuthenticatedUsers
 @DefaultFile @SkipDNSLookupFor
 @SkipHosts @SkipUserAgents @SkipFiles
@@ -246,13 +246,24 @@ use vars qw/
 %BrowsersFamily=('msie'=>1,'netscape'=>2);
 @SessionsRange=('0s-30s','30s-2mn','2mn-5mn','5mn-15mn','15mn-30mn','30mn-1h','1h+');
 %SessionsAverage=('0s-30s',15,'30s-2mn',75,'2mn-5mn',210,'5mn-15mn',600,'15mn-30mn',1350,'30mn-1h',2700,'1h+',3600);
-# Values reported by HTTP-Accept with AWStats code to use
-%LangBrowserToLangAwstats=('sq'=>'al','ba'=>'ba','bg'=>'bg','zh-tw'=>'tw','zh'=>'cn','cz'=>'cz',
-'da'=>'dk','nl'=>'nl','en'=>'en','et'=>'et','fi'=>'fi','fr'=>'fr',
-'de'=>'de','el'=>'gr','hu'=>'hu','is'=>'is','in'=>'id','it'=>'it',
-'ja'=>'jp','ko'=>'kr','lv'=>'lv','no'=>'nb','nb'=>'nb','nn'=>'nn','pl'=>'pl','pt'=>'pt','pt-br'=>'br',
-'ro'=>'ro','ru'=>'ru','sr'=>'sr','sk'=>'sk','es'=>'es','eu'=>'es_eu','ca'=>'es_cat','sv'=>'se','tr'=>'tr','uk'=>'ua','wlk'=>'wlk');
-%LangAWStatsToCountryAwstats=('et'=>'ee','he'=>'il');
+# HTTP-Accept or Lang parameter => AWStats code to use for lang
+# ISO 639-1 2 letter or other   => awstats-xx.txt
+%LangBrowserToLangAwstats=(
+'sq'=>'al','ar'=>'ar','ba'=>'ba','bg'=>'bg','zh-tw'=>'tw','zh'=>'cn','cz'=>'cz',
+'de'=>'de','da'=>'dk',
+'en'=>'en','et'=>'et','fi'=>'fi','fr'=>'fr','gl'=>'es_gl',
+'es'=>'es','eu'=>'es_eu','ca'=>'es_cat',
+'el'=>'gr','hu'=>'hu','is'=>'is','in'=>'id','it'=>'it',
+'ja'=>'jp','ko'=>'kr','lv'=>'lv','nl'=>'nl','no'=>'nb','nb'=>'nb','nn'=>'nn',
+'pl'=>'pl','pt'=>'pt','pt-br'=>'br','ro'=>'ro','ru'=>'ru','sr'=>'sr','sk'=>'sk',
+'sv'=>'se','tr'=>'tr','uk'=>'ua','cy'=>'wlk','wlk'=>'wlk'
+);
+%LangAWStatsToFlagAwstats=(  # If flag (country ISO 3166 two letters) is not same than lang AWStats code
+'et'=>'ee',
+'he'=>'il',
+'ar'=>'sa',
+'sr'=>'cs'
+);
 @HostAliases = @AllowAccessFromWebToFollowingAuthenticatedUsers=();
 @DefaultFile = @SkipDNSLookupFor = ();
 @SkipHosts = @SkipUserAgents = @SkipFiles = ();
@@ -4328,10 +4339,11 @@ sub Show_Flag_Links {
 	if ($FrameName eq 'mainright') { $NewLinkParams.='framename=index&'; }
 
 	foreach my $lng (split(/\s+/,$ShowFlagLinks)) {
+        $lng=$LangBrowserToLangAwstats{$lng}?$LangBrowserToLangAwstats{$lng}:$lng;
 		if ($lng ne $CurrentLang) {
 			my %lngtitle=('en','English','fr','French','de','German','it','Italian','nl','Dutch','es','Spanish');
 			my $lngtitle=($lngtitle{$lng}?$lngtitle{$lng}:$lng);
-			my $flag=($LangAWStatsToCountryAwstats{$lng}?$LangAWStatsToCountryAwstats{$lng}:$lng);
+			my $flag=($LangAWStatsToFlagAwstats{$lng}?$LangAWStatsToFlagAwstats{$lng}:$lng);
 			print "<a href=\"".XMLEncode("$AWScript?${NewLinkParams}lang=$lng")."\"$NewLinkTarget><img src=\"$DirIcons\/flags\/$flag.png\" height=\"14\" border=\"0\"".AltTitle("$lngtitle")." /></a>&nbsp;\n";
 		}
 	}
