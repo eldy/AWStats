@@ -31,6 +31,7 @@ New features/improvements:
 - Full updated robots database.
 
 Fixes:
+- Removed warning "Bizarre copy of ARRAY" with new Perl 5.8.4.
 - Fixed syntax error in Year view when xhtml output is selected.
 - Fixed a problem of not working misc feature when using IIS and 
   when URLWithQuery was set to 0.
