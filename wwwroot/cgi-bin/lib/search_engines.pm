@@ -86,22 +86,22 @@
 # Minor polish search engines
 "szukaj\.wp\.pl",
 # Minor russian search engines
-"yandex\.ru",
+"ya(ndex)?\.ru", "aport\.ru", "rambler\.ru", "turtle\.ru", "metabot\.ru",
 # Minor swedish search engines
 "evreka\.passagen\.se",
 # Minor swiss search engines
 "search\.bluewin\.ch",
 # Other
-"search\..*com"
+"search\..*\.\w+"
 );
 
-# SearchEnginesSearchIDOrder
-# This list is used to know in which order to search Search Engines IDs (Most
-# frequent one are first in this list to increase detect speed).
-# Note: Browsers IDs are in lower case and ' ' and '+' are changed into '_'
+# NotSearchEnginesKeys
+# If a search engie key is found, we check its exclude list to know if it's
+# really a search engine
 #-----------------------------------------------------------------
-@NotSearchEnginesSearchIDOrder=(
-"hotmail.msn.com"
+%NotSearchEnginesKeys=(
+"msn\."=>"hotmail\.msn\.",
+"yahoo\."=>"mail\.yahoo\."
 );
 
 
@@ -179,7 +179,7 @@
 # Minor polish search engines
 "szukaj\.wp\.pl","szukaj=",
 # Minor russian search engines
-"yandex\.ru","text=",
+"ya(ndex)?\.ru", "text=", "rambler\.ru","words=", "aport\.ru", "r=", "metabot\.ru", "st=",
 # Minor swedish search engines
 "evreka\.passagen\.se","q=",
 # Minor swiss search engines
@@ -280,13 +280,13 @@
 # Minor polish search engines
 "szukaj\.wp\.pl","Szukaj",
 # Minor russian search engines
-"yandex\.ru","Yandex",
+"ya(ndex)?\.ru", "Yandex", "aport\.ru", "Aport", "rambler\.ru", "Rambler", "turtle\.ru", "Turtle", "metabot\.ru", "MetaBot",
 # Minor swedish search engines
 "evreka\.passagen\.se","Evreka",
 # Minor Swiss search engines
 "search.bluewin.ch","Bluewin",
 # Other
-"search\..*com","Other search engines"
+"search\..*\.\w+","Other search engines"
 );
 
 
