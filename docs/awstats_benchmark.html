@@ -55,8 +55,11 @@ Other times for different kind of web sites sizes are shown later in this page..
 <br>
 - A log file size is about <b>150</b> (NCSA common/CLF log files) to <b>320 times</b> (NCSA extended/XLF/ELF log files) its number of lines,<br>
 - <b>1,000 visits</b> = <b>8,000 pages</b> (with 8 pages/visits) = <b>64,000 lines</b> (with 8 hits/page) = <b>20 MB file</b> => <b>15 seconds</b> (Athlon 1GHz, Standard Perl 5.8)<br>
-- History files (resuming the log analysis) has the following size (one file a month) :
-<b>15000+90*x+100*y bytes</b> (where x is number of unique visitors a month and y is number of different pages on web sites)<br>
+- History files (AWStats database, resuming the log analysis) has the following size (one file a month) :
+<b>15000+90*x+100*y bytes</b> (where x is number of unique visitors a month and y is number of different pages on web sites).
+If you use option <a href="awstats_config.html#BuildHistoryFormat">BuildHistoryFormat</a>=xml, you must 
+multiplie this value by 3.<br>
+<br>
 WARNING ! All those data are average values for a common public site with default configuration.
 Calculation rule can be seriously changed according to web server or AWStats configuration and web site content.<br>
 

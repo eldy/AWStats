@@ -643,9 +643,11 @@ when reading it), follow the example:<br>
 
 <a name="BuildHistoryFormat"><b>BuildHistoryFormat</b></a><br>
 <b>Version : </b>6.0+<br>
-<br># If you can choose in which format tha awstats history database is saved.
-<br># For the moment, only text is supported.
-<br># Possible values: text
+<br># You can choose in which format the Awstats history database is saved.
+<br># Note: Using "xml" format make AWStats building database files three times
+<br># larger than using "text" format.
+<br># Change : Database format is switched after next update
+<br># Possible values: text or xml
 <br># Default: text
 <br>#
 <br>BuildHistoryFormat=text
@@ -731,7 +733,8 @@ when reading it), follow the example:<br>
 <a name="DefaultFile"><b>DefaultFile</b></a><br>
 <b>Version : </b>1.0+ (5.0+ can accept several values)<br>
 <br># Default index page name for your web server.
-<br># Example: "default.htm default.html"
+<br># Change : Effective for new updates only
+<br># Example: "index.php index.html default.html"
 <br># Default: "index.html"
 <br>#
 <br>DefaultFile="index.html"
