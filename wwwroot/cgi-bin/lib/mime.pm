@@ -50,6 +50,8 @@
 'xml','html',
 # HTML Dynamic pages or script
 'asp','script',
+'aspx','script', 
+'asmx','script', 
 'jsp','script',
 'cgi','script',
 'ksh','script',
@@ -133,6 +135,8 @@
 'xml','page',
 # HTML Dynamic pages or script
 'asp','script',
+'aspx','script', 
+'asmx','script', 
 'jsp','script',
 'cgi','script',
 'ksh','script',
