@@ -6307,6 +6307,7 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 										# We found good parameter
 										$param =~ s/.*=//;
 										# Now param is keyphrase: "aaa+bbb/ccc+ddd%20eee'fff,ggg"
+										$param =~ s/^(cache|related):[^\+]+//;
 										&ChangeWordSeparatorsIntoSpace($param);			# Change [ aaa+bbb/ccc+ddd%20eee'fff,ggg ] into [ aaa bbb/ccc ddd eee fff ggg ]
 										# TODO Add a plugin to convert utf8 coded params (google, alltheweb) into locally coded string ($PageCode)
 										$param =~ s/^ +//; $param =~ s/ +$//; $param =~ tr/ /\+/s;
