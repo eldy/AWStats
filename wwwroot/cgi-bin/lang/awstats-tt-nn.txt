@@ -1,0 +1,50 @@
+	<div class="CTooltip" id="tt1">
+	Eit nytt besøk er ein ny <b>gjest</b> som ikkje har vore tilkopla nettstaden siste <b>#VisitTimeOut# min</b>.
+	</div>
+	<div class="CTooltip" id="tt2">
+	Talet på klientvertar (<b>IP-adresser</b>) som har besøkt nettstaden, og har sett minst ei  <b>side</b>).<br>
+	Denne informasjonen gjeld talet på <b>forskjellige personar</b> som har besøkt sida.
+	</div>
+	<div class="CTooltip" id="tt3">
+	Talet på gongar ei <b>side</b> på nettstaden har blitt <b>vist</b>.<br>
+	Denne informasjonen skil seg frå «treff» ved å berre telja HTML-sider, og ikkje bilde og andre filer.
+	</div>
+	<div class="CTooltip" id="tt4">
+	Talet på gongar ei <b>side</b>, eit <b>bilde</b> eller ei <b>fil</b> på nettstaden har blitt <b>vist</b> eller <b>lasta ned</b>.
+	</div>
+	<div class="CTooltip" id="tt5">
+	Denne informasjonen viser kor mykje data som har blitt lasta ned totalt (<b>sider</b>, <b>bilder</b> eller andre <b>filer</b>) målt i KiB (kibibyte).
+	</div>
+	<div class="CTooltip" id="tt13">
+	#PROG# kan sjå når eit besøk på nettstaden din kjem frå eit <b>søk</b> på dei <b>#SearchEnginesArray# mest populære søkemotorane og emnekatalogane</b> (f.eks.&nbsp;Yahoo, Altavista, Lycos, Google og Kvasir).
+	</div>
+	<div class="CTooltip" id="tt14">
+	Liste over alle <b>eksterne sider</b> som har lenkjer til nettstaden din (berre dei <b>#MaxNbOfRefererShown#</b> mest brukte eksterne sider blir vist).
+	Lenkjer frå søkemotorar er ikkje inkludert her, sidan desse allereie er oppført i førre del av denne tabellen.
+	</div>
+	<div class="CTooltip" id="tt15">
+	Denne tabellen viser dei mest brukte <b>søkeorda</b> brukt til å finna nettstaden din i søkemotorar og emnekatalogar.
+	(Søkeord frå dei <b>#SearchEnginesArray#</b> mest populære søkemotorane og emnekatalogane kan lesast av #PROG#, f.eks.&nbsp;Yahoo, Altavista, Lycos, Google, og Kvasir).
+	</div>
+	<div class="CTooltip" id="tt16">
+	Robotar blir brukt av mange søkemotorar som besøker nettstaden din for å 1) indeksera han, 2) samla statistikk om nettstadar , og/eller 3) sjå om nettstaden framleis eksisterer.<br>
+	#PROG# kjenner til <b>#RobotArray#</b> robotar.
+	</div>
+
+	<div class="CTooltip" id="tt201"> Inga beskriving av denne feilen. </div>
+	<div class="CTooltip" id="tt202"> Førespurnaden vart forstått av tenaren men vil bli prosessert seinare. </div>
+	<div class="CTooltip" id="tt204"> Tenaren har prosessert førespurnaden men har ikkje noko innhald å senda. </div>
+	<div class="CTooltip" id="tt206"> Delvis innhald. </div>
+	<div class="CTooltip" id="tt301"> Det førespurte dokumentet er flytta, og finst no på ei anna sida. Brukaren blir auomatisk vidaresendt til den nye adressa. </div>
+	<div class="CTooltip" id="tt302"> Inga beskriving av denne feilen. </div>
+	<div class="CTooltip" id="tt400"> Syntaksfeil. Tenaren forsto ikkje førespurnaden. </div>
+	<div class="CTooltip" id="tt401"> Prøvde å henta ei <b>side som var passordsikra</b>.<br>Mange slike feilmeldingar kan tyda på at nokon prøver å bryta seg inn på nettstaden din. </div>
+	<div class="CTooltip" id="tt403"> Prøvde å henta <b>side som er utilgjengeleg (sjølv med passord)</b> (for eksempel ein katalog som er definert som ikkje lesbar). </div>
+	<div class="CTooltip" id="tt404"> Prøvde å henta ei <b>ikkje-eksisterande side</b>. Denne feilen tyder oftast at det er ei lenkje ein eller annan plass på nettstaden din (eller på ei ekstern side) som ikkje fungerer, og som må oppdaterast. </div>
+	<div class="CTooltip" id="tt408"> Tenaren har brukt <b>for mykje tid</b> på å svara på ein førespurnad. Denne feilen gjeld enten eit treigt CGI-skript tenaren måtte avslutta, eller tungt trafikkert tenar. </div>
+	<div class="CTooltip" id="tt500"> Intern feil. Denne feiled kjem ofte av CGI-skript som har blitt avslutta unormalt. </div>
+	<div class="CTooltip" id="tt501"> Ukjent førespurnad. </div>
+	<div class="CTooltip" id="tt502"> Kode returnert av ein HTTP-tenar som fungerer som proxy eller systemport når ein ekte tenar ikkje svarer på førespurnaden. </div>
+	<div class="CTooltip" id="tt503"> Intern tenarfeil. </div>
+	<div class="CTooltip" id="tt504"> Systemport tidsavbroten. </div>
+	<div class="CTooltip" id="tt505"> HTTP-versjonen er ikkje støtta. </div>

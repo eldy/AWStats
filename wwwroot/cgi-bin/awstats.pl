@@ -81,7 +81,7 @@ $word, $yearcon, $yearfile, $yearmonthfile, $yeartoprocess) = ();
 %MonthBytes = %MonthHits = %MonthPages = %MonthUnique = %MonthVisits =
 %listofyears = %monthlib = %monthnum = ();
 
-$VERSION="2.5 (build 36)";
+$VERSION="2.5 (build 37)";
 $Lang=0;
 
 # Default value
@@ -129,6 +129,8 @@ $BarImageHorizontal_k = "barrehk.png";
 );
 
 # Search engines names database (update the 10th january 2001)
+# To add a search engine, add a new line:
+# "match_string_in_url_that_identify_engine", "search_engine_name",
 %SearchEnginesHash=(
 # Most common search engines
 "yahoo\.","Yahoo",
@@ -160,16 +162,15 @@ $BarImageHorizontal_k = "barrehk.png";
 "mamma\.","Mamma",
 "dejanews\.","DejaNews",
 "search\.dogpile\.com","Dogpile",
+"engine\.exe","Cade", "miner\.bol\.com\.br","Meta Miner",	# Minor brazilian search engine
 "ilse\.","Ilse","vindex\.","Vindex\.nl",	# Minor dutch search engines
 "nomade\.fr/","Nomade", "ctrouve\.","C'est trouvé", "francite\.","Francité", "\.lbb\.org", "LBB", "rechercher\.libertysurf\.fr", "Libertysurf",	# Minor french search engines
 "fireball\.de","Fireball", "infoseek\.de","Infoseek", "suche\.web\.de","Web.de", "meta\.ger","MetaGer",	# Minor german search engines
-"engine\.exe","Cade", "miner\.bol\.com\.br","Meta Miner",	# Minor brazilian search engine
+"kvasir\.sol\.no","Kvasir",		# Minor norvegian search engine
 "search\..*com","Other search engines"
 );
 
-# Search engines known URLs database (update the 10th january 2001)
-# To add a search engine, add a new line:
-# "match_string_in_url_that_identify_engine", "search_engine_name",
+# Search engines known URLs rules to find keywords (update the 10th january 2001)
 %SearchEngineKnownUrl=(
 # Most common search engines
 "yahoo\.","p=",
@@ -196,11 +197,13 @@ $BarImageHorizontal_k = "barrehk.png";
 "askjeeves\.","ask=",
 "mamma\.","query=",
 "search\.dogpile\.com", "q=",
+"engine\.exe","p1=", "miner\.bol\.com\.br","q=",
 "ilse\.","search_for=", "vindex\.","in=",
 "nomade\.fr/","s=", "francite\.","name=",
 "fireball\.de","q=", "infoseek\.de","qt=", "suche\.web\.de","su=",
-"engine\.exe","p1=", "miner\.bol\.com\.br","q="
+"kvasir\.sol\.no", "q="
 );
+# If no rules are known, this will be used to clean URL of not keyword parameters.
 @WordsToCleanSearchUrl= ("act=","annuaire=","btng=","categoria=","cfg=","cou=","dd=","domain=","dt=","dw=","exec=","geo=","hc=","height=","hl=","hs=","kl=","lang=","loc=","lr=","matchmode=","medor=","message=","meta=","mode=","order=","page=","par=","pays=","pg=","pos=","prg=","qc=","refer=","sa=","safe=","sc=","sort=","src=","start=","stype=","tag=","temp=","theme=","url=","user=","width=","what=","\\.x=","\\.y=");
 # Never put the following exclusion ("ask=","claus=","general=","kw=","keyword=","MT","p=","q=","qr=","qt=","query=","s=","search=","searchText=","string=","su=") because they are strings that contain keywords we're looking for.
 
