@@ -2037,13 +2037,21 @@ if ($QueryString =~ /browserdetail/) {
 	&html_end;
 	exit(0);
 	}
+if ($QueryString =~ /info/) {
+	# Not yet available
+	print "<CENTER><a name=\"INFO\"></a>";
+	
+	&html_end;
+	exit(0);
+	}
 
 if ($BenchMark == 1) { print "Start of sorting: ";print localtime();print "<br>"; }
 @RobotArray=keys %RobotHash;
 @SearchEnginesArray=keys %SearchEnginesHash;
+@sortdomains_p=sort { $SortDir*$_domener_p{$a} <=> $SortDir*$_domener_p{$b} } keys (%_domener_p);
 @sortdomains_h=sort { $SortDir*$_domener_h{$a} <=> $SortDir*$_domener_h{$b} } keys (%_domener_h);
 @sortdomains_k=sort { $SortDir*$_domener_k{$a} <=> $SortDir*$_domener_k{$b} } keys (%_domener_k);
-@sorthosts_h=sort { $SortDir*$_hostmachine_h{$a} <=> $SortDir*$_hostmachine_h{$b} } keys (%_hostmachine_h);
+@sorthosts_p=sort { $SortDir*$_hostmachine_p{$a} <=> $SortDir*$_hostmachine_p{$b} } keys (%_hostmachine_p);
 @sortsiders=sort { $SortDir*$_sider_p{$a} <=> $SortDir*$_sider_p{$b} } keys (%_sider_p);
 @sortbrowsers=sort { $SortDir*$_browser_h{$a} <=> $SortDir*$_browser_h{$b} } keys (%_browser_h);
 @sortos=sort { $SortDir*$_os_h{$a} <=> $SortDir*$_os_h{$b} } keys (%_os_h);
@@ -2561,11 +2569,10 @@ if ($SortDir<0) { $max_h=$_domener_h{$sortdomains_h[0]}; }
 else            { $max_h=$_domener_h{$sortdomains_h[$#sortdomains_h]}; }
 if ($SortDir<0) { $max_k=$_domener_k{$sortdomains_k[0]}; }
 else            { $max_k=$_domener_k{$sortdomains_k[$#sortdomains_k]}; }
-foreach $key (@sortdomains_h) {
+foreach $key (@sortdomains_p) {
         if ($max_h > 0) { $bredde_p=$BarWidth*$_domener_p{$key}/$max_h+1; }	# use max_h to enable to compare pages with hits
         if ($max_h > 0) { $bredde_h=$BarWidth*$_domener_h{$key}/$max_h+1; }
         if ($max_k > 0) { $bredde_k=$BarWidth*$_domener_k{$key}/$max_k+1; }
-		$page=$_domener_p{$key};if ($page eq "") { $page=0; }
         $kilo=int(($_domener_k{$key}/1024)*100)/100;
 		if ($key eq "ip") {
 			print "<TR><TD><IMG SRC=\"$DirIcons\/flags\/$key.png\" height=14></TD><TD CLASS=LEFT>$message[0][$Lang]</TD><TD>$key</TD>";
@@ -2573,7 +2580,7 @@ foreach $key (@sortdomains_h) {
 		else {
 			print "<TR><TD><IMG SRC=\"$DirIcons\/flags\/$key.png\" height=14></TD><TD CLASS=LEFT>$DomainsHash{$key}</TD><TD>$key</TD>";
 		}
-        print "<TD>$page</TD><TD>$_domener_h{$key}</TD><TD>$kilo</TD>";
+        print "<TD>$_domener_p{$key}</TD><TD>$_domener_h{$key}</TD><TD>$kilo</TD>";
         print "<TD CLASS=LEFT>";
         print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_p\" WIDTH=$bredde_p HEIGHT=6 ALT=\"$message[56][$Lang]: $_domener_p{$key}\"><br>\n";
         print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_h\" WIDTH=$bredde_h HEIGHT=6 ALT=\"$message[57][$Lang]: $_domener_h{$key}\"><br>\n";
@@ -2590,13 +2597,12 @@ $tab_titre="TOP $MaxNbOfHostsShown $message[55][$Lang] $TotalHosts $message[26][
 &tab_head;
 print "<TR BGCOLOR=$color_TableBGRowTitle><TH CLASS=LEFT>$message[18][$Lang]</TH><TH bgcolor=$color_p>$message[56][$Lang]</TH><TH bgcolor=$color_h>$message[57][$Lang]</TH><TH bgcolor=$color_k>$message[44][$Lang]</TH><TH>$message[9][$Lang]</TH></TR>\n";
 $count=0;$total_p=0;$total_h=0;$total_k=0;
-foreach $key (@sorthosts_h)
+foreach $key (@sorthosts_p)
 {
   if ($_hostmachine_h{$key}>=$MinHitHost) {
-	$page=$_hostmachine_p{$key};if ($page eq "") { $page=0; }
     $kilo=int(($_hostmachine_k{$key}/1024)*100)/100;
 	if ($key eq "Unknown") {
-		print "<TR><TD CLASS=LEFT><a href=\"$DirCgi$PROG.pl?action=unknownip&month=$MonthOnly&lang=$Lang\">$message[1][$Lang]</a></TD><TD>$page</TD><TD>$_hostmachine_h{$key}</TD><TD>$kilo</TD><TD><a href=\"$DirCgi$PROG.pl?action=unknownip&month=$MonthOnly&lang=$Lang\">$message[3][$Lang]</a></TD></TR>\n";
+		print "<TR><TD CLASS=LEFT><a href=\"$DirCgi$PROG.pl?action=unknownip&month=$MonthOnly&lang=$Lang\">$message[1][$Lang]</a></TD><TD>$_hostmachine_p{$key}</TD><TD>$_hostmachine_h{$key}</TD><TD>$kilo</TD><TD><a href=\"$DirCgi$PROG.pl?action=unknownip&month=$MonthOnly&lang=$Lang\">$message[3][$Lang]</a></TD></TR>\n";
 		}
 	else {
 		$yearcon=substr($_hostmachine_l{$key},0,4);
@@ -2604,7 +2610,7 @@ foreach $key (@sorthosts_h)
 		$daycon=substr($_hostmachine_l{$key},6,2);
 		$hourcon=substr($_hostmachine_l{$key},8,2);
 		$mincon=substr($_hostmachine_l{$key},10,2);
-		print "<tr><td CLASS=LEFT>$key</td><TD>$page</TD><TD>$_hostmachine_h{$key}</TD><TD>$kilo</TD>";
+		print "<tr><td CLASS=LEFT>$key</td><TD>$_hostmachine_p{$key}</TD><TD>$_hostmachine_h{$key}</TD><TD>$kilo</TD>";
 		if ($daycon ne "") {
 			if ($Lang != 0) { print "<td>$daycon/$monthcon/$yearcon - $hourcon:$mincon</td></tr>"; }
 			else { print "<td>$daycon $monthlib{$monthcon} $yearcon - $hourcon:$mincon</td></tr>"; }
@@ -2619,7 +2625,7 @@ foreach $key (@sorthosts_h)
     $total_k += $_hostmachine_k{$key};
   }
   $count++;
-  if (!(($SortDir<0 && $count<$MaxNbOfHostsShown) || ($SortDir>0 && $#sorthosts_h-$MaxNbOfHostsShown < $count))) { last; }
+  if (!(($SortDir<0 && $count<$MaxNbOfHostsShown) || ($SortDir>0 && $#sorthosts_p-$MaxNbOfHostsShown < $count))) { last; }
 }
 $rest_p=$TotalPages-$total_p;
 $rest_h=$TotalHits-$total_h;
