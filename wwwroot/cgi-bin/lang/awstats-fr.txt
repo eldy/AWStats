@@ -149,3 +149,4 @@ message145=Navigateurs avec support audio Windows Media
 message146=Navigateurs avec support PDF
 message147=Codes Erreurs SMTP
 message148=Pays
+message149=Mails

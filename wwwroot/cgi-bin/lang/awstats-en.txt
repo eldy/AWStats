@@ -149,3 +149,4 @@ message145=Browsers with Windows Media audio playing support
 message146=Browsers with PDF support
 message147=SMTP Error codes
 message148=Countries
+message149=Mails
