@@ -1565,7 +1565,12 @@ sub Check_Config {
 		debug(" ExtraFirstColumnValuesTypeVal[$extranum] is array ".join(',',@{$ExtraFirstColumnValuesTypeVal[$extranum]}),2);
 	}
 
-	# Refuse LogFile if contains a pipe and PurgeLogFile || ArchiveLogRecords set on
+	# Deny $ShowHTTPErrorsStats and $ShowSMTPErrorsStats both set
+	if ($ShowHTTPErrorsStats && $ShowSMTPErrorsStats) {
+		error("ShowHTTPErrorsStats and ShowSMTPErrorsStats can't be both set at the same time");
+	}
+	
+	# Deny LogFile if contains a pipe and PurgeLogFile || ArchiveLogRecords set on
 	if (($PurgeLogFile || $ArchiveLogRecords) && $LogFile =~ /\|\s*$/) {
 		error("A pipe in log file name is not allowed if PurgeLogFile and ArchiveLogRecords are not set to 0");
 	}
@@ -6371,10 +6376,11 @@ if (scalar keys %HTMLOutput) {
 			if ($linetitle) { print ($frame?"</tr>\n":"<td class=AWS>"); }
 			if ($ShowFileTypesStats =~ /C/i)	 { print ($frame?"<tr><td class=AWS>":""); print "<a href=\"$linkanchor#FILETYPES\"$targetpage>$Message[98]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
 			if ($ShowMiscStats)	 		 { print ($frame?"<tr><td class=AWS>":""); print "<a href=\"$linkanchor#MISC\"$targetpage>$Message[139]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
-			if ($ShowHTTPErrorsStats || $ShowSMTPErrorsStats)	 { print ($frame?"<tr><td class=AWS>":""); print "<a href=\"$linkanchor#ERRORS\"$targetpage>$Message[22]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
+			if ($ShowHTTPErrorsStats)	 { print ($frame?"<tr><td class=AWS>":""); print "<a href=\"$linkanchor#ERRORS\"$targetpage>$Message[22]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
 			foreach my $code (keys %TrapInfosForHTTPErrorCodes) {
 				if ($ShowHTTPErrorsStats)	 { print ($frame?"<tr><td class=AWS> &nbsp; <img height=8 width=9 src=\"$DirIcons/other/page.png\" alt=\"...\"> ":""); print "<a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=errors$code":"$PROG$StaticLinks.errors$code.$StaticExt")."\"$NewLinkTarget>$Message[31]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
 			}
+			if ($ShowSMTPErrorsStats)	 { print ($frame?"<tr><td class=AWS>":""); print "<a href=\"$linkanchor#ERRORS\"$targetpage>$Message[147]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
 			if ($linetitle) { print ($frame?"":"</td></tr>\n"); }
 			# Extra/Marketing
 		 	$linetitle=&AtLeastOneNotNull(@ExtraStatTypes);
