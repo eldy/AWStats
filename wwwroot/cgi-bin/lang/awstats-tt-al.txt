@@ -1,0 +1,69 @@
+<!-- Shpjeguesi Shqip. Ju lutem më kontaktoni për korrigjime (artonberisha@radiokosova.net, http://www.radiokosova.net) -->
+<!-- $Revision$ - $Date$ -->
+<DIV CLASS="CTooltip" ID="tt1">
+Vizita është përkufizuar si <b>vizitor</b> risi (Shfletimin apo Shiqimin e faqes) të cilët nuk e kan vizituar faqen që nga <b>#VisitTimeOut# min</b>.
+</DIV>
+<DIV CLASS="CTooltip" ID="tt2">
+Numri i klientëve strehues (<b>IP adresa</b>) të cilët erdhën ta vizitojnë faqen (dhe që shfletuan se paku një <b>faqe</b>).<br>
+Këto t'dhëna tregojnë numrin e <b>personave të ndryshëm fizikë</b> të cilët arritën faqen në çdo ditë.
+</DIV>
+<DIV CLASS="CTooltip" ID="tt3">
+Hera e <b>faqeve</b> që është <b>shiquar</b> (Shuma e të gjitha vizitave).<br>
+Kjo pjes e t'dhënave ndryshon nga "Hyrjet" në atë mënyr i numron vetëm faqet HTML kundër atyre për figur dhe të tjera.
+</DIV>
+<DIV CLASS="CTooltip" ID="tt4">
+Hera e <b>faqes, figurës, vargut</b> që është <b>shiquar</b> ose <b>shkarkuar</b> nga dikush.<br>
+Këto t'dhëna janë ofruar vetëm si referencë, pasi që numri i shiqimeve "Faqe" është menduar për qëllime tregtie.
+</DIV>
+<DIV CLASS="CTooltip" ID="tt5">
+Kjo informatë trtegon sasinë e t'dhënave shkarkuar nga të gjitha <b>faqet</b>, <b>figurat</b> dhe <b>vargjet</b> mbrenda një Faqësie.<br>
+Njesitë janë në KB, MB ose GB (KiloBajt, MegaBajta or GigaBajta)
+</DIV>
+<DIV CLASS="CTooltip" ID="tt13">
+#PROG# e njeh çdo lidhje në faqe <b>search</b> nga <b>#SearchEnginesArray# Makinat Kërkuese në Internet më të popullarizuara si dhe Tregues</b> (si Yahoo, Altavista, Lycos, Google, Voila, etj...).
+</DIV>
+<DIV CLASS="CTooltip" ID="tt14">
+Lista e të gjitha <b>faqeve jashta faqës</b> që nyjëzuan (dhe hyrje) te faqja e juaj (Vetëm <b>#MaxNbOfRefererShown#</b> faqe më të shpeshta).
+Nyjet që janë përdor nga rezultatet e makinave kërkuese janë përjashtu këtu sepse ato përfshi në rreshtat e tabelave.
+</DIV>
+<DIV CLASS="CTooltip" ID="tt15">
+Kjo tabelë tregon <b>kryefrazat dhe kryefjalitë</b> më të shpeshta që janë përdorur ta gjejnë faqen tënde nga Makinat Kërkuese dhe tregues në Internet.
+(kryefjalë nga <b>#SearchEnginesArray#</b> Makinat Kërkuese dhe Treguest më të popullarizuar janë njohur nga #PROG#, si Yahoo, Altavista, Lycos, Google, Voila, etj...).<br>
+Vështri se shuma e kryefalive mund të jet më i madh se sa shume për kryefraza (numri real i kërkesave) sepse ndoshta dy fjali janë përdor në të njejtin Kërkues, kërkuese është numruar dy herë për fjali (një herë për çdo fjalë).
+</DIV>
+<DIV CLASS="CTooltip" ID="tt16">
+Robotat (rrallë emruar si Marimanga) janë <b>vizita automatike kompjuterike</b> përdorur nga shumë Makina Kërkuese që e Shiqon faqen tënga për tregues dhe radhitje, grumbullon statistika në Faqet e Internetit dhe/ose shiqon nëse faqja e juajështë ende në linje.<br>
+#PROG# Ka mundësi që t'i njohë <b>#RobotArray#</b> robota.
+</DIV>
+<DIV CLASS="CTooltip" ID="tt17">
+Të gjitha vizitat janë bazuar nga koha reale e Shërbyesit.<br>
+</DIV>
+<DIV CLASS="CTooltip" ID="tt18">
+Këtu, t'dhënat e raportuara janë: <b>valutat mesatare</b> (llogaritur nga t'dhëant ndërmjet vizites së parë dhe të fundit)
+</DIV>
+<DIV CLASS="CTooltip" ID="tt19">
+Këtu, t'dhënat e raportuara janë: <b>Shuma grumbulluese</b> (llogaritur nga t'dhëant ndërmjet vizites së parë dhe të fundit)
+</DIV>
+<DIV CLASS="CTooltip" ID="tt20">
+Disa <b>zgjatje të vizitave</b> janë 'panjohur' sepse gjithmonë ato nuk mund të llogariten. Kjo është arsya kryesore për këtë:<br>
+- vizita nuk ishte përfundur kur 'freskimi' ndodhi.<br>
+- vizita filloi në orën e fundit (pas 23:00) te fundi i ditës së muajit (Një arsye teknike parandalon  #PROG# për llogaritjen e një zgjatje të një mbledhje të tillë)
+</DIV>
+
+<DIV CLASS="CTooltip" ID="tt201"> Nuk ka përshkrim për këtë gabim. </DIV>
+<DIV CLASS="CTooltip" ID="tt202"> Kërkesa është kuptuar nga shërbyesi por do të kryesohet më vonë. </DIV>
+<DIV CLASS="CTooltip" ID="tt204"> Shërbyesi ka kryesuar mirpo atje nuk ka dokument për ta dërguar. </DIV>
+<DIV CLASS="CTooltip" ID="tt206"> Përmbajtje gjysore. </DIV>
+<DIV CLASS="CTooltip" ID="tt301"> Dokumenti i kërkuar ishte larguar dhe tani një adres tjetër është përgjigj. </DIV>
+<DIV CLASS="CTooltip" ID="tt302"> Nuk ka përshkrim për këtë gabim. </DIV>
+<DIV CLASS="CTooltip" ID="tt400"> Gabim sintaksor, shërbyesi nuk e ka kuptuar kërkesen. </DIV>
+<DIV CLASS="CTooltip" ID="tt401"> Provoi që ta arrij një <b>URL ku një hyrje/parullë është nevojitur</b>.<br>Numri i madh në këtë gjë d.m.th. se (si psh. Grepi) është duke provuar që ta then, ose për të hyr në faqen tënde të siguruar (si shembull, duke shpresuar se duke provu parulla të ndryshme mund të hynë në hapsiren e siguruar). </DIV>
+<DIV CLASS="CTooltip" ID="tt403"> Provoi që ta arrij një <b>URL pa trajtur për arritje, edhe me parullë</b> (për shembull, një URL mbrenda Treguesit jo e përkufizuar si "shfletuese".). </DIV>
+<DIV CLASS="CTooltip" ID="tt404"> Provoi që ta arrij një <b>URL joekzistuese</b>. Ky gabim shpesh dmth një nyje pavlerë diku në faqen tënde ekziston ose vizitori e ka gabuar një URL të caktuar. </DIV>
+<DIV CLASS="CTooltip" ID="tt408"> Shërbyesi shfrytëzoi <b>shumë kohë</b> ti përgjigjet kërkesës. Ky gabim shpesh përfshin skriptat (CGI, PHP) e ngadalshëm që shërbyesi është detyru që ta zhduk Faqe shërbyesin jashtëzakonisht të dyndur. </DIV>
+<DIV CLASS="CTooltip" ID="tt500"> Gabim i mbrendshëm. Ky gabim shpesh shkaktohet nga një program CGI që përfundoi parregull (psh trajtim i keq). </DIV>
+<DIV CLASS="CTooltip" ID="tt501"> Kërkes e panjohur. </DIV>
+<DIV CLASS="CTooltip" ID="tt502"> Kodi i kthyer nga një shërbyes HTTP që punon si portë prokurie kur realisht, shërbyesi shenjuar nuk përgjigjet sukseshëm te kërkesat e klientëve. </DIV>
+<DIV CLASS="CTooltip" ID="tt503"> Gabim mbrenda shërbyesit. </DIV>
+<DIV CLASS="CTooltip" ID="tt504"> Parta tejkaloi kohën. </DIV>
+<DIV CLASS="CTooltip" ID="tt505"> Botimi i HTTP Nuk është i Përkrahur </DIV>
