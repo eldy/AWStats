@@ -1,9 +1,9 @@
 # AWSTATS SEARCH ENGINES DATABASE
 #--------------------------------
-# Last update: 2001-10-20
+# Last update: 2001-12-02
 
 
-# Search engines names database (update the 10th january 2001)
+# Search engines names database
 # To add a search engine, add a new line:
 # "match_string_in_url_that_identify_engine", "search_engine_name",
 #-------------------------------------------------------
@@ -29,7 +29,7 @@
 "metacrawler\.","MetaCrawler (Metamoteur)",
 "go2net\.com","Go2Net (Metamoteur)",
 "go\.com","Go.com",
-"goto\.com","Goto.com",
+"overture\.com","Overture",		# Replace "goto\.com","Goto.com",
 "euroseek\.","Euroseek",
 "excite\.","Excite",
 "lokace\.", "Lokace",
@@ -78,6 +78,7 @@
 "metacrawler\.","general=",
 "go2net\.com","general=",
 "go\.com","qt=",
+"overture\.com","keywords=",
 "euroseek\.","query=",
 "excite\.","search=",
 "spray\.","string=",
@@ -100,7 +101,7 @@
 );
 # If no rules are known, this will be used to clean URL of not keyword parameters.
 @WordsToCleanSearchUrl= ("act=","annuaire=","btng=","categoria=","cfg=","cof=","cou=","cp=","dd=","domain=","dt=","dw=","exec=","geo=","hc=","height=","hl=","hq=","hs=","id=","kl=","lang=","loc=","lr=","matchmode=","medor=","message=","meta=","mode=","order=","page=","par=","pays=","pg=","pos=","prg=","qc=","refer=","sa=","safe=","sc=","sort=","src=","start=","style=","stype=","sum=","tag=","temp=","theme=","url=","user=","width=","what=","\\.x=","\\.y=","y=","look=");
-# Never put the following exclusion ("ask=","claus=","general=","kw=","keyword=","MT","p=","q=","qr=","qt=","query=","s=","search=","searchText=","string=","su=","w=") because they are strings that contain keywords we're looking for.
+# Never put the following exclusion ("ask=","claus=","general=","kw=","keyword=","keywords=","MT","p=","q=","qr=","qt=","query=","s=","search=","searchText=","string=","su=","w=") because they are strings that contain keywords we're looking for.
 
 
 1;
