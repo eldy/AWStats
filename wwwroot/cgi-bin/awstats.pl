@@ -233,6 +233,7 @@ EOF
 		print "<body>\n";
 		# Write logo, flags and product name
 		if ($ShowHeader) {
+			print "$HTMLHeadSection\n";
 			print "<table WIDTH=$WIDTH>\n";
 			print "<tr valign=middle><td class=AWL width=150 style=\"font: 18px arial,verdana,helvetica; font-weight: bold\">AWStats\n";
 			Show_Flag_Links($Lang);
@@ -255,9 +256,9 @@ EOF
 sub html_end {
 	if ($HTMLOutput) {
 		print "$CENTER<br><br><br>\n";
-		print "<FONT COLOR=\"#$color_text\"><b>Advanced Web Statistics $VERSION</b> - <a href=\"http://awstats.sourceforge.net\" target=\"_newawstats\">Created by $PROG</a><br>\n";
+		print "<FONT COLOR=\"#$color_text\"><b>Advanced Web Statistics $VERSION</b> - <a href=\"http://awstats.sourceforge.net\" target=\"_newawstats\">Created by $PROG</a></font><br>\n";
 		print "<br>\n";
-		print "$HTMLEndSection</font>\n";
+		print "$HTMLEndSection\n";
 		print "</body>\n";
 		print "</html>\n";
 	}
@@ -1916,10 +1917,10 @@ sub BuildKeyList {
 	my $ArraySize=shift;
 	my $MinValue=shift;
 	my $hashforselect=shift;
-	$hashfororder=shift;	# Global because used in AddInTree
+	my $hashfororder=shift;
 	debug("BuildKeyList($ArraySize,$MinValue,$hashforselect,$hashfororder)",2);
 	my $count=0;
-	$lowerval=0;
+	$lowerval=0;	# Global because used in Removelowerval
 	%val=(); %egal=(); %nextval=();
 	foreach my $key (keys %$hashforselect) {
 		if ($count < $ArraySize) {
