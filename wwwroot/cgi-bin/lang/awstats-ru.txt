@@ -1,5 +1,6 @@
 # Russian message file
 # $Revision$ - $Date$
+PageCode=windows-1251
 message0=Неизвестно
 message1=неизвестных (unresolved ip)
 message2=Прочие
