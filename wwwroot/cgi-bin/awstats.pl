@@ -20,7 +20,7 @@ use Socket;
 #-----------------------------------------------------------------------------
 use vars qw/ $REVISION $VERSION /;
 my $REVISION='$Revision$'; $REVISION =~ /\s(.*)\s/; $REVISION=$1;
-my $VERSION="5.0 (build $REVISION)";
+my $VERSION="5.1 (build $REVISION)";
 
 # ---------- Init variables -------
 # Constants
@@ -36,10 +36,8 @@ $LIMITFLUSH=4000;					# Nb of records in data arrays after how we need to flush 
 $VISITTIMEOUT=10000;				# Laps of time to consider a page load as a new visit. 10000 = 1 hour (Default = 10000)
 $NOTSORTEDRECORDTOLERANCE=10000;	# Laps of time to accept a record if not in correct order. 10000 = 1 hour (Default = 10000)
 # Plugins variable
-use vars qw/ $Plugin_readgz $Plugin_graph3d $Plugin_hashfiles $Plugin_timehires $Plugin_timezone $Plugin_etf1 /;
-$Plugin_readgz=$Plugin_graph3d=$Plugin_hashfiles=$Plugin_timehires=$Plugin_timezone=$Plugin_etf1=0;
-use vars qw/ $Plugin_timezoneSeconds /;
-$Plugin_timezoneSeconds=0;
+use vars qw/ %PluginsLoaded /;
+%PluginsLoaded=();
 # Running variables
 use vars qw/
 $DIR $PROG $Extension
@@ -1479,7 +1477,6 @@ sub Read_Plugins {
 	# Other possible directories :        		"./lang"
 	my @PossiblePluginsDir=("${DIR}plugins","/usr/share/awstats/plugins","./plugins");
 
-	my %FilePath=();
 	if ($Debug) { debug("Call to Read_Plugins with list: @PluginsToLoad"); }
 	foreach my $plugininfo (@PluginsToLoad) {
 		my @loadplugin=split(/\s+/,$plugininfo,2);
@@ -1488,25 +1485,29 @@ sub Read_Plugins {
 		$pluginfile =~ /([^\/\\]*)$/;
 		my $pluginname=$1;
 		if ($pluginname) {
-			if (! $FilePath{$pluginname}) {		# Plugin already loaded
+			if (! $PluginsLoaded{"$pluginname"}) {		# Plugin already loaded
 				foreach my $dir (@PossiblePluginsDir) {
 					my $searchdir=$dir;
 					if ($searchdir && (!($searchdir =~ /\/$/)) && (!($searchdir =~ /\\$/)) ) { $searchdir .= "/"; }
 					my $pluginpath="${searchdir}${pluginfile}.pm";
 					if (-s "$pluginpath") {
+						if ($Debug) { debug(" Try to init plugin '$pluginname' ($pluginpath) with param '$pluginparam'",1); }
 						require "$pluginpath";
 						my $ret;	# To get init return
-						my $initfunction="\$ret=Init_$pluginname($pluginparam)";
-						if (! eval("$initfunction")) { &error("Plugin init for plugin '$pluginname' fails."); }
-						else { my $pluginvar="\$Plugin_$pluginname=1"; eval($pluginvar); }
+						my $initfunction="\$ret=Init_$pluginname('$VERSION','$pluginparam')";
+						my $initret=eval("$initfunction");
+						if (! $initret || $initret =~ /^error/i) {
+							# Init failed, we stop here
+							&error("Plugin init for plugin '$pluginname' fails with return code: $initret");
+						}
 						# Plugin load and init successfull
-						if ($Debug) { debug(" Init of plugin '$pluginname' ($pluginpath) with param '$pluginparam' is OK"); }
-						$FilePath{$pluginname}=1;
+						$PluginsLoaded{"$pluginname"}=$initret;
+						if ($Debug) { debug(" Init of plugin '$pluginname' OK with return ".$PluginsLoaded{"$pluginname"},1); }
 						last;
 					}
 				}
-				if (! $FilePath{$pluginname}) {
-					&error("Can't open plugin file \"$pluginfile\" for read.\nCheck if file is in ".($PossiblePluginsDir[0])." directory and is readable.");
+				if (! $PluginsLoaded{"$pluginname"}) {
+					&error("Can't open plugin file \"$pluginfile.pm\" for read.\nCheck if file is in ".($PossiblePluginsDir[0])." directory and is readable.");
 				}
 			}
 			else {
@@ -2911,6 +2912,7 @@ sub Save_History {
 	if ($sectiontosave eq "sereferrals") {
 		print HISTORYTMP "\n";
 		print HISTORYTMP "# Search engine referers ID - Hits\n";
+		$ValueInFile{$sectiontosave}=tell HISTORYTMP;
 		print HISTORYTMP "BEGIN_SEREFERRALS ".(scalar keys %_se_referrals_h)."\n";
 		foreach my $key (keys %_se_referrals_h) { print HISTORYTMP "$key $_se_referrals_h{$key}\n"; }
 		print HISTORYTMP "END_SEREFERRALS\n";
@@ -3083,7 +3085,7 @@ sub Read_DNS_Cache {
 		if ($searchdir && (!($searchdir =~ /\/$/)) && (!($searchdir =~ /\\$/)) ) { $searchdir .= "/"; }
 		if (-f "${searchdir}$dnscachefile$filesuffix$dnscacheext") { $filetoload="${searchdir}$dnscachefile$filesuffix$dnscacheext"; }
 		# Plugin call : Change filetoload and hashfileuptodate
-		if ($Plugin_hashfiles) { SearchFile_hashfiles($searchdir,$dnscachefile,$filesuffix,$dnscacheext,$filetoload); }
+		if ($PluginsLoaded{"hashfiles"}) { SearchFile_hashfiles($searchdir,$dnscachefile,$filesuffix,$dnscacheext,$filetoload); }
 		if ($filetoload) { last; }	# We found a file to load
 	}
 
@@ -3093,7 +3095,7 @@ sub Read_DNS_Cache {
 	}
 
 	# Plugin call : Load hashtoload
-	if ($Plugin_hashfiles) { LoadCache_hashfiles($filetoload,$hashtoload); }
+	if ($PluginsLoaded{"hashfiles"}) { LoadCache_hashfiles($filetoload,$hashtoload); }
 
 	if (! scalar keys %$hashtoload) {
 		open(DNSFILE,"$filetoload") or error("Error: Couldn't open DNS Cache file \"$filetoload\": $!");
@@ -3102,7 +3104,7 @@ sub Read_DNS_Cache {
 		close DNSFILE;
 		if ($savetohash) {
 			# Plugin call : Save hash file (all records) with test if up to date to save
-			if ($Plugin_hashfiles) { SaveHash_hashfiles($filetoload,$hashtoload,1,0); }
+			if ($PluginsLoaded{"hashfiles"}) { SaveHash_hashfiles($filetoload,$hashtoload,1,0); }
 		}
 	}
 	if ($Debug) { debug(" Loaded ".(scalar keys %$hashtoload)." items from $filetoload in ".(time()-$timetoload)." seconds.",1); }
@@ -3137,7 +3139,7 @@ sub Save_DNS_Cache_File {
 	if ($dnscachefile =~ s/(\.\w+)$//) { $dnscacheext=$1; }
 	$filetosave="$dnscachefile$filesuffix$dnscacheext";
 	# Plugin call : Save hash file (only $NBOFLASTUPDATELOOKUPTOSAVE records) with no test if up to date
-	if ($Plugin_hashfiles) { SaveHash_hashfiles($filetosave,$hashtosave,0,$nbofelemtosave,$nbofelemsaved); }
+	if ($PluginsLoaded{"hasgfiles"}) { SaveHash_hashfiles($filetosave,$hashtosave,0,$nbofelemtosave,$nbofelemsaved); }
 	if (! $nbofelemsaved) {
 		$filetosave="$dnscachefile$filesuffix$dnscacheext";
 		debug(" Save data ".($nbofelemtosave?"($nbofelemtosave records max)":"(all records)")." into file $filetosave");
@@ -3170,7 +3172,7 @@ sub GetDelaySinceStart {
 	if (shift) { $StartSeconds=0; }	# Reset counter
 	my ($newseconds, $newmicroseconds)=(time(),0);
 	# Plugin call : Return seconds and milliseconds
-	if ($Plugin_timehires) { GetTime_timehires($newseconds, $newmicroseconds); }
+	if ($PluginsLoaded{"timehires"}) { GetTime_timehires($newseconds, $newmicroseconds); }
 	if (! $StartSeconds) { $StartSeconds=$newseconds; $StartMicroseconds=$newmicroseconds; }
 	return (($newseconds-$StartSeconds)*1000+int(($newmicroseconds-$StartMicroseconds)/1000));
 }
@@ -4319,8 +4321,8 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {	# Updat
 		if ($MonthNum{$dateparts[1]}) { $dateparts[1]=$MonthNum{$dateparts[1]}; }	# Change lib month in num month if necessary
 
 		# Create $timerecord like YYYYMMDDHHMMSS
-		if ($Plugin_timezone) {
-			my ($nsec,$nmin,$nhour,$nmday,$nmon,$nyear,$nwday) = localtime(Time::Local::timelocal($dateparts[5], $dateparts[4], $dateparts[3], $dateparts[0], $dateparts[1]-1, $dateparts[2]-1900) + $Plugin_timezoneSeconds);
+		if ($PluginsLoaded{"timezone"}) {
+			my ($nsec,$nmin,$nhour,$nmday,$nmon,$nyear,$nwday) = localtime(Time::Local::timelocal($dateparts[5], $dateparts[4], $dateparts[3], $dateparts[0], $dateparts[1]-1, $dateparts[2]-1900) + $PluginsLoaded{"timezone"});
 			@dateparts = split(/:/, sprintf("%02u:%02u:%04u:%02u:%02u:%02u", $nmday, $nmon+1, $nyear+1900, $nhour, $nmin, $nsec));
 		}
 		my $yearmonthdayrecord=sprintf("$dateparts[2]%02i%02i",$dateparts[1],$dateparts[0]);
@@ -4328,14 +4330,13 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {	# Updat
 		my $yearrecord=int($dateparts[2]);
 		my $monthrecord=int($dateparts[1]);
 
+		# Check date
+		#-----------------------
 		if ($timerecord < 10000000000000 || $timerecord > $tomorrowtime) {
 			$NbOfLinesCorrupted++;
 			if ($ShowCorrupted) { print "Corrupted record (invalid date, timerecord=$timerecord): $_\n"; }
 			next;		# Should not happen, kept in case of parasite/corrupted line
 		}
-
-		# Skip if not a new line
-		#-----------------------
 		if ($NewLinePhase) {
 			if ($timerecord < ($LastLine - $NOTSORTEDRECORDTOLERANCE)) {
 				# Should not happen, kept in case of parasite/corrupted old line
@@ -5786,7 +5787,7 @@ EOF
 		exit(0);
 	}
 	if ($HTMLOutput eq "urldetail" || $HTMLOutput eq "urlentry" || $HTMLOutput eq "urlexit") {
-		if ($Plugin_etf1) { AddOn_Filter(); }
+		if ($PluginsLoaded{"etf1"}) { AddOn_Filter(); }
 		print "$Center<a name=\"URLDETAIL\">&nbsp;</a><BR>\n";
 		# Show filter form
 		if (! $StaticLinks) {
@@ -5831,7 +5832,7 @@ EOF
 		print "<TH bgcolor=\"#$color_k\" width=80>$Message[106]</TH>";
 		print "<TH bgcolor=\"#$color_e\" width=80>$Message[104]</TH>";
 		print "<TH bgcolor=\"#$color_x\" width=80>$Message[116]</TH>";
-		if ($Plugin_etf1) { AddOn_ShowFields(""); }
+		if ($PluginsLoaded{"etf1"}) { AddOn_ShowFields(""); }
 		print "<TH>&nbsp;</TH></TR>\n";
 		$total_p=$total_k=$total_e=$total_x=0;
 		my $count=0;
@@ -5876,7 +5877,7 @@ EOF
 			if ($max_k > 0) { $bredde_k=int($BarWidth*(($_url_k{$key}||0)/($_url_p{$key}||1))/$max_k)+1; }
 			if (($bredde_k==1) && $_url_k{$key}) { $bredde_k=2; }
 			print "</TD><TD>$_url_p{$key}</TD><TD>".($_url_k{$key}?Format_Bytes($_url_k{$key}/($_url_p{$key}||1)):"&nbsp;")."</TD><TD>".($_url_e{$key}?$_url_e{$key}:"&nbsp;")."</TD><TD>".($_url_x{$key}?$_url_x{$key}:"&nbsp;")."</TD>";
-			if ($Plugin_etf1) { AddOn_ShowFields($key); }
+			if ($PluginsLoaded{"etf1"}) { AddOn_ShowFields($key); }
 			print "<TD CLASS=AWL>";
 			print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_p\" WIDTH=$bredde_p HEIGHT=6><br>";
 			print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_k\" WIDTH=$bredde_k HEIGHT=6><br>";
@@ -6390,7 +6391,7 @@ EOF
 		if ($Debug) { debug("ShowHoursStats",2); }
 		print "$Center<a name=\"HOUR\">&nbsp;</a><BR>\n";
 		my $title=$Message[20];
-		if ($Plugin_timezone) { $title.=($Plugin_timezoneSeconds?" (GMT ".($Plugin_timezoneSeconds>=0?"+":"").int($Plugin_timezoneSeconds/3600).")":"i"); }
+		if ($PluginsLoaded{"timezone"}) { $title.=($PluginsLoaded{"timezone"}?" (GMT ".($PluginsLoaded{"timezone"}>=0?"+":"").int($PluginsLoaded{"timezone"}/3600).")":"i"); }
 		&tab_head($title,19);
 		print "<TR><TD align=center><center><TABLE><TR>\n";
 		$max_h=$max_k=1;
@@ -6994,6 +6995,9 @@ else {
 #
 # If 'update'
 #   Loop on each new line in log file
+#	  Drop wrong virtual host
+#     Drop wrong protocol
+#     Drop wrong date
 #     If line older than LastLine, skip
 #     If new line
 #        If other month/year, create/update tmp file and purge data arrays with
