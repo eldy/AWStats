@@ -21,7 +21,7 @@ use vars qw(%DomainsHashIDLib @RobotsSearchIDOrder_list1 @RobotsSearchIDOrder_li
 #-------------------------------------------------------
 # Defines
 #-------------------------------------------------------
-my $VERSION="4.0 (build 49)";
+my $VERSION="4.0 (build 50)";
 
 # ---------- Init variables -------
 my $Debug=0;
@@ -3491,9 +3491,10 @@ EOF
 			$lastdaytoshowtime=$YearRequired.$MonthRequired."31";		# Set day cursor to last day of the required month
 		}
 	}
-	if ($Debug) { debug("firstdaytocountaverage=$firstdaytocountaverage, lastdaytocountaverage=$lastdaytocountaverage",1); }
-	if ($Debug) { debug("firstdaytoshowtime=$firstdaytoshowtime, lastdaytoshowtime=$lastdaytoshowtime",1); }
-
+	if ($Debug) {
+		debug("firstdaytocountaverage=$firstdaytocountaverage, lastdaytocountaverage=$lastdaytocountaverage",1);
+		debug("firstdaytoshowtime=$firstdaytoshowtime, lastdaytoshowtime=$lastdaytoshowtime",1);
+	}
 
 	# MENU
 	#---------------------------------------------------------------------
@@ -4532,7 +4533,7 @@ EOF
 			my $p=int($_errors_h{$key}/$TotalErrors*1000)/10;
 			if ($httpcode{$key}) { print "<TR onmouseover=\"ShowTooltip($key);\" onmouseout=\"HideTooltip($key);\">"; }
 			else { print "<TR>"; }
-			if ($key == 404) { print "<TD><a href=\"$DirCgi$PROG.$Extension?${NewLinkParams}output=errors404\">$key</a></TD>"; }
+			if ($key == 404) { print "<TD><a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$DirCgi$PROG.$Extension?${NewLinkParams}output=errors404":"$PROG$FileSuffix.errors404.html")."\">$key</a></TD>"; }
 			else { print "<TD>$key</TD>"; }
 			if ($httpcode{$key}) { print "<TD CLASS=AWL>$httpcode{$key}</TD><TD>$_errors_h{$key}</TD><TD>$p&nbsp;%</TD></TR>\n"; }
 			else { print "<TD CLASS=AWL>Unknown error</TD><TD>$_errors_h{$key}</TD><TD>$p&nbsp;%</TD></TR>\n"; }
