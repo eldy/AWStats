@@ -33,7 +33,8 @@ my $PluginHooksFunctions="ShowInfoURL";
 # IF YOUR PLUGIN NEED GLOBAL VARIABLES, THEY MUST BE DECLARED HERE.
 use vars qw/
 $urlinfoloaded
-%UrlInfo
+%UrlAlias
+@UrlMatch
 /;
 # ----->
 
@@ -50,7 +51,8 @@ sub Init_urlalias {
 	# ENTER HERE CODE TO DO INIT PLUGIN ACTIONS
 	debug(" InitParams=$InitParams",1);
 	$urlinfoloaded=0;
-	%UrlInfo=();
+	%UrlAlias=();
+	@UrlMatch=();
 	# ----->
 
 	return ($checkversion?$checkversion:"$PluginHooksFunctions");
@@ -69,21 +71,64 @@ sub Init_urlalias {
 sub ShowInfoURL_urlalias {
 	# <-----
 	my $urltoshow="$_[0]";
+	my $found = 0;			# flag for testing for whether a match occurs.  unused at present 
+	my $key;				# used in iterating through potential matches
+	my $filetoload='';		# unused at present
+	my $filetoload2='';		# unused at present
+	my $iter;				# iteration variable
 	if ($urltoshow && ! $urlinfoloaded) {
-		# Load urlalias file
-		my $filetoload='';
-		if ($SiteConfig && open(URLINFOFILE,"$PluginDir/urlalias.$SiteConfig.txt"))	{ $filetoload="$PluginDir/urlalias.$SiteConfig.txt"; }
-		elsif (open(URLINFOFILE,"$PluginDir/urlalias.txt"))  						{ $filetoload="$PluginDir/urlalias.txt"; }
-		else { error("Couldn't open UrlAlias file \"$PluginDir/urlalias.txt\": $!"); }
+		# Load urlalias and match files
+		if ($SiteConfig && open(URLMATCHFILE,"$PluginDir/urlmatch.$SiteConfig.txt"))	{ $filetoload="$PluginDir/urlmatch.$SiteConfig.txt"; }
+		elsif (open(URLMATCHFILE,"$PluginDir/urlmatch.txt"))  						{ $filetoload="$PluginDir/urlmatch.txt"; }
+		else { error("Couldn't open UrlMatch file \"$PluginDir/urlmatch.txt\": $!"); }
+		if ($SiteConfig && open(URLALIASFILE,"$PluginDir/urlalias.$SiteConfig.txt"))	{ $filetoload2="$PluginDir/urlalias.$SiteConfig.txt"; }
+		elsif (open(URLALIASFILE,"$PluginDir/urlalias.txt"))  						{ $filetoload2="$PluginDir/urlalias.txt"; }
 		# This is the fastest way to load with regexp that I know
-		%UrlInfo = map(/^([^\t]+)\t+([^\t]+)/o,<URLINFOFILE>);
-		close URLINFOFILE;
-		debug("UrlAlias file loaded: ".(scalar keys %UrlInfo)." entries found.");
+		%UrlAlias = map(/^([^\t]+)\t+([^\t]+)/o,<URLALIASFILE>);
+		$iter = 0;
+		foreach $key (<URLMATCHFILE>) {
+			$key =~ /^([^\t]+)\t+([^\t]+)/o;
+			$UrlMatch[$iter][0] = $1;
+			$UrlMatch[$iter][1] = $2;
+			$iter++;
+		}
+		close URLALIASFILE;
+		close URLMATCHFILE;
+		debug("UrlAlias file loaded: ".(scalar keys %UrlAlias)." entries found.");
+		debug("UrlMatch file loaded: ".(scalar @UrlMatch)." entries found.");
 		$urlinfoloaded=1;
 	}
 	if ($urltoshow) {
-		if ($UrlInfo{$urltoshow}) { print "<font style=\"color: #$color_link; font-weight: bold\">$UrlInfo{$urltoshow}</font><br>"; }
-		else { print ""; }	# Undefined url info
+		if ($UrlAlias{$urltoshow}) {
+ 			print "<font style=\"color: $color_link; font-weight: bold\">$UrlAlias{$urltoshow}</font><br>"; 
+			$found=1;
+		}
+		else {
+			for ($iter=0;$iter<@UrlMatch;$iter++) {
+				$key = $UrlMatch[$iter][0];
+				if ( $urltoshow =~ /$key/ ) {
+ 					print "<font style=\"color: #$color_link; font-weight: bold\">$UrlMatch[$iter][1]</font><br>"; 
+					$UrlAlias{$urltoshow} = $UrlMatch[$iter][1];
+					if ($SiteConfig && open(URLALIASFILE,">> $PluginDir/urlalias.$SiteConfig.txt")) { 
+						$filetoload="$PluginDir/urlalias.$SiteConfig.txt"; 
+					}
+					elsif (open(URLALIASFILE,">> $PluginDir/urlalias.txt")) { 
+						$filetoload="$PluginDir/urlalias.txt"; 
+					}
+					else { 
+						error("Couldn't open UrlAlias file \"$PluginDir/urlalias.txt\": $!"); 
+					}
+					print URLALIASFILE "$urltoshow\t$UrlAlias{$urltoshow}";
+					close URLALIASFILE;
+					$found = 1;
+					last;
+				}
+			}
+		}
+		if (!$found) {
+		# does nothing right now
+			print "";
+		}
 	}
 	else { print ""; }	# Url info title
 	return 1;
