@@ -1,6 +1,6 @@
-# AWSTATS DOMAINSS DATABASE
+# AWSTATS DOMAINS DATABASE
 #--------------------------
-# Last update: 2001-10-20
+# Last change $Revision$ - $Author$ - $Date$
 
 
 # Domains name list ("domain id", "Domain name")

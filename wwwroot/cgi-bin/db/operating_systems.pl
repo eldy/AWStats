@@ -1,6 +1,6 @@
 # AWSTATS OPERATING SYSTEMS DATABASE
 #------------------------------------
-# Last update: 2002-02-25
+# Last change $Revision$ - $Author$ - $Date$
 
 # If you want to add an OS to extend AWStats database detection capabilities,
 # you must add an entry in OSSearchIDOrder, in OSHashID and in OSHashLib.

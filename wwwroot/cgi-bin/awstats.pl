@@ -20,7 +20,7 @@ use vars qw(%DomainsHashIDLib @RobotsSearchIDOrder_list1 @RobotsSearchIDOrder_li
 #-------------------------------------------------------
 # Defines
 #-------------------------------------------------------
-# Last change made by $Author$ on $Date$
+# Last change $Revision$ - $Author$ - $Date$
 my $REVISION='$Revision$'; $REVISION =~ /\s(.*)\s/; $REVISION=$1;
 my $VERSION="4.0 (build $REVISION)";
 

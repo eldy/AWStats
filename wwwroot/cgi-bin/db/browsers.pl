@@ -1,6 +1,6 @@
 # AWSTATS BROWSERS DATABASE
 #--------------------------
-# Last update: 2002-04-03
+# Last change $Revision$ - $Author$ - $Date$
 
 # If you want to add a Browser to extend AWStats database detection capabilities,
 # you must add an entry in BrowsersSearchIDOrder and in BrowsersHashIDLib.
