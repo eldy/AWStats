@@ -640,16 +640,16 @@ sub tab_end {
 # Return:		None
 #------------------------------------------------------------------------------
 sub error {
-	my $message=shift||"";
-	my $secondmessage=shift||"";
-	my $thirdmessage=shift||"";
+	my $message=shift||'';
+	my $secondmessage=shift||'';
+	my $thirdmessage=shift||'';
 	my $donotshowsetupinfo=shift||0;
 	if ($Debug) { debug("$message $secondmessage $thirdmessage",1); }
 	if (! $ErrorMessages && $message =~ /^Format error$/i) {
-		my $tagbold=""; my $tagunbold=""; my $tagbr=""; my $tagfontred=""; my $tagunfont="";
+		my $tagbold=''; my $tagunbold=''; my $tagbr=''; my $tagfontred=''; my $tagunfont='';
 		# Files seems to have bad format
 		if ($HTMLOutput) {
-			$tagbold="<b>"; $tagunbold="</b>"; $tagbr="<br>"; $tagfontred="<font color=#880000>"; $tagunfont="</font>";
+			$tagbold='<b>'; $tagunbold='</b>'; $tagbr='<br>'; $tagfontred='<font color=#880000>'; $tagunfont='</font>';
 			print "<br><br>\n";
 		}
 		if ($message !~ $LogSeparator) {
@@ -956,12 +956,12 @@ sub Read_Config {
 	my @PossibleConfigDir=("$DIR","/etc/opt/awstats","/etc/awstats","/etc","/usr/local/etc/awstats");
 
 	# Open config file
-	$FileConfig=""; $FileSuffix="";
+	$FileConfig=$FileSuffix='';
 	foreach my $dir (@PossibleConfigDir) {
 		my $searchdir=$dir;
 		if ($searchdir && (!($searchdir =~ /\/$/)) && (!($searchdir =~ /\\$/)) ) { $searchdir .= "/"; }
 		if (open(CONFIG,"$searchdir$PROG.$SiteConfig.conf")) 	{ $FileConfig="$searchdir$PROG.$SiteConfig.conf"; $FileSuffix=".$SiteConfig"; last; }
-		if (open(CONFIG,"$searchdir$PROG.conf"))  				{ $FileConfig="$searchdir$PROG.conf"; $FileSuffix=""; last; }
+		if (open(CONFIG,"$searchdir$PROG.conf"))  				{ $FileConfig="$searchdir$PROG.conf"; $FileSuffix=''; last; }
 	}
 	if (! $FileConfig) { error("Error: Couldn't open config file \"$PROG.$SiteConfig.conf\" nor \"$PROG.conf\" : $!"); }
 
@@ -1051,7 +1051,7 @@ sub Parse_Config {
 			$value =~ s/__(\w+)__/$ENV{$1}/g;
 		}
 		# Read main section
-		if ($param =~ /^LogFile/ && !$LogFile ) { $LogFile=$value; next; }
+		if ($param =~ /^LogFile/ && $QueryString !~ /logfile=([^\s&]+)/i)	{ $LogFile=$value; next; }
 		if ($param =~ /^LogFormat/)            	{ $LogFormat=$value; next; }
 		if ($param =~ /^LogSeparator/)         	{ $LogSeparator=$value; next; }
 		if ($param =~ /^DirData/) 				{ $DirData=$value; next; }
@@ -1316,7 +1316,7 @@ sub Read_Language_Data {
 	# Other possible directories :        		"./lang"
 	my @PossibleLangDir=("$DirLang","${DIR}lang","/usr/share/awstats/lang","./lang");
 
-	my $FileLang="";
+	my $FileLang='';
 	foreach my $dir (@PossibleLangDir) {
 		my $searchdir=$dir;
 		if ($searchdir && (!($searchdir =~ /\/$/)) && (!($searchdir =~ /\\$/)) ) { $searchdir .= "/"; }
@@ -1374,7 +1374,7 @@ sub Read_Language_Tooltip {
 	# Other possible directories :        		"./lang"
 	my @PossibleLangDir=("$DirLang","${DIR}lang","/usr/share/awstats/lang","./lang");
 
-	my $FileLang="";
+	my $FileLang='';
 	foreach my $dir (@PossibleLangDir) {
 		my $searchdir=$dir;
 		if ($searchdir && (!($searchdir =~ /\/$/)) && (!($searchdir =~ /\\$/)) ) { $searchdir .= "/"; }
@@ -1648,7 +1648,7 @@ sub Check_Config {
 # Parameters:	AWStats version required by plugin
 # Input:		$VERSION
 # Output:		None
-# Return: 		"" if ok, "Error: xxx" if error
+# Return: 		'' if ok, "Error: xxx" if error
 #------------------------------------------------------------------------------
 sub Check_Plugin_Version {
 	my $PluginNeedAWStatsVersion=shift;
@@ -1660,7 +1660,7 @@ sub Check_Plugin_Version {
 	if 	($numPluginNeedAWStatsVersion > $numAWStatsVersion) {
 		return "Error: AWStats version $PluginNeedAWStatsVersion or higher is required. Detected $VERSION.";
 	}
-	return "";
+	return '';
 }
 
 
@@ -1682,7 +1682,7 @@ sub Read_Plugins {
 	foreach my $plugininfo (@PluginsToLoad) {
 		my @loadplugin=split(/\s+/,$plugininfo,2);
 		my $pluginfile=$loadplugin[0]; $pluginfile =~ s/\.pm$//i;
-		my $pluginparam=$loadplugin[1]||"";
+		my $pluginparam=$loadplugin[1]||'';
 		$pluginfile =~ /([^\/\\]*)$/;
 		my $pluginname=$1;
 		if ($pluginname) {
@@ -1745,7 +1745,7 @@ sub Read_Plugins {
 # Parameters:	year,month,withupdate,withpurge,part to load
 # Input:		$DirData $PROG $FileSuffix $LastLine
 # Output:		None
-# Return:		Tmp history file name or "" if withupdate is 0
+# Return:		Tmp history file name or '' if withupdate is 0
 #--------------------------------------------------------------------
 sub Read_History_With_TmpUpdate {
 
@@ -2968,9 +2968,9 @@ sub Read_History_With_TmpUpdate {
 # Return:		None
 #--------------------------------------------------------------------
 sub Save_History {
-	my $sectiontosave=shift||"";
-	my $year=shift||"";
-	my $month=shift||"";
+	my $sectiontosave=shift||'';
+	my $year=shift||'';
+	my $month=shift||'';
 
 	if ($Debug) { debug(" Save_History (sectiontosave=$sectiontosave year=$year month=$month)",3); }
 	my $spacebar="                    ";
@@ -3118,7 +3118,7 @@ sub Save_History {
 			my $bytes=$_host_k{$key}||0;
 			my $timehostl=$_host_l{$key}||0;
 			my $timehosts=$_host_s{$key}||0;
-			my $lastpage=$_host_u{$key}||"";
+			my $lastpage=$_host_u{$key}||'';
 			if ($timehostl && $timehosts && $lastpage) {
 				if (($timehostl+$VISITTIMEOUT) < $LastLine) {
 					# Session for this user is expired
@@ -3134,7 +3134,7 @@ sub Save_History {
 				}
 			}
 			else {
-				my $hostl=$timehostl||"";
+				my $hostl=$timehostl||'';
 				print HISTORYTMP "$key $page $_host_h{$key} $bytes $hostl\n";
 			}
 		}
@@ -3145,7 +3145,7 @@ sub Save_History {
 			my $bytes=$_host_k{$key}||0;
 			my $timehostl=$_host_l{$key}||0;
 			my $timehosts=$_host_s{$key}||0;
-			my $lastpage=$_host_u{$key}||"";
+			my $lastpage=$_host_u{$key}||'';
 			if ($timehostl && $timehosts && $lastpage) {
 				if (($timehostl+$VISITTIMEOUT) < $LastLine) {
 					# Session for this user is expired
@@ -3161,7 +3161,7 @@ sub Save_History {
 				}
 			}
 			else {
-				my $hostl=$timehostl||"";
+				my $hostl=$timehostl||'';
 				print HISTORYTMP "$key $page $_host_h{$key} $bytes $hostl\n";
 			}
 		}
@@ -3425,7 +3425,7 @@ sub Save_History {
 			print HISTORYTMP "BEGIN_SIDER_$code ".(scalar keys %_sider404_h)."\n";
 			foreach my $key (keys %_sider404_h) {
 				my $newkey=$key;
-				my $newreferer=$_referer404_h{$key}||"";
+				my $newreferer=$_referer404_h{$key}||'';
 				$newreferer =~ s/\s/%20/g;
 				print HISTORYTMP "$newkey ".int($_sider404_h{$key})." $newreferer\n";
 			}
@@ -3445,14 +3445,14 @@ sub Save_History {
 	 			$keysinkeylist{$key}=1;
 	 			my $page=${'_section_' . $extranum . '_p'}{$key}||0;
 	 			my $bytes=${'_section_' . $extranum . '_k'}{$key}||0;
-	 			my $lastaccess=${'_section_' . $extranum . '_l'}{$key}||"";
+	 			my $lastaccess=${'_section_' . $extranum . '_l'}{$key}||'';
 	 			print HISTORYTMP "$key $page ", ${'_section_' . $extranum . '_h'}{$key}, " $bytes $lastaccess\n"; next;
 	 		}
 	 		foreach my $key (keys %{'_section_' . $extranum . '_h'}) {
 	 			if ($keysinkeylist{$key}) { next; }
 	 			my $page=${'_section_' . $extranum . '_p'}{$key}||0;
 	 			my $bytes=${'_section_' . $extranum . '_k'}{$key}||0;
-	 			my $lastaccess=${'_section_' . $extranum . '_l'}{$key}||"";
+	 			my $lastaccess=${'_section_' . $extranum . '_l'}{$key}||'';
 	 			print HISTORYTMP "$key $page ", ${'_section_' . $extranum . '_h'}{$key}, " $bytes $lastaccess\n"; next;
 	 		}
 	 		print HISTORYTMP "END_EXTRA_$extranum\n";
@@ -3534,8 +3534,8 @@ sub Read_DNS_Cache {
 	my $filesuffix=shift;
 	my $savetohash=shift;
 
-	my $dnscacheext="";
-	my $filetoload="";
+	my $dnscacheext='';
+	my $filetoload='';
 	my $timetoload = time();
 
 	if ($Debug) { debug("Call to Read_DNS_Cache [file=\"$dnscachefile\"]"); }
@@ -3584,8 +3584,8 @@ sub Save_DNS_Cache_File {
 	my $dnscachefile=shift;
 	my $filesuffix=shift;
 
-	my $dnscacheext="";
-	my $filetosave="";
+	my $dnscacheext='';
+	my $filetosave='';
 	my $timetosave = time();
 	my $nbofelemtosave=$NBOFLASTUPDATELOOKUPTOSAVE;
 	my $nbofelemsaved=0;
@@ -3775,7 +3775,7 @@ sub Show_Flag_Links {
 
 	# Build flags link
 	my $NewLinkParams=$QueryString;
-	my $NewLinkTarget="";
+	my $NewLinkTarget='';
 	if ($ENV{'GATEWAY_INTERFACE'}) {
 		$NewLinkParams =~ s/update(=\w*|$|[ &]+)//i;
 		$NewLinkParams =~ s/staticlinks(=\w*|$|[ &]+)//i;
@@ -4000,7 +4000,7 @@ sub BuildKeyList {
 	my $hashforselect=shift;
 	my $hashfororder=shift;
 	if ($Debug) { debug(" BuildKeyList($ArraySize,$MinValue,$hashforselect with size=".(scalar keys %$hashforselect).",$hashfororder with size=".(scalar keys %$hashfororder).")",2); }
-	delete $hashforselect->{0};delete $hashforselect->{""};		# Those is to protect from infinite loop when hash array has an incorrect null key
+	delete $hashforselect->{0};delete $hashforselect->{''};		# Those is to protect from infinite loop when hash array has an incorrect null key
 	my $count=0;
 	$lowerval=0;	# Global because used in AddInTree and Removelowerval
 	%val=(); %nextval=(); %egal=();
@@ -4441,7 +4441,7 @@ if ($FrameName ne 'index') {
 }
 
 # Init other parameters
-if ($ENV{'GATEWAY_INTERFACE'}) { $DirCgi=""; }
+if ($ENV{'GATEWAY_INTERFACE'}) { $DirCgi=''; }
 if ($DirCgi && !($DirCgi =~ /\/$/) && !($DirCgi =~ /\\$/)) { $DirCgi .= "/"; }
 if (! $DirData || $DirData eq ".") { $DirData=$DIR; }	# If not defined or chosen to "." value then DirData is current dir
 if (! $DirData)  { $DirData="."; }						# If current dir not defined then we put it to "."
@@ -5799,9 +5799,9 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 
 	if ($DNSLookup && $DNSLookupAlreadyDone) {
 		# DNSLookup warning
-		my $bold=($ENV{'GATEWAY_INTERFACE'}?"<b>":"");
-		my $unbold=($ENV{'GATEWAY_INTERFACE'}?"</b>":"");
-		my $br=($ENV{'GATEWAY_INTERFACE'}?"<br>":"");
+		my $bold=($ENV{'GATEWAY_INTERFACE'}?'<b>':'');
+		my $unbold=($ENV{'GATEWAY_INTERFACE'}?'</b>':'');
+		my $br=($ENV{'GATEWAY_INTERFACE'}?'<br>':'');
 		warning("Warning: $bold$PROG$unbold has detected that some hosts names were already resolved in your logfile $bold$DNSLookupAlreadyDone$unbold.$br\nIf DNS lookup was already made by the logger (web server), you should change your setup DNSLookup=$DNSLookup into DNSLookup=0 to increase $PROG speed.");
 	}
 	if ($DNSLookup && $NbOfNewLines) {
@@ -5840,7 +5840,7 @@ if ($HTMLOutput) {
 	$NewLinkParams =~ s/output(=\w*|$|[ &]+)//i;
 	$NewLinkParams =~ s/staticlinks(=\w*|$|[ &]+)//i;
 	$NewLinkParams =~ s/framename=[^ &]*//i;
-	my $NewLinkTarget="";
+	my $NewLinkTarget='';
 	if ($DetailedReportsOnNewWindows) { $NewLinkTarget=" target=\"awstatsbis\""; }
 	if (($FrameName eq 'mainleft' || $FrameName eq 'mainright') && $DetailedReportsOnNewWindows < 2) {
 		$NewLinkParams.="&framename=mainright";
@@ -5951,7 +5951,7 @@ EOF
 			$NewLinkParams =~ s/month=[^ &]*//i;
 			$NewLinkParams =~ s/framename=[^ &]*//i;
 			$NewLinkParams =~ tr/&/&/s; $NewLinkParams =~ s/^&//; $NewLinkParams =~ s/&$//;
-			my $NewLinkTarget="";
+			my $NewLinkTarget='';
 			if ($FrameName eq 'mainright') { $NewLinkTarget=" target=_parent"; }
 			print "<FORM name=\"FormDateFilter\" action=\"$AWScript?${NewLinkParams}\" style=\"padding: 2px 2px 2px 2px; margin-top: 0\"$NewLinkTarget>";
 		}
@@ -6376,9 +6376,9 @@ EOF
 #			if (! DateIsValid($day,$month,$year)) { next; }			# If not an existing day, go to next
 #			my $dayofweekcursor=DayOfWeek($day,$month,$year);
 #			print "<TD valign=middle".($dayofweekcursor=~/[06]/?" bgcolor=\"#$color_weekend\"":"").">";
-#			print ($day==$nowday && $month==$nowmonth && $year==$nowyear?"<b>":"");
+#			print ($day==$nowday && $month==$nowmonth && $year==$nowyear?'<b>':'');
 #			print "$day<br><font style=\"font-size: ".($FrameName ne 'mainright'?"10":"9")."px;\">".$MonthLib{$month}."</font>";
-#			print ($day==$nowday && $month==$nowmonth && $year==$nowyear?"</b>":"");
+#			print ($day==$nowday && $month==$nowmonth && $year==$nowyear?'</b>':'');
 #			print "</TD>\n";
 #		}
 #		print "<TD>&nbsp;</TD>";
@@ -6444,7 +6444,7 @@ EOF
 		if ($HTMLOutput eq 'lasthosts') { &BuildKeyList($MaxRowsInHTMLOutput,$MinHitHost,\%_host_h,\%_host_l); }
 		foreach my $key (@keylist) {
 			my $host=CleanFromCSSA($key);
-			print "<tr><td CLASS=AWL>".($_robot_l{$key}?"<b>":"")."$host".($_robot_l{$key}?"</b>":"")."</td>";
+			print "<tr><td CLASS=AWL>".($_robot_l{$key}?'<b>':'')."$host".($_robot_l{$key}?'</b>':'')."</td>";
 			if ($ShowLinksToWhoIs && $LinksToWhoIs) { ShowWhoIsCell($key); }
 			if ($ShowHostsStats =~ /P/i) { print "<TD>".($_host_p{$key}?$_host_p{$key}:"&nbsp;")."</TD>"; }
 			if ($ShowHostsStats =~ /H/i) { print "<TD>$_host_h{$key}</TD>"; }
@@ -6461,7 +6461,7 @@ EOF
 		$rest_k=$TotalBytes-$total_k;
 		if ($rest_p > 0 || $rest_h > 0 || $rest_k > 0) {	# All other visitors (known or not)
 			print "<TR><TD CLASS=AWL><font color=\"#$color_other\">$Message[2]</font></TD>";
-			if ($ShowLinksToWhoIs && $LinksToWhoIs) { ShowWhoIsCell(""); }
+			if ($ShowLinksToWhoIs && $LinksToWhoIs) { ShowWhoIsCell(''); }
 			if ($ShowHostsStats =~ /P/i) { print "<TD>".($rest_p?$rest_p:"&nbsp;")."</TD>"; }
 			if ($ShowHostsStats =~ /H/i) { print "<TD>$rest_h</TD>"; }
 			if ($ShowHostsStats =~ /B/i) { print "<TD>".Format_Bytes($rest_k)."</TD>"; }
@@ -6501,7 +6501,7 @@ EOF
 		$rest_k=$TotalBytes-$total_k;
 		if ($rest_p > 0 || $rest_h > 0 || $rest_k > 0) {	# All other visitors (known or not)
 			print "<TR><TD CLASS=AWL><font color=\"#$color_other\">$Message[82]</font></TD>";
-			if ($ShowLinksToWhoIs && $LinksToWhoIs) { ShowWhoIsCell(""); }
+			if ($ShowLinksToWhoIs && $LinksToWhoIs) { ShowWhoIsCell(''); }
 			if ($ShowHostsStats =~ /P/i) { print "<TD>".($rest_p?$rest_p:"&nbsp;")."</TD>"; }
 			if ($ShowHostsStats =~ /H/i) { print "<TD>$rest_h</TD>"; }
 			if ($ShowHostsStats =~ /B/i) { print "<TD>".Format_Bytes($rest_k)."</TD>"; }
@@ -6939,7 +6939,7 @@ EOF
 		$NewLinkParams =~ s/framename=[^ &]*//i;
 		$NewLinkParams =~ tr/&/&/s; $NewLinkParams =~ s/^&//; $NewLinkParams =~ s/&$//;
 		if ($NewLinkParams) { $NewLinkParams="${NewLinkParams}&"; }
-		my $NewLinkTarget="";
+		my $NewLinkTarget='';
 		if ($FrameName eq 'mainright') { $NewLinkTarget=" target=_parent"; }
 
 		# Ratio
@@ -7151,9 +7151,9 @@ EOF
 			if (! DateIsValid($day,$month,$year)) { next; }			# If not an existing day, go to next
 			my $dayofweekcursor=DayOfWeek($day,$month,$year);
 			print "<TD valign=middle".($dayofweekcursor=~/[06]/?" bgcolor=\"#$color_weekend\"":"").">";
-			print ($day==$nowday && $month==$nowmonth && $year==$nowyear?"<b>":"");
+			print ($day==$nowday && $month==$nowmonth && $year==$nowyear?'<b>':'');
 			print "$day<br><font style=\"font-size: ".($FrameName ne 'mainright'?"10":"9")."px;\">".$MonthLib{$month}."</font>";
-			print ($day==$nowday && $month==$nowmonth && $year==$nowyear?"</b>":"");
+			print ($day==$nowday && $month==$nowmonth && $year==$nowyear?'</b>':'');
 			print "</TD>\n";
 		}
 		print "<TD>&nbsp;</TD>";
