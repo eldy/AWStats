@@ -5239,9 +5239,15 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 		# Check virtual host name
 		#----------------------------------------------------------------------
 		if ($pos_vh>=0 && $field[$pos_vh] ne $SiteDomain) {
-			$NbOfLinesDropped++;
-			if ($ShowDropped) { print "Dropped record (virtual hostname '$field[$pos_vh]' does not match SiteDomain='$SiteDomain' parameter): $_\n"; }
-			next;
+			my $skip=1;
+			foreach my $key (@HostAliases) {
+				if ($field[$pos_vh] =~ m/^$key$/) { $skip=0; next; }
+			}
+			if ($skip) {
+				$NbOfLinesDropped++;
+				if ($ShowDropped) { print "Dropped record (virtual hostname '$field[$pos_vh]' does not match SiteDomain='$SiteDomain' nor HostAliases parameters): $_\n"; }
+				next;
+			}
 		}
 
 		# Check protocol (Note: Use of TmpProtocol does not increase speed)
