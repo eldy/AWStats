@@ -2614,7 +2614,7 @@ sub Read_History_With_TmpUpdate {
 										$TotalDifferentPages++;
 									}
 								}
-								# Posssibilite de mettre if ($FilterIn{'host'} && $field[0] =~ /$FilterIn{'host'}/) mais il faut gerer TotalPages de la meme maniere
+								# Posssibilite de mettre if ($FilterIn{'url'} && $field[0] =~ /$FilterIn{'url'}/) mais il faut gerer TotalPages de la meme maniere
 								if ($versionnum < 4000) {	# For history files < 4.0
 									$TotalEntries+=($field[2]||0);
 								}
@@ -2739,7 +2739,8 @@ sub Read_History_With_TmpUpdate {
 								$loadrecord=1;
 							}
 							else {
-								if (!$FilterIn{'refererpages'} || $field[0] =~ /$FilterIn{'refererpages'}/) { $loadrecord=1; }
+								if ((!$FilterIn{'refererpages'} || $field[0] =~ /$FilterIn{'refererpages'}/)
+								 && (!$FilterEx{'refererpages'} || $field[0] !~ /$FilterEx{'refererpages'}/)) { $loadrecord=1; }
 							}
 							if ($loadrecord) {
 								if ($versionnum < 5004) {	# For history files < 5.4
@@ -4251,7 +4252,7 @@ sub ShowFormFilter {
 		if ($QueryString =~ /(^|&)framename=(\w+)/i) { print "<input type=hidden name=\"framename\" value=\"$2\">\n"; }
 		print "</TD>\n";
 		print "<TD><input type=text name=\"$fieldfiltername\" value=\"$fieldfiltervalue\" class=\"AWS_FORMFIELD\"></TD>\n";
-		print "<TD><input type=submit value=\" $Message[115] \" class=\"AWS_BUTTON\">\n";
+		print "<TD><input type=submit value=\" $Message[115] \" class=\"AWS_BUTTON\"></TD>\n";
 		print "</TR></TABLE>\n";
 		print "</FORM>\n\n";
 	}
@@ -4635,8 +4636,11 @@ if ($ENV{'GATEWAY_INTERFACE'}) {	# Run from a browser as CGI
 	if ($QueryString =~ /diricons=([^&]+)/i)			{ $DirIcons=&DecodeEncodedString("$1"); }
 	# All filters
 	if ($QueryString =~ /hostfilter=([^&]+)/i)			{ $FilterIn{'host'}=&DecodeEncodedString("$1"); }			# Filter on host list can also be defined with hostfilter=filter
+	if ($QueryString =~ /hostfilterex=([^&]+)/i)		{ $FilterEx{'host'}=&DecodeEncodedString("$1"); }			#
 	if ($QueryString =~ /urlfilter=([^&]+)/i)			{ $FilterIn{'url'}=&DecodeEncodedString("$1"); }			# Filter on URL list can also be defined with urlfilter=filter
+	if ($QueryString =~ /urlfilterex=([^&]+)/i)			{ $FilterEx{'url'}=&DecodeEncodedString("$1"); }			#
 	if ($QueryString =~ /refererpagesfilter=([^&]+)/i)	{ $FilterIn{'refererpages'}=&DecodeEncodedString("$1"); }	# Filter on referer list can also be defined with refererpagesfilter=filter
+	if ($QueryString =~ /refererpagesfilterex=([^&]+)/i) { $FilterEx{'refererpages'}=&DecodeEncodedString("$1"); }	#
 	# All output
 	if ($QueryString =~ /output=allhosts:([^&]+)/i)		{ $FilterIn{'host'}=&DecodeEncodedString("$1"); }			# Filter on host list can be defined with output=allhosts:filter to reduce number of lines read and showed
 	if ($QueryString =~ /output=lasthosts:([^&]+)/i)	{ $FilterIn{'host'}=&DecodeEncodedString("$1"); }			# Filter on host list can be defined with output=lasthosts:filter to reduce number of lines read and showed
@@ -4675,8 +4679,11 @@ else {								# Run from command line
 	if ($QueryString =~ /diricons=([^&]+)/i)			{ $DirIcons="$1"; }
 	# All filters
 	if ($QueryString =~ /hostfilter=([^&]+)/i)			{ $FilterIn{'host'}="$1"; }			# Filter on host list can also be defined with hostfilter=filter
+	if ($QueryString =~ /hostfilterex=([^&]+)/i)		{ $FilterEx{'host'}="$1"; }			#
 	if ($QueryString =~ /urlfilter=([^&]+)/i)			{ $FilterIn{'url'}="$1"; }			# Filter on URL list can also be defined with urlfilter=filter
+	if ($QueryString =~ /urlfilterex=([^&]+)/i)			{ $FilterEx{'url'}="$1"; }			#
 	if ($QueryString =~ /refererpagesfilter=([^&]+)/i)	{ $FilterIn{'refererpages'}="$1"; }	# Filter on referer list can also be defined with refererpagesfilter=filter
+	if ($QueryString =~ /refererpagesfilterex=([^&]+)/i) { $FilterEx{'refererpages'}="$1"; } #
 	# All output
 	if ($QueryString =~ /output=allhosts:([^&]+)/i)		{ $FilterIn{'host'}="$1"; }			# Filter on host list can be defined with output=allhosts:filter to reduce number of lines read and showed
 	if ($QueryString =~ /output=lasthosts:([^&]+)/i)	{ $FilterIn{'host'}="$1"; }			# Filter on host list can be defined with output=lasthosts:filter to reduce number of lines read and showed
