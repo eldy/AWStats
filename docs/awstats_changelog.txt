@@ -42,6 +42,7 @@ New features/improvments:
   preprocessor was replaced by maillogconv.pl).
 
 Other/Documentation:
+- AWStats default install directory is /usr/local/awstats for unix like OS.
 - Added Isle of Man, Monserat, and Palestinian flag icon.
 - Added "local network host" and "Satellite access host" in label of possible
   countries and icons (They appears when using geoip plugins).

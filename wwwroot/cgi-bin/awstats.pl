@@ -1626,7 +1626,7 @@ sub Read_Plugins {
 	# Check plugin files in common possible directories :
 	# Windows :                           		"${DIR}plugins" (plugins in same dir than awstats.pl)
 	# Debian package :                    		"/usr/share/awstats/plugins"
-	# Other possible directories :        		"./lang"
+	# Other possible directories :        		"./plugins"
 	my @PossiblePluginsDir=("${DIR}plugins","/usr/share/awstats/plugins","./plugins");
 
 	if ($Debug) { debug("Call to Read_Plugins with list: @PluginsToLoad"); }
