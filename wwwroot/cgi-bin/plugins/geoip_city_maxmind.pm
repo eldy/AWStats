@@ -4500,17 +4500,21 @@ sub SectionProcessIp_geoip_city_maxmind {
 	my $record=();
 	$record=$geoip_city_maxmind->record_by_addr($param) if $geoip_city_maxmind;
 	if ($Debug) { debug("  Plugin geoip_city_maxmind: GetCityByIp for $param: [$record]",5); }
-    my $city=$record->city;
-#	if ($PageBool) { $_city_p{$city}++; }
-    if ($city) {
-        my $countrycity=($record->country_code).'_'.$city;
-        $countrycity=~s/ /%20/g;
-        if ($record->region) { $countrycity.='_'.$record->region; }
-        $_city_h{lc($countrycity)}++;
+    if ($record) {
+        my $city=$record->city;
+#   	if ($PageBool) { $_city_p{$city}++; }
+        if ($city) {
+            my $countrycity=($record->country_code).'_'.$city;
+            $countrycity=~s/ /%20/g;
+            if ($record->region) { $countrycity.='_'.$record->region; }
+            $_city_h{lc($countrycity)}++;
+        } else {
+            $_city_h{'unknown'}++;
+        }
+#   	if ($timerecord > $_city_l{$city}) { $_city_l{$city}=$timerecord; }
     } else {
         $_city_h{'unknown'}++;
     }
-#	if ($timerecord > $_city_l{$city}) { $_city_l{$city}=$timerecord; }
 	# ----->
 	return;
 }
