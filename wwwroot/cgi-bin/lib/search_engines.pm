@@ -23,11 +23,12 @@
 "voila\.",
 "yahoo\.",
 "lycos\.",
-"altavista\.",
-"search\.terra\.",
+"alexa\.com",
 "alltheweb\.com",
-"netscape\.",
+"altavista\.",
 "dmoz\.org",
+"netscape\.",
+"search\.terra\.",
 "www\.search\.com",
 "tiscali\.",
 "search\.aol\.co",
@@ -109,6 +110,7 @@
 #-------------------------------------------------
 %SearchEnginesKnownUrl=(
 # Most common search engines
+"alexa\.com","q=",
 "alltheweb\.com","q(|uery)=",
 "altavista\.","q=",
 "dmoz\.org","search=",
@@ -206,6 +208,7 @@
 #-----------------------------------------------------------------
 %SearchEnginesHashIDLib=(
 # Major internationnal search engines
+"alexa\.com","Alexa",
 "alltheweb\.com","AllTheWeb",
 "altavista\.","AltaVista",
 "dmoz\.org","DMOZ",
