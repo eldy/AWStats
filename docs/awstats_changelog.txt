@@ -93,10 +93,17 @@ Note 1: When migrating to 6.x series, if you use the ExtraSections feature,
   REGEX syntax (with 5.x series, this parameter could contain simple string
   values). If not, feature will be broken.
 
-Note 2: MaxLengthOfURL parameter has been renamed into MaxLengthOfShownURL
+Note 2: When migrating to 6.x series, if you use the Misc feature, you must
+  check that your ShowMiscStats parameter is set to "ajdfrqwp", if you want
+  to have all miscellanous info reported (you must also have added the
+  awstats_misc_tracker.js script in your home page as described in
+  MiscTrackerUrl parameter description). Otherwise the new default value "a"
+  will be used (only the "Add to favourites" will be reported).
 
-Note 3: To enable the new worm detection, you must add parameter
-  LevelForWormsDetection=2
+Note 3: MaxLengthOfURL parameter has been renamed into MaxLengthOfShownURL
+
+Note 4: To enable the new worm detection, you must add parameter
+  LevelForWormsDetection=2 in your config file.
 
 
 
