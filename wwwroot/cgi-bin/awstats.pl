@@ -93,7 +93,7 @@ $color_h, $color_k, $color_link, $color_p, $color_s, $color_u, $color_v, $color_
 %monthlib = %monthnum = ();
 
 
-$VERSION="3.2 (build 68)";
+$VERSION="3.2 (build 69)";
 $Lang="en";
 
 # Default value
@@ -3473,7 +3473,7 @@ EOF
 		}
 		&tab_end;
 	}	
-	
+
 	# BY OS
 	#----------------------------
 	if ($ShowOSStats) {
@@ -3485,7 +3485,7 @@ EOF
 		foreach my $key (sort { $SortDir*$_os_h{$a} <=> $SortDir*$_os_h{$b} } keys (%_os_h)) {
 			my $p=int($_os_h{$key}/$Total*1000)/10;
 			if ($key eq "Unknown") {
-				print "<TR><TD><IMG SRC=\"$DirIcons\/os\/unknown.png\"></TD><TD CLASS=AWL><a href=\"$DirCgi$PROG.$Extension?${LinkParamB}output=unknownreferer\">$Message[0]</a></TD><TD>$_os_h{$key}&nbsp;</TD>";
+				print "<TR><TD><IMG SRC=\"$DirIcons\/os\/unknown.png\"></TD><TD CLASS=AWL><a href=\"$DirCgi$PROG.$Extension?${LinkParamB}output=unknownreferer\">$Message[0]</a></TD><TD>$_os_h{$key}</TD>";
 				print "<TD>$p&nbsp;%</TD></TR>\n";
 				}
 			else {
