@@ -124,10 +124,11 @@ if (@config) {
 		if ($nbofallowedconffound == 1) {
 			print "<a href='edit_config.cgi?new=1'>$text{'index_add'}</a>\n" if ($access{'add'});
 			print "<table border width=100%>\n";
-			print "<tr $tb> <td rowspan=2><b>$text{'index_path'}</b></td> ",
-			      "<td rowspan=2 align=center><b>$text{'index_create'}</b></td> ",
-		 	      "<td colspan=2 align=center><b>$text{'index_update'}</b></td> ",
-			      "<td rowspan=2 align=center><b>$text{'index_view'}</b></td> </tr>\n";
+			print "<tr $tb> <td rowspan=2><b>$text{'index_path'}</b></td> ";
+			print "<td rowspan=2 align=center><b>$text{'index_create'}</b></td> ";
+			#print "<td rowspan=2 align=center><b>$text{'index_databasesize'}</b></td> ";
+		 	print "<td colspan=2 align=center><b>$text{'index_update'}</b></td> ";
+			print "<td rowspan=2 align=center><b>$text{'index_view'}</b></td> </tr>\n";
 			print "<tr $tb><td align=center>$text{'index_scheduled'}</td><td align=center>$text{'index_now'}</td></tr>\n";
 		}
 
@@ -151,8 +152,10 @@ if (@config) {
 		local @st=stat($l);
 		my ($sec,$min,$hour,$day,$month,$year,$wday,$yday) = localtime($st[10]);
 		$year+=1900; $month++;
-		printf("<td align=center>%04s-%02s-%02s %02s:%02s:%02s</td>",$year,$month,$day,$hour,$min,$sec);
+		printf("<td align=center>%04s-%02s-%02s<br>%02s:%02s:%02s</td>",$year,$month,$day,$hour,$min,$sec);
 	
+		# Database size
+		#print "<td>NA</td>";
 		
 		if ($access{'update'}) {	# Update
 	        print "<td align=center><a href='schedule_stats.cgi?file=$l'>$text{'index_sched2'}</a></td>";

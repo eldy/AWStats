@@ -9,6 +9,7 @@ index_path=Config file
 index_type=Type
 index_size=Size
 index_create=Created/Modified
+index_databasesize=Database size
 index_noconfig=No config files were found or have been added for analysis.
 index_edit=Edit/Delete config
 index_del=Delete config
