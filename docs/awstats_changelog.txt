@@ -42,6 +42,9 @@ New features/improvements:
   supported for the moment).
 - A lot of part of codes have been rewritten to make code more easy to
   understand and reduce unknown bugs.
+- The link to whois informations for a host, provided by hostinfo plugin,
+  has been replaced by an internal 'whois' showing in a popup window full
+  whois informations whatever is the TLD of IP or host name.
 - A new search engine database to allow several "match id" for same
   search engine. Example: All google ip referer id are recognised.
 - Can use UA and HOST fields to build personalized ExtraSection reports.

@@ -5330,7 +5330,7 @@ if ($ENV{'GATEWAY_INTERFACE'}) {	# Run from a browser as CGI
 if ($QueryString =~ /(^|&)lang=([^&]+)/i)	{ $Lang="$2"; }
 if (! $Lang || $Lang eq 'auto') {	# If lang not defined or forced to auto
 	my $langlist=$ENV{'HTTP_ACCEPT_LANGUAGE'}||''; $langlist =~ s/;[^,]*//g;
-	debug("Search an available language among HTTP_ACCEPT_LANGUAGE=$langlist",1);
+	if ($Debug) { debug("Search an available language among HTTP_ACCEPT_LANGUAGE=$langlist",1); }
 	foreach my $code (split(/,/,$langlist)) {	# Search for a valid lang in priority
 		if ($LangBrowserToLangAwstats{$code}) { $Lang=$LangBrowserToLangAwstats{$code}; debug(" Will try to use Lang=$Lang",1); last; }
 		$code =~ s/-.*$//;
@@ -5345,11 +5345,12 @@ if (! $Lang || $Lang eq 'auto') { debug(" No language defined or available. Will
 
 # Define frame name and correct variable for frames
 if (! $FrameName) {
-	if ($ENV{'GATEWAY_INTERFACE'} && $UseFramesWhenCGI && $HTMLOutput{'main'}) { $FrameName='index'; }
+	if ($ENV{'GATEWAY_INTERFACE'} && $UseFramesWhenCGI && $HTMLOutput{'main'} && ! $PluginMode) { $FrameName='index'; }
 	else { $FrameName='main'; }
 }
 
 # Load Message files, Reference data files and Plugins
+if ($Debug) { debug("FrameName=$FrameName",1); }
 if ($FrameName ne 'index') {
 	&Read_Language_Data($Lang);
 	if ($FrameName ne 'mainleft') {
@@ -9745,7 +9746,7 @@ if (scalar keys %HTMLOutput) {
 				my $p=int($_errors_h{$key}/$TotalHitsErrors*1000)/10;
 				print "<tr".($TOOLTIPON?" onmouseover=\"ShowTip($key);\" onmouseout=\"HideTip($key);\"":"").">";
 				if ($TrapInfosForHTTPErrorCodes{$key}) { print "<td><a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?XMLEncode("$AWScript?${NewLinkParams}output=errors$key"):"$PROG$StaticLinks.errors$key.$StaticExt")."\"$NewLinkTarget>$key</a></td>"; }
-				else { print "<td>$key</td>"; }
+				else { print "<td valign=\"top\">$key</td>"; }
 				print "<td class=\"aws\">".($httpcodelib{$key}?$httpcodelib{$key}:'Unknown error')."</td><td>$_errors_h{$key}</td><td>$p %</td><td>".Format_Bytes($_errors_k{$key})."</td>";
 				print "</tr>\n";
 				$total_h+=$_errors_h{$key};
@@ -9754,7 +9755,7 @@ if (scalar keys %HTMLOutput) {
 			&tab_end("* $Message[154]");
 		}
 
-		# BY SMTP ERRORS
+		# BY SMTP STATUS
 		#----------------------------
 		if ($ShowSMTPErrorsStats) {
 			if ($Debug) { debug("ShowSMTPErrorsStats",2); }
@@ -9768,7 +9769,7 @@ if (scalar keys %HTMLOutput) {
 			foreach my $key (@keylist) {
 				my $p=int($_errors_h{$key}/$TotalHitsErrors*1000)/10;
 				print "<tr".($TOOLTIPON?" onmouseover=\"ShowTip($key);\" onmouseout=\"HideTip($key);\"":"").">";
-				print "<td>$key</td>";
+				print "<td valign=\"top\">$key</td>";
 				print "<td class=\"aws\">".($smtpcodelib{$key}?$smtpcodelib{$key}:'Unknown error')."</td><td>$_errors_h{$key}</td><td>$p %</td><td>".Format_Bytes($_errors_k{$key})."</td>";
 				print "</tr>\n";
 				$total_h+=$_errors_h{$key};

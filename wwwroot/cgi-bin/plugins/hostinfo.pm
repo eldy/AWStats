@@ -1,15 +1,17 @@
 #!/usr/bin/perl
 #-----------------------------------------------------------------------------
 # HostInfo AWStats plugin
-# This plugin allow you to add information on hosts, like a whois link.
+# This plugin allow you to add information on hosts, like a whois fields.
 #-----------------------------------------------------------------------------
-# Perl Required Modules: None
+# Perl Required Modules: XWhois
 #-----------------------------------------------------------------------------
 # $Revision$ - $Author$ - $Date$
 
 
 # <-----
-# ENTER HERE THE USE COMMAND FOR ALL REQUIRED PERL MODULES.
+push @INC, "${DIR}/plugins";
+# ENTER HERE THE USE COMMAND FOR ALL REQUIRED PERL MODULES
+if (!eval ('require "Net/XWhoIs.pm";')) { return $@?"Error: $@":"Error: Need Perl module Net::XWhoIs"; }
 # ----->
 use strict;no strict "refs";
 
@@ -22,7 +24,7 @@ use strict;no strict "refs";
 # ENTER HERE THE MINIMUM AWSTATS VERSION REQUIRED BY YOUR PLUGIN
 # AND THE NAME OF ALL FUNCTIONS THE PLUGIN MANAGE.
 my $PluginNeedAWStatsVersion="5.7";
-my $PluginHooksFunctions="ShowInfoHost AddHTMLBodyHeader";
+my $PluginHooksFunctions="ShowInfoHost AddHTMLBodyHeader BuildFullHTMLOutput";
 # ----->
 
 # <-----
@@ -43,7 +45,6 @@ sub Init_hostinfo {
 	# <-----
 	# ENTER HERE CODE TO DO INIT PLUGIN ACTIONS
 	debug(" InitParams=$InitParams",1);
-	if (! $LinksToWhoIs || ! $LinksToIPWhoIs) { return "Error: Parameters LinksToWhoIs and LinksToIPWhoIs must be defined in config file to use hostinfo plugin."; } 
 	# ----->
 
 	return ($checkversion?$checkversion:"$PluginHooksFunctions");
@@ -66,8 +67,8 @@ sub AddHTMLBodyHeader_hostinfo {
 <script language="javascript" type="text/javascript">
 function neww(a,b) {
 	var wfeatures="directories=0,menubar=1,status=0,resizable=1,scrollbars=1,toolbar=0,width=$WIDTHINFO,height=$HEIGHTINFO,left=" + eval("(screen.width - $WIDTHINFO)/2") + ",top=" + eval("(screen.height - $HEIGHTINFO)/2");
-	if (b==1) { fen=window.open('$LinksToWhoIs'+a,'whois',wfeatures); }
-	if (b==2) { fen=window.open('$LinksToIPWhoIs'+a,'whois',wfeatures); }
+	if (b==1) { fen=window.open('$AWScript?pluginmode=hostinfo&host='+a,'whois',wfeatures); }
+	if (b==2) { fen=window.open('$AWScript?pluginmode=hostinfo&host='+a,'whois',wfeatures); }
 }
 </script>
 
@@ -121,5 +122,65 @@ sub ShowInfoHost_hostinfo {
 	# ----->
 }
 
+
+#-----------------------------------------------------------------------------
+# PLUGIN FUNTION: BuildFullHTMLOutput_pluginname
+# UNIQUE: NO (Several plugins using this function can be loaded)
+# Function called to output an HTML page completely built by plugin instead
+# of AWStats output
+#-----------------------------------------------------------------------------
+sub BuildFullHTMLOutput_hostinfo {
+	# <-----
+#	my $regipv4=qr/^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/;
+#	my $regipv6=qr/^[0-9A-F]*:/i;
+
+	my $Host='';
+	if ($QueryString =~ /host=([^&]+)/i) {
+		$Host=lc(&DecodeEncodedString("$1"));
+	}
+
+	my $ip='';
+	my $HostResolved='';
+#	if ($Host =~ /$regipv4/o) { $ip=4; }
+#	elsif ($Host =~ /$regipv6/o) { $ip=6; }
+#	if ($ip == 4) {
+#		my $lookupresult=lc(gethostbyaddr(pack("C4",split(/\./,$Host)),AF_INET));	# This is very slow, may spend 20 seconds
+#		if (! $lookupresult || $lookupresult =~ /$regipv4/o || ! IsAscii($lookupresult)) {
+#			$HostResolved='*';
+#		}
+#		else {
+#			$HostResolved=$lookupresult;
+#		}
+#		if ($Debug) { debug("  Reverse DNS lookup for $Host done: $HostResolved",4); }
+#	}
+	if (! $ip) { $HostResolved=$Host; }
+
+	if ($Debug) { debug("  DirData=$DirData Host=$Host HostResolved=$HostResolved ",4); }
+	my $w = new Net::XWhois Verbose=>$Debug, Cache=>$DirData, NoCache=>0, Timeout=>30, Domain=>$HostResolved;
+
+	print "<br>\n";
+	
+	&tab_head("Common Whois Fields",0,0,'whois');
+	print "<tr bgcolor=\"#$color_TableBGRowTitle\"><th>Common field info</th><th>Value</th></tr>\n";
+	print "<tr><td>Name</td><td>".($w->name())."&nbsp;</td></tr>";
+	print "<tr><td>Status</td><td>".($w->status())."&nbsp;</td></tr>";
+	print "<tr><td>NameServers</td><td>".($w->nameservers())."&nbsp;</td></tr>";
+	print "<tr><td>Registrant</td><td>".($w->registrant())."&nbsp;</td></tr>";
+	print "<tr><td>Contact Admin</td><td>".($w->contact_admin())."&nbsp;</td></tr>";
+	print "<tr><td>Contact Tech</td><td>".($w->contact_tech())."&nbsp;</td></tr>";
+	print "<tr><td>Contact Billing</td><td>".($w->contact_billing())."&nbsp;</td></tr>";
+	print "<tr><td>Contact Zone</td><td>".($w->contact_zone())."&nbsp;</td></tr>";
+	print "<tr><td>Contact Emails</td><td>".($w->contact_emails())."&nbsp;</td></tr>";
+	print "<tr><td>Contact Handles</td><td>".($w->contact_handles())."&nbsp;</td></tr>";
+	print "<tr><td>Domain Handles</td><td>".($w->domain_handles())."&nbsp;</td></tr>";
+	&tab_end;
+
+	&tab_head("Full Whois Field",0,0,'whois');
+	print "<tr><td class=\"aws\"><pre>".($w->response())."</pre></td></tr>\n";
+	&tab_end;
+
+	return 1;
+	# ----->
+}
 
 1;	# Do not remove this line

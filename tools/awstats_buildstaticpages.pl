@@ -343,7 +343,9 @@ if ($Date) {
 
 
 my $cpt=0;
-my $smallcommand="\"$Awstats\" -config=$SiteConfig".($BuildPDF?" -buildpdf -noloadplugin=tooltips,rawlog,hostinfo":"")." -staticlinks".($OutputSuffix ne $SiteConfig?"=$OutputSuffix":"");
+my $NoLoadPlugin="";
+if ($BuildPDF) { $NoLoadPlugin.="tooltips,rawlog,hostinfo"; }
+my $smallcommand="\"$Awstats\" -config=$SiteConfig".($BuildPDF?" -buildpdf":"").($NoLoadPlugin?" -noloadplugin=$NoLoadPlugin":"")." -staticlinks".($OutputSuffix ne $SiteConfig?"=$OutputSuffix":"");
 if ($StaticExt && $StaticExt ne 'html')     { $smallcommand.=" -staticlinksext=$StaticExt"; }
 if ($DirIcons)      { $smallcommand.=" -diricons=$DirIcons"; }
 if ($Lang)          { $smallcommand.=" -lang=$Lang"; }
