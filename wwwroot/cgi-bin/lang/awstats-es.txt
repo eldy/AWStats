@@ -1,4 +1,5 @@
 # Spanish message file
+# $Revision$ - $Date$
 message0=Desconocido
 message1=de dirección IP desconocida
 message2=Otros
@@ -52,7 +53,7 @@ message49=Hits&nbsp;erróneos
 message50=Navegadores desconocidos (campo de referencia)
 message51=Visitas de Robots
 message52=Visitas/Visitante
-message53=Visitas de Robots/Spiders (indexadores)
+message53=Visitas de Robots/Spiders
 message54=Analizador gratuito de 'log' para estadísticas Web avanzadas
 message55=de
 message56=Páginas
