@@ -5315,9 +5315,9 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 				$_filetypes_gz_out{$extension}+=$out;
 			}
 		}
-		elsif ($pos_gzipratio>=0 && ($field[$pos_gzipratio] =~ /(\d*)pct./)) {
-			$_filetypes_gz_in{$extension}+=int($field[$pos_size]);
-			$_filetypes_gz_out{$extension}+=int($field[$pos_size]*(1-$1/100));	# out size calculated from pct.
+		elsif ($pos_gzipratio>=0 && ($field[$pos_gzipratio] =~ /(\d+)pct./)) {
+			$_filetypes_gz_in{$extension}+=int($field[$pos_size]*100/((100-$1)||1));
+			$_filetypes_gz_out{$extension}+=int($field[$pos_size]);	# out size calculated from pct.
 		}
 
 		# Analyze: Date - Hour - Pages - Hits - Kilo
