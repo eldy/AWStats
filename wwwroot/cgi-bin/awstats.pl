@@ -513,11 +513,8 @@ sub html_head {
 		else { print "<meta name=\"robots\" content=\"noindex,nofollow\" />\n"; }
 
 		# Affiche tag meta content-type
-		if ($PageCode) { print ($ENV{'HTTP_USER_AGENT'}=~/MSIE|Googlebot/i?"<meta http-equiv=\"content-type\" content=\"text/html; charset=$PageCode\" />\n":"<meta http-equiv=\"content-type\" content=\"text/xml; charset=$PageCode\" />\n"); }
-		else { print ($ENV{'HTTP_USER_AGENT'}=~/MSIE|Googlebot/i?"<meta http-equiv=\"content-type\" content=\"text/html; charset=iso-8859-1\" />\n":"<meta http-equiv=\"content-type\" content=\"text/xml; charset=iso-8859-1\" />\n"); };
-		#else { print "<meta http-equiv=\"content-type\" content=\"text/html; charset=iso-8859-1\" />\n"; }
-		#else { print "<meta http-equiv=\"content-type\" content=\"text/html; charset=UTF-8\" />\n"; }
-
+		print ((! $UseXml || $ENV{'HTTP_USER_AGENT'}=~/MSIE|Googlebot/i)?"<meta http-equiv=\"content-type\" content=\"text/html; charset=".($PageCode?$PageCode:"iso-8859-1")."\" />\n":"<meta http-equiv=\"content-type\" content=\"text/xml; charset=".($PageCode?$PageCode:"iso-8859-1")."\" />\n");
+		
 		if ($Expires)  { print "<meta http-equiv=\"expires\" content=\"".(gmtime(time()+$Expires))."\" />\n"; }
 		print "<meta http-equiv=\"description\" content=\"".ucfirst($PROG)." - Advanced Web Statistics for $SiteDomain\" />\n";
 		if ($AllowIndex && $FrameName ne 'mainleft') { print "<meta http-equiv=\"keywords\" content=\"$SiteDomain, free, advanced, realtime, web, server, logfile, log, analyzer, analysis, statistics, stats, perl, analyse, performance, hits, visits\" />\n"; }
@@ -528,7 +525,8 @@ sub html_head {
 			print "<style type=\"text/css\">\n";
 			print !$UseXml?"<!--\n":"<![CDATA[\n";
 print "body { font: 11px verdana, arial, helvetica, sans-serif; background-color: #$color_Background; margin-top: 0; }\n";
-print ".aws_bodyl  { ".(! $UseXml?"background-image: url($DirIcons/other/backleft.png);":"")."background-repeat: repeat-y; }\n";
+#print ".aws_bodyl  { ".(! $UseXml?"background-image: url($DirIcons/other/backleft.png);":"")."background-repeat: repeat-y; }\n";
+print ".aws_bodyl  { }\n";
 print ".aws_border { background-color: #$color_TableBG; padding: 1px 1px 1px 1px; margin-top: 0 }\n";
 print ".aws_title  { font: 13px verdana, arial, helvetica, sans-serif; font-weight: bold; background-color: #$color_TableBGTitle; text-align: center; margin-bottom: 0; padding: 1px 1px 1px 1px; }\n";
 print ".aws_blank { font: 13px verdana, arial, helvetica, sans-serif; background-color: #".($ENV{'HTTP_USER_AGENT'}=~/MSIE/i?$color_Background:$color_TableBG)."; text-align: center; margin-bottom: 0; padding: 1px 1px 1px 1px; }\n";
@@ -3917,31 +3915,32 @@ sub ChangeWordSeparatorsIntoSpace {
 	$_[0] =~ s/%1[03]/ /g;
 	$_[0] =~ s/%2[02789abc]/ /ig;
 	$_[0] =~ s/%3a/ /ig;
-	$_[0] =~ tr/\+\'\(\)\"\*,:/        /s;								# "&" and "=" must not be in this list
+	$_[0] =~ tr/\+\'\(\)\"\*,:/        /s;		# "&" and "=" must not be in this list
 }
 
 #------------------------------------------------------------------------------
-# Function:     Converts an UTF8 binary string
+# Function:     Converts an UTF8 string to specified Charset
+# Parameters:	utfstringtodecode charsettoencode
+# Return:		newencodedstring
 #------------------------------------------------------------------------------
 sub Utf8_To_Ascii {
-	my $string = shift;
-	my $format = $ENV{"UCFORMAT"}||('%lx');
-	$string =~ s/([\xC0-\xDF])([\x80-\xBF])/sprintf ("%c", hex(sprintf($format,unpack("c",$1)<<6&0x07C0|unpack("c",$2)&0x003F)))/ge;
-	$string =~ s/([\xE0-\xEF])([\x80-\xBF])([\x80-\xBF])/sprintf ("%c", hex(sprintf($format,unpack("c",$1)<<12&0xF000|unpack("c",$2)<<6&0x0FC0|unpack("c",$3)&0x003F)))/ge;
-	$string =~ s/([\xF0-\xF7])([\x80-\xBF])([\x80-\xBF])([\x80-\xBF])/sprintf ("%c", hex(sprintf($format,unpack("c",$1)<<18&0x1C0000|unpack("c",$2)<<12&0x3F000|unpack("c",$3)<<6&0x0FC0|unpack("c",$4)&0x003F)))/ge;
-	return $string;
-}
-
-#------------------------------------------------------------------------------
-# Function:     Encode a binary string into an ASCII string
-#------------------------------------------------------------------------------
-sub EncodeString {
-	my $string = shift;
-#	use bytes;
-	$string =~ s/([\x2B\x80-\xFF])/sprintf ("%%%2x", ord($1))/eg;
-#	no bytes;
-	$string =~ tr/ /+/s;
-	return $string;
+#Function to prepare 'decodeUTFkeys' plugin
+#use Encode;
+#use URI::Escape;
+#my $string = shift;
+#my $encoding = shift;
+#if ( $string =~ m/^([\x00-\x7f]|[\xc2-\xdf][\x80-\xbf]|\xe0[\xa0-\xbf][\x80-\xbf]|[\xe1-\xef][\x80-\xbf][\x80-\xbf]|\xf0[\x90-\xbf][\x80-\xbf][\x80-\xbf]|[\xf1-\xf7][\x80-\xbf][\x80-\xbf][\x80-\xbf])*$/ )
+#{
+#     $string = decode("utf-8", $string);
+#     $string = encode($encoding, $string);
+#}
+## trim space
+#$string =~ s/^ +//;
+#$string =~ s/ +$//;
+## reverse "+", ";" to space
+#$string =~ s/;+/\+/g;
+#$string =~ s/\s+/\+/g;
+#return $string;
 }
 
 #------------------------------------------------------------------------------
@@ -3956,6 +3955,19 @@ sub XMLEncode {
 	return $string;
 }
 
+#------------------------------------------------------------------------------
+# Function:     Encode a binary string into an ASCII string
+# Parameters:	stringtoencode
+# Return:		encodedstring
+#------------------------------------------------------------------------------
+sub EncodeString {
+	my $string = shift;
+#	use bytes;
+	$string =~ s/([\x2B\x80-\xFF])/sprintf ("%%%2x", ord($1))/eg;
+#	no bytes;
+	$string =~ tr/ /+/s;
+	return $string;
+}
 
 #------------------------------------------------------------------------------
 # Function:     Decode an only text string into a binary string
@@ -6269,33 +6281,34 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 							$found=1;
 							my @refurl=split(/\?/,$field[$pos_referer],2);	# TODO Use \? or [$URLQuerySeparators] ?
 							if ($refurl[1]) {
-								# Extract keywords
+								# Extract params of referer query string (q=cache:mmm:www/zzz+aaa+bbb q=aaa+bbb/ccc key=ddd%20eee lang_en ie=UTF-8 ...)
 								my @paramlist=split(/&/,$KeyWordsNotSensitive?lc($refurl[1]):$refurl[1]);
 								if ($SearchEnginesKnownUrl{$TmpRefererServer{$refererserver}}) {	# Search engine with known URL syntax
 									foreach my $param (@paramlist) {
-										if ($param =~ s/^$SearchEnginesKnownUrl{$TmpRefererServer{$refererserver}}//) { 	# We found good parameter
-											# Ok, "cache:mmm:www/zzz+aaa+bbb/ccc+ddd%20eee'fff,ggg" is a search parameter line
-											$param =~ s/^cache:[^\+]*//;
-											$param =~ s/^related:[^\+]*//;
-											&ChangeWordSeparatorsIntoSpace($param);			# Change [ aaa+bbb/ccc+ddd%20eee'fff,ggg ] into [ aaa bbb/ccc ddd eee fff ggg]
+										if ($param =~ s/^$SearchEnginesKnownUrl{$TmpRefererServer{$refererserver}}//) {
+											# We found good parameter
+											# Now param is keyphrase: "cache:mmm:www/zzz+aaa+bbb/ccc+ddd%20eee'fff,ggg"
+											$param =~ s/^(cache|related):[^\+]+//;
+											&ChangeWordSeparatorsIntoSpace($param);		# Change [ aaa+bbb/ccc+ddd%20eee'fff,ggg ] into [ aaa bbb/ccc ddd eee fff ggg]
+											# TODO Add a plugin to convert utf8 coded params (google, alltheweb) into locally coded string ($PageCode)
 											$param =~ s/^ +//; $param =~ s/ +$//; $param =~ tr/ /\+/s;
 											if ((length $param) > 0) { $_keyphrases{$param}++; }
 											last;
 										}
 									}
 								}
-								else {									# Search engine with unknown URL syntax
+								else {																# Search engine with unknown URL syntax
 									foreach my $param (@paramlist) {
 										my $foundexcludeparam=0;
 										foreach my $paramtoexclude (@WordsToCleanSearchUrl) {
 											if ($param =~ /$paramtoexclude/i) { $foundexcludeparam=1; last; } # Not the param with search criteria
 										}
-										if ($foundexcludeparam) { next; }		# Do not keep this URL parameter because is in exclude list
-										$param =~ s/.*=//;						# Cut "xxx="
-										# Ok, "cache:www/zzz aaa bbb/ccc ddd eee fff ggg" is a search parameter line
-										$param =~ s/^cache:[^ ]*//;
-										$param =~ s/^related:[^ ]*//;
-										&ChangeWordSeparatorsIntoSpace($param);				# Change [ aaa+bbb/ccc+ddd%20eee'fff,ggg ] into [ aaa bbb/ccc ddd eee fff ggg ]
+										if ($foundexcludeparam) { next; }
+										# We found good parameter
+										$param =~ s/.*=//;
+										# Now param is keyphrase: "aaa+bbb/ccc+ddd%20eee'fff,ggg"
+										&ChangeWordSeparatorsIntoSpace($param);			# Change [ aaa+bbb/ccc+ddd%20eee'fff,ggg ] into [ aaa bbb/ccc ddd eee fff ggg ]
+										# TODO Add a plugin to convert utf8 coded params (google, alltheweb) into locally coded string ($PageCode)
 										$param =~ s/^ +//; $param =~ s/ +$//; $param =~ tr/ /\+/s;
 										if ((length $param) > 2) { $_keyphrases{$param}++; last; }
 									}
