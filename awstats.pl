@@ -1,4 +1,3 @@
-#!c:/program files/activeperl/bin/perl
 #!/usr/bin/perl
 # With some other Unix Os, first line might be
 #!/usr/local/bin/perl
