@@ -48,13 +48,14 @@ FAQ-ABO250 <a href="#PHPNUKE">Can AWStats be integrated with PHP Nuke ?</a><br>
 Here, you can find the most common questions and answers users have to install/setup AWStats.<br>
 <ul>
 FAQ-SET050 <a href="#MISSINGDOLLAR">Error "Missing $ on loop variable ..."</a><br>
-FAQ-SET100 <a href="#CGISOURCE">I see Perl script's source instead of its execution in my browser</a><br>
-FAQ-SET150 <a href="#SPAWNERROR">Error "... couldn't spawn child process..." with Apache for windows</a><br>
-FAQ-SET200 <a href="#INTERNAL">"Internal Server Error" in a browser connecting to Apache</a><br>
-FAQ-SET250 <a href="#SPEED">"Internal Server Error" after a long time in my browser (See FAQ-COM100 "AWStats speed/timeout problems")</a><br>
+FAQ-SET100 <a href="#CGISOURCE">I see Perl script's source instead of its execution in my browser.</a><br>
+FAQ-SET150 <a href="#SPAWNERROR">Error "... couldn't spawn child process..." with Apache for windows.</a><br>
+FAQ-SET200 <a href="#INTERNAL">"Internal Server Error" in a browser connecting to Apache.</a><br>
+FAQ-SET250 <a href="#SPEED">"Internal Server Error" after a long time in my browser (See FAQ-COM100 "AWStats speed/timeout problems").</a><br>
 FAQ-SET300 <a href="#COULDNOTOPEN">Error "Couldn't open file ..."</a><br>
 FAQ-SET350 <a href="#EMPTY_STATS">Empty or null statistics reported.</a><br>
-FAQ-SET400 <a href="#PERSONALISEDLOG">Log format setup or errors</a><br>
+FAQ-SET400 <a href="#PERSONALISEDLOG">Log format setup or errors.</a><br>
+FAQ-SET420 <a href="#FTP">Setup for FTP server log files.</a><br>
 FAQ-SET450 <a href="#NO_ICON">No pictures/graphics shown.</a><br>
 FAQ-SET500 <a href="#BENCHMARK">Frequency to launch AWStats to update statistics (See FAQ-COM150 "Benchmark question").</a><br>
 FAQ-SET550 <a href="#CRONTAB">How can i run AWStats frequently ?</a><br>
@@ -109,14 +110,15 @@ Examples of used platforms (bold means 'tested by author', others were reported 
 <a name="LOGFORMAT"></a><br>
 <b><u>FAQ-ABO150 : WHICH LOG FORMAT CAN AWSTATS ANALYZE ?</u></b><br>
 AWStats setup knows predefined log format you can use to make AWStats config easier. However,
-you can define your own log format, that's the reason why AWStats can analyze nearly all web
-servers or proxies log files.
+you can define your own log format, that's the reason why AWStats can analyze nearly all web, wap
+and proxies server log files. Some FTP servers are also supported.<br>
 The only requirement is "Your log file must contains required information".<br>
 This is example of possible log format:<br>
 <i>
-Apache combined log format (known as NCSA combined log format or XLF or ELF format)<br>
+Apache combined log format (known as NCSA combined log format or XLF or ELF format) (See FAQ for this format)<br>
 IIS 5.0+ log format (known as W3C format)<br>
 Webstar native log format<br>
+ProFTP server<br>
 ...<br>
 Apache common log format (AWStats can now analyse such log files but such log files does not contain all information
 AWStats is looking for. The problem is in the content, not in the format). I think analysing common log files is not
@@ -249,28 +251,29 @@ to log files format.<br>
 <b><u>FAQ-SET400 : LOG FORMAT SETUP OR ERRORS</u></b><br>
 <font style="color: #660000">PROBLEM:</font> Which value do I have to put in the LogFile
 parameter to make AWStats working with my log file format ?<br>
-<font style="color: #4444cc">SOLUTION:</font> The AWStats config file give you all 
-possible values for LogFile. To help you this is some common case of log file format and
+<font style="color: #4444cc">SOLUTION:</font>
+The AWStats config file give you all possible values for LogFile.
+To help you, this is some common case of log file format and
 the corresponding value of LogFile you must use in your AWStats config file:<br>
 
 <table bgcolor=#F0F0F0 width="100%" class=CFAQ><tr class=CFAQ><td class=CFAQ>
-<u>If your log records are EXACTLY like this (NCSA combined/XLF/ELF log format):</u><br>
+<u>If your log records are EXACTLY like this (<b>NCSA combined/XLF/ELF</b> log format):</u><br>
 <i>62.161.78.73 - - [dd/mmm/yyyy:hh:mm:ss +0x00] "GET /page.html HTTP/1.1" 200 1234 "http://www.from.com/from.htm" "Mozilla/4.0 (compatible; MSIE 5.01; Windows NT 5.0)"</i><br>
 You must use : <i>LogFile=1</i><br>
 </td></tr></table>
 
-<u>If your log records are EXACTLY like this (NCSA combined with Apache using mod_gzip):</u><br>
+<u>If your log records are EXACTLY like this (<b>NCSA combined</b> with <b>Apache using mod_gzip</b>):</u><br>
 <i>62.161.78.73 - - [dd/mmm/yyyy:hh:mm:ss +0x00] "GET /page.html HTTP/1.1" 200 1234 "http://www.from.com/from.htm" "Mozilla/4.0 (compatible; MSIE 5.01; Windows NT 5.0)" mod_gzip: DECHUNK:OK In:11393 Out:3904:66pct.</i><br>
 You must use : <i>LogFile="%host %other %other %time1 %methodurl %code %bytesd %refererquot %uaquot %other %gzipres %gzipin %gzipout"</i><br>
 
 <table bgcolor=#F0F0F0 width="100%" class=CFAQ><tr class=CFAQ><td class=CFAQ>
-<u>If your log records are EXACTLY like this (NCSA common CLF log format):</u><br>
+<u>If your log records are EXACTLY like this (<b>NCSA common CLF</b> log format):</u><br>
 <i>62.161.78.73 - - [dd/mmm/yyyy:hh:mm:ss +0x00] "GET /page.html HTTP/1.1" 200 1234</i><br>
 You must use : <i>LogFile=4</i><br>
 Note: Browsers, OS's, Keywords and Referers features are not available with a such format.<br>
 </td></tr></table>
 
-<u>If your log records are EXACTLY like this (IIS W3C log format):</u><br>
+<u>If your log records are EXACTLY like this (<b>IIS</b> W3C log format):</u><br>
 <i>yyyy-mm-dd hh:mm:ss 62.161.78.73 - GET /page.html 200 1234 HTTP/1.1 Mozilla/4.0+(compatible;+MSIE+5.01;+Windows+NT+5.0) http://www.from.com/from.htm</i><br>
 You must use : <i>LogFile=2</i><br>
 
@@ -281,15 +284,38 @@ You must use : <i>LogFile="%host %logname %other %time1 %methodurl %other %code 
 Note: Browsers, OS's, Keywords and Referers features are not available with a such format.<br>
 </td></tr></table>
 
-<u>If your log records are EXACTLY like this (Webstar native log format):</u><br>
+<u>If your log records are EXACTLY like this (<b>Webstar</b> native log format):</u><br>
 <i>05/21/00	00:17:31	OK  	200	212.242.30.6	Mozilla/4.0 (compatible; MSIE 5.0; Windows 98; DigExt)	http://www.cover.dk/	"www.cover.dk"	:Documentation:graphics:starninelogo.white.gif	1133</i><br>
 You must use : <i>LogFile=3</i><br>
 
 <table bgcolor=#F0F0F0 width="100%" class=CFAQ><tr class=CFAQ><td class=CFAQ>
+<u>If you use <b>ProFTP</b> server:</u><br>
+See Next FAQ.<br>
+</td></tr></table>
+
 <u>There is a lot of other possible log formats.</u><br>
 You must use a personalised log format LogFile ="..." as described in config file to
 support other various log format.<br>
-</td></tr></table>
+<br>
+
+<a name="FTP"></a><br>
+<b><u>FAQ-SET420 : SETUP FOR FTP SERVER LOG FILES</u></b><br>
+<font style="color: #660000">PROBLEM:</font> What do I have to do to use Awstats to analyze some FTP server log files.<br>
+<font style="color: #4444cc">SOLUTION:</font>
+AWStats was built to analyze web,wap or proxy servers log files. However it can be used with some FTP server log files.<br>
+<u>This is example for ProFTP:</u><br>
+Modify the proftpd.conf file. At the very top add two new defines.<br>
+<i>LogFormat awstats "%t %h %u GET %f 200 %b"<br>
+ExtendedLog /var/log/xferlog read,write awstats</i><br>
+Turn off Transfer log (optional)<br>
+<i>TransferLog none</i><br>
+Copy config awstats.conf file to "awstats.proftp.conf".<br>
+Modify this new config file:<br>
+<i>LogFile="/var/log/xferlog"<br>
+LogFormat="%time1 %host %logname %method %url %code %bytesd"<br>
+DNSLookup=0</i><br>
+ShowLinksOnUrl=0<br>
+ShowAuthenticatedUsers=1<br>
 <br>
 
 <a name="NO_ICON"></a><br>
