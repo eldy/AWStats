@@ -184,7 +184,11 @@ But this can change. You should ask to have a such Add-On to PHPNuke authors, an
 I want to have AWStats statistics but i have no access to my server log file.<br>
 <font class=CSolution>SOLUTION:</font><br>
 Because AWStats is a log analyzer, if you don't have any way to read your server log file,
-you have nothing to analyze and you can't use AWStats.<br>
+you have nothing to analyze and you should not be able to use AWStats.
+However, this is a trick that you can use to have a log file be build. You must add
+a tag to call a CGI script like pslogger into each of your web pages. This will
+allow you to have an artificial log file that can be analyzed by AWStats.<br>
+You can find a version of pslogger enhanced by AWStats auhtor <a href="/files/pslogger.pl">here</a>.
 <br>
 
 <a name="#LIMITLOG"></a><br>
