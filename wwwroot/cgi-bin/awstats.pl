@@ -798,112 +798,114 @@ sub debug {
 
 #------------------------------------------------------------------------------
 # Function:     Optimize an array removing duplicate entries
-# Parameters:	@Array notcasesensitive mustbeequal
+# Parameters:	@Array notcasesensitive=0|1
 # Input:        None
 # Output:		None
 # Return:		None
 #------------------------------------------------------------------------------
 sub OptimizeArray {
 	my $array=shift;
+	my @arrayunreg=map{if (/\(\?[-\w]*:(.*)\)/) { $1 } } @$array;
 	my $notcasesensitive=shift;
-	my $mustbeequal=shift;
 	my $searchlist=0;
-	if ($Debug) { debug("OptimizeArray (notcasesensitive=$notcasesensitive,mustbeequal=$mustbeequal)",4); }
-	while ($searchlist>-1 && @$array) {
+	if ($Debug) { debug("OptimizeArray (notcasesensitive=$notcasesensitive)",4); }
+	while ($searchlist>-1 && @arrayunreg) {
 		my $elemtoremove=-1;
 		OPTIMIZELOOP:
-		foreach my $i ($searchlist..(scalar @$array)-1) {
+		foreach my $i ($searchlist..(scalar @arrayunreg)-1) {
 			# Search if $i elem is already treated by another elem
-			foreach my $j (0..(scalar @$array)-1) {
+			foreach my $j (0..(scalar @arrayunreg)-1) {
 				if ($i == $j) { next; }
-				my $parami=$notcasesensitive?lc(@$array[$i]):@$array[$i];
-				my $paramj=$notcasesensitive?lc(@$array[$j]):@$array[$j];
+				my $parami=$notcasesensitive?lc(@arrayunreg[$i]):@arrayunreg[$i];
+				my $paramj=$notcasesensitive?lc(@arrayunreg[$j]):@arrayunreg[$j];
 				if ($Debug) { debug(" Compare $i ($parami) to $j ($paramj)",4); }
-				if (($mustbeequal && $parami eq $paramj) || (! $mustbeequal && index($parami,$paramj)>-1)) {
-					if ($Debug) { debug(" Elem $i (@$array[$i]) already treated with elem $j (@$array[$j])",4); }
+				if (index($parami,$paramj)>-1) {
+					if ($Debug) { debug(" Elem $i (@arrayunreg[$i]) already treated with elem $j (@arrayunreg[$j])",4); }
 					$elemtoremove=$i;
 					last OPTIMIZELOOP;
 				}
 			}
 		}
 		if ($elemtoremove > -1) {
-			if ($Debug) { debug(" Remove elem $elemtoremove - @$array[$elemtoremove]",4); }
-			splice @$array, $elemtoremove, 1;
+			if ($Debug) { debug(" Remove elem $elemtoremove - @arrayunreg[$elemtoremove]",4); }
+			splice @arrayunreg, $elemtoremove, 1;
 			$searchlist=$elemtoremove;
 		}
 		else {
 			$searchlist=-1;
 		}
 	}
+	if ($notcasesensitive) { return map{qr/$_/i} @arrayunreg; }
+	return map{qr/$_/} @arrayunreg;
 }
 
 #------------------------------------------------------------------------------
 # Function:     Check if parameter is in SkipDNSLookupFor array
-# Parameters:	ip @SkipDNSLookupFor
+# Parameters:	ip @SkipDNSLookupFor (a NOT case sensitive precompiled regex array)
 # Return:		0 Not found, 1 Found
 #------------------------------------------------------------------------------
 sub SkipDNSLookup {
-	foreach my $match (@SkipDNSLookupFor) { if ($_[0] =~ /$match/i) { return 1; } }
+	foreach (@SkipDNSLookupFor) { if ($_[0] =~ /$_/) { return 1; } }
 	0; # Not in @SkipDNSLookupFor
 }
 
 #------------------------------------------------------------------------------
-# Function:     Check if parameter is in SkiHosts array
-# Parameters:	host @SkipHosts
+# Function:     Check if parameter is in SkipHosts array
+# Parameters:	host @SkipHosts (a NOT case sensitive precompiled regex array)
 # Return:		0 Not found, 1 Found
 #------------------------------------------------------------------------------
 sub SkipHost {
-	foreach my $match (@SkipHosts) { if ($_[0] =~ /$match/i) { return 1; } }
+	foreach (@SkipHosts) { if ($_[0] =~ /$_/) { return 1; } }
 	0; # Not in @SkipHosts
 }
 
 #------------------------------------------------------------------------------
 # Function:     Check if parameter is in SkipUserAgents array
-# Parameters:	useragent @SkipUserAgents
+# Parameters:	useragent @SkipUserAgents (a NOT case sensitive precompiled regex array)
 # Return:		0 Not found, 1 Found
 #------------------------------------------------------------------------------
 sub SkipUserAgent {
-	foreach my $match (@SkipUserAgents) { if ($_[0] =~ /$match/i) { return 1; } }
+	foreach (@SkipUserAgents) { if ($_[0] =~ /$_/) { return 1; } }
 	0; # Not in @SkipUserAgent
 }
 
 #------------------------------------------------------------------------------
-# Function:     Check if parameter is in SkiFiles array
-# Parameters:	url @SkipFiles
+# Function:     Check if parameter is in SkipFiles array
+# Parameters:	url @SkipFiles (a NOT case sensitive precompiled regex array)
 # Return:		0 Not found, 1 Found
 #------------------------------------------------------------------------------
 sub SkipFile {
-	foreach my $match (@SkipFiles) { if ($_[0] =~ /$match/i) { return 1; } }
+	foreach (@SkipFiles) { if ($_[0] =~ /$_/) { return 1; } }
 	0; # Not in @SkipFiles
 }
 
 #------------------------------------------------------------------------------
 # Function:     Check if parameter is in OnlyHosts array
-# Parameters:	host @OnlyHosts
+# Parameters:	host @OnlyHosts (a NOT case sensitive precompiled regex array)
 # Return:		0 Not found, 1 Found
 #------------------------------------------------------------------------------
 sub OnlyHost {
-	foreach my $match (@OnlyHosts) { if ($_[0] =~ /$match/i) { return 1; } }
+	foreach (@OnlyHosts) { if ($_[0] =~ /$_/) { return 1; } }
 	0; # Not in @OnlyHosts
 }
 
 #------------------------------------------------------------------------------
 # Function:     Check if parameter is in OnlyUserAgents array
-# Parameters:	useragent @OnlyUserAgents
+# Parameters:	useragent @OnlyUserAgents (a NOT case sensitive precompiled regex array)
 # Return:		0 Not found, 1 Found
 #------------------------------------------------------------------------------
 sub OnlyUserAgent {
-	foreach my $match (@OnlyUserAgents) { if ($_[0] =~ /$match/i) { return 1; } }
+	foreach (@OnlyUserAgents) { if ($_[0] =~ /$_/) { return 1; } }
 	0; # Not in @OnlyHosts
 }
 
 #------------------------------------------------------------------------------
 # Function:     Check if parameter is in OnlyFiles array
-# Parameters:	url @OnlyFiles
+# Parameters:	url @OnlyFiles (a NOT case sensitive precompiled regex array)
 # Return:		0 Not found, 1 Found
 #------------------------------------------------------------------------------
 sub OnlyFile {
-	foreach my $match (@OnlyFiles) { if ($_[0] =~ /$match/i) { return 1; } }
+	foreach (@OnlyFiles) { if ($_[0] =~ /$_/) { return 1; } }
 	0; # Not in @OnlyFiles
 }
 
@@ -1105,7 +1107,7 @@ sub Parse_Config {
 			foreach my $elem (split(/\s+/,$value))	{
 				if ($elem =~ /^REGEX\[(.*)\]$/i) { $elem=$1; }
 				else { $elem='^'.quotemeta($elem).'$'; }
-				if ($elem) { push @HostAliases,$elem; }
+				if ($elem) { push @HostAliases, qr/$elem/i; }
 			}
 			next;
 			}
@@ -1114,7 +1116,7 @@ sub Parse_Config {
 			foreach my $elem (split(/\s+/,$value))	{
 				if ($elem =~ /^REGEX\[(.*)\]$/i) { $elem=$1; }
 				else { $elem='^'.quotemeta($elem).'$'; }
-				if ($elem) { push @SkipDNSLookupFor,$elem; }
+				if ($elem) { push @SkipDNSLookupFor, qr/$elem/i; }
 			}
 			next;
 			}
@@ -1135,7 +1137,7 @@ sub Parse_Config {
 			foreach my $elem (split(/\s+/,$value))	{
 				if ($elem =~ /^REGEX\[(.*)\]$/i) { $elem=$1; }
 				else { $elem='^'.quotemeta($elem).'$'; }
-				if ($elem) { push @SkipHosts,$elem; }
+				if ($elem) { push @SkipHosts, qr/$elem/i; }
 			}
 			next;
 			}
@@ -1143,7 +1145,7 @@ sub Parse_Config {
 			foreach my $elem (split(/\s+/,$value))	{
 				if ($elem =~ /^REGEX\[(.*)\]$/i) { $elem=$1; }
 				else { $elem='^'.quotemeta($elem).'$'; }
-				if ($elem) { push @SkipUserAgents,$elem; }
+				if ($elem) { push @SkipUserAgents, qr/$elem/i; }
 			}
 			next;
 			}
@@ -1151,7 +1153,7 @@ sub Parse_Config {
 			foreach my $elem (split(/\s+/,$value))	{
 				if ($elem =~ /^REGEX\[(.*)\]$/i) { $elem=$1; }
 				else { $elem='^'.quotemeta($elem).'$'; }
-				if ($elem) { push @SkipFiles,$elem; }
+				if ($elem) { push @SkipFiles, qr/$elem/i; }
 			}
 			next;
 			}
@@ -1159,7 +1161,7 @@ sub Parse_Config {
 			foreach my $elem (split(/\s+/,$value))	{
 				if ($elem =~ /^REGEX\[(.*)\]$/i) { $elem=$1; }
 				else { $elem='^'.quotemeta($elem).'$'; }
-				if ($elem) { push @OnlyHosts,$elem; }
+				if ($elem) { push @OnlyHosts, qr/$elem/i; }
 			}
 			next;
 			}
@@ -1167,7 +1169,7 @@ sub Parse_Config {
 			foreach my $elem (split(/\s+/,$value))	{
 				if ($elem =~ /^REGEX\[(.*)\]$/i) { $elem=$1; }
 				else { $elem='^'.quotemeta($elem).'$'; }
-				if ($elem) { push @OnlyUserAgents,$elem; }
+				if ($elem) { push @OnlyUserAgents, qr/$elem/i; }
 			}
 			next;
 			}
@@ -1175,7 +1177,7 @@ sub Parse_Config {
 			foreach my $elem (split(/\s+/,$value))	{
 				if ($elem =~ /^REGEX\[(.*)\]$/i) { $elem=$1; }
 				else { $elem='^'.quotemeta($elem).'$'; }
-				if ($elem) { push @OnlyFiles,$elem; }
+				if ($elem) { push @OnlyFiles, qr/$elem/i; }
 			}
 			next;
 			}
@@ -4016,6 +4018,18 @@ sub DecodeEncodedString {
 }
 
 #------------------------------------------------------------------------------
+# Function:     Decode an precompiled regex value to a common regex value
+# Parameters:   compiledregextodecode
+# Input:        None
+# Output:       None
+# Return:		standardregex
+#------------------------------------------------------------------------------
+sub UnCompileRegex {
+	shift =~ /\(\?[-\w]*:(.*)\)/;
+	return $1;
+}
+
+#------------------------------------------------------------------------------
 # Function:     Clean a string of HTML tags to avoid 'Cross Site Scripting attacks'
 # Parameters:   stringtodecode
 # Input:        None
@@ -4133,7 +4147,7 @@ sub IsLocalEMail {
 	if ($email !~ /\@(.*)$/) { return 0; }
 	my $domain=$1;
 	if ($domain =~ /^$SiteDomain$/i) { return 1; }
-	foreach my $match (@HostAliases) { if ($domain =~ /$match/i) { return 1; } }
+	foreach (@HostAliases) { if ($domain =~ /$_/) { return 1; } }
 	return -1;
 }
 
@@ -4771,6 +4785,7 @@ sub DefinePerlParsingFormat {
 	if ($pos_url < 0) { error("Your personalized LogFormat does not include all fields required by AWStats (Add \%methodurl or \%url in your LogFormat string)."); }
 	if ($pos_code < 0) { error("Your personalized LogFormat does not include all fields required by AWStats (Add \%code in your LogFormat string)."); }
 	if ($pos_size < 0) { error("Your personalized LogFormat does not include all fields required by AWStats (Add \%bytesd in your LogFormat string)."); }
+	$PerlParsingFormat=qr/^$PerlParsingFormat/;
 	if ($Debug) { debug(" PerlParsingFormat is $PerlParsingFormat"); }
 }
 
@@ -5476,22 +5491,44 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 	# Complete HostAliases array
 	if (! @HostAliases) {
 		warning("Warning: HostAliases parameter is not defined, $PROG choose \"$SiteDomain localhost 127.0.0.1\".");
-		push @HostAliases,"$SiteToAnalyze"; push @HostAliases,"localhost"; push @HostAliases,"127\.0\.0\.1";
+		push @HostAliases,qr/^$SiteToAnalyze$/i; push @HostAliases,qr/^localhost$/i; push @HostAliases,qr/^127\.0\.0\.1$/i;
 	}
-	unshift @HostAliases,"$SiteToAnalyze";	# Add SiteToAnalyze as first value
+	unshift @HostAliases,qr/^$SiteToAnalyze$/i;	# Add SiteToAnalyze as first value
 
-	# Optimize HostAliases, SkipDNSLookupFor, SkipHosts, SkipUserAgents, SkipFiles, OnlyHosts, OnlyUserAgnts, OnlyFiles array
-	&OptimizeArray(\@HostAliases,1,1); if ($Debug) { debug("HostAliases is now @HostAliases",1); }
-	&OptimizeArray(\@SkipDNSLookupFor,1,0); if ($Debug) { debug("SkipDNSLookupFor is now @SkipDNSLookupFor",1); }
-	&OptimizeArray(\@SkipHosts,1,0); if ($Debug) { debug("SkipHosts is now @SkipHosts",1); }
-	&OptimizeArray(\@SkipUserAgents,1,0); if ($Debug) { debug("SkipUserAgents is now @SkipUserAgents",1); }
-	&OptimizeArray(\@SkipFiles,0,0); if ($Debug) { debug("SkipFiles is now @SkipFiles",1); }
-	&OptimizeArray(\@OnlyHosts,1,0); if ($Debug) { debug("OnlyHosts is now @OnlyHosts",1); }
-	&OptimizeArray(\@OnlyUserAgents,1,0); if ($Debug) { debug("OnlyUserAgents is now @OnlyUserAgents",1); }
-	&OptimizeArray(\@OnlyFiles,0,0); if ($Debug) { debug("OnlyFiles is now @OnlyFiles",1); }
+	# Optimize arrays
+	@HostAliases=&OptimizeArray(\@HostAliases,1); if ($Debug) { debug("HostAliases is now @HostAliases",1); }
+	@SkipDNSLookupFor=&OptimizeArray(\@SkipDNSLookupFor,1); if ($Debug) { debug("SkipDNSLookupFor is now @SkipDNSLookupFor",1); }
+	@SkipHosts=&OptimizeArray(\@SkipHosts,1); if ($Debug) { debug("SkipHosts is now @SkipHosts",1); }
+	@SkipUserAgents=&OptimizeArray(\@SkipUserAgents,1); if ($Debug) { debug("SkipUserAgents is now @SkipUserAgents",1); }
+	@SkipFiles=&OptimizeArray(\@SkipFiles,$URLNotCaseSensitive); if ($Debug) { debug("SkipFiles is now @SkipFiles",1); }
+	@OnlyHosts=&OptimizeArray(\@OnlyHosts,1); if ($Debug) { debug("OnlyHosts is now @OnlyHosts",1); }
+	@OnlyUserAgents=&OptimizeArray(\@OnlyUserAgents,1); if ($Debug) { debug("OnlyUserAgents is now @OnlyUserAgents",1); }
+	@OnlyFiles=&OptimizeArray(\@OnlyFiles,$URLNotCaseSensitive); if ($Debug) { debug("OnlyFiles is now @OnlyFiles",1); }
+	$MiscTrackerUrl=qr/^$MiscTrackerUrl/;
+	@RobotsSearchIDOrder=map{qr/$_/i} @RobotsSearchIDOrder;
+	@BrowsersSearchIDOrder=map{qr/$_/i} @BrowsersSearchIDOrder;
+	@OSSearchIDOrder=map{qr/$_/i} @OSSearchIDOrder;
+	@SearchEnginesSearchIDOrder=map{qr/$_/i} @SearchEnginesSearchIDOrder;
+	my $defquoted=quotemeta("/$DefaultFile[0]");
+	my ($sregtruncanchor,$sregtruncurl,$sregext,$sregdefault,$segipv4,$segipv6)=();
+	my ($segvermsie,$segvernetscape,$segvermozilla,$segother1,$segother2,$segreferer,$segreferernoquery)=();
+	$sregtruncanchor=qr/#(\w*)$/;
+	$sregtruncurl=qr/([$URLQuerySeparators])(.*)$/;
+	$sregext=qr/\.(\w{1,6})$/;
+	if ($URLNotCaseSensitive) { $sregdefault=qr/$defquoted$/i; }
+	else { $sregdefault=qr/$defquoted$/; }
+	$segipv4=qr/^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/;
+	$segipv6=qr/^[0-9A-F]*:/i;
+	$segvermsie=qr/msie([+_ ]|)([\d\.]*)/i;
+	$segvernetscape=qr/netscape.?\/([\d\.]*)/i;
+	$segvermozilla=qr/mozilla(\/|)([\d\.]*)/i;
+	$segother1=qr/webtv|omniweb|opera/i;
+	$segother2=qr/gecko|compatible|opera|galeon|safari/i;
+	$segreferer=qr/^(\w+):\/\/([^\/:]+)(:\d+|)/;
+	$segreferernoquery=qr/^([^$URLQuerySeparators]+)/;
 
 	# Define value of $PerlParsingFormat and @fieldlib
-	DefinePerlParsingFormat();
+	&DefinePerlParsingFormat();
 
 	# Load DNS Cache Files
 	#------------------------------------------
@@ -5538,10 +5575,10 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 		seek(LOG,$LastLineOffset,0);
 		if ($_=<LOG>) {
 			chomp $_; s/\r$//;
-			@field=map(/^$PerlParsingFormat/,$_);
+			@field=map(/$PerlParsingFormat/,$_);
 			if ($Debug) {
 				my $string='';
-				foreach my $key (0..@field-1) {	$string.="$fieldlib[$key]=$field[$key] "; }
+				foreach (0..@field-1) {	$string.="$fieldlib[$_]=$field[$_] "; }
 				debug(" Read line after direct access: $string",1);
 			}
 			my $checksum=&CheckSum($_);
@@ -5592,7 +5629,7 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 		}
 
 		# Parse line record to get all required fields
-		if (! (@field=map(/^$PerlParsingFormat/,$_))) {
+		if (! (@field=map(/$PerlParsingFormat/,$_))) {
 			$NbOfLinesCorrupted++;
 			if ($ShowCorrupted) {
 				if ($_ =~ /^#/ || $_ =~ /^!/) { print "Corrupted record line ".($lastlinenumber+$NbOfLinesParsed)." (comment line): $_\n"; }
@@ -5614,8 +5651,8 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 		#----------------------------------------------------------------------
 		if ($pos_vh>=0 && $field[$pos_vh] !~ /^$SiteDomain$/i) {
 			my $skip=1;
-			foreach my $key (@HostAliases) {
-				if ($field[$pos_vh] =~ m/$key$/i) { $skip=0; next; }
+			foreach (@HostAliases) {
+				if ($field[$pos_vh] =~ /$_/) { $skip=0; last; }
 			}
 			if ($skip) {
 				$NbOfLinesDropped++;
@@ -5754,7 +5791,7 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 
 		# Check misc tracker (must be before return code)
 		#------------------------------------------------
-		if ($field[$pos_url] =~ /^$MiscTrackerUrl/) {
+		if ($field[$pos_url] =~ /$MiscTrackerUrl/) {
 			my $query=$field[$pos_url];
 			if ($pos_query >=0 && $field[$pos_query]) { $query=$field[$pos_query]; } # For this fucking IIS in pos_query mode
 			my $foundparam=0;
@@ -5836,8 +5873,9 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 				my $uarobot=$TmpRobot{$UserAgent};
 				if (! $uarobot) {
 					#study $UserAgent;		Does not increase speed
-					foreach my $bot (@RobotsSearchIDOrder) {
-						if ($UserAgent =~ /$bot/i) {
+					foreach (@RobotsSearchIDOrder) {
+						if ($UserAgent =~ /$_/) {
+							my $bot=&UnCompileRegex($_);
 							$TmpRobot{$UserAgent}=$uarobot="$bot";	# Last time, we won't search if robot or not. We know it is.
 							if ($Debug) { debug(" UserAgent '$UserAgent' is added to TmpRobot with value '$bot'",2); }
 							last;
@@ -5862,13 +5900,13 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 		# Canonize and clean target URL and referrer URL
 		# to define urlwithnoquery, tokenquery and standalonequery and $field[$pos_url]
 		#-----------------------------------------------
-		if ($URLNotCaseSensitive) { $field[$pos_url] =~ tr/A-Z/a-z/; }
+		if ($URLNotCaseSensitive) { $field[$pos_url]=lc($field[$pos_url]); }
 		# Possible URL syntax for $field[$pos_url]: /mydir/mypage.ext?param1=x&param2=y#aaa, /mydir/mypage.ext#aaa, /
 		my $urlwithnoquery; my $tokenquery; my $standalonequery; my $anchor='';
-		if ($field[$pos_url] =~ s/#(\w*)$//) { $anchor=$1; }	# Remove and save anchor
+		if ($field[$pos_url] =~ s/$sregtruncanchor//o) { $anchor=$1; }	# Remove and save anchor
 		if ($URLWithQuery) {
 			$urlwithnoquery=$field[$pos_url];
-			my $foundparam=($urlwithnoquery =~ s/([$URLQuerySeparators])(.*)$//);
+			my $foundparam=($urlwithnoquery =~ s/$sregtruncurl//o);
 			$tokenquery=$1||'';
 			$standalonequery=$2||'';
 			# For IIS setup, if pos_query is enabled we need to combine the URL to query strings
@@ -5890,7 +5928,7 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 		}
 		else {
 			# Trunc parameters of URL
-			$field[$pos_url] =~ s/([$URLQuerySeparators])(.*)$//;
+			$field[$pos_url] =~ s/$sregtruncurl//o;
 			$urlwithnoquery=$field[$pos_url];
 			$tokenquery=$1||'';
 			$standalonequery=$2||'';
@@ -5905,7 +5943,7 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 		my $PageBool=1;
 		# Extension
 		my $extension;
-		if ($urlwithnoquery =~ /\.(\w{1,6})$/ || ($urlwithnoquery =~ /[\\\/]$/ && $DefaultFile[0] =~ /\.(\w{1,6})$/)) {
+		if ($urlwithnoquery =~ /$sregext/o || ($urlwithnoquery =~ /[\\\/]$/ && $DefaultFile[0] =~ /$sregext/o)) {
 			$extension=($LevelForFileTypesDetection>=2 || $MimeHashFamily{$1})?lc($1):'Unknown';
 			if ($NotPageList{$extension}) { $PageBool=0; }
 		}
@@ -5937,8 +5975,7 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 		if ($PageBool) {
 			# Replace default page name with / only ('if' is to increase speed when only 1 value in @DefaultFile)
 			if (@DefaultFile > 1) { foreach my $elem (@DefaultFile) { if ($field[$pos_url] =~ s/\/$elem$/\//) { last; } } }
-			else { $field[$pos_url] =~ s/\/$DefaultFile[0]$/\//; }
-
+			else { $field[$pos_url] =~ s/$sregdefault/\//; }
 			# FirstTime and LastTime are First and Last human visits (so changed if access to a page)
 			$FirstTime{$lastprocessedyearmonth}||=$timerecord;
 			$LastTime{$lastprocessedyearmonth}=$timerecord;
@@ -5956,7 +5993,7 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 		if ($pos_logname>=0 && $field[$pos_logname] && $field[$pos_logname] ne '-') {
 			$field[$pos_logname] =~ s/ /_/g; # This is to allow space in logname
 			if ($LogFormat eq '6') { $field[$pos_logname] =~ s/^\"//; $field[$pos_logname] =~ s/\"$//;}	# logname field has " with Domino 6+
-			if ($AuthenticatedUsersNotCaseSensitive) { $field[$pos_logname] =~ tr/A-Z/a-z/; }
+			if ($AuthenticatedUsersNotCaseSensitive) { $field[$pos_logname]=lc($field[$pos_logname]); }
 
 			# We found an authenticated user
 			if ($PageBool) {
@@ -5983,8 +6020,8 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 		my $HostResolved='';
 		my $ip=0;
 		if ($DNSLookup) {			# DNS lookup is 1 or 2
-			if ($Host =~ /^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/) { $ip=4; }	# IPv4
-			elsif ($Host =~ /^[0-9A-F]*:/i) { $ip=6; }						# IPv6
+			if ($Host =~ /$segipv4/o) { $ip=4; }	# IPv4
+			elsif ($Host =~ /$segipv6/o) { $ip=6; }						# IPv6
 			if ($ip) {
 				# Check in static DNS cache file
 				$HostResolved=$MyDNSTable{$Host};
@@ -6002,7 +6039,7 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 						else {
 							if ($ip == 4) {
 								my $lookupresult=gethostbyaddr(pack("C4",split(/\./,$Host)),AF_INET);	# This is very slow, may spend 20 seconds
-								if (! $lookupresult || $lookupresult =~ /^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/ || ! IsAscii($lookupresult)) {
+								if (! $lookupresult || $lookupresult =~ /$segipv4/o || ! IsAscii($lookupresult)) {
 									$TmpDNSLookup{$Host}=$HostResolved='*';
 								}
 								else {
@@ -6039,8 +6076,8 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 			}
 		}
 		else {
-			if ($Host =~ /^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/) { $HostResolved='*'; $ip=4; }	# IPv4
-			elsif ($Host =~ /^[0-9A-F]*:/i) { $HostResolved='*'; $ip=6; }						# IPv6
+			if ($Host =~ /$segipv4/o) { $HostResolved='*'; $ip=4; }	# IPv4
+			elsif ($Host =~ /$segipv6/o) { $HostResolved='*'; $ip=6; }						# IPv6
 			if ($Debug) { debug("  No DNS lookup asked.",4); }
 		}
 
@@ -6171,27 +6208,28 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 				if (! $uabrowser) {
 					my $found=1;
 					# IE
-					if (($UserAgent =~ /msie([+_ ]|)([\d\.]*)/i) && ($UserAgent !~ /webtv/i) && ($UserAgent !~ /omniweb/i) && ($UserAgent !~ /opera/i)) {
+					if ($UserAgent =~ /$segvermsie/o && $UserAgent !~ /$segother1/o) {
 						$_browser_h{"msie$2"}++;
 						$TmpBrowser{$UserAgent}="msie$2";
 					}
 					# Netscape 6.x, 7.x ...
-					elsif ($UserAgent =~ /netscape.?\/([\d\.]*)/i) {
+					elsif ($UserAgent =~ /$segvernetscape/o) {
 						$_browser_h{"netscape$1"}++;
 						$TmpBrowser{$UserAgent}="netscape$1";
 					}
 					# Netscape 3.x, 4.x ...
-					elsif (($UserAgent =~ /mozilla(\/|)([\d\.]*)/i) && ($UserAgent !~ /gecko/i) && ($UserAgent !~ /compatible/i) && ($UserAgent !~ /opera/i) && ($UserAgent !~ /galeon/i) && ($UserAgent !~ /safari/i)) {
+					elsif ($UserAgent =~ /$segvermozilla/o && $UserAgent !~ /$segother2/o) {
 						$_browser_h{"netscape$2"}++;
 						$TmpBrowser{$UserAgent}="netscape$2";
 					}
 					# Other
 					else {
 						$found=0;
-						foreach my $key (@BrowsersSearchIDOrder) {	# Search ID in order of BrowsersSearchIDOrder
-							if ($UserAgent =~ /$key/i) {
-								$_browser_h{"$key"}++;
-								$TmpBrowser{$UserAgent}="$key";
+						foreach (@BrowsersSearchIDOrder) {	# Search ID in order of BrowsersSearchIDOrder
+							if ($UserAgent =~ /$_/) {
+								my $browser=&UnCompileRegex($_);
+								$_browser_h{"$browser"}++;
+								$TmpBrowser{$UserAgent}="$browser";
 								$found=1;
 								last;
 							}
@@ -6223,9 +6261,9 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 				if (! $uaos) {
 					my $found=0;
 					# in OSHashID list ?
-					foreach my $key (@OSSearchIDOrder) {	# Search ID in order of OSSearchIDOrder
-						if ($UserAgent =~ /$key/i) {
-							my $osid=$OSHashID{$key};
+					foreach (@OSSearchIDOrder) {	# Search ID in order of OSSearchIDOrder
+						if ($UserAgent =~ /$_/) {
+							my $osid=$OSHashID{&UnCompileRegex($_)};
 							$_os_h{"$osid"}++;
 							$TmpOS{$UserAgent}="$osid";
 							$found=1;
@@ -6263,12 +6301,13 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 
 			# Direct ?
 			if ($field[$pos_referer] eq '-' || $field[$pos_referer] eq 'bookmarks') {	# "bookmarks" is sent by Netscape, '-' by all others browsers
+				# Direct access
 				if ($PageBool) { $_from_p[0]++; }
 				$_from_h[0]++;
 				$found=1;
 			}
 			else {
-				$field[$pos_referer] =~ /^(\w+):\/\/([^\/:]+)(:\d+|)/;
+				$field[$pos_referer] =~ /$segreferer/o;
 				my $refererprot=$1;
 				my $refererserver=$2.($3 eq ':80'?'':$3);	# refererserver is www.xxx.com or www.xxx.com:81 but not www.xxx.com:80
 
@@ -6285,8 +6324,8 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 							$found=1;
 						}
 						else {
-							foreach my $key (@HostAliases) {
-								if ($refererserver =~ /$key/i) {
+							foreach (@HostAliases) {
+								if ($refererserver =~ /$_/) {
 									# Intern (This hit came from another page of the site)
 									if ($Debug) { debug("  Server '$refererserver' is added to TmpRefererServer with value '='",2); }
 									$TmpRefererServer{$refererserver}='=';
@@ -6299,8 +6338,9 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 	
 								if ($LevelForSearchEnginesDetection) {
 	
-									foreach my $key (@SearchEnginesSearchIDOrder) {		# Search ID in order of SearchEnginesSearchIDOrder
-										if ($refererserver =~ /$key/i) {
+									foreach (@SearchEnginesSearchIDOrder) {		# Search ID in order of SearchEnginesSearchIDOrder
+										if ($refererserver =~ /$_/) {
+											my $key=&UnCompileRegex($_);
 											if (! $NotSearchEnginesKeys{$key} || $refererserver !~ /$NotSearchEnginesKeys{$key}/i) {
 												# This hit came from the search engine $key
 												if ($Debug) { debug("  Server '$refererserver' is added to TmpRefererServer with value '$key'",2); }
@@ -6379,7 +6419,8 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 							$_pagesrefs_h{$field[$pos_referer]}++;
 						}
 						else {
-							if ($field[$pos_referer]=~/^([^$URLQuerySeparators]+)/) {
+							# We discard query for referer
+							if ($field[$pos_referer]=~/$segreferernoquery/o) {
 								if ($PageBool) { $_pagesrefs_p{"$1"}++; }
 								$_pagesrefs_h{"$1"}++;
 							}
@@ -6433,26 +6474,26 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
  			my $conditionok=0;
  			foreach my $condnum (0..@{$ExtraConditionType[$extranum]}-1) {
  				my $conditiontype=$ExtraConditionType[$extranum][$condnum];
- 				my $conditiontypeval=$ExtraConditionTypeVal[$extranum][$condnum];
+ 				my $conditiontypeval=qr/$ExtraConditionTypeVal[$extranum][$condnum]/i;
  				if ($conditiontype eq 'URL') {
 					if ($Debug) { debug(" Check condition '$conditiontype' must contain '$conditiontypeval' in $urlwithnoquery.",5); }
- 					if ($urlwithnoquery =~ m/$conditiontypeval/) { $conditionok=1; last; }
+ 					if ($urlwithnoquery =~ /$conditiontypeval/o) { $conditionok=1; last; }
  				}
  				elsif ($conditiontype eq 'QUERY_STRING') {
 					if ($Debug) { debug(" Check condition '$conditiontype' must contain '$conditiontypeval' in $standalonequery.",5); }
- 					if ($standalonequery =~ m/$conditiontypeval/) {	$conditionok=1; last; }
+ 					if ($standalonequery =~ /$conditiontypeval/o) {	$conditionok=1; last; }
  				}
  				elsif ($conditiontype eq 'REFERER') {
 					if ($Debug) { debug(" Check condition '$conditiontype' must contain '$conditiontypeval' in $field[$pos_referer]",5); }
- 					if ($field[$pos_referer] =~ m/$conditiontypeval/) { $conditionok=1; last; }
+ 					if ($field[$pos_referer] =~ /$conditiontypeval/o) { $conditionok=1; last; }
  				}
  				elsif ($conditiontype eq 'UA') {
 					if ($Debug) { debug(" Check condition '$conditiontype' must contain '$conditiontypeval' in $field[$pos_agent]",5); }
- 					if ($field[$pos_agent] =~ m/$conditiontypeval/) { $conditionok=1; last; }
+ 					if ($field[$pos_agent] =~ /$conditiontypeval/o) { $conditionok=1; last; }
  				}
  				elsif ($conditiontype eq 'HOST') {
 					if ($Debug) { debug(" Check condition '$conditiontype' must contain '$conditiontypeval' in $field[$pos_host]",5); }
- 					if ($HostResolved =~ m/$conditiontypeval/) { $conditionok=1; last; }
+ 					if ($HostResolved =~ /$conditiontypeval/o) { $conditionok=1; last; }
  				}
  				else { error("Wrong value of parameter ExtraSectionCondition$extranum"); }
  			}
@@ -6465,21 +6506,21 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 			my $rowkeyok=0;
  			foreach my $rowkeynum (0..@{$ExtraFirstColumnValuesType[$extranum]}-1) {
  				my $rowkeytype=$ExtraFirstColumnValuesType[$extranum][$rowkeynum];
- 				my $rowkeytypeval=$ExtraFirstColumnValuesTypeVal[$extranum][$rowkeynum];
+ 				my $rowkeytypeval=qr/$ExtraFirstColumnValuesTypeVal[$extranum][$rowkeynum]/i;
 				if ($rowkeytype eq 'URL') { 
-					if ($urlwithnoquery =~ m/$rowkeytypeval/) { $rowkeyval = "$1"; $rowkeyok = 1; last; }
+					if ($urlwithnoquery =~ /$rowkeytypeval/o) { $rowkeyval = "$1"; $rowkeyok = 1; last; }
 				} 
  				elsif ($rowkeytype eq 'QUERY_STRING') {
- 					if ($standalonequery =~ m/$rowkeytypeval/) { $rowkeyval = "$1"; $rowkeyok = 1; last; }
+ 					if ($standalonequery =~ /$rowkeytypeval/o) { $rowkeyval = "$1"; $rowkeyok = 1; last; }
  				}
  				elsif ($rowkeytype eq 'REFERER') {
- 					if ($field[$pos_referer] =~ m/$rowkeytypeval/) { $rowkeyval = "$1"; $rowkeyok = 1; last; }
+ 					if ($field[$pos_referer] =~ /$rowkeytypeval/o) { $rowkeyval = "$1"; $rowkeyok = 1; last; }
  				}
  				elsif ($rowkeytype eq 'UA') {
- 					if ($field[$pos_agent] =~ m/$rowkeytypeval/) { $rowkeyval = "$1"; $rowkeyok = 1; last; }
+ 					if ($field[$pos_agent] =~ /$rowkeytypeval/o) { $rowkeyval = "$1"; $rowkeyok = 1; last; }
  				}
  				elsif ($rowkeytype eq 'HOST') {
- 					if ($HostResolved =~ m/$rowkeytypeval/) { $rowkeyval = "$1"; $rowkeyok = 1; last; }
+ 					if ($HostResolved =~ /$rowkeytypeval/o) { $rowkeyval = "$1"; $rowkeyok = 1; last; }
  				}
  				else { error("Wrong value of parameter ExtraSectionFirstColumnValues$extranum"); }
  			}
