@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 #-----------------------------------------------------------------------------
 # HostInfo AWStats plugin
-# This plugin allow you to add information on hosts, like a whois fields.
+# This plugin allow you to add information on hosts, like whois fields.
 #-----------------------------------------------------------------------------
 # Perl Required Modules: XWhois
 #-----------------------------------------------------------------------------
@@ -12,6 +12,7 @@
 # ENTER HERE THE USE COMMAND FOR ALL REQUIRED PERL MODULES
 push @INC, "${DIR}/plugins";
 if (!eval ('require "Net/XWhois.pm";')) { return $@?"Error: $@":"Error: Need Perl module Net::XWhois"; }
+if (!eval ('require "Digest/MD5.pm";')) { return $@?"Error: $@":"Error: Need Perl module Digest::MD5"; }
 # ----->
 use strict;no strict "refs";
 
@@ -72,8 +73,7 @@ sub AddHTMLBodyHeader_hostinfo {
 function neww(a,b) {
 var wfeatures="directories=0,menubar=1,status=0,resizable=1,scrollbars=1,toolbar=0,width=$WIDTHINFO,height=$HEIGHTINFO,left=" + eval("(screen.width - $WIDTHINFO)/2") + ",top=" + eval("(screen.height - $HEIGHTINFO)/2");
 EOF
-	print "if (b==1) { fen=window.open('".XMLEncode("$AWScript?$urlparam&host")."='+a,'whois',wfeatures); }\n";
-	print "if (b==2) { fen=window.open('".XMLEncode("$AWScript?$urlparam&host")."='+a,'whois',wfeatures); }\n";
+	print "fen=window.open('".XMLEncode("$AWScript?$urlparam&host")."='+a+'&key='+b,'whois',wfeatures);\n";
 print <<EOF;
 }
 </script>
@@ -102,22 +102,19 @@ sub ShowInfoHost_hostinfo {
 	}
 	elsif ($param) {
 		my $keyforwhois;
-		my $linkforwhois;
 		if ($param =~ /^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/) {	# IPv4 address
 			$keyforwhois=$param;
-			$linkforwhois=2;
 		}
-		elsif ($param =~ /^[0-9A-F]*:/i) {							# IPv6 address
+		elsif ($param =~ /^[0-9A-F]*:/i) {						# IPv6 address
 			$keyforwhois=$param;
-			$linkforwhois=2;
 		}
 		else {	# Hostname
 			$param =~ /([-\w]+\.[-\w]+\.(?:au|uk|jp|nz))$/ or $param =~ /([-\w]+\.[-\w]+)$/;
 			$keyforwhois=$1;
-			$linkforwhois=1;
 		}
 		print "<td>";
-		if ($keyforwhois && $linkforwhois) { print "<a href=\"javascript:neww('$keyforwhois',$linkforwhois)\">?</a>"; }
+#		if ($keyforwhois) { print "<a href=\"javascript:neww('$keyforwhois','".md5_hex("${keyforwhois}XXX")."')\">?</a>"; }
+		if ($keyforwhois) { print "<a href=\"javascript:neww('$keyforwhois','${keyforwhois}XXX')\">?</a>"; }
 		else { print "&nbsp;" }
 		print "</td>";
 	}

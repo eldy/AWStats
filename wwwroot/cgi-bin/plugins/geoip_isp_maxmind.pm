@@ -38,6 +38,7 @@ $geoip_isp_maxmind
 %_isp_k
 %_isp_l
 $MAXNBOFSECTIONGIR
+$MAXLENGTH
 /;
 # ----->
 
@@ -49,6 +50,7 @@ sub Init_geoip_isp_maxmind {
 	my $InitParams=shift;
 	my $checkversion=&Check_Plugin_Version($PluginNeedAWStatsVersion);
     $MAXNBOFSECTIONGIR=10;
+    $MAXLENGTH=20;
     
 	# <-----
 	# ENTER HERE CODE TO DO INIT PLUGIN ACTIONS
@@ -218,7 +220,14 @@ sub ShowInfoHost_geoip_isp_maxmind {
 		if ($key && $ip==4) {
         	my $isp=$geoip_isp_maxmind->org_by_addr($param) if $geoip_isp_maxmind;
         	if ($Debug) { debug("  Plugin geoip_isp_maxmind: GetIspByIp for $param: [$isp]",5); }
-		    if ($isp) { print "$isp"; }
+		    if ($isp) {
+		        if (length($isp) <= $MAXLENGTH) {
+		            print "$isp";
+		        }
+		        else {
+		            print substr($isp,0,$MAXLENGTH).'...';
+		        }
+		    }
 		    else { print "<span style=\"color: #$color_other\">$Message[0]</span>"; }
 		}
 		if ($key && $ip==6) {
@@ -227,7 +236,14 @@ sub ShowInfoHost_geoip_isp_maxmind {
 		if (! $key) {
         	my $isp=$geoip_isp_maxmind->org_by_name($param) if $geoip_isp_maxmind;
         	if ($Debug) { debug("  Plugin geoip_isp_maxmind: GetIspByHostname for $param: [$isp]",5); }
-		    if ($isp) { print "$isp"; }
+		    if ($isp) {
+		        if (length($isp) <= $MAXLENGTH) {
+		            print "$isp";
+		        }
+		        else {
+		            print substr($isp,0,$MAXLENGTH).'...';
+		        }
+		    }
 		    else { print "<span style=\"color: #$color_other\">$Message[0]</span>"; }
 		}
 		print "</td>";

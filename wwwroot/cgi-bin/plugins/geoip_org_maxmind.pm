@@ -38,6 +38,7 @@ $geoip_org_maxmind
 %_org_k
 %_org_l
 $MAXNBOFSECTIONGIR
+$MAXLENGTH
 /;
 # ----->
 
@@ -49,6 +50,7 @@ sub Init_geoip_org_maxmind {
 	my $InitParams=shift;
 	my $checkversion=&Check_Plugin_Version($PluginNeedAWStatsVersion);
     $MAXNBOFSECTIONGIR=10;
+    $MAXLENGTH=20;
     
 	# <-----
 	# ENTER HERE CODE TO DO INIT PLUGIN ACTIONS
@@ -218,7 +220,14 @@ sub ShowInfoHost_geoip_org_maxmind {
 		if ($key && $ip==4) {
         	my $org=$geoip_org_maxmind->org_by_addr($param) if $geoip_org_maxmind;
         	if ($Debug) { debug("  Plugin geoip_org_maxmind: GetOrgByIp for $param: [$org]",5); }
-		    if ($org) { print "$org"; }
+		    if ($org) {
+		        if (length($org) <= $MAXLENGTH) {
+		            print "$org";
+		        }
+		        else {
+		            print substr($org,0,$MAXLENGTH).'...';
+		        }
+		    }
 		    else { print "<span style=\"color: #$color_other\">$Message[0]</span>"; }
 		}
 		if ($key && $ip==6) {
@@ -227,7 +236,14 @@ sub ShowInfoHost_geoip_org_maxmind {
 		if (! $key) {
         	my $org=$geoip_org_maxmind->org_by_name($param) if $geoip_org_maxmind;
         	if ($Debug) { debug("  Plugin geoip_org_maxmind: GetOrgByHostname for $param: [$org]",5); }
-		    if ($org) { print "$org"; }
+		    if ($org) {
+		        if (length($org) <= $MAXLENGTH) {
+		            print "$org";
+		        }
+		        else {
+		            print substr($org,0,$MAXLENGTH).'...';
+		        }
+		    }
 		    else { print "<span style=\"color: #$color_other\">$Message[0]</span>"; }
 		}
 		print "</td>";

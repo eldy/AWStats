@@ -31,7 +31,7 @@ use strict;no strict "refs";
 # ENTER HERE THE MINIMUM AWSTATS VERSION REQUIRED BY YOUR PLUGIN
 # AND THE NAME OF ALL FUNCTIONS THE PLUGIN MANAGE.
 my $PluginNeedAWStatsVersion="5.4";
-my $PluginHooksFunctions="GetCountryCodeByAddr GetCountryCodeByName";
+my $PluginHooksFunctions="GetCountryCodeByAddr GetCountryCodeByName ShowInfoHost";
 # ----->
 
 # <-----
@@ -110,6 +110,74 @@ sub GetCountryCodeByAddr_geoip {
 	elsif ($Debug) { debug("  Plugin geoip: GetCountryCodeByAddr for $param: Already resolved to $res",5); }
 	# ----->
 	return $res;
+}
+
+
+#-----------------------------------------------------------------------------
+# PLUGIN FUNCTION: ShowInfoHost_pluginname
+# UNIQUE: NO (Several plugins using this function can be loaded)
+# Function called to add additionnal columns to the Hosts report.
+# This function is called when building rows of the report (One call for each
+# row). So it allows you to add a column in report, for example with code :
+#   print "<TD>This is a new cell for $param</TD>";
+# Parameters: Host name or ip
+#-----------------------------------------------------------------------------
+sub ShowInfoHost_geoip {
+    my $param="$_[0]";
+	# <-----
+	if ($param eq '__title__') {
+    	my $NewLinkParams=${QueryString};
+    	$NewLinkParams =~ s/(^|&)update(=\w*|$)//i;
+    	$NewLinkParams =~ s/(^|&)output(=\w*|$)//i;
+    	$NewLinkParams =~ s/(^|&)staticlinks(=\w*|$)//i;
+    	$NewLinkParams =~ s/(^|&)framename=[^&]*//i;
+    	my $NewLinkTarget='';
+    	if ($DetailedReportsOnNewWindows) { $NewLinkTarget=" target=\"awstatsbis\""; }
+    	if (($FrameName eq 'mainleft' || $FrameName eq 'mainright') && $DetailedReportsOnNewWindows < 2) {
+    		$NewLinkParams.="&framename=mainright";
+    		$NewLinkTarget=" target=\"mainright\"";
+    	}
+    	$NewLinkParams =~ tr/&/&/s; $NewLinkParams =~ s/^&//; $NewLinkParams =~ s/&$//;
+    	if ($NewLinkParams) { $NewLinkParams="${NewLinkParams}&"; }
+
+		print "<th width=\"80\">";
+        print "<a href=\"#countries\">GeoIP<br>Country</a>";
+        print "</th>";
+	}
+	elsif ($param) {
+        my $ip=0;
+		my $key;
+		if ($param =~ /^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/) {	# IPv4 address
+		    $ip=4;
+			$key=$param;
+		}
+		elsif ($param =~ /^[0-9A-F]*:/i) {						# IPv6 address
+		    $ip=6;
+			$key=$param;
+		}
+		print "<td>";
+		if ($key && $ip==4) {
+        	my $res=lc($gi->country_code_by_addr($param)) if $gi;
+        	if ($Debug) { debug("  Plugin geoip: GetCountryByIp for $param: [$res]",5); }
+		    if ($res) { print $DomainsHashIDLib{$res}; }
+		    else { print "<span style=\"color: #$color_other\">$Message[0]</span>"; }
+		}
+		if ($key && $ip==6) {
+		    print "<span style=\"color: #$color_other\">$Message[0]</span>";
+		}
+		if (! $key) {
+        	my $res=lc($gi->country_code_by_addr($param)) if $gi;
+        	if ($Debug) { debug("  Plugin geoip: GetCountryByHostname for $param: [$res]",5); }
+		    if ($res) { print $DomainsHashIDLib{$res}; }
+		    else { print "<span style=\"color: #$color_other\">$Message[0]</span>"; }
+		}
+		print "</td>";
+	}
+	else {
+		print "<td>&nbsp;</td>";
+	}
+	return 1;
+	# ----->
 }
 
 
