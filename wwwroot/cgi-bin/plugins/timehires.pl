@@ -10,6 +10,6 @@
 use Time::HiRes qw( gettimeofday );
 
 
-$UseHiRes=1;
+$PluginTimeHiRes=1;
 
 1;	# Do not remove this line
