@@ -83,7 +83,7 @@ I - 3) Files
     README.TXT                           This file
     INSTALL.TXT                          Same as README.txt
     COPYING.TXT                          GNU General Public Licence
-    wwwroot/cgi-bin/awstats.pl           The main CGI/command line perl script
+    wwwroot/cgi-bin/awstats.pl           The main command line/CGI perl script
     wwwroot/cgi-bin/awstats.model.conf   An example of AWStats configure file
     wwwroot/icon/browser                 Directory with browsers icons
     wwwroot/icon/clock                   Directory with clocks icons
@@ -122,12 +122,12 @@ II - 1) With Apache Server (on Unix/Linux or Windows)
     * Move all awstats icons sub-directories into a directory readable by your
       web server, for example /yourwwwroot/icon.
 
-    * Copy awstats.model.conf into awstats.www.myserver.mydomain.conf or
-      awstats.conf (when you will run AWStats, it will first look for a config
-      file called awstats.www.myserver.mydomain.conf, and, if not found, will
-      look for awstats.conf). Whatever the name you choose, this new file must
-      be stored in same directory than awstats.pl (so cgi-bin directory) or
-      into /etc/awstats or /etc directory and edit it with your own setup :
+    * Copy awstats.model.conf into awstats.virtualhostname.conf or awstats.conf
+      (when you will run AWStats, it will first look for a config file named
+      awstats.virtualhostname.conf, and, if not found, will look for
+      awstats.conf). Whatever the name you choose, this new file must be stored
+      in same directory than awstats.pl (so cgi-bin directory) or into
+      /etc/awstats or /etc directory, and edit it with your own setup :
       - Edit "SiteDomain" parameter with the main domain name or the intranet
         web server name used to reach the web site to analyse.
       - Change "LogFile" value with full path of your web server log file (You
@@ -139,10 +139,10 @@ II - 1) With Apache Server (on Unix/Linux or Windows)
 
     * To update statistics, launch awstats.pl from the command line interface
       like this (the first time, process may be long) :
-        awstats.pl -site=www.myserver.mydomain -update
-      AWStats will read the config file (awstats.www.myserver.mydomain.conf,
-      or, if not found, awstats.conf) and create/update database where AWStats
-      store all summary informations issued from analyzed log files.
+        awstats.pl -config=virtualhostname -update
+      AWStats will read the config file (awstats.virtualhostname.conf, or, if
+      not found, awstats.conf) and create/update database where AWStats store
+      all summary informations issued from analyzed log files.
       A log analysis process is slow (one second for each 1300 lines of your
       logfile with Athlon 1Ghz, plus DNS resolution time for each different IP
       address in your logfile if DNSLookup=1).
@@ -150,23 +150,23 @@ II - 1) With Apache Server (on Unix/Linux or Windows)
     * Add instructions in your crontab (Unix/Linux) or your scheduler (for
       Windows), to launch frequently this Awstats update process.
       For sites with:
-      - 10,000 visits a month     Launch AWStats every day
-      - 50,000 visits a month     Launch AWStats every 4 hours
-      - 250,000 visits a month    Launch AWStats every hour
-      - 1,000,000 visits a month  Launch AWStats every hour
-      This is ABSOLUTELY necessary to keep good performances. See tab on
-      AWStats FAQ page for more accurate informations.
+      - 10,000 visitors a month     Launch AWStats every day
+      - 50,000 visitors a month     Launch AWStats every 4 hours
+      - 250,000 visitors a month    Launch AWStats every hour
+      - 1,000,000 visitors a month  Launch AWStats every hour
+      This is ABSOLUTELY necessary to keep good performances. See AWStats FAQ
+      page (benchmark question) for more accurate informations.
 
     * To see results of analyse, you can build a HTML report from the command
-      line this :
-        awstats.pl -site=www.myserver.mydomain -output > result.html
+      line, like this :
+        awstats.pl -config=virtualhostname -output > result.html
       Or, you can view dynamically your statistics from a browser. For this,
-      if you called your config file awstats.conf, just use URL:
+      if you named your config file awstats.conf, just use URL:
         http://www.myserver.mydomain/cgi-bin/awstats.pl
-      If you called your config file awstats.virtualhost.conf, use URL:
-        http://www.myserver.mydomain/cgi-bin/awstats.pl?site=virtualhost
-      where virtualhost is used to know which config file to use (AWStats will
-      use awstats.virtualhost.conf file).
+      If you named your config file awstats.virtualhostname.conf, use URL:
+        http://www.myserver.mydomain/cgi-bin/awstats.pl?config=virtualhost
+      where virtualhostname is used to know which config file to use (AWStats
+      will use awstats.virtualhostname.conf file).
 
 
 II - 2) With IIS Server
@@ -182,9 +182,9 @@ II - 2) With IIS Server
       web server, for example C:\yourwwwroot\icon and change the "DirIcons"
       parameter in configure file to reflect this directory (Ie: /icon).
 
-    * Copy awstats.model.conf into awstats.www.myserver.mydomain.conf or
-      awstats.conf (when you will run AWStats, it will first look for a config
-      file called awstats.www.myserver.mydomain.conf, and, if not found, will
+    * Copy awstats.model.conf into awstats.virtualhostname.conf or awstats.conf
+      (when you will run AWStats, it will first look for a config file named
+      awstats.virtualhostname.conf, and, if not found, will 
       look for awstats.conf). Whatever the name you choose, this new file must
       be stored in same directory than awstats.pl (so cgi-bin directory) and
       edit it with your own setup :
@@ -198,55 +198,40 @@ II - 2) With IIS Server
 
     * To update statistics, launch awstats.pl from the command line interface
       like this (the first time, process may be long) :
-        awstats.pl -site=www.myserver.mydomain -update
-      AWStats will read the config file (awstats.www.myserver.mydomain.conf,
-      or, if not found, awstats.conf) and create/update database where AWStats
-      store all summary informations issued from analyzed log files.
+        awstats.pl -config=virtualhostname -update
+      AWStats will read the config file (awstats.virtualhostname.conf, or, if
+      not found, awstats.conf) and create/update database where AWStats store
+      all summary informations issued from analyzed log files.
       A log analysis process is slow (one second for each 1300 lines of your
       logfile with Athlon 1Ghz, plus DNS resolution time for each different IP
-      address in your logfile if DNSLookup=1).
-
-    * To update statistics and generate the HTML report page, launch 
-      awstats.pl from the command line interface (the first time, process may
-      be long), like this:
-       awstats.pl site=www.myserver.mydomain > result.html
-      AWStats will use awstats.www.myserver.mydomain.conf config file, and, if
-      not found, will use awstats.conf.
-      This command create/update database where AWStats store all summary
-      informations issued from analyzed log files and create an HTML result
-      page that shows all those informations.
-      A log analysis process is slow (one second for each 570 lines of your
-      logfile with Pentium 300, plus DNS resolution time for each different IP
       address in your logfile if DNSLookup=1).
 
     * Add instructions in a task scheduler to launch frequently this Awstats
       update process.
       For sites with:
-      - 10,000 visits a month     Launch AWStats every day
-      - 50,000 visits a month     Launch AWStats every 4 hours
-      - 250,000 visits a month    Launch AWStats every hour
-      - 1,000,000 visits a month  Launch AWStats every hour
-      This is ABSOLUTELY necessary to keep good performances. See tab on
-      AWStats FAQ page for more accurate informations.
+      - 10,000 visitors a month     Launch AWStats every day
+      - 50,000 visitors a month     Launch AWStats every 4 hours
+      - 250,000 visitors a month    Launch AWStats every hour
+      - 1,000,000 visitors a month  Launch AWStats every hour
+      This is ABSOLUTELY necessary to keep good performances. See AWStats FAQ
+      page (benchmark question) for more accurate informations.
 
       !!! Warning, with IIS, Windows doesn't let AWStats to purge log file
-      after processing it, so performance won't be as good as with Apache
-      server.
-      It's very important you purge/rotate your log file yourself (or let IIS
-      doing it), if you don't want to have very bad performances.
-      The more often you clean your log file, the more faster AWStats will be
-      (See benchmark chapter to known what you can hope).
+      after processing it, so it's very important you purge/rotate your log
+      file yourself (or setup IIS to do it).
+      The more often you clean your log file, the more faster AWStats will be.
+      See AWStats FAQ (benchmark question) for more accurate informations.
 
     * To see results of analyse, you can build a HTML report from the command
-      line this :
-        awstats.pl -site=www.myserver.mydomain -output > result.html
+      line, like this :
+        awstats.pl -config=virtualhostname -output > result.html
       Or, you can view dynamically your statistics from a browser. For this,
-      if you called your config file awstats.conf, just use URL:
+      if you named your config file awstats.conf, just use URL:
         http://www.myserver.mydomain/cgi-bin/awstats.pl
-      If you called your config file awstats.virtualhost.conf, use URL:
-        http://www.myserver.mydomain/cgi-bin/awstats.pl?site=virtualhost
-      where virtualhost is used to know which config file to use (AWStats will
-      use awstats.virtualhost.conf file).
+      If you named your config file awstats.virtualhostname.conf, use URL:
+        http://www.myserver.mydomain/cgi-bin/awstats.pl?config=virtualhostname
+      where virtualhostname is used to know which config file to use (AWStats
+      will use awstats.virtualhostname.conf file).
 
 
 
@@ -260,11 +245,11 @@ AVERAGE: 1300 lines by seconds
 
 However, benchmarks of log analyzer are made without reverse dns lookup
 because this depends on your system, networks and Internet and not on the
-log analyzer you use. But, the reverse dns lookup is 99% of the time
-to make a log analysis.
-So, let's have a look on AWStats F.A.Qs (http://awstats.sourceforge.net) to:
+log analyzer you use. But, the reverse dns lookup can take 95% of the time
+of a log analysis.
+So, let's have a look on AWStats FAQs (benchmark question) to:
 - Get more real ideas on benchmarks results
-- Get more informations and advices on the following optimization setup.
+- Get more informations and advices on a good setup for your site.
 
 This is a summary of main ways to speed up AWStats:
 * You can disable DNSLookup in AWStats (set DNSLookup=0) but this requires
