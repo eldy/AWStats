@@ -8,13 +8,13 @@
 #------------------------------------------------------------------------------
 # $Revision$ - $Author$ - $Date$
 
+#$|=1;
 #use warnings;		# Must be used in test mode only. This reduce a little process speed
 #use diagnostics;	# Must be used in test mode only. This reduce a lot of process speed
 use strict;no strict "refs";
 use Time::Local;	# use Time::Local 'timelocal_nocheck' is faster but not supported by all Time::Local modules
 use Socket;
 
-$|=1;
 
 #------------------------------------------------------------------------------
 # Defines
@@ -106,7 +106,7 @@ $DNSLastUpdateCacheFile
 $MiscTrackerUrl
 $Lang
 $MaxRowsInHTMLOutput
-$MaxLengthOfURL
+$MaxLengthOfShownURL
 $MaxLengthOfStoredURL
 $MaxLengthOfStoredUA
 %BarPng
@@ -119,7 +119,7 @@ $DNSLastUpdateCacheFile='dnscachelastupdate.txt';
 $MiscTrackerUrl=quotemeta('/js/awstats_misc_tracker.js');
 $Lang='auto';
 $MaxRowsInHTMLOutput=1000;
-$MaxLengthOfURL=70;
+$MaxLengthOfShownURL=64;
 $MaxLengthOfStoredURL=256;			# Note: Apache LimitRequestLine is default to 8190
 $MaxLengthOfStoredUA=256;
 %BarPng=('vv'=>'vv.png','vu'=>'vu.png','hu'=>'hu.png','vp'=>'vp.png','hp'=>'hp.png',
@@ -181,7 +181,7 @@ $LevelForFileTypesDetection $LevelForSearchEnginesDetection $LevelForKeywordsDet
 ($AllowFullYearView,
 $LevelForRobotsDetection, $LevelForWormsDetection, $LevelForBrowsersDetection, $LevelForOSDetection, $LevelForRefererAnalyze,
 $LevelForFileTypesDetection, $LevelForSearchEnginesDetection, $LevelForKeywordsDetection)=
-(2,2,2,2,2,2,2,2,2);
+(2,2,0,2,2,2,2,2,2);
 use vars qw/
 $DirLock $DirCgi $DirConfig $DirData $DirIcons $DirLang $AWScript $ArchiveFileName
 $AllowAccessFromWebToFollowingIPAddresses $HTMLHeadSection $HTMLEndSection $LinksToWhoIs $LinksToIPWhoIs
@@ -299,7 +299,7 @@ use vars qw/
 %_host_p %_host_h %_host_k %_host_l %_host_s %_host_u
 %_waithost_e %_waithost_l %_waithost_s %_waithost_u
 %_keyphrases %_keywords %_os_h %_pagesrefs_p %_pagesrefs_h %_robot_h %_robot_k %_robot_l %_robot_r
-%_worm_h %_worm_l %_login_h %_login_p %_login_k %_login_l %_screensize_h
+%_worm_h %_worm_k %_worm_l %_login_h %_login_p %_login_k %_login_l %_screensize_h
 %_misc_p %_misc_h %_misc_k
 %_cluster_p %_cluster_h %_cluster_k
 %_se_referrals_p %_se_referrals_h %_sider404_h %_referer404_h %_url_p %_url_k %_url_e %_url_x
@@ -528,10 +528,10 @@ sub html_head {
 			print "<style type=\"text/css\">\n";
 			if ($BuildReportFormat eq 'xml') { print ($ENV{'HTTP_USER_AGENT'}=~/Firebird/i?"<!--\n":"<![CDATA[\n"); }
 			else { print "<!--\n"; }
-print "body { font: 11px verdana, arial, helvetica, sans-serif; background-color: #$color_Background; margin-top: 0; }\n";
+print "body { font: 11px verdana, arial, helvetica, sans-serif; background-color: #$color_Background; margin-top: 0; margin-bottom: 0; }\n";
 print ".aws_bodyl  { }\n";
-print ".aws_border { background-color: #$color_TableBG; padding: 1px 1px 1px 1px; margin-top: 0 }\n";
-print ".aws_title  { font: 13px verdana, arial, helvetica, sans-serif; font-weight: bold; background-color: #$color_TableBGTitle; text-align: center; margin-bottom: 0; padding: 1px 1px 1px 1px; }\n";
+print ".aws_border { background-color: #$color_TableBG; padding: 1px 1px ".($BuildReportFormat eq 'xml'?"2px":"1px")." 1px; margin-top: 0; margin-bottom: 0; }\n";
+print ".aws_title  { font: 13px verdana, arial, helvetica, sans-serif; font-weight: bold; background-color: #$color_TableBGTitle; text-align: center; margin-top: 0; margin-bottom: 0; padding: 1px 1px 1px 1px; }\n";
 print ".aws_blank  { font: 13px verdana, arial, helvetica, sans-serif; background-color: #".($ENV{'HTTP_USER_AGENT'} && $ENV{'HTTP_USER_AGENT'}=~/MSIE/i?$color_Background:$color_TableBG)."; text-align: center; margin-bottom: 0; padding: 1px 1px 1px 1px; }\n";
 print <<EOF;
 .aws_data {
@@ -606,7 +606,10 @@ sub html_end {
 			if ($HTMLEndSection) { print "<br />\n$HTMLEndSection\n"; }
 		}
 		print "\n";
-		if ($FrameName ne 'index') { print "</body>\n"; }
+		if ($FrameName ne 'index') {
+			if ($BuildReportFormat eq 'html') { print "<br />"; }
+			print "</body>\n";
+		}
 		print "</html>\n";
 #		print "<!-- NEW PAGE --><!-- NEW SHEET -->\n";
 	}
@@ -1484,7 +1487,7 @@ sub Check_Config {
 	if ($DecodeUA !~ /[0-1]/)						{ $DecodeUA=0; }
 	$MiscTrackerUrl||=quotemeta('/js/awstats_misc_tracker.js');
 	# Optional accuracy setup section
-	if ($LevelForWormsDetection !~ /^\d+/)       	{ $LevelForWormsDetection=2; }
+	if ($LevelForWormsDetection !~ /^\d+/)       	{ $LevelForWormsDetection=0; }
 	if ($LevelForRobotsDetection !~ /^\d+/)       	{ $LevelForRobotsDetection=2; }
 	if ($LevelForBrowsersDetection !~ /^\d+/)     	{ $LevelForBrowsersDetection=2; }
 	if ($LevelForOSDetection !~ /^\d+/)    			{ $LevelForOSDetection=2; }
@@ -1546,7 +1549,7 @@ sub Check_Config {
 	if ($UseFramesWhenCGI !~ /[01]/)  				{ $UseFramesWhenCGI=1; }
 	if ($DetailedReportsOnNewWindows !~ /[012]/)  	{ $DetailedReportsOnNewWindows=1; }
 	if ($ShowLinksOnUrl !~ /[01]/)               	{ $ShowLinksOnUrl=1; }
-	if ($MaxLengthOfURL !~ /^\d+/ || $MaxLengthOfURL<1) { $MaxLengthOfURL=72; }
+	if ($MaxLengthOfShownURL !~ /^\d+/ || $MaxLengthOfShownURL<1) { $MaxLengthOfShownURL=64; }
 	if ($ShowLinksToWhoIs !~ /[01]/)              	{ $ShowLinksToWhoIs=0; }
 	$Logo||='awstats_logo6.png';
 	$LogoLink||='http://awstats.sourceforge.net';
@@ -3414,7 +3417,7 @@ sub Save_History {
 	}
 	if ($sectiontosave eq 'worms') {
 		print HISTORYTMP "\n";
-		print HISTORYTMP "# Worm ID - Hits - Last visit\n";
+		print HISTORYTMP "# Worm ID - Hits - Bandwidth - Last visit\n";
 		print HISTORYTMP "# The $MaxNbOf{'WormsShown'} first Hits must be first (order not required for others)\n";
 		$ValueInFile{$sectiontosave}=tell HISTORYTMP;
 		print HISTORYTMP "BEGIN_WORMS ".(scalar keys %_worm_h)."\n";
@@ -3423,11 +3426,11 @@ sub Save_History {
 		my %keysinkeylist=();
 		foreach (@keylist) {
 			$keysinkeylist{$_}=1;
-			print HISTORYTMP "$_ ".int($_worm_h{$_})." $_worm_l{$_}\n";
+			print HISTORYTMP "$_ ".int($_worm_h{$_})." ".int($_worm_k{$_})." $_worm_l{$_}\n";
 		}
 		foreach (keys %_worm_h) {
 			if ($keysinkeylist{$_}) { next; }
-			print HISTORYTMP "$_ ".int($_worm_h{$_})." $_worm_l{$_}\n";
+			print HISTORYTMP "$_ ".int($_worm_h{$_})." ".int($_worm_k{$_})." $_worm_l{$_}\n";
 		}
 		print HISTORYTMP "END_WORMS\n";
 	}
@@ -3925,7 +3928,7 @@ sub Init_HashArray {
 	%_host_p = %_host_h = %_host_k = %_host_l = %_host_s = %_host_u = ();
 	%_waithost_e = %_waithost_l = %_waithost_s = %_waithost_u = ();
 	%_keyphrases = %_keywords = %_os_h = %_pagesrefs_p = %_pagesrefs_h = %_robot_h = %_robot_k = %_robot_l = %_robot_r = ();
-	%_worm_h = %_worm_l = %_login_p = %_login_h = %_login_k = %_login_l = %_screensize_h = ();
+	%_worm_h = %_worm_k = %_worm_l = %_login_p = %_login_h = %_login_k = %_login_l = %_screensize_h = ();
  	%_misc_p = %_misc_h = %_misc_k = ();
 	%_cluster_p = %_cluster_h = %_cluster_k = ();
 	%_se_referrals_p = %_se_referrals_h = %_sider404_h = %_referer404_h = %_url_p = %_url_k = %_url_e = %_url_x = ();
@@ -4445,7 +4448,9 @@ sub ShowFormFilter {
 		print "<input type=\"submit\" value=\" $Message[115] \" class=\"aws_button\" /></td>\n";
 		print "<td> &nbsp; </td>";
 		print "</tr></table>\n";
-		print "</form>\n\n";
+		print "</form>\n";
+		print "<br />\n";
+		print "\n";
 	}
 }
 
@@ -4484,7 +4489,7 @@ sub ShowHostInfo {
 #------------------------------------------------------------------------------
 # Function:     Write other url info (with help of plugin)
 # Parameters:   $url
-# Input:        %Aliases $MaxLengthOfURL $ShowLinksOnUrl $SiteDomain $UseHTTPSLinkForUrl
+# Input:        %Aliases $MaxLengthOfShownURL $ShowLinksOnUrl $SiteDomain $UseHTTPSLinkForUrl
 # Output:       URL link
 # Return:       None
 #------------------------------------------------------------------------------
@@ -4498,7 +4503,7 @@ sub ShowURLInfo {
 		eval("$function");
 	}
 
-	if (length($nompage)>$MaxLengthOfURL) { $nompage=substr($nompage,0,$MaxLengthOfURL)."..."; }
+	if (length($nompage)>$MaxLengthOfShownURL) { $nompage=substr($nompage,0,$MaxLengthOfShownURL)."..."; }
 	if ($ShowLinksOnUrl) {
 		my $newkey=CleanFromCSSA($url);
 		if ($LogType eq 'W') {		# Web log file
@@ -5284,8 +5289,7 @@ if ($FrameName ne 'index') {
 			if ($LevelForBrowsersDetection)		{ $datatoload{'browsers'}=1; }	# ua
 			if ($LevelForOSDetection)			{ $datatoload{'operating_systems'}=1; }	# ua
 			if ($LevelForRefererAnalyze)		{ $datatoload{'search_engines'}=1; }	# referer
-			# $datatoload{'worms'}=1;
-			# $datatoload{'referer_spam'}=1;
+			# if (...) { $datatoload{'referer_spam'}=1; }
 		}
 		if (scalar keys %HTMLOutput) {	# If output
 			if ($ShowDomainsStats) 				{ $datatoload{'domains'}=1; }
@@ -5826,9 +5830,16 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 		# Analyze: Worms
 		#---------------
 		if ($LevelForWormsDetection) {
-
-
-#			$countedtraffic=1;
+			foreach (@WormsSearchIDOrder) {
+				if ($field[$pos_url] =~ /$_/) {
+					my $worm=$WormsHashID{$_};
+					$_worm_h{$worm}++;
+					$_worm_k{$worm}+=int($field[$pos_size]);
+					$_worm_l{$worm}=$timerecord;
+					$countedtraffic=1;
+					last;
+				}
+			}
 		}
 				
 		# Check return status code
@@ -5853,6 +5864,7 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 						last;
 					}
 				}
+				if ($Debug) { debug(" Record stored in the status code chart (status code=$field[$pos_code])",2); }
 				$countedtraffic=1;
 			}
 		}
@@ -7372,7 +7384,7 @@ if (scalar keys %HTMLOutput) {
 			if ($ShowDomainsStats =~ /P/i) { print "<td>$_domener_p{$key}</td>"; }
 			if ($ShowDomainsStats =~ /H/i) { print "<td>$_domener_h{$key}</td>"; }
 			if ($ShowDomainsStats =~ /B/i) { print "<td>".Format_Bytes($_domener_k{$key})."</td>"; }
-			print "<td class=\"aws\">";
+			print "<td style=\"text-align:left; font-size:4px;\">";
 			if ($ShowDomainsStats =~ /P/i) { print "<img src=\"$DirIcons\/other\/$BarPng{'hp'}\" width=\"$bredde_p\" height=\"5\"".AltTitle("$Message[56]: ".int($_domener_p{$key}))." /><br />\n"; }
 			if ($ShowDomainsStats =~ /H/i) { print "<img src=\"$DirIcons\/other\/$BarPng{'hh'}\" width=\"$bredde_h\" height=\"5\"".AltTitle("$Message[57]: ".int($_domener_h{$key}))." /><br />\n"; }
 			if ($ShowDomainsStats =~ /B/i) { print "<img src=\"$DirIcons\/other\/$BarPng{'hk'}\" width=\"$bredde_k\" height=\"5\"".AltTitle("$Message[75]: ".Format_Bytes($_domener_k{$key}))." />"; }
@@ -7676,7 +7688,7 @@ if (scalar keys %HTMLOutput) {
 				my $function="ShowPagesAddField_$pluginname('$key')"; 
 				eval("$function");
 			}
-			print "<td class=\"aws\">";
+			print "<td style=\"text-align:left; font-size:4px;\">";
 			# alt and title are not provided to reduce page size
 			if ($ShowPagesStats =~ /P/i) { print "<img src=\"$DirIcons\/other\/$BarPng{'hp'}\" width=\"$bredde_p\" height=\"4\" /><br />"; }
 			if ($ShowPagesStats =~ /B/i) { print "<img src=\"$DirIcons\/other\/$BarPng{'hk'}\" width=\"$bredde_k\" height=\"4\" /><br />"; }
@@ -8010,7 +8022,7 @@ if (scalar keys %HTMLOutput) {
 		&BuildKeyList($MaxRowsInHTMLOutput,$MinHit{'Refer'},\%_pagesrefs_h,\%_pagesrefs_p);
 		foreach my $key (@keylist) {
 			my $nompage=CleanFromCSSA($key);
-			if (length($nompage)>$MaxLengthOfURL) { $nompage=substr($nompage,0,$MaxLengthOfURL)."..."; }
+			if (length($nompage)>$MaxLengthOfShownURL) { $nompage=substr($nompage,0,$MaxLengthOfShownURL)."..."; }
 			my $p_p; my $p_h;
 			if ($TotalRefererPages) { $p_p=int($_pagesrefs_p{$key}/$TotalRefererPages*1000)/10; }
 			if ($TotalRefererHits) { $p_h=int($_pagesrefs_h{$key}/$TotalRefererHits*1000)/10; }
@@ -8103,7 +8115,7 @@ if (scalar keys %HTMLOutput) {
 			&BuildKeyList($MaxRowsInHTMLOutput,1,\%_sider404_h,\%_sider404_h);
 			foreach my $key (@keylist) {
 				my $nompage=CleanFromCSSA($key);
-				#if (length($nompage)>$MaxLengthOfURL) { $nompage=substr($nompage,0,$MaxLengthOfURL)."..."; }
+				#if (length($nompage)>$MaxLengthOfShownURL) { $nompage=substr($nompage,0,$MaxLengthOfShownURL)."..."; }
 				my $referer=CleanFromCSSA($_referer404_h{$key});
 				print "<tr><td class=\"aws\">$nompage</td>";
 				print "<td>$_sider404_h{$key}</td>";
@@ -8806,7 +8818,7 @@ if (scalar keys %HTMLOutput) {
 				if ($ShowDomainsStats =~ /P/i) { print "<td>".($_domener_p{$key}?$_domener_p{$key}:'&nbsp;')."</td>"; }
 				if ($ShowDomainsStats =~ /H/i) { print "<td>$_domener_h{$key}</td>"; }
 				if ($ShowDomainsStats =~ /B/i) { print "<td>".Format_Bytes($_domener_k{$key})."</td>"; }
-				print "<td class=\"aws\">";
+				print "<td style=\"text-align:left; font-size:4px;\">";
 				if ($ShowDomainsStats =~ /P/i) { print "<img src=\"$DirIcons\/other\/$BarPng{'hp'}\" width=\"$bredde_p\" height=\"5\"".AltTitle("")." /><br />\n"; }
 				if ($ShowDomainsStats =~ /H/i) { print "<img src=\"$DirIcons\/other\/$BarPng{'hh'}\" width=\"$bredde_h\" height=\"5\"".AltTitle("")." /><br />\n"; }
 				if ($ShowDomainsStats =~ /B/i) { print "<img src=\"$DirIcons\/other\/$BarPng{'hk'}\" width=\"$bredde_k\" height=\"5\"".AltTitle("")." />"; }
@@ -9152,7 +9164,7 @@ if (scalar keys %HTMLOutput) {
 					my $function="ShowPagesAddField_$pluginname('$key')";
 					eval("$function");
 				}
-				print "<td class=\"aws\">";
+				print "<td style=\"text-align:left; font-size:4px;\">";
 				if ($ShowPagesStats =~ /P/i) { print "<img src=\"$DirIcons\/other\/$BarPng{'hp'}\" width=\"$bredde_p\" height=\"4\"".AltTitle("")." /><br />"; }
 				if ($ShowPagesStats =~ /B/i) { print "<img src=\"$DirIcons\/other\/$BarPng{'hk'}\" width=\"$bredde_k\" height=\"4\"".AltTitle("")." /><br />"; }
 				if ($ShowPagesStats =~ /E/i) { print "<img src=\"$DirIcons\/other\/$BarPng{'he'}\" width=\"$bredde_e\" height=\"4\"".AltTitle("")." /><br />"; }
@@ -9755,12 +9767,12 @@ else {
 #     So it's new line approved
 #     If other month/year, create/update tmp file and purge data arrays with
 #       &Read_History_With_TmpUpdate(lastprocessedyear,lastprocessedmonth,UPDATE,PURGE,"all",lastlinenumber,lastlineoffset,CheckSum($_));
-#     Check misc tracker
-#     Check add to favorites --> countedtraffic=1
-#     Check worms --> countedtraffic=1
-#     If (!countedtraffic) Check status code and complete %_error_, %_sider404 and %_referrer404 --> countedtraffic=1
-#     If (!countedtraffic) Check robot and complete %_robot --> countedtraffic=1
-#     Define a clean Url and Query (to define urlwithnoquery, tokenquery and standalonequery and $field[$pos_url])
+#     Analyze: Misc tracker --> complete %misc
+#     Analyze: Add to favorites --> complete %_misc, next on loop
+#     Analyze: Worms --> complete %_worms, countedtraffic=1
+#     If (!countedtraffic) Analyze: Status code --> complete %_error_, %_sider404, %_referrer404 --> countedtraffic=1
+#     If (!countedtraffic) Analyze: Robots --> complete %_robot, countedtraffic=1
+#     Define a clean Url and Query (set urlwithnoquery, tokenquery and standalonequery and $field[$pos_url])
 #     Define PageBool and extension
 #     If (!countedtraffic) Analyze: File types - Compression
 #     If (!countedtraffic) Analyze: Date - Hour - Pages - Hits - Kilo

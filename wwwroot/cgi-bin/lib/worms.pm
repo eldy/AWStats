@@ -31,6 +31,8 @@
 'exe?/c+dir','nimba'
 #'root.exe?/c','nimba',
 #'cmd.exe?/c','nimba'
+#'/MSOffice/cltreq.asp'		# Not a worm, a check by IE to see if discussion bar is turned on
+#'/_vti_bin/owssrv.dll'		# Not a worm, a check by IE to see if discussion bar is turned on
 );
 
 
