@@ -61,7 +61,7 @@ $word, $yearcon, $yearfile, $yearmonthfile, $yeartoprocess) = ();
 @sortsearchwords = @sortsereferrals = @sortsider404 = @sortsiders = @sortunknownip =
 @sortunknownreferer = @sortunknownrefererbrowser = @wordlist = ();
 
-$VERSION="2.24 (build 29)";
+$VERSION="2.24 (build 30)";
 $Lang=0;
 
 # Default value
@@ -1876,7 +1876,7 @@ else {
 if ($QueryString =~ /debug=/) { $Debug=$QueryString; $Debug =~ s/.*debug=//; $Debug =~ s/&.*//; $Debug =~ s/ .*//; }
 ($DIR=$0) =~ s/([^\/\\]*)$//; ($PROG=$1) =~ s/\.([^\.]*)$//; $Extension=$1;
 $LocalSite =~ tr/A-Z/a-z/;
-$LocalSite =~ s/<//g; $LocalSite =~ s/%//g;		# This is to avoid 'Cross Site Scripting attacks'
+$LocalSite =~ s/<//g; $LocalSite =~ s/%//g;				# This is to avoid 'Cross Site Scripting attacks'
 $LocalSiteWithoutwww = $LocalSite; $LocalSiteWithoutwww =~ s/www\.//;
 if (($ENV{"GATEWAY_INTERFACE"} eq "") && ($LocalSite eq "")) {
 	print "----- $PROG $VERSION (c) Laurent Destailleur -----\n";
@@ -2543,6 +2543,7 @@ if ($QueryString =~ /action=unknownrefererbrowser/) {
 		$daycon=substr($_unknownrefererbrowser_l{$key},6,2);
 		$hourcon=substr($_unknownrefererbrowser_l{$key},8,2);
 		$mincon=substr($_unknownrefererbrowser_l{$key},10,2);
+		$key =~ s/<SCRIPT>.*<\/SCRIPT>//i;			# This is to avoid 'Cross Site Scripting attacks'
 		if ($Lang == 1) { print "<tr><td CLASS=LEFT>$key</td><td>$daycon/$monthcon/$yearcon - $hourcon:$mincon</td></tr>"; }
 		else { print "<tr><td CLASS=LEFT>$key</td><td>$daycon $monthlib{$monthcon} $yearcon - $hourcon:$mincon</td></tr>"; }
 	}
@@ -2562,6 +2563,7 @@ if ($QueryString =~ /action=unknownreferer/) {
 		$daycon=substr($_unknownreferer_l{$key},6,2);
 		$hourcon=substr($_unknownreferer_l{$key},8,2);
 		$mincon=substr($_unknownreferer_l{$key},10,2);
+		$key =~ s/<SCRIPT>.*<\/SCRIPT>//i;				# This is to avoid 'Cross Site Scripting attacks'
 		if ($Lang == 1) { print "<tr><td CLASS=LEFT>$key</td><td>$daycon/$monthcon/$yearcon - $hourcon:$mincon</td></tr>"; }
 		else { print "<tr><td CLASS=LEFT>$key</td><td>$daycon $monthlib{$monthcon} $yearcon - $hourcon:$mincon</td></tr>"; }
 	}
@@ -2576,7 +2578,9 @@ if ($QueryString =~ /action=notfounderror/) {
 	print "<TR bgcolor=$color_TableBGRowTitle><TH>URL</TH><TH bgcolor=$color_h>$message[49][$Lang]</TH><TH>$message[23][$Lang]</TH></TR>\n";
 	@sortsider404=sort { $SortDir*$_sider404_h{$a} <=> $SortDir*$_sider404_h{$b} } keys (%_sider404_h);
 	foreach $key (@sortsider404) {
-		print "<tr><td CLASS=LEFT>$key</td><td>$_sider404_h{$key}</td><td>$_referer404_h{$key}&nbsp;</td></tr>";
+		$url=$key; $url =~ s/<SCRIPT>.*<\/SCRIPT>//i; 							# This is to avoid 'Cross Site Scripting attacks'
+		$referer=$_referer404_h{$key}; $referer =~ s/<SCRIPT>.*<\/SCRIPT>//i;	# This is to avoid 'Cross Site Scripting attacks'
+		print "<tr><td CLASS=LEFT>$url</td><td>$_sider404_h{$key}</td><td>$referer&nbsp;</td></tr>";
 	}
 	&tab_end;
 	&html_end;
