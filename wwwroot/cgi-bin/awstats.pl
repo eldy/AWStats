@@ -6408,10 +6408,10 @@ EOF
 		
 		# Show data array for days of week
 		print "<TABLE>\n";
-		print "<TR><TD width=\"25%\" bgcolor=\"#$color_TableBGRowTitle\">$Message[4]</TD>";
-		print "<TD width=\"25%\" bgcolor=\"#$color_p\" onmouseover=\"ShowTip(3);\" onmouseout=\"HideTip(3);\">$Message[56]</TD>";
-		print "<TD width=\"25%\" bgcolor=\"#$color_h\" onmouseover=\"ShowTip(4);\" onmouseout=\"HideTip(4);\">$Message[57]</TD>";
-		print "<TD width=\"25%\" bgcolor=\"#$color_k\" onmouseover=\"ShowTip(5);\" onmouseout=\"HideTip(5);\">$Message[75]</TD></TR>";
+		print "<TR><TD width=\"80\" bgcolor=\"#$color_TableBGRowTitle\">$Message[4]</TD>";
+		print "<TD width=\"80\" bgcolor=\"#$color_p\" onmouseover=\"ShowTip(3);\" onmouseout=\"HideTip(3);\">$Message[56]</TD>";
+		print "<TD width=\"80\" bgcolor=\"#$color_h\" onmouseover=\"ShowTip(4);\" onmouseout=\"HideTip(4);\">$Message[57]</TD>";
+		print "<TD width=\"80\" bgcolor=\"#$color_k\" onmouseover=\"ShowTip(5);\" onmouseout=\"HideTip(5);\">$Message[75]</TD></TR>";
 		for (@DOWIndex) {
 			print "<TR>";
 			print "<TD".($_=~/[06]/?" bgcolor=\"#$color_weekend\"":"").">".$Message[$_+84]."</TD>";
@@ -6473,12 +6473,13 @@ EOF
 		print "<br>\n";
 		
 		# Show data array for hours
+		print "<TABLE><TR><TD>\n";
 		print "<TABLE>\n";
-		print "<TR><TD width=\"25%\" bgcolor=\"#$color_TableBGRowTitle\">$Message[20]</TD>";
-		print "<TD width=\"25%\" bgcolor=\"#$color_p\" onmouseover=\"ShowTip(3);\" onmouseout=\"HideTip(3);\">$Message[56]</TD>";
-		print "<TD width=\"25%\" bgcolor=\"#$color_h\" onmouseover=\"ShowTip(4);\" onmouseout=\"HideTip(4);\">$Message[57]</TD>";
-		print "<TD width=\"25%\" bgcolor=\"#$color_k\" onmouseover=\"ShowTip(5);\" onmouseout=\"HideTip(5);\">$Message[75]</TD></TR>";
-		for (my $ix=1; $ix<=23; $ix++) {
+		print "<TR><TD width=\"80\" bgcolor=\"#$color_TableBGRowTitle\">$Message[20]</TD>";
+		print "<TD width=\"80\" bgcolor=\"#$color_p\" onmouseover=\"ShowTip(3);\" onmouseout=\"HideTip(3);\">$Message[56]</TD>";
+		print "<TD width=\"80\" bgcolor=\"#$color_h\" onmouseover=\"ShowTip(4);\" onmouseout=\"HideTip(4);\">$Message[57]</TD>";
+		print "<TD width=\"80\" bgcolor=\"#$color_k\" onmouseover=\"ShowTip(5);\" onmouseout=\"HideTip(5);\">$Message[75]</TD></TR>";
+		for (my $ix=0; $ix<=11; $ix++) {
 			my $monthix=($ix<10?"0$ix":"$ix");
 			print "<TR>";
 			print "<TD>$monthix</TD>";
@@ -6487,7 +6488,24 @@ EOF
 			print "<TD>",Format_Bytes(int($_time_k[$monthix])),"</TD>";
 			print "</TR>\n";
 		}
-		print "</TABLE>\n<br>\n";
+		print "</TABLE>\n";
+		print "</TD><TD>\n";
+		print "<TABLE>\n";
+		print "<TR><TD width=\"80\" bgcolor=\"#$color_TableBGRowTitle\">$Message[20]</TD>";
+		print "<TD width=\"80\" bgcolor=\"#$color_p\" onmouseover=\"ShowTip(3);\" onmouseout=\"HideTip(3);\">$Message[56]</TD>";
+		print "<TD width=\"80\" bgcolor=\"#$color_h\" onmouseover=\"ShowTip(4);\" onmouseout=\"HideTip(4);\">$Message[57]</TD>";
+		print "<TD width=\"80\" bgcolor=\"#$color_k\" onmouseover=\"ShowTip(5);\" onmouseout=\"HideTip(5);\">$Message[75]</TD></TR>";
+		for (my $ix=12; $ix<=23; $ix++) {
+			my $monthix=($ix<10?"0$ix":"$ix");
+			print "<TR>";
+			print "<TD>$monthix</TD>";
+			print "<TD>",$_time_p[$monthix]?$_time_p[$monthix]:"0","</TD>";
+			print "<TD>",$_time_h[$monthix]?$_time_h[$monthix]:"0","</TD>";
+			print "<TD>",Format_Bytes(int($_time_k[$monthix])),"</TD>";
+			print "</TR>\n";
+		}
+		print "</TABLE>\n";
+		print "</TD></TR></TABLE>\n<br>\n";
 	
 		print "</center></TD></TR>\n";
 		&tab_end;
