@@ -18,6 +18,7 @@
 # Rem: calif changed into calif[^r] to avoid confusion between Tiscalifreenet browser
 # Rem: fish changed into [^a]fish to avoid confusion between Madsafish browser
 # Rem: roadrunner changed into road_runner
+# Rem: lycos changed to lycos_ to avoid confusion with lycos-online browser
 
 
 # RobotsSearchIDOrder
@@ -44,7 +45,7 @@
 'jeeves',
 'jennybot',
 'linkwalker',
-'lycos',
+'lycos_',
 'mercator',
 'moget',
 'muscatferret',
@@ -479,7 +480,7 @@
 'linkwalker','LinkWalker',
 'lockon','Lockon',
 'logo_gif','logo.gif Crawler',
-'lycos','Lycos',
+'lycos_','Lycos',
 'macworm','Mac WWWWorm',
 'magpie','Magpie',
 'marvin','marvin/infoseek',
