@@ -259,7 +259,7 @@ use vars qw/
 'sv'=>'se','th'=>'th','tr'=>'tr','uk'=>'ua','cy'=>'cy','wlk'=>'cy'
 );
 %LangAWStatsToFlagAwstats=(  # If flag (country ISO-3166 two letters) is not same than AWStats Lang code
-'ca'=>'es_cat','et'=>'ee','eu','es_eu',
+'ca'=>'es_cat','et'=>'ee','eu'=>'es_eu',
 'cy'=>'wlk',
 'gl'=>'glg',
 'he'=>'il',
