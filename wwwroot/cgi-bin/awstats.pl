@@ -82,7 +82,7 @@ $WarningMessages= 1;
 %MonthBytes = %MonthHits = %MonthHostsKnown = %MonthHostsUnknown = %MonthPages = %MonthUnique = %MonthVisits =
 %monthlib = %monthnum = ();
 
-$VERSION="3.2 (build 62)";
+$VERSION="3.2 (build 63)";
 $Lang="en";
 
 # Default value
@@ -114,14 +114,6 @@ $BarImageHorizontal_k = "barrehk.png";
 
 $AddOn=0;
 #require "${DIR}addon.pl"; $AddOn=1; 		# Keep this line commented in standard version
-
-# URL with such end signature are kind of URL we only need to count as hits
-@NotPageList= (
-			"gif","jpg","jpeg","png","bmp",
-#			"zip","arj","gz","z",
-#			"pdf","doc","ppt","rtf","txt",
-#			"mp3","wma"
-			);
 
 # Those addresses are shown with those lib (First column is full exact relative URL, second column is text to show instead of URL)
 %Aliases    = (
@@ -417,6 +409,7 @@ sub Read_Config_File {
 	}
 	if ($FileConfig eq "") { error("Error: Couldn't open config file \"$PROG.$SiteConfig.conf\" nor \"$PROG.conf\" : $!"); }
 	&debug("Call to Read_Config_File [FileConfig=\"$FileConfig\"]");
+	my $foundNotPageList=0;
 	while (<CONFIG>) {
 		chomp $_; s/\r//;
 		$_ =~ s/#.*//;						# Remove comments
@@ -482,6 +475,12 @@ sub Read_Config_File {
 		if ($param =~ /^OnlyFiles/) {
 			my @felter=split(/\s+/,$value);
 			$i=0; foreach $elem (@felter)       { $OnlyFiles[$i]=$elem; $i++; }
+			next;
+			}
+		if ($param =~ /^NotPageList/) {
+			my @felter=split(/\s+/,$value);
+			$i=0; foreach $elem (@felter)       { $NotPageList[$i]=$elem; $i++; }
+			$foundNotPageList=1;
 			next;
 			}
 		if ($param =~ /^URLWithQuery/)          { $URLWithQuery=$value; next; }
@@ -551,6 +550,14 @@ sub Read_Config_File {
 		if ($param =~ /^color_s/)               { $color_s=$value; next; }
 	}
 	close CONFIG;
+	# If parameter NotPageList not found. Init for backward compatibility
+	if (! $foundNotPageList) {
+		$NotPageList[0]="gif";
+		$NotPageList[1]="jpg";
+		$NotPageList[2]="jpeg";
+		$NotPageList[3]="png";
+		$NotPageList[4]="bmp";
+	}
 }
 
 
@@ -2643,6 +2650,7 @@ EOF
 		if ($URLFilter) { print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[79]: <b>$URLFilter</b> - ".(scalar keys %_url_p)." $Message[28]</TH>"; }
 		else { print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>".(scalar keys %_url_p)."&nbsp; $Message[28]</TH>"; }
 		print "<TH bgcolor=\"#$color_p\">&nbsp;$Message[29]&nbsp;</TH>";
+		print "<TH bgcolor=\"#$color_s\">&nbsp;$Message[104]&nbsp;</TH>";
 		if ($AddOn) { AddOn_ShowFields(""); }
 		print "<TH>&nbsp;</TH></TR>\n";
 		$max_p=1; foreach my $key (values %_url_p) { if ($key > $max_p) { $max_p = $key; } }
@@ -2656,10 +2664,18 @@ EOF
 			if (length($nompage)>$MaxLengthOfURL) { $nompage=substr($nompage,0,$MaxLengthOfURL)."..."; }
 		    if ($ShowLinksOnUrl) { print "<A HREF=\"http://$SiteToAnalyze$key\">$nompage</A>"; }
 		    else              	 { print "$nompage"; }
-		    my $bredde=int($BarWidth*$_url_p{$key}/$max_p)+1;
-			print "</TD><TD>$_url_p{$key}</TD>";
+			my $bredde_p=0; my $bredde_s=0;
+			if ($max_p > 0) { $bredde_p=int($BarWidth*$_url_p{$key}/$max_p)+1; }
+			if ($_url_p{$key} && ($bredde_p==1)) { $bredde_p=2; }
+			if ($max_p > 0) { $bredde_e=int($BarWidth*$_url_e{$key}/$max_p)+1; }
+			if ($_url_e{$key} && ($bredde_e==1)) { $bredde_e=2; }
+			print "</TD>";
+			print "<TD>$_url_p{$key}</TD><TD>".($_url_e{$key}?$_url_e{$key}:"&nbsp;")."</TD>";
 			if ($AddOn) { AddOn_ShowFields($key); }
-			print "<TD CLASS=AWL><IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_p\" WIDTH=$bredde HEIGHT=8></TD></TR>\n";
+			print "<TD CLASS=AWL>";
+			print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_p\" WIDTH=$bredde_p HEIGHT=8><br>";
+			print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_e\" WIDTH=$bredde_e HEIGHT=8>";
+			print "</TD></TR>";
 			$count++;
 		}
 		&tab_end;
@@ -3245,7 +3261,8 @@ EOF
 			if ($_url_p{$key} && ($bredde_p==1)) { $bredde_p=2; }
 			if ($max_p > 0) { $bredde_e=int($BarWidth*$_url_e{$key}/$max_p)+1; }
 			if ($_url_e{$key} && ($bredde_e==1)) { $bredde_e=2; }
-			print "</TD><TD>$_url_p{$key}</TD><TD>".($_url_e{$key}?$_url_e{$key}:"&nbsp;")."</TD><TD CLASS=AWL>";
+			print "</TD><TD>$_url_p{$key}</TD><TD>".($_url_e{$key}?$_url_e{$key}:"&nbsp;")."</TD>";
+			print "<TD CLASS=AWL>";
 			print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_p\" WIDTH=$bredde_p HEIGHT=8 ALT=\"$Message[56]: ".int($_url_p{$key})."\" title=\"$Message[56]: ".int($_url_p{$key})."\"><br>";
 			print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_e\" WIDTH=$bredde_e HEIGHT=8 ALT=\"$Message[104]: ".int($_url_e{$key})."\" title=\"$Message[104]: ".int($_url_e{$key})."\">";
 			print "</TD></TR>\n";
