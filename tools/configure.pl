@@ -29,9 +29,9 @@ $AWSTATS_ICON_PATH='/usr/local/awstats/wwwroot/icon';
 $AWSTATS_CSS_PATH='/usr/local/awstats/wwwroot/css';
 $AWSTATS_CLASSES_PATH='/usr/local/awstats/wwwroot/classes';
 $AWSTATS_CGI_PATH='/usr/local/awstats/wwwroot/cgi-bin';
-$AWSTATS_TOOLS_PATH='/usr/local/awstats/wwwroot/tools';			# Used for linux only
-$AWSTATS_MODEL_CONFIG='/etc/awstats/awstats.model.conf';		# Used for linux only
-$AWSTATS_DIRDATA_PATH='/var/lib/awstats';						# Used for linux only
+$AWSTATS_TOOLS_PATH='/usr/local/awstats/wwwroot/tools';			# Used only when configure ran on linux
+$AWSTATS_MODEL_CONFIG='/etc/awstats/awstats.model.conf';		# Used only when configure ran on linux
+$AWSTATS_DIRDATA_PATH='/var/lib/awstats';						# Used only when configure ran on linux
 
 
 
@@ -231,10 +231,10 @@ if ($QueryString =~ /debug=/i) { $Debug=$QueryString; $Debug =~ s/.*debug=//; $D
 my $helpfound=0;
 my $OS='';
 my $CR='';
-my $AWSTATS_PATH='';	# Used for windows only
+my $AWSTATS_PATH='';	# Used only when configure ran on windows
 for (0..@ARGV-1) {
 	if ($ARGV[$_] =~ /^-*h/i)   					{ $helpfound=1; last; }
-	if ($ARGV[$_] =~ /^-*awstatspath=([^\s\"]+)/i)  { $AWSTATS_PATH==$1; last; }
+	if ($ARGV[$_] =~ /^-*awstatspath=([^\s\"]+)/i)  { $AWSTATS_PATH=$1; last; }
 }
 if (! $AWSTATS_PATH) {
 	$AWSTATS_PATH=$DIR||'..';
@@ -283,6 +283,15 @@ if (-d "/etc" && -d "/home") { $OS='linux'; $CR=''; }
 else { $OS='windows'; $CR="\r"; }
 #print "Running OS detected: $OS (Perl $^[)\n";
 print "\n-----> Running OS detected: $OS\n";
+
+if ($OS eq 'windows') {
+	# We do not use default values for awstats directives
+	# but thoose defined from AWSTATS_PATH
+	$AWSTATS_ICON_PATH="$AWSTATS_PATH/wwwroot/icon";
+	$AWSTATS_CSS_PATH="$AWSTATS_PATH/wwwroot/css";
+	$AWSTATS_CLASSES_PATH="$AWSTATS_PATH/wwwroot/classes";
+	$AWSTATS_CGI_PATH="$AWSTATS_PATH/wwwroot/cgi-bin";
+}
 
 # Detect web server path
 # ----------------------
@@ -411,19 +420,19 @@ foreach my $key (keys %ApacheConfPath) {
 		print CONF "# Directives to allow use of AWStats as a CGI$CR\n";
 		print CONF "#$CR\n";
 		if (! $awstatsclassesfound) {
-			print "  Add 'Alias \/awstatsclasses \"$AWSTATS_CLASSES_PATH\/\"' to config file\n";
+			print "  Add 'Alias \/awstatsclasses \"$AWSTATS_CLASSES_PATH\/\"'\n";
 			print CONF "Alias \/awstatsclasses \"$AWSTATS_CLASSES_PATH\/\"$CR\n";
 		}
 		if (! $awstatscssfound) {
-			print "  Add 'Alias \/awstatscss \"$AWSTATS_CSS_PATH\/\"' to config file\n";
+			print "  Add 'Alias \/awstatscss \"$AWSTATS_CSS_PATH\/\"'\n";
 			print CONF "Alias \/awstatscss \"$AWSTATS_CSS_PATH\/\"$CR\n";
 		}
 		if (! $awstatsiconsfound) {
-			print "  Add 'Alias \/awstatsicons \"$AWSTATS_ICON_PATH\/\"' to config file\n";
+			print "  Add 'Alias \/awstatsicons \"$AWSTATS_ICON_PATH\/\"'\n";
 			print CONF "Alias \/awstatsicons \"$AWSTATS_ICON_PATH\/\"$CR\n";
 		}
 		if (! $awstatscgifound) {
-			print "  Add 'ScriptAlias \/awstats\/ \"$AWSTATS_CGI_PATH\/\"' to config file\n";
+			print "  Add 'ScriptAlias \/awstats\/ \"$AWSTATS_CGI_PATH\/\"'\n";
 			print CONF "ScriptAlias \/awstats\/ \"$AWSTATS_CGI_PATH\/\"$CR\n";
 		}
 	close CONF;
@@ -549,8 +558,8 @@ if ($WebServerChanged) {
 # -------------------------------
 print "\n-----> Add update process inside a scheduler\n";
 if ($OS eq 'linux') {
-	print "Sorry, programming update is not supported yet.\n";
-	print "You can do it manually by adding the following line to your crontab\n";
+	print "Sorry, configure does not support automatic add to cron yet.\n";
+	print "You can do it manually by adding the following command to your cron:\n";
 	print "$AWSTATS_CGI_PATH/awstats -update -config=".($site?$site:"myvirtualserver")."\n";
 	print "Or if you have several config files and prefer having only one command:\n";
 	print "$AWSTATS_TOOLS_PATH/awstats_updateall.pl now\n";

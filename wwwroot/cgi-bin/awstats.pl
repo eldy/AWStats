@@ -766,7 +766,9 @@ sub error {
 	}
 	if (! $ErrorMessages && ! $donotshowsetupinfo) {
 		if ($message =~ /Couldn.t open config file/i) {
-			my $dir=$DIR; $dir =~ s/[\\\/]?wwwroot[\/\\]cgi-bin[\\\/]?//;
+			my $dir=$DIR;
+			if ($dir =~ /^\./) { $dir.='/../..'; }
+			else { $dir =~ s/[\\\/]?wwwroot[\/\\]cgi-bin[\\\/]?//; }
 			if ($ENV{'GATEWAY_INTERFACE'}) {
 				print "- ${tagbr}${tagbold}Did you use the correct URL ?${tagunbold}${tagbr}\n";
 				print "Example: http://localhost/awstats/awstats.pl?config=mysite${tagbr}\n";
@@ -1280,10 +1282,9 @@ sub Parse_Config {
 #------------------------------------------------------------------------------
 sub Read_Ref_Data {
 	# Check lib files in common possible directories :
-	# Windows :                           		"${DIR}lib" (lib in same dir than awstats.pl)
+	# Windows and standard package:        		"$DIR/lib" (lib in same dir than awstats.pl)
 	# Debian package :                    		"/usr/share/awstats/lib"
-	# Other possible directories :        		"./lib"
-	my @PossibleLibDir=("${DIR}lib","/usr/share/awstats/lib","./lib");
+	my @PossibleLibDir=("$DIR/lib","/usr/share/awstats/lib");
 	my %FilePath=(); my %DirAddedInINC=();
 	my @FileListToLoad=();
 	while (my $file=shift) { push @FileListToLoad, "$file.pm"; }
@@ -1329,10 +1330,9 @@ sub Read_Ref_Data {
 #------------------------------------------------------------------------------
 sub Read_Language_Data {
 	# Check lang files in common possible directories :
-	# Windows :                           		"${DIR}lang" (lang in same dir than awstats.pl)
+	# Windows and standard package:         	"$DIR/lang" (lang in same dir than awstats.pl)
 	# Debian package :                    		"/usr/share/awstats/lang"
-	# Other possible directories :        		"./lang"
-	my @PossibleLangDir=("$DirLang","${DIR}lang","/usr/share/awstats/lang","./lang");
+	my @PossibleLangDir=("$DirLang","$DIR/lang","/usr/share/awstats/lang");
 
 	my $FileLang='';
 	foreach (@PossibleLangDir) {
@@ -1747,11 +1747,10 @@ sub CheckSum {
 #------------------------------------------------------------------------------
 sub Read_Plugins {
 	# Check plugin files in common possible directories :
-	# Windows :                           		"${DIR}plugins" (plugins in same dir than awstats.pl)
+	# Windows and standard package:        		"$DIR/plugins" (plugins in same dir than awstats.pl)
 	# Redhat :                                  "/usr/local/awstats/wwwroot/cgi-bin/plugins"
 	# Debian package :                    		"/usr/share/awstats/plugins"
-	# Other possible directories :        		"./plugins"
-	my @PossiblePluginsDir=("${DIR}plugins","./plugins","/usr/local/awstats/wwwroot/cgi-bin/plugins","/usr/share/awstats/plugins");
+	my @PossiblePluginsDir=("$DIR/plugins","/usr/local/awstats/wwwroot/cgi-bin/plugins","/usr/share/awstats/plugins");
  	my %DirAddedInINC=();
  
 	foreach my $key (keys %NoLoadPlugin) { if ($NoLoadPlugin{$key} < 0) { push @PluginsToLoad, $key; } }
@@ -4991,7 +4990,7 @@ sub ShowEmailReceiversChart {
 #------------------------------------------------------------------------------
 # MAIN
 #------------------------------------------------------------------------------
-($DIR=$0) =~ s/([^\/\\]*)$//; ($PROG=$1) =~ s/\.([^\.]*)$//; $Extension=$1;
+($DIR=$0||'.') =~ s/[\/\\]([^\/\\]+)$//; ($PROG=$1) =~ s/\.([^\.]*)$//; $Extension=$1;
 
 $starttime=time();
 
@@ -5172,6 +5171,7 @@ else { $DayRequired=''; }
 if ($Debug) {
 	if ($ENV{'GATEWAY_INTERFACE'}) { print "\n"; }	# To end the HTTP header and see all debug
 	debug(ucfirst($PROG)." - $VERSION - Perl $^X $]",1);
+	debug("DIR=$DIR PROG=$PROG",2);
 	debug("QUERY_STRING=$QueryString",2);
 	debug("HTMLOutput=".join(',',keys %HTMLOutput),1);
 	debug("YearRequired=$YearRequired, MonthRequired=$MonthRequired",2);
