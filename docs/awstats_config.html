@@ -485,7 +485,9 @@ when reading it), follow the example:<br>
 <br># by a previous run of AWStats. This file is erased and recreated after each
 <br># statistics update process. You don't need to create and/or edit it.
 <br># AWStats will read and save this file in DirData directory.
-<br># This option is not used if DNSLookup=0.
+<br># This option is used only if DNSLookup=1.
+<br># Note: If a DNSStaticCacheFile is available, AWStats will check for DNS
+<br># lookup in DNSLastUpdateCacheFile after checking into DNSStaticCacheFile.
 <br># Example: "/mydnscachedir/dnscachelastupdate"
 <br># Default: "dnscachelastupdate.txt"
 <br>#
