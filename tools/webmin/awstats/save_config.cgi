@@ -44,9 +44,12 @@ else {
                 if ($key eq 'submit') { next; }
 		if ($key eq 'oldfile') { next; }
 		$conf{$key} = $in{$key};
-		$conf{$key} =~ s/^\s*//;
-		$conf{$key} =~ s/\s*$//;
+		if ($conf{key} ne ' ') {
+			$conf{$key} =~ s/^\s+//;
+			$conf{$key} =~ s/\s+$//;
+		}
 	}
+	if ($conf{'LogSeparator'} eq '') { $conf{'LogSeparator'}=' '; }
 
 	# Check data
 	if (! -r $conf{'LogFile'}) { &error(&text(save_errLogFile,$conf{'LogFile'})); }

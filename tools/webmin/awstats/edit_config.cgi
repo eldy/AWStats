@@ -38,7 +38,31 @@ foreach my $key (keys %$lconf) {
 
 print "<hr>\n";
 
-print "<form action='save_config.cgi'>\n";
+print <<EOF;
+<SCRIPT LANGUAGE="JavaScript">
+function Submit_onClick() {
+	if (document.editconfig.LogFormat.value=='') {
+		alert('$text{save_errLogFormat}');
+		document.editconfig.LogFormat.focus();
+		return false;
+	}
+	if (document.editconfig.SiteDomain.value=='') {
+		alert('$text{save_errSiteDomain}');
+		document.editconfig.SiteDomain.focus();
+		return false;
+	}
+	if (document.editconfig.DirData.value=='') {
+		alert('$text{save_errDirData}');
+		document.editconfig.DirData.focus();
+		return false;
+	}
+	return true;
+}
+</SCRIPT>
+EOF
+
+
+print "<form name='editconfig' action='save_config.cgi'>\n";
 
 print "<table border width=100%>\n";
 print "<tr $tb> <td><b>";
@@ -72,7 +96,7 @@ print "</td> <td> ";
 print &hblink("Help", "help.cgi?param=LogType")." </td> </tr>\n";
 print "<tr> <td><b>LogFormat</b></td> <td> <input name=LogFormat type=text size=40 value='$lconf->{'LogFormat'}'> </td> <td> ";
 print &hblink("Help", "help.cgi?param=LogFormat")," </td> </tr>\n";
-print "<tr> <td><b>LogSeparator</b></td> <td> <input name=LogSeparator type=text value='$lconf->{'LogSeparator'}'> </td> <td> ";
+print "<tr> <td><b>LogSeparator</b></td> <td> <input name=LogSeparator type=text size=10 value='$lconf->{'LogSeparator'}'> </td> <td> ";
 print &hblink("Help", "help.cgi?param=LogSeparator")." </td> </tr>\n";
 print "<tr> <td><b>SiteDomain</b></td> <td> <input name=SiteDomain type=text value='$lconf->{'SiteDomain'}'> </td> <td> ";
 print &hblink("Help", "help.cgi?param=SiteDomain")." </td> </tr>\n";
@@ -80,11 +104,11 @@ print "<tr> <td><b>HostAliases</b></td> <td> <input name=HostAliases type=text s
 print &hblink("Help", "help.cgi?param=HostAliases")." </td> </tr>\n";
 print "<tr> <td><b>DNSLookup</b></td> <td> <input name=DNSLookup type=text value='$lconf->{'DNSLookup'}'> </td> <td> ";
 print &hblink("Help", "help.cgi?param=DNSLookup")." </td> </tr>\n";
-print "<tr> <td><b>DirData</b></td> <td> <input name=DirData type=text value='$lconf->{'DirData'}'> </td> <td> ";
+print "<tr> <td><b>DirData</b></td> <td> <input name=DirData type=text size=40 value='$lconf->{'DirData'}'> </td> <td> ";
 print &hblink("Help", "help.cgi?param=DirData")." </td> </tr>\n";
-print "<tr> <td><b>DirCgi</b></td> <td> <input name=DirCgi type=text value='$lconf->{'DirCgi'}'> </td> <td> ";
+print "<tr> <td><b>DirCgi</b></td> <td> <input name=DirCgi type=text size=30 value='$lconf->{'DirCgi'}'> </td> <td> ";
 print &hblink("Help", "help.cgi?param=DirCgi")." </td> </tr>\n";
-print "<tr> <td><b>DirIcons</b></td> <td> <input name=DirIcons type=text value='$lconf->{'DirIcons'}'> </td> <td> ";
+print "<tr> <td><b>DirIcons</b></td> <td> <input name=DirIcons type=text size=30 value='$lconf->{'DirIcons'}'> </td> <td> ";
 print &hblink("Help", "help.cgi?param=DirIcons")." </td> </tr>\n";
 print "<tr> <td><b>AllowToUpdateStatsFromBrowser</b></td> <td> <input name=AllowToUpdateStatsFromBrowser type=text value='$lconf->{'AllowToUpdateStatsFromBrowser'}'> </td> <td> ";
 print &hblink("Help", "help.cgi?param=AllowToUpdateStatsFromBrowser")." </td> </tr>\n";
@@ -124,11 +148,11 @@ else {
 @b=();
 
 if ($in{'new'}) {
-	push(@b, "<input type=submit value='$text{'create'}'>");
+	push(@b, "<input type=submit value='$text{'create'}' onClick=\"return Submit_onClick();\">");
 	}
 else {
 	if ($access{'global'}) {
-		push(@b, "<input type=submit value='$text{'save'}'>");
+		push(@b, "<input type=submit value='$text{'save'}' onClick=\"return Submit_onClick();\">");
 	}
 	if ($access{'add'}) {
 		push(@b, "<input type=submit name=delete value='$text{'delete'}'>");

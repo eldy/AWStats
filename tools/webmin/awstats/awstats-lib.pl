@@ -33,14 +33,18 @@ if (! $file) { error("Call to update_config with wrong parameter"); }
 open(FILE, $file) || error("Failed to open $file for update");
 open(FILETMP, ">$file.tmp") || error("Failed to open $file.tmp for writing");
 
-local $conflinenb = 0;
+# $%conf contains param and values
+my %confchanged=();
+my $conflinenb = 0;
+
+# First, change values that are already present in old config file
 while(<FILE>) {
 	my $savline=$_;
 
 	chomp $_; s/\r//;
 	$conflinenb++;
 
-	# Remove comments
+	# Remove comments not at beginning of line
 	$_ =~ s/\s#.*$//;
 
 	# Extract param and value
@@ -48,15 +52,26 @@ while(<FILE>) {
 	$param =~ s/^\s+//; $param =~ s/\s+$//;
 
 	if ($param) {
-		if ($conf->{$param}) {
+		# cleanparam is param without begining #
+		my $cleanparam=$param; $cleanparam =~ s/^#//;
+		if (defined($conf->{$cleanparam})) {
 			# Change line with new value
-			$savline = "$param=\"".($conf->{$param})."\"\n";
+			$savline = "$cleanparam=\"".($conf->{$cleanparam})."\"\n";
+			$confchanged{$cleanparam}=1;
 		}
 	}
 
 	print FILETMP "$savline";	
-
 }
+
+# Now add values that were not present in old config file
+foreach my $key (keys %$conf) {
+	if ($confchanged{$key}) { next; }	# param already changed
+	print FILETMP "\n";
+	print FILETMP "# Param $key added by AWStats Webmin module\n";
+	print FILETMP "$key=\"$conf->{$key}\"\n";
+}
+
 close(FILE);
 close(FILETMP);
 
