@@ -3490,7 +3490,7 @@ sub Save_History {
 		print HISTORYTMP "# The $MaxNbOf{'WormsShown'} first Hits must be first (order not required for others)\n";
 		$ValueInFile{$sectiontosave}=tell HISTORYTMP;
 		print HISTORYTMP "BEGIN_WORMS ".(scalar keys %_worm_h)."\n";
-		# We save robot list in score sorted order to get a -output faster and with less use of memory.
+		# We save worm list in score sorted order to get a -output faster and with less use of memory.
 		&BuildKeyList($MaxNbOf{'WormsShown'},$MinHit{'Worm'},\%_worm_h,\%_worm_h);
 		my %keysinkeylist=();
 		foreach (@keylist) {
@@ -6039,9 +6039,11 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 		}
 		elsif ($LogType eq 'F') {						# FTP record
 		}
-
+		}
+		
 		# Analyze: Robot
 		#---------------
+		if (! $countedtraffic) {
 		if ($pos_agent >= 0) {
 			if ($DecodeUA) { $field[$pos_agent] =~ s/%20/_/g; }	# This is to support servers (like Roxen) that writes user agent with %20 in it
 			$UserAgent=$field[$pos_agent];
@@ -6077,7 +6079,10 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 				}
 			}
 		}
+		}
+
 		# It's not a known robot or robot detection disabled. Check if hit on robots.txt file
+		if (! $countedtraffic) {
 		if ($urlwithnoquery =~ /$regrobot/o) {
 			if ($Debug) { debug("  It's an unknown robot",2); }
 			$_robot_h{'unknown'}++;
@@ -6090,7 +6095,7 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 			$_time_nv_k[$hourrecord]+=int($field[$pos_size]);
 		}
 		}
-
+		
 		# Analyze: File type - Compression
 		#---------------------------------
 		if (! $countedtraffic) {
@@ -9956,7 +9961,8 @@ else {
 #     Analyze: Add to favorites --> complete %_misc, next on loop
 #     Analyze: Worms --> complete %_worms, countedtraffic=1
 #     If (!countedtraffic) Analyze: Status code --> complete %_error_, %_sider404, %_referrer404 --> countedtraffic=1
-#     If (!countedtraffic) Analyze: Robots --> complete %_robot, countedtraffic=1
+#     If (!countedtraffic) Analyze: Robots known --> complete %_robot, countedtraffic=1
+#     If (!countedtraffic) Analyze: Robots unkown on robots.txt --> complete %_robot, countedtraffic=1
 #     If (!countedtraffic) Analyze: File types - Compression
 #     If (!countedtraffic) Analyze: Date - Hour - Pages - Hits - Kilo
 #     If (!countedtraffic) Analyze: Login
