@@ -1475,8 +1475,9 @@ $DirData =~ s/\/$//;
 if ($DNSLookup) { use Socket; }
 $NewDNSLookup=$DNSLookup;
 %monthlib =  ( "01","$message[60]","02","$message[61]","03","$message[62]","04","$message[63]","05","$message[64]","06","$message[65]","07","$message[66]","08","$message[67]","09","$message[68]","10","$message[69]","11","$message[70]","12","$message[71]" );
-# monthnum must be in english because it's used to translate log date in log files which are always in english
-%monthnum =  ( "Jan","01","Feb","02","Mar","03","Apr","04","May","05","Jun","06","Jul","07","Aug","08","Sep","09","Oct","10","Nov","11","Dec","12" );
+# monthnum must be in english because it's used to translate log date in apache log files which are always in english
+%monthnum =  ( "Jan","01","jan","01","Feb","02","feb","02","Mar","03","mar","03","Apr","04","apr","04","May","05","may","05","Jun","06","jun","06","Jul","07","jul","07","Aug","08","aug","08","Sep","09","sep","09","Oct","10","oct","10","Nov","11","nov","11","Dec","12","dec","12" );
+
 
 # Check year and month parameters
 if ($QueryString =~ /year=/i) 	{ $YearRequired=$QueryString; $YearRequired =~ s/.*year=//; $YearRequired =~ s/&.*//;  $YearRequired =~ s/ .*//; }
