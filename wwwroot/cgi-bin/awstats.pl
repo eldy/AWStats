@@ -5579,14 +5579,14 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 	unshift @HostAliases,qr/^$SiteToAnalyze$/i;	# Add SiteToAnalyze as first value
 
 	# Optimize arrays
-	@HostAliases=&OptimizeArray(\@HostAliases,1); if ($Debug) { debug("HostAliases is now @HostAliases",1); }
-	@SkipDNSLookupFor=&OptimizeArray(\@SkipDNSLookupFor,1); if ($Debug) { debug("SkipDNSLookupFor is now @SkipDNSLookupFor",1); }
-	@SkipHosts=&OptimizeArray(\@SkipHosts,1); if ($Debug) { debug("SkipHosts is now @SkipHosts",1); }
-	@SkipUserAgents=&OptimizeArray(\@SkipUserAgents,1); if ($Debug) { debug("SkipUserAgents is now @SkipUserAgents",1); }
-	@SkipFiles=&OptimizeArray(\@SkipFiles,$URLNotCaseSensitive); if ($Debug) { debug("SkipFiles is now @SkipFiles",1); }
-	@OnlyHosts=&OptimizeArray(\@OnlyHosts,1); if ($Debug) { debug("OnlyHosts is now @OnlyHosts",1); }
-	@OnlyUserAgents=&OptimizeArray(\@OnlyUserAgents,1); if ($Debug) { debug("OnlyUserAgents is now @OnlyUserAgents",1); }
-	@OnlyFiles=&OptimizeArray(\@OnlyFiles,$URLNotCaseSensitive); if ($Debug) { debug("OnlyFiles is now @OnlyFiles",1); }
+	@HostAliases=&OptimizeArray(\@HostAliases,1); if ($Debug) { debug("HostAliases precompiled regex list is now @HostAliases",1); }
+	@SkipDNSLookupFor=&OptimizeArray(\@SkipDNSLookupFor,1); if ($Debug) { debug("SkipDNSLookupFor precompiled regex list is now @SkipDNSLookupFor",1); }
+	@SkipHosts=&OptimizeArray(\@SkipHosts,1); if ($Debug) { debug("SkipHosts precompiled regex list is now @SkipHosts",1); }
+	@SkipUserAgents=&OptimizeArray(\@SkipUserAgents,1); if ($Debug) { debug("SkipUserAgents precompiled regex list is now @SkipUserAgents",1); }
+	@SkipFiles=&OptimizeArray(\@SkipFiles,$URLNotCaseSensitive); if ($Debug) { debug("SkipFiles precompiled regex list is now @SkipFiles",1); }
+	@OnlyHosts=&OptimizeArray(\@OnlyHosts,1); if ($Debug) { debug("OnlyHosts precompiled regex list is now @OnlyHosts",1); }
+	@OnlyUserAgents=&OptimizeArray(\@OnlyUserAgents,1); if ($Debug) { debug("OnlyUserAgents precompiled regex list is now @OnlyUserAgents",1); }
+	@OnlyFiles=&OptimizeArray(\@OnlyFiles,$URLNotCaseSensitive); if ($Debug) { debug("OnlyFiles precompiled regex list is now @OnlyFiles",1); }
 	$MiscTrackerUrl=qr/^$MiscTrackerUrl/;
 	@RobotsSearchIDOrder=map{qr/$_/i} @RobotsSearchIDOrder;
 	@BrowsersSearchIDOrder=map{qr/$_/i} @BrowsersSearchIDOrder;
