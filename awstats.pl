@@ -14,7 +14,7 @@
 #-------------------------------------------------------
 # Defines
 #-------------------------------------------------------
-$VERSION="2.24 (build 5)";
+$VERSION="2.24 (build 7)";
 $Lang=0;
 
 # Default value
@@ -1698,7 +1698,7 @@ if (($YearRequired == $nowyear) && ($MonthRequired eq "year" || $MonthRequired =
 		$line=$_;
 		$_ =~ s/\n//;	# Needed because IIS log file end with CRLF and perl read lines until LF
 		$_ =~ s/\" / /g; $_ =~ s/ \"/ /g; $_ =~ s/\"$//;	# Suppress "
-		if (/^$/) { next; }								# ISS sometimes write blank lines, also possible with Apache log when editing log file.
+		if (/^$/) { next; }								# To ignore blank line (With ISS: happens sometimes, with Apache: possible when editing log file)
 		if ($LogFormat == 2) {
 			if (/^#/) { next; }							# ISS writes such comments, we forget line
 			@felter=split(/ /,$_);
@@ -1728,7 +1728,6 @@ if (($YearRequired == $nowyear) && ($MonthRequired eq "year" || $MonthRequired =
 		else {
 			$_ =~ s/ GET .* .* HTTP\// GET BAD_URL HTTP\//;		# Change ' GET x y z HTTP/' into ' GET x%20y%20z HTTP/'
 			@felter=split(/ /,$_);
-			if (($felter[11] eq "") && ($felter[10] ne ""))    { next; }	# Apache sometines forget field 11
 		}
 #		$felter[1]=$felter[0]; shift @felter;					# This is for test when log format is "hostname ip_adress ...	"
 
