@@ -581,7 +581,8 @@ use vars qw/ @Message /;
 'Size',
 'First',
 'Last',
-'Exclude filter'
+'Exclude filter',
+'* Codes shown here gave hits or traffic "not viewed" by visitors, so are isolated in this chart.'
 );
 
 
@@ -722,7 +723,9 @@ sub tab_head {
 # Return:		None
 #------------------------------------------------------------------------------
 sub tab_end {
+	my $string=shift;
 	print "</TABLE></TD></TR></TABLE>";
+	if ($string) { print "$string<br>\n"; }
 	print "<br>\n\n";
 }
 
@@ -5740,6 +5743,8 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 				next;	# Next log record
 			}
 		}
+		elsif ($protocol == 2) {						# FTP record
+		}
 
 		# Analyze: Robot
 		#---------------
@@ -5776,6 +5781,7 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 		}
 
 		# Canonize and clean target URL and referrer URL
+		# to define urlwithnoquery, tokenquery and standalonequery and $field[$pos_url]
 		#-----------------------------------------------
 		if ($URLNotCaseSensitive) { $field[$pos_url] =~ tr/A-Z/a-z/; }
 		if ($protocol == 2) { $field[$pos_url] =~ s/\s/%20/g; }
@@ -5812,7 +5818,6 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 			$standalonequery=$2||'';
 		}
 		if ($URLWithAnchor && $anchor) { $field[$pos_url].="#$anchor"; }	# Restore anchor
-
 		# Here now urlwithnoquery is /mydir/mypage.ext, /mydir, /, /page#XXX
 		# Here now tokenquery is '' or '?' or ';'
 		# Here now standalonequery is '' or 'param1=x'
@@ -9160,7 +9165,7 @@ if (scalar keys %HTMLOutput) {
 			&tab_end;
 		}
 	
-		# BY HTTP ERRORS
+		# BY HTTP STATUS
 		#----------------------------
 		if ($ShowHTTPErrorsStats) {
 			if ($Debug) { debug("ShowHTTPErrorsStats",2); }
@@ -9181,7 +9186,7 @@ if (scalar keys %HTMLOutput) {
 				$total_h+=$_errors_h{$key};
 				$count++;
 			}
-			&tab_end;
+			&tab_end($Message[154]);
 		}
 
 		# BY SMTP ERRORS
