@@ -1519,7 +1519,7 @@ sub Read_History_With_Update {
 		if ($UpdateStats || $HTMLOutput eq "main" || $HTMLOutput eq "unknownos")      { $SectionsToLoad{"unknownreferer"}=12; }
 		if ($UpdateStats || $HTMLOutput eq "main" || $HTMLOutput eq "unknownbrowser") { $SectionsToLoad{"unknownrefererbrowser"}=13; }
 		if ($UpdateStats || $HTMLOutput eq "main" || $HTMLOutput eq "robots") { $SectionsToLoad{"robot"}=14; }
-		if ($UpdateStats || $HTMLOutput eq "main" || $HTMLOutput eq "urldetail") { $SectionsToLoad{"sider"}=15; }
+		if ($UpdateStats || $HTMLOutput eq "main" || $HTMLOutput eq "urldetail" || $HTMLOutput eq "urlentry" || $HTMLOutput eq "urlexit") { $SectionsToLoad{"sider"}=15; }
 		if ($UpdateStats || $HTMLOutput eq "main" || $HTMLOutput eq "filetypes") { $SectionsToLoad{"filetypes"}=16; }
 		if ($UpdateStats || $HTMLOutput eq "main" || $HTMLOutput eq "origin") { $SectionsToLoad{"origin"}=17; }
 		if ($UpdateStats || $HTMLOutput eq "main" || $HTMLOutput eq "refererse") { $SectionsToLoad{"sereferrals"}=18; }
@@ -2179,7 +2179,8 @@ sub Read_History_With_Update {
 										$TotalDifferentPages++;
 									}
 								}
-								elsif ($HTMLOutput eq "urldetail") {
+#								elsif ($HTMLOutput eq "urldetail") {
+								else {	# This is for $HTMLOutput = urldetail, urlentry or urlexit
 									if ($MonthRequired eq "year" ) {
 										if (!$URLFilter || $field[0] =~ /$URLFilter/) { $loadrecord=1; }
 									}
@@ -3513,6 +3514,10 @@ if ((! $ENV{"GATEWAY_INTERFACE"}) && (! $SiteConfig)) {
 	print "               unknownip        to build page of all unresolved IP\n";
 	print "               urldetail        to list most often viewed pages \n";
 	print "               urldetail:filter to list most often viewed pages matching filter\n";
+	print "               urlentry         to list entry pages\n";
+	print "               urlentry:filter  to list entry pages matching filter\n";
+	print "               urlexit          to list exit pages\n";
+	print "               urlexit:filter   to list exit pages matching filter\n";
 	print "               browserdetail    to build page with browsers detailed versions\n";
 	print "               unknownbrowser   to list 'User Agents' with unknown browser\n";
 	print "               unknownos        to list 'User Agents' with unknown OS\n";
@@ -4951,8 +4956,8 @@ EOF
 			if ($ShowSessionsStats)		 { print ($frame?"<tr><td class=AWL>":""); print "<a href=\"$linkpage#SESSIONS\"$targetpage>$Message[117]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
 			if ($ShowPagesStats)		 { print ($frame?"<tr><td class=AWL>":""); print "<a href=\"$linkpage#PAGE\"$targetpage>$Message[29]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
 			if ($ShowPagesStats)		 { print ($frame?"<tr><td class=AWL> &nbsp; <img height=8 width=9 src=\"$DirIcons/other/page.png\"> ":""); print "<a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=urldetail":"$PROG$StaticLinks.urldetail.html")."\"$NewLinkTarget>$Message[80]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
-			if ($ShowPagesStats)		 { print ($frame?"<tr><td class=AWL>":""); print "<a href=\"$linkpage#ENTRY\"$targetpage>$Message[104]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
-			if ($ShowPagesStats)		 { print ($frame?"<tr><td class=AWL>":""); print "<a href=\"$linkpage#EXIT\"$targetpage>$Message[116]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
+			if ($ShowPagesStats)		 { print ($frame?"<tr><td class=AWL> &nbsp; <img height=8 width=9 src=\"$DirIcons/other/page.png\"> ":""); print "<a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=urlentry":"$PROG$StaticLinks.urlentry.html")."\"$NewLinkTarget>$Message[104]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
+			if ($ShowPagesStats)		 { print ($frame?"<tr><td class=AWL> &nbsp; <img height=8 width=9 src=\"$DirIcons/other/page.png\"> ":""); print "<a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=urlexit":"$PROG$StaticLinks.urlexit.html")."\"$NewLinkTarget>$Message[116]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
 			if ($ShowFileTypesStats)	 { print ($frame?"<tr><td class=AWL>":""); print "<a href=\"$linkpage#FILETYPES\"$targetpage>$Message[73]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
 			if ($ShowFileSizesStats)	 {  }
 			if ($ShowOSStats)			 { print ($frame?"<tr><td class=AWL>":""); print "<a href=\"$linkpage#OS\"$targetpage>$Message[59]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
@@ -5180,7 +5185,7 @@ EOF
 		&html_end;
 		exit(0);
 	}
-	if ($HTMLOutput eq "urldetail") {
+	if ($HTMLOutput eq "urldetail" || $HTMLOutput eq "urlentry" || $HTMLOutput eq "urlexit") {
 		if ($Plugin_etf1) { AddOn_Filter(); }
 		print "$Center<a name=\"URLDETAIL\">&nbsp;</a><BR>\n";
 		# Show filter form
@@ -5191,10 +5196,10 @@ EOF
 			$NewLinkParams =~ s/staticlinks(=\w*|$|[ &]+)//i;
 			$NewLinkParams =~ tr/&/&/s; $NewLinkParams =~ s/^&//; $NewLinkParams =~ s/&$//;
 			if ($NewLinkParams) { $NewLinkParams="${NewLinkParams}&"; }
-			print "<FORM name=\"FormUrlFilter\" action=\"$AWScript?${NewLinkParams}\" class=\"TABLEFRAME\">\n";
+			print "\n<FORM name=\"FormUrlFilter\" action=\"$AWScript?${NewLinkParams}\" class=\"TABLEFRAME\">\n";
 			print "<TABLE valign=middle><TR>\n";
 			print "<TD>&nbsp; &nbsp; $Message[79] : &nbsp; &nbsp;\n";
-			print "<input type=hidden name=\"output\" value=\"urldetail\">\n";
+			print "<input type=hidden name=\"output\" value=\"$HTMLOutput\">\n";
 			if ($SiteConfig) { print "<input type=hidden name=\"config\" value=\"$SiteConfig\">\n"; }
 			if ($QueryString =~ /year=(\d\d\d\d)/i) { print "<input type=hidden name=\"year\" value=\"$1\">\n"; }
 			if ($QueryString =~ /month=(\d\d)/i || $QueryString =~ /month=(year)/i) { print "<input type=hidden name=\"month\" value=\"$1\">\n"; }
@@ -5205,16 +5210,22 @@ EOF
 			print "<TD><input type=text name=\"urlfilter\" value=\"$URLFilter\" class=\"CFormFields\"></TD>\n";
 			print "<TD><input type=submit value=\"$Message[115]\" class=\"CFormFields\">\n";
 			print "</TR></TABLE>\n";
-			print "</FORM>\n";
+			print "</FORM>\n\n";
 		}
 		# Show URL list
-		&tab_head($Message[19],19);
+		my $title=""; my $cpt=0;
+		if ($HTMLOutput eq "urldetail") { $title=$Message[19]; $cpt=(scalar keys %_url_p); }
+		if ($HTMLOutput eq "urlentry")  { $title=$Message[104]; $cpt=(scalar keys %_url_e); }
+		if ($HTMLOutput eq "urlexit")   { $title=$Message[116]; $cpt=(scalar keys %_url_x); }
+		&tab_head($title,19);
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>";
 		if ($URLFilter) {
-			print "$Message[79] <b>$URLFilter</b>: ".(scalar keys %_url_p)." $Message[28]";
-			if ($MonthRequired ne "year") { print "<br>$Message[102]: $TotalDifferentPages $Message[28]"; }
+			print "$Message[79] <b>$URLFilter</b>: $cpt $Message[28]";
+			if ($MonthRequired ne "year") {
+				if ($HTMLOutput eq "urldetail") { print "<br>$Message[102]: $TotalDifferentPages $Message[28]"; }
+			}
 		}
-		else { print "$Message[102]: ".(scalar keys %_url_p)." $Message[28]"; }
+		else { print "$Message[102]: $cpt $Message[28]"; }
 		print "</TH>";
 		print "<TH bgcolor=\"#$color_p\" width=80>&nbsp;$Message[29]&nbsp;</TH>";
 		print "<TH bgcolor=\"#$color_k\" width=80>&nbsp;$Message[106]&nbsp;</TH>";
@@ -5224,7 +5235,9 @@ EOF
 		print "<TH>&nbsp;</TH></TR>\n";
 		$total_p=$total_k=$total_e=$total_x=0;
 		my $count=0;
-		&BuildKeyList($MaxRowsInHTMLOutput,$MinHitFile,\%_url_p,\%_url_p);
+		if ($HTMLOutput eq "urlentry") { &BuildKeyList($MaxRowsInHTMLOutput,$MinHitFile,\%_url_e,\%_url_e); }
+		elsif ($HTMLOutput eq "urlexit") { &BuildKeyList($MaxRowsInHTMLOutput,$MinHitFile,\%_url_x,\%_url_x); }
+		else { &BuildKeyList($MaxRowsInHTMLOutput,$MinHitFile,\%_url_p,\%_url_p); }
 		$max_p=1; $max_k=1;
 		foreach my $key (@keylist) {
 			if ($_url_p{$key} > $max_p) { $max_p = $_url_p{$key}; }
@@ -5983,7 +5996,7 @@ EOF
 		if ($Debug) { debug("ShowPagesStats (MaxNbOfPageShown=$MaxNbOfPageShown TotalDifferentPages=$TotalDifferentPages)",2); }
 		print "$Center<a name=\"PAGE\">&nbsp;</a><a name=\"ENTRY\">&nbsp;</a><a name=\"EXIT\">&nbsp;</a><BR>\n";
 		$MaxNbOfPageShown = $TotalDifferentPages if $MaxNbOfPageShown > $TotalDifferentPages;
-		&tab_head("$Message[19] ($Message[77] $MaxNbOfPageShown) &nbsp; - &nbsp; <a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=urldetail":"$PROG$StaticLinks.urldetail.html")."\"$NewLinkTarget>$Message[80]</a>",19);
+		&tab_head("$Message[19] ($Message[77] $MaxNbOfPageShown) &nbsp; - &nbsp; <a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=urldetail":"$PROG$StaticLinks.urldetail.html")."\"$NewLinkTarget>$Message[80]</a> &nbsp; - &nbsp; <a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=urlentry":"$PROG$StaticLinks.urlentry.html")."\"$NewLinkTarget>$Message[104]</a> &nbsp; - &nbsp; <a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=urlexit":"$PROG$StaticLinks.urlexit.html")."\"$NewLinkTarget>$Message[116]</a>",19);
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$TotalDifferentPages $Message[28]</TH>";
 		print "<TH bgcolor=\"#$color_p\" width=80>$Message[29]</TH>";
 		print "<TH bgcolor=\"#$color_k\" width=80>$Message[106]</TH>";
