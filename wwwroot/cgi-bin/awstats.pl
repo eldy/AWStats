@@ -53,7 +53,7 @@ $NoHTMLOutput, $PROG, $PageBool, $PageCode,
 $PurgeLogFile, $QueryString, $RatioBytes, $RatioHits, $RatioHosts, $RatioPages,
 $ShowFlagLinks, $ShowLinksOnURL, $ShowLinksOnUrl, $ShowSteps,
 $SiteToAnalyze, $SiteToAnalyzeWithoutwww,
-$TotalBytes, $TotalDifferentKeywords, $TotalDifferentPages, $TotalErrors, $TotalHits,
+$TotalBytes, $TotalDifferentPages, $TotalErrors, $TotalHits,
 $TotalHostsKnown, $TotalHostsUnKnown, $TotalKeywords, $TotalPages, $TotalUnique, $TotalVisits,
 $URLFilter, $UserAgent, $WarningMessages, $YearRequired, 
 $color_Background, $color_TableBG, $color_TableBGRowTitle,
@@ -63,18 +63,15 @@ $found, $internal_link, $monthtoprocess, $new,
 $tab_titre, $total_h, $total_k, $total_p, $yearmonth, $yeartoprocess) = ();
 # ---------- Init arrays --------
 @HostAliases = @OnlyFiles = @SkipDNSLookupFor = @SkipFiles = @SkipHosts =
-@dateparts = @felter = @field = @filearray = @message =
-@paramlist = @refurl = @sortbrowsers = @sortdomains_h = @sortdomains_k =
-@sortdomains_p = @sorterrors = @sorthosts_p = @sortos = @sortpagerefs = @sortrobot =
-@sortsearchwords = @sortsereferrals = @sortsider404 = @sortsiders = @sortunknownip =
-@sortunknownreferer = @sortunknownrefererbrowser = @wordlist = ();
+@dateparts = @felter = @field = @filearray = @Message =
+@paramlist = @refurl = @wordlist = ();
 # ---------- Init hash arrays --------
 %DayBytes = %DayHits = %DayPages = %DayUnique = %DayVisits =
 %FirstTime = %HistoryFileAlreadyRead = %LastTime = %LastUpdate =
 %MonthBytes = %MonthHits = %MonthHostsKnown = %MonthHostsUnknown = %MonthPages = %MonthUnique = %MonthVisits =
 %listofyears = %monthlib = %monthnum = ();
 
-$VERSION="3.1 (build 6)";
+$VERSION="3.1 (build 7)";
 $Lang="en";
 $Sort="";
 
@@ -714,7 +711,7 @@ sub html_head {
 	print "<meta http-equiv=\"description\" content=\"$PROG - Advanced Web Statistics for $SiteToAnalyze\">\n";
 	print "<meta http-equiv=\"keywords\" content=\"$SiteToAnalyze, free, advanced, realtime, web, server, logfile, log, analyzer, analysis, statistics, stats, perl, analyse, performance, hits, visits\">\n";
 	print "<meta name=\"robots\" content=\"index,follow\">\n";
-	print "<title>$message[7] $SiteToAnalyze</title>\n";
+	print "<title>$Message[7] $SiteToAnalyze</title>\n";
 	print "<STYLE TYPE=text/css>
 <!--
 BODY { font: 12px arial, verdana, helvetica, sans-serif; background-color: #$color_Background; }
@@ -858,8 +855,10 @@ sub SkipDNSLookup {
 sub Read_Config_File {
 	$FileConfig="";
 	my $Dir=$DIR; if (($Dir ne "") && (!($Dir =~ /\/$/)) && (!($Dir =~ /\\$/)) ) { $Dir .= "/"; }
-	if (open(CONFIG,"$Dir$PROG.$SiteToAnalyze.conf")) { $FileConfig="$Dir$PROG.$SiteToAnalyze.conf"; $FileSuffix=".$SiteToAnalyze"; }
+	if ($FileConfig eq "") { if (open(CONFIG,"$Dir$PROG.$SiteToAnalyze.conf")) { $FileConfig="$Dir$PROG.$SiteToAnalyze.conf"; $FileSuffix=".$SiteToAnalyze"; } }
 	if ($FileConfig eq "") { if (open(CONFIG,"$Dir$PROG.conf"))  { $FileConfig="$Dir$PROG.conf"; $FileSuffix=""; } }
+	if ($FileConfig eq "") { if (open(CONFIG,"/etc/$PROG.$SiteToAnalyze.conf"))  { $FileConfig="/etc/$PROG.$SiteToAnalyze.conf"; $FileSuffix=".$SiteToAnalyze"; } }
+	if ($FileConfig eq "") { if (open(CONFIG,"/etc/$PROG.conf"))  { $FileConfig="/etc/$PROG.conf"; $FileSuffix=""; } }
 	if ($FileConfig eq "") { error("Error: Couldn't open config file \"$PROG.$SiteToAnalyze.conf\" nor \"$PROG.conf\" : $!"); }
 	&debug("Call to Read_Config_File [FileConfig=\"$FileConfig\"]");
 	while (<CONFIG>) {
@@ -963,7 +962,7 @@ sub Read_Config_File {
 # Function:     Get the messages for a specified language
 # Parameter:	Language id
 # Input:		None
-# Output:		$message table
+# Output:		$Message table
 #------------------------------------------------------------------------------
 sub Read_Language_Data {
 	my $FileLang="";
@@ -983,13 +982,13 @@ sub Read_Language_Data {
 				$_ =~ s/^\"//; $_ =~ s/\"$//;
 				$PageCode = $_;
 			}
-			if ($_ =~ /^message/i) {
-				$_ =~ s/^message\d+=//i;
+			if ($_ =~ /^Message/i) {
+				$_ =~ s/^Message\d+=//i;
 				$_ =~ s/#.*//;								# Remove comments
 				$_ =~ tr/\t /  /s;							# Change all blanks into " "
 				$_ =~ s/^ *//; $_ =~ s/ *$//;
 				$_ =~ s/^\"//; $_ =~ s/\"$//;
-				$message[$i] = $_;
+				$Message[$i] = $_;
 				$i++;
 			}
 		}
@@ -1002,7 +1001,7 @@ sub Read_Language_Data {
 # Function:     Get the tooltip texts for a specified language
 # Parameter:	Language id
 # Input:		None
-# Output:		$message table
+# Output:		Full tooltips text
 #------------------------------------------------------------------------------
 sub Read_Language_Tooltip {
 	my $FileLang="";
@@ -1080,86 +1079,86 @@ sub Check_Config {
 	$color_h =~ s/#//g; if ($color_h !~ /^[0-9|A-Z][0-9|A-Z]*$/i)                 { $color_h="66F0FF"; }
 	$color_k =~ s/#//g; if ($color_k !~ /^[0-9|A-Z][0-9|A-Z]*$/i)                 { $color_k="339944"; }
 	$color_s =~ s/#//g; if ($color_s !~ /^[0-9|A-Z][0-9|A-Z]*$/i)                 { $color_s="8888DD"; }
-	# Default value	for messages
-	if ($message[0] eq "") { $message[0]="Unknown"; }
-	if ($message[1] eq "") { $message[1]="Unknown (unresolved ip)"; }
-	if ($message[2] eq "") { $message[2]="Others"; }
-	if ($message[3] eq "") { $message[3]="View details"; }
-	if ($message[4] eq "") { $message[4]="Day"; }
-	if ($message[5] eq "") { $message[5]="Month"; }
-	if ($message[6] eq "") { $message[6]="Year"; }
-	if ($message[7] eq "") { $message[7]="Statistics of"; }
-	if ($message[8] eq "") { $message[8]="First visit"; }
-	if ($message[9] eq "") { $message[9]="Last visit"; }
-	if ($message[10] eq "") { $message[10]="Number of visits"; }
-	if ($message[11] eq "") { $message[11]="Unique visitors"; }
-	if ($message[12] eq "") { $message[12]="Visit"; }
-	if ($message[13] eq "") { $message[13]="Keyword"; }
-	if ($message[14] eq "") { $message[14]="Search"; }
-	if ($message[15] eq "") { $message[15]="Percent"; }
-	if ($message[16] eq "") { $message[16]="Traffic"; }
-	if ($message[17] eq "") { $message[17]="Domains/Countries"; }
-	if ($message[18] eq "") { $message[18]="Visitors"; }
-	if ($message[19] eq "") { $message[19]="Pages-URL"; }
-	if ($message[20] eq "") { $message[20]="Hours (Server time)"; }
-	if ($message[21] eq "") { $message[21]="Browsers"; }
-	if ($message[22] eq "") { $message[22]="HTTP Errors"; }
-	if ($message[23] eq "") { $message[23]="Referers"; }
-	if ($message[24] eq "") { $message[24]="Search&nbsp;Keywords"; }
-	if ($message[25] eq "") { $message[25]="Visitors domains/countries"; }
-	if ($message[26] eq "") { $message[26]="hosts"; }
-	if ($message[27] eq "") { $message[27]="pages"; }
-	if ($message[28] eq "") { $message[28]="different pages"; }
-	if ($message[29] eq "") { $message[29]="Access"; }
-	if ($message[30] eq "") { $message[30]="Other words"; }
-	if ($message[31] eq "") { $message[31]="Pages not found"; }
-	if ($message[32] eq "") { $message[32]="HTTP Error codes"; }
-	if ($message[33] eq "") { $message[33]="Netscape versions"; }
-	if ($message[34] eq "") { $message[34]="IE versions"; }
-	if ($message[35] eq "") { $message[35]="Last Update"; }
-	if ($message[36] eq "") { $message[36]="Connect to site from"; }
-	if ($message[37] eq "") { $message[37]="Origin"; }
-	if ($message[38] eq "") { $message[38]="Direct address / Bookmarks"; }
-	if ($message[39] eq "") { $message[39]="Origin unknown"; }
-	if ($message[40] eq "") { $message[40]="Links from an Internet Search Engine"; }
-	if ($message[41] eq "") { $message[41]="Links from an external page (other web sites except search engines)"; }
-	if ($message[42] eq "") { $message[42]="Links from an internal page (other page on same site)"; }
-	if ($message[43] eq "") { $message[43]="keywords used on search engines"; }
-	if ($message[44] eq "") { $message[44]="Kb"; }
-	if ($message[45] eq "") { $message[45]="Unresolved IP Address"; }
-	if ($message[46] eq "") { $message[46]="Unknown OS (Referer field)"; }
-	if ($message[47] eq "") { $message[47]="Required but not found URLs (HTTP code 404)"; }
-	if ($message[48] eq "") { $message[48]="IP Address"; }
-	if ($message[49] eq "") { $message[49]="Error&nbsp;Hits"; }
-	if ($message[50] eq "") { $message[50]="Unknown browsers (Referer field)"; }
-	if ($message[51] eq "") { $message[51]="Visiting robots"; }
-	if ($message[52] eq "") { $message[52]="visits/visitor"; }
-	if ($message[53] eq "") { $message[53]="Robots/Spiders visitors"; }
-	if ($message[54] eq "") { $message[54]="Free realtime logfile analyzer for advanced web statistics"; }
-	if ($message[55] eq "") { $message[55]="of"; }
-	if ($message[56] eq "") { $message[56]="Pages"; }
-	if ($message[57] eq "") { $message[57]="Hits"; }
-	if ($message[58] eq "") { $message[58]="Versions"; }
-	if ($message[59] eq "") { $message[59]="Operating Systems"; }
-	if ($message[60] eq "") { $message[60]="Jan"; }
-	if ($message[61] eq "") { $message[61]="Feb"; }
-	if ($message[62] eq "") { $message[62]="Mar"; }
-	if ($message[63] eq "") { $message[63]="Apr"; }
-	if ($message[64] eq "") { $message[64]="May"; }
-	if ($message[65] eq "") { $message[65]="Jun"; }
-	if ($message[66] eq "") { $message[66]="Jul"; }
-	if ($message[67] eq "") { $message[67]="Aug"; }
-	if ($message[68] eq "") { $message[68]="Sep"; }
-	if ($message[69] eq "") { $message[69]="Oct"; }
-	if ($message[70] eq "") { $message[70]="Nov"; }
-	if ($message[71] eq "") { $message[71]="Dec"; }
-	if ($message[72] eq "") { $message[72]="Navigation"; }
-	if ($message[73] eq "") { $message[73]="Day statistics"; }
-	if ($message[74] eq "") { $message[74]="Update now"; }
-	if ($message[75] eq "") { $message[75]="Bytes"; }
-	if ($message[76] eq "") { $message[76]=""; }
-	if ($message[77] eq "") { $message[77]="Top"; }
-	if ($message[78] eq "") { $message[78]="dd mmm yyyy - HH:MM"; }
+	# Default value	for Messages
+	if ($Message[0] eq "") { $Message[0]="Unknown"; }
+	if ($Message[1] eq "") { $Message[1]="Unknown (unresolved ip)"; }
+	if ($Message[2] eq "") { $Message[2]="Others"; }
+	if ($Message[3] eq "") { $Message[3]="View details"; }
+	if ($Message[4] eq "") { $Message[4]="Day"; }
+	if ($Message[5] eq "") { $Message[5]="Month"; }
+	if ($Message[6] eq "") { $Message[6]="Year"; }
+	if ($Message[7] eq "") { $Message[7]="Statistics of"; }
+	if ($Message[8] eq "") { $Message[8]="First visit"; }
+	if ($Message[9] eq "") { $Message[9]="Last visit"; }
+	if ($Message[10] eq "") { $Message[10]="Number of visits"; }
+	if ($Message[11] eq "") { $Message[11]="Unique visitors"; }
+	if ($Message[12] eq "") { $Message[12]="Visit"; }
+	if ($Message[13] eq "") { $Message[13]="Keyword"; }
+	if ($Message[14] eq "") { $Message[14]="Search"; }
+	if ($Message[15] eq "") { $Message[15]="Percent"; }
+	if ($Message[16] eq "") { $Message[16]="Traffic"; }
+	if ($Message[17] eq "") { $Message[17]="Domains/Countries"; }
+	if ($Message[18] eq "") { $Message[18]="Visitors"; }
+	if ($Message[19] eq "") { $Message[19]="Pages-URL"; }
+	if ($Message[20] eq "") { $Message[20]="Hours (Server time)"; }
+	if ($Message[21] eq "") { $Message[21]="Browsers"; }
+	if ($Message[22] eq "") { $Message[22]="HTTP Errors"; }
+	if ($Message[23] eq "") { $Message[23]="Referers"; }
+	if ($Message[24] eq "") { $Message[24]="Search&nbsp;Keywords"; }
+	if ($Message[25] eq "") { $Message[25]="Visitors domains/countries"; }
+	if ($Message[26] eq "") { $Message[26]="hosts"; }
+	if ($Message[27] eq "") { $Message[27]="pages"; }
+	if ($Message[28] eq "") { $Message[28]="different pages"; }
+	if ($Message[29] eq "") { $Message[29]="Access"; }
+	if ($Message[30] eq "") { $Message[30]="Other words"; }
+	if ($Message[31] eq "") { $Message[31]="Pages not found"; }
+	if ($Message[32] eq "") { $Message[32]="HTTP Error codes"; }
+	if ($Message[33] eq "") { $Message[33]="Netscape versions"; }
+	if ($Message[34] eq "") { $Message[34]="IE versions"; }
+	if ($Message[35] eq "") { $Message[35]="Last Update"; }
+	if ($Message[36] eq "") { $Message[36]="Connect to site from"; }
+	if ($Message[37] eq "") { $Message[37]="Origin"; }
+	if ($Message[38] eq "") { $Message[38]="Direct address / Bookmarks"; }
+	if ($Message[39] eq "") { $Message[39]="Origin unknown"; }
+	if ($Message[40] eq "") { $Message[40]="Links from an Internet Search Engine"; }
+	if ($Message[41] eq "") { $Message[41]="Links from an external page (other web sites except search engines)"; }
+	if ($Message[42] eq "") { $Message[42]="Links from an internal page (other page on same site)"; }
+	if ($Message[43] eq "") { $Message[43]="keywords used on search engines"; }
+	if ($Message[44] eq "") { $Message[44]="Kb"; }
+	if ($Message[45] eq "") { $Message[45]="Unresolved IP Address"; }
+	if ($Message[46] eq "") { $Message[46]="Unknown OS (Referer field)"; }
+	if ($Message[47] eq "") { $Message[47]="Required but not found URLs (HTTP code 404)"; }
+	if ($Message[48] eq "") { $Message[48]="IP Address"; }
+	if ($Message[49] eq "") { $Message[49]="Error&nbsp;Hits"; }
+	if ($Message[50] eq "") { $Message[50]="Unknown browsers (Referer field)"; }
+	if ($Message[51] eq "") { $Message[51]="Visiting robots"; }
+	if ($Message[52] eq "") { $Message[52]="visits/visitor"; }
+	if ($Message[53] eq "") { $Message[53]="Robots/Spiders visitors"; }
+	if ($Message[54] eq "") { $Message[54]="Free realtime logfile analyzer for advanced web statistics"; }
+	if ($Message[55] eq "") { $Message[55]="of"; }
+	if ($Message[56] eq "") { $Message[56]="Pages"; }
+	if ($Message[57] eq "") { $Message[57]="Hits"; }
+	if ($Message[58] eq "") { $Message[58]="Versions"; }
+	if ($Message[59] eq "") { $Message[59]="Operating Systems"; }
+	if ($Message[60] eq "") { $Message[60]="Jan"; }
+	if ($Message[61] eq "") { $Message[61]="Feb"; }
+	if ($Message[62] eq "") { $Message[62]="Mar"; }
+	if ($Message[63] eq "") { $Message[63]="Apr"; }
+	if ($Message[64] eq "") { $Message[64]="May"; }
+	if ($Message[65] eq "") { $Message[65]="Jun"; }
+	if ($Message[66] eq "") { $Message[66]="Jul"; }
+	if ($Message[67] eq "") { $Message[67]="Aug"; }
+	if ($Message[68] eq "") { $Message[68]="Sep"; }
+	if ($Message[69] eq "") { $Message[69]="Oct"; }
+	if ($Message[70] eq "") { $Message[70]="Nov"; }
+	if ($Message[71] eq "") { $Message[71]="Dec"; }
+	if ($Message[72] eq "") { $Message[72]="Navigation"; }
+	if ($Message[73] eq "") { $Message[73]="Day statistics"; }
+	if ($Message[74] eq "") { $Message[74]="Update now"; }
+	if ($Message[75] eq "") { $Message[75]="Bytes"; }
+	if ($Message[76] eq "") { $Message[76]=""; }
+	if ($Message[77] eq "") { $Message[77]="Top"; }
+	if ($Message[78] eq "") { $Message[78]="dd mmm yyyy - HH:MM"; }
 }
 
 #--------------------------------------------------------------------
@@ -1539,12 +1538,12 @@ sub Format_Bytes {
 	my $fudge = 1;
 	if ($bytes >= $fudge * exp(3*log(1024))) { return sprintf("%.2f", $bytes/exp(3*log(1024)))." Gb"; }
 	if ($bytes >= $fudge * exp(2*log(1024))) { return sprintf("%.2f", $bytes/exp(2*log(1024)))." Mb"; }
-	if ($bytes >= $fudge * exp(1*log(1024))) { return sprintf("%.2f", $bytes/exp(1*log(1024)))." $message[44]"; }
-	return "$bytes $message[75]";
+	if ($bytes >= $fudge * exp(1*log(1024))) { return sprintf("%.2f", $bytes/exp(1*log(1024)))." $Message[44]"; }
+	return "$bytes $Message[75]";
 }
 
 #------------------------------------------------------------------------------
-# Function:      Format a date according to message[78] (country date format)
+# Function:      Format a date according to Message[78] (country date format)
 # Input:         day month year hour min
 #------------------------------------------------------------------------------
 sub Format_Date {
@@ -1554,7 +1553,7 @@ sub Format_Date {
 	my $day=substr("$date",6,2);
 	my $hour=substr("$date",8,2);
 	my $min=substr("$date",10,2);
-	my $dateformat=$message[78];
+	my $dateformat=$Message[78];
 	$dateformat =~ s/yyyy/$year/g;
 	$dateformat =~ s/yy/$year/g;
 	$dateformat =~ s/mmm/$monthlib{$month}/g;
@@ -1707,7 +1706,7 @@ if ($DirData eq "")  { $DirData="."; }						# If current dir not defined then we
 $DirData =~ s/\/$//;
 if ($DNSLookup) { use Socket; }
 $NewDNSLookup=$DNSLookup;
-%monthlib =  ( "01","$message[60]","02","$message[61]","03","$message[62]","04","$message[63]","05","$message[64]","06","$message[65]","07","$message[66]","08","$message[67]","09","$message[68]","10","$message[69]","11","$message[70]","12","$message[71]" );
+%monthlib =  ( "01","$Message[60]","02","$Message[61]","03","$Message[62]","04","$Message[63]","05","$Message[64]","06","$Message[65]","07","$Message[66]","08","$Message[67]","09","$Message[68]","10","$Message[69]","11","$Message[70]","12","$Message[71]" );
 # monthnum must be in english because it's used to translate log date in apache log files which are always in english
 %monthnum =  ( "Jan","01","jan","01","Feb","02","feb","02","Mar","03","mar","03","Apr","04","apr","04","May","05","may","05","Jun","06","jun","06","Jul","07","jul","07","Aug","08","aug","08","Sep","09","sep","09","Oct","10","oct","10","Nov","11","nov","11","Dec","12","dec","12" );
 
@@ -1717,8 +1716,8 @@ if ($YearRequired !~ /^[\d][\d][\d][\d]$/) { $YearRequired=$nowyear; }
 if ($QueryString =~ /month=/i)	{ $MonthRequired=$QueryString; $MonthRequired =~ s/.*month=//; $MonthRequired =~ s/&.*//; $MonthRequired =~ s/ .*//; }
 if ($MonthRequired ne "year" && $MonthRequired !~ /^[\d][\d]$/) { $MonthRequired=$nowmonth; }
 
-$BrowsersHash{"netscape"}="<font color=blue>Netscape</font> <a href=\"$DirCgi$PROG.$Extension?action=browserdetail&site=$SiteToAnalyze&year=$YearRequired&month=$MonthRequired&lang=$Lang\">($message[58])</a>";
-$BrowsersHash{"msie"}="<font color=blue>MS Internet Explorer</font> <a href=\"$DirCgi$PROG.$Extension?action=browserdetail&site=$SiteToAnalyze&year=$YearRequired&month=$MonthRequired&lang=$Lang\">($message[58])</a>";
+$BrowsersHash{"netscape"}="<font color=blue>Netscape</font> <a href=\"$DirCgi$PROG.$Extension?action=browserdetail&site=$SiteToAnalyze&year=$YearRequired&month=$MonthRequired&lang=$Lang\">($Message[58])</a>";
+$BrowsersHash{"msie"}="<font color=blue>MS Internet Explorer</font> <a href=\"$DirCgi$PROG.$Extension?action=browserdetail&site=$SiteToAnalyze&year=$YearRequired&month=$MonthRequired&lang=$Lang\">($Message[58])</a>";
 
 # Init all global variables
 if (@HostAliases == 0) {
@@ -1729,7 +1728,7 @@ my $SiteToAnalyzeIsInHostAliases=0;
 foreach $elem (@HostAliases) { if ($elem eq $SiteToAnalyze) { $SiteToAnalyzeIsInHostAliases=1; last; } }
 if ($SiteToAnalyzeIsInHostAliases == 0) { $HostAliases[@HostAliases]=$SiteToAnalyze; }
 if (@SkipFiles == 0) { $SkipFiles[0]="\.css\$";$SkipFiles[1]="\.js\$";$SkipFiles[2]="\.class\$";$SkipFiles[3]="robots\.txt\$"; }
-$FirstTime=0;$LastTime=0;$LastUpdate=0;$TotalVisits=0;$TotalHostsKnown=0;$TotalHostsUnKnown=0;$TotalUnique=0;$TotalDifferentPages=0;$TotalDifferentKeywords=0;$TotalKeywords=0;
+$FirstTime=0;$LastTime=0;$LastUpdate=0;$TotalVisits=0;$TotalHostsKnown=0;$TotalHostsUnKnown=0;$TotalUnique=0;$TotalDifferentPages=0;$TotalKeywords=0;
 for ($ix=1; $ix<=12; $ix++) {
 	my $monthix=$ix;if ($monthix < 10) { $monthix  = "0$monthix"; }
 	$FirstTime{$YearRequired.$monthix}=0;$LastTime{$YearRequired.$monthix}=0;$LastUpdate{$YearRequired.$monthix}=0;
@@ -1746,7 +1745,7 @@ Show_Flag_Links($Lang);
 print "</td>\n";
 print "<td class=LEFT width=450><a href=\"http://awstats.sourceforge.net\" target=_newawstats><img src=$DirIcons/other/$Logo border=0 alt=\"$PROG Official Web Site\" title=\"$PROG Official Web Site\"></a></td></tr>\n";
 #print "<b><font face=\"verdana\" size=1><a href=\"$HomeURL\">HomePage</a> &#149\; <a href=\"javascript:history.back()\">Back</a></font></b><br>\n";
-print "<tr><td class=LEFT colspan=2>$message[54]</td></tr>\n";
+print "<tr><td class=LEFT colspan=2>$Message[54]</td></tr>\n";
 print "</table>\n";
 
 print "<hr>\n";
@@ -2436,15 +2435,15 @@ EOF
 #---------------------------------------------------------------------
 print "$CENTER<a name=\"MENU\"></a><BR>";
 print "<table>";
-print "<tr><td class=LEFT><font style=\"font: 14px arial,verdana,helvetica; font-weight: bold\">$message[7] : </td><td class=LEFT><font style=\"font: 14px arial,verdana,helvetica; font-weight: normal\">$SiteToAnalyze</td></tr>";
-print "<tr><td class=LEFT valign=top><font style=\"font: 14px arial,verdana,helvetica; font-weight: bold\">$message[35] : ";
+print "<tr><td class=LEFT><font style=\"font: 14px arial,verdana,helvetica; font-weight: bold\">$Message[7] : </td><td class=LEFT><font style=\"font: 14px arial,verdana,helvetica; font-weight: normal\">$SiteToAnalyze</td></tr>";
+print "<tr><td class=LEFT valign=top><font style=\"font: 14px arial,verdana,helvetica; font-weight: bold\">$Message[35] : ";
 print "</td><td class=LEFT><font style=\"font: 14px arial,verdana,helvetica; font-weight: normal\">";
 my $choosedkey;
 foreach $key (sort keys %LastUpdate) { if ($LastUpdate < $LastUpdate{$key}) { $choosedkey=$key; $LastUpdate = $LastUpdate{$key}; } }
 if ($LastUpdate) { print Format_Date($LastUpdate); }
 else { print "<font color=#880000>Never updated</font>"; }
 print "</font>&nbsp; &nbsp; &nbsp; &nbsp;";
-if ($AllowToUpdateStatsFromBrowser) { print "<a href=\"$DirCgi$PROG.$Extension?update=1&site=$SiteToAnalyze&year=$YearRequired&month=$MonthRequired&lang=$Lang\">$message[74]</a>"; }
+if ($AllowToUpdateStatsFromBrowser) { print "<a href=\"$DirCgi$PROG.$Extension?update=1&site=$SiteToAnalyze&year=$YearRequired&month=$MonthRequired&lang=$Lang\">$Message[74]</a>"; }
 if ($NoHTMLOutput) {
 	if ($UpdateStats) { print "<br>Lines in file: $NbOfLinesRead, found $NbOfNewLinesProcessed new records, $NbOfNewLinesCorrupted corrupted records"; }
 	else { print "<br>Lines in file: $LastUpdateLinesRead{$choosedkey}, found $LastUpdateNewLinesRead{$choosedkey} new records, $LastUpdateNewLinesCorrupted{$choosedkey} corrupted records"; }
@@ -2452,27 +2451,27 @@ if ($NoHTMLOutput) {
 print "</td></tr>\n";
 print "<tr><td>&nbsp;</td></tr>\n";
 # Traffic
-print "<tr><td class=LEFT><font style=\"font: 14px arial,verdana,helvetica; font-weight: bold\">$message[16] : </td>";
-print "<td class=LEFT><a href=\"$DirCgi$PROG.$Extension?site=$SiteToAnalyze&year=$YearRequired&month=$MonthRequired&lang=$Lang#DOMAINS\">$message[17]</a> &nbsp; <a href=\"$DirCgi$PROG.$Extension?site=$SiteToAnalyze&year=$YearRequired&month=$MonthRequired&lang=$Lang#VISITOR\">".ucfirst($message[26])."</a> &nbsp; <a href=\"$DirCgi$PROG.$Extension?site=$SiteToAnalyze&year=$YearRequired&month=$MonthRequired&lang=$Lang#ROBOTS\">$message[53]</a> &nbsp; <a href=\"$DirCgi$PROG.$Extension?site=$SiteToAnalyze&year=$YearRequired&month=$MonthRequired&lang=$Lang#HOUR\">$message[20]</a> &nbsp; <a href=\"$DirCgi$PROG.$Extension?action=unknownip&site=$SiteToAnalyze&year=$YearRequired&month=$MonthRequired&lang=$Lang\">$message[45]</a><br></td></tr>\n";
+print "<tr><td class=LEFT><font style=\"font: 14px arial,verdana,helvetica; font-weight: bold\">$Message[16] : </td>";
+print "<td class=LEFT><a href=\"$DirCgi$PROG.$Extension?site=$SiteToAnalyze&year=$YearRequired&month=$MonthRequired&lang=$Lang#DOMAINS\">$Message[17]</a> &nbsp; <a href=\"$DirCgi$PROG.$Extension?site=$SiteToAnalyze&year=$YearRequired&month=$MonthRequired&lang=$Lang#VISITOR\">".ucfirst($Message[26])."</a> &nbsp; <a href=\"$DirCgi$PROG.$Extension?site=$SiteToAnalyze&year=$YearRequired&month=$MonthRequired&lang=$Lang#ROBOTS\">$Message[53]</a> &nbsp; <a href=\"$DirCgi$PROG.$Extension?site=$SiteToAnalyze&year=$YearRequired&month=$MonthRequired&lang=$Lang#HOUR\">$Message[20]</a> &nbsp; <a href=\"$DirCgi$PROG.$Extension?action=unknownip&site=$SiteToAnalyze&year=$YearRequired&month=$MonthRequired&lang=$Lang\">$Message[45]</a><br></td></tr>\n";
 # Navigation
-print "<tr><td class=LEFT><font style=\"font: 14px arial,verdana,helvetica; font-weight: bold\">$message[72] : </td>";
-print "<td class=LEFT><a href=\"$DirCgi$PROG.$Extension?action=urldetail&site=$SiteToAnalyze&year=$YearRequired&month=$MonthRequired&lang=$Lang\">$message[19]</a> &nbsp; <a href=\"$DirCgi$PROG.$Extension?site=$SiteToAnalyze&year=$YearRequired&month=$MonthRequired&lang=$Lang#BROWSER\">$message[21]</a> &nbsp; <a href=\"$DirCgi$PROG.$Extension?site=$SiteToAnalyze&year=$YearRequired&month=$MonthRequired&lang=$Lang#OS\">$message[59]</a> &nbsp; <a href=\"$DirCgi$PROG.$Extension?action=browserdetail&site=$SiteToAnalyze&year=$YearRequired&month=$MonthRequired&lang=$Lang\">$message[33]</a> &nbsp; <a href=\"$DirCgi$PROG.$Extension?action=browserdetail&site=$SiteToAnalyze&year=$YearRequired&month=$MonthRequired&lang=$Lang\">$message[34]</a><br></td></tr>\n";
+print "<tr><td class=LEFT><font style=\"font: 14px arial,verdana,helvetica; font-weight: bold\">$Message[72] : </td>";
+print "<td class=LEFT><a href=\"$DirCgi$PROG.$Extension?action=urldetail&site=$SiteToAnalyze&year=$YearRequired&month=$MonthRequired&lang=$Lang\">$Message[19]</a> &nbsp; <a href=\"$DirCgi$PROG.$Extension?site=$SiteToAnalyze&year=$YearRequired&month=$MonthRequired&lang=$Lang#BROWSER\">$Message[21]</a> &nbsp; <a href=\"$DirCgi$PROG.$Extension?site=$SiteToAnalyze&year=$YearRequired&month=$MonthRequired&lang=$Lang#OS\">$Message[59]</a> &nbsp; <a href=\"$DirCgi$PROG.$Extension?action=browserdetail&site=$SiteToAnalyze&year=$YearRequired&month=$MonthRequired&lang=$Lang\">$Message[33]</a> &nbsp; <a href=\"$DirCgi$PROG.$Extension?action=browserdetail&site=$SiteToAnalyze&year=$YearRequired&month=$MonthRequired&lang=$Lang\">$Message[34]</a><br></td></tr>\n";
 # Referers
-print "<tr><td class=LEFT><font style=\"font: 14px arial,verdana,helvetica; font-weight: bold\">$message[23] : </td>";
-print "<td class=LEFT><a href=\"$DirCgi$PROG.$Extension?site=$SiteToAnalyze&year=$YearRequired&month=$MonthRequired&lang=$Lang#REFERER\">$message[37]</a> &nbsp; <a href=\"$DirCgi$PROG.$Extension?site=$SiteToAnalyze&year=$YearRequired&month=$MonthRequired&lang=$Lang#SEARCHWORDS\">$message[24]</a><br></td></tr>\n";
+print "<tr><td class=LEFT><font style=\"font: 14px arial,verdana,helvetica; font-weight: bold\">$Message[23] : </td>";
+print "<td class=LEFT><a href=\"$DirCgi$PROG.$Extension?site=$SiteToAnalyze&year=$YearRequired&month=$MonthRequired&lang=$Lang#REFERER\">$Message[37]</a> &nbsp; <a href=\"$DirCgi$PROG.$Extension?site=$SiteToAnalyze&year=$YearRequired&month=$MonthRequired&lang=$Lang#SEARCHWORDS\">$Message[24]</a><br></td></tr>\n";
 # Others
-print "<tr><td class=LEFT><font style=\"font: 14px arial,verdana,helvetica; font-weight: bold\">$message[2] : </td>";
-print "<td class=LEFT> <a href=\"$DirCgi$PROG.$Extension?site=$SiteToAnalyze&year=$YearRequired&month=$MonthRequired&lang=$Lang#ERRORS\">$message[22]</a> &nbsp; <a href=\"$DirCgi$PROG.$Extension?action=notfounderror&site=$SiteToAnalyze&year=$YearRequired&month=$MonthRequired&lang=$Lang\">$message[31]</a><br></td></tr>\n";
+print "<tr><td class=LEFT><font style=\"font: 14px arial,verdana,helvetica; font-weight: bold\">$Message[2] : </td>";
+print "<td class=LEFT> <a href=\"$DirCgi$PROG.$Extension?site=$SiteToAnalyze&year=$YearRequired&month=$MonthRequired&lang=$Lang#ERRORS\">$Message[22]</a> &nbsp; <a href=\"$DirCgi$PROG.$Extension?action=notfounderror&site=$SiteToAnalyze&year=$YearRequired&month=$MonthRequired&lang=$Lang\">$Message[31]</a><br></td></tr>\n";
 print "</table>\n";
 print "<br>\n\n";
 
 
 if ($QueryString =~ /action=unknownip/i) {
 	print "$CENTER<a name=\"UNKOWNIP\"></a><BR>";
-	$tab_titre=$message[45];
+	$tab_titre=$Message[45];
 	&tab_head;
-	print "<TR bgcolor=#$color_TableBGRowTitle><TH>$message[48]</TH><TH>$message[9]</TH>\n";
-	@sortunknownip=sort { $SortDir*$_unknownip_l{$a} <=> $SortDir*$_unknownip_l{$b} } keys (%_unknownip_l);
+	print "<TR bgcolor=#$color_TableBGRowTitle><TH>$Message[48]</TH><TH>$Message[9]</TH>\n";
+	my @sortunknownip=sort { $SortDir*$_unknownip_l{$a} <=> $SortDir*$_unknownip_l{$b} } keys (%_unknownip_l);
 	foreach $key (@sortunknownip) { print "<tr><td>$key</td><td>".Format_Date($_unknownip_l{$key})."</td></tr>"; }
 	&tab_end;
 	&html_end;
@@ -2480,10 +2479,10 @@ if ($QueryString =~ /action=unknownip/i) {
 	}
 if ($QueryString =~ /action=unknownrefererbrowser/i) {
 	print "$CENTER<a name=\"UNKOWNREFERERBROWSER\"></a><BR>";
-	$tab_titre=$message[50];
+	$tab_titre=$Message[50];
 	&tab_head;
-	print "<TR bgcolor=#$color_TableBGRowTitle><TH>Referer</TH><TH>$message[9]</TH></TR>\n";
-	@sortunknownrefererbrowser=sort { $SortDir*$_unknownrefererbrowser_l{$a} <=> $SortDir*$_unknownrefererbrowser_l{$b} } keys (%_unknownrefererbrowser_l);
+	print "<TR bgcolor=#$color_TableBGRowTitle><TH>Referer</TH><TH>$Message[9]</TH></TR>\n";
+	my @sortunknownrefererbrowser=sort { $SortDir*$_unknownrefererbrowser_l{$a} <=> $SortDir*$_unknownrefererbrowser_l{$b} } keys (%_unknownrefererbrowser_l);
 	foreach $key (@sortunknownrefererbrowser) {
 		$key =~ s/<script.*$//gi;				# This is to avoid 'Cross Site Scripting attacks'
 		print "<tr><td CLASS=LEFT>$key</td><td>".Format_Date($_unknownrefererbrowser_l{$key})."</td></tr>";
@@ -2494,10 +2493,10 @@ if ($QueryString =~ /action=unknownrefererbrowser/i) {
 	}
 if ($QueryString =~ /action=unknownreferer/i) {
 	print "$CENTER<a name=\"UNKOWNREFERER\"></a><BR>";
-	$tab_titre=$message[46];
+	$tab_titre=$Message[46];
 	&tab_head;
-	print "<TR bgcolor=#$color_TableBGRowTitle><TH>Referer</TH><TH>$message[9]</TH></TR>\n";
-	@sortunknownreferer=sort { $SortDir*$_unknownreferer_l{$a} <=> $SortDir*$_unknownreferer_l{$b} } keys (%_unknownreferer_l);
+	print "<TR bgcolor=#$color_TableBGRowTitle><TH>Referer</TH><TH>$Message[9]</TH></TR>\n";
+	my @sortunknownreferer=sort { $SortDir*$_unknownreferer_l{$a} <=> $SortDir*$_unknownreferer_l{$b} } keys (%_unknownreferer_l);
 	foreach $key (@sortunknownreferer) {
 		$key =~ s/<script.*$//gi;				# This is to avoid 'Cross Site Scripting attacks'
 		print "<tr><td CLASS=LEFT>$key</td><td>".Format_Date($_unknownreferer_l{$key})."</td></tr>";
@@ -2508,10 +2507,10 @@ if ($QueryString =~ /action=unknownreferer/i) {
 	}
 if ($QueryString =~ /action=notfounderror/i) {
 	print "$CENTER<a name=\"NOTFOUNDERROR\"></a><BR>";
-	$tab_titre=$message[47];
+	$tab_titre=$Message[47];
 	&tab_head;
-	print "<TR bgcolor=#$color_TableBGRowTitle><TH>URL</TH><TH bgcolor=#$color_h>$message[49]</TH><TH>$message[23]</TH></TR>\n";
-	@sortsider404=sort { $SortDir*$_sider404_h{$a} <=> $SortDir*$_sider404_h{$b} } keys (%_sider404_h);
+	print "<TR bgcolor=#$color_TableBGRowTitle><TH>URL</TH><TH bgcolor=#$color_h>$Message[49]</TH><TH>$Message[23]</TH></TR>\n";
+	my @sortsider404=sort { $SortDir*$_sider404_h{$a} <=> $SortDir*$_sider404_h{$b} } keys (%_sider404_h);
 	foreach $key (@sortsider404) {
 		$url=$key; $url =~ s/<script.*$//gi; 							# This is to avoid 'Cross Site Scripting attacks'
 		$referer=$_referer404_h{$key}; $referer =~ s/<script.*$//gi;	# This is to avoid 'Cross Site Scripting attacks'
@@ -2523,9 +2522,9 @@ if ($QueryString =~ /action=notfounderror/i) {
 	}
 if ($QueryString =~ /action=browserdetail/i) {
 	print "$CENTER<a name=\"NETSCAPE\"></a><BR>";
-	$tab_titre=$message[33]."<br><img src=\"$DirIcons/browser/netscape.png\">";
+	$tab_titre=$Message[33]."<br><img src=\"$DirIcons/browser/netscape.png\">";
 	&tab_head;
-	print "<TR bgcolor=#$color_TableBGRowTitle><TH>$message[58]</TH><TH bgcolor=#$color_h width=80>$message[57]</TH><TH bgcolor=#$color_h width=40>$message[15]</TH></TR>\n";
+	print "<TR bgcolor=#$color_TableBGRowTitle><TH>$Message[58]</TH><TH bgcolor=#$color_h width=80>$Message[57]</TH><TH bgcolor=#$color_h width=40>$Message[15]</TH></TR>\n";
 	for ($i=1; $i<=$#_nsver_h; $i++) {
 		my $h="&nbsp;"; my $p="&nbsp;";
 		if ($_nsver_h[$i] > 0 && $_browser_h{"netscape"} > 0) {
@@ -2535,9 +2534,9 @@ if ($QueryString =~ /action=browserdetail/i) {
 	}
 	&tab_end;
 	print "<a name=\"MSIE\"></a><BR>";
-	$tab_titre=$message[34]."<br><img src=\"$DirIcons/browser/msie.png\">";
+	$tab_titre=$Message[34]."<br><img src=\"$DirIcons/browser/msie.png\">";
 	&tab_head;
-	print "<TR bgcolor=#$color_TableBGRowTitle><TH>$message[58]</TH><TH bgcolor=#$color_h width=80>$message[57]</TH><TH bgcolor=#$color_h width=40>$message[15]</TH></TR>\n";
+	print "<TR bgcolor=#$color_TableBGRowTitle><TH>$Message[58]</TH><TH bgcolor=#$color_h width=80>$Message[57]</TH><TH bgcolor=#$color_h width=40>$Message[15]</TH></TR>\n";
 	for ($i=1; $i<=$#_msiever_h; $i++) {
 		my $h="&nbsp;"; my $p="&nbsp;";
 		if ($_msiever_h[$i] > 0 && $_browser_h{"msie"} > 0) {
@@ -2546,17 +2545,16 @@ if ($QueryString =~ /action=browserdetail/i) {
 		print "<TR><TD CLASS=LEFT>MSIE/$i.xx</TD><TD>$h</TD><TD>$p</TD></TR>\n";
 	}
 	&tab_end;
-
 	&html_end;
 	exit(0);
 	}
 if ($QueryString =~ /action=urldetail/i) {
-	@sortsiders=sort { $SortDir*$_sider_p{$a} <=> $SortDir*$_sider_p{$b} } keys (%_sider_p);
+	my @sortsiders=sort { $SortDir*$_sider_p{$a} <=> $SortDir*$_sider_p{$b} } keys (%_sider_p);
 	print "$CENTER<a name=\"URLDETAIL\"></a><BR>";
-	$tab_titre="$message[19]";
+	$tab_titre="$Message[19]";
 	if ($URLFilter) { $tab_titre.=" (Filter $URLFilter)"; }
 	&tab_head;
-	print "<TR bgcolor=#$color_TableBGRowTitle><TH>".(@sortsiders)." $message[19]</TH><TH bgcolor=#$color_p>&nbsp;$message[29]&nbsp;</TH><TH>&nbsp;</TH></TR>\n";
+	print "<TR bgcolor=#$color_TableBGRowTitle><TH>".(@sortsiders)." $Message[19]</TH><TH bgcolor=#$color_p>&nbsp;$Message[29]&nbsp;</TH><TH>&nbsp;</TH></TR>\n";
 	my $max_p=1;
 	if ($SortDir<0) { $max_p=$_sider_p{$sortsiders[0]}; }
 	else            { $max_p=$_sider_p{$sortsiders[$#sortsiders]}; }
@@ -2568,7 +2566,7 @@ if ($QueryString =~ /action=urldetail/i) {
 	    if ($ShowLinksOnUrl) { print "<A HREF=\"http://$SiteToAnalyze$key\">$nompage</A>"; }
 	    else              	 { print "$nompage"; }
 	    my $bredde=$BarWidth*$_sider_p{$key}/$max_p+1;
-		print "</TD><TD>$_sider_p{$key}</TD><TD CLASS=LEFT><IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_p\" WIDTH=$bredde HEIGHT=8 ALT=\"$message[56]: $_sider_p{$key}\" title=\"$message[56]: $_sider_p{$key}\"></TD></TR>\n";
+		print "</TD><TD>$_sider_p{$key}</TD><TD CLASS=LEFT><IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_p\" WIDTH=$bredde HEIGHT=8 ALT=\"$Message[56]: $_sider_p{$key}\" title=\"$Message[56]: $_sider_p{$key}\"></TD></TR>\n";
 	}
 	&tab_end;
 	&html_end;
@@ -2581,25 +2579,13 @@ if ($QueryString =~ /action=info/i) {
 	exit(0);
 	}
 
-&debug("Start of sorting hash arrays");
-@sortdomains_p=sort { $SortDir*$_domener_p{$a} <=> $SortDir*$_domener_p{$b} } keys (%_domener_p);
-@sortdomains_h=sort { $SortDir*$_domener_h{$a} <=> $SortDir*$_domener_h{$b} } keys (%_domener_h);
-@sortdomains_k=sort { $SortDir*$_domener_k{$a} <=> $SortDir*$_domener_k{$b} } keys (%_domener_k);
-@sorthosts_p=sort { $SortDir*$_hostmachine_p{$a} <=> $SortDir*$_hostmachine_p{$b} } keys (%_hostmachine_p);
-@sortsiders=sort { $SortDir*$_sider_p{$a} <=> $SortDir*$_sider_p{$b} } keys (%_sider_p);
-@sortbrowsers=sort { $SortDir*$_browser_h{$a} <=> $SortDir*$_browser_h{$b} } keys (%_browser_h);
-@sortos=sort { $SortDir*$_os_h{$a} <=> $SortDir*$_os_h{$b} } keys (%_os_h);
-@sortsereferrals=sort { $SortDir*$_se_referrals_h{$a} <=> $SortDir*$_se_referrals_h{$b} } keys (%_se_referrals_h);
-@sortpagerefs=sort { $SortDir*$_pagesrefs_h{$a} <=> $SortDir*$_pagesrefs_h{$b} } keys (%_pagesrefs_h);
-@sortsearchwords=sort { $SortDir*$_keywords{$a} <=> $SortDir*$_keywords{$b} } keys (%_keywords);
-@sorterrors=sort { $SortDir*$_errors_h{$a} <=> $SortDir*$_errors_h{$b} } keys (%_errors_h);
-&debug("End of sorting hash arrays");
 
 
 # SUMMARY
 #---------------------------------------------------------------------
+my @sortsiders=sort { $SortDir*$_sider_p{$a} <=> $SortDir*$_sider_p{$b} } keys (%_sider_p);
 print "$CENTER<a name=\"SUMMARY\"></a><BR>";
-$tab_titre="$message[7] $SiteToAnalyze";
+$tab_titre="$Message[7] $SiteToAnalyze";
 &tab_head;
 
 # FirstTime LastTime TotalVisits TotalUnique TotalHostsKnown TotalHostsUnknown
@@ -2618,8 +2604,6 @@ for (my $monthix=$beginmonth; $monthix<=$endmonth; $monthix++) {
 $TotalDifferentPages=@sortsiders;
 # TotalPages TotalHits TotalBytes
 for ($ix=0; $ix<=23; $ix++) { $TotalPages+=$_time_p[$ix]; $TotalHits+=$_time_h[$ix]; $TotalBytes+=$_time_k[$ix]; }
-# TotalDifferentKeywords
-$TotalDifferentKeywords=@sortsearchwords;
 # TotalKeywords
 foreach $key (keys %_keywords) { $TotalKeywords+=$_keywords{$key}; }
 # TotalErrors
@@ -2630,28 +2614,28 @@ if ($TotalVisits > 0) { $RatioPages=int($TotalPages/$TotalVisits*100)/100; }
 if ($TotalVisits > 0) { $RatioHits=int($TotalHits/$TotalVisits*100)/100; }
 if ($TotalVisits > 0) { $RatioBytes=int(($TotalBytes/1024)*100/$TotalVisits)/100; }
 
-print "<TR bgcolor=#$color_TableBGRowTitle><TD><b>$message[8]</b></TD>";
-if ($MonthRequired eq "year") { print "<TD colspan=3 rowspan=2><font style=\"font: 18px arial,verdana,helvetica; font-weight: normal\">$message[6] $YearRequired</font><br>"; }
-else { print "<TD colspan=3 rowspan=2><font style=\"font: 18px arial,verdana,helvetica; font-weight: normal\">$message[5] $monthlib{$MonthRequired} $YearRequired</font><br>"; }
+print "<TR bgcolor=#$color_TableBGRowTitle><TD><b>$Message[8]</b></TD>";
+if ($MonthRequired eq "year") { print "<TD colspan=3 rowspan=2><font style=\"font: 18px arial,verdana,helvetica; font-weight: normal\">$Message[6] $YearRequired</font><br>"; }
+else { print "<TD colspan=3 rowspan=2><font style=\"font: 18px arial,verdana,helvetica; font-weight: normal\">$Message[5] $monthlib{$MonthRequired} $YearRequired</font><br>"; }
 # Show links for possible years
 foreach $key (keys %listofyears) {
-	print "<a href=\"$DirCgi$PROG.$Extension?site=$SiteToAnalyze&year=$key&month=year&lang=$Lang\">$message[6] $key</a> &nbsp; ";
+	print "<a href=\"$DirCgi$PROG.$Extension?site=$SiteToAnalyze&year=$key&month=year&lang=$Lang\">$Message[6] $key</a> &nbsp; ";
 }
 print "</TD>";
-print "<TD><b>$message[9]</b></TD></TR>";
+print "<TD><b>$Message[9]</b></TD></TR>";
 
 if ($FirstTime) { print "<TR bgcolor=#$color_TableBGRowTitle><TD>".Format_Date($FirstTime)."</TD>"; }
 else { print "<TR bgcolor=#$color_TableBGRowTitle><TD>NA</TD>"; }
 if ($LastTime) { print "<TD>".Format_Date($LastTime)."</TD></TR>"; }
 else { print "<TD>NA</TD></TR>\n"; }
 print "<TR>";
-print "<TD width=20% bgcolor=#$color_v onmouseover=\"ShowTooltip(1);\" onmouseout=\"HideTooltip(1);\">$message[10]</TD>";
-print "<TD width=20% bgcolor=#$color_w onmouseover=\"ShowTooltip(2);\" onmouseout=\"HideTooltip(2);\">$message[11]</TD>";
-print "<TD width=20% bgcolor=#$color_p onmouseover=\"ShowTooltip(3);\" onmouseout=\"HideTooltip(3);\">$message[56]</TD>";
-print "<TD width=20% bgcolor=#$color_h onmouseover=\"ShowTooltip(4);\" onmouseout=\"HideTooltip(4);\">$message[57]</TD>";
-print "<TD width=20% bgcolor=#$color_k onmouseover=\"ShowTooltip(5);\" onmouseout=\"HideTooltip(5);\">$message[75]</TD></TR>";
-print "<TR><TD><b>$TotalVisits</b><br>&nbsp;</TD><TD><b>$TotalUnique</b><br>($RatioHosts&nbsp;$message[52])</TD><TD><b>$TotalPages</b><br>($RatioPages&nbsp;".lc($message[56]."/".$message[12]).")</TD>";
-print "<TD><b>$TotalHits</b><br>($RatioHits&nbsp;".lc($message[57]."/".$message[12]).")</TD><TD><b>".Format_Bytes($TotalBytes)."</b><br>($RatioBytes&nbsp;$message[44]/".lc($message[12]).")</TD></TR>\n";
+print "<TD width=20% bgcolor=#$color_v onmouseover=\"ShowTooltip(1);\" onmouseout=\"HideTooltip(1);\">$Message[10]</TD>";
+print "<TD width=20% bgcolor=#$color_w onmouseover=\"ShowTooltip(2);\" onmouseout=\"HideTooltip(2);\">$Message[11]</TD>";
+print "<TD width=20% bgcolor=#$color_p onmouseover=\"ShowTooltip(3);\" onmouseout=\"HideTooltip(3);\">$Message[56]</TD>";
+print "<TD width=20% bgcolor=#$color_h onmouseover=\"ShowTooltip(4);\" onmouseout=\"HideTooltip(4);\">$Message[57]</TD>";
+print "<TD width=20% bgcolor=#$color_k onmouseover=\"ShowTooltip(5);\" onmouseout=\"HideTooltip(5);\">$Message[75]</TD></TR>";
+print "<TR><TD><b>$TotalVisits</b><br>&nbsp;</TD><TD><b>$TotalUnique</b><br>($RatioHosts&nbsp;$Message[52])</TD><TD><b>$TotalPages</b><br>($RatioPages&nbsp;".lc($Message[56]."/".$Message[12]).")</TD>";
+print "<TD><b>$TotalHits</b><br>($RatioHits&nbsp;".lc($Message[57]."/".$Message[12]).")</TD><TD><b>".Format_Bytes($TotalBytes)."</b><br>($RatioBytes&nbsp;$Message[44]/".lc($Message[12]).")</TD></TR>\n";
 print "<TR valign=bottom><TD colspan=5 align=center><center>";
 # Show monthly stats
 print "<TABLE>";
@@ -2674,12 +2658,12 @@ for ($ix=1; $ix<=12; $ix++) {
 	if ($max_h > 0) { $bredde_h=$MonthHits{$YearRequired.$monthix}/$max_h*$BarHeight/2; }
 	if ($max_k > 0) { $bredde_k=$MonthBytes{$YearRequired.$monthix}/$max_k*$BarHeight/2; }
 	print "<TD>";
-	print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_v\" HEIGHT=$bredde_v WIDTH=8 ALT=\"$message[10]: $MonthVisits{$YearRequired.$monthix}\" title=\"$message[10]: $MonthVisits{$YearRequired.$monthix}\">";
-	print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_u\" HEIGHT=$bredde_u WIDTH=8 ALT=\"$message[11]: $MonthUnique{$YearRequired.$monthix}\" title=\"$message[11]: $MonthUnique{$YearRequired.$monthix}\">";
+	print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_v\" HEIGHT=$bredde_v WIDTH=8 ALT=\"$Message[10]: $MonthVisits{$YearRequired.$monthix}\" title=\"$Message[10]: $MonthVisits{$YearRequired.$monthix}\">";
+	print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_u\" HEIGHT=$bredde_u WIDTH=8 ALT=\"$Message[11]: $MonthUnique{$YearRequired.$monthix}\" title=\"$Message[11]: $MonthUnique{$YearRequired.$monthix}\">";
 	print "&nbsp;";
-	print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_p\" HEIGHT=$bredde_p WIDTH=8 ALT=\"$message[56]: $MonthPages{$YearRequired.$monthix}\" title=\"$message[56]: $MonthPages{$YearRequired.$monthix}\">";
-	print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_h\" HEIGHT=$bredde_h WIDTH=8 ALT=\"$message[57]: $MonthHits{$YearRequired.$monthix}\" title=\"$message[57]: $MonthHits{$YearRequired.$monthix}\">";
-	print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_k\" HEIGHT=$bredde_k WIDTH=8 ALT=\"$message[75]: ".Format_Bytes($MonthBytes{$YearRequired.$monthix})."\" title=\"$message[75]: ".Format_Bytes($MonthBytes{$YearRequired.$monthix})."\">";
+	print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_p\" HEIGHT=$bredde_p WIDTH=8 ALT=\"$Message[56]: $MonthPages{$YearRequired.$monthix}\" title=\"$Message[56]: $MonthPages{$YearRequired.$monthix}\">";
+	print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_h\" HEIGHT=$bredde_h WIDTH=8 ALT=\"$Message[57]: $MonthHits{$YearRequired.$monthix}\" title=\"$Message[57]: $MonthHits{$YearRequired.$monthix}\">";
+	print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_k\" HEIGHT=$bredde_k WIDTH=8 ALT=\"$Message[75]: ".Format_Bytes($MonthBytes{$YearRequired.$monthix})."\" title=\"$Message[75]: ".Format_Bytes($MonthBytes{$YearRequired.$monthix})."\">";
 	print "</TD>\n";
 }
 print "</TR><TR>";
@@ -2722,9 +2706,9 @@ for ($ix=$MaxNbOfDays-1; $ix>=0; $ix--) {
 	if ($max_h > 0) { $bredde_h=$DayHits{$oldyear.$oldmonth.$oldday}/$max_h*$BarHeight/2; }
 	if ($max_k > 0) { $bredde_k=$DayBytes{$oldyear.$oldmonth.$oldday}/$max_k*$BarHeight/2; }
 	print "<TD>";
-	print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_p\" HEIGHT=$bredde_p WIDTH=8 ALT=\"$message[56]: $DayPages{$oldyear.$oldmonth.$oldday}\" title=\"$message[56]: $DayPages{$oldyear.$oldmonth.$oldday}\">";
-	print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_h\" HEIGHT=$bredde_h WIDTH=8 ALT=\"$message[57]: $DayHits{$oldyear.$oldmonth.$oldday}\" title=\"$message[57]: $DayHits{$oldyear.$oldmonth.$oldday}\">";
-	print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_k\" HEIGHT=$bredde_k WIDTH=8 ALT=\"$message[75]: ".Format_Bytes($DayBytes{$oldyear.$oldmonth.$oldday})."\" title=\"$message[75]: ".Format_Bytes($DayBytes{$oldyear.$oldmonth.$oldday})."\">";
+	print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_p\" HEIGHT=$bredde_p WIDTH=8 ALT=\"$Message[56]: $DayPages{$oldyear.$oldmonth.$oldday}\" title=\"$Message[56]: $DayPages{$oldyear.$oldmonth.$oldday}\">";
+	print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_h\" HEIGHT=$bredde_h WIDTH=8 ALT=\"$Message[57]: $DayHits{$oldyear.$oldmonth.$oldday}\" title=\"$Message[57]: $DayHits{$oldyear.$oldmonth.$oldday}\">";
+	print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_k\" HEIGHT=$bredde_k WIDTH=8 ALT=\"$Message[75]: ".Format_Bytes($DayBytes{$oldyear.$oldmonth.$oldday})."\" title=\"$Message[75]: ".Format_Bytes($DayBytes{$oldyear.$oldmonth.$oldday})."\">";
 	print "</TD>\n";
 }
 print "</TR><TR>";
@@ -2748,10 +2732,13 @@ print "<br><hr>\n";
 
 # BY COUNTRY/DOMAIN
 #---------------------------
+my @sortdomains_p=sort { $SortDir*$_domener_p{$a} <=> $SortDir*$_domener_p{$b} } keys (%_domener_p);
+my @sortdomains_h=sort { $SortDir*$_domener_h{$a} <=> $SortDir*$_domener_h{$b} } keys (%_domener_h);
+my @sortdomains_k=sort { $SortDir*$_domener_k{$a} <=> $SortDir*$_domener_k{$b} } keys (%_domener_k);
 print "$CENTER<a name=\"DOMAINS\"></a><BR>";
-$tab_titre="$message[25]";
+$tab_titre="$Message[25]";
 &tab_head;
-print "<TR bgcolor=#$color_TableBGRowTitle><TH colspan=2>$message[17]</TH><TH>Code</TH><TH bgcolor=#$color_p width=80>$message[56]</TH><TH bgcolor=#$color_h width=80>$message[57]</TH><TH bgcolor=#$color_k>$message[75]</TH><TH>&nbsp;</TH></TR>\n";
+print "<TR bgcolor=#$color_TableBGRowTitle><TH colspan=2>$Message[17]</TH><TH>Code</TH><TH bgcolor=#$color_p width=80>$Message[56]</TH><TH bgcolor=#$color_h width=80>$Message[57]</TH><TH bgcolor=#$color_k>$Message[75]</TH><TH>&nbsp;</TH></TR>\n";
 if ($SortDir<0) { $max_h=$_domener_h{$sortdomains_h[0]}; }
 else            { $max_h=$_domener_h{$sortdomains_h[$#sortdomains_h]}; }
 if ($SortDir<0) { $max_k=$_domener_k{$sortdomains_k[0]}; }
@@ -2763,16 +2750,16 @@ foreach $key (@sortdomains_p) {
 	if ($max_h > 0) { $bredde_h=$BarWidth*$_domener_h{$key}/$max_h+1; }
 	if ($max_k > 0) { $bredde_k=$BarWidth*$_domener_k{$key}/$max_k+1; }
 	if ($key eq "ip") {
-		print "<TR><TD><IMG SRC=\"$DirIcons\/flags\/$key.png\" height=14></TD><TD CLASS=LEFT>$message[0]</TD><TD>$key</TD>";
+		print "<TR><TD><IMG SRC=\"$DirIcons\/flags\/$key.png\" height=14></TD><TD CLASS=LEFT>$Message[0]</TD><TD>$key</TD>";
 	}
 	else {
 		print "<TR><TD><IMG SRC=\"$DirIcons\/flags\/$key.png\" height=14></TD><TD CLASS=LEFT>$DomainsHash{$key}</TD><TD>$key</TD>";
 	}
 	print "<TD>$_domener_p{$key}</TD><TD>$_domener_h{$key}</TD><TD>".Format_Bytes($_domener_k{$key})."</TD>";
 	print "<TD CLASS=LEFT>";
-	print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_p\" WIDTH=$bredde_p HEIGHT=6 ALT=\"$message[56]: $_domener_p{$key}\" title=\"$message[56]: $_domener_p{$key}\"><br>\n";
-	print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_h\" WIDTH=$bredde_h HEIGHT=6 ALT=\"$message[57]: $_domener_h{$key}\" title=\"$message[57]: $_domener_h{$key}\"><br>\n";
-	print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_k\" WIDTH=$bredde_k HEIGHT=6 ALT=\"$message[75]: ".Format_Bytes($_domener_k{$key})."\" title=\"$message[75]: ".Format_Bytes($_domener_k{$key})."\">";
+	print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_p\" WIDTH=$bredde_p HEIGHT=6 ALT=\"$Message[56]: $_domener_p{$key}\" title=\"$Message[56]: $_domener_p{$key}\"><br>\n";
+	print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_h\" WIDTH=$bredde_h HEIGHT=6 ALT=\"$Message[57]: $_domener_h{$key}\" title=\"$Message[57]: $_domener_h{$key}\"><br>\n";
+	print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_k\" WIDTH=$bredde_k HEIGHT=6 ALT=\"$Message[75]: ".Format_Bytes($_domener_k{$key})."\" title=\"$Message[75]: ".Format_Bytes($_domener_k{$key})."\">";
 	print "</TD></TR>\n";
 	$total_p += $_domener_p{$key};
 	$total_h += $_domener_h{$key};
@@ -2788,11 +2775,11 @@ if ($rest_p > 0) { 	# All other domains (known or not)
 	if ($max_h > 0) { $bredde_p=$BarWidth*$rest_p/$max_h+1; }	# use max_h to enable to compare pages with hits
 	if ($max_h > 0) { $bredde_h=$BarWidth*$rest_h/$max_h+1; }
 	if ($max_k > 0) { $bredde_k=$BarWidth*$rest_k/$max_k+1; }
-	print "<TR><TD colspan=3 CLASS=LEFT><font color=blue>$message[2]</font></TD><TD>$rest_p</TD><TD>$rest_h</TD><TD>".Format_Bytes($rest_k)."</TD>\n";
+	print "<TR><TD colspan=3 CLASS=LEFT><font color=blue>$Message[2]</font></TD><TD>$rest_p</TD><TD>$rest_h</TD><TD>".Format_Bytes($rest_k)."</TD>\n";
 	print "<TD CLASS=LEFT>";
-	print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_p\" WIDTH=$bredde_p HEIGHT=6 ALT=\"$message[56]: $rest_p\" title=\"$message[56]: $rest_p\"><br>\n";
-	print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_h\" WIDTH=$bredde_h HEIGHT=6 ALT=\"$message[57]: $rest_h\" title=\"$message[57]: $rest_h\"><br>\n";
-	print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_k\" WIDTH=$bredde_k HEIGHT=6 ALT=\"$message[75]: ".Format_Bytes($rest_k)."\" title=\"$message[75]: ".Format_Bytes($rest_k)."\">";
+	print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_p\" WIDTH=$bredde_p HEIGHT=6 ALT=\"$Message[56]: $rest_p\" title=\"$Message[56]: $rest_p\"><br>\n";
+	print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_h\" WIDTH=$bredde_h HEIGHT=6 ALT=\"$Message[57]: $rest_h\" title=\"$Message[57]: $rest_h\"><br>\n";
+	print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_k\" WIDTH=$bredde_k HEIGHT=6 ALT=\"$Message[75]: ".Format_Bytes($rest_k)."\" title=\"$Message[75]: ".Format_Bytes($rest_k)."\">";
 	print "</TD></TR>\n";
 }
 &tab_end;
@@ -2800,16 +2787,17 @@ if ($rest_p > 0) { 	# All other domains (known or not)
 
 # BY HOST/VISITOR
 #--------------------------
+my @sorthosts_p=sort { $SortDir*$_hostmachine_p{$a} <=> $SortDir*$_hostmachine_p{$b} } keys (%_hostmachine_p);
 print "$CENTER<a name=\"VISITOR\"></a><BR>";
 $MaxNbOfHostsShown = $TotalHostsKnown+($_hostmachine_h{"Unknown"}?1:0) if $MaxNbOfHostsShown > $TotalHostsKnown;
-$tab_titre="$message[77] $MaxNbOfHostsShown $message[55] ".($TotalHostsKnown+$TotalHostsUnknown)." $message[26] ($TotalUnique $message[11])";
+$tab_titre="$Message[77] $MaxNbOfHostsShown $Message[55] ".($TotalHostsKnown+$TotalHostsUnknown)." $Message[26] ($TotalUnique $Message[11])";
 &tab_head;
-print "<TR bgcolor=#$color_TableBGRowTitle><TH>$message[18]</TH><TH bgcolor=#$color_p width=80>$message[56]</TH><TH bgcolor=#$color_h width=80>$message[57]</TH><TH bgcolor=#$color_k>$message[75]</TH><TH>$message[9]</TH></TR>\n";
+print "<TR bgcolor=#$color_TableBGRowTitle><TH>$Message[18]</TH><TH bgcolor=#$color_p width=80>$Message[56]</TH><TH bgcolor=#$color_h width=80>$Message[57]</TH><TH bgcolor=#$color_k>$Message[75]</TH><TH>$Message[9]</TH></TR>\n";
 my $count=0;my $total_p=0;my $total_h=0;my $total_k=0;
 foreach $key (@sorthosts_p) {
 	if ($_hostmachine_h{$key}>=$MinHitHost) {
 		if ($key eq "Unknown") {
-			print "<TR><TD CLASS=LEFT><a href=\"$DirCgi$PROG.$Extension?action=unknownip&site=$SiteToAnalyze&year=$YearRequired&month=$MonthRequired&lang=$Lang\">$message[1]</a> &nbsp; ($TotalHostsUnknown)</TD><TD>$_hostmachine_p{$key}</TD><TD>$_hostmachine_h{$key}</TD><TD>".Format_Bytes($_hostmachine_k{$key})."</TD><TD><a href=\"$DirCgi$PROG.$Extension?action=unknownip&site=$SiteToAnalyze&year=$YearRequired&month=$MonthRequired&lang=$Lang\">$message[3]</a></TD></TR>\n";
+			print "<TR><TD CLASS=LEFT><a href=\"$DirCgi$PROG.$Extension?action=unknownip&site=$SiteToAnalyze&year=$YearRequired&month=$MonthRequired&lang=$Lang\">$Message[1]</a> &nbsp; ($TotalHostsUnknown)</TD><TD>$_hostmachine_p{$key}</TD><TD>$_hostmachine_h{$key}</TD><TD>".Format_Bytes($_hostmachine_k{$key})."</TD><TD><a href=\"$DirCgi$PROG.$Extension?action=unknownip&site=$SiteToAnalyze&year=$YearRequired&month=$MonthRequired&lang=$Lang\">$Message[3]</a></TD></TR>\n";
 			}
 		else {
 			print "<tr><td CLASS=LEFT>$key</td><TD>$_hostmachine_p{$key}</TD><TD>$_hostmachine_h{$key}</TD><TD>".Format_Bytes($_hostmachine_k{$key})."</TD>";
@@ -2828,18 +2816,18 @@ my $rest_p=$TotalPages-$total_p;
 my $rest_h=$TotalHits-$total_h;
 my $rest_k=$TotalBytes-$total_k;
 if ($rest_p > 0) {	# All other visitors (known or not)
-	print "<TR><TD CLASS=LEFT><font color=blue>$message[2]</font></TD><TD>$rest_p</TD><TD>$rest_h</TD><TD>".Format_Bytes($rest_k)."</TD><TD>&nbsp;</TD></TR>\n";
+	print "<TR><TD CLASS=LEFT><font color=blue>$Message[2]</font></TD><TD>$rest_p</TD><TD>$rest_h</TD><TD>".Format_Bytes($rest_k)."</TD><TD>&nbsp;</TD></TR>\n";
 }
 &tab_end;
 
 
 # BY ROBOTS
 #----------------------------
+my @sortrobot=sort { $SortDir*$_robot_h{$a} <=> $SortDir*$_robot_h{$b} } keys (%_robot_h);
 print "$CENTER<a name=\"ROBOTS\"></a><BR>";
-$tab_titre=$message[53];
+$tab_titre=$Message[53];
 &tab_head;
-print "<TR bgcolor=#$color_TableBGRowTitle onmouseover=\"ShowTooltip(16);\" onmouseout=\"HideTooltip(16);\"><TH>Robot</TH><TH bgcolor=#$color_h width=80>$message[57]</TH><TH>$message[9]</TH></TR>\n";
-@sortrobot=sort { $SortDir*$_robot_h{$a} <=> $SortDir*$_robot_h{$b} } keys (%_robot_h);
+print "<TR bgcolor=#$color_TableBGRowTitle onmouseover=\"ShowTooltip(16);\" onmouseout=\"HideTooltip(16);\"><TH>Robot</TH><TH bgcolor=#$color_h width=80>$Message[57]</TH><TH>$Message[9]</TH></TR>\n";
 foreach $key (@sortrobot) { print "<tr><td CLASS=LEFT>$RobotHash{$key}</td><td>$_robot_h{$key}</td><td>".Format_Date($_robot_l{$key})."</td></tr>"; }
 &tab_end;
 
@@ -2847,7 +2835,7 @@ foreach $key (@sortrobot) { print "<tr><td CLASS=LEFT>$RobotHash{$key}</td><td>$
 # BY HOUR
 #----------------------------
 print "$CENTER<a name=\"HOUR\"></a><BR>";
-$tab_titre="$message[20]";
+$tab_titre="$Message[20]";
 &tab_head;
 print "<TR><TD align=center><center><TABLE><TR>\n";
 my $max_p=0;my $max_h=0;my $max_k=0;
@@ -2871,9 +2859,9 @@ for ($ix=0; $ix<=23; $ix++) {
 	if ($max_h > 0) { $bredde_h=($BarHeight*$_time_h[$ix]/$max_h)+1; }
 	if ($max_k > 0) { $bredde_k=($BarHeight*$_time_k[$ix]/$max_k)+1; }
 	print "<TD>";
-	print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_p\" HEIGHT=$bredde_p WIDTH=6 ALT=\"$message[56]: $_time_p[$ix]\" title=\"$message[56]: $_time_p[$ix]\">";
-	print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_h\" HEIGHT=$bredde_h WIDTH=6 ALT=\"$message[57]: $_time_h[$ix]\" title=\"$message[57]: $_time_h[$ix]\">";
-	print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_k\" HEIGHT=$bredde_k WIDTH=6 ALT=\"$message[75]: ".Format_Bytes($_time_k[$ix])."\" title=\"$message[75]: ".Format_Bytes($_time_k[$ix])."\">";
+	print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_p\" HEIGHT=$bredde_p WIDTH=6 ALT=\"$Message[56]: $_time_p[$ix]\" title=\"$Message[56]: $_time_p[$ix]\">";
+	print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_h\" HEIGHT=$bredde_h WIDTH=6 ALT=\"$Message[57]: $_time_h[$ix]\" title=\"$Message[57]: $_time_h[$ix]\">";
+	print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_k\" HEIGHT=$bredde_k WIDTH=6 ALT=\"$Message[75]: ".Format_Bytes($_time_k[$ix])."\" title=\"$Message[75]: ".Format_Bytes($_time_k[$ix])."\">";
 	print "</TD>\n";
 }
 print "</TR></TABLE></center></TD></TR>\n";
@@ -2884,9 +2872,9 @@ print "</TR></TABLE></center></TD></TR>\n";
 #-------------------------
 print "$CENTER<a name=\"PAGE\"></a><BR>";
 $MaxNbOfPageShown = $TotalDifferentPages if $MaxNbOfPageShown > $TotalDifferentPages;
-$tab_titre="$message[77] $MaxNbOfPageShown $message[55] $TotalDifferentPages $message[27] &nbsp; - &nbsp; <a href=\"$DirCgi$PROG.$Extension?action=urldetail&site=$SiteToAnalyze&year=$YearRequired&month=$MonthRequired&lang=$Lang\">Full list</a>";
+$tab_titre="$Message[77] $MaxNbOfPageShown $Message[55] $TotalDifferentPages $Message[27] &nbsp; - &nbsp; <a href=\"$DirCgi$PROG.$Extension?action=urldetail&site=$SiteToAnalyze&year=$YearRequired&month=$MonthRequired&lang=$Lang\">Full list</a>";
 &tab_head;
-print "<TR bgcolor=#$color_TableBGRowTitle><TH>$message[19]</TH><TH bgcolor=#$color_p>&nbsp;$message[29]&nbsp;</TH><TH>&nbsp;</TH></TR>\n";
+print "<TR bgcolor=#$color_TableBGRowTitle><TH>$Message[19]</TH><TH bgcolor=#$color_p>&nbsp;$Message[29]&nbsp;</TH><TH>&nbsp;</TH></TR>\n";
 my $max_p=1;
 if ($SortDir<0) { $max_p=$_sider_p{$sortsiders[0]}; }
 else            { $max_p=$_sider_p{$sortsiders[$#sortsiders]}; }
@@ -2900,7 +2888,7 @@ foreach $key (@sortsiders) {
 	    if ($ShowLinksOnUrl) { print "<A HREF=\"http://$SiteToAnalyze$key\">$nompage</A>"; }
 	    else              	 { print "$nompage"; }
 	    my $bredde=$BarWidth*$_sider_p{$key}/$max_p+1;
-		print "</TD><TD>$_sider_p{$key}</TD><TD CLASS=LEFT><IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_p\" WIDTH=$bredde HEIGHT=8 ALT=\"$message[56]: $_sider_p{$key}\" title=\"$message[56]: $_sider_p{$key}\"></TD></TR>\n";
+		print "</TD><TD>$_sider_p{$key}</TD><TD CLASS=LEFT><IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_p\" WIDTH=$bredde HEIGHT=8 ALT=\"$Message[56]: $_sider_p{$key}\" title=\"$Message[56]: $_sider_p{$key}\"></TD></TR>\n";
   	}
   	$count++;
 }
@@ -2909,14 +2897,15 @@ foreach $key (@sortsiders) {
 
 # BY BROWSER
 #----------------------------
+my @sortbrowsers=sort { $SortDir*$_browser_h{$a} <=> $SortDir*$_browser_h{$b} } keys (%_browser_h);
 print "$CENTER<a name=\"BROWSER\"></a><BR>";
-$tab_titre="$message[21]";
+$tab_titre="$Message[21]";
 &tab_head;
-print "<TR bgcolor=#$color_TableBGRowTitle><TH>Browser</TH><TH bgcolor=#$color_h width=80>$message[57]</TH><TH bgcolor=#$color_h width=40>$message[15]</TH></TR>\n";
+print "<TR bgcolor=#$color_TableBGRowTitle><TH>Browser</TH><TH bgcolor=#$color_h width=80>$Message[57]</TH><TH bgcolor=#$color_h width=40>$Message[15]</TH></TR>\n";
 foreach $key (@sortbrowsers) {
 	my $p=int($_browser_h{$key}/$TotalHits*1000)/10;
 	if ($key eq "Unknown") {
-		print "<TR><TD CLASS=LEFT><a href=\"$DirCgi$PROG.$Extension?action=unknownrefererbrowser&site=$SiteToAnalyze&year=$YearRequired&month=$MonthRequired&lang=$Lang\">$message[0]</a></TD><TD>$_browser_h{$key}</TD><TD>$p&nbsp;%</TD></TR>\n";
+		print "<TR><TD CLASS=LEFT><a href=\"$DirCgi$PROG.$Extension?action=unknownrefererbrowser&site=$SiteToAnalyze&year=$YearRequired&month=$MonthRequired&lang=$Lang\">$Message[0]</a></TD><TD>$_browser_h{$key}</TD><TD>$p&nbsp;%</TD></TR>\n";
 	}
 	else {
 		print "<TR><TD CLASS=LEFT>$BrowsersHash{$key}</TD><TD>$_browser_h{$key}</TD><TD>$p&nbsp;%</TD></TR>\n";
@@ -2927,14 +2916,15 @@ foreach $key (@sortbrowsers) {
 
 # BY OS
 #----------------------------
+my @sortos=sort { $SortDir*$_os_h{$a} <=> $SortDir*$_os_h{$b} } keys (%_os_h);
 print "$CENTER<a name=\"OS\"></a><BR>";
-$tab_titre=$message[59];
+$tab_titre=$Message[59];
 &tab_head;
-print "<TR bgcolor=#$color_TableBGRowTitle><TH colspan=2>OS</TH><TH bgcolor=#$color_h width=80>$message[57]</TH><TH bgcolor=#$color_h width=40>$message[15]</TH></TR>\n";
+print "<TR bgcolor=#$color_TableBGRowTitle><TH colspan=2>OS</TH><TH bgcolor=#$color_h width=80>$Message[57]</TH><TH bgcolor=#$color_h width=40>$Message[15]</TH></TR>\n";
 foreach $key (@sortos) {
 	my $p=int($_os_h{$key}/$TotalHits*1000)/10;
 	if ($key eq "Unknown") {
-		print "<TR><TD><IMG SRC=\"$DirIcons\/os\/unknown.png\"></TD><TD CLASS=LEFT><a href=\"$DirCgi$PROG.$Extension?action=unknownreferer&site=$SiteToAnalyze&year=$YearRequired&month=$MonthRequired&lang=$Lang\">$message[0]</a></TD><TD>$_os_h{$key}&nbsp;</TD>";
+		print "<TR><TD><IMG SRC=\"$DirIcons\/os\/unknown.png\"></TD><TD CLASS=LEFT><a href=\"$DirCgi$PROG.$Extension?action=unknownreferer&site=$SiteToAnalyze&year=$YearRequired&month=$MonthRequired&lang=$Lang\">$Message[0]</a></TD><TD>$_os_h{$key}&nbsp;</TD>";
 		print "<TD>$p&nbsp;%</TD></TR>\n";
 		}
 	else {
@@ -2949,7 +2939,7 @@ foreach $key (@sortos) {
 # BY REFERENCE
 #---------------------------
 print "$CENTER<a name=\"REFERER\"></a><BR>";
-$tab_titre="$message[36]";
+$tab_titre="$Message[36]";
 &tab_head;
 my @p_p=();
 if ($TotalPages > 0) {
@@ -2967,10 +2957,11 @@ if ($TotalHits > 0) {
 	$p_h[3]=int($_from_h[3]/$TotalHits*1000)/10;
 	$p_h[4]=int($_from_h[4]/$TotalHits*1000)/10;
 }
-print "<TR bgcolor=#$color_TableBGRowTitle><TH>$message[37]</TH><TH bgcolor=#$color_p width=80>$message[56]</TH><TH bgcolor=#$color_p width=40>$message[15]</TH><TH bgcolor=#$color_h width=80>$message[57]</TH><TH bgcolor=#$color_h width=40>$message[15]</TH></TR>\n";
-print "<TR><TD CLASS=LEFT><b>$message[38]:</b></TD><TD>$_from_p[0]&nbsp;</TD><TD>$p_p[0]&nbsp;%</TD><TD>$_from_h[0]&nbsp;</TD><TD>$p_h[0]&nbsp;%</TD></TR>\n";
+print "<TR bgcolor=#$color_TableBGRowTitle><TH>$Message[37]</TH><TH bgcolor=#$color_p width=80>$Message[56]</TH><TH bgcolor=#$color_p width=40>$Message[15]</TH><TH bgcolor=#$color_h width=80>$Message[57]</TH><TH bgcolor=#$color_h width=40>$Message[15]</TH></TR>\n";
+print "<TR><TD CLASS=LEFT><b>$Message[38]:</b></TD><TD>$_from_p[0]&nbsp;</TD><TD>$p_p[0]&nbsp;%</TD><TD>$_from_h[0]&nbsp;</TD><TD>$p_h[0]&nbsp;%</TD></TR>\n";
 #------- Referrals by search engine
-print "<TR onmouseover=\"ShowTooltip(13);\" onmouseout=\"HideTooltip(13);\"><TD CLASS=LEFT><b>$message[40] :</b><br>\n";
+my @sortsereferrals=sort { $SortDir*$_se_referrals_h{$a} <=> $SortDir*$_se_referrals_h{$b} } keys (%_se_referrals_h);
+print "<TR onmouseover=\"ShowTooltip(13);\" onmouseout=\"HideTooltip(13);\"><TD CLASS=LEFT><b>$Message[40] :</b><br>\n";
 print "<TABLE>\n";
 foreach $se (@sortsereferrals) {
 	print "<TR><TD CLASS=LEFT>- $SearchEnginesHash{$se} </TD><TD align=right>$_se_referrals_h{\"$se\"}</TD></TR>\n";
@@ -2978,7 +2969,8 @@ foreach $se (@sortsereferrals) {
 print "</TABLE></TD>\n";
 print "<TD valign=top>$_from_p[2]&nbsp;</TD><TD valign=top>$p_p[2]&nbsp;%</TD><TD valign=top>$_from_h[2]&nbsp;</TD><TD valign=top>$p_h[2]&nbsp;%</TD></TR>\n";
 #------- Referrals by external HTML link
-print "<TR onmouseover=\"ShowTooltip(14);\" onmouseout=\"HideTooltip(14);\"><TD CLASS=LEFT><b>$message[41]:</b><br>\n";
+my @sortpagerefs=sort { $SortDir*$_pagesrefs_h{$a} <=> $SortDir*$_pagesrefs_h{$b} } keys (%_pagesrefs_h);
+print "<TR onmouseover=\"ShowTooltip(14);\" onmouseout=\"HideTooltip(14);\"><TD CLASS=LEFT><b>$Message[41]:</b><br>\n";
 print "<TABLE>\n";
 my $count=0;
 foreach $from (@sortpagerefs) {
@@ -2998,18 +2990,20 @@ foreach $from (@sortpagerefs) {
 print "</TABLE></TD>\n";
 print "<TD valign=top>$_from_p[3]&nbsp;</TD><TD valign=top>$p_p[3]&nbsp;%</TD><TD valign=top>$_from_h[3]&nbsp;</TD><TD valign=top>$p_h[3]&nbsp;%</TD></TR>\n";
 #------- Referrals by internal HTML link
-print "<TR><TD CLASS=LEFT><b>$message[42]:</b></TD><TD>$_from_p[4]&nbsp;</TD><TD>$p_p[4]&nbsp;%</TD><TD>$_from_h[4]&nbsp;</TD><TD>$p_h[4]&nbsp;%</TD></TR>\n";
-print "<TR><TD CLASS=LEFT><b>$message[39]:</b></TD><TD>$_from_p[1]&nbsp;</TD><TD>$p_p[1]&nbsp;%</TD><TD>$_from_h[1]&nbsp;</TD><TD>$p_h[1]&nbsp;%</TD></TR>\n";
+print "<TR><TD CLASS=LEFT><b>$Message[42]:</b></TD><TD>$_from_p[4]&nbsp;</TD><TD>$p_p[4]&nbsp;%</TD><TD>$_from_h[4]&nbsp;</TD><TD>$p_h[4]&nbsp;%</TD></TR>\n";
+print "<TR><TD CLASS=LEFT><b>$Message[39]:</b></TD><TD>$_from_p[1]&nbsp;</TD><TD>$p_p[1]&nbsp;%</TD><TD>$_from_h[1]&nbsp;</TD><TD>$p_h[1]&nbsp;%</TD></TR>\n";
 &tab_end;
 
 
 # BY SEARCHWORDS
 #----------------------------
+my @sortsearchwords=sort { $SortDir*$_keywords{$a} <=> $SortDir*$_keywords{$b} } keys (%_keywords);
+my $TotalDifferentKeywords=@sortsearchwords;
 print "$CENTER<a name=\"SEARCHWORDS\"></a><BR>";
 $MaxNbOfKeywordsShown = $TotalDifferentKeywords if $MaxNbOfKeywordsShown > $TotalDifferentKeywords;
-$tab_titre="$message[77] $MaxNbOfKeywordsShown $message[55] $TotalDifferentKeywords $message[43]";
+$tab_titre="$Message[77] $MaxNbOfKeywordsShown $Message[55] $TotalDifferentKeywords $Message[43]";
 &tab_head;
-print "<TR bgcolor=#$color_TableBGRowTitle onmouseover=\"ShowTooltip(15);\" onmouseout=\"HideTooltip(15);\"><TH>$message[13]</TH><TH bgcolor=#$color_s width=80>$message[14]</TH><TH bgcolor=#$color_s width=40>$message[15]</TH></TR>\n";
+print "<TR bgcolor=#$color_TableBGRowTitle onmouseover=\"ShowTooltip(15);\" onmouseout=\"HideTooltip(15);\"><TH>$Message[13]</TH><TH bgcolor=#$color_s width=80>$Message[14]</TH><TH bgcolor=#$color_s width=40>$Message[15]</TH></TR>\n";
 my $count=0;
 foreach $key (@sortsearchwords) {
 	if ($count>=$MaxNbOfKeywordsShown) { last; }
@@ -3025,7 +3019,7 @@ foreach $key (@sortsearchwords) {
 }
 if ($rest >0) {
 	if ($TotalKeywords > 0) { $p=int($rest/$TotalKeywords*1000)/10; }
-	print "<TR><TD CLASS=LEFT><font color=blue>$message[30]</TD><TD>$rest</TD>";
+	print "<TR><TD CLASS=LEFT><font color=blue>$Message[30]</TD><TD>$rest</TD>";
 	print "<TD>$p&nbsp;%</TD></TR>\n";
 }
 &tab_end;
@@ -3033,10 +3027,11 @@ if ($rest >0) {
 
 # BY ERRORS
 #----------------------------
+my @sorterrors=sort { $SortDir*$_errors_h{$a} <=> $SortDir*$_errors_h{$b} } keys (%_errors_h);
 print "$CENTER<a name=\"ERRORS\"></a><BR>";
-$tab_titre=$message[32];
+$tab_titre=$Message[32];
 &tab_head;
-print "<TR bgcolor=#$color_TableBGRowTitle><TH colspan=2>$message[32]</TH><TH bgcolor=#$color_h width=80>$message[57]</TH><TH bgcolor=#$color_h width=40>$message[15]</TH></TR>\n";
+print "<TR bgcolor=#$color_TableBGRowTitle><TH colspan=2>$Message[32]</TH><TH bgcolor=#$color_h width=80>$Message[57]</TH><TH bgcolor=#$color_h width=40>$Message[15]</TH></TR>\n";
 foreach $key (@sorterrors) {
 	my $p=int($_errors_h{$key}/$TotalErrors*1000)/10;
 	if ($httpcode{$key}) { print "<TR onmouseover=\"ShowTooltip($key);\" onmouseout=\"HideTooltip($key);\">"; }
