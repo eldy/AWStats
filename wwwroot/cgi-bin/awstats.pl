@@ -110,6 +110,8 @@ $MaxLengthOfURL
 $MaxLengthOfStoredURL
 $MaxLengthOfStoredUA
 %BarPng
+$BuildReportFormat
+$BuildHistoryFormat 
 /;
 $StaticExt='html';
 $DNSStaticCacheFile='dnscache.txt';
@@ -122,6 +124,8 @@ $MaxLengthOfStoredURL=256;			# Note: Apache LimitRequestLine is default to 8190
 $MaxLengthOfStoredUA=256;
 %BarPng=('vv'=>'vv.png','vu'=>'vu.png','hu'=>'hu.png','vp'=>'vp.png','hp'=>'hp.png',
 'he'=>'he.png','hx'=>'hx.png','vh'=>'vh.png','hh'=>'hh.png','vk'=>'vk.png','hk'=>'hk.png');
+$BuildReportFormat='html';
+$BuildHistoryFormat='text';
 use vars qw/
 $EnableLockForUpdate $DNSLookup $AllowAccessFromWebToAuthenticatedUsersOnly
 $BarHeight $BarWidth $CreateDirDataIfNotExists $KeepBackupOfHistoricFiles
@@ -132,7 +136,7 @@ $ShowDropped $ShowCorrupted $ShowUnknownOrigin $ShowLinksToWhoIs
 $ShowEMailSenders $ShowEMailReceivers $ShowClusterStats
 $AuthenticatedUsersNotCaseSensitive
 $Expires $UpdateStats $MigrateStats $URLNotCaseSensitive $URLWithQuery $URLReferrerWithQuery
-$UseXMLForOutput $UseXMLForHistory $DecodeUA
+$DecodeUA
 /;
 ($EnableLockForUpdate, $DNSLookup, $AllowAccessFromWebToAuthenticatedUsersOnly,
 $BarHeight, $BarWidth, $CreateDirDataIfNotExists, $KeepBackupOfHistoricFiles,
@@ -143,8 +147,8 @@ $ShowDropped, $ShowCorrupted, $ShowUnknownOrigin, $ShowLinksToWhoIs,
 $ShowEMailSenders, $ShowEMailReceivers, $ShowClusterStats,
 $AuthenticatedUsersNotCaseSensitive,
 $Expires, $UpdateStats, $MigrateStats, $URLNotCaseSensitive, $URLWithQuery, $URLReferrerWithQuery,
-$UseXMLForOutput, $UseXMLForHistory, $DecodeUA)=
-(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
+$DecodeUA)=
+(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
 use vars qw/
 $AllowToUpdateStatsFromBrowser
 $ArchiveLogRecords $DetailedReportsOnNewWindows
@@ -500,7 +504,7 @@ sub html_head {
 	if (scalar keys %HTMLOutput || $PluginMode) {
 		my $AllowIndex=0;
 		# Write head section
-		if ($UseXMLForOutput) {
+		if ($BuildReportFormat eq 'xml') {
 			if ($PageCode) { print "<?xml version=\"1.0\" encoding=\"$PageCode\"?>\n"; }
 			else { print "<?xml version=\"1.0\" encoding=\"iso-8859-1\"?>\n"; };
             if ($FrameName ne 'index') { print "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">\n";  }
@@ -516,7 +520,7 @@ sub html_head {
 		else { print "<meta name=\"robots\" content=\"noindex,nofollow\" />\n"; }
 
 		# Affiche tag meta content-type
-		if ($UseXMLForOutput) { print ($ENV{'HTTP_USER_AGENT'}=~/MSIE|Googlebot/i?"<meta http-equiv=\"content-type\" content=\"text/html; charset=".($PageCode?$PageCode:"iso-8859-1")."\" />\n":"<meta http-equiv=\"content-type\" content=\"text/xml; charset=".($PageCode?$PageCode:"iso-8859-1")."\" />\n"); }
+		if ($BuildReportFormat eq 'xml') { print ($ENV{'HTTP_USER_AGENT'}=~/MSIE|Googlebot/i?"<meta http-equiv=\"content-type\" content=\"text/html; charset=".($PageCode?$PageCode:"iso-8859-1")."\" />\n":"<meta http-equiv=\"content-type\" content=\"text/xml; charset=".($PageCode?$PageCode:"iso-8859-1")."\" />\n"); }
 		else { print "<meta http-equiv=\"content-type\" content=\"text/html; charset=".($PageCode?$PageCode:"iso-8859-1")."\" />\n"; }
 
 		if ($Expires)  { print "<meta http-equiv=\"expires\" content=\"".(gmtime(time()+$Expires))."\" />\n"; }
@@ -527,10 +531,10 @@ sub html_head {
 
 			# A STYLE section must be in head section. Do not use " for number in a style section
 			print "<style type=\"text/css\">\n";
-			if ($UseXMLForOutput) { print ($ENV{'HTTP_USER_AGENT'}=~/Firebird/i?"<!--\n":"<![CDATA[\n"); }
+			if ($BuildReportFormat eq 'xml') { print ($ENV{'HTTP_USER_AGENT'}=~/Firebird/i?"<!--\n":"<![CDATA[\n"); }
 			else { print "<!--\n"; }
 print "body { font: 11px verdana, arial, helvetica, sans-serif; background-color: #$color_Background; margin-top: 0; }\n";
-#print ".aws_bodyl  { ".(! $UseXMLForOutput?"background-image: url($DirIcons/other/backleft.png);":"")."background-repeat: repeat-y; }\n";
+#print ".aws_bodyl  { ".(! $BuildReportFormat?"background-image: url($DirIcons/other/backleft.png);":"")."background-repeat: repeat-y; }\n";
 print ".aws_bodyl  { }\n";
 print ".aws_border { background-color: #$color_TableBG; padding: 1px 1px 1px 1px; margin-top: 0 }\n";
 print ".aws_title  { font: 13px verdana, arial, helvetica, sans-serif; font-weight: bold; background-color: #$color_TableBGTitle; text-align: center; margin-bottom: 0; padding: 1px 1px 1px 1px; }\n";
@@ -560,7 +564,7 @@ EOF
 				eval("$function");
 			}
 	
-			if ($UseXMLForOutput) { print ($ENV{'HTTP_USER_AGENT'}=~/Firebird/i?"//-->\n":"]]>\n"); }
+			if ($BuildReportFormat eq 'xml') { print ($ENV{'HTTP_USER_AGENT'}=~/Firebird/i?"//-->\n":"]]>\n"); }
 			else { print "//-->\n"; }
 			print "</style>\n";
 
@@ -677,7 +681,7 @@ sub error {
 		}
 		else {
 			# Bad LogFormat parameter
-			print "AWStats did not found any valid log lines that match your ${tagbold}LogFormat${tagunbold} parameter, in the ${NbOfLinesForCorruptedLog}th first non commented lines read of your log.${tagbr}\n";
+			print "AWStats did not find any valid log lines that match your ${tagbold}LogFormat${tagunbold} parameter, in the ${NbOfLinesForCorruptedLog}th first non commented lines read of your log.${tagbr}\n";
 			print "${tagfontred}Your log file ${tagbold}$thirdmessage${tagunbold} must have a bad format or ${tagbold}LogFormat${tagunbold} parameter setup does not match this format.${tagbr}${tagbr}${tagunfont}\n";
 			print "Your AWStats ${tagbold}LogFormat${tagunbold} parameter is:\n";
 			print "${tagbold}$LogFormat${tagunbold}${tagbr}\n";
@@ -1365,8 +1369,8 @@ sub Check_Config {
 		debug(" ValidHTTPCodes ".(join(',',keys %ValidHTTPCodes)),2);
 		debug(" ValidSMTPCodes ".(join(',',keys %ValidSMTPCodes)),2);
 		debug(" UseFramesWhenCGI=$UseFramesWhenCGI",2);
-		debug(" UseXMLForOutput=$UseXMLForOutput",2);
-		debug(" UseXMLForHistory=$UseXMLForHistory",2);
+		debug(" BuildReportFormat=$BuildReportFormat",2);
+		debug(" BuildHistoryFormat=$BuildHistoryFormat",2);
 	}
 
 	# Main section
@@ -1522,8 +1526,8 @@ sub Check_Config {
 	}
 	if ($FirstDayOfWeek !~ /[01]/)               	{ $FirstDayOfWeek=1; }
 	if ($UseFramesWhenCGI !~ /[01]/)  				{ $UseFramesWhenCGI=1; }
-	if ($UseXMLForOutput !~ /[01]/)  				{ $UseXMLForOutput=0; }
-	if ($UseXMLForHistory !~ /[01]/)  				{ $UseXMLForHistory=0; }
+	if ($BuildReportFormat !~ /html|xml/i) 			{ $BuildReportFormat='html'; }
+	if ($BuildHistoryFormat !~ /text/)  			{ $BuildHistoryFormat='text'; }
 	if ($DetailedReportsOnNewWindows !~ /[012]/)  	{ $DetailedReportsOnNewWindows=1; }
 	if ($ShowLinksOnUrl !~ /[01]/)               	{ $ShowLinksOnUrl=1; }
 	if ($MaxLengthOfURL !~ /^\d+/ || $MaxLengthOfURL<1) { $MaxLengthOfURL=72; }
@@ -3984,7 +3988,7 @@ sub Utf8_To_Ascii {
 #------------------------------------------------------------------------------
 sub XMLEncode {
 	my $string = shift;
-	if (! $UseXMLForOutput) { return $string; }
+	if ($BuildReportFormat ne 'xml') { return $string; }
 	$string =~ s/&/&amp;/g;
 	return $string;
 }
@@ -4132,7 +4136,7 @@ sub AltTitle {
 	my $string = shift||'';
 	return " alt='$string' title='$string'";
 #	return " alt=\"$string\" title=\"$string\"";
-#	return ($UseXMLForOutput?"":" alt=\"$string\"")." title=\"$string\"";
+#	return ($BuildReportFormat?"":" alt=\"$string\"")." title=\"$string\"";
 }
 
 #------------------------------------------------------------------------------
@@ -4554,7 +4558,7 @@ sub DefinePerlParsingFormat {
 	if ($LogFormat =~ /^[1-6]$/) {	# Pre-defined log format
 		if ($LogFormat eq '1' || $LogFormat eq '6') {	# Same than "%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\"".
 			# %u (user) is "([^\\[]+)" instead of "[^ ]+" because can contain space (Lotus Notes). referer and ua might be "".
-			$PerlParsingFormat="([^ ]+) [^ ]+ ([^\\[]+) \\[([^ ]+) [^ ]+\\] \\\"([^ ]+) ([^ ]+) [^\\\"]+\\\" ([\\d|-]+) ([\\d|-]+) \\\"(.*)\\\" \\\"([^\\\"]*)\\\"";
+			$PerlParsingFormat="([^ ]+) [^ ]+ ([^\\[]+) \\[([^ ]+) [^ ]+\\] \\\"([^ ]+) ([^ ]+) [^\\\"]+\\\" ([\\d|-]+) ([\\d|-]+) \\\"([^\\\"]*)\\\" \\\"([^\\\"]*)\\\"";
 			$pos_host=0;$pos_logname=1;$pos_date=2;$pos_method=3;$pos_url=4;$pos_code=5;$pos_size=6;$pos_referer=7;$pos_agent=8;
 			@fieldlib=('host','logname','date','method','url','code','size','referer','ua');
 		}
@@ -4990,7 +4994,7 @@ $QueryString='';
 # be set to force AWStats to be ran as CLI even from a web page
 if ($ENV{'AWSTATS_DEL_GATEWAY_INTERFACE'}) { $ENV{'GATEWAY_INTERFACE'}=''; }
 if ($ENV{'GATEWAY_INTERFACE'}) {	# Run from a browser as CGI
-	if ($UseXMLForOutput) { print ($ENV{'HTTP_USER_AGENT'}=~/MSIE|Googlebot/i?"Content-type: text/html\n":"Content-type: text/xml\n"); }
+	if ($BuildReportFormat eq 'xml') { print ($ENV{'HTTP_USER_AGENT'}=~/MSIE|Googlebot/i?"Content-type: text/html\n":"Content-type: text/xml\n"); }
 	else { print "content-type: text/html\n"; }
     
 	# Expires must be GMT ANSI asctime and must be after Content-type to avoid pb with some servers (SAMBAR)
