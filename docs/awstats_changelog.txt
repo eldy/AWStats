@@ -7,11 +7,16 @@ $Revision$ - $Author$ - $Date$
 
 Fixes:
 - Fix wrong number of column for "other" row in host chart.
+- Fix problem of parsing with uabracket and refererquot.
+- Fixed wrong use of config file in rawlog plugin.
 
 New features/improvements:
+- Added %lognamequot tag for LogFormat parameter.
 - Added OnlyUserAgents parameter.
+- Added awredir.pl tool.
 
 Other/Documentation:
+- Deprecated %time1b tag (%time1 can be used).
 - Updated documentation.
 
 
