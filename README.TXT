@@ -10,7 +10,7 @@ links, robots and more. It works with IIS 5.0+ or Apache webserver log files.
 
 License: GNU GPL (GNU General Public License. See COPYING.TXT)
 Version : 2.23
-Release date: 16 November 2000
+Release date: 25 November 2000
 Platforms: All (Linux, NT, SCO, BSD, Solaris and other *NIX's, BeOS, OS/2...)
 Author: Laurent Destailleur <eldy@users.sourceforge.net>
 AWStats web site: http://awstats.sourceforge.net
@@ -55,7 +55,7 @@ I - 1) Features
 	  (Rodrigo Villarreal), Italian (Vittore Zen), German (Ulf Moench), Polish
 	  (Tomasz Ciemnoczulowski).
 	* Colored graphics,
-	* Distributed with sources (perl script) and free.
+	* Free and distributed with sources (perl script).
 	
 I - 2) Requirements
 	
@@ -108,24 +108,24 @@ II - 1) With Apache Server
 	
 	* Put awstats.pl file in your cgi-bin directory (or other cgi directory).
 
-	* Move all awstats icons sub-directories into a directory readable by your
-	  web server and change "$DirIcons=" value in awstats.pl to reflect this
-	  directory (Ie: yourwebroot/icon).
-	
 	* If necessary (on some Unix OS), in awstats.pl file, edit the first line
 	  #!/usr/bin/perl
 	  to reflect the path were your perl interpreter is installed. It might be
 	  #!/usr/local/bin/perl
 	  	
+	* Move all awstats icons sub-directories into a directory readable by your
+	  web server, for example /yourwwwroot/icon.
+
 	* Copy awstats.model.conf into awstats.www.myserver.mydomain.conf or
 	  awstats.conf (when you will run AWStats, it will first look for a config
 	  file called awstats.www.myserver.mydomain.conf, and, if not found, will
 	  look for awstats.conf). Whatever the name you choose, edit this new file
 	  with your own setup :
-	  - Change line "LogFile" with full path of your web server log file. You
+	  - Change "LogFile" value with full path of your web server log file. You
 	    can use a relative path from your awstats.pl directory.
 	  - Check if "LogFormat" has the value "1" (it means "apache combined log
 	    format").
+	  - Change the "DirIcons" parameter to reflect URL of icons directory.
 	  - You can change other parameters if you want.
 	
 	* Before using AWStats from your browser, launch awstats.pl from the
@@ -142,7 +142,7 @@ II - 1) With Apache Server
 	  The result, an HTML code page on your screen, means you can now run
 	  AWStats from your browser. For example with this URL :
 	   htpp://www.myserver.mydomain/cgi-bin/awstats.pl
-	  You can also use this URL to choose log for a particular site :
+	  You can also use this URL to choose parameters of a particular site :
 	   htpp://www.myserver.mydomain/cgi-bin/awstats.pl?site=virtualhost
 	  where virtualhost is a name of another web server (AWStats will use
 	  awstats.virtualhost.conf file).
@@ -173,17 +173,18 @@ II - 2) With IIS Server
 	* Put awstats.pl file in your cgi-bin directory (or other cgi directory).
 	
 	* Move all awstats icons sub-directories into a directory readable by your
-	  web server and change "$DirIcons=" value in awstats.pl to reflect this
-	  directory (Ie: yourwebroot/icon).
+	  web server, for example C:\yourwwwroot\icon and change the "DirIcons"
+	  parameter in configure file to reflect this directory (Ie: /icon).
 		
 	* Copy awstats.model.conf into awstats.www.myserver.mydomain.conf or
 	  awstats.conf (when you will run AWStats, it will first look for a config
 	  file called awstats.www.myserver.mydomain.conf, and, if not found, will
 	  look for awstats.conf). Whatever the name you choose, edit this new file
 	  with your own setup :
-	  - Change line "LogFile" with full path of your web server log file. You
+	  - Change "LogFile" value with full path of your web server log file. You
 	    can use a relative path from your awstats.pl directory.
 	  - Change "LogFormat" to value "2" (it means "IIS log format").
+	  - Change "DirIcons" parameter to reflect URL of icons directory.
 	  - You can change other parameters if you want.
 
 	* Before using AWStats from you're browser, launch awstats.pl from the
@@ -200,7 +201,7 @@ II - 2) With IIS Server
 	  The result, an HTML code page on your screen, means you can now run
 	  AWStats from your browser. For example with this URL :
 	   htpp://www.myserver.mydomain/cgi-bin/awstats.pl
-	  You can also use this URL to choose log for a particular site :
+	  You can also use this URL to choose parameters of a particular site :
 	   htpp://www.myserver.mydomain/cgi-bin/awstats.pl?site=virtualhost
 	  where virtualhost is a name of another web server (AWStats will use
 	  awstats.virtualhost.conf file).
@@ -213,21 +214,20 @@ II - 2) With IIS Server
 	  - 1,000 visits a month     Launch AWStats once a day (23h55 for example)
 	  - 10,000 visits a month    Launch AWStats every 4 hours or more often
 	  - 50,000 visits a month    Launch AWStats every hour
-	  - 200,000 visits a month   Launch AWStats every 30mn
+	  - 200,000 visits a month   Launch AWStats every 15mn
 	  This is necessary to keep good performances.
 	
 	  !!! Warning, with IIS, Windows doesn't let AWStats to purge log file
-	  after processing it (AWStats do this to analyze only new logs and
-	  increase its speed), so performance won't be as good as with Apache
+	  after processing it, so performance won't be as good as with Apache
 	  server.
-	  It's very important you do this yourself (or let MSII doing it), if you
-	  don't want to have very bad performances.
+	  It's very important you purge your log file yourself (or let IIS doing
+	  it), if you don't want to have very bad performances.
 	  The more often you clean your log file, the more faster AWStats will be
 	  (See benchmark chapter to known what you can hope).
 
-	  !!! Warning: if your log filename is different each month or day, launch
-	  awstats just before the end of month or day. If you forget it, you will
-	  also forget statistics for this month or day.
+	  !!! Warning: if your log filename is different each month or day (with
+	  IIS, think to launch awstats just before the end of month or day. If you
+	  forget it, you will also forget statistics for this month or day.
 
 
 
@@ -248,7 +248,7 @@ consuming part of the process.
 To increase speed:
 - Use last AWStats version
 - Launch AWStats more often (from crontab or a scheduler)
-- You can disable DNSLookup in AWStats (set $DNSLookup=0) but this requires
+- You can disable DNSLookup in AWStats (set DNSLookup=0) but this requires
 that hosts adresses in your log file are already resolved (need to setup your
 web server to do so). Speed can be increased up by 2 to 10 times !
 
