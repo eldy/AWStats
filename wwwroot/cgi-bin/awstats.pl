@@ -4319,9 +4319,25 @@ EOF
 			my $nompage=$Aliases{$key}?$Aliases{$key}:CleanFromCSSA($key);
 			print "<TR><TD CLASS=AWL>";
 			if (length($nompage)>$MaxLengthOfURL) { $nompage=substr($nompage,0,$MaxLengthOfURL)."..."; }
-			if ($ShowLinksOnUrl) { print "<A HREF=\"http://$SiteDomain\">$nompage</A>"; }
-			else              	 { print "$nompage"; }
-
+			if ($ShowLinksOnUrl) {
+				my $newkey=CleanFromCSSA($key);
+				if ($newkey =~ /^http(s|):/i) {
+					# URL seems to be extracted from a ftp or proxy log file
+					print "<A HREF=\"$newkey\" target=\"awstatsbis\">$nompage</A>";
+				}
+				else {
+					# URL seems to be an url extracted from a web or wap server log file
+					if ($newkey =~ /^\//) {
+						print "<A HREF=\"http://$SiteDomain$newkey\" target=\"awstatsbis\">$nompage</A>";
+					}
+					else {
+						print "$nompage";
+					}
+				}
+			}
+			else {
+				print "$nompage";
+			}
 			my $bredde_p=0; my $bredde_e=0; my $bredde_x=0; my $bredde_k=0;
 			if ($max_p > 0) { $bredde_p=int($BarWidth*($_url_p{$key}||0)/$max_p)+1; }
 			if (($bredde_p==1) && $_url_p{$key}) { $bredde_p=2; }
@@ -5060,12 +5076,17 @@ EOF
 			if ($ShowLinksOnUrl) {
 				my $newkey=CleanFromCSSA($key);
 				if ($newkey =~ /^http(s|):/i) {
-					# URL is url extracted from a proxy log file
+					# URL seems to be extracted from a ftp or proxy log file
 					print "<A HREF=\"$newkey\" target=\"awstatsbis\">$nompage</A>";
 				}
 				else {
-					# URL is url extracted from a web/wap server log file
-					print "<A HREF=\"http://$SiteDomain$newkey\" target=\"awstatsbis\">$nompage</A>";
+					# URL seems to be an url extracted from a web or wap server log file
+					if ($newkey =~ /^\//) {
+						print "<A HREF=\"http://$SiteDomain$newkey\" target=\"awstatsbis\">$nompage</A>";
+					}
+					else {
+						print "$nompage";
+					}
 				}
 			}
 			else {
