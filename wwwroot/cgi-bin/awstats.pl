@@ -3488,7 +3488,7 @@ else {								# Run from command line
 		if ($ARGV[$_] =~ /^(-|)migrate=/) {
 			$MigrateStats=$ARGV[$_];
 			$MigrateStats =~ /^(.*)$PROG(\d{0,2})(\d\d)(\d\d\d\d)(.*)\.txt$/;
-			$SiteConfig=$5?$5:"xxx";
+			$SiteConfig=$5?$5:"xxx"; $SiteConfig =~ s/^\.//;
 			last;
 		}
 		if ($_ > 0) { $QueryString .= "&"; }
