@@ -112,9 +112,6 @@ Internet but not on the log analyzer you use. For this reason, DNS lookup is dis
 So log analyzers benchmarks means "nothing" because the reverse DNS lookup is 95% (even with a lookup cache) of the time used by a
 log analyzer, and total time of the process will be nearly the same whatever is the speed of the log analyzer if DNS lookup is not
 already made in log file.<br>
-Webalizer is said to be able to process log with a 10000 lines/second rate but information are limited to number of hits, domains
-and pages (with standard log) and, for the same reason of very high time of reverse DNS lookup process, this speed means something
-only if DNS lookup is already done in your log (and this is not the case for 99% of web sites).<br>
 <br>
 ***** Some visitors use a lot of proxy servers to surf (ie: AOL users), this means it's possible that several hosts (with several
 IP addresses) are used to reach your site for only one visitor (ie: one proxy server download the page and 2 other servers download
