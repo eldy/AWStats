@@ -68,9 +68,7 @@ $paramtoexclude, $rest, $rest_h, $rest_k, $rest_p,
 $tab_titre, $total_h, $total_k, $total_p,
 $word, $yearcon, $yearmonth, $yeartoprocess) = ();
 # ---------- Init arrays --------
-@BrowserArray = @DomainsArray = @HostAliases =
-@OnlyFiles = @OSArray = @RobotArray =
-@SearchEnginesArray = @SkipDNSLookupFor = @SkipFiles = @SkipHosts =
+@HostAliases = @OnlyFiles = @SkipDNSLookupFor = @SkipFiles = @SkipHosts =
 @dateparts = @felter = @field = @filearray = @message =
 @paramlist = @refurl = @sortbrowsers = @sortdomains_h = @sortdomains_k =
 @sortdomains_p = @sorterrors = @sorthosts_p = @sortos = @sortpagerefs = @sortrobot =
@@ -91,7 +89,7 @@ $SortDir       = -1;		# -1 = Sort order from most to less, 1 = reverse order (De
 $VisitTimeOut  = 10000;		# Laps of time to consider a page load as a new visit. 10000 = one hour (Default = 10000)
 $FullHostName  = 1;			# 1 = Use name.domain.zone to refer host clients, 0 = all hosts in same domain.zone are one host (Default = 1, 0 never tested)
 $MaxLengthOfURL= 70;		# Maximum length of URL shown on stats page. This affects only URL visible text, link still work (Default = 70)
-$MaxNbOfDays   = 30;
+$MaxNbOfDays   = 15;
 $NbOfLinesForBenchmark=4000;
 $CENTER        = "";
 $WIDTH         = "600";
@@ -333,6 +331,7 @@ $BarImageHorizontal_k = "barrehk.png";
 # OS AliasHash ("text that match in log after changing ' ' or '+' into '_' ","osid")
 %OSAliasHash	= (
 "windows_me","winme",
+"windows2000","win2000",
 "windows_2000","win2000",
 "windows_nt_5","win2000",
 "windows_nt","winnt",
@@ -1000,17 +999,19 @@ sub Read_Language_Tooltip {
 	else { if (open(LANG,"${Dir}lang/awstats-tt-en.txt")) { $FileLang="${Dir}lang/awstats-tt-en.txt"; } }		# If file not found, we try english
 	&debug("Call to Read_Language_Tooltip [FileLang=\"$FileLang\"]");
 	if ($FileLang ne "") {
-		$aws_timeout = $VisitTimeOut/10000*60;
-		$aws_SearchEnginesArray = @SearchEnginesArray;
+		my @RobotArray=keys %RobotHash;
+		my @SearchEnginesArray=keys %SearchEnginesHash;
+		$aws_Timeout = $VisitTimeOut/10000*60;
 		$aws_MaxNbOfRefererShown = $MaxNbOfRefererShown;
 		$aws_RobotArray = @RobotArray;
+		$aws_SearchEnginesArray = @SearchEnginesArray;
 		while (<LANG>) {
 			# Search for replaceable parameters
 			s/#PROG#/$PROG/;
-			s/#VisitTimeOut#/$aws_timeout/;
-			s/#SearchEnginesArray#/$aws_SearchEnginesArray/;
+			s/#VisitTimeOut#/$aws_Timeout/;
 			s/#MaxNbOfRefererShown#/$aws_MaxNbOfRefererShown/;
 			s/#RobotArray#/$aws_RobotArray/;
+			s/#SearchEnginesArray#/$aws_SearchEnginesArray/;
 			print "$_";
 		}
 	}
@@ -1587,15 +1588,15 @@ if (($ENV{"GATEWAY_INTERFACE"} eq "") && ($SiteToAnalyze eq "")) {
 	print "  Number of visits and unique visitors\n";
 	print "  Rush hours\n";
 	print "  Most often viewed pages\n";
-	@DomainsArray=keys %DomainsHash;
+	my @DomainsArray=keys %DomainsHash;
 	print "  ".(@DomainsArray)." domains/countries\n";
-	@BrowserArray=keys %BrowsersHash;
+	my @BrowserArray=keys %BrowsersHash;
 	print "  ".(@BrowserArray)." browsers\n";
-	@OSArray=keys %OSHash;
+	my @OSArray=keys %OSHash;
 	print "  ".(@OSArray)." Operating Systems\n";
-	@RobotArray=keys %RobotHash;
+	my @RobotArray=keys %RobotHash;
 	print "  ".(@RobotArray)." robots\n";
-	@SearchEnginesArray=keys %SearchEnginesHash;
+	my @SearchEnginesArray=keys %SearchEnginesHash;
 	print "  ".(@SearchEnginesArray)." search engines (and keywords or keyphrases used from them)\n";
 	print "  All HTTP errors\n";
 	print "  Statistics by day/month/year\n";
@@ -2414,14 +2415,13 @@ print "<tr><td>&nbsp;</td></tr>\n";
 print "<tr><td class=LEFT><font style=\"font: 14px arial,verdana,helvetica; font-weight: bold\">$message[16] : </td>";
 print "<td class=LEFT><a href=\"#DOMAINS\">$message[17]</a> &nbsp; <a href=\"#VISITOR\">".ucfirst($message[26])."</a> &nbsp; <a href=\"#ROBOTS\">$message[53]</a> &nbsp; <a href=\"#HOUR\">$message[20]</a> &nbsp; <a href=\"$DirCgi$PROG.$Extension?action=unknownip&site=$SiteToAnalyze&year=$YearRequired&month=$MonthRequired&lang=$Lang\">$message[45]</a><br></td></tr>\n";
 print "<tr><td class=LEFT><font style=\"font: 14px arial,verdana,helvetica; font-weight: bold\">$message[72] : </td>";
-print "<td class=LEFT><a href=\"#PAGE\">$message[19]</a> &nbsp; <a href=\"#BROWSER\">$message[21]</a> &nbsp; <a href=\"#OS\">$message[59]</a> &nbsp; <a href=\"$DirCgi$PROG.$Extension?action=browserdetail&site=$SiteToAnalyze&year=$YearRequired&month=$MonthRequired&lang=$Lang\">$message[33]</a> &nbsp; <a href=\"$DirCgi$PROG.$Extension?action=browserdetail&site=$SiteToAnalyze&year=$YearRequired&month=$MonthRequired&lang=$Lang\">$message[34]</a><br></td></tr>\n";
+print "<td class=LEFT><a href=\"$DirCgi$PROG.$Extension?action=urldetail&site=$SiteToAnalyze&year=$key&month=year&lang=$Lang\">$message[19]</a> &nbsp; <a href=\"#BROWSER\">$message[21]</a> &nbsp; <a href=\"#OS\">$message[59]</a> &nbsp; <a href=\"$DirCgi$PROG.$Extension?action=browserdetail&site=$SiteToAnalyze&year=$YearRequired&month=$MonthRequired&lang=$Lang\">$message[33]</a> &nbsp; <a href=\"$DirCgi$PROG.$Extension?action=browserdetail&site=$SiteToAnalyze&year=$YearRequired&month=$MonthRequired&lang=$Lang\">$message[34]</a><br></td></tr>\n";
 print "<tr><td class=LEFT><font style=\"font: 14px arial,verdana,helvetica; font-weight: bold\">$message[23] : </td>";
 print "<td class=LEFT><a href=\"#REFERER\">$message[37]</a> &nbsp; <a href=\"#SEARCHWORDS\">$message[24]</a><br></td></tr>\n";
 print "<tr><td class=LEFT><font style=\"font: 14px arial,verdana,helvetica; font-weight: bold\">$message[2] : </td>";
 print "<td class=LEFT> <a href=\"#ERRORS\">$message[22]</a> &nbsp; <a href=\"$DirCgi$PROG.$Extension?action=notfounderror&site=$SiteToAnalyze&year=$YearRequired&month=$MonthRequired&lang=$Lang\">$message[31]</a><br></td></tr>\n";
 print "</table>\n";
 print "<br>\n\n";
-
 
 
 if ($QueryString =~ /action=unknownip/i) {
@@ -2559,8 +2559,6 @@ if ($QueryString =~ /action=info/i) {
 	}
 
 &debug("Start of sorting hash arrays");
-@RobotArray=keys %RobotHash;
-@SearchEnginesArray=keys %SearchEnginesHash;
 @sortdomains_p=sort { $SortDir*$_domener_p{$a} <=> $SortDir*$_domener_p{$b} } keys (%_domener_p);
 @sortdomains_h=sort { $SortDir*$_domener_h{$a} <=> $SortDir*$_domener_h{$b} } keys (%_domener_h);
 @sortdomains_k=sort { $SortDir*$_domener_k{$a} <=> $SortDir*$_domener_k{$b} } keys (%_domener_k);
