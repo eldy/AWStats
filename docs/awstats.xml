@@ -50,9 +50,9 @@
         <Filename_Previous>awstats.zip</Filename_Previous>
         <Filename_Generic>awstats.zip</Filename_Generic>
         <Filename_Long>awstats.zip</Filename_Long>
-        <File_Size_Bytes>396757</File_Size_Bytes>
-        <File_Size_K>387</File_Size_K>
-        <File_Size_MB>0.39</File_Size_MB>
+        <File_Size_Bytes>719976</File_Size_Bytes>
+        <File_Size_K>703</File_Size_K>
+        <File_Size_MB>0.70</File_Size_MB>
     </File_Info>
 <Expire_Info>
         <Has_Expire_Info>N</Has_Expire_Info>
@@ -104,8 +104,8 @@ Fonctionne avec les log de IIS 5.0+ et Apache. Gratuit (GNU General Public Licen
         <Application_XML_File_URL>http://awstats.sourceforge.net/docs/awstats.xml</Application_XML_File_URL>
     </Application_URLs>
 <Download_URLs>
-        <Primary_Download_URL>http://prdownloads.sourceforge.net/awstats/awstats-54.zip</Primary_Download_URL>
-        <Secondary_Download_URL />
+        <Primary_Download_URL>http://awstats.sourceforge.net/files/awstats.zip</Primary_Download_URL>
+        <Secondary_Download_URL>http://prdownloads.sourceforge.net/awstats/awstats-54.zip</Secondary_Download_URL>
         <Additional_Download_URL_1 />
         <Additional_Download_URL_2 />
     </Download_URLs>
