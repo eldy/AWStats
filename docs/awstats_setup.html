@@ -33,11 +33,11 @@
 
 <br><br><H1 style="font: 26px arial,helvetica,sans-serif">Install, Setup and Use AWStats</H1>
 
-AWStats common use is made in 3 steps:<br>
+AWStats common use is made in 3 phases:<br>
 <ul>
-<li>Step 0 : <a href="#INSTALL">The install and setup</a><br>
-<li>Step 1 : <a href="#BUILD_UPDATE">The build/update of statistics</a><br>
-<li>Step 2 : <a href="#READ">The reading of results</a><br>
+<li><a href="#INSTALL">Setup: Install and Setup</a><br>
+<li><a href="#BUILD_UPDATE">Statistics update: Building/Updating statistics database</a><br>
+<li><a href="#READ">Reports build: Building and reading reports</a><br>
 </ul>
 <br>
 
@@ -46,17 +46,18 @@ AWStats common use is made in 3 steps:<br>
 Before starting, check that your Perl version is at least 5.005_03 (or higher) by running the <i>perl -v</i> command.
 If not, you can install a recent Perl interpreter from <a href="http://www.activestate.com/ActivePerl/">ActivePerl</a> (<font color=#221188>Win32</font>) or <a href="http://www.perl.com/pub/language/info/software.html">Perl.com</a> (<font color=#221188>Unix/Linux/Other</font>).<br>
 -->
-<br><a name="INSTALL"><H2 style="font: 22px arial,helvetica,sans-serif color: #606060"><u>Step 0 : Install and Setup with awstats_configure.pl</u></H2></a>
+<br><a name="INSTALL"><H2 style="font: 22px arial,helvetica,sans-serif color: #606060"><u>Setup : Install and Setup with awstats_configure.pl</u></H2></a>
 <br>
-<a name="INSTALLAPACHE"><b>A) With Apache or compatible server (on Unix/Linux, Windows, MacOS...)</b></a><br>
+<a name="INSTALLAPACHE"><b>A) Setup with Apache or compatible server (on Unix/Linux, Windows, MacOS...)</b></a><br>
 <br>
-<font style="color: #111155"><b>* Step 0-1</b>:</font><br>
-(if you use a package provided with a Linux distribution or Windows installer, action done in step 0-1
-might have already be done, if you don't know you, do it again)<br>
+<font style="color: #111155"><b>* Step 1</b>:</font><br>
+<br>
+(if you use a package provided with a Linux distribution or Windows installer, action done in step 1
+might have already be done, if you don't know, you can run this step again)<br>
 <br>
 After downloading and extracting the AWStats package, you should run the awstats_configure.pl script to do
 several setup actions.
-You will find it in the AWStats <b>tools</b> directory (If using the windows installer, the script is
+You will find it in the AWStats <b>tools</b> directory (If using the Windows installer, the script is
 automatically launched):<br>
 <b><i>perl awstats_configure.pl</i></b><br>
 
@@ -123,7 +124,8 @@ E) awstats_configure.pl ends.<br>
 <br>
 </ul>
 
-<font style="color: #111155"><b>* Step 0-2</b>:</font><br>
+<font style="color: #111155"><b>* Step 2</b>:</font><br>
+<br>
 Once a config file has been automatically created (by awstats_configure.pl, by your package
 installer or just by a manual copy of awstats.model.conf), it's important to edit it manually and change the "MAIN PARAMETERS"
 to match all your needs:<br>
@@ -137,18 +139,19 @@ web server log files, "S" for a streaming server log file, "M" for mail log file
 or use a personalized log format if you don't use combined log format.<br>
 - Edit <a href="awstats_config.html#SiteDomain">SiteDomain</a> parameter with the main domain name or the intranet 
 web server name used to reach the web site to analyze (Example: www.mydomain.com). If you have several
-possible name for same site, add list in <a href="awstats_config.html#HostAlias">HostAlias</a> parameter.<br>
-- You can also change other parameters if you want.<br>
+possible name for same site, use the main domain name and add list of others in <a href="awstats_config.html#HostAlias">HostAlias</a> parameter.<br>
+- You can also change other parameters if you want. Full list is available in <a href="awstats_config.html">Configurations/Directives options</a> page.<br>
 <br>
 
-Step 0 (Install and Setup) is finished. You can jump to the <a href="#BUILD_UPDATE">Build/Update Statistics</a> section.<br>
+Install and Setup is finished. You can jump to the <a href="#BUILD_UPDATE">Building/Updating statistics database</a> section.<br>
+<br>
+<br>
+
 
 <br>
+<a name="INSTALLIIS"><b>B) Setup with IIS server</b></a><br>
 <br>
-<br>
-<a name="INSTALLIIS"><b>B) With IIS server</b></a><br>
-<br>
-<font style="color: #111155"><b>* Step 0-1</b>:</font><br>
+<font style="color: #111155"><b>* Step 1</b>:</font><br>
 <br>
 Configure IIS to log in <b>"Extended W3C log format"</b> (You can still use
 your own log format but setup is easier if made like suggested). So, for
@@ -175,33 +178,33 @@ your homepage. This is an example of records you should get then in the new log 
 <i>2000-07-19 14:14:14 62.161.78.73 - GET / 200 1234 HTTP/1.1 Mozilla/4.0+(compatible;+MSIE+5.01;+Windows+NT+5.0) http://www.from.com/from.htm</i><br>
 <br>
 
-<font style="color: #111155"><b>* Step 0-2</b>:</font><br>
+<font style="color: #111155"><b>* Step 2</b>:</font><br>
 <br>
 Copy the contents of the provided cgi-bin folder from your hard drive to your server's cgi-bin
 directory (this includes <b>awstats.pl</b>, <b>awstats.model.conf</b>, and the <b>lang</b>, <b>lib</b> and <b>plugins</b> sub-directories).<br>
 <br>	
 
-<font style="color: #111155"><b>* Step 0-3</b>:</font><br>
+<font style="color: #111155"><b>* Step 3</b>:</font><br>
 <br>
 Move AWStats <b>icon sub-directories</b> and its content into a directory readable by your
 web server, for example C:\yourwwwroot\icon.<br>
 <br>
 
-<font style="color: #111155"><b>* Step 0-4</b>:</font><br>
+<font style="color: #111155"><b>* Step 4</b>:</font><br>
 <br>
 Create a config file by copying <b>awstats.model.conf</b> file into a new file named <b>awstats.myvirtualhostname.conf</b>.
 You can use the value of your choice instead of "myvirtualhostname". This new file must be stored in<br>
 - Same directory than awstats.pl (so cgi-bin)<br>
 <br>
 
-<font style="color: #111155"><b>* Step 0-5</b>:</font><br>
+<font style="color: #111155"><b>* Step 5</b>:</font><br>
 <br>
 Edit this new config file with your own setup :<br>
 - Change <a href="awstats_config.html#LogFile">LogFile</a> value with full path of your web server log file (You
 can also use a relative path from your awstats.pl directory).<br>
 - Change <a href="awstats_config.html#LogType">LogType</a> value with "W" for analyzing
 web server log files, "S" for a streaming server log file, "M" for mail log files, "F" for ftp log files, "O" otherwise.<br>
-- Change <a href="awstats_config.html#LogFormat">LogFormat</a> to a value with same field's name defined in step 0-1:<br><i>
+- Change <a href="awstats_config.html#LogFormat">LogFormat</a> to a value with same field's name defined in step 1:<br><i>
 LogFormat="date time c-ip cs-username cs-method cs-uri-stem cs-uri-query sc-status sc-bytes cs-version cs(User-Agent) cs(Referer)"</i><br>
 - Change <a href="awstats_config.html#DirIcons">DirIcons</a> parameter to reflect relative path of icon directory.<br>
 - Edit <a href="awstats_config.html#SiteDomain">SiteDomain</a> parameter with the main domain name or the intranet
@@ -209,12 +212,12 @@ web server name used to reach the web site to analyze (Example: www.mydomain.com
 - Set <a href="awstats_config.html#AllowToUpdateStatsFromBrowser">AllowToUpdateStatsFromBrowser</a> parameter to 1 if you don't have command line access and have only cgi access.<br>
 - You can change other parameters if you want.<br>
 <br>
-Step 0 (Install and Setup) is finished. You can jump to the <a href="#BUILD_UPDATE">Build/Update Statistics</a> section.<br>
+Install and Setup is finished. You can jump to the <a href="#BUILD_UPDATE">Building/Updating statistics database</a> section.<br>
+<br>
+<br>
 
 <br>
-<br>
-<br>
-<b>C) With other web servers</b><br>
+<b>C) Setup with other web servers</b><br>
 <br>
 Setup process is similar to setup for Apache or IIS.<br>
 Use <a href="awstats_config.html#LogFormat">LogFormat</a> to value "3" if you have WebStar native log format, use
@@ -224,19 +227,19 @@ a personalized <a href="awstats_config.html#LogFormat">LogFormat</a> if your log
 
 <br>
 <br>
-<a name="BUILD_UPDATE"><H2 style="font: 22px arial,helvetica,sans-serif color: #606060"><u>Step 1 : Build/Update Statistics</u></H2></a>
+<a name="BUILD_UPDATE"><H2 style="font: 22px arial,helvetica,sans-serif color: #606060"><u>Statistics update: Building/Updating statistics database</u></H2></a>
 
 <br>
-<font style="color: #111155"><b>* Step 1-1</b>:</font><br>
+<font style="color: #111155"><b>* Step 1</b>:</font><br>
 <br>
 The first analyze/update of statistics should be made the first time manually from the command line since first time,
-process may be long and it's easier to solve problems (if you don't have Command Line access, just go to Step 1-2). The
+process may be long and it's easier to solve problems (if you don't have Command Line access, just go to Step 2). The
 AWStats update command line is:<br>
 <b><i>awstats.pl -config=myvirtualhostname -update</i></b><br>
 <br>
 AWStats will read the config file awstats.myvirtualhostname.conf (or if not found, awstats.conf)
 and create/update its database with all summary information issued from analyzed log file.<br>
-AWStats database files are saved in directory defined by <a href="awstats_config.html#DirData">DirData</a> parameter in config file.<br>
+AWStats database files are saved in directory defined in config file by <a href="awstats_config.html#DirData">DirData</a> parameter.<br>
 When update is finished, you should get on screen a result like this:<br>
 <br><i>
 Update for config "/etc/awstats/awstats.myvirtualhostname.conf"<br>
@@ -251,7 +254,7 @@ Parsed lines in file: 225730<br>
 &nbsp;Found 0 old records,<br>
 &nbsp;Found 225521 new qualifed records.<br>
 </i><br>
-<b>Dropped records</b> are records discarded because they were not user HTTP request or requests were not qualified
+<b>Dropped records</b> are records discarded because they were not "user HTTP requests" or requests were not qualified
 by AWStats filters (See <a href="awstats_config.html#SkipHosts">SkipHosts</a>, <a href="awstats_config.html#SkipUserAgents">SkipUserAgents</a>,
 <a href="awstats_config.html#SkipFiles">SkipFiles</a>, <a href="awstats_config.html#OnlyHosts">OnlyHosts</a>,
 <a href="awstats_config.html#OnlyUserAgents">OnlyUserAgents</a> and <a href="awstats_config.html#OnlyFiles">OnlyFiles</a> parameters).
@@ -269,23 +272,23 @@ You understood that it's not necessary to purge your log file after each update 
 if it's highly recommended to do it as often as possible.<br>
 <b>New records</b> are records in your log file that were successfully used to build/update statistics.<br>
 <br>
-Note : A log analysis process is slow (one second for each 4500 lines of your
+Note : A log analysis process might be slow (one second for each 4500 lines of your
 logfile with Athlon 1Ghz, plus DNS resolution time for each different IP
 address in your logfile if <a href="awstats_config.html#DNSLookup">DNSLookup</a> is set to 1 and not already done in your log file).<br>
 See <a href="awstats_benchmark.html">Benchmark page</a> for more accurate information.<br>
 <br>
 
-<font style="color: #111155"><b>* Step 1-2</b>:</font><br>
+<font style="color: #111155"><b>* Step 2</b>:</font><br>
 <br>
-AWStats statistics can be updated from a browser, to provide real-time statistics, by clicking
-the "Update now" link that appears when AWStats is used as a CGI (Next section '<a href="#READ">Read Statistics</a>
+AWStats statistics can also be updated from a browser, to provide real-time statistics, by clicking
+the "Update now" link that appears when AWStats is used as a CGI (Next section '<a href="#READ">Reports build: Building and reading reports</a>
 dynamically' gives you URL to use for that).<br>
-Warning !!<br>
+<br>
+<b>Warning</b>!!<br>
 To enable this link, your parameter <a href="awstats_config.html#AllowToUpdateStatsFromBrowser">AllowToUpdateStatsFromBrowser</a>
 must be set to 1 in your config file (Link is not enabled by default).<br>
-<br>
 Then, using on-line update does not prevent you from running the update process from a scheduler
-frequently (command is same than update of first process).<br>
+frequently (command is same than update of first update process).<br>
 For this, you have two choices:<br>
 - Include the update command in your <b>logrotate</b> process. See <a href="awstats_faq.html#ROTATE">FAQ-COM120</a> for this.<br>
 - Or add instructions in your <b>crontab</b> (Unix/Linux) or your <b>task scheduler</b> (for
@@ -293,8 +296,10 @@ Windows), to launch frequently the Awstats update process. See <a href="awstats_
 See AWStats <a href="awstats_benchmark.html">Benchmark page</a> for recommanded update/logrotate frequency.<br>
 <br>
 
+
+
 <br>
-<br><a name="READ"><H2 style="font: 22px arial,helvetica,sans-serif color: #606060"><u>Step 2 : Read Statistics</u></H2></a>
+<br><a name="READ"><H2 style="font: 22px arial,helvetica,sans-serif color: #606060"><u>Reports build: Building and reading reports</u></H2></a>
 
 <br>
 To see results of analyze, you have several solutions depending on your <a href="awstats_security.html">security policy</a>.<br>
@@ -328,7 +333,7 @@ This is how to use all other possible output options(1) :<br>
 <i><b>perl awstats.pl -config=myvirtualhostname -output=errors404 -staticlinks > awstats.myvirtualhostname.errors404.html</b></i><br>
 <br>
 Note (1): If you prefer, you can use <a href="awstats_tools.html#awstats_buildstaticpages">awstats_buildstaticpages</a> tool to
-build all those pages in one command or to generate PDF files.<br>
+build all those pages in one command, or to generate PDF files.<br>
 <br>
 Note (2): You can also add a <i>filter</i> on the following output reports:<b>urldetail, urlentry, urlexit, allhosts, refererpages</b>.<br>
 <i>filter</i> can be a regexp on the full key you want awstats to present information about and you must use it after the output
