@@ -81,7 +81,7 @@ $word, $yearcon, $yearfile, $yearmonthfile, $yeartoprocess) = ();
 %MonthBytes = %MonthHits = %MonthPages = %MonthUnique = %MonthVisits =
 %listofyears = %monthlib = %monthnum = ();
 
-$VERSION="2.5 (build 39)";
+$VERSION="3.0 (build 1)";
 $Lang="en";
 
 # Default value
@@ -1879,7 +1879,7 @@ if ($UpdateStats) {
 	  					$new = $MyDNSTable{$Host};
 					}
 					else {
-						if (&SkipDNSLookupFor($Host)) {
+						if (&SkipDNSLookup($Host)) {
 							&debug("(Skipping this DNS lookup at user request.)",4);
 						}
 						else {
