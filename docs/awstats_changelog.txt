@@ -6,17 +6,31 @@ $Revision$ - $Author$ - $Date$
 ***** 6.4 *****
 
 New features/improvements:
-- None
+- Add option ShowSummary.
+- If Geoip plugin is enabled, add a column in Host report.
+- Other minor changes on geoip and hostinfo plugins to enhance look.
 
 Fixes:
 - Fix security hole that allowed a user to read log file content even
   when plugin rawlog was not enabled.
 - Fix a possible use of AWStats for a DoS attack.
-- configdir option was broken on windows servers.
-- Minor fixes
+- Fix errors for setup to analyze media servers.
+- If there is no referer field in the log format, do not use them in the
+  errors reports.
+- Label of real player ("media player", not "audio player")
+- configdir option was broken on windows servers (Pb on Sanitize function
+  on windows local use).
+- Minor fixes.
+- Fix: [ 1094056 ] Bad html-output for maillogs
+- Fix: [ 1094060 ] More bad html/xml output
+- Fix: [ 1100550 ] Missing flag icon for euskera
+- Fix: [ 1111817 ] AllowToUpdateStatsFromBrowser defaults to 1 contrary
+  to docs
 
 Other/Documentation:
 - DebugMessages is by default set to 0 for security reasons.
+- Updated documentation.
+- Updated some language files.
 
 
 ***** 6.3 *****
