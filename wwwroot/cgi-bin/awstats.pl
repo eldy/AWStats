@@ -8895,8 +8895,8 @@ if (scalar keys %HTMLOutput) {
 			my $title="$Message[139]";
 			&tab_head("$title",19);
 			print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[139]</TH>";
-			print "<TH width=100>&nbsp</TH>";
-			print "<TH width=100>&nbsp</TH>";
+			print "<TH width=100>&nbsp;</TH>";
+			print "<TH width=100>&nbsp;</TH>";
 			print "</TR>\n";
 			my %label=('AddToFavourites'=>$Message[137],'JavaEnabled'=>$Message[140],'DirectorSupport'=>$Message[141],
 			'FlashSupport'=>$Message[142],'RealPlayerSupport'=>$Message[143],'QuickTimeSupport'=>$Message[144],
