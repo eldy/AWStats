@@ -50,20 +50,20 @@ Some <b>Visits durations</b> are 'unknown' because they can't always be calculat
 - Visit started the last hour (after 23:00) of the last day of a month (A technical reason prevents #PROG# from calculating duration of such sessions)
 </DIV>
 
-<DIV CLASS="CTooltip" ID="tt201"> No description for this error. </DIV>
-<DIV CLASS="CTooltip" ID="tt202"> Request was understood by server but will be processed later. </DIV>
-<DIV CLASS="CTooltip" ID="tt204"> Server has processed the request but there is no document to send. </DIV>
-<DIV CLASS="CTooltip" ID="tt206"> Partial content. </DIV>
-<DIV CLASS="CTooltip" ID="tt301"> Requested document was moved and is now at another address given in answer. </DIV>
-<DIV CLASS="CTooltip" ID="tt302"> No description for this error. </DIV>
-<DIV CLASS="CTooltip" ID="tt400"> Syntax error, server didn't understand request. </DIV>
-<DIV CLASS="CTooltip" ID="tt401"> Tried to reach an <b>URL where a login/password pair was required</b>.<br>A high number within this item could mean that someone (such as a hacker) is attempting to crack, or enter into your site (hoping to enter a secured area by trying different login/password pairs, for instance). </DIV>
-<DIV CLASS="CTooltip" ID="tt403"> Tried to reach an <b>URL not configured to be reachable, even with an login/password pair</b> (for example, an URL within a directory not defined as "browsable".). </DIV>
-<DIV CLASS="CTooltip" ID="tt404"> Tried to reach a <b>non existing URL</b>. This error often means that there is an invalid link somewhere in your site or that a visitor mistyped a certain URL. </DIV>
-<DIV CLASS="CTooltip" ID="tt408"> Server has taken <b>too much time</b> to respond to a request. This error frequently involves either a slow CGI script which the server was required to kill or an extremely congested web server. </DIV>
-<DIV CLASS="CTooltip" ID="tt500"> Internal error. This error is often caused by a CGI program that had finished abnormally (coredump for example). </DIV>
-<DIV CLASS="CTooltip" ID="tt501"> Unknown requested action. </DIV>
-<DIV CLASS="CTooltip" ID="tt502"> Code returned by a HTTP server that works as a proxy or gateway when a real, targeted server doesn't answer successfully to the client's request. </DIV>
-<DIV CLASS="CTooltip" ID="tt503"> Internal server error. </DIV>
-<DIV CLASS="CTooltip" ID="tt504"> Gateway Time-out. </DIV>
-<DIV CLASS="CTooltip" ID="tt505"> HTTP Version Not Supported. </DIV>
+<DIV CLASS="CTooltip" ID="tt201">No description for this error.</DIV>
+<DIV CLASS="CTooltip" ID="tt202">Request was understood by server but will be processed later.</DIV>
+<DIV CLASS="CTooltip" ID="tt204">Server has processed the request but there is no document to send.</DIV>
+<DIV CLASS="CTooltip" ID="tt206">Partial content.</DIV>
+<DIV CLASS="CTooltip" ID="tt301">Requested document was moved and is now at another address given in answer.</DIV>
+<DIV CLASS="CTooltip" ID="tt302">No description for this error.</DIV>
+<DIV CLASS="CTooltip" ID="tt400">Syntax error, server didn't understand request.</DIV>
+<DIV CLASS="CTooltip" ID="tt401">Tried to reach an <b>URL where a login/password pair was required</b>.<br>A high number within this item could mean that someone (such as a hacker) is attempting to crack, or enter into your site (hoping to enter a secured area by trying different login/password pairs, for instance).</DIV>
+<DIV CLASS="CTooltip" ID="tt403">Tried to reach an <b>URL not configured to be reachable, even with an login/password pair</b> (for example, an URL within a directory not defined as "browsable".).</DIV>
+<DIV CLASS="CTooltip" ID="tt404">Tried to reach a <b>non existing URL</b>. This error often means that there is an invalid link somewhere in your site or that a visitor mistyped a certain URL.</DIV>
+<DIV CLASS="CTooltip" ID="tt408">Server has taken <b>too much time</b> to respond to a request. This error frequently involves either a slow CGI script which the server was required to kill or an extremely congested web server.</DIV>
+<DIV CLASS="CTooltip" ID="tt500">Internal error. This error is often caused by a CGI program that had finished abnormally (coredump for example).</DIV>
+<DIV CLASS="CTooltip" ID="tt501">Unknown requested action.</DIV>
+<DIV CLASS="CTooltip" ID="tt502">Code returned by a HTTP server that works as a proxy or gateway when a real, targeted server doesn't answer successfully to the client's request.</DIV>
+<DIV CLASS="CTooltip" ID="tt503">Internal server error.</DIV>
+<DIV CLASS="CTooltip" ID="tt504">Gateway Time-out.</DIV>
+<DIV CLASS="CTooltip" ID="tt505">HTTP Version Not Supported.</DIV>

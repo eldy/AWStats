@@ -50,20 +50,20 @@ Certaines <b>Durée de visites</b> sont 'inconnues' car elles ne peuvent pas touj
 - La visite a commencé la derniere heure (après 23:00) du dernier jour du mois (Un raison technique empêche #PROG# de calculer la durée des visites de telles sessions).
 </DIV>
 
-<DIV CLASS="CTooltip" ID="tt201"> Contenu partiel renvoyé. </DIV>
-<DIV CLASS="CTooltip" ID="tt202"> La requête a été enregistrée par le serveur mais sera exécutée plus tard. </DIV>
-<DIV CLASS="CTooltip" ID="tt204"> Le serveur a traité la demande mais il n'existe aucun document à renvoyer. </DIV>
-<DIV CLASS="CTooltip" ID="tt206"> Contenu partiel renvoyé. </DIV>
-<DIV CLASS="CTooltip" ID="tt301"> Le document réclamé a été déplacé et se trouve maintenant à une autre adresse mentionnée dans la réponse. </DIV>
-<DIV CLASS="CTooltip" ID="tt302"> Aucun descriptif pour cette erreur. </DIV>
-<DIV CLASS="CTooltip" ID="tt400"> Erreur de syntaxe, le serveur n'a pas compris la requête. </DIV>
-<DIV CLASS="CTooltip" ID="tt401"> Tentatives d'accès à une <b>URL nécessitant identification avec un login/mot de passe invalide</b>.<br>Un nombre trop élévé peut mettre en évidence une tentative de crackage brute du site (par accès répété de différents logins/mots de passe). </DIV>
-<DIV CLASS="CTooltip" ID="tt403"> Tentatives d'accès à une <b>URL non configurée pour etre accessible, même avec une identification</b> (par exemple, une URL d'un répertoire non défini comme étant "listable"). </DIV>
-<DIV CLASS="CTooltip" ID="tt404"> Tentatives d'accès à une <b>URL inexistante</b>. Il s'agit donc d'un lien invalide sur le site ou d'une faute de frappe d'un visiteur qui a saisie une mauvaise URL directement. </DIV>
-<DIV CLASS="CTooltip" ID="tt408"> Le serveur mis un <b>temps trop important</b> pour répondre à la requête. Il peut s'agir d'un script CGI trop lent sur le serveur forcé d'abandonner le traitement ou d'une saturation du site. </DIV>
-<DIV CLASS="CTooltip" ID="tt500"> Erreur interne au serveur. Cette erreur est le plus souvant renvoyé lors de l'arrêt anormal d'un script CGI (par exemple suite à un coredump du CGI). </DIV>
-<DIV CLASS="CTooltip" ID="tt501"> Le serveur ne prend pas en charge l'action demandée. </DIV>
-<DIV CLASS="CTooltip" ID="tt502"> Code renvoyé par un serveur HTTP qui fonctionne comme proxy ou gateway lorsque le serveur réel consulté ne réagit pas avec succès à la demande du client. </DIV>
-<DIV CLASS="CTooltip" ID="tt503"> Erreur interne au serveur. </DIV>
-<DIV CLASS="CTooltip" ID="tt504"> Gateway Time-out. </DIV>
-<DIV CLASS="CTooltip" ID="tt505"> Version HTTP non supporté. </DIV>
+<DIV CLASS="CTooltip" ID="tt201">Contenu partiel renvoyé.</DIV>
+<DIV CLASS="CTooltip" ID="tt202">La requête a été enregistrée par le serveur mais sera exécutée plus tard.</DIV>
+<DIV CLASS="CTooltip" ID="tt204">Le serveur a traité la demande mais il n'existe aucun document à renvoyer.</DIV>
+<DIV CLASS="CTooltip" ID="tt206">Contenu partiel renvoyé.</DIV>
+<DIV CLASS="CTooltip" ID="tt301">Le document réclamé a été déplacé et se trouve maintenant à une autre adresse mentionnée dans la réponse.</DIV>
+<DIV CLASS="CTooltip" ID="tt302">Aucun descriptif pour cette erreur.</DIV>
+<DIV CLASS="CTooltip" ID="tt400">Erreur de syntaxe, le serveur n'a pas compris la requête.</DIV>
+<DIV CLASS="CTooltip" ID="tt401">Tentatives d'accès à une <b>URL nécessitant identification avec un login/mot de passe invalide</b>.<br>Un nombre trop élévé peut mettre en évidence une tentative de crackage brute du site (par accès répété de différents logins/mots de passe).</DIV>
+<DIV CLASS="CTooltip" ID="tt403">Tentatives d'accès à une <b>URL non configurée pour etre accessible, même avec une identification</b> (par exemple, une URL d'un répertoire non défini comme étant "listable").</DIV>
+<DIV CLASS="CTooltip" ID="tt404">Tentatives d'accès à une <b>URL inexistante</b>. Il s'agit donc d'un lien invalide sur le site ou d'une faute de frappe d'un visiteur qui a saisie une mauvaise URL directement.</DIV>
+<DIV CLASS="CTooltip" ID="tt408">Le serveur mis un <b>temps trop important</b> pour répondre à la requête. Il peut s'agir d'un script CGI trop lent sur le serveur forcé d'abandonner le traitement ou d'une saturation du site.</DIV>
+<DIV CLASS="CTooltip" ID="tt500">Erreur interne au serveur. Cette erreur est le plus souvant renvoyé lors de l'arrêt anormal d'un script CGI (par exemple suite à un coredump du CGI).</DIV>
+<DIV CLASS="CTooltip" ID="tt501">Le serveur ne prend pas en charge l'action demandée.</DIV>
+<DIV CLASS="CTooltip" ID="tt502">Code renvoyé par un serveur HTTP qui fonctionne comme proxy ou gateway lorsque le serveur réel consulté ne réagit pas avec succès à la demande du client.</DIV>
+<DIV CLASS="CTooltip" ID="tt503">Erreur interne au serveur.</DIV>
+<DIV CLASS="CTooltip" ID="tt504">Gateway Time-out.</DIV>
+<DIV CLASS="CTooltip" ID="tt505">Version HTTP non supporté.</DIV>
