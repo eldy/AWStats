@@ -15,6 +15,9 @@ New features/improvments:
 - A better browser detection.
 - Can add regex values for a lot of list parameters (HostAliases,
   SkipDNSLookupFor, ...)
+- StyleSheet parameter works completely now and sample of CSS files are
+  provided.
+- Added count for "Add to favourites"
 
 Other/Documentation:
 - Updated documentation.
