@@ -1,6 +1,6 @@
 # AWSTATS ROBOTS DATABASE
 #------------------------
-# Last update: 2001-12-10
+# Last update: 2001-12-18
 
 
 # List of active major robots
@@ -54,7 +54,8 @@
 #      - Robots with ID of 2 letters only
 #      - Robot called "webs"
 # Rem: directhit is changed into direct_hit (its real id)
-# Rem: calif is changed into calif[^r] to avoid confusion between tiscalifreenet browser
+# Rem: calif is changed into calif[^r] to avoid confusion between Tiscalifreenet browser
+# Rem: fish is changed into [^a]fish to avoid confusion between Madsafish browser
 "acme.spider","Acme.Spider",
 "ahoythehomepagefinder","Ahoy! The Homepage Finder",
 "alkaline","Alkaline",
@@ -77,7 +78,7 @@
 "brightnet","bright.net caching robot",
 "bspider","BSpider",
 "cactvschemistryspider","CACTVS Chemistry Spider",
-"calif","Calif",
+"calif[^r]","Calif",
 "cassandra","Cassandra",
 "cgireader","Digimarc Marcspider/CGI",
 "checkbot","Checkbot",
@@ -117,7 +118,7 @@
 "fido","fido",
 "finnish","Hämähäkki",
 "fireball","KIT-Fireball",
-"fish","Fish search",
+"[^a]fish","Fish search",
 "fouineur","Fouineur",
 "francoroute","Robot Francoroute",
 "freecrawl","Freecrawl",

@@ -3,14 +3,16 @@
      Advanced Web Statistics
 ------------------------------------
 
-Advanced Web Statistics (AWStats) is a powerfull web server logfile analyzer
-that shows you all your Web statistics including visitors, pages, hits, hours,
-search engines, keywords used to find your site, broken links, robots and
-more. It works with IIS 5.0+, Apache and other web/wap/proxy server log files.
+Advanced Web Statistics (AWStats) is a powerfull and featurefull web server
+logfile analyzer that shows you all your Web statistics including visitors,
+pages, hits, hours, search engines, keywords used to find your site, broken
+links, robots and more...
+It works with IIS 5.0+, Apache and all major web/wap/proxy server log files
+on all Operating Systems.
 
 License: GNU GPL (GNU General Public License. See LICENSE file)
 Version : 3.2
-Release date: 10 December 2001
+Release date: 18 December 2001
 Platforms: All (Linux, NT, SCO, BSD, Solaris and other *NIX's, BeOS, OS/2...)
 Author: Laurent Destailleur <eldy@users.sourceforge.net>
 AWStats official web site and latest version: http://awstats.sourceforge.net
@@ -83,19 +85,19 @@ I - 2) Requirements
 I - 3) Files
 
     The distribution of AWStats package includes the following files:
-    README.TXT                           This file
-	docs/LICENSE                         GNU General Public Licence
-	docs/*                               AWStats documentation (setup/use/...)
-    wwwroot/cgi-bin/awstats.pl           The main command line/CGI perl script
-    wwwroot/cgi-bin/awstats.model.conf   An example of AWStats configure file
- 	wwwroot/cgi-bin/db                   Directory with awstats reference info
- 	wwwroot/cgi-bin/lang                 Directory with languages files
-    wwwroot/icon/browser                 Directory with browsers icons
-    wwwroot/icon/clock                   Directory with clocks icons
-    wwwroot/icon/cpu                     Directory with cpu icons
-    wwwroot/icon/flags                   Directory with country flags icons
-    wwwroot/icon/os                      Directory with os icons
-    wwwroot/icon/other                   Directory with all others icons
+    README.TXT                          This file
+	docs/LICENSE                        GNU General Public Licence
+	docs/*                              AWStats documentation (setup/usage...)
+    wwwroot/cgi-bin/awstats.pl          The main command line/CGI perl script
+    wwwroot/cgi-bin/awstats.model.conf  An example of AWStats configure file
+ 	wwwroot/cgi-bin/db                  Directory with awstats reference info
+ 	wwwroot/cgi-bin/lang                Directory with languages files
+    wwwroot/icon/browser                Directory with browsers icons
+    wwwroot/icon/clock                  Directory with clocks icons
+    wwwroot/icon/cpu                    Directory with cpu icons
+    wwwroot/icon/flags                  Directory with country flags icons
+    wwwroot/icon/os                     Directory with os icons
+    wwwroot/icon/other                  Directory with all others icons
 
 
 
