@@ -1,18 +1,18 @@
-// awstats_more_tracker
+// awstats_misc_tracker.js
 //-------------------------------------------------------------------
 // You can add this file onto some of your web pages (main home page
-// can be enough) by adding the code at the bottom of page.
+// can be enough) by adding the following HTML code:
 // <script language=javascript src="/js/awstats_more_tracker.js"></script>
-// This allow AWStats to be enhanced with some miscellanous features:
-// - Screen size (TRKscreen)
-// - Screen color depth (TRKcdi)
-// - Java enabled (TRKjava)
-// - Macromedia Director plugin (TRKshk)
-// - Macromedia Shockwave plugin (TRKfla)
-// - Realplayer G2 plugin (TRKrp)
-// - QuickTime plugin (TRKmov)
-// - Mediaplayer plugin (TRKwma)
-// - Acrobat PDF plugin (TRKpdf)
+// This allows AWStats to be enhanced with some miscellanous features:
+// - Screen size detection (TRKscreen)
+// - Screen color depth detection (TRKcdi)
+// - Java enabled detection (TRKjava)
+// - Macromedia Director plugin detection (TRKshk)
+// - Macromedia Shockwave plugin detection (TRKfla)
+// - Realplayer G2 plugin detection (TRKrp)
+// - QuickTime plugin detection (TRKmov)
+// - Mediaplayer plugin detection (TRKwma)
+// - Acrobat PDF plugin detection (TRKpdf)
 //-------------------------------------------------------------------
 
 
