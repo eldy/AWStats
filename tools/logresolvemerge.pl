@@ -1,15 +1,11 @@
 #!/usr/bin/perl
-# With some other Unix Os, first line may be
-#!/usr/local/bin/perl
-# With Apache for Windows and ActiverPerl, first line may be
-#!C:/Program Files/ActiveState/bin/perl
-#-Description-------------------------------------------
+#-----------------------------------------------------------------------------
 # Merge several log files into one and replace all IP addresses
 # with resolved DNS host name.
 # This tool is part of AWStats log analyzer but can be use
 # alone for any other log analyzer.
 # See COPYING.TXT file about AWStats GNU General Public License.
-#-------------------------------------------------------
+#-----------------------------------------------------------------------------
 # $Revision$ - $Author$ - $Date$
 
 use strict; no strict "refs";
@@ -17,9 +13,9 @@ use strict; no strict "refs";
 #use Thread;
 
 
-#-------------------------------------------------------
+#-----------------------------------------------------------------------------
 # Defines
-#-------------------------------------------------------
+#-----------------------------------------------------------------------------
 use vars qw/ $REVISION $VERSION /;
 $REVISION='$Revision$'; $REVISION =~ /\s(.*)\s/; $REVISION=$1;
 $VERSION="1.2 (build $REVISION)";
@@ -40,6 +36,7 @@ $USETHREADS=0;
 
 my $Debug=0;
 my $ShowSteps=0;
+my $AddFileNum=0;
 my $DIR;
 my $PROG;
 my $Extension;
@@ -66,9 +63,9 @@ my %MyDNSTable = ();
 
 
 
-#-------------------------------------------------------
+#-----------------------------------------------------------------------------
 # Functions
-#-------------------------------------------------------
+#-----------------------------------------------------------------------------
 
 sub error {
 	print "Error: $_[0].\n";
@@ -85,25 +82,24 @@ sub debug {
 	0;
 }
 
+#------------------------------------------------------------------------------
+# Function:		Write a warning message
+# Parameters:	$message
+# Input:		$Debug
+# Output:		None
+# Return:		None
+#------------------------------------------------------------------------------
 sub warning {
 	my $messagestring=shift;
-	debug("$messagestring",1);
-#	if ($WarningMessages) {
-#    	if ($HTMLOutput) {
-#    		$messagestring =~ s/\n/\<br\>/g;
-#    		print "$messagestring<br>\n";
-#    	}
-#    	else {
-	    	print "$messagestring\n";
-#    	}
-#	}
+	if ($Debug) { debug("$messagestring",1); }
+   	print "$messagestring\n";
 }
 
-#--------------------------------------------------------------------
+#-----------------------------------------------------------------------------
 # Function:     Return 1 if string contains only ascii chars
 # Input:        String
 # Return:       0 or 1
-#--------------------------------------------------------------------
+#-----------------------------------------------------------------------------
 sub IsAscii {
 	my $string=shift;
 	if ($Debug) { debug("IsAscii($string)",5); }
@@ -128,13 +124,14 @@ sub MakeDNSLookup {
 
 
 
-#-------------------------------------------------------
+#-----------------------------------------------------------------------------
 # MAIN
-#-------------------------------------------------------
-my $QueryString=""; for (0..@ARGV-1) { $QueryString .= "$ARGV[$_] "; }
-if ($QueryString =~ /debug=/i) { $Debug=$QueryString; $Debug =~ s/.*debug=//; $Debug =~ s/&.*//; $Debug =~ s/ .*//; }
-if ($QueryString =~ /dnslookup/i) { $DNSLookup=1; }
-if ($QueryString =~ /showsteps/i) { $ShowSteps=1; }
+#-----------------------------------------------------------------------------
+my $QueryString=''; for (0..@ARGV-1) { $QueryString .= "$ARGV[$_] "; }
+if ($QueryString =~ /debug=(\d)/i) { $Debug=$1; }
+if ($QueryString =~ /dnslookup/i)  { $DNSLookup=1; }
+if ($QueryString =~ /showsteps/i)  { $ShowSteps=1; }
+if ($QueryString =~ /addfilenum/i) { $AddFileNum=1; }
 ($DIR=$0) =~ s/([^\/\\]*)$//; ($PROG=$1) =~ s/\.([^\.]*)$//; $Extension=$1;
 
 my $cpt=1;
@@ -161,6 +158,8 @@ if (scalar keys %ParamFile == 0) {
 	print "  -dnslookup    make a reverse DNS lookup on IP adresses (not done by default)\n";
 #	print "  -dnslookup:n  same with a n parallel threads instead of $QueuePoolSize by default\n";
 	print "  -showsteps    print on stderr benchmark information every $NBOFLINESFORBENCHMARK lines\n";
+	print "  -addfilenum   if used with several files, file number can be added in first\n";
+	print "                field of output file.\n";
 	print "\n";
 	print "This runs $PROG in command line to open one or several web\n";
 	print "server log files to merge them (sorted on date) and/or to make a reverse\n";
@@ -209,19 +208,19 @@ my $timetomorrow=$tomorrowyear.$tomorrowmonth.$tomorrowday.$tomorrowhour.$tomorr
 
 # Init other parameters
 $NBOFLINESFORBENCHMARK--;
-if ($ENV{"GATEWAY_INTERFACE"}) { $DirCgi=""; }
-if ($DirCgi && !($DirCgi =~ /\/$/) && !($DirCgi =~ /\\$/)) { $DirCgi .= "/"; }
-if (! $DirData || $DirData eq ".") { $DirData=$DIR; }	# If not defined or choosed to "." value then DirData is current dir
-if (! $DirData)  { $DirData="."; }						# If current dir not defined then we put it to "."
+if ($ENV{"GATEWAY_INTERFACE"}) { $DirCgi=''; }
+if ($DirCgi && !($DirCgi =~ /\/$/) && !($DirCgi =~ /\\$/)) { $DirCgi .= '/'; }
+if (! $DirData || $DirData eq '.') { $DirData=$DIR; }	# If not defined or choosed to "." value then DirData is current dir
+if (! $DirData)  { $DirData='.'; }						# If current dir not defined then we put it to "."
 $DirData =~ s/\/$//;
 if ($DNSLookup) { use Socket; }
 #my %monthlib =  ( "01","$Message[60]","02","$Message[61]","03","$Message[62]","04","$Message[63]","05","$Message[64]","06","$Message[65]","07","$Message[66]","08","$Message[67]","09","$Message[68]","10","$Message[69]","11","$Message[70]","12","$Message[71]" );
 # monthnum must be in english because it's used to translate log date in apache log files which are always in english
 my %monthnum =  ( "Jan","01","jan","01","Feb","02","feb","02","Mar","03","mar","03","Apr","04","apr","04","May","05","may","05","Jun","06","jun","06","Jul","07","jul","07","Aug","08","aug","08","Sep","09","sep","09","Oct","10","oct","10","Nov","11","nov","11","Dec","12","dec","12" );
 
-#------------------------------------------
+#-----------------------------------------------------------------------------
 # PROCESSING CURRENT LOG(s)
-#------------------------------------------
+#-----------------------------------------------------------------------------
 my %LogFileToDo=();
 my $NbOfLinesRead=0;
 my $NbOfLinesParsed=0;
@@ -345,7 +344,7 @@ while (1 == 1)
 	if ($logfilechosen <= 0) { last; }								# No more record to process
 	# Record is chosen
 	&debug(" We choosed to qualify record of file number $logfilechosen",3);
-	&debug(" Record is $linerecord{$logfilechosen}",3);
+	&debug("  Record is $linerecord{$logfilechosen}",3);
 			
 	# Record is approved. We found a new line to parse in file number $logfilechosen
 	#-------------------------------------------------------------------------------
@@ -440,7 +439,8 @@ while (1 == 1)
 			debug(" First elem in queue has been resolved ($TmpDNSLookup{$QueueHostsToResolve{$QueueCursor}}). We pull it.",4);
 		}
 		# Record is ready, we output it.
-		print "$QueueRecords{$QueueCursor}\n";
+		if ($AddFileNum) { print "$logfilechosen $QueueRecords{$QueueCursor}\n"; }
+		else { print "$QueueRecords{$QueueCursor}\n"; }
 		delete $QueueRecords{$QueueCursor};
 		delete $QueueHostsToResolve{$QueueCursor};
 		$QueueCursor++;
