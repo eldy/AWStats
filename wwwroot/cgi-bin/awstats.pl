@@ -147,7 +147,8 @@ $Expires, $UpdateStats, $MigrateStats, $URLNotCaseSensitive, $URLWithQuery, $URL
 $UseFramesWhenCGI, $DecodeUA)=
 (0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
 use vars qw/
-$AllowToUpdateStatsFromBrowser $ArchiveLogRecords $DetailedReportsOnNewWindows
+$AllowToUpdateStatsFromBrowser $AllowFullYearView
+$ArchiveLogRecords $DetailedReportsOnNewWindows
 $FirstDayOfWeek $KeyWordsNotSensitive $SaveDatabaseFilesWithPermissionsForEveryone
 $WarningMessages $DebugMessages $ShowLinksOnUrl
 $ShowMenu $ShowMonthStats $ShowDaysOfMonthStats $ShowDaysOfWeekStats
@@ -157,7 +158,8 @@ $ShowOSStats $ShowBrowsersStats $ShowOriginStats
 $ShowKeyphrasesStats $ShowKeywordsStats $ShowMiscStats $ShowHTTPErrorsStats
 $AddDataArrayMonthStats $AddDataArrayShowDaysOfMonthStats $AddDataArrayShowDaysOfWeekStats $AddDataArrayShowHoursStats
 /;
-($AllowToUpdateStatsFromBrowser, $ArchiveLogRecords, $DetailedReportsOnNewWindows,
+($AllowToUpdateStatsFromBrowser, $AllowFullYearView,
+$ArchiveLogRecords, $DetailedReportsOnNewWindows,
 $FirstDayOfWeek, $KeyWordsNotSensitive, $SaveDatabaseFilesWithPermissionsForEveryone,
 $WarningMessages, $DebugMessages, $ShowLinksOnUrl,
 $ShowMenu, $ShowMonthStats, $ShowDaysOfMonthStats, $ShowDaysOfWeekStats,
@@ -167,7 +169,7 @@ $ShowOSStats, $ShowBrowsersStats, $ShowOriginStats,
 $ShowKeyphrasesStats, $ShowKeywordsStats, $ShowMiscStats, $ShowHTTPErrorsStats,
 $AddDataArrayMonthStats, $AddDataArrayShowDaysOfMonthStats, $AddDataArrayShowDaysOfWeekStats, $AddDataArrayShowHoursStats
 )=
-(1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1);
+(1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1);
 use vars qw/
 $LevelForRobotsDetection $LevelForBrowsersDetection $LevelForOSDetection $LevelForRefererAnalyze
 $LevelForSearchEnginesDetection $LevelForKeywordsDetection
@@ -1538,6 +1540,7 @@ sub Check_Config {
 	if ($DNSLookup !~ /[0-2]/)                      { error("DNSLookup parameter is wrong in config/domain file. Value is '$DNSLookup' (should be 0 or 1)"); }
 	if (! $SiteDomain)                              { error("SiteDomain parameter not defined in your config/domain file. You must add it for using this version of AWStats."); }
 	if ($AllowToUpdateStatsFromBrowser !~ /[0-1]/) 	{ $AllowToUpdateStatsFromBrowser=0; }
+	if ($AllowFullYearView !~ /[0-2]/) 				{ $AllowFullYearView=1; }
 	# Optional setup section
 	if ($EnableLockForUpdate !~ /[0-1]/)           	{ $EnableLockForUpdate=0; }
 	$DNSStaticCacheFile||='dnscache.txt';
@@ -5151,7 +5154,7 @@ if ($QueryString =~ /(^|&)output(=[^&]*|)(&|$)/i) {
 if ($ENV{'GATEWAY_INTERFACE'} && ! scalar keys %HTMLOutput) { $HTMLOutput{'main'}=1; }
 	
 # Remove -output option with no = from QueryString
-$QueryString=~s/(^|&)output(&|$)//i; $QueryString=~s/&+$//;
+$QueryString=~s/(^|&)output(&|$)/$1/i; $QueryString=~s/&+$//;
 
 # Check year and month parameters
 if ($QueryString =~ /(^|&)month=(year)/i) { error("month=year is a deprecated option. Use month=all instead."); }
@@ -5385,6 +5388,11 @@ if ($AllowAccessFromWebToFollowingIPAddresses && $ENV{'GATEWAY_INTERFACE'}) {
 if (($UpdateStats || $MigrateStats) && (! $AllowToUpdateStatsFromBrowser) && $ENV{'GATEWAY_INTERFACE'}) {
 	error("".($UpdateStats?"Update":"Migrate")." of statistics has not been allowed from a browser (AllowToUpdateStatsFromBrowser should be set to 1).");
 }
+if (scalar keys %HTMLOutput && $MonthRequired eq 'all') {
+	if (! $AllowFullYearView) { error("Full year view has not been allowed (AllowFullYearView is set to 0)."); }
+	if ($AllowFullYearView==1 && $ENV{'GATEWAY_INTERFACE'}) { error("Full year view has not been allowed from a browser (AllowFullYearView should be set to 2)."); }
+}
+
 
 #------------------------------------------
 # MIGRATE PROCESS (Must be after reading config cause we need MaxNbOf... and Min...)
