@@ -24,6 +24,8 @@ AWStats Changelog
 - New option: -staticlinks to build static links in report page (to use
   AWStats with no web servers).
 - Fixed: wrong size of bar in "average" report when average value was < 1.
+- Fixed: pb of "Error: Not same number of records" when using some version
+  of mod_perl.
 - No more need to use \. to say . in config file.
 
 

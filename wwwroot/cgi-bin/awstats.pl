@@ -21,7 +21,7 @@ use vars qw(%DomainsHashIDLib @RobotsSearchIDOrder_list1 @RobotsSearchIDOrder_li
 #-------------------------------------------------------
 # Defines
 #-------------------------------------------------------
-my $VERSION="4.0 (build 56)";
+my $VERSION="4.0 (build 57)";
 
 # ---------- Init variables -------
 my $Debug=0;
@@ -4402,8 +4402,6 @@ EOF
 	if ($ShowBrowsersStats) {
 		if ($Debug) { debug("ShowBrowsersStats",2); }
 		print "$CENTER<a name=\"BROWSER\">&nbsp;</a><BR>";
-		$BrowsersHashIDLib{"netscape"}="<font color=blue>Netscape</font> <a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=browserdetail":"$PROG$FileSuffix.browserdetail.html")."\">($Message[58])</a>";
-		$BrowsersHashIDLib{"msie"}="<font color=blue>MS Internet Explorer</font> <a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=browserdetail":"$PROG$FileSuffix.browserdetail.html")."\">($Message[58])</a>";
 		my $Total=0; foreach my $key (keys %_browser_h) { $Total+=$_browser_h{$key}; }
 		&tab_head($Message[21],19);
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH colspan=2>Browser</TH><TH width=80>$Message[111]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[15]</TH></TR>\n";
@@ -4416,6 +4414,8 @@ EOF
 			else {
 				my $nameicon=$BrowsersHashIcon{$key}||"notavailable"; $nameicon =~ s/\s.*//; $nameicon =~ tr/A-Z/a-z/;
 				my $newbrowser=$BrowsersHashIDLib{$key}||$key;
+				if ($newbrowser eq "netscape") { $newbrowser="<font color=blue>Netscape</font> <a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=browserdetail":"$PROG$FileSuffix.browserdetail.html")."\">($Message[58])</a>"; }
+				if ($newbrowser eq "msie") { $newbrowser="<font color=blue>MS Internet Explorer</font> <a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=browserdetail":"$PROG$FileSuffix.browserdetail.html")."\">($Message[58])</a>"; }
 				print "<TR><TD width=100><IMG SRC=\"$DirIcons\/browser\/$nameicon.png\"></TD><TD CLASS=AWL>$newbrowser</TD><TD width=80>".($BrowsersHereAreGrabbers{$key}?"<b>$Message[112]</b>":"$Message[113]")."</TD><TD>$_browser_h{$key}</TD><TD>$p&nbsp;%</TD></TR>\n";
 			}
 			$count++;
