@@ -234,8 +234,8 @@
 "teleport","1",
 "webcapture","1",
 "webcopier","1",
-"curl","1"
-"wget","1",
+"curl","1",
+"wget","1"
 );
 
 
