@@ -1,0 +1,52 @@
+	<DIV CLASS="CTooltip" ID="tt1">
+	On considère une nouvelle visite pour <b>chaque arrivée</b> d un visiteur consultant une page et ne s étant pas connecté dans les dernières <b>#VisitTimeOut# mn</b>.
+	</DIV>
+	<DIV CLASS="CTooltip" ID="tt2">
+	Nombre de hotes (<b>adresse IP</b>) utilisés pour accéder au site (et voir au moins une <b>page</b>).<br>
+	Ce chiffre reflète le nombre de <b>personnes physiques</b> différentes ayant un jour accédées au site.
+	</DIV>
+	<DIV CLASS="CTooltip" ID="tt3">
+	Nombre de fois qu une <b>page</b> du site est <b>vue</b> (Cumul de tout visiteur, toute visite).<br>
+	Ce compteur différe des "hits" car il ne comptabilise que les pages HTML et non les images ou autres fichiers.
+	</DIV>
+	<DIV CLASS="CTooltip" ID="tt4">
+	Nombre de fois qu une <b>page, image, fichier</b> du site est <b>vu</b> ou <b>téléchargé</b> par un visiteur.<br>
+	Ce compteur est donné à titre indicatif, le compteur "pages" etant préféré.
+	</DIV>
+	<DIV CLASS="CTooltip" ID="tt5">
+	Nombre de <b>kilo octets</b> téléchargé lors des visites du site.<br>
+	Il s agit aussi bien du volume de données du au chargement des <b>pages</b> et <b>images</b> que des <b>fichiers</b> téléchargés.
+	</DIV>
+	<DIV CLASS="CTooltip" ID="tt13">
+	#PROG# est capable de reconnaitre l acces au site issu d une <b>recherche</b> depuis les <b>#SearchEnginesArray# moteurs de recherche Internet</b> les plus connus (Yahoo, Altavista, Lycos, Google, Voila, etc...).
+	</DIV>
+	<DIV CLASS="CTooltip" ID="tt14">
+	Liste des <b>pages de sites externes</b> contenant un lien suivi pour accéder à ce site (Seules les <b>#MaxNbOfRefererShown#</b> pages externes les plus utilisées sont affichées).
+	Les liens issus du résultat d un moteur de recherche connu n apparaissent pas ici, car comptabilisés à part sur la ligne juste au-dessus.
+	</DIV>
+	<DIV CLASS="CTooltip" ID="tt15">
+	Ce tableau offre la liste des <b>mots</b> les plus souvent utilisés pour retrouver et accéder au site depuis
+	un moteur de recherche Internet (Les recherches depuis <b>#SearchEnginesArray#</b> moteurs de recherche parmi les pluspopulaires sont reconnues, comme Yahoo, Altavista, Lycos, Google, Voila, etc...).
+	</DIV>
+	<DIV CLASS="CTooltip" ID="tt16">
+	Les robots sont des <b>automates visiteurs</b> scannant le site dans le but de l indexer, d obtenir des statistiques sur les sites Web Internet ou de vérifier sa disponibilié.<br>
+	#PROG# reconnait <b>#RobotArray#</b> robots.
+	</DIV>
+
+	<DIV CLASS="CTooltip" ID="tt201"> Contenu partiel renvoyé. </DIV>
+	<DIV CLASS="CTooltip" ID="tt202"> La requête a été enregistrée par le serveur mais sera exécutée plus tard. </DIV>
+	<DIV CLASS="CTooltip" ID="tt204"> Le serveur a traité la demande mais il n existe aucun document à renvoyer. </DIV>
+	<DIV CLASS="CTooltip" ID="tt206"> Contenu partiel renvoyé. </DIV>
+	<DIV CLASS="CTooltip" ID="tt301"> Le document réclamé a été déplacé et se trouve maintenant à une autre adresse mentionnée dans la réponse. </DIV>
+	<DIV CLASS="CTooltip" ID="tt302"> Aucun descriptif pour cette erreur. </DIV>
+	<DIV CLASS="CTooltip" ID="tt400"> Erreur de syntaxe, le serveur n a pas compris la requête. </DIV>
+	<DIV CLASS="CTooltip" ID="tt401"> Tentatives d accès à une <b>URL nécessitant identification avec un login/mot de passe invalide</b>.<br>Un nombre trop élévé peut mettre en évidence une tentative de crackage brute du site (par accès répété de différents logins/mots de passe). </DIV>
+	<DIV CLASS="CTooltip" ID="tt403"> Tentatives d accès à une <b>URL non configurée pour etre accessible, même avec une identification</b> (par exemple, une URL d un répertoire non défini comme étant "listable"). </DIV>
+	<DIV CLASS="CTooltip" ID="tt404"> Tentatives d accès à une <b>URL inexistante</b>. Il s agit donc d un lien invalide sur le site ou d une faute de frappe d un visiteur qui a saisie une mauvaise URL directement. </DIV>
+	<DIV CLASS="CTooltip" ID="tt408"> Le serveur mis un <b>temps trop important</b> pour répondre à la requête. Il peut s agir d un script CGI trop lent sur le serveur forcé d abandonner le traitement ou d une saturation du site. </DIV>
+	<DIV CLASS="CTooltip" ID="tt500"> Erreur interne au serveur. Cette erreur est le plus souvant renvoyé lors de l arrêt anormal d un script CGI (par exemple suite à un coredump du CGI). </DIV>
+	<DIV CLASS="CTooltip" ID="tt501"> Le serveur ne prend pas en charge l action demandée. </DIV>
+	<DIV CLASS="CTooltip" ID="tt502"> Code renvoyé par un serveur HTTP qui fonctionne comme proxy ou gateway lorsque le serveur réel consulté ne réagit pas avec succès à la demande du client. </DIV>
+	<DIV CLASS="CTooltip" ID="tt503"> Erreur interne au serveur. </DIV>
+	<DIV CLASS="CTooltip" ID="tt504"> Gateway Time-out. </DIV>
+	<DIV CLASS="CTooltip" ID="tt505"> Version HTTP non supporté. </DIV>
