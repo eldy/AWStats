@@ -11,29 +11,22 @@ use HTML::TokeParser;
 
 use strict;no strict "refs";
 
+
 # variables, etc
 my $REVISION='$Revision$'; $REVISION =~ /\s(.*)\s/; $REVISION=$1;
-my $VERSION="0.91 (build $REVISION)";
+my $VERSION="1.0 (build $REVISION)";
 
 my $SITECONFIG = "";
 my $FILEMARKER1 = "BEGIN_SIDER";
 my $FILEMARKER2 = "END_SIDER";
 
 my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = localtime(time);
-
-my $fullMonth = $mon + 1;
-my $fullYear = $year + 1900;
+my $fullMonth = sprintf("%02d",$mon+1);
+my $fullYear = sprintf("%04d",$year+1900);
 
 # Where everything we need to know is installed
 my $awStatsDataDir = "/var/cache/awstats";
-my $awStatsOutDir = "/opt/awstats/wwwroot/cgi-bin/plugins";
 
-# LWP settings
-# UA string passed to server.  You should add this to SkipUserAgents in the
-# awstats.conf file if you want to ignore hits from this code.
-my $userAgent = "awstats-title-grabber/0.9";
-# Put a sensible e-mail address here
-my $spiderOwner = "email\@my.domain.name";
 # Timeout (in seconds) for each HTTP request (increase on slow connections)
 my $getTimeOut = 2;
 # Proxy server to use when doing http/s - leave blank if you don't have one
@@ -42,7 +35,16 @@ my $proxyServer = "";
 # Hosts not to use a proxy for
 my @hostsNoProxy = ("host1","host1.my.domain.name");
 
+
+
 # ====== main
+my $DIR; my $PROG; my $Extension;
+($DIR=$0) =~ s/([^\/\\]*)$//; ($PROG=$1) =~ s/\.([^\.]*)$//; $Extension=$1;
+
+# LWP settings
+# UA string passed to server.  You should add this to SkipUserAgents in the
+# awstats.conf file if you want to ignore hits from this code.
+my $userAgent = ucfirst($PROG)."/$VERSION";
 
 # Change default value if options are used
 my $helpfound=0;
@@ -56,7 +58,7 @@ my $fileToOpen = $awStatsDataDir . "/awstats" . $fullMonth . $fullYear . ($SITEC
 my $urlAliasFile = "urlalias" . ($SITECONFIG?".$SITECONFIG":"") . ".txt";
 
 for (0..@ARGV-1) {
-	if ($ARGV[$_] =~ /^-*historyfile=([^\s&]+)/i) 	{ $fileToOpen="$1"; next; }
+	if ($ARGV[$_] =~ /^-*urllistfile=([^\s&]+)/i) 	{ $fileToOpen="$1"; next; }
 	if ($ARGV[$_] =~ /^-*urlaliasfile=([^\s&]+)/i) 	{ $urlAliasFile="$1"; next; }
 	if ($ARGV[$_] =~ /^-*server=(.*)/i)      		{ $hostname="$1"; next; }
 	if ($ARGV[$_] =~ /^-*h/i)     		  			{ $helpfound=1; next; }
@@ -64,41 +66,41 @@ for (0..@ARGV-1) {
 }
 
 # if no host information provided, we bomb out to usage
-if(($hostname eq "") && ($SITECONFIG eq "")) {
-	$nohosts=1;
-}
+if(! $hostname && ! $SITECONFIG) { $nohosts=1; }
 
 # if no hostname set (i.e. -server=) then we use the config value
-if(($hostname eq "") && ($SITECONFIG ne "")) {
-	$hostname=$SITECONFIG;
-}
+if(! $hostname && $SITECONFIG) { $hostname=$SITECONFIG; }
 
 # Show usage help
-my $DIR; my $PROG; my $Extension;
-($DIR=$0) =~ s/([^\/\\]*)$//; ($PROG=$1) =~ s/\.([^\.]*)$//; $Extension=$1;
 if ($nohosts || $helpfound || ! @ARGV) {
 	print "\n----- $PROG $VERSION -----\n";
-	print "$PROG generates urlalias file for the supplied site configuration.\n";
-	print "It uses an AWStats history data file as a source.\n";
-	print "If you need to use a hostname for retrieving page headers other than the\n";
-	print "one read from the config file, pass it using the -server option.\n";
-	print "If you pass the -overwrite option the urlaliases file will only ever\n";
-	print "contain the current set of active page titles (as most recently generated\n";
-	print "by AWStats).\n";
+	print ucfirst($PROG)." generates an 'urlalias' file from an input file.\n";
+	print "The input file must contain a list of URLs (It can be an AWStats history file).\n";
+	print "For each of thoose URLs, the script get the corresponding HTML page and catch the\n";
+	print "header information (title), then it writes an output file that contains one line\n";
+	print "for each URLs and several fields:\n";
+	print "- The first field is the URL,\n";
+	print "- The second is title caught from web page.\n";
+	print "This resulting file can be used by AWStats urlalias plugin.\n";
 	print "\n";
 	print "Usage:  $PROG.$Extension -server=www.myserver.com [options]\n";
 	print "\n";
+	print "The server parameter contains the web server to get the page from.\n";
 	print "Where options are:\n";
-	print "  -historyfile=AWStats input history file name\n";
-	print "  -urlaliasfile=AWStats output urlalias file to build\n";
+	print "  -urllistfile=Input urllist file\n";
+	print "    If this file is an AWStats history file then urlaliasbuilder will use the\n";
+	print "    SIDER section of this file as its input URL's list.\n";
+	print "  -urlaliasfile=Output urlalias file to build\n";
 	print "  -overwrite\n";
 	print "\n";
 	print "Example: $PROG.$Extension -server=www.someotherhost.com\n";
 	print "\n";
 	print "This is default configuration used if no option is used on command line:\n";
-	print "AWStats input history file: $fileToOpen (overwritten by -historyfile option)\n";
-	print "AWStats output urlalias file: $urlAliasFile (overwritten by -urlaliasfile option)\n";
+	print "Input urllist file: $fileToOpen (overwritten by -urllistfile option)\n";
+	print "Output urlalias file: $urlAliasFile (overwritten by -urlaliasfile option)\n";
 	print "\n";	
+	print "This script was written from simonjw original works title-grabber.pl.\n";
+	print "\n";
 	exit 0;
 }
 
@@ -124,21 +126,27 @@ if($overwritedata == 0) {
 
 # open current months AWStats data file
 print "Open input file $fileToOpen\n";
-open(FILE,$fileToOpen) || die "Error: Can't open AWStats input history file $fileToOpen";
+open(FILE,$fileToOpen) || die "Error: Can't open input urllist file $fileToOpen";
 binmode FILE;
 
 my @field=();
 my @addToAliasFile=();
-my $addToAliasFileCount = 0;
+my $addToAliasFileCount=0;
+my $isawstatshistoryfile=0;
 while (<FILE>) {
 	chomp $_; s/\r//;
+
+	if ($_ =~ /^AWSTATS DATA FILE/) {
+		print "This file looks like an AWStats history file. Searching URLs list...\n";
+		$isawstatshistoryfile=1;
+	}
 
 	# Split line out into fields
 	@field=split(/\s+/,$_);
 	if (! $field[0]) { next; }
 
 	# If we're at the start of the URL section of file
-	if ($field[0] eq $FILEMARKER1)  {
+	if (! $isawstatshistoryfile || $field[0] eq $FILEMARKER1)  {
 
 		$_=<FILE>;
 		chomp $_; s/\r//;
@@ -184,44 +192,43 @@ close(FILE);
 
 my $fileOutput = "";
 
-print "Looking thoose pages to get alias...\n";
+print "Looking thoose pages on server '$hostname' to get alias...\n";
 
 # Create a user agent (browser) object
 my $ua = new LWP::UserAgent;
 # set user agent name
 $ua->agent($userAgent);
-# set user agents owners e-mail address
-$ua->from($spiderOwner);
 # set timeout for requests
 $ua->timeout($getTimeOut);
-if ($proxyServer ne "") {
+if ($proxyServer) {
 	# set proxy for access to external sites
 	$ua->proxy(["http","https"],$proxyServer);
 	# avoid proxy for these hosts
 	$ua->no_proxy(@hostsNoProxy);
 }
 
-# Now lets build the contents to write (or append) to urlalias file
-foreach my $newAlias (@addToAliasFile) {
-	my $newAliasEntry = &Generate_Alias_List_Entry($newAlias);
-	$fileOutput .= $newAliasEntry . "\n";
-}
-
-# write the data back to urlalias file
-print "Wirte file $urlAliasFile\n";
-if($overwritedata == 0) {
-	# append to file
+# Write the data back to urlalias file
+if (! $overwritedata) {
+	# Append to file
 	open(FILE,">>$urlAliasFile") || die "Error: Failed to open file for writing: $_";;
-	print FILE $fileOutput;
+	foreach my $newAlias (@addToAliasFile) {
+		my $newAliasEntry = &Generate_Alias_List_Entry($newAlias);
+		print FILE "$newAliasEntry\n";
+	}
 	close(FILE);
 } else {
-	# overwrite the file
+	# Overwrite the file
 	open(FILE,">$urlAliasFile") || die "Error: Failed to open file for writing: $_";;
-	print FILE $fileOutput;
+	foreach my $newAlias (@addToAliasFile) {
+		my $newAliasEntry = &Generate_Alias_List_Entry($newAlias);
+		print FILE "$newAliasEntry\n";
+	}
 	close(FILE);
 }
+print "File $urlAliasFile created/updated.\n";
 
 exit();
+
 #--------------------------- End of Main -----------------------------
 
 
