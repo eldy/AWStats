@@ -78,3 +78,4 @@ message75=Bytes
 message76=Back to main page
 message77=Top
 message78=dd mmm yyyy - HH:MM
+message79=Filter
