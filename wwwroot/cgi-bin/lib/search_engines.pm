@@ -154,7 +154,7 @@
 "voila\.","kw=",
 "lycos\.","query=",
 "search\.terra\.","query=",
-"google\.","q=",
+"google\.","(p|q)=",
 "alltheweb\.com","q(|uery)=",
 "netscape\.","search=",
 "northernlight\.","qr=",
