@@ -2,7 +2,7 @@
 # With some other Unix Os, first line may be
 #!/usr/local/bin/perl
 # With Apache for Windows and ActiverPerl, first line may be
-#!c:/program files/activeperl/bin/perl
+#!C:/Program Files/ActiveState/bin/perl
 #-Description-------------------------------------------
 # Free realtime web server logfile analyzer to show advanced web statistics.
 # Works from command line or as a CGI. You must use this script as often as
@@ -82,7 +82,7 @@ $WarningMessages= 1;
 %MonthBytes = %MonthHits = %MonthHostsKnown = %MonthHostsUnknown = %MonthPages = %MonthUnique = %MonthVisits =
 %monthlib = %monthnum = ();
 
-$VERSION="3.2 (build 45)";
+$VERSION="3.2 (build 48)";
 $Lang="en";
 
 # Default value
@@ -249,11 +249,6 @@ sub tab_head {
 sub tab_end {
 	print "</TABLE></TD></TR></TABLE>";
 	print "</div>\n\n";
-}
-
-sub UnescapeURLParam {
-	$_[0] =~ tr/\+\'\(\)\",/      /s;								# "&" and "=" must not be in this list
-	$_[0] =~ s/%([a-fA-F0-9][a-fA-F0-9])/pack("C", hex($1))/eg;		# Decode encoded URL
 }
 
 sub error {
@@ -1292,7 +1287,7 @@ sub Save_History_File {
 	print HISTORYTMP "BEGIN_SEARCHWORDS\n";
 	foreach my $key (keys %_keyphrases) { 
 		my $newkey=$key;
-		if (! &IsAscii($newkey)) { $newkey="NonAsciiKeyphrase"; }
+		# if (! &IsAscii($newkey)) { $newkey="NonAsciiKeyphrase"; }
 		print HISTORYTMP "$newkey $_keyphrases{$key}\n";
 		next;
 	}
@@ -1306,8 +1301,8 @@ sub Save_History_File {
 	foreach my $key (keys %_sider404_h) { 
 		my $newkey=$key;
 		my $newreferer=$_referer404_h{$key};
-		if (! &IsAscii($newkey)) { $newkey="NonAsciiURL"; }
-		if (! &IsAscii($newreferer)) { $newreferer="NonAsciiReferer"; }
+		# if (! &IsAscii($newkey)) { $newkey="NonAsciiURL"; }
+		# if (! &IsAscii($newreferer)) { $newreferer="NonAsciiReferer"; }
 		print HISTORYTMP "$newkey $_sider404_h{$key} $newreferer\n";
 		next;
 	}
@@ -1351,6 +1346,31 @@ sub Init_HashArray {
 	%_se_referrals_h = %_sider404_h = %_url_p = %_url_e =
 	%_unknownip_l = %_unknownreferer_l = %_unknownrefererbrowser_l = ();
 }
+
+
+#--------------------------------------------------------------------
+# Function:     ChangeWordSeparatorsIntoSpace
+# Input:        stringtodecode
+# Return:		decodedstring
+#--------------------------------------------------------------------
+sub ChangeWordSeparatorsIntoSpace {
+	$_[0] =~ s/%20/ /g;
+	$_[0] =~ s/%27/ /g;
+	$_[0] =~ tr/\+\'\(\)\",/      /s;								# "&" and "=" must not be in this list
+}
+
+
+#--------------------------------------------------------------------
+# Function:     Decode an URL encoded string
+# Input:        stringtodecode
+# Return:		decodedstring
+#--------------------------------------------------------------------
+sub DecodeEncodedString {
+	my $stringtodecode=shift;
+	$stringtodecode =~ s/%([a-fA-F0-9][a-fA-F0-9])/pack("C", hex($1))/eg;		# Decode encoded URL
+	return $stringtodecode;
+}
+
 
 #--------------------------------------------------------------------
 # Function:     Copy one file into another
@@ -2001,12 +2021,7 @@ if ($UpdateStats) {
 		my $extension;
 
 		# Extension
-		$found=0;
-		if ($urlwithnoquery =~ /\.(...)$/)     { $found=1; }
-		elsif ($urlwithnoquery =~ /\.(....)$/) { $found=1; }
-		elsif ($urlwithnoquery =~ /\.(..)$/)   { $found=1; }
-		elsif ($urlwithnoquery =~ /\.(.)$/)    { $found=1; }
-		if ($found) {
+		if ($urlwithnoquery =~ /\.(\w{1,4})$/) {
 			$extension=$1; $extension =~ tr/A-Z/a-z/;
 			# Check if not a page
 			foreach $cursor (@NotPageList) { if ($extension eq $cursor) { $PageBool=0; last; } }
@@ -2262,7 +2277,7 @@ if ($UpdateStats) {
 										#	$param =~ s/^$SearchEnginesKnownUrl{$key}//;	# Cut "xxx="
 										if ($param =~ s/^$SearchEnginesKnownUrl{$key}//) { 	# We found good parameter
 											# Ok, "cache:www/zzz+aaa+bbb/ccc+ddd%20eee'fff,ggg" is a search parameter line
-											&UnescapeURLParam($param);			# Change [ cache:www/zzz+aaa+bbb/ccc+ddd%20eee'fff,ggg ] into [ cache:www/zzz aaa bbb/ccc ddd eee fff ggg]
+											&ChangeWordSeparatorsIntoSpace($param);			# Change [ cache:www/zzz+aaa+bbb/ccc+ddd%20eee'fff,ggg ] into [ cache:www/zzz aaa bbb/ccc ddd eee fff ggg]
 											$param =~ s/^cache:[^ ]*//;
 											$param =~ s/^related:[^ ]*//;
 											if ($SplitSearchString) {
@@ -2281,7 +2296,7 @@ if ($UpdateStats) {
 								}
 								else {									# Search engine with unknown URL syntax
 									foreach my $param (@paramlist) {
-										&UnescapeURLParam($param);				# Change [ xxx=cache:www/zzz+aaa+bbb/ccc+ddd%20eee'fff,ggg ] into [ xxx=cache:www/zzz aaa bbb/ccc ddd eee fff ggg ]
+										&ChangeWordSeparatorsIntoSpace($param);				# Change [ xxx=cache:www/zzz+aaa+bbb/ccc+ddd%20eee'fff,ggg ] into [ xxx=cache:www/zzz aaa bbb/ccc ddd eee fff ggg ]
 										my $foundparam=1;
 										foreach $paramtoexclude (@WordsToCleanSearchUrl) {
 											if ($param =~ /.*$paramtoexclude.*/) { $foundparam=0; last; } # Not the param with search criteria
@@ -3385,7 +3400,7 @@ EOF
 			if ($_keyphrases{$key}<$MinHitKeyword) { $rest+=$_keyphrases{$key}; next; }
 			my $p=int($_keyphrases{$key}/$TotalKeyphrases*1000)/10;
 			my $mot = $key; $mot =~ tr/\+/ /s;	# Showing $key without +
-			print "<TR><TD CLASS=AWL>$mot</TD><TD>$_keyphrases{$key}</TD><TD>$p&nbsp;%</TD></TR>\n";
+			print "<TR><TD CLASS=AWL>".DecodeEncodedString($mot)."</TD><TD>$_keyphrases{$key}</TD><TD>$p&nbsp;%</TD></TR>\n";
 			$count++;
 		}
 		if ($rest > 0) {
