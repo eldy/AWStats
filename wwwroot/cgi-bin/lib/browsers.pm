@@ -17,8 +17,9 @@
 #-------------------------------------------------------
 @BrowsersSearchIDOrder = (
 # Most frequent standard web browsers are first in this list
-'icab',
+'firebird',
 'go!zilla',
+'icab',
 'konqueror',
 'links',
 'lynx',
@@ -39,7 +40,6 @@
 'ecatch',
 'emailsiphon',
 'encompass',
-'firebird',
 'friendlyspider',
 'fresco',
 'galeon',
@@ -124,13 +124,15 @@
 #---------------------------------------------------------------
 %BrowsersHashIDLib = (
 # Common web browsers text (IE and Netscape must not be in this list)
-'icab','iCab',
+'firebird','Firebird',
 'go!zilla','Go!Zilla',
+'icab','iCab',
 'konqueror','Konqueror',
 'links','Links',
 'lynx','Lynx',
 'omniweb','OmniWeb',
 'opera','Opera',
+# Other standard web browsers
 '22acidownload','22AciDownload',
 'aol-iweng','AOL-Iweng',
 'amaya','Amaya',
@@ -145,7 +147,6 @@
 'ecatch', 'eCatch',
 'emailsiphon','EmailSiphon',
 'encompass','Encompass',
-'firebird','Firebird',
 'friendlyspider','FriendlySpider',
 'fresco','ANT Fresco',
 'galeon','Galeon',
@@ -248,16 +249,18 @@
 'msie','msie',
 'netscape','netscape',
 
-'icab','icab',
+'firebird','phoenix',
 'go!zilla','gozilla',
+'icab','icab',
 'konqueror','konqueror',
 'lynx','lynx',
 'omniweb','omniweb',
 'opera','opera',
+# Other standard web browsers
 'amaya','amaya',
+'aweb','aweb',
 'chimera','chimera',
 'dreamcast','dreamcast',
-'firebird','phoenix',
 'galeon','galeon',
 'getright','getright',
 'ibrowse','ibrowse',
