@@ -91,6 +91,7 @@ Try to follow them to build your own reporting tools:</b></u><br>
 <li><a href="#bugzilla">Tracking Bugzilla most frequently viewed bugs</a><br>
 <li><a href="#awredir">Tracking Exit clicks</a><br>
 <li><a href="#level2dir">List of top level 2 path under a directory /mydir</a><br>
+<li><a href="#aborted">Tracking aborted download</a><br>
 
 
 <br>
@@ -189,6 +190,21 @@ So this is how you need to setup your ExtraSection to add a chart for a such tra
 <br>ExtraSectionFirstColumnValues1="URL,^\/mydir\/([\w]+)\/"
 <br>ExtraSectionStatTypes1=PHK
 <br>MaxNbOfExtra1=50
+<br>MinHitExtra1=1
+</i>
+<br><br>
+
+
+<br><a name="aborted"><H2 style="font: 22px arial,helvetica,sanserif color: #606060"><u>Tracking aborted download</u></H2></a>
+Aborted downloads are reported in a log file by a 206 error, so this is how you need to setup your ExtraSection to add a chart for a such tracking:<br>
+<i>
+<br>ExtraSectionName1="List of aborted download"
+<br>ExtraSectionCodeFilter1="206"
+<br>ExtraSectionCondition1=""
+<br>ExtraSectionFirstColumnTitle1="URL"
+<br>ExtraSectionFirstColumnValues1="URL,(.*)"
+<br>ExtraSectionStatTypes1=PHK
+<br>MaxNbOfExtra1=100
 <br>MinHitExtra1=1
 </i>
 <br><br>
