@@ -472,14 +472,56 @@ it with its value when reading it), follow the example:<br>
 <a name="ValidHTTPCodes"><b>ValidHTTPCodes</b></a><br>
 <b>Version : </b>4.0 +<br>
 <br># By default, AWStats considers that records found in log file are successfull
-<br># hits if HTTP code returned by server is a valid HTTP code (200 and 302).
+<br># hits if HTTP code returned by server is a valid HTTP code (200 and 304).
 <br># Any other code are reported in HTTP error chart.
 <br># However in some specific environnement, whith web server HTTP redirection,
-<br># you can choose to also accept other codes (like 304).
-<br># Example: "200 302 304"
-<br># Default: "200 302"
+<br># you can choose to also accept other codes.
+<br># Example: "200 304 302 305"
+<br># Default: "200 304"
 <br>#
-<br>ValidHTTPCodes="200 302"
+<br>ValidHTTPCodes="200 304"
+<br>
+<br><u>This is examples of current HTTP codes</u>
+<br><i>
+<br>200 OK
+<br>201 Created
+<br>202 Accepted
+<br>203 Non-Authorative Information
+<br>204 No Content
+<br>205 Reset Content
+<br>206 Partial Content
+<br>
+<br>300 Multiple Choices
+<br>301 Moved Permanently
+<br>302 Moved Temporarily
+<br>303 See Other
+<br>304 Not Modified
+<br>305 Use Proxy
+<br>
+<br>400 Bad Request
+<br>401 Authorization Required
+<br>402 Payment Required
+<br>403 Forbidden
+<br>404 Not Found
+<br>405 Method Not Allowed
+<br>406 Not Acceptable (encoding)
+<br>407 Proxy Authentication Required
+<br>408 Request Timed Out
+<br>409 Conflicting Request
+<br>410 Gone
+<br>411 Content Length Required
+<br>412 Precondition Failed
+<br>413 Request Entity Too Long
+<br>414 Request URI Too Long
+<br>415 Unsupported Media Type
+<br>
+<br>500 Internal Server Error
+<br>501 Not Implemented
+<br>502 Bad Gateway
+<br>503 Service Unavailable
+<br>504 Gateway Timeout
+<br>505 HTTP Version Not Supported
+</i>
 
 <br><br><hr>
 
