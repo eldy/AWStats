@@ -78,7 +78,7 @@ $found, $internal_link) = ();
 %MonthBytes = %MonthHits = %MonthHostsKnown = %MonthHostsUnknown = %MonthPages = %MonthUnique = %MonthVisits =
 %monthlib = %monthnum = ();
 
-$VERSION="3.2 (build 11)";
+$VERSION="3.2 (build 12)";
 $Lang="en";
 
 # Default value
