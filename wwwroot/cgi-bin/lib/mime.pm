@@ -55,9 +55,13 @@
 # Document
 'doc','doc',
 'pdf','pdf',
-'xls','notavailable',
-'ppt','notavailable',
-'pps','notavailable',
+'xls','other',
+'ppt','other',
+'pps','other',
+'sxw','other',
+'sxc','other',
+'sxi','other',
+'sxd','other',
 # Archive
 'zip','archive',
 'tgz','archive',
@@ -68,12 +72,14 @@
 'bz2','archive',
 # Audio
 'mp3','audio',
+'ogg','audio',
 'wma','audio',
 'wav','audio',
 # Video
 'avi','video',
 'divx','video',
 'mpeg','video',
+'mpg','video',
 # JS
 'js','other',
 # Config
@@ -98,12 +104,13 @@
 'gif','image','png','image','bmp','image','jpg','image','jpeg','image',
 # Document
 'doc','document','pdf','document','xls','document','ppt','document','pps','document',
+'sxw','document','sxc','document','sxi','document','sxd','document',
 # Archive
 'zip','archive','tgz','archive','tar','archive','gz','archive','rar','archive','7z','archive','bz2','archive',
 # Audio
-'mp3','audio','wav','audio','wma','audio',
+'mp3','audio','ogg','audio','wav','audio','wma','audio',
 # Video
-'avi','video','divx','video','mpeg','video',
+'avi','video','divx','video','mpeg','video','mpg','video',
 # JS
 'js','javascript',
 # Config
