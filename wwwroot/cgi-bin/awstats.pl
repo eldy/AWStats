@@ -147,14 +147,14 @@ $LevelForSearchEnginesDetection $LevelForKeywordsDetection
 $LevelForSearchEnginesDetection, $LevelForKeywordsDetection)=
 (2,1,1,1,1,1);
 use vars qw/
-$DirCgi $DirData $DirIcons $DirLang $AWScript $ArchiveFileName
+$DirLock $DirCgi $DirData $DirIcons $DirLang $AWScript $ArchiveFileName
 $HTMLHeadSection $HTMLEndSection $LinksToWhoIs
 $LogFile $LogFormat $LogSeparator $Logo $LogoLink $StyleSheet $WrapperScript $SiteDomain
 /;
 ($DirCgi, $DirData, $DirIcons, $DirLang, $AWScript, $ArchiveFileName,
 $HTMLHeadSection, $HTMLEndSection, $LinksToWhoIs,
 $LogFile, $LogFormat, $LogSeparator, $Logo, $LogoLink, $StyleSheet, $WrapperScript, $SiteDomain)=
-("","","","","","","","","","","","","","","","","","");
+("","","","","","","","","","","","","","","","","","","");
 use vars qw/
 $color_Background $color_TableBG $color_TableBGRowTitle
 $color_TableBGTitle $color_TableBorder $color_TableRowTitle $color_TableTitle
@@ -551,7 +551,7 @@ sub error {
 		print ($HTMLOutput?"</font><br>":"");
 		print "\n";
 	}
-	if ($message && $message !~ /History file.*is corrupted/) {
+	if ($message && $message !~ /lock file/ && $message !~ /History file.*is corrupted/) {
 		if ($HTMLOutput) { print "<br><b>\n"; }
 		print "Setup (".($FileConfig?"'".$FileConfig."'":"Config")." file, web server or permissions) may be wrong.\n";
 		if ($HTMLOutput) { print "</b><br>\n"; }
@@ -583,7 +583,7 @@ sub warning {
 }
 
 #------------------------------------------------------------------------------
-# Function:     Write error message and exit
+# Function:     Write debug message and exit
 # Parameters:   $string $level
 # Input:        $Debug = required level   $DEBUGFORCED = required level forced
 # Output:		None
@@ -714,7 +714,7 @@ sub GetSessionRange {
 # Output:		None
 # Return:		Global variables
 #------------------------------------------------------------------------------
-sub Read_Config_File {
+sub Read_Config {
 	$FileConfig=""; $FileSuffix="";
 	foreach my $dir ("$DIR","/etc/opt/awstats","/etc/awstats","/etc","/usr/local/etc/awstats") {
 		my $searchdir=$dir;
@@ -723,7 +723,7 @@ sub Read_Config_File {
 		if (open(CONFIG,"$searchdir$PROG.conf"))  				{ $FileConfig="$searchdir$PROG.conf"; $FileSuffix=""; last; }
 	}
 	if (! $FileConfig) { error("Error: Couldn't open config file \"$PROG.$SiteConfig.conf\" nor \"$PROG.conf\" : $!"); }
-	if ($Debug) { debug("Call to Read_Config_File [FileConfig=\"$FileConfig\"]"); }
+	if ($Debug) { debug("Call to Read_Config [FileConfig=\"$FileConfig\"]"); }
 	my $foundNotPageList = my $foundValidHTTPCodes = 0;
 	while (<CONFIG>) {
 		chomp $_; s/\r//;
@@ -1417,7 +1417,7 @@ sub Read_Plugins {
 # Output:		None
 # Return:		None
 #--------------------------------------------------------------------
-sub Read_History_File_With_Update {
+sub Read_History_With_Update {
 	my $year=sprintf("%04i",shift||0);
 	my $month=sprintf("%02i",shift||0);
 	my $withupdate=shift||0;
@@ -1427,8 +1427,8 @@ sub Read_History_File_With_Update {
 	my $withread=0;
 	
 	# In standard use of AWStats, the DayRequired variable is always empty
-	if ($DayRequired) { if ($Debug) { debug("Call to Read_History_File_With_Update [$year,$month,withupdate=$withupdate,withpurge=$withpurge,part=$part] ($DayRequired)"); } }
-	else { if ($Debug) { debug("Call to Read_History_File_With_Update [$year,$month,withupdate=$withupdate,withpurge=$withpurge,part=$part]"); } }
+	if ($DayRequired) { if ($Debug) { debug("Call to Read_History_With_Update [$year,$month,withupdate=$withupdate,withpurge=$withpurge,part=$part] ($DayRequired)"); } }
+	else { if ($Debug) { debug("Call to Read_History_With_Update [$year,$month,withupdate=$withupdate,withpurge=$withpurge,part=$part]"); } }
 
 	# Define value for historyfilename
 	my $historyfilename="$DirData/$PROG$DayRequired$month$year$FileSuffix.txt";
@@ -1665,19 +1665,18 @@ sub Read_History_File_With_Update {
 
 						# Process data saved in 'wait' arrays
 						if ($_waithost_e{$field[0]}){
-							my $timehostl=int($field[4]);
-							my $timehosts=int($field[5]);
-							my $hostu=$field[6];
+							my $timehostl=int($field[4]||0);
+							my $timehosts=int($field[5]||0);
 							my $newtimehosts=($_waithost_s{$field[0]}?$_waithost_s{$field[0]}:$_host_s{$field[0]});
 							my $newtimehostl=($_waithost_l{$field[0]}?$_waithost_l{$field[0]}:$_host_l{$field[0]});
 							if ($newtimehosts > $timehostl + $VisitTimeOut ) {
 								if ($Debug) { debug(" Visit in 'wait' arrays is a new visit different than last in history",3); }
-								$_url_x{$hostu}++;
+								if ($field[6]) { $_url_x{$field[6]}++; }
 								$_url_e{$_waithost_e{$field[0]}}++;
 								$newtimehosts =~ /^(\d\d\d\d\d\d\d\d)/; $DayVisits{$1}++;
 								if ($timehosts && $timehostl) { $_session{GetSessionRange($timehosts,$timehostl)}++; }
 								if ($_waithost_s{$field[0]}) {
-									# There was also a second session processed log
+									# First session found in log was followed by another one so it's finished
 									$_session{GetSessionRange($newtimehosts,$newtimehostl)}++;
 								}
 								# Here $_host_l $_host_s and $_host_u are correctly defined
@@ -1685,7 +1684,7 @@ sub Read_History_File_With_Update {
 							else {
 								if ($Debug) { debug(" Visit in 'wait' arrays is following of last in history",3); }
 								if ($_waithost_s{$field[0]}) {
-									# There was also a second session in processed log
+									# First session found in log was followed by another one so it's finished
 									$_session{GetSessionRange(Minimum($timehosts,$newtimehosts),$timehostl>$newtimehostl?$timehostl:$newtimehostl)}++;
 									# Here $_host_l $_host_s and $_host_u are correctly defined
 								}
@@ -2821,7 +2820,7 @@ sub Save_History {
 # Output:		Hash array is loaded
 # Return:		1 No DNS Cache file found, 0 OK
 #------------------------------------------------------------------------------
-sub Read_DNS_Cache_File {
+sub Read_DNS_Cache {
 	my $hashtoload=shift;
 	my $dnscachefile=shift;
 	my $filesuffix=shift;
@@ -2831,7 +2830,7 @@ sub Read_DNS_Cache_File {
 	my $filetoload="";
 	my $timetoload = time();
 
-	if ($Debug) { debug("Call to Read_DNS_Cache_File [file=\"$dnscachefile\"]"); }
+	if ($Debug) { debug("Call to Read_DNS_Cache [file=\"$dnscachefile\"]"); }
 	if ($dnscachefile =~ s/(\.\w+)$//) { $dnscacheext=$1; }
 	foreach my $dir ("$DirData",".","") {
 		my $searchdir=$dir;
@@ -3280,6 +3279,46 @@ sub BuildKeyList {
 	return;
 }
 
+#--------------------------------------------------------------------
+# Function:     Lock or unlock update
+# Parameters:   1 to lock, 0 to unlock
+# Input:        $DirLock $PROG $FileSuffix
+# Output:       $DirLock
+# Return:       None
+#--------------------------------------------------------------------
+sub Lock_Update {
+	my $status=shift;
+	my $lock="$PROG$FileSuffix.lock";
+	# Define dir where to write lock file into
+	if (! $DirLock) {
+		if (-d $ENV{"TEMP"}) { $DirLock=$ENV{"TEMP"}; }
+		elsif (-d $ENV{"TMP"}) { $DirLock=$ENV{"TMP"}; }
+		elsif (-d "/tmp") { $DirLock="/tmp"; }
+		$DirLock =~ s/[\\\/]$//;
+	}
+	if ($status) {
+		# We stop if there is at least one lock file wherever it is
+		foreach my $key ($ENV{"TEMP"},$ENV{"TMP"},"/tmp","/") {
+			my $newkey =$key;
+			$newkey =~ s/[\\\/]$//;
+			if (-f "$newkey/$lock") { error("An AWStats update process seems to be already running for this config file. Try later.\nIf this is not true, remove manually lock file '$newkey/$lock'."); }
+		}
+		# Set lock
+		if ($Debug) { debug("Update lock file $DirLock/$lock is set"); }
+		open(LOCK,">$DirLock/$lock") || error("Error: Failed to create lock file $DirLock/$lock");
+		print LOCK "AWStats update started by process $$ at $nowyear-$nowmonth-$nowday $nowhour:$nowmin:$nowsec\n";
+		close(LOCK);
+	}
+	else {
+		# Remove lock
+		if ($Debug) { debug("Update lock file $lock is removed"); }
+		unlink("$DirLock/$lock");
+	}
+	return;
+}
+
+
+
 
 #--------------------------------------------------------------------
 # MAIN
@@ -3460,7 +3499,7 @@ if ($tomorrowsec < 10) { $tomorrowsec = "0$tomorrowsec"; }
 $tomorrowtime=int($tomorrowyear.$tomorrowmonth.$tomorrowday.$tomorrowhour.$tomorrowmin.$tomorrowsec);
 
 # Read config file (here SiteConfig is defined)
-&Read_Config_File;
+&Read_Config;
 if ($QueryString =~ /lang=([^\s&]+)/i)	{ $Lang=$1; }
 if (! $Lang) { $Lang="en"; }
 
@@ -3581,7 +3620,7 @@ close DIR;
 # Get FirstTime, LastTime, LastUpdate and LastLine
 if ($lastyearbeforeupdate) {
 	# Read 'general' section of last history file for LastUpdate and LastLine
-	&Read_History_File_With_Update($lastyearbeforeupdate,$ListOfYears{$lastyearbeforeupdate},0,0,"general");
+	&Read_History_With_Update($lastyearbeforeupdate,$ListOfYears{$lastyearbeforeupdate},0,0,"general");
 }
 if ($Debug) {
 	debug("Last year=$lastyearbeforeupdate - Last month=$ListOfYears{$lastyearbeforeupdate}");
@@ -3603,6 +3642,9 @@ for (my $ix=1; $ix<=12; $ix++) {
 #------------------------------------------
 if ($Debug) { debug("UpdateStats is $UpdateStats",2); }
 if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {	# Update only on index page or when not framed to avoid update twice
+
+	&Lock_Update(1);
+
 	my $lastprocessedyear=$lastyearbeforeupdate;
 	my $lastprocessedmonth=$ListOfYears{$lastyearbeforeupdate}||0;
 	my $lastprocessedyearmonth=sprintf("%04i%02i",$lastprocessedyear,$lastprocessedmonth);
@@ -3834,11 +3876,11 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {	# Updat
 	# Load DNS Cache Files
 	#------------------------------------------
 	if ($DNSLookup) {
-		&Read_DNS_Cache_File(\%MyDNSTable,"$DNSStaticCacheFile","",1);					# Load with save into a second plugin file if plugin enabled and second file not up to date. No use of FileSuffix
+		&Read_DNS_Cache(\%MyDNSTable,"$DNSStaticCacheFile","",1);					# Load with save into a second plugin file if plugin enabled and second file not up to date. No use of FileSuffix
 		if ($DNSLookup == 1) {		# System DNS lookup required
 			#if (! eval("use Socket;")) { &error("Failed to load perl module Socket."); }
 			#use Socket;
-			&Read_DNS_Cache_File(\%TmpDNSLookup,"$DNSLastUpdateCacheFile","$FileSuffix",0);	# Load with no save into a second plugin file. Use FileSuffix
+			&Read_DNS_Cache(\%TmpDNSLookup,"$DNSLastUpdateCacheFile","$FileSuffix",0);	# Load with no save into a second plugin file. Use FileSuffix
 		}
 	}
 
@@ -3964,7 +4006,7 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {	# Updat
 			# We found a new line. This will stop comparison "<=" between timerecord and LastLine (we should have only new lines now)
 			$NewLinePhase=1;
 			if ($ShowSteps) { print "Phase 2 : Now process new records\n"; }
-			#GetDelaySinceStart(1);
+			#GetDelaySinceStart(1); If time counter is reset, we need to reset also the lines counter used in 'modulo' test
 		}
 
 		# Here, field array, timerecord and yearmonthdayrecord are initialized for log record
@@ -3997,7 +4039,7 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {	# Updat
 			# A new month to process
 			if ($lastprocessedmonth) {
 				# We save data of processed month
-				&Read_History_File_With_Update($lastprocessedyear,$lastprocessedmonth,1,1,"all");
+				&Read_History_With_Update($lastprocessedyear,$lastprocessedmonth,1,1,"all");
 			}
 			$lastprocessedmonth=$monthrecord;$lastprocessedyear=$yearrecord;
 			$lastprocessedyearmonth=sprintf("%04i%02i",$lastprocessedyear,$lastprocessedmonth);
@@ -4512,8 +4554,8 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {	# Updat
 		}
 
 
-		# Clean too large hash arrays to free memory when possible
-		if ($counter++ > 500000) {
+		# Every 100000 we test to clean too large hash arrays to free memory when possible
+		if ($counter++ > 100000) {
 			$counter=0;
 			if ($Debug) { debug("We clean some hash arrays",2); }
 			#%TmpDNSLookup=();	# Do we clean this one ?
@@ -4541,7 +4583,7 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {	# Updat
 		my $withpurge=0;
 		if (($MonthRequired ne "year") && ($lastprocessedmonth != $MonthRequired)) { $withpurge=1; }	# Not a desired month (wrong month), so we purge data arrays
 		if (($MonthRequired eq "year") && ($lastprocessedyear != $YearRequired)) { $withpurge=1; }		# Not a desired month (wrong year), so we purge data arrays
-		&Read_History_File_With_Update($lastprocessedyear,$lastprocessedmonth,1,$withpurge,"all");		# We save data for this month,year
+		&Read_History_With_Update($lastprocessedyear,$lastprocessedmonth,1,$withpurge,"all");		# We save data for this month,year
 	}
 
 	# Process the Rename - Archive - Purge phase
@@ -4627,6 +4669,9 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {	# Updat
 		# Save new DNS last update cache file
 		Save_DNS_Cache_File(\%TmpDNSLookup,"$DirData/$DNSLastUpdateCacheFile","$FileSuffix");	# Save into file using FileSuffix
 	}
+
+	&Lock_Update(0);
+
 }
 # End of log processing if ($UPdateStats)
 
@@ -4715,10 +4760,10 @@ EOF
 		for (my $ix=12; $ix>=1; $ix--) {
 			my $monthix=sprintf("%02s",$ix);
 			if ($MonthRequired eq "year" || $monthix eq $MonthRequired) {
-				&Read_History_File_With_Update($YearRequired,$monthix,0,0,"all");										# Read full history file
+				&Read_History_With_Update($YearRequired,$monthix,0,0,"all");										# Read full history file
 			}
 			else {
-				&Read_History_File_With_Update($YearRequired,$monthix,0,0,"general time_partialy day_partialy visitor_partialy");	# Read general and partialy visitor
+				&Read_History_With_Update($YearRequired,$monthix,0,0,"general time_partialy day_partialy visitor_partialy");	# Read general and partialy visitor
 			}
 		}
 	}
