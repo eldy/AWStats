@@ -9541,7 +9541,8 @@ if (scalar keys %HTMLOutput) {
 			if ($ShowPagesStats =~ /X/i) { $title.=" &nbsp; - &nbsp; <a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?XMLEncode("$AWScript?${NewLinkParams}output=urlexit"):"$PROG$StaticLinks.urlexit.$StaticExt")."\"$NewLinkTarget>$Message[116]</a>"; }
 			&tab_head("$title",19,0,'urls');
 			print "<tr bgcolor=\"#$color_TableBGRowTitle\"><th>$TotalDifferentPages $Message[28]</th>";
-			if ($ShowPagesStats =~ /P/i) { print "<th bgcolor=\"#$color_p\" width=\"80\">$Message[29]</th>"; }
+			if ($ShowPagesStats =~ /P/i && $LogType ne 'F')    { print "<th bgcolor=\"#$color_p\" width=\"80\">$Message[29]</th>"; }
+			if ($ShowPagesStats =~ /[PH]/i && $LogType eq 'F') { print "<th bgcolor=\"#$color_h\" width=\"80\">$Message[57]</th>"; }
 			if ($ShowPagesStats =~ /B/i) { print "<th bgcolor=\"#$color_k\" width=\"80\">$Message[106]</th>"; }
 			if ($ShowPagesStats =~ /E/i) { print "<th bgcolor=\"#$color_e\" width=\"80\">$Message[104]</th>"; }
 			if ($ShowPagesStats =~ /X/i) { print "<th bgcolor=\"#$color_x\" width=\"80\">$Message[116]</th>"; }
@@ -9572,7 +9573,8 @@ if (scalar keys %HTMLOutput) {
 				if (($bredde_x==1) && $_url_x{$key}) { $bredde_x=2; }
 				if ($max_k > 0) { $bredde_k=int($BarWidth*(($_url_k{$key}||0)/($_url_p{$key}||1))/$max_k)+1; }
 				if (($bredde_k==1) && $_url_k{$key}) { $bredde_k=2; }
-				if ($ShowPagesStats =~ /P/i) { print "<td>$_url_p{$key}</td>"; }
+				if ($ShowPagesStats =~ /P/i && $LogType ne 'F') { print "<td>$_url_p{$key}</td>"; }
+				if ($ShowPagesStats =~ /[PH]/i && $LogType eq 'F') { print "<td>$_url_p{$key}</td>"; }
 				if ($ShowPagesStats =~ /B/i) { print "<td>".($_url_k{$key}?Format_Bytes($_url_k{$key}/($_url_p{$key}||1)):"&nbsp;")."</td>"; }
 				if ($ShowPagesStats =~ /E/i) { print "<td>".($_url_e{$key}?$_url_e{$key}:"&nbsp;")."</td>"; }
 				if ($ShowPagesStats =~ /X/i) { print "<td>".($_url_x{$key}?$_url_x{$key}:"&nbsp;")."</td>"; }
@@ -9582,7 +9584,8 @@ if (scalar keys %HTMLOutput) {
 					eval("$function");
 				}
 				print "<td class=\"aws\">";
-				if ($ShowPagesStats =~ /P/i) { print "<img src=\"$DirIcons\/other\/$BarPng{'hp'}\" width=\"$bredde_p\" height=\"4\"".AltTitle("")." /><br />"; }
+				if ($ShowPagesStats =~ /P/i && $LogType ne 'F')    { print "<img src=\"$DirIcons\/other\/$BarPng{'hp'}\" width=\"$bredde_p\" height=\"4\"".AltTitle("")." /><br />"; }
+				if ($ShowPagesStats =~ /[PH]/i && $LogType eq 'F') { print "<img src=\"$DirIcons\/other\/$BarPng{'hh'}\" width=\"$bredde_p\" height=\"4\"".AltTitle("")." /><br />"; }
 				if ($ShowPagesStats =~ /B/i) { print "<img src=\"$DirIcons\/other\/$BarPng{'hk'}\" width=\"$bredde_k\" height=\"4\"".AltTitle("")." /><br />"; }
 				if ($ShowPagesStats =~ /E/i) { print "<img src=\"$DirIcons\/other\/$BarPng{'he'}\" width=\"$bredde_e\" height=\"4\"".AltTitle("")." /><br />"; }
 				if ($ShowPagesStats =~ /X/i) { print "<img src=\"$DirIcons\/other\/$BarPng{'hx'}\" width=\"$bredde_x\" height=\"4\"".AltTitle("")." />"; }
@@ -9599,7 +9602,8 @@ if (scalar keys %HTMLOutput) {
 			$rest_k=$TotalBytesPages-$total_k;
 			if ($rest_p > 0 || $rest_k > 0 || $rest_e > 0 || $rest_x > 0) {	# All other urls
 				print "<tr><td class=\"aws\"><span style=\"color: #$color_other\">$Message[2]</span></td>";
-				if ($ShowPagesStats =~ /P/i) { print "<td>$rest_p</td>"; }
+				if ($ShowPagesStats =~ /P/i && $LogType ne 'F') { print "<td>$rest_p</td>"; }
+				if ($ShowPagesStats =~ /[PH]/i && $LogType eq 'F') { print "<td>$rest_p</td>"; }
 				if ($ShowPagesStats =~ /B/i) { print "<td>".($rest_k?Format_Bytes($rest_k/($rest_p||1)):"&nbsp;")."</td>"; }
 				if ($ShowPagesStats =~ /E/i) { print "<td>".($rest_e?$rest_e:"&nbsp;")."</td>"; }
 				if ($ShowPagesStats =~ /X/i) { print "<td>".($rest_x?$rest_x:"&nbsp;")."</td>"; }
