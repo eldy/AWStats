@@ -118,7 +118,7 @@ neste item pode significar que algu&eacute;m (como um hacker) est&aacute;
 tentando quebrar, ou entrar em seu site (esperando entrar em uma &aacute;rea
 segura tentando diferentes pares de usu&aacute;rios/senhas, por exemplo).</div>
 <div class="CTooltip" id="tt403">Tentou alcan&ccedil;ar uma <b>URL n&atilde;o
-configurada como acess&iacute;vel, mesmo com um par usu&ario/senha</b> (por
+configurada como acess&iacute;vel, mesmo com um par userio/senha</b> (por
 exemplo, uma URL com um diret&oacute;rio n&atilde;o definido como
 "naveg&aacute;vel".).</div>
 <div class="CTooltip" id="tt404">Tentou alcan&ccedil;ar uma <b>URL
