@@ -93,6 +93,8 @@ when reading it), follow the example:<br>
 
 <br><b>OPTIONAL APPEARANCE SETUP SECTION (Not required but increase AWStats features)</b><br>
 <ul>
+<li><a href="#UseFramesWhenCGI">UseFramesWhenCGI</a>
+<li><a href="#DetailedReportsOnNewWindows">DetailedReportsOnNewWindows</a>
 <li><a href="#Expires">Expires</a>
 <li><a href="#MaxRowsInHTMLOutput">MaxRowsInHTMLOutput</a>
 <li><a href="#Lang">Lang</a>
@@ -131,7 +133,6 @@ when reading it), follow the example:<br>
 <li><a href="#Max">MaxNbOfKeywordsShown</a>
 <li><a href="#Max">MinHitKeyword</a>
 <li><a href="#FirstDayOfWeek">FirstDayOfWeek</a>
-<li><a href="#DetailedReportsOnNewWindows">DetailedReportsOnNewWindows</a>
 <li><a href="#ShowFlagLinks">ShowFlagLinks</a>
 <li><a href="#ShowLinksOnUrl">ShowLinksOnUrl</a>
 <li><a href="#MaxLengthOfURL">MaxLengthOfURL</a>
@@ -754,6 +755,32 @@ AWStats 4.1+ supports both keywords AND keyphrases by default with no need of an
 
 <br><br><hr>
 
+<a name="UseFramesWhenCGI"><b>UseFramesWhenCGI</b></a><br>
+<b>Version : </b>4.2 +<br>
+<br># When you use AWStats as a CGI, you can have the reports shown in HTML views.
+<br># Frames are only available for report viewed dynamically. When you build
+<br># pages from command line, this option is not used and no frames are built.
+<br># Possible values: 1 or 0
+<br># Default: 1
+<br>#
+<br>UseFramesWhenCGI=1
+
+<br><br><hr>
+
+<a name="DetailedReportsOnNewWindows"><b>DetailedReportsOnNewWindows</b></a><br>
+<b>Version : </b>4.1 + (4.2+ for value 2)<br>
+<br># This parameter ask your browser to open detailed reports into a different
+<br># window than the main page.
+<br># Possible values:
+<br># 0 - Open all in same browser window
+<br># 1 - Open detailed reports in another window except if using frames
+<br># 2 - Open always in a different window even if reports are framed
+<br># Default: 1
+<br>#
+<br>DetailedReportsOnNewWindows=1
+
+<br><br><hr>
+
 <a name="Expires"><b>Expires</b></a><br>
 <b>Version : </b>3.1 +<br>
 <br># You can add in the HTML report page a delay to force browsers to not use cache
@@ -875,17 +902,6 @@ ShowOSStats,ShowOriginStats,ShowKeyphrasesStats,ShowKeywordsStats,ShowHTTPErrors
 <br># Default: 1
 <br>#
 <br>FirstDayOfWeek=1
-
-<br><br><hr>
-
-<a name="DetailedReportsOnNewWindows"><b>DetailedReportsOnNewWindows</b></a><br>
-<b>Version : </b>4.1 +<br>
-<br># This parameter ask your browser to open detailed reports into a different
-<br># window than the main page.
-<br># Possible values: 1 or 0
-<br># Default: 1
-<br>#
-<br>DetailedReportsOnNewWindows=1
 
 <br><br><hr>
 
