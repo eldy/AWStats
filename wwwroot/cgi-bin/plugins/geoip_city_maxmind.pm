@@ -220,7 +220,8 @@ sub AddHTMLGraph_geoip_city_maxmind {
 #        print "</tr>\n";
     	foreach my $key (@keylist) {
             if ($key eq 'unknown') { next; }
-   		    my ($countrycode,$city)=split('_',$key);
+   		    my ($countrycode,$city)=split('_',$key,2);
+            $city=~tr/_/ /;
 #            if ($countrycode ne $country) { next; }
    			my $p_p; my $p_h;
    			if ($TotalPages) { $p_p=int($_city_p{$key}/$TotalPages*1000)/10; }
