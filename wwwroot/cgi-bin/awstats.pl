@@ -514,8 +514,9 @@ sub html_head {
 		else { print "<meta name=\"robots\" content=\"noindex,nofollow\" />\n"; }
 
 		# Affiche tag meta content-type
-		print ((! $UseXMLForOutput || $ENV{'HTTP_USER_AGENT'}=~/MSIE|Googlebot/i)?"<meta http-equiv=\"content-type\" content=\"text/html; charset=".($PageCode?$PageCode:"iso-8859-1")."\" />\n":"<meta http-equiv=\"content-type\" content=\"text/xml; charset=".($PageCode?$PageCode:"iso-8859-1")."\" />\n");
-		
+		if ($UseXMLForOutput) { print ($ENV{'HTTP_USER_AGENT'}=~/MSIE|Googlebot/i?"<meta http-equiv=\"content-type\" content=\"text/html; charset=".($PageCode?$PageCode:"iso-8859-1")."\" />\n":"<meta http-equiv=\"content-type\" content=\"text/xml; charset=".($PageCode?$PageCode:"iso-8859-1")."\" />\n"); }
+		else { print "<meta http-equiv=\"content-type\" content=\"text/html; charset=".($PageCode?$PageCode:"iso-8859-1")."\" />\n"; }
+
 		if ($Expires)  { print "<meta http-equiv=\"expires\" content=\"".(gmtime(time()+$Expires))."\" />\n"; }
 		print "<meta http-equiv=\"description\" content=\"".ucfirst($PROG)." - Advanced Web Statistics for $SiteDomain\" />\n";
 		if ($AllowIndex && $FrameName ne 'mainleft') { print "<meta http-equiv=\"keywords\" content=\"$SiteDomain, free, advanced, realtime, web, server, logfile, log, analyzer, analysis, statistics, stats, perl, analyse, performance, hits, visits\" />\n"; }
@@ -524,7 +525,8 @@ sub html_head {
 
 			# A STYLE section must be in head section. Do not use " for number in a style section
 			print "<style type=\"text/css\">\n";
-			print !$UseXMLForOutput?"<!--\n":"<![CDATA[\n";
+			if ($UseXMLForOutput) { print ($ENV{'HTTP_USER_AGENT'}=~/Firebird/i?"<!--\n":"<![CDATA[\n"); }
+			else { print "<!--\n"; }
 print "body { font: 11px verdana, arial, helvetica, sans-serif; background-color: #$color_Background; margin-top: 0; }\n";
 #print ".aws_bodyl  { ".(! $UseXMLForOutput?"background-image: url($DirIcons/other/backleft.png);":"")."background-repeat: repeat-y; }\n";
 print ".aws_bodyl  { }\n";
@@ -550,13 +552,14 @@ a:link    { color: #$color_link; text-decoration: none; }
 a:visited { color: #$color_link; text-decoration: none; }
 a:hover   { color: #$color_hover; text-decoration: underline; }
 EOF
-		# Call to plugins' function AddHTMLStyles
-		foreach my $pluginname (keys %{$PluginsLoaded{'AddHTMLStyles'}})  {
-			my $function="AddHTMLStyles_$pluginname()";
-			eval("$function");
-		}
-
-			print !$UseXMLForOutput?"//-->\n":"]]>\n";
+			# Call to plugins' function AddHTMLStyles
+			foreach my $pluginname (keys %{$PluginsLoaded{'AddHTMLStyles'}})  {
+				my $function="AddHTMLStyles_$pluginname()";
+				eval("$function");
+			}
+	
+			if ($UseXMLForOutput) { print ($ENV{'HTTP_USER_AGENT'}=~/Firebird/?"//-->\n":"]]>\n"); }
+			else { print "//-->\n"; }
 			print "</style>\n";
 
 			if ($StyleSheet) {
