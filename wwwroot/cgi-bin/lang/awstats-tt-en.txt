@@ -5,7 +5,7 @@ A new visits is defined as each new <b>incoming visitor</b> (viewing or browsing
 </DIV>
 <DIV CLASS="CTooltip" ID="tt2">
 Number of client hosts (<b>IP address</b>) who came to visit the site (and who viewed at least one <b>page</b>).<br>
-This data refers to the number of <b>different physical persons</b> who had reached the site in any one day.
+This data refers to the number of <b>different physical persons</b> who had reached the site.
 </DIV>
 <DIV CLASS="CTooltip" ID="tt3">
 Number of times a <b>page</b> of the site is <b>viewed</b> (Sum for all visitors for all visits).<br>
