@@ -9,8 +9,14 @@ New features/improvements:
 - None
 
 Fixes:
+- Fix security hole that allowed a user to read log file content even
+  when plugin rawlog was not enabled.
+- Fix a possible use of AWStats for a DoS attack.
+- configdir option was broken on windows servers.
 - Minor fixes
 
+Other/Documentation:
+- DebugMessages is by default set to 0 for security reasons.
 
 
 ***** 6.3 *****
