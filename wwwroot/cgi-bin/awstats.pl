@@ -937,6 +937,7 @@ sub Check_Config {
 	if (! $Message[104]) { $Message[104]="Entry pages"; }
 	if (! $Message[105]) { $Message[105]="Code"; }
 	if (! $Message[106]) { $Message[106]="Average size"; }
+	if (! $Message[107]) { $Message[107]="Links from a NewsGroup"; }
 }
 
 #--------------------------------------------------------------------
@@ -994,12 +995,14 @@ sub Read_History_File {
         if ($field[0] eq "From2") { $_from_p[2]+=$field[1]; $_from_h[2]+=$field[2]; next; }
         if ($field[0] eq "From3") { $_from_p[3]+=$field[1]; $_from_h[3]+=$field[2]; next; }
         if ($field[0] eq "From4") { $_from_p[4]+=$field[1]; $_from_h[4]+=$field[2]; next; }
-		# Next 5 lines are to read old awstats history files ("Fromx" section was "HitFromx" in such files)
+        if ($field[0] eq "From5") { $_from_p[5]+=$field[1]; $_from_h[5]+=$field[2]; next; }
+		# Next lines are to read old awstats history files ("Fromx" section was "HitFromx" in such files)
         if ($field[0] eq "HitFrom0") { $_from_p[0]+=0; $_from_h[0]+=$field[1]; next; }
         if ($field[0] eq "HitFrom1") { $_from_p[1]+=0; $_from_h[1]+=$field[1]; next; }
         if ($field[0] eq "HitFrom2") { $_from_p[2]+=0; $_from_h[2]+=$field[1]; next; }
         if ($field[0] eq "HitFrom3") { $_from_p[3]+=0; $_from_h[3]+=$field[1]; next; }
         if ($field[0] eq "HitFrom4") { $_from_p[4]+=0; $_from_h[4]+=$field[1]; next; }
+        if ($field[0] eq "HitFrom5") { $_from_p[5]+=0; $_from_h[5]+=$field[1]; next; }
 
 	    if ($field[0] eq "BEGIN_TIME")      {
 			&debug(" Begin of TIME section");
@@ -1624,7 +1627,8 @@ sub Save_History_File {
 	print HISTORYTMP "From1 ".int($_from_p[1])." ".int($_from_h[1])."\n";
 	print HISTORYTMP "From2 ".int($_from_p[2])." ".int($_from_h[2])."\n";
 	print HISTORYTMP "From3 ".int($_from_p[3])." ".int($_from_h[3])."\n";
-	print HISTORYTMP "From4 ".int($_from_p[4])." ".int($_from_h[4])."\n";
+	print HISTORYTMP "From4 ".int($_from_p[4])." ".int($_from_h[4])."\n";		# Same site
+	print HISTORYTMP "From5 ".int($_from_p[5])." ".int($_from_h[5])."\n";		# News
 	print HISTORYTMP "BEGIN_SEREFERRALS\n";
 	foreach my $key (keys %_se_referrals_h) { print HISTORYTMP "$key $_se_referrals_h{$key}\n"; next; }
 	print HISTORYTMP "END_SEREFERRALS\n";
@@ -1689,8 +1693,8 @@ sub Init_HashArray {
 	$HistoryFileAlreadyRead{"$year$month"}=0;
 	# Delete/Reinit all arrays with name beginning by _
 	@_msiever_h = @_nsver_h = ();
-	for (my $ix=0; $ix<5; $ix++) {	$_from_p[$ix]=0; $_from_h[$ix]=0; }
-	for (my $ix=0; $ix<=23; $ix++) { $_time_h[$ix]=0; $_time_k[$ix]=0; $_time_p[$ix]=0; }
+	for (my $ix=0; $ix<6; $ix++) {	$_from_p[$ix]=0; $_from_h[$ix]=0; }
+	for (my $ix=0; $ix<24; $ix++) { $_time_h[$ix]=0; $_time_k[$ix]=0; $_time_p[$ix]=0; }
 	# Delete/Reinit all hash arrays with name beginning by _
 	%_browser_h = %_domener_h = %_domener_k = %_domener_p = %_errors_h =
 	%_filetypes_h = %_filetypes_k = %_filetypes_gz_in = %_filetypes_gz_out =
@@ -2993,7 +2997,8 @@ if ($UpdateStats) {
 				# News Link ?
 				if (! $found && $refererprot =~ /^news/i) {
 					$found=1;
-					# TODO
+					if ($PageBool) { $_from_p[5]++; }
+			    	$_from_h[5]++;
 				}
 			}
 		}	
@@ -4088,25 +4093,29 @@ EOF
 		debug("ShowOriginStats",2);
 		print "$CENTER<a name=\"REFERER\">&nbsp;</a><BR>";
 		&tab_head($Message[36],19);
-		my @p_p=(0,0,0,0,0);
+		my @p_p=(0,0,0,0,0,0);
 		if ($TotalPages > 0) {
 			$p_p[0]=int($_from_p[0]/$TotalPages*1000)/10;
 			$p_p[1]=int($_from_p[1]/$TotalPages*1000)/10;
 			$p_p[2]=int($_from_p[2]/$TotalPages*1000)/10;
 			$p_p[3]=int($_from_p[3]/$TotalPages*1000)/10;
 			$p_p[4]=int($_from_p[4]/$TotalPages*1000)/10;
+			$p_p[5]=int($_from_p[5]/$TotalPages*1000)/10;
 		}
-		my @p_h=(0,0,0,0,0);
+		my @p_h=(0,0,0,0,0,0);
 		if ($TotalHits > 0) {
 			$p_h[0]=int($_from_h[0]/$TotalHits*1000)/10;
 			$p_h[1]=int($_from_h[1]/$TotalHits*1000)/10;
 			$p_h[2]=int($_from_h[2]/$TotalHits*1000)/10;
 			$p_h[3]=int($_from_h[3]/$TotalHits*1000)/10;
 			$p_h[4]=int($_from_h[4]/$TotalHits*1000)/10;
+			$p_h[5]=int($_from_h[5]/$TotalHits*1000)/10;
 		}
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[37]</TH><TH bgcolor=\"#$color_p\" width=80>$Message[56]</TH><TH bgcolor=\"#$color_p\" width=80>$Message[15]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[15]</TH></TR>\n";
 		#------- Referrals by direct address/bookmarks
 		print "<TR><TD CLASS=AWL><b>$Message[38]</b></TD><TD>$_from_p[0]&nbsp;</TD><TD>$p_p[0]&nbsp;%</TD><TD>$_from_h[0]&nbsp;</TD><TD>$p_h[0]&nbsp;%</TD></TR>\n";
+		#------- Referrals by news group
+		print "<TR><TD CLASS=AWL><b>$Message[107]</b></TD><TD>$_from_p[5]&nbsp;</TD><TD>$p_p[5]&nbsp;%</TD><TD>$_from_h[5]&nbsp;</TD><TD>$p_h[5]&nbsp;%</TD></TR>\n";
 		#------- Referrals by search engine
 		print "<TR onmouseover=\"ShowTooltip(13);\" onmouseout=\"HideTooltip(13);\"><TD CLASS=AWL><b>$Message[40]</b><br>\n";
 		print "<TABLE>\n";
