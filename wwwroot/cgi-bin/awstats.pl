@@ -192,14 +192,14 @@ $pos_referer = $pos_agent = $pos_query = $pos_gzipin = $pos_gzipout = $pos_gzipr
 $pos_emails = $pos_emailr = $pos_hostr = -1;
 use vars qw/
 $lowerval
-$FirstTime $LastTime $LastLine $LastUpdate
+$LastLine $LastUpdate
 $TotalUnique $TotalVisits $TotalHostsKnown $TotalHostsUnknown
 $TotalPages $TotalHits $TotalBytes $TotalEntries $TotalExits $TotalBytesPages $TotalDifferentPages
 $TotalKeyphrases $TotalKeywords $TotalDifferentKeyphrases $TotalDifferentKeywords
 $TotalSearchEngines $TotalRefererPages $TotalDifferentSearchEngines $TotalDifferentRefererPages
 /;
 $lowerval = 0;
-$FirstTime = $LastTime = $LastLine = $LastUpdate = 0;
+$LastLine = $LastUpdate = 0;
 $TotalUnique = $TotalVisits = $TotalHostsKnown = $TotalHostsUnknown = 0;
 $TotalPages = $TotalHits = $TotalBytes = $TotalEntries = $TotalExits = $TotalBytesPages = $TotalDifferentPages = 0;
 $TotalKeyphrases = $TotalKeywords = $TotalDifferentKeyphrases = $TotalDifferentKeywords = 0;
@@ -1549,11 +1549,10 @@ sub Read_History_With_TmpUpdate {
 	# Define value for filetowrite and filetoread (Month before Year kept for backward compatibility)
 	my $filetowrite="";
 	my $filetoread="";
-	if (-s "$DirData/$PROG$month$year$FileSuffix.tmp.$$" && $HistoryAlreadyFlushed{"$year$month"}) {
+	if ($HistoryAlreadyFlushed{"$year$month"} && -s "$DirData/$PROG$month$year$FileSuffix.tmp.$$") {
 		# tmp history file was already flushed
 		$filetoread="$DirData/$PROG$month$year$FileSuffix.tmp.$$";
 		$filetowrite="$DirData/$PROG$month$year$FileSuffix.tmp.$$.bis";
-		$HistoryAlreadyFlushed{"$year$month"}=1;
 	}
 	else {
 		$filetoread="$DirData/$PROG$DayRequired$month$year$FileSuffix.txt";	
@@ -2459,9 +2458,6 @@ sub Read_History_With_TmpUpdate {
 	}
 	%SectionsToSave=();
 
-	# Purge loaded data for month
-	if ($withpurge) { &Init_HashArray($year,$month); }
-
 	# Update last data in general section and close files
 	if ($withupdate) {
 		# Save last data in general sections
@@ -2481,12 +2477,21 @@ sub Read_History_With_TmpUpdate {
 		close(HISTORY) || error("Command for pipe '$filetoread' failed");
 	}
 
-	if ($HistoryAlreadyFlushed{"$year$month"}) {
-		if (rename($filetowrite,$filetoread)==0) {
-			error("Failed to update tmp history file $filetoread");
+	# Purge data
+	if ($withpurge) { &Init_HashArray(); }
+
+	# If update, rename tmp file bis into tmp file or set HistoryAlreadyFlushed
+	if ($withupdate) {
+		if ($HistoryAlreadyFlushed{"$year$month"}) {
+			if (rename($filetowrite,$filetoread)==0) {
+				error("Failed to update tmp history file $filetoread");
+			}
+		}
+		else {
+			$HistoryAlreadyFlushed{"$year$month"}=1;
 		}
 	}
-
+		
 	# For backward compatibility, if LastLine does not exist
 	if (! $LastLine) { $LastLine=$LastTime{$year.$month}; }
 
@@ -3037,15 +3042,18 @@ sub GetDelaySinceStart {
 
 #------------------------------------------------------------------------------
 # Function:     Reset all variables whose name start with _ because a new month start
-# Parameters:	year, month
-# Input:        All variables whose name start with _
+# Parameters:	None
+# Input:        $YearRequired All variables whose name start with _
 # Output:       All variables whose name start with _
 # Return:		None
 #------------------------------------------------------------------------------
 sub Init_HashArray {
-	my $year=sprintf("%04i",shift||0);
-	my $month=sprintf("%02i",shift||0);
-	if ($Debug) { debug("Call to Init_HashArray [$year,$month]"); }
+	if ($Debug) { debug("Call to Init_HashArray"); }
+	# Reset global hash arrays
+	%FirstTime = %LastTime = ();
+	%MonthVisits = %MonthUnique = ();
+	%MonthPages = %MonthHits = %MonthBytes = ();
+	%MonthHostsKnown = %MonthHostsUnknown = ();
 	# Reset all arrays with name beginning by _
 	for (my $ix=0; $ix<6; $ix++)  { $_from_p[$ix]=0; $_from_h[$ix]=0; }
 	for (my $ix=0; $ix<24; $ix++) { $_time_h[$ix]=0; $_time_k[$ix]=0; $_time_p[$ix]=0; }
@@ -3792,26 +3800,18 @@ foreach (grep /^$PROG(\d\d)(\d\d\d\d)$FileSuffix\.txt(|\.gz)$/, sort readdir DIR
 }
 close DIR;
 
-# Get FirstTime, LastTime, LastUpdate and LastLine
+# Get value for LastLine
 if ($lastyearbeforeupdate) {
-	# Read 'general' section of last history file for LastUpdate and LastLine
+	# Read 'general' section of last history file for LastLine
 	&Read_History_With_TmpUpdate($lastyearbeforeupdate,$ListOfYears{$lastyearbeforeupdate},0,0,"general");
 }
 if ($Debug) {
 	debug("Last year=$lastyearbeforeupdate - Last month=$ListOfYears{$lastyearbeforeupdate}");
 	debug("LastLine=$LastLine");
-	debug("LastUpdate=$LastUpdate");
 }
 
 # Init vars
-&Init_HashArray;	# Should be useless in perl (except with mod_perl that keep variables in memory)
-for (my $ix=1; $ix<=12; $ix++) {
-	my $monthix=sprintf("%02s",$ix);
-	$FirstTime{$YearRequired.$monthix}=0;$LastTime{$YearRequired.$monthix}=0;
-	$MonthVisits{$YearRequired.$monthix}=0;$MonthUnique{$YearRequired.$monthix}=0;
-	$MonthPages{$YearRequired.$monthix}=0;$MonthHits{$YearRequired.$monthix}=0;$MonthBytes{$YearRequired.$monthix}=0;
-	$MonthHostsKnown{$YearRequired.$monthix}=0;$MonthHostsUnknown{$YearRequired.$monthix}=0;
-}
+&Init_HashArray();
 
 
 #------------------------------------------
@@ -4771,10 +4771,7 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {	# Updat
 
 	# Save current processed month $lastprocessedmonth (if lastprocessedmonth is still 0, it means we found no valid lines in log file)
 	if ($lastprocessedmonth) {
-		my $withpurge=0;
-		if (($MonthRequired ne "year") && ($lastprocessedmonth != $MonthRequired)) { $withpurge=1; }	# Not a desired month (wrong month), so we purge data arrays
-		if (($MonthRequired eq "year") && ($lastprocessedyear != $YearRequired)) { $withpurge=1; }		# Not a desired month (wrong year), so we purge data arrays
-		&Read_History_With_TmpUpdate($lastprocessedyear,$lastprocessedmonth,1,$withpurge,"all");	# We save data for this month,year
+		&Read_History_With_TmpUpdate($lastprocessedyear,$lastprocessedmonth,1,1,"all");
 	}
 
 	# Process the Rename - Archive - Purge phase
@@ -4913,15 +4910,10 @@ EOF
 	
 		# READING DATA
 		#-------------
+
+		&Init_HashArray();
+
 		# Loop on each month of year
-		&Init_HashArray;
-		for (my $ix=1; $ix<=12; $ix++) {
-			my $monthix=sprintf("%02s",$ix);
-			$FirstTime{$YearRequired.$monthix}=0;$LastTime{$YearRequired.$monthix}=0;
-			$MonthVisits{$YearRequired.$monthix}=0;$MonthUnique{$YearRequired.$monthix}=0;
-			$MonthPages{$YearRequired.$monthix}=0;$MonthHits{$YearRequired.$monthix}=0;$MonthBytes{$YearRequired.$monthix}=0;
-			$MonthHostsKnown{$YearRequired.$monthix}=0;$MonthHostsUnknown{$YearRequired.$monthix}=0;
-		}
 		for (my $ix=12; $ix>=1; $ix--) {
 			my $monthix=sprintf("%02s",$ix);
 			if ($MonthRequired eq "year" || $monthix eq $MonthRequired) {
@@ -5087,7 +5079,9 @@ EOF
 	}
 
 	# FirstTime LastTime TotalVisits TotalUnique TotalPages TotalHits TotalBytes TotalHostsKnown TotalHostsUnknown
-	$FirstTime=$LastTime=$TotalUnique=$TotalVisits=$TotalPages=$TotalHits=$TotalBytes=$TotalHostsKnown=$TotalHostsUnknown=0;
+	my $FirstTime=0;
+	my $LastTime=0;
+	$TotalUnique=$TotalVisits=$TotalPages=$TotalHits=$TotalBytes=$TotalHostsKnown=$TotalHostsUnknown=0;
 	my $beginmonth=$MonthRequired;my $endmonth=$MonthRequired;
 	if ($MonthRequired eq "year") { $beginmonth=1;$endmonth=12; }
 	for (my $month=$beginmonth; $month<=$endmonth; $month++) {
@@ -6833,24 +6827,40 @@ else {
 # ALGORITHM SUMMARY
 # Read config file
 # Init variables
+#
+# If 'migrate'
+#   We create/update tmp file with
+#     &Read_History_With_TmpUpdate(year,month,UPDATE,NOPURGE,"all");
+#   Rename the tmp file
+# End of 'migrate'
+#
 # Get last history file name
-# Read general section of this last history file
+# Get value for LastLine with
+#	&Read_History_With_TmpUpdate(lastyear,lastmonth,NOUPDATE,NOPURGE,"general");
+#
+# &Init_HashArray()
+#
 # If 'update'
 #   Loop on each new line in log file
 #     If line older than LastLine, skip
 #     If new line
-#        If other month/year
-#          Read/update history file
-#          Reset data arrays
+#        If other month/year, create/update tmp file and purge data arrays with
+#          &Read_History_With_TmpUpdate(lastprocessedyear,lastprocessedmonth,UPDATE,PURGE,"all");
 #        Analyse record and complete data arrays
+#        If too many records, we flush data arrays with
+#          &Read_History_With_TmpUpdate($lastprocessedyear,$lastprocessedmonth,UPDATE,PURGE,"all");
 #     End of new line
 #   End of loop
-#   Read/update history file
+#   Create/update tmp file 
+#	  &Read_History_With_TmpUpdate($lastprocessedyear,$lastprocessedmonth,UPDATE,PURGE,"all")
+#   Rename all tmp files
 # End of 'update'
+#
+# &Init_HashArray()
+#
 # If 'output'
-#   Loop for each month of current year
-#     If required month, read all need sections
-#     If not required month, read general and time section only
+#   Loop for each month of required year
+#     &Read_History_With_TmpUpdate($YearRequired,monthloop,NOUPDATE,NOPURGE,"all" or "general time" if not required month)
 #   End of loop
 #   Show data arrays in HTML page
 # End of 'output'
