@@ -602,13 +602,20 @@ if ($bidon =~ /^y/i) {
 	# Define config file path
 	# -----------------------
 	if ($OS eq 'linux') 		{
-		my $configdir="/etc/awstats";
+		print "\n-----> Define config file path\n";
+		print "In which directory do you plan to store your config file(s) ?\n";
+		print "Default: /etc/awstats\n";
+		my $bidon='';
+		print "Directory path to store config file(s) (Enter for default):\n> ";
+		$bidon=<STDIN>; chomp $bidon;
+		if (! $bidon) { $bidon = "/etc/awstats"; }
+		my $configdir=$bidon;
 		if (! -d $configdir) {
 			# Create the directory for config files
 			my $mkdirok=mkdir "$configdir", 0755;
 			if (! $mkdirok) { error("Failed to create directory '$configdir', required to store config files."); }
 		}
-		$configfile="/etc/awstats/awstats.$site.conf";
+		$configfile="$configdir/awstats.$site.conf";
 	}
 	elsif ($OS eq "macosx") 	{ $configfile="$AWSTATS_PATH/wwwroot/cgi-bin/awstats.$site.conf"; }
 	elsif ($OS eq 'windows') 	{ $configfile="$AWSTATS_PATH\\wwwroot\\cgi-bin\\awstats.$site.conf"; }
