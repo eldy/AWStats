@@ -205,6 +205,7 @@ it with its value when reading it), follow the example:<br>
 %query,%code,%bytesd,%refererquot,%referer,%uaquot,%ua,%other<br>
 3.2 for tags %gzipin,%gzipout<br>
 4.0 for tags %gzipratio,%syslog<br>
+4.1 for tag  %virtualname<br>
 <br># Put here your log format (Must agree with your web server. See setup
 <br># instructions in README.txt to know how to configure your web server to have
 <br># the required log format).
@@ -236,6 +237,9 @@ it with its value when reading it), follow the example:<br>
 <br>#     %gzipout          Mod_gzip compression output bytes & ratio: Out:YYY:ZZZpct.
 <br>#     %gzipratio        Mod_gzip compression ratio: ZZZpct.
 <br>#     %syslog           Syslog-specific time and host stamp with format: Mon ddhh:mm:ss hostname
+<br>#     %virtualname      Web sever virtual hostname. Use this tag when same log
+<br>#                       file contains data of several virtual web servers. The
+<br>#                       SiteDomain will be used to filter the one you want.
 <br>#     If your log format has some fields not included in this list, use
 <br>#     %other            Means another field
 <br>#
@@ -308,12 +312,17 @@ it with its value when reading it), follow the example:<br>
 <b>Version : </b>3.2 +<br>
 <br># "SiteDomain" must contain the main domain name or the main intranet web
 <br># server name used to reach the web site.
-<br># This parameter is only used to generate full URLs links when ShowLinksOnUrl
-<br># option is set to 1.
+<br># If you share the same log file for several virtual web servers, this
+<br># parameter is used to tell AWStats to filter record that contains records for
+<br># this virtual host name only (So check that this virtual hostname can be
+<br># found in your log file and use a personalized log format that include the
+<br># %virtualname tag).
+<br># But for multi hosting a better solution is to have one log file for each
+<br># virtual web server. In this case, this parameter is only used to generate
+<br># full URL's links when ShowLinksOnUrl option is set to 1.
 <br># Example: "www.mysite.com"
 <br># Example: "user.mydomain.com"
 <br># Example: "myintranetserver"
-<br># Default: ""
 <br>#
 <br>SiteDomain=""
 
