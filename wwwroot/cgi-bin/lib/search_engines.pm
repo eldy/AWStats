@@ -83,9 +83,18 @@
 "search\..*com"
 );
 
+# SearchEnginesSearchIDOrder
+# This list is used to know in which order to search Search Engines IDs (Most
+# frequent one are first in this list to increase detect speed).
+# Note: Browsers IDs are in lower case and ' ' and '+' are changed into '_'
+#-----------------------------------------------------------------
+@NotSearchEnginesSearchIDOrder=(
+"hotmail.msn.com"
+);
+
 
 # SearchEnginesKnownUrl
-# Search engines known rules to extract keywords from a referrer URL
+# Known rules to extract keywords from a referrer search engine URL
 #-------------------------------------------------
 %SearchEnginesKnownUrl=(
 # Most common search engines
@@ -152,6 +161,13 @@
 "atlas\.cz","searchtext=", "seznam\.cz","w=", "ftxt\.quick\.cz","query=", "centrum\.cz","q=", "najdi\.to","dotaz=", "redbox.cz","srch="
 );
 
+# SearchEnginesKnownUrlNotFound
+# Known rules to extract not found keywords from a referrer search engine URL
+#-------------------------------------------------
+%SearchEnginesKnownUrlNotFound=(
+# Most common search engines
+"msn\.","origq="
+);
 
 # If no rules are known, this will be used to search keyword parameter
 @WordsToExtractSearchUrl= ("ask=","claus=","general=","key=","kw=","keyword=","keywords=","MT=","p=","q=","qr=","qt=","query=","s=","search=","searchText=","string=","su=","txtsearch=","w=");
