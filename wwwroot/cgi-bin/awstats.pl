@@ -3031,7 +3031,7 @@ sub Save_History {
 		print HISTORYTMP "# for direct I/O access. If you made changes somewhere in this file, you\n";
 		print HISTORYTMP "# should also remove completely the MAP section (AWStats will rewrite it\n";
 		print HISTORYTMP "# at next update).\n";
-		print HISTORYTMP "BEGIN_MAP ".(24+(scalar keys %TrapInfosForHTTPErrorCodes)+(scalar @ExtraName?scalar @ExtraName-1:0))."\n";
+		print HISTORYTMP "BEGIN_MAP ".(25+(scalar keys %TrapInfosForHTTPErrorCodes)+(scalar @ExtraName?scalar @ExtraName-1:0))."\n";
 		print HISTORYTMP "POS_GENERAL ";$PosInFile{"general"}=tell HISTORYTMP;print HISTORYTMP "$spacebar\n";
 		# When
 		print HISTORYTMP "POS_TIME ";$PosInFile{"time"}=tell HISTORYTMP;print HISTORYTMP "$spacebar\n";
@@ -3058,6 +3058,7 @@ sub Save_History {
 		print HISTORYTMP "POS_SEREFERRALS ";$PosInFile{"sereferrals"}=tell HISTORYTMP;print HISTORYTMP "$spacebar\n";
 		print HISTORYTMP "POS_PAGEREFS ";$PosInFile{"pagerefs"}=tell HISTORYTMP;print HISTORYTMP "$spacebar\n";
 		print HISTORYTMP "POS_SEARCHWORDS ";$PosInFile{"searchwords"}=tell HISTORYTMP;print HISTORYTMP "$spacebar\n";
+		print HISTORYTMP "POS_MISC ";$PosInFile{"misc"}=tell HISTORYTMP;print HISTORYTMP "$spacebar\n";
 		print HISTORYTMP "POS_KEYWORDS ";$PosInFile{"keywords"}=tell HISTORYTMP;print HISTORYTMP "$spacebar\n";
 		# Others
 		print HISTORYTMP "POS_ERRORS ";$PosInFile{"errors"}=tell HISTORYTMP;print HISTORYTMP "$spacebar\n";
@@ -3495,6 +3496,14 @@ sub Save_History {
 	}
 
 	# Other - Errors
+	if ($sectiontosave eq 'misc') {
+		print HISTORYTMP "\n";
+		print HISTORYTMP "# Misc ID - Pages - Hits - Bandwidth\n";
+		$ValueInFile{$sectiontosave}=tell HISTORYTMP;
+		print HISTORYTMP "BEGIN_MISC ".(scalar keys %_misc_h)."\n";
+		foreach my $key (keys %_misc_h) { print HISTORYTMP "$key ".int($_misc_p{$key}||0)." $_misc_h{$key} ".int($_misc_k{$key}||0)."\n"; }
+		print HISTORYTMP "END_MISC\n";
+	}
 	if ($sectiontosave eq 'errors') {
 		print HISTORYTMP "\n";
 		print HISTORYTMP "# Errors - Hits - Bandwidth\n";
@@ -5218,12 +5227,13 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 		#----------------------------------------
 		if ($timerecord > $LastLine) { $LastLine = $timerecord; }	# Test should always be true except with not sorted log files
 
-		# TODO. Add robot in a list if URL is robots.txt (Note: robot referer value can be same than a normal browser)
-
-
-
+		# Skip for robot init
+		if ($field[$pos_url] =~ /^\/robots.txt$/i) {
+			# TODO. Add robot in a list if URL is robots.txt (Note: robot referer value can be same than a normal browser)
+			$qualifdrop="Dropped record (URL $field[$pos_url] is a robot init check)";
+		}
 		# Skip for some client host IP addresses, some URLs, other URLs
-		if    (@SkipHosts && (&SkipHost($field[$pos_host]) || ($pos_hostr && &SkipHost($field[$pos_host]))))   { $qualifdrop="Dropped record (host $field[$pos_host] not qualified by SkipHosts)"; }
+		elsif (@SkipHosts && (&SkipHost($field[$pos_host]) || ($pos_hostr && &SkipHost($field[$pos_host]))))   { $qualifdrop="Dropped record (host $field[$pos_host] not qualified by SkipHosts)"; }
 		elsif (@SkipFiles && &SkipFile($field[$pos_url]))    { $qualifdrop="Dropped record (URL $field[$pos_url] not qualified by SkipFiles)"; }
 		elsif (@OnlyHosts && ! &OnlyHost($field[$pos_host]) && (! $pos_hostr || ! &OnlyHost($field[$pos_hostr]))) { $qualifdrop="Dropped record (host $field[$pos_host]".($pos_hostr?" and $field[$pos_hostr]":"")." not qualified by OnlyHosts)"; } 
 		elsif (@OnlyFiles && ! &OnlyFile($field[$pos_url]))  { $qualifdrop="Dropped record (URL $field[$pos_url] not qualified by OnlyFiles)"; }
@@ -5264,6 +5274,9 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 			}
 			elsif ($field[$pos_url] =~ /w=(\d+)&h=(\d+)/) { $_screensize_h{"$1x$2"}++; next; }
 		}
+		# Check favicon
+		#-----------------------------------------------
+		elsif ($field[$pos_url] =~ /\/favicon\.ico$/i) { $_misc_h{'AddToFavourites'}++; next; }
 		
 		# Check return status code
 		#-------------------------
@@ -8808,11 +8821,11 @@ if (scalar keys %HTMLOutput) {
 			print "$Center<a name=\"MISC\">&nbsp;</a><BR>\n";
 			my $title="$Message[139]";
 			&tab_head("$title",19);
-			print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[139]</TH><TH>&nbsp</TH></TR>\n";
+			print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[139]</TH><TH width=80>&nbsp</TH></TR>\n";
 			foreach my $key (keys %_misc_h) {
 				print "<TR>";
-				print "<TD>$key</TD>";
-				print "<TD CLASS=AWS>$_misc_h{$key}</TD>";
+				print "<TD CLASS=AWS>$key</TD>";
+				print "<TD>$_misc_h{$key} / $TotalVisits</TD>";
 				print "</TR>\n";
 			}
 			&tab_end;
