@@ -87,7 +87,7 @@ $word, $yearcon, $yearfile, $yearmonthfile, $yeartoprocess) = ();
 @sortsearchwords = @sortsereferrals = @sortsider404 = @sortsiders = @sortunknownip =
 @sortunknownreferer = @sortunknownrefererbrowser = @wordlist = ();
 
-$VERSION="2.5 (build 13)";
+$VERSION="2.5 (build 14)";
 $Lang=0;
 
 # Default value
@@ -1524,7 +1524,7 @@ DIV { font: 12px arial,verdana,helvetica; text-align:justify; }
 .TABLEFRAME { background-color: #$color_TableBG; }
 .TABLEDATA { background-color: #$color_Background; }
 .TABLETITLE { font: bold 16px verdana, arial, helvetica, sans-serif; color: #$color_TableTitle; background-color: #$color_TableBGTitle; }
-.CTooltip { position:absolute; top:0px; left:0px; z-index:2; width:280; visibility:hidden; font: 8pt MS Comic Sans,arial,sans-serif; background-color:#FFFFE6; padding: 8px 8px; border: 1px solid black; }
+.CTooltip { position:absolute; top:0px; left:0px; z-index:2; width:280; visibility:hidden; font: 8pt MS Comic Sans,arial,sans-serif; background-color:#FFFFE6; padding: 8px; border: 1px solid black; }
 //-->
 </STYLE>\n
 ";
@@ -3185,31 +3185,31 @@ if ($Lang == 6) {
 # Korean tooltips
 if ($Lang == 10) {
 	print "
-	<DIV CLASS=\"classTooltip\" ID=\"tt1\">
+	<DIV CLASS=\"CTooltip\" ID=\"tt1\">
 	새로운 방문은 이전에(<b>\".($VisitTimeOut/10000*60).\" 분이내</b>)
 	당신의 사이트에 접속하지 않은(보거나 브라우징 하지 않은) 새로운
 	<b>방문자</b>를 나타냅니다.
 	</DIV>
-	<DIV CLASS=\"classTooltip\" ID=\"tt2\">
+	<DIV CLASS=\"CTooltip\" ID=\"tt2\">
 	클라이언트 호스트 수(<b>IP 주소</b>)는 방문한 사이트 수를 나타냅니다.(최소한 <b>한 페이지</b>라도 본 사이트)<br>
 	이 자료는 일별 <b>물리적으로 다른 사용자</b>수를 나타냅니다.
 	</DIV>
-	<DIV CLASS=\"classTooltip\" ID=\"tt3\">
+	<DIV CLASS=\"CTooltip\" ID=\"tt3\">
 	사이트에서 <b>본(view) 페이지</b> 회수를 나타냅니다.
 	(모든 방문자의 함)<br>
         이 자료는 이미지, 파일과 달리 HTML 페이지에서의 \"조회수(hit)\"와는 다릅니다.
 	</DIV>
-	<DIV CLASS=\"classTooltip\" ID=\"tt4\">
+	<DIV CLASS=\"CTooltip\" ID=\"tt4\">
 	<b>페이지, 이미지, 파일</b>을 <b>보거나 다운로드</b>한 회수를 나타냅니다.<br>
 	이 자료는 참조용으로만 제공됩니다. 왜냐하면 본 \"페이지\"는 종종 시장조사 목적으로 사용될 수 있기 때문입니다.
 	</DIV>
-	<DIV CLASS=\"classTooltip\" ID=\"tt5\">
+	<DIV CLASS=\"CTooltip\" ID=\"tt5\">
 	이 정보들은 다운로드한 모든 <b>페이지</b>, <b>이미지</b>, <b>파일</b> 들을 Kb단위로 나타냅니다.
 	</DIV>
-	<DIV CLASS=\"classTooltip\" ID=\"tt13\">
+	<DIV CLASS=\"CTooltip\" ID=\"tt13\">
 	$PROG 는 <b>".(@SearchEnginesArray)."</b>의 <b>검색</b>으로 당신의 사이트에 대한 접근을 식별할 수 있습니다.
 	</DIV>
-	<DIV CLASS=\"classTooltip\" ID=\"tt14\">
+	<DIV CLASS=\"CTooltip\" ID=\"tt14\">
 	당신의 사이트에 링크된 모든 <b>외부 페이지</b><br>
 	(<b>$MaxNbOfRefereShown</b>는 가장 자주 사용되는 외부 페이지를 나타냅니다.)
         검색 엔진에 의한 결과페이지에 사용된 링크는 여기에서 제외됩니다.
@@ -3249,27 +3249,33 @@ if ($Lang == 10) {
 	";
 }
 
-
-
+# document.body.scrollHeight = Height of full page
+# document.body.offsetHeight = Height of visible part of page
+# document.body.scrollTop || document.body.offsetTop = Pos of top of visible part in full page
+# event.clientX and event.clientY = Relative pos of mouse cursor
+# event.clientX and tooltipOBJ.style.pixelLeft doesn't work with Netscape
 print "
-<SCRIPT JavaScript>
-	function ShowTooltip(fArg)
-	{
-		var tooltipOBJ = eval(\"document.all['tt\" + fArg + \"']\");
-		var tooltipOffsetTop = tooltipOBJ.scrollHeight + 35;
-		var testTop = (document.body.scrollTop + event.clientY) - tooltipOffsetTop;
-		var testLeft = event.clientX - 310;
-		var tooltipAbsLft = (testLeft < 0) ? 10 : testLeft;
-		var tooltipAbsTop = (testTop < document.body.scrollTop) ? document.body.scrollTop + 10 : testTop;
-		tooltipOBJ.style.posLeft = tooltipAbsLft; tooltipOBJ.style.posTop = tooltipAbsTop;
-		tooltipOBJ.style.visibility = \"visible\";
+<script type=\"text/javascript\">
+  function ShowTooltip(fArg)
+  {
+    var tooltipOBJ = (document.getElementById) ? document.getElementById('tt' + fArg) : eval(\"document.all['tt\" + fArg + \"']\");
+    var tooltipLft = (document.body.offsetWidth - (tooltipOBJ.scrollWidth?tooltipOBJ.scrollWidth:(tooltipOBJ.style.pixelWidth?tooltipOBJ.style.pixelWidth:300)) - 30);
+    var tooltipTop = (document.body.scrollTop?document.body.scrollTop:document.body.offsetTop)+10;
+	if (navigator.appName != 'Netscape') {
+		if ((event.clientX > tooltipLft) && (event.clientY < (tooltipOBJ.scrollHeight?tooltipOBJ.scrollHeight:tooltipOBJ.style.pixelHeight) + 10)) {
+			tooltipTop = (document.body.scrollTop?document.body.scrollTop:document.body.offsetTop) + event.clientY + 20;
+		}
 	}
-	function HideTooltip(fArg)
-	{
-		var tooltipOBJ = eval(\"document.all['tt\" + fArg + \"']\");
-		tooltipOBJ.style.visibility = \"hidden\";
-	}
-</SCRIPT>
+    tooltipOBJ.style.pixelLeft = tooltipLft;
+    tooltipOBJ.style.pixelTop = tooltipTop;
+    tooltipOBJ.style.visibility = \"visible\";
+  }
+  function HideTooltip(fArg)
+  {
+    var tooltipOBJ = (document.getElementById) ? document.getElementById('tt' + fArg) : eval(\"document.all['tt\" + fArg + \"']\");
+    tooltipOBJ.style.visibility = \"hidden\";
+  }
+</script>
 
 ";
 
