@@ -1,8 +1,9 @@
-#!c:/program files/activeperl/bin/perl
 #!/usr/bin/perl
+#!c:/program files/activeperl/bin/perl
 # With some other Unix Os, first line might be
 #!/usr/local/bin/perl
 # With Apache for Windows and ActiverPerl, first line might be
+#!c:/program files/activeperl/bin/perl
 # use diagnostics;
 # use strict;
 #-Description-------------------------------------------
@@ -23,8 +24,8 @@
 ($ArchiveFileName, $ArchiveLogRecords, $BarHeight, $BarWidth,
 $DIR, $DNSLookup, $DefaultFile, $DirCgi, $DirConfig, $DirData,
 $DirIcons, $Extension, $FileConfig, $FileSuffix, $FirstTime,
-$HTMLEndSection, $Host, $HostAlias, $LastTime, $LastUpdate, $LocalSite,
-$LocalSiteIsInHostAliases, $LocalSiteWithoutwww, $LogFile,
+$HTMLEndSection, $Host, $HostAlias, $LastTime, $LastUpdate, $SiteToAnalyze,
+$SiteToAnalyzeIsInHostAliases, $SiteToAnalyzeWithoutwww, $LogFile,
 $LogFormat, $Logo, $MaxNbOfHostsShown, $MaxNbOfKeywordsShown,
 $MaxNbOfPageShown, $MaxNbOfRefererShown, $MaxNbOfRobotShown, $MinHitFile,
 $MinHitHost, $MinHitKeyword, $MinHitRefer, $MinHitRobot, $MonthRequired,
@@ -65,7 +66,7 @@ $word, $yearcon, $yearfile, $yearmonthfile, $yeartoprocess) = ();
 @sortsearchwords = @sortsereferrals = @sortsider404 = @sortsiders = @sortunknownip =
 @sortunknownreferer = @sortunknownrefererbrowser = @wordlist = ();
 
-$VERSION="2.5 (build 5)";
+$VERSION="2.5 (build 6)";
 $Lang=0;
 
 # Default value
@@ -1394,10 +1395,10 @@ sub html_head {
 	print "<html>\n";
 	print "<head>\n";
 	if ($PageCode[$Lang] ne "") { print "$PageCode[$Lang]\n"; }		# If not defined, iso-8859-1 is used in major countries
-	print "<meta http-equiv=\"description\" content=\"$PROG - Advanced Web Statistics for $LocalSite\">\n";
-	print "<meta http-equiv=\"keywords\" content=\"$LocalSite, free, advanced, realtime, web, server, logfile, log, analyzer, analysis, statistics, stats, perl, analyse, performance, hits, visits\">\n";
+	print "<meta http-equiv=\"description\" content=\"$PROG - Advanced Web Statistics for $SiteToAnalyze\">\n";
+	print "<meta http-equiv=\"keywords\" content=\"$SiteToAnalyze, free, advanced, realtime, web, server, logfile, log, analyzer, analysis, statistics, stats, perl, analyse, performance, hits, visits\">\n";
 	print "<meta name=\"robots\" content=\"index,follow\">\n";
-	print "<title>$message[7][$Lang] $LocalSite</title>\n";
+	print "<title>$message[7][$Lang] $SiteToAnalyze</title>\n";
 	print "<STYLE TYPE=text/css>
 <!--
 	BODY { font-family: arial, verdana, helvetica, sans-serif; font: 12px arial,verdana,helvetica; background-color:$color_Background; }
@@ -1511,9 +1512,9 @@ sub SkipFile {
 
 sub Read_Config_File {
 	$FileConfig="";$DirConfig=$DIR;if (($DirConfig ne "") && (!($DirConfig =~ /\/$/)) && (!($DirConfig =~ /\\$/)) ) { $DirConfig .= "/"; }
-	if (open(CONFIG,"$DirConfig$PROG.$LocalSite.conf")) { $FileConfig="$DirConfig$PROG.$LocalSite.conf"; $FileSuffix=".$LocalSite"; }
+	if (open(CONFIG,"$DirConfig$PROG.$SiteToAnalyze.conf")) { $FileConfig="$DirConfig$PROG.$SiteToAnalyze.conf"; $FileSuffix=".$SiteToAnalyze"; }
 	if ($FileConfig eq "") { if (open(CONFIG,"$DirConfig$PROG.conf"))  { $FileConfig="$DirConfig$PROG.conf"; $FileSuffix=""; } }
-	if ($FileConfig eq "") { $FileConfig="$PROG.conf"; error("Error: Couldn't open config file \"$PROG.$LocalSite.conf\" nor \"$PROG.conf\" : $!"); }
+	if ($FileConfig eq "") { error("Error: Couldn't open config file \"$PROG.$SiteToAnalyze.conf\" nor \"$PROG.conf\" : $!"); }
 	&debug("Call to Read_Config_File [FileConfig=\"$FileConfig\"]");
 	while (<CONFIG>) {
 		chomp $_; s/\r//;
@@ -1775,7 +1776,6 @@ sub Save_History_File {
 	print HISTORYTMP "FirstTime $FirstTime{$_[0].$_[1]}\n";
 	print HISTORYTMP "LastTime $LastTime{$_[0].$_[1]}\n";
 	if ($LastUpdate{$_[0].$_[1]} lt "$nowyear$nowmonth$nowday$nowhour$nowmin") { $LastUpdate{$_[0].$_[1]}="$nowyear$nowmonth$nowday$nowhour$nowmin"; }
-	&debug("X $LastUpdate{$_[0].$_[1]} $nowyear$nowmonth$nowday$nowhour$nowmin");
 	print HISTORYTMP "LastUpdate $LastUpdate{$_[0].$_[1]}\n";
 	print HISTORYTMP "TotalVisits $MonthVisits{$_[0].$_[1]}\n";
 
@@ -1882,30 +1882,28 @@ sub Init_HashArray {
 if ($ENV{"GATEWAY_INTERFACE"} ne "") {	# Run from a browser
 	print("Content-type: text/html\n\n\n");
 	$QueryString = $ENV{"QUERY_STRING"};
-	$QueryString =~ s/<script.*$//i;					# This is to avoid 'Cross Site Scripting attacks'
-	if ($QueryString =~ /site=/) { $LocalSite=$QueryString; $LocalSite =~ s/.*site=//; $LocalSite =~ s/&.*//; $LocalSite =~ s/ .*//; }
-	if ($QueryString =~ /conf=/) { $LocalSite=$QueryString; $LocalSite =~ s/.*conf=//; $LocalSite =~ s/&.*//; $LocalSite =~ s/ .*//; }
-	if ($LocalSite eq "") { $LocalSite = $ENV{"SERVER_NAME"}; }
+	$QueryString =~ s/<script.*$//i;						# This is to avoid 'Cross Site Scripting attacks'
+	if ($QueryString =~ /site=/) { $SiteToAnalyze=$QueryString; $SiteToAnalyze =~ s/.*site=//; $SiteToAnalyze =~ s/&.*//; $SiteToAnalyze =~ s/ .*//; }
 	$UpdateStats=0;	if ($QueryString =~ /update=1/i) { $UpdateStats=1; }	# No update by default when run from a browser
 }
 else {	# Run from command line
-	if ($ARGV[0] eq "-h") { $LocalSite = $ARGV[1]; }	# Kept for backward compatibility but useless
+	if ($ARGV[0] eq "-h") { $SiteToAnalyze = $ARGV[1]; }	# Kept for backward compatibility but useless
 	$QueryString=""; for (0..@ARGV-1) { $QueryString .= "$ARGV[$_] "; }
-	$QueryString =~ s/<script.*$//i;					# This is to avoid 'Cross Site Scripting attacks'
-	if ($QueryString =~ /site=/) { $LocalSite=$QueryString; $LocalSite =~ s/.*site=//; $LocalSite =~ s/&.*//; $LocalSite =~ s/ .*//; }
-	if ($QueryString =~ /conf=/) { $LocalSite=$QueryString; $LocalSite =~ s/.*conf=//; $LocalSite =~ s/&.*//; $LocalSite =~ s/ .*//; }
+	$QueryString =~ s/<script.*$//i;						# This is to avoid 'Cross Site Scripting attacks'
+	if ($QueryString =~ /site=/) { $SiteToAnalyze=$QueryString; $SiteToAnalyze =~ s/.*site=//; $SiteToAnalyze =~ s/&.*//; $SiteToAnalyze =~ s/ .*//; }
 	$UpdateStats=1;	if ($QueryString =~ /update=0/i) { $UpdateStats=0; }	# Update by default when run from command line
 }
 if ($QueryString =~ /debug=/i) { $Debug=$QueryString; $Debug =~ s/.*debug=//; $Debug =~ s/&.*//; $Debug =~ s/ .*//; }
 ($DIR=$0) =~ s/([^\/\\]*)$//; ($PROG=$1) =~ s/\.([^\.]*)$//; $Extension=$1;
-$LocalSite =~ tr/A-Z/a-z/;
-$LocalSiteWithoutwww = $LocalSite; $LocalSiteWithoutwww =~ s/www\.//;
-if (($ENV{"GATEWAY_INTERFACE"} eq "") && ($LocalSite eq "")) {
+if ($SiteToAnalyze eq "") { $SiteToAnalyze = $ENV{"SERVER_NAME"}; }
+$SiteToAnalyze =~ tr/A-Z/a-z/;
+$SiteToAnalyzeWithoutwww = $SiteToAnalyze; $SiteToAnalyzeWithoutwww =~ s/www\.//;
+if (($ENV{"GATEWAY_INTERFACE"} eq "") && ($SiteToAnalyze eq "")) {
 	print "----- $PROG $VERSION (c) Laurent Destailleur -----\n";
 	print "$PROG is a free web server logfile analyzer (in Perl) to show you advanced\n";
 	print "web statistics. Distributed under GNU General Public Licence.\n";
 	print "\n";
-	print "Syntax: $PROG.$Extension conf=www.host.com\n";
+	print "Syntax: $PROG.$Extension site=www.host.com\n";
 	print "  This runs $PROG in command line to update statistics of a web site, from\n";
 	print "  the log file defined in config file, and returns an HTML report.\n";
 	print "  First, $PROG tries to read $PROG.www.host.com.conf as the config file,\n";
@@ -1977,17 +1975,17 @@ if ($YearRequired !~ /^[\d][\d][\d][\d]$/) { $YearRequired=$nowyear; }
 if ($QueryString =~ /month=/i)	{ $MonthRequired=$QueryString; $MonthRequired =~ s/.*month=//; $MonthRequired =~ s/&.*//; $MonthRequired =~ s/ .*//; }
 if ($MonthRequired ne "year" && $MonthRequired !~ /^[\d][\d]$/) { $MonthRequired=$nowmonth; }
 
-$BrowsersHash{"netscape"}="<font color=blue>Netscape</font> <a href=\"$DirCgi$PROG.$Extension?action=browserdetail&conf=$LocalSite&year=$YearRequired&month=$MonthRequired&lang=$Lang\">($message[58][$Lang])</a>";
-$BrowsersHash{"msie"}="<font color=blue>MS Internet Explorer</font> <a href=\"$DirCgi$PROG.$Extension?action=browserdetail&conf=$LocalSite&year=$YearRequired&month=$MonthRequired&lang=$Lang\">($message[58][$Lang])</a>";
+$BrowsersHash{"netscape"}="<font color=blue>Netscape</font> <a href=\"$DirCgi$PROG.$Extension?action=browserdetail&site=$SiteToAnalyze&year=$YearRequired&month=$MonthRequired&lang=$Lang\">($message[58][$Lang])</a>";
+$BrowsersHash{"msie"}="<font color=blue>MS Internet Explorer</font> <a href=\"$DirCgi$PROG.$Extension?action=browserdetail&site=$SiteToAnalyze&year=$YearRequired&month=$MonthRequired&lang=$Lang\">($message[58][$Lang])</a>";
 
 if (@HostAliases == 0) {
-	warning("Warning: HostAliases parameter is not defined, $PROG will choose \"$LocalSite localhost 127.0.0.1\".");
-	$HostAliases[0]=$LocalSite; $HostAliases[1]="localhost"; $HostAliases[2]="127.0.0.1";
+	warning("Warning: HostAliases parameter is not defined, $PROG will choose \"$SiteToAnalyze localhost 127.0.0.1\".");
+	$HostAliases[0]=$SiteToAnalyze; $HostAliases[1]="localhost"; $HostAliases[2]="127.0.0.1";
 	}
 
-$LocalSiteIsInHostAliases=0;
-foreach $elem (@HostAliases) { if ($elem eq $LocalSite) { $LocalSiteIsInHostAliases=1; last; } }
-if ($LocalSiteIsInHostAliases == 0) { $HostAliases[@HostAliases]=$LocalSite; }
+$SiteToAnalyzeIsInHostAliases=0;
+foreach $elem (@HostAliases) { if ($elem eq $SiteToAnalyze) { $SiteToAnalyzeIsInHostAliases=1; last; } }
+if ($SiteToAnalyzeIsInHostAliases == 0) { $HostAliases[@HostAliases]=$SiteToAnalyze; }
 if (@SkipFiles == 0) {
 	$SkipFiles[0]="\.css";$SkipFiles[1]="\.js";$SkipFiles[2]="\.class";$SkipFiles[3]="robots\.txt";
 	}
@@ -2009,7 +2007,7 @@ if ($ShowFlagLinks == 1) {
 	for (0..5) {		# Only flags for 5 major languages
 		if ($Lang != $_) {
 			my ($lng, $flg) = split(/\s+/, $message[72][$_]);
-			print "$sp<a href=\"$DirCgi$PROG.$Extension?conf=$LocalSite&year=$YearRequired&month=$MonthRequired&lang=$_\"><img src=\"$DirIcons\/flags\/$flg\" height=14 border=0 alt=\"$lng\" title=\"$lng\"></a>\n";
+			print "$sp<a href=\"$DirCgi$PROG.$Extension?site=$SiteToAnalyze&year=$YearRequired&month=$MonthRequired&lang=$_\"><img src=\"$DirIcons\/flags\/$flg\" height=14 border=0 alt=\"$lng\" title=\"$lng\"></a>\n";
 			$sp = '&nbsp;';
 		}
 	}
@@ -2354,7 +2352,7 @@ if ($UpdateStats) {
 		if (!$found) {
 			if ($felter[10] =~ /^http/)     {
 				$internal_link=0;
-				if ($felter[10] =~ /^http(s|):\/\/(www.|)$LocalSiteWithoutwww/i) { $internal_link=1; }
+				if ($felter[10] =~ /^http(s|):\/\/(www.|)$SiteToAnalyzeWithoutwww/i) { $internal_link=1; }
 				else {
 					foreach $HostAlias (@HostAliases) {
 						if ($felter[10] =~ /^http(s|):\/\/$HostAlias/i) { $internal_link=1; last; }
@@ -3159,14 +3157,14 @@ print "
 print "$CENTER<a name=\"MENU\"></a><BR>";
 
 print "<table>";
-print "<tr><td class=LEFT colspan=2><font style=\"font: 14px arial,verdana,helvetica; font-weight: bold\">$message[7][$Lang] : <font style=\"font: 14px arial,verdana,helvetica; font-weight: normal\">$LocalSite</td></tr>";
+print "<tr><td class=LEFT colspan=2><font style=\"font: 14px arial,verdana,helvetica; font-weight: bold\">$message[7][$Lang] : <font style=\"font: 14px arial,verdana,helvetica; font-weight: normal\">$SiteToAnalyze</td></tr>";
 print "<tr><td class=LEFT style=\"font: 14px arial,verdana,helvetica; font-weight: bold\">Last update : <font style=\"font: 14px arial,verdana,helvetica; font-weight: normal\">";
 foreach $key (keys %LastUpdate) { if ($LastUpdate < $LastUpdate{$key}) { $LastUpdate = $LastUpdate{$key}; } }
 $yearcon=substr($LastUpdate,0,4);$monthcon=substr($LastUpdate,4,2);$daycon=substr($LastUpdate,6,2);$hourcon=substr($LastUpdate,8,2);$mincon=substr($LastUpdate,10,2);
 if ($LastUpdate != 0) { print "$daycon&nbsp;$monthlib{$monthcon}&nbsp;$yearcon&nbsp;-&nbsp;$hourcon:$mincon"; }
 else { print "<font color=#880000>Never updated</font>"; }
 print "</font></td><td valign=center><font size=1>&nbsp;";
-if ($AllowToUpdateStatsFromBrowser) { print "<a href=\"$DirCgi$PROG.$Extension?update=1&conf=$LocalSite&year=$YearRequired&month=$MonthRequired&lang=$Lang\">Update</a>"; }
+if ($AllowToUpdateStatsFromBrowser) { print "<a href=\"$DirCgi$PROG.$Extension?update=1&site=$SiteToAnalyze&year=$YearRequired&month=$MonthRequired&lang=$Lang\">Update</a>"; }
 print "</td></tr></table>";
 print "<br>\n";
 print "<table><tr><td class=LEFT>";
@@ -3187,7 +3185,7 @@ print "<br>\n\n";
 # SUMMARY
 #---------------------------------------------------------------------
 print "$CENTER<a name=\"SUMMARY\"></a><BR>";
-$tab_titre="$message[7][$Lang] $LocalSite";
+$tab_titre="$message[7][$Lang] $SiteToAnalyze";
 &tab_head;
 
 # FirstTime LastTime TotalVisits
@@ -3223,7 +3221,7 @@ if ($MonthRequired eq "year") { print "<TD colspan=3 rowspan=2><font style=\"fon
 else { print "<TD colspan=3 rowspan=2><font style=\"font: 10pt arial,verdana,helvetica\"><b>$message[5][$Lang] $monthlib{$MonthRequired} $YearRequired</b></font><br>"; }
 # Show links for possible years
 foreach $key (keys %listofyears) {
-	print "<a href=\"$DirCgi$PROG.$Extension?conf=$LocalSite&year=$key&month=year&lang=$Lang\">$message[6][$Lang] $key</a> ";
+	print "<a href=\"$DirCgi$PROG.$Extension?site=$SiteToAnalyze&year=$key&month=year&lang=$Lang\">$message[6][$Lang] $key</a> ";
 }
 print "</TD>";
 print "<TD><b>$message[9][$Lang]</b></TD></TR>";
@@ -3277,7 +3275,7 @@ for ($ix=1; $ix<=12; $ix++) {
 print "</TR><TR>";
 for ($ix=1; $ix<=12; $ix++) {
 	$monthix=$ix; if ($monthix < 10) { $monthix="0$monthix"; }
-	print "<TD valign=center><a href=\"$DirCgi$PROG.$Extension?conf=$LocalSite&year=$YearRequired&month=$monthix&lang=$Lang\">$monthlib{$monthix}</a></TD>";
+	print "<TD valign=center><a href=\"$DirCgi$PROG.$Extension?site=$SiteToAnalyze&year=$YearRequired&month=$monthix&lang=$Lang\">$monthlib{$monthix}</a></TD>";
 }
 
 print "</TR></TABLE>";
@@ -3346,7 +3344,7 @@ foreach $key (@sorthosts_p)
 	if ($_hostmachine_h{$key}>=$MinHitHost) {
 		$kilo=int(($_hostmachine_k{$key}/1024)*100)/100;
 		if ($key eq "Unknown") {
-			print "<TR><TD CLASS=LEFT><a href=\"$DirCgi$PROG.$Extension?action=unknownip&conf=$LocalSite&year=$YearRequired&month=$MonthRequired&lang=$Lang\">$message[1][$Lang]</a></TD><TD>$_hostmachine_p{$key}</TD><TD>$_hostmachine_h{$key}</TD><TD>$kilo</TD><TD><a href=\"$DirCgi$PROG.$Extension?action=unknownip&conf=$LocalSite&year=$YearRequired&month=$MonthRequired&lang=$Lang\">$message[3][$Lang]</a></TD></TR>\n";
+			print "<TR><TD CLASS=LEFT><a href=\"$DirCgi$PROG.$Extension?action=unknownip&site=$SiteToAnalyze&year=$YearRequired&month=$MonthRequired&lang=$Lang\">$message[1][$Lang]</a></TD><TD>$_hostmachine_p{$key}</TD><TD>$_hostmachine_h{$key}</TD><TD>$kilo</TD><TD><a href=\"$DirCgi$PROG.$Extension?action=unknownip&site=$SiteToAnalyze&year=$YearRequired&month=$MonthRequired&lang=$Lang\">$message[3][$Lang]</a></TD></TR>\n";
 			}
 		else {
 			$yearcon=substr($_hostmachine_l{$key},0,4);
@@ -3411,7 +3409,7 @@ foreach $key (@sortsiders) {
 		$nompage=$Aliases{$key};
 		if ($nompage eq "") { $nompage=$key; }
 		$nompage=substr($nompage,0,$MaxLengthOfURL);
-	    if ($ShowLinksOnUrl) { print "<A HREF=\"$key\">$nompage</A>"; }
+	    if ($ShowLinksOnUrl) { print "<A HREF=\"http://$SiteToAnalyze$key\">$nompage</A>"; }
 	    else              	 { print "$nompage"; }
 	    $bredde=$BarWidth*$_sider_p{$key}/$max+1;
 		print "</TD><TD>$_sider_p{$key}</TD><TD CLASS=LEFT><IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_p\" WIDTH=$bredde HEIGHT=8 ALT=\"$message[56][$Lang]: $_sider_p{$key}\" title=\"$message[56][$Lang]: $_sider_p{$key}\"></TD></TR>\n";
@@ -3471,7 +3469,7 @@ print "<TR BGCOLOR=$color_TableBGRowTitle><TH>Browser</TH><TH bgcolor=$color_h w
 foreach $key (@sortbrowsers) {
 	$p=int($_browser_h{$key}/$TotalHits*1000)/10;
 	if ($key eq "Unknown") {
-		print "<TR><TD CLASS=LEFT><a href=\"$DirCgi$PROG.$Extension?action=unknownrefererbrowser&conf=$LocalSite&year=$YearRequired&month=$MonthRequired&lang=$Lang\">$message[0][$Lang]</a></TD><TD>$_browser_h{$key}</TD><TD>$p&nbsp;%</TD></TR>\n";
+		print "<TR><TD CLASS=LEFT><a href=\"$DirCgi$PROG.$Extension?action=unknownrefererbrowser&site=$SiteToAnalyze&year=$YearRequired&month=$MonthRequired&lang=$Lang\">$message[0][$Lang]</a></TD><TD>$_browser_h{$key}</TD><TD>$p&nbsp;%</TD></TR>\n";
 	}
 	else {
 		print "<TR><TD CLASS=LEFT>$BrowsersHash{$key}</TD><TD>$_browser_h{$key}</TD><TD>$p&nbsp;%</TD></TR>\n";
@@ -3489,7 +3487,7 @@ print "<TR BGCOLOR=$color_TableBGRowTitle><TH colspan=2>OS</TH><TH bgcolor=$colo
 foreach $key (@sortos) {
 	$p=int($_os_h{$key}/$TotalHits*1000)/10;
 	if ($key eq "Unknown") {
-		print "<TR><TD><IMG SRC=\"$DirIcons\/os\/unknown.png\"></TD><TD CLASS=LEFT><a href=\"$DirCgi$PROG.$Extension?action=unknownreferer&conf=$LocalSite&year=$YearRequired&month=$MonthRequired&lang=$Lang\">$message[0][$Lang]</a></TD><TD>$_os_h{$key}&nbsp;</TD>";
+		print "<TR><TD><IMG SRC=\"$DirIcons\/os\/unknown.png\"></TD><TD CLASS=LEFT><a href=\"$DirCgi$PROG.$Extension?action=unknownreferer&site=$SiteToAnalyze&year=$YearRequired&month=$MonthRequired&lang=$Lang\">$message[0][$Lang]</a></TD><TD>$_os_h{$key}&nbsp;</TD>";
 		print "<TD>$p&nbsp;%</TD></TR>\n";
 		}
 	else {
@@ -3585,7 +3583,7 @@ foreach $key (@sorterrors) {
 	$p=int($_errors_h{$key}/$TotalErrors*1000)/10;
 	if ($httpcode{$key}) { print "<TR onmouseover=\"ShowTooltip($key);\" onmouseout=\"HideTooltip($key);\">"; }
 	else { print "<TR>"; }
-	if ($key == 404) { print "<TD><a href=\"$DirCgi$PROG.$Extension?action=notfounderror&conf=$LocalSite&year=$YearRequired&month=$MonthRequired&lang=$Lang\">$key</a></TD>"; }
+	if ($key == 404) { print "<TD><a href=\"$DirCgi$PROG.$Extension?action=notfounderror&site=$SiteToAnalyze&year=$YearRequired&month=$MonthRequired&lang=$Lang\">$key</a></TD>"; }
 	else { print "<TD>$key</TD>"; }
 	if ($httpcode{$key}) { print "<TD CLASS=LEFT>$httpcode{$key}</TD><TD>$_errors_h{$key}</TD><TD>$p&nbsp;%</TD></TR>\n"; }
 	else { print "<TD CLASS=LEFT>Unknown error</TD><TD>$_errors_h{$key}</TD><TD>$p&nbsp;%</TD></TR>\n"; }
