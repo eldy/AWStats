@@ -17,6 +17,7 @@
 #-----------------------------------------------------------------
 @SearchEnginesSearchIDOrder=(
 # Major internationnal search engines
+"images\.google\.",
 "google\.",	# TODO Add 216\.239\.35\.101|216\.239\.37\.101|216\.239\.39\.100|216\.239\.39\.101|216\.239\.51\.100|216\.239\.51\.101|216\.239\.35\.100
 "msn\.",
 "voila\.",
@@ -67,6 +68,7 @@
 "recherche\.aol\.fr","ctrouve\.","francite\.","\.lbb\.org","rechercher\.libertysurf\.fr",
 # Minor german search engines
 "fireball\.de","infoseek\.de","suche\.web\.de","meta\.ger",
+"suchen\.abacho\.de","brisbane\.t-online\.de","allesklar\.de","meinestadt\.de",
 # Minor hungarian search engines
 "heureka\.hu","vizsla\.origo\.hu/katalogus?","vizsla\.origo\.hu","lapkereso\.hu","goliat\.hu","index\.hu","wahoo\.hu","freeweb\.hu","webmania\.hu","search\.internetto\.hu",
 # Minor italian search engines
@@ -91,6 +93,7 @@
 "altavista\.","q=",
 "dmoz\.org","search=",
 "google\.","(p|q)=",
+"images\.google\.","(p|q)=",
 "lycos\.","query=",
 "msn\.","q=",
 "netscape\.","search=",
@@ -138,6 +141,7 @@
 "nomade\.fr/","s=", "francite\.","name=",
 # Minor german search engines
 "fireball\.de","q=", "infoseek\.de","qt=", "suche\.web\.de","su=",
+"suchen\.abacho\.de","q=", "brisbane\.t-online\.de","q=", 
 # Minor hungarian search engines
 "heureka\.hu","heureka=", "vizsla\.origo\.hu/katalogus?","q=", "vizsla\.origo\.hu","search=", "lapkereso\.hu","keres.php", "goliat\.hu","KERESES=", "index\.hu","search.php3", "wahoo\.hu","q=", "freeweb\.hu","KERESES=", "search\.internetto\.hu","searchstr=",
 # Minor norvegian search engines
@@ -153,7 +157,7 @@
 @WordsToExtractSearchUrl= ("ask=","claus=","general=","key=","kw=","keyword=","keywords=","MT=","p=","q=","qr=","qt=","query=","s=","search=","searchText=","string=","su=","txtsearch=","w=");
 
 # If no rules are known and search in WordsToExtractSearchUrl failed, this will be used to clean URL of not keyword parameters.
-@WordsToCleanSearchUrl= ("act=","annuaire=","btng=","categoria=","cfg=","cof=","cou=","count=","cp=","dd=","domain=","dt=","dw=","enc=","exec=","geo=","hc=","height=","hits=","hl=","hq=","hs=","id=","kl=","lang=","loc=","lr=","matchmode=","medor=","message=","meta=","mode=","order=","page=","par=","pays=","pg=","pos=","prg=","qc=","refer=","sa=","safe=","sc=","sort=","src=","start=","style=","stype=","sum=","tag=","temp=","theme=","type=","url=","user=","width=","what=","\\.x=","\\.y=","y=","look=");
+@WordsToCleanSearchUrl= ("act=","annuaire=","btng=","cat=","categoria=","cfg=","cof=","cou=","count=","cp=","dd=","domain=","dt=","dw=","enc=","exec=","geo=","hc=","height=","hits=","hl=","hq=","hs=","id=","kl=","lang=","loc=","lr=","matchmode=","medor=","message=","meta=","mode=","order=","page=","par=","pays=","pg=","pos=","prg=","qc=","refer=","sa=","safe=","sc=","sort=","src=","start=","style=","stype=","sum=","tag=","temp=","theme=","type=","url=","user=","width=","what=","\\.x=","\\.y=","y=","look=");
 
 
 
@@ -167,6 +171,7 @@
 "altavista\.","AltaVista",
 "dmoz\.org","DMOZ",
 "google\.","Google",
+"images\.google\.","Google (Images)",
 "lycos\.","Lycos",
 "msn\.","MSN",
 "netscape\.","Netscape",
@@ -213,6 +218,8 @@
 "recherche\.aol\.fr","AOL", "ctrouve\.","C'est trouvé", "francite\.","Francité", "\.lbb\.org", "LBB", "rechercher\.libertysurf\.fr", "Libertysurf",	
 # Minor german search engines
 "fireball\.de","Fireball", "infoseek\.de","Infoseek", "suche\.web\.de","Web.de", "meta\.ger","MetaGer",	
+"suchen\.abacho\.de","Abacho", "brisbane\.t-online\.de","T-Online", 
+"allesklar\.de","allesklar.de", "meinestadt\.de","meinestadt.de", 
 # Minor hungarian search engines
 "heureka\.hu","Heureka", "vizsla\.origo\.hu/katalogus?","Origo-Vizsla-Katalógus", "vizsla\.origo\.hu","Origo-Vizsla", "lapkereso\.hu","Startlapkeresõ", "goliat\.hu","Góliát", "index\.hu","Index", "wahoo\.hu","Wahoo", "freeweb\.hu","FreeWeb", "webmania\.hu","webmania.hu", "search\.internetto\.hu","Internetto Keresõ",
 # Minor italian search engines
