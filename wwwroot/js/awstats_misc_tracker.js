@@ -103,7 +103,6 @@ if (window.location.search == "") {
 		var TRKwma = awstats_detectNS("application/x-mplayer2")
 		var TRKpdf = awstats_detectNS("application/pdf");
 	}
-	document.write('<img src="'+awstatsmisctrackerurl+'?SCREEN='+TRKscreen+'&CDI='+TRKcdi+'&JAVA='+TRKjava+'&UC='+TRKusercode+'&SC='+TRKsessioncode+'&SHK='+TRKshk+'&FLA='+TRKfla+'&RP='+TRKrp+'&MOV='+TRKmov+'&WMA='+TRKwma+'&PDF='+TRKpdf+'" height=0 width=0 border=0>')
-	// Removed '&ICON='+icon+'&R='+escape(TRKr)
+	document.write('<img src="'+awstatsmisctrackerurl+'?SCREEN='+TRKscreen+'&CDI='+TRKcdi+'&JAVA='+TRKjava+'&SHK='+TRKshk+'&FLA='+TRKfla+'&RP='+TRKrp+'&MOV='+TRKmov+'&WMA='+TRKwma+'&PDF='+TRKpdf+'&UC='+TRKusercode+'&SC='+TRKsessioncode+'" height=0 width=0 border=0>')
 
 }
