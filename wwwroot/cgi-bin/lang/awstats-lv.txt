@@ -1,4 +1,6 @@
-# Latvieðu valodas ziòojumu fils
+# Latvieðu valodas ziòojumu fils (madmaster@gobbo.caves.lv)
+# $Revision$ - $Date$
+PageCode=windows-1257
 message0=Nezinâms
 message1=Nezinâms (neatpazîts ip)
 message2=Citi
@@ -12,7 +14,7 @@ message9=Pçdçjais apmeklçjums
 message10=Vizîðu skaits
 message11=Unikâlie apmeklçtâji
 message12=Apmeklçjums
-message13=atðíirîgs atslçgvârds
+message13=atðíirîgi(s) atslçgvârdi(s)
 message14=Meklçt
 message15=Procenti
 message16=Trafiks
@@ -105,3 +107,25 @@ message102=Kopâ
 message103=Atðíirîgi atslçgvârdi
 message104=Iejas lapas
 message105=Kods
+message106=Average size
+message107=Saites no Ziòu grupâm
+message108=KB
+message109=MB
+message110=GB
+message111=Savâcçjs
+message112=Jâ
+message113=Nç
+message114=WhoIs informâcija
+message115=OK
+message116=Izejas pages
+message117=Apmeklçjuma ilgums
+message118=Aizvçrt logu
+message119=Baiti
+message120=Meklçðans&nbsp;atslçgfrâzes
+message121=Meklçðanas&nbsp;atslçgvârdi
+message122=Citas meklçtâju lapas ar atsaucçm
+message123=Citas lapas ar atsaucçm
+message124=Citas frâzes
+message125=Anonîmie lietotâji
+message126=Meklçtâju lapas ar atsaucçm
+message127=Lapas ar atsaucçm
