@@ -128,3 +128,5 @@ message124=Other phrases
 message125=Anonymous users
 message126=Refering search engines
 message127=Refering sites
+message128=Summary
+message129=Exact value not available in 'Year' view

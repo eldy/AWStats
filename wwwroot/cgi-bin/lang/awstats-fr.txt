@@ -128,3 +128,5 @@ message124=Autres phrases
 message125=Utilisateurs anonymes
 message126=Moteurs de recherche
 message127=Sites référenceurs
+message128=Résumé
+message129=Valeur exacte indisponible en vue 'annuelle'
