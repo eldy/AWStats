@@ -20,7 +20,7 @@
 <td bgcolor=#9999cc align=center><a href="/"><img src="images/awstats_logo4.png" border=0></a></td>
 <td bgcolor=#9999cc align=center>
 <br>
-<font style="font: 16pt arial,helvetica,sanserif" color=#EEEEFF><b>AWStats logfile analyzer 5.0 Documentation</b></font><br>
+<font style="font: 16pt arial,helvetica,sanserif" color=#EEEEFF><b>AWStats logfile analyzer 5.1 Documentation</b></font><br>
 <br>
 </td>
 <td bgcolor=#9999cc align=center>
@@ -912,34 +912,55 @@ AWStats 4.1+ supports both keywords AND keyphrases by default with no need of an
 <b>Version : </b><br>
 3.2 for ShowHeader,ShowMenu,ShowMonthDayStats,ShowDaysOfWeekStats,ShowHoursStats,
 ShowDomainsStats,ShowHostsStats,ShowAuthenticatedUsers,ShowRobotsStats,
-ShowPagesStats,ShowCompressionStats,ShowFileTypesStats,ShowFileSizesStats,ShowBrowsersStats,
+ShowPagesStats,ShowFileTypesStats,ShowFileSizesStats,ShowBrowsersStats,
 ShowOSStats,ShowOriginStats,ShowKeyphrasesStats,ShowKeywordsStats,ShowHTTPErrorsStats<br>
+3.2 - 5.0 for ShowCompressionStats (deprecated since 5.1, use code C with ShowFileTypesStats instead)<br>
 4.1 for ShowSessionsStats, ShowKeywordsStats<br>
-<br># You choose here which summary report you want to see in the main page.
-<br># Whatever is your setup here, all detailed reports are still available.
-<br># So if you setup to 1 only ShowHeader, ShowMenu and ShowMonthDayStats, all
-<br># links in menu will point to detailed views.
-<br># Possible values: 0 or 1
+<br># You choose here which reports you want to see in the main page and what you
+<br># want to see in those reports.
+<br># Possible values:
+<br>#  0  - Topic is not shown at all
+<br>#  1  - Report is shown with all its related informations
+<br># XYZ - Report is shown with only informations defined by code X,Y and Z
 <br>#
-<br>ShowHeader=1				# Show AWStats head title and icon
-<br>ShowMenu=1					# Show menu header with links on detailed reports
+<br># Show AWStats head title and icon
+<br>ShowHeader=1				
+<br># Show menu header with links on detailed reports
+<br>ShowMenu=1					
+<br># Show monthly and daily chart
 <br>ShowMonthDayStats=1
+<br># Show days of week chart
 <br>ShowDaysOfWeekStats=1
+<br># Show hourly chart
 <br>ShowHoursStats=1
+<br># Show domains/country chart
 <br>ShowDomainsStats=1
+<br># Show hosts chart
 <br>ShowHostsStats=1
+<br># Show authenticated users chart
+<br># ->Codes are P (Nb pages), H (Nb hits), B (bandwidth), L (last access date)
 <br>ShowAuthenticatedUsers=0
+<br># Show robots chart
 <br>ShowRobotsStats=1
+<br># Show session chart
 <br>ShowSessionsStats=1
-<br>ShowPagesStats=1
-<br>ShowCompressionStats=0		# Show report of compression stats when using mod_gzip
-<br>ShowFileTypesStats=1
-<br>ShowFileSizesStats=0		# Not yet available
+<br># Show pages-url chart.
+<br># ->Codes are H (Nb hits), B (bandwidth), E (entry), X (exit)
+<br>ShowPagesStats=HBEX	
+<br># Show file types chart.
+<br># ->Codes are H (Nb hits), B (bandwidth), C (mod_gzip compression statistics)
+<br>ShowFileTypesStats=HB
+<br># Show browsers chart
 <br>ShowBrowsersStats=1
+<br># Show Operating systems chart
 <br>ShowOSStats=1
+<br># Show Origin chart
 <br>ShowOriginStats=1
+<br># Show keyphrases chart
 <br>ShowKeyphrasesStats=1
+<br># Show keywords chart
 <br>ShowKeywordsStats=1
+<br># Show HTTP errors chart
 <br>ShowHTTPErrorsStats=1
 
 <br><br><hr>

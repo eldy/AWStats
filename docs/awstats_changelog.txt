@@ -2,8 +2,10 @@ AWStats Changelog
 -----------------
 
 5.1
+
 - Added an AWStats version check in plugins
 - Added SkipUserAgents parameter
+- 
 
 5.0
 
