@@ -76,6 +76,7 @@ FAQ-SET200 <a href="#INTERNAL">"Internal Error" or "Error 500" in a browser conn
 FAQ-SET210 <a href="#SPEED">"Internal Error" after a long time in my browser (See FAQ-COM100 "AWStats speed/timeout problems").</a><br>
 FAQ-SET220 <a href="#CRASH">Crash while running awstats.pl or page content only partialy loaded</a><br>
 FAQ-SET250 <a href="#PERSONALIZEDLOG">Log format setup or errors.</a><br>
+FAQ-SET270 <a href="#CORRUPTEDDROPPED">Only corrupted/dropped records</a><br>
 FAQ-SET280 <a href="#NOTSAMENUMBER">Error "Not same number of records of...".</a><br>
 FAQ-SET300 <a href="#COULDNOTOPEN">Error "Couldn't open file ..."</a><br>
 FAQ-SET320 <a href="#MALFORMEDUTF8">Error "Malformed UTF-8 character (unexpected..."</a><br>
@@ -756,7 +757,8 @@ MS produced a Hotfix which is now included in SP1.<br>
 <a name="PERSONALIZEDLOG"></a><br>
 <b><u>FAQ-SET250 : LOG FORMAT SETUP OR ERRORS</u></b><br>
 <font class=CProblem>PROBLEM:</font><br>
-Which value do I have to put in the LogFormat parameter to make AWStats working with my log file format ?<br>
+Which value do I have to put in the LogFormat parameter to make AWStats working with my log
+file format ?<br>
 <font class=CSolution>SOLUTION:</font><br>
 The AWStats config file give you all possible values for LogFormat parameter.
 To help you, this is some common cases of log file format, and
@@ -842,6 +844,48 @@ Note: Browsers, OS's, Keywords and Referers features are not available with a su
 You must use a personalized log format LogFormat ="..." as described in config file to
 support other various log formats.<br>
 <br>
+
+
+<a name="CORRUPTEDDROPPED"></a><br>
+<b><u>FAQ-SET270 : ONLY CORRUPTED OR DROPPED RECORDS</u></b><br>
+<font class=CProblem>PROBLEM:</font><br>
+After running an AWStats update process, all my records are reported to be corrupted or dropped<br>
+<font class=CSolution>SOLUTION:</font><br>
+First, if you have only a small percent of corrupted or dropped records, don't worry. This
+is a normal behaviour. Few corrupted or dropped records can appear in a log file because of
+internal web server bug, virus attack, error writing, log purge or rotate during a writing, etc...<br>
+However, if ALL your records are reported to be corrupted or dropped, check the following things:<br>
+If they are all dropped, run the update process from command line adding the option -showdropped<br>
+-> You will be able to know why a dropped record is discarded. In most cases, this is because you use a 
+too large or bad filter parameter (SkipFiles, SkipHosts, OnlyFiles ...).<br>
+If they are all corrupted, run the update process from command line adding the option -showcorrupted<br>
+-> You will be able to know why a corrupted record is discarded.<br>
+If this is because of the log format, check the <a href="#EMPTY_STATS">FAQ-SET350</a> about log format errors.<br>
+If this is because the date of a record is said to be lower than date of previous, this means 
+that you ran update processes on different log files without keeping the chronological order
+of log files.<br>
+If this is because the date is invalid, you might have a problem of date not computed correctly
+this it happens in some Pentium4/Xeon4 processors:<br>
+On some (few) Intel Pentium4 (also Xeon4) based host systems, log file time can not be computed
+correctly. This is not an issue of AWStats itself. This error usually occurs on source-based linux
+distributions (gentoo, slackware etc.), where all system libraries are compiled with CPU optimization.
+AWStats is a highly developed PERL application. PERL itself relies on some system libraries,
+for example GLIBC. The GLIBC library usually is buggy in this case. There is an easy way to figure
+out whether the problem described here is responsible for AWStats problems on your system:<br>
+If you have shell access to your machine, simply type the following command:<br>
+<i>perl -e "print int ('541234567891011165415658')"</i><br>
+(NOTE: any 25-digit number works, there is no need to type this exact number)<br>
+If everything goes fine, you should see a floating point number as output:<br>
+<i>5.41234567891011e+23</i><br>
+In this case, please do more research on your log file formats. Your host system itself is not
+responsible for the error.<br>
+But if simply a "0" returns or some other error, this is an indication of your glibc beeing corrupt.<br>
+ATTENTION: The only solution in this case might be to recompile your GLIBC. This can be a quite tricky
+task. Please consult the documentation and F.A.Q.s of your linux distribution first!! (experts: first
+check your global compile flags, eg. march=Pentium4 < for almost sure, you will run into trouble).<br>
+NOTE: In some cases, this error might occour "suddenly", even though AWStats was aleady running
+perfect already.<br>
+<br> 
 
 <a name="NOTSAMENUMBER"></a><br>
 <b><u>FAQ-SET280 : ERROR "NOT SAME NUMBER OF RECORDS OF..."</u></b><br>
