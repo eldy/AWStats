@@ -93,7 +93,7 @@ $color_h, $color_k, $color_link, $color_p, $color_s, $color_u, $color_v, $color_
 %monthlib = %monthnum = ();
 
 
-$VERSION="3.2 (build 78)";
+$VERSION="3.2 (build 79)";
 $Lang="en";
 
 # Default value
@@ -1518,7 +1518,7 @@ sub Show_Flag_Links {
 	# Build flags link
 	my $NewLinkParams=$QueryString;
 	if ($ENV{"GATEWAY_INTERFACE"}) {
-		$NewLinkParams =~ s/update=[^ &]*//;
+		$NewLinkParams =~ s/update[=]*[^ &]*//;
 		$NewLinkParams =~ s/lang=[^ &]*//;
 		$NewLinkParams =~ tr/&/&/s; $NewLinkParams =~ s/&$//;
 		if ($NewLinkParams) { $NewLinkParams="${NewLinkParams}&"; }
@@ -1613,17 +1613,24 @@ if ($ENV{"GATEWAY_INTERFACE"}) {	# Run from a browser
 	$UpdateStats=0; $HTMLOutput=1;							# No update but report by default when run from a browser
 	if ($QueryString =~ /update=1/i)   { $UpdateStats=1; }					# Update is required
 }
-else {									# Run from command line
-	if ($ARGV[0] && $ARGV[0] eq "-h") { $SiteConfig = $ARGV[1]; }		# Kept for backward compatibility but useless
-	$QueryString=""; for (0..@ARGV-1) { $QueryString .= "$ARGV[$_] "; }
-	$QueryString =~ s/<script.*$//i;						# This is to avoid 'Cross Site Scripting attacks'
-	if ($QueryString =~ /site=/i)   { $SiteConfig=$QueryString; $SiteConfig =~ s/.*site=//i;   $SiteConfig =~ s/&.*//; $SiteConfig =~ s/ .*//; }	# For backward compatibility
-	if ($QueryString =~ /config=/i) { $SiteConfig=$QueryString; $SiteConfig =~ s/.*config=//i; $SiteConfig =~ s/&.*//; $SiteConfig =~ s/ .*//; }
-	$UpdateStats=1;	$HTMLOutput=0;							# Update with no report by default when run from command line
-	if ($QueryString =~ /-output/i)    { $UpdateStats=0; $HTMLOutput=1; }	# Report and no update if an output is required
-	if ($QueryString =~ /-update/i)    { $UpdateStats=1; }					# Except if -update specified
-	if ($QueryString =~ /-showsteps/i) { $ShowSteps=1; } else { $ShowSteps=0; }
-	if ($QueryString =~ /-showcorrupted/i) { $ShowCorrupted=1; } else { $ShowCorrupted=0; }
+else {                                             # Run from command line
+	if ($ARGV[0] && $ARGV[0] eq "-h") { $SiteConfig = $ARGV[1]; }          # Kept for backward compatibility but useless
+	$QueryString=""; for (0..@ARGV-1) {
+		if ($_ > 0) { $QueryString .= "&"; }
+		my $NewLinkParams=$ARGV[$_]; $NewLinkParams =~ s/^-+//;
+		$QueryString .= "$NewLinkParams";
+	}
+	$QueryString =~ s/<script.*$//i;                             # This is to avoid 'Cross Site Scripting attacks'
+	if ($QueryString =~ /site=/i)     { $SiteConfig=$QueryString; $SiteConfig =~ s/.*site=//i;   $SiteConfig =~ s/&.*//; $SiteConfig =~ s/ .*//; }  # For backward compatibility
+	if ($QueryString =~ /config=/i)   { $SiteConfig=$QueryString; $SiteConfig =~ s/.*config=//i; $SiteConfig =~ s/&.*//; $SiteConfig =~ s/ .*//; }
+	$UpdateStats=1; $HTMLOutput=0;                               # Update with no report by default when run from command line
+	if ($QueryString =~ /update/i)    { $UpdateStats=1; }                  # Except if -update specified
+	if ($QueryString =~ /output/i)    { $UpdateStats=0; $HTMLOutput=1; }   # Report and no update if an output is required
+	$QueryString=~s/output&//; $QueryString=~s/output$//;
+	if ($QueryString =~ /showsteps/i) { $ShowSteps=1; } else { $ShowSteps=0; }
+	$QueryString=~s/showsteps[^&]*//;
+	if ($QueryString =~ /showcorrupted/i) { $ShowCorrupted=1; } else { $ShowCorrupted=0; }
+	$QueryString=~s/showcorrupted[^&]*//;
 }
 if ($QueryString =~ /sort=/i)  		{ $Sort=$QueryString;  $Sort =~ s/.*sort=//i;  $Sort =~ s/&.*//;  $Sort =~ s/ .*//; }
 if ($QueryString =~ /debug=/i) 		{ $Debug=$QueryString; $Debug =~ s/.*debug=//i; $Debug =~ s/&.*//; $Debug =~ s/ .*//; }
@@ -2714,8 +2721,8 @@ EOF
 	# Define the LinkParamA and LinkParamB for main chart
 	my $LinkParamA=""; my $LinkParamB="";
 	my $NewLinkParams=${QueryString};
-	$NewLinkParams =~ s/update=[^ &]*//;
-	$NewLinkParams =~ s/output=[^ &]*//;
+	$NewLinkParams =~ s/update[=]*[^ &]*//;
+	$NewLinkParams =~ s/output[=]*[^ &]*//;
 	$NewLinkParams =~ tr/&/&/s; $NewLinkParams =~ s/&$//;
 	if ($ENV{"GATEWAY_INTERFACE"}) {
 		# If runned from a browser, we keep same parameters string
@@ -2744,7 +2751,7 @@ EOF
 		print "</font>&nbsp; &nbsp; &nbsp; &nbsp;";
 		if ($AllowToUpdateStatsFromBrowser) {
 			my $NewLinkParams=${QueryString};
-			$NewLinkParams =~ s/update=[^ &]*//;
+			$NewLinkParams =~ s/update[=]*[^ &]*//;
 			$NewLinkParams =~ tr/&/&/s; $NewLinkParams =~ s/&$//;
 			if ($NewLinkParams) { $NewLinkParams="${NewLinkParams}&"; }
 			print "<a href=\"$DirCgi$PROG.$Extension?${NewLinkParams}update=1\">$Message[74]</a>";
@@ -3015,7 +3022,7 @@ EOF
 		else { print "<TD colspan=3 rowspan=2><font style=\"font: 18px arial,verdana,helvetica; font-weight: normal\">$Message[5] $monthlib{$MonthRequired} $YearRequired</font><br>"; }
 		# Show links for possible years
 		my $NewLinkParams=${QueryString};
-		$NewLinkParams =~ s/update=[^ &]*//;
+		$NewLinkParams =~ s/update[=]*[^ &]*//;
 		$NewLinkParams =~ s/year=[^ &]*//;
 		$NewLinkParams =~ s/month=[^ &]*//;
 		$NewLinkParams =~ tr/&/&/s; $NewLinkParams =~ s/&$//;
