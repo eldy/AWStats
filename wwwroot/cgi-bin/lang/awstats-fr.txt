@@ -163,5 +163,5 @@ message159=Le trafic 'non vu' est le trafic généré par les robots, vers ou répon
 message160=Trafic 'vu'
 message161=Trafic 'non vu'
 message162=Historique mensuel
-message163=Worms
+message163=Vers
 message164=different worms

@@ -1307,11 +1307,13 @@ sub Read_Ref_Data {
 			warning("Warning: Can't read file \"$file\" ($filetext detection will not work correctly).\nCheck if file is in \"".($PossibleLibDir[0])."\" directory and is readable.");
 		}
 	}
-	# Sanity check.
-	if (@OSSearchIDOrder != scalar keys %OSHashID) { error("Not same number of records of OSSearchIDOrder (".(@OSSearchIDOrder)." entries) and OSHashID (".(scalar keys %OSHashID)." entries) in OS database. Check your file ".$FilePath{"operating_systems.pm"}); }
-	if (@BrowsersSearchIDOrder != (scalar keys %BrowsersHashIDLib) - 2) { error("Not same number of records of BrowsersSearchIDOrder (".(@BrowsersSearchIDOrder)." entries) and BrowsersHashIDLib (".((scalar keys %BrowsersHashIDLib) - 2)." entries without msie and netscape) in Browsers database. Check your file ".$FilePath{"browsers.pm"}); }
-	if ((@SearchEnginesSearchIDOrder_list1+@SearchEnginesSearchIDOrder_list2+@SearchEnginesSearchIDOrder_listgen) != scalar keys %SearchEnginesHashID) { error("Not same number of records of SearchEnginesSearchIDOrder_listx (total is ".(@SearchEnginesSearchIDOrder_list1+@SearchEnginesSearchIDOrder_list2+@SearchEnginesSearchIDOrder_listgen)." entries) and SearchEnginesHashID (".(scalar keys %SearchEnginesHashID)." entries) in Search Engines database. Check your file ".$FilePath{"search_engines.pm"}); }
-	if ((@RobotsSearchIDOrder_list1+@RobotsSearchIDOrder_list2+@RobotsSearchIDOrder_listgen) != (scalar keys %RobotsHashIDLib) - 1) { error("Not same number of records of RobotsSearchIDOrder_listx (total is ".(@RobotsSearchIDOrder_list1+@RobotsSearchIDOrder_list2+@RobotsSearchIDOrder_listgen)." entries) and RobotsHashIDLib (".((scalar keys %RobotsHashIDLib) - 1)." entries without 'unknown') in Robots database. Check your file ".$FilePath{"robots.pm"}); }
+	# Sanity check
+	if ($LogType eq 'W' || $LogType eq 'S') {
+		if (@OSSearchIDOrder != scalar keys %OSHashID) { error("Not same number of records of OSSearchIDOrder (".(@OSSearchIDOrder)." entries) and OSHashID (".(scalar keys %OSHashID)." entries) in OS database. Check your file ".$FilePath{"operating_systems.pm"}); }
+		if ((@SearchEnginesSearchIDOrder_list1+@SearchEnginesSearchIDOrder_list2+@SearchEnginesSearchIDOrder_listgen) != scalar keys %SearchEnginesHashID) { error("Not same number of records of SearchEnginesSearchIDOrder_listx (total is ".(@SearchEnginesSearchIDOrder_list1+@SearchEnginesSearchIDOrder_list2+@SearchEnginesSearchIDOrder_listgen)." entries) and SearchEnginesHashID (".(scalar keys %SearchEnginesHashID)." entries) in Search Engines database. Check your file ".$FilePath{"search_engines.pm"}); }
+		if (@BrowsersSearchIDOrder != (scalar keys %BrowsersHashIDLib) - 2) { error("Not same number of records of BrowsersSearchIDOrder (".(@BrowsersSearchIDOrder)." entries) and BrowsersHashIDLib (".((scalar keys %BrowsersHashIDLib) - 2)." entries without msie and netscape) in Browsers database. Check your file ".$FilePath{"browsers.pm"}); }
+		if ((@RobotsSearchIDOrder_list1+@RobotsSearchIDOrder_list2+@RobotsSearchIDOrder_listgen) != (scalar keys %RobotsHashIDLib) - 1) { error("Not same number of records of RobotsSearchIDOrder_listx (total is ".(@RobotsSearchIDOrder_list1+@RobotsSearchIDOrder_list2+@RobotsSearchIDOrder_listgen)." entries) and RobotsHashIDLib (".((scalar keys %RobotsHashIDLib) - 1)." entries without 'unknown') in Robots database. Check your file ".$FilePath{"robots.pm"}); }
+	}
 }
 
 
@@ -3759,7 +3761,7 @@ sub Save_History {
  	foreach my $extranum (1..@ExtraName-1) {
 		if ($sectiontosave eq "extra_$extranum") {
 			print HISTORYTMP "\n";
-			print HISTORYTMP "# Extra sections...\n";
+			print HISTORYTMP "# Extra key - Pages - Hits - Last access - Bandwidth\n";
 			$ValueInFile{$sectiontosave}=tell HISTORYTMP;
 	 		print HISTORYTMP "BEGIN_EXTRA_$extranum\n";
 	 		&BuildKeyList($MaxNbOfExtra[$extranum],$MinHitExtra[$extranum],\%{'_section_' . $extranum . '_h'},\%{'_section_' . $extranum . '_p'});
@@ -7109,7 +7111,8 @@ if (scalar keys %HTMLOutput) {
 				if ($frame) { }
 				else {}
 			}
-			print ($frame?"":"<br />\n");
+			#print ($frame?"":"<br />\n");
+			print "<br />\n";
 		}
 		# Print Back link
 		elsif (! $HTMLOutput{'main'}) {
@@ -8296,7 +8299,7 @@ if (scalar keys %HTMLOutput) {
 			if ($ShowMonthStats =~ /B/i) { print "<td width=\"$w%\" bgcolor=\"#$color_k\"".($TOOLTIPON?" onmouseover=\"ShowTip(5);\" onmouseout=\"HideTip(5);\"":"").">$Message[75]</td>"; } else { print "<td width=\"20%\">&nbsp;</td>"; }
 			print "</tr>\n";
 			print "<tr>";
-			if ($LogType eq 'W' || $LogType eq 'S') { $w='17'; print "<td class=\"aws\">$Message[160] *</td>"; }
+			if ($LogType eq 'W' || $LogType eq 'S') { $w='17'; print "<td class=\"aws\">$Message[160]&nbsp;*</td>"; }
 			if ($ShowMonthStats =~ /U/i) { print "<td>".($MonthRequired eq 'all'?"<b><= $TotalUnique</b><br />$Message[129]":"<b>$TotalUnique</b><br />&nbsp;")."</td>"; } else { print "<td>&nbsp;</td>"; }
 			if ($ShowMonthStats =~ /V/i) { print "<td><b>$TotalVisits</b><br />($RatioVisits&nbsp;$Message[52])</td>"; } else { print "<td>&nbsp;</td>"; }
 			if ($ShowMonthStats =~ /P/i) { print "<td><b>$TotalPages</b><br />($RatioPages&nbsp;".lc($Message[56]."/".$Message[12]).")</td>"; } else { print "<td>&nbsp;</td>"; }
@@ -8305,7 +8308,7 @@ if (scalar keys %HTMLOutput) {
 			print "</tr>\n";
 			print "<tr>";
 			if ($LogType eq 'W' || $LogType eq 'S') {
-				print "<td class=\"aws\">$Message[161] *</td>";
+				print "<td class=\"aws\">$Message[161]&nbsp;*</td>";
 				print "<td colspan=2>&nbsp;<br>&nbsp;</td>\n";
 				if ($ShowMonthStats =~ /P/i) { print "<td><b>$TotalNotViewedPages</b></td>"; } else { print "<td>&nbsp;</td>"; }
 				if ($ShowMonthStats =~ /H/i) { print "<td><b>$TotalNotViewedHits</b></td>"; } else { print "<td>&nbsp;</td>"; }
