@@ -2,7 +2,23 @@ AWStats Changelog
 -----------------
 $Revision$ - $Author$ - $Date$
 
-6.2
+
+***** 6.3 *****
+
+New features/improvements:
+- Added the geoip_isp_maxmind and geoip_org_maxmind plugin.
+
+Fixes:
+- The geoip_city_maxmind plugin was sometimes bind.
+- Removed an unknown security hole.
+
+Other/Documentation:
+- Updated documentation
+- Updated language files
+
+
+
+***** 6.2 *****
 
 New features/improvements:
 - awstats_updateall.pl: Added -excludeconf option
@@ -54,7 +70,8 @@ Other/Documentation:
 have no problem for users that change their hour by one.
 
 
-6.1
+
+***** 6.1 *****
 
 New features/improvements:
 - The BuildHistoryFormat can now accept xml to build the AWStats 
@@ -116,7 +133,8 @@ Other/Documentation:
   Update value of NBOFENTRYFOFLUSH
 
 
-6.0
+
+***** 6.0 *****
 
 Fixes:
 - Fixed bug 599388: Search engines are not detected if domain is IP
@@ -240,7 +258,7 @@ Note 5: When migrating to 6.x series, if you used the urlalias or userinfo
 
 
 
-5.9
+***** 5.9 *****
 
 Fixes:
 - Several fixes in maillogconvert.pl
@@ -282,7 +300,7 @@ Other/Documentation:
 
 
 
-5.8
+***** 5.8 *****
 
 Fixes:
 - mod_deflate compression reported bandwith saved instead of bandwidth used.
@@ -322,7 +340,7 @@ Other/Documentation:
 
 
 
-5.7
+***** 5.7 *****
 
 Fixes:
 - The -configdir parameter in awstats_updateall.pl is now working coorectly.
@@ -377,7 +395,7 @@ Note 1:
 
 
 
-5.6
+***** 5.6 *****
 
 Fixes:
 - Domain with no pages hits were always reported as other in domain chart.
@@ -416,7 +434,7 @@ Note 1:
   
 
 
-5.5
+***** 5.5 *****
 
 Fixes:
 - Summary robots list was limited to MaxNbOfLoginShown instead of being
@@ -469,7 +487,8 @@ Other/Documentation:
 - Updated documentation.
 
 
-5.4
+
+***** 5.4 *****
 
 Fixes:
 - File name with space inside were not correctly reported when doing FTP log
@@ -532,7 +551,8 @@ Note 2:
   used on command line.
 
 
-5.3
+
+***** 5.3 *****
 
 Fixes:
 - Fixed: Bad documentation for use of ExtraSection.
@@ -562,7 +582,8 @@ Other/Documentation:
 - Updated documentation.
 
 
-5.2
+
+***** 5.2 *****
 
 - Added urlalias plugin to replace URL values in URL reports by a text.
 - Added geoip plugin to track countries from IP location instead of domain
@@ -591,7 +612,8 @@ Other/Documentation:
 - Added Seychelles flag.
 
 
-5.1
+
+***** 5.1 *****
 
 - Better support for ftp log files.
 - Better support for mail log files.
@@ -656,7 +678,8 @@ Note 2:
   Use config= instead.
 
 
-5.0
+
+***** 5.0 *****
 
 - Complete rewrite of update process and code to read/save history files.
   AWStats 5.0 is compatible with previous versions (3.x or 4.x).
@@ -700,7 +723,8 @@ Note 2:
 - Other minor changes and bug fixes.
 
 
-4.1
+
+***** 4.1 *****
 
 - Fixed: -logfile option can be anywhere on command line and accept space
    in log file names.
@@ -721,7 +745,8 @@ Note 2:
 - Updated documentation.
 
 
-4.0
+
+***** 4.0 *****
 
   WARNING: 4.0 is not compatible with OLD history data files. If you use 4.0
   to read statistics for old month, report for "visitors" will be wrong as all
@@ -759,7 +784,7 @@ Note 2:
 - Documentation seriously updated.
 
 
-3.2
+***** 3.2 *****
 
 - Increased speed (19% faster than 3.1).
 - Fixed: AWStats history file is no more corrupted by hits made from a search
@@ -798,7 +823,8 @@ Note 2:
 - Added an HTML documentation.
 
 
-3.1
+
+***** 3.1 *****
 
 - Increased seriously speed for update process (above all for large web sites).
 - Increased VERY seriously speed for viewing stats from a browser.
@@ -821,7 +847,8 @@ Note 2:
 - New languages.
 
 
-3.0
+
+***** 3.0 *****
 
 - New look
 - Added daily report for pages, hits and bytes.
@@ -846,7 +873,8 @@ Note 2:
 - 259 domains/countries, 60 browsers database, 26 OS, 258 robots, 47 search engines.
 
 
-2.24
+
+***** 2.24 *****
 
 - Added a way to include dynamic current year, month, day and hour in LogFile parameter.
 - Option to choose month, year and language is also available from command line.
@@ -870,7 +898,8 @@ Note 2:
 - 252 domains/countries, 44 browsers database, 24 OS, 252 robots, 39 search engines.
 
 
-2.23
+
+***** 2.23 *****
 
 - Use of configuration file.
 - Now AWStats can process old log files (however, you must keep order).
@@ -889,7 +918,8 @@ Note 2:
 - Setup instructions are cleaner
 
 
-2.1
+
+***** 2.1 *****
 
 - AWStats considers myserver and www.myserver as the same, even if "HostAliases" setup is wrong.
 - Fixed a bug making unique visitors counter too high.
@@ -908,5 +938,7 @@ Note 2:
 - 252 domains/countries, 40 browsers database, 22 OS, 250 robots, 32 search engines.
 
 
-1.0
+
+***** 1.0 *****
+
 - First version, not distributed
