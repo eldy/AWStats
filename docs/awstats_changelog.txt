@@ -19,9 +19,10 @@ Fixes:
 - configure.pl: If /etc/awstats directory does not exist, try to
   create it. If /etc/awstats.model.conf not found on Linux, try to
   find from it in cgi-bin directory.
+- Some plugins broke hte xhtml output.
 
 New features/improvements:
-- Added firefox to browser database.
+- Added Firefox to browser database.
 - Added option IncludeInternalLinksInOriginSection (defined to 0 
   by default).
 - maillogconvert.pl:
@@ -35,6 +36,7 @@ New features/improvements:
   sensitive.
 
 Other/Documentation:
+- BuildReportOutput=xml renamed into BuildReportOutput=xhtml
 - Added arabic language file.
 - Updated language file.
 - Updated documentation.
