@@ -10,7 +10,7 @@ more. It works with IIS 5.0+, Apache and other web/wap/proxy server log files.
 
 License: GNU GPL (GNU General Public License. See COPYING.TXT)
 Version : 3.2
-Release date: 15 September 2001
+Release date: 15 October 2001
 Platforms: All (Linux, NT, SCO, BSD, Solaris and other *NIX's, BeOS, OS/2...)
 Author: Laurent Destailleur <eldy@users.sourceforge.net>
 AWStats web site: http://awstats.sourceforge.net
@@ -85,6 +85,8 @@ I - 3) Files
     COPYING.TXT                          GNU General Public Licence
     wwwroot/cgi-bin/awstats.pl           The main command line/CGI perl script
     wwwroot/cgi-bin/awstats.model.conf   An example of AWStats configure file
+ 	wwwroot/cgi-bin/db                   Directory with awstats reference info
+ 	wwwroot/cgi-bin/lang                 Directory with languages files
     wwwroot/icon/browser                 Directory with browsers icons
     wwwroot/icon/clock                   Directory with clocks icons
     wwwroot/icon/cpu                     Directory with cpu icons
@@ -104,13 +106,14 @@ II - 1) With Apache Server (on Unix/Linux or Windows)
         into
       CustomLog /yourlogpath/yourlogfile combined
       See your apache manual for more information.
-      Stop Apache, remove old log file and restart Apache.
+      Stop Apache, remove old log files and restart Apache.
       This is an example of records you should get in new log file:
       62.161.78.73 - - [dd/mmm/yyyy:hh:mm:ss +0000] "GET / HTTP/1.1" 200 1234 "http://www.from.com/from.htm" "Mozilla/4.0 (compatible; MSIE 5.01; Windows NT 5.0)"
 
-    * Put awstats.pl file in your cgi-bin directory (or other cgi directory).
-      Check that this file has right permissions to be ran.
-
+	* Copy all the content of provided AWStats cgi-bin directory into your web
+	  server cgi-bin directory (this includes awstats.pl, awstats.model.conf,
+	  logresolvemerge.pl and the lang and db sub-directories).
+	
     * If necessary, in awstats.pl file, edit the first line
       #!/usr/bin/perl
       to reflect the path were your perl interpreter is installed.
@@ -120,7 +123,7 @@ II - 1) With Apache Server (on Unix/Linux or Windows)
       #!c:/program files/activeperl/bin/perl
 
     * Move all awstats icon sub-directories into a directory readable by your
-      web server, for example /yourwwwroot/icon.
+      web server, for example /yourwwwroot/icon or /yourwwwroot/icons.
 
     * Copy awstats.model.conf into awstats.virtualhostname.conf or awstats.conf
       (when you will run AWStats, it will first look for a config file named
@@ -134,7 +137,7 @@ II - 1) With Apache Server (on Unix/Linux or Windows)
         can also use a relative path from your awstats.pl directory).
       - Check if "LogFormat" has the value "1" (it means "NCSA apache
         combined/ELF/XLF log format").
-      - Change the "DirIcons" parameter to reflect URL of icon directory.
+      - Change "DirIcons" parameter to reflect relative URL of icon directory.
       - Edit "SiteDomain" parameter with the main domain name or the intranet
         web server name used to reach the web site to analyze.
       - You can change other parameters if you want.
@@ -192,12 +195,14 @@ II - 2) With IIS Server
       cs-version
       cs(User-Agent)
       cs(Referer)
-      Stop IIS, remove old log file and restart IIS.
+      Stop IIS, remove old log files and restart IIS.
       This is an example of records you should get in new log file:
       2000-07-19 14:14:14 62.161.78.73 - GET / 200 1234 HTTP/1.1 Mozilla/4.0+(compatible;+MSIE+5.01;+Windows+NT+5.0) http://www.from.com/from.htm
 
-    * Put awstats.pl file in your cgi-bin directory (or other cgi directory).
-
+	* Copy all the content of provided AWStats cgi-bin directory into your web
+	  server cgi-bin directory (this includes awstats.pl, awstats.model.conf,
+	  logresolvemerge.pl and the lang and db sub-directories).
+	
     * Move all awstats icon sub-directories into a directory readable by your
       web server, for example C:\yourwwwroot\icon.
 
@@ -211,7 +216,7 @@ II - 2) With IIS Server
       - Change "LogFile" value with full path of your web server log file (You
         can also use a relative path from your awstats.pl directory).
       - Change "LogFormat" to value "2" (it means "IIS W3C log format").
-      - Change the "DirIcons" parameter to reflect URL of icon directory.
+      - Change "DirIcons" parameter to reflect relative URL of icon directory.
       - Edit "SiteDomain" parameter with the main domain name or the intranet
         web server name used to reach the web site to analyze.
       - You can change other parameters if you want.
