@@ -52,7 +52,8 @@ $LogFile, $LogFormat, $LogFormatString, $Logo, $LogoLink,
 $MaxNbOfDays, $MaxNbOfHostsShown, $MaxNbOfKeywordsShown,
 $MaxNbOfPageShown, $MaxNbOfRefererShown, $MaxNbOfRobotShown,
 $MinHitFile, $MinHitHost, $MinHitKeyword, $MinHitRefer, $MinHitRobot,
-$MonthRequired, $HTMLOutput, $PROG, $PageCode,
+$MonthRequired, $NbOfLinesForCorruptedLog,
+$HTMLOutput, $PROG, $PageCode,
 $PurgeLogFile, $QueryString, $RatioBytes, $RatioHits, $RatioHosts, $RatioPages,
 $ShowHeader, $ShowMenu, $ShowMonthDayStats, $ShowDomainsStats,
 $ShowHostsStats, $ShowRobotsStats, $ShowHoursStats, $ShowDaysOfWeekStats,
@@ -77,7 +78,7 @@ $found, $internal_link) = ();
 %MonthBytes = %MonthHits = %MonthHostsKnown = %MonthHostsUnknown = %MonthPages = %MonthUnique = %MonthVisits =
 %monthlib = %monthnum = ();
 
-$VERSION="3.2 (build 6)";
+$VERSION="3.2 (build 7)";
 $Lang="en";
 
 # Default value
@@ -88,7 +89,6 @@ $FullHostName  = 1;			# 1 = Use name.domain.zone to refer host clients, 0 = all 
 $MaxLengthOfURL= 72;		# Maximum length of URL shown on stats page. This affects only URL visible text, link still work (Default = 72)
 $MaxNbOfDays   = 31;
 $NbOfLinesForBenchmark=5000;
-$NbOfLinesForCorruptedLog=10;
 $ShowBackLink  = 1;
 $Sort          = "";
 $CENTER        = "";
@@ -106,7 +106,7 @@ $BarImageVertical_k   = "barrevk.png";
 $BarImageHorizontal_k = "barrehk.png";
 
 $AddOn=0;
-#require "${DIR}addon.pl"; $AddOn=1; 		# Keep this line commented in standard version
+require "${DIR}addon.pl"; $AddOn=1; 		# Keep this line commented in standard version
 
 # URL with such end signature are kind of URL we only need to count as hits
 @NotPageList= (
@@ -888,8 +888,8 @@ sub UnescapeURLParam {
 sub error {
 	if ($_[0] eq "Format error") {
 		# Files seems to have bad format
-		print "AWStats did not found any valid log lines that match your <b>LogFormat</b> parameter, in the 10th first non commented lines read of your log.<br>\n";
-		print "<font color=#880000>Your log file <b>$_[2]</b> must have a bad format or <b>LogFormat</b> parameter setup is wrong.</font><br><br>\n";
+		print "AWStats did not found any valid log lines that match your <b>LogFormat</b> parameter, in the ${NbOfLinesForCorruptedLog}th first non commented lines read of your log.<br>\n";
+		print "<font color=#880000>Your log file <b>$_[2]</b> must have a bad format or <b>LogFormat</b> parameter setup does not match this format.</font><br><br>\n";
 		print "Your <b>LogFormat</b> parameter is <b>$LogFormat</b>, this means each line in your log file need to have ";
 		if ($LogFormat == 1) {
 			print "<b>\"combined log format\"</b> like this:<br>\n";
@@ -911,14 +911,17 @@ sub error {
 			print "<font color=#888888><i>$LogFormat</i></font><br>\n";
 		}
 		print "<br>";
-		print "And this is a sample of what AWStats found in your log (the 10th non commented line read):<br>\n";
+		print "And this is a sample of what AWStats found in your log (the record number $NbOfLinesForCorruptedLog in your log):<br>\n";
 		print ($ENV{"GATEWAY_INTERFACE"} ne ""?"<font color=#888888><i>":"");
 		print "$_[1]";
-		print ($ENV{"GATEWAY_INTERFACE"} ne ""?"</i></font><br>":"");
+		print ($ENV{"GATEWAY_INTERFACE"} ne ""?"</i></font><br><br>":"");
+		print "\n";
+		print "Note: If your $NbOfLinesForCorruptedLog first lines in your log files are wrong because they are result of a worm virus attack,\n";
+		print "you can increase the NbOfLinesForCorruptedLog parameter in config file.\n";
 		print "\n";
 	}			
    	if ($_[0] ne "Format error" && $_[0] ne "") {
-   		print ($ENV{"GATEWAY_INTERFACE"} ne ""?"<font color=#880000>":"");
+   		print ($ENV{"GATEWAY_INTERFACE"} ne ""?"<br><font color=#880000>":"");
    		print "$_[0]";
    		print ($ENV{"GATEWAY_INTERFACE"} ne ""?"</font><br>":"");
    		print "\n";
@@ -1044,27 +1047,27 @@ sub Read_Config_File {
 		if ($param =~ /^DefaultFile/)           { $DefaultFile=$value; next; }
 		if ($param =~ /^SkipHosts/) {
 			my @felter=split(/\s+/,$value);
-			$i=0; foreach $elem (@felter)      { $SkipHosts[$i]=$elem; $i++; }
+			$i=0; foreach $elem (@felter)       { $SkipHosts[$i]=$elem; $i++; }
 			next;
 			}
 		if ($param =~ /^SkipDNSLookupFor/) {
 			my @felter=split(/\s+/,$value);
-			$i=0; foreach $elem (@felter)      { $SkipDNSLookupFor[$i]=$elem; $i++; }
+			$i=0; foreach $elem (@felter)       { $SkipDNSLookupFor[$i]=$elem; $i++; }
 			next;
 			}
 		if ($param =~ /^SkipFiles/) {
 			my @felter=split(/\s+/,$value);
-			$i=0; foreach $elem (@felter)      { $SkipFiles[$i]=$elem; $i++; }
+			$i=0; foreach $elem (@felter)       { $SkipFiles[$i]=$elem; $i++; }
 			next;
 			}
 		if ($param =~ /^OnlyFiles/) {
 			my @felter=split(/\s+/,$value);
-			$i=0; foreach $elem (@felter)      { $OnlyFiles[$i]=$elem; $i++; }
+			$i=0; foreach $elem (@felter)       { $OnlyFiles[$i]=$elem; $i++; }
 			next;
 			}
-		if ($param =~ /^URLWithQuery/)         { $URLWithQuery=$value; next; }
+		if ($param =~ /^URLWithQuery/)          { $URLWithQuery=$value; next; }
 		if ($param =~ /^WarningMessages/)       { $WarningMessages=$value; next; }
-		if ($param =~ /^Expires/)               { $Expires=$value; next; }
+		if ($param =~ /^NbOfLinesForCorruptedLog/) { $NbOfLinesForCorruptedLog=$value; next; }
 		if ($param =~ /^FirstDayOfWeek/)       	{ $FirstDayOfWeek=$value; next; }
 		if ($param =~ /^MaxNbOfDomain/)         { $MaxNbOfDomain=$value; next; }
 		if ($param =~ /^MaxNbOfHostsShown/)     { $MaxNbOfHostsShown=$value; next; }
@@ -1078,6 +1081,7 @@ sub Read_Config_File {
 		if ($param =~ /^MaxNbOfKeywordsShown/)  { $MaxNbOfKeywordsShown=$value; next; }
 		if ($param =~ /^MinHitKeyword/)         { $MinHitKeyword=$value; next; }
 		if ($param =~ /^SplitSearchString/)     { $SplitSearchString=$value; next; }
+		if ($param =~ /^Expires/)               { $Expires=$value; next; }
 		if ($param =~ /^ShowHeader/)             { $ShowHeader=$value; next; }
 		if ($param =~ /^ShowMenu/)               { $ShowMenu=$value; next; }
 		if ($param =~ /^ShowMonthDayStats/)      { $ShowMonthDayStats=$value; next; }
@@ -1223,52 +1227,53 @@ sub Check_Config {
 	if ($LogFormat =~ /^[\d]$/ && $LogFormat !~ /[1-4]/)  { error("Error: LogFormat parameter is wrong. Value is '$LogFormat' (should be 1 or 2 or a 'personalised AWtats log format string')"); }
 	if ($DNSLookup !~ /[0-1]/)                            { error("Error: DNSLookup parameter is wrong. Value is '$DNSLookup' (should be 0 or 1)"); }
 	if ($AllowToUpdateStatsFromBrowser !~ /[0-1]/) { $AllowToUpdateStatsFromBrowser=1; }	# For compatibility, is 1 if not defined
-	if ($PurgeLogFile !~ /[0-1]/)                { $PurgeLogFile=0; }
-	if ($ArchiveLogRecords !~ /[0-1]/)           { $ArchiveLogRecords=1; }
+	if ($PurgeLogFile !~ /[0-1]/)                 { $PurgeLogFile=0; }
+	if ($ArchiveLogRecords !~ /[0-1]/)            { $ArchiveLogRecords=1; }
 	# Optional section
-	if ($DefaultFile eq "")                      { $DefaultFile="index.html"; }
-	if ($URLWithQuery !~ /[0-1]/)                { $URLWithQuery=0; }
-	if ($WarningMessages !~ /[0-1]/)             { $WarningMessages=1; }
-	if ($FirstDayOfWeek !~ /[0-1]/)              { $FirstDayOfWeek=1; }
-	if ($MaxNbOfDomain !~ /^[\d][\d]*/)          { $MaxNbOfDomain=25; }
-	if ($MaxNbOfHostsShown !~ /^[\d][\d]*/)      { $MaxNbOfHostsShown=25; }
-	if ($MinHitHost !~ /^[\d][\d]*/)             { $MinHitHost=1; }
-	if ($MaxNbOfRobotShown !~ /^[\d][\d]*/)      { $MaxNbOfRobotShown=25; }
-	if ($MinHitRobot !~ /^[\d][\d]*/)            { $MinHitRobot=1; }
-	if ($MaxNbOfPageShown !~ /^[\d][\d]*/)       { $MaxNbOfPageShown=25; }
-	if ($MinHitFile !~ /^[\d][\d]*/)             { $MinHitFile=1; }
-	if ($MaxNbOfRefererShown !~ /^[\d][\d]*/)    { $MaxNbOfRefererShown=25; }
-	if ($MinHitRefer !~ /^[\d][\d]*/)            { $MinHitRefer=1; }
-	if ($MaxNbOfKeywordsShown !~ /^[\d][\d]*/)   { $MaxNbOfKeywordsShown=25; }
-	if ($MinHitKeyword !~ /^[\d][\d]*/)          { $MinHitKeyword=1; }
-	if ($MaxNbOfLastHosts !~ /^[\d][\d]*/)       { $MaxNbOfLastHosts=1000; }
-	if ($SplitSearchString !~ /[0-1]/)           { $SplitSearchString=0; }
-	if ($Expires !~ /^[\d][\d]*/)                { $Expires=0; }
-	if ($ShowHeader !~ /[0-1]/)                  { $ShowHeader=1; }
-	if ($ShowMenu !~ /[0-1]/)                    { $ShowMenu=1; }
-	if ($ShowMonthDayStats !~ /[0-1]/)           { $ShowMonthDayStats=1; }
-	if ($ShowDomainsStats !~ /[0-1]/)            { $ShowDomainsStats=1; }
-	if ($ShowHostsStats !~ /[0-1]/)              { $ShowHostsStats=1; }
-	if ($ShowRobotsStats !~ /[0-1]/)             { $ShowRobotsStats=1; }
-	if ($ShowHoursStats !~ /[0-1]/)              { $ShowHoursStats=1; }
-	if ($ShowDaysOfWeekStats !~ /[0-1]/)         { $ShowDaysOfWeekStats=1; }
-	if ($ShowPagesStats !~ /[0-1]/)              { $ShowPagesStats=1; }
-	if ($ShowFileTypesStats !~ /[0-1]/)          { $ShowFileTypesStats=1; }
-	if ($ShowFileSizesStats !~ /[0-1]/)          { $ShowFileSizeStats=1; }
-	if ($ShowBrowsersStats !~ /[0-1]/)           { $ShowBrowsersStats=1; }
-	if ($ShowOSStats !~ /[0-1]/)                 { $ShowOSStats=1; }
-	if ($ShowOriginStats !~ /[0-1]/)             { $ShowOriginStats=1; }
-	if ($ShowKeyphrasesStats !~ /[0-1]/)         { $ShowKeyphrasesStats=1; }
-	if ($ShowKeywordsStats !~ /[0-1]/)           { $ShowKeywordsStats=1; }
-	if ($ShowHTTPErrorsStats !~ /[0-1]/)         { $ShowHTTPErrorsStats=1; }
-	if ($ShowAuthenticatedUsers !~ /[0-1]/)      { $ShowAuthenticatedUsers=1; }
-	if ($ShowFlagLinks !~ /[0-1]/)               { $ShowFlagLinks=1; }
-	if ($ShowLinksOnURL !~ /[0-1]/)              { $ShowLinksOnURL=1; }
-	if ($DetailedReportsOnNewWindows !~ /[0-1]/) { $DetailedReportsOnNewWindows=1; }
-	if ($BarWidth !~ /^[\d][\d]*/)               { $BarWidth=260; }
-	if ($BarHeight !~ /^[\d][\d]*/)              { $BarHeight=180; }
-	if ($Logo eq "")                             { $Logo="awstats_logo1.png"; }
-	if ($LogoLink eq "")                         { $LogoLink="http://awstats.sourceforge.net"; }
+	if ($DefaultFile eq "")                       { $DefaultFile="index.html"; }
+	if ($URLWithQuery !~ /[0-1]/)                 { $URLWithQuery=0; }
+	if ($WarningMessages !~ /[0-1]/)              { $WarningMessages=1; }
+	if ($NbOfLinesForCorruptedLog !~ /[\d][\d]*/) { $NbOfLinesForCorruptedLog=50; }
+	if ($FirstDayOfWeek !~ /[0-1]/)               { $FirstDayOfWeek=1; }
+	if ($MaxNbOfDomain !~ /^[\d][\d]*/)           { $MaxNbOfDomain=25; }
+	if ($MaxNbOfHostsShown !~ /^[\d][\d]*/)       { $MaxNbOfHostsShown=25; }
+	if ($MinHitHost !~ /^[\d][\d]*/)              { $MinHitHost=1; }
+	if ($MaxNbOfRobotShown !~ /^[\d][\d]*/)       { $MaxNbOfRobotShown=25; }
+	if ($MinHitRobot !~ /^[\d][\d]*/)             { $MinHitRobot=1; }
+	if ($MaxNbOfPageShown !~ /^[\d][\d]*/)        { $MaxNbOfPageShown=25; }
+	if ($MinHitFile !~ /^[\d][\d]*/)              { $MinHitFile=1; }
+	if ($MaxNbOfRefererShown !~ /^[\d][\d]*/)     { $MaxNbOfRefererShown=25; }
+	if ($MinHitRefer !~ /^[\d][\d]*/)             { $MinHitRefer=1; }
+	if ($MaxNbOfKeywordsShown !~ /^[\d][\d]*/)    { $MaxNbOfKeywordsShown=25; }
+	if ($MinHitKeyword !~ /^[\d][\d]*/)           { $MinHitKeyword=1; }
+	if ($MaxNbOfLastHosts !~ /^[\d][\d]*/)        { $MaxNbOfLastHosts=1000; }
+	if ($SplitSearchString !~ /[0-1]/)            { $SplitSearchString=0; }
+	if ($Expires !~ /^[\d][\d]*/)                 { $Expires=0; }
+	if ($ShowHeader !~ /[0-1]/)                   { $ShowHeader=1; }
+	if ($ShowMenu !~ /[0-1]/)                     { $ShowMenu=1; }
+	if ($ShowMonthDayStats !~ /[0-1]/)            { $ShowMonthDayStats=1; }
+	if ($ShowDomainsStats !~ /[0-1]/)             { $ShowDomainsStats=1; }
+	if ($ShowHostsStats !~ /[0-1]/)               { $ShowHostsStats=1; }
+	if ($ShowRobotsStats !~ /[0-1]/)              { $ShowRobotsStats=1; }
+	if ($ShowHoursStats !~ /[0-1]/)               { $ShowHoursStats=1; }
+	if ($ShowDaysOfWeekStats !~ /[0-1]/)          { $ShowDaysOfWeekStats=1; }
+	if ($ShowPagesStats !~ /[0-1]/)               { $ShowPagesStats=1; }
+	if ($ShowFileTypesStats !~ /[0-1]/)           { $ShowFileTypesStats=1; }
+	if ($ShowFileSizesStats !~ /[0-1]/)           { $ShowFileSizeStats=1; }
+	if ($ShowBrowsersStats !~ /[0-1]/)            { $ShowBrowsersStats=1; }
+	if ($ShowOSStats !~ /[0-1]/)                  { $ShowOSStats=1; }
+	if ($ShowOriginStats !~ /[0-1]/)              { $ShowOriginStats=1; }
+	if ($ShowKeyphrasesStats !~ /[0-1]/)          { $ShowKeyphrasesStats=1; }
+	if ($ShowKeywordsStats !~ /[0-1]/)            { $ShowKeywordsStats=1; }
+	if ($ShowHTTPErrorsStats !~ /[0-1]/)          { $ShowHTTPErrorsStats=1; }
+	if ($ShowAuthenticatedUsers !~ /[0-1]/)       { $ShowAuthenticatedUsers=1; }
+	if ($ShowFlagLinks !~ /[0-1]/)                { $ShowFlagLinks=1; }
+	if ($ShowLinksOnURL !~ /[0-1]/)               { $ShowLinksOnURL=1; }
+	if ($DetailedReportsOnNewWindows !~ /[0-1]/)  { $DetailedReportsOnNewWindows=1; }
+	if ($BarWidth !~ /^[\d][\d]*/)                { $BarWidth=260; }
+	if ($BarHeight !~ /^[\d][\d]*/)               { $BarHeight=180; }
+	if ($Logo eq "")                              { $Logo="awstats_logo1.png"; }
+	if ($LogoLink eq "")                          { $LogoLink="http://awstats.sourceforge.net"; }
 	$color_Background =~ s/#//g; if ($color_Background !~ /^[0-9|A-Z][0-9|A-Z]*$/i)           { $color_Background="FFFFFF";	}
 	$color_TableBGTitle =~ s/#//g; if ($color_TableBGTitle !~ /^[0-9|A-Z][0-9|A-Z]*$/i)       { $color_TableBGTitle="CCCCDD"; }
 	$color_TableTitle =~ s/#//g; if ($color_TableTitle !~ /^[0-9|A-Z][0-9|A-Z]*$/i)           { $color_TableTitle="000000"; }
