@@ -12,6 +12,7 @@
 # DomainsHashIDLib
 # List of domain with their name ("domain id", "Domain name")
 # Official list can be found at http://www.iana.org/cctld/cctld-whois.htm
+# "Domain id" should be ISO 3166 code + miscelanous domains
 #-------------------------------------------------------
 %DomainsHashIDLib = (
 "localhost","localhost",
@@ -83,5 +84,6 @@
 "ws","Web sites","ye","Yemen","yt","Mayotte","yu","Yugoslavia","za","South Africa",
 "zm","Zambia","zr","Zaire","zw","Zimbabwe"
 );
+
 
 1;
