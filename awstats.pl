@@ -14,7 +14,7 @@
 #-------------------------------------------------------
 # Defines
 #-------------------------------------------------------
-$VERSION="2.24 (build 4)";
+$VERSION="2.24 (build 5)";
 $Lang=0;
 
 # Default value
@@ -53,46 +53,66 @@ $BarImageHorizontal_k = "barrehk.png";
 			"/YourRelativeUrl",						"<b>Your HTML text</b>"
 			);
 
-# ---------- Search engines list --------------------
+# ---------- Search engines names database ---------- (update the 10th january 2001)
 %SearchEnginesHash=(
 # Most common search engines
-"yahoo\.","Yahoo",				"altavista\.","AltaVista",
-"msn\.dk/","MSN (dk)",			"msn\.fr/","MSN (fr)",		"msn\.","MSN",
-"voila\.", "Voila",				"lycos\.","Lycos",			"nomade\.fr/","Nomade",
+"yahoo\.","Yahoo",
+"altavista\.","AltaVista",
+"msn\.","MSN",
+"voila\.", "Voila",
+"lycos\.","Lycos",
 "search\.terra\.","Terra",
-"google\.","Google",			"alltheweb\.com","AllTheWeb",
-# Others
-"hotbot\.","Hotbot",			"northernlight\.","NorthernLight",	
-"webcrawler\.","WebCrawler",	"metacrawler\.","MetaCrawler (Metamoteur)",	"go2net\.com","Go2Net (Metamoteur)",
-"go\.com","Go.com",		
-"euroseek\.","Euroseek",		"excite\.","Excite",		"lokace\.", "Lokace",	"spray\.","Spray",
-"ctrouve\.","C'est trouvé",		"francite\.","Francité",	"\.lbb\.org", "LBB",	"rechercher\.libertysurf\.fr","Libertysurf",
-"netscape\.","Netscape",		"netfind\.aol\.com","AOL",	"recherche\.aol\.fr","AOL",
-"snap\.","Snap",				"nbci\.com/search","NBCI",
-"askjeeves\.","Ask Jeeves",		"mamma\.","Mamma",
-"dejanews\.","DejaNews",
+"google\.","Google",
+"alltheweb\.com","AllTheWeb",
+"netscape\.","Netscape",		
+"northernlight\.","NorthernLight",	
 "dmoz\.org","DMOZ",
+# Others
+"nomade\.fr/","Nomade",
+"hotbot\.","Hotbot",
+"webcrawler\.","WebCrawler",
+"metacrawler\.","MetaCrawler (Metamoteur)",
+"go2net\.com","Go2Net (Metamoteur)",
+"go\.com","Go.com",		
+"euroseek\.","Euroseek",
+"excite\.","Excite",
+"lokace\.", "Lokace",
+"spray\.","Spray",
+"ctrouve\.","C'est trouvé",		"francite\.","Francité",	"\.lbb\.org", "LBB",	"rechercher\.libertysurf\.fr","Libertysurf",
+"netfind\.aol\.com","AOL",		"recherche\.aol\.fr","AOL",
+"nbci\.com/search","NBCI",
+"askjeeves\.","Ask Jeeves",
+"mamma\.","Mamma",
+"dejanews\.","DejaNews",
 "search\.com","Other search engines"
 );
 
-# ---------- Search engines URL --------------------
-@SearchEngineUrl=(
+# ---------- Search engines known URL database ---------- (update the 10th january 2001)
+%SearchEngineKnownUrl=(
+# Most common search engines
 "yahoo\.","p=",
 "altavista\.","q=",
-"msn\.dk","MT=",
-"msn\.fr","MT=",
-"msn\.","MT=",
+"msn\.","mt=",
+"voila\.","kw=",
+"lycos\.","query=",
 "google\.","q=",
 "alltheweb\.","query=",
-"lycos\.","query=",
-"excite\.","search=",
-"infoseek\.","qt=",
-"eureka\.","q=",
-"hotbot\.","MT=",
-"webcrawler","searchText=",
 "netscape\.","search=",
-"mamma\.","query=",
-"northernlight\.","qr="
+"northernlight\.","qr=",
+"dmoz\.org","search=",
+# Others
+"nomade\.fr/","s=",
+"hotbot\.","mt=",
+"webcrawler","searchText=",
+"metacrawler\.","general=",
+"go2net\.com","general=",
+"go\.com","qt=",
+"euroseek\.","query=",
+"excite\.","search=",
+"spray\.","string=",
+"nbci\.com/search","keyword=",
+"askjeeves\.","ask=",
+"mamma\.","query="
 );
 @WordsToCleanSearchUrl= ("act=","annuaire=","btng=","categoria=","cou=","dd=","domain=","dt=","dw=","exec=","geo=","hc=","height=","hl=","hs=","kl=","lang=","loc=","lr=","matchmode=","medor=","message=","meta=","mode=","order=","page=","par=","pays=","pg=","pos=","prg=","qc=","refer=","sa=","safe=","sc=","sort=","src=","start=","stype=","tag=","temp=","theme=","url=","user=","width=","what=","\\.x=","\\.y=");
 # Never put the following exclusion ("Claus=","kw=","keyword=","MT","p=","q=","qr=","qt=","query=","s=","search=","searchText=") because they are strings that contain keywords we're looking for.
@@ -1101,7 +1121,7 @@ sub tab_end {
 	print "</TD></TR></TABLE>\n\n";
 }
 
-sub UnescapeURL {
+sub UnescapeURLParam {
 	$_[0] =~ s/\+/ /gi;
 	$_[0] =~ s/%20/ /gi;	#
 	$_[0] =~ s/%22//gi;		#"
@@ -1111,7 +1131,7 @@ sub UnescapeURL {
 	$_[0] =~ s/%29//gi;		#)
 	$_[0] =~ s/%2b/ /gi;	#+
 	$_[0] =~ s/%2c/ /gi;	#,
-	$_[0] =~ s/%2d//gi;		#-
+	$_[0] =~ s/%2d/-/gi;	#-
 	$_[0] =~ s/%2e/\./gi;	#.
 	$_[0] =~ s/%2f/ /gi;	#/
 	$_[0] =~ s/%3c/ /gi;	#<
@@ -1125,7 +1145,6 @@ sub UnescapeURL {
 	$_[0] =~ s/%f1/ñ/gi;	#ñ
 	$_[0] =~ s/%f2/ò/gi;	#ò
 	$_[0] =~ s/%f3/ó/gi;	#ó
-	$_[0] =~ s/[0-9]//gi;	#		$_[0] =~ s/^[0-9]*//gi; should be better but not tested yet
 	$_[0] =~ s/\"//gi;
 }
 
@@ -1273,17 +1292,6 @@ sub Check_Config {
 	if (! ($color_h =~ /[\d]/))               { $color_h="#66F0FF"; }
 	if (! ($color_k =~ /[\d]/))               { $color_k="#339944"; }
 	if (! ($color_s =~ /[\d]/))               { $color_s="#8888DD"; }
-}
-
-sub Read_History_File_For_LastTime {
-if (open(HISTORY,"$DirData/$PROG$_[0]$_[1]$FileSuffix.txt")) {
-	while (<HISTORY>) {
-		$_ =~ s/\n//;
-		@field=split(/ /,$_);
-		if ($field[0] eq "LastTime")        { $LastTime{$_[0].$_[1]}=$field[1]; last; }
-		}
-	}
-close HISTORY;
 }
 
 sub Read_History_File {
@@ -1576,7 +1584,7 @@ $LogFileWithoutLog=$LogFile;$LogFileWithoutLog =~ s/\.log$//;
 ($nowsec,$nowmin,$nowmin,$nowday,$nowmonth,$nowyear,$nowwday,$nowyday,$nowisdst) = localtime(time);
 if ($nowyear < 100) { $nowyear+=2000; } else { $nowyear+=1900; }
 $nowsmallyear=$nowyear;$nowsmallyear =~ s/^..//;
-if ($nowmonth++ < 10) { $nowmonth = "0$nowmonth"; }
+if (++$nowmonth < 10) { $nowmonth = "0$nowmonth"; }
 if ($nowday < 10) { $nowday = "0$nowday"; }
 
 if ($QueryString =~ /year=[\d][\d][\d][\d]/) { $YearRequired=$QueryString; $YearRequired =~ s/.*year=//; $YearRequired =~ s/&.*//; }
@@ -1993,27 +2001,47 @@ if (($YearRequired == $nowyear) && ($MonthRequired eq "year" || $MonthRequired =
 					$refurl[0] =~ tr/A-Z/a-z/;
 				    foreach $key (keys %SearchEnginesHash) {
 						if ($refurl[0] =~ /$key/) {
-							# This hit came from a search engine
+							# This hit came from the search engine $key
 							$_from_h[2]++;
 							$_se_referrals_h{$key}++;
+							$found=1;									
 							# Extract keywords
-							$refurl[1] =~ tr/A-Z/a-z/;
+							$refurl[1] =~ tr/A-Z/a-z/;				# Full param string in lowcase
+							&UnescapeURLParam($refurl[1]);			# Change [ xxx=123&yyy=aaa+bbb/ccc+ddd%20eee'fff ] into [ xxx=123&yyy=aaa bbb ccc ddd eee fff ]
 							@paramlist=split(/&/,$refurl[1]);
-							foreach $param (@paramlist) {
-								$keep=1;
-								&UnescapeURL($param);				# Change xxx=aaa+bbb/ccc+ddd%20eee'fff into xxx=aaa bbb ccc ddd eee fff
-								foreach $paramtoexclude (@WordsToCleanSearchUrl) {
-									if ($param =~ /.*$paramtoexclude.*/i) { $keep=0; last; } # Not the param with search criteria
-								}
-								if ($keep == 0) { next; }			# Do not keep this URL parameter because is in exclude list
-								# Ok. xxx=aaa bbb ccc ddd eee fff is a search parameter line
-								$param =~ s/.*=//g;					# Cut chars xxx=
-								@wordlist=split(/ /,$param);		# Split aaa bbb ccc ddd eee fff into a wordlist array
-								foreach $word (@wordlist) {
-									if ((length $word) > 2) { $_keywords{$word}++; }	# Keep word only if word length is 3 or more
+							if ($SearchEngineKnownUrl{$key}) {		# Search engine with known URL syntax
+								foreach $param (@paramlist) {
+									if ($param =~ /^$SearchEngineKnownUrl{$key}/) { # We found good parameter
+										# Ok. xxx=aaa bbb ccc ddd eee fff is a search parameter line
+										$param =~ s/.*=//g;					# Cut "yyy=" out of line
+										if ($CutKeyWords) {
+											@wordlist=split(/ /,$param);	# Split aaa bbb ccc ddd eee fff into a wordlist array
+											foreach $word (@wordlist) {
+												if ((length $word) > 0) { $_keywords{$word}++; }
+											}
+										}
+										else {
+											if ((length $param) > 0) { $_keywords{$param}++; }
+										}
+										last;
+									}
 								}
 							}
-							$found=1;
+							else {									# Search engine with unknown URL syntax
+								foreach $param (@paramlist) {
+									$keep=1;
+									foreach $paramtoexclude (@WordsToCleanSearchUrl) {
+										if ($param =~ /.*$paramtoexclude.*/) { $keep=0; last; } # Not the param with search criteria
+									}
+									if ($keep == 0) { next; }			# Do not keep this URL parameter because is in exclude list
+									# Ok. xxx=aaa bbb ccc ddd eee fff is a search parameter line
+									$param =~ s/.*=//g;					# Cut chars xxx=
+									@wordlist=split(/ /,$param);		# Split aaa bbb ccc ddd eee fff into a wordlist array
+									foreach $word (@wordlist) {
+										if ((length $word) > 2) { $_keywords{$word}++; }	# Keep word only if word length is 3 or more
+									}
+								}
+							}
 							last;
 						}
 					}
@@ -2044,7 +2072,6 @@ if (($YearRequired == $nowyear) && ($MonthRequired eq "year" || $MonthRequired =
 
 	# Save for month $monthtoprocess
 	if ($monthtoprocess) {	# If monthtoprocess is 0, it means there was no history files and we found no valid lines in log file
-#		&Read_History_File($monthtoprocess,$yeartoprocess,1);	# Add full history file to data
 		&Save_History_File($monthtoprocess,$yeartoprocess);		# We save data for this month
 		if (($MonthRequired ne "year") && ($monthtoprocess != $MonthRequired)) { &Init_HashArray; }	# Not a desired month, so we clean data
 	}
