@@ -163,10 +163,10 @@ But this can change. You should ask to have a such Add-On to PHPNuke authors, an
 
 <a name="MISSINGDOLLAR"></a><br>
 <b><u>FAQ-SET050 : ERROR "MISSING $ ON LOOP VARIABLE ..."</u></b><br>
-<font class=CProblem>PROBLEM:</font>
+<font class=CProblem>PROBLEM:</font><br>
 When I run awstats.pl from command line, I get:<br>
 <i>"Missing $ on loop variable at awstats.pl line xxx"</i><br>
-<font class=CSolution>SOLUTION:</font>
+<font class=CSolution>SOLUTION:</font><br>
 Problem is in your Perl interpreter. Try to install or reinstall a more recent/stable Perl interpreter.<br>
 You can get new Perl version at <a href="http://www.activestate.com/ActivePerl/">ActivePerl</a> (<font color=#221188>Win32</font>)
 or <a href="http://www.perl.com/pub/language/info/software.html">Perl.com</a> (<font color=#221188>Unix/Linux/Other</font>).<br>
@@ -174,10 +174,10 @@ or <a href="http://www.perl.com/pub/language/info/software.html">Perl.com</a> (<
 
 <a name="CGISOURCE"></a><br>
 <b><u>FAQ-SET100 : I SEE PERL SCRIPT'S SOURCE INSTEAD OF ITS EXECUTION</u></b><br>
-<font class=CProblem>PROBLEM:</font>
+<font class=CProblem>PROBLEM:</font><br>
 When I try to execute the Perl script through the web server,
 I see the Perl script's source instead of the HTML result page of its execution !<br>
-<font class=CSolution>SOLUTION:</font>
+<font class=CSolution>SOLUTION:</font><br>
 This is not a problem of AWStats but a problem in your web server setup.
 awstats.pl file must be in a directory defined in your web server to be a "cgi" directory,
 this means, a directory configured in your web server to contain "executable" files and
@@ -190,18 +190,23 @@ properties, with Apache you have to use the "ExecCGI" option in the directory "D
 <a name="SPAWNERROR"></a><a name="INTERNAL"></a><br>
 <b><u>FAQ-SET150 : INTERNAL ERROR 500 IN MY BROWSER</u></b><br>
 <b><u>FAQ-SET200 : ERROR "... COULDN'T CREATE/SPAWN CHILD PROCESS..."</u></b><br>
-<font class=CProblem>PROBLEM:</font>
+<font class=CProblem>PROBLEM:</font><br>
 AWStats seems to run fine at the command prompt but when ran as a CGI from a browser, I get an <i>"Internal Error 500"</i>.<br>
-I also get the following message in my Apache error log file (or in browser with Apache 2.0+):<br>
+I also also might have the following message in my Apache error log file (or in browser with Apache 2.0+):<br>
 <i>...couldn't create/spawn child process: c:/mywebroot/cgi-bin/awstats.pl</i><br>
-<font class=CSolution>SOLUTION:</font>
-This problem occurs with Apache web server with no internal Perl interpreter (mod_perl not
-active). To solve this, you must tell Apache where is your Perl interpreter.<br>
+<font class=CSolution>SOLUTION:</font><br>
+First, try to run awstats.pl from command line to see if file is correct. If you get some
+syntax errors and use a Unix like OS, check if your file is a Unix like text file (This
+means each line end with a LF char and not a CR+LF char).<br>
+If awstats.pl file runs correctly from command line, this is probably because your
+web server is not able to known how to run perl scripts. This problem can occur with Apache web
+servers with no internal Perl interpreter (mod_perl not active). To solve this, you must
+tell Apache where is your external Perl interpreter.<br>
 <u>For this, you have 2 solutions:</u><br>
 1) Add the following directive in your Apache <b>httpd.conf</b> config (or remove the # to uncomment it if line is already available)<br>
 <b><i>ScriptInterpreterSource registry</i></b><br>
 Then restart Apache. This will tell Apache to look into the registry to find the program associated to .pl extension.<br>
-2) Other solution (not necessary if first works): Change the first line of awstats.pl file with the full path of your Perl interpreter.<br>
+2) Other solution (not necessary if first solution works): Change the first line of awstats.pl file with the full path of your Perl interpreter.<br>
 Example with Windows OS and ActivePerl Perl interpreter (installed in C:\Program Files\ActiveState\ActivePerl),
 you must change the first line of awstats.pl file with:<br>
 <i>#!c:/program files/activestate/activeperl/bin/perl</i><br>
@@ -209,8 +214,9 @@ you must change the first line of awstats.pl file with:<br>
 
 <a name="IE6CRASH"></a><a name="IE6CRASH"></a><br>
 <b><u>FAQ-SET220 : IE6 CRASH WHILE RUNNING AWSTATS.PL</u></b><br>
-<font class=CProblem>PROBLEM:</font> Sometimes IE6 crash while running awstats.pl with some AWStats configuration. Other versions or browsers works fine.<br>
-<font class=CSolution>SOLUTION:</font>
+<font class=CProblem>PROBLEM:</font><br>
+Sometimes IE6 crash while running awstats.pl with some AWStats configuration. Other versions or browsers works fine.<br>
+<font class=CSolution>SOLUTION:</font><br>
 A lot of users had experienced problems with IE6. It seems that this browser is not able to load a 60k text
 served by perl script which would read the 60k text file and then display the html page.
 The only solution is to wait of fix from MS or use another version (5.0, 5.5...) or browser (Netscape, Opera...).<br>
@@ -218,9 +224,9 @@ The only solution is to wait of fix from MS or use another version (5.0, 5.5...)
 
 <a name="PERSONALIZEDLOG"></a><br>
 <b><u>FAQ-SET250 : LOG FORMAT SETUP OR ERRORS</u></b><br>
-<font class=CProblem>PROBLEM:</font> Which value do I have to put in the LogFormat
-parameter to make AWStats working with my log file format ?<br>
-<font class=CSolution>SOLUTION:</font>
+<font class=CProblem>PROBLEM:</font><br>
+Which value do I have to put in the LogFormat parameter to make AWStats working with my log file format ?<br>
+<font class=CSolution>SOLUTION:</font><br>
 The AWStats config file give you all possible values for LogFormat parameter.
 To help you, this is some common cases of log file format, and
 the corresponding value for LogFormat you must use in your AWStats config file:<br>
@@ -286,8 +292,9 @@ support other various log formats.<br>
 
 <a name="FTP"></a><br>
 <b><u>FAQ-SET260 : SETUP FOR FTP SERVER LOG FILES</u></b><br>
-<font class=CProblem>PROBLEM:</font> What do I have to do to use AWStats to analyze some FTP server log files.<br>
-<font class=CSolution>SOLUTION:</font>
+<font class=CProblem>PROBLEM:</font><br>
+What do I have to do to use AWStats to analyze some FTP server log files.<br>
+<font class=CSolution>SOLUTION:</font><br>
 AWStats was built to analyze web,wap or proxy server's log files. However it can be used with some FTP server log files.<br>
 <u>This is example for ProFTP:</u><br>
 Modify the proftpd.conf file. At the very top add two new defines.<br>
@@ -309,9 +316,10 @@ log file to replace 'space' char into '_'...<br>
 
 <a name="NOTSAMENUMBER"></a><br>
 <b><u>FAQ-SET280 : ERROR "NOT SAME NUMBER OF RECORDS OF..."</u></b><br>
-<font class=CProblem>PROBLEM:</font> When I run AWStats from command line (or as a cgi from a browser), I get
+<font class=CProblem>PROBLEM:</font><br>
+When I run AWStats from command line (or as a cgi from a browser), I get
 a message "Not same number of records of ...".<br>
-<font class=CSolution>SOLUTION:</font>
+<font class=CSolution>SOLUTION:</font><br>
 This means your AWStats reference database files (operating systems, browsers, robots...) are not correct.
 First try to update to 4.0. Then check in your disk that you have only ONE of those files. They should be
 in '<b>lib</b>' directory ('db' with 4.0) where awstats.pl is installed:<br>
@@ -324,10 +332,11 @@ in '<b>lib</b>' directory ('db' with 4.0) where awstats.pl is installed:<br>
 
 <a name="COULDNOTOPEN"></a><br>
 <b><u>FAQ-SET300 : ERROR "COULDN'T OPEN FILE ..."</u></b><br>
-<font class=CProblem>PROBLEM:</font> I have the following error:<br>
+<font class=CProblem>PROBLEM:</font><br>
+I have the following error:<br>
 <i>"Couldn't open file /workingpath/awstatsmmyyyy.tmp.9999: Permission denied."</i><br>
-<font class=CSolution>SOLUTION:</font> This error means that the web server 
-didn't succeed in writing the working temporary file (file ended by .tmp.9999 
+<font class=CSolution>SOLUTION:</font><br>
+This error means that the web server didn't succeed in writing the working temporary file (file ended by .tmp.9999 
 where 9999 is a number) because of permissions problems.<br>
 First check that the directory <i>/workingpath</i> has "Write" permission for<br>
 user <u>nobody</u> (default user used by Apache on Linux systems)<br>
@@ -345,10 +354,10 @@ user, used by web server process, can write into).<br>
 
 <a name="EMPTY_STATS"></a><br>
 <b><u>FAQ-SET350 : EMPTY OR NULL STATISTICS REPORTED</u></b><br>
-<font class=CProblem>PROBLEM:</font> AWStats seems to work but I'm not 
-getting any results. i get a statistics page that looks like i have no hits.<br>
-<font class=CSolution>SOLUTION:</font> That's the most common problem you 
-can have and reason is simple: Your log file format setup is wrong.<br>
+<font class=CProblem>PROBLEM:</font><br>
+AWStats seems to work but I'm not getting any results. i get a statistics page that looks like i have no hits.<br>
+<font class=CSolution>SOLUTION:</font><br>
+That's the one of the most common problem you can have and reason is simple: Your log file format setup is wrong.<br>
 <u>If you use Apache web server</u><br>
 The best way of working is to use the <i>"combined"</i> log format (See the <a href="awstats_setup.html">Setup and Use</a> page
 to know the way to change your Apache server log from <i>"common"</i> log format into <i>"combined"</i>).
@@ -367,20 +376,22 @@ You can also read the next FAQ to have examples of <a href="awstats_config.html#
 
 <a name="REDIRECT"></a><br>
 <b><u>FAQ-SET400 : PIPE REDIRECTION TO A FILE GIVE ME AN EMPTY FILE</u></b><br>
-<font class=CProblem>PROBLEM:</font> I want to redirect awstats.pl output to a file with the following command :<br>
+<font class=CProblem>PROBLEM:</font><br>
+I want to redirect awstats.pl output to a file with the following command :<br>
 <i>> awstats.pl -config=... [other_options] > myfile.html</i><br>
 But myfile.html is empty (size is 0). If i remove the redirection, everythings works correctly.<br>
-<font class=CSolution>SOLUTION:</font> This is not an AWStats bug but a problem between perl and Windows.<br>
+<font class=CSolution>SOLUTION:</font><br>
+This is not an AWStats bug but a problem between perl and Windows.<br>
 You can easily solve this running the following command instead:<br>
 <i>> perl awstats.pl -config=... [other_options] > myfile.html</i><br>
 <br>
 
 <a name="NO_ICON"></a><br>
 <b><u>FAQ-SET450 : NO PICTURES/GRAPHICS SHOWN</u></b><br>
-<font class=CProblem>PROBLEM:</font> AWStats seems to work (all data and counters seem to be good)
-but I have no image shown.<br>
-<font class=CSolution>SOLUTION:</font> With Apache web server, you might have
-troubles (no picture shown on stats page) if you use a directory called "icons" (because of Apache
+<font class=CProblem>PROBLEM:</font><br>
+AWStats seems to work (all data and counters seem to be good) but I have no image shown.<br>
+<font class=CSolution>SOLUTION:</font><br>
+With Apache web server, you might have troubles (no picture shown on stats page) if you use a directory called "icons" (because of Apache
 pre-defined "icons" alias directory), so use instead, for example, a directory called "icon"  with
 no s at the end (Rename your directory physically and change the <a href="awstats_config.html#DirIcons">DirIcons</a> parameter in config file
 to reflect this change).<br>
@@ -388,9 +399,9 @@ to reflect this change).<br>
 
 <a name="ROTATE"></a><br>
 <b><u>FAQ-SET500 : HOW TO ROTATE MY LOGS WITHOUT LOOSING DATA</u></b><br>
-<font class=CProblem>PROBLEM:</font> I want to archive/rotate my logs using my web server
-system options or a third software (rotatelog, cronolog) but don't want to loose any visits information
-during the rotate process.<br>
+<font class=CProblem>PROBLEM:</font><br>
+I want to archive/rotate my logs using my web server system options or a third software (rotatelog,
+cronolog) but don't want to loose any visits information during the rotate process.<br>
 <font class=CSolution>SOLUTION:</font><br>
 If you use a rotate system (internal web server feature or third software), this means you probably not use
 AWStats <a href="awstats_config.html#PurgeLogFile">PurgeLogFile</a> nor <a href="awstats_config.html#ArchiveLogRecords">ArchiveLogRecords</a> parameter.<br>
@@ -411,8 +422,8 @@ To use cronolog or rotatelog you must setup your web server log file name using 
 
 <a name="CRONTAB"></a><br>
 <b><u>FAQ-SET550 : HOW TO RUN AWSTATS FREQUENTLY</u></b><br>
-<font class=CProblem>PROBLEM:</font> AWStats must be ran frequently to update statistics.
-How can I do this ?<br>
+<font class=CProblem>PROBLEM:</font><br>
+AWStats must be ran frequently to update statistics. How can I do this ?<br>
 <font class=CSolution>SOLUTION:</font><br>
 <br>
 <u>With Windows</u>, you can use the internal task scheduler.
@@ -434,8 +445,8 @@ To run update every hour, use :<br>
 
 <a name="EXCLUDEHOSTS"></a><br>
 <b><u>FAQ-SET600 : HOW CAN I EXCLUDE MY IP ADDRESS (OR WHOLE SUBNET MASK) FROM STATS ?</u></b><br>
-<font class=CProblem>PROBLEM:</font> I don't want to see my own IP address in the stats or I want to exclude counting
-visits from a whole subnet.<br>
+<font class=CProblem>PROBLEM:</font><br>
+I don't want to see my own IP address in the stats or I want to exclude counting visits from a whole subnet.<br>
 <font class=CSolution>SOLUTION:</font><br>
 You must edit the config file to change the <a href="awstats_config.html#SkipHosts">SkipHosts</a> parameter.<br>
 For example, to exclude:<br>
@@ -451,13 +462,13 @@ log file).<br>
 
 <a name="SPEED"></a><br>
 <b><u>FAQ-COM100 : AWSTATS SPEED/TIMEOUT PROBLEMS ?</u></b><br>
-<font class=CProblem>PROBLEM:</font> When I analyze large log files,
-processing times are very important (Update process from a browser
+<font class=CProblem>PROBLEM:</font><br>
+When I analyze large log files, processing times are very important (Update process from a browser
 returns a timeout/internal error after a long wait).
 Is there a setup or things to do to avoid this and increase speed ?<br>
-<font class=CSolution>SOLUTION:</font> You really need to understand 
-how a log analyzer works to have good speed. There is also major setup changes 
-you can do to decrease your processing time.<br>
+<font class=CSolution>SOLUTION:</font><br>
+You really need to understand how a log analyzer works to have good speed.
+There is also major setup changes you can do to decrease your processing time.<br>
 - Launch AWStats more often (from crontab or a scheduler). More often you launch 
 AWStats, more faster is AWStats (because the less is the number of NEW lines in 
 log, since last run, to process). See the <a href="awstats_benchmark.html">Benchmark page</a> to
@@ -476,8 +487,10 @@ to purge the log file after processing it. This increase speed for next run).<br
 
 <a name="BENCHMARK"></a><br>
 <b><u>FAQ-COM150 : BENCHMARK / FREQUENCY TO LAUNCH AWSTATS TO UPDATE STATISTICS</u></b><br>
-<font class=CProblem>PROBLEM:</font> What is AWStats speed ?<br>
-<font class=CProblem>PROBLEM:</font> What is the frequency to launch AWStats process to update my statistics ?<br>
+<font class=CProblem>PROBLEM:</font><br>
+What is AWStats speed ?<br>
+<font class=CProblem>PROBLEM:</font><br>
+What is the frequency to launch AWStats process to update my statistics ?<br>
 <font class=CSolution>SOLUTION:</font>
 All benchmarks information and advice on frequency for update process are related into
 the <a href="awstats_benchmark.html">Benchmark page</a>.<br>
@@ -485,11 +498,11 @@ the <a href="awstats_benchmark.html">Benchmark page</a>.<br>
 
 <a name="DNS"></a><br>
 <b><u>FAQ-COM200 : HOW REVERSE DNS LOOKUP WORKS, UNRESOLVED IP ADDRESSES</u></b><br>
-<font class=CProblem>PROBLEM:</font> The reported page AWStats shows me 
-has no hostnames, only IP addresses, countries reported are all "unknown".<br>
-<font class=CSolution>SOLUTION:</font> When AWStats find an IP address 
-in your log file, it tries a reverse DNS lookup to find the hostname and domain 
-if the <a href="awstats_tools.html#DNSLookup">DNSLookup</a> parameter, in your AWStats config file, is <a href="awstats_config.html#DNSLookup">DNSLookup</a>=1
+<font class=CProblem>PROBLEM:</font><br>
+The reported page AWStats shows me has no hostnames, only IP addresses, countries reported are all "unknown".<br>
+<font class=CSolution>SOLUTION:</font><br>
+When AWStats find an IP address in your log file, it tries a reverse DNS lookup to find
+the hostname and domain if the <a href="awstats_tools.html#DNSLookup">DNSLookup</a> parameter, in your AWStats config file, is <a href="awstats_config.html#DNSLookup">DNSLookup</a>=1
 (Default value). So, first, check if you have the good value. The <a href="awstats_config.html#DNSLookup">DNSLookup</a>=0 
 must be used only if your log file contains already resolved IP address. For example, 
 when you set up Apache with the <i>HostNameLookups=on</i> directive. When you 
@@ -507,9 +520,9 @@ provided with AWStats distribution (This tools is an improved version of <i>logr
 
 <a name="DIFFERENT_RESULTS"></a><br>
 <b><u>FAQ-COM250 : DIFFERENT RESULTS THAN OTHER ANALYZER</u></b><br>
-<font class=CProblem>PROBLEM:</font> I also use webalizer (or another 
-log analyzer) and it doesn't report the same results than AWStats. Why ?<br>
-<font class=CSolution>SOLUTION:</font>
+<font class=CProblem>PROBLEM:</font><br>
+I also use webalizer (or another log analyzer) and it doesn't report the same results than AWStats. Why ?<br>
+<font class=CSolution>SOLUTION:</font><br>
 If you compare AWStats results with an other log file analyzer, you will found some differences,
 sometimes very important. In fact, all analyzer (even AWStats) make "over reporting" because of the
 problem of proxy-servers and robots. However AWStats is one the most accurate and its "over reporting"
@@ -537,11 +550,12 @@ an algorithm to detect keywords of unknown search engines with unknown url synta
 
 <a name="DIFFERENCE_HOURS"></a><br>
 <b><u>FAQ-COM300 : DIFFERENCE BETWEEN LOCAL HOURS AND AWSTATS REPORTED HOURS</u></b><br>
-<font class=CProblem>PROBLEM:</font> I use IIS and there's a difference 
-between local hour and AWStats reported hour. For example I made a hit on a page 
+<font class=CProblem>PROBLEM:</font><br>
+I use IIS and there's a difference between local hour and AWStats reported hour. For example I made a hit on a page 
 at 4:00 and AWStats report I hit it at 2:00.<br>
-<font class=CSolution>SOLUTION:</font> This is not a problem of time 
-in your local client host. AWStats use only time reported in logs by your server 
+<font class=CSolution>SOLUTION:</font><br>
+This is not a problem of time in your local client host.
+AWStats use only time reported in logs by your server 
 and all time are related to server hour. The problem is that IIS in some foreign 
 versions puts GMT time in its log file (and not local time). So, you have also 
 GMT time in your statistics.<br>
@@ -559,8 +573,9 @@ So this means this way of working might never be changed.<br>
 
 <a name="OLDLOG"></a><br>
 <b><u>FAQ-COM350 : HOW CAN I PROCESS OLD LOG FILE ?</u></b><br>
-<font class=CProblem>PROBLEM:</font> I want to process an old log file to include its data in my AWStats reports.<br>
-<font class=CSolution>SOLUTION:</font> 
+<font class=CProblem>PROBLEM:</font><br>
+I want to process an old log file to include its data in my AWStats reports.<br>
+<font class=CSolution>SOLUTION:</font><br>
 You must change your <a href="awstats_config.html#LogFile">LogFile</a> parameter to point to the old log file and run
 the update (or use the -logformat option on command line to overwrite <a href="awstats_config.html#LogFile">LogFile</a> parameter).
 The update process can only accept files in chronological order, so if you have already processed a recent file,
@@ -570,8 +585,9 @@ and in chronological order.<br>
 
 <a name="MULTILOG"></a><br>
 <b><u>FAQ-COM400 : HOW CAN I UPDATE MY STATISTICS WHEN I USE A LOAD BALANCING SYSTEM THAT SPLITS MY LOGS ?</u></b><br>
-<font class=CProblem>PROBLEM:</font> How can I update my statistics when i use a load balancing system that split my logs ?<br>
-<font class=CSolution>SOLUTION:</font> 
+<font class=CProblem>PROBLEM:</font><br>
+How can I update my statistics when i use a load balancing system that split my logs ?<br>
+<font class=CSolution>SOLUTION:</font><br>
 The best solution is to merge all split log files resulted from all your load balanced servers into one. For this, you can use
 the <a href="awstats_config.html#logresolvemerge">logresolvemerge</a> tool provided with AWStats :<br>
 <i>logresolvemerge.pl file1.log file2.log ... filen.log > newfiletoprocess.log</i><br>
@@ -581,8 +597,9 @@ the <i>-logfile</i> command line option to overwrite <a href="awstats_config.htm
 
 <a name="RESET"></a><br>
 <b><u>FAQ-COM500 : HOW CAN I RESET ALL MY STATISTICS ?</u></b><br>
-<font class=CProblem>PROBLEM:</font> I want to reset all my statistics and restart my stats from now.<br>
-<font class=CSolution>SOLUTION:</font> 
+<font class=CProblem>PROBLEM:</font><br>
+I want to reset all my statistics and restart my stats from now.<br>
+<font class=CSolution>SOLUTION:</font><br>
 All analyzed data are stored by AWStats in files called <i>awstatsMMYYYY.[site.]txt</i> (one file each month).
 You will find those files in directory defined by <a href="awstats_config.html#DirData">DirData</a> parameter (same directory than awstats.pl by default).<br>
 To reset your stats for a month, you just have to delete the file for the required month/year.<br>
@@ -593,9 +610,10 @@ You will have to process all past log files (in chronological order) to get old 
 
 <a name="EDITHISTORY"></a><br>
 <b><u>FAQ-COM550 : CAN I SAFELY REMOVE A LINE IN HISTORY FILES (awstatsMMYYYY*.txt) ?</u></b><br>
-<font class=CProblem>PROBLEM:</font> After processing a log file I want to change my statistics
+<font class=CProblem>PROBLEM:</font><br>
+After processing a log file I want to change my statistics
 without running AWStats update process but changing directly data in AWStats historical database files.<br>
-<font class=CSolution>SOLUTION:</font> 
+<font class=CSolution>SOLUTION:</font><br>
 If you remove a lines starting with "BEGIN_" or "END_", AWStats will find your file "corrupted" so you must not change those
 kind of lines. All lines that are not in any "section" (between a BEGIN_xxx and END_xxx line) should also not be removed.
 However you can change any line that is a "section record", but you do this at your own risk. Your reported stats
@@ -606,27 +624,30 @@ might have wrong values after that.<br>
 
 <a name="CSSATTACK"></a><br>
 <b><u>FAQ-SEC100 : CAN AWSTATS BE USED TO MAKE CROSS SITE SCRIPTING ATTACKS ?</u></b><br>
-<font class=CProblem>PROBLEM:</font> If a bad user use a browser to make a hit on an URL that include a < SCRIPT > ... < /SCRIPT >
+<font class=CProblem>PROBLEM:</font><br>
+If a bad user use a browser to make a hit on an URL that include a < SCRIPT > ... < /SCRIPT >
 section in its parameter, when AWStats will show the links on the report page, does the script will be executed ?<br>
-<font class=CSolution>SOLUTION:</font> 
+<font class=CSolution>SOLUTION:</font><br>
 No. AWStats use a filter to remove all scripts codes that was included in an URL to make a Cross Site Scripting Attack using a
 log analyzer report page.<br>
 <br>
 
 <a name="SECUSER"></a><br>
 <b><u>FAQ-SEC150 : HOW CAN I PREVENT SOME USERS TO SEE STATISTICS OF OTHER USERS ?</u></b><br>
-<font class=CProblem>PROBLEM:</font> I don't want a user xxx (having a site www.xxx.com) to see statistics of user yyy (having
+<font class=CProblem>PROBLEM:</font><br>
+I don't want a user xxx (having a site www.xxx.com) to see statistics of user yyy (having
 a site www.yyy.com). How can i setup AWStats for this ?<br>
-<font class=CSolution>SOLUTION:</font> 
+<font class=CSolution>SOLUTION:</font><br>
 Take a look at the <a href="awstats_security.html">security page</a>.<br>
 <br>
 
 <a name="WORMS"></a><br>
 <b><u>FAQ-SEC200 : HOW TO MANAGE LOG FILES (AND STATISTICS) CORRUPTED BY 'CODE RED VIRUS LIKE' ATTACKS ?</u></b><br>
-<font class=CProblem>PROBLEM:</font> My site is attacked by some Code Red Viruses. This make my log file corrupted
+<font class=CProblem>PROBLEM:</font><br>
+My site is attacked by some Code Red Viruses. This make my log file corrupted
 and full of 404 errors. So my statistics are also full of 404 errors. This make AWStats slower and my history files very large.
 Can I do something to avoid this ?<br>
-<font class=CSolution>SOLUTION:</font> 
+<font class=CSolution>SOLUTION:</font><br>
 Yes.<br>
 'Code Red virus like' attacks are infected browsers or robots that make hits on your site using a very long unknown URL
 like this one (hoping your server is IIS):<br>
