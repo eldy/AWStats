@@ -1774,7 +1774,7 @@ sub Read_History_With_TmpUpdate {
 							my $newtimehosts=($_waithost_s{$field[0]}?$_waithost_s{$field[0]}:$_host_s{$field[0]});
 							my $newtimehostl=($_waithost_l{$field[0]}?$_waithost_l{$field[0]}:$_host_l{$field[0]});
 							if ($newtimehosts > $timehostl + $VisitTimeOut ) {
-								if ($Debug) { debug(" Visit in 'wait' arrays is a new visit different than last in history",4); }
+								if ($Debug) { debug(" Visit for $field[0] in 'wait' arrays is a new visit different than last in history",4); }
 								if ($field[6]) { $_url_x{$field[6]}++; }
 								$_url_e{$_waithost_e{$field[0]}}++;
 								$newtimehosts =~ /^(\d\d\d\d\d\d\d\d)/; $DayVisits{$1}++;
@@ -1786,7 +1786,7 @@ sub Read_History_With_TmpUpdate {
 								# Here $_host_l $_host_s and $_host_u are correctly defined
 							}
 							else {
-								if ($Debug) { debug(" Visit in 'wait' arrays is following of last in history",4); }
+								if ($Debug) { debug(" Visit for $field[0] in 'wait' arrays is following of last visit in history",4); }
 								if ($_waithost_s{$field[0]}) {
 									# First session found in log was followed by another one so it's finished
 									$_session{GetSessionRange(MinimumButNoZero($timehosts,$newtimehosts),$timehostl>$newtimehostl?$timehostl:$newtimehostl)}++;
@@ -1798,8 +1798,8 @@ sub Read_History_With_TmpUpdate {
 										$_host_l{$field[0]}=$timehostl;
 										$_host_u{$field[0]}=$field[6];
 									}
-									if ($timehosts > $newtimehosts) {
-										$_host_s{$field[0]}=$newtimehosts;
+									if ($timehosts < $newtimehosts) {
+										$_host_s{$field[0]}=$timehosts;
 									}
 								}
 							}
@@ -3054,6 +3054,7 @@ sub Init_HashArray {
 	%MonthVisits = %MonthUnique = ();
 	%MonthPages = %MonthHits = %MonthBytes = ();
 	%MonthHostsKnown = %MonthHostsUnknown = ();
+	%DayPages = %DayHits = %DayBytes = %DayVisits = ();
 	# Reset all arrays with name beginning by _
 	for (my $ix=0; $ix<6; $ix++)  { $_from_p[$ix]=0; $_from_h[$ix]=0; }
 	for (my $ix=0; $ix<24; $ix++) { $_time_h[$ix]=0; $_time_k[$ix]=0; $_time_p[$ix]=0; }
@@ -4438,7 +4439,7 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {	# Updat
 					if (! $_waithost_s{$_}) {
 						# This is a second visit or more
 						# We count 'visit','exit','entry','DayVisits'
-						#if ($Debug) { debug("  This is a second visit for $_.",4); }
+						if ($Debug) { debug("  This is a second visit for $_.",4); }
 						my $timehosts=$_host_s{$_};
 						my $page=$_host_u{$_};
 						if ($page) { $_url_x{$page}++; }
@@ -4453,7 +4454,7 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {	# Updat
 					else {
 						# This is third visit or more
 						# We count 'session','visit','exit','entry','DayVisits'
-						#if ($Debug) { debug("  This is a third visit or more for $_.",4); }
+						if ($Debug) { debug("  This is a third visit or more for $_.",4); }
 						my $timehosts=$_host_s{$_};
 						my $page=$_host_u{$_};
 						if ($page) { $_url_x{$page}++; }
@@ -4468,18 +4469,18 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {	# Updat
 				}
 				elsif ($timerecord > $timehostl) {
 					# This is a same visit we can count
-					#if ($Debug) { debug("  This is same visit still running for $_. host_l/host_u changed to $timerecord/$field[$pos_url]",4); }
+					if ($Debug) { debug("  This is same visit still running for $_. host_l/host_u changed to $timerecord/$field[$pos_url]",4); }
 					$_host_l{$_}=$timerecord;
 					$_host_u{$_}=$field[$pos_url];
 				}
 				elsif ($timerecord == $timehostl) {
 					# This is a same visit we can count
-					#if ($Debug) { debug("  This is same visit still running for $_. host_l/host_u changed to $timerecord/$field[$pos_url]",4); }
+					if ($Debug) { debug("  This is same visit still running for $_. host_l/host_u changed to $timerecord/$field[$pos_url]",4); }
 					$_host_u{$_}=$field[$pos_url];
 				}
 				elsif ($timerecord < $_host_s{$_}) {
 					# Should happens only with not correctly sorted log files
-					#if ($Debug) { debug("  This is same visit still running for $_ with start not in order. host_s changed to $timerecord",4); }
+					if ($Debug) { debug("  This is same visit still running for $_ with start not in order. host_s changed to $timerecord",4); }
 					if (! $_waithost_s{$_}) {
 						# We can change entry page not yet counted as the save entry page was waithost_e if $_waithost_s{$_} is not defined
 						$_waithost_e{$_}=$field[$pos_url];
@@ -4490,13 +4491,12 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {	# Updat
 					$_host_s{$_}=$timerecord;
 				}
 				else {
-					#if ($Debug) { debug("  This is same visit still running for $_ with hit between start and last hits. No change",4); }
+					if ($Debug) { debug("  This is same visit still running for $_ with hit between start and last hits. No change",4); }
 				}
 			}
 			else {
-				# This is a new visit (may be). First new visit found for this host.
-				#if ($Debug) { debug("  New session (may be) for $_. Save in wait array to see later",3); }
-				# We save in wait array the entry page to count later
+				# This is a new visit (may be). First new visit found for this host. We save in wait array the entry page to count later
+				if ($Debug) { debug("  New session (may be) for $_. Save in wait array to see later",4); }
 				$_waithost_e{$_}=$field[$pos_url];
 				# Save new session properties
 				$_host_u{$_}=$field[$pos_url];
@@ -4507,7 +4507,6 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {	# Updat
 		}
 		$_host_h{$_}++;
 		$_host_k{$_}+=$field[$pos_size];
-
 
 		# Analyze: Browser and OS
 		#------------------------
@@ -4739,9 +4738,11 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {	# Updat
 			$_from_h[1]++;
 		}
 
-		# Every 20,000 approved lines we test to clean too large hash arrays to free memory when possible
+		# Every 20,000 approved lines we test to clean too large hash arrays to flush data in tmp file
 		if ($counter++ >= 20000) {
 			if ((scalar keys %_host_u) > $LIMITFLUSH || (scalar keys %_url_p) > $LIMITFLUSH) {
+#		if ($counter++ >= 400) {
+#			if ((scalar keys %_host_u) > 1 || (scalar keys %_url_p) > 1) {
 				# warning("Warning: Try to run AWStats update process more frequently to analyze smaller log files.");
 				if ($Debug) {
 					debug("End of set of ".($counter-1)." records: Some hash arrays are too large. We clean some.",2);
@@ -4749,14 +4750,13 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {	# Updat
 					print " _url_p:".(scalar keys %_url_p)." _url_k:".(scalar keys %_url_k)." _url_e:".(scalar keys %_url_e)." _url_x:".(scalar keys %_url_x)."\n";
 					print " _waithost_e:".(scalar keys %_waithost_e)." _waithost_l:".(scalar keys %_waithost_l)." _waithost_s:".(scalar keys %_waithost_s)." _waithost_u:".(scalar keys %_waithost_u)."\n";
 				}
-#				%TmpOS = %TmpRefererServer = %TmpRobot = %TmpBrowser =();
-#				&Read_History_With_TmpUpdate($lastprocessedyear,$lastprocessedmonth,1,1,"all");
+				%TmpOS = %TmpRefererServer = %TmpRobot = %TmpBrowser =();
+				&Read_History_With_TmpUpdate($lastprocessedyear,$lastprocessedmonth,1,1,"all");
 			}
 			$counter=0;
 		}
 
-		# End of processing new record.
-	}
+	}	# End of loop for processing new record.
 
 	if ($Debug) { debug("Close log file \"$LogFile\""); }
 	close LOG || error("Command for pipe '$LogFile' failed");
@@ -4769,7 +4769,8 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {	# Updat
 	}
 
 
-	# Save current processed month $lastprocessedmonth (if lastprocessedmonth is still 0, it means we found no valid lines in log file)
+	# Save current processed month $lastprocessedmonth
+	# If lastprocessedmonth is still 0, it means we found no valid lines in log file
 	if ($lastprocessedmonth) {
 		&Read_History_With_TmpUpdate($lastprocessedyear,$lastprocessedmonth,1,1,"all");
 	}
