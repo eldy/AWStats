@@ -1,9 +1,10 @@
 # AWSTATS BROWSERS DATABASE
-#--------------------------
-# Last change $Revision$ - $Author$ - $Date$
-
+#-------------------------------------------------------
 # If you want to add a Browser to extend AWStats database detection capabilities,
 # you must add an entry in BrowsersSearchIDOrder and in BrowsersHashIDLib.
+#-------------------------------------------------------
+# Last change $Revision$ - $Author$ - $Date$
+
 
 
 # BrowsersSearchIDOrder
@@ -34,6 +35,7 @@
 "downloadagent",
 "ecatch",
 "emailsiphon",
+"encompass",
 "friendlyspider",
 "getright",
 "headdump",
@@ -131,6 +133,7 @@
 "downloadagent","notavailable",
 "ecatch","notavailable",
 "emailsiphon","notavailable",
+"encompass","notavailable",
 "friendlyspider","notavailable",
 "getright","getright",
 "headdump","notavailable",
@@ -215,6 +218,7 @@
 "downloadagent","DownloadAgent",
 "ecatch", "eCatch",
 "emailsiphon","EmailSiphon",
+"encompass","Encompass",
 "friendlyspider","FriendlySpider",
 "getright","GetRight",
 "headdump","HeadDump",
