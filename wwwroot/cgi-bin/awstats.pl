@@ -559,9 +559,9 @@ sub error {
 		print ($HTMLOutput?"</font><br>":"");
 		print "\n";
 	}
-	if ($message ne "" && $message !~ /History file.*is corrupted/) {
+	if ($message && $message !~ /History file.*is corrupted/) {
 		if ($HTMLOutput) { print "<br><b>\n"; }
-		print "Setup (".($FileConfig?$FileConfig:"Config")." file, web server or permissions) may be wrong.\n";
+		print "Setup ('".($FileConfig?$FileConfig:"Config")."' file, web server or permissions) may be wrong.\n";
 		if ($HTMLOutput) { print "</b><br>\n"; }
 		print "See AWStats documentation in 'docs' directory for informations on how to setup $PROG.\n";
 	}
@@ -1049,11 +1049,21 @@ sub Check_Config {
 	$LogFile =~ s/%NS/$nowns/ig;
 	$LogFormat =~ s/\\//g;
 	if ($Debug) {
-		debug(" LogFile=$LogFile",1);
-		debug(" LogFormat=$LogFormat",1);
+		debug(" LogFile=$LogFile",2);
+		debug(" LogFormat=$LogFormat",2);
+		debug(" DirData=$DirData",2);
+		debug(" DirCgi=$DirCgi",2);
+		debug(" DirIcons=$DirIcons",2);
+		debug(" DNSLookup=$DNSLookup",2);
 	}
-	if ($LogFormat =~ /^[\d]$/ && $LogFormat !~ /[1-5]/)  { error("Error: LogFormat parameter is wrong. Value is '$LogFormat' (should be 1,2,3,4,5 or a 'personalized AWtats log format string')"); }
-	if ($DNSLookup !~ /[0-1]/)                            { error("Error: DNSLookup parameter is wrong. Value is '$DNSLookup' (should be 0 or 1)"); }
+	if (! $LogFile)   { error("Error: LogFile parameter is not defined in config/domain file"); }
+	if (! $LogFormat) { error("Error: LogFormat parameter is not defined in config/domain file"); }
+	if ($LogFormat =~ /^\d$/ && $LogFormat !~ /[1-5]/)  { error("Error: LogFormat parameter is wrong in config/domain file. Value is '$LogFormat' (should be 1,2,3,4,5 or a 'personalized AWStats log format string')"); }
+	if (! $DirData)   { $DirData="."; }
+	if (! $DirCgi)    { $DirCgi="/cgi-bin"; }
+	if (! $DirIcons)  { $DirIcons="/icon"; }
+	if ($DNSLookup !~ /[0-1]/)                      { error("Error: DNSLookup parameter is wrong in config/domain file. Value is '$DNSLookup' (should be 0 or 1)"); }
+	if (! $SiteDomain)                              { warning("Warning: SiteDomain parameter is not defined in config/domain file. You should add it to avoid analysis errors."); }
 	if ($AllowToUpdateStatsFromBrowser !~ /[0-1]/) 	{ $AllowToUpdateStatsFromBrowser=0; }
 	# Optional setup section
 	if ($AllowAccessFromWebToAuthenticatedUsersOnly !~ /[0-1]/)     { $AllowAccessFromWebToAuthenticatedUsersOnly=0; }
@@ -1216,7 +1226,7 @@ sub Check_Config {
 	if (! $Message[72]) { $Message[72]="Navigation"; }
 	if (! $Message[73]) { $Message[73]="Files type"; }
 	if (! $Message[74]) { $Message[74]="Update now"; }
-	if (! $Message[75]) { $Message[75]="Bytes"; }
+	if (! $Message[75]) { $Message[75]="Bandwith"; }
 	if (! $Message[76]) { $Message[76]="Back to main page"; }
 	if (! $Message[77]) { $Message[77]="Top"; }
 	if (! $Message[78]) { $Message[78]="dd mmm yyyy - HH:MM"; }
@@ -1260,6 +1270,7 @@ sub Check_Config {
 	if (! $Message[116]) { $Message[116]="Exit Pages"; }
 	if (! $Message[117]) { $Message[117]="Visits duration"; }
 	if (! $Message[118]) { $Message[118]="Close window"; }
+	if (! $Message[119]) { $Message[119]="Bytes"; }
 	# Check if DirData is OK
 	if (! -d $DirData) {
 		if ($CreateDirDataIfNotExists) {
@@ -2295,7 +2306,7 @@ sub Format_Bytes {
 	if ($bytes >= $fudge * exp(2*log(1024))) { return sprintf("%.2f", $bytes/exp(2*log(1024)))." $Message[109]"; }
 	if ($bytes >= $fudge * exp(1*log(1024))) { return sprintf("%.2f", $bytes/exp(1*log(1024)))." $Message[108]"; }
 	if ($bytes < 0) { $bytes="?"; }
-	return int($bytes)." $Message[75]";
+	return int($bytes)." $Message[119]";
 }
 
 #------------------------------------------------------------------------------
@@ -3061,8 +3072,11 @@ if ($UpdateStats) {
 		if ($monthnum{$dateparts[1]}) { $dateparts[1]=$monthnum{$dateparts[1]}; }	# Change lib month in num month if necessary
 
 		# Create $timerecord like YYYYMMDDHHMMSS
-#		my ($nsec,$nmin,$nhour,$nmday,$nmon,$nyear,$nwday) = localtime(Time::Local::timelocal($dateparts[5], $dateparts[4], $dateparts[3], $dateparts[0], $dateparts[1], $dateparts[2]) + 3600);
+		#--- TZ START : Uncomment following 3 lines to made a timezone adjustment. Warning this reduce seriously AWStats speed.
+#		my $TZ=+2;
+#		my ($nsec,$nmin,$nhour,$nmday,$nmon,$nyear,$nwday) = localtime(Time::Local::timelocal($dateparts[5], $dateparts[4], $dateparts[3], $dateparts[0], $dateparts[1], $dateparts[2] + (3600*$TZ) ));
 #		@dateparts = split(/:/, sprintf("%02u:%02u:%04u:%02u:%02u:%02u", $nmday, $nmon, $nyear+1900, $nhour, $nmin, $nsec)); 
+		#--- TZ END : Uncomment following three lines to made a timezone adjustement. Warning this reduce seriously AWStats speed.
 		my $timerecord=int($dateparts[2].$dateparts[1].$dateparts[0].$dateparts[3].$dateparts[4].$dateparts[5]);	# !!!
 		my $yearrecord=int($dateparts[2]);
 		my $monthrecord=int($dateparts[1]);
@@ -4639,7 +4653,7 @@ EOF
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\" onmouseover=\"ShowTooltip(16);\" onmouseout=\"HideTooltip(16);\"><TH>$Message[83]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH width=120>$Message[9]</TH></TR>\n";
 		my $count=0;
 		foreach my $key (sort { $_robot_h{$b} <=> $_robot_h{$a} } keys (%_robot_h)) {
-			print "<tr><td CLASS=AWL>".($RobotsHashIDLib{$key}?$RobotsHashIDLib{$key}:"Unknown robot")."</td><td>$_robot_h{$key}</td><td>".Format_Date($_robot_l{$key},1)."</td></tr>\n";
+			print "<tr><td CLASS=AWL>".($RobotsHashIDLib{$key}?$RobotsHashIDLib{$key}:$Message[0])."</td><td>$_robot_h{$key}</td><td>".Format_Date($_robot_l{$key},1)."</td></tr>\n";
 			$count++;
 			}
 		&tab_end;
