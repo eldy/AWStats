@@ -4281,15 +4281,15 @@ sub UnCompileRegex {
 }
 
 #------------------------------------------------------------------------------
-# Function:     Clean a string of all chars that are not char or _
+# Function:     Clean a string of all chars that are not char or _ - \ / . \s
 # Parameters:   stringtoclean
 # Input:        None
 # Output:       None
 # Return:		cleanedstring
 #------------------------------------------------------------------------------
-sub CleanPluginName {
+sub Sanitize {
 	my $stringtoclean=shift;
-	$stringtoclean =~ s/[^\w_]//g;
+	$stringtoclean =~ s/[^\w_\-\\\/\.\s]//g;
 	return $stringtoclean;
 }
 
@@ -5371,8 +5371,8 @@ if ($ENV{'GATEWAY_INTERFACE'}) {	# Run from a browser as CGI
 
 	if ($QueryString =~ /config=([^&]+)/i)				{ $SiteConfig=&DecodeEncodedString("$1"); }
 	if ($QueryString =~ /diricons=([^&]+)/i)			{ $DirIcons=&DecodeEncodedString("$1"); }
-	if ($QueryString =~ /pluginmode=([^&]+)/i)			{ $PluginMode=CleanPluginName(&DecodeEncodedString("$1")); }
-	if ($QueryString =~ /configdir=([^&]+)/i)			{ $DirConfig=&DecodeEncodedString("$1"); }
+	if ($QueryString =~ /pluginmode=([^&]+)/i)			{ $PluginMode=&Sanitize(&DecodeEncodedString("$1")); }
+	if ($QueryString =~ /configdir=([^&]+)/i)			{ $DirConfig=&Sanitize(&DecodeEncodedString("$1")); }
 	# All filters
 	if ($QueryString =~ /hostfilter=([^&]+)/i)			{ $FilterIn{'host'}=&DecodeEncodedString("$1"); }			# Filter on host list can also be defined with hostfilter=filter
 	if ($QueryString =~ /hostfilterex=([^&]+)/i)		{ $FilterEx{'host'}=&DecodeEncodedString("$1"); }			#
@@ -5419,8 +5419,8 @@ else {								# Run from command line
 
 	if ($QueryString =~ /config=([^&]+)/i)				{ $SiteConfig="$1"; }
 	if ($QueryString =~ /diricons=([^&]+)/i)			{ $DirIcons="$1"; }
-	if ($QueryString =~ /pluginmode=([^&]+)/i)			{ $PluginMode=CleanPluginName("$1"); }
-	if ($QueryString =~ /configdir=([^&]+)/i)			{ $DirConfig="$1"; }
+	if ($QueryString =~ /pluginmode=([^&]+)/i)			{ $PluginMode=&Sanitize("$1"); }
+	if ($QueryString =~ /configdir=([^&]+)/i)			{ $DirConfig=&Sanitize("$1"); }
 	# All filters
 	if ($QueryString =~ /hostfilter=([^&]+)/i)			{ $FilterIn{'host'}="$1"; }			# Filter on host list can also be defined with hostfilter=filter
 	if ($QueryString =~ /hostfilterex=([^&]+)/i)		{ $FilterEx{'host'}="$1"; }			#
@@ -5448,8 +5448,8 @@ if ($QueryString =~ /(^|&)staticlinksext=([^&]+)/i) { $StaticExt="$2"; }
 if ($QueryString =~ /(^|&)framename=([^&]+)/i)		{ $FrameName="$2"; }
 if ($QueryString =~ /(^|&)debug=(\d+)/i)			{ $Debug=$2; }
 if ($QueryString =~ /(^|&)updatefor=(\d+)/i)		{ $UpdateFor=$2; }
-if ($QueryString =~ /(^|&)noloadplugin=([^&]+)/i)	{ foreach (split(/,/,$2)) { $NoLoadPlugin{CleanPluginName("$_")}=1; } }
-if ($QueryString =~ /(^|&)loadplugin=([^&]+)/i)		{ foreach (split(/,/,$2)) { $NoLoadPlugin{CleanPluginName("$_")}=-1; } }
+if ($QueryString =~ /(^|&)noloadplugin=([^&]+)/i)	{ foreach (split(/,/,$2)) { $NoLoadPlugin{&Sanitize("$_")}=1; } }
+if ($QueryString =~ /(^|&)loadplugin=([^&]+)/i)		{ foreach (split(/,/,$2)) { $NoLoadPlugin{&Sanitize("$_")}=-1; } }
 if ($QueryString =~ /(^|&)limitflush=(\d+)/i)		{ $LIMITFLUSH=$2; }
 # Get/Define output
 if ($QueryString =~ /(^|&)output(=[^&]*|)(.*)&output(=[^&]*|)(&|$)/i) { error("Only 1 output option is allowed","","",1); }
@@ -5502,7 +5502,7 @@ if ($Debug) {
 if ($ENV{'AWSTATS_CONFIG'}) { $ENV{'AWSTATS_FORCE_CONFIG'}=$ENV{'AWSTATS_CONFIG'}; } # For backward compatibility
 if ($ENV{'AWSTATS_FORCE_CONFIG'}) {
 	if ($Debug) { debug("AWSTATS_FORCE_CONFIG parameter is defined to '".$ENV{'AWSTATS_FORCE_CONFIG'}."'. $PROG will use this as config value."); }
-	$SiteConfig=$ENV{'AWSTATS_FORCE_CONFIG'};
+	$SiteConfig=&Sanitize($ENV{'AWSTATS_FORCE_CONFIG'});
 }
 
 if ((! $ENV{'GATEWAY_INTERFACE'}) && (! $SiteConfig)) {
@@ -5608,7 +5608,7 @@ if ((! $ENV{'GATEWAY_INTERFACE'}) && (! $SiteConfig)) {
 	print "New versions and FAQ at http://awstats.sourceforge.net\n";
 	exit 2;
 }
-$SiteConfig||=$ENV{'SERVER_NAME'};
+$SiteConfig||=&Sanitize($ENV{'SERVER_NAME'});
 #$ENV{'SERVER_NAME'}||=$SiteConfig;	# For thoose who use __SERVER_NAME__ in conf file and use CLI.
 $ENV{'AWSTATS_CURRENT_CONFIG'}=$SiteConfig;
 
