@@ -13,7 +13,7 @@ AWStats Changelog
   To benefit the speed/memory improvement of 5.0 (2 to 8 times faster
   when reading stats, less memory use) you can migrate your history files
   with the command :
-    awstats.pl -migrate="/fullpath/awstatsMMYYYY.myconfigval.conf"
+    awstats.pl -migrate="/fullpath/awstatsMMYYYY.configval.txt"
 
 - Fixed: pb when using several tags with different offset in LogFile name.
 - Fixed: Create of directory with CreateDataDirIfNotExists is made with 0766
@@ -31,10 +31,11 @@ AWStats Changelog
 - New feature: Added url entry and url exit full list report.
 - New feature: Added AllowAccessFromWebToFollowingIPAddresses parameter
 - New parameter: LogSeparator for log files with exotic separators.
+- New parameter: EnableLockForUpdate to allow lock for update process.
+- New parameter: DecodeUA to make AWStats work correctly with Roxen.
 - New tag for logfile: %WY is replaced by week number in year.
 - Added slovak, spanish (catalan) language files and updated a lot of language
   files.
-- Added a lock for update process.
 - Made changes to allow FTP log analysis.
 - Made changes to prepare sendmail log analysis.
 - Updated belarus flag.
