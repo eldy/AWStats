@@ -37,13 +37,13 @@ $PluginHashfilesUpToDate
 
 
 #-----------------------------------------------------------------------------
-# PLUGIN FUNTION Init_pluginname
+# PLUGIN FUNCTION: Init_pluginname
 #-----------------------------------------------------------------------------
 sub Init_hashfiles {
 	my $InitParams=shift;
 
 	# <-----
-	# YOU CAN ENTER HERE CODE TO INIT PLUGIN GLOBAL VARIABLES
+	# ENTER HERE CODE TO DO INIT PLUGIN ACTIONS
 	$PluginHashfilesUpToDate=1;
 	# ----->
 
@@ -54,7 +54,8 @@ sub Init_hashfiles {
 
 
 #-----------------------------------------------------------------------------
-# PLUGIN FUNTION SearchFile_pluginname
+# PLUGIN FUNTION: SearchFile_pluginname
+# UNIQUE: YES (Only one plugin using this function can be loaded)
 #-----------------------------------------------------------------------------
 sub SearchFile_hashfiles {
 	my ($searchdir,$dnscachefile,$filesuffix,$dnscacheext,$filetoload)=@_;	# Get params sent by ref
@@ -80,7 +81,8 @@ sub SearchFile_hashfiles {
 
 
 #-----------------------------------------------------------------------------
-# PLUGIN FUNTION LoadCache_pluginname
+# PLUGIN FUNCTION: LoadCache_pluginname
+# UNIQUE: YES (Only one plugin using this function can be loaded)
 #-----------------------------------------------------------------------------
 sub LoadCache_hashfiles {
 	my ($filetoload,$hashtoload)=@_;
@@ -92,7 +94,8 @@ sub LoadCache_hashfiles {
 
 
 #-----------------------------------------------------------------------------
-# PLUGIN FUNTION SaveHash_pluginname
+# PLUGIN FUNCTION: SaveHash_pluginname
+# UNIQUE: YES (Only one plugin using this function can be loaded)
 #-----------------------------------------------------------------------------
 sub SaveHash_hashfiles {
 	my ($filetosave,$hashtosave,$testifuptodate,$nbmaxofelemtosave,$nbofelemsaved)=@_;

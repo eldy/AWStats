@@ -40,14 +40,14 @@ $urlaliasloaded
 
 
 #-----------------------------------------------------------------------------
-# PLUGIN FUNTION Init_pluginname
+# PLUGIN FUNCTION: Init_pluginname
 #-----------------------------------------------------------------------------
 sub Init_urlalias {
 	my $InitParams=shift;
 	my $checkversion=&Check_Plugin_Version($PluginNeedAWStatsVersion);
 
 	# <-----
-	# YOU CAN ENTER HERE CODE TO INIT PLUGIN GLOBAL VARIABLES
+	# ENTER HERE CODE TO DO INIT PLUGIN ACTIONS
 	debug(" InitParams=$InitParams",1);
 	$urlaliasloaded=0;
 	%UrlAliases=();
@@ -59,9 +59,10 @@ sub Init_urlalias {
 
 
 #-----------------------------------------------------------------------------
-# PLUGIN FUNTION ReplaceURL_pluginname
-# UNIQUE: NO (Several ReplaceURL can exists for all loaded plugins)
-# ReplaceURL is called to add additionnal information for URLs in URLs' report.
+# PLUGIN FUNCTION: ReplaceURL_pluginname
+# UNIQUE: NO (Several plugins using this function can be loaded)
+# Function called to add additionnal information for URLs in URLs' report.
+# Parameters: URL
 #-----------------------------------------------------------------------------
 sub ReplaceURL_urlalias {
 	# <-----

@@ -46,14 +46,14 @@ $gi
 
 
 #-----------------------------------------------------------------------------
-# PLUGIN FUNTION Init_pluginname
+# PLUGIN FUNCTION: Init_pluginname
 #-----------------------------------------------------------------------------
 sub Init_geoip {
 	my $InitParams=shift;
 	my $checkversion=&Check_Plugin_Version($PluginNeedAWStatsVersion);
 
 	# <-----
-	# YOU CAN ENTER HERE CODE TO INIT PLUGIN GLOBAL VARIABLES
+	# ENTER HERE CODE TO DO INIT PLUGIN ACTIONS
 	debug(" InitParams=$InitParams",1);
 	%TmpDomainLookup=();
 	$gi = Geo::IP->new(GEOIP_MEMORY_CACHE);		# For GeoIP	(Can also use GEOIP_STANDARD)
@@ -65,8 +65,8 @@ sub Init_geoip {
 
 
 #-----------------------------------------------------------------------------
-# PLUGIN FUNTION GetCountryCodeByName_pluginname
-# UNIQUE: YES (Only one function GetCountryName can exists for all loaded plugins)
+# PLUGIN FUNCTION: GetCountryCodeByName_pluginname
+# UNIQUE: YES (Only one plugin using this function can be loaded)
 # GetCountryCodeByName is called to translate a host name into a country name.
 #-----------------------------------------------------------------------------
 sub GetCountryCodeByName_geoip {
@@ -84,8 +84,8 @@ sub GetCountryCodeByName_geoip {
 }
 
 #-----------------------------------------------------------------------------
-# PLUGIN FUNTION GetCountryCodeByAddr_pluginname
-# UNIQUE: YES (Only one function GetCountryName can exists for all loaded plugins)
+# PLUGIN FUNCTION: GetCountryCodeByAddr_pluginname
+# UNIQUE: YES (Only one plugin using this function can be loaded)
 # GetCountryCodeByAddr is called to translate an ip into a country name.
 #-----------------------------------------------------------------------------
 sub GetCountryCodeByAddr_geoip {

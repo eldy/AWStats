@@ -29,14 +29,14 @@ my $PluginHooksFunctions="ShowMonthGraph";
 
 
 #-----------------------------------------------------------------------------
-# PLUGIN FUNTION Init_pluginname
+# PLUGIN FUNCTION: Init_pluginname
 #-----------------------------------------------------------------------------
 sub Init_graph3d {
 	my $InitParams=shift;
 	my $checkversion=&Check_Plugin_Version($PluginNeedAWStatsVersion);
 
 	# <-----
-	# YOU CAN ENTER HERE CODE TO INIT PLUGIN GLOBAL VARIABLES
+	# ENTER HERE CODE TO DO INIT PLUGIN ACTIONS
 	# ----->
 
 	return ($checkversion?$checkversion:"$PluginHooksFunctions");
@@ -44,7 +44,9 @@ sub Init_graph3d {
 
 
 #-------------------------------------------------------
-# Genere un fichier image .png du graphique du tableau de bord
+# PLUGIN FUNCTION: ShowMonthGraph
+# UNIQUE: YES (Only one plugin using this function can be loaded)
+# Build an image file.
 # Parameters:	$max_value, @data
 # Input:        None
 # Output:       Png file

@@ -50,7 +50,7 @@ sub Init_timezone {
 	my $checkversion=&Check_Plugin_Version($PluginNeedAWStatsVersion);
 
 	# <-----
-	# YOU CAN ENTER HERE CODE TO INIT PLUGIN GLOBAL VARIABLES
+	# ENTER HERE CODE TO DO INIT PLUGIN ACTIONS
 	debug("InitParams=$InitParams",1);
 	$PluginVariable1="";
 	# ----->
@@ -61,23 +61,56 @@ sub Init_timezone {
 
 
 # HERE ARE ALL POSSIBLE HOOK FUNCTIONS. YOU MUST CHANGE THE NAME OF THE
-# FUNCTION xxx_example INTO xxx_pluginname (pluginname is in lower case).
-# NOTE THAT IN PLUGIN FUNCTIONS YOU CAN USE ANY AWSTATS GLOBAL VARIALES.
+# FUNCTION xxx_example INTO xxx_pluginname (pluginname in lower case).
+# NOTE THAT IN PLUGINS' FUNCTIONS, YOU CAN USE ANY AWSTATS GLOBAL VARIALES.
 
 
 #-----------------------------------------------------------------------------
-# PLUGIN FUNTION ShowPagesAddField_pluginname
-# ShowPagesAddField is called when building the row of the output report
+# PLUGIN FUNCTION: AddHTMLStyles_pluginname
+# UNIQUE: NO (Several plugins using this function can be loaded)
+# Function called to Add HTML styles at beginning of BODY section.
+#-----------------------------------------------------------------------------
+sub AddHTMLStyles_example {
+	# <-----
+	# PERL CODE HERE
+	# ----->
+}
+
+#-----------------------------------------------------------------------------
+# PLUGIN FUNCTION: AddHTMLBodyHeader_pluginname
+# UNIQUE: NO (Several plugins using this function can be loaded)
+# Function called to Add HTML code at beginning of BODY section.
+#-----------------------------------------------------------------------------
+sub AddHTMLBodyHeader_example {
+	# <-----
+	# PERL CODE HERE
+	# ----->
+}
+
+#-----------------------------------------------------------------------------
+# PLUGIN FUNCTION: ShowPagesAddField_pluginname
+# UNIQUE: NO (Several plugins using this function can be loaded)
+# Function called when building the row of the output report
 # of TOP Pages-URL (One call for each row). So it allows you to add a column
 # in these report. For example with the code :
 #   print "<TD>This is a new cell</TD>";
 #-----------------------------------------------------------------------------
 sub ShowPagesAddField_example {
-
 	# <-----
-	# ENTER PERL CODE HERE
+	# PERL CODE HERE
 	# ----->
+}
 
+#-----------------------------------------------------------------------------
+# PLUGIN FUNCTION: ReplaceURL_pluginname
+# UNIQUE: NO (Several plugins using this function can be loaded)
+# Function called to add additionnal information for URLs in URLs' report.
+# Parameters: URL
+#-----------------------------------------------------------------------------
+sub ReplaceURL_urlalias {
+	# <-----
+	# PERL CODE HERE
+	# ----->
 }
 
 

@@ -26,14 +26,14 @@ my $PluginHooksFunctions="GetTime";
 
 
 #-----------------------------------------------------------------------------
-# PLUGIN FUNTION Init_pluginname
+# PLUGIN FUNCTION: Init_pluginname
 #-----------------------------------------------------------------------------
 sub Init_timehires {
 	my $InitParams=shift;
 	my $checkversion=&Check_Plugin_Version($PluginNeedAWStatsVersion);
 
 	# <-----
-	# YOU CAN ENTER HERE CODE TO INIT PLUGIN GLOBAL VARIABLES
+	# ENTER HERE CODE TO DO INIT PLUGIN ACTIONS
 	# ----->
 
 	return ($checkversion?$checkversion:"$PluginHooksFunctions");
@@ -41,8 +41,8 @@ sub Init_timehires {
 
 
 #-----------------------------------------------------------------------------
-# PLUGIN FUNTION GetTime_pluginname
-# UNIQUE: YES (Only one function GetTime can exists for all loaded plugins)
+# PLUGIN FUNCTION: GetTime_pluginname
+# UNIQUE: YES (Only one plugin using this function can be loaded)
 #-----------------------------------------------------------------------------
 sub GetTime_timehires {
 	my ($sec,$msec)=&gettimeofday();

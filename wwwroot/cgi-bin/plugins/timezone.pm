@@ -40,13 +40,13 @@ $PluginTimeZoneSeconds
 
 
 #-----------------------------------------------------------------------------
-# PLUGIN FUNTION Init_pluginname
+# PLUGIN FUNCTION: Init_pluginname
 #-----------------------------------------------------------------------------
 sub Init_timezone {
 	my $InitParams=shift;
 
 	# <-----
-	# YOU CAN ENTER HERE CODE TO INIT PLUGIN GLOBAL VARIABLES
+	# ENTER HERE CODE TO DO INIT PLUGIN ACTIONS
 	if (! $InitParams || int($InitParams) == 0) { return "Error: Disable plugin if TimeZone is 0 (Plugin useless)"; }	# We do not need this plugin if TZ=0
 	$PluginTimeZoneSeconds=(int($InitParams)*3600);
 	# ----->
@@ -58,7 +58,8 @@ sub Init_timezone {
 
 
 #-----------------------------------------------------------------------------
-# PLUGIN FUNTION ChangeTime_pluginname
+# PLUGIN FUNCTION: ChangeTime_pluginname
+# UNIQUE: YES (Only one plugin using this function can be loaded)
 #-----------------------------------------------------------------------------
 sub ChangeTime_timezone {
 	my $dateparts=shift;
@@ -68,7 +69,8 @@ sub ChangeTime_timezone {
 
 
 #-----------------------------------------------------------------------------
-# PLUGIN FUNTION GetTimeZoneTitle_pluginname
+# PLUGIN FUNCTION: GetTimeZoneTitle_pluginname
+# UNIQUE: YES (Only one plugin using this function can be loaded)
 #-----------------------------------------------------------------------------
 sub GetTimeZoneTitle_timezone {
 	return ($PluginTimeZoneSeconds/3600);

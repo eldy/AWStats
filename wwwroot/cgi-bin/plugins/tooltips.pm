@@ -26,27 +26,29 @@ use strict;no strict "refs";
 # ENTER HERE THE MINIMUM AWSTATS VERSION REQUIRED BY YOUR PLUGIN
 # AND THE NAME OF ALL FUNCTIONS THE PLUGIN MANAGE.
 my $PluginNeedAWStatsVersion="5.4";
-my $PluginHooksFunctions="AddHTMLBodyHeader";
+my $PluginHooksFunctions="AddHTMLStyles AddHTMLBodyHeader";
 # ----->
 
 # <-----
 # IF YOUR PLUGIN NEED GLOBAL VARIABLES, THEY MUST BE DECLARED HERE.
 use vars qw/
+$TOOLTIPWIDTH
 /;
 # ----->
 
 
 
 #-----------------------------------------------------------------------------
-# PLUGIN FUNTION Init_pluginname
+# PLUGIN FUNCTION: Init_pluginname
 #-----------------------------------------------------------------------------
 sub Init_tooltips {
 	my $InitParams=shift;
 	my $checkversion=&Check_Plugin_Version($PluginNeedAWStatsVersion);
 
 	# <-----
-	# YOU CAN ENTER HERE CODE TO INIT PLUGIN GLOBAL VARIABLES
+	# ENTER HERE CODE TO DO INIT PLUGIN ACTIONS
 	debug(" InitParams=$InitParams",1);
+	$TOOLTIPON=1;
 	$TOOLTIPWIDTH=380;					# Width of tooltips
 	# ----->
 
@@ -56,15 +58,75 @@ sub Init_tooltips {
 
 
 #-----------------------------------------------------------------------------
-# PLUGIN FUNTION AddHTMLBodyHeader_pluginname
-# UNIQUE: NO (Only one function XXX can exists for all loaded plugins)
+# PLUGIN FUNCTION: AddHTMLStyles_pluginname
+# UNIQUE: NO (Several plugins using this function can be loaded)
+# AddHTMLStyles is called to Add HTML styles at beginning of BODY section.
+#-----------------------------------------------------------------------------
+sub AddHTMLStyles_tooltips {
+	# <-----
+	print "DIV { font: 12px arial,verdana,helvetica; text-align:justify; }\n";
+	print ".CTooltip { position:absolute; top:0px; left:0px; z-index:2; width:$TOOLTIPWIDTH; visibility:hidden; font: 8pt MS Comic Sans,arial,sans-serif; background-color: #FFFFE6; padding: 8px; border: 1px solid black; }\n";
+	return 1;
+	# ----->
+}
+
+
+#-----------------------------------------------------------------------------
+# PLUGIN FUNTION: AddHTMLBodyHeader_pluginname
+# UNIQUE: NO (Several plugins using this function can be loaded)
 # AddHTMLBodyHeader is called to Add HTML code at beginning of BODY section.
 #-----------------------------------------------------------------------------
 sub AddHTMLBodyHeader_tooltips {
 	# <-----
 	if ($FrameName ne 'mainleft') {
-		# Get the tooltips texts
-		&Read_Language_Tooltip($Lang);
+
+		# GET AND WRITE THE TOOLTIP STRINGS
+		#---------------------------------------------------------------------
+		&_ReadAndOutputTooltipFile($Lang);
+
+		# WRITE TOOLTIPS JAVASCRIPT CODE
+		#---------------------------------------------------------------------
+		# Position .style.pixelLeft/.pixelHeight/.pixelWidth/.pixelTop	IE OK	Opera OK
+		#          .style.left/.height/.width/.top											Netscape OK
+		# document.getElementById										IE OK	Opera OK	Netscape OK
+		# document.body.offsetWidth|document.body.style.pixelWidth		IE OK	Opera OK	Netscape OK		Visible width of container
+		# document.body.scrollTop                                       IE OK	Opera OK	Netscape OK		Visible width of container
+		# tooltip.offsetWidth|tooltipOBJ.style.pixelWidth				IE OK	Opera OK	Netscape OK		Width of an object
+		# event.clientXY												IE OK	Opera OK	Netscape KO		Return position of mouse
+		print <<EOF;
+
+<script language="javascript" type="text/javascript">
+function ShowTip(fArg)
+{
+	var tooltipOBJ = (document.getElementById) ? document.getElementById('tt' + fArg) : eval("document.all['tt" + fArg + "']");
+	if (tooltipOBJ != null) {
+		var tooltipLft = (document.body.offsetWidth?document.body.offsetWidth:document.body.style.pixelWidth) - (tooltipOBJ.offsetWidth?tooltipOBJ.offsetWidth:(tooltipOBJ.style.pixelWidth?tooltipOBJ.style.pixelWidth:$TOOLTIPWIDTH)) - 30;
+		var tooltipTop = 10;
+		if (navigator.appName == 'Netscape') {
+			if (parseFloat(navigator.appVersion) >= 5) { tooltipTop = (document.body.scrollTop>=0?document.body.scrollTop+10:event.clientY+10); }
+			tooltipOBJ.style.left = tooltipLft; tooltipOBJ.style.top = tooltipTop;
+		}
+		else {
+			tooltipTop = (document.body.scrollTop>=0?document.body.scrollTop+10:event.clientY+10);
+			if ((event.clientX > tooltipLft) && (event.clientY < (tooltipOBJ.scrollHeight?tooltipOBJ.scrollHeight:tooltipOBJ.style.pixelHeight) + 10)) {
+				tooltipTop = (document.body.scrollTop?document.body.scrollTop:document.body.offsetTop) + event.clientY + 20;
+			}
+			tooltipOBJ.style.pixelLeft = tooltipLft; tooltipOBJ.style.pixelTop = tooltipTop;
+		}
+		tooltipOBJ.style.visibility = "visible";
+	}
+}
+function HideTip(fArg)
+{
+	var tooltipOBJ = (document.getElementById) ? document.getElementById('tt' + fArg) : eval("document.all['tt" + fArg + "']");
+	if (tooltipOBJ != null) {
+		tooltipOBJ.style.visibility = "hidden";
+	}
+}
+</script>
+
+EOF
+
 	}
 	return 1;
 	# ----->
@@ -78,7 +140,7 @@ sub AddHTMLBodyHeader_tooltips {
 # Output:		Full tooltips text
 # Return:		None
 #------------------------------------------------------------------------------
-sub Read_Language_Tooltip {
+sub _ReadAndOutputTooltipFile {
 	# Check lang files in common possible directories :
 	# Windows :                           		"${DIR}lang" (lang in same dir than awstats.pl)
 	# Debian package :                    		"/usr/share/awstats/lang"
