@@ -87,7 +87,7 @@ $word, $yearcon, $yearfile, $yearmonthfile, $yeartoprocess) = ();
 @sortsearchwords = @sortsereferrals = @sortsider404 = @sortsiders = @sortunknownip =
 @sortunknownreferer = @sortunknownrefererbrowser = @wordlist = ();
 
-$VERSION="2.5 (build 19)";
+$VERSION="2.5 (build 20)";
 $Lang=0;
 
 # Default value
@@ -577,6 +577,7 @@ $BarImageHorizontal_k = "barrehk.png";
 "daviesbot", "DaviesBot (Not referenced robot)",
 "ezresult",	"Ezresult (Not referenced robot)",
 "fast-webcrawler", "Fast-Webcrawler (Not referenced robot)",
+"gnodspider","GNOD Spider (Not referenced robot)",
 "jennybot", "JennyBot (Not referenced robot)",
 "justview", "JustView (Not referenced robot)",
 "mercator", "Mercator (Not referenced robot)",
@@ -2073,7 +2074,8 @@ if (($ENV{"GATEWAY_INTERFACE"} eq "") && ($SiteToAnalyze eq "")) {
 	@SearchEnginesArray=keys %SearchEnginesHash;
 	print "  ".(@SearchEnginesArray)." search engines (and keywords or keyphrases used from them)\n";
 	print "  All HTTP errors\n";
-	print "New versions and support at http://awstats.sourceforge.net\n";
+	print "  Statistics by day/month/year\n";
+	print "New versions and FAQ at http://awstats.sourceforge.net\n";
 	exit 0;
 	}
 
@@ -2200,7 +2202,7 @@ if ($UpdateStats) {
 	# 05/21/00	00:17:31	OK  	200	212.242.30.6	Mozilla/4.0 (compatible; MSIE 5.0; Windows 98; DigExt)	http://www.cover.dk/	"www.cover.dk"	:Documentation:graphics:starninelogo.white.gif	1133
 	$LogFormatString=$LogFormat;
 	if ($LogFormat == 1) { $LogFormatString="%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\""; }
-	if ($LogFormat == 2) { $LogFormatString="date time c-ip cs-username cs-method cs-uri-stem sc-status cs-bytes cs-version cs(User-Agent) cs(Referer)"; }
+	if ($LogFormat == 2) { $LogFormatString="date time c-ip cs-username cs-method cs-uri-stem sc-status sc-bytes cs-version cs(User-Agent) cs(Referer)"; }
 	&debug("Generate PerlParsingFormat from LogFormatString=$LogFormatString");
 	$PerlParsingFormat="";
 	if ($LogFormat == 1) {
@@ -2237,44 +2239,26 @@ if ($UpdateStats) {
 		$i = 1;
 		foreach $f (@fields) {
 			$found=0;
-			if ($f =~ /%.*a$/) { $found=1; $PerlParsingFormat .= "[^\\s]* "; }
-			if ($f =~ /%.*A$/) { $found=1; $PerlParsingFormat .= "[^\\s]* "; }
-			if ($f =~ /%.*B$/) { $found=1; $PerlParsingFormat .= "[^\\s]* "; }
-			if ($f =~ /%.*b$/) {
-				$found=1; 
-				$pos_size = $i; $i++;
-				$PerlParsingFormat .= "([\\d|-]*) ";
-			}
-			if ($f =~ /%.*c$/) { $found=1; $PerlParsingFormat .= "[^\\s]* "; }
-			if ($f =~ /%.*e$/) { $found=1; $PerlParsingFormat .= "[^\\s]* "; }
-			if ($f =~ /%.*h$/) {
+			if ($f =~ /%host$/ || $f =~ /%h$/ || $f =~ /c-ip$/) {
 				$found=1; 
 				$pos_rc = $i; $i++;
 				$PerlParsingFormat .= "([^\\s]*) ";
 			}
-			if ($f =~ /%.*H$/) { $found=1; $PerlParsingFormat .= "[^\\s]* "; }
-			if ($f =~ /\\"%{Referer}i\\"/) {
-				$found=1;
-				$pos_referer = $i; $i++;
-				$PerlParsingFormat .= "\\\"([^\\\"]*)\\\" ";
-			}
-			if ($f =~ /\\"%{User-Agent}i\\"/) {
+			if ($f =~ /%time1$/ || $f =~ /%t$/) {
 				$found=1; 
-				$pos_agent = $i; $i++;
-				$PerlParsingFormat .= "\\\"([^\\\"]*)\\\" ";
+				$pos_date = $i;
+				$i++;
+				$pos_zone = $i;
+				$i++;
+				$PerlParsingFormat .= "\\[([^\\s]*) ([^\\s]*)\\] ";
 			}
-			if ($f =~ /%.*l$/) {
+			if ($f =~ /%time2$/) {
 				$found=1; 
-				$pos_logname = $i; $i++;
-				$PerlParsingFormat .= "([^\\s]*) ";
+				$pos_date = $i;
+				$i++;
+				$PerlParsingFormat .= "([^\\s]* [^\\s]*) ";
 			}
-			if ($f =~ /%.*m$/) { $found=1; $PerlParsingFormat .= "[^\\s]* "; }
-			if ($f =~ /%.*n$/) { $found=1; $PerlParsingFormat .= "[^\\s]* "; }
-			if ($f =~ /%.*o$/) { $found=1; $PerlParsingFormat .= "[^\\s]* "; }
-			if ($f =~ /%.*p$/) { $found=1; $PerlParsingFormat .= "[^\\s]* "; }
-			if ($f =~ /%.*P$/) { $found=1; $PerlParsingFormat .= "[^\\s]* "; }
-			if ($f =~ /%.*q$/) { $found=1; $PerlParsingFormat .= "[^\\s]* "; }
-			if ($f =~ /\\"%r\\"/) {
+			if ($f =~ /%methodurl$/ || $f =~ /\\"%r\\"/) {
 				$found=1; 
 				$pos_method = $i;
 				$i++;
@@ -2282,40 +2266,62 @@ if ($UpdateStats) {
 				$i++;
 				$PerlParsingFormat .= "\\\"([^\\s]*) ([^\\s]*) [^\\\"]*\\\" ";
 			}
-			if ($f =~ /%.*>s$/) {
+			if ($f =~ /%method$/ || $f =~ /cs-method$/) {
+				$found=1; 
+				$pos_method = $i;
+				$i++;
+				$PerlParsingFormat .= "([^\\s]*) ";
+			}
+			if ($f =~ /%url$/ || $f =~ /cs-uri-stem$/) {
+				$found=1; 
+				$pos_url = $i;
+				$i++;
+				$PerlParsingFormat .= "([^\\s]*) ";
+			}
+			if ($f =~ /%code$/ || $f =~ /%.*>s$/ || $f =~ /cs-status$/) {
 				$found=1; 
 				$pos_code = $i;
 				$i++;
 				$PerlParsingFormat .= "([\\d|-]*) ";
 			}
-			if ($f =~ /%.*t$/) {
+			if ($f =~ /%bytesd$/ || $f =~ /%b$/ || $f =~ /sc-bytes$/) {
 				$found=1; 
-				# need extra stuff for parsing time if a format is specified
-				$pos_date = $i;
-				$i++;
-				$pos_zone = $i;
-				$i++;
-				$PerlParsingFormat .= "\\[([^\\s]*) ([^\\s]*)\\] ";
+				$pos_size = $i; $i++;
+				$PerlParsingFormat .= "([\\d|-]*) ";
 			}
-			if ($f =~ /%.*T$/) { $found=1; $PerlParsingFormat .= "[^\\s]* "; }
-			if ($f =~ /%.*u$/) {
+			if ($f =~ /%refererquot$/ || $f =~ /\\"%{Referer}i\\"/) {
 				$found=1;
-				$pos_user = $i;
-				$i++;
+				$pos_referer = $i; $i++;
+				$PerlParsingFormat .= "\\\"([^\\\"]*)\\\" ";
+			}
+			if ($f =~ /%referer$/ || $f =~ /cs\(Referer\)/) {
+				$found=1;
+				$pos_referer = $i; $i++;
 				$PerlParsingFormat .= "([^\\s]*) ";
 			}
-			if ($f =~ /%.*U$/) { $found=1; $PerlParsingFormat .= "[^\\s]* "; }
-			if ($f =~ /%.*v$/) { $found=1; $PerlParsingFormat .= "[^\\s]* "; }
-			if ($f =~ /%.*V$/) { $found=1; $PerlParsingFormat .= "[^\\s]* "; }
-			if ($f =~ /%nu$/i) { $found=1; $PerlParsingFormat .= "[^\\s]* "; }
-			if (! $found) { error("Error: Personalised LogFormat parameter contains unrecognized command: $f"); }
+			if ($f =~ /%uaquot$/ || $f =~ /\\"%{User-Agent}i\\"/) {
+				$found=1; 
+				$pos_agent = $i; $i++;
+				$PerlParsingFormat .= "\\\"([^\\\"]*)\\\" ";
+			}
+			if ($f =~ /%ua$/ || $f =~ /cs\(User-Agent\)/) {
+				$found=1; 
+				$pos_agent = $i; $i++;
+				$PerlParsingFormat .= "([^\\s]*) ";
+			}
+			if (! $found) { $found=1; $PerlParsingFormat .= "[^\\s]* "; }
 		}
 		($PerlParsingFormat) ? chop($PerlParsingFormat) : error("Error: no recognised format commands in Personalised log format"); 
 		$lastrequiredfield=$i--;
 	}
-	if ($pos_rc eq "" || $pos_date eq "" || $pos_method eq "" || $pos_url eq "" || $pos_code eq "" || $pos_size eq "" || $pos_referer eq "" || $pos_agent eq "") {
-		error("Error: Your personalised LogFormat does not include all fields required by AWStats");
-		}
+	if ($pos_rc eq "") { error("Error: Your personalised LogFormat does not include all fields required by AWStats (Add \%host in your LogFormat string)."); }
+	if ($pos_date eq "") { error("Error: Your personalised LogFormat does not include all fields required by AWStats (Add \%time1 or \%time2 in your LogFormat string)."); }
+	if ($pos_method eq "") { error("Error: Your personalised LogFormat does not include all fields required by AWStats (Add \%methodurl or \%method in your LogFormat string)."); }
+	if ($pos_url eq "") { error("Error: Your personalised LogFormat does not include all fields required by AWStats (Add \%methodurl or \%url in your LogFormat string)."); }
+	if ($pos_code eq "") { error("Error: Your personalised LogFormat does not include all fields required by AWStats (Add \%code in your LogFormat string)."); }
+	if ($pos_size eq "") { error("Error: Your personalised LogFormat does not include all fields required by AWStats (Add \%bytesd in your LogFormat string)."); }
+	if ($pos_referer eq "") { error("Error: Your personalised LogFormat does not include all fields required by AWStats (Add \%referer or \%refererquot in your LogFormat string)."); }
+	if ($pos_agent eq "") { error("Error: Your personalised LogFormat does not include all fields required by AWStats (Add \%ua or \%uaquot in your LogFormat string)."); }
 	&debug("PerlParsingFormat is $PerlParsingFormat");
 
 
@@ -2338,7 +2344,7 @@ if ($UpdateStats) {
 		# Parse line record to get all required fields
 		$_ =~ /^$PerlParsingFormat/;
 		foreach $i (1..$lastrequiredfield) { $field[$i]=$$i; }
-		&debug("$field[$pos_rc] ; $field[$pos_logname] ; $field[$pos_user] ; $field[$pos_date] ; $field[$pos_zone]; $field[$pos_method] ; $field[$pos_url] ; $field[$pos_code] ; $field[$pos_size] ; $field[$pos_referer] ; $field[$pos_agent]",3);
+		&debug("$field[$pos_rc] ; - ; - ; $field[$pos_date] ; $field[$pos_zone]; $field[$pos_method] ; $field[$pos_url] ; $field[$pos_code] ; $field[$pos_size] ; $field[$pos_referer] ; $field[$pos_agent]",3);
 
 		# Check parsed parameters
 		#----------------------------------------------------------------------
@@ -2346,8 +2352,8 @@ if ($UpdateStats) {
 			$corrupted++;
 			if ($NbOfLinesProcessed >= 10 && $corrupted == $NbOfLinesProcessed) {
 				# Files seems to have bad format
-				print "AWStats did not found any valid log lines, that match your <b>LogFormat</b> parameter, in the 10th first non commented lines of your log.<br>\n";
-				print "<font color=#880000>Your log file <b>$LogFile</b> must have a bad format or <b>LogFormat</b> parameter is wrong.</font><br><br>\n";
+				print "AWStats did not found any valid log lines that match your <b>LogFormat</b> parameter, in the 10th first non commented lines of your log.<br>\n";
+				print "<font color=#880000>Your log file <b>$LogFile</b> must have a bad format or <b>LogFormat</b> parameter setup is wrong.</font><br><br>\n";
 				print "Your <b>LogFormat</b> parameter is <b>$LogFormat</b>, this means each line in your log file need to have ";
 				if ($LogFormat == 1) {
 					print "<b>\"combined log format\"</b> like this:<br>\n";
@@ -2355,10 +2361,10 @@ if ($UpdateStats) {
 				}
 				if ($LogFormat == 2) {
 					print "<b>\"MSIE Extended W3C log format\"</b> like this:<br>\n";
-					print "<font color=#888888><i>date time c-ip c-username cs-method cs-uri-sterm sc-status cs-bytes cs-version cs(User-Agent) cs(Referer)</i></font><br>\n";
+					print "<font color=#888888><i>date time c-ip c-username cs-method cs-uri-sterm sc-status sc-bytes cs-version cs(User-Agent) cs(Referer)</i></font><br>\n";
 				}
 				if ($LogFormat != 1 && $LogFormat != 2) {
-					print "the following personalized log format:<br>\n";
+					print "the following personalised log format:<br>\n";
 					print "<font color=#888888><i>$LogFormat</i></font><br>\n";
 				}
 				print "<br>";
