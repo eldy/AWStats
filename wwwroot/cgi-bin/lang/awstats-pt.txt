@@ -72,6 +72,6 @@ message69=Out
 message70=Nov
 message71=Dez
 message72=
-message73=Daily statistics
+message73=
 message74=Update now
 message75=Bytes

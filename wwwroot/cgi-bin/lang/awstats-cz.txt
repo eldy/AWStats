@@ -73,6 +73,6 @@ message69=Øíj
 message70=Lis
 message71=Pro
 message72=Navigation
-message73=Denní statistiky
+message73=
 message74=Aktualizovat
 message75=Bajtù

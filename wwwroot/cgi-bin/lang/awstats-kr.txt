@@ -73,6 +73,6 @@ message69=10월
 message70=11월
 message71=12월
 message72=
-message73=일일 통계
+message73=
 message74=Update now
 message75=Bytes

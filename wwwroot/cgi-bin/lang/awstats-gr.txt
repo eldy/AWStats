@@ -73,6 +73,6 @@ message69=Ïêô
 message70=Íïİ
 message71=Äåê
 message72=
-message73=Daily statistics
+message73=
 message74=Update now
 message75=Bytes

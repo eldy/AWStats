@@ -72,6 +72,6 @@ message69=Oct
 message70=Nov
 message71=Dic
 message72=
-message73=Statistiche giornaliere
+message73=
 message74=Aggiorna
 message75=Bytes

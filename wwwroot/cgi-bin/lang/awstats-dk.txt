@@ -72,6 +72,6 @@ message69=Okt
 message70=Nov
 message71=Dec
 message72=
-message73=Dag statistikker
+message73=
 message74=Opdater
 message75=Bytes

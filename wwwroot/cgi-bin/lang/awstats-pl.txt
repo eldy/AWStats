@@ -73,6 +73,6 @@ message69=Pa¼dziernik
 message70=Listopad
 message71=Grudzieñ
 message72=
-message73=Dzieñ Statystyki
+message73=
 message74=Update now
 message75=Bytes
