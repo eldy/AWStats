@@ -1009,14 +1009,21 @@ AWStats 4.1+ supports both keywords AND keyphrases by default with no need of an
 
 <a name="LevelFor"><b>LevelFor</b></a><br>
 <b>Version : </b>4.0 +<br>
-<br># Following values allows you to disable/enable some AWStats features.
-<br># Possible values: 0, 1 (or 2 for LevelForRobotsDetection)
-<br># Default: 1 (2 for LevelForRobotsDetection)
+<br># Following values allows you to define accuracy of AWStats entities (robots,
+<br># browsers, os, referers) detection.
+<br># Large web sites or overloaded ISP with a lot of hosts should set this
+<br># parameter to 1 or 0, instead of 2, to gain speed and memory.
+<br># Possible values:
+<br>#  0 = No detection,
+<br>#  1 = Medium/Standard detection
+<br>#  2 = Full detection
+<br># Change : Effective for new updates only
+<br># Default: 2
 <br>#
 <br>LevelForRobotsDetection=2			# 0 will increase AWStats speed by 1%.
-<br>LevelForBrowsersDetection=1			# 0 disables Browsers detection. No speed gain.
-<br>LevelForOSDetection=1				# 0 disables OS detection. No speed gain.
-<br>LevelForRefererAnalyze=1			# 0 will increase AWStats speed by 5%.
+<br>LevelForBrowsersDetection=2			# 0 disables Browsers detection. No speed gain.
+<br>LevelForOSDetection=2				# 0 disables OS detection. No speed gain.
+<br>LevelForRefererAnalyze=2			# 0 will increase AWStats speed by 5%.
 
 <br><br><hr>
 

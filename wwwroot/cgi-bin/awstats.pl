@@ -164,7 +164,7 @@ $LevelForSearchEnginesDetection $LevelForKeywordsDetection
 /;
 ($LevelForRobotsDetection, $LevelForBrowsersDetection, $LevelForOSDetection, $LevelForRefererAnalyze,
 $LevelForSearchEnginesDetection, $LevelForKeywordsDetection)=
-(2,1,1,1,1,1);
+(2,2,2,2,2,2);
 use vars qw/
 $LastLineChecksum $DirLock $DirCgi $DirData $DirIcons $DirLang $AWScript $ArchiveFileName
 $AllowAccessFromWebToFollowingIPAddresses $HTMLHeadSection $HTMLEndSection $LinksToWhoIs $LinksToIPWhoIs
@@ -1518,11 +1518,11 @@ sub Check_Config {
 	if ($DecodeUA !~ /[0-1]/)						{ $DecodeUA=0; }
 	# Optional accuracy setup section
 	if ($LevelForRobotsDetection !~ /^\d+/)       	{ $LevelForRobotsDetection=2; }
-	if ($LevelForBrowsersDetection !~ /^\d+/)     	{ $LevelForBrowsersDetection=1; }
-	if ($LevelForOSDetection !~ /^\d+/)    			{ $LevelForOSDetection=1; }
-	if ($LevelForRefererAnalyze !~ /^\d+/)			{ $LevelForRefererAnalyze=1; }
-	if ($LevelForSearchEnginesDetection !~ /^\d+/)	{ $LevelForSearchEnginesDetection=1; }
-	if ($LevelForKeywordsDetection !~ /^\d+/)  		{ $LevelForKeywordsDetection=1; }
+	if ($LevelForBrowsersDetection !~ /^\d+/)     	{ $LevelForBrowsersDetection=2; }
+	if ($LevelForOSDetection !~ /^\d+/)    			{ $LevelForOSDetection=2; }
+	if ($LevelForRefererAnalyze !~ /^\d+/)			{ $LevelForRefererAnalyze=2; }
+	if ($LevelForSearchEnginesDetection !~ /^\d+/)	{ $LevelForSearchEnginesDetection=2; }
+	if ($LevelForKeywordsDetection !~ /^\d+/)  		{ $LevelForKeywordsDetection=2; }
 	# Optional extra setup section
 	foreach my $extracpt (1..@ExtraName-1) {
 		if ($ExtraStatTypes[$extracpt] !~ /[PHBL]/)  { $ExtraStatTypes[$extracpt]='PHBL'; }
@@ -4941,11 +4941,11 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 	my $lastprocessedyearmonth=sprintf("%04i%02i",$lastprocessedyear,$lastprocessedmonth);
 
 	# Init RobotsSearchIDOrder required for update process
-	my @RobotArrayList;
-	if ($LevelForRobotsDetection >= 1) { push @RobotArrayList,"list1"; }
-	if ($LevelForRobotsDetection >= 2) { push @RobotArrayList,"list2"; }
-	if ($LevelForRobotsDetection >= 1) { push @RobotArrayList,"list3"; }	# Always added
-	foreach my $key (@RobotArrayList) {
+	my @robotlist;
+	if ($LevelForRobotsDetection >= 1) { push @robotlist,"list1"; }
+	if ($LevelForRobotsDetection >= 2) { push @robotlist,"list2"; }
+	if ($LevelForRobotsDetection >= 1) { push @robotlist,"list3"; }	# Always added
+	foreach my $key (@robotlist) {
 		push @RobotsSearchIDOrder,@{"RobotsSearchIDOrder_$key"};
 		if ($Debug) { debug("Add ".@{"RobotsSearchIDOrder_$key"}." elements from RobotsSearchIDOrder_$key into RobotsSearchIDOrder",2); }
 	}
