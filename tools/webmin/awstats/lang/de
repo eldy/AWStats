@@ -1,0 +1,79 @@
+index_title=AWStats Logfile Analyse
+index_version=AWStats Version $1
+index_eawstats=Das Logfile Analyse Programm $1 wurde nicht auf Ihrem System gefunden. Vieleicht ist es nicht installiert, oder Ihre <a href='$2'>module configuration</a> ist fehlerhaft.
+index_econfdir=Das AWStats Konfigurations Verzeichniss $1 wurde nicht auf Ihrem System gefunden. Vieleicht ist es nicht installiert, oder Ihre <a href='$2'>module configuration</a> ist fehlerhaft.
+index_econf=Die AWStats Beispiel-Konfigurations Datei $1 wurde nicht auf ihrem System gefunden. Vieleicht ist es nicht installiert, oder Ihre <a href='$2'>module configuration</a> ist fehlerhaft.
+index_cgi=<a href='$1'>CGI path not configured</a>
+index_add=Hinzufügen einer neuen Analyse-Konfiguration.
+index_path=Konfigurations Datei
+index_type=Typ
+index_size=Größe
+index_create=Erstellt/Geändert
+index_noconfig=Es wurden keine Analyse-Konfigurations Dateien gefunden bzw. hinzugefügt.
+index_edit=Konfiguration Bearbeiten/Löschen
+index_del=Konfiguration Löschen
+index_scheduled=Eingeplant
+index_now=Jetzt
+index_update=Statistik aktualisieren
+index_update2=Aktualisieren
+index_view=Statistik anzeigen
+index_view2=Anzeigen
+index_return=Konfigurations Dateien
+index_eversion=Das AWStats Programm auf Ihrem System hat die Version $2, aber dieses Modul unterstüzt nur Versionen $3 und aufwärts.
+index_egetversion=Die Versions Nr. Ihrer AWStats Installation konnte nicht ermittelt werden. Die Abfrage ergab : $2.<br>May be your <a href='$3'>module configuration</a> fehlerhaft.
+index_advanced1=Direktiven für den OPTIONALEN EINSTELLUNGS BEREICH anzeigen
+index_advanced2=Direktiven für die OPTIONALEN DETAIL-EINSTELLUNGEN anzeigen
+index_advanced3=Direktiven für das OPTIONALE ERSCHEINUNGSBILD anzeigen
+index_advanced4=Direktiven für die OPTIONALEN PLUGINS anzeigen
+index_advanced5=Direktiven für die OPTIONALEN EXTRA EINSTGELLUNGEN anzeigen
+index_hideadvanced=Optionale Direktiven verbergen
+index_nodirallowed=Der Benutzer $1 hat kein berechtigtes Verzeichniss zum lesen/speichern von AWStats Konfigurationen
+index_allowed=Ihr Benutzer-Konto $1 ist berechtigt, um Dateien anzusehen/bearbeiten in
+index_changeallowed=Berechtigungen für Verzeichnisse, die es Ihnen erlaube AWStats Konfigurationen zu  listen/berabeiten, kann Ihnen der Webmin Administrator über den Benutzer ACL Editor zuweisen ($1)
+
+edit_title1=Konfiguration hinzufügen
+edit_title2=Konfiguration bearbeiten
+edit_header=Bearbeitungs Assisitent für die Konfiguration $1
+edit_headernew=Assistent zum Erstellen von Konfigurationen
+edit_file=Datei Inhalt
+edit_add=Dateiname der zu erstellenden Konfigurationsdatei
+edit_user=AWStats unter folgendem Benutzer ausführen
+edit_ecannot=Sie sind nicht berechtigt, diese Konfiguration zu bearbeiten
+edit_efilecannot=Die Konfigurationsdatei '$1' liegt nicht in einem berechtigten Verzeichniss.
+save_err=Fehler beim Erzeugen der Konfigurationsdatei
+save_efile=Dateiname für die Konfigurationsdatei wurde nicht angegeben
+save_fileexists=Konfigurationsdatei existiert bereits
+
+save_edir=Für das gewählte Verzeichniss '$1' zum speichern der Konfigurationen existieren keine Webmin Rechte.
+save_ecannot=Sie haben keinen Berechtigung zum erzeugen/ansehen von Auswertugen unter $1
+save_errLogFile=Fehler im LogFile Parameter. Das Logfile $1 existiert nicht, oder nicht lesbar
+save_errLogFormat=Fehler im LogFormat Parameter. Der parameter ist nicht definiert
+save_errSiteDomain=Fehler im SiteDomain Parameter. Der Parameter ist nicht definiert
+save_errDirData=Fehler im DirData Parameter. Der Parameter ist nicht definiert oder das verzeichniss existiert nicht
+save_dirnotexists=Verzeichniss existiert nicht
+
+update_title=Statistik aktualisieren
+update_ecannot=Sie sind nicht berechtigt die Statistik zu aktualisieren
+scheduled_title=Statistik Aktualisierung einplanen
+scheduled_ecannot=Sie sind nicht berechtigt, die Statistik zu aktualisieren oder einzuplanen
+
+log_create_log=Erstellte Awstats Konfigurationsdatei $1
+log_modify_log=AWStats Konfigurationsdatei geändert $1
+log_delete_log=Gelöschte AWStats Konfigurationsdatei $1
+log_generate_log=Aktualisiere folgende AWStats Konfigurationsdatei $1
+
+acl_view=Darf Auswertungen für Bestehende Konfigurationen anzeigen ?
+acl_global=Darf AWStats Konfigurationen bearbeiten ?
+acl_add=Darf Konfigurationen bearbeiten und löschen ?
+acl_update=Darf Auswertungen für Bestehende Konfigurationen anzeigen ?
+
+acl_user=AWStats unter folgendem Unix benutzer ausführen
+acl_this=Aktueller Webmin Benutzer
+acl_any=Jeder Benutzer
+acl_dir=Berechtigung zum Ansehen und Berabeiten von Konfigurationen unter
+
+help_title=Hilfe Seite
+help_subtitle=<b>Help for config file parameter $1</b>
+help_subtitleplugin=<b>Help for plugin $1</b>
+help_notfound=Parameter wurde nicht in Ihrer Beispiel Datei $1 gefunden.<br>May be your AWStats version does not support it, so no help is available. 
+help_help=Hilfe
