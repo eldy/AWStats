@@ -22,7 +22,7 @@ use Socket;
 #------------------------------------------------------------------------------
 use vars qw/ $REVISION $VERSION /;
 $REVISION='$Revision$'; $REVISION =~ /\s(.*)\s/; $REVISION=$1;
-$VERSION="6.0 (build $REVISION)";
+$VERSION="6.1 (build $REVISION)";
 
 # ----- Constants -----
 use vars qw/
@@ -496,7 +496,9 @@ use vars qw/ @Message /;
 'Traffic not viewed',
 'Monthly history',
 'Worms',
-'different worms'
+'different worms',
+'Mails successully sent',
+'Mails failed/refused'
 );
 
 
@@ -8312,41 +8314,57 @@ if (scalar keys %HTMLOutput) {
 			my $w='20';
 			if ($LogType eq 'W' || $LogType eq 'S') { $w='17'; $colspan=6; }
 			
+			# Show first/last
 			print "<tr bgcolor=\"#$color_TableBGRowTitle\">";
-			if ($LogType eq 'W' || $LogType eq 'S') { print "<td>&nbsp;</td>"; }
-			print "<td><b>$Message[8]</b></td>\n";
-			print "<td colspan=\"3\">$Message[128]</td>";
-			print "<td><b>$Message[9]</b></td></tr>\n";
+			print "<td class=\"aws\"><b>$Message[133]</b></td><td class=\"aws\" colspan=\"".($colspan-1)."\">\n";
+			print ($MonthRequired eq 'all'?"$Message[6] $YearRequired":"$Message[5] ".$MonthNumLib{$MonthRequired}." $YearRequired</td>");
+			print "</tr>\n";
 			print "<tr bgcolor=\"#$color_TableBGRowTitle\">";
-			if ($LogType eq 'W' || $LogType eq 'S') { print "<td>&nbsp;</td>"; }
-			if ($FirstTime) { print "<td>".Format_Date($FirstTime,0)."</td>"; }
-			else { print "<td>NA</td>"; }
-			print "<td colspan=\"3\"><b>";
-			print ($MonthRequired eq 'all'?"$Message[6] $YearRequired":"$Message[5] ".$MonthNumLib{$MonthRequired}." $YearRequired");
-			print "</b></td>";
-			if ($LastTime) { print "<td>".Format_Date($LastTime,0)."</td></tr>\n"; }
-			else { print "<td>NA</td></tr>\n"; }
+			print "<td class=\"aws\"><b>$Message[8]</b></td>\n";
+			print "<td class=\"aws\" colspan=\"".($colspan-1)."\">".($FirstTime?Format_Date($FirstTime,0):"NA")."</td>";
+			print "</tr>\n";
+			print "<tr bgcolor=\"#$color_TableBGRowTitle\">";
+			print "<td class=\"aws\"><b>$Message[9]</b></td>\n";
+			print "<td class=\"aws\" colspan=\"".($colspan-1)."\">".($LastTime?Format_Date($LastTime,0):"NA")."</td>\n";
+			print "</tr>\n";
+			
 			# Show main indicators
 			print "<tr>";
-			if ($LogType eq 'W' || $LogType eq 'S') { print "<td bgcolor=\"#$color_TableBGRowTitle\">&nbsp;</td>"; }
-			if ($ShowMonthStats =~ /U/i) { print "<td width=\"$w%\" bgcolor=\"#$color_u\"".($TOOLTIPON?" onmouseover=\"ShowTip(2);\" onmouseout=\"HideTip(2);\"":"").">$Message[11]</td>"; } else { print "<td width=\"20%\">&nbsp;</td>"; }
-			if ($ShowMonthStats =~ /V/i) { print "<td width=\"$w%\" bgcolor=\"#$color_v\"".($TOOLTIPON?" onmouseover=\"ShowTip(1);\" onmouseout=\"HideTip(1);\"":"").">$Message[10]</td>"; } else { print "<td width=\"20%\">&nbsp;</td>"; }
-			if ($ShowMonthStats =~ /P/i) { print "<td width=\"$w%\" bgcolor=\"#$color_p\"".($TOOLTIPON?" onmouseover=\"ShowTip(3);\" onmouseout=\"HideTip(3);\"":"").">$Message[56]</td>"; } else { print "<td width=\"20%\">&nbsp;</td>"; }
-			if ($ShowMonthStats =~ /H/i) { print "<td width=\"$w%\" bgcolor=\"#$color_h\"".($TOOLTIPON?" onmouseover=\"ShowTip(4);\" onmouseout=\"HideTip(4);\"":"").">$Message[57]</td>"; } else { print "<td width=\"20%\">&nbsp;</td>"; }
-			if ($ShowMonthStats =~ /B/i) { print "<td width=\"$w%\" bgcolor=\"#$color_k\"".($TOOLTIPON?" onmouseover=\"ShowTip(5);\" onmouseout=\"HideTip(5);\"":"").">$Message[75]</td>"; } else { print "<td width=\"20%\">&nbsp;</td>"; }
+			if ($LogType eq 'W' || $LogType eq 'S') { print "<td bgcolor=\"#$color_TableBGTitle\">&nbsp;</td>"; }
+			if ($ShowMonthStats =~ /U/i) { print "<td width=\"$w%\" bgcolor=\"#$color_u\"".($TOOLTIPON?" onmouseover=\"ShowTip(2);\" onmouseout=\"HideTip(2);\"":"").">$Message[11]</td>"; } else { print "<td bgcolor=\"#$color_TableBGTitle\" width=\"20%\">&nbsp;</td>"; }
+			if ($ShowMonthStats =~ /V/i) { print "<td width=\"$w%\" bgcolor=\"#$color_v\"".($TOOLTIPON?" onmouseover=\"ShowTip(1);\" onmouseout=\"HideTip(1);\"":"").">$Message[10]</td>"; } else { print "<td bgcolor=\"#$color_TableBGTitle\" width=\"20%\">&nbsp;</td>"; }
+			if ($ShowMonthStats =~ /P/i) { print "<td width=\"$w%\" bgcolor=\"#$color_p\"".($TOOLTIPON?" onmouseover=\"ShowTip(3);\" onmouseout=\"HideTip(3);\"":"").">$Message[56]</td>"; } else { print "<td bgcolor=\"#$color_TableBGTitle\" width=\"20%\">&nbsp;</td>"; }
+			if ($ShowMonthStats =~ /H/i) { print "<td width=\"$w%\" bgcolor=\"#$color_h\"".($TOOLTIPON?" onmouseover=\"ShowTip(4);\" onmouseout=\"HideTip(4);\"":"").">$Message[57]</td>"; } else { print "<td bgcolor=\"#$color_TableBGTitle\" width=\"20%\">&nbsp;</td>"; }
+			if ($ShowMonthStats =~ /B/i) { print "<td width=\"$w%\" bgcolor=\"#$color_k\"".($TOOLTIPON?" onmouseover=\"ShowTip(5);\" onmouseout=\"HideTip(5);\"":"").">$Message[75]</td>"; } else { print "<td bgcolor=\"#$color_TableBGTitle\" width=\"20%\">&nbsp;</td>"; }
 			print "</tr>\n";
 			print "<tr>";
-			if ($LogType eq 'W' || $LogType eq 'S') { $w='17'; print "<td class=\"aws\">$Message[160]&nbsp;*</td>"; }
-			if ($ShowMonthStats =~ /U/i) { print "<td>".($MonthRequired eq 'all'?"<b><= $TotalUnique</b><br />$Message[129]":"<b>$TotalUnique</b><br />&nbsp;")."</td>"; } else { print "<td>&nbsp;</td>"; }
-			if ($ShowMonthStats =~ /V/i) { print "<td><b>$TotalVisits</b><br />($RatioVisits&nbsp;$Message[52])</td>"; } else { print "<td>&nbsp;</td>"; }
-			if ($ShowMonthStats =~ /P/i) { print "<td><b>$TotalPages</b><br />($RatioPages&nbsp;".lc($Message[56]."/".$Message[12]).")</td>"; } else { print "<td>&nbsp;</td>"; }
-			if ($ShowMonthStats =~ /H/i) { print "<td><b>$TotalHits</b>".($LogType eq 'M'?"":"<br />($RatioHits&nbsp;".lc($Message[57]."/".$Message[12]).")</td>"); } else { print "<td>&nbsp;</td>"; }
-			if ($ShowMonthStats =~ /B/i) { print "<td><b>".Format_Bytes(int($TotalBytes))."</b><br />($RatioBytes&nbsp;$Message[108]/".lc($Message[($LogType eq 'M'?149:12)]).")</td>"; } else { print "<td>&nbsp;</td>"; }
+			if ($LogType eq 'M') { 
+				print "<td class=\"aws\">$Message[165]</td>";
+				print "<td>&nbsp;<br>&nbsp;</td>\n";
+				print "<td>&nbsp;<br>&nbsp;</td>\n";
+				if ($ShowMonthStats =~ /H/i) { print "<td><b>$TotalHits</b>".($LogType eq 'M'?"":"<br />($RatioHits&nbsp;".lc($Message[57]."/".$Message[12]).")</td>"); } else { print "<td>&nbsp;</td>"; }
+				if ($ShowMonthStats =~ /B/i) { print "<td><b>".Format_Bytes(int($TotalBytes))."</b><br />($RatioBytes&nbsp;$Message[108]/".lc($Message[($LogType eq 'M'?149:12)]).")</td>"; } else { print "<td>&nbsp;</td>"; }
+			}
+			else {
+				if ($LogType eq 'W' || $LogType eq 'S') { print "<td class=\"aws\">$Message[160]&nbsp;*</td>"; }
+				if ($ShowMonthStats =~ /U/i) { print "<td>".($MonthRequired eq 'all'?"<b><= $TotalUnique</b><br />$Message[129]":"<b>$TotalUnique</b><br />&nbsp;")."</td>"; } else { print "<td>&nbsp;</td>"; }
+				if ($ShowMonthStats =~ /V/i) { print "<td><b>$TotalVisits</b><br />($RatioVisits&nbsp;$Message[52])</td>"; } else { print "<td>&nbsp;</td>"; }
+				if ($ShowMonthStats =~ /P/i) { print "<td><b>$TotalPages</b><br />($RatioPages&nbsp;".lc($Message[56]."/".$Message[12]).")</td>"; } else { print "<td>&nbsp;</td>"; }
+				if ($ShowMonthStats =~ /H/i) { print "<td><b>$TotalHits</b>".($LogType eq 'M'?"":"<br />($RatioHits&nbsp;".lc($Message[57]."/".$Message[12]).")</td>"); } else { print "<td>&nbsp;</td>"; }
+				if ($ShowMonthStats =~ /B/i) { print "<td><b>".Format_Bytes(int($TotalBytes))."</b><br />($RatioBytes&nbsp;$Message[108]/".lc($Message[($LogType eq 'M'?149:12)]).")</td>"; } else { print "<td>&nbsp;</td>"; }
+			}
 			print "</tr>\n";
 			print "<tr>";
-			if ($LogType eq 'W' || $LogType eq 'S') {
-				print "<td class=\"aws\">$Message[161]&nbsp;*</td>";
-				print "<td colspan=2>&nbsp;<br>&nbsp;</td>\n";
+			if ($LogType eq 'M') { 
+				print "<td class=\"aws\">$Message[166]</td>";
+				print "<td>&nbsp;<br>&nbsp;</td>\n";
+				print "<td>&nbsp;<br>&nbsp;</td>\n";
+				if ($ShowMonthStats =~ /H/i) { print "<td><b>$TotalNotViewedHits</b></td>"; } else { print "<td>&nbsp;</td>"; }
+				if ($ShowMonthStats =~ /B/i) { print "<td><b>".Format_Bytes(int($TotalNotViewedBytes))."</b></td>"; } else { print "<td>&nbsp;</td>"; }
+			}
+			else {
+				if ($LogType eq 'W' || $LogType eq 'S') { print "<td class=\"aws\">$Message[161]&nbsp;*</td>"; }
+				print "<td colspan=\"2\">&nbsp;<br>&nbsp;</td>\n";
 				if ($ShowMonthStats =~ /P/i) { print "<td><b>$TotalNotViewedPages</b></td>"; } else { print "<td>&nbsp;</td>"; }
 				if ($ShowMonthStats =~ /H/i) { print "<td><b>$TotalNotViewedHits</b></td>"; } else { print "<td>&nbsp;</td>"; }
 				if ($ShowMonthStats =~ /B/i) { print "<td><b>".Format_Bytes(int($TotalNotViewedBytes))."</b></td>"; } else { print "<td>&nbsp;</td>"; }
