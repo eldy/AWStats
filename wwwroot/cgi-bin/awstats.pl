@@ -4102,8 +4102,10 @@ EOF
 			print "<tr><th class=AWL>$Message[23] : </th>";
 			print "<td class=AWL>";
 			if ($ShowOriginStats)		 { print "<a href=\"#REFERER\">$Message[37]</a> &nbsp;\n"; }
-			if ($ShowKeyphrasesStats)	 { print "<a href=\"#SEARCHKEYS\">$Message[120]</a> &nbsp;\n"; }
-			if ($ShowKeywordsStats)	 	 { print "<a href=\"#SEARCHKEYS\">$Message[121]</a> &nbsp;\n"; }
+#			if ($ShowOriginStats)		 { print "<a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=refererse":"$PROG$StaticLinks.refererse.html")."\"".($DetailedReportsOnNewWindows?" target=\"awstatsbis\"":"").">$Message[34]</a> &nbsp;\n"; }
+#			if ($ShowOriginStats)		 { print "<a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=refererpages":"$PROG$StaticLinks.refererpages.html")."\"".($DetailedReportsOnNewWindows?" target=\"awstatsbis\"":"").">$Message[34]</a> &nbsp;\n"; }
+			if ($ShowKeyphrasesStats)	 { print "<a href=\"#KEYPHRASES\">$Message[120]</a> &nbsp;\n"; }
+			if ($ShowKeywordsStats)	 	 { print "<a href=\"#KEYWORDS\">$Message[121]</a> &nbsp;\n"; }
 			print "<br></td></tr>";
 			# Others
 			print "<tr><th class=AWL>$Message[2] : </th>";
