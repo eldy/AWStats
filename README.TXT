@@ -111,10 +111,12 @@ You can find a most up-to-date documentation on:
 http://awstats.sourceforge.net
 
 
+
 III - BENCHMARK
 -----------------------------------
 
 Tests and results are available in AWStats documentation, in docs/ directory.
+
 
 
 IV - ABOUT THE AUTHOR, LICENSE AND SUPPORT
