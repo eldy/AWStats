@@ -34,7 +34,7 @@ $NBOFLINESFORBENCHMARK=5000;		# Benchmark info are printing every NBOFLINESFORBE
 $FRAMEWIDTH=260;					# Width of left frame when UseFramesWhenCGI is on
 $TOOLTIPWIDTH=380;					# Width of tooltips
 $NBOFLASTUPDATELOOKUPTOSAVE=200;	# Nb of records to save in DNS last update cache file
-$LIMITFLUSH=4000;					# Nb of records in data arrays after how we need to flush data on disk
+$LIMITFLUSH=1000;					# Nb of records in data arrays after how we need to flush data on disk
 $VISITTIMEOUT=10000;				# Laps of time to consider a page load as a new visit. 10000 = 1 hour (Default = 10000)
 $NOTSORTEDRECORDTOLERANCE=10000;	# Laps of time to accept a record if not in correct order. 10000 = 1 hour (Default = 10000)
 $MAXDIFFEXTRA=500;
@@ -4874,7 +4874,7 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 	my $counter=0;
 	# Reset counter for benchmark (first call to GetDelaySinceStart)
 	&GetDelaySinceStart(1);
-	if ($ShowSteps) { print "Phase 1 : First bypass old records\n"; }
+	if (! $HTMLOutput) { print "Phase 1 : First bypass old records...\n"; }
 	while (<LOG>) {
 		chomp $_; s/\r$//;
 		$NbOfLinesRead++;
@@ -4978,16 +4978,18 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 				$NbOfOldLines++;
 				next;
 			}
-			# We found a new line. This will stop comparison "<=" between timerecord and LastLine (we should have only new lines now)
+			# We found a new line. This will replace comparison "<=" with "<" between timerecord and LastLine (we should have only new lines now)
 			$NewLinePhase=1;
 			if ($ShowSteps) {
 				if ($NbOfLinesShowsteps > 1 && ($NbOfLinesShowsteps % $NBOFLINESFORBENCHMARK != 0)) {
 					my $delay=&GetDelaySinceStart(0);
 					print "".($NbOfLinesRead-1)." lines processed (".($delay>0?$delay:1000)." ms, ".int(1000*($NbOfLinesShowsteps-1)/($delay>0?$delay:1000))." lines/second)\n";
 				}
-				print "Phase 2 : Now process new records (Flush history on disk after ".($LIMITFLUSH<<2)." uniques)\n";
-				#print "Phase 2 : Now process new records (Flush history on disk after ".($LIMITFLUSH<<2)." uniques or ".($LIMITFLUSH)." different URLs)\n";
 				&GetDelaySinceStart(1);	$NbOfLinesShowsteps=1;
+			}
+			if (! $HTMLOutput) {
+				print "Phase 2 : Now process new records (Flush history on disk after ".($LIMITFLUSH<<2)." uniques)...\n";
+				#print "Phase 2 : Now process new records (Flush history on disk after ".($LIMITFLUSH<<2)." uniques or ".($LIMITFLUSH)." different URLs)...\n";
 			}
 		}
 
@@ -5104,16 +5106,16 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 
 		# Canonize and clean target URL and referrer URL
 		#-----------------------------------------------
+		if ($URLNotCaseSensitive) { $field[$pos_url] =~ tr/A-Z/a-z/; }
 		# Possible URL syntax for $field[$pos_url]: /mydir/mypage.ext?param1=x&param2=y#aaa, /mydir/mypage.ext#aaa, /
 		my $urlwithnoquery;
 		my $tokenquery;
 		my $standalonequery;
 		if ($URLWithQuery) {
-			if ($URLNotCaseSensitive) { $field[$pos_url] =~ tr/A-Z/a-z/; }
 			$urlwithnoquery=$field[$pos_url];
 			my $foundparam=($urlwithnoquery =~ s/([$URLQuerySeparators])(.*)$//);
-			$tokenquery="$1";
-			$standalonequery="$2";
+			$tokenquery=$1?"$1":"";
+			$standalonequery=$2?"$2":"";
 			# For IIS setup, if pos_query is enabled we need to combine the URL to query strings
 			if (! $foundparam && $pos_query >=0 && $field[$pos_query] && $field[$pos_query] ne '-') {
 				$foundparam=1;
@@ -5133,13 +5135,14 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 		}
 		else {
 			# Trunc CGI parameters in URL
-			if ($URLNotCaseSensitive) { $field[$pos_url] =~ tr/A-Z/a-z/; }
 			$field[$pos_url] =~ s/([$URLQuerySeparators])(.*)$//;
 			$urlwithnoquery=$field[$pos_url];
-			$tokenquery="$1";
-			$standalonequery="$2";
+			$tokenquery=$1?"$1":"";
+			$standalonequery=$2?"$2":"";
 		}
 		# Here now urlwithnoquery is /mydir/mypage.ext, /mydir, /
+		# Here now tokenquery is '' or '?' or ';'
+		# Here now standalonequery is '' or 'param1=x'
 
 		# Analyze: File type and compression
 		#-----------------------------------
@@ -5154,7 +5157,7 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 			$extension='Unknown';
 		}
 		$_filetypes_h{$extension}++;
-		$_filetypes_k{$extension}+=int($field[$pos_size]);
+		$_filetypes_k{$extension}+=int($field[$pos_size]);	# TODO can cause a warning
 		# Compression
 		if ($pos_gzipin>=0 && $field[$pos_gzipin]) {	# If in and out in log
 			my ($notused,$in)=split(/:/,$field[$pos_gzipin]);
@@ -5709,7 +5712,7 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 				else {
 					# We flush if perl is not activestate
 					if ($Debug) {
-						debug("End of set of ".($counter-1)." records: Some hash arrays are too large. We clean some.",2);
+						debug("End of set of ".($counter-1)." records: Some hash arrays are too large. We flush and clean some.",2);
 						print " _host_p:".(scalar keys %_host_p)." _host_h:".(scalar keys %_host_h)." _host_k:".(scalar keys %_host_k)." _host_l:".(scalar keys %_host_l)." _host_s:".(scalar keys %_host_s)." _host_u:".(scalar keys %_host_u)."\n";
 						print " _url_p:".(scalar keys %_url_p)." _url_k:".(scalar keys %_url_k)." _url_e:".(scalar keys %_url_e)." _url_x:".(scalar keys %_url_x)."\n";
 						print " _waithost_e:".(scalar keys %_waithost_e)." _waithost_l:".(scalar keys %_waithost_l)." _waithost_s:".(scalar keys %_waithost_s)." _waithost_u:".(scalar keys %_waithost_u)."\n";
