@@ -50,7 +50,7 @@ $SiteToAnalyzeIsInHostAliases, $SiteToAnalyzeWithoutwww, $LogFile,
 $LogFormat, $LogFormatString, $Logo, $MaxNbOfDays, $MaxNbOfHostsShown, $MaxNbOfKeywordsShown,
 $MaxNbOfPageShown, $MaxNbOfRefererShown, $MaxNbOfRobotShown, $MinHitFile,
 $MinHitHost, $MinHitKeyword, $MinHitRefer, $MinHitRobot, $MonthRequired,
-$OpenFileError, $PROG, $PageBool, $PageCode,
+$PROG, $PageBool, $PageCode,
 $PurgeLogFile, $QueryString, $RatioBytes, $RatioHits, $RatioHosts, $RatioPages,
 $ShowFlagLinks, $ShowLinksOnURL, $ShowLinksOnUrl, $TotalBytes,
 $TotalDifferentKeywords, $TotalDifferentPages, $TotalErrors, $TotalHits,
@@ -62,11 +62,11 @@ $color_TableBGTitle, $color_TableBorder, $color_TableRowTitle,
 $color_TableTitle, $color_h, $color_k, $color_link, $color_p, $color_s, $color_v,
 $color_w, $count, $daycon, $endmonth, $found, $foundrobot,
 $h, $hourcon, $hr, $internal_link, $ix, $keep, $key, $lien,
-$max, $max_h, $max_k, $max_p, $max_v, $mincon, $monthcon, $monthfile, $monthix,
+$max, $max_h, $max_k, $max_p, $max_v, $mincon, $monthcon, $monthix,
 $monthtoprocess, $nameicon, $new, $nompage, $p, $param,
 $paramtoexclude, $rest, $rest_h, $rest_k, $rest_p,
 $tab_titre, $total_h, $total_k, $total_p,
-$word, $yearcon, $yearfile, $yearmonthfile, $yeartoprocess) = ();
+$word, $yearcon, $yearmonth, $yeartoprocess) = ();
 # ---------- Init arrays --------
 @BrowserArray = @DomainsArray = @HostAliases =
 @OnlyFiles = @OSArray = @RobotArray =
@@ -82,8 +82,9 @@ $word, $yearcon, $yearfile, $yearmonthfile, $yeartoprocess) = ();
 %MonthBytes = %MonthHits = %MonthPages = %MonthUnique = %MonthVisits =
 %listofyears = %monthlib = %monthnum = ();
 
-$VERSION="3.1 (build 2)";
+$VERSION="3.1 (build 3)";
 $Lang="en";
+$Sort="";
 
 # Default value
 $SortDir       = -1;		# -1 = Sort order from most to less, 1 = reverse order (Default = -1)
@@ -761,7 +762,36 @@ sub UnescapeURLParam {
 }
 
 sub error {
-   	if ($_[0] ne "") { print "<font color=#880000>$_[0].</font><br>\n"; }
+	if ($_[0] eq "Format error") {
+		# Files seems to have bad format
+		print "AWStats did not found any valid log lines that match your <b>LogFormat</b> parameter, in the 10th first non commented lines read of your log.<br>\n";
+		print "<font color=#880000>Your log file <b>$_[2]</b> must have a bad format or <b>LogFormat</b> parameter setup is wrong.</font><br><br>\n";
+		print "Your <b>LogFormat</b> parameter is <b>$LogFormat</b>, this means each line in your log file need to have ";
+		if ($LogFormat == 1) {
+			print "<b>\"combined log format\"</b> like this:<br>\n";
+			print "<font color=#888888><i>111.22.33.44 - - [10/Jan/2001:02:14:14 +0200] \"GET / HTTP/1.1\" 200 1234 \"http://www.fromserver.com/from.htm\" \"Mozilla/4.0 (compatible; MSIE 5.01; Windows NT 5.0)\"</i></font><br>\n";
+		}
+		if ($LogFormat == 2) {
+			print "<b>\"MSIE Extended W3C log format\"</b> like this:<br>\n";
+			print "<font color=#888888><i>date time c-ip c-username cs-method cs-uri-sterm sc-status sc-bytes cs-version cs(User-Agent) cs(Referer)</i></font><br>\n";
+		}
+		if ($LogFormat != 1 && $LogFormat != 2) {
+			print "the following personalised log format:<br>\n";
+			print "<font color=#888888><i>$LogFormat</i></font><br>\n";
+		}
+		print "<br>";
+		print "And this is a sample of what AWStats found in your log (the 10th non commented line read):<br>\n";
+		print ($ENV{"GATEWAY_INTERFACE"} ne ""?"<font color=#888888><i>":"");
+		print "$_[1]";
+		print ($ENV{"GATEWAY_INTERFACE"} ne ""?"</i></font><br>":"");
+		print "\n";
+	}			
+   	if ($_[0] ne "Format error" && $_[0] ne "") {
+   		print ($ENV{"GATEWAY_INTERFACE"} ne ""?"<font color=#880000>":"");
+   		print "$_[0]";
+   		print ($ENV{"GATEWAY_INTERFACE"} ne ""?"</font><br>":"");
+   		print "\n";
+   	}
    	if ($ENV{"GATEWAY_INTERFACE"} ne "") { print "<br><b>\n"; }
 	if ($_[0] ne "") { print "Setup ($FileConfig file, web server or logfile permissions) may be wrong.\n"; }
 	if ($ENV{"GATEWAY_INTERFACE"} ne "") { print "</b><br>\n"; }
@@ -779,7 +809,11 @@ sub warning {
 
 sub debug {
 	my $level = $_[1] || 1;
-	if ($Debug >= $level) { print "DEBUG $level - ".time." : $_[0]<br>\n"; }
+	if ($Debug >= $level) { 
+		my $debugstring = $_[0];
+		if ($ENV{"GATEWAY_INTERFACE"} ne "") { $debugstring =~ s/^ /&nbsp&nbsp /; $debugstring .= "<br>"; }
+		print "DEBUG $level - ".time." : $debugstring\n";
+		}
 	0;
 }
 
@@ -1052,7 +1086,7 @@ sub Check_Config {
 	if ($message[16] eq "") { $message[16]="Traffic"; }
 	if ($message[17] eq "") { $message[17]="Domains/Countries"; }
 	if ($message[18] eq "") { $message[18]="Visitors"; }
-	if ($message[19] eq "") { $message[19]="Pages/URL"; }
+	if ($message[19] eq "") { $message[19]="Pages-URL"; }
 	if ($message[20] eq "") { $message[20]="Hours (Server time)"; }
 	if ($message[21] eq "") { $message[21]="Browsers"; }
 	if ($message[22] eq "") { $message[22]="HTTP Errors"; }
@@ -1072,7 +1106,7 @@ sub Check_Config {
 	if ($message[36] eq "") { $message[36]="Connect to site from"; }
 	if ($message[37] eq "") { $message[37]="Origin"; }
 	if ($message[38] eq "") { $message[38]="Direct address / Bookmarks"; }
-	if ($message[39] eq "") { $message[39]="Links from a Newsgroup"; }
+	if ($message[39] eq "") { $message[39]="Origin unknown"; }
 	if ($message[40] eq "") { $message[40]="Links from an Internet Search Engine"; }
 	if ($message[41] eq "") { $message[41]="Links from an external page (other web sites except search engines)"; }
 	if ($message[42] eq "") { $message[42]="Links from an internal page (other page on same site)"; }
@@ -1122,14 +1156,19 @@ sub Read_History_File {
 	if ($HistoryFileAlreadyRead{"$_[0]$_[1]"}) { return 0; }			# Protect code to invoke function only once for each month/year
 	$HistoryFileAlreadyRead{"$_[0]$_[1]"}=1;							# Protect code to invoke function only once for each month/year
 	if (! -s "$DirData/$PROG$_[1]$_[0]$FileSuffix.txt") { return 0; }	# If file not exists, return
+
+	# If session for read (no update), file can be open with share
+	# POSSIBLE CHANGE HERE	
+	
 	open(HISTORY,"$DirData/$PROG$_[1]$_[0]$FileSuffix.txt") || error("Error: Couldn't open for read file \"$DirData/$PROG$_[1]$_[0]$FileSuffix.txt\" : $!");	# Month before Year kept for backward compatibility
-	$readdomain=0;$readvisitor=0;$readunknownip=0;$readsider=0;$readtime=0;$readbrowser=0;$readnsver=0;$readmsiever=0;
-	$reados=0;$readrobot=0;$readunknownreferer=0;$readunknownrefererbrowser=0;$readpagerefs=0;$readse=0;
-	$readsearchwords=0;$readerrors=0;$readerrors404=0; $readday=0;
 	$MonthUnique{$_[0].$_[1]}=0; $MonthPages{$_[0].$_[1]}=0; $MonthHits{$_[0].$_[1]}=0; $MonthBytes{$_[0].$_[1]}=0;
+	$readdomain=0;$readsider=0;$readtime=0;$readbrowser=0;$readnsver=0;$readmsiever=0;
+	$reados=0;$readrobot=0;$readunknownreferer=0;$readunknownrefererbrowser=0;$readse=0;
+	$readsearchwords=0;$readerrors=0;$readerrors404=0; $readday=0;
+
 	while (<HISTORY>) {
 		chomp $_; s/\r//;
-		@field=split(/ /,$_);
+		@field=split(/\s+/,$_);
 
 		# FIRST PART: Always read
 		if ($field[0] eq "FirstTime")       { $FirstTime{$_[0].$_[1]}=$field[1]; next; }
@@ -1145,26 +1184,57 @@ sub Read_History_File {
 		    };
 	    	next;
 	    }
-	    if ($field[0] eq "BEGIN_VISITOR")   { $readvisitor=1; next; }
-	    if ($field[0] eq "END_VISITOR")     { $readvisitor=0; next; }
-	    if ($field[0] eq "BEGIN_UNKNOWNIP") { $readunknownip=1; next; }
-	    if ($field[0] eq "END_UNKNOWNIP")   { $readunknownip=0; next; }
+	    if ($field[0] eq "BEGIN_VISITOR")   {
+			&debug(" Start of VISITOR section");
+			$_=<HISTORY>;
+			chomp $_; s/\r//;
+			if ($_ eq "") { error("Error: History file \"$DirData/$PROG$_[1]$_[0]$FileSuffix.txt\" is corrupted. Restore a backup of this file, or remove it (data for this month will be lost)."); }
+			@field=split(/\s+/,$_);
+			while ($field[0] ne "END_VISITOR") {
+		    	if (($field[0] ne "Unknown") && ($field[1] > 0)) { $MonthUnique{$_[0].$_[1]}++; }
+#				if ($_[2]) {
+				if ($_[2] && ($QueryString !~ /action=/i)) {
+		        	$_hostmachine_p{$field[0]}+=$field[1];
+		        	$_hostmachine_h{$field[0]}+=$field[2];
+		        	$_hostmachine_k{$field[0]}+=$field[3];
+		        	if ($_hostmachine_l{$field[0]} eq "") { $_hostmachine_l{$field[0]}=$field[4]; }
+				}
+				$_=<HISTORY>;
+				chomp $_; s/\r//;
+				if ($_ eq "") { error("Error: History file \"$DirData/$PROG$_[1]$_[0]$FileSuffix.txt\" is corrupted. Restore a backup of this file, or remove it (data for this month will be lost)."); }
+				@field=split(/\s+/,$_);
+			}
+			&debug(" End of VISITOR section");
+			next;
+    	}
+	    if ($field[0] eq "BEGIN_UNKNOWNIP")   {
+			&debug(" Begin of UNKNOWNIP section");
+			$_=<HISTORY>;
+			chomp $_; s/\r//;
+			if ($_ eq "") { error("Error: History file \"$DirData/$PROG$_[1]$_[0]$FileSuffix.txt\" is corrupted. Restore a backup of this file, or remove it (data for this month will be lost)."); }
+			@field=split(/\s+/,$_);
+			while ($field[0] ne "END_UNKNOWNIP") {
+		    	$MonthUnique{$_[0].$_[1]}++;
+#				if ($_[2]) {
+				if ($_[2] && ($QueryString =~ /action=unknownip/i || $QueryString !~ /action=/i)) {
+		        	if ($_unknownip_l{$field[0]} eq "") { $_unknownip_l{$field[0]}=$field[1]; }
+				}
+				$_=<HISTORY>;
+				chomp $_; s/\r//;
+				if ($_ eq "") { error("Error: History file \"$DirData/$PROG$_[1]$_[0]$FileSuffix.txt\" is corrupted. Restore a backup of this file, or remove it (data for this month will be lost)."); }
+				@field=split(/\s+/,$_);
+			}
+			&debug(" End of UNKNOWN_IP section");
+			next;
+    	}
 	    if ($field[0] eq "BEGIN_TIME")      { $readtime=1; next; }
 	    if ($field[0] eq "END_TIME")        { $readtime=0; next; }
 	    if ($field[0] eq "BEGIN_DAY")       { $readday=1; next; }
 	    if ($field[0] eq "END_DAY")         { $readday=0; next; }
-
-	    if ($readvisitor) {
-	    	if (($field[0] ne "Unknown") && ($field[1] > 0)) { $MonthUnique{$_[0].$_[1]}++; }
-	    	}
-	    if ($readunknownip) {
-	    	$MonthUnique{$_[0].$_[1]}++;
-			}
 	    if ($readtime) {
 	    	$MonthPages{$_[0].$_[1]}+=$field[1]; $MonthHits{$_[0].$_[1]}+=$field[2]; $MonthBytes{$_[0].$_[1]}+=$field[3];
-			}
-		if ($readday)
-		{
+		}
+		if ($readday) {
 			$DayPages{$field[0]}=$field[1]; $DayHits{$field[0]}=$field[2]; $DayBytes{$field[0]}=$field[3]; $DayVisits{$field[0]}=$field[4]; $DayUnique{$field[0]}=$field[5];
 		}
 
@@ -1188,8 +1258,22 @@ sub Read_History_File {
 	        if ($field[0] eq "END_UNKNOWNREFERER")   { $readunknownreferer=0; next; }
 	        if ($field[0] eq "BEGIN_UNKNOWNREFERERBROWSER") { $readunknownrefererbrowser=1; next; }
 	        if ($field[0] eq "END_UNKNOWNREFERERBROWSER")   { $readunknownrefererbrowser=0; next; }
-	        if ($field[0] eq "BEGIN_PAGEREFS") { $readpagerefs=1; next; }
-	        if ($field[0] eq "END_PAGEREFS") { $readpagerefs=0; next; }
+		    if ($field[0] eq "BEGIN_PAGEREFS")   {
+				&debug(" Start of PAGEREFS section");
+				$_=<HISTORY>;
+				chomp $_; s/\r//;
+				if ($_ eq "") { error("Error: History file \"$DirData/$PROG$_[1]$_[0]$FileSuffix.txt\" is corrupted. Restore a backup of this file, or remove it (data for this month will be lost)."); }
+				@field=split(/\s+/,$_);
+				while ($field[0] ne "END_PAGEREFS") {
+					$_pagesrefs_h{$field[0]}+=$field[1];
+					$_=<HISTORY>;
+					chomp $_; s/\r//;
+					if ($_ eq "") { error("Error: History file \"$DirData/$PROG$_[1]$_[0]$FileSuffix.txt\" is corrupted. Restore a backup of this file, or remove it (data for this month will be lost)."); }
+					@field=split(/\s+/,$_);
+				}
+				&debug(" End of PAGEREFS section");
+				next;
+	    	}
 	        if ($field[0] eq "BEGIN_SEREFERRALS") { $readse=1; next; }
 	        if ($field[0] eq "END_SEREFERRALS") { $readse=0; next; }
 	        if ($field[0] eq "BEGIN_SEARCHWORDS") { $readsearchwords=1; next; }
@@ -1200,28 +1284,21 @@ sub Read_History_File {
 	        if ($field[0] eq "END_SIDER_404") { $readerrors404=0; next; }
 	  		if ($field[0] eq "BEGIN_DAY")       { $readday=1; next; }
 	    	if ($field[0] eq "END_DAY")         { $readday=0; next; }
-
-	        if ($readvisitor) {
-	        	$_hostmachine_p{$field[0]}+=$field[1];
-	        	$_hostmachine_h{$field[0]}+=$field[2];
-	        	$_hostmachine_k{$field[0]}+=$field[3];
-	        	if ($_hostmachine_l{$field[0]} eq "") { $_hostmachine_l{$field[0]}=$field[4]; }
-	        	next; }
 	        if ($readunknownreferer) {
 	        	if ($_unknownreferer_l{$field[0]} eq "") { $_unknownreferer_l{$field[0]}=$field[1]; }
-	        	next; }
+	        	next;
+	        }
 			if ($readdomain) {
 				$_domener_p{$field[0]}+=$field[1];
 				$_domener_h{$field[0]}+=$field[2];
 				$_domener_k{$field[0]}+=$field[3];
-				next; }
-	        if ($readunknownip) {
-	        	if ($_unknownip_l{$field[0]} eq "") { $_unknownip_l{$field[0]}=$field[1]; }
-	        	next; }
+				next;
+			}
 			if ($readsider) { $_sider_p{$field[0]}+=$field[1]; next; }
 	        if ($readtime) {
 	        	$_time_p[$field[0]]+=$field[1]; $_time_h[$field[0]]+=$field[2]; $_time_k[$field[0]]+=$field[3];
-	        	next; }
+	        	next;
+	        }
 	        if ($readbrowser) { $_browser_h{$field[0]}+=$field[1]; next; }
 	        if ($readnsver) { $_nsver_h[$field[0]]+=$field[1]; next; }
 	        if ($readmsiever) { $_msiever_h[$field[0]]+=$field[1]; next; }
@@ -1229,10 +1306,12 @@ sub Read_History_File {
 	        if ($readrobot) {
 				$_robot_h{$field[0]}+=$field[1];
 	        	if ($_robot_l{$field[0]} eq "") { $_robot_l{$field[0]}=$field[2]; }
-				next; }
+				next;
+			}
 	        if ($readunknownrefererbrowser) {
 	        	if ($_unknownrefererbrowser_l{$field[0]} eq "") { $_unknownrefererbrowser_l{$field[0]}=$field[1]; }
-	        	next; }
+	        	next;
+	        }
 	        if ($field[0] eq "From0") { $_from_p[0]+=$field[1]; $_from_h[0]+=$field[2]; next; }
 	        if ($field[0] eq "From1") { $_from_p[1]+=$field[1]; $_from_h[1]+=$field[2]; next; }
 	        if ($field[0] eq "From2") { $_from_p[2]+=$field[1]; $_from_h[2]+=$field[2]; next; }
@@ -1244,7 +1323,6 @@ sub Read_History_File {
 	        if ($field[0] eq "HitFrom2") { $_from_p[2]=0; $_from_h[2]+=$field[1]; next; }
 	        if ($field[0] eq "HitFrom3") { $_from_p[3]=0; $_from_h[3]+=$field[1]; next; }
 	        if ($field[0] eq "HitFrom4") { $_from_p[4]=0; $_from_h[4]+=$field[1]; next; }
-	        if ($readpagerefs) { $_pagesrefs_h{$field[0]}+=$field[1]; next; }
 	        if ($readse) { $_se_referrals_h{$field[0]}+=$field[1]; next; }
 	        if ($readsearchwords) { $_keywords{$field[0]}+=$field[1]; next; }
 	        if ($readerrors) { $_errors_h{$field[0]}+=$field[1]; next; }
@@ -1252,7 +1330,7 @@ sub Read_History_File {
 		}
 	}
 	close HISTORY;
-	if ($readdomain || $readvisitor || $readunknownip || $readsider || $readtime || $readbrowser || $readnsver || $readmsiever || $reados || $readrobot || $readunknownreferer || $readunknownrefererbrowser || $readpagerefs || $readse || $readsearchwords || $readerrors || $readerrors404 || $readday) {
+	if ($readdomain || $readunknownip || $readsider || $readtime || $readbrowser || $readnsver || $readmsiever || $reados || $readrobot || $readunknownreferer || $readunknownrefererbrowser || $readpagerefs || $readse || $readsearchwords || $readerrors || $readerrors404 || $readday) {
 		# History file is corrupted
 		error("Error: History file \"$DirData/$PROG$_[1]$_[0]$FileSuffix.txt\" is corrupted. Restore a backup of this file, or remove it (data for this month will be lost).");
 	}
@@ -1269,11 +1347,12 @@ sub Save_History_File {
 	print HISTORYTMP "FirstTime $FirstTime{$_[0].$_[1]}\n";
 	print HISTORYTMP "LastTime $LastTime{$_[0].$_[1]}\n";
 	if ($LastUpdate{$_[0].$_[1]} lt "$nowyear$nowmonth$nowday$nowhour$nowmin$nowsec") { $LastUpdate{$_[0].$_[1]}="$nowyear$nowmonth$nowday$nowhour$nowmin$nowsec"; }
-	print HISTORYTMP "LastUpdate $LastUpdate{$_[0].$_[1]} $NbOfLinesProcessed $NbOfNewLinesProcessed $NbOfLinesCorrupted $NbOfNewLinesCorrupted\n";
+	print HISTORYTMP "LastUpdate $LastUpdate{$_[0].$_[1]} $NbOfLinesRead $NbOfNewLinesProcessed $NbOfLinesCorrupted $NbOfNewLinesCorrupted\n";
 	print HISTORYTMP "TotalVisits $MonthVisits{$_[0].$_[1]}\n";
 
 	print HISTORYTMP "BEGIN_DOMAIN\n";
-	foreach $key (keys %_domener_h) {
+#	foreach $key (keys %_domener_h) {
+	foreach $key (sort keys %_domener_h) {
 		my $page=$_domener_p{$key}; if ($page == "") {$page=0;}
 		my $bytes=$_domener_k{$key}; if ($bytes == "") {$bytes=0;}
 		print HISTORYTMP "$key $page $_domener_h{$key} $bytes\n"; next;
@@ -1281,7 +1360,8 @@ sub Save_History_File {
 	print HISTORYTMP "END_DOMAIN\n";
 
 	print HISTORYTMP "BEGIN_VISITOR\n";
-	foreach $key (keys %_hostmachine_h) {
+#	foreach $key (keys %_hostmachine_h) {
+	foreach $key (sort keys %_hostmachine_h) {
 		my $page=$_hostmachine_p{$key}; if ($page == "") {$page=0;}
 		my $bytes=$_hostmachine_k{$key}; if ($bytes == "") {$bytes=0;}
 		print HISTORYTMP "$key $page $_hostmachine_h{$key} $bytes $_hostmachine_l{$key}\n"; next;
@@ -1289,11 +1369,13 @@ sub Save_History_File {
 	print HISTORYTMP "END_VISITOR\n";
 
 	print HISTORYTMP "BEGIN_UNKNOWNIP\n";
-	foreach $key (keys %_unknownip_l) { print HISTORYTMP "$key $_unknownip_l{$key}\n"; next; }
+#	foreach $key (keys %_unknownip_l) { print HISTORYTMP "$key $_unknownip_l{$key}\n"; next; }
+	foreach $key (sort keys %_unknownip_l) { print HISTORYTMP "$key $_unknownip_l{$key}\n"; next; }
 	print HISTORYTMP "END_UNKNOWNIP\n";
 
 	print HISTORYTMP "BEGIN_SIDER\n";
-	foreach $key (keys %_sider_p) { print HISTORYTMP "$key $_sider_p{$key}\n"; next; }
+	foreach $key (sort keys %_sider_p) { print HISTORYTMP "$key $_sider_p{$key}\n"; next; }
+#	foreach $key (keys %_sider_p) { print HISTORYTMP "$key $_sider_p{$key}\n"; next; }
 	print HISTORYTMP "END_SIDER\n";
 
 	print HISTORYTMP "BEGIN_TIME\n";
@@ -1326,7 +1408,8 @@ sub Save_History_File {
 	print HISTORYTMP "END_ROBOT\n";
 
 	print HISTORYTMP "BEGIN_UNKNOWNREFERER\n";
-	foreach $key (keys %_unknownreferer_l) { print HISTORYTMP "$key $_unknownreferer_l{$key}\n"; next; }
+#	foreach $key (keys %_unknownreferer_l) { print HISTORYTMP "$key $_unknownreferer_l{$key}\n"; next; }
+	foreach $key (sort keys %_unknownreferer_l) { print HISTORYTMP "$key $_unknownreferer_l{$key}\n"; next; }
 	print HISTORYTMP "END_UNKNOWNREFERER\n";
 	print HISTORYTMP "BEGIN_UNKNOWNREFERERBROWSER\n";
 	foreach $key (keys %_unknownrefererbrowser_l) { print HISTORYTMP "$key $_unknownrefererbrowser_l{$key}\n"; next; }
@@ -1343,11 +1426,13 @@ sub Save_History_File {
 	print HISTORYTMP "END_SEREFERRALS\n";
 
 	print HISTORYTMP "BEGIN_PAGEREFS\n";
-	foreach $key (keys %_pagesrefs_h) { print HISTORYTMP "$key $_pagesrefs_h{$key}\n"; next; }
+#	foreach $key (keys %_pagesrefs_h) { print HISTORYTMP "$key $_pagesrefs_h{$key}\n"; next; }
+	foreach $key (sort keys %_pagesrefs_h) { print HISTORYTMP "$key $_pagesrefs_h{$key}\n"; next; }
 	print HISTORYTMP "END_PAGEREFS\n";
 
 	print HISTORYTMP "BEGIN_SEARCHWORDS\n";
-	foreach $key (keys %_keywords) { if ($_keywords{$key}) { print HISTORYTMP "$key $_keywords{$key}\n"; } next; }
+#	foreach $key (keys %_keywords) { if ($_keywords{$key}) { print HISTORYTMP "$key $_keywords{$key}\n"; } next; }
+	foreach $key (sort keys %_keywords) { if ($_keywords{$key}) { print HISTORYTMP "$key $_keywords{$key}\n"; } next; }
 	print HISTORYTMP "END_SEARCHWORDS\n";
 
 	print HISTORYTMP "BEGIN_ERRORS\n";
@@ -1355,7 +1440,8 @@ sub Save_History_File {
 	print HISTORYTMP "END_ERRORS\n";
 
 	print HISTORYTMP "BEGIN_SIDER_404\n";
-	foreach $key (keys %_sider404_h) { print HISTORYTMP "$key $_sider404_h{$key} $_referer404_h{$key}\n"; next; }
+#	foreach $key (keys %_sider404_h) { print HISTORYTMP "$key $_sider404_h{$key} $_referer404_h{$key}\n"; next; }
+	foreach $key (sort keys %_sider404_h) { print HISTORYTMP "$key $_sider404_h{$key} $_referer404_h{$key}\n"; next; }
 	print HISTORYTMP "END_SIDER_404\n";
 
 	close(HISTORYTMP);
@@ -1526,7 +1612,7 @@ $timetomorrow=$tomorrowyear.$tomorrowmonth.$tomorrowday.$tomorrowhour.$tomorrowm
 # Read config file
 &Read_Config_File;
 if ($QueryString =~ /lang=/i) { $Lang=$QueryString; $Lang =~ s/.*lang=//i; $Lang =~ s/&.*//; $Lang =~ s/\s+//; }
-if ($QueryString =~ /lang=/i) { $Lang=$QueryString; $Lang =~ s/.*lang=//i; $Lang =~ s/&.*//; $Lang =~ s/\s+//; }
+if ($QueryString =~ /sort=/i) { $Sort=$QueryString; $Sort =~ s/.*sort=//i; $Sort =~ s/&.*//; $Sort =~ s/\s+//; }
 if ($Lang eq "") { $Lang="en"; }
 
 # Change old values of Lang into new for compatibility
@@ -1583,7 +1669,7 @@ if ($SiteToAnalyzeIsInHostAliases == 0) { $HostAliases[@HostAliases]=$SiteToAnal
 if (@SkipFiles == 0) { $SkipFiles[0]="\.css\$";$SkipFiles[1]="\.js\$";$SkipFiles[2]="\.class\$";$SkipFiles[3]="robots\.txt\$"; }
 $FirstTime=0;$LastTime=0;$LastUpdate=0;$TotalVisits=0;$TotalHosts=0;$TotalUnique=0;$TotalDifferentPages=0;$TotalDifferentKeywords=0;$TotalKeywords=0;
 for ($ix=1; $ix<=12; $ix++) {
-	$monthix=$ix;if ($monthix < 10) { $monthix  = "0$monthix"; }
+	my $monthix=$ix;if ($monthix < 10) { $monthix  = "0$monthix"; }
 	$FirstTime{$YearRequired.$monthix}=0;$LastTime{$YearRequired.$monthix}=0;$LastUpdate{$YearRequired.$monthix}=0;
 	$MonthVisits{$YearRequired.$monthix}=0;$MonthUnique{$YearRequired.$monthix}=0;$MonthPages{$YearRequired.$monthix}=0;$MonthHits{$YearRequired.$monthix}=0;$MonthBytes{$YearRequired.$monthix}=0;
 	}
@@ -1618,14 +1704,14 @@ if ($UpdateStats) {
 	opendir(DIR,"$DirData");
 	@filearray = sort readdir DIR;
 	close DIR;
-	$yearmonthmax=0;
+	my $yearmonthmax=0;
 	foreach $i (0..$#filearray) {
 		if ("$filearray[$i]" =~ /^$PROG[\d][\d][\d][\d][\d][\d]$FileSuffix\.txt$/) {
-			$yearmonthfile=$filearray[$i]; $yearmonthfile =~ s/^$PROG//; $yearmonthfile =~ s/\..*//;
-			$yearfile=$yearmonthfile; $yearfile =~ s/^..//;
-			$monthfile=$yearmonthfile; $monthfile =~ s/....$//;
-			$yearmonthfile="$yearfile$monthfile";	# year and month have been inversed
-			if ($yearmonthfile > $yearmonthmax) { $yearmonthmax=$yearmonthfile; }
+			my $yearmonth=$filearray[$i]; $yearmonth =~ s/^$PROG//; $yearmonth =~ s/\..*//;
+			my $yearfile=$yearmonth; $yearfile =~ s/^..//;
+			my $monthfile=$yearmonth; $monthfile =~ s/....$//;
+			$yearmonth="$yearfile$monthfile";	# year and month have been inversed
+			if ($yearmonth > $yearmonthmax) { $yearmonthmax=$yearmonth; }
 		}
 	};
 
@@ -1760,52 +1846,36 @@ if ($UpdateStats) {
 	#------------------------------------------
 	# PROCESSING CURRENT LOG
 	#------------------------------------------
-	&debug("Start of processing log file $LogFile (monthtoprocess=$monthtoprocess, yeartoprocess=$yeartoprocess)");
-	$OpenFileError=1; if (open(LOG,"$LogFile")) { $OpenFileError=0; }
-	if ($OpenFileError) { error("Error: Couldn't open server log file \"$LogFile\" : $!"); }
-	$NbOfLinesProcessed=0; $NbOfLinesCorrupted=0; 
+	&debug("Start of processing log file (monthtoprocess=$monthtoprocess, yeartoprocess=$yeartoprocess)");
+	my $yearmonth="$yeartoprocess$monthtoprocess";
+	$NbOfLinesRead=0; $NbOfLinesCorrupted=0; 
 	$NbOfNewLinesProcessed=0; $NbOfNewLinesCorrupted=0;
 	$NowNewLinePhase=0;
+	$starttime=time();
+
+	# Open log file
+	&debug("Open log file \"$LogFile\"");
+	open(LOG,"$LogFile") || error("Error: Couldn't open server log file \"$LogFile\" : $!");
+
 	while (<LOG>)
 	{
 		chomp $_; s/\r//;
-		if (/^$/) { next; }									# Ignore blank lines (With ISS: happens sometimes, with Apache: possible when editing log file)
 		if (/^#/) { next; }									# Ignore comment lines (ISS writes such comments)
 		if (/^!!/) { next; }								# Ignore comment lines (Webstar writes such comments)
-		$NbOfLinesProcessed++;
+		if (/^$/) { next; }									# Ignore blank lines (With ISS: happens sometimes, with Apache: possible when editing log file)
+
+		$NbOfLinesRead++;
 
 		# Parse line record to get all required fields
 		$_ =~ /^$PerlParsingFormat/;
 		foreach $i (1..$lastrequiredfield) { $field[$i]=$$i; }
-		&debug("Fields for record $NbOfLinesProcessed: $field[$pos_rc] ; - ; - ; $field[$pos_date] ; TZ; $field[$pos_method] ; $field[$pos_url] ; $field[$pos_code] ; $field[$pos_size] ; $field[$pos_referer] ; $field[$pos_agent]",3);
+		&debug(" Record $NbOfLinesRead is: $field[$pos_rc] ; - ; - ; $field[$pos_date] ; TZ; $field[$pos_method] ; $field[$pos_url] ; $field[$pos_code] ; $field[$pos_size] ; $field[$pos_referer] ; $field[$pos_agent]",3);
 
 		# Check parsed parameters
 		#----------------------------------------------------------------------
 		if ($field[$pos_code] eq "") {
 			$NbOfLinesCorrupted++;
-			if ($NbOfLinesProcessed >= 10 && $NbOfLinesCorrupted == $NbOfLinesProcessed) {
-				# Files seems to have bad format
-				print "AWStats did not found any valid log lines that match your <b>LogFormat</b> parameter, in the 10th first non commented lines of your log.<br>\n";
-				print "<font color=#880000>Your log file <b>$LogFile</b> must have a bad format or <b>LogFormat</b> parameter setup is wrong.</font><br><br>\n";
-				print "Your <b>LogFormat</b> parameter is <b>$LogFormat</b>, this means each line in your log file need to have ";
-				if ($LogFormat == 1) {
-					print "<b>\"combined log format\"</b> like this:<br>\n";
-					print "<font color=#888888><i>111.22.33.44 - - [10/Jan/2001:02:14:14 +0200] \"GET / HTTP/1.1\" 200 1234 \"http://www.fromserver.com/from.htm\" \"Mozilla/4.0 (compatible; MSIE 5.01; Windows NT 5.0)\"</i></font><br>\n";
-				}
-				if ($LogFormat == 2) {
-					print "<b>\"MSIE Extended W3C log format\"</b> like this:<br>\n";
-					print "<font color=#888888><i>date time c-ip c-username cs-method cs-uri-sterm sc-status sc-bytes cs-version cs(User-Agent) cs(Referer)</i></font><br>\n";
-				}
-				if ($LogFormat != 1 && $LogFormat != 2) {
-					print "the following personalised log format:<br>\n";
-					print "<font color=#888888><i>$LogFormat</i></font><br>\n";
-				}
-				print "<br>";
-				print "And this is a sample of what AWStats found in your log (the 10th non commented line):<br>\n";
-				print "<font color=#888888><i>$_</i></font><br>\n";
-
-				error("");	# Exit with format error
-			}
+			if ($NbOfLinesRead >= 10 && $NbOfLinesCorrupted == $NbOfLinesRead) { error("Format error",$_,$LogFile); }	# Exit with format error
 			next;
 		}
 
@@ -1831,14 +1901,22 @@ if ($UpdateStats) {
 			if ($timeconnexion < $LastTime{$yeartoprocess.$monthtoprocess}) { next; }	# Should not happen, kept in case of parasite/corrupted old line
 		}
 		else {
-			if ($timeconnexion <= $LastTime{$yeartoprocess.$monthtoprocess}) { next; }	# Already processed
+			if ($timeconnexion <= $LastTime{$yeartoprocess.$monthtoprocess}) {
+				# NEXT LINE IS FOR TEST
+				if (($QueryString =~ /showstep=1/i) && ($NbOfLinesRead % 4000 == 0)) { print "$NbOfLinesRead lines read already processed (".(time()-$starttime)." seconds, ".($NbOfLinesRead/(time()-$starttime+1))." lines/seconds)\n"; }
+				next;
+			}	# Already processed
 			$NowNewLinePhase=1;	# This will stop comparison "<=" between timeconnexion and LastTime (we should have only new lines now)
 		}
+
+		# Here, field array, datepart array, timeconnexion and dayconnexion are init for log record
+		&debug(" This is a not already processed record",3);
 
 		# Record is approved. We found a new line
 		#----------------------------------------
 		$NbOfNewLinesProcessed++;
-		#if (($QueryString =~ /showstep=1/i) && ($NbOfNewLinesProcessed % 1000 == 0)) { print "$NbOfNewLinesProcessed lines processed\n"; }
+		# NEXT LINE IS FOR TEST
+		if (($QueryString =~ /showstep=1/i) && ($NbOfNewLinesProcessed % 4000 == 0)) { print "$NbOfNewLinesProcessed lines processed (".(time()-$starttime)." seconds, ".($NbOfNewLinesProcessed/(time()-$starttime+1))." lines/seconds)\n"; }
 
 		if (&SkipHost($field[$pos_rc])) { next; }		# Skip with some client host IP addresses
 		if (&SkipFile($field[$pos_url])) { next; }		# Skip with some URLs
@@ -2146,18 +2224,18 @@ if ($UpdateStats) {
 			}
 		}
 
-		# News link ?
+		# Origin not found
 		if (!$found) {
-			if ($field[$pos_referer] =~ /^news/i) {
-				if ($PageBool) { $_from_p[1]++; }
-				$_from_h[1]++;
-				$found=1;
-			}
+			if ($PageBool) { $_from_p[1]++; }
+			$_from_h[1]++;
 		}
 
+		# End of processing all new records.
 	}
+	&debug("End of processing log file(s)");
+
+	&debug("Close log file");
 	close LOG;
-	&debug("End of processing log file");
 
 	# DNSLookup warning
 	if ($DNSLookup && !$NewDNSLookup) { warning("Warning: <b>$PROG</b> has detected that hosts names are already resolved in your logfile <b>$LogFile</b>.<br>\nIf this is always true, you should change your setup DNSLookup=1 into DNSLookup=0 to increase $PROG speed."); }
@@ -2191,13 +2269,13 @@ if ($UpdateStats) {
 	close DIR;
 	foreach $i (0..$#filearray) {
 		if ("$filearray[$i]" =~ /^$PROG[\d][\d][\d][\d][\d][\d]$FileSuffix\.tmp\..*$/) {
-			$yearmonthfile=$filearray[$i]; $yearmonthfile =~ s/^$PROG//; $yearmonthfile =~ s/\..*//;
-			if (-s "$DirData/$PROG$yearmonthfile$FileSuffix.tmp.$$") {	# Rename only files for this session and with size > 0
-				if (rename("$DirData/$PROG$yearmonthfile$FileSuffix.tmp.$$", "$DirData/$PROG$yearmonthfile$FileSuffix.txt")==0) {
+			my $yearmonth=$filearray[$i]; $yearmonth =~ s/^$PROG//; $yearmonth =~ s/\..*//;
+			if (-s "$DirData/$PROG$yearmonth$FileSuffix.tmp.$$") {	# Rename only files for this session and with size > 0
+				if (rename("$DirData/$PROG$yearmonth$FileSuffix.tmp.$$", "$DirData/$PROG$yearmonth$FileSuffix.txt")==0) {
 					$allok=0;	# At least one error in renaming working files
 					last;
 				}
-				chmod 0666,"$DirData/$PROG$yearmonthfile$FileSuffix.txt";
+				chmod 0666,"$DirData/$PROG$yearmonth$FileSuffix.txt";
 			}
 		}
 	}
@@ -2217,8 +2295,8 @@ opendir(DIR,"$DirData");
 close DIR;
 foreach $i (0..$#filearray) {
 	if ("$filearray[$i]" =~ /^$PROG[\d][\d][\d][\d][\d][\d]$FileSuffix\.txt$/) {
-		$yearmonthfile=$filearray[$i]; $yearmonthfile =~ s/^$PROG//; $yearmonthfile =~ s/\..*//;
-		$yearfile=$yearmonthfile; $yearfile =~ s/^..//;
+		my $yearmonth=$filearray[$i]; $yearmonth =~ s/^$PROG//; $yearmonth =~ s/\..*//;
+		my $yearfile=$yearmonth; $yearfile =~ s/^..//;
 		$listofyears{$yearfile}=1;
 	}
 }
@@ -2353,6 +2431,28 @@ if ($QueryString =~ /action=browserdetail/i) {
 	&html_end;
 	exit(0);
 	}
+if ($QueryString =~ /action=urldetail/i) {
+	@sortsiders=sort { $SortDir*$_sider_p{$a} <=> $SortDir*$_sider_p{$b} } keys (%_sider_p);
+	print "$CENTER<a name=\"URLDETAIL\"></a><BR>";
+	$tab_titre="$message[19]";
+	&tab_head;
+	print "<TR bgcolor=#$color_TableBGRowTitle><TH>".(@sortsiders)." $message[19]</TH><TH bgcolor=#$color_p>&nbsp;$message[29]&nbsp;</TH><TH>&nbsp;</TH></TR>\n";
+	if ($SortDir<0) { $max=$_sider_p{$sortsiders[0]}; }
+	else            { $max=$_sider_p{$sortsiders[$#sortsiders]}; }
+	foreach $key (@sortsiders) {
+    	print "<TR><TD CLASS=LEFT>";
+		$nompage=$Aliases{$key};
+		if ($nompage eq "") { $nompage=$key; }
+		$nompage=substr($nompage,0,$MaxLengthOfURL);
+	    if ($ShowLinksOnUrl) { print "<A HREF=\"http://$SiteToAnalyze$key\">$nompage</A>"; }
+	    else              	 { print "$nompage"; }
+	    $bredde=$BarWidth*$_sider_p{$key}/$max+1;
+		print "</TD><TD>$_sider_p{$key}</TD><TD CLASS=LEFT><IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_p\" WIDTH=$bredde HEIGHT=8 ALT=\"$message[56]: $_sider_p{$key}\" title=\"$message[56]: $_sider_p{$key}\"></TD></TR>\n";
+	}
+	&tab_end;
+	&html_end;
+	exit(0);
+	}
 if ($QueryString =~ /action=info/i) {
 	# Not yet available
 	print "$CENTER<a name=\"INFO\"></a><BR>";
@@ -2464,7 +2564,7 @@ $tab_titre="$message[7] $SiteToAnalyze";
 # FirstTime LastTime TotalVisits
 $beginmonth=$MonthRequired;$endmonth=$MonthRequired;
 if ($MonthRequired eq "year") { $beginmonth=1;$endmonth=12; }
-for ($monthix=$beginmonth; $monthix<=$endmonth; $monthix++) {
+for (my $monthix=$beginmonth; $monthix<=$endmonth; $monthix++) {
 	$monthix=$monthix+0; if ($monthix < 10) { $monthix  = "0$monthix"; }	# Good trick to change $month into "MM" format
 	if ($FirstTime{$YearRequired.$monthix} > 0 && ($FirstTime == 0 || $FirstTime > $FirstTime{$YearRequired.$monthix})) { $FirstTime = $FirstTime{$YearRequired.$monthix}; }
 	if ($LastTime  < $LastTime{$YearRequired.$monthix}) { $LastTime = $LastTime{$YearRequired.$monthix}; }
@@ -2761,7 +2861,7 @@ print "$CENTER<a name=\"PAGE\"></a><BR>";
 $MaxNbOfPageShown = $TotalDifferentPages if $MaxNbOfPageShown > $TotalDifferentPages;
 $tab_titre="TOP $MaxNbOfPageShown $message[55] $TotalDifferentPages $message[27]";
 &tab_head;
-print "<TR bgcolor=#$color_TableBGRowTitle><TH>Page-URL</TH><TH bgcolor=#$color_p>&nbsp;$message[29]&nbsp;</TH><TH>&nbsp;</TH></TR>\n";
+print "<TR bgcolor=#$color_TableBGRowTitle><TH>$message[19]</TH><TH bgcolor=#$color_p>&nbsp;$message[29]&nbsp;</TH><TH>&nbsp;</TH></TR>\n";
 if ($SortDir<0) { $max=$_sider_p{$sortsiders[0]}; }
 else            { $max=$_sider_p{$sortsiders[$#sortsiders]}; }
 $count=0;
@@ -2843,7 +2943,6 @@ if ($TotalHits > 0) {
 }
 print "<TR bgcolor=#$color_TableBGRowTitle><TH>$message[37]</TH><TH bgcolor=#$color_p width=80>$message[56]</TH><TH bgcolor=#$color_p width=40>$message[15]</TH><TH bgcolor=#$color_h width=80>$message[57]</TH><TH bgcolor=#$color_h width=40>$message[15]</TH></TR>\n";
 print "<TR><TD CLASS=LEFT><b>$message[38]:</b></TD><TD>$_from_p[0]&nbsp;</TD><TD>$p_p[0]&nbsp;%</TD><TD>$_from_h[0]&nbsp;</TD><TD>$p_h[0]&nbsp;%</TD></TR>\n";
-print "<TR><TD CLASS=LEFT><b>$message[39]:</b></TD><TD>$_from_p[1]&nbsp;</TD><TD>$p_p[1]&nbsp;%</TD><TD>$_from_h[1]&nbsp;</TD><TD>$p_h[1]&nbsp;%</TD></TR>\n";
 #------- Referrals by search engine
 print "<TR onmouseover=\"ShowTooltip(13);\" onmouseout=\"HideTooltip(13);\"><TD CLASS=LEFT><b>$message[40] :</b><br>\n";
 print "<TABLE>\n";
@@ -2853,7 +2952,7 @@ foreach $se (@sortsereferrals) {
 print "</TABLE></TD>\n";
 print "<TD valign=top>$_from_p[2]&nbsp;</TD><TD valign=top>$p_p[2]&nbsp;%</TD><TD valign=top>$_from_h[2]&nbsp;</TD><TD valign=top>$p_h[2]&nbsp;%</TD></TR>\n";
 #------- Referrals by external HTML link
-print "<TR onmouseover=\"ShowTooltip(14);\" onmouseout=\"HideTooltip(14);\"><TD CLASS=LEFT><b>$message[41] :</b><br>\n";
+print "<TR onmouseover=\"ShowTooltip(14);\" onmouseout=\"HideTooltip(14);\"><TD CLASS=LEFT><b>$message[41]:</b><br>\n";
 print "<TABLE>\n";
 $count=0;
 foreach $from (@sortpagerefs) {
@@ -2873,7 +2972,8 @@ foreach $from (@sortpagerefs) {
 print "</TABLE></TD>\n";
 print "<TD valign=top>$_from_p[3]&nbsp;</TD><TD valign=top>$p_p[3]&nbsp;%</TD><TD valign=top>$_from_h[3]&nbsp;</TD><TD valign=top>$p_h[3]&nbsp;%</TD></TR>\n";
 #------- Referrals by internal HTML link
-print "<TR><TD CLASS=LEFT><b>$message[42] :</b></TD><TD>$_from_p[4]&nbsp;</TD><TD>$p_p[4]&nbsp;%</TD><TD>$_from_h[4]&nbsp;</TD><TD>$p_h[4]&nbsp;%</TD></TR>\n";
+print "<TR><TD CLASS=LEFT><b>$message[42]:</b></TD><TD>$_from_p[4]&nbsp;</TD><TD>$p_p[4]&nbsp;%</TD><TD>$_from_h[4]&nbsp;</TD><TD>$p_h[4]&nbsp;%</TD></TR>\n";
+print "<TR><TD CLASS=LEFT><b>$message[39]:</b></TD><TD>$_from_p[1]&nbsp;</TD><TD>$p_p[1]&nbsp;%</TD><TD>$_from_h[1]&nbsp;</TD><TD>$p_h[1]&nbsp;%</TD></TR>\n";
 &tab_end;
 
 
@@ -2921,6 +3021,8 @@ foreach $key (@sorterrors) {
 	else { print "<TD CLASS=LEFT>Unknown error</TD><TD>$_errors_h{$key}</TD><TD>$p&nbsp;%</TD></TR>\n"; }
 }
 &tab_end;
+
+#print "XXXXX Record $NbOfLinesRead{1}, file 1 is: $field[$pos_rc]{1} ; - ; - ; $field[$pos_date]{1} ; TZ; $field[$pos_method]{1} ; $field[$pos_url]{1} ; $field[$pos_code]{1} ; $field[$pos_size]{1} ; $field[$pos_referer]{1} ; $field[$pos_agent]{1}";
 
 &html_end;
 
