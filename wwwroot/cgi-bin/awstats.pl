@@ -3648,9 +3648,9 @@ sub Utf8_To_Ascii
 sub EncodeString
 {
 	my $string = shift;
-	use bytes;
+#	use bytes;
 	$string =~ s/([\x2B\x80-\xFF])/sprintf ("%%%2x", ord($1))/eg;
-	no bytes;
+#	no bytes;
 	$string =~ tr/ /+/s;
 	return $string;
 }
