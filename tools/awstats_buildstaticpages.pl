@@ -30,6 +30,9 @@ my $Extension;
 my $Config;
 my $Update=0;
 my $Date=0;
+my $Lang;
+my $YearRequired;
+my $MonthRequired;
 my $Awstats="awstats.pl";
 my $OutputDir="";
 my $OutputSuffix;
@@ -81,6 +84,9 @@ if ($QueryString =~ /-awstatsprog=/i) { $Awstats=$QueryString; $Awstats =~ s/.*a
 if ($QueryString =~ /-dir=/i)    { $OutputDir=$QueryString; $OutputDir =~ s/.*dir=//; $OutputDir =~ s/&.*//; $OutputDir =~ s/ .*//; }
 if ($QueryString =~ /-update/i)  { $Update=1; }
 if ($QueryString =~ /-date/i)    { $Date=1; }
+if ($QueryString =~ /-year=(\d\d\d\d)/i) { $YearRequired="$1"; }
+if ($QueryString =~ /-month=(\d\d)/i || $QueryString =~ /month=(year)/i) { $MonthRequired="$1"; }
+if ($QueryString =~ /-lang=([^\s&]+)/i)	{ $Lang=$1; }
 ($DIR=$0) =~ s/([^\/\\]*)$//; ($PROG=$1) =~ s/\.([^\.]*)$//; $Extension=$1;
 if ($OutputDir) { if ($OutputDir !~ /[\\\/]$/) { $OutputDir.="/"; } }
 
@@ -92,11 +98,14 @@ if (! $Config) {
 	print "Usage:\n";
 	print "  $PROG.$Extension -config=configvalue -awstatsprog=pathtoawstatspl [-dir=outputdir] [-date] [-update] \n";
 	print "\n";
-	print "  where configvalue is value for config option of AWStats software.\n";
+	print "  where configvalue  is value for config option of AWStats software.\n";
 	print "        pathtoawstatspl is name of AWStats software with path (awstats.pl).\n";
-	print "        outputdir is name of output directory for generated pages.\n";
-	print "        -date option is used to add build date in built files name.\n";
-	print "        -update option is used to update statistics before generate pages.\n";
+	print "        outputdir    is name of output directory for generated pages.\n";
+	print "        -date        option is used to add build date in built files name.\n";
+	print "        -update      option is used to update statistics before generate pages.\n";
+	print "        -lang=LL     to output a HTML report in language LL (en,de,es,fr,it,nl,...)\n";
+	print "        -month=MM    to output a HTML report for an old month=MM\n";
+	print "        -year=YYYY   to output a HTML report for an old year=YYYY\n";
 	print "\n";
 	print "New versions and FAQ at http://awstats.sourceforge.net\n";
 	exit 0;
@@ -131,9 +140,13 @@ if ($Date) {
 
 
 my $cpt=0;
+my $smallcommand="\"$Awstats\" -config=$Config -staticlinks".($OutputSuffix ne $Config?"=$OutputSuffix":"");
+if ($Lang)          { $smallcommand.=" -lang=$Lang"; }
+if ($MonthRequired) { $smallcommand.=" -month=$MonthRequired"; }
+if ($YearRequired)  { $smallcommand.=" -year=$YearRequired"; }
 
 # Launch main awstats output
-my $command="\"$Awstats\" -config=$Config -staticlinks".($OutputSuffix ne $Config?"=$OutputSuffix":"")." -output";
+my $command="$smallcommand -output";
 print "Build main page: $command\n";
 $retour=`$command  2>&1`;
 $OutputFile=($OutputDir?$OutputDir:"")."awstats.$OutputSuffix.html";
@@ -143,9 +156,9 @@ close("OUTPUT");
 $cpt++;
 
 # Launch all other awstats output
-my @OutputList=("allhosts","lasthosts","unknownip","urldetail","unknownos","unknownbrowser","browserdetail","allkeyphrases","errors404");
+my @OutputList=("allhosts","lasthosts","unknownip","urldetail","unknownos","unknownbrowser","browserdetail","allkeyphrases","allkeywords","errors404");
 for my $output (@OutputList) {
-	my $command="\"$Awstats\" -config=$Config -staticlinks".($OutputSuffix ne $Config?"=$OutputSuffix":"")." -output=$output";
+	my $command="$smallcommand -output=$output";
 	print "Build $output page: $command\n";
 	$retour=`$command  2>&1`;
 	$OutputFile=($OutputDir?$OutputDir:"")."awstats.$OutputSuffix.$output.html";
