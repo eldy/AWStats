@@ -39,7 +39,7 @@ function awstats_detectNS(TRKClassID) {
 
 function awstats_getCookie(TRKNameOfCookie){
 	if (document.cookie.length > 0){
-		TRKbegin = document.cookie.indexOf(TRKNameOfCookie+"="); 
+		TRKbegin = document.cookie.indexOf(TRKNameOfCookie+"=");
 	    if (TRKbegin != -1) {
 			TRKbegin += TRKNameOfCookie.length+1; 
 			TRKend = document.cookie.indexOf(";", TRKbegin);
@@ -80,7 +80,10 @@ if (window.location.search == "") {
 		var TRKrp  = awstats_detectIE("rmocx.RealPlayer G2 Control.1")
 		var TRKmov = awstats_detectIE("QuickTimeCheckObject.QuickTimeCheck.1")
 		var TRKwma = awstats_detectIE("MediaPlayer.MediaPlayer.1")
-		var TRKpdf = awstats_detectIE("PDF.PdfCtrl.5");
+		var TRKpdf = 'n'; 
+		if (awstats_detectIE('PDF.PdfCtrl.5') == 'y' || awstats_detectIE('PDF.PdfCtrl.6') == 'y') {
+			TRKpdf = 'y';
+		}
 	}
 	if (TRKns || !TRKwin) {
 		TRKnse = ""; for (var TRKi=0;TRKi<navigator.mimeTypes.length;TRKi++) TRKnse += navigator.mimeTypes[TRKi].type.toLowerCase();
