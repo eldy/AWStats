@@ -3037,9 +3037,9 @@ sub Show_Flag_Links {
 	my $NewLinkParams=$QueryString;
 	my $NewLinkTarget="";
 	if ($ENV{"GATEWAY_INTERFACE"}) {
-		$NewLinkParams =~ s/update[=]*[^ &]*//i;
-		$NewLinkParams =~ s/staticlinks[=]*[^ &]*//i;
-		$NewLinkParams =~ s/framename[=]*[^ &]*//i;
+		$NewLinkParams =~ s/update(=\w*|$|[ &]+)//i;
+		$NewLinkParams =~ s/staticlinks(=\w*|$|[ &]+)//i;
+		$NewLinkParams =~ s/framename=[^ &]*//i;
 		$NewLinkParams =~ s/lang=[^ &]*//i;
 		if ($FrameName eq "mainleft") { $NewLinkTarget=" target=\"_parent\""; }
 		$NewLinkParams =~ tr/&/&/s; $NewLinkParams =~ s/^&//; $NewLinkParams =~ s/&$//;
@@ -3322,7 +3322,7 @@ sub Lock_Update {
 #--------------------------------------------------------------------
 # MAIN
 #--------------------------------------------------------------------
- $starttime=time;
+$starttime=time;
 
 if ($ENV{"GATEWAY_INTERFACE"}) {	# Run from a browser
 	my $ExpireDelayInHTTPHeader=0;
@@ -3362,7 +3362,7 @@ else {								# Run from command line
 }
 if ($QueryString =~ /logfile=([^\s&]+)/i )      { $LogFile=&DecodeEncodedString($1); }
 if ($QueryString =~ /staticlinks/i) 			{ $StaticLinks=".$SiteConfig"; }
-if ($QueryString =~ /staticlinks=([^\s&]+)/i) 	{ $StaticLinks=".$1"; }
+if ($QueryString =~ /staticlinks=([^\s&]+)/i) 	{ $StaticLinks=".$1"; }		# When ran from awstatsbuildstaticpages.pl
 if ($QueryString =~ /framename=([^\s&]+)/i)		{ $FrameName=$1; }
 if ($QueryString =~ /debug=(\d+)/i)				{ $Debug=$1; }
 # Define output option
@@ -3372,7 +3372,7 @@ if ($QueryString =~ /output/i) {
 	if (! $ENV{"GATEWAY_INTERFACE"} && $QueryString !~ /update/i) { $UpdateStats=0; }	# If output only, on command line, no update
 	if ($QueryString =~ /output=([^\s&:]+)/i) { $HTMLOutput=lc($1); }
 }
-$QueryString=~s/&{0,1}output&//i; $QueryString=~s/&{0,1}output$//i;	# -output with no = is same than nothing
+$QueryString=~s/output(&|$)//i;	$QueryString=~s/&$//;	# -output with no = is same than nothing
 # A filter on URL list can be defined with output=urldetail:filter to reduce number of lines read and showed
 if ($QueryString =~ /output=urldetail:([^\s&]+)/i)	{ $URLFilter=&DecodeEncodedString($1); }
 # A filter on URL list can also be defined with urlfilter=filter
@@ -3587,7 +3587,8 @@ if ($UpdateStats && (! $AllowToUpdateStatsFromBrowser) && $ENV{"GATEWAY_INTERFAC
 if ($FrameName eq "index") {
 	# Define the NewLinkParams for main chart
 	my $NewLinkParams=${QueryString};
-	$NewLinkParams =~ s/framename[=]*[^\s&]*//i;
+	$NewLinkParams =~ s/framename=[^ &]*//i;
+	$NewLinkParams =~ tr/&/&/s; $NewLinkParams =~ s/^&//; $NewLinkParams =~ s/&$//;
 	if ($NewLinkParams) { $NewLinkParams="${NewLinkParams}&"; }
 	# Exit if main frame
 	print "<frameset cols=\"$FRAMEWIDTH,*\" border=0 framespacing=2 frameborder=0>\n";
@@ -4687,10 +4688,10 @@ if ($HTMLOutput) {
 
 	# Define the NewLinkParams for main chart
 	my $NewLinkParams=${QueryString};
-	$NewLinkParams =~ s/update[=]*[^ &]*//i;
-	$NewLinkParams =~ s/output[=]*[^ &]*//i;
-	$NewLinkParams =~ s/framename[=]*[^ &]*//i;
-	$NewLinkParams =~ s/staticlinks[=]*[^ &]*//i;
+	$NewLinkParams =~ s/update(=\w*|$|[ &]+)//i;
+	$NewLinkParams =~ s/output(=\w*|$|[ &]+)//i;
+	$NewLinkParams =~ s/staticlinks(=\w*|$|[ &]+)//i;
+	$NewLinkParams =~ s/framename=[^ &]*//i;
 	my $NewLinkTarget="";
 	if ($DetailedReportsOnNewWindows) { $NewLinkTarget=" target=\"awstatsbis\""; }
 	if (($FrameName eq "mainleft" || $FrameName eq "mainright") && $DetailedReportsOnNewWindows < 2) {
@@ -4815,9 +4816,9 @@ EOF
 			# Print update link
 			if ($AllowToUpdateStatsFromBrowser && ! $StaticLinks) {
 				my $NewLinkParams=${QueryString};
-				$NewLinkParams =~ s/update[=]*[^ &]*//i;
-				$NewLinkParams =~ s/staticlinks[=]*[^ &]*//i;
-				$NewLinkParams =~ s/framename[=]*[^ &]*//i;
+				$NewLinkParams =~ s/update(=\w*|$|[ &]+)//i;
+				$NewLinkParams =~ s/staticlinks(=\w*|$|[ &]+)//i;
+				$NewLinkParams =~ s/framename=[^ &]*//i;
 				if ($FrameName eq "mainright") { $NewLinkParams.="&framename=mainright"; }
 				$NewLinkParams =~ tr/&/&/s; $NewLinkParams =~ s/^&//; $NewLinkParams =~ s/&$//;
 				if ($NewLinkParams) { $NewLinkParams="${NewLinkParams}&"; }
@@ -4894,8 +4895,8 @@ EOF
 		# Print Back link
 		elsif ($HTMLOutput ne "main") {
 			print "<table>\n";
-			$NewLinkParams =~ s/urlfilter[=]*[^ &]*//i;
-			$NewLinkParams =~ s/&+$//;
+			$NewLinkParams =~ s/urlfilter=[^ &]*//i;
+			$NewLinkParams =~ tr/&/&/s; $NewLinkParams =~ s/&$//;
 			if (! $DetailedReportsOnNewWindows || $FrameName eq "mainright") {
 				print "<tr><td class=AWL><a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript".(${NewLinkParams}?"?${NewLinkParams}":""):"$PROG$StaticLinks.html")."\">$Message[76]</a></td></tr>\n";
 			}
@@ -5096,9 +5097,9 @@ EOF
 		# Show filter form
 		if (! $StaticLinks) {
 			my $NewLinkParams=${QueryString};
-			$NewLinkParams =~ s/update[=]*[^ &]*//i;
-			$NewLinkParams =~ s/output[=]*[^ &]*//i;
-			$NewLinkParams =~ s/staticlinks[=]*[^ &]*//i;
+			$NewLinkParams =~ s/update(=\w*|$|[ &]+)//i;
+			$NewLinkParams =~ s/output(=\w*|$|[ &]+)//i;
+			$NewLinkParams =~ s/staticlinks(=\w*|$|[ &]+)//i;
 			$NewLinkParams =~ tr/&/&/s; $NewLinkParams =~ s/^&//; $NewLinkParams =~ s/&$//;
 			if ($NewLinkParams) { $NewLinkParams="${NewLinkParams}&"; }
 			print "<FORM name=\"FormUrlFilter\" action=\"$AWScript?${NewLinkParams}\" class=\"TABLEFRAME\">\n";
@@ -5408,11 +5409,11 @@ EOF
 		else { print "<TD colspan=3 rowspan=2><font style=\"font: 18px arial,verdana,helvetica; font-weight: normal\">$Message[5] $monthlib{$MonthRequired} $YearRequired</font><br>"; }
 		# Show links for possible years
 		my $NewLinkParams=${QueryString};
-		$NewLinkParams =~ s/update[=]*[^ &]*//i;
+		$NewLinkParams =~ s/update(=\w*|$|[ &]+)//i;
+		$NewLinkParams =~ s/staticlinks(=\w*|$|[ &]+)//i;
 		$NewLinkParams =~ s/year=[^ &]*//i;
 		$NewLinkParams =~ s/month=[^ &]*//i;
-		$NewLinkParams =~ s/staticlinks[=]*[^ &]*//i;
-		$NewLinkParams =~ s/framename[=]*[^ &]*//i;
+		$NewLinkParams =~ s/framename=[^ &]*//i;
 		$NewLinkParams =~ tr/&/&/s; $NewLinkParams =~ s/^&//; $NewLinkParams =~ s/&$//;
 		if ($NewLinkParams) { $NewLinkParams="${NewLinkParams}&"; }
 		my $NewLinkTarget="";
