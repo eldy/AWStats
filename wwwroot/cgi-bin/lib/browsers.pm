@@ -27,7 +27,7 @@
 'opera',
 # Other standard web browsers
 '22acidownload',
-'aol-iweng',
+'aol\-iweng',
 'amaya',
 'amigavoyager',
 'aweb',
@@ -48,9 +48,9 @@
 'hotjava',
 'ibrowse',
 'intergo',
-'k-meleon',
+'k\-meleon',
 'linemodebrowser',
-'lotus-notes',
+'lotus\-notes',
 'macweb',
 'multizilla',
 'ncsa_mosaic',
@@ -74,7 +74,7 @@
 # Music only browsers
 'real',
 'winamp',				# Works for winampmpeg and winamp3httprdr
-'windows-media-player',
+'windows\-media\-player',
 'audion',
 'freeamp',
 'itunes',
@@ -88,7 +88,7 @@
 'xaudio',
 # PDA/Phonecell browsers
 'alcatel',				# Alcatel
-'mot-',					# Motorola
+'mot\-',				# Motorola
 'nokia',				# Nokia
 'panasonic',			# Panasonic
 'philips',				# Philips
@@ -137,7 +137,7 @@
 'opera','Opera',
 # Other standard web browsers
 '22acidownload','22AciDownload',
-'aol-iweng','AOL-Iweng',
+'aol\-iweng','AOL-Iweng',
 'amaya','Amaya',
 'amigavoyager','AmigaVoyager',
 'aweb','AWeb',
@@ -158,9 +158,9 @@
 'hotjava','Sun HotJava',
 'ibrowse','iBrowse',
 'intergo','InterGO',
-'k-meleon','K-Meleon',
+'k\-meleon','K-Meleon',
 'linemodebrowser','W3C Line Mode Browser',
-'lotus-notes','Lotus Notes web client',
+'lotus\-notes','Lotus Notes web client',
 'macweb','MacWeb',
 'multizilla','MultiZilla',
 'ncsa_mosaic','NCSA Mosaic',
@@ -184,7 +184,7 @@
 # Music only browsers
 'real','RealAudio or compatible (media player)',
 'winamp','WinAmp (media player)',				# Works for winampmpeg and winamp3httprdr
-'windows-media-player','Windows Media Player (media player)',
+'windows\-media\-player','Windows Media Player (media player)',
 'audion','Audion (media player)',
 'freeamp','FreeAmp (media player)',
 'itunes','Apple iTunes (media player)',
@@ -199,7 +199,7 @@
 # PDA/Phonecell browsers
 'alcatel','Alcatel Browser (PDA/Phone browser)',
 'ericsson','Ericsson Browser (PDA/Phone browser)',
-'mot-','Motorola Browser (PDA/Phone browser)',
+'mot\-','Motorola Browser (PDA/Phone browser)',
 'nokia','Nokia Browser (PDA/Phone browser)',
 'panasonic','Panasonic Browser (PDA/Phone browser)',
 'philips','Philips Browser (PDA/Phone browser)',
@@ -269,8 +269,8 @@
 'galeon','galeon',
 'getright','getright',
 'ibrowse','ibrowse',
-'k-meleon','kmeleon',
-'lotus-notes','lotusnotes',
+'k\-meleon','kmeleon',
+'lotus\-notes','lotusnotes',
 'multizilla','multizilla',
 'netpositive','netpositive',
 'phoenix','phoenix',
@@ -282,7 +282,7 @@
 # Music only browsers
 'real','mediaplayer',
 'winamp','mediaplayer',				# Works for winampmpeg and winamp3httprdr
-'windows-media-player','mediaplayer',
+'windows\-media\-player','mediaplayer',
 'audion','mediaplayer',
 'freeamp','mediaplayer',
 'itunes','mediaplayer',
@@ -297,7 +297,7 @@
 # PDA/Phonecell browsers
 'alcatel','pdaphone',				# Alcatel
 'ericsson','pdaphone',				# Ericsson
-'mot-','pdaphone',					# Motorola
+'mot\-','pdaphone',					# Motorola
 'nokia','pdaphone',					# Nokia
 'panasonic','pdaphone',				# Panasonic
 'philips','pdaphone',				# Philips
