@@ -1,8 +1,8 @@
+#!c:/program files/activeperl/bin/perl
 #!/usr/bin/perl
 # With some other Unix Os, first line might be
 #!/usr/local/bin/perl
 # With Apache for Windows and ActiverPerl, first line might be
-#!c:/program files/activeperl/bin/perl
 # use diagnostics;
 # use strict;
 #-Description-------------------------------------------
@@ -1516,7 +1516,7 @@ sub Read_Config_File {
 	if (open(CONFIG,"$DirConfig$PROG.$LocalSite.conf")) { $FileConfig="$DirConfig$PROG.$LocalSite.conf"; $FileSuffix=".$LocalSite"; }
 	if ($FileConfig eq "") { if (open(CONFIG,"$DirConfig$PROG.conf"))  { $FileConfig="$DirConfig$PROG.conf"; $FileSuffix=""; } }
 	if ($FileConfig eq "") { $FileConfig="$PROG.conf"; error("Error: Couldn't open config file \"$PROG.$LocalSite.conf\" nor \"$PROG.conf\" : $!"); }
-	&debug("Call to Read_Config_File. FileConfig=\"$FileConfig\"");
+	&debug("Call to Read_Config_File [FileConfig=\"$FileConfig\"]");
 	while (<CONFIG>) {
 		chomp $_; s/\r//;
 		$_ =~ s/#.*//;								# Remove comments
@@ -1537,7 +1537,7 @@ sub Read_Config_File {
 			next;
 			}
 		if ($param =~ /^LogFormat/)            { $LogFormat=$value; next; }
-		if ($param =~ /^AllowToUpdateStatsFromBrowser/	{ $AllowToUpdateStatsFromBrowser=$value; next; }
+		if ($param =~ /^AllowToUpdateStatsFromBrowser/)	{ $AllowToUpdateStatsFromBrowser=$value; next; }
 		if ($param =~ /^HostAliases/) {
 			@felter=split(/ /,$value);
 			$i=0; foreach $elem (@felter)      { $HostAliases[$i]=$elem; $i++; }
@@ -1608,7 +1608,7 @@ sub Check_Config {
 	if (! ($LogFormat =~ /[1-2]/))            { error("Error: LogFormat parameter is wrong. Value is '$LogFormat' (should be 1 or 2)"); }
 	if (! ($DNSLookup =~ /[0-1]/))            { error("Error: DNSLookup parameter is wrong. Value is '$DNSLookup' (should be 0 or 1)"); }
 	# Optional section
-	if (! ($AllowToUpdateStatsFromBrowser) =~ /[0-1]/)) { $AllowToUpdateStatsFromBrowser=1; }
+	if (! ($AllowToUpdateStatsFromBrowser =~ /[0-1]/)) { $AllowToUpdateStatsFromBrowser=1; }
 	if (! ($PurgeLogFile =~ /[0-1]/))         { $PurgeLogFile=0; }
 	if (! ($ArchiveLogRecords =~ /[0-1]/))    { $ArchiveLogRecords=1; }
 	if (! ($Lang =~ /[0-9]/))                 { $Lang=0; }
@@ -1651,7 +1651,7 @@ sub Check_Config {
 }
 
 sub Read_History_File {
-	&debug("Call to Read_History_File ($_[0],$_[1],$_[2])");
+	&debug("Call to Read_History_File [$_[0],$_[1],$_[2]]");
 	if ($HistoryFileAlreadyRead{"$_[0]$_[1]"}) { return 0; }			# Protect code to invoke function only once for each month/year
 	$HistoryFileAlreadyRead{"$_[0]$_[1]"}=1;							# Protect code to invoke function only once for each month/year
 	if (! -s "$DirData/$PROG$_[1]$_[0]$FileSuffix.txt") { return 0; }	# If file not exists, return
@@ -1770,7 +1770,7 @@ sub Read_History_File {
 }
 
 sub Save_History_File {
-	&debug("Call to Save_History_File ($_[0],$_[1])");
+	&debug("Call to Save_History_File [$_[0],$_[1]]");
 	open(HISTORYTMP,">$DirData/$PROG$_[1]$_[0]$FileSuffix.tmp.$$") || error("Error: Couldn't open file \"$DirData/$PROG$_[1]$_[0]$FileSuffix.tmp.$$\" : $!");	# Month before Year kept for backward compatibility
 
 	print HISTORYTMP "FirstTime $FirstTime{$_[0].$_[1]}\n";
@@ -1906,7 +1906,7 @@ if (($ENV{"GATEWAY_INTERFACE"} eq "") && ($LocalSite eq "")) {
 	print "  See README.TXT file to know how to create the config file.\n";
 	print "\n";
 	print "Advanced options:\n";
-	print "  lang=X              to generate a report page in language number X\n";
+	print "  lang=X              to show a report page in language number X\n";
 	print "  month=MM year=YYYY  to show a report for an old month=MM, year=YYYY\n";
 	print "  Warning : Those 'date' options doesn't allow you to process old log file.\n";
 	print "  It only allows you to see a report of old already processed data for an old\n";
