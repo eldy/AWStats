@@ -349,13 +349,6 @@ use vars qw/ %smtpcodelib /;
 %smtpcodelib = (
 );
 
-# HTTP codes with tooltips
-#use vars qw/ %httpcodewithtooltips /;
-#%httpcodewithtooltips = (
-#"201", 1, "202", 1, "204", 1, "206", 1, "301", 1, "302", 1, "400", 1, "401", 1, "403", 1, "404", 1, "408", 1,
-#"500", 1, "501", 1, "502", 1, "503", 1, "504", 1, "505", 1, "200", 1, "304", 1
-#);
-
 
 
 #-----------------------------------------------------------------------------
@@ -4103,13 +4096,9 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {	# Updat
 			next;
 		}
 
-		# Check protocol
+		# Check protocol (Note: Use of TmpProtocol does not increase speed)
 		#----------------------------------------------------------------------
-
-		# TODO Use a TmpProtocol
-#		my $protocol=$TmpProtocol{$field[$pos_method]};
-
-		my $protocol=0;
+  		my $protocol=0;
 		if ($field[$pos_method] eq 'GET' || $field[$pos_method] eq 'POST' || $field[$pos_method] eq 'HEAD' || $field[$pos_method] =~ /OK/i) {
 			# HTTP request.	Keep only GET, POST, HEAD, *OK* with Webstar but not OPTIONS
 			$protocol=1;
@@ -4118,12 +4107,11 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {	# Updat
 			# FTP request.
 			$protocol=2;
 		}
-		if (! $protocol) {
+		else {
 			$NbOfLinesDropped++;
 			if ($ShowDropped) { print "Dropped record (method/protocol '$field[$pos_method]' not qualified): $_\n"; }
 			next;
 		}
-
 
 		# Split DD/Month/YYYY:HH:MM:SS or YYYY-MM-DD HH:MM:SS or MM/DD/YY\tHH:MM:SS
 		$field[$pos_date] =~ tr/-\/ \t/::::/;			# " \t" is used instead of "\s" not known with tr
