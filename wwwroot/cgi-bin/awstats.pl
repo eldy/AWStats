@@ -88,7 +88,7 @@ $BarImageHorizontal_k
 /;
 $DNSStaticCacheFile='dnscache.txt';
 $DNSLastUpdateCacheFile='dnscachelastupdate.txt';
-$Lang='en';
+$Lang='auto';
 $MaxRowsInHTMLOutput = 1000;
 $BarImageVertical_v   = 'vv.png';
 #$BarImageHorizontal_v = 'hv.png';
@@ -235,8 +235,8 @@ use vars qw/
 @_time_p = @_time_h = @_time_k = ();
 @fieldlib = @keylist = ();
 use vars qw/
-@BrowsersFamily
-@SessionsRange %SessionsAverage @HostAliases @AllowAccessFromWebToFollowingAuthenticatedUsers
+@BrowsersFamily @SessionsRange %SessionsAverage %LangBrowserToAwstats
+@HostAliases @AllowAccessFromWebToFollowingAuthenticatedUsers
 @DefaultFile @SkipDNSLookupFor
 @SkipHosts @SkipUserAgents @SkipFiles
 @OnlyHosts @OnlyFiles 
@@ -250,6 +250,10 @@ use vars qw/
 @BrowsersFamily=('msie','netscape');
 @SessionsRange=('0s-30s','30s-2mn','2mn-5mn','5mn-15mn','15mn-30mn','30mn-1h','1h+');
 %SessionsAverage=('0s-30s',15,'30s-2mn',75,'2mn-5mn',210,'5mn-15mn',600,'15mn-30mn',1350,'30mn-1h',2700,'1h+',3600);
+%LangBrowserToAwstats=('sq','al','ba','ba','cz','cz','de','de','en','en','nl','nl','bg','bg',
+'ca','es_cat','zh','cn','zh-tw','tw','ko','kr','da','dk','es','es','fi','fi','fr','fr',
+'el','gr','hu','hu','in','id','it','it','ja','jp','lv','lv','lt','lt','no','nn','pl','pl',
+'pt','pt','pt-br','br','ro','ro','ru','ru','sk','sk','sv','se','tr','tr','uk','ua','wlk','wlk');
 @HostAliases=();
 @AllowAccessFromWebToFollowingAuthenticatedUsers=();
 @DefaultFile = @SkipDNSLookupFor = ();
@@ -4647,6 +4651,15 @@ else { $MonthRequired="$nowmonth"; }
 if ($QueryString =~ /(^|&)day=(\d\d)/i) { $DayRequired="$2"; }	# day is a hidden option. Must not be used (Make results not understandable). Available for users that rename history files with day.
 else { $DayRequired=''; }
 
+# Print AWStats and Perl version 
+if ($Debug) {
+	debug(ucfirst($PROG)." - $VERSION - Perl $^X $]",1);
+	debug("QUERY_STRING=$QueryString",2);
+	debug("HTMLOutput=".join(',',keys %HTMLOutput),1);
+	debug("YearRequired=$YearRequired, MonthRequired=$MonthRequired",2);
+	debug("Site domain to analyze=$SiteDomain",1);
+}
+
 # Force SiteConfig if AWSTATS_FORCE_CONFIG is defined
 if ($ENV{'AWSTATS_CONFIG'}) { $ENV{'AWSTATS_FORCE_CONFIG'}=$ENV{'AWSTATS_CONFIG'}; } # For backward compatibility
 if ($ENV{'AWSTATS_FORCE_CONFIG'}) {
@@ -4752,7 +4765,16 @@ $ENV{'AWSTATS_CURRENT_CONFIG'}=$SiteConfig;
 # Read config file (here SiteConfig is defined)
 &Read_Config;
 if ($QueryString =~ /(^|&)lang=([^&]+)/i)	{ $Lang="$2"; }
-if (! $Lang) { $Lang='en'; }
+if (! $Lang || $Lang eq 'auto') {	# If lang not defined or forced to auto
+	my $langlist=$ENV{'HTTP_ACCEPT_LANGUAGE'}; $langlist =~ s/;[^,]*//g;
+	debug("Search an available language among HTTP_ACCEPT_LANGUAGE=$langlist",1);
+	foreach my $code (split(/,/,$langlist)) {	# Search for a valid lang in priority
+		if ($LangBrowserToAwstats{$code}) { $Lang=$LangBrowserToAwstats{$code}; debug("Will try to use Lang=$Lang",1); last; }
+		$code =~ s/-.*$//;
+		if ($LangBrowserToAwstats{$code}) { $Lang=$LangBrowserToAwstats{$code}; debug("Will try to use Lang=$Lang",1); last; }
+	}
+}
+if (! $Lang || $Lang eq 'auto') { debug("No language defined or available. Will use Lang=en",1); $Lang='en'; }
 
 # Check and correct bad parameters
 &Check_Config;
@@ -4792,15 +4814,6 @@ $AWScript=($WrapperScript?"$WrapperScript":"$DirCgi$PROG.$Extension");
 
 # Print html header (Need HTMLOutput,Expires,Lang,StyleSheet,HTMLHeadSectionExpires defined by Read_Config, PageCodes defined by Read_Language_Data)
 &html_head;
-
-# Print AWStats and Perl version 
-if ($Debug) {
-	debug(ucfirst($PROG)." - $VERSION - Perl $^X $]",1);
-	debug("QUERY_STRING=$QueryString",2);
-	debug("HTMLOutput=".join(',',keys %HTMLOutput));
-	debug("YearRequired=$YearRequired, MonthRequired=$MonthRequired",2);
-	debug("Site domain to analyze=$SiteDomain");
-}
 
 # Security check
 if ($AllowAccessFromWebToAuthenticatedUsersOnly && $ENV{'GATEWAY_INTERFACE'}) {

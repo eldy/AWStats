@@ -19,6 +19,8 @@ Fixes:
 - WhoIs link did not work if host name contained a "-" char.
 
 New features/improvments:
+- Lang parameter accepts 'auto' value (Choose first available language
+  accepted by browser).
 - Little support for realmedia server.
 - Added urlaliasbuilder.pl tool.
 - Added URL in possible values for ExtraSection first column.
@@ -39,6 +41,8 @@ New features/improvments:
 - The AWSTATS_CURRENT_CONFIG environment variable is now always defined
   into AWStats environment with value of config (Can be used inside config
   file like other environment variables).
+- Added offset of last log line read and a signature of line into the
+  history file after the LastLine date.
 
 Other/Documentation:
 - AWSTATS_CONFIG environment variable renamed into AWSTATS_FORCE_CONFIG.
