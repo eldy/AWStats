@@ -497,7 +497,7 @@ use vars qw/ @Message /;
 'Monthly history',
 'Worms',
 'different worms',
-'Mails successully sent',
+'Mails successfully sent',
 'Mails failed/refused',
 'Sensitive targets'
 );
@@ -4977,8 +4977,8 @@ sub ShowEmailReceiversChart {
 	}
 	&tab_head("$title",19,0,'emailreceivers');
 	print "<tr bgcolor=\"#$color_TableBGRowTitle\"><th colspan=\"3\">$Message[132] : ".(scalar keys %_emailr_h)."</th>";
-	if ($ShowEMailReceivers =~ /H/i) { print "<th rowspan=\"2\" bgcolor=\"#$color_h\" width=\"80\">$Message[57]</th>"; }
-	if ($ShowEMailReceivers =~ /B/i) { print "<th rowspan=\"2\" bgcolor=\"#$color_k\" width=\"80\">$Message[75]</th>"; }
+	if ($ShowEMailReceivers =~ /H/i) { print "<th rowspan=\"2\" bgcolor=\"#$color_h\" width=\"80\"".($TOOLTIPON?" onmouseover=\"ShowTip(4);\" onmouseout=\"HideTip(4);\"":"").">$Message[57]</th>"; }
+	if ($ShowEMailReceivers =~ /B/i) { print "<th rowspan=\"2\" bgcolor=\"#$color_k\" width=\"80\"".($TOOLTIPON?" onmouseover=\"ShowTip(5);\" onmouseout=\"HideTip(5);\"":"").">$Message[75]</th>"; }
 	if ($ShowEMailReceivers =~ /M/i) { print "<th rowspan=\"2\" bgcolor=\"#$color_k\" width=\"80\">$Message[106]</th>"; }
 	if ($ShowEMailReceivers =~ /L/i) { print "<th rowspan=\"2\" width=\"120\">$Message[9]</th>"; }
 	print "</tr>\n";
@@ -5298,7 +5298,7 @@ if ((! $ENV{'GATEWAY_INTERFACE'}) && (! $SiteConfig)) {
 	print "  -debug=X     to add debug informations lesser than level X (speed reduced)\n";
 	print "\n";
 	print "Now supports/detects:\n";
-	print "  Web/Ftp/Mail log analyze\n";
+	print "  Web/Ftp/Mail log analyze (and load balanced log files)\n";
 	print "  Reverse DNS lookup (IPv4 and IPv6) and GeoIP lookup\n";
 	print "  Number of visits, number of unique visitors\n";
 	print "  Visits duration and list of last visits\n";
@@ -5306,21 +5306,22 @@ if ((! $ENV{'GATEWAY_INTERFACE'}) && (! $SiteConfig)) {
 	print "  Days of week and rush hours\n";
 	print "  Hosts list and unresolved IP addresses list\n";
 	print "  Most viewed, entry and exit pages\n";
-	print "  Files type and Web compression\n";
+	print "  Files type and Web compression (mod_gzip, mod_deflate stats)\n";
 	print "  Screen size\n";
 	print "  Number of times site is 'added to favorites bookmarks'\n";
 	print "  Ratio of Browsers with support of: Java, Flash, RealG2 reader,\n";
 	print "                        Quicktime reader, WMA reader, PDF reader\n";
-	print "  Personalized reports\n";
+	print "  Configurable personalized reports\n";
 	print "  ".(scalar keys %DomainsHashIDLib)." domains/countries\n";
 	print "  ".(scalar keys %RobotsHashIDLib)." robots\n";
+	print "  ".(scalar keys %WormsHashLib)." worm's families\n";
 	print "  ".(scalar keys %OSHashLib)." operating systems\n";
 	print "  ".(scalar keys %BrowsersHashIDLib)." browsers\n";
 	print "  ".(scalar keys %SearchEnginesHashLib)." search engines (and keyphrases/keywords used from them)\n";
 	print "  All HTTP errors with last referrer\n";
 	print "  Report by day/month/year\n";
 	print "  Dynamic or static HTML reports, static PDF reports\n";
-	print "  And a lot of other advanced options...\n";
+	print "  And a lot of other advanced features and options...\n";
 	print "New versions and FAQ at http://awstats.sourceforge.net\n";
 	exit 2;
 }
