@@ -126,7 +126,7 @@ $color_h, $color_k, $color_p, $color_s, $color_u, $color_v)=
 
 
 
-$VERSION="4.0 (build 5)";
+$VERSION="4.0 (build 6)";
 $Lang="en";
 
 # Default value
@@ -1317,23 +1317,33 @@ sub Read_History_File {
 				$count++;
 				if ($part && ($UpdateStats || $QueryString !~ /output=/i || $QueryString =~ /output=urldetail/i)) {
 					# Data required:
-					# update 				need to load all pages
+					# update 				need to load all pages - TotalDiffetentPages could be counted but is not
 					# noupdate+
-					#  main page for year	need to load all pages
-					#  main page for month	need to load MaxNbOfPageShown pages and >= MinHitFile
-					#  urldetail for year	need to load all pages with filter ok
-					#  urldetail for month	need to load all pages with filter ok and >= MinHitFile
-					#  misc page			need nothing
+					#  main page for year	need to load all pages - TotalDiffetentPages could be counted but is not
+					#  main page for month	need to load MaxNbOfPageShown pages and >= MinHitFile - TotalDiffetentPages can be counted and is
+					#  urldetail for year	need to load all pages with filter ok - TotalDiffetentPages could be counted if no filter but is not
+					#  urldetail for month	need to load all pages with filter ok and >= MinHitFile - TotalDiffetentPages can be counted and is
+					#  misc page			need nothing - TotalDiffetentPages not needed
 					my $loadrecord=0;
 					if ($UpdateStats) {
 						$loadrecord=1;
 					}
 					else {
-						# In this case we count TotalDifferentPages because we won't fill _url_p completely to save memory
-						$TotalDifferentPages++;
-						if ($MonthRequired eq "year" || $field[1] >= $MinHitFile) {
-							if ($QueryString =~ /output=urldetail/i && (!$URLFilter || $field[0] =~ /$URLFilter/)) { $loadrecord=1; }
-							if ($QueryString !~ /output=/i && ($MonthRequired eq "year" || $countloaded < $MaxNbOfPageShown)) { $loadrecord=1; }
+						if ($QueryString !~ /output=/i) {
+							if ($MonthRequired eq "year") { $loadrecord=1; }
+							else { 
+								if (countloaded < $MaxNbOfPageShown && $field[1] >= $MinHitFile) { $loadrecord=1; }
+								$TotalDifferentPages++;
+							}	
+						}
+						if ($QueryString =~ /output=urldetail/i) {
+							if ($MonthRequired eq "year" ) { 
+								if (!$URLFilter || $field[0] =~ /$URLFilter/) { $loadrecord=1; }
+							}
+							else { 
+								if ((!$URLFilter || $field[0] =~ /$URLFilter/) && $field[1] >= $MinHitFile) { $loadrecord=1; }
+								$TotalDifferentPages++;
+							}
 						}
 					}
 					if ($loadrecord) {					
@@ -3106,10 +3116,15 @@ if ($HTMLOutput) {
 	opendir(DIR,"$DirData");
 	@filearray = sort readdir DIR;
 	close DIR;
+	#my $yearmin=0;
 	foreach my $i (0..$#filearray) {
-		if ("$filearray[$i]" =~ /^$PROG([\d][\d])([\d][\d][\d][\d])$FileSuffix\.txt$/) { $listofyears{$2}=1; }
+		if ("$filearray[$i]" =~ /^$PROG([\d][\d])([\d][\d][\d][\d])$FileSuffix\.txt$/) {
+			$listofyears{$2}=1; 
+			#if (int("$2") < $yearmin || $yearmin == 0) { $yearmin=int("$2"); }
+		}
 	}
-	
+	#foreach my $i ($yearmin..$nowyear) { $listofyears{$i}=1; }
+
 	# Here, first part of data for processed month (old and current) are still in memory
 	# If a month was already processed, then $HistoryFileAlreadyRead{"MMYYYY"} value is 1
 	
@@ -3307,8 +3322,13 @@ EOF
 		if ($AddOn) { AddOn_Filter(); }
 		print "$CENTER<a name=\"URLDETAIL\">&nbsp;</a><BR>";
 		&tab_head($Message[19],19);
-		if ($URLFilter) { print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[79]: <b>$URLFilter</b> - ".(scalar keys %_url_p)." $Message[28]</TH>"; }
-		else { print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>".(scalar keys %_url_p)."&nbsp; $Message[28]</TH>"; }
+		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>";
+		if ($URLFilter) {
+			print "$Message[79]: <b>$URLFilter</b> - ".(scalar keys %_url_p)." $Message[28]";
+			if ($MonthRequired ne "year") { print " ($Message[102]: $TotalDifferentPages $Message[28])"; }
+		}
+		else { print "$Message[102]: ".(scalar keys %_url_p)." $Message[28]"; }
+		print "</TH>";
 		print "<TH bgcolor=\"#$color_p\">&nbsp;$Message[29]&nbsp;</TH>";
 		print "<TH bgcolor=\"#$color_s\">&nbsp;$Message[104]&nbsp;</TH>";
 		print "<TH bgcolor=\"#$color_k\">&nbsp;$Message[106]&nbsp;</TH>";
@@ -3923,7 +3943,7 @@ EOF
 	# BY URL
 	#-------------------------
 	if ($ShowPagesStats) {
-		debug("ShowPagesStats",2);
+		debug("ShowPagesStats (MaxNbOfPageShown=$MaxNbOfPageShown TotalDifferentPages=$TotalDifferentPages)",2);
 		print "$CENTER<a name=\"PAGE\">&nbsp;</a><a name=\"ENTRY\">&nbsp;</a><BR>";
 		$MaxNbOfPageShown = $TotalDifferentPages if $MaxNbOfPageShown > $TotalDifferentPages;
 		&tab_head("$Message[19] ($Message[77] $MaxNbOfPageShown) &nbsp; - &nbsp; <a href=\"$DirCgi$PROG.$Extension?${LinkParamB}output=urldetail\">$Message[80]</a>",19);
