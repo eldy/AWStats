@@ -11,8 +11,8 @@ It works with IIS 5.0+, Apache and all major web/wap/proxy server log files
 on all Operating Systems.
 
 License: GNU GPL (GNU General Public License. See LICENSE file)
-Version : 4.1
-Release date: June 2002
+Version : 5.0
+Release date: August 2002
 Platforms: All (Linux, NT, SCO, BSD, Solaris and other *NIX's, BeOS, OS/2...)
 Author: Laurent Destailleur <eldy@users.sourceforge.net>
 AWStats official web site and latest version: http://awstats.sourceforge.net
@@ -34,7 +34,7 @@ I - 1) Features
 
 	A full log analysis enables AWStats to show you the following information:
 	* Number of VISITS and UNIQUE VISITORS,
-	* Visits duration and list of last visitors,
+	* Visits duration and list of last visits,
 	* Authenticated users,
 	* Days of week and rush hours (pages, hits, kb for each day and hour),
 	* Hosts list and unresolved IP addresses list,
@@ -46,7 +46,7 @@ I - 1) Features
 	* OS used (pages, hits, kb for each OS),
 	* VISITS OF ROBOTS,
 	* SEARCH ENGINES, KEYPHRASES or KEYWORDS used to find your site,
-	* HTTP errors (Page not found, ...).
+	* HTTP errors (Page not found with last referer, ...).
 
 	It supports the following features as well:
 	* Can analyze all log formats.
@@ -54,8 +54,8 @@ I - 1) Features
 	* Update of statistics can be made on demand from the web interface and
 	  not only from your scheduler,
 	* Unlimited log file size, support splited log files,
-	* Reverse DNS lookup during analysis,
-	* A lot of options/filters can be defined,
+	* Reverse DNS lookup before or during analysis, support DNS cache files,
+	* A lot of options/filters and plugins can be used,
 	* Multi-named web sites supported (virtual servers),
 	* Cross Site Scripting Attacks protection,
 	* Several languages. English, French, Dutch, Spanish, Italian, German,
@@ -123,7 +123,7 @@ Tests and results are available in AWStats documentation, in docs/ directory.
 
 IV - ABOUT THE AUTHOR, LICENSE AND SUPPORT
 -----------------------------------------
-Copyright (C) 2000-2001 - Laurent Destailleur - eldy@users.sourceforge.net
+Copyright (C) 2000-2002 - Laurent Destailleur - eldy@users.sourceforge.net
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
