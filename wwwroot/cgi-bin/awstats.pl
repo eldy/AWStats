@@ -125,7 +125,7 @@ $color_h, $color_k, $color_p, $color_s, $color_u, $color_v)=
 
 
 
-$VERSION="4.0 (build 12)";
+$VERSION="4.0 (build 13)";
 $Lang="en";
 
 # Default value
@@ -509,11 +509,11 @@ sub Read_Config_File {
 		if ($param =~ /^DNSLookup/)             { $DNSLookup=$value; next; }
 		if ($param =~ /^AllowToUpdateStatsFromBrowser/)	{ $AllowToUpdateStatsFromBrowser=$value; next; }
 		if ($param =~ /^SiteDomain/)			{
-			$value =~ s/\\\./\./g; $value =~ s/([^\\])\./$1\\\./g; $value =~ s/^\./\\\.\./;	# Replace . into \.
+			$value =~ s/\\\./\./g; $value =~ s/([^\\])\./$1\\\./g; $value =~ s/^\./\\\./;	# Replace . into \.
 			$SiteDomain=$value; next;
 			}
 		if ($param =~ /^HostAliases/) {
-			$value =~ s/\\\./\./g; $value =~ s/([^\\])\./$1\\\./g; $value =~ s/^\./\\\.\./;	# Replace . into \.
+			$value =~ s/\\\./\./g; $value =~ s/([^\\])\./$1\\\./g; $value =~ s/^\./\\\./;	# Replace . into \.
 			my @felter=split(/\s+/,$value);
 			foreach my $elem (@felter)	  { push @HostAliases,$elem; }
 			next;
@@ -527,25 +527,25 @@ sub Read_Config_File {
 		if ($param =~ /^DirLang/)               { $DirLang=$value; next; }
 		if ($param =~ /^DefaultFile/)           { $DefaultFile=$value; next; }
 		if ($param =~ /^SkipHosts/) {
-			$value =~ s/\\\./\./g; $value =~ s/([^\\])\./$1\\\./g; $value =~ s/^\./\\\.\./;	# Replace . into \.
+			$value =~ s/\\\./\./g; $value =~ s/([^\\])\./$1\\\./g; $value =~ s/^\./\\\./;	# Replace . into \.
 			my @felter=split(/\s+/,$value);
 			foreach my $elem (@felter)    { push @SkipHosts,$elem; }
 			next;
 			}
 		if ($param =~ /^SkipDNSLookupFor/) {
-			$value =~ s/\\\./\./g; $value =~ s/([^\\])\./$1\\\./g; $value =~ s/^\./\\\.\./;	# Replace . into \.
+			$value =~ s/\\\./\./g; $value =~ s/([^\\])\./$1\\\./g; $value =~ s/^\./\\\./;	# Replace . into \.
 			my @felter=split(/\s+/,$value);
 			foreach my $elem (@felter)    { push @SkipDNSLookupFor,$elem; }
 			next;
 			}
 		if ($param =~ /^SkipFiles/) {
-			$value =~ s/\\\./\./g; $value =~ s/([^\\])\./$1\\\./g; $value =~ s/^\./\\\.\./;	# Replace . into \.
+			$value =~ s/\\\./\./g; $value =~ s/([^\\])\./$1\\\./g; $value =~ s/^\./\\\./;	# Replace . into \.
 			my @felter=split(/\s+/,$value);
 			foreach my $elem (@felter)    { push @SkipFiles,$elem; }
 			next;
 			}
 		if ($param =~ /^OnlyFiles/) {
-			$value =~ s/\\\./\./g; $value =~ s/([^\\])\./$1\\\./g; $value =~ s/^\./\\\.\./;	# Replace . into \.
+			$value =~ s/\\\./\./g; $value =~ s/([^\\])\./$1\\\./g; $value =~ s/^\./\\\./;	# Replace . into \.
 			my @felter=split(/\s+/,$value);
 			foreach my $elem (@felter)    { push @OnlyFiles,$elem; }
 			next;
@@ -2295,6 +2295,8 @@ if ($UpdateStats) {
 	# my.domain.com - user [09/Jan/2001:11:38:51 -0600] "OPTIONS /mime-tmp/xxx file.doc HTTP/1.1" 408 - "-" "-"
     # 2000-07-19 14:14:14 62.161.78.73 - GET / 200 1234 HTTP/1.1 Mozilla/4.0+(compatible;+MSIE+5.01;+Windows+NT+5.0) http://www.from.com/from.htm
 	# 05/21/00	00:17:31	OK  	200	212.242.30.6	Mozilla/4.0 (compatible; MSIE 5.0; Windows 98; DigExt)	http://www.cover.dk/	"www.cover.dk"	:Documentation:graphics:starninelogo.white.gif	1133
+	# Other example for error 408 with Apache
+	# 62.161.78.73 user - [dd/mmm/yyyy:hh:mm:ss +0000] "-" 408 - "-" "-"
 	$LogFormatString=$LogFormat;
 	if ($LogFormat eq "1") { $LogFormatString="%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\""; }
 	if ($LogFormat eq "2") { $LogFormatString="date time c-ip cs-username cs-method cs-uri-stem sc-status sc-bytes cs-version cs(User-Agent) cs(Referer)"; }
@@ -2932,19 +2934,19 @@ if ($UpdateStats) {
 				if ($refererprot =~ /^http/i) {
 
 					# Kind of origin
-					if (!$TmpHashServer{$refererserver}) {
+					if (!$TmpHashRefererServer{$refererserver}) {
 						if ($refererserver =~ /^(www\.|)$SiteToAnalyzeWithoutwww/i) {
 						    # Intern (This hit came from another page of the site)
-							debug("Server $refererserver is added to TmpHashServer with value '='",2);
-							$TmpHashServer{$refererserver}="=";
+							debug("Server $refererserver is added to TmpHashRefererServer with value '='",2);
+							$TmpHashRefererServer{$refererserver}="=";
 							$found=1;
 						}
 						if (! $found) {
 							foreach my $key (@HostAliases) {
 								if ($refererserver =~ /^$key/i) {
 								    # Intern (This hit came from another page of the site)
-									debug("Server $refererserver is added to TmpHashServer with value '='",2);
-									$TmpHashServer{$refererserver}="=";
+									debug("Server $refererserver is added to TmpHashRefererServer with value '='",2);
+									$TmpHashRefererServer{$refererserver}="=";
 									$found=1;
 									last;
 								}
@@ -2956,16 +2958,16 @@ if ($UpdateStats) {
 						    foreach my $key (keys %SearchEnginesHashIDLib) {
 								# This hit came from the search engine $key
 								if ($refererserver =~ /$key/i) {
-									debug("Server $refererserver is added to TmpHashServer with value '$key'",2);
-									$TmpHashServer{$refererserver}="$key";
+									debug("Server $refererserver is added to TmpHashRefererServer with value '$key'",2);
+									$TmpHashRefererServer{$refererserver}="$key";
 									$found=1;
 								}
 							}
 						}
 					}
 					
-					if ($TmpHashServer{$refererserver}) {
-						if ($TmpHashServer{$refererserver} eq "=") {
+					if ($TmpHashRefererServer{$refererserver}) {
+						if ($TmpHashRefererServer{$refererserver} eq "=") {
 						    # Intern (This hit came from another page of the site)
 							if ($PageBool) { $_from_p[4]++; }
 					    	$_from_h[4]++;
@@ -2974,18 +2976,18 @@ if ($UpdateStats) {
 							# This hit came from the search engine
 							if ($PageBool) { $_from_p[2]++; }
 							$_from_h[2]++;
-							$_se_referrals_h{$TmpHashServer{$refererserver}}++;
+							$_se_referrals_h{$TmpHashRefererServer{$refererserver}}++;
 							$found=1;
 							my @refurl=split(/\?/,$field[$pos_referer],2);
 							if ($refurl[1]) {								
 								# Extract keywords
 								$refurl[1] =~ tr/A-Z/a-z/;				# Full param string in lowcase
 								my @paramlist=split(/&/,$refurl[1]);
-								if ($SearchEnginesKnownUrl{$TmpHashServer{$refererserver}}) {	# Search engine with known URL syntax
+								if ($SearchEnginesKnownUrl{$TmpHashRefererServer{$refererserver}}) {	# Search engine with known URL syntax
 									foreach my $param (@paramlist) {
 										#if ($param =~ /^$SearchEnginesKnownUrl{$key}/) { 	# We found good parameter
 										#	$param =~ s/^$SearchEnginesKnownUrl{$key}//;	# Cut "xxx="
-										if ($param =~ s/^$SearchEnginesKnownUrl{$TmpHashServer{$refererserver}}//) { 	# We found good parameter
+										if ($param =~ s/^$SearchEnginesKnownUrl{$TmpHashRefererServer{$refererserver}}//) { 	# We found good parameter
 											# Ok, "cache:mmm:www/zzz+aaa+bbb/ccc+ddd%20eee'fff,ggg" is a search parameter line
 											$param =~ s/^cache:[^\+]*//;
 											$param =~ s/^related:[^\+]*//;
@@ -3030,7 +3032,7 @@ if ($UpdateStats) {
 								}
 							}	# End of if refurl[1]
 						}
-					}	# End of if ($TmpHashServer) 
+					}	# End of if ($TmpHashRefererServer) 
 					else {
 						# This hit came from a site other than a search engine
 						if ($PageBool) { $_from_p[3]++; }
