@@ -19,12 +19,12 @@ if (!&has_command($config{'awstats'})) {
 
 &header($text{'viewall_title'}, "", undef, 1, 1, 0, undef, undef, undef, undef);
 
-
+my $widthtooltip=560;
 print <<EOF;
 <style type="text/css">
 <!--
 div { font: 12px 'Arial','Verdana','Helvetica', sans-serif; text-align: justify; }
-.CTooltip { position:absolute; top: 0px; left: 0px; z-index: 2; width: 540px; visibility:hidden; font: 8pt 'MS Comic Sans','Arial',sans-serif; background-color: #FFFFE6; padding: 8px; border: 1px solid black; }
+.CTooltip { position:absolute; top: 0px; left: 0px; z-index: 2; width: ${widthtooltip}px; visibility:hidden; font: 8pt 'MS Comic Sans','Arial',sans-serif; background-color: #FFFFE6; padding: 8px; border: 1px solid black; }
 //-->
 </style>
 
@@ -33,7 +33,7 @@ function ShowTip(fArg)
 {
 	var tooltipOBJ = (document.getElementById) ? document.getElementById('tt' + fArg) : eval("document.all['tt" + fArg + "']");
 	if (tooltipOBJ != null) {
-		var tooltipLft = (document.body.offsetWidth?document.body.offsetWidth:document.body.style.pixelWidth) - (tooltipOBJ.offsetWidth?tooltipOBJ.offsetWidth:(tooltipOBJ.style.pixelWidth?tooltipOBJ.style.pixelWidth:540)) - 30;
+		var tooltipLft = (document.body.offsetWidth?document.body.offsetWidth:document.body.style.pixelWidth) - (tooltipOBJ.offsetWidth?tooltipOBJ.offsetWidth:(tooltipOBJ.style.pixelWidth?tooltipOBJ.style.pixelWidth:${widthtooltip})) - 30;
 		var tooltipTop = 10;
 		if (navigator.appName == 'Netscape') {
 			tooltipTop = (document.body.scrollTop>=0?document.body.scrollTop+10:event.clientY+10);
@@ -169,11 +169,12 @@ if (scalar @config) {
 			print "<table border width=\"100%\">\n";
 			print "<tr $tb>";
 			print "<td colspan=\"3\"><b>$text{'index_path'}</b></td>";
-			print "<td align=center><b>$text{'viewall_u'}</b></td>";
-			print "<td align=center><b>$text{'viewall_v'}</b></td>";
-			print "<td align=center><b>$text{'viewall_p'}</b></td>";
-			print "<td align=center><b>$text{'viewall_h'}</b></td>";
-			print "<td align=center><b>$text{'viewall_k'}</b></td>";
+			print "<td width=80 bgcolor=#FFB055 align=center><b>$text{'viewall_u'}</b></td>";
+			print "<td width=80 bgcolor=#F8E880 align=center><b>$text{'viewall_v'}</b></td>";
+			print "<td width=80 bgcolor=#4477DD align=center><b>$text{'viewall_p'}</b></td>";
+			print "<td width=80 bgcolor=#66F0FF align=center><b>$text{'viewall_h'}</b></td>";
+			print "<td width=80 bgcolor=#2EA495 align=center><b>$text{'viewall_k'}</b></td>";
+			print "<td align=center><b>$text{'index_view'}</b></td>";
 			print "</tr>\n";
 		}
 
@@ -284,7 +285,7 @@ if (scalar @config) {
 		print "<td>$nbofallowedconffound</td>";
         print "<td align=\"center\" width=\"20\" onmouseover=\"ShowTip($nbofallowedconffound);\" onmouseout=\"HideTip($nbofallowedconffound);\"><img src=\"images/info.png\"></td>";
 		print "<td>";
-        print $l;
+        print "$conf";
 		if ($access{'global'}) {	# Edit config
 	    	print "<br><a href=\"edit_config.cgi?file=$l\">$text{'index_edit'}</a>";
 		}
@@ -317,6 +318,18 @@ if (scalar @config) {
     		print "$view_k{$l}";
     		print "</td>";
         }
+
+		if ($access{'view'}) {
+			if ($config{'awstats_cgi'}) {
+				print "<td align=center><a href='$config{'awstats_cgi'}?".($conf?"config=$conf":"").($dir?"&configdir=$dir":"")."' target=awstats>$text{'index_view2'}</a></td>\n";
+			}
+			else {
+				print "<td align=center>".&text('index_cgi', "$gconfig{'webprefix'}/config.cgi?$module_name")."</td>";	
+			}
+		}
+		else {
+	        print "<td align=center>NA</td>";
+		}
 
 		print "</tr>\n";
 	}

@@ -42,12 +42,12 @@ if ($out !~ /^----- awstats (\S+)\.(\S+)\s(\S+\s\S+)/) {
 
 &header($text{'index_title'}, "", undef, 1, 1, 0, undef, undef, undef, &text('index_version', "$1.$2 $3"));
 
-
+my $widthtooltip=560;
 print <<EOF;
 <style type="text/css">
 <!--
 div { font: 12px 'Arial','Verdana','Helvetica', sans-serif; text-align: justify; }
-.CTooltip { position:absolute; top: 0px; left: 0px; z-index: 2; width: 560px; visibility:hidden; font: 8pt 'MS Comic Sans','Arial',sans-serif; background-color: #FFFFE6; padding: 8px; border: 1px solid black; }
+.CTooltip { position:absolute; top: 0px; left: 0px; z-index: 2; width: ${widthtooltip}px; visibility:hidden; font: 8pt 'MS Comic Sans','Arial',sans-serif; background-color: #FFFFE6; padding: 8px; border: 1px solid black; }
 //-->
 </style>
 
@@ -56,7 +56,7 @@ function ShowTip(fArg)
 {
 	var tooltipOBJ = (document.getElementById) ? document.getElementById('tt' + fArg) : eval("document.all['tt" + fArg + "']");
 	if (tooltipOBJ != null) {
-		var tooltipLft = (document.body.offsetWidth?document.body.offsetWidth:document.body.style.pixelWidth) - (tooltipOBJ.offsetWidth?tooltipOBJ.offsetWidth:(tooltipOBJ.style.pixelWidth?tooltipOBJ.style.pixelWidth:560)) - 30;
+		var tooltipLft = (document.body.offsetWidth?document.body.offsetWidth:document.body.style.pixelWidth) - (tooltipOBJ.offsetWidth?tooltipOBJ.offsetWidth:(tooltipOBJ.style.pixelWidth?tooltipOBJ.style.pixelWidth:$widthtooltip)) - 30;
 		var tooltipTop = 10;
 		if (navigator.appName == 'Netscape') {
 			tooltipTop = (document.body.scrollTop>=0?document.body.scrollTop+10:event.clientY+10);
@@ -210,7 +210,7 @@ if (scalar @config) {
     	print "<td width=\"40\" align=\"center\">$nbofallowedconffound</td>";
         print "<td align=\"center\" width=\"20\" onmouseover=\"ShowTip($nbofallowedconffound);\" onmouseout=\"HideTip($nbofallowedconffound);\"><img src=\"images/info.png\"></td>";
 		print "<td>";
-		print "$l";
+		print "$conf";
 		if ($access{'global'}) {	# Edit config
 	        print "<br><a href='edit_config.cgi?file=$l'>$text{'index_edit'}</a>\n";
 		}
