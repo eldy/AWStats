@@ -2,7 +2,7 @@
 #-------------------------------------------------------
 # Save the click done on managed hits into a trace file
 # and return to browser a redirector to tell browser to visit this URL.
-# Ex: <a href="http://athena/cgi-bin/awredir/awredir.pl?url=http://212.43.217.240/%7Eforumgp/forum/list.php3?f=11">XXX</a>
+# Ex: <a href="http://athena/cgi-bin/awredir/awredir.pl?tag=TAGFORLOG&url=http://212.43.217.240/%7Eforumgp/forum/list.php3?f=11">XXX</a>
 #-------------------------------------------------------
 
 #use DBD::mysql;
@@ -84,9 +84,12 @@ if (! $ENV{'GATEWAY_INTERFACE'}) {	# Run from command line
 	exit 0;
 }
 
-$Url=$ENV{QUERY_STRING};
+# Extract tag
+$Tag='NOTAG';
+if ($ENV{QUERY_STRING} =~ /tag=\"?([^\"&]+)\"?/) { $Tag=$1; }
 
 # Extract url to redirect to
+$Url=$ENV{QUERY_STRING};
 if ($Url =~ /url=\"([^\"]+)\"/) { $Url=$1; }
 elsif ($Url =~ /url=(.+)$/) { $Url=$1; }
 
@@ -121,7 +124,7 @@ if ($TRACEBASE == 1) {
 if ($TRACEFILE == 1) {
 	if ($ENV{REMOTE_ADDR} !~ /$EXCLUDEIP/) {
 		open(FICHIER,">>$TXTDIR/$TXTFILE") || error("Error: Enable to open trace file $TXTDIR/$TXTFILE: $!");
-		print FICHIER "$nowyear-$nowmonth-$nowday $nowhour:$nowmin:$nowsec\t$ENV{REMOTE_ADDR}\t$Url\n";
+		print FICHIER "$nowyear-$nowmonth-$nowday $nowhour:$nowmin:$nowsec\t$ENV{REMOTE_ADDR}\t$Tag\t$Url\n";
 		close(FICHIER);
 	}
 }
