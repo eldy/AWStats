@@ -117,7 +117,8 @@ when reading it), follow the example:<br>
 <li><a href="#DirLang">DirLang</a>
 <li><a href="#Show">ShowHeader</a>
 <li><a href="#Show">ShowMenu</a>
-<li><a href="#Show">ShowMonthDayStats</a>
+<li><a href="#Show">ShowMonthStats</a>
+<li><a href="#Show">ShowDaysOfMonthStats</a>
 <li><a href="#Show">ShowDaysOfWeekStats</a>
 <li><a href="#Show">ShowHoursStats</a>
 <li><a href="#Show">ShowDomainsStats</a>
@@ -136,7 +137,8 @@ when reading it), follow the example:<br>
 <li><a href="#Show">ShowKeyphrasesStats</a>
 <li><a href="#Show">ShowKeywordsStats</a>
 <li><a href="#Show">ShowHTTPErrorsStats</a>
-<li><a href="#AddDataArray">AddDataArrayMonthDayStats</a>
+<li><a href="#AddDataArray">AddDataArrayMonthStats</a>
+<li><a href="#AddDataArray">AddDataArrayShowDaysOfMonthStats</a>
 <li><a href="#AddDataArray">AddDataArrayShowDaysOfWeekStats</a>
 <li><a href="#AddDataArray">AddDataArrayShowHoursStats</a>
 <li><a href="#Max">MaxNbOfDomain</a>
@@ -1134,20 +1136,21 @@ AWStats 4.1+ supports both keywords AND keyphrases by default with no need of an
 <a name="Show"><b>Show...</b></a><br>
 <b>Version : </b><br>
 <font color="#808080">3.2 - 5.3 for ShowHeader (deprecated since 5.4)</font><br>
-3.2 + for ShowMenu,ShowMonthDayStats,ShowDaysOfWeekStats,ShowHoursStats,
+3.2 + for ShowMenu,ShowMonthStats,ShowDaysOfWeekStats,ShowHoursStats,
 ShowDomainsStats,ShowHostsStats,ShowAuthenticatedUsers,ShowRobotsStats,
 ShowPagesStats,ShowFileTypesStats,ShowFileSizesStats,ShowBrowsersStats,
 ShowOSStats,ShowOriginStats,ShowKeyphrasesStats,ShowKeywordsStats,ShowHTTPErrorsStats<br>
 <font color="#808080">3.2 - 5.0 for ShowCompressionStats (deprecated since 5.1, use code C with ShowFileTypesStats instead)</font><br>
 4.1 + for ShowSessionsStats, ShowKeywordsStats<br>
 5.1 + for all letters codes<br>
+5.5 + for ShowDaysOfMonthStats<br>
 <br># You choose here which reports you want to see in the main page and what you
 <br># want to see in those reports.
 <br># Possible values:
 <br>#  0  - Topic is not shown at all
 <br>#  1  - Report is shown with default informations
-<br># XYZ - Report is shown with only informations defined by code X,Y,Z
-<br>#       X,Y,Z are code letters among the following:
+<br># XYZ - Report is shown with only informations defined by code X,Y,Z...
+<br>#       X,Y,Z... are code letters among the following:
 <br>#        U = Unique visitors
 <br>#        V = Visits
 <br>#        P = Number of pages
@@ -1162,9 +1165,12 @@ ShowOSStats,ShowOriginStats,ShowKeyphrasesStats,ShowKeywordsStats,ShowHTTPErrors
 <br># Show menu header with report links
 <br># Default: 1, Possible codes: None
 <br>ShowMenu=1					
-<br># Show monthly and daily chart
+<br># Show monthly chart
 <br># Default: UVPHB, Possible codes: UVPHB
-<br>ShowMonthDayStats=UVPHB
+<br>ShowMonthStats=UVPHB
+<br># Show days of month chart
+<br># Default: VPHB, Possible codes: VPHB
+<br>ShowDaysOfMonthStats=VPHB
 <br># Show days of week chart
 <br># Default: PHB, Possible codes: PHB
 <br>ShowDaysOfWeekStats=PHB
@@ -1226,15 +1232,19 @@ ShowOSStats,ShowOriginStats,ShowKeyphrasesStats,ShowKeywordsStats,ShowHTTPErrors
 <br><br><hr>
 
 <a name="AddDataArray"><b>AddDataArray...</b></a><br>
-<b>Version : </b>5.4 +<br>
+<b>Version : </b><br>
+5.4 + for AddDataArrayMonthStats,AddDataArrayShowDaysOfWeekStats,AddDataArrayShowHoursStats<br>
+5.5 + for AddDataArrayShowDaysOfMonthStats<br>
 <br># Some graphical reports are followed by the data array of values.
 <br># If you don't want this array (to reduce report size for example), you can
 <br># set thoose options to 0.
 <br># Possible values: 0 or 1
 <br># Default: 1
 <br>#
-<br># Data array values for the ShowMonthDaysStats report
-<br>AddDataArrayMonthDayStats=1
+<br># Data array values for the ShowMonthStats report
+<br>AddDataArrayMonthStats=1
+<br># Data array values for the ShowDaysOfMonthStats report
+<br>AddDataArrayShowDaysOfMonthStats=1
 <br># Data array values for the ShowDaysOfWeekStats report
 <br>AddDataArrayShowDaysOfWeekStats=1
 <br># Data array values for the ShowHoursStats report
