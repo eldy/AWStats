@@ -7032,7 +7032,7 @@ if (scalar keys %HTMLOutput) {
 			my $p='&nbsp;';
 			if ($Total) { $p=int($totalfamily_h{$family}/$Total*1000)/10; $p="$p %"; }
 			print "<TR bgcolor=\"#F8F8F8\"><TD class=AWL colspan=2><b>".uc($family)."</b></TD>";
-			print "<TD>&nbsp;</TD><TD><b>$totalfamily_h{$family}</b></TD><TD><b>$p</b></TD><TD>&nbsp;</TD>";
+			print "<TD>&nbsp;</TD><TD><b>".($totalfamily_h{$family}?$totalfamily_h{$family}:'&nbsp;')."</b></TD><TD><b>$p</b></TD><TD>&nbsp;</TD>";
 			print "</TR>\n";
 			foreach my $key (reverse sort keys %_browser_h) {
 				if ($key =~ /^$family(.*)/i) {
