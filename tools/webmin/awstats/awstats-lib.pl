@@ -80,12 +80,23 @@ while(<FILE>) {
 
 # Now add values for directives that were not present in old config file
 foreach my $key (keys %$conf) {
-	if ($key eq 'advanced') { next; }		# param to know if plugin setup was loaded
-	if ($key =~ /^plugin_param_/) { next; }	# param of a plugin not an awstats directive
-	if ($confchanged{$key}) { next; }		# awstats directive already changed
+	if ($key eq 'advanced') { next; }	# param to know if plugin setup section was opened
+	if ($key =~ /^plugin_/) { next; }	# field from plugin section, not an awstats directive
+	if ($confchanged{$key}) { next; }	# awstats directive already changed
 	print FILETMP "\n";
 	print FILETMP "# Param $key added by AWStats Webmin module\n";
 	print FILETMP "$key=\"$conf->{$key}\"\n";
+}
+
+# Now add plugin load that were not already present in old config file
+foreach my $key (keys %$conf) {
+	my $pluginname = $key; 
+	if ($pluginname !~ s/^plugin_//) { next; }			# not a plugin load row
+	if ($pluginname =~ /^param_/) { next; }				# not a plugin load row
+	if ($confchanged{"plugin_$pluginname"}) { next; }	# awstats directive or load plugin already changed
+	print FILETMP "\n";
+	print FILETMP "# Plugin load for plugin $pluginname added by AWStats Webmin module\n";
+	print FILETMP "LoadPlugin=\"$pluginname".($conf->{"plugin_param_$pluginname"}?" ".$conf->{"plugin_param_$pluginname"}:"")."\"\n";
 }
 
 close(FILE);
