@@ -93,7 +93,7 @@ $color_h, $color_k, $color_link, $color_p, $color_s, $color_u, $color_v, $color_
 %monthlib = %monthnum = ();
 
 
-$VERSION="3.2 (build 70)";
+$VERSION="3.2 (build 71)";
 $Lang="en";
 
 # Default value
@@ -1860,7 +1860,7 @@ if ($UpdateStats) {
 	&debug("Generate PerlParsingFormat from LogFormatString=$LogFormatString");
 	$PerlParsingFormat="";
 	if ($LogFormat == 1) {
-		$PerlParsingFormat="([^\\s]+) [^\\s]+ ([^\\s]+) \\[([^\\s]+) [^\\s]+\\] \\\"([^\\s]+) ([^\\s]+) [^\\\"]+\\\" ([\\d|-]+) ([\\d|-]+) \\\"([^\\\"]+)\\\" \\\"([^\\\"]+)\\\"";
+		$PerlParsingFormat="([^\\s]+) [^\\s]+ ([^\\s]+) \\[([^\\s]+) [^\\s]+\\] \\\"([^\\s]+) ([^\\s]+) [^\\\"]+\\\" ([\\d|-]+) ([\\d|-]+) \\\"(.*)\\\" \\\"([^\\\"]+)\\\"";
 		$pos_rc=1;$pos_logname=2;$pos_date=3;$pos_method=4;$pos_url=5;$pos_code=6;$pos_size=7;$pos_referer=8;$pos_agent=9;
 		$lastrequiredfield=9;
 	}
@@ -1962,7 +1962,7 @@ if ($UpdateStats) {
 			if ($f =~ /%refererquot$/) {
 				$found=1;
 				$pos_referer = $i; $i++;
-				$PerlParsingFormat .= "\\\"([^\\\"]*)\\\" ";
+				$PerlParsingFormat .= "\\\"(.*)\\\" ";
 			}
 			if ($f =~ /%referer$/) {
 				$found=1;
@@ -1996,6 +1996,7 @@ if ($UpdateStats) {
 			}
 			if (! $found) { $found=1; $PerlParsingFormat .= "[^\\s]* "; }
 		}
+		# Remove last space char
 		($PerlParsingFormat) ? chop($PerlParsingFormat) : error("Error: No recognised format tag in personalised LogFormat string"); 
 		$lastrequiredfield=$i--;
 	}
@@ -2061,7 +2062,7 @@ if ($UpdateStats) {
 		#----------------------------------------------------------------------
 		if (! $field[$pos_code]) {
 			$NbOfLinesCorrupted++;
-			if ($ShowCorrupted) { print "$_\n"; }
+			if ($ShowCorrupted) { print "Corrupted record: $_\n"; }
 			if ($NbOfLinesRead >= $NbOfLinesForCorruptedLog && $NbOfLinesCorrupted == $NbOfLinesRead) { error("Format error",$_,$LogFile); }	# Exit with format error
 			next;
 		}
@@ -2069,7 +2070,7 @@ if ($UpdateStats) {
 		# Check filters
 		#----------------------------------------------------------------------
 		if ($field[$pos_method] ne 'GET' && $field[$pos_method] ne 'POST' && $field[$pos_method] !~ /OK/) { next; }	# Keep only GET, POST (OK with Webstar) but not HEAD, OPTIONS
-		#if ($field[$pos_url] =~ /^RC=/) { $NbOfLinesCorrupted++; if ($ShowCorrupted) { print "$_\n"; } next; }			# A strange log record with IIS we need to forget
+		#if ($field[$pos_url] =~ /^RC=/) { $NbOfLinesCorrupted++; if ($ShowCorrupted) { print "Corrupted Record: $_\n"; } next; }			# A strange log record with IIS we need to forget
 		# Split DD/Month/YYYY:HH:MM:SS or YYYY-MM-DD HH:MM:SS or MM/DD/YY\tHH:MM:SS
 		$field[$pos_date] =~ tr/-\/ \t/::::/;
 		my @dateparts=split(/:/,$field[$pos_date]);
@@ -2079,13 +2080,13 @@ if ($UpdateStats) {
 		# Create $timeconnexion like YYYYMMDDHHMMSS
 		my $timeconnexion=int($dateparts[2].$dateparts[1].$dateparts[0].$dateparts[3].$dateparts[4].$dateparts[5]);
 		my $dayconnexion=$dateparts[2].$dateparts[1].$dateparts[0];
-		if ($timeconnexion < 10000000000000) { $NbOfLinesCorrupted++; if ($ShowCorrupted) { print "$_\n"; } next; }		# Should not happen, kept in case of parasite/corrupted line
-		if ($timeconnexion > $timetomorrow) { $NbOfLinesCorrupted++; if ($ShowCorrupted) { print "$_\n"; } next; }		# Should not happen, kept in case of parasite/corrupted line
+		if ($timeconnexion < 10000000000000) { $NbOfLinesCorrupted++; if ($ShowCorrupted) { print "Corrupted record: $_\n"; } next; }		# Should not happen, kept in case of parasite/corrupted line
+		if ($timeconnexion > $timetomorrow) { $NbOfLinesCorrupted++; if ($ShowCorrupted) { print "Corrupted record: $_\n"; } next; }		# Should not happen, kept in case of parasite/corrupted line
 
 		# Skip if not a new line
 		#-----------------------
 		if ($NowNewLinePhase) {
-			if ($timeconnexion < $LastLine{$yearmonth}) { $NbOfLinesCorrupted++; if ($ShowCorrupted) { print "$_\n"; } next; }	# Should not happen, kept in case of parasite/corrupted old line
+			if ($timeconnexion < $LastLine{$yearmonth}) { $NbOfLinesCorrupted++; if ($ShowCorrupted) { print "Corrupted record: $_\n"; } next; }	# Should not happen, kept in case of parasite/corrupted old line
 		}
 		else {
 			if ($timeconnexion <= $LastLine{$yearmonth}) {
@@ -2143,7 +2144,7 @@ if ($UpdateStats) {
 				}
 				else {														# Bad format record (should not happen but when using MSIndex server), next
 					$NbOfLinesCorrupted++;
-					if ($ShowCorrupted) { print "$_\n"; }
+					if ($ShowCorrupted) { print "Corrupted record: $_\n"; }
 					next;
 				}
 			}
@@ -2423,7 +2424,7 @@ if ($UpdateStats) {
 					    $_from_h[4]++;
 						$found=1;
 					}
-					else {	# If made on each record -> -1700 rows/seconds
+					else {	# If made on each record -> -1700 rows/seconds (should be made on 10% of records only)
 					    # Extern (This hit came from an external web site). 
 						my @refurl=split(/\?/,$refererwithouthttp);
 						$refurl[0] =~ tr/A-Z/a-z/;
@@ -2443,10 +2444,10 @@ if ($UpdateStats) {
 										#if ($param =~ /^$SearchEnginesKnownUrl{$key}/) { 	# We found good parameter
 										#	$param =~ s/^$SearchEnginesKnownUrl{$key}//;	# Cut "xxx="
 										if ($param =~ s/^$SearchEnginesKnownUrl{$key}//) { 	# We found good parameter
-											# Ok, "cache:www/zzz+aaa+bbb/ccc+ddd%20eee'fff,ggg" is a search parameter line
-											&ChangeWordSeparatorsIntoSpace($param);			# Change [ cache:www/zzz+aaa+bbb/ccc+ddd%20eee'fff,ggg ] into [ cache:www/zzz aaa bbb/ccc ddd eee fff ggg]
-											$param =~ s/^cache:[^ ]*//;
-											$param =~ s/^related:[^ ]*//;
+											# Ok, "cache:mmm:www/zzz+aaa+bbb/ccc+ddd%20eee'fff,ggg" is a search parameter line
+											$param =~ s/^cache:[^\+]*//;
+											$param =~ s/^related:[^\+]*//;
+											&ChangeWordSeparatorsIntoSpace($param);			# Change [ aaa+bbb/ccc+ddd%20eee'fff,ggg ] into [ aaa bbb/ccc ddd eee fff ggg]
 											if ($SplitSearchString) {
 												my @wordlist=split(/ /,$param);	# Split aaa bbb ccc ddd eee fff into a wordlist array
 												foreach $word (@wordlist) {
