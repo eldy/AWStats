@@ -317,9 +317,10 @@ use vars qw/
 /;
 &Init_HashArray();
 # ---------- Init Regex --------
-use vars qw/ $regclean1 $regclean2 /;
+use vars qw/ $regclean1 $regclean2 $regdate /;
 $regclean1=qr/<(recnb|\/td)>/i;
 $regclean2=qr/<\/?[^<>]+>/i;
+$regdate=qr/(\d\d\d\d)(\d\d)(\d\d)(\d\d)(\d\d)(\d\d)/;
 
 # ---------- Init Tie::hash arrays --------
 # Didn't find a tie that increase speed
@@ -1042,18 +1043,17 @@ sub DateIsValid {
 #------------------------------------------------------------------------------
 sub GetSessionRange {
 	my $starttime = my $endtime;
-	if (shift =~ /(\d\d\d\d)(\d\d)(\d\d)(\d\d)(\d\d)(\d\d)/) { $starttime = Time::Local::timelocal($6,$5,$4,$3,$2-1,$1); }
-	if (shift =~ /(\d\d\d\d)(\d\d)(\d\d)(\d\d)(\d\d)(\d\d)/) { $endtime = Time::Local::timelocal($6,$5,$4,$3,$2-1,$1); }
+	if (shift =~ /$regdate/o) { $starttime = Time::Local::timelocal($6,$5,$4,$3,$2-1,$1); }
+	if (shift =~ /$regdate/o) { $endtime = Time::Local::timelocal($6,$5,$4,$3,$2-1,$1); }
 	my $delay=$endtime-$starttime;
 	if ($Debug) { debug("GetSessionRange $endtime - $starttime = $delay",4); }
-	if ($delay <= 30) { return $SessionsRange[0]; }
-	if ($delay > 30 && $delay <= 120) { return $SessionsRange[1]; }
-	if ($delay > 120 && $delay <= 300) { return $SessionsRange[2]; }
-	if ($delay > 300 && $delay <= 900) { return $SessionsRange[3]; }
-	if ($delay > 900 && $delay <= 1800) { return $SessionsRange[4]; }
-	if ($delay > 1800 && $delay <= 3600) { return $SessionsRange[5]; }
-	if ($delay > 3600) { return $SessionsRange[6]; }
-	return "error";
+	if ($delay <= 30)   { return $SessionsRange[0]; }
+	if ($delay <= 120)  { return $SessionsRange[1]; }
+	if ($delay <= 300)  { return $SessionsRange[2]; }
+	if ($delay <= 900)  { return $SessionsRange[3]; }
+	if ($delay <= 1800) { return $SessionsRange[4]; }
+	if ($delay <= 3600) { return $SessionsRange[5]; }
+	return $SessionsRange[6];
 }
 
 #------------------------------------------------------------------------------
@@ -2380,8 +2380,8 @@ sub Read_History_With_TmpUpdate {
 							}
 							else {
 								if ($HTMLOutput{'allhosts'} || $HTMLOutput{'lasthosts'}) {
-									if ((!$FilterIn{'host'} || $field[0] =~ /$FilterIn{'host'}/)
-									 && (!$FilterEx{'host'} || $field[0] !~ /$FilterEx{'host'}/)) { $loadrecord=1; }
+									if ((!$FilterIn{'host'} || $field[0] =~ /$FilterIn{'host'}/i)
+									 && (!$FilterEx{'host'} || $field[0] !~ /$FilterEx{'host'}/i)) { $loadrecord=1; }
 								}
 								elsif ($MonthRequired eq 'all' || $field[2] >= $MinHit{'Host'}) {
 									if ($HTMLOutput{'unknownip'} && ($field[0] =~ /^\d+\.\d+\.\d+\.\d+$/ || $field[0] =~ /^[0-9A-F]*:/i)) { $loadrecord=1; }
@@ -5804,7 +5804,7 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 	my $regreferer=qr/^(\w+):\/\/([^\/:]+)(:\d+|)/;
 	my $regreferernoquery=qr/^([^$URLQuerySeparators]+)/;
 	my $reglocal=qr/^(www\.|)$sitewithoutwww/i;
-
+    
 	# Define value of $PerlParsingFormat and @fieldlib
 	&DefinePerlParsingFormat();
 
