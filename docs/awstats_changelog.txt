@@ -6,6 +6,7 @@ $Revision$ - $Author$ - $Date$
 5.7
 
 Fixes:
+- Pb with some regex value used in the new REGEX fields added in 5.6.
 - Count for add to favourites is done on hits to favicon.ico for IE only. This
   avoid counting wrong "Add" done by browsers that hit the file even when no
   add is done. Value reported is the (count for IE) / (ratio of IE among all
@@ -16,11 +17,15 @@ Fixes:
 - Road runner browsers detection problems.
 - syslog tag can accept hostname with not only a-z chars.
 - "&nbsp" changed to "&nbsp;" in miscellanous chart.
-- maillogconvert.pl did not support all sendmail setup.
+- Geoip lookup is always done (as it should) on ip when ip is known, even if
+  DNSLookup is enabled and successfull. This increase seriously AWStats speed
+  when DNSLookup and Geoip are both enabled.
 
 New features/improvements:
 - Added support for Darwin streaming server.
 - awstats_buildstaticpages.pl can also build one PDF file (need htmldoc).
+- Added maillogconvert.p for analyzing mail log files (support better
+  sendmail, postfix and qmail log files).
 
 Other/Documentation:
 - Added mp4 mime type.
