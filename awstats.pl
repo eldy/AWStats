@@ -14,7 +14,7 @@
 #-------------------------------------------------------
 # Defines
 #-------------------------------------------------------
-$VERSION="2.24 (build 23)";
+$VERSION="2.24 (build 24)";
 $Lang=0;
 
 # Default value
@@ -65,8 +65,8 @@ $BarImageHorizontal_k = "barrehk.png";
 "search\.terra\.","Terra",
 "google\.","Google",
 "alltheweb\.com","AllTheWeb",
-"netscape\.","Netscape",		
-"northernlight\.","NorthernLight",	
+"netscape\.","Netscape",
+"northernlight\.","NorthernLight",
 "dmoz\.org","DMOZ",
 "search\.aol\.co","AOL",
 # Others
@@ -74,7 +74,7 @@ $BarImageHorizontal_k = "barrehk.png";
 "webcrawler\.","WebCrawler",
 "metacrawler\.","MetaCrawler (Metamoteur)",
 "go2net\.com","Go2Net (Metamoteur)",
-"go\.com","Go.com",		
+"go\.com","Go.com",
 "euroseek\.","Euroseek",
 "excite\.","Excite",
 "lokace\.", "Lokace",
@@ -347,19 +347,19 @@ $message[54][2]="Gratis realtime logbestand analyzer voor geavanceerde web stati
 $message[55][2]="van";
 $message[56][2]="Pagina's";
 $message[57][2]="Hits";
-$message[58][2]="Versies";																																																										
-$message[59][2]="OS";																																																										
-$message[60][2]="Jan";																																																										
-$message[61][2]="Feb";																																																										
+$message[58][2]="Versies";
+$message[59][2]="OS";
+$message[60][2]="Jan";
+$message[61][2]="Feb";
 $message[62][2]="Mar";
-$message[63][2]="Apr";																																																										
-$message[64][2]="May";																																																										
-$message[65][2]="Jun";																																																										
-$message[66][2]="Jul";																																																										
-$message[67][2]="Aug";																																																										
-$message[68][2]="Sep";																																																										
-$message[69][2]="Oct";																																																										
-$message[70][2]="Nov";																																																										
+$message[63][2]="Apr";
+$message[64][2]="May";
+$message[65][2]="Jun";
+$message[66][2]="Jul";
+$message[67][2]="Aug";
+$message[68][2]="Sep";
+$message[69][2]="Oct";
+$message[70][2]="Nov";
 $message[71][2]="Dec";
 $message[72][2]="Dutch nl.png";
 
@@ -595,7 +595,7 @@ $message[1][6]="Nieznany (brak odwzorowania IP w DNS)";
 $message[2][6]="Inni";
 $message[3][6]="Szczegó³y...";
 $message[4][6]="Dzieñ";
-$message[5][6]="Miesi±c"; 
+$message[5][6]="Miesi±c";
 $message[6][6]="Rok";
 $message[7][6]="Statystyki";
 $message[8][6]="Pierwsza wizyta";
@@ -621,7 +621,7 @@ $message[27][6]="strony";
 $message[28][6]="ró¿nych stron";
 $message[29][6]="Dostêp";
 $message[30][6]="Inne s³owa";
-$message[31][6]="Przegl±darki"; 
+$message[31][6]="Przegl±darki";
 $message[32][6]="Kody b³êdów HTTP";
 $message[33][6]="Wersje Netscape'a";
 $message[34][6]="Wersje MS IE";
@@ -953,7 +953,7 @@ $message[72][9]="Portuguese pt.png";
 "winnt","Windows NT",
 "win2000","Windows 2000",
 "wince","Windows CE",
-"beos","BeOS", 
+"beos","BeOS",
 "macintosh","Mac OS",
 "unix","Unknown Unix system",
 "linux","Linux",
@@ -1456,7 +1456,7 @@ sub Read_Config_File {
 	if ($FileConfig eq "") { if (open(CONFIG,"$DirConfig$PROG.conf"))  { $FileConfig="$DirConfig$PROG.conf"; $FileSuffix=""; } }
 	if ($FileConfig eq "") { $FileConfig="$PROG.conf"; error("Error: Couldn't open config file [$PROG.$LocalSite.conf] nor [$PROG.conf]: $!"); }
 	while (<CONFIG>) {
-		chomp $_;
+		chomp $_; s/\r//;
 		$_ =~ s/#.*//;								# Remove comments
 		$_ =~ tr/\t /  /s;							# Change all blanks into " "
 		$_ =~ s/=/§/; @felter=split(/§/,$_);		# Change first "=" into "§" to split
@@ -1584,7 +1584,7 @@ if (open(HISTORY,"$DirData/$PROG$_[0]$_[1]$FileSuffix.txt")) {
 	$reados=0;$readrobot=0;$readunknownreferer=0;$readunknownrefererbrowser=0;$readpagerefs=0;$readse=0;
 	$readsearchwords=0;$readerrors=0;$readerrors404=0;
 	while (<HISTORY>) {
-		chomp $_;
+		chomp $_; s/\r//;
 		@field=split(/ /,$_);
 		if ($field[0] eq "FirstTime")       { $FirstTime{$_[0].$_[1]}=$field[1]; next; }
         if ($field[0] eq "LastTime")        { if ($LastTime{$_[0].$_[1]} < $field[1]) { $LastTime{$_[0].$_[1]}=$field[1]; }; next; }
@@ -1607,7 +1607,7 @@ if (open(HISTORY,"$DirData/$PROG$_[0]$_[1]$FileSuffix.txt")) {
 			}
 
 		# If $_[2] == 0, it means we don't need second part of history file
-		if ($_[2]) {	
+		if ($_[2]) {
 	        if ($field[0] eq "BEGIN_DOMAIN") { $readdomain=1; next; }
 			if ($field[0] eq "END_DOMAIN")   { $readdomain=0; next; }
 			if ($field[0] eq "BEGIN_SIDER")  { $readsider=1; next; }
@@ -1688,11 +1688,11 @@ close HISTORY;
 
 sub Save_History_File {
 	open(HISTORYTMP,">$DirData/$PROG$_[0]$_[1]$FileSuffix.tmp.$$") || error("Couldn't open file $DirData/$PROG$_[0]$_[1]$FileSuffix.tmp.$$: $!");
-	
+
 	print HISTORYTMP "FirstTime $FirstTime{$_[0].$_[1]}\n";
 	print HISTORYTMP "LastTime $LastTime{$_[0].$_[1]}\n";
 	print HISTORYTMP "TotalVisits $MonthVisits{$_[0].$_[1]}\n";
-	
+
 	print HISTORYTMP "BEGIN_DOMAIN\n";
 	foreach $key (keys %_domener_h) {
 		$page=$_domener_p{$key};$kilo=$_domener_k{$key};
@@ -1701,7 +1701,7 @@ sub Save_History_File {
 		print HISTORYTMP "$key $page $_domener_h{$key} $kilo\n"; next;
 		}
 	print HISTORYTMP "END_DOMAIN\n";
-	
+
 	print HISTORYTMP "BEGIN_VISITOR\n";
 	foreach $key (keys %_hostmachine_h) {
 		$page=$_hostmachine_p{$key};$kilo=$_hostmachine_k{$key};
@@ -1710,19 +1710,19 @@ sub Save_History_File {
 		print HISTORYTMP "$key $page $_hostmachine_h{$key} $kilo $_hostmachine_l{$key}\n"; next;
 		}
 	print HISTORYTMP "END_VISITOR\n";
-	
+
 	print HISTORYTMP "BEGIN_UNKNOWNIP\n";
 	foreach $key (keys %_unknownip_l) { print HISTORYTMP "$key $_unknownip_l{$key}\n"; next; }
 	print HISTORYTMP "END_UNKNOWNIP\n";
-	
+
 	print HISTORYTMP "BEGIN_SIDER\n";
 	foreach $key (keys %_sider_p) { print HISTORYTMP "$key $_sider_p{$key}\n"; next; }
 	print HISTORYTMP "END_SIDER\n";
-	
+
 	print HISTORYTMP "BEGIN_TIME\n";
 	for ($ix=0; $ix<=23; $ix++) { print HISTORYTMP "$ix $_time_p[$ix] $_time_h[$ix] $_time_k[$ix]\n"; next; }
 	print HISTORYTMP "END_TIME\n";
-	
+
 	print HISTORYTMP "BEGIN_BROWSER\n";
 	foreach $key (keys %_browser_h) { print HISTORYTMP "$key $_browser_h{$key}\n"; next; }
 	print HISTORYTMP "END_BROWSER\n";
@@ -1735,44 +1735,44 @@ sub Save_History_File {
 	print HISTORYTMP "BEGIN_OS\n";
 	foreach $key (keys %_os_h) { print HISTORYTMP "$key $_os_h{$key}\n"; next; }
 	print HISTORYTMP "END_OS\n";
-	
+
 	print HISTORYTMP "BEGIN_ROBOT\n";
 	foreach $key (keys %_robot_h) { print HISTORYTMP "$key $_robot_h{$key} $_robot_l{$key}\n"; next; }
 	print HISTORYTMP "END_ROBOT\n";
-	
+
 	print HISTORYTMP "BEGIN_UNKNOWNREFERER\n";
 	foreach $key (keys %_unknownreferer_l) { print HISTORYTMP "$key $_unknownreferer_l{$key}\n"; next; }
 	print HISTORYTMP "END_UNKNOWNREFERER\n";
 	print HISTORYTMP "BEGIN_UNKNOWNREFERERBROWSER\n";
 	foreach $key (keys %_unknownrefererbrowser_l) { print HISTORYTMP "$key $_unknownrefererbrowser_l{$key}\n"; next; }
 	print HISTORYTMP "END_UNKNOWNREFERERBROWSER\n";
-	
+
 	print HISTORYTMP "HitFrom0 $_from_h[0]\n";
 	print HISTORYTMP "HitFrom1 $_from_h[1]\n";
 	print HISTORYTMP "HitFrom2 $_from_h[2]\n";
 	print HISTORYTMP "HitFrom3 $_from_h[3]\n";
 	print HISTORYTMP "HitFrom4 $_from_h[4]\n";
-	
+
 	print HISTORYTMP "BEGIN_SEREFERRALS\n";
 	foreach $key (keys %_se_referrals_h) { print HISTORYTMP "$key $_se_referrals_h{$key}\n"; next; }
 	print HISTORYTMP "END_SEREFERRALS\n";
-	
+
 	print HISTORYTMP "BEGIN_PAGEREFS\n";
 	foreach $key (keys %_pagesrefs_h) { print HISTORYTMP "$key $_pagesrefs_h{$key}\n"; next; }
 	print HISTORYTMP "END_PAGEREFS\n";
-	
+
 	print HISTORYTMP "BEGIN_SEARCHWORDS\n";
 	foreach $key (keys %_keywords) { if ($_keywords{$key}) { print HISTORYTMP "$key $_keywords{$key}\n"; } next; }
 	print HISTORYTMP "END_SEARCHWORDS\n";
-	
+
 	print HISTORYTMP "BEGIN_ERRORS\n";
 	foreach $key (keys %_errors_h) { print HISTORYTMP "$key $_errors_h{$key}\n"; next; }
 	print HISTORYTMP "END_ERRORS\n";
-	
+
 	print HISTORYTMP "BEGIN_SIDER_404\n";
 	foreach $key (keys %_sider404_h) { print HISTORYTMP "$key $_sider404_h{$key} $_referer404_h{$key}\n"; next; }
 	print HISTORYTMP "END_SIDER_404\n";
-	
+
 	close(HISTORYTMP);
 }
 
@@ -1891,7 +1891,7 @@ for ($ix=0; $ix<5; $ix++) {	$_from_h[$ix]=0; }
 
 
 print "<a href=\"http://awstats.sourceforge.net\" target=_newawstats><img src=$DirIcons/other/$Logo border=0 alt=\"$PROG Official Web Site\" title=\"$PROG Official Web Site\"></a><br>\n";
-if ($ShowFlagLinks == 1) { 
+if ($ShowFlagLinks == 1) {
 	my $sp = '';
 	for (0..5) {		# Only flags for 5 major languages
 		if ($Lang != $_) {
@@ -1907,7 +1907,7 @@ print "<font size=1>$message[54][$Lang]</font><br>\n";
 print "<BR><BR>\n";
 
 
-# No realtime (no log processing) if not current month or full current year asked 
+# No realtime (no log processing) if not current month or full current year asked
 if (($YearRequired == $nowyear) && ($MonthRequired eq "year" || $MonthRequired == $nowmonth)) {
 
 	#------------------------------------------
@@ -1952,22 +1952,20 @@ if (($YearRequired == $nowyear) && ($MonthRequired eq "year" || $MonthRequired =
 	$CheckFormatNotDone=1;$NowNewLinePhase=0;
 	while (<LOG>)
 	{
-		# Get log line
-		#-------------
 		$savedline=$_;
-		chomp $_;		# Needed because IIS log file end with CRLF and perl read lines until LF
+		chomp $_; s/\r//;
 		$_ =~ s/\" / /g; $_ =~ s/ \"/ /g; $_ =~ s/\"$//;	# Suppress "
-		if (/^$/) { next; }								# Ignore blank line (With ISS: happens sometimes, with Apache: possible when editing log file)
+		if (/^$/) { next; }									# Ignore blank line (With ISS: happens sometimes, with Apache: possible when editing log file)
 		if ($LogFormat == 2) {
-			if (/^#/) { next; }							# ISS writes such comments, we forget line
+			if (/^#/) { next; }								# ISS writes such comments, we forget line
 			@felter=split(/ /,$_);
 			$savetime=$felter[1];
-			@datep=split(/-/,$felter[0]);				# YYYY-MM-DD
+			@datep=split(/-/,$felter[0]);					# YYYY-MM-DD
 			# Change order of ISS parameters to be like Apache
-			if ($#felter == 10) {						# Log with no virtual_host_name in it (11 fields)
+			if ($#felter == 10) {							# Log with no virtual_host_name in it (11 fields)
 				$felter[11]=$felter[9];
 			}
-			else {										# Log with virtual_host_name in it (12 fields)
+			else {											# Log with virtual_host_name in it (12 fields)
 				$savetmp=$felter[10];
 				$felter[10]=$felter[11];
 				$felter[11]=$savetmp;
@@ -1989,7 +1987,7 @@ if (($YearRequired == $nowyear) && ($MonthRequired eq "year" || $MonthRequired =
 			if ($_ =~ / GET .* .* HTTP\//) { $_corrupted++; next; }
 			@felter=split(/ /,$_);
 		}
-#		$felter[1]=$felter[0]; shift @felter;					# This is for test when log format is "hostname ip_adress ...	"
+#		$felter[1]=$felter[0]; shift @felter;				# This is for test when log format is "hostname ip_adress ...	"
 
 		# Check filters (here, log is in apache combined format, even with IIS)
 		#----------------------------------------------------------------------
@@ -2025,7 +2023,7 @@ if (($YearRequired == $nowyear) && ($MonthRequired eq "year" || $MonthRequired =
 						print "<font color=#888888><i>111.22.33.44 - - [10/Jan/2001:02:14:14 +0200] \"GET / HTTP/1.1\" 200 1234 \"http://www.fromserver.com/from.htm\" \"Mozilla/4.0 (compatible; MSIE 5.01; Windows NT 5.0)\"</i></font><br>";
 				}
 				error("<br>");	# Exit with format error
-			}			
+			}
 			$CheckFormatNotDone=0;	# No more format test
 		}
 
@@ -2058,13 +2056,13 @@ if (($YearRequired == $nowyear) && ($MonthRequired eq "year" || $MonthRequired =
 		#------------------
 		if (($felter[8] != 200) && ($felter[8] != 304)) {		# Stop if HTTP server return code != 200 and 304
 			if ($felter[8] =~ /^[\d][\d][\d]$/) { 				# Keep error code and next
-				$_errors_h{$felter[8]}++;						
+				$_errors_h{$felter[8]}++;
 				if ($felter[8] == 404) { $_sider404_h{$felter[6]}++; $_referer404_h{$felter[6]}=$felter[10]; }
-				next;											
+				next;
 				}
 			else {												# Bad format record (should not happen but when using MSIndex server), next
 				next;
-				}										
+				}
 		}
 
 		if ($LogFormat == 1) {
@@ -2075,11 +2073,11 @@ if (($YearRequired == $nowyear) && ($MonthRequired eq "year" || $MonthRequired =
 				$felter[11] .= "_"; $felter[11] .= $felter[$ix];
 			}
 		}
-	
+
 		$felter[11] =~ tr/\+/_/;
 		$UserAgent = $felter[11];
 		$UserAgent =~ tr/A-Z/a-z/;
-	
+
 		# Robot ? If yes, we stop here
 		#-----------------------------
 		$foundrobot=0;
@@ -2088,15 +2086,15 @@ if (($YearRequired == $nowyear) && ($MonthRequired eq "year" || $MonthRequired =
 			if ($foundrobot == 1) { next; }
 			$TmpHashNotRobot{$UserAgent}=1;		# Last time, we won't search if robot or not. We know it's not.
 		}
-	
+
 		# Canonize and clean target URL and referrer URL
 		$felter[6] =~ s/\/$DefaultFile$/\//;	# Replace default page name with / only
 		$felter[6] =~ s/\?.*//;					# Trunc CGI parameters in URL get
 		$felter[6] =~ s/\/\//\//g;				# Because some targeted url were taped with 2 / (Ex: //rep//file.htm)
-	
+
 		# Check if page or not
 		$PageBool=1;
-		foreach $cursor (@NotPageList) { if ($felter[6] =~ /$cursor$/) { $PageBool=0; last; } }
+		foreach $cursor (@NotPageList) { if ($felter[6] =~ /$cursor$/i) { $PageBool=0; last; } }
 
 		# Analyze: Date - Hour - Pages - Hits - Kilo
 		#-------------------------------------------
@@ -2126,7 +2124,7 @@ if (($YearRequired == $nowyear) && ($MonthRequired eq "year" || $MonthRequired =
 					if ($new eq "") {	$new="ip"; }
 					$TmpHashDNSLookup{$Host}=$new;
 				}
-	
+
 				# Here $Host is still xxx.xxx.xxx.xxx and $new is name or "ip" if reverse failed)
 				if ($new ne "ip") { $Host=$new; }
 			}
@@ -2152,7 +2150,7 @@ if (($YearRequired == $nowyear) && ($MonthRequired eq "year" || $MonthRequired =
 		if (!$found) {				# If not processed yet ($Host = hostname)
 			$Host =~ tr/A-Z/a-z/;
 			$_ = $Host;
-	
+
 			# Count hostmachine
 			if (!$FullHostName) { s/^[\w\-]+\.//; };
 			if ($PageBool) {
@@ -2163,7 +2161,7 @@ if (($YearRequired == $nowyear) && ($MonthRequired eq "year" || $MonthRequired =
 				}
 			$_hostmachine_h{$_}++;
 			$_hostmachine_k{$_}+=$felter[9];
-	
+
 			# Count top-level domain
 			if (/\./) { /\.([\w]+)$/; $_=$1; };
 			if ($DomainsHash{$_}) {
@@ -2177,11 +2175,11 @@ if (($YearRequired == $nowyear) && ($MonthRequired eq "year" || $MonthRequired =
 				 $_domener_k{"ip"}+=$felter[9];
 			}
 		}
-	
+
 		# Analyze: Browser
 		#-----------------
 		$found=0;
-	
+
 		# IE ? (For higher speed, we start whith IE, the most often used. This avoid other tests if found)
 		if ($UserAgent =~ /msie/) {
 			if (($UserAgent !~ /webtv/) && ($UserAgent !~ /omniweb/)) {
@@ -2191,7 +2189,7 @@ if (($YearRequired == $nowyear) && ($MonthRequired eq "year" || $MonthRequired =
 				$found=1;
 			}
 		}
-	
+
 		# Netscape ?
 		if (!$found) {
 			if ($UserAgent =~ /mozilla/ && $UserAgent !~ /compatible/) {
@@ -2201,17 +2199,17 @@ if (($YearRequired == $nowyear) && ($MonthRequired eq "year" || $MonthRequired =
 		    	$found=1;
 			}
 		}
-	
+
 		# Other ?
 		if (!$found) {
 			foreach $key (keys %BrowsersHash) {
 		    	if ($UserAgent =~ /$key/) { $_browser_h{$key}++; $found=1; last; }
 			}
 		}
-	
+
 		# Unknown browser ?
 		if (!$found) { $_browser_h{"Unknown"}++; $_unknownrefererbrowser_l{$felter[11]}=$timeconnexion; }
-	
+
 		# Analyze: OS
 		#------------
 		$found=0;
@@ -2232,14 +2230,14 @@ if (($YearRequired == $nowyear) && ($MonthRequired eq "year" || $MonthRequired =
 		else {
 			$_os_h{$TmpHashOS{$UserAgent}}++;
 		}
-	
+
 		# Analyze: Referrer
 		#------------------
 		$found=0;
 
 		# Direct ?
 		if ($felter[10] eq "-") { $_from_h[0]++; $found=1; }
-	
+
 		# HTML link ?
 		if (!$found) {
 			if ($felter[10] =~ /^http/)     {
@@ -2250,7 +2248,7 @@ if (($YearRequired == $nowyear) && ($MonthRequired eq "year" || $MonthRequired =
 						if ($felter[10] =~ /^http:\/\/$HostAlias/) { $internal_link=1; last; }
 						}
 				}
-	
+
 				if ($internal_link) {
 				    # Intern (This hit came from another page of the site)
 				    $_from_h[4]++;
@@ -2327,7 +2325,7 @@ if (($YearRequired == $nowyear) && ($MonthRequired eq "year" || $MonthRequired =
 				}
 			}
 		}
-	
+
 		# News link ?
 		if (!$found) {
 			if ($felter[10] =~ /^news/) {
@@ -2335,7 +2333,7 @@ if (($YearRequired == $nowyear) && ($MonthRequired eq "year" || $MonthRequired =
 				$found=1;
 			}
 		}
-	
+
 	}
 	close LOG;
 	if ($BenchMark) { print "End of processing log file: ".time."<br>\n"; }
@@ -2407,7 +2405,7 @@ foreach $i (0..$#filearray) {
 # Here, first part of data for all processed month (old or current) are is still in memory
 # If a month was already processed, then $HistoryFileAlreadyRead{"MMYYYY"} value is 1
 
-	
+
 #--------------------------------------------
 # READING NOW HISTORY FILES FOR REQUIRED YEAR
 #--------------------------------------------
@@ -2537,7 +2535,7 @@ if ($QueryString =~ /action=browserdetail/) {
 if ($QueryString =~ /action=info/) {
 	# Not yet available
 	print "<CENTER><a name=\"INFO\"></a>";
-	
+
 	&html_end;
 	exit(0);
 	}
@@ -2983,7 +2981,7 @@ if ($Lang == 6) {
 	Roboty s± <b>programami sieciowymi</b> skanuj±cymi strony w celu zebrania/aktualizacji danych (np. s³owa kluczowe do wyszukiwarek), lub sprawdzaj±cymi czy strona nadal istnieje w sieci.<br>
 	$PROG rozró¿nia obecnie <b>".(@RobotArray)."</b> robów.
 	</DIV>";
-	
+
 	print "
 	<DIV CLASS=\"classTooltip\" ID=\"tt201\"> Zlecenie POST zosta³o zrealizowane pomy¶lnie. </DIV>
 	<DIV CLASS=\"classTooltip\" ID=\"tt202\"> ¯±danie zosta³o odebrane poprawnie, lecz jeszcze siê nie zakoñczy³o. </DIV>
