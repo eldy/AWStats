@@ -110,6 +110,9 @@ Note 3: MaxLengthOfURL parameter has been renamed into MaxLengthOfShownURL
 Note 4: To enable the new worm detection, you must add parameter
   LevelForWormsDetection=2 in your config file.
 
+Note 5: If you use the urlalias plugin, you must move the urlalias.*.txt
+  from Plugins directory to DirData directory.
+
 
 
 5.9
