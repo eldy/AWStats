@@ -82,7 +82,7 @@ $WarningMessages= 1;
 %MonthBytes = %MonthHits = %MonthHostsKnown = %MonthHostsUnknown = %MonthPages = %MonthUnique = %MonthVisits =
 %monthlib = %monthnum = ();
 
-$VERSION="3.2 (build 33)";
+$VERSION="3.2 (build 34)";
 $Lang="en";
 
 # Default value
@@ -2667,8 +2667,8 @@ EOF
 		print "<TD width=\"20%\" bgcolor=\"#$color_k\" onmouseover=\"ShowTooltip(5);\" onmouseout=\"HideTooltip(5);\">$Message[75]</TD>";
 		print "</TR>\n";
 		print "<TR>";
-		print "<TD>".($MonthRequired eq "year"?"<b>< $TotalUnique</b><br>Exact value not available in 'Year' view":"<b>$TotalUnique</b><br>(".int($RatioHosts)."&nbsp;$Message[52])")."</TD>";
-		print "<TD><b>$TotalVisits</b><br>&nbsp;</TD>";
+		print "<TD>".($MonthRequired eq "year"?"<b>< $TotalUnique</b><br>Exact value not available in 'Year' view":"<b>$TotalUnique</b><br>&nbsp;")."</TD>";
+		print "<TD><b>$TotalVisits</b><br>(".int($RatioHosts)."&nbsp;$Message[52])</TD>";
 		print "<TD><b>$TotalPages</b><br>(".int($RatioPages)."&nbsp;".lc($Message[56]."/".$Message[12]).")</TD>";
 		print "<TD><b>$TotalHits</b><br>(".int($RatioHits)."&nbsp;".lc($Message[57]."/".$Message[12]).")</TD>";
 		print "<TD><b>".Format_Bytes(int($TotalBytes))."</b><br>(".int($RatioBytes)."&nbsp;$Message[44]/".lc($Message[12]).")</TD>";
