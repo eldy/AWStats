@@ -1614,13 +1614,15 @@ color_u,color_v,color_p,color_h,color_k,color_s<br>
 <br># In most cases, you don't need this feature.
 <br>#
 <br># ExtraSectionNameX is title of your personalized chart.
-<br># ExtraSectionConditionalX are conditions on URL and/or QUERY_STRING and/or
-<br>#   REFERER you can use to count or not the hit. Use "|" for "OR".
+<br># ExtraSectionConditionalX are conditions you can use to count or not the hit,
+<br>#   Use one of the field condition (URL, QUERY_STRING, REFERER, UA, HOST)
+<br>#   and string to match after a coma. Use "|" for "OR".
 <br># ExtraSectionFirstColumnTitleX is the first column title of the chart.
-<br># ExtraSectionFirstColumnValuesX is a Regex string to tell AWStats how to 
-<br>#   extract the value used for first column. Each different value found will
-<br>#   be a different row. Be sure that list of different values is "limited" to
-<br>#   avoid "not enough memory" problems !
+<br># ExtraSectionFirstColumnValuesX is a Regex string to tell AWStats in which 
+<br>#   field to extract value from (URL, QUERY_STRING, REFERER, UA, HOST) and how
+<br>#   to extract the value. Each different value found will appear in first
+<br>#   column of report on a different row. Be sure that list of different values
+<br>#   is "limited" to avoid "not enough memory" problems !
 <br># ExtraSectionFirstColumnFormatX is the string used to write value.
 <br># ExtraSectionStatTypesX are things you want to count. You can use standard
 <br>#   code letters (P for pages,H for hits,B for bandwidth,L for last access).

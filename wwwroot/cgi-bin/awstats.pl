@@ -6398,6 +6398,14 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 					if ($Debug) { debug(" Check condition '$conditiontype' must contain '$conditiontypeval' in $field[$pos_referer]",5); }
  					if ($field[$pos_referer] =~ m/$conditiontypeval/) { $conditionok=1; last; }
  				}
+ 				elsif ($conditiontype eq 'UA') {
+					if ($Debug) { debug(" Check condition '$conditiontype' must contain '$conditiontypeval' in $field[$pos_ua]",5); }
+ 					if ($field[$pos_ua] =~ m/$conditiontypeval/) { $conditionok=1; last; }
+ 				}
+ 				elsif ($conditiontype eq 'HOST') {
+					if ($Debug) { debug(" Check condition '$conditiontype' must contain '$conditiontypeval' in $field[$pos_host]",5); }
+ 					if ($HostResolved =~ m/$conditiontypeval/) { $conditionok=1; last; }
+ 				}
  				else { error("Wrong value of parameter ExtraSectionCondition$extranum"); }
  			}
 			if (! $conditionok && @{$ExtraConditionType[$extranum]}) { next; }	# End for this section
@@ -6418,6 +6426,12 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
  				}
  				elsif ($rowkeytype eq 'REFERER') {
  					if ($field[$pos_referer] =~ m/$rowkeytypeval/) { $rowkeyval = "$1"; $rowkeyok = 1; last; }
+ 				}
+ 				elsif ($rowkeytype eq 'UA') {
+ 					if ($field[$pos_ua] =~ m/$rowkeytypeval/) { $rowkeyval = "$1"; $rowkeyok = 1; last; }
+ 				}
+ 				elsif ($rowkeytype eq 'HOST') {
+ 					if ($HostResolved =~ m/$rowkeytypeval/) { $rowkeyval = "$1"; $rowkeyok = 1; last; }
  				}
  				else { error("Wrong value of parameter ExtraSectionFirstColumnValues$extranum"); }
  			}
