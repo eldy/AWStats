@@ -49,8 +49,8 @@ my $NbOfLinesShowsteps=0;
 
 # ---------- Init arrays --------
 my @SkipDNSLookupFor=();
+my @ParamFile=();
 # ---------- Init hash arrays --------
-my %ParamFile=();
 my %linerecord=();
 my %timerecord=();
 my %corrupted=();
@@ -138,11 +138,11 @@ for (0..@ARGV-1) {
 		else { print "Unknown argument $ARGV[$_] ignored\n"; }
 	}
 	else {
-		$ParamFile{$cpt}=$ARGV[$_];
+		push @ParamFile, $ARGV[$_];
 		$cpt++;
 	}
 }
-if (scalar keys %ParamFile == 0) {
+if (scalar @ParamFile == 0) {
 	print "----- $PROG $VERSION (c) Laurent Destailleur -----\n";
 	print "$PROG allows you to merge several log files into one output,\n";
 	print "sorted on date. It also makes a fast reverse DNS lookup to replace\n";
@@ -248,39 +248,39 @@ my $starttime=time();
 
 # Define the LogFileToDo list
 $cpt=1;
-foreach my $key (keys %ParamFile) {
-	if ($ParamFile{$key} !~ /\*/ && $ParamFile{$key} !~ /\?/) {
-		&debug("Log file $ParamFile{$key} is added to LogFileToDo.");
+foreach my $key (0..(@ParamFile-1)) {
+	if ($ParamFile[$key] !~ /\*/ && $ParamFile[$key] !~ /\?/) {
+		&debug("Log file $ParamFile[$key] is added to LogFileToDo with number $cpt.");
 
 		# Check for supported compression 
-		if ($ParamFile{$key} =~ /$zcat_file/) {
-			&debug("GZIP compression detected for Log file $ParamFile{$key}.");
+		if ($ParamFile[$key] =~ /$zcat_file/) {
+			&debug("GZIP compression detected for Log file $ParamFile[$key].");
 			# Modify the name to include the zcat command
-			$ParamFile{$key} = $zcat . ' ' . $ParamFile{$key} . ' |';
+			$ParamFile[$key] = $zcat . ' ' . $ParamFile[$key] . ' |';
 		}
-		elsif ($ParamFile{$key} =~ /$bzcat_file/) {
-			&debug("BZ2 compression detected for Log file $ParamFile{$key}.");
+		elsif ($ParamFile[$key] =~ /$bzcat_file/) {
+			&debug("BZ2 compression detected for Log file $ParamFile[$key].");
 			# Modify the name to include the bzcat command
-			$ParamFile{$key} = $bzcat . ' ' . $ParamFile{$key} . ' |';
+			$ParamFile[$key] = $bzcat . ' ' . $ParamFile[$key] . ' |';
 		}
 
-		$LogFileToDo{$cpt}=$ParamFile{$key};
+		$LogFileToDo{$cpt}=@ParamFile[$key];
 		$cpt++;
 	}
 	else {
-		my $DirFile=$ParamFile{$key}; $DirFile =~ s/([^\/\\]*)$//;
-		$ParamFile{$key} = $1;
-		if ($DirFile eq "") { $DirFile = "."; }
-		$ParamFile{$key} =~ s/\./\\\./g;
-		$ParamFile{$key} =~ s/\*/\.\*/g;
-		$ParamFile{$key} =~ s/\?/\./g;
-		&debug("Search for file \"$ParamFile{$key}\" into \"$DirFile\"");
+		my $DirFile=$ParamFile[$key]; $DirFile =~ s/([^\/\\]*)$//;
+		$ParamFile[$key] = $1;
+		if ($DirFile eq '') { $DirFile = '.'; }
+		$ParamFile[$key] =~ s/\./\\\./g;
+		$ParamFile[$key] =~ s/\*/\.\*/g;
+		$ParamFile[$key] =~ s/\?/\./g;
+		&debug("Search for file \"$ParamFile[$key]\" into \"$DirFile\"");
 		opendir(DIR,"$DirFile");
 		my @filearray = sort readdir DIR;
 		close DIR;
 		foreach my $i (0..$#filearray) {
-			if ("$filearray[$i]" =~ /^$ParamFile{$key}$/ && "$filearray[$i]" ne "." && "$filearray[$i]" ne "..") {
-				&debug("Log file $filearray[$i] is added to LogFileToDo.");
+			if ("$filearray[$i]" =~ /^$ParamFile[$key]$/ && "$filearray[$i]" ne "." && "$filearray[$i]" ne "..") {
+				&debug("Log file $filearray[$i] is added to LogFileToDo with number $cpt.");
 				$LogFileToDo{$cpt}="$DirFile/$filearray[$i]";
 				$cpt++;
 			}
