@@ -1887,7 +1887,7 @@ sub Save_History_File {
 			}
 		}
 		else {
-			print HISTORYTMP "$key $page $_hostmachine_h{$key} $bytes\n";
+			print HISTORYTMP "$key $page $_hostmachine_h{$key} $bytes $_hostmachine_l{$key}\n";
 		}
 	}
 	foreach my $key (keys %_hostmachine_h) {
@@ -1909,7 +1909,7 @@ sub Save_History_File {
 			}
 		}
 		else {
-			print HISTORYTMP "$key $page $_hostmachine_h{$key} $bytes\n";
+			print HISTORYTMP "$key $page $_hostmachine_h{$key} $bytes $_hostmachine_l{$key}\n";
 		}
 	}
 	print HISTORYTMP "END_VISITOR\n";
@@ -4579,7 +4579,7 @@ EOF
 			$count++;
 		}
 		if ($TotalVisits > $total_s) {
-			print "<tr><td CLASS=AWL><font color=blue>$Message[0]</font></td><td>".($TotalVisits-$total_s)."</td></tr>\n";
+			print "<tr><td CLASS=AWL>$Message[0]</td><td>".($TotalVisits-$total_s)."</td></tr>\n";
 		}
 		&tab_end;
 	}
