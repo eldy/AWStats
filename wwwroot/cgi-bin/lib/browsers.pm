@@ -257,7 +257,7 @@
 "nutscrape","notavailable",
 "msfrontpageexpress","notavailable",
 "phoenix","notavailable",
-"safari","notavailable",
+"safari","safari",
 "tzgeturl","notavailable",
 "viking","notavailable",
 "webfetcher","notavailable",
