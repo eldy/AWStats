@@ -5617,21 +5617,22 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 				my $uabrowser=$TmpBrowser{$UserAgent};
 				if (! $uabrowser) {
 					my $found=1;
-					# IE ?
+					# IE
 					if (($UserAgent =~ /msie([+_ ]|)([\d\.]*)/i) && ($UserAgent !~ /webtv/i) && ($UserAgent !~ /omniweb/i) && ($UserAgent !~ /opera/i)) {
 						$_browser_h{"msie$2"}++;
 						$TmpBrowser{$UserAgent}="msie$2";
 					}
-					# Netscape ?
+					# Netscape 6.x, 7.x ...
 					elsif ($UserAgent =~ /netscape.?\/([\d\.]*)/i) {
 						$_browser_h{"netscape$1"}++;
 						$TmpBrowser{$UserAgent}="netscape$1";
 					}
-					elsif (($UserAgent =~ /mozilla(\/|)([\d\.]*)/i) && ($UserAgent !~ /compatible/i) && ($UserAgent !~ /opera/i) && ($UserAgent !~ /galeon/i) && ($UserAgent !~ /safari/i)) {
+					# Netscape 3.x, 4.x ...
+					elsif (($UserAgent =~ /mozilla(\/|)([\d\.]*)/i) && ($UserAgent !~ /gecko/i) && ($UserAgent !~ /compatible/i) && ($UserAgent !~ /opera/i) && ($UserAgent !~ /galeon/i) && ($UserAgent !~ /safari/i)) {
 						$_browser_h{"netscape$2"}++;
 						$TmpBrowser{$UserAgent}="netscape$2";
 					}
-					# Other ?
+					# Other
 					else {
 						$found=0;
 						foreach my $key (@BrowsersSearchIDOrder) {	# Search ID in order of BrowsersSearchIDOrder
@@ -7137,7 +7138,7 @@ if (scalar keys %HTMLOutput) {
 		my %totalfamily_h=();
 		my $Total=0;
 		my $count=0;
-		&BuildKeyList($MaxRowsInHTMLOutput,1,\%_os_h,\%_os_h);
+		&BuildKeyList(MinimumButNoZero(scalar keys %_os_h,500),1,\%_os_h,\%_os_h);
 		my %keysinkeylist=();
 		$max_h=1;
 		OSLOOP: foreach my $key (@keylist) {
@@ -7218,7 +7219,7 @@ if (scalar keys %HTMLOutput) {
 		my %totalfamily_h=();
 		my $Total=0;
 		my $count=0;
-		&BuildKeyList($MaxRowsInHTMLOutput,1,\%_browser_h,\%_browser_h);
+		&BuildKeyList(MinimumButNoZero(scalar keys %_browser_h,500),1,\%_browser_h,\%_browser_h);
 		my %keysinkeylist=();
 		$max_h=1;
 		BROWSERLOOP: foreach my $key (@keylist) {
@@ -7226,7 +7227,7 @@ if (scalar keys %HTMLOutput) {
 			if ($_browser_h{$key} > $max_h) { $max_h = $_browser_h{$key}; }
 			foreach my $family (@BrowsersFamily) { if ($key =~ /^$family/i) { $totalfamily_h{$family}+=$_browser_h{$key}; next BROWSERLOOP; } }
 		}
-		# Write records grouped in a brwoser family
+		# Write records grouped in a browser family
 		foreach my $family (@BrowsersFamily) {
 			my $p='&nbsp;';
 			if ($Total) { $p=int($totalfamily_h{$family}/$Total*1000)/10; $p="$p %"; }
