@@ -1,0 +1,15 @@
+body { 
+	background-color: #FFFFFF;
+	font: 14px verdana,arial;
+	font-family: sans-serif;
+	margin-top: 4;
+	margin-bottom: 4;
+	margin-right: 4;
+	margin-left: 4;
+}
+a:link   	{ font: 14px verdana,arial; color: #2200C0; font-family: sans-serif; text-decoration: none; }
+a:visited	{ font: 14px verdana,arial; color: #2200C0; font-family: sans-serif; text-decoration: none; }
+a:active	{ font: 14px verdana,arial; color: #2200C0; font-family: sans-serif; text-decoration: none; }
+a:hover		{ font: 14px verdana,arial; color: #2200C0; font-family: sans-serif; text-decoration: underline; }
+
+td.CFAQ		{ font: 14px verdana,arial; color: #000000; font-family: sans-serif; text-decoration: none; }

@@ -1,0 +1,159 @@
+AWStats Changelog
+-----------------
+
+3.2
+
+- Increased speed (19% faster than 3.1).
+- Fixed: AWStats history file is no more corrupted by hits made from a search
+  engines using a URL with URL encoded binary chars.
+- Fixed: AWStats history file is no more corrupted when a reverse DNS lookup
+  return a corrupted hostname (Happens with some DNS systems).
+- Fixed: Security fix. No more possible to update stats from a browser using
+  direct url (awstats.pl?update=1) when AllowToUpdateStatsFromBrowser is off.
+- New feature: Added various tags to use dynamic log file name in conf file
+  according to current but also older date/time (%YYYY-n,%YY-n,%MM-n,%DD-n...)
+- New feature: Added NotPageList parameter to choose which file extensions to
+  count as "hit only" (and not reported in the "Page-URL viewed" report).
+- New feature: Added KeepBackupOfHistoricFiles option.
+- New feature: Number of visits is also visible in days stats.
+- New feature: Added stats for day of week.
+- New feature: Added stats for file types.
+- New feature: Added stats for entry pages.
+- New feature: Added stats for web compression (mod_gzip).
+- New feature: Added stats for authenticated users/logins.
+- New feature: Added parameters to choose which report to see in main page.
+- New feature: Added URLWithQuery option to differenciate
+  http://mysite/sameurl?param=x of http://mysite/sameurl?param=y
+- New feature: ShowFlagLinks can now accept list of all wanted flags for
+  translation link.
+- New feature: Add logresolvemerge tool to merge splitted log files
+  from a load balancing web server before running awstats.
+- New feature: Support standard ISA server log format.
+- New parameter: HTMLHeadSection allows you to add HTML code in header report.
+- New parameter: NbOfLinesForCorruptedLog.
+- Fixed: no more warning/error messages when runned with option perl -w.
+- Reference database (robots, os, browsers, search engines, domains)
+  has been extracted in external files.
+- Other minor updates (new flags, reference database updates, ...)
+- Fixed: Parameter MaxNbOfHostsShown was not working correctly.
+- New languages.
+
+
+3.1
+
+- Increased seriously speed for update process (above all for large web sites).
+- Increased VERY seriously speed for viewing stats from a browser.
+- Reduced amount of memory used.
+- AWStats search config file in directories:
+   current dir, then /etc/opt/awstats, then /etc/awstats, then /etc
+- New feature: AWStats can analyze NCSA common log files.
+- New feature: List of last access.
+- New feature: Full list of url scores.
+- New feature: Date format can be chosen according to local country.
+- New parameter: DirLang allows to choose directory for language files.
+- New parameter: Expires allows to add a meta-tag EXPIRES in HTML report page.
+- New parameter: LogoLink parameter to choose link used for clicking on logo.
+- New parameter: color_weekend option to show week-end days in different colors.
+- New option: -update and -output to update and/or output a report.
+- New option: -showsteps to follow advancement of update process.
+- Fixed: OS detection now works correctly (Windows ME reported correctly).
+- Fixed: Bad value were reported in daily chart when no pages were viewed.
+- Added WAP browsers in AWStats database.
+- New languages.
+
+
+3.0
+
+- New look
+- Added daily report for pages, hits and bytes.
+- AWStats can use its own conversion array to make some reverse DNS lookup.
+- Added also SkipDNSLookupFor option.
+- Added OnlyFiles option.
+- AWStats works with personalized log file format (support also Webstar native log format). New log format parsing algorithm.
+- Now update is not made by default when stats are read from a browser. Added an "update now" button on HTML report page if new option AllowToUpdateStatsFromBrowser is on.
+- Tooltips now works also with Netscape 6, Opera and most browsers.
+- Update browsers database to add a lot of "audio" browsers and more.
+- Update OS database (Added Windows ME, OpenBSD).
+- Robots database updated.
+- Support new domains (biz, museum, coop, info, aero...).
+- Added some missing flags icons.
+- Rewrite UnescapeURL function to works with all encoded URLs, cyrilic URL.
+- Some minor changes.
+- Added translation for some "not translated" words.
+- Bytes reported are auto-scaled (Bytes, Kb, Mb, Gb).
+- Fixed problem of colors (styles) not working with some browsers.
+- Added new languages (Korean, Danish, ...). Now 14 different languages.
+- Fixed bug of bad link in TOP pages links when viewed page is of another virtual host.
+- 259 domains/countries, 60 browsers database, 26 OS, 258 robots, 47 search engines.
+
+
+2.24
+
+- Added a way to include dynamic current year, month, day and hour in LogFile parameter.
+- Option to choose month, year and language is also available from command line.
+- https request are correctly reported.
+- Added initialization of parameters to avoid problem of bad cache with mod_perl.
+- Fixed check of parameters to avoid 'Cross Site Scripting attacks'.
+- Added flags for Mongolia, Maldives, San Marino, Senegal.
+- New keyword detection algorithm (Now use a search engine url database like Webalizer AND old algorithm of AWStats for unknown search engines).
+- Added option to report keywords used from search engine as separate words or as full search strings.
+- Added Greek, Czech and Portuguese translation (now 9 different languages supported).
+- A better and faster config file parsing. Solve the problem of "=" into the HTMLEndSection parameter.
+- AWStats is no more sensitive to DOS-UNIX config files.
+- Disable DNS lookup only if host has at least 1 alphabetical char.
+- Better management of corrupted log files.
+- Make difference between windows NT and windows 2000.
+- Added OmniWeb and iCab browser. Better MacOS detection.
+- Make AWStats still working even when MS IndexServer return a bad HTTP return code (like "1" instead of a "three digits" number).
+- Fixed problem of missing year=yyyy in some links.
+- Fixed a bug of empty page when domain has "info" in its name.
+- A lot of minor changes.
+- 252 domains/countries, 44 browsers database, 24 OS, 252 robots, 39 search engines.
+
+
+2.23
+
+- Use of configuration file.
+- Now AWStats can process old log files (however, you must keep order).
+- Month-to-month basis statistics works now correctly.
+- Old years now can also be viewed from AWStats report page.
+- Working directory (with write permissions) can be chosen (you can use another directory than cgi-bin).
+- Added PurgeLogFile option (you can choose if AWStats purge log file or not).
+- awstats.pl can be renamed into awstats.plx (for ActiveState perl) and still works.
+- Statistic page generated from command line has no more bad links.
+- Added a link to choose full year view.
+- Domain and page reports are sorted on pages (no more on hits)
+- Automatic disabling of reverse DNS lookup if this is already done in your log file.
+- Can add your own HTML code at the end of awstats (ban advert for example).
+- Added Italian, German, Polish language (now 7 different languages supported).
+- 252 domains/countries, 40 browsers database, 22 OS, 252 robots, 35 search engines.
+- Setup instructions are cleaner
+
+
+2.22
+
+- AWStats considers myserver and www.myserver as the same, even if "HostAliases" setup is wrong.
+- Fixed a bug making unique visitors counter too high.
+- Added ArchiveLog parameter to archive processed records into backup files.
+- Make difference between unknown browsers and unknown OS.
+- Robots stats are isolated from the rest of visitors.
+- Better keywords detection algorithm.
+- Code a little bit cleaner and faster.
+- Images are in .png format.
+- Added Spanish language (now 4 different languages supported).
+- 252 domains/countries, 40 browsers database, 22 OS, 250 robots, 32 search engines.
+
+
+2.1
+
+- Added last time connection for each hosts
+- Added list of URL for HTTP Error 404
+- Added pages, hits and kb for each statistics
+- Added colors and links
+- Works also with IIS
+- 3 languages: English, French and Dutch
+- 250 domains/countries, 38 browsers (more with all versions), 19 OS, 186 robots, 24 search engines.
+
+
+1.0
+- First version, not distributed
