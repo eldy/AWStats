@@ -12,11 +12,12 @@ Fixes:
 New features/improvments:
 - Added a screen size report.
 - Better 404 errors management. URLs are always cleaned from their
-  parameter to build list 404 not found URLs list (because parameters are not
-  intersting as they can't have effect because page is not found). Referrer
-  URLs list for 40 not fouond URLs are kept with parameters only if
+  parameter to build '404 not found' URLs list (because parameters are not
+  interesting as they can't have effect as page is not found). Referrer
+  URLs list for '404 not found' URLs are kept with parameters only if
   URLReferrerWithQuery is set to 1. This make this report more useful.
 - Optimized code size.
+- Optimized HTML output report size.
 
 Other/Documentation:
 - Updated documentation.
