@@ -1805,7 +1805,7 @@ if ($UpdateStats) {
 	#	if ($@){
 	#		error("Error: The perl 'Socket' module is not installed. Install it from CPAN or use a more 'standard' perl interpreter.\n");
 	#	}
-#		use Socket;
+		use Socket;
 	}
 	$NewDNSLookup=$DNSLookup;
 
