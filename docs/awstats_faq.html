@@ -50,7 +50,7 @@ Here, you can find the most common questions and answers about AWStats setup/usa
 FAQ-COM025 <a href="#NOLOG">How to use AWStats with no server log</a><br>
 FAQ-COM050 <a href="#LIMITLOG">What is the log size limit AWStats can analyze ?</a><br>
 FAQ-COM090 <a href="#FTP">Setup for FTP server log files.</a><br>
-FAQ-COM100 <a href="#MAIL">Setup for MAIL log files (Sendmail, Postfix, QMail, MDaemon, Exchange).</a><br>
+FAQ-COM100 <a href="#MAIL">Setup for MAIL log files (Postfix, Sendmail, QMail, MDaemon, Exchange).</a><br>
 FAQ-COM110 <a href="#MEDIASERVER">Setup for MEDIA SERVER log files (Realmedia, Windows media, Darwin streaming server).</a><br>
 FAQ-COM120 <a href="#ROTATE">How to rotate my logs without loosing data.</a><br>
 FAQ-COM130 <a href="#CRONTAB">How to run AWStats frequently ?</a><br>
@@ -118,7 +118,7 @@ Examples of used platforms (bold means 'tested by author', others were reported 
 <b>Windows 2000</b>, <b>Windows NT 4.0</b>, Windows Me, <b>Linux (RedHat, Mandrake, Debian, Suse...)</b>, Macintosh, <b>Solaris</b>, <b>Aix</b>, BeOS, ...<br>
 <u>Web/Wap/Proxy/Streaming servers</u><br>
 <b>Apache 1.3.x and 2.x</b>, <b>IIS 5.0 and 6.0</b>, WebStar, WebLogic, WebSite, <b>Windows Media Server</b>, Tomcat, <b>Squid</b>,
-Sambar, Roxen, Resin, RealMedia server, <b>Lotus Notes/Domino</b>, Darwin, IPlanet, IceCast, ZeroBrand, Zeus, Zope, Abyss...<br>
+Sambar, Roxen, Resin, RealMedia server, Oracle9iAS, <b>Lotus Notes/Domino</b>, Darwin, IPlanet, IceCast, ZeroBrand, Zeus, Zope, Abyss...<br>
 <u>FTP servers</u><br>
 <b>ProFTP</b>, ...<br>
 <u>Mails servers</u><br>
@@ -204,7 +204,7 @@ You can find a Perl version of CGI pslogger enhanced by AWStats author <a href="
 or a php version of CGI pslogger made by Florent CHANTRET <a href="/files/pslogger.phps">here</a>.
 <br>
 
-<a name="#LIMITLOG"></a><br>
+<a name="LIMITLOG"></a><br>
 <b><u>FAQ-COM050 : WHAT IS THE LOG SIZE LIMIT AWSTATS CAN ANALYZE</u></b><br>
 <font class=CProblem>PROBLEM:</font><br>
 I know I must run AWStats update process frequently on new log files, this means thoose
@@ -212,7 +212,7 @@ files have a regular size, but for my first update, I want/need to run update pr
 on old log files that are very large. Is there a limit on log file size AWStats can analyze ?<br>
 <font class=CSolution>SOLUTION:</font><br>
 No. There is no limit in AWStats. This means you can use it on large log files (test were
-made on 30GB log files).<br>
+made on 10GB log files).<br>
 However your system (Operating System or Perl version) might have a limit. For example, you can
 experience size limit errors on files larger than 2 or 4 GB.
 If limit is Perl only, try to use a Perl version compiled with "large file" option.<br>
@@ -264,6 +264,7 @@ LogFile="/var/log/xferlog"
 <br>LevelForOSDetection=0
 <br>LevelForRefererAnalyze=0
 <br>LevelForRobotsDetection=0
+<br>LevelForWormsDetection=0
 <br>LevelForSearchEnginesDetection=0
 <br>ShowLinksOnUrl=0
 <br>ShowMenu=1
@@ -295,7 +296,7 @@ Now you can use AWStats as usual (run the update process and read statistics).<b
 <br>
 
 <a name="MAIL"></a><br>
-<b><u>FAQ-COM100 : SETUP FOR MAIL LOG FILES (SENDMAIL, POSTFIX, QMAIL, MDAEMON, EXCHANGE...)</u></b><br>
+<b><u>FAQ-COM100 : SETUP FOR MAIL LOG FILES (POSTFIX, SENDMAIL, QMAIL, MDAEMON, EXCHANGE...)</u></b><br>
 <font class=CProblem>PROBLEM:</font><br>
 What do I have to do to use AWStats to analyze my mail log files.<br>
 <font class=CSolution>SOLUTION:</font><br>
@@ -329,6 +330,7 @@ Then change:
 <br>LevelForOSDetection=0
 <br>LevelForRefererAnalyze=0
 <br>LevelForRobotsDetection=0
+<br>LevelForWormsDetection=0
 <br>LevelForSearchEnginesDetection=0
 <br>LevelForFileTypesDetection=0
 <br>ShowMenu=1
@@ -539,8 +541,8 @@ that point to your current running log file (required if you want to use the
 <a href="awstats_config.html#AllowToUpdateStatsFromBrowser">AllowToUpdateStatsFromBrowser</a>
 option to have "real-time" statistics), to avoid loosing too much records during the rotate
 process, you must run the AWStats update JUST BEFORE the rotate process is done.<br>
-The best way to do that on Linux like OS is to use the linux built-in logrotate feature. You must
-edit the logrotate config file used for you web server log file (usually stored in /etc/logrotate.d
+The best way to do that on 'Linux like' OS is to use the linux built-in logrotate feature. You must
+edit the logrotate config file used for your web server log file (usually stored in /etc/logrotate.d
 directory) by adding the AWStats update process as a preprocessor command, like this example (bold
 lines are lines to add for having a prerotate process):<br><i>
 /usr/local/apache/logs/*log<br>
@@ -561,20 +563,20 @@ endscript<br>
 }<br>
 </i>
 <br>
-If using a such solution, this is sequential step that happens:<br>
-<table border=1 cellpadding=1 cellspacing=0 bgcolor=#F4F4F4 width="100%" class=CFAQ><tr class=CFAQ><td class=CFAQ>
+If using a such solution, this is sequential steps that happens:<br>
+<table border=1 cellpadding=1 cellspacing=0 bgcolor=#F4F4F4 width="100%" class=CFAQ>
 <tr><td<b>Step</b></td><td><b>Description</b></td><td><b>Step name</b></td><td><b>Date/Time example</b></td></tr>
 <tr valign=top><td>A</td><td>logrotate is started (by cron)</td><td>Start of logrotate</td><td>04:02:00</td></tr>
 <tr valign=top><td>B</td><td><ul>awstats -update is launched by logrotate</td><td>Start of awstats</td><td>04:02:01</td><tr>
-<tr valign=top><td>C</td><td><ul><ul>awstats read the log file </td><td>&nbsp;</td><td>04:02:02</td><tr>
-<tr valign=top><td>D</td><td><ul>awstats has reached the end of log file. It start to save its database on disk.</td><td>&nbsp;</td><td>04:05:00</td><tr>
+<tr valign=top><td>C</td><td><ul><ul>awstats start to read the log file <i>file.log</i></td><td>&nbsp;</td><td>04:02:02</td><tr>
+<tr valign=top><td>D</td><td><ul>awstats has reached the end of log file so now it starts to save its database on disk.</td><td>&nbsp;</td><td>04:05:00</td><tr>
 <tr valign=top><td>E</td><td><ul>awstats has finished to save its new database, so it stops</td><td>End of awstats</td><td>04:06:00</td><tr>
-<tr valign=top><td>F</td><td>logrotate move old log file <i>file.log</i> to a new name <i>file.log.sav</i>. Apache now logs in <i>file.log.new</i> since log file handle has not been changed (only log file name).</td><td>Log move</td><td>04:06:01</td><tr>
-<tr valign=top><td>G</td><td>logrotate send the -HUP or -USR1 signal to Apache.<br>With -HUP, Apache immediatly kills all its child process/thread, close log file <i>file.log.sav</i>, and reopen file <i>file.log</i>. So now, ALL hits are written to new file.<br>With -USR1, Apache only ask its child process/thread to stop only when HTTP request will be completely served, but it closes immediatly log file <i>file.log.sav</i>, and reopen file <i>file.log</i>. So only NEW hits are written to new log file. Still running HTTP requests will write in old one.</td><td>Apache restart</td><td>04:06:02</td><tr>
-<tr valign=top><td>H</td><td>logrotate start compress the old log file <i>file.log.sav</i> into <i>file.log.gz</i></td><td>Start compress</td><td>04:06:03</td><tr>
-<tr valign=top><td>I</td><td><ul>If some apache threads are still running (because the kill sent was -USR1, so child process are waiting end of request before to stop), then those process are still writing to <i>file.log.sav</i>.<br>If kill -HUP was used, no problem, all process are already restarted.</td><td>&nbsp;</td><td>&nbsp;</td><tr>
-<tr valign=top><td>J</td><td>logrotate has finished to compress log file. File <i>file.log.sav</i> is deleted.</td><td>End&nbsp;of&nbsp;compress<br>End&nbsp;of&nbsp;logrotate</td><td>04:07:03</td><tr>
-<tr valign=top><td>K</td><td><ul>If signal was -USR1, some old childs can still run (when serving a very long request for example). So the log writing, still done in same file handle are going to a file that has been removed. So log writing are lost nowhere.</td><td>&nbsp;</td><td>&nbsp;</td><tr>
+<tr valign=top><td>F</td><td>logrotate moves old log file <i>file.log</i> to a new name <i>file.log.sav</i>. Apache now logs in this file <i>file.log.sav</i> since log file handle has not been changed (only log file name has been renamed).</td><td>Log move</td><td>04:06:01</td><tr>
+<tr valign=top><td>G</td><td>logrotate sends the -HUP or -USR1 signal to Apache.<br>With -HUP, Apache immediatly kills all its child process/thread, close log file <i>file.log.sav</i>, and reopen file <i>file.log</i>. So now, ALL hits are written to new file.<br>With -USR1, Apache only ask its child process/thread to stop only when HTTP request will be completely served. However it closes immediatly log file <i>file.log.sav</i>, and reopen file <i>file.log</i>. So only NEW hits are written to new log file. HTTP requests that are still running will write in old one.</td><td>Apache restart</td><td>04:06:02</td><tr>
+<tr valign=top><td>H</td><td>logrotate starts compress the old log file <i>file.log.sav</i> into <i>file.log.gz</i></td><td>Start compress</td><td>04:06:03</td><tr>
+<tr valign=top><td>I</td><td><ul>If some apache threads/processes are still running (because the kill sent was -USR1, so child process are waiting end of request before to stop), then those threads/processes are still writing to <i>file.log.sav</i>.<br>If kill -HUP was used, all process are already restarted so all writes in new <i>file.log</i>.</td><td>&nbsp;</td><td>&nbsp;</td><tr>
+<tr valign=top><td>J</td><td>logrotate has finished to compress log file into <i>file.log.gz</i>. File <i>file.log.sav</i> is deleted.</td><td>End&nbsp;of&nbsp;compress<br>End&nbsp;of&nbsp;logrotate</td><td>04:07:03</td><tr>
+<tr valign=top><td>K</td><td><ul>If signal was -USR1, some old childs can still run (when serving a very long request for example). So the log writing, still done in same file handle are going to a file that has been removed. So log writing are lost nowhere (this is only if -USR1 was used and if request was very long).</td><td>&nbsp;</td><td>&nbsp;</td><tr>
 </table>
 <br>
 The advantage of this solution is that it is a very common way of working, used by a lot of
@@ -588,20 +590,20 @@ If you use the -USR1 signal, you will not kill any request. But you will loose a
 were wrote during D and E (like with -HUP) but also all hits that are still running after H
 (all very long request that requires several minutes to be served). If hit ends during I, it is
 wrote in a log file already analyzed, if hit ends at K, it is wrote nowhere. In the example,
-it's a also a 0.07% error plus error for other not visible hits that were finished during I or K,
-but number of such hits should not very low since only hits that started before G and not
+it's also a 0.07% error plus error for other not visible hits that were finished during I or K,
+but number of such hits should be very low since only hits that started before G and not
 finished after H are concerned. In most cases a hits needs only few milliseconds to be served
-so error could be ignored.<br>
+so lost hits could be ignored.<br>
 <br>
 Note also that if you have x logrotate config files, with each of them a postrotate with a
-kill -HUP, you send a kill x times your server process. So try to include several log files
+kill -HUP, you send a kill x times to your server process. So try to include several log files
 in same logrotate config file. You can have several awstats update command in the same
-prerotate section and you will send the -HUP only once, after that all updates are finished.
-However, doing this, you will have a lap time between D and E for all those log files that will
-be egal to the maximum of all lap for each file.<br>
+prerotate section and you will send the -HUP only once, after all updates are finished.
+However, doing this, you will have a lap time between D and F (were some hits are lost) that will
+be higher.<br>
 <br>
 
-<li> You can also choose to run the AWStats update process only once the log file has been
+<li> Another common way of working is to choose to run the AWStats update process only once the log file has been
 archived.<br>
 This is required for example if you use the <a href="http://cronolog.org" target=awstatsbis>cronolog</a>
 or rotatelog tools to rotate your log files. For example, Apache users can setup their Apache
@@ -613,23 +615,24 @@ rotate is done, so you must run it AFTER the rotate process, so on the archived 
 To setup awstats to always point to last archive log file, you can use the 'tags' available for
 <a href="awstats_config.html#LogFile">LogFile</a>.<br>
 The problem with that is that your data are refreshed only after a rotate has done. However,
-you will miss absolutely nothing.<br>
+you will miss absolutely nothing (no hits) and your server processes are never killed.<br>
 <br>
 <li> So, if you really want to not loose absolutely no hit and want to have updates more
 frequently than the rotate frequency, the best way is still an hybrid solution (i am not sure
 that it worth the pain, and remember that statistics are only statistics):<br>
-You run the awstats update process from you crontab every hour for example and half and hour
-before the rotate has done.
-Then, once the rotate has been done, and before the next scheduled awstats update process start,
+You run the awstats update process from you crontab frequently, every hour for example, and half and hour
+before the rotate has done. See next FAQ to know how to setup a scheduled job.<br>
+Then, once the rotate has been done (by the logrotate or by a piped cronolog log file), and
+before the next scheduled awstats update process start,
 you run another update process on the archived log file using the -logfile option to force
-update on the archived log file and not the log file that is currently defined in awstats
-config file and used by cron update. This will allow you to update the half hour missing,
+update on the archived log file and not the current log file defined in awstats
+config file. This will allow you to update the half hour missing,
 until the log rotate (AWStats will find the new lines). However don't forget that this
 particular update MUST be finished before the next croned update.<br>
 <br>
 
 <a name="CRONTAB"></a><br>
-<b><u>FAQ-COM130 : HOW TO RUN AWSTATS FREQUENTLY</u></b><br>
+<b><u>FAQ-COM130 : HOW TO RUN AWSTATS UPDATE PROCESS FREQUENTLY</u></b><br>
 <font class=CProblem>PROBLEM:</font><br>
 AWStats must be ran frequently to update statistics. How can I do this ?<br>
 <font class=CSolution>SOLUTION:</font><br>
@@ -662,8 +665,8 @@ I don't want to see my own IP address in the stats or I want to exclude counting
 You must edit the config file to change the <a href="awstats_config.html#SkipHosts">SkipHosts</a> parameter.<br>
 For example, to exclude:<br>
 <li> your own IP address 123.123.123.123, use <a href="awstats_config.html#SkipHosts">SkipHosts</a>="123.123.123.123"<br>
-<li> the whole subnet 123.123.123.xxx, use <a href="awstats_config.html#SkipHosts">SkipHosts</a>="123.123.123"<br>
-<li> all sub hosts xxx.myintranet.com, use <a href="awstats_config.html#SkipHosts">SkipHosts</a>=".myintranet.com" (This one works only if DNS lookup is already done in your
+<li> the whole subnet 123.123.123.xxx, use <a href="awstats_config.html#SkipHosts">SkipHosts</a>="REGEX[^123\.123\.123\.]"<br>
+<li> all sub hosts xxx.myintranet.com, use <a href="awstats_config.html#SkipHosts">SkipHosts</a>="REGEX[\.myintranet\.com$]" (This one works only if DNS lookup is already done in your
 log file).<br>
 <br> 
 
@@ -799,7 +802,6 @@ If you want to check how serious is your log analyzer, try to parse the followin
 <br>80.8.55.1 - - [01/Jan/2001:00:00:35 +0100] "GET /image2.png HTTP/1.0" 200 7009 "-" "Mozilla/4.0 (compatible; MSIE 5.5; Windows NT 5.0)"
 <br>80.8.55.1 - - [01/Jan/2001:00:00:40 +0100] "GET /dir/favicon.ico HTTP/1.0" 404 299 "-" "Mozilla/4.0 (compatible; MSIE 5.5; Windows NT 5.0)"
 <br>80.8.55.1 - - [01/Jan/2001:00:00:40 +0100] "GET /favicon.ico HTTP/1.0" 200 299 "-" "Mozilla/4.0 (compatible; MSIE 5.5; Windows NT 5.0)"
-<br>
 <br>80.8.55.1 - - [01/Jan/2001:12:00:00 +0100] "GET / HTTP/1.0" 200 7009 "http://WWW.SiteRefereR:80/cgi-bin/azerty.pl?q=a" "Mozilla/4.7 [fr] (Win95; I)"
 <br>80.8.55.1 - - [01/Jan/2001:12:00:10 +0100] "GET /page1.html HTTP/1.0" 200 7009 "-" "Mozilla/4.7 [fr] (Win95; I)"
 <br>80.8.55.1 - - [01/Jan/2001:12:00:20 +0100] "GET /page2.cgi HTTP/1.0" 200 7009 "-" "Mozilla/4.7 [fr] (Win95; I)"
@@ -1127,27 +1129,35 @@ You must use : <i>LogFormat=6</i><br>
 You must use : <i>LogFormat="%host %other %lognamequot %time1 %methodurl %code %bytesd %refererquot %uaquot"</i><br>
 </td></tr></table>
 
+<u>If your log records are EXACTLY like this (With <b>Oracle9iAS</b>):</u><br>
+<i>62.161.78.73 - [dd/mmm/yyyy:hh:mm:ss +0x00] GET /page.html HTTP/1.1 200 1234 - "Mozilla/4.0 (compatible; MSIE 5.01; Windows NT 5.0)"</i><br>
+Where separators are <tab> chars or several spaces,
+You must use : <i>LogFormat="%host %logname %time1 %method %url %other %code %bytesd %referer %uaquot"</i>
+and <i>LogSeparator="\s+"</i><br>
+
+<table bgcolor=#F4F4F4 width="100%" class=CFAQ><tr class=CFAQ><td class=CFAQ>
 <u>If you use a FTP server like <b>ProFTP</b>:</u><br>
 See <a href="#FTP">FAQ-COM090</a>.<br>
-
-<table bgcolor=#F4F4F4 width="100%" class=CFAQ><tr class=CFAQ><td class=CFAQ>
-<u>If you want to analyze a mail log file (<b>Sendmail</b>, <b>Exchange</b>):</u><br>
-See <a href="#MAIL">FAQ-COM100</a>.<br>
 </td></tr></table>
 
-<u>If you use a Media Server (<b>Realmedia</b>, <b>Windows Media Server</b>):</u><br>
-See <a href="#MEDIASERVER">FAQ-COM110</a>.<br>
+<u>If you want to analyze a mail log file (<b>Postfix</b>, <b>Sendmail</b>, <b>QMail</b>, <b>MDaemon</b>, <b>Exchange</b>):</u><br>
+See <a href="#MAIL">FAQ-COM100</a>.<br>
 
 <table bgcolor=#F4F4F4 width="100%" class=CFAQ><tr class=CFAQ><td class=CFAQ>
+<u>If you use a Media Server (<b>Realmedia</b>, <b>Windows Media Server</b>):</u><br>
+See <a href="#MEDIASERVER">FAQ-COM110</a>.<br>
+</td></tr></table>
+
 <u>If your log records are EXACTLY like this (With some providers):</u><br>
 <i>62.161.78.73 - - [dd/Month/yyyy:hh:mm:ss +0x00] "GET /page.html HTTP/1.1" "-" 200 1234</i><br>
 You must use : <i>LogFormat="%host %other %logname %time1 %methodurl %other %code %bytesd"</i><br>
 Note: Browsers, OS's, Keywords and Referers features are not available with a such format.<br>
-</td></tr></table>
 
+<table bgcolor=#F4F4F4 width="100%" class=CFAQ><tr class=CFAQ><td class=CFAQ>
 <u>There is a lot of other possible log formats.</u><br>
 You must use a personalized log format LogFormat ="..." as described in config file to
 support other various log formats.<br>
+</td></tr></table>
 <br>
 
 
