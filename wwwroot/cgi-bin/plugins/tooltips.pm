@@ -164,7 +164,7 @@ sub _ReadAndOutputTooltipFile {
 		my $aws_PROG=ucfirst($PROG);
 		my $aws_VisitTimeout = $VISITTIMEOUT/10000*60;
 		my $aws_NbOfRobots = scalar keys %RobotsHashIDLib;
-		my $aws_NbOfSearchEngines = scalar keys %SearchEnginesHashIDLib;
+		my $aws_NbOfSearchEngines = scalar keys %SearchEnginesHashLib;
 		while (<LANG>) {
 			if ($_ =~ /\<!--/) { next; }	# Remove comment
 			# Search for replaceable parameters
