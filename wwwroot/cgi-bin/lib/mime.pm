@@ -41,6 +41,8 @@
 # HTML Dynamic pages or script
 'ksh','script',
 'php','script',
+'php3','script',
+'php4','script',
 'pl','script',
 'py','script',
 'sh','script',
@@ -99,7 +101,7 @@
 # HTML Static page
 'html','page','htm','page',
 # HTML Dynamic pages or script
-'ksh','script','php','script','pl','script','py','script','sh','script','shtml','script','tcl','script',
+'ksh','script','php','script','php3','script','php4','script','pl','script','py','script','sh','script','shtml','script','tcl','script',
 # Image
 'gif','image','png','image','bmp','image','jpg','image','jpeg','image',
 # Document
