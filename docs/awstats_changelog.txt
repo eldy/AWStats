@@ -23,6 +23,8 @@ Fixes:
   when DNSLookup and Geoip are both enabled.
 
 New features/improvements:
+- Added 'rawlog' plugin to add a form to show raw log content with filter
+  capabilities.
 - Added maillogconvert.pl for analyzing mail log files (better support
   for sendmail, postfix and qmail log files).
 - Added -addfilenum option in logresolvemerge.pl
@@ -30,10 +32,11 @@ New features/improvements:
   session.
 - Added support for Darwin streaming server.
 - Added Firebird browser detection.
-- awstats_buildstaticpages.pl can also build one PDF file (need htmldoc).
+- awstats_buildstaticpages.pl can also build a PDF file (need htmldoc).
 - Better management of plugin load failure.
 - Added LogType parameter.
 - Added option -dnscache= in logresolvemerge.pl to use dns static file.
+- Minor bug fixes.
 
 Other/Documentation:
 - The "Popup WhoIs link" code is now handled by new 'hostinfo' plugin.
