@@ -197,7 +197,7 @@ when reading it), follow the example:<br>
 4.0+ for tag %DW-n<br>
 4.1+ for tag %NS-n<br>
 5.0+ for tag %WY-n<br>
-5.1+ for tag %Dw-n<br>
+5.1+ for tag %Wm-n, %Wy-n, %Dw-n<br>
 <br># "LogFile" contains the web server logfile to analyze.
 <br># You can use a full path or relative path from awstats.pl directory.
 <br># Example: "/var/log/apache/access.log"
@@ -212,7 +212,9 @@ when reading it), follow the example:<br>
 <br>#   %HH-n    is replaced with hour we were n hours ago
 <br>#   %NS-n    is replaced with number of seconds at 00:00 since 1970
 <br>#   %WM-n    is replaced with the week number in month (1-5)
+<br>#   %Wm-n    is replaced with the week number in month (0-4)
 <br>#   %WY-n    is replaced with the week number in year (1-52)
+<br>#   %Wy-n    is replaced with the week number in year (0-51)
 <br>#   %DW-n    is replaced with the day number in week (1-7, 1=sunday)
 <br>#                              use n=24 if you need (1-7, 1=monday)
 <br>#   %Dw-n    is replaced with the day number in week (0-6, 0=sunday)
@@ -266,6 +268,8 @@ when reading it), follow the example:<br>
 <br>#   %gzipin           Mod_gzip compression input bytes: In:XXX
 <br>#   %gzipout          Mod_gzip compression output bytes & ratio: Out:YYY:ZZZpct.
 <br>#   %gzipratio        Mod_gzip compression ratio: ZZZpct.
+<br>#   %email            EMail sender (for mail log)
+<br>#   %email_r          EMail receiver (for mail log)
 <br>#   %syslog           Syslog-specific time and host stamp with format: Mon dd hh:mm:ss hostname
 <br>#   %virtualname      Web sever virtual hostname. Use this tag when same log
 <br>#                     file contains data of several virtual web servers. The
@@ -273,10 +277,11 @@ when reading it), follow the example:<br>
 <br>#   If your log format has some fields not included in this list, use
 <br>#   %other            Means another field
 <br>#
-<br># Examples for Apache combined logs (this two examples are equivalent):
+<br># Examples for Apache combined logs (following two examples are equivalent):
 <br># LogFormat = 1
 <br># LogFormat = "%host %other %logname %time1 %methodurl %code %bytesd %refererquot %uaquot"
-<br># Examples for IIS (this two examples are equivalent):
+<br>#
+<br># Examples for IIS (following two examples are equivalent):
 <br># LogFormat = 2
 <br># LogFormat = "%time2 %host %logname %method %url %code %bytesd %other %ua %referer"
 <br>#

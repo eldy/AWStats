@@ -1423,8 +1423,10 @@ sub Check_Config {
 		if ($timetag =~ /DD/i)   { $LogFile =~ s/%DD-$timephase/$olderday/ig; next; }
 		if ($timetag =~ /HH/i)   { $LogFile =~ s/%HH-$timephase/$olderhour/ig; next; }
 		if ($timetag =~ /NS/i)   { $LogFile =~ s/%NS-$timephase/$olderns/ig; next; }
-		if ($timetag =~ /WM/i)   { $LogFile =~ s/%WM-$timephase/$olderweekofmonth/ig; next; }
-		if ($timetag =~ /WY/i)   { $LogFile =~ s/%WY-$timephase/$olderweekofyear/ig; next; }
+		if ($timetag =~ /WM/)    { $LogFile =~ s/%WM-$timephase/$olderweekofmonth/g; next; }
+		if ($timetag =~ /Wm/)    { my $olderweekofmonth0=$olderweekofmonth-1; $LogFile =~ s/%Wm-$timephase/$olderweekofmonth0/g; next; }
+		if ($timetag =~ /WY/)    { $LogFile =~ s/%WY-$timephase/$olderweekofyear/g; next; }
+		if ($timetag =~ /Wy/)    { my $olderweekofyear0=$olderweekofyear-1; $LogFile =~ s/%Wy-$timephase/$olderweekofyear0/g; next; }
 		if ($timetag =~ /DW/)    { $LogFile =~ s/%DW-$timephase/$olderwday/g; next; }
 		if ($timetag =~ /Dw/)    { my $olderwday0=$olderwday-1; $LogFile =~ s/%Dw-$timephase/$olderwday0/g; next; }
 		# If unknown tag
@@ -1437,8 +1439,10 @@ sub Check_Config {
 	$LogFile =~ s/%DD/$nowday/ig;
 	$LogFile =~ s/%HH/$nowhour/ig;
 	$LogFile =~ s/%NS/$nowns/ig;
-	$LogFile =~ s/%WM/$nowweekofmonth/ig;
-	$LogFile =~ s/%WY/$nowweekofyear/ig;
+	$LogFile =~ s/%WM/$nowweekofmonth/g;
+	my $nowweekofmonth0=$nowweekofmonth-1; $LogFile =~ s/%Wm/$nowweekofmonth0/g;
+	$LogFile =~ s/%WY/$nowweekofyear/g;
+	my $nowweekofyear0=$nowweekofyear-1; $LogFile =~ s/%Wy/$nowweekofyear0/g;
 	$LogFile =~ s/%DW/$nowwday/g;
 	my $nowwday0=$nowwday-1; $LogFile =~ s/%Dw/$nowwday0/g;
 	$LogFormat =~ s/\\//g;

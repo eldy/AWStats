@@ -18,6 +18,10 @@ AWStats Changelog
 - New parameter: Added URLWithQueryWithoutFollowingParameters to exclude some
   parameters from URL when URLWithQuery is on.
 - New parameter: Added URLReferrerWithquery.
+- Added tag %Wm-n for LogFile parameter (replaced with the week number in month
+  but differs from %WM-n because start with 0).
+- Added tag %Wy-n for LogFile parameter (replaced with the week number in year
+  but differs from %WY-n because start with 0).
 - Added tag %Dw-n for LogFile parameter (replaced with the day number in week
   but differs from %DW-n because start with 0).
 - Fixed: Log analyze is no more stopped if log file contains binary chars.
