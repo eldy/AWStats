@@ -118,12 +118,10 @@ If you really need to use <a href="awstats_config.html#URLWithQuery">URLWithQuer
  The more often you
 launch AWStats, the less AWStats has new lines in log to process. This solve also the ActiveState memory problem (see next advice).<br>
 <img src="images/star.png"><img src="images/star.png"><img src="images/star.png">
-- Use standard Perl distribution instead of ActiveState (It seems that ActiveState Perl 5.006 and may be other version)
-have an important memory problem making speed of analysis slower and slower when analysing more and more lines.<br>
+- Use last Perl version (For example 5.8 is 5% faster than 5.6) and use standard Perl distribution instead of ActiveState (For example Standard Perl 5.8 Win32 binary is 25% faster than
+ActiveState. And ActiveStates 5.006, and may be other versions, have an important memory problem making speed of analysis slower and slower when analysing more and more lines).<br>
 <img src="images/star.png"><img src="images/star.png">
 - Use last AWStats version.<br>
-<img src="images/star.png"><img src="images/star.png">
-- Use last Perl version. For example Perl 5.8 is 5% faster than Perl 5.6<br>
 <img src="images/star.png">
 - If you use Apache and don't rotate your logs (not the best way of working), set <a href="awstats_config.html#PurgeLogFile">PurgeLogFile</a> to 1 (By default, to avoid bad surprise,
 <a href="awstats_config.html#PurgeLogFile">PurgeLogFile</a> is 0 in configure file, but you can set it to 1 to ask AWStats
