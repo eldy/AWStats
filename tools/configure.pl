@@ -9,7 +9,11 @@
 #-------------------------------------------------------
 # $Revision$ - $Author$ - $Date$
 use strict;
-use Win32::TieRegistry;
+
+# For windows registry management
+my $reg;
+eval('use Win32::TieRegistry ( Delimiter=>"/", TiedRef=>\$reg )');
+
 
 
 #-------------------------------------------------------
@@ -130,7 +134,10 @@ my $file=shift;
 my $fileto=shift||"$file.tmp";
 
 if (! $file) { error("Call to update_awstats_config with wrong parameter"); }
-if ($file =~ /Developpements[\\\/]awstats/i) { return; }	# To avoid script working in my dev area
+if ($file =~ /Developpements[\\\/]awstats/i) {
+	print "  This is my dev area. Don't touch.\n";
+	return;
+}	# To avoid script working in my dev area
 
 open(FILE, $file) || error("Failed to open $file for update");
 open(FILETMP, ">$fileto") || error("Failed to open $fileto for writing");
@@ -265,12 +272,12 @@ if ($OS eq 'linux') {
 	}
 }
 if ($OS eq 'windows') {
-	$Registry->Delimiter("/");
-	if ($tips=$Registry->{"LMachine/Software/Apache Group/Apache/"}) {
+	$reg->Delimiter("/");
+	if ($tips=$reg->{"LMachine/Software/Apache Group/Apache/"}) {
 		# If Apache registry call successfull
 		my $found=0;
 		foreach( sort keys %$tips  ) {
-			my $path=$Registry->{"LMachine/Software/Apache Group/Apache/$_/ServerRoot"};
+			my $path=$reg->{"LMachine/Software/Apache Group/Apache/$_/ServerRoot"};
 			$path=~s/[\\\/]$//;
 			if (-d "$path" && -s "$path/conf/httpd.conf") {
 				print "  Found a Web server Apache install in '$path'\n";
@@ -279,6 +286,32 @@ if ($OS eq 'windows') {
 			}
 		}
 	}
+}
+if ( scalar keys %ApacheConfPath) {
+	# Ask web server path
+	print "configure.pl did not find your web server path.\n";
+	
+	print "Please, enter full path directory of you web server.\n";
+	print "Example: /usr/local/apache\n";
+	print "Example: d:\\Program files\\apache group\\apache\n";
+	my $bidon='';
+	while (! -d "$bidon") {
+		print "Web server path (CTRL+C to cancel):";
+		read STDIN, $bidon, 1;
+		if (! -d "$bidon") { print "This directory does not exists.\n"; }
+	}
+	$ApachePath{"$bidon"}=1;
+
+	print "Now, enter full config file path of you web server.\n";
+	print "Example: /etc/httpd/apache.conf\n";
+	print "Example: d:\\Program files\\apache group\\apache\\conf\\httpd.conf\n";
+	my $bidon='';
+	while (! -f "$bidon") {
+		print "Config file path (CTRL+C to cancel):";
+		read STDIN, $bidon, 1;
+		if (! -f "$bidon") { print "This file does not exists.\n"; }
+	}
+	$ApacheConfPath{"$bidon"}=1;
 }
 
 if (! scalar keys %ApacheConfPath) {
@@ -291,6 +324,7 @@ if (! scalar keys %ApacheConfPath) {
 foreach my $key (keys %ApacheConfPath) {
 	print "- Check and complete web server config file '$key'...\n";
 	# Read config file to search for awstats directives
+	my $commonchangedtocombined=0;
 	READ:
 	$LogFormat{$key}=4;
 	open(CONF,"<$key") || error("Failed to open config file '$key' for reading");
@@ -306,10 +340,12 @@ foreach my $key (keys %ApacheConfPath) {
 			print "This means that some features can't work (os, browsers and keywords detection).\n";
 			print "Do you want me to setup Apache to write 'combined' log files [y/N] ?\n";
 			my $bidon='';
-			while ($bidon !~ /^[yN]$/) { read STDIN, $bidon, 1; }
-			if ($bidon eq 'y') {
+			while ($bidon !~ /^[yN]/i) { read STDIN, $bidon, 1; }
+			if ($bidon =~ /^y/i) {
 				close CONF;				
-				update_httpd_config("key");
+				update_httpd_config("$key");
+				$WebServerChanged=1;
+				$commonchangedtocombined=1;
 				goto READ;
 			}
 		}
@@ -324,10 +360,11 @@ foreach my $key (keys %ApacheConfPath) {
 
 	if ($awstatsjsfound && $awstatsclassesfound && $awstatscssfound && $awstatsiconsfound && $awstatscgifound) {
 		$UseAlias=1;
-		print "  Config file already complete.\n";
+		if ($commonchangedtocombined) { print "  Common log files changed to combined.\n"; }
+		print "  AWStats directives already present.\n";
 		next;
 	}
-	
+
 	# Add awstats directives
 	open(CONF,">>$key") || error("Failed to open config file '$key' for adding AWStats directives");
 		binmode CONF;
@@ -401,12 +438,13 @@ else {
 # ----------------------------------
 if ($WebServerChanged) {
 	if ($OS eq 'linux') 	{
+		print "- Restart Apache with '/usr/bin/service httpd restart'\n";
 	 	my $ret=`/usr/bin/service httpd restart`;
 	}
 	if ($OS eq 'windows')	{
 		foreach my $key (keys %ApachePath) {
 			if (-f "$key/bin/Apache.exe") {
-				print "Restart Apache with '\"$key/bin/Apache.exe\" -k restart'\n";
+				print "- Restart Apache with '\"$key/bin/Apache.exe\" -k restart'\n";
 			 	my $ret=`"$key/bin/Apache.exe" -k restart`;
 			}
 		}
