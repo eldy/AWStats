@@ -49,9 +49,9 @@ $DirCgi, $DirData, $DirIcons, $DirLang,
 $DetailedReportsOnNewWindows, $Expires, $Extension, $FileConfig, $FileSuffix, $FirstDayOfWeek,
 $FirstTime, $HTMLHeadSection, $HTMLEndSection, $Host, $HostAlias, $LastTime, $LastUpdate,
 $LogFile, $LogFormat, $LogFormatString, $Logo, $LogoLink,
-$MaxNbOfDays, $MaxNbOfHostsShown, $MaxNbOfKeywordsShown,
+$MaxNbOfDays, $MaxNbOfHostsShown, $MaxNbOfKeywordsShown, $MaxNbOfLoginShown,
 $MaxNbOfPageShown, $MaxNbOfRefererShown, $MaxNbOfRobotShown,
-$MinHitFile, $MinHitHost, $MinHitKeyword, $MinHitRefer, $MinHitRobot,
+$MinHitFile, $MinHitHost, $MinHitKeyword, $MinHitLogin, $MinHitRefer, $MinHitRobot,
 $MonthRequired, $NbOfLinesForCorruptedLog,
 $HTMLOutput, $PROG, $PageCode,
 $PurgeLogFile, $QueryString, $RatioBytes, $RatioHits, $RatioHosts, $RatioPages,
@@ -78,7 +78,7 @@ $found, $internal_link) = ();
 %MonthBytes = %MonthHits = %MonthHostsKnown = %MonthHostsUnknown = %MonthPages = %MonthUnique = %MonthVisits =
 %monthlib = %monthnum = ();
 
-$VERSION="3.2 (build 7)";
+$VERSION="3.2 (build 10)";
 $Lang="en";
 
 # Default value
@@ -1074,6 +1074,8 @@ sub Read_Config_File {
 		if ($param =~ /^MinHitHost/)            { $MinHitHost=$value; next; }
 		if ($param =~ /^MaxNbOfRobotShown/)     { $MaxNbOfRobotShown=$value; next; }
 		if ($param =~ /^MinHitRobot/)           { $MinHitRobot=$value; next; }
+		if ($param =~ /^MaxNbOfLoginShown/)     { $MaxNbOfLoginShown=$value; next; }
+		if ($param =~ /^MinHitLogin/)           { $MinHitLogin=$value; next; }
 		if ($param =~ /^MaxNbOfPageShown/)      { $MaxNbOfPageShown=$value; next; }
 		if ($param =~ /^MinHitFile/)            { $MinHitFile=$value; next; }
 		if ($param =~ /^MaxNbOfRefererShown/)   { $MaxNbOfRefererShown=$value; next; }
@@ -1238,6 +1240,8 @@ sub Check_Config {
 	if ($MaxNbOfDomain !~ /^[\d][\d]*/)           { $MaxNbOfDomain=25; }
 	if ($MaxNbOfHostsShown !~ /^[\d][\d]*/)       { $MaxNbOfHostsShown=25; }
 	if ($MinHitHost !~ /^[\d][\d]*/)              { $MinHitHost=1; }
+	if ($MaxNbOfLoginShown !~ /^[\d][\d]*/)       { $MaxNbOfLoginShown=10; }
+	if ($MinHitLogin !~ /^[\d][\d]*/)             { $MinHitLogin=1; }
 	if ($MaxNbOfRobotShown !~ /^[\d][\d]*/)       { $MaxNbOfRobotShown=25; }
 	if ($MinHitRobot !~ /^[\d][\d]*/)             { $MinHitRobot=1; }
 	if ($MaxNbOfPageShown !~ /^[\d][\d]*/)        { $MaxNbOfPageShown=25; }
@@ -1387,6 +1391,7 @@ sub Check_Config {
 	if ($Message[91] eq "") { $Message[91]="Days of week"; }
 	if ($Message[92] eq "") { $Message[92]="Who"; }
 	if ($Message[93] eq "") { $Message[93]="When"; }
+	if ($Message[94] eq "") { $Message[94]="Authenticated users"; }
 }
 
 #--------------------------------------------------------------------
@@ -1440,9 +1445,9 @@ sub Read_History_File {
 			while ($field[0] ne "END_VISITOR") {
 		    	if ($field[0] ne "Unknown") { if ($field[1] > 0) { $MonthUnique{$year.$month}++; } $MonthHostsKnown{$year.$month}++; }
 				if ($part && ($QueryString !~ /output=/i || $QueryString =~ /output=lasthosts/i)) {
-		        	$_hostmachine_p{$field[0]}+=$field[1];
-		        	$_hostmachine_h{$field[0]}+=$field[2];
-		        	$_hostmachine_k{$field[0]}+=$field[3];
+		        	if ($field[1] > 0) { $_hostmachine_p{$field[0]}+=$field[1]; }
+		        	if ($field[2] > 0) { $_hostmachine_h{$field[0]}+=$field[2]; }
+		        	if ($field[3] > 0) { $_hostmachine_k{$field[0]}+=$field[3]; }
 		        	if (! $_hostmachine_l{$field[0]} && $field[4] > 0) { $_hostmachine_l{$field[0]}=int($field[4]); }
 				}
 				$_=<HISTORY>;
@@ -1474,6 +1479,29 @@ sub Read_History_File {
 			&debug(" End of UNKNOWN_IP section ($count entries)");
 			next;
     	}
+	    if ($field[0] eq "BEGIN_LOGIN")   {
+			&debug(" Begin of LOGIN section");
+			$_=<HISTORY>;
+			chomp $_; s/\r//;
+			if ($_ eq "") { error("Error: History file \"$DirData/$PROG$_[1]$_[0]$FileSuffix.txt\" is corrupted. Restore a backup of this file, or remove it (data for this month will be lost)."); }
+			my @field=split(/\s+/,$_);
+			my $count=0;
+			while ($field[0] ne "END_LOGIN") {
+				$count++;
+            	if ($part) {
+			    	if ($field[1] > 0) { $_login_p{$field[0]}+=$field[1]; }
+			    	if ($field[2] > 0) { $_login_h{$field[0]}+=$field[2]; }
+			    	if ($field[3] > 0) { $_login_k{$field[0]}+=$field[3]; }
+		        	if (! $_login_l{$field[0]} && $field[4] > 0) { $_login_l{$field[0]}=int($field[4]); }
+				}
+				$_=<HISTORY>;
+				chomp $_; s/\r//;
+				if ($_ eq "") { error("Error: History file \"$DirData/$PROG$_[1]$_[0]$FileSuffix.txt\" is corrupted. Restore a backup of this file, or remove it (data for this month will be lost)."); }
+				@field=split(/\s+/,$_);
+			}
+			&debug(" End of LOGIN section ($count entries)");
+			next;
+    	}
 	    if ($field[0] eq "BEGIN_TIME")      {
 			&debug(" Begin of TIME section");
 			$_=<HISTORY>;
@@ -1483,7 +1511,9 @@ sub Read_History_File {
 			while ($field[0] ne "END_TIME") {
 		    	$MonthPages{$year.$month}+=$field[1]; $MonthHits{$year.$month}+=$field[2]; $MonthBytes{$year.$month}+=$field[3];
 				if ($part) {
-		        	$_time_p[$field[0]]+=$field[1]; $_time_h[$field[0]]+=$field[2]; $_time_k[$field[0]]+=$field[3];
+		        	$_time_p[$field[0]]+=$field[1];
+		        	$_time_h[$field[0]]+=$field[2];
+		        	$_time_k[$field[0]]+=$field[3];
 				}
 				$_=<HISTORY>;
 				chomp $_; s/\r//;
@@ -1716,6 +1746,10 @@ sub Save_History_File {
 	foreach my $key (keys %_unknownip_l) { print HISTORYTMP "$key $_unknownip_l{$key}\n"; next; }
 	print HISTORYTMP "END_UNKNOWNIP\n";
 
+	print HISTORYTMP "BEGIN_LOGIN\n";
+	foreach my $key (keys %_login_h) { print HISTORYTMP "$key $_login_p{$key} $_login_h{$key} $_login_k{$key} $_login_l{$key}\n"; next; }
+	print HISTORYTMP "END_LOGIN\n";
+
 	# Save page list in score sorted order to allow to show reports faster and saving memory.
 	print HISTORYTMP "BEGIN_SIDER\n";
 	foreach my $key (sort {$SortDir*$_sider_p{$a} <=> $SortDir*$_sider_p{$b}} keys %_sider_p) { print HISTORYTMP "$key $_sider_p{$key}\n"; next; }
@@ -1807,8 +1841,10 @@ sub Init_HashArray {
 	# Delete/Reinit all hash arrays with name beginning by _
 	%_browser_h = %_domener_h = %_domener_k = %_domener_p = %_errors_h = 
 	%_hostmachine_h = %_hostmachine_k = %_hostmachine_l = %_hostmachine_p =
-	%_keyphrases = %_os_h = %_pagesrefs_h = %_robot_h = %_robot_l = %_se_referrals_h =
-	%_sider404_h = %_sider_h = %_sider_k = %_sider_p = %_unknownip_l = %_unknownreferer_l =	%_unknownrefererbrowser_l = ();
+	%_keyphrases = %_os_h = %_pagesrefs_h = %_robot_h = %_robot_l = 
+	%_login_h = %_login_p = %_login_k = %_login_l =
+	%_se_referrals_h = %_sider404_h = %_sider_h = %_sider_k = %_sider_p =
+	%_unknownip_l = %_unknownreferer_l =	%_unknownrefererbrowser_l = ();
 }
 
 #--------------------------------------------------------------------
@@ -2102,6 +2138,11 @@ if ($UpdateStats) {
 				$pos_rc = $i; $i++;
 				$PerlParsingFormat .= "([^\\s]*) ";
 			}
+			if ($f =~ /%logname$/ || $f =~ /%l$/ || $f =~ /cs-username$/) {
+				$found=1; 
+				$pos_rc = $i; $i++;
+				$PerlParsingFormat .= "([^\\s]*) ";
+			}
 			if ($f =~ /%time1$/ || $f =~ /%t$/) {
 				$found=1; 
 				$pos_date = $i;
@@ -2376,8 +2417,17 @@ if ($UpdateStats) {
 		$_dayofweek_h[$TmpDOW[1]]++; 
 		$_dayofweek_k[$TmpDOW[1]]+=$field[$pos_size]; 
 
-		# Analize Pages, Hits, Kilo at days of week
-		#-------------------------------------------
+		# Analize login
+		#--------------
+		if ($field[$pos_logname] && $field[$pos_logname] ne "-") {
+			# We found an authenticated user
+			if ($PageBool) {
+				$_login_p{$field[$pos_logname]}++;										#Count accesses for page (page)
+			}
+			$_login_h{$field[$pos_logname]}++;											#Count accesses for page (hit)
+			$_login_k{$field[$pos_logname]}+=$field[$pos_size];							#Count accesses for page (kb)
+			$_login_l{$field[$pos_logname]}=$timeconnexion;
+		}
 
 		# Analyze: IP-address
 		#--------------------
@@ -2810,8 +2860,10 @@ EOF
 			print "<td class=AWL>";
 			print "<a href=\"$DirCgi$PROG.$Extension?".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang#DOMAINS\">$Message[17]</a> &nbsp; ";
 			print "<a href=\"$DirCgi$PROG.$Extension?".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang#VISITOR\">".ucfirst($Message[26])."</a> &nbsp; ";
+			print "<a href=\"$DirCgi$PROG.$Extension?output=unknownip&".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang\">$Message[45]</a> &nbsp;\n";
 			print "<a href=\"$DirCgi$PROG.$Extension?".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang#ROBOTS\">$Message[53]</a> &nbsp; ";
-			print "<a href=\"$DirCgi$PROG.$Extension?output=unknownip&".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang\">$Message[45]</a><br></td></tr>\n";
+			if ($ShowAuthenticatedUsers) { print "<a href=\"$DirCgi$PROG.$Extension?".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang#LOGIN\">$Message[94]</a> &nbsp; "; }
+			print "<br></td></tr>";
 			# Navigation
 			print "<tr><th class=AWL>$Message[72] : </th>";
 			print "<td class=AWL>";
@@ -3204,7 +3256,7 @@ EOF
 		my @sortdomains_p=sort { $SortDir*$_domener_p{$a} <=> $SortDir*$_domener_p{$b} } keys (%_domener_p);
 		print "$CENTER<a name=\"DOMAINS\">&nbsp;</a><BR>";
 		&tab_head($Message[25]);
-		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH colspan=2>$Message[17]</TH><TH>Code</TH><TH bgcolor=\"#$color_p\" width=80>$Message[56]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH bgcolor=\"#$color_k\">$Message[75]</TH><TH>&nbsp;</TH></TR>\n";
+		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH colspan=2>$Message[17]</TH><TH>Code</TH><TH bgcolor=\"#$color_p\" width=80>$Message[56]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH bgcolor=\"#$color_k\" width=80>$Message[75]</TH><TH>&nbsp;</TH></TR>\n";
 		$total_p=$total_h=$total_k=0;
 		$max_h=1; foreach my $key (values %_domener_h) { if ($key > $max_h) { $max_h = $key; } }
 		$max_k=1; foreach my $key (values %_domener_k) { if ($key > $max_k) { $max_k = $key; } }
@@ -3256,7 +3308,7 @@ EOF
 		print "$CENTER<a name=\"VISITOR\">&nbsp;</a><BR>";
 		$MaxNbOfHostsShown = $TotalHostsKnown+($_hostmachine_h{"Unknown"}?1:0) if $MaxNbOfHostsShown > $TotalHostsKnown;
 		&tab_head("$Message[77] $MaxNbOfHostsShown $Message[55] ".($TotalHostsKnown+$TotalHostsUnknown)." $Message[26] ($TotalUnique $Message[11]) &nbsp; - &nbsp; <a href=\"$DirCgi$PROG.$Extension?output=lasthosts&".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang\">$Message[9]</a>");
-		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[81] : $TotalHostsKnown $Message[82], $TotalHostsUnknown $Message[1]</TH><TH bgcolor=\"#$color_p\" width=80>$Message[56]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH bgcolor=\"#$color_k\">$Message[75]</TH><TH>$Message[9]</TH></TR>\n";
+		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[81] : $TotalHostsKnown $Message[82], $TotalHostsUnknown $Message[1]</TH><TH bgcolor=\"#$color_p\" width=80>$Message[56]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH bgcolor=\"#$color_k\" width=80>$Message[75]</TH><TH width=120>$Message[9]</TH></TR>\n";
 		$total_p=$total_h=$total_k=0;
 		$count=0;
 		foreach my $key (sort { $SortDir*$_hostmachine_p{$a} <=> $SortDir*$_hostmachine_p{$b} } keys (%_hostmachine_p)) {
@@ -3285,6 +3337,41 @@ EOF
 		&tab_end;
 	}	
 	
+	# BY LOGIN
+	#----------------------------
+	if ($ShowAuthenticatedUsers) {
+		my @sortlogin_h=sort { $SortDir*$_login_h{$a} <=> $SortDir*$_login_h{$b} } keys (%_login_h);
+		print "$CENTER<a name=\"LOGIN\">&nbsp;</a><BR>";
+		&tab_head($Message[94]);
+		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[94]</TH><TH bgcolor=\"#$color_p\" width=80>$Message[56]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH bgcolor=\"#$color_k\" width=80>$Message[75]</TH><TH width=120>$Message[9]</TH></TR>\n";
+		$total_p=$total_h=$total_k=0;
+		$max_h=1; foreach my $key (values %_login_h) { if ($key > $max_h) { $max_h = $key; } }
+		$max_k=1; foreach my $key (values %_login_k) { if ($key > $max_k) { $max_k = $key; } }
+		$count=0; $rest_p=0;
+		foreach my $key (@sortlogin_h) {
+			if ($count >= $MaxNbOfLoginShown) { last; }
+			my $bredde_p=0;my $bredde_h=0;my $bredde_k=0;
+			if ($max_h > 0) { $bredde_p=int($BarWidth*$_login_p{$key}/$max_h)+1; }	# use max_h to enable to compare pages with hits
+			if ($max_h > 0) { $bredde_h=int($BarWidth*$_login_h{$key}/$max_h)+1; }
+			if ($max_k > 0) { $bredde_k=int($BarWidth*$_login_k{$key}/$max_k)+1; }
+			print "<TR><TD CLASS=AWL>$key</TD>";
+			print "<TD>$_login_p{$key}</TD><TD>$_login_h{$key}</TD><TD>".Format_Bytes($_login_k{$key})."</TD>";
+			if ($_login_l{$key}) { print "<td>".Format_Date($_login_l{$key})."</td>"; }
+			else { print "<td>-</td>"; }
+#			print "<TD CLASS=AWL>";
+#			print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_p\" WIDTH=$bredde_p HEIGHT=6 ALT=\"$Message[56]: $_login_p{$key}\" title=\"$Message[56]: $_login_p{$key}\"><br>\n";
+#			print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_h\" WIDTH=$bredde_h HEIGHT=6 ALT=\"$Message[57]: $_login_h{$key}\" title=\"$Message[57]: $_login_h{$key}\"><br>\n";
+#			print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_k\" WIDTH=$bredde_k HEIGHT=6 ALT=\"$Message[75]: ".Format_Bytes($_login_k{$key})."\" title=\"$Message[75]: ".Format_Bytes($_login_k{$key})."\">";
+#			print "</TD>";
+			print "</TR>\n";
+			$total_p += $_login_p{$key};
+			$total_h += $_login_h{$key};
+			$total_k += $_login_k{$key};
+			$count++;
+		}
+		&tab_end;
+	}	
+	
 	# BY ROBOTS
 	#----------------------------
 	if ($ShowRobotsStats) {
@@ -3298,7 +3385,7 @@ EOF
 			}
 		&tab_end;
 	}	
-	
+		
 	# BY PAGE
 	#-------------------------
 	if ($ShowPagesStats) {
@@ -3467,12 +3554,6 @@ EOF
 		&tab_end;
 	}	
 	
-	# BY AUTHENTICATED USERS
-	#-------------------------
-	if ($ShowAuthenticatedUsers) {
-		
-	}
-		
 	# BY ERRORS
 	#----------------------------
 	if ($ShowHTTPErrorsStats) {
