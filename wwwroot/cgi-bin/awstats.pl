@@ -60,7 +60,7 @@ $FrameName $Center $FileConfig $FileSuffix $Host $DayRequired $MonthRequired $Ye
 $QueryString $SiteConfig $StaticLinks $PageCode $PageDir $PerlParsingFormat $UserAgent
 $pos_vh $pos_host $pos_logname $pos_date $pos_tz $pos_method $pos_url $pos_code $pos_size
 $pos_referer $pos_agent $pos_query $pos_gzipin $pos_gzipout $pos_compratio
-$pos_cluster $pos_emails $pos_emailr $pos_hostr
+$pos_cluster $pos_emails $pos_emailr $pos_hostr @pos_extra
 /;
 $DIR=$PROG=$Extension='';
 $Debug = $ShowSteps = 0;
@@ -81,6 +81,7 @@ $QueryString, $SiteConfig, $StaticLinks, $PageCode, $PageDir, $PerlParsingFormat
 $pos_vh = $pos_host = $pos_logname = $pos_date = $pos_tz = $pos_method = $pos_url = $pos_code = $pos_size = -1;
 $pos_referer = $pos_agent = $pos_query = $pos_gzipin = $pos_gzipout = $pos_compratio = -1;
 $pos_cluster = $pos_emails = $pos_emailr = $pos_hostr = -1;
+@pos_extra=();
 # ----- Plugins variable -----
 use vars qw/ %PluginsLoaded $PluginDir $AtLeastOneSectionPlugin /;
 %PluginsLoaded=();
@@ -5052,6 +5053,11 @@ sub DefinePerlParsingFormat {
 					$PerlParsingFormat .= "([^$LogSeparatorWithoutStar]+)";
 				}
 			}
+			# Extra tag
+			elsif ($f =~ /%extra(\d+)$/) {
+				$pos_extra[$1] = $i; $i++; push @fieldlib, "extra$1";
+				$PerlParsingFormat .= "([^$LogSeparatorWithoutStar]+)";
+			}
 			# Other tag
 			elsif ($f =~ /%other$/) {
 				$PerlParsingFormat .= "[^$LogSeparatorWithoutStar]+";
@@ -6229,7 +6235,7 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 			foreach (split(/&/,$standalonequery)) {
 				if ($_ =~ /^screen=(\d+)x(\d+)/i) 	{ $foundparam++; $_screensize_h{"$1x$2"}++; next; }
 				#if ($_ =~ /cdi=(\d+)/i) 			{ $foundparam++; $_screendepth_h{"$1"}++; next; }
-				if ($_ =~ /^nojs=(\w+)/i)	 		{ $foundparam++; if ($1 eq 'y')    { $_misc_h{"JavaScriptDisabled"}++; } next; }
+				if ($_ =~ /^nojs=(\w+)/i)	 		{ $foundparam++; if ($1 eq 'y')    { $_misc_h{"JavascriptDisabled"}++; } next; }
 				if ($_ =~ /^java=(\w+)/i)	 		{ $foundparam++; if ($1 eq 'true') { $_misc_h{"JavaEnabled"}++; } next; }
 				if ($_ =~ /^shk=(\w+)/i) 			{ $foundparam++; if ($1 eq 'y')    { $_misc_h{"DirectorSupport"}++; } next; }
 				if ($_ =~ /^fla=(\w+)/i) 			{ $foundparam++; if ($1 eq 'y')    { $_misc_h{"FlashSupport"}++; } next; }
@@ -6960,6 +6966,10 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 					if ($Debug) { debug("  Check condition '$conditiontype' must contain '$conditiontypeval' in '$field[$pos_host]'",5); }
  					if ($HostResolved =~ /$conditiontypeval/) { $conditionok=1; last; }
  				}
+ 				elsif ($conditiontype =~ /extra(\d+)/i) {
+					if ($Debug) { debug("  Check condition '$conditiontype' must contain '$conditiontypeval' in '$field[$pos_extra[$1]]'",5); }
+ 					if ($field[$pos_extra[$1]] =~ /$conditiontypeval/) { $conditionok=1; last; }
+                }
  				else { error("Wrong value of parameter ExtraSectionCondition$extranum"); }
  			}
 			if (! $conditionok && @{$ExtraConditionType[$extranum]}) { next; }	# End for this section
@@ -6987,6 +6997,9 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
  				elsif ($rowkeytype eq 'HOST') {
  					if ($HostResolved =~ /$rowkeytypeval/) { $rowkeyval = "$1"; $rowkeyok = 1; last; }
  				}
+ 				elsif ($rowkeytype =~ /extra(\d+)/i) {
+ 					if ($field[$pos_extra[$1]] =~ /$rowkeytypeval/) { $rowkeyval = "$1"; $rowkeyok = 1; last; }
+ 				}
  				else { error("Wrong value of parameter ExtraSectionFirstColumnValues$extranum"); }
  			}
 			if (! $rowkeyok) { next; }	# End for this section
@@ -7003,7 +7016,7 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 			if (scalar keys %{'_section_' . $extranum . '_h'} > $ExtraTrackedRowsLimit) {
 				error(<<END_ERROR_TEXT);
 The number of values found for extra section $extranum has grown too large.
-In order prevent awstats from using an excessive amount of memory, the number
+In order to prevent awstats from using an excessive amount of memory, the number
 of values is currently limited to $ExtraTrackedRowsLimit. Perhaps you should consider
 revising extract parameters for extra section $extranum. If you are certain you
 want to track such a large data set, you can increase the limit by setting
@@ -9862,7 +9875,7 @@ if (scalar keys %HTMLOutput) {
 			print "<th width=\"100\">&nbsp;</th>";
 			print "<th width=\"100\">&nbsp;</th>";
 			print "</tr>\n";
-			my %label=('AddToFavourites'=>$Message[137],'JavaScriptDisabled'=>$Message[168],'JavaEnabled'=>$Message[140],'DirectorSupport'=>$Message[141],
+			my %label=('AddToFavourites'=>$Message[137],'JavascriptDisabled'=>$Message[168],'JavaEnabled'=>$Message[140],'DirectorSupport'=>$Message[141],
 			'FlashSupport'=>$Message[142],'RealPlayerSupport'=>$Message[143],'QuickTimeSupport'=>$Message[144],
 			'WindowsMediaPlayerSupport'=>$Message[145],'PDFSupport'=>$Message[146]);
 			foreach my $key (@MiscListOrder) {
