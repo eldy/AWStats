@@ -516,7 +516,7 @@ use vars qw/ @Message /;
 #------------------------------------------------------------------------------
 sub http_head {
 	if (! $HeaderHTTPSent) {
-		if ($BuildReportFormat eq 'xml') { print ($ENV{'HTTP_USER_AGENT'}=~/MSIE|Googlebot/i?"Content-type: text/html; charset=$PageCode\n":"Content-type: text/xml; charset=$PageCode\n"); }
+		if ($BuildReportFormat eq 'xhtml' || $BuildReportFormat eq 'xml') { print ($ENV{'HTTP_USER_AGENT'}=~/MSIE|Googlebot/i?"Content-type: text/html; charset=$PageCode\n":"Content-type: text/xml; charset=$PageCode\n"); }
 		else { print "Content-type: text/html; charset=$PageCode\n"; }
 
 		# Expires must be GMT ANSI asctime and must be after Content-type to avoid pb with some servers (SAMBAR)
@@ -542,7 +542,7 @@ sub html_head {
 	if (scalar keys %HTMLOutput || $PluginMode) {
 		my $MetaRobot=0;	# meta robots
 		# Write head section
-		if ($BuildReportFormat eq 'xml') {
+		if ($BuildReportFormat eq 'xhtml' || $BuildReportFormat eq 'xml') {
 			if ($PageCode) { print "<?xml version=\"1.0\" encoding=\"$PageCode\"?>\n"; }
 			else { print "<?xml version=\"1.0\" encoding=\"iso-8859-1\"?>\n"; };
             if ($FrameName ne 'index') { print "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">\n";  }
@@ -558,7 +558,7 @@ sub html_head {
 		else { print "<meta name=\"robots\" content=\"noindex,nofollow\" />\n"; }
 
 		# Affiche tag meta content-type
-		if ($BuildReportFormat eq 'xml') { print ($ENV{'HTTP_USER_AGENT'}=~/MSIE|Googlebot/i?"<meta http-equiv=\"content-type\" content=\"text/html; charset=".($PageCode?$PageCode:"iso-8859-1")."\" />\n":"<meta http-equiv=\"content-type\" content=\"text/xml; charset=".($PageCode?$PageCode:"iso-8859-1")."\" />\n"); }
+		if ($BuildReportFormat eq 'xhtml' || $BuildReportFormat eq 'xml') { print ($ENV{'HTTP_USER_AGENT'}=~/MSIE|Googlebot/i?"<meta http-equiv=\"content-type\" content=\"text/html; charset=".($PageCode?$PageCode:"iso-8859-1")."\" />\n":"<meta http-equiv=\"content-type\" content=\"text/xml; charset=".($PageCode?$PageCode:"iso-8859-1")."\" />\n"); }
 		else { print "<meta http-equiv=\"content-type\" content=\"text/html; charset=".($PageCode?$PageCode:"iso-8859-1")."\" />\n"; }
 
 		if ($Expires)  { print "<meta http-equiv=\"expires\" content=\"".(gmtime($starttime+$Expires))."\" />\n"; }
@@ -569,11 +569,11 @@ sub html_head {
 
 			# A STYLE section must be in head section. Do not use " for number in a style section
 			print "<style type=\"text/css\">\n";
-			if ($BuildReportFormat eq 'xml') { print ($ENV{'HTTP_USER_AGENT'}=~/Firebird/i?"<!--\n":"<![CDATA[\n"); }
+			if ($BuildReportFormat eq 'xhtml' || $BuildReportFormat eq 'xml') { print ($ENV{'HTTP_USER_AGENT'}=~/Firebird/i?"<!--\n":"<![CDATA[\n"); }
 			else { print "<!--\n"; }
 print "body { font: 11px verdana, arial, helvetica, sans-serif; background-color: #$color_Background; margin-top: 0; margin-bottom: 0; }\n";
 print ".aws_bodyl  { }\n";
-print ".aws_border { background-color: #$color_TableBG; padding: 1px 1px ".($BuildReportFormat eq 'xml'?"2px":"1px")." 1px; margin-top: 0; margin-bottom: 0; }\n";
+print ".aws_border { background-color: #$color_TableBG; padding: 1px 1px ".($BuildReportFormat eq 'xhtml' || $BuildReportFormat eq 'xml'?"2px":"1px")." 1px; margin-top: 0; margin-bottom: 0; }\n";
 print ".aws_title  { font: 13px verdana, arial, helvetica, sans-serif; font-weight: bold; background-color: #$color_TableBGTitle; text-align: center; margin-top: 0; margin-bottom: 0; padding: 1px 1px 1px 1px; }\n";
 print ".aws_blank  { font: 13px verdana, arial, helvetica, sans-serif; background-color: #".($ENV{'HTTP_USER_AGENT'} && $ENV{'HTTP_USER_AGENT'}=~/MSIE/i?$color_Background:$color_TableBG)."; text-align: center; margin-bottom: 0; padding: 1px 1px 1px 1px; }\n";
 print <<EOF;
@@ -608,7 +608,7 @@ EOF
 				eval("$function");
 			}
 	
-			if ($BuildReportFormat eq 'xml') { print ($ENV{'HTTP_USER_AGENT'}=~/Firebird/i?"//-->\n":"]]>\n"); }
+			if ($BuildReportFormat eq 'xhtml' || $BuildReportFormat eq 'xml') { print ($ENV{'HTTP_USER_AGENT'}=~/Firebird/i?"//-->\n":"]]>\n"); }
 			else { print "//-->\n"; }
 			print "</style>\n";
 
@@ -1524,7 +1524,7 @@ sub Check_Config {
 	if ($DNSStaticCacheFile eq $DNSLastUpdateCacheFile)	{ error("DNSStaticCacheFile and DNSLastUpdateCacheFile must have different values."); }
 	if ($AllowAccessFromWebToAuthenticatedUsersOnly !~ /[0-1]/)     { $AllowAccessFromWebToAuthenticatedUsersOnly=0; }
 	if ($CreateDirDataIfNotExists !~ /[0-1]/)      	{ $CreateDirDataIfNotExists=0; }
-	if ($BuildReportFormat !~ /html|xml/i) 			{ $BuildReportFormat='html'; }
+	if ($BuildReportFormat !~ /html|xhtml|xml/i) 	{ $BuildReportFormat='html'; }
 	if ($BuildHistoryFormat !~ /text/)  			{ $BuildHistoryFormat='text'; }
 	if ($SaveDatabaseFilesWithPermissionsForEveryone !~ /[0-1]/)	{ $SaveDatabaseFilesWithPermissionsForEveryone=1; }
 	if ($PurgeLogFile !~ /[0-1]/)                 	{ $PurgeLogFile=0; }
@@ -4063,7 +4063,7 @@ sub ChangeWordSeparatorsIntoSpace {
 #------------------------------------------------------------------------------
 sub XMLEncode {
 	my $string = shift;
-	if ($BuildReportFormat ne 'xml') { return $string; }
+	if ($BuildReportFormat ne 'xhtml' && $BuildReportFormat ne 'xml') { return $string; }
 	$string =~ s/&/&amp;/g;
 	return $string;
 }
@@ -6949,7 +6949,7 @@ if (scalar keys %HTMLOutput) {
 		if ($FrameName ne 'mainright') {
 			# Print Statistics Of
 			if ($FrameName eq 'mainleft') { print "<tr><td class=\"awsm\"><b>$Message[7]:</b></td></tr><tr><td class=\"aws\"><span style=\"font-size: 12px;\">$SiteDomain</span></td>"; }
-			else { print "<tr><td class=\"aws\" valign=\"middle\"><b>$Message[7]:</b>&nbsp;</td><td class=\"aws\"><span style=\"font-size: 14px;\">$SiteDomain</span></td>"; }
+			else { print "<tr><td class=\"aws\" valign=\"middle\"><b>$Message[7]:</b>&nbsp;</td><td class=\"aws\" valign=\"middle\"><span style=\"font-size: 14px;\">$SiteDomain</span></td>"; }
 
 			# Logo and flags
 			if ($FrameName ne 'mainleft') {
@@ -8374,7 +8374,7 @@ if (scalar keys %HTMLOutput) {
 			}
 			else {
 				if ($LogType eq 'W' || $LogType eq 'S') { print "<td class=\"aws\">$Message[161]&nbsp;*</td>"; }
-				print "<td colspan=\"2\">&nbsp;<br>&nbsp;</td>\n";
+				print "<td colspan=\"2\">&nbsp;<br />&nbsp;</td>\n";
 				if ($ShowMonthStats =~ /P/i) { print "<td><b>$TotalNotViewedPages</b></td>"; } else { print "<td>&nbsp;</td>"; }
 				if ($ShowMonthStats =~ /H/i) { print "<td><b>$TotalNotViewedHits</b></td>"; } else { print "<td>&nbsp;</td>"; }
 				if ($ShowMonthStats =~ /B/i) { print "<td><b>".Format_Bytes(int($TotalNotViewedBytes))."</b></td>"; } else { print "<td>&nbsp;</td>"; }
