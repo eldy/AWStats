@@ -19,7 +19,7 @@ use Time::Local;	# use Time::Local 'timelocal_nocheck' is faster but not support
 #-----------------------------------------------------------------------------
 use vars qw/ $REVISION $VERSION /;
 my $REVISION='$Revision$'; $REVISION =~ /\s(.*)\s/; $REVISION=$1;
-my $VERSION="4.2 (build $REVISION)";
+my $VERSION="5.0 (build $REVISION)";
 
 # ---------- Init variables -------
 # Constants
@@ -2574,43 +2574,57 @@ sub Save_History_File {
 #------------------------------------------------------------------------------
 sub Read_DNS_Cache_File {
 	my $filetoload="";
+	my $filehashtoload="";
 	my $timetoload = time();
-	my $donotloadhash=1;
+	my $hashfileuptodate=1;
 
+	if ($Debug) { debug("Call to Read_DNS_Cache_File [DNSCacheFile=\"$DNSCacheFile\"]"); }
 	foreach my $dir ("$DirData",".","") {
 		my $searchdir=$dir;
 		if ($searchdir && (!($searchdir =~ /\/$/)) && (!($searchdir =~ /\\$/)) ) { $searchdir .= "/"; }
-		if (-s "${searchdir}$DNSCacheFile") { $filetoload="${searchdir}$DNSCacheFile"; last; }
-		if ($Plugin_hashfiles) { if (-r -s "${searchdir}$DNSCacheFile.hash") { $filetoload="${searchdir}$DNSCacheFile"; last; } }
-	}
-
-	if ($Debug) { debug("Call to Read_DNS_Cache_File [filetoload=\"$filetoload\"]"); }
-	if (! $filetoload) {
-		if ($Debug) { debug(" No DNS Cache file found"); }
-		return;
-	}
-
-	if ($Plugin_hashfiles) {
-		my ($tmp1a,$tmp2a,$tmp3a,$tmp4a,$tmp5a,$tmp6a,$tmp7a,$tmp8a,$tmp9a,$datesource,$tmp10a,$tmp11a,$tmp12a) = stat("$filetoload");
-		my ($tmp1b,$tmp2b,$tmp3b,$tmp4b,$tmp5b,$tmp6b,$tmp7b,$tmp8b,$tmp9b,$datehash,$tmp10b,$tmp11b,$tmp12b) = stat("$filetoload.hash");
-		if (! $datesource || $datehash >= $datesource) {
-			# There is no source file of there is and hash file is up to date. We can load hash file
-			$donotloadhash=0;
+		if (-f "${searchdir}$DNSCacheFile") { $filetoload="${searchdir}$DNSCacheFile"; }
+		if ($Plugin_hashfiles) {
+			if (-f "${searchdir}$DNSCacheFile.hash") {
+				my ($tmp1a,$tmp2a,$tmp3a,$tmp4a,$tmp5a,$tmp6a,$tmp7a,$tmp8a,$tmp9a,$datesource,$tmp10a,$tmp11a,$tmp12a) = stat("${searchdir}$DNSCacheFile");
+				my ($tmp1b,$tmp2b,$tmp3b,$tmp4b,$tmp5b,$tmp6b,$tmp7b,$tmp8b,$tmp9b,$datehash,$tmp10b,$tmp11b,$tmp12b) = stat("${searchdir}$DNSCacheFile.hash");
+				if ($datesource && $datehash < $datesource) {
+					$hashfileuptodate=0;
+					debug(" Hash file not up to date. Will use source file $filetoload instead.");
+				}
+				else {
+					# There is no source file or there is and hash file is up to date. We can just load hash file
+					$filehashtoload="${searchdir}$DNSCacheFile.hash";
+				}
+			}
+			elsif ($filetoload) {
+				$hashfileuptodate=0;
+				debug(" Hash file not found. Will use source file $filetoload instead.");
+			}
 		}
+		if ($filetoload || $filehashtoload) { last; }	# We found a file to load
 	}
 
-	if ($donotloadhash) {
+	if (! $filetoload && ! $filehashtoload) {
+		if ($Debug) { debug(" No DNS Cache file found"); }
+		return 1;
+	}
+
+	if ($filehashtoload) {
+		# There is no source file or there is and hash file is up to date. We can just load hash file
+		eval('%MyDNSTable = %{ retrieve("$filehashtoload") };');
+	}
+	else {
 		open(DNSFILE,"$filetoload") or error("Error: Couldn't open DNS Cache file \"$filetoload\": $!");
 		# This is the fastest way to load with regexp that I know of
 		%MyDNSTable = map(/^\d+\s+(\d+\.\d+\.\d+\.\d+)\s+(.*)$/o, <DNSFILE>);
 	   	close DNSFILE;
-		if ($Plugin_hashfiles) { eval('use Storable; store(\%MyDNSTable, "$filetoload.hash");'); }
+		if ($Plugin_hashfiles && ! $hashfileuptodate) {
+			debug(" Save Hash file $filetoload.hash");
+			eval('store(\%MyDNSTable, "$filetoload.hash");');
+		}
 	}
-	else  {
-		$filetoload="$filetoload.hash";
-		eval('use Storable; %MyDNSTable = %{ retrieve("$filetoload") };');
-	}
-	if ($Debug) { debug(" Loaded ".(scalar keys %MyDNSTable)." items from $filetoload in ".(time()-$timetoload)." seconds.",1); }
+	if ($Debug) { debug(" Loaded ".(scalar keys %MyDNSTable)." items from ".($filehashtoload?$filehashtoload:"$filetoload")." in ".(time()-$timetoload)." seconds.",1); }
+	return 0;
 }
 
 #------------------------------------------------------------------------------
@@ -3504,6 +3518,9 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {
 	if ($pos_size < 0) { error("Error: Your personalized LogFormat does not include all fields required by AWStats (Add \%bytesd in your LogFormat string)."); }
 	if ($Debug) { debug("PerlParsingFormat is $PerlParsingFormat"); }
 
+	# Load DNS Cache File
+	#------------------------------------------
+	if ($DNSLookup) { &Read_DNS_Cache_File(); }
 
 	if ($Debug) { debug("Start Update process"); }
 
@@ -3529,15 +3546,14 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {
 		$LastLine{"000000"}=0;
 	}
 
-	# Load DNS Cache File
-	#------------------------------------------
-	if ($DNSLookup) { &Read_DNS_Cache_File(); }
-
 	# PROCESSING CURRENT LOG
 	#------------------------------------------
-	if ($Debug) { debug("Start of processing log file (monthtoprocess=$monthtoprocess, yeartoprocess=$yeartoprocess)"); }
 	$yearmonthtoprocess=sprintf("%04i%02i",$yeartoprocess,$monthtoprocess);
 	$NbOfLinesRead=$NbOfLinesDropped=$NbOfLinesCorrupted=$NbOfOldLines=$NbOfNewLines=0;
+	if ($Debug) {
+		debug("Start of processing log file (monthtoprocess=$monthtoprocess, yeartoprocess=$yeartoprocess)");
+		debug("LastLine{$yearmonthtoprocess}=$LastLine{$yearmonthtoprocess}");
+	}
 
 	# Open log file
 	if ($Debug) { debug("Open log file \"$LogFile\""); }
@@ -3841,7 +3857,12 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {
 						}
 						else {
 							my $lookupresult=gethostbyaddr(pack("C4",split(/\./,$Host)),AF_INET);	# This is very slow, may took 20 seconds
-							$HostResolved=$TmpDNSLookup{$Host}=($lookupresult && IsAscii($lookupresult)?$lookupresult:"ip");
+							if (! $lookupresult || $lookupresult =~ /^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/ || ! IsAscii($lookupresult)) {
+								$TmpDNSLookup{$Host}=$HostResolved="ip";
+							}
+							else {
+								$TmpDNSLookup{$Host}=$HostResolved=$lookupresult;
+							}
 							if ($Debug) { debug(" Reverse DNS lookup for $Host done: $HostResolved",4); }
 						}
 					}
@@ -3863,7 +3884,7 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {
 
 		my $Domain="ip";
 		if ($HostResolved eq "ip") {
-			# $Host is an IP address and is not resolved
+			# $Host is an IP address and is not resolved or resolution gives an IP address
 			$_ = $Host;
 		}
 		else {
