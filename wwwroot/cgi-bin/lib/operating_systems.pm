@@ -51,7 +51,7 @@
 "cp/m",
 "crayos",
 "dreamcast",
-"riscos",
+"riscos","risc_os",
 "webtv"
 );
 
@@ -92,7 +92,7 @@
 "cp/m","cp/m",
 "crayos","crayos",
 "dreamcast","dreamcast",
-"riscos","riscos",
+"riscos","riscos","risc_os","riscos",
 "webtv","webtv"
 );
 
@@ -131,7 +131,7 @@
 "cp/m","CPM",
 "crayos","CrayOS",
 "dreamcast","Dreamcast",
-"riscos","Acorn RISC OS",
+"riscos","RISC OS",
 "webtv","WebTV"
 );
 
