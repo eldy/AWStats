@@ -21,7 +21,7 @@ use vars qw(%DomainsHashIDLib @RobotsSearchIDOrder_list1 @RobotsSearchIDOrder_li
 #-------------------------------------------------------
 # Defines
 #-------------------------------------------------------
-my $VERSION="4.0 (build 57)";
+my $VERSION="4.0 (build 58)";
 
 # ---------- Init variables -------
 my $Debug=0;
@@ -71,9 +71,10 @@ $MinHitLogin, $MinHitRefer, $MinHitRobot,
 $NbOfLinesRead, $NbOfLinesDropped, $NbOfLinesCorrupted, $NbOfOldLines, $NbOfNewLines,
 $NowNewLinePhase, $NbOfLinesForCorruptedLog, $PurgeLogFile,
 $ShowAuthenticatedUsers, $ShowCompressionStats, $ShowFileSizesStats,
-$ShowDropped, $ShowCorrupted, $ShowUnknownOrigin, $SplitSearchString, $StartSeconds, $StartMicroseconds,
+$ShowDropped, $ShowCorrupted, $ShowUnknownOrigin, $ShowLinksToWhoIs,
+$SplitSearchString, $StartSeconds, $StartMicroseconds,
 $StaticLinks, $UpdateStats, $URLWithQuery)=
-(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
+(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
 my ($AllowToUpdateStatsFromBrowser, $ArchiveLogRecords, $DetailedReportsOnNewWindows,
 $FirstDayOfWeek, $SaveDatabaseFilesWithPermissionsForEveryone,
 $LevelForRobotsDetection, $LevelForBrowsersDetection, $LevelForOSDetection,
@@ -83,11 +84,13 @@ $ShowHoursStats, $ShowDomainsStats, $ShowHostsStats,
 $ShowRobotsStats, $ShowPagesStats, $ShowFileTypesStats,
 $ShowBrowsersStats, $ShowOSStats, $ShowOriginStats, $ShowKeyphrasesStats,
 $ShowKeywordsStats,  $ShowHTTPErrorsStats,
-$ShowFlagLinks, $ShowLinksOnUrl, $WarningMessages)=
+$ShowFlagLinks, $ShowLinksOnUrl,
+$WarningMessages)=
 (1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1);
 my ($ArchiveFileName, $DayRequired, $DefaultFile, $FileConfig, $FileSuffix,
 $HTMLHeadSection, $HTMLEndSection, $HTMLOutput, $Host,
-$LastUpdate, $LogFile, $LogFormat, $LogFormatString, $Logo, $LogoLink,
+$LastUpdate, $LinksToWhoIs,
+$LogFile, $LogFormat, $LogFormatString, $Logo, $LogoLink,
 $MonthRequired, $PageCode, $PerlParsingFormat, $QueryString,
 $SiteConfig, $SiteDomain, $SiteToAnalyze, $SiteToAnalyzeWithoutwww,
 $StyleSheet, $WrapperScript,
@@ -584,11 +587,6 @@ sub Read_Config_File {
 		if ($param =~ /^ShowKeywordsStats/)      { $ShowKeywordsStats=$value; next; }
 		if ($param =~ /^ShowCompressionStats/)   { $ShowCompressionStats=$value; next; }
 		if ($param =~ /^ShowHTTPErrorsStats/)    { $ShowHTTPErrorsStats=$value; next; }
-		if ($param =~ /^FirstDayOfWeek/)       	{ $FirstDayOfWeek=$value; next; }
-		if ($param =~ /^DetailedReportsOnNewWindows/) { $DetailedReportsOnNewWindows=$value; next; }
-		if ($param =~ /^ShowFlagLinks/)         { $ShowFlagLinks=$value; next; }
-		if ($param =~ /^ShowLinksOnUrl/)        { $ShowLinksOnUrl=$value; next; }
-		if ($param =~ /^MaxLengthOfURL/)        { $MaxLengthOfURL=$value; next; }
 		if ($param =~ /^MaxRowsInHTMLOutput/)   { $MaxRowsInHTMLOutput=$value; next; }	# Not used yet
 		if ($param =~ /^MaxNbOfDomain/)         { $MaxNbOfDomain=$value; next; }
 		if ($param =~ /^MaxNbOfHostsShown/)     { $MaxNbOfHostsShown=$value; next; }
@@ -603,6 +601,13 @@ sub Read_Config_File {
 		if ($param =~ /^MinHitRefer/)           { $MinHitRefer=$value; next; }
 		if ($param =~ /^MaxNbOfKeywordsShown/)  { $MaxNbOfKeywordsShown=$value; next; }
 		if ($param =~ /^MinHitKeyword/)         { $MinHitKeyword=$value; next; }
+		if ($param =~ /^FirstDayOfWeek/)       	{ $FirstDayOfWeek=$value; next; }
+		if ($param =~ /^DetailedReportsOnNewWindows/) { $DetailedReportsOnNewWindows=$value; next; }
+		if ($param =~ /^ShowFlagLinks/)         { $ShowFlagLinks=$value; next; }
+		if ($param =~ /^ShowLinksOnUrl/)        { $ShowLinksOnUrl=$value; next; }
+		if ($param =~ /^MaxLengthOfURL/)        { $MaxLengthOfURL=$value; next; }
+		if ($param =~ /^ShowLinksToWhoIs/)      { $ShowLinksToWhoIs=$value; next; }
+		if ($param =~ /^LinksToWhoIs/)          { $LinksToWhoIs=$value; next; }
 		if ($param =~ /^HTMLHeadSection/)       { $HTMLHeadSection=$value; next; }
 		if ($param =~ /^HTMLEndSection/)        { $HTMLEndSection=$value; next; }
 		if ($param =~ /^BarWidth/)              { $BarWidth=$value; next; }
@@ -828,6 +833,7 @@ sub Check_Config {
 	if ($LevelForRefererAnalyze !~ /^[\d]+/)			{ $LevelForRefererAnalyze=1; }
 	if ($LevelForKeywordsDetection !~ /^[\d]+/)    		{ $LevelForKeywordsDetection=1; }
 	# Optional appearance setup section
+	if ($MaxRowsInHTMLOutput !~ /^[\d]+/ || $MaxRowsInHTMLOutput<1)     { $MaxRowsInHTMLOutput=1000; }
 	if ($ShowHeader !~ /[0-1]/)                   	{ $ShowHeader=1; }
 	if ($ShowMenu !~ /[0-1]/)                     	{ $ShowMenu=1; }
 	if ($ShowMonthDayStats !~ /[0-1]/)            	{ $ShowMonthDayStats=1; }
@@ -847,7 +853,6 @@ sub Check_Config {
 	if ($ShowKeywordsStats !~ /[0-1]/)            	{ $ShowKeywordsStats=1; }
 	if ($ShowCompressionStats !~ /[0-1]/)         	{ $ShowCompressionStats=1; }
 	if ($ShowHTTPErrorsStats !~ /[0-1]/)          	{ $ShowHTTPErrorsStats=1; }
-	if ($ShowLinksOnUrl !~ /[0-1]/)               	{ $ShowLinksOnUrl=1; }
 	if ($MaxNbOfDomain !~ /^[\d]+/ || $MaxNbOfDomain<1)           		{ $MaxNbOfDomain=25; }
 	if ($MaxNbOfHostsShown !~ /^[\d]+/ || $MaxNbOfHostsShown<1)       	{ $MaxNbOfHostsShown=25; }
 	if ($MinHitHost !~ /^[\d]+/ || $MinHitHost<1)              			{ $MinHitHost=1; }
@@ -861,14 +866,15 @@ sub Check_Config {
 	if ($MinHitRefer !~ /^[\d]+/ || $MinHitRefer<1)             		{ $MinHitRefer=1; }
 	if ($MaxNbOfKeywordsShown !~ /^[\d]+/ || $MaxNbOfKeywordsShown<1)	{ $MaxNbOfKeywordsShown=25; }
 	if ($MinHitKeyword !~ /^[\d]+/ || $MinHitKeyword<1)           		{ $MinHitKeyword=1; }
-	if ($MaxRowsInHTMLOutput !~ /^[\d]+/ || $MaxRowsInHTMLOutput<1)     { $MaxRowsInHTMLOutput=1000; }
-	if ($MaxLengthOfURL !~ /^[\d+]/ || $MaxLengthOfURL<1) { $MaxLengthOfURL=72; }
 	if ($FirstDayOfWeek !~ /[0-1]/)               	{ $FirstDayOfWeek=1; }
 	if ($DetailedReportsOnNewWindows !~ /[0-1]/)  	{ $DetailedReportsOnNewWindows=1; }
-	if ($BarWidth !~ /^[\d]+/ || $BarWidth<1) 		{ $BarWidth=260; }
-	if ($BarHeight !~ /^[\d]+/ || $BarHeight<1)		{ $BarHeight=180; }
+	if ($ShowLinksOnUrl !~ /[0-1]/)               	{ $ShowLinksOnUrl=1; }
+	if ($MaxLengthOfURL !~ /^[\d+]/ || $MaxLengthOfURL<1) { $MaxLengthOfURL=72; }
+	if ($ShowLinksToWhoIs !~ /[0-1]/)              	{ $ShowLinksToWhoIs=0; }
 	if (! $Logo)    	                          	{ $Logo="awstats_logo1.png"; }
 	if (! $LogoLink)  	                        	{ $LogoLink="http://awstats.sourceforge.net"; }
+	if ($BarWidth !~ /^[\d]+/ || $BarWidth<1) 		{ $BarWidth=260; }
+	if ($BarHeight !~ /^[\d]+/ || $BarHeight<1)		{ $BarHeight=180; }
 	$color_Background =~ s/#//g; if ($color_Background !~ /^[0-9|A-Z]+$/i)           { $color_Background="FFFFFF";	}
 	$color_TableBGTitle =~ s/#//g; if ($color_TableBGTitle !~ /^[0-9|A-Z]+$/i)       { $color_TableBGTitle="CCCCDD"; }
 	$color_TableTitle =~ s/#//g; if ($color_TableTitle !~ /^[0-9|A-Z]+$/i)           { $color_TableTitle="000000"; }
@@ -1002,6 +1008,7 @@ sub Check_Config {
 	if (! $Message[111]) { $Message[111]="Grabber"; }
 	if (! $Message[112]) { $Message[112]="Yes"; }
 	if (! $Message[113]) { $Message[113]="No"; }
+	if (! $Message[114]) { $Message[114]="WhoIs info"; }
 	# Check if DirData is OK
 	if (! -d $DirData) {
 		if ($CreateDirDataIfNotExists) {
@@ -2003,6 +2010,23 @@ sub Format_Date {
 	$dateformat =~ s/MM/$min/g;
 	$dateformat =~ s/SS/$sec/g;
 	return "$dateformat";
+}
+
+#--------------------------------------------------------------------
+# Function:     Write a HTML cell with a WhoIs link to parameter
+# Parameter:    Key to used as WhoIs target
+# Input:        $LinksToWhoIs
+#--------------------------------------------------------------------
+sub ShowWhoIsCell {
+	my $keyurl=shift;
+	my $keyforwhois;
+	if ($keyurl =~ /^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/) {
+		# $keyforwhois=$key;
+	}
+	else { $keyurl =~ /(\w+\.\w+)$/; $keyforwhois=$1; }
+	print "<td>";
+	if ($keyforwhois) { print "<a href=\"$LinksToWhoIs$keyforwhois\" target=whois>?</a>"; }
+	print "</td>";
 }
 
 #--------------------------------------------------------------------
@@ -3551,6 +3575,7 @@ EOF
 			print "<td class=AWL>";
 			if ($ShowDomainsStats)		 { print "<a href=\"#DOMAINS\">$Message[17]</a> &nbsp; "; }
 			if ($ShowHostsStats)		 { print "<a href=\"#VISITOR\">".ucfirst($Message[81])."</a> &nbsp; "; }
+			if ($ShowHostsStats)		 { print "<a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=allhosts":"$PROG$FileSuffix.lasthosts.html")."\">$Message[80]</a> &nbsp;\n"; }
 			if ($ShowHostsStats)		 { print "<a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=lasthosts":"$PROG$FileSuffix.lasthosts.html")."\">$Message[9]</a> &nbsp;\n"; }
 			if ($ShowHostsStats)		 { print "<a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=unknownip":"$PROG$FileSuffix.unknownip.html")."\">$Message[45]</a> &nbsp;\n"; }
 			if ($ShowAuthenticatedUsers) { print "<a href=\"#LOGIN\">$Message[94]</a> &nbsp; "; }
@@ -3590,14 +3615,17 @@ EOF
 	if ($QueryString =~ /output=allhosts/i) {
 		print "$CENTER<a name=\"HOSTSLIST\">&nbsp;</a><BR>";
 		&tab_head($Message[81],19);
-		if ($MonthRequired ne "year") { print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[81] : $TotalHostsKnown $Message[82], $TotalHostsUnknown $Message[1] - $TotalUnique $Message[11]</TH><TH bgcolor=\"#$color_p\" width=80>$Message[56]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH bgcolor=\"#$color_k\" width=80>$Message[75]</TH><TH width=120>$Message[9]</TH></TR>\n"; }
-		else { print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[81] : ".(scalar keys %_hostmachine_h)."</TH><TH bgcolor=\"#$color_p\" width=80>$Message[56]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH bgcolor=\"#$color_k\" width=80>$Message[75]</TH><TH width=120>$Message[9]</TH></TR>\n"; }
+		if ($MonthRequired ne "year") { print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[81] : $TotalHostsKnown $Message[82], $TotalHostsUnknown $Message[1] - $TotalUnique $Message[11]</TH>"; }
+		else { print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[81] : ".(scalar keys %_hostmachine_h)."</TH>"; }
+		if ($ShowLinksToWhoIs && $LinksToWhoIs) { print "<TH width=80>$Message[114]</TH>"; }
+		print "<TH bgcolor=\"#$color_p\" width=80>$Message[56]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH bgcolor=\"#$color_k\" width=80>$Message[75]</TH><TH width=120>$Message[9]</TH></TR>\n";
 		$total_p=$total_h=$total_k=0;
 		my $count=0;
 		&BuildKeyList($MaxRowsInHTMLOutput,$MinHitHost,\%_hostmachine_h,\%_hostmachine_p);
 		foreach my $key (@keylist) {
 			my $host=CleanFromCSSA($key);
 			print "<tr><td CLASS=AWL>".($_robot_l{$key}?"<b>":"")."$host".($_robot_l{$key}?"</b>":"")."</td>";
+			if ($ShowLinksToWhoIs && $LinksToWhoIs) { ShowWhoIsCell($key); }
 			print "<TD>".($_hostmachine_p{$key}?$_hostmachine_p{$key}:"&nbsp;")."</TD><TD>$_hostmachine_h{$key}</TD><TD>".Format_Bytes($_hostmachine_k{$key})."</TD>";
 			if ($_hostmachine_l{$key}) { print "<td>".Format_Date($_hostmachine_l{$key},1)."</td>"; }
 			else { print "<td>-</td>"; }
@@ -3612,7 +3640,9 @@ EOF
 		$rest_h=$TotalHits-$total_h;
 		$rest_k=$TotalBytes-$total_k;
 		if ($rest_p > 0 || $rest_h > 0 || $rest_k > 0) {	# All other visitors (known or not)
-			print "<TR><TD CLASS=AWL><font color=blue>$Message[2]</font></TD><TD>$rest_p</TD><TD>$rest_h</TD><TD>".Format_Bytes($rest_k)."</TD><TD>&nbsp;</TD></TR>\n";
+			print "<TR><TD CLASS=AWL><font color=blue>$Message[2]</font></TD>";
+			if ($ShowLinksToWhoIs && $LinksToWhoIs) { ShowWhoIsCell(""); }
+			print "<TD>$rest_p</TD><TD>$rest_h</TD><TD>".Format_Bytes($rest_k)."</TD><TD>&nbsp;</TD></TR>\n";
 		}
 		&tab_end;
 		&html_end;
@@ -3621,14 +3651,17 @@ EOF
 	if ($QueryString =~ /output=lasthosts/i) {
 		print "$CENTER<a name=\"HOSTSLIST\">&nbsp;</a><BR>";
 		&tab_head($Message[9],19);
-		if ($MonthRequired ne "year") { print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[81] : $TotalHostsKnown $Message[82], $TotalHostsUnknown $Message[1] - $TotalUnique $Message[11]</TH><TH bgcolor=\"#$color_p\" width=80>$Message[56]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH bgcolor=\"#$color_k\" width=80>$Message[75]</TH><TH width=120>$Message[9]</TH></TR>\n"; }
-		else { print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[81] : ".(scalar keys %_hostmachine_h)."</TH><TH bgcolor=\"#$color_p\" width=80>$Message[56]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH bgcolor=\"#$color_k\" width=80>$Message[75]</TH><TH width=120>$Message[9]</TH></TR>\n"; }
+		if ($MonthRequired ne "year") { print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[81] : $TotalHostsKnown $Message[82], $TotalHostsUnknown $Message[1] - $TotalUnique $Message[11]</TH>"; }
+		else { print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[81] : ".(scalar keys %_hostmachine_h)."</TH>"; }
+		if ($ShowLinksToWhoIs && $LinksToWhoIs) { print "<TH width=80>$Message[114]</TH>"; }
+		print "<TH bgcolor=\"#$color_p\" width=80>$Message[56]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH bgcolor=\"#$color_k\" width=80>$Message[75]</TH><TH width=120>$Message[9]</TH></TR>\n";
 		$total_p=$total_h=$total_k=0;
 		my $count=0;
 		&BuildKeyList($MaxRowsInHTMLOutput,$MinHitHost,\%_hostmachine_h,\%_hostmachine_l);
 		foreach my $key (@keylist) {
 			my $host=CleanFromCSSA($key);
 			print "<tr><td CLASS=AWL>".($_robot_l{$key}?"<b>":"")."$host".($_robot_l{$key}?"</b>":"")."</td>";
+			if ($ShowLinksToWhoIs && $LinksToWhoIs) { ShowWhoIsCell($key); }
 			print "<TD>".($_hostmachine_p{$key}?$_hostmachine_p{$key}:"&nbsp;")."</TD><TD>$_hostmachine_h{$key}</TD><TD>".Format_Bytes($_hostmachine_k{$key})."</TD>";
 			if ($_hostmachine_l{$key}) { print "<td>".Format_Date($_hostmachine_l{$key},1)."</td>"; }
 			else { print "<td>-</td>"; }
@@ -3643,7 +3676,9 @@ EOF
 		$rest_h=$TotalHits-$total_h;
 		$rest_k=$TotalBytes-$total_k;
 		if ($rest_p > 0 || $rest_h > 0 || $rest_k > 0) {	# All other visitors (known or not)
-			print "<TR><TD CLASS=AWL><font color=blue>$Message[2]</font></TD><TD>$rest_p</TD><TD>$rest_h</TD><TD>".Format_Bytes($rest_k)."</TD><TD>&nbsp;</TD></TR>\n";
+			print "<TR><TD CLASS=AWL><font color=blue>$Message[2]</font></TD>";
+			if ($ShowLinksToWhoIs && $LinksToWhoIs) { ShowWhoIsCell(""); }
+			print "<TD>$rest_p</TD><TD>$rest_h</TD><TD>".Format_Bytes($rest_k)."</TD><TD>&nbsp;</TD></TR>\n";
 		}
 		&tab_end;
 		&html_end;
@@ -3652,13 +3687,16 @@ EOF
 	if ($QueryString =~ /output=unknownip/i) {
 		print "$CENTER<a name=\"UNKOWNIP\">&nbsp;</a><BR>";
 		&tab_head($Message[45],19);
-		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>".(scalar keys %_hostmachine_h)." $Message[1]</TH><TH bgcolor=\"#$color_p\" width=80>$Message[56]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH bgcolor=\"#$color_k\" width=80>$Message[75]</TH><TH width=120>$Message[9]</TH>\n";
+		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>".(scalar keys %_hostmachine_h)." $Message[1]</TH>";
+		if ($ShowLinksToWhoIs && $LinksToWhoIs) { print "<TH width=80>$Message[114]</TH>"; }
+		print "<TH bgcolor=\"#$color_p\" width=80>$Message[56]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH bgcolor=\"#$color_k\" width=80>$Message[75]</TH><TH width=120>$Message[9]</TH></TR>\n";
 		$total_p=$total_h=$total_k=0;
 		my $count=0;
 		&BuildKeyList($MaxRowsInHTMLOutput,$MinHitHost,\%_hostmachine_h,\%_hostmachine_p);
 		foreach my $key (@keylist) {
 			my $host=CleanFromCSSA($key);
 			print "<tr><td CLASS=AWL>$host</td>";
+			if ($ShowLinksToWhoIs && $LinksToWhoIs) { ShowWhoIsCell($key); }
 			print "<TD>".($_hostmachine_p{$key}||"&nbsp")."</TD><TD>$_hostmachine_h{$key}</TD><TD>".Format_Bytes($_hostmachine_k{$key})."</TD>";
 			if ($_hostmachine_l{$key}) { print "<td>".Format_Date($_hostmachine_l{$key},1)."</td>"; }
 			else { print "<td>-</td>"; }
@@ -3673,7 +3711,9 @@ EOF
 		$rest_h=$TotalHits-$total_h;
 		$rest_k=$TotalBytes-$total_k;
 		if ($rest_p > 0 || $rest_h > 0 || $rest_k > 0) {	# All other visitors (known or not)
-			print "<TR><TD CLASS=AWL><font color=blue>$Message[82]</font></TD><TD>$rest_p</TD><TD>$rest_h</TD><TD>".Format_Bytes($rest_k)."</TD><TD>&nbsp;</TD></TR>\n";
+			print "<TR><TD CLASS=AWL><font color=blue>$Message[82]</font></TD>";
+			if ($ShowLinksToWhoIs && $LinksToWhoIs) { ShowWhoIsCell(""); }
+			print "<TD>$rest_p</TD><TD>$rest_h</TD><TD>".Format_Bytes($rest_k)."</TD><TD>&nbsp;</TD></TR>\n";
 		}
 		&tab_end;
 		&html_end;
@@ -4201,13 +4241,18 @@ EOF
 		print "$CENTER<a name=\"VISITOR\">&nbsp;</a><BR>";
 		$MaxNbOfHostsShown = (scalar keys %_hostmachine_h) if $MaxNbOfHostsShown > (scalar keys %_hostmachine_h);
 		&tab_head("$Message[81] ($Message[77] $MaxNbOfHostsShown) &nbsp; - &nbsp; <a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=allhosts":"$PROG$FileSuffix.allhosts.html")."\">$Message[80]</a> &nbsp; - &nbsp; <a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=lasthosts":"$PROG$FileSuffix.lasthosts.html")."\">$Message[9]</a> &nbsp; - &nbsp; <a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=unknownip":"$PROG$FileSuffix.unknownip.html")."\">$Message[45]</a>",19);
-		if ($MonthRequired ne "year") { print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[81] : $TotalHostsKnown $Message[82], $TotalHostsUnknown $Message[1] - $TotalUnique $Message[11]</TH><TH bgcolor=\"#$color_p\" width=80>$Message[56]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH bgcolor=\"#$color_k\" width=80>$Message[75]</TH><TH width=120>$Message[9]</TH></TR>\n"; }
-		else { print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[81] : ".(scalar keys %_hostmachine_h)."</TH><TH bgcolor=\"#$color_p\" width=80>$Message[56]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH bgcolor=\"#$color_k\" width=80>$Message[75]</TH><TH width=120>$Message[9]</TH></TR>\n"; }
+		if ($MonthRequired ne "year") { print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[81] : $TotalHostsKnown $Message[82], $TotalHostsUnknown $Message[1] - $TotalUnique $Message[11]</TH>"; }
+		else { print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[81] : ".(scalar keys %_hostmachine_h)."</TH>"; }
+		if ($ShowLinksToWhoIs && $LinksToWhoIs) { print "<TH width=80>$Message[114]</TH>"; }
+		print "<TH bgcolor=\"#$color_p\" width=80>$Message[56]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH bgcolor=\"#$color_k\" width=80>$Message[75]</TH><TH width=120>$Message[9]</TH></TR>\n";
 		$total_p=$total_h=$total_k=0;
 		my $count=0;
 		&BuildKeyList($MaxNbOfHostsShown,$MinHitHost,\%_hostmachine_h,\%_hostmachine_p);
 		foreach my $key (@keylist) {
-			print "<tr><td CLASS=AWL>$key</td><TD>".($_hostmachine_p{$key}||"&nbsp")."</TD><TD>$_hostmachine_h{$key}</TD><TD>".Format_Bytes($_hostmachine_k{$key})."</TD>";
+			print "<tr>";
+			print "<td CLASS=AWL>$key</td>";
+			if ($ShowLinksToWhoIs && $LinksToWhoIs) { ShowWhoIsCell($key); }
+			print "<TD>".($_hostmachine_p{$key}||"&nbsp")."</TD><TD>$_hostmachine_h{$key}</TD><TD>".Format_Bytes($_hostmachine_k{$key})."</TD>";
 			if ($_hostmachine_l{$key}) { print "<td>".Format_Date($_hostmachine_l{$key},1)."</td>"; }
 			else { print "<td>-</td>"; }
 			print "</tr>\n";

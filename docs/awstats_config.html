@@ -89,6 +89,7 @@ it with its value when reading it), follow the example:<br>
 
 <br><b>OPTIONAL APPEARANCE SETUP SECTION (Not required but increase AWStats features)</b><br>
 <ul>
+<li><a href="#MaxRowsInHTMLOutput">MaxRowsInHTMLOutput</a>
 <li><a href="#Lang">Lang</a>
 <li><a href="#DirLang">DirLang</a>
 <li><a href="#Show">ShowHeader</a>
@@ -128,6 +129,8 @@ it with its value when reading it), follow the example:<br>
 <li><a href="#ShowFlagLinks">ShowFlagLinks</a>
 <li><a href="#ShowLinksOnUrl">ShowLinksOnUrl</a>
 <li><a href="#MaxLengthOfURL">MaxLengthOfURL</a>
+<li><a href="#ShowLinksToWhoIs">ShowLinksToWhoIs</a>
+<li><a href="#LinksToWhoIs">LinksToWhoIs</a>
 <li><a href="#HTMLHeadSection">HTMLHeadSection</a>
 <li><a href="#HTMLEndSection">HTMLEndSection</a>
 <li><a href="#Bar">BarWidth</a>
@@ -159,6 +162,7 @@ it with its value when reading it), follow the example:<br>
 <br><br><hr>
 
 <a name="LogFile"><b>LogFile</b></a><br>
+<b>Version : </b>1.0 +<br>
 <br># "LogFile" contains the web server logfile to analyze.
 <br># You can use a full path or relative path from awstats.pl directory.
 <br># Example: "/var/log/apache/access.log"
@@ -182,6 +186,7 @@ it with its value when reading it), follow the example:<br>
 <br><br><hr>
 
 <a name="LogFormat"><b>LogFormat</b></a><br>
+<b>Version : </b>2.1 +<br>
 <br># Put here your log format (Must agree with your web server. See setup
 <br># instructions in README.txt to know how to configure your web server to have
 <br># the required log format).
@@ -227,6 +232,7 @@ it with its value when reading it), follow the example:<br>
 <br><br><hr>
 
 <a name="DNSLookup"><b>DNSLookup</b></a><br>
+<b>Version : </b>1.0 +<br>
 <br># If you want to have informations on domains/countries visitors, you must ask
 <br># AWStats to make reverse DNS lookup (if not already done in your log file).
 <br># If you set DNSLookup to 1, don't forget that reverse DNS lookup decrease
@@ -242,6 +248,7 @@ it with its value when reading it), follow the example:<br>
 <br><br><hr>
 
 <a name="DirData"><b>DirData</b></a><br>
+<b>Version : </b>1.0 +<br>
 <br># When AWStats updates its statistics, it stores results of its analysis in 
 <br># files (AWStats database). All those files are written in the directory
 <br># defined by the "DirData" parameter. Set this value to the directory where
@@ -259,6 +266,7 @@ it with its value when reading it), follow the example:<br>
 <br><br><hr>
 
 <a name="DirCgi"><b>DirCgi</b></a><br>
+<b>Version : </b>1.0 +<br>
 <br># Relative or absolute web URL of your awstats.pl directory.
 <br># This parameter is used only when AWStats is runned from command line
 <br># with -output option (to generate links in HTML reported page).
@@ -269,6 +277,7 @@ it with its value when reading it), follow the example:<br>
 <br><br><hr>
 
 <a name="DirIcons"><b>DirIcons</b></a><br>
+<b>Version : </b>1.0 +<br>
 <br># Relative or absolute web URL of all icons subdirectories.
 <br># Default: "/icon" (means you must copy icon directories in "/mywwwroot/icon")
 <br>#
@@ -277,6 +286,7 @@ it with its value when reading it), follow the example:<br>
 <br><br><hr>
 
 <a name="SiteDomain"><b>SiteDomain</b></a><br>
+<b>Version : </b>3.2 +<br>
 <br># "SiteDomain" must contain the main domain name or the main intranet web
 <br># server name used to reach the web site.
 <br># This parameter is only used to generate full URLs links when ShowLinksOnUrl
@@ -291,6 +301,7 @@ it with its value when reading it), follow the example:<br>
 <br><br><hr>
 
 <a name="Hostaliases"><b>Hostaliases</b></a><br>
+<b>Version : </b>1.0 +<br>
 <br># Put here all other possible domain names, addresses or virtual host aliases
 <br># someone can use to access your site. Try to keep only the minimum number of
 <br># possible names/adresses to have the best performances.
@@ -306,6 +317,7 @@ it with its value when reading it), follow the example:<br>
 <br><br><hr>
 
 <a name="AllowToUpdateStatsFromBrowser"><b>AllowToUpdateStatsFromBrowser</b></a><br>
+<b>Version : </b>3.0 +<br>
 <br># When this parameter is set to 1, AWStats add a button on report page to
 <br># allow to "update" statistics from a web browser. Warning, when "update" is
 <br># made from a browser, AWStats is runned as a CGI by the web server user
@@ -353,6 +365,7 @@ it with its value when reading it), follow the example:<br>
 <br><br><hr>
 
 <a name="PurgeLogFile"><b>PurgeLogFile</b></a><br>
+<b>Version : </b>2.23 +<br>
 <br># AWStats can purge log after processing it. By this way, the next time you
 <br># launch AWStats, log file will be smaller and processing time will be better.
 <br># IMPORTANT !!!
@@ -371,6 +384,7 @@ it with its value when reading it), follow the example:<br>
 <br><br><hr>
 
 <a name="ArchiveLogRecords"><b>ArchiveLogRecords</b></a><br>
+<b>Version : </b>2.1 +<br>
 <br># When PurgeLogFile is setup to 1, AWStats will clean your log file after
 <br># processing it. You can however keep an archive file (saved in "DirData") of
 <br># all processed log records by setting this to 1 (For example if you want to
@@ -400,6 +414,7 @@ it with its value when reading it), follow the example:<br>
 <br><br><hr>
 
 <a name="DefaultFile"><b>DefaultFile</b></a><br>
+<b>Version : </b>1.0 +<br>
 <br># Index page name for your web server.
 <br># Example: "default.htm"
 <br># Default: "index.html"
@@ -409,6 +424,7 @@ it with its value when reading it), follow the example:<br>
 <br><br><hr>
 
 <a name="SkipHosts"><b>SkipHosts</b></a><br>
+<b>Version : </b>1.0 +<br>
 <br># Do not include access from clients that match following criteria.
 <br># If your log file contains IP adresses in host field, you must put here
 <br># matching IP adresses criteria.
@@ -424,6 +440,7 @@ it with its value when reading it), follow the example:<br>
 <br><br><hr>
 
 <a name="SkipDNSLookupFor"><b>SkipDNSLookupFor</b></a><br>
+<b>Version : </b>3.0 +<br>
 <br># You can specify specific IP addresses that should NOT be looked up in
 <br>#  the DNS. You may specify partial addresses (ie 163.85. for everything
 <br>#  behind the usual firewall setup, etc)...
@@ -437,6 +454,7 @@ it with its value when reading it), follow the example:<br>
 <br><br><hr>
 
 <a name="SkipFiles"><b>SkipFiles</b></a><br>
+<b>Version : </b>1.0 +<br>
 <br># Use SkipFiles to ignore access to URLs that match one of following entries.
 <br># You can, with this option, add a list of not important frame pages (like 
 <br># menus, etc...) to exclude them from statistics.
@@ -454,6 +472,7 @@ it with its value when reading it), follow the example:<br>
 <br><br><hr>
 
 <a name="OnlyFiles"><b>OnlyFiles</b></a><br>
+<b>Version : </b>3.0 +<br>
 <br># Include in stats, only accesses to URLs that match one of following entries.
 <br># For example, if you want AWStats to filter access to keep only stats that
 <br># match a particular string, like a particular directory, you can add this
@@ -470,6 +489,7 @@ it with its value when reading it), follow the example:<br>
 <br><br><hr>
 
 <a name="NotPageList"><b>NotPageList</b></a><br>
+<b>Version : </b>3.2 +<br>
 <br># Add here a list of kind of url (file extension) that must be counted as
 <br># "Hit only" and not as a "Hit" and "Page viewed". You can set here all images
 <br># extensions as they are hit downloaded that must be counted but they are not
@@ -569,6 +589,7 @@ it with its value when reading it), follow the example:<br>
 <br><br><hr>
 
 <a name="NbOfLinesForCorruptedLog"><b>NbOfLinesForCorruptedLog</b></a><br>
+<b>Version : </b>3.2 +<br>
 <br># To help you to detect if your log format is good, AWStats report an error
 <br># if the first NbOfLinesForCorruptedLog lines have all a format that does not
 <br># match the LogFormat parameter.
@@ -582,6 +603,7 @@ it with its value when reading it), follow the example:<br>
 <br><br><hr>
 
 <a name="SplitSearchString"><b>SplitSearchString</b></a><br>
+<b>Version : </b>2.24 +<br>
 <br># Search engines keywords reported are full search string or separate keywords
 <br># Possible values:
 <br># 0 - Search keywords reported are full search string (ie: "town maps")
@@ -629,7 +651,18 @@ it with its value when reading it), follow the example:<br>
 
 <br><br><hr>
 
+<a name="MaxRowsInHTMLOutput"><b>MaxRowsInHTMLOutput</b></a><br>
+<b>Version : </b>4.0 +<br>
+<br># To avoid too large web pages, you can ask AWStats to limit number of rows of
+<br># all reported charts to this number when no other limit apply.
+<br># Default: 1000
+<br>#
+<br>MaxRowsInHTMLOutput=1000
+
+<br><br><hr>
+
 <a name="Lang"><b>Lang</b></a><br>
+<b>Version : </b>2.1 +<br>
 <br># Set your primary language.
 <br># Possible value:
 <br>#  Bosnian=ba, Chinese (Taiwan)=tw, Chinese (Traditional)=cn, Czech=cz,
@@ -645,6 +678,7 @@ it with its value when reading it), follow the example:<br>
 <br><br><hr>
 
 <a name="DirLang"><b>DirLang</b></a><br>
+<b>Version : </b>2.1 +<br>
 <br># Set the location of language files.
 <br># Example: "/opt/awstats/lang"
 <br># Default: "./lang" (means lang directory is in same location than awstats.pl)
@@ -654,6 +688,7 @@ it with its value when reading it), follow the example:<br>
 <br><br><hr>
 
 <a name="Show"><b>Show...</b></a><br>
+<b>Version : </b>3.2 +<br>
 <br># You choose here which summary report you want to see in the main page.
 <br># Whatever is your setup here, all detailed reports are still available.
 <br># So if you setup to 1 only ShowHeader, ShowMenu and ShowMonthDayStats, all
@@ -683,6 +718,7 @@ it with its value when reading it), follow the example:<br>
 <br><br><hr>
 
 <a name="Max"><b>Max...</b></a><br>
+<b>Version : </b>1.0 +<br>
 <br># This value can be used to choose maximum number of lines shown for each 
 <br># particular reporting.
 <br>#
@@ -710,6 +746,7 @@ it with its value when reading it), follow the example:<br>
 <br><br><hr>
 
 <a name="FirstDayOfWeek"><b>FirstDayOfWeek</b></a><br>
+<b>Version : </b>3.2 +<br>
 <br># Choose if you want week to start on sunday or monday
 <br># Possible values:
 <br># 0 - Week start on sunday
@@ -721,6 +758,7 @@ it with its value when reading it), follow the example:<br>
 <br><br><hr>
 
 <a name="DetailedReportsOnNewWindows"><b>DetailedReportsOnNewWindows</b></a><br>
+<b>Version : </b>3.2 +<br>
 <br># This parameter ask your browser to open detailed reports into a different
 <br># window than the main page.
 <br># Possible values: 1 or 0
@@ -731,6 +769,7 @@ it with its value when reading it), follow the example:<br>
 <br><br><hr>
 
 <a name="ShowFlagLinks"><b>ShowFlagLinks</b></a><br>
+<b>Version : </b>3.2 +<br>
 <br># List of visible flags with link to other language translations.
 <br># If you don't want any flag link, set ShowFlagLinks to "".
 <br># This parameter is used only if ShowHeader is set to 1.
@@ -742,6 +781,7 @@ it with its value when reading it), follow the example:<br>
 <br><br><hr>
 
 <a name="ShowLinksOnUrl"><b>ShowLinksOnUrl</b></a><br>
+<b>Version : </b>3.1 +<br>
 <br># Each URL shown in stats report views are links you can click.
 <br># Possible values: 1 or 0
 <br># Default: 1
@@ -751,6 +791,7 @@ it with its value when reading it), follow the example:<br>
 <br><br><hr>
 
 <a name="MaxLengthOfURL"><b>MaxLengthOfURL</b></a><br>
+<b>Version : </b>1.0 +<br>
 <br># Maximum length of URL shown on stats page (number of characters). This
 <br># affects only URL visible text, link still work.
 <br># Default: 72
@@ -759,7 +800,34 @@ it with its value when reading it), follow the example:<br>
 
 <br><br><hr>
 
+<a name="ShowLinksToWhoIs"><b>ShowLinksToWhoIs</b></a><br>
+<b>Version : </b>4.0 +<br>
+<br># AWStats can include a link to WhoIs database on all hostnames. For this, you
+<br># must set ShowLinksToWhoIs to 1. Warning, a such feature depends on next
+<br># parameter (LinksForWhoIs) and on WhoIs server exhaustivity and availability.
+<br># For this reason, this feature can't be a reliable feature.
+<br># Possible values: 1 or 0
+<br># Default: 0
+<br>#
+<br>ShowLinksToWhoIs=0
+
+<br><br><hr>
+
+<a name="LinksToWhoIs"><b>LinksToWhoIs</b></a><br>
+<b>Version : </b>4.0 +<br>
+<br># Set here the link used to point to Internet WhoIs database.
+<br># This parameter is not used if ShowLinksToWhoIs is 0.
+<br># Default: "http://www.whois.net/search.cgi2?str="
+<br># Example: "http://www.netsol.com/cgi-bin/whois/whois?SearchType=all&STRING="
+<br># Example: "http://www.ripe.net/perl/whois?form_type=simple&searchtext="
+<br># Example: "http://www.arin.net/cgi-bin/whois.pl?queryinput="
+<br>#
+<br>LinksToWhoIs="http://www.whois.net/search.cgi2?str="
+
+<br><br><hr>
+
 <a name="HTMLHeadSection"><b>HTMLHeadSection</b></a><br>
+<b>Version : </b>3.2 +<br>
 <br># You can put here HTML code that will be added at the top of AWStats reports.
 <br># Default: ""
 <br>#
@@ -768,6 +836,7 @@ it with its value when reading it), follow the example:<br>
 <br><br><hr>
 
 <a name="HTMLEndSection"><b>HTMLEndSection</b></a><br>
+<b>Version : </b>3.2 +<br>
 <br># You can put here HTML code that will be added at the end of AWStats reports.
 <br># Great to add advert ban.
 <br># Default: ""
@@ -777,6 +846,7 @@ it with its value when reading it), follow the example:<br>
 <br><br><hr>
 
 <a name="Bar"><b>Bar...</b></a><br>
+<b>Version : </b>1.0 +<br>
 <br># Value of maximum bar width/heigth for horizontal/vertical graphics bar
 <br># Default: 260/180
 <br>#
@@ -786,7 +856,7 @@ it with its value when reading it), follow the example:<br>
 <br><br><hr>
 
 <a name="Logo"><b>Logo...</b></a><br>
-<b>Version : </b>3.1<br>
+<b>Version : </b>3.1 +<br>
 <br># You can set Logo and LogoLink to use your own logo.
 <br># Logo must be the name of image file (must be in $DirIcons/other directory).
 <br># LogoLink is the expected URL when clicking on Logo.
@@ -798,7 +868,7 @@ it with its value when reading it), follow the example:<br>
 <br><br><hr>
 
 <a name="StyleSheet"><b>StyleSheet</b></a><br>
-<b>Version : </b>4.0+<br>
+<b>Version : </b>4.0 +<br>
 <br># You can ask AWStats to use a particular CSS (Cascading Style Sheet) to
 <br># change its look.
 <br># Example: "/css/awstats.css"

@@ -16,17 +16,22 @@ AWStats Changelog
 - New feature: Added average files size in Pages/URL report chart.
 - New feature: You can put dynamic environnement variables into config file.
 - New feature: Keyphrases list can be viewed entirely (not only most used).
-- New parameter: ValidHTTPCodes
-- New parameter: StyleSheet
 - New parameter: WrapperScript
 - New parameter: CreateDirDataIfNotExists
+- New parameter: ValidHTTPCodes
+- New parameter: MaxRowsInHTMLOutput
+- New parameter: ShowLinksToWhoIs
+- New parameter: LinksToWhoIs
+- New parameter: StyleSheet
 - New tool: A log format converter common2combined.pl
 - New option: -staticlinks to build static links in report page (to use
   AWStats with no web servers).
 - Fixed: wrong size of bar in "average" report when average value was < 1.
 - Fixed: pb of "Error: Not same number of records" when using some version
   of mod_perl.
+- Fixed: pb in logresolvemerge.pl
 - No more need to use \. to say . in config file.
+- Documentation seriously updated.
 
 
 3.2
@@ -54,9 +59,9 @@ AWStats Changelog
   http://mysite/sameurl?param=x of http://mysite/sameurl?param=y
 - New feature: ShowFlagLinks can now accept list of all wanted flags for
   translation link.
-- New feature: Add logresolvemerge tool to merge split log files
-  from a load balancing web server before running awstats.
 - New feature: Support standard ISA server log format.
+- New tool: Add logresolvemerge tool to merge split log files
+  from a load balancing web server before running awstats.
 - New parameter: HTMLHeadSection allows you to add HTML code in header report.
 - New parameter: NbOfLinesForCorruptedLog.
 - Fixed: no more warning/error messages when runned with option perl -w.
@@ -159,7 +164,7 @@ AWStats Changelog
 - Setup instructions are cleaner
 
 
-2.22
+2.1
 
 - AWStats considers myserver and www.myserver as the same, even if "HostAliases" setup is wrong.
 - Fixed a bug making unique visitors counter too high.
@@ -167,21 +172,15 @@ AWStats Changelog
 - Make difference between unknown browsers and unknown OS.
 - Robots stats are isolated from the rest of visitors.
 - Better keywords detection algorithm.
-- Code a little bit cleaner and faster.
-- Images are in .png format.
-- Added Spanish language (now 4 different languages supported).
-- 252 domains/countries, 40 browsers database, 22 OS, 250 robots, 32 search engines.
-
-
-2.1
-
 - Added last time connection for each hosts
 - Added list of URL for HTTP Error 404
 - Added pages, hits and KB for each statistics
 - Added colors and links
 - Works also with IIS
-- 3 languages: English, French and Dutch
-- 250 domains/countries, 38 browsers (more with all versions), 19 OS, 186 robots, 24 search engines.
+- Code a little bit cleaner and faster.
+- Images are in .png format.
+- 4 languages: English, French, Dutch, Spanish
+- 252 domains/countries, 40 browsers database, 22 OS, 250 robots, 32 search engines.
 
 
 1.0
