@@ -1760,7 +1760,7 @@ sub Read_Plugins {
 				}
 			}
 			else {
-				warning("Tried to load plugin \"$pluginname\" twice. Fix config file.");
+				warning("Warning: Tried to load plugin \"$pluginname\" twice. Fix config file.");
 			}
 		}
 		else {
