@@ -8,12 +8,11 @@ logfile analyzer that shows you all your Web statistics including visitors,
 pages, hits, hours, search engines, keywords used to find your site, broken
 links, robots and more...
 It works with IIS 5.0+, Apache and all major web, wap, proxy, streaming
-server log files (and even syslog, ftp servers or mail logs) on all Operating
-Systems.
+server log files (and even ftp servers or mail logs) on all Operating Systems.
 
 License: GNU GPL (GNU General Public License. See LICENSE file)
-Version : 5.7
-Release date: July 2003
+Version : 5.8
+Release date: September 2003
 Platforms: All (Linux, NT, SCO, BSD, Solaris and other *NIX's, BeOS, OS/2...)
 Author: Laurent Destailleur <eldy@users.sourceforge.net>
 AWStats official web site and latest version: http://awstats.sourceforge.net
@@ -98,6 +97,7 @@ I - 3) Files
 	docs/*                              AWStats documentation (setup/usage...)
 	tools/*                             Ohter provided tools
 	wwwroot/cgi-bin/awstats.pl          The main CLI/CGI program
+	wwwroot/cgi-bin/awredir.pl          A tool to track click that exit site
 	wwwroot/cgi-bin/awstats.model.conf  An example of AWStats configure file
 	wwwroot/cgi-bin/lang                Directory with languages files
 	wwwroot/cgi-bin/lib                 Directory with awstats reference info

@@ -3,6 +3,19 @@ AWStats Changelog
 $Revision$ - $Author$ - $Date$ 
 
 
+5.8
+
+Fixes:
+- Fix wrong number of column for "other" row in host chart.
+
+New features/improvements:
+- Added OnlyUserAgents parameter.
+
+Other/Documentation:
+- Updated documentation.
+
+
+
 5.7
 
 Fixes:
