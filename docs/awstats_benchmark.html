@@ -101,15 +101,16 @@ to complete correctly <a href="awstats_config.html#URLQuerySeparators">URLQueryS
 <br>
 <a name="ADVICES"></a><b><u>SOME IMPORTANT ADVICES FOR A GOOD USE OF AWSTATS:</u></b><br>
 <br>
-<img src="images/star.png"><img src="images/star.png"><img src="images/star.png"><img src="images/star.png"><img src="images/star.png">
-- You can disable <a href="awstats_config.html#DNSLookup">DNSLookup</a> in AWStats (set DNSLookup=0 or DNSlookup=2 to only use DNS file resolver).
-Note that with DNSLookup disabled, if you still want to have the 'Country' report, you must enable the 'geoip' plugin.
-Without this plugin, 'Country' report will works only if hosts addresses in your log file are already
-resolved (need to setup your web server to do so, your web server will be slowed).
-Without DNSLookup, log analyze speed can be increased by 20 to 100 times.<br>
+<img src="images/star.png"><img src="images/star.png"><img src="images/star.png"><img src="images/star.png">
+- Check that <a href="awstats_config.html#DNSLookup">DNSLookup</a> is disabled in AWStats (DNSLookup must
+be set to 0, or 2 to only use a DNS file resolver). Note that you still can have a 'Country' report
+without DNS lookup enabled. For this you must enable the 'geoip' plugin. Without this plugin, 'Country'
+report will works only if hosts addresses in your log file are already resolved (need to setup your web
+server to do so, your web server will be slowed). With DNSLookup enabled, log analyze speed is decreased
+by 20 to 100 times.<br>
 <img src="images/star.png"><img src="images/star.png"><img src="images/star.png"><img src="images/star.png">
 - Use carefully parameters <a href="awstats_config.html#URLWithQuery">URLWithQuery</a> and <a href="awstats_config.html#URLReferrerWithQuery">URLReferrerWithQuery</a>
-(Let them set to 0 if you don't know what they means) and check your web site URLs' syntax to know if you need to complete parameter <a href="awstats_config.html#URLQuerySeparators">URLQuerySeparators</a>.
+(Let them set to 0 if you don't know what they means) and check your web site URLs' syntax to know if you don't need to complete parameter <a href="awstats_config.html#URLQuerySeparators">URLQuerySeparators</a>.
 If you really need to use <a href="awstats_config.html#URLWithQuery">URLWithQuery</a>=1, check that <a href="awstats_config.html#URLWithQueryWithoutFollowingParameters">URLWithQueryWithoutFollowingParameters</a> is set properly.<br>
 <img src="images/star.png"><img src="images/star.png"><img src="images/star.png"><img src="images/star.png">
 - Be sure that your <a href="awstats_config.html#HostAliases">HostAliases</a> parameter list is complete.<br>
@@ -118,8 +119,8 @@ If you really need to use <a href="awstats_config.html#URLWithQuery">URLWithQuer
  The more often you
 launch AWStats, the less AWStats has new lines in log to process. This solve also the ActiveState memory problem (see next advice).<br>
 <img src="images/star.png"><img src="images/star.png"><img src="images/star.png">
-- Use last Perl version (For example 5.8 is 5% faster than 5.6) and use standard Perl distribution instead of ActiveState (For example Standard Perl 5.8 Win32 binary is 25% faster than
-ActiveState. And ActiveStates 5.006, and may be other versions, have an important memory problem making speed of analysis slower and slower when analysing more and more lines).<br>
+- Use last Perl version (For example 5.8 is 5% faster than 5.6) and, more important, use standard Perl distribution instead of ActiveState (For example Standard Perl 5.8 Win32 binary is 25% faster than
+ActiveState. And ActiveState 5.006, and may be other versions, have important memory problems making speed of analysis slower and slower when analysing more and more lines).<br>
 <img src="images/star.png"><img src="images/star.png">
 - Use last AWStats version.<br>
 <img src="images/star.png">
