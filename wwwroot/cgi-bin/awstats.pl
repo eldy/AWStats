@@ -4901,7 +4901,7 @@ sub DefinePerlParsingFormat {
 			}
 			elsif ($f =~ /%time3$/) {	# mon d hh:mm:ss
 				$pos_date = $i;	$i++; push @fieldlib, 'date';
-				$PerlParsingFormat .= "(\\w\\w\\w \\s??\\d+ \\d\\d:\\d\\d:\\d\\d)";
+				$PerlParsingFormat .= "(\\w\\w\\w \\s?\\d+ \\d\\d:\\d\\d:\\d\\d)";
 			}
 			elsif ($f =~ /%time4$/) {	# ddddddddddddd
 				$pos_date = $i;	$i++; push @fieldlib, 'date';
@@ -5965,17 +5965,19 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 			next;
 		}
 
-		# Split DD/Month/YYYY:HH:MM:SS or YYYY-MM-DD HH:MM:SS or MM/DD/YY\tHH:MM:SS
-		$field[$pos_date] =~ tr/,-\/ \t/:::::/;			# " \t" is used instead of "\s" not known with tr
+		$field[$pos_date] =~ tr/,-\/ \t/:::::/s;		# " \t" is used instead of "\s" not known with tr
 		my @dateparts=split(/:/,$field[$pos_date]);		# tr and split faster than @dateparts=split(/[\/\-:\s]/,$field[$pos_date])
+		# Detected date format: dddddddddd, YYYY-MM-DD HH:MM:SS (IIS), MM/DD/YY\tHH:MM:SS,
+		# DD/Month/YYYY:HH:MM:SS (Apache), DD/MM/YYYY HH:MM:SS, Mon DD HH:MM:SS
 		if (! $dateparts[1]) {	# Unix timestamp
 			($dateparts[5],$dateparts[4],$dateparts[3],$dateparts[0],$dateparts[1],$dateparts[2]) = localtime(int($field[$pos_date]));
 			$dateparts[1]++;$dateparts[2]+=1900;
 		}
 		elsif ($dateparts[0] =~ /^....$/) { my $tmp=$dateparts[0]; $dateparts[0]=$dateparts[2]; $dateparts[2]=$tmp; }
 		elsif ($field[$pos_date] =~ /^..:..:..:/) { $dateparts[2]+=2000; my $tmp=$dateparts[0]; $dateparts[0]=$dateparts[1]; $dateparts[1]=$tmp; }
+		elsif ($dateparts[0] =~ /^...$/)  { my $tmp=$dateparts[0]; $dateparts[0]=$dateparts[1]; $dateparts[1]=$tmp; $dateparts[5]=$dateparts[4]; $dateparts[4]=$dateparts[3]; $dateparts[3]=$dateparts[2]; $dateparts[2]=$nowyear; }
 		if ($MonthNum{$dateparts[1]}) { $dateparts[1]=$MonthNum{$dateparts[1]}; }	# Change lib month in num month if necessary
-		
+
 		# Now @dateparts is (DD,MM,YYYY,HH,MM,SS) and we're going to create $timerecord=YYYYMMDDHHMMSS
 		# Plugin call : Convert a @datepart into another @datepart
 		if ($PluginsLoaded{'ChangeTime'}{'timezone'})  { @dateparts=ChangeTime_timezone(\@dateparts); }
