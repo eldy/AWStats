@@ -624,6 +624,7 @@ a { font: 11px verdana, arial, helvetica, sans-serif; }
 a:link    { color: #$color_link; text-decoration: none; }
 a:visited { color: #$color_link; text-decoration: none; }
 a:hover   { color: #$color_hover; text-decoration: underline; }
+.currentday { font-weight: bold; }
 EOF
 			# Call to plugins' function AddHTMLStyles
 			foreach my $pluginname (keys %{$PluginsLoaded{'AddHTMLStyles'}})  {
@@ -8560,7 +8561,7 @@ if (scalar keys %HTMLOutput) {
 				print "</tr>\n";
 				# Show lib for month
 				print "<tr valign=\"middle\">";
-#				if ($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks) {
+#				if (!$StaticLinks) {
 #					print "<td><a href=\"".XMLEncode("$AWScript?${NewLinkParams}month=12&year=".($YearRequired-1))."\">&lt;&lt;</a></td>";
 #				}
 #				else {
@@ -8568,14 +8569,16 @@ if (scalar keys %HTMLOutput) {
 #				}
 				for (my $ix=1; $ix<=12; $ix++) {
 					my $monthix=sprintf("%02s",$ix);
-#					if ($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks) {
+#					if (!$StaticLinks) {
 #						print "<td><a href=\"".XMLEncode("$AWScript?${NewLinkParams}month=$monthix&year=$YearRequired")."\">$MonthNumLib{$monthix}<br />$YearRequired</a></td>";
 #					}
 #					else {
-						print "<td>$MonthNumLib{$monthix}<br />$YearRequired</td>";
+    					print "<td>".(! $StaticLinks && $monthix==$nowmonth && $YearRequired==$nowyear?'<font class="currentday">':'');
+						print "$MonthNumLib{$monthix}<br />$YearRequired";
+    					print (! $StaticLinks && $monthix==$nowmonth && $YearRequired==$nowyear?'<font class="currentday">':'')."</td>";
 #					}
 				}
-#				if ($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks) {
+#				if (!$StaticLinks) {
 #					print "<td><a href=\"".XMLEncode("$AWScript?${NewLinkParams}month=1&year=".($YearRequired+1))."\">&gt;&gt;</a></td>";
 #				}
 #				else {
@@ -8599,7 +8602,9 @@ if (scalar keys %HTMLOutput) {
 				for (my $ix=1; $ix<=12; $ix++) {
 					my $monthix=sprintf("%02s",$ix);
 					print "<tr>";
-					print "<td>$MonthNumLib{$monthix} $YearRequired</td>";
+					print "<td>".(! $StaticLinks && $monthix==$nowmonth && $YearRequired==$nowyear?'<font class="currentday">':'');
+					print "$MonthNumLib{$monthix} $YearRequired";
+					print (! $StaticLinks && $monthix==$nowmonth && $YearRequired==$nowyear?'</font>':'')."</td>";
 					if ($ShowMonthStats =~ /U/i) { print "<td>",$MonthUnique{$YearRequired.$monthix}?$MonthUnique{$YearRequired.$monthix}:"0","</td>"; }
 					if ($ShowMonthStats =~ /V/i) { print "<td>",$MonthVisits{$YearRequired.$monthix}?$MonthVisits{$YearRequired.$monthix}:"0","</td>"; }
 					if ($ShowMonthStats =~ /P/i) { print "<td>",$MonthPages{$YearRequired.$monthix}?$MonthPages{$YearRequired.$monthix}:"0","</td>"; }
@@ -8772,9 +8777,9 @@ if (scalar keys %HTMLOutput) {
 					if (! DateIsValid($day,$month,$year)) { next; }			# If not an existing day, go to next
 					my $dayofweekcursor=DayOfWeek($day,$month,$year);
 					print "<td".($dayofweekcursor=~/[06]/?" bgcolor=\"#$color_weekend\"":"").">";
-					print ($day==$nowday && $month==$nowmonth && $year==$nowyear?'<b>':'');
+					print (! $StaticLinks && $day==$nowday && $month==$nowmonth && $year==$nowyear?'<font class="currentday">':'');
 					print "$day<br /><span style=\"font-size: ".($FrameName ne 'mainright' && $QueryString !~ /buildpdf/i?"9":"8")."px;\">".$MonthNumLib{$month}."</span>";
-					print ($day==$nowday && $month==$nowmonth && $year==$nowyear?'</b>':'');
+					print (! $StaticLinks && $day==$nowday && $month==$nowmonth && $year==$nowyear?'</font>':'');
 					print "</td>\n";
 				}
 				print "<td>&nbsp;</td>";
@@ -8799,7 +8804,9 @@ if (scalar keys %HTMLOutput) {
 					if (! DateIsValid($day,$month,$year)) { next; }			# If not an existing day, go to next
 					my $dayofweekcursor=DayOfWeek($day,$month,$year);
 					print "<tr".($dayofweekcursor=~/[06]/?" bgcolor=\"#$color_weekend\"":"").">";
-					print "<td>",Format_Date("$year$month$day"."000000",2),"</td>";
+					print "<td>".(! $StaticLinks && $day==$nowday && $month==$nowmonth && $year==$nowyear?'<font class="currentday">':'');
+                    print Format_Date("$year$month$day"."000000",2);
+                    print (! $StaticLinks && $day==$nowday && $month==$nowmonth && $year==$nowyear?'</font>':'')."</td>";
 					if ($ShowDaysOfMonthStats =~ /V/i) { print "<td>",$DayVisits{$year.$month.$day}?$DayVisits{$year.$month.$day}:"0","</td>"; }
 					if ($ShowDaysOfMonthStats =~ /P/i) { print "<td>",$DayPages{$year.$month.$day}?$DayPages{$year.$month.$day}:"0","</td>"; }
 					if ($ShowDaysOfMonthStats =~ /H/i) { print "<td>",$DayHits{$year.$month.$day}?$DayHits{$year.$month.$day}:"0","</td>"; }
@@ -8919,7 +8926,9 @@ if (scalar keys %HTMLOutput) {
 				print "</tr>\n";
 				print "<tr".Tooltip(17).">\n";
 				for (@DOWIndex) {
-					print "<td".($_=~/[06]/?" bgcolor=\"#$color_weekend\"":"").">".$Message[$_+84]."</td>";
+					print "<td".($_=~/[06]/?" bgcolor=\"#$color_weekend\"":"").">".(! $StaticLinks && $_==($nowwday-1) && $MonthRequired==$nowmonth && $YearRequired==$nowyear?'<font class="currentday">':'');
+					print $Message[$_+84];
+					print (! $StaticLinks && $_==($nowwday-1) && $MonthRequired==$nowmonth && $YearRequired==$nowyear?'<font class="currentday">':'')."</td>";
 				}
 				print "</tr>\n</table>\n";
 			}
@@ -8934,7 +8943,9 @@ if (scalar keys %HTMLOutput) {
 				if ($ShowDaysOfWeekStats =~ /B/i) { print "<td width=\"80\" bgcolor=\"#$color_k\"".Tooltip(5).">$Message[75]</td></tr>"; }
 				for (@DOWIndex) {
 					print "<tr".($_=~/[06]/?" bgcolor=\"#$color_weekend\"":"").">";
-					print "<td>".$Message[$_+84]."</td>";
+					print "<td>".(! $StaticLinks && $_==($nowwday-1) && $MonthRequired==$nowmonth && $YearRequired==$nowyear?'<font class="currentday">':'');
+					print $Message[$_+84];
+					print "</td>";
 					if ($ShowDaysOfWeekStats =~ /P/i) { print "<td>",$avg_dayofweek_p[$_],"</td>"; }
 					if ($ShowDaysOfWeekStats =~ /H/i) { print "<td>",$avg_dayofweek_h[$_],"</td>"; }
 					if ($ShowDaysOfWeekStats =~ /B/i) { print "<td>",Format_Bytes($avg_dayofweek_k[$_]),"</td>"; }
