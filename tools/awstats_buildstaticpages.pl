@@ -27,13 +27,15 @@ my $Debug=0;
 my $DIR;
 my $PROG;
 my $Extension;
-my $Config;
+my $SiteConfig;
 my $Update=0;
+my $BuildPDF=0;
 my $Date=0;
 my $Lang;
 my $YearRequired;
 my $MonthRequired;
 my $Awstats='awstats.pl';
+my $AwstatsDir='';
 my $HtmlDoc='htmldoc';		# ghtmldoc.exe
 my $StaticExt='html';
 my $DirIcons='';
@@ -41,39 +43,41 @@ my $OutputDir='';
 my $OutputSuffix;
 my $OutputFile;
 my @pages=();
-my @OutputList=(
-"alldomains",
-"allhosts","lasthosts","unknownip",
-"alllogins","lastlogins",
-"allrobots","lastrobots",
-"urldetail","urlentry","urlexit",
-"unknownos","unknownbrowser","osdetail","browserdetail",
-"refererse","refererpages",
-#"referersites",
-"keyphrases","keywords",
-"errors404"
-);
+my @OutputList=();
+my $FileConfig;
+my $FileSuffix;
+my $SiteConfig;
+use vars qw/
+$ShowDomainsStats $ShowHostsStats $ShowAuthenticatedUsers $ShowRobotsStats
+$ShowEMailSenders $ShowEMailReceivers $ShowSessionsStats $ShowPagesStats $ShowFileTypesStats
+$ShowOSStats $ShowBrowsersStats $ShowScreenSizeStats $ShowOriginStats $ShowKeyphrasesStats
+$ShowKeywordsStats $ShowMiscStats $ShowHTTPErrorsStats $ShowSMTPErrorsStats
+/;
 
 
 #-------------------------------------------------------
 # Functions
 #-------------------------------------------------------
 
+#------------------------------------------------------------------------------
+# Function:		Write error message and exit
+# Parameters:	$message
+# Input:		None
+# Output:		None
+# Return:		None
+#------------------------------------------------------------------------------
 sub error {
 	print "Error: $_[0].\n";
     exit 1;
 }
 
-sub debug {
-	my $level = $_[1] || 1;
-	if ($Debug >= $level) { 
-		my $debugstring = $_[0];
-		if ($ENV{"GATEWAY_INTERFACE"}) { $debugstring =~ s/^ /&nbsp&nbsp /; $debugstring .= "<br>"; }
-		print "DEBUG $level - ".time." : $debugstring\n";
-		}
-	0;
-}
-
+#------------------------------------------------------------------------------
+# Function:		Write a warning message
+# Parameters:	$message
+# Input:		$WarningMessage %HTMLOutput
+# Output:		None
+# Return:		None
+#------------------------------------------------------------------------------
 sub warning {
 	my $messagestring=shift;
 	debug("$messagestring",1);
@@ -88,6 +92,130 @@ sub warning {
 #	}
 }
 
+#------------------------------------------------------------------------------
+# Function:     Write debug message and exit
+# Parameters:   $string $level
+# Input:        %HTMLOutput  $Debug=required level  $DEBUGFORCED=required level forced
+# Output:		None
+# Return:		None
+#------------------------------------------------------------------------------
+sub debug {
+	my $level = $_[1] || 1;
+	if ($Debug >= $level) {
+		my $debugstring = $_[0];
+		if ($ENV{"GATEWAY_INTERFACE"}) { $debugstring =~ s/^ /&nbsp&nbsp /; $debugstring .= "<br>"; }
+		print localtime(time)." - DEBUG $level - $debugstring\n";
+	}
+}
+
+#------------------------------------------------------------------------------
+# Function:     Read config file
+# Parameters:	-
+# Input:        $DIR $PROG $SiteConfig
+# Output:		Global variables
+# Return:		-
+#------------------------------------------------------------------------------
+sub Read_Config {
+	# Check config file in common possible directories :
+	# Windows :                   	"$DIR" (same dir than awstats.pl)
+	# Mandrake and Debian package :	"/etc/awstats"
+	# FHS standard, Suse package : 	"/etc/opt/awstats"
+	# Other possible directories :	"/etc", "/usr/local/etc/awstats"
+	my @PossibleConfigDir=("$AwstatsDir","$DIR","/etc/awstats","/etc/opt/awstats","/etc","/usr/local/etc/awstats");
+
+	# Open config file
+	$FileConfig=$FileSuffix='';
+	foreach my $dir (@PossibleConfigDir) {
+		my $searchdir=$dir;
+		if ($searchdir && $searchdir !~ /[\\\/]$/) { $searchdir .= "/"; }
+		if (open(CONFIG,"${searchdir}awstats.$SiteConfig.conf")) 	{ $FileConfig="${searchdir}awstats.$SiteConfig.conf"; $FileSuffix=".$SiteConfig"; last; }
+		if (open(CONFIG,"${searchdir}awstats.conf"))  				{ $FileConfig="${searchdir}awstats.conf"; $FileSuffix=''; last; }
+	}
+	if (! $FileConfig) { error("Couldn't open config file \"awstats.$SiteConfig.conf\" nor \"awstats.conf\" : $!"); }
+
+	# Analyze config file content and close it
+	&Parse_Config( *CONFIG , 1 , $FileConfig);
+	close CONFIG;
+}
+
+#------------------------------------------------------------------------------
+# Function:     Parse content of a config file
+# Parameters:	opened file handle, depth level, file name
+# Input:        -
+# Output:		Global variables
+# Return:		-
+#------------------------------------------------------------------------------
+sub Parse_Config {
+    my ( $confighandle ) = $_[0];
+	my $level = $_[1];
+	my $configFile = $_[2];
+	my $versionnum=0;
+	my $conflinenb=0;
+	
+	if ($level > 10) { error("$PROG can't read down more than 10 level of includes. Check that no 'included' config files include their parent config file (this cause infinite loop)."); }
+
+   	while (<$confighandle>) {
+		chomp $_; s/\r//;
+		$conflinenb++;
+
+		# Extract version from first line
+		if (! $versionnum && $_ =~ /^# AWSTATS CONFIGURE FILE (\d+).(\d+)/i) {
+			$versionnum=($1*1000)+$2;
+			#if ($Debug) { debug(" Configure file version is $versionnum",1); }
+			next;
+		}
+
+		if ($_ =~ /^\s*$/) { next; }
+
+		# Check includes
+		if ($_ =~ /^Include "([^\"]+)"/ || $_ =~ /^#include "([^\"]+)"/) {	# #include kept for backward compatibility
+		    my $includeFile = $1;
+			if ($Debug) { debug("Found an include : $includeFile",2); }
+		    if ( $includeFile !~ /^[\\\/]/ ) {
+			    # Correct relative include files
+				if ($FileConfig =~ /^(.*[\\\/])[^\\\/]*$/) { $includeFile = "$1$includeFile"; }
+			}
+			if ($level > 1) {
+				warning("Warning: Perl versions before 5.6 cannot handle nested includes");
+				next;
+			}
+		    if ( open( CONFIG_INCLUDE, $includeFile ) ) {
+				&Parse_Config( *CONFIG_INCLUDE , $level+1, $includeFile);
+				close( CONFIG_INCLUDE );
+		    }
+		    else {
+				error("Could not open include file: $includeFile" );
+		    }
+			next;
+		}
+
+		# Remove comments
+		if ($_ =~ /^#/) { next; }
+		$_ =~ s/\s#.*$//;
+
+		# Extract param and value
+		my ($param,$value)=split(/=/,$_,2);
+		$param =~ s/^\s+//; $param =~ s/\s+$//;
+
+		# If not a param=value, try with next line
+		if (! $param) { warning("Warning: Syntax error line $conflinenb in file '$configFile'. Config line is ignored."); next; }
+		if (! defined $value) { warning("Warning: Syntax error line $conflinenb in file '$configFile'. Config line is ignored."); next; }
+
+		if ($value) {
+			$value =~ s/^\s+//; $value =~ s/\s+$//;
+			$value =~ s/^\"//; $value =~ s/\";?$//;
+			# Replace __MONENV__ with value of environnement variable MONENV
+			while ($value =~ /__(\w+)__/) {	my $var=$1;	$value =~ s/__${var}__/$ENV{$var}/g; }
+		}
+
+		# If parameters was not found previously, defined variable with name of param to value
+		$$param=$value;
+	}
+
+	if ($Debug) { debug("Config file read was \"$configFile\" (level $level)"); }
+}
+
+
 
 
 #-------------------------------------------------------
@@ -100,9 +228,9 @@ my $QueryString=''; for (0..@ARGV-1) { $QueryString .= "$ARGV[$_]&"; }
 if ($QueryString =~ /(^|-|&)month=(year)/i) { error("month=year is a deprecated option. Use month=all instead."); }
 
 if ($QueryString =~ /(^|-|&)debug=(\d+)/i)			{ $Debug=$2; }
-if ($QueryString =~ /(^|-|&)config=([^&]+)/i)		{ $Config="$2"; }
+if ($QueryString =~ /(^|-|&)config=([^&]+)/i)		{ $SiteConfig="$2"; }
 if ($QueryString =~ /(^|-|&)awstatsprog=([^&]+)/i)	{ $Awstats="$2"; }
-if ($QueryString =~ /(^|-|&)buildpdf=([^&]+)/i)		{ $HtmlDoc="$2"; }
+if ($QueryString =~ /(^|-|&)buildpdf=([^&]+)/i)		{ $HtmlDoc="$2"; $BuildPDF=1; }
 if ($QueryString =~ /(^|-|&)staticlinksext=([^&]+)/i)	{ $StaticExt="$2"; }
 if ($QueryString =~ /(^|-|&)dir=([^&]+)/i)			{ $OutputDir="$2"; }
 if ($QueryString =~ /(^|-|&)diricons=([^&]+)/i)		{ $DirIcons="$2"; }
@@ -114,7 +242,7 @@ if ($QueryString =~ /(^|-|&)lang=([^&]+)/i)			{ $Lang="$2"; }
 
 if ($OutputDir) { if ($OutputDir !~ /[\\\/]$/) { $OutputDir.="/"; } }
 
-if (! $Config) {
+if (! $SiteConfig) {
 	print "----- $PROG $VERSION (c) Laurent Destailleur -----\n";
 	print "$PROG allows you to launch AWStats with -staticlinks option\n";
 	print "to build all possible pages allowed by AWStats -output option.\n";
@@ -156,9 +284,11 @@ if (! $AwstatsFound) {
 	error("Can't find AWStats program ('$Awstats').\nUse -awstatsprog option to solve this");
 	exit 1;
 }
+$AwstatsDir=$Awstats; $AwstatsDir =~ s/[\\\/][^\\\/]*$//;
+debug("AwstatsDir=$AwstatsDir");
 
 # Check if HTMLDOC prog is found
-if ($QueryString =~ /(^|-|&)buildpdf/i) {
+if ($BuildPDF) {
 	my $HtmlDocFound=0;
 	if (-s "$HtmlDoc") { $HtmlDocFound=1; }
 	elsif (-s "/usr/bin/htmldoc") {
@@ -171,17 +301,39 @@ if ($QueryString =~ /(^|-|&)buildpdf/i) {
 	}
 }
 
+# Read config file (here SiteConfig is defined)
+&Read_Config;
+
+# Define list of output files
+if ($ShowDomainsStats) { push @OutputList,'alldomains'; }
+if ($ShowHostsStats) { push @OutputList,'allhosts'; push @OutputList,'lasthosts'; push @OutputList,'unknownip'; }
+if ($ShowAuthenticatedUsers) { push @OutputList,'alllogins'; push @OutputList,'lastlogins'; }
+if ($ShowRobotsStats) { push @OutputList,'allrobots'; push @OutputList,'lastrobots'; }
+if ($ShowEMailSenders) { push @OutputList,'allemails'; push @OutputList,'lastemails'; }
+if ($ShowEMailReceivers) { push @OutputList,'allemailr'; push @OutputList,'lastemailr'; }
+if ($ShowSessionsStats) { push @OutputList,'session'; }
+if ($ShowPagesStats) { push @OutputList,'urldetail'; push @OutputList,'urlentry'; push @OutputList,'urlexit'; }
+if ($ShowFileTypesStats) { push @OutputList,'filetypes'; }
+#if ($ShowFileSizesStats) { push @OutputList,'filesize'; }
+if ($ShowOSStats) { push @OutputList,'osdetail'; push @OutputList,'unkownos'; }
+if ($ShowBrowsersStats) { push @OutputList,'browserdetail'; push @OutputList,'unkownbrowser'; }
+if ($ShowScreenSizeStats) { push @OutputList,'screensize'; }
+if ($ShowOriginStats) { push @OutputList,'refererse'; push @OutputList,'refererpages'; }
+if ($ShowKeyphrasesStats) { push @OutputList,'keyphrases'; }
+if ($ShowKeywordsStats) { push @OutputList,'keywords'; }
+if ($ShowMiscStats) { push @OutputList,'misc'; }
+if ($ShowHTTPErrorsStats) { push @OutputList,'errors'; push @OutputList,'errors404'; }
+if ($ShowSMTPErrorsStats) { push @OutputList,'errors'; }
+
 # Launch awstats update
 if ($Update) {
-	my $command="\"$Awstats\" -config=$Config -update";
+	my $command="\"$Awstats\" -config=$SiteConfig -update";
 	print "Launch update process : $command\n";
 	$retour=`$command  2>&1`;
 }
 
-
-
 # Built the OutputSuffix value (used later to build page name)
-$OutputSuffix=$Config;
+$OutputSuffix=$SiteConfig;
 if ($Date) {
 	my ($nowsec,$nowmin,$nowhour,$nowday,$nowmonth,$nowyear,$nowwday) = localtime(time);
 	if ($nowyear < 100) { $nowyear+=2000; } else { $nowyear+=1900; }
@@ -191,7 +343,7 @@ if ($Date) {
 
 
 my $cpt=0;
-my $smallcommand="\"$Awstats\" -config=$Config -noloadplugin=tooltips -staticlinks".($OutputSuffix ne $Config?"=$OutputSuffix":"");
+my $smallcommand="\"$Awstats\" -config=$SiteConfig".($BuildPDF?" -noloadplugin=tooltips":"")." -staticlinks".($OutputSuffix ne $SiteConfig?"=$OutputSuffix":"");
 if ($StaticExt && $StaticExt ne 'html')     { $smallcommand.=" -staticlinksext=$StaticExt"; }
 if ($DirIcons)      { $smallcommand.=" -diricons=$DirIcons"; }
 if ($Lang)          { $smallcommand.=" -lang=$Lang"; }

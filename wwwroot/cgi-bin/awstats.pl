@@ -525,7 +525,10 @@ use vars qw/ @Message /;
 'Browsers with PDF support',
 'SMTP Error codes',
 'Countries',
-'Mails'
+'Mails',
+'Size',
+'First',
+'Last'
 );
 
 
@@ -1314,7 +1317,15 @@ sub Read_Language_Data {
 		warning("Warning: Can't find language files for \"$_[0]\". English will be used.");
 	}
 	# Some language string changes
-	if ($LogType eq 'M') { $Message[57]=$Message[149]; }
+	if ($LogType eq 'M') {	# For mail
+		$Message[8]=$Message[151];
+		$Message[9]=$Message[152];
+		$Message[57]=$Message[149];
+		$Message[75]=$Message[150];
+	}
+	if ($LogType eq 'F') {	# For web
+
+	}
 }
 
 
