@@ -200,7 +200,7 @@ $TotalSearchEngines = $TotalRefererPages = $TotalDifferentSearchEngines = $Total
 # ---------- Init arrays --------
 use vars qw/
 @RobotsSearchIDOrder_list1 @RobotsSearchIDOrder_list2 @RobotsSearchIDOrder_list3
-@BrowsersSearchIDOrder @OSSearchIDOrder @SearchEnginesSearchIDOrder @WordsToCleanSearchUrl
+@BrowsersSearchIDOrder @OSSearchIDOrder @SearchEnginesSearchIDOrder @WordsToExtractSearchUrl @WordsToCleanSearchUrl
 /;
 use vars qw/
 @SessionsRange @HostAliases @AllowAccessFromWebToFollowingAuthenticatedUsers
@@ -3228,6 +3228,11 @@ sub Save_DNS_Cache_File {
 			#}
 		}
 		close DNSFILE;
+		
+		if ($SaveDatabaseFilesWithPermissionsForEveryone) {
+			chmod 0666,"$filetosave";
+		}
+
 	}
 	if ($Debug) { debug(" Saved $nbofelemsaved items into $filetosave in ".(time()-$timetosave)." seconds.",1); }
 	return 0;
@@ -4594,7 +4599,7 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {	# Updat
 		#-------------------------------------------
 		my $hourrecord=int($dateparts[3]);
 		if ($PageBool) {
-			# Replace default page name with / only (if increase speed in only 1 value)
+			# Replace default page name with / only ('if' is to increase speed when only 1 value in @DefaultFile)
 			if (@DefaultFile > 1) { foreach my $elem (@DefaultFile) { if ($field[$pos_url] =~ s/\/$elem$/\//) { last; } } }
 			else { $field[$pos_url] =~ s/\/$DefaultFile[0]$/\//; }
 
@@ -6199,11 +6204,11 @@ EOF
 		else { print "<TD>NA</TD></TR>\n"; }
 		# Show main indicators
 		print "<TR>";
-		if ($ShowMonthDayStats =~ /U/i) { print "<TD width=\"20%\" bgcolor=\"#$color_u\" onmouseover=\"ShowTip(2);\" onmouseout=\"HideTip(2);\">$Message[11]</TD>"; } else { print "<TD>&nbsp;</TD>"; }
-		if ($ShowMonthDayStats =~ /V/i) { print "<TD width=\"20%\" bgcolor=\"#$color_v\" onmouseover=\"ShowTip(1);\" onmouseout=\"HideTip(1);\">$Message[10]</TD>"; } else { print "<TD>&nbsp;</TD>"; }
-		if ($ShowMonthDayStats =~ /P/i) { print "<TD width=\"20%\" bgcolor=\"#$color_p\" onmouseover=\"ShowTip(3);\" onmouseout=\"HideTip(3);\">$Message[56]</TD>"; } else { print "<TD>&nbsp;</TD>"; }
-		if ($ShowMonthDayStats =~ /H/i) { print "<TD width=\"20%\" bgcolor=\"#$color_h\" onmouseover=\"ShowTip(4);\" onmouseout=\"HideTip(4);\">$Message[57]</TD>"; } else { print "<TD>&nbsp;</TD>"; }
-		if ($ShowMonthDayStats =~ /B/i) { print "<TD width=\"20%\" bgcolor=\"#$color_k\" onmouseover=\"ShowTip(5);\" onmouseout=\"HideTip(5);\">$Message[75]</TD>"; } else { print "<TD>&nbsp;</TD>"; }
+		if ($ShowMonthDayStats =~ /U/i) { print "<TD width=\"20%\" bgcolor=\"#$color_u\" onmouseover=\"ShowTip(2);\" onmouseout=\"HideTip(2);\">$Message[11]</TD>"; } else { print "<TD width=\"20%\">&nbsp;</TD>"; }
+		if ($ShowMonthDayStats =~ /V/i) { print "<TD width=\"20%\" bgcolor=\"#$color_v\" onmouseover=\"ShowTip(1);\" onmouseout=\"HideTip(1);\">$Message[10]</TD>"; } else { print "<TD width=\"20%\">&nbsp;</TD>"; }
+		if ($ShowMonthDayStats =~ /P/i) { print "<TD width=\"20%\" bgcolor=\"#$color_p\" onmouseover=\"ShowTip(3);\" onmouseout=\"HideTip(3);\">$Message[56]</TD>"; } else { print "<TD width=\"20%\">&nbsp;</TD>"; }
+		if ($ShowMonthDayStats =~ /H/i) { print "<TD width=\"20%\" bgcolor=\"#$color_h\" onmouseover=\"ShowTip(4);\" onmouseout=\"HideTip(4);\">$Message[57]</TD>"; } else { print "<TD width=\"20%\">&nbsp;</TD>"; }
+		if ($ShowMonthDayStats =~ /B/i) { print "<TD width=\"20%\" bgcolor=\"#$color_k\" onmouseover=\"ShowTip(5);\" onmouseout=\"HideTip(5);\">$Message[75]</TD>"; } else { print "<TD width=\"20%\">&nbsp;</TD>"; }
 		print "</TR>\n";
 		print "<TR>";
 		if ($ShowMonthDayStats =~ /U/i) { print "<TD>".($MonthRequired eq "year"?"<b><= $TotalUnique</b><br>$Message[129]":"<b>$TotalUnique</b><br>&nbsp;")."</TD>"; } else { print "<TD>&nbsp;</TD>"; }
