@@ -93,7 +93,7 @@ $color_h, $color_k, $color_link, $color_p, $color_s, $color_u, $color_v, $color_
 %monthlib = %monthnum = ();
 
 
-$VERSION="3.2 (build 72)";
+$VERSION="3.2 (build 74)";
 $Lang="en";
 
 # Default value
@@ -3500,7 +3500,8 @@ EOF
 				print "<TR><TD CLASS=AWL><a href=\"$DirCgi$PROG.$Extension?${LinkParamB}output=unknownrefererbrowser\">$Message[0]</a></TD><TD>$_browser_h{$key}</TD><TD>$p&nbsp;%</TD></TR>\n";
 			}
 			else {
-				print "<TR><TD CLASS=AWL>$BrowsersHashIDLib{$key}</TD><TD>$_browser_h{$key}</TD><TD>$p&nbsp;%</TD></TR>\n";
+				my $newbrowser=$BrowsersHashIDLib{$key}||$key;
+				print "<TR><TD CLASS=AWL>$newbrowser</TD><TD>$_browser_h{$key}</TD><TD>$p&nbsp;%</TD></TR>\n";
 			}
 			$count++;
 		}
@@ -3522,8 +3523,9 @@ EOF
 				print "<TD>$p&nbsp;%</TD></TR>\n";
 				}
 			else {
-				my $nameicon = $OSHashLib{$key}; $nameicon =~ s/\s.*//; $nameicon =~ tr/A-Z/a-z/;
-				print "<TR><TD><IMG SRC=\"$DirIcons\/os\/$nameicon.png\"></TD><TD CLASS=AWL>$OSHashLib{$key}</TD><TD>$_os_h{$key}</TD>";
+				my $newos=$OSHashLib{$key}||$key;
+				my $nameicon=$newos; $nameicon =~ s/\s.*//; $nameicon =~ tr/A-Z/a-z/;
+				print "<TR><TD><IMG SRC=\"$DirIcons\/os\/$nameicon.png\"></TD><TD CLASS=AWL>$newos</TD><TD>$_os_h{$key}</TD>";
 				print "<TD>$p&nbsp;%</TD></TR>\n";
 			}
 			$count++;
@@ -3560,7 +3562,8 @@ EOF
 		print "<TABLE>\n";
 		$count=0; 
 		foreach my $key (sort { $SortDir*$_se_referrals_h{$a} <=> $SortDir*$_se_referrals_h{$b} } keys (%_se_referrals_h)) {
-			print "<TR><TD CLASS=AWL>- $SearchEnginesHashIDLib{$key} </TD><TD align=right>$_se_referrals_h{\"$key\"}</TD></TR>\n";
+			my $newreferer=$SearchEnginesHashIDLib{$key}||$key;
+			print "<TR><TD CLASS=AWL>- $newreferer</TD><TD align=right> $_se_referrals_h{$key}</TD></TR>\n";
 			$count++;
 		}
 		print "</TABLE></TD>\n";
