@@ -31,7 +31,8 @@ Fixes:
 
 New features/improvements:
 - Increased speed by 10 to 20%.
-- Added a Worms report.
+- Added a Worms report (Added LevelForWormsDetection and
+  ShowWormsStats parameter).
 - Added report for "not viewed" traffic in Summary report.
 - Monthly history report have been taken out the Summary report.
 - Some changes to make AWStats to be XML compliant ready.
@@ -83,6 +84,10 @@ Note 1: When migrating to 6.x series, if you use the ExtraSections feature,
   values). If not, feature will be broken.
 
 Note 2: MaxLengthOfURL parameter has been renamed into MaxLengthOfShownURL
+
+Note 3: To enable the new worm detection, you must add parameter
+  LevelForWormsDetection=2
+
 
 
 5.9

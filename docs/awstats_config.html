@@ -113,6 +113,7 @@ when reading it), follow the example:<br>
 <li><a href="#LevelFor">LevelForRobotsDetection</a>
 <li><a href="#LevelFor">LevelForSearchEnginesDetection</a>
 <li><a href="#LevelFor">LevelForFileTypesDetection</a>
+<li><a href="#LevelFor">LevelForWormsDetection</a>
 
 </ul>
 
@@ -1181,7 +1182,7 @@ AWStats 4.1+ supports both keywords AND keyphrases by default with no need of an
 <br>#  1 = Medium/Standard detection
 <br>#  2 = Full detection
 <br># Change : Effective for new updates only
-<br># Default: 2
+<br># Default: 2 (0 for LevelForWormsDetection)
 <br>#
 <br>LevelForBrowsersDetection=2			# 0 disables Browsers detection.
 <br>LevelForOSDetection=2				# 0 disables OS detection.
@@ -1189,6 +1190,7 @@ AWStats 4.1+ supports both keywords AND keyphrases by default with no need of an
 <br>LevelForRobotsDetection=2			# 0 disables Robots detection.
 <br>LevelForSearchEnginesDetection=2	# 0 disables Search engines detection.
 <br>LevelForFileTypesDetection=2		# 0 disables file types detection.
+<br>LevelForWormsDetection=0			# 0 disables Worms detection.
 
 <br><br><hr>
 
@@ -1329,8 +1331,8 @@ ShowOSStats,ShowOriginStats,ShowKeyphrasesStats,ShowKeywordsStats,ShowHTTPErrors
 <br># Default: HBL, Possible codes: HBL
 <br>ShowRobotsStats=HBL
 <br># Show worms chart
-<br># Default: HBL, Possible codes: HBL
-<br>ShowWormsStats=HBL
+<br># Default: 0 (See also LevelForWormsDetection if set), Possible codes: HBL
+<br>ShowWormsStats=0
 <br># Show email senders chart (For use when analyzing mail log files)
 <br># Default: 0, Possible codes: HBML
 <br>ShowEMailSenders=0

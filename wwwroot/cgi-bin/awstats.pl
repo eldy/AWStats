@@ -7017,7 +7017,7 @@ if (scalar keys %HTMLOutput) {
 				my $menuicon=0;
 				# Menu HTML
 				print "<table".($frame?" cellspacing=\"0\" cellpadding=\"0\" border=\"0\"":"").">\n";
-				if ($ShowMonthStats)		 { print ($frame?"<tr><td class=\"awsm\">":""); print "<a href=\"$linkanchor#TOP\"$targetpage>$Message[128]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
+				if ($FrameName eq 'mainleft' && $ShowMonthStats)		 { print ($frame?"<tr><td class=\"awsm\">":""); print "<a href=\"$linkanchor#TOP\"$targetpage>$Message[128]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
 				# When
 				$linetitle=&AtLeastOneNotNull($ShowMonthStats,$ShowDaysOfMonthStats,$ShowDaysOfWeekStats,$ShowHoursStats);
 				if ($linetitle) { print "<tr><td class=\"awsm\" width=\"$WIDTHMENU1\"".($frame?"":" valign=\"top\"").">".($menuicon?"<img src=\"$DirIcons/other/menu4.png\" />&nbsp;":"")."<b>$Message[93]:</b></td>\n"; }
