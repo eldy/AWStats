@@ -3620,7 +3620,8 @@ sub Init_HashArray {
 }
 
 #------------------------------------------------------------------------------
-# Function:     Change word separators into space and remove bad coded chars
+# Function:     Change word separators of a keyphrase string into space and
+#               remove bad coded chars
 # Parameters:	stringtodecode
 # Input:        None
 # Output:       None
@@ -3628,7 +3629,7 @@ sub Init_HashArray {
 #------------------------------------------------------------------------------
 sub ChangeWordSeparatorsIntoSpace {
 	$_[0] =~ s/%1[03]/ /g;
-	$_[0] =~ s/%2[02789ac]/ /ig;
+	$_[0] =~ s/%2[02789abc]/ /ig;
 	$_[0] =~ s/%3a/ /ig;
 	$_[0] =~ tr/\+\'\(\)\"\*,:/        /s;								# "&" and "=" must not be in this list
 }
