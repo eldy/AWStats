@@ -94,3 +94,6 @@ message91=Jours de la semaine
 message92=Qui
 message93=Quand
 message94=Login utilises
+message95=Min
+message96=Moyenne
+message97=Max

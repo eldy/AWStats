@@ -94,3 +94,6 @@ message91=Days of week
 message92=Who
 message93=When
 message94=Authenticated users
+message95=Min
+message96=Average
+message97=Max
