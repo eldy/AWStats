@@ -10,15 +10,36 @@ Fixes:
   when URLWithQuery was set to 0.
 - maillogconvert.pl: Better management of error records with sendmail.
 - configure.pl: Now works also on Mac OS X
+- Fixed a problem of not working misc feature when using IIS and 
+  when URLWithQuery is set to 0.
+- Now all non ISO-8859-1 languages are shown correctly even with 
+  Apache2 whatever is the value of the AddDefaultCharset 
+  directive.
+- Enhancement of configure.pl. If /etc/awstats directory does not exist.
+  Try to create it. If /etc/awstats.model.conf not found on Linux, try
+  to find from it in cgi-bin directory.
 
 New features/improvements:
 - Added option IncludeInternalLinksInOriginSection.
 - Added an automatic year adjustment for sendmail/postfix log 
   files that does not store the year. This solve problems for mail 
   analyses around new year.
+- maillogconvert.pl:
+  Added an automatic year adjustment for sendmail/postfix log 
+  files that does not store the log. This solve problems for mail 
+  analyses around new year.
+- Added option IncludeInternalLinksInOriginSection (defined to 0 
+  by default).
+- Added tooltips for mail reports.
+  Changed look of the summary report to prepare add of new informations.
+- Added failed mails number in the summary.
+- maillogconvert.pl:
+  Update value of NBOFENTRYFOFLUSH
+- Added firefox to browser database.
 
 Other/Documentation:
 - Updated language file.
+- Added arabic language file.
 - Updated documentation.
 
 
