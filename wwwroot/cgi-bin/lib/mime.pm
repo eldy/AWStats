@@ -43,6 +43,9 @@
 # HTML Static page
 'html','html',
 'htm','html',
+'hdml','html',
+'wml','html',
+'wmlp','html',
 # HTML Dynamic pages or script
 'asp','script',
 'jsp','script',
