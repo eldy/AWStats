@@ -11,7 +11,7 @@
 # See COPYING.TXT file about AWStats GNU General Public License.
 #-------------------------------------------------------
 use strict; no strict "refs";
-use diagnostics;
+#use diagnostics;
 #use Thread;
 
 
@@ -29,9 +29,11 @@ my $Extension;
 my $DNSLookup=0;
 my $DirCgi="";
 my $DirData="";
+my $DNSLookupAlreadyDone=0;
 my $QueuePoolSize=10;
 my $NbOfLinesForBenchmark=5000;
-my $DNSLookupAlreadyDone=0;
+my $nowtime = my $nowweekofmonth = my $nowdaymod = my $nowsmallyear = 0; 
+my $nowsec = my $nowmin = my $nowhour = my $nowday = my $nowmonth = my $nowyear = my $nowwday = 0;
 # ---------- Init arrays --------
 my @SkipDNSLookupFor=();
 # ---------- Init hash arrays --------
