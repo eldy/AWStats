@@ -50,7 +50,7 @@ Here, you can find the most common questions and answers about AWStats setup/usa
 FAQ-COM025 <a href="#NOLOG">How to use AWStats with no server log</a><br>
 FAQ-COM050 <a href="#LIMITLOG">What is the log size limit AWStats can analyze ?</a><br>
 FAQ-COM090 <a href="#FTP">Setup for FTP server log files.</a><br>
-FAQ-COM100 <a href="#MAIL">Setup for MAIL log files (Sendmail, Postfix, Exchange).</a><br>
+FAQ-COM100 <a href="#MAIL">Setup for MAIL log files (Sendmail, Postfix, QMail, Exchange).</a><br>
 FAQ-COM110 <a href="#MEDIASERVER">Setup for MEDIA SERVER log files (Realmedia, Windows media server).</a><br>
 FAQ-COM120 <a href="#ROTATE">How to rotate my logs without loosing data.</a><br>
 FAQ-COM130 <a href="#CRONTAB">How to run AWStats frequently ?</a><br>
@@ -115,7 +115,7 @@ Examples of used platforms (bold means 'tested by author', others were reported 
 <u>OS:</u><br>
 <b>Windows 2000</b>, <b>Windows NT 4.0</b>, Windows Me, <b>Linux</b>, Macintosh, <b>Solaris</b>, <b>Aix</b>, BeOS, ...<br>
 <u>Web/Wap/Proxy/FTP/Mails/Streaming servers</u><br>
-<b>Apache 1.3.x and 2</b>, <b>IIS 5.0</b>, WebStar, WebLogic, WebSite, <b>Windows Media Server</b>, Tomcat, <b>Squid</b>, <b>Sendmail</b>, <b>Postfix</b>,
+<b>Apache 1.3.x and 2</b>, <b>IIS 5.0</b>, WebStar, WebLogic, WebSite, <b>Windows Media Server</b>, Tomcat, <b>Squid</b>, <b>Sendmail</b>, <b>Postfix</b>, QMail,
 Roxen, Resin, <b>ProFTP</b>, Lotus Notes/Domino, IPlanet, IceCast, ZeroBrand, Zeus, Zope, www4mail, ...<br>
 <u>Perl interpreters:</u><br>
 <b>ActivePerl 5.6</b>, <b>Perl 5.8</b>, <b>Perl 5.6</b>, <b>Perl 5.0</b>, <b>mod_perl for Apache</b>, ...<br>
@@ -251,7 +251,8 @@ LogFile="/var/log/xferlog"
 <br>NotPageList=""
 <br>ShowLinksOnUrl=0
 <br>ShowMenu=1
-<br>ShowMonthDayStats=UVHB
+<br>ShowMonthStats=UVHB
+<br>ShowDaysOfMonthStats=HB
 <br>ShowDaysOfWeekStats=HB
 <br>ShowHoursStats=HB
 <br>ShowDomainsStats=HB
@@ -276,16 +277,16 @@ Now you can use AWStats as usual (run the update process and read statistics).<b
 <br>
 
 <a name="MAIL"></a><br>
-<b><u>FAQ-COM100 : SETUP FOR MAIL LOG FILES (SENDMAIL, POSTFIX, EXCHANGE...)</u></b><br>
+<b><u>FAQ-COM100 : SETUP FOR MAIL LOG FILES (SENDMAIL, POSTFIX, QMAIL, EXCHANGE...)</u></b><br>
 <font class=CProblem>PROBLEM:</font><br>
 What do I have to do to use AWStats to analyze my mail log files.<br>
 <font class=CSolution>SOLUTION:</font><br>
 <br>
-<u>For Sendmail or PostFix log files</u><br>
+<u>For PostFix or Sendmail log files</u><br>
 <br>
 1- First, install a mail log convertor like <a href="http://www.klake.org/sma/">SMA</a> to use it
 as a pre-processor for AWStats update process (to convert your mail log into a readable format):<br>
-For this, you can download an copy sma (or sma.exe) file and sma.conf into same directory
+For this, you can download and copy sma (or sma.exe) file and sma.conf into same directory
 than awstats.pl file.<br>
 Edit sma.conf to change the ClogFormat and ClogSentOnly parameter to :
 <table width="95%" border=1 cellpadding=0 cellspacing=0><tr class=CFAQ><td class=CFAQ>
@@ -313,7 +314,8 @@ LogFile="/pathtosma/sma -O clog -f /pathtosmaconf/sma.conf /pathtomaillog/maillo
 <br>LogFormat="%time2 %email %email_r %host %host_r %method %url %code %bytesd"
 <br>ValidSMTPCodes="1"
 <br>ShowMenu=1
-<br>ShowMonthDayStats=HB
+<br>ShowMonthStats=HB
+<br>ShowDaysOfMonthStats=HB
 <br>ShowDaysOfWeekStats=HB
 <br>ShowHoursStats=HB
 <br>ShowDomainsStats=0
@@ -337,6 +339,61 @@ LogFile="/pathtosma/sma -O clog -f /pathtosmaconf/sma.conf /pathtomaillog/maillo
 <br>
 Now you can use AWStats as usual (run the update process and read statistics).<br>
 <br>
+
+<u>For QMail or Sendmail log files</u><br>
+<br>
+1- First, install a Qmail log convertor like <a href="http://www.ke.nu/software/">Maillogconv</a> to use it
+as a pre-processor for AWStats update process (to convert your Qmail log into a readable format):<br>
+For this, you can download and copy maillogconv file into same directory
+than awstats.pl file.<br>
+<br>
+2- Then setup AWStats to analyze Maillogconv processed mail log:<br>
+Copy config awstats.model.conf file to "awstats.mail.conf".<br>
+Modify this new config file:
+<table width="95%" border=1 cellpadding=0 cellspacing=0><tr class=CFAQ><td class=CFAQ>
+For standard QMail and SendMail logfiles, set<br>
+<i>
+LogFile="/path/to/maillogconv standard /pathtomaillog/maillog |"<br>
+</i>
+And for VAdmin QMail logfiles (multi-host/virtualhost mail servers running vadmin software)<br>
+<i>
+LogFile="/path/to/maillogconv vadmin /pathtomaillog/maillog |"<br>
+</i>
+If the logfiles are compressed, they can be processed this way<br>
+<i>
+LogFile="gzip -cd /var/log/maillog.0.gz | /path/to/maillogconv vadmin /var/log/maillog |"<br>
+</i>
+Then change:
+<i>
+<br>LogFormat="%time2 %email %email_r %host %host_r %method %url %code %bytesd"
+<br>ValidSMTPCodes="1"
+<br>ShowMenu=1
+<br>ShowMonthStats=HB
+<br>ShowDaysOfMonthStats=HB
+<br>ShowDaysOfWeekStats=HB
+<br>ShowHoursStats=HB
+<br>ShowDomainsStats=0
+<br>ShowHostsStats=HBL
+<br>ShowAuthenticatedUsers=0
+<br>ShowRobotsStats=0
+<br>ShowEMailSenders=HBL
+<br>ShowEMailReceivers=HBL
+<br>ShowSessionsStats=0
+<br>ShowPagesStats=0
+<br>ShowFileTypesStats=0
+<br>ShowFileSizesStats=0
+<br>ShowBrowsersStats=0
+<br>ShowOSStats=0
+<br>ShowOriginStats=0
+<br>ShowKeyphrasesStats=0
+<br>ShowKeywordsStats=0
+<br>ShowHTTPErrorsStats=0
+</i>
+</td></tr></table>
+<br>
+Now you can use AWStats as usual (run the update process and read statistics).<br>
+<br>
+
 <u>For Exchange log files</u><br>
 If someone can understand the Exchange log format, he can explain it to me at eldy@users.sourceforge.net.<br>
 Until this server won't log in a clever way, just forget using AWStats or use a more serious
@@ -373,7 +430,8 @@ Modify this new config file:
 <br>LogFormat="%host %other %logname %time1 %methodurl %code %bytesd %uabracket %other %other %other %other %other %other %other %other"
 <br>LogSeparator="\s+"
 <br>ShowMenu=1
-<br>ShowMonthDayStats=UHB
+<br>ShowMonthStats=UHB
+<br>ShowDaysOfMonthStats=HB
 <br>ShowDaysOfWeekStats=HB
 <br>ShowHoursStats=HB
 <br>ShowDomainsStats=HB
@@ -463,7 +521,8 @@ Modify this new config file:
 LogFile="/pathtomediaserver/mediaserverlog"
 <br>LogFormat="c-ip date time cs-uri-stem c-starttime x-duration c-rate c-status c-playerid c-playerversion c-playerlanguage cs(User-Agent) cs(Referer) c-hostexe c-hostexever c-os c-osversion c-cpu filelength filesize avgbandwidth protocol transport audiocodec videocodec channelURL sc-bytes"
 <br>ShowMenu=1
-<br>ShowMonthDayStats=UHB
+<br>ShowMonthStats=UHB
+<br>ShowDaysOfMonthStats=HB
 <br>ShowDaysOfWeekStats=HB
 <br>ShowHoursStats=HB
 <br>ShowDomainsStats=HB

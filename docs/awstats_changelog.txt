@@ -35,6 +35,7 @@ New features/improvments:
   AddDataArrayShowDaysOfMonthStats parameters were added.
 - Added -staticlinksext to build static pages with another extension than
   default .html
+- Added QMail support.
 
 Other/Documentation:
 - Added Isle of Man, Monserat, and Palestinian flag icon.
