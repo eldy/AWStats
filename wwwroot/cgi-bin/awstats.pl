@@ -948,7 +948,7 @@ sub Read_Ref_Data {
 	my %FilePath=();
 	my @FileListToLoad=();
 	push @FileListToLoad, "browsers.pm";
-	if ($HTMLOutput) { push @FileListToLoad, "domains.pm"; }	# Used only when HTML output required
+	push @FileListToLoad, "domains.pm";
 	push @FileListToLoad, "operating_systems.pm";
 	push @FileListToLoad, "robots.pm";
 	push @FileListToLoad, "search_engines.pm";
