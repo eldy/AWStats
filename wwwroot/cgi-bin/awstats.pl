@@ -55,8 +55,8 @@ $MinHitFile, $MinHitHost, $MinHitKeyword,
 $MinHitLogin, $MinHitRefer, $MinHitRobot,
 $NbOfLinesForCorruptedLog,
 $ShowAuthenticatedUsers, $ShowCompressionStats, $ShowFileSizesStats,
-$ShowSteps, $StartSeconds, $StartMicroseconds)=
-(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
+$ShowCorrupted, $ShowSteps, $StartSeconds, $StartMicroseconds)=
+(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
 ($ArchiveLogRecords, $DetailedReportsOnNewWindows, $FirstDayOfWeek,
 $ShowHeader, $ShowMenu, $ShowMonthDayStats, $ShowDaysOfWeekStats,
 $ShowHoursStats, $ShowDomainsStats, $ShowHostsStats, 
@@ -93,7 +93,7 @@ $color_h, $color_k, $color_link, $color_p, $color_s, $color_u, $color_v, $color_
 %monthlib = %monthnum = ();
 
 
-$VERSION="3.2 (build 69)";
+$VERSION="3.2 (build 70)";
 $Lang="en";
 
 # Default value
@@ -1624,6 +1624,7 @@ else {									# Run from command line
 	if ($QueryString =~ /-output/i)    { $UpdateStats=0; $HTMLOutput=1; }	# Report and no update if an output is required
 	if ($QueryString =~ /-update/i)    { $UpdateStats=1; }					# Except if -update specified
 	if ($QueryString =~ /-showsteps/i) { $ShowSteps=1; } else { $ShowSteps=0; }
+	if ($QueryString =~ /-showcorrupted/i) { $ShowCorrupted=1; } else { $ShowCorrupted=0; }
 }
 if ($QueryString =~ /sort=/i)  		{ $Sort=$QueryString;  $Sort =~ s/.*sort=//i;  $Sort =~ s/&.*//;  $Sort =~ s/ .*//; }
 if ($QueryString =~ /debug=/i) 		{ $Debug=$QueryString; $Debug =~ s/.*debug=//i; $Debug =~ s/&.*//; $Debug =~ s/ .*//; }
@@ -1653,8 +1654,9 @@ if ((! $ENV{"GATEWAY_INTERFACE"}) && (! $SiteConfig)) {
 	print "  See README.TXT file to know how to create the config file.\n";
 	print "\n";
 	print "Options to update statistics:\n";
-	print "  -update     to update statistics (default)\n";
-	print "  -showsteps  to add benchmark information every $NbOfLinesForBenchmark lines processed\n";
+	print "  -update        to update statistics (default)\n";
+	print "  -showsteps     to add benchmark information every $NbOfLinesForBenchmark lines processed\n";
+#	print "  -showcorrupted to add a print on stdout of all found corrupted lines\n";
 	print "  Be care to process log files in chronological order when updating statistics.\n";
 	print "\n";
 	print "Options to show statistics:\n";
@@ -2059,6 +2061,7 @@ if ($UpdateStats) {
 		#----------------------------------------------------------------------
 		if (! $field[$pos_code]) {
 			$NbOfLinesCorrupted++;
+			if ($ShowCorrupted) { print "$_\n"; }
 			if ($NbOfLinesRead >= $NbOfLinesForCorruptedLog && $NbOfLinesCorrupted == $NbOfLinesRead) { error("Format error",$_,$LogFile); }	# Exit with format error
 			next;
 		}
@@ -2066,7 +2069,7 @@ if ($UpdateStats) {
 		# Check filters
 		#----------------------------------------------------------------------
 		if ($field[$pos_method] ne 'GET' && $field[$pos_method] ne 'POST' && $field[$pos_method] !~ /OK/) { next; }	# Keep only GET, POST (OK with Webstar) but not HEAD, OPTIONS
-		#if ($field[$pos_url] =~ /^RC=/) { $NbOfLinesCorrupted++; next; }			# A strange log record with IIS we need to forget
+		#if ($field[$pos_url] =~ /^RC=/) { $NbOfLinesCorrupted++; if ($ShowCorrupted) { print "$_\n"; } next; }			# A strange log record with IIS we need to forget
 		# Split DD/Month/YYYY:HH:MM:SS or YYYY-MM-DD HH:MM:SS or MM/DD/YY\tHH:MM:SS
 		$field[$pos_date] =~ tr/-\/ \t/::::/;
 		my @dateparts=split(/:/,$field[$pos_date]);
@@ -2076,13 +2079,13 @@ if ($UpdateStats) {
 		# Create $timeconnexion like YYYYMMDDHHMMSS
 		my $timeconnexion=int($dateparts[2].$dateparts[1].$dateparts[0].$dateparts[3].$dateparts[4].$dateparts[5]);
 		my $dayconnexion=$dateparts[2].$dateparts[1].$dateparts[0];
-		if ($timeconnexion < 10000000000000) { $NbOfLinesCorrupted++; next; }		# Should not happen, kept in case of parasite/corrupted line
-		if ($timeconnexion > $timetomorrow) { $NbOfLinesCorrupted++; next; }		# Should not happen, kept in case of parasite/corrupted line
+		if ($timeconnexion < 10000000000000) { $NbOfLinesCorrupted++; if ($ShowCorrupted) { print "$_\n"; } next; }		# Should not happen, kept in case of parasite/corrupted line
+		if ($timeconnexion > $timetomorrow) { $NbOfLinesCorrupted++; if ($ShowCorrupted) { print "$_\n"; } next; }		# Should not happen, kept in case of parasite/corrupted line
 
 		# Skip if not a new line
 		#-----------------------
 		if ($NowNewLinePhase) {
-			if ($timeconnexion < $LastLine{$yearmonth}) { $NbOfLinesCorrupted++; next; }	# Should not happen, kept in case of parasite/corrupted old line
+			if ($timeconnexion < $LastLine{$yearmonth}) { $NbOfLinesCorrupted++; if ($ShowCorrupted) { print "$_\n"; } next; }	# Should not happen, kept in case of parasite/corrupted old line
 		}
 		else {
 			if ($timeconnexion <= $LastLine{$yearmonth}) {
@@ -2139,7 +2142,9 @@ if ($UpdateStats) {
 					next;
 				}
 				else {														# Bad format record (should not happen but when using MSIndex server), next
-					$NbOfLinesCorrupted++; next;
+					$NbOfLinesCorrupted++;
+					if ($ShowCorrupted) { print "$_\n"; }
+					next;
 				}
 			}
 		}
