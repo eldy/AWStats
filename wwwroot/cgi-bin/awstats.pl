@@ -1370,17 +1370,17 @@ sub Check_Config {
 	if (! $LogFile)   { error("LogFile parameter is not defined in config/domain file"); }
 	if (! $LogFormat) { error("LogFormat parameter is not defined in config/domain file"); }
 	if ($LogFormat =~ /^\d$/ && $LogFormat !~ /[1-6]/)  { error("LogFormat parameter is wrong in config/domain file. Value is '$LogFormat' (should be 1,2,3,4,5 or a 'personalized AWStats log format string')"); }
-	if (! $LogSeparator) { $LogSeparator="\\s"; }
-	if (! $DirData)   { $DirData='.'; }
-	if (! $DirCgi)    { $DirCgi='/cgi-bin'; }
-	if (! $DirIcons)  { $DirIcons='/icon'; }
+	$LogSeparator||="\\s";
+	$DirData||=$DirData='.';
+	$DirCgi||='/cgi-bin';
+	$DirIcons||='/icon';
 	if ($DNSLookup !~ /[0-2]/)                      { error("DNSLookup parameter is wrong in config/domain file. Value is '$DNSLookup' (should be 0 or 1)"); }
 	if (! $SiteDomain)                              { error("SiteDomain parameter not found in your config/domain file. You must add it for using this version."); }
 	if ($AllowToUpdateStatsFromBrowser !~ /[0-1]/) 	{ $AllowToUpdateStatsFromBrowser=0; }
 	# Optional setup section
 	if ($EnableLockForUpdate !~ /[0-1]/)           	{ $EnableLockForUpdate=0; }
-	if (! $DNSStaticCacheFile)                     	{ $DNSStaticCacheFile="dnscache.txt"; }
-	if (! $DNSLastUpdateCacheFile)                 	{ $DNSLastUpdateCacheFile="dnscachelastupdate.txt"; }
+	$DNSStaticCacheFile||='dnscache.txt';
+	$DNSLastUpdateCacheFile||='dnscachelastupdate.txt';
 	if ($DNSStaticCacheFile eq $DNSLastUpdateCacheFile)	{ error("DNSStaticCacheFile and DNSLastUpdateCacheFile must have different values."); }
 	if ($AllowAccessFromWebToAuthenticatedUsersOnly !~ /[0-1]/)     { $AllowAccessFromWebToAuthenticatedUsersOnly=0; }
 	if ($CreateDirDataIfNotExists !~ /[0-1]/)      	{ $CreateDirDataIfNotExists=0; }
@@ -1388,7 +1388,7 @@ sub Check_Config {
 	if ($PurgeLogFile !~ /[0-1]/)                 	{ $PurgeLogFile=0; }
 	if ($ArchiveLogRecords !~ /[0-1]/)            	{ $ArchiveLogRecords=1; }
 	if ($KeepBackupOfHistoricFiles !~ /[0-1]/)     	{ $KeepBackupOfHistoricFiles=0; }
-	if (! $DefaultFile[0])                          { $DefaultFile[0]='index.html'; }
+	$DefaultFile[0]||='index.html';
 	if ($AuthenticatedUsersNotCaseSensitive !~ /[0-1]/)       { $AuthenticatedUsersNotCaseSensitive=0; }
 	if ($URLNotCaseSensitive !~ /[0-1]/)           	{ $URLNotCaseSensitive=0; }
 	if ($URLWithAnchor !~ /[0-1]/)                 	{ $URLWithAnchor=0; }
@@ -1401,7 +1401,7 @@ sub Check_Config {
 	if ($NbOfLinesForCorruptedLog !~ /^\d+/ || $NbOfLinesForCorruptedLog<1)	{ $NbOfLinesForCorruptedLog=50; }
 	if ($Expires !~ /^\d+/)                 		{ $Expires=0; }
 	if ($DecodeUA !~ /[0-1]/)						{ $DecodeUA=0; }
-	if (! $LogScreenSizeUrl)						{ $LogScreenSizeUrl='logscreensizeurl'; }
+	$LogScreenSizeUrl||='logscreensizeurl';
 	# Optional accuracy setup section
 	if ($LevelForRobotsDetection !~ /^\d+/)       	{ $LevelForRobotsDetection=2; }
 	if ($LevelForBrowsersDetection !~ /^\d+/)     	{ $LevelForBrowsersDetection=2; }
@@ -1459,8 +1459,8 @@ sub Check_Config {
 	if ($ShowLinksOnUrl !~ /[0-1]/)               	{ $ShowLinksOnUrl=1; }
 	if ($MaxLengthOfURL !~ /^\d+/ || $MaxLengthOfURL<1) { $MaxLengthOfURL=72; }
 	if ($ShowLinksToWhoIs !~ /[0-1]/)              	{ $ShowLinksToWhoIs=0; }
-	if (! $Logo)    	                          	{ $Logo='awstats_logo1.png'; }
-	if (! $LogoLink)  	                        	{ $LogoLink='http://awstats.sourceforge.net'; }
+	$Logo||='awstats_logo1.png';
+	$LogoLink||='http://awstats.sourceforge.net';
 	if ($BarWidth !~ /^\d+/ || $BarWidth<1) 		{ $BarWidth=260; }
 	if ($BarHeight !~ /^\d+/ || $BarHeight<1)		{ $BarHeight=90; }
 	$color_Background =~ s/#//g; if ($color_Background !~ /^[0-9|A-Z]+$/i)           { $color_Background='FFFFFF';	}
@@ -2948,8 +2948,8 @@ sub Read_History_With_TmpUpdate {
 		if (! $ListOfYears{"$year"} || $ListOfYears{"$year"} lt "$month") { $ListOfYears{"$year"}="$month"; }
 	}
 
-	# For backward compatibility, if LastLine does not exist
-	if (! $LastLine) { $LastLine=$LastTime{$year.$month}; }
+	# For backward compatibility, if LastLine does not exist, set to LastTime
+	$LastLine||=$LastTime{$year.$month};
 
 	return ($withupdate?"$filetowrite":"");
 }
@@ -4091,7 +4091,7 @@ sub Lock_Update {
 		}
 		# Set lock where we can
 		foreach my $key ($ENV{"TEMP"},$ENV{"TMP"},"/tmp","/",".") {
-			if (! -d $key) { next; }
+			if (! -d "$key") { next; }
 			$DirLock=$key;
 			$DirLock =~ s/[\\\/]$//;
 			if ($Debug) { debug("Update lock file $DirLock/$lock is set"); }
@@ -4715,8 +4715,8 @@ if ((! $ENV{'GATEWAY_INTERFACE'}) && (! $SiteConfig)) {
 	print "New versions and FAQ at http://awstats.sourceforge.net\n";
 	exit 2;
 }
-if (! $SiteConfig) { $SiteConfig=$ENV{'SERVER_NAME'}; }
-#if (! $ENV{'SERVER_NAME'}) { $ENV{'SERVER_NAME'} = $SiteConfig; }	# For thoose who use __SERVER_NAME__ in conf file and use CLI.
+$SiteConfig||=$ENV{'SERVER_NAME'};
+#$ENV{'SERVER_NAME'}||=$SiteConfig;	# For thoose who use __SERVER_NAME__ in conf file and use CLI.
 $ENV{'AWSTATS_CURRENT_CONFIG'}=$SiteConfig;
 
 # Read config file (here SiteConfig is defined)
@@ -4758,7 +4758,7 @@ $NBOFLINESFORBENCHMARK--;
 if ($ENV{'GATEWAY_INTERFACE'}) { $DirCgi=''; }
 if ($DirCgi && !($DirCgi =~ /\/$/) && !($DirCgi =~ /\\$/)) { $DirCgi .= '/'; }
 if (! $DirData || $DirData eq '.') { $DirData="$DIR"; }	# If not defined or chosen to '.' value then DirData is current dir
-if (! $DirData)  { $DirData='.'; }						# If current dir not defined then we put it to '.'
+$DirData||='.';		# If current dir not defined then we put it to '.'
 $DirData =~ s/\/$//; $DirData =~ s/\\$//;
 # Define SiteToAnalyze and SiteToAnalyzeWithoutwww for regex operations
 $SiteToAnalyze=lc($SiteDomain); $SiteToAnalyze =~ s/\./\\\./g;
@@ -4818,7 +4818,7 @@ if ($MigrateStats) {
 	$FileSuffix="$5";
 	# Correct DirData
 	if (! $DirData || $DirData eq '.') { $DirData="$DIR"; }	# If not defined or chosen to '.' value then DirData is current dir
-	if (! $DirData)  { $DirData='.'; }						# If current dir not defined then we put it to '.'
+	$DirData||=$DirData='.';	# If current dir not defined then we put it to '.'
 	$DirData =~ s/\/$//; $DirData =~ s/\\$//;
 	print "Start migration for file '$MigrateStats'."; print $ENV{'GATEWAY_INTERFACE'}?"<br>\n":"\n";
 	if ($EnableLockForUpdate) {	&Lock_Update(1); }
@@ -5202,11 +5202,12 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 					foreach my $code (keys %TrapInfosForHTTPErrorCodes) {
 						if ($field[$pos_code] == $code) {
 							my $newurl=$field[$pos_url];
-							$newurl =~ s/([$URLQuerySeparators])(.*)$//;
+							$newurl =~ s/[$URLQuerySeparators].*$//;
 							$_sider404_h{$newurl}++;
 							my $newreferer=$field[$pos_referer];
-							if (! $URLReferrerWithQuery) { $newreferer =~ s/([$URLQuerySeparators])(.*)$//; }
+							if (! $URLReferrerWithQuery) { $newreferer =~ s/[$URLQuerySeparators].*$//; }
 							$_referer404_h{$newurl}=$newreferer;
+							last;
 						}
 					}
 					next;
@@ -5344,8 +5345,8 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 			else { $field[$pos_url] =~ s/\/$DefaultFile[0]$/\//; }
 
 			# FirstTime and LastTime are First and Last human visits (so changed if access to a page)
-			if (! $FirstTime{$lastprocessedyearmonth}) { $FirstTime{$lastprocessedyearmonth}=$timerecord; }
-			$LastTime{$lastprocessedyearmonth} = $timerecord;
+			$FirstTime{$lastprocessedyearmonth}||=$timerecord;
+			$LastTime{$lastprocessedyearmonth}=$timerecord;
 			$DayPages{$yearmonthdayrecord}++;
 			$MonthPages{$lastprocessedyearmonth}++;
 			$_time_p[$hourrecord]++;											#Count accesses for hour (page)
@@ -5720,11 +5721,11 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 								}
 								else {									# Search engine with unknown URL syntax
 									foreach my $param (@paramlist) {
-										my $foundparam=1;
+										my $foundexcludeparam=0;
 										foreach my $paramtoexclude (@WordsToCleanSearchUrl) {
-											if ($param =~ /$paramtoexclude/) { $foundparam=0; last; } # Not the param with search criteria
+											if ($param =~ /$paramtoexclude/i) { $foundexcludeparam=1; last; } # Not the param with search criteria
 										}
-										if ($foundparam == 0) { next; }			# Do not keep this URL parameter because is in exclude list
+										if ($foundexcludeparam) { next; }		# Do not keep this URL parameter because is in exclude list
 										$param =~ s/.*=//;						# Cut "xxx="
 										# Ok, "cache:www/zzz aaa bbb/ccc ddd eee fff ggg" is a search parameter line
 										$param =~ s/^cache:[^ ]*//;
@@ -6125,7 +6126,7 @@ if (scalar keys %HTMLOutput) {
 				print "</select>\n";
 				print "<select class=CFormFields name=\"year\">\n";
 				# Add YearRequired in list if not in ListOfYears
-				if (! $ListOfYears{$YearRequired}) { $ListOfYears{$YearRequired}=$MonthRequired; }
+				$ListOfYears{$YearRequired}||=$MonthRequired;
 				foreach my $key (sort keys %ListOfYears) { print "<option".($YearRequired eq "$key"?" selected":"")." value=\"$key\">$key\n"; }
 				print "</select>\n";
 				print "<input type=hidden name=\"output\" value=\"".join(',',keys %HTMLOutput)."\">\n";
@@ -6309,15 +6310,15 @@ if (scalar keys %HTMLOutput) {
 	# TotalRefererHits (if not already specifically counted, we init it from _pagesrefs_h hash table)
 	if (!$TotalRefererHits) { foreach my $key (keys %_pagesrefs_h) { $TotalRefererHits+=$_pagesrefs_h{$key}; } }
 	# TotalDifferentPages (if not already specifically counted, we init it from _url_p hash table)
-	if (!$TotalDifferentPages) { $TotalDifferentPages=scalar keys %_url_p; }
+	$TotalDifferentPages||=scalar keys %_url_p;
 	# TotalDifferentKeyphrases (if not already specifically counted, we init it from _keyphrases hash table)
-	if (!$TotalDifferentKeyphrases) { $TotalDifferentKeyphrases=scalar keys %_keyphrases; }
+	$TotalDifferentKeyphrases||=scalar keys %_keyphrases;
 	# TotalDifferentKeywords (if not already specifically counted, we init it from _keywords hash table)
-	if (!$TotalDifferentKeywords) { $TotalDifferentKeywords=scalar keys %_keywords; }
+	$TotalDifferentKeywords||=scalar keys %_keywords;
 	# TotalDifferentSearchEngines (if not already specifically counted, we init it from _se_referrals_h hash table)
-	if (!$TotalDifferentSearchEngines) { $TotalDifferentSearchEngines=scalar keys %_se_referrals_h; }
+	$TotalDifferentSearchEngines||=scalar keys %_se_referrals_h;
 	# TotalDifferentReferer (if not already specifically counted, we init it from _pagesrefs_h hash table)
-	if (!$TotalDifferentReferer) { $TotalDifferentReferer=scalar keys %_pagesrefs_h; }
+	$TotalDifferentReferer||=scalar keys %_pagesrefs_h;
 
 	# Define firstdaytocountaverage, lastdaytocountaverage, firstdaytoshowtime, lastdaytoshowtime
 	my $firstdaytocountaverage=$nowyear.$nowmonth."01";				# Set day cursor to 1st day of month
