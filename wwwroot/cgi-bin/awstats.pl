@@ -4290,7 +4290,7 @@ sub UnCompileRegex {
 #------------------------------------------------------------------------------
 sub Sanitize {
 	my $stringtoclean=shift;
-	$stringtoclean =~ s/[^\w_\-\\\/\.\s]//g;
+	$stringtoclean =~ s/[^\w_\-\\\/\.:\s]//g;
 	return $stringtoclean;
 }
 
