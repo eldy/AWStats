@@ -80,7 +80,7 @@ $WarningMessages= 1;
 %MonthBytes = %MonthHits = %MonthHostsKnown = %MonthHostsUnknown = %MonthPages = %MonthUnique = %MonthVisits =
 %monthlib = %monthnum = ();
 
-$VERSION="3.2 (build 22)";
+$VERSION="3.2 (build 23)";
 $Lang="en";
 
 # Default value
@@ -732,7 +732,7 @@ sub Check_Config {
 	if ($Message[10] eq "") { $Message[10]="Number of visits"; }
 	if ($Message[11] eq "") { $Message[11]="Unique visitors"; }
 	if ($Message[12] eq "") { $Message[12]="Visit"; }
-	if ($Message[13] eq "") { $Message[13]="Keyword"; }
+	if ($Message[13] eq "") { $Message[13]="different keywords"; }
 	if ($Message[14] eq "") { $Message[14]="Search"; }
 	if ($Message[15] eq "") { $Message[15]="Percent"; }
 	if ($Message[16] eq "") { $Message[16]="Traffic"; }
@@ -762,7 +762,7 @@ sub Check_Config {
 	if ($Message[40] eq "") { $Message[40]="Links from an Internet Search Engine"; }
 	if ($Message[41] eq "") { $Message[41]="Links from an external page (other web sites except search engines)"; }
 	if ($Message[42] eq "") { $Message[42]="Links from an internal page (other page on same site)"; }
-	if ($Message[43] eq "") { $Message[43]="keywords used on search engines"; }
+	if ($Message[43] eq "") { $Message[43]="Keywords used on search engines"; }
 	if ($Message[44] eq "") { $Message[44]="Kb"; }
 	if ($Message[45] eq "") { $Message[45]="Unresolved IP Address"; }
 	if ($Message[46] eq "") { $Message[46]="Unknown OS (Referer field)"; }
@@ -822,6 +822,7 @@ sub Check_Config {
 	if ($Message[100] eq "") { $Message[100]="Before compression"; }
 	if ($Message[101] eq "") { $Message[101]="After compression"; }
 	if ($Message[102] eq "") { $Message[102]="Total"; }
+	if ($Message[103] eq "") { $Message[103]="different keyphrases"; }
 }
 
 #--------------------------------------------------------------------
@@ -2329,7 +2330,8 @@ EOF
 			print "<tr><th class=AWL>$Message[92] : </th>";
 			print "<td class=AWL>";
 			if ($ShowDomainsStats) { print "<a href=\"$DirCgi$PROG.$Extension?".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang#DOMAINS\">$Message[17]</a> &nbsp; "; }
-			if ($ShowHostsStats) { print "<a href=\"$DirCgi$PROG.$Extension?".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang#VISITOR\">".ucfirst($Message[26])."</a> &nbsp; "; }
+			if ($ShowHostsStats) { print "<a href=\"$DirCgi$PROG.$Extension?".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang#VISITOR\">".ucfirst($Message[81])."</a> &nbsp; "; }
+			if ($ShowHostsStats) { print "<a href=\"$DirCgi$PROG.$Extension?output=lasthosts&".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang\">$Message[9]</a> &nbsp;\n"; }
 			if ($ShowHostsStats) { print "<a href=\"$DirCgi$PROG.$Extension?output=unknownip&".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang\">$Message[45]</a> &nbsp;\n"; }
 			if ($ShowAuthenticatedUsers) { print "<a href=\"$DirCgi$PROG.$Extension?".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang#LOGIN\">$Message[94]</a> &nbsp; "; }
 			if ($ShowRobotsStats) { print "<a href=\"$DirCgi$PROG.$Extension?".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang#ROBOTS\">$Message[53]</a> &nbsp; "; }
@@ -2846,8 +2848,8 @@ EOF
 	if ($ShowHostsStats) {
 		print "$CENTER<a name=\"VISITOR\">&nbsp;</a><BR>";
 		$MaxNbOfHostsShown = $TotalHostsKnown+($_hostmachine_h{"Unknown"}?1:0) if $MaxNbOfHostsShown > $TotalHostsKnown;
-		&tab_head("$Message[77] $MaxNbOfHostsShown $Message[55] ".($TotalHostsKnown+$TotalHostsUnknown)." $Message[26] ($TotalUnique $Message[11]) &nbsp; - &nbsp; <a href=\"$DirCgi$PROG.$Extension?output=lasthosts&".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang\">$Message[9]</a>",19);
-		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[81] : $TotalHostsKnown $Message[82], $TotalHostsUnknown $Message[1]</TH><TH bgcolor=\"#$color_p\" width=80>$Message[56]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH bgcolor=\"#$color_k\" width=80>$Message[75]</TH><TH width=120>$Message[9]</TH></TR>\n";
+		&tab_head("$Message[81] ($Message[77] $MaxNbOfHostsShown) &nbsp; - &nbsp; <a href=\"$DirCgi$PROG.$Extension?output=lasthosts&".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang\">$Message[9]</a>",19);
+		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[81] : $TotalHostsKnown $Message[82], $TotalHostsUnknown $Message[1] - $TotalUnique $Message[11]</TH><TH bgcolor=\"#$color_p\" width=80>$Message[56]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH bgcolor=\"#$color_k\" width=80>$Message[75]</TH><TH width=120>$Message[9]</TH></TR>\n";
 		$total_p=$total_h=$total_k=0;
 		$count=0;
 		foreach my $key (sort { $SortDir*$_hostmachine_p{$a} <=> $SortDir*$_hostmachine_p{$b} } keys (%_hostmachine_p)) {
@@ -2930,8 +2932,8 @@ EOF
 	if ($ShowPagesStats) {
 		print "$CENTER<a name=\"PAGE\">&nbsp;</a><BR>";
 		$MaxNbOfPageShown = $TotalDifferentPages if $MaxNbOfPageShown > $TotalDifferentPages;
-		&tab_head("$Message[77] $MaxNbOfPageShown $Message[55] $TotalDifferentPages $Message[27] &nbsp; - &nbsp; <a href=\"$DirCgi$PROG.$Extension?output=urldetail&".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang\">$Message[80]</a>",19);
-		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[19]</TH><TH bgcolor=\"#$color_p\" width=80>&nbsp;$Message[29]&nbsp;</TH><TH>&nbsp;</TH></TR>\n";
+		&tab_head("$Message[19] ($Message[77] $MaxNbOfPageShown) &nbsp; - &nbsp; <a href=\"$DirCgi$PROG.$Extension?output=urldetail&".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang\">$Message[80]</a>",19);
+		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$TotalDifferentPages $Message[28]</TH>";
 		$max_p=1; foreach my $key (values %_sider_p) { if ($key > $max_p) { $max_p = $key; } }
 		$count=0; $rest_p=0;
 		foreach my $key (sort { $SortDir*$_sider_p{$a} <=> $SortDir*$_sider_p{$b} } keys (%_sider_p)) {
@@ -3113,8 +3115,8 @@ EOF
 		my $TotalKeyphrases=0; foreach my $key (keys %_keyphrases) { $TotalKeyphrases+=$_keyphrases{$key}; }
 		print "$CENTER<a name=\"SEARCHWORDS\">&nbsp;</a><BR>";
 		$MaxNbOfKeywordsShown = $TotalDifferentKeyphrases if $MaxNbOfKeywordsShown > $TotalDifferentKeyphrases;
-		&tab_head("$Message[77] $MaxNbOfKeywordsShown $Message[55] $TotalDifferentKeyphrases $Message[43]",19);
-		print "<TR bgcolor=\"#$color_TableBGRowTitle\" onmouseover=\"ShowTooltip(15);\" onmouseout=\"HideTooltip(15);\"><TH>$Message[13]</TH><TH bgcolor=\"#$color_s\" width=80>$Message[14]</TH><TH bgcolor=\"#$color_s\" width=80>$Message[15]</TH></TR>\n";
+		&tab_head("$Message[43] ($Message[77] $MaxNbOfKeywordsShown)",19);
+		print "<TR bgcolor=\"#$color_TableBGRowTitle\" onmouseover=\"ShowTooltip(15);\" onmouseout=\"HideTooltip(15);\"><TH>$TotalDifferentKeyphrases $Message[103]</TH><TH bgcolor=\"#$color_s\" width=80>$Message[14]</TH><TH bgcolor=\"#$color_s\" width=80>$Message[15]</TH></TR>\n";
 		$count=0; $rest=0;
 		foreach my $key (sort { $SortDir*$_keyphrases{$a} <=> $SortDir*$_keyphrases{$b} } keys (%_keyphrases)) {
 			if ($count>=$MaxNbOfKeywordsShown) { $rest+=$_keyphrases{$key}; next; }
