@@ -4103,11 +4103,11 @@ else {								# Run from command line
 		}
 		# TODO Check if ARGV is an AllowedArg
 		if ($_ > 0) { $QueryString .= "&"; }
-		my $NewLinkParams=$ARGV[$_]; $NewLinkParams =~ s/^-+//; $NewLinkParams =~ s/\s/%20/g;
+		my $NewLinkParams=$ARGV[$_]; $NewLinkParams =~ s/^-+//;
 		$QueryString .= "$NewLinkParams";
 	}
 	$QueryString = CleanFromCSSA($QueryString);
-	if ($QueryString =~ /config=([^\s&]+)/i)	{ $SiteConfig=$1; }
+	if ($QueryString =~ /config=([^&]+)/i)		{ $SiteConfig=$1; }
 	$UpdateStats=1; $HTMLOutput="";                           								# Update with no report by default when run from command line
 	if ($QueryString =~ /showsteps/i) 			{ $ShowSteps=1; }
 	$QueryString=~s/showsteps[^&]*//i;
@@ -4117,9 +4117,9 @@ else {								# Run from command line
 	$QueryString=~s/showdropped[^&]*//i;
 	if ($QueryString =~ /showunknownorigin/i)	{ $ShowUnknownOrigin=1; }
 	$QueryString=~s/showunknownorigin[^&]*//i;
-	if ($QueryString =~ /logfile=([^\s&]+)/i )	{ $LogFile="$1"; }
-	if ($QueryString =~ /output=urldetail:([^\s&]+)/i)	{ $URLFilter="$1"; }	# Filter on URL list can be defined with output=urldetail:filter to reduce number of lines read and showed
-	if ($QueryString =~ /urlfilter=([^\s&]+)/i)	{ $URLFilter="$1"; }			# Filter on URL list can also be defined with urlfilter=filter
+	if ($QueryString =~ /logfile=([^&]+)/i )	{ $LogFile="$1"; }
+	if ($QueryString =~ /output=urldetail:([^&]+)/i)	{ $URLFilter="$1"; }	# Filter on URL list can be defined with output=urldetail:filter to reduce number of lines read and showed
+	if ($QueryString =~ /urlfilter=([^&]+)/i)	{ $URLFilter="$1"; }			# Filter on URL list can also be defined with urlfilter=filter
 }
 
 if ($QueryString =~ /staticlinks/i) 			{ $StaticLinks=".$SiteConfig"; }
