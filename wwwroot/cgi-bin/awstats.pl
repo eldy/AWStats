@@ -1329,9 +1329,9 @@ sub Check_Config {
 		debug(" DirData='$DirData'",2);
 		debug(" DirCgi='$DirCgi'",2);
 		debug(" DirIcons='$DirIcons'",2);
-		debug(" NotPageList ".(scalar keys %NotPageList),2);
-		debug(" ValidHTTPCodes ".(scalar keys %ValidHTTPCodes),2);
-		debug(" ValidSMTPCodes ".(scalar keys %ValidSMTPCodes),2);
+		debug(" NotPageList ".(join(',',keys %NotPageList)),2);
+		debug(" ValidHTTPCodes ".(join(',',keys %ValidHTTPCodes)),2);
+		debug(" ValidSMTPCodes ".(join(',',keys %ValidSMTPCodes)),2);
 		debug(" UseFramesWhenCGI=$UseFramesWhenCGI",2);
 	}
 
