@@ -1450,39 +1450,19 @@ sub Read_Language_Data {
 
 
 #------------------------------------------------------------------------------
-# Function:     Check if all parameters are correctly defined. If not set them to default.
-# Parameters:	None
+# Function:     Substitute date tags in a string by value
+# Parameters:	String
 # Input:		All global variables
 # Output:		Change on some global variables
-# Return:		None
+# Return:		String
 #------------------------------------------------------------------------------
-sub Check_Config {
-	if ($Debug) { debug("Call to Check_Config"); }
+sub Substitute_Tags {
+    my $SourceString=shift;
+	if ($Debug) { debug("Call to Substitute_Tags on $SourceString"); }
 
 	my %MonthNumLibEn = ("01","Jan","02","Feb","03","Mar","04","Apr","05","May","06","Jun","07","Jul","08","Aug","09","Sep","10","Oct","11","Nov","12","Dec");
 
-	# Show initial values of main parameters before check
-	if ($Debug) {
-		debug(" LogFile='$LogFile'",2);
-		debug(" LogType='$LogType'",2);
-		debug(" LogFormat='$LogFormat'",2);
-		debug(" LogSeparator='$LogSeparator'",2);
-		debug(" DNSLookup='$DNSLookup'",2);
-		debug(" DirData='$DirData'",2);
-		debug(" DirCgi='$DirCgi'",2);
-		debug(" DirIcons='$DirIcons'",2);
-		debug(" NotPageList ".(join(',',keys %NotPageList)),2);
-		debug(" ValidHTTPCodes ".(join(',',keys %ValidHTTPCodes)),2);
-		debug(" ValidSMTPCodes ".(join(',',keys %ValidSMTPCodes)),2);
-		debug(" UseFramesWhenCGI=$UseFramesWhenCGI",2);
-		debug(" BuildReportFormat=$BuildReportFormat",2);
-		debug(" BuildHistoryFormat=$BuildHistoryFormat",2);
-		debug(" URLWithQueryWithOnlyFollowingParameters=".(join(',',@URLWithQueryWithOnly)),2);
-		debug(" URLWithQueryWithoutFollowingParameters=".(join(',',@URLWithQueryWithout)),2);
-	}
-
-	# Main section
-	while ($LogFile =~ /%([ymdhwYMDHWNSO]+)-(\(\d+\)|\d+)/) {
+	while ($SourceString =~ /%([ymdhwYMDHWNSO]+)-(\(\d+\)|\d+)/) {
 		# Accept tag %xx-dd and %xx-(dd)
 		my $timetag="$1";
 		my $timephase=quotemeta("$2");
@@ -1508,36 +1488,73 @@ sub Check_Config {
 		if ($oldermin < 10) { $oldermin = "0$oldermin"; }
 		if ($oldersec < 10) { $oldersec = "0$oldersec"; }
 		# Replace tag with new value
-		if ($timetag eq 'YYYY') { $LogFile =~ s/%YYYY-$timephase/$olderyear/ig; next; }
-		if ($timetag eq 'YY')   { $LogFile =~ s/%YY-$timephase/$oldersmallyear/ig; next; }
-		if ($timetag eq 'MM')   { $LogFile =~ s/%MM-$timephase/$oldermonth/ig; next; }
-		if ($timetag eq 'MO')   { $LogFile =~ s/%MO-$timephase/$MonthNumLibEn{$oldermonth}/ig; next; }
-		if ($timetag eq 'DD')   { $LogFile =~ s/%DD-$timephase/$olderday/ig; next; }
-		if ($timetag eq 'HH')   { $LogFile =~ s/%HH-$timephase/$olderhour/ig; next; }
-		if ($timetag eq 'NS')   { $LogFile =~ s/%NS-$timephase/$olderns/ig; next; }
-		if ($timetag eq 'WM')   { $LogFile =~ s/%WM-$timephase/$olderweekofmonth/g; next; }
-		if ($timetag eq 'Wm')   { my $olderweekofmonth0=$olderweekofmonth-1; $LogFile =~ s/%Wm-$timephase/$olderweekofmonth0/g; next; }
-		if ($timetag eq 'WY')   { $LogFile =~ s/%WY-$timephase/$olderweekofyear/g; next; }
-		if ($timetag eq 'Wy')   { my $olderweekofyear0=sprintf("%02d",$olderweekofyear-1); $LogFile =~ s/%Wy-$timephase/$olderweekofyear0/g; next; }
-		if ($timetag eq 'DW')   { $LogFile =~ s/%DW-$timephase/$olderwday/g; next; }
-		if ($timetag eq 'Dw')   { my $olderwday0=$olderwday-1; $LogFile =~ s/%Dw-$timephase/$olderwday0/g; next; }
+		if ($timetag eq 'YYYY') { $SourceString =~ s/%YYYY-$timephase/$olderyear/ig; next; }
+		if ($timetag eq 'YY')   { $SourceString =~ s/%YY-$timephase/$oldersmallyear/ig; next; }
+		if ($timetag eq 'MM')   { $SourceString =~ s/%MM-$timephase/$oldermonth/ig; next; }
+		if ($timetag eq 'MO')   { $SourceString =~ s/%MO-$timephase/$MonthNumLibEn{$oldermonth}/ig; next; }
+		if ($timetag eq 'DD')   { $SourceString =~ s/%DD-$timephase/$olderday/ig; next; }
+		if ($timetag eq 'HH')   { $SourceString =~ s/%HH-$timephase/$olderhour/ig; next; }
+		if ($timetag eq 'NS')   { $SourceString =~ s/%NS-$timephase/$olderns/ig; next; }
+		if ($timetag eq 'WM')   { $SourceString =~ s/%WM-$timephase/$olderweekofmonth/g; next; }
+		if ($timetag eq 'Wm')   { my $olderweekofmonth0=$olderweekofmonth-1; $SourceString =~ s/%Wm-$timephase/$olderweekofmonth0/g; next; }
+		if ($timetag eq 'WY')   { $SourceString =~ s/%WY-$timephase/$olderweekofyear/g; next; }
+		if ($timetag eq 'Wy')   { my $olderweekofyear0=sprintf("%02d",$olderweekofyear-1); $SourceString =~ s/%Wy-$timephase/$olderweekofyear0/g; next; }
+		if ($timetag eq 'DW')   { $SourceString =~ s/%DW-$timephase/$olderwday/g; next; }
+		if ($timetag eq 'Dw')   { my $olderwday0=$olderwday-1; $SourceString =~ s/%Dw-$timephase/$olderwday0/g; next; }
 		# If unknown tag
-		error("Unknown tag '\%$timetag' in LogFile parameter.");
+		error("Unknown tag '\%$timetag' in parameter.");
 	}
 	# Replace %YYYY %YY %MM %DD %HH with current value. Kept for backward compatibility.
-	$LogFile =~ s/%YYYY/$nowyear/ig;
-	$LogFile =~ s/%YY/$nowsmallyear/ig;
-	$LogFile =~ s/%MM/$nowmonth/ig;
-	$LogFile =~ s/%MO/$MonthNumLibEn{$nowmonth}/ig;
-	$LogFile =~ s/%DD/$nowday/ig;
-	$LogFile =~ s/%HH/$nowhour/ig;
-	$LogFile =~ s/%NS/$nowns/ig;
-	$LogFile =~ s/%WM/$nowweekofmonth/g;
-	my $nowweekofmonth0=$nowweekofmonth-1; $LogFile =~ s/%Wm/$nowweekofmonth0/g;
-	$LogFile =~ s/%WY/$nowweekofyear/g;
-	my $nowweekofyear0=$nowweekofyear-1; $LogFile =~ s/%Wy/$nowweekofyear0/g;
-	$LogFile =~ s/%DW/$nowwday/g;
-	my $nowwday0=$nowwday-1; $LogFile =~ s/%Dw/$nowwday0/g;
+	$SourceString =~ s/%YYYY/$nowyear/ig;
+	$SourceString =~ s/%YY/$nowsmallyear/ig;
+	$SourceString =~ s/%MM/$nowmonth/ig;
+	$SourceString =~ s/%MO/$MonthNumLibEn{$nowmonth}/ig;
+	$SourceString =~ s/%DD/$nowday/ig;
+	$SourceString =~ s/%HH/$nowhour/ig;
+	$SourceString =~ s/%NS/$nowns/ig;
+	$SourceString =~ s/%WM/$nowweekofmonth/g;
+	my $nowweekofmonth0=$nowweekofmonth-1; $SourceString =~ s/%Wm/$nowweekofmonth0/g;
+	$SourceString =~ s/%WY/$nowweekofyear/g;
+	my $nowweekofyear0=$nowweekofyear-1; $SourceString =~ s/%Wy/$nowweekofyear0/g;
+	$SourceString =~ s/%DW/$nowwday/g;
+	my $nowwday0=$nowwday-1; $SourceString =~ s/%Dw/$nowwday0/g;
+	
+	return $SourceString;
+}
+
+
+#------------------------------------------------------------------------------
+# Function:     Check if all parameters are correctly defined. If not set them to default.
+# Parameters:	None
+# Input:		All global variables
+# Output:		Change on some global variables
+# Return:		None
+#------------------------------------------------------------------------------
+sub Check_Config {
+	if ($Debug) { debug("Call to Check_Config"); }
+
+	# Show initial values of main parameters before check
+	if ($Debug) {
+		debug(" LogFile='$LogFile'",2);
+		debug(" LogType='$LogType'",2);
+		debug(" LogFormat='$LogFormat'",2);
+		debug(" LogSeparator='$LogSeparator'",2);
+		debug(" DNSLookup='$DNSLookup'",2);
+		debug(" DirData='$DirData'",2);
+		debug(" DirCgi='$DirCgi'",2);
+		debug(" DirIcons='$DirIcons'",2);
+		debug(" NotPageList ".(join(',',keys %NotPageList)),2);
+		debug(" ValidHTTPCodes ".(join(',',keys %ValidHTTPCodes)),2);
+		debug(" ValidSMTPCodes ".(join(',',keys %ValidSMTPCodes)),2);
+		debug(" UseFramesWhenCGI=$UseFramesWhenCGI",2);
+		debug(" BuildReportFormat=$BuildReportFormat",2);
+		debug(" BuildHistoryFormat=$BuildHistoryFormat",2);
+		debug(" URLWithQueryWithOnlyFollowingParameters=".(join(',',@URLWithQueryWithOnly)),2);
+		debug(" URLWithQueryWithoutFollowingParameters=".(join(',',@URLWithQueryWithout)),2);
+	}
+
+	# Main section
+	$LogFile=&Substitute_Tags($LogFile);
 	if (! $LogFile)   { error("LogFile parameter is not defined in config/domain file"); }
 	if ($LogType !~ /[WSMF]/i) { $LogType='W'; }
 	$LogFormat =~ s/\\//g;
@@ -1562,7 +1579,6 @@ sub Check_Config {
 	if ($BuildHistoryFormat !~ /text|xml/) 			{ $BuildHistoryFormat='text'; }
 	if ($SaveDatabaseFilesWithPermissionsForEveryone !~ /[0-1]/)	{ $SaveDatabaseFilesWithPermissionsForEveryone=0; }
 	if ($PurgeLogFile !~ /[0-1]/)                 	{ $PurgeLogFile=0; }
-	if ($ArchiveLogRecords !~ /[0-1]/)            	{ $ArchiveLogRecords=0; }
 	if ($KeepBackupOfHistoricFiles !~ /[0-1]/)     	{ $KeepBackupOfHistoricFiles=0; }
 	$DefaultFile[0]||='index.html';
 	if ($AuthenticatedUsersNotCaseSensitive !~ /[0-1]/)       { $AuthenticatedUsersNotCaseSensitive=0; }
@@ -7180,9 +7196,14 @@ END_ERROR_TEXT
 	my $renameok=1; my $archiveok=1;
 
 	# Open Log file for writing if PurgeLogFile is on
-	if ($PurgeLogFile == 1) {
-		if ($ArchiveLogRecords == 1) {
-			$ArchiveFileName="$DirData/${PROG}_archive$FileSuffix.log";
+	if ($PurgeLogFile) {
+		if ($ArchiveLogRecords) {
+			if ($ArchiveLogRecords == 1) {  # For backward compatibility
+			    $ArchiveFileName="$DirData/${PROG}_archive$FileSuffix.log";
+            }
+            else {
+                $ArchiveFileName="$DirData/${PROG}_archive$FileSuffix.".&Substitute_Tags($ArchiveLogRecords).".log";
+            }
 			open(LOG,"+<$LogFile") || error("Enable to archive log records of \"$LogFile\" into \"$ArchiveFileName\" because source can't be opened for read and write: $!<br />\n");
 		}
 		else {
@@ -7195,9 +7216,9 @@ END_ERROR_TEXT
 	&Rename_All_Tmp_History;
 
 	# Purge Log file if option is on and all renaming are ok
-	if ($PurgeLogFile == 1) {
+	if ($PurgeLogFile) {
 		# Archive LOG file into ARCHIVELOG
-		if ($ArchiveLogRecords == 1) {
+		if ($ArchiveLogRecords) {
 			if ($Debug) { debug("Start of archiving log file"); }
 			open(ARCHIVELOG,">>$ArchiveFileName") || error("Couldn't open file \"$ArchiveFileName\" to archive log: $!");
 			binmode ARCHIVELOG;
