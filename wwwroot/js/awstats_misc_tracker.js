@@ -54,18 +54,6 @@ function awstats_getCookie(TRKNameOfCookie){
 if (window.location.search == "") {
 
 	TRKnow = new Date();
-	//var icon="";
-	//var TRKr="";
-	//TRKr=top.document.referrer;
-	//if ((TRKr == "") || (TRKr == "[unknown origin]") || (TRKr == "unknown") || (TRKr == "undefined"))
-	//	if (document["parent"] != null) 
-	//		if (parent["document"] != null)
-	//			if (parent.document["referrer"] != null) 
-	//				if (typeof(parent.document) == "object")
-	//					TRKr=parent.document.referrer;
-	//if ((TRKr == "") || (TRKr == "[unknown origin]") || (TRKr == "unknown") || (TRKr == "undefined"))
-	//	if (document["referrer"] != null) 
-	//		TRKr = document.referrer;
 	TRKscreen=screen.width+"x"+screen.height;
 	if (navigator.appName != "Netscape") {TRKcdi=screen.colorDepth}
 	else {TRKcdi=screen.pixelDepth};
