@@ -38,7 +38,7 @@ $NBOFLASTUPDATELOOKUPTOSAVE=500;	# Nb of records to save in DNS last update cach
 $LIMITFLUSH=5000;					# Nb of records in data arrays after how we need to flush data on disk
 $NEWDAYVISITTIMEOUT=764041;			# Delay between 01-23:59:59 and 02-00:00:00
 $VISITTIMEOUT=10000;				# Lapse of time to consider a page load as a new visit. 10000 = 1 hour (Default = 10000)
-$NOTSORTEDRECORDTOLERANCE=10000;	# Lapse of time to accept a record if not in correct order. 10000 = 1 hour (Default = 10000)
+$NOTSORTEDRECORDTOLERANCE=20000;	# Lapse of time to accept a record if not in correct order. 20000 = 2 hour (Default = 20000)
 $WIDTHCOLICON=32;
 $TOOLTIPON=0;						# Tooltips plugin loaded
 # ----- Running variables -----
