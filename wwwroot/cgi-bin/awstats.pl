@@ -9470,7 +9470,7 @@ if (scalar keys %HTMLOutput) {
 			print "<tr bgcolor=\"#$color_TableBGRowTitle\"><th colspan=\"3\">$Message[73]</th>";
 			if ($ShowFileTypesStats =~ /H/i) { print "<th bgcolor=\"#$color_h\" width=\"80\"".Tooltip(4).">$Message[57]</th><th bgcolor=\"#$color_h\" width=\"80\">$Message[15]</th>"; }
 			if ($ShowFileTypesStats =~ /B/i) { print "<th bgcolor=\"#$color_k\" width=\"80\"".Tooltip(5).">$Message[75]</th><th bgcolor=\"#$color_k\" width=\"80\">$Message[15]</th>"; }
-			if ($ShowFileTypesStats =~ /C/i) { print "<th bgcolor=\"#$color_k\" width=\"120\">$Message[100]</th><th bgcolor=\"#$color_k\" width=\"120\">$Message[101]</th><th bgcolor=\"#$color_k\" width=\"120\">$Message[99]</th>"; }
+			if ($ShowFileTypesStats =~ /C/i) { print "<th bgcolor=\"#$color_k\" width=\"100\">$Message[100]</th><th bgcolor=\"#$color_k\" width=\"100\">$Message[101]</th><th bgcolor=\"#$color_k\" width=\"100\">$Message[99]</th>"; }
 			print "</tr>\n";
 			my $total_con=0; my $total_cre=0;
 			my $count=0;
