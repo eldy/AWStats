@@ -1,8 +1,8 @@
+#!c:/program files/activeperl/bin/perl
 #!/usr/bin/perl
 # With some other Unix Os, first line might be
 #!/usr/local/bin/perl
 # With Apache for Windows and ActiverPerl, first line might be
-#!c:/program files/activeperl/bin/perl
 # use diagnostics;
 # use strict;
 #-Description-------------------------------------------
@@ -65,7 +65,7 @@ $word, $yearcon, $yearfile, $yearmonthfile, $yeartoprocess) = ();
 @sortsearchwords = @sortsereferrals = @sortsider404 = @sortsiders = @sortunknownip =
 @sortunknownreferer = @sortunknownrefererbrowser = @wordlist = ();
 
-$VERSION="2.5 (build 4)";
+$VERSION="2.5 (build 5)";
 $Lang=0;
 
 # Default value
@@ -1400,18 +1400,18 @@ sub html_head {
 	print "<title>$message[7][$Lang] $LocalSite</title>\n";
 	print "<STYLE TYPE=text/css>
 <!--
-	BODY { font-family: arial, verdana, helvetica, sans-serif; font-size:12px; background-color:$color_Background; }
-	TH { font-family: arial, verdana, helvetica, sans-serif; font-size:10px; text-align:center; color:$color_titletext}
-	TD { font-family: arial, verdana, helvetica, sans-serif; font-size:10px; text-align:center; color:$color_text}
-	TD.LEFT { font-family: arial, verdana, helvetica, sans-serif; font-size:10px; text-align:left; color:$color_text }
-	A {	font-family: arial, verdana helvetica, sans-serif; font-size:10px; font-style:normal; color:$color_link; }
+	BODY { font-family: arial, verdana, helvetica, sans-serif; font: 12px arial,verdana,helvetica; background-color:$color_Background; }
+	TH { font-family: arial, verdana, helvetica, sans-serif; font: 12px arial,verdana,helvetica; text-align:center; color:$color_titletext}
+	TD { font-family: arial, verdana, helvetica, sans-serif; font: 12px arial,verdana,helvetica; text-align:center; color:$color_text}
+	TD.LEFT { font-family: arial, verdana, helvetica, sans-serif; font: 12px arial,verdana,helvetica; text-align:left; color:$color_text }
+	A {	font-family: arial, verdana helvetica, sans-serif; font: 12px arial,verdana,helvetica; font-style:normal; color:$color_link; }
 	A:hover { color:$color_hover; }
-	DIV { text-align:justify; }
+	DIV { font: 12px arial,verdana,helvetica; text-align:justify; }
 	.TABLEBORDER { background-color:$color_TableBorder; }
 	.TABLEFRAME { background-color:$color_TableBG; }
 	.TABLEDATA { background-color:$color_Background; }
-	.TABLETITLE { font-family: verdana, arial, helvetica, sans-serif; font-size:14px; font-weight:bold; color:$color_TableTitle; background-color:$color_TableBGTitle; }
-	.classTooltip { position:absolute; top:0px; left:0px; z-index:2; width:280; visibility:hidden; font:8pt MS Comic Sans,arial,sans-serif; background-color:#FFFFE6; padding:10px 10px; border:1px solid black; }
+	.TABLETITLE { font-family: verdana, arial, helvetica, sans-serif; font: 14px arial,verdana,helvetica; font-weight:bold; color:$color_TableTitle; background-color:$color_TableBGTitle; }
+	.CTooltip { position:absolute; top:0px; left:0px; z-index:2; width:280; visibility:hidden; font:8pt MS Comic Sans,arial,sans-serif; background-color:#FFFFE6; padding:8px 8px; border:1px solid black; }
 //-->
 </STYLE>\n
 ";
@@ -1885,7 +1885,7 @@ if ($ENV{"GATEWAY_INTERFACE"} ne "") {	# Run from a browser
 	$QueryString =~ s/<script.*$//i;					# This is to avoid 'Cross Site Scripting attacks'
 	if ($QueryString =~ /site=/) { $LocalSite=$QueryString; $LocalSite =~ s/.*site=//; $LocalSite =~ s/&.*//; $LocalSite =~ s/ .*//; }
 	if ($QueryString =~ /conf=/) { $LocalSite=$QueryString; $LocalSite =~ s/.*conf=//; $LocalSite =~ s/&.*//; $LocalSite =~ s/ .*//; }
-	else { $LocalSite = $ENV{"SERVER_NAME"}; }
+	if ($LocalSite eq "") { $LocalSite = $ENV{"SERVER_NAME"}; }
 	$UpdateStats=0;	if ($QueryString =~ /update=1/i) { $UpdateStats=1; }	# No update by default when run from a browser
 }
 else {	# Run from command line
@@ -2001,7 +2001,7 @@ for ($ix=0; $ix<5; $ix++) {	$_from_h[$ix]=0; }
 
 # Show logo
 print "<table WIDTH=$WIDTH>\n";
-print "<tr valign=center><td class=LEFT width=150><font size=3><b>AWStats</b></font>\n";
+print "<tr valign=center><td class=LEFT width=150 style=\"font: 18px arial,verdana,helvetica; font-weight: bold\">AWStats\n";
 # Show flags
 if ($ShowFlagLinks == 1) {
 	print "<br>\n";
@@ -2017,7 +2017,7 @@ if ($ShowFlagLinks == 1) {
 print "</td>\n";
 print "<td class=LEFT width=450><a href=\"http://awstats.sourceforge.net\" target=_newawstats><img src=$DirIcons/other/$Logo border=0 alt=\"$PROG Official Web Site\" title=\"$PROG Official Web Site\"></a></td></tr>\n";
 #print "<b><font face=\"verdana\" size=1><a href=\"$HomeURL\">HomePage</a> &#149\; <a href=\"javascript:history.back()\">Back</a></font></b><br>\n";
-print "<tr><td class=LEFT colspan=2><font size=1>$message[54][$Lang]</font></td></tr>\n";
+print "<tr><td class=LEFT colspan=2>$message[54][$Lang]</td></tr>\n";
 print "</table>\n";
 
 print "<hr>\n";
@@ -2672,94 +2672,94 @@ if ($BenchMark) { print "End of sorting hash arrays: ".time."<br>\n"; }
 # English tooltips
 if (($Lang != 1) && ($Lang != 2) && ($Lang != 3) && ($Lang != 6)) {
 	print "
-	<DIV CLASS=\"classTooltip\" ID=\"tt1\">
+	<DIV CLASS=\"CTooltip\" ID=\"tt1\">
 	A new visits is defined as each new <b>incoming visitor</b> (viewing or browsing a page) who was not connected to your site during last <b>".($VisitTimeOut/10000*60)." mn</b>.
 	</DIV>
-	<DIV CLASS=\"classTooltip\" ID=\"tt2\">
+	<DIV CLASS=\"CTooltip\" ID=\"tt2\">
 	Number of client hosts (<b>IP address</b>) who came to visit the site (and who viewed at least one <b>page</b>).<br>
 	This data refers to the number of <b>different physical persons</b> who had reached the site in any one day.
 	</DIV>
-	<DIV CLASS=\"classTooltip\" ID=\"tt3\">
+	<DIV CLASS=\"CTooltip\" ID=\"tt3\">
 	Number of times a <b>page</b> of the site is <b>viewed</b> (Sum for all visitors for all visits).<br>
 	This piece of data differs from \"hits\" in that it counts only HTML pages as oppose to images and other files.
 	</DIV>
-	<DIV CLASS=\"classTooltip\" ID=\"tt4\">
+	<DIV CLASS=\"CTooltip\" ID=\"tt4\">
 	Number of times a <b>page, image, file</b> of the site is <b>viewed</b> or <b>downloaded</b> by someone.<br>
 	This piece of data is provided as a reference only, since the number of \"pages\" viewed is often prefered for marketing purposes.
 	</DIV>
-	<DIV CLASS=\"classTooltip\" ID=\"tt5\">
+	<DIV CLASS=\"CTooltip\" ID=\"tt5\">
 	This piece of information refers to the amount of data downloaded by all <b>pages</b>, <b>images</b> and <b>files</b> within your site measured in KBs.
 	</DIV>
-	<DIV CLASS=\"classTooltip\" ID=\"tt13\">
+	<DIV CLASS=\"CTooltip\" ID=\"tt13\">
 	$PROG recognizes each access to your site after a <b>search</b> from the <b>".(@SearchEnginesArray)." most popular Internet Search Engines and Directories</b> (such as Yahoo, Altavista, Lycos, Google, Voila, etc...).
 	</DIV>
-	<DIV CLASS=\"classTooltip\" ID=\"tt14\">
+	<DIV CLASS=\"CTooltip\" ID=\"tt14\">
 	List of all <b>external pages</b> which were used to link (or eneter) to your site (Only the <b>$MaxNbOfRefererShown</b> most often used external pages are shown.\n
 	Links used by the results of the search engines are excluded here because they have already been included on the previous line within this table.
 	</DIV>
-	<DIV CLASS=\"classTooltip\" ID=\"tt15\">
+	<DIV CLASS=\"CTooltip\" ID=\"tt15\">
 	This table shows the list of the most frequently <b>keywords</b> utilized to find your site from Internet Search Engines and Directories.
 	(Keywords from the <b>".(@SearchEnginesArray)."</b> most popular Search Engines and Directories are recognized by $PROG, such as Yahoo, Altavista, Lycos, Google, Voila, etc...).
 	</DIV>
-	<DIV CLASS=\"classTooltip\" ID=\"tt16\">
+	<DIV CLASS=\"CTooltip\" ID=\"tt16\">
 	Robots (sometimes refer to Spiders) are <b>automatic computer visitors</b> used by many search engines that scan your web site to (1) index it and rank it, (2) collect statistics on Internet Web sites and/or (3) see if your site is still online.<br>
 	$PROG is able to recognize up to <b>".(@RobotArray)."</b> robots.
 	</DIV>";
 
 	print "
-	<DIV CLASS=\"classTooltip\" ID=\"tt201\">
+	<DIV CLASS=\"CTooltip\" ID=\"tt201\">
 	No description for this error.
 	</DIV>
-	<DIV CLASS=\"classTooltip\" ID=\"tt202\">
+	<DIV CLASS=\"CTooltip\" ID=\"tt202\">
 	Request was understood by server but will be processed later.
 	</DIV>
-	<DIV CLASS=\"classTooltip\" ID=\"tt204\">
+	<DIV CLASS=\"CTooltip\" ID=\"tt204\">
 	Server has processed the request but there is no document to send.
 	</DIV>
-	<DIV CLASS=\"classTooltip\" ID=\"tt206\">
+	<DIV CLASS=\"CTooltip\" ID=\"tt206\">
 	Partial content.
 	</DIV>
 
-	<DIV CLASS=\"classTooltip\" ID=\"tt301\">
+	<DIV CLASS=\"CTooltip\" ID=\"tt301\">
 	Requested document was moved and is now at another address given in awnswer.
 	</DIV>
-	<DIV CLASS=\"classTooltip\" ID=\"tt302\">
+	<DIV CLASS=\"CTooltip\" ID=\"tt302\">
 	No description for this error.
 	</DIV>
 
-	<DIV CLASS=\"classTooltip\" ID=\"tt400\">
+	<DIV CLASS=\"CTooltip\" ID=\"tt400\">
 	Syntax error, server didn\'t understand request.
 	</DIV>
-	<DIV CLASS=\"classTooltip\" ID=\"tt401\">
+	<DIV CLASS=\"CTooltip\" ID=\"tt401\">
 	Tried to reach an <b>URL where a login/password pair was required</b>.<br>
 	A high number within this item could mean that someone (such as a hacker) is attempting to crack, or enter into your site (hoping to enter a secured area by trying different login/password pairs, for instance).
 	</DIV>
-	<DIV CLASS=\"classTooltip\" ID=\"tt403\">
+	<DIV CLASS=\"CTooltip\" ID=\"tt403\">
 	Tried to reach an <b>URL not configured to be reachable, even with an login/password pair</b> (for example, an URL within a directory not defined as \"browsable\".).
 	</DIV>
-	<DIV CLASS=\"classTooltip\" ID=\"tt404\">
+	<DIV CLASS=\"CTooltip\" ID=\"tt404\">
 	Tried to reach a <b>non existing URL</b>. This error often means that there is an invalid link somewhere in your site or that a visitor mistyped a certain URL.
 	</DIV>
-	<DIV CLASS=\"classTooltip\" ID=\"tt408\">
+	<DIV CLASS=\"CTooltip\" ID=\"tt408\">
 	Server has taken <b>too much time</b> to respond to a request. This error frequently involves either a slow CGI script which the server was required to kill or an extremely congested web server.
 	</DIV>
 
-	<DIV CLASS=\"classTooltip\" ID=\"tt500\">
+	<DIV CLASS=\"CTooltip\" ID=\"tt500\">
 	Internal error. This error is often caused by a CGI program that had finished abnormally (coredump for example).
 	</DIV>
-	<DIV CLASS=\"classTooltip\" ID=\"tt501\">
+	<DIV CLASS=\"CTooltip\" ID=\"tt501\">
 	Unknown requested action.
 	</DIV>
-	<DIV CLASS=\"classTooltip\" ID=\"tt502\">
+	<DIV CLASS=\"CTooltip\" ID=\"tt502\">
 	Code returned by a HTTP server that works as a proxy or gateway when a real, targeted server doesn\'t answer successfully to the client\'s request.
 	</DIV>
-	<DIV CLASS=\"classTooltip\" ID=\"tt503\">
+	<DIV CLASS=\"CTooltip\" ID=\"tt503\">
 	Internal server error.
 	</DIV>
-	<DIV CLASS=\"classTooltip\" ID=\"tt504\">
+	<DIV CLASS=\"CTooltip\" ID=\"tt504\">
 	Gateway Time-out.
 	</DIV>
-	<DIV CLASS=\"classTooltip\" ID=\"tt505\">
+	<DIV CLASS=\"CTooltip\" ID=\"tt505\">
 	HTTP Version Not Supported.
 	</DIV>
 	";
@@ -2768,95 +2768,95 @@ if (($Lang != 1) && ($Lang != 2) && ($Lang != 3) && ($Lang != 6)) {
 # French tooltips
 if ($Lang == 1) {
 	print "
-	<DIV CLASS=\"classTooltip\" ID=\"tt1\">
+	<DIV CLASS=\"CTooltip\" ID=\"tt1\">
 	On considère une nouvelle visite pour <b>chaque arrivée</b> d un visiteur consultant une page et ne s étant pas connecté dans les dernières <b>".($VisitTimeOut/10000*60)." mn</b>.
 	</DIV>
-	<DIV CLASS=\"classTooltip\" ID=\"tt2\">
+	<DIV CLASS=\"CTooltip\" ID=\"tt2\">
 	Nombre de hotes (<b>adresse IP</b>) utilisés pour accéder au site (et voir au moins une <b>page</b>).<br>
 	Ce chiffre reflète le nombre de <b>personnes physiques</b> différentes ayant un jour accédé au site.
 	</DIV>
-	<DIV CLASS=\"classTooltip\" ID=\"tt3\">
+	<DIV CLASS=\"CTooltip\" ID=\"tt3\">
 	Nombre de fois qu une <b>page</b> du site est <b>vue</b> (Cumul de tout visiteur, toute visite).<br>
 	Ce compteur différe des \"hits\" car il ne comptabilise que les pages HTML et non les images ou autres fichiers.
 	</DIV>
-	<DIV CLASS=\"classTooltip\" ID=\"tt4\">
+	<DIV CLASS=\"CTooltip\" ID=\"tt4\">
 	Nombre de fois qu une <b>page, image, fichier</b> du site est <b>vu</b> ou <b>téléchargé</b> par un visiteur.<br>
 	Ce compteur est donné à titre indicatif, le compteur \"pages\" etant préféré.
 	</DIV>
-	<DIV CLASS=\"classTooltip\" ID=\"tt5\">
+	<DIV CLASS=\"CTooltip\" ID=\"tt5\">
 	Nombre de <b>kilo octets</b> téléchargé lors des visites du site.<br>
 	Il s agit aussi bien du volume de données du au chargement des <b>pages</b> et <b>images</b> que des <b>fichiers</b> téléchargés.
 	</DIV>
-	<DIV CLASS=\"classTooltip\" ID=\"tt13\">
+	<DIV CLASS=\"CTooltip\" ID=\"tt13\">
 	$PROG est capable de reconnaitre l acces au site issu d une <b>recherche</b> depuis les <b>".(@SearchEnginesArray)." moteurs de recherche Internet</b> les plus connus (Yahoo, Altavista, Lycos, Google, Voila, etc...).
 	</DIV>
-	<DIV CLASS=\"classTooltip\" ID=\"tt14\">
+	<DIV CLASS=\"CTooltip\" ID=\"tt14\">
 	Liste des <b>pages de sites externes</b> contenant un lien suivi pour accéder à ce site (Seules les <b>$MaxNbOfRefererShown</b> pages externes les plus utilisées sont affichées).\n
 	Les liens issus du résultat d un moteur de recherche connu n apparaissent pas ici, car comptabilisés à part sur la ligne juste au-dessus.
 	</DIV>
-	<DIV CLASS=\"classTooltip\" ID=\"tt15\">
+	<DIV CLASS=\"CTooltip\" ID=\"tt15\">
 	Ce tableau offre la liste des <b>mots</b> les plus souvent utilisés pour retrouver et accéder au site depuis
 	un moteur de recherche Internet (Les recherches depuis <b>".(@SearchEnginesArray)."</b> moteurs de recherche parmi les pluspopulaires sont reconnues, comme Yahoo, Altavista, Lycos, Google, Voila, etc...).
 	</DIV>
-	<DIV CLASS=\"classTooltip\" ID=\"tt16\">
+	<DIV CLASS=\"CTooltip\" ID=\"tt16\">
 	Les robots sont des <b>automates visiteurs</b> scannant le site dans le but de l indexer, d obtenir des statistiques sur les sites Web Internet ou de vérifier sa disponibilié.<br>
 	$PROG reconnait <b>".(@RobotArray)."</b> robots.
 	</DIV>";
 
 	print "
-	<DIV CLASS=\"classTooltip\" ID=\"tt201\">
+	<DIV CLASS=\"CTooltip\" ID=\"tt201\">
 	Contenu partiel renvoyé.
 	</DIV>
-	<DIV CLASS=\"classTooltip\" ID=\"tt202\">
+	<DIV CLASS=\"CTooltip\" ID=\"tt202\">
 	La requête a été enregistrée par le serveur mais sera exécutée plus tard.
 	</DIV>
-	<DIV CLASS=\"classTooltip\" ID=\"tt204\">
+	<DIV CLASS=\"CTooltip\" ID=\"tt204\">
 	Le serveur a traité la demande mais il n existe aucun document à renvoyer.
 	</DIV>
-	<DIV CLASS=\"classTooltip\" ID=\"tt206\">
+	<DIV CLASS=\"CTooltip\" ID=\"tt206\">
 	Contenu partiel renvoyé.
 	</DIV>
 
-	<DIV CLASS=\"classTooltip\" ID=\"tt301\">
+	<DIV CLASS=\"CTooltip\" ID=\"tt301\">
 	Le document réclamé a été déplacé et se trouve maintenant à une autre adresse mentionnée dans la réponse.
 	</DIV>
-	<DIV CLASS=\"classTooltip\" ID=\"tt302\">
+	<DIV CLASS=\"CTooltip\" ID=\"tt302\">
 	Aucun descriptif pour cette erreur.
 	</DIV>
 
-	<DIV CLASS=\"classTooltip\" ID=\"tt400\">
+	<DIV CLASS=\"CTooltip\" ID=\"tt400\">
 	Erreur de syntaxe, le serveur n a pas compris la requête.
 	</DIV>
-	<DIV CLASS=\"classTooltip\" ID=\"tt401\">
+	<DIV CLASS=\"CTooltip\" ID=\"tt401\">
 	Tentatives d accès à une <b>URL nécessitant identification avec un login/mot de passe invalide</b>.<br>
 	Un nombre trop élévé peut mettre en évidence une tentative de crackage brute du site (par accès répété de différents logins/mots de passe).
 	</DIV>
-	<DIV CLASS=\"classTooltip\" ID=\"tt403\">
+	<DIV CLASS=\"CTooltip\" ID=\"tt403\">
 	Tentatives d accès à une <b>URL non configurée pour etre accessible, même avec une identification</b> (par exemple, une URL d un répertoire non défini comme étant \"listable\").
 	</DIV>
-	<DIV CLASS=\"classTooltip\" ID=\"tt404\">
+	<DIV CLASS=\"CTooltip\" ID=\"tt404\">
 	Tentatives d accès à une <b>URL inexistante</b>. Il s agit donc d un lien invalide sur le site ou d une faute de frappe d un visiteur qui a saisie une mauvaise URL directement.
 	</DIV>
-	<DIV CLASS=\"classTooltip\" ID=\"tt408\">
+	<DIV CLASS=\"CTooltip\" ID=\"tt408\">
 	Le serveur mis un <b>temps trop important</b> pour répondre à la requête. Il peut s agir d un script CGI trop lent sur le serveur forcé d abandonner le traitement ou d une saturation du site.
 	</DIV>
 
-	<DIV CLASS=\"classTooltip\" ID=\"tt500\">
+	<DIV CLASS=\"CTooltip\" ID=\"tt500\">
 	Erreur interne au serveur. Cette erreur est le plus souvant renvoyé lors de l arrêt anormal d un script CGI (par exemple suite à un coredump du CGI).
 	</DIV>
-	<DIV CLASS=\"classTooltip\" ID=\"tt501\">
+	<DIV CLASS=\"CTooltip\" ID=\"tt501\">
 	Le serveur ne prend pas en charge l action demandée.
 	</DIV>
-	<DIV CLASS=\"classTooltip\" ID=\"tt502\">
+	<DIV CLASS=\"CTooltip\" ID=\"tt502\">
 	Code renvoyé par un serveur HTTP qui fonctionne comme proxy ou gateway lorsque le serveur réel consulté ne réagit pas avec succès à la demande du client.
 	</DIV>
-	<DIV CLASS=\"classTooltip\" ID=\"tt503\">
+	<DIV CLASS=\"CTooltip\" ID=\"tt503\">
 	Erreur interne au serveur.
 	</DIV>
-	<DIV CLASS=\"classTooltip\" ID=\"tt504\">
+	<DIV CLASS=\"CTooltip\" ID=\"tt504\">
 	Gateway Time-out.
 	</DIV>
-	<DIV CLASS=\"classTooltip\" ID=\"tt505\">
+	<DIV CLASS=\"CTooltip\" ID=\"tt505\">
 	Version HTTP non supporté.
 	</DIV>
 	";
@@ -2865,97 +2865,97 @@ if ($Lang == 1) {
 # Dutch tooltips
 if ($Lang == 2) {
 	print "
-	<DIV CLASS=\"classTooltip\" ID=\"tt1\">
+	<DIV CLASS=\"CTooltip\" ID=\"tt1\">
 	Een nieuw bezoek is elke <b>binnenkomende bezoeker</b> (die een pagina bekijkt) die de laatste <b>".($VisitTimeOut/10000*60)." mn</b> niet met uw site verbonden was.
 	</DIV>
-	<DIV CLASS=\"classTooltip\" ID=\"tt2\">
+	<DIV CLASS=\"CTooltip\" ID=\"tt2\">
 	Number of client hosts (<b>IP address</b>) who came to visit the site (and who viewed at least one <b>page</b>).<br>
 	This data refers to the number of <b>different physical persons</b> who had reached the site in any one day.
 	Aantal client hosts (<b>IP adres</b>) die de site bezochten (en minimaal een <b>pagina</b> bekeken).<br>
 	Dit geeft aan hoeveel <b>verschillende fysieke personen</b> de site op een bepaalde dag bezocht hebben.
 	</DIV>
-	<DIV CLASS=\"classTooltip\" ID=\"tt3\">
+	<DIV CLASS=\"CTooltip\" ID=\"tt3\">
 	Aantal malen dat een <b>pagina</b> van de site <b>bekeken</b> is (Som voor alle bezoekers voor alle bezoeken).<br>
 	Dit onderdeel verschilt van \"hits\" in het feit dat het alleen HTML pagina\'s telt, in tegenstelling tot plaatjes en andere bestanden.
 	</DIV>
-	<DIV CLASS=\"classTooltip\" ID=\"tt4\">
+	<DIV CLASS=\"CTooltip\" ID=\"tt4\">
 	Aantal malen dat een <b>pagina</b>, <b>plaatje</b> of <b>bestand</b> op de site door iemand is <b>bekeken</b> of <b>gedownload</b>.<br>
 	Dit onderdeel is alleen als referentie gegeven, omdat het aantal bekeken \"pagina\'s\" voor marketingdoeleinden de voorkeur heeft.
 	</DIV>
-	<DIV CLASS=\"classTooltip\" ID=\"tt5\">
+	<DIV CLASS=\"CTooltip\" ID=\"tt5\">
 	Aantal door uw bezoekers gedownloade <b>kilobytes</b>.<br>
 	Dit onderdeel geeft de hoeveelheid gedownloade gegevens in alle <b>pagina\'s</b>, <b>plaatjes</b> en <b>bestanden</b> van uw site, gemeten in KBs.
 	</DIV>
-	<DIV CLASS=\"classTooltip\" ID=\"tt13\">
+	<DIV CLASS=\"CTooltip\" ID=\"tt13\">
 	Dit programma, $PROG, herkent elke benadering van uw site na een <b>zoekopdracht</b> van de <b>".(@SearchEnginesArray)." meest populaire Internet zoekmachines</b> (zoals Yahoo, Altavista, Lycos, Google, Voila, etc...).
 	</DIV>
-	<DIV CLASS=\"classTooltip\" ID=\"tt14\">
+	<DIV CLASS=\"CTooltip\" ID=\"tt14\">
 	Lijst van alle <b>externe pagina\'s</b> die zijn gebruikt om naar uw site te linken (of deze te benaderen) (Alleen de <b>$MaxNbOfRefererShown</b> meest gebruikte externe pagina\'s zijn getoond.\n
 	Links gebruikt door de resultaten van zoekmachines worden hiet niet getoond omdat deze al zijn opgenomen in de vorige regel van deze tabel.
 	</DIV>
-	<DIV CLASS=\"classTooltip\" ID=\"tt15\">
+	<DIV CLASS=\"CTooltip\" ID=\"tt15\">
 	Deze tabel toont de lijst van <b>keywords</b> die het meest zijn gebruikt om uw site te vindein in Internet zoekmachines.
 	(Keywords van de <b>".(@SearchEnginesArray)."</b> meest populaire zoekmachines worden door $PROG herkend, zoals Yahoo, Altavista, Lycos, Google, Voila, etc...).
 	</DIV>
-	<DIV CLASS=\"classTooltip\" ID=\"tt16\">
+	<DIV CLASS=\"CTooltip\" ID=\"tt16\">
 	Robots (soms Spiders genoemd) zijn <b>automatische bezoekcomputers</b> die door veel zoekmachines worden gebruikt om uw site te scannen om (1) deze te indexeren, (2) statistieken over Internet sites te verzamelen en/of (3) te kijken of site nog steeds on-line is.<br>
 	Dit programma, $PROG, is in staat maximaal <b>".(@RobotArray)."</b> robots te herkennen</b>.
 	</DIV>";
 
 	print "
-	<DIV CLASS=\"classTooltip\" ID=\"tt201\">
+	<DIV CLASS=\"CTooltip\" ID=\"tt201\">
 	Geen beschrijving voor deze foutmelding.
 	</DIV>
-	<DIV CLASS=\"classTooltip\" ID=\"tt202\">
+	<DIV CLASS=\"CTooltip\" ID=\"tt202\">
 	De server heeft het verzoek begrepen, maar zal deze later behandelen.
 	</DIV>
-	<DIV CLASS=\"classTooltip\" ID=\"tt204\">
+	<DIV CLASS=\"CTooltip\" ID=\"tt204\">
 	De server heeft het verzoek verwerkt, maar er is geen document om te verzenden.
 	</DIV>
-	<DIV CLASS=\"classTooltip\" ID=\"tt206\">
+	<DIV CLASS=\"CTooltip\" ID=\"tt206\">
 	Gedeeltelijke inhoud.
 	</DIV>
 
-	<DIV CLASS=\"classTooltip\" ID=\"tt301\">
+	<DIV CLASS=\"CTooltip\" ID=\"tt301\">
 	Het aangevraagde document is verplaatst en is nu op een andere locatie die in het antwoord gegeven is.
 	</DIV>
-	<DIV CLASS=\"classTooltip\" ID=\"tt302\">
+	<DIV CLASS=\"CTooltip\" ID=\"tt302\">
 	Geen beschrijving voor deze foutmelding.
 	</DIV>
 
-	<DIV CLASS=\"classTooltip\" ID=\"tt400\">
+	<DIV CLASS=\"CTooltip\" ID=\"tt400\">
 	\"Taalfout\", de server begreep het verzoek niet.
 	</DIV>
-	<DIV CLASS=\"classTooltip\" ID=\"tt401\">
+	<DIV CLASS=\"CTooltip\" ID=\"tt401\">
 	Er is gepoogd een <b>URL waarvoor een usernaam/wachtwoord noodzakelijk is</b> te benaderen.<br>
 	Een hoog aantal van deze meldingen kan betekenen dat iemand (zoals een hacker) probeert uw site te kraken, of uw site binnen te komen (pogend een beveiligd onderdeel van uw site te benaderen door verschillende usernamen/wachtwoorden te proberen, bijvoorbeeld).
 	</DIV>
-	<DIV CLASS=\"classTooltip\" ID=\"tt403\">
+	<DIV CLASS=\"CTooltip\" ID=\"tt403\">
 	Er is gepoogd een <b>URL die is ingesteld om niet benaderbaar te zijn, zelfs met usernaam/wachtwoord</b> te benaderen (bijvoorbeeld, een URL in een directory die niet \"doorbladerbaar\" is).
 	</DIV>
-	<DIV CLASS=\"classTooltip\" ID=\"tt404\">
+	<DIV CLASS=\"CTooltip\" ID=\"tt404\">
 	Er is gepoogd een <b>niet bestaande URL</b> te benaderen. Deze fout betekent vaak dat er een ongeldige link in uw site zit of dat een bezoeker een URL foutief heeft ingevoerd.
 	</DIV>
-	<DIV CLASS=\"classTooltip\" ID=\"tt408\">
+	<DIV CLASS=\"CTooltip\" ID=\"tt408\">
 	De server heeft er <b>te lang</b> over gedaan om een antwoord op een aanvraag te geven. Het kan een CGI script zijn dat zo traag is dat de server hem heeft moeten afbreken of een overbelaste web server.
 	</DIV>
 
-	<DIV CLASS=\"classTooltip\" ID=\"tt500\">
+	<DIV CLASS=\"CTooltip\" ID=\"tt500\">
 	Interne fout. Deze error wordt vaak veroorzaakt door een CGI programma dat abnormaal is beeindigd (een core dump, bijvoorbeeld).
 	</DIV>
-	<DIV CLASS=\"classTooltip\" ID=\"tt501\">
+	<DIV CLASS=\"CTooltip\" ID=\"tt501\">
 	Onbekende actie aangevraagd.
 	</DIV>
-	<DIV CLASS=\"classTooltip\" ID=\"tt502\">
+	<DIV CLASS=\"CTooltip\" ID=\"tt502\">
 	Melding die door een proxy of gateway HTTP server wordt gegeven als een echte doelserver niet succesvol op de aanvraag van een client antwoordt.
 	</DIV>
-	<DIV CLASS=\"classTooltip\" ID=\"tt503\">
+	<DIV CLASS=\"CTooltip\" ID=\"tt503\">
 	Interne server fout.
 	</DIV>
-	<DIV CLASS=\"classTooltip\" ID=\"tt504\">
+	<DIV CLASS=\"CTooltip\" ID=\"tt504\">
 	Gateway time-out.
 	</DIV>
-	<DIV CLASS=\"classTooltip\" ID=\"tt505\">
+	<DIV CLASS=\"CTooltip\" ID=\"tt505\">
 	HTTP versie niet ondersteund.
 	</DIV>
 	";
@@ -2965,95 +2965,95 @@ if ($Lang == 2) {
 # Spanish tooltips
 if ($Lang == 3) {
 	print "
-	<DIV CLASS=\"classTooltip\" ID=\"tt1\">
+	<DIV CLASS=\"CTooltip\" ID=\"tt1\">
 	Se considera un nueva vista por <b>cada nuevo visitante</b> que consulte una página y que no haya accesado el sitio en los últimos <b>".($VisitTimeOut/10000*60)." mins.</b>.
 	</DIV>
-	<DIV CLASS=\"classTooltip\" ID=\"tt2\">
+	<DIV CLASS=\"CTooltip\" ID=\"tt2\">
 	Número de Servidores (<b>direcciones IP</b>) que entran a un sitio (y que por lo menos visitan una <b>página</b>).<br>
 	Esta cifra refleja el número de <b>personas físicas diferentes</b> que hayan accesado al sitio en un día.
 	</DIV>
-	<DIV CLASS=\"classTooltip\" ID=\"tt3\">
+	<DIV CLASS=\"CTooltip\" ID=\"tt3\">
 	Número de ocasiones que una <b>página</b> del sitio ha sido <b>vista</b> (La suma de todos los visitantes incluyendo múltiples visitas).<br>
 	Este contador se distingue de \"hits\" porque cuenta sólo las páginas HTML y no los gráficos u otros archivos o ficheros.
 	</DIV>
-	<DIV CLASS=\"classTooltip\" ID=\"tt4\">
+	<DIV CLASS=\"CTooltip\" ID=\"tt4\">
 	El número de ocasiones que una <b>página, imagen, archivo o fichero</b> de un sitio es <b>visto</b> o <b>descargado</b> por un visitante.<br>
 	Este contador sirve de referencia, pero el contador de \"páginas\" representa un dato mercadotécnico generalmente más útil y por lo tanto se recomienda.
 	</DIV>
-	<DIV CLASS=\"classTooltip\" ID=\"tt5\">
+	<DIV CLASS=\"CTooltip\" ID=\"tt5\">
 	El número de <b>kilo bytes</b> descargados por los visitantes del sitio.<br>
 	Se refiere al volumen de datos descargados por todas las <b>páginas</b>, <b>imágenes</b> y <b>archivos o ficheros</b> medidos en kilo bytes.
 	</DIV>
-	<DIV CLASS=\"classTooltip\" ID=\"tt13\">
+	<DIV CLASS=\"CTooltip\" ID=\"tt13\">
 	El programa $PROG es capaz de reconocer una visita a su sitio luego de cada <b>búsqueda</b> desde cualquiera de los <b>".(@SearchEnginesArray)." motores de búsqueda y directorios Internet</b> más populares (Yahoo, Altavista, Lycos, Google, Terra, etc...).
 	</DIV>
-	<DIV CLASS=\"classTooltip\" ID=\"tt14\">
+	<DIV CLASS=\"CTooltip\" ID=\"tt14\">
 	Lista de <b>páginas de sitios externos</b> utilizadas para acceder o enlazarse con su sitio (Sólo las <b>$MaxNbOfRefererShown</b> páginas más utilizadas se encuentras enumeradas).\n
 	Los enlaces utilizados por los motores de búsqueda o directorios son excluidos porque ya han sido contabilizados en el rubro anterior.
 	</DIV>
-	<DIV CLASS=\"classTooltip\" ID=\"tt15\">
+	<DIV CLASS=\"CTooltip\" ID=\"tt15\">
 	Esta tabla muestra la lista de las <b>palabras clave</b> más utilizadas en los motores de búsqueda y directorios Internet para encontrar su sitio.
 	(El programa $PROG reconoce palabras clave usadas en los <b>".(@SearchEnginesArray)."</b> motores de búsqueda más populares, tales como Yahoo, Altavista, Lycos, Google, Voila, Terra etc...).
 	</DIV>
-	<DIV CLASS=\"classTooltip\" ID=\"tt16\">
+	<DIV CLASS=\"CTooltip\" ID=\"tt16\">
 	Los Robots son <b>visitantes automáticos</b> que escanean o viajan por su sitio para indexarlo, o jerarquizarlo, para recopilar estadísticas de sitios Web, o para verificar si su sitio se encuentra conectado a la Red.<br>
 	El programa $PROG reconoce hasta <b>".(@RobotArray)."</b> robots.
 	</DIV>";
 
 	print "
-	<DIV CLASS=\"classTooltip\" ID=\"tt201\">
+	<DIV CLASS=\"CTooltip\" ID=\"tt201\">
 	Error sin descripción.
 	</DIV>
-	<DIV CLASS=\"classTooltip\" ID=\"tt202\">
+	<DIV CLASS=\"CTooltip\" ID=\"tt202\">
 	La solicitud ha sido computada pero el servidor la procesará más tarde.
 	</DIV>
-	<DIV CLASS=\"classTooltip\" ID=\"tt204\">
+	<DIV CLASS=\"CTooltip\" ID=\"tt204\">
 	El servidor ha procesado la solicitud pero no existen documentos para enviar.
 	</DIV>
-	<DIV CLASS=\"classTooltip\" ID=\"tt206\">
+	<DIV CLASS=\"CTooltip\" ID=\"tt206\">
 	Contenido parcial.
 	</DIV>
 
-	<DIV CLASS=\"classTooltip\" ID=\"tt301\">
+	<DIV CLASS=\"CTooltip\" ID=\"tt301\">
 	El documento solicitado ha sido reubicado y se encuentra en un URL proporcionado en la misma respuesta.
 	</DIV>
-	<DIV CLASS=\"classTooltip\" ID=\"tt302\">
+	<DIV CLASS=\"CTooltip\" ID=\"tt302\">
 	Error sin descripción.
 	</DIV>
 
-	<DIV CLASS=\"classTooltip\" ID=\"tt400\">
+	<DIV CLASS=\"CTooltip\" ID=\"tt400\">
 	Error de sintaxis, el servidor no ha comprendido su solicitud.
 	</DIV>
-	<DIV CLASS=\"classTooltip\" ID=\"tt401\">
+	<DIV CLASS=\"CTooltip\" ID=\"tt401\">
 	Número de intentos por acceder un <b>URL que exige una combinación usuario/contraseña que ha sido invalida.</b>.<br>
 	Un número de intentos muy elevado pudiera sugerir la posibilidad de que un hacker (o pirata) ha intentado entrar a una zona restringida del sitio (p.e., intentando múltiples combinaciones de usuario/contraseña).
 	</DIV>
-	<DIV CLASS=\"classTooltip\" ID=\"tt403\">
+	<DIV CLASS=\"CTooltip\" ID=\"tt403\">
 	Número de intentos por acceder un <b>URL configurado para no ser accesible, aún con una combinación usuario/contraseña</b> (p.e., un URL previamente definido como \"no navegable\").
 	</DIV>
-	<DIV CLASS=\"classTooltip\" ID=\"tt404\">
+	<DIV CLASS=\"CTooltip\" ID=\"tt404\">
 	Número de intentos por acceder un <b>URL inexistente</b>. Frecuentemente, éstos se refieren ya sea a un enlace (link) inválido o a un error mecanográfico cuando el visitante tecleó el URL equivocado.
 	</DIV>
-	<DIV CLASS=\"classTooltip\" ID=\"tt408\">
+	<DIV CLASS=\"CTooltip\" ID=\"tt408\">
 	El servidor ha tomado <b>demasiado tiempo</b> para responder a una solicitud. Frecuentemente se debe ya sea a un programa CGI muy lento, el cual tuvo que ser abandonado por el servidor, o bien por un servidor sobre-saturado.
 	</DIV>
 
-	<DIV CLASS=\"classTooltip\" ID=\"tt500\">
+	<DIV CLASS=\"CTooltip\" ID=\"tt500\">
 	Error interno. Este error generalmente es causado por una terminación anormal o prematura de un programa CGI (p.e., un CGI corrompido o dañado).
 	</DIV>
-	<DIV CLASS=\"classTooltip\" ID=\"tt501\">
+	<DIV CLASS=\"CTooltip\" ID=\"tt501\">
 	Solicitud desconocida por el servidor.
 	</DIV>
-	<DIV CLASS=\"classTooltip\" ID=\"tt502\">
+	<DIV CLASS=\"CTooltip\" ID=\"tt502\">
 	Código retornado por un servidor de protocolo HTTP el cual funge como proxy o puente (gateway) cuando el servidor objetivo no funciona o no interpreta adecuadamente la solicitud del cliente (o visitante).
 	</DIV>
-	<DIV CLASS=\"classTooltip\" ID=\"tt503\">
+	<DIV CLASS=\"CTooltip\" ID=\"tt503\">
 	Error interno del servidor.
 	</DIV>
-	<DIV CLASS=\"classTooltip\" ID=\"tt504\">
+	<DIV CLASS=\"CTooltip\" ID=\"tt504\">
 	Gateway time-out.
 	</DIV>
-	<DIV CLASS=\"classTooltip\" ID=\"tt505\">
+	<DIV CLASS=\"CTooltip\" ID=\"tt505\">
 	Versión de protocolo HTTP no soportada.
 	</DIV>
 	";
@@ -3062,71 +3062,71 @@ if ($Lang == 3) {
 # Polish tooltips
 if ($Lang == 6) {
 	print "
-	<DIV CLASS=\"classTooltip\" ID=\"tt1\">
+	<DIV CLASS=\"CTooltip\" ID=\"tt1\">
 	Wizyty ka¿dego <b>nowego go¶cia</b>, który ogl±da³ stronê i nie ³±czy³ siê z ni± przez ostatnie <b>".($VisitTimeOut/10000*60)." mn</b>.
 	</DIV>
-	<DIV CLASS=\"classTooltip\" ID=\"tt2\">
+	<DIV CLASS=\"CTooltip\" ID=\"tt2\">
 	Adres numeryczny hosta klienta (<b>tzw. adres IP</b>) odwiedzaj±cego tê stronê.<br>
 	Ten numer mo¿e byæ identyczny dla <B>kilku ró¿nych Internautów</B> którzy odwiedzili stronê tego samego dnia.
 	</DIV>
-	<DIV CLASS=\"classTooltip\" ID=\"tt3\">
+	<DIV CLASS=\"CTooltip\" ID=\"tt3\">
 	¦rednia liczba obejrzanych <B>stron</B> przypadaj±ca na jednego Internautê. (Suma go¶ci, wszystkich wizyt).<br>
 	Ten licznik ró¿ni siê od kolumny z prawej, gdy¿ zlicza on tylko strony html (bez obrazków i innych plików).
 	</DIV>
-	<DIV CLASS=\"classTooltip\" ID=\"tt4\">
+	<DIV CLASS=\"CTooltip\" ID=\"tt4\">
 	Liczba wszystkich <b>stron, obrazków, d¼wiêków, plików</b>, które zosta³y <b>obejrzane</b> lub <b>¶ci±gniête</b> przez kogo¶.<br>
 	Warto¶æ jest jedynie orientacyjna, zaleca siê spogl±daæ na licznik \"strony\".
 	</DIV>
-	<DIV CLASS=\"classTooltip\" ID=\"tt5\">
+	<DIV CLASS=\"CTooltip\" ID=\"tt5\">
 	Liczba <b>kilobajtów</b> ¶ci±gniêtych przez Internautów.<br>
 	Jest to suma wszystkich ¶ci±gniêtych danych <B>(strony html, obrazki, d¼wiêki)</B>.
 	</DIV>
-	<DIV CLASS=\"classTooltip\" ID=\"tt13\">
+	<DIV CLASS=\"CTooltip\" ID=\"tt13\">
 	$PROG rozró¿nia dostêp do stron <b>z zagranicznych wyszukiwarek</b> dziêki <b>".(@SearchEnginesArray)." najpopularniejszym przegl±darkom internetowym</b> (Yahoo, Altavista, Lycos, Google, Voila, etc...).
 	</DIV>
-	<DIV CLASS=\"classTooltip\" ID=\"tt14\">
+	<DIV CLASS=\"CTooltip\" ID=\"tt14\">
 	Lista wszystkich <b>stron spoza serwera</b> z których trafiono na ten serwer (wy¶wietlanych jest <b>$MaxNbOfRefererShown</b> stron z których najczê¶ciej siê odwo³ywano.\n
 	</DIV>
-	<DIV CLASS=\"classTooltip\" ID=\"tt15\">
+	<DIV CLASS=\"CTooltip\" ID=\"tt15\">
 	Ta kolumna pokazuje listê najczê¶ciej u¿ywanych <b>s³ów kluczowych</b>, dziêki którym znaleziono t± stronê w wyszukiwarkach.
 	($PROG rozró¿nia zapytania s³ów kluczowych z <b>".(@SearchEnginesArray)."</b> najpopularniejszych wyszukiwarek, takich jak Yahoo, Altavista, Lycos, Google, Voila, etc...).
 	</DIV>
-	<DIV CLASS=\"classTooltip\" ID=\"tt16\">
+	<DIV CLASS=\"CTooltip\" ID=\"tt16\">
 	Roboty s± <b>programami sieciowymi</b> skanuj±cymi strony w celu zebrania/aktualizacji danych (np. s³owa kluczowe do wyszukiwarek), lub sprawdzaj±cymi czy strona nadal istnieje w sieci.<br>
 	$PROG rozró¿nia obecnie <b>".(@RobotArray)."</b> robów.
 	</DIV>";
 
 	print "
-	<DIV CLASS=\"classTooltip\" ID=\"tt201\"> Zlecenie POST zosta³o zrealizowane pomy¶lnie. </DIV>
-	<DIV CLASS=\"classTooltip\" ID=\"tt202\"> ¯±danie zosta³o odebrane poprawnie, lecz jeszcze siê nie zakoñczy³o. </DIV>
-	<DIV CLASS=\"classTooltip\" ID=\"tt203\"> Zwrócona informacja na temat obiektu jest nieaktualna. </DIV>
-	<DIV CLASS=\"classTooltip\" ID=\"tt204\"> Serwer przetworzy³ ¿±danie, lecz nie posiada ¿adnych danych do wys³ania. </DIV>
-	<DIV CLASS=\"classTooltip\" ID=\"tt206\"> Czê¶ciowa zawarto¶æ.</DIV>
-	<DIV CLASS=\"classTooltip\" ID=\"tt301\"> Dokument zosta³ przeniesiony pod inny adres.</DIV>
-	<DIV CLASS=\"classTooltip\" ID=\"tt302\"> Dokument zosta³ czasowo przeniesiony pod iiny adres.</DIV>
-	<DIV CLASS=\"classTooltip\" ID=\"tt303\"> W celu pobrania dokumentu konieczne jest sprawdzenie innego URL-a. </DIV>
-	<DIV CLASS=\"classTooltip\" ID=\"tt400\"> Zlecenie by³o b³êdne, lub niemo¿liwe do zrealizowania przez serwer.<BR>B³±d powstaje wtedy, kiedy serwer WWW otrzymuje do wykonania instrukcjê, której nie rozumie.</DIV>
-	<DIV CLASS=\"classTooltip\" ID=\"tt401\"> B³±d autoryzacji. Strona wymaga podania has³a i loginu - b³±d pokazuje siê wtedy, gdy które¶ z tych danych siê nie zgadza lub zosta³y podane niew³a¶ciwiwe.<BR>Je¶li liczba ta jest du¿a, jest to sygna³ dla webmastera, i¿ kto¶ próbuje z³amaæ has³o do strony nim zabezpieczonej.</DIV>
-	<DIV CLASS=\"classTooltip\" ID=\"tt403\"> B³±d wystêpuje wtedy, gdy katalog/strona do którego siê odwo³ywano nie ma ustawionych w³a¶ciwych praw dostêpu, lub prawa te nie pozwalaj± na obejrzenie zawarto¶ci katalogu/strony.</DIV>
-	<DIV CLASS=\"classTooltip\" ID=\"tt404\"> Spróbuj wpisaæ <b>nie istniej±cy adres URL</b> (np. adres tej strony ze skasowan± jedn± literk±). Znaczy to, ¿e posiadasz gdzie¶ na swoich stronach b³êdny link, lub link odnosz±cy siê do nieistniej±cej strony.</DIV>
-	<DIV CLASS=\"classTooltip\" ID=\"tt405\"> Metoda wskazana w <B>nag³ówku ¿±dania</B> jest niedozwolona przy odnoszeniu siê do zasobu, na który wskazuje. </DIV>
-	<DIV CLASS=\"classTooltip\" ID=\"tt406\"> Zasób identyfikowany przez ¿±danie jest generuje odpowiedzi zawieraj±ce charakterystyczn± zawarto¶æ nie akceptowaln± wed³ug nag³ówka ¿±dania. </DIV>
-	<DIV CLASS=\"classTooltip\" ID=\"tt407\"> Kod podobny do Error 401 (brak autoryzacji), lecz nakazuje on, i¿ musisz dokonaæ wpierw <B>autoryzacji na serwerze proxy</B> (serwer proxy wysy³a wtedy do strony nag³ówek <B>Proxy-Authentificate</B>, dziêki któremu autoryzacja jest mo¿liwa). </DIV>
-	<DIV CLASS=\"classTooltip\" ID=\"tt408\"> Przegl±darka nie wys³a³a ¿±dañ do serwera w czasie jego oczekiwania. Mo¿esz powtórzyæ ¿±danie bez jego modyfikacji w czasie pó¼niejszym. </DIV>
-	<DIV CLASS=\"classTooltip\" ID=\"tt409\"> ¯±danie nie mog³o zostaæ spe³nione, poniewa¿ wyst±pi³ konflikt stanu ¿±danego obiektu. </DIV>
-	<DIV CLASS=\"classTooltip\" ID=\"tt410\"> Dosyæ ciekawy b³±d - jeszcze siê z nim nie spotka³em. B³±d jest wy¶wietlany, gdy <B>trwale uzuniêto stronê</B> i jej autorzy chc± o tym fakcie poinformowaæ (zazwyczaj praktykuje siê kasacjê konta bez uprzedzenia :). Oznacza to, i¿ inni webmasterzy powinni usun±æ na swoich stronach odwo³ania do strony z Error410. </DIV>
-	<DIV CLASS=\"classTooltip\" ID=\"tt411\"> Serwer odrzuci³ ¿adanie poniewa¿ nie zawiera³o ono nag³ówka <B>Content-Length</B>. </DIV>
-	<DIV CLASS=\"classTooltip\" ID=\"tt412\"> Jeden lub wiêcej <B>warunków</B> przes³anych w <b>nag³ówku ¿±dania</b> nie spe³ni³ warunków i zosta³ odrzucony (np. gdy wa¿no¶æ strony okre¶lona w nag³ówku <B>Expiration</B> wygas³a). </DIV>
-	<DIV CLASS=\"classTooltip\" ID=\"tt413\"> Serwer odrzuci³ ¿±danie poniewa¿ dane wejsciowe s± zbyt du¿e ni¿ mo¿na je obs³u¿yæ (np. przy próbie wys³ania przez formularz pliku o du¿ej objêto¶ci). Serwer zakoñczy po³±czenie w celu ochrony klienta.</DIV>
-	<DIV CLASS=\"classTooltip\" ID=\"tt414\"> Serwer odrzuci³ ¿±danie, poniewa¿ <B>URI</B> zasobu jest d³u¿sze ni¿ serwer mo¿e zinterpretowaæ.</DIV>
-	<DIV CLASS=\"classTooltip\" ID=\"tt415\"> Serwer odrzuci³ ¿±danie, poniewa¿ ¿±danie jest w formacie nie obs³ugiwanym przez serwer.</DIV>
-	<DIV CLASS=\"classTooltip\" ID=\"tt408\"> Serwer czeka³ <b>zbyt d³ugo</b> na odpowied¼. Prawdopodobnie skrypt CGI pracuje zbyt wolno (ma za du¿o danych do przetworzenia). </DIV>
-	<DIV CLASS=\"classTooltip\" ID=\"tt500\"> B³±d wewnêtrzny. Ten b³±d czêsto pojawia siê, gdy aplikacja CGI nie zakoñczy³a siê normalnie (podobno ka¿dy program zawiera przynajmniej jeden b³±d...:-). </DIV>
-	<DIV CLASS=\"classTooltip\" ID=\"tt501\"> Serwer nie umo¿liwia obs³ugi mechanizmu. </DIV>
-	<DIV CLASS=\"classTooltip\" ID=\"tt502\"> Serwer jest chwilowo przeci±¿ony i nie mo¿e obs³u¿yæ zlecenia.</DIV>
-	<DIV CLASS=\"classTooltip\" ID=\"tt503\"> Serwer zdecydowa³ siê przerwaæ oczekiwanie na inny zasób lub us³ugê, i z tego powodu nie móg³ obs³u¿yæ zlecenia.</DIV>
-	<DIV CLASS=\"classTooltip\" ID=\"tt504\"> Serwer docelowy nie otrzyma³ odpowiedzi od serwera proxy, lub bramki.</DIV>
-	<DIV CLASS=\"classTooltip\" ID=\"tt505\"> Nie obs³ugiwana wesja protoko³u HTTP. </DIV>
+	<DIV CLASS=\"CTooltip\" ID=\"tt201\"> Zlecenie POST zosta³o zrealizowane pomy¶lnie. </DIV>
+	<DIV CLASS=\"CTooltip\" ID=\"tt202\"> ¯±danie zosta³o odebrane poprawnie, lecz jeszcze siê nie zakoñczy³o. </DIV>
+	<DIV CLASS=\"CTooltip\" ID=\"tt203\"> Zwrócona informacja na temat obiektu jest nieaktualna. </DIV>
+	<DIV CLASS=\"CTooltip\" ID=\"tt204\"> Serwer przetworzy³ ¿±danie, lecz nie posiada ¿adnych danych do wys³ania. </DIV>
+	<DIV CLASS=\"CTooltip\" ID=\"tt206\"> Czê¶ciowa zawarto¶æ.</DIV>
+	<DIV CLASS=\"CTooltip\" ID=\"tt301\"> Dokument zosta³ przeniesiony pod inny adres.</DIV>
+	<DIV CLASS=\"CTooltip\" ID=\"tt302\"> Dokument zosta³ czasowo przeniesiony pod iiny adres.</DIV>
+	<DIV CLASS=\"CTooltip\" ID=\"tt303\"> W celu pobrania dokumentu konieczne jest sprawdzenie innego URL-a. </DIV>
+	<DIV CLASS=\"CTooltip\" ID=\"tt400\"> Zlecenie by³o b³êdne, lub niemo¿liwe do zrealizowania przez serwer.<BR>B³±d powstaje wtedy, kiedy serwer WWW otrzymuje do wykonania instrukcjê, której nie rozumie.</DIV>
+	<DIV CLASS=\"CTooltip\" ID=\"tt401\"> B³±d autoryzacji. Strona wymaga podania has³a i loginu - b³±d pokazuje siê wtedy, gdy które¶ z tych danych siê nie zgadza lub zosta³y podane niew³a¶ciwiwe.<BR>Je¶li liczba ta jest du¿a, jest to sygna³ dla webmastera, i¿ kto¶ próbuje z³amaæ has³o do strony nim zabezpieczonej.</DIV>
+	<DIV CLASS=\"CTooltip\" ID=\"tt403\"> B³±d wystêpuje wtedy, gdy katalog/strona do którego siê odwo³ywano nie ma ustawionych w³a¶ciwych praw dostêpu, lub prawa te nie pozwalaj± na obejrzenie zawarto¶ci katalogu/strony.</DIV>
+	<DIV CLASS=\"CTooltip\" ID=\"tt404\"> Spróbuj wpisaæ <b>nie istniej±cy adres URL</b> (np. adres tej strony ze skasowan± jedn± literk±). Znaczy to, ¿e posiadasz gdzie¶ na swoich stronach b³êdny link, lub link odnosz±cy siê do nieistniej±cej strony.</DIV>
+	<DIV CLASS=\"CTooltip\" ID=\"tt405\"> Metoda wskazana w <B>nag³ówku ¿±dania</B> jest niedozwolona przy odnoszeniu siê do zasobu, na który wskazuje. </DIV>
+	<DIV CLASS=\"CTooltip\" ID=\"tt406\"> Zasób identyfikowany przez ¿±danie jest generuje odpowiedzi zawieraj±ce charakterystyczn± zawarto¶æ nie akceptowaln± wed³ug nag³ówka ¿±dania. </DIV>
+	<DIV CLASS=\"CTooltip\" ID=\"tt407\"> Kod podobny do Error 401 (brak autoryzacji), lecz nakazuje on, i¿ musisz dokonaæ wpierw <B>autoryzacji na serwerze proxy</B> (serwer proxy wysy³a wtedy do strony nag³ówek <B>Proxy-Authentificate</B>, dziêki któremu autoryzacja jest mo¿liwa). </DIV>
+	<DIV CLASS=\"CTooltip\" ID=\"tt408\"> Przegl±darka nie wys³a³a ¿±dañ do serwera w czasie jego oczekiwania. Mo¿esz powtórzyæ ¿±danie bez jego modyfikacji w czasie pó¼niejszym. </DIV>
+	<DIV CLASS=\"CTooltip\" ID=\"tt409\"> ¯±danie nie mog³o zostaæ spe³nione, poniewa¿ wyst±pi³ konflikt stanu ¿±danego obiektu. </DIV>
+	<DIV CLASS=\"CTooltip\" ID=\"tt410\"> Dosyæ ciekawy b³±d - jeszcze siê z nim nie spotka³em. B³±d jest wy¶wietlany, gdy <B>trwale uzuniêto stronê</B> i jej autorzy chc± o tym fakcie poinformowaæ (zazwyczaj praktykuje siê kasacjê konta bez uprzedzenia :). Oznacza to, i¿ inni webmasterzy powinni usun±æ na swoich stronach odwo³ania do strony z Error410. </DIV>
+	<DIV CLASS=\"CTooltip\" ID=\"tt411\"> Serwer odrzuci³ ¿adanie poniewa¿ nie zawiera³o ono nag³ówka <B>Content-Length</B>. </DIV>
+	<DIV CLASS=\"CTooltip\" ID=\"tt412\"> Jeden lub wiêcej <B>warunków</B> przes³anych w <b>nag³ówku ¿±dania</b> nie spe³ni³ warunków i zosta³ odrzucony (np. gdy wa¿no¶æ strony okre¶lona w nag³ówku <B>Expiration</B> wygas³a). </DIV>
+	<DIV CLASS=\"CTooltip\" ID=\"tt413\"> Serwer odrzuci³ ¿±danie poniewa¿ dane wejsciowe s± zbyt du¿e ni¿ mo¿na je obs³u¿yæ (np. przy próbie wys³ania przez formularz pliku o du¿ej objêto¶ci). Serwer zakoñczy po³±czenie w celu ochrony klienta.</DIV>
+	<DIV CLASS=\"CTooltip\" ID=\"tt414\"> Serwer odrzuci³ ¿±danie, poniewa¿ <B>URI</B> zasobu jest d³u¿sze ni¿ serwer mo¿e zinterpretowaæ.</DIV>
+	<DIV CLASS=\"CTooltip\" ID=\"tt415\"> Serwer odrzuci³ ¿±danie, poniewa¿ ¿±danie jest w formacie nie obs³ugiwanym przez serwer.</DIV>
+	<DIV CLASS=\"CTooltip\" ID=\"tt408\"> Serwer czeka³ <b>zbyt d³ugo</b> na odpowied¼. Prawdopodobnie skrypt CGI pracuje zbyt wolno (ma za du¿o danych do przetworzenia). </DIV>
+	<DIV CLASS=\"CTooltip\" ID=\"tt500\"> B³±d wewnêtrzny. Ten b³±d czêsto pojawia siê, gdy aplikacja CGI nie zakoñczy³a siê normalnie (podobno ka¿dy program zawiera przynajmniej jeden b³±d...:-). </DIV>
+	<DIV CLASS=\"CTooltip\" ID=\"tt501\"> Serwer nie umo¿liwia obs³ugi mechanizmu. </DIV>
+	<DIV CLASS=\"CTooltip\" ID=\"tt502\"> Serwer jest chwilowo przeci±¿ony i nie mo¿e obs³u¿yæ zlecenia.</DIV>
+	<DIV CLASS=\"CTooltip\" ID=\"tt503\"> Serwer zdecydowa³ siê przerwaæ oczekiwanie na inny zasób lub us³ugê, i z tego powodu nie móg³ obs³u¿yæ zlecenia.</DIV>
+	<DIV CLASS=\"CTooltip\" ID=\"tt504\"> Serwer docelowy nie otrzyma³ odpowiedzi od serwera proxy, lub bramki.</DIV>
+	<DIV CLASS=\"CTooltip\" ID=\"tt505\"> Nie obs³ugiwana wesja protoko³u HTTP. </DIV>
 	";
 }
 
@@ -3159,8 +3159,8 @@ print "
 print "$CENTER<a name=\"MENU\"></a><BR>";
 
 print "<table>";
-print "<tr><td class=LEFT colspan=2><font size=1><b>$message[7][$Lang] : </b> $LocalSite</font></td></tr>";
-print "<tr><td class=LEFT><font size=1><b>Last update : </b>";
+print "<tr><td class=LEFT colspan=2><font style=\"font: 14px arial,verdana,helvetica; font-weight: bold\">$message[7][$Lang] : <font style=\"font: 14px arial,verdana,helvetica; font-weight: normal\">$LocalSite</td></tr>";
+print "<tr><td class=LEFT style=\"font: 14px arial,verdana,helvetica; font-weight: bold\">Last update : <font style=\"font: 14px arial,verdana,helvetica; font-weight: normal\">";
 foreach $key (keys %LastUpdate) { if ($LastUpdate < $LastUpdate{$key}) { $LastUpdate = $LastUpdate{$key}; } }
 $yearcon=substr($LastUpdate,0,4);$monthcon=substr($LastUpdate,4,2);$daycon=substr($LastUpdate,6,2);$hourcon=substr($LastUpdate,8,2);$mincon=substr($LastUpdate,10,2);
 if ($LastUpdate != 0) { print "$daycon&nbsp;$monthlib{$monthcon}&nbsp;$yearcon&nbsp;-&nbsp;$hourcon:$mincon"; }
