@@ -281,6 +281,7 @@ print "Read the AWStats documentation (docs/index.html).\n";
 # Detect OS type
 # --------------
 if (-d "/etc" && -d "/home") { $OS='linux'; $CR=''; }
+elsif (-d "/etc" && -d "/Users") { $OS='macosx'; $CR=''; }
 else { $OS='windows'; $CR="\r"; }
 #print "Running OS detected: $OS (Perl $^[)\n";
 print "\n-----> Running OS detected: $OS\n";
@@ -296,6 +297,31 @@ if ($OS eq 'linux') {
 		print "$AWSTATS_PATH\n";
 		print "to standard directory:\n";
 		print "/usr/local/awstats\n";
+		print "And then, run configure.pl from this location.\n";
+		print "Do you want to continue setup from this NON standard directory [yN] ? ";
+		my $bidon='';
+		while ($bidon !~ /^[yN]/i) { $bidon=<STDIN>; }
+		if ($bidon !~ /^y/i) {
+			print "configure.pl aborted.\n";
+			exit 1;
+		}
+		$AWSTATS_ICON_PATH="$AWSTATS_PATH/wwwroot/icon";
+		$AWSTATS_CSS_PATH="$AWSTATS_PATH/wwwroot/css";
+		$AWSTATS_CLASSES_PATH="$AWSTATS_PATH/wwwroot/classes";
+		$AWSTATS_CGI_PATH="$AWSTATS_PATH/wwwroot/cgi-bin";
+	}
+}
+elsif ($OS eq 'macosx') {
+	$AWSTATS_PATH=`pwd`; $AWSTATS_PATH =~ s/[\r\n]//;
+	$AWSTATS_PATH=~s/tools[\\\/]?$//;
+	$AWSTATS_PATH=~s/[\\\/]$//;
+	if ($AWSTATS_PATH ne '/Library/WebServer/awstats') {
+		print "Warning: AWStats standard directory on Mac OS X is '/Library/WebServer/awstats'.\n";
+		print "If you want to use standard directory, you should first move all content\n";
+		print "of AWStats distribution from current directory:\n";
+		print "$AWSTATS_PATH\n";
+		print "to standard directory:\n";
+		print "/Library/WebServer/awstats\n";
 		print "And then, run configure.pl from this location.\n";
 		print "Do you want to continue setup from this NON standard directory [yN] ? ";
 		my $bidon='';
@@ -327,7 +353,7 @@ print "\n-----> Check for web server install\n";
 my %ApachePath=();		# All Apache path found
 my %ApacheConfPath=();	# All Apache config found
 my $tips;
-if ($OS eq 'linux') {
+if ($OS eq 'linux' || $OS eq 'macosx') {
 	my $found=0;
 	foreach my $conf (@WEBCONF) {
 		if (-s "$conf") {
@@ -501,6 +527,9 @@ if ($OS eq 'linux') 		{
 		$modelfile="$AWSTATS_MODEL_CONFIG";	
 	}
 }
+elsif ($OS eq "macosx") 		{ 
+	$modelfile="$AWSTATS_PATH/wwwroot/cgi-bin/awstats.model.conf";
+}
 elsif ($OS eq 'windows')	{ $modelfile="$AWSTATS_PATH\\wwwroot\\cgi-bin\\awstats.model.conf"; }
 else						{ $modelfile="$AWSTATS_PATH\\wwwroot\\cgi-bin\\awstats.model.conf"; }
 
@@ -508,7 +537,7 @@ else						{ $modelfile="$AWSTATS_PATH\\wwwroot\\cgi-bin\\awstats.model.conf"; }
 # ------------------------
 print "\n-----> Update model config file '$modelfile'\n";
 %ConfToChange=();
-if ($OS eq 'linux') 	 { $ConfToChange{'DirData'}="$AWSTATS_DIRDATA_PATH"; }
+if ($OS eq 'linux' || $OS eq "macosx") 	 { $ConfToChange{'DirData'}="$AWSTATS_DIRDATA_PATH"; }
 elsif ($OS eq 'windows') { $ConfToChange{'DirData'}='.'; }
 else					 { $ConfToChange{'DirData'}='.'; }
 if ($UseAlias) {
@@ -547,6 +576,7 @@ if ($bidon =~ /^y/i) {
 	# Define config file path
 	# -----------------------
 	if ($OS eq 'linux') 		{ $configfile="/etc/awstats/awstats.$site.conf"; }
+	elsif ($OS eq "macosx") 	{ $configfile="$AWSTATS_PATH/wwwroot/cgi-bin/awstats.$site.conf"; }
 	elsif ($OS eq 'windows') 	{ $configfile="$AWSTATS_PATH\\wwwroot\\cgi-bin\\awstats.$site.conf"; }
 	else 						{ $configfile="$AWSTATS_PATH\\wwwroot\\cgi-bin\\awstats.$site.conf"; }
 
@@ -561,7 +591,7 @@ if ($bidon =~ /^y/i) {
 	if (-s $configfile) { print "  Config file already exists. No overwrite possible on existing config files.\n"; }
 	else {
 		%ConfToChange=();
-		if ($OS eq 'linux') { $ConfToChange{'DirData'}="$AWSTATS_DIRDATA_PATH"; }
+		if ($OS eq 'linux' || $OS eq "macosx") { $ConfToChange{'DirData'}="$AWSTATS_DIRDATA_PATH"; }
 		if ($OS eq 'windows') { $ConfToChange{'DirData'}='.'; }
 		if ($UseAlias) {
 			$ConfToChange{'DirCgi'}='/awstats';
@@ -582,6 +612,11 @@ if ($WebServerChanged) {
 	if ($OS eq 'linux') 	{
 		print "\n-----> Restart Apache with '/sbin/service httpd restart'\n";
 	 	my $ret=`/sbin/service httpd restart`;
+	 	print "$ret";
+	}
+	elsif ($OS eq 'macosx')	{
+		print "\n-----> Restart Apache with '/usr/sbin/apachectl restart'\n";
+	 	my $ret=`/usr/sbin/apachectl restart`;
 	 	print "$ret";
 	}
 	elsif ($OS eq 'windows')	{
@@ -615,7 +650,7 @@ if ($WebServerChanged) {
 # Schedule awstats update process
 # -------------------------------
 print "\n-----> Add update process inside a scheduler\n";
-if ($OS eq 'linux') {
+if ($OS eq 'linux' || $OS eq "macosx") {
 	print "Sorry, configure.pl does not support automatic add to cron yet.\n";
 	print "You can do it manually by adding the following command to your cron:\n";
 	print "$AWSTATS_CGI_PATH/awstats -update -config=".($site?$site:"myvirtualserver")."\n";
