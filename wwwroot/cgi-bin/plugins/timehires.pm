@@ -10,21 +10,41 @@
 
 use Time::HiRes qw( gettimeofday );
 use strict;no strict "refs";
-$Plugin_timehires=1;
 
 
 
 #-----------------------------------------------------------------------------
-# PLUGIN GLOBAL VARIABLES
+# PLUGIN VARIABLES
 #-----------------------------------------------------------------------------
+my $Plugin_need_awstats_version=5001;
 #...
+
+
+
+#-----------------------------------------------------------------------------
+# PLUGIN Init_check_Version FUNCTION
+#-----------------------------------------------------------------------------
+sub Init_timehires_Check_Version {
+	my $AWStats_Version=shift;
+	if (! $Plugin_need_awstats_version) { return 0; }
+	$AWStats_Version =~ /^(\d+)\.(\d+)/;
+	my $versionnum=($1*1000)+$2;
+	if 	($Plugin_need_awstats_version > $versionnum) {
+		my $maj=int($Plugin_need_awstats_version/1000);
+		my $min=$Plugin_need_awstats_version % 1000;
+		return "Error: AWStats version $maj.$min or higher is required.";
+	}
+	return 0;
+}
 
 
 #-----------------------------------------------------------------------------
 # PLUGIN Init_pluginname FUNCTION
 #-----------------------------------------------------------------------------
 sub Init_timehires {
-	return 1;
+	my $AWStats_Version=shift;
+	my $checkversion=Init_timehires_Check_Version($AWStats_Version);
+	return ($checkversion?$checkversion:1);
 }
 
 

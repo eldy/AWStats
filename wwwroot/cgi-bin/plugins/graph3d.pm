@@ -8,22 +8,37 @@
 # $Revision$ - $Author$ - $Date$
 
 
-use GD::Graph3D;
-$PluginGraph3D=1;
+use GD::Graph3d;
 
 
 
 #-----------------------------------------------------------------------------
 # PLUGIN GLOBAL VARIABLES
 #-----------------------------------------------------------------------------
+my $Plugin_need_awstats_version=5001;
 #...
+
+
+#-----------------------------------------------------------------------------
+# PLUGIN Init_check_Version FUNCTION
+#-----------------------------------------------------------------------------
+sub Init_graph3d_Check_Version {
+	if (! $Plugin_need_awstats_version) { return 0; }
+	$VERSION =~ /^(\d+)\.(\d+)/;
+	my $versionnum=($1*1000)+$2;
+	if 	($Plugin_need_awstats_version < $versionnum) {
+		return "Error: AWStats version $Plugin_need_awstats_version or higher is required.";
+	}
+	return 0;
+}
 
 
 #-----------------------------------------------------------------------------
 # PLUGIN Init_pluginname FUNCTION
 #-----------------------------------------------------------------------------
 sub Init_graph3d {
-	return 1;
+	my $checkversion=Init_timehires_Check_Version();
+	return ($checkversion?$checkversion:1);
 }
 
 

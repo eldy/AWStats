@@ -11,22 +11,43 @@
 
 use Storable;
 use strict;no strict "refs";
-$Plugin_hashfiles=1;
 
 
 
 #-----------------------------------------------------------------------------
-# PLUGIN GLOBAL VARIABLES
+# PLUGIN VARIABLES
 #-----------------------------------------------------------------------------
-use vars qw/ $hashfileuptodate /;
+my $Plugin_need_awstats_version=5001;
+use vars qw/
+$hashfileuptodate
+/;
+#...
 
+
+#-----------------------------------------------------------------------------
+# PLUGIN Init_check_Version FUNCTION
+#-----------------------------------------------------------------------------
+sub Init_hashfiles_Check_Version {
+	my $AWStats_Version=shift;
+	if (! $Plugin_need_awstats_version) { return 0; }
+	$AWStats_Version =~ /^(\d+)\.(\d+)/;
+	my $versionnum=($1*1000)+$2;
+	if 	($Plugin_need_awstats_version > $versionnum) {
+		my $maj=int($Plugin_need_awstats_version/1000);
+		my $min=$Plugin_need_awstats_version % 1000;
+		return "Error: AWStats version $maj.$min or higher is required.";
+	}
+	return 0;
+}
 
 #-----------------------------------------------------------------------------
 # PLUGIN Init_pluginname FUNCTION
 #-----------------------------------------------------------------------------
 sub Init_hashfiles {
+	my $AWStats_Version=shift;
 	$hashfileuptodate=1;
-	return 1;
+	my $checkversion=Init_hashfiles_Check_Version($AWStats_Version);
+	return ($checkversion?$checkversion:1);
 }
 
 
