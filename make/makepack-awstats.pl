@@ -72,7 +72,6 @@ if (! $TEMP || ! -d $TEMP) {
     exit 2;
 } 
 $BUILDROOT="$TEMP/buildroot";
-$BUILDROOT="c:/temp/buildroot";
 
 
 
