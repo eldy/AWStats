@@ -3306,9 +3306,6 @@ sub Save_History {
 			print HISTORYTMP "\n";
 			print HISTORYTMP "# Extra sections...\n";
 	 		print HISTORYTMP "BEGIN_EXTRA_$extranum\n";
-	 		foreach my $key (keys %{'_section_' . $extranum . '_h'} ) { 
-	 			print "$key xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx";
-	 		}
 	 		&BuildKeyList($MaxNbOfExtra[$extranum],$MinHitExtra[$extranum],\%{'_section_' . $extranum . '_h'},\%{'_section_' . $extranum . '_p'});
 	 		%keysinkeylist=();
 	 		foreach my $key (@keylist) {
