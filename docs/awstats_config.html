@@ -290,7 +290,7 @@ when reading it), follow the example:<br>
 <br># Possible values:
 <br>#  0 No DNS Lookup
 <br>#  1 DNS Lookup is fully enabled
-<br>#  2 DNS Lookup is made only from DNS cache file
+<br>#  2 DNS Lookup is made only from DNS cache files
 <br># Default: 2
 <br># 
 <br>DNSLookup=2
@@ -397,7 +397,8 @@ when reading it), follow the example:<br>
 <br># previously created manually. If no path is gave in static DNS cache file
 <br># name, AWStats will search DirData directory. This file is never changed.
 <br># This option is not used if DNSLookup=0.
-<br># Note: DNS cache file must have format:  ipaddress  resolved_hostname
+<br># Note: DNS cache file format is 'minsince1970 ipaddress resolved_hostname'
+<br># or just 'ipaddress resolved_hostname'
 <br># Example: "/mydnscachedir/dnscache"
 <br># Default: "dnscache.txt"
 <br>#
