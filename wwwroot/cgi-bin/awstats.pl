@@ -4911,6 +4911,9 @@ my @AllowedCLIArgs=('migrate','config',
 'pluginmode','filterrawlog');
 
 $QueryString='';
+# AWStats use GATEWAY_INTERFACE to known if ran as CLI or CGI. AWSTATS_DEL_GATEWAY_INTERFACE can
+# be set to force AWStats to be ran as CLI even from a web page
+if ($ENV{'AWSTATS_DEL_GATEWAY_INTERFACE'}) { $ENV{'GATEWAY_INTERFACE'}=''; }
 if ($ENV{'GATEWAY_INTERFACE'}) {	# Run from a browser as CGI
 	print "Content-type: text/html\n";
 	# Expires must be GMT ANSI asctime and must be after Content-type to avoid pb with some servers (SAMBAR)
@@ -5018,7 +5021,7 @@ if ($QueryString =~ /(^|&)output(=[^&]*|)(&|$)/i) {
 			if ($outputparam) { $HTMLOutput{lc($outputparam)}="$1"||1; }
 		}
 	}
-	# If output with no update, on command line
+	# If on command line and no update
 	if (! $ENV{'GATEWAY_INTERFACE'} && $QueryString !~ /update/i) { $UpdateStats=0; }
 	# If no output defined, used default value
 	if (! scalar keys %HTMLOutput) { $HTMLOutput{'main'}=1; }
