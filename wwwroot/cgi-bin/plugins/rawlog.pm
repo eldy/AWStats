@@ -60,8 +60,8 @@ sub Init_rawlog {
 #-----------------------------------------------------------------------------
 sub AddHTMLBodyHeader_rawlog {
 	# <-----
-	# Show form
-	&_ShowForm('');
+	# Show form only if option -staticlinks not used
+	if (! $StaticLinks) { &_ShowForm(''); }
 	return 1;
 	# ----->
 }

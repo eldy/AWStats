@@ -48,6 +48,7 @@ $DebugResetDone $DNSLookupAlreadyDone
 $RunAsCli $UpdateFor $lowerval
 $LastLine $LastLineNumber $LastLineOffset $LastLineChecksum
 $LastUpdate
+$PluginMode
 $TotalUnique $TotalVisits $TotalHostsKnown $TotalHostsUnknown
 $TotalPages $TotalHits $TotalBytes $TotalEntries $TotalExits $TotalBytesPages $TotalDifferentPages
 $TotalKeyphrases $TotalKeywords $TotalDifferentKeyphrases $TotalDifferentKeywords
@@ -66,6 +67,7 @@ $RunAsCli = 0; $UpdateFor=0;
 $lowerval = 0;
 $LastLine = $LastLineNumber = $LastLineOffset = $LastLineChecksum = 0;
 $LastUpdate = 0;
+$PluginMode = '';
 $TotalUnique = $TotalVisits = $TotalHostsKnown = $TotalHostsUnknown = 0;
 $TotalPages = $TotalHits = $TotalBytes = $TotalEntries = $TotalExits = $TotalBytesPages = $TotalDifferentPages = 0;
 $TotalKeyphrases = $TotalKeywords = $TotalDifferentKeyphrases = $TotalDifferentKeywords = 0;
@@ -541,12 +543,12 @@ use vars qw/ @Message /;
 #------------------------------------------------------------------------------
 # Function:		Write on ouput header of HTML page
 # Parameters:	None
-# Input:		%HTMLOutput $Expires $Lang $StyleSheet $HTMLHeadSection $PageCode
+# Input:		%HTMLOutput $PluginMode $Expires $Lang $StyleSheet $HTMLHeadSection $PageCode
 # Output:		None
 # Return:		None
 #------------------------------------------------------------------------------
 sub html_head {
-	if (scalar keys %HTMLOutput) {
+	if (scalar keys %HTMLOutput || $PluginMode) {
 		my $AllowIndex=0;
 		# Write head section
 		if ($FrameName ne 'index') { print "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">\n\n";  }
@@ -1692,6 +1694,7 @@ sub Read_Plugins {
 					# Do not load "output plugins" if update only
 					if ($UpdateStats && ! scalar keys %HTMLOutput && $pluginisfor{$pluginname} !~ /u/) { $PluginsLoaded{'init'}{"$pluginname"}=1; next; }
 				}
+				else { $PluginsLoaded{'init'}{"$pluginname"}=1; }	# Unkown plugins always loaded
 				# Load plugin
 				foreach my $dir (@PossiblePluginsDir) {
 					my $searchdir=$dir;
@@ -4631,13 +4634,16 @@ if ($tomorrowmin < 10) { $tomorrowmin = "0$tomorrowmin"; }
 if ($tomorrowsec < 10) { $tomorrowsec = "0$tomorrowsec"; }
 $tomorrowtime=int($tomorrowyear.$tomorrowmonth.$tomorrowday.$tomorrowhour.$tomorrowmin.$tomorrowsec);
 
-my @AllowedArgs=('migrate','config',
+# Allowed option
+my @AllowedCLIArgs=('migrate','config',
 'logfile','output','runascli','update',
 'staticlinks','staticlinksext','noloadplugin',
 'hostfilter','urlfilter','refererpagesfilter',
 'lang','month','year','framename','debug',
 'showsteps','showdropped','showcorrupted','showunknownorigin',
-'limitflush','confdir','updatefor');
+'limitflush','confdir','updatefor',
+'hostfilter','hostfilterex','urlfilter','urlfilterex','refererpagesfilter','refererpagesfilterex',
+'pluginmode','filterrawlog');
 
 $QueryString='';
 if ($ENV{'GATEWAY_INTERFACE'}) {	# Run from a browser as CGI
@@ -4673,6 +4679,8 @@ if ($ENV{'GATEWAY_INTERFACE'}) {	# Run from a browser as CGI
 	if ($QueryString =~ /output=lasthosts:([^&]+)/i)	{ $FilterIn{'host'}=&DecodeEncodedString("$1"); }			# Filter on host list can be defined with output=lasthosts:filter to reduce number of lines read and showed
 	if ($QueryString =~ /output=urldetail:([^&]+)/i)	{ $FilterIn{'url'}=&DecodeEncodedString("$1"); }			# Filter on URL list can be defined with output=urldetail:filter to reduce number of lines read and showed
 	if ($QueryString =~ /output=refererpages:([^&]+)/i)	{ $FilterIn{'refererpages'}=&DecodeEncodedString("$1"); }	# Filter on referer list can be defined with output=refererpages:filter to reduce number of lines read and showed
+
+	if ($QueryString =~ /pluginmode=([^&]+)/i)			{ $PluginMode=&DecodeEncodedString("$1"); }
 
 	# If migrate
 	if ($QueryString =~ /(^|-|&)migrate=([^&]+)/i)	{
@@ -4773,6 +4781,7 @@ if ($Debug) {
 	debug("HTMLOutput=".join(',',keys %HTMLOutput),1);
 	debug("YearRequired=$YearRequired, MonthRequired=$MonthRequired",2);
 	debug("UpdateFor=$UpdateFor",2);
+	debug("PluginMode=$PluginMode",2);
 }
 
 # Force SiteConfig if AWSTATS_FORCE_CONFIG is defined
@@ -4892,12 +4901,12 @@ if (! $Lang || $Lang eq 'auto') {	# If lang not defined or forced to auto
 	my $langlist=$ENV{'HTTP_ACCEPT_LANGUAGE'}||''; $langlist =~ s/;[^,]*//g;
 	debug("Search an available language among HTTP_ACCEPT_LANGUAGE=$langlist",1);
 	foreach my $code (split(/,/,$langlist)) {	# Search for a valid lang in priority
-		if ($LangBrowserToAwstats{$code}) { $Lang=$LangBrowserToAwstats{$code}; debug("Will try to use Lang=$Lang",1); last; }
+		if ($LangBrowserToAwstats{$code}) { $Lang=$LangBrowserToAwstats{$code}; debug(" Will try to use Lang=$Lang",1); last; }
 		$code =~ s/-.*$//;
-		if ($LangBrowserToAwstats{$code}) { $Lang=$LangBrowserToAwstats{$code}; debug("Will try to use Lang=$Lang",1); last; }
+		if ($LangBrowserToAwstats{$code}) { $Lang=$LangBrowserToAwstats{$code}; debug(" Will try to use Lang=$Lang",1); last; }
 	}
 }
-if (! $Lang || $Lang eq 'auto') { debug("No language defined or available. Will use Lang=en",1); $Lang='en'; }
+if (! $Lang || $Lang eq 'auto') { debug(" No language defined or available. Will use Lang=en",1); $Lang='en'; }
 
 # Check and correct bad parameters
 &Check_Config;
@@ -4913,8 +4922,8 @@ if (! $FrameName) {
 if ($FrameName ne 'index') {
 	&Read_Language_Data($Lang);
 	if ($FrameName ne 'mainleft') {
-		if (! scalar keys %HTMLOutput) { &Read_Ref_Data('browsers','domains','operating_systems','robots','search_engines','worms'); }
-		else { &Read_Ref_Data('browsers','domains','operating_systems','robots','search_engines','worms','mime'); }
+		if ($UpdateStats) { &Read_Ref_Data('browsers','domains','operating_systems','robots','search_engines','worms'); }
+		elsif (scalar keys %HTMLOutput) { &Read_Ref_Data('browsers','domains','operating_systems','robots','search_engines','worms','mime'); }
 		&Read_Plugins();
 	}
 }
@@ -4937,6 +4946,14 @@ $AWScript=($WrapperScript?"$WrapperScript":"$DirCgi$PROG.$Extension");
 
 # Print html header (Need HTMLOutput,Expires,Lang,StyleSheet,HTMLHeadSectionExpires defined by Read_Config, PageCodes defined by Read_Language_Data)
 &html_head;
+
+# AWStats output is replaced by a plugin output
+if ($PluginMode) {
+	my $function="BuildFullHTMLOutput_$PluginMode()";
+	eval("$function");
+	if ($? || $@) { error("$@"); }
+	exit 0;	
+}
 
 # Security check
 if ($AllowAccessFromWebToAuthenticatedUsersOnly && $ENV{'GATEWAY_INTERFACE'}) {
@@ -6498,6 +6515,12 @@ if (scalar keys %HTMLOutput) {
 			print "</table>\n";
 			print "\n";
 		}
+	}
+
+	# Call to plugins' function AddHTMLMenuFooter
+	foreach my $pluginname (keys %{$PluginsLoaded{'AddHTMLMenuFooter'}})  {
+		my $function="AddHTMLMenuFooter_$pluginname()";
+		eval("$function");
 	}
 
 	# Exit if left frame
