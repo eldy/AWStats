@@ -1499,17 +1499,17 @@ sub Check_Config {
 	if ($ShowMonthDayStats !~ /[01UVPHB]/)         	{ $ShowMonthDayStats="UVPHB"; }
 	if ($ShowDaysOfWeekStats !~ /[01PHBL]/)        	{ $ShowDaysOfWeekStats="PHBL"; }
 	if ($ShowHoursStats !~ /[01PHBL]/)             	{ $ShowHoursStats="PHBL"; }
-	if ($ShowDomainsStats !~ /[0-1]/)             	{ $ShowDomainsStats=1; }
+	if ($ShowDomainsStats !~ /[01PHB]/)            	{ $ShowDomainsStats="PHB"; }
 	if ($ShowHostsStats !~ /[01PHBL]/)             	{ $ShowHostsStats="PHBL"; }
 	if ($ShowAuthenticatedUsers !~ /[01PHBL]/)     	{ $ShowAuthenticatedUsers=0; }
 	if ($ShowRobotsStats !~ /[0-1]/)              	{ $ShowRobotsStats=1; }
 	if ($ShowSessionsStats !~ /[0-1]/)             	{ $ShowSessionsStats=1; }
-	if ($ShowPagesStats !~ /[01HBEX]/i)           	{ $ShowPagesStats="HBEX"; }
+	if ($ShowPagesStats !~ /[01PBEX]/i)           	{ $ShowPagesStats="PBEX"; }
 	if ($ShowFileTypesStats !~ /[01HBC]/)         	{ $ShowFileTypesStats="HB"; }
 	if ($ShowFileSizesStats !~ /[0-1]/)           	{ $ShowFileSizesStats=1; }
 	if ($ShowBrowsersStats !~ /[0-1]/)            	{ $ShowBrowsersStats=1; }
 	if ($ShowOSStats !~ /[0-1]/)                  	{ $ShowOSStats=1; }
-	if ($ShowOriginStats !~ /[0-1]/)              	{ $ShowOriginStats=1; }
+	if ($ShowOriginStats !~ /[01PH]/)              	{ $ShowOriginStats="PH"; }
 	if ($ShowKeyphrasesStats !~ /[0-1]/)          	{ $ShowKeyphrasesStats=1; }
 	if ($ShowKeywordsStats !~ /[0-1]/)            	{ $ShowKeywordsStats=1; }
 	if ($ShowHTTPErrorsStats !~ /[0-1]/)          	{ $ShowHTTPErrorsStats=1; }
@@ -1567,10 +1567,12 @@ sub Check_Config {
 	if ($ShowMonthDayStats eq "1")      { $ShowMonthDayStats = "UVPHB"; }
 	if ($ShowDaysOfWeekStats eq "1")    { $ShowDaysOfWeekStats = "PHBL"; }
 	if ($ShowHoursStats eq "1")         { $ShowHoursStats = "PHBL"; }
+	if ($ShowDomainsStats eq "1")       { $ShowDomainsStats = "PHB"; }
 	if ($ShowHostsStats eq "1")         { $ShowHostsStats = "PHBL"; }
 	if ($ShowAuthenticatedUsers eq "1") { $ShowAuthenticatedUsers = "PHBL"; }
-	if ($ShowPagesStats eq "1") 		{ $ShowPagesStats = "HBEX"; }
+	if ($ShowPagesStats eq "1") 		{ $ShowPagesStats = "PBEX"; }
 	if ($ShowFileTypesStats eq "1") 	{ $ShowFileTypesStats = "HB"; }
+	if ($ShowOriginStats eq "1") 		{ $ShowOriginStats = "PH"; }
 
 	# Refuse LogFile if contains a pipe and PurgeLogFile || ArchiveLogRecords set on
 	if (($PurgeLogFile || $ArchiveLogRecords) && $LogFile =~ /\|\s*$/) {
@@ -4447,8 +4449,8 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {	# Updat
 		$LogFormatString =~ s/s-object-source/%other/g;
 		$LogFormatString =~ s/s-cache-info/%other/g;
 		# Added for MMS
-		$LogFormatString =~ s/protocol/%protocolmms/g;
-		$LogFormatString =~ s/c-status/%codemms/g;
+		$LogFormatString =~ s/protocol/%protocolmms/g;	# cs-method might not be available
+		$LogFormatString =~ s/c-status/%codemms/g;		# sc-status not available
 		if ($Debug) { debug("LogFormatString=$LogFormatString"); }
 		# Scan $LogFormatString to found all required fields and generate PerlParsingFormat
 		my @fields = split(/\s+/,$LogFormatString); # make array of entries
@@ -6299,7 +6301,7 @@ EOF
 		}
 		else { print "$Message[102]: $cpt $Message[28]"; }
 		print "</TH>";
-		if ($ShowPagesStats =~ /H/i) { print "<TH bgcolor=\"#$color_p\" width=80>$Message[29]</TH>"; }
+		if ($ShowPagesStats =~ /P/i) { print "<TH bgcolor=\"#$color_p\" width=80>$Message[29]</TH>"; }
 		if ($ShowPagesStats =~ /B/i) { print "<TH bgcolor=\"#$color_k\" width=80>$Message[106]</TH>"; }
 		if ($ShowPagesStats =~ /E/i) { print "<TH bgcolor=\"#$color_e\" width=80>$Message[104]</TH>"; }
 		if ($ShowPagesStats =~ /X/i) { print "<TH bgcolor=\"#$color_x\" width=80>$Message[116]</TH>"; }
@@ -6352,7 +6354,7 @@ EOF
 			if (($bredde_x==1) && $_url_x{$key}) { $bredde_x=2; }
 			if ($max_k > 0) { $bredde_k=int($BarWidth*(($_url_k{$key}||0)/($_url_p{$key}||1))/$max_k)+1; }
 			if (($bredde_k==1) && $_url_k{$key}) { $bredde_k=2; }
-			if ($ShowPagesStats =~ /H/i) { print "<TD>$_url_p{$key}</TD>"; }
+			if ($ShowPagesStats =~ /P/i) { print "<TD>$_url_p{$key}</TD>"; }
 			if ($ShowPagesStats =~ /B/i) { print "<TD>".($_url_k{$key}?Format_Bytes($_url_k{$key}/($_url_p{$key}||1)):"&nbsp;")."</TD>"; }
 			if ($ShowPagesStats =~ /E/i) { print "<TD>".($_url_e{$key}?$_url_e{$key}:"&nbsp;")."</TD>"; }
 			if ($ShowPagesStats =~ /X/i) { print "<TD>".($_url_x{$key}?$_url_x{$key}:"&nbsp;")."</TD>"; }
@@ -6362,7 +6364,7 @@ EOF
 				eval("$function");
 			}
 			print "<TD CLASS=AWL>";
-			if ($ShowPagesStats =~ /H/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_p\" WIDTH=$bredde_p HEIGHT=6><br>"; }
+			if ($ShowPagesStats =~ /P/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_p\" WIDTH=$bredde_p HEIGHT=6><br>"; }
 			if ($ShowPagesStats =~ /B/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_k\" WIDTH=$bredde_k HEIGHT=6><br>"; }
 			if ($ShowPagesStats =~ /E/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_e\" WIDTH=$bredde_e HEIGHT=6><br>"; }
 			if ($ShowPagesStats =~ /X/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_x\" WIDTH=$bredde_x HEIGHT=6>"; }
@@ -6380,7 +6382,7 @@ EOF
 		$rest_k=$TotalBytesPages-$total_k;
 		if ($rest_p > 0 || $rest_e > 0 || $rest_k > 0) {
 			print "<TR><TD CLASS=AWL><font color=\"#$color_other\">$Message[2]</font></TD>";
-			if ($ShowPagesStats =~ /H/i) { print "<TD>".($rest_p?$rest_p:"&nbsp;")."</TD>"; }
+			if ($ShowPagesStats =~ /P/i) { print "<TD>".($rest_p?$rest_p:"&nbsp;")."</TD>"; }
 			if ($ShowPagesStats =~ /B/i) { print "<TD>".($rest_k?Format_Bytes($rest_k/$rest_p||1):"&nbsp;")."</TD>"; }
 			if ($ShowPagesStats =~ /E/i) { print "<TD>".($rest_e?$rest_e:"&nbsp;")."</TD>"; }
 			if ($ShowPagesStats =~ /X/i) { print "<TD>".($rest_x?$rest_x:"&nbsp;")."</TD>"; }
@@ -7044,9 +7046,9 @@ EOF
 		print "$Center<a name=\"DOMAINS\">&nbsp;</a><BR>\n";
 		&tab_head("$Message[25]",19);
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH colspan=2>$Message[17]</TH><TH>$Message[105]</TH>";
-		print "<TH bgcolor=\"#$color_p\" width=80>$Message[56]</TH>";
-		print "<TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH>";
-		print "<TH bgcolor=\"#$color_k\" width=80>$Message[75]</TH>";
+		if ($ShowDomainsStats =~ /P/i) { print "<TH bgcolor=\"#$color_p\" width=80>$Message[56]</TH>"; }
+		if ($ShowDomainsStats =~ /H/i) { print "<TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH>"; }
+		if ($ShowDomainsStats =~ /B/i) { print "<TH bgcolor=\"#$color_k\" width=80>$Message[75]</TH>"; }
 		print "<TH>&nbsp;</TH>";
 		print "</TR>\n";
 		$total_p=$total_h=$total_k=0;
@@ -7068,13 +7070,13 @@ EOF
 			else {
 				print "<TR><TD><IMG SRC=\"$DirIcons\/flags\/$key.png\" height=14 alt=\"$key\"></TD><TD CLASS=AWL>$DomainsHashIDLib{$key}</TD><TD>$key</TD>";
 			}
-			print "<TD>$_domener_p{$key}</TD>";
-			print "<TD>$_domener_h{$key}</TD>";
-			print "<TD>".Format_Bytes($_domener_k{$key})."</TD>";
+			if ($ShowDomainsStats =~ /P/i) { print "<TD>$_domener_p{$key}</TD>"; }
+			if ($ShowDomainsStats =~ /H/i) { print "<TD>$_domener_h{$key}</TD>"; }
+			if ($ShowDomainsStats =~ /B/i) { print "<TD>".Format_Bytes($_domener_k{$key})."</TD>"; }
 			print "<TD CLASS=AWL>";
-			print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_p\" WIDTH=$bredde_p HEIGHT=6 ALT=\"$Message[56]: ".int($_domener_p{$key})."\" title=\"$Message[56]: ".int($_domener_p{$key})."\"><br>\n";
-			print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_h\" WIDTH=$bredde_h HEIGHT=6 ALT=\"$Message[57]: ".int($_domener_h{$key})."\" title=\"$Message[57]: ".int($_domener_h{$key})."\"><br>\n";
-			print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_k\" WIDTH=$bredde_k HEIGHT=6 ALT=\"$Message[75]: ".Format_Bytes($_domener_k{$key})."\" title=\"$Message[75]: ".Format_Bytes($_domener_k{$key})."\">";
+			if ($ShowDomainsStats =~ /P/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_p\" WIDTH=$bredde_p HEIGHT=6 ALT=\"$Message[56]: ".int($_domener_p{$key})."\" title=\"$Message[56]: ".int($_domener_p{$key})."\"><br>\n"; }
+			if ($ShowDomainsStats =~ /H/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_h\" WIDTH=$bredde_h HEIGHT=6 ALT=\"$Message[57]: ".int($_domener_h{$key})."\" title=\"$Message[57]: ".int($_domener_h{$key})."\"><br>\n"; }
+			if ($ShowDomainsStats =~ /B/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_k\" WIDTH=$bredde_k HEIGHT=6 ALT=\"$Message[75]: ".Format_Bytes($_domener_k{$key})."\" title=\"$Message[75]: ".Format_Bytes($_domener_k{$key})."\">"; }
 			print "</TD></TR>\n";
 			$total_p += $_domener_p{$key};
 			$total_h += $_domener_h{$key};
@@ -7086,9 +7088,9 @@ EOF
 		$rest_k=$TotalBytes-$total_k;
 		if ($rest_p > 0 || $rest_h > 0 || $rest_k > 0) { 	# All other domains (known or not)
 			print "<TR><TD colspan=3 CLASS=AWL><font color=\"#$color_other\">$Message[2]</font></TD>";
-			print "<TD>$rest_p</TD>";
-			print "<TD>$rest_h</TD>";
-			print "<TD>".Format_Bytes($rest_k)."</TD>";
+			if ($ShowDomainsStats =~ /P/i) { print "<TD>$rest_p</TD>"; }
+			if ($ShowDomainsStats =~ /H/i) { print "<TD>$rest_h</TD>"; }
+			if ($ShowDomainsStats =~ /B/i) { print "<TD>".Format_Bytes($rest_k)."</TD>"; }
 			print "<TD CLASS=AWL>&nbsp;</TD>";
 			print "</TR>\n";
 		}
@@ -7269,7 +7271,7 @@ EOF
 		if ($ShowPagesStats =~ /X/i) { $title.=" &nbsp; - &nbsp; <a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=urlexit":"$PROG$StaticLinks.urlexit.html")."\"$NewLinkTarget>$Message[116]</a>"; }
 		&tab_head("$title",19);
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$TotalDifferentPages $Message[28]</TH>";
-		if ($ShowPagesStats =~ /H/i) { print "<TH bgcolor=\"#$color_p\" width=80>$Message[29]</TH>"; }
+		if ($ShowPagesStats =~ /P/i) { print "<TH bgcolor=\"#$color_p\" width=80>$Message[29]</TH>"; }
 		if ($ShowPagesStats =~ /B/i) { print "<TH bgcolor=\"#$color_k\" width=80>$Message[106]</TH>"; }
 		if ($ShowPagesStats =~ /E/i) { print "<TH bgcolor=\"#$color_e\" width=80>$Message[104]</TH>"; }
 		if ($ShowPagesStats =~ /X/i) { print "<TH bgcolor=\"#$color_x\" width=80>$Message[116]</TH>"; }
@@ -7320,7 +7322,7 @@ EOF
 			if (($bredde_x==1) && $_url_x{$key}) { $bredde_x=2; }
 			if ($max_k > 0) { $bredde_k=int($BarWidth*(($_url_k{$key}||0)/($_url_p{$key}||1))/$max_k)+1; }
 			if (($bredde_k==1) && $_url_k{$key}) { $bredde_k=2; }
-			if ($ShowPagesStats =~ /H/i) { print "<TD>$_url_p{$key}</TD>"; }
+			if ($ShowPagesStats =~ /P/i) { print "<TD>$_url_p{$key}</TD>"; }
 			if ($ShowPagesStats =~ /B/i) { print "<TD>".($_url_k{$key}?Format_Bytes($_url_k{$key}/($_url_p{$key}||1)):"&nbsp;")."</TD>"; }
 			if ($ShowPagesStats =~ /E/i) { print "<TD>".($_url_e{$key}?$_url_e{$key}:"&nbsp;")."</TD>"; }
 			if ($ShowPagesStats =~ /X/i) { print "<TD>".($_url_x{$key}?$_url_x{$key}:"&nbsp;")."</TD>"; }
@@ -7330,7 +7332,7 @@ EOF
 				eval("$function");
 			}
 			print "<TD CLASS=AWL>";
-			if ($ShowPagesStats =~ /H/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_p\" WIDTH=$bredde_p HEIGHT=6 ALT=\"$Message[56]: ".int($_url_p{$key}||0)."\" title=\"$Message[56]: ".int($_url_p{$key}||0)."\"><br>"; }
+			if ($ShowPagesStats =~ /P/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_p\" WIDTH=$bredde_p HEIGHT=6 ALT=\"$Message[56]: ".int($_url_p{$key}||0)."\" title=\"$Message[56]: ".int($_url_p{$key}||0)."\"><br>"; }
 			if ($ShowPagesStats =~ /B/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_k\" WIDTH=$bredde_k HEIGHT=6 ALT=\"$Message[106]: ".($_url_k{$key}?Format_Bytes($_url_k{$key}/($_url_p{$key}||1)):"&nbsp;")."\" title=\"$Message[106]: ".($_url_k{$key}?Format_Bytes($_url_k{$key}/($_url_p{$key}||1)):"&nbsp;")."\"><br>"; }
 			if ($ShowPagesStats =~ /E/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_e\" WIDTH=$bredde_e HEIGHT=6 ALT=\"$Message[104]: ".int($_url_e{$key}||0)."\" title=\"$Message[104]: ".int($_url_e{$key}||0)."\"><br>"; }
 			if ($ShowPagesStats =~ /X/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_x\" WIDTH=$bredde_x HEIGHT=6 ALT=\"$Message[116]: ".int($_url_x{$key}||0)."\" title=\"$Message[116]: ".int($_url_x{$key}||0)."\">"; }
@@ -7347,7 +7349,7 @@ EOF
 		$rest_k=$TotalBytesPages-$total_k;
 		if ($rest_p > 0 || $rest_k > 0 || $rest_e > 0 || $rest_x > 0) {	# All other urls
 			print "<TR><TD CLASS=AWL><font color=\"#$color_other\">$Message[2]</font></TD>";
-			if ($ShowPagesStats =~ /H/i) { print "<TD>$rest_p</TD>"; }
+			if ($ShowPagesStats =~ /P/i) { print "<TD>$rest_p</TD>"; }
 			if ($ShowPagesStats =~ /B/i) { print "<TD>".($rest_k?Format_Bytes($rest_k/($rest_p||1)):"&nbsp;")."</TD>"; }
 			if ($ShowPagesStats =~ /E/i) { print "<TD>".($rest_e?$rest_e:"&nbsp;")."</TD>"; }
 			if ($ShowPagesStats =~ /X/i) { print "<TD>".($rest_x?$rest_x:"&nbsp;")."</TD>"; }
@@ -7498,11 +7500,20 @@ EOF
 			$p_h[4]=int($_from_h[4]/$Totalh*1000)/10;
 			$p_h[5]=int($_from_h[5]/$Totalh*1000)/10;
 		}
-		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[37]</TH><TH bgcolor=\"#$color_p\" width=80>$Message[56]</TH><TH bgcolor=\"#$color_p\" width=80>$Message[15]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[15]</TH></TR>\n";
+		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[37]</TH>";
+		if ($ShowDomainsStats =~ /P/i) { print "<TH bgcolor=\"#$color_p\" width=80>$Message[56]</TH><TH bgcolor=\"#$color_p\" width=80>$Message[15]</TH>"; }
+		if ($ShowDomainsStats =~ /H/i) { print "<TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[15]</TH>"; }
+		print "</TR>\n";
 		#------- Referrals by direct address/bookmarks
-		print "<TR><TD CLASS=AWL><b>$Message[38]</b></TD><TD>".($_from_p[0]?$_from_p[0]:"&nbsp;")."</TD><TD>$p_p[0] %</TD><TD>".($_from_h[0]?$_from_h[0]:"&nbsp;")."</TD><TD>$p_h[0] %</TD></TR>\n";
+		print "<TR><TD CLASS=AWL><b>$Message[38]</b></TD>";
+		if ($ShowDomainsStats =~ /P/i) { print "<TD>".($_from_p[0]?$_from_p[0]:"&nbsp;")."</TD><TD>".($_from_p[0]?"$p_p[0] %":"&nbsp;")."</TD>"; }
+		if ($ShowDomainsStats =~ /H/i) { print "<TD>".($_from_h[0]?$_from_h[0]:"&nbsp;")."</TD><TD>".($_from_h[0]?"$p_h[0] %":"&nbsp;")."</TD>"; }
+		print "</TR>\n";
 		#------- Referrals by news group
-		print "<TR><TD CLASS=AWL><b>$Message[107]</b></TD><TD>".($_from_p[5]?$_from_p[5]:"&nbsp;")."</TD><TD>$p_p[5] %</TD><TD>".($_from_h[5]?$_from_h[5]:"&nbsp;")."</TD><TD>$p_h[5] %</TD></TR>\n";
+		print "<TR><TD CLASS=AWL><b>$Message[107]</b></TD>";
+		if ($ShowDomainsStats =~ /P/i) { print "<TD>".($_from_p[5]?$_from_p[5]:"&nbsp;")."</TD><TD>".($_from_p[5]?"$p_p[5] %":"&nbsp;")."</TD>"; }
+		if ($ShowDomainsStats =~ /H/i) { print "<TD>".($_from_h[5]?$_from_h[5]:"&nbsp;")."</TD><TD>".($_from_h[5]?"$p_h[5] %":"&nbsp;")."</TD>"; }
+		print "</TR>\n";
 		#------- Referrals by search engine
 		print "<TR onmouseover=\"ShowTip(13);\" onmouseout=\"HideTip(13);\"><TD CLASS=AWL><b>$Message[40]</b> - <a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=refererse":"$PROG$StaticLinks.refererse.html")."\"$NewLinkTarget>$Message[80]</a><br>\n";
 		print "<TABLE>\n";
@@ -7521,7 +7532,9 @@ EOF
 			print "<TR><TD CLASS=AWL><font color=\"#$color_other\">- $Message[2]</font></TD><TD>$rest_h</TD>";
 		}
 		print "</TABLE></TD>\n";
-		print "<TD valign=top>".($_from_p[2]?$_from_p[2]:"&nbsp;")."</TD><TD valign=top>$p_p[2] %</TD><TD valign=top>".($_from_h[2]?$_from_h[2]:"&nbsp;")."</TD><TD valign=top>$p_h[2] %</TD></TR>\n";
+		if ($ShowDomainsStats =~ /P/i) { print "<TD valign=top>".($_from_p[2]?$_from_p[2]:"&nbsp;")."</TD><TD valign=top>".($_from_p[2]?"$p_p[2] %":"&nbsp;")."</TD>"; }
+		if ($ShowDomainsStats =~ /H/i) { print "<TD valign=top>".($_from_h[2]?$_from_h[2]:"&nbsp;")."</TD><TD valign=top>".($_from_h[2]?"$p_h[2] %":"&nbsp;")."</TD>"; }
+		print "</TR>\n";
 		#------- Referrals by external HTML link
 		print "<TR onmouseover=\"ShowTip(14);\" onmouseout=\"HideTip(14);\"><TD CLASS=AWL><b>$Message[41]</b> - <a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=refererpages":"$PROG$StaticLinks.refererpages.html")."\"$NewLinkTarget>$Message[80]</a><br>\n";
 		print "<TABLE>\n";
@@ -7546,10 +7559,19 @@ EOF
 			print "<TR><TD CLASS=AWL><font color=\"#$color_other\">- $Message[2]</font></TD><TD>$rest_h</TD>";
 		}
 		print "</TABLE></TD>\n";
-		print "<TD valign=top>".($_from_p[3]?$_from_p[3]:"&nbsp;")."</TD><TD valign=top>$p_p[3] %</TD><TD valign=top>".($_from_h[3]?$_from_h[3]:"&nbsp;")."</TD><TD valign=top>$p_h[3] %</TD></TR>\n";
+		if ($ShowDomainsStats =~ /P/i) { print "<TD valign=top>".($_from_p[3]?$_from_p[3]:"&nbsp;")."</TD><TD valign=top>".($_from_p[3]?"$p_p[3] %":"&nbsp;")."</TD>"; }
+		if ($ShowDomainsStats =~ /H/i) { print "<TD valign=top>".($_from_h[3]?$_from_h[3]:"&nbsp;")."</TD><TD valign=top>".($_from_h[3]?"$p_h[3] %":"&nbsp;")."</TD>"; }
+		print "</TR>\n";
 		#------- Referrals by internal HTML link
-		print "<TR><TD CLASS=AWL><b>$Message[42]</b></TD><TD>".($_from_p[4]?$_from_p[4]:"&nbsp;")."</TD><TD>$p_p[4] %</TD><TD>".($_from_h[4]?$_from_h[4]:"&nbsp;")."</TD><TD>$p_h[4] %</TD></TR>\n";
-		print "<TR><TD CLASS=AWL><b>$Message[39]</b></TD><TD>".($_from_p[1]?$_from_p[1]:"&nbsp;")."</TD><TD>$p_p[1] %</TD><TD>".($_from_h[1]?$_from_h[1]:"&nbsp;")."</TD><TD>$p_h[1] %</TD></TR>\n";
+		print "<TR><TD CLASS=AWL><b>$Message[42]</b></TD>";
+		if ($ShowDomainsStats =~ /P/i) { print "<TD>".($_from_p[4]?$_from_p[4]:"&nbsp;")."</TD><TD>".($_from_p[4]?"$p_p[4] %":"&nbsp;")."</TD>"; }
+		if ($ShowDomainsStats =~ /H/i) { print "<TD>".($_from_h[4]?$_from_h[4]:"&nbsp;")."</TD><TD>".($_from_h[4]?"$p_h[4] %":"&nbsp;")."</TD>"; }
+		print "</TR>\n";
+		#------- Unkown origin
+		print "<TR><TD CLASS=AWL><b>$Message[39]</b></TD>";
+		if ($ShowDomainsStats =~ /P/i) { print "<TD>".($_from_p[1]?$_from_p[1]:"&nbsp;")."</TD><TD>".($_from_p[1]?"$p_p[1] %":"&nbsp;")."</TD>"; }
+		if ($ShowDomainsStats =~ /H/i) { print "<TD>".($_from_h[1]?$_from_h[1]:"&nbsp;")."</TD><TD>".($_from_h[1]?"$p_h[1] %":"&nbsp;")."</TD>"; }
+		print "</TR>\n";
 		&tab_end;
 	}
 

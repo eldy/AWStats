@@ -56,6 +56,7 @@ FAQ-SET220 <a href="#CRASH">Crash while running awstats.pl or page content only 
 FAQ-SET250 <a href="#PERSONALIZEDLOG">Log format setup or errors.</a><br>
 FAQ-SET260 <a href="#FTP">Setup for FTP server log files.</a><br>
 FAQ-SET270 <a href="#SENDMAIL">Setup for SENDMAIL log files.</a><br>
+FAQ-SET272 <a href="#MEDIASERVER">Setup for WINDOWS MEDIA SERVER log files.</a><br>
 FAQ-SET280 <a href="#NOTSAMENUMBER">Error "Not same number of records of...".</a><br>
 FAQ-SET300 <a href="#COULDNOTOPEN">Error "Couldn't open file ..."</a><br>
 FAQ-SET350 <a href="#EMPTY_STATS">Empty or null statistics reported.</a><br>
@@ -310,16 +311,19 @@ See <a href="#FTP">FAQ-SET260</a>.<br>
 See <a href="#SENDMAIL">FAQ-SET270</a>.<br>
 </td></tr></table>
 
+<u>If you use <b>Windows Media Server</b>:</u><br>
+See <a href="#FTP">FAQ-SET272</a>.<br>
+
+<table bgcolor=#F0F0F0 width="100%" class=CFAQ><tr class=CFAQ><td class=CFAQ>
 <u>If your log records are EXACTLY like this (With some providers):</u><br>
 <i>62.161.78.73 - - [dd/Month/yyyy:hh:mm:ss +0x00] "GET /page.html HTTP/1.1" "-" 200 1234</i><br>
 You must use : <i>LogFormat="%host %other %logname %time1 %methodurl %other %code %bytesd"</i><br>
 Note: Browsers, OS's, Keywords and Referers features are not available with a such format.<br>
+</td></tr></table>
 
-<table bgcolor=#F0F0F0 width="100%" class=CFAQ><tr class=CFAQ><td class=CFAQ>
 <u>There is a lot of other possible log formats.</u><br>
 You must use a personalized log format LogFormat ="..." as described in config file to
 support other various log formats.<br>
-</td></tr></table>
 <br>
 
 <a name="FTP"></a><br>
@@ -339,8 +343,9 @@ Modify the proftpd.conf file to add the following two lines :
 <br>TransferLog none
 </i>
 <br>
+To have the change effective, stop your server, remove old log files and restart the server.<br>
 <u>Setup AWStats to analyze those FTP log files:</u><br>
-Copy config awstats.conf file to "awstats.proftp.conf".<br>
+Copy config awstats.model.conf file to "awstats.proftp.conf".<br>
 Modify this new config file:
 <i>
 <br>LogFile="/var/log/xferlog"
@@ -351,16 +356,18 @@ Modify this new config file:
 <br>ShowLinksOnUrl=0
 <br>ShowHeader=1
 <br>ShowMenu=1
-<br>ShowMonthDayStats=1
-<br>ShowDaysOfWeekStats=1
-<br>ShowHoursStats=1
-<br>ShowDomainsStats=1
-<br>ShowHostsStats=1
-<br>ShowAuthenticatedUsers=1
-<br>ShowRobotsStats=0
+<br>ShowMonthDayStats=UVHB
+<br>ShowDaysOfWeekStats=HB
+<br>ShowHoursStats=HB
+<br>ShowDomainsStats=HB
+<br>ShowHostsStats=HBL
+<br>ShowAuthenticatedUsers=HBL
+<br>ShowRobotsStats=1
+<br>ShowEMailSenders=0
+<br>ShowEMailReceivers=0
 <br>ShowSessionsStats=1
-<br>ShowPagesStats=1
-<br>ShowFileTypesStats=1
+<br>ShowPagesStats=PBEX
+<br>ShowFileTypesStats=HB
 <br>ShowFileSizesStats=0
 <br>ShowBrowsersStats=0
 <br>ShowOSStats=0
@@ -368,8 +375,6 @@ Modify this new config file:
 <br>ShowKeyphrasesStats=0
 <br>ShowKeywordsStats=0
 <br>ShowHTTPErrorsStats=0
-<br>ShowEMailSenders=0
-<br>ShowEMailReceivers=0
 </i>
 <br><br>
 Now you can use AWStats as usual (run the update process and read statistics).<br>
@@ -401,7 +406,7 @@ The resulting convertedmaillog file must have records that match the following f
 <i>2001-01-01 05:38:08 sender@mailsender.com receiver@mailreceiver.com hostrelaysender hostrelayreceiver SMTP - 1 31357</i><br>
 <br>
 <u>Then setup AWStats to analyze SMA processed mail log:</u><br>
-Copy config awstats.conf file to "awstats.sendmail.conf".<br>
+Copy config awstats.model.conf file to "awstats.sendmail.conf".<br>
 Modify this new config file:
 <i>
 <br>LogFile="/pathtosma/sma -O clog -f /pathtosmaconf/sma.conf /pathtomaillog/maillog |"
@@ -416,6 +421,8 @@ Modify this new config file:
 <br>ShowHostsStats=HBL
 <br>ShowAuthenticatedUsers=0
 <br>ShowRobotsStats=0
+<br>ShowEMailSenders=HBL
+<br>ShowEMailReceivers=HBL
 <br>ShowSessionsStats=0
 <br>ShowPagesStats=0
 <br>ShowFileTypesStats=0
@@ -426,8 +433,82 @@ Modify this new config file:
 <br>ShowKeyphrasesStats=0
 <br>ShowKeywordsStats=0
 <br>ShowHTTPErrorsStats=0
-<br>ShowEMailSenders=HBL
-<br>ShowEMailReceivers=HBL
+</i>
+<br><br>
+Now you can use AWStats as usual (run the update process and read statistics).<br>
+<br>
+
+<a name="MEDIASERVER"></a><br>
+<b><u>FAQ-SET272 : SETUP FOR WINDOWS MEDIA SERVER</u></b><br>
+<font class=CProblem>PROBLEM:</font><br>
+What do I have to do to use AWStats to analyze my Windows Media Server log files.<br>
+<font class=CSolution>SOLUTION:</font><br>
+<br>
+<u>Setup your Windows Media Server log format to write the following fields:</u>
+<i>
+<br>c-ip
+<br>date
+<br>time
+<br>cs-uri-stem
+<br>c-starttime
+<br>x-duration
+<br>c-rate
+<br>c-status
+<br>c-playerid
+<br>c-playerversion
+<br>c-playerlanguage
+<br>cs(User-Agent)
+<br>cs(Referer)
+<br>c-hostexe
+<br>c-hostexever
+<br>c-os
+<br>c-osversion
+<br>c-cpu
+<br>filelength
+<br>filesize
+<br>avgbandwidth
+<br>protocol
+<br>transport
+<br>audiocodec
+<br>videocodec
+<br>channelURL
+<br>sc-bytes
+</i>
+<br>
+To have the change effective, stop your server, remove old log files and restart the server.<br>
+Listen to streaming files and check that your new log file looks like this:<br>
+<i>
+80.223.91.37 2002-10-08 14:18:58 mmst://mydomain.com/mystream 0 106 1 200 {F4A826EE-FA46-480F-A49B-76786320FC6B} 8.0.0.4477 fi-FI - - wmplayer.exe 8.0.0.4477 Windows_2000 5.1.0.2600 Pentium 0 0 20702 mms TCP Windows_Media_Audio_9 - - 277721
+</i>
+<br><br>
+<u>Then setup AWStats to analyze your Media Server log:</u><br>
+Copy config awstats.model.conf file to "awstats.mediaserver.conf".<br>
+Modify this new config file:
+<i>
+<br>LogFile="/pathtomediaserver/mediaserverlog"
+<br>LogFormat="c-ip date time cs-uri-stem c-starttime x-duration c-rate c-status c-playerid c-playerversion c-playerlanguage cs(User-Agent) cs(Referer) c-hostexe c-hostexever c-os c-osversion c-cpu filelength filesize avgbandwidth protocol transport audiocodec videocodec channelURL sc-bytes"
+<br>DNSLookup=0
+<br>ShowHeader=1
+<br>ShowMenu=1
+<br>ShowMonthDayStats=UHB
+<br>ShowDaysOfWeekStats=HB
+<br>ShowHoursStats=HB
+<br>ShowDomainsStats=HB
+<br>ShowHostsStats=HBL
+<br>ShowAuthenticatedUsers=0
+<br>ShowRobotsStats=0
+<br>ShowEMailSenders=0
+<br>ShowEMailReceivers=0
+<br>ShowSessionsStats=0
+<br>ShowPagesStats=PB
+<br>ShowFileTypesStats=HB
+<br>ShowFileSizesStats=0
+<br>ShowBrowsersStats=1
+<br>ShowOSStats=1
+<br>ShowOriginStats=PH
+<br>ShowKeyphrasesStats=0
+<br>ShowKeywordsStats=0
+<br>ShowHTTPErrorsStats=1
 </i>
 <br><br>
 Now you can use AWStats as usual (run the update process and read statistics).<br>
