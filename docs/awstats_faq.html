@@ -58,7 +58,7 @@ FAQ-SET280 <a href="#NOTSAMENUMBER">Error "Not same number of records of...".</a
 FAQ-SET300 <a href="#COULDNOTOPEN">Error "Couldn't open file ..."</a><br>
 FAQ-SET350 <a href="#EMPTY_STATS">Empty or null statistics reported.</a><br>
 FAQ-SET450 <a href="#NO_ICON">No pictures/graphics shown.</a><br>
-FAQ-SET500 <a href="#BENCHMARK">Frequency to launch AWStats to update statistics (See FAQ-COM150 "Benchmark question").</a><br>
+FAQ-SET500 <a href="#ROTATE">How to rotate my logs without loosing data.</a><br>
 FAQ-SET550 <a href="#CRONTAB">How to run AWStats frequently ?</a><br>
 FAQ-SET600 <a href="#EXCLUDEHOSTS">How to exclude my IP address (or whole subnet mask) from stats ?</a><br>
 </ul>
@@ -92,11 +92,11 @@ FAQ-SEC200 <a href="#WORMS">How to manage log files (and statistics) corrupted b
 <br><br>
 <a name="SERVERSOS"></a><br>
 <b><u>FAQ-ABO100 : WHICH WEB SERVER OR OS ARE SUPPORTED ?</u></b><br>
-AWStats can works with all web server able to write log file with a <u>combined log format (XLF/ELF)</u> like apache,
+AWStats can works with all web server able to write log file with a <u>combined log format (XLF/ELF)</u> like Apache,
 a <u>common log format (CLF)</u> like Apache or Squid, an <u>W3C log format</u> like IIS 5.0 or higher (Some users have
 reported that you can setup your log format to W3C with IIS 4.0 but you need a service pack 6), and a lot of others
 Web/Wap/Proxy servers.<br>
-Because AWStats is in perl, it can works on all Operating Systems.<br>
+Because AWStats is in Perl, it can works on all Operating Systems.<br>
 Examples of used platforms (bold means 'tested by author', others were reported by AWStats users to work correctly) :<br>
 <table bgcolor=#F0F0F0 width="100%" class=CFAQ><tr class=CFAQ><td class=CFAQ>
 <u>OS:</u><br>
@@ -162,8 +162,8 @@ But this can change. You should ask to have a such Add-On to PHPNuke authors, an
 <font style="color: #660000">PROBLEM:</font>
 When I run awstats.pl from command line, I get:<br>
 <i>"Missing $ on loop variable at awstats.pl line xxx"</i><br>
-<font style="color: #4444cc">SOLUTION:</font>
-Problem is in your Perl interpreter. Try to install or reinstall a more recent/stable perl interpreter.<br>
+<font style="color: #448866">SOLUTION:</font>
+Problem is in your Perl interpreter. Try to install or reinstall a more recent/stable Perl interpreter.<br>
 You can get new Perl version at <a href="http://www.activestate.com/ActivePerl/">ActivePerl</a> (<font color=#221188>Win32</font>)
 or <a href="http://www.perl.com/pub/language/info/software.html">Perl.com</a> (<font color=#221188>Unix/Linux/Other</font>).<br>
 <br>
@@ -171,16 +171,16 @@ or <a href="http://www.perl.com/pub/language/info/software.html">Perl.com</a> (<
 <a name="CGISOURCE"></a><br>
 <b><u>FAQ-SET100 : I SEE PERL SCRIPT'S SOURCE INSTEAD OF ITS EXECUTION</u></b><br>
 <font style="color: #660000">PROBLEM:</font>
-When I try to execute the perl script through the web server,
-I see the perl script's source instead of the HTML result page of its execution !<br>
-<font style="color: #4444cc">SOLUTION:</font>
+When I try to execute the Perl script through the web server,
+I see the Perl script's source instead of the HTML result page of its execution !<br>
+<font style="color: #448866">SOLUTION:</font>
 This is not a problem of AWStats but a problem in your web server setup.
 awstats.pl file must be in a directory defined in your web server to be a "cgi" directory,
 this means, a directory configured in your web server to contain "executable" files and
 not to documents files.
 You have to read your web server manual to know how to setup a directory to be an
 "executable cgi" directory (With IIS, you have some checkbox to check in directory
-properties, with apache you have to use the "ExecCGI" option in the directory "Directive").<br>
+properties, with Apache you have to use the "ExecCGI" option in the directory "Directive").<br>
 <br>
 
 <a name="SPAWNERROR"></a><a name="INTERNAL"></a><br>
@@ -191,24 +191,24 @@ AWStats seems to run fine at the command prompt but when ran as a CGI from a bro
 <i>"Internal Error"</i>.<br>
 Sometimes I get the following message in my error log file:<br>
 <i>[error] [client xx.xx.xx.xx] No such file or directory: couldn't spawn child process: c:/mywebroot/cgi-bin/awstats.pl</i><br>
-<font style="color: #4444cc">SOLUTION:</font>
-This problem occurs with Apache web server with no internal perl interpreter (mod_perl not
-active). To solve this, you must tell Apache where is your perl interpreter. For this, you have 2 solutions:<br>
-1) Change the first line of awstats.pl file with the full path of your perl interpreter.<br>
-Example with Windows OS and ActivePerl perl interpreter (installed in C:\Program Files\ActivePerl),
+<font style="color: #448866">SOLUTION:</font>
+This problem occurs with Apache web server with no internal Perl interpreter (mod_perl not
+active). To solve this, you must tell Apache where is your Perl interpreter. For this, you have 2 solutions:<br>
+1) Change the first line of awstats.pl file with the full path of your Perl interpreter.<br>
+Example with Windows OS and ActivePerl Perl interpreter (installed in C:\Program Files\ActivePerl),
 you must change the first line of awstats.pl file with:<br>
 <i>#!c:/program files/activeperl/bin/perl</i><br>
 2) Other solution: Uncomment in your Apache httpd.conf config the following line (remove the # at the beginning)<br>
 <i>ScriptInterpreterSource registry</i><br>
 Then restart Apache. This will tell Apache to use the program associated to .pl extension in windows registry,
-to find the perl interpreter.<br>
+to find the Perl interpreter.<br>
 <br>
 
 <a name="PERSONALIZEDLOG"></a><br>
 <b><u>FAQ-SET250 : LOG FORMAT SETUP OR ERRORS</u></b><br>
 <font style="color: #660000">PROBLEM:</font> Which value do I have to put in the LogFormat
 parameter to make AWStats working with my log file format ?<br>
-<font style="color: #4444cc">SOLUTION:</font>
+<font style="color: #448866">SOLUTION:</font>
 The AWStats config file give you all possible values for LogFormat parameter.
 To help you, this is some common cases of log file format, and
 the corresponding value for LogFormat you must use in your AWStats config file:<br>
@@ -264,7 +264,7 @@ support other various log formats.<br>
 <a name="FTP"></a><br>
 <b><u>FAQ-SET260 : SETUP FOR FTP SERVER LOG FILES</u></b><br>
 <font style="color: #660000">PROBLEM:</font> What do I have to do to use AWStats to analyze some FTP server log files.<br>
-<font style="color: #4444cc">SOLUTION:</font>
+<font style="color: #448866">SOLUTION:</font>
 AWStats was built to analyze web,wap or proxy server's log files. However it can be used with some FTP server log files.<br>
 <u>This is example for ProFTP:</u><br>
 Modify the proftpd.conf file. At the very top add two new defines.<br>
@@ -287,7 +287,7 @@ log file to replace 'space' char into '_'...<br>
 <b><u>FAQ-SET280 : ERROR "NOT SAME NUMBER OF RECORDS OF..."</u></b><br>
 <font style="color: #660000">PROBLEM:</font> When I run AWStats from command line (or as a cgi from a browser), I get
 a message "Not same number of records of ...".<br>
-<font style="color: #4444cc">SOLUTION:</font>
+<font style="color: #448866">SOLUTION:</font>
 This means your AWStats reference database files (operating systems, browsers, robots...) are not correct.
 Check in your disk that you have only ONE of those files (They should be in 'db' directory where awstats.pl is installed):<br>
 <i>browsers.pl</i><br>
@@ -301,11 +301,11 @@ Check in your disk that you have only ONE of those files (They should be in 'db'
 <b><u>FAQ-SET300 : ERROR "COULDN'T OPEN FILE ..."</u></b><br>
 <font style="color: #660000">PROBLEM:</font> I have the following error:<br>
 <i>"Couldn't open file /workingpath/awstatsmmyyyy.tmp.9999: Permission denied."</i><br>
-<font style="color: #4444cc">SOLUTION:</font> This error means that the web server 
+<font style="color: #448866">SOLUTION:</font> This error means that the web server 
 didn't succeed in writing the working temporary file (file ended by .tmp.9999 
 where 9999 is a number) because of permissions problems.<br>
 First check that the directory <i>/workingpath</i> has "Write" permission for<br>
-user <u>nobody</u> (default user used by apache on Linux systems)<br>
+user <u>nobody</u> (default user used by Apache on Linux systems)<br>
 or user <u>IUSR_<i>SERVERNAME</i></u> (default used user by IIS on NT).<br>
 With Unix, try with a path with no links.<br>
 With NT, you must check NTFS permissions ("Read/Write/Modify"), if your directory is on a NTFS partition.<br>
@@ -322,12 +322,12 @@ user, used by web server process, can write into).<br>
 <b><u>FAQ-SET350 : EMPTY OR NULL STATISTICS REPORTED</u></b><br>
 <font style="color: #660000">PROBLEM:</font> AWStats seems to work but I'm not 
 getting any results. i get a statistics page that looks like i have no hits.<br>
-<font style="color: #4444cc">SOLUTION:</font> That's the most common problem you 
+<font style="color: #448866">SOLUTION:</font> That's the most common problem you 
 can have and reason is simple: Your log file format setup is wrong.<br>
 <u>If you use Apache web server</u><br>
 The best way of working is to use the <i>"combined"</i> log format (See into the <b>README.TXT</b> file
-to know the way to change your apache server log from <i>"common"</i> log format into <i>"combined"</i>).
-Don't forget to stop apache, reset your log file and restart Apache to make change into combined
+to know the way to change your Apache server log from <i>"common"</i> log format into <i>"combined"</i>).
+Don't forget to stop Apache, reset your log file and restart Apache to make change into combined
 effective. Then you must setup your AWStats config file with value <i>LogFormat=1</i>.<br>
 If you want to use another format, read the next FAQ to have examples of LogFile value according
 to log files format.<br>
@@ -344,10 +344,10 @@ You can also read the next FAQ to have examples of LogFormat value according to 
 <b><u>FAQ-SET450 : NO PICTURES/GRAPHICS SHOWN</u></b><br>
 <font style="color: #660000">PROBLEM:</font> AWStats seems to work (all data and counters seem to be good)
 but I have no image shown.<br>
-<font style="color: #4444cc">SOLUTION:</font> With Apache web server, you might have
+<font style="color: #448866">SOLUTION:</font> With Apache web server, you might have
 troubles (no picture shown on stats page) if you use a directory called "icons" (because of Apache
 pre-defined "icons" alias directory), so use instead, for example, a directory called "icon"  with
-no s at the end (Rename your directory physically and change the DirIcons parameter in config file
+no s at the end (Rename your directory physically and change the <a href="awstats_config.html#DirIcons">DirIcons</a> parameter in config file
 to reflect this change).<br>
 <br>
 
@@ -356,13 +356,18 @@ to reflect this change).<br>
 <font style="color: #660000">PROBLEM:</font> I want to archive/rotate my logs using my web server
 system options or a third software (rotatelog, cronolog) but don't want to loose any visits information
 during the rotate process.<br>
-<font style="color: #4444cc">SOLUTION:</font><br>
+<font style="color: #448866">SOLUTION:</font><br>
 If you use a rotate system (internal web server feature or third software), this means you probably not use
-AWStats <a href="awstats_config.html#PurgeLogFile">PurgeLogFile</a> nor <a href="awstats_config.html#ArchiveLogRecords">ArchiveLogRecords</a> parameter.
-To be sure to not loose any records in your log file during the rotate process, you can just run the AWStats update process 
-on the log file after it was archived.<br>
+AWStats <a href="awstats_config.html#PurgeLogFile">PurgeLogFile</a> nor <a href="awstats_config.html#ArchiveLogRecords">ArchiveLogRecords</a> parameter.<br>
+* If your config file is setup to process current log file (because you want to use the <a href="awstats_config.html#AllowToUpdateStatsFromBrowser">AllowToUpdateStatsFromBrowser</a>
+option), if you don't want to loose any records during the rotate process, you can just run the AWStats update process 
+on the archived log file just after the update process using the -logfile option (This will avoid you to change the config file).<br>
+* If you choose (for security reason, to avoid CPU abuse on large web site or other) to make updates by your scheduler only on archive files, this means
+you don't use the <a href="awstats_config.html#AllowToUpdateStatsFromBrowser">AllowToUpdateStatsFromBrowser</a> "real-time" feature of AWStats.
+In this case all you have to do is to run the update process just after the rotate was done using a config/domain file configured to
+process the archived log files (using date tags of <a href="awstats_config.html#LogFile">LogFile</a> for examples).<br>
 Note: For Apache users, use of <a href="http://cronolog.org" target=awstatsbis>cronolog</a> seems to be a better choice
-than rotatelog (cronolog is available for Unix/Liux and Windows and is more flexible).<br>
+than rotatelog (cronolog is available for Unix/Linux and Windows and is more flexible).<br>
 To use cronolog or rotatelog you must setup your web server log file name using a pipe like this example:<br>
 <i>CustomLog "|/usr/sbin/cronolog [cronolog_options] /var/logs/access.%Y%m%d.log" combined</i><br>
 <br>
@@ -373,7 +378,7 @@ To use cronolog or rotatelog you must setup your web server log file name using 
 <b><u>FAQ-SET550 : HOW TO RUN AWSTATS FREQUENTLY</u></b><br>
 <font style="color: #660000">PROBLEM:</font> AWStats must be ran frequently to update statistics.
 How can I do this ?<br>
-<font style="color: #4444cc">SOLUTION:</font><br>
+<font style="color: #448866">SOLUTION:</font><br>
 <br>
 <u>With Windows</u>, you can use the internal task scheduler.
 The use of this tool is not an AWStats related problem, so please take a look at your Windows manual.
@@ -396,7 +401,7 @@ To run update every hour, use :<br>
 <b><u>FAQ-SET600 : HOW CAN I EXCLUDE MY IP ADDRESS (OR WHOLE SUBNET MASK) FROM STATS ?</u></b><br>
 <font style="color: #660000">PROBLEM:</font> I don't want to see my own IP address in the stats or I want to exclude counting
 visits from a whole subnet.<br>
-<font style="color: #4444cc">SOLUTION:</font><br>
+<font style="color: #448866">SOLUTION:</font><br>
 You must edit the config file to change the SkipHosts parameter.<br>
 For example, to exclude:<br>
 - your own IP address 123.123.123.123, use SkipHosts="123.123.123.123"<br>
@@ -415,7 +420,7 @@ log file).<br>
 processing times are very important (Update process from a browser
 returns a timeout/internal error after a long wait).
 Is there a setup or things to do to avoid this and increase speed ?<br>
-<font style="color: #4444cc">SOLUTION:</font> Yes. You really need to understand 
+<font style="color: #448866">SOLUTION:</font> Yes. You really need to understand 
 how a log analyzer works to have good speed. There is also major setup changes 
 you can do to decrease your processing time.<br>
 - Launch AWStats more often (from crontab or a scheduler). More often you launch 
@@ -438,17 +443,16 @@ to purge the log file after processing it. This increase speed for next run).<br
 <b><u>FAQ-COM150 : BENCHMARK / FREQUENCY TO LAUNCH AWSTATS TO UPDATE STATISTICS</u></b><br>
 <font style="color: #660000">PROBLEM:</font> What is AWStats speed ?<br>
 <font style="color: #660000">PROBLEM:</font> What is the frequency to launch AWStats process to update my statistics ?<br>
-<font style="color: #4444cc">SOLUTION:</font>
+<font style="color: #448866">SOLUTION:</font>
 All benchmarks information and advice on frequency for update process are related into
-the <a href="awstats_benchmark.html">Benchmark page</a>.
+the <a href="awstats_benchmark.html">Benchmark page</a>.<br>
 <br>
-
 
 <a name="DNS"></a><br>
 <b><u>FAQ-COM200 : HOW REVERSE DNS LOOKUP WORKS, UNRESOLVED IP ADDRESSES</u></b><br>
 <font style="color: #660000">PROBLEM:</font> The reported page AWStats shows me 
 has no hostnames, only IP addresses, countries reported are all "unknown".<br>
-<font style="color: #4444cc">SOLUTION:</font> When AWStats find an IP address 
+<font style="color: #448866">SOLUTION:</font> When AWStats find an IP address 
 in your log file, it tries a reverse DNS lookup to find the hostname and domain 
 if the <a href="awstats_tools.html#DNSLookup">DNSLookup</a> parameter, in your AWStats config file, is <a href="awstats_config.html#DNSLookup">DNSLookup</a>=1
 (Default value). So, first, check if you have the good value. The <a href="awstats_config.html#DNSLookup">DNSLookup</a>=0 
@@ -470,7 +474,7 @@ provided with AWStats distribution (This tools is an improved version of <i>logr
 <b><u>FAQ-COM250 : DIFFERENT RESULTS THAN OTHER ANALYZER</u></b><br>
 <font style="color: #660000">PROBLEM:</font> I also use webalizer (or another 
 log analyzer) and it doesn't report the same results than AWStats. Why ?<br>
-<font style="color: #4444cc">SOLUTION:</font>
+<font style="color: #448866">SOLUTION:</font>
 If you compare AWStats results with an other log file analyzer, you will found some differences,
 sometimes very important. In fact, all analyzer (even AWStats) make "over reporting" because of the
 problem of proxy-servers and robots. However AWStats is one the most accurate and its "over reporting"
@@ -501,7 +505,7 @@ an algorithm to detect keywords of unknown search engines with unknown url synta
 <font style="color: #660000">PROBLEM:</font> I use IIS and there's a difference 
 between local hour and AWStats reported hour. For example I made a hit on a page 
 at 4:00 and AWStats report I hit it at 2:00.<br>
-<font style="color: #4444cc">SOLUTION:</font> This is not a problem of time 
+<font style="color: #448866">SOLUTION:</font> This is not a problem of time 
 in your local client host. AWStats use only time reported in logs by your server 
 and all time are related to server hour. The problem is that IIS in some foreign 
 versions puts GMT time in its log file (and not local time). So, you have also 
@@ -521,7 +525,7 @@ So this means this way of working might never be changed.<br>
 <a name="OLDLOG"></a><br>
 <b><u>FAQ-COM350 : HOW CAN I PROCESS OLD LOG FILE ?</u></b><br>
 <font style="color: #660000">PROBLEM:</font> I want to process an old log file to include its data in my AWStats reports.<br>
-<font style="color: #4444cc">SOLUTION:</font> 
+<font style="color: #448866">SOLUTION:</font> 
 You must change your LogFile parameter to point to the old log file and run the update. However the update process can only accept
 files in chronological order, so if you have already processed a recent file, you must before
 reset all your statistics (see next FAQ) and restart all the update process for all past log files and in chronological order.<br>
@@ -530,7 +534,7 @@ reset all your statistics (see next FAQ) and restart all the update process for 
 <a name="MULTILOG"></a><br>
 <b><u>FAQ-COM400 : HOW CAN I UPDATE MY STATISTICS WHEN I USE A LOAD BALANCING SYSTEM THAT SPLITS MY LOGS ?</u></b><br>
 <font style="color: #660000">PROBLEM:</font> How can I update my statistics when i use a load balancing system that split my logs ?<br>
-<font style="color: #4444cc">SOLUTION:</font> 
+<font style="color: #448866">SOLUTION:</font> 
 The best solution is to merge all split log files resulted from all your load balanced servers into one. For this, you can use
 the <b>logresolvemerge</b> tool provided with AWStats since version 3.2 :<br>
 <i>logresolvemerge.pl file1.log file2.log ... filen.log > newfiletoprocess.log</i><br>
@@ -540,7 +544,7 @@ And setup the <i>LogFile</i> parameter in your config file to process the <i>new
 <a name="RESET"></a><br>
 <b><u>FAQ-COM500 : HOW CAN I RESET ALL MY STATISTICS ?</u></b><br>
 <font style="color: #660000">PROBLEM:</font> I want to reset all my statistics and restart my stats from now.<br>
-<font style="color: #4444cc">SOLUTION:</font> 
+<font style="color: #448866">SOLUTION:</font> 
 All analyzed data are stored by AWStats in files called awstatsMMYYYY.[site.]txt (one file each month).
 You will find those files in directory defined by "DirData" parameter (same directory than awstats.pl by default).<br>
 To reset your stats for a month, you just have to delete the file for the required month/year.<br>
@@ -553,7 +557,7 @@ You will have to process all past log files (in chronological order) to get old 
 <b><u>FAQ-COM550 : CAN I SAFELY REMOVE A LINE IN HISTORY FILES (awstatsMMYYYY*.txt) ?</u></b><br>
 <font style="color: #660000">PROBLEM:</font> After processing a log file I want to change my statistics
 without running AWStats update process but changing directly data in AWStats historical database files.<br>
-<font style="color: #4444cc">SOLUTION:</font> 
+<font style="color: #448866">SOLUTION:</font> 
 If you remove a lines starting with "BEGIN_" or "END_", AWStats will find your file "corrupted" so you must not change those
 kind of lines. All lines that are not in any "section" (between a BEGIN_xxx and END_xxx line) should also not be removed.
 However you can change any line that is a "section record", but you do this at your own risk. Your reported stats
@@ -566,7 +570,7 @@ might have wrong values after that.<br>
 <b><u>FAQ-SEC00 : CAN AWSTATS BE USED TO MAKE CROSS SITE SCRIPTING ATTACKS ?</u></b><br>
 <font style="color: #660000">PROBLEM:</font> If a bad user use a browser to make a hit on an URL that include a < SCRIPT > ... < /SCRIPT >
 section in its parameter, when AWStats will show the links on the report page, does the script will be executed ?<br>
-<font style="color: #4444cc">SOLUTION:</font> 
+<font style="color: #448866">SOLUTION:</font> 
 No. AWStats use a filter to remove all scripts codes that was included in an URL to make a Cross Site Scripting Attack using a
 log analyzer report page.<br>
 <br>
@@ -575,7 +579,7 @@ log analyzer report page.<br>
 <b><u>FAQ-SEC150 : HOW CAN I PREVENT SOME USERS TO SEE STATISTICS OF OTHER USERS ?</u></b><br>
 <font style="color: #660000">PROBLEM:</font> I don't want a user xxx (having a site www.xxx.com) to see statistics of user yyy (having
 a site www.yyy.com). How can i setup AWStats for this ?<br>
-<font style="color: #4444cc">SOLUTION:</font> 
+<font style="color: #448866">SOLUTION:</font> 
 Take a look at the <a href="awstats_security.html">security page</a>.<br>
 <br>
 
@@ -584,20 +588,20 @@ Take a look at the <a href="awstats_security.html">security page</a>.<br>
 <font style="color: #660000">PROBLEM:</font> My site is attacked by some Code Red Viruses. This make my log file corrupted
 and full of 404 errors. So my statistics are also full of 404 errors. This make AWStats slower and my history files very large.
 Can I do something to avoid this ?<br>
-<font style="color: #4444cc">SOLUTION:</font> 
+<font style="color: #448866">SOLUTION:</font> 
 Yes.<br>
 'Code Red virus like' attacks are infected browsers or robots that make hits on your site using a very long unknown URL
 like this one (hoping your server is IIS):<br>
 <i>/default.ida?XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX%40%50...%40%50</i><br>
 URL is generated by the infected robot and the purpose is to exploit a vulnerability of the web server (only IIS is concerned by Code Red worm).
 So you will often find a 'common string' in those URLs. For example, with Code Red worm, there is always default.ida in the URL string.
-So, you should edit your config file to add in the SkipFiles parameter the following value:<br>
+So, you should edit your config file to add in the <a href="awstats_config.html#SkipFiles">SkipFiles</a> parameter the following value:<br>
 <i>SkipFiles="default.ida"</i><br>
 <br>
 
 
 <hr>
-<script language=javascript>
+<script language="javascript">
 	var lastmod = new Date(document.lastModified);
 	if (lastmod.getDate() > 0) {
 		if (lastmod.getDate()<10) zerod="0"
