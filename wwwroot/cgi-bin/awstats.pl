@@ -21,7 +21,7 @@ use vars qw(%DomainsHashIDLib @RobotsSearchIDOrder_list1 @RobotsSearchIDOrder_li
 #-------------------------------------------------------
 # Defines
 #-------------------------------------------------------
-my $VERSION="4.0 (build 37)";
+my $VERSION="4.0 (build 38)";
 
 # ---------- Init variables -------
 my $Debug=0;
@@ -481,43 +481,7 @@ sub Read_Config_File {
 		# Replace __MONENV__ with value of environnement variable MONENV
 		$value =~ s/__(\w+)__/$ENV{$1}/g;
 		# Read main section
-		if ($param =~ /^LogFile/) {
-			$LogFile=$value;
-			if ($LogFile =~ /%([ymdhwYMDHW]+)-(\d*)/) {
-				my $timephase=$2;
-				debug(" Found a time phase of $timephase hour in log file name",1);
-				# Get older time
-				my ($oldersec,$oldermin,$olderhour,$olderday,$oldermonth,$olderyear,$olderwday) = localtime($nowtime-($timephase*3600));
-				my $olderweekofmonth=int($olderday/7);
-				my $olderdaymod=$olderday%7;
-				$olderwday++;
-				if ($olderdaymod <= $olderwday) { if (($olderwday != 7) || ($olderdaymod != 0)) { $olderweekofmonth=$olderweekofmonth+1; } }
-				if ($olderdaymod >  $olderwday) { $olderweekofmonth=$olderweekofmonth+2; }
-				$olderweekofmonth = "0$olderweekofmonth";
-				if ($olderyear < 100) { $olderyear+=2000; } else { $olderyear+=1900; }
-				my $oldersmallyear=$olderyear;$oldersmallyear =~ s/^..//;
-				if (++$oldermonth < 10) { $oldermonth = "0$oldermonth"; }
-				if ($olderday < 10) { $olderday = "0$olderday"; }
-				if ($olderhour < 10) { $olderhour = "0$olderhour"; }
-				if ($oldermin < 10) { $oldermin = "0$oldermin"; }
-				if ($oldersec < 10) { $oldersec = "0$oldersec"; }
-				$LogFile =~ s/%YYYY-$timephase/$olderyear/ig;
-				$LogFile =~ s/%YY-$timephase/$oldersmallyear/ig;
-				$LogFile =~ s/%MM-$timephase/$oldermonth/ig;
-				$LogFile =~ s/%DD-$timephase/$olderday/ig;
-				$LogFile =~ s/%HH-$timephase/$olderhour/ig;
-				$LogFile =~ s/%WM-$timephase/$olderweekofmonth/ig;
-			}
-			# Replace %YYYY %YY %MM %DD %HH with current value. Kept for backward compatibility.
-			$LogFile =~ s/%YYYY/$nowyear/ig;
-			$LogFile =~ s/%YY/$nowsmallyear/ig;
-			$LogFile =~ s/%MM/$nowmonth/ig;
-			$LogFile =~ s/%DD/$nowday/ig;
-			$LogFile =~ s/%HH/$nowhour/ig;
-			$LogFile =~ s/%WM/$nowweekofmonth/ig;
-			debug(" LogFile=$LogFile",1);
-			next;
-			}
+		if ($param =~ /^LogFile/ && !$LogFile ) { $LogFile=$value; next; }
 		if ($param =~ /^LogFormat/)            	{ $LogFormat=$value; next; }
 		if ($param =~ /^DirData/) 				{ $DirData=$value; next; }
 		if ($param =~ /^DirCgi/)                { $DirCgi=$value; next; }
@@ -789,6 +753,39 @@ sub Read_Language_Tooltip {
 sub Check_Config {
 	&debug("Call to Check_Config");
 	# Main section
+	if ($LogFile =~ /%([ymdhwYMDHW]+)-(\d*)/) {
+		my $timephase=$2;
+		debug(" Found a time phase of $timephase hour in log file name",1);
+		# Get older time
+		my ($oldersec,$oldermin,$olderhour,$olderday,$oldermonth,$olderyear,$olderwday) = localtime($nowtime-($timephase*3600));
+		my $olderweekofmonth=int($olderday/7);
+		my $olderdaymod=$olderday%7;
+		$olderwday++;
+		if ($olderdaymod <= $olderwday) { if (($olderwday != 7) || ($olderdaymod != 0)) { $olderweekofmonth=$olderweekofmonth+1; } }
+		if ($olderdaymod >  $olderwday) { $olderweekofmonth=$olderweekofmonth+2; }
+		$olderweekofmonth = "0$olderweekofmonth";
+		if ($olderyear < 100) { $olderyear+=2000; } else { $olderyear+=1900; }
+		my $oldersmallyear=$olderyear;$oldersmallyear =~ s/^..//;
+		if (++$oldermonth < 10) { $oldermonth = "0$oldermonth"; }
+		if ($olderday < 10) { $olderday = "0$olderday"; }
+		if ($olderhour < 10) { $olderhour = "0$olderhour"; }
+		if ($oldermin < 10) { $oldermin = "0$oldermin"; }
+		if ($oldersec < 10) { $oldersec = "0$oldersec"; }
+		$LogFile =~ s/%YYYY-$timephase/$olderyear/ig;
+		$LogFile =~ s/%YY-$timephase/$oldersmallyear/ig;
+		$LogFile =~ s/%MM-$timephase/$oldermonth/ig;
+		$LogFile =~ s/%DD-$timephase/$olderday/ig;
+		$LogFile =~ s/%HH-$timephase/$olderhour/ig;
+		$LogFile =~ s/%WM-$timephase/$olderweekofmonth/ig;
+	}
+	# Replace %YYYY %YY %MM %DD %HH with current value. Kept for backward compatibility.
+	$LogFile =~ s/%YYYY/$nowyear/ig;
+	$LogFile =~ s/%YY/$nowsmallyear/ig;
+	$LogFile =~ s/%MM/$nowmonth/ig;
+	$LogFile =~ s/%DD/$nowday/ig;
+	$LogFile =~ s/%HH/$nowhour/ig;
+	$LogFile =~ s/%WM/$nowweekofmonth/ig;
+	debug(" LogFile=$LogFile",1);
 	if ($LogFormat =~ /^[\d]$/ && $LogFormat !~ /[1-5]/)  { error("Error: LogFormat parameter is wrong. Value is '$LogFormat' (should be 1,2,3,4,5 or a 'personalised AWtats log format string')"); }
 	if ($DNSLookup !~ /[0-1]/)                            { error("Error: DNSLookup parameter is wrong. Value is '$DNSLookup' (should be 0 or 1)"); }
 	if ($AllowToUpdateStatsFromBrowser !~ /[0-1]/) 	{ $AllowToUpdateStatsFromBrowser=0; }
@@ -2192,6 +2189,7 @@ else {								# Run from command line
 	if ($QueryString =~ /showcorrupted/i) { $ShowCorrupted=1; } else { $ShowCorrupted=0; }
 	$QueryString=~s/showcorrupted[^&]*//;
 }
+if ($QueryString =~ /logfile=([^\s&]+)$/i) 	{ $LogFile=$1; }
 if ($QueryString =~ /staticlinks/i) 		{ $StaticLinks=1; }
 if ($QueryString =~ /debug=(\d+)/i)			{ $Debug=$1; }
 if ($QueryString =~ /output=urldetail:/i) 	{	
@@ -2225,6 +2223,7 @@ if ((! $ENV{"GATEWAY_INTERFACE"}) && (! $SiteConfig)) {
 	print "  -update        to update statistics (default)\n";
 	print "  -showsteps     to add benchmark information every $NbOfLinesForBenchmark lines processed\n";
 	print "  -showcorrupted to add output for each corrupted lines found, with reason\n";
+	print "  -logfile=x     to force log to analyse whatever is 'LogFile' in config file\n";
 	print "  Be care to process log files in chronological order when updating statistics.\n";
 	print "\n";
 	print "Options to show statistics:\n";
@@ -2244,12 +2243,12 @@ if ((! $ENV{"GATEWAY_INTERFACE"}) && (! $SiteConfig)) {
 	print "  -lang=LL     to output a HTML report in language LL (en,de,es,fr,it,nl,...)\n";
 	print "  -month=MM    to output a HTML report for an old month=MM\n";
 	print "  -year=YYYY   to output a HTML report for an old year=YYYY\n";
-	print "  Warning: Those 'date' options doesn't allow you to process old log file.\n";
-	print "  It only allows you to see a report for a chosen month/year period instead\n";
-	print "  of current month/year.\n";
+	print "  Those 'date' options doesn't allow you to process old log file. They only\n";
+	print "  allow you to see a past report for a chosen month/year period instead of\n";
+	print "  current month/year.\n";
 	print "\n";
 	print "Other options:\n";
-	print "  -debug=X       to add debug informations lesser than level X\n";
+	print "  -debug=X     to add debug informations lesser than level X\n";
 	print "\n";
 	print "Now supports/detects:\n";
 	print "  Reverse DNS lookup\n";
