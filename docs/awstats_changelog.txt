@@ -30,6 +30,10 @@ Other/Documentation:
   possible countries and icons (They appears when using geoip plugins).
 - Better management of parsed lines counting. The last line number is
   also stored in history file, for a future use.
+- Removed LogFormat=5 option for ISA log file because I am fed up of
+  supporting bugged and non standard MS products. Sorry but this takes me too
+  many times. To use AWStats with an ISA server, just use now a preprocessor
+  tool to convert into a W3C log file.
 - Updated documentation.
 
 
