@@ -152,7 +152,7 @@
 'getright','GetRight',
 'headdump','HeadDump',
 'hotjava','Sun HotJava',
-'ibrowse','IBrowse',
+'ibrowse','iBrowse',
 'intergo','InterGO',
 'k-meleon','K-Meleon',
 'linemodebrowser','W3C Line Mode Browser',
