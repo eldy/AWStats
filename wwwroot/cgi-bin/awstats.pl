@@ -21,7 +21,7 @@ use vars qw(%DomainsHashIDLib @RobotsSearchIDOrder_list1 @RobotsSearchIDOrder_li
 #-------------------------------------------------------
 # Defines
 #-------------------------------------------------------
-my $VERSION="4.0 (build 41)";
+my $VERSION="4.0 (build 42)";
 
 # ---------- Init variables -------
 my $Debug=0;
@@ -2197,9 +2197,14 @@ if ($QueryString =~ /output=urldetail:/i) 	{
 	# A filter can be defined with output=urldetail to reduce number of lines read and showed
 	$URLFilter=$QueryString; $URLFilter =~ s/.*output=urldetail://; $URLFilter =~ s/&.*//; $URLFilter =~ s/ .*//;
 }
+($DIR=$0) =~ s/([^\/\\]*)$//; ($PROG=$1) =~ s/\.([^\.]*)$//; $Extension=$1;
 &debug("QUERY_STRING=$QueryString",2);
 
-($DIR=$0) =~ s/([^\/\\]*)$//; ($PROG=$1) =~ s/\.([^\.]*)$//; $Extension=$1;
+# Force SiteConfig if AWSTATS_CONFIG is defined
+if ($ENV{"AWSTATS_CONFIG"}) {
+	&debug("AWSTATS_CONFIG parameter is defined '".$ENV{"AWSTATS_CONFIG"}."'. $PROG will use it as config value.");
+	$SiteConfig=$ENV{"AWSTATS_CONFIG"};
+}
 
 # Read reference databases
 &Read_Ref_Data();
@@ -2216,8 +2221,11 @@ if ((! $ENV{"GATEWAY_INTERFACE"}) && (! $SiteConfig)) {
 	print "  the log file defined in config file, and/or returns a HTML report.\n";
 	print "  First, $PROG tries to read $PROG.virtualhostname.conf as the config file.\n";
 	print "  If not found, $PROG tries to read $PROG.conf\n";
-	print "  Config files must be in /etc/opt/awstats, /etc/awstats, /etc or same\n";
-	print "  directory than awstats.pl file.\n";
+	print "  Note 1: If AWSTATS_CONFIG environment variable is defined, AWStats will use\n";
+	print "  it as the \"config\" value, whatever is the value on command line.\n";
+	print "  Note 2: Config files ($PROG.virtualhostname.conf or $PROG.conf) must be\n";
+	print "  in /etc/opt/awstats, /etc/awstats, /etc or same directory than awstats.pl\n";
+	print "  file.\n";
 	print "  See AWStats documentation for all setup instrutions.\n";
 	print "\n";
 	print "Options to update statistics:\n";
