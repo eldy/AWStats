@@ -11,7 +11,7 @@ Fixes:
 - Fixed problem of parsing with uabracket and refererquot.
 - Fixed wrong use of config file in rawlog plugin.
 - Some changes on maillogconvert.pl:
-  maillogconvert support more exotic sendmail log files.
+  maillogconvert support more exotic sendmail log files (Thanks to W-Mark Kubacki).
   Fixed pb of '-' in relay hostname.
   When a mail is sent to 2 different receivers, now report 2 records.
   When a forward is active, report the original receiver, not the
