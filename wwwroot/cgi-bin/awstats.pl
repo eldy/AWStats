@@ -5830,7 +5830,7 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 				else { print "Corrupted record line ".($lastlinenb+$NbOfLinesParsed)." (record format does not match LogFormat parameter): $line\n"; }
 			}
 			if ($NbOfLinesParsed >= $NbOfLinesForCorruptedLog && $NbOfLinesParsed == $NbOfLinesCorrupted) { error("Format error",$line,$LogFile); }	# Exit with format error
-			if ($line =~ /^__end_of_file__/) { last; }	# For test purpose only
+			if ($line =~ /^__end_of_file__/i) { last; }	# For test purpose only
 			next;
 		}
 
