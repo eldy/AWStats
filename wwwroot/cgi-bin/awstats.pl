@@ -443,7 +443,7 @@ DIV { font: 12px arial,verdana,helvetica; text-align:justify; }
 .TABLEBORDER { background-color: #$color_TableBorder; }
 .TABLEFRAME { background-color: #$color_TableBG; padding: 2px 2px 2px 2px; margin-top: 0 }
 .TABLEDATA { background-color: #$color_Background; }
-.TABLETITLEFULL  { font: 14px verdana, arial, helvetica, sans-serif; font-weight: bold; background-color: #$color_TableBGTitle; text-align: center; width: 66%; margin-bottom: 0; padding: 2px; }
+.TABLETITLEFULL  { font: 14px verdana, arial, helvetica, sans-serif; font-weight: bold; background-color: #$color_TableBGTitle; text-align: center; margin-bottom: 0; padding: 2px; }
 .TABLETITLEBLANK { font: 14px verdana, arial, helvetica, sans-serif; background-color: #$color_Background; }
 .CFormFields { font: 14px verdana, arial, helvetica; }
 .CTooltip { position:absolute; top:0px; left:0px; z-index:2; width:280; visibility:hidden; font: 8pt MS Comic Sans,arial,sans-serif; background-color: #FFFFE6; padding: 8px; border: 1px solid black; }
@@ -494,21 +494,32 @@ sub html_end {
 	}
 }
 
+#------------------------------------------------------------------------------
+# Function:     Print on stdout tab header of a chart
+# Input:		$title $tooltip_number [$width percentage of chart title]
+# Output:		-
+#------------------------------------------------------------------------------
 sub tab_head {
 	my $title=shift;
 	my $tooltip=shift;
+	my $width=shift||70;
 	print "<div class=\"tablecontainer\">\n";
 	print "<TABLE CLASS=\"TABLEFRAME\" BORDER=0 CELLPADDING=2 CELLSPACING=0 WIDTH=\"100%\">\n";
 	if ($tooltip) {
-		print "<TR><TD class=\"TABLETITLEFULL\" onmouseover=\"ShowTooltip($tooltip);\" onmouseout=\"HideTooltip($tooltip);\">$title </TD>";
+		print "<TR><TD class=\"TABLETITLEFULL\" width=$width% onmouseover=\"ShowTooltip($tooltip);\" onmouseout=\"HideTooltip($tooltip);\">$title </TD>";
 	}
 	else {
-		print "<TR><TD class=\"TABLETITLEFULL\">$title </TD>";
+		print "<TR><TD class=\"TABLETITLEFULL\" width=$width%>$title </TD>";
 	}
-	print "<TD class=\"TABLETITLEBLANK\"> &nbsp; </TD></TR>\n";
+	print "<TD class=\"TABLETITLEBLANK\">&nbsp;</TD></TR>\n";
 	print "<TR><TD colspan=2><TABLE CLASS=\"TABLEDATA\" BORDER=1 BORDERCOLOR=\"#$color_TableBorder\" CELLPADDING=2 CELLSPACING=0 WIDTH=\"100%\">";
 }
 
+#------------------------------------------------------------------------------
+# Function:     Print on stdout tab ender of a chart
+# Input:		-
+# Output:		-
+#------------------------------------------------------------------------------
 sub tab_end {
 	print "</TABLE></TD></TR></TABLE>";
 	print "</div>\n\n";
@@ -5153,9 +5164,9 @@ EOF
 		# By Keyphrases
 		if ($ShowKeyphrasesStats && $ShowKeywordsStats) { print "<td width=50% valign=top>\n";	}
 		if ($Debug) { debug("ShowKeyphrasesStats",2); }
-		print "$CENTER<a name=\"SEARCHKEYS\">&nbsp;</a><BR>";
+		print "$CENTER<a name=\"KEYPHRASES\">&nbsp;</a><BR>";
 		$MaxNbOfKeyphrasesShown = $TotalDifferentKeyphrases if $MaxNbOfKeyphrasesShown > $TotalDifferentKeyphrases;
-		&tab_head("$Message[43] ($Message[77] $MaxNbOfKeyphrasesShown)<br><a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=allkeyphrases":"$PROG$StaticLinks.allkeyphrases.html")."\"".($DetailedReportsOnNewWindows?" target=\"awstatsbis\"":"").">$Message[80]</a>",19);
+		&tab_head("$Message[43] ($Message[77] $MaxNbOfKeyphrasesShown)<br><a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=allkeyphrases":"$PROG$StaticLinks.allkeyphrases.html")."\"".($DetailedReportsOnNewWindows?" target=\"awstatsbis\"":"").">$Message[80]</a>",19,($ShowKeyphrasesStats && $ShowKeywordsStats)?95:70);
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\" onmouseover=\"ShowTooltip(15);\" onmouseout=\"HideTooltip(15);\"><TH>$TotalDifferentKeyphrases $Message[103]</TH><TH bgcolor=\"#$color_s\" width=80>$Message[14]</TH><TH bgcolor=\"#$color_s\" width=80>$Message[15]</TH></TR>\n";
 		$total_s=0;
 		my $count=0;
@@ -5182,9 +5193,9 @@ EOF
 		# By Keywords
 		if ($ShowKeyphrasesStats && $ShowKeywordsStats) { print "<td width=50% valign=top>\n";	}
 		if ($Debug) { debug("ShowKeywordsStats",2); }
-		print "$CENTER<a name=\"SEARCHKEYS\">&nbsp;</a><BR>";
+		print "$CENTER<a name=\"KEYWORDS\">&nbsp;</a><BR>";
 		$MaxNbOfKeywordsShown = $TotalDifferentKeywords if $MaxNbOfKeywordsShown > $TotalDifferentKeywords;
-		&tab_head("$Message[44] ($Message[77] $MaxNbOfKeywordsShown)<br><a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=allkeywords":"$PROG$StaticLinks.allkeywords.html")."\"".($DetailedReportsOnNewWindows?" target=\"awstatsbis\"":"").">$Message[80]</a>",19);
+		&tab_head("$Message[44] ($Message[77] $MaxNbOfKeywordsShown)<br><a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=allkeywords":"$PROG$StaticLinks.allkeywords.html")."\"".($DetailedReportsOnNewWindows?" target=\"awstatsbis\"":"").">$Message[80]</a>",19,($ShowKeyphrasesStats && $ShowKeywordsStats)?95:70);
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\" onmouseover=\"ShowTooltip(15);\" onmouseout=\"HideTooltip(15);\"><TH>$TotalDifferentKeywords $Message[13]</TH><TH bgcolor=\"#$color_s\" width=80>$Message[14]</TH><TH bgcolor=\"#$color_s\" width=80>$Message[15]</TH></TR>\n";
 		$total_s=0;
 		my $count=0;
