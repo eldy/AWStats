@@ -916,52 +916,87 @@ ShowPagesStats,ShowFileTypesStats,ShowFileSizesStats,ShowBrowsersStats,
 ShowOSStats,ShowOriginStats,ShowKeyphrasesStats,ShowKeywordsStats,ShowHTTPErrorsStats<br>
 3.2 - 5.0 for ShowCompressionStats (deprecated since 5.1, use code C with ShowFileTypesStats instead)<br>
 4.1 for ShowSessionsStats, ShowKeywordsStats<br>
+5.1 for all letters codes<br>
 <br># You choose here which reports you want to see in the main page and what you
 <br># want to see in those reports.
 <br># Possible values:
 <br>#  0  - Topic is not shown at all
-<br>#  1  - Report is shown with all its related informations
-<br># XYZ - Report is shown with only informations defined by code X,Y and Z
+<br>#  1  - Report is shown with default informations
+<br># XYZ - Report is shown with only informations defined by code X,Y,Z
+<br>#       X,Y,Z are code letters among the following:
+<br>#        U = Unique visitors
+<br>#        V = Visits
+<br>#        P = Number of pages
+<br>#        H = Number of hits
+<br>#        B = Bandwith
+<br>#        L = Last access date
+<br>#        E = Entry pages
+<br>#        X = Exit pages
+<br>#        C = Web compression (mod_gzip)
 <br>#
 <br># Show AWStats head title and icon
+<br># Default: 1, Possible codes: None
 <br>ShowHeader=1				
 <br># Show menu header with links on detailed reports
+<br># Default: 1, Possible codes: None
 <br>ShowMenu=1					
 <br># Show monthly and daily chart
-<br>ShowMonthDayStats=1
+<br># Default: UVPHB, Possible codes: UVPHB
+<br>ShowMonthDayStats=UVPHB
 <br># Show days of week chart
-<br>ShowDaysOfWeekStats=1
+<br># Default: PHB, Possible codes: PHB
+<br>ShowDaysOfWeekStats=PHB
 <br># Show hourly chart
-<br>ShowHoursStats=1
+<br># Default: PHB, Possible codes: PHB
+<br>ShowHoursStats=PHB
 <br># Show domains/country chart
+<br># Default: 1, Possible codes: None
 <br>ShowDomainsStats=1
 <br># Show hosts chart
-<br>ShowHostsStats=1
+<br># Default: PHBL, Possible codes: PHBL
+<br>ShowHostsStats=PHBL
 <br># Show authenticated users chart
-<br># ->Codes are P (Nb pages), H (Nb hits), B (bandwidth), L (last access date)
+<br># Default: 0, Possible codes: PHBL
 <br>ShowAuthenticatedUsers=0
 <br># Show robots chart
+<br># Default: 1, Possible codes: None
 <br>ShowRobotsStats=1
 <br># Show session chart
+<br># Default: 1, Possible codes: None
 <br>ShowSessionsStats=1
 <br># Show pages-url chart.
-<br># ->Codes are H (Nb hits), B (bandwidth), E (entry), X (exit)
+<br># Default: HBEX, Possible codes: HBEX
 <br>ShowPagesStats=HBEX	
 <br># Show file types chart.
-<br># ->Codes are H (Nb hits), B (bandwidth), C (mod_gzip compression statistics)
+<br># Default: HB, Possible codes: HBC
 <br>ShowFileTypesStats=HB
+<br># Show file size chart (Not yet available)
+<br># Default: 1, Possible codes: None
+<br>ShowFileSizesStats=0		
 <br># Show browsers chart
+<br># Default: 1, Possible codes: None
 <br>ShowBrowsersStats=1
 <br># Show Operating systems chart
+<br># Default: 1, Possible codes: None
 <br>ShowOSStats=1
 <br># Show Origin chart
+<br># Default: 1, Possible codes: None
 <br>ShowOriginStats=1
 <br># Show keyphrases chart
+<br># Default: 1, Possible codes: None
 <br>ShowKeyphrasesStats=1
 <br># Show keywords chart
+<br># Default: 1, Possible codes: None
 <br>ShowKeywordsStats=1
 <br># Show HTTP errors chart
+<br># Default: 1, Possible codes: None
 <br>ShowHTTPErrorsStats=1
+<br># Show EMail senders chart (For use when analyzing mail log files. Not yet available)
+<br># Default: HBL, Possible codes: HBL
+<br>ShowEMailSenders=HBL
+<br># Show EMail receiver chart (For use when analyzing mail log files. Not yet available)
+<br># Default: HBL, Possible codes: HBL
+<br>ShowEMailReceivers=HBL
 
 <br><br><hr>
 

@@ -203,14 +203,13 @@ use vars qw/
 @BrowsersSearchIDOrder @OSSearchIDOrder @SearchEnginesSearchIDOrder @WordsToCleanSearchUrl
 /;
 use vars qw/
-@SessionsRange @Message @HostAliases @AllowAccessFromWebToFollowingAuthenticatedUsers
+@SessionsRange @HostAliases @AllowAccessFromWebToFollowingAuthenticatedUsers
 @DefaultFile @OnlyFiles @SkipDNSLookupFor @SkipFiles @SkipHosts @SkipUserAgents
 @PluginsToLoad @DOWIndex @RobotsSearchIDOrder
 @_from_p @_from_h @_time_p @_time_h @_time_k
 @keylist
 /;
 @SessionsRange=("0s-30s","30s-2mn","2mn-5mn","5mn-15mn","15mn-30mn","30mn-1h","1h+");
-@Message=();
 @HostAliases=();
 @AllowAccessFromWebToFollowingAuthenticatedUsers=();
 @DefaultFile = @OnlyFiles = @SkipDNSLookupFor = @SkipFiles = @SkipHosts = @SkipUserAgents = ();
@@ -346,6 +345,144 @@ use vars qw/ %ftpcodelib /;
 # SMTP codes
 use vars qw/ %smtpcodelib /;
 %smtpcodelib = (
+);
+
+# DEFAULT MESSAGE
+use vars qw/ @Message /;
+@Message=(
+"Unknown",
+"Unknown (unresolved ip)",
+"Others",
+"View details",
+"Day",
+"Month",
+"Year",
+"Statistics of",
+"First visit",
+"Last visit",
+"Number of visits",
+"Unique visitors",
+"Visit",
+"different keywords",
+"Search",
+"Percent",
+"Traffic",
+"Domains/Countries",
+"Visitors",
+"Pages-URL",
+"Hours",
+"Browsers",
+"HTTP Errors",
+"Referers",
+"Never updated",
+"Visitors domains/countries",
+"hosts",
+"pages",
+"different pages-url",
+"Viewed",
+"Other words",
+"Pages not found",
+"HTTP Error codes",
+"Netscape versions",
+"IE versions",
+"Last Update",
+"Connect to site from",
+"Origin",
+"Direct address / Bookmarks",
+"Origin unknown",
+"Links from an Internet Search Engine",
+"Links from an external page (other web sites except search engines)",
+"Links from an internal page (other page on same site)",
+"Keyphrases used on search engines",
+"Keywords used on search engines",
+"Unresolved IP Address",
+"Unknown OS (Referer field)",
+"Required but not found URLs (HTTP code 404)",
+"IP Address",
+"Error&nbsp;Hits",
+"Unknown browsers (Referer field)",
+"different robots",
+"visits/visitor",
+"Robots/Spiders visitors",
+"Free realtime logfile analyzer for advanced web statistics",
+"of",
+"Pages",
+"Hits",
+"Versions",
+"Operating Systems",
+"Jan",
+"Feb",
+"Mar",
+"Apr",
+"May",
+"Jun",
+"Jul",
+"Aug",
+"Sep",
+"Oct",
+"Nov",
+"Dec",
+"Navigation",
+"Files type",
+"Update now",
+"Bandwidth",
+"Back to main page",
+"Top",
+"dd mmm yyyy - HH:MM",
+"Filter",
+"Full list",
+"Hosts",
+"Known",
+"Robots",
+"Sun",
+"Mon",
+"Tue",
+"Wed",
+"Thu",
+"Fri",
+"Sat",
+"Days of week",
+"Who",
+"When",
+"Authenticated users",
+"Min",
+"Average",
+"Max",
+"Web compression",
+"Bandwidth saved",
+"Compression on",
+"Compression result",
+"Total",
+"different keyphrases",
+"Entry",
+"Code",
+"Average size",
+"Links from a NewsGroup",
+"KB",
+"MB",
+"GB",
+"Grabber",
+"Yes",
+"No",
+"WhoIs info",
+"OK",
+"Exit",
+"Visits duration",
+"Close window",
+"Bytes",
+"Search&nbsp;Keyphrases",
+"Search&nbsp;Keywords",
+"different refering search engines",
+"different refering sites",
+"Other phrases",
+"Anonymous users",
+"Refering search engines",
+"Refering sites",
+"Summary",
+"Exact value not available in 'Year' view",
+"Data value arrays",
+"Sender EMail",
+"Receiver EMail"
 );
 
 
@@ -1269,11 +1406,11 @@ sub Check_Config {
 	if ($MaxRowsInHTMLOutput !~ /^\d+/ || $MaxRowsInHTMLOutput<1)     { $MaxRowsInHTMLOutput=1000; }
 	if ($ShowHeader !~ /[0-1]/)                   	{ $ShowHeader=1; }
 	if ($ShowMenu !~ /[0-1]/)                     	{ $ShowMenu=1; }
-	if ($ShowMonthDayStats !~ /[0-1]/)            	{ $ShowMonthDayStats=1; }
-	if ($ShowDaysOfWeekStats !~ /[0-1]/)          	{ $ShowDaysOfWeekStats=1; }
-	if ($ShowHoursStats !~ /[0-1]/)               	{ $ShowHoursStats=1; }
+	if ($ShowMonthDayStats !~ /[01UVPHB]/)         	{ $ShowMonthDayStats="UVPHB"; }
+	if ($ShowDaysOfWeekStats !~ /[01PHBL]/)        	{ $ShowDaysOfWeekStats="PHBL"; }
+	if ($ShowHoursStats !~ /[01PHBL]/)             	{ $ShowHoursStats="PHBL"; }
 	if ($ShowDomainsStats !~ /[0-1]/)             	{ $ShowDomainsStats=1; }
-	if ($ShowHostsStats !~ /[0-1]/)               	{ $ShowHostsStats=1; }
+	if ($ShowHostsStats !~ /[01PHBL]/)             	{ $ShowHostsStats="PHBL"; }
 	if ($ShowAuthenticatedUsers !~ /[01PHBL]/)     	{ $ShowAuthenticatedUsers=0; }
 	if ($ShowRobotsStats !~ /[0-1]/)              	{ $ShowRobotsStats=1; }
 	if ($ShowSessionsStats !~ /[0-1]/)             	{ $ShowSessionsStats=1; }
@@ -1335,142 +1472,12 @@ sub Check_Config {
 	$color_s =~ s/#//g; if ($color_s !~ /^[0-9|A-Z]+$/i)                 			 { $color_s="8888DD"; }
 	$color_e =~ s/#//g; if ($color_e !~ /^[0-9|A-Z]+$/i)                 			 { $color_e="CEC2E8"; }
 	$color_x =~ s/#//g; if ($color_x !~ /^[0-9|A-Z]+$/i)                 			 { $color_x="C1B2E2"; }
-	# Default value	for Messages
-	if (! $Message[0])   { $Message[0]="Unknown"; }
-	if (! $Message[1])   { $Message[1]="Unknown (unresolved ip)"; }
-	if (! $Message[2])   { $Message[2]="Others"; }
-	if (! $Message[3])   { $Message[3]="View details"; }
-	if (! $Message[4])   { $Message[4]="Day"; }
-	if (! $Message[5])   { $Message[5]="Month"; }
-	if (! $Message[6])   { $Message[6]="Year"; }
-	if (! $Message[7])   { $Message[7]="Statistics of"; }
-	if (! $Message[8])   { $Message[8]="First visit"; }
-	if (! $Message[9])   { $Message[9]="Last visit"; }
-	if (! $Message[10])  { $Message[10]="Number of visits"; }
-	if (! $Message[11])  { $Message[11]="Unique visitors"; }
-	if (! $Message[12])  { $Message[12]="Visit"; }
-	if (! $Message[13])  { $Message[13]="different keywords"; }
-	if (! $Message[14])  { $Message[14]="Search"; }
-	if (! $Message[15])  { $Message[15]="Percent"; }
-	if (! $Message[16])  { $Message[16]="Traffic"; }
-	if (! $Message[17])  { $Message[17]="Domains/Countries"; }
-	if (! $Message[18])  { $Message[18]="Visitors"; }
-	if (! $Message[19])  { $Message[19]="Pages-URL"; }
-	if (! $Message[20])  { $Message[20]="Hours"; }
-	if (! $Message[21])  { $Message[21]="Browsers"; }
-	if (! $Message[22])  { $Message[22]="HTTP Errors"; }
-	if (! $Message[23])  { $Message[23]="Referers"; }
-	if (! $Message[24])  { $Message[24]="Never updated"; }
-	if (! $Message[25])  { $Message[25]="Visitors domains/countries"; }
-	if (! $Message[26])  { $Message[26]="hosts"; }
-	if (! $Message[27])  { $Message[27]="pages"; }
-	if (! $Message[28])  { $Message[28]="different pages-url"; }
-	if (! $Message[29])  { $Message[29]="Viewed"; }
-	if (! $Message[30])  { $Message[30]="Other words"; }
-	if (! $Message[31])  { $Message[31]="Pages not found"; }
-	if (! $Message[32])  { $Message[32]="HTTP Error codes"; }
-	if (! $Message[33])  { $Message[33]="Netscape versions"; }
-	if (! $Message[34])  { $Message[34]="IE versions"; }
-	if (! $Message[35])  { $Message[35]="Last Update"; }
-	if (! $Message[36])  { $Message[36]="Connect to site from"; }
-	if (! $Message[37])  { $Message[37]="Origin"; }
-	if (! $Message[38])  { $Message[38]="Direct address / Bookmarks"; }
-	if (! $Message[39])  { $Message[39]="Origin unknown"; }
-	if (! $Message[40])  { $Message[40]="Links from an Internet Search Engine"; }
-	if (! $Message[41])  { $Message[41]="Links from an external page (other web sites except search engines)"; }
-	if (! $Message[42])  { $Message[42]="Links from an internal page (other page on same site)"; }
-	if (! $Message[43])  { $Message[43]="Keyphrases used on search engines"; }
-	if (! $Message[44])  { $Message[44]="Keywords used on search engines"; }
-	if (! $Message[45])  { $Message[45]="Unresolved IP Address"; }
-	if (! $Message[46])  { $Message[46]="Unknown OS (Referer field)"; }
-	if (! $Message[47])  { $Message[47]="Required but not found URLs (HTTP code 404)"; }
-	if (! $Message[48])  { $Message[48]="IP Address"; }
-	if (! $Message[49])  { $Message[49]="Error&nbsp;Hits"; }
-	if (! $Message[50])  { $Message[50]="Unknown browsers (Referer field)"; }
-	if (! $Message[51])  { $Message[51]="different robots"; }
-	if (! $Message[52])  { $Message[52]="visits/visitor"; }
-	if (! $Message[53])  { $Message[53]="Robots/Spiders visitors"; }
-	if (! $Message[54])  { $Message[54]="Free realtime logfile analyzer for advanced web statistics"; }
-	if (! $Message[55])  { $Message[55]="of"; }
-	if (! $Message[56])  { $Message[56]="Pages"; }
-	if (! $Message[57])  { $Message[57]="Hits"; }
-	if (! $Message[58])  { $Message[58]="Versions"; }
-	if (! $Message[59])  { $Message[59]="Operating Systems"; }
-	if (! $Message[60])  { $Message[60]="Jan"; }
-	if (! $Message[61])  { $Message[61]="Feb"; }
-	if (! $Message[62])  { $Message[62]="Mar"; }
-	if (! $Message[63])  { $Message[63]="Apr"; }
-	if (! $Message[64])  { $Message[64]="May"; }
-	if (! $Message[65])  { $Message[65]="Jun"; }
-	if (! $Message[66])  { $Message[66]="Jul"; }
-	if (! $Message[67])  { $Message[67]="Aug"; }
-	if (! $Message[68])  { $Message[68]="Sep"; }
-	if (! $Message[69])  { $Message[69]="Oct"; }
-	if (! $Message[70])  { $Message[70]="Nov"; }
-	if (! $Message[71])  { $Message[71]="Dec"; }
-	if (! $Message[72])  { $Message[72]="Navigation"; }
-	if (! $Message[73])  { $Message[73]="Files type"; }
-	if (! $Message[74])  { $Message[74]="Update now"; }
-	if (! $Message[75])  { $Message[75]="Bandwidth"; }
-	if (! $Message[76])  { $Message[76]="Back to main page"; }
-	if (! $Message[77])  { $Message[77]="Top"; }
-	if (! $Message[78])  { $Message[78]="dd mmm yyyy - HH:MM"; }
-	if (! $Message[79])  { $Message[79]="Filter"; }
-	if (! $Message[80])  { $Message[80]="Full list"; }
-	if (! $Message[81])  { $Message[81]="Hosts"; }
-	if (! $Message[82])  { $Message[82]="Known"; }
-	if (! $Message[83])  { $Message[83]="Robots"; }
-	if (! $Message[84])  { $Message[84]="Sun"; }
-	if (! $Message[85])  { $Message[85]="Mon"; }
-	if (! $Message[86])  { $Message[86]="Tue"; }
-	if (! $Message[87])  { $Message[87]="Wed"; }
-	if (! $Message[88])  { $Message[88]="Thu"; }
-	if (! $Message[89])  { $Message[89]="Fri"; }
-	if (! $Message[90])  { $Message[90]="Sat"; }
-	if (! $Message[91])  { $Message[91]="Days of week"; }
-	if (! $Message[92])  { $Message[92]="Who"; }
-	if (! $Message[93])  { $Message[93]="When"; }
-	if (! $Message[94])  { $Message[94]="Authenticated users"; }
-	if (! $Message[95])  { $Message[95]="Min"; }
-	if (! $Message[96])  { $Message[96]="Average"; }
-	if (! $Message[97])  { $Message[97]="Max"; }
-	if (! $Message[98])  { $Message[98]="Web compression"; }
-	if (! $Message[99])  { $Message[99]="Bandwidth saved"; }
-	if (! $Message[100]) { $Message[100]="Compression on"; }
-	if (! $Message[101]) { $Message[101]="Compression result"; }
-	if (! $Message[102]) { $Message[102]="Total"; }
-	if (! $Message[103]) { $Message[103]="different keyphrases"; }
-	if (! $Message[104]) { $Message[104]="Entry"; }
-	if (! $Message[105]) { $Message[105]="Code"; }
-	if (! $Message[106]) { $Message[106]="Average size"; }
-	if (! $Message[107]) { $Message[107]="Links from a NewsGroup"; }
-	if (! $Message[108]) { $Message[108]="KB"; }
-	if (! $Message[109]) { $Message[109]="MB"; }
-	if (! $Message[110]) { $Message[110]="GB"; }
-	if (! $Message[111]) { $Message[111]="Grabber"; }
-	if (! $Message[112]) { $Message[112]="Yes"; }
-	if (! $Message[113]) { $Message[113]="No"; }
-	if (! $Message[114]) { $Message[114]="WhoIs info"; }
-	if (! $Message[115]) { $Message[115]="OK"; }
-	if (! $Message[116]) { $Message[116]="Exit"; }
-	if (! $Message[117]) { $Message[117]="Visits duration"; }
-	if (! $Message[118]) { $Message[118]="Close window"; }
-	if (! $Message[119]) { $Message[119]="Bytes"; }
-	if (! $Message[120]) { $Message[120]="Search&nbsp;Keyphrases"; }
-	if (! $Message[121]) { $Message[121]="Search&nbsp;Keywords"; }
-	if (! $Message[122]) { $Message[122]="different refering search engines"; }
-	if (! $Message[123]) { $Message[123]="different refering sites"; }
-	if (! $Message[124]) { $Message[124]="Other phrases"; }
-	if (! $Message[125]) { $Message[125]="Anonymous users"; }
-	if (! $Message[126]) { $Message[126]="Refering search engines"; }
-	if (! $Message[127]) { $Message[127]="Refering sites"; }
-	if (! $Message[128]) { $Message[128]="Summary"; }
-	if (! $Message[129]) { $Message[129]="Exact value not available in 'Year' view"; }
-	if (! $Message[130]) { $Message[130]="Data value arrays"; }
 
 	# Correct param for backward compatibility
-	if ($ShowFlagLinks eq "0") { $ShowFlagLinks = ""; }
-	if ($ShowFlagLinks eq "1") { $ShowFlagLinks = "en fr de nl es"; }
+	if ($ShowMonthDayStats eq "1")      { $ShowMonthDayStats = "UVPHB"; }
+	if ($ShowDaysOfWeekStats eq "1")    { $ShowDaysOfWeekStats = "PHBL"; }
+	if ($ShowHoursStats eq "1")         { $ShowHoursStats = "PHBL"; }
+	if ($ShowHostsStats eq "1")         { $ShowHostsStats = "PHBL"; }
 	if ($ShowAuthenticatedUsers eq "1") { $ShowAuthenticatedUsers = "PHBL"; }
 	if ($ShowPagesStats eq "1") 		{ $ShowPagesStats = "HBEX"; }
 	if ($ShowFileTypesStats eq "1") 	{ $ShowFileTypesStats = "HB"; }
@@ -5272,14 +5279,13 @@ EOF
 			if ($ShowDomainsStats)		 { print ($frame?"<tr><td class=AWL>":""); print "<a href=\"$linkpage#DOMAINS\"$targetpage>$Message[17]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
 			if ($ShowHostsStats)		 { print ($frame?"<tr><td class=AWL>":""); print "<a href=\"$linkpage#VISITOR\"$targetpage>".ucfirst($Message[81])."</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
 			if ($ShowHostsStats)		 { print ($frame?"<tr><td class=AWL> &nbsp; <img height=8 width=9 src=\"$DirIcons/other/page.png\" alt=\"...\"> ":""); print "<a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=allhosts":"$PROG$StaticLinks.allhosts.html")."\"$NewLinkTarget>$Message[80]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
-			if ($ShowHostsStats)		 { print ($frame?"<tr><td class=AWL> &nbsp; <img height=8 width=9 src=\"$DirIcons/other/page.png\" alt=\"...\"> ":""); print "<a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=lasthosts":"$PROG$StaticLinks.lasthosts.html")."\"$NewLinkTarget>$Message[9]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
+			if ($ShowHostsStats =~ /L/i) { print ($frame?"<tr><td class=AWL> &nbsp; <img height=8 width=9 src=\"$DirIcons/other/page.png\" alt=\"...\"> ":""); print "<a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=lasthosts":"$PROG$StaticLinks.lasthosts.html")."\"$NewLinkTarget>$Message[9]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
 			if ($ShowHostsStats)		 { print ($frame?"<tr><td class=AWL> &nbsp; <img height=8 width=9 src=\"$DirIcons/other/page.png\" alt=\"...\"> ":""); print "<a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=unknownip":"$PROG$StaticLinks.unknownip.html")."\"$NewLinkTarget>$Message[45]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
 			if ($ShowAuthenticatedUsers) { print ($frame?"<tr><td class=AWL>":""); print "<a href=\"$linkpage#LOGIN\"$targetpage>$Message[94]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
 			if ($ShowAuthenticatedUsers) { print ($frame?"<tr><td class=AWL> &nbsp; <img height=8 width=9 src=\"$DirIcons/other/page.png\" alt=\"...\"> ":""); print "<a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=alllogins":"$PROG$StaticLinks.alllogins.html")."\"$NewLinkTarget>$Message[80]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
 			if ($ShowAuthenticatedUsers =~ /L/i)	{ print ($frame?"<tr><td class=AWL> &nbsp; <img height=8 width=9 src=\"$DirIcons/other/page.png\" alt=\"...\"> ":""); print "<a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=lastlogins":"$PROG$StaticLinks.lastlogins.html")."\"$NewLinkTarget>$Message[9]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
 			if ($ShowEMailSenders)		 { print ($frame?"<tr><td class=AWL>":""); print "<a href=\"$linkpage#EMAILSENDERS\"$targetpage>$Message[0]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
 			if ($ShowEMailReceivers)	 { print ($frame?"<tr><td class=AWL>":""); print "<a href=\"$linkpage#EMAILRECEIVERS\"$targetpage>$Message[0]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
-			if ($ShowRobotsStats)		 { print ($frame?"<tr><td class=AWL>":""); print "<a href=\"$linkpage#ROBOTS\"$targetpage>$Message[53]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
 			if ($ShowRobotsStats)		 { print ($frame?"<tr><td class=AWL>":""); print "<a href=\"$linkpage#ROBOTS\"$targetpage>$Message[53]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
 			if ($ShowRobotsStats) 		 { print ($frame?"<tr><td class=AWL> &nbsp; <img height=8 width=9 src=\"$DirIcons/other/page.png\" alt=\"...\"> ":""); print "<a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=allrobots":"$PROG$StaticLinks.allrobots.html")."\"$NewLinkTarget>$Message[80]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
 			if ($ShowRobotsStats) 		 { print ($frame?"<tr><td class=AWL> &nbsp; <img height=8 width=9 src=\"$DirIcons/other/page.png\" alt=\"...\"> ":""); print "<a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=lastrobots":"$PROG$StaticLinks.lastrobots.html")."\"$NewLinkTarget>$Message[9]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
@@ -5458,12 +5464,12 @@ EOF
 			if ($max_h > 0) { $bredde_h=int($MonthHits{$YearRequired.$monthix}/$max_h*$BarHeight)+1; }
 			if ($max_k > 0) { $bredde_k=int($MonthBytes{$YearRequired.$monthix}/$max_k*$BarHeight)+1; }
 			print "<TD>";
-			print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_u\" HEIGHT=$bredde_u WIDTH=8 ALT=\"$Message[11]: $MonthUnique{$YearRequired.$monthix}\" title=\"$Message[11]: $MonthUnique{$YearRequired.$monthix}\">";
-			print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_v\" HEIGHT=$bredde_v WIDTH=8 ALT=\"$Message[10]: $MonthVisits{$YearRequired.$monthix}\" title=\"$Message[10]: $MonthVisits{$YearRequired.$monthix}\">";
+			if ($ShowMonthDayStats =~ /U/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_u\" HEIGHT=$bredde_u WIDTH=8 ALT=\"$Message[11]: $MonthUnique{$YearRequired.$monthix}\" title=\"$Message[11]: $MonthUnique{$YearRequired.$monthix}\">"; }
+			if ($ShowMonthDayStats =~ /V/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_v\" HEIGHT=$bredde_v WIDTH=8 ALT=\"$Message[10]: $MonthVisits{$YearRequired.$monthix}\" title=\"$Message[10]: $MonthVisits{$YearRequired.$monthix}\">"; }
 			print "&nbsp;";
-			print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_p\" HEIGHT=$bredde_p WIDTH=8 ALT=\"$Message[56]: $MonthPages{$YearRequired.$monthix}\" title=\"$Message[56]: $MonthPages{$YearRequired.$monthix}\">";
-			print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_h\" HEIGHT=$bredde_h WIDTH=8 ALT=\"$Message[57]: $MonthHits{$YearRequired.$monthix}\" title=\"$Message[57]: $MonthHits{$YearRequired.$monthix}\">";
-			print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_k\" HEIGHT=$bredde_k WIDTH=8 ALT=\"$Message[75]: ".Format_Bytes($MonthBytes{$YearRequired.$monthix})."\" title=\"$Message[75]: ".Format_Bytes($MonthBytes{$YearRequired.$monthix})."\">";
+			if ($ShowMonthDayStats =~ /P/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_p\" HEIGHT=$bredde_p WIDTH=8 ALT=\"$Message[56]: $MonthPages{$YearRequired.$monthix}\" title=\"$Message[56]: $MonthPages{$YearRequired.$monthix}\">"; }
+			if ($ShowMonthDayStats =~ /H/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_h\" HEIGHT=$bredde_h WIDTH=8 ALT=\"$Message[57]: $MonthHits{$YearRequired.$monthix}\" title=\"$Message[57]: $MonthHits{$YearRequired.$monthix}\">"; }
+			if ($ShowMonthDayStats =~ /B/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_k\" HEIGHT=$bredde_k WIDTH=8 ALT=\"$Message[75]: ".Format_Bytes($MonthBytes{$YearRequired.$monthix})."\" title=\"$Message[75]: ".Format_Bytes($MonthBytes{$YearRequired.$monthix})."\">"; }
 			print "</TD>\n";
 		}
 		print "</TR>\n";
@@ -5483,20 +5489,20 @@ EOF
 		# Show data array for month
 		print "<TABLE>\n";
 		print "<TR><TD width=\"15%\" bgcolor=\"#$color_TableBGRowTitle\">$Message[5]</TD>";
-		print "<TD width=\"17%\" bgcolor=\"#$color_u\" onmouseover=\"ShowTip(2);\" onmouseout=\"HideTip(2);\">$Message[11]</TD>";
-		print "<TD width=\"17%\" bgcolor=\"#$color_v\" onmouseover=\"ShowTip(1);\" onmouseout=\"HideTip(1);\">$Message[10]</TD>";
-		print "<TD width=\"17%\" bgcolor=\"#$color_p\" onmouseover=\"ShowTip(3);\" onmouseout=\"HideTip(3);\">$Message[56]</TD>";
-		print "<TD width=\"17%\" bgcolor=\"#$color_h\" onmouseover=\"ShowTip(4);\" onmouseout=\"HideTip(4);\">$Message[57]</TD>";
-		print "<TD width=\"17%\" bgcolor=\"#$color_k\" onmouseover=\"ShowTip(5);\" onmouseout=\"HideTip(5);\">$Message[75]</TD></TR>";
+		if ($ShowMonthDayStats =~ /U/i) { print "<TD width=\"17%\" bgcolor=\"#$color_u\" onmouseover=\"ShowTip(2);\" onmouseout=\"HideTip(2);\">$Message[11]</TD>"; }
+		if ($ShowMonthDayStats =~ /V/i) { print "<TD width=\"17%\" bgcolor=\"#$color_v\" onmouseover=\"ShowTip(1);\" onmouseout=\"HideTip(1);\">$Message[10]</TD>"; }
+		if ($ShowMonthDayStats =~ /P/i) { print "<TD width=\"17%\" bgcolor=\"#$color_p\" onmouseover=\"ShowTip(3);\" onmouseout=\"HideTip(3);\">$Message[56]</TD>"; }
+		if ($ShowMonthDayStats =~ /H/i) { print "<TD width=\"17%\" bgcolor=\"#$color_h\" onmouseover=\"ShowTip(4);\" onmouseout=\"HideTip(4);\">$Message[57]</TD>"; }
+		if ($ShowMonthDayStats =~ /B/i) { print "<TD width=\"17%\" bgcolor=\"#$color_k\" onmouseover=\"ShowTip(5);\" onmouseout=\"HideTip(5);\">$Message[75]</TD></TR>"; }
 		for (my $ix=1; $ix<=12; $ix++) {
 			my $monthix=($ix<10?"0$ix":"$ix");
 			print "<TR>";
 			print "<TD>",$MonthLib{$monthix},"</TD>";
-			print "<TD>",$MonthUnique{$YearRequired.$monthix}?$MonthUnique{$YearRequired.$monthix}:"0","</TD>";
-			print "<TD>",$MonthVisits{$YearRequired.$monthix}?$MonthVisits{$YearRequired.$monthix}:"0","</TD>";
-			print "<TD>",$MonthPages{$YearRequired.$monthix}?$MonthPages{$YearRequired.$monthix}:"0","</TD>";
-			print "<TD>",$MonthHits{$YearRequired.$monthix}?$MonthHits{$YearRequired.$monthix}:"0","</TD>";
-			print "<TD>",Format_Bytes(int($MonthBytes{$YearRequired.$monthix})),"</TD>";
+			if ($ShowMonthDayStats =~ /U/i) { print "<TD>",$MonthUnique{$YearRequired.$monthix}?$MonthUnique{$YearRequired.$monthix}:"0","</TD>"; }
+			if ($ShowMonthDayStats =~ /V/i) { print "<TD>",$MonthVisits{$YearRequired.$monthix}?$MonthVisits{$YearRequired.$monthix}:"0","</TD>"; }
+			if ($ShowMonthDayStats =~ /P/i) { print "<TD>",$MonthPages{$YearRequired.$monthix}?$MonthPages{$YearRequired.$monthix}:"0","</TD>"; }
+			if ($ShowMonthDayStats =~ /H/i) { print "<TD>",$MonthHits{$YearRequired.$monthix}?$MonthHits{$YearRequired.$monthix}:"0","</TD>"; }
+			if ($ShowMonthDayStats =~ /B/i) { print "<TD>",Format_Bytes(int($MonthBytes{$YearRequired.$monthix})),"</TD>"; }
 			print "</TR>\n";
 		}
 		print "</TABLE>\n<br>";
@@ -5562,10 +5568,10 @@ EOF
 			if ($max_h > 0) { $bredde_h=int(($DayHits{$year.$month.$day}||0)/$max_h*$BarHeight)+1; }
 			if ($max_k > 0) { $bredde_k=int(($DayBytes{$year.$month.$day}||0)/$max_k*$BarHeight)+1; }
 			print "<TD>";
-			print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_v\" HEIGHT=$bredde_v WIDTH=4 ALT=\"$Message[10]: ".int($DayVisits{$year.$month.$day}||0)."\" title=\"$Message[10]: ".int($DayVisits{$year.$month.$day}||0)."\">";
-			print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_p\" HEIGHT=$bredde_p WIDTH=4 ALT=\"$Message[56]: ".int($DayPages{$year.$month.$day}||0)."\" title=\"$Message[56]: ".int($DayPages{$year.$month.$day}||0)."\">";
-			print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_h\" HEIGHT=$bredde_h WIDTH=4 ALT=\"$Message[57]: ".int($DayHits{$year.$month.$day}||0)."\" title=\"$Message[57]: ".int($DayHits{$year.$month.$day}||0)."\">";
-			print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_k\" HEIGHT=$bredde_k WIDTH=4 ALT=\"$Message[75]: ".Format_Bytes($DayBytes{$year.$month.$day})."\" title=\"$Message[75]: ".Format_Bytes($DayBytes{$year.$month.$day})."\">";
+			if ($ShowMonthDayStats =~ /V/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_v\" HEIGHT=$bredde_v WIDTH=4 ALT=\"$Message[10]: ".int($DayVisits{$year.$month.$day}||0)."\" title=\"$Message[10]: ".int($DayVisits{$year.$month.$day}||0)."\">"; }
+			if ($ShowMonthDayStats =~ /P/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_p\" HEIGHT=$bredde_p WIDTH=4 ALT=\"$Message[56]: ".int($DayPages{$year.$month.$day}||0)."\" title=\"$Message[56]: ".int($DayPages{$year.$month.$day}||0)."\">"; }
+			if ($ShowMonthDayStats =~ /H/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_h\" HEIGHT=$bredde_h WIDTH=4 ALT=\"$Message[57]: ".int($DayHits{$year.$month.$day}||0)."\" title=\"$Message[57]: ".int($DayHits{$year.$month.$day}||0)."\">"; }
+			if ($ShowMonthDayStats =~ /B/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_k\" HEIGHT=$bredde_k WIDTH=4 ALT=\"$Message[75]: ".Format_Bytes($DayBytes{$year.$month.$day})."\" title=\"$Message[75]: ".Format_Bytes($DayBytes{$year.$month.$day})."\">"; }
 			print "</TD>\n";
 		}
 		print "<TD>&nbsp;</TD>";
@@ -5579,10 +5585,10 @@ EOF
 		$avg_day_p=sprintf("%.2f",$avg_day_p);
 		$avg_day_h=sprintf("%.2f",$avg_day_h);
 		$avg_day_k=sprintf("%.2f",$avg_day_k);
-		print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_v\" HEIGHT=$bredde_v WIDTH=4 ALT=\"$Message[10]: $avg_day_v\" title=\"$Message[10]: $avg_day_v\">";
-		print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_p\" HEIGHT=$bredde_p WIDTH=4 ALT=\"$Message[56]: $avg_day_p\" title=\"$Message[56]: $avg_day_p\">";
-		print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_h\" HEIGHT=$bredde_h WIDTH=4 ALT=\"$Message[57]: $avg_day_h\" title=\"$Message[57]: $avg_day_h\">";
-		print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_k\" HEIGHT=$bredde_k WIDTH=4 ALT=\"$Message[75]: ".Format_Bytes($avg_day_k)."\" title=\"$Message[75]: ".Format_Bytes($avg_day_k)."\">";
+		if ($ShowMonthDayStats =~ /V/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_v\" HEIGHT=$bredde_v WIDTH=4 ALT=\"$Message[10]: $avg_day_v\" title=\"$Message[10]: $avg_day_v\">"; }
+		if ($ShowMonthDayStats =~ /P/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_p\" HEIGHT=$bredde_p WIDTH=4 ALT=\"$Message[56]: $avg_day_p\" title=\"$Message[56]: $avg_day_p\">"; }
+		if ($ShowMonthDayStats =~ /H/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_h\" HEIGHT=$bredde_h WIDTH=4 ALT=\"$Message[57]: $avg_day_h\" title=\"$Message[57]: $avg_day_h\">"; }
+		if ($ShowMonthDayStats =~ /B/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_k\" HEIGHT=$bredde_k WIDTH=4 ALT=\"$Message[75]: ".Format_Bytes($avg_day_k)."\" title=\"$Message[75]: ".Format_Bytes($avg_day_k)."\">"; }
 		print "</TD>";
 		print "<TD></TD>\n";
 		print "</TR>\n";
@@ -5608,10 +5614,10 @@ EOF
 		# Show data array for days
 		print "<TABLE>\n";
 		print "<TR><TD width=\"20%\" bgcolor=\"#$color_TableBGRowTitle\">$Message[4]</TD>";
-		print "<TD width=\"20%\" bgcolor=\"#$color_v\" onmouseover=\"ShowTip(1);\" onmouseout=\"HideTip(1);\">$Message[10]</TD>";
-		print "<TD width=\"20%\" bgcolor=\"#$color_p\" onmouseover=\"ShowTip(3);\" onmouseout=\"HideTip(3);\">$Message[56]</TD>";
-		print "<TD width=\"20%\" bgcolor=\"#$color_h\" onmouseover=\"ShowTip(4);\" onmouseout=\"HideTip(4);\">$Message[57]</TD>";
-		print "<TD width=\"20%\" bgcolor=\"#$color_k\" onmouseover=\"ShowTip(5);\" onmouseout=\"HideTip(5);\">$Message[75]</TD></TR>";
+		if ($ShowMonthDayStats =~ /V/i) { print "<TD width=\"20%\" bgcolor=\"#$color_v\" onmouseover=\"ShowTip(1);\" onmouseout=\"HideTip(1);\">$Message[10]</TD>"; }
+		if ($ShowMonthDayStats =~ /P/i) { print "<TD width=\"20%\" bgcolor=\"#$color_p\" onmouseover=\"ShowTip(3);\" onmouseout=\"HideTip(3);\">$Message[56]</TD>"; }
+		if ($ShowMonthDayStats =~ /H/i) { print "<TD width=\"20%\" bgcolor=\"#$color_h\" onmouseover=\"ShowTip(4);\" onmouseout=\"HideTip(4);\">$Message[57]</TD>"; }
+		if ($ShowMonthDayStats =~ /B/i) { print "<TD width=\"20%\" bgcolor=\"#$color_k\" onmouseover=\"ShowTip(5);\" onmouseout=\"HideTip(5);\">$Message[75]</TD></TR>"; }
 		foreach my $daycursor ($firstdaytoshowtime..$lastdaytoshowtime) {
 			$daycursor =~ /^(\d\d\d\d)(\d\d)(\d\d)/;
 			my $year=$1; my $month=$2; my $day=$3;
@@ -5619,10 +5625,10 @@ EOF
 			my $dayofweekcursor=DayOfWeek($day,$month,$year);
 			print "<TR>";
 			print "<TD".($dayofweekcursor=~/[06]/?" bgcolor=\"#$color_weekend\"":"").">",Format_Date("$year$month$day"."000000",2),"</TD>";
-			print "<TD".($dayofweekcursor=~/[06]/?" bgcolor=\"#$color_weekend\"":"").">",$DayVisits{$year.$month.$day}?$DayVisits{$year.$month.$day}:"0","</TD>";
-			print "<TD".($dayofweekcursor=~/[06]/?" bgcolor=\"#$color_weekend\"":"").">",$DayPages{$year.$month.$day}?$DayPages{$year.$month.$day}:"0","</TD>";
-			print "<TD".($dayofweekcursor=~/[06]/?" bgcolor=\"#$color_weekend\"":"").">",$DayHits{$year.$month.$day}?$DayHits{$year.$month.$day}:"0","</TD>";
-			print "<TD".($dayofweekcursor=~/[06]/?" bgcolor=\"#$color_weekend\"":"").">",Format_Bytes(int($DayBytes{$year.$month.$day})),"</TD>";
+			if ($ShowMonthDayStats =~ /V/i) { print "<TD".($dayofweekcursor=~/[06]/?" bgcolor=\"#$color_weekend\"":"").">",$DayVisits{$year.$month.$day}?$DayVisits{$year.$month.$day}:"0","</TD>"; }
+			if ($ShowMonthDayStats =~ /P/i) { print "<TD".($dayofweekcursor=~/[06]/?" bgcolor=\"#$color_weekend\"":"").">",$DayPages{$year.$month.$day}?$DayPages{$year.$month.$day}:"0","</TD>"; }
+			if ($ShowMonthDayStats =~ /H/i) { print "<TD".($dayofweekcursor=~/[06]/?" bgcolor=\"#$color_weekend\"":"").">",$DayHits{$year.$month.$day}?$DayHits{$year.$month.$day}:"0","</TD>"; }
+			if ($ShowMonthDayStats =~ /B/i) { print "<TD".($dayofweekcursor=~/[06]/?" bgcolor=\"#$color_weekend\"":"").">",Format_Bytes(int($DayBytes{$year.$month.$day})),"</TD>"; }
 			print "</TR>\n";
 		}
 		print "</TABLE>\n<br>";
@@ -5633,24 +5639,28 @@ EOF
 		&html_end;
 		exit(0);
 	}
-	if ($HTMLOutput eq "allhosts") {
+	if ($HTMLOutput eq "allhosts" || $HTMLOutput eq "lasthosts") {
 		print "$Center<a name=\"HOSTSLIST\">&nbsp;</a><BR>\n";
-		&tab_head($Message[81],19);
+		my $title="";
+		if ($HTMLOutput eq "allhosts")  { $title.="$Message[81]"; }
+		if ($HTMLOutput eq "lasthosts") { $title.="$Message[9]"; }
+		&tab_head("$title",19);
 		if ($MonthRequired ne "year") { print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[81] : $TotalHostsKnown $Message[82], $TotalHostsUnknown $Message[1] - $TotalUnique $Message[11]</TH>"; }
 		else { print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[81] : ".(scalar keys %_host_h)."</TH>"; }
 		if ($ShowLinksToWhoIs && $LinksToWhoIs) { print "<TH width=80>$Message[114]</TH>"; }
 		print "<TH bgcolor=\"#$color_p\" width=80>$Message[56]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH bgcolor=\"#$color_k\" width=80>$Message[75]</TH><TH width=120>$Message[9]</TH></TR>\n";
 		$total_p=$total_h=$total_k=0;
 		my $count=0;
-		&BuildKeyList($MaxRowsInHTMLOutput,$MinHitHost,\%_host_h,\%_host_p);
+		if ($HTMLOutput eq "allhosts")  { &BuildKeyList($MaxRowsInHTMLOutput,$MinHitHost,\%_host_h,\%_host_p); }
+		if ($HTMLOutput eq "lasthosts") { &BuildKeyList($MaxRowsInHTMLOutput,$MinHitHost,\%_host_h,\%_host_l); }
 		foreach my $key (@keylist) {
 			my $host=CleanFromCSSA($key);
 			print "<tr><td CLASS=AWL>".($_robot_l{$key}?"<b>":"")."$host".($_robot_l{$key}?"</b>":"")."</td>";
 			if ($ShowLinksToWhoIs && $LinksToWhoIs) { ShowWhoIsCell($key); }
-			print "<TD>".($_host_p{$key}?$_host_p{$key}:"&nbsp;")."</TD><TD>$_host_h{$key}</TD><TD>".Format_Bytes($_host_k{$key})."</TD>";
-			if ($_host_l{$key}) { print "<td>".Format_Date($_host_l{$key},1)."</td>"; }
-			else { print "<td>-</td>"; }
-			print "</tr>\n";
+			if ($ShowHostsStats =~ /P/i) { print "<TD>".($_host_p{$key}?$_host_p{$key}:"&nbsp;")."</TD>"; }
+			if ($ShowHostsStats =~ /H/i) { print "<TD>$_host_h{$key}</TD>"; }
+			if ($ShowHostsStats =~ /B/i) { print "<TD>".Format_Bytes($_host_k{$key})."</TD>"; }
+			if ($ShowHostsStats =~ /L/i) { print "<TD>".($_host_l{$key}?Format_Date($_host_l{$key},1):"-")."</TD>"; }
 			$total_p += $_host_p{$key};
 			$total_h += $_host_h{$key};
 			$total_k += $_host_k{$key}||0;
@@ -5663,43 +5673,11 @@ EOF
 		if ($rest_p > 0 || $rest_h > 0 || $rest_k > 0) {	# All other visitors (known or not)
 			print "<TR><TD CLASS=AWL><font color=\"#$color_other\">$Message[2]</font></TD>";
 			if ($ShowLinksToWhoIs && $LinksToWhoIs) { ShowWhoIsCell(""); }
-			print "<TD>$rest_p</TD><TD>".($rest_h?$rest_h:"&nbsp;")."</TD><TD>".Format_Bytes($rest_k)."</TD><TD>&nbsp;</TD></TR>\n";
-		}
-		&tab_end;
-		&html_end;
-		exit(0);
-	}
-	if ($HTMLOutput eq "lasthosts") {
-		print "$Center<a name=\"HOSTSLIST\">&nbsp;</a><BR>\n";
-		&tab_head($Message[9],19);
-		if ($MonthRequired ne "year") { print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[81] : $TotalHostsKnown $Message[82], $TotalHostsUnknown $Message[1] - $TotalUnique $Message[11]</TH>"; }
-		else { print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[81] : ".(scalar keys %_host_h)."</TH>"; }
-		if ($ShowLinksToWhoIs && $LinksToWhoIs) { print "<TH width=80>$Message[114]</TH>"; }
-		print "<TH bgcolor=\"#$color_p\" width=80>$Message[56]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH bgcolor=\"#$color_k\" width=80>$Message[75]</TH><TH width=120>$Message[9]</TH></TR>\n";
-		$total_p=$total_h=$total_k=0;
-		my $count=0;
-		&BuildKeyList($MaxRowsInHTMLOutput,$MinHitHost,\%_host_h,\%_host_l);
-		foreach my $key (@keylist) {
-			my $host=CleanFromCSSA($key);
-			print "<tr><td CLASS=AWL>".($_robot_l{$key}?"<b>":"")."$host".($_robot_l{$key}?"</b>":"")."</td>";
-			if ($ShowLinksToWhoIs && $LinksToWhoIs) { ShowWhoIsCell($key); }
-			print "<TD>".($_host_p{$key}?$_host_p{$key}:"&nbsp;")."</TD><TD>$_host_h{$key}</TD><TD>".Format_Bytes($_host_k{$key})."</TD>";
-			if ($_host_l{$key}) { print "<td>".Format_Date($_host_l{$key},1)."</td>"; }
-			else { print "<td>-</td>"; }
-			print "</tr>\n";
-			$total_p += $_host_p{$key};
-			$total_h += $_host_h{$key};
-			$total_k += $_host_k{$key}||0;
-			$count++;
-		}
-		if ($Debug) { debug("Total real / shown : $TotalPages / $total_p - $TotalHits / $total_h - $TotalBytes / $total_h",2); }
-		$rest_p=$TotalPages-$total_p;
-		$rest_h=$TotalHits-$total_h;
-		$rest_k=$TotalBytes-$total_k;
-		if ($rest_p > 0 || $rest_h > 0 || $rest_k > 0) {	# All other visitors (known or not)
-			print "<TR><TD CLASS=AWL><font color=\"#$color_other\">$Message[2]</font></TD>";
-			if ($ShowLinksToWhoIs && $LinksToWhoIs) { ShowWhoIsCell(""); }
-			print "<TD>$rest_p</TD><TD>$rest_h</TD><TD>".Format_Bytes($rest_k)."</TD><TD>&nbsp;</TD></TR>\n";
+			if ($ShowHostsStats =~ /P/i) { print "<TD>$rest_p</TD>"; }
+			if ($ShowHostsStats =~ /H/i) { print "<TD>".($rest_h?$rest_h:"&nbsp;")."</TD>"; }
+			if ($ShowHostsStats =~ /B/i) { print "<TD>".Format_Bytes($rest_k)."</TD>"; }
+			if ($ShowHostsStats =~ /L/i) { print "<TD>&nbsp;</TD>"; }
+			print "</TR>\n";
 		}
 		&tab_end;
 		&html_end;
@@ -5707,7 +5685,7 @@ EOF
 	}
 	if ($HTMLOutput eq "unknownip") {
 		print "$Center<a name=\"UNKOWNIP\">&nbsp;</a><BR>\n";
-		&tab_head($Message[45],19);
+		&tab_head("$Message[45]",19);
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>".(scalar keys %_host_h)." $Message[1]</TH>";
 		if ($ShowLinksToWhoIs && $LinksToWhoIs) { print "<TH width=80>$Message[114]</TH>"; }
 		print "<TH bgcolor=\"#$color_p\" width=80>$Message[56]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH bgcolor=\"#$color_k\" width=80>$Message[75]</TH><TH width=120>$Message[9]</TH></TR>\n";
@@ -5718,9 +5696,10 @@ EOF
 			my $host=CleanFromCSSA($key);
 			print "<tr><td CLASS=AWL>$host</td>";
 			if ($ShowLinksToWhoIs && $LinksToWhoIs) { ShowWhoIsCell($key); }
-			print "<TD>".($_host_p{$key}||"&nbsp")."</TD><TD>$_host_h{$key}</TD><TD>".Format_Bytes($_host_k{$key})."</TD>";
-			if ($_host_l{$key}) { print "<td>".Format_Date($_host_l{$key},1)."</td>"; }
-			else { print "<td>-</td>"; }
+			if ($ShowHostsStats =~ /P/i) { print "<TD>".($_host_p{$key}?$_host_p{$key}:"&nbsp;")."</TD>"; }
+			if ($ShowHostsStats =~ /H/i) { print "<TD>$_host_h{$key}</TD>"; }
+			if ($ShowHostsStats =~ /B/i) { print "<TD>".Format_Bytes($_host_k{$key})."</TD>"; }
+			if ($ShowHostsStats =~ /L/i) { print "<TD>".($_host_l{$key}?Format_Date($_host_l{$key},1):"-")."</TD>"; }
 			print "</tr>\n";
 			$total_p += $_host_p{$key};
 			$total_h += $_host_h{$key};
@@ -5734,7 +5713,11 @@ EOF
 		if ($rest_p > 0 || $rest_h > 0 || $rest_k > 0) {	# All other visitors (known or not)
 			print "<TR><TD CLASS=AWL><font color=\"#$color_other\">$Message[82]</font></TD>";
 			if ($ShowLinksToWhoIs && $LinksToWhoIs) { ShowWhoIsCell(""); }
-			print "<TD>$rest_p</TD><TD>$rest_h</TD><TD>".Format_Bytes($rest_k)."</TD><TD>&nbsp;</TD></TR>\n";
+			if ($ShowHostsStats =~ /P/i) { print "<TD>$rest_p</TD>"; }
+			if ($ShowHostsStats =~ /H/i) { print "<TD>".($rest_h?$rest_h:"&nbsp;")."</TD>"; }
+			if ($ShowHostsStats =~ /B/i) { print "<TD>".Format_Bytes($rest_k)."</TD>"; }
+			if ($ShowHostsStats =~ /L/i) { print "<TD>&nbsp;</TD>"; }
+			print "</TR>\n";
 		}
 		&tab_end;
 		&html_end;
@@ -5784,20 +5767,23 @@ EOF
 		&html_end;
 		exit(0);
 	}
-	if ($HTMLOutput eq "allrobots") {
+	if ($HTMLOutput eq "allrobots" || $HTMLOutput eq "lastrobots") {
 		print "$Center<a name=\"ROBOTSLIST\">&nbsp;</a><BR>\n";
-		&tab_head($Message[53],19);
+		my $title="";
+		if ($HTMLOutput eq "allrobots")  { $title.="$Message[53]"; }
+		if ($HTMLOutput eq "lastrobots") { $title.="$Message[9]"; }
+		&tab_head("$title",19);
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>".(scalar keys %_robot_h)." $Message[51]</TH>";
 		print "<TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH bgcolor=\"#$color_k\" width=80>$Message[75]</TH><TH width=120>$Message[9]</TH></TR>\n";
 		$total_p=$total_h=$total_k=0;
 		my $count=0;
-		&BuildKeyList($MaxRowsInHTMLOutput,$MinHitRobot,\%_robot_h,\%_robot_h);
+		if ($HTMLOutput eq "allrobots")  { &BuildKeyList($MaxRowsInHTMLOutput,$MinHitRobot,\%_robot_h,\%_robot_h); }
+		if ($HTMLOutput eq "lastrobots") { &BuildKeyList($MaxRowsInHTMLOutput,$MinHitRobot,\%_robot_h,\%_robot_l); }
 		foreach my $key (@keylist) {
 			print "<TR><TD CLASS=AWL>".($RobotsHashIDLib{$key}?$RobotsHashIDLib{$key}:$key)."</TD>";
 			print "<TD>$_robot_h{$key}</TD>";
 			print "<TD>".Format_Bytes($_robot_k{$key})."</TD>";
-			if ($_robot_l{$key}) { print "<td>".Format_Date($_robot_l{$key},1)."</td>"; }
-			else { print "<td>-</td>"; }
+			print "<TD>".($_robot_l{$key}?Format_Date($_robot_l{$key},1):"-")."</TD>";
 			print "</TR>\n";
 			#$total_p += $_robot_p{$key}||0;
 			$total_h += $_robot_h{$key};
@@ -5813,42 +5799,11 @@ EOF
 		$rest_k=$TotalBytesRobots-$total_k;
 		if ($Debug) { debug("Total real / shown : $TotalPagesRobots / $total_p - $TotalHitsRobots / $total_h - $TotalBytesRobots / $total_k",2); }
 		if ($rest_p > 0 || $rest_h > 0 || $rest_k > 0) {	# All other login
-			print "<TR><TD CLASS=AWL><font color=\"#$color_other\">$Message[2]</font></TD><TD>$rest_h</TD><TD>".(Format_Bytes($rest_k))."</TD><TD>&nbsp;</TD></TR>\n";
-		}
-		&tab_end;
-		&html_end;
-		exit(0);
-	}
-	if ($HTMLOutput eq "lastrobots") {
-		print "$Center<a name=\"ROBOTSLIST\">&nbsp;</a><BR>\n";
-		&tab_head($Message[9],19);
-		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>".(scalar keys %_robot_h)." $Message[51]</TH>";
-		print "<TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH bgcolor=\"#$color_k\" width=80>$Message[75]</TH><TH width=120>$Message[9]</TH></TR>\n";
-		$total_p=$total_h=$total_k=0;
-		my $count=0;
-		&BuildKeyList($MaxRowsInHTMLOutput,$MinHitRobot,\%_robot_h,\%_robot_l);
-		foreach my $key (@keylist) {
-			print "<TR><TD CLASS=AWL>".($RobotsHashIDLib{$key}?$RobotsHashIDLib{$key}:$key)."</TD>";
-			print "<TD>$_robot_h{$key}</TD>";
-			print "<TD>".Format_Bytes($_robot_k{$key})."</TD>";
-			if ($_robot_l{$key}) { print "<td>".Format_Date($_robot_l{$key},1)."</td>"; }
-			else { print "<td>-</td>"; }
+			print "<TR><TD CLASS=AWL><font color=\"#$color_other\">$Message[2]</font></TD>";
+			print "<TD>$rest_h</TD>";
+			print "<TD>".(Format_Bytes($rest_k))."</TD>";
+			print "<TD>&nbsp;</TD>";
 			print "</TR>\n";
-			#$total_p += $_robot_p{$key}||0;
-			$total_h += $_robot_h{$key};
-			$total_k += $_robot_k{$key}||0;
-			$count++;
-		}
-		# For bots we need to count Totals
-		my $TotalPagesRobots = 0; #foreach my $val (values %_robot_p) { $TotalPagesRobots+=$val; }
-		my $TotalHitsRobots = 0; foreach my $val (values %_robot_h) { $TotalHitsRobots+=$val; }
-		my $TotalBytesRobots = 0; foreach my $val (values %_robot_k) { $TotalBytesRobots+=$val; }
-		$rest_p=0;	#$rest_p=$TotalPagesRobots-$total_p;
-		$rest_h=$TotalHitsRobots-$total_h;
-		$rest_k=$TotalBytesRobots-$total_k;
-		if ($Debug) { debug("Total real / shown : $TotalPagesRobots / $total_p - $TotalHitsRobots / $total_h - $TotalBytesRobots / $total_k",2); }
-		if ($rest_p > 0 || $rest_h > 0 || $rest_k > 0) {	# All other login
-			print "<TR><TD CLASS=AWL><font color=\"#$color_other\">$Message[2]</font></TD><TD>$rest_h</TD><TD>".(Format_Bytes($rest_k))."</TD><TD>&nbsp;</TD></TR>\n";
 		}
 		&tab_end;
 		&html_end;
@@ -6242,21 +6197,24 @@ EOF
 		else { print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TD>NA</TD>"; }
 		if ($LastTime) { print "<TD>".Format_Date($LastTime,0)."</TD></TR>\n"; }
 		else { print "<TD>NA</TD></TR>\n"; }
+		# Show main indicators
 		print "<TR>";
-		print "<TD width=\"20%\" bgcolor=\"#$color_u\" onmouseover=\"ShowTip(2);\" onmouseout=\"HideTip(2);\">$Message[11]</TD>";
-		print "<TD width=\"20%\" bgcolor=\"#$color_v\" onmouseover=\"ShowTip(1);\" onmouseout=\"HideTip(1);\">$Message[10]</TD>";
-		print "<TD width=\"20%\" bgcolor=\"#$color_p\" onmouseover=\"ShowTip(3);\" onmouseout=\"HideTip(3);\">$Message[56]</TD>";
-		print "<TD width=\"20%\" bgcolor=\"#$color_h\" onmouseover=\"ShowTip(4);\" onmouseout=\"HideTip(4);\">$Message[57]</TD>";
-		print "<TD width=\"20%\" bgcolor=\"#$color_k\" onmouseover=\"ShowTip(5);\" onmouseout=\"HideTip(5);\">$Message[75]</TD>";
+		if ($ShowMonthDayStats =~ /U/i) { print "<TD width=\"20%\" bgcolor=\"#$color_u\" onmouseover=\"ShowTip(2);\" onmouseout=\"HideTip(2);\">$Message[11]</TD>"; } else { print "<TD>&nbsp;</TD>"; }
+		if ($ShowMonthDayStats =~ /V/i) { print "<TD width=\"20%\" bgcolor=\"#$color_v\" onmouseover=\"ShowTip(1);\" onmouseout=\"HideTip(1);\">$Message[10]</TD>"; } else { print "<TD>&nbsp;</TD>"; }
+		if ($ShowMonthDayStats =~ /P/i) { print "<TD width=\"20%\" bgcolor=\"#$color_p\" onmouseover=\"ShowTip(3);\" onmouseout=\"HideTip(3);\">$Message[56]</TD>"; } else { print "<TD>&nbsp;</TD>"; }
+		if ($ShowMonthDayStats =~ /H/i) { print "<TD width=\"20%\" bgcolor=\"#$color_h\" onmouseover=\"ShowTip(4);\" onmouseout=\"HideTip(4);\">$Message[57]</TD>"; } else { print "<TD>&nbsp;</TD>"; }
+		if ($ShowMonthDayStats =~ /B/i) { print "<TD width=\"20%\" bgcolor=\"#$color_k\" onmouseover=\"ShowTip(5);\" onmouseout=\"HideTip(5);\">$Message[75]</TD>"; } else { print "<TD>&nbsp;</TD>"; }
 		print "</TR>\n";
 		print "<TR>";
-		print "<TD>".($MonthRequired eq "year"?"<b><= $TotalUnique</b><br>$Message[129]":"<b>$TotalUnique</b><br>&nbsp;")."</TD>";
-		print "<TD><b>$TotalVisits</b><br>($RatioVisits&nbsp;$Message[52])</TD>";
-		print "<TD><b>$TotalPages</b><br>($RatioPages&nbsp;".lc($Message[56]."/".$Message[12]).")</TD>";
-		print "<TD><b>$TotalHits</b><br>($RatioHits&nbsp;".lc($Message[57]."/".$Message[12]).")</TD>";
-		print "<TD><b>".Format_Bytes(int($TotalBytes))."</b><br>($RatioBytes&nbsp;$Message[108]/".lc($Message[12]).")</TD>";
+		if ($ShowMonthDayStats =~ /U/i) { print "<TD>".($MonthRequired eq "year"?"<b><= $TotalUnique</b><br>$Message[129]":"<b>$TotalUnique</b><br>&nbsp;")."</TD>"; } else { print "<TD>&nbsp;</TD>"; }
+		if ($ShowMonthDayStats =~ /V/i) { print "<TD><b>$TotalVisits</b><br>($RatioVisits&nbsp;$Message[52])</TD>"; } else { print "<TD>&nbsp;</TD>"; }
+		if ($ShowMonthDayStats =~ /P/i) { print "<TD><b>$TotalPages</b><br>($RatioPages&nbsp;".lc($Message[56]."/".$Message[12]).")</TD>"; } else { print "<TD>&nbsp;</TD>"; }
+		if ($ShowMonthDayStats =~ /H/i) { print "<TD><b>$TotalHits</b><br>($RatioHits&nbsp;".lc($Message[57]."/".$Message[12]).")</TD>"; } else { print "<TD>&nbsp;</TD>"; }
+		if ($ShowMonthDayStats =~ /B/i) { print "<TD><b>".Format_Bytes(int($TotalBytes))."</b><br>($RatioBytes&nbsp;$Message[108]/".lc($Message[12]).")</TD>"; } else { print "<TD>&nbsp;</TD>"; }
 		print "</TR>\n";
-		print "<TR valign=bottom><TD align=center colspan=5>";
+
+		my $colspan=5;
+		print "<TR valign=bottom><TD align=center colspan=$colspan>";
 
 		# Show monthly stats
 		print "<CENTER>";
@@ -6280,12 +6238,12 @@ EOF
 			if ($max_h > 0) { $bredde_h=int($MonthHits{$YearRequired.$monthix}/$max_h*$BarHeight)+1; }
 			if ($max_k > 0) { $bredde_k=int($MonthBytes{$YearRequired.$monthix}/$max_k*$BarHeight)+1; }
 			print "<TD>";
-			print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_u\" HEIGHT=$bredde_u WIDTH=8 ALT=\"$Message[11]: $MonthUnique{$YearRequired.$monthix}\" title=\"$Message[11]: $MonthUnique{$YearRequired.$monthix}\">";
-			print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_v\" HEIGHT=$bredde_v WIDTH=8 ALT=\"$Message[10]: $MonthVisits{$YearRequired.$monthix}\" title=\"$Message[10]: $MonthVisits{$YearRequired.$monthix}\">";
+			if ($ShowMonthDayStats =~ /U/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_u\" HEIGHT=$bredde_u WIDTH=8 ALT=\"$Message[11]: $MonthUnique{$YearRequired.$monthix}\" title=\"$Message[11]: $MonthUnique{$YearRequired.$monthix}\">"; }
+			if ($ShowMonthDayStats =~ /V/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_v\" HEIGHT=$bredde_v WIDTH=8 ALT=\"$Message[10]: $MonthVisits{$YearRequired.$monthix}\" title=\"$Message[10]: $MonthVisits{$YearRequired.$monthix}\">"; }
 			print "&nbsp;";
-			print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_p\" HEIGHT=$bredde_p WIDTH=8 ALT=\"$Message[56]: $MonthPages{$YearRequired.$monthix}\" title=\"$Message[56]: $MonthPages{$YearRequired.$monthix}\">";
-			print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_h\" HEIGHT=$bredde_h WIDTH=8 ALT=\"$Message[57]: $MonthHits{$YearRequired.$monthix}\" title=\"$Message[57]: $MonthHits{$YearRequired.$monthix}\">";
-			print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_k\" HEIGHT=$bredde_k WIDTH=8 ALT=\"$Message[75]: ".Format_Bytes($MonthBytes{$YearRequired.$monthix})."\" title=\"$Message[75]: ".Format_Bytes($MonthBytes{$YearRequired.$monthix})."\">";
+			if ($ShowMonthDayStats =~ /P/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_p\" HEIGHT=$bredde_p WIDTH=8 ALT=\"$Message[56]: $MonthPages{$YearRequired.$monthix}\" title=\"$Message[56]: $MonthPages{$YearRequired.$monthix}\">"; }
+			if ($ShowMonthDayStats =~ /H/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_h\" HEIGHT=$bredde_h WIDTH=8 ALT=\"$Message[57]: $MonthHits{$YearRequired.$monthix}\" title=\"$Message[57]: $MonthHits{$YearRequired.$monthix}\">"; }
+			if ($ShowMonthDayStats =~ /B/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_k\" HEIGHT=$bredde_k WIDTH=8 ALT=\"$Message[75]: ".Format_Bytes($MonthBytes{$YearRequired.$monthix})."\" title=\"$Message[75]: ".Format_Bytes($MonthBytes{$YearRequired.$monthix})."\">"; }
 			print "</TD>\n";
 		}
 		print "</TR>\n";
@@ -6354,10 +6312,10 @@ EOF
 			if ($max_h > 0) { $bredde_h=int(($DayHits{$year.$month.$day}||0)/$max_h*$BarHeight)+1; }
 			if ($max_k > 0) { $bredde_k=int(($DayBytes{$year.$month.$day}||0)/$max_k*$BarHeight)+1; }
 			print "<TD>";
-			print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_v\" HEIGHT=$bredde_v WIDTH=4 ALT=\"$Message[10]: ".int($DayVisits{$year.$month.$day}||0)."\" title=\"$Message[10]: ".int($DayVisits{$year.$month.$day}||0)."\">";
-			print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_p\" HEIGHT=$bredde_p WIDTH=4 ALT=\"$Message[56]: ".int($DayPages{$year.$month.$day}||0)."\" title=\"$Message[56]: ".int($DayPages{$year.$month.$day}||0)."\">";
-			print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_h\" HEIGHT=$bredde_h WIDTH=4 ALT=\"$Message[57]: ".int($DayHits{$year.$month.$day}||0)."\" title=\"$Message[57]: ".int($DayHits{$year.$month.$day}||0)."\">";
-			print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_k\" HEIGHT=$bredde_k WIDTH=4 ALT=\"$Message[75]: ".Format_Bytes($DayBytes{$year.$month.$day})."\" title=\"$Message[75]: ".Format_Bytes($DayBytes{$year.$month.$day})."\">";
+			if ($ShowMonthDayStats =~ /V/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_v\" HEIGHT=$bredde_v WIDTH=4 ALT=\"$Message[10]: ".int($DayVisits{$year.$month.$day}||0)."\" title=\"$Message[10]: ".int($DayVisits{$year.$month.$day}||0)."\">"; }
+			if ($ShowMonthDayStats =~ /P/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_p\" HEIGHT=$bredde_p WIDTH=4 ALT=\"$Message[56]: ".int($DayPages{$year.$month.$day}||0)."\" title=\"$Message[56]: ".int($DayPages{$year.$month.$day}||0)."\">"; }
+			if ($ShowMonthDayStats =~ /H/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_h\" HEIGHT=$bredde_h WIDTH=4 ALT=\"$Message[57]: ".int($DayHits{$year.$month.$day}||0)."\" title=\"$Message[57]: ".int($DayHits{$year.$month.$day}||0)."\">"; }
+			if ($ShowMonthDayStats =~ /B/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_k\" HEIGHT=$bredde_k WIDTH=4 ALT=\"$Message[75]: ".Format_Bytes($DayBytes{$year.$month.$day})."\" title=\"$Message[75]: ".Format_Bytes($DayBytes{$year.$month.$day})."\">"; }
 			print "</TD>\n";
 		}
 		print "<TD>&nbsp;</TD>";
@@ -6372,10 +6330,10 @@ EOF
 		$avg_day_p=sprintf("%.2f",$avg_day_p);
 		$avg_day_h=sprintf("%.2f",$avg_day_h);
 		$avg_day_k=sprintf("%.2f",$avg_day_k);
-		print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_v\" HEIGHT=$bredde_v WIDTH=4 ALT=\"$Message[10]: $avg_day_v\" title=\"$Message[10]: $avg_day_v\">";
-		print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_p\" HEIGHT=$bredde_p WIDTH=4 ALT=\"$Message[56]: $avg_day_p\" title=\"$Message[56]: $avg_day_p\">";
-		print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_h\" HEIGHT=$bredde_h WIDTH=4 ALT=\"$Message[57]: $avg_day_h\" title=\"$Message[57]: $avg_day_h\">";
-		print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_k\" HEIGHT=$bredde_k WIDTH=4 ALT=\"$Message[75]: ".Format_Bytes($avg_day_k)."\" title=\"$Message[75]: ".Format_Bytes($avg_day_k)."\">";
+		if ($ShowMonthDayStats =~ /V/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_v\" HEIGHT=$bredde_v WIDTH=4 ALT=\"$Message[10]: $avg_day_v\" title=\"$Message[10]: $avg_day_v\">"; }
+		if ($ShowMonthDayStats =~ /P/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_p\" HEIGHT=$bredde_p WIDTH=4 ALT=\"$Message[56]: $avg_day_p\" title=\"$Message[56]: $avg_day_p\">"; }
+		if ($ShowMonthDayStats =~ /H/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_h\" HEIGHT=$bredde_h WIDTH=4 ALT=\"$Message[57]: $avg_day_h\" title=\"$Message[57]: $avg_day_h\">"; }
+		if ($ShowMonthDayStats =~ /B/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_k\" HEIGHT=$bredde_k WIDTH=4 ALT=\"$Message[75]: ".Format_Bytes($avg_day_k)."\" title=\"$Message[75]: ".Format_Bytes($avg_day_k)."\">"; }
 		print "</TD>\n";
 		print "</TR>\n";
 		# Show lib for day
@@ -6393,6 +6351,7 @@ EOF
 		}
 		print "<TD>&nbsp;</TD>";
 		print "<TD valign=middle onmouseover=\"ShowTip(18);\" onmouseout=\"HideTip(18);\">$Message[96]</TD>\n";
+
 		print "</TR>\n";
 		print "</TABLE>\n<br>\n";
 
@@ -6418,7 +6377,7 @@ EOF
 	if ($ShowDaysOfWeekStats) {
 		if ($Debug) { debug("ShowDaysOfWeekStats",2); }
 		print "$Center<a name=\"DAYOFWEEK\">&nbsp;</a><BR>\n";
-		&tab_head($Message[91],18);
+		&tab_head("$Message[91]",18);
 		print "<TR>";
 		print "<TD align=center><center><TABLE>";
 		print "<TR valign=bottom>\n";
@@ -6462,9 +6421,9 @@ EOF
 			if ($avg_dayofweek_p[$_] == int($avg_dayofweek_p[$_])) { $avg_dayofweek_p[$_]=int($avg_dayofweek_p[$_]); }
 			if ($avg_dayofweek_h[$_] == int($avg_dayofweek_h[$_])) { $avg_dayofweek_h[$_]=int($avg_dayofweek_h[$_]); }
 			print "<TD valign=bottom>";
-			print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_p\" HEIGHT=$bredde_p WIDTH=6 ALT=\"$Message[56]: $avg_dayofweek_p[$_]\" title=\"$Message[56]: $avg_dayofweek_p[$_]\">";
-			print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_h\" HEIGHT=$bredde_h WIDTH=6 ALT=\"$Message[57]: $avg_dayofweek_h[$_]\" title=\"$Message[57]: $avg_dayofweek_h[$_]\">";
-			print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_k\" HEIGHT=$bredde_k WIDTH=6 ALT=\"$Message[75]: ".Format_Bytes($avg_dayofweek_k[$_])."\" title=\"$Message[75]: ".Format_Bytes($avg_dayofweek_k[$_])."\">";
+			if ($ShowDaysOfWeekStats =~ /P/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_p\" HEIGHT=$bredde_p WIDTH=6 ALT=\"$Message[56]: $avg_dayofweek_p[$_]\" title=\"$Message[56]: $avg_dayofweek_p[$_]\">"; }
+			if ($ShowDaysOfWeekStats =~ /H/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_h\" HEIGHT=$bredde_h WIDTH=6 ALT=\"$Message[57]: $avg_dayofweek_h[$_]\" title=\"$Message[57]: $avg_dayofweek_h[$_]\">"; }
+			if ($ShowDaysOfWeekStats =~ /B/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_k\" HEIGHT=$bredde_k WIDTH=6 ALT=\"$Message[75]: ".Format_Bytes($avg_dayofweek_k[$_])."\" title=\"$Message[75]: ".Format_Bytes($avg_dayofweek_k[$_])."\">"; }
 			print "</TD>\n";
 		}
 		print "</TR>\n";
@@ -6478,15 +6437,15 @@ EOF
 		# Show data array for days of week
 		print "<TABLE>\n";
 		print "<TR><TD width=\"80\" bgcolor=\"#$color_TableBGRowTitle\">$Message[4]</TD>";
-		print "<TD width=\"80\" bgcolor=\"#$color_p\" onmouseover=\"ShowTip(3);\" onmouseout=\"HideTip(3);\">$Message[56]</TD>";
-		print "<TD width=\"80\" bgcolor=\"#$color_h\" onmouseover=\"ShowTip(4);\" onmouseout=\"HideTip(4);\">$Message[57]</TD>";
-		print "<TD width=\"80\" bgcolor=\"#$color_k\" onmouseover=\"ShowTip(5);\" onmouseout=\"HideTip(5);\">$Message[75]</TD></TR>";
+		if ($ShowDaysOfWeekStats =~ /P/i) { print "<TD width=\"80\" bgcolor=\"#$color_p\" onmouseover=\"ShowTip(3);\" onmouseout=\"HideTip(3);\">$Message[56]</TD>"; }
+		if ($ShowDaysOfWeekStats =~ /H/i) { print "<TD width=\"80\" bgcolor=\"#$color_h\" onmouseover=\"ShowTip(4);\" onmouseout=\"HideTip(4);\">$Message[57]</TD>"; }
+		if ($ShowDaysOfWeekStats =~ /B/i) { print "<TD width=\"80\" bgcolor=\"#$color_k\" onmouseover=\"ShowTip(5);\" onmouseout=\"HideTip(5);\">$Message[75]</TD></TR>"; }
 		for (@DOWIndex) {
 			print "<TR>";
 			print "<TD".($_=~/[06]/?" bgcolor=\"#$color_weekend\"":"").">".$Message[$_+84]."</TD>";
-			print "<TD".($_=~/[06]/?" bgcolor=\"#$color_weekend\"":"").">",$avg_dayofweek_p[$_],"</TD>";
-			print "<TD".($_=~/[06]/?" bgcolor=\"#$color_weekend\"":"").">",$avg_dayofweek_h[$_],"</TD>";
-			print "<TD".($_=~/[06]/?" bgcolor=\"#$color_weekend\"":"").">",Format_Bytes($avg_dayofweek_k[$_]),"</TD>";
+			if ($ShowDaysOfWeekStats =~ /P/i) { print "<TD".($_=~/[06]/?" bgcolor=\"#$color_weekend\"":"").">",$avg_dayofweek_p[$_],"</TD>"; }
+			if ($ShowDaysOfWeekStats =~ /H/i) { print "<TD".($_=~/[06]/?" bgcolor=\"#$color_weekend\"":"").">",$avg_dayofweek_h[$_],"</TD>"; }
+			if ($ShowDaysOfWeekStats =~ /B/i) { print "<TD".($_=~/[06]/?" bgcolor=\"#$color_weekend\"":"").">",Format_Bytes($avg_dayofweek_k[$_]),"</TD>"; }
 			print "</TR>\n";
 		}
 		print "</TABLE>\n<br>\n";
@@ -6518,10 +6477,10 @@ EOF
 			if ($max_h > 0) { $bredde_h=int($BarHeight*$_time_h[$ix]/$max_h)+1; }
 			if ($max_k > 0) { $bredde_k=int($BarHeight*$_time_k[$ix]/$max_k)+1; }
 			print "<TD>";
-			print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_p\" HEIGHT=$bredde_p WIDTH=6 ALT=\"$Message[56]: ".int($_time_p[$ix])."\" title=\"$Message[56]: ".int($_time_p[$ix])."\">";
-			print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_h\" HEIGHT=$bredde_h WIDTH=6 ALT=\"$Message[57]: ".int($_time_h[$ix])."\" title=\"$Message[57]: ".int($_time_h[$ix])."\">";
-			print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_k\" HEIGHT=$bredde_k WIDTH=6 ALT=\"$Message[75]: ".Format_Bytes($_time_k[$ix])."\" title=\"$Message[75]: ".Format_Bytes($_time_k[$ix])."\">";
-			print "</TD>\n";
+			if ($ShowHoursStats =~ /P/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_p\" HEIGHT=$bredde_p WIDTH=6 ALT=\"$Message[56]: ".int($_time_p[$ix])."\" title=\"$Message[56]: ".int($_time_p[$ix])."\">"; }
+			if ($ShowHoursStats =~ /H/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_h\" HEIGHT=$bredde_h WIDTH=6 ALT=\"$Message[57]: ".int($_time_h[$ix])."\" title=\"$Message[57]: ".int($_time_h[$ix])."\">"; }
+			if ($ShowHoursStats =~ /B/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_k\" HEIGHT=$bredde_k WIDTH=6 ALT=\"$Message[75]: ".Format_Bytes($_time_k[$ix])."\" title=\"$Message[75]: ".Format_Bytes($_time_k[$ix])."\">"; }
+			print "</TD>";
 		}
 		print "</TR>";
 		# Show clock icon
@@ -6545,32 +6504,34 @@ EOF
 		print "<TABLE><TR><TD>\n";
 		print "<TABLE>\n";
 		print "<TR><TD width=\"80\" bgcolor=\"#$color_TableBGRowTitle\">$Message[20]</TD>";
-		print "<TD width=\"80\" bgcolor=\"#$color_p\" onmouseover=\"ShowTip(3);\" onmouseout=\"HideTip(3);\">$Message[56]</TD>";
-		print "<TD width=\"80\" bgcolor=\"#$color_h\" onmouseover=\"ShowTip(4);\" onmouseout=\"HideTip(4);\">$Message[57]</TD>";
-		print "<TD width=\"80\" bgcolor=\"#$color_k\" onmouseover=\"ShowTip(5);\" onmouseout=\"HideTip(5);\">$Message[75]</TD></TR>";
+		if ($ShowHoursStats =~ /P/i) { print "<TD width=\"80\" bgcolor=\"#$color_p\" onmouseover=\"ShowTip(3);\" onmouseout=\"HideTip(3);\">$Message[56]</TD>"; }
+		if ($ShowHoursStats =~ /H/i) { print "<TD width=\"80\" bgcolor=\"#$color_h\" onmouseover=\"ShowTip(4);\" onmouseout=\"HideTip(4);\">$Message[57]</TD>"; }
+		if ($ShowHoursStats =~ /B/i) { print "<TD width=\"80\" bgcolor=\"#$color_k\" onmouseover=\"ShowTip(5);\" onmouseout=\"HideTip(5);\">$Message[75]</TD>"; }
+		print "</TR>";
 		for (my $ix=0; $ix<=11; $ix++) {
 			my $monthix=($ix<10?"0$ix":"$ix");
 			print "<TR>";
 			print "<TD>$monthix</TD>";
-			print "<TD>",$_time_p[$monthix]?$_time_p[$monthix]:"0","</TD>";
-			print "<TD>",$_time_h[$monthix]?$_time_h[$monthix]:"0","</TD>";
-			print "<TD>",Format_Bytes(int($_time_k[$monthix])),"</TD>";
+			if ($ShowHoursStats =~ /P/i) { print "<TD>",$_time_p[$monthix]?$_time_p[$monthix]:"0","</TD>"; }
+			if ($ShowHoursStats =~ /H/i) { print "<TD>",$_time_h[$monthix]?$_time_h[$monthix]:"0","</TD>"; }
+			if ($ShowHoursStats =~ /B/i) { print "<TD>",Format_Bytes(int($_time_k[$monthix])),"</TD>"; }
 			print "</TR>\n";
 		}
 		print "</TABLE>\n";
 		print "</TD><TD>\n";
 		print "<TABLE>\n";
 		print "<TR><TD width=\"80\" bgcolor=\"#$color_TableBGRowTitle\">$Message[20]</TD>";
-		print "<TD width=\"80\" bgcolor=\"#$color_p\" onmouseover=\"ShowTip(3);\" onmouseout=\"HideTip(3);\">$Message[56]</TD>";
-		print "<TD width=\"80\" bgcolor=\"#$color_h\" onmouseover=\"ShowTip(4);\" onmouseout=\"HideTip(4);\">$Message[57]</TD>";
-		print "<TD width=\"80\" bgcolor=\"#$color_k\" onmouseover=\"ShowTip(5);\" onmouseout=\"HideTip(5);\">$Message[75]</TD></TR>";
+		if ($ShowHoursStats =~ /P/i) { print "<TD width=\"80\" bgcolor=\"#$color_p\" onmouseover=\"ShowTip(3);\" onmouseout=\"HideTip(3);\">$Message[56]</TD>"; }
+		if ($ShowHoursStats =~ /H/i) { print "<TD width=\"80\" bgcolor=\"#$color_h\" onmouseover=\"ShowTip(4);\" onmouseout=\"HideTip(4);\">$Message[57]</TD>"; }
+		if ($ShowHoursStats =~ /B/i) { print "<TD width=\"80\" bgcolor=\"#$color_k\" onmouseover=\"ShowTip(5);\" onmouseout=\"HideTip(5);\">$Message[75]</TD>"; }
+		print "</TR>\n";
 		for (my $ix=12; $ix<=23; $ix++) {
 			my $monthix=($ix<10?"0$ix":"$ix");
 			print "<TR>";
 			print "<TD>$monthix</TD>";
-			print "<TD>",$_time_p[$monthix]?$_time_p[$monthix]:"0","</TD>";
-			print "<TD>",$_time_h[$monthix]?$_time_h[$monthix]:"0","</TD>";
-			print "<TD>",Format_Bytes(int($_time_k[$monthix])),"</TD>";
+			if ($ShowHoursStats =~ /P/i) { print "<TD>",$_time_p[$monthix]?$_time_p[$monthix]:"0","</TD>"; }
+			if ($ShowHoursStats =~ /H/i) { print "<TD>",$_time_h[$monthix]?$_time_h[$monthix]:"0","</TD>"; }
+			if ($ShowHoursStats =~ /B/i) { print "<TD>",Format_Bytes(int($_time_k[$monthix])),"</TD>"; }
 			print "</TR>\n";
 		}
 		print "</TABLE>\n";
@@ -6587,8 +6548,13 @@ EOF
 	if ($ShowDomainsStats) {
 		if ($Debug) { debug("ShowDomainsStats",2); }
 		print "$Center<a name=\"DOMAINS\">&nbsp;</a><BR>\n";
-		&tab_head($Message[25],19);
-		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH colspan=2>$Message[17]</TH><TH>$Message[105]</TH><TH bgcolor=\"#$color_p\" width=80>$Message[56]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH bgcolor=\"#$color_k\" width=80>$Message[75]</TH><TH>&nbsp;</TH></TR>\n";
+		&tab_head("$Message[25]",19);
+		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH colspan=2>$Message[17]</TH><TH>$Message[105]</TH>";
+		print "<TH bgcolor=\"#$color_p\" width=80>$Message[56]</TH>";
+		print "<TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH>";
+		print "<TH bgcolor=\"#$color_k\" width=80>$Message[75]</TH>";
+		print "<TH>&nbsp;</TH>";
+		print "</TR>\n";
 		$total_p=$total_h=$total_k=0;
 		$max_h=1; foreach my $key (values %_domener_h) { if ($key > $max_h) { $max_h = $key; } }
 		$max_k=1; foreach my $key (values %_domener_k) { if ($key > $max_k) { $max_k = $key; } }
@@ -6608,7 +6574,9 @@ EOF
 			else {
 				print "<TR><TD><IMG SRC=\"$DirIcons\/flags\/$key.png\" height=14 alt=\"$key\"></TD><TD CLASS=AWL>$DomainsHashIDLib{$key}</TD><TD>$key</TD>";
 			}
-			print "<TD>$_domener_p{$key}</TD><TD>$_domener_h{$key}</TD><TD>".Format_Bytes($_domener_k{$key})."</TD>";
+			print "<TD>$_domener_p{$key}</TD>";
+			print "<TD>$_domener_h{$key}</TD>";
+			print "<TD>".Format_Bytes($_domener_k{$key})."</TD>";
 			print "<TD CLASS=AWL>";
 			print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_p\" WIDTH=$bredde_p HEIGHT=6 ALT=\"$Message[56]: ".int($_domener_p{$key})."\" title=\"$Message[56]: ".int($_domener_p{$key})."\"><br>\n";
 			print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_h\" WIDTH=$bredde_h HEIGHT=6 ALT=\"$Message[57]: ".int($_domener_h{$key})."\" title=\"$Message[57]: ".int($_domener_h{$key})."\"><br>\n";
@@ -6623,7 +6591,10 @@ EOF
 		$rest_h=$TotalHits-$total_h;
 		$rest_k=$TotalBytes-$total_k;
 		if ($rest_p > 0 || $rest_h > 0 || $rest_k > 0) { 	# All other domains (known or not)
-			print "<TR><TD colspan=3 CLASS=AWL><font color=\"#$color_other\">$Message[2]</font></TD><TD>$rest_p</TD><TD>$rest_h</TD><TD>".Format_Bytes($rest_k)."</TD>\n";
+			print "<TR><TD colspan=3 CLASS=AWL><font color=\"#$color_other\">$Message[2]</font></TD>";
+			print "<TD>$rest_p</TD>";
+			print "<TD>$rest_h</TD>";
+			print "<TD>".Format_Bytes($rest_k)."</TD>";
 			print "<TD CLASS=AWL>&nbsp;</TD>";
 			print "</TR>\n";
 		}
@@ -6639,7 +6610,11 @@ EOF
 		if ($MonthRequired ne "year") { print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[81] : $TotalHostsKnown $Message[82], $TotalHostsUnknown $Message[1] - $TotalUnique $Message[11]</TH>"; }
 		else { print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[81] : ".(scalar keys %_host_h)."</TH>"; }
 		if ($ShowLinksToWhoIs && $LinksToWhoIs) { print "<TH width=80>$Message[114]</TH>"; }
-		print "<TH bgcolor=\"#$color_p\" width=80>$Message[56]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH bgcolor=\"#$color_k\" width=80>$Message[75]</TH><TH width=120>$Message[9]</TH></TR>\n";
+		if ($ShowHoursStats =~ /P/i) { print "<TH bgcolor=\"#$color_p\" width=80>$Message[56]</TH>"; }
+		if ($ShowHoursStats =~ /H/i) { print "<TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH>"; }
+		if ($ShowHoursStats =~ /B/i) { print "<TH bgcolor=\"#$color_k\" width=80>$Message[75]</TH>"; }
+		if ($ShowHoursStats =~ /L/i) { print "<TH width=120>$Message[9]</TH>"; }
+		print "</TR>\n";
 		$total_p=$total_h=$total_k=0;
 		my $count=0;
 		&BuildKeyList($MaxNbOfHostsShown,$MinHitHost,\%_host_h,\%_host_p);
@@ -6647,9 +6622,10 @@ EOF
 			print "<tr>";
 			print "<td CLASS=AWL>$key</td>";
 			if ($ShowLinksToWhoIs && $LinksToWhoIs) { ShowWhoIsCell($key); }
-			print "<TD>".($_host_p{$key}||"&nbsp")."</TD><TD>$_host_h{$key}</TD><TD>".Format_Bytes($_host_k{$key})."</TD>";
-			if ($_host_l{$key}) { print "<td>".Format_Date($_host_l{$key},1)."</td>"; }
-			else { print "<td>-</td>"; }
+			if ($ShowHoursStats =~ /P/i) { print "<TD>".($_host_p{$key}||"&nbsp")."</TD>"; }
+			if ($ShowHoursStats =~ /H/i) { print "<TD>$_host_h{$key}</TD>"; }
+			if ($ShowHoursStats =~ /B/i) { print "<TD>".Format_Bytes($_host_k{$key})."</TD>"; }
+			if ($ShowHoursStats =~ /L/i) { print "<TD>".($_host_l{$key}?Format_Date($_host_l{$key},1):"-")."</TD>"; }
 			print "</tr>\n";
 			$total_p += $_host_p{$key};
 			$total_h += $_host_h{$key};
@@ -6662,7 +6638,11 @@ EOF
 		if ($rest_p > 0 || $rest_h > 0 || $rest_k > 0) {	# All other visitors (known or not)
 			print "<TR><TD CLASS=AWL><font color=\"#$color_other\">$Message[2]</font></TD>";
 			if ($ShowLinksToWhoIs && $LinksToWhoIs) { print "<TD>&nbsp;</TD>"; }
-			print "<TD>$rest_p</TD><TD>$rest_h</TD><TD>".Format_Bytes($rest_k)."</TD><TD>&nbsp;</TD></TR>\n";
+			if ($ShowHoursStats =~ /P/i) { print "<TD>$rest_p</TD>"; }
+			if ($ShowHoursStats =~ /H/i) { print "<TD>$rest_h</TD>"; }
+			if ($ShowHoursStats =~ /B/i) { print "<TD>".Format_Bytes($rest_k)."</TD>"; }
+			if ($ShowHoursStats =~ /L/i) { print "<TD>&nbsp;</TD>"; }
+			print "</TR>\n";
 		}
 		&tab_end;
 	}
@@ -6695,7 +6675,7 @@ EOF
 			if ($ShowAuthenticatedUsers =~ /P/i) { print "<TD>$_login_p{$key}</TD>"; }
 			if ($ShowAuthenticatedUsers =~ /H/i) { print "<TD>$_login_h{$key}</TD>"; }
 			if ($ShowAuthenticatedUsers =~ /B/i) { print "<TD>".Format_Bytes($_login_k{$key})."</TD>"; }
-			if ($ShowAuthenticatedUsers =~ /L/i) { print "<td>".($_login_l{$key}?Format_Date($_login_l{$key},1):"-")."</td>"; }
+			if ($ShowAuthenticatedUsers =~ /L/i) { print "<TD>".($_login_l{$key}?Format_Date($_login_l{$key},1):"-")."</TD>"; }
 			#print "<TD CLASS=AWL>";
 			#print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_p\" WIDTH=$bredde_p HEIGHT=6 ALT=\"$Message[56]: $_login_p{$key}\" title=\"$Message[56]: $_login_p{$key}\"><br>\n";
 			#print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_h\" WIDTH=$bredde_h HEIGHT=6 ALT=\"$Message[57]: $_login_h{$key}\" title=\"$Message[57]: $_login_h{$key}\"><br>\n";
