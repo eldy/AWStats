@@ -38,8 +38,8 @@
 They are described using a consistent format.<br>
 <br>
 <b>Notes</b>
-To include an environment variable in any parameter (AWStats will replaced
-it with its value when reading it), follow the example:<br>
+To include an environment variable in any parameter (AWStats will replace it with its value
+when reading it), follow the example:<br>
 <i>Parameter="__ENVNAME__"</i>
 <br>
 <br>
@@ -165,15 +165,22 @@ it with its value when reading it), follow the example:<br>
 <li><a href="#color_">color_x</a>
 </ul>
 
+<br><b>PLUGINS</b><br>
+<ul>
+<li><a href="#LoadPlugin">LoadPlugin</a>
+</ul>
+
+
 
 <br><br><hr>
 
 <a name="LogFile"><b>LogFile</b></a><br>
 <b>Version : </b>1.0 +<br>
-3.1 for tags %YYYY-n,%YY-n,%MM-n,%DD-n,%HH-n<br>
-3.2 for tag %WM-n<br>
-4.0 for tag %DW-n<br>
-4.1 for tag %NS-n<br>
+3.1+ for tags %YYYY-n,%YY-n,%MM-n,%DD-n,%HH-n<br>
+3.2+ for tag %WM-n<br>
+4.0+ for tag %DW-n<br>
+4.1+ for tag %NS-n<br>
+4.2+ for tag %WY-n<br>
 <br># "LogFile" contains the web server logfile to analyze.
 <br># You can use a full path or relative path from awstats.pl directory.
 <br># Example: "/var/log/apache/access.log"
@@ -203,11 +210,11 @@ it with its value when reading it), follow the example:<br>
 
 <a name="LogFormat"><b>LogFormat</b></a><br>
 <b>Version : </b>2.1 +<br>
-3.1 for tags %host,%logname,%time1,%time2,%methodurl,%methodurlnoprot,%method,%url,
+3.1+ for tags %host,%logname,%time1,%time2,%methodurl,%methodurlnoprot,%method,%url,
 %query,%code,%bytesd,%refererquot,%referer,%uaquot,%ua,%other<br>
-3.2 for tags %gzipin,%gzipout<br>
-4.0 for tags %gzipratio,%syslog<br>
-4.1 for tag  %virtualname<br>
+3.2+ for tags %gzipin,%gzipout<br>
+4.0+ for tags %gzipratio,%syslog<br>
+4.1+ for tag  %virtualname<br>
 <br># Put here your log format (Must agree with your web server. See setup
 <br># instructions in README.txt to know how to configure your web server to have
 <br># the required log format).
@@ -1006,6 +1013,17 @@ color_u,color_v,color_p,color_h,color_k,color_s<br>
 <br>color_s="8888DD"				# Background color for number of search (Default = "8888DD")
 <br>color_e="CEC2E8"				# Background color for number of entry pages (Default = "CEC2E8")
 <br>color_x="C1B2E2"				# Background color for number of exit pages (Default = "C1B2E2")
+<br>
+
+<br><br><hr>
+
+<a name="LoadPlugin"><b>LoadPlugin</b></a><br>
+<b>Version : </b>4.2 +<br>
+<br># Add here all plugins file you want to load
+<br># Plugin files must be stored in plugins directory
+<br># Example: "timehires.pl"
+<br>#
+<br>#LoadPlugin="timehires.pl"
 <br>
 
 
