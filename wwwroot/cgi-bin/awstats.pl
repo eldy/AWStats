@@ -25,6 +25,7 @@ use Time::Local;	# use Time::Local 'timelocal_nocheck' is not supported by all T
 #-------------------------------------------------------
 # Defines
 #-------------------------------------------------------
+use vars qw/ $REVISION $VERSION /;
 my $REVISION='$Revision$'; $REVISION =~ /\s(.*)\s/; $REVISION=$1;
 my $VERSION="4.1 (build $REVISION)";
 
@@ -2488,9 +2489,13 @@ sub BuildKeyList {
 #--------------------------------------------------------------------
 # MAIN
 #--------------------------------------------------------------------
+$starttime=time;
+
 if ($ENV{"GATEWAY_INTERFACE"}) {	# Run from a browser
-	#print "Expires: ".(localtime(time()+3600))."\n";
-	print("Content-type: text/html\n\n\n");
+	# $ExpireDelayInHTTPHeader=3600;
+	# print "Expires: ".(localtime($starttime+$ExpireDelayInHTTPHeader)."\n";
+	print "Content-type: text/html\n";
+	print "\n\n";
 	if ($ENV{"CONTENT_LENGTH"}) {
 		binmode STDIN;
 		read(STDIN, $QueryString, $ENV{'CONTENT_LENGTH'});
@@ -2625,7 +2630,6 @@ if ((! $ENV{"GATEWAY_INTERFACE"}) && (! $SiteConfig)) {
 }
 
 # Get current time (time when AWStats is started)
-$starttime=time;
 ($nowsec,$nowmin,$nowhour,$nowday,$nowmonth,$nowyear,$nowwday) = localtime($starttime);
 $nowweekofmonth=int($nowday/7);
 $nowdaymod=$nowday%7;
@@ -4272,9 +4276,10 @@ EOF
 		print "<TD><b>".Format_Bytes(int($TotalBytes))."</b><br>($RatioBytes&nbsp;$Message[108]/".lc($Message[12]).")</TD>";
 		print "</TR>\n";
 		print "<TR valign=bottom><TD colspan=5 align=center><center>";
+
 		# Show monthly stats
 		print "<TABLE>";
-		print "<TR valign=bottom>";
+		print "<TR valign=bottom><td></td>";
 		$max_v=$max_p=$max_h=$max_k=1;
 		for (my $ix=1; $ix<=12; $ix++) {
 			my $monthix=$ix; if ($monthix < 10) { $monthix="0$monthix"; }
@@ -4302,17 +4307,35 @@ EOF
 			print "</TD>\n";
 		}
 		print "</TR>\n";
-		print "<TR>";
+		print "<TR valign=middle cellspacing=0 cellpadding=0><td></td>";
 		for (my $ix=1; $ix<=12; $ix++) {
-			my $monthix=$ix; if ($monthix < 10) { $monthix="0$monthix"; }
-			print "<TD valign=middle>";
+			my $monthix=($ix<10?"0$ix":"$ix");
+			print "<TD>";
 			if ($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks) { print "<a href=\"$AWScript?${NewLinkParams}year=$YearRequired&month=$monthix\">"; }
 			print "$monthlib{$monthix}";
 			if ($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks) { print "</a>"; }
 			print "</TD>\n";
 		}
 		print "</TR>\n";
+		# Array of values
+#		print "<STYLE TYPE=\"text/css\"><!-- .ROWU { font: 12px arial, verdana, helvetica, sans-serif; color: #$color_u; } --></STYLE>\n";
+#		print "<STYLE TYPE=\"text/css\"><!-- .ROWV { font: 12px arial, verdana, helvetica, sans-serif; color: #$color_v; } --></STYLE>\n";
+#		print "<STYLE TYPE=\"text/css\"><!-- .ROWP { font: 12px arial, verdana, helvetica, sans-serif; color: #$color_p; } --></STYLE>\n";
+#		print "<STYLE TYPE=\"text/css\"><!-- .ROWH { font: 12px arial, verdana, helvetica, sans-serif; color: #$color_h; } --></STYLE>\n";
+#		print "<TR valign=middle><td class=\"ROWU\">$Message[11]</td>";
+#		for (my $ix=1; $ix<=12; $ix++) { my $monthix=($ix<10?"0$ix":"$ix"); print "<TD class=\"ROWU\">$MonthUnique{$YearRequired.$monthix}</TD>\n"; }
+#		print "</TR>\n";
+#		print "<TR valign=middle><td class=\"ROWV\">$Message[10]</td>";
+#		for (my $ix=1; $ix<=12; $ix++) { my $monthix=($ix<10?"0$ix":"$ix"); print "<TD class=\"ROWV\">$MonthVisits{$YearRequired.$monthix}</TD>\n";	}
+#		print "</TR></font>\n";
+#		print "<TR valign=middle><td class=\"ROWP\">$Message[56]</td>";
+#		for (my $ix=1; $ix<=12; $ix++) { my $monthix=($ix<10?"0$ix":"$ix"); print "<TD class=\"ROWP\">$MonthPages{$YearRequired.$monthix}</TD>\n";	}
+#		print "</TR></font>\n";
+#		print "<TR valign=middle><td class=\"ROWH\">$Message[57]</td>";
+#		for (my $ix=1; $ix<=12; $ix++) { my $monthix=($ix<10?"0$ix":"$ix"); print "<TD class=\"ROWH\">$MonthHits{$YearRequired.$monthix}</TD>\n";	}
+#		print "</TR>\n";
 		print "</TABLE>\n<br>\n";
+
 		# Show daily stats
 		print "<TABLE>";
 		print "<TR valign=bottom>";
