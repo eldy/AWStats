@@ -54,7 +54,7 @@ $TotalPages $TotalHits $TotalBytes $TotalEntries $TotalExits $TotalBytesPages $T
 $TotalKeyphrases $TotalKeywords $TotalDifferentKeyphrases $TotalDifferentKeywords
 $TotalSearchEnginesPages $TotalSearchEnginesHits $TotalRefererPages $TotalRefererHits $TotalDifferentSearchEngines $TotalDifferentReferer
 $FrameName $Center $FileConfig $FileSuffix $Host $DayRequired $MonthRequired $YearRequired
-$QueryString $SiteConfig $StaticLinks $PageCode $PerlParsingFormat
+$QueryString $SiteConfig $StaticLinks $PageCode $PageDir $PerlParsingFormat
 $SiteToAnalyze $SiteToAnalyzeWithoutwww $UserAgent
 $pos_vh $pos_host $pos_logname $pos_date $pos_tz $pos_method $pos_url $pos_code $pos_size
 $pos_referer $pos_agent $pos_query $pos_gzipin $pos_gzipout $pos_compratio
@@ -73,9 +73,9 @@ $TotalPages = $TotalHits = $TotalBytes = $TotalEntries = $TotalExits = $TotalByt
 $TotalKeyphrases = $TotalKeywords = $TotalDifferentKeyphrases = $TotalDifferentKeywords = 0;
 $TotalSearchEnginesPages = $TotalSearchEnginesHits = $TotalRefererPages = $TotalRefererHits = $TotalDifferentSearchEngines = $TotalDifferentReferer = 0;
 ($FrameName, $Center, $FileConfig, $FileSuffix, $Host, $DayRequired, $MonthRequired, $YearRequired,
-$QueryString, $SiteConfig, $StaticLinks, $PageCode, $PerlParsingFormat,
+$QueryString, $SiteConfig, $StaticLinks, $PageCode, $PageDir, $PerlParsingFormat,
 $SiteToAnalyze, $SiteToAnalyzeWithoutwww, $UserAgent)=
-('','','','','','','','','','','','','','','','');
+('','','','','','','','','','','','','','','','','');
 $pos_vh = $pos_host = $pos_logname = $pos_date = $pos_tz = $pos_method = $pos_url = $pos_code = $pos_size = -1;
 $pos_referer = $pos_agent = $pos_query = $pos_gzipin = $pos_gzipout = $pos_compratio = -1;
 $pos_cluster = $pos_emails = $pos_emailr = $pos_hostr = -1;
@@ -487,11 +487,12 @@ use vars qw/ @Message /;
 #------------------------------------------------------------------------------
 # Function:		Write on ouput header of HTML page
 # Parameters:	None
-# Input:		%HTMLOutput $PluginMode $Expires $Lang $StyleSheet $HTMLHeadSection $PageCode
+# Input:		%HTMLOutput $PluginMode $Expires $Lang $StyleSheet $HTMLHeadSection $PageCode $PageDir
 # Output:		None
 # Return:		None
 #------------------------------------------------------------------------------
 sub html_head {
+	my $dir=$PageDir?'right':'left';
 	if (scalar keys %HTMLOutput || $PluginMode) {
 		my $AllowIndex=0;
 		# Write head section
@@ -504,7 +505,7 @@ sub html_head {
 		} else {
 			if ($FrameName ne 'index') { print "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">\n\n";  }
 			else { print "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Frameset//EN\">\n\n"; }
-			print "<html lang='$Lang'>\n";
+			print "<html lang='$Lang'".($PageDir?" dir='rtl'":"").">\n";
 		}
 		print "<head>\n";
 		if ($AllowIndex) { print "<meta name=\"robots\" content=\"".($FrameName eq 'mainleft'?'no':'')."index,nofollow\" />\n"; }
@@ -540,7 +541,7 @@ print <<EOF;
 th { font: 11px verdana, arial, helvetica, sans-serif; text-align:center; color: #$color_titletext; }
 th.aws { font-size: 13px; font-weight: bold; }
 td { font: 11px verdana, arial, helvetica, sans-serif; text-align:center; color: #$color_text; }
-.aws { font: 11px verdana, arial, helvetica, sans-serif; text-align:left; color: #$color_text; }
+.aws { font: 11px verdana, arial, helvetica, sans-serif; text-align:$dir; color: #$color_text; }
 b { font-weight: bold; }
 a { font: 11px verdana, arial, helvetica, sans-serif; }
 a:link    { color: #$color_link; text-decoration: none; }
@@ -1296,16 +1297,9 @@ sub Read_Language_Data {
 		binmode LANG;	# Might avoid 'Malformed UTF-8 errors'
 		while (<LANG>) {
 			chomp $_; s/\r//;
-			if ($_ =~ /^PageCode/i) {
-				$_ =~ s/^PageCode=//i;
-				$_ =~ s/#.*//;								# Remove comments
-				$_ =~ tr/\t /  /s;							# Change all blanks into " "
-				$_ =~ s/^\s+//; $_ =~ s/\s+$//;
-				$_ =~ s/^\"//; $_ =~ s/\"$//;
-				$PageCode = $_;
-			}
-			if ($_ =~ /^Message/i) {
-				$_ =~ s/^Message\d+=//i;
+			if ($_ =~ /^PageCode=[\t\s\"\']*([\w-]+)/i) { $PageCode = $1; }
+			if ($_ =~ /^PageDir=[\t\s\"\']*([\w-]+)/i) { $PageDir = $1; }
+			if ($_ =~ s/^Message\d+=//i) {
 				$_ =~ s/#.*//;								# Remove comments
 				$_ =~ tr/\t /  /s;							# Change all blanks into " "
 				$_ =~ s/^\s+//; $_ =~ s/\s+$//;
