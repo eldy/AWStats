@@ -7,8 +7,7 @@
 # Free realtime web server logfile analyzer to show advanced web statistics.
 # Works from command line or as a CGI. You must use this script as often as
 # necessary from your scheduler to update your statistics.
-# See README.TXT file for setup and benchmark informations.
-# See COPYING.TXT file about AWStats GNU General Public License.
+# See AWStats documenation (in docs/ directory) for all setup instructions.
 #-------------------------------------------------------
 # ALGORITHM SUMMARY
 # Read config file
@@ -47,16 +46,16 @@
 
 # ---------- Init variables (Variable $TmpHashxxx are not initialized) -------
 ($AddOn,$BarHeight,$BarWidth,$Debug,$DebugResetDone,$DNSLookup,$Expires, 
-$KeepBackupOfHistoricFiles,
-$MaxLengthOfURL,
+$KeepBackupOfHistoricFiles,$MaxLengthOfURL,
 $MaxNbOfHostsShown, $MaxNbOfKeywordsShown, $MaxNbOfLastHosts, $MaxNbOfLoginShown,
 $MaxNbOfPageShown, $MaxNbOfRefererShown, $MaxNbOfRobotShown,
 $MinHitFile, $MinHitHost, $MinHitKeyword,
 $MinHitLogin, $MinHitRefer, $MinHitRobot,
 $NbOfLinesForCorruptedLog,
 $ShowAuthenticatedUsers, $ShowCompressionStats, $ShowFileSizesStats,
-$ShowCorrupted, $ShowSteps, $StartSeconds, $StartMicroseconds)=
-(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
+$ShowCorrupted, $ShowSteps, $StartSeconds, $StartMicroseconds,
+$URLWithQuery)=
+(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
 ($ArchiveLogRecords, $DetailedReportsOnNewWindows, $FirstDayOfWeek,
 $ShowHeader, $ShowMenu, $ShowMonthDayStats, $ShowDaysOfWeekStats,
 $ShowHoursStats, $ShowDomainsStats, $ShowHostsStats, 
@@ -67,21 +66,24 @@ $ShowFlagLinks, $ShowLinksOnURL,
 $WarningMessages)=
 (1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1);
 ($ArchiveFileName, $DIR, $DayRequired, $DefaultFile,
-$DirCgi, $DirData, $DirIcons, $DirLang,
 $Extension, $FileConfig, $FileSuffix, 
-$FirstTime, $HTMLHeadSection, $HTMLEndSection, $Host, $KeepBackupOfHistoricFiles,
+$FirstTime, $HTMLHeadSection, $HTMLEndSection, $Host,
 $LastTime, $LastUpdate, $LogFile, $LogFormat, $LogFormatString, $Logo, $LogoLink,
 $MonthRequired,
 $HTMLOutput, $PROG, $PageCode,
-$PurgeLogFile, $QueryString, $RatioBytes, $RatioHits, $RatioHosts, $RatioPages,
+$PurgeLogFile, $QueryString,
 $SiteConfig, $SiteDomain, $SiteToAnalyze, $SiteToAnalyzeWithoutwww,
 $TotalBytes, $TotalDifferentPages, $TotalErrors, $TotalHits,
 $TotalHostsKnown, $TotalHostsUnKnown, $TotalPages, $TotalUnique, $TotalVisits,
-$URLFilter, $URLWithQuery, $UserAgent, $YearRequired, 
-$color_Background, $color_TableBG, $color_TableBGRowTitle,
-$color_TableBGTitle, $color_TableBorder, $color_TableRowTitle, $color_TableTitle,
-$color_h, $color_k, $color_link, $color_p, $color_s, $color_u, $color_v, $color_weekend)=
+$URLFilter, $UserAgent, $YearRequired)=
 ();
+($color_Background, $color_TableBG, $color_TableBGRowTitle,
+$color_TableBGTitle, $color_TableBorder, $color_TableRowTitle, $color_TableTitle,
+$color_text, $color_titletext, $color_weekend, $color_link, $color_hover,
+$color_h, $color_k, $color_p, $color_s, $color_u, $color_v)=
+("","","","","","","","","","","","","","","","","","");
+($DirCgi, $DirData, $DirIcons, $DirLang)=
+("","","","");
 # ---------- Init arrays --------
 @HostAliases = @Message = @OnlyFiles = @SkipDNSLookupFor = @SkipFiles = @SkipHosts = @DOWIndex = ();
 @RobotArrayID=();
@@ -93,7 +95,7 @@ $color_h, $color_k, $color_link, $color_p, $color_s, $color_u, $color_v, $color_
 %monthlib = %monthnum = ();
 
 
-$VERSION="3.2 (build 80)";
+$VERSION="3.2 (build 82)";
 $Lang="en";
 
 # Default value
@@ -254,9 +256,9 @@ sub tab_end {
 }
 
 sub error {
-	my $message=shift;
-	my $secondmessage=shift;
-	my $thirdmessage=shift;
+	my $message=shift||"";
+	my $secondmessage=shift||"";
+	my $thirdmessage=shift||"";
 	debug("$message $secondmessage $thirdmessage",1);
 	if ($message =~ /^Format error$/) {
 		# Files seems to have bad format
@@ -308,7 +310,7 @@ sub error {
    	}
    	if ($message ne "" && $message !~ /History file.*is corrupted/) { 
 		if ($HTMLOutput) { print "<br><b>\n"; }
-		print "Setup ($FileConfig file, web server or logfile permissions) may be wrong.\n";
+		print "Setup (".($FileConfig?$FileConfig:"Config")." file, web server or permissions) may be wrong.\n";
 		if ($HTMLOutput) { print "</b><br>\n"; }
 		print "See README.TXT for informations on how to setup $PROG.\n";
 	}
@@ -572,11 +574,11 @@ sub Read_Config_File {
 		if ($param =~ /^color_TableBGRowTitle/) { $color_TableBGRowTitle=$value; next; }
 		if ($param =~ /^color_TableBG/)         { $color_TableBG=$value; next; }
 		if ($param =~ /^color_TableBorder/)     { $color_TableBorder=$value; next; }
-		if ($param =~ /^color_link/)            { $color_link=$value; next; }
-		if ($param =~ /^color_hover/)           { $color_hover=$value; next; }
 		if ($param =~ /^color_text/)            { $color_text=$value; next; }
 		if ($param =~ /^color_titletext/)       { $color_titletext=$value; next; }
 		if ($param =~ /^color_weekend/)         { $color_weekend=$value; next; }
+		if ($param =~ /^color_link/)            { $color_link=$value; next; }
+		if ($param =~ /^color_hover/)           { $color_hover=$value; next; }
 		if ($param =~ /^color_u/)               { $color_u=$value; next; }
 		if ($param =~ /^color_v/)               { $color_v=$value; next; }
 		if ($param =~ /^color_p/)               { $color_p=$value; next; }
@@ -787,9 +789,9 @@ sub Check_Config {
 	$color_TableBorder =~ s/#//g; if ($color_TableBorder !~ /^[0-9|A-Z]+$/i)         { $color_TableBorder="ECECEC"; }
 	$color_text =~ s/#//g; if ($color_text !~ /^[0-9|A-Z]+$/i)           			 { $color_text="000000"; }
 	$color_titletext =~ s/#//g; if ($color_titletext !~ /^[0-9|A-Z]+$/i) 			 { $color_titletext="000000"; }
+	$color_weekend =~ s/#//g; if ($color_weekend !~ /^[0-9|A-Z]+$/i)     			 { $color_weekend="EAEAEA"; }
 	$color_link =~ s/#//g; if ($color_link !~ /^[0-9|A-Z]+$/i)           			 { $color_link="0011BB"; }
 	$color_hover =~ s/#//g; if ($color_hover !~ /^[0-9|A-Z]+$/i)         			 { $color_hover="605040"; }
-	$color_weekend =~ s/#//g; if ($color_weekend !~ /^[0-9|A-Z]+$/i)     			 { $color_weekend="EAEAEA"; }
 	$color_u =~ s/#//g; if ($color_u !~ /^[0-9|A-Z]+$/i)                 			 { $color_u="FF9933"; }
 	$color_v =~ s/#//g; if ($color_v !~ /^[0-9|A-Z]+$/i)                 			 { $color_v="F3F300"; }
 	$color_p =~ s/#//g; if ($color_p !~ /^[0-9|A-Z]+$/i)                 			 { $color_p="4477DD"; }
@@ -797,112 +799,112 @@ sub Check_Config {
 	$color_k =~ s/#//g; if ($color_k !~ /^[0-9|A-Z]+$/i)                 			 { $color_k="339944"; }
 	$color_s =~ s/#//g; if ($color_s !~ /^[0-9|A-Z]+$/i)                 			 { $color_s="8888DD"; }
 	# Default value	for Messages
-	if ($Message[0] eq "") { $Message[0]="Unknown"; }
-	if ($Message[1] eq "") { $Message[1]="Unknown (unresolved ip)"; }
-	if ($Message[2] eq "") { $Message[2]="Others"; }
-	if ($Message[3] eq "") { $Message[3]="View details"; }
-	if ($Message[4] eq "") { $Message[4]="Day"; }
-	if ($Message[5] eq "") { $Message[5]="Month"; }
-	if ($Message[6] eq "") { $Message[6]="Year"; }
-	if ($Message[7] eq "") { $Message[7]="Statistics of"; }
-	if ($Message[8] eq "") { $Message[8]="First visit"; }
-	if ($Message[9] eq "") { $Message[9]="Last visit"; }
-	if ($Message[10] eq "") { $Message[10]="Number of visits"; }
-	if ($Message[11] eq "") { $Message[11]="Unique visitors"; }
-	if ($Message[12] eq "") { $Message[12]="Visit"; }
-	if ($Message[13] eq "") { $Message[13]="different keywords"; }
-	if ($Message[14] eq "") { $Message[14]="Search"; }
-	if ($Message[15] eq "") { $Message[15]="Percent"; }
-	if ($Message[16] eq "") { $Message[16]="Traffic"; }
-	if ($Message[17] eq "") { $Message[17]="Domains/Countries"; }
-	if ($Message[18] eq "") { $Message[18]="Visitors"; }
-	if ($Message[19] eq "") { $Message[19]="Pages-URL"; }
-	if ($Message[20] eq "") { $Message[20]="Hours"; }
-	if ($Message[21] eq "") { $Message[21]="Browsers"; }
-	if ($Message[22] eq "") { $Message[22]="HTTP Errors"; }
-	if ($Message[23] eq "") { $Message[23]="Referers"; }
-	if ($Message[24] eq "") { $Message[24]="Search&nbsp;Keywords"; }
-	if ($Message[25] eq "") { $Message[25]="Visitors domains/countries"; }
-	if ($Message[26] eq "") { $Message[26]="hosts"; }
-	if ($Message[27] eq "") { $Message[27]="pages"; }
-	if ($Message[28] eq "") { $Message[28]="different pages"; }
-	if ($Message[29] eq "") { $Message[29]="Viewed pages"; }
-	if ($Message[30] eq "") { $Message[30]="Other words"; }
-	if ($Message[31] eq "") { $Message[31]="Pages not found"; }
-	if ($Message[32] eq "") { $Message[32]="HTTP Error codes"; }
-	if ($Message[33] eq "") { $Message[33]="Netscape versions"; }
-	if ($Message[34] eq "") { $Message[34]="IE versions"; }
-	if ($Message[35] eq "") { $Message[35]="Last Update"; }
-	if ($Message[36] eq "") { $Message[36]="Connect to site from"; }
-	if ($Message[37] eq "") { $Message[37]="Origin"; }
-	if ($Message[38] eq "") { $Message[38]="Direct address / Bookmarks"; }
-	if ($Message[39] eq "") { $Message[39]="Origin unknown"; }
-	if ($Message[40] eq "") { $Message[40]="Links from an Internet Search Engine"; }
-	if ($Message[41] eq "") { $Message[41]="Links from an external page (other web sites except search engines)"; }
-	if ($Message[42] eq "") { $Message[42]="Links from an internal page (other page on same site)"; }
-	if ($Message[43] eq "") { $Message[43]="Keywords used on search engines"; }
-	if ($Message[44] eq "") { $Message[44]="Kb"; }
-	if ($Message[45] eq "") { $Message[45]="Unresolved IP Address"; }
-	if ($Message[46] eq "") { $Message[46]="Unknown OS (Referer field)"; }
-	if ($Message[47] eq "") { $Message[47]="Required but not found URLs (HTTP code 404)"; }
-	if ($Message[48] eq "") { $Message[48]="IP Address"; }
-	if ($Message[49] eq "") { $Message[49]="Error&nbsp;Hits"; }
-	if ($Message[50] eq "") { $Message[50]="Unknown browsers (Referer field)"; }
-	if ($Message[51] eq "") { $Message[51]="Visiting robots"; }
-	if ($Message[52] eq "") { $Message[52]="visits/visitor"; }
-	if ($Message[53] eq "") { $Message[53]="Robots/Spiders visitors"; }
-	if ($Message[54] eq "") { $Message[54]="Free realtime logfile analyzer for advanced web statistics"; }
-	if ($Message[55] eq "") { $Message[55]="of"; }
-	if ($Message[56] eq "") { $Message[56]="Pages"; }
-	if ($Message[57] eq "") { $Message[57]="Hits"; }
-	if ($Message[58] eq "") { $Message[58]="Versions"; }
-	if ($Message[59] eq "") { $Message[59]="Operating Systems"; }
-	if ($Message[60] eq "") { $Message[60]="Jan"; }
-	if ($Message[61] eq "") { $Message[61]="Feb"; }
-	if ($Message[62] eq "") { $Message[62]="Mar"; }
-	if ($Message[63] eq "") { $Message[63]="Apr"; }
-	if ($Message[64] eq "") { $Message[64]="May"; }
-	if ($Message[65] eq "") { $Message[65]="Jun"; }
-	if ($Message[66] eq "") { $Message[66]="Jul"; }
-	if ($Message[67] eq "") { $Message[67]="Aug"; }
-	if ($Message[68] eq "") { $Message[68]="Sep"; }
-	if ($Message[69] eq "") { $Message[69]="Oct"; }
-	if ($Message[70] eq "") { $Message[70]="Nov"; }
-	if ($Message[71] eq "") { $Message[71]="Dec"; }
-	if ($Message[72] eq "") { $Message[72]="Navigation"; }
-	if ($Message[73] eq "") { $Message[73]="Files type"; }
-	if ($Message[74] eq "") { $Message[74]="Update now"; }
-	if ($Message[75] eq "") { $Message[75]="Bytes"; }
-	if ($Message[76] eq "") { $Message[76]="Back to main page"; }
-	if ($Message[77] eq "") { $Message[77]="Top"; }
-	if ($Message[78] eq "") { $Message[78]="dd mmm yyyy - HH:MM"; }
-	if ($Message[79] eq "") { $Message[79]="Filter"; }
-	if ($Message[80] eq "") { $Message[80]="Full list"; }
-	if ($Message[81] eq "") { $Message[81]="Hosts"; }
-	if ($Message[82] eq "") { $Message[82]="Known"; }
-	if ($Message[83] eq "") { $Message[83]="Robots"; }
-	if ($Message[84] eq "") { $Message[84]="Sun"; }
-	if ($Message[85] eq "") { $Message[85]="Mon"; }
-	if ($Message[86] eq "") { $Message[86]="Tue"; }
-	if ($Message[87] eq "") { $Message[87]="Wed"; }
-	if ($Message[88] eq "") { $Message[88]="Thu"; }
-	if ($Message[89] eq "") { $Message[89]="Fri"; }
-	if ($Message[90] eq "") { $Message[90]="Sat"; }
-	if ($Message[91] eq "") { $Message[91]="Days of week"; }
-	if ($Message[92] eq "") { $Message[92]="Who"; }
-	if ($Message[93] eq "") { $Message[93]="When"; }
-	if ($Message[94] eq "") { $Message[94]="Authenticated users"; }
-	if ($Message[95] eq "") { $Message[95]="Min"; }
-	if ($Message[96] eq "") { $Message[96]="Average"; }
-	if ($Message[97] eq "") { $Message[97]="Max"; }
-	if ($Message[98] eq "") { $Message[98]="Web compression"; }
-	if ($Message[99] eq "") { $Message[99]="Bandwith saved"; }
-	if ($Message[100] eq "") { $Message[100]="Before compression"; }
-	if ($Message[101] eq "") { $Message[101]="After compression"; }
-	if ($Message[102] eq "") { $Message[102]="Total"; }
-	if ($Message[103] eq "") { $Message[103]="different keyphrases"; }
-	if ($Message[104] eq "") { $Message[104]="Entry pages"; }
-	if ($Message[105] eq "") { $Message[105]="Code"; }
+	if (! $Message[0]) { $Message[0]="Unknown"; }
+	if (! $Message[1]) { $Message[1]="Unknown (unresolved ip)"; }
+	if (! $Message[2]) { $Message[2]="Others"; }
+	if (! $Message[3]) { $Message[3]="View details"; }
+	if (! $Message[4]) { $Message[4]="Day"; }
+	if (! $Message[5]) { $Message[5]="Month"; }
+	if (! $Message[6]) { $Message[6]="Year"; }
+	if (! $Message[7]) { $Message[7]="Statistics of"; }
+	if (! $Message[8]) { $Message[8]="First visit"; }
+	if (! $Message[9]) { $Message[9]="Last visit"; }
+	if (! $Message[10]) { $Message[10]="Number of visits"; }
+	if (! $Message[11]) { $Message[11]="Unique visitors"; }
+	if (! $Message[12]) { $Message[12]="Visit"; }
+	if (! $Message[13]) { $Message[13]="different keywords"; }
+	if (! $Message[14]) { $Message[14]="Search"; }
+	if (! $Message[15]) { $Message[15]="Percent"; }
+	if (! $Message[16]) { $Message[16]="Traffic"; }
+	if (! $Message[17]) { $Message[17]="Domains/Countries"; }
+	if (! $Message[18]) { $Message[18]="Visitors"; }
+	if (! $Message[19]) { $Message[19]="Pages-URL"; }
+	if (! $Message[20]) { $Message[20]="Hours"; }
+	if (! $Message[21]) { $Message[21]="Browsers"; }
+	if (! $Message[22]) { $Message[22]="HTTP Errors"; }
+	if (! $Message[23]) { $Message[23]="Referers"; }
+	if (! $Message[24]) { $Message[24]="Search&nbsp;Keywords"; }
+	if (! $Message[25]) { $Message[25]="Visitors domains/countries"; }
+	if (! $Message[26]) { $Message[26]="hosts"; }
+	if (! $Message[27]) { $Message[27]="pages"; }
+	if (! $Message[28]) { $Message[28]="different pages"; }
+	if (! $Message[29]) { $Message[29]="Viewed pages"; }
+	if (! $Message[30]) { $Message[30]="Other words"; }
+	if (! $Message[31]) { $Message[31]="Pages not found"; }
+	if (! $Message[32]) { $Message[32]="HTTP Error codes"; }
+	if (! $Message[33]) { $Message[33]="Netscape versions"; }
+	if (! $Message[34]) { $Message[34]="IE versions"; }
+	if (! $Message[35]) { $Message[35]="Last Update"; }
+	if (! $Message[36]) { $Message[36]="Connect to site from"; }
+	if (! $Message[37]) { $Message[37]="Origin"; }
+	if (! $Message[38]) { $Message[38]="Direct address / Bookmarks"; }
+	if (! $Message[39]) { $Message[39]="Origin unknown"; }
+	if (! $Message[40]) { $Message[40]="Links from an Internet Search Engine"; }
+	if (! $Message[41]) { $Message[41]="Links from an external page (other web sites except search engines)"; }
+	if (! $Message[42]) { $Message[42]="Links from an internal page (other page on same site)"; }
+	if (! $Message[43]) { $Message[43]="Keywords used on search engines"; }
+	if (! $Message[44]) { $Message[44]="Kb"; }
+	if (! $Message[45]) { $Message[45]="Unresolved IP Address"; }
+	if (! $Message[46]) { $Message[46]="Unknown OS (Referer field)"; }
+	if (! $Message[47]) { $Message[47]="Required but not found URLs (HTTP code 404)"; }
+	if (! $Message[48]) { $Message[48]="IP Address"; }
+	if (! $Message[49]) { $Message[49]="Error&nbsp;Hits"; }
+	if (! $Message[50]) { $Message[50]="Unknown browsers (Referer field)"; }
+	if (! $Message[51]) { $Message[51]="Visiting robots"; }
+	if (! $Message[52]) { $Message[52]="visits/visitor"; }
+	if (! $Message[53]) { $Message[53]="Robots/Spiders visitors"; }
+	if (! $Message[54]) { $Message[54]="Free realtime logfile analyzer for advanced web statistics"; }
+	if (! $Message[55]) { $Message[55]="of"; }
+	if (! $Message[56]) { $Message[56]="Pages"; }
+	if (! $Message[57]) { $Message[57]="Hits"; }
+	if (! $Message[58]) { $Message[58]="Versions"; }
+	if (! $Message[59]) { $Message[59]="Operating Systems"; }
+	if (! $Message[60]) { $Message[60]="Jan"; }
+	if (! $Message[61]) { $Message[61]="Feb"; }
+	if (! $Message[62]) { $Message[62]="Mar"; }
+	if (! $Message[63]) { $Message[63]="Apr"; }
+	if (! $Message[64]) { $Message[64]="May"; }
+	if (! $Message[65]) { $Message[65]="Jun"; }
+	if (! $Message[66]) { $Message[66]="Jul"; }
+	if (! $Message[67]) { $Message[67]="Aug"; }
+	if (! $Message[68]) { $Message[68]="Sep"; }
+	if (! $Message[69]) { $Message[69]="Oct"; }
+	if (! $Message[70]) { $Message[70]="Nov"; }
+	if (! $Message[71]) { $Message[71]="Dec"; }
+	if (! $Message[72]) { $Message[72]="Navigation"; }
+	if (! $Message[73]) { $Message[73]="Files type"; }
+	if (! $Message[74]) { $Message[74]="Update now"; }
+	if (! $Message[75]) { $Message[75]="Bytes"; }
+	if (! $Message[76]) { $Message[76]="Back to main page"; }
+	if (! $Message[77]) { $Message[77]="Top"; }
+	if (! $Message[78]) { $Message[78]="dd mmm yyyy - HH:MM"; }
+	if (! $Message[79]) { $Message[79]="Filter"; }
+	if (! $Message[80]) { $Message[80]="Full list"; }
+	if (! $Message[81]) { $Message[81]="Hosts"; }
+	if (! $Message[82]) { $Message[82]="Known"; }
+	if (! $Message[83]) { $Message[83]="Robots"; }
+	if (! $Message[84]) { $Message[84]="Sun"; }
+	if (! $Message[85]) { $Message[85]="Mon"; }
+	if (! $Message[86]) { $Message[86]="Tue"; }
+	if (! $Message[87]) { $Message[87]="Wed"; }
+	if (! $Message[88]) { $Message[88]="Thu"; }
+	if (! $Message[89]) { $Message[89]="Fri"; }
+	if (! $Message[90]) { $Message[90]="Sat"; }
+	if (! $Message[91]) { $Message[91]="Days of week"; }
+	if (! $Message[92]) { $Message[92]="Who"; }
+	if (! $Message[93]) { $Message[93]="When"; }
+	if (! $Message[94]) { $Message[94]="Authenticated users"; }
+	if (! $Message[95]) { $Message[95]="Min"; }
+	if (! $Message[96]) { $Message[96]="Average"; }
+	if (! $Message[97]) { $Message[97]="Max"; }
+	if (! $Message[98]) { $Message[98]="Web compression"; }
+	if (! $Message[99]) { $Message[99]="Bandwith saved"; }
+	if (! $Message[100]) { $Message[100]="Before compression"; }
+	if (! $Message[101]) { $Message[101]="After compression"; }
+	if (! $Message[102]) { $Message[102]="Total"; }
+	if (! $Message[103]) { $Message[103]="different keyphrases"; }
+	if (! $Message[104]) { $Message[104]="Entry pages"; }
+	if (! $Message[105]) { $Message[105]="Code"; }
 }
 
 #--------------------------------------------------------------------
@@ -1520,7 +1522,7 @@ sub Show_Flag_Links {
 	if ($ENV{"GATEWAY_INTERFACE"}) {
 		$NewLinkParams =~ s/update[=]*[^ &]*//;
 		$NewLinkParams =~ s/lang=[^ &]*//;
-		$NewLinkParams =~ tr/&/&/s; $NewLinkParams =~ s/&$//;
+		$NewLinkParams =~ tr/&/&/s; $NewLinkParams =~ s/^&//; $NewLinkParams =~ s/&$//;
 		if ($NewLinkParams) { $NewLinkParams="${NewLinkParams}&"; }
 	}
 	else {
@@ -1611,7 +1613,7 @@ if ($ENV{"GATEWAY_INTERFACE"}) {	# Run from a browser
 	if ($QueryString =~ /site=/i)   { $SiteConfig=$QueryString; $SiteConfig =~ s/.*site=//i;   $SiteConfig =~ s/&.*//; $SiteConfig =~ s/ .*//; }	# For backward compatibility
 	if ($QueryString =~ /config=/i) { $SiteConfig=$QueryString; $SiteConfig =~ s/.*config=//i; $SiteConfig =~ s/&.*//; $SiteConfig =~ s/ .*//; }
 	$UpdateStats=0; $HTMLOutput=1;							# No update but report by default when run from a browser
-	if ($QueryString =~ /update=1/i)   { $UpdateStats=1; }					# Update is required
+	if ($QueryString =~ /update=1/i)  { $UpdateStats=1; }	# Update is required
 }
 else {                                             # Run from command line
 	if ($ARGV[0] && $ARGV[0] eq "-h") { $SiteConfig = $ARGV[1]; }          # Kept for backward compatibility but useless
@@ -1624,8 +1626,8 @@ else {                                             # Run from command line
 	if ($QueryString =~ /site=/i)     { $SiteConfig=$QueryString; $SiteConfig =~ s/.*site=//i;   $SiteConfig =~ s/&.*//; $SiteConfig =~ s/ .*//; }  # For backward compatibility
 	if ($QueryString =~ /config=/i)   { $SiteConfig=$QueryString; $SiteConfig =~ s/.*config=//i; $SiteConfig =~ s/&.*//; $SiteConfig =~ s/ .*//; }
 	$UpdateStats=1; $HTMLOutput=0;                               # Update with no report by default when run from command line
-	if ($QueryString =~ /update/i)    { $UpdateStats=1; }                  # Except if -update specified
 	if ($QueryString =~ /output/i)    { $UpdateStats=0; $HTMLOutput=1; }   # Report and no update if an output is required
+	if ($QueryString =~ /update/i)    { $UpdateStats=1; }                  # Except if -update specified
 	$QueryString=~s/output&//; $QueryString=~s/output$//;
 	if ($QueryString =~ /showsteps/i) { $ShowSteps=1; } else { $ShowSteps=0; }
 	$QueryString=~s/showsteps[^&]*//;
@@ -1650,19 +1652,21 @@ if ((! $ENV{"GATEWAY_INTERFACE"}) && (! $SiteConfig)) {
 	print "$PROG is a free web server logfile analyzer to show you advanced web\n";
 	print "statistics.\n";
 	print "$PROG comes with ABSOLUTELY NO WARRANTY. It's a free software distributed\n";
-	print "with a GNU General Public License (See COPYING.txt file for details).\n";
+	print "with a GNU General Public License (See LICENSE file for details).\n";
 	print "\n";
 	print "Syntax: $PROG.$Extension -config=virtualhostname [options]\n";
 	print "  This runs $PROG in command line to update statistics of a web site, from\n";
 	print "  the log file defined in config file, and/or returns a HTML report.\n";
 	print "  First, $PROG tries to read $PROG.virtualhostname.conf as the config file.\n";
 	print "  If not found, $PROG tries to read $PROG.conf\n";
-	print "  See README.TXT file to know how to create the config file.\n";
+	print "  Config files must be in /etc/opt/awstats, /etc/awstats, /etc or same\n";
+	print "  directory than awstats.pl file.\n";
+	print "  See AWStats documentation for all setup instrutions.\n";
 	print "\n";
 	print "Options to update statistics:\n";
 	print "  -update        to update statistics (default)\n";
 	print "  -showsteps     to add benchmark information every $NbOfLinesForBenchmark lines processed\n";
-#	print "  -showcorrupted to add a print on stdout of all found corrupted lines\n";
+	print "  -showcorrupted to add output for each corrupted lines found with reason\n";
 	print "  Be care to process log files in chronological order when updating statistics.\n";
 	print "\n";
 	print "Options to show statistics:\n";
@@ -1674,9 +1678,9 @@ if ((! $ENV{"GATEWAY_INTERFACE"}) && (! $SiteConfig)) {
 	print "  It only allows you to see a report for a chosen month/year period instead\n";
 	print "  of current month/year.\n";
 	print "\n";
-#	print "Common options:\n";
-#	print "  -debug=X             to add debug informations lesser than level X\n";
-#	print "\n";
+	print "Other options:\n";
+	print "  -debug=X       to add debug informations lesser than level X\n";
+	print "\n";
 	print "Now supports/detects:\n";
 	print "  Reverse DNS lookup\n";
 	print "  Number of visits, unique visitors, list of last visits\n";
@@ -1684,6 +1688,7 @@ if ((! $ENV{"GATEWAY_INTERFACE"}) && (! $SiteConfig)) {
 	print "  Days of week and rush hours\n";
 	print "  Authenticated users\n";
 	print "  Viewed and entry pages\n";
+	print "  Type of files and Web compression\n";
 	print "  ".(scalar keys %DomainsHashIDLib)." domains/countries\n";
 	print "  ".(scalar keys %BrowsersHashIDLib)." browsers\n";
 	print "  ".(scalar keys %OSHashLib)." operating systems\n";
@@ -1726,7 +1731,7 @@ $timetomorrow=int($tomorrowyear.$tomorrowmonth.$tomorrowday.$tomorrowhour.$tomor
 # Read config file
 &Read_Config_File;
 if ($QueryString =~ /lang=/i) { $Lang=$QueryString; $Lang =~ s/.*lang=//i; $Lang =~ s/&.*//; $Lang =~ s/ .*//; }
-if ($Lang eq "") { $Lang="en"; }
+if (! $Lang) { $Lang="en"; }
 
 # Change old values of Lang into new for compatibility
 if ($Lang eq "0") { $Lang="en"; }
@@ -1754,7 +1759,7 @@ if ($DirData eq "" || $DirData eq ".") { $DirData=$DIR; }	# If not defined or ch
 if ($DirData eq "")  { $DirData="."; }						# If current dir not defined then we put it to "."
 $DirData =~ s/\/$//; $DirData =~ s/\\$//;
 $SiteToAnalyze=$SiteDomain;
-if ($SiteToAnalyze eq "") { $SiteToAnalyze=$SiteConfig; }
+if (! $SiteToAnalyze) { $SiteToAnalyze=$SiteConfig; }
 $SiteToAnalyze =~ tr/A-Z/a-z/;
 $SiteToAnalyzeWithoutwww = $SiteToAnalyze; $SiteToAnalyzeWithoutwww =~ s/www\.//;
 if ($FirstDayOfWeek == 1) { @DOWIndex = (1,2,3,4,5,6,0); }
@@ -1792,7 +1797,7 @@ for (my $ix=1; $ix<=12; $ix++) {
 #------------------------------------------
 # UPDATE PROCESS
 #------------------------------------------
-
+debug("UpdateStats is $UpdateStats",2);
 if ($UpdateStats) {
 
 	if ($DNSLookup) {
@@ -1800,7 +1805,7 @@ if ($UpdateStats) {
 	#	if ($@){
 	#		error("Error: The perl 'Socket' module is not installed. Install it from CPAN or use a more 'standard' perl interpreter.\n");
 	#	}
-		use Socket;
+#		use Socket;
 	}
 	$NewDNSLookup=$DNSLookup;
 
@@ -1859,10 +1864,10 @@ if ($UpdateStats) {
     # 2000-07-19 14:14:14 62.161.78.73 - GET / 200 1234 HTTP/1.1 Mozilla/4.0+(compatible;+MSIE+5.01;+Windows+NT+5.0) http://www.from.com/from.htm
 	# 05/21/00	00:17:31	OK  	200	212.242.30.6	Mozilla/4.0 (compatible; MSIE 5.0; Windows 98; DigExt)	http://www.cover.dk/	"www.cover.dk"	:Documentation:graphics:starninelogo.white.gif	1133
 	$LogFormatString=$LogFormat;
-	if ($LogFormat == 1) { $LogFormatString="%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\""; }
-	if ($LogFormat == 2) { $LogFormatString="date time c-ip cs-username cs-method cs-uri-stem sc-status sc-bytes cs-version cs(User-Agent) cs(Referer)"; }
-	if ($LogFormat == 4) { $LogFormatString="%h %l %u %t \"%r\" %>s %b"; }
-	if ($LogFormat == 5) { $LogFormatString="c-ip cs-username c-agent sc-authenticated date time s-svcname s-computername cs-referred r-host r-ip r-port time-taken cs-bytes sc-bytes cs-protocol cs-transport s-operation cs-uri cs-mime-type s-object-source sc-status s-cache-info"; }
+	if ($LogFormat eq "1") { $LogFormatString="%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\""; }
+	if ($LogFormat eq "2") { $LogFormatString="date time c-ip cs-username cs-method cs-uri-stem sc-status sc-bytes cs-version cs(User-Agent) cs(Referer)"; }
+	if ($LogFormat eq "4") { $LogFormatString="%h %l %u %t \"%r\" %>s %b"; }
+	if ($LogFormat eq "5") { $LogFormatString="c-ip cs-username c-agent sc-authenticated date time s-svcname s-computername cs-referred r-host r-ip r-port time-taken cs-bytes sc-bytes cs-protocol cs-transport s-operation cs-uri cs-mime-type s-object-source sc-status s-cache-info"; }
 	# Replacement for Apache format string
 	$LogFormatString =~ s/%h([\s])/%host$1/g; $LogFormatString =~ s/%h$/%host/g;
 	$LogFormatString =~ s/%l([\s])/%other$1/g; $LogFormatString =~ s/%l$/%other/g;
@@ -1902,32 +1907,32 @@ if ($UpdateStats) {
 	# Generate PerlParsingFormat
 	&debug("Generate PerlParsingFormat from LogFormatString=$LogFormatString");
 	$PerlParsingFormat="";
-	if ($LogFormat == 1) {
+	if ($LogFormat eq "1") {
 		$PerlParsingFormat="([^\\s]+) [^\\s]+ ([^\\s]+) \\[([^\\s]+) [^\\s]+\\] \\\"([^\\s]+) ([^\\s]+) [^\\\"]+\\\" ([\\d|-]+) ([\\d|-]+) \\\"(.*)\\\" \\\"([^\\\"]+)\\\"";
 		$pos_rc=1;$pos_logname=2;$pos_date=3;$pos_method=4;$pos_url=5;$pos_code=6;$pos_size=7;$pos_referer=8;$pos_agent=9;
 		$lastrequiredfield=9;
 	}
-	if ($LogFormat == 2) {
+	if ($LogFormat eq "2") {
 		$PerlParsingFormat="([^\\s]+ [^\\s]+) ([^\\s]+) ([^\\s]+) ([^\\s]+) ([^\\s]+) ([\\d|-]+) ([\\d|-]+) [^\\s]+ ([^\\s]+) ([^\\s]+)";
 		$pos_date=1;$pos_rc=2;$pos_logname=3;$pos_method=4;$pos_url=5;$pos_code=6;$pos_size=7;$pos_agent=8;$pos_referer=9;
 		$lastrequiredfield=9;
 	}
-	if ($LogFormat == 3) {
+	if ($LogFormat eq "3") {
 		$PerlParsingFormat="([^\\t]*\\t[^\\t]*)\\t([^\\t]*)\\t([\\d]*)\\t([^\\t]*)\\t([^\\t]*)\\t([^\\t]*)\\t[^\\t]*\\t.*:([^\\t]*)\\t([\\d]*)";
 		$pos_date=1;$pos_method=2;$pos_code=3;$pos_rc=4;$pos_agent=5;$pos_referer=6;$pos_url=7;$pos_size=8;
 		$lastrequiredfield=8;
 	}
-	if ($LogFormat == 4) {
+	if ($LogFormat eq "4") {
 		$PerlParsingFormat="([^\\s]*) [^\\s]* ([^\\s]*) \\[([^\\s]*) [^\\s]*\\] \\\"([^\\s]*) ([^\\s]*) [^\\\"]*\\\" ([\\d|-]*) ([\\d|-]*)";
 		$pos_rc=1;$pos_logname=2;$pos_date=3;$pos_method=4;$pos_url=5;$pos_code=6;$pos_size=7;
 		$lastrequiredfield=7;
 	}
-	if ($LogFormat == 5) {
+	if ($LogFormat eq "5") {
 		$PerlParsingFormat="([^\\t]*)\\t([^\\t]*)\\t([^\\t]*)\\t[^\\t]*\\t([^\\t]*\\t[^\\t]*)\\t[^\\t]*\\t[^\\t]*\\t([^\\t]*)\\t[^\\t]*\\t[^\\t]*\\t[^\\t]*\\t[^\\t]*\\t[^\\t]*\\t([^\\t]*)\\t[^\\t]*\\t[^\\t]*\\t([^\\t]*)\\t([^\\t]*)\\t[^\\t]*\\t[^\\t]*\\t([^\\t]*)\\t[^\\t]*";
 		$pos_rc=1;$pos_logname=2;$pos_agent=3;$pos_date=4;$pos_referer=5;$pos_size=6;$pos_method=7;$pos_url=8;$pos_code=9;
 		$lastrequiredfield=9;
 	}
-	if ($LogFormat < 1 || $LogFormat > 5) {
+	if ($LogFormat lt "1" || $LogFormat gt "5") {
 		# Scan $LogFormat to found all required fields and generate PerlParsing
 		my @fields = split(/ +/, $LogFormatString); # make array of entries
 		my $i = 1;
@@ -2116,7 +2121,17 @@ if ($UpdateStats) {
 
 		# Check filters
 		#----------------------------------------------------------------------
-		if ($field[$pos_method] ne 'GET' && $field[$pos_method] ne 'POST' && $field[$pos_method] !~ /OK/) { next; }	# Keep only GET, POST (OK with Webstar) but not HEAD, OPTIONS
+		my $protocol=0;	
+		if ($field[$pos_method] eq 'GET' || $field[$pos_method] eq 'POST' || $field[$pos_method] =~ /OK/) {
+			# HTTP request.	Keep only GET, POST, *OK* with Webstar but not HEAD, OPTIONS
+			$protocol=1;
+			}
+		elsif ($field[$pos_method] =~ /sent/ || $field[$pos_method] =~ /get/) {
+			# FTP request.
+			$protocol=2;
+		}	
+		if (! $protocol) { next; }
+		
 		# Split DD/Month/YYYY:HH:MM:SS or YYYY-MM-DD HH:MM:SS or MM/DD/YY\tHH:MM:SS
 		$field[$pos_date] =~ tr/-\/ \t/::::/;
 		my @dateparts=split(/:/,$field[$pos_date]);
@@ -2178,24 +2193,26 @@ if ($UpdateStats) {
 
 		# Check return code
 		#------------------
-		if ($field[$pos_code]==304) {
-			$field[$pos_size]=0;
-		}
-		else {
-			if ($field[$pos_code] != 200) {	# Stop if HTTP server return code != 200 and 304
-				if ($field[$pos_code] =~ /^[\d][\d][\d]$/) { 				# Keep error code and next
-					$_errors_h{$field[$pos_code]}++;
-					if ($field[$pos_code] == 404) { $_sider404_h{$field[$pos_url]}++; $_referer404_h{$field[$pos_url]}=$field[$pos_referer]; }
-					next;
-				}
-				else {														# Bad format record (should not happen but when using MSIndex server), next
-					$NbOfLinesCorrupted++;
-					if ($ShowCorrupted) { print "Corrupted record (HTTP code not on 3 digits): $_\n"; }
-					next;
+		if ($protocol == 1) {
+			if ($field[$pos_code]==304) {
+				$field[$pos_size]=0;
+			}
+			else {
+				if ($field[$pos_code] != 200) {	# Stop if HTTP server return code != 200 and 304
+					if ($field[$pos_code] =~ /^[\d][\d][\d]$/) { 				# Keep error code and next
+						$_errors_h{$field[$pos_code]}++;
+						if ($field[$pos_code] == 404) { $_sider404_h{$field[$pos_url]}++; $_referer404_h{$field[$pos_url]}=$field[$pos_referer]; }
+						next;
+					}
+					else {														# Bad format record (should not happen but when using MSIndex server), next
+						$NbOfLinesCorrupted++;
+						if ($ShowCorrupted) { print "Corrupted record (HTTP code not on 3 digits): $_\n"; }
+						next;
+					}
 				}
 			}
 		}
-
+	
 		$field[$pos_agent] =~ tr/\+ /__/;		# Same Agent with different writing syntax have now same name
 		$UserAgent = $field[$pos_agent];
 		$UserAgent =~ tr/A-Z/a-z/;
@@ -2723,19 +2740,19 @@ EOF
 	my $NewLinkParams=${QueryString};
 	$NewLinkParams =~ s/update[=]*[^ &]*//;
 	$NewLinkParams =~ s/output[=]*[^ &]*//;
-	$NewLinkParams =~ tr/&/&/s; $NewLinkParams =~ s/&$//;
-	if ($ENV{"GATEWAY_INTERFACE"}) {
+	$NewLinkParams =~ tr/&/&/s; $NewLinkParams =~ s/^&//; $NewLinkParams =~ s/&$//;
+#	if ($ENV{"GATEWAY_INTERFACE"}) {
 		# If runned from a browser, we keep same parameters string
 		if ($NewLinkParams) {
 			$LinkParamA="?$NewLinkParams";
 			$LinkParamB="$NewLinkParams&";
 		}
-	}
-	else {
+#	}
+#	else {
 		# If runned from commandline, we need to build parameters string
-		$LinkParamA="?".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang";
-		$LinkParamB=($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang&";
-	}
+#		$LinkParamA="?".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang";
+#		$LinkParamB=($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang&";
+#	}
 
 	# MENU
 	#---------------------------------------------------------------------
@@ -2752,7 +2769,7 @@ EOF
 		if ($AllowToUpdateStatsFromBrowser) {
 			my $NewLinkParams=${QueryString};
 			$NewLinkParams =~ s/update[=]*[^ &]*//;
-			$NewLinkParams =~ tr/&/&/s; $NewLinkParams =~ s/&$//;
+			$NewLinkParams =~ tr/&/&/s; $NewLinkParams =~ s/^&//; $NewLinkParams =~ s/&$//;
 			if ($NewLinkParams) { $NewLinkParams="${NewLinkParams}&"; }
 			print "<a href=\"$DirCgi$PROG.$Extension?${NewLinkParams}update=1\">$Message[74]</a>";
 		}
@@ -2972,8 +2989,8 @@ EOF
 		if ($LastTime < $LastTime{$YearRequired.$monthix}) { $LastTime = $LastTime{$YearRequired.$monthix}; }
 		$TotalVisits+=$MonthVisits{$YearRequired.$monthix};
 		$TotalUnique+=$MonthUnique{$YearRequired.$monthix};
-		$TotalHostsKnown+=$MonthHostsKnown{$YearRequired.$monthix};
-		$TotalHostsUnknown+=$MonthHostsUnknown{$YearRequired.$monthix};
+		$TotalHostsKnown+=$MonthHostsKnown{$YearRequired.$monthix}||0;
+		$TotalHostsUnknown+=$MonthHostsUnknown{$YearRequired.$monthix}||0;
 	}
 	# TotalDifferentPages (if not already specifically counted, we init it from _url_p hash table)
 	if (!$TotalDifferentPages) { $TotalDifferentPages=scalar keys %_url_p; }
@@ -2982,6 +2999,7 @@ EOF
 	# TotalErrors
 	foreach my $key (keys %_errors_h) { $TotalErrors+=$_errors_h{$key}; }
 	# Ratio
+	my $RatioHosts=0; my $RatioPages=0; my $RatioHits=0; my $RatioBytes=0;
 	if ($TotalUnique > 0) { $RatioHosts=int($TotalVisits/$TotalUnique*100)/100; }
 	if ($TotalVisits > 0) { $RatioPages=int($TotalPages/$TotalVisits*100)/100; }
 	if ($TotalVisits > 0) { $RatioHits=int($TotalHits/$TotalVisits*100)/100; }
@@ -3025,7 +3043,7 @@ EOF
 		$NewLinkParams =~ s/update[=]*[^ &]*//;
 		$NewLinkParams =~ s/year=[^ &]*//;
 		$NewLinkParams =~ s/month=[^ &]*//;
-		$NewLinkParams =~ tr/&/&/s; $NewLinkParams =~ s/&$//;
+		$NewLinkParams =~ tr/&/&/s; $NewLinkParams =~ s/^&//; $NewLinkParams =~ s/&$//;
 		if ($NewLinkParams) { $NewLinkParams="${NewLinkParams}&"; }
 		foreach my $key (keys %listofyears) {
 			print "<a href=\"$DirCgi$PROG.$Extension?${NewLinkParams}year=$key&month=year\">$Message[6] $key</a> &nbsp; ";
@@ -3295,7 +3313,7 @@ EOF
 			if ($_domener_p{$key} && $bredde_p==1) { $bredde_p=2; }
 			if ($max_h > 0) { $bredde_h=int($BarWidth*$_domener_h{$key}/$max_h)+1; }
 			if ($_domener_h{$key} && $bredde_h==1) { $bredde_h=2; }
-			if ($max_k > 0) { $bredde_k=int($BarWidth*$_domener_k{$key}/$max_k)+1; }
+			if ($max_k > 0) { $bredde_k=int($BarWidth*($_domener_k{$key}||0)/$max_k)+1; }
 			if ($_domener_k{$key} && $bredde_k==1) { $bredde_k=2; }
 			if ($key eq "ip") {
 				print "<TR><TD><IMG SRC=\"$DirIcons\/flags\/$key.png\" height=14></TD><TD CLASS=AWL>$Message[0]</TD><TD>$key</TD>";
@@ -3311,7 +3329,7 @@ EOF
 			print "</TD></TR>\n";
 			$total_p += $_domener_p{$key};
 			$total_h += $_domener_h{$key};
-			$total_k += $_domener_k{$key};
+			$total_k += $_domener_k{$key}||0;
 			$count++;
 		}
 		$rest_p=$TotalPages-$total_p;
@@ -3358,7 +3376,7 @@ EOF
 			}
 			$total_p += $_hostmachine_p{$key};
 			$total_h += $_hostmachine_h{$key};
-			$total_k += $_hostmachine_k{$key};
+			$total_k += $_hostmachine_k{$key}||0;
 			$count++;
 		}
 		$rest_p=$TotalPages-$total_p;
@@ -3567,7 +3585,7 @@ EOF
 	if ($ShowOriginStats) {
 		print "$CENTER<a name=\"REFERER\">&nbsp;</a><BR>";
 		&tab_head($Message[36],19);
-		my @p_p=();
+		my @p_p=(0,0,0,0,0);
 		if ($TotalPages > 0) {
 			$p_p[0]=int($_from_p[0]/$TotalPages*1000)/10;
 			$p_p[1]=int($_from_p[1]/$TotalPages*1000)/10;
@@ -3575,7 +3593,7 @@ EOF
 			$p_p[3]=int($_from_p[3]/$TotalPages*1000)/10;
 			$p_p[4]=int($_from_p[4]/$TotalPages*1000)/10;
 		}
-		my @p_h=();
+		my @p_h=(0,0,0,0,0);
 		if ($TotalHits > 0) {
 			$p_h[0]=int($_from_h[0]/$TotalHits*1000)/10;
 			$p_h[1]=int($_from_h[1]/$TotalHits*1000)/10;
@@ -3675,7 +3693,9 @@ EOF
 
 }
 else {
-	print "Lines in file: $NbOfLinesRead, found $NbOfNewLinesProcessed new records, $NbOfLinesCorrupted corrupted records.\n";
+	print "Lines in file: $NbOfLinesRead\n";
+	print "Found $NbOfNewLinesProcessed new records,\n";
+	print "Found $NbOfLinesCorrupted corrupted records.\n";
 }
 
 0;	# Do not remove this line
