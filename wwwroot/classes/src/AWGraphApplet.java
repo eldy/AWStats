@@ -49,8 +49,7 @@ public class AWGraphApplet extends java.applet.Applet {
 
 //    public synchronized void init() {
     public synchronized void start() {
-//        Trace.init(DEBUG,"");
-//        Trace.debug(0,"Applet init",getClass().getName());
+        Log("Applet init");
   
         String temp = getParameter("b_fontsize");
         if (temp != null) { b_fontsize = Integer.parseInt(temp); }
@@ -83,12 +82,12 @@ public class AWGraphApplet extends java.applet.Applet {
 		temp = getParameter("border_color");
         if (temp != null) { border_color = Color.decode("#"+temp); }
 
+        Log("bblocks "+nbblocks);
+        Log("nbvalues "+nbvalues);
+        Log("barsize "+barsize);
+        
         font = new java.awt.Font("Verdana", 0, b_fontsize);
         metrics = getFontMetrics(font);
-        
-//        Trace.debug(1,"nbblocks "+nbblocks,getClass().getName());
-//        Trace.debug(1,"nbvalues "+nbvalues,getClass().getName());
-//        Trace.debug(1,"barsize "+barsize,getClass().getName());
         
         blabels = new String[nbblocks];
         vlabels = new String[nbvalues];
@@ -109,10 +108,15 @@ public class AWGraphApplet extends java.applet.Applet {
 		}
         for (int i=0; i < nbvalues; i++) {
 			if (max[i]<=0) { max[i]=1; }
-//			Trace.debug(2,"max["+i+"]="+max[i],getClass().getName());
+			Log("max["+i+"]="+max[i]);
 		}
     }
             
+	private synchronized void Log(String s) {
+//			Trace.debug(1,s);
+		System.out.println(s);
+	}
+		
     private synchronized void parsebLabel(int i) {
         String temp = getParameter("b" + (i+1) + "_label");
         if (temp==null) {
@@ -166,9 +170,9 @@ public class AWGraphApplet extends java.applet.Applet {
 		if (temp != null) {
         	String[] ss=temp.split(" ",0);
         	for (int i=0; i<ss.length; i++) {
-				//Trace.debug(2,"ss="+ss[i],getClass().getName());
+//				Log("ss="+ss[i]);
 	            values[j][i] = Float.parseFloat(ss[i]);
-				//Trace.debug(2,"values["+j+"]["+i+"]="+values[j][i],getClass().getName());
+//				Log("values["+j+"]["+i+"]="+values[j][i]);
 			}
 	    }
     }
@@ -192,7 +196,7 @@ public class AWGraphApplet extends java.applet.Applet {
 		Polygon p = new Polygon();
 		int width=new Float(w).intValue();
 		int height=new Float(h).intValue();
-		//Trace.debug(2,"draw3DBar "+x+","+y+","+w+"=>"+width+","+h+"=>"+height,getClass().getName());
+//		Log("draw3DBar "+x+","+y+","+w+"=>"+width+","+h+"=>"+height);
 		
 		p.addPoint(x,y);p.addPoint(x+width,y);
 		p.addPoint(x+width,y-height);p.addPoint(x,y-height);
@@ -252,10 +256,16 @@ public class AWGraphApplet extends java.applet.Applet {
 		
 		// Loop on each block
         for (int j = 0; j < nbblocks; j++) {
+
             // Draw the block label
-			//Trace.debug("Write block j="+j+" with cx="+cx,"");
+//			Log("Write block j="+j+" with cx="+cx);
             cy = getSize().height - metrics.getHeight() - metrics.getDescent();
             g.setColor(Color.black);
+			// Check if bold or highlight
+			int bold=0; int highlight=0;
+			if (blabels[j].indexOf(":")>0) { bold=1; blabels[j]=blabels[j].replaceAll(":",""); }
+			if (blabels[j].indexOf("!")>0) { highlight=1; blabels[j]=blabels[j].replaceAll("!",""); }
+
             String[] ss=blabels[j].split("§",0);
             for (int i=0; i<ss.length; i++) {
 	            int cxoffset=((nbvalues*(valWidth+valSpacing))-metrics.stringWidth(ss[i]))>>1;
@@ -287,13 +297,7 @@ public class AWGraphApplet extends java.applet.Applet {
     
     public synchronized String[][] getParameterInfo() {
         String[][] info = {
-            {"title", "string", "The title of bar graph.  Default is 'Chart'"},
-            {"nbvalues", "int", "The number of nbvalues/rows.  Default is 5."},
-            {"orientation", "{VERTICAL, HORIZONTAL}", "The orienation of the bar graph.  Default is VERTICAL."},
-            {"c#", "int", "Subsitute a number for #.  " + "The value/size of bar #.  Default is 0."},
-            {"c#_label", "string", "The label for bar #.  " + "Default is an empty label."},
-            {"c#_style", "{SOLID, STRIPED}", "The style of bar #.  " + "Default is SOLID."},
-            {"c#_color", "{RED, GREEN, BLUE, PINK, ORANGE, MAGENTA, CYAN, " + "WHITE, YELLOW, GRAY, DARKGRAY}", "The color of bar #.  Default is GRAY."}
+            {"title", "string", "The title of bar graph."}
         };
         return info;
     }
