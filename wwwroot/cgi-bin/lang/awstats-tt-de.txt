@@ -7,14 +7,15 @@
 	</DIV>
 	<DIV CLASS="CTooltip" ID="tt3">
 	Anzahl der insgesamt <b>angezeigten Seiten</b> Ihrer Web Site (Summe aller Zugriffe von allen Besuchern).<br>
-	Diese Zahl unterscheidet sich von den &quot;Hits&quot;, da nur HTML Seiten und keine Grafiken oder andere Dateien gez&auml;hlt werden.
+	Diese Zahl unterscheidet sich von den &quot;Zugriffen&quot;, da nur HTML Seiten und keine Grafiken oder andere Dateien gez&auml;hlt werden.
 	</DIV>
 	<DIV CLASS="CTooltip" ID="tt4">
 	Anzahl der insgesamt <b>angezeigten</b> oder <b>heruntergeladenen Seiten, Grafiken, Dateien</b> Ihrer Web Site.<br>
 	Diese Zahl wird nur als Referenz angegeben, da meistens die Anzahl der angezeigten &quot;Seiten&quot; f&uuml; Marketingzwecke bevorzugt wird.
 	</DIV>
 	<DIV CLASS="CTooltip" ID="tt5">
-	Dieser Wert entspricht der Menge an Daten, die aufgrund aller <b>Seiten</b>, <b>Grafiken</b> und <b>Dateien</b> Ihrer Web Site &uuml;bertragen worden sind.
+	Dieser Wert entspricht der Menge an Daten, die aufgrund aller <b>Seiten</b>, <b>Grafiken</b> und <b>Dateien</b> Ihrer Web Site &uuml;bertragen worden sind.<br>
+	Einheiten sind in Kb, Mb oder Gb (KiloBytes, MegaBytes oder GigaBytes)
 	</DIV>
 	<DIV CLASS="CTooltip" ID="tt13">
 	#PROG# erkennt jeden Zugriff auf Ihre Web Site aufgrund einer <b>Suche</b> von einer der <b>#SearchEnginesArray# beliebtesten Internet-Suchmaschinen und -Verzeichnisse</b> (wie z.B. Yahoo, Altavista, Lycos, Google, Voila, etc...).
@@ -28,8 +29,17 @@
 	(#PROG# erkennt die Schl&uuml;sselw&ouml;rter der <b>#SearchEnginesArray#</b> beliebtesten Internet-Suchmaschinen und -Verzeichnisse, wie z.B. Yahoo, Altavista, Lycos, Google, Voila, etc...).
 	</DIV>
 	<DIV CLASS="CTooltip" ID="tt16">
-	Robots (manchmal auch als Spider bezeichnet) sind <b>automatische Computerbesucher</b>, die von vielen Suchmaschinen eingesetzt werden, um Ihre Web Seite (1) aufzunehmen und auszuwerten, (2) Statistiken &uuml;ber Internet Web Sites zu sammeln und/oder (3) zu kontrollieren, ob Ihre Web Site noch erreichbar ist.<br>
+	Robots (manchmal auch als Spider bezeichnet) sind <b>automatische Computerbesucher</b>, die von vielen Suchmaschinen eingesetzt werden, um Ihre Web Seite aufzunehmen und auszuwerten.<br>
 	#PROG# ist in der Lage, bis zu <b>#RobotArray#</b> Robots zu erkennen.
+	</DIV>
+	<DIV CLASS="CTooltip" ID="tt17">
+	Alle zeitbezogenen Statistiken basieren auf der Serverzeit.<br>
+	</DIV>
+	<DIV CLASS="CTooltip" ID="tt18">
+	Die angezeigten Werte sind <b>Durchschnittswerte</b> (berechnet aus allen Werten zwischen dem ersten und letzten Besuch)
+	</DIV>
+	<DIV CLASS="CTooltip" ID="tt19">
+	Die angezeigten Werte sind <b>Summenwerte</b> (berechnet aus allen Werten zwischen dem ersten und letzten Besuch)
 	</DIV>
 
 	<DIV CLASS="CTooltip" ID="tt201"> F&uuml;r diesen Fehler liegt keine Beschreibung vor. </DIV>

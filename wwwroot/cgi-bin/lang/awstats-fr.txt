@@ -1,7 +1,7 @@
 # French message file (eldy@users.sourceforge.net)
 # $Revision$ - $Date$
-message0=Inconnus
-message1=Inconnus (IP non résolue)
+message0=Inconnu
+message1=Inconnu (IP non résolue)
 message2=Autres
 message3=Voir détails
 message4=Jour
@@ -75,7 +75,7 @@ message71=Déc
 message72=Navigation
 message73=Types de fichiers
 message74=Mise à jour immédiate
-message75=Octets
+message75=Bande passante
 message76=Retour page principale
 message77=Top
 message78=dd mmm yyyy - HH:MM
@@ -119,3 +119,4 @@ message115=OK
 message116=Pages de sortie
 message117=Durée des visites
 message118=Fermer
+message119=Octets
