@@ -90,7 +90,7 @@
 # Minor swedish search engines
 "evreka\.passagen\.se",
 # Minor swiss search engines
-"search\.bluewin\.ch",
+"search\.ch", "search\.bluewin\.ch",
 # Other
 "search\..*\.\w+"
 );
@@ -183,7 +183,7 @@
 # Minor swedish search engines
 "evreka\.passagen\.se","q=",
 # Minor swiss search engines
-"search\.bluewin\.ch","qry=",
+"search\.ch", "q=", "search\.bluewin\.ch", "qry="       # Minor swiss search engines
 );
 
 # SearchEnginesKnownUrlNotFound
@@ -284,7 +284,7 @@
 # Minor swedish search engines
 "evreka\.passagen\.se","Evreka",
 # Minor Swiss search engines
-"search.bluewin.ch","Bluewin",
+"search\.ch", "search.ch", "search\.bluewin\.ch", "search.bluewin.ch",								
 # Other
 "search\..*\.\w+","Other search engines"
 );
