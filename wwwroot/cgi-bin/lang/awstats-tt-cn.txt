@@ -42,7 +42,7 @@
 <DIV CLASS="CTooltip" ID="tt408"> 网页服务器花费太多时间处理这个需求</DIV>
 <DIV CLASS="CTooltip" ID="tt500"> 内部服务器发生错误，一般是 CGI 程序发生问题</DIV>
 <DIV CLASS="CTooltip" ID="tt501"> 不了解需求</DIV>
-<DIV CLASS="CTooltip" ID="tt502"> 网页服务器因 proxy 而未能响应真正使用者的需求</DIV>
+<DIV CLASS="CTooltip" ID="tt502"> 发给代理服务器或网关服务器的页面请求没有成功返回给客户端</DIV>
 <DIV CLASS="CTooltip" ID="tt503"> 内部服务器发生错误 </DIV>
 <DIV CLASS="CTooltip" ID="tt504"> 通讯闸逾时 </DIV>
 <DIV CLASS="CTooltip" ID="tt505"> 这个 HTTP 的版本没有支持 </DIV>
