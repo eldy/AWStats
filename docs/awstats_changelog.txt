@@ -21,6 +21,7 @@ New features/improvments:
 - Export tooltip features in a plugin (plugin tooltips disabled by default).
 - Added average session length in Visit Duration report.
 - Added percentage in Visit Duration report.
+- logresolvemerge.pl can read .gz or .bz2 files.
 
 Other/Documentation:
 - Replaced -month=year option by -month=all.

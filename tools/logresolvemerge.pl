@@ -24,6 +24,14 @@ use vars qw/ $REVISION $VERSION /;
 $REVISION='$Revision$'; $REVISION =~ /\s(.*)\s/; $REVISION=$1;
 $VERSION="1.2 (build $REVISION)";
 
+# ---------- External Program variables ----------
+# For gzip compression
+my $zcat = 'zcat';
+my $zcat_file = '\.gz$';
+# For bz2 compression
+my $bzcat = 'bzcat';
+my $bzcat_file = '\.bz2$';
+
 # ---------- Init variables --------
 my $Debug=0;
 my $ShowSteps=0;
@@ -168,6 +176,7 @@ if (scalar keys %ParamFile == 0) {
 	print "\n";
 	print "Now supports/detects:\n";
 	print "  Automatic detection of log format\n";
+	print "  Files can be .gz/.bz2 files if zcat/bzcat tools are available in PATH.\n";
 #	print "  Multithreaded reverse DNS lookup (several parallel requests)\n";
 #	print "  No need of extra Perl library\n";
 	print "New versions and FAQ at http://awstats.sourceforge.net\n";
@@ -220,6 +229,19 @@ $cpt=1;
 foreach my $key (keys %ParamFile) {
 	if ($ParamFile{$key} !~ /\*/ && $ParamFile{$key} !~ /\?/) {
 		&debug("Log file $ParamFile{$key} is added to LogFileToDo.");
+
+		# Check for supported compression 
+		if ($ParamFile{$key} =~ /$zcat_file/) {
+			&debug("GZIP compression detected for Log file $ParamFile{$key}.");
+			# Modify the name to include the zcat command
+			$ParamFile{$key} = $zcat . ' ' . $ParamFile{$key} . ' |';
+		}
+		elsif ($ParamFile{$key} =~ /$bzcat_file/) {
+			&debug("BZ2 compression detected for Log file $ParamFile{$key}.");
+			# Modify the name to include the bzcat command
+			$ParamFile{$key} = $bzcat . ' ' . $ParamFile{$key} . ' |';
+		}
+
 		$LogFileToDo{$cpt}=$ParamFile{$key};
 		$cpt++;
 	}
@@ -399,7 +421,7 @@ while (1 == 1)
 # Close all log files
 foreach my $logfilenb (keys %LogFileToDo) {
 	&debug("Close log file number $logfilenb");
-	close("LOG$logfilenb");
+	close("LOG$logfilenb") || error("Command for pipe '$LogFileToDo{$logfilenb}' failed");
 }
 
 # Waiting queue is empty
