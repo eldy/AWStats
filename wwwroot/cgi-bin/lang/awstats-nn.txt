@@ -1,4 +1,5 @@
-# Norwegian Nynorsk message file, by Karl Ove Hufthammer <huftis@bigfoot.com>
+# Norwegian Nynorsk message file (by Karl Ove Hufthammer <huftis@bigfoot.com>)
+# $Revision$ - $Date$
 PageCode=iso-8859-1
 message0=Ukjent
 message1=ukjente (fann ikkje vertsnamn)

@@ -1,4 +1,5 @@
-# French message file
+# French message file (eldy@users.sourceforge.net)
+# $Revision$ - $Date$
 message0=Inconnus
 message1=Inconnus (IP non résolue)
 message2=Autres
