@@ -3,13 +3,19 @@ AWStats Changelog
 
 4.1
 
-- Fixed a bug of vampired memory and abnormal disk swapping when using
-  logresolvemerge.pl
+- Fixed: -logfile option can be anywhere on command line and accept space
+   in log file names.
+- Fixed: A bug vampired memory and caused abnormal disk swapping in 
+   logresolvemerge.pl
+- Fixed: Reduce nb of dropped records for log files not 'completely' sorted.
+- New tag for logfile: %virtualname allows you to share same log file for
+   several virtual servers
+- New feature: A 'pipe' can be used in LogFile name parameter.
 - New feature: Report exit pages
 - New feature: Report visits duration
-- New option: Added -dir option to choose destination directory 
-  for awstats_buildstaticpages.pl
-- Updated AWStats databases
+- New option: Added -dir option to choose destination directory for
+   awstats_buildstaticpages.pl
+- Updated AWStats databases (renamed into .pm files and moved to lib dir)
 - Updated documentation
 
 
