@@ -14,7 +14,7 @@
 #-------------------------------------------------------
 # Defines
 #-------------------------------------------------------
-$VERSION="2.24 (build 2)";
+$VERSION="2.24 (build 3)";
 $Lang=0;
 
 # Default value
@@ -1582,8 +1582,8 @@ if ($YearRequired eq "")  { $YearRequired=$nowyear; }
 if ($QueryString =~ /month=/)                { $MonthRequired=$QueryString; $MonthRequired =~ s/.*month=//; $MonthRequired =~ s/&.*//; }
 if ($MonthRequired eq "") { $MonthRequired=$nowmonth; }
 
-$BrowsersHash{"netscape"}="<font color=blue>Netscape</font> <a href=\"$DirCgi$PROG.$Extension?site=$LocalSite&action=browserdetail&month=$MonthRequired&lang=$Lang\">($message[58][$Lang])</a>";
-$BrowsersHash{"msie"}="<font color=blue>MS Internet Explorer</font> <a href=\"$DirCgi$PROG.$Extension?site=$LocalSite&action=browserdetail&month=$MonthRequired&lang=$Lang\">($message[58][$Lang])</a>";
+$BrowsersHash{"netscape"}="<font color=blue>Netscape</font> <a href=\"$DirCgi$PROG.$Extension?action=browserdetail&site=$LocalSite&year=$YearRequired&month=$MonthRequired&lang=$Lang\">($message[58][$Lang])</a>";
+$BrowsersHash{"msie"}="<font color=blue>MS Internet Explorer</font> <a href=\"$DirCgi$PROG.$Extension?action=browserdetail&site=$LocalSite&year=$YearRequired&month=$MonthRequired&lang=$Lang\">($message[58][$Lang])</a>";
 
 if (@HostAliases == 0) {
 	warning("Warning: HostAliases parameter is not defined, $PROG will choose \"$LocalSite localhost 127.0.0.1\".");
@@ -2277,7 +2277,6 @@ if (($Lang != 1) && ($Lang != 3) && ($Lang != 6)) {
 	This piece of data is provided as a reference only, since the number of \"pages\" viewed is often prefered for marketing purposes.
 	</DIV>
 	<DIV CLASS=\"classTooltip\" ID=\"tt5\">
-#	Number of <b>kilobytes</b> downloaded by your visitors.<br>
 	This piece of information refers to the amount of data downloaded by all <b>pages</b>, <b>images</b> and <b>files</b> within your site measured in KBs.
 	</DIV>
 	<DIV CLASS=\"classTooltip\" ID=\"tt13\">
@@ -2806,7 +2805,7 @@ foreach $key (@sorthosts_p)
   if ($_hostmachine_h{$key}>=$MinHitHost) {
     $kilo=int(($_hostmachine_k{$key}/1024)*100)/100;
 	if ($key eq "Unknown") {
-		print "<TR><TD CLASS=LEFT><a href=\"$DirCgi$PROG.$Extension?site=$LocalSite&action=unknownip&month=$MonthRequired&lang=$Lang\">$message[1][$Lang]</a></TD><TD>$_hostmachine_p{$key}</TD><TD>$_hostmachine_h{$key}</TD><TD>$kilo</TD><TD><a href=\"$DirCgi$PROG.$Extension?site=$LocalSite&action=unknownip&month=$MonthRequired&lang=$Lang\">$message[3][$Lang]</a></TD></TR>\n";
+		print "<TR><TD CLASS=LEFT><a href=\"$DirCgi$PROG.$Extension?action=unknownip&site=$LocalSite&year=$YearRequired&month=$MonthRequired&lang=$Lang\">$message[1][$Lang]</a></TD><TD>$_hostmachine_p{$key}</TD><TD>$_hostmachine_h{$key}</TD><TD>$kilo</TD><TD><a href=\"$DirCgi$PROG.$Extension?action=unknownip&site=$LocalSite&year=$YearRequired&month=$MonthRequired&lang=$Lang\">$message[3][$Lang]</a></TD></TR>\n";
 		}
 	else {
 		$yearcon=substr($_hostmachine_l{$key},0,4);
@@ -2933,7 +2932,7 @@ print "<TR BGCOLOR=$color_TableBGRowTitle><TH>Browser</TH><TH bgcolor=$color_h w
 foreach $key (@sortbrowsers) {
 	$p=int($_browser_h{$key}/$TotalHits*1000)/10;
 	if ($key eq "Unknown") {
-		print "<TR><TD CLASS=LEFT><a href=\"$DirCgi$PROG.$Extension?site=$LocalSite&action=unknownrefererbrowser&month=$MonthRequired&lang=$Lang\">$message[0][$Lang]</a></TD><TD>$_browser_h{$key}</TD><TD>$p&nbsp;%</TD></TR>\n";
+		print "<TR><TD CLASS=LEFT><a href=\"$DirCgi$PROG.$Extension?action=unknownrefererbrowser&site=$LocalSite&year=$YearRequired&month=$MonthRequired&lang=$Lang\">$message[0][$Lang]</a></TD><TD>$_browser_h{$key}</TD><TD>$p&nbsp;%</TD></TR>\n";
 	}
 	else {
 		print "<TR><TD CLASS=LEFT>$BrowsersHash{$key}</TD><TD>$_browser_h{$key}</TD><TD>$p&nbsp;%</TD></TR>\n";
@@ -2951,7 +2950,7 @@ print "<TR BGCOLOR=$color_TableBGRowTitle><TH colspan=2>OS</TH><TH bgcolor=$colo
 foreach $key (@sortos) {
 	$p=int($_os_h{$key}/$TotalHits*1000)/10;
 	if ($key eq "Unknown") {
-		print "<TR><TD><IMG SRC=\"$DirIcons\/os\/unknown.png\"></TD><TD CLASS=LEFT><a href=\"$DirCgi$PROG.$Extension?site=$LocalSite&action=unknownreferer&month=$MonthRequired&lang=$Lang\">$message[0][$Lang]</a></TD><TD>$_os_h{$key}&nbsp;</TD>";
+		print "<TR><TD><IMG SRC=\"$DirIcons\/os\/unknown.png\"></TD><TD CLASS=LEFT><a href=\"$DirCgi$PROG.$Extension?action=unknownreferer&site=$LocalSite&year=$YearRequired&month=$MonthRequired&lang=$Lang\">$message[0][$Lang]</a></TD><TD>$_os_h{$key}&nbsp;</TD>";
 		print "<TD>$p&nbsp;%</TD></TR>\n";
 		}
 	else {
@@ -3049,7 +3048,7 @@ foreach $key (@sorterrors) {
 	$p=int($_errors_h{$key}/$TotalErrors*1000)/10;
 	if ($httpcode{$key}) { print "<TR onmouseover=\"ShowTooltip($key);\" onmouseout=\"HideTooltip($key);\">"; }
 	else { print "<TR>"; }
-	if ($key == 404) { print "<TD><a href=\"$DirCgi$PROG.$Extension?site=$LocalSite&action=notfounderror&month=$MonthRequired&lang=$Lang\">$key</a></TD>"; }
+	if ($key == 404) { print "<TD><a href=\"$DirCgi$PROG.$Extension?action=notfounderror&site=$LocalSite&year=$YearRequired&month=$MonthRequired&lang=$Lang\">$key</a></TD>"; }
 	else { print "<TD>$key</TD>"; }
 	if ($httpcode{$key}) { print "<TD CLASS=LEFT>$httpcode{$key}</TD><TD>$_errors_h{$key}</TD><TD>$p&nbsp;%</TD></TR>\n"; }
 	else { print "<TD CLASS=LEFT>Unknown error</TD><TD>$_errors_h{$key}</TD><TD>$p&nbsp;%</TD></TR>\n"; }
