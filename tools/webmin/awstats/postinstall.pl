@@ -1,5 +1,5 @@
 
-require 'aawstats-lib.pl';
+require 'awstats-lib.pl';
 
 sub module_install
 {
