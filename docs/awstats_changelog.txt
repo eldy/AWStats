@@ -15,6 +15,7 @@ Fixes:
 - Fixed bug 817388: lib/referer_spam.pm & lib/robots.pm
 - Fixed bug 818704: Warning in IPv6 plugin when no reverse DNS
 - Fixed bug 841877: regex bug for parsing log lines
+- Fixed bug 846365: relative path not working for DirData.
 - Fixed value for ValueSMTPCodes if not defined in config file.
 - Fixed pb when country code is not same than lang code (example:
   estonian has lang code 'et' and country code 'ee').
@@ -31,6 +32,8 @@ Fixes:
 - Fixed AmigaVoyager detection.
 - Fixed bug in SkipHosts filter for mail log files.
 - Fixed not working link for search keywords/keyphrase in menu with FireBird.
+- Fixed pb in loading plugins with mod_perl2.
+- Fixed not found relative DirData path with some Perl/OS versions.
 
 New features/improvements:
 - Increased speed by 10 to 20%.
@@ -58,6 +61,8 @@ New features/improvements:
 - Added percent column for file types.
 - The robot chart now shows details between hits on robots.txt file and
   other hits.
+- Added patch 857319: Allow several IPs and IP ranges in
+  AllowAccessFromWebToFollowingIPAddresses parameter.
 - Added experimental graphapplet plugin (graph are built by applet).
 - Webmin module updated to 1.210 to integrate all new parameters.
 - Better setup error messages for newbie.
