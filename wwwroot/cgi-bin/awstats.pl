@@ -55,11 +55,13 @@ $MinHitFile, $MinHitHost, $MinHitKeyword, $MinHitLogin, $MinHitRefer, $MinHitRob
 $MonthRequired, $NbOfLinesForCorruptedLog,
 $HTMLOutput, $PROG, $PageCode,
 $PurgeLogFile, $QueryString, $RatioBytes, $RatioHits, $RatioHosts, $RatioPages,
-$ShowHeader, $ShowMenu, $ShowMonthDayStats, $ShowDomainsStats,
-$ShowHostsStats, $ShowRobotsStats, $ShowHoursStats, $ShowDaysOfWeekStats,
+$ShowHeader, $ShowMenu, $ShowMonthDayStats,
+$ShowDaysOfWeekStats, $ShowHoursStats, 
+$ShowDomainsStats, $ShowHostsStats, $ShowAuthenticatedUsers, $ShowRobotsStats, 
 $ShowPagesStats, $ShowFileTypesStats, $ShowFileSizesStats,
-$ShowBrowsersStats, $ShowOSStats, $ShowOriginStats, $ShowKeyphrasesStats, $ShowKeywordsStats,
-$ShowAuthenticatedUsers, $ShowHTTPErrorsStats,
+$ShowBrowsersStats, $ShowOSStats, $ShowOriginStats,
+$ShowKeyphrasesStats, $ShowKeywordsStats,
+$ShowCompressionStats, $ShowHTTPErrorsStats,
 $ShowFlagLinks, $ShowLinksOnURL, $ShowLinksOnUrl, $ShowSteps,
 $SiteConfig, $SiteDomain, $SiteToAnalyze, $SiteToAnalyzeWithoutwww,
 $TotalBytes, $TotalDifferentPages, $TotalErrors, $TotalHits,
@@ -470,11 +472,12 @@ sub Read_Config_File {
 		if ($param =~ /^ShowHeader/)             { $ShowHeader=$value; next; }
 		if ($param =~ /^ShowMenu/)               { $ShowMenu=$value; next; }
 		if ($param =~ /^ShowMonthDayStats/)      { $ShowMonthDayStats=$value; next; }
+		if ($param =~ /^ShowDaysOfWeekStats/)    { $ShowDaysOfWeekStats=$value; next; }
+		if ($param =~ /^ShowHoursStats/)         { $ShowHoursStats=$value; next; }
 		if ($param =~ /^ShowDomainsStats/)       { $ShowDomainsStats=$value; next; }
 		if ($param =~ /^ShowHostsStats/)         { $ShowHostsStats=$value; next; }
+		if ($param =~ /^ShowAuthenticatedUsers/) { $ShowAuthenticatedUsers=$value; next; }
 		if ($param =~ /^ShowRobotsStats/)        { $ShowRobotsStats=$value; next; }
-		if ($param =~ /^ShowHoursStats/)         { $ShowHoursStats=$value; next; }
-		if ($param =~ /^ShowDaysOfWeekStats/)    { $ShowDaysOfWeekStats=$value; next; }
 		if ($param =~ /^ShowPagesStats/)         { $ShowPagesStats=$value; next; }
 		if ($param =~ /^ShowFileTypesStats/)     { $ShowFileTypesStats=$value; next; }
 		if ($param =~ /^ShowFileSizesStats/)     { $ShowFileSizesStats=$value; next; }
@@ -483,7 +486,7 @@ sub Read_Config_File {
 		if ($param =~ /^ShowOriginStats/)        { $ShowOriginStats=$value; next; }
 		if ($param =~ /^ShowKeyphrasesStats/)    { $ShowKeyphrasesStats=$value; next; }
 		if ($param =~ /^ShowKeywordsStats/)      { $ShowKeywordsStats=$value; next; }
-		if ($param =~ /^ShowAuthenticatedUsers/) { $ShowAuthenticatedUsers=$value; next; }
+		if ($param =~ /^ShowCompressionStats/)   { $ShowCompressionStats=$value; next; }
 		if ($param =~ /^ShowHTTPErrorsStats/)    { $ShowHTTPErrorsStats=$value; next; }
 		if ($param =~ /^ShowFlagLinks/)         { $ShowFlagLinks=$value; next; }
 		if ($param =~ /^ShowLinksOnUrl/)        { $ShowLinksOnUrl=$value; next; }
@@ -671,11 +674,12 @@ sub Check_Config {
 	if ($ShowHeader !~ /[0-1]/)                   { $ShowHeader=1; }
 	if ($ShowMenu !~ /[0-1]/)                     { $ShowMenu=1; }
 	if ($ShowMonthDayStats !~ /[0-1]/)            { $ShowMonthDayStats=1; }
+	if ($ShowDaysOfWeekStats !~ /[0-1]/)          { $ShowDaysOfWeekStats=1; }
+	if ($ShowHoursStats !~ /[0-1]/)               { $ShowHoursStats=1; }
 	if ($ShowDomainsStats !~ /[0-1]/)             { $ShowDomainsStats=1; }
 	if ($ShowHostsStats !~ /[0-1]/)               { $ShowHostsStats=1; }
+	if ($ShowAuthenticatedUsers !~ /[0-1]/)       { $ShowAuthenticatedUsers=1; }
 	if ($ShowRobotsStats !~ /[0-1]/)              { $ShowRobotsStats=1; }
-	if ($ShowHoursStats !~ /[0-1]/)               { $ShowHoursStats=1; }
-	if ($ShowDaysOfWeekStats !~ /[0-1]/)          { $ShowDaysOfWeekStats=1; }
 	if ($ShowPagesStats !~ /[0-1]/)               { $ShowPagesStats=1; }
 	if ($ShowFileTypesStats !~ /[0-1]/)           { $ShowFileTypesStats=1; }
 	if ($ShowFileSizesStats !~ /[0-1]/)           { $ShowFileSizeStats=1; }
@@ -684,8 +688,8 @@ sub Check_Config {
 	if ($ShowOriginStats !~ /[0-1]/)              { $ShowOriginStats=1; }
 	if ($ShowKeyphrasesStats !~ /[0-1]/)          { $ShowKeyphrasesStats=1; }
 	if ($ShowKeywordsStats !~ /[0-1]/)            { $ShowKeywordsStats=1; }
+	if ($ShowCompressionStats !~ /[0-1]/)         { $ShowCompressionStats=1; }
 	if ($ShowHTTPErrorsStats !~ /[0-1]/)          { $ShowHTTPErrorsStats=1; }
-	if ($ShowAuthenticatedUsers !~ /[0-1]/)       { $ShowAuthenticatedUsers=1; }
 	if ($ShowLinksOnURL !~ /[0-1]/)               { $ShowLinksOnURL=1; }
 	if ($DetailedReportsOnNewWindows !~ /[0-1]/)  { $DetailedReportsOnNewWindows=1; }
 	if ($BarWidth !~ /^[\d][\d]*/)                { $BarWidth=260; }
@@ -706,7 +710,7 @@ sub Check_Config {
 	$color_weekend =~ s/#//g; if ($color_weekend !~ /^[0-9|A-Z][0-9|A-Z]*$/i)     { $color_weekend="EAEAEA"; }
 	$color_v =~ s/#//g; if ($color_v !~ /^[0-9|A-Z][0-9|A-Z]*$/i)                 { $color_v="F3F300"; }
 	$color_w =~ s/#//g; if ($color_w !~ /^[0-9|A-Z][0-9|A-Z]*$/i)                 { $color_w="FF9933"; }
-	$color_w =~ s/#//g; if ($color_p !~ /^[0-9|A-Z][0-9|A-Z]*$/i)                 { $color_p="4477DD"; }
+	$color_p =~ s/#//g; if ($color_p !~ /^[0-9|A-Z][0-9|A-Z]*$/i)                 { $color_p="4477DD"; }
 	$color_h =~ s/#//g; if ($color_h !~ /^[0-9|A-Z][0-9|A-Z]*$/i)                 { $color_h="66F0FF"; }
 	$color_k =~ s/#//g; if ($color_k !~ /^[0-9|A-Z][0-9|A-Z]*$/i)                 { $color_k="339944"; }
 	$color_s =~ s/#//g; if ($color_s !~ /^[0-9|A-Z][0-9|A-Z]*$/i)                 { $color_s="8888DD"; }
@@ -809,6 +813,11 @@ sub Check_Config {
 	if ($Message[95] eq "") { $Message[95]="Min"; }
 	if ($Message[96] eq "") { $Message[96]="Average"; }
 	if ($Message[97] eq "") { $Message[97]="Max"; }
+	if ($Message[98] eq "") { $Message[98]="Web compression web"; }
+	if ($Message[99] eq "") { $Message[99]="Total Bytes served"; }
+	if ($Message[100] eq "") { $Message[100]="Not&nbsp;compressed"; }
+	if ($Message[101] eq "") { $Message[101]="Compressed<br>(before/after)"; }
+	if ($Message[102] eq "") { $Message[102]="Compression rate"; }
 }
 
 #--------------------------------------------------------------------
@@ -1065,6 +1074,9 @@ sub Read_History_File {
 				$_domener_p{$field[0]}+=$field[1];
 				$_domener_h{$field[0]}+=$field[2];
 				$_domener_k{$field[0]}+=$field[3];
+				$_domener_gz_i{$field[0]}+=$field[6];
+				$_domener_gz_in{$field[0]}+=$field[4];
+				$_domener_gz_out{$field[0]}+=$field[5];
 				next;
 			}
 	        if ($readbrowser) { $_browser_h{$field[0]}+=$field[1]; next; }
@@ -1125,7 +1137,8 @@ sub Save_History_File {
 	foreach my $key (keys %_domener_h) {
 		my $page=$_domener_p{$key}; if ($page == "") {$page=0;}
 		my $bytes=$_domener_k{$key}; if ($bytes == "") {$bytes=0;}
-		print HISTORYTMP "$key $page $_domener_h{$key} $bytes\n"; next;
+#		print HISTORYTMP "$key $page $_domener_h{$key} $bytes\n"; next;
+		print HISTORYTMP "$key $page $_domener_h{$key} $bytes $_domener_gz_in{$key} $_domener_gz_out{$key} $_domener_gz_i{$key}\n"; next;
 	}
 	print HISTORYTMP "END_DOMAIN\n";
 
@@ -1371,17 +1384,20 @@ if (($ENV{"GATEWAY_INTERFACE"} eq "") && ($SiteConfig eq "")) {
 #	print "  -debug=X             to add debug informations lesser than level X\n";
 #	print "\n";
 	print "Now supports/detects:\n";
-	print "  Number of visits and unique visitors\n";
-	print "  Rush hours and days of week\n";
-	print "  Last visitors and list of unresolved IP addresses\n";
+	print "  Reverse DNS lookup\n";
+	print "  Number of visits, unique visitors, list of last visits\n";
+	print "  Hosts list and unresolved IP addresses list\n";
+	print "  Days of week and rush hours\n";
+	print "  Authenticated users\n";
 	print "  Most often viewed pages\n";
 	print "  ".(scalar keys %DomainsHashIDLib)." domains/countries\n";
 	print "  ".(scalar keys %BrowsersHashIDLib)." browsers\n";
 	print "  ".(scalar keys %OSHashLib)." operating systems\n";
 	print "  ".(scalar keys %RobotHashIDLib)." robots\n";
-	print "  ".(scalar keys %SearchEnginesHashIDLib)." search engines (and keywords or keyphrases used from them)\n";
-	print "  All HTTP errors\n";
-	print "  Statistics by day/month/year\n";
+	print "  ".(scalar keys %SearchEnginesHashIDLib)." search engines (and keywords/keyphrases used from them)\n";
+	print "  HTTP errors statistics\n";
+	print "  Report by day/month/year\n";
+	print "  And a lot of other advanced options...\n";
 	print "New versions and FAQ at http://awstats.sourceforge.net\n";
 	exit 0;
 }
@@ -1533,7 +1549,7 @@ if ($UpdateStats) {
 			}
 			if ($f =~ /%logname$/ || $f =~ /%l$/ || $f =~ /cs-username$/) {
 				$found=1; 
-				$pos_rc = $i; $i++;
+				$pos_logname = $i; $i++;
 				$PerlParsingFormat .= "([^\\s]*) ";
 			}
 			if ($f =~ /%time1$/ || $f =~ /%t$/) {
@@ -1615,6 +1631,21 @@ if ($UpdateStats) {
 				$pos_agent = $i; $i++;
 				$PerlParsingFormat .= "([^\\s]*) ";
 			}
+			if ($f =~ /%gzipin$/ ) {
+				$found=1;
+				$gzipin=$i;$i++;
+				$PerlParsingFormat .= "([^\\s]*) ";
+			}
+			if ($f =~ /%gzipout$/ ) {
+				$found=1;
+				$gzipout=$i;$i++;
+				$PerlParsingFormat .= "([^\\s]*) ";
+			}
+			if ($f =~ /%gzipres$/ ) {
+				$found=1;
+				$gzipres=$i;$i++;
+				$PerlParsingFormat .= "([^\\s]*) ";
+			}
 			if (! $found) { $found=1; $PerlParsingFormat .= "[^\\s]* "; }
 		}
 		($PerlParsingFormat) ? chop($PerlParsingFormat) : error("Error: no recognised format commands in personalised LogFormat string"); 
@@ -1674,7 +1705,7 @@ if ($UpdateStats) {
 		/^$PerlParsingFormat/;
 		my @field=();
 		foreach $i (1..$lastrequiredfield) { $field[$i]=$$i; }
- 		&debug(" Record $NbOfLinesRead is: $field[$pos_rc] ; $field[$pos_logname] ; - ; $field[$pos_date] ; TZ; $field[$pos_method] ; $field[$pos_url] ; $field[$pos_code] ; $field[$pos_size] ; $field[$pos_referer] ; $field[$pos_agent]",3);
+ 		&debug(" Record $NbOfLinesRead is ($lastrequiredfield fields read) : $field[$pos_rc] ; $field[$pos_logname] ; - ; $field[$pos_date] ; TZ; $field[$pos_method] ; $field[$pos_url] ; $field[$pos_code] ; $field[$pos_size] ; $field[$pos_referer] ; $field[$pos_agent]",3);
 
 		# Check parsed parameters
 		#----------------------------------------------------------------------
@@ -2069,10 +2100,24 @@ if ($UpdateStats) {
 				}
 			}
 		}	
+
 		# Origin not found
 		if (!$found) {
 			if ($PageBool) { $_from_p[1]++; }
 			$_from_h[1]++;
+		}
+
+		# Compression
+		if ($field[$gzipin]) {
+			my($a,$b)=split(":",$field[$gzipres]);
+			my(undef,$in)=split(":",$field[$gzipin]);
+			my(undef,$out,$percent)=split(":",$field[$gzipout]);
+			$percent=~s/pct.//;
+			if ($out) {
+				$_domener_gz_in{ip}+=$in;
+				$_domener_gz_out{ip}+=$out;
+				$_domener_gz_i{ip}++;
+			}
 		}
 
 		# End of processing all new records.
@@ -2519,10 +2564,10 @@ EOF
 		my $lastdaytoshowtime=$nowyear.$nowmonth.$nowday;				# Set day cursor to today
 		if (($MonthRequired ne $nowmonth && $MonthRequired ne "year") || $YearRequired ne $nowyear) { 
 			if ($MonthRequired eq "year") {
-				$lastdaytoshowtime=$YearRequired."3112";				# Set day cursor to last day of the required year
+				$lastdaytoshowtime=$YearRequired."1231";				# Set day cursor to last day of the required year
 			}
 			else {
-				$lastdaytoshowtime=$YearRequired.$MonthRequired."31";	# Set ay cursor to last day of the required month
+				$lastdaytoshowtime=$YearRequired.$MonthRequired."31";	# Set day cursor to last day of the required month
 			}
 		}
 		my $firstdaytoshowtime=$lastdaytoshowtime;
@@ -3005,7 +3050,32 @@ EOF
 		}
 		&tab_end;
 	}	
-	
+
+	# BY COMPRESSION
+	#---------------------------
+	if ($ShowCompressionStats) {
+		$max_k=1; foreach my $key (values %_domener_k) { if ($key > $max_k) { $max_k = $key; } }
+		print "$CENTER<a name=\"COMPRESS\">&nbsp;</a><BR>";
+		&tab_head($Message[98],19);
+		print "<TR bgcolor=\"#$color_TableBGRowTitle\">";
+		print "<TH>&nbsp;</TH>";
+		print "<TH bgcolor=\"#$color_k\" width=100>$Message[75]</TH>";
+		print "<TH bgcolor=\"#$color_k\" width=100>$Message[100]</TH>";
+		print "<TH bgcolor=\"#$color_k\" width=100>$Message[101]</TH>";
+		print "<TH bgcolor=\"#$color_k\" width=80>$Message[102]</TH></TR>\n";
+		if ($_domener_gz_in{ip}) { $percent=int(100*(1-$_domener_gz_out{ip}/$_domener_gz_in{ip})); }
+		my $not_gz=$max_k-$_domener_gz_out{ip};
+        print "<TR><TD>$Message[99]</TD>";
+		printf("<TD>%s</td><TD>%s</td>",Format_Bytes($max_k),Format_Bytes($not_gz));
+		if ($_domener_gz_in{ip}) {
+			printf("<TD>%s / %s</td><TD>%0.0f %</td></tr>",Format_Bytes($_domener_gz_in{ip}),Format_Bytes($_domener_gz_out{ip}),$percent);
+		}
+		else {
+			printf("<TD>&nbsp;</td><TD>&nbsp</td></tr>",Format_Bytes($_domener_gz_in{ip}),Format_Bytes($_domener_gz_out{ip}),$percent);
+		}
+		&tab_end;
+	}
+
 	# BY ERRORS
 	#----------------------------
 	if ($ShowHTTPErrorsStats) {
