@@ -56,6 +56,13 @@ $nowsec $nowmin $nowhour $nowday $nowmonth $nowyear $nowwday $nowyday $nowns
 $StartSeconds $StartMicroseconds
 /;
 $StartSeconds=$StartMicroseconds=0;
+# Vars for config file reading
+use vars qw/
+$FoundNotPageList
+$FoundValidHTTPCodes
+/;
+$FoundNotPageList = 0;
+$FoundValidHTTPCodes = 0;
 # Config vars
 use vars qw/
 $DNSStaticCacheFile
@@ -908,8 +915,8 @@ sub GetSessionRange {
 # Function:     Read config file
 # Parameters:	None
 # Input:        $DIR $PROG $SiteConfig
-# Output:		None
-# Return:		Global variables
+# Output:		Global variables
+# Return:		None
 #------------------------------------------------------------------------------
 sub Read_Config {
 	# Check config file in common possible directories :
@@ -919,6 +926,7 @@ sub Read_Config {
 	# Other possible directories :              "/etc", "/usr/local/etc/awstats"
 	my @PossibleConfigDir=("$DIR","/etc/opt/awstats","/etc/awstats","/etc","/usr/local/etc/awstats");
 
+	# Open config file
 	$FileConfig=""; $FileSuffix="";
 	foreach my $dir (@PossibleConfigDir) {
 		my $searchdir=$dir;
@@ -928,9 +936,45 @@ sub Read_Config {
 	}
 	if (! $FileConfig) { error("Error: Couldn't open config file \"$PROG.$SiteConfig.conf\" nor \"$PROG.conf\" : $!"); }
 	if ($Debug) { debug("Call to Read_Config [FileConfig=\"$FileConfig\"]"); }
-	my $foundNotPageList = my $foundValidHTTPCodes = 0;
+
+	# Analyze config file content
+	&Parse_Config( *CONFIG , 1 );
+
+	# Close config file
+	close CONFIG;
+	
+	# If parameter NotPageList not found, init for backward compatibility
+	if (! $FoundNotPageList) {
+		$NotPageList{"gif"}=$NotPageList{"jpg"}=$NotPageList{"jpeg"}=$NotPageList{"png"}=$NotPageList{"bmp"}=1;
+	}
+	# If parameter ValidHTTPCodes not found, init for backward compatibility
+	if (! $FoundValidHTTPCodes) {
+		$ValidHTTPCodes{"200"}=$ValidHTTPCodes{"304"}=1;
+	}
+
+	if ($Debug) { debug(" NotPageList ".(scalar keys %NotPageList)); }
+	if ($Debug) { debug(" ValidHTTPCodes ".(scalar keys %ValidHTTPCodes)); }
+	if ($Debug) { debug(" UseFramesWhenCGI=$UseFramesWhenCGI"); }
+}
+
+#------------------------------------------------------------------------------
+# Function:     Parse content of a config file
+# Parameters:	File handle, level
+# Input:        None
+# Output:		Global variables
+# Return:		None
+#------------------------------------------------------------------------------
+sub Parse_Config {
+    my( $config ) = @_[0];
+	my $level = @_[1];
 	my $versionnum=0;
-	while (<CONFIG>) {
+
+	if ($Debug) { debug("Call to Parse_Config level $level",2); }
+	if ($level > 10) {
+		error("Error: $PROG can't read down more than 10 level of includes. Check that no 'included' config files include their parent config file (this cause infinite loop).");
+	}
+
+   	while (<$config>) {
 		chomp $_; s/\r//;
 
 		# Extract version from first line
@@ -941,6 +985,26 @@ sub Read_Config {
 		}
 
 		if ($_ =~ /^$/) { next; }
+
+		# Check includes
+		if ($_ =~ /^#include "([^"]+)"/) {
+		    my $includeFile = $1;
+			if ($Debug) { debug("Found an include : $includeFile",2); }
+		    # Correct relative include files
+		    if ( $includeFile !~ m|^[\\/]| ) {
+				my $configDir = $FileConfig;
+				$configDir =~ s|[\\/][^\\/]*$|/|;
+				$includeFile = "$configDir$includeFile";
+		    }
+		    if ( open( CONFIG_INCLUDE, $includeFile ) ) {
+				&Parse_Config( *CONFIG_INCLUDE , ++$level);
+				close( CONFIG_INCLUDE );
+		    }
+		    else {
+				error("Error: Could not open include file: $includeFile" );
+				next;
+		    }
+		}
 
 		# Remove comments
 		if ($_ =~ /^#/) { next; }
@@ -1023,12 +1087,12 @@ sub Read_Config {
 			}
 		if ($param =~ /^NotPageList/) {
 			foreach my $elem (split(/\s+/,$value))	{ $NotPageList{$elem}=1; }
-			$foundNotPageList=1;
+			$FoundNotPageList=1;
 			next;
 			}
 		if ($param =~ /^ValidHTTPCodes/) {
 			foreach my $elem (split(/\s+/,$value))	{ $ValidHTTPCodes{$elem}=1; }
-			$foundValidHTTPCodes=1;
+			$FoundValidHTTPCodes=1;
 			next;
 			}
 		if ($param =~ /^URLWithQuery/)			{ $URLWithQuery=$value; next; }
@@ -1126,18 +1190,10 @@ sub Read_Config {
 	}
 	close CONFIG;
 
-	# Changes for backward compatibility
-	if (! $foundNotPageList) {
-		$NotPageList{"gif"}=$NotPageList{"jpg"}=$NotPageList{"jpeg"}=$NotPageList{"png"}=$NotPageList{"bmp"}=1;
-	}
-	if (! $foundValidHTTPCodes) {
-		$ValidHTTPCodes{"200"}=$ValidHTTPCodes{"304"}=1;
-	}
+	# For backward compatibility
 	if ($versionnum < 5001) { $BarHeight=$BarHeight>>1; }
 
-	if ($Debug) { debug(" NotPageList ".(scalar keys %NotPageList)); }
-	if ($Debug) { debug(" ValidHTTPCodes ".(scalar keys %ValidHTTPCodes)); }
-	if ($Debug) { debug(" UseFramesWhenCGI=$UseFramesWhenCGI"); }
+	if ($Debug) { debug("End of Parse_Config level $level",2); }
 }
 
 
