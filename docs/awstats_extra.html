@@ -97,16 +97,16 @@ file a hit that looks like this:<br>
 <br>
 So this is how you need to setup your ExtraSection to track your product orders:<br>
 <i>
-ExtraSectionName1="Product orders"<br>
-ExtraSectionCondition1="URL,\/cgi\-bin\/order\.cgi|URL,\/cgi\-bin\/order2\.cgi"<br>
-ExtraSectionFirstColumnTitle1="Product ID"<br>
-ExtraSectionFirstColumnValues1="QUERY_STRING,productid=([^&]+)"<br>
-ExtraSectionFirstColumnFormat1="%s"<br>
-ExtraSectionStatTypes1=PL<br>
-ExtraSectionAddAverageRow1=0<br>
-ExtraSectionAddSumRow1=1<br>
-MaxNbOfExtra1=100<br>
-MinHitExtra1=1<br>
+<br>ExtraSectionName1="Product orders"
+<br>ExtraSectionCondition1="URL,\/cgi\-bin\/order\.cgi|URL,\/cgi\-bin\/order2\.cgi"
+<br>ExtraSectionFirstColumnTitle1="Product ID"
+<br>ExtraSectionFirstColumnValues1="QUERY_STRING,productid=([^&]+)"
+<br>ExtraSectionFirstColumnFormat1="%s"
+<br>ExtraSectionStatTypes1=PL
+<br>ExtraSectionAddAverageRow1=0
+<br>ExtraSectionAddSumRow1=1
+<br>MaxNbOfExtra1=100
+<br>MinHitExtra1=1
 </i>
 <br>
 
@@ -115,16 +115,16 @@ MinHitExtra1=1<br>
 <br><a name="bugzilla"><H2 style="font: 22px arial,helvetica,sanserif color: #606060"><u>Tracking Bugzilla most frequently viewed bugs</u></H2></a>
 This is an example on how to setup your ExtraSection:<br>
 <i>
-ExtraSectionName1="Bugzilla: Most frequently viewed bugs"<br>
-ExtraSectionCondition1="URL,\/bugzilla\/show_bug\.cgi"<br>
-ExtraSectionFirstColumnTitle1="Bug ID"<br>
-ExtraSectionFirstColumnValues1="QUERY_STRING,id=([^&]+)"<br>
-ExtraSectionFirstColumnFormat1="&lt;a href='/bugzilla/show_bug.cgi?id=%s' target=new&gt;%s&lt;/a&gt;"<br>
-ExtraSectionStatTypes1=PL<br>
-ExtraSectionAddAverageRow1=0<br>
-ExtraSectionAddSumRow1=1<br>
-MaxNbOfExtra1=500<br>
-MinHitExtra1=1<br>
+<br>ExtraSectionName1="Bugzilla: Most frequently viewed bugs"
+<br>ExtraSectionCondition1="URL,\/bugzilla\/show_bug\.cgi"
+<br>ExtraSectionFirstColumnTitle1="Bug ID"
+<br>ExtraSectionFirstColumnValues1="QUERY_STRING,id=([^&]+)"
+<br>ExtraSectionFirstColumnFormat1="&lt;a href='/bugzilla/show_bug.cgi?id=%s' target=new&gt;%s&lt;/a&gt;"
+<br>ExtraSectionStatTypes1=PL
+<br>ExtraSectionAddAverageRow1=0
+<br>ExtraSectionAddSumRow1=1
+<br>MaxNbOfExtra1=500
+<br>MinHitExtra1=1
 </i>
 <br>
 
@@ -156,16 +156,14 @@ keys values taken from the "url=" parameter. You will get in an independant char
 all external pages viewed by your visitor after exiting your site.<br>
 This is for this how you must setup your ExtraSection:<br>
 <i>
-ExtraSectionName1="Redirected Hit"
-ExtraSectionCondition1="URL,\/cgi\-bin\/awredir\.pl"
-ExtraSectionFirstColumnTitle1="Url"
-ExtraSectionFirstColumnValues1="QUERY_STRING,url=([^&]+)"
-ExtraSectionStatTypes1=HL
-MaxNbOfExtra1=500
-MinHitExtra1=1
-ExtraSectionAddSumRow1=1<br>
-MaxNbOfExtra1=500<br>
-MinHitExtra1=1<br>
+<br>ExtraSectionName1="Redirected Hit"
+<br>ExtraSectionCondition1="URL,\/cgi\-bin\/awredir\.pl"
+<br>ExtraSectionFirstColumnTitle1="Url"
+<br>ExtraSectionFirstColumnValues1="QUERY_STRING,url=([^&]+)"
+<br>ExtraSectionStatTypes1=HL
+<br>MaxNbOfExtra1=500
+<br>MinHitExtra1=1
+<br>ExtraSectionAddSumRow1=1
 </i>
 <br><br>
 
