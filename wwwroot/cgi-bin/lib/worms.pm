@@ -1,4 +1,4 @@
-# AWSTATS WORMS DATABASE
+# AWSTATS WORMS ADATABASE
 #-------------------------------------------------------
 # If you want to add worms to extend AWStats database detection capabilities,
 # you must add an entry in WormsSearchIDOrder, WormsHashID and WormsHashLib.
