@@ -26,6 +26,23 @@
 'free',1,
 'porn',2,
 'sex',2
+
+'full-list.net',4
+'voodoomachine.com',4
+'mastodonte.com',4
+'surfnomore.com',4
+'raverpussies.com',4
+'quiveringfuckholes.com',4
+'burningbush.netfirms.com',4
+'lesbo-tennie-girls.lesbian-hardcore-porn-teen-pics.com',4
+'free-people-search-engines.com',4
+'iaea.org',4
+'1stchoicecolo.com',4
+'globoads.com',4
+'morganindustriesinc.com',4
+'chicagodrugclub.com',4
+'massivecocks.com',4
+
 );
 
 
