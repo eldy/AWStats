@@ -14,7 +14,7 @@
 #-------------------------------------------------------
 # Defines
 #-------------------------------------------------------
-$VERSION="2.24 (build 7)";
+$VERSION="2.24 (build 8)";
 $Lang=0;
 
 # Default value
@@ -1664,7 +1664,7 @@ if (($YearRequired == $nowyear) && ($MonthRequired eq "year" || $MonthRequired =
 		if ("$filearray[$i]" =~ /^$PROG[\d][\d][\d][\d][\d][\d]$FileSuffix\.txt$/) {
 			$yearmonth=$filearray[$i]; $yearmonth =~ s/^$PROG//; $yearmonth =~ s/\..*//;
 			# Reverse year and month
-			$yearfile=$yearmonth; $monthfile=$yearmonth; $yearfile =~ s/^..//; $monthfile =~ s/....$//; 
+			$yearfile=$yearmonth; $monthfile=$yearmonth; $yearfile =~ s/^..//; $monthfile =~ s/....$//;
 			$yearmonth="$yearfile$monthfile";
 			if ($yearmonth > $yearmonthchoosed) { $yearmonthchoosed=$yearmonth; }
 		}
@@ -1733,7 +1733,8 @@ if (($YearRequired == $nowyear) && ($MonthRequired eq "year" || $MonthRequired =
 
 		# Check filters (here, log is in apache combined format, even with IIS)
 		#----------------------------------------------------------------------
-		if ($felter[5] eq 'HEAD') { next; }				# Keep only GET, POST, OPTIONS but not HEAD
+		if ($felter[5] eq 'HEAD') { next; }				# Keep only GET, POST but not HEAD, OPTIONS
+		if ($felter[5] eq 'OPTIONS') { next; }			# Keep only GET, POST but not HEAD, OPTIONS
 		if ($felter[6] =~ /^RC=/) { next; }				# A strange log record we need to forget
 
 		$felter[3] =~ s/\//:/g;
@@ -1756,11 +1757,11 @@ if (($YearRequired == $nowyear) && ($MonthRequired eq "year" || $MonthRequired =
 				print "<br><b>LogFormat</b> parameter is <b>$LogFormat</b>, this means each line in your log file need to have ";
 				if ($LogFormat == 2) {
 						print "<b>\"MSIE Extended W3C log format\"</b> like this:<br>";
-						print "<font color=#888888><i>date time c-ip c-username cs-method cs-uri-sterm sc-status cs-bytes cs-version cs(User-Agent) cs(Referer)</i></font><br>"
+						print "<font color=#888888><i>date time c-ip c-username cs-method cs-uri-sterm sc-status cs-bytes cs-version cs(User-Agent) cs(Referer)</i></font><br>";
 					}
 				else {
 						print "<b>\"combined log format\"</b> like this:<br>";
-						print "<font color=#888888><i>62.161.78.73 - - [19/Jul/2000:02:14:14 +0200] \"GET / HTTP/1.1\" 200 1234 \"http://www.fromserver.com/from.htm\" \"Mozilla/4.0 (compatible; MSIE 5.01; Windows NT 5.0)\"</i></font><br>";
+						print "<font color=#888888><i>111.22.33.44 - - [10/Jan/2001:02:14:14 +0200] \"GET / HTTP/1.1\" 200 1234 \"http://www.fromserver.com/from.htm\" \"Mozilla/4.0 (compatible; MSIE 5.01; Windows NT 5.0)\"</i></font><br>";
 				}
 				error("<br>");	# Exit with format error
 			}			
