@@ -52,6 +52,7 @@
 "virgilio\.it","Virgilio",										# Minor italian search engines
 "sok\.start\.no","start.no",									# Minor norvegian search engines
 "evreka\.passagen\.se","Evreka",								# Minor swedish search engines
+"atlas\.cz","Atlas.cz",	"seznam\.cz","Seznam.cz", "quick\.cz","Quick.cz", "centrum\.cz","Centrum.cz",	#Minor czech search engines
 "search\..*com","Other search engines"
 );
 
@@ -97,7 +98,8 @@
 "nomade\.fr/","s=", "francite\.","name=",									# Minor french search engines
 "fireball\.de","q=", "infoseek\.de","qt=", "suche\.web\.de","su=",			# Minor german search engines
 "sok\.start\.no", "q=",											# Minor norvegian search engines
-"evreka\.passagen\.se","q="										# Minor swedish search engines
+"evreka\.passagen\.se","q=",										# Minor swedish search engines
+"atlas\.cz","searchtext=", "seznam\.cz","w=", "ftxt\.quick\.cz","query=", "centrum\.cz","q="		# Minor czech search engines
 );
 # If no rules are known, this will be used to clean URL of not keyword parameters.
 @WordsToCleanSearchUrl= ("act=","annuaire=","btng=","categoria=","cfg=","cof=","cou=","cp=","dd=","domain=","dt=","dw=","exec=","geo=","hc=","height=","hl=","hq=","hs=","id=","kl=","lang=","loc=","lr=","matchmode=","medor=","message=","meta=","mode=","order=","page=","par=","pays=","pg=","pos=","prg=","qc=","refer=","sa=","safe=","sc=","sort=","src=","start=","style=","stype=","sum=","tag=","temp=","theme=","url=","user=","width=","what=","\\.x=","\\.y=","y=","look=");
