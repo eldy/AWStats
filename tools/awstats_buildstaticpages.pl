@@ -34,10 +34,12 @@ my $Lang;
 my $YearRequired;
 my $MonthRequired;
 my $Awstats='awstats.pl';
+my $HtmlDoc='htmldoc';		# ghtmldoc.exe
 my $StaticExt='html';
 my $OutputDir='';
 my $OutputSuffix;
 my $OutputFile;
+my @pages=();
 my @OutputList=(
 "alldomains",
 "allhosts","lasthosts","unknownip",
@@ -99,6 +101,7 @@ if ($QueryString =~ /(^|-|&)month=(year)/i) { error("month=year is a deprecated 
 if ($QueryString =~ /(^|-|&)debug=(\d+)/i)			{ $Debug=$2; }
 if ($QueryString =~ /(^|-|&)config=([^&]+)/i)		{ $Config="$2"; }
 if ($QueryString =~ /(^|-|&)awstatsprog=([^&]+)/i)	{ $Awstats="$2"; }
+if ($QueryString =~ /(^|-|&)buildpdf=([^&]+)/i)		{ $HtmlDoc="$2"; }
 if ($QueryString =~ /(^|-|&)staticlinksext=([^&]+)/i)	{ $StaticExt="$2"; }
 if ($QueryString =~ /(^|-|&)dir=([^&]+)/i)			{ $OutputDir="$2"; }
 if ($QueryString =~ /(^|-|&)update/i)				{ $Update=1; }
@@ -125,10 +128,11 @@ if (! $Config) {
 	print "   -year=YYYY          to output a HTML report for an old year=YYYY\n";
 	print "\n";
 	print "  and awstatsbuildstaticpages_options can be\n";
-	print "   -awstatsprog=pathtoawstatspl gives AWStats software (awstats.pl) path\n";
-	print "   -dir=outputdir               to set output directory for generated pages\n";
-	print "   -date                        used to add build date in built pages file name\n";
-	print "   -staticlinksext=xxx          for pages with .xxx extension instead of .html\n";
+	print "   -awstatsprog=pathtoawstatspl AWStats software (awstats.pl) path\n";
+	print "   -dir=outputdir               Output directory for generated pages\n";
+	print "   -date                        Used to add build date in built pages file name\n";
+	print "   -staticlinksext=xxx          For pages with .xxx extension instead of .html\n";
+#	print "   -buildpdf[=pathtohtmldoc]    Build a PDF file after building HTML pages.\n";
 	print "\n";
 	print "New versions and FAQ at http://awstats.sourceforge.net\n";
 	exit 0;
@@ -137,8 +141,14 @@ if (! $Config) {
 
 my $retour;
 
-# Check if AWSTATS is ok
-if (! -s "$Awstats") {
+# Check if AWSTATS prog is found
+my $AwstatsFound=0;
+if (-s "$Awstats") { $AwstatsFound=1; }
+else {
+	$Awstats='/usr/local/awstats/wwwroot/cgi-bin/awstats.pl';
+	if (-s "$Awstats") { $AwstatsFound=1; }
+}
+if (! $AwstatsFound) {
 	error("Can't find AWStats program ('$Awstats').\nUse -awstatsprog option to solve this");
 	exit 1;
 }
@@ -178,6 +188,7 @@ open("OUTPUT",">$OutputFile") || error("Couldn't open log file \"$OutputFile\" f
 print OUTPUT $retour;
 close("OUTPUT");
 $cpt++;
+push @pages, $OutputFile;	# Add page to @page for PDF build
 
 # Launch all other awstats output
 for my $output (@OutputList) {
@@ -189,7 +200,22 @@ for my $output (@OutputList) {
 	print OUTPUT $retour;
 	close("OUTPUT");
 	$cpt++;
+	push @pages, $OutputFile;	# Add page to @page for PDF build
 }
+
+# Build pdf file
+if ($QueryString =~ /(^|-|&)buildpdf/i) {
+#	my $pdffile=$pages[0]; $pdffile=~s/\.\w+$/\.pdf/;
+	my $command="\"$HtmlDoc\" -t pdf --quiet --webpage --no-title --textfont helvetica  --left 16 --bottom 8 --top 8 --browserwidth 800 --fontsize 7.0 @pages > awstats.$OutputSuffix.pdf\n";
+	print "Build PDF file : $command\n";
+	$retour=`$command  2>&1`;
+	my $res=$?>>8;
+	if ($res || $retour =~ /error/) {
+		error("Failed to build PDF file with following error: $retour\n");
+	}
+	$cpt++;
+}
+
 
 print "$cpt files built. Main page is 'awstats.$OutputSuffix.$StaticExt'\n";
 
