@@ -969,15 +969,15 @@ sub GetSessionRange {
 #------------------------------------------------------------------------------
 sub Read_Config {
 	# Check config file in common possible directories :
-	# Windows :                   	"$DIR" (same dir than awstats.pl)
-	# Mandrake and Debian package :	"/etc/awstats"
-	# FHS standard, Suse package : 	"/etc/opt/awstats"
-	# Other possible directories :	"/etc", "/usr/local/etc/awstats"
+	# Windows :                   				"$DIR" (same dir than awstats.pl)
+	# Standard, Mandrake and Debian package :	"/etc/awstats"
+	# Other possible directories :				"/usr/local/etc/awstats", "/etc"
+	# FHS standard, Suse package : 				"/etc/opt/awstats"
 	my $configdir=shift;
 	my @PossibleConfigDir=();
 
 	if ($configdir) { @PossibleConfigDir=("$configdir"); }
-	else { @PossibleConfigDir=("$DIR","/etc/awstats","/etc/opt/awstats","/etc","/usr/local/etc/awstats"); }
+	else { @PossibleConfigDir=("$DIR","/etc/awstats","/usr/local/etc/awstats","/etc","/etc/opt/awstats"); }
 
 	# Open config file
 	$FileConfig=$FileSuffix='';
@@ -5095,11 +5095,11 @@ if ((! $ENV{'GATEWAY_INTERFACE'}) && (! $SiteConfig)) {
 	print "  First, $PROG tries to read $PROG.virtualhostname.conf as the config file.\n";
 	print "  If not found, $PROG tries to read $PROG.conf\n";
 	print "  Note 1: Config files ($PROG.virtualhostname.conf or $PROG.conf) must be\n";
-	print "  in /etc/awstats, /etc/opt/awstats, /etc or same directory than awstats.pl\n";
-	print "  file.\n";
+	print "   in /etc/awstats, /usr/local/etc/awstats, /etc or same directory than\n";
+	print "   awstats.pl file.\n";
 	print "  Note 2: If AWSTATS_FORCE_CONFIG environment variable is defined, AWStats will\n";
-	print "  use it as the \"config\" value, whatever is the value on command line or URL.\n";
-	print "  See AWStats documentation for all setup instrutions.\n";
+	print "   use it as the \"config\" value, whatever is the value on command line or URL.\n";
+	print "   See AWStats documentation for all setup instrutions.\n";
 	print "\n";
 	print "Options to update statistics:\n";
 	print "  -update        to update statistics (default)\n";
