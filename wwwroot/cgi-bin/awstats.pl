@@ -1041,7 +1041,7 @@ sub Parse_Config {
 		# Extract param and value
 		#if ($Debug) { debug("$_",2); }
 		my @felter=split(/=/,$_,2);
-		my $param=$felter[0]||next;					# If not a param=value, try with next line
+		my $param=$felter[0]||next;			# If not a param=value, try with next line
 		my $value=$felter[1];
 		$param =~ s/^\s+//; $param =~ s/\s+$//;
 		if ($value) {
@@ -1877,6 +1877,7 @@ sub Read_History_With_TmpUpdate {
 	# Open files
 	if ($withread) {
 		open(HISTORY,$filetoread) || error("Couldn't open file \"$filetoread\" for read: $!","","",$MigrateStats);
+		binmode HISTORY;	# Avoid premature EOF due to history files corrupted with \cZ or bin chars
 	}
 	if ($withupdate) {
 		open(HISTORYTMP,">$filetowrite") || error("Couldn't open file \"$filetowrite\" for write: $!");
@@ -1934,7 +1935,7 @@ sub Read_History_With_TmpUpdate {
 			if ($field[0] eq 'MonthHostsKnown')   { if (! $withupdate) { $MonthHostsKnown{$year.$month}+=int($field[1]); } next; }
 			if ($field[0] eq 'MonthHostsUnknown') { if (! $withupdate) { $MonthHostsUnknown{$year.$month}+=int($field[1]); } next; }
 
-			if ($field[0] eq 'END_GENERAL'	# END_GENERAL didn't exists for history files < 5.0
+			if ($field[0] eq 'END_GENERAL'	# END_GENERAL didn't exist for history files < 5.0
 			 || ($versionnum < 5000 && $SectionsToLoad{"general"} && $FirstTime{$year.$month} && $LastTime{$year.$month}) )		{
 				if ($Debug) { debug(" End of GENERAL section"); }
 
@@ -4939,9 +4940,7 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 	# Open log file
 	if ($Debug) { debug("Open log file \"$LogFile\""); }
 	open(LOG,"$LogFile") || error("Couldn't open server log file \"$LogFile\" : $!");
-
-	# Avoid premature EOF due to log files corrupted with \cZ or bin chars
-	binmode LOG;
+	binmode LOG;	# Avoid premature EOF due to log files corrupted with \cZ or bin chars
 
 	my @field=();
 	my $counter=0;
