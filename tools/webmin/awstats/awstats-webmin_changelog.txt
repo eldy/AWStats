@@ -15,10 +15,12 @@ New features/improvements:
   BuildReportFormat
   LevelForFileTypesDetection
   URLWithQueryWithOnlyFollowingParameters
+  ShowWormsStats
 - Module setup parameter awstats_conf has been removed since now
   directories into wich you can scan/edit AWStats configuration files
   are defined in ACL users. Defined to /etc/awstats by default.
   Also added a link the the ACL page to edit this directory listing.
+- Added a streaming server log file type.
 
 Other/Documentation:
 - None

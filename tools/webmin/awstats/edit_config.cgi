@@ -107,7 +107,9 @@ print "<tr> <td colspan=3>MAIN SETUP SECTION (Required to make AWStats work)<br>
 print "<tr> <td><b>LogFile</b></td> <td> <input type=text name=LogFile size=50 value='$lconf->{'LogFile'}'> ".&file_chooser_button("LogFile",0,0)." </td> <td> ";
 print &hblink($text{'help_help'}, "help.cgi?param=LogFile")." </td> </tr>\n";
 print "<tr> <td><b>LogType</b></td> <td> ";
-print "<select name=LogType><option value='W'".($lconf->{'LogType'} eq 'W'?" selected":"").">W (Web server log file)</option>\n";
+print "<select name=LogType>";
+print "<option value='W'".($lconf->{'LogType'} eq 'W'?" selected":"").">W (Web server log file)</option>\n";
+print "<option value='S'".($lconf->{'LogType'} eq 'S'?" selected":"").">S (Streaming server log file)</option>\n";
 print "<option value='M'".($lconf->{'LogType'} eq 'M'?" selected":"").">M (Mail server log file)</option>\n";
 print "<option value='F'".($lconf->{'LogType'} eq 'F'?" selected":"").">F (Ftp server log file)</option>\n";
 print "</select>\n";
