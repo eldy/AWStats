@@ -316,29 +316,34 @@ if ($OS eq 'windows') {
 	}
 }
 if (! scalar keys %ApacheConfPath) {
+	my $bidon='';
+
 	# Ask web server path
 	print "$PROG did not find your Apache web server path.\n";
 	
-	print "\nPlease, enter directory full path of your Apache web server.\n";
-	print "Example: /usr/local/apache\n";
-	print "Example: d:\\Program files\\apache group\\apache\n";
-	my $bidon='';
-	while ($bidon ne 'none' && ! -d "$bidon") {
-		print "Apache Web server path (\"none\" to skip this step or CTRL+C to cancel): ";
-		$bidon=<STDIN>; chomp $bidon;
-		if ($bidon && ! -d "$bidon" && $bidon ne 'none') { print " The directory '$bidon' does not exists.\n"; }
+	if ($OS eq 'windows') 	{
+		print "\nPlease, enter full directory path of your Apache web server or\n";
+		print "'none' to skip this step if you don't have local web server.\n";
+		print "Example: /usr/local/apache\n";
+		print "Example: d:\\Program files\\apache group\\apache\n";
+		while ($bidon ne 'none' && ! -d "$bidon") {
+			print "Apache Web server path (CTRL+C to cancel):\n> ";
+			$bidon=<STDIN>; chomp $bidon;
+			if ($bidon && ! -d "$bidon" && $bidon ne 'none') { print "  The directory '$bidon' does not exists.\n"; }
+		}
 	}
-	if ($bidon ne 'none') {
-		$ApachePath{"$bidon"}=1;
 
-		print "\nNow, enter full config file path of you web server.\n";
+	if ($bidon ne 'none') {
+		if ($bidon) { $ApachePath{"$bidon"}=1; }
+
+		print "\n".($bidon?"Now, enter":"Enter")." full config file path of you web server.\n";
 		print "Example: /etc/httpd/apache.conf\n";
 		print "Example: d:\\Program files\\apache group\\apache\\conf\\httpd.conf\n";
 		$bidon='';
 		while (! -f "$bidon") {
-			print "Config file path (CTRL+C to cancel): ";
+			print "Config file path (CTRL+C to cancel):\n> ";
 			$bidon=<STDIN>; chomp $bidon;
-			if (! -f "$bidon") { print " This file does not exists.\n"; }
+			if (! -f "$bidon") { print "  This file does not exists.\n"; }
 		}
 		$ApacheConfPath{"$bidon"}=1;
 	}
@@ -465,9 +470,9 @@ if ($bidon =~ /^y/i) {
 	ASKCONFIG:
 	my $bidon='';
 	while (! $bidon) {
-		print "Your web site, virtual server or profile name: ";
+		print "Your web site, virtual server or profile name:\n> ";
 		$bidon=<STDIN>; chomp $bidon;
-	
+		if ($bidon =~ /\s/) { print "  Space chars are not allowed.\n"; $bidon=''; }
 	}
 	$site=$bidon;
 
@@ -550,15 +555,37 @@ if ($OS eq 'linux') {
 	$bidon=<STDIN>;
 }
 
+#print "\n-----> End of configuration\n";
 print "\n\n";
-
 if ($site) {
 	print "A SIMPLE config file for '$site' has been created. You should have a look\n";
 	print "inside to check and change manually main parameters.\n";
-	print "You can then update your statistics for '$site' with command:\n";
-	print "> awstats.pl -update -config=$site\n";
-	print "You can also read your statistics for '$site' with URL:\n";
-	print "> http://localhost/awstats/awstats.pl?config=$site\n";
+	print "You can then manually update your statistics for '$site' with command:\n";
+	print "> perl awstats.pl -update -config=$site\n";
+	if (scalar keys %ApacheConfPath) {
+		print "You can also read your statistics for '$site' with URL:\n";
+		print "> http://localhost/awstats/awstats.pl?config=$site\n";
+	}
+	else {
+		print "You can also build static report pages for '$site' with command:\n";
+		print "> perl awstats.pl -output=pagename -config=$site\n";
+	}
+	print "\n";
+}
+else {
+	print "No config file was built. You can run this tool later to build as\n";
+	print "much config/profile files as you want.\n";
+	print "Once you have a config/profile file, for example 'awstats.demo.conf',\n";
+	print "You can manually update your statistics for 'demo' with command:\n";
+	print "> perl awstats.pl -update -config=demo\n";
+	if (scalar keys %ApacheConfPath) {
+		print "You can also read your statistics for 'demo' with URL:\n";
+		print "> http://localhost/awstats/awstats.pl?config=demo\n";
+	}
+	else {
+		print "You can also build static report pages for 'demo' with command:\n";
+		print "> perl awstats.pl -output=pagename -config=demo\n";
+	}
 	print "\n";
 }
 print "Press ENTER to finish...\n";
