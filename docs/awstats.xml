@@ -33,9 +33,9 @@
 </Company_Info>
 <Program_Info>
         <Program_Name>AWStats</Program_Name>
-        <Program_Version>3.1</Program_Version>
-        <Program_Release_Month>09</Program_Release_Month>
-        <Program_Release_Day>09</Program_Release_Day>
+        <Program_Version>3.2</Program_Version>
+        <Program_Release_Month>12</Program_Release_Month>
+        <Program_Release_Day>10</Program_Release_Day>
         <Program_Release_Year>2001</Program_Release_Year>
         <Program_Cost_Dollars>0</Program_Cost_Dollars>
         <Program_Cost_Other>0</Program_Cost_Other>
@@ -43,18 +43,18 @@
         <Program_Release_Status>Major Update</Program_Release_Status>
         <Program_Install_Support>No Install Support</Program_Install_Support>
         <Program_OS_Support>Win95,Win98,WinME,WinNT 4.x,Windows2000,Unix,Linux,OS/2,OS/2 Warp,OS/2 Warp 4,MAC 68k,Mac PPC</Program_OS_Support>
-        <Program_Language>English,Spanish,French,German,Italian,ChineseTraditional,Russian</Program_Language>
+        <Program_Language>English,Spanish,French,German,Italian,Japanese,ChineseSimplified,ChineseTraditional,Russian</Program_Language>
         <Program_Change_Info />
-        <Program_System_Requirements />
+        <Program_System_Requirements>None</Program_System_Requirements>
         <Program_Specific_Category>Internet</Program_Specific_Category>
         <Program_Categories>Log analyzer</Program_Categories>
 <File_Info>
         <Filename_Versioned>awstats.zip</Filename_Versioned>
-        <Filename_Previous>awstats1.zip</Filename_Previous>
+        <Filename_Previous>awstats.zip</Filename_Previous>
         <Filename_Generic>awstats.zip</Filename_Generic>
         <Filename_Long>awstats.zip</Filename_Long>
-        <File_Size_Bytes>236125</File_Size_Bytes>
-        <File_Size_K>231</File_Size_K>
+        <File_Size_Bytes>242000</File_Size_Bytes>
+        <File_Size_K />
         <File_Size_MB>0.23</File_Size_MB>
     </File_Info>
 <Expire_Info>
@@ -100,9 +100,9 @@ Fonctionne avec les log de IIS 5.0+ et Apache. Gratuit (GNU General Public Licen
 <Application_URLs>
         <Application_Info_URL>http://awstats.sourceforge.net</Application_Info_URL>
         <Application_Order_URL>http://awstats.sourceforge.net</Application_Order_URL>
-        <Application_Screenshot_URL>http://awstats.sourceforge.net/images/awstats/screen_shot_1.jpg</Application_Screenshot_URL>
-        <Application_Icon_URL>http://awstats.sourceforge.net/images/awstats/awstats_logo1.gif</Application_Icon_URL>
-        <Application_XML_File_URL>http://awstats.sourceforge.net/awstats_pad.xml</Application_XML_File_URL>
+        <Application_Screenshot_URL>http://awstats.sourceforge.net/docs/images/screen_shot_1.jpg</Application_Screenshot_URL>
+        <Application_Icon_URL>http://awstats.sourceforge.net/docs/images/awstats_logo1.gif</Application_Icon_URL>
+        <Application_XML_File_URL>http://awstats.sourceforge.net/docs/awstats_pad.xml</Application_XML_File_URL>
     </Application_URLs>
 <Download_URLs>
         <Primary_Download_URL>http://awstats.sourceforge.net/files/awstats.zip</Primary_Download_URL>
