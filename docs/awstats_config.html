@@ -134,6 +134,7 @@ when reading it), follow the example:<br>
 <li><a href="#Show">ShowHostsStats</a>
 <li><a href="#Show">ShowAuthenticatedUsers</a>
 <li><a href="#Show">ShowRobotsStats</a>
+<li><a href="#Show">ShowWormsStats</a>
 <li><a href="#Show">ShowSessionsStats</a>
 <li><a href="#Show">ShowPagesStats</a>
 <li><a href="#Show">ShowCompressionStats</a>
@@ -1281,6 +1282,7 @@ ShowOSStats,ShowOriginStats,ShowKeyphrasesStats,ShowKeywordsStats,ShowHTTPErrors
 5.5+ for ShowDaysOfMonthStats<br>
 5.6+ for ShowMiscStats,ShowSTMPErrorsStats<br>
 5.8+ for ShowClusterStats<br>
+6.0+ for ShowWormsStats<br>
 <br># You choose here which reports you want to see in the main page and what you
 <br># want to see in those reports.
 <br># Possible values:
@@ -1326,6 +1328,9 @@ ShowOSStats,ShowOriginStats,ShowKeyphrasesStats,ShowKeywordsStats,ShowHTTPErrors
 <br># Show robots chart
 <br># Default: HBL, Possible codes: HBL
 <br>ShowRobotsStats=HBL
+<br># Show worms chart
+<br># Default: HBL, Possible codes: HBL
+<br>ShowWormsStats=HBL
 <br># Show email senders chart (For use when analyzing mail log files)
 <br># Default: 0, Possible codes: HBML
 <br>ShowEMailSenders=0
@@ -1456,7 +1461,7 @@ ShowOSStats,ShowOriginStats,ShowKeyphrasesStats,ShowKeywordsStats,ShowHTTPErrors
 <br># List of visible flags with link to other language translations.
 <br># See Lang parameter for list of allowed flag/language codes.
 <br># If you don't want any flag link, set ShowFlagLinks to "".
-<br># This parameter is used only if ShowHeader parameter is set to 1.
+<br># This parameter is used only if ShowMenu parameter is set to 1.
 <br># Possible values: "" or "language_codes_separated_by_space"
 <br># Default: "en es fr it nl es"
 <br>#
