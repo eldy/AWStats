@@ -113,7 +113,7 @@ $MaxLengthOfStoredUA
 $StaticExt='html';
 $DNSStaticCacheFile='dnscache.txt';
 $DNSLastUpdateCacheFile='dnscachelastupdate.txt';
-$MiscTrackerUrl=quotemeta('/awstatsjs/awstats_misc_tracker.js');
+$MiscTrackerUrl=quotemeta('/js/awstats_misc_tracker.js');
 $Lang='auto';
 $MaxRowsInHTMLOutput=1000;
 $MaxLengthOfURL=70;
@@ -1456,7 +1456,7 @@ sub Check_Config {
 	if ($NbOfLinesForCorruptedLog !~ /^\d+/ || $NbOfLinesForCorruptedLog<1)	{ $NbOfLinesForCorruptedLog=50; }
 	if ($Expires !~ /^\d+/)                 		{ $Expires=0; }
 	if ($DecodeUA !~ /[0-1]/)						{ $DecodeUA=0; }
-	$MiscTrackerUrl||=quotemeta('/awstatsjs/awstats_misc_tracker.js');
+	$MiscTrackerUrl||=quotemeta('/js/awstats_misc_tracker.js');
 	# Optional accuracy setup section
 	if ($LevelForRobotsDetection !~ /^\d+/)       	{ $LevelForRobotsDetection=2; }
 	if ($LevelForBrowsersDetection !~ /^\d+/)     	{ $LevelForBrowsersDetection=2; }

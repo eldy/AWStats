@@ -48,27 +48,34 @@ AWStats common use is made in 3 steps:<br>
 <br>
 <font style="color: #111155"><b>* Step 1-1</b>:</font><br>
 (if you use a package provided with a Linux distribution or Windows installer, this might be
-already done and is not necessary)<br>
+already done, however it is recommanded to do it)<br>
 <br>
-Configure your apache web server to have <b>NCSA combined/XLF/ELF</b> log format (you can use your own log format but
-this predefined logformat is often the best choice and make setup easier). You can do this by changing, in <b>httpd.conf</b>,
+After downloading and running the AWStats package, you must run the configure.pl script.
+You will find it in the tools directory (If using the windows installer, the script is
+automatically launched):<br>
+<b><i>perl configure.pl</i></b><br>
+<br>
+<u>This is what the script will do for you (you can do all of this manually if you prefer):</u><br>
+<br>
+
+A) configure.pl check your apache web server log format configuration.
+If you use a <b>common</b> log, configure will
+suggest to change it to have <b>NCSA combined/XLF/ELF</b> log format (you can use your own log
+format but this predefined logformat is often the best choice and make setup easier).<br>
+If you answer yes, configure will modify your <b>httpd.conf</b> to change all the
 following directives (See your apache manual for more information):<br>
 <i>CustomLog /yourlogpath/yourlogfile common</i><br>
 into<br>
 <i>CustomLog /yourlogpath/yourlogfile combined</i><br>
 <br>
-To be sure the log format change is effective, you can stop Apache, remove all old log files, restart Apache and go to
-your homepage. This is an example of records you should get then in your new log file:<br>
+To be sure the log format change is effective, later you can stop Apache, remove all old
+log files, restart Apache and go to your homepage. This is an example of records you
+should get then in your new log file:<br>
 <i>62.161.78.75 - - [dd/mmm/yyyy:hh:mm:ss +0000] "GET / HTTP/1.1" 200 1234 "http://www.from.com/from.html" "Mozilla/4.0 (compatible; MSIE 5.01; Windows NT 5.0)"</i><br>
 <br>
 
-<font style="color: #111155"><b>* Step 1-2</b>:</font><br>
-(if you use a package provided with a Linux distribution or Windows installer, this might be
-already done and is not necessary)<br>
-<br>
-Check that your Apache config file (httpd.conf) contains the following directives and add them
-if not (note that the "/usr/loca/awstats/wwwroot" path might differ according to your
-distribution or OS:<br>
+B) configure.pl will add, if not already done, the following directives to your Apache config file
+(note that the "/usr/loca/awstats/wwwroot" path might differ according to your distribution or OS:<br>
 <br>
 <i>
 #<br>
@@ -81,7 +88,40 @@ Alias /awstatsicons "/usr/local/awstats/wwwroot/icon/"<br>
 ScriptAlias /awstats/ "/usr/local/awstats/wwwroot/cgi-bin/"<br>
 </i>
 <br>
-Note that you need to restart Apache to apply the changes.<br>
+C) configure.pl restart Apache to apply the changes made in A and B.<br>
+<br>
+
+D) configure.pl will ask you a name for a config profile. Enter here the name of your
+web server or any analysis profile name, for example <b>myvirtualhostname</b>.<br>
+So configure.pl will copy the file <b>awstats.model.conf</b> file into a new file
+named <b>awstats.myvirtualhostname.conf</b>.
+You can use the value of your choice instead of "myvirtualhostname". This new file must
+be stored in<br>
+- For Unix/Linux users: /etc/awstats.<br>
+- For Windows and other OS: Same directory than awstats.pl (so cgi-bin).<br>
+<br>
+
+E) configure.pl finish.<br>
+<br>
+
+
+<font style="color: #111155"><b>* Step 1-2</b>:</font><br>
+Once a config file has been automatically created (by configure.pl or you package
+installer), it's important to edit it manually and change the "MAIN PARAMETERS"
+to match all your needs:<br>
+<br>
+This is for example the parameters you should check seriously :<br>
+- Check/Change <a href="awstats_config.html#LogFile">LogFile</a> value with full path of your web server log file (You
+can also use a relative path from your awstats.pl directory).<br>
+- Check/Change <a href="awstats_config.html#LogType">LogType</a> value with "W" for analyzing
+web server log files, "M" for mail log files, "F" for ftp log files.<br>
+- Check if <a href="awstats_config.html#LogFormat">LogFormat</a> has the value "1" (it means "NCSA apache combined/ELF/XLF log format")
+or use a personalized log format if you don't use combined log format.<br>
+- Check/Change <a href="awstats_config.html#DirIcons">DirIcons</a> parameter to reflect relative URL of awstats icon directory.<br>
+- Edit <a href="awstats_config.html#SiteDomain">SiteDomain</a> parameter with the main domain name or the intranet 
+web server name used to reach the web site to analyze (Example: www.mydomain.com). If you have several
+possible name for same site, add list in <a href="awstats_config.html#HostAlias">HostAlias</a> parameter.<br>
+- You can change other parameters if you want.<br>
 <br>
 
 <font style="color: #111155"><b>* Step 1-3</b>:</font><br>
@@ -94,39 +134,6 @@ With Apache for Windows and ActivePerl interpreter, it might be<br>
 <i>#!c:/program files/activeperl/bin/perl</i><br>
 <br>
 
-<font style="color: #111155"><b>* Step 1-4</b>:</font><br>
-(if you use a package provided with a Linux distribution or Windows installer, this might not be necessary)<br>
-<br>
-Move AWStats <b>icon sub-directories</b> and its content into a directory readable by your
-web server, for example /yourwwwroot/icon.<br>
-<br>
-
-<font style="color: #111155"><b>* Step 1-5</b>:</font><br>
-(if you use a package provided with a Linux distribution or Windows installer, your config
-file might have been already created)<br>
-<br>
-Create a config file by copying <b>awstats.model.conf</b> file into a new file named <b>awstats.myvirtualhostname.conf</b>.
-You can use the value of your choice instead of "myvirtualhostname". This new file must be stored in<br>
-- For Unix/Linux users: /etc/awstats or /usr/local/etc/awstats or /etc or same directory than awstats.pl (so cgi-bin).<br>
-- For Windows and other OS: Same directory than awstats.pl (so cgi-bin).<br>
-<br>
-
-<font style="color: #111155"><b>* Step 1-6</b>:</font><br>
-(if you use a package provided with a Linux distribution or Windows installer, your config
-file already contains the right values)<br>
-<br>
-Edit this new config file with your own setup :<br>
-- Change <a href="awstats_config.html#LogFile">LogFile</a> value with full path of your web server log file (You
-can also use a relative path from your awstats.pl directory).<br>
-- Change <a href="awstats_config.html#LogType">LogType</a> value with "W" for analyzing
-web server log files, "M" for mail log files, "F" for ftp log files, "O" otherwise.<br>
-- Check if <a href="awstats_config.html#LogFormat">LogFormat</a> has the value "1" (it means "NCSA apache combined/ELF/XLF log format").<br>
-- Change <a href="awstats_config.html#DirIcons">DirIcons</a> parameter to reflect relative path of icon directory.<br>
-- Edit <a href="awstats_config.html#SiteDomain">SiteDomain</a> parameter with the main domain name or the intranet 
-web server name used to reach the web site to analyze (Example: www.mydomain.com). If you have several
-possible name for same site, add list in <a href="awstats_config.html#HostAlias">HostAlias</a> parameter.<br>
-- You can change other parameters if you want.<br>
-<br>
 Step 1 (Install and Setup) is finished. You can jump to the <a href="#BUILD_UPDATE">Build/Update Statistics</a> section.<br>
 
 <br>
@@ -167,7 +174,7 @@ directory (this includes <b>awstats.pl</b>, <b>awstats.model.conf</b>, and the <
 <br>	
 
 <font style="color: #111155"><b>* Step 1-3</b>:</font><br>
-(if your IIS and Perl are setup correctly, this step is not required)<br><br>
+<br>
 Move AWStats <b>icon sub-directories</b> and its content into a directory readable by your
 web server, for example C:\yourwwwroot\icon.<br>
 <br>
@@ -186,7 +193,7 @@ Edit this new config file with your own setup :<br>
 can also use a relative path from your awstats.pl directory).<br>
 - Change <a href="awstats_config.html#LogType">LogType</a> value with "W" for analyzing
 web server log files, "M" for mail log files, "F" for ftp log files, "O" otherwise.<br>
-- Change <a href="awstats_config.html#LogFormat">LogFormat</a> to value "2" (it means "IIS Extended W3C log format").<br>
+- Change <a href="awstats_config.html#LogFormat">LogFormat</a> to value "2" (it means the "IIS Extended W3C log format" defined in step 1-1).<br>
 - Change <a href="awstats_config.html#DirIcons">DirIcons</a> parameter to reflect relative path of icon directory.<br>
 - Edit <a href="awstats_config.html#SiteDomain">SiteDomain</a> parameter with the main domain name or the intranet
 web server name used to reach the web site to analyze (Example: www.mydomain.com).<br>
@@ -216,7 +223,7 @@ a personalized <a href="awstats_config.html#LogFormat">LogFormat</a> if your log
 The first analyze/update of statistics should be made the first time manually from the command line since first time,
 process may be long and it's easier to solve problems (if you don't have Command Line access, just go to Step 2-2). The
 AWStats update command line is:<br>
-<b><i>awstats.pl -config=myvirtualhostname -update</i></b><br>
+<b><i>awstats.pl -update -config=myvirtualhostname</i></b><br>
 <br>
 AWStats will read the config file awstats.myvirtualhostname.conf (or if not found, awstats.conf)
 and create/update its database with all summary information issued from analyzed log file.<br>

@@ -1,24 +1,47 @@
 #!/usr/bin/perl
 #-------------------------------------------------------
-# This script configures AWStats on a Windows OS so AWStats
-# is immediately working:
+# This script configures AWStats so that it works immediately.
 # - Get Apache config file from registry (ask if not found)
+# - Change common log to combined (ask to confirm)
 # - Add AWStats directives
-# - Change common to combined (ask to confirm)
+# - Restart web server
+# - Create AWStats config file
 # See COPYING.TXT file about AWStats GNU General Public License.
 #-------------------------------------------------------
 # $Revision$ - $Author$ - $Date$
 use strict;
 
-# For windows registry management
-my $reg;
-eval('use Win32::TieRegistry ( Delimiter=>"/", TiedRef=>\$reg )');
+#-------------------------------------------------------
+# IF YOU ARE A PACKAGE BUILDER, CHANGE THIS TO MATCH YOUR PATH
+# SO THAT THE CONFIGURE WILL WORK ON YOUR DISTRIB !!!
+# Following path are the one 
+#-------------------------------------------------------
+use vars qw/
+$AWSTATS_ICON_PATH
+$AWSTATS_CSS_PATH
+$AWSTATS_CLASSES_PATH
+$AWSTATS_CGI_PATH
+$AWSTATS_TOOLS_PATH
+$AWSTATS_MODEL_CONFIG
+$AWSTATS_DIRDATA_PATH
+/;
+$AWSTATS_ICON_PATH='/usr/local/awstats/wwwroot/icon';
+$AWSTATS_CSS_PATH='/usr/local/awstats/wwwroot/css';
+$AWSTATS_CLASSES_PATH='/usr/local/awstats/wwwroot/classes';
+$AWSTATS_CGI_PATH='/usr/local/awstats/wwwroot/cgi-bin';
+$AWSTATS_TOOLS_PATH='/usr/local/awstats/wwwroot/tools';			# Used for linux only
+$AWSTATS_MODEL_CONFIG='/etc/awstats/awstats.model.conf';		# Used for linux only
+$AWSTATS_DIRDATA_PATH='/var/lib/awstats';						# Used for linux only
 
 
 
 #-------------------------------------------------------
 # Defines
 #-------------------------------------------------------
+# For windows registry management
+my $reg;
+eval('use Win32::TieRegistry ( Delimiter=>"/", TiedRef=>\$reg )');
+
 use vars qw/ $REVISION $VERSION /;
 $REVISION='$Revision$'; $REVISION =~ /\s(.*)\s/; $REVISION=$1;
 $VERSION="1.0 (build $REVISION)";
@@ -206,17 +229,17 @@ my $QueryString=""; for (0..@ARGV-1) { $QueryString .= "$ARGV[$_] "; }
 if ($QueryString =~ /debug=/i) { $Debug=$QueryString; $Debug =~ s/.*debug=//; $Debug =~ s/&.*//; $Debug =~ s/ .*//; }
 
 my $helpfound=0;
-my $AWSTATSPATH;
 my $OS='';
 my $CR='';
+my $AWSTATS_PATH='';	# Used for windows only
 for (0..@ARGV-1) {
 	if ($ARGV[$_] =~ /^-*h/i)   					{ $helpfound=1; last; }
-	if ($ARGV[$_] =~ /^-*awstatspath=([^\s\"]+)/i)  { $AWSTATSPATH==$1; last; }
+	if ($ARGV[$_] =~ /^-*awstatspath=([^\s\"]+)/i)  { $AWSTATS_PATH==$1; last; }
 }
-if (! $AWSTATSPATH) {
-	$AWSTATSPATH="$DIR";
-	$AWSTATSPATH=~s/tools[\\\/]?$//;
-	$AWSTATSPATH=~s/[\\\/]$//;
+if (! $AWSTATS_PATH) {
+	$AWSTATS_PATH="$DIR";
+	$AWSTATS_PATH=~s/tools[\\\/]?$//;
+	$AWSTATS_PATH=~s/[\\\/]$//;
 }
 
 # Show usage help
@@ -248,9 +271,10 @@ if ($nowsec < 10) { $nowsec = "0$nowsec"; }
 print "\n";
 print "----- AWStats $PROG $VERSION (c) Laurent Destailleur -----\n";
 print "This tool will help you to configure AWStats to analyze statistics for\n";
-print "one web server. If you need to analyze several virtual servers, load\n";
-print "balanced servers, downloaded log files or mail or ftp log files, you\n";
-print "will have to complete the config file manually according to your needs.\n";
+print "one web server. If you need to analyze load balanced servers, downloaded\n";
+print "log files without web server, to analyze mail or ftp log files, or need\n";
+print "to manage rotated logs, you will have to complete the config file manually\n";
+print "according to your needs.\n";
 print "Read the AWStats documentation (docs/index.html).\n";
 print "\n";
 
@@ -263,7 +287,7 @@ print "\n-----> Running OS detected: $OS\n";
 
 # Detect web server path
 # ----------------------
-print "\n-----> Check for web server install...\n";
+print "\n-----> Check for web server install\n";
 my %ApachePath=();		# All Apache path found
 my %ApacheConfPath=();	# All Apache config found
 my $tips;
@@ -327,7 +351,7 @@ if (! scalar keys %ApacheConfPath) {
 # Open Apache config file
 # -----------------------
 foreach my $key (keys %ApacheConfPath) {
-	print "\n-----> Check and complete web server config file '$key'...\n";
+	print "\n-----> Check and complete web server config file '$key'\n";
 	# Read config file to search for awstats directives
 	my $commonchangedtocombined=0;
 	READ:
@@ -355,7 +379,6 @@ foreach my $key (keys %ApacheConfPath) {
 			}
 		}
 		if ($_ =~ /^CustomLog\s(.*)\scombined$/i)	{ $LogFormat{$key}=1; }
-		if ($_ =~ /Alias \/awstatsjs/) 			{ $awstatsjsfound=1; }
 		if ($_ =~ /Alias \/awstatsclasses/) 	{ $awstatsclassesfound=1; }
 		if ($_ =~ /Alias \/awstatscss/) 		{ $awstatscssfound=1; }
 		if ($_ =~ /Alias \/awstatsicons/) 		{ $awstatsiconsfound=1; }
@@ -363,7 +386,7 @@ foreach my $key (keys %ApacheConfPath) {
 	}	
 	close CONF;
 
-	if ($awstatsjsfound && $awstatsclassesfound && $awstatscssfound && $awstatsiconsfound && $awstatscgifound) {
+	if ($awstatsclassesfound && $awstatscssfound && $awstatsiconsfound && $awstatscgifound) {
 		$UseAlias=1;
 		if ($commonchangedtocombined) { print "  Common log files changed to combined.\n"; }
 		print "  AWStats directives already present.\n";
@@ -377,29 +400,26 @@ foreach my $key (keys %ApacheConfPath) {
 		print CONF "#$CR\n";
 		print CONF "# Directives to allow use of AWStats as a CGI$CR\n";
 		print CONF "#$CR\n";
-		if (! $awstatsjsfound) {
-			print " Add 'Alias \/awstatsjs \"$AWSTATSPATH/wwwroot/js/\"' to config file\n";
-			print CONF "Alias \/awstatsjs \"$AWSTATSPATH/wwwroot/js/$CR\n";
-		}
 		if (! $awstatsclassesfound) {
-			print " Add 'Alias \/awstatsclasses \"$AWSTATSPATH/wwwroot/classes/\"' to config file\n";
-			print CONF "Alias \/awstatsclasses \"$AWSTATSPATH/wwwroot/classes/$CR\n";
+			print " Add 'Alias \/awstatsclasses \"$AWSTATS_CLASSES_PATH/\"' to config file\n";
+			print CONF "Alias \/awstatsclasses \"$AWSTATS_CLASSES_PATH/$CR\n";
 		}
 		if (! $awstatscssfound) {
-			print " Add 'Alias \/awstatscss \"$AWSTATSPATH/wwwroot/css/\"' to config file\n";
-			print CONF "Alias \/awstatscss \"$AWSTATSPATH/wwwroot/css/$CR\n";
+			print " Add 'Alias \/awstatscss \"$AWSTATS_CSS_PATH/\"' to config file\n";
+			print CONF "Alias \/awstatscss \"$AWSTATS_CSS_PATH/$CR\n";
 		}
 		if (! $awstatsiconsfound) {
-			print " Add 'Alias \/awstatsicons \"$AWSTATSPATH/wwwroot/icon/\"' to config file\n";
-			print CONF "Alias \/awstatsicons \"$AWSTATSPATH/wwwroot/icon/$CR\n";
+			print " Add 'Alias \/awstatsicons \"$AWSTATS_ICON_PATH/\"' to config file\n";
+			print CONF "Alias \/awstatsicons \"$AWSTATS_ICON_PATH/$CR\n";
 		}
 		if (! $awstatscgifound) {
-			print " Add 'ScriptAlias \/awstats\/ \"$AWSTATSPATH/wwwroot/cgi-bin/\"' to config file\n";
-			print CONF "ScriptAlias \/awstats\/ \"$AWSTATSPATH/wwwroot/cgi-bin/$CR\n";
+			print " Add 'ScriptAlias \/awstats\/ \"$AWSTATS_CGI_PATH/\"' to config file\n";
+			print CONF "ScriptAlias \/awstats\/ \"$AWSTATS_CGI_PATH/$CR\n";
 		}
 	close CONF;
 	$UseAlias=1;
 	$WebServerChanged=1;
+	print "  AWStats directives added to Apache config file.\n";
 }
 
 # Ask value for web site name
@@ -420,34 +440,32 @@ my $site=$bidon;
 # -----------------------
 my $configfile='';
 my $modelfile='';
-if ($OS eq 'linux') 	{ $modelfile='/etc/awstats/awstats.model.conf'; $configfile='/etc/awstats/awstats.$site.conf'; }
-if ($OS eq 'windows') 	{ $modelfile="$AWSTATSPATH\\wwwroot\\cgi-bin\\awstats.model.conf"; $configfile="$AWSTATSPATH\\wwwroot\\cgi-bin\\awstats.$site.conf"; }
+if ($OS eq 'linux') 	{ $modelfile="$AWSTATS_MODEL_CONFIG"; $configfile='/etc/awstats/awstats.$site.conf'; }
+if ($OS eq 'windows') 	{ $modelfile="$AWSTATS_PATH\\wwwroot\\cgi-bin\\awstats.model.conf"; $configfile="$AWSTATS_PATH\\wwwroot\\cgi-bin\\awstats.$site.conf"; }
 
 # Update model config file
 # ------------------------
-print "\n-----> Update model config file...\n";
+print "\n-----> Update model config file\n";
 %ConfToChange=();
-if ($OS eq 'linux') { $ConfToChange{'DirData'}='/var/lib/awstats'; }
+if ($OS eq 'linux') { $ConfToChange{'DirData'}="$AWSTATS_DIRDATA_PATH"; }
 if ($OS eq 'windows') { $ConfToChange{'DirData'}='.'; }
 if ($UseAlias) {
 	$ConfToChange{'DirCgi'}='/awstats';
 	$ConfToChange{'DirIcons'}='/awstatsicons';
-	$ConfToChange{'MiscTrackerUrl'}='/awstatsjs/awstats_misc_tracker.js';
 }
 update_awstats_config("$modelfile");
 
 # Create awstats.conf file
-# -----------------------
-print "\n-----> Create config file '$configfile' for main site...\n";
-if (-s $configfile) { print "  Main config file already exists. No change made.\n"; }
+# ------------------------
+print "\n-----> Create config file '$configfile'\n";
+if (-s $configfile) { print "  Config file already exists. No overwrite possible on existing config files.\n"; }
 else {
 	%ConfToChange=();
-	if ($OS eq 'linux') { $ConfToChange{'DirData'}='/var/lib/awstats'; }
+	if ($OS eq 'linux') { $ConfToChange{'DirData'}="$AWSTATS_DIRDATA_PATH"; }
 	if ($OS eq 'windows') { $ConfToChange{'DirData'}='.'; }
 	if ($UseAlias) {
 		$ConfToChange{'DirCgi'}='/awstats';
 		$ConfToChange{'DirIcons'}='/awstatsicons';
-		$ConfToChange{'MiscTrackerUrl'}='/awstatsjs/awstats_misc_tracker.js';
 	}
 	$ConfToChange{'SiteDomain'}="$site";
 	my $sitewithoutwww=lc($site); $sitewithoutwww =~ s/^www\.//i;
@@ -482,13 +500,33 @@ if ($WebServerChanged) {
 # If not found
 
 
-# TODO
-# Ask to run awstats update process
-
+# Schedule awstats update process
+# -------------------------------
+print "\n-----> Add update process inside a scheduler\n";
+if ($OS eq 'windows') {
+	print "Sorry, for windows users, if you want to have statisitics to be\n";
+	print "updated on a regular basis, you have to add the update process\n";
+	print "in a scheduler task manually (See AWStats docs/index.html).\n";
+	print "Press a key to continue...\n";
+	$bidon=<STDIN>;
+}
+if ($OS eq 'linux') {
+	print "Sorry, programming update is not supported yet.\n";
+	print "You can to it manually by adding the following line to your crontab\n";
+	print "$AWSTATS_CGI_PATH/awstats -update -config=$site\n";
+	print "Or if you have several config files and prefer having only one command:\n";
+	print "$AWSTATS_TOOLS_PATH/awstats_updateall.pl now\n";
+	print "Press a key to continue...\n";
+	$bidon=<STDIN>;
+}
 
 print "\n\n";
-print "You should now be able to read your statistics with the following URL:\n";
-print "http://localhost/awstats/awstats.pl?config=$site\n";
+print "A SIMPLE config file for '$site' has been created. You should have a look\n";
+print "inside to check and change manually main parameters.\n";
+print "You can then update your statistics for '$site' with command:\n";
+print "> awstats.pl -update -config=$site\n";
+print "You can also read your statistics for '$site' with URL:\n";
+print "> http://localhost/awstats/awstats.pl?config=$site\n";
 print "\n";
 print "Press a key to finish...\n";
 $bidon=<STDIN>;
