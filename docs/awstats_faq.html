@@ -987,7 +987,7 @@ the ".UTF-8" at the end. For example, set <i>LANG="en_US"</i> instead of <i>LANG
 <font class=CProblem>PROBLEM:</font><br>
 AWStats seems to work but I'm not getting any results. i get a statistics page that looks like i have no hits.<br>
 <font class=CSolution>SOLUTION:</font><br>
-That's one of the most common problem you can get and there is 2 possible reasons :<br>
+That's one of the most common problem you can get and there is 3 possible reasons :<br>
 <br>
 1) Your log file format setup might be wrong.<br>
 <u>If you use Apache web server</u><br>
@@ -1010,6 +1010,11 @@ When you run awstats, the reports is by default for the current month/year.<br>
 If you want to see data for another month/year you must:<br>
 Add -year=YYYY -month=MM on command line when building the html report page from command line.<br>
 Use an URL like http://myserver/cgi-bin/awstats.pl?config=xxx&year=YYYY&month=MM if viewing stats with AWStats used as a CGI.<br>
+<br>
+3) When you read your statistics, AWStats does not use the same config file than the one
+used for the update process. Scan your disk for files that match <i>awstats.*conf</i> and remove
+all files that are not the config file(s) you need (awstats.conf files, if found, can be deleted.
+It is better to use a config file called awstats.mydomain.conf).<br>
 <br>
 
 <a name="REDIRECT"></a><br>
