@@ -1,3 +1,4 @@
+#!c:/program files/activeperl/bin/perl
 #!/usr/bin/perl
 # With some other Unix Os, first line might be
 #!/usr/local/bin/perl
@@ -65,7 +66,7 @@ $word, $yearcon, $yearfile, $yearmonthfile, $yeartoprocess) = ();
 @sortsearchwords = @sortsereferrals = @sortsider404 = @sortsiders = @sortunknownip =
 @sortunknownreferer = @sortunknownrefererbrowser = @wordlist = ();
 
-$VERSION="2.24 (build 31)";
+$VERSION="2.24 (build 32)";
 $Lang=0;
 
 # Default value
@@ -1496,6 +1497,11 @@ sub warning {
 	}
 }
 
+sub debug {
+	if ($Debug) { print "DEBUG: $_[0]<br>\n"; }
+	0;
+}
+
 sub SkipHost {
 	foreach $Skip (@SkipHosts) { if ($_[0] =~ /$Skip/i) { return 1; } }
 	0; # Not in @SkipHosts
@@ -1511,6 +1517,7 @@ sub Read_Config_File {
 	if (open(CONFIG,"$DirConfig$PROG.$LocalSite.conf")) { $FileConfig="$DirConfig$PROG.$LocalSite.conf"; $FileSuffix=".$LocalSite"; }
 	if ($FileConfig eq "") { if (open(CONFIG,"$DirConfig$PROG.conf"))  { $FileConfig="$DirConfig$PROG.conf"; $FileSuffix=""; } }
 	if ($FileConfig eq "") { $FileConfig="$PROG.conf"; error("Error: Couldn't open config file \"$PROG.$LocalSite.conf\" nor \"$PROG.conf\" : $!"); }
+	&debug("Call to Read_Config_File. FileConfig=\"$FileConfig\"");
 	while (<CONFIG>) {
 		chomp $_; s/\r//;
 		$_ =~ s/#.*//;								# Remove comments
@@ -1596,6 +1603,7 @@ sub Read_Config_File {
 }
 
 sub Check_Config {
+	&debug("Call to Check_Config");
 	# Main section
 	if (! ($LogFormat =~ /[1-2]/))            { error("Error: LogFormat parameter is wrong. Value is '$LogFormat' (should be 1 or 2)"); }
 	if (! ($DNSLookup =~ /[0-1]/))            { error("Error: DNSLookup parameter is wrong. Value is '$DNSLookup' (should be 0 or 1)"); }
@@ -1642,9 +1650,11 @@ sub Check_Config {
 }
 
 sub Read_History_File {
-if ($HistoryFileAlreadyRead{"$_[0]$_[1]"}) { return 0; }	# Protect code to invoke function only once for each month/year
-$HistoryFileAlreadyRead{"$_[0]$_[1]"}=1;
-if (open(HISTORY,"$DirData/$PROG$_[1]$_[0]$FileSuffix.txt")) {	# Month before Year kept for backward compatibility
+	&debug("Call to Read_History_File ($_[0],$_[1],$_[2])");
+	if ($HistoryFileAlreadyRead{"$_[0]$_[1]"}) { return 0; }			# Protect code to invoke function only once for each month/year
+	$HistoryFileAlreadyRead{"$_[0]$_[1]"}=1;							# Protect code to invoke function only once for each month/year
+	if (! -s "$DirData/$PROG$_[1]$_[0]$FileSuffix.txt") { return 0; }	# If file not exists, return
+	open(HISTORY,"$DirData/$PROG$_[1]$_[0]$FileSuffix.txt") || error("Error: Couldn't open for read file \"$DirData/$PROG$_[1]$_[0]$FileSuffix.txt\" : $!");	# Month before Year kept for backward compatibility
 	$readdomain=0;$readvisitor=0;$readunknownip=0;$readsider=0;$readtime=0;$readbrowser=0;$readnsver=0;$readmsiever=0;
 	$reados=0;$readrobot=0;$readunknownreferer=0;$readunknownrefererbrowser=0;$readpagerefs=0;$readse=0;
 	$readsearchwords=0;$readerrors=0;$readerrors404=0; $readday=0;
@@ -1652,32 +1662,32 @@ if (open(HISTORY,"$DirData/$PROG$_[1]$_[0]$FileSuffix.txt")) {	# Month before Ye
 		chomp $_; s/\r//;
 		@field=split(/ /,$_);
 		if ($field[0] eq "FirstTime")       { $FirstTime{$_[0].$_[1]}=$field[1]; next; }
-        if ($field[0] eq "LastTime")        { if ($LastTime{$_[0].$_[1]} < $field[1]) { $LastTime{$_[0].$_[1]}=$field[1]; }; next; }
+	    if ($field[0] eq "LastTime")        { if ($LastTime{$_[0].$_[1]} < $field[1]) { $LastTime{$_[0].$_[1]}=$field[1]; }; next; }
 		if ($field[0] eq "TotalVisits")     { $MonthVisits{$_[0].$_[1]}+=$field[1]; next; }
-        if ($field[0] eq "BEGIN_VISITOR")   { $readvisitor=1; next; }
-        if ($field[0] eq "END_VISITOR")     { $readvisitor=0; next; }
-        if ($field[0] eq "BEGIN_UNKNOWNIP") { $readunknownip=1; next; }
-        if ($field[0] eq "END_UNKNOWNIP")   { $readunknownip=0; next; }
-        if ($field[0] eq "BEGIN_TIME")      { $readtime=1; next; }
-        if ($field[0] eq "END_TIME")        { $readtime=0; next; }
-        if ($field[0] eq "BEGIN_DAY")       { $readday=1; next; }
-        if ($field[0] eq "END_DAY")         { $readday=0; next; }
-
-        if ($readvisitor) {
-        	if (($field[0] ne "Unknown") && ($field[1] > 0)) { $MonthUnique{$_[0].$_[1]}++; }
-        	}
-        if ($readunknownip) {
-        	$MonthUnique{$_[0].$_[1]}++;
+	    if ($field[0] eq "BEGIN_VISITOR")   { $readvisitor=1; next; }
+	    if ($field[0] eq "END_VISITOR")     { $readvisitor=0; next; }
+	    if ($field[0] eq "BEGIN_UNKNOWNIP") { $readunknownip=1; next; }
+	    if ($field[0] eq "END_UNKNOWNIP")   { $readunknownip=0; next; }
+	    if ($field[0] eq "BEGIN_TIME")      { $readtime=1; next; }
+	    if ($field[0] eq "END_TIME")        { $readtime=0; next; }
+	    if ($field[0] eq "BEGIN_DAY")       { $readday=1; next; }
+	    if ($field[0] eq "END_DAY")         { $readday=0; next; }
+	
+	    if ($readvisitor) {
+	    	if (($field[0] ne "Unknown") && ($field[1] > 0)) { $MonthUnique{$_[0].$_[1]}++; }
+	    	}
+	    if ($readunknownip) {
+	    	$MonthUnique{$_[0].$_[1]}++;
 			}
-        if ($readtime) {
-        	$MonthPage{$_[0].$_[1]}+=$field[1]; $MonthHits{$_[0].$_[1]}+=$field[2]; $MonthBytes{$_[0].$_[1]}+=$field[3];
+	    if ($readtime) {
+	    	$MonthPage{$_[0].$_[1]}+=$field[1]; $MonthHits{$_[0].$_[1]}+=$field[2]; $MonthBytes{$_[0].$_[1]}+=$field[3];
 			}
 		if ($readday)
 		{
 			$DayPage{$field[0]}+=$field[1]; $DayHits{$field[0]}+=$field[2]; $DayBytes{$field[0]}+=$field[3]; $DayVisits{$field[0]}+=$field[4]; $DayUnique{$field[0]}+=$field[5];
 		}	
-
-		# If $_[2] == 0, it means we don't need second part of history file
+	
+		# If $_[2] == 0, it means we don't need second part of history file.
 		if ($_[2]) {
 	        if ($field[0] eq "BEGIN_DOMAIN") { $readdomain=1; next; }
 			if ($field[0] eq "END_DOMAIN")   { $readdomain=0; next; }
@@ -1707,9 +1717,9 @@ if (open(HISTORY,"$DirData/$PROG$_[1]$_[0]$FileSuffix.txt")) {	# Month before Ye
 	        if ($field[0] eq "END_ERRORS") { $readerrors=0; next; }
 	        if ($field[0] eq "BEGIN_SIDER_404") { $readerrors404=1; next; }
 	        if ($field[0] eq "END_SIDER_404") { $readerrors404=0; next; }
-      		if ($field[0] eq "BEGIN_DAY")       { $readday=1; next; }
-        	if ($field[0] eq "END_DAY")         { $readday=0; next; }
-
+	  		if ($field[0] eq "BEGIN_DAY")       { $readday=1; next; }
+	    	if ($field[0] eq "END_DAY")         { $readday=0; next; }
+	
 	        if ($readvisitor) {
 	        	$_hostmachine_p{$field[0]}+=$field[1];
 	        	$_hostmachine_h{$field[0]}+=$field[2];
@@ -1752,14 +1762,14 @@ if (open(HISTORY,"$DirData/$PROG$_[1]$_[0]$FileSuffix.txt")) {	# Month before Ye
 	        if ($readsearchwords) { $_keywords{$field[0]}+=$field[1]; next; }
 	        if ($readerrors) { $_errors_h{$field[0]}+=$field[1]; next; }
 	        if ($readerrors404) { $_sider404_h{$field[0]}+=$field[1]; $_referer404_h{$field[0]}=$field[2]; next; }
-
+	
 			}
 		}
-	}
-close HISTORY;
+	close HISTORY;
 }
 
 sub Save_History_File {
+	&debug("Call to Save_History_File ($_[0],$_[1])");
 	open(HISTORYTMP,">$DirData/$PROG$_[1]$_[0]$FileSuffix.tmp.$$") || error("Error: Couldn't open file \"$DirData/$PROG$_[1]$_[0]$FileSuffix.tmp.$$\" : $!");	# Month before Year kept for backward compatibility
 
 	print HISTORYTMP "FirstTime $FirstTime{$_[0].$_[1]}\n";
@@ -2022,7 +2032,7 @@ if (($YearRequired == $nowyear) && ($MonthRequired eq "year" || $MonthRequired =
 	if ($yearmonthmax) {	# We found last history file
 		$yeartoprocess=$yearmonthmax; $monthtoprocess=$yearmonthmax;
 		$yeartoprocess =~ s/..$//; $monthtoprocess =~ s/^....//;
-		# We read LastTime in this last history file
+		# We read LastTime in this last history file.
 		&Read_History_File($yeartoprocess,$monthtoprocess,1);
 	}
 
@@ -2432,7 +2442,7 @@ if (($YearRequired == $nowyear) && ($MonthRequired eq "year" || $MonthRequired =
 	if ($DNSLookup && !$NewDNSLookup) { warning("Warning: <b>$PROG</b> has detected that hosts names are already resolved in your logfile <b>$LogFile</b>.<br>\nIf this is true, you should change your setup DNSLookup=1 into DNSLookup=0 to increase $PROG speed."); }
 
 	# Save for month $monthtoprocess
-	if ($monthtoprocess) {	# If monthtoprocess is 0, it means there was no history files and we found no valid lines in log file
+	if ($monthtoprocess) {	# If monthtoprocess is still 0, it means there was no history files and we found no valid lines in log file
 		&Save_History_File($yeartoprocess,$monthtoprocess);		# We save data for this month
 		if (($MonthRequired ne "year") && ($monthtoprocess != $MonthRequired)) { &Init_HashArray; }	# Not a desired month, so we clean data
 	}
@@ -2460,7 +2470,7 @@ if (($YearRequired == $nowyear) && ($MonthRequired eq "year" || $MonthRequired =
 	foreach $i (0..$#filearray) {
 		if ("$filearray[$i]" =~ /^$PROG[\d][\d][\d][\d][\d][\d]$FileSuffix\.tmp\..*$/) {
 			$yearmonthfile=$filearray[$i]; $yearmonthfile =~ s/^$PROG//; $yearmonthfile =~ s/\..*//;
-			if (-R "$DirData/$PROG$yearmonthfile$FileSuffix.tmp.$$") {
+			if (-s "$DirData/$PROG$yearmonthfile$FileSuffix.tmp.$$") {	# Rename only files for this session and with size > 0
 				if (rename("$DirData/$PROG$yearmonthfile$FileSuffix.tmp.$$", "$DirData/$PROG$yearmonthfile$FileSuffix.txt")==0) {
 					$allok=0;	# At least one error in renaming working files
 					last;
@@ -2496,18 +2506,18 @@ foreach $i (0..$#filearray) {
 # If a month was already processed, then $HistoryFileAlreadyRead{"MMYYYY"} value is 1
 
 
-#--------------------------------------------
-# READING NOW HISTORY FILES FOR REQUIRED YEAR
-#--------------------------------------------
+#-------------------------------------------------------------------------------
+# READING NOW ALL NOT ALREADY READ HISTORY FILES FOR ALL MONTHS OF REQUIRED YEAR 
+#-------------------------------------------------------------------------------
 
-# Loop on each month files
-for ($ix=12; $ix>=1; $ix--) {
+# Loop on each month of year but only existing and not already read will be read by Read_History_File function
+for ($ix=12; $ix>=1; $ix--) {	
 	$monthix=$ix+0; if ($monthix < 10) { $monthix  = "0$monthix"; }	# Good trick to change $monthix into "MM" format
 	if ($MonthRequired eq "year" || $monthix == $MonthRequired) {
 		&Read_History_File($YearRequired,$monthix,1);	# Read full history file
 	}
 	else {
-		&Read_History_File($YearRequired,$monthix,0);	# Read first part of history file
+		&Read_History_File($YearRequired,$monthix,0);	# Read first part of history file is enough
 	}
 }
 
