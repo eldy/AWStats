@@ -10,7 +10,7 @@
 # Other robots can be found at http://www.jafsoft.com/searchengines/webbots.html 
 # Rem: To avoid bad detection, some robots id were removed from this list:
 #      - Robots with ID of 2 letters only
-#      - Robot called "webs"
+#      - Robot called "webs" and "tcl"
 # Rem: directhit is changed into direct_hit (its real id)
 # Rem: calif is changed into calif[^r] to avoid confusion between Tiscalifreenet browser
 # Rem: fish is changed into [^a]fish to avoid confusion between Madsafish browser
@@ -49,12 +49,13 @@
 "peternews",
 "scooter",
 "slurp",
-"tcl",
+#"tcl",
 "unlost_web_crawler",
 "voila",
 "voyager",
 "webbase",
 "weblayers",
+#"webs",
 "wget",
 "wisenutbot"
 );
@@ -537,7 +538,7 @@
 "tach_bw","TACH Black Widow",
 "tarantula","Tarantula",
 "tarspider","tarspider",
-"tcl","Tcl W3 Robot",
+#"tcl","Tcl W3 Robot",
 "techbot","TechBOT",
 "templeton","Templeton",
 "teoma_agent1","TeomaTechnologies",
@@ -570,6 +571,7 @@
 "webquest","WebQuest",
 "webreader","Digimarc MarcSpider",
 "webreaper","WebReaper",
+#"webs","Webs",
 "websnarf","Websnarf",
 "webspider","WebSpider",
 "webvac","WebVac",
