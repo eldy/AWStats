@@ -3783,7 +3783,7 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {	# Updat
 	$PerlParsingFormat="";
 	if ($LogFormat =~ /^[1-5]$/) {	# Pre-defined log format
 		if ($LogFormat eq "1") {	# Same than "%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\""
-			$PerlParsingFormat="([^\\s]+) [^\\s]+ ([^\\s]+) \\[([^\\s]+) [^\\s]+\\] \\\"([^\\s]+) ([^\\s]+) [^\\\"]+\\\" ([\\d|-]+) ([\\d|-]+) \\\"(.*)\\\" \\\"([^\\\"]*)\\\"";	# referer and ua might be ""
+			$PerlParsingFormat="([^ ]+) [^ ]+ ([^ ]+) \\[([^ ]+) [^ ]+\\] \\\"([^ ]+) ([^ ]+) [^\\\"]+\\\" ([\\d|-]+) ([\\d|-]+) \\\"(.*)\\\" \\\"([^\\\"]*)\\\"";	# referer and ua might be ""
 			$pos_rc=0;$pos_logname=1;$pos_date=2;$pos_method=3;$pos_url=4;$pos_code=5;$pos_size=6;$pos_referer=7;$pos_agent=8;
 		}
 		elsif ($LogFormat eq "2") {	# Same than "date time c-ip cs-username cs-method cs-uri-stem sc-status sc-bytes cs-version cs(User-Agent) cs(Referer)"
@@ -3795,7 +3795,7 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {	# Updat
 			$pos_date=0;$pos_method=1;$pos_code=2;$pos_rc=3;$pos_agent=4;$pos_referer=5;$pos_url=6;$pos_size=7;
 		}
 		elsif ($LogFormat eq "4") {	# Same than "%h %l %u %t \"%r\" %>s %b"
-			$PerlParsingFormat="([^\\s]+) [^\\s]+ ([^\\s]+) \\[([^\\s]+) [^\\s]+\\] \\\"([^\\s]+) ([^\\s]+) [^\\\"]+\\\" ([\\d|-]+) ([\\d|-]+)";
+			$PerlParsingFormat="([^ ]+) [^ ]+ ([^ ]+) \\[([^ ]+) [^ ]+\\] \\\"([^ ]+) ([^ ]+) [^\\\"]+\\\" ([\\d|-]+) ([\\d|-]+)";
 			$pos_rc=0;$pos_logname=1;$pos_date=2;$pos_method=3;$pos_url=4;$pos_code=5;$pos_size=6;
 		}
 		elsif ($LogFormat eq "5") {	# Same than "c-ip cs-username c-agent sc-authenticated date time s-svcname s-computername cs-referred r-host r-ip r-port time-taken cs-bytes sc-bytes cs-protocol cs-transport s-operation cs-uri cs-mime-type s-object-source sc-status s-cache-info"
@@ -5188,7 +5188,7 @@ EOF
 	}
 	if ($HTMLOutput eq "alllogins") {
 		print "$Center<a name=\"LOGINSLIST\">&nbsp;</a><BR>\n";
-		&tab_head($Message[80],19);
+		&tab_head($Message[94],19);
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[94] : ".(scalar keys %_login_h)."</TH>";
 		print "<TH bgcolor=\"#$color_p\" width=80>$Message[56]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH bgcolor=\"#$color_k\" width=80>$Message[75]</TH><TH width=120>$Message[9]</TH></TR>\n";
 		$total_p=$total_h=$total_k=0;
@@ -5367,7 +5367,7 @@ EOF
 	if ($HTMLOutput eq "unknownos") {
 		print "$Center<a name=\"UNKOWNOS\">&nbsp;</a><BR>\n";
 		&tab_head($Message[46],19);
-		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>Referer (".(scalar keys %_unknownreferer_l).")</TH><TH>$Message[9]</TH></TR>\n";
+		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>User agent (".(scalar keys %_unknownreferer_l).")</TH><TH>$Message[9]</TH></TR>\n";
 		my $count=0;
 		foreach my $key (sort { $_unknownreferer_l{$b} <=> $_unknownreferer_l{$a} } keys (%_unknownreferer_l)) {
 			if ($count>=$MaxRowsInHTMLOutput) { next; }
@@ -5382,7 +5382,7 @@ EOF
 	if ($HTMLOutput eq "unknownbrowser") {
 		print "$Center<a name=\"UNKOWNBROWSER\">&nbsp;</a><BR>\n";
 		&tab_head($Message[50],19);
-		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>Referer (".(scalar keys %_unknownrefererbrowser_l).")</TH><TH>$Message[9]</TH></TR>\n";
+		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>User agent (".(scalar keys %_unknownrefererbrowser_l).")</TH><TH>$Message[9]</TH></TR>\n";
 		my $count=0;
 		foreach my $key (sort { $_unknownrefererbrowser_l{$b} <=> $_unknownrefererbrowser_l{$a} } keys (%_unknownrefererbrowser_l)) {
 			if ($count>=$MaxRowsInHTMLOutput) { next; }
