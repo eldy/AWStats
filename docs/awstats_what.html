@@ -40,28 +40,32 @@
 	<b>A full log analysis enables AWStats to show you the following information</b>:<br>
 	* Number of <u>visits</u>, and number of <u>unique visitors</u>,<br>
 	* <u>Visits duration</u> and last visits,<br>
-	* <u>Authenticated users</u>,<br>
+	* <u>Authenticated users</u>, and last authenticated visits,<br>
 	* <u>Days of week</u> and <u>rush hours</u> (pages, hits, KB for each hour and day of week),<br>
-	* Hosts names and/or unresolved IP addresses (with 'WhoIs' link),<br>
 	* <u>Domains/countries</u> of hosts visitors (pages, hits, KB, <font color=#221188>259 domains/countries detected</font>),<br>
+	* Hosts list, last visits and unresolved IP addresses list,<br>
 	* <u>Most viewed</u>, <u>entry</u> and <u>exit</u> pages,<br>
 	* <u>Files type</u>,<br>
 	* <u>Web compression statistics</u> (for mod_gzip),<br>
-	* <u>Browsers</u> used (pages, hits, KB for each browser, each version, <font color=#221188>74 browsers</font>: Web, Wap, Media browsers...),<br>
+	* <u>Browsers</u> used (pages, hits, KB for each browser, each version, <font color=#221188>75 browsers</font>: Web, Wap, Media browsers...),<br>
 	* <u>OS used</u> (pages, hits, KB for each OS, <font color=#221188>29 OS detected</font>),<br>
-	* <u>Visits of robots</u> (<font color=#221188>287 robots detected</font>),<br>
+	* <u>Visits of robots</u> (<font color=#221188>295 robots detected</font>),<br>
 	* <u>Search engines</u>, <u>keyphrases</u> and <u>keywords</u> used to find your site (<font color=#221188>The 63 most famous search engines are detected like yahoo, google, altavista, etc...</font>),<br>
 	* HTTP errors (Page Not Found with last referrer, ...),<br>
 <br>
 	<b>AWStats also supports the following features</b>:<br>
-	* Can analyze a lot of log formats: Apache NCSA combined log files (XLF/ELF) or common (CLF), IIS log files (W3C), WebStar native log files and other web, proxy or wap servers log files (but also ftp, syslog or mail log files). See <a href="awstats_faq.html#LOGFORMAT">AWStats F.A.Q.</a> for examples.<br>
+	* Can analyze a lot of log formats: Apache NCSA combined log files (XLF/ELF) or common (CLF), IIS log files (W3C),
+	  WebStar native log files and other web, proxy or wap servers log files (but also ftp, syslog or mail log files). See <a href="awstats_faq.html#LOGFORMAT">AWStats F.A.Q.</a> for examples.<br>
 	* Works from command line and from a browser as a CGI (with dynamic filters capabilities for some charts),<br>
-	* Update of statistics can be made from a web browser and not only from a scheduler,<br>
+	* Update of statistics can be made from a web browser and not only from your scheduler,<br>
 	* Unlimited log file size, support split log files (load balancing system),<br>
+	* Support 'nearly sorted' log files even for entry and exit pages,<br>
 	* Reverse DNS lookup before or during analysis, support DNS cache files,<br>
+	* WhoIS links,<br>
 	* A lot of options/filters and plugins can be used,<br>
 	* Multi-named web sites supported (virtual servers, great for web-hosting providers),<br>
 <!--	* Yearly, monthly and daily statistics,<br> -->
+	* Cross Site Scripting Attacks protection,<br>
 	* Several languages. See <a href="awstats_faq.html#LANG">AWStats F.A.Q.</a> for full list.<br>
 	* No need of rare perl libraries. All basic perl interpreters can make AWStats working,<br>
 	* Graphical and framed reports,<br>
@@ -73,7 +77,7 @@
 <br>
 	<b>Requirements</b>:<br>
 	To use AWStats, you need the following requirements:<br>
-	* Your server must log web access in log files you can read.<br>
+	* Your server must log web access in a log file you can read.<br>
 	* You must be able to run perl scripts (.pl files) from command line and/or as CGI.<br>
 	If not, you can solve this by downloading last Perl version at <a href="http://www.activestate.com/ActivePerl/">ActivePerl</a> (<font color=#221188>Win32</font>) or <a href="http://www.perl.com/pub/language/info/software.html">Perl.com</a> (<font color=#221188>Unix/Linux/Other</font>).<br>
 	See <a href="awstats_faq.html#SERVERSOS">AWStats F.A.Q.</a> to have examples of supported OS and Web servers.<br>
