@@ -11,9 +11,7 @@
 #-------------------------------------------------------
 # $Revision$ - $Author$ - $Date$
 
-# use strict and use vars are commented to make AWStats working with old perl.
 use strict;no strict "refs";
-use vars qw(%DomainsHashIDLib @RobotsSearchIDOrder_list1 @RobotsSearchIDOrder_list2 @RobotsSearchIDOrder_list3 @BrowsersSearchIDOrder @OSSearchIDOrder @WordsToCleanSearchUrl %BrowsersHereAreGrabbers %BrowsersHashIcon %BrowsersHashIDLib %OSHashID %OSHashLib %RobotsHashIDLib @SearchEnginesSearchIDOrder %SearchEnginesHashIDLib %SearchEnginesKnownUrl %DomainsHashIDLib);
 #use warnings;		# Must be used in test mode only. This reduce a little process speed
 #use diagnostics;	# Must be used in test mode only. This reduce a lot of process speed
 use Socket;
@@ -31,47 +29,100 @@ my $REVISION='$Revision$'; $REVISION =~ /\s(.*)\s/; $REVISION=$1;
 my $VERSION="4.1 (build $REVISION)";
 
 # ---------- Init variables -------
-my $Debug=0;
-my $ShowSteps=0;
-my $AWScript;
-my $DIR;
-my $PROG;
-my $Extension;
-my $DNSLookup=0;
-my $DirCgi="";
-my $DirData="";
-my $DirIcons="";
-my $DirLang="";
-my $DNSLookupAlreadyDone=0;
-my $Lang="en";
-my $DEBUGFORCED   = 0;				# Force debug level to log lesser level into debug.log file (Keep this value to 0)
-my $MaxRowsInHTMLOutput = 1000;		# Max number of rows for not limited HTML arrays
-my $VisitTimeOut  = 10000;			# Laps of time to consider a page load as a new visit. 10000 = one hour (Default = 10000)
-#my $FullHostName  = 1;				# 1 = Use name.domain.zone to refer host clients, 0 = all hosts in same domain.zone are one host (Default = 1, 0 never tested)
-my $NbOfLinesForBenchmark=5000;
-my $ShowBackLink  = 1;
-my $WIDTH         = 600;
-my $CENTER        = "";
+use vars qw/
+$Debug
+$ShowSteps
+$AWScript
+$DIR
+$PROG
+$Extension
+$DNSLookup
+$DirCgi
+$DirData
+$DirIcons
+$DirLang
+$DNSLookupAlreadyDone
+$Lang
+$DEBUGFORCED
+$MaxRowsInHTMLOutput
+$VisitTimeOut
+$NbOfLinesForBenchmark
+$ShowBackLink
+$WIDTH
+$CENTER
+/;
+$Debug=0;
+$ShowSteps=0;
+$AWScript="";
+$DIR="";
+$PROG="";
+$Extension="";
+$DNSLookup=0;
+$DirCgi="";
+$DirData="";
+$DirIcons="";
+$DirLang="";
+$DNSLookupAlreadyDone=0;
+$Lang="en";
+$DEBUGFORCED   = 0;				# Force debug level to log lesser level into debug.log file (Keep this value to 0)
+$MaxRowsInHTMLOutput = 1000;		# Max number of rows for not limited HTML arrays
+$VisitTimeOut  = 10000;			# Laps of time to consider a page load as a new visit. 10000 = one hour (Default = 10000)
+$NbOfLinesForBenchmark=5000;
+$ShowBackLink  = 1;
+$WIDTH         = 600;
+$CENTER        = "";
 # Images for graphics
-my $BarImageVertical_v   = "barrevv.png";
+use vars qw/
+$BarImageVertical_v
+$BarImageVertical_u
+$BarImageVertical_p
+$BarImageHorizontal_p
+$BarImageHorizontal_e
+$BarImageHorizontal_x
+$BarImageVertical_h
+$BarImageHorizontal_h
+$BarImageVertical_k
+$BarImageHorizontal_k
+/;
+$BarImageVertical_v   = "barrevv.png";
 #$BarImageHorizontal_v = "barrehv.png";
-my $BarImageVertical_u   = "barrevu.png";
+$BarImageVertical_u   = "barrevu.png";
 #$BarImageHorizontal_u = "barrehu.png";
-my $BarImageVertical_p   = "barrevp.png";
-my $BarImageHorizontal_p = "barrehp.png";
+$BarImageVertical_p   = "barrevp.png";
+$BarImageHorizontal_p = "barrehp.png";
 #$BarImageVertical_e = "barreve.png";
-my $BarImageHorizontal_e = "barrehe.png";
-my $BarImageHorizontal_x = "barrehx.png";
-my $BarImageVertical_h   = "barrevh.png";
-my $BarImageHorizontal_h = "barrehh.png";
-my $BarImageVertical_k   = "barrevk.png";
-my $BarImageHorizontal_k = "barrehk.png";
-my $starttime;
-my $nowtime = my $tomorrowtime = 0;
-my $nowweekofmonth = my $nowdaymod = my $nowsmallyear = 0;
-my $nowsec = my $nowmin = my $nowhour = my $nowday = my $nowmonth = my $nowyear = my $nowwday = my $nowns = 0;
-my ($AllowAccessFromWebToAuthenticatedUsersOnly,$BarHeight,$BarWidth,$DebugResetDone,$Expires,
-$CreateDirDataIfNotExists, $KeepBackupOfHistoricFiles, $MaxLengthOfURL,
+$BarImageHorizontal_e = "barrehe.png";
+$BarImageHorizontal_x = "barrehx.png";
+$BarImageVertical_h   = "barrevh.png";
+$BarImageHorizontal_h = "barrehh.png";
+$BarImageVertical_k   = "barrevk.png";
+$BarImageHorizontal_k = "barrehk.png";
+use vars qw/
+$starttime
+$nowtime $tomorrowtime
+$nowweekofmonth $nowdaymod $nowsmallyear
+$nowsec $nowmin $nowhour $nowday $nowmonth $nowyear $nowwday $nowns
+/;
+$starttime;
+$nowtime = $tomorrowtime = 0;
+$nowweekofmonth = $nowdaymod = $nowsmallyear = 0;
+$nowsec = $nowmin = $nowhour = $nowday = $nowmonth = $nowyear = $nowwday = $nowns = 0;
+use vars qw/
+$AllowAccessFromWebToAuthenticatedUsersOnly $BarHeight $BarWidth $DebugResetDone
+$Expires $CreateDirDataIfNotExists $KeepBackupOfHistoricFiles $MaxLengthOfURL
+$MaxNbOfDomain $MaxNbOfHostsShown $MaxNbOfKeywordsShown $MaxNbOfLoginShown
+$MaxNbOfPageShown $MaxNbOfRefererShown $MaxNbOfRobotShown
+$MinHitFile $MinHitHost $MinHitKeyword
+$MinHitLogin $MinHitRefer $MinHitRobot
+$NbOfLinesRead $NbOfLinesDropped $NbOfLinesCorrupted $NbOfOldLines $NbOfNewLines
+$NowNewLinePhase $NbOfLinesForCorruptedLog $PurgeLogFile
+$ShowAuthenticatedUsers $ShowCompressionStats $ShowFileSizesStats
+$ShowDropped $ShowCorrupted $ShowUnknownOrigin $ShowLinksToWhoIs
+$SplitSearchString $StartSeconds $StartMicroseconds
+$UpdateStats $URLWithQuery
+/;
+($AllowAccessFromWebToAuthenticatedUsersOnly, $BarHeight, $BarWidth, $DebugResetDone,
+$Expires, $CreateDirDataIfNotExists, $KeepBackupOfHistoricFiles, $MaxLengthOfURL,
 $MaxNbOfDomain, $MaxNbOfHostsShown, $MaxNbOfKeywordsShown, $MaxNbOfLoginShown,
 $MaxNbOfPageShown, $MaxNbOfRefererShown, $MaxNbOfRobotShown,
 $MinHitFile, $MinHitHost, $MinHitKeyword,
@@ -83,7 +134,18 @@ $ShowDropped, $ShowCorrupted, $ShowUnknownOrigin, $ShowLinksToWhoIs,
 $SplitSearchString, $StartSeconds, $StartMicroseconds,
 $UpdateStats, $URLWithQuery)=
 (0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
-my ($AllowToUpdateStatsFromBrowser, $ArchiveLogRecords, $DetailedReportsOnNewWindows,
+use vars qw/
+$AllowToUpdateStatsFromBrowser $ArchiveLogRecords $DetailedReportsOnNewWindows
+$FirstDayOfWeek $SaveDatabaseFilesWithPermissionsForEveryone
+$ShowHeader $ShowMenu $ShowMonthDayStats $ShowDaysOfWeekStats
+$ShowHoursStats $ShowDomainsStats $ShowHostsStats
+$ShowRobotsStats $ShowSessionsStats $ShowPagesStats $ShowFileTypesStats
+$ShowBrowsersStats $ShowOSStats $ShowOriginStats $ShowKeyphrasesStats
+$ShowKeywordsStats  $ShowHTTPErrorsStats
+$ShowFlagLinks $ShowLinksOnUrl
+$WarningMessages
+/;
+($AllowToUpdateStatsFromBrowser, $ArchiveLogRecords, $DetailedReportsOnNewWindows,
 $FirstDayOfWeek, $SaveDatabaseFilesWithPermissionsForEveryone,
 $ShowHeader, $ShowMenu, $ShowMonthDayStats, $ShowDaysOfWeekStats,
 $ShowHoursStats, $ShowDomainsStats, $ShowHostsStats,
@@ -93,66 +155,118 @@ $ShowKeywordsStats,  $ShowHTTPErrorsStats,
 $ShowFlagLinks, $ShowLinksOnUrl,
 $WarningMessages)=
 (1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1);
-my ($LevelForRobotsDetection, $LevelForBrowsersDetection, $LevelForOSDetection, $LevelForRefererAnalyze,
+use vars qw/
+$LevelForRobotsDetection $LevelForBrowsersDetection $LevelForOSDetection $LevelForRefererAnalyze
+$LevelForSearchEnginesDetection $LevelForKeywordsDetection
+/;
+($LevelForRobotsDetection, $LevelForBrowsersDetection, $LevelForOSDetection, $LevelForRefererAnalyze,
 $LevelForSearchEnginesDetection, $LevelForKeywordsDetection)=
 (2,1,1,1,1,1);
-my ($ArchiveFileName, $DefaultFile, $HTMLHeadSection, $HTMLEndSection, $LinksToWhoIs,
+use vars qw/
+$ArchiveFileName $DefaultFile $HTMLHeadSection $HTMLEndSection $LinksToWhoIs
+$LogFile $LogFormat $Logo $LogoLink $StyleSheet $WrapperScript $SiteDomain
+/;
+($ArchiveFileName, $DefaultFile, $HTMLHeadSection, $HTMLEndSection, $LinksToWhoIs,
 $LogFile, $LogFormat, $Logo, $LogoLink, $StyleSheet, $WrapperScript, $SiteDomain)=
 ("","","","","","","","","","","","");
-my ($color_Background, $color_TableBG, $color_TableBGRowTitle,
+use vars qw/
+$color_Background $color_TableBG $color_TableBGRowTitle
+$color_TableBGTitle $color_TableBorder $color_TableRowTitle $color_TableTitle
+$color_text $color_textpercent $color_titletext $color_weekend $color_link $color_hover
+$color_h $color_k $color_p $color_e $color_x $color_s $color_u $color_v
+/;
+($color_Background, $color_TableBG, $color_TableBGRowTitle,
 $color_TableBGTitle, $color_TableBorder, $color_TableRowTitle, $color_TableTitle,
 $color_text, $color_textpercent, $color_titletext, $color_weekend, $color_link, $color_hover,
 $color_h, $color_k, $color_p, $color_e, $color_x, $color_s, $color_u, $color_v)=
 ("","","","","","","","","","","","","","","","","","","","","");
-my ($FileConfig, $FileSuffix, $Host, $HTMLOutput, $LastUpdate, $DayRequired, $MonthRequired, $YearRequired,
+use vars qw/
+$FileConfig $FileSuffix $Host $HTMLOutput $LastUpdate $DayRequired $MonthRequired $YearRequired
+$QueryString $SiteConfig $StaticLinks $URLFilter $PageCode $LogFormatString $PerlParsingFormat
+$SiteToAnalyze $SiteToAnalyzeWithoutwww $UserAgent
+/;
+($FileConfig, $FileSuffix, $Host, $HTMLOutput, $LastUpdate, $DayRequired, $MonthRequired, $YearRequired,
 $QueryString, $SiteConfig, $StaticLinks, $URLFilter, $PageCode, $LogFormatString, $PerlParsingFormat,
 $SiteToAnalyze, $SiteToAnalyzeWithoutwww, $UserAgent)=
 ("","","","","","","","","","","","","","","","","","");
-my $pos_rc = my $pos_logname = my $pos_date = my $pos_method = my $pos_url = my $pos_code = my $pos_size = 0;
-my $pos_referer = my $pos_agent = my $pos_query = my $pos_gzipin = my $pos_gzipout = my $pos_gzipratio = 0;
-my $lastrequiredfield = my $lowerval = 0;
-my $FirstTime = my $LastTime = 0;
-my $TotalUnique = my $TotalVisits = my $TotalHostsKnown = my $TotalHostsUnknown = 0;
-my $TotalPages = my $TotalHits = my $TotalBytes = my $TotalEntries = my $TotalExits = my $TotalBytesPages = 0;
-my $TotalKeyphrases = my $TotalDifferentPages = my $TotalDifferentKeyphrases = 0;
+use vars qw/
+$pos_rc $pos_logname $pos_date $pos_method $pos_url $pos_code $pos_size
+$pos_referer $pos_agent $pos_query $pos_gzipin $pos_gzipout $pos_gzipratio
+$lastrequiredfield $lowerval
+$FirstTime $LastTime
+$TotalUnique $TotalVisits $TotalHostsKnown $TotalHostsUnknown
+$TotalPages $TotalHits $TotalBytes $TotalEntries $TotalExits $TotalBytesPages
+$TotalKeyphrases $TotalDifferentPages $TotalDifferentKeyphrases
+/;
+$pos_rc = $pos_logname = $pos_date = $pos_method = $pos_url = $pos_code = $pos_size = 0;
+$pos_referer = $pos_agent = $pos_query = $pos_gzipin = $pos_gzipout = $pos_gzipratio = 0;
+$lastrequiredfield = $lowerval = 0;
+$FirstTime = $LastTime = 0;
+$TotalUnique = $TotalVisits = $TotalHostsKnown = $TotalHostsUnknown = 0;
+$TotalPages = $TotalHits = $TotalBytes = $TotalEntries = $TotalExits = $TotalBytesPages = 0;
+$TotalKeyphrases = $TotalDifferentPages = $TotalDifferentKeyphrases = 0;
 # ---------- Init arrays --------
-my @SessionsRange=("0s-30s","30s-2mn","2mn-5mn","5mn-15mn","15mn-30mn","30mn-1h","1h+");
-my @Message=();
-my @HostAliases=();
-my @AllowAccessFromWebToFollowingAuthenticatedUsers=();
-my @OnlyFiles = my @SkipDNSLookupFor = my @SkipFiles = my @SkipHosts = ();
-my @DOWIndex=();
-my @RobotsSearchIDOrder = ();
-#my @RobotsSearchIDOrder_list1=(); my @RobotsSearchIDOrder_list2=();  my @RobotsSearchIDOrder_list3=();
-#my @BrowsersSearchIDOrder = my @OSSearchIDOrder = my @SearchEnginesSearchIDOrder();
-#my @WordsToCleanSearchUrl=();
-my @_msiever_h = my @_nsver_h = ();
-my @_from_p = my @_from_h = ();
-my @_time_p = my @_time_h = my @_time_k = ();
-my @keylist=();
+use vars qw/
+@RobotsSearchIDOrder_list1 @RobotsSearchIDOrder_list2 @RobotsSearchIDOrder_list3
+@BrowsersSearchIDOrder @OSSearchIDOrder @SearchEnginesSearchIDOrder @WordsToCleanSearchUrl
+/;
+use vars qw/
+@SessionsRange @Message @HostAliases @AllowAccessFromWebToFollowingAuthenticatedUsers @OnlyFiles
+@SkipDNSLookupFor @SkipFiles @SkipHosts @DOWIndex @RobotsSearchIDOrder
+@_msiever_h @_nsver_h @_from_p @_from_h @_time_p @_time_h @_time_k
+@keylist
+/;
+@SessionsRange=("0s-30s","30s-2mn","2mn-5mn","5mn-15mn","15mn-30mn","30mn-1h","1h+");
+@Message=();
+@HostAliases=();
+@AllowAccessFromWebToFollowingAuthenticatedUsers=();
+@OnlyFiles = @SkipDNSLookupFor = @SkipFiles = @SkipHosts = ();
+@DOWIndex=();
+@RobotsSearchIDOrder = ();
+@_msiever_h = @_nsver_h = ();
+@_from_p = @_from_h = ();
+@_time_p = @_time_h = @_time_k = ();
+@keylist=();
 # ---------- Init hash arrays --------
-my %ValidHTTPCodes=();
-my %TrapInfosForHTTPCodes=(); $TrapInfosForHTTPCodes{404}=1;	# TODO Add this in config file
-my %NotPageList=();
-my %DayBytes = my %DayHits = my %DayPages = my %DayUnique = my %DayVisits = ();
-my %FirstTime = my %LastTime = my %LastLine = my %LastUpdate = ();
-my %MonthBytes = my %MonthHits = my %MonthHostsKnown = my %MonthHostsUnknown = my %MonthPages = my %MonthUnique = my %MonthVisits = ();
-my %monthlib = my %monthnum = ();
-my %HistoryFileAlreadyRead=();
-#my %BrowsersHereAreGrabbers = my %BrowsersHashIcon = my %BrowsersHashIDLib = ();
-#my %OSHashID = my %OSHashLib = ();
-#my %RobotsHashIDLib = ();
-#my %SearchEnginesHashIDLib = my %SearchEnginesKnownUrl = ();
-#my %DomainsHashIDLib = ();
-my %_session = my %_browser_h = my %_domener_h = my %_domener_k = my %_domener_p = my %_errors_h = ();
-my %_filetypes_h = my %_filetypes_k = my %_filetypes_gz_in = my %_filetypes_gz_out = ();
-my %_hostmachine_h = my %_hostmachine_k = my %_hostmachine_l = my %_hostmachine_p = my %_hostmachine_s = my %_hostmachine_u = ();
-my %_keyphrases = my %_os_h = my %_pagesrefs_h = my %_robot_h = my %_robot_l = ();
-my %_login_h = my %_login_p = my %_login_k = my %_login_l = ();
-my %_se_referrals_h = my %_sider404_h = my %_referer404_h = my %_url_p = my %_url_k = my %_url_e = my %_url_x = ();
-my %_unknownreferer_l = my %_unknownrefererbrowser_l = ();
-my %val = my %nextval = my %egal = ();
-my %TmpHashDNSLookup = my %TmpHashOS = my %TmpHashRefererServer = my %TmpHashRobot = my %TmpHashBrowser = ();
+use vars qw/
+%DomainsHashIDLib %BrowsersHereAreGrabbers %BrowsersHashIcon %BrowsersHashIDLib
+%OSHashID %OSHashLib
+%RobotsHashIDLib
+%SearchEnginesHashIDLib %SearchEnginesKnownUrl
+/;
+use vars qw/
+%ValidHTTPCodes %TrapInfosForHTTPCodes %NotPageList %DayBytes %DayHits %DayPages %DayUnique %DayVisits
+%FirstTime %LastTime %LastLine %LastUpdate
+%MonthBytes %MonthHits %MonthHostsKnown %MonthHostsUnknown %MonthPages %MonthUnique %MonthVisits
+%monthlib %monthnum
+%HistoryFileAlreadyRead
+%_session %_browser_h %_domener_h %_domener_k %_domener_p %_errors_h
+%_filetypes_h %_filetypes_k %_filetypes_gz_in %_filetypes_gz_out
+%_hostmachine_h %_hostmachine_k %_hostmachine_l %_hostmachine_p %_hostmachine_s %_hostmachine_u
+%_keyphrases %_os_h %_pagesrefs_h %_robot_h %_robot_l
+%_login_h %_login_p %_login_k %_login_l
+%_se_referrals_h %_sider404_h %_referer404_h %_url_p %_url_k %_url_e %_url_x
+%_unknownreferer_l %_unknownrefererbrowser_l
+%val %nextval %egal
+%TmpHashDNSLookup %TmpHashOS %TmpHashRefererServer %TmpHashRobot %TmpHashBrowser
+/;
+%ValidHTTPCodes=();
+%TrapInfosForHTTPCodes=(); $TrapInfosForHTTPCodes{404}=1;	# TODO Add this in config file
+%NotPageList=();
+%DayBytes = %DayHits = %DayPages = %DayUnique = %DayVisits = ();
+%FirstTime = %LastTime = %LastLine = %LastUpdate = ();
+%MonthBytes = %MonthHits = %MonthHostsKnown = %MonthHostsUnknown = %MonthPages = %MonthUnique = %MonthVisits = ();
+%monthlib = %monthnum = ();
+%HistoryFileAlreadyRead=();
+%_session = %_browser_h = %_domener_h = %_domener_k = %_domener_p = %_errors_h = ();
+%_filetypes_h = %_filetypes_k = %_filetypes_gz_in = %_filetypes_gz_out = ();
+%_hostmachine_h = %_hostmachine_k = %_hostmachine_l = %_hostmachine_p = %_hostmachine_s = %_hostmachine_u = ();
+%_keyphrases = %_os_h = %_pagesrefs_h = %_robot_h = %_robot_l = ();
+%_login_h = %_login_p = %_login_k = %_login_l = ();
+%_se_referrals_h = %_sider404_h = %_referer404_h = %_url_p = %_url_k = %_url_e = %_url_x = ();
+%_unknownreferer_l = %_unknownrefererbrowser_l = ();
+%val = %nextval = %egal = ();
+%TmpHashDNSLookup = %TmpHashOS = %TmpHashRefererServer = %TmpHashRobot = %TmpHashBrowser = ();
 # ---------- Init Tie::hash arrays --------
 #use Tie::Hash;
 #tie %_hostmachine_p, 'Tie::StdHash';
@@ -189,11 +303,13 @@ my %TmpHashDNSLookup = my %TmpHashOS = my %TmpHashRefererServer = my %TmpHashRob
 #tie %_unknownreferer_l, 'Tie::StdHash';
 #tie %_unknownrefererbrowser_l, 'Tie::StdHash';
 
-my $AddOn=0;
+use vars qw/ $AddOn /;
+$AddOn=0;
 #require "${DIR}addon.pl"; $AddOn=1; 		# Keep this line commented in standard version
 
 # Those addresses are shown with those lib (First column is full exact relative URL, second column is text to show instead of URL)
-my %Aliases = (
+use vars qw/ %Aliases /;
+%Aliases = (
 			"/",                            "<b>HOME PAGE</b>",
 			"/cgi-bin/awstats.pl",			"<b>AWStats stats page</b>",
 			"/cgi-bin/awstats/awstats.pl",	"<b>AWStats stats page</b>",
@@ -202,7 +318,8 @@ my %Aliases = (
 			);
 
 # These table is used to make fast reverse DNS lookup for particular IP adresses. You can add your own IP addresses resolutions.
-my %MyDNSTable = (
+use vars qw/ %MyDNSTable /;
+%MyDNSTable = (
 #"256.256.256.1", "myworkstation1",
 #"256.256.256.2", "myworkstation2"
 );
@@ -210,7 +327,8 @@ my %MyDNSTable = (
 # PROTOCOL CODES
 
 # HTTP codes
-my %httpcodelib = (
+use vars qw/ %httpcodelib /;
+%httpcodelib = (
 #[Miscellaneous successes]
 "2xx", "[Miscellaneous successes]",
 "200", "OK",								# HTTP request OK
@@ -264,15 +382,18 @@ my %httpcodelib = (
 );
 
 # FTP codes
-my %ftpcodelib = (
+use vars qw/ %ftpcodelib /;
+%ftpcodelib = (
 );
 
 # SMTP codes
-my %smtpcodelib = (
+use vars qw/ %smtpcodelib /;
+%smtpcodelib = (
 );
 
 # HTTP codes with tooltips
-my %httpcodewithtooltips = (
+use vars qw/ %httpcodewithtooltips /;
+%httpcodewithtooltips = (
 "201", 1, "202", 1, "204", 1, "206", 1, "301", 1, "302", 1, "400", 1, "401", 1, "403", 1, "404", 1, "408", 1,
 "500", 1, "501", 1, "502", 1, "503", 1, "504", 1, "505", 1, "200", 1, "304", 1
 );
@@ -2367,26 +2488,26 @@ if ($ENV{"GATEWAY_INTERFACE"}) {	# Run from a browser
 		$QueryString = $ENV{"QUERY_STRING"};
 	}
 	$QueryString = CleanFromCSSA($QueryString);
-	if ($QueryString =~ /site=/i)   { $SiteConfig=$QueryString; $SiteConfig =~ s/.*site=//i;   $SiteConfig =~ s/&.*//; $SiteConfig =~ s/ .*//; }	# For backward compatibility
-	if ($QueryString =~ /config=/i) { $SiteConfig=$QueryString; $SiteConfig =~ s/.*config=//i; $SiteConfig =~ s/&.*//; $SiteConfig =~ s/ .*//; }
+	if ($QueryString =~ /site=/i)		{ $SiteConfig=$QueryString; $SiteConfig =~ s/.*site=//i;   $SiteConfig =~ s/&.*//; $SiteConfig =~ s/ .*//; }	# For backward compatibility
+	if ($QueryString =~ /config=/i)		{ $SiteConfig=$QueryString; $SiteConfig =~ s/.*config=//i; $SiteConfig =~ s/&.*//; $SiteConfig =~ s/ .*//; }
 	$UpdateStats=0; $HTMLOutput=1;							# No update but report by default when run from a browser
-	if ($QueryString =~ /update=1/i)  { $UpdateStats=1; }	# Update is required
+	if ($QueryString =~ /update=1/i)	{ $UpdateStats=1; }	# Update is required
 }
 else {								# Run from command line
-	if ($ARGV[0] && $ARGV[0] eq "-h") { $SiteConfig = $ARGV[1]; }          # Kept for backward compatibility but useless
+	if ($ARGV[0] && $ARGV[0] eq "-h")	{ $SiteConfig = $ARGV[1]; }          # Kept for backward compatibility but useless
 	$QueryString=""; for (0..@ARGV-1) {
 		if ($_ > 0) { $QueryString .= "&"; }
 		my $NewLinkParams=$ARGV[$_]; $NewLinkParams =~ s/^-+//;
 		$QueryString .= "$NewLinkParams";
 	}
 	$QueryString = CleanFromCSSA($QueryString);
-	if ($QueryString =~ /site=/i)     { $SiteConfig=$QueryString; $SiteConfig =~ s/.*site=//i;   $SiteConfig =~ s/&.*//; $SiteConfig =~ s/ .*//; }  # For backward compatibility
-	if ($QueryString =~ /config=/i)   { $SiteConfig=$QueryString; $SiteConfig =~ s/.*config=//i; $SiteConfig =~ s/&.*//; $SiteConfig =~ s/ .*//; }
+	if ($QueryString =~ /site=/i)  		{ $SiteConfig=$QueryString; $SiteConfig =~ s/.*site=//i;   $SiteConfig =~ s/&.*//; $SiteConfig =~ s/ .*//; }  # For backward compatibility
+	if ($QueryString =~ /config=/i)		{ $SiteConfig=$QueryString; $SiteConfig =~ s/.*config=//i; $SiteConfig =~ s/&.*//; $SiteConfig =~ s/ .*//; }
 	$UpdateStats=1; $HTMLOutput=0;                               # Update with no report by default when run from command line
-	if ($QueryString =~ /output/i)    { $UpdateStats=0; $HTMLOutput=1; }   # Report and no update if an output is required
-	if ($QueryString =~ /update/i)    { $UpdateStats=1; }                  # Except if -update specified
+	if ($QueryString =~ /output/i)    	{ $UpdateStats=0; $HTMLOutput=1; }   # Report and no update if an output is required
+	if ($QueryString =~ /update/i)    	{ $UpdateStats=1; }                  # Except if -update specified
 	$QueryString=~s/output&//; $QueryString=~s/output$//;
-	if ($QueryString =~ /showsteps/i) { $ShowSteps=1; }
+	if ($QueryString =~ /showsteps/i) 	{ $ShowSteps=1; }
 	$QueryString=~s/showsteps[^&]*//;
 	if ($QueryString =~ /showcorrupted/i) 		{ $ShowCorrupted=1; }
 	$QueryString=~s/showcorrupted[^&]*//;
@@ -2395,11 +2516,11 @@ else {								# Run from command line
 	if ($QueryString =~ /showunknownorigin/i)	{ $ShowUnknownOrigin=1; }
 	$QueryString=~s/showunknownorigin[^&]*//;
 }
-if ($QueryString =~ /logfile=([^\s&]+)$/i) 	{ $LogFile=$1; }
+if ($QueryString =~ /logfile=([^\s&]+)$/i) 		{ $LogFile=$1; }
 if ($QueryString =~ /staticlinks/i) 			{ $StaticLinks=".$SiteConfig"; }
 if ($QueryString =~ /staticlinks=([^\s&]+)/i) 	{ $StaticLinks=".$1"; }
-if ($QueryString =~ /debug=(\d+)/i)			{ $Debug=$1; }
-if ($QueryString =~ /output=urldetail:/i) 	{
+if ($QueryString =~ /debug=(\d+)/i)				{ $Debug=$1; }
+if ($QueryString =~ /output=urldetail:/i) 		{
 	# A filter on URL list can be defined with output=urldetail:filter to reduce number of lines read and showed
 	$URLFilter=$QueryString; $URLFilter =~ s/.*output=urldetail://i; $URLFilter =~ s/&.*//; $URLFilter =~ s/ .*//;
 }
@@ -4535,7 +4656,7 @@ EOF
 		my $count=0;
 		foreach my $key (@SessionsRange) {
 			$total_s+=$_session{$key}||0;
-			print "<tr><td CLASS=AWL>$key</td><td>$_session{$key}</td></tr>\n";
+			print "<tr><td CLASS=AWL>$key</td><td>".($_session{$key}?$_session{$key}:"&nbsp;")."</td></tr>\n";
 			$count++;
 		}
 		if ($TotalVisits > $total_s) {
