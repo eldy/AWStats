@@ -4,7 +4,7 @@
 Et <b>besøg</b> er en der ser på mindst en side og ikke har været inde på hjemmesiden i <b>#VisitTimeOut# minuter</b>.
 </DIV>
 <DIV CLASS="CTooltip" ID="tt2">
-Antal besøg (<b>IP-addresser</b>) som har besøgt hjemmesiden (og som har været inde på minst en side).<br>
+Antal besøgende (<b>IP-adresser</b>) som har besøgt hjemmesiden (og som har været inde på mindst en side).<br>
 Dette er antallet af <b>forskellige personer</b> der har været inde på siden.
 </DIV>
 <DIV CLASS="CTooltip" ID="tt3">
@@ -12,29 +12,29 @@ Antal gange en <b>side</b> på hjemmesiden har været besøgt (Summen af alle sider
 <b>Sider</b> adskiller sig fra <b>hits</b> idet det kun er HTML-sider, ikke billeder eller andre filer der tæller.
 </DIV>
 <DIV CLASS="CTooltip" ID="tt4">
-Antal gange en <b>side, fil eller et billed</b> på hjemmesiden er blevet <b>set</b> eller <b>hentet</b> af nogen.<br>
+Antal gange en <b>side, fil eller et billede</b> på hjemmesiden er blevet <b>set</b> eller <b>hentet</b> af nogen.<br>
 Hits er kun med som reference idet det oftest er Sider eller Besøg (eller Unikke besøg) man ser på.
 </DIV>
 <DIV CLASS="CTooltip" ID="tt5">
 Denne information er mængden af data hentet (<b>sider</b>, <b>billeder</b> og <b>filer</b>) fra hjemmesiden.<br>
-Enhederne er Kb, Mb eller Gb (KiloByte, MegaByte eller GigaByte)
+Enhederne er KB, MB eller GB (KiloByte, MegaByte eller GigaByte)
 </DIV>
 <DIV CLASS="CTooltip" ID="tt13">
 #PROG# kan se hvis en besøgende har fundet hjemmesiden gennem en <b>søgning</b> fra en af de <b>#SearchEnginesArray# mest brugte Internet søgemaskiner og kataloger</b> (så som Yahoo, Altavista, Lycos, Google, Voila, etc...). 
 </DIV>
 <DIV CLASS="CTooltip" ID="tt14">
-En Liste med alle <b>externe sider</b> der linker til (og er blevet brugt til at komme ind på siden) din side (kun de <b>#MaxNbOfRefererShown#</b> mest anvendte externe sider vises). Links fra søgemaskiner er ikke medregnet, da de er for sig selv ovenstående i tabellen 
+En Liste med alle <b>externe sider</b> der linker til (og er blevet brugt til at komme ind på) din side (kun de <b>#MaxNbOfRefererShown#</b> mest anvendte externe sider vises). Links fra søgemaskiner er ikke medregnet, da de er for sig selv ovenstående i tabellen 
 </DIV>
 <DIV CLASS="CTooltip" ID="tt15">
 Denne tabel viser de mest benyttede <b>søgeord</b> som anvendes for at finde din hjemmeside gennem søgemaskiner og kataloger.
 (søgeord fra de <b>#SearchEnginesArray#</b> mest populære søgemaskiner og kataloger genkendes af #PROG#, så som Yahoo, Altavista, Lycos, Google, Voila, etc...).<br>
 </DIV>
 <DIV CLASS="CTooltip" ID="tt16">
-Roboter (også kaldt Spiders) er <b>automatiske computer besøgende</b> som anvendes af mange søgemaskiner. De scanner hjemmesider for at indeksere og rangordne dem, samle statistik om hjemmesider og se om din hjemmeside eksisterer endnu.<br>
+Robotter (også kaldt Spiders) er <b>automatiske computer besøgende</b> som anvendes af mange søgemaskiner. De scanner hjemmesider for at indeksere og rangordne dem, samle statistik om hjemmesider og se om din hjemmeside eksisterer endnu.<br>
 #PROG# genkender op til <b>#RobotArray#</b> søgerobotter.
 </DIV>
 <DIV CLASS="CTooltip" ID="tt17">
-Alt tidsrelaterat statistik baseres på klokken på webbservern.<br>
+Alt tidsrelaterat statistik baseres på klokken på webserveren.<br>
 </DIV>
 <DIV CLASS="CTooltip" ID="tt18">
 Her vises <b>gennemsnit</b> (beregnet ud fra alle data mellem første og sidste besøg)
@@ -44,19 +44,19 @@ Her vises <b>sammenlagte summer</b> (beregnet ud fra alle data mellem første og 
 </DIV>
 
 <DIV CLASS="CTooltip" ID="tt201"> Ingen beskrivelse af denne fejl. </DIV>
-<DIV CLASS="CTooltip" ID="tt202"> Serveren forstod forespørgelsen men udfører opgaven senere. </DIV>
+<DIV CLASS="CTooltip" ID="tt202"> Serveren forstod forespørgslen men udfører opgaven senere. </DIV>
 <DIV CLASS="CTooltip" ID="tt204"> Serveren har udført opgaven men der er ikke noget dokument af sende. </DIV>
-<DIV CLASS="CTooltip" ID="tt206"> Delvis indhold. </DIV>
-<DIV CLASS="CTooltip" ID="tt301"> Sider er flyttet og ny URL er givet i svaret. </DIV>
+<DIV CLASS="CTooltip" ID="tt206"> Delvist indhold. </DIV>
+<DIV CLASS="CTooltip" ID="tt301"> Sider er flyttet og den nye URL er givet i svaret. </DIV>
 <DIV CLASS="CTooltip" ID="tt302"> Ingen beskrivelse af denne fejl. </DIV>
-<DIV CLASS="CTooltip" ID="tt400"> Syntax fejl, serveren forstod ikke forespørgelsen. </DIV>
-<DIV CLASS="CTooltip" ID="tt401"> Der er blevet forespurgt en <b>URL hvor brugernavn/kode var krævet</b>.<br>Et højt nummer her kan betyde at nogen (måske en hacker) forsøger at komme ind på din side (ved at prøve forskellige brugernavne/koder). </DIV>
-<DIV CLASS="CTooltip" ID="tt403"> Der er blevet forespurgt en <b>URL der opsat ikke tilgængelig, selv med et brugernavn/kode par</b> (for eksempel, en URL i et bibliotek der er defineret ikke "browsable".). </DIV>
+<DIV CLASS="CTooltip" ID="tt400"> Syntax fejl, serveren forstod ikke forespørgslen. </DIV>
+<DIV CLASS="CTooltip" ID="tt401"> Der er blevet forespurgt en <b>URL hvor brugernavn/kode var krævet</b>.<br>Et højt antal her kan betyde at nogen (måske en hacker) forsøger at komme ind på din side (ved at prøve forskellige brugernavne/koder). </DIV>
+<DIV CLASS="CTooltip" ID="tt403"> Der er blevet forespurgt en <b>URL der er opsat ikke tilgængelig, selv med et brugernavn/kode par</b> (for eksempel, en URL i et bibliotek der er defineret ikke "browsable".). </DIV>
 <DIV CLASS="CTooltip" ID="tt404"> Der er blevet forespurgt en <b>ikke eksisterende URL</b>. Denne fejl skyldes ofte at der er en forkert link på hjemmesiden eller at en besøgende har tastet forkert. </DIV>
-<DIV CLASS="CTooltip" ID="tt408"> Serveren har taget <b>for lang tid</b> om at besvare foresåørelsen. Dette skyldes ofte et langsomt cgi-script eller at serveren er overbelastet. </DIV>
+<DIV CLASS="CTooltip" ID="tt408"> Serveren har taget <b>for lang tid</b> om at besvare forespørgslen. Dette skyldes ofte et langsomt cgi-script eller at serveren er overbelastet. </DIV>
 <DIV CLASS="CTooltip" ID="tt500"> Intern fejl. Dette skyldes ofte at et cgi-script er afsluttet unormalt. </DIV>
-<DIV CLASS="CTooltip" ID="tt501"> Ukendt forespørgelse. </DIV>
-<DIV CLASS="CTooltip" ID="tt502"> Kode returneret af en HTTP server der fungerer som proxy eller gateway når en rigtig, destinations server ikke svarer rigtigt på klient forespørgersel.</DIV>
+<DIV CLASS="CTooltip" ID="tt501"> Ukendt forespørgsel. </DIV>
+<DIV CLASS="CTooltip" ID="tt502"> Kode returneret af en HTTP server der fungerer som proxy eller gateway når den rigtige destinations server ikke svarer rigtigt på klient forespørgsel.</DIV>
 <DIV CLASS="CTooltip" ID="tt503"> Intern serverfejl. </DIV>
 <DIV CLASS="CTooltip" ID="tt504"> Gateway timeout</DIV>
 <DIV CLASS="CTooltip" ID="tt505"> HTTP-version understøttes ikke. </DIV>
