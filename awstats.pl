@@ -14,7 +14,7 @@
 #-------------------------------------------------------
 # Defines
 #-------------------------------------------------------
-$VERSION="2.24 (build 11)";
+$VERSION="2.24 (build 12)";
 $Lang=0;
 
 # Default value
@@ -572,7 +572,7 @@ $message[70][5]="Nov";
 $message[71][5]="Dez";
 
 # Polish
-$PageCode[6]="<META HTTP-EQUIV=\"content-type\" CONTENT=\"text/html; charset=ISO-8859-2\">";
+$PageCode[6]="<META HTTP-EQUIV=\"content-type\" CONTENT=\"text/html; charset=iso-8859-2\">";
 $message[0][6]="Nieznany";
 $message[1][6]="Nieznany (brak odwzorowania IP w DNS)";
 $message[2][6]="Inni goście";
@@ -647,7 +647,7 @@ $message[70][6]="Listopad";
 $message[71][6]="Grudzień";
 
 # Greek (simos@hellug.gr)
-$PageCode[7]="<META HTTP-EQUIV=\"content-type\" CONTENT=\"text/html; charset=windows-1253\">";
+$PageCode[7]="<META HTTP-EQUIV=\"content-type\" CONTENT=\"text/html; charset=iso-8859-7\">";
 $message[0][7]="śăíůóôď";
 $message[1][7]="śăíůóôď (ěç áíáăíůńéóěÝíç ip)";
 $message[2][7]="śëëďé ĺđéóęÝđôĺň";
@@ -2096,6 +2096,7 @@ if (($YearRequired == $nowyear) && ($MonthRequired eq "year" || $MonthRequired =
 											}
 										}
 										else {
+											$param =~ s/^ *//; $param =~ s/ *$//; $param =~ s/ */ /g;
 											if ((length $param) > 0) { $param =~ s/ /+/g; $_keywords{$param}++; }
 										}
 										last;
@@ -2118,6 +2119,7 @@ if (($YearRequired == $nowyear) && ($MonthRequired eq "year" || $MonthRequired =
 										}
 									}
 									else {
+										$param =~ s/^ *//; $param =~ s/ *$//; $param =~ s/ */ /g;
 										if ((length $param) > 2) { $param =~ s/ /+/g; $_keywords{$param}++; }
 									}
 								}
@@ -3084,7 +3086,7 @@ if ($TotalHits > 0) { $_=int($_from_h[2]/$TotalHits*1000)/10; }
 print "<TR onmouseover=\"ShowTooltip(13);\" onmouseout=\"HideTooltip(13);\"><TD CLASS=LEFT><b>$message[40][$Lang] :</b><br>\n";
 print "<TABLE>\n";
 foreach $SE (@sortsereferrals) {
-    print "<TR><TD CLASS=LEFT>- $SearchEnginesHash{$SE} </TD><TD align=right>$_se_referrals_h{\"$SE\"}</TD></TR>\n";
+	print "<TR><TD CLASS=LEFT>- $SearchEnginesHash{$SE} </TD><TD align=right>$_se_referrals_h{\"$SE\"}</TD></TR>\n";
 }
 print "</TABLE></TD>\n";
 print "<TD valign=top>$_from_h[2]&nbsp;</TD><TD valign=top>$_&nbsp;%</TD>\n</TR>\n";
@@ -3128,8 +3130,8 @@ $count=0;
 foreach $key (@sortsearchwords) {
 	if ( $count>=$MaxNbOfKeywordsShown ) { last; }
 	$p=int($_keywords{$key}/$TotalKeywords*1000)/10;
-	print "<TR><TD CLASS=LEFT>$key</TD><TD>$_keywords{$key}</TD>";
-	print "<TD>$p&nbsp;%</TD></TR>\n";
+	$mot = $key; $mot =~ s/\+/ /g;	# Showing $key without +
+	print "<TR><TD CLASS=LEFT>$mot</TD><TD>$_keywords{$key}</TD><TD>$p&nbsp;%</TD></TR>\n";
 	$count++;
 }
 $count=0;$rest=0;
