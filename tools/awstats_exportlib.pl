@@ -56,18 +56,22 @@ $QueryString $LibToExport $ExportFormat
 ('','','');
 # ---------- Init arrays --------
 use vars qw/
-@RobotsSearchIDOrder_list1 @RobotsSearchIDOrder_list2 @RobotsSearchIDOrder_list3
-@BrowsersSearchIDOrder @OSSearchIDOrder @SearchEnginesSearchIDOrder @WordsToExtractSearchUrl @WordsToCleanSearchUrl
-@RobotsSearchIDOrder
+@RobotsSearchIDOrder_list1 @RobotsSearchIDOrder_list2 @RobotsSearchIDOrder_listgen
+@SearchEnginesSearchIDOrder_list1 @SearchEnginesSearchIDOrder_list2 @SearchEnginesSearchIDOrder_listgen
+@BrowsersSearchIDOrder @OSSearchIDOrder @WordsToExtractSearchUrl @WordsToCleanSearchUrl
+@WormsSearchIDOrder
+@RobotsSearchIDOrder @SearchEnginesSearchIDOrder
 /;
-@RobotsSearchIDOrder = ();
+@RobotsSearchIDOrder = @SearchEnginesSearchIDOrder = ();
 # ---------- Init hash arrays --------
 use vars qw/
-%DomainsHashIDLib %BrowsersHereAreGrabbers %BrowsersHashIcon %BrowsersHashIDLib
+%BrowsersHashIDLib %BrowsersHashIcon %BrowsersHereAreGrabbers 
+%DomainsHashIDLib
+%MimeHashLib %MimeHashIcon %MimeHashFamily
 %OSHashID %OSHashLib
 %RobotsHashIDLib
-%SearchEnginesHashIDLib %SearchEnginesKnownUrl
-%MimeHashFamily %MimeHashLib
+%SearchEnginesHashID %SearchEnginesHashLib %SearchEnginesKnownUrl %NotSearchEnginesKeys
+%WormsHashID %WormsHashLib
 /;
 
 
@@ -157,18 +161,42 @@ sub Read_Ref_Data {
 			&error("Error: Can't read file \"$file\".\nCheck if file is in ".($PossibleLibDir[0])." directory and is readable.");
 		}
 	}
-	# Sanity check.
-	if (@OSSearchIDOrder != scalar keys %OSHashID) { error("Error: Not same number of records of OSSearchIDOrder (".(@OSSearchIDOrder)." entries) and OSHashID (".(scalar keys %OSHashID)." entries) in OS database. Check your file ".$FilePath{"operating_systems.pm"}); }
-	if (@BrowsersSearchIDOrder != scalar keys %BrowsersHashIDLib) { error("Error: Not same number of records of BrowsersSearchIDOrder (".(@BrowsersSearchIDOrder)." entries) and BrowsersHashIDLib (".(scalar keys %BrowsersHashIDLib)." entries) in Browsers database. Check your file ".$FilePath{"browsers.pm"}); }
-	if (@SearchEnginesSearchIDOrder != scalar keys %SearchEnginesHashIDLib) { error("Error: Not same number of records of SearchEnginesSearchIDOrder (".(@SearchEnginesSearchIDOrder)." entries) and SearchEnginesHashIDLib (".(scalar keys %SearchEnginesHashIDLib)." entries) in Search Engines database. Check your file ".$FilePath{"search_engines.pm"}); }
-	if ((@RobotsSearchIDOrder_list1+@RobotsSearchIDOrder_list2+@RobotsSearchIDOrder_list3) != scalar keys %RobotsHashIDLib) { error("Error: Not same number of records of RobotsSearchIDOrder_listx (total is ".(@RobotsSearchIDOrder_list1+@RobotsSearchIDOrder_list2+@RobotsSearchIDOrder_list3)." entries) and RobotsHashIDLib (".(scalar keys %RobotsHashIDLib)." entries) in Robots database. Check your file ".$FilePath{"robots.pm"}); }
+}
+
+#------------------------------------------------------------------------------
+# Function:     Unregex a string
+# Parameters:	String
+# Input:		-
+# Output:		-
+# Return:       Unregexed string
+#------------------------------------------------------------------------------
+sub unregex {
+	my $ss=shift;
+	$ss=~s/\\//g;
+	return $ss;
+}
+
+#------------------------------------------------------------------------------
+# Function:     Unregex a keyword code extractor
+# Parameters:	String
+# Input:		-
+# Output:		-
+# Return:       Unregexed string
+#------------------------------------------------------------------------------
+sub unregexkeywordcode {
+	my $ss=shift;
+	my $firstoneonly=shift||0;
+	my @xx=split(/\|/,$ss);
+	my @ll=map { s/[\(\)]//g; $_; } @xx;
+	if ($firstoneonly) { return $ll[0]; }
+	return join(',',@ll);
 }
 
 
 
-#--------------------------------------------------------------------
+#------------------------------------------------------------------------------
 # MAIN
-#--------------------------------------------------------------------
+#------------------------------------------------------------------------------
 ($DIR=$0) =~ s/([^\/\\]*)$//; ($PROG=$1) =~ s/\.([^\.]*)$//; $Extension=$1;
 
 my @AllowedArgs=('-lib','-exportformat','-debug');
@@ -217,9 +245,9 @@ my $libisexportable=0;
 #------------
 
 if ($LibToExport =~ /browsers/) {
-	foreach my $key (sort keys %BrowsersHashIcon) {	
+	foreach my $key (@BrowsersSearchIDOrder) {	
 		if ($ExportFormat eq 'text') {
-			print "$key\n";
+			print "$key\t$BrowsersHashIDLib{$key}\n";
 		}
 		if ($ExportFormat eq 'webalizer') {
 			print "GroupAgent\t$key\n";
@@ -273,39 +301,62 @@ if ($LibToExport =~ /operating_systems/) {
 
 if ($LibToExport =~ /robots/) {
 	my %robotlist=();
-	foreach my $robot (@RobotsSearchIDOrder_list1,@RobotsSearchIDOrder_list2) {
-		$robotlist{"$robot"}=1;
+
+	my @list;
+	# Init RobotsSearchIDOrder required for update process
+	@list=();
+	foreach (1..2) { push @list,"list$_"; }
+	push @list,"listgen";
+	foreach my $key (@list) {
+		push @RobotsSearchIDOrder,@{"RobotsSearchIDOrder_$key"};
 	}
-	foreach my $robot (@RobotsSearchIDOrder_list3) {
-		$robotlist{"$robot"}=2;
-	}
-	foreach my $key (sort keys %robotlist) {	
+
+	foreach my $key (@RobotsSearchIDOrder) {
 		if ($ExportFormat eq 'text') {
-			if ($robotlist{"$key"}==1) { print "$key\n"; }
+			print "$key\t$RobotsHashIDLib{$key}\n";
 		}
 		if ($ExportFormat eq 'webalizer') {
-			if ($robotlist{"$key"}==1) { print "GroupAgent\t$key\n"; }
+			print "GroupAgent\t$key\n";
 		}
 		if ($ExportFormat eq 'analog') {
-			print 'ROBOTINCLUDE '.($robotlist{$key}==1?'':'REGEXPI:')."$key".($robotlist{$key}==1?'*':'')."\n";
+			print "ROBOTINCLUDE REGEXPI:$key\n";
 		}	
 	}
 	$libisexportable=1;
 }
 
 if ($LibToExport =~ /search_engines/) {
-	foreach my $key (sort keys %SearchEnginesKnownUrl) {	
+
+	my @list;
+	# Init SearchEnginesIDOrder required for update process
+	@list=();
+	foreach (1..2) { push @list,"list$_"; }
+	push @list,"listgen";		# Always added
+	foreach my $key (@list) {
+		push @SearchEnginesSearchIDOrder,@{"SearchEnginesSearchIDOrder_$key"};
+	}
+
+	foreach my $key (@SearchEnginesSearchIDOrder) {
 		if ($ExportFormat eq 'text') {
-			print "$key\t$SearchEnginesKnownUrl{$key}\t$SearchEnginesHashIDLib{$key}\n";
+			print "$key\t$SearchEnginesKnownUrl{$SearchEnginesHashID{$key}}\t$SearchEnginesHashLib{$SearchEnginesHashID{$key}}\n";
 		}
 		if ($ExportFormat eq 'webalizer') {
-			print "SearchEngine\t$key\t$SearchEnginesKnownUrl{$key}\n";
-			print "GroupReferrer\t$key\t$SearchEnginesHashIDLib{$key}\n";
+			my $urlkeywordsyntax=$SearchEnginesKnownUrl{$SearchEnginesHashID{$key}};
+			my $urlkeywordsyntax=&unregexkeywordcode($urlkeywordsyntax,1);
+			if (! $urlkeywordsyntax) { next; }				# This has no keywordextractcode
+			my $newkey=&unregex($key);
+			if ($newkey =~ /[\[\]\(\)\|\?\*\+]/) { next; }	# This was a regex value that i can't clean
+			print "SearchEngine\t$newkey\t$urlkeywordsyntax\n";
+			print "GroupReferrer\t$newkey\t$SearchEnginesHashLib{$SearchEnginesHashID{$key}}\n";
 		}
 		if ($ExportFormat eq 'analog') {
-			my $urlkeywordsyntax=$SearchEnginesKnownUrl{$key};
+			my $urlkeywordsyntax=$SearchEnginesKnownUrl{$SearchEnginesHashID{$key}};
 			$urlkeywordsyntax=~s/=$//;
-			print "SEARCHENGINE http://*$key*/* $urlkeywordsyntax\n";
+			$urlkeywordsyntax=&unregexkeywordcode($urlkeywordsyntax);
+			if (! $urlkeywordsyntax) { next; }				# This has no keywordextractcode
+			my $newkey=&unregex($key);
+			if ($newkey =~ /[\[\]\(\)\|\?\*\+]/) { next; }	# This was a regex value that i can't clean
+			print "SEARCHENGINE http://*$newkey*/* $urlkeywordsyntax\n";
 		}
 	}
 	$libisexportable=1;
