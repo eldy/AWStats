@@ -3753,15 +3753,13 @@ sub Save_History {
 			$keysinkeylist{$_}=1;
 			my $newkey=$_;
 			$newkey =~ s/^http(s|):\/\/([^\/]+)\/$/http$1:\/\/$2/i;	# Remove / at end of http://.../ but not at end of http://.../dir/
-			$newkey =~ s/\s/%20/g;
-			print HISTORYTMP "${xmlrb}$newkey${xmlrs}".int($_pagesrefs_p{$_}||0)."${xmlrs}$_pagesrefs_h{$_}${xmlre}\n";
+			print HISTORYTMP "${xmlrb}".XMLEncodeForH($newkey)."${xmlrs}".int($_pagesrefs_p{$_}||0)."${xmlrs}$_pagesrefs_h{$_}${xmlre}\n";
 		}
 		foreach (keys %_pagesrefs_h) {
 			if ($keysinkeylist{$_}) { next; }
 			my $newkey=$_;
 			$newkey =~ s/^http(s|):\/\/([^\/]+)\/$/http$1:\/\/$2/i;	# Remove / at end of http://.../ but not at end of http://.../dir/
-			$newkey =~ s/\s/%20/g;
-			print HISTORYTMP "${xmlrb}$newkey${xmlrs}".int($_pagesrefs_p{$_}||0)."${xmlrs}$_pagesrefs_h{$_}${xmlre}\n";
+			print HISTORYTMP "${xmlrb}".XMLEncodeForH($newkey)."${xmlrs}".int($_pagesrefs_p{$_}||0)."${xmlrs}$_pagesrefs_h{$_}${xmlre}\n";
 		}
 		print HISTORYTMP "${xmleb}END_PAGEREFS${xmlee}\n";
 	}
@@ -3853,8 +3851,8 @@ sub Save_History {
 			print HISTORYTMP "${xmlbb}BEGIN_SIDER_$code${xmlbs}".(scalar keys %_sider404_h)."${xmlbe}\n";
 			foreach (keys %_sider404_h) {
 				my $newkey=$_;
-				my $newreferer=$_referer404_h{$_}||''; $newreferer =~ s/\s/%20/g;
-				print HISTORYTMP "${xmlrb}$newkey${xmlrs}$_sider404_h{$_}${xmlrs}$newreferer${xmlre}\n";
+				my $newreferer=$_referer404_h{$_}||'';
+				print HISTORYTMP "${xmlrb}".XMLEncodeForH($newkey)."${xmlrs}$_sider404_h{$_}${xmlrs}".XMLEncodeForH($newreferer)."${xmlre}\n";
 			}
 			print HISTORYTMP "${xmleb}END_SIDER_$code${xmlee}\n";
 		}
@@ -4130,9 +4128,24 @@ sub ChangeWordSeparatorsIntoSpace {
 # Return:		encodedstring
 #------------------------------------------------------------------------------
 sub XMLEncode {
+	if ($BuildReportFormat ne 'xhtml' && $BuildReportFormat ne 'xml') { return shift; }
 	my $string = shift;
-	if ($BuildReportFormat ne 'xhtml' && $BuildReportFormat ne 'xml') { return $string; }
 	$string =~ s/&/&amp;/g;
+	return $string;
+}
+
+#------------------------------------------------------------------------------
+# Function:		Transforms & into &amp; as needed in XML/XHTML
+# Parameters:	stringtoencode
+# Return:		encodedstring
+#------------------------------------------------------------------------------
+sub XMLEncodeForH {
+	my $string = shift;
+    $string =~ s/\s/%20/g;
+	if ($BuildHistoryFormat ne 'xml') { return $string; }
+	$string =~ s/&/&amp;/g;
+	$string =~ s/</&lt;/g;
+	$string =~ s/>/&gt;/g;
 	return $string;
 }
 
