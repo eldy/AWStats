@@ -1,4 +1,4 @@
-<?xml version="1.0" ?>
+<?xml version="1.0" encoding="Windows-1252" ?>
 <XML_DIZ_INFO>
 <MASTER_PAD_VERSION_INFO>
     <MASTER_PAD_VERSION>1.15</MASTER_PAD_VERSION>
@@ -33,9 +33,9 @@
 </Company_Info>
 <Program_Info>
         <Program_Name>AWStats</Program_Name>
-        <Program_Version>6.0</Program_Version>
-        <Program_Release_Month>01</Program_Release_Month>
-        <Program_Release_Day>04</Program_Release_Day>
+        <Program_Version>6.1</Program_Version>
+        <Program_Release_Month>04</Program_Release_Month>
+        <Program_Release_Day>03</Program_Release_Day>
         <Program_Release_Year>2004</Program_Release_Year>
         <Program_Cost_Dollars>0</Program_Cost_Dollars>
         <Program_Cost_Other_Code />
@@ -50,9 +50,9 @@
         <Filename_Previous>awstats.zip</Filename_Previous>
         <Filename_Generic>awstats.zip</Filename_Generic>
         <Filename_Long>awstats.zip</Filename_Long>
-        <File_Size_Bytes>936612</File_Size_Bytes>
-        <File_Size_K>915</File_Size_K>
-        <File_Size_MB>0.91</File_Size_MB>
+        <File_Size_Bytes>920857</File_Size_Bytes>
+        <File_Size_K>899</File_Size_K>
+        <File_Size_MB>0.90</File_Size_MB>
     </File_Info>
 <Expire_Info>
         <Has_Expire_Info>N</Has_Expire_Info>
@@ -97,7 +97,7 @@ Distributed under GNU General Public License.</Char_Desc_2000>
     </Application_URLs>
 <Download_URLs>
         <Primary_Download_URL>http://awstats.sourceforge.net/files/awstats.zip</Primary_Download_URL>
-        <Secondary_Download_URL>http://prdownloads.sourceforge.net/awstats/awstats-60.zip</Secondary_Download_URL>
+        <Secondary_Download_URL>http://prdownloads.sourceforge.net/awstats/awstats-61.zip</Secondary_Download_URL>
         <Additional_Download_URL_1 />
         <Additional_Download_URL_2 />
     </Download_URLs>
