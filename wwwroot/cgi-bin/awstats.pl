@@ -4781,11 +4781,13 @@ if ($AllowAccessFromWebToAuthenticatedUsersOnly && $ENV{'GATEWAY_INTERFACE'}) {
 	}
 	if (@AllowAccessFromWebToFollowingAuthenticatedUsers) {
 		my $userisinlist=0;
+		my $currentuser=$ENV{"REMOTE_USER"};
+		$currentuser =~ s/\s/%20/g;	# Allow authenticated user with space in name to be compared to allowed user list
 		foreach my $key (@AllowAccessFromWebToFollowingAuthenticatedUsers) {
-			if ($ENV{"REMOTE_USER"} eq $key) { $userisinlist=1; last; }
+			if ($currentuser eq $key) { $userisinlist=1; last; }
 		}
 		if (! $userisinlist) {
-			error("User '".$ENV{"REMOTE_USER"}."' is not allowed to access statistics of this domain/config.");
+			error("User '$currentuser' is not allowed to access statistics of this domain/config.");
 		}
 	}
 }
