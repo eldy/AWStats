@@ -287,7 +287,7 @@
 "w3m2","W3M2",
 "wallpaper","WallPaper",
 "wanderer","the World Wide Web Wanderer",
-"wapspider","w@pSpider by wap4.com",
+"wapspider","w\@pSpider by wap4.com",
 "webbandit","WebBandit Web Spider",
 "webcatcher","WebCatcher",
 "webcopy","WebCopy",
