@@ -24,6 +24,12 @@ New features/improvments:
 - "Miscellanous chart" also report the "Add to favourites" (must remove the
   "robots.txt" and "favicon.ico" entries off your SkipFiles parameter in your
   config file to have this feature working.
+- Update process now try a direct access at last updated record when a new
+  update is ran. If it fails (file changed or wrong checksum of record), then
+  it does a scan from the beginning of file until a new date has been
+  reached (This was the only way of working on older version). So now update
+  process is very much faster for thoose who don't purge/rotate their log
+  file between two update process (direct access is faster than full scan).
 
 Other/Documentation:
 - Updated documentation.

@@ -47,7 +47,7 @@ use vars qw/
 $DIR $PROG $Extension
 $Debug $ShowSteps
 $DebugResetDone $DNSLookupAlreadyDone
-$RunAsCli $lowerval
+$RunAsCli $UpdateFor $lowerval
 $LastLine $LastLineNumber $LastLineOffset $LastLineChecksum
 $LastUpdate
 $TotalUnique $TotalVisits $TotalHostsKnown $TotalHostsUnknown
@@ -65,7 +65,7 @@ $pos_emails $pos_emailr $pos_hostr
 $DIR=$PROG=$Extension='';
 $Debug=$ShowSteps=0;
 $DebugResetDone=$DNSLookupAlreadyDone=0;
-$RunAsCli = 0;
+$RunAsCli = 0; $UpdateFor=0;
 $lowerval = 0;
 $LastLine = $LastLineNumber = $LastLineOffset = $LastLineChecksum = 0;
 $LastUpdate = 0;
@@ -4573,7 +4573,7 @@ my @AllowedArgs=('-migrate','-config',
 '-showsteps','-showdropped','-showcorrupted','-showunknownorigin',
 '-logfile','-output','-runascli','-staticlinks','-staticlinksext','-update',
 '-lang','-hostfilter','-urlfilter','-refererpagesfilter',
-'-month','-year','-framename','-debug','-limitflush');
+'-month','-year','-framename','-debug','-limitflush','-from','-updatefor');
 
 $QueryString='';
 if ($ENV{'GATEWAY_INTERFACE'}) {	# Run from a browser as CGI
@@ -4655,6 +4655,7 @@ if ($QueryString =~ /(^|&)staticlinks=([^&]+)/i) 	{ $StaticLinks=".$2"; }		# Whe
 if ($QueryString =~ /(^|&)staticlinksext=([^&]+)/i) { $StaticExt="$2"; }
 if ($QueryString =~ /(^|&)framename=([^&]+)/i)		{ $FrameName="$2"; }
 if ($QueryString =~ /(^|&)debug=(\d+)/i)			{ $Debug=$2; }
+if ($QueryString =~ /(^|&)updatefor=(\d+)/i)		{ $UpdateFor=$2; }
 if ($QueryString =~ /(^|&)limitflush=(\d+)/i)		{ $LIMITFLUSH=$2; }
 # Get/Define output
 if ($QueryString =~ /(^|&)output(=[^&]*|)(.*)&output(=[^&]*|)(&|$)/i) { error("Only 1 output option is allowed","","",1); }
@@ -4697,6 +4698,7 @@ if ($Debug) {
 	debug("QUERY_STRING=$QueryString",2);
 	debug("HTMLOutput=".join(',',keys %HTMLOutput),1);
 	debug("YearRequired=$YearRequired, MonthRequired=$MonthRequired",2);
+	debug("UpdateFor=$UpdateFor",2);
 }
 
 # Force SiteConfig if AWSTATS_FORCE_CONFIG is defined
@@ -4976,6 +4978,8 @@ if ($Debug) {
 #------------------------------------------
 # UPDATE PROCESS
 #------------------------------------------
+my $lastlinenumber=0; my $lastlineoffset=0; my $lastlineoffsetnext=0;
+
 if ($Debug) { debug("UpdateStats is $UpdateStats",2); }
 if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Update only on index page or when not framed to avoid update twice
 
@@ -5050,7 +5054,6 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 
 	# Define local variables for loop scan
 	my @field=();
-	my $lastlinenumber=0; my $lastlineoffset=0; my $lastlineoffsetnext=0;
 	my $counterforflushtest=0;
 	my $qualifdrop='';
 	# Reset chrono for benchmark (first call to GetDelaySinceStart)
@@ -5060,43 +5063,44 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 	# Can we try a direct seek access in log ?
 	if ($LastLine && $LastLineNumber && $LastLineOffset && $LastLineChecksum) {
 		# Try a direct seek access to save time
-#		if ($Debug) { debug("Try a direct access to LastLine=$LastLine, LastLineNumber=$LastLineNumber, LastLineOffset=$LastLineOffset, LastLineChecksum=$LastLineChecksum"); }
-#		seek(LOG,$LastLineOffset,0);
-#		if ($_=<LOG>) {
-#			chomp $_; s/\r$//;
-#			@field=map(/^$PerlParsingFormat/,$_);
-#			if ($Debug) {
-#				my $string='';
-#				foreach my $key (0..@field-1) {	$string.="$fieldlib[$key]=$field[$key] "; }
-#				debug(" Read line after direct access: $string",1);
-#			}
-#			my $checksum=&CheckSum(join("\t",@field));
-#			debug(" LastLineChecksum=$LastLineChecksum, Read line checksum=$checksum",1);
-#			if ($checksum == $LastLineChecksum ) {
-#				if (! scalar keys %HTMLOutput) { print "Direct access to new records was successfull (We should be line $LastLineRead)\n"; }
-#				$lastlinenumber=$LastLineNumber;
-#				$lastlineoffset=$LastLineOffset;
-#				$lastlineoffsetnext=$LastLineOffset;
+		if ($Debug) { debug("Try a direct access to LastLine=$LastLine, LastLineNumber=$LastLineNumber, LastLineOffset=$LastLineOffset, LastLineChecksum=$LastLineChecksum"); }
+		seek(LOG,$LastLineOffset,0);
+		if ($_=<LOG>) {
+			chomp $_; s/\r$//;
+			@field=map(/^$PerlParsingFormat/,$_);
+			if ($Debug) {
+				my $string='';
+				foreach my $key (0..@field-1) {	$string.="$fieldlib[$key]=$field[$key] "; }
+				debug(" Read line after direct access: $string",1);
+			}
+			my $checksum=&CheckSum($_);
+			debug(" LastLineChecksum=$LastLineChecksum, Read line checksum=$checksum",1);
+			if ($checksum == $LastLineChecksum ) {
+				if (! scalar keys %HTMLOutput) { print "Direct access after last updated record successfull (after line $LastLineNumber)\n"; }
+				$lastlinenumber=$LastLineNumber;
+				$lastlineoffset=$LastLineOffset;
+				$lastlineoffsetnext=$LastLineOffset;
 #				seek(LOG,$LastLineOffset,0);	# Direct access succesful, we keep it.
-#			}
-#			else {
-#				if (! scalar keys %HTMLOutput) { print "Direct access to last remembered record falled on another record.\nSo searching it from beginning of log file...\n"; }
-#				$lastlinenumber=0;
-#				$lastlineoffset=0;
-#				$lastlineoffsetnext=0;
-#				seek(LOG,0,0);
-#			}
-#		}
-#		else {
-#			if (! scalar keys %HTMLOutput) { print "Direct access to last remembered record is out of file.\nSo searching if from beginning of log file...\n"; }
-#			$lastlinenumber=0;
-#			$lastlineoffset=0;
-#			$lastlineoffsetnext=0;
-#			seek(LOG,0,0);
-#		}
+			}
+			else {
+				if (! scalar keys %HTMLOutput) { print "Direct access to last remembered record has fallen on another record.\nSo searching new records from beginning of log file...\n"; }
+				$lastlinenumber=0;
+				$lastlineoffset=0;
+				$lastlineoffsetnext=0;
+				seek(LOG,0,0);
+			}
+		}
+		else {
+			if (! scalar keys %HTMLOutput) { print "Direct access to last remembered record is out of file.\nSo searching if from beginning of log file...\n"; }
+			$lastlinenumber=0;
+			$lastlineoffset=0;
+			$lastlineoffsetnext=0;
+			seek(LOG,0,0);
+		}
 	}
 	else {
 		# No try of direct seek access
+		if (! scalar keys %HTMLOutput) { print "Searching new records from beginning of log file...\n"; }
 		$lastlinenumber=0;
 		$lastlineoffset=0;
 		$lastlineoffsetnext=0;
@@ -5104,7 +5108,9 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 	
 	while (<LOG>) {
 		chomp $_; s/\r$//;
+		if ($UpdateFor && $NbOfLinesParsed >= $UpdateFor) { last; }
 		$NbOfLinesParsed++;
+
  		$lastlineoffset=$lastlineoffsetnext; $lastlineoffsetnext=tell LOG;
 
 		if ($ShowSteps) {
@@ -5197,6 +5203,7 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 			next;		# Should not happen, kept in case of parasite/corrupted line
 		}
 		if ($NewLinePhase) {
+# TODO NOTSORTEDRECORDTOLERANCE does not work around midnight
 			if ($timerecord < ($LastLine - $NOTSORTEDRECORDTOLERANCE)) {
 				# Should not happen, kept in case of parasite/corrupted old line
 				$NbOfLinesCorrupted++;
@@ -5619,9 +5626,9 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 				}
 				elsif ($timerecord < $_host_s{$HostResolved}) {
 					# Should happens only with not correctly sorted log files
-					if ($Debug) { debug("  This is same visit still running for $HostResolved with start not in order. host_s changed to $timerecord",4); }
+					if ($Debug) { debug("  This is same visit still running for $HostResolved with start not in order. host_s changed to $timerecord (entry page also changed if first visit)",4); }
 					if (! $_waithost_s{$HostResolved}) {
-						# We can change entry page not yet counted as the save entry page was waithost_e if $_waithost_s{$HostResolved} is not defined
+						# We can reorder entry page only if it's the first visit found in this update run (The saved entry page was $_waithost_e if $_waithost_s{$HostResolved} is not defined. If second visit or more, entry was directly counted and not saved)
 						$_waithost_e{$HostResolved}=$field[$pos_url];
 					}
 					else {
@@ -8921,12 +8928,13 @@ if (scalar keys %HTMLOutput) {
 	}
 }
 else {
-	# if ($LastLineRead < $NbOfLinesRead) { Print "Jumped lines in file: $LastLineRead\n"; }
+	print "Jumped lines in file: $lastlinenumber\n";
+	if ($lastlinenumber) { print " Found $lastlinenumber old records.\n"; }
 	print "Parsed lines in file: $NbOfLinesParsed\n";
-	print "Found $NbOfLinesDropped dropped records,\n";
-	print "Found $NbOfLinesCorrupted corrupted records,\n";
-	print "Found $NbOfOldLines old records,\n";
-	print "Found $NbOfNewLines new qualifed records.\n";
+	print " Found $NbOfLinesDropped dropped records,\n";
+	print " Found $NbOfLinesCorrupted corrupted records,\n";
+	print " Found $NbOfOldLines old records,\n";
+	print " Found $NbOfNewLines new qualifed records.\n";
 }
 
 0;	# Do not remove this line
@@ -8970,16 +8978,16 @@ else {
 #     Skip line for @SkipUserAgent --> next on loop
 #     So it's new line approved
 #     If other month/year, create/update tmp file and purge data arrays with
-#       &Read_History_With_TmpUpdate(lastprocessedyear,lastprocessedmonth,UPDATE,PURGE,"all",lastlinenumber,lastlineoffset,checksum($_));
+#       &Read_History_With_TmpUpdate(lastprocessedyear,lastprocessedmonth,UPDATE,PURGE,"all",lastlinenumber,lastlineoffset,CheckSum($_));
 #     Check protocol and complete %_error_, %_sider404 and %_referrer404
 #     Check robot and complete %_robot
 #     ...
 #     If too many records, we flush data arrays with
-#       &Read_History_With_TmpUpdate($lastprocessedyear,$lastprocessedmonth,UPDATE,PURGE,"all",lastlinenumber,lastlineoffset,checksum($_));
+#       &Read_History_With_TmpUpdate($lastprocessedyear,$lastprocessedmonth,UPDATE,PURGE,"all",lastlinenumber,lastlineoffset,CheckSum($_));
 #   End of loop
 #   Create/update tmp file
 #	  Seek to lastlineoffset to read and get last line into $_ 
-#	  &Read_History_With_TmpUpdate($lastprocessedyear,$lastprocessedmonth,UPDATE,PURGE,"all",lastlinenumber,lastlineoffset,checksum($_))
+#	  &Read_History_With_TmpUpdate($lastprocessedyear,$lastprocessedmonth,UPDATE,PURGE,"all",lastlinenumber,lastlineoffset,CheckSum($_))
 #   Rename all tmp files
 # End of 'update'
 #
