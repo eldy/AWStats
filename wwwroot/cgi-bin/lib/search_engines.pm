@@ -332,7 +332,7 @@
 #------------------------------------------------------------------------------
 %SearchEnginesKnownUrlNotFound=(
 # Most common search engines
-'msn\.','origq='
+'msn','origq='
 );
 
 # If no rules are known, WordsToExtractSearchUrl will be used to search keyword parameter
@@ -346,8 +346,8 @@
 #------------------------------------------------------------------------------
 %SearchEnginesKnownUTFCoding=(
 # Most common search engines
-'google\.','ie=utf-8',
-'alltheweb\.com','cs=utf-8'
+'google','ie=utf-8',
+'alltheweb','cs=utf-8'
 );
 
 
