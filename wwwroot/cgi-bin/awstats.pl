@@ -2216,6 +2216,9 @@ if ($UpdateStats) {
 		# Robot ? If yes, we stop here
 		#-----------------------------
 		if (!$TmpHashNotRobot{$UserAgent}) {	# TmpHashNotRobot is a temporary hash table to increase speed
+
+			# study $UserAgent
+
 			my $foundrobot=0;
 			foreach $bot (keys %RobotHashIDLib) { if ($UserAgent =~ /$bot/) { $_robot_h{$bot}++; $_robot_l{$bot}=$timeconnexion; $foundrobot=1; last; }	}
 			if ($foundrobot == 1) { next; }
@@ -2337,11 +2340,11 @@ if ($UpdateStats) {
 			}
 		}
 
-		# Analyze: Browser
-		#-----------------
 		if ($UserAgent) {
-			my $found=0;
 
+			# Analyze: Browser
+			#-----------------
+			my $found=0;
 			if (!$TmpHashBrowser{$UserAgent}) {
 				# IE ? (For higher speed, we start whith IE, the most often used. This avoid other tests if found)
 				if ($UserAgent =~ /msie/) {
@@ -2382,15 +2385,9 @@ if ($UpdateStats) {
 				if (!$found && $TmpHashBrowser{$UserAgent} =~ /^netscape_(\d)/) { $_browser_h{"netscape"}++; $_nsver_h[$1]++; $found=1; }
 				if (!$found) { $_browser_h{$TmpHashBrowser{$UserAgent}}++; }
 			}
-		}
-		else {
-			$_browser_h{"Unknown"}++;
-		}		
 
-
-		# Analyze: OS
-		#------------
-		if ($UserAgent) {
+			# Analyze: OS
+			#------------
 			if (!$TmpHashOS{$UserAgent}) {
 				my $found=0;
 				# in OSHashID list ?
@@ -2405,9 +2402,9 @@ if ($UpdateStats) {
 			}
 		}
 		else {
+			$_browser_h{"Unknown"}++;
 			$_os_h{"Unknown"}++;
-		}
-
+		}		
 
 		# Analyze: Referer
 		#-----------------
@@ -2512,7 +2509,6 @@ if ($UpdateStats) {
 				}
 			}
 		}	
-
 		# Origin not found
 		if (!$found) {
 			if ($PageBool) { $_from_p[1]++; }
