@@ -558,7 +558,7 @@ EOF
 				eval("$function");
 			}
 	
-			if ($UseXMLForOutput) { print ($ENV{'HTTP_USER_AGENT'}=~/Firebird/?"//-->\n":"]]>\n"); }
+			if ($UseXMLForOutput) { print ($ENV{'HTTP_USER_AGENT'}=~/Firebird/i?"//-->\n":"]]>\n"); }
 			else { print "//-->\n"; }
 			print "</style>\n";
 
