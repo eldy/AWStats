@@ -82,7 +82,7 @@ $WarningMessages= 1;
 %MonthBytes = %MonthHits = %MonthHostsKnown = %MonthHostsUnknown = %MonthPages = %MonthUnique = %MonthVisits =
 %monthlib = %monthnum = ();
 
-$VERSION="3.2 (build 30)";
+$VERSION="3.2 (build 31)";
 $Lang="en";
 
 # Default value
@@ -2657,8 +2657,8 @@ EOF
 		print "<TD width=\"20%\" bgcolor=\"#$color_k\" onmouseover=\"ShowTooltip(5);\" onmouseout=\"HideTooltip(5);\">$Message[75]</TD>";
 		print "</TR>\n";
 		print "<TR>";
-		print "<TD><b>$TotalVisits</b><br>&nbsp;</TD>";
 		print "<TD>".($MonthRequired eq "year"?"<b>< $TotalUnique</b><br>Exact value not available in 'Year' view":"<b>$TotalUnique</b><br>(".int($RatioHosts)."&nbsp;$Message[52])")."</TD>";
+		print "<TD><b>$TotalVisits</b><br>&nbsp;</TD>";
 		print "<TD><b>$TotalPages</b><br>(".int($RatioPages)."&nbsp;".lc($Message[56]."/".$Message[12]).")</TD>";
 		print "<TD><b>$TotalHits</b><br>(".int($RatioHits)."&nbsp;".lc($Message[57]."/".$Message[12]).")</TD>";
 		print "<TD><b>".Format_Bytes(int($TotalBytes))."</b><br>(".int($RatioBytes)."&nbsp;$Message[44]/".lc($Message[12]).")</TD>";
@@ -3198,9 +3198,10 @@ EOF
 			$p_h[4]=int($_from_h[4]/$TotalHits*1000)/10;
 		}
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[37]</TH><TH bgcolor=\"#$color_p\" width=80>$Message[56]</TH><TH bgcolor=\"#$color_p\" width=80>$Message[15]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[15]</TH></TR>\n";
-		print "<TR><TD CLASS=AWL><b>$Message[38]:</b></TD><TD>$_from_p[0]&nbsp;</TD><TD>$p_p[0]&nbsp;%</TD><TD>$_from_h[0]&nbsp;</TD><TD>$p_h[0]&nbsp;%</TD></TR>\n";
+		#------- Referrals by direct address/bookmarks
+		print "<TR><TD CLASS=AWL><b>$Message[38]</b></TD><TD>$_from_p[0]&nbsp;</TD><TD>$p_p[0]&nbsp;%</TD><TD>$_from_h[0]&nbsp;</TD><TD>$p_h[0]&nbsp;%</TD></TR>\n";
 		#------- Referrals by search engine
-		print "<TR onmouseover=\"ShowTooltip(13);\" onmouseout=\"HideTooltip(13);\"><TD CLASS=AWL><b>$Message[40] :</b><br>\n";
+		print "<TR onmouseover=\"ShowTooltip(13);\" onmouseout=\"HideTooltip(13);\"><TD CLASS=AWL><b>$Message[40]</b><br>\n";
 		print "<TABLE>\n";
 		$count=0; 
 		foreach my $key (sort { $SortDir*$_se_referrals_h{$a} <=> $SortDir*$_se_referrals_h{$b} } keys (%_se_referrals_h)) {
@@ -3210,7 +3211,7 @@ EOF
 		print "</TABLE></TD>\n";
 		print "<TD valign=top>$_from_p[2]&nbsp;</TD><TD valign=top>$p_p[2]&nbsp;%</TD><TD valign=top>$_from_h[2]&nbsp;</TD><TD valign=top>$p_h[2]&nbsp;%</TD></TR>\n";
 		#------- Referrals by external HTML link
-		print "<TR onmouseover=\"ShowTooltip(14);\" onmouseout=\"HideTooltip(14);\"><TD CLASS=AWL><b>$Message[41]:</b><br>\n";
+		print "<TR onmouseover=\"ShowTooltip(14);\" onmouseout=\"HideTooltip(14);\"><TD CLASS=AWL><b>$Message[41]</b><br>\n";
 		print "<TABLE>\n";
 		$count=0; $rest_h=0;
 		foreach my $key (sort { $SortDir*$_pagesrefs_h{$a} <=> $SortDir*$_pagesrefs_h{$b} } keys (%_pagesrefs_h)) {
@@ -3231,8 +3232,8 @@ EOF
 		print "</TABLE></TD>\n";
 		print "<TD valign=top>$_from_p[3]&nbsp;</TD><TD valign=top>$p_p[3]&nbsp;%</TD><TD valign=top>$_from_h[3]&nbsp;</TD><TD valign=top>$p_h[3]&nbsp;%</TD></TR>\n";
 		#------- Referrals by internal HTML link
-		print "<TR><TD CLASS=AWL><b>$Message[42]:</b></TD><TD>$_from_p[4]&nbsp;</TD><TD>$p_p[4]&nbsp;%</TD><TD>$_from_h[4]&nbsp;</TD><TD>$p_h[4]&nbsp;%</TD></TR>\n";
-		print "<TR><TD CLASS=AWL><b>$Message[39]:</b></TD><TD>$_from_p[1]&nbsp;</TD><TD>$p_p[1]&nbsp;%</TD><TD>$_from_h[1]&nbsp;</TD><TD>$p_h[1]&nbsp;%</TD></TR>\n";
+		print "<TR><TD CLASS=AWL><b>$Message[42]</b></TD><TD>$_from_p[4]&nbsp;</TD><TD>$p_p[4]&nbsp;%</TD><TD>$_from_h[4]&nbsp;</TD><TD>$p_h[4]&nbsp;%</TD></TR>\n";
+		print "<TR><TD CLASS=AWL><b>$Message[39]</b></TD><TD>$_from_p[1]&nbsp;</TD><TD>$p_p[1]&nbsp;%</TD><TD>$_from_h[1]&nbsp;</TD><TD>$p_h[1]&nbsp;%</TD></TR>\n";
 		&tab_end;
 	}	
 	
