@@ -523,8 +523,9 @@ sub Read_Config_File {
 #------------------------------------------------------------------------------
 # Function:     Get the reference databases
 # Parameter:	None
+# Return value: None
 # Input:		$DIR
-# Output:		Arrays and Hash tables are defined in memory
+# Output:		Arrays and Hash tables are defined 
 #------------------------------------------------------------------------------
 sub Read_Ref_Data {
 	foreach my $file ("browsers.pl","domains.pl","operating_systems.pl","robots.pl","search_engines.pl") {
@@ -545,9 +546,12 @@ sub Read_Ref_Data {
 			&warning("Warning: Can't read file \"$file\" ($filetext detection will not work correctly).\nCheck if file is in ${DIR}db directory and is readable.");
 		}
 	}
-	# Check if OSHashID and OSArrayID are correct
+	# Sanity check.
 	if (scalar keys %OSHashID != @OSArrayID) { error("Error: Not same number of records of OSHashID (".(scalar keys %OSHashID).") and/or OSArrayID (".(@OSArrayID).") in source file."); }
+	if (scalar keys %BrowsersHashID != @BrowsersHashIDLib) { error("Error: Not same number of records of BrowsersHashID (".(scalar keys %BrowsersHashID).") and/or BrowsersHashIDLib (".(@BrowsersHashIDLib).") in source file."); }
 }
+
+
 
 #------------------------------------------------------------------------------
 # Function:     Get the messages for a specified language
