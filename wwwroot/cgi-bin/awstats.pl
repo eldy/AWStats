@@ -1636,10 +1636,12 @@ sub Read_History_With_Update {
 					#if ($field[0]) {	# This test must not be here for TIME section (because field[0] is "0" for hour 0)
 						$count++;
 						if ($SectionsToLoad{"time"}) {
-							$countloaded++;
-							if ($field[1]) { $_time_p[$field[0]]+=int($field[1]); }
-							if ($field[2]) { $_time_h[$field[0]]+=int($field[2]); }
-							if ($field[3]) { $_time_k[$field[0]]+=int($field[3]); }
+							if ($MonthRequired eq "year" || $MonthRequired eq $month) {	# Still required
+								$countloaded++;
+								if ($field[1]) { $_time_p[$field[0]]+=int($field[1]); }
+								if ($field[2]) { $_time_h[$field[0]]+=int($field[2]); }
+								if ($field[3]) { $_time_k[$field[0]]+=int($field[3]); }
+							}
 							$monthpages+=int($field[1]);
 							$monthhits+=int($field[2]);
 							$monthbytes+=int($field[3]);
@@ -4919,7 +4921,7 @@ EOF
 				&Read_History_With_Update($YearRequired,$monthix,0,0,"all");			# Read full history file
 			}
 			elsif ($HTMLOutput eq "main" && $ShowMonthDayStats) {
-				&Read_History_With_Update($YearRequired,$monthix,0,0,"general time");	# Read general and time sections
+				&Read_History_With_Update($YearRequired,$monthix,0,0,"general time");	# Read general and time sections.
 			}
 		}
 	}
