@@ -47,7 +47,7 @@ print <<EOF;
 <style type="text/css">
 <!--
 div { font: 12px 'Arial','Verdana','Helvetica', sans-serif; text-align: justify; }
-.CTooltip { position:absolute; top: 0px; left: 0px; z-index: 2; width: 540px; visibility:hidden; font: 8pt 'MS Comic Sans','Arial',sans-serif; background-color: #FFFFE6; padding: 8px; border: 1px solid black; }
+.CTooltip { position:absolute; top: 0px; left: 0px; z-index: 2; width: 560px; visibility:hidden; font: 8pt 'MS Comic Sans','Arial',sans-serif; background-color: #FFFFE6; padding: 8px; border: 1px solid black; }
 //-->
 </style>
 
@@ -56,7 +56,7 @@ function ShowTip(fArg)
 {
 	var tooltipOBJ = (document.getElementById) ? document.getElementById('tt' + fArg) : eval("document.all['tt" + fArg + "']");
 	if (tooltipOBJ != null) {
-		var tooltipLft = (document.body.offsetWidth?document.body.offsetWidth:document.body.style.pixelWidth) - (tooltipOBJ.offsetWidth?tooltipOBJ.offsetWidth:(tooltipOBJ.style.pixelWidth?tooltipOBJ.style.pixelWidth:540)) - 30;
+		var tooltipLft = (document.body.offsetWidth?document.body.offsetWidth:document.body.style.pixelWidth) - (tooltipOBJ.offsetWidth?tooltipOBJ.offsetWidth:(tooltipOBJ.style.pixelWidth?tooltipOBJ.style.pixelWidth:560)) - 30;
 		var tooltipTop = 10;
 		if (navigator.appName == 'Netscape') {
 			tooltipTop = (document.body.scrollTop>=0?document.body.scrollTop+10:event.clientY+10);
