@@ -4,10 +4,13 @@ AWStats Changelog
 
 4.2
 
+- New feature: Added Plugins support and several working plugins.
+- New feature: Use frame to report (new UseFramesWhenCGI parameter).
+- Rewrite code of reading history files to reduce time and memory to load.
 - "Never updated" is now in language files.
 - Reduce number of global vars in code.
-- DefaultFile parameter accepts several values.
-- New parameter: LogSeparator
+- New feature: DefaultFile parameter accepts several values.
+- New parameter: LogSeparator for log files with exotic separators.
 - Added slovak language files.
 
 
