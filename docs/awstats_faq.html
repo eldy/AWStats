@@ -51,11 +51,12 @@ FAQ-SET050 <a href="#MISSINGDOLLAR">Error "Missing $ on loop variable ..."</a><b
 FAQ-SET100 <a href="#CGISOURCE">I see Perl script's source instead of its execution in my browser.</a><br>
 FAQ-SET150 <a href="#SPAWNERROR">Error "... couldn't spawn child process..." with Apache for windows.</a><br>
 FAQ-SET200 <a href="#INTERNAL">"Internal Error" or "Error 500" in a browser connecting to Apache.</a><br>
-FAQ-SET250 <a href="#SPEED">"Internal Error" after a long time in my browser (See FAQ-COM100 "AWStats speed/timeout problems").</a><br>
+FAQ-SET210 <a href="#SPEED">"Internal Error" after a long time in my browser (See FAQ-COM100 "AWStats speed/timeout problems").</a><br>
+FAQ-SET250 <a href="#PERSONALISEDLOG">Log format setup or errors.</a><br>
+FAQ-SET260 <a href="#FTP">Setup for FTP server log files.</a><br>
+FAQ-SET280 <a href="#NOTSAMENUMBER">Error "Not same number of records of...".</a><br>
 FAQ-SET300 <a href="#COULDNOTOPEN">Error "Couldn't open file ..."</a><br>
 FAQ-SET350 <a href="#EMPTY_STATS">Empty or null statistics reported.</a><br>
-FAQ-SET400 <a href="#PERSONALISEDLOG">Log format setup or errors.</a><br>
-FAQ-SET420 <a href="#FTP">Setup for FTP server log files.</a><br>
 FAQ-SET450 <a href="#NO_ICON">No pictures/graphics shown.</a><br>
 FAQ-SET500 <a href="#BENCHMARK">Frequency to launch AWStats to update statistics (See FAQ-COM150 "Benchmark question").</a><br>
 FAQ-SET550 <a href="#CRONTAB">How can i run AWStats frequently ?</a><br>
@@ -204,51 +205,8 @@ Then restart Apache. This will tell Apache to use the program associated to .pl 
 to find the perl interpreter.<br>
 <br>
 
-<a name="COULDNOTOPEN"></a><br>
-<b><u>FAQ-SET300 : ERROR "COULDN'T OPEN FILE ..."</u></b><br>
-<font style="color: #660000">PROBLEM:</font> I have the following error:<br>
-<i>"Couldn't open file /workingpath/awstatsmmyyyy.tmp.9999: Permission denied."</i><br>
-<font style="color: #4444cc">SOLUTION:</font> This error means that the web server 
-didn't succeed in writing the working temporary file (file ended by .tmp.9999 
-where 9999 is a number) because of permissions problems.<br>
-First check that the directory <i>/workingpath</i> has write permission for<br>
-user <u>nobody</u> (default used user by apache on linux systems)<br>
-or user <u>IUSR_<i>SERVERNAME</i></u> (default used user by IIS on NT).<br>
-With Unix, try with a path with no links.<br>
-With NT, you must check NTFS permissions if your directory is on a NTFS partition.<br>
-With IIS, there is also a write permission attribute, defined in directory properties 
-in your IIS setup, that you must check.<br>
-With IIS, if a default cgi-bin directory was created during IIS install, try to 
-put AWStats directly this directory.<br>
-If this still doesn't work, you can change the DirData parameter to say AWStats 
-that you want to use another directory (A directory you are sure that the default 
-user, used by web server process, can write into).<br>
-<br>
-
-<a name="EMPTY_STATS"></a><br>
-<b><u>FAQ-SET350 : EMPTY OR NULL STATISTICS REPORTED</u></b><br>
-<font style="color: #660000">PROBLEM:</font> Awstats seems to work but i'm not 
-getting any results. i get a statistics page that looks like i have no hits.<br>
-<font style="color: #4444cc">SOLUTION:</font> That's the most common problem you 
-can have and reason is simple: Your log file format setup is wrong.<br>
-<u>If you use Apache web server</u><br>
-The best way of working is to use the <i>"combined"</i> log format (See into the <b>README.TXT</b> file
-to know the way to change your apache server log from <i>"common"</i> log format into <i>"combined"</i>).
-Don't forget to stop apache, reset your log file and restart Apache to make change into combined
-effective. Then you must setup your AWStats config file with value <i>LogFormat=1</i>.<br>
-If you want to use another format, read the next FAQ to have examples of LogFile value according
-to log files format.<br>
-<u>If you use IIS server or Windows built-in web server</u><br>
-The Internet Information Server default W3C Extended Log Format will not work correctly with AWStats.
-To make it work correctly, start the IIS Snap-in, select the web site and look at it's Properties.
-Choose W3C Extended Log Format, then Properties, then the Tab Extended Properties and uncheck everything
-under Extended Properties. Once they are all unchecked, check off the list in the ReadMe file in the
-IIS section, "With IIS Server".
-You can also read the next FAQ to have examples of LogFormat value according to log files format.<br>
-<br>
-
 <a name="PERSONALISEDLOG"></a><br>
-<b><u>FAQ-SET400 : LOG FORMAT SETUP OR ERRORS</u></b><br>
+<b><u>FAQ-SET250 : LOG FORMAT SETUP OR ERRORS</u></b><br>
 <font style="color: #660000">PROBLEM:</font> Which value do I have to put in the LogFormat
 parameter to make AWStats working with my log file format ?<br>
 <font style="color: #4444cc">SOLUTION:</font>
@@ -299,7 +257,7 @@ support other various log formats.<br>
 <br>
 
 <a name="FTP"></a><br>
-<b><u>FAQ-SET420 : SETUP FOR FTP SERVER LOG FILES</u></b><br>
+<b><u>FAQ-SET260 : SETUP FOR FTP SERVER LOG FILES</u></b><br>
 <font style="color: #660000">PROBLEM:</font> What do I have to do to use Awstats to analyze some FTP server log files.<br>
 <font style="color: #4444cc">SOLUTION:</font>
 AWStats was built to analyze web,wap or proxy servers log files. However it can be used with some FTP server log files.<br>
@@ -316,6 +274,65 @@ LogFormat="%time1 %host %logname %method %url %code %bytesd"<br>
 DNSLookup=0</i><br>
 ShowLinksOnUrl=0<br>
 ShowAuthenticatedUsers=1<br>
+Warning: This tip doesn't work for FTPed files that contains spaces in them (they are not reported). You can still convert your
+log file to replace 'space' char into '_'...<br>
+<br>
+
+<a name="NOTSAMENUMBER"></a><br>
+<b><u>FAQ-SET280 : ERROR "NOT SAME NUMBER OF RECORDS OF..."</u></b><br>
+<font style="color: #660000">PROBLEM:</font> When I run AWStats from command line (or as a cgi from a browser), I get
+a message "Not same number of records of ...".<br>
+<font style="color: #4444cc">SOLUTION:</font>
+This means your AWStats reference database files (operating systems, browsers, robots...) are not correct.
+Check in your disk that you have only ONE of those files (They should be in 'db' directory where awstats.pl is installed):<br>
+<i>browsers.pl</i><br>
+<i>operating_systems.pl</i><br>
+<i>robots.pl</i><br>
+<i>domains.pl</i><br>
+<i>search_engines.pl</i><br>
+<br>
+
+<a name="COULDNOTOPEN"></a><br>
+<b><u>FAQ-SET300 : ERROR "COULDN'T OPEN FILE ..."</u></b><br>
+<font style="color: #660000">PROBLEM:</font> I have the following error:<br>
+<i>"Couldn't open file /workingpath/awstatsmmyyyy.tmp.9999: Permission denied."</i><br>
+<font style="color: #4444cc">SOLUTION:</font> This error means that the web server 
+didn't succeed in writing the working temporary file (file ended by .tmp.9999 
+where 9999 is a number) because of permissions problems.<br>
+First check that the directory <i>/workingpath</i> has write permission for<br>
+user <u>nobody</u> (default used user by apache on linux systems)<br>
+or user <u>IUSR_<i>SERVERNAME</i></u> (default used user by IIS on NT).<br>
+With Unix, try with a path with no links.<br>
+With NT, you must check NTFS permissions if your directory is on a NTFS partition.<br>
+With IIS, there is also a write permission attribute, defined in directory properties 
+in your IIS setup, that you must check.<br>
+With IIS, if a default cgi-bin directory was created during IIS install, try to 
+put AWStats directly this directory.<br>
+If this still doesn't work, you can change the DirData parameter to say AWStats 
+that you want to use another directory (A directory you are sure that the default 
+user, used by web server process, can write into).<br>
+<br>
+
+<a name="EMPTY_STATS"></a><br>
+<b><u>FAQ-SET350 : EMPTY OR NULL STATISTICS REPORTED</u></b><br>
+<font style="color: #660000">PROBLEM:</font> Awstats seems to work but i'm not 
+getting any results. i get a statistics page that looks like i have no hits.<br>
+<font style="color: #4444cc">SOLUTION:</font> That's the most common problem you 
+can have and reason is simple: Your log file format setup is wrong.<br>
+<u>If you use Apache web server</u><br>
+The best way of working is to use the <i>"combined"</i> log format (See into the <b>README.TXT</b> file
+to know the way to change your apache server log from <i>"common"</i> log format into <i>"combined"</i>).
+Don't forget to stop apache, reset your log file and restart Apache to make change into combined
+effective. Then you must setup your AWStats config file with value <i>LogFormat=1</i>.<br>
+If you want to use another format, read the next FAQ to have examples of LogFile value according
+to log files format.<br>
+<u>If you use IIS server or Windows built-in web server</u><br>
+The Internet Information Server default W3C Extended Log Format will not work correctly with AWStats.
+To make it work correctly, start the IIS Snap-in, select the web site and look at it's Properties.
+Choose W3C Extended Log Format, then Properties, then the Tab Extended Properties and uncheck everything
+under Extended Properties. Once they are all unchecked, check off the list in the ReadMe file in the
+IIS section, "With IIS Server".
+You can also read the next FAQ to have examples of LogFormat value according to log files format.<br>
 <br>
 
 <a name="NO_ICON"></a><br>
