@@ -13,7 +13,7 @@
 #-------------------------------------------------------
 # Defines
 #-------------------------------------------------------
-$VERSION="2.23o";
+$VERSION="2.23p";
 $Lang=0;
 
 # Default value
@@ -1610,6 +1610,7 @@ if (($YearRequired == $nowyear) && ($MonthRequired eq "year" || $MonthRequired =
 			$_ =~ s/ GET .* .* HTTP\// GET BAD_URL HTTP\//;		# Change ' GET x y z HTTP/' into ' GET x%20y%20z HTTP/'
 			@felter=split(/ /,$_);
 		}
+#		$felter[1]=$felter[0]; shift @felter;					# This is for test when log format is "hostname ip ...	"
 	
 		# Check filters (here, log is in apache combined format, even with IIS)
 		#----------------------------------------------------------------------
@@ -1623,9 +1624,17 @@ if (($YearRequired == $nowyear) && ($MonthRequired eq "year" || $MonthRequired =
 		if ( $monthnum{$dateparts[1]} ) { $dateparts[1]=$monthnum{$dateparts[1]}; }	# Change lib month in num month if necessary
 		$timeconnexion=$dateparts[2].$dateparts[1].$dateparts[0].$dateparts[3].$dateparts[4].$dateparts[5];	# YYYYMMDDHHMMSS
 		# Skip if not a new line
-		if ($timeconnexion <= $LastTime{$monthtoprocess.$yeartoprocess}) { next; }
-		if (&SkipHost($felter[0])) { next; }			# Skip with some client host IP address
+		if ($NowNewLinePhase) {
+			if ($timeconnexion < $LastTime{$monthtoprocess.$yeartoprocess}) { next; }	# Should not happen, kept in case of parasite lines
+			}
+		else {
+			if ($timeconnexion <= $LastTime{$monthtoprocess.$yeartoprocess}) { next; }	# Already processed
+			$NowNewLinePhase=1;
+			}
+
 		if (&SkipFile($felter[6])) { next; }			# Skip with some URL
+		if (&SkipHost($felter[0])) { next; }			# Skip with some client host IP address
+
 
 		# We found a new line. Is it in a new month section
 		#----------------------------------------------------------------------
@@ -1741,7 +1750,7 @@ if (($YearRequired == $nowyear) && ($MonthRequired eq "year" || $MonthRequired =
 		      }
 	    }
 		else { $NewDNSLookup=0; }	# Hosts seems to be already resolved
-	
+
 		# Here, $Host = hostname or xxx.xxx.xxx.xxx
 		if (!$found) {				# If not processed yet ($Host = hostname)
 			$Host =~ tr/A-Z/a-z/;
