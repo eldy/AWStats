@@ -9,6 +9,11 @@ Fixes:
 - Fix wrong number of column for "other" row in host chart.
 - Fix problem of parsing with uabracket and refererquot.
 - Fixed wrong use of config file in rawlog plugin.
+- Some changes on maillogconvert.pl:
+  Fixed pb of '-' in relay hostname.
+  When a mail is sent to 2 different receivers, report 2 records instead of 1.
+  When a forward is active, report the original receiver, not the
+  "forwarded to".
 
 New features/improvements:
 - Added %lognamequot tag for LogFormat parameter.
