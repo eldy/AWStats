@@ -527,12 +527,13 @@ sub html_head {
 		print "<head>\n";
 		if ($PageCode) { print "<META HTTP-EQUIV=\"content-type\" CONTENT=\"text/html; charset=$PageCode\">\n"; }		# If not defined, iso-8859-1 is used in major countries
 		#else { print "<META HTTP-EQUIV=\"content-type\" CONTENT=\"text/html; charset=iso-8859-1\">\n"; }
+		#else { print "<meta HTTP-EQUIV=\"content-type\" CONTENT=\"text/html; charset=UTF-8\">\n"; }
 		if ($Expires)  { print "<META HTTP-EQUIV=\"expires\" CONTENT=\"".(gmtime(time()+$Expires))."\">\n"; }
 		print "<meta http-equiv=\"description\" content=\"".ucfirst($PROG)." - Advanced Web Statistics for $SiteDomain\">\n";
 		if ($FrameName ne "mainleft") { print "<meta http-equiv=\"keywords\" content=\"$SiteDomain, free, advanced, realtime, web, server, logfile, log, analyzer, analysis, statistics, stats, perl, analyse, performance, hits, visits\">\n"; }
 		print "<meta name=\"robots\" content=\"".($FrameName eq "mainleft"?"no":"")."index,follow\">\n";
 		print "<title>$Message[7] $SiteDomain</title>\n";
-		if ($FrameName ne "index") {
+		if ($FrameName ne 'index') {
 			# Do not use " for number in a style section
 			print <<EOF;
 <STYLE TYPE="text/css">
@@ -567,7 +568,7 @@ EOF
 			}
 		}
 		print "</head>\n\n";
-		if ($FrameName ne "index") { print "<body>\n"; }
+		if ($FrameName ne 'index') { print "<body>\n"; }
 	}
 }
 
@@ -580,14 +581,14 @@ EOF
 #------------------------------------------------------------------------------
 sub html_end {
 	if ($HTMLOutput) {
-		if ($FrameName ne "index" && $FrameName ne "mainleft") {
+		if ($FrameName ne 'index' && $FrameName ne 'mainleft') {
 			print "$Center<br><br><br>\n";
 			print "<FONT COLOR=\"#$color_text\"><b>Advanced Web Statistics $VERSION</b> - <a href=\"http://awstats.sourceforge.net\" target=\"awstatshome\">Created by $PROG</a></font><br>\n";
 			print "<br>\n";
 			print "$HTMLEndSection\n";
 		}
 		print "\n";
-		if ($FrameName ne "index") { print "</body>\n"; }
+		if ($FrameName ne 'index') { print "</body>\n"; }
 		print "</html>\n";
 	}
 }
@@ -3623,13 +3624,39 @@ sub Init_HashArray {
 #------------------------------------------------------------------------------
 sub ChangeWordSeparatorsIntoSpace {
 	$_[0] =~ s/%1[03]/ /g;
-	$_[0] =~ s/%2[02789abc]/ /g;
-	$_[0] =~ s/%3a/ /g;
+	$_[0] =~ s/%2[02789ac]/ /ig;
+	$_[0] =~ s/%3a/ /ig;
 	$_[0] =~ tr/\+\'\(\)\"\*,:/        /s;								# "&" and "=" must not be in this list
 }
 
+#------------------------------------------------------------------------------
+# Function:     Converts an UTF8 binary string
+#------------------------------------------------------------------------------
+sub Utf8_To_Ascii
+{
+	my $string = shift;
+	my $format = $ENV{"UCFORMAT"}||('%lx');
+	$string =~ s/([\xC0-\xDF])([\x80-\xBF])/sprintf ("%c", hex(sprintf($format,unpack("c",$1)<<6&0x07C0|unpack("c",$2)&0x003F)))/ge;
+	$string =~ s/([\xE0-\xEF])([\x80-\xBF])([\x80-\xBF])/sprintf ("%c", hex(sprintf($format,unpack("c",$1)<<12&0xF000|unpack("c",$2)<<6&0x0FC0|unpack("c",$3)&0x003F)))/ge;
+	$string =~ s/([\xF0-\xF7])([\x80-\xBF])([\x80-\xBF])([\x80-\xBF])/sprintf ("%c", hex(sprintf($format,unpack("c",$1)<<18&0x1C0000|unpack("c",$2)<<12&0x3F000|unpack("c",$3)<<6&0x0FC0|unpack("c",$4)&0x003F)))/ge;
+	return $string;
+}
+
 #--------------------------------------------------------------------
-# Function:     Decode an URL encoded string
+# Function:     Encode a binary string into a non binary string
+#--------------------------------------------------------------------
+sub EncodeString
+{
+	my $string = shift;
+	use bytes;
+	$string =~ s/([\x2B\x80-\xFF])/sprintf ("%%%2x", ord($1))/eg;
+	no bytes;
+	$string =~ tr/ /+/s;
+	return $string;
+}
+
+#--------------------------------------------------------------------
+# Function:     Decode an only text string into a binary string
 # Parameters:   stringtodecode
 # Input:        None
 # Output:       None
@@ -3638,7 +3665,7 @@ sub ChangeWordSeparatorsIntoSpace {
 sub DecodeEncodedString {
 	my $stringtodecode=shift;
 	$stringtodecode =~ tr/\+/ /s;
-	$stringtodecode =~ s/%([a-fA-F0-9][a-fA-F0-9])/pack("C", hex($1))/eg;		# Decode encoded URL
+	$stringtodecode =~ s/%([A-F0-9][A-F0-9])/pack("C", hex($1))/ieg;
 	return $stringtodecode;
 }
 
@@ -5314,8 +5341,6 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {	# Updat
 								my @paramlist=split(/&/,$KeyWordsNotSensitive?lc($refurl[1]):$refurl[1]);
 								if ($SearchEnginesKnownUrl{$TmpRefererServer{$refererserver}}) {	# Search engine with known URL syntax
 									foreach my $param (@paramlist) {
-										#if ($param =~ /^$SearchEnginesKnownUrl{$key}/) { 	# We found good parameter
-										#	$param =~ s/^$SearchEnginesKnownUrl{$key}//;	# Cut "xxx="
 										if ($param =~ s/^$SearchEnginesKnownUrl{$TmpRefererServer{$refererserver}}//) { 	# We found good parameter
 											# Ok, "cache:mmm:www/zzz+aaa+bbb/ccc+ddd%20eee'fff,ggg" is a search parameter line
 											$param =~ s/^cache:[^\+]*//;
@@ -5329,18 +5354,18 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {	# Updat
 								}
 								else {									# Search engine with unknown URL syntax
 									foreach my $param (@paramlist) {
-										&ChangeWordSeparatorsIntoSpace($param);				# Change [ xxx=cache:www/zzz+aaa+bbb/ccc+ddd%20eee'fff,ggg ] into [ xxx=cache:www/zzz aaa bbb/ccc ddd eee fff ggg ]
 										my $foundparam=1;
 										foreach my $paramtoexclude (@WordsToCleanSearchUrl) {
-											if ($param =~ /.*$paramtoexclude.*/) { $foundparam=0; last; } # Not the param with search criteria
+											if ($param =~ /$paramtoexclude/) { $foundparam=0; last; } # Not the param with search criteria
 										}
 										if ($foundparam == 0) { next; }			# Do not keep this URL parameter because is in exclude list
-										# Ok, "xxx=cache:www/zzz aaa bbb/ccc ddd eee fff ggg" is a search parameter line
 										$param =~ s/.*=//;						# Cut "xxx="
+										# Ok, "cache:www/zzz aaa bbb/ccc ddd eee fff ggg" is a search parameter line
 										$param =~ s/^cache:[^ ]*//;
 										$param =~ s/^related:[^ ]*//;
+										&ChangeWordSeparatorsIntoSpace($param);				# Change [ aaa+bbb/ccc+ddd%20eee'fff,ggg ] into [ aaa bbb/ccc ddd eee fff ggg ]
 										$param =~ s/^ +//; $param =~ s/ +$//; $param =~ tr/ /\+/s;
-										if ((length $param) > 2) { $_keyphrases{$param}++; }
+										if ((length $param) > 2) { $_keyphrases{$param}++; last; }
 									}
 								}
 							}	# End of if refurl[1]
