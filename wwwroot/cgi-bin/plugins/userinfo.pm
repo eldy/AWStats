@@ -68,12 +68,12 @@ sub Init_userinfo {
 sub ShowInfoUser_userinfo {
 	# <-----
 	my $userinfotoshow="$_[0]";
+	my $filetoload='';
 	if ($userinfotoshow && $userinfotoshow ne '__title__' && ! $userinfoloaded) {
 		# Load userinfo file
-		my $filetoload='';
-		if ($SiteConfig && open(USERINFOFILE,"$PluginDir/userinfo.$SiteConfig.txt"))	{ $filetoload="$PluginDir/userinfo.$SiteConfig.txt"; }
-		elsif (open(USERINFOFILE,"$PluginDir/userinfo.txt"))  							{ $filetoload="$PluginDir/userinfo.txt"; }
-		else { error("Couldn't open UserInfo file \"$PluginDir/userinfo.txt\": $!"); }
+		if ($SiteConfig && open(USERINFOFILE,"$DirData/userinfo.$SiteConfig.txt"))	{ $filetoload="$DirData/userinfo.$SiteConfig.txt"; }
+		elsif (open(USERINFOFILE,"$DirData/userinfo.txt"))  						{ $filetoload="$DirData/userinfo.txt"; }
+		else { error("Couldn't open UserInfo file \"$DirData/userinfo.txt\": $!"); }
 		# This is the fastest way to load with regexp that I know
 		%UserInfo = map(/^([^\t]+)\t+([^\t]+)/o,<USERINFOFILE>);
 		close USERINFOFILE;

@@ -72,15 +72,15 @@ sub ShowInfoURL_urlalias {
 	# <-----
 	my $urltoshow="$_[0]";
 	my $found = 0;			# flag for testing for whether a match occurs.  unused at present 
-	my $filetoload='';		# unused at present
-	my $filetoload2='';		# unused at present
+	my $filetoload='';
+	my $filetoload2='';
 	if ($urltoshow && ! $urlinfoloaded) {
 		# Load urlalias and match files
-		if ($SiteConfig && open(URLALIASFILE,"$DirData/urlalias.$SiteConfig.txt"))	{ $filetoload2="$PluginDir/urlalias.$SiteConfig.txt"; }
-		elsif (open(URLALIASFILE,"$DirData/urlalias.txt"))  						{ $filetoload2="$PluginDir/urlalias.txt"; }
+		if ($SiteConfig && open(URLALIASFILE,"$DirData/urlalias.$SiteConfig.txt"))	{ $filetoload2="$DirData/urlalias.$SiteConfig.txt"; }
+		elsif (open(URLALIASFILE,"$DirData/urlalias.txt"))  						{ $filetoload2="$DirData/urlalias.txt"; }
 		else { error("Couldn't open UrlAlias file \"$DirData/urlalias.txt\": $!"); }
-		if ($SiteConfig && open(URLMATCHFILE,"$DirData/urlmatch.$SiteConfig.txt"))	{ $filetoload="$PluginDir/urlmatch.$SiteConfig.txt"; }
-		elsif (open(URLMATCHFILE,"$DirData/urlmatch.txt"))  						{ $filetoload="$PluginDir/urlmatch.txt"; }
+		if ($SiteConfig && open(URLMATCHFILE,"$DirData/urlmatch.$SiteConfig.txt"))	{ $filetoload="$DirData/urlmatch.$SiteConfig.txt"; }
+		elsif (open(URLMATCHFILE,"$DirData/urlmatch.txt"))  						{ $filetoload="$DirData/urlmatch.txt"; }
 		# Load UrlAlias
 		%UrlAlias = map(/^([^\t]+)\t+([^\t]+)/o,<URLALIASFILE>);
 		# Load UrlMatch
@@ -107,25 +107,24 @@ sub ShowInfoURL_urlalias {
 				my $key = $UrlMatch[$iter][0];
 				if ( $urltoshow =~ /$key/ ) {
  					print "<font style=\"color: #$color_link; font-weight: bold\">$UrlMatch[$iter][1]</font><br>"; 
-					$UrlAlias{$urltoshow} = $UrlMatch[$iter][1];
-					if ($SiteConfig && open(URLALIASFILE,">> $PluginDir/urlalias.$SiteConfig.txt")) { 
-						$filetoload="$PluginDir/urlalias.$SiteConfig.txt"; 
-					}
-					elsif (open(URLALIASFILE,">> $PluginDir/urlalias.txt")) { 
-						$filetoload="$PluginDir/urlalias.txt"; 
-					}
-					else { 
-						error("Couldn't open UrlAlias file \"$PluginDir/urlalias.txt\": $!"); 
-					}
-					print URLALIASFILE "$urltoshow\t$UrlAlias{$urltoshow}";
-					close URLALIASFILE;
 					$found = 1;
+#					$UrlAlias{$urltoshow} = $UrlMatch[$iter][1];
+#					if ($SiteConfig && open(URLALIASFILE,">> $DirData/urlalias.$SiteConfig.txt")) { 
+#						$filetoload="$DirData/urlalias.$SiteConfig.txt"; 
+#					}
+#					elsif (open(URLALIASFILE,">> $DirData/urlalias.txt")) { 
+#						$filetoload="$DirData/urlalias.txt"; 
+#					}
+#					else { 
+#						error("Couldn't open UrlAlias file \"$DirData/urlalias.txt\": $!"); 
+#					}
+#					print URLALIASFILE "$urltoshow\t$UrlAlias{$urltoshow}";
+#					close URLALIASFILE;
 					last;
 				}
 			}
 		}
-		if (!$found) {
-		# does nothing right now
+		if (!$found) {	# does nothing right now
 			print "";
 		}
 	}
