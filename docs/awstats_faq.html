@@ -120,7 +120,7 @@ Examples of used platforms (bold means 'tested by author', others were reported 
 <u>OS:</u><br>
 <b>Windows 2000</b>, <b>Windows NT 4.0</b>, Windows Me, <b>Linux (RedHat, Mandrake, Debian, Suse...)</b>, Macintosh, <b>Solaris</b>, <b>Aix</b>, BeOS, FreeBSD, ...<br>
 <u>Web/Wap/Proxy/Streaming servers</u><br>
-<b>Apache 1.3.x and 2.x</b>, <b>IIS 5.0 and 6.0</b>, WebStar, WebLogic, WebSite, <b>Windows Media Server</b>, Tomcat, <b>Squid</b>,
+<b>Apache 1.3.x and 2.x</b>, <b>IIS 5.0 or higher</b>, ISA, WebStar, WebLogic, WebSite, <b>Windows Media Server</b>, Tomcat, <b>Squid</b>,
 Sambar, Roxen, Resin, RealMedia server, Oracle9iAS, <b>Lotus Notes/Domino</b>, Darwin, IPlanet, IceCast, ZeroBrand, Zeus, Zope, Abyss...<br>
 <u>FTP servers</u><br>
 <b>ProFTPd</b>, vsFTPd...<br>
@@ -1207,7 +1207,7 @@ You must use : <i>LogFormat="%host %other %logname %time1 %methodurl %code %byte
 You must use : <i>LogFormat="%host %other %logname %time1 %methodurl %code %bytesd %refererquot %uaquot %other %other %gzipin %gzipout"</i><br>
 
 <table bgcolor=#F4F4F4 width="100%" class=CFAQ><tr class=CFAQ><td class=CFAQ>
-<u>If your log records are EXACTLY like this (<b>NCSA combined and mod_deflate</b> with <b>Apache 2 </b>):</u><br>
+<u>If your log records are EXACTLY like this (<b>NCSA combined and mod_deflate</b> with <b>Apache 2</b>):</u><br>
 <i>62.161.78.73 - - [dd/mmm/yyyy:hh:mm:ss +0x00] "GET /page.html HTTP/1.1" 200 3904 "http://www.from.com/from.htm" "Mozilla/4.0 (compatible; MSIE 5.01; Windows NT 5.0)" (45)</i><br>
 You must use : <i>LogFormat="%host %other %logname %time1 %methodurl %code %bytesd %refererquot %uaquot %deflateratio"</i><br>
 </td></tr></table>
@@ -1238,12 +1238,12 @@ You must use : <i>LogFormat=2</i><br>
 
 <u>If your log records are EXACTLY like this (Some <b>IIS</b> W3C log format with some <b>.net</b> servers):</u><br>
 <i>yyyy-mm-dd hh:mm:ss GET /page.html - 62.161.78.73 - Mozilla/4.0+(compatible;+MSIE+5.01;+Windows+NT+5.0) http://www.from.com/from.html 200 1234 HTTP/1.1</i><br>
-You must use : <i>LogFormat="%time2 %method %url %logname %host %other %ua %referer %code %bytesd %other"</i><br> 
+You must use : <i>LogFormat=2 (or LogFormat="%time2 %method %url %logname %host %other %ua %referer %code %bytesd %other")</i><br> 
 
 <table bgcolor=#F4F4F4 width="100%" class=CFAQ><tr class=CFAQ><td class=CFAQ>
 <u>If your log records are EXACTLY like this (Some <b>IIS 6+</b> W3C log format):</u><br>
 <i>yyyy-mm-dd hh:mm:ss GET /page.html - 62.161.78.73 - Mozilla/4.0+(compatible;+MSIE+5.01;+Windows+NT+5.0) http://www.from.com/from.html 200 1234</i><br>
-You must use : <i>LogFormat="date time cs-method cs-uri-stem cs-username c-ip cs-version cs(User-Agent) cs(Referer) sc-status sc-bytes"</i><br>
+You must use : <i>LogFormat=2 (or LogFormat="date time cs-method cs-uri-stem cs-username c-ip cs-version cs(User-Agent) cs(Referer) sc-status sc-bytes")</i><br>
 </td></tr></table>
 
 <u>If your log records are EXACTLY like this (With some <b>WebSite</b> versions):</u><br>

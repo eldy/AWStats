@@ -315,7 +315,7 @@ when reading it), follow the example:<br>
 <br># the required log format).
 <br># Possible values: 1,2,3,4 or "your_own_personalized_log_format"
 <br># 1 - Apache or Lotus Notes/Domino native combined log format (NCSA combined/XLF/ELF log format)
-<br># 2 - Old IIS log format (IIS W3C log format). See FAQ for IIS 6.x.
+<br># 2 - IIS or ISA format (IIS W3C log format).
 <br># 3 - Webstar native log format.
 <br># 4 - Apache or Squid native common log format (NCSA common/CLF log format)
 <br>#     With LogFormat=4, some features (browsers, os, keywords...) can't work.
@@ -351,16 +351,18 @@ when reading it), follow the example:<br>
 <br>#                     will discard records not in SiteDomain nor HostAliases
 <br>#   %cluster          If log file is provided from several computers (merged by
 <br>#                     logresolvemerge.pl), this tag define field of cluster id.
+<br>#   %extraX           Another field that you plan to use for building a
+<br>#                     personalized report with ExtraSection feature (See later).
 <br>#   If your log format has some fields not included in this list, use
 <br>#   %other            Means another field
+<br>#   %otherquot        Means another not used double quoted field
 <br>#
 <br># Examples for Apache combined logs (following two examples are equivalent):
 <br># LogFormat = 1
 <br># LogFormat = "%host %other %logname %time1 %methodurl %code %bytesd %refererquot %uaquot"
 <br>#
-<br># Examples for IIS (following two examples are equivalent):
+<br># Example for IIS:
 <br># LogFormat = 2
-<br># LogFormat = "%time2 %host %logname %method %url %code %bytesd %other %ua %referer"
 <br>#
 <br>LogFormat=1
 
@@ -706,13 +708,17 @@ when reading it), follow the example:<br>
 <br><br><hr>
 
 <a name="ArchiveLogRecords"><b>ArchiveLogRecords</b></a><br>
-<b>Version : </b>2.1+<br>
+<b>Version : </b>2.1+ (6.4+ to use tags for suffix)<br>
 <br># When PurgeLogFile is setup to 1, AWStats will clean your log file after
-<br># processing it. You can however keep an archive file (saved in "DirData") of
-<br># all processed log records by setting this to 1 (For example if you want to
-<br># use another log analyzer).
+<br># processing it. You can however keep an archive file of all processed log
+<br># records by setting this parameter (For example if you want to use another
+<br># log analyzer). The archived log file is saved in "DirData" with name
+<br># awstats_archive.configname[.suffix].log
 <br># This parameter is not used if PurgeLogFile=0
-<br># Possible values: 0 or 1
+<br># Change : Effective for new updates only
+<br># Possible values: 0, 1, or tags (See LogFile parameter) for suffix
+<br># Example: 1
+<br># Example: %YYYY%MM%DD
 <br># Default: 0
 <br>#
 <br>ArchiveLogRecords=0
@@ -1101,13 +1107,14 @@ when reading it), follow the example:<br>
 
 <a name="DebugMessages"><b>DebugMessages</b></a><br>
 <b>Version : </b>5.2+<br>
-<br># AWStat can be run with debug=x parameter to ouput various informations
-<br># to help in debugging or solving troubles. If you want (in most cases for 
-<br># security reasons) to disable debugging, set this parameter to 0.
+<br># AWStat can be run with debug=x parameter to output various informations
+<br># to help in debugging or solving troubles. If you want to allow this (not
+<br># enabled by default for security reasons), set this parameter to 0.
+<br># Change : Effective immediatly
 <br># Possible values: 0 or 1
-<br># Default: 1
+<br># Default: 0
 <br>#
-<br>DebugMessages=1
+<br>DebugMessages=0
 
 <br><br><hr>
 
