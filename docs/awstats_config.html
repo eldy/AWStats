@@ -82,6 +82,7 @@ when reading it), follow the example:<br>
 <li><a href="#NotPageList">NotPageList</a>
 <li><a href="#ValidHTTPCodes">ValidHTTPCodes</a>
 <li><a href="#ValidSMTPCodes">ValidSMTPCodes</a>
+<li><a href="#AuthenticatedUsersNotCaseSensitive">AuthenticatedUsersNotCaseSensitive</a>
 <li><a href="#URLNotCaseSensitive">URLNotCaseSensitive</a>
 <li><a href="#URLQuerySeparators">URLQuerySeparators</a>
 <li><a href="#URLWithQuery">URLWithQuery</a>
@@ -807,6 +808,18 @@ when reading it), follow the example:<br>
 <br># Default: "1"
 <br>#
 <br>ValidSMTPCodes="1"
+
+<br><br><hr>
+
+<a name="AuthenticatedUsersNotCaseSensitive"><b>AuthenticatedUsersNotCaseSensitive</b></a><br>
+<b>Version : </b>5.3 +<br>
+<br># Some web servers on some Operating systems (IIS-Windows) considers that a
+<br># login with same value but different case are the same login. To tell AWStats
+<br># to also considers them as one, set this parameter to 1.
+<br># Possible values: 0 or 1
+<br># Default: 0
+<br># 
+<br>AuthenticatedUsersNotCaseSensitive=0
 
 <br><br><hr>
 

@@ -113,6 +113,7 @@ $NbOfLinesShowsteps $NewLinePhase $NbOfLinesForCorruptedLog $PurgeLogFile
 $ShowAuthenticatedUsers $ShowFileSizesStats
 $ShowDropped $ShowCorrupted $ShowUnknownOrigin $ShowLinksToWhoIs
 $ShowEMailSenders $ShowEMailReceivers
+$AuthenticatedUsersNotCaseSensitive
 $Expires $UpdateStats $MigrateStats $URLNotCaseSensitive $URLWithQuery $URLReferrerWithQuery
 $UseFramesWhenCGI $DecodeUA
 /;
@@ -127,9 +128,10 @@ $NbOfLinesShowsteps, $NewLinePhase, $NbOfLinesForCorruptedLog, $PurgeLogFile,
 $ShowAuthenticatedUsers, $ShowFileSizesStats,
 $ShowDropped, $ShowCorrupted, $ShowUnknownOrigin, $ShowLinksToWhoIs,
 $ShowEMailSenders, $ShowEMailReceivers,
+$AuthenticatedUsersNotCaseSensitive,
 $Expires, $UpdateStats, $MigrateStats, $URLNotCaseSensitive, $URLWithQuery, $URLReferrerWithQuery,
 $UseFramesWhenCGI, $DecodeUA)=
-(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
+(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
 use vars qw/
 $AllowToUpdateStatsFromBrowser $ArchiveLogRecords $DetailedReportsOnNewWindows
 $FirstDayOfWeek $KeyWordsNotSensitive $SaveDatabaseFilesWithPermissionsForEveryone
@@ -221,12 +223,12 @@ use vars qw/
 @DOWIndex @RobotsSearchIDOrder
 @_from_p @_from_h
 @_time_p @_time_h @_time_k
-@keylist
+@fieldlib @keylist
 /;
 @DOWIndex = @RobotsSearchIDOrder = ();
 @_from_p = @_from_h = ();
 @_time_p = @_time_h = @_time_k = ();
-@keylist=();
+@fieldlib = @keylist = ();
 use vars qw/
 @SessionsRange @HostAliases @AllowAccessFromWebToFollowingAuthenticatedUsers
 @DefaultFile @SkipDNSLookupFor
@@ -642,7 +644,7 @@ sub tab_end {
 # Return:		None
 #------------------------------------------------------------------------------
 sub error {
-	my $message=shift||'';
+	my $message=shift||''; if ($HTMLOutput) { $message =~ s/\</&lt;/g; $message =~ s/\>/&gt;/g; }
 	my $secondmessage=shift||'';
 	my $thirdmessage=shift||'';
 	my $donotshowsetupinfo=shift||0;
@@ -656,16 +658,12 @@ sub error {
 		}
 		if ($message !~ $LogSeparator) {
 			# Bad LogSeparator parameter
-			if ($HTMLOutput) { print "${tagfontred}"; }
-			print "AWStats did not found the ${tagbold}LogSeparator${tagunbold} in your log records.${tagbr}\n";
-			if ($HTMLOutput) { print "${tagunfont}"; }
+			print "${tagfontred}AWStats did not found the ${tagbold}LogSeparator${tagunbold} in your log records.${tagbr}${tagunfont}\n";
 		}
 		else {
 			# Bad LogFormat parameter
 			print "AWStats did not found any valid log lines that match your ${tagbold}LogFormat${tagunbold} parameter, in the ${NbOfLinesForCorruptedLog}th first non commented lines read of your log.${tagbr}\n";
-			if ($HTMLOutput) { print "${tagfontred}"; }
-			print "Your log file ${tagbold}$thirdmessage${tagunbold} must have a bad format or ${tagbold}LogFormat${tagunbold} parameter setup does not match this format.${tagbr}${tagbr}\n";
-			if ($HTMLOutput) { print "${tagunfont}"; }
+			print "${tagfontred}Your log file ${tagbold}$thirdmessage${tagunbold} must have a bad format or ${tagbold}LogFormat${tagunbold} parameter setup does not match this format.${tagbr}${tagbr}${tagunfont}\n";
 			print "Your AWStats ${tagbold}LogFormat${tagunbold} parameter is:\n";
 			print "${tagbold}$LogFormat${tagunbold}${tagbr}\n";
 			print "This means each line in your web server log file need to have ";
@@ -717,7 +715,7 @@ sub error {
 	}
 	else {
 		print ($HTMLOutput?'<br><font color=#880000>':'');
-		print ($ErrorMessages?"$ErrorMessages":"$message");
+		print ($ErrorMessages?"$ErrorMessages":"Error: $message");
 		print ($HTMLOutput?'</font><br>':'');
 		print "\n";
 	}
@@ -965,7 +963,7 @@ sub Read_Config {
 		if (open(CONFIG,"$searchdir$PROG.$SiteConfig.conf")) 	{ $FileConfig="$searchdir$PROG.$SiteConfig.conf"; $FileSuffix=".$SiteConfig"; last; }
 		if (open(CONFIG,"$searchdir$PROG.conf"))  				{ $FileConfig="$searchdir$PROG.conf"; $FileSuffix=''; last; }
 	}
-	if (! $FileConfig) { error("Error: Couldn't open config file \"$PROG.$SiteConfig.conf\" nor \"$PROG.conf\" : $!"); }
+	if (! $FileConfig) { error("Couldn't open config file \"$PROG.$SiteConfig.conf\" nor \"$PROG.conf\" : $!"); }
 
 	# Analyze config file content
 	&Parse_Config( *CONFIG , 1 , $FileConfig);
@@ -1001,7 +999,7 @@ sub Parse_Config {
 	my $versionnum=0;
 
 	if ($level > 10) {
-		error("Error: $PROG can't read down more than 10 level of includes. Check that no 'included' config files include their parent config file (this cause infinite loop).");
+		error("$PROG can't read down more than 10 level of includes. Check that no 'included' config files include their parent config file (this cause infinite loop).");
 	}
 
    	while (<$confighandle>) {
@@ -1017,7 +1015,7 @@ sub Parse_Config {
 		if ($_ =~ /^$/) { next; }
 
 		# Check includes
-		if ($_ =~ /^#include "([^"]+)"/) {
+		if ($_ =~ /^#include "([^\"]+)"/) {
 		    my $includeFile = $1;
 			if ($Debug) { debug("Found an include : $includeFile",2); }
 		    # Correct relative include files
@@ -1031,7 +1029,7 @@ sub Parse_Config {
 				close( CONFIG_INCLUDE );
 		    }
 		    else {
-				error("Error: Could not open include file: $includeFile" );
+				error("Could not open include file: $includeFile" );
 				next;
 		    }
 		}
@@ -1048,7 +1046,7 @@ sub Parse_Config {
 		$param =~ s/^\s+//; $param =~ s/\s+$//;
 		if ($value) {
 			$value =~ s/^\s+//; $value =~ s/\s+$//;
-			$value =~ s/^\"//; $value =~ s/\"$//;
+			$value =~ s/^\"//; $value =~ s/\";?$//;
 			# Replace __MONENV__ with value of environnement variable MONENV
 			$value =~ s/__(\w+)__/$ENV{$1}/g;
 		}
@@ -1135,6 +1133,7 @@ sub Parse_Config {
 			$FoundValidSMTPCodes=1;
 			next;
 			}
+		if ($param =~ /^AuthenticatedUsersNotCaseSensitive$/)		{ $AuthenticatedUsersNotCaseSensitive=$value; next; }
 		if ($param =~ /^URLNotCaseSensitive$/)		{ $URLNotCaseSensitive=$value; next; }
 		if ($param =~ /^URLQuerySeparators$/)		{ $URLQuerySeparators=$value; $URLQuerySeparators =~ s/\s//g; next; }
 		if ($param =~ /^URLWithQuery$/)				{ $URLWithQuery=$value; next; }
@@ -1294,14 +1293,14 @@ sub Read_Ref_Data {
 		}
 		if (! $FilePath{$file}) {
 			my $filetext=$file; $filetext =~ s/\.pm$//; $filetext =~ s/_/ /g;
-			&warning("Warning: Can't read file \"$file\" ($filetext detection will not work correctly).\nCheck if file is in \"".($PossibleLibDir[0])."\" directory and is readable.");
+			warning("Warning: Can't read file \"$file\" ($filetext detection will not work correctly).\nCheck if file is in \"".($PossibleLibDir[0])."\" directory and is readable.");
 		}
 	}
 	# Sanity check.
-	if (@OSSearchIDOrder != scalar keys %OSHashID) { error("Error: Not same number of records of OSSearchIDOrder (".(@OSSearchIDOrder)." entries) and OSHashID (".(scalar keys %OSHashID)." entries) in OS database. Check your file ".$FilePath{"operating_systems.pm"}); }
-	if (@BrowsersSearchIDOrder != scalar keys %BrowsersHashIDLib) { error("Error: Not same number of records of BrowsersSearchIDOrder (".(@BrowsersSearchIDOrder)." entries) and BrowsersHashIDLib (".(scalar keys %BrowsersHashIDLib)." entries) in Browsers database. Check your file ".$FilePath{"browsers.pm"}); }
-	if (@SearchEnginesSearchIDOrder != scalar keys %SearchEnginesHashIDLib) { error("Error: Not same number of records of SearchEnginesSearchIDOrder (".(@SearchEnginesSearchIDOrder)." entries) and SearchEnginesHashIDLib (".(scalar keys %SearchEnginesHashIDLib)." entries) in Search Engines database. Check your file ".$FilePath{"search_engines.pm"}); }
-	if ((@RobotsSearchIDOrder_list1+@RobotsSearchIDOrder_list2+@RobotsSearchIDOrder_list3) != scalar keys %RobotsHashIDLib) { error("Error: Not same number of records of RobotsSearchIDOrder_listx (total is ".(@RobotsSearchIDOrder_list1+@RobotsSearchIDOrder_list2+@RobotsSearchIDOrder_list3)." entries) and RobotsHashIDLib (".(scalar keys %RobotsHashIDLib)." entries) in Robots database. Check your file ".$FilePath{"robots.pm"}); }
+	if (@OSSearchIDOrder != scalar keys %OSHashID) { error("Not same number of records of OSSearchIDOrder (".(@OSSearchIDOrder)." entries) and OSHashID (".(scalar keys %OSHashID)." entries) in OS database. Check your file ".$FilePath{"operating_systems.pm"}); }
+	if (@BrowsersSearchIDOrder != scalar keys %BrowsersHashIDLib) { error("Not same number of records of BrowsersSearchIDOrder (".(@BrowsersSearchIDOrder)." entries) and BrowsersHashIDLib (".(scalar keys %BrowsersHashIDLib)." entries) in Browsers database. Check your file ".$FilePath{"browsers.pm"}); }
+	if (@SearchEnginesSearchIDOrder != scalar keys %SearchEnginesHashIDLib) { error("Not same number of records of SearchEnginesSearchIDOrder (".(@SearchEnginesSearchIDOrder)." entries) and SearchEnginesHashIDLib (".(scalar keys %SearchEnginesHashIDLib)." entries) in Search Engines database. Check your file ".$FilePath{"search_engines.pm"}); }
+	if ((@RobotsSearchIDOrder_list1+@RobotsSearchIDOrder_list2+@RobotsSearchIDOrder_list3) != scalar keys %RobotsHashIDLib) { error("Not same number of records of RobotsSearchIDOrder_listx (total is ".(@RobotsSearchIDOrder_list1+@RobotsSearchIDOrder_list2+@RobotsSearchIDOrder_list3)." entries) and RobotsHashIDLib (".(scalar keys %RobotsHashIDLib)." entries) in Robots database. Check your file ".$FilePath{"robots.pm"}); }
 }
 
 #------------------------------------------------------------------------------
@@ -1357,7 +1356,7 @@ sub Read_Language_Data {
 		}
 	}
 	else {
-		&warning("Warning: Can't find language files for \"$_[0]\". English will be used.");
+		warning("Warning: Can't find language files for \"$_[0]\". English will be used.");
 	}
 	close(LANG);
 }
@@ -1473,7 +1472,7 @@ sub Check_Config {
 		if ($timetag =~ /DW/)    { $LogFile =~ s/%DW-$timephase/$olderwday/g; next; }
 		if ($timetag =~ /Dw/)    { my $olderwday0=$olderwday-1; $LogFile =~ s/%Dw-$timephase/$olderwday0/g; next; }
 		# If unknown tag
-		error("Error: Unknown tag '\%$timetag' in LogFile parameter.");
+		error("Unknown tag '\%$timetag' in LogFile parameter.");
 	}
 	# Replace %YYYY %YY %MM %DD %HH with current value. Kept for backward compatibility.
 	$LogFile =~ s/%YYYY/$nowyear/ig;
@@ -1489,21 +1488,21 @@ sub Check_Config {
 	$LogFile =~ s/%DW/$nowwday/g;
 	my $nowwday0=$nowwday-1; $LogFile =~ s/%Dw/$nowwday0/g;
 	$LogFormat =~ s/\\//g;
-	if (! $LogFile)   { error("Error: LogFile parameter is not defined in config/domain file"); }
-	if (! $LogFormat) { error("Error: LogFormat parameter is not defined in config/domain file"); }
-	if ($LogFormat =~ /^\d$/ && $LogFormat !~ /[1-6]/)  { error("Error: LogFormat parameter is wrong in config/domain file. Value is '$LogFormat' (should be 1,2,3,4,5 or a 'personalized AWStats log format string')"); }
+	if (! $LogFile)   { error("LogFile parameter is not defined in config/domain file"); }
+	if (! $LogFormat) { error("LogFormat parameter is not defined in config/domain file"); }
+	if ($LogFormat =~ /^\d$/ && $LogFormat !~ /[1-6]/)  { error("LogFormat parameter is wrong in config/domain file. Value is '$LogFormat' (should be 1,2,3,4,5 or a 'personalized AWStats log format string')"); }
 	if (! $LogSeparator) { $LogSeparator="\\s"; }
 	if (! $DirData)   { $DirData="."; }
 	if (! $DirCgi)    { $DirCgi="/cgi-bin"; }
 	if (! $DirIcons)  { $DirIcons="/icon"; }
-	if ($DNSLookup !~ /[0-2]/)                      { error("Error: DNSLookup parameter is wrong in config/domain file. Value is '$DNSLookup' (should be 0 or 1)"); }
-	if (! $SiteDomain)                              { error("Error: SiteDomain parameter not found in your config/domain file. You must add it for using this version."); }
+	if ($DNSLookup !~ /[0-2]/)                      { error("DNSLookup parameter is wrong in config/domain file. Value is '$DNSLookup' (should be 0 or 1)"); }
+	if (! $SiteDomain)                              { error("SiteDomain parameter not found in your config/domain file. You must add it for using this version."); }
 	if ($AllowToUpdateStatsFromBrowser !~ /[0-1]/) 	{ $AllowToUpdateStatsFromBrowser=0; }
 	# Optional setup section
 	if ($EnableLockForUpdate !~ /[0-1]/)           	{ $EnableLockForUpdate=0; }
 	if (! $DNSStaticCacheFile)                     	{ $DNSStaticCacheFile="dnscache.txt"; }
 	if (! $DNSLastUpdateCacheFile)                 	{ $DNSLastUpdateCacheFile="dnscachelastupdate.txt"; }
-	if ($DNSStaticCacheFile eq $DNSLastUpdateCacheFile)	{ error("Error: DNSStaticCacheFile and DNSLastUpdateCacheFile must have different values."); }
+	if ($DNSStaticCacheFile eq $DNSLastUpdateCacheFile)	{ error("DNSStaticCacheFile and DNSLastUpdateCacheFile must have different values."); }
 	if ($AllowAccessFromWebToAuthenticatedUsersOnly !~ /[0-1]/)     { $AllowAccessFromWebToAuthenticatedUsersOnly=0; }
 	if ($CreateDirDataIfNotExists !~ /[0-1]/)      	{ $CreateDirDataIfNotExists=0; }
 	if ($SaveDatabaseFilesWithPermissionsForEveryone !~ /[0-1]/)	{ $SaveDatabaseFilesWithPermissionsForEveryone=1; }
@@ -1511,6 +1510,7 @@ sub Check_Config {
 	if ($ArchiveLogRecords !~ /[0-1]/)            	{ $ArchiveLogRecords=1; }
 	if ($KeepBackupOfHistoricFiles !~ /[0-1]/)     	{ $KeepBackupOfHistoricFiles=0; }
 	if (! $DefaultFile[0])                          { $DefaultFile[0]="index.html"; }
+	if ($AuthenticatedUsersNotCaseSensitive !~ /[0-1]/)       { $AuthenticatedUsersNotCaseSensitive=0; }
 	if ($URLNotCaseSensitive !~ /[0-1]/)           	{ $URLNotCaseSensitive=0; }
 	if (! $URLQuerySeparators)                 		{ $URLQuerySeparators='?;'; }
 	if ($URLWithQuery !~ /[0-1]/)                 	{ $URLWithQuery=0; }
@@ -1532,7 +1532,7 @@ sub Check_Config {
 		if ($ExtraStatTypes[$extracpt] !~ /[PHBL]/)  { $ExtraStatTypes[$extracpt]='PHBL'; }
 		if ($MaxNbOfExtra[$extracpt] !~ /^\d+$/ || $MaxNbOfExtra[$extracpt]<1) { $MaxNbOfExtra[$extracpt]=20; }
 		if ($MinHitExtra[$extracpt] !~ /^\d+$/ || $MinHitExtra[$extracpt]<1) { $MinHitExtra[$extracpt]=1; }
-		if (! $ExtraFirstColumnValues[$extracpt]) { error("Error: Extra section number $extracpt is defined without ExtraSectionFirstColumnValues$extracpt parameter"); }
+		if (! $ExtraFirstColumnValues[$extracpt]) { error("Extra section number $extracpt is defined without ExtraSectionFirstColumnValues$extracpt parameter"); }
 	}
 	# Optional appearance setup section
 	if ($MaxRowsInHTMLOutput !~ /^\d+/ || $MaxRowsInHTMLOutput<1)     { $MaxRowsInHTMLOutput=1000; }
@@ -1621,7 +1621,7 @@ sub Check_Config {
 	if ($ShowFileTypesStats eq '1') 	{ $ShowFileTypesStats = 'HB'; }
 	if ($ShowOriginStats eq '1') 		{ $ShowOriginStats = 'PH'; }
 
-	# Convert extra sections data
+	# Convert extra sections data into @ExtraConditionType, @ExtraConditionTypeVal...
 	foreach my $extranum (1..@ExtraName-1) {
 		my $part=0;
 		foreach my $conditioncouple (split(/\s\|\s/, $ExtraCondition[$extranum])) {
@@ -1658,17 +1658,17 @@ sub Check_Config {
 
 	# Refuse LogFile if contains a pipe and PurgeLogFile || ArchiveLogRecords set on
 	if (($PurgeLogFile || $ArchiveLogRecords) && $LogFile =~ /\|\s*$/) {
-		error("Error: A pipe in log file name is not allowed if PurgeLogFile and ArchiveLogRecords are not set to 0");
+		error("A pipe in log file name is not allowed if PurgeLogFile and ArchiveLogRecords are not set to 0");
 	}
 	# If not a migrate, check if DirData is OK
 	if (! $MigrateStats && ! -d $DirData) {
 		if ($CreateDirDataIfNotExists) {
 			if ($Debug) { debug(" Make directory $DirData",2); }
 			my $mkdirok=mkdir "$DirData", 0766;
-			if (! $mkdirok) { error("Error: $PROG failed to create directory DirData (DirData=\"$DirData\", CreateDirDataIfNotExists=$CreateDirDataIfNotExists)."); }
+			if (! $mkdirok) { error("$PROG failed to create directory DirData (DirData=\"$DirData\", CreateDirDataIfNotExists=$CreateDirDataIfNotExists)."); }
 		}
 		else {
-			error("Error: AWStats database directory defined in config file by 'DirData' parameter ($DirData) does not exist or is not writable.");
+			error("AWStats database directory defined in config file by 'DirData' parameter ($DirData) does not exist or is not writable.");
 		}
 	}
 }
@@ -1728,14 +1728,14 @@ sub Read_Plugins {
 						my $loadret=require "$pluginpath";
 						if (! $loadret || $loadret =~ /^error/i) {
 							# Load failed, we stop here
-							&error("Plugin load for plugin '$pluginname' failed with return code: $loadret");
+							error("Plugin load for plugin '$pluginname' failed with return code: $loadret");
 						}
 						my $ret;	# To get init return
 						my $initfunction="\$ret=Init_$pluginname('$pluginparam')";
 						my $initret=eval("$initfunction");
 						if (! $initret || $initret =~ /^error/i) {
 							# Init function failed, we stop here
-							&error("Plugin init for plugin '$pluginname' failed with return code: ".($initret?"$initret":"$@ (A module required by plugin might be missing)."));
+							error("Plugin init for plugin '$pluginname' failed with return code: ".($initret?"$initret":"$@ (A module required by plugin might be missing)."));
 						}
 						# Plugin load and init successfull
 						foreach my $elem (split(/\s+/,$initret)) {
@@ -1745,7 +1745,7 @@ sub Read_Plugins {
 								if ("$elem" eq "$function") {
 									# We try to load a 'unique' function, so we check and stop if already loaded
 									foreach my $otherpluginname (keys %{$PluginsLoaded{"$elem"}})  {
-										&error("Error: Conflict between plugin '$pluginname' and '$otherpluginname'. They implements both the 'must be unique' function '$elem'.\nYou can use only one of these plugins but not both of them.");
+										error("Conflict between plugin '$pluginname' and '$otherpluginname'. They implements both the 'must be unique' function '$elem'.\nYou can use only one of these plugins but not both of them.");
 									}
 									last;
 								}
@@ -1758,15 +1758,15 @@ sub Read_Plugins {
 					}
 				}
 				if (! $PluginsLoaded{'init'}{"$pluginname"}) {
-					&error("Can't open plugin file \"$pluginfile.pm\" for read.\nCheck if file is in \"".($PossiblePluginsDir[0])."\" directory and is readable.");
+					error("Can't open plugin file \"$pluginfile.pm\" for read.\nCheck if file is in \"".($PossiblePluginsDir[0])."\" directory and is readable.");
 				}
 			}
 			else {
-				&warning("Tried to load plugin \"$pluginname\" twice. Fix config file.");
+				warning("Tried to load plugin \"$pluginname\" twice. Fix config file.");
 			}
 		}
 		else {
-			&error("Plugin \"$pluginfile\" is not a valid plugin name.");
+			error("Plugin \"$pluginfile\" is not a valid plugin name.");
 		}
 	}
 }
@@ -1815,7 +1815,7 @@ sub Read_History_With_TmpUpdate {
 		if ($UpdateStats || $MigrateStats || ($HTMLOutput eq 'main' && $ShowHostsStats) || $HTMLOutput =~ /allhosts/ || $HTMLOutput =~ /lasthosts/ || $HTMLOutput =~ /unknownip/) { $SectionsToLoad{'visitor'}=$order++; }	# Must be before day, sider and session section
 		if ($UpdateStats || $MigrateStats || ($HTMLOutput eq 'main' && ($ShowDaysOfWeekStats || $ShowMonthDayStats)) || $HTMLOutput eq 'alldays') { $SectionsToLoad{'day'}=$order++; }
 		# Who
-		if ($UpdateStats || $MigrateStats || ($HTMLOutput eq 'main' && $ShowDomainsStats) || $HTMLOutput eq 'domains') { $SectionsToLoad{'domain'}=$order++; }
+		if ($UpdateStats || $MigrateStats || ($HTMLOutput eq 'main' && $ShowDomainsStats) || $HTMLOutput eq 'alldomains') { $SectionsToLoad{'domain'}=$order++; }
 		if ($UpdateStats || $MigrateStats || ($HTMLOutput eq 'main' && $ShowAuthenticatedUsers) || $HTMLOutput =~ /alllogins/ || $HTMLOutput =~ /lastlogins/) { $SectionsToLoad{'login'}=$order++; }
 		if ($UpdateStats || $MigrateStats || ($HTMLOutput eq 'main' && $ShowRobotsStats) || $HTMLOutput =~ /allrobots/ || $HTMLOutput =~ /lastrobots/) { $SectionsToLoad{'robot'}=$order++; }
 		if ($UpdateStats || $MigrateStats || ($HTMLOutput eq 'main' && $ShowEMailSenders) || $HTMLOutput =~ /allemails/ || $HTMLOutput =~ /lastemails/) { $SectionsToLoad{'emailsender'}=$order++; }
@@ -1876,10 +1876,10 @@ sub Read_History_With_TmpUpdate {
 
 	# Open files
 	if ($withread) {
-		open(HISTORY,$filetoread) || error("Error: Couldn't open file \"$filetoread\" for read: $!","","",$MigrateStats);
+		open(HISTORY,$filetoread) || error("Couldn't open file \"$filetoread\" for read: $!","","",$MigrateStats);
 	}
 	if ($withupdate) {
-		open(HISTORYTMP,">$filetowrite") || error("Error: Couldn't open file \"$filetowrite\" for write: $!");
+		open(HISTORYTMP,">$filetowrite") || error("Couldn't open file \"$filetowrite\" for write: $!");
 		Save_History("header",$year,$month);
 	}
 
@@ -1979,7 +1979,7 @@ sub Read_History_With_TmpUpdate {
 				if ($Debug) { debug(" Begin of TIME section"); }
 				$_=<HISTORY>;
 				chomp $_; s/\r//;
-				if (! $_) { error("Error: History file \"$filetoread\" is corrupted (in section TIME). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost).","","",1); }
+				if (! $_) { error("History file \"$filetoread\" is corrupted (in section TIME). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost).","","",1); }
 				my @field=split(/\s+/,$_); $countlines++;
 				my $count=0;my $countloaded=0;
 				my $monthpages=0;my $monthhits=0;my $monthbytes=0;
@@ -2000,7 +2000,7 @@ sub Read_History_With_TmpUpdate {
 					#}
 					$_=<HISTORY>;
 					chomp $_; s/\r//;
-					if (! $_) { error("Error: History file \"$filetoread\" is corrupted (in section TIME). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost).","","",1); }
+					if (! $_) { error("History file \"$filetoread\" is corrupted (in section TIME). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost).","","",1); }
 					@field=split(/\s+/,$_); $countlines++;
 				}
 				$MonthPages{$year.$month}+=$monthpages;
@@ -2051,7 +2051,7 @@ sub Read_History_With_TmpUpdate {
 				if ($Debug) { debug(" Begin of DAY section"); }
 				$_=<HISTORY>;
 				chomp $_; s/\r//;
-				if (! $_) { error("Error: History file \"$filetoread\" is corrupted (in section DAY). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost).","","",1); }
+				if (! $_) { error("History file \"$filetoread\" is corrupted (in section DAY). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost).","","",1); }
 				my @field=split(/\s+/,$_); $countlines++;
 				my $count=0;my $countloaded=0;
 				while ($field[0] ne 'END_DAY' ) {
@@ -2067,7 +2067,7 @@ sub Read_History_With_TmpUpdate {
 					}
 					$_=<HISTORY>;
 					chomp $_; s/\r//;
-					if (! $_) { error("Error: History file \"$filetoread\" is corrupted (in section DAY). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost).","","",1); }
+					if (! $_) { error("History file \"$filetoread\" is corrupted (in section DAY). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost).","","",1); }
 					@field=split(/\s+/,$_); $countlines++;
 				}
 				if ($Debug) { debug(" End of DAY section ($count entries, $countloaded loaded)"); }
@@ -2085,7 +2085,7 @@ sub Read_History_With_TmpUpdate {
 				if ($Debug) { debug(" Begin of VISITOR section"); }
 				$_=<HISTORY>;
 				chomp $_; s/\r//;
-				if (! $_) { error("Error: History file \"$filetoread\" is corrupted (in section VISITOR). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost).","","",1); }
+				if (! $_) { error("History file \"$filetoread\" is corrupted (in section VISITOR). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost).","","",1); }
 				my @field=split(/\s+/,$_); $countlines++;
 				my $count=0;my $countloaded=0;
 				while ($field[0] ne 'END_VISITOR') {
@@ -2175,7 +2175,7 @@ sub Read_History_With_TmpUpdate {
 					}
 					$_=<HISTORY>;
 					chomp $_; s/\r//;
-					if (! $_) { error("Error: History file \"$filetoread\" is corrupted (in section VISITOR). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost).","","",1); }
+					if (! $_) { error("History file \"$filetoread\" is corrupted (in section VISITOR). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost).","","",1); }
 					@field=split(/\s+/,$_); $countlines++;
 				}
 				if ($Debug) { debug(" End of VISITOR section ($count entries, $countloaded loaded)"); }
@@ -2193,7 +2193,7 @@ sub Read_History_With_TmpUpdate {
 				if ($Debug) { debug(" Begin of UNKNOWNIP section"); }
 				$_=<HISTORY>;
 				chomp $_; s/\r//;
-				if (! $_) { error("Error: History file \"$filetoread\" is corrupted (in section UNKNOWNIP). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost).","","",1); }
+				if (! $_) { error("History file \"$filetoread\" is corrupted (in section UNKNOWNIP). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost).","","",1); }
 				my @field=split(/\s+/,$_); $countlines++;
 				my $count=0;my $countloaded=0;
 				my %iptomigrate=();
@@ -2207,7 +2207,7 @@ sub Read_History_With_TmpUpdate {
 					}
 					$_=<HISTORY>;
 					chomp $_; s/\r//;
-					if (! $_) { error("Error: History file \"$filetoread\" is corrupted (in section UNKNOWNIP). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost).","","",1); }
+					if (! $_) { error("History file \"$filetoread\" is corrupted (in section UNKNOWNIP). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost).","","",1); }
 					@field=split(/\s+/,$_); $countlines++;
 				}
 				if ($Debug) { debug(" End of UNKNOWNIP section ($count entries, $countloaded loaded)"); }
@@ -2231,7 +2231,7 @@ sub Read_History_With_TmpUpdate {
 				if ($Debug) { debug(" Begin of LOGIN section"); }
 				$_=<HISTORY>;
 				chomp $_; s/\r//;
-				if (! $_) { error("Error: History file \"$filetoread\" is corrupted (in section LOGIN). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost).","","",1); }
+				if (! $_) { error("History file \"$filetoread\" is corrupted (in section LOGIN). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost).","","",1); }
 				my @field=split(/\s+/,$_); $countlines++;
 				my $count=0;my $countloaded=0;
 				while ($field[0] ne 'END_LOGIN') {
@@ -2247,7 +2247,7 @@ sub Read_History_With_TmpUpdate {
 					}
 					$_=<HISTORY>;
 					chomp $_; s/\r//;
-					if (! $_) { error("Error: History file \"$filetoread\" is corrupted (in section LOGIN). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost).","","",1); }
+					if (! $_) { error("History file \"$filetoread\" is corrupted (in section LOGIN). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost).","","",1); }
 					@field=split(/\s+/,$_); $countlines++;
 				}
 				if ($Debug) { debug(" End of LOGIN section ($count entries, $countloaded loaded)"); }
@@ -2264,7 +2264,7 @@ sub Read_History_With_TmpUpdate {
 				if ($Debug) { debug(" Begin of DOMAIN section"); }
 				$_=<HISTORY>;
 				chomp $_; s/\r//;
-				if (! $_) { error("Error: History file \"$filetoread\" is corrupted (in section DOMAIN). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost).","","",1); }
+				if (! $_) { error("History file \"$filetoread\" is corrupted (in section DOMAIN). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost).","","",1); }
 				my @field=split(/\s+/,$_); $countlines++;
 				my $count=0;my $countloaded=0;
 				while ($field[0] ne 'END_DOMAIN') {
@@ -2279,7 +2279,7 @@ sub Read_History_With_TmpUpdate {
 					}
 					$_=<HISTORY>;
 					chomp $_; s/\r//;
-					if (! $_) { error("Error: History file \"$filetoread\" is corrupted (in section DOMAIN). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost).","","",1); }
+					if (! $_) { error("History file \"$filetoread\" is corrupted (in section DOMAIN). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost).","","",1); }
 					@field=split(/\s+/,$_); $countlines++;
 				}
 				if ($Debug) { debug(" End of DOMAIN section ($count entries, $countloaded loaded)"); }
@@ -2296,7 +2296,7 @@ sub Read_History_With_TmpUpdate {
 				if ($Debug) { debug(" Begin of SESSION section"); }
 				$_=<HISTORY>;
 				chomp $_; s/\r//;
-				if (! $_) { error("Error: History file \"$filetoread\" is corrupted (in section SESSION). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost).","","",1); }
+				if (! $_) { error("History file \"$filetoread\" is corrupted (in section SESSION). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost).","","",1); }
 				my @field=split(/\s+/,$_); $countlines++;
 				my $count=0;my $countloaded=0;
 				while ($field[0] ne 'END_SESSION') {
@@ -2309,7 +2309,7 @@ sub Read_History_With_TmpUpdate {
 					}
 					$_=<HISTORY>;
 					chomp $_; s/\r//;
-					if (! $_) { error("Error: History file \"$filetoread\" is corrupted (in section SESSION). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost).","","",1); }
+					if (! $_) { error("History file \"$filetoread\" is corrupted (in section SESSION). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost).","","",1); }
 					@field=split(/\s+/,$_); $countlines++;
 				}
 				if ($Debug) { debug(" End of SESSION section ($count entries, $countloaded loaded)"); }
@@ -2327,7 +2327,7 @@ sub Read_History_With_TmpUpdate {
 				if ($Debug) { debug(" Begin of BROWSER section"); }
 				$_=<HISTORY>;
 				chomp $_; s/\r//;
-				if (! $_) { error("Error: History file \"$filetoread\" is corrupted (in section BROWSER). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost).","","",1); }
+				if (! $_) { error("History file \"$filetoread\" is corrupted (in section BROWSER). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost).","","",1); }
 				my @field=split(/\s+/,$_); $countlines++;
 				my $count=0;my $countloaded=0;
 				while ($field[0] ne 'END_BROWSER') {
@@ -2340,7 +2340,7 @@ sub Read_History_With_TmpUpdate {
 					}
 					$_=<HISTORY>;
 					chomp $_; s/\r//;
-					if (! $_) { error("Error: History file \"$filetoread\" is corrupted (in section BROWSER). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost).","","",1); }
+					if (! $_) { error("History file \"$filetoread\" is corrupted (in section BROWSER). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost).","","",1); }
 					@field=split(/\s+/,$_); $countlines++;
 				}
 				if ($Debug) { debug(" End of BROWSER section ($count entries, $countloaded loaded)"); }
@@ -2357,7 +2357,7 @@ sub Read_History_With_TmpUpdate {
 				if ($Debug) { debug(" Begin of OS section"); }
 				$_=<HISTORY>;
 				chomp $_; s/\r//;
-				if (! $_) { error("Error: History file \"$filetoread\" is corrupted (in section OS). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost).","","",1); }
+				if (! $_) { error("History file \"$filetoread\" is corrupted (in section OS). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost).","","",1); }
 				my @field=split(/\s+/,$_); $countlines++;
 				my $count=0;my $countloaded=0;
 				while ($field[0] ne 'END_OS') {
@@ -2370,7 +2370,7 @@ sub Read_History_With_TmpUpdate {
 					}
 					$_=<HISTORY>;
 					chomp $_; s/\r//;
-					if (! $_) { error("Error: History file \"$filetoread\" is corrupted (in section OS). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost).","","",1); }
+					if (! $_) { error("History file \"$filetoread\" is corrupted (in section OS). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost).","","",1); }
 					@field=split(/\s+/,$_); $countlines++;
 				}
 				if ($Debug) { debug(" End of OS section ($count entries, $countloaded loaded)"); }
@@ -2387,7 +2387,7 @@ sub Read_History_With_TmpUpdate {
 				if ($Debug) { debug(" Begin of UNKNOWNREFERER section"); }
 				$_=<HISTORY>;
 				chomp $_; s/\r//;
-				if (! $_) { error("Error: History file \"$filetoread\" is corrupted (in section UNKNOWNREFERER). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost).","","",1); }
+				if (! $_) { error("History file \"$filetoread\" is corrupted (in section UNKNOWNREFERER). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost).","","",1); }
 				my @field=split(/\s+/,$_); $countlines++;
 				my $count=0;my $countloaded=0;
 				while ($field[0] ne 'END_UNKNOWNREFERER') {
@@ -2400,7 +2400,7 @@ sub Read_History_With_TmpUpdate {
 					}
 					$_=<HISTORY>;
 					chomp $_; s/\r//;
-					if (! $_) { error("Error: History file \"$filetoread\" is corrupted (in section UNKNOWNREFERER). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost).","","",1); }
+					if (! $_) { error("History file \"$filetoread\" is corrupted (in section UNKNOWNREFERER). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost).","","",1); }
 					@field=split(/\s+/,$_); $countlines++;
 				}
 				if ($Debug) { debug(" End of UNKNOWNREFERER section ($count entries, $countloaded loaded)"); }
@@ -2417,7 +2417,7 @@ sub Read_History_With_TmpUpdate {
 				if ($Debug) { debug(" Begin of UNKNOWNREFERERBROWSER section"); }
 				$_=<HISTORY>;
 				chomp $_; s/\r//;
-				if (! $_) { error("Error: History file \"$filetoread\" is corrupted (in section UNKNOWNREFERERBROWSER). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost).","","",1); }
+				if (! $_) { error("History file \"$filetoread\" is corrupted (in section UNKNOWNREFERERBROWSER). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost).","","",1); }
 				my @field=split(/\s+/,$_); $countlines++;
 				my $count=0;my $countloaded=0;
 				while ($field[0] ne 'END_UNKNOWNREFERERBROWSER') {
@@ -2430,7 +2430,7 @@ sub Read_History_With_TmpUpdate {
 					}
 					$_=<HISTORY>;
 					chomp $_; s/\r//;
-					if (! $_) { error("Error: History file \"$filetoread\" is corrupted (in section UNKNOWNREFERERBROWSER). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost).","","",1); }
+					if (! $_) { error("History file \"$filetoread\" is corrupted (in section UNKNOWNREFERERBROWSER). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost).","","",1); }
 					@field=split(/\s+/,$_); $countlines++;
 				}
 				if ($Debug) { debug(" End of UNKNOWNREFERERBROWSER section ($count entries, $countloaded loaded)"); }
@@ -2447,7 +2447,7 @@ sub Read_History_With_TmpUpdate {
 				if ($Debug) { debug(" Begin of ROBOT section"); }
 				$_=<HISTORY>;
 				chomp $_; s/\r//;
-				if (! $_) { error("Error: History file \"$filetoread\" is corrupted (in section ROBOT). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost).","","",1); }
+				if (! $_) { error("History file \"$filetoread\" is corrupted (in section ROBOT). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost).","","",1); }
 				my @field=split(/\s+/,$_); $countlines++;
 				my $count=0;my $countloaded=0;
 				while ($field[0] ne 'END_ROBOT') {
@@ -2467,7 +2467,7 @@ sub Read_History_With_TmpUpdate {
 					}
 					$_=<HISTORY>;
 					chomp $_; s/\r//;
-					if (! $_) { error("Error: History file \"$filetoread\" is corrupted (in section ROBOT). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost).","","",1); }
+					if (! $_) { error("History file \"$filetoread\" is corrupted (in section ROBOT). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost).","","",1); }
 					@field=split(/\s+/,$_); $countlines++;
 				}
 				if ($Debug) { debug(" End of ROBOT section ($count entries, $countloaded loaded)"); }
@@ -2484,7 +2484,7 @@ sub Read_History_With_TmpUpdate {
 				if ($Debug) { debug(" Begin of EMAILSENDER section"); }
 				$_=<HISTORY>;
 				chomp $_; s/\r//;
-				if (! $_) { error("Error: History file \"$filetoread\" is corrupted (in section EMAILSENDER). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost).","","",1); }
+				if (! $_) { error("History file \"$filetoread\" is corrupted (in section EMAILSENDER). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost).","","",1); }
 				my @field=split(/\s+/,$_); $countlines++;
 				my $count=0;my $countloaded=0;
 				while ($field[0] ne 'END_EMAILSENDER') {
@@ -2499,7 +2499,7 @@ sub Read_History_With_TmpUpdate {
 					}
 					$_=<HISTORY>;
 					chomp $_; s/\r//;
-					if (! $_) { error("Error: History file \"$filetoread\" is corrupted (in section EMAILSENDER). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost).","","",1); }
+					if (! $_) { error("History file \"$filetoread\" is corrupted (in section EMAILSENDER). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost).","","",1); }
 					@field=split(/\s+/,$_); $countlines++;
 				}
 				if ($Debug) { debug(" End of EMAILSENDER section ($count entries, $countloaded loaded)"); }
@@ -2516,7 +2516,7 @@ sub Read_History_With_TmpUpdate {
 				if ($Debug) { debug(" Begin of EMAILRECEIVER section"); }
 				$_=<HISTORY>;
 				chomp $_; s/\r//;
-				if (! $_) { error("Error: History file \"$filetoread\" is corrupted (in section EMAILRECEIVER). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost).","","",1); }
+				if (! $_) { error("History file \"$filetoread\" is corrupted (in section EMAILRECEIVER). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost).","","",1); }
 				my @field=split(/\s+/,$_); $countlines++;
 				my $count=0;my $countloaded=0;
 				while ($field[0] ne 'END_EMAILRECEIVER') {
@@ -2531,7 +2531,7 @@ sub Read_History_With_TmpUpdate {
 					}
 					$_=<HISTORY>;
 					chomp $_; s/\r//;
-					if (! $_) { error("Error: History file \"$filetoread\" is corrupted (in section EMAILRECEIVER). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost).","","",1); }
+					if (! $_) { error("History file \"$filetoread\" is corrupted (in section EMAILRECEIVER). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost).","","",1); }
 					@field=split(/\s+/,$_); $countlines++;
 				}
 				if ($Debug) { debug(" End of EMAILRECEIVER section ($count entries, $countloaded loaded)"); }
@@ -2548,7 +2548,7 @@ sub Read_History_With_TmpUpdate {
 				if ($Debug) { debug(" Begin of SIDER section"); }
 				$_=<HISTORY>;
 				chomp $_; s/\r//;
-				if (! $_) { error("Error: History file \"$filetoread\" is corrupted (in section SIDER). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost).","","",1); }
+				if (! $_) { error("History file \"$filetoread\" is corrupted (in section SIDER). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost).","","",1); }
 				my @field=split(/\s+/,$_); $countlines++;
 				my $count=0;my $countloaded=0;
 				while ($field[0] ne 'END_SIDER') {
@@ -2603,7 +2603,7 @@ sub Read_History_With_TmpUpdate {
 					}
 					$_=<HISTORY>;
 					chomp $_; s/\r//;
-					if (! $_) { error("Error: History file \"$filetoread\" is corrupted (in section SIDER). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost).","","",1); }
+					if (! $_) { error("History file \"$filetoread\" is corrupted (in section SIDER). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost).","","",1); }
 					@field=split(/\s+/,$_); $countlines++;
 				}
 				if ($Debug) { debug(" End of SIDER section ($count entries, $countloaded loaded)"); }
@@ -2621,7 +2621,7 @@ sub Read_History_With_TmpUpdate {
 				if ($Debug) { debug(" Begin of FILETYPES section"); }
 				$_=<HISTORY>;
 				chomp $_; s/\r//;
-				if (! $_) { error("Error: History file \"$filetoread\" is corrupted (in section FILETYPES). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost).","","",1); }
+				if (! $_) { error("History file \"$filetoread\" is corrupted (in section FILETYPES). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost).","","",1); }
 				my @field=split(/\s+/,$_); $countlines++;
 				my $count=0;my $countloaded=0;
 				while ($field[0] ne 'END_FILETYPES') {
@@ -2637,7 +2637,7 @@ sub Read_History_With_TmpUpdate {
 					}
 					$_=<HISTORY>;
 					chomp $_; s/\r//;
-					if (! $_) { error("Error: History file \"$filetoread\" is corrupted (in section FILETYPES). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost).","","",1); }
+					if (! $_) { error("History file \"$filetoread\" is corrupted (in section FILETYPES). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost).","","",1); }
 					@field=split(/\s+/,$_); $countlines++;
 				}
 				if ($Debug) { debug(" End of FILETYPES section ($count entries, $countloaded loaded)"); }
@@ -2654,7 +2654,7 @@ sub Read_History_With_TmpUpdate {
 				if ($Debug) { debug(" Begin of SEREFERRALS section"); }
 				$_=<HISTORY>;
 				chomp $_; s/\r//;
-				if (! $_) { error("Error: History file \"$filetoread\" is corrupted (in section SEREFERRALS). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost).","","",1); }
+				if (! $_) { error("History file \"$filetoread\" is corrupted (in section SEREFERRALS). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost).","","",1); }
 				my @field=split(/\s+/,$_); $countlines++;
 				my $count=0;my $countloaded=0;
 				while ($field[0] ne 'END_SEREFERRALS') {
@@ -2667,7 +2667,7 @@ sub Read_History_With_TmpUpdate {
 					}
 					$_=<HISTORY>;
 					chomp $_; s/\r//;
-					if (! $_) { error("Error: History file \"$filetoread\" is corrupted (in section SEREFERRALS). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost).","","",1); }
+					if (! $_) { error("History file \"$filetoread\" is corrupted (in section SEREFERRALS). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost).","","",1); }
 					@field=split(/\s+/,$_); $countlines++;
 				}
 				if ($Debug) { debug(" End of SEREFERRALS section ($count entries, $countloaded loaded)"); }
@@ -2684,7 +2684,7 @@ sub Read_History_With_TmpUpdate {
 				if ($Debug) { debug(" Begin of PAGEREFS section"); }
 				$_=<HISTORY>;
 				chomp $_; s/\r//;
-				if (! $_) { error("Error: History file \"$filetoread\" is corrupted (in section PAGEREFS). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost).","","",1); }
+				if (! $_) { error("History file \"$filetoread\" is corrupted (in section PAGEREFS). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost).","","",1); }
 				my @field=split(/\s+/,$_); $countlines++;
 				my $count=0;my $countloaded=0;
 				while ($field[0] ne 'END_PAGEREFS') {
@@ -2706,7 +2706,7 @@ sub Read_History_With_TmpUpdate {
 					}
 					$_=<HISTORY>;
 					chomp $_; s/\r//;
-					if (! $_) { error("Error: History file \"$filetoread\" is corrupted (in section PAGEREFS). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost).","","",1); }
+					if (! $_) { error("History file \"$filetoread\" is corrupted (in section PAGEREFS). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost).","","",1); }
 					@field=split(/\s+/,$_); $countlines++;
 				}
 				if ($Debug) { debug(" End of PAGEREFS section ($count entries, $countloaded loaded)"); }
@@ -2723,7 +2723,7 @@ sub Read_History_With_TmpUpdate {
 				if ($Debug) { debug(" Begin of SEARCHWORDS section ($MaxNbOfKeyphrasesShown,$MinHitKeyphrase)"); }
 				$_=<HISTORY>;
 				chomp $_; s/\r//;
-				if (! $_) { error("Error: History file \"$filetoread\" is corrupted (in section SEARCHWORDS). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost).","","",1); }
+				if (! $_) { error("History file \"$filetoread\" is corrupted (in section SEARCHWORDS). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost).","","",1); }
 				my @field=split(/\s+/,$_); $countlines++;
 				my $count=0;my $countloaded=0;
 				while ($field[0] ne 'END_SEARCHWORDS') {
@@ -2772,7 +2772,7 @@ sub Read_History_With_TmpUpdate {
 					}
 					$_=<HISTORY>;
 					chomp $_; s/\r//;
-					if (! $_) { error("Error: History file \"$filetoread\" is corrupted (in section SEARCHWORDS). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost).","","",1); }
+					if (! $_) { error("History file \"$filetoread\" is corrupted (in section SEARCHWORDS). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost).","","",1); }
 					@field=split(/\s+/,$_); $countlines++;
 				}
 				if ($Debug) { debug(" End of SEARCHWORDS section ($count entries, $countloaded loaded)"); }
@@ -2789,7 +2789,7 @@ sub Read_History_With_TmpUpdate {
 				if ($Debug) { debug(" Begin of KEYWORDS section ($MaxNbOfKeywordsShown,$MinHitKeyword)"); }
 				$_=<HISTORY>;
 				chomp $_; s/\r//;
-				if (! $_) { error("Error: History file \"$filetoread\" is corrupted (in section KEYWORDS). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost).","","",1); }
+				if (! $_) { error("History file \"$filetoread\" is corrupted (in section KEYWORDS). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost).","","",1); }
 				my @field=split(/\s+/,$_); $countlines++;
 				my $count=0;my $countloaded=0;
 				while ($field[0] ne 'END_KEYWORDS') {
@@ -2811,7 +2811,7 @@ sub Read_History_With_TmpUpdate {
 					}
 					$_=<HISTORY>;
 					chomp $_; s/\r//;
-					if (! $_) { error("Error: History file \"$filetoread\" is corrupted (in section KEYWORDS). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost).","","",1); }
+					if (! $_) { error("History file \"$filetoread\" is corrupted (in section KEYWORDS). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost).","","",1); }
 					@field=split(/\s+/,$_); $countlines++;
 				}
 				if ($Debug) { debug(" End of KEYWORDS section ($count entries, $countloaded loaded)"); }
@@ -2828,7 +2828,7 @@ sub Read_History_With_TmpUpdate {
 				if ($Debug) { debug(" Begin of ERRORS section"); }
 				$_=<HISTORY>;
 				chomp $_; s/\r//;
-				if (! $_) { error("Error: History file \"$filetoread\" is corrupted (in section ERRORS). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost).","","",1); }
+				if (! $_) { error("History file \"$filetoread\" is corrupted (in section ERRORS). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost).","","",1); }
 				my @field=split(/\s+/,$_); $countlines++;
 				my $count=0;my $countloaded=0;
 				while ($field[0] ne 'END_ERRORS') {
@@ -2842,7 +2842,7 @@ sub Read_History_With_TmpUpdate {
 					}
 					$_=<HISTORY>;
 					chomp $_; s/\r//;
-					if (! $_) { error("Error: History file \"$filetoread\" is corrupted (in section ERRORS). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost).","","",1); }
+					if (! $_) { error("History file \"$filetoread\" is corrupted (in section ERRORS). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost).","","",1); }
 					@field=split(/\s+/,$_); $countlines++;
 				}
 				if ($Debug) { debug(" End of ERRORS section ($count entries, $countloaded loaded)"); }
@@ -2860,7 +2860,7 @@ sub Read_History_With_TmpUpdate {
 					if ($Debug) { debug(" Begin of SIDER_$code section"); }
 					$_=<HISTORY>;
 					chomp $_; s/\r//;
-					if (! $_) { error("Error: History file \"$filetoread\" is corrupted (in section SIDER_$code). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost).","","",1); }
+					if (! $_) { error("History file \"$filetoread\" is corrupted (in section SIDER_$code). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost).","","",1); }
 					my @field=split(/\s+/,$_); $countlines++;
 					my $count=0;my $countloaded=0;
 					while ($field[0] ne "END_SIDER_$code") {
@@ -2876,7 +2876,7 @@ sub Read_History_With_TmpUpdate {
 						}
 						$_=<HISTORY>;
 						chomp $_; s/\r//;
-						if (! $_) { error("Error: History file \"$filetoread\" is corrupted (in section SIDER_$code). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost).","","",1); }
+						if (! $_) { error("History file \"$filetoread\" is corrupted (in section SIDER_$code). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost).","","",1); }
 						@field=split(/\s+/,$_); $countlines++;
 					}
 					if ($Debug) { debug(" End of SIDER_$code section ($count entries, $countloaded loaded)"); }
@@ -2895,7 +2895,7 @@ sub Read_History_With_TmpUpdate {
 					if ($Debug) { debug(" Begin of EXTRA_$extranum"); }
 					$_=<HISTORY>;
 					chomp $_; s/\r//;
-					if (! $_) { error("Error: History file \"$DirData/$PROG$month$year$FileSuffix.txt\" is corrupted (in section EXTRA_$extranum). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
+					if (! $_) { error("History file \"$DirData/$PROG$month$year$FileSuffix.txt\" is corrupted (in section EXTRA_$extranum). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
 					my @field=split(/\s+/,$_); $countlines++;
 					my $count=0;my $countloaded=0;
 					while ($field[0] ne "END_EXTRA_$extranum") {
@@ -2911,7 +2911,7 @@ sub Read_History_With_TmpUpdate {
 						# }
 						$_=<HISTORY>;
 						chomp $_; s/\r//;
-						if (! $_) { error("Error: History file \"$DirData/$PROG$month$year$FileSuffix.txt\" is corrupted (in section EXTRA_$extranum). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
+						if (! $_) { error("History file \"$DirData/$PROG$month$year$FileSuffix.txt\" is corrupted (in section EXTRA_$extranum). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
 						@field=split(/\s+/,$_); $countlines++;
 					}
 					if ($Debug) { debug(" End of EXTRA_$extranum ($count entries, $countloaded loaded)"); }
@@ -2961,8 +2961,6 @@ sub Read_History_With_TmpUpdate {
 		seek(HISTORYTMP,$PosInFile{"MonthHostsKnown"},0); print HISTORYTMP $MonthHostsKnown{$year.$month};
 		debug(" Update MonthHostsUnknown=$MonthHostsUnknown{$year.$month} in file at offset $PosInFile{MonthHostsUnknown}");
 		seek(HISTORYTMP,$PosInFile{"MonthHostsUnknown"},0); print HISTORYTMP $MonthHostsUnknown{$year.$month};
-		# Set cursor at end of file
-#		seek(HISTORYTMP,0,2);
 		close(HISTORYTMP) || error("Failed to write temporary history file");
 	}
 	if ($withread) {
@@ -3588,7 +3586,7 @@ sub Read_DNS_Cache {
 	# Plugin call : Load hashtoload
 	if ($PluginsLoaded{'LoadCache'}{'hashfiles'}) { LoadCache_hashfiles($filetoload,$hashtoload); }
 	if (! scalar keys %$hashtoload) {
-		open(DNSFILE,"$filetoload") or error("Error: Couldn't open DNS Cache file \"$filetoload\": $!");
+		open(DNSFILE,"$filetoload") or error("Couldn't open DNS Cache file \"$filetoload\": $!");
 		# This is the fastest way to load with regexp that I know
 		%$hashtoload = map(/^\d{0,10}\s*([0-9A-F:\.]+)\s+([^\s]+)$/oi,<DNSFILE>);
 		close DNSFILE;
@@ -4026,8 +4024,8 @@ sub MinimumButNoZero {
 # Return:       @keylist response array
 #--------------------------------------------------------------------
 sub BuildKeyList {
-	my $ArraySize=shift||error("Error: System error. Call to BuildKeyList function with incorrect value for first param","","",1);
-	my $MinValue=shift||error("Error: System error. Call to BuildKeyList function with incorrect value for second param","","",1);
+	my $ArraySize=shift||error("System error. Call to BuildKeyList function with incorrect value for first param","","",1);
+	my $MinValue=shift||error("System error. Call to BuildKeyList function with incorrect value for second param","","",1);
 	my $hashforselect=shift;
 	my $hashfororder=shift;
 	if ($Debug) { debug(" BuildKeyList($ArraySize,$MinValue,$hashforselect with size=".(scalar keys %$hashforselect).",$hashfororder with size=".(scalar keys %$hashfororder).")",2); }
@@ -4089,7 +4087,7 @@ sub Lock_Update {
 			$DirLock=$key;
 			$DirLock =~ s/[\\\/]$//;
 			if ($Debug) { debug("Update lock file $DirLock/$lock is set"); }
-			open(LOCK,">$DirLock/$lock") || error("Error: Failed to create lock file $DirLock/$lock","","",1);
+			open(LOCK,">$DirLock/$lock") || error("Failed to create lock file $DirLock/$lock","","",1);
 			print LOCK "AWStats update started by process $$ at $nowyear-$nowmonth-$nowday $nowhour:$nowmin:$nowsec\n";
 			close(LOCK);
 			last;
@@ -4216,6 +4214,234 @@ sub ShowURL() {
 	else {
 		print "$nompage";
 	}
+}
+
+#--------------------------------------------------------------------
+# Function:     Define value for PerlParsingFormat (used for regex log record parsing)
+# Parameters:   -
+# Input:        $LogFormat
+# Output:       @fieldlib
+# Return:       -
+#--------------------------------------------------------------------
+sub DefinePerlParsingFormat() {
+	# Log records examples:
+	# Apache combined: 62.161.78.73 user - [dd/mmm/yyyy:hh:mm:ss +0000] "GET / HTTP/1.1" 200 1234 "http://www.from.com/from.htm" "Mozilla/4.0 (compatible; MSIE 5.01; Windows NT 5.0)"
+	# Apache combined (408 error): my.domain.com - user [09/Jan/2001:11:38:51 -0600] "OPTIONS /mime-tmp/xxx file.doc HTTP/1.1" 408 - "-" "-"
+	# Apache combined (408 error): 62.161.78.73 user - [dd/mmm/yyyy:hh:mm:ss +0000] "-" 408 - "-" "-"
+	# Apache common_with_mod_gzip_info1: %h %l %u %t \"%r\" %>s %b mod_gzip: %{mod_gzip_compression_ratio}npct.
+	# Apache common_with_mod_gzip_info2: %h %l %u %t \"%r\" %>s %b mod_gzip: %{mod_gzip_result}n In:%{mod_gzip_input_size}n Out:%{mod_gzip_output_size}n:%{mod_gzip_compression_ratio}npct.
+	# IIS: 2000-07-19 14:14:14 62.161.78.73 - GET / 200 1234 HTTP/1.1 Mozilla/4.0+(compatible;+MSIE+5.01;+Windows+NT+5.0) http://www.from.com/from.htm
+	# WebStar: 05/21/00	00:17:31	OK  	200	212.242.30.6	Mozilla/4.0 (compatible; MSIE 5.0; Windows 98; DigExt)	http://www.cover.dk/	"www.cover.dk"	:Documentation:graphics:starninelogo.white.gif	1133
+	# Squid extended: 12.229.91.170 - - [27/Jun/2002:03:30:50 -0700] "GET http://www.callistocms.com/images/printable.gif HTTP/1.1" 304 354 "-" "Mozilla/5.0 Galeon/1.0.3 (X11; Linux i686; U;) Gecko/0" TCP_REFRESH_HIT:DIRECT
+	if ($Debug) { debug("Call To DefinePerlParsingFormat"); }
+	if ($Debug) { debug(" LogFormat=$LogFormat"); }
+	@fieldlib=();
+	if ($LogFormat =~ /^[1-6]$/) {	# Pre-defined log format
+		if ($LogFormat eq '1') {	# Same than "%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\""
+			$PerlParsingFormat="([^ ]+) [^ ]+ ([^ ]+) \\[([^ ]+) [^ ]+\\] \\\"([^ ]+) ([^ ]+) [^\\\"]+\\\" ([\\d|-]+) ([\\d|-]+) \\\"(.*)\\\" \\\"([^\\\"]*)\\\"";	# referer and ua might be ""
+			$pos_host=0;$pos_logname=1;$pos_date=2;$pos_method=3;$pos_url=4;$pos_code=5;$pos_size=6;$pos_referer=7;$pos_agent=8;
+			@fieldlib=('host','logname','date','method','url','code','size','referer','ua');
+		}
+		elsif ($LogFormat eq '2') {	# Same than "date time c-ip cs-username cs-method cs-uri-stem sc-status sc-bytes cs-version cs(User-Agent) cs(Referer)"
+			$PerlParsingFormat="(\\S+ \\S+) (\\S+) (\\S+) (\\S+) (\\S+) ([\\d|-]+) ([\\d|-]+) \\S+ (\\S+) (\\S+)";
+			$pos_date=0;$pos_host=1;$pos_logname=2;$pos_method=3;$pos_url=4;$pos_code=5;$pos_size=6;$pos_agent=7;$pos_referer=8;
+			@fieldlib=('date','host','logname','method','url','code','size','ua','referer');
+		}
+		elsif ($LogFormat eq '3') {
+			$PerlParsingFormat="([^\\t]*\\t[^\\t]*)\\t([^\\t]*)\\t([\\d]*)\\t([^\\t]*)\\t([^\\t]*)\\t([^\\t]*)\\t[^\\t]*\\t.*:([^\\t]*)\\t([\\d]*)";
+			$pos_date=0;$pos_method=1;$pos_code=2;$pos_host=3;$pos_agent=4;$pos_referer=5;$pos_url=6;$pos_size=7;
+			@fieldlib=('date','method','code','host','ua','referer','url','size');
+		}
+		elsif ($LogFormat eq '4') {	# Same than "%h %l %u %t \"%r\" %>s %b"
+			$PerlParsingFormat="([^ ]+) [^ ]+ ([^ ]+) \\[([^ ]+) [^ ]+\\] \\\"([^ ]+) ([^ ]+) [^\\\"]+\\\" ([\\d|-]+) ([\\d|-]+)";
+			$pos_host=0;$pos_logname=1;$pos_date=2;$pos_method=3;$pos_url=4;$pos_code=5;$pos_size=6;
+			@fieldlib=('host','logname','date','method','url','code','size');
+		}
+		elsif ($LogFormat eq '5') {	# Same than "c-ip cs-username c-agent sc-authenticated date time s-svcname s-computername cs-referred r-host r-ip r-port time-taken cs-bytes sc-bytes cs-protocol cs-transport s-operation cs-uri cs-mime-type s-object-source sc-status s-cache-info"
+			$PerlParsingFormat="([^\\t]*)\\t([^\\t]*)\\t([^\\t]*)\\t[^\\t]*\\t([^\\t]*\\t[^\\t]*)\\t[^\\t]*\\t[^\\t]*\\t([^\\t]*)\\t[^\\t]*\\t[^\\t]*\\t[^\\t]*\\t[^\\t]*\\t[^\\t]*\\t([^\\t]*)\\t[^\\t]*\\t[^\\t]*\\t([^\\t]*)\\t([^\\t]*)\\t[^\\t]*\\t[^\\t]*\\t([^\\t]*)\\t[^\\t]*";
+			$pos_host=0;$pos_logname=1;$pos_agent=2;$pos_date=3;$pos_referer=4;$pos_size=5;$pos_method=6;$pos_url=7;$pos_code=8;
+			@fieldlib=('host','logname','ua','date','referer','size','method','url','code');
+		}
+		elsif ($LogFormat eq '6') {	# Lotus notes (allows spaces in the logname without quoting them)
+			$PerlParsingFormat="(\\S+) \\S+ (.+) \\[(\\S+) \\S+\\] \\\"(\\S+) (\\S+) [^\\\"]+\\\" ([\\d|-]+) ([\\d|-]+) \\\"(.*)\\\" \\\"([^\\\"]*)\\\"";	# referer and ua might be ""
+			$pos_host=0;$pos_logname=1;$pos_date=2;$pos_method=3;$pos_url=4;$pos_code=5;$pos_size=6;$pos_referer=7;$pos_agent=8;
+			@fieldlib=('host','logname','date','method','url','code','size','referer','agent');
+		}
+	}
+	else {							# Personalized log format
+		my $LogFormatString=$LogFormat;
+		# Replacement for Apache format string
+		$LogFormatString =~ s/%v(\s)/%virtualname$1/g; $LogFormatString =~ s/%v$/%virtualname/g;
+		$LogFormatString =~ s/%h(\s)/%host$1/g; $LogFormatString =~ s/%h$/%host/g;
+		$LogFormatString =~ s/%l(\s)/%other$1/g; $LogFormatString =~ s/%l$/%other/g;
+		$LogFormatString =~ s/%u(\s)/%logname$1/g; $LogFormatString =~ s/%u$/%logname/g;
+		$LogFormatString =~ s/%t(\s)/%time1$1/g; $LogFormatString =~ s/%t$/%time1/g;
+		$LogFormatString =~ s/\"%r\"/%methodurl/g;
+		$LogFormatString =~ s/%>s/%code/g;
+		$LogFormatString =~ s/%b(\s)/%bytesd$1/g;	$LogFormatString =~ s/%b$/%bytesd/g;
+		$LogFormatString =~ s/\"%{Referer}i\"/%refererquot/g;
+		$LogFormatString =~ s/\"%{User-Agent}i\"/%uaquot/g;
+		$LogFormatString =~ s/%{mod_gzip_input_size}n/%gzipin/g;
+		$LogFormatString =~ s/%{mod_gzip_output_size}n/%gzipout/g;
+		$LogFormatString =~ s/%{mod_gzip_compression_ratio}n/%gzipratio/g;
+		# Replacement for a IIS and ISA format string
+		$LogFormatString =~ s/cs-uri-query/%query/g;	# Must be before cs-uri
+		$LogFormatString =~ s/date\stime/%time2/g;
+		$LogFormatString =~ s/c-ip/%host/g;
+		$LogFormatString =~ s/cs-username/%logname/g;
+		$LogFormatString =~ s/cs-method/%method/g;		# GET, POST, SMTP, RETR STOR
+		$LogFormatString =~ s/cs-uri-stem/%url/g; $LogFormatString =~ s/cs-uri/%url/g;
+		$LogFormatString =~ s/sc-status/%code/g;
+		$LogFormatString =~ s/sc-bytes/%bytesd/g;
+		$LogFormatString =~ s/cs-version/%other/g;		# Protocol
+		$LogFormatString =~ s/cs\(User-Agent\)/%ua/g; $LogFormatString =~ s/c-agent/%ua/g;
+		$LogFormatString =~ s/cs\(Referer\)/%referer/g; $LogFormatString =~ s/cs-referred/%referer/g;
+		$LogFormatString =~ s/sc-authenticated/%other/g;
+		$LogFormatString =~ s/s-svcname/%other/g;
+		$LogFormatString =~ s/s-computername/%other/g;
+		$LogFormatString =~ s/r-host/%other/g;
+		$LogFormatString =~ s/r-ip/%other/g;
+		$LogFormatString =~ s/r-port/%other/g;
+		$LogFormatString =~ s/time-taken/%other/g;
+		$LogFormatString =~ s/cs-bytes/%other/g;
+		$LogFormatString =~ s/cs-protocol/%other/g;
+		$LogFormatString =~ s/cs-transport/%other/g;
+		$LogFormatString =~ s/s-operation/%other/g;
+		$LogFormatString =~ s/cs-mime-type/%other/g;
+		$LogFormatString =~ s/s-object-source/%other/g;
+		$LogFormatString =~ s/s-cache-info/%other/g;
+		# Added for MMS
+		$LogFormatString =~ s/protocol/%protocolmms/g;	# cs-method might not be available
+		$LogFormatString =~ s/c-status/%codemms/g;		# sc-status not available
+		if ($Debug) { debug(" LogFormatString=$LogFormatString"); }
+		# Scan $LogFormatString to found all required fields and generate PerlParsingFormat
+		my $i = 0;
+		my $LogSeparatorWithoutStar=$LogSeparator; $LogSeparatorWithoutStar =~ s/[\*\+]//g;
+		foreach my $f (split(/\s+/,$LogFormatString)) {
+			# Add separator for next field
+			if ($PerlParsingFormat) { $PerlParsingFormat.="$LogSeparator"; }
+			if ($f =~ /%virtualname$/) {
+				$pos_vh = $i; $i++; push @fieldlib, 'vhost';
+				$PerlParsingFormat .= "([^$LogSeparatorWithoutStar]+)";
+			}
+			elsif ($f =~ /%host_r$/) {
+				$pos_hostr = $i; $i++; push @fieldlib, 'hostr';
+				$PerlParsingFormat .= "([^$LogSeparatorWithoutStar]+)";
+			}
+			elsif ($f =~ /%host$/) {
+				$pos_host = $i; $i++; push @fieldlib, 'host';
+				$PerlParsingFormat .= "([^$LogSeparatorWithoutStar]+)";
+			}
+			elsif ($f =~ /%logname$/) {
+				$pos_logname = $i; $i++; push @fieldlib, 'logname';
+				$PerlParsingFormat .= "([^$LogSeparatorWithoutStar]+)";
+			}
+			elsif ($f =~ /%time1b$/) {
+				$pos_date = $i; $i++; push @fieldlib, 'date';
+				$PerlParsingFormat .= "\\[([^$LogSeparatorWithoutStar]+)\\]";
+			}
+			elsif ($f =~ /%time1$/) {
+				$pos_date = $i;	$i++; push @fieldlib, 'date';
+				$PerlParsingFormat .= "\\[([^$LogSeparatorWithoutStar]+) [^$LogSeparatorWithoutStar]+\\]";
+			}
+			elsif ($f =~ /%time2$/) {
+				$pos_date = $i;	$i++; push @fieldlib, 'date';
+				$PerlParsingFormat .= "([^$LogSeparatorWithoutStar]+\\s[^$LogSeparatorWithoutStar]+)";	# Need \s for Exchange log files
+			}
+			elsif ($f =~ /%methodurl$/) {
+				$pos_method = $i; $i++; push @fieldlib, 'method';
+				$pos_url = $i; $i++; push @fieldlib, 'url';
+				$PerlParsingFormat .= "\\\"([^$LogSeparatorWithoutStar]+) ([^$LogSeparatorWithoutStar]+) [^\\\"]+\\\"";
+			}
+			elsif ($f =~ /%methodurlnoprot$/) {
+				$pos_method = $i; $i++; push @fieldlib, 'method';
+				$pos_url = $i; $i++; push @fieldlib, 'url';
+				$PerlParsingFormat .= "\\\"([^$LogSeparatorWithoutStar]+) ([^$LogSeparatorWithoutStar]+)\\\"";
+			}
+			elsif ($f =~ /%method$/) {
+				$pos_method = $i; $i++; push @fieldlib, 'method';
+				$PerlParsingFormat .= "([^$LogSeparatorWithoutStar]+)";
+			}
+			elsif ($f =~ /%protocolmms$/) {	# protocolmms is used for method if method not already found (for MMS)
+				if ($pos_method < 0) {
+					$pos_method = $i; $i++; push @fieldlib, 'method';
+					$PerlParsingFormat .= "([^$LogSeparatorWithoutStar]+)";
+				}
+			}
+			elsif ($f =~ /%url$/) {
+				$pos_url = $i; $i++; push @fieldlib, 'url';
+				$PerlParsingFormat .= "([^$LogSeparatorWithoutStar]+)";
+			}
+			elsif ($f =~ /%query$/) {
+				$pos_query = $i; $i++; push @fieldlib, 'query';
+				$PerlParsingFormat .= "([^$LogSeparatorWithoutStar]+)";
+			}
+			elsif ($f =~ /%code$/) {
+				$pos_code = $i; $i++; push @fieldlib, 'code';
+				$PerlParsingFormat .= "([\\d|-]+)";
+			}
+			elsif ($f =~ /%codemms$/) {		# codemms is used for code if method not already found (for MMS)
+				if ($pos_code < 0) {
+					$pos_code = $i; $i++; push @fieldlib, 'code';
+					$PerlParsingFormat .= "([\\d|-]+)";
+				}
+			}
+			elsif ($f =~ /%bytesd$/) {
+				$pos_size = $i; $i++; push @fieldlib, 'size';
+				$PerlParsingFormat .= "([\\d|-]+)";
+			}
+			elsif ($f =~ /%refererquot$/) {
+				$pos_referer = $i; $i++; push @fieldlib, 'host';
+				$PerlParsingFormat .= "\\\"(.*)\\\""; 		# referer might be ""
+			}
+			elsif ($f =~ /%referer$/) {
+				$pos_referer = $i; $i++; push @fieldlib, 'referer';
+				$PerlParsingFormat .= "([^$LogSeparatorWithoutStar]+)";
+			}
+			elsif ($f =~ /%uaquot$/) {
+				$pos_agent = $i; $i++; push @fieldlib, 'ua';
+				$PerlParsingFormat .= "\\\"([^\\\"]*)\\\"";	# ua might be ""
+			}
+			elsif ($f =~ /%ua$/) {
+				$pos_agent = $i; $i++; push @fieldlib, 'ua';
+				$PerlParsingFormat .= "([^$LogSeparatorWithoutStar]+)";
+			}
+			elsif ($f =~ /%gzipin$/ ) {
+				$pos_gzipin=$i;$i++; push @fieldlib, 'gzipin';
+				$PerlParsingFormat .= "([^$LogSeparatorWithoutStar]+)";
+			}
+			elsif ($f =~ /%gzipout/ ) {		# Compare $f to /%gzipout/ and not to /%gzipout$/ like other fields
+				$pos_gzipout=$i;$i++; push @fieldlib, 'gzipout';
+				$PerlParsingFormat .= "([^$LogSeparatorWithoutStar]+)";
+			}
+			elsif ($f =~ /%gzipratio/ ) {	# Compare $f to /%gzipratio/ and not to /%gzipratio$/ like other fields
+				$pos_gzipratio=$i;$i++; push @fieldlib, 'gzipratio';
+				$PerlParsingFormat .= "([^$LogSeparatorWithoutStar]+)";
+			}
+			elsif ($f =~ /%syslog$/) {		# Added for syslog time and host stamp, fields are skipped and not analyzed
+				$PerlParsingFormat .= "[A-Z][a-z][a-z] .[0-9] ..:..:.. [A-Za-z]+";
+			}
+			elsif ($f =~ /%email_r$/) {
+				$pos_emailr = $i; $i++; push @fieldlib, 'email_r';
+				$PerlParsingFormat .= "([^$LogSeparatorWithoutStar]+)";
+			}
+			elsif ($f =~ /%email$/) {
+				$pos_emails = $i; $i++; push @fieldlib, 'email';
+				$PerlParsingFormat .= "([^$LogSeparatorWithoutStar]+)";
+			}
+			else {
+				$PerlParsingFormat .= "[^$LogSeparatorWithoutStar]+";
+			}
+		}
+		if (! $PerlParsingFormat) { error("No recognized format tag in personalized LogFormat string"); }
+	}
+	if ($pos_host < 0) { error("Your personalized LogFormat does not include all fields required by AWStats (Add \%host in your LogFormat string)."); }
+	if ($pos_date < 0) { error("Your personalized LogFormat does not include all fields required by AWStats (Add \%time1 or \%time2 in your LogFormat string)."); }
+	if ($pos_method < 0) { error("Your personalized LogFormat does not include all fields required by AWStats (Add \%methodurl or \%method in your LogFormat string)."); }
+	if ($pos_url < 0) { error("Your personalized LogFormat does not include all fields required by AWStats (Add \%methodurl or \%url in your LogFormat string)."); }
+	if ($pos_code < 0) { error("Your personalized LogFormat does not include all fields required by AWStats (Add \%code in your LogFormat string)."); }
+	if ($pos_size < 0) { error("Your personalized LogFormat does not include all fields required by AWStats (Add \%bytesd in your LogFormat string)."); }
+	if ($Debug) { debug(" PerlParsingFormat is $PerlParsingFormat"); }
 }
 
 
@@ -4510,7 +4736,7 @@ if ($Debug) { debug("YearRequired=$YearRequired MonthRequired=$MonthRequired",2)
 if ($AllowAccessFromWebToAuthenticatedUsersOnly && $ENV{'GATEWAY_INTERFACE'}) {
 	if ($Debug) { debug("REMOTE_USER is ".$ENV{"REMOTE_USER"}); }
 	if (! $ENV{"REMOTE_USER"}) {
-		error("Error: Access to statistics is only allowed from an authenticated session to authenticated users.");
+		error("Access to statistics is only allowed from an authenticated session to authenticated users.");
 	}
 	if (@AllowAccessFromWebToFollowingAuthenticatedUsers) {
 		my $userisinlist=0;
@@ -4518,23 +4744,23 @@ if ($AllowAccessFromWebToAuthenticatedUsersOnly && $ENV{'GATEWAY_INTERFACE'}) {
 			if ($ENV{"REMOTE_USER"} eq $key) { $userisinlist=1; last; }
 		}
 		if (! $userisinlist) {
-			error("Error: User <b>".$ENV{"REMOTE_USER"}."</b> is not allowed to access statistics of this domain/config.");
+			error("User <b>".$ENV{"REMOTE_USER"}."</b> is not allowed to access statistics of this domain/config.");
 		}
 	}
 }
 if ($AllowAccessFromWebToFollowingIPAddresses && $ENV{'GATEWAY_INTERFACE'}) {
 	if ($AllowAccessFromWebToFollowingIPAddresses	!~ /^(\d+\.\d+\.\d+\.\d+)-(\d+\.\d+\.\d+\.\d+)$/) {
-		error("Error: AllowAccessFromWebToFollowingIPAddresses is defined to '$AllowAccessFromWebToFollowingIPAddresses' but does not match the correct syntax: IPAddressMin-IPAddressMax");
+		error("AllowAccessFromWebToFollowingIPAddresses is defined to '$AllowAccessFromWebToFollowingIPAddresses' but does not match the correct syntax: IPAddressMin-IPAddressMax");
 	}
 	my $ipmin=&Convert_IP_To_Decimal($1);
 	my $ipmax=&Convert_IP_To_Decimal($2);
 	my $useripaddress=&Convert_IP_To_Decimal($ENV{"REMOTE_ADDR"});
 	if ($useripaddress < $ipmin || $useripaddress > $ipmax) {
-		error("Error: Access to statistics is not allowed from your IP Address ".$ENV{"REMOTE_ADDR"});
+		error("Access to statistics is not allowed from your IP Address ".$ENV{"REMOTE_ADDR"});
 	}
 }
 if (($UpdateStats || $MigrateStats) && (! $AllowToUpdateStatsFromBrowser) && $ENV{'GATEWAY_INTERFACE'}) {
-	error("Error: ".($UpdateStats?"Update":"Migrate")." of statistics is not allowed from a browser.");
+	error("".($UpdateStats?"Update":"Migrate")." of statistics is not allowed from a browser.");
 }
 
 #------------------------------------------
@@ -4558,7 +4784,7 @@ if ($MigrateStats) {
 	my $newhistory=&Read_History_With_TmpUpdate($YearRequired,$MonthRequired,1,0,"all");
 	if (rename("$newhistory","$MigrateStats")==0) {
 		unlink "$newhistory";
-		error("Error: Failed to rename \"$newhistory\" into \"$MigrateStats\".\nWrite permissions on \"$MigrateStats\" might be wrong".($ENV{'GATEWAY_INTERFACE'}?" for a 'migration from web'":"")." or file might be opened.");
+		error("Failed to rename \"$newhistory\" into \"$MigrateStats\".\nWrite permissions on \"$MigrateStats\" might be wrong".($ENV{'GATEWAY_INTERFACE'}?" for a 'migration from web'":"")." or file might be opened.");
 	}
 	if ($EnableLockForUpdate) {	&Lock_Update(0); }
 	print "Migration for file '$MigrateStats' successful."; print $ENV{'GATEWAY_INTERFACE'}?"<br>\n":"\n";
@@ -4619,8 +4845,8 @@ if ($Debug) { debug("UpdateStats is $UpdateStats",2); }
 if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Update only on index page or when not framed to avoid update twice
 
 	if (! $HTMLOutput) {
-		print "Update for config '$FileConfig'\n";
-		print "With data in log file '$LogFile'...\n";
+		print "Update for config \"$FileConfig\"\n";
+		print "With data in log file \"$LogFile\"...\n";
 	}
 
 	my $lastprocessedyear=$lastyearbeforeupdate;
@@ -4654,235 +4880,15 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 	&OptimizeArray(\@OnlyHosts,1,0); if ($Debug) { debug("OnlyHosts is now @OnlyHosts",1); }
 	&OptimizeArray(\@OnlyFiles,0,0); if ($Debug) { debug("OnlyFiles is now @OnlyFiles",1); }
 
-	# GENERATING PerlParsingFormat
-	#------------------------------------------
-	# Log records examples:
-	# Apache combined: 62.161.78.73 user - [dd/mmm/yyyy:hh:mm:ss +0000] "GET / HTTP/1.1" 200 1234 "http://www.from.com/from.htm" "Mozilla/4.0 (compatible; MSIE 5.01; Windows NT 5.0)"
-	# Apache combined (408 error): my.domain.com - user [09/Jan/2001:11:38:51 -0600] "OPTIONS /mime-tmp/xxx file.doc HTTP/1.1" 408 - "-" "-"
-	# Apache combined (408 error): 62.161.78.73 user - [dd/mmm/yyyy:hh:mm:ss +0000] "-" 408 - "-" "-"
-	# Apache common_with_mod_gzip_info1: %h %l %u %t \"%r\" %>s %b mod_gzip: %{mod_gzip_compression_ratio}npct.
-	# Apache common_with_mod_gzip_info2: %h %l %u %t \"%r\" %>s %b mod_gzip: %{mod_gzip_result}n In:%{mod_gzip_input_size}n Out:%{mod_gzip_output_size}n:%{mod_gzip_compression_ratio}npct.
-	# IIS: 2000-07-19 14:14:14 62.161.78.73 - GET / 200 1234 HTTP/1.1 Mozilla/4.0+(compatible;+MSIE+5.01;+Windows+NT+5.0) http://www.from.com/from.htm
-	# WebStar: 05/21/00	00:17:31	OK  	200	212.242.30.6	Mozilla/4.0 (compatible; MSIE 5.0; Windows 98; DigExt)	http://www.cover.dk/	"www.cover.dk"	:Documentation:graphics:starninelogo.white.gif	1133
-	# Squid extended: 12.229.91.170 - - [27/Jun/2002:03:30:50 -0700] "GET http://www.callistocms.com/images/printable.gif HTTP/1.1" 304 354 "-" "Mozilla/5.0 Galeon/1.0.3 (X11; Linux i686; U;) Gecko/0" TCP_REFRESH_HIT:DIRECT
-
-	if ($Debug) { debug("Generate PerlParsingFormat from LogFormat=$LogFormat"); }
-	$PerlParsingFormat='';
-	my @fieldlib=();
-	if ($LogFormat =~ /^[1-6]$/) {	# Pre-defined log format
-		if ($LogFormat eq '1') {	# Same than "%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\""
-			$PerlParsingFormat="([^ ]+) [^ ]+ ([^ ]+) \\[([^ ]+) [^ ]+\\] \\\"([^ ]+) ([^ ]+) [^\\\"]+\\\" ([\\d|-]+) ([\\d|-]+) \\\"(.*)\\\" \\\"([^\\\"]*)\\\"";	# referer and ua might be ""
-			$pos_host=0;$pos_logname=1;$pos_date=2;$pos_method=3;$pos_url=4;$pos_code=5;$pos_size=6;$pos_referer=7;$pos_agent=8;
-			@fieldlib=('host','logname','date','method','url','code','size','referer','ua');
-		}
-		elsif ($LogFormat eq '2') {	# Same than "date time c-ip cs-username cs-method cs-uri-stem sc-status sc-bytes cs-version cs(User-Agent) cs(Referer)"
-			$PerlParsingFormat="(\\S+ \\S+) (\\S+) (\\S+) (\\S+) (\\S+) ([\\d|-]+) ([\\d|-]+) \\S+ (\\S+) (\\S+)";
-			$pos_date=0;$pos_host=1;$pos_logname=2;$pos_method=3;$pos_url=4;$pos_code=5;$pos_size=6;$pos_agent=7;$pos_referer=8;
-			@fieldlib=('date','host','logname','method','url','code','size','ua','referer');
-		}
-		elsif ($LogFormat eq '3') {
-			$PerlParsingFormat="([^\\t]*\\t[^\\t]*)\\t([^\\t]*)\\t([\\d]*)\\t([^\\t]*)\\t([^\\t]*)\\t([^\\t]*)\\t[^\\t]*\\t.*:([^\\t]*)\\t([\\d]*)";
-			$pos_date=0;$pos_method=1;$pos_code=2;$pos_host=3;$pos_agent=4;$pos_referer=5;$pos_url=6;$pos_size=7;
-			@fieldlib=('date','method','code','host','ua','referer','url','size');
-		}
-		elsif ($LogFormat eq '4') {	# Same than "%h %l %u %t \"%r\" %>s %b"
-			$PerlParsingFormat="([^ ]+) [^ ]+ ([^ ]+) \\[([^ ]+) [^ ]+\\] \\\"([^ ]+) ([^ ]+) [^\\\"]+\\\" ([\\d|-]+) ([\\d|-]+)";
-			$pos_host=0;$pos_logname=1;$pos_date=2;$pos_method=3;$pos_url=4;$pos_code=5;$pos_size=6;
-			@fieldlib=('host','logname','date','method','url','code','size');
-		}
-		elsif ($LogFormat eq '5') {	# Same than "c-ip cs-username c-agent sc-authenticated date time s-svcname s-computername cs-referred r-host r-ip r-port time-taken cs-bytes sc-bytes cs-protocol cs-transport s-operation cs-uri cs-mime-type s-object-source sc-status s-cache-info"
-			$PerlParsingFormat="([^\\t]*)\\t([^\\t]*)\\t([^\\t]*)\\t[^\\t]*\\t([^\\t]*\\t[^\\t]*)\\t[^\\t]*\\t[^\\t]*\\t([^\\t]*)\\t[^\\t]*\\t[^\\t]*\\t[^\\t]*\\t[^\\t]*\\t[^\\t]*\\t([^\\t]*)\\t[^\\t]*\\t[^\\t]*\\t([^\\t]*)\\t([^\\t]*)\\t[^\\t]*\\t[^\\t]*\\t([^\\t]*)\\t[^\\t]*";
-			$pos_host=0;$pos_logname=1;$pos_agent=2;$pos_date=3;$pos_referer=4;$pos_size=5;$pos_method=6;$pos_url=7;$pos_code=8;
-			@fieldlib=('host','logname','ua','date','referer','size','method','url','code');
-		}
-		elsif ($LogFormat eq '6') {	# Lotus notes (allows spaces in the logname without quoting them)
-			$PerlParsingFormat="(\\S+) \\S+ (.+) \\[(\\S+) \\S+\\] \\\"(\\S+) (\\S+) [^\\\"]+\\\" ([\\d|-]+) ([\\d|-]+) \\\"(.*)\\\" \\\"([^\\\"]*)\\\"";	# referer and ua might be ""
-			$pos_host=0;$pos_logname=1;$pos_date=2;$pos_method=3;$pos_url=4;$pos_code=5;$pos_size=6;$pos_referer=7;$pos_agent=8;
-			@fieldlib=('host','logname','date','method','url','code','size','referer','agent');
-		}
-	}
-	else {							# Personalized log format
-		my $LogFormatString=$LogFormat;
-		# Replacement for Apache format string
-		$LogFormatString =~ s/%v(\s)/%virtualname$1/g; $LogFormatString =~ s/%v$/%virtualname/g;
-		$LogFormatString =~ s/%h(\s)/%host$1/g; $LogFormatString =~ s/%h$/%host/g;
-		$LogFormatString =~ s/%l(\s)/%other$1/g; $LogFormatString =~ s/%l$/%other/g;
-		$LogFormatString =~ s/%u(\s)/%logname$1/g; $LogFormatString =~ s/%u$/%logname/g;
-		$LogFormatString =~ s/%t(\s)/%time1$1/g; $LogFormatString =~ s/%t$/%time1/g;
-		$LogFormatString =~ s/\"%r\"/%methodurl/g;
-		$LogFormatString =~ s/%>s/%code/g;
-		$LogFormatString =~ s/%b(\s)/%bytesd$1/g;	$LogFormatString =~ s/%b$/%bytesd/g;
-		$LogFormatString =~ s/\"%{Referer}i\"/%refererquot/g;
-		$LogFormatString =~ s/\"%{User-Agent}i\"/%uaquot/g;
-		$LogFormatString =~ s/%{mod_gzip_input_size}n/%gzipin/g;
-		$LogFormatString =~ s/%{mod_gzip_output_size}n/%gzipout/g;
-		$LogFormatString =~ s/%{mod_gzip_compression_ratio}n/%gzipratio/g;
-		# Replacement for a IIS and ISA format string
-		$LogFormatString =~ s/cs-uri-query/%query/g;	# Must be before cs-uri
-		$LogFormatString =~ s/date\stime/%time2/g;
-		$LogFormatString =~ s/c-ip/%host/g;
-		$LogFormatString =~ s/cs-username/%logname/g;
-		$LogFormatString =~ s/cs-method/%method/g;		# GET, POST, SMTP, RETR STOR
-		$LogFormatString =~ s/cs-uri-stem/%url/g; $LogFormatString =~ s/cs-uri/%url/g;
-		$LogFormatString =~ s/sc-status/%code/g;
-		$LogFormatString =~ s/sc-bytes/%bytesd/g;
-		$LogFormatString =~ s/cs-version/%other/g;		# Protocol
-		$LogFormatString =~ s/cs\(User-Agent\)/%ua/g; $LogFormatString =~ s/c-agent/%ua/g;
-		$LogFormatString =~ s/cs\(Referer\)/%referer/g; $LogFormatString =~ s/cs-referred/%referer/g;
-		$LogFormatString =~ s/sc-authenticated/%other/g;
-		$LogFormatString =~ s/s-svcname/%other/g;
-		$LogFormatString =~ s/s-computername/%other/g;
-		$LogFormatString =~ s/r-host/%other/g;
-		$LogFormatString =~ s/r-ip/%other/g;
-		$LogFormatString =~ s/r-port/%other/g;
-		$LogFormatString =~ s/time-taken/%other/g;
-		$LogFormatString =~ s/cs-bytes/%other/g;
-		$LogFormatString =~ s/cs-protocol/%other/g;
-		$LogFormatString =~ s/cs-transport/%other/g;
-		$LogFormatString =~ s/s-operation/%other/g;
-		$LogFormatString =~ s/cs-mime-type/%other/g;
-		$LogFormatString =~ s/s-object-source/%other/g;
-		$LogFormatString =~ s/s-cache-info/%other/g;
-		# Added for MMS
-		$LogFormatString =~ s/protocol/%protocolmms/g;	# cs-method might not be available
-		$LogFormatString =~ s/c-status/%codemms/g;		# sc-status not available
-		if ($Debug) { debug("LogFormatString=$LogFormatString"); }
-		# Scan $LogFormatString to found all required fields and generate PerlParsingFormat
-		my @fields = split(/\s+/,$LogFormatString);
-		my $i = 0;
-		my $LogSeparatorWithoutStar=$LogSeparator; $LogSeparatorWithoutStar =~ s/[\*\+]//g;
-		foreach my $f (@fields) {
-			# Add separator for next field
-			if ($PerlParsingFormat) { $PerlParsingFormat.="$LogSeparator"; }
-			if ($f =~ /%virtualname$/) {
-				$pos_vh = $i; $i++; push @fieldlib, 'vhost';
-				$PerlParsingFormat .= "([^$LogSeparatorWithoutStar]+)";
-			}
-			elsif ($f =~ /%host_r$/) {
-				$pos_hostr = $i; $i++; push @fieldlib, 'hostr';
-				$PerlParsingFormat .= "([^$LogSeparatorWithoutStar]+)";
-			}
-			elsif ($f =~ /%host$/) {
-				$pos_host = $i; $i++; push @fieldlib, 'host';
-				$PerlParsingFormat .= "([^$LogSeparatorWithoutStar]+)";
-			}
-			elsif ($f =~ /%logname$/) {
-				$pos_logname = $i; $i++; push @fieldlib, 'logname';
-				$PerlParsingFormat .= "([^$LogSeparatorWithoutStar]+)";
-			}
-			elsif ($f =~ /%time1b$/) {
-				$pos_date = $i; $i++; push @fieldlib, 'date';
-				$PerlParsingFormat .= "\\[([^$LogSeparatorWithoutStar]+)\\]";
-			}
-			elsif ($f =~ /%time1$/) {
-				$pos_date = $i;	$i++; push @fieldlib, 'date';
-				$PerlParsingFormat .= "\\[([^$LogSeparatorWithoutStar]+) [^$LogSeparatorWithoutStar]+\\]";
-			}
-			elsif ($f =~ /%time2$/) {
-				$pos_date = $i;	$i++; push @fieldlib, 'date';
-				$PerlParsingFormat .= "([^$LogSeparatorWithoutStar]+\\s[^$LogSeparatorWithoutStar]+)";	# Need \s for Exchange log files
-			}
-			elsif ($f =~ /%methodurl$/) {
-				$pos_method = $i; $i++; push @fieldlib, 'method';
-				$pos_url = $i; $i++; push @fieldlib, 'url';
-				$PerlParsingFormat .= "\\\"([^$LogSeparatorWithoutStar]+) ([^$LogSeparatorWithoutStar]+) [^\\\"]+\\\"";
-			}
-			elsif ($f =~ /%methodurlnoprot$/) {
-				$pos_method = $i; $i++; push @fieldlib, 'method';
-				$pos_url = $i; $i++; push @fieldlib, 'url';
-				$PerlParsingFormat .= "\\\"([^$LogSeparatorWithoutStar]+) ([^$LogSeparatorWithoutStar]+)\\\"";
-			}
-			elsif ($f =~ /%method$/) {
-				$pos_method = $i; $i++; push @fieldlib, 'method';
-				$PerlParsingFormat .= "([^$LogSeparatorWithoutStar]+)";
-			}
-			elsif ($f =~ /%protocolmms$/) {	# protocolmms is used for method if method not already found (for MMS)
-				if ($pos_method < 0) {
-					$pos_method = $i; $i++; push @fieldlib, 'method';
-					$PerlParsingFormat .= "([^$LogSeparatorWithoutStar]+)";
-				}
-			}
-			elsif ($f =~ /%url$/) {
-				$pos_url = $i; $i++; push @fieldlib, 'url';
-				$PerlParsingFormat .= "([^$LogSeparatorWithoutStar]+)";
-			}
-			elsif ($f =~ /%query$/) {
-				$pos_query = $i; $i++; push @fieldlib, 'query';
-				$PerlParsingFormat .= "([^$LogSeparatorWithoutStar]+)";
-			}
-			elsif ($f =~ /%code$/) {
-				$pos_code = $i; $i++; push @fieldlib, 'code';
-				$PerlParsingFormat .= "([\\d|-]+)";
-			}
-			elsif ($f =~ /%codemms$/) {		# codemms is used for code if method not already found (for MMS)
-				if ($pos_code < 0) {
-					$pos_code = $i; $i++; push @fieldlib, 'code';
-					$PerlParsingFormat .= "([\\d|-]+)";
-				}
-			}
-			elsif ($f =~ /%bytesd$/) {
-				$pos_size = $i; $i++; push @fieldlib, 'size';
-				$PerlParsingFormat .= "([\\d|-]+)";
-			}
-			elsif ($f =~ /%refererquot$/) {
-				$pos_referer = $i; $i++; push @fieldlib, 'host';
-				$PerlParsingFormat .= "\\\"(.*)\\\""; 		# referer might be ""
-			}
-			elsif ($f =~ /%referer$/) {
-				$pos_referer = $i; $i++; push @fieldlib, 'referer';
-				$PerlParsingFormat .= "([^$LogSeparatorWithoutStar]+)";
-			}
-			elsif ($f =~ /%uaquot$/) {
-				$pos_agent = $i; $i++; push @fieldlib, 'ua';
-				$PerlParsingFormat .= "\\\"([^\\\"]*)\\\"";	# ua might be ""
-			}
-			elsif ($f =~ /%ua$/) {
-				$pos_agent = $i; $i++; push @fieldlib, 'ua';
-				$PerlParsingFormat .= "([^$LogSeparatorWithoutStar]+)";
-			}
-			elsif ($f =~ /%gzipin$/ ) {
-				$pos_gzipin=$i;$i++; push @fieldlib, 'gzipin';
-				$PerlParsingFormat .= "([^$LogSeparatorWithoutStar]+)";
-			}
-			elsif ($f =~ /%gzipout/ ) {		# Compare $f to /%gzipout/ and not to /%gzipout$/ like other fields
-				$pos_gzipout=$i;$i++; push @fieldlib, 'gzipout';
-				$PerlParsingFormat .= "([^$LogSeparatorWithoutStar]+)";
-			}
-			elsif ($f =~ /%gzipratio/ ) {	# Compare $f to /%gzipratio/ and not to /%gzipratio$/ like other fields
-				$pos_gzipratio=$i;$i++; push @fieldlib, 'gzipratio';
-				$PerlParsingFormat .= "([^$LogSeparatorWithoutStar]+)";
-			}
-			elsif ($f =~ /%syslog$/) {		# Added for syslog time and host stamp, fields are skipped and not analyzed
-				$PerlParsingFormat .= "[A-Z][a-z][a-z] .[0-9] ..:..:.. [A-Za-z]+";
-			}
-			elsif ($f =~ /%email_r$/) {
-				$pos_emailr = $i; $i++; push @fieldlib, 'email_r';
-				$PerlParsingFormat .= "([^$LogSeparatorWithoutStar]+)";
-			}
-			elsif ($f =~ /%email$/) {
-				$pos_emails = $i; $i++; push @fieldlib, 'email';
-				$PerlParsingFormat .= "([^$LogSeparatorWithoutStar]+)";
-			}
-			else {
-				$PerlParsingFormat .= "[^$LogSeparatorWithoutStar]+";
-			}
-		}
-		if (! $PerlParsingFormat) { error("Error: No recognized format tag in personalized LogFormat string"); }
-	}
-	if ($pos_host < 0) { error("Error: Your personalized LogFormat does not include all fields required by AWStats (Add \%host in your LogFormat string)."); }
-	if ($pos_date < 0) { error("Error: Your personalized LogFormat does not include all fields required by AWStats (Add \%time1 or \%time2 in your LogFormat string)."); }
-	if ($pos_method < 0) { error("Error: Your personalized LogFormat does not include all fields required by AWStats (Add \%methodurl or \%method in your LogFormat string)."); }
-	if ($pos_url < 0) { error("Error: Your personalized LogFormat does not include all fields required by AWStats (Add \%methodurl or \%url in your LogFormat string)."); }
-	if ($pos_code < 0) { error("Error: Your personalized LogFormat does not include all fields required by AWStats (Add \%code in your LogFormat string)."); }
-	if ($pos_size < 0) { error("Error: Your personalized LogFormat does not include all fields required by AWStats (Add \%bytesd in your LogFormat string)."); }
-	if ($Debug) { debug("PerlParsingFormat is $PerlParsingFormat"); }
+	# Define value of $PerlParsingFormat and @fieldlib
+	DefinePerlParsingFormat();
 
 	# Load DNS Cache Files
 	#------------------------------------------
 	if ($DNSLookup) {
 		&Read_DNS_Cache(\%MyDNSTable,"$DNSStaticCacheFile","",1);						# Load with save into a second plugin file if plugin enabled and second file not up to date. No use of FileSuffix
 		if ($DNSLookup == 1) {		# System DNS lookup required
-			#if (! eval("use Socket;")) { &error("Failed to load perl module Socket."); }
+			#if (! eval("use Socket;")) { error("Failed to load perl module Socket."); }
 			#use Socket;
 			&Read_DNS_Cache(\%TmpDNSLookup,"$DNSLastUpdateCacheFile","$FileSuffix",0);	# Load with no save into a second plugin file. Use FileSuffix
 		}
@@ -4905,7 +4911,7 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 
 	# Open log file
 	if ($Debug) { debug("Open log file \"$LogFile\""); }
-	open(LOG,"$LogFile") || error("Error: Couldn't open server log file \"$LogFile\" : $!");
+	open(LOG,"$LogFile") || error("Couldn't open server log file \"$LogFile\" : $!");
 
 	# Avoid premature EOF due to log files corrupted with \cZ or bin chars
 	binmode LOG;
@@ -5127,6 +5133,7 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 						if ($UserAgent =~ /$bot/i) {
 							$foundrobot=1;
 							$TmpRobot{$UserAgent}=$uarobot="$bot";	# Last time, we won't search if robot or not. We know it is.
+							if ($Debug) { debug(" UserAgent '$UserAgent' is added to TmpRobot with value '$bot'",2); }
 							last;
 						}
 					}
@@ -5136,7 +5143,7 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 				}
 				# If robot, we stop here
 				if ($uarobot ne '-') {
-					if ($Debug) { debug("UserAgent '$UserAgent' contains robot ID '$uarobot'",2); }
+					if ($Debug) { debug(" UserAgent '$UserAgent' contains robot ID '$uarobot'",2); }
 					$_robot_h{$uarobot}++;
 					$_robot_k{$uarobot}+=int($field[$pos_size]);
 					$_robot_l{$uarobot}=$timerecord;
@@ -5238,6 +5245,7 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 		#---------------
 		if ($pos_logname>=0 && $field[$pos_logname] && $field[$pos_logname] ne '-') {
 			if ($LogFormat eq '6') { $field[$pos_logname] =~ s/ /\_/g; }			# Lotus notes allow space in logname field
+			if ($AuthenticatedUsersNotCaseSensitive) { $field[$pos_logname] =~ tr/A-Z/a-z/; }
 
 			# We found an authenticated user
 			if ($PageBool) {
@@ -5542,34 +5550,35 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 					if (!$TmpRefererServer{$refererserver}) {
 						if ($refererserver =~ /^(www\.|)$SiteToAnalyzeWithoutwww/i) {
 							# Intern (This hit came from another page of the site)
-							if ($Debug) { debug("Server $refererserver is added to TmpRefererServer with value '='",2); }
+							if ($Debug) { debug(" Server '$refererserver' is added to TmpRefererServer with value '='",2); }
 							$TmpRefererServer{$refererserver}='=';
 							$found=1;
 						}
-						if (! $found) {
+						else {
 							foreach my $key (@HostAliases) {
 								if ($refererserver =~ /^$key/i) {
 									# Intern (This hit came from another page of the site)
-									if ($Debug) { debug("Server $refererserver is added to TmpRefererServer with value '='",2); }
+									if ($Debug) { debug(" Server '$refererserver' is added to TmpRefererServer with value '='",2); }
 									$TmpRefererServer{$refererserver}='=';
 									$found=1;
 									last;
 								}
 							}
-						}
-						if (! $found) {
-							# Extern (This hit came from an external web site).
-
-							if ($LevelForSearchEnginesDetection) {
-
-								foreach my $key (@SearchEnginesSearchIDOrder) {		# Search ID in order of SearchEnginesSearchIDOrder
-									if ($refererserver =~ /$key/i) {
-										# This hit came from the search engine $key
-										if ($Debug) { debug("Server $refererserver is added to TmpRefererServer with value '$key'",2); }
-										$TmpRefererServer{$refererserver}="$key";
-										$found=1;
-										last;
+							if (! $found) {
+								# Extern (This hit came from an external web site).
+	
+								if ($LevelForSearchEnginesDetection) {
+	
+									foreach my $key (@SearchEnginesSearchIDOrder) {		# Search ID in order of SearchEnginesSearchIDOrder
+										if ($refererserver =~ /$key/i) {
+											# This hit came from the search engine $key
+											if ($Debug) { debug(" Server '$refererserver' is added to TmpRefererServer with value '$key'",2); }
+											$TmpRefererServer{$refererserver}="$key";
+											$found=1;
+											last;
+										}
 									}
+
 								}
 							}
 						}
@@ -5675,7 +5684,7 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 		# Analyze: Extra
 		#---------------
  		foreach my $extranum (1..@ExtraName-1) {
-			if ($Debug) { debug("Process extra analyze $extranum",4); }
+			if ($Debug) { debug(" Process extra analyze $extranum",4); }
 
  			# Check conditions
  			my $conditionok=0;
@@ -5783,7 +5792,7 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 	if ($PurgeLogFile == 1) {
 		if ($ArchiveLogRecords == 1) {
 			$ArchiveFileName="$DirData/${PROG}_archive$FileSuffix.log";
-			open(LOG,"+<$LogFile") || error("Error: Enable to archive log records of \"$LogFile\" into \"$ArchiveFileName\" because source can't be opened for read and write: $!<br>\n");
+			open(LOG,"+<$LogFile") || error("Enable to archive log records of \"$LogFile\" into \"$ArchiveFileName\" because source can't be opened for read and write: $!<br>\n");
 		}
 		else {
 			open(LOG,"+<$LogFile");
@@ -5798,11 +5807,11 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 		# Archive LOG file into ARCHIVELOG
 		if ($ArchiveLogRecords == 1) {
 			if ($Debug) { debug("Start of archiving log file"); }
-			open(ARCHIVELOG,">>$ArchiveFileName") || error("Error: Couldn't open file \"$ArchiveFileName\" to archive log: $!");
+			open(ARCHIVELOG,">>$ArchiveFileName") || error("Couldn't open file \"$ArchiveFileName\" to archive log: $!");
 			while (<LOG>) {
 				if (! print ARCHIVELOG $_) { $archiveok=0; last; }
 			}
-			close(ARCHIVELOG) || error("Error: Archiving failed during closing archive: $!");
+			close(ARCHIVELOG) || error("Archiving failed during closing archive: $!");
 			if ($SaveDatabaseFilesWithPermissionsForEveryone) {	chmod 0666,"$ArchiveFileName"; }
 			if ($Debug) { debug("End of archiving log file"); }
 		}
@@ -6062,6 +6071,7 @@ EOF
 			if ($linetitle) { print "<tr><th class=AWL valign=top>$Message[92] : </th>\n"; }
 			if ($linetitle) { print ($frame?"</tr>\n":"<td class=AWL>"); }
 			if ($ShowDomainsStats)		 { print ($frame?"<tr><td class=AWL>":""); print "<a href=\"$linkanchor#DOMAINS\"$targetpage>$Message[17]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
+			if ($ShowDomainsStats)		 { print ($frame?"<tr><td class=AWL> &nbsp; <img height=8 width=9 src=\"$DirIcons/other/page.png\" alt=\"...\"> ":""); print "<a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=alldomains":"$PROG$StaticLinks.alldomains.html")."\"$NewLinkTarget>$Message[80]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
 			if ($ShowHostsStats)		 { print ($frame?"<tr><td class=AWL>":""); print "<a href=\"$linkanchor#VISITOR\"$targetpage>".ucfirst($Message[81])."</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
 			if ($ShowHostsStats)		 { print ($frame?"<tr><td class=AWL> &nbsp; <img height=8 width=9 src=\"$DirIcons/other/page.png\" alt=\"...\"> ":""); print "<a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=allhosts":"$PROG$StaticLinks.allhosts.html")."\"$NewLinkTarget>$Message[80]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
 			if ($ShowHostsStats =~ /L/i) { print ($frame?"<tr><td class=AWL> &nbsp; <img height=8 width=9 src=\"$DirIcons/other/page.png\" alt=\"...\"> ":""); print "<a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=lasthosts":"$PROG$StaticLinks.lasthosts.html")."\"$NewLinkTarget>$Message[9]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
@@ -6433,6 +6443,67 @@ EOF
 #		&html_end;
 #		exit(0);
 #	}
+	if ($HTMLOutput eq 'alldomains') {
+		print "$Center<a name=\"DOMAINSLIST\">&nbsp;</a><BR>\n";
+		# Show domains list
+		my $title=''; my $cpt=0;
+		if ($HTMLOutput eq 'alldomains')  { $title.="$Message[25]"; $cpt=(scalar keys %_domener_h); }
+		&tab_head("$title",19);
+		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH width=$WIDTHCOLICON>&nbsp;</TH><TH colspan=2>$Message[17]</TH>";
+		if ($ShowDomainsStats =~ /P/i) { print "<TH bgcolor=\"#$color_p\" width=80>$Message[56]</TH>"; }
+		if ($ShowDomainsStats =~ /H/i) { print "<TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH>"; }
+		if ($ShowDomainsStats =~ /B/i) { print "<TH bgcolor=\"#$color_k\" width=80>$Message[75]</TH>"; }
+		print "<TH>&nbsp;</TH>";
+		print "</TR>\n";
+		$total_p=$total_h=$total_k=0;
+		$max_h=1; foreach my $key (values %_domener_h) { if ($key > $max_h) { $max_h = $key; } }
+		$max_k=1; foreach my $key (values %_domener_k) { if ($key > $max_k) { $max_k = $key; } }
+		my $count=0;
+		&BuildKeyList($MaxRowsInHTMLOutput,1,\%_domener_p,\%_domener_p);
+		foreach my $key (@keylist) {
+			my $bredde_p=0;my $bredde_h=0;my $bredde_k=0;
+			if ($max_h > 0) { $bredde_p=int($BarWidth*$_domener_p{$key}/$max_h)+1; }	# use max_h to enable to compare pages with hits
+			if ($_domener_p{$key} && $bredde_p==1) { $bredde_p=2; }
+			if ($max_h > 0) { $bredde_h=int($BarWidth*$_domener_h{$key}/$max_h)+1; }
+			if ($_domener_h{$key} && $bredde_h==1) { $bredde_h=2; }
+			if ($max_k > 0) { $bredde_k=int($BarWidth*($_domener_k{$key}||0)/$max_k)+1; }
+			if ($_domener_k{$key} && $bredde_k==1) { $bredde_k=2; }
+			my $newkey=lc($key);
+			if ($newkey eq 'ip' || ! $DomainsHashIDLib{$newkey}) {
+				print "<TR><TD width=$WIDTHCOLICON><IMG SRC=\"$DirIcons\/flags\/ip.png\" height=14 alt=\"$Message[0]\"></TD><TD CLASS=AWL>$Message[0]</TD><TD>$newkey</TD>";
+			}
+			else {
+				print "<TR><TD width=$WIDTHCOLICON><IMG SRC=\"$DirIcons\/flags\/$newkey.png\" height=14 alt=\"$newkey\"></TD><TD CLASS=AWL>$DomainsHashIDLib{$newkey}</TD><TD>$newkey</TD>";
+			}
+			if ($ShowDomainsStats =~ /P/i) { print "<TD>$_domener_p{$key}</TD>"; }
+			if ($ShowDomainsStats =~ /H/i) { print "<TD>$_domener_h{$key}</TD>"; }
+			if ($ShowDomainsStats =~ /B/i) { print "<TD>".Format_Bytes($_domener_k{$key})."</TD>"; }
+			print "<TD CLASS=AWL>";
+			if ($ShowDomainsStats =~ /P/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_p\" WIDTH=$bredde_p HEIGHT=6 ALT=\"$Message[56]: ".int($_domener_p{$key})."\" title=\"$Message[56]: ".int($_domener_p{$key})."\"><br>\n"; }
+			if ($ShowDomainsStats =~ /H/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_h\" WIDTH=$bredde_h HEIGHT=6 ALT=\"$Message[57]: ".int($_domener_h{$key})."\" title=\"$Message[57]: ".int($_domener_h{$key})."\"><br>\n"; }
+			if ($ShowDomainsStats =~ /B/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_k\" WIDTH=$bredde_k HEIGHT=6 ALT=\"$Message[75]: ".Format_Bytes($_domener_k{$key})."\" title=\"$Message[75]: ".Format_Bytes($_domener_k{$key})."\">"; }
+			print "</TD>";
+			print "</TR>\n";
+			$total_p += $_domener_p{$key};
+			$total_h += $_domener_h{$key};
+			$total_k += $_domener_k{$key}||0;
+			$count++;
+		}
+		$rest_p=$TotalPages-$total_p;
+		$rest_h=$TotalHits-$total_h;
+		$rest_k=$TotalBytes-$total_k;
+		if ($rest_p > 0 || $rest_h > 0 || $rest_k > 0) { 	# All other domains (known or not)
+			print "<TR><TD width=$WIDTHCOLICON>&nbsp;</TD><TD colspan=2 CLASS=AWL><font color=\"#$color_other\">$Message[2]</font></TD>";
+			if ($ShowDomainsStats =~ /P/i) { print "<TD>$rest_p</TD>"; }
+			if ($ShowDomainsStats =~ /H/i) { print "<TD>$rest_h</TD>"; }
+			if ($ShowDomainsStats =~ /B/i) { print "<TD>".Format_Bytes($rest_k)."</TD>"; }
+			print "<TD CLASS=AWL>&nbsp;</TD>";
+			print "</TR>\n";
+		}
+		&tab_end;
+		&html_end;
+		exit(0);
+	}
 	if ($HTMLOutput eq 'allhosts' || $HTMLOutput eq 'lasthosts') {
 		print "$Center<a name=\"HOSTSLIST\">&nbsp;</a><BR>\n";
 		# Show filter form
@@ -7174,7 +7245,7 @@ EOF
 			my $year=$1; my $month=$2; my $day=$3;
 			if (! DateIsValid($day,$month,$year)) { next; }			# If not an existing day, go to next
 			my $dayofweekcursor=DayOfWeek($day,$month,$year);
-			print "<TD".($dayofweekcursor=~/[06]/?" bgcolor=\"#$color_weekend\"":"").">";
+			print "<TD ".($dayofweekcursor=~/[06]/?" bgcolor=\"#$color_weekend\"":"").">";
 			print ($day==$nowday && $month==$nowmonth && $year==$nowyear?'<b>':'');
 			print "$day<br><font style=\"font-size: ".($FrameName ne 'mainright'?"10":"9")."px;\">".$MonthLib{$month}."</font>";
 			print ($day==$nowday && $month==$nowmonth && $year==$nowyear?'</b>':'');
@@ -7222,16 +7293,6 @@ EOF
 		print "</TR>\n";		
 
 		print "</TABLE>\n<br>";
-
-		# Show data arrays link
-#		if ($DetailedReportsOnNewWindows) { $NewLinkTarget=" target=\"awstatsbis\""; }
-#		if (($FrameName eq 'mainleft' || $FrameName eq 'mainright') && $DetailedReportsOnNewWindows < 2) {
-#			$NewLinkParams.="&framename=mainright";
-#			$NewLinkTarget=" target=\"mainright\"";
-#		}
-#		$NewLinkParams =~ tr/&/&/s; $NewLinkParams =~ s/^&//; $NewLinkParams =~ s/&$//;
-#		if ($NewLinkParams) { $NewLinkParams="${NewLinkParams}&"; }
-#		print "<a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=alldays&year=$YearRequired&month=$MonthRequired":"$PROG$StaticLinks.alldays.html")."\"$NewLinkTarget>$Message[130]</a>";
 
 		print "</CENTER>\n";
 		print "</TD></TR>\n";
@@ -7416,7 +7477,7 @@ EOF
 	if ($ShowDomainsStats) {
 		if ($Debug) { debug("ShowDomainsStats",2); }
 		print "$Center<a name=\"DOMAINS\">&nbsp;</a><BR>\n";
-		my $title="$Message[25] ($Message[77] $MaxNbOfDomain)";
+		my $title="$Message[25] ($Message[77] $MaxNbOfHostsShown) &nbsp; - &nbsp; <a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=alldomains":"$PROG$StaticLinks.alldomains.html")."\"$NewLinkTarget>$Message[80]</a>";
 		&tab_head("$title",19);
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH width=$WIDTHCOLICON>&nbsp;</TH><TH colspan=2>$Message[17]</TH>";
 		if ($ShowDomainsStats =~ /P/i) { print "<TH bgcolor=\"#$color_p\" width=80>$Message[56]</TH>"; }
