@@ -1187,7 +1187,8 @@ sub Parse_Config {
 			$value =~ s/^\s+//; $value =~ s/\s+$//;
 			$value =~ s/^\"//; $value =~ s/\";?$//;
 			# Replace __MONENV__ with value of environnement variable MONENV
-			while ($value =~ /__(\w+(?:_\w+)*)__/) { my $var=$1; $value =~ s/__${var}__/$ENV{$var}/g; }
+			# Must be able to replace __VAR_1____VAR_2__
+			while ($value =~ /__([^\s_]+(?:_[^\s_]+)*)__/) { my $var=$1; $value =~ s/__${var}__/$ENV{$var}/g; }
 		}
 
 		# Initialize parameter for (param,value)
