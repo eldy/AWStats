@@ -369,7 +369,7 @@ sub html_head {
 		# Write head section
 		if ($FrameName ne "index") { print "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">\n\n";  }
 		else { print "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Frameset//EN\">\n\n"; }
-		print "<html>\n";
+		print "<html lang='$Lang'>\n";
 		print "<head>\n";
 		if ($PageCode) { print "<META HTTP-EQUIV=\"content-type\" CONTENT=\"text/html; charset=$PageCode\"\n"; }		# If not defined, iso-8859-1 is used in major countries
 		if ($Expires)  { print "<META HTTP-EQUIV=\"expires\" CONTENT=\"".(localtime(time()+$Expires))."\">\n"; }
@@ -5672,7 +5672,7 @@ EOF
 		print "<TR>\n";
 		for (my $ix=0; $ix<=23; $ix++) {
 			my $hr=($ix+1); if ($hr>12) { $hr=$hr-12; }
-			print "<TH onmouseover=\"ShowTooltip(17);\" onmouseout=\"HideTooltip(17);\"><IMG SRC=\"$DirIcons\/clock\/hr$hr.png\" width=10></TH>\n";
+			print "<TH onmouseover=\"ShowTooltip(17);\" onmouseout=\"HideTooltip(17);\"><IMG alt='' SRC=\"$DirIcons\/clock\/hr$hr.png\" width=10></TH>\n";
 		}
 		print "</TR>\n";
 		print "<TR valign=bottom>\n";
