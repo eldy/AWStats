@@ -5778,8 +5778,8 @@ if ($FrameName eq 'index') {
 if ($Debug) { debug("Scan for last history files into DirData='$DirData'"); }
 $lastyearbeforeupdate=0;
 opendir(DIR,"$DirData");
-foreach (grep /^$PROG(\d\d)(\d\d\d\d)$FileSuffix\.txt(|\.gz)$/, sort readdir DIR) {
-	/^$PROG(\d\d)(\d\d\d\d)$FileSuffix\.txt(|\.gz)$/;
+foreach (grep /^$PROG(\d\d)(\d\d\d\d)$FileSuffix\.txt(|\.gz)$/i, sort readdir DIR) {
+	/^$PROG(\d\d)(\d\d\d\d)$FileSuffix\.txt(|\.gz)$/i;
 	if (! $ListOfYears{"$2"} || "$1" gt $ListOfYears{"$2"}) {
 		$ListOfYears{"$2"}="$1";	# ListOfYears contains max month found
 		if ("$2" gt $lastyearbeforeupdate) { $lastyearbeforeupdate="$2"; }
