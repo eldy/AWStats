@@ -122,7 +122,7 @@ $NewLinePhase $NbOfLinesForCorruptedLog $PurgeLogFile
 $ShowAuthenticatedUsers $ShowCompressionStats $ShowFileSizesStats
 $ShowDropped $ShowCorrupted $ShowUnknownOrigin $ShowLinksToWhoIs
 $SplitSearchString $StartSeconds $StartMicroseconds
-$UpdateStats $URLWithQuery
+$HTMLOutput $UpdateStats $URLWithQuery
 /;
 ($AllowAccessFromWebToAuthenticatedUsersOnly, $BarHeight, $BarWidth, $DebugResetDone,
 $Expires, $CreateDirDataIfNotExists, $KeepBackupOfHistoricFiles, $MaxLengthOfURL,
@@ -135,8 +135,8 @@ $NewLinePhase, $NbOfLinesForCorruptedLog, $PurgeLogFile,
 $ShowAuthenticatedUsers, $ShowCompressionStats, $ShowFileSizesStats,
 $ShowDropped, $ShowCorrupted, $ShowUnknownOrigin, $ShowLinksToWhoIs,
 $SplitSearchString, $StartSeconds, $StartMicroseconds,
-$UpdateStats, $URLWithQuery)=
-(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
+$HTMLOutput, $UpdateStats, $URLWithQuery)=
+(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
 use vars qw/
 $AllowToUpdateStatsFromBrowser $ArchiveLogRecords $DetailedReportsOnNewWindows
 $FirstDayOfWeek $SaveDatabaseFilesWithPermissionsForEveryone
@@ -184,11 +184,11 @@ $color_text, $color_textpercent, $color_titletext, $color_weekend, $color_link, 
 $color_h, $color_k, $color_p, $color_e, $color_x, $color_s, $color_u, $color_v)=
 ("","","","","","","","","","","","","","","","","","","","","");
 use vars qw/
-$FileConfig $FileSuffix $Host $HTMLOutput $LastUpdate $DayRequired $MonthRequired $YearRequired
+$FileConfig $FileSuffix $Host $LastUpdate $DayRequired $MonthRequired $YearRequired
 $QueryString $SiteConfig $StaticLinks $URLFilter $PageCode $LogFormatString $PerlParsingFormat
 $SiteToAnalyze $SiteToAnalyzeWithoutwww $UserAgent
 /;
-($FileConfig, $FileSuffix, $Host, $HTMLOutput, $LastUpdate, $DayRequired, $MonthRequired, $YearRequired,
+($FileConfig, $FileSuffix, $Host, $LastUpdate, $DayRequired, $MonthRequired, $YearRequired,
 $QueryString, $SiteConfig, $StaticLinks, $URLFilter, $PageCode, $LogFormatString, $PerlParsingFormat,
 $SiteToAnalyze, $SiteToAnalyzeWithoutwww, $UserAgent)=
 ("","","","","","","","","","","","","","","","","","");
@@ -893,7 +893,7 @@ sub Read_Ref_Data {
 	my %FilePath=();
 	my @FileListToLoad=();
 	push @FileListToLoad, "browsers.pm";
-	if (! $HTMLOutput) { push @FileListToLoad, "domains.pm"; }				# Not required if no output asked
+	if ($HTMLOutput) { push @FileListToLoad, "domains.pm"; }	# Used only when HTML output required
 	push @FileListToLoad, "operating_systems.pm";
 	push @FileListToLoad, "robots.pm";
 	push @FileListToLoad, "search_engines.pm";
