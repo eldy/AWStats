@@ -10,9 +10,12 @@
 
 
 # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-# !!!!!!! This plugin reduces AWStats speed by 40% !!!!!!!
+# !!!!!!! This plugin reduces AWStats speed by 30% !!!!!!!
 # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+# <-----
+# ENTER HERE THE USE COMMAND FOR ALL REQUIRED PERL MODULES
 #use Time::Local 'timelocal_nocheck';
+# ----->
 use strict;no strict "refs";
 
 
@@ -23,22 +26,31 @@ use strict;no strict "refs";
 my $PluginNeedAWStatsVersion="5.1";
 my $PluginHooksFunctions="ChangeTime GetTimeZoneTitle";
 
+# <-----
+# IF YOUR PLUGIN NEED GLOBAL VARIABLES, THEY MUST BE DECLARED HERE
 use vars qw/
 $PluginTimeZoneSeconds
 /;
+# ----->
+
 
 
 #-----------------------------------------------------------------------------
 # PLUGIN FUNTION Init_pluginname
 #-----------------------------------------------------------------------------
 sub Init_timezone {
-	my $AWStatsVersion=shift;
-	my $TZ=shift;
-	if (! $TZ) { return "Error: Disable plugin if TimeZone is 0 (Plugin useless)"; }	# We do not need this plugin if TZ=0
-	$PluginTimeZoneSeconds=($TZ*3600);
+	my $InitParams=shift;
+
+	# <-----
+	# YOU CAN ENTER HERE CODE TO INIT PLUGIN GLOBAL VARIABLES
+	if (! $InitParams) { return "Error: Disable plugin if TimeZone is 0 (Plugin useless)"; }	# We do not need this plugin if TZ=0
+	$PluginTimeZoneSeconds=($InitParams*3600);
+	# ----->
+
 	my $checkversion=&Check_Plugin_Version($PluginNeedAWStatsVersion);
 	return ($checkversion?$checkversion:"$PluginHooksFunctions");
 }
+
 
 
 #-----------------------------------------------------------------------------

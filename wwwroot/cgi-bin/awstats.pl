@@ -99,7 +99,7 @@ $MinHitFile $MinHitHost $MinHitKeyphrase $MinHitKeyword
 $MinHitLogin $MinHitRefer $MinHitRobot
 $NbOfLinesRead $NbOfLinesDropped $NbOfLinesCorrupted $NbOfOldLines $NbOfNewLines
 $NbOfLinesShowsteps $NewLinePhase $NbOfLinesForCorruptedLog $PurgeLogFile
-$ShowAuthenticatedUsers $ShowCompressionStats $ShowFileSizesStats
+$ShowAuthenticatedUsers $ShowFileSizesStats
 $ShowDropped $ShowCorrupted $ShowUnknownOrigin $ShowLinksToWhoIs
 $ShowEMailSenders $ShowEMailReceivers
 $Expires $UpdateStats $MigrateStats $URLWithQuery $UseFramesWhenCGI $DecodeUA
@@ -112,7 +112,7 @@ $MinHitFile, $MinHitHost, $MinHitKeyphrase, $MinHitKeyword,
 $MinHitLogin, $MinHitRefer, $MinHitRobot,
 $NbOfLinesRead, $NbOfLinesDropped, $NbOfLinesCorrupted, $NbOfOldLines, $NbOfNewLines,
 $NbOfLinesShowsteps, $NewLinePhase, $NbOfLinesForCorruptedLog, $PurgeLogFile,
-$ShowAuthenticatedUsers, $ShowCompressionStats, $ShowFileSizesStats,
+$ShowAuthenticatedUsers, $ShowFileSizesStats,
 $ShowDropped, $ShowCorrupted, $ShowUnknownOrigin, $ShowLinksToWhoIs,
 $ShowEMailSenders, $ShowEMailReceivers,
 $Expires, $UpdateStats, $MigrateStats, $URLWithQuery, $UseFramesWhenCGI, $DecodeUA)=
@@ -928,7 +928,6 @@ sub Read_Config {
 		if ($param =~ /^ShowOriginStats/)        { $ShowOriginStats=$value; next; }
 		if ($param =~ /^ShowKeyphrasesStats/)    { $ShowKeyphrasesStats=$value; next; }
 		if ($param =~ /^ShowKeywordsStats/)      { $ShowKeywordsStats=$value; next; }
-		if ($param =~ /^ShowCompressionStats/)   { $ShowCompressionStats=$value; next; }
 		if ($param =~ /^ShowHTTPErrorsStats/)    { $ShowHTTPErrorsStats=$value; next; }
 		if ($param =~ /^ShowEMailSenders/)      { $ShowEMailSenders=$value; next; }
 		if ($param =~ /^ShowEMailReceivers/)    { $ShowEMailReceivers=$value; next; }
@@ -1286,7 +1285,6 @@ sub Check_Config {
 	if ($ShowOriginStats !~ /[0-1]/)              	{ $ShowOriginStats=1; }
 	if ($ShowKeyphrasesStats !~ /[0-1]/)          	{ $ShowKeyphrasesStats=1; }
 	if ($ShowKeywordsStats !~ /[0-1]/)            	{ $ShowKeywordsStats=1; }
-	if ($ShowCompressionStats !~ /[0-1]/)         	{ $ShowCompressionStats=1; }
 	if ($ShowHTTPErrorsStats !~ /[0-1]/)          	{ $ShowHTTPErrorsStats=1; }
 	if ($ShowEMailSenders !~ /[0-1]/)          		{ $ShowEMailSenders=0; }
 	if ($ShowEMailReceivers !~ /[0-1]/)          	{ $ShowEMailReceivers=0; }
@@ -1547,17 +1545,28 @@ sub Read_Plugins {
 						if ($Debug) { debug(" Try to init plugin '$pluginname' ($pluginpath) with param '$pluginparam'",1); }
 						require "$pluginpath";
 						my $ret;	# To get init return
-						my $initfunction="\$ret=Init_$pluginname('$VERSION','$pluginparam')";
+						my $initfunction="\$ret=Init_$pluginname('$pluginparam')";
 						my $initret=eval("$initfunction");
 						if (! $initret || $initret =~ /^error/i) {
 							# Init failed, we stop here
 							&error("Plugin init for plugin '$pluginname' fails with return code: $initret");
 						}
 						# Plugin load and init successfull
-						$PluginsLoaded{"init"}{"$pluginname"}=1;
 						foreach my $elem (split(/\s+/,$initret)) {
+							# Some functions can only be plugged once
+							my @UniquePluginsFunctions=("ChangeTime","GetTimeZoneTitle","GetTime","SearchFile","LoadCache","SaveCash");
+							foreach my $function (@UniquePluginsFunctions) {
+								if ("$elem" eq "$function") {
+									# We try to load a 'unique' function, so we check and stop if already loaded
+									foreach my $otherpluginname (keys %{$PluginsLoaded{"$elem"}})  {
+										&error("Error: Conflict between plugin '$pluginname' and '$otherpluginname'. They implements both the 'must be unique' function '$elem'.\nYou can use only one of these plugins but not both of them.");
+									}
+									last;
+								}
+							}
 							$PluginsLoaded{"$elem"}{"$pluginname"}=1;
 						}
+						$PluginsLoaded{"init"}{"$pluginname"}=1;
 						if ($Debug) { debug(" Plugin '$pluginname' now hooks functions '$initret'",1); }
 						last;
 					}
@@ -3648,15 +3657,25 @@ sub SigHandler {
 # Output:       None
 # Return:       Int
 #--------------------------------------------------------------------
-sub Convert_IP_To_Decimal()
-{
+sub Convert_IP_To_Decimal() {
 	my ($IPAddress) = @_;
 	my @ip_seg_arr = split(/\./,$IPAddress);
 	my $decimal_ip_address = 256 * 256 *256 * $ip_seg_arr[0] + 256 * 256 * $ip_seg_arr[1] + 256 * $ip_seg_arr[2] + $ip_seg_arr[3];
 	return($decimal_ip_address);
 }
 
-
+#--------------------------------------------------------------------
+# Function:     Test there is at least on value in list not null
+# Parameters:   List of values
+# Input:        None
+# Output:       None
+# Return:       1 There is at least one not null value, 0 else
+#--------------------------------------------------------------------
+sub AtLeastOneNotNull() {
+	debug(" Call to AtLeastOneNotNull (".join('-',@_).")",3);
+	foreach my $val (@_) { if ($val) { return 1; } }
+	return 0;
+}
 
 
 #--------------------------------------------------------------------
@@ -5230,14 +5249,14 @@ EOF
 		if (($HTMLOutput eq "main" && $FrameName ne "mainright") || $FrameName eq "mainleft") {	# If main page asked
 			my $linkpage=($FrameName eq "mainleft"?"$AWScript?${NewLinkParams}":""); $linkpage =~ s/&$//;
 			my $targetpage=($FrameName eq "mainleft"?" target=mainright":"");
-			my $linetitle=0;
+			my $linetitle=1;
 			print "<table".($frame?" cellspacing=0 cellpadding=0 border=0":"").">\n";
 			if ($frame) {
 				# Summary
 				#print "<tr><th class=AWL valign=top>$Message[128]</th>\n";
 			}
 			# When
-			$linetitle=$ShowMonthDayStats+$ShowDaysOfWeekStats+$ShowHoursStats;
+			$linetitle=&AtLeastOneNotNull($ShowMonthDayStats,$ShowDaysOfWeekStats,$ShowHoursStats);
 			if ($linetitle) { print "<tr><th class=AWL valign=top>$Message[93] : </th>\n"; }
 			if ($linetitle) { print ($frame?"</tr>\n":"<td class=AWL>"); }
 			if ($ShowMonthDayStats)		 { print ($frame?"<tr><td class=AWL>":""); print "<a href=\"$linkpage#SUMMARY\"$targetpage>$Message[5]/$Message[4]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
@@ -5246,7 +5265,7 @@ EOF
 			if ($ShowHoursStats)		 { print ($frame?"<tr><td class=AWL>":""); print "<a href=\"$linkpage#HOUR\"$targetpage>$Message[20]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
 			if ($linetitle) { print ($frame?"":"</td></tr>\n"); }
 			# Who
-			$linetitle=$ShowDomainsStats+$ShowHostsStats+$ShowAuthenticatedUsers+$ShowEMailSenders+$ShowEMailReceivers+$ShowRobotsStats;
+			$linetitle=&AtLeastOneNotNull($ShowDomainsStats,$ShowHostsStats,$ShowAuthenticatedUsers,$ShowEMailSenders,$ShowEMailReceivers,$ShowRobotsStats);
 			if ($linetitle) { print "<tr><th class=AWL valign=top>$Message[92] : </th>\n"; }
 			if ($linetitle) { print ($frame?"</tr>\n":"<td class=AWL>"); }
 			if ($ShowDomainsStats)		 { print ($frame?"<tr><td class=AWL>":""); print "<a href=\"$linkpage#DOMAINS\"$targetpage>$Message[17]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
@@ -5257,12 +5276,15 @@ EOF
 			if ($ShowAuthenticatedUsers) { print ($frame?"<tr><td class=AWL>":""); print "<a href=\"$linkpage#LOGIN\"$targetpage>$Message[94]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
 			if ($ShowAuthenticatedUsers) { print ($frame?"<tr><td class=AWL> &nbsp; <img height=8 width=9 src=\"$DirIcons/other/page.png\" alt=\"...\"> ":""); print "<a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=alllogins":"$PROG$StaticLinks.alllogins.html")."\"$NewLinkTarget>$Message[80]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
 			if ($ShowAuthenticatedUsers =~ /L/i)	{ print ($frame?"<tr><td class=AWL> &nbsp; <img height=8 width=9 src=\"$DirIcons/other/page.png\" alt=\"...\"> ":""); print "<a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=lastlogins":"$PROG$StaticLinks.lastlogins.html")."\"$NewLinkTarget>$Message[9]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
+			if ($ShowEMailSenders)		 { print ($frame?"<tr><td class=AWL>":""); print "<a href=\"$linkpage#EMAILSENDERS\"$targetpage>$Message[0]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
+			if ($ShowEMailReceivers)	 { print ($frame?"<tr><td class=AWL>":""); print "<a href=\"$linkpage#EMAILRECEIVERS\"$targetpage>$Message[0]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
+			if ($ShowRobotsStats)		 { print ($frame?"<tr><td class=AWL>":""); print "<a href=\"$linkpage#ROBOTS\"$targetpage>$Message[53]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
 			if ($ShowRobotsStats)		 { print ($frame?"<tr><td class=AWL>":""); print "<a href=\"$linkpage#ROBOTS\"$targetpage>$Message[53]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
 			if ($ShowRobotsStats) 		 { print ($frame?"<tr><td class=AWL> &nbsp; <img height=8 width=9 src=\"$DirIcons/other/page.png\" alt=\"...\"> ":""); print "<a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=allrobots":"$PROG$StaticLinks.allrobots.html")."\"$NewLinkTarget>$Message[80]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
 			if ($ShowRobotsStats) 		 { print ($frame?"<tr><td class=AWL> &nbsp; <img height=8 width=9 src=\"$DirIcons/other/page.png\" alt=\"...\"> ":""); print "<a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=lastrobots":"$PROG$StaticLinks.lastrobots.html")."\"$NewLinkTarget>$Message[9]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
 			if ($linetitle) { print ($frame?"":"</td></tr>\n"); }
 			# Navigation
-			$linetitle=$ShowSessionsStats+$ShowPagesStats+$ShowFileTypesStats+$ShowFileSizesStats+$ShowOSStats+$ShowBrowsersStats;
+			$linetitle=&AtLeastOneNotNull($ShowSessionsStats,$ShowPagesStats,$ShowFileTypesStats,$ShowFileSizesStats,$ShowOSStats+$ShowBrowsersStats);
 			if ($linetitle) { print "<tr><th class=AWL valign=top>$Message[72] : </th>\n"; }
 			if ($linetitle) { print ($frame?"</tr>\n":"<td class=AWL>"); }
 			if ($ShowSessionsStats)		 { print ($frame?"<tr><td class=AWL>":""); print "<a href=\"$linkpage#SESSIONS\"$targetpage>$Message[117]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
@@ -5279,7 +5301,7 @@ EOF
 			if ($ShowBrowsersStats && $FrameName eq "mainleft")	{ print ($frame?"<tr><td class=AWL> &nbsp; <img height=8 width=9 src=\"$DirIcons/other/page.png\" alt=\"...\"> ":""); print "<a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=unknownbrowser":"$PROG$StaticLinks.unknownbrowser.html")."\"$NewLinkTarget>$Message[0]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
 			if ($linetitle) { print ($frame?"":"</td></tr>\n"); }
 			# Referers
-			$linetitle=$ShowOriginStats+$ShowKeyphrasesStats+$ShowKeywordsStats;
+			$linetitle=&AtLeastOneNotNull($ShowOriginStats,$ShowKeyphrasesStats,$ShowKeywordsStats);
 			if ($linetitle) { print "<tr><th class=AWL valign=top>$Message[23] : </th>\n"; }
 			if ($linetitle) { print ($frame?"</tr>\n":"<td class=AWL>"); }
 			if ($ShowOriginStats)		 { print ($frame?"<tr><td class=AWL>":""); print "<a href=\"$linkpage#REFERER\"$targetpage>$Message[37]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
@@ -5290,7 +5312,7 @@ EOF
 			if ($ShowKeywordsStats)	 	 { print ($frame?"<tr><td class=AWL> &nbsp; <img height=8 width=9 src=\"$DirIcons/other/page.png\" alt=\"...\"> ":""); print "<a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=keywords":"$PROG$StaticLinks.keywords.html")."\"$NewLinkTarget>$Message[121]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
 			if ($linetitle) { print ($frame?"":"</td></tr>\n"); }
 			# Others
-			$linetitle=$ShowCompressionStats+$ShowHTTPErrorsStats;
+			$linetitle=&AtLeastOneNotNull($ShowFileTypesStats=~/C/i,$ShowHTTPErrorsStats);
 			if ($linetitle) { print "<tr><th class=AWL valign=top>$Message[2] : </th>\n"; }
 			if ($linetitle) { print ($frame?"</tr>\n":"<td class=AWL>"); }
 			if ($ShowFileTypesStats =~ /C/i)	 { print ($frame?"<tr><td class=AWL>":""); print "<a href=\"$linkpage#FILETYPES\"$targetpage>$Message[98]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
@@ -5832,13 +5854,11 @@ EOF
 		exit(0);
 	}
 	if ($HTMLOutput eq "urldetail" || $HTMLOutput eq "urlentry" || $HTMLOutput eq "urlexit") {
-
-		foreach my $pluginname (keys %{$PluginsLoaded{"AddOn_Filter"}})  {
-			my $function="AddOn_Filter()"; 
+		# Call to plugin function ShowPagesFilter
+		foreach my $pluginname (keys %{$PluginsLoaded{"ShowPagesFilter"}})  {
+			my $function="ShowPagesFilter_$pluginname()";
 			eval("$function");
 		}
-#		if ($PluginsLoaded{"etf1"}) { AddOn_Filter(); }
-
 		print "$Center<a name=\"URLDETAIL\">&nbsp;</a><BR>\n";
 		# Show filter form
 		if (! $StaticLinks) {
@@ -5883,13 +5903,11 @@ EOF
 		if ($ShowPagesStats =~ /B/i) { print "<TH bgcolor=\"#$color_k\" width=80>$Message[106]</TH>"; }
 		if ($ShowPagesStats =~ /E/i) { print "<TH bgcolor=\"#$color_e\" width=80>$Message[104]</TH>"; }
 		if ($ShowPagesStats =~ /X/i) { print "<TH bgcolor=\"#$color_x\" width=80>$Message[116]</TH>"; }
-
-		foreach my $pluginname (keys %{$PluginsLoaded{"AddOn_ShowFields"}})  {
-			my $function="AddOn_ShowFields(\"\")"; 
+		# Call to plugin function ShowPagesAddField
+		foreach my $pluginname (keys %{$PluginsLoaded{"ShowPagesAddField"}})  {
+			my $function="ShowPagesAddField_$pluginname('title')";
 			eval("$function");
 		}
-#		if ($PluginsLoaded{"etf1"}) { AddOn_ShowFields(""); }
-
 		print "<TH>&nbsp;</TH></TR>\n";
 		$total_p=$total_k=$total_e=$total_x=0;
 		my $count=0;
@@ -5938,13 +5956,11 @@ EOF
 			if ($ShowPagesStats =~ /B/i) { print "<TD>".($_url_k{$key}?Format_Bytes($_url_k{$key}/($_url_p{$key}||1)):"&nbsp;")."</TD>"; }
 			if ($ShowPagesStats =~ /E/i) { print "<TD>".($_url_e{$key}?$_url_e{$key}:"&nbsp;")."</TD>"; }
 			if ($ShowPagesStats =~ /X/i) { print "<TD>".($_url_x{$key}?$_url_x{$key}:"&nbsp;")."</TD>"; }
-
-			foreach my $pluginname (keys %{$PluginsLoaded{"AddOn_ShowFields"}})  {
-				my $function="AddOn_ShowFields($key)"; 
+			# Call to plugin function ShowPagesAddField
+			foreach my $pluginname (keys %{$PluginsLoaded{"ShowPagesAddField"}})  {
+				my $function="ShowPagesAddField_$pluginname('$key')"; 
 				eval("$function");
 			}
-#			if ($PluginsLoaded{"etf1"}) { AddOn_ShowFields($key); }
-
 			print "<TD CLASS=AWL>";
 			if ($ShowPagesStats =~ /H/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_p\" WIDTH=$bredde_p HEIGHT=6><br>"; }
 			if ($ShowPagesStats =~ /B/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_k\" WIDTH=$bredde_k HEIGHT=6><br>"; }
@@ -5968,13 +5984,11 @@ EOF
 			if ($ShowPagesStats =~ /B/i) { print "<TD>".($rest_k?Format_Bytes($rest_k/$rest_p||1):"&nbsp;")."</TD>"; }
 			if ($ShowPagesStats =~ /E/i) { print "<TD>".($rest_e?$rest_e:"&nbsp;")."</TD>"; }
 			if ($ShowPagesStats =~ /X/i) { print "<TD>".($rest_x?$rest_x:"&nbsp;")."</TD>"; }
-
-			foreach my $pluginname (keys %{$PluginsLoaded{"AddOn_ShowFields"}})  {
-				my $function="AddOn_ShowFields('&nbsp')"; 
+			# Call to plugin function ShowPagesAddField
+			foreach my $pluginname (keys %{$PluginsLoaded{"ShowPagesAddField"}})  {
+				my $function="ShowPagesAddField_$pluginname('')";
 				eval("$function");
 			}
-#			if ($PluginsLoaded{"etf1"}) { AddOn_ShowFields("&nbsp"); }
-
 			print "<TD>&nbsp;</TD></TR>\n";
 		}
 		&tab_end;
@@ -6777,6 +6791,11 @@ EOF
 		if ($ShowPagesStats =~ /B/i) { print "<TH bgcolor=\"#$color_k\" width=80>$Message[106]</TH>"; }
 		if ($ShowPagesStats =~ /E/i) { print "<TH bgcolor=\"#$color_e\" width=80>$Message[104]</TH>"; }
 		if ($ShowPagesStats =~ /X/i) { print "<TH bgcolor=\"#$color_x\" width=80>$Message[116]</TH>"; }
+		# Call to plugin function ShowPagesAddField
+		foreach my $pluginname (keys %{$PluginsLoaded{"ShowPagesAddField"}})  {
+			my $function="ShowPagesAddField_$pluginname('title')";
+			eval("$function");
+		}
 		print "<TH>&nbsp;</TH></TR>\n";
 		$total_p=$total_e=$total_x=$total_k=0;
 		$max_p=1; $max_k=1;
@@ -6823,6 +6842,11 @@ EOF
 			if ($ShowPagesStats =~ /B/i) { print "<TD>".($_url_k{$key}?Format_Bytes($_url_k{$key}/($_url_p{$key}||1)):"&nbsp;")."</TD>"; }
 			if ($ShowPagesStats =~ /E/i) { print "<TD>".($_url_e{$key}?$_url_e{$key}:"&nbsp;")."</TD>"; }
 			if ($ShowPagesStats =~ /X/i) { print "<TD>".($_url_x{$key}?$_url_x{$key}:"&nbsp;")."</TD>"; }
+			# Call to plugin function ShowPagesAddField
+			foreach my $pluginname (keys %{$PluginsLoaded{"ShowPagesAddField"}})  {
+				my $function="ShowPagesAddField_$pluginname('$key')";
+				eval("$function");
+			}
 			print "<TD CLASS=AWL>";
 			if ($ShowPagesStats =~ /H/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_p\" WIDTH=$bredde_p HEIGHT=6 ALT=\"$Message[56]: ".int($_url_p{$key}||0)."\" title=\"$Message[56]: ".int($_url_p{$key}||0)."\"><br>"; }
 			if ($ShowPagesStats =~ /B/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_k\" WIDTH=$bredde_k HEIGHT=6 ALT=\"$Message[106]: ".($_url_k{$key}?Format_Bytes($_url_k{$key}/($_url_p{$key}||1)):"&nbsp;")."\" title=\"$Message[106]: ".($_url_k{$key}?Format_Bytes($_url_k{$key}/($_url_p{$key}||1)):"&nbsp;")."\"><br>"; }
@@ -6845,6 +6869,11 @@ EOF
 			if ($ShowPagesStats =~ /B/i) { print "<TD>".($rest_k?Format_Bytes($rest_k/($rest_p||1)):"&nbsp;")."</TD>"; }
 			if ($ShowPagesStats =~ /E/i) { print "<TD>".($rest_e?$rest_e:"&nbsp;")."</TD>"; }
 			if ($ShowPagesStats =~ /X/i) { print "<TD>".($rest_x?$rest_x:"&nbsp;")."</TD>"; }
+			# Call to plugin function ShowPagesAddField
+			foreach my $pluginname (keys %{$PluginsLoaded{"ShowPagesAddField"}})  {
+				my $function="ShowPagesAddField_$pluginname('')";
+				eval("$function");
+			}
 			print "<TD>&nbsp;</TD></TR>\n";
 		}
 		&tab_end;
