@@ -212,7 +212,8 @@ use vars qw/
 @fieldlib = @keylist = ();
 use vars qw/
 @MiscListOrder %MiscListCalc
-@OSFamily @BrowsersFamily @SessionsRange %SessionsAverage %LangBrowserToAwstats
+@OSFamily @BrowsersFamily @SessionsRange %SessionsAverage
+%LangBrowserToLangAwstats %LangAWStatsToCountryAwstats
 @HostAliases @AllowAccessFromWebToFollowingAuthenticatedUsers
 @DefaultFile @SkipDNSLookupFor
 @SkipHosts @SkipUserAgents @SkipFiles
@@ -232,11 +233,12 @@ use vars qw/
 @SessionsRange=('0s-30s','30s-2mn','2mn-5mn','5mn-15mn','15mn-30mn','30mn-1h','1h+');
 %SessionsAverage=('0s-30s',15,'30s-2mn',75,'2mn-5mn',210,'5mn-15mn',600,'15mn-30mn',1350,'30mn-1h',2700,'1h+',3600);
 # Values reported by HTTP-Accept with AWStats code to use
-%LangBrowserToAwstats=('sq'=>'al','ba'=>'ba','bg'=>'bg','zh-tw'=>'tw','zh'=>'cn','cz'=>'cz',
+%LangBrowserToLangAwstats=('sq'=>'al','ba'=>'ba','bg'=>'bg','zh-tw'=>'tw','zh'=>'cn','cz'=>'cz',
 'da'=>'dk','nl'=>'nl','en'=>'en','et'=>'et','fi'=>'fi','fr'=>'fr',
 'de'=>'de','el'=>'gr','hu'=>'hu','is'=>'is','in'=>'id','it'=>'it',
 'ja'=>'jp','ko'=>'kr','lv'=>'lv','no'=>'nb','nb'=>'nb','nn'=>'nn','pl'=>'pl','pt'=>'pt','pt-br'=>'br',
 'ro'=>'ro','ru'=>'ru','sr'=>'sr','sk'=>'sk','es'=>'es','eu'=>'es_eu','ca'=>'es_cat','sv'=>'se','tr'=>'tr','uk'=>'ua','wlk'=>'wlk');
+%LangAWStatsToCountryAwstats=('et'=>'ee');
 @HostAliases = @AllowAccessFromWebToFollowingAuthenticatedUsers=();
 @DefaultFile = @SkipDNSLookupFor = ();
 @SkipHosts = @SkipUserAgents = @SkipFiles = ();
@@ -4057,11 +4059,12 @@ sub Show_Flag_Links {
 	}
 	if ($FrameName eq 'mainright') { $NewLinkParams.='framename=index&'; }
 
-	foreach my $flag (split(/\s+/,$ShowFlagLinks)) {
-		if ($flag ne $CurrentLang) {
+	foreach my $lng (split(/\s+/,$ShowFlagLinks)) {
+		if ($lng ne $CurrentLang) {
 			my %lngtitle=('en','English','fr','French','de','German','it','Italian','nl','Dutch','es','Spanish');
-			my $lng=($lngtitle{$flag}?$lngtitle{$flag}:$flag);
-			print "<a href=\"".XMLEncode("$AWScript?${NewLinkParams}lang=$flag")."\"$NewLinkTarget><img src=\"$DirIcons\/flags\/$flag.png\" height=\"14\" border=\"0\"".AltTitle("$lng")." /></a>&nbsp;\n";
+			my $lngtitle=($lngtitle{$lng}?$lngtitle{$lng}:$lng);
+			my $flag=($LangAWStatsToCountryAwstats{$lng}?$LangAWStatsToCountryAwstats{$lng}:$lng);
+			print "<a href=\"".XMLEncode("$AWScript?${NewLinkParams}lang=$lng")."\"$NewLinkTarget><img src=\"$DirIcons\/flags\/$flag.png\" height=\"14\" border=\"0\"".AltTitle("$lngtitle")." /></a>&nbsp;\n";
 		}
 	}
 }
@@ -5212,9 +5215,9 @@ if (! $Lang || $Lang eq 'auto') {	# If lang not defined or forced to auto
 	my $langlist=$ENV{'HTTP_ACCEPT_LANGUAGE'}||''; $langlist =~ s/;[^,]*//g;
 	debug("Search an available language among HTTP_ACCEPT_LANGUAGE=$langlist",1);
 	foreach my $code (split(/,/,$langlist)) {	# Search for a valid lang in priority
-		if ($LangBrowserToAwstats{$code}) { $Lang=$LangBrowserToAwstats{$code}; debug(" Will try to use Lang=$Lang",1); last; }
+		if ($LangBrowserToLangAwstats{$code}) { $Lang=$LangBrowserToLangAwstats{$code}; debug(" Will try to use Lang=$Lang",1); last; }
 		$code =~ s/-.*$//;
-		if ($LangBrowserToAwstats{$code}) { $Lang=$LangBrowserToAwstats{$code}; debug(" Will try to use Lang=$Lang",1); last; }
+		if ($LangBrowserToLangAwstats{$code}) { $Lang=$LangBrowserToLangAwstats{$code}; debug(" Will try to use Lang=$Lang",1); last; }
 	}
 }
 if (! $Lang || $Lang eq 'auto') { debug(" No language defined or available. Will use Lang=en",1); $Lang='en'; }
