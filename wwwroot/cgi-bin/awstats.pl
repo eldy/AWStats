@@ -69,7 +69,7 @@ $tab_titre, $total_h, $total_k, $total_p, $yearmonth, $yeartoprocess) = ();
 %MonthBytes = %MonthHits = %MonthHostsKnown = %MonthHostsUnknown = %MonthPages = %MonthUnique = %MonthVisits =
 %listofyears = %monthlib = %monthnum = ();
 
-$VERSION="3.1 (build 13)";
+$VERSION="3.1 (build 14)";
 $Lang="en";
 $Sort="";
 
@@ -716,7 +716,7 @@ sub html_head {
 		print "<meta name=\"robots\" content=\"index,follow\">\n";
 		print "<title>$Message[7] $SiteToAnalyze</title>\n";
 		print <<EOF;
-<STYLE TYPE=text/css>
+<STYLE TYPE="text/css">
 <!--
 BODY { font: 12px arial, verdana, helvetica, sans-serif; background-color: #$color_Background; }
 TH { font: 12px arial, verdana, helvetica, sans-serif; text-align:center; color: #$color_titletext }
@@ -740,10 +740,10 @@ EOF
 		print "<body>\n";
 		# Write logo, flags and product name
 		print "<table WIDTH=$WIDTH>\n";
-		print "<tr valign=center><td class=AWL width=150 style=\"font: 18px arial,verdana,helvetica; font-weight: bold\">AWStats\n";
+		print "<tr valign=middle><td class=AWL width=150 style=\"font: 18px arial,verdana,helvetica; font-weight: bold\">AWStats\n";
 		Show_Flag_Links($Lang);
 		print "</td>\n";
-		print "<td class=AWL width=450><a href=\"http://awstats.sourceforge.net\" target=_newawstats><img src=$DirIcons/other/$Logo border=0 alt=\"$PROG Official Web Site\" title=\"$PROG Official Web Site\"></a></td></tr>\n";
+		print "<td class=AWL width=450><a href=\"http://awstats.sourceforge.net\" target=\"_newawstats\"><img src=\"$DirIcons/other/$Logo\" border=0 alt=\"$PROG Official Web Site\" title=\"$PROG Official Web Site\"></a></td></tr>\n";
 		#print "<b><font face=\"verdana\" size=1><a href=\"$HomeURL\">HomePage</a> &#149\; <a href=\"javascript:history.back()\">Back</a></font></b><br>\n";
 		print "<tr><td class=AWL colspan=2>$Message[54]</td></tr>\n";
 		print "</table>\n";
@@ -756,7 +756,7 @@ EOF
 sub html_end {
 	if ($HTMLOutput) {
 		print "$CENTER<br><br><br>\n";
-		print "<b>Advanced Web Statistics $VERSION</b> - <a href=\"http://awstats.sourceforge.net\" target=_newawstats>Created by $PROG</a><br>\n";
+		print "<b>Advanced Web Statistics $VERSION</b> - <a href=\"http://awstats.sourceforge.net\" target=\"_newawstats\">Created by $PROG</a><br>\n";
 		print "<br>\n";
 		print "$HTMLEndSection\n";
 		print "</body>\n";
@@ -766,12 +766,12 @@ sub html_end {
 
 sub tab_head {
 	print "
-		<TABLE BORDER=0 CELLPADDING=1 CELLSPACING=0 WIDTH=100%>
+		<TABLE BORDER=0 CELLPADDING=1 CELLSPACING=0 WIDTH=\"100%\">
 		<TR><TD>
-		<TABLE CLASS=TABLEFRAME BORDER=0 CELLPADDING=3 CELLSPACING=0 WIDTH=100%>
-		<TR><TD class=TABLETITLEFULL align=center width=60%>$tab_titre </TD><TD class=TABLETITLEBLANK>&nbsp;</TD></TR>
+		<TABLE CLASS=TABLEFRAME BORDER=0 CELLPADDING=3 CELLSPACING=0 WIDTH=\"100%\">
+		<TR><TD class=TABLETITLEFULL align=center width=\"60%\">$tab_titre </TD><TD class=TABLETITLEBLANK>&nbsp;</TD></TR>
 		<TR><TD colspan=2>
-		<TABLE CLASS=TABLEDATA BORDER=1 BORDERCOLOR=#$color_TableBorder CELLPADDING=2 CELLSPACING=0 WIDTH=100%>
+		<TABLE CLASS=TABLEDATA BORDER=1 BORDERCOLOR=\"#$color_TableBorder\" CELLPADDING=2 CELLSPACING=0 WIDTH=\"100%\">
 		";
 }
 
@@ -2467,7 +2467,7 @@ if ($HTMLOutput) {
 	# tooltip.offsetWidth|tooltipOBJ.style.pixelWidth				IE OK	Opera OK	Netscape OK		Width of an object
 	# event.clientXY												IE OK	Opera OK	Netscape KO		Return position of mouse
 	print <<EOF;
-	<script type="text/javascript" language="javascript">
+	<script language="javascript" type="text/javascript">
 		function ShowTooltip(fArg)
 		{
 			var tooltipOBJ = (document.getElementById) ? document.getElementById('tt' + fArg) : eval("document.all['tt" + fArg + "']");
@@ -2500,11 +2500,11 @@ EOF
 	
 	# INFO
 	#---------------------------------------------------------------------
-	print "$CENTER<a name=\"MENU\"></a><BR>";
+	print "$CENTER<a name=\"MENU\">&nbsp;</a><BR>";
 	print "<table>";
-	print "<tr><td class=AWL><font style=\"font: 14px arial,verdana,helvetica; font-weight: bold\">$Message[7] : </td><td class=AWL><font style=\"font: 14px arial,verdana,helvetica; font-weight: normal\">$SiteToAnalyze</td></tr>";
-	print "<tr><td class=AWL valign=top><font style=\"font: 14px arial,verdana,helvetica; font-weight: bold\">$Message[35] : ";
-	print "</td><td class=AWL><font style=\"font: 14px arial,verdana,helvetica; font-weight: normal\">";
+	print "<tr><td class=AWL><font style=\"font: 14px arial,verdana,helvetica; font-weight: bold\">$Message[7] : </font></td><td class=AWL><font style=\"font: 14px arial,verdana,helvetica; font-weight: normal\">$SiteToAnalyze</font></td></tr>";
+	print "<tr><td class=AWL valign=top><font style=\"font: 14px arial,verdana,helvetica; font-weight: bold\">$Message[35] : </font></td>";
+	print "<td class=AWL><font style=\"font: 14px arial,verdana,helvetica; font-weight: normal\">";
 	foreach my $key (sort keys %LastUpdate) { if ($LastUpdate < $LastUpdate{$key}) { $LastUpdate = $LastUpdate{$key}; } }
 	if ($LastUpdate) { print Format_Date($LastUpdate); }
 	else { print "<font color=#880000>Never updated</font>"; }
@@ -2534,10 +2534,10 @@ EOF
 	
 	
 	if ($QueryString =~ /output=unknownip/i) {
-		print "$CENTER<a name=\"UNKOWNIP\"></a><BR>";
+		print "$CENTER<a name=\"UNKOWNIP\">&nbsp;</a><BR>";
 		$tab_titre=$Message[45];
 		&tab_head;
-		print "<TR bgcolor=#$color_TableBGRowTitle><TH>$Message[48] (".(scalar keys %_unknownip_l).")</TH><TH>$Message[9]</TH>\n";
+		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[48] (".(scalar keys %_unknownip_l).")</TH><TH>$Message[9]</TH>\n";
 		my $count=0; my $rest=0;
 		foreach my $key (sort { $SortDir*$_unknownip_l{$a} <=> $SortDir*$_unknownip_l{$b} } keys (%_unknownip_l)) {
 			if ($count>=$MAXROWS) { $rest+=$_sider404_h{$key}; next; }
@@ -2550,10 +2550,10 @@ EOF
 		exit(0);
 	}
 	if ($QueryString =~ /output=unknownrefererbrowser/i) {
-		print "$CENTER<a name=\"UNKOWNREFERERBROWSER\"></a><BR>";
+		print "$CENTER<a name=\"UNKOWNREFERERBROWSER\">&nbsp;</a><BR>";
 		$tab_titre=$Message[50];
 		&tab_head;
-		print "<TR bgcolor=#$color_TableBGRowTitle><TH>Referer (".(scalar keys %_unknownrefererbrowser_l).")</TH><TH>$Message[9]</TH></TR>\n";
+		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>Referer (".(scalar keys %_unknownrefererbrowser_l).")</TH><TH>$Message[9]</TH></TR>\n";
 		my $count=0; my $rest=0;
 		foreach my $key (sort { $SortDir*$_unknownrefererbrowser_l{$a} <=> $SortDir*$_unknownrefererbrowser_l{$b} } keys (%_unknownrefererbrowser_l)) {
 			if ($count>=$MAXROWS) { $rest+=$_sider404_h{$key}; next; }
@@ -2566,10 +2566,10 @@ EOF
 		exit(0);
 	}
 	if ($QueryString =~ /output=unknownreferer/i) {
-		print "$CENTER<a name=\"UNKOWNREFERER\"></a><BR>";
+		print "$CENTER<a name=\"UNKOWNREFERER\">&nbsp;</a><BR>";
 		$tab_titre=$Message[46];
 		&tab_head;
-		print "<TR bgcolor=#$color_TableBGRowTitle><TH>Referer (".(scalar keys %_unknownreferer_l).")</TH><TH>$Message[9]</TH></TR>\n";
+		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>Referer (".(scalar keys %_unknownreferer_l).")</TH><TH>$Message[9]</TH></TR>\n";
 		my $count=0; my $rest=0;
 		foreach my $key (sort { $SortDir*$_unknownreferer_l{$a} <=> $SortDir*$_unknownreferer_l{$b} } keys (%_unknownreferer_l)) {
 			if ($count>=$MAXROWS) { $rest+=$_sider404_h{$key}; next; }
@@ -2582,10 +2582,10 @@ EOF
 		exit(0);
 	}
 	if ($QueryString =~ /output=notfounderror/i) {
-		print "$CENTER<a name=\"NOTFOUNDERROR\"></a><BR>";
+		print "$CENTER<a name=\"NOTFOUNDERROR\">&nbsp;</a><BR>";
 		$tab_titre=$Message[47];
 		&tab_head;
-		print "<TR bgcolor=#$color_TableBGRowTitle><TH>URL (".(scalar keys %_sider404_h).")</TH><TH bgcolor=#$color_h>$Message[49]</TH><TH>$Message[23]</TH></TR>\n";
+		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>URL (".(scalar keys %_sider404_h).")</TH><TH bgcolor=\"#$color_h\">$Message[49]</TH><TH>$Message[23]</TH></TR>\n";
 		my $count=0; my $rest=0;
 		foreach my $key (sort { $SortDir*$_sider404_h{$a} <=> $SortDir*$_sider404_h{$b} } keys (%_sider404_h)) {
 			if ($count>=$MAXROWS) { $rest+=$_sider404_h{$key}; next; }
@@ -2599,10 +2599,10 @@ EOF
 		exit(0);
 	}
 	if ($QueryString =~ /output=browserdetail/i) {
-		print "$CENTER<a name=\"NETSCAPE\"></a><BR>";
+		print "$CENTER<a name=\"NETSCAPE\">&nbsp;</a><BR>";
 		$tab_titre=$Message[33]."<br><img src=\"$DirIcons/browser/netscape.png\">";
 		&tab_head;
-		print "<TR bgcolor=#$color_TableBGRowTitle><TH>$Message[58]</TH><TH bgcolor=#$color_h width=80>$Message[57]</TH><TH bgcolor=#$color_h width=40>$Message[15]</TH></TR>\n";
+		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[58]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH bgcolor=\"#$color_h\" width=40>$Message[15]</TH></TR>\n";
 		for (my $i=1; $i<=$#_nsver_h; $i++) {
 			my $h="&nbsp;"; my $p="&nbsp;";
 			if ($_nsver_h[$i] > 0 && $_browser_h{"netscape"} > 0) {
@@ -2611,10 +2611,10 @@ EOF
 			print "<TR><TD CLASS=AWL>Mozilla/$i.xx</TD><TD>$h</TD><TD>$p</TD></TR>\n";
 		}
 		&tab_end;
-		print "<a name=\"MSIE\"></a><BR>";
+		print "<a name=\"MSIE\">&nbsp;</a><BR>";
 		$tab_titre=$Message[34]."<br><img src=\"$DirIcons/browser/msie.png\">";
 		&tab_head;
-		print "<TR bgcolor=#$color_TableBGRowTitle><TH>$Message[58]</TH><TH bgcolor=#$color_h width=80>$Message[57]</TH><TH bgcolor=#$color_h width=40>$Message[15]</TH></TR>\n";
+		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[58]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH bgcolor=\"#$color_h\" width=40>$Message[15]</TH></TR>\n";
 		for ($i=1; $i<=$#_msiever_h; $i++) {
 			my $h="&nbsp;"; my $p="&nbsp;";
 			if ($_msiever_h[$i] > 0 && $_browser_h{"msie"} > 0) {
@@ -2627,10 +2627,10 @@ EOF
 		exit(0);
 	}
 	if ($QueryString =~ /output=urldetail/i) {
-		print "$CENTER<a name=\"URLDETAIL\"></a><BR>";
+		print "$CENTER<a name=\"URLDETAIL\">&nbsp;</a><BR>";
 		$tab_titre="$Message[19]";
 		&tab_head;
-		print "<TR bgcolor=#$color_TableBGRowTitle><TH>".(scalar keys %_sider_p)."&nbsp; $Message[19] ".($URLFilter?"&nbsp; (Filter: $URLFilter)":"")."</TH><TH bgcolor=#$color_p>&nbsp;$Message[29]&nbsp;</TH><TH>&nbsp;</TH></TR>\n";
+		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>".(scalar keys %_sider_p)."&nbsp; $Message[19] ".($URLFilter?"&nbsp; (Filter: $URLFilter)":"")."</TH><TH bgcolor=\"#$color_p\">&nbsp;$Message[29]&nbsp;</TH><TH>&nbsp;</TH></TR>\n";
 		my $max_p=1; foreach my $key (values %_sider_p) { if ($key > $max_p) { $max_p = $key; } }
 		my $count=0; my $rest=0;
 		foreach my $key (sort { $SortDir*$_sider_p{$a} <=> $SortDir*$_sider_p{$b} } keys (%_sider_p)) {
@@ -2652,7 +2652,7 @@ EOF
 	}
 	if ($QueryString =~ /output=info/i) {
 		# Not yet available
-		print "$CENTER<a name=\"INFO\"></a><BR>";
+		print "$CENTER<a name=\"INFO\">&nbsp;</a><BR>";
 		&html_end;
 		exit(0);
 	}
@@ -2660,7 +2660,7 @@ EOF
 	
 	# SUMMARY
 	#---------------------------------------------------------------------
-	print "$CENTER<a name=\"SUMMARY\"></a><BR>";
+	print "$CENTER<a name=\"SUMMARY\">&nbsp;</a><BR>";
 	$tab_titre="$Message[7] $SiteToAnalyze";
 	&tab_head;
 	
@@ -2688,7 +2688,7 @@ EOF
 	if ($TotalVisits > 0) { $RatioHits=int($TotalHits/$TotalVisits*100)/100; }
 	if ($TotalVisits > 0) { $RatioBytes=int(($TotalBytes/1024)*100/$TotalVisits)/100; }
 	
-	print "<TR bgcolor=#$color_TableBGRowTitle><TD><b>$Message[8]</b></TD>";
+	print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TD><b>$Message[8]</b></TD>";
 	if ($MonthRequired eq "year") { print "<TD colspan=3 rowspan=2><font style=\"font: 18px arial,verdana,helvetica; font-weight: normal\">$Message[6] $YearRequired</font><br>"; }
 	else { print "<TD colspan=3 rowspan=2><font style=\"font: 18px arial,verdana,helvetica; font-weight: normal\">$Message[5] $monthlib{$MonthRequired} $YearRequired</font><br>"; }
 	# Show links for possible years
@@ -2698,16 +2698,16 @@ EOF
 	print "</TD>";
 	print "<TD><b>$Message[9]</b></TD></TR>";
 	
-	if ($FirstTime) { print "<TR bgcolor=#$color_TableBGRowTitle><TD>".Format_Date($FirstTime)."</TD>"; }
-	else { print "<TR bgcolor=#$color_TableBGRowTitle><TD>NA</TD>"; }
+	if ($FirstTime) { print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TD>".Format_Date($FirstTime)."</TD>"; }
+	else { print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TD>NA</TD>"; }
 	if ($LastTime) { print "<TD>".Format_Date($LastTime)."</TD></TR>"; }
 	else { print "<TD>NA</TD></TR>\n"; }
 	print "<TR>";
-	print "<TD width=20% bgcolor=#$color_v onmouseover=\"ShowTooltip(1);\" onmouseout=\"HideTooltip(1);\">$Message[10]</TD>";
-	print "<TD width=20% bgcolor=#$color_w onmouseover=\"ShowTooltip(2);\" onmouseout=\"HideTooltip(2);\">$Message[11]</TD>";
-	print "<TD width=20% bgcolor=#$color_p onmouseover=\"ShowTooltip(3);\" onmouseout=\"HideTooltip(3);\">$Message[56]</TD>";
-	print "<TD width=20% bgcolor=#$color_h onmouseover=\"ShowTooltip(4);\" onmouseout=\"HideTooltip(4);\">$Message[57]</TD>";
-	print "<TD width=20% bgcolor=#$color_k onmouseover=\"ShowTooltip(5);\" onmouseout=\"HideTooltip(5);\">$Message[75]</TD></TR>";
+	print "<TD width=\"20%\" bgcolor=\"#$color_v\" onmouseover=\"ShowTooltip(1);\" onmouseout=\"HideTooltip(1);\">$Message[10]</TD>";
+	print "<TD width=\"20%\" bgcolor=\"#$color_w\" onmouseover=\"ShowTooltip(2);\" onmouseout=\"HideTooltip(2);\">$Message[11]</TD>";
+	print "<TD width=\"20%\" bgcolor=\"#$color_p\" onmouseover=\"ShowTooltip(3);\" onmouseout=\"HideTooltip(3);\">$Message[56]</TD>";
+	print "<TD width=\"20%\" bgcolor=\"#$color_h\" onmouseover=\"ShowTooltip(4);\" onmouseout=\"HideTooltip(4);\">$Message[57]</TD>";
+	print "<TD width=\"20%\" bgcolor=\"#$color_k\" onmouseover=\"ShowTooltip(5);\" onmouseout=\"HideTooltip(5);\">$Message[75]</TD></TR>";
 	print "<TR><TD><b>$TotalVisits</b><br>&nbsp;</TD><TD><b>$TotalUnique</b><br>($RatioHosts&nbsp;$Message[52])</TD><TD><b>$TotalPages</b><br>($RatioPages&nbsp;".lc($Message[56]."/".$Message[12]).")</TD>";
 	print "<TD><b>$TotalHits</b><br>($RatioHits&nbsp;".lc($Message[57]."/".$Message[12]).")</TD><TD><b>".Format_Bytes($TotalBytes)."</b><br>($RatioBytes&nbsp;$Message[44]/".lc($Message[12]).")</TD></TR>\n";
 	print "<TR valign=bottom><TD colspan=5 align=center><center>";
@@ -2743,7 +2743,7 @@ EOF
 	print "</TR><TR>";
 	for (my $ix=1; $ix<=12; $ix++) {
 		my $monthix=$ix; if ($monthix < 10) { $monthix="0$monthix"; }
-		print "<TD valign=center><a href=\"$DirCgi$PROG.$Extension?site=$SiteToAnalyze&year=$YearRequired&month=$monthix&lang=$Lang\">$monthlib{$monthix}</a></TD>";
+		print "<TD valign=middle><a href=\"$DirCgi$PROG.$Extension?site=$SiteToAnalyze&year=$YearRequired&month=$monthix&lang=$Lang\">$monthlib{$monthix}</a></TD>";
 	}
 	print "</TR></TABLE><br>";
 	# Show daily stats
@@ -2791,7 +2791,7 @@ EOF
 		if ($oldyear < 100) { $oldyear+=2000; } else { $oldyear+=1900; }
 		if (++$oldmonth < 10) { $oldmonth="0$oldmonth"; }
 		if ($oldday < 10) { $oldday="0$oldday"; }
-		print "<TD valign=center".($oldwday==0||$oldwday==6?" bgcolor=#$color_weekend":"").">";
+		print "<TD valign=middle".($oldwday==0||$oldwday==6?" bgcolor=\"#$color_weekend\"":"").">";
 		print ($oldday==$nowday && $oldmonth==$nowmonth?"<b>":"");
 		print "$oldday<br><font style=\"font: 10px;\">".$monthlib{$oldmonth}."</font>";
 		print ($oldday==$nowday && $oldmonth==$nowmonth?"</b></TD>":"</TD>");
@@ -2807,10 +2807,10 @@ EOF
 	# BY COUNTRY/DOMAIN
 	#---------------------------
 	my @sortdomains_p=sort { $SortDir*$_domener_p{$a} <=> $SortDir*$_domener_p{$b} } keys (%_domener_p);
-	print "$CENTER<a name=\"DOMAINS\"></a><BR>";
+	print "$CENTER<a name=\"DOMAINS\">&nbsp;</a><BR>";
 	$tab_titre="$Message[25]";
 	&tab_head;
-	print "<TR bgcolor=#$color_TableBGRowTitle><TH colspan=2>$Message[17]</TH><TH>Code</TH><TH bgcolor=#$color_p width=80>$Message[56]</TH><TH bgcolor=#$color_h width=80>$Message[57]</TH><TH bgcolor=#$color_k>$Message[75]</TH><TH>&nbsp;</TH></TR>\n";
+	print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH colspan=2>$Message[17]</TH><TH>Code</TH><TH bgcolor=\"#$color_p\" width=80>$Message[56]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH bgcolor=\"#$color_k\">$Message[75]</TH><TH>&nbsp;</TH></TR>\n";
 	my $total_p=0;my $total_h=0;my $total_k=0;
 	my $max_h=1; foreach my $key (values %_domener_h) { if ($key > $max_h) { $max_h = $key; } }
 	my $max_k=1; foreach my $key (values %_domener_k) { if ($key > $max_k) { $max_k = $key; } }
@@ -2858,11 +2858,11 @@ EOF
 	
 	# BY HOST/VISITOR
 	#--------------------------
-	print "$CENTER<a name=\"VISITOR\"></a><BR>";
+	print "$CENTER<a name=\"VISITOR\">&nbsp;</a><BR>";
 	$MaxNbOfHostsShown = $TotalHostsKnown+($_hostmachine_h{"Unknown"}?1:0) if $MaxNbOfHostsShown > $TotalHostsKnown;
 	$tab_titre="$Message[77] $MaxNbOfHostsShown $Message[55] ".($TotalHostsKnown+$TotalHostsUnknown)." $Message[26] ($TotalUnique $Message[11])";
 	&tab_head;
-	print "<TR bgcolor=#$color_TableBGRowTitle><TH>$Message[18]</TH><TH bgcolor=#$color_p width=80>$Message[56]</TH><TH bgcolor=#$color_h width=80>$Message[57]</TH><TH bgcolor=#$color_k>$Message[75]</TH><TH>$Message[9]</TH></TR>\n";
+	print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[18]</TH><TH bgcolor=\"#$color_p\" width=80>$Message[56]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH bgcolor=\"#$color_k\">$Message[75]</TH><TH>$Message[9]</TH></TR>\n";
 	my $total_p=0;my $total_h=0;my $total_k=0;
 	my $count=0;
 	foreach my $key (sort { $SortDir*$_hostmachine_p{$a} <=> $SortDir*$_hostmachine_p{$b} } keys (%_hostmachine_p)) {
@@ -2893,10 +2893,10 @@ EOF
 	
 	# BY ROBOTS
 	#----------------------------
-	print "$CENTER<a name=\"ROBOTS\"></a><BR>";
+	print "$CENTER<a name=\"ROBOTS\">&nbsp;</a><BR>";
 	$tab_titre=$Message[53];
 	&tab_head;
-	print "<TR bgcolor=#$color_TableBGRowTitle onmouseover=\"ShowTooltip(16);\" onmouseout=\"HideTooltip(16);\"><TH>Robot</TH><TH bgcolor=#$color_h width=80>$Message[57]</TH><TH>$Message[9]</TH></TR>\n";
+	print "<TR bgcolor=\"#$color_TableBGRowTitle\" onmouseover=\"ShowTooltip(16);\" onmouseout=\"HideTooltip(16);\"><TH>Robot</TH><TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH>$Message[9]</TH></TR>\n";
 	my $count=0;
 	foreach my $key (sort { $SortDir*$_robot_h{$a} <=> $SortDir*$_robot_h{$b} } keys (%_robot_h)) {
 		print "<tr><td CLASS=AWL>$RobotHash{$key}</td><td>$_robot_h{$key}</td><td>".Format_Date($_robot_l{$key})."</td></tr>";
@@ -2907,7 +2907,7 @@ EOF
 	
 	# BY HOUR
 	#----------------------------
-	print "$CENTER<a name=\"HOUR\"></a><BR>";
+	print "$CENTER<a name=\"HOUR\">&nbsp;</a><BR>";
 	$tab_titre="$Message[20]";
 	&tab_head;
 	print "<TR><TD align=center><center><TABLE><TR>\n";
@@ -2943,11 +2943,11 @@ EOF
 	
 	# BY PAGE
 	#-------------------------
-	print "$CENTER<a name=\"PAGE\"></a><BR>";
+	print "$CENTER<a name=\"PAGE\">&nbsp;</a><BR>";
 	$MaxNbOfPageShown = $TotalDifferentPages if $MaxNbOfPageShown > $TotalDifferentPages;
 	$tab_titre="$Message[77] $MaxNbOfPageShown $Message[55] $TotalDifferentPages $Message[27] &nbsp; - &nbsp; <a href=\"$DirCgi$PROG.$Extension?output=urldetail&site=$SiteToAnalyze&year=$YearRequired&month=$MonthRequired&lang=$Lang\">Full list</a>";
 	&tab_head;
-	print "<TR bgcolor=#$color_TableBGRowTitle><TH>$Message[19]</TH><TH bgcolor=#$color_p>&nbsp;$Message[29]&nbsp;</TH><TH>&nbsp;</TH></TR>\n";
+	print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[19]</TH><TH bgcolor=\"#$color_p\">&nbsp;$Message[29]&nbsp;</TH><TH>&nbsp;</TH></TR>\n";
 	my $max_p=1; foreach my $key (values %_sider_p) { if ($key > $max_p) { $max_p = $key; } }
 	my $count=0; my $rest_p=0;
 	foreach my $key (sort { $SortDir*$_sider_p{$a} <=> $SortDir*$_sider_p{$b} } keys (%_sider_p)) {
@@ -2968,10 +2968,10 @@ EOF
 	
 	# BY BROWSER
 	#----------------------------
-	print "$CENTER<a name=\"BROWSER\"></a><BR>";
+	print "$CENTER<a name=\"BROWSER\">&nbsp;</a><BR>";
 	$tab_titre="$Message[21]";
 	&tab_head;
-	print "<TR bgcolor=#$color_TableBGRowTitle><TH>Browser</TH><TH bgcolor=#$color_h width=80>$Message[57]</TH><TH bgcolor=#$color_h width=40>$Message[15]</TH></TR>\n";
+	print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>Browser</TH><TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH bgcolor=\"#$color_h\" width=40>$Message[15]</TH></TR>\n";
 	my $count=0; 
 	foreach my $key (sort { $SortDir*$_browser_h{$a} <=> $SortDir*$_browser_h{$b} } keys (%_browser_h)) {
 		my $p=int($_browser_h{$key}/$TotalHits*1000)/10;
@@ -2988,10 +2988,10 @@ EOF
 	
 	# BY OS
 	#----------------------------
-	print "$CENTER<a name=\"OS\"></a><BR>";
+	print "$CENTER<a name=\"OS\">&nbsp;</a><BR>";
 	$tab_titre=$Message[59];
 	&tab_head;
-	print "<TR bgcolor=#$color_TableBGRowTitle><TH colspan=2>OS</TH><TH bgcolor=#$color_h width=80>$Message[57]</TH><TH bgcolor=#$color_h width=40>$Message[15]</TH></TR>\n";
+	print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH colspan=2>OS</TH><TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH bgcolor=\"#$color_h\" width=40>$Message[15]</TH></TR>\n";
 	my $count=0; 
 	foreach my $key (sort { $SortDir*$_os_h{$a} <=> $SortDir*$_os_h{$b} } keys (%_os_h)) {
 		my $p=int($_os_h{$key}/$TotalHits*1000)/10;
@@ -3011,7 +3011,7 @@ EOF
 	
 	# BY REFERENCE
 	#---------------------------
-	print "$CENTER<a name=\"REFERER\"></a><BR>";
+	print "$CENTER<a name=\"REFERER\">&nbsp;</a><BR>";
 	$tab_titre="$Message[36]";
 	&tab_head;
 	my @p_p=();
@@ -3030,7 +3030,7 @@ EOF
 		$p_h[3]=int($_from_h[3]/$TotalHits*1000)/10;
 		$p_h[4]=int($_from_h[4]/$TotalHits*1000)/10;
 	}
-	print "<TR bgcolor=#$color_TableBGRowTitle><TH>$Message[37]</TH><TH bgcolor=#$color_p width=80>$Message[56]</TH><TH bgcolor=#$color_p width=40>$Message[15]</TH><TH bgcolor=#$color_h width=80>$Message[57]</TH><TH bgcolor=#$color_h width=40>$Message[15]</TH></TR>\n";
+	print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[37]</TH><TH bgcolor=\"#$color_p\" width=80>$Message[56]</TH><TH bgcolor=\"#$color_p\" width=40>$Message[15]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH bgcolor=\"#$color_h\" width=40>$Message[15]</TH></TR>\n";
 	print "<TR><TD CLASS=AWL><b>$Message[38]:</b></TD><TD>$_from_p[0]&nbsp;</TD><TD>$p_p[0]&nbsp;%</TD><TD>$_from_h[0]&nbsp;</TD><TD>$p_h[0]&nbsp;%</TD></TR>\n";
 	#------- Referrals by search engine
 	print "<TR onmouseover=\"ShowTooltip(13);\" onmouseout=\"HideTooltip(13);\"><TD CLASS=AWL><b>$Message[40] :</b><br>\n";
@@ -3073,11 +3073,11 @@ EOF
 	#----------------------------
 	my $TotalDifferentKeywords=scalar keys %_keywords;
 	my $TotalKeywords=0; foreach my $key (keys %_keywords) { $TotalKeywords+=$_keywords{$key}; }
-	print "$CENTER<a name=\"SEARCHWORDS\"></a><BR>";
+	print "$CENTER<a name=\"SEARCHWORDS\">&nbsp;</a><BR>";
 	$MaxNbOfKeywordsShown = $TotalDifferentKeywords if $MaxNbOfKeywordsShown > $TotalDifferentKeywords;
 	$tab_titre="$Message[77] $MaxNbOfKeywordsShown $Message[55] $TotalDifferentKeywords $Message[43]";
 	&tab_head;
-	print "<TR bgcolor=#$color_TableBGRowTitle onmouseover=\"ShowTooltip(15);\" onmouseout=\"HideTooltip(15);\"><TH>$Message[13]</TH><TH bgcolor=#$color_s width=80>$Message[14]</TH><TH bgcolor=#$color_s width=40>$Message[15]</TH></TR>\n";
+	print "<TR bgcolor=\"#$color_TableBGRowTitle\" onmouseover=\"ShowTooltip(15);\" onmouseout=\"HideTooltip(15);\"><TH>$Message[13]</TH><TH bgcolor=\"#$color_s\" width=80>$Message[14]</TH><TH bgcolor=\"#$color_s\" width=40>$Message[15]</TH></TR>\n";
 	my $count=0; my $rest=0;
 	foreach my $key (sort { $SortDir*$_keywords{$a} <=> $SortDir*$_keywords{$b} } keys (%_keywords)) {
 		if ($count>=$MaxNbOfKeywordsShown) { $rest+=$_keywords{$key}; next; }
@@ -3097,10 +3097,10 @@ EOF
 	
 	# BY ERRORS
 	#----------------------------
-	print "$CENTER<a name=\"ERRORS\"></a><BR>";
+	print "$CENTER<a name=\"ERRORS\">&nbsp;</a><BR>";
 	$tab_titre=$Message[32];
 	&tab_head;
-	print "<TR bgcolor=#$color_TableBGRowTitle><TH colspan=2>$Message[32]</TH><TH bgcolor=#$color_h width=80>$Message[57]</TH><TH bgcolor=#$color_h width=40>$Message[15]</TH></TR>\n";
+	print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH colspan=2>$Message[32]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH bgcolor=\"#$color_h\" width=40>$Message[15]</TH></TR>\n";
 	my $count=0;
 	foreach my $key (sort { $SortDir*$_errors_h{$a} <=> $SortDir*$_errors_h{$b} } keys (%_errors_h)) {
 		my $p=int($_errors_h{$key}/$TotalErrors*1000)/10;
