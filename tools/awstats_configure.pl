@@ -292,8 +292,8 @@ print "Read the AWStats documentation (docs/index.html).\n";
 # Detect OS type
 # --------------
 if ("$^O" =~ /linux/i || (-d "/etc" && -d "/var" && "$^O" !~ /cygwin/i)) { $OS='linux'; $CR=''; }
-elsif (-d "/etc" && -d "/Users") { $OS='macosx'; $CR=''; }
-elsif ("$^O" =~ /cygwin/i || "$^O" =~ /win32/i) { $OS='windows'; $CR="\r"; }
+if ("$^O" !~ /linux/i && -d "/etc" && -d "/Users") { $OS='macosx'; $CR=''; }
+if ("$^O" =~ /cygwin/i || "$^O" =~ /win32/i) { $OS='windows'; $CR="\r"; }
 if (! $OS) {
     print "configure.pl was not able to detect your OS. You must configure AWStats\n";
 	print "manually following the setup documentation (docs/index.html).\n";
