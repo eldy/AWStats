@@ -9,6 +9,7 @@ Fixes:
 - Fixed a problem of not working misc feature when using IIS and 
   when URLWithQuery was set to 0.
 - maillogconvert.pl: Better management of error records with sendmail.
+  and postfix (some "reject" records were discarded).
 - Now all non ISO-8859-1 languages are shown correctly even with 
   Apache2 whatever is the value of the AddDefaultCharset 
   directive.

@@ -248,17 +248,24 @@ while (<>) {
 		# postfix:  Jan 01 04:19:04 apollon postfix/smtpd[26553]: 1954F3B8A4: reject: RCPT from unknown[80.245.33.2]: 450 <partenaires@chiensderace.com>: User unknown in local recipient table; from=<httpd@fozzy2.dpi-europe.fr> to=<partenaires@chiensderace.com> proto=ESMTP helo=<fozzy2.dpi-europe.fr>
 		# postfix:  Jan 01 04:26:39 halley postfix/smtpd[9245]: reject: RCPT from unknown[203.156.32.33]: 554 <charitha99@yahoo.com>: Recipient address rejected: Relay access denied; from=<1126448365@aol.com> to=<charitha99@yahoo.com>
 		my ($mon,$day,$time,$id,$code,$from,$to)=m/(\w+)\s+(\d+)\s+(\d+:\d+:\d+)\s+[\w\-]+\s+(?:postfix\/(?:local|lmtp|smtpd|smtp|virtual|pipe))\[\d+\]:\s+(.*?):\s+(.*)\s+from=([^\s,]*)\s+to=([^\s,]*)/;
+		# postfix:	Jan 01 14:10:16 juni postfix/smtpd[2568]: C34ED1432B: reject: RCPT from relay2.tp2rc.edu.tw[163.28.32.177]: 450 <linda@trieger.org>: User unknown in local recipient table; from=<> proto=ESMTP helo=<rmail.nccu.edu.tw>
+		if (! $mon) { ($mon,$day,$time,$id,$code,$from)=m/(\w+)\s+(\d+)\s+(\d+:\d+:\d+)\s+[\w\-]+\s+(?:postfix\/(?:local|lmtp|smtpd|smtp|virtual|pipe))\[\d+\]:\s+(.*?):\s+(.*)\s+from=([^\s,]*)/; }
 		$mailid=($id eq 'reject'?'999':$id);	# id not provided in log, we take '999'
-		# $code='reject: RCPT from c66.191.66.89.dul.mn.charter.com[66.191.66.89]: 450 <partenaires@chiensderace.com>: User unknown in local recipient table;'
-		#    or 'reject: RCPT from unknown[203.156.32.33]: 554 <charitha99@yahoo.com>: Recipient address rejected: Relay access denied;'
 		if ($mailid) {
+			# $code='reject: RCPT from c66.191.66.89.dul.mn.charter.com[66.191.66.89]: 450 <partenaires@chiensderace.com>: User unknown in local recipient table;'
+			#    or 'reject: RCPT from unknown[203.156.32.33]: 554 <charitha99@yahoo.com>: Recipient address rejected: Relay access denied;'
 			if ($code =~ /\s+(\d\d\d)\s+/) { $mail{$mailid}{'code'}=$1; }
 			else { $mail{$mailid}{'code'}=999; }	# Unkown error
-			if (! $mail{$mailid}{'relay_s'} &&  $code =~ /from\s+([^\s]+)\s+/) {
+			if (! $mail{$mailid}{'relay_s'} && $code =~ /from\s+([^\s]+)\s+/) {
 				$mail{$mailid}{'relay_s'}=&trim($1);
 			}
 			$mail{$mailid}{'from'}=&trim($from);
-			$mail{$mailid}{'to'}=&trim($to);
+			if ($to) { 
+				$mail{$mailid}{'to'}=&trim($to);
+			}
+			elsif ($code =~ /<(.*)>/) {
+				$mail{$mailid}{'to'}=&trim($1);
+			}
 			$mail{$mailid}{'mon'}=$mon;
 			$mail{$mailid}{'day'}=$day;
 			$mail{$mailid}{'time'}=$time;
