@@ -13,8 +13,8 @@
 	Talet på gongar ei <b>side</b>, eit <b>bilde</b> eller ei <b>fil</b> på nettstaden har blitt <b>vist</b> eller <b>lasta ned</b>.
 	</div>
 	<div class="CTooltip" id="tt5">
-	Denne informasjonen viser kor mykje data som har blitt lasta ned totalt (<b>sider</b>, <b>bilder</b> eller andre <b>filer</b>).<br>
-	Einingane er KB, MB eller GB (kilobyte, megabyte eller gigabyte)
+ 	Denne informasjonen viser kor mykje data som har blitt lasta ned totalt (<b>sider</b>, <b>bilde</b> eller andre <b>filer</b>).<br>
+ 	Einingane er KiB, MiB eller GiB (kibibyte, mebibyte eller gibibyte)
 	</div>
 	<div class="CTooltip" id="tt13">
 	#PROG# kan sjå når eit besøk på nettstaden din kjem frå eit <b>søk</b> på dei <b>#SearchEnginesArray# mest populære søkemotorane og emnekatalogane</b> (f.eks.&nbsp;Yahoo, Altavista, Lycos, Google og Kvasir).
