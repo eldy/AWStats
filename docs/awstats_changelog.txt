@@ -24,6 +24,7 @@ Fixes:
 - Fixed bug in counting hits for miscellanous and clusters chart when
   a temporary flush was done on disk during a long update.
 - ExtraSections now works on all records whatever is the error code.
+- Click on "Summary" now returns to top of page even with rawlog plugin.
 
 New features/improvements:
 - Increased speed by 10 to 20%.
@@ -31,6 +32,7 @@ New features/improvements:
   understand and reduce unknown bugs.
 - Some changes to make AWStats to be XML compliant ready.
   Need to set the new parameter BuildReportFormat to 'xml' in config file.
+- Summary report shows also "unviewed" traffic.
 - A new search engine database to allow several "match id" for same
   search engine. Example: All google ip referer id are recognised.
 - Can use UA and HOST fields to build personalized ExtraSection reports.
@@ -63,6 +65,7 @@ Other/Documentation:
   asmx and aspx added in mime.pm file.
   Microsoft URL Control added in robot list.
 - Documentation seriously updated.
+- FAQ updated.
 - Debian icon and some missing country flags added.
 - Prepare code for decodeUTFkeys plugin.
 - Added Hebrew and Galician language.

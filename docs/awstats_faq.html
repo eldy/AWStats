@@ -260,6 +260,11 @@ LogFile="/var/log/xferlog"
 <br>LogFormat="%time1 %host %logname %method %url %code %bytesd"
 <br>LogSeparator="\t"
 <br>NotPageList=""
+<br>LevelForBrowsersDetection=0
+<br>LevelForOSDetection=0
+<br>LevelForRefererAnalyze=0
+<br>LevelForRobotsDetection=0
+<br>LevelForSearchEnginesDetection=0
 <br>ShowLinksOnUrl=0
 <br>ShowMenu=1
 <br>ShowMonthStats=UVHB
@@ -269,7 +274,7 @@ LogFile="/var/log/xferlog"
 <br>ShowDomainsStats=HB
 <br>ShowHostsStats=HBL
 <br>ShowAuthenticatedUsers=HBL
-<br>ShowRobotsStats=1
+<br>ShowRobotsStats=0
 <br>ShowEMailSenders=0
 <br>ShowEMailReceivers=0
 <br>ShowSessionsStats=1
@@ -320,6 +325,12 @@ Then change:
 <i>
 <br>LogType=M
 <br>LogFormat="%time2 %email %email_r %host %host_r %method %url %code %bytesd"
+<br>LevelForBrowsersDetection=0
+<br>LevelForOSDetection=0
+<br>LevelForRefererAnalyze=0
+<br>LevelForRobotsDetection=0
+<br>LevelForSearchEnginesDetection=0
+<br>LevelForFileTypesDetection=0
 <br>ShowMenu=1
 <br>ShowMonthStats=HB
 <br>ShowDaysOfMonthStats=HB
@@ -386,7 +397,9 @@ Your log file will probably looks like this:<br>
 Copy config awstats.model.conf file to "awstats.mediaserver.conf".
 Modify this new config file:
 <table width="95%" border=1 cellpadding=0 cellspacing=0><tr class=CFAQ><td class=CFAQ>
-<i>LogFile="/pathtomediaserver/mediaserverlog"
+<i>
+LogFile="/pathtomediaserverlog/mediaserverlog"
+<br>LogType=S
 <br>LogFormat="%host %other %logname %time1 %methodurl %code %bytesd %uabracket %other %other %other %other %other %other %other %other"
 <br>LogSeparator="\s+"
 <br>ShowMenu=1
@@ -482,6 +495,7 @@ Modify this new config file:
 <table width="95%" border=1 cellpadding=0 cellspacing=0><tr class=CFAQ><td class=CFAQ>
 <i>
 LogFile="/pathtomediaserver/mediaserverlog"
+<br>LogType=S
 <br>LogFormat="c-ip date time cs-uri-stem c-starttime x-duration c-rate c-status c-playerid c-playerversion c-playerlanguage cs(User-Agent) cs(Referer) c-hostexe c-hostexever c-os c-osversion c-cpu filelength filesize avgbandwidth protocol transport audiocodec videocodec channelURL sc-bytes"
 <br>DecodeUA=1
 <br>ShowMenu=1
