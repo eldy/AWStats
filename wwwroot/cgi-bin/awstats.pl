@@ -93,7 +93,7 @@ $color_h, $color_k, $color_link, $color_p, $color_s, $color_u, $color_v, $color_
 %monthlib = %monthnum = ();
 
 
-$VERSION="3.2 (build 74)";
+$VERSION="3.2 (build 75)";
 $Lang="en";
 
 # Default value
@@ -443,6 +443,7 @@ sub Read_Config_File {
 				$olderwday++;
 				if ($olderdaymod <= $olderwday) { if (($olderwday != 7) || ($olderdaymod != 0)) { $olderweekofmonth=$olderweekofmonth+1; } }
 				if ($olderdaymod >  $olderwday) { $olderweekofmonth=$olderweekofmonth+2; }
+				$olderweekofmonth = "0$olderweekofmonth";
 				if ($olderyear < 100) { $olderyear+=2000; } else { $olderyear+=1900; }
 				$oldersmallyear=$olderyear;$oldersmallyear =~ s/^..//;
 				if (++$oldermonth < 10) { $oldermonth = "0$oldermonth"; }
@@ -1697,6 +1698,7 @@ $nowdaymod=$nowday%7;
 $nowwday++;
 if ($nowdaymod <= $nowwday) { if (($nowwday != 7) || ($nowdaymod != 0)) { $nowweekofmonth=$nowweekofmonth+1; } }
 if ($nowdaymod >  $nowwday) { $nowweekofmonth=$nowweekofmonth+2; }
+$nowweekofmonth = "0$nowweekofmonth";
 if ($nowyear < 100) { $nowyear+=2000; } else { $nowyear+=1900; }
 $nowsmallyear=$nowyear;$nowsmallyear =~ s/^..//;
 if (++$nowmonth < 10) { $nowmonth = "0$nowmonth"; }
