@@ -56,6 +56,7 @@
 "wisenut\.com", "ixquick.com",
 "search\.earthlink\.net", 
 "search\.sli\.sympatico\.ca", 
+"i-une\.com",
 # Minor brazilian search engines
 "engine\.exe", "miner\.bol\.com\.br",
 # Minor chinese search engines
@@ -147,6 +148,7 @@
 "ixquick\.com", "query=",
 "search\.earthlink\.net", "q=",
 "search\.sli\.sympatico\.ca", "query=", 
+"i-une\.com","(keywords|q)=",
 # Minor brazilian search engines
 "engine\.exe","p1=", "miner\.bol\.com\.br","q=",
 # Minor chinese search engines
@@ -244,6 +246,7 @@
 "ixquick\.com", "ix quick", 
 "search\.earthlink\.net", "Earth Link",
 "search\.sli\.sympatico\.ca", "Sympatico",
+"i-une\.com","i-une.com",
 # Minor brazilian search engines
 "engine\.exe","Cade", "miner\.bol\.com\.br","Meta Miner",
 # Minor chinese search engines
