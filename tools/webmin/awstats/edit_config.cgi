@@ -34,31 +34,62 @@ foreach my $key (keys %$lconf) {
 	$lconf->{$key}=~s/[\"\']\s*$//;
 }
 
+# Put in @conflist, list of all existing config
+my @conflist=();
+foreach my $dir (split(/\s+/, $access{'dir'})) {
+	push(@conflist, map { $_->{'custom'} = 1; $_ } &scan_config_dir($dir));
+}
+
+
 print "<hr>\n";
 
 print <<EOF;
 <SCRIPT LANGUAGE="JavaScript">
 function Submit_onClick() {
-	if (document.editconfig.LogFormat.value=='') {
-		alert('$text{save_errLogFormat}');
-		document.editconfig.LogFormat.focus();
-		return false;
-	}
-	if (document.editconfig.LogFile.value.match(/maillogconvert.pl/)!=null && document.editconfig.LogType.value != 'M') {
-		alert('Your log file is preprocessed by maillogconvert.pl but is not defined as a "Mail" log type.\\nChange LogFile or LogType parameter.');
-		document.editconfig.LogType.focus();
-		return false;
-	}
-	if (document.editconfig.SiteDomain.value=='') {
-		alert('$text{save_errSiteDomain}');
-		document.editconfig.SiteDomain.focus();
-		return false;
-	}
-	if (document.editconfig.DirData.value=='') {
-		alert('$text{save_errDirData}');
-		document.editconfig.DirData.focus();
-		return false;
-	}
+EOF
+# If create
+if ($in{'new'} && scalar @conflist) {
+print <<EOF;
+    if (document.editconfig.create_mode[0].checked) {
+    	if (document.editconfig.file_to_copy.value=='') {
+    		alert('You must choose a config to copy for creating a new one by copy');
+    		document.editconfig.file_to_copy.focus();
+    		return false;
+    	}
+    } else {
+EOF
+}
+# End If create
+print <<EOF;
+    	if (document.editconfig.LogFormat.value=='') {
+    		alert('$text{save_errLogFormat}');
+    		document.editconfig.LogFormat.focus();
+    		return false;
+    	}
+    	if (document.editconfig.LogFile.value.match(/maillogconvert.pl/)!=null && document.editconfig.LogType.value != 'M') {
+    		alert('Your log file is preprocessed by maillogconvert.pl but is not defined as a "Mail" log type.\\nChange LogFile or LogType parameter.');
+    		document.editconfig.LogType.focus();
+    		return false;
+    	}
+    	if (document.editconfig.SiteDomain.value=='') {
+    		alert('$text{save_errSiteDomain}');
+    		document.editconfig.SiteDomain.focus();
+    		return false;
+    	}
+    	if (document.editconfig.DirData.value=='') {
+    		alert('$text{save_errDirData}');
+    		document.editconfig.DirData.focus();
+    		return false;
+    	}
+EOF
+# If create
+if ($in{'new'} && scalar @conflist) {
+print <<EOF;
+    }
+EOF
+}
+# End If create
+print <<EOF;
 	return true;
 }
 
@@ -82,7 +113,7 @@ if (-d "/private/etc" && ! &can_edit_config("/private/etc")) { # For MacOS users
 
 print "<form name='editconfig' action='save_config.cgi'>\n";
 
-print "<table border width=100%>\n";
+print "<table border width=\"100%\">\n";
 print "<tr $tb> <td><b>";
 if ($in{'new'}) {
 	print &text('edit_headernew');
@@ -98,12 +129,29 @@ print "<tr $cb> <td><table width=100%>\n";
 my $filenametosave="";
 if ($in{'new'}) {
 	print "<tr> <td><b>$text{'edit_add'}</b></td> <td>\n";
-
 	my $newfile="/etc/awstats/awstats.newconfig.conf";
 	print "<input type=text name=new size=50 value='$newfile'>";
-
 	print "</td> <td> </td> </tr>\n";
-	print "<tr> <td colspan=3><hr></td> </tr>\n";
+    print "</table></td></tr></table>\n";
+    
+    if (scalar @conflist) {
+        print "<br><input name=\"create_mode\" type=\"radio\" value=\"by_copy\"> ".$text{'edit_create_by_copy'};
+        print "<table border width=\"100%\"><tr $cb><td>\n";
+        print "<table width=\"100%\">\n";
+    	print "<tr> <td><b>$text{'edit_config_to_copy'}</b></td> <td>\n";
+        print "<select name=\"file_to_copy\"><option value='' selected>&nbsp;</option>\n";
+       	foreach my $file (@conflist) {	
+       		next if (!&can_edit_config($file));
+       		print "<option value=\"$file\">$file</option>\n";
+       	}
+        print "</select>";
+    	print "</td> <td> </td> </tr>\n";
+        print "</table></td></tr></table>\n";
+    }
+    
+    print "<br><input name=\"create_mode\" type=\"radio\" value=\"from_scratch\" checked=true> ".$text{'edit_create_from_scratch'};
+    print "<table border width=\"100%\"><tr $cb><td>\n";
+    print "<table width=\"100%\">\n";
 } else {
 	print "<input type=hidden name=file value='$in{'file'}'>\n";
 }
@@ -111,9 +159,9 @@ print "<input type=hidden name=oldfile value='$in{'file'}'>\n";
 
 print "<tr> <td colspan=3>MAIN SETUP SECTION (Required to make AWStats work)<br><hr></td> </tr>\n";
 
-print "<tr> <td><b>LogFile</b></td> <td> <input type=text name=LogFile size=50 value='$lconf->{'LogFile'}'> ".&file_chooser_button("LogFile",0,0)." </td> <td> ";
+print "<tr> <td><b>LogFile*</b></td> <td> <input type=text name=LogFile size=50 value='$lconf->{'LogFile'}'> ".&file_chooser_button("LogFile",0,0)." </td> <td> ";
 print &hblink($text{'help_help'}, "help.cgi?param=LogFile")." </td> </tr>\n";
-print "<tr> <td><b>LogType</b></td> <td> ";
+print "<tr> <td><b>LogType*</b></td> <td> ";
 print "<select name=LogType>";
 print "<option value='W'".($lconf->{'LogType'} eq 'W'?" selected":"").">W (Web server log file)</option>\n";
 print "<option value='S'".($lconf->{'LogType'} eq 'S'?" selected":"").">S (Streaming server log file)</option>\n";
@@ -122,11 +170,11 @@ print "<option value='F'".($lconf->{'LogType'} eq 'F'?" selected":"").">F (Ftp s
 print "</select>\n";
 print "</td> <td> ";
 print &hblink($text{'help_help'}, "help.cgi?param=LogType")." </td> </tr>\n";
-print "<tr> <td><b>LogFormat</b></td> <td> <input name=LogFormat type=text size=40 value='$lconf->{'LogFormat'}'> </td> <td> ";
+print "<tr> <td><b>LogFormat*</b></td> <td> <input name=LogFormat type=text size=40 value='$lconf->{'LogFormat'}'> </td> <td> ";
 print &hblink($text{'help_help'}, "help.cgi?param=LogFormat")," </td> </tr>\n";
 print "<tr> <td><b>LogSeparator</b></td> <td> <input size=10 name=LogSeparator type=text value='$lconf->{'LogSeparator'}'> </td> <td> ";
 print &hblink($text{'help_help'}, "help.cgi?param=LogSeparator")." </td> </tr>\n";
-print "<tr> <td><b>SiteDomain</b></td> <td> <input name=SiteDomain type=text value='$lconf->{'SiteDomain'}'> </td> <td> ";
+print "<tr> <td><b>SiteDomain*</b></td> <td> <input name=SiteDomain type=text value='$lconf->{'SiteDomain'}'> </td> <td> ";
 print &hblink($text{'help_help'}, "help.cgi?param=SiteDomain")." </td> </tr>\n";
 print "<tr> <td><b>HostAliases</b></td> <td> <input size=50 name=HostAliases type=text value='$lconf->{'HostAliases'}'> </td> <td> ";
 print &hblink($text{'help_help'}, "help.cgi?param=HostAliases")." </td> </tr>\n";
@@ -142,6 +190,7 @@ print "<tr> <td><b>AllowToUpdateStatsFromBrowser</b></td> <td> <input size=10 na
 print &hblink($text{'help_help'}, "help.cgi?param=AllowToUpdateStatsFromBrowser")." </td> </tr>\n";
 print "<tr> <td><b>AllowFullYearView</b></td> <td> <input size=10 name=AllowFullYearView type=text value='$lconf->{'AllowFullYearView'}'> </td> <td> ";
 print &hblink($text{'help_help'}, "help.cgi?param=AllowFullYearView")." </td> </tr>\n";
+print "<tr> <td colspan=2><b>*</b> are required parameters with no default value. They can't be empty.</td> <td> ";
 
 
 print "<tr> <td colspan=3><br>OPTIONAL SETUP SECTION (Not required but increase AWStats features)<br><hr></td> </tr>\n";
@@ -531,11 +580,9 @@ if ($advanced) {
 	print "<tr> <td colspan=3><br><hr></td> </tr>\n";
 	print "<tr> <td colspan=3 align=center><a href='edit_config.cgi?".($in{'new'}?"new=1&":"")."file=$in{'file'}'>$text{'index_hideadvanced'}</a></td></tr>\n";
 	print "<tr> <td colspan=3><hr></td> </tr>\n";
-	print "</table>\n";
 }
-else{
-	print "</table>\n";
-}
+print "</table>\n";
+print "</td></tr></table>\n";
 
 @b=();
 if ($in{'new'}) {
@@ -555,6 +602,7 @@ else {
 
 print "</form>\n";
 
+# Back to config list
 print "<hr>\n";
 &footer("", $text{'index_return'});
 

@@ -40,7 +40,7 @@ elsif ($in{'delete'}) {
 
 	}
 else {
-	# Validate and store inputs
+	# Validate and store inputs. $in{'new'} is new file to create or update.
 	if (!$in{'new'} && !$in{'file'}) { &error($text{'save_efile'}); }
 
 	my $dir=$in{'file'}; $dir =~ s/[\\\/][^\\\/]+$//;
@@ -52,48 +52,62 @@ else {
 	if ($in{'new'} && -r $in{'$file'}) { &error($text{'save_fileexists'}); }
 	if (! -d $dir) { &error($text{'save_dirnotexists'}); }
 
-	%conf=();
-	foreach my $key (keys %in) {
-		if ($key eq 'file') { next; }
-                if ($key eq 'new') { next; }
-                if ($key eq 'submit') { next; }
-		if ($key eq 'oldfile') { next; }
-		$conf{$key} = $in{$key};
-		if ($conf{key} ne ' ') {
-			$conf{$key} =~ s/^\s+//;
-			$conf{$key} =~ s/\s+$//;
-		}
-	}
-	if ($conf{'LogSeparator'} eq '') { $conf{'LogSeparator'}=' '; }
+    my $modelconf=$config{'alt_conf'};
 
-	# Check data
-	my $logfile='';
-	if ($conf{'LogFile'} !~ /|\s*$/) {	# LogFile is not a piped valued
-		$logfile=$conf{'LogFile'};
-	}
-	else {								# LogFile is piped
-		# It can be
-		# '/xxx/maillogconvert.pl standard /aaa/mail.log |'
-		# '/xxx/logresolvermerge.pl *'
+    # If create by copy
+    if ($in{'new'} && $in{'create_mode'} eq 'by_copy') {
+        $modelconf=$in{'file_to_copy'};
+        $in{'new'} =~ s/([^\\\/]+)$//;
+        my $to=$1;
+        if (! $modelconf || ! -r $modelconf) { &error('You must choose a config to copy'); }
+		# Add a new config file
+		&system_logged("cp '$modelconf' '$dir/$to'");
+    }
+    else {
+    	%conf=();
+    	foreach my $key (keys %in) {
+    		if ($key eq 'file') { next; }
+                    if ($key eq 'new') { next; }
+                    if ($key eq 'submit') { next; }
+    		if ($key eq 'oldfile') { next; }
+    		$conf{$key} = $in{$key};
+    		if ($conf{key} ne ' ') {
+    			$conf{$key} =~ s/^\s+//;
+    			$conf{$key} =~ s/\s+$//;
+    		}
+    	}
+    	if ($conf{'LogSeparator'} eq '') { $conf{'LogSeparator'}=' '; }
+    
+    	# Check data
+    	my $logfile='';
+    	if ($conf{'LogFile'} !~ /|\s*$/) {	# LogFile is not a piped valued
+    		$logfile=$conf{'LogFile'};
+    	}
+    	else {								# LogFile is piped
+    		# It can be
+    		# '/xxx/maillogconvert.pl standard /aaa/mail.log |'
+    		# '/xxx/logresolvermerge.pl *'
+    
+    		# TODO test something here ?
+    	}
+    	if ($logfile && ! -r $logfile)	{ &error(&text(save_errLogFile,$logfile)); }
+    	if (! $conf{'SiteDomain'}) 		{ &error(&text(save_errSiteDomain,$conf{'SiteDomain'})); }
+    	if (! -d $conf{'DirData'}) 		{ &error(&text(save_errDirData,$conf{'DirData'})); }
+    
+    	if ($in{'new'}) {
+    		# Add a new config file
+    		&system_logged("cp '$modelconf' '$in{'new'}'");
+    	}
+    	
+    	# Update the config file's options
+    	local $cfile = $in{'file'};
+    	&lock_file($cfile);
+    	&update_config($cfile, \%conf);
+    	&unlock_file($cfile);
+    }
 
-		# TODO test something here ?
-	}
-	if ($logfile && ! -r $logfile)	{ &error(&text(save_errLogFile,$logfile)); }
-	if (! $conf{'SiteDomain'}) 		{ &error(&text(save_errSiteDomain,$conf{'SiteDomain'})); }
-	if (! -d $conf{'DirData'}) 		{ &error(&text(save_errDirData,$conf{'DirData'})); }
-
-	if ($in{'new'}) {
-		# Add a new config file to the configuration
-		&system_logged("cp '$config{'alt_conf'}' '$in{'new'}'");
-	}
-	
-	# Update the config file's options
-	local $cfile = $in{'file'};
-	&lock_file($cfile);
-	&update_config($cfile, \%conf);
-	&unlock_file($cfile);
 	&webmin_log($in{'new'} ? "create" : "modify", "log", $in{'file'});
-	}
+}
 
 &redirect("");
 

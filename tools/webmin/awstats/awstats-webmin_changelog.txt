@@ -2,6 +2,13 @@ AWStats-Webmin module Changelog
 -------------------------------
 $Revision$ - $Author$ - $Date$ 
 
+1.400
+
+New features/improvements:
+- Some change to add scheduler management for update process
+- Creating new config files can be done by copying an old one.
+
+
 1.300
 
 Fixes:
