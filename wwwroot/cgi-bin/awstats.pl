@@ -19,8 +19,8 @@ use Socket;
 # Defines
 #-----------------------------------------------------------------------------
 use vars qw/ $REVISION $VERSION /;
-my $REVISION='$Revision$'; $REVISION =~ /\s(.*)\s/; $REVISION=$1;
-my $VERSION="5.1 (build $REVISION)";
+$REVISION='$Revision$'; $REVISION =~ /\s(.*)\s/; $REVISION=$1;
+$VERSION="5.1 (build $REVISION)";
 
 # ---------- Init variables -------
 # Constants
@@ -1660,13 +1660,17 @@ sub Read_Plugins {
 					my $pluginpath="${searchdir}${pluginfile}.pm";
 					if (-s "$pluginpath") {
 						if ($Debug) { debug(" Try to init plugin '$pluginname' ($pluginpath) with param '$pluginparam'",1); }
-						require "$pluginpath";
+						my $initreq=require "$pluginpath";
+						if (! $initreq || $initreq =~ /^error/i) {
+							# Load failed, we stop here
+							&error("Plugin load for plugin '$pluginname' failed with return code: $initreq");
+						}
 						my $ret;	# To get init return
 						my $initfunction="\$ret=Init_$pluginname('$pluginparam')";
 						my $initret=eval("$initfunction");
 						if (! $initret || $initret =~ /^error/i) {
-							# Init failed, we stop here
-							&error("Plugin init for plugin '$pluginname' fails with return code: $initret");
+							# Init function failed, we stop here
+							&error("Plugin init for plugin '$pluginname' failed with return code: $initret");
 						}
 						# Plugin load and init successfull
 						foreach my $elem (split(/\s+/,$initret)) {
@@ -4878,6 +4882,9 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {	# Updat
 			$lastprocessedyearmonth=sprintf("%04i%02i",$lastprocessedyear,$lastprocessedmonth);
 		}
 
+		# Convert $field[$pos_size]
+		# if ($field[$pos_size] eq '-') { $field[$pos_size]=0; }
+		
 		# Check return status code
 		#-------------------------
 		if ($protocol == 1 || $protocol == 4) {		# HTTP record or Stream record
@@ -4887,7 +4894,7 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {	# Updat
 			else {										# Code is not valid
 				if ($field[$pos_code] =~ /^\d\d\d$/) { 					# Keep error code and next
 					$_errors_h{$field[$pos_code]}++;
-					$_errors_k{$field[$pos_code]}+=$field[$pos_size];
+					$_errors_k{$field[$pos_code]}+=int($field[$pos_size]);
 					foreach my $code (keys %TrapInfosForHTTPErrorCodes) {
 						if ($field[$pos_code] == $code) { $_sider404_h{$field[$pos_url]}++; $_referer404_h{$field[$pos_url]}=$field[$pos_referer]; }
 					}
@@ -4904,7 +4911,7 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {	# Updat
 			if ($field[$pos_code] != 1) {				# Code is not valid
 				$field[$pos_size]=0;
 				$_errors_h{$field[$pos_code]}++;
-				$_errors_k{$field[$pos_code]}+=$field[$pos_size];
+				$_errors_k{$field[$pos_code]}+=int($field[$pos_size]);
 				next;
 			}
 		}
@@ -4936,7 +4943,7 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {	# Updat
 				if ($uarobot ne "-") {
 					if ($Debug) { debug("UserAgent '$UserAgent' contains robot ID '$uarobot'",2); }
 					$_robot_h{$uarobot}++;
-					$_robot_k{$uarobot}+=$field[$pos_size];
+					$_robot_k{$uarobot}+=int($field[$pos_size]);
 					$_robot_l{$uarobot}=$timerecord;
 					next;
 				}
@@ -4975,7 +4982,7 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {	# Updat
 			if ($URLNotCaseSensitive) { $field[$pos_url] =~ tr/A-Z/a-z/; }
 			$field[$pos_url] =~ s/\?(.*)$//;
 			$urlwithnoquery=$field[$pos_url];
-			$standalonequery="$1";
+			$standalonequery=$1||"";
 		}
 		# Here now urlwithnoquery is /mydir/mypage.ext, /mydir, /
 
@@ -5003,7 +5010,7 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {	# Updat
 			}
 		}
 		elsif ($pos_gzipratio>=0 && ($field[$pos_gzipratio] =~ /(\d*)pct./)) {
-			$_filetypes_gz_in{$extension}+=$field[$pos_size];
+			$_filetypes_gz_in{$extension}+=int($field[$pos_size]);
 			$_filetypes_gz_out{$extension}+=int($field[$pos_size]*(1-$1/100));	# out size calculated from pct.
 		}
 
@@ -5022,10 +5029,10 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {	# Updat
 			$MonthPages{$lastprocessedyearmonth}++;
 			$_time_p[$hourrecord]++;											#Count accesses for hour (page)
 			$_url_p{$field[$pos_url]}++; 										#Count accesses for page (page)
-			$_url_k{$field[$pos_url]}+=$field[$pos_size];
+			$_url_k{$field[$pos_url]}+=int($field[$pos_size]);
 		}
 		$_time_h[$hourrecord]++; $MonthHits{$lastprocessedyearmonth}++; $DayHits{$yearmonthdayrecord}++;	#Count accesses for hour (hit)
-		$_time_k[$hourrecord]+=$field[$pos_size]; $MonthBytes{$lastprocessedyearmonth}+=$field[$pos_size]; $DayBytes{$yearmonthdayrecord}+=$field[$pos_size];	#Count accesses for hour (kb)
+		$_time_k[$hourrecord]+=int($field[$pos_size]); $MonthBytes{$lastprocessedyearmonth}+=int($field[$pos_size]); $DayBytes{$yearmonthdayrecord}+=int($field[$pos_size]);	#Count accesses for hour (kb)
 
 		# Analyze: Login
 		#---------------
@@ -5037,7 +5044,7 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {	# Updat
 				$_login_p{$field[$pos_logname]}++;								#Count accesses for page (page)
 			}
 			$_login_h{$field[$pos_logname]}++;									#Count accesses for page (hit)
-			$_login_k{$field[$pos_logname]}+=$field[$pos_size];					#Count accesses for page (kb)
+			$_login_k{$field[$pos_logname]}+=int($field[$pos_size]);			#Count accesses for page (kb)
 			$_login_l{$field[$pos_logname]}=$timerecord;
 		}
 
@@ -5101,7 +5108,7 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {	# Updat
 		}
 		if ($PageBool) { $_domener_p{$Domain}++; }
 		$_domener_h{$Domain}++;
-		$_domener_k{$Domain}+=$field[$pos_size];
+		$_domener_k{$Domain}+=int($field[$pos_size]);
 
 		# Analyze: Host, URL and Session
 		#-------------------------------
@@ -5180,7 +5187,7 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {	# Updat
 			$_host_p{$_}++;
 		}
 		$_host_h{$_}++;
-		$_host_k{$_}+=$field[$pos_size];
+		$_host_k{$_}+=int($field[$pos_size]);
 
 		# Analyze: Browser and OS
 		#------------------------
@@ -5421,13 +5428,13 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {	# Updat
 		if ($pos_emails>=0 && $field[$pos_emails]) {
 			if ($field[$pos_emails] !~ /\@/) { $field[$pos_emails].="\@$SiteDomain"; }
 			$_emails_h{lc($field[$pos_emails])}++;									#Count accesses for sender email (hit)
-			$_emails_k{lc($field[$pos_emails])}+=$field[$pos_size];					#Count accesses for sender email (kb)
+			$_emails_k{lc($field[$pos_emails])}+=int($field[$pos_size]);					#Count accesses for sender email (kb)
 			$_emails_l{lc($field[$pos_emails])}=$timerecord;
 		}
 		if ($pos_emailr>=0 && $field[$pos_emailr]) {
 			if ($field[$pos_emailr] !~ /\@/) { $field[$pos_emailr].="\@$SiteDomain"; }
 			$_emailr_h{lc($field[$pos_emailr])}++;									#Count accesses for receiver email (hit)
-			$_emailr_k{lc($field[$pos_emailr])}+=$field[$pos_size];					#Count accesses for receiver email (kb)
+			$_emailr_k{lc($field[$pos_emailr])}+=int($field[$pos_size]);					#Count accesses for receiver email (kb)
 			$_emailr_l{lc($field[$pos_emailr])}=$timerecord;
 		}
 
@@ -5521,7 +5528,7 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {	# Updat
  			# Needs to be tested because this is most likely a huge resource hog (cpu).
  			if ($ExtraSectionStatTypes[$extranum] =~ m/P/i && $PageBool) { ${'_section_' . $extranum . '_p'}{$col_value}++; }
  			if ($ExtraSectionStatTypes[$extranum] =~ m/H/i) { ${'_section_' . $extranum . '_h'}{$col_value}++; }
- 			if ($ExtraSectionStatTypes[$extranum] =~ m/B/i) { ${'_section_' . $extranum . '_k'}{$col_value}+=$field[$pos_size]; }
+ 			if ($ExtraSectionStatTypes[$extranum] =~ m/B/i) { ${'_section_' . $extranum . '_k'}{$col_value}+=int($field[$pos_size]); }
  			if ($ExtraSectionStatTypes[$extranum] =~ m/L/i) {
  				if (${'_section_' . $extranum . '_l'}{$col_value} < $timerecord) { ${'_section_' . $extranum . '_l'}{$col_value}=$timerecord; }
  			}

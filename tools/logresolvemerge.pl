@@ -20,8 +20,9 @@ use strict; no strict "refs";
 #-------------------------------------------------------
 # Defines
 #-------------------------------------------------------
-my $REVISION='$Revision$'; $REVISION =~ /\s(.*)\s/; $REVISION=$1;
-my $VERSION="1.2 (build $REVISION)";
+use vars qw/ $REVISION $VERSION /;
+$REVISION='$Revision$'; $REVISION =~ /\s(.*)\s/; $REVISION=$1;
+$VERSION="1.2 (build $REVISION)";
 
 # ---------- Init variables --------
 my $Debug=0;
@@ -35,8 +36,6 @@ my $DirData="";
 my $DNSLookupAlreadyDone=0;
 my $QueuePoolSize=10;
 my $NbOfLinesForBenchmark=5000;
-my $nowtime = my $nowweekofmonth = my $nowdaymod = my $nowsmallyear = 0; 
-my $nowsec = my $nowmin = my $nowhour = my $nowday = my $nowmonth = my $nowyear = my $nowwday = 0;
 # ---------- Init arrays --------
 my @SkipDNSLookupFor=();
 # ---------- Init hash arrays --------
