@@ -1782,7 +1782,7 @@ sub Read_Plugins {
 # Parameters:	year,month,withupdate,withpurge,part_to_load[,lastlinenumber,lastlineoffset,lastlinechecksum]
 # Input:		$DirData $PROG $FileSuffix $LastLine
 # Output:		None
-# Return:		Tmp history file name or '' if withupdate is 0
+# Return:		Tmp history file name created/updated or '' if withupdate is 0
 #------------------------------------------------------------------------------
 sub Read_History_With_TmpUpdate {
 
@@ -1803,10 +1803,9 @@ sub Read_History_With_TmpUpdate {
 					 'origin'=>21,'sereferrals'=>22,'pagerefs'=>23,
 					 'searchwords'=>24,'keywords'=>25,
 					 'errors'=>26);
-	my $order=27;
+	my $order=(scalar keys %allsections)+1;
 	foreach my $code (keys %TrapInfosForHTTPErrorCodes) { $allsections{"sider_$code"}=$order++; }
 	foreach my $extranum (1..@ExtraName-1) { $allsections{"extra_$extranum"}=$order++; }
-
 	my $withread=0;
 
 	# Variable used to read old format history files
@@ -1886,7 +1885,7 @@ sub Read_History_With_TmpUpdate {
 	}
 	if ($Debug) { debug(" History file to read is '$filetoread'",2); }
 
-	# Is there an old data file to read or if migrate, we need to open for read the file
+	# Is there an old data file to read or, if migrate, can we open the file for read
 	if (-s $filetoread || $MigrateStats) { $withread=1; }
 
 	# Open files
@@ -1975,7 +1974,7 @@ sub Read_History_With_TmpUpdate {
 				}
 				# If migrate and version < 4.x we need to include BEGIN_UNKNOWNIP into BEGIN_VISITOR for backward compatibility
 				if ($MigrateStats && $versionnum < 4000) {
-					debug("File is version < 4000. We add UNKNOWNIP in sections to load",1);
+					if ($Debug) { debug("File is version < 4000. We add UNKNOWNIP in sections to load",1); }
 					$SectionsToLoad{'unknownip'}=99;
 				}
 
@@ -1985,13 +1984,14 @@ sub Read_History_With_TmpUpdate {
 				# Test for backward compatibility
 				if ($versionnum < 5000 && ! $withupdate) {
 					# We must find another way to init MonthUnique MonthHostsKnown and MonthHostsUnknown
-					debug(" We ask to count MonthUnique, MonthHostsKnown and MonthHostsUnknown in visitor section because they are not stored in general section for this data file (version $versionnum).");
+					if ($Debug) { debug(" We ask to count MonthUnique, MonthHostsKnown and MonthHostsUnknown in visitor section because they are not stored in general section for this data file (version $versionnum)."); }
 					$readvisitorforbackward=($SectionsToLoad{"visitor"}?1:2);
-					$SectionsToLoad{"visitor"}=3;
+					$SectionsToLoad{"visitor"}=4;
 				}
 				else {
 					if (! scalar %SectionsToLoad) {
-						debug(" Stop reading history file. Got all we need."); last;
+						if ($Debug) { debug(" Stop reading history file. Got all we need."); }
+						last;
 					}
 				}
 				if ($versionnum >= 5000) { next; }	# We can forget 'END_GENERAL' line and read next one
@@ -4144,6 +4144,18 @@ sub IsAscii {
 }
 
 #------------------------------------------------------------------------------
+# Function:     Return the lower value between 2 but exclude value if 0
+# Parameters:   Val1 and Val2
+# Input:        None
+# Output:       None
+# Return:       min(Val1,Val2)
+#------------------------------------------------------------------------------
+sub MinimumButNoZero {
+	my ($val1,$val2)=@_;
+	return ($val1&&($val1<$val2||!$val2)?$val1:$val2);
+}
+
+#------------------------------------------------------------------------------
 # Function:     Add a val from sorting tree
 # Parameters:   keytoadd keyval [firstadd]
 # Input:        None
@@ -4181,7 +4193,7 @@ sub AddInTree {
 	$val{$keyval}=$keytoadd;
 	my $valcursor=$lowerval;	# valcursor is value just before keyval
 	while ($nextval{$valcursor} && ($nextval{$valcursor} < $keyval)) { $valcursor=$nextval{$valcursor}; }
-	if ($nextval{$valcursor}) {	# keyval is beetween valcursor and nextval{valcursor}
+	if ($nextval{$valcursor}) {	# keyval is between valcursor and nextval{valcursor}
 		$nextval{$keyval}=$nextval{$valcursor};
 	}
 	$nextval{$valcursor}=$keyval;
@@ -4207,18 +4219,6 @@ sub Removelowerval {
 		$lowerval=$nextval{$lowerval};	# Set new lowerval
 	}
 	if ($Debug) { debug("   new lower value=$lowerval, val size=".(scalar keys %val).", egal size=".(scalar keys %egal),4); }
-}
-
-#------------------------------------------------------------------------------
-# Function:     Return the lower value between 2 but exclude value if 0
-# Parameters:   Val1 and Val2
-# Input:        None
-# Output:       None
-# Return:       min(Val1,Val2)
-#------------------------------------------------------------------------------
-sub MinimumButNoZero {
-	my ($val1,$val2)=@_;
-	return ($val1&&($val1<$val2||!$val2)?$val1:$val2);
 }
 
 #------------------------------------------------------------------------------
@@ -4250,11 +4250,8 @@ sub BuildKeyList {
 			}
 			next;
 		}
-		if (($hashfororder->{$key}||0)<=$lowerval) {
-			$count++;
-			next;
-		}
 		$count++;
+		if (($hashfororder->{$key}||0)<=$lowerval) { next; }
 		if ($Debug) { debug("  Add in tree entry $count : $key (value=".($hashfororder->{$key}||0)." > lowerval=$lowerval)",4); }
 		AddInTree($key,$hashfororder->{$key}||0);
 		if ($Debug) { debug("  Removelower in tree",4); }
@@ -9376,7 +9373,7 @@ else {
 	print " Found $NbOfNewLines new qualifed records.\n";
 }
 
-
+#sleep 10;
 
 0;	# Do not remove this line
 
