@@ -1841,8 +1841,10 @@ sub Read_Plugins {
 		}
 		if ($pluginname) {
 			if (! $PluginsLoaded{'init'}{"$pluginname"}) {		# Plugin not already loaded
-				my %pluginisfor=('timehires'=>'u','ipv6'=>'u','hashfiles'=>'u','geoip'=>'u','geoipfree'=>'u',
-				                 'geoip_region_maxmind'=>'mou','timezone'=>'ou',
+				my %pluginisfor=('timehires'=>'u','ipv6'=>'u','hashfiles'=>'u',
+				                 'geoipfree'=>'u',
+				                 'geoip'=>'ou','geoip_region_maxmind'=>'mou','geoip_city_maxmind'=>'mou','geoip_isp_maxmind'=>'mou','geoip_org_maxmind'=>'mou',
+				                 'timezone'=>'ou',
 								 'decodeutfkeys'=>'o','hostinfo'=>'o','rawlog'=>'o','userinfo'=>'o','urlalias'=>'o','tooltips'=>'o');
 				if ($pluginisfor{$pluginname}) {    # If it's a known plugin, may be we don't need to load it
             		# Do not load "menu handler plugins" if output only and mainleft frame
