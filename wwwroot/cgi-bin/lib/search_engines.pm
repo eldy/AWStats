@@ -56,6 +56,8 @@
 "wisenut\.com",
 # Minor brazilian search engines
 "engine\.exe", "miner\.bol\.com\.br",
+# Minor czech search engines
+"atlas\.cz","seznam\.cz","quick\.cz","centrum\.cz","najdi\.to","redbox\.cz",
 # Minor danish search-engines 
 "opasia\.dk", "danielsen\.com", "sol\.dk", "jubii\.dk", "find\.dk", "edderkoppen\.dk", "netstjernen\.dk", "orbis\.dk", "tyfon\.dk", "1klik\.dk", "ofir\.dk",
 # Minor dutch search engines
@@ -75,10 +77,10 @@
 "virgilio\.it",
 # Minor norvegian search engines
 "sok\.start\.no",
+# Minor russian search engines
+"yandex\.ru",
 # Minor swedish search engines
 "evreka\.passagen\.se",
-# Minor czech search engines
-"atlas\.cz","seznam\.cz","quick\.cz","centrum\.cz","najdi\.to","redbox\.cz",
 # Other
 "search\..*com"
 );
@@ -136,6 +138,8 @@
 "wisenut\.com","query=",
 # Minor brazilian search engines
 "engine\.exe","p1=", "miner\.bol\.com\.br","q=",
+# Minor czech search engines
+"atlas\.cz","searchtext=", "seznam\.cz","w=", "ftxt\.quick\.cz","query=", "centrum\.cz","q=", "najdi\.to","dotaz=", "redbox.cz","srch=",
 # Minor danish search engines
 "opasia\.dk","q=", "danielsen\.com","q=", "sol\.dk","q=", "jubii\.dk","soegeord=", "find\.dk","words=", "edderkoppen\.dk","query=", "orbis\.dk","search_field=", "1klik\.dk","query=", "ofir\.dk","querytext=",
 # Minor dutch search engines
@@ -154,11 +158,11 @@
 # Minor hungarian search engines
 "heureka\.hu","heureka=", "vizsla\.origo\.hu/katalogus?","q=", "vizsla\.origo\.hu","search=", "lapkereso\.hu","keres.php", "goliat\.hu","KERESES=", "index\.hu","search.php3", "wahoo\.hu","q=", "freeweb\.hu","KERESES=", "search\.internetto\.hu","searchstr=",
 # Minor norvegian search engines
-"sok\.start\.no", "q=",
+"sok\.start\.no","q=",
+# Minor russian search engines
+"yandex\.ru","text=",
 # Minor swedish search engines
-"evreka\.passagen\.se","q=",
-# Minor czech search engines
-"atlas\.cz","searchtext=", "seznam\.cz","w=", "ftxt\.quick\.cz","query=", "centrum\.cz","q=", "najdi\.to","dotaz=", "redbox.cz","srch="
+"evreka\.passagen\.se","q="
 );
 
 # SearchEnginesKnownUrlNotFound
@@ -222,6 +226,8 @@
 "wisenut\.com","WISENut",
 # Minor brazilian search engines
 "engine\.exe","Cade", "miner\.bol\.com\.br","Meta Miner",
+# Minor czech search engines
+"atlas\.cz","Atlas.cz",	"seznam\.cz","Seznam.cz", "quick\.cz","Quick.cz", "centrum\.cz","Centrum.cz","najdi\.to","Najdi.to","redbox\.cz","RedBox.cz",
 # Minor danish search-engines
 "opasia\.dk","Opasia", "danielsen\.com","Thor (danielsen.com)", "sol\.dk","SOL", "jubii\.dk","Jubii", "find\.dk","Find", "edderkoppen\.dk","Edderkoppen", "netstjernen\.dk","Netstjernen", "orbis\.dk","Orbis", "tyfon\.dk","Tyfon", "1klik\.dk","1Klik", "ofir\.dk","Ofir",
 # Minor dutch search engines
@@ -241,11 +247,11 @@
 # Minor italian search engines
 "virgilio\.it","Virgilio",										
 # Minor norvegian search engines
-"sok\.start\.no","start.no",									
+"sok\.start\.no","start.no",								
+# Minor russian search engines
+"yandex\.ru","Yandex",
 # Minor swedish search engines
 "evreka\.passagen\.se","Evreka",								
-# Minor czech search engines
-"atlas\.cz","Atlas.cz",	"seznam\.cz","Seznam.cz", "quick\.cz","Quick.cz", "centrum\.cz","Centrum.cz","najdi\.to","Najdi.to","redbox\.cz","RedBox.cz",
 # Other
 "search\..*com","Other search engines"
 );
