@@ -120,7 +120,7 @@ $BuildHistoryFormat
 $StaticExt='html';
 $DNSStaticCacheFile='dnscache.txt';
 $DNSLastUpdateCacheFile='dnscachelastupdate.txt';
-$MiscTrackerUrl=quotemeta('/js/awstats_misc_tracker.js');
+$MiscTrackerUrl='/js/awstats_misc_tracker.js';
 $Lang='auto';
 $MaxRowsInHTMLOutput=1000;
 $MaxLengthOfShownURL=64;
@@ -780,7 +780,8 @@ sub error {
 				print "Example: If your config file is awstats.mysite.conf, you must use -config=mysite\n";
 			}
 			print "- ${tagbold}Did you create your config file 'awstats.$SiteConfig.conf' ?${tagunbold}${tagbr}\n";
-			print "If not, you can run \"$dir/tools/configure.pl\"${tagbr}${tagbr}\n";
+			print "If not, you can run \"$dir/tools/configure.pl\"${tagbr}\n";
+			print "${tagbr}\n";
 		}
 		else { print "${tagbr}${tagbold}Setup (".($FileConfig?"'".$FileConfig."'":"Config")." file, web server or permissions) may be wrong.${tagunbold}${tagbr}\n"; }
 		print "See AWStats documentation in 'docs' directory for informations on how to setup $PROG.\n";
@@ -1513,7 +1514,7 @@ sub Check_Config {
 	if ($NbOfLinesForCorruptedLog !~ /^\d+/ || $NbOfLinesForCorruptedLog<1)	{ $NbOfLinesForCorruptedLog=50; }
 	if ($Expires !~ /^\d+/)                 		{ $Expires=0; }
 	if ($DecodeUA !~ /[0-1]/)						{ $DecodeUA=0; }
-	$MiscTrackerUrl||=quotemeta('/js/awstats_misc_tracker.js');
+	$MiscTrackerUrl||='/js/awstats_misc_tracker.js';
 	# Optional accuracy setup section
 	if ($LevelForWormsDetection !~ /^\d+/)       	{ $LevelForWormsDetection=0; }
 	if ($LevelForRobotsDetection !~ /^\d+/)       	{ $LevelForRobotsDetection=2; }
@@ -1646,8 +1647,6 @@ sub Check_Config {
 	 	}
 	}
 
-
-
 	# Show definitive value for major parameters
 	if ($Debug) {
 		debug(" LogFile='$LogFile'",2);
@@ -1657,7 +1656,8 @@ sub Check_Config {
 		debug(" DirData='$DirData'",2);
 		debug(" DirCgi='$DirCgi'",2);
 		debug(" DirIcons='$DirIcons'",2);
-		debug(" SiteDomain=$SiteDomain",2);
+		debug(" SiteDomain='$SiteDomain'",2);
+		debug(" MiscTrackerUrl='$MiscTrackerUrl'",2);
 		foreach (keys %MaxNbOf) { debug(" MaxNbOf{$_}=$MaxNbOf{$_}",2); }
 		foreach (keys %MinHit)  { debug(" MinHit{$_}=$MinHit{$_}",2); }
 		foreach my $extranum (1..@ExtraName-1) {
@@ -5588,14 +5588,15 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 	@OnlyUserAgents=&OptimizeArray(\@OnlyUserAgents,1); if ($Debug) { debug("OnlyUserAgents precompiled regex list is now @OnlyUserAgents",1); }
 	@OnlyFiles=&OptimizeArray(\@OnlyFiles,$URLNotCaseSensitive); if ($Debug) { debug("OnlyFiles precompiled regex list is now @OnlyFiles",1); }
 	# Precompile the regex search strings with qr
-	$MiscTrackerUrl=qr/^$MiscTrackerUrl/;
 	@RobotsSearchIDOrder=map{qr/$_/i} @RobotsSearchIDOrder;
 	@WormsSearchIDOrder=map{qr/$_/i} @WormsSearchIDOrder;
 	@BrowsersSearchIDOrder=map{qr/$_/i} @BrowsersSearchIDOrder;
 	@OSSearchIDOrder=map{qr/$_/i} @OSSearchIDOrder;
 	@SearchEnginesSearchIDOrder=map{qr/$_/i} @SearchEnginesSearchIDOrder;
+	my $miscquoted=quotemeta("$MiscTrackerUrl");
 	my $defquoted=quotemeta("/$DefaultFile[0]");
 	# Define precompiled regex
+	my $regmisc=qr/^$miscquoted/;
 	my $regrobot=qr/^\/robots\.txt$/i;
 	my $regtruncanchor=qr/#(\w*)$/;
 	my $regtruncurl=qr/([$URLQuerySeparators])(.*)$/;
@@ -5676,7 +5677,7 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 				$lastlinenumber=$LastLineNumber;
 				$lastlineoffset=$LastLineOffset;
 				$lastlineoffsetnext=$LastLineOffset;
-#				seek(LOG,$LastLineOffset,0);	# Direct access succesful, we keep it.
+				#seek(LOG,$LastLineOffset,0);	# Direct access succesful, we keep it.
 			}
 			else {
 				if (! scalar keys %HTMLOutput) { print "Direct access to last remembered record has fallen on another record.\nSo searching new records from beginning of log file...\n"; }
@@ -5952,19 +5953,19 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 
 		# Analyze: misc tracker (must be before return code)
 		#---------------------------------------------------
-		if ($urlwithnoquery =~ /$MiscTrackerUrl/o) {
-			my $query=$field[$pos_url];
+		if ($urlwithnoquery =~ /$regmisc/o) {
+			if ($Debug) { debug("  Found an URL that is a MiscTracker record with standalonequery=$standalonequery",2); }
 			my $foundparam=0;
 			foreach (split(/&/,$standalonequery)) {
-				if ($_ =~ /SCREEN=(\d+)x(\d+)/) { $foundparam++; $_screensize_h{"$1x$2"}++; next; }
-#				if ($_ =~ /CDI=(\d+)/) 			{ $foundparam++; $_screendepth_h{"$1"}++; next; }
-				if ($_ =~ /JAVA=(\w+)/) 		{ $foundparam++; if ($1 eq 'true') { $_misc_h{"JavaEnabled"}++; } next; }
-				if ($_ =~ /SHK=(\w+)/) 			{ $foundparam++; if ($1 eq 'Y')    { $_misc_h{"DirectorSupport"}++; } next; }
-				if ($_ =~ /FLA=(\w+)/) 			{ $foundparam++; if ($1 eq 'Y')    { $_misc_h{"FlashSupport"}++; } next; }
-				if ($_ =~ /RP=(\w+)/) 			{ $foundparam++; if ($1 eq 'Y')    { $_misc_h{"RealPlayerSupport"}++; } next; }
-				if ($_ =~ /MOV=(\w+)/) 			{ $foundparam++; if ($1 eq 'Y')    { $_misc_h{"QuickTimeSupport"}++; } next; }
-				if ($_ =~ /WMA=(\w+)/) 			{ $foundparam++; if ($1 eq 'Y')    { $_misc_h{"WindowsMediaPlayerSupport"}++; } next; }
-				if ($_ =~ /PDF=(\w+)/) 			{ $foundparam++; if ($1 eq 'Y')    { $_misc_h{"PDFSupport"}++; } next; }
+				if ($_ =~ /^screen=(\d+)x(\d+)/i) 	{ $foundparam++; $_screensize_h{"$1x$2"}++; next; }
+				#if ($_ =~ /cdi=(\d+)/i) 			{ $foundparam++; $_screendepth_h{"$1"}++; next; }
+				if ($_ =~ /^java=(\w+)/i)	 		{ $foundparam++; if ($1 eq 'true') { $_misc_h{"JavaEnabled"}++; } next; }
+				if ($_ =~ /^shk=(\w+)/i) 			{ $foundparam++; if ($1 eq 'y')    { $_misc_h{"DirectorSupport"}++; } next; }
+				if ($_ =~ /^fla=(\w+)/i) 			{ $foundparam++; if ($1 eq 'y')    { $_misc_h{"FlashSupport"}++; } next; }
+				if ($_ =~ /^rp=(\w+)/i)	 			{ $foundparam++; if ($1 eq 'y')    { $_misc_h{"RealPlayerSupport"}++; } next; }
+				if ($_ =~ /^mov=(\w+)/i) 			{ $foundparam++; if ($1 eq 'y')    { $_misc_h{"QuickTimeSupport"}++; } next; }
+				if ($_ =~ /^wma=(\w+)/i) 			{ $foundparam++; if ($1 eq 'y')    { $_misc_h{"WindowsMediaPlayerSupport"}++; } next; }
+				if ($_ =~ /^pdf=(\w+)/i) 			{ $foundparam++; if ($1 eq 'y')    { $_misc_h{"PDFSupport"}++; } next; }
 			}
 			if ($foundparam) { $_misc_h{"TotalMisc"}++; }
 		}
@@ -6045,8 +6046,8 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 		}
 		}
 		
-		# Analyze: Robot
-		#---------------
+		# Analyze: Robot from robot database
+		#-----------------------------------
 		if (! $countedtraffic) {
 		if ($pos_agent >= 0) {
 			if ($DecodeUA) { $field[$pos_agent] =~ s/%20/_/g; }	# This is to support servers (like Roxen) that writes user agent with %20 in it
@@ -6085,7 +6086,8 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 		}
 		}
 
-		# It's not a known robot or robot detection disabled. Check if hit on robots.txt file
+		# Analyze: Robot from "hit on robots.txt" file
+		# --------------------------------------------
 		if (! $countedtraffic) {
 		if ($urlwithnoquery =~ /$regrobot/o) {
 			if ($Debug) { debug("  It's an unknown robot",2); }

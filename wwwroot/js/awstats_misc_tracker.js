@@ -27,13 +27,13 @@ function awstats_setCookie(TRKNameOfCookie, TRKvalue, TRKexpirehours) {
 function awstats_detectIE(TRKClassID) {
 	TRKresult = false;
 	document.write('<SCR' + 'IPT LANGUAGE=VBScript>\n on error resume next \n TRKresult = IsObject(CreateObject("' + TRKClassID + '"))</SCR' + 'IPT>\n');
-	if (TRKresult) return 'Y';
-	else return 'N';
+	if (TRKresult) return 'y';
+	else return 'n';
 }
 
 function awstats_detectNS(TRKClassID) {
-	TRKn = "N";
-	if (TRKnse.indexOf(TRKClassID) != -1) if (navigator.mimeTypes[TRKClassID].enabledPlugin != null) TRKn = "Y";
+	TRKn = "n";
+	if (TRKnse.indexOf(TRKClassID) != -1) if (navigator.mimeTypes[TRKClassID].enabledPlugin != null) TRKn = "y";
 	return TRKn;
 }
 
@@ -61,8 +61,8 @@ if (window.location.search == "") {
 	TRKuserid=awstats_getCookie("AWSUSER_ID");
 	TRKsessionid=awstats_getCookie("AWSSESSION_ID");
 	var TRKrandomnumber=Math.floor(Math.random()*10000);
-	if (TRKuserid == null || (TRKuserid=="")) {TRKuserid = "AWSUSER_ID" + TRKnow.getTime() +"r"+ TRKrandomnumber};
-	if (TRKsessionid == null || (TRKsessionid=="")) {TRKsessionid = "AWSSESSION_ID" + TRKnow.getTime() +"r"+ TRKrandomnumber};
+	if (TRKuserid == null || (TRKuserid=="")) {TRKuserid = "awsuser_id" + TRKnow.getTime() +"r"+ TRKrandomnumber};
+	if (TRKsessionid == null || (TRKsessionid=="")) {TRKsessionid = "awssession_id" + TRKnow.getTime() +"r"+ TRKrandomnumber};
 	awstats_setCookie("AWSUSER_ID", TRKuserid, 10000);
 	awstats_setCookie("AWSSESSION_ID", TRKsessionid, 1);
 	TRKuserid=""; TRKuserid=awstats_getCookie("AWSUSER_ID");
@@ -91,6 +91,6 @@ if (window.location.search == "") {
 		var TRKwma = awstats_detectNS("application/x-mplayer2")
 		var TRKpdf = awstats_detectNS("application/pdf");
 	}
-	document.write('<img src="'+awstatsmisctrackerurl+'?SCREEN='+TRKscreen+'&CDI='+TRKcdi+'&JAVA='+TRKjava+'&SHK='+TRKshk+'&FLA='+TRKfla+'&RP='+TRKrp+'&MOV='+TRKmov+'&WMA='+TRKwma+'&PDF='+TRKpdf+'&UID='+TRKuserid+'&SID='+TRKsessionid+'" height=0 width=0 border=0>')
+	document.write('<img src="'+awstatsmisctrackerurl+'?screen='+TRKscreen+'&cdi='+TRKcdi+'&java='+TRKjava+'&shk='+TRKshk+'&fla='+TRKfla+'&rp='+TRKrp+'&mov='+TRKmov+'&wma='+TRKwma+'&pdf='+TRKpdf+'&uid='+TRKuserid+'&sid='+TRKsessionid+'" height=0 width=0 border=0>')
 
 }
