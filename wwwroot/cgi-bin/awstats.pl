@@ -71,7 +71,7 @@ $total_h, $total_k, $total_p) = ();
 %MonthBytes = %MonthHits = %MonthHostsKnown = %MonthHostsUnknown = %MonthPages = %MonthUnique = %MonthVisits =
 %listofyears = %monthlib = %monthnum = ();
 
-$VERSION="3.1 (build 18)";
+$VERSION="3.1 (build 19)";
 $Lang="en";
 $Sort="";
 
@@ -709,14 +709,15 @@ $BarImageHorizontal_k = "barrehk.png";
 sub html_head {
 	if ($HTMLOutput) {
 		# Write head section
+		my $sitetoanalyze=$SiteToAnalyze; $sitetoanalyze =~ s/\\\./\./g;
 	  	print "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">\n\n";
 	    print "<html>\n";
 		print "<head>\n";
 		if ($PageCode ne "") { print "<META HTTP-EQUIV=\"content-type\" CONTENT=\"text/html; charset=$PageCode\"\n"; }		# If not defined, iso-8859-1 is used in major countries
-		print "<meta http-equiv=\"description\" content=\"$PROG - Advanced Web Statistics for $SiteToAnalyze\">\n";
-		print "<meta http-equiv=\"keywords\" content=\"$SiteToAnalyze, free, advanced, realtime, web, server, logfile, log, analyzer, analysis, statistics, stats, perl, analyse, performance, hits, visits\">\n";
+		print "<meta http-equiv=\"description\" content=\"$PROG - Advanced Web Statistics for $sitetoanalyze\">\n";
+		print "<meta http-equiv=\"keywords\" content=\"$sitetoanalyze, free, advanced, realtime, web, server, logfile, log, analyzer, analysis, statistics, stats, perl, analyse, performance, hits, visits\">\n";
 		print "<meta name=\"robots\" content=\"index,follow\">\n";
-		print "<title>$Message[7] $SiteToAnalyze</title>\n";
+		print "<title>$Message[7] $sitetoanalyze</title>\n";
 		print <<EOF;
 <STYLE TYPE="text/css">
 <!--
@@ -772,7 +773,7 @@ sub tab_head {
 		<TABLE BORDER=0 CELLPADDING=1 CELLSPACING=0 WIDTH=\"100%\">
 		<TR><TD>
 		<TABLE CLASS=TABLEFRAME BORDER=0 CELLPADDING=3 CELLSPACING=0 WIDTH=\"100%\">
-		<TR><TD class=TABLETITLEFULL align=center width=\"60%\">$title </TD><TD class=TABLETITLEBLANK>&nbsp;</TD></TR>
+		<TR><TD class=TABLETITLEFULL align=center width=\"60%\">$title </TD><TD class=TABLETITLEBLANK> &nbsp; </TD></TR>
 		<TR><TD colspan=2>
 		<TABLE CLASS=TABLEDATA BORDER=1 BORDERCOLOR=\"#$color_TableBorder\" CELLPADDING=2 CELLSPACING=0 WIDTH=\"100%\">
 		";
@@ -875,11 +876,12 @@ sub SkipDNSLookup {
 
 #------------------------------------------------------------------------------
 # Function:     read config file
-# Input:		$DIR $PROG $SiteToAnalyze
+# Input:		$DIR $PROG $SiteConfig
 # Output:		Global variables
 #------------------------------------------------------------------------------
 sub Read_Config_File {
 	$FileConfig="";
+	if (! $SiteConfig) { $SiteConfig=$ENV{"SERVER_NAME"}; }		# For backward compatibility
 	foreach my $dir ("$DIR","/etc/awstats","/etc") {
 		my $searchdir=$dir;
 		if (($searchdir ne "") && (!($searchdir =~ /\/$/)) && (!($searchdir =~ /\\$/)) ) { $searchdir .= "/"; }
@@ -1470,7 +1472,6 @@ sub Save_History_File {
 
 	print HISTORYTMP "BEGIN_DOMAIN\n";
 	foreach my $key (keys %_domener_h) {
-#	foreach my $key (sort keys %_domener_h) {
 		my $page=$_domener_p{$key}; if ($page == "") {$page=0;}
 		my $bytes=$_domener_k{$key}; if ($bytes == "") {$bytes=0;}
 		print HISTORYTMP "$key $page $_domener_h{$key} $bytes\n"; next;
@@ -1479,7 +1480,6 @@ sub Save_History_File {
 
 	print HISTORYTMP "BEGIN_VISITOR\n";
 	foreach my $key (keys %_hostmachine_h) {
-#	foreach my $key (sort keys %_hostmachine_h) {
 		my $page=$_hostmachine_p{$key}; if ($page == "") {$page=0;}
 		my $bytes=$_hostmachine_k{$key}; if ($bytes == "") {$bytes=0;}
 		print HISTORYTMP "$key $page $_hostmachine_h{$key} $bytes $_hostmachine_l{$key}\n"; next;
@@ -1488,7 +1488,6 @@ sub Save_History_File {
 
 	print HISTORYTMP "BEGIN_UNKNOWNIP\n";
 	foreach my $key (keys %_unknownip_l) { print HISTORYTMP "$key $_unknownip_l{$key}\n"; next; }
-#	foreach my $key (sort keys %_unknownip_l) { print HISTORYTMP "$key $_unknownip_l{$key}\n"; next; }
 	print HISTORYTMP "END_UNKNOWNIP\n";
 
 	# Save page list in score sorted order to allow to show reports faster and saving memory.
@@ -1510,7 +1509,6 @@ sub Save_History_File {
 
 	print HISTORYTMP "BEGIN_BROWSER\n";
 	foreach my $key (keys %_browser_h) { print HISTORYTMP "$key $_browser_h{$key}\n"; next; }
-#	foreach my $key (sort keys %_browser_h) { print HISTORYTMP "$key $_browser_h{$key}\n"; next; }
 	print HISTORYTMP "END_BROWSER\n";
 	print HISTORYTMP "BEGIN_NSVER\n";
 	for (my $i=1; $i<=$#_nsver_h; $i++) { print HISTORYTMP "$i $_nsver_h[$i]\n"; next; }
@@ -1520,21 +1518,17 @@ sub Save_History_File {
 	print HISTORYTMP "END_MSIEVER\n";
 	print HISTORYTMP "BEGIN_OS\n";
 	foreach my $key (keys %_os_h) { print HISTORYTMP "$key $_os_h{$key}\n"; next; }
-#	foreach my $key (sort keys %_os_h) { print HISTORYTMP "$key $_os_h{$key}\n"; next; }
 	print HISTORYTMP "END_OS\n";
 
 	print HISTORYTMP "BEGIN_ROBOT\n";
 	foreach my $key (keys %_robot_h) { print HISTORYTMP "$key $_robot_h{$key} $_robot_l{$key}\n"; next; }
-#	foreach my $key (sort keys %_robot_h) { print HISTORYTMP "$key $_robot_h{$key} $_robot_l{$key}\n"; next; }
 	print HISTORYTMP "END_ROBOT\n";
 
 	print HISTORYTMP "BEGIN_UNKNOWNREFERER\n";
 	foreach my $key (keys %_unknownreferer_l) { print HISTORYTMP "$key $_unknownreferer_l{$key}\n"; next; }
-#	foreach my $key (sort keys %_unknownreferer_l) { print HISTORYTMP "$key $_unknownreferer_l{$key}\n"; next; }
 	print HISTORYTMP "END_UNKNOWNREFERER\n";
 	print HISTORYTMP "BEGIN_UNKNOWNREFERERBROWSER\n";
 	foreach my $key (keys %_unknownrefererbrowser_l) { print HISTORYTMP "$key $_unknownrefererbrowser_l{$key}\n"; next; }
-#	foreach my $key (sort keys %_unknownrefererbrowser_l) { print HISTORYTMP "$key $_unknownrefererbrowser_l{$key}\n"; next; }
 	print HISTORYTMP "END_UNKNOWNREFERERBROWSER\n";
 
 	print HISTORYTMP "From0 $_from_p[0] $_from_h[0]\n";
@@ -1686,7 +1680,7 @@ if ($QueryString =~ /output=urldetail:/i) 	{
 }
 
 ($DIR=$0) =~ s/([^\/\\]*)$//; ($PROG=$1) =~ s/\.([^\.]*)$//; $Extension=$1;
-
+	
 if (($ENV{"GATEWAY_INTERFACE"} eq "") && ($SiteConfig eq "")) {
 	print "----- $PROG $VERSION (c) Laurent Destailleur -----\n";
 	print "$PROG is a free web server logfile analyzer to show you advanced web\n";
@@ -2205,35 +2199,46 @@ if ($UpdateStats) {
 		if ($UserAgent) {
 			my $found=0;
 
-			# IE ? (For higher speed, we start whith IE, the most often used. This avoid other tests if found)
-			if ($UserAgent =~ /msie/) {
-				if (($UserAgent !~ /webtv/) && ($UserAgent !~ /omniweb/) && ($UserAgent !~ /opera/)) {
-					$_browser_h{"msie"}++;
-					$UserAgent =~ /msie_(\d)\./;  # $1 now contains major version no
-					$_msiever_h[$1]++;
-					$found=1;
+			if (!$TmpHashBrowser{$UserAgent}) {
+				# IE ? (For higher speed, we start whith IE, the most often used. This avoid other tests if found)
+				if ($UserAgent =~ /msie/) {
+					if (($UserAgent !~ /webtv/) && ($UserAgent !~ /omniweb/) && ($UserAgent !~ /opera/)) {
+						$_browser_h{"msie"}++;
+						if ($UserAgent =~ /msie_(\d)\./) {  # $1 now contains major version no
+							$_msiever_h[$1]++;
+							$found=1;
+							$TmpHashBrowser{$UserAgent}="msie_$1";
+						}
+					}
 				}
-			}
+		
+				# Netscape ?
+				if (!$found) {
+					if (($UserAgent =~ /mozilla/) && ($UserAgent !~ /compatible/) && ($UserAgent !~ /opera/)) {
+				    	$_browser_h{"netscape"}++;
+				    	if ($UserAgent =~ /\/(\d)\./) {		# $1 now contains major version no
+				    		$_nsver_h[$1]++;
+				    		$found=1;
+							$TmpHashBrowser{$UserAgent}="netscape_$1";
+						}
+					}
+				}
+		
+				# Other ?
+				if (!$found) {
+					foreach my $key (keys %BrowsersHash) {
+				    	if ($UserAgent =~ /$key/) { $_browser_h{$key}++; $found=1; $TmpHashBrowser{$UserAgent}=$key; last; }
+					}
+				}
 	
-			# Netscape ?
-			if (!$found) {
-				if (($UserAgent =~ /mozilla/) && ($UserAgent !~ /compatible/) && ($UserAgent !~ /opera/)) {
-			    	$_browser_h{"netscape"}++;
-			    	$UserAgent =~ /\/(\d)\./;  # $1 now contains major version no
-			    	$_nsver_h[$1]++;
-			    	$found=1;
-				}
+				# Unknown browser ?
+				if (!$found) { $_browser_h{"Unknown"}++; $_unknownrefererbrowser_l{$field[$pos_agent]}=$timeconnexion; }
 			}
-	
-			# Other ?
-			if (!$found) {
-				foreach my $key (keys %BrowsersHash) {
-			    	if ($UserAgent =~ /$key/) { $_browser_h{$key}++; $found=1; last; }
-				}
+			else {
+				if ($TmpHashBrowser{$UserAgent} =~ /^msie_(\d)/) { $_browser_h{"msie"}++; $_msiever_h[$1]++; $found=1; }
+				if (!$found && $TmpHashBrowser{$UserAgent} =~ /^netscape_(\d)/) { $_browser_h{"netscape"}++; $_nsver_h[$1]++; $found=1; }
+				if (!$found) { $_browser_h{$TmpHashBrowser{$UserAgent}}++; }
 			}
-
-			# Unknown browser ?
-			if (!$found) { $_browser_h{"Unknown"}++; $_unknownrefererbrowser_l{$field[$pos_agent]}=$timeconnexion; }
 		}
 		else {
 			$_browser_h{"Unknown"}++;
@@ -2283,7 +2288,7 @@ if ($UpdateStats) {
 				# HTML link ?
 				if ($field[$pos_referer] =~ /^http/i) {
 					$internal_link=0;
-					if ($field[$pos_referer] =~ /^http(s|):\/\/(www.|)$SiteToAnalyzeWithoutwww/i) { $internal_link=1; }
+					if ($field[$pos_referer] =~ /^http(s|):\/\/(www\.|)$SiteToAnalyzeWithoutwww/i) { $internal_link=1; }
 					else {
 						foreach $HostAlias (@HostAliases) {
 							if ($field[$pos_referer] =~ /^http(s|):\/\/$HostAlias/i) { $internal_link=1; last; }
@@ -2443,6 +2448,8 @@ if ($UpdateStats) {
 
 if ($HTMLOutput) {
 	
+	$SiteToAnalyze =~ s/\\\./\./g;
+
 	# Get list of all possible years
 	opendir(DIR,"$DirData");
 	my @filearray = sort readdir DIR;
@@ -2479,7 +2486,7 @@ if ($HTMLOutput) {
 	# tooltip.offsetWidth|tooltipOBJ.style.pixelWidth				IE OK	Opera OK	Netscape OK		Width of an object
 	# event.clientXY												IE OK	Opera OK	Netscape KO		Return position of mouse
 	print <<EOF;
-	<script language="javascript" type="text/javascript">
+	<script language="javascript">
 		function ShowTooltip(fArg)
 		{
 			var tooltipOBJ = (document.getElementById) ? document.getElementById('tt' + fArg) : eval("document.all['tt" + fArg + "']");
@@ -2509,7 +2516,7 @@ if ($HTMLOutput) {
 	</script>
 EOF
 	
-	
+
 	# INFO
 	#---------------------------------------------------------------------
 	print "$CENTER<a name=\"MENU\">&nbsp;</a><BR>";
