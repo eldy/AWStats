@@ -47,6 +47,8 @@ my $getTimeOut = 2;
 my $proxyServer = "";
 # Hosts not to use a proxy for
 my @hostsNoProxy = ("host1","host1.my.domain.name");
+# Make sure we don't download multi-megabyte files! We need only head section
+my $maxDocSizeBytes = 4096; # number is bytes
 
 ############### DON'T EDIT BELOW HERE ###############
 
@@ -111,12 +113,12 @@ if ($nohosts || $helpfound || ! @ARGV) {
 	print "    If this file is an AWStats history file then urlaliasbuilder will use the\n";
 	print "    SIDER section of this file as its input URL's list.\n";
 	print "  -urlaliasfile=Output urlalias file to build\n";
-	print "  -overwrite\n";
-	print "  -secure\n";
+	print "  -overwrite    Overwrite output file if exists\n";
+	print "  -secure       Use https protocol\n";
 	print "\n";
 	print "Example: $PROG.$Extension -site=www.someotherhost.com\n";
 	print "\n";
-	print "This is default configuration used if no option is used on command line:\n";
+	print "This is default configuration used when no option are provided on command line:\n";
 	print "Input urllist file: $fileToOpen (overwritten by -urllistfile option)\n";
 	print "Output urlalias file: $urlAliasFile (overwritten by -urlaliasfile option)\n";
 	print "\n";	
@@ -234,6 +236,8 @@ if ($proxyServer) {
 	# avoid proxy for these hosts
 	$ua->no_proxy(@hostsNoProxy);
 }
+# set maximum size of document to retrieve (in bytes)
+$ua->max_size($maxDocSizeBytes);
 if(!($ua->is_protocol_supported('https')) && $useHTTPS) {
 	print "SSL is not supported on this machine.\n\n";
 	exit();
