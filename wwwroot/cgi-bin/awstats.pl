@@ -942,10 +942,10 @@ sub GetSessionRange {
 
 #------------------------------------------------------------------------------
 # Function:     Read config file
-# Parameters:	None
+# Parameters:	-
 # Input:        $DIR $PROG $SiteConfig
 # Output:		Global variables
-# Return:		None
+# Return:		-
 #------------------------------------------------------------------------------
 sub Read_Config {
 	# Check config file in common possible directories :
