@@ -13,7 +13,7 @@
 # RefererSpamKeys
 # This list is used to know which keywords to search for in referer URLs
 # to find if hits comes from a referer spammers. If referer URLs has a
-# cost higher or equal to 4
+# cost higher or equal to 4, it's a referer spammer.
 # key, cost
 #-------------------------------------------------------
 %RefererSpamKeys = (
