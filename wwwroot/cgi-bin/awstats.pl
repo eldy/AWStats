@@ -1589,7 +1589,7 @@ sub tab_end {
 sub UnescapeURLParam {
 	$_[0] =~ tr/\+/ /s;
 	$_[0] =~ s/%([a-fA-F0-9][a-fA-F0-9])/pack("C", hex($1))/eg;		# Decode encoded URL
-	$_[0] =~ tr/\'\/=\(\)\"/      /s;
+	$_[0] =~ tr/\'\/\(\)\"/     /s;									# "&" and "=" must not be in this list
 }
 
 sub error {
