@@ -6749,6 +6749,10 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 					if ($Debug) { debug("  Check condition '$conditiontype' must contain '$conditiontypeval' in $field[$pos_host]",5); }
  					if ($HostResolved =~ /$conditiontypeval/) { $conditionok=1; last; }
  				}
+ 				elsif ($conditiontype eq 'CODE') {
+					if ($Debug) { debug("  Check condition '$conditiontype' must be '$conditiontypeval' in $field[$pos_code]",5); }
+ 					if ($field[$pos_code] eq "$conditiontypeval") { $conditionok=1; last; }
+ 				}
  				else { error("Wrong value of parameter ExtraSectionCondition$extranum"); }
  			}
 			if (! $conditionok && @{$ExtraConditionType[$extranum]}) { next; }	# End for this section
