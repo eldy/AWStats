@@ -20,7 +20,7 @@
 <td bgcolor=#9999cc align=center><a href="/"><img src="images/awstats_logo4.png" border=0></a></td>
 <td bgcolor=#9999cc align=center>
 <br>
-<font style="font: 16pt arial,helvetica,sanserif" color=#EEEEFF><b>AWStats logfile analyzer 5.6 Documentation</b></font><br>
+<font style="font: 16pt arial,helvetica,sanserif" color=#EEEEFF><b>AWStats logfile analyzer 5.7 Documentation</b></font><br>
 <br>
 </td>
 <td bgcolor=#9999cc align=center>
@@ -104,7 +104,19 @@ for example "teleport", "webcapture", "webcopier"...<br>
 
 <hr>
 
-<a name="Grabber"><b>HTTP Status Codes</b><a>:<br>
+<a name="AddToFavourites"><b>Add To Favourites</b></a>:<br>
+This value, available in the "miscellanous chart", reports an estimated value of the number
+of times a visitor has added your web site into its favourite bookmarks.<br>
+The technical rules for that is the following:<br>
+<i>Number of Add to Favourites = round((x+y) * r)</i> where<br>
+x = Number of hits made by IE browsers for "/anydir/favicon.ico" with no 404 error<br>
+y = Number of hits made by IE browsers for "/favicon.ico" (with or without 404 error)<br>
+r = Ratio of hits made by IE browsers compared to hits made by all browsers<br>
+<br>
+
+<hr>
+
+<a name="HTTP"><b>HTTP Status Codes</b><a>:<br>
 
 <font face="arial"><font size=-1>HTTP
 status codes are returned by web servers to indicate the status of a request.
@@ -461,6 +473,48 @@ support or is configured to ignore.</font></font></td>
 <td ALIGN=LEFT VALIGN=TOP></td>
 </tr>
 </table>
+
+<hr>
+
+<a name="SMTP"><b>SMTP Status Codes</b><a>:<br>
+
+<font face="arial"><font size=-1>SMTP
+status codes are returned by mail servers to indicate the status of a sending/receiving mail.
+The status code depends on mail server and preprocessor used to analyze log file.<br>
+This is value reported for Postfix mail server when mail log file is preprocessing
+with maillogconvert:<br>
+
+<table CELLSPACING=5 CELLPADDING=5 WIDTH="500" >
+<tr><td VALIGN=TOP BGCOLOR="#DADADA">
+
+<a NAME="1"></a><b><font face="arial">xxx class - Errors</font></b>
+<br><font face="arial"><font size=-1>&nbsp;</font></font>
+
+<table CELLSPACING=5 CELLPADDING=5 WIDTH="460" >
+<tr>
+<td VALIGN=TOP BGCOLOR="#EEEEEE"><b><font face="arial"><font size=-1>450</font></font></b></td>
+
+<td VALIGN=TOP BGCOLOR="#EEEEFF"><b><font face="arial"><font size=-1>450
+User Unknown</font></font></b>
+<br><font face="arial"><font size=-1>The mail server has receive an email for an unknown user
+so mail was rejected.&nbsp;</font></font></td>
+</tr>
+
+<tr>
+<td VALIGN=TOP BGCOLOR="#EEEEEE"><b><font face="arial"><font size=-1>554</font></font></b></td>
+
+<td VALIGN=TOP BGCOLOR="#EEEEFF"><b><font face="arial"><font size=-1>554
+Relay denied</font></font></b>
+<br><font face="arial"><font size=-1>The SMTP server was used to send a mail from a user/ip/domain x
+to a user/ip/domain y with a path x to y that is not allowed&nbsp;</font></font></td>
+</tr>
+</table>
+
+<td ALIGN=LEFT VALIGN=TOP></td>
+</tr>
+</table>
+
+
 
 
 
