@@ -6702,7 +6702,7 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
  			}
 			# Check to avoid too large extra sections
 			if (scalar keys %{'_section_' . $extranum . '_h'} > $MAXDIFFEXTRA) {
-				error("Too many (more than $MAXDIFFEXTRA) different values for row keys of extra section $extranum. Your setup is probably wrong.");
+				error("Too many (more than MAXDIFFEXTRA=$MAXDIFFEXTRA) different values for row keys of extra section $extranum. Are you sure you want to track an array with so many values (may be your ExtraSection setup is wrong) ? If yes, increase the MAXDIFFEXTRA constant in awstats.pl");
 			}
  		}
 
