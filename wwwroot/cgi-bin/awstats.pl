@@ -31,7 +31,7 @@ $DEBUGFORCED=0;						# Force debug level to log lesser level into debug.log file
 $NBOFLINESFORBENCHMARK=5000;		# Benchmark info are printing every NBOFLINESFORBENCHMARK lines
 $FRAMEWIDTH=260;					# Width of left frame when UseFramesWhenCGI is on
 $NBOFLASTUPDATELOOKUPTOSAVE=200;	# Nb of records to save in DNS last update cache file
-$LIMITFLUSH=2000;					# Nb of records in data arrays after how we need to flush data on disk
+$LIMITFLUSH=4000;					# Nb of records in data arrays after how we need to flush data on disk
 # Plugins variable
 use vars qw/ $Plugin_readgz $Plugin_graph3d $Plugin_hashfiles $Plugin_timehires $Plugin_timezone $Plugin_etf1 /;
 $Plugin_readgz=$Plugin_graph3d=$Plugin_hashfiles=$Plugin_timehires=$Plugin_timezone=$Plugin_etf1=0;
@@ -101,7 +101,7 @@ $MaxNbOfLoginShown $MaxNbOfPageShown $MaxNbOfRefererShown $MaxNbOfRobotShown
 $MinHitFile $MinHitHost $MinHitKeyphrase $MinHitKeyword
 $MinHitLogin $MinHitRefer $MinHitRobot
 $NbOfLinesRead $NbOfLinesDropped $NbOfLinesCorrupted $NbOfOldLines $NbOfNewLines
-$NewLinePhase $NbOfLinesForCorruptedLog $PurgeLogFile
+$NbOfLinesShowsteps $NewLinePhase $NbOfLinesForCorruptedLog $PurgeLogFile
 $ShowAuthenticatedUsers $ShowCompressionStats $ShowFileSizesStats
 $ShowDropped $ShowCorrupted $ShowUnknownOrigin $ShowLinksToWhoIs
 $ShowEMailSenders $ShowEMailReceivers
@@ -114,12 +114,12 @@ $MaxNbOfLoginShown, $MaxNbOfPageShown, $MaxNbOfRefererShown, $MaxNbOfRobotShown,
 $MinHitFile, $MinHitHost, $MinHitKeyphrase, $MinHitKeyword,
 $MinHitLogin, $MinHitRefer, $MinHitRobot,
 $NbOfLinesRead, $NbOfLinesDropped, $NbOfLinesCorrupted, $NbOfOldLines, $NbOfNewLines,
-$NewLinePhase, $NbOfLinesForCorruptedLog, $PurgeLogFile,
+$NbOfLinesShowsteps, $NewLinePhase, $NbOfLinesForCorruptedLog, $PurgeLogFile,
 $ShowAuthenticatedUsers, $ShowCompressionStats, $ShowFileSizesStats,
 $ShowDropped, $ShowCorrupted, $ShowUnknownOrigin, $ShowLinksToWhoIs,
 $ShowEMailSenders, $ShowEMailReceivers,
 $Expires, $UpdateStats, $MigrateStats, $URLWithQuery, $UseFramesWhenCGI, $Spec)=
-(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
+(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
 use vars qw/
 $PosTotalVisits $PosTotalUnique $PosMonthHostsKnown $PosMonthHostsUnknown
 /;
@@ -3093,7 +3093,7 @@ sub Save_DNS_Cache_File {
 # Return:		Number of miliseconds elapsed since last call
 #------------------------------------------------------------------------------
 sub GetDelaySinceStart {
-	if (shift) { $StartSeconds=0; }		# Reset counter
+	if (shift) { $StartSeconds=0; }	# Reset counter
 	my ($newseconds, $newmicroseconds)=(time(),0);
 	# Plugin call : Return seconds and milliseconds
 	if ($Plugin_timehires) { GetTime_timehires($newseconds, $newmicroseconds); }
@@ -3120,14 +3120,14 @@ sub Init_HashArray {
 	for (my $ix=0; $ix<6; $ix++)  { $_from_p[$ix]=0; $_from_h[$ix]=0; }
 	for (my $ix=0; $ix<24; $ix++) { $_time_h[$ix]=0; $_time_k[$ix]=0; $_time_p[$ix]=0; }
 	# Reset all hash arrays with name beginning by _
-	%_session = %_browser_h = %_domener_h = %_domener_k = %_domener_p = %_errors_h =
-	%_filetypes_h = %_filetypes_k = %_filetypes_gz_in = %_filetypes_gz_out =
-	%_host_p = %_host_h = %_host_k = %_host_l = %_host_s = %_host_u =
-	%_keyphrases = %_keywords = %_os_h = %_pagesrefs_h = %_robot_h = %_robot_l =
-	%_login_h = %_login_p = %_login_k = %_login_l =
-	%_se_referrals_h = %_sider404_h = %_referer404_h = %_url_p = %_url_k = %_url_e = %_url_x =
-	%_unknownreferer_l = %_unknownrefererbrowser_l = ();
+	%_session = %_browser_h = %_domener_h = %_domener_k = %_domener_p = %_errors_h = ();
+	%_filetypes_h = %_filetypes_k = %_filetypes_gz_in = %_filetypes_gz_out = ();
+	%_host_p = %_host_h = %_host_k = %_host_l = %_host_s = %_host_u = ();
 	%_waithost_e = %_waithost_l = %_waithost_s = %_waithost_u = ();
+	%_keyphrases = %_keywords = %_os_h = %_pagesrefs_h = %_robot_h = %_robot_l = ();
+	%_login_h = %_login_p = %_login_k = %_login_l = ();
+	%_se_referrals_h = %_sider404_h = %_referer404_h = %_url_p = %_url_k = %_url_e = %_url_x = ();
+	%_unknownreferer_l = %_unknownrefererbrowser_l = ();
 }
 
 #------------------------------------------------------------------------------
@@ -3533,6 +3533,10 @@ sub Convert_IP_To_Decimal()
 #--------------------------------------------------------------------
 $starttime=time;
 
+my @AllowedArgs=('-site','-config','-showsteps','-showdropped','-showcorrupted',
+'-showunknownorigin','-logfile','-output','-urlfilter','-staticlinks','-lang',
+'-month','-year','-framename','-debug');
+
 if ($ENV{"GATEWAY_INTERFACE"}) {	# Run from a browser
 	my $ExpireDelayInHTTPHeader=0;
 	print "Expires: ".(localtime($starttime+$ExpireDelayInHTTPHeader))."\n";
@@ -3559,6 +3563,7 @@ else {								# Run from command line
 			$SiteConfig=$5?$5:"xxx"; $SiteConfig =~ s/^\.//;
 			last;
 		}
+		# TODO Check if ARGV is an AllowedArg
 		if ($_ > 0) { $QueryString .= "&"; }
 		my $NewLinkParams=$ARGV[$_]; $NewLinkParams =~ s/^-+//; $NewLinkParams =~ s/\s/%20/g;
 		$QueryString .= "$NewLinkParams";
@@ -4147,7 +4152,7 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {	# Updat
 	&Lock_Update(1);
 
 	if ($Debug) { debug("Start Update process (lastprocessedmonth=$lastprocessedmonth, lastprocessedyear=$lastprocessedyear)"); }
-	$NbOfLinesRead=$NbOfLinesDropped=$NbOfLinesCorrupted=$NbOfOldLines=$NbOfNewLines=0;
+	$NbOfLinesRead=$NbOfLinesDropped=$NbOfLinesCorrupted=$NbOfOldLines=$NbOfNewLines=$NbOfLinesShowsteps=0;
 
 	# Open log file
 	if ($Debug) { debug("Open log file \"$LogFile\""); }
@@ -4156,16 +4161,18 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {	# Updat
 	my @field=();
 	my $counter=0;
 	# Reset counter for benchmark (first call to GetDelaySinceStart)
-	GetDelaySinceStart(1);
+	&GetDelaySinceStart(1);
 	if ($ShowSteps) { print "Phase 1 : First bypass old records\n"; }
 	while (<LOG>)
 	{
 		$NbOfLinesRead++;
 		chomp $_; s/\r$//;
 		
-		if ($ShowSteps && ($NbOfLinesRead % $NBOFLINESFORBENCHMARK == 0)) {
-			my $delay=GetDelaySinceStart(0);
-			print "$NbOfLinesRead lines processed ($delay ms, ".int(1000*$NbOfLinesRead/($delay>0?$delay:1))." lines/second)\n";
+		if ($ShowSteps) {
+			if (++$NbOfLinesShowsteps % $NBOFLINESFORBENCHMARK == 0) {
+				my $delay=&GetDelaySinceStart(0);
+				print "$NbOfLinesRead lines processed (".($delay>0?$delay:1000)." ms, ".int(1000*$NbOfLinesShowsteps/($delay>0?$delay:1000))." lines/second)\n";
+			}
 		}
 
 		# Parse line record to get all required fields
@@ -4257,14 +4264,20 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {	# Updat
 			}
 		}
 		else {
-			if ($timerecord <= $LastLine) {
+			if ($timerecord <= $LastLine) {	# Already processed
 				$NbOfOldLines++;
 				next;
-			}	# Already processed
+			}
 			# We found a new line. This will stop comparison "<=" between timerecord and LastLine (we should have only new lines now)
 			$NewLinePhase=1;
-			if ($ShowSteps) { print "Phase 2 : Now process new records\n"; }
-			#GetDelaySinceStart(1); $NbOfLinesRead=0;
+			if ($ShowSteps) {
+				if ($NbOfLinesShowsteps > 1 && ($NbOfLinesShowsteps % $NBOFLINESFORBENCHMARK != 0)) {
+					my $delay=&GetDelaySinceStart(0);
+					print "".($NbOfLinesRead-1)." lines processed (".($delay>0?$delay:1000)." ms, ".int(1000*($NbOfLinesShowsteps-1)/($delay>0?$delay:1000))." lines/second)\n";
+				}
+				print "Phase 2 : Now process new records (LIMITFLUSH=$LIMITFLUSH)\n";
+				&GetDelaySinceStart(1);	$NbOfLinesShowsteps=1;
+			}
 		}
 
 		# Here, field array, timerecord and yearmonthdayrecord are initialized for log record
@@ -4815,16 +4828,23 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {	# Updat
 
 		# Every 20,000 approved lines we test to clean too large hash arrays to flush data in tmp file
 		if ($counter++ >= 20000) {
-			if ((scalar keys %_host_u) > $LIMITFLUSH || (scalar keys %_url_p) > $LIMITFLUSH) {
+			if ((scalar keys %_host_u) > ($LIMITFLUSH<<2) || (scalar keys %_url_p) > $LIMITFLUSH) {
 				# warning("Warning: Try to run AWStats update process more frequently to analyze smaller log files.");
-				if ($Debug) {
-					debug("End of set of ".($counter-1)." records: Some hash arrays are too large. We clean some.",2);
-					print " _host_p:".(scalar keys %_host_p)." _host_h:".(scalar keys %_host_h)." _host_k:".(scalar keys %_host_k)." _host_l:".(scalar keys %_host_l)." _host_s:".(scalar keys %_host_s)." _host_u:".(scalar keys %_host_u)."\n";
-					print " _url_p:".(scalar keys %_url_p)." _url_k:".(scalar keys %_url_k)." _url_e:".(scalar keys %_url_e)." _url_x:".(scalar keys %_url_x)."\n";
-					print " _waithost_e:".(scalar keys %_waithost_e)." _waithost_l:".(scalar keys %_waithost_l)." _waithost_s:".(scalar keys %_waithost_s)." _waithost_u:".(scalar keys %_waithost_u)."\n";
+				if ($^X =~ /activestate/i || $^X =~ /activeperl/i) {
+					# We don't flush if perl is activestate to avoid slowing process because of memory hole
 				}
-				%TmpOS = %TmpRefererServer = %TmpRobot = %TmpBrowser =();
-				&Read_History_With_TmpUpdate($lastprocessedyear,$lastprocessedmonth,1,1,"all");
+				else {
+					# We flush if perl is not activestate
+					if ($Debug) {
+						debug("End of set of ".($counter-1)." records: Some hash arrays are too large. We clean some.",2);
+						print " _host_p:".(scalar keys %_host_p)." _host_h:".(scalar keys %_host_h)." _host_k:".(scalar keys %_host_k)." _host_l:".(scalar keys %_host_l)." _host_s:".(scalar keys %_host_s)." _host_u:".(scalar keys %_host_u)."\n";
+						print " _url_p:".(scalar keys %_url_p)." _url_k:".(scalar keys %_url_k)." _url_e:".(scalar keys %_url_e)." _url_x:".(scalar keys %_url_x)."\n";
+						print " _waithost_e:".(scalar keys %_waithost_e)." _waithost_l:".(scalar keys %_waithost_l)." _waithost_s:".(scalar keys %_waithost_s)." _waithost_u:".(scalar keys %_waithost_u)."\n";
+					}
+					%TmpOS = %TmpRefererServer = %TmpRobot = %TmpBrowser =();
+					&Read_History_With_TmpUpdate($lastprocessedyear,$lastprocessedmonth,1,1,"all");
+					&GetDelaySinceStart(1);	$NbOfLinesShowsteps=1;
+				}
 			}
 			$counter=0;
 		}
@@ -5225,7 +5245,7 @@ EOF
 		debug("firstdaytoshowtime=$firstdaytoshowtime, lastdaytoshowtime=$lastdaytoshowtime",1);
 	}
 
-
+	# Output for detailed reports
 	if ($HTMLOutput eq "monthdayvalues") {
 		if ($Debug) { debug("ShowMonthDayStats",2); }
 		print "$Center<a name=\"MONTHDAY\">&nbsp;</a><BR>\n";
