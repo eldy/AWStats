@@ -16,6 +16,7 @@ New features/improvments:
   intersting as they can't have effect because page is not found). Referrer
   URLs list for 40 not fouond URLs are kept with parameters only if
   URLReferrerWithQuery is set to 1. This make this report more useful.
+- Optimized code size.
 
 Other/Documentation:
 - Updated documentation.
