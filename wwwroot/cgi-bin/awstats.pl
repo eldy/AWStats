@@ -126,7 +126,7 @@ $color_h, $color_k, $color_p, $color_s, $color_u, $color_v)=
 
 
 
-$VERSION="4.0 (build 30)";
+$VERSION="4.0 (build 31)";
 $Lang="en";
 
 # Default value
@@ -348,7 +348,7 @@ sub error {
 sub warning {
 	my $messagestring=shift;
 	debug("$messagestring",1);
-	if ($WarningMessages == 1) {
+	if ($WarningMessages) {
     	if ($HTMLOutput) {
     		$messagestring =~ s/\n/\<br\>/g;
     		print "$messagestring<br>\n";
