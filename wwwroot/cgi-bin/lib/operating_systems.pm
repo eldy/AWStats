@@ -17,6 +17,8 @@
 #-------------------------------------------------------------------------
 @OSSearchIDOrder	= (
 # Windows OS family
+"windows[_+ ]?2005", "windows[_+ ]nt[_+ ]6\.0",
+"windows[_+ ]?2003","windows[_+ ]nt[_+ ]5\.2",	# Must be before windows_nt_5
 "windows[_+ ]xp","windows[_+ ]nt[_+ ]5\.1",		# Must be before windows_nt_5
 "windows[_+ ]me","win[_+ ]9x",					# Must be before windows_98
 "windows[_+ ]?2000","windows[_+ ]nt[_+ ]5",
@@ -65,6 +67,8 @@
 #--------------------------------------------------------------------------
 %OSHashID	= (
 # Windows OS family
+"windows[_+ ]?2005","winlong","windows[_+ ]nt[_+ ]6\.0","winlong",
+"windows[_+ ]?2003","win2003","windows[_+ ]nt[_+ ]5\.2","win2003",
 "windows[_+ ]xp","winxp","windows[_+ ]nt[_+ ]5\.1","winxp",
 "windows[_+ ]me","winme","win[_+ ]9x","winme",
 "windows[_+ ]?2000","win2000","windows[_+ ]nt[_+ ]5","win2000",
@@ -108,6 +112,8 @@
 #-----------------------------------------------------------
 %OSHashLib      = (
 # Windows family OS
+"winlong","Windows Codename Longhorn",
+"win2003","Windows 2003",
 "winxp","Windows XP",
 "winme","Windows Me",
 "win2000","Windows 2000",
