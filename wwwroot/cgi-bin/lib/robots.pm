@@ -332,7 +332,8 @@
 @RobotsSearchIDOrder_list3 = (
 # Generic robot
 "robot",
-"crawl"
+"crawl",
+"spider"
 );
 
 
@@ -643,7 +644,8 @@
 
 # Generic root ID
 "robot", "Unknown robot (identified by 'robot')",
-"crawl", "Unknown robot (identified by 'crawl')"
+"crawl", "Unknown robot (identified by 'crawl')",
+"spider", "Unknown robot (identified by 'spider')"
 );
 
 
