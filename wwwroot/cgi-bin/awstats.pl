@@ -1021,9 +1021,9 @@ sub Parse_Config {
 		    # Correct relative include files
 		    if ( $includeFile !~ m|^[\\/]| ) {
 				my $configDir = $FileConfig;
-				$configDir =~ s|[\\/][^\\/]*$|/|;
-				$includeFile = "$configDir$includeFile";
-		    }
+				if ($configDir =~ s|[\\/][^\\/]*$|/|) {   $includeFile = "$configDir$includeFile"; }
+				else { $includeFile = "$includeFile"; }
+			}
 		    if ( open( CONFIG_INCLUDE, $includeFile ) ) {
 				&Parse_Config( *CONFIG_INCLUDE , $level+1, $includeFile);
 				close( CONFIG_INCLUDE );
