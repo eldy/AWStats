@@ -58,7 +58,8 @@ $word, $yearcon, $yearfile, $yearmonthfile, $yeartoprocess) = ();
 %_unknownrefererbrowser_l = %listofyears = %monthlib = %monthnum = ();
 # ---------- Init hash arrays --------
 @BrowserArray = @DomainsArray = @FirstTime = @HostAliases = @LastTime = @LastUpdate =
-@OSArray = @PageCode = @RobotArray = @SearchEnginesArray = @SkipFiles = @SkipHosts =
+@OnlyFiles = @OSArray = @PageCode = @RobotArray =
+@SearchEnginesArray = @SkipFiles = @SkipHosts =
 @_from_h = @_msiever_h = @_nsver_h = @_time_h = @_time_k = @_time_p =
 @datep = @dateparts = @felter = @field = @filearray = @message =
 @paramlist = @refurl = @sortbrowsers = @sortdomains_h = @sortdomains_k =
@@ -1590,13 +1591,19 @@ sub debug {
 }
 
 sub SkipHost {
-	foreach $Skip (@SkipHosts) { if ($_[0] =~ /$Skip/i) { return 1; } }
+	foreach $match (@SkipHosts) { if ($_[0] =~ /$match/i) { return 1; } }
 	0; # Not in @SkipHosts
 }
 
 sub SkipFile {
-	foreach $Skip (@SkipFiles) { if ($_[0] =~ /$Skip/i) { return 1; } }
+	foreach $match (@SkipFiles) { if ($_[0] =~ /$match/i) { return 1; } }
 	0; # Not inside @SkipFiles
+}
+
+sub OnlyFile {
+	if ($OnlyFiles[0] eq "") { return 1; }
+	foreach $match (@OnlyFiles) { if ($_[0] =~ /$match/i) { return 1; } }
+	0; # Not inside @OnlyFiles
 }
 
 sub Read_Config_File {
@@ -1631,14 +1638,19 @@ sub Read_Config_File {
 			$i=0; foreach $elem (@felter)      { $HostAliases[$i]=$elem; $i++; }
 			next;
 			}
+		if ($param =~ /^SkipHosts/) {
+			@felter=split(/ /,$value);
+			$i=0; foreach $elem (@felter)      { $SkipHosts[$i]=$elem; $i++; }
+			next;
+			}
 		if ($param =~ /^SkipFiles/) {
 			@felter=split(/ /,$value);
 			$i=0; foreach $elem (@felter)      { $SkipFiles[$i]=$elem; $i++; }
 			next;
 			}
-		if ($param =~ /^SkipHosts/) {
+		if ($param =~ /^OnlyFiles/) {
 			@felter=split(/ /,$value);
-			$i=0; foreach $elem (@felter)      { $SkipHosts[$i]=$elem; $i++; }
+			$i=0; foreach $elem (@felter)      { $OnlyFiles[$i]=$elem; $i++; }
 			next;
 			}
 		if ($param =~ /^DirData/)               { $DirData=$value; next; }
@@ -2081,9 +2093,7 @@ if (@HostAliases == 0) {
 $SiteToAnalyzeIsInHostAliases=0;
 foreach $elem (@HostAliases) { if ($elem eq $SiteToAnalyze) { $SiteToAnalyzeIsInHostAliases=1; last; } }
 if ($SiteToAnalyzeIsInHostAliases == 0) { $HostAliases[@HostAliases]=$SiteToAnalyze; }
-if (@SkipFiles == 0) {
-	$SkipFiles[0]="\.css";$SkipFiles[1]="\.js";$SkipFiles[2]="\.class";$SkipFiles[3]="robots\.txt";
-	}
+if (@SkipFiles == 0) { $SkipFiles[0]="\.css\$";$SkipFiles[1]="\.js\$";$SkipFiles[2]="\.class\$";$SkipFiles[3]="robots\.txt\$"; }
 $FirstTime=0;$LastTime=0;$LastUpdate=0;$TotalVisits=0;$TotalHosts=0;$TotalUnique=0;$TotalDifferentPages=0;$TotalDifferentKeywords=0;$TotalKeywords=0;
 for ($ix=1; $ix<=12; $ix++) {
 	$monthix=$ix;if ($monthix < 10) { $monthix  = "0$monthix"; }
@@ -2272,8 +2282,9 @@ if ($UpdateStats) {
 			$NowNewLinePhase=1;	# This will stop comparison "<=" between timeconnexion and LastTime (we should have only new lines now)
 			}
 
-		if (&SkipFile($field[$pos_url])) { next; }		# Skip with some URL
-		if (&SkipHost($field[$pos_rc])) { next; }		# Skip with some client host IP address
+		if (&SkipHost($field[$pos_rc])) { next; }		# Skip with some client host IP addresses
+		if (&SkipFile($field[$pos_url])) { next; }		# Skip with some URLs
+		if (! &OnlyFile($field[$pos_url])) { next; }	# Skip with other URLs
 
 		# Record is approved. We found a new line. Is it in a new month section ?
 		#------------------------------------------------------------------------
