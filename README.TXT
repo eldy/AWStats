@@ -14,7 +14,7 @@ server log files (and even ftp servers or mail logs) on all Operating Systems.
 License: GNU GPL (GNU General Public License. See LICENSE file),
          OSI Certified Open Source Software license.
 Version: 6.1
-Release date: April 2004
+Release date: May 2004
 Platforms: All (Linux, NT, BSD, Solaris and other *NIX's, BeOS, OS/2...)
 Author: Laurent Destailleur <eldy@users.sourceforge.net>
 AWStats official web site and latest version: http://awstats.sourceforge.net
@@ -74,12 +74,12 @@ I - 1) Features
 	* Several languages
 	* No need of rare perl libraries
 	* Dynamic reports as CGI output
-	* Static reports in one or framed HTML/XHTML pages
+	* Static reports in one or framed HTML or XHTML pages
 	* Experimental PDF export
 	* Look and colors can match your site design (CSS)
 	* Help and tooltips on HTML reported pages
 	* Easy to use (Just one configuration file to edit)
-	* Analysis database can be stored in XML format for XSLT processing
+	* Analysis database can be stored in XML format (for XSLT processing, ...)
 	* A Webmin module
 	* Free (GNU GPL) with sources (perl scripts)
 	* Available on all platforms
@@ -121,6 +121,7 @@ I - 3) Files
 	wwwroot/css                         Samples of CSS files
 	wwwroot/js                          Javascript sources for "Misc" feature
 	tools/*                             Other provided tools
+	tools/xslt/awstats61.xsd            AWStats XML database schema descriptor
 	tools/xslt/*                        Demo to manipulate AWStats XML database
 	tools/webmin/awstats-x.x.wbm        A Webmin module for AWStats
 
@@ -146,7 +147,7 @@ Tests and results are available in AWStats documentation, in docs/ directory.
 
 IV - ABOUT THE AUTHOR, LICENSE AND SUPPORT
 -----------------------------------------
-Copyright (C) 2000-2003 - Laurent Destailleur - eldy@users.sourceforge.net
+Copyright (C) 2000-2004 - Laurent Destailleur - eldy@users.sourceforge.net
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
