@@ -99,14 +99,14 @@ sub ShowInfoURL_urlalias {
 	}
 	if ($urltoshow) {
 		if ($UrlAlias{$urltoshow}) {
- 			print "<font style=\"color: $color_link; font-weight: bold\">$UrlAlias{$urltoshow}</font><br>"; 
+ 			print "<font style=\"color: $color_link; font-weight: bold\">$UrlAlias{$urltoshow}</font><br />"; 
 			$found=1;
 		}
 		else {
 			foreach my $iter (0..@UrlMatch-1) {
 				my $key = $UrlMatch[$iter][0];
 				if ( $urltoshow =~ /$key/ ) {
- 					print "<font style=\"color: #$color_link; font-weight: bold\">$UrlMatch[$iter][1]</font><br>"; 
+ 					print "<font style=\"color: #$color_link; font-weight: bold\">$UrlMatch[$iter][1]</font><br />"; 
 					$found = 1;
 #					$UrlAlias{$urltoshow} = $UrlMatch[$iter][1];
 #					if ($SiteConfig && open(URLALIASFILE,">> $DirData/urlalias.$SiteConfig.txt")) { 

@@ -70,8 +70,10 @@ sub AddHTMLBodyHeader_hostinfo {
 <script language="javascript" type="text/javascript">
 function neww(a,b) {
 	var wfeatures="directories=0,menubar=1,status=0,resizable=1,scrollbars=1,toolbar=0,width=$WIDTHINFO,height=$HEIGHTINFO,left=" + eval("(screen.width - $WIDTHINFO)/2") + ",top=" + eval("(screen.height - $HEIGHTINFO)/2");
-	if (b==1) { fen=window.open('$AWScript?$urlparam&host='+a,'whois',wfeatures); }
-	if (b==2) { fen=window.open('$AWScript?$urlparam&host='+a,'whois',wfeatures); }
+EOF
+	print "if (b==1) { fen=window.open('".XMLEncode("$AWScript?$urlparam&host")."='+a,'whois',wfeatures); }\n";
+	print "if (b==2) { fen=window.open('".XMLEncode("$AWScript?$urlparam&host")."='+a,'whois',wfeatures); }\n";
+print <<EOF;
 }
 </script>
 
@@ -160,7 +162,7 @@ sub BuildFullHTMLOutput_hostinfo {
 	if ($Debug) { debug("  DirData=$DirData Host=$Host HostResolved=$HostResolved ",4); }
 	my $w = new Net::XWhois Verbose=>$Debug, Cache=>$DirData, NoCache=>0, Timeout=>10, Domain=>$HostResolved;
 
-	print "<br>\n";
+	print "<br />\n";
 	
 	if ($w && $w->response()) {
 		&tab_head("Common Whois Fields",0,0,'whois');
