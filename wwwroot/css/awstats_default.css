@@ -15,7 +15,7 @@ body { font: 11px verdana, arial, helvetica, sans-serif; background-color: #FFFF
 	font-family: arial,verdana,helvetica, sans-serif;
 	font-size: 12px;
 	border: 1px solid #ccd7e0;
-	background-image: url(/icon/other/button.gif);
+	background-image: url(/awstatsicons/other/button.gif);
 }
 th 		{ border-color: #ECECEC; border-left-width: 0px; border-right-width: 1px; border-top-width: 0px; border-bottom-width: 0px; padding: 2px 2px 2px 2px; font: 11px verdana, arial, helvetica, sans-serif; text-align:center; color: #000000; }
 th.aws 	{ border-color: #ECECEC; border-left-width: 0px; border-right-width: 1px; border-top-width: 0px; border-bottom-width: 0px; padding: 2px 2px 2px 2px; font-size: 13px; font-weight: bold; }
