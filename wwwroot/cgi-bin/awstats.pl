@@ -6083,7 +6083,7 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 
 		# Analyze: favicon
 		#-----------------
-		if ($urlwithnoquery =~ /\/favicon\.ico$/i) {
+		if ($pos_referer >= 0 && $field[$pos_referer] && $urlwithnoquery =~ /\/favicon\.ico$/i) {
 			if (($field[$pos_code] != 404 || $urlwithnoquery !~ /\/.+\/favicon\.ico$/i) && ($field[$pos_agent] =~ /MSIE/)) {
 				# We don't count one hit if (not on root and error) and MSIE
 				# If error not on root, another hit will be made on root. If not MSIE, hit are made not only for "Adding".
