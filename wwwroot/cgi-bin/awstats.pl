@@ -47,7 +47,7 @@ use vars qw/
 $DIR $PROG $Extension
 $Debug $ShowSteps
 $DebugResetDone $DNSLookupAlreadyDone
-$RunAsCli $UpdateFor $HeaderHTTPComplete $HeaderHTMLComplete
+$RunAsCli $UpdateFor $HeaderHTTPSent $HeaderHTMLSent
 $LastLine $LastLineNumber $LastLineOffset $LastLineChecksum $LastUpdate
 $lowerval
 $PluginMode
@@ -67,7 +67,7 @@ $pos_cluster $pos_emails $pos_emailr $pos_hostr
 $DIR=$PROG=$Extension='';
 $Debug = $ShowSteps = 0;
 $DebugResetDone = $DNSLookupAlreadyDone = 0;
-$RunAsCli = $UpdateFor = $HeaderHTTPComplete = $HeaderHTMLComplete = 0;
+$RunAsCli = $UpdateFor = $HeaderHTTPSent = $HeaderHTMLSent = 0;
 $LastLine = $LastLineNumber = $LastLineOffset = $LastLineChecksum = $LastUpdate = 0;
 $lowerval = 0;
 $PluginMode = '';
@@ -508,10 +508,33 @@ use vars qw/ @Message /;
 #------------------------------------------------------------------------------
 
 #------------------------------------------------------------------------------
+# Function:		Write on ouput header of HTTP answer
+# Parameters:	None
+# Input:		$HeaderHTTPSent $BuildReportFormat $PageCode $Expires
+# Output:		$HeaderHTTPSent=1
+# Return:		None
+#------------------------------------------------------------------------------
+sub http_head {
+	if (! $HeaderHTTPSent) {
+		if ($BuildReportFormat eq 'xml') { print ($ENV{'HTTP_USER_AGENT'}=~/MSIE|Googlebot/i?"Content-type: text/html; charset=$PageCode\n":"Content-type: text/xml; charset=$PageCode\n"); }
+		else { print "Content-type: text/html; charset=$PageCode\n"; }
+
+		# Expires must be GMT ANSI asctime and must be after Content-type to avoid pb with some servers (SAMBAR)
+		if ($Expires =~ /^\d+$/) {
+		    print "Cache-Control: public\n";
+		    print "Last-Modified: ".gmtime($starttime)."\n";
+		    print "Expires: ".(gmtime($starttime+$Expires))."\n";
+		}
+		print "\n";
+	}
+	$HeaderHTTPSent++;;
+}
+
+#------------------------------------------------------------------------------
 # Function:		Write on ouput header of HTML page
 # Parameters:	None
 # Input:		%HTMLOutput $PluginMode $Expires $Lang $StyleSheet $HTMLHeadSection $PageCode $PageDir
-# Output:		$HeaderHTMLComplete=1
+# Output:		$HeaderHTMLSent=1
 # Return:		None
 #------------------------------------------------------------------------------
 sub html_head {
@@ -600,7 +623,7 @@ EOF
 		 	print ">\n";
 		}
 	}
-	$HeaderHTMLComplete=1;
+	$HeaderHTMLSent++;
 }
 
 #------------------------------------------------------------------------------
@@ -683,7 +706,7 @@ sub tab_end {
 #------------------------------------------------------------------------------
 # Function:		Write error message and exit
 # Parameters:	$message $secondmessage $thirdmessage $donotshowsetupinfo
-# Input:		$HeaderHTTPComplete $HeaderHTMLComplete %HTMLOutput $LogSeparator $LogFormat
+# Input:		$HeaderHTTPSent $HeaderHTMLSent %HTMLOutput $LogSeparator $LogFormat
 # Output:		None
 # Return:		None
 #------------------------------------------------------------------------------
@@ -693,8 +716,8 @@ sub error {
 	my $thirdmessage=shift||'';
 	my $donotshowsetupinfo=shift||0;
 
-	if (! $HeaderHTTPComplete && $ENV{'GATEWAY_INTERFACE'}) { print "\n"; $HeaderHTTPComplete=1; }
-	if (! $HeaderHTMLComplete && scalar keys %HTMLOutput) 	{ print "<html><body>\n"; $HeaderHTMLComplete=1; }
+	if (! $HeaderHTTPSent && $ENV{'GATEWAY_INTERFACE'}) { http_head(); }
+	if (! $HeaderHTMLSent && scalar keys %HTMLOutput) 	{ print "<html><body>\n"; $HeaderHTMLSent=1; }
 	if ($Debug) { debug("$message $secondmessage $thirdmessage",1); }
 	my $tagbold=''; my $tagunbold=''; my $tagbr=''; my $tagfontred=''; my $tagfontgrey=''; my $tagunfont='';
 	if (scalar keys %HTMLOutput) {
@@ -781,14 +804,14 @@ sub error {
 				print "Example: http://127.0.0.1/cgi-bin/awstats.pl?config=mysite${tagbr}\n";
 			} else {
 				print "- ${tagbold}Did you use correct config parameter ?${tagunbold}${tagbr}\n";
-				print "Example: If your config file is awstats.mysite.conf, you must use -config=mysite\n";
+				print "Example: If your config file is awstats.mysite.conf, use -config=mysite\n";
 			}
 			print "- ${tagbold}Did you create your config file 'awstats.$SiteConfig.conf' ?${tagunbold}${tagbr}\n";
-			print "If not, you can run \"$dir/tools/configure.pl\"${tagbr}\n";
+			print "If not, you can run \"$dir/tools/configure.pl\"\nfrom command line, or create it manually.${tagbr}\n";
 			print "${tagbr}\n";
 		}
 		else { print "${tagbr}${tagbold}Setup (".($FileConfig?"'".$FileConfig."'":"Config")." file, web server or permissions) may be wrong.${tagunbold}${tagbr}\n"; }
-		print "See AWStats documentation in 'docs' directory for informations on how to setup $PROG.\n";
+		print "See AWStats documentation in 'docs' directory to know how to setup $PROG.\n";
 	}
 	# Remove lock if not a lock message 
 	if ($EnableLockForUpdate && $message !~ /lock file/) { &Lock_Update(0); }
@@ -799,15 +822,15 @@ sub error {
 #------------------------------------------------------------------------------
 # Function:		Write a warning message
 # Parameters:	$message
-# Input:		$HeaderHTTPComplete $HeaderHTMLComplete $WarningMessage %HTMLOutput
+# Input:		$HeaderHTTPSent $HeaderHTMLSent $WarningMessage %HTMLOutput
 # Output:		None
 # Return:		None
 #------------------------------------------------------------------------------
 sub warning {
 	my $messagestring=shift;
 
-	if (! $HeaderHTTPComplete && $ENV{'GATEWAY_INTERFACE'}) { print "\n"; $HeaderHTTPComplete=1; }
-	if (! $HeaderHTMLComplete) { html_head(); }
+	if (! $HeaderHTTPSent && $ENV{'GATEWAY_INTERFACE'}) { http_head(); }
+	if (! $HeaderHTMLSent) { html_head(); }
 	if ($Debug) { debug("$messagestring",1); }
 	if ($WarningMessages) {
 		if (scalar keys %HTMLOutput) {
@@ -829,6 +852,8 @@ sub warning {
 #------------------------------------------------------------------------------
 sub debug {
 	my $level = $_[1] || 1;
+
+	if (! $HeaderHTTPSent && $ENV{'GATEWAY_INTERFACE'}) { http_head(); }	# To send the HTTP header and see debug
 	if ($level <= $DEBUGFORCED) {
 		my $debugstring = $_[0];
 		if (! $DebugResetDone) { open(DEBUGFORCEDFILE,"debug.log"); close DEBUGFORCEDFILE; chmod 0666,"debug.log"; $DebugResetDone=1; }
@@ -5049,9 +5074,6 @@ $QueryString='';
 # be set to force AWStats to be ran as CLI even from a web page.
 if ($ENV{'AWSTATS_DEL_GATEWAY_INTERFACE'}) { $ENV{'GATEWAY_INTERFACE'}=''; }
 if ($ENV{'GATEWAY_INTERFACE'}) {	# Run from a browser as CGI
-	if ($BuildReportFormat eq 'xml') { print ($ENV{'HTTP_USER_AGENT'}=~/MSIE|Googlebot/i?"Content-type: text/html\n":"Content-type: text/xml\n"); }
-	else { print "Content-type: text/html\n"; }
-
 	# Prepare QueryString
 	if ($ENV{'CONTENT_LENGTH'}) {
 		binmode STDIN;
@@ -5178,7 +5200,6 @@ else { $DayRequired=''; }
 
 # Print AWStats and Perl version 
 if ($Debug) {
-	if ($ENV{'GATEWAY_INTERFACE'}) { print "\n"; }	# To end the HTTP header and see all debug
 	debug(ucfirst($PROG)." - $VERSION - Perl $^X $]",1);
 	debug("DIR=$DIR PROG=$PROG",2);
 	debug("QUERY_STRING=$QueryString",2);
@@ -5303,19 +5324,6 @@ $ENV{'AWSTATS_CURRENT_CONFIG'}=$SiteConfig;
 # Read config file (SiteConfig must be defined)
 &Read_Config($DirConfig);
 
-if ($ENV{'GATEWAY_INTERFACE'}) {	# Run from a browser as CGI
-	# Expires must be GMT ANSI asctime and must be after Content-type to avoid pb with some servers (SAMBAR)
-	if (! $HeaderHTTPComplete) {
-		if ($Expires =~ /^\d+$/) {
-		    print "Cache-Control: public\n";
-		    print "Last-Modified: ".gmtime($starttime)."\n";
-		    print "Expires: ".(gmtime($starttime+$Expires))."\n";
-		}
-		print "\n";
-	}
-	$HeaderHTTPComplete=1;
-}
-
 # Check language
 if ($QueryString =~ /(^|&)lang=([^&]+)/i)	{ $Lang="$2"; }
 if (! $Lang || $Lang eq 'auto') {	# If lang not defined or forced to auto
@@ -5372,6 +5380,8 @@ if ($FrameName ne 'index') {
 		&Read_Plugins();
 	}
 }
+# Here charset is defined, so we can send the http header (Need BuildReportFormat,PageCode)
+if (! $HeaderHTTPSent && $ENV{'GATEWAY_INTERFACE'}) { http_head(); }	# Run from a browser as CGI
 
 # Init other parameters
 $NBOFLINESFORBENCHMARK--;
@@ -5392,8 +5402,8 @@ else { @DOWIndex = (0,1,2,3,4,5,6); }
 # Should we link to ourselves or to a wrapper script
 $AWScript=($WrapperScript?"$WrapperScript":"$DirCgi$PROG.$Extension");
 
-# Print html header (Need HTMLOutput,Expires,Lang,StyleSheet,HTMLHeadSectionExpires defined by Read_Config, PageCodes defined by Read_Language_Data)
-if (! $HeaderHTMLComplete) { &html_head; }
+# Print html header (Need HTMLOutput,Expires,Lang,StyleSheet,HTMLHeadSectionExpires defined by Read_Config, PageCode defined by Read_Language_Data)
+if (! $HeaderHTMLSent) { &html_head; }
 
 # AWStats output is replaced by a plugin output
 if ($PluginMode) {
