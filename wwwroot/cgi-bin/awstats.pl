@@ -4669,14 +4669,14 @@ sub DefinePerlParsingFormat {
 		$LogFormatString =~ s/sc-authenticated/%other/g;
 		$LogFormatString =~ s/s-svcname/%other/g;
 		$LogFormatString =~ s/s-computername/%other/g;
-		$LogFormatString =~ s/r-host/%other/g;
+		$LogFormatString =~ s/r-host/%virtualname/g;
 		$LogFormatString =~ s/r-ip/%other/g;
 		$LogFormatString =~ s/r-port/%other/g;
 		$LogFormatString =~ s/time-taken/%other/g;
 		$LogFormatString =~ s/cs-bytes/%other/g;
 		$LogFormatString =~ s/cs-protocol/%other/g;
 		$LogFormatString =~ s/cs-transport/%other/g;
-		$LogFormatString =~ s/s-operation/%other/g;
+		$LogFormatString =~ s/s-operation/%method/g;	# GET, POST, SMTP, RETR STOR
 		$LogFormatString =~ s/cs-mime-type/%other/g;
 		$LogFormatString =~ s/s-object-source/%other/g;
 		$LogFormatString =~ s/s-cache-info/%other/g;
@@ -9526,7 +9526,7 @@ else {
 #       &Read_History_With_TmpUpdate(lastprocessedyear,lastprocessedmonth,UPDATE,PURGE,"all",lastlinenumber,lastlineoffset,CheckSum($_));
 #     Check misc tracker --> next on loop
 #     Check add to favorites --> next on loop
-#     Check protocol and complete %_error_, %_sider404 and %_referrer404 --> next on loop
+#     Check protocol and code and complete %_error_, %_sider404 and %_referrer404 --> next on loop
 #     Check robot and complete %_robot --> next on loop
 #     Clean Url and Query
 #     Analyze: File types - Compression
