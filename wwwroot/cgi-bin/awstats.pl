@@ -466,7 +466,7 @@ EOF
 			print "$HTMLHeadSection\n";
 			print "<table WIDTH=$WIDTH>\n";
 			print "<tr valign=middle><td class=AWL width=150 style=\"font: 18px arial,verdana,helvetica; font-weight: bold\">AWStats\n";
-			Show_Flag_Links($Lang);
+			if (! $StaticLinks) { Show_Flag_Links($Lang); }
 			print "</td>\n";
 			if ($LogoLink =~ "http://awstats.sourceforge.net") {
 				print "<td class=AWL width=450><a href=\"$LogoLink\" target=\"awstatshome\"><img src=\"$DirIcons/other/$Logo\" border=0 alt=\"$PROG Official Web Site\" title=\"$PROG Official Web Site\"></a></td></tr>\n";
@@ -2473,7 +2473,6 @@ sub Show_Flag_Links {
 	my $CurrentLang = shift;
 	if ($ShowFlagLinks eq "0") { $ShowFlagLinks = ""; }						# For backward compatibility
 	if ($ShowFlagLinks eq "1") { $ShowFlagLinks = "en fr de it nl es"; }	# For backward compatibility
-	my @flaglist=split(/\s+/,$ShowFlagLinks);
 
 	# Build flags link
 	my $NewLinkParams=$QueryString;
@@ -2489,7 +2488,7 @@ sub Show_Flag_Links {
 	}
 
 	print "<br>\n";
-	foreach my $flag (@flaglist) {
+	foreach my $flag (split(/\s+/,$ShowFlagLinks)) {
 		if ($flag ne $CurrentLang) {
 			my $lng=$flag;
 			if ($flag eq "en") { $lng="English"; }
