@@ -57,8 +57,7 @@ $TotalEntries $TotalExits $TotalBytesPages $TotalDifferentPages
 $TotalKeyphrases $TotalKeywords $TotalDifferentKeyphrases $TotalDifferentKeywords
 $TotalSearchEnginesPages $TotalSearchEnginesHits $TotalRefererPages $TotalRefererHits $TotalDifferentSearchEngines $TotalDifferentReferer
 $FrameName $Center $FileConfig $FileSuffix $Host $DayRequired $MonthRequired $YearRequired
-$QueryString $SiteConfig $StaticLinks $PageCode $PageDir $PerlParsingFormat
-$SiteToAnalyze $SiteToAnalyzeWithoutwww $UserAgent
+$QueryString $SiteConfig $StaticLinks $PageCode $PageDir $PerlParsingFormat $UserAgent
 $pos_vh $pos_host $pos_logname $pos_date $pos_tz $pos_method $pos_url $pos_code $pos_size
 $pos_referer $pos_agent $pos_query $pos_gzipin $pos_gzipout $pos_compratio
 $pos_cluster $pos_emails $pos_emailr $pos_hostr
@@ -77,9 +76,8 @@ $TotalEntries = $TotalExits = $TotalBytesPages = $TotalDifferentPages = 0;
 $TotalKeyphrases = $TotalKeywords = $TotalDifferentKeyphrases = $TotalDifferentKeywords = 0;
 $TotalSearchEnginesPages = $TotalSearchEnginesHits = $TotalRefererPages = $TotalRefererHits = $TotalDifferentSearchEngines = $TotalDifferentReferer = 0;
 ($FrameName, $Center, $FileConfig, $FileSuffix, $Host, $DayRequired, $MonthRequired, $YearRequired,
-$QueryString, $SiteConfig, $StaticLinks, $PageCode, $PageDir, $PerlParsingFormat,
-$SiteToAnalyze, $SiteToAnalyzeWithoutwww, $UserAgent)=
-('','','','','','','','','','','','','','','','','');
+$QueryString, $SiteConfig, $StaticLinks, $PageCode, $PageDir, $PerlParsingFormat, $UserAgent)=
+('','','','','','','','','','','','','','','');
 $pos_vh = $pos_host = $pos_logname = $pos_date = $pos_tz = $pos_method = $pos_url = $pos_code = $pos_size = -1;
 $pos_referer = $pos_agent = $pos_query = $pos_gzipin = $pos_gzipout = $pos_compratio = -1;
 $pos_cluster = $pos_emails = $pos_emailr = $pos_hostr = -1;
@@ -317,6 +315,10 @@ use vars qw/
 %_emails_h %_emails_k %_emails_l %_emailr_h %_emailr_k %_emailr_l
 /;
 &Init_HashArray();
+# ---------- Init Regex --------
+use vars qw/ $regclean1 $regclean2 /;
+$regclean1=qr/<(recnb|\/td)>/i;
+$regclean2=qr/<\/?[^<>]+>/i;
 
 # ---------- Init Tie::hash arrays --------
 # Didn't find a tie that increase speed
@@ -2025,7 +2027,7 @@ sub Read_History_With_TmpUpdate {
 				if ($Debug) { debug(" Data file format is 'xml'",1); }
 				next;
 			}
-			
+
 			# Extract version from first line
 			if (! $versionnum && $_ =~ /^AWSTATS DATA FILE (\d+).(\d+)/i) {
 				$versionnum=($1*1000)+$2;
@@ -2037,7 +2039,10 @@ sub Read_History_With_TmpUpdate {
 			@field=split(/\s+/,($xmlold?CleanFromTags($_):$_));
 			if (! $field[0]) { next; }
 
+			# Here version MUST be defined, or file will be processed as an old data file
+
 			# BEGIN_GENERAL
+			# TODO Manage GENERAL in a loop like other sections. Need to return error if data file version < 5000 (no END_GENERAL) to say that history files < 5.0 can't be used
 			if ($field[0] eq 'BEGIN_GENERAL')      {
 				if ($Debug) { debug(" Begin of GENERAL section"); }
 				next;
@@ -2073,7 +2078,6 @@ sub Read_History_With_TmpUpdate {
 			if ($field[0] eq 'TotalUnique' || $field[0] eq "${xmlrb}TotalUnique")       { if (! $withupdate) { $MonthUnique{$year.$month}+=int($field[1]); } next; }
 			if ($field[0] eq 'MonthHostsKnown' || $field[0] eq "${xmlrb}MonthHostsKnown")   { if (! $withupdate) { $MonthHostsKnown{$year.$month}+=int($field[1]); } next; }
 			if ($field[0] eq 'MonthHostsUnknown' || $field[0] eq "${xmlrb}MonthHostsUnknown") { if (! $withupdate) { $MonthHostsUnknown{$year.$month}+=int($field[1]); } next; }
-
 			if (($field[0] eq 'END_GENERAL' || $field[0] eq "${xmleb}END_GENERAL")	# END_GENERAL didn't exist for history files < 5.0
 			 || ($versionnum < 5000 && $SectionsToLoad{"general"} && $FirstTime{$year.$month} && $LastTime{$year.$month}) )		{
 				if ($Debug) { debug(" End of GENERAL section"); }
@@ -3283,7 +3287,8 @@ sub Save_History {
 	my $xml=($BuildHistoryFormat eq 'xml'?1:0);
 	my ($xmlbb,$xmlbs,$xmlbe,$xmlhb,$xmlhs,$xmlhe,$xmlrb,$xmlrs,$xmlre,$xmleb,$xmlee)=();
 	if ($xml) { ($xmlbb,$xmlbs,$xmlbe,$xmlhb,$xmlhs,$xmlhe,$xmlrb,$xmlrs,$xmlre,$xmleb,$xmlee)=("</comment><nu>\n",'</nu><recnb>','</recnb><table>','<tr><th>','</th><th>','</th></tr>','<tr><td>','</td><td>','</td></tr>','</table><nu>',"\n</nu></section>" ); }
-		
+	else { $xmlbs=' '; $xmlhs=' '; $xmlrs=' '; }
+			
 	my $lastlinenb=shift||0;
 	my $lastlineoffset=shift||0;
 	my $lastlinechecksum=shift||0;
@@ -3310,43 +3315,43 @@ sub Save_History {
 		print HISTORYTMP "# direct I/O access. If you made changes somewhere in this file, you should\n";
 		print HISTORYTMP "# also remove completely the MAP section (AWStats will rewrite it at next\n";
 		print HISTORYTMP "# update).\n";
-		print HISTORYTMP "${xmlbb}BEGIN_MAP ${xmlbs}".(26+(scalar keys %TrapInfosForHTTPErrorCodes)+(scalar @ExtraName?scalar @ExtraName-1:0))."${xmlbe}\n";
-		print HISTORYTMP "${xmlrb}POS_GENERAL ";$PosInFile{"general"}=tell HISTORYTMP;print HISTORYTMP "$spacebar${xmlre}\n";
+		print HISTORYTMP "${xmlbb}BEGIN_MAP${xmlbs}".(26+(scalar keys %TrapInfosForHTTPErrorCodes)+(scalar @ExtraName?scalar @ExtraName-1:0))."${xmlbe}\n";
+		print HISTORYTMP "${xmlrb}POS_GENERAL${xmlrs}";$PosInFile{"general"}=tell HISTORYTMP;print HISTORYTMP "$spacebar${xmlre}\n";
 		# When
-		print HISTORYTMP "${xmlrb}POS_TIME ";$PosInFile{"time"}=tell HISTORYTMP;print HISTORYTMP "$spacebar${xmlre}\n";
-		print HISTORYTMP "${xmlrb}POS_VISITOR ";$PosInFile{"visitor"}=tell HISTORYTMP;print HISTORYTMP "$spacebar${xmlre}\n";
-		print HISTORYTMP "${xmlrb}POS_DAY ";$PosInFile{"day"}=tell HISTORYTMP;print HISTORYTMP "$spacebar${xmlre}\n";
+		print HISTORYTMP "${xmlrb}POS_TIME${xmlrs}";$PosInFile{"time"}=tell HISTORYTMP;print HISTORYTMP "$spacebar${xmlre}\n";
+		print HISTORYTMP "${xmlrb}POS_VISITOR${xmlrs}";$PosInFile{"visitor"}=tell HISTORYTMP;print HISTORYTMP "$spacebar${xmlre}\n";
+		print HISTORYTMP "${xmlrb}POS_DAY${xmlrs}";$PosInFile{"day"}=tell HISTORYTMP;print HISTORYTMP "$spacebar${xmlre}\n";
 		# Who
-		print HISTORYTMP "${xmlrb}POS_DOMAIN ";$PosInFile{"domain"}=tell HISTORYTMP;print HISTORYTMP "$spacebar${xmlre}\n";
-		print HISTORYTMP "${xmlrb}POS_LOGIN ";$PosInFile{"login"}=tell HISTORYTMP;print HISTORYTMP "$spacebar${xmlre}\n";
-		print HISTORYTMP "${xmlrb}POS_ROBOT ";$PosInFile{"robot"}=tell HISTORYTMP;print HISTORYTMP "$spacebar${xmlre}\n";
-		print HISTORYTMP "${xmlrb}POS_WORMS ";$PosInFile{"worms"}=tell HISTORYTMP;print HISTORYTMP "$spacebar${xmlre}\n";
-		print HISTORYTMP "${xmlrb}POS_EMAILSENDER ";$PosInFile{"emailsender"}=tell HISTORYTMP;print HISTORYTMP "$spacebar${xmlre}\n";
-		print HISTORYTMP "${xmlrb}POS_EMAILRECEIVER ";$PosInFile{"emailreceiver"}=tell HISTORYTMP;print HISTORYTMP "$spacebar${xmlre}\n";
+		print HISTORYTMP "${xmlrb}POS_DOMAIN${xmlrs}";$PosInFile{"domain"}=tell HISTORYTMP;print HISTORYTMP "$spacebar${xmlre}\n";
+		print HISTORYTMP "${xmlrb}POS_LOGIN${xmlrs}";$PosInFile{"login"}=tell HISTORYTMP;print HISTORYTMP "$spacebar${xmlre}\n";
+		print HISTORYTMP "${xmlrb}POS_ROBOT${xmlrs}";$PosInFile{"robot"}=tell HISTORYTMP;print HISTORYTMP "$spacebar${xmlre}\n";
+		print HISTORYTMP "${xmlrb}POS_WORMS${xmlrs}";$PosInFile{"worms"}=tell HISTORYTMP;print HISTORYTMP "$spacebar${xmlre}\n";
+		print HISTORYTMP "${xmlrb}POS_EMAILSENDER${xmlrs}";$PosInFile{"emailsender"}=tell HISTORYTMP;print HISTORYTMP "$spacebar${xmlre}\n";
+		print HISTORYTMP "${xmlrb}POS_EMAILRECEIVER${xmlrs}";$PosInFile{"emailreceiver"}=tell HISTORYTMP;print HISTORYTMP "$spacebar${xmlre}\n";
 		# Navigation
-		print HISTORYTMP "${xmlrb}POS_SESSION ";$PosInFile{"session"}=tell HISTORYTMP;print HISTORYTMP "$spacebar${xmlre}\n";
-		print HISTORYTMP "${xmlrb}POS_SIDER ";$PosInFile{"sider"}=tell HISTORYTMP;print HISTORYTMP "$spacebar${xmlre}\n";
-		print HISTORYTMP "${xmlrb}POS_FILETYPES ";$PosInFile{"filetypes"}=tell HISTORYTMP;print HISTORYTMP "$spacebar${xmlre}\n";
-		print HISTORYTMP "${xmlrb}POS_OS ";$PosInFile{"os"}=tell HISTORYTMP;print HISTORYTMP "$spacebar${xmlre}\n";
-		print HISTORYTMP "${xmlrb}POS_BROWSER ";$PosInFile{"browser"}=tell HISTORYTMP;print HISTORYTMP "$spacebar${xmlre}\n";
-		print HISTORYTMP "${xmlrb}POS_SCREENSIZE ";$PosInFile{"screensize"}=tell HISTORYTMP;print HISTORYTMP "$spacebar${xmlre}\n";
-		print HISTORYTMP "${xmlrb}POS_UNKNOWNREFERER ";$PosInFile{'unknownreferer'}=tell HISTORYTMP;print HISTORYTMP "$spacebar${xmlre}\n";
-		print HISTORYTMP "${xmlrb}POS_UNKNOWNREFERERBROWSER ";$PosInFile{'unknownrefererbrowser'}=tell HISTORYTMP;print HISTORYTMP "$spacebar${xmlre}\n";
+		print HISTORYTMP "${xmlrb}POS_SESSION${xmlrs}";$PosInFile{"session"}=tell HISTORYTMP;print HISTORYTMP "$spacebar${xmlre}\n";
+		print HISTORYTMP "${xmlrb}POS_SIDER${xmlrs}";$PosInFile{"sider"}=tell HISTORYTMP;print HISTORYTMP "$spacebar${xmlre}\n";
+		print HISTORYTMP "${xmlrb}POS_FILETYPES${xmlrs}";$PosInFile{"filetypes"}=tell HISTORYTMP;print HISTORYTMP "$spacebar${xmlre}\n";
+		print HISTORYTMP "${xmlrb}POS_OS${xmlrs}";$PosInFile{"os"}=tell HISTORYTMP;print HISTORYTMP "$spacebar${xmlre}\n";
+		print HISTORYTMP "${xmlrb}POS_BROWSER${xmlrs}";$PosInFile{"browser"}=tell HISTORYTMP;print HISTORYTMP "$spacebar${xmlre}\n";
+		print HISTORYTMP "${xmlrb}POS_SCREENSIZE${xmlrs}";$PosInFile{"screensize"}=tell HISTORYTMP;print HISTORYTMP "$spacebar${xmlre}\n";
+		print HISTORYTMP "${xmlrb}POS_UNKNOWNREFERER${xmlrs}";$PosInFile{'unknownreferer'}=tell HISTORYTMP;print HISTORYTMP "$spacebar${xmlre}\n";
+		print HISTORYTMP "${xmlrb}POS_UNKNOWNREFERERBROWSER${xmlrs}";$PosInFile{'unknownrefererbrowser'}=tell HISTORYTMP;print HISTORYTMP "$spacebar${xmlre}\n";
 		# Referers
-		print HISTORYTMP "${xmlrb}POS_ORIGIN ";$PosInFile{"origin"}=tell HISTORYTMP;print HISTORYTMP "$spacebar${xmlre}\n";
-		print HISTORYTMP "${xmlrb}POS_SEREFERRALS ";$PosInFile{"sereferrals"}=tell HISTORYTMP;print HISTORYTMP "$spacebar${xmlre}\n";
-		print HISTORYTMP "${xmlrb}POS_PAGEREFS ";$PosInFile{"pagerefs"}=tell HISTORYTMP;print HISTORYTMP "$spacebar${xmlre}\n";
-		print HISTORYTMP "${xmlrb}POS_SEARCHWORDS ";$PosInFile{"searchwords"}=tell HISTORYTMP;print HISTORYTMP "$spacebar${xmlre}\n";
-		print HISTORYTMP "${xmlrb}POS_KEYWORDS ";$PosInFile{"keywords"}=tell HISTORYTMP;print HISTORYTMP "$spacebar${xmlre}\n";
+		print HISTORYTMP "${xmlrb}POS_ORIGIN${xmlrs}";$PosInFile{"origin"}=tell HISTORYTMP;print HISTORYTMP "$spacebar${xmlre}\n";
+		print HISTORYTMP "${xmlrb}POS_SEREFERRALS${xmlrs}";$PosInFile{"sereferrals"}=tell HISTORYTMP;print HISTORYTMP "$spacebar${xmlre}\n";
+		print HISTORYTMP "${xmlrb}POS_PAGEREFS${xmlrs}";$PosInFile{"pagerefs"}=tell HISTORYTMP;print HISTORYTMP "$spacebar${xmlre}\n";
+		print HISTORYTMP "${xmlrb}POS_SEARCHWORDS${xmlrs}";$PosInFile{"searchwords"}=tell HISTORYTMP;print HISTORYTMP "$spacebar${xmlre}\n";
+		print HISTORYTMP "${xmlrb}POS_KEYWORDS${xmlrs}";$PosInFile{"keywords"}=tell HISTORYTMP;print HISTORYTMP "$spacebar${xmlre}\n";
 		# Others
-		print HISTORYTMP "${xmlrb}POS_MISC ";$PosInFile{"misc"}=tell HISTORYTMP;print HISTORYTMP "$spacebar${xmlre}\n";
-		print HISTORYTMP "${xmlrb}POS_ERRORS ";$PosInFile{"errors"}=tell HISTORYTMP;print HISTORYTMP "$spacebar${xmlre}\n";
-		print HISTORYTMP "${xmlrb}POS_CLUSTER ";$PosInFile{"cluster"}=tell HISTORYTMP;print HISTORYTMP "$spacebar${xmlre}\n";
+		print HISTORYTMP "${xmlrb}POS_MISC${xmlrs}";$PosInFile{"misc"}=tell HISTORYTMP;print HISTORYTMP "$spacebar${xmlre}\n";
+		print HISTORYTMP "${xmlrb}POS_ERRORS${xmlrs}";$PosInFile{"errors"}=tell HISTORYTMP;print HISTORYTMP "$spacebar${xmlre}\n";
+		print HISTORYTMP "${xmlrb}POS_CLUSTER${xmlrs}";$PosInFile{"cluster"}=tell HISTORYTMP;print HISTORYTMP "$spacebar${xmlre}\n";
 		foreach (keys %TrapInfosForHTTPErrorCodes) {
-			print HISTORYTMP "${xmlrb}POS_SIDER_$_ ";$PosInFile{"sider_$_"}=tell HISTORYTMP;print HISTORYTMP "$spacebar${xmlre}\n";
+			print HISTORYTMP "${xmlrb}POS_SIDER_$_${xmlrs}";$PosInFile{"sider_$_"}=tell HISTORYTMP;print HISTORYTMP "$spacebar${xmlre}\n";
 		}
 		foreach (1..@ExtraName-1) {
-			print HISTORYTMP "${xmlrb}POS_EXTRA_$_ ";$PosInFile{"extra_$_"}=tell HISTORYTMP;print HISTORYTMP "$spacebar${xmlre}\n";
+			print HISTORYTMP "${xmlrb}POS_EXTRA_$_${xmlrs}";$PosInFile{"extra_$_"}=tell HISTORYTMP;print HISTORYTMP "$spacebar${xmlre}\n";
 		}
 		print HISTORYTMP "${xmleb}END_MAP${xmlee}\n";
 	}
@@ -3365,15 +3370,15 @@ sub Save_History {
 		print HISTORYTMP "# MonthHostsKnown   = Number of hosts known\n";
 		print HISTORYTMP "# MonthHostsUnKnown = Number of hosts unknown\n";
 		$ValueInFile{$sectiontosave}=tell HISTORYTMP;
-		print HISTORYTMP "${xmlbb}BEGIN_GENERAL ${xmlbs}8${xmlbe}\n";
-		print HISTORYTMP "${xmlrb}LastLine ".($LastLine>0?$LastLine:$LastTime{$year.$month})." $lastlinenb $lastlineoffset $lastlinechecksum${xmlre}\n";
-		print HISTORYTMP "${xmlrb}FirstTime $FirstTime{$year.$month}${xmlre}\n";
-		print HISTORYTMP "${xmlrb}LastTime $LastTime{$year.$month}${xmlre}\n";
-		print HISTORYTMP "${xmlrb}LastUpdate $LastUpdate $NbOfLinesParsed $NbOfOldLines $NbOfNewLines $NbOfLinesCorrupted $NbOfLinesDropped${xmlre}\n";
-		print HISTORYTMP "${xmlrb}TotalVisits ";$PosInFile{"TotalVisits"}=tell HISTORYTMP;print HISTORYTMP "$spacebar${xmlre}\n";
-		print HISTORYTMP "${xmlrb}TotalUnique ";$PosInFile{"TotalUnique"}=tell HISTORYTMP;print HISTORYTMP "$spacebar${xmlre}\n";
-		print HISTORYTMP "${xmlrb}MonthHostsKnown ";$PosInFile{"MonthHostsKnown"}=tell HISTORYTMP;print HISTORYTMP "$spacebar${xmlre}\n";
-		print HISTORYTMP "${xmlrb}MonthHostsUnknown ";$PosInFile{"MonthHostsUnknown"}=tell HISTORYTMP;print HISTORYTMP "$spacebar${xmlre}\n";
+		print HISTORYTMP "${xmlbb}BEGIN_GENERAL${xmlbs}8${xmlbe}\n";
+		print HISTORYTMP "${xmlrb}LastLine${xmlrs}".($LastLine>0?$LastLine:$LastTime{$year.$month})." $lastlinenb $lastlineoffset $lastlinechecksum${xmlre}\n";
+		print HISTORYTMP "${xmlrb}FirstTime${xmlrs}$FirstTime{$year.$month}${xmlre}\n";
+		print HISTORYTMP "${xmlrb}LastTime${xmlrs}$LastTime{$year.$month}${xmlre}\n";
+		print HISTORYTMP "${xmlrb}LastUpdate${xmlrs}$LastUpdate $NbOfLinesParsed $NbOfOldLines $NbOfNewLines $NbOfLinesCorrupted $NbOfLinesDropped${xmlre}\n";
+		print HISTORYTMP "${xmlrb}TotalVisits${xmlrs}";$PosInFile{"TotalVisits"}=tell HISTORYTMP;print HISTORYTMP "$spacebar${xmlre}\n";
+		print HISTORYTMP "${xmlrb}TotalUnique${xmlrs}";$PosInFile{"TotalUnique"}=tell HISTORYTMP;print HISTORYTMP "$spacebar${xmlre}\n";
+		print HISTORYTMP "${xmlrb}MonthHostsKnown${xmlrs}";$PosInFile{"MonthHostsKnown"}=tell HISTORYTMP;print HISTORYTMP "$spacebar${xmlre}\n";
+		print HISTORYTMP "${xmlrb}MonthHostsUnknown${xmlrs}";$PosInFile{"MonthHostsUnknown"}=tell HISTORYTMP;print HISTORYTMP "$spacebar${xmlre}\n";
 		print HISTORYTMP "${xmleb}".(${xmleb}?"\n":"")."END_GENERAL${xmlee}\n";	# END_GENERAL on a new line following xml tag because END_ detection does not work like other sections
 	}
 
@@ -3383,8 +3388,8 @@ sub Save_History {
 		if ($xml) { print HISTORYTMP "<section id='$sectiontosave'><comment>\n"; }
 		print HISTORYTMP "# Hour - Pages - Hits - Bandwidth - Not viewed Pages - Not viewed Hits - Not viewed Bandwidth\n";
 		$ValueInFile{$sectiontosave}=tell HISTORYTMP;
-		print HISTORYTMP "${xmlbb}BEGIN_TIME ${xmlbs}24${xmlbe}\n";
-		for (my $ix=0; $ix<=23; $ix++) { print HISTORYTMP "${xmlrb}$ix ".int($_time_p[$ix])." ".int($_time_h[$ix])." ".int($_time_k[$ix])." ".int($_time_nv_p[$ix])." ".int($_time_nv_h[$ix])." ".int($_time_nv_k[$ix])."${xmlre}\n"; }
+		print HISTORYTMP "${xmlbb}BEGIN_TIME${xmlbs}24${xmlbe}\n";
+		for (my $ix=0; $ix<=23; $ix++) { print HISTORYTMP "${xmlrb}$ix${xmlrs}".int($_time_p[$ix])."${xmlrs}".int($_time_h[$ix])."${xmlrs}".int($_time_k[$ix])."${xmlrs}".int($_time_nv_p[$ix])."${xmlrs}".int($_time_nv_h[$ix])."${xmlrs}".int($_time_nv_k[$ix])."${xmlre}\n"; }
 		print HISTORYTMP "${xmleb}END_TIME${xmlee}\n";
 	}
 	if ($sectiontosave eq 'day') {	# This section must be saved after VISITOR section is read
@@ -3392,7 +3397,7 @@ sub Save_History {
 		if ($xml) { print HISTORYTMP "<section id='$sectiontosave'><comment>\n"; }
 		print HISTORYTMP "# Date - Pages - Hits - Bandwidth - Visits\n";
 		$ValueInFile{$sectiontosave}=tell HISTORYTMP;
-		print HISTORYTMP "${xmlbb}BEGIN_DAY ${xmlbs}".(scalar keys %DayHits)."${xmlbe}\n";
+		print HISTORYTMP "${xmlbb}BEGIN_DAY${xmlbs}".(scalar keys %DayHits)."${xmlbe}\n";
 		my $monthvisits=0;
 		foreach (sort keys %DayHits) {
 			if ($_ =~ /^$year$month/i) {	# Found a day entry of the good month
@@ -3400,7 +3405,7 @@ sub Save_History {
 				my $hits=$DayHits{$_}||0;
 				my $bytes=$DayBytes{$_}||0;
 				my $visits=$DayVisits{$_}||0;
-				print HISTORYTMP "${xmlrb}$_ $page $hits $bytes $visits${xmlre}\n";
+				print HISTORYTMP "${xmlrb}$_${xmlrs}$page${xmlrs}$hits${xmlrs}$bytes${xmlrs}$visits${xmlre}\n";
 				$monthvisits+=$visits;
 			}
 		}
@@ -3415,7 +3420,7 @@ sub Save_History {
 		print HISTORYTMP "# Domain - Pages - Hits - Bandwidth\n";
 		print HISTORYTMP "# The $MaxNbOf{'Domain'} first Pages must be first (order not required for others)\n";
 		$ValueInFile{$sectiontosave}=tell HISTORYTMP;
-		print HISTORYTMP "${xmlbb}BEGIN_DOMAIN ${xmlbs}".(scalar keys %_domener_h)."${xmlbe}\n";
+		print HISTORYTMP "${xmlbb}BEGIN_DOMAIN${xmlbs}".(scalar keys %_domener_h)."${xmlbe}\n";
 		# We save page list in score sorted order to get a -output faster and with less use of memory.
 		&BuildKeyList($MaxNbOf{'Domain'},$MinHit{'Domain'},\%_domener_h,\%_domener_p);
 		my %keysinkeylist=();
@@ -3423,13 +3428,13 @@ sub Save_History {
 			$keysinkeylist{$_}=1;
 			my $page=$_domener_p{$_}||0;
 			my $bytes=$_domener_k{$_}||0;		# ||0 could be commented to reduce history file size
-			print HISTORYTMP "${xmlrb}$_ $page $_domener_h{$_} $bytes${xmlre}\n";
+			print HISTORYTMP "${xmlrb}$_${xmlrs}$page${xmlrs}$_domener_h{$_}${xmlrs}$bytes${xmlre}\n";
 		}
 		foreach (keys %_domener_h) {
 			if ($keysinkeylist{$_}) { next; }
 			my $page=$_domener_p{$_}||0;
 			my $bytes=$_domener_k{$_}||0;		# ||0 could be commented to reduce history file size
-			print HISTORYTMP "${xmlrb}$_ $page $_domener_h{$_} $bytes${xmlre}\n";
+			print HISTORYTMP "${xmlrb}$_${xmlrs}$page${xmlrs}$_domener_h{$_}${xmlrs}$bytes${xmlre}\n";
 		}
 		print HISTORYTMP "${xmleb}END_DOMAIN${xmlee}\n";
 	}
@@ -3440,7 +3445,7 @@ sub Save_History {
 		print HISTORYTMP "# [Start date of last visit] and [Last page of last visit] are saved only if session is not finished\n";
 		print HISTORYTMP "# The $MaxNbOf{'HostsShown'} first Hits must be first (order not required for others)\n";
 		$ValueInFile{$sectiontosave}=tell HISTORYTMP;
-		print HISTORYTMP "${xmlbb}BEGIN_VISITOR ${xmlbs}".(scalar keys %_host_h)."${xmlbe}\n";
+		print HISTORYTMP "${xmlbb}BEGIN_VISITOR${xmlbs}".(scalar keys %_host_h)."${xmlbe}\n";
 		my $monthhostsknown=0;
 		# We save page list in score sorted order to get a -output faster and with less use of memory.
 		&BuildKeyList($MaxNbOf{'HostsShown'},$MinHit{'Host'},\%_host_h,\%_host_p);
@@ -3460,16 +3465,16 @@ sub Save_History {
 					if ($lastpage) { $_url_x{$lastpage}++; }
 					delete $_host_s{$key};
 					delete $_host_u{$key};
-					print HISTORYTMP "${xmlrb}$key $page $_host_h{$key} $bytes $timehostl${xmlre}\n";
+					print HISTORYTMP "${xmlrb}$key${xmlrs}$page${xmlrs}$_host_h{$key}${xmlrs}$bytes${xmlrs}$timehostl${xmlre}\n";
 				}
 				else {
 					# If this user has started a new session that is not expired
-					print HISTORYTMP "${xmlrb}$key $page $_host_h{$key} $bytes $timehostl $timehosts $lastpage${xmlre}\n";
+					print HISTORYTMP "${xmlrb}$key${xmlrs}$page${xmlrs}$_host_h{$key}${xmlrs}$bytes${xmlrs}$timehostl${xmlrs}$timehosts${xmlrs}$lastpage${xmlre}\n";
 				}
 			}
 			else {
 				my $hostl=$timehostl||'';
-				print HISTORYTMP "${xmlrb}$key $page $_host_h{$key} $bytes $hostl${xmlre}\n";
+				print HISTORYTMP "${xmlrb}$key${xmlrs}$page${xmlrs}$_host_h{$key}${xmlrs}$bytes${xmlrs}$hostl${xmlre}\n";
 			}
 		}
 		foreach my $key (keys %_host_h) {
@@ -3487,16 +3492,16 @@ sub Save_History {
 					if ($lastpage) { $_url_x{$lastpage}++; }
 					delete $_host_s{$key};
 					delete $_host_u{$key};
-					print HISTORYTMP "${xmlrb}$key $page $_host_h{$key} $bytes $timehostl${xmlre}\n";
+					print HISTORYTMP "${xmlrb}$key${xmlrs}$page${xmlrs}$_host_h{$key}${xmlrs}$bytes${xmlrs}$timehostl${xmlre}\n";
 				}
 				else {
 					# If this user has started a new session that is not expired
-					print HISTORYTMP "${xmlrb}$key $page $_host_h{$key} $bytes $timehostl $timehosts $lastpage${xmlre}\n";
+					print HISTORYTMP "${xmlrb}$key${xmlrs}$page${xmlrs}$_host_h{$key}${xmlrs}$bytes${xmlrs}$timehostl${xmlrs}$timehosts${xmlrs}$lastpage${xmlre}\n";
 				}
 			}
 			else {
 				my $hostl=$timehostl||'';
-				print HISTORYTMP "${xmlrb}$key $page $_host_h{$key} $bytes $hostl${xmlre}\n";
+				print HISTORYTMP "${xmlrb}$key${xmlrs}$page${xmlrs}$_host_h{$key}${xmlrs}$bytes${xmlrs}$hostl${xmlre}\n";
 			}
 		}
 		$MonthUnique{$year.$month}=(scalar keys %_host_p);
@@ -3510,17 +3515,17 @@ sub Save_History {
 		print HISTORYTMP "# Login - Pages - Hits - Bandwidth - Last visit\n";
 		print HISTORYTMP "# The $MaxNbOf{'LoginShown'} first Pages must be first (order not required for others)\n";
 		$ValueInFile{$sectiontosave}=tell HISTORYTMP;
-		print HISTORYTMP "${xmlbb}BEGIN_LOGIN ${xmlbs}".(scalar keys %_login_h)."${xmlbe}\n";
+		print HISTORYTMP "${xmlbb}BEGIN_LOGIN${xmlbs}".(scalar keys %_login_h)."${xmlbe}\n";
 		# We save login list in score sorted order to get a -output faster and with less use of memory.
 		&BuildKeyList($MaxNbOf{'LoginShown'},$MinHit{'Login'},\%_login_h,\%_login_p);
 		my %keysinkeylist=();
 		foreach (@keylist) {
 			$keysinkeylist{$_}=1;
-			print HISTORYTMP "${xmlrb}$_ ".int($_login_p{$_}||0)." ".int($_login_h{$_}||0)." ".int($_login_k{$_}||0)." ".($_login_l{$_}||'')."${xmlre}\n";
+			print HISTORYTMP "${xmlrb}$_${xmlrs}".int($_login_p{$_}||0)."${xmlrs}".int($_login_h{$_}||0)."${xmlrs}".int($_login_k{$_}||0)."${xmlrs}".($_login_l{$_}||'')."${xmlre}\n";
 		}
 		foreach (keys %_login_h) {
 			if ($keysinkeylist{$_}) { next; }
-			print HISTORYTMP "${xmlrb}$_ ".int($_login_p{$_}||0)." ".int($_login_h{$_}||0)." ".int($_login_k{$_}||0)." ".($_login_l{$_}||'')."${xmlre}\n";
+			print HISTORYTMP "${xmlrb}$_${xmlrs}".int($_login_p{$_}||0)."${xmlrs}".int($_login_h{$_}||0)."${xmlrs}".int($_login_k{$_}||0)."${xmlrs}".($_login_l{$_}||'')."${xmlre}\n";
 		}
 		print HISTORYTMP "${xmleb}END_LOGIN${xmlee}\n";
 	}
@@ -3530,17 +3535,17 @@ sub Save_History {
 		print HISTORYTMP "# Robot ID - Hits - Bandwidth - Last visit - Hits on robots.txt\n";
 		print HISTORYTMP "# The $MaxNbOf{'RobotShown'} first Hits must be first (order not required for others)\n";
 		$ValueInFile{$sectiontosave}=tell HISTORYTMP;
-		print HISTORYTMP "${xmlbb}BEGIN_ROBOT ${xmlbs}".(scalar keys %_robot_h)."${xmlbe}\n";
+		print HISTORYTMP "${xmlbb}BEGIN_ROBOT${xmlbs}".(scalar keys %_robot_h)."${xmlbe}\n";
 		# We save robot list in score sorted order to get a -output faster and with less use of memory.
 		&BuildKeyList($MaxNbOf{'RobotShown'},$MinHit{'Robot'},\%_robot_h,\%_robot_h);
 		my %keysinkeylist=();
 		foreach (@keylist) {
 			$keysinkeylist{$_}=1;
-			print HISTORYTMP "${xmlrb}$_ ".int($_robot_h{$_})." ".int($_robot_k{$_})." $_robot_l{$_} ".int($_robot_r{$_})."${xmlre}\n";
+			print HISTORYTMP "${xmlrb}$_${xmlrs}".int($_robot_h{$_})."${xmlrs}".int($_robot_k{$_})."${xmlrs}$_robot_l{$_}${xmlrs}".int($_robot_r{$_})."${xmlre}\n";
 		}
 		foreach (keys %_robot_h) {
 			if ($keysinkeylist{$_}) { next; }
-			print HISTORYTMP "${xmlrb}$_ ".int($_robot_h{$_})." ".int($_robot_k{$_})." $_robot_l{$_} ".int($_robot_r{$_})."${xmlre}\n";
+			print HISTORYTMP "${xmlrb}$_${xmlrs}".int($_robot_h{$_})."${xmlrs}".int($_robot_k{$_})."${xmlrs}$_robot_l{$_}${xmlrs}".int($_robot_r{$_})."${xmlre}\n";
 		}
 		print HISTORYTMP "${xmleb}END_ROBOT${xmlee}\n";
 	}
@@ -3550,17 +3555,17 @@ sub Save_History {
 		print HISTORYTMP "# Worm ID - Hits - Bandwidth - Last visit\n";
 		print HISTORYTMP "# The $MaxNbOf{'WormsShown'} first Hits must be first (order not required for others)\n";
 		$ValueInFile{$sectiontosave}=tell HISTORYTMP;
-		print HISTORYTMP "${xmlbb}BEGIN_WORMS ${xmlbs}".(scalar keys %_worm_h)."${xmlbe}\n";
+		print HISTORYTMP "${xmlbb}BEGIN_WORMS${xmlbs}".(scalar keys %_worm_h)."${xmlbe}\n";
 		# We save worm list in score sorted order to get a -output faster and with less use of memory.
 		&BuildKeyList($MaxNbOf{'WormsShown'},$MinHit{'Worm'},\%_worm_h,\%_worm_h);
 		my %keysinkeylist=();
 		foreach (@keylist) {
 			$keysinkeylist{$_}=1;
-			print HISTORYTMP "${xmlrb}$_ ".int($_worm_h{$_})." ".int($_worm_k{$_})." $_worm_l{$_}${xmlre}\n";
+			print HISTORYTMP "${xmlrb}$_${xmlrs}".int($_worm_h{$_})."${xmlrs}".int($_worm_k{$_})."${xmlrs}$_worm_l{$_}${xmlre}\n";
 		}
 		foreach (keys %_worm_h) {
 			if ($keysinkeylist{$_}) { next; }
-			print HISTORYTMP "${xmlrb}$_ ".int($_worm_h{$_})." ".int($_worm_k{$_})." $_worm_l{$_}${xmlre}\n";
+			print HISTORYTMP "${xmlrb}$_${xmlrs}".int($_worm_h{$_})."${xmlrs}".int($_worm_k{$_})."${xmlrs}$_worm_l{$_}${xmlre}\n";
 		}
 		print HISTORYTMP "${xmleb}END_WORMS${xmlee}\n";
 	}
@@ -3570,17 +3575,17 @@ sub Save_History {
 		print HISTORYTMP "# EMail - Hits - Bandwidth - Last visit\n";
 		print HISTORYTMP "# The $MaxNbOf{'EMailsShown'} first Hits must be first (order not required for others)\n";
 		$ValueInFile{$sectiontosave}=tell HISTORYTMP;
-		print HISTORYTMP "${xmlbb}BEGIN_EMAILSENDER ${xmlbs}".(scalar keys %_emails_h)."${xmlbe}\n";
+		print HISTORYTMP "${xmlbb}BEGIN_EMAILSENDER${xmlbs}".(scalar keys %_emails_h)."${xmlbe}\n";
 		# We save sender email list in score sorted order to get a -output faster and with less use of memory.
 		&BuildKeyList($MaxNbOf{'EMailsShown'},$MinHit{'EMail'},\%_emails_h,\%_emails_h);
 		my %keysinkeylist=();
 		foreach (@keylist) {
 			$keysinkeylist{$_}=1;
-			print HISTORYTMP "${xmlrb}$_ ".int($_emails_h{$_}||0)." ".int($_emails_k{$_}||0)." $_emails_l{$_}${xmlre}\n";
+			print HISTORYTMP "${xmlrb}$_${xmlrs}".int($_emails_h{$_}||0)."${xmlrs}".int($_emails_k{$_}||0)."${xmlrs}$_emails_l{$_}${xmlre}\n";
 		}
 		foreach (keys %_emails_h) {
 			if ($keysinkeylist{$_}) { next; }
-			print HISTORYTMP "${xmlrb}$_ ".int($_emails_h{$_}||0)." ".int($_emails_k{$_}||0)." $_emails_l{$_}${xmlre}\n";
+			print HISTORYTMP "${xmlrb}$_${xmlrs}".int($_emails_h{$_}||0)."${xmlrs}".int($_emails_k{$_}||0)."${xmlrs}$_emails_l{$_}${xmlre}\n";
 		}
 		print HISTORYTMP "${xmleb}END_EMAILSENDER${xmlee}\n";
 	}
@@ -3590,17 +3595,17 @@ sub Save_History {
 		print HISTORYTMP "# EMail - Hits - Bandwidth - Last visit\n";
 		print HISTORYTMP "# The $MaxNbOf{'EMailsShown'} first hits must be first (order not required for others)\n";
 		$ValueInFile{$sectiontosave}=tell HISTORYTMP;
-		print HISTORYTMP "${xmlbb}BEGIN_EMAILRECEIVER ${xmlbs}".(scalar keys %_emailr_h)."${xmlbe}\n";
+		print HISTORYTMP "${xmlbb}BEGIN_EMAILRECEIVER${xmlbs}".(scalar keys %_emailr_h)."${xmlbe}\n";
 		# We save receiver email list in score sorted order to get a -output faster and with less use of memory.
 		&BuildKeyList($MaxNbOf{'EMailsShown'},$MinHit{'EMail'},\%_emailr_h,\%_emailr_h);
 		my %keysinkeylist=();
 		foreach (@keylist) {
 			$keysinkeylist{$_}=1;
-			print HISTORYTMP "${xmlrb}$_ ".int($_emailr_h{$_}||0)." ".int($_emailr_k{$_}||0)." $_emailr_l{$_}${xmlre}\n";
+			print HISTORYTMP "${xmlrb}$_${xmlrs}".int($_emailr_h{$_}||0)."${xmlrs}".int($_emailr_k{$_}||0)."${xmlrs}$_emailr_l{$_}${xmlre}\n";
 		}
 		foreach (keys %_emailr_h) {
 			if ($keysinkeylist{$_}) { next; }
-			print HISTORYTMP "${xmlrb}$_ ".int($_emailr_h{$_}||0)." ".int($_emailr_k{$_}||0)." $_emailr_l{$_}${xmlre}\n";
+			print HISTORYTMP "${xmlrb}$_${xmlrs}".int($_emailr_h{$_}||0)."${xmlrs}".int($_emailr_k{$_}||0)."${xmlrs}$_emailr_l{$_}${xmlre}\n";
 		}
 		print HISTORYTMP "${xmleb}END_EMAILRECEIVER${xmlee}\n";
 	}
@@ -3611,8 +3616,8 @@ sub Save_History {
 		if ($xml) { print HISTORYTMP "<section id='$sectiontosave'><comment>\n"; }
 		print HISTORYTMP "# Session range - Number of visits\n";
 		$ValueInFile{$sectiontosave}=tell HISTORYTMP;
-		print HISTORYTMP "${xmlbb}BEGIN_SESSION ${xmlbs}".(scalar keys %_session)."${xmlbe}\n";
-		foreach (keys %_session) { print HISTORYTMP "${xmlrb}$_ ".int($_session{$_})."${xmlre}\n"; }
+		print HISTORYTMP "${xmlbb}BEGIN_SESSION${xmlbs}".(scalar keys %_session)."${xmlbe}\n";
+		foreach (keys %_session) { print HISTORYTMP "${xmlrb}$_${xmlrs}".int($_session{$_})."${xmlre}\n"; }
 		print HISTORYTMP "${xmleb}END_SESSION${xmlee}\n";
 	}
 	if ($sectiontosave eq 'sider') {	# This section must be saved after VISITOR section is read
@@ -3621,7 +3626,7 @@ sub Save_History {
 		print HISTORYTMP "# URL - Pages - Bandwidth - Entry - Exit\n";
 		print HISTORYTMP "# The $MaxNbOf{'PageShown'} first Pages must be first (order not required for others)\n";
 		$ValueInFile{$sectiontosave}=tell HISTORYTMP;
-		print HISTORYTMP "${xmlbb}BEGIN_SIDER ${xmlbs}".(scalar keys %_url_p)."${xmlbe}\n";
+		print HISTORYTMP "${xmlbb}BEGIN_SIDER${xmlbs}".(scalar keys %_url_p)."${xmlbe}\n";
 		# We save page list in score sorted order to get a -output faster and with less use of memory.
 		&BuildKeyList($MaxNbOf{'PageShown'},$MinHit{'File'},\%_url_p,\%_url_p);
 		%keysinkeylist=();
@@ -3629,13 +3634,13 @@ sub Save_History {
 			$keysinkeylist{$_}=1;
 			my $newkey=$_;
 			$newkey =~ s/([^:])\/\//$1\//g;		# Because some targeted url were taped with 2 / (Ex: //rep//file.htm). We must keep http://rep/file.htm
-			print HISTORYTMP "${xmlrb}$newkey ".int($_url_p{$_}||0)." ".int($_url_k{$_}||0)." ".int($_url_e{$_}||0)." ".int($_url_x{$_}||0)."${xmlre}\n";
+			print HISTORYTMP "${xmlrb}$newkey${xmlrs}".int($_url_p{$_}||0)."${xmlrs}".int($_url_k{$_}||0)."${xmlrs}".int($_url_e{$_}||0)."${xmlrs}".int($_url_x{$_}||0)."${xmlre}\n";
 		}
 		foreach (keys %_url_p) {
 			if ($keysinkeylist{$_}) { next; }
 			my $newkey=$_;
 			$newkey =~ s/([^:])\/\//$1\//g;		# Because some targeted url were taped with 2 / (Ex: //rep//file.htm). We must keep http://rep/file.htm
-			print HISTORYTMP "${xmlrb}$newkey ".int($_url_p{$_}||0)." ".int($_url_k{$_}||0)." ".int($_url_e{$_}||0)." ".int($_url_x{$_}||0)."${xmlre}\n";
+			print HISTORYTMP "${xmlrb}$newkey ".int($_url_p{$_}||0)."${xmlrs}".int($_url_k{$_}||0)."${xmlrs}".int($_url_e{$_}||0)."${xmlrs}".int($_url_x{$_}||0)."${xmlre}\n";
 		}
 		print HISTORYTMP "${xmleb}END_SIDER${xmlee}\n";
 	}
@@ -3644,13 +3649,13 @@ sub Save_History {
 		if ($xml) { print HISTORYTMP "<section id='$sectiontosave'><comment>\n"; }
 		print HISTORYTMP "# Files type - Hits - Bandwidth - Bandwidth without compression - Bandwidth after compression\n";
 		$ValueInFile{$sectiontosave}=tell HISTORYTMP;
-		print HISTORYTMP "${xmlbb}BEGIN_FILETYPES ${xmlbs}".(scalar keys %_filetypes_h)."${xmlbe}\n";
+		print HISTORYTMP "${xmlbb}BEGIN_FILETYPES${xmlbs}".(scalar keys %_filetypes_h)."${xmlbe}\n";
 		foreach (keys %_filetypes_h) {
 			my $hits=$_filetypes_h{$_}||0;
 			my $bytes=$_filetypes_k{$_}||0;
 			my $bytesbefore=$_filetypes_gz_in{$_}||0;
 			my $bytesafter=$_filetypes_gz_out{$_}||0;
-			print HISTORYTMP "${xmlrb}$_ $hits $bytes $bytesbefore $bytesafter${xmlre}\n";
+			print HISTORYTMP "${xmlrb}$_${xmlrs}$hits${xmlrs}$bytes${xmlrs}$bytesbefore${xmlrs}$bytesafter${xmlre}\n";
 		}
 		print HISTORYTMP "${xmleb}END_FILETYPES${xmlee}\n";
 	}
@@ -3659,8 +3664,8 @@ sub Save_History {
 		if ($xml) { print HISTORYTMP "<section id='$sectiontosave'><comment>\n"; }
 		print HISTORYTMP "# OS ID - Hits\n";
 		$ValueInFile{$sectiontosave}=tell HISTORYTMP;
-		print HISTORYTMP "${xmlbb}BEGIN_OS ${xmlbs}".(scalar keys %_os_h)."${xmlbe}\n";
-		foreach (keys %_os_h) { print HISTORYTMP "${xmlrb}$_ $_os_h{$_}${xmlre}\n"; }
+		print HISTORYTMP "${xmlbb}BEGIN_OS${xmlbs}".(scalar keys %_os_h)."${xmlbe}\n";
+		foreach (keys %_os_h) { print HISTORYTMP "${xmlrb}$_${xmlrs}$_os_h{$_}${xmlre}\n"; }
 		print HISTORYTMP "${xmleb}END_OS${xmlee}\n";
 	}
 	if ($sectiontosave eq 'browser') {
@@ -3668,8 +3673,8 @@ sub Save_History {
 		if ($xml) { print HISTORYTMP "<section id='$sectiontosave'><comment>\n"; }
 		print HISTORYTMP "# Browser ID - Hits\n";
 		$ValueInFile{$sectiontosave}=tell HISTORYTMP;
-		print HISTORYTMP "${xmlbb}BEGIN_BROWSER ${xmlbs}".(scalar keys %_browser_h)."${xmlbe}\n";
-		foreach (keys %_browser_h) { print HISTORYTMP "${xmlrb}$_ $_browser_h{$_}${xmlre}\n"; }
+		print HISTORYTMP "${xmlbb}BEGIN_BROWSER${xmlbs}".(scalar keys %_browser_h)."${xmlbe}\n";
+		foreach (keys %_browser_h) { print HISTORYTMP "${xmlrb}$_${xmlrs}$_browser_h{$_}${xmlre}\n"; }
 		print HISTORYTMP "${xmleb}END_BROWSER${xmlee}\n";
 	}
 	if ($sectiontosave eq 'screensize') {
@@ -3677,8 +3682,8 @@ sub Save_History {
 		if ($xml) { print HISTORYTMP "<section id='$sectiontosave'><comment>\n"; }
 		print HISTORYTMP "# Screen size - Hits\n";
 		$ValueInFile{$sectiontosave}=tell HISTORYTMP;
-		print HISTORYTMP "${xmlbb}BEGIN_SCREENSIZE ${xmlbs}".(scalar keys %_screensize_h)."${xmlbe}\n";
-		foreach (keys %_screensize_h) { print HISTORYTMP "${xmlrb}$_ $_screensize_h{$_}${xmlre}\n"; }
+		print HISTORYTMP "${xmlbb}BEGIN_SCREENSIZE${xmlbs}".(scalar keys %_screensize_h)."${xmlbe}\n";
+		foreach (keys %_screensize_h) { print HISTORYTMP "${xmlrb}$_${xmlrs}$_screensize_h{$_}${xmlre}\n"; }
 		print HISTORYTMP "${xmleb}END_SCREENSIZE${xmlee}\n";
 	}
 
@@ -3688,8 +3693,8 @@ sub Save_History {
 		if ($xml) { print HISTORYTMP "<section id='$sectiontosave'><comment>\n"; }
 		print HISTORYTMP "# Unknown referer OS - Last visit date\n";
 		$ValueInFile{$sectiontosave}=tell HISTORYTMP;
-		print HISTORYTMP "${xmlbb}BEGIN_UNKNOWNREFERER ${xmlbs}".(scalar keys %_unknownreferer_l)."${xmlbe}\n";
-		foreach (keys %_unknownreferer_l) { print HISTORYTMP "${xmlrb}$_ $_unknownreferer_l{$_}${xmlre}\n"; }
+		print HISTORYTMP "${xmlbb}BEGIN_UNKNOWNREFERER${xmlbs}".(scalar keys %_unknownreferer_l)."${xmlbe}\n";
+		foreach (keys %_unknownreferer_l) { print HISTORYTMP "${xmlrb}$_${xmlrs}$_unknownreferer_l{$_}${xmlre}\n"; }
 		print HISTORYTMP "${xmleb}END_UNKNOWNREFERER${xmlee}\n";
 	}
 	if ($sectiontosave eq 'unknownrefererbrowser') {
@@ -3697,8 +3702,8 @@ sub Save_History {
 		if ($xml) { print HISTORYTMP "<section id='$sectiontosave'><comment>\n"; }
 		print HISTORYTMP "# Unknown referer Browser - Last visit date\n";
 		$ValueInFile{$sectiontosave}=tell HISTORYTMP;
-		print HISTORYTMP "${xmlbb}BEGIN_UNKNOWNREFERERBROWSER ${xmlbs}".(scalar keys %_unknownrefererbrowser_l)."${xmlbe}\n";
-		foreach (keys %_unknownrefererbrowser_l) { print HISTORYTMP "${xmlrb}$_ $_unknownrefererbrowser_l{$_}${xmlre}\n"; }
+		print HISTORYTMP "${xmlbb}BEGIN_UNKNOWNREFERERBROWSER${xmlbs}".(scalar keys %_unknownrefererbrowser_l)."${xmlbe}\n";
+		foreach (keys %_unknownrefererbrowser_l) { print HISTORYTMP "${xmlrb}$_${xmlrs}$_unknownrefererbrowser_l{$_}${xmlre}\n"; }
 		print HISTORYTMP "${xmleb}END_UNKNOWNREFERERBROWSER${xmlee}\n";
 	}
 	if ($sectiontosave eq 'origin') {
@@ -3706,13 +3711,13 @@ sub Save_History {
 		if ($xml) { print HISTORYTMP "<section id='$sectiontosave'><comment>\n"; }
 		print HISTORYTMP "# Origin - Pages - Hits \n";
 		$ValueInFile{$sectiontosave}=tell HISTORYTMP;
-		print HISTORYTMP "${xmlbb}BEGIN_ORIGIN ${xmlbs}6"."${xmlbe}\n";
-		print HISTORYTMP "${xmlrb}From0 ".int($_from_p[0])." ".int($_from_h[0])."${xmlre}\n";
-		print HISTORYTMP "${xmlrb}From1 ".int($_from_p[1])." ".int($_from_h[1])."${xmlre}\n";
-		print HISTORYTMP "${xmlrb}From2 ".int($_from_p[2])." ".int($_from_h[2])."${xmlre}\n";
-		print HISTORYTMP "${xmlrb}From3 ".int($_from_p[3])." ".int($_from_h[3])."${xmlre}\n";
-		print HISTORYTMP "${xmlrb}From4 ".int($_from_p[4])." ".int($_from_h[4])."${xmlre}\n";		# Same site
-		print HISTORYTMP "${xmlrb}From5 ".int($_from_p[5])." ".int($_from_h[5])."${xmlre}\n";		# News
+		print HISTORYTMP "${xmlbb}BEGIN_ORIGIN${xmlbs}6"."${xmlbe}\n";
+		print HISTORYTMP "${xmlrb}From0${xmlrs}".int($_from_p[0])."${xmlrs}".int($_from_h[0])."${xmlre}\n";
+		print HISTORYTMP "${xmlrb}From1${xmlrs}".int($_from_p[1])."${xmlrs}".int($_from_h[1])."${xmlre}\n";
+		print HISTORYTMP "${xmlrb}From2${xmlrs}".int($_from_p[2])."${xmlrs}".int($_from_h[2])."${xmlre}\n";
+		print HISTORYTMP "${xmlrb}From3${xmlrs}".int($_from_p[3])."${xmlrs}".int($_from_h[3])."${xmlre}\n";
+		print HISTORYTMP "${xmlrb}From4${xmlrs}".int($_from_p[4])."${xmlrs}".int($_from_h[4])."${xmlre}\n";		# Same site
+		print HISTORYTMP "${xmlrb}From5${xmlrs}".int($_from_p[5])."${xmlrs}".int($_from_h[5])."${xmlre}\n";		# News
 		print HISTORYTMP "${xmleb}END_ORIGIN${xmlee}\n";
 	}
 	if ($sectiontosave eq 'sereferrals') {
@@ -3720,8 +3725,8 @@ sub Save_History {
 		if ($xml) { print HISTORYTMP "<section id='$sectiontosave'><comment>\n"; }
 		print HISTORYTMP "# Search engine referers ID - Pages - Hits\n";
 		$ValueInFile{$sectiontosave}=tell HISTORYTMP;
-		print HISTORYTMP "${xmlbb}BEGIN_SEREFERRALS ${xmlbs}".(scalar keys %_se_referrals_h)."${xmlbe}\n";
-		foreach (keys %_se_referrals_h) { print HISTORYTMP "${xmlrb}$_ ".int($_se_referrals_p{$_}||0)." $_se_referrals_h{$_}${xmlre}\n"; }
+		print HISTORYTMP "${xmlbb}BEGIN_SEREFERRALS${xmlbs}".(scalar keys %_se_referrals_h)."${xmlbe}\n";
+		foreach (keys %_se_referrals_h) { print HISTORYTMP "${xmlrb}$_${xmlrs}".int($_se_referrals_p{$_}||0)."${xmlrs}$_se_referrals_h{$_}${xmlre}\n"; }
 		print HISTORYTMP "${xmleb}END_SEREFERRALS${xmlee}\n";
 	}
 	if ($sectiontosave eq 'pagerefs') {
@@ -3730,7 +3735,7 @@ sub Save_History {
 		print HISTORYTMP "# External page referers - Pages - Hits\n";
 		print HISTORYTMP "# The $MaxNbOf{'RefererShown'} first Pages must be first (order not required for others)\n";
 		$ValueInFile{$sectiontosave}=tell HISTORYTMP;
-		print HISTORYTMP "${xmlbb}BEGIN_PAGEREFS ${xmlbs}".(scalar keys %_pagesrefs_h)."${xmlbe}\n";
+		print HISTORYTMP "${xmlbb}BEGIN_PAGEREFS${xmlbs}".(scalar keys %_pagesrefs_h)."${xmlbe}\n";
 		# We save page list in score sorted order to get a -output faster and with less use of memory.
 		&BuildKeyList($MaxNbOf{'RefererShown'},$MinHit{'Refer'},\%_pagesrefs_h,\%_pagesrefs_p);
 		%keysinkeylist=();
@@ -3739,14 +3744,14 @@ sub Save_History {
 			my $newkey=$_;
 			$newkey =~ s/^http(s|):\/\/([^\/]+)\/$/http$1:\/\/$2/i;	# Remove / at end of http://.../ but not at end of http://.../dir/
 			$newkey =~ s/\s/%20/g;
-			print HISTORYTMP "${xmlrb}$newkey ".int($_pagesrefs_p{$_}||0)." $_pagesrefs_h{$_}${xmlre}\n";
+			print HISTORYTMP "${xmlrb}$newkey${xmlrs}".int($_pagesrefs_p{$_}||0)."${xmlrs}$_pagesrefs_h{$_}${xmlre}\n";
 		}
 		foreach (keys %_pagesrefs_h) {
 			if ($keysinkeylist{$_}) { next; }
 			my $newkey=$_;
 			$newkey =~ s/^http(s|):\/\/([^\/]+)\/$/http$1:\/\/$2/i;	# Remove / at end of http://.../ but not at end of http://.../dir/
 			$newkey =~ s/\s/%20/g;
-			print HISTORYTMP "${xmlrb}$newkey ".int($_pagesrefs_p{$_}||0)." $_pagesrefs_h{$_}${xmlre}\n";
+			print HISTORYTMP "${xmlrb}$newkey${xmlrs}".int($_pagesrefs_p{$_}||0)."${xmlrs}$_pagesrefs_h{$_}${xmlre}\n";
 		}
 		print HISTORYTMP "${xmleb}END_PAGEREFS${xmlee}\n";
 	}
@@ -3756,7 +3761,7 @@ sub Save_History {
 		print HISTORYTMP "# Search keyphrases - Number of search\n";
 		print HISTORYTMP "# The $MaxNbOf{'KeyphrasesShown'} first number of search must be first (order not required for others)\n";
 		$ValueInFile{$sectiontosave}=tell HISTORYTMP;
-		print HISTORYTMP "${xmlbb}BEGIN_SEARCHWORDS ${xmlbs}".(scalar keys %_keyphrases)."${xmlbe}\n";
+		print HISTORYTMP "${xmlbb}BEGIN_SEARCHWORDS${xmlbs}".(scalar keys %_keyphrases)."${xmlbe}\n";
 		# We will also build _keywords
 		%_keywords=();
 		# We save key list in score sorted order to get a -output faster and with less use of memory.
@@ -3765,13 +3770,13 @@ sub Save_History {
 		foreach my $key (@keylist) {
 			$keysinkeylist{$key}=1;
 			my $keyphrase=$key;
-			print HISTORYTMP "${xmlrb}$keyphrase $_keyphrases{$key}${xmlre}\n";
+			print HISTORYTMP "${xmlrb}$keyphrase${xmlrs}$_keyphrases{$key}${xmlre}\n";
 			foreach (split(/\+/,$key)) { $_keywords{$_}+=$_keyphrases{$key}; }	# To init %_keywords
 		}
 		foreach my $key (keys %_keyphrases) {
 			if ($keysinkeylist{$key}) { next; }
 			my $keyphrase=$key;
-			print HISTORYTMP "${xmlrb}$keyphrase $_keyphrases{$key}${xmlre}\n";
+			print HISTORYTMP "${xmlrb}$keyphrase${xmlrs}$_keyphrases{$key}${xmlre}\n";
 			foreach (split(/\+/,$key)) { $_keywords{$_}+=$_keyphrases{$key}; }	# To init %_keywords
 		}
 		print HISTORYTMP "${xmleb}END_SEARCHWORDS${xmlee}\n";
@@ -3782,19 +3787,19 @@ sub Save_History {
 		print HISTORYTMP "# Search keywords - Number of search\n";
 		print HISTORYTMP "# The $MaxNbOf{'KeywordsShown'} first number of search must be first (order not required for others)\n";
 		$ValueInFile{"keywords"}=tell HISTORYTMP;
-		print HISTORYTMP "${xmlbb}BEGIN_KEYWORDS ${xmlbs}".(scalar keys %_keywords)."${xmlbe}\n";
+		print HISTORYTMP "${xmlbb}BEGIN_KEYWORDS${xmlbs}".(scalar keys %_keywords)."${xmlbe}\n";
 		# We save key list in score sorted order to get a -output faster and with less use of memory.
 		&BuildKeyList($MaxNbOf{'KeywordsShown'},$MinHit{'Keyword'},\%_keywords,\%_keywords);
 		%keysinkeylist=();
 		foreach (@keylist) {
 			$keysinkeylist{$_}=1;
 			my $keyword=$_;
-			print HISTORYTMP "${xmlrb}$keyword $_keywords{$_}${xmlre}\n";
+			print HISTORYTMP "${xmlrb}$keyword${xmlrs}$_keywords{$_}${xmlre}\n";
 		}
 		foreach (keys %_keywords) {
 			if ($keysinkeylist{$_}) { next; }
 			my $keyword=$_;
-			print HISTORYTMP "${xmlrb}$keyword $_keywords{$_}${xmlre}\n";
+			print HISTORYTMP "${xmlrb}$keyword${xmlrs}$_keywords{$_}${xmlre}\n";
 		}
 		print HISTORYTMP "${xmleb}END_KEYWORDS${xmlee}\n";
 
@@ -3806,8 +3811,8 @@ sub Save_History {
 		if ($xml) { print HISTORYTMP "<section id='$sectiontosave'><comment>\n"; }
 		print HISTORYTMP "# Cluster ID - Pages - Hits - Bandwidth\n";
 		$ValueInFile{$sectiontosave}=tell HISTORYTMP;
-		print HISTORYTMP "${xmlbb}BEGIN_CLUSTER ${xmlbs}".(scalar keys %_cluster_h)."${xmlbe}\n";
-		foreach (keys %_cluster_h) { print HISTORYTMP "${xmlrb}$_ ".int($_cluster_p{$_}||0)." ".int($_cluster_h{$_}||0)." ".int($_cluster_k{$_}||0)."${xmlre}\n"; }
+		print HISTORYTMP "${xmlbb}BEGIN_CLUSTER${xmlbs}".(scalar keys %_cluster_h)."${xmlbe}\n";
+		foreach (keys %_cluster_h) { print HISTORYTMP "${xmlrb}$_${xmlrs}".int($_cluster_p{$_}||0)."${xmlrs}".int($_cluster_h{$_}||0)."${xmlrs}".int($_cluster_k{$_}||0)."${xmlre}\n"; }
 		print HISTORYTMP "${xmleb}END_CLUSTER${xmlee}\n";
 	}
 	if ($sectiontosave eq 'misc') {
@@ -3815,8 +3820,8 @@ sub Save_History {
 		if ($xml) { print HISTORYTMP "<section id='$sectiontosave'><comment>\n"; }
 		print HISTORYTMP "# Misc ID - Pages - Hits - Bandwidth\n";
 		$ValueInFile{$sectiontosave}=tell HISTORYTMP;
-		print HISTORYTMP "${xmlbb}BEGIN_MISC ${xmlbs}".(scalar keys %MiscListCalc)."${xmlbe}\n";
-		foreach (keys %MiscListCalc) { print HISTORYTMP "${xmlrb}$_ ".int($_misc_p{$_}||0)." ".int($_misc_h{$_}||0)." ".int($_misc_k{$_}||0)."${xmlre}\n"; }
+		print HISTORYTMP "${xmlbb}BEGIN_MISC${xmlbs}".(scalar keys %MiscListCalc)."${xmlbe}\n";
+		foreach (keys %MiscListCalc) { print HISTORYTMP "${xmlrb}$_${xmlrs}".int($_misc_p{$_}||0)."${xmlrs}".int($_misc_h{$_}||0)."${xmlrs}".int($_misc_k{$_}||0)."${xmlre}\n"; }
 		print HISTORYTMP "${xmleb}END_MISC${xmlee}\n";
 	}
 	if ($sectiontosave eq 'errors') {
@@ -3824,8 +3829,8 @@ sub Save_History {
 		if ($xml) { print HISTORYTMP "<section id='$sectiontosave'><comment>\n"; }
 		print HISTORYTMP "# Errors - Hits - Bandwidth\n";
 		$ValueInFile{$sectiontosave}=tell HISTORYTMP;
-		print HISTORYTMP "${xmlbb}BEGIN_ERRORS ${xmlbs}".(scalar keys %_errors_h)."${xmlbe}\n";
-		foreach (keys %_errors_h) { print HISTORYTMP "${xmlrb}$_ $_errors_h{$_} ".int($_errors_k{$_}||0)."${xmlre}\n"; }
+		print HISTORYTMP "${xmlbb}BEGIN_ERRORS${xmlbs}".(scalar keys %_errors_h)."${xmlbe}\n";
+		foreach (keys %_errors_h) { print HISTORYTMP "${xmlrb}$_${xmlrs}$_errors_h{$_}${xmlrs}".int($_errors_k{$_}||0)."${xmlre}\n"; }
 		print HISTORYTMP "${xmleb}END_ERRORS${xmlee}\n";
 	}
  	# Other - Trapped errors
@@ -3835,11 +3840,11 @@ sub Save_History {
 			if ($xml) { print HISTORYTMP "<section id='$sectiontosave'><comment>\n"; }
 			print HISTORYTMP "# URL with $code errors - Hits - Last URL referer\n";
 			$ValueInFile{$sectiontosave}=tell HISTORYTMP;
-			print HISTORYTMP "${xmlbb}BEGIN_SIDER_$code ${xmlbs}".(scalar keys %_sider404_h)."${xmlbe}\n";
+			print HISTORYTMP "${xmlbb}BEGIN_SIDER_$code${xmlbs}".(scalar keys %_sider404_h)."${xmlbe}\n";
 			foreach (keys %_sider404_h) {
 				my $newkey=$_;
 				my $newreferer=$_referer404_h{$_}||''; $newreferer =~ s/\s/%20/g;
-				print HISTORYTMP "${xmlrb}$newkey $_sider404_h{$_} $newreferer${xmlre}\n";
+				print HISTORYTMP "${xmlrb}$newkey${xmlrs}$_sider404_h{$_}${xmlrs}$newreferer${xmlre}\n";
 			}
 			print HISTORYTMP "${xmleb}END_SIDER_$code${xmlee}\n";
 		}
@@ -3852,7 +3857,7 @@ sub Save_History {
 			print HISTORYTMP "# Extra key - Pages - Hits - Bandwidth - Last access\n";
 			print HISTORYTMP "# The $MaxNbOfExtra[$extranum] first number of hits are first\n";
 			$ValueInFile{$sectiontosave}=tell HISTORYTMP;
-	 		print HISTORYTMP "${xmlbb}BEGIN_EXTRA_$extranum ${xmlbs}".scalar (keys %{'_section_' . $extranum . '_h'})."${xmlbe}\n";
+	 		print HISTORYTMP "${xmlbb}BEGIN_EXTRA_$extranum${xmlbs}".scalar (keys %{'_section_' . $extranum . '_h'})."${xmlbe}\n";
 	 		&BuildKeyList($MaxNbOfExtra[$extranum],$MinHitExtra[$extranum],\%{'_section_' . $extranum . '_h'},\%{'_section_' . $extranum . '_p'});
 	 		%keysinkeylist=();
 	 		foreach (@keylist) {
@@ -3860,14 +3865,14 @@ sub Save_History {
 	 			my $page=${'_section_' . $extranum . '_p'}{$_}||0;
 	 			my $bytes=${'_section_' . $extranum . '_k'}{$_}||0;
 	 			my $lastaccess=${'_section_' . $extranum . '_l'}{$_}||'';
-	 			print HISTORYTMP "${xmlrb}$_ $page ", ${'_section_' . $extranum . '_h'}{$_}, " $bytes $lastaccess${xmlre}\n"; next;
+	 			print HISTORYTMP "${xmlrb}$_${xmlrs}$page${xmlrs}", ${'_section_' . $extranum . '_h'}{$_}, "${xmlrs}$bytes${xmlrs}$lastaccess${xmlre}\n"; next;
 	 		}
 	 		foreach (keys %{'_section_' . $extranum . '_h'}) {
 	 			if ($keysinkeylist{$_}) { next; }
 	 			my $page=${'_section_' . $extranum . '_p'}{$_}||0;
 	 			my $bytes=${'_section_' . $extranum . '_k'}{$_}||0;
 	 			my $lastaccess=${'_section_' . $extranum . '_l'}{$_}||'';
-	 			print HISTORYTMP "${xmlrb}$_ $page ", ${'_section_' . $extranum . '_h'}{$_}, " $bytes $lastaccess${xmlre}\n"; next;
+	 			print HISTORYTMP "${xmlrb}$_${xmlrs}$page${xmlrs}", ${'_section_' . $extranum . '_h'}{$_}, "${xmlrs}$bytes${xmlrs}$lastaccess${xmlre}\n"; next;
 	 		}
 	 		print HISTORYTMP "${xmleb}END_EXTRA_$extranum${xmlee}\n";
 		}
@@ -4184,8 +4189,8 @@ sub CleanFromCSSA {
 #------------------------------------------------------------------------------
 sub CleanFromTags {
 	my $stringtoclean=shift;
-	$stringtoclean =~ s/<(\/?tr|td)>//ig;	# Remove <tr>,<td>,</tr>
-	$stringtoclean =~ s/<\/td>/ /ig;		# Replace </td> with space
+	$stringtoclean =~ s/$regclean1/ /g;	# Replace <recnb> or </td> with space
+	$stringtoclean =~ s/$regclean2//g;	# Remove <xxx>
 	return $stringtoclean;
 }
 
@@ -5464,9 +5469,7 @@ if (! $DirData || $DirData =~ /^\./) {
 }
 $DirData||='.';		# If current dir not defined then we put it to '.'
 $DirData =~ s/[\\\/]+$//;
-# Define SiteToAnalyze and SiteToAnalyzeWithoutwww for regex operations
-$SiteToAnalyze=lc($SiteDomain); $SiteToAnalyze =~ s/\./\\\./g;
-$SiteToAnalyzeWithoutwww = $SiteToAnalyze; $SiteToAnalyzeWithoutwww =~ s/www\.//;
+
 if ($FirstDayOfWeek == 1) { @DOWIndex = (1,2,3,4,5,6,0); }
 else { @DOWIndex = (0,1,2,3,4,5,6); }
 
@@ -5662,11 +5665,12 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 	if ($Debug) { debug("SearchEnginesSearchIDOrder has now ".@SearchEnginesSearchIDOrder." elements",1); }
 
 	# Complete HostAliases array
+	my $sitetoanalyze=quotemeta(lc($SiteDomain));
 	if (! @HostAliases) {
 		warning("Warning: HostAliases parameter is not defined, $PROG choose \"$SiteDomain localhost 127.0.0.1\".");
-		push @HostAliases,qr/^$SiteToAnalyze$/i; push @HostAliases,qr/^localhost$/i; push @HostAliases,qr/^127\.0\.0\.1$/i;
+		push @HostAliases,qr/^$sitetoanalyze$/i; push @HostAliases,qr/^localhost$/i; push @HostAliases,qr/^127\.0\.0\.1$/i;
 	}
-	unshift @HostAliases,qr/^$SiteToAnalyze$/i;	# Add SiteToAnalyze as first value
+	else { unshift @HostAliases,qr/^$sitetoanalyze$/i; }	# Add SiteDomain as first value
 
 	# Optimize arrays
 	@HostAliases=&OptimizeArray(\@HostAliases,1); if ($Debug) { debug("HostAliases precompiled regex list is now @HostAliases",1); }
@@ -5685,6 +5689,7 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 	@SearchEnginesSearchIDOrder=map{qr/$_/i} @SearchEnginesSearchIDOrder;
 	my $miscquoted=quotemeta("$MiscTrackerUrl");
 	my $defquoted=quotemeta("/$DefaultFile[0]");
+	my $sitewithoutwww=lc($SiteDomain); $sitewithoutwww =~ s/www\.//; $sitewithoutwww=quotemeta($sitewithoutwww);
 	# Define precompiled regex
 	my $regmisc=qr/^$miscquoted/;
 	my $regrobot=qr/^\/robots\.txt$/i;
@@ -5703,6 +5708,7 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 	my $regnotnetscape=qr/gecko|compatible|opera|galeon|safari/i;
 	my $regreferer=qr/^(\w+):\/\/([^\/:]+)(:\d+|)/;
 	my $regreferernoquery=qr/^([^$URLQuerySeparators]+)/;
+	my $reglocal=qr/^(www\.|)$sitewithoutwww/i;
 
 	# Define value of $PerlParsingFormat and @fieldlib
 	&DefinePerlParsingFormat();
@@ -6576,7 +6582,7 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 
 					# Kind of origin
 					if (!$TmpRefererServer{$refererserver}) {	# is "=" if same site, "search egine key" if search engine, not defined otherwise
-						if ($refererserver =~ /^(www\.|)$SiteToAnalyzeWithoutwww/i) {
+						if ($refererserver =~ /$reglocal/o) {
 							# Intern (This hit came from another page of the site)
 							if ($Debug) { debug("  Server '$refererserver' is added to TmpRefererServer with value '='",2); }
 							$TmpRefererServer{$refererserver}='=';
