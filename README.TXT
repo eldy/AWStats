@@ -42,13 +42,16 @@ I - 1) Features
 	* Hosts list, last visits and unresolved IP addresses list,
 	* Most viewed, entry and exit pages,
 	* File types,
-	* Web compression statistics (for mod_gzip),
+	* Web compression statistics (for mod_gzip or mod_deflate),
 	* Browsers used (pages, hits, kb for each browser),
 	* OS used (pages, hits, KB for each OS),
 	* Visits of robots,
 	* Search engines, keyphrases and keywords used to find your site,
+	* HTTP errors (Page not found with last referer, ...),
 	* Other personalized reports,
-	* HTTP errors (Page not found with last referer, ...).
+	* Screen size report,
+	* Ratio of Browsers that support: Java, Flash, RealG2 reader,
+	  Quicktime reader, WMA reader, PDF reader
 
 	It supports the following features as well:
 	* Can analyze all log formats.
@@ -67,10 +70,10 @@ I - 1) Features
 	* Several languages,
 	* No need of rare perl libraries,
 	* Graphical one page or framed reports,
-	* Look and colors can match your site design,
+	* Look and colors can match your site design, can use CSS,
 	* Help and tooltips on HTML reported pages,
 	* Easy to use (Just one configuration file to edit),
-	* Free (GNU GPL), with sources (perl script),
+	* Free (GNU GPL), with sources (perl scripts),
 	* Available on all platforms.
 
 
@@ -93,7 +96,7 @@ I - 3) Files
 	docs/LICENSE                        GNU General Public Licence
 	docs/*                              AWStats documentation (setup/usage...)
 	tools/*                             Ohter provided tools
-	wwwroot/cgi-bin/awstats.pl          The main command line/CGI program
+	wwwroot/cgi-bin/awstats.pl          The main CLI/CGI program
 	wwwroot/cgi-bin/awstats.model.conf  An example of AWStats configure file
 	wwwroot/cgi-bin/lang                Directory with languages files
 	wwwroot/cgi-bin/lib                 Directory with awstats reference info
@@ -104,6 +107,8 @@ I - 3) Files
 	wwwroot/icon/flags                  Directory with country flags icons
 	wwwroot/icon/os                     Directory with os icons
 	wwwroot/icon/other                  Directory with all others icons
+	wwwroot/css                         Samples of CSS files
+	wwwroot/js                          Javascript sources for "Misc" feature
 
 
 

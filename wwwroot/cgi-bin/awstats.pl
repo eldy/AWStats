@@ -225,7 +225,7 @@ use vars qw/
 @PluginsToLoad 
 /;
 @MiscListOrder=('AddToFavourites','JavaEnabled','DirectorSupport','FlashSupport','RealPlayerSupport','QuickTimeSupport','MediaPlayerSupport','PDFSupport');
-%MiscListCalc=('TotalMisc'=>'','AddToFavourites'=>'v','JavaEnabled'=>'hm','DirectorSupport'=>'hm','FlashSupport'=>'hm','RealPlayerSupport'=>'hm','QuickTimeSupport'=>'hm','MediaPlayerSupport'=>'hm','PDFSupport'=>'hm');
+%MiscListCalc=('TotalMisc'=>'','AddToFavourites'=>'u','JavaEnabled'=>'hm','DirectorSupport'=>'hm','FlashSupport'=>'hm','RealPlayerSupport'=>'hm','QuickTimeSupport'=>'hm','MediaPlayerSupport'=>'hm','PDFSupport'=>'hm');
 @OSFamily=('win','mac');
 @BrowsersFamily=('msie','netscape');
 @SessionsRange=('0s-30s','30s-2mn','2mn-5mn','5mn-15mn','15mn-30mn','30mn-1h','1h+');
@@ -8835,14 +8835,23 @@ if (scalar keys %HTMLOutput) {
 			print "$Center<a name=\"MISC\">&nbsp;</a><BR>\n";
 			my $title="$Message[139]";
 			&tab_head("$title",19);
-			print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[139]</TH><TH width=80>&nbsp</TH></TR>\n";
+			print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[139]</TH>";
+			print "<TH width=100>&nbsp</TH>";
+			print "<TH width=80>&nbsp</TH>";
+			print "</TR>\n";
 			foreach my $key (@MiscListOrder) {
+				my $total=0;
+				my $p;
+				if ($MiscListCalc{$key} eq 'v') { $total=$TotalVisits; }
+				if ($MiscListCalc{$key} eq 'u') { $total=$TotalUnique; }
+				if ($MiscListCalc{$key} eq 'hm') { $total=$_misc_h{'TotalMisc'}||0; }
+				if ($total) { $p=int($_misc_h{$key}/$total*1000)/10; }
 				print "<TR>";
 				print "<TD CLASS=AWS>$key</TD>";
-				print "<TD>".int($_misc_h{$key}||0)." / ";
-				if ($MiscListCalc{$key} eq 'v') { print $TotalVisits; }
-				if ($MiscListCalc{$key} eq 'hm') { print $_misc_h{'TotalMisc'}; }
-				print "</TD>";
+				if ($MiscListCalc{$key} eq 'v') { print "<TD>".int($_misc_h{$key}||0)." / $total $Message[12]</TD>"; }
+				if ($MiscListCalc{$key} eq 'u') { print "<TD>".int($_misc_h{$key}||0)." / $total $Message[18]</TD>"; }
+				if ($MiscListCalc{$key} eq 'hm') { print "<TD>&nbsp;</TD>"; }
+				print "<TD>".($total?"$p %":"&nbsp;")."</TD>";
 				print "</TR>\n";
 			}
 			&tab_end;
