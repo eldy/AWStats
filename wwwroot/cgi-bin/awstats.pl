@@ -78,10 +78,6 @@ $TotalSearchEnginesPages = $TotalSearchEnginesHits = $TotalRefererPages = $Total
 ($FrameName, $Center, $FileConfig, $FileSuffix, $Host, $DayRequired, $MonthRequired, $YearRequired,
 $QueryString, $SiteConfig, $StaticLinks, $PageCode, $PageDir, $PerlParsingFormat, $UserAgent)=
 ('','','','','','','','','','','','','','','');
-$pos_vh = $pos_host = $pos_logname = $pos_date = $pos_tz = $pos_method = $pos_url = $pos_code = $pos_size = -1;
-$pos_referer = $pos_agent = $pos_query = $pos_gzipin = $pos_gzipout = $pos_compratio = -1;
-$pos_cluster = $pos_emails = $pos_emailr = $pos_hostr = -1;
-@pos_extra=();
 # ----- Plugins variable -----
 use vars qw/ %PluginsLoaded $PluginDir $AtLeastOneSectionPlugin /;
 %PluginsLoaded=();
@@ -4871,6 +4867,10 @@ sub ShowURLInfo {
 # Return:       -
 #------------------------------------------------------------------------------
 sub DefinePerlParsingFormat {
+    $pos_vh = $pos_host = $pos_logname = $pos_date = $pos_tz = $pos_method = $pos_url = $pos_code = $pos_size = -1;
+    $pos_referer = $pos_agent = $pos_query = $pos_gzipin = $pos_gzipout = $pos_compratio = -1;
+    $pos_cluster = $pos_emails = $pos_emailr = $pos_hostr = -1;
+    @pos_extra=();
 	# Log records examples:
 	# Apache combined: 62.161.78.73 user - [dd/mmm/yyyy:hh:mm:ss +0000] "GET / HTTP/1.1" 200 1234 "http://www.from.com/from.htm" "Mozilla/4.0 (compatible; MSIE 5.01; Windows NT 5.0)"
 	# Apache combined (408 error): my.domain.com - user [09/Jan/2001:11:38:51 -0600] "OPTIONS /mime-tmp/xxx file.doc HTTP/1.1" 408 - "-" "-"
@@ -4906,12 +4906,6 @@ sub DefinePerlParsingFormat {
 			$PerlParsingFormat="([^ ]+) [^ ]+ (.+) \\[([^ ]+) [^ ]+\\] \\\"([^ ]+) ([^ ]+) [^\\\"]+\\\" ([\\d|-]+) ([\\d|-]+)";
 			$pos_host=0;$pos_logname=1;$pos_date=2;$pos_method=3;$pos_url=4;$pos_code=5;$pos_size=6;
 			@fieldlib=('host','logname','date','method','url','code','size');
-		}
-		# This is a deprecated option, will be removed in a next version.
-		elsif ($LogFormat eq '5') {	# Same than "c-ip cs-username c-agent sc-authenticated date time s-svcname s-computername cs-referred r-host r-ip r-port time-taken cs-bytes sc-bytes cs-protocol cs-transport s-operation cs-uri cs-mime-type s-object-source sc-status s-cache-info"
-			$PerlParsingFormat="([^\\t]*)\\t([^\\t]*)\\t([^\\t]*)\\t[^\\t]*\\t([^\\t]*\\t[^\\t]*)\\t[^\\t]*\\t[^\\t]*\\t([^\\t]*)\\t[^\\t]*\\t[^\\t]*\\t[^\\t]*\\t[^\\t]*\\t[^\\t]*\\t([^\\t]*)\\t[^\\t]*\\t[^\\t]*\\t([^\\t]*)\\t([^\\t]*)\\t[^\\t]*\\t[^\\t]*\\t([^\\t]*)\\t[^\\t]*";
-			$pos_host=0;$pos_logname=1;$pos_agent=2;$pos_date=3;$pos_referer=4;$pos_size=5;$pos_method=6;$pos_url=7;$pos_code=8;
-			@fieldlib=('host','logname','ua','date','referer','size','method','url','code');
 		}
 	}
 	else {							# Personalized log format
@@ -6049,6 +6043,16 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 				print "$NbOfLinesParsed lines processed (".($delay>0?$delay:1000)." ms, ".int(1000*$NbOfLinesShowsteps/($delay>0?$delay:1000))." lines/second)\n";
 			}
 		}
+
+        if ($LogFormat eq '2' && $line =~ /^#Fields:/) {
+            my @fixField=map(/^#Fields: (.*)/, $line);
+            if ($fixField[0] !~ /s-kernel-time/) {
+                debug("Found new log format: '". $fixField[0] ."'",1);
+                $PerlParsingFormat = '';
+                $LogFormat = $fixField[0];
+                &DefinePerlParsingFormat();
+            }
+        }
 
 		# Parse line record to get all required fields
 		if (! (@field=map(/$PerlParsingFormat/,$line))) {

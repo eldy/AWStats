@@ -9,6 +9,7 @@ New features/improvements:
 - Add option ShowSummary.
 - If Geoip plugin is enabled, add a column in Host report.
 - Other minor changes on geoip and hostinfo plugins to enhance look.
+- If LogFormat is 2, AWStats autodetect log format change.
 
 Fixes:
 - Fix security hole that allowed a user to read log file content even
@@ -31,6 +32,7 @@ Other/Documentation:
 - DebugMessages is by default set to 0 for security reasons.
 - Updated documentation.
 - Updated some language files.
+- Remove deprecated LogFormat 5.
 
 
 ***** 6.3 *****
