@@ -47,7 +47,7 @@
 # ---------- Init variables (Variable $TmpHashxxx are not initialized) -------
 ($AddOn,$BarHeight,$BarWidth,$Debug,$DebugResetDone,$DNSLookup,$Expires, 
 $CreateDirDataIfNotExists, $KeepBackupOfHistoricFiles,$MaxLengthOfURL,
-$MaxNbOfHostsShown, $MaxNbOfKeywordsShown, $MaxNbOfLastHosts, $MaxNbOfLoginShown,
+$MaxNbOfHostsShown, $MaxNbOfKeywordsShown, $MaxNbOfLoginShown,
 $MaxNbOfPageShown, $MaxNbOfRefererShown, $MaxNbOfRobotShown,
 $MinHitFile, $MinHitHost, $MinHitKeyword,
 $MinHitLogin, $MinHitRefer, $MinHitRobot,
@@ -72,7 +72,8 @@ $LastUpdate, $LogFile, $LogFormat, $LogFormatString, $Logo, $LogoLink,
 $MonthRequired,
 $HTMLOutput, $PROG, $PageCode, $QueryString,
 $SiteConfig, $SiteDomain, $SiteToAnalyze, $SiteToAnalyzeWithoutwww, 
-$TotalEntries, $TotalBytesPages, $TotalDifferentPages, $URLFilter, $UserAgent, $YearRequired)=
+$TotalEntries, $TotalBytesPages, $TotalKeyphrases, $TotalDifferentPages, $TotalDifferentKeyphrases,
+$URLFilter, $UserAgent, $YearRequired)=
 ();
 ($color_Background, $color_TableBG, $color_TableBGRowTitle,
 $color_TableBGTitle, $color_TableBorder, $color_TableRowTitle, $color_TableTitle,
@@ -125,14 +126,14 @@ $color_h, $color_k, $color_p, $color_s, $color_u, $color_v)=
 
 
 
-$VERSION="4.0 (build 16)";
+$VERSION="4.0 (build 17)";
 $Lang="en";
 
 # Default value
-$DEBUGFORCED   = 0;			# Force debug level to log lesser level into debug.log file (Keep this value to 0)
-$MAXROWS       = 1000;		# Max number of rows for not limited HTML arrays
-$VisitTimeOut  = 10000;		# Laps of time to consider a page load as a new visit. 10000 = one hour (Default = 10000)
-$FullHostName  = 1;			# 1 = Use name.domain.zone to refer host clients, 0 = all hosts in same domain.zone are one host (Default = 1, 0 never tested)
+$DEBUGFORCED   = 0;				# Force debug level to log lesser level into debug.log file (Keep this value to 0)
+$MaxRowsInHTMLOutput = 1000;	# Max number of rows for not limited HTML arrays
+$VisitTimeOut  = 10000;			# Laps of time to consider a page load as a new visit. 10000 = one hour (Default = 10000)
+$FullHostName  = 1;				# 1 = Use name.domain.zone to refer host clients, 0 = all hosts in same domain.zone are one host (Default = 1, 0 never tested)
 $NbOfLinesForBenchmark=5000;
 $ShowBackLink  = 1;
 $CENTER        = "";
@@ -597,6 +598,7 @@ sub Read_Config_File {
 		if ($param =~ /^ShowFlagLinks/)         { $ShowFlagLinks=$value; next; }
 		if ($param =~ /^ShowLinksOnUrl/)        { $ShowLinksOnUrl=$value; next; }
 		if ($param =~ /^MaxLengthOfURL/)        { $MaxLengthOfURL=$value; next; }
+		if ($param =~ /^MaxRowsInHTMLOutput/)   { $MaxRowsInHTMLOutput=$value; next; }
 		if ($param =~ /^DetailedReportsOnNewWindows/) { $DetailedReportsOnNewWindows=$value; next; }
 		if ($param =~ /^HTMLHeadSection/)       { $HTMLHeadSection=$value; next; }
 		if ($param =~ /^HTMLEndSection/)        { $HTMLEndSection=$value; next; }
@@ -774,22 +776,22 @@ sub Check_Config {
 	if (! $DefaultFile)                       		{ $DefaultFile="index.html"; }
 	if ($URLWithQuery !~ /[0-1]/)                 	{ $URLWithQuery=0; }
 	if ($WarningMessages !~ /[0-1]/)              	{ $WarningMessages=1; }
-	if ($NbOfLinesForCorruptedLog !~ /[\d]+/ || $NbOfLinesForCorruptedLog<1) 	  	{ $NbOfLinesForCorruptedLog=50; }
+	if ($NbOfLinesForCorruptedLog !~ /[\d]+/ || $NbOfLinesForCorruptedLog<1)	{ $NbOfLinesForCorruptedLog=50; }
 	if ($FirstDayOfWeek !~ /[0-1]/)               	{ $FirstDayOfWeek=1; }
 	if ($MaxNbOfDomain !~ /^[\d]+/ || $MaxNbOfDomain<1)           		{ $MaxNbOfDomain=25; }
-	if ($MaxNbOfHostsShown !~ /^[\d]+/ || $MaxNbOfHostsShown<1)       		{ $MaxNbOfHostsShown=25; }
-	if ($MinHitHost !~ /^[\d]+/ || $MinHitHost<1)              		{ $MinHitHost=1; }
-	if ($MaxNbOfLoginShown !~ /^[\d]+/ || $MaxNbOfLoginShown<1)       		{ $MaxNbOfLoginShown=10; }
+	if ($MaxNbOfHostsShown !~ /^[\d]+/ || $MaxNbOfHostsShown<1)       	{ $MaxNbOfHostsShown=25; }
+	if ($MinHitHost !~ /^[\d]+/ || $MinHitHost<1)              			{ $MinHitHost=1; }
+	if ($MaxNbOfLoginShown !~ /^[\d]+/ || $MaxNbOfLoginShown<1)       	{ $MaxNbOfLoginShown=10; }
 	if ($MinHitLogin !~ /^[\d]+/ || $MinHitLogin<1)             		{ $MinHitLogin=1; }
-	if ($MaxNbOfRobotShown !~ /^[\d]+/ || $MaxNbOfRobotShown<1)       		{ $MaxNbOfRobotShown=25; }
+	if ($MaxNbOfRobotShown !~ /^[\d]+/ || $MaxNbOfRobotShown<1)       	{ $MaxNbOfRobotShown=25; }
 	if ($MinHitRobot !~ /^[\d]+/ || $MinHitRobot<1)             		{ $MinHitRobot=1; }
-	if ($MaxNbOfPageShown !~ /^[\d]+/ || $MaxNbOfPageShown<1)        		{ $MaxNbOfPageShown=25; }
-	if ($MinHitFile !~ /^[\d]+/ || $MinHitFile<1)              		{ $MinHitFile=1; }
-	if ($MaxNbOfRefererShown !~ /^[\d]+/ || $MaxNbOfRefererShown<1)     		{ $MaxNbOfRefererShown=25; }
+	if ($MaxNbOfPageShown !~ /^[\d]+/ || $MaxNbOfPageShown<1)        	{ $MaxNbOfPageShown=25; }
+	if ($MinHitFile !~ /^[\d]+/ || $MinHitFile<1)              			{ $MinHitFile=1; }
+	if ($MaxNbOfRefererShown !~ /^[\d]+/ || $MaxNbOfRefererShown<1)     { $MaxNbOfRefererShown=25; }
 	if ($MinHitRefer !~ /^[\d]+/ || $MinHitRefer<1)             		{ $MinHitRefer=1; }
-	if ($MaxNbOfKeywordsShown !~ /^[\d]+/ || $MaxNbOfKeywordsShown<1)    		{ $MaxNbOfKeywordsShown=25; }
+	if ($MaxNbOfKeywordsShown !~ /^[\d]+/ || $MaxNbOfKeywordsShown<1)	{ $MaxNbOfKeywordsShown=25; }
 	if ($MinHitKeyword !~ /^[\d]+/ || $MinHitKeyword<1)           		{ $MinHitKeyword=1; }
-	if ($MaxNbOfLastHosts !~ /^[\d]+/ || $MaxNbOfLastHosts<1)        		{ $MaxNbOfLastHosts=1000; }
+	if ($MaxRowsInHTMLOutput !~ /^[\d]+/ || $MaxRowsInHTMLOutput<1)     { $MaxRowsInHTMLOutput=1000; }
 	if ($SplitSearchString !~ /[0-1]/)          	{ $SplitSearchString=0; }
 	if ($Expires !~ /^[\d]+/)                 		{ $Expires=0; }
 	if ($ShowHeader !~ /[0-1]/)                   	{ $ShowHeader=1; }
@@ -1091,7 +1093,7 @@ sub Read_History_File {
 		    		$MonthUnique{$year.$month}++;
 		    		$MonthHostsUnknown{$year.$month}++;
 		    	}
-				if ($part && ($UpdateStats || $QueryString !~ /output=/i || $QueryString =~ /output=lasthosts/i || $QueryString =~ /output=unknownip/i)) {
+				if ($part && ($UpdateStats || $QueryString !~ /output=/i || $QueryString =~ /output=allhosts/i || $QueryString =~ /output=lasthosts/i || $QueryString =~ /output=unknownip/i)) {
 					# Data required:
 					# update 				 need to load all
 					# noupdate+
@@ -1106,7 +1108,7 @@ sub Read_History_File {
 						$loadrecord=1;
 					}
 					else {
-						if ($QueryString =~ /output=lasthosts/i) { $loadrecord=1;	}
+						if ($QueryString =~ /output=allhosts/i || $QueryString =~ /output=lasthosts/i) { $loadrecord=1;	}
 						if ($MonthRequired eq "year" || $field[2] >= $MinHitHost) {
 							if ($QueryString =~ /output=unknownip/i && ($field[0] =~ /^[\d]+\.[\d]+\.[\d]+\.[\d]+$/)) { $loadrecord=1; }
 							if ($QueryString !~ /output=/i && ($MonthRequired eq "year" || $countloaded < $MaxNbOfHostsShown)) { $loadrecord=1; }
@@ -1348,7 +1350,7 @@ sub Read_History_File {
 						if ($QueryString !~ /output=/i) {
 							if ($MonthRequired eq "year") { $loadrecord=1; }
 							else { 
-								if (countloaded < $MaxNbOfPageShown && $field[1] >= $MinHitFile) { $loadrecord=1; }
+								if ($countloaded < $MaxNbOfPageShown && $field[1] >= $MinHitFile) { $loadrecord=1; }
 								$TotalDifferentPages++;
 							}	
 						}
@@ -1359,8 +1361,6 @@ sub Read_History_File {
 							else { 
 								if ((!$URLFilter || $field[0] =~ /$URLFilter/) && $field[1] >= $MinHitFile) { $loadrecord=1; }
 								$TotalDifferentPages++;
-#debug("X $TotalDifferentPages -$field[0]-",1);
-#if ($_url_p{$field[0]}) { print "$field[0] existe DEJA"; }
 							}
 						}
 						# Posssibilite de mettre if ($URLFilter && $field[0] =~ /$URLFilter/) mais il faut gerer TotalPages de la meme maniere
@@ -1468,9 +1468,35 @@ sub Read_History_File {
 			my $count=0;my $countloaded=0;
 			while ($field[0] ne "END_SEARCHWORDS") {
 				$count++;
-				if ($part && ($UpdateStats || $QueryString !~ /output=/i || $QueryString =~ /output=xxx/i)) {
-					$countloaded++;
-					if ($field[1]) { $_keyphrases{$field[0]}+=$field[1]; }
+				if ($part && ($UpdateStats || $QueryString !~ /output=/i || $QueryString =~ /output=allkeyphrases/i)) {
+					my $loadrecord=0;
+					if ($UpdateStats) {
+						$loadrecord=1;
+					}
+					else {
+						if ($QueryString !~ /output=/i) {
+							if ($MonthRequired eq "year") { $loadrecord=1; }
+							else { 
+								if ($countloaded < $MaxNbOfKeywordsShown && $field[1] >= $MinHitKeyword) { $loadrecord=1; }
+								$TotalDifferentKeyphrases++;
+								$TotalKeyphrases+=($field[1]||0);
+							}	
+						}
+						if ($QueryString =~ /output=allkeyphrases/i) {
+							if ($MonthRequired eq "year" ) { 
+								$loadrecord=1;
+							}
+							else { 
+								if ($field[1] >= $MinHitKeyword) { $loadrecord=1; }
+								$TotalDifferentKeyphrases++;
+								$TotalKeyphrases+=($field[1]||0);
+							}
+						}
+					}
+					if ($loadrecord) {					
+						if ($field[1]) { $_keyphrases{$field[0]}+=$field[1]; }
+						$countloaded++;
+					}
 				}
 				$_=<HISTORY>;
 				chomp $_; s/\r//;
@@ -1677,10 +1703,17 @@ sub Save_History_File {
 	}
 	print HISTORYTMP "END_PAGEREFS\n";
 	print HISTORYTMP "BEGIN_SEARCHWORDS\n";
-	foreach my $key (keys %_keyphrases) { 
-		my $newkey=$key;
-		print HISTORYTMP "$newkey $_keyphrases{$key}\n";
-		next;
+	&BuildKeyList($MaxNbOfKeywordsShown,$MinHitKeyword,\%_keyphrases,\%_keyphrases);
+	my %keysinkeylist=();
+	foreach my $key (@keylist) {
+		$keysinkeylist{$key}=1;
+		my $keyphrase=$key;
+		print HISTORYTMP "$keyphrase $_keyphrases{$key}\n"; next;
+	}
+	foreach my $key (keys %_keyphrases) {
+		if ($keysinkeylist{$key}) { next; }
+		my $keyphrase=$key;
+		print HISTORYTMP "$keyphrase $_keyphrases{$key}\n"; next;
 	}
 	print HISTORYTMP "END_SEARCHWORDS\n";
 
@@ -1763,7 +1796,8 @@ sub ChangeWordSeparatorsIntoSpace {
 #--------------------------------------------------------------------
 sub DecodeEncodedString {
 	my $stringtodecode=shift;
-	$stringtodecode =~ s/%([a-fA-F0-9][a-fA-F0-9])/pack("C", hex($1))/eg;		# Decode encoded URL
+ 	$stringtodecode =~ tr/\+/ /s;
+ 	$stringtodecode =~ s/%([a-fA-F0-9][a-fA-F0-9])/pack("C", hex($1))/eg;		# Decode encoded URL
 	return $stringtodecode;
 }
 
@@ -2112,6 +2146,7 @@ if ((! $ENV{"GATEWAY_INTERFACE"}) && (! $SiteConfig)) {
 	print "Options to show statistics:\n";
 	print "  -output      to output main HTML report (no update made except with -update)\n";
 	print "  -output=x    to output other report pages where x is:\n";
+	print "               allhosts         to build page of all hosts\n";
 	print "               lasthosts        to build page of last connections\n";
 	print "               unknownip        to build page of all unresolved IP\n";
 	print "               urldetail        to list most often viewed pages \n";
@@ -2119,6 +2154,7 @@ if ((! $ENV{"GATEWAY_INTERFACE"}) && (! $SiteConfig)) {
 	print "               unknownreferer        to list 'User Agents' with unknown OS\n";
 	print "               unknownrefererbrowser to list 'User Agents' with unknown browser\n";
 	print "               browserdetail    to build page with browsers detailed versions\n";
+	print "               allkeyphrases    to list all keyphrases used on search engines\n";
 	print "               errors404        to list 'Referers' for 404 errors\n";
 	print "  -staticlinks to have static links in HTML report page\n";
 	print "  -lang=LL     to output a HTML report in language LL (en,de,es,fr,it,nl,...)\n";
@@ -2237,7 +2273,7 @@ if ($UpdateStats && ($AllowToUpdateStatsFromBrowser==0) && ($ENV{"GATEWAY_INTERF
 %monthlib = ("01","$Message[60]","02","$Message[61]","03","$Message[62]","04","$Message[63]","05","$Message[64]","06","$Message[65]","07","$Message[66]","08","$Message[67]","09","$Message[68]","10","$Message[69]","11","$Message[70]","12","$Message[71]");
 %monthnum = ("Jan","01","jan","01","Feb","02","feb","02","Mar","03","mar","03","Apr","04","apr","04","May","05","may","05","Jun","06","jun","06","Jul","07","jul","07","Aug","08","aug","08","Sep","09","sep","09","Oct","10","oct","10","Nov","11","nov","11","Dec","12","dec","12");	# monthnum must be in english because used to translate log date in apache log files
 $LastLine=0;$LastUpdate=0;
-$TotalEntries=0; $TotalBytesPages=0; $TotalDifferentPages=0;
+$TotalEntries=0; $TotalBytesPages=0; $TotalKeyphrases=0; $TotalDifferentPages=0; $TotalDifferentKeyphrases=0;
 for (my $ix=1; $ix<=12; $ix++) {
 	my $monthix=$ix;if ($monthix < 10) { $monthix  = "0$monthix"; }
 	$LastLine{$YearRequired.$monthix}=0;$FirstTime{$YearRequired.$monthix}=0;$LastTime{$YearRequired.$monthix}=0;$LastUpdate{$YearRequired.$monthix}=0;
@@ -2685,7 +2721,10 @@ if ($UpdateStats) {
 			$TmpHashNotRobot{$UserAgent}=1;		# Last time, we won't search if robot or not. We know it's not.
 		}
 
-		# Canonize and clean target URL and referrer URL
+		# Canonize and clean target URL and referrer URL. Possible URL syntax for $field[$pos_url]:
+		# /mypage.ext?param=x#aaa
+		# /mypage.ext#aaa
+		# /
 		my $urlwithnoquery;
 		if ($URLWithQuery) { 				
 			$urlwithnoquery=$field[$pos_url];
@@ -2698,6 +2737,7 @@ if ($UpdateStats) {
 			$field[$pos_url] =~ s/\?.*//;
 			$urlwithnoquery=$field[$pos_url];
 		}
+		# urlwithnoquery=/mypage.ext
 		$field[$pos_url] =~ s/\/$DefaultFile$/\//;	# Replace default page name with / only
 
 		# Analyze file type and compression
@@ -3168,7 +3208,7 @@ if ($HTMLOutput) {
 	my %listofyears;
 	my $max_p; my $max_h; my $max_k; my $max_v;
 	my $rest_p; my $rest_h; my $rest_k; my $rest_e; my $rest_s;
-	my $total_p; my $total_h; my $total_k; my $total_e;
+	my $total_p; my $total_h; my $total_k; my $total_e; my $total_s;
 
 	$SiteToAnalyze =~ s/\\\./\./g;
 
@@ -3280,8 +3320,12 @@ EOF
 	if (!$TotalEntries) { foreach my $key (keys %_url_e) { $TotalEntries+=$_url_e{$key}; } }
 	# TotalBytesPages (if not already specifically counted, we init it from _url_k hash table)
 	if (!$TotalBytesPages) { foreach my $key (keys %_url_k) { $TotalBytesPages+=$_url_k{$key}; } }
+	# TotalKeyphrases (if not already specifically counted, we init it from _keyphrases hash table)
+	if (!$TotalKeyphrases) { foreach my $key (keys %_keyphrases) { $TotalKeyphrases+=$_keyphrases{$key}; } }
 	# TotalDifferentPages (if not already specifically counted, we init it from _url_p hash table)
 	if (!$TotalDifferentPages) { $TotalDifferentPages=scalar keys %_url_p; }
+	# TotalDifferentKeyphrases (if not already specifically counted, we init it from _keyphrases hash table)
+	if (!$TotalDifferentKeyphrases) { $TotalDifferentKeyphrases=scalar keys %_keyphrases; }
 	# Define firstdaytocountaverage, lastdaytocountaverage, firstdaytoshowtime, lastdaytoshowtime
 	my $firstdaytocountaverage=$nowyear.$nowmonth."01";				# Set day cursor to 1st day of month
 	my $firstdaytoshowtime=$nowyear.$nowmonth."01";					# Set day cursor to 1st day of month
@@ -3380,6 +3424,105 @@ EOF
 		print "<br>\n";
 		print "<hr>\n\n";
 	}
+	if ($QueryString =~ /output=allhosts/i) {
+		print "$CENTER<a name=\"HOSTSLIST\">&nbsp;</a><BR>";
+		&tab_head($Message[81],19);
+		if ($MonthRequired ne "year") { print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[81] : $TotalHostsKnown $Message[82], $TotalHostsUnknown $Message[1] - $TotalUnique $Message[11]</TH><TH bgcolor=\"#$color_p\" width=80>$Message[56]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH bgcolor=\"#$color_k\" width=80>$Message[75]</TH><TH width=120>$Message[9]</TH></TR>\n"; }
+		else { print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[81] : ".(scalar keys %_hostmachine_h)."</TH><TH bgcolor=\"#$color_p\" width=80>$Message[56]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH bgcolor=\"#$color_k\" width=80>$Message[75]</TH><TH width=120>$Message[9]</TH></TR>\n"; }
+		$total_p=$total_h=$total_k=0;
+		my $count=0;
+		&BuildKeyList($MaxRowsInHTMLOutput,$MinHitHost,\%_hostmachine_h,\%_hostmachine_p);
+		foreach my $key (@keylist) {
+			$key =~ s/<script.*$//gi;				# This is to avoid 'Cross Site Scripting attacks'
+			if ($_robot_l{$key}) {
+				print "<tr><td CLASS=AWL><b>$key</b></td>";
+			} else {
+				print "<tr><td CLASS=AWL>$key</td>";
+			}
+			print "<TD>".($_hostmachine_p{$key}?$_hostmachine_p{$key}:"&nbsp;")."</TD><TD>$_hostmachine_h{$key}</TD><TD>".Format_Bytes($_hostmachine_k{$key})."</TD>";
+			if ($_hostmachine_l{$key}) { print "<td>".Format_Date($_hostmachine_l{$key},1)."</td>"; }
+			else { print "<td>-</td>"; }
+			print "</tr>\n";
+			$total_p += $_hostmachine_p{$key};
+			$total_h += $_hostmachine_h{$key};
+			$total_k += $_hostmachine_k{$key}||0;
+			$count++;
+		}
+		debug("Total real / shown : $TotalPages / $total_p - $TotalHits / $total_h - $TotalBytes / $total_h",2);
+		$rest_p=$TotalPages-$total_p;
+		$rest_h=$TotalHits-$total_h;
+		$rest_k=$TotalBytes-$total_k;
+		if ($rest_p > 0 || $rest_h > 0 || $rest_k > 0) {	# All other visitors (known or not)
+			print "<TR><TD CLASS=AWL><font color=blue>$Message[2]</font></TD><TD>$rest_p</TD><TD>$rest_h</TD><TD>".Format_Bytes($rest_k)."</TD><TD>&nbsp;</TD></TR>\n";
+		}
+		&tab_end;
+		&html_end;
+		exit(0);
+	}
+	if ($QueryString =~ /output=lasthosts/i) {
+		print "$CENTER<a name=\"HOSTSLIST\">&nbsp;</a><BR>";
+		&tab_head($Message[9],19);
+		if ($MonthRequired ne "year") { print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[81] : $TotalHostsKnown $Message[82], $TotalHostsUnknown $Message[1] - $TotalUnique $Message[11]</TH><TH bgcolor=\"#$color_p\" width=80>$Message[56]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH bgcolor=\"#$color_k\" width=80>$Message[75]</TH><TH width=120>$Message[9]</TH></TR>\n"; }
+		else { print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[81] : ".(scalar keys %_hostmachine_h)."</TH><TH bgcolor=\"#$color_p\" width=80>$Message[56]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH bgcolor=\"#$color_k\" width=80>$Message[75]</TH><TH width=120>$Message[9]</TH></TR>\n"; }
+		$total_p=$total_h=$total_k=0;
+		my $count=0;
+		&BuildKeyList($MaxRowsInHTMLOutput,$MinHitHost,\%_hostmachine_h,\%_hostmachine_l);
+		foreach my $key (@keylist) {
+			$key =~ s/<script.*$//gi;				# This is to avoid 'Cross Site Scripting attacks'
+			if ($_robot_l{$key}) {
+				print "<tr><td CLASS=AWL><b>$key</b></td>";
+			} else {
+				print "<tr><td CLASS=AWL>$key</td>";
+			}
+			print "<TD>".($_hostmachine_p{$key}?$_hostmachine_p{$key}:"&nbsp;")."</TD><TD>$_hostmachine_h{$key}</TD><TD>".Format_Bytes($_hostmachine_k{$key})."</TD>";
+			if ($_hostmachine_l{$key}) { print "<td>".Format_Date($_hostmachine_l{$key},1)."</td>"; }
+			else { print "<td>-</td>"; }
+			print "</tr>\n";
+			$total_p += $_hostmachine_p{$key};
+			$total_h += $_hostmachine_h{$key};
+			$total_k += $_hostmachine_k{$key}||0;
+			$count++;
+		}
+		debug("Total real / shown : $TotalPages / $total_p - $TotalHits / $total_h - $TotalBytes / $total_h",2);
+		$rest_p=$TotalPages-$total_p;
+		$rest_h=$TotalHits-$total_h;
+		$rest_k=$TotalBytes-$total_k;
+		if ($rest_p > 0 || $rest_h > 0 || $rest_k > 0) {	# All other visitors (known or not)
+			print "<TR><TD CLASS=AWL><font color=blue>$Message[2]</font></TD><TD>$rest_p</TD><TD>$rest_h</TD><TD>".Format_Bytes($rest_k)."</TD><TD>&nbsp;</TD></TR>\n";
+		}
+		&tab_end;
+		&html_end;
+		exit(0);
+	}
+	if ($QueryString =~ /output=unknownip/i) {
+		print "$CENTER<a name=\"UNKOWNIP\">&nbsp;</a><BR>";
+		&tab_head($Message[45],19);
+		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>".(scalar keys %_hostmachine_h)." $Message[1]</TH><TH bgcolor=\"#$color_p\" width=80>$Message[56]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH bgcolor=\"#$color_k\" width=80>$Message[75]</TH><TH width=120>$Message[9]</TH>\n";
+		$total_p=$total_h=$total_k=0;
+		$count=0;
+		&BuildKeyList($MaxRowsInHTMLOutput,$MinHitHost,\%_hostmachine_h,\%_hostmachine_p);
+		foreach my $key (@keylist) {
+			$key =~ s/<script.*$//gi;				# This is to avoid 'Cross Site Scripting attacks'
+			print "<tr><td CLASS=AWL>$key</td><TD>".($_hostmachine_p{$key}||"&nbsp")."</TD><TD>$_hostmachine_h{$key}</TD><TD>".Format_Bytes($_hostmachine_k{$key})."</TD>";
+			if ($_hostmachine_l{$key}) { print "<td>".Format_Date($_hostmachine_l{$key},1)."</td>"; }
+			else { print "<td>-</td>"; }
+			print "</tr>\n";
+			$total_p += $_hostmachine_p{$key};
+			$total_h += $_hostmachine_h{$key};
+			$total_k += $_hostmachine_k{$key}||0;
+			$count++;
+		}
+		debug("Total real / shown : $TotalPages / $total_p - $TotalHits / $total_h - $TotalBytes / $total_h",2);
+		$rest_p=$TotalPages-$total_p;
+		$rest_h=$TotalHits-$total_h;
+		$rest_k=$TotalBytes-$total_k;
+		if ($rest_p > 0 || $rest_h > 0 || $rest_k > 0) {	# All other visitors (known or not)
+			print "<TR><TD CLASS=AWL><font color=blue>$Message[82]</font></TD><TD>$rest_p</TD><TD>$rest_h</TD><TD>".Format_Bytes($rest_k)."</TD><TD>&nbsp;</TD></TR>\n";
+		}
+		&tab_end;
+		&html_end;
+		exit(0);
+	}
 	if ($QueryString =~ /output=urldetail/i) {
 		if ($AddOn) { AddOn_Filter(); }
 		print "$CENTER<a name=\"URLDETAIL\">&nbsp;</a><BR>";
@@ -3398,7 +3541,7 @@ EOF
 		print "<TH>&nbsp;</TH></TR>\n";
 		$total_p=$total_k=$total_e=0;
 		my $count=0;
-		&BuildKeyList($MAXROWS,$MinHitFile,\%_url_p,\%_url_p);
+		&BuildKeyList($MaxRowsInHTMLOutput,$MinHitFile,\%_url_p,\%_url_p);
 		$max_p=1; $max_k=1;
 		foreach my $key (@keylist) {
 			if ($_url_p{$key} > $max_p) { $max_p = $_url_p{$key}; }
@@ -3442,64 +3585,27 @@ EOF
 		&html_end;
 		exit(0);
 	}
-	if ($QueryString =~ /output=lasthosts/i) {
-		print "$CENTER<a name=\"HOSTSLIST\">&nbsp;</a><BR>";
-		&tab_head($Message[9],19);
-		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[81] (".(scalar keys %_hostmachine_h).")</TH><TH bgcolor=\"#$color_p\" width=80>$Message[56]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH bgcolor=\"#$color_k\" width=80>$Message[75]</TH><TH width=120>$Message[9]</TH>\n";
-		$total_p=$total_h=$total_k=0;
-		my $count=0;
-		&BuildKeyList($MAXROWS,$MinHitHost,\%_hostmachine_h,\%_hostmachine_l);
-		foreach my $key (@keylist) {
-			$key =~ s/<script.*$//gi;				# This is to avoid 'Cross Site Scripting attacks'
-			if ($_robot_l{$key}) {
-				print "<tr><td CLASS=AWL><b>$key</b></td>";
-			} else {
-				print "<tr><td CLASS=AWL>$key</td>";
+	if ($QueryString =~ /output=browserdetail/i) {
+		print "$CENTER<a name=\"NETSCAPE\">&nbsp;</a><BR>";
+		&tab_head("$Message[33]<br><img src=\"$DirIcons/browser/netscape.png\">",19);
+		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[58]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[15]</TH></TR>\n";
+		for (my $i=1; $i<=$#_nsver_h; $i++) {
+			my $h="&nbsp;"; my $p="&nbsp;";
+			if ($_nsver_h[$i] > 0 && $_browser_h{"netscape"} > 0) {
+				$h=$_nsver_h[$i]; $p=int($_nsver_h[$i]/$_browser_h{"netscape"}*1000)/10; $p="$p&nbsp;%";
 			}
-			print "<TD>".($_hostmachine_p{$key}?$_hostmachine_p{$key}:"&nbsp;")."</TD><TD>$_hostmachine_h{$key}</TD><TD>".Format_Bytes($_hostmachine_k{$key})."</TD>";
-			if ($_hostmachine_l{$key}) { print "<td>".Format_Date($_hostmachine_l{$key},1)."</td>"; }
-			else { print "<td>-</td>"; }
-			print "</tr>\n";
-			$total_p += $_hostmachine_p{$key};
-			$total_h += $_hostmachine_h{$key};
-			$total_k += $_hostmachine_k{$key}||0;
-			$count++;
-		}
-		debug("Total real / shown : $TotalPages / $total_p - $TotalHits / $total_h - $TotalBytes / $total_h",2);
-		$rest_p=$TotalPages-$total_p;
-		$rest_h=$TotalHits-$total_h;
-		$rest_k=$TotalBytes-$total_k;
-		if ($rest_p > 0 || $rest_h > 0 || $rest_k > 0) {	# All other visitors (known or not)
-			print "<TR><TD CLASS=AWL><font color=blue>$Message[2]</font></TD><TD>$rest_p</TD><TD>$rest_h</TD><TD>".Format_Bytes($rest_k)."</TD><TD>&nbsp;</TD></TR>\n";
+			print "<TR><TD CLASS=AWL>Mozilla/$i.xx</TD><TD>$h</TD><TD>$p</TD></TR>\n";
 		}
 		&tab_end;
-		&html_end;
-		exit(0);
-	}
-	if ($QueryString =~ /output=unknownip/i) {
-		print "$CENTER<a name=\"UNKOWNIP\">&nbsp;</a><BR>";
-		&tab_head($Message[45],19);
-		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>".(scalar keys %_hostmachine_h)." $Message[1]</TH><TH bgcolor=\"#$color_p\" width=80>$Message[56]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH bgcolor=\"#$color_k\" width=80>$Message[75]</TH><TH width=120>$Message[9]</TH>\n";
-		$total_p=$total_h=$total_k=0;
-		$count=0;
-		&BuildKeyList($MAXROWS,$MinHitHost,\%_hostmachine_h,\%_hostmachine_p);
-		foreach my $key (@keylist) {
-			$key =~ s/<script.*$//gi;				# This is to avoid 'Cross Site Scripting attacks'
-			print "<tr><td CLASS=AWL>$key</td><TD>".($_hostmachine_p{$key}||"&nbsp")."</TD><TD>$_hostmachine_h{$key}</TD><TD>".Format_Bytes($_hostmachine_k{$key})."</TD>";
-			if ($_hostmachine_l{$key}) { print "<td>".Format_Date($_hostmachine_l{$key},1)."</td>"; }
-			else { print "<td>-</td>"; }
-			print "</tr>\n";
-			$total_p += $_hostmachine_p{$key};
-			$total_h += $_hostmachine_h{$key};
-			$total_k += $_hostmachine_k{$key}||0;
-			$count++;
-		}
-		debug("Total real / shown : $TotalPages / $total_p - $TotalHits / $total_h - $TotalBytes / $total_h",2);
-		$rest_p=$TotalPages-$total_p;
-		$rest_h=$TotalHits-$total_h;
-		$rest_k=$TotalBytes-$total_k;
-		if ($rest_p > 0 || $rest_h > 0 || $rest_k > 0) {	# All other visitors (known or not)
-			print "<TR><TD CLASS=AWL><font color=blue>$Message[82]</font></TD><TD>$rest_p</TD><TD>$rest_h</TD><TD>".Format_Bytes($rest_k)."</TD><TD>&nbsp;</TD></TR>\n";
+		print "<a name=\"MSIE\">&nbsp;</a><BR>";
+		&tab_head("$Message[34]<br><img src=\"$DirIcons/browser/msie.png\">",19);
+		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[58]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[15]</TH></TR>\n";
+		for ($i=1; $i<=$#_msiever_h; $i++) {
+			my $h="&nbsp;"; my $p="&nbsp;";
+			if ($_msiever_h[$i] > 0 && $_browser_h{"msie"} > 0) {
+				$h=$_msiever_h[$i]; $p=int($_msiever_h[$i]/$_browser_h{"msie"}*1000)/10; $p="$p&nbsp;%";
+			}
+			print "<TR><TD CLASS=AWL>MSIE/$i.xx</TD><TD>$h</TD><TD>$p</TD></TR>\n";
 		}
 		&tab_end;
 		&html_end;
@@ -3531,16 +3637,29 @@ EOF
 		&html_end;
 		exit(0);
 	}
-	if ($QueryString =~ /output=unknownrefererbrowser/i) {
-		print "$CENTER<a name=\"UNKOWNREFERERBROWSER\">&nbsp;</a><BR>";
-		&tab_head($Message[50],19);
-		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>Referer (".(scalar keys %_unknownrefererbrowser_l).")</TH><TH>$Message[9]</TH></TR>\n";
+	if ($QueryString =~ /output=allkeyphrases/i) {
+		print "$CENTER<a name=\"KEYPHRASES\">&nbsp;</a><BR>";
+		&tab_head($Message[43],19);
+		print "<TR bgcolor=\"#$color_TableBGRowTitle\" onmouseover=\"ShowTooltip(15);\" onmouseout=\"HideTooltip(15);\"><TH>$TotalDifferentKeyphrases $Message[103]</TH><TH bgcolor=\"#$color_s\" width=80>$Message[14]</TH><TH bgcolor=\"#$color_s\" width=80>$Message[15]</TH></TR>\n";
+		$total_s=0;
 		my $count=0;
-		foreach my $key (sort { $_unknownrefererbrowser_l{$b} <=> $_unknownrefererbrowser_l{$a} } keys (%_unknownrefererbrowser_l)) {
-			if ($count>=$MAXROWS) { next; }
+		&BuildKeyList($MaxRowsInHTMLOutput,$MinHitKeyword,\%_keyphrases,\%_keyphrases);
+		foreach my $key (@keylist) {
 			$key =~ s/<script.*$//gi;				# This is to avoid 'Cross Site Scripting attacks'
-			print "<tr><td CLASS=AWL>$key</td><td>".Format_Date($_unknownrefererbrowser_l{$key},1)."</td></tr>\n";
+			my $p;
+			if ($TotalKeyphrases) { $p=int($_keyphrases{$key}/$TotalKeyphrases*1000)/10; }
+			my $mot = $key;
+			print "<TR><TD CLASS=AWL>".DecodeEncodedString($mot)."</TD><TD>$_keyphrases{$key}</TD><TD>$p&nbsp;%</TD></TR>\n";
+			$total_s += $_keyphrases{$key};
 			$count++;
+		}
+		debug("Total real / shown : $TotalKeyphrases / $total_s",2);
+		$rest_s=$TotalKeyphrases-$total_s;
+		if ($rest_s > 0) {
+			my $p;
+			if ($TotalKeyphrases) { $p=int($rest_s/$TotalKeyphrases*1000)/10; }
+			print "<TR><TD CLASS=AWL><font color=blue>$Message[30]</TD><TD>$rest_s</TD>";
+			print "<TD>$p&nbsp;%</TD></TR>\n";
 		}
 		&tab_end;
 		&html_end;
@@ -3552,7 +3671,7 @@ EOF
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>Referer (".(scalar keys %_unknownreferer_l).")</TH><TH>$Message[9]</TH></TR>\n";
 		my $count=0;
 		foreach my $key (sort { $_unknownreferer_l{$b} <=> $_unknownreferer_l{$a} } keys (%_unknownreferer_l)) {
-			if ($count>=$MAXROWS) { next; }
+			if ($count>=$MaxRowsInHTMLOutput) { next; }
 			$key =~ s/<script.*$//gi;				# This is to avoid 'Cross Site Scripting attacks'
 			print "<tr><td CLASS=AWL>$key</td><td>".Format_Date($_unknownreferer_l{$key},1)."</td></tr>\n";
 			$count++;
@@ -3567,7 +3686,7 @@ EOF
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>URL (".(scalar keys %_sider404_h).")</TH><TH bgcolor=\"#$color_h\">$Message[49]</TH><TH>$Message[23]</TH></TR>\n";
 		my $count=0;
 		foreach my $key (sort { $_sider404_h{$b} <=> $_sider404_h{$a} } keys (%_sider404_h)) {
-			if ($count>=$MAXROWS) { next; }
+			if ($count>=$MaxRowsInHTMLOutput) { next; }
 			$key =~ s/<script.*$//gi; 				# This is to avoid 'Cross Site Scripting attacks'
 			my $nompage=$key;
 			#if (length($nompage)>$MaxLengthOfURL) { $nompage=substr($nompage,0,$MaxLengthOfURL)."..."; }
@@ -3928,7 +4047,7 @@ EOF
 		debug("ShowHostsStats",2);
 		print "$CENTER<a name=\"VISITOR\">&nbsp;</a><BR>";
 		$MaxNbOfHostsShown = (scalar keys %_hostmachine_h) if $MaxNbOfHostsShown > (scalar keys %_hostmachine_h);
-		&tab_head("$Message[81] ($Message[77] $MaxNbOfHostsShown) &nbsp; - &nbsp; <a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$DirCgi$PROG.$Extension?${NewLinkParams}output=lasthosts":"$PROG$FileSuffix.lasthosts.html")."\">$Message[9]</a> &nbsp; - &nbsp; <a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$DirCgi$PROG.$Extension?${NewLinkParams}output=unknownip":"$PROG$FileSuffix.unknownip.html")."\">$Message[45]</a>",19);
+		&tab_head("$Message[81] ($Message[77] $MaxNbOfHostsShown) &nbsp; - &nbsp; <a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$DirCgi$PROG.$Extension?${NewLinkParams}output=allhosts":"$PROG$FileSuffix.allhosts.html")."\">$Message[80]</a> &nbsp; - &nbsp; <a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$DirCgi$PROG.$Extension?${NewLinkParams}output=lasthosts":"$PROG$FileSuffix.lasthosts.html")."\">$Message[9]</a> &nbsp; - &nbsp; <a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$DirCgi$PROG.$Extension?${NewLinkParams}output=unknownip":"$PROG$FileSuffix.unknownip.html")."\">$Message[45]</a>",19);
 		if ($MonthRequired ne "year") { print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[81] : $TotalHostsKnown $Message[82], $TotalHostsUnknown $Message[1] - $TotalUnique $Message[11]</TH><TH bgcolor=\"#$color_p\" width=80>$Message[56]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH bgcolor=\"#$color_k\" width=80>$Message[75]</TH><TH width=120>$Message[9]</TH></TR>\n"; }
 		else { print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[81] : ".(scalar keys %_hostmachine_h)."</TH><TH bgcolor=\"#$color_p\" width=80>$Message[56]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH bgcolor=\"#$color_k\" width=80>$Message[75]</TH><TH width=120>$Message[9]</TH></TR>\n"; }
 		$total_p=$total_h=$total_k=0;
@@ -4072,7 +4191,7 @@ EOF
 		}
 		&tab_end;
 	}
-		
+
 	# BY FILE TYPE
 	#-------------------------
 	if ($ShowFileTypesStats || $ShowCompressionStats) {
@@ -4249,21 +4368,22 @@ EOF
 	if ($ShowKeyphrasesStats) {
 		debug("ShowKeyphrasesStats",2);
 		print "$CENTER<a name=\"SEARCHKEYS\">&nbsp;</a><BR>";
-		my $TotalDifferentKeyphrases=scalar keys %_keyphrases;
-		my $TotalKeyphrases=0; foreach my $key (keys %_keyphrases) { $TotalKeyphrases+=$_keyphrases{$key}; }
 		$MaxNbOfKeywordsShown = $TotalDifferentKeyphrases if $MaxNbOfKeywordsShown > $TotalDifferentKeyphrases;
-		&tab_head("$Message[43] ($Message[77] $MaxNbOfKeywordsShown)",19);
+		&tab_head("$Message[43] ($Message[77] $MaxNbOfKeywordsShown) &nbsp; - &nbsp; <a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$DirCgi$PROG.$Extension?${NewLinkParams}output=allkeyphrases":"$PROG$FileSuffix.allkeyphrases.html")."\">$Message[80]</a>",19);
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\" onmouseover=\"ShowTooltip(15);\" onmouseout=\"HideTooltip(15);\"><TH>$TotalDifferentKeyphrases $Message[103]</TH><TH bgcolor=\"#$color_s\" width=80>$Message[14]</TH><TH bgcolor=\"#$color_s\" width=80>$Message[15]</TH></TR>\n";
-		$count=0;
-		$rest_s=0;
-		foreach my $key (sort { $_keyphrases{$b} <=> $_keyphrases{$a} } keys (%_keyphrases)) {
-			if ($count>=$MaxNbOfKeywordsShown) { $rest_s+=$_keyphrases{$key}; next; }
-			if ($_keyphrases{$key}<$MinHitKeyword) { $rest_s+=$_keyphrases{$key}; next; }
-			my $p=int($_keyphrases{$key}/$TotalKeyphrases*1000)/10;
-			my $mot = $key; $mot =~ tr/\+/ /s;	# Showing $key without +
+		$total_s=0;
+		my $count=0;
+		&BuildKeyList($MaxNbOfKeywordsShown,$MinHitKeyword,\%_keyphrases,\%_keyphrases);
+		foreach my $key (@keylist) {
+			$key =~ s/<script.*$//gi;				# This is to avoid 'Cross Site Scripting attacks'
+			my $p;
+			if ($TotalKeyphrases) { $p=int($_keyphrases{$key}/$TotalKeyphrases*1000)/10; }
+			my $mot = $key;
 			print "<TR><TD CLASS=AWL>".DecodeEncodedString($mot)."</TD><TD>$_keyphrases{$key}</TD><TD>$p&nbsp;%</TD></TR>\n";
+			$total_s += $_keyphrases{$key};
 			$count++;
 		}
+		$rest_s=$TotalKeyphrases-$total_s;
 		if ($rest_s > 0) {
 			my $p;
 			if ($TotalKeyphrases) { $p=int($rest_s/$TotalKeyphrases*1000)/10; }
