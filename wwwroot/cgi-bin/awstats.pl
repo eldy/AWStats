@@ -1472,13 +1472,13 @@ sub Check_Config {
 	if ($AddDataArrayShowDaysOfMonthStats !~ /[0-1]/)       { $AddDataArrayShowDaysOfMonthStats=1; }
 	if ($AddDataArrayShowDaysOfWeekStats !~ /[0-1]/)       	{ $AddDataArrayShowDaysOfWeekStats=1; }
 	if ($AddDataArrayShowHoursStats !~ /[0-1]/)          	{ $AddDataArrayShowHoursStats=1; }
-	my @maxnboflist=('Domain','HostsShown','LoginShown','RobotShown','WormsShown','PageShown','ScreenSizesShown','RefererShown','KeyphrasesShown','KeywordsShown','EMailsShown');
-	my @maxnboflistdefaultval=(10,10,10,10,10,10,5,10,10,10,20);
+	my @maxnboflist=('Domain','HostsShown','LoginShown','RobotShown','WormsShown','PageShown','OsShown','BrowsersShown','ScreenSizesShown','RefererShown','KeyphrasesShown','KeywordsShown','EMailsShown');
+	my @maxnboflistdefaultval=(10,10,10,10,10,10,10,10,5,10,10,10,20);
 	foreach my $i (0..(@maxnboflist-1)) {
 		if (! $MaxNbOf{$maxnboflist[$i]} || $MaxNbOf{$maxnboflist[$i]} !~ /^\d+$/ || $MaxNbOf{$maxnboflist[$i]}<1) 	{ $MaxNbOf{$maxnboflist[$i]}=$maxnboflistdefaultval[$i]; }
 	}
-	my @minhitlist=('Domain','Host','Login','Robot','Worm','File','ScreenSize','Refer','Keyphrase','Keyword','EMail');
-	my @minhitlistdefaultval=(1,1,1,1,1,1,1,1,1,1,1);
+	my @minhitlist=('Domain','Host','Login','Robot','Worm','File','Os','Browser','ScreenSize','Refer','Keyphrase','Keyword','EMail');
+	my @minhitlistdefaultval=(1,1,1,1,1,1,1,1,1,1,1,1,1);
 	foreach my $i (0..(@minhitlist-1)) {
 		if (! $MinHit{$minhitlist[$i]} || $MinHit{$minhitlist[$i]} !~ /^\d+$/ || $MinHit{$minhitlist[$i]}<1) 	{ $MinHit{$minhitlist[$i]}=$minhitlistdefaultval[$i]; }
 	}
@@ -8235,7 +8235,7 @@ if (scalar keys %HTMLOutput) {
 			}
 			&tab_end;
 		}
-	
+
 		# BY RECEIVER EMAIL
 		#----------------------------
 		if ($ShowEMailReceivers) {
@@ -8566,11 +8566,12 @@ if (scalar keys %HTMLOutput) {
 				foreach my $family (@OSFamily) { if ($key =~ /^$family/i) { $new_os_h{"${family}cumul"}+=$_os_h{$key}; next OSLOOP; } }
 				$new_os_h{$key}+=$_os_h{$key};
 			}
-			my $title="$Message[59] &nbsp; - &nbsp; <a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=osdetail":"$PROG$StaticLinks.osdetail.$StaticExt")."\"$NewLinkTarget>$Message[58]</a> &nbsp; - &nbsp; <a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=unknownos":"$PROG$StaticLinks.unknownos.$StaticExt")."\"$NewLinkTarget>$Message[0]</a>";
+			my $title="$Message[59] ($Message[77] $MaxNbOf{'OsShown'}) &nbsp; - &nbsp; <a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=osdetail":"$PROG$StaticLinks.osdetail.$StaticExt")."\"$NewLinkTarget>$Message[80]/$Message[58]</a> &nbsp; - &nbsp; <a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=unknownos":"$PROG$StaticLinks.unknownos.$StaticExt")."\"$NewLinkTarget>$Message[0]</a>";
 			&tab_head("$title",19);
 			print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH width=$WIDTHCOLICON>&nbsp;</TH><TH>$Message[59]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[15]</TH></TR>\n";
+			$total_h=0;
 			my $count=0;
-			&BuildKeyList($MaxRowsInHTMLOutput,1,\%new_os_h,\%new_os_h);
+			&BuildKeyList($MaxNbOf{'OsShown'},$MinHit{'Os'},\%new_os_h,\%new_os_h);
 			foreach my $key (@keylist) {
 				my $p='&nbsp;';
 				if ($Totalh) { $p=int($new_os_h{$key}/$Totalh*1000)/10; $p="$p %"; }
@@ -8586,7 +8587,18 @@ if (scalar keys %HTMLOutput) {
 					if ($libos eq 'mac') { $libos="<b>Macintosh</b>"; }
 					print "<TR><TD".($count?"":" width=$WIDTHCOLICON")."><IMG SRC=\"$DirIcons\/os\/$nameicon.png\" alt=\"\"></TD><TD CLASS=AWS>$libos</TD><TD>$new_os_h{$key}</TD><TD>$p</TD></TR>\n";
 				}
+				$total_h += $new_os_h{$key};
 				$count++;
+			}
+			if ($Debug) { debug("Total real / shown : $Totalh / $total_h",2); }
+			$rest_h=$Totalh-$total_h;
+			if ($rest_h > 0) {
+				my $p;
+				if ($Totalh) { $p=int($rest_h/$Totalh*1000)/10; }
+				print "<TR>";
+				print "<TD>&nbsp;</TD>";
+				print "<TD CLASS=AWS><font color=\"#$color_other\">$Message[2]</font></TD><TD>$rest_h</TD>";
+				print "<TD>$p %</TD></TR>\n";
 			}
 			&tab_end;
 		}
@@ -8602,11 +8614,12 @@ if (scalar keys %HTMLOutput) {
 				foreach my $family (@BrowsersFamily) { if ($key =~ /^$family/i) { $new_browser_h{"${family}cumul"}+=$_browser_h{$key}; next BROWSERLOOP; } }
 				$new_browser_h{$key}+=$_browser_h{$key};
 			}
-			my $title="$Message[21] &nbsp; - &nbsp; <a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=browserdetail":"$PROG$StaticLinks.browserdetail.$StaticExt")."\"$NewLinkTarget>$Message[58]</a> &nbsp; - &nbsp; <a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=unknownbrowser":"$PROG$StaticLinks.unknownbrowser.$StaticExt")."\"$NewLinkTarget>$Message[0]</a>";
+			my $title="$Message[21] ($Message[77] $MaxNbOf{'BrowsersShown'}) &nbsp; - &nbsp; <a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=browserdetail":"$PROG$StaticLinks.browserdetail.$StaticExt")."\"$NewLinkTarget>$Message[80]/$Message[58]</a> &nbsp; - &nbsp; <a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=unknownbrowser":"$PROG$StaticLinks.unknownbrowser.$StaticExt")."\"$NewLinkTarget>$Message[0]</a>";
 			&tab_head("$title",19);
 			print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH width=$WIDTHCOLICON>&nbsp;</TH><TH>$Message[21]</TH><TH width=80>$Message[111]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[15]</TH></TR>\n";
+			$total_h=0;
 			my $count=0;
-			&BuildKeyList($MaxRowsInHTMLOutput,1,\%new_browser_h,\%new_browser_h);
+			&BuildKeyList($MaxNbOf{'BrowsersShown'},$MinHit{'Browser'},\%new_browser_h,\%new_browser_h);
 			foreach my $key (@keylist) {
 				my $p='&nbsp;';
 				if ($Totalh) { $p=int($new_browser_h{$key}/$Totalh*1000)/10; $p="$p %"; }
@@ -8622,7 +8635,18 @@ if (scalar keys %HTMLOutput) {
 					if ($libbrowser eq 'msie')     { $libbrowser="<b>MS Internet Explorer</b>"; }
 					print "<TR><TD".($count?"":" width=$WIDTHCOLICON")."><IMG SRC=\"$DirIcons\/browser\/$nameicon.png\" alt=\"\"></TD><TD CLASS=AWS>$libbrowser</TD><TD>".($BrowsersHereAreGrabbers{$key}?"<b>$Message[112]</b>":"$Message[113]")."</TD><TD>$new_browser_h{$key}</TD><TD>$p</TD></TR>\n";
 				}
+				$total_h += $new_browser_h{$key};
 				$count++;
+			}
+			if ($Debug) { debug("Total real / shown : $Totalh / $total_h",2); }
+			$rest_h=$Totalh-$total_h;
+			if ($rest_h > 0) {
+				my $p;
+				if ($Totalh) { $p=int($rest_h/$Totalh*1000)/10; }
+				print "<TR>";
+				print "<TD>&nbsp;</TD>";
+				print "<TD CLASS=AWS><font color=\"#$color_other\">$Message[2]</font></TD><TD>&nbsp;</TD><TD>$rest_h</TD>";
+				print "<TD>$p %</TD></TR>\n";
 			}
 			&tab_end;
 		}
