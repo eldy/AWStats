@@ -66,7 +66,7 @@
 "voila\.","kw=",
 "lycos\.","query=",
 "google\.","q=",
-"alltheweb\.","query=",
+"alltheweb\.com","q(|uery)=",
 "netscape\.","search=",
 "northernlight\.","qr=",
 "dmoz\.org","search=",
