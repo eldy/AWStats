@@ -77,7 +77,8 @@ if ($OS =~ /macos/) {
     $TEMP=$ENV{"TEMP"}||$ENV{"TMP"}||"/tmp";
 }
 if ($OS =~ /windows/) {
-    $TEMP=$ENV{"TEMP"}||$ENV{"TMP"}||"c:/temp";
+    #$TEMP=$ENV{"TEMP"}||$ENV{"TMP"}||"c:/temp";
+    $TEMP="c:/temp";
     $PROGPATH=$ENV{"ProgramFiles"};
 }
 if (! $TEMP || ! -d $TEMP) {
@@ -87,7 +88,7 @@ if (! $TEMP || ! -d $TEMP) {
     sleep 2;
     exit 2;
 } 
-$BUILDROOT="$TEMP/$PROJET-buildroot";
+$BUILDROOT="$TEMP/${PROJECT}-buildroot";
 
 
 my $copyalreadydone=0;

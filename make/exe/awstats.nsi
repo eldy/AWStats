@@ -20,10 +20,10 @@
   ;General
   Name "AWStats"
   OutFile "awstats-${MUI_VERSION_DOT}.exe"
-  Icon "C:\temp\buildroot\awstats-${MUI_VERSION_DOT}\docs\images\awstats.ico"
-  UninstallIcon "C:\temp\buildroot\awstats-${MUI_VERSION_DOT}\docs\images\awstats.ico"
-  !define MUI_ICON "C:\temp\buildroot\awstats-${MUI_VERSION_DOT}\docs\images\awstats.ico"
-  !define MUI_UNICON "C:\temp\buildroot\awstats-${MUI_VERSION_DOT}\docs\images\awstats.ico"
+  Icon "C:\temp\awstats-buildroot\awstats-${MUI_VERSION_DOT}\docs\images\awstats.ico"
+  UninstallIcon "C:\temp\awstats-buildroot\awstats-${MUI_VERSION_DOT}\docs\images\awstats.ico"
+  !define MUI_ICON "C:\temp\awstats-buildroot\awstats-${MUI_VERSION_DOT}\docs\images\awstats.ico"
+  !define MUI_UNICON "C:\temp\awstats-buildroot\awstats-${MUI_VERSION_DOT}\docs\images\awstats.ico"
 
   BrandingText ""
 ;  ShowInstDetails nevershow
@@ -60,7 +60,7 @@
   !define MUI_HEADERBITMAP "C:\Mes Developpements\awstats\make\exe\awstats_bitmap2.bmp"
 
   !insertmacro MUI_PAGE_WELCOME
-  !insertmacro MUI_PAGE_LICENSE "C:\temp\buildroot\awstats-${MUI_VERSION_DOT}\docs\LICENSE.TXT"
+  !insertmacro MUI_PAGE_LICENSE "C:\temp\awstats-buildroot\awstats-${MUI_VERSION_DOT}\docs\LICENSE.TXT"
 ;  !insertmacro MUI_PAGE_COMPONENTS
   !insertmacro MUI_PAGE_DIRECTORY
   !insertmacro MUI_PAGE_INSTFILES
@@ -144,7 +144,7 @@ SectionEnd
 Section "AWStats" AWStats
 
 	SetOutPath $INSTDIR
-	File /r "C:\temp\buildroot\awstats-${MUI_VERSION_DOT}\*"
+	File /r "C:\temp\awstats-buildroot\awstats-${MUI_VERSION_DOT}\*"
 	
 	;Store install folder
     WriteRegStr HKCU "Software\${MUI_PROD}" "" $INSTDIR
