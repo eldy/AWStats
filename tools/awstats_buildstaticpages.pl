@@ -206,7 +206,7 @@ for my $output (@OutputList) {
 # Build pdf file
 if ($QueryString =~ /(^|-|&)buildpdf/i) {
 #	my $pdffile=$pages[0]; $pdffile=~s/\.\w+$/\.pdf/;
-	my $command="\"$HtmlDoc\" -t pdf --quiet --webpage --no-title --textfont helvetica  --left 16 --bottom 8 --top 8 --browserwidth 800 --fontsize 7.0 @pages > awstats.$OutputSuffix.pdf\n";
+	my $command="\"$HtmlDoc\" -t pdf --quiet --webpage --no-title --textfont helvetica  --left 16 --bottom 8 --top 8 --browserwidth 800 --headfootsize 7.0 --fontsize 7.0 @pages > awstats.$OutputSuffix.pdf\n";
 	print "Build PDF file : $command\n";
 	$retour=`$command  2>&1`;
 	my $res=$?>>8;
