@@ -36,9 +36,9 @@
 <br>
 <u>ABOUT QUESTIONS:</u><br>
 <ul>
-FAQ-ABO100 <a href="#SERVERSOS">Wich web servers or operating systems are supported ?</a><br>
-FAQ-ABO150 <a href="#LOGFORMAT">Wich log format can AWStats analyze ?</a><br>
-FAQ-ABO200 <a href="#LANG">Wich languages are available ?</a><br>
+FAQ-ABO100 <a href="#SERVERSOS">Which web servers or operating systems are supported ?</a><br>
+FAQ-ABO150 <a href="#LOGFORMAT">Which log format can AWStats analyze ?</a><br>
+FAQ-ABO200 <a href="#LANG">Which languages are available ?</a><br>
 FAQ-ABO250 <a href="#PHPNUKE">Can AWStats be integrated with PHP Nuke ?</a><br>
 </ul>
 <br>
@@ -52,14 +52,14 @@ FAQ-SET100 <a href="#CGISOURCE">I see Perl script's source instead of its execut
 FAQ-SET150 <a href="#SPAWNERROR">Error "... couldn't spawn child process..." with Apache for windows.</a><br>
 FAQ-SET200 <a href="#INTERNAL">"Internal Error" or "Error 500" in a browser connecting to Apache.</a><br>
 FAQ-SET210 <a href="#SPEED">"Internal Error" after a long time in my browser (See FAQ-COM100 "AWStats speed/timeout problems").</a><br>
-FAQ-SET250 <a href="#PERSONALISEDLOG">Log format setup or errors.</a><br>
+FAQ-SET250 <a href="#PERSONALIZEDLOG">Log format setup or errors.</a><br>
 FAQ-SET260 <a href="#FTP">Setup for FTP server log files.</a><br>
 FAQ-SET280 <a href="#NOTSAMENUMBER">Error "Not same number of records of...".</a><br>
 FAQ-SET300 <a href="#COULDNOTOPEN">Error "Couldn't open file ..."</a><br>
 FAQ-SET350 <a href="#EMPTY_STATS">Empty or null statistics reported.</a><br>
 FAQ-SET450 <a href="#NO_ICON">No pictures/graphics shown.</a><br>
 FAQ-SET500 <a href="#BENCHMARK">Frequency to launch AWStats to update statistics (See FAQ-COM150 "Benchmark question").</a><br>
-FAQ-SET550 <a href="#CRONTAB">How can i run AWStats frequently ?</a><br>
+FAQ-SET550 <a href="#CRONTAB">How to run AWStats frequently ?</a><br>
 FAQ-SET600 <a href="#EXCLUDEHOSTS">How to exclude my IP address (or whole subnet mask) from stats ?</a><br>
 </ul>
 
@@ -71,9 +71,9 @@ FAQ-COM100 <a href="#SPEED">AWStats speed/timeout problems.</a><br>
 FAQ-COM150 <a href="#BENCHMARK">Benchmark question.</a><br>
 FAQ-COM200 <a href="#DNS">How reverse DNS Lookup works, unresolved IP Addresses ?</a><br>
 FAQ-COM250 <a href="#DIFFERENT_RESULTS">Different results than other log analyzers (Webalizer, WUsage, wwwStats...).</a><br>
-FAQ-COM300 <a href="#DIFFERENCE_HOURS">Difference beetween local hour and AWStats reported hour.</a><br>
+FAQ-COM300 <a href="#DIFFERENCE_HOURS">Difference between local hour and AWStats reported hour.</a><br>
 FAQ-COM350 <a href="#OLDLOG">How can I process old log file ?</a><br>
-FAQ-COM400 <a href="#MULTILOG">How can I update my statistics when i use a load balancing system that splits my logs ?</a><br>
+FAQ-COM400 <a href="#MULTILOG">How can I update my statistics when I use a load balancing system that splits my logs ?</a><br>
 FAQ-COM500 <a href="#RESET">How can I reset all my statistics ?</a><br>
 FAQ-COM550 <a href="#EDITHISTORY">Can I safely remove an line in AWStats history files (awstatsMMYYYY*.txt) ?</a><br>
 </ul>
@@ -96,7 +96,7 @@ FAQ-SEC200 <a href="#WORMS">How to manage log files (and statistics) corrupted b
 AWStats can works with all web server able to write log file with a <u>combined log format (XLF/ELF)</u> like apache,
 a <u>common log format (CLF)</u> like Apache or Squid, an <u>W3C log format</u> like IIS 5.0 or higher (Some users have
 reported that you can setup your log format to W3C with IIS 4.0 but you need a service pack 6), and a lot of others
-web/wap/proxies servers.<br>
+Web/Wap/Proxy servers.<br>
 Because AWStats is in perl, it can works on all Operating Systems.<br>
 Examples of used platforms (bold means 'tested by author', others were reported by AWStats users to work correctly) :<br>
 <table bgcolor=#F0F0F0 width="100%" class=CFAQ><tr class=CFAQ><td class=CFAQ>
@@ -113,8 +113,8 @@ Examples of used platforms (bold means 'tested by author', others were reported 
 <b><u>FAQ-ABO150 : WHICH LOG FORMAT CAN AWSTATS ANALYZE ?</u></b><br>
 AWStats setup knows predefined log format you can use to make AWStats config easier. However,
 you can define your own log format, that's the reason why AWStats can analyze nearly all web, wap
-and proxies server log files. Some FTP servers are also supported.<br>
-The only requirement is "Your log file must contains required information".<br>
+and proxy server log files. Some FTP servers are also supported.<br>
+The only requirement is "Your log file must contain required information".<br>
 This is example of possible log format:<br>
 <i>
 Apache combined log format (known as NCSA combined log format or XLF or ELF format) (See FAQ for this format)<br>
@@ -122,24 +122,24 @@ IIS 5.0+ log format (known as W3C format)<br>
 Webstar native log format<br>
 ProFTP server<br>
 ...<br>
-Apache common log format (AWStats can now analyse such log files but such log files does not contain all information
-AWStats is looking for. The problem is in the content, not in the format). I think analysing common log files is not
+Apache common log format (AWStats can now analyze such log files but such log files does not contain all information
+AWStats is looking for. The problem is in the content, not in the format). I think analyzing common log files is not
 interesting because there is a lot of missing information: no way to filter robots, find search engines, keywords, os, browser.
-But a lot of users asked me for it, so AWStats support it. However, a lot of intereting advanced features can't work: browsers, os, keywords, robot detection...).
+But a lot of users asked me for it, so AWStats support it. However, a lot of interesting advanced features can't work: browsers, os's, keywords, robot detection...).
 </i><br>
-See also <a href="#PERSONALISEDLOG">F.A.Q.: LOG FORMAT SETUP OR ERRORS </a>.<br>
+See also <a href="#PERSONALIZEDLOG">F.A.Q.: LOG FORMAT SETUP OR ERRORS </a>.<br>
 <br>
 
 
 <a name="LANG"></a><br>
-<b><u>FAQ-ABO200 : WICH LANGUAGES ARE AVAILABLE ?</u></b><br>
+<b><u>FAQ-ABO200 : WHICH LANGUAGES ARE AVAILABLE ?</u></b><br>
 AWStats can make reports in 27 languages. This is a list of all of them, for last version, in alphabetical order:<br>
 <i>
 <table bgcolor=#F0F0F0 width="100%" class=CFAQ><tr class=CFAQ><td class=CFAQ>
 Bosnian=ba, Chinese (Taiwan)=tw, Chinese (Traditional)=cn, Czech=cz, Danish=dk,
 Dutch=nl, English=en, French=fr, German=de, Greek=gr, Hungarian=hu,
 Indonesian=id, Italian=it, Japanese=jp, Korean=kr, Latvian=lv, Norwegian (Nynorsk)=nn,
-Norwegian (Bokmål)=nb, Polish=pl, Portuguese=pt, Portuguese (Brazilian)=br,
+Norwegian (Bokmal)=nb, Polish=pl, Portuguese=pt, Portuguese (Brazilian)=br,
 Romanian=ro, Russian=ru, Spanish=es, Swedish=se, Turkish=tr, Ukrainian=ua
 </td></tr></table>
 </i>
@@ -188,7 +188,7 @@ properties, with apache you have to use the "ExecCGI" option in the directory "D
 <b><u>FAQ-SET150 & FAQ-SET200 : INTERNAL ERROR OR ERROR 500 IN MY BROWSER</u></b><br>
 <b><u>ERROR "... COULDN'T SPAWN CHILD PROCESS..." IN APACHE ERROR LOG</u></b><br>
 <font style="color: #660000">PROBLEM:</font>
-AWStats seems to run fine at the command prompt but when ran as a CGI from a browser, i get an<br>
+AWStats seems to run fine at the command prompt but when ran as a CGI from a browser, I get an<br>
 <i>"Internal Error"</i>.<br>
 Sometimes I get the following message in my error log file:<br>
 <i>[error] [client xx.xx.xx.xx] No such file or directory: couldn't spawn child process: c:/mywebroot/cgi-bin/awstats.pl</i><br>
@@ -205,7 +205,7 @@ Then restart Apache. This will tell Apache to use the program associated to .pl 
 to find the perl interpreter.<br>
 <br>
 
-<a name="PERSONALISEDLOG"></a><br>
+<a name="PERSONALIZEDLOG"></a><br>
 <b><u>FAQ-SET250 : LOG FORMAT SETUP OR ERRORS</u></b><br>
 <font style="color: #660000">PROBLEM:</font> Which value do I have to put in the LogFormat
 parameter to make AWStats working with my log file format ?<br>
@@ -252,15 +252,15 @@ See Next FAQ.<br>
 </td></tr></table>
 
 <u>There is a lot of other possible log formats.</u><br>
-You must use a personalised log format LogFormat ="..." as described in config file to
+You must use a personalized log format LogFormat ="..." as described in config file to
 support other various log formats.<br>
 <br>
 
 <a name="FTP"></a><br>
 <b><u>FAQ-SET260 : SETUP FOR FTP SERVER LOG FILES</u></b><br>
-<font style="color: #660000">PROBLEM:</font> What do I have to do to use Awstats to analyze some FTP server log files.<br>
+<font style="color: #660000">PROBLEM:</font> What do I have to do to use AWStats to analyze some FTP server log files.<br>
 <font style="color: #4444cc">SOLUTION:</font>
-AWStats was built to analyze web,wap or proxy servers log files. However it can be used with some FTP server log files.<br>
+AWStats was built to analyze web,wap or proxy server's log files. However it can be used with some FTP server log files.<br>
 <u>This is example for ProFTP:</u><br>
 Modify the proftpd.conf file. At the very top add two new defines.<br>
 <i>LogFormat awstats "%t %h %u GET %f 200 %b"<br>
@@ -315,7 +315,7 @@ user, used by web server process, can write into).<br>
 
 <a name="EMPTY_STATS"></a><br>
 <b><u>FAQ-SET350 : EMPTY OR NULL STATISTICS REPORTED</u></b><br>
-<font style="color: #660000">PROBLEM:</font> Awstats seems to work but i'm not 
+<font style="color: #660000">PROBLEM:</font> AWStats seems to work but I'm not 
 getting any results. i get a statistics page that looks like i have no hits.<br>
 <font style="color: #4444cc">SOLUTION:</font> That's the most common problem you 
 can have and reason is simple: Your log file format setup is wrong.<br>
@@ -337,7 +337,7 @@ You can also read the next FAQ to have examples of LogFormat value according to 
 
 <a name="NO_ICON"></a><br>
 <b><u>FAQ-SET450 : NO PICTURES/GRAPHICS SHOWN</u></b><br>
-<font style="color: #660000">PROBLEM:</font> Awstats seems to work (all data and counters seem to be good)
+<font style="color: #660000">PROBLEM:</font> AWStats seems to work (all data and counters seem to be good)
 but I have no image shown.<br>
 <font style="color: #4444cc">SOLUTION:</font> With Apache web server, you might have
 troubles (no picture shown on stats page) if you use a directory called "icons" (because of Apache
@@ -348,14 +348,14 @@ to reflect this change).<br>
 
 <a name="CRONTAB"></a><br>
 <b><u>FAQ-SET550 : HOW TO RUN AWSTATS FREQUENTLY</u></b><br>
-<font style="color: #660000">PROBLEM:</font> Awstats must be ran frequently to update statistitics.
+<font style="color: #660000">PROBLEM:</font> AWStats must be ran frequently to update statistics.
 How can I do this ?<br>
 <font style="color: #4444cc">SOLUTION:</font><br>
 <u>With Windows</u>, you can use the internal task scheduler.
 The use of this tool is not an AWStats related problem, so please take a look at your Windows manual.
 Warning, if you use <i>"awstats.pl -config=mysite -update"</i> in your scheduled task, you might
 experience problem of failing task. Try this instead<br>
-<i>"C:\WINNT\system32\CMD.EXE /C C:\[awstat_path]\awstats.pl -config=mysite -update"</i><br>
+<i>"C:\WINNT\system32\CMD.EXE /C C:\[awstats_path]\awstats.pl -config=mysite -update"</i><br>
 or<br>
 <i>"C:\[perl_path]\perl.exe C:\[awstats_path]\awstats.pl -config=mysite -update"</i><br>
 A lot of other scheduler (sharewares/freewares) are very good.<br>
@@ -374,9 +374,9 @@ visits from a whole subnet.<br>
 <font style="color: #4444cc">SOLUTION:</font><br>
 You must edit the config file to change the SkipHosts parameter.<br>
 For example, to exclude:<br>
-- your own IP adress 123.123.123.123, use SkipHosts="123\.123\.123\.123"<br>
+- your own IP address 123.123.123.123, use SkipHosts="123\.123\.123\.123"<br>
 - the whole subnet 123.123.123.xxx, use SkipHosts="123\.123\.123"<br>
-- all sub hosts xxx.myintranet.com, use SkipHosts="\.myintranet\.com" (This one works only if dns lookup is already done in your
+- all sub hosts xxx.myintranet.com, use SkipHosts="\.myintranet\.com" (This one works only if DNS lookup is already done in your
 log file).<br>
 <br> 
 
@@ -452,12 +452,12 @@ log analyzer) and it doesn't report the same results than AWStats. Why ?<br>
 <font style="color: #4444cc">SOLUTION:</font>
 If you compare AWStats results with an other log file analyzer, you will found some differences,
 sometimes very important. In fact, all analyzer (even AWStats) make "over reporting" because of the
-problem of proxy-servers and robots. However Awstats is one the most accurate and its "over reporting"
+problem of proxy-servers and robots. However AWStats is one the most accurate and its "over reporting"
 is very low where all other analyzers, even the most famous, have a very high error rate (10% to 2x more than reality).<br>
 This is the most important reasons why you will find differences:<br>
 - Some dynamic pages generated by CGI programs are not counted by some analyzer (ie Webalizer) like
 a "Page" (but only like a "Hit") if CGI prog has not a .cgi extension, so they are not included
-correctly in their statistics. AWstats does not make this error and all CGI pages are pages.<br>
+correctly in their statistics. AWStats does not make this error and all CGI pages are pages.<br>
 - AWStats is the alone analyzer (that i know for the moment) able to detect robots visits.
 All other analyzers think it's a human visitor. This error make them to report more visits and visitors
 than reality. This does not happen with AWStats. When it tells "1 visitor", it means "1 human visitor".
@@ -470,7 +470,7 @@ the page and 2 other servers download all images). Because of this, if stats of 
 This decrease the error, not completely, because it's always possible that a proxy server download one HTML frame and
 another one download another frame, but this make the over-reporting of unique visitors less important.<br>
 There is also differences in log analyzers databases and algorithms that make details of results less or more accurate:<br>
-- AWStats has a higher browser, os and search engine database, so reports concerning this are more accurate.<br>
+- AWStats has a larger browser, os and search engine database, so reports concerning this are more accurate.<br>
 - AWStats has url syntax rules to find keywords or keyphrases used to find your site, but AWStats has also
 an algorithm to detect keywords of unknown search engines with unknown url syntax rule.<br>
 <br>
@@ -479,13 +479,13 @@ an algorithm to detect keywords of unknown search engines with unknown url synta
 <b><u>FAQ-COM300 : DIFFERENCE BETWEEN LOCAL HOURS AND AWSTATS REPORTED HOURS</u></b><br>
 <font style="color: #660000">PROBLEM:</font> I use IIS and there's a difference 
 between local hour and AWStats reported hour. For example I made a hit on a page 
-at 4:00 and AWStats report I hited it at 2:00.<br>
+at 4:00 and AWStats report I hit it at 2:00.<br>
 <font style="color: #4444cc">SOLUTION:</font> This is not a problem of time 
 in your local client host. AWStats use only time reported in logs by your server 
 and all time are related to server hour. The problem is that IIS in some foreign 
 versions puts GMT time in its log file (and not local time). So, you have also 
 GMT time in your statistics.<br>
-You can do nothing, for the moment, but waiting that microsoft change this in next
+You can do nothing, for the moment, but waiting that Microsoft change this in next
 IIS versions. However, Microsoft sheet Q271196 "IIS Log File Entries 
 Have the Incorrect Date and Time Stamp" says: <br>
 <i>The selected log file format is the W3C Extended Log File 
@@ -503,15 +503,15 @@ So this means this way of working might never be changed.<br>
 <font style="color: #4444cc">SOLUTION:</font> 
 You must change your LogFile parameter to point to the old log file and run the update. However the update process can only accept
 files in chronological order, so if you have already processed a recent file, you must before
-reset all your statistics (see next FAQ) and restart all the update process for all past log files and in chronoloical order.<br>
+reset all your statistics (see next FAQ) and restart all the update process for all past log files and in chronological order.<br>
 <br>
 
 <a name="MULTILOG"></a><br>
 <b><u>FAQ-COM400 : HOW CAN I UPDATE MY STATISTICS WHEN I USE A LOAD BALANCING SYSTEM THAT SPLITS MY LOGS ?</u></b><br>
 <font style="color: #660000">PROBLEM:</font> How can I update my statistics when i use a load balancing system that split my logs ?<br>
 <font style="color: #4444cc">SOLUTION:</font> 
-The best solution is to merge all splitted log files resulted from all your load balanced servers into one. For this, you can use
-the <b>logresolvemerge</b> tool provided with AWstats since version 3.2 :<br>
+The best solution is to merge all split log files resulted from all your load balanced servers into one. For this, you can use
+the <b>logresolvemerge</b> tool provided with AWStats since version 3.2 :<br>
 <i>logresolvemerge.pl file1.log file2.log ... filen.log > newfiletoprocess.log</i><br>
 And setup the <i>LogFile</i> parameter in your config file to process the <i>newfiletoprocess.log</i> file.<br>
 <br>
@@ -534,7 +534,7 @@ You will have to process all past log files (in chronological order) to get old 
 without running AWStats update process but changing directly data in AWStats historical database files.<br>
 <font style="color: #4444cc">SOLUTION:</font> 
 If you remove a lines starting with "BEGIN_" or "END_", AWStats will find your file "corrupted" so you must not change those
-king of lines. All lines that are not in any "section" (between a BEGIN_xxx and END_xxx line) should also not be removed.
+kind of lines. All lines that are not in any "section" (between a BEGIN_xxx and END_xxx line) should also not be removed.
 However you can change any line that is a "section record", but you do this at your own risk. Your reported stats
 might have wrong values after that.<br>
 <br>
