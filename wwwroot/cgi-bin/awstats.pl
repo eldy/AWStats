@@ -110,7 +110,8 @@ $NbOfLinesShowsteps $NewLinePhase $NbOfLinesForCorruptedLog $PurgeLogFile
 $ShowAuthenticatedUsers $ShowFileSizesStats
 $ShowDropped $ShowCorrupted $ShowUnknownOrigin $ShowLinksToWhoIs
 $ShowEMailSenders $ShowEMailReceivers
-$Expires $UpdateStats $MigrateStats $URLNotCaseSensitive $URLWithQuery $UseFramesWhenCGI $DecodeUA
+$Expires $UpdateStats $MigrateStats $URLNotCaseSensitive $URLWithQuery $URLReferrerWithQuery
+$UseFramesWhenCGI $DecodeUA
 /;
 ($EnableLockForUpdate, $DNSLookup, $AllowAccessFromWebToAuthenticatedUsersOnly,
 $BarHeight, $BarWidth, $CreateDirDataIfNotExists, $KeepBackupOfHistoricFiles, $MaxLengthOfURL,
@@ -123,8 +124,9 @@ $NbOfLinesShowsteps, $NewLinePhase, $NbOfLinesForCorruptedLog, $PurgeLogFile,
 $ShowAuthenticatedUsers, $ShowFileSizesStats,
 $ShowDropped, $ShowCorrupted, $ShowUnknownOrigin, $ShowLinksToWhoIs,
 $ShowEMailSenders, $ShowEMailReceivers,
-$Expires, $UpdateStats, $MigrateStats, $URLNotCaseSensitive, $URLWithQuery, $UseFramesWhenCGI, $DecodeUA)=
-(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
+$Expires, $UpdateStats, $MigrateStats, $URLNotCaseSensitive, $URLWithQuery, $URLReferrerWithQuery,
+$UseFramesWhenCGI, $DecodeUA)=
+(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
 use vars qw/
 $AllowToUpdateStatsFromBrowser $ArchiveLogRecords $DetailedReportsOnNewWindows
 $FirstDayOfWeek $KeyWordsNotSensitive $SaveDatabaseFilesWithPermissionsForEveryone
@@ -1111,16 +1113,17 @@ sub Parse_Config {
 			next;
 			}
 		if ($param =~ /^URLNotCaseSensitive$/)		{ $URLNotCaseSensitive=$value; next; }
-		if ($param =~ /^URLWithQuery$/)			{ $URLWithQuery=$value; next; }
+		if ($param =~ /^URLWithQuery$/)				{ $URLWithQuery=$value; next; }
 		if ($param =~ /^URLWithQueryWithoutFollowingParameters$/)	{
 			foreach my $elem (split(/\s+/,$value))	{ push @URLWithQueryWithoutFollowingParameters,$elem; }
 			next;
 			}
-		if ($param =~ /^WarningMessages/)       { $WarningMessages=$value; next; }
-		if ($param =~ /^NbOfLinesForCorruptedLog/) { $NbOfLinesForCorruptedLog=$value; next; }
-		if ($param =~ /^Expires/)               { $Expires=$value; next; }
-		if ($param =~ /^WrapperScript/)         { $WrapperScript=$value; next; }
-		if ($param =~ /^DecodeUA/)         		{ $DecodeUA=$value; next; }
+		if ($param =~ /^URLReferrerWithQuery$/)		{ $URLReferrerWithQuery=$value; next; }
+		if ($param =~ /^WarningMessages/)       	{ $WarningMessages=$value; next; }
+		if ($param =~ /^NbOfLinesForCorruptedLog/) 	{ $NbOfLinesForCorruptedLog=$value; next; }
+		if ($param =~ /^Expires/)               	{ $Expires=$value; next; }
+		if ($param =~ /^WrapperScript/)         	{ $WrapperScript=$value; next; }
+		if ($param =~ /^DecodeUA/)         			{ $DecodeUA=$value; next; }
 		# Read optional accuracy setup section
 		if ($param =~ /^LevelForRobotsDetection/)			{ $LevelForRobotsDetection=$value; next; }
 		if ($param =~ /^LevelForBrowsersDetection/)			{ $LevelForBrowsersDetection=$value; next; }
@@ -1480,6 +1483,7 @@ sub Check_Config {
 	if (! $DefaultFile[0])                          { $DefaultFile[0]="index.html"; }
 	if ($URLNotCaseSensitive !~ /[0-1]/)           	{ $URLNotCaseSensitive=0; }
 	if ($URLWithQuery !~ /[0-1]/)                 	{ $URLWithQuery=0; }
+	if ($URLReferrerWithQuery !~ /[0-1]/)          	{ $URLReferrerWithQuery=0; }
 	if ($WarningMessages !~ /[0-1]/)              	{ $WarningMessages=1; }
 	if ($NbOfLinesForCorruptedLog !~ /^\d+/ || $NbOfLinesForCorruptedLog<1)	{ $NbOfLinesForCorruptedLog=50; }
 	if ($Expires !~ /^\d+/)                 		{ $Expires=0; }
@@ -5330,7 +5334,7 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {	# Updat
 							$found=1;
 						}
 						else {
-							# This hit came from the search engine
+							# This hit came from a search engine
 							if ($PageBool) { $_from_p[2]++; }
 							$_from_h[2]++;
 							$_se_referrals_h{$TmpRefererServer{$refererserver}}++;
@@ -5376,8 +5380,14 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {	# Updat
 						if ($PageBool) { $_from_p[3]++; }
 						$_from_h[3]++;
 						# http://www.mysite.com/ must be same referer than http://www.mysite.com but .../mypage/ differs of .../mypage
-						#if ($refurl[0] =~ /^[^\/]+\/$/) { $field[$pos_referer] =~ s/\/$//; }	# Code moved in save
-						$_pagesrefs_h{$field[$pos_referer]}++;
+						#if ($refurl[0] =~ /^[^\/]+\/$/) { $field[$pos_referer] =~ s/\/$//; }	# Code moved in SaveHistory
+						if ($URLReferrerWithQuery) {
+							$_pagesrefs_h{$field[$pos_referer]}++;
+						}
+						else {
+							if ($field[$pos_referer]=~/^(.*)\?/) { $_pagesrefs_h{"$1"}++; }
+							else { $_pagesrefs_h{$field[$pos_referer]}++; }
+						}
 						$found=1;
 					}
 				}

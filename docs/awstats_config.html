@@ -83,6 +83,7 @@ when reading it), follow the example:<br>
 <li><a href="#URLNotCaseSensitive">URLNotCaseSensitive</a>
 <li><a href="#URLWithQuery">URLWithQuery</a>
 <li><a href="#URLWithQueryWithoutFollowingParameters">URLWithQueryWithoutFollowingParameters</a>
+<li><a href="#URLReferrerWithQuery">URLReferrerWithQuery</a>
 <li><a href="#WarningMessages">WarningMessages</a>
 <li><a href="#NbOfLinesForCorruptedLog">NbOfLinesForCorruptedLog</a>
 <li><a href="#SplitSearchString">SplitSearchString</a>
@@ -762,7 +763,7 @@ when reading it), follow the example:<br>
 
 <a name="URLWithQuery"><b>URLWithQuery</b></a><br>
 <b>Version : </b>3.2 +<br>
-<br># Keep or attach the query string to the URL in the statistics for individual
+<br># Keep or remove the query string to the URL in the statistics for individual
 <br># pages. This is primarily used to differentiate between the URLs of dynamic
 <br># pages. If set to 1, mypage.html?id=x and mypage.html?id=y are counted as two
 <br># different pages.
@@ -795,6 +796,21 @@ when reading it), follow the example:<br>
 <br># Default: ""
 <br># 
 <br>URLWithQueryWithoutFollowingParameters=""
+
+<br><br><hr>
+
+<a name="URLReferrerWithQuery"><b>URLReferrerWithQuery</b></a><br>
+<b>Version : </b>5.1 +<br>
+<br># Keep or remove the query string to the referrer URL in the statistics for
+<br># external referrer pages. This is used to differentiate between the URLs of
+<br># dynamic referrer pages. If set to 1, mypage.html?id=x and mypage.html?id=y
+<br># are counted as two different referrer pages.
+<br># Possible values:
+<br># 0 - Referrer URLs are cleaned from the query string (ie: "/mypage.html")
+<br># 1 - Full URL with query string is used      (ie: "/mypage.html?p=x&q=y")
+<br># Default: 0
+<br># 
+<br>URLReferrerWithQuery=0
 
 <br><br><hr>
 

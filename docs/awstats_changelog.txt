@@ -17,8 +17,10 @@ AWStats Changelog
 - New parameter: Added URLNotCaseSensitive.
 - New parameter: Added URLWithQueryWithoutFollowingParameters to exclude some
   parameters from URL when URLWithQuery is on.
+- New parameter: Added URLReferrerWithquery.
 - Added tag %Dw-n for LogFile parameter (replaced with the day number in week
   but differs from %DW-n because start with 0).
+- Fixed: Log analyze is no more stopped if log file contains binary chars.
 - Fixed: -debug option is allowed in migrate.
 - Fixed: Wrong window was opened when clicking on flag link when
   UseFramesWhenCGI was on.
