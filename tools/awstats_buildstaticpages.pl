@@ -91,19 +91,20 @@ sub warning {
 #-------------------------------------------------------
 ($DIR=$0) =~ s/([^\/\\]*)$//; ($PROG=$1) =~ s/\.([^\.]*)$//; $Extension=$1;
 
-my $QueryString=''; for (0..@ARGV-1) { $QueryString .= "$ARGV[$_] "; }
+my $QueryString=''; for (0..@ARGV-1) { $QueryString .= "$ARGV[$_]&"; }
 
 if ($QueryString =~ /(^|-|&)month=(year)/i) { error("month=year is a deprecated option. Use month=all instead."); }
 
-if ($QueryString =~ /-debug=/i)  { $Debug=$QueryString; $Debug =~ s/.*debug=//; $Debug =~ s/&.*//; $Debug =~ s/ .*//; }
-if ($QueryString =~ /-config=/i) { $Config=$QueryString; $Config =~ s/.*config=//; $Config =~ s/&.*//; $Config =~ s/ .*//; }
-if ($QueryString =~ /-awstatsprog=/i) { $Awstats=$QueryString; $Awstats =~ s/.*awstatsprog=//; $Awstats =~ s/&.*//; $Awstats =~ s/ .*//; }
-if ($QueryString =~ /-dir=/i)    { $OutputDir=$QueryString; $OutputDir =~ s/.*dir=//; $OutputDir =~ s/&.*//; $OutputDir =~ s/ .*//; }
-if ($QueryString =~ /-update/i)  { $Update=1; }
-if ($QueryString =~ /-date/i)    { $Date=1; }
-if ($QueryString =~ /-year=(\d\d\d\d)/i) { $YearRequired="$1"; }
-if ($QueryString =~ /-month=(\d\d)/i || $QueryString =~ /month=(all)/i) { $MonthRequired="$1"; }
-if ($QueryString =~ /-lang=([^\s&]+)/i)	{ $Lang=$1; }
+if ($QueryString =~ /(^|-|&)debug=(\d+)/i)			{ $Debug=$2; }
+if ($QueryString =~ /(^|-|&)config=([^&]+)/i)		{ $Config="$2"; }
+if ($QueryString =~ /(^|-|&)awstatsprog=([^&]+)/i)	{ $Awstats="$2"; }
+if ($QueryString =~ /(^|-|&)dir=([^&]+)/i)			{ $OutputDir="$2"; }
+if ($QueryString =~ /(^|-|&)update/i)				{ $Update=1; }
+if ($QueryString =~ /(^|-|&)date/i)					{ $Date=1; }
+if ($QueryString =~ /(^|-|&)year=(\d\d\d\d)/i) 		{ $YearRequired="$2"; }
+if ($QueryString =~ /(^|-|&)month=(\d\d)/i || $QueryString =~ /(^|-|&)month=(all)/i) { $MonthRequired="$2"; }
+if ($QueryString =~ /(^|-|&)lang=([^&]+)/i)			{ $Lang="$2"; }
+
 if ($OutputDir) { if ($OutputDir !~ /[\\\/]$/) { $OutputDir.="/"; } }
 
 if (! $Config) {
