@@ -11,8 +11,8 @@ It works with IIS 5.0+, Apache and all major web/wap/proxy server log files
 on all Operating Systems.
 
 License: GNU GPL (GNU General Public License. See LICENSE file)
-Version : 3.2
-Release date: 18 December 2001
+Version : 4.0
+Release date: 19 January 2001
 Platforms: All (Linux, NT, SCO, BSD, Solaris and other *NIX's, BeOS, OS/2...)
 Author: Laurent Destailleur <eldy@users.sourceforge.net>
 AWStats official web site and latest version: http://awstats.sourceforge.net
@@ -57,7 +57,7 @@ I - 1) Features
     * Multi-named web sites supported (virtual servers),
 	* Cross Site Scripting Attacks protection,
     * Several languages. English, French, Dutch, Spanish, Italian, German,
-      Polish, Greek, Czech, Portuguese, Chinese, Korean...
+      Polish, Greek, Czech, Portuguese, Chinese, Japanese, Korean...
     * No need of extra perl libraries,
 	* Look and colors can match your site design,
     * Help on how AWStats work, tooltips on HTML reporting page,
@@ -88,7 +88,8 @@ I - 3) Files
     README.TXT                          This file
 	docs/LICENSE                        GNU General Public Licence
 	docs/*                              AWStats documentation (setup/usage...)
-    wwwroot/cgi-bin/awstats.pl          The main command line/CGI perl script
+	tools/*                             Ohter provided tools
+    wwwroot/cgi-bin/awstats.pl          The main command line/CGI program
     wwwroot/cgi-bin/awstats.model.conf  An example of AWStats configure file
  	wwwroot/cgi-bin/db                  Directory with awstats reference info
  	wwwroot/cgi-bin/lang                Directory with languages files
