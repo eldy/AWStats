@@ -79,6 +79,7 @@ when reading it), follow the example:<br>
 <li><a href="#SkipUserAgents">SkipUserAgents</a>
 <li><a href="#SkipFiles">SkipFiles</a>
 <li><a href="#OnlyHosts">OnlyHosts</a>
+<li><a href="#OnlyUserAgents">OnlyUserAgents</a>
 <li><a href="#OnlyFiles">OnlyFiles</a>
 <li><a href="#NotPageList">NotPageList</a>
 <li><a href="#ValidHTTPCodes">ValidHTTPCodes</a>
@@ -690,6 +691,7 @@ when reading it), follow the example:<br>
 <br># Do not include access from clients with a user agent that match following
 <br># criteria. If you want to exclude a robot, you should update the robots.pm
 <br># file instead of this parameter.
+<br># The opposite parameter of "SkipUserAgents" is "OnlyUserAgents".
 <br># Note: Use space between each value. This parameter is not case sensitive.
 <br># Note: You can use regular expression values writing value with REGEX[value].
 <br># Change : Effective for new updates only
@@ -735,6 +737,23 @@ when reading it), follow the example:<br>
 <br># Default: ""
 <br>#
 <br>OnlyHosts=""
+
+<br><br><hr>
+
+<a name="OnlyUserAgents"><b>OnlyUserAgents</b></a><br>
+<b>Version : </b>5.8+<br>
+<br># Include in stats, only accesses from user agent that match one of following
+<br># entries. For example, if you want AWStats to filter access to keep only
+<br># stats for visits from particular browsers, you can add their user agents
+<br># string in this parameter.
+<br># The opposite parameter of "OnlyUserAgents" is "SkipUserAgents".
+<br># Note: Use space between each value. This parameter is not case sensitive.
+<br># Note: You can use regular expression values writing value with REGEX[value].
+<br># Change : Effective for new updates only
+<br># Example: "msie"
+<br># Default: ""
+<br>#
+<br>OnlyUserAgents=""
 
 <br><br><hr>
 

@@ -213,7 +213,7 @@ use vars qw/
 @HostAliases @AllowAccessFromWebToFollowingAuthenticatedUsers
 @DefaultFile @SkipDNSLookupFor
 @SkipHosts @SkipUserAgents @SkipFiles
-@OnlyHosts @OnlyFiles 
+@OnlyHosts @OnlyUserAgents @OnlyFiles 
 @URLWithQueryWithoutFollowingParameters
 @ExtraName @ExtraCondition @ExtraStatTypes @MaxNbOfExtra @MinHitExtra
 @ExtraFirstColumnTitle @ExtraFirstColumnValues
@@ -236,7 +236,7 @@ use vars qw/
 @HostAliases = @AllowAccessFromWebToFollowingAuthenticatedUsers=();
 @DefaultFile = @SkipDNSLookupFor = ();
 @SkipHosts = @SkipUserAgents = @SkipFiles = ();
-@OnlyHosts = @OnlyFiles = ();
+@OnlyHosts = @OnlyUserAgents = @OnlyFiles = ();
 @URLWithQueryWithoutFollowingParameters = ();
 @ExtraName = @ExtraCondition = @ExtraStatTypes = @MaxNbOfExtra = @MinHitExtra = ();
 @ExtraFirstColumnTitle = @ExtraFirstColumnValues = ();
@@ -909,6 +909,16 @@ sub OnlyHost {
 }
 
 #------------------------------------------------------------------------------
+# Function:     Check if parameter is in OnlyUserAgents array
+# Parameters:	useragent @OnlyUserAgents
+# Return:		0 Not found, 1 Found
+#------------------------------------------------------------------------------
+sub OnlyUserAgent {
+	foreach my $match (@OnlyUserAgents) { if ($_[0] =~ /$match/i) { return 1; } }
+	0; # Not in @OnlyHosts
+}
+
+#------------------------------------------------------------------------------
 # Function:     Check if parameter is in OnlyFiles array
 # Parameters:	url @OnlyFiles
 # Return:		0 Not found, 1 Found
@@ -1169,6 +1179,14 @@ sub Parse_Config {
 				if ($elem =~ /^REGEX\[(.*)\]$/i) { $elem=$1; }
 				else { $elem='^'.quotemeta($elem).'$'; }
 				if ($elem) { push @OnlyHosts,$elem; }
+			}
+			next;
+			}
+		if ($param =~ /^OnlyUserAgents/) {
+			foreach my $elem (split(/\s+/,$value))	{
+				if ($elem =~ /^REGEX\[(.*)\]$/i) { $elem=$1; }
+				else { $elem='^'.quotemeta($elem).'$'; }
+				if ($elem) { push @OnlyUserAgents,$elem; }
 			}
 			next;
 			}
@@ -5136,13 +5154,14 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 	}
 	unshift @HostAliases,"$SiteToAnalyze";	# Add SiteToAnalyze as first value
 
-	# Optimize HostAliases, SkipDNSLookupFor, SkipHosts, SkipUserAgents, SkipFiles, OnlyHosts, OnlyFiles array
+	# Optimize HostAliases, SkipDNSLookupFor, SkipHosts, SkipUserAgents, SkipFiles, OnlyHosts, OnlyUserAgnts, OnlyFiles array
 	&OptimizeArray(\@HostAliases,1,1); if ($Debug) { debug("HostAliases is now @HostAliases",1); }
 	&OptimizeArray(\@SkipDNSLookupFor,1,0); if ($Debug) { debug("SkipDNSLookupFor is now @SkipDNSLookupFor",1); }
 	&OptimizeArray(\@SkipHosts,1,0); if ($Debug) { debug("SkipHosts is now @SkipHosts",1); }
 	&OptimizeArray(\@SkipUserAgents,1,0); if ($Debug) { debug("SkipUserAgents is now @SkipUserAgents",1); }
 	&OptimizeArray(\@SkipFiles,0,0); if ($Debug) { debug("SkipFiles is now @SkipFiles",1); }
 	&OptimizeArray(\@OnlyHosts,1,0); if ($Debug) { debug("OnlyHosts is now @OnlyHosts",1); }
+	&OptimizeArray(\@OnlyUserAgents,1,0); if ($Debug) { debug("OnlyUserAgents is now @OnlyUserAgents",1); }
 	&OptimizeArray(\@OnlyFiles,0,0); if ($Debug) { debug("OnlyFiles is now @OnlyFiles",1); }
 
 	# Define value of $PerlParsingFormat and @fieldlib
@@ -5385,7 +5404,8 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 		elsif (@SkipFiles && &SkipFile($field[$pos_url]))    { $qualifdrop="Dropped record (URL $field[$pos_url] not qualified by SkipFiles)"; }
 		elsif (@OnlyHosts && ! &OnlyHost($field[$pos_host]) && (! $pos_hostr || ! &OnlyHost($field[$pos_hostr]))) { $qualifdrop="Dropped record (host $field[$pos_host]".($pos_hostr?" and $field[$pos_hostr]":"")." not qualified by OnlyHosts)"; } 
 		elsif (@OnlyFiles && ! &OnlyFile($field[$pos_url]))  { $qualifdrop="Dropped record (URL $field[$pos_url] not qualified by OnlyFiles)"; }
-		elsif (@SkipUserAgents && $pos_agent >= 0 && &SkipUserAgent($field[$pos_agent]))	{ $qualifdrop="Dropped record (user agent $field[$pos_agent] not qualified by SkipUserAgents)"; }
+		elsif (@OnlyUserAgents && ! &OnlyUserAgent($field[$pos_agent]))  { $qualifdrop="Dropped record (user agent '$field[$pos_agent]' not qualified by OnlyUserAgents)"; }
+		elsif (@SkipUserAgents && $pos_agent >= 0 && &SkipUserAgent($field[$pos_agent]))	{ $qualifdrop="Dropped record (user agent '$field[$pos_agent]' not qualified by SkipUserAgents)"; }
 		if ($qualifdrop) {
 			$NbOfLinesDropped++;
 			if ($Debug) { debug("$qualifdrop: $_",4); }
@@ -9207,6 +9227,7 @@ else {
 #     Skip line for @SkipFiles --> next on loop
 #     Skip line for not @OnlyHosts --> next on loop
 #     Skip line for not @OnlyFiles --> next on loop
+#     Skip line for not @OnlyUserAgent --> next on loop
 #     Skip line for @SkipUserAgent --> next on loop
 #     So it's new line approved
 #     If other month/year, create/update tmp file and purge data arrays with
