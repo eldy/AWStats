@@ -969,7 +969,7 @@ sub Check_Config {
 	if ($ShowLinksOnURL !~ /[0-1]/)              { $ShowLinksOnURL=1; }
 	if ($ShowFlagLinks !~ /[0-1]/)               { $ShowFlagLinks=1; }
 	if ($BarWidth !~ /^[\d][\d]*/)               { $BarWidth=260; }
-	if ($BarHeight !~ /^[\d][\d]*/)              { $BarHeight=220; }
+	if ($BarHeight !~ /^[\d][\d]*/)              { $BarHeight=180; }
 	if ($MaxNbOfDomain !~ /^[\d][\d]*/)          { $MaxNbOfDomain=25; }
 	if ($MaxNbOfHostsShown !~ /^[\d][\d]*/)      { $MaxNbOfHostsShown=25; }
 	if ($MinHitHost !~ /^[\d][\d]*/)             { $MinHitHost=1; }
@@ -2359,14 +2359,14 @@ $yearcon=substr($LastUpdate,0,4);$monthcon=substr($LastUpdate,4,2);$daycon=subst
 if ($LastUpdate != 0) { print "$daycon&nbsp;$monthlib{$monthcon}&nbsp;$yearcon&nbsp;-&nbsp;$hourcon:$mincon &nbsp;"; }
 else { print "<font color=#880000>Never updated</font>"; }
 print "</font>&nbsp; &nbsp; &nbsp; &nbsp;";
-if ($UpdateStats) {
-	print " (New lines processed: $NbOfNewLinesProcessed, New lines corrupted: $NbOfNewLinesCorrupted)";
-}
-else {
-	print " (New lines processed: $LastUpdateNewLinesRead{$choosedkey}, New lines corrupted: $LastUpdateNewLinesCorrupted{$choosedkey})";
-}
+#if ($UpdateStats) {
+#	print " (New lines processed: $NbOfNewLinesProcessed, New lines corrupted: $NbOfNewLinesCorrupted)";
+#}
+#else {
+#	print " (New lines processed: $LastUpdateNewLinesRead{$choosedkey}, New lines corrupted: $LastUpdateNewLinesCorrupted{$choosedkey})";
+#}
 if ($AllowToUpdateStatsFromBrowser) {
-	print "</td></tr><tr><td>&nbsp;</td><td class=LEFT>";
+#	print "</td></tr><tr><td>&nbsp;</td><td class=LEFT>";
 	print "<a href=\"$DirCgi$PROG.$Extension?update=1&site=$SiteToAnalyze&year=$YearRequired&month=$MonthRequired&lang=$Lang\">$message[74]</a>";
 }
 print "</td></tr>\n";
