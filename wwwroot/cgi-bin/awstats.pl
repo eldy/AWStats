@@ -988,9 +988,9 @@ sub Read_Config {
 #------------------------------------------------------------------------------
 # Function:     Parse content of a config file
 # Parameters:	File handle, level
-# Input:        None
+# Input:        -
 # Output:		Global variables
-# Return:		None
+# Return:		-
 #------------------------------------------------------------------------------
 sub Parse_Config {
     my ( $confighandle ) = $_[0];
