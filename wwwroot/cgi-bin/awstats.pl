@@ -31,7 +31,9 @@
 #   If required month, read 1st and 2nd part of history file for this month
 #   If not required month, read 1st part of history file for this month
 # End of loop
-# Show data arrays in HTML page
+# If 'output'
+#   Show data arrays in HTML page
+# End of 'output'
 #-------------------------------------------------------
 #use diagnostics;
 #use strict;
@@ -73,7 +75,6 @@ $total_h, $total_k, $total_p) = ();
 
 $VERSION="3.1 (build 20)";
 $Lang="en";
-$Sort="";
 
 # Default value
 $MAXROWS       = 200000;	# Max number of rows for not limited HTML arrays
@@ -85,6 +86,8 @@ $MaxNbOfDays   = 31;
 $NbOfLinesForBenchmark=5000;
 $NbOfLinesForCorruptedLog=10;
 #$NbOfLinesForCorruptedLog=10000;	# ETF1
+$ShowBackLink  = 1;
+$Sort          = "";
 $CENTER        = "";
 $WIDTH         = "600";
 # Images for graphics
@@ -1214,6 +1217,7 @@ sub Check_Config {
 	if ($Message[76] eq "") { $Message[76]="Back to main page"; }
 	if ($Message[77] eq "") { $Message[77]="Top"; }
 	if ($Message[78] eq "") { $Message[78]="dd mmm yyyy - HH:MM"; }
+	if ($Message[79] eq "") { $Message[79]="Filter"; }
 }
 
 #--------------------------------------------------------------------
@@ -1241,8 +1245,7 @@ sub Read_History_File {
 	while (<HISTORY>) {
 		chomp $_; s/\r//;
 		my @field=split(/\s+/,$_);
-
-		# FIRST PART: Always read
+		# Analyze config line
 		if ($field[0] eq "FirstTime")       { $FirstTime{$year.$month}=int($field[1]); next; }
 	    if ($field[0] eq "LastTime")        { if ($LastTime{$year.$month} < int($field[1])) { $LastTime{$year.$month}=int($field[1]); }; next; }
 		if ($field[0] eq "TotalVisits")     { $MonthVisits{$year.$month}=int($field[1]); next; }
@@ -1335,31 +1338,42 @@ sub Read_History_File {
 			&debug(" End of DAY section");
 			next;
 	    }
+		if ($field[0] eq "BEGIN_SIDER")  {
+			&debug(" Begin of SIDER section");
+			$_=<HISTORY>;
+			chomp $_; s/\r//;
+			if ($_ eq "") { error("Error: History file \"$DirData/$PROG$_[1]$_[0]$FileSuffix.txt\" is corrupted. Restore a backup of this file, or remove it (data for this month will be lost)."); }
+			my @field=split(/\s+/,$_);
+			my $count=0;my $countadd=0;
+			while ($field[0] ne "END_SIDER") {
+				$count++;
+				if ($part) {
+					my $addsider=0;
+					if ($UpdateStats) { $addsider=1; }
+					if (!$UpdateStats) {
+						# In this case we count TotalDifferentPages because we don't fill _sider_p completely
+						$TotalDifferentPages++;
+						if ($HTMLOutput && $QueryString =~ /output=urldetail/i && (!$URLFilter || $field[0] =~ /$URLFilter/)) { $addsider=1; }
+						if ($HTMLOutput && $QueryString !~ /output=/i && $countadd < $MaxNbOfPageShown) { $addsider=1; }
+					}
+					if ($addsider) {					
+						$countadd++;
+						$_sider_p{$field[0]}+=$field[1];
+					}
+				}
+				$_=<HISTORY>;
+				chomp $_; s/\r//;
+				if ($_ eq "") { error("Error: History file \"$DirData/$PROG$_[1]$_[0]$FileSuffix.txt\" is corrupted. Restore a backup of this file, or remove it (data for this month will be lost)."); }
+				@field=split(/\s+/,$_);
+			}
+			&debug(" End of SIDER section ($count entries loaded)");
+			next;
+		}
 
 		# SECOND PART: If $part == 0, it means we don't need this part of data.
 		if ($part) {
 	        if ($field[0] eq "BEGIN_DOMAIN") { $readdomain=1; next; }
 			if ($field[0] eq "END_DOMAIN")   { $readdomain=0; next; }
-			if ($field[0] eq "BEGIN_SIDER")  {
-				&debug(" Begin of SIDER section");
-				$_=<HISTORY>;
-				chomp $_; s/\r//;
-				if ($_ eq "") { error("Error: History file \"$DirData/$PROG$_[1]$_[0]$FileSuffix.txt\" is corrupted. Restore a backup of this file, or remove it (data for this month will be lost)."); }
-				my @field=split(/\s+/,$_);
-				my $count=0;
-				while ($field[0] ne "END_SIDER") {
-					$count++;
-					if ($UpdateStats || $QueryString !~ /output=/i || ($QueryString =~ /output=urldetail/i && (!$URLFilter || $field[0] =~ /$URLFilter/))) {
-						$_sider_p{$field[0]}+=$field[1];
-					}
-					$_=<HISTORY>;
-					chomp $_; s/\r//;
-					if ($_ eq "") { error("Error: History file \"$DirData/$PROG$_[1]$_[0]$FileSuffix.txt\" is corrupted. Restore a backup of this file, or remove it (data for this month will be lost)."); }
-					@field=split(/\s+/,$_);
-				}
-				&debug(" End of SIDER section ($count entries)");
-				next;
-			}
 	        if ($field[0] eq "BEGIN_BROWSER") { $readbrowser=1; next; }
 	        if ($field[0] eq "END_BROWSER") { $readbrowser=0; next; }
 	        if ($field[0] eq "BEGIN_NSVER") { $readnsver=1; next; }
@@ -2554,7 +2568,7 @@ EOF
 		print "<td class=AWL> <a href=\"$DirCgi$PROG.$Extension?".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang#ERRORS\">$Message[22]</a> &nbsp; <a href=\"$DirCgi$PROG.$Extension?output=notfounderror&".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang\">$Message[31]</a><br></td></tr>\n";
 	}
 	else {
-		print "<tr><td class=AWL><a href=\"$DirCgi$PROG.$Extension?".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang\">$Message[76]</a></td></tr>\n";
+		if ($ShowBackLink) { print "<tr><td class=AWL><a href=\"$DirCgi$PROG.$Extension?".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang\">$Message[76]</a></td></tr>\n"; }
 	}
 	print "</table>\n";
 	print "<br>\n\n";
@@ -2650,7 +2664,8 @@ EOF
 	if ($QueryString =~ /output=urldetail/i) {
 		print "$CENTER<a name=\"URLDETAIL\">&nbsp;</a><BR>";
 		&tab_head($Message[19]);
-		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>".(scalar keys %_sider_p)."&nbsp; $Message[19] ".($URLFilter?"&nbsp; (Filter: $URLFilter)":"")."</TH><TH bgcolor=\"#$color_p\">&nbsp;$Message[29]&nbsp;</TH><TH>&nbsp;</TH></TR>\n";
+		if ($URLFilter) { print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[79]: <b>$URLFilter</b> - ".(scalar keys %_sider_p)." $Message[28]</TH><TH bgcolor=\"#$color_p\">&nbsp;$Message[29]&nbsp;</TH><TH>&nbsp;</TH></TR>\n"; }
+		else { print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>".(scalar keys %_sider_p)."&nbsp; $Message[28]</TH><TH bgcolor=\"#$color_p\">&nbsp;$Message[29]&nbsp;</TH><TH>&nbsp;</TH></TR>\n"; }
 		my $max_p=1; foreach my $key (values %_sider_p) { if ($key > $max_p) { $max_p = $key; } }
 		my $count=0; my $rest=0;
 		foreach my $key (sort { $SortDir*$_sider_p{$a} <=> $SortDir*$_sider_p{$b} } keys (%_sider_p)) {
@@ -2695,8 +2710,8 @@ EOF
 		$TotalHostsKnown+=$MonthHostsKnown{$YearRequired.$monthix};
 		$TotalHostsUnknown+=$MonthHostsUnknown{$YearRequired.$monthix};
 	}
-	# TotalDifferentPages
-	$TotalDifferentPages=scalar keys %_sider_p;
+	# TotalDifferentPages (if not already specifically counted, we init it from _sider_p hash table)
+	if (!$TotalDifferentPages) { $TotalDifferentPages=scalar keys %_sider_p; }
 	# TotalPages TotalHits TotalBytes
 	for (my $ix=0; $ix<=23; $ix++) { $TotalPages+=$_time_p[$ix]; $TotalHits+=$_time_h[$ix]; $TotalBytes+=$_time_k[$ix]; }
 	# TotalErrors
