@@ -54,6 +54,7 @@ how to add an Extra report by adding an ExtraSection configuration in your confi
 or just click <a href="#extraconfig">here</a> to jump to a copy of this explanation.<br>
 Note that following examples is often a precious tutorial, so see next paragraph for this...<br>
 
+<a name="examples">&nbsp;</a>
 <br><br>
 <u><b>Some examples of ExtraSection setup you can follow to build your own personalized reports:</b></u><br>
 <br>
@@ -133,9 +134,9 @@ because an entry will be seen in your own server log like this record:<br>
 </i>
 <br>
 Then, you can add in AWStats a chart to track all call to <i>awredir.pl</i> with
-keys values taken from the "url=" parameter. You will get in an independant chart, counting
+keys values taken from the "url=" parameter. You will get an independant chart, counting
 all external pages viewed by your visitor after exiting your site.<br>
-This is for this how you must setup your ExtraSection:<br>
+To have this chart, this is how you must setup your ExtraSection:<br>
 <i>
 <br>ExtraSectionName1="Redirected Hit"
 <br>ExtraSectionCodeFilter1="302"
@@ -231,7 +232,7 @@ And result will be:
 }
 th		{ border-color: #ECECEC; border-left-width: 0px; border-right-width: 1px; border-top-width: 0px; border-bottom-width: 1px; padding: 1px 2px 1px 1px; font: 11px verdana, arial, helvetica, sans-serif; text-align:center; color: #000000; }
 th.aws	{ border-color: #ECECEC; border-left-width: 0px; border-right-width: 1px; border-top-width: 0px; border-bottom-width: 1px; padding: 1px 2px 1px 1px; font-size: 13px; font-weight: bold; }
-td.aws	{ border-color: #ECECEC; border-left-width: 0px; border-right-width: 1px; border-top-width: 0px; border-bottom-width: 1px; font: 11px verdana, arial, helvetica, sans-serif; text-align:left; color: #000000; padding: 0px;}
+td	{ border-color: #ECECEC; border-left-width: 0px; border-right-width: 1px; border-top-width: 0px; border-bottom-width: 1px; font: 11px verdana, arial, helvetica, sans-serif; color: #000000; padding: 0px;}
 td.awsm	{ border-left-width: 0px; border-right-width: 0px; border-top-width: 0px; border-bottom-width: 0px; font: 11px verdana, arial, helvetica, sans-serif; text-align:left; color: #000000; padding: 0px; }
 //-->
 </style>
@@ -315,7 +316,7 @@ There is a lot of other possible use for Extra Sections ...<br>
 <br><br>
 Warning: the ExtraSectionConditionX MUST use regex values since AWStats 6.0.<br>
 ExtraSectionFirstColumnValuesX also need REGEX value for all AWStats versions.<br>
-See examples for syntax use.<br>
+Return to <a href="#examples">examples</a> for examples on syntax use.<br>
 <br>
 
 
