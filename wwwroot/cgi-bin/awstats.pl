@@ -4246,8 +4246,9 @@ sub DefinePerlParsingFormat() {
 	if ($Debug) { debug(" LogFormat=$LogFormat"); }
 	@fieldlib=();
 	if ($LogFormat =~ /^[1-6]$/) {	# Pre-defined log format
-		if ($LogFormat eq '1') {	# Same than "%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\""
-			$PerlParsingFormat="([^ ]+) [^ ]+ ([^ ]+) \\[([^ ]+) [^ ]+\\] \\\"([^ ]+) ([^ ]+) [^\\\"]+\\\" ([\\d|-]+) ([\\d|-]+) \\\"(.*)\\\" \\\"([^\\\"]*)\\\"";	# referer and ua might be ""
+		if ($LogFormat eq '1' || $LogFormat eq '6') {	# Same than "%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\"".
+			# %u (user) is "(.+)" instead of "[^ ]+" because can contain space (Lotus Notes). referer and ua might be "".
+			$PerlParsingFormat="([^ ]+) [^ ]+ (.+) \\[([^ ]+) [^ ]+\\] \\\"([^ ]+) ([^ ]+) [^\\\"]+\\\" ([\\d|-]+) ([\\d|-]+) \\\"(.*)\\\" \\\"([^\\\"]*)\\\"";
 			$pos_host=0;$pos_logname=1;$pos_date=2;$pos_method=3;$pos_url=4;$pos_code=5;$pos_size=6;$pos_referer=7;$pos_agent=8;
 			@fieldlib=('host','logname','date','method','url','code','size','referer','ua');
 		}
@@ -4262,7 +4263,8 @@ sub DefinePerlParsingFormat() {
 			@fieldlib=('date','method','code','host','ua','referer','url','size');
 		}
 		elsif ($LogFormat eq '4') {	# Same than "%h %l %u %t \"%r\" %>s %b"
-			$PerlParsingFormat="([^ ]+) [^ ]+ ([^ ]+) \\[([^ ]+) [^ ]+\\] \\\"([^ ]+) ([^ ]+) [^\\\"]+\\\" ([\\d|-]+) ([\\d|-]+)";
+			# %u (user) is "(.+)" instead of "[^ ]+" because can contain space (Lotus Notes).
+			$PerlParsingFormat="([^ ]+) [^ ]+ (.+) \\[([^ ]+) [^ ]+\\] \\\"([^ ]+) ([^ ]+) [^\\\"]+\\\" ([\\d|-]+) ([\\d|-]+)";
 			$pos_host=0;$pos_logname=1;$pos_date=2;$pos_method=3;$pos_url=4;$pos_code=5;$pos_size=6;
 			@fieldlib=('host','logname','date','method','url','code','size');
 		}
@@ -4270,11 +4272,6 @@ sub DefinePerlParsingFormat() {
 			$PerlParsingFormat="([^\\t]*)\\t([^\\t]*)\\t([^\\t]*)\\t[^\\t]*\\t([^\\t]*\\t[^\\t]*)\\t[^\\t]*\\t[^\\t]*\\t([^\\t]*)\\t[^\\t]*\\t[^\\t]*\\t[^\\t]*\\t[^\\t]*\\t[^\\t]*\\t([^\\t]*)\\t[^\\t]*\\t[^\\t]*\\t([^\\t]*)\\t([^\\t]*)\\t[^\\t]*\\t[^\\t]*\\t([^\\t]*)\\t[^\\t]*";
 			$pos_host=0;$pos_logname=1;$pos_agent=2;$pos_date=3;$pos_referer=4;$pos_size=5;$pos_method=6;$pos_url=7;$pos_code=8;
 			@fieldlib=('host','logname','ua','date','referer','size','method','url','code');
-		}
-		elsif ($LogFormat eq '6') {	# Lotus notes (allows spaces in the logname without quoting them)
-			$PerlParsingFormat="([^ ]+) [^ ]+ (.*) \\[([^ ]+) [^ ]+\\] \\\"([^ ]+) ([^ ]+) [^\\\"]+\\\" ([\\d|-]+) ([\\d|-]+) \\\"(.*)\\\" \\\"([^\\\"]*)\\\"";	# referer and ua might be ""
-			$pos_host=0;$pos_logname=1;$pos_date=2;$pos_method=3;$pos_url=4;$pos_code=5;$pos_size=6;$pos_referer=7;$pos_agent=8;
-			@fieldlib=('host','logname','date','method','url','code','size','referer','agent');
 		}
 	}
 	else {							# Personalized log format
@@ -5273,7 +5270,8 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 		# Analyze: Login
 		#---------------
 		if ($pos_logname>=0 && $field[$pos_logname] && $field[$pos_logname] ne '-') {
-			if ($LogFormat eq '6') { $field[$pos_logname] =~ s/^\"//; $field[$pos_logname] =~ s/\"$//; $field[$pos_logname] =~ s/ /_/g; }	# Lotus notes allow space in logname field and are " with Domino 6+
+			$field[$pos_logname] =~ s/ /_/g; # This is to allow space in logname
+			if ($LogFormat eq '6') { $field[$pos_logname] =~ s/^\"//; $field[$pos_logname] =~ s/\"$//;}	# logname field has " with Domino 6+
 			if ($AuthenticatedUsersNotCaseSensitive) { $field[$pos_logname] =~ tr/A-Z/a-z/; }
 
 			# We found an authenticated user
