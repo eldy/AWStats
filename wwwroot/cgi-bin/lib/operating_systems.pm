@@ -42,11 +42,12 @@
 "freebsd",
 "openbsd",
 "gnu",
-"unix",
+"unix","x11",
 # Other famous OS
 "beos",
 "os/2",
 "amiga",
+"atari",
 "vms",
 # Miscellanous OS
 "cp/m",
@@ -85,11 +86,12 @@
 "freebsd","freebsd",
 "openbsd","openbsd",
 "gnu","gnu",
-"unix","unix",
+"unix","unix","x11","unix",
 # Other famous OS
 "beos","beos",
 "os/2","os/2",
 "amiga","amigaos",
+"atari","atari",
 "vms","vms",
 # Miscellanous OS
 "cp/m","cp/m",
@@ -129,8 +131,9 @@
 "unix","Unknown Unix system",
 # Other famous OS
 "beos","BeOS",
-"os/2","Warp OS/2",
+"os/2","OS/2",
 "amigaos","AmigaOS",
+"atari","Atari",
 "vms","VMS",
 # Miscellanous OS
 "cp/m","CPM",
