@@ -42,7 +42,7 @@ my @OutputList=(
 "unknownos","unknownbrowser","browserdetail",
 "refererse","refererpages",
 #"referersites",
-"allkeyphrases","allkeywords","errors404"
+"keyphrases","keywords","errors404"
 );
 
 
