@@ -11,7 +11,7 @@
 #-------------------------------------------------------
 # $Revision$ - $Author$ - $Date$
 
-# Next 'use' are commented to make AWStats working with old perl.
+# use strict and use vars are commented to make AWStats working with old perl.
 use strict;no strict "refs";
 use vars qw(%DomainsHashIDLib @RobotsSearchIDOrder_list1 @RobotsSearchIDOrder_list2 @RobotsSearchIDOrder_list3 @BrowsersSearchIDOrder @OSSearchIDOrder @WordsToCleanSearchUrl %BrowsersHereAreGrabbers %BrowsersHashIcon %BrowsersHashIDLib %OSHashID %OSHashLib %RobotsHashIDLib %SearchEnginesHashIDLib %SearchEnginesKnownUrl %DomainsHashIDLib);
 #use warnings;		# Must be used in test mode only. This reduce a little process speed
@@ -81,8 +81,8 @@ $NowNewLinePhase, $NbOfLinesForCorruptedLog, $PurgeLogFile,
 $ShowAuthenticatedUsers, $ShowCompressionStats, $ShowFileSizesStats,
 $ShowDropped, $ShowCorrupted, $ShowUnknownOrigin, $ShowLinksToWhoIs,
 $SplitSearchString, $StartSeconds, $StartMicroseconds,
-$StaticLinks, $UpdateStats, $URLWithQuery)=
-(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
+$UpdateStats, $URLWithQuery)=
+(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
 my ($AllowToUpdateStatsFromBrowser, $ArchiveLogRecords, $DetailedReportsOnNewWindows,
 $FirstDayOfWeek, $SaveDatabaseFilesWithPermissionsForEveryone,
 $LevelForRobotsDetection, $LevelForBrowsersDetection, $LevelForOSDetection,
@@ -104,9 +104,9 @@ $color_text, $color_textpercent, $color_titletext, $color_weekend, $color_link, 
 $color_h, $color_k, $color_p, $color_e, $color_x, $color_s, $color_u, $color_v)=
 ("","","","","","","","","","","","","","","","","","","","","");
 my ($FileConfig, $FileSuffix, $Host, $HTMLOutput, $LastUpdate, $DayRequired, $MonthRequired, $YearRequired,
-$QueryString, $SiteConfig, $URLFilter, $PageCode, $LogFormatString, $PerlParsingFormat,
+$QueryString, $SiteConfig, $StaticLinks, $URLFilter, $PageCode, $LogFormatString, $PerlParsingFormat,
 $SiteToAnalyze, $SiteToAnalyzeWithoutwww, $UserAgent)=
-("","","","","","","","","","","","","","","","","");
+("","","","","","","","","","","","","","","","","","");
 my $pos_rc = my $pos_logname = my $pos_date = my $pos_method = my $pos_url = my $pos_code = my $pos_size = 0;
 my $pos_referer = my $pos_agent = my $pos_query = my $pos_gzipin = my $pos_gzipout = my $pos_gzipratio = 0;
 my $lastrequiredfield = my $lowerval = 0;
@@ -276,10 +276,10 @@ EOF
 			Show_Flag_Links($Lang);
 			print "</td>\n";
 			if ($LogoLink =~ "http://awstats.sourceforge.net") {
-				print "<td class=AWL width=450><a href=\"$LogoLink\" target=\"_newawstats\"><img src=\"$DirIcons/other/$Logo\" border=0 alt=\"$PROG Official Web Site\" title=\"$PROG Official Web Site\"></a></td></tr>\n";
+				print "<td class=AWL width=450><a href=\"$LogoLink\" target=\"awstatshome\"><img src=\"$DirIcons/other/$Logo\" border=0 alt=\"$PROG Official Web Site\" title=\"$PROG Official Web Site\"></a></td></tr>\n";
 			}
 			else {
-				print "<td class=AWL width=450><a href=\"$LogoLink\" target=\"_newawstats\"><img src=\"$DirIcons/other/$Logo\" border=0></a></td></tr>\n";
+				print "<td class=AWL width=450><a href=\"$LogoLink\" target=\"awstatshome\"><img src=\"$DirIcons/other/$Logo\" border=0></a></td></tr>\n";
 			}
 			#print "<b><font face=\"verdana\" size=1><a href=\"$HomeURL\">HomePage</a> &#149\; <a href=\"javascript:history.back()\">Back</a></font></b><br>\n";
 			print "<tr><td class=AWL colspan=2>$Message[54]</td></tr>\n";
@@ -293,7 +293,7 @@ EOF
 sub html_end {
 	if ($HTMLOutput) {
 		print "$CENTER<br><br><br>\n";
-		print "<FONT COLOR=\"#$color_text\"><b>Advanced Web Statistics $VERSION</b> - <a href=\"http://awstats.sourceforge.net\" target=\"_newawstats\">Created by $PROG</a></font><br>\n";
+		print "<FONT COLOR=\"#$color_text\"><b>Advanced Web Statistics $VERSION</b> - <a href=\"http://awstats.sourceforge.net\" target=\"awstatshome\">Created by $PROG</a></font><br>\n";
 		print "<br>\n";
 		print "$HTMLEndSection\n";
 		print "</body>\n";
@@ -1074,6 +1074,7 @@ sub Check_Config {
 	if (! $Message[115]) { $Message[115]="OK"; }
 	if (! $Message[116]) { $Message[116]="Exit Pages"; }
 	if (! $Message[117]) { $Message[117]="Visits duration"; }
+	if (! $Message[118]) { $Message[118]="Close window"; }
 	# Check if DirData is OK
 	if (! -d $DirData) {
 		if ($CreateDirDataIfNotExists) {
@@ -2150,7 +2151,7 @@ sub ShowWhoIsCell {
 	}
 	else { $keyurl =~ /(\w+\.\w+)$/; $keyforwhois=$1; }
 	print "<td>";
-	if ($keyforwhois) { print "<a href=\"$LinksToWhoIs$keyforwhois\" target=whois>?</a>"; }
+	if ($keyforwhois) { print "<a href=\"$LinksToWhoIs$keyforwhois\" target=awstatswhois>?</a>"; }
 	print "</td>";
 }
 
@@ -2374,7 +2375,8 @@ else {								# Run from command line
 	$QueryString=~s/showunknownorigin[^&]*//;
 }
 if ($QueryString =~ /logfile=([^\s&]+)$/i) 	{ $LogFile=$1; }
-if ($QueryString =~ /staticlinks/i) 		{ $StaticLinks=1; }
+if ($QueryString =~ /staticlinks/i) 			{ $StaticLinks=".$SiteConfig"; }
+if ($QueryString =~ /staticlinks=([^\s&]+)/i) 	{ $StaticLinks=".$1"; }
 if ($QueryString =~ /debug=(\d+)/i)			{ $Debug=$1; }
 if ($QueryString =~ /output=urldetail:/i) 	{
 	# A filter on URL list can be defined with output=urldetail:filter to reduce number of lines read and showed
@@ -3690,7 +3692,7 @@ EOF
 		if ($LastUpdate) { print Format_Date($LastUpdate,0); }
 		else { print "<font color=#880000>Never updated</font>"; }
 		print "</font>&nbsp; &nbsp; &nbsp; &nbsp;";
-		if ($AllowToUpdateStatsFromBrowser) {
+		if ($AllowToUpdateStatsFromBrowser && ! $StaticLinks) {
 			my $NewLinkParams=${QueryString};
 			$NewLinkParams =~ s/update[=]*[^ &]*//i;
 			$NewLinkParams =~ s/staticlinks[=]*[^ &]*//i;
@@ -3712,9 +3714,9 @@ EOF
 			print "<td class=AWL>";
 			if ($ShowDomainsStats)		 { print "<a href=\"#DOMAINS\">$Message[17]</a> &nbsp; "; }
 			if ($ShowHostsStats)		 { print "<a href=\"#VISITOR\">".ucfirst($Message[81])."</a> &nbsp; "; }
-			if ($ShowHostsStats)		 { print "<a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=allhosts":"$PROG$FileSuffix.lasthosts.html")."\">$Message[80]</a> &nbsp;\n"; }
-			if ($ShowHostsStats)		 { print "<a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=lasthosts":"$PROG$FileSuffix.lasthosts.html")."\">$Message[9]</a> &nbsp;\n"; }
-			if ($ShowHostsStats)		 { print "<a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=unknownip":"$PROG$FileSuffix.unknownip.html")."\">$Message[45]</a> &nbsp;\n"; }
+			if ($ShowHostsStats)		 { print "<a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=allhosts":"$PROG$StaticLinks.lasthosts.html")."\"".($DetailedReportsOnNewWindows?" target=\"awstatsbis\"":"").">$Message[80]</a> &nbsp;\n"; }
+			if ($ShowHostsStats)		 { print "<a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=lasthosts":"$PROG$StaticLinks.lasthosts.html")."\"".($DetailedReportsOnNewWindows?" target=\"awstatsbis\"":"").">$Message[9]</a> &nbsp;\n"; }
+			if ($ShowHostsStats)		 { print "<a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=unknownip":"$PROG$StaticLinks.unknownip.html")."\"".($DetailedReportsOnNewWindows?" target=\"awstatsbis\"":"").">$Message[45]</a> &nbsp;\n"; }
 			if ($ShowAuthenticatedUsers) { print "<a href=\"#LOGIN\">$Message[94]</a> &nbsp; "; }
 			if ($ShowRobotsStats)		 { print "<a href=\"#ROBOTS\">$Message[53]</a> &nbsp; "; }
 			print "<br></td></tr>";
@@ -3722,15 +3724,15 @@ EOF
 			print "<tr><th class=AWL>$Message[72] : </th>";
 			print "<td class=AWL>";
 			if ($ShowSessionsStats)		 { print "<a href=\"#SESSIONS\">$Message[117]</a> &nbsp; "; }
-			if ($ShowPagesStats)		 { print "<a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=urldetail":"$PROG$FileSuffix.urldetail.html")."\">$Message[29]</a> &nbsp; "; }
+			if ($ShowPagesStats)		 { print "<a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=urldetail":"$PROG$StaticLinks.urldetail.html")."\"".($DetailedReportsOnNewWindows?" target=\"awstatsbis\"":"").">$Message[29]</a> &nbsp; "; }
 			if ($ShowPagesStats)		 { print "<a href=\"#ENTRY\">$Message[104]</a> &nbsp; "; }
 			if ($ShowPagesStats)		 { print "<a href=\"#EXIT\">$Message[116]</a> &nbsp; "; }
 			if ($ShowFileTypesStats)	 { print "<a href=\"#FILETYPES\">$Message[73]</a> &nbsp; "; }
 			if ($ShowFileSizesStats)	 {  }
 			if ($ShowOSStats)			 { print "<a href=\"#OS\">$Message[59]</a> &nbsp; "; }
 			if ($ShowBrowsersStats)		 { print "<a href=\"#BROWSER\">$Message[21]</a> &nbsp; "; }
-			if ($ShowBrowsersStats)		 { print "<a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=browserdetail":"$PROG$FileSuffix.browserdetail.html")."\">$Message[33]</a> &nbsp; "; }
-			if ($ShowBrowsersStats)		 { print "<a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=browserdetail":"$PROG$FileSuffix.browserdetail.html")."\">$Message[34]</a><br></td></tr>\n"; }
+			if ($ShowBrowsersStats)		 { print "<a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=browserdetail":"$PROG$StaticLinks.browserdetail.html")."\"".($DetailedReportsOnNewWindows?" target=\"awstatsbis\"":"").">$Message[33]</a> &nbsp; "; }
+			if ($ShowBrowsersStats)		 { print "<a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=browserdetail":"$PROG$StaticLinks.browserdetail.html")."\"".($DetailedReportsOnNewWindows?" target=\"awstatsbis\"":"").">$Message[34]</a><br></td></tr>\n"; }
 			# Referers
 			print "<tr><th class=AWL>$Message[23] : </th>";
 			print "<td class=AWL>";
@@ -3741,12 +3743,17 @@ EOF
 			print "<td class=AWL>";
 			if ($ShowCompressionStats)	 { print "<a href=\"#FILETYPES\">$Message[98]</a> &nbsp; "; }
 			if ($ShowHTTPErrorsStats)	 { print "<a href=\"#ERRORS\">$Message[22]</a> &nbsp; "; }
-			if ($ShowHTTPErrorsStats)	 { print "<a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=errors404":"$PROG$FileSuffix.errors404.html")."\">$Message[31]</a><br></td></tr>\n"; }
+			if ($ShowHTTPErrorsStats)	 { print "<a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=errors404":"$PROG$StaticLinks.errors404.html")."\"".($DetailedReportsOnNewWindows?" target=\"awstatsbis\"":"").">$Message[31]</a><br></td></tr>\n"; }
 		}
-		else {
+		else {	# If not main page
 			$NewLinkParams =~ s/urlfilter[=]*[^ &]*//i;
 			$NewLinkParams =~ s/&+$//;
-			if ($ShowBackLink) { print "<tr><td class=AWL><a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript".(${NewLinkParams}?"?${NewLinkParams}":""):"$PROG$FileSuffix.html")."\">$Message[76]</a></td></tr>\n"; }
+			if (! $DetailedReportsOnNewWindows) {
+				if ($ShowBackLink) { print "<tr><td class=AWL><a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript".(${NewLinkParams}?"?${NewLinkParams}":""):"$PROG$StaticLinks.html")."\">$Message[76]</a></td></tr>\n"; }
+			}
+			else {
+				print "<tr><td class=AWL><a href=\"javascript:parent.window.close();\">$Message[118]</a></td></tr>\n";
+			}
 		}
 		print "</table>\n";
 		print "<br>\n";
@@ -4409,7 +4416,7 @@ EOF
 		if ($Debug) { debug("ShowHostsStats",2); }
 		print "$CENTER<a name=\"VISITOR\">&nbsp;</a><BR>";
 		$MaxNbOfHostsShown = (scalar keys %_hostmachine_h) if $MaxNbOfHostsShown > (scalar keys %_hostmachine_h);
-		&tab_head("$Message[81] ($Message[77] $MaxNbOfHostsShown) &nbsp; - &nbsp; <a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=allhosts":"$PROG$FileSuffix.allhosts.html")."\">$Message[80]</a> &nbsp; - &nbsp; <a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=lasthosts":"$PROG$FileSuffix.lasthosts.html")."\">$Message[9]</a> &nbsp; - &nbsp; <a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=unknownip":"$PROG$FileSuffix.unknownip.html")."\">$Message[45]</a>",19);
+		&tab_head("$Message[81] ($Message[77] $MaxNbOfHostsShown) &nbsp; - &nbsp; <a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=allhosts":"$PROG$StaticLinks.allhosts.html")."\"".($DetailedReportsOnNewWindows?" target=\"awstatsbis\"":"").">$Message[80]</a> &nbsp; - &nbsp; <a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=lasthosts":"$PROG$StaticLinks.lasthosts.html")."\"".($DetailedReportsOnNewWindows?" target=\"awstatsbis\"":"").">$Message[9]</a> &nbsp; - &nbsp; <a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=unknownip":"$PROG$StaticLinks.unknownip.html")."\"".($DetailedReportsOnNewWindows?" target=\"awstatsbis\"":"").">$Message[45]</a>",19);
 		if ($MonthRequired ne "year") { print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[81] : $TotalHostsKnown $Message[82], $TotalHostsUnknown $Message[1] - $TotalUnique $Message[11]</TH>"; }
 		else { print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[81] : ".(scalar keys %_hostmachine_h)."</TH>"; }
 		if ($ShowLinksToWhoIs && $LinksToWhoIs) { print "<TH width=80>$Message[114]</TH>"; }
@@ -4510,7 +4517,7 @@ EOF
 			$count++;
 		}
 		if ($TotalVisits > $total_s) {
-			print "<tr><td CLASS=AWL>$Message[0]</td><td>".($TotalVisits-$total_s)."</td></tr>\n";
+			print "<tr><td CLASS=AWL><font color=blue>$Message[0]</font></td><td>".($TotalVisits-$total_s)."</td></tr>\n";
 		}
 		&tab_end;
 	}
@@ -4521,7 +4528,7 @@ EOF
 		if ($Debug) { debug("ShowPagesStats (MaxNbOfPageShown=$MaxNbOfPageShown TotalDifferentPages=$TotalDifferentPages)",2); }
 		print "$CENTER<a name=\"PAGE\">&nbsp;</a><a name=\"ENTRY\">&nbsp;</a><a name=\"EXIT\">&nbsp;</a><BR>";
 		$MaxNbOfPageShown = $TotalDifferentPages if $MaxNbOfPageShown > $TotalDifferentPages;
-		&tab_head("$Message[19] ($Message[77] $MaxNbOfPageShown) &nbsp; - &nbsp; <a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=urldetail":"$PROG$FileSuffix.urldetail.html")."\">$Message[80]</a>",19);
+		&tab_head("$Message[19] ($Message[77] $MaxNbOfPageShown) &nbsp; - &nbsp; <a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=urldetail":"$PROG$StaticLinks.urldetail.html")."\"".($DetailedReportsOnNewWindows?" target=\"awstatsbis\"":"").">$Message[80]</a>",19);
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$TotalDifferentPages $Message[28]</TH>";
 		print "<TH bgcolor=\"#$color_p\" width=80>$Message[29]</TH>";
 		print "<TH bgcolor=\"#$color_k\" width=80>$Message[106]</TH>";
@@ -4544,11 +4551,11 @@ EOF
 				my $newkey=CleanFromCSSA($key);
 				if ($newkey =~ /^http(s|):/i) {
 					# URL is url extracted from a proxy log file
-					print "<A HREF=\"$newkey\">$nompage</A>";
+					print "<A HREF=\"$newkey\" target=\"awstatsbis\">$nompage</A>";
 				}
 				else {
 					# URL is url extracted from a web/wap server log file
-					print "<A HREF=\"http://$SiteToAnalyze$newkey\">$nompage</A>";
+					print "<A HREF=\"http://$SiteToAnalyze$newkey\" target=\"awstatsbis\">$nompage</A>";
 				}
 			}
 			else {
@@ -4650,13 +4657,13 @@ EOF
 		foreach my $key (sort { $_browser_h{$b} <=> $_browser_h{$a} } keys (%_browser_h)) {
 			my $p=int($_browser_h{$key}/$Total*1000)/10;
 			if ($key eq "Unknown") {
-				print "<TR><TD width=100><IMG SRC=\"$DirIcons\/browser\/unknown.png\"></TD><TD CLASS=AWL><a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=unknownbrowser":"$PROG$FileSuffix.unknownbrowser.html")."\">$Message[0]</a></TD><TD width=80>?</TD><TD>$_browser_h{$key}</TD><TD>$p&nbsp;%</TD></TR>\n";
+				print "<TR><TD width=100><IMG SRC=\"$DirIcons\/browser\/unknown.png\"></TD><TD CLASS=AWL><a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=unknownbrowser":"$PROG$StaticLinks.unknownbrowser.html")."\"".($DetailedReportsOnNewWindows?" target=\"awstatsbis\"":"").">$Message[0]</a></TD><TD width=80>?</TD><TD>$_browser_h{$key}</TD><TD>$p&nbsp;%</TD></TR>\n";
 			}
 			else {
 				my $nameicon=$BrowsersHashIcon{$key}||"notavailable"; $nameicon =~ s/\s.*//; $nameicon =~ tr/A-Z/a-z/;
 				my $newbrowser=$BrowsersHashIDLib{$key}||$key;
-				if ($newbrowser eq "netscape") { $newbrowser="<font color=blue>Netscape</font> <a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=browserdetail":"$PROG$FileSuffix.browserdetail.html")."\">($Message[58])</a>"; }
-				if ($newbrowser eq "msie") { $newbrowser="<font color=blue>MS Internet Explorer</font> <a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=browserdetail":"$PROG$FileSuffix.browserdetail.html")."\">($Message[58])</a>"; }
+				if ($newbrowser eq "netscape") { $newbrowser="<font color=blue>Netscape</font> <a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=browserdetail":"$PROG$StaticLinks.browserdetail.html")."\"".($DetailedReportsOnNewWindows?" target=\"awstatsbis\"":"").">($Message[58])</a>"; }
+				if ($newbrowser eq "msie") { $newbrowser="<font color=blue>MS Internet Explorer</font> <a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=browserdetail":"$PROG$StaticLinks.browserdetail.html")."\"".($DetailedReportsOnNewWindows?" target=\"awstatsbis\"":"").">($Message[58])</a>"; }
 				print "<TR><TD width=100><IMG SRC=\"$DirIcons\/browser\/$nameicon.png\"></TD><TD CLASS=AWL>$newbrowser</TD><TD width=80>".($BrowsersHereAreGrabbers{$key}?"<b>$Message[112]</b>":"$Message[113]")."</TD><TD>$_browser_h{$key}</TD><TD>$p&nbsp;%</TD></TR>\n";
 			}
 			$count++;
@@ -4676,7 +4683,7 @@ EOF
 		foreach my $key (sort { $_os_h{$b} <=> $_os_h{$a} } keys (%_os_h)) {
 			my $p=int($_os_h{$key}/$Total*1000)/10;
 			if ($key eq "Unknown") {
-				print "<TR><TD width=100><IMG SRC=\"$DirIcons\/os\/unknown.png\"></TD><TD CLASS=AWL><a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=unknownos":"$PROG$FileSuffix.unknownos.html")."\">$Message[0]</a></TD><TD>$_os_h{$key}</TD>";
+				print "<TR><TD width=100><IMG SRC=\"$DirIcons\/os\/unknown.png\"></TD><TD CLASS=AWL><a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=unknownos":"$PROG$StaticLinks.unknownos.html")."\"".($DetailedReportsOnNewWindows?" target=\"awstatsbis\"":"").">$Message[0]</a></TD><TD>$_os_h{$key}</TD>";
 				print "<TD>$p&nbsp;%</TD></TR>\n";
 				}
 			else {
@@ -4744,7 +4751,7 @@ EOF
 			if (length($nompage)>$MaxLengthOfURL) { $nompage=substr($nompage,0,$MaxLengthOfURL)."..."; }
 			if ($ShowLinksOnUrl && ($key =~ /^http(s|):/i)) {
 				my $newkey=CleanFromCSSA($key);
-				print "<TR><TD CLASS=AWL>- <A HREF=\"$newkey\">$nompage</A></TD><TD>$_pagesrefs_h{$key}</TD></TR>\n";
+				print "<TR><TD CLASS=AWL>- <A HREF=\"$newkey\" target=\"awstatsbis\">$nompage</A></TD><TD>$_pagesrefs_h{$key}</TD></TR>\n";
 			} else {
 				print "<TR><TD CLASS=AWL>- $nompage</TD><TD>$_pagesrefs_h{$key}</TD></TR>\n";
 			}
@@ -4767,7 +4774,7 @@ EOF
 		if ($Debug) { debug("ShowKeyphrasesStats",2); }
 		print "$CENTER<a name=\"SEARCHKEYS\">&nbsp;</a><BR>";
 		$MaxNbOfKeywordsShown = $TotalDifferentKeyphrases if $MaxNbOfKeywordsShown > $TotalDifferentKeyphrases;
-		&tab_head("$Message[43] ($Message[77] $MaxNbOfKeywordsShown) &nbsp; - &nbsp; <a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=allkeyphrases":"$PROG$FileSuffix.allkeyphrases.html")."\">$Message[80]</a>",19);
+		&tab_head("$Message[43] ($Message[77] $MaxNbOfKeywordsShown) &nbsp; - &nbsp; <a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=allkeyphrases":"$PROG$StaticLinks.allkeyphrases.html")."\"".($DetailedReportsOnNewWindows?" target=\"awstatsbis\"":"").">$Message[80]</a>",19);
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\" onmouseover=\"ShowTooltip(15);\" onmouseout=\"HideTooltip(15);\"><TH>$TotalDifferentKeyphrases $Message[103]</TH><TH bgcolor=\"#$color_s\" width=80>$Message[14]</TH><TH bgcolor=\"#$color_s\" width=80>$Message[15]</TH></TR>\n";
 		$total_s=0;
 		my $count=0;
@@ -4802,7 +4809,7 @@ EOF
 			my $p=int($_errors_h{$key}/$TotalErrors*1000)/10;
 			if ($httpcode{$key}) { print "<TR onmouseover=\"ShowTooltip($key);\" onmouseout=\"HideTooltip($key);\">"; }
 			else { print "<TR>"; }
-			if ($key == 404) { print "<TD><a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=errors404":"$PROG$FileSuffix.errors404.html")."\">$key</a></TD>"; }
+			if ($key == 404) { print "<TD><a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=errors404":"$PROG$StaticLinks.errors404.html")."\"".($DetailedReportsOnNewWindows?" target=\"awstatsbis\"":"").">$key</a></TD>"; }
 			else { print "<TD>$key</TD>"; }
 			if ($httpcode{$key}) { print "<TD CLASS=AWL>$httpcode{$key}</TD><TD>$_errors_h{$key}</TD><TD>$p&nbsp;%</TD></TR>\n"; }
 			else { print "<TD CLASS=AWL>Unknown error</TD><TD>$_errors_h{$key}</TD><TD>$p&nbsp;%</TD></TR>\n"; }
