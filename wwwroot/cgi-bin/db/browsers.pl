@@ -1,6 +1,10 @@
 # AWSTATS BROWSERS DATABASE
 #--------------------------
-# Last update: 2001-10-20
+# Last update: 2002-02-09
+
+# If you want to add a Browser to extend AWStats database detection capabilities,
+# you must add an entry in BrowsersArrayID and in BrowsersOSHashIDLib.
+
 
 
 # BrowsersArrayID

@@ -3,7 +3,8 @@
 # Last update: 2001-11-10
 
 # If you want to add an OS to extend AWStats database detection capabilities,
-# you must add an entry in OSArrayID, in OSHashID and in OS Hash Lib.
+# you must add an entry in OSArrayID, in OSHashID and in OSHashLib.
+
 
 
 # OSArrayID
