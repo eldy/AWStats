@@ -8830,14 +8830,16 @@ if (scalar keys %HTMLOutput) {
 			if ($ShowFileTypesStats =~ /C/i) { $title.=" - $Message[98]"; }
 			&tab_head("$title",19);
 			print "<tr bgcolor=\"#$color_TableBGRowTitle\"><th colspan=\"3\">$Message[73]</th>";
-			if ($ShowFileTypesStats =~ /H/i) { print "<th bgcolor=\"#$color_h\" width=\"80\">&nbsp;$Message[57]&nbsp;</th><th bgcolor=\"#$color_h\" width=\"80\">$Message[15]</th>"; }
-			if ($ShowFileTypesStats =~ /B/i) { print "<th bgcolor=\"#$color_k\" width=\"80\">$Message[75]</th>"; }
+			if ($ShowFileTypesStats =~ /H/i) { print "<th bgcolor=\"#$color_h\" width=\"80\">$Message[57]</th><th bgcolor=\"#$color_h\" width=\"80\">$Message[15]</th>"; }
+			if ($ShowFileTypesStats =~ /B/i) { print "<th bgcolor=\"#$color_k\" width=\"80\">$Message[75]</th><th bgcolor=\"#$color_k\" width=\"80\">$Message[15]</th>"; }
 			if ($ShowFileTypesStats =~ /C/i) { print "<th bgcolor=\"#$color_k\" width=\"120\">$Message[100]</th><th bgcolor=\"#$color_k\" width=\"120\">$Message[101]</th><th bgcolor=\"#$color_k\" width=\"120\">$Message[99]</th>"; }
 			print "</tr>\n";
 			my $count=0;
 			&BuildKeyList($MaxRowsInHTMLOutput,1,\%_filetypes_h,\%_filetypes_h);
 			foreach my $key (@keylist) {
-				my $p=int($_filetypes_h{$key}/$Totalh*1000)/10;
+				my $p_h='&nbsp;'; my $p_k='&nbsp;';
+				if ($Totalh) { $p_h=int($_filetypes_h{$key}/$Totalh*1000)/10; $p_h="$p_h %"; }
+				if ($Totalk) { $p_k=int($_filetypes_k{$key}/$Totalk*1000)/10; $p_k="$p_k %"; }
 				if ($key eq 'Unknown') {
 					print "<tr><td".($count?"":" width=\"$WIDTHCOLICON\"")."><img src=\"$DirIcons\/mime\/unknown.png\"".AltTitle("")." /></td><td class=\"aws\" colspan=\"2\"><span style=\"color: #$color_other\">$Message[0]</span></td>";
 				}
@@ -8847,8 +8849,8 @@ if (scalar keys %HTMLOutput) {
 					print "<tr><td".($count?"":" width=\"$WIDTHCOLICON\"")."><img src=\"$DirIcons\/mime\/$nameicon.png\"".AltTitle("")." /></td><td class=\"aws\">$key</td>";
 					print "<td class=\"aws\">$nametype</td>";
 				}
-				if ($ShowFileTypesStats =~ /H/i) { print "<td>$_filetypes_h{$key}</td><td>$p %</td>"; }
-				if ($ShowFileTypesStats =~ /B/i) { print "<td>".Format_Bytes($_filetypes_k{$key})."</td>"; }
+				if ($ShowFileTypesStats =~ /H/i) { print "<td>$_filetypes_h{$key}</td><td>$p_h %</td>"; }
+				if ($ShowFileTypesStats =~ /B/i) { print "<td>".Format_Bytes($_filetypes_k{$key})."</td><td>$p_k %</td>"; }
 				if ($ShowFileTypesStats =~ /C/i) {
 					if ($_filetypes_gz_in{$key}) {
 						my $percent=int(100*(1-$_filetypes_gz_out{$key}/$_filetypes_gz_in{$key}));
@@ -8861,6 +8863,8 @@ if (scalar keys %HTMLOutput) {
 				print "</tr>\n";
 				$count++;
 			}
+			# TODO Add a total
+			
 			&tab_end;
 		}
 	
