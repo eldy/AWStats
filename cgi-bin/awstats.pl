@@ -87,7 +87,7 @@ $word, $yearcon, $yearfile, $yearmonthfile, $yeartoprocess) = ();
 @sortsearchwords = @sortsereferrals = @sortsider404 = @sortsiders = @sortunknownip =
 @sortunknownreferer = @sortunknownrefererbrowser = @wordlist = ();
 
-$VERSION="2.5 (build 14)";
+$VERSION="2.5 (build 15)";
 $Lang=0;
 
 # Default value
@@ -1504,7 +1504,8 @@ $message[74][10]="Update";
 #-------------------------------------------------------
 
 sub html_head {
-	print "<html>\n";
+  	print "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">\n\n";
+    print "<html>\n";
 	print "<head>\n";
 	if ($PageCode[$Lang] ne "") { print "$PageCode[$Lang]\n"; }		# If not defined, iso-8859-1 is used in major countries
 	print "<meta http-equiv=\"description\" content=\"$PROG - Advanced Web Statistics for $SiteToAnalyze\">\n";
@@ -1517,8 +1518,9 @@ BODY { font: 12px arial, verdana, helvetica, sans-serif; background-color: #$col
 TH { font: 12px arial, verdana, helvetica, sans-serif; text-align:center; color: #$color_titletext }
 TD { font: 12px arial, verdana, helvetica, sans-serif; text-align:center; color: #$color_text }
 TD.LEFT { font: 12px arial, verdana, helvetica, sans-serif; text-align:left; color: #$color_text }
-A { font: normal 12px arial, verdana, helvetica, sans-serif; color: #$color_link; text-decoration: underline; }
-A:hover { color: #$color_hover; text-decoration: underline; }
+A { font: normal 12px arial, verdana, helvetica, sans-serif; text-decoration: underline; }
+A:link  { color: #$color_link; }
+A:hover { color: #$color_hover; }
 DIV { font: 12px arial,verdana,helvetica; text-align:justify; }
 .TABLEBORDER { background-color: #$color_TableBorder; }
 .TABLEFRAME { background-color: #$color_TableBG; }
@@ -3652,9 +3654,9 @@ foreach $from (@sortpagerefs) {
 		# Show source
 		$lien=$from; $lien=substr($lien,0,$MaxLengthOfURL);
 		if ($ShowLinksOnUrl && ($from =~ /^http(s|):\/\//)) {
-		    print "<TR><TD CLASS=LEFT>- <A HREF=$from>$lien</A></TD> <TD>$_pagesrefs_h{$from}</TD></TR>\n";
+			print "<TR><TD CLASS=LEFT>- <A HREF=\"$from\">$lien</A></TD><TD>$_pagesrefs_h{$from}</TD></TR>\n";
 		} else {
-			print "<TR><TD CLASS=LEFT>- $lien </TD><TD>$_pagesrefs_h{$from}</TD></TR>\n";
+			print "<TR><TD CLASS=LEFT>- $lien</TD><TD>$_pagesrefs_h{$from}</TD></TR>\n";
 		}
 
 		$count++;
