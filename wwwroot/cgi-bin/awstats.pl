@@ -556,6 +556,9 @@ sub html_head {
 			print "<html lang='$Lang'".($PageDir?" dir='rtl'":"").">\n";
 		}
 		print "<head>\n";
+ 
+        print "<meta name=\"generator\" content=\"AWStats $VERSION from config file awstats.$SiteConfig.conf (http://awstats.sourceforge.net)\" />\n";
+ 
 		if ($MetaRobot) { print "<meta name=\"robots\" content=\"".($FrameName eq 'mainleft'?'no':'')."index,nofollow\" />\n"; }
 		else { print "<meta name=\"robots\" content=\"noindex,nofollow\" />\n"; }
 
