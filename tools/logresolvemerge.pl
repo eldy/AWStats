@@ -10,6 +10,8 @@
 # alone for any other log analyzer.
 # See COPYING.TXT file about AWStats GNU General Public License.
 #-------------------------------------------------------
+# $Revision$ - $Author$ - $Date$
+
 use strict; no strict "refs";
 #use diagnostics;
 #use Thread;
@@ -18,7 +20,6 @@ use strict; no strict "refs";
 #-------------------------------------------------------
 # Defines
 #-------------------------------------------------------
-# Last change $Revision$ - $Author$ - $Date$
 my $REVISION='$Revision$'; $REVISION =~ /\s(.*)\s/; $REVISION=$1;
 my $VERSION="1.1 (build $REVISION)";
 
@@ -41,7 +42,7 @@ my @SkipDNSLookupFor=();
 # ---------- Init hash arrays --------
 my %ParamFile=();
 my %linerecord=();
-my %timeconnexion=();
+my %timerecord=();
 my %corrupted=();
 my %TmpHashDNSLookup=();
 my %QueueHosts=();
@@ -149,7 +150,7 @@ if (scalar keys %ParamFile == 0) {
 	print "Options:\n";
 	print "  -dnslookup    make a reverse DNS lookup on IP adresses (not done by default)\n";
 #	print "  -dnslookup:n  same with a n parallel threads instead of $QueuePoolSize by default\n";
-	print "  -showsteps    to add benchmark informations every $NbOfLinesForBenchmark lines processed\n";
+	print "  -showsteps    print on stderr benchmark information every $NbOfLinesForBenchmark lines\n";
 	print "\n";
 	print "This runs $PROG in command line to open one or several web\n";
 	print "server log files to merge them (sorted on date) and/or to make a reverse\n";
@@ -206,7 +207,8 @@ my %monthnum =  ( "Jan","01","jan","01","Feb","02","feb","02","Mar","03","mar","
 #------------------------------------------
 # PROCESSING CURRENT LOG(s)
 #------------------------------------------
-my %LogFileToDo=(); my %NbOfLinesRead=();
+my %LogFileToDo=();
+my $NbOfLinesRead=0;
 my $NbOfNewLinesProcessed=0;
 my $logfilechosen=0;
 my $starttime=time();
@@ -266,47 +268,49 @@ while (1 == 1)
 				if (! $_) {							# No more records in log file number $logfilenb
 					&debug(" No more records in file number $logfilenb",2);
 					delete $LogFileToDo{$logfilenb};
-					last; }											# We have all the new records for each other files, we stop here
+					last;
+				}
 
-				chomp $_; s/\r//;
+				$NbOfLinesRead++;
+				chomp $_; s/\r$//;
 
 				if (/^#/) { next; }									# Ignore comment lines (ISS writes such comments)
 				if (/^!!/) { next; }								# Ignore comment lines (Webstar writes such comments)
 				if (/^$/) { next; }									# Ignore blank lines (With ISS: happens sometimes, with Apache: possible when editing log file)
 
-				$NbOfLinesRead{$logfilenb}++;
+				$linerecord{$logfilenb}=$_; 
 
 				# Check filters
 				#----------------------------------------------------------------------
+
 				# Split DD/Month/YYYY:HH:MM:SS or YYYY-MM-DD HH:MM:SS or MM/DD/YY\tHH:MM:SS
-				$linerecord{$logfilenb}=$_; 
 				my $year=0; my $month=0; my $day=0; my $hour=0; my $minute=0; my $second=0;
 				if ($_ =~ /(\d\d\d\d)-(\d\d)-(\d\d) (\d\d):(\d\d):(\d\d)/) { $year=$1; $month=$2; $day=$3; $hour=$4; $minute=$5; $second=$6; }
-				if ($_ =~ /\[(\d\d)\/(.*)\/(\d\d\d\d):(\d\d):(\d\d):(\d\d) /) { $year=$3; $month=$2; $day=$1; $hour=$4; $minute=$5; $second=$6; }
+				if ($_ =~ /\[(\d\d)[\/:\s](\w+)[\/:\s](\d\d\d\d)[\/:\s](\d\d)[\/:\s](\d\d)[\/:\s](\d\d) /) { $year=$3; $month=$2; $day=$1; $hour=$4; $minute=$5; $second=$6; }
 				if ($monthnum{$month}) { $month=$monthnum{$month}; }	# Change lib month in num month if necessary
 
-				# Create $timeconnexion like YYYYMMDDHHMMSS
-		 		$timeconnexion{$logfilenb}=int("$year$month$day$hour$minute$second");
-				if ($timeconnexion{$logfilenb}<10000000000000) {
+				# Create $timerecord like YYYYMMDDHHMMSS
+		 		$timerecord{$logfilenb}=int("$year$month$day$hour$minute$second");
+				if ($timerecord{$logfilenb}<10000000000000) {
 					&debug(" This record is corrupted (no date found)",3);
 					$corrupted{$logfilenb}++;
 					next;
 				}
-				&debug(" This is next record for file $logfilenb : timeconnexion=$timeconnexion{$logfilenb}",3);
+				&debug(" This is next record for file $logfilenb : timerecord=$timerecord{$logfilenb}",3);
 				last;
 			}
 		}
 	}
 	# END Read new lines for each log file. After this, following var are filled
-	# $timeconnexion{$logfilenb}
-	
+	# $timerecord{$logfilenb}
+
 	# We choose wich record of wich log file to process
 	&debug("Choose of wich record of which log file to process",3);
 	$logfilechosen=-1;
 	my $timeref="99999999999999";
 	foreach my $logfilenb (keys %LogFileToDo) {
-		&debug(" timeconnexion for file $logfilenb is $timeconnexion{$logfilenb}",4);
-		if ($timeconnexion{$logfilenb} < $timeref) { $logfilechosen=$logfilenb; $timeref=$timeconnexion{$logfilenb} }
+		&debug(" timerecord for file $logfilenb is $timerecord{$logfilenb}",4);
+		if ($timerecord{$logfilenb} < $timeref) { $logfilechosen=$logfilenb; $timeref=$timerecord{$logfilenb} }
 	}
 	if ($logfilechosen <= 0) { last; }								# No more record to process
 	# Record is chosen
@@ -316,7 +320,10 @@ while (1 == 1)
 	# Record is approved. We found a new line to process in file number $logfilechosen
 	#----------------------------------------------------------------------------------
 	$NbOfNewLinesProcessed++;
-	if (($ShowSteps) && ($NbOfNewLinesProcessed % $NbOfLinesForBenchmark == 0)) { print STDERR "$NbOfNewLinesProcessed lines processed (".(time()-$starttime)." seconds, ".($NbOfNewLinesProcessed/(time()-$starttime))." lines/seconds)\n"; }
+	if ($ShowSteps && ($NbOfLinesRead % $NbOfLinesForBenchmark == 0)) {
+		my $delay=(time()-$starttime)||1;
+		print STDERR "$NbOfLinesRead lines processed (".(1000*$delay)." ms, ".int($NbOfLinesRead/$delay)." lines/seconds)\n";
+	}
 
 	# Analyze: IP-address
 	#--------------------
@@ -375,7 +382,9 @@ while (1 == 1)
 			}
 			debug(" First elem in queue has been resolved ($TmpHashDNSLookup{$QueueHosts{$QueueCursor}}). We pull it.",4);
 		}
-		print "$QueueRecord{$QueueCursor}\n"; delete $QueueRecord{$QueueCursor};
+		print "$QueueRecord{$QueueCursor}\n";
+		delete $QueueRecord{$QueueCursor};
+		delete $QueueHosts{$QueueCursor};
 		$QueueCursor++;
 	}
 
