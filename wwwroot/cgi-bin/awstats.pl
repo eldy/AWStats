@@ -8684,8 +8684,7 @@ if (scalar keys %HTMLOutput) {
 			foreach my $key (@keylist) {
 				my $p=int($_filetypes_h{$key}/$Totalh*1000)/10;
 				if ($key eq 'Unknown') {
-					print "<TR><TD".($count?"":" width=$WIDTHCOLICON")."><IMG SRC=\"$DirIcons\/mime\/unknown.png\"".AltTitle("")."></TD><TD CLASS=AWS><font color=\"#$color_other\">$Message[0]</font></TD>";
-					print "<TD>&nbsp;</TD>";
+					print "<TR><TD".($count?"":" width=$WIDTHCOLICON")."><IMG SRC=\"$DirIcons\/mime\/unknown.png\"".AltTitle("")."></TD><TD CLASS=AWS colspan=2><font color=\"#$color_other\">$Message[0]</font></TD>";
 				}
 				else {
 					my $nameicon=$MimeHashIcon{$key}||"notavailable";
