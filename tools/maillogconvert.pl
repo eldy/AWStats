@@ -216,20 +216,24 @@ while (<>) {
 	#
 	elsif (/: reject/ ne undef) {
 		# Example: 
-		# postfix:  Jun 29 04:19:04 apollon postfix/smtpd[26553]: 1954F3B8A4: reject: RCPT from unknown[80.245.33.2]: 450 <partenaires@chiensderace.com>: User unknown in local recipient table; from=<httpd@fozzy2.dpi-europe.fr> to=<partenaires@chiensderace.com> proto=ESMTP helo=<fozzy2.dpi-europe.fr>
-		#
-		my ($mon,$day,$time,$id,$code,$from,$to)=m/(\w+)\s+(\d+)\s+(\d+:\d+:\d+)\s+[\w\-]+\s+(?:postfix\/smtpd|postfix\/smtp)\[\d+\]:\s+(.*?):\s+(.*)\s+from=([^\s,]*)\s+to=([^\s,]*)\s/;
-		$rowid=$id;
+		# postfix:  Jan 01 04:19:04 apollon postfix/smtpd[26553]: 1954F3B8A4: reject: RCPT from unknown[80.245.33.2]: 450 <partenaires@chiensderace.com>: User unknown in local recipient table; from=<httpd@fozzy2.dpi-europe.fr> to=<partenaires@chiensderace.com> proto=ESMTP helo=<fozzy2.dpi-europe.fr>
+		# postfix:  Jan 01 04:26:39 halley postfix/smtpd[9245]: reject: RCPT from unknown[203.156.32.33]: 554 <charitha99@yahoo.com>: Recipient address rejected: Relay access denied; from=<1126448365@aol.com> to=<charitha99@yahoo.com>
+		my ($mon,$day,$time,$id,$code,$from,$to)=m/(\w+)\s+(\d+)\s+(\d+:\d+:\d+)\s+[\w\-]+\s+(?:postfix\/smtpd|postfix\/smtp)\[\d+\]:\s+(.*?):\s+(.*)\s+from=([^\s,]*)\s+to=([^\s,]*)/;
+		$rowid=($id eq 'reject'?999:$id);	# id not provided in log, we take 999
 		# $code='reject: RCPT from c66.191.66.89.dul.mn.charter.com[66.191.66.89]: 450 <partenaires@chiensderace.com>: User unknown in local recipient table;'
+		#    or 'reject: RCPT from unknown[203.156.32.33]: 554 <charitha99@yahoo.com>: Recipient address rejected: Relay access denied;'
 		if ($rowid) {
-			if ($code =~ /\s+(\d\d\d)\s+/) { $entry{$id}{'code'}=$1; }
-			else { $entry{$id}{'code'}=999; }	# Unkown error
-			$entry{$id}{'from'}=&trim($from);
-			$entry{$id}{'to'}=&trim($to);
-			$entry{$id}{'mon'}=$mon;
-			$entry{$id}{'day'}=$day;
-			$entry{$id}{'time'}=$time;
-			debug("For id=$id, found a postfix error incoming message: code=$entry{$id}{'code'} from=$entry{$id}{'from'} to=$entry{$id}{'to'}");
+			if ($code =~ /\s+(\d\d\d)\s+/) { $entry{$rowid}{'code'}=$1; }
+			else { $entry{$rowid}{'code'}=999; }	# Unkown error
+			if (! $entry{$rowid}{'relay_s'} &&  $code =~ /from\s+([^\s]+)\s+/) {
+				$entry{$rowid}{'relay_s'}=&trim($1);
+			}
+			$entry{$rowid}{'from'}=&trim($from);
+			$entry{$rowid}{'to'}=&trim($to);
+			$entry{$rowid}{'mon'}=$mon;
+			$entry{$rowid}{'day'}=$day;
+			$entry{$rowid}{'time'}=$time;
+			debug("For id=$rowid, found a postfix error incoming message: code=$entry{$rowid}{'code'} from=$entry{$rowid}{'from'} to=$entry{$rowid}{'to'}");
 		}
 	}
 	#
@@ -344,7 +348,11 @@ while (<>) {
 		   ($entry{$rowid}{'from'} && $entry{$rowid}{'to'})
 		|| ($entry{$rowid}{'from'} && $entry{$rowid}{'code'} > 1)
 		) {
-			&OutputRecord($rowid)
+			&OutputRecord($rowid);
+			# Delete generic unknown record
+			if ($rowid == 999) {
+				undef $entry{999};
+			}
 		}
 	}
 	else {
