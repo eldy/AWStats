@@ -255,7 +255,7 @@ use vars qw/
 %MimeHashLib %MimeHashIcon %MimeHashFamily
 %OSHashID %OSHashLib
 %RobotsHashIDLib
-%SearchEnginesHashIDLib %SearchEnginesKnownUrl %NotSearchEnginesKeys
+%SearchEnginesHashID %SearchEnginesHashLib %SearchEnginesKnownUrl %NotSearchEnginesKeys
 %WormsHashID %WormsHashLib
 /;
 use vars qw/
@@ -528,7 +528,7 @@ print "body { font: 11px verdana, arial, helvetica, sans-serif; background-color
 print ".aws_bodyl  { }\n";
 print ".aws_border { background-color: #$color_TableBG; padding: 1px 1px 1px 1px; margin-top: 0 }\n";
 print ".aws_title  { font: 13px verdana, arial, helvetica, sans-serif; font-weight: bold; background-color: #$color_TableBGTitle; text-align: center; margin-bottom: 0; padding: 1px 1px 1px 1px; }\n";
-print ".aws_blank { font: 13px verdana, arial, helvetica, sans-serif; background-color: #".($ENV{'HTTP_USER_AGENT'}=~/MSIE/i?$color_Background:$color_TableBG)."; text-align: center; margin-bottom: 0; padding: 1px 1px 1px 1px; }\n";
+print ".aws_blank { font: 13px verdana, arial, helvetica, sans-serif; background-color: #".($ENV{'HTTP_USER_AGENT'} && $ENV{'HTTP_USER_AGENT'}=~/MSIE/i?$color_Background:$color_TableBG)."; text-align: center; margin-bottom: 0; padding: 1px 1px 1px 1px; }\n";
 print <<EOF;
 .aws_data { background-color: #$color_Background; }
 .aws_formfield { font: 13px verdana, arial, helvetica; }
@@ -1258,8 +1258,9 @@ sub Read_Ref_Data {
 	# Sanity check.
 	if (@OSSearchIDOrder != scalar keys %OSHashID) { error("Not same number of records of OSSearchIDOrder (".(@OSSearchIDOrder)." entries) and OSHashID (".(scalar keys %OSHashID)." entries) in OS database. Check your file ".$FilePath{"operating_systems.pm"}); }
 	if (@BrowsersSearchIDOrder != scalar keys %BrowsersHashIDLib) { error("Not same number of records of BrowsersSearchIDOrder (".(@BrowsersSearchIDOrder)." entries) and BrowsersHashIDLib (".(scalar keys %BrowsersHashIDLib)." entries) in Browsers database. Check your file ".$FilePath{"browsers.pm"}); }
-	if (@SearchEnginesSearchIDOrder != scalar keys %SearchEnginesHashIDLib) { error("Not same number of records of SearchEnginesSearchIDOrder (".(@SearchEnginesSearchIDOrder)." entries) and SearchEnginesHashIDLib (".(scalar keys %SearchEnginesHashIDLib)." entries) in Search Engines database. Check your file ".$FilePath{"search_engines.pm"}); }
+	if (@SearchEnginesSearchIDOrder != scalar keys %SearchEnginesHashID) { error("Not same number of records of SearchEnginesSearchIDOrder (".(@SearchEnginesSearchIDOrder)." entries) and SearchEnginesHashID (".(scalar keys %SearchEnginesHashID)." entries) in Search Engines database. Check your file ".$FilePath{"search_engines.pm"}); }
 	if ((@RobotsSearchIDOrder_list1+@RobotsSearchIDOrder_list2+@RobotsSearchIDOrder_list3) != scalar keys %RobotsHashIDLib) { error("Not same number of records of RobotsSearchIDOrder_listx (total is ".(@RobotsSearchIDOrder_list1+@RobotsSearchIDOrder_list2+@RobotsSearchIDOrder_list3)." entries) and RobotsHashIDLib (".(scalar keys %RobotsHashIDLib)." entries) in Robots database. Check your file ".$FilePath{"robots.pm"}); }
+
 }
 
 
@@ -1298,7 +1299,7 @@ sub Read_Language_Data {
 		while (<LANG>) {
 			chomp $_; s/\r//;
 			if ($_ =~ /^PageCode=[\t\s\"\']*([\w-]+)/i) { $PageCode = $1; }
-			if ($_ =~ /^PageDir=[\t\s\"\']*([\w-]+)/i) { $PageDir = $1; }
+			if ($_ =~ /^PageDir=[\t\s\"\']*([\w-]+)/i)  { $PageDir = $1; }
 			if ($_ =~ s/^Message\d+=//i) {
 				$_ =~ s/#.*//;								# Remove comments
 				$_ =~ tr/\t /  /s;							# Change all blanks into " "
@@ -2778,8 +2779,25 @@ sub Read_History_With_TmpUpdate {
 						$count++;
 						if ($SectionsToLoad{'sereferrals'}) {
 							$countloaded++;
-							if ($versionnum < 5004) {	# For history files < 5.4
-								if ($field[1]) { $_se_referrals_h{$field[0]}+=$field[1]; }
+							if ($versionnum < 5004) {		# For history files < 5.4
+								my $se=$field[0]; $se=~s/\./\\./g;
+								if ($SearchEnginesHashID{$se}) {
+									$_se_referrals_h{$SearchEnginesHashID{$se}}+=$field[1]||0;
+								}
+								else {
+									$_se_referrals_h{$field[0]}+=$field[1]||0;
+								}
+							}
+							elsif ($versionnum < 5091) {	# For history files < 5.91
+								my $se=$field[0]; $se=~s/\./\\./g;
+								if ($SearchEnginesHashID{$se}) {
+									$_se_referrals_p{$SearchEnginesHashID{$se}}+=$field[1]||0;
+									$_se_referrals_h{$SearchEnginesHashID{$se}}+=$field[2]||0;
+								}
+								else {
+									$_se_referrals_p{$field[0]}+=$field[1]||0;
+									$_se_referrals_h{$field[0]}+=$field[2]||0;
+								}
 							} else {
 								if ($field[1]) { $_se_referrals_p{$field[0]}+=$field[1]; }
 								if ($field[2]) { $_se_referrals_h{$field[0]}+=$field[2]; }
@@ -5176,7 +5194,7 @@ if ((! $ENV{'GATEWAY_INTERFACE'}) && (! $SiteConfig)) {
 	print "  ".(scalar keys %RobotsHashIDLib)." robots\n";
 	print "  ".(scalar keys %OSHashLib)." operating systems\n";
 	print "  ".(scalar keys %BrowsersHashIDLib)." browsers\n";
-	print "  ".(scalar keys %SearchEnginesHashIDLib)." search engines (and keyphrases/keywords used from them)\n";
+	print "  ".(scalar keys %SearchEnginesHashLib)." search engines (and keyphrases/keywords used from them)\n";
 	print "  All HTTP errors with last referrer\n";
 	print "  Report by day/month/year\n";
 	print "  Dynamic or static HTML reports, static PDF reports\n";
@@ -6250,7 +6268,7 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 											if (! $NotSearchEnginesKeys{$key} || $refererserver !~ /$NotSearchEnginesKeys{$key}/i) {
 												# This hit came from the search engine $key
 												if ($Debug) { debug("  Server '$refererserver' is added to TmpRefererServer with value '$key'",2); }
-												$TmpRefererServer{$refererserver}="$key";
+												$TmpRefererServer{$refererserver}=$SearchEnginesHashID{$key};
 												$found=1;
 											}
 											last;
@@ -6906,7 +6924,7 @@ if (scalar keys %HTMLOutput) {
 	for (my $month=$beginmonth; $month<=$endmonth; $month++) {
 		my $monthix=sprintf("%02s",$month);
 		if ($FirstTime{$YearRequired.$monthix} && ($FirstTime == 0 || $FirstTime > $FirstTime{$YearRequired.$monthix})) { $FirstTime = $FirstTime{$YearRequired.$monthix}; }
-		if ($LastTime < $LastTime{$YearRequired.$monthix}) { $LastTime = $LastTime{$YearRequired.$monthix}; }
+		if ($LastTime < ($LastTime{$YearRequired.$monthix}||0)) { $LastTime = $LastTime{$YearRequired.$monthix}; }
 		$TotalVisits+=$MonthVisits{$YearRequired.$monthix}||0;
 		$TotalPages+=$MonthPages{$YearRequired.$monthix}||0;
 		$TotalHits+=$MonthHits{$YearRequired.$monthix}||0;
@@ -7786,7 +7804,7 @@ if (scalar keys %HTMLOutput) {
 		my $count=0;
 		&BuildKeyList($MaxRowsInHTMLOutput,$MinHit{'Refer'},\%_se_referrals_h,\%_se_referrals_p);
 		foreach my $key (@keylist) {
-			my $newreferer=CleanFromCSSA($SearchEnginesHashIDLib{$key}||$key);
+			my $newreferer=CleanFromCSSA($SearchEnginesHashLib{$key}||$key);
 			my $p_p; my $p_h;
 			if ($TotalSearchEnginesPages) { $p_p=int($_se_referrals_p{$key}/$TotalSearchEnginesPages*1000)/10; }
 			if ($TotalSearchEnginesHits) { $p_h=int($_se_referrals_h{$key}/$TotalSearchEnginesHits*1000)/10; }
@@ -8037,11 +8055,11 @@ if (scalar keys %HTMLOutput) {
 				$total_p+=$MonthPages{$YearRequired.$monthix}||0;
 				$total_h+=$MonthHits{$YearRequired.$monthix}||0;
 				$total_k+=$MonthBytes{$YearRequired.$monthix}||0;
-				#if ($MonthUnique{$YearRequired.$monthix} > $max_v) { $max_v=$MonthUnique{$YearRequired.$monthix}; }
-				if ($MonthVisits{$YearRequired.$monthix} > $max_v) { $max_v=$MonthVisits{$YearRequired.$monthix}; }
-				#if ($MonthPages{$YearRequired.$monthix} > $max_p)  { $max_p=$MonthPages{$YearRequired.$monthix}; }
-				if ($MonthHits{$YearRequired.$monthix} > $max_h)   { $max_h=$MonthHits{$YearRequired.$monthix}; }
-				if ($MonthBytes{$YearRequired.$monthix} > $max_k)  { $max_k=$MonthBytes{$YearRequired.$monthix}; }
+				#if (($MonthUnique{$YearRequired.$monthix}||0) > $max_v) { $max_v=$MonthUnique{$YearRequired.$monthix}; }
+				if (($MonthVisits{$YearRequired.$monthix}||0) > $max_v) { $max_v=$MonthVisits{$YearRequired.$monthix}; }
+				#if (($MonthPages{$YearRequired.$monthix}||0) > $max_p)  { $max_p=$MonthPages{$YearRequired.$monthix}; }
+				if (($MonthHits{$YearRequired.$monthix}||0) > $max_h)   { $max_h=$MonthHits{$YearRequired.$monthix}; }
+				if (($MonthBytes{$YearRequired.$monthix}||0) > $max_k)  { $max_k=$MonthBytes{$YearRequired.$monthix}; }
 			}
 			# Define average
 			# TODO
@@ -8051,17 +8069,17 @@ if (scalar keys %HTMLOutput) {
 			for (my $ix=1; $ix<=12; $ix++) {
 				my $monthix=sprintf("%02s",$ix);
 				my $bredde_u=0; my $bredde_v=0;my $bredde_p=0;my $bredde_h=0;my $bredde_k=0;
-				if ($max_v > 0) { $bredde_u=int($MonthUnique{$YearRequired.$monthix}/$max_v*$BarHeight)+1; }
-				if ($max_v > 0) { $bredde_v=int($MonthVisits{$YearRequired.$monthix}/$max_v*$BarHeight)+1; }
-				if ($max_h > 0) { $bredde_p=int($MonthPages{$YearRequired.$monthix}/$max_h*$BarHeight)+1; }
-				if ($max_h > 0) { $bredde_h=int($MonthHits{$YearRequired.$monthix}/$max_h*$BarHeight)+1; }
-				if ($max_k > 0) { $bredde_k=int($MonthBytes{$YearRequired.$monthix}/$max_k*$BarHeight)+1; }
+				if ($max_v > 0) { $bredde_u=int(($MonthUnique{$YearRequired.$monthix}||0)/$max_v*$BarHeight)+1; }
+				if ($max_v > 0) { $bredde_v=int(($MonthVisits{$YearRequired.$monthix}||0)/$max_v*$BarHeight)+1; }
+				if ($max_h > 0) { $bredde_p=int(($MonthPages{$YearRequired.$monthix}||0)/$max_h*$BarHeight)+1; }
+				if ($max_h > 0) { $bredde_h=int(($MonthHits{$YearRequired.$monthix}||0)/$max_h*$BarHeight)+1; }
+				if ($max_k > 0) { $bredde_k=int(($MonthBytes{$YearRequired.$monthix}||0)/$max_k*$BarHeight)+1; }
 				print "<td>";
-				if ($ShowMonthStats =~ /U/i) { print "<img align=\"bottom\" src=\"$DirIcons\/other\/$BarPng{'vu'}\" height=\"$bredde_u\" width=\"6\"".AltTitle("$Message[11]: $MonthUnique{$YearRequired.$monthix}")." />"; }
-				if ($ShowMonthStats =~ /V/i) { print "<img align=\"bottom\" src=\"$DirIcons\/other\/$BarPng{'vv'}\" height=\"$bredde_v\" width=\"6\"".AltTitle("$Message[10]: $MonthVisits{$YearRequired.$monthix}")." />"; }
+				if ($ShowMonthStats =~ /U/i) { print "<img align=\"bottom\" src=\"$DirIcons\/other\/$BarPng{'vu'}\" height=\"$bredde_u\" width=\"6\"".AltTitle("$Message[11]: ".($MonthUnique{$YearRequired.$monthix}||0))." />"; }
+				if ($ShowMonthStats =~ /V/i) { print "<img align=\"bottom\" src=\"$DirIcons\/other\/$BarPng{'vv'}\" height=\"$bredde_v\" width=\"6\"".AltTitle("$Message[10]: ".($MonthVisits{$YearRequired.$monthix}||0))." />"; }
 				if ($QueryString !~ /buildpdf/i) { print "&nbsp;"; }
-				if ($ShowMonthStats =~ /P/i) { print "<img align=\"bottom\" src=\"$DirIcons\/other\/$BarPng{'vp'}\" height=\"$bredde_p\" width=\"6\"".AltTitle("$Message[56]: $MonthPages{$YearRequired.$monthix}")." />"; }
-				if ($ShowMonthStats =~ /H/i) { print "<img align=\"bottom\" src=\"$DirIcons\/other\/$BarPng{'vh'}\" height=\"$bredde_h\" width=\"6\"".AltTitle("$Message[57]: $MonthHits{$YearRequired.$monthix}")." />"; }
+				if ($ShowMonthStats =~ /P/i) { print "<img align=\"bottom\" src=\"$DirIcons\/other\/$BarPng{'vp'}\" height=\"$bredde_p\" width=\"6\"".AltTitle("$Message[56]: ".($MonthPages{$YearRequired.$monthix}||0))." />"; }
+				if ($ShowMonthStats =~ /H/i) { print "<img align=\"bottom\" src=\"$DirIcons\/other\/$BarPng{'vh'}\" height=\"$bredde_h\" width=\"6\"".AltTitle("$Message[57]: ".($MonthHits{$YearRequired.$monthix}||0))." />"; }
 				if ($ShowMonthStats =~ /B/i) { print "<img align=\"bottom\" src=\"$DirIcons\/other\/$BarPng{'vk'}\" height=\"$bredde_k\" width=\"6\"".AltTitle("$Message[75]: ".Format_Bytes($MonthBytes{$YearRequired.$monthix}))." />"; }
 				print "</td>\n";
 			}
@@ -8111,7 +8129,7 @@ if (scalar keys %HTMLOutput) {
 					if ($ShowMonthStats =~ /V/i) { print "<td>",$MonthVisits{$YearRequired.$monthix}?$MonthVisits{$YearRequired.$monthix}:"0","</td>"; }
 					if ($ShowMonthStats =~ /P/i) { print "<td>",$MonthPages{$YearRequired.$monthix}?$MonthPages{$YearRequired.$monthix}:"0","</td>"; }
 					if ($ShowMonthStats =~ /H/i) { print "<td>",$MonthHits{$YearRequired.$monthix}?$MonthHits{$YearRequired.$monthix}:"0","</td>"; }
-					if ($ShowMonthStats =~ /B/i) { print "<td>",Format_Bytes(int($MonthBytes{$YearRequired.$monthix})),"</td>"; }
+					if ($ShowMonthStats =~ /B/i) { print "<td>",Format_Bytes(int($MonthBytes{$YearRequired.$monthix}||0)),"</td>"; }
 					print "</tr>\n";
 				}
 				# Average row
@@ -8272,7 +8290,7 @@ if (scalar keys %HTMLOutput) {
 					if ($ShowDaysOfMonthStats =~ /V/i) { print "<td>",$DayVisits{$year.$month.$day}?$DayVisits{$year.$month.$day}:"0","</td>"; }
 					if ($ShowDaysOfMonthStats =~ /P/i) { print "<td>",$DayPages{$year.$month.$day}?$DayPages{$year.$month.$day}:"0","</td>"; }
 					if ($ShowDaysOfMonthStats =~ /H/i) { print "<td>",$DayHits{$year.$month.$day}?$DayHits{$year.$month.$day}:"0","</td>"; }
-					if ($ShowDaysOfMonthStats =~ /B/i) { print "<td>",Format_Bytes(int($DayBytes{$year.$month.$day})),"</td>"; }
+					if ($ShowDaysOfMonthStats =~ /B/i) { print "<td>",Format_Bytes(int($DayBytes{$year.$month.$day}||0)),"</td>"; }
 					print "</tr>\n";
 				}
 				# Average row
@@ -8709,7 +8727,7 @@ if (scalar keys %HTMLOutput) {
 			print "$Center<a name=\"sessions\">&nbsp;</a><br />\n";
 			my $title="$Message[117]";
 			&tab_head($title,19,0,'sessions');
-			my $Totals=0; foreach my $key (@SessionsRange) { $average_s+=$_session{$key}*$SessionsAverage{$key}; $Totals+=$_session{$key}; }
+			my $Totals=0; foreach my $key (@SessionsRange) { $average_s+=($_session{$key}||0)*$SessionsAverage{$key}; $Totals+=$_session{$key}||0; }
 			if ($Totals) { $average_s=int($average_s/$Totals); }
 			else { $average_s='?'; }
 			print "<tr bgcolor=\"#$color_TableBGRowTitle\"".($TOOLTIPON?" onmouseover=\"ShowTip(1);\" onmouseout=\"HideTip(1);\"":"")."><th>$Message[10]: $TotalVisits - $Message[96]: $average_s s</th><th bgcolor=\"#$color_s\" width=\"80\">$Message[10]</th><th bgcolor=\"#$color_s\" width=\"80\">$Message[15]</th></tr>\n";
@@ -9053,7 +9071,7 @@ if (scalar keys %HTMLOutput) {
 			if ($ShowOriginStats =~ /P/i) { print "<td>".($_from_p[5]?$_from_p[5]:"&nbsp;")."</td><td>".($_from_p[5]?"$p_p[5] %":"&nbsp;")."</td>"; }
 			if ($ShowOriginStats =~ /H/i) { print "<td>".($_from_h[5]?$_from_h[5]:"&nbsp;")."</td><td>".($_from_h[5]?"$p_h[5] %":"&nbsp;")."</td>"; }
 			print "</tr>\n";
-			#------- Referrals by search engine
+			#------- Referrals by search engines
 			print "<tr".($TOOLTIPON?" onmouseover=\"ShowTip(13);\" onmouseout=\"HideTip(13);\"":"")."><td class=\"aws\"><b>$Message[40]</b> - <a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?XMLEncode("$AWScript?${NewLinkParams}output=refererse"):"$PROG$StaticLinks.refererse.$StaticExt")."\"$NewLinkTarget>$Message[80]</a><br />\n";
 			if (scalar keys %_se_referrals_h) {
 				print "<table>\n";
@@ -9061,7 +9079,7 @@ if (scalar keys %HTMLOutput) {
 				my $count=0;
 				&BuildKeyList($MaxNbOf{'RefererShown'},$MinHit{'Refer'},\%_se_referrals_h,\%_se_referrals_p);
 				foreach my $key (@keylist) {
-					my $newreferer=CleanFromCSSA($SearchEnginesHashIDLib{$key}||$key);
+					my $newreferer=CleanFromCSSA($SearchEnginesHashLib{$key}||$key);
 					print "<tr><td class=\"aws\">- $newreferer</td>";
 					print "<td>".($_se_referrals_p{$key}?$_se_referrals_p{$key}:'0')."</td>";
 					print "<td>$_se_referrals_h{$key}</td>";
