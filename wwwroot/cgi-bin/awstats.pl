@@ -86,7 +86,7 @@ $word, $yearcon, $yearfile, $yearmonthfile, $yeartoprocess) = ();
 @sortsearchwords = @sortsereferrals = @sortsider404 = @sortsiders = @sortunknownip =
 @sortunknownreferer = @sortunknownrefererbrowser = @wordlist = ();
 
-$VERSION="2.5 (build 25)";
+$VERSION="2.5 (build 26)";
 $Lang=0;
 
 # Default value
@@ -3553,14 +3553,14 @@ if ($rest_p > 0) { 	# All other domains (known or not)
 	if ($max_h > 0) { $bredde_p=$BarWidth*$rest_p/$max_h+1; }	# use max_h to enable to compare pages with hits
 	if ($max_h > 0) { $bredde_h=$BarWidth*$rest_h/$max_h+1; }
 	if ($max_k > 0) { $bredde_k=$BarWidth*$rest_k/$max_k+1; }
-	$kilo=int(($rest_k{$key}/1024)*100)/100;
-	print "<TR><TD colspan=3 CLASS=LEFT><font color=blue>$message[2][$Lang]</font></TD><TD>$rest_p</TD><TD>$rest_h</TD><TD>$rest_k</TD>\n";
+	$kilo=int(($rest_k/1024)*100)/100;
+	print "<TR><TD colspan=3 CLASS=LEFT><font color=blue>$message[2][$Lang]</font></TD><TD>$rest_p</TD><TD>$rest_h</TD><TD>$kilo</TD>\n";
 	print "<TD CLASS=LEFT>";
 	print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_p\" WIDTH=$bredde_p HEIGHT=6 ALT=\"$message[56][$Lang]: $rest_p\" title=\"$message[56][$Lang]: $rest_p\"><br>\n";
 	print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_h\" WIDTH=$bredde_h HEIGHT=6 ALT=\"$message[57][$Lang]: $rest_h\" title=\"$message[57][$Lang]: $rest_h\"><br>\n";
-	print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_k\" WIDTH=$bredde_k HEIGHT=6 ALT=\"$message[44][$Lang]: $kilo\" title=\"$message[44][$Lang]: $rest_k\">";
+	print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_k\" WIDTH=$bredde_k HEIGHT=6 ALT=\"$message[44][$Lang]: $kilo\" title=\"$message[44][$Lang]: $kilo\">";
 	print "</TD></TR>\n";
-	}
+}
 &tab_end;
 
 
@@ -3571,8 +3571,7 @@ $tab_titre="TOP $MaxNbOfHostsShown $message[55][$Lang] $TotalHosts $message[26][
 &tab_head;
 print "<TR bgcolor=#$color_TableBGRowTitle><TH>$message[18][$Lang]</TH><TH bgcolor=#$color_p>$message[56][$Lang]</TH><TH bgcolor=#$color_h>$message[57][$Lang]</TH><TH bgcolor=#$color_k>$message[44][$Lang]</TH><TH>$message[9][$Lang]</TH></TR>\n";
 $count=0;$total_p=0;$total_h=0;$total_k=0;
-foreach $key (@sorthosts_p)
-{
+foreach $key (@sorthosts_p) {
 	if ($_hostmachine_h{$key}>=$MinHitHost) {
 		$kilo=int(($_hostmachine_k{$key}/1024)*100)/100;
 		if ($key eq "Unknown") {
@@ -3602,8 +3601,11 @@ foreach $key (@sorthosts_p)
 }
 $rest_p=$TotalPages-$total_p;
 $rest_h=$TotalHits-$total_h;
-$rest_k=int((($TotalBytes-$total_k)/1024)*100)/100;
-if ($rest_p > 0) { print "<TR><TD CLASS=LEFT><font color=blue>$message[2][$Lang]</font></TD><TD>$rest_p</TD><TD>$rest_h</TD><TD>$rest_k</TD><TD>&nbsp;</TD></TR>\n"; }	# All other visitors (known or not)
+$rest_k=$TotalBytes-$total_k;
+if ($rest_p > 0) {	# All other visitors (known or not)
+	$kilo=int(($rest_k/1024)*100)/100;
+	print "<TR><TD CLASS=LEFT><font color=blue>$message[2][$Lang]</font></TD><TD>$rest_p</TD><TD>$rest_h</TD><TD>$kilo</TD><TD>&nbsp;</TD></TR>\n";
+}
 &tab_end;
 
 
