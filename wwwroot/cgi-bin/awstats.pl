@@ -8133,10 +8133,10 @@ if (scalar keys %HTMLOutput) {
 			if ($ShowMonthStats =~ /H/i) { print "<td><b>$TotalHits</b>".($LogType eq 'M'?"":"<br />($RatioHits&nbsp;".lc($Message[57]."/".$Message[12]).")</td>"); } else { print "<td>&nbsp;</td>"; }
 			if ($ShowMonthStats =~ /B/i) { print "<td><b>".Format_Bytes(int($TotalBytes))."</b><br />($RatioBytes&nbsp;$Message[108]/".lc($Message[($LogType eq 'M'?149:12)]).")</td>"; } else { print "<td>&nbsp;</td>"; }
 			print "</tr>\n";
-	
+
 			my $colspan=5;
 			print "<tr valign=\"bottom\"><td align=\"center\" colspan=\"$colspan\">";
-	
+
 			$average_nb=$average_u=$average_v=$average_p=$average_h=$average_k=0;
 			$total_u=$total_v=$total_p=$total_h=$total_k=0;
 			print "<center>\n";
@@ -8530,6 +8530,9 @@ if (scalar keys %HTMLOutput) {
 				my @valaverage=($average_p,$average_h,$average_k);
 				my @valdata=();
 				my $xx=0;
+				$avg_dayofweek_p[$_]=sprintf("%.2f",$avg_dayofweek_p[$_]);
+				$avg_dayofweek_h[$_]=sprintf("%.2f",$avg_dayofweek_h[$_]);
+				$avg_dayofweek_k[$_]=sprintf("%.2f",$avg_dayofweek_k[$_]);
 				for (@DOWIndex) {
 					$valdata[$xx++]=$avg_dayofweek_p[$_]||0;
 					$valdata[$xx++]=$avg_dayofweek_h[$_]||0;
