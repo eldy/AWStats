@@ -13,8 +13,7 @@
 	Talet på gongar ei <b>side</b>, eit <b>bilde</b> eller ei <b>fil</b> på nettstaden har blitt <b>vist</b> eller <b>lasta ned</b>.
 	</div>
 	<div class="CTooltip" id="tt5">
-	Denne informasjonen viser kor mykje data som har blitt lasta ned totalt (<b>sider</b>, <b>bilder</b> eller andre <b>filer</b>).<br>
-	Einingane er KB, MB eller GB (kilobyte, megabyte eller gigabyte)
+	Denne informasjonen viser kor mykje data som har blitt lasta ned totalt (<b>sider</b>, <b>bilder</b> eller andre <b>filer</b>) målt i KiB (kibibyte).
 	</div>
 	<div class="CTooltip" id="tt13">
 	#PROG# kan sjå når eit besøk på nettstaden din kjem frå eit <b>søk</b> på dei <b>#SearchEnginesArray# mest populære søkemotorane og emnekatalogane</b> (f.eks.&nbsp;Yahoo, Altavista, Lycos, Google og Kvasir).
@@ -28,18 +27,9 @@
 	(Søkeord frå dei <b>#SearchEnginesArray#</b> mest populære søkemotorane og emnekatalogane kan lesast av #PROG#, f.eks.&nbsp;Yahoo, Altavista, Lycos, Google, og Kvasir).
 	</div>
 	<div class="CTooltip" id="tt16">
-	Robotar blir brukt av mange søkemotorar som besøker nettstaden din for å indeksera og rangera han, samla statistikk om nettstader, og/eller sjå om nettstaden framleis er tilgjengeleg.<br>
+	Robotar blir brukt av mange søkemotorar som besøker nettstaden din for å 1) indeksera han, 2) samla statistikk om nettstadar , og/eller 3) sjå om nettstaden framleis eksisterer.<br>
 	#PROG# kjenner til <b>#RobotArray#</b> robotar.
 	</div>
-	<div class="CTooltip" ID="tt17">
- 	All tidsrelatert statistikk er basert på tenartid.<br>
-	</div>
- 	<div class="CTooltip" id="tt18">
- 	Rapporterte tal er <b>gjennomsnittsverdiar</b> (rekna ut frå all data mellom første og siste besøk)
- 	</div>
- 	<div class="CTooltip" id="tt19">
- 	Rapporterte tal er <b>kumulative summar</b> (rekna ut frå all data mellom første og siste besøk)
- 	</div>
 
 	<div class="CTooltip" id="tt201"> Inga beskriving av denne feilen. </div>
 	<div class="CTooltip" id="tt202"> Førespurnaden vart forstått av tenaren men vil bli prosessert seinare. </div>
@@ -57,4 +47,4 @@
 	<div class="CTooltip" id="tt502"> Kode returnert av ein HTTP-tenar som fungerer som proxy eller systemport når ein ekte tenar ikkje svarer på førespurnaden. </div>
 	<div class="CTooltip" id="tt503"> Intern tenarfeil. </div>
 	<div class="CTooltip" id="tt504"> Systemport tidsavbroten. </div>
-	<div class="CTooltip" id="tt505"> Støttar ikkje HTTP-versjonen. </div>
+	<div class="CTooltip" id="tt505"> HTTP-versjonen er ikkje støtta. </div>

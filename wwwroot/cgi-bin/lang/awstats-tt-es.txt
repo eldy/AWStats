@@ -1,9 +1,9 @@
 	<DIV CLASS="CTooltip" ID="tt1">
-	Se considera un nueva vista por <b>cada nuevo visitante</b> que consulta una página y que no haya accedido al sitio en los últimos <b>#VisitTimeOut# mins.</b>.
+	Se considera un nueva vista por <b>cada nuevo visitante</b> que consulte una página y que no haya accesado el sitio en los últimos <b>#VisitTimeOut# mins.</b>.
 	</DIV>
 	<DIV CLASS="CTooltip" ID="tt2">
 	Número de Servidores (<b>direcciones IP</b>) que entran a un sitio (y que por lo menos visitan una <b>página</b>).<br>
-	Esta cifra refleja el número de <b>personas físicas diferentes</b> que hayan accedido al sitio en un día.
+	Esta cifra refleja el número de <b>personas físicas diferentes</b> que hayan accesado al sitio en un día.
 	</DIV>
 	<DIV CLASS="CTooltip" ID="tt3">
 	Número de ocasiones que una <b>página</b> del sitio ha sido <b>vista</b> (La suma de todos los visitantes incluyendo múltiples visitas).<br>
@@ -43,10 +43,10 @@
 	<DIV CLASS="CTooltip" ID="tt401"> Número de intentos por acceder un <b>URL que exige una combinación usuario/contraseña que ha sido invalida.</b>.<br>Un número de intentos muy elevado pudiera sugerir la posibilidad de que un hacker (o pirata) ha intentado entrar a una zona restringida del sitio (p.e., intentando múltiples combinaciones de usuario/contraseña). </DIV>
 	<DIV CLASS="CTooltip" ID="tt403"> Número de intentos por acceder un <b>URL configurado para no ser accesible, aún con una combinación usuario/contraseña</b> (p.e., un URL previamente definido como "no navegable"). </DIV>
 	<DIV CLASS="CTooltip" ID="tt404"> Número de intentos por acceder un <b>URL inexistente</b>. Frecuentemente, éstos se refieren ya sea a un enlace (link) inválido o a un error mecanográfico cuando el visitante tecleó el URL equivocado. </DIV>
-	<DIV CLASS="CTooltip" ID="tt408"> El servidor ha tardado <b>demasiado tiempo</b> para responder a una solicitud. Frecuentemente se debe ya sea a un programa CGI muy lento, el cual tuvo que ser abandonado por el servidor, o bien por un servidor sobre-saturado. </DIV>
+	<DIV CLASS="CTooltip" ID="tt408"> El servidor ha tomado <b>demasiado tiempo</b> para responder a una solicitud. Frecuentemente se debe ya sea a un programa CGI muy lento, el cual tuvo que ser abandonado por el servidor, o bien por un servidor sobre-saturado. </DIV>
 	<DIV CLASS="CTooltip" ID="tt500"> Error interno. Este error generalmente es causado por una terminación anormal o prematura de un programa CGI (p.e., un CGI corrompido o dañado). </DIV>
 	<DIV CLASS="CTooltip" ID="tt501"> Solicitud desconocida por el servidor. </DIV>
 	<DIV CLASS="CTooltip" ID="tt502"> Código retornado por un servidor de protocolo HTTP el cual funge como proxy o puente (gateway) cuando el servidor objetivo no funciona o no interpreta adecuadamente la solicitud del cliente (o visitante). </DIV>
 	<DIV CLASS="CTooltip" ID="tt503"> Error interno del servidor. </DIV>
-	<DIV CLASS="CTooltip" ID="tt504"> Pasarela fuera de linea. </DIV>
+	<DIV CLASS="CTooltip" ID="tt504"> Gateway time-out. </DIV>
 	<DIV CLASS="CTooltip" ID="tt505"> Versión de protocolo HTTP no soportada. </DIV>

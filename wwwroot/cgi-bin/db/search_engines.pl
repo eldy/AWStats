@@ -1,9 +1,9 @@
 # AWSTATS SEARCH ENGINES DATABASE
 #--------------------------------
-# Last update: 2001-12-02
+# Last update: 2001-10-20
 
 
-# Search engines names database
+# Search engines names database (update the 10th january 2001)
 # To add a search engine, add a new line:
 # "match_string_in_url_that_identify_engine", "search_engine_name",
 #-------------------------------------------------------
@@ -29,7 +29,7 @@
 "metacrawler\.","MetaCrawler (Metamoteur)",
 "go2net\.com","Go2Net (Metamoteur)",
 "go\.com","Go.com",
-"overture\.com","Overture",		# Replace "goto\.com","Goto.com",
+"goto\.com","Goto.com",
 "euroseek\.","Euroseek",
 "excite\.","Excite",
 "lokace\.", "Lokace",
@@ -46,7 +46,6 @@
 "opasia\.dk","Opasia", "danielsen\.com","Thor (danielsen.com)",	# Minor danish search-engines 
 "ilse\.","Ilse","vindex\.","Vindex\.nl",						# Minor dutch search engines
 "splut\.","Splut", "ukplus\.", "UKPlus", "mirago\.", "Mirago", "ukindex\.co\.uk", "UKIndex", "ukdirectory\.","UK Directory", # Minor english search engines
-"haku\.www\.fi","Ihmemaa",										# Minor finnish search engines
 "nomade\.fr/","Nomade", "ctrouve\.","C'est trouvé", "francite\.","Francité", "\.lbb\.org", "LBB", "rechercher\.libertysurf\.fr", "Libertysurf",	# Minor french search engines
 "fireball\.de","Fireball", "infoseek\.de","Infoseek", "suche\.web\.de","Web.de", "meta\.ger","MetaGer",	# Minor german search engines
 "virgilio\.it","Virgilio",										# Minor italian search engines
@@ -78,7 +77,6 @@
 "metacrawler\.","general=",
 "go2net\.com","general=",
 "go\.com","qt=",
-"overture\.com","keywords=",
 "euroseek\.","query=",
 "excite\.","search=",
 "spray\.","string=",
@@ -93,15 +91,14 @@
 "ilse\.","search_for=", "vindex\.","in=",						# Minor dutch search engines
 "splut\.","pattern=", "ukplus\.", "search=", "mirago\.", "txtSearch=",		# Minor english search engines
 "ukindex\.co\.uk", "stext=", "ukdirectory\.","k=", 							# Minor english search engines
-"haku\.www\.fi","w=",														# Minor finnish search engines
 "nomade\.fr/","s=", "francite\.","name=",									# Minor french search engines
 "fireball\.de","q=", "infoseek\.de","qt=", "suche\.web\.de","su=",			# Minor german search engines
 "sok\.start\.no", "q=",											# Minor norvegian search engines
 "evreka\.passagen\.se","q="										# Minor swedish search engines
 );
 # If no rules are known, this will be used to clean URL of not keyword parameters.
-@WordsToCleanSearchUrl= ("act=","annuaire=","btng=","categoria=","cfg=","cof=","cou=","cp=","dd=","domain=","dt=","dw=","exec=","geo=","hc=","height=","hl=","hq=","hs=","id=","kl=","lang=","loc=","lr=","matchmode=","medor=","message=","meta=","mode=","order=","page=","par=","pays=","pg=","pos=","prg=","qc=","refer=","sa=","safe=","sc=","sort=","src=","start=","style=","stype=","sum=","tag=","temp=","theme=","url=","user=","width=","what=","\\.x=","\\.y=","y=","look=");
-# Never put the following exclusion ("ask=","claus=","general=","kw=","keyword=","keywords=","MT","p=","q=","qr=","qt=","query=","s=","search=","searchText=","string=","su=","w=") because they are strings that contain keywords we're looking for.
+@WordsToCleanSearchUrl= ("act=","annuaire=","btng=","categoria=","cfg=","cou=","cp=","dd=","domain=","dt=","dw=","exec=","geo=","hc=","height=","hl=","hq=","hs=","id=","kl=","lang=","loc=","lr=","matchmode=","medor=","message=","meta=","mode=","order=","page=","par=","pays=","pg=","pos=","prg=","qc=","refer=","sa=","safe=","sc=","sort=","src=","start=","stype=","sum=","tag=","temp=","theme=","url=","user=","width=","what=","\\.x=","\\.y=","y=","look=");
+# Never put the following exclusion ("ask=","claus=","general=","kw=","keyword=","MT","p=","q=","qr=","qt=","query=","s=","search=","searchText=","string=","su=") because they are strings that contain keywords we're looking for.
 
 
 1;

@@ -1,17 +1,16 @@
 # AWSTATS OPERATING SYSTEMS DATABASE
 #------------------------------------
-# Last update: 2001-11-10
+# Last update: 2001-10-20
 
 
 # OSArrayID
-# This list is used to know in which order to search Operating System IDs.
-# It contains all matching criteria to search for in log fields.
-# Note: OS IDs are in lower case and ' ' and '+' are changed into '_'
-#-------------------------------------------------------------------------
+# Matching criteria to search in log after changing ' ' or '+' into '_' "
+# This searching ID are searched in declare order.
+#-------------------------------------------------------
 @OSArrayID	= (
 # Windows OS family
-"windows_xp","windows_nt_5\.1",		# Must be before windows_nt_5
-"windows_me","win_9x_4\.9",			# Must be before windows_98
+"windows_nt_5\.1",
+"win_9x_4\.9",			# Must be before windows_98
 "windows2000","windows_2000","windows_nt_5",
 "winnt","windows_nt","windows-nt","win32",
 "win98","windows_98","windows98",
@@ -53,8 +52,8 @@
 #-------------------------------------------------------
 %OSHashID	= (
 # Windows OS family
-"windows_xp","winxp","windows_nt_5\.1","winxp",
-"windows_me","winme","win_9x_4\.9","winme",
+"windows_nt_5\.1","winxp",
+"win_9x_4\.9","winme",
 "windows2000","win2000","windows_2000","win2000","windows_nt_5","win2000",
 "winnt","winnt","windows_nt","winnt","windows-nt","winnt","win32","winnt",
 "win98","win98","windows_98","win98","windows98","win98",
@@ -127,14 +126,3 @@
 
 
 1;
-
-
-# Informations from microsoft for detecting windows version
-#  Windows 95 retail, OEM     4.00.950                     7/11/95
-#  Windows 95 retail SP1      4.00.950A                    7/11/95-12/31/95
-#  OEM Service Release 2      4.00.1111* (4.00.950B)       8/24/96
-#  OEM Service Release 2.1    4.03.1212-1214* (4.00.950B)  8/24/96-8/27/97  
-#  OEM Service Release 2.5    4.03.1214* (4.00.950C)       8/24/96-11/18/97
-#  Windows 98 retail, OEM     4.10.1998                    5/11/98
-#  Windows 98 Second Edition  4.10.2222A                   4/23/99
-#  Windows Me                 4.90.3000 

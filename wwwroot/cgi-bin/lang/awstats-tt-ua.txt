@@ -14,7 +14,7 @@
 	Цi данi мають чисто пiзнавальну цiннiсть щодо роботи <strong>сервера</strong>, бо кiлькiсть переглядiв <strong>сторiнок</strong> є набагато iлюстративнiшою щодо людської аудиторiї.
 	</DIV>
 	<DIV CLASS="CTooltip" ID="tt5">
-	Це сумарний об'єм даних, переданих сервером вiдвiдувачам при завантаженнi ними <strong>сторiнок</strong>, <strong>зображень</strong> та iнших <strong>файлiв</strong>. Вимiрюється в кiлобайтах (кБ), мегабайтах (МБ), гiгабайтах (ГБ).
+	Це сумарний об'єм даних, переданих сервером вiдвiдувачам при завантаженнi ними <strong>сторiнок</strong>, <strong>зображень</strong> та iнших <strong>файлiв</strong>. Вимiрюється в кiлобайтах.
 	</DIV>
 	<DIV CLASS="CTooltip" ID="tt13">
 	#PROG# вирiзняє кожен доступ до сайту пiсля <strong>пошуку</strong> з допомогою <strong>#SearchEnginesArray#</strong> найбiльш популярних пошукових систем i каталогiв (таких як Altavista, Lycos, Google, Voila, AllTheWeb, та iн.).
@@ -36,18 +36,6 @@
 	</ol>
 	В поточнiй версiї #PROG# вмiє розпiзнавати
 	<strong>#RobotArray#</strong> роботiв.
-	</DIV>
-	<DIV CLASS="CTooltip" ID="tt17">
-	Вся статистика, пов'язана з часом, базується на часовi, 
-	встановленому на серверi.<br />
-	</DIV>
-	<DIV CLASS="CTooltip" ID="tt18">
-	Тут показуються <strong>середнi значення</strong> (розрахованi за 
-	всiма даними, накопиченими мiж першим i останнiм вiзитами)
-	</DIV>
-	<DIV CLASS="CTooltip" ID="tt19">
-	Тут показуються <strong>сукупнi значення</strong> (розрахованi за 
-	всiма даними, накопиченими мiж першим i останнiм вiзитами)
 	</DIV>
 	
 	<DIV CLASS="CTooltip" ID="tt201"> Для цiєї помилки немає описання. </DIV>

@@ -1,0 +1,117 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<meta name="description" content="AWStats Documentation - Security page">
+<meta name="keywords" content="awstats, awstat, security, tips">
+<meta name="robots" content="index,follow">
+<meta name="title" content="AWStats Documentation - Security page">
+<title>AWStats Documentation - Security page</title>
+<link rel="stylesheet" href="styles.css" type="text/css">
+</head>
+
+<body topmargin=10 leftmargin=5>
+
+
+<table style="font: 10pt arial,helvetica,verdana" cellpadding=0 cellspacing=0 border=0 bgcolor=#FFFFFF width=100%>
+
+<!-- Large -->
+<tr style="font: 10pt arial,helvetica,verdana">
+<td bgcolor=#9999cc align=center><a href="/"><img src="images/awstats_logo1.png" border=0></a></td>
+<td bgcolor=#9999cc align=center>
+<br>
+<font style="font: 16pt Times;" color=#EEEEFF><b>AWStats logfile analyzer 4.0 Documentation</b></font><br>
+<br>
+</td>
+<td bgcolor=#9999cc align=center>
+&nbsp;
+</td>
+</tr>
+
+</table>
+
+
+<br><br><font style="font: 26px Times;">Little tips about Security</font><br><br>
+
+A lot of AWStats users have several web site to manage. This is particularly true for web hosting providers.
+The most common things you would like to do is to prevent user xxx (having a site www.xxx.com) to see
+statistics of user yyy (having a site www.yyy.com).<br>
+<br>
+This is example of possible way of working:<br>
+<br>
+<u>1) HIGHLY SECURED</u><br>
+<b>Policy</b>:<br>
+All statistics pages for a config/domain file are built in static html files using <b>-output -staticlinks</b> option.<br>
+There is no CGI use of AWStats and static built pages are stored in a web protected <b>realm</b> to
+be securely viewed by correct allowed users only (or sent by mails).<br>
+<b>+</b>: Highly secured.<br>
+<b>-</b>: Statistics are static, No way to have dynamic update/view.<br>
+<b>Note</b>: With this policy, AWStats database files can have their own permissions.
+So, set all AWStats database files built by the update process for config/domain1 to have read/write for <i>user1</i>
+(or an admin user) and NO read and/or NO write for any other users.
+If AWStats database files for config/domain1 are read protected, only allowed users can see statistics for config/domain1.<br>
+If AWStats database files for config/domain1 are write protected, only allowed users can update statistics for config/domain1.<br>
+This is a very good choice for web hosting providers with important customers.<br>
+<br>
+<u>2) MEDIUM SECURED</u><br>
+<b>Policy</b>: Statistics pages for a config/domain file can be read dynamically from a browser (with AWStats working as a CGI).<br>
+Use of <b>awstatsusers</b> file to list config/domain a particular user can see/update.<br>
+awstats.pl file must be saved in a web protected <b>realm</b> to allow awstats to get the username when running as CGI.<br>
+<b>+</b>: Statistics are dynamic.<br>
+<b>-</b>: AWStats database files must be readable by anonymous web server user, so if an experimented user can have an access to
+the server (telnet, ftp), he will be able to install and run a hacked version of AWStats that does not check permissions into the <b>awstatsusers</b>.<br>
+<b>Note</b>: With this policy, you must first create a text file called <b>awstatsusers</b>. This file is a text file
+with several records that contains two fields separated by a "<b>;</b>".
+First field is the user name allowed to read statistics from a browser.<br>
+Second field is a list (separated by comma "<b>,</b>") of all visible config/domain allowed for this user.<br>
+<u>Example of <b>awstatsusers</b> file:</u><br><i>
+user1;*<br>
+user2;www.domain2.com<br>
+user3;www.domain3a.com,www.domain3b.com<br>
+</i>
+<u>Example of directives you can add into Apache to have awstats.pl in a web protected realm:</u><br><i>
+&lt;Files "awstats.pl"&gt;<br>
+AuthUserFile /path/to/.passwd<br>
+AuthGroupFile /path/to/.group<br>
+AuthName "Restricted Area For Customers"<br>
+AuthType Basic<br>
+require valid-user<br>
+&lt;/Files&gt;
+</i><br>
+<br>
+Save the <b>awstatsusers</b> file in the <b>DirData</b> directory (directory where AWStats save its database) and put on this file "read only"
+permissions for everyone.<br>
+<br>
+<u>3) LOW SECURED</u><br>
+<b>Policy</b>: Same as 2 with no use of <b>awstatsusers</b>.<br>
+<b>+</b>: Setup is very easy (No need of particular setup). Statistics are dynamic.<br>
+<b>-</b>: No way to prevent stats for config/domain to be seen by a user that known the
+config/domain name and the url syntax to see stats of a particular config/domain.<br>
+<b>Note</b>: This is the most common way of working for all users that have only one hosts
+and no restricted accounts to manage.<br>
+
+
+
+
+
+<br>
+
+
+<br>
+<hr>
+
+<script language=javascript>
+	var lastmod = new Date(document.lastModified);
+	if (lastmod.getDate() > 0) {
+		if (lastmod.getDate()<10) zerod="0"
+		else zerod="";
+		if (lastmod.getMonth()<9) zerom="0"
+		else zerom=""
+		year2kok=lastmod.getYear();
+		if (year2kok<100) year2kok+=2000;
+		if ((year2kok>=100) && (year2kok < 1970)) year2kok+=1900;
+		document.writeln("Last revision: "+year2kok+"-"+zerom+(lastmod.getMonth()+1)+"-"+zerod+lastmod.getDate());
+	}
+</script>
+
+</body>
+</html>

@@ -1,17 +1,17 @@
 	<DIV CLASS="CTooltip" ID="tt1">
-	Ein neuer Besucher wird definiert als jeder neue <b>Besucher</b>, der eine Seite abgerufen hat und der auf Ihre Web Site in den letzten <b>#VisitTimeOut# min.</b> nicht zugegriffen hat.
+	Ein neuer Besucher wird definiert als jeder neue <b>Besucher</b>, der eine Seite aufgerufen hat und der auf Ihre Web Site in den letzten <b>#VisitTimeOut# min.</b> nicht zugegriffen hat.
 	</DIV>
 	<DIV CLASS="CTooltip" ID="tt2">
 	Anzahl der Rechner (<b>IP-Adressen</b>), die Ihre Web Site besuchten und mindestens eine <b>Seite</b> aufgerufen haben.<br>
 	Diese Anzahl entspricht der Zahl an <b>unterschiedlichen physikalischen Personen</b>, die Ihre Web Site an irgendeinem Tag besuchten.
 	</DIV>
 	<DIV CLASS="CTooltip" ID="tt3">
-	Anzahl der insgesamt <b>angezeigten Seiten</b> Ihrer Web Site (Summe aller Zugriffe von allen Besuchern).<br>
-	Diese Zahl unterscheidet sich von den &quot;Hits&quot;, da nur HTML Seiten und keine Grafiken oder andere Dateien gez&auml;hlt werden.
+	Anzahl der insgesamt <b>angezeigten Seiten</b> Ihrer Web Site (Summe aller Besuche von allen Besuchern).<br>
+	Diese Zahl unterscheidet sich von den &quote;Hits&quote;, da nur HTML Seiten und keine Grafiken oder andere Dateien gez&auml;hlt werden.
 	</DIV>
 	<DIV CLASS="CTooltip" ID="tt4">
 	Anzahl der insgesamt <b>angezeigten</b> oder <b>heruntergeladenen Seiten, Grafiken, Dateien</b> Ihrer Web Site.<br>
-	Diese Zahl wird nur als Referenz angegeben, da meistens die Anzahl der angezeigten &quot;Seiten&quot; f&uuml; Marketingzwecke bevorzugt wird.
+	Diese Zahl wird nur als Referenz angegeben, da meistens die Anzahl der angezeigten &quote;Seiten&quote; f&uuml; Marketingzwecke bevorzugt wird.
 	</DIV>
 	<DIV CLASS="CTooltip" ID="tt5">
 	Dieser Wert entspricht der Menge an Daten, die aufgrund aller <b>Seiten</b>, <b>Grafiken</b> und <b>Dateien</b> Ihrer Web Site &uuml;bertragen worden sind.

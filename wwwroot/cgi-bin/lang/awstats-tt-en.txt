@@ -14,14 +14,13 @@
 	This piece of data is provided as a reference only, since the number of "pages" viewed is often prefered for marketing purposes.
 	</DIV>
 	<DIV CLASS="CTooltip" ID="tt5">
-	This piece of information refers to the amount of data downloaded by all <b>pages</b>, <b>images</b> and <b>files</b> within your site.<br>
-	Units are in Kb, Mb or Gb (KiloBytes, MegaBytes or GigaBytes)
+	This piece of information refers to the amount of data downloaded by all <b>pages</b>, <b>images</b> and <b>files</b> within your site measured in KBs.
 	</DIV>
 	<DIV CLASS="CTooltip" ID="tt13">
 	#PROG# recognizes each access to your site after a <b>search</b> from the <b>#SearchEnginesArray# most popular Internet Search Engines and Directories</b> (such as Yahoo, Altavista, Lycos, Google, Voila, etc...).
 	</DIV>
 	<DIV CLASS="CTooltip" ID="tt14">
-	List of all <b>external pages</b> which were used to link (and enter) to your site (Only the <b>#MaxNbOfRefererShown#</b> most often used external pages are shown).
+	List of all <b>external pages</b> which were used to link (or eneter) to your site (Only the <b>#MaxNbOfRefererShown#</b> most often used external pages are shown.
 	Links used by the results of the search engines are excluded here because they have already been included on the previous line within this table.
 	</DIV>
 	<DIV CLASS="CTooltip" ID="tt15">
@@ -29,24 +28,15 @@
 	(Keywords from the <b>#SearchEnginesArray#</b> most popular Search Engines and Directories are recognized by #PROG#, such as Yahoo, Altavista, Lycos, Google, Voila, etc...).
 	</DIV>
 	<DIV CLASS="CTooltip" ID="tt16">
-	Robots (sometimes refer to Spiders) are <b>automatic computer visitors</b> used by many search engines that scan your web site to index it and rank it, collect statistics on Internet Web sites and/or see if your site is still online.<br>
+	Robots (sometimes refer to Spiders) are <b>automatic computer visitors</b> used by many search engines that scan your web site to (1) index it and rank it, (2) collect statistics on Internet Web sites and/or (3) see if your site is still online.<br>
 	#PROG# is able to recognize up to <b>#RobotArray#</b> robots.
-	</DIV>
-	<DIV CLASS="CTooltip" ID="tt17">
-	All time related statistics are based on server time.<br>
-	</DIV>
-	<DIV CLASS="CTooltip" ID="tt18">
-	Here, reported data are: <b>average values</b> (calculated from all data between the first and last visit)
-	</DIV>
-	<DIV CLASS="CTooltip" ID="tt19">
-	Here, reported data are: <b>cumulative sums</b> (calculated from all data between the first and last visit)
 	</DIV>
 
 	<DIV CLASS="CTooltip" ID="tt201"> No description for this error. </DIV>
 	<DIV CLASS="CTooltip" ID="tt202"> Request was understood by server but will be processed later. </DIV>
 	<DIV CLASS="CTooltip" ID="tt204"> Server has processed the request but there is no document to send. </DIV>
 	<DIV CLASS="CTooltip" ID="tt206"> Partial content. </DIV>
-	<DIV CLASS="CTooltip" ID="tt301"> Requested document was moved and is now at another address given in answer. </DIV>
+	<DIV CLASS="CTooltip" ID="tt301"> Requested document was moved and is now at another address given in awnswer. </DIV>
 	<DIV CLASS="CTooltip" ID="tt302"> No description for this error. </DIV>
 	<DIV CLASS="CTooltip" ID="tt400"> Syntax error, server didn't understand request. </DIV>
 	<DIV CLASS="CTooltip" ID="tt401"> Tried to reach an <b>URL where a login/password pair was required</b>.<br>A high number within this item could mean that someone (such as a hacker) is attempting to crack, or enter into your site (hoping to enter a secured area by trying different login/password pairs, for instance). </DIV>
