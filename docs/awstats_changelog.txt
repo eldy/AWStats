@@ -29,6 +29,7 @@ New features/improvements:
   AddHTMLContentHeader, AddHTMLContentFooter
 
 Fixes:
+- Fixed syntax error in Year view when xhtml output is selected.
 - Fixed a problem of not working misc feature when using IIS and 
   when URLWithQuery was set to 0.
 - Now all non ISO-8859-1 languages are shown correctly even with 

@@ -7134,7 +7134,7 @@ if (scalar keys %HTMLOutput) {
 				print "<select class=\"aws_formfield\" name=\"month\">\n";
 				foreach (1..12) { my $monthix=sprintf("%02s",$_); print "<option".($MonthRequired eq "$monthix"?" selected=\"true\"":"")." value=\"$monthix\">$MonthNumLib{$monthix}</option>\n"; }
 				if ($AllowFullYearView >= 2) {
-					print "<option".($MonthRequired eq 'all'?" selected=\"true\"":"")." value='all'>- $Message[6] -</option>\n";
+					print "<option".($MonthRequired eq 'all'?" selected=\"true\"":"")." value=\"all\">- $Message[6] -</option>\n";
 				}
 				print "</select>\n";
 				print "<select class=\"aws_formfield\" name=\"year\">\n";
@@ -8472,8 +8472,8 @@ if (scalar keys %HTMLOutput) {
 			# Show first/last
 			print "<tr bgcolor=\"#$color_TableBGRowTitle\">";
 			print "<td class=\"aws\"><b>$Message[133]</b></td><td class=\"aws\" colspan=\"".($colspan-1)."\">\n";
-			print ($MonthRequired eq 'all'?"$Message[6] $YearRequired":"$Message[5] ".$MonthNumLib{$MonthRequired}." $YearRequired</td>");
-			print "</tr>\n";
+			print ($MonthRequired eq 'all'?"$Message[6] $YearRequired":"$Message[5] ".$MonthNumLib{$MonthRequired}." $YearRequired");
+			print "</td></tr>\n";
 			print "<tr bgcolor=\"#$color_TableBGRowTitle\">";
 			print "<td class=\"aws\"><b>$Message[8]</b></td>\n";
 			print "<td class=\"aws\" colspan=\"".($colspan-1)."\">".($FirstTime?Format_Date($FirstTime,0):"NA")."</td>";
@@ -8503,7 +8503,7 @@ if (scalar keys %HTMLOutput) {
 			}
 			else {
 				if ($LogType eq 'W' || $LogType eq 'S') { print "<td class=\"aws\">$Message[160]&nbsp;*</td>"; }
-				if ($ShowMonthStats =~ /U/i) { print "<td>".($MonthRequired eq 'all'?"<b><= $TotalUnique</b><br />$Message[129]":"<b>$TotalUnique</b><br />&nbsp;")."</td>"; } else { print "<td>&nbsp;</td>"; }
+				if ($ShowMonthStats =~ /U/i) { print "<td>".($MonthRequired eq 'all'?"<b>&lt;= $TotalUnique</b><br />$Message[129]":"<b>$TotalUnique</b><br />&nbsp;")."</td>"; } else { print "<td>&nbsp;</td>"; }
 				if ($ShowMonthStats =~ /V/i) { print "<td><b>$TotalVisits</b><br />($RatioVisits&nbsp;$Message[52])</td>"; } else { print "<td>&nbsp;</td>"; }
 				if ($ShowMonthStats =~ /P/i) { print "<td><b>$TotalPages</b><br />($RatioPages&nbsp;".lc($Message[56]."/".$Message[12]).")</td>"; } else { print "<td>&nbsp;</td>"; }
 				if ($ShowMonthStats =~ /H/i) { print "<td><b>$TotalHits</b>".($LogType eq 'M'?"":"<br />($RatioHits&nbsp;".lc($Message[57]."/".$Message[12]).")</td>"); } else { print "<td>&nbsp;</td>"; }
