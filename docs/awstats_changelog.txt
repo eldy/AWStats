@@ -17,6 +17,9 @@ New features/improvments:
 - Added urlaliasbuilder.pl tool.
 - Added URL in possible values for ExtraSection first column.
 - New parameter: URLWithAnchor (set to 0 by default).
+- Export tooltip features in a plugin (plugin tooltips disabled by default).
+- Added average session length in Visit Duration report.
+- Added percentage in Visit Duration report.
 
 Other/Documentation:
 - Replaced -month=year option by -month=all.
@@ -24,6 +27,7 @@ Other/Documentation:
   wrong file name.
 - GeoIP memory cache code is now stored inside plugin code.
 - Added list of loaded plugins in AWStats copyright string.
+- Minor cosmetic change (remove ShowHeader parameter).
 - Updated documentation.
 
 Note 1:

@@ -230,7 +230,7 @@ use vars qw/
 @_time_p = @_time_h = @_time_k = ();
 @fieldlib = @keylist = ();
 use vars qw/
-@SessionsRange @HostAliases @AllowAccessFromWebToFollowingAuthenticatedUsers
+@SessionsRange %SessionsAverage @HostAliases @AllowAccessFromWebToFollowingAuthenticatedUsers
 @DefaultFile @SkipDNSLookupFor
 @SkipHosts @SkipUserAgents @SkipFiles
 @OnlyHosts @OnlyFiles 
@@ -242,6 +242,7 @@ use vars qw/
 @PluginsToLoad 
 /;
 @SessionsRange=('0s-30s','30s-2mn','2mn-5mn','5mn-15mn','15mn-30mn','30mn-1h','1h+');
+%SessionsAverage=('0s-30s',15,'30s-2mn',75,'2mn-5mn',210,'5mn-15mn',600,'15mn-30mn',1350,'30mn-1h',2700,'1h+',3600);
 @HostAliases=();
 @AllowAccessFromWebToFollowingAuthenticatedUsers=();
 @DefaultFile = @SkipDNSLookupFor = ();
@@ -1312,6 +1313,7 @@ sub Read_Ref_Data {
 	if ((@RobotsSearchIDOrder_list1+@RobotsSearchIDOrder_list2+@RobotsSearchIDOrder_list3) != scalar keys %RobotsHashIDLib) { error("Not same number of records of RobotsSearchIDOrder_listx (total is ".(@RobotsSearchIDOrder_list1+@RobotsSearchIDOrder_list2+@RobotsSearchIDOrder_list3)." entries) and RobotsHashIDLib (".(scalar keys %RobotsHashIDLib)." entries) in Robots database. Check your file ".$FilePath{"robots.pm"}); }
 }
 
+
 #------------------------------------------------------------------------------
 # Function:     Get the messages for a specified language
 # Parameters:	LanguageId
@@ -1370,56 +1372,9 @@ sub Read_Language_Data {
 	close(LANG);
 }
 
-#------------------------------------------------------------------------------
-# Function:     Get the tooltip texts for a specified language
-# Parameters:	LanguageId
-# Input:		$DirLang $DIR
-# Output:		Full tooltips text
-# Return:		None
-#------------------------------------------------------------------------------
-sub Read_Language_Tooltip {
-	# Check lang files in common possible directories :
-	# Windows :                           		"${DIR}lang" (lang in same dir than awstats.pl)
-	# Debian package :                    		"/usr/share/awstats/lang"
-	# Other possible directories :        		"./lang"
-	my @PossibleLangDir=("$DirLang","${DIR}lang","/usr/share/awstats/lang","./lang");
-
-	my $FileLang='';
-	foreach my $dir (@PossibleLangDir) {
-		my $searchdir=$dir;
-		if ($searchdir && (!($searchdir =~ /\/$/)) && (!($searchdir =~ /\\$/)) ) { $searchdir .= "/"; }
-		if (open(LANG,"${searchdir}awstats-tt-$_[0].txt")) { $FileLang="${searchdir}awstats-tt-$_[0].txt"; last; }
-	}
-	# If file not found, we try english
-	if (! $FileLang) {
-		foreach my $dir (@PossibleLangDir) {
-			my $searchdir=$dir;
-			if ($searchdir && (!($searchdir =~ /\/$/)) && (!($searchdir =~ /\\$/)) ) { $searchdir .= "/"; }
-			if (open(LANG,"${searchdir}awstats-tt-en.txt")) { $FileLang="${searchdir}awstats-tt-en.txt"; last; }
-		}
-	}
-	if ($Debug) { debug("Call to Read_Language_Tooltip [FileLang=\"$FileLang\"]"); }
-	if ($FileLang) {
-		my $aws_PROG=ucfirst($PROG);
-		my $aws_VisitTimeout = $VISITTIMEOUT/10000*60;
-		my $aws_NbOfRobots = scalar keys %RobotsHashIDLib;
-		my $aws_NbOfSearchEngines = scalar keys %SearchEnginesHashIDLib;
-		while (<LANG>) {
-			if ($_ =~ /\<!--/) { next; }	# Remove comment
-			# Search for replaceable parameters
-			s/#PROG#/$aws_PROG/;
-			s/#MaxNbOfRefererShown#/$MaxNbOfRefererShown/;
-			s/#VisitTimeOut#/$aws_VisitTimeout/;
-			s/#RobotArray#/$aws_NbOfRobots/;
-			s/#SearchEnginesArray#/$aws_NbOfSearchEngines/;
-			print "$_";
-		}
-	}
-	close(LANG);
-}
 
 #------------------------------------------------------------------------------
-# Function:     Get the tooltip texts for a specified language
+# Function:     Check if all parameters are correctly defined. If not set them to default.
 # Parameters:	None
 # Input:		All global variables
 # Output:		Change on some global variables
@@ -3831,13 +3786,8 @@ sub Show_Flag_Links {
 
 	foreach my $flag (split(/\s+/,$ShowFlagLinks)) {
 		if ($flag ne $CurrentLang) {
-			my $lng=$flag;
-			if ($flag eq 'en') { $lng='English'; }
-			if ($flag eq 'fr') { $lng='French'; }
-			if ($flag eq 'de') { $lng='German'; }
-			if ($flag eq 'it') { $lng='Italian'; }
-			if ($flag eq 'nl') { $lng='Dutch'; }
-			if ($flag eq 'es') { $lng='Spanish'; }
+			my %lngtitle=('en','English','fr','French','de','German','it','Italian','nl','Dutch','es','Spanish');
+			my $lng=($lngtitle{$flag}?$lngtitle{$flag}:$flag);
 			print "<a href=\"$AWScript?${NewLinkParams}lang=$flag\"$NewLinkTarget><img src=\"$DirIcons\/flags\/$flag.png\" height=14 border=0 alt=\"$lng\" title=\"$lng\"></a>&nbsp;\n";
 		}
 	}
@@ -4197,7 +4147,7 @@ sub ShowURL() {
 	my $url=shift;
 	my $nompage=CleanFromCSSA($url);
 
-	# Call to plugin function ReplaceURL
+	# Call to plugins' function ReplaceURL
 	foreach my $pluginname (keys %{$PluginsLoaded{'ReplaceURL'}})  {
 		my $function="ReplaceURL_$pluginname('$url')";
 		eval("$function");
@@ -5872,7 +5822,7 @@ if (scalar keys %HTMLOutput) {
 
 	my $max_p; my $max_h; my $max_k; my $max_v;
 	my $total_u; my $total_v; my $total_p; my $total_h; my $total_k; my $total_e; my $total_x; my $total_s;
-	my $average_u; my $average_v; my $average_p; my $average_h; my $average_k;
+	my $average_u; my $average_v; my $average_p; my $average_h; my $average_k; my $average_s;
 	my $rest_p; my $rest_h; my $rest_k; my $rest_e; my $rest_x; my $rest_s;
 	my $average_nb;
 
@@ -5891,12 +5841,16 @@ if (scalar keys %HTMLOutput) {
 	$NewLinkParams =~ tr/&/&/s; $NewLinkParams =~ s/^&//; $NewLinkParams =~ s/&$//;
 	if ($NewLinkParams) { $NewLinkParams="${NewLinkParams}&"; }
 
-	# WRITE TOOLTIPS INFO
-	#---------------------------------------------------------------------
+	# Call to plugins' function AddHTMLBodyHeader
+	foreach my $pluginname (keys %{$PluginsLoaded{'AddHTMLBodyHeader'}})  {
+		my $function="AddHTMLBodyHeader_$pluginname()";
+		eval("$function");
+	}
+
 	if ($FrameName ne 'mainleft') {
 
-		# Get the tooltips texts
-		&Read_Language_Tooltip($Lang);
+		# WRITE TOOLTIPS JAVASCRIPT CODE
+		#---------------------------------------------------------------------
 
 		# Position .style.pixelLeft/.pixelHeight/.pixelWidth/.pixelTop	IE OK	Opera OK
 		#          .style.left/.height/.width/.top											Netscape OK
@@ -5969,6 +5923,8 @@ EOF
 		my $frame=($FrameName eq 'mainleft');
 		print "$Center<a name=\"MENU\">&nbsp;</a>\n";
 
+		my $WIDTHMENU1=150;
+		
 		if ($FrameName ne 'mainleft') {
 			my $NewLinkParams=${QueryString};
 			$NewLinkParams =~ s/(^|&)update(=\w*|$)//i;
@@ -5982,10 +5938,11 @@ EOF
 			print "<FORM name=\"FormDateFilter\" action=\"$AWScript?${NewLinkParams}\" style=\"padding: 0px 0px 0px 0px; margin-top: 0\"$NewLinkTarget>\n";
 		}
 
-		print "<table width=\"100%\" bgcolor=#$color_TableBGTitle".($frame?" cellspacing=0 cellpadding=0 border=0":"").">\n";
+		if ($FrameName ne 'mainright' && $FrameName ne 'mainleft') { print "<table width=\"100%\"".($frame?" cellspacing=0 cellpadding=0 border=0":"").">\n"; }
+		else { print "<table width=\"100%\" bgcolor=#$color_TableBGTitle".($frame?" cellspacing=0 cellpadding=0 border=0":"").">\n"; }
 		if ($FrameName ne 'mainright') {
-			# Print site name
-			print "<tr><th class=AWL>$Message[7] : </th><td class=AWL><font style=\"font-size: 14px;\">".($frame?"&nbsp; ":"")."$SiteDomain</font></td>";
+			# Print Statistics Of
+			print "<tr><th class=AWL>$Message[7]: </th><td class=AWL><font style=\"font-size: 14px;\">".($frame?"&nbsp; ":"")."$SiteDomain</font></td>";
 
 			# Logo and flags
 			if ($FrameName ne 'mainleft') {
@@ -6002,8 +5959,8 @@ EOF
 		}
 		if ($FrameName ne 'mainleft') {
 
-			# Print LastUpdate
-			print "<tr><th class=AWL valign=middle width=160>$Message[35] :</th>";
+			# Print Last Update
+			print "<tr><th class=AWL valign=middle width=$WIDTHMENU1>$Message[35]:</th>";
 			print "<td class=AWL valign=middle><font style=\"font-size: 14px;\">";
 			if ($LastUpdate) { print Format_Date($LastUpdate,0); }
 			else {
@@ -6041,7 +5998,7 @@ EOF
 
 			print "</tr>\n";
 			# Print selected period of analysis (month and year required)
-			print "<tr><th class=AWL valign=middle>$Message[133] :</th>";
+			print "<tr><th class=AWL valign=middle>$Message[133]:</th>";
 			print "<td class=AWL valign=middle>";
 			if ($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks) {
 				print "<select class=CFormFields name=\"month\">\n";
@@ -6070,7 +6027,7 @@ EOF
 		}
 		print "</table>\n";
 
-		if ($FrameName ne 'mainleft') { print "</FORM>\n"; }
+		if ($FrameName ne 'mainleft') { print "</FORM>\n"; if ($FrameName ne 'mainright') { print "<hr>"; } }
 		else { print "<br>\n"; }
 		print "\n";
 
@@ -6084,7 +6041,7 @@ EOF
 			print "<table".($frame?" cellspacing=0 cellpadding=0 border=0":"").">\n";
 			# When
 			$linetitle=&AtLeastOneNotNull($ShowMonthDayStats,$ShowDaysOfWeekStats,$ShowHoursStats);
-			if ($linetitle) { print "<tr><th class=AWL valign=top>$Message[93] : </th>\n"; }
+			if ($linetitle) { print "<tr><th class=AWL width=$WIDTHMENU1>$Message[93]: </th>\n"; }
 			if ($linetitle) { print ($frame?"</tr>\n":"<td class=AWL>"); }
 			if ($ShowMonthDayStats)		 { print ($frame?"<tr><td class=AWL>":""); print "<a href=\"$linkanchor#TOP\"$targetpage>$Message[5]/$Message[4]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
 			#if ($ShowMonthDayStats)		 { print ($frame?"<tr><td class=AWL> &nbsp; <img height=8 width=9 src=\"$DirIcons/other/page.png\" alt=\"...\"> ":""); print "<a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=alldays":"$PROG$StaticLinks.alldays.html")."\"$NewLinkTarget>$Message[130]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
@@ -6093,7 +6050,7 @@ EOF
 			if ($linetitle) { print ($frame?"":"</td></tr>\n"); }
 			# Who
 			$linetitle=&AtLeastOneNotNull($ShowDomainsStats,$ShowHostsStats,$ShowAuthenticatedUsers,$ShowEMailSenders,$ShowEMailReceivers,$ShowRobotsStats);
-			if ($linetitle) { print "<tr><th class=AWL valign=top>$Message[92] : </th>\n"; }
+			if ($linetitle) { print "<tr><th class=AWL>$Message[92]: </th>\n"; }
 			if ($linetitle) { print ($frame?"</tr>\n":"<td class=AWL>"); }
 			if ($ShowDomainsStats)		 { print ($frame?"<tr><td class=AWL>":""); print "<a href=\"$linkanchor#DOMAINS\"$targetpage>$Message[17]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
 			if ($ShowDomainsStats)		 { print ($frame?"<tr><td class=AWL> &nbsp; <img height=8 width=9 src=\"$DirIcons/other/page.png\" alt=\"...\"> ":""); print "<a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=alldomains":"$PROG$StaticLinks.alldomains.html")."\"$NewLinkTarget>$Message[80]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
@@ -6116,7 +6073,7 @@ EOF
 			if ($linetitle) { print ($frame?"":"</td></tr>\n"); }
 			# Navigation
 			$linetitle=&AtLeastOneNotNull($ShowSessionsStats,$ShowPagesStats,$ShowFileTypesStats,$ShowFileSizesStats,$ShowOSStats+$ShowBrowsersStats);
-			if ($linetitle) { print "<tr><th class=AWL valign=top>$Message[72] : </th>\n"; }
+			if ($linetitle) { print "<tr><th class=AWL>$Message[72]: </th>\n"; }
 			if ($linetitle) { print ($frame?"</tr>\n":"<td class=AWL>"); }
 			if ($ShowSessionsStats)		 { print ($frame?"<tr><td class=AWL>":""); print "<a href=\"$linkanchor#SESSIONS\"$targetpage>$Message[117]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
 			if ($ShowPagesStats)		 { print ($frame?"<tr><td class=AWL>":""); print "<a href=\"$linkanchor#PAGE\"$targetpage>$Message[29]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
@@ -6133,7 +6090,7 @@ EOF
 			if ($linetitle) { print ($frame?"":"</td></tr>\n"); }
 			# Referers
 			$linetitle=&AtLeastOneNotNull($ShowOriginStats,$ShowKeyphrasesStats,$ShowKeywordsStats);
-			if ($linetitle) { print "<tr><th class=AWL valign=top>$Message[23] : </th>\n"; }
+			if ($linetitle) { print "<tr><th class=AWL>$Message[23]: </th>\n"; }
 			if ($linetitle) { print ($frame?"</tr>\n":"<td class=AWL>"); }
 			if ($ShowOriginStats)		 { print ($frame?"<tr><td class=AWL>":""); print "<a href=\"$linkanchor#REFERER\"$targetpage>$Message[37]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
 			if ($ShowOriginStats)		 { print ($frame?"<tr><td class=AWL> &nbsp; <img height=8 width=9 src=\"$DirIcons/other/page.png\" alt=\"...\"> ":""); print "<a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=refererse":"$PROG$StaticLinks.refererse.html")."\"$NewLinkTarget>$Message[126]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
@@ -6144,7 +6101,7 @@ EOF
 			if ($linetitle) { print ($frame?"":"</td></tr>\n"); }
 			# Others
 			$linetitle=&AtLeastOneNotNull($ShowFileTypesStats=~/C/i,$ShowHTTPErrorsStats);
-			if ($linetitle) { print "<tr><th class=AWL valign=top>$Message[2] : </th>\n"; }
+			if ($linetitle) { print "<tr><th class=AWL>$Message[2]: </th>\n"; }
 			if ($linetitle) { print ($frame?"</tr>\n":"<td class=AWL>"); }
 			if ($ShowFileTypesStats =~ /C/i)	 { print ($frame?"<tr><td class=AWL>":""); print "<a href=\"$linkanchor#FILETYPES\"$targetpage>$Message[98]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
 			if ($ShowHTTPErrorsStats)	 { print ($frame?"<tr><td class=AWL>":""); print "<a href=\"$linkanchor#ERRORS\"$targetpage>$Message[22]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
@@ -6823,7 +6780,7 @@ EOF
 		exit(0);
 	}
 	if ($HTMLOutput{'urldetail'} || $HTMLOutput{'urlentry'} || $HTMLOutput{'urlexit'}) {
-		# Call to plugin function ShowPagesFilter
+		# Call to plugins' function ShowPagesFilter
 		foreach my $pluginname (keys %{$PluginsLoaded{'ShowPagesFilter'}})  {
 			my $function="ShowPagesFilter_$pluginname()";
 			eval("$function");
@@ -6850,7 +6807,7 @@ EOF
 		if ($ShowPagesStats =~ /B/i) { print "<TH bgcolor=\"#$color_k\" width=80>$Message[106]</TH>"; }
 		if ($ShowPagesStats =~ /E/i) { print "<TH bgcolor=\"#$color_e\" width=80>$Message[104]</TH>"; }
 		if ($ShowPagesStats =~ /X/i) { print "<TH bgcolor=\"#$color_x\" width=80>$Message[116]</TH>"; }
-		# Call to plugin function ShowPagesAddField
+		# Call to plugins' function ShowPagesAddField
 		foreach my $pluginname (keys %{$PluginsLoaded{'ShowPagesAddField'}})  {
 			my $function="ShowPagesAddField_$pluginname('title')";
 			eval("$function");
@@ -6883,7 +6840,7 @@ EOF
 			if ($ShowPagesStats =~ /B/i) { print "<TD>".($_url_k{$key}?Format_Bytes($_url_k{$key}/($_url_p{$key}||1)):"&nbsp;")."</TD>"; }
 			if ($ShowPagesStats =~ /E/i) { print "<TD>".($_url_e{$key}?$_url_e{$key}:"&nbsp;")."</TD>"; }
 			if ($ShowPagesStats =~ /X/i) { print "<TD>".($_url_x{$key}?$_url_x{$key}:"&nbsp;")."</TD>"; }
-			# Call to plugin function ShowPagesAddField
+			# Call to plugins' function ShowPagesAddField
 			foreach my $pluginname (keys %{$PluginsLoaded{'ShowPagesAddField'}})  {
 				my $function="ShowPagesAddField_$pluginname('$key')"; 
 				eval("$function");
@@ -6916,7 +6873,7 @@ EOF
 			if ($ShowPagesStats =~ /B/i) { print "<TD>".($rest_k?Format_Bytes($rest_k/($rest_p||1)):"&nbsp;")."</TD>"; }
 			if ($ShowPagesStats =~ /E/i) { print "<TD>".($rest_e?$rest_e:"&nbsp;")."</TD>"; }
 			if ($ShowPagesStats =~ /X/i) { print "<TD>".($rest_x?$rest_x:"&nbsp;")."</TD>"; }
-			# Call to plugin function ShowPagesAddField
+			# Call to plugins' function ShowPagesAddField
 			foreach my $pluginname (keys %{$PluginsLoaded{'ShowPagesAddField'}})  {
 				my $function="ShowPagesAddField_$pluginname('')";
 				eval("$function");
@@ -7918,19 +7875,32 @@ EOF
 	if ($ShowSessionsStats) {
 		if ($Debug) { debug("ShowSessionsStats",2); }
 		print "$Center<a name=\"SESSIONS\">&nbsp;</a><BR>\n";
-		&tab_head($Message[117],19);
-		print "<TR bgcolor=\"#$color_TableBGRowTitle\" onmouseover=\"ShowTip(1);\" onmouseout=\"HideTip(1);\"><TH>$Message[117]</TH><TH bgcolor=\"#$color_s\" width=80>$Message[10]</TH></TR>\n";
+		my $title="$Message[117]";
+		&tab_head($title,19);
+		my $Totals=0; foreach my $key (@SessionsRange) { $average_s+=$_session{$key}*$SessionsAverage{$key}; $Totals+=$_session{$key}; }
+		if ($Totals) { $average_s=int($average_s/$Totals); }
+		else { $average_s='?'; }
+		print "<TR bgcolor=\"#$color_TableBGRowTitle\" onmouseover=\"ShowTip(1);\" onmouseout=\"HideTip(1);\"><TH>$Message[10]: $TotalVisits - $Message[96]: $average_s s</TH><TH bgcolor=\"#$color_s\" width=80>$Message[10]</TH><TH bgcolor=\"#$color_s\" width=80>$Message[15]</TH></TR>\n";
+		$average_s=0;
 		$total_s=0;
 		my $count=0;
 		foreach my $key (@SessionsRange) {
+			my $p=0;
+			if ($TotalVisits) { $p=int($_session{$key}/$TotalVisits*1000)/10; }
 			$total_s+=$_session{$key}||0;
-			print "<tr><td CLASS=AWL>$key</td><td>".($_session{$key}?$_session{$key}:"&nbsp;")."</td></tr>\n";
+			print "<tr><td CLASS=AWL>$key</td>";
+			print "<td>".($_session{$key}?$_session{$key}:"&nbsp;")."</td>";
+			print "<td>".($_session{$key}?"$p %":"&nbsp;")."</td>";
+			print "</tr>\n";
 			$count++;
 		}
 		$rest_s=$TotalVisits-$total_s;
 		if ($rest_s > 0) {	# All others sessions
+			my $p=0;
+			if ($TotalVisits) { $p=int($rest_s/$TotalVisits*1000)/10; }
 			print "<tr onmouseover=\"ShowTip(20);\" onmouseout=\"HideTip(20);\"><td CLASS=AWL><font color=\"#$color_other\">$Message[0]</font></td>";
 			print "<td>$rest_s</td>";
+			print "<td>".($rest_s?"$p %":"&nbsp;")."</td>";
 			print "</tr>\n";
 		}
 		&tab_end;
@@ -7950,7 +7920,7 @@ EOF
 		if ($ShowPagesStats =~ /B/i) { print "<TH bgcolor=\"#$color_k\" width=80>$Message[106]</TH>"; }
 		if ($ShowPagesStats =~ /E/i) { print "<TH bgcolor=\"#$color_e\" width=80>$Message[104]</TH>"; }
 		if ($ShowPagesStats =~ /X/i) { print "<TH bgcolor=\"#$color_x\" width=80>$Message[116]</TH>"; }
-		# Call to plugin function ShowPagesAddField
+		# Call to plugins' function ShowPagesAddField
 		foreach my $pluginname (keys %{$PluginsLoaded{'ShowPagesAddField'}})  {
 			my $function="ShowPagesAddField_$pluginname('title')";
 			eval("$function");
@@ -7981,7 +7951,7 @@ EOF
 			if ($ShowPagesStats =~ /B/i) { print "<TD>".($_url_k{$key}?Format_Bytes($_url_k{$key}/($_url_p{$key}||1)):"&nbsp;")."</TD>"; }
 			if ($ShowPagesStats =~ /E/i) { print "<TD>".($_url_e{$key}?$_url_e{$key}:"&nbsp;")."</TD>"; }
 			if ($ShowPagesStats =~ /X/i) { print "<TD>".($_url_x{$key}?$_url_x{$key}:"&nbsp;")."</TD>"; }
-			# Call to plugin function ShowPagesAddField
+			# Call to plugins' function ShowPagesAddField
 			foreach my $pluginname (keys %{$PluginsLoaded{'ShowPagesAddField'}})  {
 				my $function="ShowPagesAddField_$pluginname('$key')";
 				eval("$function");
@@ -8008,7 +7978,7 @@ EOF
 			if ($ShowPagesStats =~ /B/i) { print "<TD>".($rest_k?Format_Bytes($rest_k/($rest_p||1)):"&nbsp;")."</TD>"; }
 			if ($ShowPagesStats =~ /E/i) { print "<TD>".($rest_e?$rest_e:"&nbsp;")."</TD>"; }
 			if ($ShowPagesStats =~ /X/i) { print "<TD>".($rest_x?$rest_x:"&nbsp;")."</TD>"; }
-			# Call to plugin function ShowPagesAddField
+			# Call to plugins' function ShowPagesAddField
 			foreach my $pluginname (keys %{$PluginsLoaded{'ShowPagesAddField'}})  {
 				my $function="ShowPagesAddField_$pluginname('')";
 				eval("$function");
