@@ -1106,7 +1106,7 @@ AWStats 4.1+ supports both keywords AND keyphrases by default with no need of an
 <br># To enable all this features, you must copy the awstats_misc_tracker.js file
 <br># into a /js/ directory stored in your web document root and add the following
 <br># HTML code at the end of your index page (before </BODY>) :
-<br># <i>&lt; <script language=javascript src="/js/awstats_misc_tracker.js"&gt;&lt/script&gt</i>
+<br># <i>&lt;script language=javascript src="/js/awstats_misc_tracker.js"&gt;&lt/script&gt</i>
 <br># If code is not added in index page, all this detection capabilities will be
 <br># disabled. You must also check that ShowScreenSizeStats and ShowMiscStats
 <br># parameters are set to 1 to make results appear in report page.
@@ -1668,17 +1668,8 @@ color_u,color_v,color_p,color_h,color_k,color_s<br>
 <br><br><hr>
 
 <script language=javascript>
-	var lastmod = new Date(document.lastModified);
-	if (lastmod.getDate() > 0) {
-		if (lastmod.getDate()<10) zerod="0"
-		else zerod="";
-		if (lastmod.getMonth()<9) zerom="0"
-		else zerom=""
-		year2kok=lastmod.getYear();
-		if (year2kok<100) year2kok+=2000;
-		if ((year2kok>=100) && (year2kok < 1970)) year2kok+=1900;
-		document.writeln("Last revision: "+year2kok+"-"+zerom+(lastmod.getMonth()+1)+"-"+zerod+lastmod.getDate());
-	}
+	var date='$Date$';
+	document.writeln("Last revision: "+date);
 </script>
 
 </body>

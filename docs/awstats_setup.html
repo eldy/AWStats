@@ -223,7 +223,7 @@ a personalized <a href="awstats_config.html#LogFormat">LogFormat</a> if your log
 The first analyze/update of statistics should be made the first time manually from the command line since first time,
 process may be long and it's easier to solve problems (if you don't have Command Line access, just go to Step 2-2). The
 AWStats update command line is:<br>
-<b><i>awstats.pl -update -config=myvirtualhostname</i></b><br>
+<b><i>awstats.pl -config=myvirtualhostname -update</i></b><br>
 <br>
 AWStats will read the config file awstats.myvirtualhostname.conf (or if not found, awstats.conf)
 and create/update its database with all summary information issued from analyzed log file.<br>
@@ -345,17 +345,8 @@ you will also be able to run the update process from your browser. Just click on
 <hr>
 
 <script language=javascript>
-	var lastmod = new Date(document.lastModified);
-	if (lastmod.getDate() > 0) {
-		if (lastmod.getDate()<10) zerod="0"
-		else zerod="";
-		if (lastmod.getMonth()<9) zerom="0"
-		else zerom=""
-		year2kok=lastmod.getYear();
-		if (year2kok<100) year2kok+=2000;
-		if ((year2kok>=100) && (year2kok < 1970)) year2kok+=1900;
-		document.writeln("Last revision: "+year2kok+"-"+zerom+(lastmod.getMonth()+1)+"-"+zerod+lastmod.getDate());
-	}
+	var date='$Date$';
+	document.writeln("Last revision: "+date);
 </script>
 
 </body>

@@ -1233,22 +1233,12 @@ So, you should edit your config file to add in the <a href="awstats_config.html#
 <i>SkipFiles="default.ida cmd.exe"</i><br>
 <br>
 
-
 <hr>
-<script language="javascript">
-	var lastmod = new Date(document.lastModified);
-	if (lastmod.getDate() > 0) {
-		if (lastmod.getDate()<10) zerod="0"
-		else zerod="";
-		if (lastmod.getMonth()<9) zerom="0"
-		else zerom=""
-		year2kok=lastmod.getYear();
-		if (year2kok<100) year2kok+=2000;
-		if ((year2kok>=100) && (year2kok < 1970)) year2kok+=1900;
-		document.writeln("Last revision: "+year2kok+"-"+zerom+(lastmod.getMonth()+1)+"-"+zerod+lastmod.getDate());
-	}
-</script>
 
+<script language=javascript>
+	var date='$Date$';
+	document.writeln("Last revision: "+date);
+</script>
 
 </body>
 </html>
