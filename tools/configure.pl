@@ -276,7 +276,6 @@ print "log files without web server, to analyze mail or ftp log files, or need\n
 print "to manage rotated logs, you will have to complete the config file manually\n";
 print "according to your needs.\n";
 print "Read the AWStats documentation (docs/index.html).\n";
-print "\n";
 
 # Detect web server path
 # ----------------------
@@ -457,6 +456,7 @@ if ($bidon =~ /^y/i) {
 	print "What is the name of your web site or profile analysis ?\n";
 	print "Example: www.mysite.com\n";
 	print "Example: demo\n";
+	ASKCONFIG:
 	my $bidon='';
 	while (! $bidon) {
 		print "Your web site, virtual server or profile name: ";
@@ -470,6 +470,11 @@ if ($bidon =~ /^y/i) {
 	my $configfile='';
 	if ($OS eq 'linux') 	{ $configfile="/etc/awstats/awstats.$site.conf"; }
 	if ($OS eq 'windows') 	{ $configfile="$AWSTATS_PATH\\wwwroot\\cgi-bin\\awstats.$site.conf"; }
+
+	if (-s "$configfile") {
+		print "Warning: A config file for this name already exists. Choose another one.\n";
+		goto ASKCONFIG;	
+	}
 	
 	# Create awstats.conf file
 	# ------------------------
