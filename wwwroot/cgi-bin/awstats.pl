@@ -224,14 +224,14 @@ use vars qw/
 %SearchEnginesHashIDLib %SearchEnginesKnownUrl
 /;
 use vars qw/
-%ValidHTTPCodes %TrapInfosForHTTPErrorCodes %NotPageList %DayBytes %DayHits %DayPages %DayUnique %DayVisits
+%ValidHTTPCodes %TrapInfosForHTTPErrorCodes %NotPageList %DayBytes %DayHits %DayPages %DayVisits
 %FirstTime %LastTime
 %MonthUnique %MonthVisits %MonthPages %MonthHits %MonthBytes %MonthHostsKnown %MonthHostsUnknown
 %monthlib %monthnum
 %ListOfYears
 %_session %_browser_h %_domener_h %_domener_k %_domener_p %_errors_h
 %_filetypes_h %_filetypes_k %_filetypes_gz_in %_filetypes_gz_out
-%_host_p %_host_h %_host_k %_host_v %_host_l %_host_s %_host_u
+%_host_p %_host_h %_host_k %_host_l %_host_s %_host_u
 %_waithost_e %_waithost_l %_waithost_s %_waithost_u
 %_keyphrases %_keywords %_os_h %_pagesrefs_h %_robot_h %_robot_l
 %_login_h %_login_p %_login_k %_login_l
@@ -244,14 +244,14 @@ use vars qw/
 %ValidHTTPCodes=();
 %TrapInfosForHTTPErrorCodes=(); $TrapInfosForHTTPErrorCodes{404}=1;	# TODO Add this in config file
 %NotPageList=();
-%DayBytes = %DayHits = %DayPages = %DayUnique = %DayVisits = ();
+%DayBytes = %DayHits = %DayPages = %DayVisits = ();
 %FirstTime = %LastTime = ();
 %MonthUnique = %MonthVisits = %MonthPages = %MonthHits = %MonthBytes = %MonthHostsKnown = %MonthHostsUnknown = ();
 %monthlib = %monthnum = ();
 %ListOfYears = ();
 %_session = %_browser_h = %_domener_h = %_domener_k = %_domener_p = %_errors_h = ();
 %_filetypes_h = %_filetypes_k = %_filetypes_gz_in = %_filetypes_gz_out = ();
-%_host_p = %_host_h = %_host_k = %_host_v = %_host_l = %_host_s = %_host_u = ();
+%_host_p = %_host_h = %_host_k = %_host_l = %_host_s = %_host_u = ();
 %_waithost_e = %_waithost_l = %_waithost_s = %_waithost_u = ();
 %_keyphrases = %_keywords = %_os_h = %_pagesrefs_h = %_robot_h = %_robot_l = ();
 %_login_h = %_login_p = %_login_k = %_login_l = ();
@@ -264,7 +264,6 @@ use vars qw/
 #tie %_host_p, 'Tie::StdHash';
 #tie %_host_h, 'Tie::StdHash';
 #tie %_host_k, 'Tie::StdHash';
-#tie %_host_v, 'Tie::StdHash';
 #tie %_host_l, 'Tie::StdHash';
 #tie %_host_s, 'Tie::StdHash';
 #tie %_host_u, 'Tie::StdHash';
@@ -1473,7 +1472,7 @@ sub Read_History_File_With_Update {
 		# Load all sections
 		$SectionsToLoad{"general"}=1;
 		$SectionsToLoad{"time"}=2;
-		if ($UpdateStats || $HTMLOutput eq "main" || $HTMLOutput eq "allhosts" || $HTMLOutput eq "lasthosts" || $HTMLOutput eq "unknownip") { $SectionsToLoad{"visitor"}=3; }
+		if ($UpdateStats || $HTMLOutput eq "main" || $HTMLOutput eq "allhosts" || $HTMLOutput eq "lasthosts" || $HTMLOutput eq "unknownip") { $SectionsToLoad{"visitor"}=3; }	# before day session and sider
 		if ($UpdateStats || $HTMLOutput eq "main" || $HTMLOutput eq "days")   { $SectionsToLoad{"day"}=4; }
 		if ($UpdateStats || $HTMLOutput eq "main" || $HTMLOutput eq "logins") { $SectionsToLoad{"login"}=5; }
 		if ($UpdateStats || $HTMLOutput eq "main" || $HTMLOutput eq "domains") { $SectionsToLoad{"domain"}=6; }
@@ -1483,17 +1482,17 @@ sub Read_History_File_With_Update {
 		if ($UpdateStats || $HTMLOutput eq "main" || $HTMLOutput eq "browserdetail") { $SectionsToLoad{"nsver"}=10; }
 		if ($UpdateStats || $HTMLOutput eq "main" || $HTMLOutput eq "os") { $SectionsToLoad{"os"}=11; }
 		if ($UpdateStats || $HTMLOutput eq "main" || $HTMLOutput eq "unknownos")      { $SectionsToLoad{"unknownreferer"}=12; }
-		if ($UpdateStats || $HTMLOutput eq "main" || $HTMLOutput eq "unknownbrowser") { $SectionsToLoad{"unknownrefererbrowser"}=12; }
-		if ($UpdateStats || $HTMLOutput eq "main" || $HTMLOutput eq "robots") { $SectionsToLoad{"robot"}=13; }
-		if ($UpdateStats || $HTMLOutput eq "main" || $HTMLOutput eq "urldetail") { $SectionsToLoad{"sider"}=14; }
-		if ($UpdateStats || $HTMLOutput eq "main" || $HTMLOutput eq "filetypes") { $SectionsToLoad{"filetypes"}=15; }
-		if ($UpdateStats || $HTMLOutput eq "main" || $HTMLOutput eq "origin") { $SectionsToLoad{"origin"}=16; }
-		if ($UpdateStats || $HTMLOutput eq "main" || $HTMLOutput eq "refererse") { $SectionsToLoad{"sereferrals"}=17; }
-		if ($UpdateStats || $HTMLOutput eq "main" || $HTMLOutput eq "refererpages") { $SectionsToLoad{"pagerefs"}=18; }
-		if ($UpdateStats || $HTMLOutput eq "main" || $HTMLOutput eq "keyphrases" || $HTMLOutput eq "keywords") { $SectionsToLoad{"searchwords"}=19; }
-		if ($HTMLOutput eq "main") { $SectionsToLoad{"keywords"}=20; }
-		if ($UpdateStats || $HTMLOutput eq "main" || $HTMLOutput eq "errors") { $SectionsToLoad{"errors"}=21; }
-		if ($UpdateStats || $HTMLOutput eq "main" || $HTMLOutput eq "errors404") { $SectionsToLoad{"sider_404"}=22; }
+		if ($UpdateStats || $HTMLOutput eq "main" || $HTMLOutput eq "unknownbrowser") { $SectionsToLoad{"unknownrefererbrowser"}=13; }
+		if ($UpdateStats || $HTMLOutput eq "main" || $HTMLOutput eq "robots") { $SectionsToLoad{"robot"}=14; }
+		if ($UpdateStats || $HTMLOutput eq "main" || $HTMLOutput eq "urldetail") { $SectionsToLoad{"sider"}=15; }
+		if ($UpdateStats || $HTMLOutput eq "main" || $HTMLOutput eq "filetypes") { $SectionsToLoad{"filetypes"}=16; }
+		if ($UpdateStats || $HTMLOutput eq "main" || $HTMLOutput eq "origin") { $SectionsToLoad{"origin"}=17; }
+		if ($UpdateStats || $HTMLOutput eq "main" || $HTMLOutput eq "refererse") { $SectionsToLoad{"sereferrals"}=18; }
+		if ($UpdateStats || $HTMLOutput eq "main" || $HTMLOutput eq "refererpages") { $SectionsToLoad{"pagerefs"}=19; }
+		if ($UpdateStats || $HTMLOutput eq "main" || $HTMLOutput eq "keyphrases" || $HTMLOutput eq "keywords") { $SectionsToLoad{"searchwords"}=20; }
+		if ($HTMLOutput eq "main") { $SectionsToLoad{"keywords"}=21; }
+		if ($UpdateStats || $HTMLOutput eq "main" || $HTMLOutput eq "errors") { $SectionsToLoad{"errors"}=22; }
+		if ($UpdateStats || $HTMLOutput eq "main" || $HTMLOutput eq "errors404") { $SectionsToLoad{"sider_404"}=23; }
 	}
 	else {
 		# Load only required sections
@@ -1561,7 +1560,9 @@ sub Read_History_File_With_Update {
 				};
 				next;
 			}
-			if ($versionnum < 5000) { if ($field[0] eq "TotalVisits")     { $MonthVisits{$year.$month}+=int($field[1]); next; } }	# For backward compatibility
+			if ($versionnum < 5000) {	# MonthVisits for < 5.0
+				if ($field[0] eq "TotalVisits")     { $MonthVisits{$year.$month}+=int($field[1]); next; }
+			}
 			if ($field[0] eq "END_GENERAL")		{
 				if ($Debug) { debug(" End of GENERAL section"); }
 				delete $SectionsToLoad{"general"};
@@ -1569,7 +1570,7 @@ sub Read_History_File_With_Update {
 				if (! scalar %SectionsToLoad) { debug(" Stop reading history file. Got all we need."); last; }
 				next;
 			}
-	
+
 			# BEGIN_ORIGIN
 			if ($field[0] eq "BEGIN_ORIGIN")	{
 				if ($Debug) { debug(" Begin of ORIGIN section"); }
@@ -1615,6 +1616,7 @@ sub Read_History_File_With_Update {
 						$MonthPages{$year.$month}+=int($field[1]);
 						$MonthHits{$year.$month}+=int($field[2]);
 						$MonthBytes{$year.$month}+=int($field[3]);
+
 						if ($SectionsToLoad{"time"} && ! $SectionsToLoadPartialy{"time"}) {
 							$countloaded++;
 							if ($field[1]) { $_time_p[$field[0]]+=int($field[1]); }
@@ -1647,13 +1649,14 @@ sub Read_History_File_With_Update {
 				while ($field[0] ne "END_DAY" ) {
 					if ($field[0]) {
 						$count++;
+						# We always read this to build the month graph (MonthVisits)
+						if ($versionnum >= 5000 && ($field[4]||0) > 0) { $MonthVisits{$year.$month}+=$field[4]; }	# MonthVisits for >= 5.0
 						if ($SectionsToLoad{"day"}) {
 							$countloaded++;
-							if ($field[1]) { $DayPages{$field[0]}=int($field[1]); }
-							if ($field[2]) { $DayHits{$field[0]}=int($field[2]); }
-							if ($field[3]) { $DayBytes{$field[0]}=int($field[3]); }
-							if ($field[4]) { $DayVisits{$field[0]}=int($field[4]); }
-							if ($field[5]) { $DayUnique{$field[0]}=int($field[5]); }
+							if ($field[1]) { $DayPages{$field[0]}+=int($field[1]); }
+							if ($field[2]) { $DayHits{$field[0]}+=int($field[2]); }
+							if ($field[3]) { $DayBytes{$field[0]}+=int($field[3]); }
+							if ($field[4]) { $DayVisits{$field[0]}+=int($field[4]); }
 						}
 					}
 					$_=<HISTORY>;
@@ -1663,9 +1666,10 @@ sub Read_History_File_With_Update {
 				}
 				if ($Debug) { debug(" End of DAY section ($count entries, $countloaded loaded)"); }
 				delete $SectionsToLoad{"day"};
+				# WE DO NOT SAVE SECTION NOW BECAUSE VALUES CAN BE CHANGED AFTER READING VISITOR
 				#if ($SectionsToSave{"day"}) {	# Must be made after read of visitor
 				#	Save_History("day",$year,$month); delete $SectionsToSave{"day"};
-				#	if ($withpurge) { %DayPages=(); %DayHits=(); %DayBytes=(); %DayVisits=(); %DayUnique=(); }
+				#	if ($withpurge) { %DayPages=(); %DayHits=(); %DayBytes=(); %DayVisits=(); }
 				#}
 				if (! scalar %SectionsToLoad) { debug(" Stop reading history file. Got all we need."); last; }
 				next;
@@ -1681,9 +1685,8 @@ sub Read_History_File_With_Update {
 				while ($field[0] ne "END_VISITOR") {
 					if ($field[0]) {
 						$count++;
-						# We always read this to build the month graph (MonthUnique, MonthVisits, MonthHostsKnown, MonthHostsUnknown)
+						# We always read this to build the month graph (MonthUnique, MonthHostsKnown, MonthHostsUnknown)
 						if (($field[1]||0) > 0) { $MonthUnique{$year.$month}++; }
-						if ($versionnum >= 5000 && ($field[4]||0) > 0) { $MonthVisits{$year.$month}+=$field[4]; }
 						if ($field[0] !~ /^\d+\.\d+\.\d+\.\d+$/) { $MonthHostsKnown{$year.$month}++; }
 						else { $MonthHostsUnknown{$year.$month}++; }
 
@@ -1698,7 +1701,6 @@ sub Read_History_File_With_Update {
 							my $newtimehostl=($_waithost_l{$field[0]}?$_waithost_l{$field[0]}:$_host_l{$field[0]});
 							if ($newtimehosts > $timehostl + $VisitTimeOut ) {
 								if ($Debug) { debug(" Visit in 'wait' arrays is a new visit different than last in history",3); }
-								$_host_v{$field[0]}++;
 								$_url_x{$hostu}++;
 								$_url_e{$_waithost_e{$field[0]}}++;
 								$newtimehosts =~ /^(\d\d\d\d\d\d)/; $DayVisits{$1}++;
@@ -1758,24 +1760,11 @@ sub Read_History_File_With_Update {
 								if ($field[1]) { $_host_p{$field[0]}+=$field[1]; }
 								if ($field[2]) { $_host_h{$field[0]}+=$field[2]; }
 								if ($field[3]) { $_host_k{$field[0]}+=$field[3]; }
-								if ($versionnum >= 5000) {
-									if ($field[4]) { $_host_v{$field[0]}+=$field[4]; }
-									if ($field[5] && ! $_host_l{$field[0]}) {	# We save last connexion params if not already catched
-										$_host_l{$field[0]}=int($field[5]);
-										if ($UpdateStats) {		# field[6] field[7] are used only for update
-											if ($field[6] && ! $_host_s{$field[0]}) { $_host_s{$field[0]}=int($field[6]); }
-											if ($field[7] && ! $_host_u{$field[0]}) { $_host_u{$field[0]}=$field[7]; }
-										}
-									}
-								}
-								else {
-									# To read old data files
-									if ($field[4] && ! $_host_l{$field[0]}) {	# We save last connexion params if not already catched
-										$_host_l{$field[0]}=int($field[4]);
-										if ($UpdateStats) {		# field[5] field[6] are used only for update
-											if ($field[5] && ! $_host_s{$field[0]}) { $_host_s{$field[0]}=int($field[5]); }
-											if ($field[6] && ! $_host_u{$field[0]}) { $_host_u{$field[0]}=$field[6]; }
-										}
+								if ($field[4] && ! $_host_l{$field[0]}) {	# We save last connexion params if not already catched
+									$_host_l{$field[0]}=int($field[4]);
+									if ($UpdateStats) {		# field[5] field[6] are used only for update
+										if ($field[5] && ! $_host_s{$field[0]}) { $_host_s{$field[0]}=int($field[5]); }
+										if ($field[6] && ! $_host_u{$field[0]}) { $_host_u{$field[0]}=$field[6]; }
 									}
 								}
 								$countloaded++;
@@ -1791,7 +1780,7 @@ sub Read_History_File_With_Update {
 				delete $SectionsToLoad{"visitor"};
 				#if ($SectionsToSave{"visitor"}) {
 				#	Save_History("visitor",$year,$month); delete $SectionsToSave{"visitor"};
-				#	if ($withpurge) { %_host_p=(); %_host_h=(); %_host_k=(); %_host_v=(); %_host_l=(); %_host_s=(); %_host_u=(); }
+				#	if ($withpurge) { %_host_p=(); %_host_h=(); %_host_k=(); %_host_l=(); %_host_s=(); %_host_u=(); }
 				#}
 				if (! scalar %SectionsToLoad) { debug(" Stop reading history file. Got all we need."); last; }
 				next;
@@ -1884,6 +1873,7 @@ sub Read_History_File_With_Update {
 				}
 				if ($Debug) { debug(" End of SESSION section ($count entries, $countloaded loaded)"); }
 				delete $SectionsToLoad{"session"};
+				# WE DO NOT SAVE SECTION NOW BECAUSE VALUES CAN BE CHANGED AFTER READING VISITOR
 				#if ($SectionsToSave{"session"}) {
 				#	Save_History("session",$year,$month); delete $SectionsToSave{"session"}; }
 				#	if ($withpurge) { %_session=(); }
@@ -2033,7 +2023,7 @@ sub Read_History_File_With_Update {
 					@field=split(/\s+/,$_); $countlines++;
 				}
 				if ($Debug) { debug(" End of UNKNOWNREFERER section ($count entries, $countloaded loaded)"); }
-				delete $SectionsToLoad{"unknowreferer"};
+				delete $SectionsToLoad{"unknownreferer"};
 				if ($SectionsToSave{"unknownreferer"}) {
 					Save_History("unknownreferer",$year,$month); delete $SectionsToSave{"unknownreferer"};
 					if ($withpurge) { %_unknownreferer_l=(); }
@@ -2174,6 +2164,7 @@ sub Read_History_File_With_Update {
 				}
 				if ($Debug) { debug(" End of SIDER section ($count entries, $countloaded loaded)"); }
 				delete $SectionsToLoad{"sider"};
+				# WE DO NOT SAVE SECTION NOW BECAUSE VALUES CAN BE CHANGED AFTER READING VISITOR
 				#if ($SectionsToSave{"sider"}) {
 				#	Save_History("sider",$year,$month); delete $SectionsToSave{"sider"};
 				#	if ($withpurge) { %_url_p=(); %_url_k=(); %_url_e=(); %_url_x=(); }
@@ -2447,18 +2438,19 @@ sub Read_History_File_With_Update {
 
 	if ($withupdate) {
 
-		# Process rest of data saved in 'wait' arrays (data for hosts not in history file or no found history file)
+		# Process rest of data saved in 'wait' arrays (data for hosts not in history file or no history file found)
 		if ($Debug) { debug(" Processing data in 'wait' arrays",3); }
 		foreach my $key (keys %_waithost_e) {
 	
 			$MonthUnique{$year.$month}++; 
-			if ($versionnum >= 5000) { $MonthVisits{$year.$month}++; }
-			
+#			if ($versionnum >= 5000) {
+				$MonthVisits{$year.$month}++;
+#			}
+
 			my $newtimehosts=($_waithost_s{$key}?$_waithost_s{$key}:$_host_s{$key});
 			my $newtimehostl=($_waithost_l{$key}?$_waithost_l{$key}:$_host_l{$key});
 	
 			if ($Debug) { debug("  Visit in 'wait' arrays is a new visit",3); }
-			$_host_v{$key}++;
 			$_url_e{$_waithost_e{$key}}++;
 			$newtimehosts =~ /^(\d\d\d\d\d\d\d\d)/; $DayVisits{$1}++;
 			if ($_waithost_s{$key}) {
@@ -2472,7 +2464,7 @@ sub Read_History_File_With_Update {
 
 	}
 
-	# Write all unwrote sections ('day','visitor','sider','session' and other...)
+	# Write all unwrote sections ('general','day','visitor','sider','session' and other...)
 	foreach my $key (sort { $SectionsToSave{$a} <=> $SectionsToSave{$b} } keys %SectionsToSave) {
 		Save_History("$key",$year,$month);
 	}
@@ -2513,7 +2505,6 @@ sub Save_History {
 		print HISTORYTMP "# FirstTime   = Date of first visit for history file\n";
 		print HISTORYTMP "# LastTime    = Date of last visit for history file\n";
 		print HISTORYTMP "# LastUpdate  = Date of last update - Nb of lines read - Nb of old records - Nb of new records - Nb of corrupted - Nb of dropped\n";
-		#print HISTORYTMP "# TotalVisits = Number of visits\n";
 		print HISTORYTMP "BEGIN_GENERAL\n";
 		print HISTORYTMP "LastLine $LastLine\n";
 		print HISTORYTMP "FirstTime $FirstTime{$year.$month}\n";
@@ -2534,8 +2525,7 @@ sub Save_History {
 				my $hits=$DayHits{$key}||0;
 				my $bytes=$DayBytes{$key}||0;
 				my $visits=$DayVisits{$key}||0;
-				my $unique=$DayUnique{$key}||"";
-				print HISTORYTMP "$key $page $hits $bytes $visits $unique\n";
+				print HISTORYTMP "$key $page $hits $bytes $visits\n";
 			}
 		}
 		print HISTORYTMP "END_DAY\n";
@@ -2562,7 +2552,7 @@ sub Save_History {
 	}
 	if ($sectiontosave eq "visitor") {
 		print HISTORYTMP "\n";
-		print HISTORYTMP "# Host - Pages - Hits - Bandwith - Visits - Last visit date - [Start of last visit date] - [Last page of last visit]\n";
+		print HISTORYTMP "# Host - Pages - Hits - Bandwith - Last visit date - [Start of last visit date] - [Last page of last visit]\n";
 		print HISTORYTMP "# [Start of last visit date] and [Last page of last visit] are saved only if session is not finished\n";
 		print HISTORYTMP "# The $MaxNbOfHostsShown first Hits must be first (order not required for others)\n";
 		print HISTORYTMP "BEGIN_VISITOR\n";
@@ -2573,7 +2563,6 @@ sub Save_History {
 			my $page=$_host_p{$key}||0;
 			my $bytes=$_host_k{$key}||0;
 			my $timehostl=$_host_l{$key}||0;
-			my $visits=$_host_v{$key}||0;
 			my $timehosts=$_host_s{$key}||0;
 			my $lastpage=$_host_u{$key}||"";
 			if ($timehostl && $timehosts && $lastpage) {
@@ -2583,16 +2572,16 @@ sub Save_History {
 					if ($lastpage) { $_url_x{$lastpage}++; }
 					delete $_host_s{$key};
 					delete $_host_u{$key};
-					print HISTORYTMP "$key $page $_host_h{$key} $bytes $visits $timehostl\n";
+					print HISTORYTMP "$key $page $_host_h{$key} $bytes $timehostl\n";
 				}
 				else {
 					# If this user has started a new session that is not expired
-					print HISTORYTMP "$key $page $_host_h{$key} $bytes $visits $timehostl $timehosts $lastpage\n";
+					print HISTORYTMP "$key $page $_host_h{$key} $bytes $timehostl $timehosts $lastpage\n";
 				}
 			}
 			else {
 				my $hostl=$timehostl||"";
-				print HISTORYTMP "$key $page $_host_h{$key} $bytes $visits $hostl\n";
+				print HISTORYTMP "$key $page $_host_h{$key} $bytes $hostl\n";
 			}
 		}
 		foreach my $key (keys %_host_h) {
@@ -2600,7 +2589,6 @@ sub Save_History {
 			my $page=$_host_p{$key}||0;
 			my $bytes=$_host_k{$key}||0;
 			my $timehostl=$_host_l{$key}||0;
-			my $visits=$_host_v{$key}||0;
 			my $timehosts=$_host_s{$key}||0;
 			my $lastpage=$_host_u{$key}||"";
 			if ($timehostl && $timehosts && $lastpage) {
@@ -2610,16 +2598,16 @@ sub Save_History {
 					if ($lastpage) { $_url_x{$lastpage}++; }
 					delete $_host_s{$key};
 					delete $_host_u{$key};
-					print HISTORYTMP "$key $page $_host_h{$key} $bytes $visits $timehostl\n";
+					print HISTORYTMP "$key $page $_host_h{$key} $bytes $timehostl\n";
 				}
 				else {
 					# If this user has started a new session that is not expired
-					print HISTORYTMP "$key $page $_host_h{$key} $bytes $visits $timehostl $timehosts $lastpage\n";
+					print HISTORYTMP "$key $page $_host_h{$key} $bytes $timehostl $timehosts $lastpage\n";
 				}
 			}
 			else {
 				my $hostl=$timehostl||"";
-				print HISTORYTMP "$key $page $_host_h{$key} $bytes $visits $hostl\n";
+				print HISTORYTMP "$key $page $_host_h{$key} $bytes $hostl\n";
 			}
 		}
 		print HISTORYTMP "END_VISITOR\n";
@@ -2719,7 +2707,7 @@ sub Save_History {
 	}
 	
 	# Referer
-	if ($sectiontosave eq "unknwonreferer") {
+	if ($sectiontosave eq "unknownreferer") {
 		print HISTORYTMP "\n";
 		print HISTORYTMP "# Unknown referer OS - Last visit date\n";
 		print HISTORYTMP "BEGIN_UNKNOWNREFERER\n";
@@ -2968,7 +2956,7 @@ sub Init_HashArray {
 	# Reset all hash arrays with name beginning by _
 	%_session = %_browser_h = %_domener_h = %_domener_k = %_domener_p = %_errors_h =
 	%_filetypes_h = %_filetypes_k = %_filetypes_gz_in = %_filetypes_gz_out =
-	%_host_p = %_host_h = %_host_k = %_host_v = %_host_l = %_host_s = %_host_u =
+	%_host_p = %_host_h = %_host_k = %_host_l = %_host_s = %_host_u =
 	%_keyphrases = %_keywords = %_os_h = %_pagesrefs_h = %_robot_h = %_robot_l =
 	%_login_h = %_login_p = %_login_k = %_login_l =
 	%_se_referrals_h = %_sider404_h = %_referer404_h = %_url_p = %_url_k = %_url_e = %_url_x =
@@ -3882,27 +3870,26 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {	# Updat
 			my $delay=GetDelaySinceStart(0);
 			print "$NbOfLinesRead lines processed ($delay ms, ".int(1000*$NbOfLinesRead/($delay>0?$delay:1))." lines/second)\n";
 #			if ($Debug) {
-#				print " _host_p:".(scalar keys %_host_p)." _host_h:".(scalar keys %_host_h)." _host_k:".(scalar keys %_host_k)." _host_v:".(scalar keys %_host_v)." _host_l:".(scalar keys %_host_l)." _host_s:".(scalar keys %_host_s)." _host_u:".(scalar keys %_host_u)."\n";
+#				print " _host_p:".(scalar keys %_host_p)." _host_h:".(scalar keys %_host_h)." _host_k:".(scalar keys %_host_k)." _host_l:".(scalar keys %_host_l)." _host_s:".(scalar keys %_host_s)." _host_u:".(scalar keys %_host_u)."\n";
 #				print " _url_p:".(scalar keys %_url_p)." _url_k:".(scalar keys %_url_k)." _url_e:".(scalar keys %_url_e)." _url_x:".(scalar keys %_url_x)."\n";
 #				print " _waithost_e:".(scalar keys %_waithost_e)." _waithost_l:".(scalar keys %_waithost_l)." _waithost_s:".(scalar keys %_waithost_s)." _waithost_u:".(scalar keys %_waithost_u)."\n";
 #			}
 		}
 
-		if ($_ =~ /^#/ || $_ =~ /^!/ || $_ =~ /^\s*$/) {
-			$NbOfLinesDropped++;
-			if ($ShowDropped) { print "Dropped record (comment or blank line) : $_\n"; }
-			next;		
-		}
-
 		# Parse line record to get all required fields
 		@field=map(/^$PerlParsingFormat/,$_);
 		if (! @field) {
-			if ($_ !~ /^\s*$/) {
-				$NbOfLinesCorrupted++;
-				if ($ShowCorrupted) { print "Corrupted record line $NbOfLinesRead (record format does not match LogFormat parameter): $_\n"; }
-			}
-			else { 
-				$NbOfLinesDropped++;
+			$NbOfLinesCorrupted++;
+			if ($ShowCorrupted) {
+				if ($_ =~ /^#/ || $_ =~ /^!/) {
+					print "Corrupted record (comment line) : $_\n";
+				}
+				elsif ($_ =~ /^\s*$/) {
+					print "Corrupted record (blank line)\n";
+				}
+				else { 
+					print "Corrupted record line $NbOfLinesRead (record format does not match LogFormat parameter): $_\n";
+				}
 			}
 			if ($NbOfLinesRead >= $NbOfLinesForCorruptedLog && $NbOfLinesCorrupted == $NbOfLinesRead) { error("Format error",$_,$LogFile); }	# Exit with format error
 			next;
@@ -4218,7 +4205,6 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {	# Updat
 		# Analyze: Host, URL and Session
 		#-------------------------------
 		if ($PageBool) {
-			$_host_p{$_}++;
 			my $timehostl=$_host_l{$_};
 			if ($timehostl) {
 				if ($timerecord > ($timehostl+$VisitTimeOut)) {
@@ -4226,29 +4212,27 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {	# Updat
 					if (! $_waithost_s{$_}) {
 						# This is a second visit or more
 						# We count 'visit','exit','entry','DayVisits'
-						if ($Debug) { debug("  This is a second visit for $_.",4); }
+#						if ($Debug) { debug("  This is a second visit for $_.",4); }
 						my $timehosts=$_host_s{$_};
 						my $page=$_host_u{$_};
-						$_host_v{$_}++;
 						if ($page) { $_url_x{$page}++; }
 						$_url_e{$field[$pos_url]}++;
-						$timerecord =~ /^(\d\d\d\d\d\d\d\d)/; $DayVisits{$1}++;
+						$DayVisits{$yearmonthdayrecord}++;
 						# We can't count session yet because we don't have the start so
 						# we save save params of first 'wait' session
-						$_waithost_s{$_}=$_host_s{$_};
-						$_waithost_l{$_}=$_host_l{$_};
-						$_waithost_u{$_}=$_host_u{$_};
+						$_waithost_l{$_}=$timehostl;
+						$_waithost_s{$_}=$timehosts;
+						$_waithost_u{$_}=$page;
 					}
 					else {
 						# This is third visit or more
 						# We count 'session','visit','exit','entry','DayVisits'
-						if ($Debug) { debug("  This is a third visit or more for $_.",4); }
+#						if ($Debug) { debug("  This is a third visit or more for $_.",4); }
 						my $timehosts=$_host_s{$_};
 						my $page=$_host_u{$_};
-						$_host_v{$_}++;
 						if ($page) { $_url_x{$page}++; }
 						$_url_e{$field[$pos_url]}++;
-						$timerecord =~ /^(\d\d\d\d\d\d\d\d)/; $DayVisits{$1}++;
+						$DayVisits{$yearmonthdayrecord}++;
 						if ($timehosts) { $_session{GetSessionRange($timehosts,$timehostl)}++; }
 					}
 					# Save new session properties
@@ -4256,15 +4240,21 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {	# Updat
 					$_host_l{$_}=$timerecord;
 					$_host_u{$_}=$field[$pos_url];
 				}
-				elsif ($timerecord >= $timehostl) {
+				elsif ($timerecord > $timehostl) {
 					# This is a same visit we can count
-					if ($Debug) { debug("  This is same visit still running for $_. host_l/host_u changed to $timerecord/$field[$pos_url]",4); }
+#					if ($Debug) { debug("  This is same visit still running for $_. host_l/host_u changed to $timerecord/$field[$pos_url]",4); }
 					$_host_l{$_}=$timerecord;
+					$_host_u{$_}=$field[$pos_url];
+				}
+				elsif ($timerecord == $timehostl) {
+					# This is a same visit we can count
+#					if ($Debug) { debug("  This is same visit still running for $_. host_l/host_u changed to $timerecord/$field[$pos_url]",4); }
+					#$_host_l{$_}=$timerecord;
 					$_host_u{$_}=$field[$pos_url];
 				}
 				elsif ($timerecord < $_host_s{$_}) {
 					# Should happens with not correctly sorted log files
-					if ($Debug) { debug("  This is same visit still running for $_ with start not in order. host_s changed to $timerecord",4); }
+#					if ($Debug) { debug("  This is same visit still running for $_ with start not in order. host_s changed to $timerecord",4); }
 					if (! $_waithost_s{$_}) {
 						# We can change entry page not yet counted as the save entry page was waithost_e if $_waithost_s{$_} is not defined
 						$_waithost_e{$_}=$field[$pos_url];
@@ -4275,19 +4265,20 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {	# Updat
 					$_host_s{$_}=$timerecord;
 				}
 				else {
-					if ($Debug) { debug("  This is same visit still running for $_ with hit between start and last hits. No change",4); }
+#					if ($Debug) { debug("  This is same visit still running for $_ with hit between start and last hits. No change",4); }
 				}
 			}
 			else {
 				# This is a new visit (may be). First new visits found for this host
-				if ($Debug) { debug("  New session (may be) for $_. Save in wait array to see later",3); }
+#				if ($Debug) { debug("  New session (may be) for $_. Save in wait array to see later",3); }
 				# We save in wait array the entry page to count later
 				$_waithost_e{$_}=$field[$pos_url];
 				# Save new session properties
+				$_host_u{$_}=$field[$pos_url];
 				$_host_s{$_}=$timerecord;
 				$_host_l{$_}=$timerecord;
-				$_host_u{$_}=$field[$pos_url];
 			}
+			$_host_p{$_}++;
 		}
 		$_host_h{$_}++;
 		$_host_k{$_}+=$field[$pos_size];
@@ -4537,19 +4528,19 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {	# Updat
 			# warning("Try to made AWStats update more frequently to process log files with less than 1 000 000 records.");
 		}
 
-#			if ($Debug) {
-#				print " _host_p:".(scalar keys %_host_p)." _host_h:".(scalar keys %_host_h)." _host_k:".(scalar keys %_host_k)." _host_v:".(scalar keys %_host_v)." _host_l:".(scalar keys %_host_l)." _host_s:".(scalar keys %_host_s)." _host_u:".(scalar keys %_host_u)."\n";
-#				print " _url_p:".(scalar keys %_url_p)." _url_k:".(scalar keys %_url_k)." _url_e:".(scalar keys %_url_e)." _url_x:".(scalar keys %_url_x)."\n";
-#				print " _waithost_e:".(scalar keys %_waithost_e)." _waithost_l:".(scalar keys %_waithost_l)." _waithost_s:".(scalar keys %_waithost_s)." _waithost_u:".(scalar keys %_waithost_u)."\n";
-#			}
-
 		# End of processing new record.
 	}
 
 	if ($Debug) { debug("Close log file \"$LogFile\""); }
 	close LOG || error("Command for pipe '$LogFile' failed");
 
-	if ($Debug) { debug("End of processing log file (AWStats memory cache is TmpDNSLookup=".(scalar keys %TmpDNSLookup)." TmpBrowser=".(scalar keys %TmpBrowser)." TmpOS=".(scalar keys %TmpOS)." TmpRefererServer=".(scalar keys %TmpRefererServer)." TmpRobot=".(scalar keys %TmpRobot).")",1); }
+	if ($Debug) {
+		debug(" _host_p:".(scalar keys %_host_p)." _host_h:".(scalar keys %_host_h)." _host_k:".(scalar keys %_host_k)." _host_l:".(scalar keys %_host_l)." _host_s:".(scalar keys %_host_s)." _host_u:".(scalar keys %_host_u)."\n",1);
+		debug(" _url_p:".(scalar keys %_url_p)." _url_k:".(scalar keys %_url_k)." _url_e:".(scalar keys %_url_e)." _url_x:".(scalar keys %_url_x)."\n",1);
+		debug(" _waithost_e:".(scalar keys %_waithost_e)." _waithost_l:".(scalar keys %_waithost_l)." _waithost_s:".(scalar keys %_waithost_s)." _waithost_u:".(scalar keys %_waithost_u)."\n",1);
+		debug("End of processing log file (AWStats memory cache is TmpDNSLookup=".(scalar keys %TmpDNSLookup)." TmpBrowser=".(scalar keys %TmpBrowser)." TmpOS=".(scalar keys %TmpOS)." TmpRefererServer=".(scalar keys %TmpRefererServer)." TmpRobot=".(scalar keys %TmpRobot).")",1);
+	}
+
 
 	# Save current processed month $lastprocessedmonth
 	if ($lastprocessedmonth) {		# If lastprocessedmonth is still 0, it means we found no valid lines in log file
@@ -4718,12 +4709,9 @@ if ($HTMLOutput) {
 
 EOF
 	
-		# Here, first part of data for processed month (old and current) are still in memory
-		# If a month was already processed, then $HistoryFileAlreadyRead{"MMYYYY"} value is 1
-	
 		# READING DATA
 		#-------------
-		# Loop on each month of year but only existing and not already read will be read by Read_History_File_With_Update function
+		# Loop on each month of year
 		&Init_HashArray;
 		for (my $ix=1; $ix<=12; $ix++) {
 			my $monthix=sprintf("%02s",$ix);
@@ -4888,15 +4876,15 @@ EOF
 	$FirstTime=$LastTime=$TotalUnique=$TotalVisits=$TotalPages=$TotalHits=$TotalBytes=$TotalHostsKnown=$TotalHostsUnknown=0;
 	my $beginmonth=$MonthRequired;my $endmonth=$MonthRequired;
 	if ($MonthRequired eq "year") { $beginmonth=1;$endmonth=12; }
-	for (my $monthix=$beginmonth; $monthix<=$endmonth; $monthix++) {
-		$monthix=$monthix+0; if ($monthix < 10) { $monthix  = "0$monthix"; }	# Good trick to change $month into "MM" format
+	for (my $month=$beginmonth; $month<=$endmonth; $month++) {
+		my $monthix=sprintf("%02s",$month);
 		if ($FirstTime{$YearRequired.$monthix} && ($FirstTime == 0 || $FirstTime > $FirstTime{$YearRequired.$monthix})) { $FirstTime = $FirstTime{$YearRequired.$monthix}; }
 		if ($LastTime < $LastTime{$YearRequired.$monthix}) { $LastTime = $LastTime{$YearRequired.$monthix}; }
-		$TotalUnique+=$MonthUnique{$YearRequired.$monthix}||0;					# Wrong in year view
 		$TotalVisits+=$MonthVisits{$YearRequired.$monthix}||0;
 		$TotalPages+=$MonthPages{$YearRequired.$monthix}||0;
 		$TotalHits+=$MonthHits{$YearRequired.$monthix}||0;
 		$TotalBytes+=$MonthBytes{$YearRequired.$monthix}||0;
+		$TotalUnique+=$MonthUnique{$YearRequired.$monthix}||0;				# Wrong in year view
 		$TotalHostsKnown+=$MonthHostsKnown{$YearRequired.$monthix}||0;		# Wrong in year view
 		$TotalHostsUnknown+=$MonthHostsUnknown{$YearRequired.$monthix}||0;	# Wrong in year view
 	}
