@@ -2,6 +2,26 @@ AWStats Changelog
 -----------------
 $Revision$ - $Author$ - $Date$
 
+
+6.1
+
+Fixes:
+- Fixed a problem of not working misc feature when using IIS and 
+  when URLWithQuery was set to 0.
+- maillogconvert.pl: Better management of error records with sendmail.
+- configure.pl: Now works also on Mac OS X
+
+New features/improvements:
+- Added option IncludeInternalLinksInOriginSection.
+- Added an automatic year adjustment for sendmail/postfix log 
+  files that does not store the year. This solve problems for mail 
+  analyses around new year.
+
+Other/Documentation:
+- Updated language file.
+- Updated documentation.
+
+
 6.0
 
 Fixes:
