@@ -126,7 +126,7 @@ $color_h, $color_k, $color_p, $color_s, $color_u, $color_v)=
 
 
 
-$VERSION="4.0 (build 20)";
+$VERSION="4.0 (build 21)";
 $Lang="en";
 
 # Default value
@@ -2606,7 +2606,8 @@ if ($UpdateStats) {
 		#----------------------------------------------------------------------
 		if (! $field[$pos_code]) {
 			$NbOfLinesCorrupted++;
-			if ($ShowCorrupted) { print "Corrupted record (corrupted HTTP code): $_\n"; }
+			if ($ShowCorrupted && $_ =~ /^\s*$/) { print "Corrupted record (blank line)\n"; }
+			if ($ShowCorrupted && $_ !~ /^\s*$/) { print "Corrupted record (corrupted HTTP code): $_\n"; }
 			if ($NbOfLinesRead >= $NbOfLinesForCorruptedLog && $NbOfLinesCorrupted == $NbOfLinesRead) { error("Format error",$_,$LogFile); }	# Exit with format error
 			next;
 		}
