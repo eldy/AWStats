@@ -272,10 +272,10 @@ if ($nowsec < 10) { $nowsec = "0$nowsec"; }
 print "\n";
 print "----- AWStats $PROG $VERSION (c) Laurent Destailleur -----\n";
 print "This tool will help you to configure AWStats to analyze statistics for\n";
-print "one web server. If you need to analyze load balanced servers, downloaded\n";
-print "log files without web server, to analyze mail or ftp log files, or need\n";
-print "to manage rotated logs, you will have to complete the config file manually\n";
-print "according to your needs.\n";
+print "one web server. If you need to analyze load balanced servers log files, to\n";
+print "analyze downloaded log files without web server, to analyze mail or ftp log\n";
+print "files, or need to manage rotated logs, you will have to complete the config\n";
+print "file manually according to your needs.\n";
 print "Read the AWStats documentation (docs/index.html).\n";
 
 # Detect OS type
