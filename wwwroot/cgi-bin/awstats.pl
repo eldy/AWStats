@@ -5460,9 +5460,9 @@ if ($ENV{'AWSTATS_FORCE_CONFIG'}) {
 if ((! $ENV{'GATEWAY_INTERFACE'}) && (! $SiteConfig)) {
 	&Read_Ref_Data('browsers','domains','operating_systems','robots','search_engines','worms');
 	print "----- $PROG $VERSION (c) 2000-2004 Laurent Destailleur -----\n";
-	print "$PROG is a free web server logfile analyzer to show you advanced web\n";
+	print "AWStats is a free web server logfile analyzer to show you advanced web\n";
 	print "statistics.\n";
-	print "$PROG comes with ABSOLUTELY NO WARRANTY. It's a free software distributed\n";
+	print "AWStats comes with ABSOLUTELY NO WARRANTY. It's a free software distributed\n";
 	print "with a GNU General Public License (See LICENSE file for details).\n";
 	print "\n";
 	print "Syntax: $PROG.$Extension -config=virtualhostname [options]\n";
