@@ -8439,7 +8439,7 @@ if (scalar keys %HTMLOutput) {
 			print "<td class=\"aws\" colspan=\"".($colspan-1)."\">".($LastTime?Format_Date($LastTime,0):"NA")."</td>\n";
 			print "</tr>\n";
 			
-			# Show main indicators
+			# Show main indicators title row
 			print "<tr>";
 			if ($LogType eq 'W' || $LogType eq 'S') { print "<td bgcolor=\"#$color_TableBGTitle\">&nbsp;</td>"; }
 			if ($ShowMonthStats =~ /U/i) { print "<td width=\"$w%\" bgcolor=\"#$color_u\"".($TOOLTIPON?" onmouseover=\"ShowTip(2);\" onmouseout=\"HideTip(2);\"":"").">$Message[11]</td>"; } else { print "<td bgcolor=\"#$color_TableBGTitle\" width=\"20%\">&nbsp;</td>"; }
@@ -8448,6 +8448,7 @@ if (scalar keys %HTMLOutput) {
 			if ($ShowMonthStats =~ /H/i) { print "<td width=\"$w%\" bgcolor=\"#$color_h\"".($TOOLTIPON?" onmouseover=\"ShowTip(4);\" onmouseout=\"HideTip(4);\"":"").">$Message[57]</td>"; } else { print "<td bgcolor=\"#$color_TableBGTitle\" width=\"20%\">&nbsp;</td>"; }
 			if ($ShowMonthStats =~ /B/i) { print "<td width=\"$w%\" bgcolor=\"#$color_k\"".($TOOLTIPON?" onmouseover=\"ShowTip(5);\" onmouseout=\"HideTip(5);\"":"").">$Message[75]</td>"; } else { print "<td bgcolor=\"#$color_TableBGTitle\" width=\"20%\">&nbsp;</td>"; }
 			print "</tr>\n";
+			# Show main indicators values for viewed traffic
 			print "<tr>";
 			if ($LogType eq 'M') { 
 				print "<td class=\"aws\">$Message[165]</td>";
@@ -8465,22 +8466,25 @@ if (scalar keys %HTMLOutput) {
 				if ($ShowMonthStats =~ /B/i) { print "<td><b>".Format_Bytes(int($TotalBytes))."</b><br />($RatioBytes&nbsp;$Message[108]/".lc($Message[($LogType eq 'M'?149:12)]).")</td>"; } else { print "<td>&nbsp;</td>"; }
 			}
 			print "</tr>\n";
-			print "<tr>";
-			if ($LogType eq 'M') { 
-				print "<td class=\"aws\">$Message[166]</td>";
-				print "<td>&nbsp;<br />&nbsp;</td>\n";
-				print "<td>&nbsp;<br />&nbsp;</td>\n";
-				if ($ShowMonthStats =~ /H/i) { print "<td><b>$TotalNotViewedHits</b></td>"; } else { print "<td>&nbsp;</td>"; }
-				if ($ShowMonthStats =~ /B/i) { print "<td><b>".Format_Bytes(int($TotalNotViewedBytes))."</b></td>"; } else { print "<td>&nbsp;</td>"; }
-			}
-			else {
-				if ($LogType eq 'W' || $LogType eq 'S') { print "<td class=\"aws\">$Message[161]&nbsp;*</td>"; }
-				print "<td colspan=\"2\">&nbsp;<br />&nbsp;</td>\n";
-				if ($ShowMonthStats =~ /P/i) { print "<td><b>$TotalNotViewedPages</b></td>"; } else { print "<td>&nbsp;</td>"; }
-				if ($ShowMonthStats =~ /H/i) { print "<td><b>$TotalNotViewedHits</b></td>"; } else { print "<td>&nbsp;</td>"; }
-				if ($ShowMonthStats =~ /B/i) { print "<td><b>".Format_Bytes(int($TotalNotViewedBytes))."</b></td>"; } else { print "<td>&nbsp;</td>"; }
-			}
-			print "</tr>\n";
+			# Show main indicators values for not viewed traffic values
+            if ($LogType eq 'M' || $LogType eq 'W' || $LogType eq 'S') {
+    			print "<tr>";
+    			if ($LogType eq 'M') { 
+    				print "<td class=\"aws\">$Message[166]</td>";
+    				print "<td>&nbsp;<br />&nbsp;</td>\n";
+    				print "<td>&nbsp;<br />&nbsp;</td>\n";
+    				if ($ShowMonthStats =~ /H/i) { print "<td><b>$TotalNotViewedHits</b></td>"; } else { print "<td>&nbsp;</td>"; }
+    				if ($ShowMonthStats =~ /B/i) { print "<td><b>".Format_Bytes(int($TotalNotViewedBytes))."</b></td>"; } else { print "<td>&nbsp;</td>"; }
+    			}
+    			else {
+    				if ($LogType eq 'W' || $LogType eq 'S') { print "<td class=\"aws\">$Message[161]&nbsp;*</td>"; }
+    				print "<td colspan=\"2\">&nbsp;<br />&nbsp;</td>\n";
+    				if ($ShowMonthStats =~ /P/i) { print "<td><b>$TotalNotViewedPages</b></td>"; } else { print "<td>&nbsp;</td>"; }
+    				if ($ShowMonthStats =~ /H/i) { print "<td><b>$TotalNotViewedHits</b></td>"; } else { print "<td>&nbsp;</td>"; }
+    				if ($ShowMonthStats =~ /B/i) { print "<td><b>".Format_Bytes(int($TotalNotViewedBytes))."</b></td>"; } else { print "<td>&nbsp;</td>"; }
+    			}
+    			print "</tr>\n";
+            }
 			&tab_end($LogType eq 'W' || $LogType eq 'S'?"* $Message[159]":"");
 
 			# BY MONTH
