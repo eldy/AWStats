@@ -11,7 +11,7 @@ It works with IIS 5.0+, Apache and all major web, wap, proxy, streaming
 server log files (and even ftp servers or mail logs) on all Operating Systems.
 
 License: GNU GPL (GNU General Public License. See LICENSE file)
-Version : 5.9
+Version : 5.91
 Release date: October 2003
 Platforms: All (Linux, NT, SCO, BSD, Solaris and other *NIX's, BeOS, OS/2...)
 Author: Laurent Destailleur <eldy@users.sourceforge.net>
