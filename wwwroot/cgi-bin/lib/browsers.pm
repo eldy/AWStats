@@ -209,7 +209,7 @@
 
 # BrowsersHashIcon
 # Each Browsers Search ID is associated to a string that is the name of icon
-# file for this OS.
+# file for this browser.
 #---------------------------------------------------------------------------
 %BrowsersHashIcon = (
 # Standard web browsers
