@@ -271,6 +271,7 @@ LogFile="/var/log/xferlog"
 <br>ShowOriginStats=0
 <br>ShowKeyphrasesStats=0
 <br>ShowKeywordsStats=0
+<br>ShowMiscStats=0
 <br>ShowHTTPErrorsStats=0
 </i></td></tr></table>
 <br>
@@ -298,15 +299,15 @@ Modify this new config file:
 <table width="95%" border=1 cellpadding=0 cellspacing=0><tr class=CFAQ><td class=CFAQ>
 For standard Postfix, Sendmail and standard QMail logfiles, set<br>
 <i>
-LogFile="/path/to/maillogconv standard /pathtomaillog/maillog |"<br>
+LogFile="/path/to/maillogconv standard &lt; /pathtomaillog/maillog |"<br>
 </i>
 And for VAdmin QMail logfiles (multi-host/virtualhost mail servers running vadmin software)<br>
 <i>
-LogFile="/path/to/maillogconv vadmin /pathtomaillog/maillog |"<br>
+LogFile="/path/to/maillogconv vadmin &lt; /pathtomaillog/maillog |"<br>
 </i>
 If the logfiles are compressed, they can be processed this way<br>
 <i>
-LogFile="gzip -cd /var/log/maillog.0.gz | /path/to/maillogconv vadmin /var/log/maillog |"<br>
+LogFile="gzip -cd /var/log/maillog.0.gz | /path/to/maillogconv vadmin |"<br>
 </i>
 Then change:
 <i>
@@ -331,6 +332,7 @@ Then change:
 <br>ShowOriginStats=0
 <br>ShowKeyphrasesStats=0
 <br>ShowKeywordsStats=0
+<br>ShowMiscStats=0
 <br>ShowHTTPErrorsStats=0
 <br>
 </i>
@@ -395,6 +397,7 @@ Modify this new config file:
 <br>ShowOriginStats=PH
 <br>ShowKeyphrasesStats=0
 <br>ShowKeywordsStats=0
+<br>ShowMiscStats=0
 <br>ShowHTTPErrorsStats=1
 </i>
 </td></tr></table>
@@ -486,6 +489,7 @@ LogFile="/pathtomediaserver/mediaserverlog"
 <br>ShowOriginStats=PH
 <br>ShowKeyphrasesStats=0
 <br>ShowKeywordsStats=0
+<br>ShowMiscStats=0
 <br>ShowHTTPErrorsStats=1
 </i>
 </td></tr></table>
