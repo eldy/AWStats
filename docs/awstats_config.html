@@ -61,6 +61,8 @@ when reading it), follow the example:<br>
 
 <br><b>OPTIONAL SETUP SECTION (Not required but increase AWStats features)</b><br>
 <ul>
+<li><a href="#DNSCacheFile">DNSCacheFile</a>
+<li><a href="#SkipDNSLookupFor">SkipDNSLookupFor</a>
 <li><a href="#AllowAccessFromWebToAuthenticatedUsersOnly">AllowAccessFromWebToAuthenticatedUsersOnly</a>
 <li><a href="#AllowAccessFromWebToFollowingAuthenticatedUsers">AllowAccessFromWebToFollowingAuthenticatedUsers</a>
 <li><a href="#CreateDirDataIfNotExists">CreateDirDataIfNotExists</a>
@@ -70,7 +72,6 @@ when reading it), follow the example:<br>
 <li><a href="#KeepBackupOfHistoricFiles">KeepBackupOfHistoricFiles</a>
 <li><a href="#DefaultFile">DefaultFile</a>
 <li><a href="#SkipHosts">SkipHosts</a>
-<li><a href="#SkipDNSLookupFor">SkipDNSLookupFor</a>
 <li><a href="#SkipFiles">SkipFiles</a>
 <li><a href="#OnlyFiles">OnlyFiles</a>
 <li><a href="#NotPageList">NotPageList</a>
@@ -275,18 +276,21 @@ when reading it), follow the example:<br>
 <br><br><hr>
 
 <a name="DNSLookup"><b>DNSLookup</b></a><br>
-<b>Version : </b>1.0 +<br>
-<br># If you want to have informations on domains/countries visitors, you must ask
+<b>Version : </b>1.0 + (4.2 + for value 2) <br>
+<br># If you want to have information on domains/countries visitors, you must ask
 <br># AWStats to make reverse DNS lookup (if not already done in your log file).
-<br># If you set DNSLookup to 1, don't forget that reverse DNS lookup decrease
-<br># seriously AWStats time processing.
-<br># If you keep DNSLookup to 0, all hosts will be reported by the IP addresses
-<br># and not by the full hostname of visitors. Domain/Country chart will also 
-<br># report all visitors from a domain/country "Unknown".
-<br># Possible values: 0 or 1
-<br># Default: 0
+<br># With DNSLookup to 0, all hosts will be reported by their IP addresses and
+<br># not by the full hostname of visitors. Domain/Country chart will also report
+<br># all visitors from a domain/country "Unknown".
+<br># If you need to set DNSLookup to 1, don't forget that reverse DNS lookup
+<br># increase dramatically AWStats update process. Do not use on large web sites.
+<br># Possible values:
+<br>#  0 No DNS Lookup
+<br>#  1 DNS Lookup is fully enabled
+<br>#  2 DNS Lookup is made only from DNS cache file
+<br># Default: 2
 <br># 
-<br>DNSLookup=0
+<br>DNSLookup=2
 
 <br><br><hr>
 
@@ -381,6 +385,35 @@ when reading it), follow the example:<br>
 <br># Default: 0
 <br>#
 <br>AllowToUpdateStatsFromBrowser=0
+
+<br><br><hr>
+
+<a name="DNSCacheFile"><b>DNSCacheFile</b></a><br>
+<b>Version : </b>4.2 +<br>
+<br># AWStats can do reverse DNS lookups through a DNS cache file that is either
+<br># created/updated at run-time, or has been previously created, either by a
+<br># previous run of AWStats, or other tools using same format of DNS cache file.
+<br># If no path is given in DNS cache file name, AWStats will search and save it
+<br># into DirData directory.
+<br># This option is not used if DNSLookup=0.
+<br># Example: "/mydnscachedir/dnscache"
+<br># Default: "dnscachefile.txt"
+<br>#
+<br>DNSCacheFile="dnscachefile.txt"
+
+<br><br><hr>
+
+<a name="SkipDNSLookupFor"><b>SkipDNSLookupFor</b></a><br>
+<b>Version : </b>3.0 +<br>
+<br># You can specify specific IP addresses that should NOT be looked up in
+<br>#  the DNS. You may specify partial addresses (ie 163.85. for everything
+<br>#  behind the usual firewall setup, etc)...
+<br># This option is used only if DNSLookup=1.
+<br># Note: Use space between each value.
+<br># Example: "163.85. 201.101.51.2"
+<br># Default: ""
+<br>#
+<br>SkipDNSLookupFor=""
 
 <br><br><hr>
 
@@ -512,20 +545,6 @@ when reading it), follow the example:<br>
 <br># Default: ""
 <br>#
 <br>SkipHosts=""
-
-<br><br><hr>
-
-<a name="SkipDNSLookupFor"><b>SkipDNSLookupFor</b></a><br>
-<b>Version : </b>3.0 +<br>
-<br># You can specify specific IP addresses that should NOT be looked up in
-<br>#  the DNS. You may specify partial addresses (ie 163.85. for everything
-<br>#  behind the usual firewall setup, etc)...
-<br># This is only useful if DNSLookup=1.
-<br># Note: Use space between each value.
-<br># Example: "163.85. 201.101.51.2"
-<br># Default: ""
-<br>#
-<br>SkipDNSLookupFor=""
 
 <br><br><hr>
 

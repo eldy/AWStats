@@ -14,9 +14,9 @@ use Socket;
 use Time::Local;	# use Time::Local 'timelocal_nocheck' is faster but not supported by all Time::Local modules
 
 
-#-------------------------------------------------------
+#-----------------------------------------------------------------------------
 # Defines
-#-------------------------------------------------------
+#-----------------------------------------------------------------------------
 use vars qw/ $REVISION $VERSION /;
 my $REVISION='$Revision$'; $REVISION =~ /\s(.*)\s/; $REVISION=$1;
 my $VERSION="4.2 (build $REVISION)";
@@ -30,8 +30,8 @@ $NBOFLINESFORBENCHMARK
 $DEBUGFORCED   = 0;				# Force debug level to log lesser level into debug.log file (Keep this value to 0)
 $NBOFLINESFORBENCHMARK=5000;	# Benchmark info are printing every NBOFLINESFORBENCHMARK lines
 # Plugins variable
-use vars qw/ $UseHiRes $UseCompress /;
-$UseHiRes=$UseCompress=0;
+use vars qw/ $UseHiRes $UseCompress $UseHashFiles $AddOn /;
+$UseHiRes=$UseCompress=$UseHashFiles=$AddOn=0;
 # Running variables
 use vars qw/
 $DIR $PROG $Extension
@@ -56,6 +56,7 @@ $StartSeconds $StartMicroseconds
 $StartSeconds=$StartMicroseconds=0;
 # Config vars
 use vars qw/
+$DNSCacheFile 
 $Lang
 $MaxRowsInHTMLOutput
 $BarImageVertical_v
@@ -69,6 +70,7 @@ $BarImageHorizontal_h
 $BarImageVertical_k
 $BarImageHorizontal_k
 /;
+$DNSCacheFile="dnscachefile.txt";
 $Lang="en";
 $MaxRowsInHTMLOutput = 1000;
 $BarImageVertical_v   = "barrevv.png";
@@ -86,7 +88,7 @@ $BarImageVertical_k   = "barrevk.png";
 $BarImageHorizontal_k = "barrehk.png";
 use vars qw/
 $DNSLookup $AllowAccessFromWebToAuthenticatedUsersOnly $BarHeight $BarWidth
-$Expires $CreateDirDataIfNotExists $KeepBackupOfHistoricFiles $MaxLengthOfURL
+$CreateDirDataIfNotExists $KeepBackupOfHistoricFiles $MaxLengthOfURL
 $MaxNbOfDomain $MaxNbOfHostsShown $MaxNbOfKeyphrasesShown $MaxNbOfKeywordsShown
 $MaxNbOfLoginShown $MaxNbOfPageShown $MaxNbOfRefererShown $MaxNbOfRobotShown
 $MinHitFile $MinHitHost $MinHitKeyphrase $MinHitKeyword
@@ -95,10 +97,10 @@ $NbOfLinesRead $NbOfLinesDropped $NbOfLinesCorrupted $NbOfOldLines $NbOfNewLines
 $NewLinePhase $NbOfLinesForCorruptedLog $PurgeLogFile
 $ShowAuthenticatedUsers $ShowCompressionStats $ShowFileSizesStats
 $ShowDropped $ShowCorrupted $ShowUnknownOrigin $ShowLinksToWhoIs
-$UpdateStats $URLWithQuery
+$Expires $UpdateStats $URLWithQuery
 /;
 ($DNSLookup, $AllowAccessFromWebToAuthenticatedUsersOnly, $BarHeight, $BarWidth,
-$Expires, $CreateDirDataIfNotExists, $KeepBackupOfHistoricFiles, $MaxLengthOfURL,
+$CreateDirDataIfNotExists, $KeepBackupOfHistoricFiles, $MaxLengthOfURL,
 $MaxNbOfDomain, $MaxNbOfHostsShown, $MaxNbOfKeyphrasesShown, $MaxNbOfKeywordsShown,
 $MaxNbOfLoginShown, $MaxNbOfPageShown, $MaxNbOfRefererShown, $MaxNbOfRobotShown,
 $MinHitFile, $MinHitHost, $MinHitKeyphrase, $MinHitKeyword,
@@ -107,7 +109,7 @@ $NbOfLinesRead, $NbOfLinesDropped, $NbOfLinesCorrupted, $NbOfOldLines, $NbOfNewL
 $NewLinePhase, $NbOfLinesForCorruptedLog, $PurgeLogFile,
 $ShowAuthenticatedUsers, $ShowCompressionStats, $ShowFileSizesStats,
 $ShowDropped, $ShowCorrupted, $ShowUnknownOrigin, $ShowLinksToWhoIs,
-$UpdateStats, $URLWithQuery)=
+$Expires, $UpdateStats, $URLWithQuery)=
 (0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
 use vars qw/
 $AllowToUpdateStatsFromBrowser $ArchiveLogRecords $DetailedReportsOnNewWindows
@@ -170,16 +172,18 @@ $PerlParsingFormat, $SiteToAnalyze, $SiteToAnalyzeWithoutwww, $UserAgent)=
 use vars qw/
 $pos_vh $pos_rc $pos_logname $pos_date $pos_method $pos_url $pos_code $pos_size
 $pos_referer $pos_agent $pos_query $pos_gzipin $pos_gzipout $pos_gzipratio
-$lastrequiredfield $lowerval
+/;
+$pos_vh = $pos_rc = $pos_logname = $pos_date = $pos_method = $pos_url = $pos_code = $pos_size = -1;
+$pos_referer = $pos_agent = $pos_query = $pos_gzipin = $pos_gzipout = $pos_gzipratio = -1;
+use vars qw/
+$lowerval
 $FirstTime $LastTime
 $TotalUnique $TotalVisits $TotalHostsKnown $TotalHostsUnknown
 $TotalPages $TotalHits $TotalBytes $TotalEntries $TotalExits $TotalBytesPages $TotalDifferentPages
 $TotalKeyphrases $TotalKeywords $TotalDifferentKeyphrases $TotalDifferentKeywords
 $TotalSearchEngines $TotalRefererPages $TotalDifferentSearchEngines $TotalDifferentRefererPages
 /;
-$pos_vh = $pos_rc = $pos_logname = $pos_date = $pos_method = $pos_url = $pos_code = $pos_size = 0;
-$pos_referer = $pos_agent = $pos_query = $pos_gzipin = $pos_gzipout = $pos_gzipratio = 0;
-$lastrequiredfield = $lowerval = 0;
+$lowerval = 0;
 $FirstTime = $LastTime = 0;
 $TotalUnique = $TotalVisits = $TotalHostsKnown = $TotalHostsUnknown = 0;
 $TotalPages = $TotalHits = $TotalBytes = $TotalEntries = $TotalExits = $TotalBytesPages = $TotalDifferentPages = 0;
@@ -229,6 +233,7 @@ use vars qw/
 %_unknownreferer_l %_unknownrefererbrowser_l
 %val %nextval %egal
 %TmpDNSLookup %TmpOS %TmpRefererServer %TmpRobot %TmpBrowser
+%MyDNSTable
 /;
 %ValidHTTPCodes=();
 %TrapInfosForHTTPCodes=(); $TrapInfosForHTTPCodes{404}=1;	# TODO Add this in config file
@@ -284,10 +289,6 @@ use vars qw/
 #tie %_unknownreferer_l, 'Tie::StdHash';
 #tie %_unknownrefererbrowser_l, 'Tie::StdHash';
 
-use vars qw/ $AddOn /;
-$AddOn=0;
-#require "${DIR}addon.pl"; $AddOn=1; 		# Keep this line commented in standard version
-
 # Those addresses are shown with those lib (First column is full exact relative URL, second column is text to show instead of URL)
 use vars qw/ %Aliases /;
 %Aliases = (
@@ -298,12 +299,6 @@ use vars qw/ %Aliases /;
 #			"/YourRelativeUrl",				"<b>Your HTML text</b>"
 			);
 
-# These table is used to make fast reverse DNS lookup for particular IP adresses. You can add your own IP addresses resolutions.
-use vars qw/ %MyDNSTable /;
-%MyDNSTable = (
-#"256.256.256.1", "myworkstation1",
-#"256.256.256.2", "myworkstation2"
-);
 
 # PROTOCOL CODES
 
@@ -381,14 +376,16 @@ use vars qw/ %smtpcodelib /;
 
 
 
-#-------------------------------------------------------
+#-----------------------------------------------------------------------------
 # Functions
-#-------------------------------------------------------
+#-----------------------------------------------------------------------------
 
 #------------------------------------------------------------------------------
-# Function:     Write on ouput header of HTML page
-# Input:		$HTMLOutput $PageCode $Expires
-# Output:		-
+# Function:		Write on ouput header of HTML page
+# Parameters:	None
+# Input:		$HTMLOutput $PageCode $Expires $HTMLHeadSection
+# Output:		None
+# Return:		None
 #------------------------------------------------------------------------------
 sub html_head {
 	if ($HTMLOutput) {
@@ -458,11 +455,12 @@ EOF
 	}
 }
 
-
 #------------------------------------------------------------------------------
-# Function:     Write on ouput end of HTML page
-# Input:		-
-# Output:		-
+# Function:		Write on ouput end of HTML page
+# Parameters:	None
+# Input:		$HTMLOutput $HTMLEndSection
+# Output:		None
+# Return:		None
 #------------------------------------------------------------------------------
 sub html_end {
 	if ($HTMLOutput) {
@@ -476,9 +474,11 @@ sub html_end {
 }
 
 #------------------------------------------------------------------------------
-# Function:     Print on stdout tab header of a chart
-# Input:		$title $tooltip_number [$width percentage of chart title]
-# Output:		-
+# Function:		Print on stdout tab header of a chart
+# Parameters:	$title $tooltip_number [$width percentage of chart title]
+# Input:		None
+# Output:		None
+# Return:		None
 #------------------------------------------------------------------------------
 sub tab_head {
 	my $title=shift;
@@ -497,9 +497,11 @@ sub tab_head {
 }
 
 #------------------------------------------------------------------------------
-# Function:     Print on stdout tab ender of a chart
-# Input:		-
-# Output:		-
+# Function:		Print on stdout tab ender of a chart
+# Parameters:	None
+# Input:		None
+# Output:		None
+# Return:		None
 #------------------------------------------------------------------------------
 sub tab_end {
 	print "</TABLE></TD></TR></TABLE>";
@@ -507,9 +509,11 @@ sub tab_end {
 }
 
 #------------------------------------------------------------------------------
-# Function:     Write error message and exit
-# Input:		-
-# Output:		-
+# Function:		Write error message and exit
+# Parameters:	$message $secondmessage $thirdmessage
+# Input:		$HTMLOutput $LogSeparator $LogFormat
+# Output:		None
+# Return:		None
 #------------------------------------------------------------------------------
 sub error {
 	my $message=shift||"";
@@ -595,9 +599,11 @@ sub error {
 }
 
 #------------------------------------------------------------------------------
-# Function:     Write a warning message
-# Input:		-
-# Output:		-
+# Function:		Write a warning message
+# Parameters:	$message
+# Input:		$WarningMessage $HTMLOutput
+# Output:		None
+# Return:		None
 #------------------------------------------------------------------------------
 sub warning {
 	my $messagestring=shift;
@@ -617,7 +623,8 @@ sub warning {
 # Function:     Write error message and exit
 # Parameters:   $string $level
 # Input:        $Debug = required level   $DEBUGFORCED = required level forced
-# Output:		-
+# Output:		None
+# Return:		None
 #------------------------------------------------------------------------------
 sub debug {
 	my $level = $_[1] || 1;
@@ -637,8 +644,8 @@ sub debug {
 
 #------------------------------------------------------------------------------
 # Function:     Check if parameter is in SkiHosts array
-# Input:		host @SkipHosts
-# Output:		0 Not found, 1 Found
+# Parameters:	host @SkipHosts
+# Return:		0 Not found, 1 Found
 #------------------------------------------------------------------------------
 sub SkipHost {
 	foreach my $match (@SkipHosts) { if ($_[0] =~ /$match/i) { return 1; } }
@@ -647,8 +654,8 @@ sub SkipHost {
 
 #------------------------------------------------------------------------------
 # Function:     Check if parameter is in SkiFiles array
-# Input:		url @SkipFiles
-# Output:		0 Not found, 1 Found
+# Parameters:	url @SkipFiles
+# Return:		0 Not found, 1 Found
 #------------------------------------------------------------------------------
 sub SkipFile {
 	foreach my $match (@SkipFiles) { if ($_[0] =~ /$match/i) { return 1; } }
@@ -657,8 +664,8 @@ sub SkipFile {
 
 #------------------------------------------------------------------------------
 # Function:     Check if parameter is in OnlyFiles array
-# Input:		host @SkipHosts
-# Output:		0 Not found, 1 Found
+# Parameters:	host @SkipHosts
+# Return:		0 Not found, 1 Found
 #------------------------------------------------------------------------------
 sub OnlyFile {
 	foreach my $match (@OnlyFiles) { if ($_[0] =~ /$match/i) { return 1; } }
@@ -666,9 +673,9 @@ sub OnlyFile {
 }
 
 #------------------------------------------------------------------------------
-# Function:     Check if parameter is in SkiHosts array
-# Input:		host @SkipHosts
-# Output:		0 Not found, 1 Found
+# Function:     Check if parameter is in SkipHosts array
+# Parameters:	host @SkipHosts
+# Return:		0 Not found, 1 Found
 #------------------------------------------------------------------------------
 sub SkipDNSLookup {
 	foreach my $match (@SkipDNSLookupFor) { if ($_[0] =~ /$match/i) { return 1; } }
@@ -677,8 +684,8 @@ sub SkipDNSLookup {
 
 #------------------------------------------------------------------------------
 # Function:     Return day of week of a day
-# Input:		$day $month $year
-# Output:		0-6
+# Parameters:	$day $month $year
+# Return:		0-6
 #------------------------------------------------------------------------------
 sub DayOfWeek {
 	my ($day, $month, $year) = @_;
@@ -695,8 +702,8 @@ sub DayOfWeek {
 
 #------------------------------------------------------------------------------
 # Function:     Return 1 if a date exists
-# Input:		$day $month $year
-# Output:		1 if date exists
+# Parameters:	$day $month $year
+# Return:		1 if date exists
 #------------------------------------------------------------------------------
 sub DateIsValid {
 	my ($day, $month, $year) = @_;
@@ -715,9 +722,11 @@ sub DateIsValid {
 }
 
 #------------------------------------------------------------------------------
-# Function:     return string of visit duration
-# Input:		$starttime $endtime
-# Output:		A string that identify the visit duration range
+# Function:     Return string of visit duration
+# Parameters:	$starttime $endtime
+# Input:        None
+# Output:		None
+# Return:		A string that identify the visit duration range
 #------------------------------------------------------------------------------
 sub SessionLastToSessionRange {
 	my $starttime = my $endtime;
@@ -736,17 +745,19 @@ sub SessionLastToSessionRange {
 }
 
 #------------------------------------------------------------------------------
-# Function:     read config file
-# Input:		$DIR $PROG $SiteConfig
-# Output:		Global variables
+# Function:     Read config file
+# Parameters:	None
+# Input:        $DIR $PROG $SiteConfig
+# Output:		None
+# Return:		Global variables
 #------------------------------------------------------------------------------
 sub Read_Config_File {
 	$FileConfig=""; $FileSuffix="";
 	foreach my $dir ("$DIR","/etc/opt/awstats","/etc/awstats","/etc","/usr/local/etc/awstats") {
 		my $searchdir=$dir;
 		if ($searchdir && (!($searchdir =~ /\/$/)) && (!($searchdir =~ /\\$/)) ) { $searchdir .= "/"; }
-		if (! $FileConfig) { if (open(CONFIG,"$searchdir$PROG.$SiteConfig.conf")) { $FileConfig="$searchdir$PROG.$SiteConfig.conf"; $FileSuffix=".$SiteConfig"; } }
-		if (! $FileConfig) { if (open(CONFIG,"$searchdir$PROG.conf"))  { $FileConfig="$searchdir$PROG.conf"; $FileSuffix=""; } }
+		if (open(CONFIG,"$searchdir$PROG.$SiteConfig.conf")) 	{ $FileConfig="$searchdir$PROG.$SiteConfig.conf"; $FileSuffix=".$SiteConfig"; last; }
+		if (open(CONFIG,"$searchdir$PROG.conf"))  				{ $FileConfig="$searchdir$PROG.conf"; $FileSuffix=""; last; }
 	}
 	if (! $FileConfig) { error("Error: Couldn't open config file \"$PROG.$SiteConfig.conf\" nor \"$PROG.conf\" : $!"); }
 	if ($Debug) { debug("Call to Read_Config_File [FileConfig=\"$FileConfig\"]"); }
@@ -789,6 +800,12 @@ sub Read_Config_File {
 			}
 		if ($param =~ /^AllowToUpdateStatsFromBrowser/)	{ $AllowToUpdateStatsFromBrowser=$value; next; }
 		# Read optional setup section
+		if ($param =~ /^DNSCacheFile/)				  { $DNSCacheFile=$value; next; }
+		if ($param =~ /^SkipDNSLookupFor/) {
+			$value =~ s/\\\./\./g; $value =~ s/([^\\])\./$1\\\./g; $value =~ s/^\./\\\./;	# Replace . into \.
+			foreach my $elem (split(/\s+/,$value))    { push @SkipDNSLookupFor,$elem; }
+			next;
+			}
 		if ($param =~ /^AllowAccessFromWebToAuthenticatedUsersOnly/)	{ $AllowAccessFromWebToAuthenticatedUsersOnly=$value; next; }
 		if ($param =~ /^AllowAccessFromWebToFollowingAuthenticatedUsers/) {
 			foreach my $elem (split(/\s+/,$value))	  { push @AllowAccessFromWebToFollowingAuthenticatedUsers,$elem; }
@@ -807,11 +824,6 @@ sub Read_Config_File {
 		if ($param =~ /^SkipHosts/) {
 			$value =~ s/\\\./\./g; $value =~ s/([^\\])\./$1\\\./g; $value =~ s/^\./\\\./;	# Replace . into \.
 			foreach my $elem (split(/\s+/,$value))    { push @SkipHosts,$elem; }
-			next;
-			}
-		if ($param =~ /^SkipDNSLookupFor/) {
-			$value =~ s/\\\./\./g; $value =~ s/([^\\])\./$1\\\./g; $value =~ s/^\./\\\./;	# Replace . into \.
-			foreach my $elem (split(/\s+/,$value))    { push @SkipDNSLookupFor,$elem; }
 			next;
 			}
 		if ($param =~ /^SkipFiles/) {
@@ -978,25 +990,27 @@ sub Read_Ref_Data {
 	if ((@RobotsSearchIDOrder_list1+@RobotsSearchIDOrder_list2+@RobotsSearchIDOrder_list3) != scalar keys %RobotsHashIDLib) { error("Error: Not same number of records of RobotsSearchIDOrder_listx (total is ".(@RobotsSearchIDOrder_list1+@RobotsSearchIDOrder_list2+@RobotsSearchIDOrder_list3)." entries) and RobotsHashIDLib (".(scalar keys %RobotsHashIDLib)." entries) in Robots database. Check your file ".$FilePath{"robots.pl"}); }
 }
 
-
 #------------------------------------------------------------------------------
 # Function:     Get the messages for a specified language
-# Parameter:	Language id
-# Input:		$DIR
+# Parameter:	Language ID
+# Input:		$DirLang $DIR
 # Output:		$Message table is defined in memory
+# Return:		None
 #------------------------------------------------------------------------------
 sub Read_Language_Data {
 	my $FileLang="";
 	foreach my $dir ("$DirLang","${DIR}lang","./lang") {
 		my $searchdir=$dir;
 		if ($searchdir && (!($searchdir =~ /\/$/)) && (!($searchdir =~ /\\$/)) ) { $searchdir .= "/"; }
-		if (! $FileLang) { if (open(LANG,"${searchdir}awstats-$_[0].txt")) { $FileLang="${searchdir}awstats-$_[0].txt"; } }
+		if (open(LANG,"${searchdir}awstats-$_[0].txt")) { $FileLang="${searchdir}awstats-$_[0].txt"; last; }
 	}
 	# If file not found, we try english
-	foreach my $dir ("$DirLang","${DIR}lang","./lang") {
-		my $searchdir=$dir;
-		if ($searchdir && (!($searchdir =~ /\/$/)) && (!($searchdir =~ /\\$/)) ) { $searchdir .= "/"; }
-		if (! $FileLang) { if (open(LANG,"${searchdir}awstats-en.txt")) { $FileLang="${searchdir}awstats-en.txt"; } }
+	if (! $FileLang) {
+		foreach my $dir ("$DirLang","${DIR}lang","./lang") {
+			my $searchdir=$dir;
+			if ($searchdir && (!($searchdir =~ /\/$/)) && (!($searchdir =~ /\\$/)) ) { $searchdir .= "/"; }
+			if (open(LANG,"${searchdir}awstats-en.txt")) { $FileLang="${searchdir}awstats-en.txt"; last; }
+		}
 	}
 	if ($Debug) { debug("Call to Read_Language_Data [FileLang=\"$FileLang\"]"); }
 	if ($FileLang) {
@@ -1028,25 +1042,27 @@ sub Read_Language_Data {
 	close(LANG);
 }
 
-
 #------------------------------------------------------------------------------
 # Function:     Get the tooltip texts for a specified language
 # Parameter:	Language id
 # Input:		None
 # Output:		Full tooltips text
+# Return:		None
 #------------------------------------------------------------------------------
 sub Read_Language_Tooltip {
 	my $FileLang="";
 	foreach my $dir ("$DirLang","${DIR}lang","./lang") {
 		my $searchdir=$dir;
 		if ($searchdir && (!($searchdir =~ /\/$/)) && (!($searchdir =~ /\\$/)) ) { $searchdir .= "/"; }
-		if (! $FileLang) { if (open(LANG,"${searchdir}awstats-tt-$_[0].txt")) { $FileLang="${searchdir}awstats-tt-$_[0].txt"; } }
+		if (open(LANG,"${searchdir}awstats-tt-$_[0].txt")) { $FileLang="${searchdir}awstats-tt-$_[0].txt"; last; }
 	}
 	# If file not found, we try english
-	foreach my $dir ("$DirLang","${DIR}lang","./lang") {
-		my $searchdir=$dir;
-		if ($searchdir && (!($searchdir =~ /\/$/)) && (!($searchdir =~ /\\$/)) ) { $searchdir .= "/"; }
-		if (! $FileLang) { if (open(LANG,"${searchdir}awstats-tt-en.txt")) { $FileLang="${searchdir}awstats-tt-en.txt"; } }
+	if (! $FileLang) {
+		foreach my $dir ("$DirLang","${DIR}lang","./lang") {
+			my $searchdir=$dir;
+			if ($searchdir && (!($searchdir =~ /\/$/)) && (!($searchdir =~ /\\$/)) ) { $searchdir .= "/"; }
+			if (open(LANG,"${searchdir}awstats-tt-en.txt")) { $FileLang="${searchdir}awstats-tt-en.txt"; last; }
+		}
 	}
 	if ($Debug) { debug("Call to Read_Language_Tooltip [FileLang=\"$FileLang\"]"); }
 	if ($FileLang) {
@@ -1067,11 +1083,13 @@ sub Read_Language_Tooltip {
 	close(LANG);
 }
 
-
-#--------------------------------------------------------------------
-# Input: All global variables
-# Ouput: Change on some global variables
-#--------------------------------------------------------------------
+#------------------------------------------------------------------------------
+# Function:     Get the tooltip texts for a specified language
+# Parameter:	None
+# Input:		All global variables
+# Output:		Change on some global variables
+# Return:		None
+#------------------------------------------------------------------------------
 sub Check_Config {
 	if ($Debug) { debug("Call to Check_Config"); }
 	# Main section
@@ -1122,10 +1140,10 @@ sub Check_Config {
 		debug(" LogFile='$LogFile'",2);
 		debug(" LogFormat='$LogFormat'",2);
 		debug(" LogSeparator='$LogSeparator'",2);
+		debug(" DNSLookup='$DNSLookup'",2);
 		debug(" DirData='$DirData'",2);
 		debug(" DirCgi='$DirCgi'",2);
 		debug(" DirIcons='$DirIcons'",2);
-		debug(" DNSLookup='$DNSLookup'",2);
 	}
 	if (! $LogFile)   { error("Error: LogFile parameter is not defined in config/domain file"); }
 	if (! $LogFormat) { error("Error: LogFormat parameter is not defined in config/domain file"); }
@@ -1134,10 +1152,11 @@ sub Check_Config {
 	if (! $DirData)   { $DirData="."; }
 	if (! $DirCgi)    { $DirCgi="/cgi-bin"; }
 	if (! $DirIcons)  { $DirIcons="/icon"; }
-	if ($DNSLookup !~ /[0-1]/)                      { error("Error: DNSLookup parameter is wrong in config/domain file. Value is '$DNSLookup' (should be 0 or 1)"); }
+	if ($DNSLookup !~ /[0-2]/)                      { error("Error: DNSLookup parameter is wrong in config/domain file. Value is '$DNSLookup' (should be 0 or 1)"); }
 	if (! $SiteDomain)                              { error("Error: SiteDomain parameter not found in your config/domain file. You must add it for using this version."); }
 	if ($AllowToUpdateStatsFromBrowser !~ /[0-1]/) 	{ $AllowToUpdateStatsFromBrowser=0; }
 	# Optional setup section
+    if (! $DNSCacheFile)                          	{ $DNSCacheFile="dnscachefile.txt"; }
 	if ($AllowAccessFromWebToAuthenticatedUsersOnly !~ /[0-1]/)     { $AllowAccessFromWebToAuthenticatedUsersOnly=0; }
 	if ($CreateDirDataIfNotExists !~ /[0-1]/)      	{ $CreateDirDataIfNotExists=0; }
 	if ($SaveDatabaseFilesWithPermissionsForEveryone !~ /[0-1]/)	{ $SaveDatabaseFilesWithPermissionsForEveryone=1; }
@@ -1370,17 +1389,16 @@ sub Check_Config {
 	}
 }
 
-
 #------------------------------------------------------------------------------
 # Function:     Load plugins files
-# Parameter:	None
-# Return value: None
-# Input:		$DIR
+# Parameters:	None
+# Input:		@PluginsToLoad $DIR
 # Output:		None
+# Return: 		None
 #------------------------------------------------------------------------------
 sub Read_Plugins {
 	my %FilePath=();
-	if ($Debug) { debug("Call to Read_Plugins @PluginsToLoad"); }
+	if ($Debug) { debug("Call to Read_Plugins with list: @PluginsToLoad"); }
 	foreach my $file (@PluginsToLoad) {
 		foreach my $dir ("${DIR}plugins","./plugins") {
 			my $searchdir=$dir;
@@ -1400,9 +1418,12 @@ sub Read_Plugins {
 	}
 }
 
-
 #--------------------------------------------------------------------
-# Input: year,month,0|1		(0=read only some part of 3 sections, 1=read needed sections completely)
+# Function:		Load an history file
+# Parameters:	year,month,0|1		(0=read only some part of 3 sections, 1=read needed sections completely)
+# Input:		$DirData $PROG $FileSuffix
+# Output:		None
+# Return:		None
 #--------------------------------------------------------------------
 sub Read_History_File {
 	my $year=sprintf("%04i",shift);
@@ -1468,7 +1489,7 @@ sub Read_History_File {
 	}
 	if ($Debug) {
 		foreach my $section (keys %SectionsToLoad) {
-			&debug(" Section $section is marked for load",3);
+			debug(" Section $section is marked for load",2);
 		}	
 	}
 
@@ -1510,7 +1531,7 @@ sub Read_History_File {
 		if ($field[0] eq "END_GENERAL")      {
 			if ($Debug) { debug(" End of GENERAL section"); }
 			delete $SectionsToLoad{"general"};
-			if (scalar keys %SectionsToLoad == 0) { debug(" Stop reading config file. Got all we need."); last; }
+			if (! scalar %SectionsToLoad) { debug(" Stop reading config file. Got all we need."); last; }
 			next;
 		}
 
@@ -1537,7 +1558,7 @@ sub Read_History_File {
 		if ($field[0] eq "END_ORIGIN")      {
 			if ($Debug) { debug(" End of ORIGIN section"); }
 			delete $SectionsToLoad{"origin"};
-			if (scalar keys %SectionsToLoad == 0) { debug(" Stop reading config file. Got all we need."); last; }
+			if (! scalar %SectionsToLoad) { debug(" Stop reading config file. Got all we need."); last; }
 			next;
 		}
 		# BEGIN_TIME
@@ -1567,7 +1588,7 @@ sub Read_History_File {
 			}
 			if ($Debug) { debug(" End of TIME section ($count entries, $countloaded loaded)"); }
 			delete $SectionsToLoad{"time"};
-			if (scalar keys %SectionsToLoad == 0) { debug(" Stop reading config file. Got all we need."); last; }
+			if (! scalar %SectionsToLoad) { debug(" Stop reading config file. Got all we need."); last; }
 			next;
 		}
 		# BEGIN_DAY
@@ -1597,7 +1618,7 @@ sub Read_History_File {
 			}
 			if ($Debug) { debug(" End of DAY section ($count entries, $countloaded loaded)"); }
 			delete $SectionsToLoad{"day"};
-			if (scalar keys %SectionsToLoad == 0) { debug(" Stop reading config file. Got all we need."); last; }
+			if (! scalar %SectionsToLoad) { debug(" Stop reading config file. Got all we need."); last; }
 			next;
 		}
 		# BEGIN_VISITOR
@@ -1658,7 +1679,7 @@ sub Read_History_File {
 			}
 			if ($Debug) { debug(" End of VISITOR section ($count entries, $countloaded loaded)"); }
 			delete $SectionsToLoad{"visitor"};
-			if (scalar keys %SectionsToLoad == 0) { debug(" Stop reading config file. Got all we need."); last; }
+			if (! scalar %SectionsToLoad) { debug(" Stop reading config file. Got all we need."); last; }
 			next;
 		}
 		# BEGIN_LOGIN
@@ -1687,7 +1708,7 @@ sub Read_History_File {
 			}
 			if ($Debug) { debug(" End of LOGIN section ($count entries, $countloaded loaded)"); }
 			delete $SectionsToLoad{"login"};
-			if (scalar keys %SectionsToLoad == 0) { debug(" Stop reading config file. Got all we need."); last; }
+			if (! scalar %SectionsToLoad) { debug(" Stop reading config file. Got all we need."); last; }
 			next;
 		}
 		# BEGIN_DOMAIN
@@ -1715,7 +1736,7 @@ sub Read_History_File {
 			}
 			if ($Debug) { debug(" End of DOMAIN section ($count entries, $countloaded loaded)"); }
 			delete $SectionsToLoad{"domain"};
-			if (scalar keys %SectionsToLoad == 0) { debug(" Stop reading config file. Got all we need."); last; }
+			if (! scalar %SectionsToLoad) { debug(" Stop reading config file. Got all we need."); last; }
 			next;
 		}
 		# BEGIN_SESSION
@@ -1741,7 +1762,7 @@ sub Read_History_File {
 			}
 			if ($Debug) { debug(" End of SESSION section ($count entries, $countloaded loaded)"); }
 			delete $SectionsToLoad{"session"};
-			if (scalar keys %SectionsToLoad == 0) { debug(" Stop reading config file. Got all we need."); last; }
+			if (! scalar %SectionsToLoad) { debug(" Stop reading config file. Got all we need."); last; }
 			next;
 		}
 		# BEGIN_BROWSER
@@ -1767,7 +1788,7 @@ sub Read_History_File {
 			}
 			if ($Debug) { debug(" End of BROWSER section ($count entries, $countloaded loaded)"); }
 			delete $SectionsToLoad{"browser"};
-			if (scalar keys %SectionsToLoad == 0) { debug(" Stop reading config file. Got all we need."); last; }
+			if (! scalar %SectionsToLoad) { debug(" Stop reading config file. Got all we need."); last; }
 			next;
 		}
 		# BEGIN_MSIEVER
@@ -1793,7 +1814,7 @@ sub Read_History_File {
 			}
 			if ($Debug) { debug(" End of MSIEVER section ($count entries, $countloaded loaded)"); }
 			delete $SectionsToLoad{"msiever"};
-			if (scalar keys %SectionsToLoad == 0) { debug(" Stop reading config file. Got all we need."); last; }
+			if (! scalar %SectionsToLoad) { debug(" Stop reading config file. Got all we need."); last; }
 			next;
 		}
 		# BEGIN_NSVER
@@ -1819,7 +1840,7 @@ sub Read_History_File {
 			}
 			if ($Debug) { debug(" End of NSVER section ($count entries, $countloaded loaded)"); }
 			delete $SectionsToLoad{"nsver"};
-			if (scalar keys %SectionsToLoad == 0) { debug(" Stop reading config file. Got all we need."); last; }
+			if (! scalar %SectionsToLoad) { debug(" Stop reading config file. Got all we need."); last; }
 			next;
 		}
 		# BEGIN_OS
@@ -1845,7 +1866,7 @@ sub Read_History_File {
 			}
 			if ($Debug) { debug(" End of OS section ($count entries, $countloaded loaded)"); }
 			delete $SectionsToLoad{"os"};
-			if (scalar keys %SectionsToLoad == 0) { debug(" Stop reading config file. Got all we need."); last; }
+			if (! scalar %SectionsToLoad) { debug(" Stop reading config file. Got all we need."); last; }
 			next;
 		}
 		# BEGIN_UNKNOWNREFERER
@@ -1871,7 +1892,7 @@ sub Read_History_File {
 			}
 			if ($Debug) { debug(" End of UNKNOWNREFERER section ($count entries, $countloaded loaded)"); }
 			delete $SectionsToLoad{"unknowreferer"};
-			if (scalar keys %SectionsToLoad == 0) { debug(" Stop reading config file. Got all we need."); last; }
+			if (! scalar %SectionsToLoad) { debug(" Stop reading config file. Got all we need."); last; }
 			next;
 		}
 		# BEGIN_UNKNOWNREFERERBROWSER
@@ -1897,7 +1918,7 @@ sub Read_History_File {
 			}
 			if ($Debug) { debug(" End of UNKNOWNREFERERBROWSER section ($count entries, $countloaded loaded)"); }
 			delete $SectionsToLoad{"unknownrefererbrowser"};
-			if (scalar keys %SectionsToLoad == 0) { debug(" Stop reading config file. Got all we need."); last; }
+			if (! scalar %SectionsToLoad) { debug(" Stop reading config file. Got all we need."); last; }
 			next;
 		}
 		# BEGIN_ROBOT
@@ -1924,7 +1945,7 @@ sub Read_History_File {
 			}
 			if ($Debug) { debug(" End of ROBOT section ($count entries, $countloaded loaded)"); }
 			delete $SectionsToLoad{"robot"};
-			if (scalar keys %SectionsToLoad == 0) { debug(" Stop reading config file. Got all we need."); last; }
+			if (! scalar %SectionsToLoad) { debug(" Stop reading config file. Got all we need."); last; }
 			next;
 		}
 		# BEGIN_SIDER
@@ -1999,7 +2020,7 @@ sub Read_History_File {
 			}
 			if ($Debug) { debug(" End of SIDER section ($count entries, $countloaded loaded)"); }
 			delete $SectionsToLoad{"sider"};
-			if (scalar keys %SectionsToLoad == 0) { debug(" Stop reading config file. Got all we need."); last; }
+			if (! scalar %SectionsToLoad) { debug(" Stop reading config file. Got all we need."); last; }
 			next;
 		}
 		# BEGIN_FILETYPES
@@ -2028,7 +2049,7 @@ sub Read_History_File {
 			}
 			if ($Debug) { debug(" End of FILETYPES section ($count entries, $countloaded loaded)"); }
 			delete $SectionsToLoad{"filetypes"};
-			if (scalar keys %SectionsToLoad == 0) { debug(" Stop reading config file. Got all we need."); last; }
+			if (! scalar %SectionsToLoad) { debug(" Stop reading config file. Got all we need."); last; }
 			next;
 		}
 		# BEGIN_SEREFERRALS
@@ -2054,7 +2075,7 @@ sub Read_History_File {
 			}
 			if ($Debug) { debug(" End of SEREFERRALS section ($count entries, $countloaded loaded)"); }
 			delete $SectionsToLoad{"sereferrals"};
-			if (scalar keys %SectionsToLoad == 0) { debug(" Stop reading config file. Got all we need."); last; }
+			if (! scalar %SectionsToLoad) { debug(" Stop reading config file. Got all we need."); last; }
 			next;
 		}
 		# BEGIN_PAGEREFS
@@ -2080,7 +2101,7 @@ sub Read_History_File {
 			}
 			if ($Debug) { debug(" End of PAGEREFS section ($count entries, $countloaded loaded)"); }
 			delete $SectionsToLoad{"pagerefs"};
-			if (scalar keys %SectionsToLoad == 0) { debug(" Stop reading config file. Got all we need."); last; }
+			if (! scalar %SectionsToLoad) { debug(" Stop reading config file. Got all we need."); last; }
 			next;
 		}
 		# BEGIN_SEARCHWORDS
@@ -2142,7 +2163,7 @@ sub Read_History_File {
 			}
 			if ($Debug) { debug(" End of SEARCHWORDS section ($count entries, $countloaded loaded)"); }
 			delete $SectionsToLoad{"searchwords"};
-			if (scalar keys %SectionsToLoad == 0) { debug(" Stop reading config file. Got all we need."); last; }
+			if (! scalar %SectionsToLoad) { debug(" Stop reading config file. Got all we need."); last; }
 			next;
 		}
 		# BEGIN_KEYWORDS
@@ -2177,7 +2198,7 @@ sub Read_History_File {
 			}
 			if ($Debug) { debug(" End of KEYWORDS section ($count entries, $countloaded loaded)"); }
 			delete $SectionsToLoad{"keywords"};
-			if (scalar keys %SectionsToLoad == 0) { debug(" Stop reading config file. Got all we need."); last; }
+			if (! scalar %SectionsToLoad) { debug(" Stop reading config file. Got all we need."); last; }
 			next;
 		}
 		# BEGIN_ERRORS
@@ -2203,7 +2224,7 @@ sub Read_History_File {
 			}
 			if ($Debug) { debug(" End of ERRORS section ($count entries, $countloaded loaded)"); }
 			delete $SectionsToLoad{"errors"};
-			if (scalar keys %SectionsToLoad == 0) { debug(" Stop reading config file. Got all we need."); last; }
+			if (! scalar %SectionsToLoad) { debug(" Stop reading config file. Got all we need."); last; }
 			next;
 		}
 		# BEGIN_SIDER_404
@@ -2232,7 +2253,7 @@ sub Read_History_File {
 			}
 			if ($Debug) { debug(" End of SIDER_404 section ($count entries, $countloaded loaded)"); }
 			delete $SectionsToLoad{"sider_404"};
-			if (scalar keys %SectionsToLoad == 0) { debug(" Stop reading config file. Got all we need."); last; }
+			if (! scalar %SectionsToLoad) { debug(" Stop reading config file. Got all we need."); last; }
 			next;
 		}
 	}
@@ -2241,8 +2262,11 @@ sub Read_History_File {
 }
 
 #--------------------------------------------------------------------
-# Function:    Save History file for year month
-# Input:       Year, Month, [dateoflastlineknown]
+# Function:		Save History file for year month
+# Parameters:	year, month, [dateoflastlineknown]
+# Input:		$DirData $PROG $FileSuffix
+# Output:		None
+# Return:		None
 #--------------------------------------------------------------------
 sub Save_History_File {
 	my $year=sprintf("%04i",shift);
@@ -2526,11 +2550,61 @@ sub Save_History_File {
 	close(HISTORYTMP);
 }
 
-#--------------------------------------------------------------------
+#------------------------------------------------------------------------------
+# Function:     Load into memory DNS Cache entries
+# Parameter:	None
+# Input:		$DNSCacheFile
+# Output:		%MyDNSTable is filled
+# Return:		None
+#------------------------------------------------------------------------------
+sub Read_DNS_Cache_File {
+	my $filetoload="";
+	my $timetoload = time();
+	my $donotloadhash=1;
+
+	foreach my $dir ("$DirData",".","") {
+		my $searchdir=$dir;
+		if ($searchdir && (!($searchdir =~ /\/$/)) && (!($searchdir =~ /\\$/)) ) { $searchdir .= "/"; }
+		if (-s "${searchdir}$DNSCacheFile") { $filetoload="${searchdir}$DNSCacheFile"; last; }
+		if ($UseHashFiles) { if (-r -s "${searchdir}$DNSCacheFile.hash") { $filetoload="${searchdir}$DNSCacheFile"; last; } }
+	}
+
+	if ($Debug) { debug("Call to Read_DNS_Cache_File [filetoload=\"$filetoload\"]"); }
+	if (! $filetoload) {
+		if ($Debug) { debug(" No DNS Cache file found"); }
+		return;
+	}
+
+	if ($UseHashFiles) {
+		my ($tmp,$tmp,$tmp,$tmp,$tmp,$tmp,$tmp,$tmp,$tmp,$datesource,$tmp,$tmp,$tmp) = stat("$filetoload");
+		my ($tmp,$tmp,$tmp,$tmp,$tmp,$tmp,$tmp,$tmp,$tmp,$datehash,$tmp,$tmp,$tmp) = stat("$filetoload.hash");
+		if (! $datesource || $datehash >= $datesource) {
+			# There is no source file of there is and hash file is up to date. We can load hash file
+			$donotloadhash=0;
+		}
+	}
+
+	if ($donotloadhash) {
+		open(DNSFILE,"$filetoload") or error("Error: Couldn't open DNS Cache file \"$filetoload\": $!");
+		# This is the fastest way to load with regexp that I know of
+		%MyDNSTable = map(/^\d+\s+(\d+\.\d+\.\d+\.\d+)\s+(.*)$/o, <DNSFILE>);
+	   	close DNSFILE;
+		if ($UseHashFiles) { eval('use Storable; store(\%MyDNSTable, "$filetoload.hash");'); }
+	}
+	else  {
+		$filetoload="$filetoload.hash";
+		eval('use Storable; %MyDNSTable = %{ retrieve("$filetoload") };');
+	}
+	if ($Debug) { debug(" Loaded ".(scalar keys %MyDNSTable)." items from $filetoload in ".(time()-$timetoload)." seconds.",1); }
+}
+
+#------------------------------------------------------------------------------
 # Function:     Return time elapsed since last call in miliseconds
-# Input:        0|1 (0 reset counter, 1 no reset)
-# Return:       Number of miliseconds elapsed since last call
-#--------------------------------------------------------------------
+# Parameter:	0|1 (0 reset counter, 1 no reset)
+# Input:		None
+# Output:		None
+# Return:		Number of miliseconds elapsed since last call
+#------------------------------------------------------------------------------
 sub GetDelaySinceStart {
 	if (shift) { $StartSeconds=0;	}	# Reset counter
 	my ($newseconds, $newmicroseconds)=(0,0);
@@ -2540,11 +2614,13 @@ sub GetDelaySinceStart {
 	return ($newseconds*1000+int($newmicroseconds/1000)-$StartSeconds*1000-int($StartMicroseconds/1000));
 }
 
-#--------------------------------------------------------------------
+#------------------------------------------------------------------------------
 # Function:     Reset all variables whose name start with _ because a new month start
+# Parameter:	year, month
 # Input:        All variables whose name start with _
 # Output:       All variables whose name start with _
-#--------------------------------------------------------------------
+# Return:		None
+#------------------------------------------------------------------------------
 sub Init_HashArray {
 	my $year=sprintf("%04i",shift||0);
 	my $month=sprintf("%02i",shift||0);
@@ -2565,13 +2641,13 @@ sub Init_HashArray {
 	%_unknownreferer_l = %_unknownrefererbrowser_l = ();
 }
 
-
-
-#--------------------------------------------------------------------
+#------------------------------------------------------------------------------
 # Function:     Change word separators into space and remove bad coded chars
-# Input:        stringtodecode
+# Parameter:	stringtodecode
+# Input:        None
+# Output:       None
 # Return:		decodedstring
-#--------------------------------------------------------------------
+#------------------------------------------------------------------------------
 sub ChangeWordSeparatorsIntoSpace {
 	$_[0] =~ s/%1[03]/ /g;
 	$_[0] =~ s/%2[02789abc]/ /g;
@@ -2582,7 +2658,9 @@ sub ChangeWordSeparatorsIntoSpace {
 
 #--------------------------------------------------------------------
 # Function:     Decode an URL encoded string
-# Input:        stringtodecode
+# Parameters:   stringtodecode
+# Input:        None
+# Output:       None
 # Return:		decodedstring
 #--------------------------------------------------------------------
 sub DecodeEncodedString {
@@ -2595,7 +2673,9 @@ sub DecodeEncodedString {
 
 #--------------------------------------------------------------------
 # Function:     Clean a string of all HTML code to avoid 'Cross Site Scripting attacks'
-# Input:        stringtodecode
+# Parameters:   stringtodecode
+# Input:        None
+# Output:       None
 # Return:		decodedstring
 #--------------------------------------------------------------------
 sub CleanFromCSSA {
@@ -2607,7 +2687,9 @@ sub CleanFromCSSA {
 
 #--------------------------------------------------------------------
 # Function:     Copy one file into another
-# Input:        sourcefilename targetfilename
+# Parameters:   sourcefilename targetfilename
+# Input:        None
+# Output:       None
 # Return:		0 if copy is ok, 1 else
 #--------------------------------------------------------------------
 sub FileCopy {
@@ -2624,8 +2706,11 @@ sub FileCopy {
 }
 
 #--------------------------------------------------------------------
-# Function:      Show flags for other language translations
-# Input:         Current languade id (en, fr, ...)
+# Function:     Show flags for other language translations
+# Parameters:   Current languade id (en, fr, ...)
+# Input:        None
+# Output:       None
+# Return:       None
 #--------------------------------------------------------------------
 sub Show_Flag_Links {
 	my $CurrentLang = shift;
@@ -2661,8 +2746,11 @@ sub Show_Flag_Links {
 }
 
 #--------------------------------------------------------------------
-# Function:      Format value in bytes in a string (Bytes, Kb, Mb, Gb)
-# Input:         bytes
+# Function:		Format value in bytes in a string (Bytes, Kb, Mb, Gb)
+# Parameters:   bytes
+# Input:        None
+# Output:       None
+# Return:       bytes formated
 #--------------------------------------------------------------------
 sub Format_Bytes {
 	my $bytes = shift||0;
@@ -2674,10 +2762,13 @@ sub Format_Bytes {
 	return int($bytes)." $Message[119]";
 }
 
-#------------------------------------------------------------------------------
-# Function:      Format a date according to Message[78] (country date format)
-# Input:         String YYYYMMDDHHMMSS
-#------------------------------------------------------------------------------
+#--------------------------------------------------------------------
+# Function:		Format a date according to Message[78] (country date format)
+# Parameters:   bytes
+# Input:        None
+# Output:       None
+# Return:       String YYYYMMDDHHMMSS
+#--------------------------------------------------------------------
 sub Format_Date {
 	my $date=shift;
 	my $option=shift;
@@ -2703,6 +2794,8 @@ sub Format_Date {
 # Function:     Write a HTML cell with a WhoIs link to parameter
 # Parameter:    Key to used as WhoIs target
 # Input:        $LinksToWhoIs
+# Output:       None
+# Return:       String YYYYMMDDHHMMSS
 #--------------------------------------------------------------------
 sub ShowWhoIsCell {
 	my $keyurl=shift;
@@ -2719,7 +2812,9 @@ sub ShowWhoIsCell {
 
 #--------------------------------------------------------------------
 # Function:     Return 1 if string contains only ascii chars
-# Input:        String
+# Parameters:   string
+# Input:        None
+# Output:       None
 # Return:       0 or 1
 #--------------------------------------------------------------------
 sub IsAscii {
@@ -2733,11 +2828,12 @@ sub IsAscii {
 	return 0;
 }
 
-
 #--------------------------------------------------------------------
 # Function:     Add a val from sorting tree
-# Input:
-# Return:
+# Parameters:   keytoadd keyval [firstadd]
+# Input:        None
+# Output:       None
+# Return:       None
 #--------------------------------------------------------------------
 sub AddInTree {
 	my $keytoadd=shift;
@@ -2782,8 +2878,10 @@ sub AddInTree {
 
 #--------------------------------------------------------------------
 # Function:     Remove a val from sorting tree
-# Input:
-# Return:
+# Parameters:   None
+# Input:        $lowerval %val %egal
+# Output:       None
+# Return:       None
 #--------------------------------------------------------------------
 sub Removelowerval {
 	my $keytoremove=$val{$lowerval};	# This is lower key
@@ -2803,7 +2901,9 @@ sub Removelowerval {
 
 #--------------------------------------------------------------------
 # Function:     Return the lower value between 2
-# Input:        Val1 and Val2
+# Parameters:   Val1 and Val2
+# Input:        None
+# Output:       None
 # Return:       min(Val1,Val2)
 #--------------------------------------------------------------------
 sub Minimum {
@@ -2813,10 +2913,12 @@ sub Minimum {
 
 #--------------------------------------------------------------------
 # Function:     Build @keylist array
-# Input:        Size max for @keylist array,
+# Parameters:   Size max for @keylist array,
 #               Min value in hash for select,
 #               Hash used for select,
 #               Hash used for order
+# Input:        None
+# Output:       None
 # Return:       @keylist response array
 #--------------------------------------------------------------------
 sub BuildKeyList {
@@ -3068,7 +3170,7 @@ if ($Lang eq "10") { $Lang="kr"; }
 &Read_Plugins;
 
 # Here SiteDomain is always defined
-if ($Debug) { &debug("Site domain to analyze: $SiteDomain"); }
+if ($Debug) { debug("Site domain to analyze: $SiteDomain"); }
 
 # Init other parameters
 if ($ENV{"GATEWAY_INTERFACE"}) { $DirCgi=""; }
@@ -3178,28 +3280,23 @@ if ($UpdateStats) {
 	if ($LogFormat =~ /^[1-5]$/) {	# Pre-defined log format
 		if ($LogFormat eq "1") {	# Same than "%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\""
 			$PerlParsingFormat="([^\\s]+) [^\\s]+ ([^\\s]+) \\[([^\\s]+) [^\\s]+\\] \\\"([^\\s]+) ([^\\s]+) [^\\\"]+\\\" ([\\d|-]+) ([\\d|-]+) \\\"(.*)\\\" \\\"([^\\\"]*)\\\"";	# referer and ua might be ""
-			$pos_rc=1;$pos_logname=2;$pos_date=3;$pos_method=4;$pos_url=5;$pos_code=6;$pos_size=7;$pos_referer=8;$pos_agent=9;
-			$lastrequiredfield=9;
+			$pos_rc=0;$pos_logname=1;$pos_date=2;$pos_method=3;$pos_url=4;$pos_code=5;$pos_size=6;$pos_referer=7;$pos_agent=8;
 		}
 		elsif ($LogFormat eq "2") {	# Same than "date time c-ip cs-username cs-method cs-uri-stem sc-status sc-bytes cs-version cs(User-Agent) cs(Referer)"
 			$PerlParsingFormat="([^\\s]+ [^\\s]+) ([^\\s]+) ([^\\s]+) ([^\\s]+) ([^\\s]+) ([\\d|-]+) ([\\d|-]+) [^\\s]+ ([^\\s]+) ([^\\s]+)";
-			$pos_date=1;$pos_rc=2;$pos_logname=3;$pos_method=4;$pos_url=5;$pos_code=6;$pos_size=7;$pos_agent=8;$pos_referer=9;
-			$lastrequiredfield=9;
+			$pos_date=0;$pos_rc=1;$pos_logname=2;$pos_method=3;$pos_url=4;$pos_code=5;$pos_size=6;$pos_agent=7;$pos_referer=8;
 		}
 		elsif ($LogFormat eq "3") {	# Same than "%h %l %u %t \"%r\" %>s %b"
 			$PerlParsingFormat="([^\\t]*\\t[^\\t]*)\\t([^\\t]*)\\t([\\d]*)\\t([^\\t]*)\\t([^\\t]*)\\t([^\\t]*)\\t[^\\t]*\\t.*:([^\\t]*)\\t([\\d]*)";
-			$pos_date=1;$pos_method=2;$pos_code=3;$pos_rc=4;$pos_agent=5;$pos_referer=6;$pos_url=7;$pos_size=8;
-			$lastrequiredfield=8;
+			$pos_date=0;$pos_method=1;$pos_code=2;$pos_rc=3;$pos_agent=4;$pos_referer=5;$pos_url=6;$pos_size=7;
 		}
 		elsif ($LogFormat eq "4") {
 			$PerlParsingFormat="([^\\s]+) [^\\s]+ ([^\\s]+) \\[([^\\s]+) [^\\s]+\\] \\\"([^\\s]+) ([^\\s]+) [^\\\"]+\\\" ([\\d|-]+) ([\\d|-]+)";
-			$pos_rc=1;$pos_logname=2;$pos_date=3;$pos_method=4;$pos_url=5;$pos_code=6;$pos_size=7;
-			$lastrequiredfield=7;
+			$pos_rc=0;$pos_logname=1;$pos_date=2;$pos_method=3;$pos_url=4;$pos_code=5;$pos_size=6;
 		}
 		elsif ($LogFormat eq "5") {	# Same than "c-ip cs-username c-agent sc-authenticated date time s-svcname s-computername cs-referred r-host r-ip r-port time-taken cs-bytes sc-bytes cs-protocol cs-transport s-operation cs-uri cs-mime-type s-object-source sc-status s-cache-info"
 			$PerlParsingFormat="([^\\t]*)\\t([^\\t]*)\\t([^\\t]*)\\t[^\\t]*\\t([^\\t]*\\t[^\\t]*)\\t[^\\t]*\\t[^\\t]*\\t([^\\t]*)\\t[^\\t]*\\t[^\\t]*\\t[^\\t]*\\t[^\\t]*\\t[^\\t]*\\t([^\\t]*)\\t[^\\t]*\\t[^\\t]*\\t([^\\t]*)\\t([^\\t]*)\\t[^\\t]*\\t[^\\t]*\\t([^\\t]*)\\t[^\\t]*";
-			$pos_rc=1;$pos_logname=2;$pos_agent=3;$pos_date=4;$pos_referer=5;$pos_size=6;$pos_method=7;$pos_url=8;$pos_code=9;
-			$lastrequiredfield=9;
+			$pos_rc=0;$pos_logname=1;$pos_agent=2;$pos_date=3;$pos_referer=4;$pos_size=5;$pos_method=6;$pos_url=7;$pos_code=8;
 		}
 	}
 	else {							# Personalized log format
@@ -3247,7 +3344,7 @@ if ($UpdateStats) {
 		if ($Debug) { debug("LogFormatString=$LogFormatString"); }
 		# Scan $LogFormatString to found all required fields and generate PerlParsingFormat
 		my @fields = split(/\s+/,$LogFormatString); # make array of entries
-		my $i = 1;
+		my $i = 0;
 		foreach my $f (@fields) {
 			# Add separator for next field
 			if ($PerlParsingFormat) { $PerlParsingFormat.=$LogSeparator; }
@@ -3355,15 +3452,13 @@ if ($UpdateStats) {
 			}
 		}
 		if (! $PerlParsingFormat) { error("Error: No recognized format tag in personalized LogFormat string"); }
-		$lastrequiredfield=--$i;
-		if ($Debug) { debug("lastrequiredfield=$lastrequiredfield"); }
 	}
-	if (! $pos_rc) { error("Error: Your personalized LogFormat does not include all fields required by AWStats (Add \%host in your LogFormat string)."); }
-	if (! $pos_date) { error("Error: Your personalized LogFormat does not include all fields required by AWStats (Add \%time1 or \%time2 in your LogFormat string)."); }
-	if (! $pos_method) { error("Error: Your personalized LogFormat does not include all fields required by AWStats (Add \%methodurl or \%method in your LogFormat string)."); }
-	if (! $pos_url) { error("Error: Your personalized LogFormat does not include all fields required by AWStats (Add \%methodurl or \%url in your LogFormat string)."); }
-	if (! $pos_code) { error("Error: Your personalized LogFormat does not include all fields required by AWStats (Add \%code in your LogFormat string)."); }
-	if (! $pos_size) { error("Error: Your personalized LogFormat does not include all fields required by AWStats (Add \%bytesd in your LogFormat string)."); }
+	if ($pos_rc < 0) { error("Error: Your personalized LogFormat does not include all fields required by AWStats (Add \%host in your LogFormat string)."); }
+	if ($pos_date < 0) { error("Error: Your personalized LogFormat does not include all fields required by AWStats (Add \%time1 or \%time2 in your LogFormat string)."); }
+	if ($pos_method < 0) { error("Error: Your personalized LogFormat does not include all fields required by AWStats (Add \%methodurl or \%method in your LogFormat string)."); }
+	if ($pos_url < 0) { error("Error: Your personalized LogFormat does not include all fields required by AWStats (Add \%methodurl or \%url in your LogFormat string)."); }
+	if ($pos_code < 0) { error("Error: Your personalized LogFormat does not include all fields required by AWStats (Add \%code in your LogFormat string)."); }
+	if ($pos_size < 0) { error("Error: Your personalized LogFormat does not include all fields required by AWStats (Add \%bytesd in your LogFormat string)."); }
 	if ($Debug) { debug("PerlParsingFormat is $PerlParsingFormat"); }
 
 
@@ -3393,6 +3488,10 @@ if ($UpdateStats) {
 		$LastLine{"000000"}=0;
 	}
 
+	# Load DNS Cache File
+	#------------------------------------------
+	if ($DNSLookup) { &Read_DNS_Cache_File(); }
+
 	# PROCESSING CURRENT LOG
 	#------------------------------------------
 	if ($Debug) { debug("Start of processing log file (monthtoprocess=$monthtoprocess, yeartoprocess=$yeartoprocess)"); }
@@ -3405,7 +3504,6 @@ if ($UpdateStats) {
 
 	my @field=();
 	my $counter=0;
-#	my $PreviousHost="";
 	# Reset counter for benchmark (first call to GetDelaySinceStart)
 	GetDelaySinceStart(1);
 	if ($ShowSteps) { print "Phase 1 : First bypass old records\n"; }
@@ -3413,28 +3511,29 @@ if ($UpdateStats) {
 	{
 		$NbOfLinesRead++;
 		chomp $_; s/\r$//;
-
+		
 		if ($ShowSteps && ($NbOfLinesRead % $NBOFLINESFORBENCHMARK == 0)) {
 			my $delay=GetDelaySinceStart(0);
 			print "$NbOfLinesRead lines processed ($delay ms, ".int(1000*$NbOfLinesRead/($delay>0?$delay:1))." lines/second)\n";
 		}
 
 		# Parse line record to get all required fields
-		if (! /^$PerlParsingFormat/) {	# !!!!!!!!!
+		@field=map(/^$PerlParsingFormat/,$_);
+
+		if (! @field) {
 			$NbOfLinesCorrupted++;
 			if ($ShowCorrupted && ($_ =~ /^#/ || $_ =~ /^!/ || $_ =~ /^\s*$/)) { print "Corrupted record line $NbOfLinesRead (comment or blank line)\n"; }
 			if ($ShowCorrupted && $_ !~ /^\s*$/) { print "Corrupted record line $NbOfLinesRead (record format does not match LogFormat parameter): $_\n"; }
 			if ($NbOfLinesRead >= $NbOfLinesForCorruptedLog && $NbOfLinesCorrupted == $NbOfLinesRead) { error("Format error",$_,$LogFile); }	# Exit with format error
 			next;
 		}
-		foreach my $i (1..$lastrequiredfield) { $field[$i]=$$i; }	# !!!!!
 
 		if ($Debug) { debug(" Correct format line $NbOfLinesRead : host=\"$field[$pos_rc]\", logname=\"$field[$pos_logname]\", date=\"$field[$pos_date]\", method=\"$field[$pos_method]\", url=\"$field[$pos_url]\", code=\"$field[$pos_code]\", size=\"$field[$pos_size]\", referer=\"$field[$pos_referer]\", agent=\"$field[$pos_agent]\"",3); }
 		#if ($Debug) { debug("$field[$pos_vh] - $field[$pos_gzipin] - $field[$pos_gzipout] - $field[$pos_gzipratio]\n"); }
 
 		# Check virtual host name
 		#----------------------------------------------------------------------
-		if ($pos_vh && $field[$pos_vh] ne $SiteDomain) {
+		if ($pos_vh>=0 && $field[$pos_vh] ne $SiteDomain) {
 			$NbOfLinesDropped++;
 			if ($ShowDropped) { print "Dropped record (virtual hostname '$field[$pos_vh]' does not match SiteDomain='$SiteDomain' parameter): $_\n"; }
 			next;
@@ -3579,7 +3678,9 @@ if ($UpdateStats) {
 		# Robot ?
 		#-------------------------------------------------------------------------
 		if ($LevelForRobotsDetection) {
-			if (!$TmpRobot{$UserAgent}) {	# TmpRobot is a temporary hash table to increase speed
+
+			my $uarobot=$TmpRobot{$UserAgent};
+			if (! $uarobot) {
 				# If made on each record -> -1300 rows/seconds
 				my $foundrobot=0;
 				# study $UserAgent
@@ -3590,21 +3691,22 @@ if ($UpdateStats) {
 						last;
 					}
 				}
-				if (! $foundrobot) {						# Last time, we won't search if robot or not. We know it's not.
+				if (! $foundrobot) {					# Last time, we won't search if robot or not. We know it's not.
 					$TmpRobot{$UserAgent}="-";
 				}
 			}
 			# If robot, we stop here
-			if ($TmpRobot{$UserAgent} ne "-") {
-				if ($Debug) { debug("UserAgent $UserAgent contains robot ID '$TmpRobot{$UserAgent}'",2); }
-				$_robot_h{$TmpRobot{$UserAgent}}++; $_robot_l{$TmpRobot{$UserAgent}}=$timerecord;
+			if ($uarobot ne "-") {
+				if ($Debug) { debug("UserAgent $UserAgent contains robot ID '$uarobot'",2); }
+				$_robot_h{$uarobot}++; $_robot_l{$uarobot}=$timerecord;
 				next;
 			}
+
 		}
 
 		# Canonize and clean target URL and referrer URL. Possible URL syntax for $field[$pos_url]:
-		# /mypage.ext?param=x#aaa
-		# /mypage.ext#aaa
+		# /mydir/mypage.ext?param1=x&param2=y#aaa
+		# /mydir/mypage.ext#aaa
 		# /
 		my $urlwithnoquery;
 		if ($URLWithQuery) {
@@ -3634,7 +3736,7 @@ if ($UpdateStats) {
 		$_filetypes_h{$extension}++;
 		$_filetypes_k{$extension}+=int($field[$pos_size]);
 		# Compression
-		if ($pos_gzipin && $field[$pos_gzipin]) {	# If in and out in log
+		if ($pos_gzipin>=0 && $field[$pos_gzipin]) {	# If in and out in log
 			my ($notused,$in)=split(/:/,$field[$pos_gzipin]);
 			my ($notused1,$out,$notused2)=split(/:/,$field[$pos_gzipout]);
 			if ($out) {
@@ -3642,7 +3744,7 @@ if ($UpdateStats) {
 				$_filetypes_gz_out{$extension}+=$out;
 			}
 		}
-		elsif ($pos_gzipratio && ($field[$pos_gzipratio] =~ /(\d*)pct./)) {
+		elsif ($pos_gzipratio>=0 && ($field[$pos_gzipratio] =~ /(\d*)pct./)) {
 			$_filetypes_gz_in{$extension}+=$field[$pos_size];
 			$_filetypes_gz_out{$extension}+=int($field[$pos_size]*(1-$1/100));	# out size calculated from pct.
 		}
@@ -3681,46 +3783,52 @@ if ($UpdateStats) {
 		# Analyze: IP-address
 		#--------------------
 		my $Host=$field[$pos_rc];
-		my $HostIsIp=0;
-		if ($DNSLookup) {			# Doing DNS lookup
+		my $HostResolved="";
+		if ($DNSLookup) {			# DNS lookup is 1 or 2
 			if ($Host =~ /^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/) {
-				$HostIsIp=1;
-				if (! $TmpDNSLookup{$Host}) {		# if $Host has not been resolved yet
-					if ($MyDNSTable{$Host}) {
-						$TmpDNSLookup{$Host}=$MyDNSTable{$Host};
-						if ($Debug) { debug(" No need of reverse DNS lookup for $Host, found resolution in local MyDNSTable: $MyDNSTable{$Host}",4); }
-					}
-					else {
+				# Check in DNS cache file
+				$HostResolved=$MyDNSTable{$Host};
+				if ($HostResolved) {
+					if ($Debug) { debug(" DNS lookup asked for $Host found in DNS cache file: $HostResolved",4); }
+				}
+				elsif ($DNSLookup==1) {
+					# Check in DNS session cache
+					$HostResolved=$TmpDNSLookup{$Host};
+					if (! $HostResolved) {
 						if (&SkipDNSLookup($Host)) {
-							$TmpDNSLookup{$Host}="ip";
+							$HostResolved=$TmpDNSLookup{$Host}="ip";
 							if ($Debug) { debug(" No need of reverse DNS lookup for $Host, skipped at user request.",4); }
 						}
 						else {
 							my $lookupresult=gethostbyaddr(pack("C4",split(/\./,$Host)),AF_INET);	# This is very slow, may took 20 seconds
-							$TmpDNSLookup{$Host}=($lookupresult && IsAscii($lookupresult)?$lookupresult:"ip");
-							if ($Debug) { debug(" Reverse DNS lookup for $Host done: $TmpDNSLookup{$Host}",4); }
+							$HostResolved=$TmpDNSLookup{$Host}=(lookupresult && IsAscii($lookupresult)?$lookupresult:"ip");
+							if ($Debug) { debug(" Reverse DNS lookup for $Host done: $HostResolved",4); }
 						}
 					}
 				}
+				else {
+					$HostResolved="ip";					
+					if ($Debug) { debug(" DNS lookup asked for $Host but not found in DNS cache file.",4); }
+				}
 			}
 			else {
-				if ($Debug) { debug(" DNS lookup asked for $Host but this is not an IP address.",3); }
+				if ($Debug) { debug(" DNS lookup asked for $Host but this is not an IP address.",4); }
 				$DNSLookupAlreadyDone=$LogFile;
 			}
 		}
 		else {
-			if ($Host =~ /^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/) { $HostIsIp=1; }
-			if ($Debug) { debug(" No DNS lookup asked.",3); }
+			if ($Host =~ /^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/) { $HostResolved="ip"; }
+			if ($Debug) { debug(" No DNS lookup asked.",4); }
 		}
 
 		my $Domain="ip";
-		if ($HostIsIp && ((! $TmpDNSLookup{$Host}) || ($TmpDNSLookup{$Host} eq "ip"))) {
-			# Here $Host = IP address not resolved
+		if ($HostResolved eq "ip") {
+			# $Host is an IP address and is not resolved
 			$_ = $Host;
 		}
 		else {
-			# Here $TmpDNSLookup{$Host} is $Host resolved or undefined if $Host was already a host name
-			$_ = ($TmpDNSLookup{$Host}?$TmpDNSLookup{$Host}:$Host);
+			# $Host has been resolved or was already a host name
+			$_ = ($HostResolved?$HostResolved:$Host);
 			tr/A-Z/a-z/;
 			if (/\.(\w+)$/) { $Domain=$1; }
 		}
@@ -3759,11 +3867,8 @@ if ($UpdateStats) {
 				$_host_u{$_}=$field[$pos_url];
 			}
 		}
-#		if ($_ ne ${PreviousHost} && ! $_host_h{$_}) { $MonthHostsUnknown{$yearmonthtoprocess}++; }
 		if (! $_host_h{$_}++) { $MonthHostsUnknown{$yearmonthtoprocess}++; }
-#		$_host_h{$_}++;
 		$_host_k{$_}+=$field[$pos_size];
-#		$PreviousHost=$_;
 
 		# Count top-level domain
 		if ($PageBool) { $_domener_p{$Domain}++; }
@@ -3776,7 +3881,8 @@ if ($UpdateStats) {
 
 				# Analyze: Browser
 				#-----------------
-				if (! $TmpBrowser{$UserAgent}) {
+				my $uabrowser=$TmpBrowser{$UserAgent};
+				if (! $uabrowser) {
 					my $found=0;
 					# IE ? (For higher speed, we start with IE, the most often used. This avoid other tests if found)
 					if (($UserAgent =~ /msie/) && ($UserAgent !~ /webtv/) && ($UserAgent !~ /omniweb/) && ($UserAgent !~ /opera/)) {
@@ -3821,10 +3927,12 @@ if ($UpdateStats) {
 				}
 				else {
 					# TODO Do not parse version (do it in output only). This will increase features and reduce speed.
-
-					if ($TmpBrowser{$UserAgent} =~ /^msie_(\d)/) { $_browser_h{"msie"}++; $_msiever_h[$1]++; }
-					elsif ($TmpBrowser{$UserAgent} =~ /^netscape_(\d)/) { $_browser_h{"netscape"}++; $_nsver_h[$1]++; }
-					else { $_browser_h{$TmpBrowser{$UserAgent}}++; }
+					if ($uabrowser =~ /^msie_(\d)/) { $_browser_h{"msie"}++; $_msiever_h[$1]++; }
+					elsif ($uabrowser =~ /^netscape_(\d)/) { $_browser_h{"netscape"}++; $_nsver_h[$1]++; }
+					else {
+						$_browser_h{$uabrowser}++;
+						if ($uabrowser eq "Unknown") { $_unknownrefererbrowser_l{$field[$pos_agent]}=$timerecord; }
+					}
 				}
 
 			}
@@ -3833,7 +3941,8 @@ if ($UpdateStats) {
 
 				# Analyze: OS
 				#------------
-				if (! $TmpOS{$UserAgent}) {
+				my $uaos=$TmpOS{$UserAgent};
+				if (! $uaos) {
 					my $found=0;
 					# in OSHashID list ?
 					foreach my $key (@OSSearchIDOrder) {	# Search ID in order of OSSearchIDOrder
@@ -3852,7 +3961,8 @@ if ($UpdateStats) {
 					}
 				}
 				else {
-					$_os_h{$TmpOS{$UserAgent}}++;
+					$_os_h{$uaos}++;
+					if ($uaos eq "Unknown") { $_unknownreferer_l{$field[$pos_agent]}=$timerecord; }
 				}
 
 			}
