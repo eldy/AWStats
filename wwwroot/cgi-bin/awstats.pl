@@ -518,7 +518,14 @@ use vars qw/ @Message /;
 'Worm/Virus attacks',
 'Add to favourites',
 'Days of month',
-'Miscellanous'
+'Miscellanous',
+'Browsers with Java support',
+'Browsers with Macromedia Director Support',
+'Browsers with Flash Support',
+'Browsers with Real audio playing support',
+'Browsers with Quictime audio playing support',
+'Browsers with Windows Media audio playing support',
+'Browsers with PDF support',
 );
 
 
@@ -8845,8 +8852,11 @@ if (scalar keys %HTMLOutput) {
 			&tab_head("$title",19);
 			print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[139]</TH>";
 			print "<TH width=100>&nbsp</TH>";
-			print "<TH width=80>&nbsp</TH>";
+			print "<TH width=100>&nbsp</TH>";
 			print "</TR>\n";
+			my %label=('AddToFavourites'=>$Message[137],'JavaEnabled'=>$Message[140],'DirectorSupport'=>$Message[141],
+			'FlashSupport'=>$Message[142],'RealPlayerSupport'=>$Message[143],'QuickTimeSupport'=>$Message[144],
+			'MediaPlayerSupport'=>$Message[145],'PDFSupport'=>$Message[146]);
 			foreach my $key (@MiscListOrder) {
 				my $total=0;
 				my $p;
@@ -8855,10 +8865,10 @@ if (scalar keys %HTMLOutput) {
 				if ($MiscListCalc{$key} eq 'hm') { $total=$_misc_h{'TotalMisc'}||0; }
 				if ($total) { $p=int($_misc_h{$key}/$total*1000)/10; }
 				print "<TR>";
-				print "<TD CLASS=AWS>$key</TD>";
+				print "<TD CLASS=AWS>".$label{$key}."</TD>";
 				if ($MiscListCalc{$key} eq 'v') { print "<TD>".int($_misc_h{$key}||0)." / $total $Message[12]</TD>"; }
 				if ($MiscListCalc{$key} eq 'u') { print "<TD>".int($_misc_h{$key}||0)." / $total $Message[18]</TD>"; }
-				if ($MiscListCalc{$key} eq 'hm') { print "<TD>&nbsp;</TD>"; }
+				if ($MiscListCalc{$key} eq 'hm') { print "<TD>-</TD>"; }
 				print "<TD>".($total?"$p %":"&nbsp;")."</TD>";
 				print "</TR>\n";
 			}
