@@ -1,3 +1,4 @@
+<!-- Polish tooltips message file -->
 <!-- $Revision$ - $Date$ -->
 <DIV CLASS="CTooltip" ID="tt1">
 Wizyty ka¿dego <b>nowego go¶cia</b>, który ogl±da³ stronê i nie ³±czy³ siê z ni± przez ostatnie <b>#VisitTimeOut# mn</b>.
@@ -32,13 +33,28 @@ Ta kolumna pokazuje listê najczê¶ciej u¿ywanych <b>s³ów kluczowych</b>, dziêki k
 Roboty s± <b>programami sieciowymi</b> skanuj±cymi strony w celu zebrania/aktualizacji danych (np. s³owa kluczowe do wyszukiwarek), lub sprawdzaj±cymi czy strona nadal istnieje w sieci.<br>
 #PROG# rozró¿nia obecnie <b>#RobotArray#</b> robów.
 </DIV>
+<DIV CLASS="CTooltip" ID="tt17">
+Wszystkie statystyki bazuj± na czasie serwera.<br>
+</DIV>
+<DIV CLASS="CTooltip" ID="tt18">
+Here, reported data are: <b>average values</b> (calculated from all data between the first and last visit)
+</DIV>
+<DIV CLASS="CTooltip" ID="tt19">
+Here, reported data are: <b>cumulative sums</b> (calculated from all data between the first and last visit)
+
+</DIV>
+<DIV CLASS="CTooltip" ID="tt20">
+Pewne <b>d³ugo¶ci wizyt</b> s± podane jako nieznae, gdy¿ nie zawsze mog± zostaæ obliczone. Najczê¶ciej wynika to z:<BR>
+- Wizyta jeszcze trwa³a podczas aktualizacji statystyki,<BR> 
+- Wizyta rozpoczê³a siê po 23:00 ostatniego dnia miesi±ca (ze wzglêdów technicznych #PROG# nie przelicza d³ugo¶ci takich sesji)
+</DIV>
 
 <DIV CLASS="CTooltip" ID="tt201"> Zlecenie POST zosta³o zrealizowane pomy¶lnie. </DIV>
-<DIV CLASS="CTooltip" ID="tt202"> ¯±danie zosta³o odebrane poprawnie, lecz jeszcze siê nie zakoñczy³o. </DIV>
+<DIV CLASS="CTooltip" ID="tt202"> ¯±danie zosta³o odebrane poprawnie, lecz bêdzie pó¼niej zrealizowane przez serwer. </DIV>
 <DIV CLASS="CTooltip" ID="tt204"> Serwer przetworzy³ ¿±danie, lecz nie posiada ¿adnych danych do wys³ania. </DIV>
 <DIV CLASS="CTooltip" ID="tt206"> Czê¶ciowa zawarto¶æ.</DIV>
 <DIV CLASS="CTooltip" ID="tt301"> Dokument zosta³ przeniesiony pod inny adres.</DIV>
-<DIV CLASS="CTooltip" ID="tt302"> Dokument zosta³ czasowo przeniesiony pod iiny adres.</DIV>
+<DIV CLASS="CTooltip" ID="tt302"> Dokument zosta³ czasowo przeniesiony pod inny adres.</DIV>
 <DIV CLASS="CTooltip" ID="tt400"> Zlecenie by³o b³êdne, lub niemo¿liwe do zrealizowania przez serwer.<BR>B³±d powstaje wtedy, kiedy serwer WWW otrzymuje do wykonania instrukcjê, której nie rozumie.</DIV>
 <DIV CLASS="CTooltip" ID="tt401"> B³±d autoryzacji. Strona wymaga podania has³a i loginu - b³±d pokazuje siê wtedy, gdy które¶ z tych danych siê nie zgadza lub zosta³y podane niew³a¶ciwiwe.<BR>Je¶li liczba ta jest du¿a, jest to sygna³ dla webmastera, i¿ kto¶ próbuje z³amaæ has³o do strony nim zabezpieczonej.</DIV>
 <DIV CLASS="CTooltip" ID="tt403"> B³±d wystêpuje wtedy, gdy katalog/strona do którego siê odwo³ywano nie ma ustawionych w³a¶ciwych praw dostêpu, lub prawa te nie pozwalaj± na obejrzenie zawarto¶ci katalogu/strony.</DIV>
