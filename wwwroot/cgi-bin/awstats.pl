@@ -1443,7 +1443,7 @@ sub Check_Config {
 	}
 	# Optional appearance setup section
 	if ($MaxRowsInHTMLOutput !~ /^\d+/ || $MaxRowsInHTMLOutput<1)     { $MaxRowsInHTMLOutput=1000; }
-	if ($ShowMenu !~ /[0-1]/)                     	{ $ShowMenu=1; }
+	if ($ShowMenu !~ /[01]/)                     	{ $ShowMenu=1; }
 	if ($ShowMonthStats !~ /[01UVPHB]/)         	{ $ShowMonthStats='UVPHB'; }
 	if ($ShowDaysOfMonthStats !~ /[01VPHB]/)    	{ $ShowDaysOfMonthStats='VPHB'; }
 	if ($ShowDaysOfWeekStats !~ /[01PHBL]/)        	{ $ShowDaysOfWeekStats='PHBL'; }
@@ -1455,23 +1455,23 @@ sub Check_Config {
 	if ($ShowWormsStats !~ /[01HL]/)            	{ $ShowWormsStats='HL'; }
 	if ($ShowEMailSenders !~ /[01HBML]/)       		{ $ShowEMailSenders=0; }
 	if ($ShowEMailReceivers !~ /[01HBML]/)         	{ $ShowEMailReceivers=0; }
-	if ($ShowSessionsStats !~ /[0-1]/)             	{ $ShowSessionsStats=1; }
+	if ($ShowSessionsStats !~ /[01]/)             	{ $ShowSessionsStats=1; }
 	if ($ShowPagesStats !~ /[01PBEX]/i)           	{ $ShowPagesStats='PBEX'; }
 	if ($ShowFileTypesStats !~ /[01HBC]/)         	{ $ShowFileTypesStats='HB'; }
-	if ($ShowFileSizesStats !~ /[0-1]/)           	{ $ShowFileSizesStats=1; }
-	if ($ShowOSStats !~ /[0-1]/)                  	{ $ShowOSStats=1; }
-	if ($ShowBrowsersStats !~ /[0-1]/)            	{ $ShowBrowsersStats=1; }
-	if ($ShowScreenSizeStats !~ /[0-1]/)           	{ $ShowScreenSizeStats=0; }
+	if ($ShowFileSizesStats !~ /[01]/)           	{ $ShowFileSizesStats=1; }
+	if ($ShowOSStats !~ /[01]/)                  	{ $ShowOSStats=1; }
+	if ($ShowBrowsersStats !~ /[01]/)            	{ $ShowBrowsersStats=1; }
+	if ($ShowScreenSizeStats !~ /[01]/)           	{ $ShowScreenSizeStats=0; }
 	if ($ShowOriginStats !~ /[01PH]/)              	{ $ShowOriginStats='PH'; }
-	if ($ShowKeyphrasesStats !~ /[0-1]/)          	{ $ShowKeyphrasesStats=1; }
-	if ($ShowKeywordsStats !~ /[0-1]/)            	{ $ShowKeywordsStats=1; }
-	if ($ShowMiscStats !~ /[0-1]/)             	    { $ShowMiscStats=1; }
-	if ($ShowHTTPErrorsStats !~ /[0-1]/)          	{ $ShowHTTPErrorsStats=1; }
-	if ($ShowSMTPErrorsStats !~ /[0-1]/)          	{ $ShowSMTPErrorsStats=0; }
-	if ($AddDataArrayMonthStats !~ /[0-1]/)        	{ $AddDataArrayMonthStats=1; }
-	if ($AddDataArrayShowDaysOfMonthStats !~ /[0-1]/)       { $AddDataArrayShowDaysOfMonthStats=1; }
-	if ($AddDataArrayShowDaysOfWeekStats !~ /[0-1]/)       	{ $AddDataArrayShowDaysOfWeekStats=1; }
-	if ($AddDataArrayShowHoursStats !~ /[0-1]/)          	{ $AddDataArrayShowHoursStats=1; }
+	if ($ShowKeyphrasesStats !~ /[01]/)          	{ $ShowKeyphrasesStats=1; }
+	if ($ShowKeywordsStats !~ /[01]/)            	{ $ShowKeywordsStats=1; }
+	if ($ShowMiscStats !~ /[01AJDFRQWP]/)     	    { $ShowMiscStats='AJDFRQWP'; }
+	if ($ShowHTTPErrorsStats !~ /[01]/)          	{ $ShowHTTPErrorsStats=1; }
+	if ($ShowSMTPErrorsStats !~ /[01]/)          	{ $ShowSMTPErrorsStats=0; }
+	if ($AddDataArrayMonthStats !~ /[01]/)        	{ $AddDataArrayMonthStats=1; }
+	if ($AddDataArrayShowDaysOfMonthStats !~ /[01]/)       { $AddDataArrayShowDaysOfMonthStats=1; }
+	if ($AddDataArrayShowDaysOfWeekStats !~ /[01]/)       	{ $AddDataArrayShowDaysOfWeekStats=1; }
+	if ($AddDataArrayShowHoursStats !~ /[01]/)          	{ $AddDataArrayShowHoursStats=1; }
 	my @maxnboflist=('Domain','HostsShown','LoginShown','RobotShown','WormsShown','PageShown','OsShown','BrowsersShown','ScreenSizesShown','RefererShown','KeyphrasesShown','KeywordsShown','EMailsShown');
 	my @maxnboflistdefaultval=(10,10,10,10,10,10,10,10,5,10,10,10,20);
 	foreach my $i (0..(@maxnboflist-1)) {
@@ -1482,38 +1482,38 @@ sub Check_Config {
 	foreach my $i (0..(@minhitlist-1)) {
 		if (! $MinHit{$minhitlist[$i]} || $MinHit{$minhitlist[$i]} !~ /^\d+$/ || $MinHit{$minhitlist[$i]}<1) 	{ $MinHit{$minhitlist[$i]}=$minhitlistdefaultval[$i]; }
 	}
-	if ($FirstDayOfWeek !~ /[0-1]/)               	{ $FirstDayOfWeek=1; }
-	if ($UseFramesWhenCGI !~ /[0-1]/)  				{ $UseFramesWhenCGI=0; }
-	if ($DetailedReportsOnNewWindows !~ /[0-2]/)  	{ $DetailedReportsOnNewWindows=1; }
-	if ($ShowLinksOnUrl !~ /[0-1]/)               	{ $ShowLinksOnUrl=1; }
+	if ($FirstDayOfWeek !~ /[01]/)               	{ $FirstDayOfWeek=1; }
+	if ($UseFramesWhenCGI !~ /[01]/)  				{ $UseFramesWhenCGI=0; }
+	if ($DetailedReportsOnNewWindows !~ /[012]/)  	{ $DetailedReportsOnNewWindows=1; }
+	if ($ShowLinksOnUrl !~ /[01]/)               	{ $ShowLinksOnUrl=1; }
 	if ($MaxLengthOfURL !~ /^\d+/ || $MaxLengthOfURL<1) { $MaxLengthOfURL=72; }
-	if ($ShowLinksToWhoIs !~ /[0-1]/)              	{ $ShowLinksToWhoIs=0; }
+	if ($ShowLinksToWhoIs !~ /[01]/)              	{ $ShowLinksToWhoIs=0; }
 	$Logo||='awstats_logo1.png';
 	$LogoLink||='http://awstats.sourceforge.net';
 	if ($BarWidth !~ /^\d+/ || $BarWidth<1) 		{ $BarWidth=260; }
 	if ($BarHeight !~ /^\d+/ || $BarHeight<1)		{ $BarHeight=90; }
-	$color_Background =~ s/#//g; if ($color_Background !~ /^[0-9|A-Z]+$/i)           { $color_Background='FFFFFF';	}
-	$color_TableBGTitle =~ s/#//g; if ($color_TableBGTitle !~ /^[0-9|A-Z]+$/i)       { $color_TableBGTitle='CCCCDD'; }
-	$color_TableTitle =~ s/#//g; if ($color_TableTitle !~ /^[0-9|A-Z]+$/i)           { $color_TableTitle='000000'; }
-	$color_TableBG =~ s/#//g; if ($color_TableBG !~ /^[0-9|A-Z]+$/i)                 { $color_TableBG='CCCCDD'; }
-	$color_TableRowTitle =~ s/#//g; if ($color_TableRowTitle !~ /^[0-9|A-Z]+$/i)     { $color_TableRowTitle='FFFFFF'; }
-	$color_TableBGRowTitle =~ s/#//g; if ($color_TableBGRowTitle !~ /^[0-9|A-Z]+$/i) { $color_TableBGRowTitle='ECECEC'; }
-	$color_TableBorder =~ s/#//g; if ($color_TableBorder !~ /^[0-9|A-Z]+$/i)         { $color_TableBorder='ECECEC'; }
-	$color_text =~ s/#//g; if ($color_text !~ /^[0-9|A-Z]+$/i)           			 { $color_text='000000'; }
-	$color_textpercent =~ s/#//g; if ($color_textpercent !~ /^[0-9|A-Z]+$/i)  		 { $color_textpercent='606060'; }
-	$color_titletext =~ s/#//g; if ($color_titletext !~ /^[0-9|A-Z]+$/i) 			 { $color_titletext='000000'; }
-	$color_weekend =~ s/#//g; if ($color_weekend !~ /^[0-9|A-Z]+$/i)     			 { $color_weekend='EAEAEA'; }
-	$color_link =~ s/#//g; if ($color_link !~ /^[0-9|A-Z]+$/i)           			 { $color_link='0011BB'; }
-	$color_hover =~ s/#//g; if ($color_hover !~ /^[0-9|A-Z]+$/i)         			 { $color_hover='605040'; }
-	$color_other =~ s/#//g; if ($color_other !~ /^[0-9|A-Z]+$/i)         			 { $color_other='666688'; }
-	$color_u =~ s/#//g; if ($color_u !~ /^[0-9|A-Z]+$/i)                 			 { $color_u='FFB055'; }
-	$color_v =~ s/#//g; if ($color_v !~ /^[0-9|A-Z]+$/i)                 			 { $color_v='F8E880'; }
-	$color_p =~ s/#//g; if ($color_p !~ /^[0-9|A-Z]+$/i)                 			 { $color_p='4477DD'; }
-	$color_h =~ s/#//g; if ($color_h !~ /^[0-9|A-Z]+$/i)                 			 { $color_h='66F0FF'; }
-	$color_k =~ s/#//g; if ($color_k !~ /^[0-9|A-Z]+$/i)                 			 { $color_k='2EA495'; }
-	$color_s =~ s/#//g; if ($color_s !~ /^[0-9|A-Z]+$/i)                 			 { $color_s='8888DD'; }
-	$color_e =~ s/#//g; if ($color_e !~ /^[0-9|A-Z]+$/i)                 			 { $color_e='CEC2E8'; }
-	$color_x =~ s/#//g; if ($color_x !~ /^[0-9|A-Z]+$/i)                 			 { $color_x='C1B2E2'; }
+	$color_Background =~ s/#//g; if ($color_Background !~ /^[0-9|A-H]+$/i)           { $color_Background='FFFFFF';	}
+	$color_TableBGTitle =~ s/#//g; if ($color_TableBGTitle !~ /^[0-9|A-H]+$/i)       { $color_TableBGTitle='CCCCDD'; }
+	$color_TableTitle =~ s/#//g; if ($color_TableTitle !~ /^[0-9|A-H]+$/i)           { $color_TableTitle='000000'; }
+	$color_TableBG =~ s/#//g; if ($color_TableBG !~ /^[0-9|A-H]+$/i)                 { $color_TableBG='CCCCDD'; }
+	$color_TableRowTitle =~ s/#//g; if ($color_TableRowTitle !~ /^[0-9|A-H]+$/i)     { $color_TableRowTitle='FFFFFF'; }
+	$color_TableBGRowTitle =~ s/#//g; if ($color_TableBGRowTitle !~ /^[0-9|A-H]+$/i) { $color_TableBGRowTitle='ECECEC'; }
+	$color_TableBorder =~ s/#//g; if ($color_TableBorder !~ /^[0-9|A-H]+$/i)         { $color_TableBorder='ECECEC'; }
+	$color_text =~ s/#//g; if ($color_text !~ /^[0-9|A-H]+$/i)           			 { $color_text='000000'; }
+	$color_textpercent =~ s/#//g; if ($color_textpercent !~ /^[0-9|A-H]+$/i)  		 { $color_textpercent='606060'; }
+	$color_titletext =~ s/#//g; if ($color_titletext !~ /^[0-9|A-H]+$/i) 			 { $color_titletext='000000'; }
+	$color_weekend =~ s/#//g; if ($color_weekend !~ /^[0-9|A-H]+$/i)     			 { $color_weekend='EAEAEA'; }
+	$color_link =~ s/#//g; if ($color_link !~ /^[0-9|A-H]+$/i)           			 { $color_link='0011BB'; }
+	$color_hover =~ s/#//g; if ($color_hover !~ /^[0-9|A-H]+$/i)         			 { $color_hover='605040'; }
+	$color_other =~ s/#//g; if ($color_other !~ /^[0-9|A-H]+$/i)         			 { $color_other='666688'; }
+	$color_u =~ s/#//g; if ($color_u !~ /^[0-9|A-H]+$/i)                 			 { $color_u='FFB055'; }
+	$color_v =~ s/#//g; if ($color_v !~ /^[0-9|A-H]+$/i)                 			 { $color_v='F8E880'; }
+	$color_p =~ s/#//g; if ($color_p !~ /^[0-9|A-H]+$/i)                 			 { $color_p='4477DD'; }
+	$color_h =~ s/#//g; if ($color_h !~ /^[0-9|A-H]+$/i)                 			 { $color_h='66F0FF'; }
+	$color_k =~ s/#//g; if ($color_k !~ /^[0-9|A-H]+$/i)                 			 { $color_k='2EA495'; }
+	$color_s =~ s/#//g; if ($color_s !~ /^[0-9|A-H]+$/i)                 			 { $color_s='8888DD'; }
+	$color_e =~ s/#//g; if ($color_e !~ /^[0-9|A-H]+$/i)                 			 { $color_e='CEC2E8'; }
+	$color_x =~ s/#//g; if ($color_x !~ /^[0-9|A-H]+$/i)                 			 { $color_x='C1B2E2'; }
 
 	# Correct param if default value is asked
 	if ($ShowMonthStats eq '1')      	{ $ShowMonthStats = 'UVPHB'; }
@@ -1530,6 +1530,7 @@ sub Check_Config {
 	if ($ShowPagesStats eq '1') 		{ $ShowPagesStats = 'PBEX'; }
 	if ($ShowFileTypesStats eq '1') 	{ $ShowFileTypesStats = 'HB'; }
 	if ($ShowOriginStats eq '1') 		{ $ShowOriginStats = 'PH'; }
+	if ($ShowMiscStats eq '1') 			{ $ShowMiscStats = 'AJDFRQWP'; }
 
 	# Convert extra sections data into @ExtraConditionType, @ExtraConditionTypeVal...
 	foreach my $extranum (1..@ExtraName-1) {
@@ -1646,9 +1647,10 @@ sub CheckSum {
 sub Read_Plugins {
 	# Check plugin files in common possible directories :
 	# Windows :                           		"${DIR}plugins" (plugins in same dir than awstats.pl)
+	# Redhat :                                  "/usr/local/awstats/wwwroot/cgi-bin/plugins"
 	# Debian package :                    		"/usr/share/awstats/plugins"
 	# Other possible directories :        		"./plugins"
-	my @PossiblePluginsDir=("${DIR}plugins","/usr/share/awstats/plugins","./plugins");
+	my @PossiblePluginsDir=("${DIR}plugins","./plugins","/usr/local/awstats/wwwroot/cgi-bin/plugins","/usr/share/awstats/plugins");
 
 	if ($Debug) { debug("Call to Read_Plugins with list: @PluginsToLoad"); }
 	foreach my $plugininfo (@PluginsToLoad) {
@@ -1658,7 +1660,7 @@ sub Read_Plugins {
 		$pluginfile =~ /([^\/\\]*)$/;
 		my $pluginname=$1;
 		if ($pluginname) {
-			if (! $PluginsLoaded{'init'}{"$pluginname"}) {		# Plugin already loaded
+			if (! $PluginsLoaded{'init'}{"$pluginname"}) {		# Plugin not already loaded
 				foreach my $dir (@PossiblePluginsDir) {
 					my $searchdir=$dir;
 					if ($searchdir && (!($searchdir =~ /\/$/)) && (!($searchdir =~ /\\$/)) ) { $searchdir .= "/"; }
@@ -2956,7 +2958,7 @@ sub Read_History_With_TmpUpdate {
 		# This can change some values for day, sider and session sections
 		if ($Debug) { debug(" Processing data in 'wait' arrays",3); }
 		foreach my $key (keys %_waithost_e) {
-			if ($Debug) { debug("  Visit in 'wait' arrays is a new visit",4); }
+			if ($Debug) { debug("  Visit in 'wait' array for $key is a new visit",4); }
 			my $newtimehosts=($_waithost_s{$key}?$_waithost_s{$key}:$_host_s{$key});
 			my $newtimehostl=($_waithost_l{$key}?$_waithost_l{$key}:$_host_l{$key});
 			$_url_e{$_waithost_e{$key}}++;
@@ -8893,8 +8895,10 @@ if (scalar keys %HTMLOutput) {
 			print "</TR>\n";
 			my %label=('AddToFavourites'=>$Message[137],'JavaEnabled'=>$Message[140],'DirectorSupport'=>$Message[141],
 			'FlashSupport'=>$Message[142],'RealPlayerSupport'=>$Message[143],'QuickTimeSupport'=>$Message[144],
-			'MediaPlayerSupport'=>$Message[145],'PDFSupport'=>$Message[146]);
+			'WindowsMediaPlayerSupport'=>$Message[145],'PDFSupport'=>$Message[146]);
 			foreach my $key (@MiscListOrder) {
+				my $mischar=substr($key,0,1);
+				if ($ShowMiscStats !~ /$mischar/i) { next; }
 				my $total=0;
 				my $p;
 				if ($MiscListCalc{$key} eq 'v') { $total=$TotalVisits; }
