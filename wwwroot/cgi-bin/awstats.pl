@@ -82,7 +82,7 @@ $word, $yearcon, $yearfile, $yearmonthfile, $yeartoprocess) = ();
 %MonthBytes = %MonthHits = %MonthPages = %MonthUnique = %MonthVisits =
 %listofyears = %monthlib = %monthnum = ();
 
-$VERSION="3.1 (build 1)";
+$VERSION="3.1 (build 2)";
 $Lang="en";
 
 # Default value
@@ -146,6 +146,7 @@ $BarImageHorizontal_k = "barrehk.png";
 "northernlight\.","NorthernLight",
 "dmoz\.org","DMOZ",
 "search\.aol\.co","AOL",
+"www\.search\.com","Search.com",
 # Others
 "hotbot\.","Hotbot",
 "webcrawler\.","WebCrawler",
@@ -188,9 +189,10 @@ $BarImageHorizontal_k = "barrehk.png";
 "northernlight\.","qr=",
 "dmoz\.org","search=",
 "search\.aol\.co","query=",
+"www\.search\.com","q=",
 # Others
+"askjeeves\.","ask=",
 "hotbot\.","mt=",
-"webcrawler","searchText=",
 "metacrawler\.","general=",
 "go2net\.com","general=",
 "go\.com","qt=",
@@ -198,20 +200,20 @@ $BarImageHorizontal_k = "barrehk.png";
 "excite\.","search=",
 "spray\.","string=",
 "nbci\.com/search","keyword=",
-"askjeeves\.","ask=",
 "mamma\.","query=",
 "search\.dogpile\.com", "q=",
 "wisenut\.com","query=",
-"engine\.exe","p1=", "miner\.bol\.com\.br","q=",
-"ilse\.","search_for=", "vindex\.","in=",
-"nomade\.fr/","s=", "francite\.","name=",
-"fireball\.de","q=", "infoseek\.de","qt=", "suche\.web\.de","su=",
 "virgilio\.it","qs=",
-"kvasir\.sol\.no", "q=", "sok\.start\.no", "q=",
-"evreka\.passagen\.se","q="
+"webcrawler","searchText=",
+"engine\.exe","p1=", "miner\.bol\.com\.br","q=",				# Minor brazilian search engine
+"ilse\.","search_for=", "vindex\.","in=",						# Minor dutch search engines
+"nomade\.fr/","s=", "francite\.","name=",									# Minor french search engines
+"fireball\.de","q=", "infoseek\.de","qt=", "suche\.web\.de","su=",			# Minor german search engines
+"kvasir\.sol\.no", "q=", "sok\.start\.no", "q=",				# Minor norvegian search engine
+"evreka\.passagen\.se","q="										# Minor swedish search engine
 );
 # If no rules are known, this will be used to clean URL of not keyword parameters.
-@WordsToCleanSearchUrl= ("act=","annuaire=","btng=","categoria=","cfg=","cou=","dd=","domain=","dt=","dw=","exec=","geo=","hc=","height=","hl=","hq=","hs=","kl=","lang=","loc=","lr=","matchmode=","medor=","message=","meta=","mode=","order=","page=","par=","pays=","pg=","pos=","prg=","qc=","refer=","sa=","safe=","sc=","sort=","src=","start=","stype=","tag=","temp=","theme=","url=","user=","width=","what=","\\.x=","\\.y=","y=","look=");
+@WordsToCleanSearchUrl= ("act=","annuaire=","btng=","categoria=","cfg=","cou=","cp=","dd=","domain=","dt=","dw=","exec=","geo=","hc=","height=","hl=","hq=","hs=","id=","kl=","lang=","loc=","lr=","matchmode=","medor=","message=","meta=","mode=","order=","page=","par=","pays=","pg=","pos=","prg=","qc=","refer=","sa=","safe=","sc=","sort=","src=","start=","stype=","tag=","temp=","theme=","url=","user=","width=","what=","\\.x=","\\.y=","y=","look=");
 # Never put the following exclusion ("ask=","claus=","general=","kw=","keyword=","MT","p=","q=","qr=","qt=","query=","s=","search=","searchText=","string=","su=") because they are strings that contain keywords we're looking for.
 
 # HTTP codes with tooltip
@@ -591,6 +593,7 @@ $BarImageHorizontal_k = "barrehk.png";
 
 # Not declared robots
 "antibot", "Antibot (Not referenced robot)",
+"cscrawler","CsCrawler (Not referenced robot)",
 "daviesbot", "DaviesBot (Not referenced robot)",
 "ezresult",	"Ezresult (Not referenced robot)",
 "fast-webcrawler", "Fast-Webcrawler (Not referenced robot)",
@@ -606,13 +609,13 @@ $BarImageHorizontal_k = "barrehk.png";
 "wisenutbot","WISENutbot (Not referenced robot)",
 "yandex", "Yandex bot (Not referenced robot)",
 # Supposed to be robots
-"webcompass", "webcompass (Not referenced robot)",
+"boris", "Boris (Not referenced robot)",
 "digout4u", "digout4u (Not referenced robot)",
 "echo", "EchO! (Not referenced robot)",
-"voila", "Voila (Not referenced robot)",
-"boris", "Boris (Not referenced robot)",
-"ultraseek", "Ultraseek (Not referenced robot)",
 "ia_archiver", "ia_archiver (Not referenced robot)",
+"ultraseek", "Ultraseek (Not referenced robot)",
+"voila", "Voila (Not referenced robot)",
+"webcompass", "webcompass (Not referenced robot)",
 # Generic ID
 "robot", "Unknown robot (Not referenced robot)"
 );
@@ -754,7 +757,7 @@ sub tab_end {
 sub UnescapeURLParam {
 	$_[0] =~ tr/\+/ /s;
 	$_[0] =~ s/%([a-fA-F0-9][a-fA-F0-9])/pack("C", hex($1))/eg;		# Decode encoded URL
-	$_[0] =~ tr/\'\/\(\)\"/     /s;									# "&" and "=" must not be in this list
+	$_[0] =~ tr/\'\(\)\"/    /s;									# "&" and "=" must not be in this list
 }
 
 sub error {
@@ -1444,7 +1447,7 @@ if ($ENV{"GATEWAY_INTERFACE"} ne "") {	# Run from a browser
 	if ($QueryString =~ /site=/) { $SiteToAnalyze=$QueryString; $SiteToAnalyze =~ s/.*site=//; $SiteToAnalyze =~ s/&.*//; $SiteToAnalyze =~ s/ .*//; }
 	$UpdateStats=0;	if ($QueryString =~ /update=1/i) { $UpdateStats=1; }	# No update by default when run from a browser
 }
-else {	# Run from command line
+else {									# Run from command line
 	if ($ARGV[0] eq "-h") { $SiteToAnalyze = $ARGV[1]; }	# Kept for backward compatibility but useless
 	$QueryString=""; for (0..@ARGV-1) { $QueryString .= "$ARGV[$_] "; }
 	$QueryString =~ s/<script.*$//i;						# This is to avoid 'Cross Site Scripting attacks'
@@ -1522,6 +1525,7 @@ $timetomorrow=$tomorrowyear.$tomorrowmonth.$tomorrowday.$tomorrowhour.$tomorrowm
 
 # Read config file
 &Read_Config_File;
+if ($QueryString =~ /lang=/i) { $Lang=$QueryString; $Lang =~ s/.*lang=//i; $Lang =~ s/&.*//; $Lang =~ s/\s+//; }
 if ($QueryString =~ /lang=/i) { $Lang=$QueryString; $Lang =~ s/.*lang=//i; $Lang =~ s/&.*//; $Lang =~ s/\s+//; }
 if ($Lang eq "") { $Lang="en"; }
 
@@ -1834,6 +1838,7 @@ if ($UpdateStats) {
 		# Record is approved. We found a new line
 		#----------------------------------------
 		$NbOfNewLinesProcessed++;
+		if (($QueryString =~ /showstep=1/i) && ($NbOfNewLinesProcessed % 1000 == 0)) { print "$NbOfNewLinesProcessed lines processed\n"; }
 
 		if (&SkipHost($field[$pos_rc])) { next; }		# Skip with some client host IP addresses
 		if (&SkipFile($field[$pos_url])) { next; }		# Skip with some URLs
@@ -2083,10 +2088,10 @@ if ($UpdateStats) {
 							if ($SearchEngineKnownUrl{$key}) {		# Search engine with known URL syntax
 								foreach $param (@paramlist) {
 									if ($param =~ /^$SearchEngineKnownUrl{$key}/) { # We found good parameter
-										&UnescapeURLParam($param);			# Change [ xxx=cache:www+aaa+bbb/ccc+ddd%20eee'fff ] into [ xxx=cache:www aaa bbb ccc ddd eee fff ]
-										# Ok, "xxx=cache:www aaa bbb ccc ddd eee fff" is a search parameter line
+										&UnescapeURLParam($param);			# Change [ xxx=cache:www/zzz+aaa+bbb/ccc+ddd%20eee'fff ] into [ xxx=cache:www/zzz aaa bbb/ccc ddd eee fff ]
+										# Ok, "xxx=cache:www/zzz aaa bbb/ccc ddd eee fff" is a search parameter line
 										$param =~ s/.*=//;					# Cut "xxx="
-										$param =~ s/^cache:[^ ]* //;
+										$param =~ s/^cache:[^ +]* //;
 										$param =~ s/^related:[^ ]* //;
 										if ($SplitSearchString) {
 											@wordlist=split(/ /,$param);	# Split aaa bbb ccc ddd eee fff into a wordlist array
@@ -2318,7 +2323,7 @@ if ($QueryString =~ /action=browserdetail/i) {
 	print "$CENTER<a name=\"NETSCAPE\"></a><BR>";
 	$tab_titre=$message[33]."<br><img src=\"$DirIcons/browser/netscape.png\">";
 	&tab_head;
-	print "<TR bgcolor=#$color_TableBGRowTitle><TH>$message[58]</TH><TH bgcolor=#$color_h width=40>$message[57]</TH><TH bgcolor=#$color_h width=40>$message[15]</TH></TR>\n";
+	print "<TR bgcolor=#$color_TableBGRowTitle><TH>$message[58]</TH><TH bgcolor=#$color_h width=80>$message[57]</TH><TH bgcolor=#$color_h width=40>$message[15]</TH></TR>\n";
 	for ($i=1; $i<=$#_nsver_h; $i++) {
 		$p="";
 		if ($_nsver_h[$i] > 0 && $_browser_h{"netscape"} > 0) {
@@ -2333,7 +2338,7 @@ if ($QueryString =~ /action=browserdetail/i) {
 	print "<a name=\"MSIE\"></a><BR>";
 	$tab_titre=$message[34]."<br><img src=\"$DirIcons/browser/msie.png\">";
 	&tab_head;
-	print "<TR bgcolor=#$color_TableBGRowTitle><TH>$message[58]</TH><TH bgcolor=#$color_h width=40>$message[57]</TH><TH bgcolor=#$color_h width=40>$message[15]</TH></TR>\n";
+	print "<TR bgcolor=#$color_TableBGRowTitle><TH>$message[58]</TH><TH bgcolor=#$color_h width=80>$message[57]</TH><TH bgcolor=#$color_h width=40>$message[15]</TH></TR>\n";
 	for ($i=1; $i<=$#_msiever_h; $i++) {
 		if ($_msiever_h[$i] > 0 && $_browser_h{"msie"} > 0) {
 			$h=$_msiever_h[$i]; $p=int($_msiever_h[$i]/$_browser_h{"msie"}*1000)/10; $p="$p&nbsp;%";
@@ -2606,7 +2611,7 @@ print "<br><hr>\n";
 print "$CENTER<a name=\"DOMAINS\"></a><BR>";
 $tab_titre="$message[25]";
 &tab_head;
-print "<TR bgcolor=#$color_TableBGRowTitle><TH colspan=2>$message[17]</TH><TH>Code</TH><TH bgcolor=#$color_p>$message[56]</TH><TH bgcolor=#$color_h>$message[57]</TH><TH bgcolor=#$color_k>$message[75]</TH><TH>&nbsp;</TH></TR>\n";
+print "<TR bgcolor=#$color_TableBGRowTitle><TH colspan=2>$message[17]</TH><TH>Code</TH><TH bgcolor=#$color_p width=80>$message[56]</TH><TH bgcolor=#$color_h width=80>$message[57]</TH><TH bgcolor=#$color_k>$message[75]</TH><TH>&nbsp;</TH></TR>\n";
 if ($SortDir<0) { $max_h=$_domener_h{$sortdomains_h[0]}; }
 else            { $max_h=$_domener_h{$sortdomains_h[$#sortdomains_h]}; }
 if ($SortDir<0) { $max_k=$_domener_k{$sortdomains_k[0]}; }
@@ -2659,7 +2664,7 @@ print "$CENTER<a name=\"VISITOR\"></a><BR>";
 $MaxNbOfHostsShown = $TotalHosts if $MaxNbOfHostsShown > $TotalHosts;
 $tab_titre="$Message[77] $MaxNbOfHostsShown $message[55] $TotalHosts $message[26] ($TotalUnique $message[11])";
 &tab_head;
-print "<TR bgcolor=#$color_TableBGRowTitle><TH>$message[18]</TH><TH bgcolor=#$color_p>$message[56]</TH><TH bgcolor=#$color_h>$message[57]</TH><TH bgcolor=#$color_k>$message[75]</TH><TH>$message[9]</TH></TR>\n";
+print "<TR bgcolor=#$color_TableBGRowTitle><TH>$message[18]</TH><TH bgcolor=#$color_p width=80>$message[56]</TH><TH bgcolor=#$color_h width=80>$message[57]</TH><TH bgcolor=#$color_k>$message[75]</TH><TH>$message[9]</TH></TR>\n";
 $count=0;$total_p=0;$total_h=0;$total_k=0;
 foreach $key (@sorthosts_p) {
 	if ($_hostmachine_h{$key}>=$MinHitHost) {
@@ -2781,7 +2786,7 @@ foreach $key (@sortsiders) {
 print "$CENTER<a name=\"BROWSER\"></a><BR>";
 $tab_titre="$message[21]";
 &tab_head;
-print "<TR bgcolor=#$color_TableBGRowTitle><TH>Browser</TH><TH bgcolor=#$color_h width=40>$message[57]</TH><TH bgcolor=#$color_h width=40>$message[15]</TH></TR>\n";
+print "<TR bgcolor=#$color_TableBGRowTitle><TH>Browser</TH><TH bgcolor=#$color_h width=80>$message[57]</TH><TH bgcolor=#$color_h width=40>$message[15]</TH></TR>\n";
 foreach $key (@sortbrowsers) {
 	$p=int($_browser_h{$key}/$TotalHits*1000)/10;
 	if ($key eq "Unknown") {
@@ -2799,7 +2804,7 @@ foreach $key (@sortbrowsers) {
 print "$CENTER<a name=\"OS\"></a><BR>";
 $tab_titre=$message[59];
 &tab_head;
-print "<TR bgcolor=#$color_TableBGRowTitle><TH colspan=2>OS</TH><TH bgcolor=#$color_h width=40>$message[57]</TH><TH bgcolor=#$color_h width=40>$message[15]</TH></TR>\n";
+print "<TR bgcolor=#$color_TableBGRowTitle><TH colspan=2>OS</TH><TH bgcolor=#$color_h width=80>$message[57]</TH><TH bgcolor=#$color_h width=40>$message[15]</TH></TR>\n";
 foreach $key (@sortos) {
 	$p=int($_os_h{$key}/$TotalHits*1000)/10;
 	if ($key eq "Unknown") {
@@ -2836,7 +2841,7 @@ if ($TotalHits > 0) {
 	$p_h[3]=int($_from_h[3]/$TotalHits*1000)/10;
 	$p_h[4]=int($_from_h[4]/$TotalHits*1000)/10;
 }
-print "<TR bgcolor=#$color_TableBGRowTitle><TH>$message[37]</TH><TH bgcolor=#$color_p width=40>$message[56]</TH><TH bgcolor=#$color_p width=40>$message[15]</TH><TH bgcolor=#$color_h width=40>$message[57]</TH><TH bgcolor=#$color_h width=40>$message[15]</TH></TR>\n";
+print "<TR bgcolor=#$color_TableBGRowTitle><TH>$message[37]</TH><TH bgcolor=#$color_p width=80>$message[56]</TH><TH bgcolor=#$color_p width=40>$message[15]</TH><TH bgcolor=#$color_h width=80>$message[57]</TH><TH bgcolor=#$color_h width=40>$message[15]</TH></TR>\n";
 print "<TR><TD CLASS=LEFT><b>$message[38]:</b></TD><TD>$_from_p[0]&nbsp;</TD><TD>$p_p[0]&nbsp;%</TD><TD>$_from_h[0]&nbsp;</TD><TD>$p_h[0]&nbsp;%</TD></TR>\n";
 print "<TR><TD CLASS=LEFT><b>$message[39]:</b></TD><TD>$_from_p[1]&nbsp;</TD><TD>$p_p[1]&nbsp;%</TD><TD>$_from_h[1]&nbsp;</TD><TD>$p_h[1]&nbsp;%</TD></TR>\n";
 #------- Referrals by search engine
@@ -2857,7 +2862,7 @@ foreach $from (@sortpagerefs) {
 
 		# Show source
 		$lien=$from; $lien=substr($lien,0,$MaxLengthOfURL);
-		if ($ShowLinksOnUrl && ($from =~ /^http(s|):\/\//)) {
+		if ($ShowLinksOnUrl && ($from =~ /^http(s|):\/\//i)) {
 			print "<TR><TD CLASS=LEFT>- <A HREF=\"$from\">$lien</A></TD><TD>$_pagesrefs_h{$from}</TD></TR>\n";
 		} else {
 			print "<TR><TD CLASS=LEFT>- $lien</TD><TD>$_pagesrefs_h{$from}</TD></TR>\n";
@@ -2878,7 +2883,7 @@ print "$CENTER<a name=\"SEARCHWORDS\"></a><BR>";
 $MaxNbOfKeywordsShown = $TotalDifferentKeywords if $MaxNbOfKeywordsShown > $TotalDifferentKeywords;
 $tab_titre="TOP $MaxNbOfKeywordsShown $message[55] $TotalDifferentKeywords $message[43]";
 &tab_head;
-print "<TR bgcolor=#$color_TableBGRowTitle onmouseover=\"ShowTooltip(15);\" onmouseout=\"HideTooltip(15);\"><TH>$message[13]</TH><TH bgcolor=#$color_s width=40>$message[14]</TH><TH bgcolor=#$color_s width=40>$message[15]</TH></TR>\n";
+print "<TR bgcolor=#$color_TableBGRowTitle onmouseover=\"ShowTooltip(15);\" onmouseout=\"HideTooltip(15);\"><TH>$message[13]</TH><TH bgcolor=#$color_s width=80>$message[14]</TH><TH bgcolor=#$color_s width=40>$message[15]</TH></TR>\n";
 $count=0;
 foreach $key (@sortsearchwords) {
 	if ( $count>=$MaxNbOfKeywordsShown ) { last; }
@@ -2905,7 +2910,7 @@ if ($rest >0) {
 print "$CENTER<a name=\"ERRORS\"></a><BR>";
 $tab_titre=$message[32];
 &tab_head;
-print "<TR bgcolor=#$color_TableBGRowTitle><TH colspan=2>$message[32]</TH><TH bgcolor=#$color_h width=40>$message[57]</TH><TH bgcolor=#$color_h width=40>$message[15]</TH></TR>\n";
+print "<TR bgcolor=#$color_TableBGRowTitle><TH colspan=2>$message[32]</TH><TH bgcolor=#$color_h width=80>$message[57]</TH><TH bgcolor=#$color_h width=40>$message[15]</TH></TR>\n";
 foreach $key (@sorterrors) {
 	$p=int($_errors_h{$key}/$TotalErrors*1000)/10;
 	if ($httpcode{$key}) { print "<TR onmouseover=\"ShowTooltip($key);\" onmouseout=\"HideTooltip($key);\">"; }
