@@ -3591,7 +3591,7 @@ if ($UpdateStats) {
 					# IE ? (For higher speed, we start whith IE, the most often used. This avoid other tests if found)
 					if (($UserAgent =~ /msie/) && ($UserAgent !~ /webtv/) && ($UserAgent !~ /omniweb/) && ($UserAgent !~ /opera/)) {
 						$_browser_h{"msie"}++;
-						if ($UserAgent =~ /msie_(\d)\./) {  # $1 now contains major version no
+						if ($UserAgent =~ /msie_(\d)\./) {  # $1 now contains IE major version no
 							$_msiever_h[$1]++;
 							$found=1;
 							$TmpBrowser{$UserAgent}="msie_$1";
@@ -3600,9 +3600,9 @@ if ($UpdateStats) {
 	
 					# Netscape ?
 					if (!$found) {
-						if (($UserAgent =~ /mozilla/) && ($UserAgent !~ /compatible/) && ($UserAgent !~ /opera/)) {
+						if (($UserAgent =~ /mozilla/) && ($UserAgent !~ /compatible/) && ($UserAgent !~ /opera/) && ($UserAgent !~ /galeon/)) {
 							$_browser_h{"netscape"}++;
-							if ($UserAgent =~ /\/(\d)\./) {		# $1 now contains major version no
+							if ($UserAgent =~ /\/(\d)\./) {		# $1 now contains Netscape major version no
 								$_nsver_h[$1]++;
 								$found=1;
 								$TmpBrowser{$UserAgent}="netscape_$1";
