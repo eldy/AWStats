@@ -33,7 +33,13 @@
 	#PROG# is able to recognize up to <b>#RobotArray#</b> robots.
 	</DIV>
 	<DIV CLASS="CTooltip" ID="tt17">
-	All time related statistics are base on server time.<br>
+	All time related statistics are based on server time.<br>
+	</DIV>
+	<DIV CLASS="CTooltip" ID="tt18">
+	Here, reported data are: <b>average values</b> (calculated from all data between the first and last visit)
+	</DIV>
+	<DIV CLASS="CTooltip" ID="tt19">
+	Here, reported data are: <b>cumulative sums</b> (calculated from all data between the first and last visit)
 	</DIV>
 
 	<DIV CLASS="CTooltip" ID="tt201"> No description for this error. </DIV>

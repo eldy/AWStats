@@ -35,6 +35,12 @@
 	<DIV CLASS="CTooltip" ID="tt17">
 	Toutes les statistiques en rapport avec le temps sont basées sur les heures du serveur.<br>
 	</DIV>
+	<DIV CLASS="CTooltip" ID="tt18">
+	Ici les données rapportées sont des: <b>valeurs moyennes</b> (calculées à partir des données entre la première et dernière visite)
+	</DIV>
+	<DIV CLASS="CTooltip" ID="tt19">
+	Ici les données rapportées sont des: <b>sommes cumulées</b> (calculées à partir des données entre la première et dernière visite)
+	</DIV>
 
 	<DIV CLASS="CTooltip" ID="tt201"> Contenu partiel renvoyé. </DIV>
 	<DIV CLASS="CTooltip" ID="tt202"> La requête a été enregistrée par le serveur mais sera exécutée plus tard. </DIV>
