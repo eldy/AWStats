@@ -53,11 +53,11 @@ $MaxRowsInHTMLOutput
 $VisitTimeOut
 $VisitTolerance
 $NbOfLinesForBenchmark
-$ShowBackLink
 $WIDTH
 $CENTER
+$PreviousHost
 /;
-# TODO $OldForhh Check if this enhance speed
+# TODO $PreviousHost Check if this enhance speed
 $Debug=0;
 $ShowSteps=0;
 $AWScript="";
@@ -73,10 +73,9 @@ $DNSLookupAlreadyDone=0;
 $Lang="en";
 $DEBUGFORCED   = 0;				# Force debug level to log lesser level into debug.log file (Keep this value to 0)
 $MaxRowsInHTMLOutput = 1000;	# Max number of rows for not limited HTML arrays
-$VisitTimeOut  = 10000;			# Laps of time to consider a page load as a new visit. 10000 = one hour (Default = 10000)
-$VisitTolerance= 500;			# Laps of time to accept a record if not in correct order. 500 = five minute (Default = 500)
+$VisitTimeOut  = 10000;			# Laps of time to consider a page load as a new visit. 10000 = 1 hour (Default = 10000)
+$VisitTolerance= 10000;			# Laps of time to accept a record if not in correct order. 10000 = 1 hour (Default = 10000)
 $NbOfLinesForBenchmark=5000;
-$ShowBackLink  = 1;
 $WIDTH         = 600;
 $CENTER        = "";
 # Images for graphics
@@ -3198,7 +3197,7 @@ if ($UpdateStats) {
 	if ($Debug) { debug("Open log file \"$LogFile\""); }
 	open(LOG,"$LogFile") || error("Error: Couldn't open server log file \"$LogFile\" : $!");
 
-	my @field=();
+	my @field=(); my $counter=0;
 	# Reset counter for benchmark (first call to GetDelaySinceStart)
 	GetDelaySinceStart(1);
 	if ($ShowSteps) { print "Phase 1 : First bypass old records\n"; }
@@ -3280,9 +3279,9 @@ if ($UpdateStats) {
 		# Skip if not a new line
 		#-----------------------
 		if ($NewLinePhase) {
-			if ($timerecord < $LastLine{$yearmonthtoprocess} - $VisitTolerance) {
+			if ($timerecord < ($LastLine{$yearmonthtoprocess} - $VisitTolerance)) {
 					# Should not happen, kept in case of parasite/corrupted old line
-					$NbOfLinesCorrupted++; if ($ShowCorrupted) { print "Corrupted record (not sorted record): $_\n"; } next;
+					$NbOfLinesCorrupted++; if ($ShowCorrupted) { print "Corrupted record (date $timerecord lower than $LastLine{$yearmonthtoprocess}-$VisitTolerance): $_\n"; } next;
 			}
 		}
 		else {
@@ -3307,7 +3306,7 @@ if ($UpdateStats) {
 
 		# Skip for some client host IP addresses, some URLs, other URLs		# !!!
 		my $qualifdrop="";
-		if (@SkipHosts && &SkipHost($field[$pos_rc]))    { $qualifdrop="Dropped record (host $field[$pos_rc] not qualified by SkipHosts)"; }
+		if (@SkipHosts && &SkipHost($field[$pos_rc]))       { $qualifdrop="Dropped record (host $field[$pos_rc] not qualified by SkipHosts)"; }
 		elsif (@SkipFiles && &SkipFile($field[$pos_url]))   { $qualifdrop="Dropped record (URL $field[$pos_url] not qualified by SkipFiles)"; }
 		elsif (@OnlyFiles && ! &OnlyFile($field[$pos_url])) { $qualifdrop="Dropped record (URL $field[$pos_url] not qualified by OnlyFiles)"; }
 		if ($qualifdrop) {
@@ -3351,6 +3350,15 @@ if ($UpdateStats) {
 					next;
 				}
 			}
+		}
+
+		# Clean Tmp hash arrays to avoid speed decrease when using too large hash arrays
+		if ($counter++ > 1000000) {
+			$counter=0;
+			#%TmpDNSLookup=();	# No clean for this one
+			%TmpOS = %TmpRefererServer = %TmpRobot = %TmpBrowser =();
+			# TODO Add a warning
+			# warning("Try to made AWStats update more frequently to process log files with less than 1 000 000 records.");
 		}
 
 		$field[$pos_agent] =~ tr/\+ /__/;		# Same Agent with different writing syntax have now same name
@@ -3525,25 +3533,27 @@ if ($UpdateStats) {
 				$_hostmachine_s{$_}=$timerecord;	# Save start of first visit
 			}
 			if ($timerecord < $timehostl) {
-				# Record is before record already read for this host and used for start of visit
-				# This occurs when log file is 'nearly' sorted
-				# TODO change hostmachine_l and hostmachine_s and hotmachine_u
+				# Record is before last record of visit
+				# This occurs when log file is not correctly sorted but just 'nearly' sorted
 				$_hostmachine_p{$_}++;
-				$_hostmachine_l{$_}=$timerecord;
-				$_hostmachine_u{$_}=$field[$pos_url];
+				if ($timerecord < $_hostmachine_s{$_}) {	# This should not happens because first page of visits rarely logged after another page of same visit
+					# Record is before record used for start of visit
+					$_hostmachine_s{$_}=$timerecord;
+					# TODO Change entry page _url_e counter (not possible yet)
+				}
 			}
 			else {
-				# Record is first for this host or after record used for start of visit
+				# This is a new visit or record is after last record of visit
 				$_hostmachine_p{$_}++;
 				$_hostmachine_l{$_}=$timerecord;
 				$_hostmachine_u{$_}=$field[$pos_url];
 			}
 		}
-#		if ($_ ne ${OldForhh} && ! $_hostmachine_h{$_}) { $MonthHostsUnknown{$yearmonthtoprocess}++; }
-		if (! $_hostmachine_h{$_}) { $MonthHostsUnknown{$yearmonthtoprocess}++; }
+		if ($_ ne ${PreviousHost} && ! $_hostmachine_h{$_}) { $MonthHostsUnknown{$yearmonthtoprocess}++; }
+#		if (! $_hostmachine_h{$_}) { $MonthHostsUnknown{$yearmonthtoprocess}++; }
 		$_hostmachine_h{$_}++;
 		$_hostmachine_k{$_}+=$field[$pos_size];
-#		${OldForhh}=$_;
+		${PreviousHost}=$_;
 
 		# Count top-level domain
 		if ($PageBool) { $_domener_p{$Domain}++; }
@@ -3554,84 +3564,84 @@ if ($UpdateStats) {
 
 			if ($LevelForBrowsersDetection) {
 
-			# Analyze: Browser
-			#-----------------
-			my $found=0;
-			if (! $TmpBrowser{$UserAgent}) {
-				# IE ? (For higher speed, we start whith IE, the most often used. This avoid other tests if found)
-				if (($UserAgent =~ /msie/) && ($UserAgent !~ /webtv/) && ($UserAgent !~ /omniweb/) && ($UserAgent !~ /opera/)) {
-					$_browser_h{"msie"}++;
-					if ($UserAgent =~ /msie_(\d)\./) {  # $1 now contains major version no
-						$_msiever_h[$1]++;
-						$found=1;
-						$TmpBrowser{$UserAgent}="msie_$1";
-					}
-				}
-
-				# Netscape ?
-				if (!$found) {
-					if (($UserAgent =~ /mozilla/) && ($UserAgent !~ /compatible/) && ($UserAgent !~ /opera/)) {
-						$_browser_h{"netscape"}++;
-						if ($UserAgent =~ /\/(\d)\./) {		# $1 now contains major version no
-							$_nsver_h[$1]++;
+				# Analyze: Browser
+				#-----------------
+				my $found=0;
+				if (! $TmpBrowser{$UserAgent}) {
+					# IE ? (For higher speed, we start whith IE, the most often used. This avoid other tests if found)
+					if (($UserAgent =~ /msie/) && ($UserAgent !~ /webtv/) && ($UserAgent !~ /omniweb/) && ($UserAgent !~ /opera/)) {
+						$_browser_h{"msie"}++;
+						if ($UserAgent =~ /msie_(\d)\./) {  # $1 now contains major version no
+							$_msiever_h[$1]++;
 							$found=1;
-							$TmpBrowser{$UserAgent}="netscape_$1";
+							$TmpBrowser{$UserAgent}="msie_$1";
 						}
 					}
-				}
-
-				# Other ?
-				if (!$found) {
-					foreach my $key (@BrowsersSearchIDOrder) {	# Search ID in order of BrowsersSearchIDOrder
-						if ($UserAgent =~ /$key/) {
-							$_browser_h{$key}++;
-							$found=1;
-							$TmpBrowser{$UserAgent}=$key;
-							last;
+	
+					# Netscape ?
+					if (!$found) {
+						if (($UserAgent =~ /mozilla/) && ($UserAgent !~ /compatible/) && ($UserAgent !~ /opera/)) {
+							$_browser_h{"netscape"}++;
+							if ($UserAgent =~ /\/(\d)\./) {		# $1 now contains major version no
+								$_nsver_h[$1]++;
+								$found=1;
+								$TmpBrowser{$UserAgent}="netscape_$1";
+							}
 						}
 					}
+	
+					# Other ?
+					if (!$found) {
+						foreach my $key (@BrowsersSearchIDOrder) {	# Search ID in order of BrowsersSearchIDOrder
+							if ($UserAgent =~ /$key/) {
+								$_browser_h{$key}++;
+								$found=1;
+								$TmpBrowser{$UserAgent}=$key;
+								last;
+							}
+						}
+					}
+	
+					# Unknown browser ?
+					if (!$found) {
+						$_browser_h{"Unknown"}++;
+						$_unknownrefererbrowser_l{$field[$pos_agent]}=$timerecord;
+						$TmpBrowser{$UserAgent}="Unknown";
+					}
 				}
-
-				# Unknown browser ?
-				if (!$found) {
-					$_browser_h{"Unknown"}++;
-					$_unknownrefererbrowser_l{$field[$pos_agent]}=$timerecord;
-					$TmpBrowser{$UserAgent}="Unknown";
+				else {
+					if ($TmpBrowser{$UserAgent} =~ /^msie_(\d)/) { $_browser_h{"msie"}++; $_msiever_h[$1]++; $found=1; }
+					if (!$found && $TmpBrowser{$UserAgent} =~ /^netscape_(\d)/) { $_browser_h{"netscape"}++; $_nsver_h[$1]++; $found=1; }
+					if (!$found) { $_browser_h{$TmpBrowser{$UserAgent}}++; }
 				}
-			}
-			else {
-				if ($TmpBrowser{$UserAgent} =~ /^msie_(\d)/) { $_browser_h{"msie"}++; $_msiever_h[$1]++; $found=1; }
-				if (!$found && $TmpBrowser{$UserAgent} =~ /^netscape_(\d)/) { $_browser_h{"netscape"}++; $_nsver_h[$1]++; $found=1; }
-				if (!$found) { $_browser_h{$TmpBrowser{$UserAgent}}++; }
-			}
 
 			}
 
 			if ($LevelForOSDetection) {
 		
-			# Analyze: OS
-			#------------
-			if (! $TmpOS{$UserAgent}) {
-				my $found=0;
-				# in OSHashID list ?
-				foreach my $key (@OSSearchIDOrder) {	# Search ID in order of OSSearchIDOrder
-					if ($UserAgent =~ /$key/) {
-						$_os_h{$OSHashID{$key}}++;
-						$found=1;
-						$TmpOS{$UserAgent}=$OSHashID{$key};
-						last;
+				# Analyze: OS
+				#------------
+				if (! $TmpOS{$UserAgent}) {
+					my $found=0;
+					# in OSHashID list ?
+					foreach my $key (@OSSearchIDOrder) {	# Search ID in order of OSSearchIDOrder
+						if ($UserAgent =~ /$key/) {
+							$_os_h{$OSHashID{$key}}++;
+							$found=1;
+							$TmpOS{$UserAgent}=$OSHashID{$key};
+							last;
+						}
+					}
+					# Unknown OS ?
+					if (!$found) {
+						$_os_h{"Unknown"}++;
+						$_unknownreferer_l{$field[$pos_agent]}=$timerecord;
+						$TmpOS{$UserAgent}="Unknown";
 					}
 				}
-				# Unknown OS ?
-				if (!$found) {
-					$_os_h{"Unknown"}++;
-					$_unknownreferer_l{$field[$pos_agent]}=$timerecord;
-					$TmpOS{$UserAgent}="Unknown";
+				else {
+					$_os_h{$TmpOS{$UserAgent}}++;
 				}
-			}
-			else {
-				$_os_h{$TmpOS{$UserAgent}}++;
-			}
 	
 			}
 
@@ -4119,7 +4129,7 @@ EOF
 			$NewLinkParams =~ s/urlfilter[=]*[^ &]*//i;
 			$NewLinkParams =~ s/&+$//;
 			if (! $DetailedReportsOnNewWindows) {
-				if ($ShowBackLink) { print "<tr><td class=AWL><a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript".(${NewLinkParams}?"?${NewLinkParams}":""):"$PROG$StaticLinks.html")."\">$Message[76]</a></td></tr>\n"; }
+				print "<tr><td class=AWL><a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript".(${NewLinkParams}?"?${NewLinkParams}":""):"$PROG$StaticLinks.html")."\">$Message[76]</a></td></tr>\n";
 			}
 			else {
 				print "<tr><td class=AWL><a href=\"javascript:parent.window.close();\">$Message[118]</a></td></tr>\n";
