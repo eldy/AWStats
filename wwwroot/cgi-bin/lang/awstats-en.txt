@@ -83,4 +83,11 @@ message80=Full list
 message81=Hosts
 message82=Known
 message83=Robots
+message84=Sun
+message85=Mon
+message86=Tue
+message87=Wed
+message88=Thu
+message89=Fri
+message90=Sat
 
