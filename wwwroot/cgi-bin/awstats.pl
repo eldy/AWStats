@@ -24,14 +24,16 @@ my $VERSION="4.2 (build $REVISION)";
 # ---------- Init variables -------
 # Constants
 use vars qw/
-$DEBUGFORCED
-$NBOFLINESFORBENCHMARK
+$DEBUGFORCED $NBOFLINESFORBENCHMARK $FRAMEWIDTH
 /;
-$DEBUGFORCED   = 0;				# Force debug level to log lesser level into debug.log file (Keep this value to 0)
+$DEBUGFORCED=0;					# Force debug level to log lesser level into debug.log file (Keep this value to 0)
 $NBOFLINESFORBENCHMARK=5000;	# Benchmark info are printing every NBOFLINESFORBENCHMARK lines
+$FRAMEWIDTH=290;
 # Plugins variable
-use vars qw/ $UseHiRes $UseCompress $UseHashFiles $AddOn /;
-$UseHiRes=$UseCompress=$UseHashFiles=$AddOn=0;
+use vars qw/ $PluginCompress $PluginGraph3D $PluginHashFiles $PluginTimeHiRes $UseTimeZone $PluginETF1 /;
+$PluginCompress=$PluginGraph3D=$PluginHashFiles=$PluginTimeHiRes=$UseTimeZone=$PluginETF1=0;
+use vars qw/ $UseTimeZoneSeconds /;
+$UseTimeZoneSeconds=0;
 # Running variables
 use vars qw/
 $DIR $PROG $Extension
@@ -120,7 +122,7 @@ $ShowRobotsStats $ShowSessionsStats $ShowPagesStats $ShowFileTypesStats
 $ShowBrowsersStats $ShowOSStats $ShowOriginStats
 $ShowKeyphrasesStats $ShowKeywordsStats
 $ShowHTTPErrorsStats
-$ShowFlagLinks $ShowLinksOnUrl
+$ShowFlagLinks $ShowLinksOnUrl $UseFramesWhenCGI
 $WarningMessages
 /;
 ($AllowToUpdateStatsFromBrowser, $ArchiveLogRecords, $DetailedReportsOnNewWindows,
@@ -130,9 +132,9 @@ $ShowHoursStats, $ShowDomainsStats, $ShowHostsStats,
 $ShowRobotsStats, $ShowSessionsStats, $ShowPagesStats, $ShowFileTypesStats,
 $ShowBrowsersStats, $ShowOSStats, $ShowOriginStats, $ShowKeyphrasesStats,
 $ShowKeywordsStats,  $ShowHTTPErrorsStats,
-$ShowFlagLinks, $ShowLinksOnUrl,
+$ShowFlagLinks, $ShowLinksOnUrl, $UseFramesWhenCGI,
 $WarningMessages)=
-(1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1);
+(1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1);
 use vars qw/
 $LevelForRobotsDetection $LevelForBrowsersDetection $LevelForOSDetection $LevelForRefererAnalyze
 $LevelForSearchEnginesDetection $LevelForKeywordsDetection
@@ -161,14 +163,14 @@ $color_text, $color_textpercent, $color_titletext, $color_weekend, $color_link, 
 $color_h, $color_k, $color_p, $color_e, $color_x, $color_s, $color_u, $color_v)=
 ("","","","","","","","","","","","","","","","","","","","","");
 use vars qw/
-$HTMLOutput $Center $FileConfig $FileSuffix $Host $DayRequired $MonthRequired $YearRequired
+$HTMLOutput $FrameName $Center $FileConfig $FileSuffix $Host $DayRequired $MonthRequired $YearRequired
 $QueryString $SiteConfig $StaticLinks $URLFilter $PageCode $PerlParsingFormat
 $SiteToAnalyze $SiteToAnalyzeWithoutwww $UserAgent
 /;
-($HTMLOutput, $Center, $FileConfig, $FileSuffix, $Host, $DayRequired, $MonthRequired,
+($HTMLOutput, $FrameName, $Center, $FileConfig, $FileSuffix, $Host, $DayRequired, $MonthRequired,
 $YearRequired, $QueryString, $SiteConfig, $StaticLinks, $URLFilter, $PageCode,
 $PerlParsingFormat, $SiteToAnalyze, $SiteToAnalyzeWithoutwww, $UserAgent)=
-("","","","","","","","", "","","","","","","","","");
+("","","","","","","","","","","","","","","","","","");
 use vars qw/
 $pos_vh $pos_rc $pos_logname $pos_date $pos_method $pos_url $pos_code $pos_size
 $pos_referer $pos_agent $pos_query $pos_gzipin $pos_gzipout $pos_gzipratio
@@ -431,27 +433,7 @@ EOF
 		if ($StyleSheet) {
 			print "<link rel=\"stylesheet\" href=\"$StyleSheet\">\n";
 		}
-
 		print "</head>\n\n";
-		print "<body>\n";
-		# Write logo, flags and product name
-		if ($ShowHeader) {
-			print "$HTMLHeadSection\n";
-			print "<table>\n";
-			print "<tr valign=middle><td class=AWL width=150 style=\"font: 18px arial,verdana,helvetica; font-weight: bold\">AWStats\n";
-			if (! $StaticLinks) { Show_Flag_Links($Lang); }
-			print "</td>\n";
-			if ($LogoLink =~ "http://awstats.sourceforge.net") {
-				print "<td class=AWL width=450><a href=\"$LogoLink\" target=\"awstatshome\"><img src=\"$DirIcons/other/$Logo\" border=0 alt=\"$PROG Official Web Site\" title=\"$PROG Official Web Site\"></a></td></tr>\n";
-			}
-			else {
-				print "<td class=AWL width=450><a href=\"$LogoLink\" target=\"awstatshome\"><img src=\"$DirIcons/other/$Logo\" border=0></a></td></tr>\n";
-			}
-			#print "<b><font face=\"verdana\" size=1><a href=\"$HomeURL\">HomePage</a> &#149\; <a href=\"javascript:history.back()\">Back</a></font></b><br>\n";
-			print "<tr><td class=AWL colspan=2>$Message[54]</td></tr>\n";
-			print "</table>\n";
-			#print "<hr>\n";
-		}
 	}
 }
 
@@ -464,10 +446,12 @@ EOF
 #------------------------------------------------------------------------------
 sub html_end {
 	if ($HTMLOutput) {
-		print "$Center<br><br><br>\n";
-		print "<FONT COLOR=\"#$color_text\"><b>Advanced Web Statistics $VERSION</b> - <a href=\"http://awstats.sourceforge.net\" target=\"awstatshome\">Created by $PROG</a></font><br>\n";
-		print "<br>\n";
-		print "$HTMLEndSection\n";
+		if ($FrameName ne "index" && $FrameName ne "mainleft") {
+			print "$Center<br><br><br>\n";
+	 		print "<FONT COLOR=\"#$color_text\"><b>Advanced Web Statistics $VERSION</b> - <a href=\"http://awstats.sourceforge.net\" target=\"awstatshome\">Created by $PROG</a></font><br>\n";
+			print "<br>\n";
+			print "$HTMLEndSection\n";
+		}
 		print "</body>\n";
 		print "</html>\n";
 	}
@@ -898,6 +882,7 @@ sub Read_Config_File {
 		if ($param =~ /^MaxNbOfKeywordsShown/)  { $MaxNbOfKeywordsShown=$value; next; }
 		if ($param =~ /^MinHitKeyword/)         { $MinHitKeyword=$value; next; }
 		if ($param =~ /^FirstDayOfWeek/)       	{ $FirstDayOfWeek=$value; next; }
+		if ($param =~ /^UseFramesWhenCGI/)      { $UseFramesWhenCGI=$value; next; }
 		if ($param =~ /^DetailedReportsOnNewWindows/) { $DetailedReportsOnNewWindows=$value; next; }
 		if ($param =~ /^ShowFlagLinks/)         { $ShowFlagLinks=$value; next; }
 		if ($param =~ /^ShowLinksOnUrl/)        { $ShowLinksOnUrl=$value; next; }
@@ -945,6 +930,7 @@ sub Read_Config_File {
 	}
 	if ($Debug) { debug(" NotPageList ".(scalar keys %NotPageList)); }
 	if ($Debug) { debug(" ValidHTTPCodes ".(scalar keys %ValidHTTPCodes)); }
+	if ($Debug) { debug(" UseFramesWhenCGI=$UseFramesWhenCGI"); }
 }
 
 
@@ -1213,7 +1199,8 @@ sub Check_Config {
 	if ($MaxNbOfKeywordsShown !~ /^\d+/ || $MaxNbOfKeywordsShown<1)		{ $MaxNbOfKeywordsShown=25; }
 	if ($MinHitKeyword !~ /^\d+/ || $MinHitKeyword<1)           		{ $MinHitKeyword=1; }
 	if ($FirstDayOfWeek !~ /[0-1]/)               	{ $FirstDayOfWeek=1; }
-	if ($DetailedReportsOnNewWindows !~ /[0-1]/)  	{ $DetailedReportsOnNewWindows=1; }
+	if ($UseFramesWhenCGI !~ /[0-1]/)  				{ $UseFramesWhenCGI=1; }
+	if ($DetailedReportsOnNewWindows !~ /[0-2]/)  	{ $DetailedReportsOnNewWindows=1; }
 	if ($ShowLinksOnUrl !~ /[0-1]/)               	{ $ShowLinksOnUrl=1; }
 	if ($MaxLengthOfURL !~ /^\d+/ || $MaxLengthOfURL<1) { $MaxLengthOfURL=72; }
 	if ($ShowLinksToWhoIs !~ /[0-1]/)              	{ $ShowLinksToWhoIs=0; }
@@ -1372,6 +1359,10 @@ sub Check_Config {
 	if (! $Message[126]) { $Message[126]="Refering search engines"; }
 	if (! $Message[127]) { $Message[127]="Refering sites"; }
 
+	# Correct ShowFlagLinks
+	if ($ShowFlagLinks eq "0") { $ShowFlagLinks = ""; }					# For backward compatibility
+	if ($ShowFlagLinks eq "1") { $ShowFlagLinks = "en fr de nl es"; }	# For backward compatibility
+
 	# Refuse LogFile if contains a pipe and PurgeLogFile || ArchiveLogRecords set on
 	if (($PurgeLogFile || $ArchiveLogRecords) && $LogFile =~ /\|\s*$/) {
 		error("Error: A pipe in log file name is not allowed if PurgeLogFile and ArchiveLogRecords are not set to 0");
@@ -1433,22 +1424,22 @@ sub Read_History_File {
 	# In standard use of AWStats, the DayRequired variable is always empty
 	if ($DayRequired) { if ($Debug) { debug("Call to Read_History_File [$year,$month,$part] ($DayRequired)"); } }
 	else { if ($Debug) { debug("Call to Read_History_File [$year,$month,$part]"); } }
-	if ($HistoryFileAlreadyRead{"$year$month$DayRequired"}) {				# Protect code to invoke function only once for each month/year
+	if ($HistoryFileAlreadyRead{"$year$month$DayRequired"}) {							# Protect code to invoke function only once for each month/year
 		if ($Debug) { debug(" Already loaded"); }
 		return 0;
 		}
-	$HistoryFileAlreadyRead{"$year$month$DayRequired"}=1;					# Protect code to invoke function only once for each month/year
+	if ($part ne "general") { $HistoryFileAlreadyRead{"$year$month$DayRequired"}=1; }	# Protect code to invoke function only once for each month/year
 
 	# Define value for historyfilename
 	my $historyfilename="$DirData/$PROG$DayRequired$month$year$FileSuffix.txt";
-	if ($UseCompress) { $historyfilename.="\.gz"; }
+	if ($PluginCompress) { $historyfilename.="\.gz"; }
 	if (! -s $historyfilename) {
 		# If file not exists, return
 		if ($Debug) { debug(" No history file $historyfilename"); }
 		$LastLine{$year.$month}=0;	# To avoid warning of undefinded value later (with 'use warnings')
 		return 0;
 	}
-	if ($UseCompress) {	$historyfilename="gzip -d <\"$historyfilename\" |"; }
+	if ($PluginCompress) {	$historyfilename="gzip -d <\"$historyfilename\" |"; }
 	if ($Debug) { debug(" History file is '$historyfilename'",2); }
 
 	open(HISTORY,$historyfilename) || error("Error: Couldn't open file \"$historyfilename\" for read: $!");	# Month before Year kept for backward compatibility
@@ -1462,7 +1453,7 @@ sub Read_History_File {
 		$SectionsToLoad{"time"}=2;
 		$SectionsToLoad{"visitor"}=2;
 	}
-	else {
+	elsif ($part == 1) {
 		$SectionsToLoad{"general"}=1;
 		$SectionsToLoad{"time"}=1;
 		if ($UpdateStats || $HTMLOutput eq "main" || $HTMLOutput eq "allhosts" || $HTMLOutput eq "lasthosts" || $HTMLOutput eq "unknownip") { $SectionsToLoad{"visitor"}=1; }
@@ -1487,8 +1478,11 @@ sub Read_History_File {
 		if ($UpdateStats || $HTMLOutput eq "main" || $HTMLOutput eq "errors") { $SectionsToLoad{"errors"}=1; }
 		if ($UpdateStats || $HTMLOutput eq "main" || $HTMLOutput eq "errors404") { $SectionsToLoad{"sider_404"}=1; }
 	}
+	else {
+		$SectionsToLoad{$part}=1;
+	}
 	if ($Debug) {
-		foreach my $section (keys %SectionsToLoad) {
+		foreach my $section (sort keys %SectionsToLoad) {
 			debug(" Section $section is marked for load",2);
 		}	
 	}
@@ -1652,9 +1646,9 @@ sub Read_History_File {
 						}
 						else {
 							if ($HTMLOutput eq "allhosts" || $HTMLOutput eq "lasthosts") { $loadrecord=1; }
-							if ($MonthRequired eq "year" || $field[2] >= $MinHitHost) {
+							elsif ($MonthRequired eq "year" || $field[2] >= $MinHitHost) {
 								if ($HTMLOutput eq "unknownip" && ($field[0] =~ /^\d+\.\d+\.\d+\.\d+$/)) { $loadrecord=1; }
-								if ($HTMLOutput eq "main" && ($MonthRequired eq "year" || $countloaded < $MaxNbOfHostsShown)) { $loadrecord=1; }
+								elsif ($HTMLOutput eq "main" && ($MonthRequired eq "year" || $countloaded < $MaxNbOfHostsShown)) { $loadrecord=1; }
 							}
 						}
 						if ($loadrecord) {
@@ -1979,7 +1973,7 @@ sub Read_History_File {
 									$TotalDifferentPages++;
 								}
 							}
-							if ($HTMLOutput eq "urldetail") {
+							elsif ($HTMLOutput eq "urldetail") {
 								if ($MonthRequired eq "year" ) {
 									if (!$URLFilter || $field[0] =~ /$URLFilter/) { $loadrecord=1; }
 								}
@@ -2129,7 +2123,7 @@ sub Read_History_File {
 									$TotalKeyphrases+=($field[1]||0);
 								}
 							}
-							if ($HTMLOutput eq "keyphrases") {	# Load keyphrases for keyphrases chart
+							elsif ($HTMLOutput eq "keyphrases") {	# Load keyphrases for keyphrases chart
 								if ($MonthRequired eq "year" ) { $loadrecord=1; }
 								else {
 									if ($field[1] >= $MinHitKeyphrase) { $loadrecord=1; }
@@ -2566,7 +2560,7 @@ sub Read_DNS_Cache_File {
 		my $searchdir=$dir;
 		if ($searchdir && (!($searchdir =~ /\/$/)) && (!($searchdir =~ /\\$/)) ) { $searchdir .= "/"; }
 		if (-s "${searchdir}$DNSCacheFile") { $filetoload="${searchdir}$DNSCacheFile"; last; }
-		if ($UseHashFiles) { if (-r -s "${searchdir}$DNSCacheFile.hash") { $filetoload="${searchdir}$DNSCacheFile"; last; } }
+		if ($PluginHashFiles) { if (-r -s "${searchdir}$DNSCacheFile.hash") { $filetoload="${searchdir}$DNSCacheFile"; last; } }
 	}
 
 	if ($Debug) { debug("Call to Read_DNS_Cache_File [filetoload=\"$filetoload\"]"); }
@@ -2575,7 +2569,7 @@ sub Read_DNS_Cache_File {
 		return;
 	}
 
-	if ($UseHashFiles) {
+	if ($PluginHashFiles) {
 		my ($tmp1a,$tmp2a,$tmp3a,$tmp4a,$tmp5a,$tmp6a,$tmp7a,$tmp8a,$tmp9a,$datesource,$tmp10a,$tmp11a,$tmp12a) = stat("$filetoload");
 		my ($tmp1b,$tmp2b,$tmp3b,$tmp4b,$tmp5b,$tmp6b,$tmp7b,$tmp8b,$tmp9b,$datehash,$tmp10b,$tmp11b,$tmp12b) = stat("$filetoload.hash");
 		if (! $datesource || $datehash >= $datesource) {
@@ -2589,7 +2583,7 @@ sub Read_DNS_Cache_File {
 		# This is the fastest way to load with regexp that I know of
 		%MyDNSTable = map(/^\d+\s+(\d+\.\d+\.\d+\.\d+)\s+(.*)$/o, <DNSFILE>);
 	   	close DNSFILE;
-		if ($UseHashFiles) { eval('use Storable; store(\%MyDNSTable, "$filetoload.hash");'); }
+		if ($PluginHashFiles) { eval('use Storable; store(\%MyDNSTable, "$filetoload.hash");'); }
 	}
 	else  {
 		$filetoload="$filetoload.hash";
@@ -2608,7 +2602,7 @@ sub Read_DNS_Cache_File {
 sub GetDelaySinceStart {
 	if (shift) { $StartSeconds=0;	}	# Reset counter
 	my ($newseconds, $newmicroseconds)=(0,0);
-	if ($UseHiRes) { ($newseconds, $newmicroseconds) = &gettimeofday; }
+	if ($PluginTimeHiRes) { ($newseconds, $newmicroseconds) = &gettimeofday; }
 	else { $newseconds=time(); }
 	if (! $StartSeconds) { $StartSeconds=$newseconds; $StartMicroseconds=$newmicroseconds; }
 	return ($newseconds*1000+int($newmicroseconds/1000)-$StartSeconds*1000-int($StartMicroseconds/1000));
@@ -2714,8 +2708,6 @@ sub FileCopy {
 #--------------------------------------------------------------------
 sub Show_Flag_Links {
 	my $CurrentLang = shift;
-	if ($ShowFlagLinks eq "0") { $ShowFlagLinks = ""; }						# For backward compatibility
-	if ($ShowFlagLinks eq "1") { $ShowFlagLinks = "en fr de it nl es"; }	# For backward compatibility
 
 	# Build flags link
 	my $NewLinkParams=$QueryString;
@@ -3008,6 +3000,7 @@ else {								# Run from command line
 if ($QueryString =~ /logfile=([^\s&]+)/i )      { $LogFile=&DecodeEncodedString($1); }
 if ($QueryString =~ /staticlinks/i) 			{ $StaticLinks=".$SiteConfig"; }
 if ($QueryString =~ /staticlinks=([^\s&]+)/i) 	{ $StaticLinks=".$1"; }
+if ($QueryString =~ /framename=([^\s&]+)/i)		{ $FrameName=$1; }
 if ($QueryString =~ /debug=(\d+)/i)				{ $Debug=$1; }
 # Define output option
 if ($QueryString =~ /output=.*output=/i) { error("Only 1 output option is allowed"); }
@@ -3161,14 +3154,21 @@ if ($Lang eq "8") { $Lang="cz"; }
 if ($Lang eq "9") { $Lang="pt"; }
 if ($Lang eq "10") { $Lang="kr"; }
 
-# Get the output strings
-&Read_Language_Data($Lang);
-
 # Check and correct bad parameters
 &Check_Config;
 
-# Load plugins
-&Read_Plugins;
+# Define frame name and correct variable for frames
+if (! $FrameName) {
+	if ($ENV{"GATEWAY_INTERFACE"} && $UseFramesWhenCGI && $HTMLOutput eq "main") { $FrameName="index"; }
+	else { $FrameName="main"; }
+}
+if ($FrameName eq "index" || $FrameName eq "mainleft") { $UpdateStats=0; }
+	
+# Load Message and Plugins
+if ($FrameName ne "index") {
+	&Read_Language_Data($Lang);
+	&Read_Plugins();
+}
 
 # Here SiteDomain is always defined
 if ($Debug) { debug("Site domain to analyze: $SiteDomain"); }
@@ -3201,24 +3201,45 @@ if ($Debug) { debug("YearRequired=$YearRequired MonthRequired=$MonthRequired",2)
 # Print html header
 &html_head;
 
-# Security check
-if ($AllowAccessFromWebToAuthenticatedUsersOnly && $ENV{"GATEWAY_INTERFACE"}) {
-	if ($Debug) { debug("REMOTE_USER is ".$ENV{"REMOTE_USER"}); }
-	if (! $ENV{"REMOTE_USER"}) {
-		error("Error: Access to statistics is only allowed from an authenticated session to authenticated users.");
-	}
-	if (@AllowAccessFromWebToFollowingAuthenticatedUsers) {
-		my $userisinlist=0;
-		foreach my $key (@AllowAccessFromWebToFollowingAuthenticatedUsers) {
-			if ($ENV{"REMOTE_USER"} eq $key) { $userisinlist=1; last; }
-		}
-		if (! $userisinlist) {
-			error("Error: User <b>".$ENV{"REMOTE_USER"}."</b> is not allowed to access statistics of this domain/config.");
-		}
-	}
+# Output main frame page and exit
+if ($FrameName eq "index") {
+	# Define the NewLinkParams for main chart
+	my $NewLinkParams=${QueryString};
+	$NewLinkParams =~ s/framename[=]*[^\s&]*//i;
+	if ($NewLinkParams) { $NewLinkParams="${NewLinkParams}&"; }
+	# Exit if main frame
+	print "<frameset cols=\"$FRAMEWIDTH,*\" border=2 framespacing=4 frameborder=0>\n";
+	print "<frame name=\"mainleft\"  src=\"$AWScript?${NewLinkParams}framename=mainleft\" noresize scrolling=\"NO\" noborder>\n";
+	print "<frame name=\"mainright\" src=\"$AWScript?${NewLinkParams}framename=mainright\" noresize scrolling=\"YES\" noborder>\n";
+	print "<noframes><body>Your browser does not support frames. Change AWStats UseFramesWhenCGI parameter to see your reports</body></noframes>\n";
+	print "</frameset>\n";
+	&html_end();
+	exit 0;
 }
-if ($UpdateStats && (! $AllowToUpdateStatsFromBrowser) && $ENV{"GATEWAY_INTERFACE"}) {
-	error("Error: Update of statistics is not allowed from a browser.");
+
+# End of html header
+print "<body>\n";
+
+# Security check
+if ($FrameName ne "index" || $FrameName ne "mainleft") {
+	if ($AllowAccessFromWebToAuthenticatedUsersOnly && $ENV{"GATEWAY_INTERFACE"}) {
+		if ($Debug) { debug("REMOTE_USER is ".$ENV{"REMOTE_USER"}); }
+		if (! $ENV{"REMOTE_USER"}) {
+			error("Error: Access to statistics is only allowed from an authenticated session to authenticated users.");
+		}
+		if (@AllowAccessFromWebToFollowingAuthenticatedUsers) {
+			my $userisinlist=0;
+			foreach my $key (@AllowAccessFromWebToFollowingAuthenticatedUsers) {
+				if ($ENV{"REMOTE_USER"} eq $key) { $userisinlist=1; last; }
+			}
+			if (! $userisinlist) {
+				error("Error: User <b>".$ENV{"REMOTE_USER"}."</b> is not allowed to access statistics of this domain/config.");
+			}
+		}
+	}
+	if ($UpdateStats && (! $AllowToUpdateStatsFromBrowser) && $ENV{"GATEWAY_INTERFACE"}) {
+		error("Error: Update of statistics is not allowed from a browser.");
+	}
 }
 
 # Init global variables required for output and update process
@@ -3482,7 +3503,7 @@ if ($UpdateStats) {
 	# We read last history file if found
 	if ($yearmonthmax =~ /^(\d\d\d\d)(\d\d)$/) {
 		$monthtoprocess=int($2);$yeartoprocess=int($1);
-		# We read LastTime in this last history file.
+		# We read all data in this last history file.
 		&Read_History_File($yeartoprocess,$monthtoprocess,1);
 	}
 	else {
@@ -3529,8 +3550,8 @@ if ($UpdateStats) {
 			next;
 		}
 
-		if ($Debug) { debug(" Correct format line $NbOfLinesRead : host=\"$field[$pos_rc]\", logname=\"$field[$pos_logname]\", date=\"$field[$pos_date]\", method=\"$field[$pos_method]\", url=\"$field[$pos_url]\", code=\"$field[$pos_code]\", size=\"$field[$pos_size]\", referer=\"$field[$pos_referer]\", agent=\"$field[$pos_agent]\"",3); }
-		#if ($Debug) { debug("$field[$pos_vh] - $field[$pos_gzipin] - $field[$pos_gzipout] - $field[$pos_gzipratio]\n"); }
+		if ($Debug) { debug(" Correct format line $NbOfLinesRead : host=\"$field[$pos_rc]\", logname=\"$field[$pos_logname]\", date=\"$field[$pos_date]\", method=\"$field[$pos_method]\", url=\"$field[$pos_url]\", code=\"$field[$pos_code]\", size=\"$field[$pos_size]\", referer=\"$field[$pos_referer]\", agent=\"$field[$pos_agent]\"",4); }
+		#if ($Debug) { debug("$field[$pos_vh] - $field[$pos_gzipin] - $field[$pos_gzipout] - $field[$pos_gzipratio]\n",4); }
 
 		# Check virtual host name
 		#----------------------------------------------------------------------
@@ -3567,11 +3588,10 @@ if ($UpdateStats) {
 		if ($monthnum{$dateparts[1]}) { $dateparts[1]=$monthnum{$dateparts[1]}; }	# Change lib month in num month if necessary
 
 		# Create $timerecord like YYYYMMDDHHMMSS
-		#--- TZ START : Uncomment following 3 lines to made a timezone adjustment. Warning this reduce seriously AWStats speed.
-#		my $TZ=+2;
-#		my ($nsec,$nmin,$nhour,$nmday,$nmon,$nyear,$nwday) = localtime(Time::Local::timelocal($dateparts[5], $dateparts[4], $dateparts[3], $dateparts[0], $dateparts[1], $dateparts[2]) + (3600*$TZ));
-#		@dateparts = split(/:/, sprintf("%02u:%02u:%04u:%02u:%02u:%02u", $nmday, $nmon, $nyear+1900, $nhour, $nmin, $nsec));
-		#--- TZ END : Uncomment following three lines to made a timezone adjustement. Warning this reduce seriously AWStats speed.
+		if ($UseTimeZone) {
+			my ($nsec,$nmin,$nhour,$nmday,$nmon,$nyear,$nwday) = localtime(Time::Local::timelocal($dateparts[5], $dateparts[4], $dateparts[3], $dateparts[0], $dateparts[1]-1, $dateparts[2]-1900) + $UseTimeZoneSeconds);
+			@dateparts = split(/:/, sprintf("%02u:%02u:%04u:%02u:%02u:%02u", $nmday, $nmon+1, $nyear+1900, $nhour, $nmin, $nsec));
+		}
 #		my $yearmonthdayrecord="$dateparts[2]$dateparts[1]$dateparts[0]";
 		my $yearmonthdayrecord=sprintf("$dateparts[2]%02i%02i",$dateparts[1],$dateparts[0]);
 #		my $timerecord=int($yearmonthdayrecord.$dateparts[3].$dateparts[4].$dateparts[5]);
@@ -3606,7 +3626,7 @@ if ($UpdateStats) {
 		}
 
 		# Here, field array, timerecord and yearmonthdayrecord are initialized for log record
-		if ($Debug) { debug(" This is a not already processed record",3); }
+		if ($Debug) { debug(" This is a not already processed record",4); }
 
 		# We found a new line
 		#----------------------------------------
@@ -4202,7 +4222,7 @@ if ($UpdateStats) {
 		close(LOG);
 	}
 }
-# End of log processing
+# End of log processing if ($UPdateStats)
 
 
 
@@ -4218,18 +4238,225 @@ if ($HTMLOutput) {
 	my $rest_p; my $rest_h; my $rest_k; my $rest_e; my $rest_x; my $rest_s;
 	my $total_p; my $total_h; my $total_k; my $total_e; my $total_x; my $total_s;
 
+	# Define the NewLinkParams for main chart
+	my $NewLinkParams=${QueryString};
+	$NewLinkParams =~ s/update[=]*[^ &]*//i;
+	$NewLinkParams =~ s/output[=]*[^ &]*//i;
+	$NewLinkParams =~ s/framename[=]*[^ &]*//i;
+	$NewLinkParams =~ s/staticlinks[=]*[^ &]*//i;
+	my $NewLinkTarget="";
+	if ($DetailedReportsOnNewWindows) { $NewLinkTarget=" target=\"awstatsbis\""; }
+	if (($FrameName eq "mainleft" || $FrameName eq "mainright") && $DetailedReportsOnNewWindows < 2) {
+		$NewLinkParams.="&framename=mainright";
+		$NewLinkTarget=" target=\"mainright\"";
+	}
+	$NewLinkParams =~ tr/&/&/s; $NewLinkParams =~ s/^&//; $NewLinkParams =~ s/&$//;
+	if ($NewLinkParams) { $NewLinkParams="${NewLinkParams}&"; }
+	
+	# WRITE TOOLTIPS INFO
+	#---------------------------------------------------------------------
+	if ($FrameName ne "mainleft") {
+
+		# Get the tooltips texts
+		&Read_Language_Tooltip($Lang);
+	
+		# Position .style.pixelLeft/.pixelHeight/.pixelWidth/.pixelTop	IE OK	Opera OK
+		#          .style.left/.height/.width/.top											Netscape OK
+		# document.getElementById										IE OK	Opera OK	Netscape OK
+		# document.body.offsetWidth|document.body.style.pixelWidth		IE OK	Opera OK	Netscape OK		Visible width of container
+		# document.body.scrollTop                                       IE OK	Opera OK	Netscape OK		Visible width of container
+		# tooltip.offsetWidth|tooltipOBJ.style.pixelWidth				IE OK	Opera OK	Netscape OK		Width of an object
+		# event.clientXY												IE OK	Opera OK	Netscape KO		Return position of mouse
+		print <<EOF;
+	
+		<script language="javascript">
+			function ShowTooltip(fArg)
+			{
+				var tooltipOBJ = (document.getElementById) ? document.getElementById('tt' + fArg) : eval("document.all['tt" + fArg + "']");
+				if (tooltipOBJ != null) {
+					var tooltipLft = (document.body.offsetWidth?document.body.offsetWidth:document.body.style.pixelWidth) - (tooltipOBJ.offsetWidth?tooltipOBJ.offsetWidth:(tooltipOBJ.style.pixelWidth?tooltipOBJ.style.pixelWidth:300)) - 30;
+					if (navigator.appName != 'Netscape') {
+						var tooltipTop = (document.body.scrollTop>=0?document.body.scrollTop+10:event.clientY+10);
+						if ((event.clientX > tooltipLft) && (event.clientY < (tooltipOBJ.scrollHeight?tooltipOBJ.scrollHeight:tooltipOBJ.style.pixelHeight) + 10)) {
+							tooltipTop = (document.body.scrollTop?document.body.scrollTop:document.body.offsetTop) + event.clientY + 20;
+						}
+						tooltipOBJ.style.pixelLeft = tooltipLft; tooltipOBJ.style.pixelTop = tooltipTop;
+					}
+					else {
+						var tooltipTop = 10;
+						tooltipOBJ.style.left = tooltipLft; tooltipOBJ.style.top = tooltipTop;
+					}
+					tooltipOBJ.style.visibility = "visible";
+				}
+			}
+			function HideTooltip(fArg)
+			{
+				var tooltipOBJ = (document.getElementById) ? document.getElementById('tt' + fArg) : eval("document.all['tt" + fArg + "']");
+				if (tooltipOBJ != null) {
+					tooltipOBJ.style.visibility = "hidden";
+				}
+			}
+		</script>
+
+EOF
+	}
+
+	# BUILD listofyears LIST
+	#-----------------------
+
 	# Get list of all possible years
+	# TODO Use of grep to limit list of readdir
 	opendir(DIR,"$DirData");
 	@filearray = sort readdir DIR;
 	close DIR;
-	#my $yearmin=0;
+	my $maxyear="0000";
 	foreach my $i (0..$#filearray) {
 		if ("$filearray[$i]" =~ /^$PROG(\d\d)(\d\d\d\d)$FileSuffix\.txt$/) {
-			$listofyears{$2}=1;
-			#if (int("$2") < $yearmin || $yearmin == 0) { $yearmin=int("$2"); }
+			if (! $listofyears{"$2"} || "$1" gt $listofyears{"$2"}) {
+				$listofyears{"$2"}="$1";	# listofyear contains max month found
+				if ("$2" gt $maxyear) { $maxyear="$2"; }
+			}
 		}
 	}
-	#foreach my $i ($yearmin..$nowyear) { $listofyears{$i}=1; }
+
+	# Read LastUpdate
+	if ($FrameName ne "index" && $FrameName ne "mainright") {
+		# Read 'general' section of this history file for LastUpdate
+		&Read_History_File($maxyear,$listofyears{$maxyear},"general");
+	}
+
+	if ($FrameName ne "index" && $FrameName ne "mainleft") { print "$HTMLHeadSection\n"; }
+
+	# LOGO AND FLAGS
+	#---------------------------------------------------------------------
+	if (($ShowHeader && $FrameName ne "mainright") || $FrameName eq "mainleft") {
+		print "<table>\n";
+		print "<tr><td class=AWL width=150 style=\"font: 18px arial,verdana,helvetica; font-weight: bold\">AWStats\n";
+		if (! $StaticLinks) { Show_Flag_Links($Lang); }
+		print "</td>\n";
+		if ($LogoLink =~ "http://awstats.sourceforge.net") {
+			print "<td width=200 class=AWL><a href=\"$LogoLink\" target=\"awstatshome\"><img src=\"$DirIcons/other/$Logo\" border=0 alt=\"$PROG Official Web Site\" title=\"$PROG Official Web Site\"></a></td></tr>\n";
+		}
+		else {
+			print "<td width=200 class=AWL><a href=\"$LogoLink\" target=\"awstatshome\"><img src=\"$DirIcons/other/$Logo\" border=0></a></td></tr>\n";
+		}
+		print "<tr><td class=AWL colspan=2>$Message[54]</td></tr>\n";
+		print "</table>\n";
+	}
+
+	# MENU
+	#---------------------------------------------------------------------
+	if ($ShowMenu || $FrameName eq "mainleft") {
+		if ($Debug) { debug("ShowMenu",2); }
+		my $table=0;
+		if ($FrameName ne "mainright") {
+			if (! $table) { print "$Center<a name=\"MENU\">&nbsp;</a><BR>"; print "<table>"; $table=1; }
+			# Print site name
+			print "<tr><th class=AWL>$Message[7] : </th><td class=AWL><font style=\"font-size: 14px;\">$SiteDomain</font></td></tr>";
+			print "<tr><th class=AWL valign=top>$Message[35] : </th>";
+			print "<td class=AWL><font style=\"font-size: 14px;\">";
+			# Print LastUpdate
+			my $lastupdate=0;
+			foreach my $key (sort keys %LastUpdate) { if ($lastupdate < $LastUpdate{$key}) { $lastupdate = $LastUpdate{$key}; } }
+			if ($lastupdate) { print Format_Date($lastupdate,0); }
+			else { print "<font color=#880000>$Message[24]</font>"; }
+			print "</font>";
+			# Print selected period of analysis
+			# ...
+			# Print update link
+			if ($AllowToUpdateStatsFromBrowser && ! $StaticLinks) {
+				my $NewLinkParams=${QueryString};
+				$NewLinkParams =~ s/update[=]*[^ &]*//i;
+				$NewLinkParams =~ s/staticlinks[=]*[^ &]*//i;
+				$NewLinkParams =~ s/framename[=]*[^ &]*//i;
+				$NewLinkParams =~ tr/&/&/s; $NewLinkParams =~ s/^&//; $NewLinkParams =~ s/&$//;
+				if ($NewLinkParams) { $NewLinkParams="${NewLinkParams}&"; }
+				my $NewLinkTarget="";
+				if ($FrameName eq "mainleft") { $NewLinkTarget=" target=_top"; print "<br>"; }
+				else { print "&nbsp; &nbsp; &nbsp; &nbsp;"; }
+				print "<a href=\"$AWScript?${NewLinkParams}update=1\"$NewLinkTarget>$Message[74]</a>";
+			}
+			print "</td></tr>\n";
+		}
+		# Print menu links
+		if (($HTMLOutput eq "main" && $FrameName ne "mainright") || $FrameName eq "mainleft") {	# If main page asked
+			my $linkpage=($FrameName eq "mainleft"?"$AWScript?${NewLinkParams}framename=mainright":"");
+			my $targetpage=($FrameName eq "mainleft"?" target=mainright":"");
+			if (! $table) { print "$Center<a name=\"MENU\">&nbsp;</a><BR>"; print "<table>"; $table=1; }
+			print "<tr><td>&nbsp;</td></tr>\n";
+			# When
+			print "<tr><th class=AWL>$Message[93] : </th>";
+			print "<td class=AWL>";
+			if ($ShowMonthDayStats)		 { print "<a href=\"$linkpage#SUMMARY\"$targetpage>$Message[5]/$Message[4]</a> &nbsp; "; }
+			if ($ShowDaysOfWeekStats)	 { print "<a href=\"$linkpage#DAYOFWEEK\"$targetpage>$Message[91]</a> &nbsp; "; }
+			if ($ShowHoursStats)		 { print "<a href=\"$linkpage#HOUR\"$targetpage>$Message[20]</a> &nbsp; "; }
+			print "<br></td></tr>";
+			# Who
+			print "<tr><th class=AWL>$Message[92] : </th>";
+			print "<td class=AWL>";
+			if ($ShowDomainsStats)		 { print "<a href=\"$linkpage#DOMAINS\"$targetpage>$Message[17]</a> &nbsp; "; }
+			if ($ShowHostsStats)		 { print "<a href=\"$linkpage#VISITOR\"$targetpage>".ucfirst($Message[81])."</a> &nbsp; "; }
+			if ($ShowHostsStats)		 { print "<a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=allhosts":"$PROG$StaticLinks.lasthosts.html")."\"$NewLinkTarget>$Message[80]</a> &nbsp;\n"; }
+			if ($ShowHostsStats)		 { print "<a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=lasthosts":"$PROG$StaticLinks.lasthosts.html")."\"$NewLinkTarget>$Message[9]</a> &nbsp;\n"; }
+			if ($ShowHostsStats)		 { print "<a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=unknownip":"$PROG$StaticLinks.unknownip.html")."\"$NewLinkTarget>$Message[45]</a> &nbsp;\n"; }
+			if ($ShowAuthenticatedUsers) { print "<a href=\"$linkpage#LOGIN\"$targetpage>$Message[94]</a> &nbsp; "; }
+			if ($ShowRobotsStats)		 { print "<a href=\"$linkpage#ROBOTS\"$targetpage>$Message[53]</a> &nbsp; "; }
+			print "<br></td></tr>";
+			# Navigation
+			print "<tr><th class=AWL>$Message[72] : </th>";
+			print "<td class=AWL>";
+			if ($ShowSessionsStats)		 { print "<a href=\"$linkpage#SESSIONS\"$targetpage>$Message[117]</a> &nbsp; "; }
+			if ($ShowPagesStats)		 { print "<a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=urldetail":"$PROG$StaticLinks.urldetail.html")."\"$NewLinkTarget>$Message[29]</a> &nbsp;\n"; }
+			if ($ShowPagesStats)		 { print "<a href=\"$linkpage#ENTRY\"$targetpage>$Message[104]</a> &nbsp; "; }
+			if ($ShowPagesStats)		 { print "<a href=\"$linkpage#EXIT\"$targetpage>$Message[116]</a> &nbsp; "; }
+			if ($ShowFileTypesStats)	 { print "<a href=\"$linkpage#FILETYPES\"$targetpage>$Message[73]</a> &nbsp; "; }
+			if ($ShowFileSizesStats)	 {  }
+			if ($ShowOSStats)			 { print "<a href=\"$linkpage#OS\"$targetpage>$Message[59]</a> &nbsp; "; }
+			if ($ShowBrowsersStats)		 { print "<a href=\"$linkpage#BROWSER\"$targetpage>$Message[21]</a> &nbsp; "; }
+			if ($ShowBrowsersStats)		 { print "<a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=browserdetail":"$PROG$StaticLinks.browserdetail.html")."\"$NewLinkTarget>$Message[33]</a> &nbsp;\n"; }
+			if ($ShowBrowsersStats)		 { print "<a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=browserdetail":"$PROG$StaticLinks.browserdetail.html")."\"$NewLinkTarget>$Message[34]</a> &nbsp;\n"; }
+			print "<br></td></tr>";
+			# Referers
+			print "<tr><th class=AWL>$Message[23] : </th>";
+			print "<td class=AWL>";
+			if ($ShowOriginStats)		 { print "<a href=\"$linkpage#REFERER\"$targetpage>$Message[37]</a> &nbsp;\n"; }
+			if ($ShowOriginStats)		 { print "<a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=refererse":"$PROG$StaticLinks.refererse.html")."\"$NewLinkTarget>$Message[126]</a> &nbsp;\n"; }
+			if ($ShowOriginStats)		 { print "<a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=refererpages":"$PROG$StaticLinks.refererpages.html")."\"$NewLinkTarget>$Message[127]</a> &nbsp;\n"; }
+			if ($ShowKeyphrasesStats)	 { print "<a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=keyphrases":"$PROG$StaticLinks.keyphrases.html")."\"$NewLinkTarget>$Message[120]</a> &nbsp;\n"; }
+			if ($ShowKeywordsStats)	 	 { print "<a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=keywords":"$PROG$StaticLinks.keywords.html")."\"$NewLinkTarget>$Message[121]</a> &nbsp;\n"; }
+			print "<br></td></tr>";
+			# Others
+			print "<tr><th class=AWL>$Message[2] : </th>";
+			print "<td class=AWL>";
+			if ($ShowCompressionStats)	 { print "<a href=\"$linkpage#FILETYPES\"$targetpage>$Message[98]</a> &nbsp; "; }
+			if ($ShowHTTPErrorsStats)	 { print "<a href=\"$linkpage#ERRORS\"$targetpage>$Message[22]</a> &nbsp; "; }
+			if ($ShowHTTPErrorsStats)	 { print "<a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=errors404":"$PROG$StaticLinks.errors404.html")."\"$NewLinkTarget>$Message[31]</a>\n"; }
+			print "<br></td></tr>";
+		}
+		# Print Back link
+		elsif ($HTMLOutput ne "main") {
+			if (! $table) { print "$Center<a name=\"MENU\">&nbsp;</a><BR>"; print "<table>"; $table=1; }
+			$NewLinkParams =~ s/urlfilter[=]*[^ &]*//i;
+			$NewLinkParams =~ s/&+$//;
+			if (! $DetailedReportsOnNewWindows || $FrameName eq "mainright") {
+				print "<tr><td class=AWL><a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript".(${NewLinkParams}?"?${NewLinkParams}":""):"$PROG$StaticLinks.html")."\">$Message[76]</a></td></tr>\n";
+			}
+			else {
+				print "<tr><td class=AWL><a href=\"javascript:parent.window.close();\">$Message[118]</a></td></tr>\n";
+			}
+		}
+		if ($table) { print "</table>\n<br>\n"; }
+
+		if ($FrameName ne "mainleft" && $FrameName ne "mainright") { print "<hr>\n\n"; }
+
+		# Exit if left frame
+		if ($FrameName eq "mainleft") {
+			# TODO Print created by
+			
+			&html_end();
+			exit 0;
+		}
+	}
 
 	# Here, first part of data for processed month (old and current) are still in memory
 	# If a month was already processed, then $HistoryFileAlreadyRead{"MMYYYY"} value is 1
@@ -4238,66 +4465,16 @@ if ($HTMLOutput) {
 	#-------------------------------------------------------------------------------
 	# Loop on each month of year but only existing and not already read will be read by Read_History_File function
 	for (my $ix=12; $ix>=1; $ix--) {
-		my $monthix=$ix+0; if ($monthix < 10) { $monthix  = "0$monthix"; }	# Good trick to change $monthix into "MM" format
-		if ($MonthRequired eq "year" || $monthix == $MonthRequired) {
+		my $monthix=sprintf("%02s",$ix);
+		if ($MonthRequired eq "year" || $monthix eq $MonthRequired) {
 			&Read_History_File($YearRequired,$monthix,1);	# Read full history file
 		}
 		else {
-			&Read_History_File($YearRequired,$monthix,0);	# Read first part of history file is enough (for the month graph and LastUpdate)
+			# TODO We can store nb of hits,pages,bandwith and visits,visitors for month in general section to avoid reading time and visitor section here
+			# However this duplicate info and can create incorrect sync.
+			&Read_History_File($YearRequired,$monthix,0);	# Read first part of history file is enough (general, time, partialy visitor)
 		}
 	}
-
-
-	# Get the tooltips texts
-	&Read_Language_Tooltip($Lang);
-
-	# Position .style.pixelLeft/.pixelHeight/.pixelWidth/.pixelTop	IE OK	Opera OK
-	#          .style.left/.height/.width/.top											Netscape OK
-	# document.getElementById										IE OK	Opera OK	Netscape OK
-	# document.body.offsetWidth|document.body.style.pixelWidth		IE OK	Opera OK	Netscape OK		Visible width of container
-	# document.body.scrollTop                                       IE OK	Opera OK	Netscape OK		Visible width of container
-	# tooltip.offsetWidth|tooltipOBJ.style.pixelWidth				IE OK	Opera OK	Netscape OK		Width of an object
-	# event.clientXY												IE OK	Opera OK	Netscape KO		Return position of mouse
-	print <<EOF;
-
-	<script language="javascript">
-		function ShowTooltip(fArg)
-		{
-			var tooltipOBJ = (document.getElementById) ? document.getElementById('tt' + fArg) : eval("document.all['tt" + fArg + "']");
-			if (tooltipOBJ != null) {
-				var tooltipLft = (document.body.offsetWidth?document.body.offsetWidth:document.body.style.pixelWidth) - (tooltipOBJ.offsetWidth?tooltipOBJ.offsetWidth:(tooltipOBJ.style.pixelWidth?tooltipOBJ.style.pixelWidth:300)) - 30;
-				if (navigator.appName != 'Netscape') {
-					var tooltipTop = (document.body.scrollTop>=0?document.body.scrollTop+10:event.clientY+10);
-					if ((event.clientX > tooltipLft) && (event.clientY < (tooltipOBJ.scrollHeight?tooltipOBJ.scrollHeight:tooltipOBJ.style.pixelHeight) + 10)) {
-						tooltipTop = (document.body.scrollTop?document.body.scrollTop:document.body.offsetTop) + event.clientY + 20;
-					}
-					tooltipOBJ.style.pixelLeft = tooltipLft; tooltipOBJ.style.pixelTop = tooltipTop;
-				}
-				else {
-					var tooltipTop = 10;
-					tooltipOBJ.style.left = tooltipLft; tooltipOBJ.style.top = tooltipTop;
-				}
-				tooltipOBJ.style.visibility = "visible";
-			}
-		}
-		function HideTooltip(fArg)
-		{
-			var tooltipOBJ = (document.getElementById) ? document.getElementById('tt' + fArg) : eval("document.all['tt" + fArg + "']");
-			if (tooltipOBJ != null) {
-				tooltipOBJ.style.visibility = "hidden";
-			}
-		}
-	</script>
-
-EOF
-
-	# Define the NewLinkParams for main chart
-	my $NewLinkParams=${QueryString};
-	$NewLinkParams =~ s/update[=]*[^ &]*//i;
-	$NewLinkParams =~ s/output[=]*[^ &]*//i;
-	$NewLinkParams =~ s/staticlinks[=]*[^ &]*//i;
-	$NewLinkParams =~ tr/&/&/s; $NewLinkParams =~ s/^&//; $NewLinkParams =~ s/&$//;
-	if ($NewLinkParams) { $NewLinkParams="${NewLinkParams}&"; }
 
 	# FirstTime LastTime TotalVisits TotalUnique TotalHostsKnown TotalHostsUnknown
 	$FirstTime=$LastTime=$TotalUnique=$TotalVisits=$TotalHostsKnown=$TotalHostsUnknown=0;
@@ -4373,95 +4550,7 @@ EOF
 		debug("firstdaytoshowtime=$firstdaytoshowtime, lastdaytoshowtime=$lastdaytoshowtime",1);
 	}
 
-	# MENU
-	#---------------------------------------------------------------------
-	if ($ShowMenu) {
-		if ($Debug) { debug("ShowMenu",2); }
-		print "$Center<a name=\"MENU\">&nbsp;</a><BR>";
-		print "<table>";
-		print "<tr><th class=AWL>$Message[7] : </th><td class=AWL><font style=\"font-size: 14px;\">$SiteDomain</font></th></tr>";
-		print "<tr><th class=AWL valign=top>$Message[35] : </th>";
-		print "<td class=AWL><font style=\"font-size: 14px;\">";
-		# Search max of %LastUpdate
-		my $lastupdate=0;
-		foreach my $key (sort keys %LastUpdate) { if ($lastupdate < $LastUpdate{$key}) { $lastupdate = $LastUpdate{$key}; } }
-		if ($lastupdate) { print Format_Date($lastupdate,0); }
-		else { print "<font color=#880000>$Message[24]</font>"; }
-		print "</font>&nbsp; &nbsp; &nbsp; &nbsp;";
-		if ($AllowToUpdateStatsFromBrowser && ! $StaticLinks) {
-			my $NewLinkParams=${QueryString};
-			$NewLinkParams =~ s/update[=]*[^ &]*//i;
-			$NewLinkParams =~ s/staticlinks[=]*[^ &]*//i;
-			$NewLinkParams =~ tr/&/&/s; $NewLinkParams =~ s/^&//; $NewLinkParams =~ s/&$//;
-			if ($NewLinkParams) { $NewLinkParams="${NewLinkParams}&"; }
-			print "<a href=\"$AWScript?${NewLinkParams}update=1\">$Message[74]</a>";
-		}
-		print "</td></tr>\n";
-		if ($HTMLOutput eq "main") {	# If main page asked
-			print "<tr><td>&nbsp;</td></tr>\n";
-			# When
-			print "<tr><th class=AWL>$Message[93] : </th>";
-			print "<td class=AWL>";
-			if ($ShowMonthDayStats)		 { print "<a href=\"#SUMMARY\">$Message[5]/$Message[4]</a> &nbsp; "; }
-			if ($ShowDaysOfWeekStats)	 { print "<a href=\"#DAYOFWEEK\">$Message[91]</a> &nbsp; "; }
-			if ($ShowHoursStats)		 { print "<a href=\"#HOUR\">$Message[20]</a> &nbsp; "; }
-			print "<br></td></tr>";
-			# Who
-			print "<tr><th class=AWL>$Message[92] : </th>";
-			print "<td class=AWL>";
-			if ($ShowDomainsStats)		 { print "<a href=\"#DOMAINS\">$Message[17]</a> &nbsp; "; }
-			if ($ShowHostsStats)		 { print "<a href=\"#VISITOR\">".ucfirst($Message[81])."</a> &nbsp; "; }
-			if ($ShowHostsStats)		 { print "<a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=allhosts":"$PROG$StaticLinks.lasthosts.html")."\"".($DetailedReportsOnNewWindows?" target=\"awstatsbis\"":"").">$Message[80]</a> &nbsp;\n"; }
-			if ($ShowHostsStats)		 { print "<a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=lasthosts":"$PROG$StaticLinks.lasthosts.html")."\"".($DetailedReportsOnNewWindows?" target=\"awstatsbis\"":"").">$Message[9]</a> &nbsp;\n"; }
-			if ($ShowHostsStats)		 { print "<a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=unknownip":"$PROG$StaticLinks.unknownip.html")."\"".($DetailedReportsOnNewWindows?" target=\"awstatsbis\"":"").">$Message[45]</a> &nbsp;\n"; }
-			if ($ShowAuthenticatedUsers) { print "<a href=\"#LOGIN\">$Message[94]</a> &nbsp; "; }
-			if ($ShowRobotsStats)		 { print "<a href=\"#ROBOTS\">$Message[53]</a> &nbsp; "; }
-			print "<br></td></tr>";
-			# Navigation
-			print "<tr><th class=AWL>$Message[72] : </th>";
-			print "<td class=AWL>";
-			if ($ShowSessionsStats)		 { print "<a href=\"#SESSIONS\">$Message[117]</a> &nbsp; "; }
-			if ($ShowPagesStats)		 { print "<a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=urldetail":"$PROG$StaticLinks.urldetail.html")."\"".($DetailedReportsOnNewWindows?" target=\"awstatsbis\"":"").">$Message[29]</a> &nbsp;\n"; }
-			if ($ShowPagesStats)		 { print "<a href=\"#ENTRY\">$Message[104]</a> &nbsp; "; }
-			if ($ShowPagesStats)		 { print "<a href=\"#EXIT\">$Message[116]</a> &nbsp; "; }
-			if ($ShowFileTypesStats)	 { print "<a href=\"#FILETYPES\">$Message[73]</a> &nbsp; "; }
-			if ($ShowFileSizesStats)	 {  }
-			if ($ShowOSStats)			 { print "<a href=\"#OS\">$Message[59]</a> &nbsp; "; }
-			if ($ShowBrowsersStats)		 { print "<a href=\"#BROWSER\">$Message[21]</a> &nbsp; "; }
-			if ($ShowBrowsersStats)		 { print "<a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=browserdetail":"$PROG$StaticLinks.browserdetail.html")."\"".($DetailedReportsOnNewWindows?" target=\"awstatsbis\"":"").">$Message[33]</a> &nbsp;\n"; }
-			if ($ShowBrowsersStats)		 { print "<a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=browserdetail":"$PROG$StaticLinks.browserdetail.html")."\"".($DetailedReportsOnNewWindows?" target=\"awstatsbis\"":"").">$Message[34]</a> &nbsp;\n"; }
-			print "<br></td></tr>";
-			# Referers
-			print "<tr><th class=AWL>$Message[23] : </th>";
-			print "<td class=AWL>";
-			if ($ShowOriginStats)		 { print "<a href=\"#REFERER\">$Message[37]</a> &nbsp;\n"; }
-			if ($ShowOriginStats)		 { print "<a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=refererse":"$PROG$StaticLinks.refererse.html")."\"".($DetailedReportsOnNewWindows?" target=\"awstatsbis\"":"").">$Message[126]</a> &nbsp;\n"; }
-			if ($ShowOriginStats)		 { print "<a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=refererpages":"$PROG$StaticLinks.refererpages.html")."\"".($DetailedReportsOnNewWindows?" target=\"awstatsbis\"":"").">$Message[127]</a> &nbsp;\n"; }
-			if ($ShowKeyphrasesStats)	 { print "<a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=keyphrases":"$PROG$StaticLinks.keyphrases.html")."\"".($DetailedReportsOnNewWindows?" target=\"awstatsbis\"":"").">$Message[120]</a> &nbsp;\n"; }
-			if ($ShowKeywordsStats)	 	 { print "<a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=keywords":"$PROG$StaticLinks.keywords.html")."\"".($DetailedReportsOnNewWindows?" target=\"awstatsbis\"":"").">$Message[121]</a> &nbsp;\n"; }
-			print "<br></td></tr>";
-			# Others
-			print "<tr><th class=AWL>$Message[2] : </th>";
-			print "<td class=AWL>";
-			if ($ShowCompressionStats)	 { print "<a href=\"#FILETYPES\">$Message[98]</a> &nbsp; "; }
-			if ($ShowHTTPErrorsStats)	 { print "<a href=\"#ERRORS\">$Message[22]</a> &nbsp; "; }
-			if ($ShowHTTPErrorsStats)	 { print "<a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=errors404":"$PROG$StaticLinks.errors404.html")."\"".($DetailedReportsOnNewWindows?" target=\"awstatsbis\"":"").">$Message[31]</a>\n"; }
-			print "<br></td></tr>";
-		}
-		else {	# If not main page
-			$NewLinkParams =~ s/urlfilter[=]*[^ &]*//i;
-			$NewLinkParams =~ s/&+$//;
-			if (! $DetailedReportsOnNewWindows) {
-				print "<tr><td class=AWL><a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript".(${NewLinkParams}?"?${NewLinkParams}":""):"$PROG$StaticLinks.html")."\">$Message[76]</a></td></tr>\n";
-			}
-			else {
-				print "<tr><td class=AWL><a href=\"javascript:parent.window.close();\">$Message[118]</a></td></tr>\n";
-			}
-		}
-		print "</table>\n";
-		print "<br>\n";
-		print "<hr>\n\n";
-	}
+
 	if ($HTMLOutput eq "allhosts") {
 		print "$Center<a name=\"HOSTSLIST\">&nbsp;</a><BR>";
 		&tab_head($Message[81],19);
@@ -4570,7 +4659,7 @@ EOF
 		exit(0);
 	}
 	if ($HTMLOutput eq "urldetail") {
-		if ($AddOn) { AddOn_Filter(); }
+		if ($PluginETF1) { AddOn_Filter(); }
 		print "$Center<a name=\"URLDETAIL\">&nbsp;</a><BR>";
 		# Show filter form
 		if (! $StaticLinks) {
@@ -4581,7 +4670,7 @@ EOF
 			$NewLinkParams =~ tr/&/&/s; $NewLinkParams =~ s/^&//; $NewLinkParams =~ s/&$//;
 			if ($NewLinkParams) { $NewLinkParams="${NewLinkParams}&"; }
 			print "<FORM name=\"FormUrlFilter\" action=\"$AWScript?${NewLinkParams}\" class=\"TABLEFRAME\">\n";
-			print "<TABLE valign=center><TR>\n";
+			print "<TABLE valign=middle><TR>\n";
 			print "<TD>&nbsp; &nbsp; $Message[79] : &nbsp; &nbsp;\n";
 			print "<input type=hidden name=\"output\" value=\"urldetail\">\n";
 			if ($SiteConfig) { print "<input type=hidden name=\"config\" value=\"$SiteConfig\">\n"; }
@@ -4589,6 +4678,7 @@ EOF
 			if ($QueryString =~ /month=(\d\d)/i || $QueryString =~ /month=(year)/i) { print "<input type=hidden name=\"month\" value=\"$1\">\n"; }
 			if ($QueryString =~ /lang=(\w+)/i) { print "<input type=hidden name=\"lang\" value=\"$1\">\n"; }
 			if ($QueryString =~ /debug=(\d+)/i) { print "<input type=hidden name=\"debug\" value=\"$1\">\n"; }
+			if ($QueryString =~ /framename=(\w+)/i) { print "<input type=hidden name=\"framename\" value=\"$1\">\n"; }
 			print "</TD>\n";
 			print "<TD><input type=text name=\"urlfilter\" value=\"$URLFilter\" class=\"CFormFields\"></TD>\n";
 			print "<TD><input type=submit value=\"$Message[115]\" class=\"CFormFields\">\n";
@@ -4599,8 +4689,8 @@ EOF
 		&tab_head($Message[19],19);
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>";
 		if ($URLFilter) {
-			print "$Message[79]: <b>$URLFilter</b> - ".(scalar keys %_url_p)." $Message[28]";
-			if ($MonthRequired ne "year") { print " ($Message[102]: $TotalDifferentPages $Message[28])"; }
+			print "$Message[79] <b>$URLFilter</b>: ".(scalar keys %_url_p)." $Message[28]";
+			if ($MonthRequired ne "year") { print "<br>$Message[102]: $TotalDifferentPages $Message[28]"; }
 		}
 		else { print "$Message[102]: ".(scalar keys %_url_p)." $Message[28]"; }
 		print "</TH>";
@@ -4608,7 +4698,7 @@ EOF
 		print "<TH bgcolor=\"#$color_k\">&nbsp;$Message[106]&nbsp;</TH>";
 		print "<TH bgcolor=\"#$color_e\">&nbsp;$Message[104]&nbsp;</TH>";
 		print "<TH bgcolor=\"#$color_x\">&nbsp;$Message[116]&nbsp;</TH>";
-		if ($AddOn) { AddOn_ShowFields(""); }
+		if ($PluginETF1) { AddOn_ShowFields(""); }
 		print "<TH>&nbsp;</TH></TR>\n";
 		$total_p=$total_k=$total_e=$total_x=0;
 		my $count=0;
@@ -4626,12 +4716,12 @@ EOF
 				my $newkey=CleanFromCSSA($key);
 				if ($newkey =~ /^http(s|):/i) {
 					# URL seems to be extracted from a ftp or proxy log file
-					print "<A HREF=\"$newkey\" target=\"awstatsbis\">$nompage</A>";
+					print "<A HREF=\"$newkey\" target=\"url\">$nompage</A>";
 				}
 				else {
 					# URL seems to be an url extracted from a web or wap server log file
 					if ($newkey =~ /^\//) {
-						print "<A HREF=\"http://$SiteDomain$newkey\" target=\"awstatsbis\">$nompage</A>";
+						print "<A HREF=\"http://$SiteDomain$newkey\" target=\"url\">$nompage</A>";
 					}
 					else {
 						print "$nompage";
@@ -4651,7 +4741,7 @@ EOF
 			if ($max_k > 0) { $bredde_k=int($BarWidth*(($_url_k{$key}||0)/($_url_p{$key}||1))/$max_k)+1; }
 			if (($bredde_k==1) && $_url_k{$key}) { $bredde_k=2; }
 			print "</TD><TD>$_url_p{$key}</TD><TD>".($_url_k{$key}?Format_Bytes($_url_k{$key}/($_url_p{$key}||1)):"&nbsp;")."</TD><TD>".($_url_e{$key}?$_url_e{$key}:"&nbsp;")."</TD><TD>".($_url_x{$key}?$_url_x{$key}:"&nbsp;")."</TD>";
-			if ($AddOn) { AddOn_ShowFields($key); }
+			if ($PluginETF1) { AddOn_ShowFields($key); }
 			print "<TD CLASS=AWL>";
 			print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_p\" WIDTH=$bredde_p HEIGHT=6><br>";
 			print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_k\" WIDTH=$bredde_k HEIGHT=6><br>";
@@ -4777,7 +4867,7 @@ EOF
 			if ($TotalRefererPages) { $p=int($_pagesrefs_h{$key}/$TotalRefererPages*1000)/10; }
 			if ($ShowLinksOnUrl && ($key =~ /^http(s|):/i)) {
 				my $newkey=CleanFromCSSA($key);
-				print "<TR><TD CLASS=AWL><A HREF=\"$newkey\" target=\"awstatsbis\">$nompage</A></TD><TD>$_pagesrefs_h{$key}</TD><TD>$p&nbsp;%</TD></TR>\n";
+				print "<TR><TD CLASS=AWL><A HREF=\"$newkey\" target=\"url\">$nompage</A></TD><TD>$_pagesrefs_h{$key}</TD><TD>$p&nbsp;%</TD></TR>\n";
 			} else {
 				print "<TR><TD CLASS=AWL>$nompage</TD><TD>$_pagesrefs_h{$key}</TD><TD>$p&nbsp;%</TD></TR>\n";
 			}
@@ -4889,11 +4979,15 @@ EOF
 		$NewLinkParams =~ s/year=[^ &]*//i;
 		$NewLinkParams =~ s/month=[^ &]*//i;
 		$NewLinkParams =~ s/staticlinks[=]*[^ &]*//i;
+		$NewLinkParams =~ s/framename[=]*[^ &]*//i;
 		$NewLinkParams =~ tr/&/&/s; $NewLinkParams =~ s/^&//; $NewLinkParams =~ s/&$//;
 		if ($NewLinkParams) { $NewLinkParams="${NewLinkParams}&"; }
+		my $NewLinkTarget="";
+		if ($FrameName eq "mainright") { $NewLinkTarget=" target=_top"; }
+
 		foreach my $key (sort keys %listofyears) {
 			if ($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks) {
-				print "<a href=\"$AWScript?${NewLinkParams}year=$key&month=year\">$Message[6] $key</a> &nbsp; ";
+				print "<a href=\"$AWScript?${NewLinkParams}year=$key&month=year\"$NewLinkTarget>$Message[6] $key</a> &nbsp; ";
 			}
 		}
 		print "</TD>";
@@ -4924,14 +5018,15 @@ EOF
 		print "<TD><b>$TotalHits</b><br>($RatioHits&nbsp;".lc($Message[57]."/".$Message[12]).")</TD>";
 		print "<TD><b>".Format_Bytes(int($TotalBytes))."</b><br>($RatioBytes&nbsp;$Message[108]/".lc($Message[12]).")</TD>";
 		print "</TR>\n";
-		print "<TR valign=bottom><TD colspan=5 align=center><center>";
+		print "<TR valign=bottom><TD align=center colspan=5>";
 
 		# Show monthly stats
+		print "<CENTER>";
 		print "<TABLE>";
 		print "<TR valign=bottom><td></td>";
 		$max_v=$max_p=$max_h=$max_k=1;
 		for (my $ix=1; $ix<=12; $ix++) {
-			my $monthix=$ix; if ($monthix < 10) { $monthix="0$monthix"; }
+			my $monthix=sprintf("%02s",$ix);
 			#if ($MonthUnique{$YearRequired.$monthix} > $max_v) { $max_v=$MonthUnique{$YearRequired.$monthix}; }
 			if ($MonthVisits{$YearRequired.$monthix} > $max_v) { $max_v=$MonthVisits{$YearRequired.$monthix}; }
 			#if ($MonthPages{$YearRequired.$monthix} > $max_p)  { $max_p=$MonthPages{$YearRequired.$monthix}; }
@@ -4939,7 +5034,7 @@ EOF
 			if ($MonthBytes{$YearRequired.$monthix} > $max_k)  { $max_k=$MonthBytes{$YearRequired.$monthix}; }
 		}
 		for (my $ix=1; $ix<=12; $ix++) {
-			my $monthix=$ix; if ($monthix < 10) { $monthix="0$monthix"; }
+			my $monthix=sprintf("%02s",$ix);
 			my $bredde_u=0; my $bredde_v=0;my $bredde_p=0;my $bredde_h=0;my $bredde_k=0;
 			if ($max_v > 0) { $bredde_u=int($MonthUnique{$YearRequired.$monthix}/$max_v*$BarHeight/2)+1; }
 			if ($max_v > 0) { $bredde_v=int($MonthVisits{$YearRequired.$monthix}/$max_v*$BarHeight/2)+1; }
@@ -4960,7 +5055,7 @@ EOF
 		for (my $ix=1; $ix<=12; $ix++) {
 			my $monthix=($ix<10?"0$ix":"$ix");
 			print "<TD>";
-			if ($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks) { print "<a href=\"$AWScript?${NewLinkParams}year=$YearRequired&month=$monthix\">"; }
+			if ($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks) { print "<a href=\"$AWScript?${NewLinkParams}year=$YearRequired&month=$monthix\"$NewLinkTarget>"; }
 			print "$monthlib{$monthix}";
 			if ($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks) { print "</a>"; }
 			print "</TD>\n";
@@ -5070,14 +5165,16 @@ EOF
 			print "<TD valign=middle".($dayofweekcursor==0||$dayofweekcursor==6?" bgcolor=\"#$color_weekend\"":"").">";
 			print ($day==$nowday && $month==$nowmonth && $year==$nowyear?"<b>":"");
 			print "$day<br><font style=\"font: 10px;\">".$monthlib{$month}."</font>";
-			print ($day==$nowday && $month==$nowmonth && $year==$nowyear?"</b></TD>":"</TD>\n");
+			print ($day==$nowday && $month==$nowmonth && $year==$nowyear?"</b>":"");
+			print "</TD>\n";
 		}
 		print "<TD> &nbsp; </TD>";
 		print "<TD valign=middle onmouseover=\"ShowTooltip(18);\" onmouseout=\"HideTooltip(18);\">$Message[96]</TD>\n";
 		print "</TR>\n";
 		print "</TABLE>\n<br>\n";
+		print "</CENTER>\n";
 
-		print "</center></TD></TR>\n";
+		print "</TD></TR>\n";
 		&tab_end;
 	}
 
@@ -5245,7 +5342,7 @@ EOF
 		if ($Debug) { debug("ShowHostsStats",2); }
 		print "$Center<a name=\"VISITOR\">&nbsp;</a><BR>";
 		$MaxNbOfHostsShown = (scalar keys %_host_h) if $MaxNbOfHostsShown > (scalar keys %_host_h);
-		&tab_head("$Message[81] ($Message[77] $MaxNbOfHostsShown) &nbsp; - &nbsp; <a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=allhosts":"$PROG$StaticLinks.allhosts.html")."\"".($DetailedReportsOnNewWindows?" target=\"awstatsbis\"":"").">$Message[80]</a> &nbsp; - &nbsp; <a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=lasthosts":"$PROG$StaticLinks.lasthosts.html")."\"".($DetailedReportsOnNewWindows?" target=\"awstatsbis\"":"").">$Message[9]</a> &nbsp; - &nbsp; <a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=unknownip":"$PROG$StaticLinks.unknownip.html")."\"".($DetailedReportsOnNewWindows?" target=\"awstatsbis\"":"").">$Message[45]</a>",19);
+		&tab_head("$Message[81] ($Message[77] $MaxNbOfHostsShown) &nbsp; - &nbsp; <a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=allhosts":"$PROG$StaticLinks.allhosts.html")."\"$NewLinkTarget>$Message[80]</a> &nbsp; - &nbsp; <a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=lasthosts":"$PROG$StaticLinks.lasthosts.html")."\"$NewLinkTarget>$Message[9]</a> &nbsp; - &nbsp; <a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=unknownip":"$PROG$StaticLinks.unknownip.html")."\"$NewLinkTarget>$Message[45]</a>",19);
 		if ($MonthRequired ne "year") { print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[81] : $TotalHostsKnown $Message[82], $TotalHostsUnknown $Message[1] - $TotalUnique $Message[11]</TH>"; }
 		else { print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[81] : ".(scalar keys %_host_h)."</TH>"; }
 		if ($ShowLinksToWhoIs && $LinksToWhoIs) { print "<TH width=80>$Message[114]</TH>"; }
@@ -5359,7 +5456,7 @@ EOF
 		if ($Debug) { debug("ShowPagesStats (MaxNbOfPageShown=$MaxNbOfPageShown TotalDifferentPages=$TotalDifferentPages)",2); }
 		print "$Center<a name=\"PAGE\">&nbsp;</a><a name=\"ENTRY\">&nbsp;</a><a name=\"EXIT\">&nbsp;</a><BR>";
 		$MaxNbOfPageShown = $TotalDifferentPages if $MaxNbOfPageShown > $TotalDifferentPages;
-		&tab_head("$Message[19] ($Message[77] $MaxNbOfPageShown) &nbsp; - &nbsp; <a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=urldetail":"$PROG$StaticLinks.urldetail.html")."\"".($DetailedReportsOnNewWindows?" target=\"awstatsbis\"":"").">$Message[80]</a>",19);
+		&tab_head("$Message[19] ($Message[77] $MaxNbOfPageShown) &nbsp; - &nbsp; <a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=urldetail":"$PROG$StaticLinks.urldetail.html")."\"$NewLinkTarget>$Message[80]</a>",19);
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$TotalDifferentPages $Message[28]</TH>";
 		print "<TH bgcolor=\"#$color_p\" width=80>$Message[29]</TH>";
 		print "<TH bgcolor=\"#$color_k\" width=80>$Message[106]</TH>";
@@ -5382,7 +5479,7 @@ EOF
 				my $newkey=CleanFromCSSA($key);
 				if ($newkey =~ /^http(s|):/i) {
 					# URL seems to be extracted from a ftp or proxy log file
-					print "<A HREF=\"$newkey\" target=\"awstatsbis\">$nompage</A>";
+					print "<A HREF=\"$newkey\" target=\"bis\">$nompage</A>";
 				}
 				else {
 					# URL seems to be an url extracted from a web or wap server log file
@@ -5431,13 +5528,13 @@ EOF
 
 	# BY FILE TYPE
 	#-------------------------
-	if ($ShowFileTypesStats || $ShowCompressionStats) {
+	if ($ShowFileTypesStats) {
 		if ($Debug) { debug("ShowFileTypesStatsCompressionStats",2); }
 		print "$Center<a name=\"FILETYPES\">&nbsp;</a><BR>";
 		my $Totalh=0; foreach my $key (keys %_filetypes_h) { $Totalh+=$_filetypes_h{$key}; }
 		my $Totalk=0; foreach my $key (keys %_filetypes_k) { $Totalk+=$_filetypes_k{$key}; }
-		if ($ShowCompressionStats) { &tab_head("$Message[73] - $Message[98]</a>",19); }
-		else { &tab_head("$Message[73]</a>",19); }
+		if ($ShowCompressionStats) { &tab_head("$Message[73] - $Message[98]",19); }
+		else { &tab_head("$Message[73]",19); }
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[73]</TH>";
 		print "<TH bgcolor=\"#$color_h\" width=80>&nbsp;$Message[57]&nbsp;</TH><TH bgcolor=\"#$color_h\" width=80>$Message[15]</TH>";
 		if ($ShowCompressionStats) {
@@ -5493,13 +5590,13 @@ EOF
 		foreach my $key (sort { $_browser_h{$b} <=> $_browser_h{$a} } keys (%_browser_h)) {
 			my $p=int($_browser_h{$key}/$Total*1000)/10;
 			if ($key eq "Unknown") {
-				print "<TR><TD width=100><IMG SRC=\"$DirIcons\/browser\/unknown.png\"></TD><TD CLASS=AWL><a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=unknownbrowser":"$PROG$StaticLinks.unknownbrowser.html")."\"".($DetailedReportsOnNewWindows?" target=\"awstatsbis\"":"").">$Message[0]</a></TD><TD width=80>?</TD><TD>$_browser_h{$key}</TD><TD>$p&nbsp;%</TD></TR>\n";
+				print "<TR><TD width=100><IMG SRC=\"$DirIcons\/browser\/unknown.png\"></TD><TD CLASS=AWL><a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=unknownbrowser":"$PROG$StaticLinks.unknownbrowser.html")."\"$NewLinkTarget>$Message[0]</a></TD><TD width=80>?</TD><TD>$_browser_h{$key}</TD><TD>$p&nbsp;%</TD></TR>\n";
 			}
 			else {
 				my $nameicon=$BrowsersHashIcon{$key}||"notavailable"; $nameicon =~ s/\s.*//; $nameicon =~ tr/A-Z/a-z/;
 				my $newbrowser=$BrowsersHashIDLib{$key}||$key;
-				if ($newbrowser eq "netscape") { $newbrowser="<font color=blue>Netscape</font> <a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=browserdetail":"$PROG$StaticLinks.browserdetail.html")."\"".($DetailedReportsOnNewWindows?" target=\"awstatsbis\"":"").">($Message[58])</a>"; }
-				if ($newbrowser eq "msie") { $newbrowser="<font color=blue>MS Internet Explorer</font> <a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=browserdetail":"$PROG$StaticLinks.browserdetail.html")."\"".($DetailedReportsOnNewWindows?" target=\"awstatsbis\"":"").">($Message[58])</a>"; }
+				if ($newbrowser eq "netscape") { $newbrowser="<font color=blue>Netscape</font> <a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=browserdetail":"$PROG$StaticLinks.browserdetail.html")."\"$NewLinkTarget>($Message[58])</a>"; }
+				if ($newbrowser eq "msie") { $newbrowser="<font color=blue>MS Internet Explorer</font> <a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=browserdetail":"$PROG$StaticLinks.browserdetail.html")."\"$NewLinkTarget>($Message[58])</a>"; }
 				print "<TR><TD width=100><IMG SRC=\"$DirIcons\/browser\/$nameicon.png\"></TD><TD CLASS=AWL>$newbrowser</TD><TD width=80>".($BrowsersHereAreGrabbers{$key}?"<b>$Message[112]</b>":"$Message[113]")."</TD><TD>$_browser_h{$key}</TD><TD>$p&nbsp;%</TD></TR>\n";
 			}
 			$count++;
@@ -5519,7 +5616,7 @@ EOF
 		foreach my $key (sort { $_os_h{$b} <=> $_os_h{$a} } keys (%_os_h)) {
 			my $p=int($_os_h{$key}/$Total*1000)/10;
 			if ($key eq "Unknown") {
-				print "<TR><TD width=100><IMG SRC=\"$DirIcons\/os\/unknown.png\"></TD><TD CLASS=AWL><a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=unknownos":"$PROG$StaticLinks.unknownos.html")."\"".($DetailedReportsOnNewWindows?" target=\"awstatsbis\"":"").">$Message[0]</a></TD><TD>$_os_h{$key}</TD>";
+				print "<TR><TD width=100><IMG SRC=\"$DirIcons\/os\/unknown.png\"></TD><TD CLASS=AWL><a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=unknownos":"$PROG$StaticLinks.unknownos.html")."\"$NewLinkTarget>$Message[0]</a></TD><TD>$_os_h{$key}</TD>";
 				print "<TD>$p&nbsp;%</TD></TR>\n";
 				}
 			else {
@@ -5565,7 +5662,7 @@ EOF
 		#------- Referrals by news group
 		print "<TR><TD CLASS=AWL><b>$Message[107]</b></TD><TD>$_from_p[5]&nbsp;</TD><TD>$p_p[5]&nbsp;%</TD><TD>$_from_h[5]&nbsp;</TD><TD>$p_h[5]&nbsp;%</TD></TR>\n";
 		#------- Referrals by search engine
-		print "<TR onmouseover=\"ShowTooltip(13);\" onmouseout=\"HideTooltip(13);\"><TD CLASS=AWL><b>$Message[40]</b> - <a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=refererse":"$PROG$StaticLinks.refererse.html")."\"".($DetailedReportsOnNewWindows?" target=\"awstatsbis\"":"").">$Message[80]</a><br>\n";
+		print "<TR onmouseover=\"ShowTooltip(13);\" onmouseout=\"HideTooltip(13);\"><TD CLASS=AWL><b>$Message[40]</b> - <a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=refererse":"$PROG$StaticLinks.refererse.html")."\"$NewLinkTarget>$Message[80]</a><br>\n";
 		print "<TABLE>\n";
 		my $count=0;
 		$rest_h=0;
@@ -5582,7 +5679,7 @@ EOF
 		print "</TABLE></TD>\n";
 		print "<TD valign=top>$_from_p[2]&nbsp;</TD><TD valign=top>$p_p[2]&nbsp;%</TD><TD valign=top>$_from_h[2]&nbsp;</TD><TD valign=top>$p_h[2]&nbsp;%</TD></TR>\n";
 		#------- Referrals by external HTML link
-		print "<TR onmouseover=\"ShowTooltip(14);\" onmouseout=\"HideTooltip(14);\"><TD CLASS=AWL><b>$Message[41]</b> - <a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=refererpages":"$PROG$StaticLinks.refererpages.html")."\"".($DetailedReportsOnNewWindows?" target=\"awstatsbis\"":"").">$Message[80]</a><br>\n";
+		print "<TR onmouseover=\"ShowTooltip(14);\" onmouseout=\"HideTooltip(14);\"><TD CLASS=AWL><b>$Message[41]</b> - <a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=refererpages":"$PROG$StaticLinks.refererpages.html")."\"$NewLinkTarget>$Message[80]</a><br>\n";
 		print "<TABLE>\n";
 		$count=0;
 		$rest_h=0;
@@ -5619,7 +5716,7 @@ EOF
 		if ($Debug) { debug("ShowKeyphrasesStats",2); }
 		print "$Center<a name=\"KEYPHRASES\">&nbsp;</a><BR>";
 		$MaxNbOfKeyphrasesShown = $TotalDifferentKeyphrases if $MaxNbOfKeyphrasesShown > $TotalDifferentKeyphrases;
-		&tab_head("$Message[43] ($Message[77] $MaxNbOfKeyphrasesShown)<br><a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=keyphrases":"$PROG$StaticLinks.keyphrases.html")."\"".($DetailedReportsOnNewWindows?" target=\"awstatsbis\"":"").">$Message[80]</a>",19,($ShowKeyphrasesStats && $ShowKeywordsStats)?95:70);
+		&tab_head("$Message[43] ($Message[77] $MaxNbOfKeyphrasesShown)<br><a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=keyphrases":"$PROG$StaticLinks.keyphrases.html")."\"$NewLinkTarget>$Message[80]</a>",19,($ShowKeyphrasesStats && $ShowKeywordsStats)?95:70);
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\" onmouseover=\"ShowTooltip(15);\" onmouseout=\"HideTooltip(15);\"><TH>$TotalDifferentKeyphrases $Message[103]</TH><TH bgcolor=\"#$color_s\" width=80>$Message[14]</TH><TH bgcolor=\"#$color_s\" width=80>$Message[15]</TH></TR>\n";
 		$total_s=0;
 		my $count=0;
@@ -5648,7 +5745,7 @@ EOF
 		if ($Debug) { debug("ShowKeywordsStats",2); }
 		print "$Center<a name=\"KEYWORDS\">&nbsp;</a><BR>";
 		$MaxNbOfKeywordsShown = $TotalDifferentKeywords if $MaxNbOfKeywordsShown > $TotalDifferentKeywords;
-		&tab_head("$Message[44] ($Message[77] $MaxNbOfKeywordsShown)<br><a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=keywords":"$PROG$StaticLinks.keywords.html")."\"".($DetailedReportsOnNewWindows?" target=\"awstatsbis\"":"").">$Message[80]</a>",19,($ShowKeyphrasesStats && $ShowKeywordsStats)?95:70);
+		&tab_head("$Message[44] ($Message[77] $MaxNbOfKeywordsShown)<br><a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=keywords":"$PROG$StaticLinks.keywords.html")."\"$NewLinkTarget>$Message[80]</a>",19,($ShowKeyphrasesStats && $ShowKeywordsStats)?95:70);
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\" onmouseover=\"ShowTooltip(15);\" onmouseout=\"HideTooltip(15);\"><TH>$TotalDifferentKeywords $Message[13]</TH><TH bgcolor=\"#$color_s\" width=80>$Message[14]</TH><TH bgcolor=\"#$color_s\" width=80>$Message[15]</TH></TR>\n";
 		$total_s=0;
 		my $count=0;
@@ -5686,7 +5783,7 @@ EOF
 			#if ($httpcodewithtooltips{$key}) { print "<TR onmouseover=\"ShowTooltip($key);\" onmouseout=\"HideTooltip($key);\">"; }
 			#else { print "<TR>"; }
 			print "<TR onmouseover=\"ShowTooltip($key);\" onmouseout=\"HideTooltip($key);\">";
-			if ($TrapInfosForHTTPCodes{$key}) { print "<TD><a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=errors$key":"$PROG$StaticLinks.errors$key.html")."\"".($DetailedReportsOnNewWindows?" target=\"awstatsbis\"":"").">$key</a></TD>"; }
+			if ($TrapInfosForHTTPCodes{$key}) { print "<TD><a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=errors$key":"$PROG$StaticLinks.errors$key.html")."\"$NewLinkTarget>$key</a></TD>"; }
 			else { print "<TD>$key</TD>"; }
 			print "<TD CLASS=AWL>".($httpcodelib{$key}?$httpcodelib{$key}:"Unknown error")."</TD><TD>$_errors_h{$key}</TD><TD>$p&nbsp;%</TD>";
 			print "</TR>\n";
