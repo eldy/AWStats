@@ -470,9 +470,7 @@ if ($in{'advanced'} == 4) {
 		if ($_ =~ /^#?LoadPlugin/i) {
 			# Extract param and value
 			my ($load,$value)=split(/=/,$_,2);
-			my $active=0;
 			# Remove comments not at beginning of line
-			if ($load !~ /#.*LoadPlugin/i) { $active=1; }
 			$param =~ s/^\s+//; $param =~ s/\s+$//;
 			$value =~ s/#.*$//; 
 			$value =~ s/^[\s\'\"]+//g; $value =~ s/[\s\'\"]+$//g;
@@ -481,8 +479,10 @@ if ($in{'advanced'} == 4) {
 			if (! $pluginlinefound{$value1}) {	# To avoid plugin to be shown twice
 				$pluginlinefound{$value1}=1;
 				push @pconfparam, $value1;
-				push @pconfactive, $active;
 				push @pconfvaluep, $value2;
+    			my $active=0;
+    			if ($load !~ /#.*LoadPlugin/i) { $active=1; }
+				push @pconfactive, $active;
 			}
 		}	
 	}
@@ -497,9 +497,7 @@ if ($in{'advanced'} == 4) {
 			if ($_ =~ /^#?LoadPlugin/i) {
 				# Extract param and value
 				my ($load,$value)=split(/=/,$_,2);
-				my $active=0;
 				# Remove comments not at beginning of line
-				if ($load !~ /#.*LoadPlugin/i) { $active=1; }
 				$param =~ s/^\s+//; $param =~ s/\s+$//;
 				$value =~ s/#.*$//; 
 				$value =~ s/^[\s\'\"]+//g; $value =~ s/[\s\'\"]+$//g;
@@ -507,8 +505,10 @@ if ($in{'advanced'} == 4) {
 				if ($value1 =~ /^graph3d$/i) { next; }
 				if (! $pluginlinefound{$value1}) {	# To avoid plugin to be shown twice
 					push @pconfparam, $value1;
-					push @pconfactive, $active;
 					push @pconfvaluep, $value2;
+                    # Plugin in sample but not in config file is by default not enabled.
+        			my $active=0;
+					push @pconfactive, $active;
 				}
 			}	
 		}
