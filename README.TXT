@@ -136,7 +136,7 @@ II - 1) With Apache Server (on Unix/Linux or Windows)
     * To update statistics and generate the HTML report page, launch 
       awstats.pl from the command line interface (the first time, process may
       be long), like this:
-       awstats.pl conf=www.myserver.mydomain > result.html
+       awstats.pl site=www.myserver.mydomain > result.html
       AWStats will use awstats.www.myserver.mydomain.conf config file, and, if
       not found, will use awstats.conf.
       This command create/update database where AWStats store all summary
@@ -167,7 +167,7 @@ II - 1) With Apache Server (on Unix/Linux or Windows)
       For this, if you called your config file awstats.conf, just use URL:
        htpp://www.myserver.mydomain/cgi-bin/awstats.pl
       If you called your config file awstats.virtualhost.conf, use URL:
-       htpp://www.myserver.mydomain/cgi-bin/awstats.pl?conf=virtualhost
+       htpp://www.myserver.mydomain/cgi-bin/awstats.pl?site=virtualhost
       where virtualhost is used to know which config file to use (AWStats will
       use awstats.virtualhost.conf file).
 
@@ -204,7 +204,7 @@ II - 2) With IIS Server
     * To update statistics and generate the HTML report page, launch 
       awstats.pl from the command line interface (the first time, process may
       be long), like this:
-       awstats.pl conf=www.myserver.mydomain > result.html
+       awstats.pl site=www.myserver.mydomain > result.html
       AWStats will use awstats.www.myserver.mydomain.conf config file, and, if
       not found, will use awstats.conf.
       This command create/update database where AWStats store all summary
@@ -243,7 +243,7 @@ II - 2) With IIS Server
       For this, if you called your config file awstats.conf, just use URL:
        htpp://www.myserver.mydomain/cgi-bin/awstats.pl
       If you called your config file awstats.virtualhost.conf, use URL:
-       htpp://www.myserver.mydomain/cgi-bin/awstats.pl?conf=virtualhost
+       htpp://www.myserver.mydomain/cgi-bin/awstats.pl?site=virtualhost
       where virtualhost is used to know which config file to use (AWStats will
       use awstats.virtualhost.conf file).
 
