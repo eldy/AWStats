@@ -41,7 +41,8 @@ The period shown by AWStats reports is by default the current month.<br>
 However if you use AWStats as a CGI you can click on the "year" link to have a report for all the year.
 In a such report, period is full year, so Unique Visitors are number of hosts that have made at least 1 hit
 on 1 page of your web site during those year.<br>
-<br>
+
+<hr>
 
 <a name="Visits"><b>Visits</b></a>:<br>
 Number of visits made by all visitors.<br>
@@ -49,37 +50,44 @@ Think "session" here, say a unique IP accesses a page, and then requests three o
 between any of the requests, all of the "pages" are included in the visit, therefore you should expect
 multiple pages per visit and multiple visits per unique visitor (assuming that some of the unique IPs are
 logged with more than an hour between requests)<br>
-<br>
+
+<hr>
 
 <a name="Pages"><b>Pages</b></a>:<br>
 The number of "pages" logged. Only files that don't match an entry in the NotPageList config
 parameter (and match an entry of OnlyFiles config parameter if used) are counted as "Pages".
 Usually pages are reserved for HTML files or CGI files, not images nor other files requested as a result
 of loading a "Page" (like js,css... files).<br>
-<br>
+
+<hr>
 
 <a name="Hits"><b>Hits</b></a>:<br>
 Any files requested from the server (including files that are "Pages") except those that match
 the SkipFiles config parameter.<br>
-<br>
+
+<hr>
+
 
 <a name="Bandwidth"><b>Bandwidth</b></a>:<br>
 Total number of bytes downloaded.<br>
-<br>
+
+<hr>
 
 <a name="Entry Page"><b>Entry Page</b></a>:<br>
 First page viewed by a visitor during its visit.<br>
 Note: When a visit started at end of month to end at beginning of next month,
 you might have an Entry page for the month report and no Exit pages.<br>
 That's why Entry pages can be different than Exit pages.<br>
-<br>
+
+<hr>
 
 <a name="Exit Page"><b>Exit Page</b></a>:<br>
 Last page viewed by a visitor during its visit.<br>
 Note: When a visit started at end of month to end at beginning of next month,
 you might have an Entry page for the month report and no Exit pages.<br>
 That's why Entry pages can be different than Exit pages.<br>
-<br>
+
+<hr>
 
 <a name="Session Duration"><b>Session Duration</b></a>:<br>
 The time a visitor spent on your site for each visit.<br>
@@ -87,13 +95,376 @@ Some Visits durations are 'unknown' because they can't always be calculated. Thi
 - Visit was not finished when 'update' occured.<br>
 - Visit started the last hour (after 23:00) of the last day of a month (A technical reason prevents AWStats from
 calculating duration of such sessions).<br>
-<br>
+
+<hr>
 
 <a name="Grabber"><b>Grabber</b></a>:<br>
 A browser that is used primarily for copying locally an entire site. These include
 for example "teleport", "webcapture", "webcopier"...<br>
-<br>
 
+<hr>
+
+<a name="Grabber"><b>HTTP Status Codes</b><a>:<br>
+
+<font face="arial"><font size=-1>HTTP
+status codes are returned by web servers to indicate the status of a request.
+The status code is a 3-digit code indicating the particular response. The
+first digit of this code identifies the class of the status code. The remaining
+2 digits correspond to the specific condition within the response class.
+The following table outlines all status codes defined for the HTTP/1.1
+draft specification outlined in <a href="http://www.w3.org/Protocols/rfc2068/rfc2068">IETF
+rfc 2068</a>.&nbsp;</font></font>
+They are classified in 5 categories:<br>
+<ul>
+<li>
+<font face="arial"><font size=-1><a href="#1">1xx - informational</a></font></font></li>
+
+<li>
+<font face="arial"><font size=-1><a href="#2">2xx - successful</a></font></font></li>
+
+<li>
+<font face="arial"><font size=-1><a href="#3">3xx - redirection</a></font></font></li>
+
+<li>
+<font face="arial"><font size=-1><a href="#4">4xx - client
+error&nbsp;</a></font></font></li>
+
+<li>
+<font face="arial"><font size=-1><a href="#5">5xx - server
+error&nbsp;</a></font></font></li>
+</ul>
+
+<table CELLSPACING=5 CELLPADDING=5 WIDTH="500" >
+<tr><td VALIGN=TOP BGCOLOR="#DADADA">
+
+<a NAME="1"></a><b><font face="arial">1xx class - Informational</font></b>
+<br><font face="arial"><font size=-1>Informational status codes are provisional
+responses from the web server... they give the client a heads-up on what
+the server is doing. Informational codes do not indicate an error condition.&nbsp;</font></font>
+<br>&nbsp;
+<table CELLSPACING=5 CELLPADDING=5 WIDTH="460" >
+<tr>
+<td VALIGN=TOP BGCOLOR="#EEEEEE"><b><font face="arial"><font size=-1>100</font></font></b></td>
+
+<td VALIGN=TOP BGCOLOR="#EEEEFF"><b><font face="arial"><font size=-1>100
+Continue</font></font></b>
+<br><font face="arial"><font size=-1>The continue status code tells the
+browser to continue sending a request to the server.&nbsp;</font></font></td>
+</tr>
+
+<tr>
+<td VALIGN=TOP BGCOLOR="#EEEEEE"><b><font face="arial"><font size=-1>101</font></font></b></td>
+
+<td VALIGN=TOP BGCOLOR="#EEEEFF"><b><font face="arial"><font size=-1>101
+Switching Protocols</font></font></b>
+<br><font face="arial"><font size=-1>The server sends this response when
+the client asks to switch from HTTP/1.0 to HTTP/1.1&nbsp;</font></font></td>
+</tr>
+</table>
+
+<p><a NAME="2"></a><b><font face="arial">2xx class - Successful</font></b>
+<br><font face="arial"><font size=-1>This class of status code indicates
+that the client's request was received, understood, and successful.&nbsp;</font></font>
+<br>&nbsp;
+<table CELLSPACING=5 CELLPADDING=5 WIDTH="460" >
+<tr>
+<td VALIGN=TOP BGCOLOR="#EEEEEE"><b><font face="arial"><font size=-1>200</font></font></b></td>
+
+<td VALIGN=TOP BGCOLOR="#EEEEFF"><b><font face="arial"><font size=-1>200
+Successful</font></font></b></td>
+</tr>
+
+<tr>
+<td VALIGN=TOP BGCOLOR="#EEEEEE"><b><font face="arial"><font size=-1>201</font></font></b></td>
+
+<td VALIGN=TOP BGCOLOR="#EEEEFF"><b><font face="arial"><font size=-1>201
+Created</font></font></b></td>
+</tr>
+
+<tr>
+<td VALIGN=TOP BGCOLOR="#EEEEEE"><b><font face="arial"><font size=-1>202</font></font></b></td>
+
+<td VALIGN=TOP BGCOLOR="#EEEEFF"><b><font face="arial"><font size=-1>202
+Accepted</font></font></b></td>
+</tr>
+
+<tr>
+<td VALIGN=TOP BGCOLOR="#EEEEEE"><b><font face="arial"><font size=-1>203</font></font></b></td>
+
+<td VALIGN=TOP BGCOLOR="#EEEEFF"><b><font face="arial"><font size=-1>203
+Non-Authorative Information</font></font></b></td>
+</tr>
+
+<tr>
+<td VALIGN=TOP BGCOLOR="#EEEEEE"><b><font face="arial"><font size=-1>204</font></font></b></td>
+
+<td VALIGN=TOP BGCOLOR="#EEEEFF"><b><font face="arial"><font size=-1>204
+No Content</font></font></b></td>
+</tr>
+
+<tr>
+<td VALIGN=TOP BGCOLOR="#EEEEEE"><b><font face="arial"><font size=-1>205</font></font></b></td>
+
+<td VALIGN=TOP BGCOLOR="#EEEEFF"><b><font face="arial"><font size=-1>205
+Reset Content</font></font></b></td>
+</tr>
+
+<tr>
+<td VALIGN=TOP BGCOLOR="#EEEEEE"><b><font face="arial"><font size=-1>206</font></font></b></td>
+
+<td VALIGN=TOP BGCOLOR="#EEEEFF"><b><font face="arial"><font size=-1>206
+Partial Content</font></font></b>
+<br><font face="arial"><font size=-1>The partial content success code is
+issued when the server fulfills a partial GET request. This happens when
+the client is downloading a multi-part document or part of a larger file.&nbsp;</font></font></td>
+</tr>
+</table>
+
+<p><a NAME="3"></a><b><font face="arial">3xx class - Redirection</font></b>
+<br><font face="arial"><font size=-1>This code tells the client that the
+browser should be redirected to another URL in order to complete the request.
+This is not an error condition.&nbsp;</font></font>
+<br>&nbsp;
+<table CELLSPACING=5 CELLPADDING=5 WIDTH="460" >
+<tr>
+<td VALIGN=TOP BGCOLOR="#EEEEEE"><b><font face="arial"><font size=-1>300</font></font></b></td>
+
+<td VALIGN=TOP BGCOLOR="#EEEEFF"><b><font face="arial"><font size=-1>300
+Multiple Choices</font></font></b></td>
+</tr>
+
+<tr>
+<td VALIGN=TOP BGCOLOR="#EEEEEE"><b><font face="arial"><font size=-1>301</font></font></b></td>
+
+<td VALIGN=TOP BGCOLOR="#EEEEFF"><b><font face="arial"><font size=-1>301
+Moved Permanently</font></font></b></td>
+</tr>
+
+<tr>
+<td VALIGN=TOP BGCOLOR="#EEEEEE"><b><font face="arial"><font size=-1>302</font></font></b></td>
+
+<td VALIGN=TOP BGCOLOR="#EEEEFF"><b><font face="arial"><font size=-1>302
+Moved Temporarily</font></font></b></td>
+</tr>
+
+<tr>
+<td VALIGN=TOP BGCOLOR="#EEEEEE"><b><font face="arial"><font size=-1>303</font></font></b></td>
+
+<td VALIGN=TOP BGCOLOR="#EEEEFF"><b><font face="arial"><font size=-1>303
+See Other</font></font></b></td>
+</tr>
+
+<tr>
+<td VALIGN=TOP BGCOLOR="#EEEEEE"><b><font face="arial"><font size=-1>304</font></font></b></td>
+
+<td VALIGN=TOP BGCOLOR="#EEEEFF"><b><font face="arial"><font size=-1>304
+Not Modified</font></font></b></td>
+</tr>
+
+<tr>
+<td VALIGN=TOP BGCOLOR="#EEEEEE"><b><font face="arial"><font size=-1>305</font></font></b></td>
+
+<td VALIGN=TOP BGCOLOR="#EEEEFF"><b><font face="arial"><font size=-1>305
+Use Proxy</font></font></b></td>
+</tr>
+</table>
+
+<p><a NAME="4"></a><b><font face="arial">4xx class - Client Error</font></b>
+<br><font face="arial"><font size=-1>This status code indicates that the
+client has sent bad data or a malformed request to the server. Client errors
+are generally issued by the webserver when a client tries to gain access
+to a protected area using a bad username and password.&nbsp;</font></font>
+<br>&nbsp;
+<table CELLSPACING=5 CELLPADDING=5 WIDTH="460" >
+<tr>
+<td VALIGN=TOP BGCOLOR="#EEEEEE"><b><font face="arial"><font size=-1>400</font></font></b></td>
+
+<td VALIGN=TOP BGCOLOR="#EEEEFF"><b><font face="arial"><font size=-1>400
+Bad Request</font></font></b></td>
+</tr>
+
+<tr>
+<td VALIGN=TOP BGCOLOR="#EEEEEE"><b><font face="arial"><font size=-1>401</font></font></b></td>
+
+<td VALIGN=TOP BGCOLOR="#EEEEFF"><b><font face="arial"><font size=-1>401
+Unauthorized</font></font></b></td>
+</tr>
+
+<tr>
+<td VALIGN=TOP BGCOLOR="#EEEEEE"><b><font face="arial"><font size=-1>402</font></font></b></td>
+
+<td VALIGN=TOP BGCOLOR="#EEEEFF"><b><font face="arial"><font size=-1>402
+Payment Required</font></font></b></td>
+</tr>
+
+<tr>
+<td VALIGN=TOP BGCOLOR="#EEEEEE"><b><font face="arial"><font size=-1>403</font></font></b></td>
+
+<td VALIGN=TOP BGCOLOR="#EEEEFF"><b><font face="arial"><font size=-1>403
+Forbidden</font></font></b></td>
+</tr>
+
+<tr>
+<td VALIGN=TOP BGCOLOR="#EEEEEE"><b><font face="arial"><font size=-1>404</font></font></b></td>
+
+<td VALIGN=TOP BGCOLOR="#EEEEFF"><b><font face="arial"><font size=-1>404
+Not Found</font></font></b></td>
+</tr>
+
+<tr>
+<td VALIGN=TOP BGCOLOR="#EEEEEE"><b><font face="arial"><font size=-1>405</font></font></b></td>
+
+<td VALIGN=TOP BGCOLOR="#EEEEFF"><b><font face="arial"><font size=-1>400
+Method Not Allowed</font></font></b></td>
+</tr>
+
+<tr>
+<td VALIGN=TOP BGCOLOR="#EEEEEE"><b><font face="arial"><font size=-1>406</font></font></b></td>
+
+<td VALIGN=TOP BGCOLOR="#EEEEFF"><b><font face="arial"><font size=-1>400
+Not Acceptable</font></font></b></td>
+</tr>
+
+<tr>
+<td VALIGN=TOP BGCOLOR="#EEEEEE"><b><font face="arial"><font size=-1>407</font></font></b></td>
+
+<td VALIGN=TOP BGCOLOR="#EEEEFF"><b><font face="arial"><font size=-1>400
+Proxy Authentication Required</font></font></b></td>
+</tr>
+
+<tr>
+<td VALIGN=TOP BGCOLOR="#EEEEEE"><b><font face="arial"><font size=-1>408</font></font></b></td>
+
+<td VALIGN=TOP BGCOLOR="#EEEEFF"><b><font face="arial"><font size=-1>400
+Request Timeout</font></font></b></td>
+</tr>
+
+<tr>
+<td VALIGN=TOP BGCOLOR="#EEEEEE"><b><font face="arial"><font size=-1>409</font></font></b></td>
+
+<td VALIGN=TOP BGCOLOR="#EEEEFF"><b><font face="arial"><font size=-1>409
+Conflict</font></font></b></td>
+</tr>
+
+<tr>
+<td VALIGN=TOP BGCOLOR="#EEEEEE"><b><font face="arial"><font size=-1>410</font></font></b></td>
+
+<td VALIGN=TOP BGCOLOR="#EEEEFF"><b><font face="arial"><font size=-1>410
+Gone</font></font></b></td>
+</tr>
+
+<tr>
+<td VALIGN=TOP BGCOLOR="#EEEEEE"><b><font face="arial"><font size=-1>411</font></font></b></td>
+
+<td VALIGN=TOP BGCOLOR="#EEEEFF"><b><font face="arial"><font size=-1>411
+Length Required</font></font></b></td>
+</tr>
+
+<tr>
+<td VALIGN=TOP BGCOLOR="#EEEEEE"><b><font face="arial"><font size=-1>412</font></font></b></td>
+
+<td VALIGN=TOP BGCOLOR="#EEEEFF"><b><font face="arial"><font size=-1>412
+Precondition Failed</font></font></b></td>
+</tr>
+
+<tr>
+<td VALIGN=TOP BGCOLOR="#EEEEEE"><b><font face="arial"><font size=-1>413</font></font></b></td>
+
+<td VALIGN=TOP BGCOLOR="#EEEEFF"><b><font face="arial"><font size=-1>413
+Request Entity Too Long</font></font></b></td>
+</tr>
+
+<tr>
+<td VALIGN=TOP BGCOLOR="#EEEEEE"><b><font face="arial"><font size=-1>414</font></font></b></td>
+
+<td VALIGN=TOP BGCOLOR="#EEEEFF"><b><font face="arial"><font size=-1>414
+Request-URI Too Long</font></font></b></td>
+</tr>
+
+<tr>
+<td VALIGN=TOP BGCOLOR="#EEEEEE"><b><font face="arial"><font size=-1>415</font></font></b></td>
+
+<td VALIGN=TOP BGCOLOR="#EEEEFF"><b><font face="arial"><font size=-1>415
+Unsupported Media Type</font></font></b></td>
+</tr>
+</table>
+
+<p><a NAME="5"></a><b><font face="arial">5xx class - Server Error</font></b>
+<br><font face="arial"><font size=-1>This status code indicates that the
+client's request couldn't be succesfully processed due to some internal
+error in the web server. These error codes may indicate something is seriously
+wrong with the web server.&nbsp;</font></font>
+<br>&nbsp;
+<table CELLSPACING=5 CELLPADDING=5 WIDTH="460" >
+<tr>
+<td VALIGN=TOP BGCOLOR="#EEEEEE"><b><font face="arial"><font size=-1>500</font></font></b></td>
+
+<td VALIGN=TOP BGCOLOR="#EEEEFF"><b><font face="arial"><font size=-1>500
+Internal Server Error</font></font></b>
+<br><font face="arial"><font size=-1>An internal server error has caused
+the server to abort your request. This is an error condition that may also
+indicate a misconfiguration with the web server. However, the most common
+reason for 500 server errors is when you try to execute a script that has
+syntax errors.&nbsp;</font></font></td>
+</tr>
+
+<tr>
+<td VALIGN=TOP BGCOLOR="#EEEEEE"><b><font face="arial"><font size=-1>501</font></font></b></td>
+
+<td VALIGN=TOP BGCOLOR="#EEEEFF"><b><font face="arial"><font size=-1>501
+Not Implemented</font></font></b>
+<br><font face="arial"><font size=-1>This code is generated by a webserver
+when the client requests a service that is not implemented on the server.
+Typically, not implemented codes are returned when a client attempts to
+POST data to a non-CGI (ie, the form action tag refers to a non-executable
+file).&nbsp;</font></font></td>
+</tr>
+
+<tr>
+<td VALIGN=TOP BGCOLOR="#EEEEEE"><b><font face="arial"><font size=-1>502</font></font></b></td>
+
+<td VALIGN=TOP BGCOLOR="#EEEEFF"><b><font face="arial"><font size=-1>502
+Bad Gateway</font></font></b>
+<br><font face="arial"><font size=-1>The server, when acting as a proxy,
+issues this response when it receives a bad response from an upstream or
+support server.&nbsp;</font></font></td>
+</tr>
+
+<tr>
+<td VALIGN=TOP BGCOLOR="#EEEEEE"><b><font face="arial"><font size=-1>503</font></font></b></td>
+
+<td VALIGN=TOP BGCOLOR="#EEEEFF"><b><font face="arial"><font size=-1>503
+Service Unavailable</font></font></b>
+<br><font face="arial"><font size=-1>The web server is too busy processing
+current requests to listen to a new client. This error represents a serious
+problem with the webserver (normally solved with a reboot).&nbsp;</font></font></td>
+</tr>
+
+<tr>
+<td VALIGN=TOP BGCOLOR="#EEEEEE"><b><font face="arial"><font size=-1>504</font></font></b></td>
+
+<td VALIGN=TOP BGCOLOR="#EEEEFF"><b><font face="arial"><font size=-1>504
+Gateway Timeout</font></font></b>
+<br><font face="arial"><font size=-1>Gateway timeouts are normally issued
+by proxy servers when an upstream or support server doesn't respond to
+a request in a timely fashion.&nbsp;</font></font></td>
+</tr>
+
+<tr>
+<td VALIGN=TOP BGCOLOR="#EEEEEE"><b><font face="arial"><font size=-1>505</font></font></b></td>
+
+<td VALIGN=TOP BGCOLOR="#EEEEFF"><b><font face="arial"><font size=-1>505
+HTTP Version Not Supported</font></font></b>
+<br><font face="arial"><font size=-1>The server issues this status code
+when a client tries to talk using an HTTP protocol that the server doesn't
+support or is configured to ignore.</font></font></td>
+</tr>
+</table>
+</td>
+
+<td ALIGN=LEFT VALIGN=TOP></td>
+</tr>
+</table>
 
 
 
