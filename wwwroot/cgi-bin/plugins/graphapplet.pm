@@ -81,7 +81,7 @@ sub ShowGraph_graphapplet() {
 	print "<applet name=\"$type\" archive=\"awgraphapplet.jar\" code=\"AWGraphApplet.class\" codebase=\"/classes\" width=\"$graphwidth\" height=\"$graphheight\" alt= \"Your browser does not support Java correctly. Change browser or disable AWStats graphapplet plugin.\">\n";
 print <<EOF;
 <param name="title" value="$title" />
-<param name="awstats_type" value="$type" />
+<param name="special" value="$type" />
 <param name="orientation" value="vertical" />
 <param name="barsize" value="$barsize" />
 <param name="background_color" value="$color_Background" />
