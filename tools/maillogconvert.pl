@@ -262,31 +262,8 @@ while (<>) {
 			$mail{$mailid}{'mon'}=$mon;
 			$mail{$mailid}{'day'}=$day;
 			$mail{$mailid}{'time'}=$time;
+			if (! defined($mail{$mailid}{'size'})) { $mail{$mailid}{'size'}='?'; }
 			debug("For id=$mailid, found a postfix error incoming message: code=$mail{$mailid}{'code'} from=$mail{$mailid}{'from'} to=$mail{$mailid}{'to'} time=$mail{$mailid}{'time'}");
-		}
-	}
-	#
-	# See if we received sendmail reject error
-	#
-	elsif (/, reject/) {
-		$MailType||='sendmail';
-		# Example: 
-		# sm-mta:   Jul 27 04:06:05 androneda sm-mta[6641]: h6RB44tg006641: ruleset=check_mail, arg1=<7ms93d4ms@topprodsource.com>, relay=crelay1.easydns.com [216.220.57.222], reject=451 4.1.8 Domain of sender address 7ms93d4ms@topprodsource.com does not resolve
-		# sm-mta:	Jul 27 06:21:24 androneda sm-mta[11461]: h6RDLNtg011461: ruleset=check_rcpt, arg1=<nobody@nova.dice.net>, relay=freedom.myhostdns.com [66.246.77.42], reject=550 5.7.1 <nobody@nova.dice.net>... Relaying denied
-		# sendmail: Sep 30 04:21:32 halley sendmail[3161]: g8U2LVi03161: ruleset=check_rcpt, arg1=<amber3624@netzero.net>, relay=moon.partenor.fr [10.0.0.254], reject=550 5.7.1 <amber3624@netzero.net>... Relaying denied
-		my ($mon,$day,$time,$id,$ruleset,$arg,$relay_s,$code)=m/(\w+)\s+(\d+)\s+(\d+:\d+:\d+)\s+[\w\-]+\s+(?:sendmail|sm-mta)\[\d+\]:\s+(.*?):\sruleset=(\w+),\s+arg1=(.*),\s+relay=(.*),\s+(reject=.*)/;
-		$mailid=$id;
-		if ($mailid) {
-			if ($ruleset eq 'check_mail') { $mail{$id}{'from'}=$arg; }
-			if ($ruleset eq 'check_rcpt') { $mail{$id}{'to'}=$arg; }
-			$mail{$id}{'relay_s'}=$relay_s;
-			# $code='reject=550 5.7.1 <amber3624@netzero.net>... Relaying denied'
-			if ($code =~ /=(\d\d\d)\s+/) { $mail{$id}{'code'}=$1; }
-			else { $mail{$id}{'code'}=999; }	# Unkown error
-			$mail{$id}{'mon'}=$mon;
-			$mail{$id}{'day'}=$day;
-			$mail{$id}{'time'}=$time;
-			debug("For id=$id, found a sendmail error incoming message: code=$mail{$id}{'code'} from=$mail{$id}{'from'} to=$mail{$id}{'to'} relay_s=$mail{$id}{'relay_s'}");
 		}
 	}
 	#
@@ -305,7 +282,41 @@ while (<>) {
 			$mail{$mailid}{'mon'}=$mon;
 			$mail{$mailid}{'day'}=$day;
 			$mail{$mailid}{'time'}=$time;
+			if (! defined($mail{$mailid}{'size'})) { $mail{$mailid}{'size'}='?'; }
 			debug("For id=$mailid, found a postfix bounced incoming message: code=$mail{$mailid}{'code'} to=$mail{$mailid}{'to'} relay_r=$mail{$mailid}{'relay_r'}");
+		}
+	}
+	#
+	# See if we received sendmail reject error
+	#
+	elsif (/, reject/) {
+		$MailType||='sendmail';
+		# Example: 
+		# sm-mta:   Jul 27 04:06:05 androneda sm-mta[6641]: h6RB44tg006641: ruleset=check_mail, arg1=<7ms93d4ms@topprodsource.com>, relay=crelay1.easydns.com [216.220.57.222], reject=451 4.1.8 Domain of sender address 7ms93d4ms@topprodsource.com does not resolve
+		# sm-mta:	Jul 27 06:21:24 androneda sm-mta[11461]: h6RDLNtg011461: ruleset=check_rcpt, arg1=<nobody@nova.dice.net>, relay=freedom.myhostdns.com [66.246.77.42], reject=550 5.7.1 <nobody@nova.dice.net>... Relaying denied
+		# sendmail: Sep 30 04:21:32 halley sendmail[3161]: g8U2LVi03161: ruleset=check_rcpt, arg1=<amber3624@netzero.net>, relay=moon.partenor.fr [10.0.0.254], reject=550 5.7.1 <amber3624@netzero.net>... Relaying denied
+
+		# sendmail:	Jan 10 07:37:48 smtp sendmail[32440]: ruleset=check_relay, arg1=[211.228.26.114], arg2=211.228.26.114, relay=[211.228.26.114], reject=554 5.7.1 Rejected 211.228.26.114 found in dnsbl.sorbs.net
+		# sendmail: Jan 10 07:37:08 smtp sendmail[32439]: ruleset=check_relay, arg1=235.Red-213-97-175.pooles.rima-tde.net, arg2=213.97.175.235, relay=235.Red-213-97-175.pooles.rima-tde.net [213.97.175.235], reject=550 5.7.1 Mail from 213.97.175.235 refused. Rejected for bad WHOIS info on IP of your SMTP server - see http://www.rfc-ignorant.org/
+		# sendmail: Jan 10 17:15:42 smtp sendmail[12770]: ruleset=check_relay, arg1=[63.218.84.21], arg2=63.218.84.21, relay=[63.218.84.21], reject=553 5.3.0 Rejected - see http://spamhaus.org/
+		my ($mon,$day,$time,$id,$ruleset,$arg,$relay_s,$code)=m/(\w+)\s+(\d+)\s+(\d+:\d+:\d+)\s+[\w\-]+\s+(?:sendmail|sm-mta)\[\d+\][:\s]*(.*?):\sruleset=(\w+),\s+arg1=(.*),\s+relay=(.*),\s+(reject=.*)/;
+		# sendmail: Jan 10 18:00:34 smtp sendmail[5759]: i04Axx2c005759: Milter: data, reject=511 Virus found in email!
+		if (! $mon) { ($mon,$day,$time,$id,$ruleset,$code)=m/(\w+)\s+(\d+)\s+(\d+:\d+:\d+)\s+[\w\-]+\s+(?:sendmail|sm-mta)\[\d+\]:\s+(.*?):\s\w+:\s(\w+),\s+(reject=.*)/; }
+		$mailid=(! $id && $mon?'999':$id);	# id not provided in log, we take '999'
+		if ($mailid) {
+			if ($ruleset eq 'check_mail') { $mail{$mailid}{'from'}=$arg; }
+			if ($ruleset eq 'check_rcpt') { $mail{$mailid}{'to'}=$arg; }
+			if ($ruleset eq 'check_relay') { }
+			if ($ruleset eq 'data') { }
+			$mail{$mailid}{'relay_s'}=$relay_s;
+			# $code='reject=550 5.7.1 <amber3624@netzero.net>... Relaying denied'
+			if ($code =~ /=(\d\d\d)\s+/) { $mail{$mailid}{'code'}=$1; }
+			else { $mail{$mailid}{'code'}=999; }	# Unkown error
+			$mail{$mailid}{'mon'}=$mon;
+			$mail{$mailid}{'day'}=$day;
+			$mail{$mailid}{'time'}=$time;
+			if (! defined($mail{$mailid}{'size'})) { $mail{$mailid}{'size'}='?'; }
+			debug("For id=$mailid, found a sendmail error incoming message: code=$mail{$mailid}{'code'} from=$mail{$mailid}{'from'} to=$mail{$mailid}{'to'} relay_s=$mail{$mailid}{'relay_s'}");
 		}
 	}
 
@@ -563,8 +574,9 @@ while (<>) {
 			$to=$mail{$mailid}{'to'};
 			if ($mail{$mailid}{'from'} && $mail{$mailid}{'to'}) { $canoutput=1; }
 			if ($mail{$mailid}{'from'} && $mail{$mailid}{'code'} > 1) { $canoutput=1; }
+			if ($mailid && $mail{$mailid}{'code'} > 1) { $canoutput=1; }
 		}
-		
+
 		# If we can
 		if ($canoutput) {
 			&OutputRecord($mail{$mailid}{'year'}?$mail{$mailid}{'year'}:$year,$mail{$mailid}{'mon'},$mail{$mailid}{'day'},$mail{$mailid}{'time'},$mail{$mailid}{'from'},$to,$mail{$mailid}{'relay_s'},$mail{$mailid}{'relay_r'},$code,$mail{$mailid}{'size'},$mail{$mailid}{'forwardto'},$mail{$mailid}{'extinfo'});
