@@ -859,7 +859,6 @@ sub warning {
 	my $messagestring=shift;
 
 	if (! $HeaderHTTPSent && $ENV{'GATEWAY_INTERFACE'}) { http_head(); }
-	if (! $HeaderHTMLSent) { html_head(); }
 	if ($Debug) { debug("$messagestring",1); }
 	if ($WarningMessages) {
 		if (scalar keys %HTMLOutput) {
