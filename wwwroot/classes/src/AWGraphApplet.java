@@ -1,5 +1,6 @@
 /*
- * @(#)AWGraphApplet.java 1.0 03/11/03
+ * @(#)AWGraphApplet.java
+ * $Revision$ - $Author$ - $Date$
  *
  */
 
@@ -165,7 +166,8 @@ public class AWGraphApplet extends Applet
         	String[] as=split(s," ",0);
         	for (int j=0; j<as.length; j++) {
 //				Log("as="+as[j]);
-	            values[i][j] = Float.parseFloat(as[j]);
+	            if (as[j].compareTo("?")==0) { values[i][j] = 0; }
+	            else { values[i][j] = Float.parseFloat(as[j]); }
 //				Log("values["+i+"]["+j+"]="+values[i][j]);
 			}
 	    }
