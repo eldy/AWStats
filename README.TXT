@@ -14,7 +14,7 @@ Release date: 15 August 2001
 Platforms: All (Linux, NT, SCO, BSD, Solaris and other *NIX's, BeOS, OS/2...)
 Author: Laurent Destailleur <eldy@users.sourceforge.net>
 AWStats web site: http://awstats.sourceforge.net
-
+ 
 I   - Features and requirements of AWStats
       I - 1) Features, what AWStats can show you
       I - 2) Requirements for using AWStats
