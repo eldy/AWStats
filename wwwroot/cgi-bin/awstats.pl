@@ -5580,7 +5580,7 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 								if ($Debug) { debug("  Reverse DNS lookup for $Host done: $HostResolved",4); }
 							}
 							elsif ($ip == 6) {
-								if ($PluginsLoaded{'GetResolveIP'}{'ipv6'}) {
+								if ($PluginsLoaded{'GetResolvedIP'}{'ipv6'}) {
 									my $lookupresult=GetResolvedIP_ipv6($Host);
 									if (! $lookupresult || ! IsAscii($lookupresult)) {
 										$TmpDNSLookup{$Host}=$HostResolved='*';
