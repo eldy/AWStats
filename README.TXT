@@ -11,8 +11,8 @@ It works with IIS 5.0+, Apache and all major web/wap/proxy server log files
 on all Operating Systems.
 
 License: GNU GPL (GNU General Public License. See LICENSE file)
-Version : 4.0
-Release date: March 2002
+Version : 4.1
+Release date: June 2002
 Platforms: All (Linux, NT, SCO, BSD, Solaris and other *NIX's, BeOS, OS/2...)
 Author: Laurent Destailleur <eldy@users.sourceforge.net>
 AWStats official web site and latest version: http://awstats.sourceforge.net
@@ -33,11 +33,13 @@ I - FEATURES AND REQUIREMENTS
 I - 1) Features
 
 	A full log analysis enables AWStats to show you the following information:
-	* Number of VISITS and UNIQUE VISITORS, list of last visitors,
-	* Days of week and rush hours (pages, hits, kb for each day and hour),
-	* Domains/countries of hosts visitors (pages, hits, kb),
+	* Number of VISITS and UNIQUE VISITORS,
+	* Visits duration and list of last visitors,
 	* Authenticated users,
-	* Most often pages viewed,
+	* Days of week and rush hours (pages, hits, kb for each day and hour),
+	* Hosts list and unresolved IP addresses list,
+	* Domains/countries of hosts visitors (pages, hits, kb),
+	* Most viewed, entry and exit pages,
 	* File types,
 	* Web compression statistics (for mod_gzip),
 	* Browsers used (pages, hits, kb for each browser),
