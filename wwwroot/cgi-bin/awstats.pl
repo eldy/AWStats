@@ -5943,6 +5943,11 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 			$urlwithnoquery=$field[$pos_url];
 			$tokenquery=$1||'';
 			$standalonequery=$2||'';
+			# For IIS setup, if pos_query is enabled we need to use it for query strings
+			if ($pos_query >=0 && $field[$pos_query] && $field[$pos_query] ne '-') {
+				$tokenquery='?';
+				$standalonequery=$field[$pos_query];
+			}
 		}
 		if ($URLWithAnchor && $anchor) { $field[$pos_url].="#$anchor"; }	# Restore anchor
 		# Here now urlwithnoquery is /mydir/mypage.ext, /mydir, /, /page#XXX
