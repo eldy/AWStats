@@ -4155,7 +4155,7 @@ sub AtLeastOneNotNull() {
 #--------------------------------------------------------------------
 # Function:     Insert a form filter
 # Parameters:   name of filter field, default value for filter field
-# Input:        $StaticLinks, $queryString
+# Input:        $StaticLinks, $QueryString
 # Output:       HTML Form
 # Return:       None
 #--------------------------------------------------------------------
@@ -4473,6 +4473,8 @@ if ($ENV{'GATEWAY_INTERFACE'}) {	# Run from a browser
 	#my $ExpireDelayInHTTPHeader=0;
 	#print "Expires: ".(gmtime($starttime()+$ExpireDelayInHTTPHeader))."\n";
 	print "\n";
+
+	# Prepare QueryString
 	if ($ENV{'CONTENT_LENGTH'}) {
 		binmode STDIN;
 		read(STDIN, $QueryString, $ENV{'CONTENT_LENGTH'});
@@ -4503,6 +4505,7 @@ if ($ENV{'GATEWAY_INTERFACE'}) {	# Run from a browser
 	}
 }
 else {								# Run from command line
+	# Prepare QueryString
 	for (0..@ARGV-1) {
 		if ($ARGV[$_] =~ /^(-|)migrate=/) {
 			$MigrateStats=$ARGV[$_];
@@ -4510,8 +4513,8 @@ else {								# Run from command line
 			$SiteConfig=$5?$5:'xxx'; $SiteConfig =~ s/^\.//;	# SiteConfig is not required for migrate
 			next;
 		}
-		# TODO Check if ARGV is an AllowedArg
-		if ($_ > 0) { $QueryString .= '&'; }
+		# TODO Check if ARGV is in @AllowedArg
+		if ($QueryString) { $QueryString .= '&'; }
 		my $NewLinkParams=$ARGV[$_]; $NewLinkParams =~ s/^-+//;
 		$QueryString .= "$NewLinkParams";
 	}
@@ -5191,6 +5194,7 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 		# Canonize and clean target URL and referrer URL
 		#-----------------------------------------------
 		if ($URLNotCaseSensitive) { $field[$pos_url] =~ tr/A-Z/a-z/; }
+		if ($protocol == 2) { $field[$pos_url] =~ s/\s/%20/g; }
 		# Possible URL syntax for $field[$pos_url]: /mydir/mypage.ext?param1=x&param2=y#aaa, /mydir/mypage.ext#aaa, /
 		my $urlwithnoquery;
 		my $tokenquery;

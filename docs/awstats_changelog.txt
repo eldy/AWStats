@@ -1,5 +1,21 @@
 AWStats Changelog
 -----------------
+$Revision$ - $Author$ - $Date$ 
+
+
+5.4
+
+Fixes:
+- File name with space inside were not correctly reported when doing
+  FTP log server analysis.
+
+New features/improvments:
+- Added urlbuildalias.pl tool.
+- Added URL in possible values for ExtraSection first column.
+
+Other/Documentation:
+- Added list of loaded plugins in AWStats copyright string.
+- Updated documentation.
 
 
 5.3
@@ -15,7 +31,7 @@ Fixes:
 - Fixed: Columns not aligned in allhosts and lasthosts view when not all
   fields are choosed.
 
-New features/improvments
+New features/improvments:
 - Added awstats_exportlib.pl tool.
 - Added 'Full list' view for Domains/Country report.
 - Added 'Full list' and 'Last visits' for email senders/receivers chart.
@@ -23,7 +39,7 @@ New features/improvments
 - New parameter: Added AuthenticatedUsersNotCaseSensitive.
 - Speed increased when ExtraSection is used.
 
-Other/Documentation
+Other/Documentation:
 - Updates to AWStats robots, os, browsers, search_engines databases.
 - Added awstats_logo3.png
 - Added X11 as Unknown Unix OS, and Atari OS.
@@ -122,8 +138,8 @@ Note 1:
     awstats.pl -migrate="/fullpath/awstatsMMYYYY.configval.txt"
 
 Note 2:
-  Old deprecated command line parameter site= has been removed.
-  Use config= instead (replace site= since 3.0).
+  Old deprecated command line parameters -h and site= have been removed.
+  Use config= instead.
 
 
 5.0
