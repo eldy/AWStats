@@ -238,7 +238,7 @@ use vars qw/
 'de'=>'de','el'=>'gr','hu'=>'hu','is'=>'is','in'=>'id','it'=>'it',
 'ja'=>'jp','ko'=>'kr','lv'=>'lv','no'=>'nb','nb'=>'nb','nn'=>'nn','pl'=>'pl','pt'=>'pt','pt-br'=>'br',
 'ro'=>'ro','ru'=>'ru','sr'=>'sr','sk'=>'sk','es'=>'es','eu'=>'es_eu','ca'=>'es_cat','sv'=>'se','tr'=>'tr','uk'=>'ua','wlk'=>'wlk');
-%LangAWStatsToCountryAwstats=('et'=>'ee');
+%LangAWStatsToCountryAwstats=('et'=>'ee','he'=>'il');
 @HostAliases = @AllowAccessFromWebToFollowingAuthenticatedUsers=();
 @DefaultFile = @SkipDNSLookupFor = ();
 @SkipHosts = @SkipUserAgents = @SkipFiles = ();
@@ -583,7 +583,7 @@ sub html_end {
 	if (scalar keys %HTMLOutput) {
 		if ($FrameName ne 'index' && $FrameName ne 'mainleft') {
 			print "$Center<br /><br />\n";
-			print "<span style=\"font: 11px verdana, arial, helvetica; color: #$color_text\">";
+			print "<span style=\"font: 11px verdana, arial, helvetica; color: #$color_text;\">";
 			print "<b>Advanced Web Statistics $VERSION</b> - <a href=\"http://awstats.sourceforge.net\" target=\"awstatshome\">Created by $PROG";
 			my $atleastoneplugin=0;
 			foreach my $pluginname (keys %{$PluginsLoaded{'init'}}) {

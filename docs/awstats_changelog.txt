@@ -14,6 +14,8 @@ Fixes:
 - Fixed minor typo errors.
 - Fixed value for ValueSMTPCodes if not defined in config file.
 - Replaced Kb/visits to Kb/mails for mail log analysis.
+- Fixed pb when country code is not same than lang code (example:
+  estonian has lang code 'et' and country code 'ee').
 
 New features/improvements:
 - logresolvemerge.pl: can use several threads for reverse DNS lookup
@@ -28,12 +30,12 @@ New features/improvements:
 - Can use UA and HOST fields to build personalized ExtraSection reports.
 - A new search engine database to allow several "match id" for same
   search engine.
+- Support for right to left languages. Added he language.
 
 Other/Documentation:
 - Prepare code for decodeUTFkeys plugin.
 - Added debian icon.
 - Added Microsoft URL Control in robot list.
-- Litlle support for right to left languages.
 - Added asmx and aspx in mime.pm file.
 - Remove some warnings that appears when running perl -W 
 
