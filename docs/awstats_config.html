@@ -57,6 +57,7 @@ when reading it), follow the example:<br>
 <li><a href="#SiteDomain">SiteDomain</a>
 <li><a href="#HostAliases">HostAliases</a>
 <li><a href="#AllowToUpdateStatsFromBrowser">AllowToUpdateStatsFromBrowser</a>
+<li><a href="#AllowFullYearView">AllowFullYearView</a>
 </ul>
 
 
@@ -481,6 +482,24 @@ when reading it), follow the example:<br>
 <br># Default: 0
 <br>#
 <br>AllowToUpdateStatsFromBrowser=0
+
+<br><br><hr>
+
+<a name="AllowFullYearView"><b>AllowFullYearView</b></a><br>
+<b>Version : </b>5.9+<br>
+<br># AWStats save and sort its database on a month basis, this allows to build
+<br># build a report quickly. However, if you choose the -month=all from command
+<br># lien or the month='---' from CGI form to have a report for all year, AWStats
+<br># need to reload all data for full year, and resort them completely, requiring
+<br># a large amount of memory and CPU. This might be a problem for web hosting
+<br># providers that offer AWStats for large sites on shared servers to non CPU
+<br># cautious customers.
+<br># For this reason, the 'full year' is only enable on Command Line by default.
+<br># You can change this by setting this parameter to 0, 1 or 2.
+<br># Possible values: 0 (never allowed), 1 (on CLI only), 2 (on CLI and CGI)
+<br># Default: 1
+<br>#
+<br>AllowFullYearView=1
 
 <br><br><hr>
 
@@ -1353,7 +1372,7 @@ ShowOSStats,ShowOriginStats,ShowKeyphrasesStats,ShowKeywordsStats,ShowHTTPErrors
 <br># Stats for keywords
 <br>MaxNbOfKeywordsShown = 10
 <br>MinHitKeyword  = 1
-<br># Stats for emails
+<br># Stats for sender or receiver emails
 <br>MaxNbOfEMailsShown = 20
 <br>MinHitEMail = 1
 
@@ -1474,7 +1493,7 @@ parameter.
 
 <a name="Bar"><b>Bar...</b></a><br>
 <b>Version : </b>1.0+<br>
-<br># Value of maximum bar width/heigth for horizontal/vertical graphics bar
+<br># Value of maximum bar width/height for horizontal/vertical HTML graphics bar.
 <br># Default: 260/90
 <br>#
 <br>BarWidth   = 260
