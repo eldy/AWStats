@@ -71,7 +71,7 @@ $found, $internal_link, $new) = ();
 %MonthBytes = %MonthHits = %MonthHostsKnown = %MonthHostsUnknown = %MonthPages = %MonthUnique = %MonthVisits =
 %listofyears = %monthlib = %monthnum = ();
 
-$VERSION="3.1 (build 31)";
+$VERSION="3.1 (build 32)";
 $Lang="en";
 
 # Default value
@@ -236,7 +236,7 @@ $AddOn=0;
 "msie","defined_later",
 "netscape","defined_later",
 # Most frequent browsers should be first in this list
-"lynx","Lynx",						
+"lynx","Lynx",
 "opera","Opera",
 "wget","Wget",
 "22acidownload","22AciDownload",
@@ -260,6 +260,7 @@ $AddOn=0;
 "intergo","InterGO",
 "konqueror","Konqueror",
 "linemodebrowser","W3C Line Mode Browser",
+"links","Links",
 "lotus-notes","Lotus Notes web client",
 "macweb","MacWeb",
 "ncsa_mosaic","NCSA Mosaic",
