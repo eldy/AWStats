@@ -125,7 +125,7 @@ $color_h, $color_k, $color_p, $color_s, $color_u, $color_v)=
 
 
 
-$VERSION="4.0 (build 10)";
+$VERSION="4.0 (build 12)";
 $Lang="en";
 
 # Default value
@@ -450,9 +450,11 @@ sub Read_Config_File {
 	while (<CONFIG>) {
 		chomp $_; s/\r//;
 		if ($_ =~ /^$/) { next; }
-		if ($_ =~ /^#/) { next; }					# Remove comments
-		$_ =~ s/^([^\"]*)#.*/$1/;					# Remove comments
-		$_ =~ s/^([^\"]*\"[^\"]*\"[^\"]*)#.*/$1/;	# Remove comments
+		# Remove comments
+		if ($_ =~ /^#/) { next; }					
+		$_ =~ s/^([^\"]*)#.*/$1/;
+		$_ =~ s/^([^\"]*\"[^\"]*\"[^\"]*)#.*/$1/;
+		# Extract param and value
 		#debug("$_",2);
 		my @felter=split(/=/,$_,2);						
 		my $param=$felter[0]||next;					# If not a param=value, try with next line
@@ -460,11 +462,12 @@ sub Read_Config_File {
 		$param =~ s/^\s+//; $param =~ s/\s+$//;
 		$value =~ s/^\s+//; $value =~ s/\s+$//;
 		$value =~ s/^\"//; $value =~ s/\"$//;
+		# Replace __MONENV__ with value of environnement variable MONENV
 		$value =~ s/__(\w+)__/$ENV{$1}/g;
 		# Read main section
 		if ($param =~ /^LogFile/) {
 			$LogFile=$value;
-			if ($LogFile =~ /%([ymdhYMDH]+)-(\d*)/) {
+			if ($LogFile =~ /%([ymdhwYMDHW]+)-(\d*)/) {
 				my $timephase=$2;
 				debug(" Found a time phase of $timephase hour in log file name",1);
 				# Get older time
@@ -505,8 +508,12 @@ sub Read_Config_File {
 		if ($param =~ /^DirIcons/)              { $DirIcons=$value; next; }
 		if ($param =~ /^DNSLookup/)             { $DNSLookup=$value; next; }
 		if ($param =~ /^AllowToUpdateStatsFromBrowser/)	{ $AllowToUpdateStatsFromBrowser=$value; next; }
-		if ($param =~ /^SiteDomain/)			{ $SiteDomain=$value; next; }
+		if ($param =~ /^SiteDomain/)			{
+			$value =~ s/\\\./\./g; $value =~ s/([^\\])\./$1\\\./g; $value =~ s/^\./\\\.\./;	# Replace . into \.
+			$SiteDomain=$value; next;
+			}
 		if ($param =~ /^HostAliases/) {
+			$value =~ s/\\\./\./g; $value =~ s/([^\\])\./$1\\\./g; $value =~ s/^\./\\\.\./;	# Replace . into \.
 			my @felter=split(/\s+/,$value);
 			foreach my $elem (@felter)	  { push @HostAliases,$elem; }
 			next;
@@ -520,21 +527,25 @@ sub Read_Config_File {
 		if ($param =~ /^DirLang/)               { $DirLang=$value; next; }
 		if ($param =~ /^DefaultFile/)           { $DefaultFile=$value; next; }
 		if ($param =~ /^SkipHosts/) {
+			$value =~ s/\\\./\./g; $value =~ s/([^\\])\./$1\\\./g; $value =~ s/^\./\\\.\./;	# Replace . into \.
 			my @felter=split(/\s+/,$value);
 			foreach my $elem (@felter)    { push @SkipHosts,$elem; }
 			next;
 			}
 		if ($param =~ /^SkipDNSLookupFor/) {
+			$value =~ s/\\\./\./g; $value =~ s/([^\\])\./$1\\\./g; $value =~ s/^\./\\\.\./;	# Replace . into \.
 			my @felter=split(/\s+/,$value);
 			foreach my $elem (@felter)    { push @SkipDNSLookupFor,$elem; }
 			next;
 			}
 		if ($param =~ /^SkipFiles/) {
+			$value =~ s/\\\./\./g; $value =~ s/([^\\])\./$1\\\./g; $value =~ s/^\./\\\.\./;	# Replace . into \.
 			my @felter=split(/\s+/,$value);
 			foreach my $elem (@felter)    { push @SkipFiles,$elem; }
 			next;
 			}
 		if ($param =~ /^OnlyFiles/) {
+			$value =~ s/\\\./\./g; $value =~ s/([^\\])\./$1\\\./g; $value =~ s/^\./\\\.\./;	# Replace . into \.
 			my @felter=split(/\s+/,$value);
 			foreach my $elem (@felter)    { push @OnlyFiles,$elem; }
 			next;
@@ -1348,6 +1359,8 @@ sub Read_History_File {
 							else { 
 								if ((!$URLFilter || $field[0] =~ /$URLFilter/) && $field[1] >= $MinHitFile) { $loadrecord=1; }
 								$TotalDifferentPages++;
+#debug("X $TotalDifferentPages -$field[0]-",1);
+#if ($_url_p{$field[0]}) { print "$field[0] existe DEJA"; }
 							}
 						}
 						# Posssibilite de mettre if ($URLFilter && $field[0] =~ /$URLFilter/) mais il faut gerer TotalPages de la meme maniere
@@ -1589,7 +1602,7 @@ sub Save_History_File {
 	print HISTORYTMP "END_ROBOT\n";
 
 	# Navigation
-	# We save page list in score sorted order to get a -output=urldetail faster and with less use of memory.
+	# We save page list in score sorted order to get a -output faster and with less use of memory.
 	print HISTORYTMP "BEGIN_SIDER\n";
 	&BuildKeyList($MaxNbOfPageShown,$MinHitFile,\%_url_p,\%_url_p);
 	%keysinkeylist=();
