@@ -62,9 +62,9 @@ sub ShowMonthGraph_graph3d() {
 		return 1;
 	}
 
-	print "<APPLET>\n";
+	print "<applet>\n";
 	
-	print "</APPLET>\n";	
+	print "</applet>\n";	
 
 	return 0;
 }

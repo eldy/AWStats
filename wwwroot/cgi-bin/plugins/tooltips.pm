@@ -62,8 +62,8 @@ sub Init_tooltips {
 #-----------------------------------------------------------------------------
 sub AddHTMLStyles_tooltips {
 	# <-----
-	print "DIV { font: 12px arial,verdana,helvetica; text-align:justify; }\n";
-	print ".CTooltip { position:absolute; top:0px; left:0px; z-index:2; width:$TOOLTIPWIDTH; visibility:hidden; font: 8pt MS Comic Sans,arial,sans-serif; background-color: #FFFFE6; padding: 8px; border: 1px solid black; }\n";
+	print "div { font: 12px 'Arial','Verdana','Helvetica', sans-serif; text-align: justify; }\n";
+	print ".CTooltip { position:absolute; top: 0px; left: 0px; z-index: 2; width: ${TOOLTIPWIDTH}px; visibility:hidden; font: 8pt 'MS Comic Sans','Arial',sans-serif; background-color: #FFFFE6; padding: 8px; border: 1px solid black; }\n";
 	return 1;
 	# ----->
 }

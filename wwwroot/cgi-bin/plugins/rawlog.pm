@@ -105,16 +105,16 @@ sub BuildFullHTMLOutput_rawlog {
 sub _ShowForm {
 	my $Filter=shift||'';
 	print "<br>\n";
-	print "<form action=\"$AWScript\" style=\"padding: 0px 0px 0px 0px; margin-top: 0\" target=>\n";
-	print "<TABLE CLASS=\"AWS_BORDER\" BORDER=0 CELLPADDING=2 CELLSPACING=0 WIDTH=\"100%\">\n";
-	print "<TR><TD>";
-	print "<TABLE CLASS=\"AWS_DATA\" BORDER=0 CELLPADDING=1 CELLSPACING=0 WIDTH=\"100%\">\n";
+	print "<form action=\"$AWScript\" style=\"padding: 0px 0px 0px 0px; margin-top: 0\">\n";
+	print "<table class=\"aws_border\" border=0 cellpadding=2 cellspacing=0 width=\"100%\">\n";
+	print "<tr><td>";
+	print "<table class=\"aws_data\" border=0 cellpadding=1 cellspacing=0 width=\"100%\">\n";
 	print "<tr align=left><td align=left><b>Show content of file '$LogFile' ($MAXLINE first lines):</b></td></tr>\n";
-	print "<tr align=left><td align=left>$Message[79]: <input type=text name=filterrawlog value=\"$Filter\"><input type=submit value=\"List\" class=\"AWS_BUTTON\">\n";
+	print "<tr align=left><td align=left>$Message[79]: <input type=text name=filterrawlog value=\"$Filter\"><input type=submit value=\"List\" class=\"aws_button\">\n";
 	print "<input type=hidden name=config value=\"$SiteConfig\"><input type=hidden name=framename value=\"$FrameName\"><input type=hidden name=pluginmode value=\"rawlog\">";
 	print "</td></tr>\n";
-	print "</TABLE>\n";
-	print "</TD></TR></TABLE>\n";
+	print "</table>\n";
+	print "</td></tr></table>\n";
 	print "</form>\n";
 }
 
