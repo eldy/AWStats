@@ -35,6 +35,7 @@ my $AwstatsDir='';
 my $HtmlDoc='htmldoc';		# ghtmldoc.exe
 my $StaticExt='html';
 my $DirIcons='';
+my $DirConfig='';
 my $OutputDir='';
 my $OutputSuffix;
 my $OutputFile;
@@ -116,18 +117,22 @@ sub debug {
 
 #------------------------------------------------------------------------------
 # Function:     Read config file
-# Parameters:	-
+# Parameters:	None or configdir to scan
 # Input:        $DIR $PROG $SiteConfig
 # Output:		Global variables
 # Return:		-
 #------------------------------------------------------------------------------
 sub Read_Config {
 	# Check config file in common possible directories :
-	# Windows :                   	"$DIR" (same dir than awstats.pl)
-	# Mandrake and Debian package :	"/etc/awstats"
-	# FHS standard, Suse package : 	"/etc/opt/awstats"
-	# Other possible directories :	"/etc", "/usr/local/etc/awstats"
-	my @PossibleConfigDir=("$AwstatsDir","$DIR","/etc/awstats","/etc/opt/awstats","/etc","/usr/local/etc/awstats");
+	# Windows :                   				"$DIR" (same dir than awstats.pl)
+	# Standard, Mandrake and Debian package :	"/etc/awstats"
+	# Other possible directories :				"/usr/local/etc/awstats", "/etc"
+	# FHS standard, Suse package : 				"/etc/opt/awstats"
+	my $configdir=shift;
+	my @PossibleConfigDir=();
+
+	if ($configdir) { @PossibleConfigDir=("$configdir"); }
+	else { @PossibleConfigDir=("$AwstatsDir","$DIR","/etc/awstats","/usr/local/etc/awstats","/etc","/etc/opt/awstats"); }
 
 	# Open config file
 	$FileConfig=$FileSuffix='';
@@ -137,7 +142,7 @@ sub Read_Config {
 		if (open(CONFIG,"${searchdir}awstats.$SiteConfig.conf")) 	{ $FileConfig="${searchdir}awstats.$SiteConfig.conf"; $FileSuffix=".$SiteConfig"; last; }
 		if (open(CONFIG,"${searchdir}awstats.conf"))  				{ $FileConfig="${searchdir}awstats.conf"; $FileSuffix=''; last; }
 	}
-	if (! $FileConfig) { error("Couldn't open config file \"awstats.$SiteConfig.conf\" nor \"awstats.conf\" : $!"); }
+	if (! $FileConfig) { error("Couldn't open config file \"awstats.$SiteConfig.conf\" nor \"awstats.conf\" after searching in path \"".join(',',@PossibleConfigDir)."\": $!"); }
 
 	# Analyze config file content and close it
 	&Parse_Config( *CONFIG , 1 , $FileConfig);
@@ -234,6 +239,7 @@ my $QueryString=''; for (0..@ARGV-1) { $QueryString .= "$ARGV[$_]&"; }
 if ($QueryString =~ /(^|-|&)month=(year)/i) { error("month=year is a deprecated option. Use month=all instead."); }
 
 if ($QueryString =~ /(^|-|&)debug=(\d+)/i)			{ $Debug=$2; }
+if ($QueryString =~ /(^|-|&)configdir=([^&]+)/i)	{ $DirConfig="$2"; }
 if ($QueryString =~ /(^|-|&)config=([^&]+)/i)		{ $SiteConfig="$2"; }
 if ($QueryString =~ /(^|-|&)awstatsprog=([^&]+)/i)	{ $Awstats="$2"; }
 if ($QueryString =~ /(^|-|&)buildpdf/i) 			{ $BuildPDF=1; }
@@ -310,8 +316,8 @@ if ($BuildPDF) {
 	}
 }
 
-# Read config file (here SiteConfig is defined)
-&Read_Config;
+# Read config file (SiteConfig must be defined)
+&Read_Config($DirConfig);
 
 # Define list of output files
 if ($ShowDomainsStats) { push @OutputList,'alldomains'; }
@@ -339,6 +345,7 @@ if ($ShowHTTPErrorsStats) {
 # Launch awstats update
 if ($Update) {
 	my $command="\"$Awstats\" -config=$SiteConfig -update";
+	$command .= " -configdir=$DirConfig" if defined $DirConfig;
 	print "Launch update process : $command\n";
 	$retour=`$command  2>&1`;
 }
@@ -387,6 +394,7 @@ if ($BuildPDF) { $NoLoadPlugin.="tooltips,rawlog,hostinfo"; }
 my $smallcommand="\"$Awstats\" -config=$SiteConfig".($BuildPDF?" -buildpdf":"").($NoLoadPlugin?" -noloadplugin=$NoLoadPlugin":"")." -staticlinks".($OutputSuffix ne $SiteConfig?"=$OutputSuffix":"");
 if ($StaticExt && $StaticExt ne 'html')     { $smallcommand.=" -staticlinksext=$StaticExt"; }
 if ($DirIcons)      { $smallcommand.=" -diricons=$DirIcons"; }
+if ($DirConfig)   	{ $smallcommand.=" -configdir=$DirConfig"; }
 if ($Lang)          { $smallcommand.=" -lang=$Lang"; }
 if ($MonthRequired) { $smallcommand.=" -month=$MonthRequired"; }
 if ($YearRequired)  { $smallcommand.=" -year=$YearRequired"; }
