@@ -371,7 +371,8 @@ use vars qw/ %ftpcodelib /;
 # SMTP codes
 use vars qw/ %smtpcodelib /;
 %smtpcodelib = (
-'450'=>'User unknown',
+'450'=>'Sender or domain address not qualified',
+'550'=>'Relaying denied or Unkown recipient user',
 '554'=>'Relay denied'
 );
 
