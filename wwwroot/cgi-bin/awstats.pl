@@ -5973,7 +5973,13 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 		seek(LOG,$lastlineoffset,0);
 		$_=<LOG>;
  		chomp $_; s/\r$//;
-		&Read_History_With_TmpUpdate($lastprocessedyear,$lastprocessedmonth,1,1,"all",($lastlinenumber+$NbOfLinesParsed),$lastlineoffset,&CheckSum($_));
+		if (! $NbOfLinesParsed) {
+			# TODO If there was no lines parsed (log was empty), we only update LastUpdate line with YYYYMMDDHHMMSS 0 0 0 0 0
+			&Read_History_With_TmpUpdate($lastprocessedyear,$lastprocessedmonth,1,1,"all",($lastlinenumber+$NbOfLinesParsed),$lastlineoffset,&CheckSum($_));
+		}
+		else {
+			&Read_History_With_TmpUpdate($lastprocessedyear,$lastprocessedmonth,1,1,"all",($lastlinenumber+$NbOfLinesParsed),$lastlineoffset,&CheckSum($_));
+		}
 	}
 
 	if ($Debug) { debug("Close log file \"$LogFile\""); }

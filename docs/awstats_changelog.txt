@@ -10,6 +10,7 @@ Fixes:
 
 New features/improvments:
 - Report compression ratios with mod_deflate feature (Apache 2).
+- A better browser detection.
 
 Other/Documentation:
 - Updated documentation.
