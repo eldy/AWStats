@@ -164,9 +164,9 @@ II - 1) With Apache Server
 II - 2) With IIS Server
 
 	* Configure IIS to have "Extended W3C log format" with following fields:
-	  date time c-ip c-username cs-method cs-uri-sterm sc-status cs-bytes cs-version cs(User-Agent) cs(Referer)
+	  date time c-ip cs-username cs-method cs-uri-stem sc-status cs-bytes cs-version cs(User-Agent) cs(Referer)
 	    or
-	  date time c-ip c-username cs-method cs-uri-sterm sc-status cs-bytes cs-version cs-host cs(User-Agent) cs(Referer)
+	  date time c-ip cs-username cs-method cs-uri-stem sc-status cs-bytes cs-version cs-host cs(User-Agent) cs(Referer)
 	  This is an example of what you should get:
 	  2000-07-19 14:14:14 62.161.78.73 - GET / 200 1234 HTTP/1.1 Mozilla/4.0+(compatible;+MSIE+5.01;+Windows+NT+5.0) http://www.from.com/from.htm
 	    or
