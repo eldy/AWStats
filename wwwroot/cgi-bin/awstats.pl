@@ -1105,13 +1105,14 @@ sub Parse_Config {
 			next;
 			}
 		if ($param =~ /^SiteDomain/)			{
-			#$value =~ s/\\\./\./g; $value =~ s/([^\\])\./$1\\\./g; $value =~ s/^\./\\\./;	# SiteDomain is not used in regex. Must not replace . into \.
+			# No regex test as SiteDomain is always exact value
 			$SiteDomain=$value;
 			next;
 			}
 		if ($param =~ /^HostAliases/) {
 			foreach my $elem (split(/\s+/,$value))	{
-				if ($elem!~s/^REGEX\[(.*)\]$/$1/i) { $elem =~ s/\\\./\./g; $elem =~ s/([^\\])\./$1\\\./g; $elem =~ s/^\./\\\./; }	# Replace . into \.
+				if ($elem =~ /^REGEX\[(.*)\]$/i) { $elem=$1; }
+				else { $elem='^'.quotemeta($elem).'$'; }
 				if ($elem) { push @HostAliases,$elem; }
 			}
 			next;
@@ -1119,7 +1120,8 @@ sub Parse_Config {
 		# Special optional setup params
 		if ($param =~ /^SkipDNSLookupFor/) {
 			foreach my $elem (split(/\s+/,$value))	{
-				if ($elem!~s/^REGEX\[(.*)\]$/$1/i) { $elem =~ s/\\\./\./g; $elem =~ s/([^\\])\./$1\\\./g; $elem =~ s/^\./\\\./; }	# Replace . into \.
+				if ($elem =~ /^REGEX\[(.*)\]$/i) { $elem=$1; }
+				else { $elem='^'.quotemeta($elem).'$'; }
 				if ($elem) { push @SkipDNSLookupFor,$elem; }
 			}
 			next;
@@ -1130,42 +1132,48 @@ sub Parse_Config {
 			}
 		if ($param =~ /^DefaultFile/)           {
 			foreach my $elem (split(/\s+/,$value))	{	# No REGEX for this option
-				$elem =~ s/\\\./\./g; $elem =~ s/([^\\])\./$1\\\./g; $elem =~ s/^\./\\\./;	# Replace . into \.
+				if ($elem =~ /^REGEX\[(.*)\]$/i) { $elem=$1; }
+				else { $elem='^'.quotemeta($elem).'$'; }
 				if ($elem) { push @DefaultFile,$elem; }
 			}
 			next;
 			}
 		if ($param =~ /^SkipHosts/) {
 			foreach my $elem (split(/\s+/,$value))	{
-				if ($elem!~s/^REGEX\[(.*)\]$/$1/i) { $elem =~ s/\\\./\./g; $elem =~ s/([^\\])\./$1\\\./g; $elem =~ s/^\./\\\./; }	# Replace . into \.
+				if ($elem =~ /^REGEX\[(.*)\]$/i) { $elem=$1; }
+				else { $elem='^'.quotemeta($elem).'$'; }
 				if ($elem) { push @SkipHosts,$elem; }
 			}
 			next;
 			}
 		if ($param =~ /^SkipUserAgents/) {
 			foreach my $elem (split(/\s+/,$value))	{
-				if ($elem!~s/^REGEX\[(.*)\]$/$1/i) { $elem =~ s/\\\./\./g; $elem =~ s/([^\\])\./$1\\\./g; $elem =~ s/^\./\\\./; }	# Replace . into \.
+				if ($elem =~ /^REGEX\[(.*)\]$/i) { $elem=$1; }
+				else { $elem='^'.quotemeta($elem).'$'; }
 				if ($elem) { push @SkipUserAgents,$elem; }
 			}
 			next;
 			}
 		if ($param =~ /^SkipFiles/) {
 			foreach my $elem (split(/\s+/,$value))	{
-				if ($elem!~s/^REGEX\[(.*)\]$/$1/i) { $elem =~ s/\\\./\./g; $elem =~ s/([^\\])\./$1\\\./g; $elem =~ s/^\./\\\./; }	# Replace . into \.
+				if ($elem =~ /^REGEX\[(.*)\]$/i) { $elem=$1; }
+				else { $elem='^'.quotemeta($elem).'$'; }
 				if ($elem) { push @SkipFiles,$elem; }
 			}
 			next;
 			}
 		if ($param =~ /^OnlyHosts/) {
 			foreach my $elem (split(/\s+/,$value))	{
-				if ($elem!~s/^REGEX\[(.*)\]$/$1/i) { $elem =~ s/\\\./\./g; $elem =~ s/([^\\])\./$1\\\./g; $elem =~ s/^\./\\\./; }	# Replace . into \.
+				if ($elem =~ /^REGEX\[(.*)\]$/i) { $elem=$1; }
+				else { $elem='^'.quotemeta($elem).'$'; }
 				if ($elem) { push @OnlyHosts,$elem; }
 			}
 			next;
 			}
 		if ($param =~ /^OnlyFiles/) {
 			foreach my $elem (split(/\s+/,$value))	{
-				if ($elem!~s/^REGEX\[(.*)\]$/$1/i) { $elem =~ s/\\\./\./g; $elem =~ s/([^\\])\./$1\\\./g; $elem =~ s/^\./\\\./; }	# Replace . into \.
+				if ($elem =~ /^REGEX\[(.*)\]$/i) { $elem=$1; }
+				else { $elem='^'.quotemeta($elem).'$'; }
 				if ($elem) { push @OnlyFiles,$elem; }
 			}
 			next;
