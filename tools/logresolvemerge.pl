@@ -330,6 +330,9 @@ if (scalar @ParamFile == 0) {
 	print "WARNING: If log files are old MAC text files (lines ended with CR char), you\n";
 	print "can't run this tool on Win or Unix platforms.\n";
 	print "\n";
+	print "WARNING: Because of important memory holes in ActiveState Perl version, use\n";
+	print "another Perl interpreter if you need to process large lof files.\n";
+	print "\n";
 	print "Now supports/detects:\n";
 	print "  Automatic detection of log format\n";
 	print "  Files can be .gz/.bz2 files if zcat/bzcat tools are available in PATH.\n";

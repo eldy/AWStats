@@ -11,9 +11,9 @@ It works with IIS 5.0+, Apache and all major web, wap, proxy, streaming
 server log files (and even ftp servers or mail logs) on all Operating Systems.
 
 License: GNU GPL (GNU General Public License. See LICENSE file),
-         OSI Certified Open Source Software.
+         OSI Certified Open Source Software license.
 Version: 6.0
-Release date: December 2003
+Release date: January 2004
 Platforms: All (Linux, NT, SCO, BSD, Solaris and other *NIX's, BeOS, OS/2...)
 Author: Laurent Destailleur <eldy@users.sourceforge.net>
 AWStats official web site and latest version: http://awstats.sourceforge.net
