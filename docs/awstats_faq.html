@@ -57,6 +57,7 @@ FAQ-SET260 <a href="#FTP">Setup for FTP server log files.</a><br>
 FAQ-SET280 <a href="#NOTSAMENUMBER">Error "Not same number of records of...".</a><br>
 FAQ-SET300 <a href="#COULDNOTOPEN">Error "Couldn't open file ..."</a><br>
 FAQ-SET350 <a href="#EMPTY_STATS">Empty or null statistics reported.</a><br>
+FAQ-SET400 <a href="#REDIRECT">Pipe redirection to a file give me an empty file.</a><br>
 FAQ-SET450 <a href="#NO_ICON">No pictures/graphics shown.</a><br>
 FAQ-SET500 <a href="#ROTATE">How to rotate my logs without loosing data.</a><br>
 FAQ-SET550 <a href="#CRONTAB">How to run AWStats frequently ?</a><br>
@@ -75,7 +76,7 @@ FAQ-COM300 <a href="#DIFFERENCE_HOURS">Difference between local hour and AWStats
 FAQ-COM350 <a href="#OLDLOG">How can I process old log file ?</a><br>
 FAQ-COM400 <a href="#MULTILOG">How can I update my statistics when I use a load balancing system that splits my logs ?</a><br>
 FAQ-COM500 <a href="#RESET">How can I reset all my statistics ?</a><br>
-FAQ-COM550 <a href="#EDITHISTORY">Can I safely remove an line in AWStats history files (awstatsMMYYYY*.txt) ?</a><br>
+FAQ-COM550 <a href="#EDITHISTORY">Can I safely remove a line in AWStats history files (awstatsMMYYYY*.txt) ?</a><br>
 </ul>
 <br>
 
@@ -242,29 +243,35 @@ You must use : <i>LogFormat=4</i><br>
 Note: Browsers, OS's, Keywords and Referers features are not available with a such format.<br>
 </td></tr></table>
 
+<u>If your log records are EXACTLY like this (With some <b>Squid</b> versions):</u><br>
+<i>200.135.30.181 - - [dd/mmm/yyyy:hh:mm:ss +0x00] "GET http://www.mysite.com/page.html HTTP/1.0" 200 456 TCP_CLIENT_REFRESH_MISS:DIRECT</i><br>
+You must use : <i>LogFormat="%host %other %logname %time1 %methodurl %code %bytesd %other"</i><br>
+
+<table bgcolor=#F0F0F0 width="100%" class=CFAQ><tr class=CFAQ><td class=CFAQ>
 <u>If your log records are EXACTLY like this (<b>IIS</b> W3C log format):</u><br>
 <i>yyyy-mm-dd hh:mm:ss 62.161.78.73 - GET /page.html 200 1234 HTTP/1.1 Mozilla/4.0+(compatible;+MSIE+5.01;+Windows+NT+5.0) http://www.from.com/from.htm</i><br>
 You must use : <i>LogFormat=2</i><br>
+</td></tr></table>
 
-<table bgcolor=#F0F0F0 width="100%" class=CFAQ><tr class=CFAQ><td class=CFAQ>
 <u>If your log records are EXACTLY like this (With some providers):</u><br>
 <i>62.161.78.73 - - [dd/Month/yyyy:hh:mm:ss +0x00] "GET /page.html HTTP/1.1" "-" 200 1234</i><br>
 You must use : <i>LogFormat="%host %other %logname %time1 %methodurl %other %code %bytesd"</i><br>
 Note: Browsers, OS's, Keywords and Referers features are not available with a such format.<br>
-</td></tr></table>
 
+<table bgcolor=#F0F0F0 width="100%" class=CFAQ><tr class=CFAQ><td class=CFAQ>
 <u>If your log records are EXACTLY like this (<b>Webstar</b> native log format):</u><br>
 <i>05/21/00	00:17:31	OK  	200	212.242.30.6	Mozilla/4.0 (compatible; MSIE 5.0; Windows 98; DigExt)	http://www.cover.dk/	"www.cover.dk"	:Documentation:graphics:starninelogo.white.gif	1133</i><br>
 You must use : <i>LogFormat=3</i><br>
-
-<table bgcolor=#F0F0F0 width="100%" class=CFAQ><tr class=CFAQ><td class=CFAQ>
-<u>If you use <b>ProFTP</b> server:</u><br>
-See Next FAQ.<br>
 </td></tr></table>
 
+<u>If you use <b>ProFTP</b> server:</u><br>
+See Next FAQ.<br>
+
+<table bgcolor=#F0F0F0 width="100%" class=CFAQ><tr class=CFAQ><td class=CFAQ>
 <u>There is a lot of other possible log formats.</u><br>
 You must use a personalized log format LogFormat ="..." as described in config file to
 support other various log formats.<br>
+</td></tr></table>
 <br>
 
 <a name="FTP"></a><br>
@@ -346,6 +353,16 @@ Choose W3C Extended Log Format, then Properties, then the Tab Extended Propertie
 under Extended Properties. Once they are all unchecked, check off the list given in
 the <a href="awstats_setup.html">Setup and Use</a> page ("With IIS Server" chapter).<br>
 You can also read the next FAQ to have examples of <a href="awstats_config.html#LogFormat">LogFormat</a> value according to log files format.<br>
+<br>
+
+<a name="REDIRECT"></a><br>
+<b><u>FAQ-SET400 : PIPE REDIRECTION TO A FILE GIVE ME AN EMPTY FILE</u></b><br>
+<font class=CProblem>PROBLEM:</font> I want to redirect awstats.pl output to a file with the following command :<br>
+<i>> awstats.pl -config=... [other_options] > myfile.html</i><br>
+But myfile.html is empty (size is 0). If i remove the redirection, everythings works correctly.<br>
+<font class=CSolution>SOLUTION:</font> This is not an AWStats bug but a problem between perl and Windows.<br>
+You can easily solve this running the following command instead:<br>
+<i>> perl awstats.pl -config=... [other_options] > myfile.html</i><br>
 <br>
 
 <a name="NO_ICON"></a><br>
@@ -534,9 +551,11 @@ So this means this way of working might never be changed.<br>
 <b><u>FAQ-COM350 : HOW CAN I PROCESS OLD LOG FILE ?</u></b><br>
 <font class=CProblem>PROBLEM:</font> I want to process an old log file to include its data in my AWStats reports.<br>
 <font class=CSolution>SOLUTION:</font> 
-You must change your LogFile parameter to point to the old log file and run the update. However the update process can only accept
-files in chronological order, so if you have already processed a recent file, you must before
-reset all your statistics (see next FAQ) and restart all the update process for all past log files and in chronological order.<br>
+You must change your <a href="awstats_config.html#LogFile">LogFile</a> parameter to point to the old log file and run
+the update (or use the -logformat option on command line to overwrite <a href="awstats_config.html#LogFile">LogFile</a> parameter).
+The update process can only accept files in chronological order, so if you have already processed a recent file,
+you must before reset all your statistics (see next FAQ) and restart all the update process for all past log files
+and in chronological order.<br>
 <br>
 
 <a name="MULTILOG"></a><br>
