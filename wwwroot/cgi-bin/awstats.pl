@@ -26,7 +26,7 @@ $VERSION="5.2 (build $REVISION)";
 # Constants
 use vars qw/
 $DEBUGFORCED $NBOFLINESFORBENCHMARK $FRAMEWIDTH $TOOLTIPWIDTH $NBOFLASTUPDATELOOKUPTOSAVE
-$LIMITFLUSH $VISITTIMEOUT $NOTSORTEDRECORDTOLERANCE $MAXDIFFEXTRA
+$LIMITFLUSH $NEWDAYVISITTIMEOUT $VISITTIMEOUT $NOTSORTEDRECORDTOLERANCE $MAXDIFFEXTRA
 $WIDTHCOLICON
 /;
 $DEBUGFORCED=0;						# Force debug level to log lesser level into debug.log file (Keep this value to 0)
@@ -35,6 +35,7 @@ $FRAMEWIDTH=260;					# Width of left frame when UseFramesWhenCGI is on
 $TOOLTIPWIDTH=380;					# Width of tooltips
 $NBOFLASTUPDATELOOKUPTOSAVE=200;	# Nb of records to save in DNS last update cache file
 $LIMITFLUSH=4000;					# Nb of records in data arrays after how we need to flush data on disk
+$NEWDAYVISITTIMEOUT=764041;			# Delay between 01-23:59:59 and 02-00:00:00
 $VISITTIMEOUT=10000;				# Laps of time to consider a page load as a new visit. 10000 = 1 hour (Default = 10000)
 $NOTSORTEDRECORDTOLERANCE=10000;	# Laps of time to accept a record if not in correct order. 10000 = 1 hour (Default = 10000)
 $MAXDIFFEXTRA=500;
@@ -639,16 +640,16 @@ sub tab_end {
 # Return:		None
 #------------------------------------------------------------------------------
 sub error {
-	my $message=shift||"";
-	my $secondmessage=shift||"";
-	my $thirdmessage=shift||"";
+	my $message=shift||'';
+	my $secondmessage=shift||'';
+	my $thirdmessage=shift||'';
 	my $donotshowsetupinfo=shift||0;
 	if ($Debug) { debug("$message $secondmessage $thirdmessage",1); }
 	if (! $ErrorMessages && $message =~ /^Format error$/i) {
-		my $tagbold=""; my $tagunbold=""; my $tagbr=""; my $tagfontred=""; my $tagunfont="";
+		my $tagbold=''; my $tagunbold=''; my $tagbr=''; my $tagfontred=''; my $tagunfont='';
 		# Files seems to have bad format
 		if ($HTMLOutput) {
-			$tagbold="<b>"; $tagunbold="</b>"; $tagbr="<br>"; $tagfontred="<font color=#880000>"; $tagunfont="</font>";
+			$tagbold='<b>'; $tagunbold='</b>'; $tagbr='<br>'; $tagfontred='<font color=#880000>'; $tagunfont='</font>';
 			print "<br><br>\n";
 		}
 		if ($message !~ $LogSeparator) {
@@ -955,12 +956,12 @@ sub Read_Config {
 	my @PossibleConfigDir=("$DIR","/etc/opt/awstats","/etc/awstats","/etc","/usr/local/etc/awstats");
 
 	# Open config file
-	$FileConfig=""; $FileSuffix="";
+	$FileConfig=$FileSuffix='';
 	foreach my $dir (@PossibleConfigDir) {
 		my $searchdir=$dir;
 		if ($searchdir && (!($searchdir =~ /\/$/)) && (!($searchdir =~ /\\$/)) ) { $searchdir .= "/"; }
 		if (open(CONFIG,"$searchdir$PROG.$SiteConfig.conf")) 	{ $FileConfig="$searchdir$PROG.$SiteConfig.conf"; $FileSuffix=".$SiteConfig"; last; }
-		if (open(CONFIG,"$searchdir$PROG.conf"))  				{ $FileConfig="$searchdir$PROG.conf"; $FileSuffix=""; last; }
+		if (open(CONFIG,"$searchdir$PROG.conf"))  				{ $FileConfig="$searchdir$PROG.conf"; $FileSuffix=''; last; }
 	}
 	if (! $FileConfig) { error("Error: Couldn't open config file \"$PROG.$SiteConfig.conf\" nor \"$PROG.conf\" : $!"); }
 
@@ -1050,7 +1051,7 @@ sub Parse_Config {
 			$value =~ s/__(\w+)__/$ENV{$1}/g;
 		}
 		# Read main section
-		if ($param =~ /^LogFile/ && !$LogFile ) { $LogFile=$value; next; }
+		if ($param =~ /^LogFile/ && $QueryString !~ /logfile=([^\s&]+)/i)	{ $LogFile=$value; next; }
 		if ($param =~ /^LogFormat/)            	{ $LogFormat=$value; next; }
 		if ($param =~ /^LogSeparator/)         	{ $LogSeparator=$value; next; }
 		if ($param =~ /^DirData/) 				{ $DirData=$value; next; }
@@ -1315,7 +1316,7 @@ sub Read_Language_Data {
 	# Other possible directories :        		"./lang"
 	my @PossibleLangDir=("$DirLang","${DIR}lang","/usr/share/awstats/lang","./lang");
 
-	my $FileLang="";
+	my $FileLang='';
 	foreach my $dir (@PossibleLangDir) {
 		my $searchdir=$dir;
 		if ($searchdir && (!($searchdir =~ /\/$/)) && (!($searchdir =~ /\\$/)) ) { $searchdir .= "/"; }
@@ -1373,7 +1374,7 @@ sub Read_Language_Tooltip {
 	# Other possible directories :        		"./lang"
 	my @PossibleLangDir=("$DirLang","${DIR}lang","/usr/share/awstats/lang","./lang");
 
-	my $FileLang="";
+	my $FileLang='';
 	foreach my $dir (@PossibleLangDir) {
 		my $searchdir=$dir;
 		if ($searchdir && (!($searchdir =~ /\/$/)) && (!($searchdir =~ /\\$/)) ) { $searchdir .= "/"; }
@@ -1647,7 +1648,7 @@ sub Check_Config {
 # Parameters:	AWStats version required by plugin
 # Input:		$VERSION
 # Output:		None
-# Return: 		"" if ok, "Error: xxx" if error
+# Return: 		'' if ok, "Error: xxx" if error
 #------------------------------------------------------------------------------
 sub Check_Plugin_Version {
 	my $PluginNeedAWStatsVersion=shift;
@@ -1659,7 +1660,7 @@ sub Check_Plugin_Version {
 	if 	($numPluginNeedAWStatsVersion > $numAWStatsVersion) {
 		return "Error: AWStats version $PluginNeedAWStatsVersion or higher is required. Detected $VERSION.";
 	}
-	return "";
+	return '';
 }
 
 
@@ -1681,7 +1682,7 @@ sub Read_Plugins {
 	foreach my $plugininfo (@PluginsToLoad) {
 		my @loadplugin=split(/\s+/,$plugininfo,2);
 		my $pluginfile=$loadplugin[0]; $pluginfile =~ s/\.pm$//i;
-		my $pluginparam=$loadplugin[1]||"";
+		my $pluginparam=$loadplugin[1]||'';
 		$pluginfile =~ /([^\/\\]*)$/;
 		my $pluginname=$1;
 		if ($pluginname) {
@@ -1744,7 +1745,7 @@ sub Read_Plugins {
 # Parameters:	year,month,withupdate,withpurge,part to load
 # Input:		$DirData $PROG $FileSuffix $LastLine
 # Output:		None
-# Return:		Tmp history file name or "" if withupdate is 0
+# Return:		Tmp history file name or '' if withupdate is 0
 #--------------------------------------------------------------------
 sub Read_History_With_TmpUpdate {
 
@@ -2967,9 +2968,9 @@ sub Read_History_With_TmpUpdate {
 # Return:		None
 #--------------------------------------------------------------------
 sub Save_History {
-	my $sectiontosave=shift||"";
-	my $year=shift||"";
-	my $month=shift||"";
+	my $sectiontosave=shift||'';
+	my $year=shift||'';
+	my $month=shift||'';
 
 	if ($Debug) { debug(" Save_History (sectiontosave=$sectiontosave year=$year month=$month)",3); }
 	my $spacebar="                    ";
@@ -3117,7 +3118,7 @@ sub Save_History {
 			my $bytes=$_host_k{$key}||0;
 			my $timehostl=$_host_l{$key}||0;
 			my $timehosts=$_host_s{$key}||0;
-			my $lastpage=$_host_u{$key}||"";
+			my $lastpage=$_host_u{$key}||'';
 			if ($timehostl && $timehosts && $lastpage) {
 				if (($timehostl+$VISITTIMEOUT) < $LastLine) {
 					# Session for this user is expired
@@ -3133,7 +3134,7 @@ sub Save_History {
 				}
 			}
 			else {
-				my $hostl=$timehostl||"";
+				my $hostl=$timehostl||'';
 				print HISTORYTMP "$key $page $_host_h{$key} $bytes $hostl\n";
 			}
 		}
@@ -3144,7 +3145,7 @@ sub Save_History {
 			my $bytes=$_host_k{$key}||0;
 			my $timehostl=$_host_l{$key}||0;
 			my $timehosts=$_host_s{$key}||0;
-			my $lastpage=$_host_u{$key}||"";
+			my $lastpage=$_host_u{$key}||'';
 			if ($timehostl && $timehosts && $lastpage) {
 				if (($timehostl+$VISITTIMEOUT) < $LastLine) {
 					# Session for this user is expired
@@ -3160,7 +3161,7 @@ sub Save_History {
 				}
 			}
 			else {
-				my $hostl=$timehostl||"";
+				my $hostl=$timehostl||'';
 				print HISTORYTMP "$key $page $_host_h{$key} $bytes $hostl\n";
 			}
 		}
@@ -3424,7 +3425,7 @@ sub Save_History {
 			print HISTORYTMP "BEGIN_SIDER_$code ".(scalar keys %_sider404_h)."\n";
 			foreach my $key (keys %_sider404_h) {
 				my $newkey=$key;
-				my $newreferer=$_referer404_h{$key}||"";
+				my $newreferer=$_referer404_h{$key}||'';
 				$newreferer =~ s/\s/%20/g;
 				print HISTORYTMP "$newkey ".int($_sider404_h{$key})." $newreferer\n";
 			}
@@ -3444,14 +3445,14 @@ sub Save_History {
 	 			$keysinkeylist{$key}=1;
 	 			my $page=${'_section_' . $extranum . '_p'}{$key}||0;
 	 			my $bytes=${'_section_' . $extranum . '_k'}{$key}||0;
-	 			my $lastaccess=${'_section_' . $extranum . '_l'}{$key}||"";
+	 			my $lastaccess=${'_section_' . $extranum . '_l'}{$key}||'';
 	 			print HISTORYTMP "$key $page ", ${'_section_' . $extranum . '_h'}{$key}, " $bytes $lastaccess\n"; next;
 	 		}
 	 		foreach my $key (keys %{'_section_' . $extranum . '_h'}) {
 	 			if ($keysinkeylist{$key}) { next; }
 	 			my $page=${'_section_' . $extranum . '_p'}{$key}||0;
 	 			my $bytes=${'_section_' . $extranum . '_k'}{$key}||0;
-	 			my $lastaccess=${'_section_' . $extranum . '_l'}{$key}||"";
+	 			my $lastaccess=${'_section_' . $extranum . '_l'}{$key}||'';
 	 			print HISTORYTMP "$key $page ", ${'_section_' . $extranum . '_h'}{$key}, " $bytes $lastaccess\n"; next;
 	 		}
 	 		print HISTORYTMP "END_EXTRA_$extranum\n";
@@ -3533,8 +3534,8 @@ sub Read_DNS_Cache {
 	my $filesuffix=shift;
 	my $savetohash=shift;
 
-	my $dnscacheext="";
-	my $filetoload="";
+	my $dnscacheext='';
+	my $filetoload='';
 	my $timetoload = time();
 
 	if ($Debug) { debug("Call to Read_DNS_Cache [file=\"$dnscachefile\"]"); }
@@ -3583,8 +3584,8 @@ sub Save_DNS_Cache_File {
 	my $dnscachefile=shift;
 	my $filesuffix=shift;
 
-	my $dnscacheext="";
-	my $filetosave="";
+	my $dnscacheext='';
+	my $filetosave='';
 	my $timetosave = time();
 	my $nbofelemtosave=$NBOFLASTUPDATELOOKUPTOSAVE;
 	my $nbofelemsaved=0;
@@ -3774,7 +3775,7 @@ sub Show_Flag_Links {
 
 	# Build flags link
 	my $NewLinkParams=$QueryString;
-	my $NewLinkTarget="";
+	my $NewLinkTarget='';
 	if ($ENV{'GATEWAY_INTERFACE'}) {
 		$NewLinkParams =~ s/update(=\w*|$|[ &]+)//i;
 		$NewLinkParams =~ s/staticlinks(=\w*|$|[ &]+)//i;
@@ -3999,7 +4000,7 @@ sub BuildKeyList {
 	my $hashforselect=shift;
 	my $hashfororder=shift;
 	if ($Debug) { debug(" BuildKeyList($ArraySize,$MinValue,$hashforselect with size=".(scalar keys %$hashforselect).",$hashfororder with size=".(scalar keys %$hashfororder).")",2); }
-	delete $hashforselect->{0};delete $hashforselect->{""};		# Those is to protect from infinite loop when hash array has an incorrect null key
+	delete $hashforselect->{0};delete $hashforselect->{''};		# Those is to protect from infinite loop when hash array has an incorrect null key
 	my $count=0;
 	$lowerval=0;	# Global because used in AddInTree and Removelowerval
 	%val=(); %nextval=(); %egal=();
@@ -4440,7 +4441,7 @@ if ($FrameName ne 'index') {
 }
 
 # Init other parameters
-if ($ENV{'GATEWAY_INTERFACE'}) { $DirCgi=""; }
+if ($ENV{'GATEWAY_INTERFACE'}) { $DirCgi=''; }
 if ($DirCgi && !($DirCgi =~ /\/$/) && !($DirCgi =~ /\\$/)) { $DirCgi .= "/"; }
 if (! $DirData || $DirData eq ".") { $DirData=$DIR; }	# If not defined or chosen to "." value then DirData is current dir
 if (! $DirData)  { $DirData="."; }						# If current dir not defined then we put it to "."
@@ -4634,31 +4635,38 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 	# Squid extended: 12.229.91.170 - - [27/Jun/2002:03:30:50 -0700] "GET http://www.callistocms.com/images/printable.gif HTTP/1.1" 304 354 "-" "Mozilla/5.0 Galeon/1.0.3 (X11; Linux i686; U;) Gecko/0" TCP_REFRESH_HIT:DIRECT
 
 	if ($Debug) { debug("Generate PerlParsingFormat from LogFormat=$LogFormat"); }
-	$PerlParsingFormat="";
+	$PerlParsingFormat='';
+	my @fieldlib=();
 	if ($LogFormat =~ /^[1-6]$/) {	# Pre-defined log format
-		if ($LogFormat eq "1") {	# Same than "%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\""
+		if ($LogFormat eq '1') {	# Same than "%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\""
 			$PerlParsingFormat="([^ ]+) [^ ]+ ([^ ]+) \\[([^ ]+) [^ ]+\\] \\\"([^ ]+) ([^ ]+) [^\\\"]+\\\" ([\\d|-]+) ([\\d|-]+) \\\"(.*)\\\" \\\"([^\\\"]*)\\\"";	# referer and ua might be ""
 			$pos_host=0;$pos_logname=1;$pos_date=2;$pos_method=3;$pos_url=4;$pos_code=5;$pos_size=6;$pos_referer=7;$pos_agent=8;
+			@fieldlib=('host','logname','date','method','url','code','size','referer','ua');
 		}
-		elsif ($LogFormat eq "2") {	# Same than "date time c-ip cs-username cs-method cs-uri-stem sc-status sc-bytes cs-version cs(User-Agent) cs(Referer)"
+		elsif ($LogFormat eq '2') {	# Same than "date time c-ip cs-username cs-method cs-uri-stem sc-status sc-bytes cs-version cs(User-Agent) cs(Referer)"
 			$PerlParsingFormat="([^\\s]+ [^\\s]+) ([^\\s]+) ([^\\s]+) ([^\\s]+) ([^\\s]+) ([\\d|-]+) ([\\d|-]+) [^\\s]+ ([^\\s]+) ([^\\s]+)";
 			$pos_date=0;$pos_host=1;$pos_logname=2;$pos_method=3;$pos_url=4;$pos_code=5;$pos_size=6;$pos_agent=7;$pos_referer=8;
+			@fieldlib=('date','host','logname','method','url','code','size','ua','referer');
 		}
-		elsif ($LogFormat eq "3") {
+		elsif ($LogFormat eq '3') {
 			$PerlParsingFormat="([^\\t]*\\t[^\\t]*)\\t([^\\t]*)\\t([\\d]*)\\t([^\\t]*)\\t([^\\t]*)\\t([^\\t]*)\\t[^\\t]*\\t.*:([^\\t]*)\\t([\\d]*)";
 			$pos_date=0;$pos_method=1;$pos_code=2;$pos_host=3;$pos_agent=4;$pos_referer=5;$pos_url=6;$pos_size=7;
+			@fieldlib=('date','method','code','host','ua','referer','url','size');
 		}
-		elsif ($LogFormat eq "4") {	# Same than "%h %l %u %t \"%r\" %>s %b"
+		elsif ($LogFormat eq '4') {	# Same than "%h %l %u %t \"%r\" %>s %b"
 			$PerlParsingFormat="([^ ]+) [^ ]+ ([^ ]+) \\[([^ ]+) [^ ]+\\] \\\"([^ ]+) ([^ ]+) [^\\\"]+\\\" ([\\d|-]+) ([\\d|-]+)";
 			$pos_host=0;$pos_logname=1;$pos_date=2;$pos_method=3;$pos_url=4;$pos_code=5;$pos_size=6;
+			@fieldlib=('host','logname','date','method','url','code','size');
 		}
-		elsif ($LogFormat eq "5") {	# Same than "c-ip cs-username c-agent sc-authenticated date time s-svcname s-computername cs-referred r-host r-ip r-port time-taken cs-bytes sc-bytes cs-protocol cs-transport s-operation cs-uri cs-mime-type s-object-source sc-status s-cache-info"
+		elsif ($LogFormat eq '5') {	# Same than "c-ip cs-username c-agent sc-authenticated date time s-svcname s-computername cs-referred r-host r-ip r-port time-taken cs-bytes sc-bytes cs-protocol cs-transport s-operation cs-uri cs-mime-type s-object-source sc-status s-cache-info"
 			$PerlParsingFormat="([^\\t]*)\\t([^\\t]*)\\t([^\\t]*)\\t[^\\t]*\\t([^\\t]*\\t[^\\t]*)\\t[^\\t]*\\t[^\\t]*\\t([^\\t]*)\\t[^\\t]*\\t[^\\t]*\\t[^\\t]*\\t[^\\t]*\\t[^\\t]*\\t([^\\t]*)\\t[^\\t]*\\t[^\\t]*\\t([^\\t]*)\\t([^\\t]*)\\t[^\\t]*\\t[^\\t]*\\t([^\\t]*)\\t[^\\t]*";
 			$pos_host=0;$pos_logname=1;$pos_agent=2;$pos_date=3;$pos_referer=4;$pos_size=5;$pos_method=6;$pos_url=7;$pos_code=8;
+			@fieldlib=('host','logname','ua','date','referer','size','method','url','code');
 		}
-		elsif ($LogFormat eq "6") {	# Lotus notes (allows spaces in the logname without quoting them)
+		elsif ($LogFormat eq '6') {	# Lotus notes (allows spaces in the logname without quoting them)
 			$PerlParsingFormat="([^\\s]+) [^\\s]+ (.+) \\[([^\\s]+) [^\\s]+\\] \\\"([^\\s]+) ([^\\s]+) [^\\\"]+\\\" ([\\d|-]+) ([\\d|-]+) \\\"(.*)\\\" \\\"([^\\\"]*)\\\"";	# referer and ua might be ""
 			$pos_host=0;$pos_logname=1;$pos_date=2;$pos_method=3;$pos_url=4;$pos_code=5;$pos_size=6;$pos_referer=7;$pos_agent=8;
+			@fieldlib=('host','logname','date','method','url','code','size','referer','agent');
 		}
 	}
 	else {							# Personalized log format
@@ -4708,119 +4716,119 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 		$LogFormatString =~ s/c-status/%codemms/g;		# sc-status not available
 		if ($Debug) { debug("LogFormatString=$LogFormatString"); }
 		# Scan $LogFormatString to found all required fields and generate PerlParsingFormat
-		my @fields = split(/\s+/,$LogFormatString); # make array of entries
+		my @fields = split(/\s+/,$LogFormatString);
 		my $i = 0;
 		my $LogSeparatorWithoutStar=$LogSeparator; $LogSeparatorWithoutStar =~ s/[\*\+]//g;
 		foreach my $f (@fields) {
 			# Add separator for next field
 			if ($PerlParsingFormat) { $PerlParsingFormat.="$LogSeparator"; }
 			if ($f =~ /%virtualname$/) {
-				$pos_vh = $i; $i++;
+				$pos_vh = $i; $i++; push @fieldlib, 'vhost';
 				$PerlParsingFormat .= "([^$LogSeparatorWithoutStar]+)";
 			}
 			elsif ($f =~ /%host_r$/) {
-				$pos_hostr = $i; $i++;
+				$pos_hostr = $i; $i++; push @fieldlib, 'hostr';
 				$PerlParsingFormat .= "([^$LogSeparatorWithoutStar]+)";
 			}
 			elsif ($f =~ /%host$/) {
-				$pos_host = $i; $i++;
+				$pos_host = $i; $i++; push @fieldlib, 'host';
 				$PerlParsingFormat .= "([^$LogSeparatorWithoutStar]+)";
 			}
 			elsif ($f =~ /%logname$/) {
-				$pos_logname = $i; $i++;
+				$pos_logname = $i; $i++; push @fieldlib, 'logname';
 				$PerlParsingFormat .= "([^$LogSeparatorWithoutStar]+)";
 			}
 			elsif ($f =~ /%time1b$/) {
-				$pos_date = $i; $i++;
+				$pos_date = $i; $i++; push @fieldlib, 'date';
 				$PerlParsingFormat .= "\\[([^$LogSeparatorWithoutStar]+)\\]";
 			}
 			elsif ($f =~ /%time1$/) {
-				$pos_date = $i;	$i++;
+				$pos_date = $i;	$i++; push @fieldlib, 'date';
 				$PerlParsingFormat .= "\\[([^$LogSeparatorWithoutStar]+) [^$LogSeparatorWithoutStar]+\\]";
 			}
 			elsif ($f =~ /%time2$/) {
-				$pos_date = $i;	$i++;
+				$pos_date = $i;	$i++; push @fieldlib, 'date';
 				$PerlParsingFormat .= "([^$LogSeparatorWithoutStar]+\\s[^$LogSeparatorWithoutStar]+)";	# Need \s for Exchange log files
 			}
 			elsif ($f =~ /%methodurl$/) {
-				$pos_method = $i; $i++;
-				$pos_url = $i; $i++;
+				$pos_method = $i; $i++; push @fieldlib, 'method';
+				$pos_url = $i; $i++; push @fieldlib, 'url';
 				$PerlParsingFormat .= "\\\"([^$LogSeparatorWithoutStar]+) ([^$LogSeparatorWithoutStar]+) [^\\\"]+\\\"";
 			}
 			elsif ($f =~ /%methodurlnoprot$/) {
-				$pos_method = $i; $i++;
-				$pos_url = $i; $i++;
+				$pos_method = $i; $i++; push @fieldlib, 'method';
+				$pos_url = $i; $i++; push @fieldlib, 'url';
 				$PerlParsingFormat .= "\\\"([^$LogSeparatorWithoutStar]+) ([^$LogSeparatorWithoutStar]+)\\\"";
 			}
 			elsif ($f =~ /%method$/) {
-				$pos_method = $i; $i++;
+				$pos_method = $i; $i++; push @fieldlib, 'method';
 				$PerlParsingFormat .= "([^$LogSeparatorWithoutStar]+)";
 			}
 			elsif ($f =~ /%protocolmms$/) {	# protocolmms is used for method if method not already found (for MMS)
 				if ($pos_method < 0) {
-					$pos_method = $i; $i++;
+					$pos_method = $i; $i++; push @fieldlib, 'method';
 					$PerlParsingFormat .= "([^$LogSeparatorWithoutStar]+)";
 				}
 			}
 			elsif ($f =~ /%url$/) {
-				$pos_url = $i; $i++;
+				$pos_url = $i; $i++; push @fieldlib, 'url';
 				$PerlParsingFormat .= "([^$LogSeparatorWithoutStar]+)";
 			}
 			elsif ($f =~ /%query$/) {
-				$pos_query = $i; $i++;
+				$pos_query = $i; $i++; push @fieldlib, 'query';
 				$PerlParsingFormat .= "([^$LogSeparatorWithoutStar]+)";
 			}
 			elsif ($f =~ /%code$/) {
-				$pos_code = $i; $i++;
+				$pos_code = $i; $i++; push @fieldlib, 'code';
 				$PerlParsingFormat .= "([\\d|-]+)";
 			}
 			elsif ($f =~ /%codemms$/) {		# codemms is used for code if method not already found (for MMS)
 				if ($pos_code < 0) {
-					$pos_code = $i; $i++;
+					$pos_code = $i; $i++; push @fieldlib, 'code';
 					$PerlParsingFormat .= "([\\d|-]+)";
 				}
 			}
 			elsif ($f =~ /%bytesd$/) {
-				$pos_size = $i; $i++;
+				$pos_size = $i; $i++; push @fieldlib, 'size';
 				$PerlParsingFormat .= "([\\d|-]+)";
 			}
 			elsif ($f =~ /%refererquot$/) {
-				$pos_referer = $i; $i++;
-				$PerlParsingFormat .= "\\\"(.*)\\\"";		# referer might be ""
+				$pos_referer = $i; $i++; push @fieldlib, 'host';
+				$PerlParsingFormat .= "\\\"(.*)\\\""; 		# referer might be ""
 			}
 			elsif ($f =~ /%referer$/) {
-				$pos_referer = $i; $i++;
+				$pos_referer = $i; $i++; push @fieldlib, 'referer';
 				$PerlParsingFormat .= "([^$LogSeparatorWithoutStar]+)";
 			}
 			elsif ($f =~ /%uaquot$/) {
-				$pos_agent = $i; $i++;
+				$pos_agent = $i; $i++; push @fieldlib, 'ua';
 				$PerlParsingFormat .= "\\\"([^\\\"]*)\\\"";	# ua might be ""
 			}
 			elsif ($f =~ /%ua$/) {
-				$pos_agent = $i; $i++;
+				$pos_agent = $i; $i++; push @fieldlib, 'ua';
 				$PerlParsingFormat .= "([^$LogSeparatorWithoutStar]+)";
 			}
 			elsif ($f =~ /%gzipin$/ ) {
-				$pos_gzipin=$i;$i++;
+				$pos_gzipin=$i;$i++; push @fieldlib, 'gzipin';
 				$PerlParsingFormat .= "([^$LogSeparatorWithoutStar]+)";
 			}
 			elsif ($f =~ /%gzipout/ ) {		# Compare $f to /%gzipout/ and not to /%gzipout$/ like other fields
-				$pos_gzipout=$i;$i++;
+				$pos_gzipout=$i;$i++; push @fieldlib, 'gzipout';
 				$PerlParsingFormat .= "([^$LogSeparatorWithoutStar]+)";
 			}
 			elsif ($f =~ /%gzipratio/ ) {	# Compare $f to /%gzipratio/ and not to /%gzipratio$/ like other fields
-				$pos_gzipratio=$i;$i++;
+				$pos_gzipratio=$i;$i++; push @fieldlib, 'gzipratio';
 				$PerlParsingFormat .= "([^$LogSeparatorWithoutStar]+)";
 			}
 			elsif ($f =~ /%syslog$/) {		# Added for syslog time and host stamp, fields are skipped and not analyzed
 				$PerlParsingFormat .= "[A-Z][a-z][a-z] .[0-9] ..:..:.. [A-Za-z]+";
 			}
 			elsif ($f =~ /%email_r$/) {
-				$pos_emailr = $i; $i++;
+				$pos_emailr = $i; $i++; push @fieldlib, 'email_r';
 				$PerlParsingFormat .= "([^$LogSeparatorWithoutStar]+)";
 			}
 			elsif ($f =~ /%email$/) {
-				$pos_emails = $i; $i++;
+				$pos_emails = $i; $i++; push @fieldlib, 'email';
 				$PerlParsingFormat .= "([^$LogSeparatorWithoutStar]+)";
 			}
 			else {
@@ -4899,9 +4907,11 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 			next;
 		}
 
-		if ($Debug) { debug(" Correct format line $NbOfLinesRead : host=\"$field[$pos_host]\", logname=\"$field[$pos_logname]\", date=\"$field[$pos_date]\", method=\"$field[$pos_method]\", url=\"$field[$pos_url]\", code=\"$field[$pos_code]\", size=\"$field[$pos_size]\", referer=\"$field[$pos_referer]\", agent=\"$field[$pos_agent]\"",4); }
-		#if ($Debug) { debug("$field[$pos_vh] - $field[$pos_gzipin] - $field[$pos_gzipout] - $field[$pos_gzipratio]\n",4); }
-		#if ($Debug) { debug("$field[$pos_emails] - $field[$pos_emailr] - $field[$pos_hostr]\n",4); }
+		if ($Debug) {
+			my $string='';
+			foreach my $key (0..@field-1) {	$string.="$fieldlib[$key]=$field[$key] "; }
+			debug(" Correct format line $NbOfLinesRead : $string",4);
+		}
 
 		# Check virtual host name
 		#----------------------------------------------------------------------
@@ -4951,7 +4961,7 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 		elsif ($field[$pos_date] =~ /^..:..:..:/) { $dateparts[2]+=2000; my $tmp=$dateparts[0]; $dateparts[0]=$dateparts[1]; $dateparts[1]=$tmp; }
 		if ($MonthNum{$dateparts[1]}) { $dateparts[1]=$MonthNum{$dateparts[1]}; }	# Change lib month in num month if necessary
 
-		# Create $timerecord like YYYYMMDDHHMMSS
+		# Now @dateparts is (DD,MM,YYYY,HH,MM,SS) and we're going to create $timerecord=YYYYMMDDHHMMSS
 		# Plugin call : Convert a @datepart into another @datepart
 		if ($PluginsLoaded{'ChangeTime'}{'timezone'})  { @dateparts=ChangeTime_timezone(\@dateparts); }
 		my $yearmonthdayrecord=sprintf("$dateparts[2]%02i%02i",$dateparts[1],$dateparts[0]);
@@ -5003,7 +5013,7 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 		# TODO. Add robot in a list if URL is robots.txt (Note: robot referer value can be same than a normal browser)
 
 		# Skip for some client host IP addresses, some URLs, other URLs
-		my $qualifdrop="";
+		my $qualifdrop='';
 		if    (@SkipHosts && &SkipHost($field[$pos_host]))   { $qualifdrop="Dropped record (host $field[$pos_host] not qualified by SkipHosts)"; }
 		elsif (@SkipFiles && &SkipFile($field[$pos_url]))    { $qualifdrop="Dropped record (URL $field[$pos_url] not qualified by SkipFiles)"; }
 		elsif (@OnlyHosts && ! &OnlyHost($field[$pos_host])) { $qualifdrop="Dropped record (host $field[$pos_host] not qualified by OnlyHosts)"; }
@@ -5089,11 +5099,11 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 						}
 					}
 					if (! $foundrobot) {							# Last time, we won't search if robot or not. We know it's not.
-						$TmpRobot{$UserAgent}=$uarobot="-";
+						$TmpRobot{$UserAgent}=$uarobot='-';
 					}
 				}
 				# If robot, we stop here
-				if ($uarobot ne "-") {
+				if ($uarobot ne '-') {
 					if ($Debug) { debug("UserAgent '$UserAgent' contains robot ID '$uarobot'",2); }
 					$_robot_h{$uarobot}++;
 					$_robot_k{$uarobot}+=int($field[$pos_size]);
@@ -5194,7 +5204,7 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 
 		# Analyze: Login
 		#---------------
-		if ($pos_logname>=0 && $field[$pos_logname] && $field[$pos_logname] ne "-") {
+		if ($pos_logname>=0 && $field[$pos_logname] && $field[$pos_logname] ne '-') {
 			if ($LogFormat eq '6') { $field[$pos_logname] =~ s/ /\_/g; }			# Lotus notes allow space in logname field
 
 			# We found an authenticated user
@@ -5295,6 +5305,10 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 		if ($PageBool) {
 			my $timehostl=$_host_l{$_};
 			if ($timehostl) {
+				# A visit for this host was already detected
+# TODO everywhere there is $VISITTIMEOUT
+#				$timehostl =~ /^\d\d\d\d\d\d(\d\d)/; my $daytimehostl=$1;
+#				if ($timerecord > ($timehostl+$VISITTIMEOUT+($dateparts[3]>$daytimehostl?$NEWDAYVISITTIMEOUT:0))) {
 				if ($timerecord > ($timehostl+$VISITTIMEOUT)) {
 					# This is a second visit or more
 					if (! $_waithost_s{$_}) {
@@ -5471,7 +5485,7 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 		if ($pos_referer >= 0 && $LevelForRefererAnalyze && $field[$pos_referer]) {
 
 			# Direct ?
-			if ($field[$pos_referer] eq '-' || $field[$pos_referer] eq 'bookmarks') {	# "bookmarks" is sent by Netscape, "-" by all others browsers
+			if ($field[$pos_referer] eq '-' || $field[$pos_referer] eq 'bookmarks') {	# "bookmarks" is sent by Netscape, '-' by all others browsers
 				if ($PageBool) { $_from_p[0]++; }
 				$_from_h[0]++;
 				$found=1;
@@ -5785,9 +5799,9 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 
 	if ($DNSLookup && $DNSLookupAlreadyDone) {
 		# DNSLookup warning
-		my $bold=($ENV{'GATEWAY_INTERFACE'}?"<b>":"");
-		my $unbold=($ENV{'GATEWAY_INTERFACE'}?"</b>":"");
-		my $br=($ENV{'GATEWAY_INTERFACE'}?"<br>":"");
+		my $bold=($ENV{'GATEWAY_INTERFACE'}?'<b>':'');
+		my $unbold=($ENV{'GATEWAY_INTERFACE'}?'</b>':'');
+		my $br=($ENV{'GATEWAY_INTERFACE'}?'<br>':'');
 		warning("Warning: $bold$PROG$unbold has detected that some hosts names were already resolved in your logfile $bold$DNSLookupAlreadyDone$unbold.$br\nIf DNS lookup was already made by the logger (web server), you should change your setup DNSLookup=$DNSLookup into DNSLookup=0 to increase $PROG speed.");
 	}
 	if ($DNSLookup && $NbOfNewLines) {
@@ -5826,7 +5840,7 @@ if ($HTMLOutput) {
 	$NewLinkParams =~ s/output(=\w*|$|[ &]+)//i;
 	$NewLinkParams =~ s/staticlinks(=\w*|$|[ &]+)//i;
 	$NewLinkParams =~ s/framename=[^ &]*//i;
-	my $NewLinkTarget="";
+	my $NewLinkTarget='';
 	if ($DetailedReportsOnNewWindows) { $NewLinkTarget=" target=\"awstatsbis\""; }
 	if (($FrameName eq 'mainleft' || $FrameName eq 'mainright') && $DetailedReportsOnNewWindows < 2) {
 		$NewLinkParams.="&framename=mainright";
@@ -5907,7 +5921,7 @@ EOF
 
 	# LOGO AND FLAGS
 	#---------------------------------------------------------------------
-	if (($ShowHeader && $FrameName ne 'mainright') || $FrameName eq 'mainleft') {
+	if ($ShowHeader && ($FrameName ne 'mainright' || $FrameName eq 'mainleft')) {
 		print "<table>\n";
 		print "<tr><td width=120 class=AWL style=\"font-size: 18px arial,verdana,helvetica; font-weight: bold\">AWStats\n";
 		if (! $StaticLinks) { Show_Flag_Links($Lang); }
@@ -5937,7 +5951,7 @@ EOF
 			$NewLinkParams =~ s/month=[^ &]*//i;
 			$NewLinkParams =~ s/framename=[^ &]*//i;
 			$NewLinkParams =~ tr/&/&/s; $NewLinkParams =~ s/^&//; $NewLinkParams =~ s/&$//;
-			my $NewLinkTarget="";
+			my $NewLinkTarget='';
 			if ($FrameName eq 'mainright') { $NewLinkTarget=" target=_parent"; }
 			print "<FORM name=\"FormDateFilter\" action=\"$AWScript?${NewLinkParams}\" style=\"padding: 2px 2px 2px 2px; margin-top: 0\"$NewLinkTarget>";
 		}
@@ -6362,9 +6376,9 @@ EOF
 #			if (! DateIsValid($day,$month,$year)) { next; }			# If not an existing day, go to next
 #			my $dayofweekcursor=DayOfWeek($day,$month,$year);
 #			print "<TD valign=middle".($dayofweekcursor=~/[06]/?" bgcolor=\"#$color_weekend\"":"").">";
-#			print ($day==$nowday && $month==$nowmonth && $year==$nowyear?"<b>":"");
+#			print ($day==$nowday && $month==$nowmonth && $year==$nowyear?'<b>':'');
 #			print "$day<br><font style=\"font-size: ".($FrameName ne 'mainright'?"10":"9")."px;\">".$MonthLib{$month}."</font>";
-#			print ($day==$nowday && $month==$nowmonth && $year==$nowyear?"</b>":"");
+#			print ($day==$nowday && $month==$nowmonth && $year==$nowyear?'</b>':'');
 #			print "</TD>\n";
 #		}
 #		print "<TD>&nbsp;</TD>";
@@ -6430,12 +6444,12 @@ EOF
 		if ($HTMLOutput eq 'lasthosts') { &BuildKeyList($MaxRowsInHTMLOutput,$MinHitHost,\%_host_h,\%_host_l); }
 		foreach my $key (@keylist) {
 			my $host=CleanFromCSSA($key);
-			print "<tr><td CLASS=AWL>".($_robot_l{$key}?"<b>":"")."$host".($_robot_l{$key}?"</b>":"")."</td>";
+			print "<tr><td CLASS=AWL>".($_robot_l{$key}?'<b>':'')."$host".($_robot_l{$key}?'</b>':'')."</td>";
 			if ($ShowLinksToWhoIs && $LinksToWhoIs) { ShowWhoIsCell($key); }
 			if ($ShowHostsStats =~ /P/i) { print "<TD>".($_host_p{$key}?$_host_p{$key}:"&nbsp;")."</TD>"; }
 			if ($ShowHostsStats =~ /H/i) { print "<TD>$_host_h{$key}</TD>"; }
 			if ($ShowHostsStats =~ /B/i) { print "<TD>".Format_Bytes($_host_k{$key})."</TD>"; }
-			if ($ShowHostsStats =~ /L/i) { print "<TD>".($_host_l{$key}?Format_Date($_host_l{$key},1):"-")."</TD>"; }
+			if ($ShowHostsStats =~ /L/i) { print "<TD>".($_host_l{$key}?Format_Date($_host_l{$key},1):'-')."</TD>"; }
 			$total_p += $_host_p{$key};
 			$total_h += $_host_h{$key};
 			$total_k += $_host_k{$key}||0;
@@ -6447,7 +6461,7 @@ EOF
 		$rest_k=$TotalBytes-$total_k;
 		if ($rest_p > 0 || $rest_h > 0 || $rest_k > 0) {	# All other visitors (known or not)
 			print "<TR><TD CLASS=AWL><font color=\"#$color_other\">$Message[2]</font></TD>";
-			if ($ShowLinksToWhoIs && $LinksToWhoIs) { ShowWhoIsCell(""); }
+			if ($ShowLinksToWhoIs && $LinksToWhoIs) { ShowWhoIsCell(''); }
 			if ($ShowHostsStats =~ /P/i) { print "<TD>".($rest_p?$rest_p:"&nbsp;")."</TD>"; }
 			if ($ShowHostsStats =~ /H/i) { print "<TD>$rest_h</TD>"; }
 			if ($ShowHostsStats =~ /B/i) { print "<TD>".Format_Bytes($rest_k)."</TD>"; }
@@ -6474,7 +6488,7 @@ EOF
 			if ($ShowHostsStats =~ /P/i) { print "<TD>".($_host_p{$key}?$_host_p{$key}:"&nbsp;")."</TD>"; }
 			if ($ShowHostsStats =~ /H/i) { print "<TD>$_host_h{$key}</TD>"; }
 			if ($ShowHostsStats =~ /B/i) { print "<TD>".Format_Bytes($_host_k{$key})."</TD>"; }
-			if ($ShowHostsStats =~ /L/i) { print "<TD>".($_host_l{$key}?Format_Date($_host_l{$key},1):"-")."</TD>"; }
+			if ($ShowHostsStats =~ /L/i) { print "<TD>".($_host_l{$key}?Format_Date($_host_l{$key},1):'-')."</TD>"; }
 			print "</tr>\n";
 			$total_p += $_host_p{$key};
 			$total_h += $_host_h{$key};
@@ -6487,7 +6501,7 @@ EOF
 		$rest_k=$TotalBytes-$total_k;
 		if ($rest_p > 0 || $rest_h > 0 || $rest_k > 0) {	# All other visitors (known or not)
 			print "<TR><TD CLASS=AWL><font color=\"#$color_other\">$Message[82]</font></TD>";
-			if ($ShowLinksToWhoIs && $LinksToWhoIs) { ShowWhoIsCell(""); }
+			if ($ShowLinksToWhoIs && $LinksToWhoIs) { ShowWhoIsCell(''); }
 			if ($ShowHostsStats =~ /P/i) { print "<TD>".($rest_p?$rest_p:"&nbsp;")."</TD>"; }
 			if ($ShowHostsStats =~ /H/i) { print "<TD>$rest_h</TD>"; }
 			if ($ShowHostsStats =~ /B/i) { print "<TD>".Format_Bytes($rest_k)."</TD>"; }
@@ -6519,7 +6533,7 @@ EOF
 			if ($ShowAuthenticatedUsers =~ /P/i) { print "<TD>".($_login_p{$key}?$_login_p{$key}:"&nbsp;")."</TD>"; }
 			if ($ShowAuthenticatedUsers =~ /H/i) { print "<TD>$_login_h{$key}</TD>"; }
 			if ($ShowAuthenticatedUsers =~ /B/i) { print  "<TD>".Format_Bytes($_login_k{$key})."</TD>"; }
-			if ($ShowAuthenticatedUsers =~ /L/i) { print "<td>".($_login_l{$key}?Format_Date($_login_l{$key},1):"-")."</td>"; }
+			if ($ShowAuthenticatedUsers =~ /L/i) { print "<td>".($_login_l{$key}?Format_Date($_login_l{$key},1):'-')."</td>"; }
 			print "</TR>\n";
 			$total_p += $_login_p{$key}||0;
 			$total_h += $_login_h{$key};
@@ -6558,7 +6572,7 @@ EOF
 			print "<TR><TD CLASS=AWL>".($RobotsHashIDLib{$key}?$RobotsHashIDLib{$key}:$key)."</TD>";
 			if ($ShowRobotsStats =~ /H/i) { print "<TD>$_robot_h{$key}</TD>"; }
 			if ($ShowRobotsStats =~ /B/i) { print "<TD>".Format_Bytes($_robot_k{$key})."</TD>"; }
-			if ($ShowRobotsStats =~ /L/i) { print "<TD>".($_robot_l{$key}?Format_Date($_robot_l{$key},1):"-")."</TD>"; }
+			if ($ShowRobotsStats =~ /L/i) { print "<TD>".($_robot_l{$key}?Format_Date($_robot_l{$key},1):'-')."</TD>"; }
 			print "</TR>\n";
 			#$total_p += $_robot_p{$key}||0;
 			$total_h += $_robot_h{$key};
@@ -6651,10 +6665,15 @@ EOF
 				eval("$function");
 			}
 			print "<TD CLASS=AWL>";
+			# alt and title are not provided to reduce page size
 			if ($ShowPagesStats =~ /P/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_p\" WIDTH=$bredde_p HEIGHT=6><br>"; }
 			if ($ShowPagesStats =~ /B/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_k\" WIDTH=$bredde_k HEIGHT=6><br>"; }
 			if ($ShowPagesStats =~ /E/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_e\" WIDTH=$bredde_e HEIGHT=6><br>"; }
 			if ($ShowPagesStats =~ /X/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_x\" WIDTH=$bredde_x HEIGHT=6>"; }
+			#if ($ShowPagesStats =~ /P/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_p\" WIDTH=$bredde_p HEIGHT=6 ALT=\"$Message[29]: $_url_p{$key}\" TITLE=\"$Message[29]: $_url_p{$key}\" ><br>"; }
+			#if ($ShowPagesStats =~ /B/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_k\" WIDTH=$bredde_k HEIGHT=6 ALT=\"$Message[106]: ".Format_Bytes($_url_k{$key}/($_url_p{$key}||1))."\" TITLE=\"$Message[106]: ".Format_Bytes($_url_k{$key}/($_url_p{$key}||1))."\"><br>"; }
+			#if ($ShowPagesStats =~ /E/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_e\" WIDTH=$bredde_e HEIGHT=6 ALT=\"$Message[104]: $_url_e{$key}\" TITLE=\"$Message[104]: $_url_e{$key}\"><br>"; }
+			#if ($ShowPagesStats =~ /X/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_x\" WIDTH=$bredde_x HEIGHT=6 ALT=\"$Message[116]: $_url_x{$key}\" TITLE=\"$Message[116]: $_url_x{$key}\">"; }
 			print "</TD></TR>\n";
 			$total_p += $_url_p{$key};
 			$total_e += $_url_e{$key};
@@ -6725,7 +6744,7 @@ EOF
 		}
 		# Show msie and netscape arrays
 		print "$Center<a name=\"MSIE\">&nbsp;</a><BR>";
-		my $title="$Message[34]<br><img src=\"$DirIcons/browser/msie_large.png\">";
+		my $title="$Message[34]<br><img src=\"$DirIcons/browser/msie_large.png\" alt=\"Msie\">";
 		&tab_head("$title",19);
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[58]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[15]</TH></TR>\n";
 		foreach my $key (reverse sort keys %_browser_h) {
@@ -6737,7 +6756,8 @@ EOF
 		}
 		&tab_end;
 		print "<a name=\"NETSCAPE\">&nbsp;</a><BR>\n";
-		&tab_head("$Message[33]<br><img src=\"$DirIcons/browser/netscape_large.png\">",19);
+		my $title="$Message[33]<br><img src=\"$DirIcons/browser/netscape_large.png\" alt=\"Netscape\">";
+		&tab_head("$title",19);
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[58]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[15]</TH></TR>\n";
 		foreach my $key (reverse sort keys %_browser_h) {
 			if ($key =~ /^netscape(.*)/i) {
@@ -6925,7 +6945,7 @@ EOF
 		$NewLinkParams =~ s/framename=[^ &]*//i;
 		$NewLinkParams =~ tr/&/&/s; $NewLinkParams =~ s/^&//; $NewLinkParams =~ s/&$//;
 		if ($NewLinkParams) { $NewLinkParams="${NewLinkParams}&"; }
-		my $NewLinkTarget="";
+		my $NewLinkTarget='';
 		if ($FrameName eq 'mainright') { $NewLinkTarget=" target=_parent"; }
 
 		# Ratio
@@ -7007,7 +7027,7 @@ EOF
 		}
 		print "</TR>\n";
 		# Show lib for month
-		print "<TR valign=middle cellspacing=0 cellpadding=0><td>&nbsp;</td>";
+		print "<TR valign=middle><td>&nbsp;</td>";
 		for (my $ix=1; $ix<=12; $ix++) {
 			my $monthix=sprintf("%02s",$ix);
 			print "<TD>$MonthLib{$monthix}</TD>";
@@ -7137,9 +7157,9 @@ EOF
 			if (! DateIsValid($day,$month,$year)) { next; }			# If not an existing day, go to next
 			my $dayofweekcursor=DayOfWeek($day,$month,$year);
 			print "<TD valign=middle".($dayofweekcursor=~/[06]/?" bgcolor=\"#$color_weekend\"":"").">";
-			print ($day==$nowday && $month==$nowmonth && $year==$nowyear?"<b>":"");
+			print ($day==$nowday && $month==$nowmonth && $year==$nowyear?'<b>':'');
 			print "$day<br><font style=\"font-size: ".($FrameName ne 'mainright'?"10":"9")."px;\">".$MonthLib{$month}."</font>";
-			print ($day==$nowday && $month==$nowmonth && $year==$nowyear?"</b>":"");
+			print ($day==$nowday && $month==$nowmonth && $year==$nowyear?'</b>':'');
 			print "</TD>\n";
 		}
 		print "<TD>&nbsp;</TD>";
@@ -7323,7 +7343,7 @@ EOF
 		print "<TR onmouseover=\"ShowTip(17);\" onmouseout=\"HideTip(17);\">\n";
 		for (my $ix=0; $ix<=23; $ix++) {
 			my $hr=($ix+1); if ($hr>12) { $hr=$hr-12; }
-			print "<TD><IMG alt='' SRC=\"$DirIcons\/clock\/hr$hr.png\" width=10 alt=\"$hr:00\"></TD>\n";
+			print "<TD><IMG SRC=\"$DirIcons\/clock\/hr$hr.png\" width=10 alt=\"$hr:00\"></TD>\n";
 		}
 		print "</TR>\n";
 
@@ -7473,7 +7493,7 @@ EOF
 			if ($ShowHostsStats =~ /P/i) { print "<TD>".($_host_p{$key}||"&nbsp")."</TD>"; }
 			if ($ShowHostsStats =~ /H/i) { print "<TD>$_host_h{$key}</TD>"; }
 			if ($ShowHostsStats =~ /B/i) { print "<TD>".Format_Bytes($_host_k{$key})."</TD>"; }
-			if ($ShowHostsStats =~ /L/i) { print "<TD>".($_host_l{$key}?Format_Date($_host_l{$key},1):"-")."</TD>"; }
+			if ($ShowHostsStats =~ /L/i) { print "<TD>".($_host_l{$key}?Format_Date($_host_l{$key},1):'-')."</TD>"; }
 			print "</TR>\n";
 			$total_p += $_host_p{$key};
 			$total_h += $_host_h{$key};
@@ -7524,7 +7544,7 @@ EOF
 			if ($ShowAuthenticatedUsers =~ /P/i) { print "<TD>$_login_p{$key}</TD>"; }
 			if ($ShowAuthenticatedUsers =~ /H/i) { print "<TD>$_login_h{$key}</TD>"; }
 			if ($ShowAuthenticatedUsers =~ /B/i) { print "<TD>".Format_Bytes($_login_k{$key})."</TD>"; }
-			if ($ShowAuthenticatedUsers =~ /L/i) { print "<TD>".($_login_l{$key}?Format_Date($_login_l{$key},1):"-")."</TD>"; }
+			if ($ShowAuthenticatedUsers =~ /L/i) { print "<TD>".($_login_l{$key}?Format_Date($_login_l{$key},1):'-')."</TD>"; }
 			#print "<TD CLASS=AWL>";
 			#print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_p\" WIDTH=$bredde_p HEIGHT=6 ALT=\"$Message[56]: $_login_p{$key}\" title=\"$Message[56]: $_login_p{$key}\"><br>\n";
 			#print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_h\" WIDTH=$bredde_h HEIGHT=6 ALT=\"$Message[57]: $_login_h{$key}\" title=\"$Message[57]: $_login_h{$key}\"><br>\n";
@@ -7852,46 +7872,52 @@ EOF
 		print "</TR>\n";
 		#------- Referrals by search engine
 		print "<TR onmouseover=\"ShowTip(13);\" onmouseout=\"HideTip(13);\"><TD CLASS=AWL><b>$Message[40]</b> - <a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=refererse":"$PROG$StaticLinks.refererse.html")."\"$NewLinkTarget>$Message[80]</a><br>\n";
-		print "<TABLE>\n";
-		$total_h=0;
-		my $count=0;
-		&BuildKeyList($MaxNbOfRefererShown,$MinHitRefer,\%_se_referrals_h,\%_se_referrals_h);
-		foreach my $key (@keylist) {
-			my $newreferer=CleanFromCSSA($SearchEnginesHashIDLib{$key}||$key);
-			print "<TR><TD CLASS=AWL>- $newreferer</TD><TD align=right> $_se_referrals_h{$key} </TD></TR>\n";
-			$total_h += $_se_referrals_h{$key};
-			$count++;
+		if (scalar keys %_se_referrals_h) {
+			print "<TABLE>\n";
+			$total_h=0;
+			my $count=0;
+			&BuildKeyList($MaxNbOfRefererShown,$MinHitRefer,\%_se_referrals_h,\%_se_referrals_h);
+			foreach my $key (@keylist) {
+				my $newreferer=CleanFromCSSA($SearchEnginesHashIDLib{$key}||$key);
+				print "<TR><TD CLASS=AWL>- $newreferer</TD><TD align=right> $_se_referrals_h{$key} </TD></TR>\n";
+				$total_h += $_se_referrals_h{$key};
+				$count++;
+			}
+			if ($Debug) { debug("Total real / shown : $TotalDifferentSearchEngines / $total_h",2); }
+			$rest_h=$TotalSearchEngines-$total_h;
+			if ($rest_h > 0) {
+				print "<TR><TD CLASS=AWL><font color=\"#$color_other\">- $Message[2]</font></TD><TD>$rest_h</TD>";
+			}
+			print "</TABLE>";
 		}
-		if ($Debug) { debug("Total real / shown : $TotalDifferentSearchEngines / $total_h",2); }
-		$rest_h=$TotalSearchEngines-$total_h;
-		if ($rest_h > 0) {
-			print "<TR><TD CLASS=AWL><font color=\"#$color_other\">- $Message[2]</font></TD><TD>$rest_h</TD>";
-		}
-		print "</TABLE></TD>\n";
+		print "</TD>\n";
 		if ($ShowOriginStats =~ /P/i) { print "<TD valign=top>".($_from_p[2]?$_from_p[2]:"&nbsp;")."</TD><TD valign=top>".($_from_p[2]?"$p_p[2] %":"&nbsp;")."</TD>"; }
 		if ($ShowOriginStats =~ /H/i) { print "<TD valign=top>".($_from_h[2]?$_from_h[2]:"&nbsp;")."</TD><TD valign=top>".($_from_h[2]?"$p_h[2] %":"&nbsp;")."</TD>"; }
 		print "</TR>\n";
 		#------- Referrals by external HTML link
 		print "<TR onmouseover=\"ShowTip(14);\" onmouseout=\"HideTip(14);\"><TD CLASS=AWL><b>$Message[41]</b> - <a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=refererpages":"$PROG$StaticLinks.refererpages.html")."\"$NewLinkTarget>$Message[80]</a><br>\n";
-		print "<TABLE>\n";
-		$total_h=0;
-		$count=0;
-		&BuildKeyList($MaxNbOfRefererShown,$MinHitRefer,\%_pagesrefs_h,\%_pagesrefs_h);
-		foreach my $key (@keylist) {
-			print "<TR><TD CLASS=AWL>- ";
-			&ShowURL($key);
-			print "</TD>";
-			print "<TD>$_pagesrefs_h{$key}</TD>";
-			print "</TR>\n";
-			$total_h += $_pagesrefs_h{$key};
-			$count++;
+		if (scalar keys %_pagesrefs_h) {
+			print "<TABLE>\n";
+			$total_h=0;
+			my $count=0;
+			&BuildKeyList($MaxNbOfRefererShown,$MinHitRefer,\%_pagesrefs_h,\%_pagesrefs_h);
+			foreach my $key (@keylist) {
+				print "<TR><TD CLASS=AWL>- ";
+				&ShowURL($key);
+				print "</TD>";
+				print "<TD>$_pagesrefs_h{$key}</TD>";
+				print "</TR>\n";
+				$total_h += $_pagesrefs_h{$key};
+				$count++;
+			}
+			if ($Debug) { debug("Total real / shown : $TotalRefererPages / $total_h",2); }
+			$rest_h=$TotalRefererPages-$total_h;
+			if ($rest_h > 0) {
+				print "<TR><TD CLASS=AWL><font color=\"#$color_other\">- $Message[2]</font></TD><TD>$rest_h</TD>";
+			}
+			print "</TABLE>";
 		}
-		if ($Debug) { debug("Total real / shown : $TotalRefererPages / $total_h",2); }
-		$rest_h=$TotalRefererPages-$total_h;
-		if ($rest_h > 0) {
-			print "<TR><TD CLASS=AWL><font color=\"#$color_other\">- $Message[2]</font></TD><TD>$rest_h</TD>";
-		}
-		print "</TABLE></TD>\n";
+		print "</TD>\n";
 		if ($ShowOriginStats =~ /P/i) { print "<TD valign=top>".($_from_p[3]?$_from_p[3]:"&nbsp;")."</TD><TD valign=top>".($_from_p[3]?"$p_p[3] %":"&nbsp;")."</TD>"; }
 		if ($ShowOriginStats =~ /H/i) { print "<TD valign=top>".($_from_h[3]?$_from_h[3]:"&nbsp;")."</TD><TD valign=top>".($_from_h[3]?"$p_h[3] %":"&nbsp;")."</TD>"; }
 		print "</TR>\n";
@@ -8027,7 +8053,7 @@ EOF
 			if ($ShowEMailSenders =~ /H/i) { print "<TD>$_emails_h{$key}</TD>"; }
 			if ($ShowEMailSenders =~ /B/i) { print "<TD>".Format_Bytes($_emails_k{$key})."</TD>"; }
 			if ($ShowEMailSenders =~ /M/i) { print "<TD>".Format_Bytes($_emails_k{$key}/($_emails_h{$key}||1))."</TD>"; }
-			if ($ShowEMailSenders =~ /L/i) { print "<TD>".($_emails_l{$key}?Format_Date($_emails_l{$key},1):"-")."</TD>"; }
+			if ($ShowEMailSenders =~ /L/i) { print "<TD>".($_emails_l{$key}?Format_Date($_emails_l{$key},1):'-')."</TD>"; }
 			print "</TR>\n";
 			#$total_p += $_emails_p{$key};
 			$total_h += $_emails_h{$key};
@@ -8075,7 +8101,7 @@ EOF
 			if ($ShowEMailReceivers =~ /H/i) { print "<TD>$_emailr_h{$key}</TD>"; }
 			if ($ShowEMailReceivers =~ /B/i) { print "<TD>".Format_Bytes($_emailr_k{$key})."</TD>"; }
 			if ($ShowEMailReceivers =~ /M/i) { print "<TD>".Format_Bytes($_emailr_k{$key}/($_emailr_h{$key}||1))."</TD>"; }
-			if ($ShowEMailReceivers =~ /L/i) { print "<TD>".($_emailr_l{$key}?Format_Date($_emailr_l{$key},1):"-")."</TD>"; }
+			if ($ShowEMailReceivers =~ /L/i) { print "<TD>".($_emailr_l{$key}?Format_Date($_emailr_l{$key},1):'-')."</TD>"; }
 			print "</TR>\n";
 			#$total_p += $_emailr_p{$key};
 			$total_h += $_emailr_h{$key};
@@ -8125,7 +8151,7 @@ EOF
  			if ($ExtraSectionStatTypes[$extranum] =~ m/P/i) { print "<TD>" . ${'_section_' . $extranum . '_p'}{$key} . "</TD>"; }
  			if ($ExtraSectionStatTypes[$extranum] =~ m/H/i) { print "<TD>" . ${'_section_' . $extranum . '_h'}{$key} . "</TD>"; }
  			if ($ExtraSectionStatTypes[$extranum] =~ m/B/i) { print "<TD>" . Format_Bytes(${'_section_' . $extranum . '_k'}{$key}) . "</TD>"; }
- 			if ($ExtraSectionStatTypes[$extranum] =~ m/L/i) { print "<TD>" . (${'_section_' . $extranum . '_l'}{$key}?Format_Date(${'_section_' . $extranum . '_l'}{$key},1):"-") . "</TD>"; }
+ 			if ($ExtraSectionStatTypes[$extranum] =~ m/L/i) { print "<TD>" . (${'_section_' . $extranum . '_l'}{$key}?Format_Date(${'_section_' . $extranum . '_l'}{$key},1):'-') . "</TD>"; }
  			print "</TR>\n";
  			$count++;
 		}
