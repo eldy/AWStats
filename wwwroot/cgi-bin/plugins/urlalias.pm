@@ -66,7 +66,8 @@ sub Init_urlalias {
 #-----------------------------------------------------------------------------
 sub ShowInfoURL_urlalias {
 	# <-----
-	if (! $urlinfoloaded) {
+	my $urltoshow="$_[0]";
+	if ($urltoshow && ! $urlinfoloaded) {
 		# Load urlalias file
 		my $filetoload='';
 		if ($SiteConfig && open(URLINFOFILE,"$PluginDir/urlalias.$SiteConfig.txt"))	{ $filetoload="$PluginDir/urlalias.$SiteConfig.txt"; }
@@ -78,9 +79,11 @@ sub ShowInfoURL_urlalias {
 		debug("UrlAlias file loaded: ".(scalar keys %UrlInfo)." entries found.");
 		$urlinfoloaded=1;
 	}
-	my $urltoreplace="$_[0]";
-	if ($UrlInfo{$urltoreplace}) { print "<font style=\"color: #$color_link; font-weight: bold\">$UrlInfo{$urltoreplace}</font><br>"; }
-	else { print ""; }
+	if ($urltoshow) {
+		if ($UrlInfo{$urltoshow}) { print "<font style=\"color: #$color_link; font-weight: bold\">$UrlInfo{$urltoshow}</font><br>"; }
+		else { print ""; }	# Undefined url info
+	}
+	else { print ""; }	# Url info title
 	return 1;
 	# ----->
 }
