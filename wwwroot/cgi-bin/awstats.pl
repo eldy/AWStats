@@ -1702,7 +1702,7 @@ sub Read_Plugins {
 					# Do not load "output plugins" if update only
 					if ($UpdateStats && ! scalar keys %HTMLOutput && $pluginisfor{$pluginname} !~ /u/) { $PluginsLoaded{'init'}{"$pluginname"}=1; next; }
 				}
-				else { $PluginsLoaded{'init'}{"$pluginname"}=1; }	# Unkown plugins always loaded
+				else { $PluginsLoaded{'init'}{"$pluginname"}=1; }	# Unknown plugins always loaded
 				# Load plugin
 				foreach my $dir (@PossiblePluginsDir) {
 					my $searchdir=$dir;
@@ -1955,7 +1955,7 @@ sub Read_History_With_TmpUpdate {
 				}
 				# If migrate and version < 4.x we need to include BEGIN_UNKNOWNIP into BEGIN_VISITOR for backward compatibility
 				if ($MigrateStats && $versionnum < 4000) {
-					debug("File is version < 4000. We add UNKOWNIP in sections to load",1);
+					debug("File is version < 4000. We add UNKNOWNIP in sections to load",1);
 					$SectionsToLoad{'unknownip'}=99;
 				}
 
@@ -2225,7 +2225,7 @@ sub Read_History_With_TmpUpdate {
 				if (! scalar %SectionsToLoad) { debug(" Stop reading history file. Got all we need."); last; }
 				next;
 			}
-			# BEGIN_UNKOWNIP for backward compatibility
+			# BEGIN_UNKNOWNIP for backward compatibility
 			if ($field[0] eq 'BEGIN_UNKNOWNIP')   {
 				if ($Debug) { debug(" Begin of UNKNOWNIP section"); }
 				$_=<HISTORY>;
@@ -4349,17 +4349,28 @@ sub ShowURLInfo {
 	if (length($nompage)>$MaxLengthOfURL) { $nompage=substr($nompage,0,$MaxLengthOfURL)."..."; }
 	if ($ShowLinksOnUrl) {
 		my $newkey=CleanFromCSSA($url);
-		if ($newkey =~ /^http(s|):/i) {	# URL seems to be extracted from a ftp or proxy log file
-			print "<A HREF=\"$newkey\" target=\"url\">$nompage</A>";
+		if ($LogType eq 'W') {		# Web log file
+			if ($newkey =~ /^http(s|):/i) {	# URL seems to be extracted from a proxy log file
+				print "<A HREF=\"$newkey\" target=\"url\">$nompage</A>";
+			}
+			elsif ($newkey =~ /^\//) {		# URL seems to be an url extracted from a web or wap server log file
+				$newkey =~ s/^\/$SiteDomain//;
+				# Define urlprot
+				my $urlprot='http';
+				if ($UseHTTPSLinkForUrl && $newkey =~ /^$UseHTTPSLinkForUrl/) { $urlprot='https'; }
+				print "<A HREF=\"$urlprot://$SiteDomain$newkey\" target=\"url\">$nompage</A>";
+			}
+			else {
+				print "$nompage";
+			}
 		}
-		elsif ($newkey =~ /^\//) {		# URL seems to be an url extracted from a web or wap server log file
-			$newkey =~ s/^\/$SiteDomain//;
-			# Define http or https
-			my $httplink='http';
-			if ($UseHTTPSLinkForUrl && $newkey =~ /^$UseHTTPSLinkForUrl/) { $httplink='https'; }
-			print "<A HREF=\"$httplink://$SiteDomain$newkey\" target=\"url\">$nompage</A>";
+		elsif ($LogType eq 'F') {	# Ftp log file
+			print "$nompage";
 		}
-		else {
+		elsif ($LogType eq 'M') {	# Smtp log file
+			print "$nompage";
+		}
+		else {						# Other type log file
 			print "$nompage";
 		}
 	}
@@ -5274,11 +5285,11 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 			# Mail request ('SMTP' for mail log with maillogconvert.pl preprocessor)
 			$protocol=3;
 		}
-		elsif ($field[$pos_method] eq 'RETR' || $field[$pos_method] =~ /get/i) {
+		elsif ($field[$pos_method] eq 'RETR' || $field[$pos_method] eq 'o' || $field[$pos_method] =~ /get/i) {
 			# FTP GET request
 			$protocol=2;
 		}
-		elsif ($field[$pos_method] eq 'STOR' || $field[$pos_method] =~ /sent/i) {
+		elsif ($field[$pos_method] eq 'STOR' || $field[$pos_method] eq 'i' || $field[$pos_method] =~ /sent/i) {
 			# FTP SENT request
 			$protocol=2;
 		}
@@ -6975,7 +6986,7 @@ if (scalar keys %HTMLOutput) {
 		&html_end;
 	}
 	if ($HTMLOutput{'unknownip'}) {
-		print "$Center<a name=\"UNKOWNIP\">&nbsp;</a><BR>\n";
+		print "$Center<a name=\"UNKNOWNIP\">&nbsp;</a><BR>\n";
 		&tab_head("$Message[45]",19);
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>".(scalar keys %_host_h)." $Message[1]</TH>";
 		&ShowHostInfo('__title__');
@@ -7308,7 +7319,7 @@ if (scalar keys %HTMLOutput) {
 		&html_end;
 	}
 	if ($HTMLOutput{'unknownos'}) {
-		print "$Center<a name=\"UNKOWNOS\">&nbsp;</a><BR>\n";
+		print "$Center<a name=\"UNKNOWNOS\">&nbsp;</a><BR>\n";
 		my $title="$Message[46]";
 		&tab_head("$title",19);
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>User agent (".(scalar keys %_unknownreferer_l).")</TH><TH>$Message[9]</TH></TR>\n";
@@ -7333,7 +7344,7 @@ if (scalar keys %HTMLOutput) {
 		&html_end;
 	}
 	if ($HTMLOutput{'unknownbrowser'}) {
-		print "$Center<a name=\"UNKOWNBROWSER\">&nbsp;</a><BR>\n";
+		print "$Center<a name=\"UNKNOWNBROWSER\">&nbsp;</a><BR>\n";
 		my $title="$Message[50]";
 		&tab_head("$title",19);
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>User agent (".(scalar keys %_unknownrefererbrowser_l).")</TH><TH>$Message[9]</TH></TR>\n";
@@ -8938,7 +8949,7 @@ if (scalar keys %HTMLOutput) {
 			if ($ShowOriginStats =~ /P/i) { print "<TD>".($_from_p[4]?$_from_p[4]:"&nbsp;")."</TD><TD>".($_from_p[4]?"$p_p[4] %":"&nbsp;")."</TD>"; }
 			if ($ShowOriginStats =~ /H/i) { print "<TD>".($_from_h[4]?$_from_h[4]:"&nbsp;")."</TD><TD>".($_from_h[4]?"$p_h[4] %":"&nbsp;")."</TD>"; }
 			print "</TR>\n";
-			#------- Unkown origin
+			#------- Unknown origin
 			print "<TR><TD CLASS=AWS><b>$Message[39]</b></TD>";
 			if ($ShowOriginStats =~ /P/i) { print "<TD>".($_from_p[1]?$_from_p[1]:"&nbsp;")."</TD><TD>".($_from_p[1]?"$p_p[1] %":"&nbsp;")."</TD>"; }
 			if ($ShowOriginStats =~ /H/i) { print "<TD>".($_from_h[1]?$_from_h[1]:"&nbsp;")."</TD><TD>".($_from_h[1]?"$p_h[1] %":"&nbsp;")."</TD>"; }
