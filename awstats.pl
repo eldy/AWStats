@@ -13,7 +13,7 @@
 #-------------------------------------------------------
 # Defines
 #-------------------------------------------------------
-$VERSION="2.23h";
+$VERSION="2.23i";
 $Lang=0;
 
 # Default value
@@ -54,20 +54,22 @@ $BarImageHorizontal_k = "barrehk.png";
 
 # ---------- Search engines list --------------------
 %SearchEnginesHash=(
+# Most common search engines
 "yahoo\.","Yahoo",				"altavista\.","AltaVista",
-"google\.","Google",			"lycos\.","Lycos",
 "msn\.dk/","MSN (dk)",			"msn\.fr/","MSN (fr)",		"msn\.","MSN",
-"excite\.","Excite",			"infoseek\.","Infoseek",			
-"voila\.", "Voila",				"nomade\.fr/","Nomade",
-"webcrawler\.","WebCrawler",	"lokace\.", "Lokace",
-"northernlight\.","NorthernLight",	"hotbot\.","Hotbot",
-"metacrawler\.","MetaCrawler",	"go2net\.com","Go2Net (Metamoteur)",
-"askjeeves\.","Ask Jeeves",		"euroseek\.","Euroseek",		
-"ctrouve\.","C'est trouvé",		"francite\.","Francité",	"\.lbb\.org", "LBB",
-"netscape\.","Netscape",		"nbci\.com/search","NBCI",
-"mamma\.","Mamma",				"dejanews\.","DejaNews",
-"search\.terra\.","Terra",		"snap\.","Snap",
-"netfind\.aol\.com","AOL",		"recherche\.aol\.fr","AOL",		"rechercher\.libertysurf\.fr","Libertysurf",
+"voila\.", "Voila",				"lycos\.","Lycos",			"nomade\.fr/","Nomade",
+"search\.terra\.","Terra",
+"google\.","Google",			"alltheweb\.com","AllTheWeb",
+# Others
+"hotbot\.","Hotbot",			"northernlight\.","NorthernLight",	
+"webcrawler\.","WebCrawler",	"metacrawler\.","MetaCrawler (Metamoteur)",	"go2net\.com","Go2Net (Metamoteur)",
+"go\.com","Go.com",		
+"euroseek\.","Euroseek",		"excite\.","Excite",		"lokace\.", "Lokace",	"spray\.","Spray",
+"ctrouve\.","C'est trouvé",		"francite\.","Francité",	"\.lbb\.org", "LBB",	"rechercher\.libertysurf\.fr","Libertysurf",
+"netscape\.","Netscape",		"netfind\.aol\.com","AOL",	"recherche\.aol\.fr","AOL",
+"snap\.","Snap",				"nbci\.com/search","NBCI",
+"askjeeves\.","Ask Jeeves",		"mamma\.","Mamma",
+"dejanews\.","DejaNews",
 "dmoz\.org","DMOZ",
 "search\.com","Other search engines"
 );
@@ -76,11 +78,12 @@ $BarImageHorizontal_k = "barrehk.png";
 @SearchEngineUrl=(
 "yahoo\.","p=",
 "altavista\.","q=",
-"google\.","q=",
-"lycos\.","query=",
 "msn\.dk","MT=",
 "msn\.fr","MT=",
 "msn\.","MT=",
+"google\.","q=",
+"alltheweb\.","query=",
+"lycos\.","query=",
 "excite\.","search=",
 "infoseek\.","qt=",
 "eureka\.","q=",
@@ -88,10 +91,9 @@ $BarImageHorizontal_k = "barrehk.png";
 "webcrawler","searchText=",
 "netscape\.","search=",
 "mamma\.","query=",
-"alltheweb\.","query=",
 "northernlight\.","qr="
 );
-@WordsToCleanSearchUrl= ("act=","annuaire=","btng=","categoria=","cou=","dd=","domain=","dt=","dw=","geo=","hc=","height=","hl=","hs=","kl=","lang=","loc=","lr=","medor=","message=","meta=","mode=","order=","page=","par=","pays=","pg=","pos=","prg=","qc=","refer=","sa=","safe=","sc=","sort=","src=","start=","stype=","tag=","temp=","theme=","url=","user=","width=","what=","\\.x=","\\.y=");
+@WordsToCleanSearchUrl= ("act=","annuaire=","btng=","categoria=","cou=","dd=","domain=","dt=","dw=","exec=","geo=","hc=","height=","hl=","hs=","kl=","lang=","loc=","lr=","medor=","message=","meta=","mode=","order=","page=","par=","pays=","pg=","pos=","prg=","qc=","refer=","sa=","safe=","sc=","sort=","src=","start=","stype=","tag=","temp=","theme=","url=","user=","width=","what=","\\.x=","\\.y=");
 # Never put the following exclusion ("Claus=","kw=","keyword=","MT","p=","q=","qr=","qt=","query=","s=","search=","searchText=") because they are strings that contain keywords we're looking for.
 
 # ---------- HTTP Code with tooltip --------
@@ -1054,8 +1056,8 @@ sub SkipFile {
 
 sub Read_Config_File {
 	$FileConfig="";$DirConfig=$DIR;if (($DirConfig ne "") && (!($DirConfig =~ /\/$/)) && (!($DirConfig =~ /\\$/)) ) { $DirConfig .= "/"; }
-	if (open(CONFIG,"$DirConfig$PROG.$LocalSite.conf")) { $FileConfig="$DirConfig$PROG.$LocalSite.conf"; }
-	if ($FileConfig eq "") { if (open(CONFIG,"$DirConfig$PROG.conf"))  { $FileConfig="$DirConfig$PROG.conf"; } }
+	if (open(CONFIG,"$DirConfig$PROG.$LocalSite.conf")) { $FileConfig="$DirConfig$PROG.$LocalSite.conf"; $FileSuffix=".$LocalSite"; }
+	if ($FileConfig eq "") { if (open(CONFIG,"$DirConfig$PROG.conf"))  { $FileConfig="$DirConfig$PROG.conf"; $FileSuffix=""; } }
 	if ($FileConfig eq "") { $FileConfig="$PROG.conf"; error("Error: Couldn't open config file [$PROG.$LocalSite.conf] nor [$PROG.conf]: $!"); }
 	while (<CONFIG>) {
 		$_ =~ s/\n//;
@@ -1080,7 +1082,7 @@ sub Read_Config_File {
 			$i=0; foreach $elem (@felter)      { $SkipHosts[$i]=$elem; $i++; }
 			next;
 			}
-		if ($line =~ /^DirHistory/)            { $DirHistory=$param; next; }
+		if ($line =~ /^DirData/)               { $DirData=$param; next; }
 		if ($line =~ /^DirCgi/)                { $DirCgi=$param; next; }
 		if ($line =~ /^DirIcons/)              { $DirIcons=$param; next; }
 		if ($line =~ /^DNSLookup/)             { $DNSLookup=$param; next; }
@@ -1163,8 +1165,8 @@ sub Check_Config {
 	if (! ($color_s =~ /[\d]/))               { $color_s="#8888DD"; }
 }
 
-sub Read_LastTime {
-if (open(HISTORY,"$DirHistory/$PROG$_[0]$_[1].txt")) {
+sub Read_History_File_For_LastTime {
+if (open(HISTORY,"$DirData/$PROG$_[0]$_[1]$FileSuffix.txt")) {
 	while (<HISTORY>) {
 		$_ =~ s/\n//;
 		@felter=split(/ /,$_);
@@ -1175,7 +1177,7 @@ close HISTORY;
 }
 
 sub Read_History_File {
-if (open(HISTORY,"$DirHistory/$PROG$_[0]$_[1].txt")) {
+if (open(HISTORY,"$DirData/$PROG$_[0]$_[1]$FileSuffix.txt")) {
 	$readdomain=0;$readvisitor=0;$readunknownip=0;$readsider=0;$readtime=0;$readbrowser=0;$readnsver=0;$readmsiever=0;
 	$reados=0;$readrobot=0;$readunknownreferer=0;$readunknownrefererbrowser=0;$readpagerefs=0;$readse=0;
 	$readsearchwords=0;$readerrors=0;$readerrors404=0;
@@ -1285,7 +1287,7 @@ close HISTORY;
 }
 
 sub Save_History_File {
-	open(HISTORYTMP,">$DirHistory/$PROG$_[0]$_[1].tmp.$$") || error("Couldn't open file $DirHistory/$PROG$_[0]$_[1].tmp.$$: $!");
+	open(HISTORYTMP,">$DirData/$PROG$_[0]$_[1]$FileSuffix.tmp.$$") || error("Couldn't open file $DirData/$PROG$_[0]$_[1]$FileSuffix.tmp.$$: $!");
 	
 	print HISTORYTMP "FirstTime $FirstTime{$_[0]}\n";
 	print HISTORYTMP "LastTime $LastTime{$_[0]}\n";
@@ -1398,7 +1400,7 @@ else {
 $LocalSite =~ tr/A-Z/a-z/;
 $LocalSiteWithoutwww = $LocalSite; $LocalSiteWithoutwww =~ s/www\.//;
 if (($ENV{"GATEWAY_INTERFACE"} eq "") && ($ARGV[0] eq "" || $ARGV[0] ne "-h" || $ARGV[1] eq "")) {
-	print "----- $PROG $VERSION (c) laurent.destailleur\@wanadoo.fr -----\n";
+	print "----- $PROG $VERSION (c) Laurent Destailleur -----\n";
 	print "$PROG is a free web server logfile analyzer (in Perl) to show you advanced\n";
 	print "web statistics. Distributed under GNU General Public Licence.\n";
 	print "Syntax: $PROG.pl -h www.host.com\n";
@@ -1407,7 +1409,7 @@ if (($ENV{"GATEWAY_INTERFACE"} eq "") && ($ARGV[0] eq "" || $ARGV[0] ne "-h" || 
 	print " not found, $PROG will use $PROG.conf.\n";
 	print " See README.TXT file to know how to configure this file.\n";
 	print "Now supports/detects:\n";
-	print " Visits and unique visitors\n";
+	print " Number of visits and unique visitors\n";
 	print " Rush hours\n";
 	print " Most often viewed pages\n";
 	@DomainsArray=keys %DomainsHash;
@@ -1419,8 +1421,9 @@ if (($ENV{"GATEWAY_INTERFACE"} eq "") && ($ARGV[0] eq "" || $ARGV[0] ne "-h" || 
 	@RobotArray=keys %RobotHash;
 	print " ".(@RobotArray)." robots\n";
 	@SearchEnginesArray=keys %SearchEnginesHash;
-	print " ".(@SearchEnginesArray)." search engines and keywords used\n";
+	print " ".(@SearchEnginesArray)." search engines (and keywords used from them)\n";
 	print " All HTTP errors\n";
+	print " and more...\n";
 	print "New versions and support at http://awstats.sourceforge.net\n";
 	exit 0
 	}
@@ -1441,9 +1444,9 @@ if ($ENV{"GATEWAY_INTERFACE"} ne "") {
 	if ($QueryString =~ /lang=/) { $Lang=$QueryString; $Lang =~ s/.*lang=//; $Lang =~ s/&.*//; }
 	}
 if (($DirCgi ne "") && !($DirCgi =~ /\/$/) && !($DirCgi =~ /\\$/)) { $DirCgi .= "/"; }
-if ($DirHistory eq ".") { $DirHistory=$DIR; }
-if ($DirHistory eq "")  { $DirHistory="."; }
-$DirHistory =~ s/\/$//;
+if ($DirData eq ".") { $DirData=$DIR; }
+if ($DirData eq "")  { $DirData="."; }
+$DirData =~ s/\/$//;
 
 # Check if parameters are OK
 &Check_Config;
@@ -1518,7 +1521,7 @@ if ($MonthOnly eq "year" || $MonthOnly == $month) {
 	$monthtoprocess=0;
 	for ($ix=($month); $ix>=1; $ix--) {
 		$monthix=$ix+0; if ($monthix < 10) { $monthix  = "0$monthix"; }	# Good trick to change $monthix into "MM" format
-		&Read_LastTime($monthix,$year);
+		&Read_History_File_For_LastTime($monthix,$year);
 		if ($LastTime{$monthix} > 0) {
 			$monthtoprocess=$monthix;
 			&Read_History_File($monthtoprocess,$year);
@@ -1877,8 +1880,7 @@ if ($MonthOnly eq "year" || $MonthOnly == $month) {
 	# Archive LOG file into ARCHIVELOG
 	if ($ArchiveLogRecords == 1) {
 		if ($BenchMark == 1) { print "Start of archiving log records: ";print localtime(); print "<br>"; }
-		if ($FileConfig eq "$DirConfig$PROG.$LocalSite.conf") { $ArchiveFileName="$DirHistory/$PROG.$LocalSite.archive.log"; }
-		else { $ArchiveFileName="$DirHistory/$PROG.archive.log"; }
+		$ArchiveFileName="$DirData/$PROG_archive$FileSuffix.log";
 		open(LOG,"+<$LogFile") || error("Error: Enable to archive log records of $LogFile into $ArchiveFileName because source can't be opened for read and write: $!<br>\n");
 		open(ARCHIVELOG,">>$ArchiveFileName") || error("Error: Couldn't open file $ArchiveFileName to archive current log: $!");
 		while (<LOG>) {	print ARCHIVELOG $_; }
@@ -1894,12 +1896,12 @@ if ($MonthOnly eq "year" || $MonthOnly == $month) {
 	$allok=1;
 	for ($ix=1; $ix<=$monthtoprocess; $ix++) {
 		$monthix=$ix+0; if ($monthix < 10) { $monthix  = "0$monthix"; }	# Good trick to change $monthix into "MM" format
-		if (-R "$DirHistory/$PROG$monthix$year.tmp.$$") {
-			if (rename("$DirHistory/$PROG$monthix$year.tmp.$$", "$DirHistory/$PROG$monthix$year.txt")==0) { 
+		if (-R "$DirData/$PROG$monthix$year$FileSuffix.tmp.$$") {
+			if (rename("$DirData/$PROG$monthix$year$FileSuffix.tmp.$$", "$DirData/$PROG$monthix$year$FileSuffix.txt")==0) { 
 				$allok=0;
 				last;
 			}
-			chmod 438,"$DirHistory/$PROG$monthix$year.txt"; 
+			chmod 438,"$DirData/$PROG$monthix$year$FileSuffix.txt"; 
 		}
 	}
 	if ($allok > 0) {
@@ -2473,7 +2475,7 @@ if ($TotalVisits > 0) { $RatioHits=int($TotalHits/$TotalVisits*100)/100; }
 if ($TotalVisits > 0) { $RatioBytes=int(($TotalBytes/1024)*100/$TotalVisits)/100; }
 
 if ($MonthOnly eq "year") { print "<TR><TD><b>$message[8][$Lang]</b></TD><TD colspan=3 rowspan=2><font style=\"font: 10pt arial,verdana,helvetica\"><b>$message[6][$Lang] $year</b></TD><TD><b>$message[9][$Lang]</b></TD></TR>"; }
-else {  print "<TR><TD><b>$message[8][$Lang]</b></TD><TD colspan=3 rowspan=2><font style=\"font: 10pt arial,verdana,helvetica\"><b>$message[5][$Lang] $monthlib{$MonthOnly} $year</b></TD><TD><b>$message[9][$Lang]</b></TD></TR>"; }
+else {  print "<TR><TD><b>$message[8][$Lang]</b></TD><TD colspan=3 rowspan=2><font style=\"font: 10pt arial,verdana,helvetica\"><b>$message[5][$Lang] $monthlib{$MonthOnly} $year</b></font><br><a href=\"$DirCgi$PROG.pl?month=year&lang=$Lang\">$message[6][$Lang] $year</a></TD><TD><b>$message[9][$Lang]</b></TD></TR>"; }
 $yearcon=substr($FirstTime,0,4);$monthcon=substr($FirstTime,4,2);$daycon=substr($FirstTime,6,2);$hourcon=substr($FirstTime,8,2);$mincon=substr($FirstTime,10,2);
 if ($FirstTime != 0) { print "<TR><TD>$daycon&nbsp;$monthlib{$monthcon}&nbsp;$yearcon&nbsp;-&nbsp;$hourcon:$mincon</TD>"; }
 else { print "<TR><TD>NA</TD>"; }
@@ -2523,11 +2525,6 @@ print "</TR><TR>";
 for ($ix=1; $ix<=12; $ix++) {
 	$monthix=$ix; if ($monthix < 10) { $monthix="0$monthix"; }
 	print "<TD valign=center><a href=\"$DirCgi$PROG.pl?month=$monthix&lang=$Lang\">$monthlib{$monthix}</a></TD>";
-}
-if ($MonthOnly ne "year") {
-	print "<TD valign=center>";
-	print "<a href=\"$DirCgi$PROG.pl?month=year&lang=$Lang\">$message[6][$Lang] $year</a></TD>";
-	print "</TD>\n";
 }
 
 print "</TR></TABLE>";
