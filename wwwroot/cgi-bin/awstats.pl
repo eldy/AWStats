@@ -82,7 +82,7 @@ $WarningMessages= 1;
 %MonthBytes = %MonthHits = %MonthHostsKnown = %MonthHostsUnknown = %MonthPages = %MonthUnique = %MonthVisits =
 %monthlib = %monthnum = ();
 
-$VERSION="3.2 (build 61)";
+$VERSION="3.2 (build 62)";
 $Lang="en";
 
 # Default value
@@ -419,9 +419,10 @@ sub Read_Config_File {
 	&debug("Call to Read_Config_File [FileConfig=\"$FileConfig\"]");
 	while (<CONFIG>) {
 		chomp $_; s/\r//;
-		$_ =~ s/#.*//;								# Remove comments
-		$_ =~ tr/\t /  /s;							# Change all blanks into " "
-		$_ =~ s/=/§/;								# Change first "=" into "§" to split
+		$_ =~ s/#.*//;						# Remove comments
+		$_ =~ tr/\t /  /s;					# Change all blanks into " "
+		$_ =~ s/=/§/;						# Change first "=" into "§" to split
+		$_ =~ s/__SITE__/$SiteConfig/s;		# You can use __SITE__ in config file, if you want to have one generic config file for several config
 		my @felter=split(/§/,$_);						
 		my $param=$felter[0];
 		my $value=$felter[1];
@@ -440,10 +441,15 @@ sub Read_Config_File {
 			next;
 			}
 		if ($param =~ /^LogFormat/)            	{ $LogFormat=$value; next; }
-		if ($param =~ /^DNSLookup/)             { $DNSLookup=$value; next; }
-		if ($param =~ /^DirData/)               { $DirData=$value; next; }
+		if ($param =~ /^DirData/)               { 
+			$DirData=$value; 
+			if (! -d $DirData) {
+				error("Error: AWStats database directory defined in config file by 'DirData' parameter ($DirData) does not exist or is not writable.");
+				}
+			}
 		if ($param =~ /^DirCgi/)                { $DirCgi=$value; next; }
 		if ($param =~ /^DirIcons/)              { $DirIcons=$value; next; }
+		if ($param =~ /^DNSLookup/)             { $DNSLookup=$value; next; }
 		if ($param =~ /^AllowToUpdateStatsFromBrowser/)	{ $AllowToUpdateStatsFromBrowser=$value; next; }
 		if ($param =~ /^SiteDomain/)			{ $SiteDomain=$value; next; }
 		if ($param =~ /^HostAliases/) {
