@@ -46,16 +46,16 @@
 
 # ---------- Init variables (Variable $TmpHashxxx are not initialized) -------
 ($AddOn,$BarHeight,$BarWidth,$Debug,$DebugResetDone,$DNSLookup,$Expires, 
-$KeepBackupOfHistoricFiles,$MaxLengthOfURL,
+$CreateDirDataIfNotExists, $KeepBackupOfHistoricFiles,$MaxLengthOfURL,
 $MaxNbOfHostsShown, $MaxNbOfKeywordsShown, $MaxNbOfLastHosts, $MaxNbOfLoginShown,
 $MaxNbOfPageShown, $MaxNbOfRefererShown, $MaxNbOfRobotShown,
 $MinHitFile, $MinHitHost, $MinHitKeyword,
 $MinHitLogin, $MinHitRefer, $MinHitRobot,
-$NbOfLinesForCorruptedLog,
+$NbOfLinesForCorruptedLog, $PurgeLogFile,
 $ShowAuthenticatedUsers, $ShowCompressionStats, $ShowFileSizesStats,
 $ShowCorrupted, $ShowSteps, $StartSeconds, $StartMicroseconds,
 $StaticLinks, $URLWithQuery)=
-(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
+(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
 ($ArchiveLogRecords, $DetailedReportsOnNewWindows, $FirstDayOfWeek,
 $ShowHeader, $ShowMenu, $ShowMonthDayStats, $ShowDaysOfWeekStats,
 $ShowHoursStats, $ShowDomainsStats, $ShowHostsStats, 
@@ -70,8 +70,7 @@ $Extension, $FileConfig, $FileSuffix,
 $HTMLHeadSection, $HTMLEndSection, $Host,
 $LastUpdate, $LogFile, $LogFormat, $LogFormatString, $Logo, $LogoLink,
 $MonthRequired,
-$HTMLOutput, $PROG, $PageCode,
-$PurgeLogFile, $QueryString,
+$HTMLOutput, $PROG, $PageCode, $QueryString,
 $SiteConfig, $SiteDomain, $SiteToAnalyze, $SiteToAnalyzeWithoutwww, 
 $TotalEntries, $TotalBytesPages, $TotalDifferentPages, $URLFilter, $UserAgent, $YearRequired)=
 ();
@@ -126,7 +125,7 @@ $color_h, $color_k, $color_p, $color_s, $color_u, $color_v)=
 
 
 
-$VERSION="4.0 (build 9)";
+$VERSION="4.0 (build 10)";
 $Lang="en";
 
 # Default value
@@ -461,7 +460,7 @@ sub Read_Config_File {
 		$param =~ s/^\s+//; $param =~ s/\s+$//;
 		$value =~ s/^\s+//; $value =~ s/\s+$//;
 		$value =~ s/^\"//; $value =~ s/\"$//;
-		$value =~ s/__SITE__/$SiteConfig/s;			# You can use __SITE__ in config file, if you want to have one generic config file for several config
+		$value =~ s/__(\w+)__/$ENV{$1}/g;
 		# Read main section
 		if ($param =~ /^LogFile/) {
 			$LogFile=$value;
@@ -501,12 +500,7 @@ sub Read_Config_File {
 			next;
 			}
 		if ($param =~ /^LogFormat/)            	{ $LogFormat=$value; next; }
-		if ($param =~ /^DirData/) { 
-			$DirData=$value; 
-			if (! -d $DirData) {
-				error("Error: AWStats database directory defined in config file by 'DirData' parameter ($DirData) does not exist or is not writable.");
-				}
-			}
+		if ($param =~ /^DirData/) 				{ $DirData=$value; next; }
 		if ($param =~ /^DirCgi/)                { $DirCgi=$value; next; }
 		if ($param =~ /^DirIcons/)              { $DirIcons=$value; next; }
 		if ($param =~ /^DNSLookup/)             { $DNSLookup=$value; next; }
@@ -518,6 +512,7 @@ sub Read_Config_File {
 			next;
 			}
 		# Read optional section
+		if ($param =~ /^CreateDirDataIfNotExists/)   { $CreateDirDataIfNotExists=$value; next; }
 		if ($param =~ /^PurgeLogFile/)          { $PurgeLogFile=$value; next; }
 		if ($param =~ /^ArchiveLogRecords/)     { $ArchiveLogRecords=$value; next; }
 		if ($param =~ /^KeepBackupOfHistoricFiles/)     { $KeepBackupOfHistoricFiles=$value; next; }
@@ -761,6 +756,7 @@ sub Check_Config {
 	if ($DNSLookup !~ /[0-1]/)                            { error("Error: DNSLookup parameter is wrong. Value is '$DNSLookup' (should be 0 or 1)"); }
 	if ($AllowToUpdateStatsFromBrowser !~ /[0-1]/) 	{ $AllowToUpdateStatsFromBrowser=1; }	# For compatibility, is 1 if not defined
 	# Optional section
+	if ($CreateDirDataIfNotExists !~ /[0-1]/)      	{ $CreateDirDataIfNotExists=0; }
 	if ($PurgeLogFile !~ /[0-1]/)                 	{ $PurgeLogFile=0; }
 	if ($ArchiveLogRecords !~ /[0-1]/)            	{ $ArchiveLogRecords=1; }
 	if ($KeepBackupOfHistoricFiles !~ /[0-1]/)     	{ $KeepBackupOfHistoricFiles=0; }
@@ -938,6 +934,17 @@ sub Check_Config {
 	if (! $Message[105]) { $Message[105]="Code"; }
 	if (! $Message[106]) { $Message[106]="Average size"; }
 	if (! $Message[107]) { $Message[107]="Links from a NewsGroup"; }
+	# Check if DirData is OK
+	if (! -d $DirData) {
+		if ($CreateDirDataIfNotExists) {
+			debug(" Make directory $DirData",2);
+			my $mkdirok=mkdir "$DirData", 0666;
+			if (! $mkdirok) { error("Error: $PROG failed to create directory DirData (DirData=\"$DirData\", CreateDirDataIfNotExists=$CreateDirDataIfNotExists)."); }
+		}
+		else {
+			error("Error: AWStats database directory defined in config file by 'DirData' parameter ($DirData) does not exist or is not writable.");
+		}
+	}
 }
 
 #--------------------------------------------------------------------
