@@ -6352,7 +6352,7 @@ EOF
 		print "<TR><TD align=center><center><TABLE><TR>\n";
 		$max_h=$max_k=1;
 		for (my $ix=0; $ix<=23; $ix++) {
-		  print "<TH width=18 onmouseover=\"ShowTip(17);\" onmouseout=\"HideTip(17);\">$ix</TH>\n";
+		  print "<TH width=19 onmouseover=\"ShowTip(17);\" onmouseout=\"HideTip(17);\">$ix</TH>\n";	# width=19 instead of 18 to avoid a MacOS browser bug.
 		  #if ($_time_p[$ix]>$max_p) { $max_p=$_time_p[$ix]; }
 		  if ($_time_h[$ix]>$max_h) { $max_h=$_time_h[$ix]; }
 		  if ($_time_k[$ix]>$max_k) { $max_k=$_time_k[$ix]; }
@@ -6361,7 +6361,7 @@ EOF
 		print "<TR>\n";
 		for (my $ix=0; $ix<=23; $ix++) {
 			my $hr=($ix+1); if ($hr>12) { $hr=$hr-12; }
-			print "<TH onmouseover=\"ShowTip(17);\" onmouseout=\"HideTip(17);\"><IMG alt='' SRC=\"$DirIcons\/clock\/hr$hr.png\" width=10 alt=\"$hr:00\"></TH>\n";
+			print "<TD onmouseover=\"ShowTip(17);\" onmouseout=\"HideTip(17);\"><IMG alt='' SRC=\"$DirIcons\/clock\/hr$hr.png\" width=10 alt=\"$hr:00\"></TD>\n";
 		}
 		print "</TR>\n";
 		print "<TR valign=bottom>\n";
