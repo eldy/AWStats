@@ -21,7 +21,7 @@ use vars qw(%DomainsHashIDLib @RobotsSearchIDOrder_list1 @RobotsSearchIDOrder_li
 #-------------------------------------------------------
 # Defines
 #-------------------------------------------------------
-my $VERSION="4.0 (build 44)";
+my $VERSION="4.0 (build 45)";
 
 # ---------- Init variables -------
 my $Debug=0;
@@ -2834,7 +2834,7 @@ if ($UpdateStats) {
 		my $extension;
 
 		# Extension
-		if ($urlwithnoquery =~ /\.(\w{1,5})$/) {
+		if ($urlwithnoquery =~ /\.(\w{1,6})$/) {
 			$extension=$1; $extension =~ tr/A-Z/a-z/;
 			# Check if not a page
 			foreach my $cursor (@NotPageList) { if ($extension eq $cursor) { $PageBool=0; last; } }
