@@ -44,10 +44,31 @@ FAQ-ABO250 <a href="#PHPNUKE">Can AWStats be integrated with PHP Nuke ?</a><br>
 </ul>
 <br>
 
-<u>SETUP or ERROR QUESTIONS:</u><br>
-Here, you can find the most common questions and answers users have to install/setup AWStats.<br>
+<u>COMMON SETUP/USAGE QUESTIONS:</u><br>
+Here, you can find the most common questions and answers about AWStats setup/usage process.<br>
 <ul>
-FAQ-SET025 <a href="#NOLOG">How to use AWStats with no server log</a><br>
+FAQ-COM025 <a href="#NOLOG">How to use AWStats with no server log</a><br>
+FAQ-COM050 <a href="#LIMITLOG">What is the log size limit AWStats can analyze ?</a><br>
+FAQ-COM090 <a href="#FTP">Setup for FTP server log files.</a><br>
+FAQ-COM100 <a href="#MAIL">Setup for MAIL log files (Sendmail, Postfix, Exchange).</a><br>
+FAQ-COM110 <a href="#MEDIASERVER">Setup for MEDIA SERVER log files (Realmedia, Windows media server).</a><br>
+FAQ-COM120 <a href="#ROTATE">How to rotate my logs without loosing data.</a><br>
+FAQ-COM130 <a href="#CRONTAB">How to run AWStats frequently ?</a><br>
+FAQ-COM140 <a href="#EXCLUDEHOSTS">How to exclude my IP address (or whole subnet mask) from stats ?</a><br>
+FAQ-COM150 <a href="#BENCHMARK">Benchmark question.</a><br>
+FAQ-COM200 <a href="#DNS">How reverse DNS Lookup works, unresolved IP Addresses ?</a><br>
+FAQ-COM250 <a href="#DIFFERENT_RESULTS">Different results than other log analyzers (Analog, Webalizer, WUsage, wwwStats...).</a><br>
+FAQ-COM300 <a href="#DIFFERENCE_HOURS">Difference between local hour and AWStats reported hour.</a><br>
+FAQ-COM350 <a href="#OLDLOG">How can I process old log file ?</a><br>
+FAQ-COM400 <a href="#MULTILOG">How can I update my statistics when I use a load balancing system that splits my logs ?</a><br>
+FAQ-COM120 <a href="#RESET">How can I reset all my statistics ?</a><br>
+FAQ-COM130 <a href="#EDITHISTORY">Can I safely remove a line in AWStats history files (awstatsMMYYYY*.txt) ?</a><br>
+</ul>
+<br>
+
+<u>ERRORS/TROUBLESHOOTING QUESTIONS:</u><br>
+Here, you can find the most common questions and answers about errors or problems using AWStats.<br>
+<ul>
 FAQ-SET050 <a href="#MISSINGDOLLAR">Error "Missing $ on loop variable ..."</a><br>
 FAQ-SET100 <a href="#CGISOURCE">I see Perl script's source instead of its execution in my browser.</a><br>
 FAQ-SET150 <a href="#SPAWNERROR">Error "...couldn't create/spawn child process..." with Apache for windows.</a><br>
@@ -55,34 +76,13 @@ FAQ-SET200 <a href="#INTERNAL">"Internal Error" or "Error 500" in a browser conn
 FAQ-SET210 <a href="#SPEED">"Internal Error" after a long time in my browser (See FAQ-COM100 "AWStats speed/timeout problems").</a><br>
 FAQ-SET220 <a href="#CRASH">Crash while running awstats.pl or page content only partialy loaded</a><br>
 FAQ-SET250 <a href="#PERSONALIZEDLOG">Log format setup or errors.</a><br>
-FAQ-SET260 <a href="#FTP">Setup for FTP server log files.</a><br>
-FAQ-SET270 <a href="#MAIL">Setup for MAIL log files (Sendmail, Postfix, Exchange).</a><br>
-FAQ-SET272 <a href="#MEDIASERVER">Setup for MEDIA SERVER log files (Realmedia, Windows media server).</a><br>
 FAQ-SET280 <a href="#NOTSAMENUMBER">Error "Not same number of records of...".</a><br>
 FAQ-SET300 <a href="#COULDNOTOPEN">Error "Couldn't open file ..."</a><br>
 FAQ-SET350 <a href="#EMPTY_STATS">Empty or null statistics reported.</a><br>
 FAQ-SET400 <a href="#REDIRECT">Pipe redirection to a file give me an empty file.</a><br>
 FAQ-SET450 <a href="#NO_ICON">No pictures/graphics shown.</a><br>
-FAQ-SET500 <a href="#ROTATE">How to rotate my logs without loosing data.</a><br>
-FAQ-SET550 <a href="#CRONTAB">How to run AWStats frequently ?</a><br>
-FAQ-SET600 <a href="#EXCLUDEHOSTS">How to exclude my IP address (or whole subnet mask) from stats ?</a><br>
 FAQ-SET700 <a href="#MIGRATEDOUBLED">My visits are doubled for old month I migrated from 3.2 to 5.x</a><br>
-
-</ul>
-<br>
-
-<u>COMMON SUPPORT QUESTIONS:</u><br>
-Here, you can find the most common questions and answers users have when using AWStats.<br>
-<ul>
-FAQ-COM100 <a href="#SPEED">AWStats speed/timeout problems.</a><br>
-FAQ-COM150 <a href="#BENCHMARK">Benchmark question.</a><br>
-FAQ-COM200 <a href="#DNS">How reverse DNS Lookup works, unresolved IP Addresses ?</a><br>
-FAQ-COM250 <a href="#DIFFERENT_RESULTS">Different results than other log analyzers (Analog, Webalizer, WUsage, wwwStats...).</a><br>
-FAQ-COM300 <a href="#DIFFERENCE_HOURS">Difference between local hour and AWStats reported hour.</a><br>
-FAQ-COM350 <a href="#OLDLOG">How can I process old log file ?</a><br>
-FAQ-COM400 <a href="#MULTILOG">How can I update my statistics when I use a load balancing system that splits my logs ?</a><br>
-FAQ-COM500 <a href="#RESET">How can I reset all my statistics ?</a><br>
-FAQ-COM550 <a href="#EDITHISTORY">Can I safely remove a line in AWStats history files (awstatsMMYYYY*.txt) ?</a><br>
+FAQ-SET800 <a href="#SPEED">AWStats speed/timeout problems.</a><br>
 </ul>
 <br>
 
@@ -97,6 +97,8 @@ FAQ-SEC200 <a href="#WORMS">How to manage log files (and statistics) corrupted b
 
 <hr>
 <br><br>
+
+
 <a name="SERVERSOS"></a><br>
 <b><u>FAQ-ABO100 : WHICH SERVER LOG FILES OR OS ARE SUPPORTED ?</u></b><br>
 AWStats can works with :<br>
@@ -142,7 +144,6 @@ However, a lot of interesting advanced features can't work: browsers, os's, keyw
 See also <a href="#PERSONALIZEDLOG">F.A.Q.: LOG FORMAT SETUP OR ERRORS </a>.<br>
 <br>
 
-
 <a name="LANG"></a><br>
 <b><u>FAQ-ABO200 : WHICH LANGUAGES ARE AVAILABLE ?</u></b><br>
 AWStats can make reports in 33 languages. This is a list of all of them, for last version, in
@@ -176,13 +177,513 @@ But this can change. You should ask to have a such Add-On to PHPNuke authors, an
 
 
 <a name="NOLOG"></a><br>
-<b><u>FAQ-SET025 : HOW TO USE AWSTATS WITH NO SERVER LOG FILE</u></b><br>
+<b><u>FAQ-COM025 : HOW TO USE AWSTATS WITH NO SERVER LOG FILE</u></b><br>
 <font class=CProblem>PROBLEM:</font><br>
 I want to have AWStats statistics but i have no access to my server log file.<br>
 <font class=CSolution>SOLUTION:</font><br>
 Because AWStats is a log analyzer, if you don't have any way to read your server log file,
 you have nothing to analyze and you can't use AWStats.<br>
 <br>
+
+<a name="#LIMITLOG"></a><br>
+<b><u>FAQ-COM050 : WHAT IS THE LOG SIZE LIMIT AWSTATS CAN ANALYZE</u></b><br>
+<font class=CProblem>PROBLEM:</font><br>
+I know I must run AWStats update process frequently on new log files, this means thoose
+files have a regular size, but for my first update, I want/need to run update process
+on old log files that are very large. Is there a limit on log file size AWStats can analyze ?<br>
+<font class=CSolution>SOLUTION:</font><br>
+No. There is no limit in AWStats. This means you can use it on large log files (test were
+made on 30GB log files).<br>
+However your system (Operating System or Perl version) might have a limit. For example, you can
+experience size limit errors on files larger than 2 or 4 GB.
+If limit is Perl only, try to use a Perl version compiled with "large file" option.<br>
+If you can't find it nor build it, you can try to use a LogFile parameter that looks like this
+<i>LogFile="cat /yourlogfilepath/yourlogfile |"</i> instead of
+<i>LogFile="/yourlogfilepath/yourlogfile"</i><br>
+<br>
+
+<a name="FTP"></a><br>
+<b><u>FAQ-COM090 : SETUP FOR FTP SERVER LOG FILES</u></b><br>
+<font class=CProblem>PROBLEM:</font><br>
+What do I have to do to use AWStats to analyze some FTP server log files.<br>
+<font class=CSolution>SOLUTION:</font><br>
+AWStats was built to analyze web,wap or proxy server's log files. However it can be used with some FTP server log files.<br>
+<br>
+1- Setup your FTP log file format:<br>
+<br>
+With ProFTP, modify the proftpd.conf file to add the following two lines :
+<table width="95%" border=1 cellpadding=0 cellspacing=0><tr class=CFAQ><td class=CFAQ>
+<!--<br>With ProFTPd 1.2.2:-->
+<i>LogFormat awstats "%t %h %u %m %f %s %b"</i> &nbsp; &nbsp; # WARNING: You must use a tab char between % tags and not a space !
+<i><br>ExtendedLog /var/log/xferlog read,write awstats</i> &nbsp; &nbsp; # WARNING: ExtendedLog directive might need to be placed inside a virtual host context if you use them.
+<!--<br>With ProFTPd 1.2.6:
+<i><br>LogFormat awstats ""${%F %H-%M-%S}t %h %u %m %F %s %b"</i> &nbsp; &nbsp; # WARNING: You must use a tab char between % tags and not a space !
+<i><br>ExtendedLog /var/log/xferlog read,write awstats</i> &nbsp; &nbsp; # WARNING: ExtendedLog directive might need to be placed inside a virtual host context if you use them.
+-->
+</td></tr></table>
+Then turn off old format Transfer log:
+<table width="95%" border=1 cellpadding=0 cellspacing=0><tr class=CFAQ><td class=CFAQ>
+<i>TransferLog none</i> &nbsp; &nbsp; # WARNING: TransferLog directive might need to be placed inside a virtual host context if you use them.
+</td></tr></table>
+<br>
+To have the change effective, stop your server, remove old log file /var/log/xferlog and restart the server.<br>
+Download a file by FTP and check that your new log file looks like this:<br>
+<i>[01/Jan/2001:21:49:57 +0200]	ftp.server.com	user	RETR	/home/fileiget.txt	226	1499</i><br>
+<br>
+2- Then setup AWStats to analyze the FTP log file:<br>
+<br>
+Copy config awstats.model.conf file to "awstats.proftp.conf".<br>
+Modify this new config file:
+<table width="95%" border=1 cellpadding=0 cellspacing=0><tr class=CFAQ><td class=CFAQ>
+<i>
+LogFile="/var/log/xferlog"
+<br>LogFormat="%time1 %host %logname %method %url %code %bytesd"
+<br>LogSeparator="\t"
+<br>DNSLookup=0
+<br>SkipFiles=""
+<br>NotPageList=""
+<br>ShowLinksOnUrl=0
+<br>ShowMenu=1
+<br>ShowMonthDayStats=UVHB
+<br>ShowDaysOfWeekStats=HB
+<br>ShowHoursStats=HB
+<br>ShowDomainsStats=HB
+<br>ShowHostsStats=HBL
+<br>ShowAuthenticatedUsers=HBL
+<br>ShowRobotsStats=1
+<br>ShowEMailSenders=0
+<br>ShowEMailReceivers=0
+<br>ShowSessionsStats=1
+<br>ShowPagesStats=PBEX
+<br>ShowFileTypesStats=HB
+<br>ShowFileSizesStats=0
+<br>ShowBrowsersStats=0
+<br>ShowOSStats=0
+<br>ShowOriginStats=0
+<br>ShowKeyphrasesStats=0
+<br>ShowKeywordsStats=0
+<br>ShowHTTPErrorsStats=0
+</i></td></tr></table>
+<br>
+Now you can use AWStats as usual (run the update process and read statistics).<br>
+<br>
+
+<a name="MAIL"></a><br>
+<b><u>FAQ-COM100 : SETUP FOR MAIL LOG FILES (SENDMAIL, POSTFIX, EXCHANGE...)</u></b><br>
+<font class=CProblem>PROBLEM:</font><br>
+What do I have to do to use AWStats to analyze my mail log files.<br>
+<font class=CSolution>SOLUTION:</font><br>
+<br>
+<u>For Sendmail or PostFix log files</u><br>
+<br>
+1- First, install a mail log convertor like <a href="http://www.klake.org/sma/">SMA</a> to use it
+as a pre-processor for AWStats update process (to convert your mail log into a readable format):<br>
+For this, you can download an copy sma (or sma.exe) file and sma.conf into same directory
+than awstats.pl file.<br>
+Edit sma.conf to change the ClogFormat and ClogSentOnly parameter to :
+<table width="95%" border=1 cellpadding=0 cellspacing=0><tr class=CFAQ><td class=CFAQ>
+<i>ClogFormat "%y-%m-%d %h:%n:%s %f %t %F %T SMTP - %S %z"
+<br>ClogSentOnly no
+</i>
+</td></tr></table>
+<br>
+<!--To have the change effective, stop your mail daemon, remove old log file and restart mail daemon.<br>
+Send a mail and check in your mail that your log file looks like this:<br>-->
+To check that your sma config is correct, run the following command:<br>
+<b>sma -O clog -f /pathtosmaconf/sma.conf /pathtomaillog/maillog > convertedmaillog</b><br>
+The resulting convertedmaillog file must have records that match the following format:<br>
+<i>2001-01-01 05:38:08 sender@mailsender.com receiver@mailreceiver.com hostrelaysender hostrelayreceiver SMTP - 1 31357</i><br>
+Warning: some sma versions (1.3) have been reported to not convert month correctly, giving
+for example a date like this 2001-#01-01 or 2001-00-01 instead of 2001-01-01. This makes AWStats
+analyze fails so check your sma output and change version if error.<br>
+<br>
+2- Then setup AWStats to analyze SMA processed mail log:<br>
+Copy config awstats.model.conf file to "awstats.mail.conf".<br>
+Modify this new config file:
+<table width="95%" border=1 cellpadding=0 cellspacing=0><tr class=CFAQ><td class=CFAQ>
+<i>
+LogFile="/pathtosma/sma -O clog -f /pathtosmaconf/sma.conf /pathtomaillog/maillog |"
+<br>LogFormat="%time2 %email %email_r %host %host_r %method %url %code %bytesd"
+<br>ValidSMTPCodes="1"
+<br>ShowMenu=1
+<br>ShowMonthDayStats=HB
+<br>ShowDaysOfWeekStats=HB
+<br>ShowHoursStats=HB
+<br>ShowDomainsStats=0
+<br>ShowHostsStats=HBL
+<br>ShowAuthenticatedUsers=0
+<br>ShowRobotsStats=0
+<br>ShowEMailSenders=HBL
+<br>ShowEMailReceivers=HBL
+<br>ShowSessionsStats=0
+<br>ShowPagesStats=0
+<br>ShowFileTypesStats=0
+<br>ShowFileSizesStats=0
+<br>ShowBrowsersStats=0
+<br>ShowOSStats=0
+<br>ShowOriginStats=0
+<br>ShowKeyphrasesStats=0
+<br>ShowKeywordsStats=0
+<br>ShowHTTPErrorsStats=0
+</i>
+</td></tr></table>
+<br>
+Now you can use AWStats as usual (run the update process and read statistics).<br>
+<br>
+<u>For Exchange log files</u><br>
+If someone can understand the Exchange log format, he can explain it to me at eldy@users.sourceforge.net.<br>
+Until this server won't log in a clever way, just forget using AWStats or use a more serious
+mail server (sendmail, postfix, ...). Sorry.<br>
+<!--
+Your Exchange mail log file might looks like this:<br>
+<i>2002-9-29	0:3:2 GMT	-	-	-	S_EXCHANG01	-	/O=INVESTMENT SCORECARD INC/OU=MAIL/CN=RECIPIENTS/CN=KJOHNSON	1027	1640EF7202084243942C5EC620117D376B68AA@s_exchang01.investmentscorecard.com	0	0	1943	2	2002-9-29 0:3:2 GMT	0	-	c=US;a= ;p=Investment Score;l=S_EXCHANG01-020929000302Z-2583	Dev Request Late Notification: KS_CM00004271	EX:/O=INVESTMENT SCORECARD INC/OU=MAIL/CN=RECIPIENTS/CN=CLEARQUEST(KS_CM)	-</i><br>
+Copy config awstats.model.conf file to "awstats.mail.conf".<br>
+Modify this new config file:
+<i>
+<br>LogFile="yourmaillogfilename"
+<br>LogFormat="%time2 %other %host %other %other %other %email %method %other %url %code %bytesd %other %other %other %other %other %other %email_r"
+<br>LogSeparator="\t"
+-->
+<br>
+
+<a name="MEDIASERVER"></a><br>
+<b><u>FAQ-COM110 : SETUP FOR A MEDIA SERVER (REALMEDIA, WINDOWS MEDIA SERVER)</u></b><br>
+<font class=CProblem>PROBLEM:</font><br>
+What do I have to do to use AWStats to analyze my Media Server log files.<br>
+<font class=CSolution>SOLUTION:</font><br>
+<br>
+<u>For Realmedia</u><br>
+<br>
+Your log file will probably looks like this:<br>
+<i>
+216.125.146.50 - - [16/Sep/2002:14:57:21 -0500]  "GET cme/rhythmcity/rcitycaddy.rm?cloakport=8080,554,7070 RTSP/1.0" 200 6672 [Win95_4.0_6.0.9.374_play32_NS80_en-US_586] [80d280e1-c9ae-11d6-fa53-d52aaed98681] [UNKNOWN] 281712 141 3 0 0 494<br>
+</i>
+<br>
+Copy config awstats.model.conf file to "awstats.mediaserver.conf".
+Modify this new config file:
+<table width="95%" border=1 cellpadding=0 cellspacing=0><tr class=CFAQ><td class=CFAQ>
+<i>LogFile="/pathtomediaserver/mediaserverlog"
+<br>LogFormat="%host %other %logname %time1 %methodurl %code %bytesd %uabracket %other %other %other %other %other %other %other %other"
+<br>LogSeparator="\s+"
+<br>ShowMenu=1
+<br>ShowMonthDayStats=UHB
+<br>ShowDaysOfWeekStats=HB
+<br>ShowHoursStats=HB
+<br>ShowDomainsStats=HB
+<br>ShowHostsStats=HBL
+<br>ShowAuthenticatedUsers=0
+<br>ShowRobotsStats=0
+<br>ShowEMailSenders=0
+<br>ShowEMailReceivers=0
+<br>ShowSessionsStats=0
+<br>ShowPagesStats=PB
+<br>ShowFileTypesStats=HB
+<br>ShowFileSizesStats=0
+<br>ShowBrowsersStats=1
+<br>ShowOSStats=1
+<br>ShowOriginStats=PH
+<br>ShowKeyphrasesStats=0
+<br>ShowKeywordsStats=0
+<br>ShowHTTPErrorsStats=1
+</i>
+</td></tr></table>
+<br>
+Now you can use AWStats as usual (run the update process and read statistics).<br>
+<br>
+<br>
+<u>For Windows Media Server</u><br>
+<br>
+1- If your Windows Media Server version allows it, setup your log format to write the following fields:
+<i>
+<br>c-ip
+<br>date
+<br>time
+<br>cs-uri-stem
+<br>c-starttime
+<br>x-duration
+<br>c-rate
+<br>c-status
+<br>c-playerid
+<br>c-playerversion
+<br>c-playerlanguage
+<br>cs(User-Agent)
+<br>cs(Referer)
+<br>c-hostexe
+<br>c-hostexever
+<br>c-os
+<br>c-osversion
+<br>c-cpu
+<br>filelength
+<br>filesize
+<br>avgbandwidth
+<br>protocol
+<br>transport
+<br>audiocodec
+<br>videocodec
+<br>channelURL
+<br>sc-bytes
+</i>
+<br>
+To have the change effective, stop your server, remove old log files and restart the server.<br>
+Listen to streaming files and check that your new log file looks like this:<br>
+<i>
+80.223.91.37 2002-10-08 14:18:58 mmst://mydomain.com/mystream 0 106 1 200 {F4A826EE-FA46-480F-A49B-76786320FC6B} 8.0.0.4477 fi-FI - - wmplayer.exe 8.0.0.4477 Windows_2000 5.1.0.2600 Pentium 0 0 20702 mms TCP Windows_Media_Audio_9 - - 277721
+</i>
+<br>
+<br>
+If your Windows Media Server version does not allow to define your log format:<br>
+Just follow instructions in step 2 directly but use the log format string found in first
+lines of your log files as value for AWStats LogFormat parameter, for example:<br>
+<i>
+LogFormat="c-ip date time c-dns cs-uri-stem c-starttime x-duration c-rate
+c-status c-playerid c-playerversion c-playerlanguage cs(User-Agent)
+cs(Referer) c-hostexe c-hostexever c-os c-osversion c-cpu filelength
+filesize avgbandwidth protocol transport audiocodec videocodec channelURL
+sc-bytes c-bytes s-pkts-sent c-pkts-received c-pkts-lost-client
+c-pkts-lost-net c-pkts-lost-cont-net c-resendreqs c-pkts-recovered-ECC
+c-pkts-recovered-resent c-buffercount c-totalbuffertime c-quality s-ip s-dns
+s-totalclients s-cpu-util"
+</i>
+<br>This means you don't use the AWStats tags but AWStats can often also understand all the IIS and/or
+Windows Media Server tags.<br>
+
+<br>
+2- Then setup AWStats to analyze your Media Server log:<br>
+Copy config awstats.model.conf file to "awstats.mediaserver.conf".<br>
+Modify this new config file:
+<table width="95%" border=1 cellpadding=0 cellspacing=0><tr class=CFAQ><td class=CFAQ>
+<i>
+LogFile="/pathtomediaserver/mediaserverlog"
+<br>LogFormat="c-ip date time cs-uri-stem c-starttime x-duration c-rate c-status c-playerid c-playerversion c-playerlanguage cs(User-Agent) cs(Referer) c-hostexe c-hostexever c-os c-osversion c-cpu filelength filesize avgbandwidth protocol transport audiocodec videocodec channelURL sc-bytes"
+<br>ShowMenu=1
+<br>ShowMonthDayStats=UHB
+<br>ShowDaysOfWeekStats=HB
+<br>ShowHoursStats=HB
+<br>ShowDomainsStats=HB
+<br>ShowHostsStats=HBL
+<br>ShowAuthenticatedUsers=0
+<br>ShowRobotsStats=0
+<br>ShowEMailSenders=0
+<br>ShowEMailReceivers=0
+<br>ShowSessionsStats=0
+<br>ShowPagesStats=PB
+<br>ShowFileTypesStats=HB
+<br>ShowFileSizesStats=0
+<br>ShowBrowsersStats=1
+<br>ShowOSStats=1
+<br>ShowOriginStats=PH
+<br>ShowKeyphrasesStats=0
+<br>ShowKeywordsStats=0
+<br>ShowHTTPErrorsStats=1
+</i>
+</td></tr></table>
+<br>
+Now you can use AWStats as usual (run the update process and read statistics).<br>
+<br>
+
+<a name="ROTATE"></a><br>
+<b><u>FAQ-COM120 : HOW TO ROTATE MY LOGS WITHOUT LOOSING DATA</u></b><br>
+<font class=CProblem>PROBLEM:</font><br>
+I want to archive/rotate my logs using my web server system options or a third software (rotatelog,
+cronolog) but don't want to loose any visits information during the rotate process.<br>
+<font class=CSolution>SOLUTION:</font><br>
+If you use a rotate system (internal web server feature or third software), this means you probably not use
+AWStats <a href="awstats_config.html#PurgeLogFile">PurgeLogFile</a> nor <a href="awstats_config.html#ArchiveLogRecords">ArchiveLogRecords</a> parameter.<br>
+* If your config file is setup to process current log file (because you want to use the <a href="awstats_config.html#AllowToUpdateStatsFromBrowser">AllowToUpdateStatsFromBrowser</a>
+option), if you don't want to loose any records during the rotate process, you can just run the AWStats update process 
+on the archived log file just after the update process using the -logfile option (This will avoid you to change the config file).<br>
+* If you choose (for security reason, to avoid CPU abuse on large web site or other) to make updates by your scheduler only on archive files, this means
+you don't use the <a href="awstats_config.html#AllowToUpdateStatsFromBrowser">AllowToUpdateStatsFromBrowser</a> "real-time" feature of AWStats.
+In this case all you have to do is to run the update process just after the rotate was done using a config/domain file configured to
+process the archived log files (using date tags of <a href="awstats_config.html#LogFile">LogFile</a> for examples).<br>
+Note: For Apache users, use of <a href="http://cronolog.org" target=awstatsbis>cronolog</a> seems to be a better choice
+than rotatelog (cronolog is available for Unix/Linux and Windows and is more flexible).<br>
+To use cronolog or rotatelog you must setup your web server log file name using a pipe like this example:<br>
+<i>CustomLog "|/usr/sbin/cronolog [cronolog_options] /var/logs/access.%Y%m%d.log" combined</i><br>
+<br>
+
+<a name="CRONTAB"></a><br>
+<b><u>FAQ-SET550 : HOW TO RUN AWSTATS FREQUENTLY</u></b><br>
+<font class=CProblem>PROBLEM:</font><br>
+AWStats must be ran frequently to update statistics. How can I do this ?<br>
+<font class=CSolution>SOLUTION:</font><br>
+<br>
+<u>With Windows</u>, you can use the internal task scheduler.
+The use of this tool is not an AWStats related problem, so please take a look at your Windows manual.
+Warning, if you use <i>"awstats.pl -config=mysite -update"</i> in your scheduled task, you might
+experience problem of failing task. Try this instead<br>
+<i>"C:\WINNT\system32\CMD.EXE /C C:\[awstats_path]\awstats.pl -config=mysite -update"</i><br>
+or<br>
+<i>"C:\[perl_path]\perl.exe C:\[awstats_path]\awstats.pl -config=mysite -update"</i><br>
+A lot of other scheduler (sharewares/freewares) are very good.<br>
+<br>
+<u>With unix-like operating systems</u>, you can use the "<b>crontab</b>".<br>
+This is examples of lines you can add in the cron file (see your unix reference manual for cron) :<br>
+To run update every day at 04:00, use :<br>
+<i>0 4 * * * /opt/awstats/wwwroot/cgi-bin/awstats.pl -config=mysite -update</i><br>
+To run update every hour, use :<br>
+<i>0 * * * * /opt/awstats/wwwroot/cgi-bin/awstats.pl -config=mysite -update</i><br>
+<br>
+
+<a name="EXCLUDEHOSTS"></a><br>
+<b><u>FAQ-COM140 : HOW CAN I EXCLUDE MY IP ADDRESS (OR WHOLE SUBNET MASK) FROM STATS ?</u></b><br>
+<font class=CProblem>PROBLEM:</font><br>
+I don't want to see my own IP address in the stats or I want to exclude counting visits from a whole subnet.<br>
+<font class=CSolution>SOLUTION:</font><br>
+You must edit the config file to change the <a href="awstats_config.html#SkipHosts">SkipHosts</a> parameter.<br>
+For example, to exclude:<br>
+- your own IP address 123.123.123.123, use <a href="awstats_config.html#SkipHosts">SkipHosts</a>="123.123.123.123"<br>
+- the whole subnet 123.123.123.xxx, use <a href="awstats_config.html#SkipHosts">SkipHosts</a>="123.123.123"<br>
+- all sub hosts xxx.myintranet.com, use <a href="awstats_config.html#SkipHosts">SkipHosts</a>=".myintranet.com" (This one works only if DNS lookup is already done in your
+log file).<br>
+<br> 
+
+
+<a name="BENCHMARK"></a><br>
+<b><u>FAQ-COM150 : BENCHMARK / FREQUENCY TO LAUNCH AWSTATS TO UPDATE STATISTICS</u></b><br>
+<font class=CProblem>PROBLEM:</font><br>
+What is AWStats speed ?<br>
+What is the frequency to launch AWStats process to update my statistics ?<br>
+<font class=CSolution>SOLUTION:</font><br>
+All benchmarks information and advice on frequency for update process are related into
+the <a href="awstats_benchmark.html">Benchmark page</a>.<br>
+<br>
+
+<a name="DNS"></a><br>
+<b><u>FAQ-COM200 : HOW REVERSE DNS LOOKUP WORKS, UNRESOLVED IP ADDRESSES</u></b><br>
+<font class=CProblem>PROBLEM:</font><br>
+The reported page AWStats shows me has no hostnames, only IP addresses, countries reported are all "unknown".<br>
+<font class=CSolution>SOLUTION:</font><br>
+When AWStats find an IP address in your log file, it tries a reverse DNS lookup to find
+the hostname and domain if the <a href="awstats_tools.html#DNSLookup">DNSLookup</a> parameter, in your AWStats config file, is <a href="awstats_config.html#DNSLookup">DNSLookup</a>=1
+(Default value). So, first, check if you have the good value. The <a href="awstats_config.html#DNSLookup">DNSLookup</a>=0 
+must be used only if your log file contains already resolved IP address. For example, 
+when you set up Apache with the <i>HostNameLookups=on</i> directive. When you 
+ask your web server to make itself the reverse DNS lookup to log hostname instead 
+of IP address, you will still find some IP addresses in your log file because 
+the reverse DNS lookup is not always possible. But if your web server fails in 
+it, AWStats will also fails (All reverse DNS lookups use the same system API). 
+So to avoid AWStats to make an already done lookup (with success or not), you 
+can set <a href="awstats_config.html#DNSLookup">DNSLookup</a>=0 in AWStats config file.
+If you prefer, you can make the reverse DNS lookup on a log file before running
+your log analyzer (If you only need to convert a logfile with IP Addresses into a
+logfile with resolved hostnames). You can use for this <a href="awstats_config.html#logresolvemerge">logresolvemerge</a> tool
+provided with AWStats distribution (This tools is an improved version of <i>logresolve</i> provided with Apache).<br>
+<br>
+
+<a name="DIFFERENT_RESULTS"></a><br>
+<b><u>FAQ-COM250 : DIFFERENT RESULTS THAN OTHER ANALYZER</u></b><br>
+<font class=CProblem>PROBLEM:</font><br>
+I also use webalizer (or another log analyzer) and it doesn't report the same results than AWStats. Why ?<br>
+<font class=CSolution>SOLUTION:</font><br>
+If you compare AWStats results with an other log file analyzer, you will found some differences,
+sometimes very important. In fact, all analyzer (even AWStats) make "over reporting" because of the
+problem of proxy-servers and robots. However AWStats is one the most accurate and its "over reporting"
+is very low where all other analyzers, even the most famous, have a very high error rate (10% to 2x more than reality).<br>
+This is the most important reasons why you will find differences:<br>
+- Some dynamic pages generated by CGI programs are not counted by some analyzer (ie Webalizer) like
+a "Page" (but only like a "Hit") if CGI prog has not a .cgi extension, so they are not included
+correctly in their statistics. AWStats does not make this error and all CGI pages are pages.<br>
+- AWStats is the alone analyzer (that i know for the moment) able to detect robots visits.
+All other analyzers think it's a human visitor. This error make them to report more visits and visitors
+than reality. This does not happen with AWStats. When it tells "1 visitor", it means "1 human visitor".
+All robots hits are reported in the "Robots/Spiders visitors" chart.<br>
+- A lot of analyzer (ie webalizer) use the "Hits" to count visitors. This is not a good way of working :
+Some visitors use a lot of proxy servers to surf (ie: AOL users), this means it's possible that several
+hosts (with several IP addresses) are used to reach your site for only one visitor (ie: one proxy server download
+the page and 2 other servers download all images). Because of this, if stats of unique visitors are made on "hits",
+3 users are reported but it's wrong. So AWStats, like HitBox, considers only HTML "Pages" to count unique visitors.
+This decrease the error, not completely, because it's always possible that a proxy server download one HTML frame and
+another one download another frame, but this make the over-reporting of unique visitors less important.<br>
+There is also differences in log analyzers databases and algorithms that make details of results less or more accurate:<br>
+- AWStats has a larger browser, os and search engine database, so reports concerning this are more accurate.<br>
+- AWStats has url syntax rules to find keywords or keyphrases used to find your site, but AWStats has also
+an algorithm to detect keywords of unknown search engines with unknown url syntax rule.<br>
+<br>
+
+<a name="DIFFERENCE_HOURS"></a><br>
+<b><u>FAQ-COM300 : DIFFERENCE BETWEEN LOCAL HOURS AND AWSTATS REPORTED HOURS</u></b><br>
+<font class=CProblem>PROBLEM:</font><br>
+I use IIS and there's a difference between local hour and AWStats reported hour. For example I made a hit on a page 
+at 4:00 and AWStats report I hit it at 2:00.<br>
+<font class=CSolution>SOLUTION:</font><br>
+This is not a problem of time in your local client host.
+AWStats use only time reported in logs by your server 
+and all time are related to server hour. The problem is that IIS in some foreign 
+versions puts GMT time in its log file (and not local time). So, you have also 
+GMT time in your statistics.<br>
+You can wait that Microsoft change this in next IIS versions.
+However, Microsoft sheet Q271196 "IIS Log File Entries Have the Incorrect Date and Time Stamp" says: <br>
+<i>The selected log file format is the W3C Extended Log File 
+Format. The extended log file format is defined in the W3C 
+Working Draft WD-logfile-960323 specification by Phillip 
+M. Hallam-Baker and Brian Behlendorf. This document defines 
+the Date and Time files to always be in GMT. This behavior 
+is by design.</i><br>
+So this means this way of working might never be changed, so another chance is to use the AWStats plugin 'timezone'.
+Warning, this plugin need the perl module Time::Local and it reduces seriously AWStats speed.<br>
+To enable the plugin, uncomment the following line in your config file.<br>
+<i>LoadPlugin="timezone TZ"</i><br>
+where TZ is value of your signed timezone (+2 for Paris, -8 for ...)<br>
+<br>
+
+<a name="OLDLOG"></a><br>
+<b><u>FAQ-COM350 : HOW CAN I PROCESS OLD LOG FILE ?</u></b><br>
+<font class=CProblem>PROBLEM:</font><br>
+I want to process an old log file to include its data in my AWStats reports.<br>
+<font class=CSolution>SOLUTION:</font><br>
+You must change your <a href="awstats_config.html#LogFile">LogFile</a> parameter to point to the old log file and run
+the update (or use the -logfile option on command line to overwrite <a href="awstats_config.html#LogFile">LogFile</a> parameter).
+The update process can only accept files in chronological order, so if you have already processed a recent file,
+you must before reset all your statistics (see next FAQ) and restart all the update process for all past log files
+and in chronological order.<br>
+<br>
+
+<a name="MULTILOG"></a><br>
+<b><u>FAQ-COM400 : HOW CAN I UPDATE MY STATISTICS WHEN I USE A LOAD BALANCING SYSTEM THAT SPLITS MY LOGS ?</u></b><br>
+<font class=CProblem>PROBLEM:</font><br>
+How can I update my statistics when i use a load balancing system that split my logs ?<br>
+<font class=CSolution>SOLUTION:</font><br>
+The best solution is to merge all split log files resulted from all your load balanced servers into one. For this, you can use
+the <a href="awstats_config.html#logresolvemerge">logresolvemerge</a> tool provided with AWStats :<br>
+<i>logresolvemerge.pl file1.log file2.log ... filen.log > newfiletoprocess.log</i><br>
+And setup the <a href="awstats_config.html#LogFile">LogFile</a> parameter in your config file to process the <i>newfiletoprocess.log</i> file or use
+the <i>-logfile</i> command line option to overwrite <a href="awstats_config.html#LogFile">LogFile</a> value.<br>
+<br>
+
+<a name="RESET"></a><br>
+<b><u>FAQ-COM120 : HOW CAN I RESET ALL MY STATISTICS ?</u></b><br>
+<font class=CProblem>PROBLEM:</font><br>
+I want to reset all my statistics and restart my stats from now.<br>
+<font class=CSolution>SOLUTION:</font><br>
+All analyzed data are stored by AWStats in files called <i>awstatsMMYYYY.[site.]txt</i> (one file each month).
+You will find those files in directory defined by <a href="awstats_config.html#DirData">DirData</a> parameter (same directory than awstats.pl by default).<br>
+To reset your stats for a month, you just have to delete the file for the required month/year.<br>
+To reset all your stats, delete all files awstats*.txt<br>
+Warning, if you delete those data files, you won't be able to recover your stats back, unless you kept old log files somewhere.
+You will have to process all past log files (in chronological order) to get old statistics back.<br>
+<br>
+
+<a name="EDITHISTORY"></a><br>
+<b><u>FAQ-COM130 : CAN I SAFELY REMOVE A LINE IN HISTORY FILES (awstatsMMYYYY*.txt) ?</u></b><br>
+<font class=CProblem>PROBLEM:</font><br>
+After processing a log file I want to change my statistics
+without running AWStats update process but changing directly data in AWStats historical database files.<br>
+<font class=CSolution>SOLUTION:</font><br>
+If you remove a lines starting with "BEGIN_" or "END_", AWStats will find your file "corrupted" so you must not change those
+two kinds of lines.<br>
+You can change, add or remove any line that is in any sections but if you do this, you must
+also update the MAP section (lines between BEGIN_MAP and END_MAP) because this section contains the offset in
+file of each other sections for direct I/O access.
+If history file is the last one, you can easily do that by removing completely the MAP section and run an update process.
+Like that AWStats will rewrite the history file and the MAP section will be rewritten (MAP section is not read by
+update process, only written). You do this at your own risk. The main risk is that some charts will report wrong values
+or be unavailable.<br>
+<br>
+
+
+<hr><br>
+
 
 <a name="MISSINGDOLLAR"></a><br>
 <b><u>FAQ-SET050 : ERROR "MISSING $ ON LOOP VARIABLE ..."</u></b><br>
@@ -319,15 +820,15 @@ You must use : <i>LogFormat=6</i><br>
 </td></tr></table>
 
 <u>If you use a FTP server like <b>ProFTP</b>:</u><br>
-See <a href="#FTP">FAQ-SET260</a>.<br>
+See <a href="#FTP">FAQ-COM090</a>.<br>
 
 <table bgcolor=#F0F0F0 width="100%" class=CFAQ><tr class=CFAQ><td class=CFAQ>
 <u>If you want to analyze a mail log file (<b>Sendmail</b>, <b>Exchange</b>):</u><br>
-See <a href="#MAIL">FAQ-SET270</a>.<br>
+See <a href="#MAIL">FAQ-COM100</a>.<br>
 </td></tr></table>
 
 <u>If you use a Media Server (<b>Realmedia</b>, <b>Windows Media Server</b>):</u><br>
-See <a href="#MEDIASERVER">FAQ-SET272</a>.<br>
+See <a href="#MEDIASERVER">FAQ-COM110</a>.<br>
 
 <table bgcolor=#F0F0F0 width="100%" class=CFAQ><tr class=CFAQ><td class=CFAQ>
 <u>If your log records are EXACTLY like this (With some providers):</u><br>
@@ -339,285 +840,6 @@ Note: Browsers, OS's, Keywords and Referers features are not available with a su
 <u>There is a lot of other possible log formats.</u><br>
 You must use a personalized log format LogFormat ="..." as described in config file to
 support other various log formats.<br>
-<br>
-
-<a name="FTP"></a><br>
-<b><u>FAQ-SET260 : SETUP FOR FTP SERVER LOG FILES</u></b><br>
-<font class=CProblem>PROBLEM:</font><br>
-What do I have to do to use AWStats to analyze some FTP server log files.<br>
-<font class=CSolution>SOLUTION:</font><br>
-AWStats was built to analyze web,wap or proxy server's log files. However it can be used with some FTP server log files.<br>
-<br>
-1- Setup your FTP log file format:<br>
-<br>
-With ProFTP, modify the proftpd.conf file to add the following two lines :
-<table width="95%" border=1 cellpadding=0 cellspacing=0><tr class=CFAQ><td class=CFAQ>
-<!--<br>With ProFTPd 1.2.2:-->
-<i>LogFormat awstats "%t %h %u %m %f %s %b"</i> &nbsp; &nbsp; # WARNING: You must use a tab char between % tags and not a space !
-<i><br>ExtendedLog /var/log/xferlog read,write awstats</i> &nbsp; &nbsp; # WARNING: ExtendedLog directive might need to be placed inside a virtual host context if you use them.
-<!--<br>With ProFTPd 1.2.6:
-<i><br>LogFormat awstats ""${%F %H-%M-%S}t %h %u %m %F %s %b"</i> &nbsp; &nbsp; # WARNING: You must use a tab char between % tags and not a space !
-<i><br>ExtendedLog /var/log/xferlog read,write awstats</i> &nbsp; &nbsp; # WARNING: ExtendedLog directive might need to be placed inside a virtual host context if you use them.
--->
-</td></tr></table>
-Then turn off old format Transfer log:
-<table width="95%" border=1 cellpadding=0 cellspacing=0><tr class=CFAQ><td class=CFAQ>
-<i>TransferLog none</i> &nbsp; &nbsp; # WARNING: TransferLog directive might need to be placed inside a virtual host context if you use them.
-</td></tr></table>
-<br>
-To have the change effective, stop your server, remove old log file /var/log/xferlog and restart the server.<br>
-Download a file by FTP and check that your new log file looks like this:<br>
-<i>[01/Jan/2001:21:49:57 +0200]	ftp.server.com	user	RETR	/home/fileiget.txt	226	1499</i><br>
-<br>
-2- Then setup AWStats to analyze the FTP log file:<br>
-<br>
-Copy config awstats.model.conf file to "awstats.proftp.conf".<br>
-Modify this new config file:
-<table width="95%" border=1 cellpadding=0 cellspacing=0><tr class=CFAQ><td class=CFAQ>
-<i>
-LogFile="/var/log/xferlog"
-<br>LogFormat="%time1 %host %logname %method %url %code %bytesd"
-<br>LogSeparator="\t"
-<br>DNSLookup=0
-<br>SkipFiles=""
-<br>NotPageList=""
-<br>ShowLinksOnUrl=0
-<br>ShowMenu=1
-<br>ShowMonthDayStats=UVHB
-<br>ShowDaysOfWeekStats=HB
-<br>ShowHoursStats=HB
-<br>ShowDomainsStats=HB
-<br>ShowHostsStats=HBL
-<br>ShowAuthenticatedUsers=HBL
-<br>ShowRobotsStats=1
-<br>ShowEMailSenders=0
-<br>ShowEMailReceivers=0
-<br>ShowSessionsStats=1
-<br>ShowPagesStats=PBEX
-<br>ShowFileTypesStats=HB
-<br>ShowFileSizesStats=0
-<br>ShowBrowsersStats=0
-<br>ShowOSStats=0
-<br>ShowOriginStats=0
-<br>ShowKeyphrasesStats=0
-<br>ShowKeywordsStats=0
-<br>ShowHTTPErrorsStats=0
-</i></td></tr></table>
-<br>
-Now you can use AWStats as usual (run the update process and read statistics).<br>
-<br>
-
-<a name="MAIL"></a><br>
-<b><u>FAQ-SET270 : SETUP FOR MAIL LOG FILES (SENDMAIL, POSTFIX, EXCHANGE...)</u></b><br>
-<font class=CProblem>PROBLEM:</font><br>
-What do I have to do to use AWStats to analyze my mail log files.<br>
-<font class=CSolution>SOLUTION:</font><br>
-<br>
-<u>For Sendmail or PostFix log files</u><br>
-<br>
-1- First, install a mail log convertor like <a href="http://www.klake.org/sma/">SMA</a> to use it
-as a pre-processor for AWStats update process (to convert your mail log into a readable format):<br>
-For this, you can download an copy sma (or sma.exe) file and sma.conf into same directory
-than awstats.pl file.<br>
-Edit sma.conf to change the ClogFormat and ClogSentOnly parameter to :
-<table width="95%" border=1 cellpadding=0 cellspacing=0><tr class=CFAQ><td class=CFAQ>
-<i>ClogFormat "%y-%m-%d %h:%n:%s %f %t %F %T SMTP - %S %z"
-<br>ClogSentOnly no
-</i>
-</td></tr></table>
-<br>
-<!--To have the change effective, stop your mail daemon, remove old log file and restart mail daemon.<br>
-Send a mail and check in your mail that your log file looks like this:<br>-->
-To check that your sma config is correct, run the following command:<br>
-<b>sma -O clog -f /pathtosmaconf/sma.conf /pathtomaillog/maillog > convertedmaillog</b><br>
-The resulting convertedmaillog file must have records that match the following format:<br>
-<i>2001-01-01 05:38:08 sender@mailsender.com receiver@mailreceiver.com hostrelaysender hostrelayreceiver SMTP - 1 31357</i><br>
-Warning: some sma versions (1.3) have been reported to not convert month correctly, giving
-for example a date like this 2001-#01-01 or 2001-00-01 instead of 2001-01-01. This makes AWStats
-analyze fails so check your sma output and change version if error.<br>
-<br>
-2- Then setup AWStats to analyze SMA processed mail log:<br>
-Copy config awstats.model.conf file to "awstats.mail.conf".<br>
-Modify this new config file:
-<table width="95%" border=1 cellpadding=0 cellspacing=0><tr class=CFAQ><td class=CFAQ>
-<i>
-LogFile="/pathtosma/sma -O clog -f /pathtosmaconf/sma.conf /pathtomaillog/maillog |"
-<br>LogFormat="%time2 %email %email_r %host %host_r %method %url %code %bytesd"
-<br>ValidSMTPCodes="1"
-<br>ShowMenu=1
-<br>ShowMonthDayStats=HB
-<br>ShowDaysOfWeekStats=HB
-<br>ShowHoursStats=HB
-<br>ShowDomainsStats=0
-<br>ShowHostsStats=HBL
-<br>ShowAuthenticatedUsers=0
-<br>ShowRobotsStats=0
-<br>ShowEMailSenders=HBL
-<br>ShowEMailReceivers=HBL
-<br>ShowSessionsStats=0
-<br>ShowPagesStats=0
-<br>ShowFileTypesStats=0
-<br>ShowFileSizesStats=0
-<br>ShowBrowsersStats=0
-<br>ShowOSStats=0
-<br>ShowOriginStats=0
-<br>ShowKeyphrasesStats=0
-<br>ShowKeywordsStats=0
-<br>ShowHTTPErrorsStats=0
-</i>
-</td></tr></table>
-<br>
-Now you can use AWStats as usual (run the update process and read statistics).<br>
-<br>
-<u>For Exchange log files</u><br>
-If someone can understand the Exchange log format, he can explain it to me at eldy@users.sourceforge.net.<br>
-Until this server won't log in a clever way, just forget using AWStats or use a more serious
-mail server (sendmail, postfix, ...). Sorry.<br>
-<!--
-Your Exchange mail log file might looks like this:<br>
-<i>2002-9-29	0:3:2 GMT	-	-	-	S_EXCHANG01	-	/O=INVESTMENT SCORECARD INC/OU=MAIL/CN=RECIPIENTS/CN=KJOHNSON	1027	1640EF7202084243942C5EC620117D376B68AA@s_exchang01.investmentscorecard.com	0	0	1943	2	2002-9-29 0:3:2 GMT	0	-	c=US;a= ;p=Investment Score;l=S_EXCHANG01-020929000302Z-2583	Dev Request Late Notification: KS_CM00004271	EX:/O=INVESTMENT SCORECARD INC/OU=MAIL/CN=RECIPIENTS/CN=CLEARQUEST(KS_CM)	-</i><br>
-Copy config awstats.model.conf file to "awstats.mail.conf".<br>
-Modify this new config file:
-<i>
-<br>LogFile="yourmaillogfilename"
-<br>LogFormat="%time2 %other %host %other %other %other %email %method %other %url %code %bytesd %other %other %other %other %other %other %email_r"
-<br>LogSeparator="\t"
--->
-<br>
-
-<a name="MEDIASERVER"></a><br>
-<b><u>FAQ-SET272 : SETUP FOR A MEDIA SERVER (REALMEDIA, WINDOWS MEDIA SERVER)</u></b><br>
-<font class=CProblem>PROBLEM:</font><br>
-What do I have to do to use AWStats to analyze my Media Server log files.<br>
-<font class=CSolution>SOLUTION:</font><br>
-<br>
-<u>For Realmedia</u><br>
-<br>
-Your log file will probably looks like this:<br>
-<i>
-216.125.146.50 - - [16/Sep/2002:14:57:21 -0500]  "GET cme/rhythmcity/rcitycaddy.rm?cloakport=8080,554,7070 RTSP/1.0" 200 6672 [Win95_4.0_6.0.9.374_play32_NS80_en-US_586] [80d280e1-c9ae-11d6-fa53-d52aaed98681] [UNKNOWN] 281712 141 3 0 0 494<br>
-</i>
-<br>
-Copy config awstats.model.conf file to "awstats.mediaserver.conf".
-Modify this new config file:
-<table width="95%" border=1 cellpadding=0 cellspacing=0><tr class=CFAQ><td class=CFAQ>
-<i>LogFile="/pathtomediaserver/mediaserverlog"
-<br>LogFormat="%host %other %logname %time1 %methodurl %code %bytesd %uabracket %other %other %other %other %other %other %other %other"
-<br>LogSeparator="\s+"
-<br>ShowMenu=1
-<br>ShowMonthDayStats=UHB
-<br>ShowDaysOfWeekStats=HB
-<br>ShowHoursStats=HB
-<br>ShowDomainsStats=HB
-<br>ShowHostsStats=HBL
-<br>ShowAuthenticatedUsers=0
-<br>ShowRobotsStats=0
-<br>ShowEMailSenders=0
-<br>ShowEMailReceivers=0
-<br>ShowSessionsStats=0
-<br>ShowPagesStats=PB
-<br>ShowFileTypesStats=HB
-<br>ShowFileSizesStats=0
-<br>ShowBrowsersStats=1
-<br>ShowOSStats=1
-<br>ShowOriginStats=PH
-<br>ShowKeyphrasesStats=0
-<br>ShowKeywordsStats=0
-<br>ShowHTTPErrorsStats=1
-</i>
-</td></tr></table>
-<br>
-Now you can use AWStats as usual (run the update process and read statistics).<br>
-<br>
-<br>
-<u>For Windows Media Server</u><br>
-<br>
-1- If your Windows Media Server version allows it, setup your log format to write the following fields:
-<i>
-<br>c-ip
-<br>date
-<br>time
-<br>cs-uri-stem
-<br>c-starttime
-<br>x-duration
-<br>c-rate
-<br>c-status
-<br>c-playerid
-<br>c-playerversion
-<br>c-playerlanguage
-<br>cs(User-Agent)
-<br>cs(Referer)
-<br>c-hostexe
-<br>c-hostexever
-<br>c-os
-<br>c-osversion
-<br>c-cpu
-<br>filelength
-<br>filesize
-<br>avgbandwidth
-<br>protocol
-<br>transport
-<br>audiocodec
-<br>videocodec
-<br>channelURL
-<br>sc-bytes
-</i>
-<br>
-To have the change effective, stop your server, remove old log files and restart the server.<br>
-Listen to streaming files and check that your new log file looks like this:<br>
-<i>
-80.223.91.37 2002-10-08 14:18:58 mmst://mydomain.com/mystream 0 106 1 200 {F4A826EE-FA46-480F-A49B-76786320FC6B} 8.0.0.4477 fi-FI - - wmplayer.exe 8.0.0.4477 Windows_2000 5.1.0.2600 Pentium 0 0 20702 mms TCP Windows_Media_Audio_9 - - 277721
-</i>
-<br>
-<br>
-If your Windows Media Server version does not allow to define your log format:<br>
-Just follow instructions in step 2 directly but use the log format string found in first
-lines of your log files as value for AWStats LogFormat parameter, for example:<br>
-<i>
-LogFormat="c-ip date time c-dns cs-uri-stem c-starttime x-duration c-rate
-c-status c-playerid c-playerversion c-playerlanguage cs(User-Agent)
-cs(Referer) c-hostexe c-hostexever c-os c-osversion c-cpu filelength
-filesize avgbandwidth protocol transport audiocodec videocodec channelURL
-sc-bytes c-bytes s-pkts-sent c-pkts-received c-pkts-lost-client
-c-pkts-lost-net c-pkts-lost-cont-net c-resendreqs c-pkts-recovered-ECC
-c-pkts-recovered-resent c-buffercount c-totalbuffertime c-quality s-ip s-dns
-s-totalclients s-cpu-util"
-</i>
-<br>This means you don't use the AWStats tags but AWStats can often also understand all the IIS and/or
-Windows Media Server tags.<br>
-
-<br>
-2- Then setup AWStats to analyze your Media Server log:<br>
-Copy config awstats.model.conf file to "awstats.mediaserver.conf".<br>
-Modify this new config file:
-<table width="95%" border=1 cellpadding=0 cellspacing=0><tr class=CFAQ><td class=CFAQ>
-<i>
-LogFile="/pathtomediaserver/mediaserverlog"
-<br>LogFormat="c-ip date time cs-uri-stem c-starttime x-duration c-rate c-status c-playerid c-playerversion c-playerlanguage cs(User-Agent) cs(Referer) c-hostexe c-hostexever c-os c-osversion c-cpu filelength filesize avgbandwidth protocol transport audiocodec videocodec channelURL sc-bytes"
-<br>ShowMenu=1
-<br>ShowMonthDayStats=UHB
-<br>ShowDaysOfWeekStats=HB
-<br>ShowHoursStats=HB
-<br>ShowDomainsStats=HB
-<br>ShowHostsStats=HBL
-<br>ShowAuthenticatedUsers=0
-<br>ShowRobotsStats=0
-<br>ShowEMailSenders=0
-<br>ShowEMailReceivers=0
-<br>ShowSessionsStats=0
-<br>ShowPagesStats=PB
-<br>ShowFileTypesStats=HB
-<br>ShowFileSizesStats=0
-<br>ShowBrowsersStats=1
-<br>ShowOSStats=1
-<br>ShowOriginStats=PH
-<br>ShowKeyphrasesStats=0
-<br>ShowKeywordsStats=0
-<br>ShowHTTPErrorsStats=1
-</i>
-</td></tr></table>
-<br>
-Now you can use AWStats as usual (run the update process and read statistics).<br>
 <br>
 
 <a name="NOTSAMENUMBER"></a><br>
@@ -712,65 +934,6 @@ no s at the end (Rename your directory physically and change the <a href="awstat
 to reflect this change).<br>
 <br>
 
-<a name="ROTATE"></a><br>
-<b><u>FAQ-SET500 : HOW TO ROTATE MY LOGS WITHOUT LOOSING DATA</u></b><br>
-<font class=CProblem>PROBLEM:</font><br>
-I want to archive/rotate my logs using my web server system options or a third software (rotatelog,
-cronolog) but don't want to loose any visits information during the rotate process.<br>
-<font class=CSolution>SOLUTION:</font><br>
-If you use a rotate system (internal web server feature or third software), this means you probably not use
-AWStats <a href="awstats_config.html#PurgeLogFile">PurgeLogFile</a> nor <a href="awstats_config.html#ArchiveLogRecords">ArchiveLogRecords</a> parameter.<br>
-* If your config file is setup to process current log file (because you want to use the <a href="awstats_config.html#AllowToUpdateStatsFromBrowser">AllowToUpdateStatsFromBrowser</a>
-option), if you don't want to loose any records during the rotate process, you can just run the AWStats update process 
-on the archived log file just after the update process using the -logfile option (This will avoid you to change the config file).<br>
-* If you choose (for security reason, to avoid CPU abuse on large web site or other) to make updates by your scheduler only on archive files, this means
-you don't use the <a href="awstats_config.html#AllowToUpdateStatsFromBrowser">AllowToUpdateStatsFromBrowser</a> "real-time" feature of AWStats.
-In this case all you have to do is to run the update process just after the rotate was done using a config/domain file configured to
-process the archived log files (using date tags of <a href="awstats_config.html#LogFile">LogFile</a> for examples).<br>
-Note: For Apache users, use of <a href="http://cronolog.org" target=awstatsbis>cronolog</a> seems to be a better choice
-than rotatelog (cronolog is available for Unix/Linux and Windows and is more flexible).<br>
-To use cronolog or rotatelog you must setup your web server log file name using a pipe like this example:<br>
-<i>CustomLog "|/usr/sbin/cronolog [cronolog_options] /var/logs/access.%Y%m%d.log" combined</i><br>
-<br>
-
-
-
-<a name="CRONTAB"></a><br>
-<b><u>FAQ-SET550 : HOW TO RUN AWSTATS FREQUENTLY</u></b><br>
-<font class=CProblem>PROBLEM:</font><br>
-AWStats must be ran frequently to update statistics. How can I do this ?<br>
-<font class=CSolution>SOLUTION:</font><br>
-<br>
-<u>With Windows</u>, you can use the internal task scheduler.
-The use of this tool is not an AWStats related problem, so please take a look at your Windows manual.
-Warning, if you use <i>"awstats.pl -config=mysite -update"</i> in your scheduled task, you might
-experience problem of failing task. Try this instead<br>
-<i>"C:\WINNT\system32\CMD.EXE /C C:\[awstats_path]\awstats.pl -config=mysite -update"</i><br>
-or<br>
-<i>"C:\[perl_path]\perl.exe C:\[awstats_path]\awstats.pl -config=mysite -update"</i><br>
-A lot of other scheduler (sharewares/freewares) are very good.<br>
-<br>
-<u>With unix-like operating systems</u>, you can use the "<b>crontab</b>".<br>
-This is examples of lines you can add in the cron file (see your unix reference manual for cron) :<br>
-To run update every day at 04:00, use :<br>
-<i>0 4 * * * /opt/awstats/wwwroot/cgi-bin/awstats.pl -config=mysite -update</i><br>
-To run update every hour, use :<br>
-<i>0 * * * * /opt/awstats/wwwroot/cgi-bin/awstats.pl -config=mysite -update</i><br>
-<br>
-
-<a name="EXCLUDEHOSTS"></a><br>
-<b><u>FAQ-SET600 : HOW CAN I EXCLUDE MY IP ADDRESS (OR WHOLE SUBNET MASK) FROM STATS ?</u></b><br>
-<font class=CProblem>PROBLEM:</font><br>
-I don't want to see my own IP address in the stats or I want to exclude counting visits from a whole subnet.<br>
-<font class=CSolution>SOLUTION:</font><br>
-You must edit the config file to change the <a href="awstats_config.html#SkipHosts">SkipHosts</a> parameter.<br>
-For example, to exclude:<br>
-- your own IP address 123.123.123.123, use <a href="awstats_config.html#SkipHosts">SkipHosts</a>="123.123.123.123"<br>
-- the whole subnet 123.123.123.xxx, use <a href="awstats_config.html#SkipHosts">SkipHosts</a>="123.123.123"<br>
-- all sub hosts xxx.myintranet.com, use <a href="awstats_config.html#SkipHosts">SkipHosts</a>=".myintranet.com" (This one works only if DNS lookup is already done in your
-log file).<br>
-<br> 
-
 <a name="MIGRATEDOUBLED"></a><br>
 <b><u>FAQ-SET700 : MY VISITS ARE DOUBLED FOR OLD MONTH I MIGRATED FROM 3.2 TO 5.X</u></b><br>
 <font class=CProblem>PROBLEM:</font><br>
@@ -803,11 +966,8 @@ You must remove manually the line <i>YYYYMM00 999 999 999 999</i> (must find one
 one such line) and then run the migrate process again on the file.<br>
 <br>
 
-<hr><br>
-
-
 <a name="SPEED"></a><br>
-<b><u>FAQ-COM100 : AWSTATS SPEED/TIMEOUT PROBLEMS ?</u></b><br>
+<b><u>FAQ-SET800 : AWSTATS SPEED/TIMEOUT PROBLEMS ?</u></b><br>
 <font class=CProblem>PROBLEM:</font><br>
 When I analyze large log files, processing times are very important (Example: update process from a browser
 returns a timeout/internal error after a long wait).
@@ -818,149 +978,9 @@ There is also major setup changes you can do to decrease your processing time.<b
 See <a href="awstats_benchmark.html#ADVICES">important advices</a> in benchmark page.<br>
 <br>
 
-<a name="BENCHMARK"></a><br>
-<b><u>FAQ-COM150 : BENCHMARK / FREQUENCY TO LAUNCH AWSTATS TO UPDATE STATISTICS</u></b><br>
-<font class=CProblem>PROBLEM:</font><br>
-What is AWStats speed ?<br>
-What is the frequency to launch AWStats process to update my statistics ?<br>
-<font class=CSolution>SOLUTION:</font><br>
-All benchmarks information and advice on frequency for update process are related into
-the <a href="awstats_benchmark.html">Benchmark page</a>.<br>
-<br>
-
-<a name="DNS"></a><br>
-<b><u>FAQ-COM200 : HOW REVERSE DNS LOOKUP WORKS, UNRESOLVED IP ADDRESSES</u></b><br>
-<font class=CProblem>PROBLEM:</font><br>
-The reported page AWStats shows me has no hostnames, only IP addresses, countries reported are all "unknown".<br>
-<font class=CSolution>SOLUTION:</font><br>
-When AWStats find an IP address in your log file, it tries a reverse DNS lookup to find
-the hostname and domain if the <a href="awstats_tools.html#DNSLookup">DNSLookup</a> parameter, in your AWStats config file, is <a href="awstats_config.html#DNSLookup">DNSLookup</a>=1
-(Default value). So, first, check if you have the good value. The <a href="awstats_config.html#DNSLookup">DNSLookup</a>=0 
-must be used only if your log file contains already resolved IP address. For example, 
-when you set up Apache with the <i>HostNameLookups=on</i> directive. When you 
-ask your web server to make itself the reverse DNS lookup to log hostname instead 
-of IP address, you will still find some IP addresses in your log file because 
-the reverse DNS lookup is not always possible. But if your web server fails in 
-it, AWStats will also fails (All reverse DNS lookups use the same system API). 
-So to avoid AWStats to make an already done lookup (with success or not), you 
-can set <a href="awstats_config.html#DNSLookup">DNSLookup</a>=0 in AWStats config file.
-If you prefer, you can make the reverse DNS lookup on a log file before running
-your log analyzer (If you only need to convert a logfile with IP Addresses into a
-logfile with resolved hostnames). You can use for this <a href="awstats_config.html#logresolvemerge">logresolvemerge</a> tool
-provided with AWStats distribution (This tools is an improved version of <i>logresolve</i> provided with Apache).<br>
-<br>
-
-<a name="DIFFERENT_RESULTS"></a><br>
-<b><u>FAQ-COM250 : DIFFERENT RESULTS THAN OTHER ANALYZER</u></b><br>
-<font class=CProblem>PROBLEM:</font><br>
-I also use webalizer (or another log analyzer) and it doesn't report the same results than AWStats. Why ?<br>
-<font class=CSolution>SOLUTION:</font><br>
-If you compare AWStats results with an other log file analyzer, you will found some differences,
-sometimes very important. In fact, all analyzer (even AWStats) make "over reporting" because of the
-problem of proxy-servers and robots. However AWStats is one the most accurate and its "over reporting"
-is very low where all other analyzers, even the most famous, have a very high error rate (10% to 2x more than reality).<br>
-This is the most important reasons why you will find differences:<br>
-- Some dynamic pages generated by CGI programs are not counted by some analyzer (ie Webalizer) like
-a "Page" (but only like a "Hit") if CGI prog has not a .cgi extension, so they are not included
-correctly in their statistics. AWStats does not make this error and all CGI pages are pages.<br>
-- AWStats is the alone analyzer (that i know for the moment) able to detect robots visits.
-All other analyzers think it's a human visitor. This error make them to report more visits and visitors
-than reality. This does not happen with AWStats. When it tells "1 visitor", it means "1 human visitor".
-All robots hits are reported in the "Robots/Spiders visitors" chart.<br>
-- A lot of analyzer (ie webalizer) use the "Hits" to count visitors. This is not a good way of working :
-Some visitors use a lot of proxy servers to surf (ie: AOL users), this means it's possible that several
-hosts (with several IP addresses) are used to reach your site for only one visitor (ie: one proxy server download
-the page and 2 other servers download all images). Because of this, if stats of unique visitors are made on "hits",
-3 users are reported but it's wrong. So AWStats, like HitBox, considers only HTML "Pages" to count unique visitors.
-This decrease the error, not completely, because it's always possible that a proxy server download one HTML frame and
-another one download another frame, but this make the over-reporting of unique visitors less important.<br>
-There is also differences in log analyzers databases and algorithms that make details of results less or more accurate:<br>
-- AWStats has a larger browser, os and search engine database, so reports concerning this are more accurate.<br>
-- AWStats has url syntax rules to find keywords or keyphrases used to find your site, but AWStats has also
-an algorithm to detect keywords of unknown search engines with unknown url syntax rule.<br>
-<br>
-
-<a name="DIFFERENCE_HOURS"></a><br>
-<b><u>FAQ-COM300 : DIFFERENCE BETWEEN LOCAL HOURS AND AWSTATS REPORTED HOURS</u></b><br>
-<font class=CProblem>PROBLEM:</font><br>
-I use IIS and there's a difference between local hour and AWStats reported hour. For example I made a hit on a page 
-at 4:00 and AWStats report I hit it at 2:00.<br>
-<font class=CSolution>SOLUTION:</font><br>
-This is not a problem of time in your local client host.
-AWStats use only time reported in logs by your server 
-and all time are related to server hour. The problem is that IIS in some foreign 
-versions puts GMT time in its log file (and not local time). So, you have also 
-GMT time in your statistics.<br>
-You can wait that Microsoft change this in next IIS versions.
-However, Microsoft sheet Q271196 "IIS Log File Entries Have the Incorrect Date and Time Stamp" says: <br>
-<i>The selected log file format is the W3C Extended Log File 
-Format. The extended log file format is defined in the W3C 
-Working Draft WD-logfile-960323 specification by Phillip 
-M. Hallam-Baker and Brian Behlendorf. This document defines 
-the Date and Time files to always be in GMT. This behavior 
-is by design.</i><br>
-So this means this way of working might never be changed, so another chance is to use the AWStats plugin 'timezone'.
-Warning, this plugin need the perl module Time::Local and it reduces seriously AWStats speed.<br>
-To enable the plugin, uncomment the following line in your config file.<br>
-<i>LoadPlugin="timezone TZ"</i><br>
-where TZ is value of your signed timezone (+2 for Paris, -8 for ...)<br>
-<br>
-
-<a name="OLDLOG"></a><br>
-<b><u>FAQ-COM350 : HOW CAN I PROCESS OLD LOG FILE ?</u></b><br>
-<font class=CProblem>PROBLEM:</font><br>
-I want to process an old log file to include its data in my AWStats reports.<br>
-<font class=CSolution>SOLUTION:</font><br>
-You must change your <a href="awstats_config.html#LogFile">LogFile</a> parameter to point to the old log file and run
-the update (or use the -logfile option on command line to overwrite <a href="awstats_config.html#LogFile">LogFile</a> parameter).
-The update process can only accept files in chronological order, so if you have already processed a recent file,
-you must before reset all your statistics (see next FAQ) and restart all the update process for all past log files
-and in chronological order.<br>
-<br>
-
-<a name="MULTILOG"></a><br>
-<b><u>FAQ-COM400 : HOW CAN I UPDATE MY STATISTICS WHEN I USE A LOAD BALANCING SYSTEM THAT SPLITS MY LOGS ?</u></b><br>
-<font class=CProblem>PROBLEM:</font><br>
-How can I update my statistics when i use a load balancing system that split my logs ?<br>
-<font class=CSolution>SOLUTION:</font><br>
-The best solution is to merge all split log files resulted from all your load balanced servers into one. For this, you can use
-the <a href="awstats_config.html#logresolvemerge">logresolvemerge</a> tool provided with AWStats :<br>
-<i>logresolvemerge.pl file1.log file2.log ... filen.log > newfiletoprocess.log</i><br>
-And setup the <a href="awstats_config.html#LogFile">LogFile</a> parameter in your config file to process the <i>newfiletoprocess.log</i> file or use
-the <i>-logfile</i> command line option to overwrite <a href="awstats_config.html#LogFile">LogFile</a> value.<br>
-<br>
-
-<a name="RESET"></a><br>
-<b><u>FAQ-COM500 : HOW CAN I RESET ALL MY STATISTICS ?</u></b><br>
-<font class=CProblem>PROBLEM:</font><br>
-I want to reset all my statistics and restart my stats from now.<br>
-<font class=CSolution>SOLUTION:</font><br>
-All analyzed data are stored by AWStats in files called <i>awstatsMMYYYY.[site.]txt</i> (one file each month).
-You will find those files in directory defined by <a href="awstats_config.html#DirData">DirData</a> parameter (same directory than awstats.pl by default).<br>
-To reset your stats for a month, you just have to delete the file for the required month/year.<br>
-To reset all your stats, delete all files awstats*.txt<br>
-Warning, if you delete those data files, you won't be able to recover your stats back, unless you kept old log files somewhere.
-You will have to process all past log files (in chronological order) to get old statistics back.<br>
-<br>
-
-<a name="EDITHISTORY"></a><br>
-<b><u>FAQ-COM550 : CAN I SAFELY REMOVE A LINE IN HISTORY FILES (awstatsMMYYYY*.txt) ?</u></b><br>
-<font class=CProblem>PROBLEM:</font><br>
-After processing a log file I want to change my statistics
-without running AWStats update process but changing directly data in AWStats historical database files.<br>
-<font class=CSolution>SOLUTION:</font><br>
-If you remove a lines starting with "BEGIN_" or "END_", AWStats will find your file "corrupted" so you must not change those
-two kinds of lines.<br>
-You can change, add or remove any line that is in any sections but if you do this, you must
-also update the MAP section (lines between BEGIN_MAP and END_MAP) because this section contains the offset in
-file of each other sections for direct I/O access.
-If history file is the last one, you can easily do that by removing completely the MAP section and run an update process.
-Like that AWStats will rewrite the history file and the MAP section will be rewritten (MAP section is not read by
-update process, only written). You do this at your own risk. The main risk is that some charts will report wrong values
-or be unavailable.<br>
-<br>
 
 <hr><br>
+
 
 <a name="CSSATTACK"></a><br>
 <b><u>FAQ-SEC100 : CAN AWSTATS BE USED TO MAKE CROSS SITE SCRIPTING ATTACKS ?</u></b><br>
