@@ -71,7 +71,7 @@ $found, $internal_link, $new) = ();
 %MonthBytes = %MonthHits = %MonthHostsKnown = %MonthHostsUnknown = %MonthPages = %MonthUnique = %MonthVisits =
 %monthlib = %monthnum = ();
 
-$VERSION="3.2 (build 1)";
+$VERSION="3.2 (build 2)";
 $Lang="en";
 
 # Default value
@@ -826,21 +826,22 @@ EOF
 		print "</head>\n\n";
 		print "<body>\n";
 		# Write logo, flags and product name
-		print "<table WIDTH=$WIDTH>\n";
-		print "<tr valign=middle><td class=AWL width=150 style=\"font: 18px arial,verdana,helvetica; font-weight: bold\">AWStats\n";
-		Show_Flag_Links($Lang);
-		print "</td>\n";
-		if ($LogoLink =~ "http://awstats.sourceforge.net") {
-			print "<td class=AWL width=450><a href=\"$LogoLink\" target=\"_newawstats\"><img src=\"$DirIcons/other/$Logo\" border=0 alt=\"$PROG Official Web Site\" title=\"$PROG Official Web Site\"></a></td></tr>\n";
+		if ($ShowHeader) {
+			print "<table WIDTH=$WIDTH>\n";
+			print "<tr valign=middle><td class=AWL width=150 style=\"font: 18px arial,verdana,helvetica; font-weight: bold\">AWStats\n";
+			Show_Flag_Links($Lang);
+			print "</td>\n";
+			if ($LogoLink =~ "http://awstats.sourceforge.net") {
+				print "<td class=AWL width=450><a href=\"$LogoLink\" target=\"_newawstats\"><img src=\"$DirIcons/other/$Logo\" border=0 alt=\"$PROG Official Web Site\" title=\"$PROG Official Web Site\"></a></td></tr>\n";
+			}
+			else {
+				print "<td class=AWL width=450><a href=\"$LogoLink\" target=\"_newawstats\"><img src=\"$DirIcons/other/$Logo\" border=0></a></td></tr>\n";
+			}
+			#print "<b><font face=\"verdana\" size=1><a href=\"$HomeURL\">HomePage</a> &#149\; <a href=\"javascript:history.back()\">Back</a></font></b><br>\n";
+			print "<tr><td class=AWL colspan=2>$Message[54]</td></tr>\n";
+			print "</table>\n";
+			#print "<hr>\n";
 		}
-		else {
-			print "<td class=AWL width=450><a href=\"$LogoLink\" target=\"_newawstats\"><img src=\"$DirIcons/other/$Logo\" border=0></a></td></tr>\n";
-		}
-		#print "<b><font face=\"verdana\" size=1><a href=\"$HomeURL\">HomePage</a> &#149\; <a href=\"javascript:history.back()\">Back</a></font></b><br>\n";
-		print "<tr><td class=AWL colspan=2>$Message[54]</td></tr>\n";
-		print "</table>\n";
-		
-		print "<hr>\n";
 	}
 }
 
@@ -1040,6 +1041,23 @@ sub Read_Config_File {
 		if ($param =~ /^DefaultFile/)           { $DefaultFile=$value; next; }
 		if ($param =~ /^WarningMessages/)       { $WarningMessages=$value; next; }
 		if ($param =~ /^Expires/)               { $Expires=$value; next; }
+		if ($param =~ /^ShowHeader/)             { $ShowHeader=$value; next; }
+		if ($param =~ /^ShowMenu/)               { $ShowMenu=$value; next; }
+		if ($param =~ /^ShowMonthDayStats/)      { $ShowMonthDayStats=$value; next; }
+		if ($param =~ /^ShowDomainsStats/)       { $ShowDomainsStats=$value; next; }
+		if ($param =~ /^ShowHostsStats/)         { $ShowHostsStats=$value; next; }
+		if ($param =~ /^ShowRobotsStats/)        { $ShowRobotsStats=$value; next; }
+		if ($param =~ /^ShowHoursStats/)         { $ShowHoursStats=$value; next; }
+		if ($param =~ /^ShowDaysOfWeekStats/)    { $ShowDaysOfWeekStats=$value; next; }
+		if ($param =~ /^ShowPagesStats/)         { $ShowPagesStats=$value; next; }
+		if ($param =~ /^ShowFileTypesStats/)     { $ShowFileTypesStats=$value; next; }
+		if ($param =~ /^ShowFileSizesStats/)     { $ShowFileSizesStats=$value; next; }
+		if ($param =~ /^ShowBrowsersStats/)      { $ShowBrowsersStats=$value; next; }
+		if ($param =~ /^ShowOSStats/)            { $ShowOSStats=$value; next; }
+		if ($param =~ /^ShowOriginStats/)        { $ShowOriginStats=$value; next; }
+		if ($param =~ /^ShowKeywordsStats/)      { $ShowKeywordsStats=$value; next; }
+		if ($param =~ /^ShowAuthenticatedUsers/) { $ShowAuthenticatedUsers=$value; next; }
+		if ($param =~ /^ShowHTTPErrorsStats/)    { $ShowHTTPErrorsStats=$value; next; }
 		if ($param =~ /^ShowFlagLinks/)         { $ShowFlagLinks=$value; next; }
 		if ($param =~ /^ShowLinksOnUrl/)        { $ShowLinksOnUrl=$value; next; }
 		if ($param =~ /^HTMLEndSection/)        { $HTMLEndSection=$value; next; }
@@ -1184,6 +1202,23 @@ sub Check_Config {
 	if ($DefaultFile eq "")                      { $DefaultFile="index.html"; }
 	if ($WarningMessages !~ /[0-1]/)             { $WarningMessages=1; }
 	if ($Expires !~ /^[\d][\d]*/)                { $Expires=0; }
+	if ($ShowHeader !~ /[0-1]/)                  { $ShowHeader=1; }
+	if ($ShowMenu !~ /[0-1]/)                    { $ShowMenu=1; }
+	if ($ShowMonthDayStats !~ /[0-1]/)           { $ShowMonthDayStats=1; }
+	if ($ShowDomainsStats !~ /[0-1]/)            { $ShowDomainsStats=1; }
+	if ($ShowHostsStats !~ /[0-1]/)              { $ShowHostsStats=1; }
+	if ($ShowRobotsStats !~ /[0-1]/)             { $ShowRobotsStats=1; }
+	if ($ShowHoursStats !~ /[0-1]/)              { $ShowHoursStats=1; }
+	if ($ShowDaysOfWeekStats !~ /[0-1]/)         { $ShowDaysOfWeekStats=1; }
+	if ($ShowPagesStats !~ /[0-1]/)              { $ShowPagesStats=1; }
+	if ($ShowFileTypesStats !~ /[0-1]/)          { $ShowFileTypesStats=1; }
+	if ($ShowFileSizesStats !~ /[0-1]/)          { $ShowFileSizeStats=1; }
+	if ($ShowBrowsersStats !~ /[0-1]/)           { $ShowBrowsersStats=1; }
+	if ($ShowOSStats !~ /[0-1]/)                 { $ShowOSStats=1; }
+	if ($ShowOriginStats !~ /[0-1]/)             { $ShowOriginStats=1; }
+	if ($ShowKeywordsStats !~ /[0-1]/)           { $ShowKeywordsStats=1; }
+	if ($ShowHTTPErrorsStats !~ /[0-1]/)         { $ShowHTTPErrorsStats=1; }
+	if ($ShowAuthenticatedUsers !~ /[0-1]/)      { $ShowAuthenticatedUsers=1; }
 	if ($ShowFlagLinks !~ /[0-1]/)               { $ShowFlagLinks=1; }
 	if ($ShowLinksOnURL !~ /[0-1]/)              { $ShowLinksOnURL=1; }
 	if ($BarWidth !~ /^[\d][\d]*/)               { $BarWidth=260; }
@@ -2658,37 +2693,53 @@ EOF
 
 	# INFO
 	#---------------------------------------------------------------------
-	print "$CENTER<a name=\"MENU\">&nbsp;</a><BR>";
-	print "<table>";
-	print "<tr><th class=AWL>$Message[7] : </th><td class=AWL><font style=\"font-size: 14px;\">$SiteToAnalyze</font></th></tr>";
-	print "<tr><th class=AWL valign=top>$Message[35] : </th>";
-	print "<td class=AWL><font style=\"font-size: 14px;\">";
-	foreach my $key (sort keys %LastUpdate) { if ($LastUpdate < $LastUpdate{$key}) { $LastUpdate = $LastUpdate{$key}; } }
-	if ($LastUpdate) { print Format_Date($LastUpdate); }
-	else { print "<font color=#880000>Never updated</font>"; }
-	print "</font>&nbsp; &nbsp; &nbsp; &nbsp;";
-	if ($AllowToUpdateStatsFromBrowser) { print "<a href=\"$DirCgi$PROG.$Extension?update=1&".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang\">$Message[74]</a>"; }
-	print "</td></tr>\n";
-	if ($QueryString !~ /output=/i) {	# If main page asked
-		print "<tr><td>&nbsp;</td></tr>\n";
-		# Traffic
-		print "<tr><th class=AWL>$Message[16] : </th>";
-		print "<td class=AWL><a href=\"$DirCgi$PROG.$Extension?".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang#DOMAINS\">$Message[17]</a> &nbsp; <a href=\"$DirCgi$PROG.$Extension?".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang#VISITOR\">".ucfirst($Message[26])."</a> &nbsp; <a href=\"$DirCgi$PROG.$Extension?".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang#ROBOTS\">$Message[53]</a> &nbsp; <a href=\"$DirCgi$PROG.$Extension?".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang#HOUR\">$Message[20]</a> &nbsp; <a href=\"$DirCgi$PROG.$Extension?output=unknownip&".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang\">$Message[45]</a><br></td></tr>\n";
-		# Navigation
-		print "<tr><th class=AWL>$Message[72] : </th>";
-		print "<td class=AWL><a href=\"$DirCgi$PROG.$Extension?output=urldetail&".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang\">$Message[19]</a> &nbsp; <a href=\"$DirCgi$PROG.$Extension?".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang#BROWSER\">$Message[21]</a> &nbsp; <a href=\"$DirCgi$PROG.$Extension?".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang#OS\">$Message[59]</a> &nbsp; <a href=\"$DirCgi$PROG.$Extension?output=browserdetail&".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang\">$Message[33]</a> &nbsp; <a href=\"$DirCgi$PROG.$Extension?output=browserdetail&".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang\">$Message[34]</a><br></td></tr>\n";
-		# Referers
-		print "<tr><th class=AWL>$Message[23] : </th>";
-		print "<td class=AWL><a href=\"$DirCgi$PROG.$Extension?".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang#REFERER\">$Message[37]</a> &nbsp; <a href=\"$DirCgi$PROG.$Extension?".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang#SEARCHWORDS\">$Message[24]</a><br></td></tr>\n";
-		# Others
-		print "<tr><th class=AWL>$Message[2] : </th>";
-		print "<td class=AWL> <a href=\"$DirCgi$PROG.$Extension?".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang#ERRORS\">$Message[22]</a> &nbsp; <a href=\"$DirCgi$PROG.$Extension?output=notfounderror&".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang\">$Message[31]</a><br></td></tr>\n";
+	if ($ShowMenu) {
+		print "$CENTER<a name=\"MENU\">&nbsp;</a><BR>";
+		print "<table>";
+		print "<tr><th class=AWL>$Message[7] : </th><td class=AWL><font style=\"font-size: 14px;\">$SiteToAnalyze</font></th></tr>";
+		print "<tr><th class=AWL valign=top>$Message[35] : </th>";
+		print "<td class=AWL><font style=\"font-size: 14px;\">";
+		foreach my $key (sort keys %LastUpdate) { if ($LastUpdate < $LastUpdate{$key}) { $LastUpdate = $LastUpdate{$key}; } }
+		if ($LastUpdate) { print Format_Date($LastUpdate); }
+		else { print "<font color=#880000>Never updated</font>"; }
+		print "</font>&nbsp; &nbsp; &nbsp; &nbsp;";
+		if ($AllowToUpdateStatsFromBrowser) { print "<a href=\"$DirCgi$PROG.$Extension?update=1&".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang\">$Message[74]</a>"; }
+		print "</td></tr>\n";
+		if ($QueryString !~ /output=/i) {	# If main page asked
+			print "<tr><td>&nbsp;</td></tr>\n";
+			# Traffic
+			print "<tr><th class=AWL>$Message[16] : </th>";
+			print "<td class=AWL>";
+			print "<a href=\"$DirCgi$PROG.$Extension?".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang#DOMAINS\">$Message[17]</a> &nbsp; ";
+			print "<a href=\"$DirCgi$PROG.$Extension?".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang#VISITOR\">".ucfirst($Message[26])."</a> &nbsp; ";
+			print "<a href=\"$DirCgi$PROG.$Extension?".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang#ROBOTS\">$Message[53]</a> &nbsp; ";
+			print "<a href=\"$DirCgi$PROG.$Extension?".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang#HOUR\">$Message[20]</a> &nbsp; ";
+			print "<a href=\"$DirCgi$PROG.$Extension?output=unknownip&".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang\">$Message[45]</a><br></td></tr>\n";
+			# Navigation
+			print "<tr><th class=AWL>$Message[72] : </th>";
+			print "<td class=AWL>";
+			print "<a href=\"$DirCgi$PROG.$Extension?output=urldetail&".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang\">$Message[19]</a> &nbsp; ";
+			print "<a href=\"$DirCgi$PROG.$Extension?".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang#BROWSER\">$Message[21]</a> &nbsp; ";
+			print "<a href=\"$DirCgi$PROG.$Extension?".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang#OS\">$Message[59]</a> &nbsp; ";
+			print "<a href=\"$DirCgi$PROG.$Extension?output=browserdetail&".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang\">$Message[33]</a> &nbsp; ";
+			print "<a href=\"$DirCgi$PROG.$Extension?output=browserdetail&".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang\">$Message[34]</a><br></td></tr>\n";
+			# Referers
+			print "<tr><th class=AWL>$Message[23] : </th>";
+			print "<td class=AWL>";
+			print "<a href=\"$DirCgi$PROG.$Extension?".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang#REFERER\">$Message[37]</a> &nbsp; ";
+			print "<a href=\"$DirCgi$PROG.$Extension?".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang#SEARCHWORDS\">$Message[24]</a><br></td></tr>\n";
+			# Others
+			print "<tr><th class=AWL>$Message[2] : </th>";
+			print "<td class=AWL>";
+			print "<a href=\"$DirCgi$PROG.$Extension?".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang#ERRORS\">$Message[22]</a> &nbsp; ";
+			print "<a href=\"$DirCgi$PROG.$Extension?output=notfounderror&".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang\">$Message[31]</a><br></td></tr>\n";
+		}
+		else {
+			if ($ShowBackLink) { print "<tr><td class=AWL><a href=\"$DirCgi$PROG.$Extension?".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang\">$Message[76]</a></td></tr>\n"; }
+		}
+		print "</table>\n";
+		print "<br>\n<hr>\n";
 	}
-	else {
-		if ($ShowBackLink) { print "<tr><td class=AWL><a href=\"$DirCgi$PROG.$Extension?".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang\">$Message[76]</a></td></tr>\n"; }
-	}
-	print "</table>\n";
-	print "<br>\n\n";
 	
 	if ($QueryString =~ /output=lasthosts/i) {
 		print "$CENTER<a name=\"HOSTSLIST\">&nbsp;</a><BR>";
