@@ -1,4 +1,4 @@
-# Hungarian message file (v1.5 - 2001.11.27 - gabor.funk@hunetkft.hu)
+# Hungarian message file (v1.6 - 2002.03.21 - gabor.funk@hunetkft.hu)
 PageCode=iso-8859-2
 message0=Ismeretlen
 message1=ismeretlen (feloldatlan ip)
@@ -106,8 +106,11 @@ message102=Összesen
 message103=különbözõ kifejezés
 message104=Belépõ oldalak
 message105=Kód
-message106=Average size
-message107=Links from a NewsGroup
+message106=Átlagméret
+message107=Kapcsolódás hírcsoportból
 message108=KB
 message109=MB
 message110=GB
+message111=Grabber
+message112=Igen
+message113=Nem
