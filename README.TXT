@@ -9,8 +9,8 @@ pages, hits, hours, search engines, keywords used to find your site, broken
 links, robots and more. It works with IIS 5.0+ or Apache webserver log files.
 
 License: GNU GPL (GNU General Public License. See COPYING.TXT)
-Version : 3.0
-Release date: 08 July 2001
+Version : 3.1
+Release date: 15 August 2001
 Platforms: All (Linux, NT, SCO, BSD, Solaris and other *NIX's, BeOS, OS/2...)
 Author: Laurent Destailleur <eldy@users.sourceforge.net>
 AWStats web site: http://awstats.sourceforge.net
@@ -249,33 +249,29 @@ II - 2) With IIS Server
 III - BENCHMARK
 -----------------------------------
 
-This is benchmark results with AWStats version 2.5:
-CONFIG: Athlon 1 GHz / Windows 2000 / ActivePerl 5.6
+This is benchmark results with AWStats version 3.1:
+CONFIG: Athlon 1 GHz / Windows 2000 / ActivePerl 5.6 / LogFormat=1
 SPEED: 20000 lines in 15s with reverse dns lookup disabled
-AVERAGE: 1333 lines by seconds 
+AVERAGE: 1300 lines by seconds
 
 However, benchmarks of log analyzer are made without reverse dns lookup
 because this depends on your system, networks and Internet and not on the
 log analyzer you use. But, the reverse dns lookup is 99% of the time
-to make a log analysis. So this is results in reality (with reverse dns
-lookup enabled, made on true log samples):
-AVERAGE: 100 lines by seconds
-If we consider 5 hits by page and 5 pages for one visit, it means that
-AWStats is able to analyze 4 visits in one second.
-If your site has 70 visits each hour (50,000 visits a month), you should
-launch AWStats each hour to be sure to get a processing time less than
-70/4 = 18 seconds (with Athlon 1 Ghz).
+to make a log analysis.
+So, let's have a look on AWStats F.A.Qs (http://awstats.sourceforge.net) to:
+- Get more real ideas on benchmarks results
+- Get more informations and advices on the following optimization setup.
 
-To increase speed:
-- You can disable DNSLookup in AWStats (set DNSLookup=0) but this requires
+This is a summary of main ways to speed up AWStats:
+* You can disable DNSLookup in AWStats (set DNSLookup=0) but this requires
 that hosts adresses in your log file are already resolved (need to setup your
 web server to do so). Speed can be increased up by 2 to 50 times !
-- If you use Apache, set PurgeLogFile to 1 (By default, to avoid bad surpise,
+* If you use Apache, set PurgeLogFile to 1 (By default, to avoid bad surpise,
 PurgeLogFile is 0 in configure file, but you can set it to 1 to ask AWStats
 to purge log file after processing it, this increase speed for next run).
-- Launch AWStats more often (from crontab or a scheduler). The more often you
+* Launch AWStats more often (from crontab or a scheduler). The more often you
 launch AWStats, the less AWStats has new lines in log to process.
-- Use last AWStats version
+* Use last AWStats version
 
 
 IV - TROUBLESHOUTING / FAQ
