@@ -20,7 +20,7 @@
 <td bgcolor=#9999cc align=center><a href="/"><img src="images/awstats_logo4.png" border=0></a></td>
 <td bgcolor=#9999cc align=center>
 <br>
-<font style="font: 16pt arial,helvetica,sanserif" color=#EEEEFF><b>AWStats logfile analyzer 4.1 Documentation</b></font><br>
+<font style="font: 16pt arial,helvetica,sanserif" color=#EEEEFF><b>AWStats logfile analyzer 5.0 Documentation</b></font><br>
 <br>
 </td>
 <td bgcolor=#9999cc align=center>
@@ -182,7 +182,7 @@ when reading it), follow the example:<br>
 3.2+ for tag %WM-n<br>
 4.0+ for tag %DW-n<br>
 4.1+ for tag %NS-n<br>
-4.2+ for tag %WY-n<br>
+5.0+ for tag %WY-n<br>
 <br># "LogFile" contains the web server logfile to analyze.
 <br># You can use a full path or relative path from awstats.pl directory.
 <br># Example: "/var/log/apache/access.log"
@@ -266,7 +266,7 @@ when reading it), follow the example:<br>
 <br><br><hr>
 
 <a name="LogSeparator"><b>LogSeparator</b></a><br>
-<b>Version : </b>4.2 +<br>
+<b>Version : </b>5.0 +<br>
 <br># If your log field's separator is not a space, you can change this parameter.
 <br># Example: " "
 <br># Example: "\t"
@@ -277,7 +277,7 @@ when reading it), follow the example:<br>
 <br><br><hr>
 
 <a name="DNSLookup"><b>DNSLookup</b></a><br>
-<b>Version : </b>1.0 + (4.2 + for value 2) <br>
+<b>Version : </b>1.0 + (5.0 + for value 2) <br>
 <br># If you want to have information on domains/countries visitors, you must ask
 <br># AWStats to make reverse DNS lookup (if not already done in your log file).
 <br># With DNSLookup to 0, all hosts will be reported by their IP addresses and
@@ -390,13 +390,14 @@ when reading it), follow the example:<br>
 <br><br><hr>
 
 <a name="DNSCacheFile"><b>DNSCacheFile</b></a><br>
-<b>Version : </b>4.2 +<br>
+<b>Version : </b>5.0 +<br>
 <br># AWStats can do reverse DNS lookups through a DNS cache file that is either
 <br># created/updated at run-time, or has been previously created, either by a
 <br># previous run of AWStats, or other tools using same format of DNS cache file.
-<br># If no path is given in DNS cache file name, AWStats will search and save it
-<br># into DirData directory.
+<br># If no path is gave in DNS cache file name, AWStats will search DirData
+<br># directory.
 <br># This option is not used if DNSLookup=0.
+<br># Note: DNS cache file must have format: no ipaddress resolved_hostname
 <br># Example: "/mydnscachedir/dnscache"
 <br># Default: "dnscachefile.txt"
 <br>#
@@ -524,7 +525,7 @@ when reading it), follow the example:<br>
 <br><br><hr>
 
 <a name="DefaultFile"><b>DefaultFile</b></a><br>
-<b>Version : </b>1.0 + (4.2 + can accept several values)<br>
+<b>Version : </b>1.0 + (5.0 + can accept several values)<br>
 <br># Default index page name for your web server.
 <br># Example: "default.htm default.html"
 <br># Default: "index.html"
@@ -756,7 +757,7 @@ AWStats 4.1+ supports both keywords AND keyphrases by default with no need of an
 <br><br><hr>
 
 <a name="UseFramesWhenCGI"><b>UseFramesWhenCGI</b></a><br>
-<b>Version : </b>4.2 +<br>
+<b>Version : </b>5.0 +<br>
 <br># When you use AWStats as a CGI, you can have the reports shown in HTML views.
 <br># Frames are only available for report viewed dynamically. When you build
 <br># pages from command line, this option is not used and no frames are built.
@@ -768,7 +769,7 @@ AWStats 4.1+ supports both keywords AND keyphrases by default with no need of an
 <br><br><hr>
 
 <a name="DetailedReportsOnNewWindows"><b>DetailedReportsOnNewWindows</b></a><br>
-<b>Version : </b>4.1 + (4.2+ for value 2)<br>
+<b>Version : </b>4.1 + (5.0 + for value 2)<br>
 <br># This parameter ask your browser to open detailed reports into a different
 <br># window than the main page.
 <br># Possible values:
@@ -1052,14 +1053,15 @@ color_u,color_v,color_p,color_h,color_k,color_s<br>
 <br><br><hr>
 
 <a name="LoadPlugin"><b>LoadPlugin</b></a><br>
-<b>Version : </b>4.2 +<br>
+<b>Version : </b>5.0 +<br>
 <br># Add here all plugins file you want to load.
 <br># Plugin files must be .pm files stored in 'plugins' directory.
 <br># Uncomment LoadPlugin lines to enable a plugin after checking that plugin
 <br># required perl modules are installed.
 <br>
-<br># Plugin MyPlugin:
-<br># MyPlugin description
+<br># Plugin: PluginName
+<br># PluginName description
+<br># Perl modules required: ...
 <br>#
 <br>LoadPlugin="pluginname"
 

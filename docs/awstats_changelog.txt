@@ -2,15 +2,18 @@ AWStats Changelog
 -----------------
 
 
-4.2
+5.0
 
-- New feature: Added Plugins support and several working plugins.
-- New feature: Use frame to report (new UseFramesWhenCGI parameter).
-- Rewrite code of reading history files to reduce time and memory to load.
+- New feature: Support DNS cache files for DNS lookup.
+- New feature: Added Plugins support and several working plugins:
+  A GMT correcter, A hash file DNS cache saver/reader...
+- New feature: Use framed report (new UseFramesWhenCGI parameter).
+- Rewrite code to read history files to reduce time and memory to load.
 - "Never updated" is now in language files.
 - Reduce number of global vars in code.
 - New feature: DefaultFile parameter accepts several values.
 - New parameter: LogSeparator for log files with exotic separators.
+- New tag for logfile: %WY is replaced by week number in year.
 - Added slovak language files.
 
 
