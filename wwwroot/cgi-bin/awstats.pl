@@ -138,6 +138,7 @@ $NbOfLinesShowsteps $NewLinePhase $NbOfLinesForCorruptedLog $PurgeLogFile
 $ShowDropped $ShowCorrupted $ShowUnknownOrigin $ShowLinksToWhoIs
 $ShowAuthenticatedUsers $ShowFileSizesStats $ShowScreenSizeStats $ShowSMTPErrorsStats
 $ShowEMailSenders $ShowEMailReceivers $ShowWormsStats $ShowClusterStats
+$IncludeInternalLinksInOriginSection
 $AuthenticatedUsersNotCaseSensitive
 $Expires $UpdateStats $MigrateStats $URLNotCaseSensitive $URLWithQuery $URLReferrerWithQuery
 $DecodeUA
@@ -149,10 +150,11 @@ $NbOfLinesShowsteps, $NewLinePhase, $NbOfLinesForCorruptedLog, $PurgeLogFile,
 $ShowDropped, $ShowCorrupted, $ShowUnknownOrigin, $ShowLinksToWhoIs,
 $ShowAuthenticatedUsers, $ShowFileSizesStats, $ShowScreenSizeStats, $ShowSMTPErrorsStats,
 $ShowEMailSenders, $ShowEMailReceivers, $ShowWormsStats, $ShowClusterStats,
+$IncludeInternalLinksInOriginSection,
 $AuthenticatedUsersNotCaseSensitive,
 $Expires, $UpdateStats, $MigrateStats, $URLNotCaseSensitive, $URLWithQuery, $URLReferrerWithQuery,
 $DecodeUA)=
-(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
+(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
 use vars qw/
 $AllowToUpdateStatsFromBrowser
 $ArchiveLogRecords $DetailedReportsOnNewWindows
@@ -9541,8 +9543,8 @@ if (scalar keys %HTMLOutput) {
 		if ($ShowOriginStats) {
 			if ($Debug) { debug("ShowOriginStats",2); }
 			print "$Center<a name=\"referer\">&nbsp;</a><br />\n";
-			my $Totalp=0; foreach (0..5) { $Totalp+=$_from_p[$_]; }
-			my $Totalh=0; foreach (0..5) { $Totalh+=$_from_h[$_]; }
+			my $Totalp=0; foreach (0..5) { $Totalp+=($_ != 4 || $IncludeInternalLinksInOriginSection)?$_from_p[$_]:0; }
+			my $Totalh=0; foreach (0..5) { $Totalh+=($_ != 4 || $IncludeInternalLinksInOriginSection)?$_from_h[$_]:0; }
 			&tab_head($Message[36],19,0,'referer');
 			my @p_p=(0,0,0,0,0,0);
 			if ($Totalp > 0) {
@@ -9642,10 +9644,12 @@ if (scalar keys %HTMLOutput) {
 			if ($ShowOriginStats =~ /H/i) { print "<td valign=\"top\">".($_from_h[3]?$_from_h[3]:"&nbsp;")."</td><td valign=\"top\">".($_from_h[3]?"$p_h[3] %":"&nbsp;")."</td>"; }
 			print "</tr>\n";
 			#------- Referrals by internal HTML link
-			print "<tr><td class=\"aws\"><b>$Message[42]</b></td>";
-			if ($ShowOriginStats =~ /P/i) { print "<td>".($_from_p[4]?$_from_p[4]:"&nbsp;")."</td><td>".($_from_p[4]?"$p_p[4] %":"&nbsp;")."</td>"; }
-			if ($ShowOriginStats =~ /H/i) { print "<td>".($_from_h[4]?$_from_h[4]:"&nbsp;")."</td><td>".($_from_h[4]?"$p_h[4] %":"&nbsp;")."</td>"; }
-			print "</tr>\n";
+			if ($IncludeInternalLinksInOriginSection) {
+				print "<tr><td class=\"aws\"><b>$Message[42]</b></td>";
+				if ($ShowOriginStats =~ /P/i) { print "<td>".($_from_p[4]?$_from_p[4]:"&nbsp;")."</td><td>".($_from_p[4]?"$p_p[4] %":"&nbsp;")."</td>"; }
+				if ($ShowOriginStats =~ /H/i) { print "<td>".($_from_h[4]?$_from_h[4]:"&nbsp;")."</td><td>".($_from_h[4]?"$p_h[4] %":"&nbsp;")."</td>"; }
+				print "</tr>\n";
+			}
 			#------- Unknown origin
 			print "<tr><td class=\"aws\"><b>$Message[39]</b></td>";
 			if ($ShowOriginStats =~ /P/i) { print "<td>".($_from_p[1]?$_from_p[1]:"&nbsp;")."</td><td>".($_from_p[1]?"$p_p[1] %":"&nbsp;")."</td>"; }
