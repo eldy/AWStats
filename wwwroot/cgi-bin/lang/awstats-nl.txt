@@ -1,4 +1,5 @@
 # Dutch message file (door Amedee Van Gasse - amedee.be)
+# Addon by Marcel Huijkman - marcel.huijkman@raketnet.nl
 # $Revision$ - $Date$
 message0=Onbekend
 message1=Onbekend (Onbekend ip)
@@ -108,9 +109,9 @@ message104=Binnenkomst pagina's
 message105=Code
 message106=Gemiddelde grootte
 message107=Links vanuit een Nieuwsgroep
-message108=KiB
-message109=MiB
-message110=GiB
+message108=KB
+message109=MB
+message110=GB
 message111=Grabber
 message112=Ja
 message113=Nee
@@ -134,3 +135,23 @@ message130=Data value arrays
 message131=Afzender EMail
 message132=Ontvanger EMail
 message133=Gerapporteerde periode
+message134=Extra/Marketing
+message135=Screen sizes
+message136=Worm/Virus attacks
+message137=Add to favorites (estimated)
+message138=Dagen van maand
+message139=Overigen
+message140=Browsers met Java ondersteuning
+message141=Browsers met Macromedia Director ondersteuning
+message142=Browsers met Flash ondersteuning
+message143=Browsers met Real audio playing ondersteuning
+message144=Browsers met Quicktime audio playing ondersteuning
+message145=Browsers met Windows Media audio playing ondersteuning
+message146=Browsers met PDF ondersteuning
+message147=SMTP Error codes
+message148=Landen
+message149=Mails
+message150=Grootte
+message151=Eerste
+message152=Laatste
+message153=Uitsluiten filter
