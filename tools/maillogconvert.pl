@@ -27,13 +27,28 @@ $DIR $PROG $Extension
 $Debug
 %mail %qmaildelivery
 $help
-$mode $year $Debug
+$mode $year $lastmon $Debug
 $NBOFENTRYFOFLUSH
 $MailType
+%MonthNum
 /;
 $Debug=0;
 $NBOFENTRYFOFLUSH=16384;	# Nb or records for flush of %entry (Must be a power of 2)
 $MailType='';				# Mail server family (postfix, sendmail, qmail)
+%MonthNum = (
+'Jan'=>1,
+'Feb'=>2,
+'Mar'=>3,
+'Apr'=>4,
+'May'=>5,
+'Jun'=>6,
+'Jul'=>7,
+'Aug'=>8,
+'Sep'=>9,
+'Oct'=>10,
+'Nov'=>11,
+'Dec'=>12
+);
 
 
 #-------------------------------------------------------
@@ -100,7 +115,7 @@ sub trim { $_=shift;
 #
 sub OutputRecord {
 	my $year=shift;
-	my $month=shift;
+	my $month=shift;    # Jan,Feb,... or 1,2,3...
 	my $day=shift;
 	my $time=shift;
 	my $from=shift;
@@ -114,18 +129,7 @@ sub OutputRecord {
 
 	# Clean day and month
 	$day=sprintf("%02d",$day);
-	if ($month eq 'Jan') { $month = "01"; }
-	if ($month eq 'Feb') { $month = "02"; }
-	if ($month eq 'Mar') { $month = "03"; }
-	if ($month eq 'Apr') { $month = "04"; }
-	if ($month eq 'May') { $month = "05"; }
-	if ($month eq 'Jun') { $month = "06"; }
-	if ($month eq 'Jul') { $month = "07"; }
-	if ($month eq 'Aug') { $month = "08"; }
-	if ($month eq 'Sep') { $month = "09"; }
-	if ($month eq 'Oct') { $month = "10"; }
-	if ($month eq 'Nov') { $month = "11"; }
-	if ($month eq 'Dec') { $month = "12"; }
+    $month=sprintf("%02d",$MonthNum{$month}||$month);
 
 	# Clean from
 	$from=&CleanEmail($from);
@@ -212,6 +216,7 @@ HELPTEXT
 #
 # Start Processing Input Logfile
 #
+$lastmon=0;
 my $numrecord=0;
 my $numrecordforflush=0;
 while (<>) {
@@ -222,6 +227,16 @@ while (<>) {
 	my $mailid=0;
 
 	if (/^__BREAKPOINT__/) { last; }	# For debug only
+
+	### <CJK> ###
+	my ($mon)=m/(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\s/;
+	if ($mon) {
+	    $mon = $MonthNum{$mon};
+		if ($mon==12 && $lastmon==1 ){$year--;}
+		if ($mon==1 && $lastmon==12){$year++;}
+		$lastmon=$mon;
+	}
+	### </CJK> ###
 
 	if (/^#/) {
 		debug("Comment record");
@@ -270,6 +285,7 @@ while (<>) {
 			elsif ($code =~ /<(.*)>/) {
 				$mail{$mailid}{'to'}=&trim($1);
 			}
+			$mail{$mailid}{'year'}=$year; ### <CJK>###
 			$mail{$mailid}{'mon'}=$mon;
 			$mail{$mailid}{'day'}=$day;
 			$mail{$mailid}{'time'}=$time;
@@ -290,6 +306,7 @@ while (<>) {
 			$mail{$mailid}{'code'}=999;	# Unkown error (bounced)
 			$mail{$mailid}{'to'}=&trim($to);
 			$mail{$mailid}{'relay_r'}=&trim($relay_r);
+			$mail{$mailid}{'year'}=$year; ### <CJK>###
 			$mail{$mailid}{'mon'}=$mon;
 			$mail{$mailid}{'day'}=$day;
 			$mail{$mailid}{'time'}=$time;
@@ -323,6 +340,7 @@ while (<>) {
 			# $code='reject=550 5.7.1 <amber3624@netzero.net>... Relaying denied'
 			if ($code =~ /=(\d\d\d)\s+/) { $mail{$mailid}{'code'}=$1; }
 			else { $mail{$mailid}{'code'}=999; }	# Unkown error
+			$mail{$mailid}{'year'}=$year; ### <CJK>###
 			$mail{$mailid}{'mon'}=$mon;
 			$mail{$mailid}{'day'}=$day;
 			$mail{$mailid}{'time'}=$time;
@@ -348,6 +366,7 @@ while (<>) {
 		elsif (/, stat\=Local\s+configuration/) { $mail{$id}{'code'}=451; }
 		elsif (/, stat\=Deferred:\s+(\d*)/) { $mail{$id}{'code'}=$1; }
 		else { $mail{$id}{'code'}=999; }
+			$mail{$mailid}{'year'}=$year; ### <CJK>###
 		$mail{$id}{'mon'}=$mon;
 		$mail{$id}{'day'}=$day;
 		$mail{$id}{'time'}=$time;
@@ -485,6 +504,7 @@ while (<>) {
 			else {
 				$mail{$id}{'to'}=&trim($to);
 			}
+			$mail{$mailid}{'year'}=$year; ### <CJK>###
 			$mail{$id}{'mon'}=$mon;
 			$mail{$id}{'day'}=$day;
 			$mail{$id}{'time'}=$time;
