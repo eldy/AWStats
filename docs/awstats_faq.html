@@ -637,7 +637,7 @@ Now you can use AWStats as usual (run the update process and read statistics).<b
 <b><u>FAQ-COM120 : HOW TO ROTATE MY LOGS WITHOUT LOOSING DATA</u></b><br>
 <font class=CProblem>PROBLEM:</font><br>
 I want to archive/rotate my logs using my server system (for example logrotate) options or a third
-software (rotatelog, cronolog) but I don't want to loose any visits information during the rotate
+software (rotatelog, cronolog) but I don't want to lose any visits information during the rotate
 process.<br>
 <font class=CSolution>SOLUTION:</font><br>
 <li> If your config file is setup with a <a href="awstats_config.html#LogFile">LogFile</a> parameter
@@ -684,13 +684,13 @@ If using a such solution, this is sequential steps that happens:<br>
 </table>
 <br>
 The advantage of this solution is that it is a very common way of working, used by a lot of
-products, and easy to setup. You will notice that you can "loose" some hits:<br>
-If you use the -HUP signal, you will only loose all hits that were written during D and E.
+products, and easy to setup. You will notice that you can "lose" some hits:<br>
+If you use the -HUP signal, you will only lose all hits that were written during D and E.
 Note that you will also break all requests still running at G. In the example, it's a 
 1 minute lost (for small or medium web sites, it will be less than few seconds), so this
 give you an error less than 0.07% (less for small web sites). This is not significant,
 above all for a "statistics" progam.<br>
-If you use the -USR1 signal, you will not kill any request. But you will loose all hits that
+If you use the -USR1 signal, you will not kill any request. But you will lose all hits that
 were wrote during D and E (like with -HUP) but also all hits that are still running after H
 (all very long request that requires several minutes to be served). If hit ends during I, it is
 wrote in a log file already analyzed, if hit ends at K, it is wrote nowhere. In the example,
@@ -721,7 +721,7 @@ To setup awstats to always point to last archive log file, you can use the 'tags
 The problem with that is that your data are refreshed only after a rotate has done. However,
 you will miss absolutely nothing (no hits) and your server processes are never killed.<br>
 <br>
-<li> So, if you really want to not loose absolutely no hit and want to have updates more
+<li> So, if you really want to not lose absolutely no hit and want to have updates more
 frequently than the rotate frequency, the best way is still an hybrid solution (i am not sure
 that it worth the pain, and remember that statistics are only statistics):<br>
 You run the awstats update process from you crontab frequently, every hour for example, and half and hour
