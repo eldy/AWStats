@@ -86,7 +86,7 @@ $word, $yearcon, $yearfile, $yearmonthfile, $yeartoprocess) = ();
 @sortsearchwords = @sortsereferrals = @sortsider404 = @sortsiders = @sortunknownip =
 @sortunknownreferer = @sortunknownrefererbrowser = @wordlist = ();
 
-$VERSION="2.5 (build 26)";
+$VERSION="2.5 (build 29)";
 $Lang=0;
 
 # Default value
@@ -749,7 +749,7 @@ $message[70][0]="Nov";
 $message[71][0]="Dec";
 $message[72][0]="English us.png";
 $message[73][0]="Day statistics";
-$message[74][0]="Update";
+$message[74][0]="Update now";
 
 # French
 $message[0][1]="Inconnus";
@@ -826,7 +826,7 @@ $message[70][1]="Nov";
 $message[71][1]="Déc";
 $message[72][1]="French fr.png";
 $message[73][1]="Statistiques par jour";
-$message[74][1]="Mise à jour";
+$message[74][1]="Mise à jour immédiate";
 
 # Dutch
 $message[0][2]="Onbekend";
@@ -903,7 +903,7 @@ $message[70][2]="Nov";
 $message[71][2]="Dec";
 $message[72][2]="Dutch nl.png";
 $message[73][2]="Dag statistieken";
-$message[74][2]="Update";
+$message[74][2]="Update now";
 
 # Spanish
 $message[0][3]="Desconocido";
@@ -980,7 +980,7 @@ $message[70][3]="Nov";
 $message[71][3]="Dic";
 $message[72][3]="Spanish es.png";
 $message[73][3]="Dia estadísticas";
-$message[74][3]="Update";
+$message[74][3]="Update now";
 
 # Italian
 $message[0][4]="Sconosciuto";
@@ -1057,7 +1057,7 @@ $message[70][4]="Nov";
 $message[71][4]="Dic";
 $message[72][4]="Italian it.png";
 $message[73][4]="Giorno statistiche";
-$message[74][4]="Update";
+$message[74][4]="Update now";
 
 # German
 $message[0][5]="Unbekannt";
@@ -1134,7 +1134,7 @@ $message[70][5]="Nov";
 $message[71][5]="Dez";
 $message[72][5]="German de.png";
 $message[73][5]="Tag statistik";
-$message[74][5]="Update";
+$message[74][5]="Update now";
 
 # Polish
 $PageCode[6]="<META HTTP-EQUIV=\"content-type\" CONTENT=\"text/html; charset=iso-8859-2\">";
@@ -1212,7 +1212,7 @@ $message[70][6]="Listopad";
 $message[71][6]="Grudzieñ";
 $message[72][6]="Polish pl.png";
 $message[73][6]="Dzieñ Statystyki";
-$message[74][6]="Update";
+$message[74][6]="Update now";
 
 # Greek (simos@hellug.gr)
 $PageCode[7]="<META HTTP-EQUIV=\"content-type\" CONTENT=\"text/html; charset=iso-8859-7\">";
@@ -1290,7 +1290,7 @@ $message[70][7]="ÍïÝ";
 $message[71][7]="Äåê";
 $message[72][7]="Greek gr.png";
 $message[73][7]="Daily statistics";
-$message[74][7]="Update";
+$message[74][7]="Update now";
 
 # Czech (js@fsid.cvut.cz)
 $PageCode[8]="<META HTTP-EQUIV=\"content-type\" CONTENT=\"text/html; charset=iso-8859-2\">";
@@ -1368,7 +1368,7 @@ $message[70][8]="Lis";
 $message[71][8]="Pro";
 $message[72][8]="Czech cz.png";
 $message[73][8]="Daily statistics";
-$message[74][8]="Update";
+$message[74][8]="Update now";
 
 # Portuguese
 $message[0][9]="Desconhecido";
@@ -1445,7 +1445,7 @@ $message[70][9]="Nov";
 $message[71][9]="Dez";
 $message[72][9]="Portuguese pt.png";
 $message[73][9]="Daily statistics";
-$message[74][9]="Update";
+$message[74][9]="Update now";
 
 # Korean
 $PageCode[10]="<META HTTP-EQUIV=\"content-type\" CONTENT=\"text/html; charset=euc-kr\">";
@@ -1523,7 +1523,7 @@ $message[70][10]="11¿ù";
 $message[71][10]="12¿ù";
 $message[72][10]="Korean kr.png";
 $message[73][10]="ÀÏÀÏ Åë°è";
-$message[74][10]="Update";
+$message[74][10]="Update now";
 
 
 #-------------------------------------------------------
@@ -1545,14 +1545,17 @@ BODY { font: 12px arial, verdana, helvetica, sans-serif; background-color: #$col
 TH { font: 12px arial, verdana, helvetica, sans-serif; text-align:center; color: #$color_titletext }
 TD { font: 12px arial, verdana, helvetica, sans-serif; text-align:center; color: #$color_text }
 TD.LEFT { font: 12px arial, verdana, helvetica, sans-serif; text-align:left; color: #$color_text }
-A { font: normal 12px arial, verdana, helvetica, sans-serif; text-decoration: underline; }
-A:link  { color: #$color_link; }
-A:hover { color: #$color_hover; }
+A { font: normal 12px arial, verdana, helvetica, sans-serif; }
+A:link    { color: #$color_link; text-decoration: none; }
+A:visited { color: #$color_link; text-decoration: none; }
+A:hover   { color: #$color_hover; text-decoration: underline; }
 DIV { font: 12px arial,verdana,helvetica; text-align:justify; }
 .TABLEBORDER { background-color: #$color_TableBorder; }
 .TABLEFRAME { background-color: #$color_TableBG; }
 .TABLEDATA { background-color: #$color_Background; }
-.TABLETITLE { font: bold 16px verdana, arial, helvetica, sans-serif; color: #$color_TableTitle; background-color: #$color_TableBGTitle; }
+.TABLETITLEFULL  { font: bold 14px verdana, arial, helvetica, sans-serif; background-color: #$color_TableBGTitle; }
+.TABLETITLEBLANK { font: bold 14px verdana, arial, helvetica, sans-serif; background-color: #$color_Background; }
+
 .CTooltip { position:absolute; top:0px; left:0px; z-index:2; width:280; visibility:hidden; font: 8pt MS Comic Sans,arial,sans-serif; background-color:#FFFFE6; padding: 8px; border: 1px solid black; }
 //-->
 </STYLE>\n
@@ -1563,7 +1566,8 @@ DIV { font: 12px arial,verdana,helvetica; text-align:justify; }
 
 
 sub html_end {
-	print "$CENTER<br><font size=1><b>Advanced Web Statistics $VERSION</b> - <a href=\"http://awstats.sourceforge.net\" target=_newawstats>Created by $PROG</a></font><br>\n";
+	print "$CENTER<br><br><br>\n";
+	print "<b>Advanced Web Statistics $VERSION</b> - <a href=\"http://awstats.sourceforge.net\" target=_newawstats>Created by $PROG</a><br>\n";
 	print "<br>\n";
 	print "$HTMLEndSection\n";
 	print "</body>\n";
@@ -1572,17 +1576,17 @@ sub html_end {
 
 sub tab_head {
 	print "
-		<TABLE CLASS=TABLEBORDER BORDER=0 CELLPADDING=1 CELLSPACING=0 WIDTH=$WIDTH>
+		<TABLE BORDER=0 CELLPADDING=1 CELLSPACING=0 WIDTH=100%>
 		<TR><TD>
 		<TABLE CLASS=TABLEFRAME BORDER=0 CELLPADDING=3 CELLSPACING=0 WIDTH=100%>
-		<TR><TH COLSPAN=2 CLASS=TABLETITLE>$tab_titre</TH></TR>
-		<TR><TD COLSPAN=2>
-		<TABLE CLASS=TABLEDATA BORDER=1 CELLPADDING=2 CELLSPACING=0 WIDTH=100%>
+		<TR><TD class=TABLETITLEFULL align=center width=60%>$tab_titre </TD><TD class=TABLETITLEBLANK>&nbsp;</TD></TR>
+		<TR><TD colspan=2>
+		<TABLE CLASS=TABLEDATA BORDER=1 BORDERCOLOR=#$color_TableBorder CELLPADDING=2 CELLSPACING=0 WIDTH=100%>
 		";
 }
 
 sub tab_end {
-	print "</TABLE></TD></TR></TABLE>";
+	print "\n</TABLE></TD></TR></TABLE>";
 	print "</TD></TR></TABLE>\n\n";
 }
 
@@ -1711,8 +1715,8 @@ sub Read_Config_File {
 		if ($param =~ /^color_TableBGTitle/)    { $color_TableBGTitle=$value; next; }
 		if ($param =~ /^color_TableRowTitle/)   { $color_TableRowTitle=$value; next; }
 		if ($param =~ /^color_TableBGRowTitle/) { $color_TableBGRowTitle=$value; next; }
-		if ($param =~ /^color_TableBorder/)     { $color_TableBorder=$value; next; }
 		if ($param =~ /^color_TableBG/)         { $color_TableBG=$value; next; }
+		if ($param =~ /^color_TableBorder/)     { $color_TableBorder=$value; next; }
 		if ($param =~ /^color_link/)            { $color_link=$value; next; }
 		if ($param =~ /^color_hover/)           { $color_hover=$value; next; }
 		if ($param =~ /^color_text/)            { $color_text=$value; next; }
@@ -1731,48 +1735,48 @@ sub Check_Config {
 	&debug("Call to Check_Config");
 	# Main section
 	if ($LogFormat =~ /^[\d]$/ && $LogFormat !~ /[1-3]/)  { error("Error: LogFormat parameter is wrong. Value is '$LogFormat' (should be 1 or 2 or a 'personalised AWtats log format string')"); }
-	if ($DNSLookup !~ /[0-1]/)             { error("Error: DNSLookup parameter is wrong. Value is '$DNSLookup' (should be 0 or 1)"); }
+	if ($DNSLookup !~ /[0-1]/)                            { error("Error: DNSLookup parameter is wrong. Value is '$DNSLookup' (should be 0 or 1)"); }
 	# Optional section
 	if ($AllowToUpdateStatsFromBrowser !~ /[0-1]/) { $AllowToUpdateStatsFromBrowser=1; }	# For compatibility, is 1 if not defined
-	if ($PurgeLogFile !~ /[0-1]/)          { $PurgeLogFile=0; }
-	if ($ArchiveLogRecords !~ /[0-1]/)     { $ArchiveLogRecords=1; }
-	if ($Lang !~ /[0-9]/)                  { $Lang=0; }
-	if ($DefaultFile eq "")                { $DefaultFile="index.html"; }
-	if ($WarningMessages !~ /[0-1]/)       { $WarningMessages=1; }
-	if ($ShowLinksOnURL !~ /[0-1]/)        { $ShowLinksOnURL=1; }
-	if ($ShowFlagLinks !~ /[0-1]/)         { $ShowFlagLinks=1; }
-	if ($BarWidth !~ /[\d]/)               { $BarWidth=260; }
-	if ($BarHeight !~ /[\d]/)              { $BarHeight=220; }
-	if ($MaxNbOfDomain !~ /[\d]/)          { $MaxNbOfDomain=25; }
-	if ($MaxNbOfHostsShown !~ /[\d]/)      { $MaxNbOfHostsShown=25; }
-	if ($MinHitHost !~ /[\d]/)             { $MinHitHost=1; }
-	if ($MaxNbOfRobotShown !~ /[\d]/)      { $MaxNbOfRobotShown=25; }
-	if ($MinHitRobot !~ /[\d]/)            { $MinHitRobot=1; }
-	if ($MaxNbOfPageShown !~ /[\d]/)       { $MaxNbOfPageShown=25; }
-	if ($MinHitFile !~ /[\d]/)             { $MinHitFile=1; }
-	if ($MaxNbOfRefererShown !~ /[\d]/)    { $MaxNbOfRefererShown=25; }
-	if ($MinHitRefer !~ /[\d]/)            { $MinHitRefer=1; }
-	if ($MaxNbOfKeywordsShown !~ /[\d]/)   { $MaxNbOfKeywordsShown=25; }
-	if ($MinHitKeyword !~ /[\d]/)          { $MinHitKeyword=1; }
-	if ($SplitSearchString !~ /[0-1]/)     { $SplitSearchString=0; }
-	if ($Logo eq "")                       { $Logo="awstats_logo1.png"; }
-	$color_Background =~ s/#//g; if ($color_Background !~ /[\d]/)           { $color_Background="FFFFFF";	}
-	$color_TableBorder =~ s/#//g; if ($color_TableBorder !~ /[\d]/)         { $color_TableBorder="000000"; }
-	$color_TableBG =~ s/#//g; if ($color_TableBG !~ /[\d]/)                 { $color_TableBG="DDDDBB"; }
-	$color_TableTitle =~ s/#//g; if ($color_TableTitle !~ /[\d]/)           { $color_TableTitle="FFFFFF"; }
-	$color_TableBGTitle =~ s/#//g; if ($color_TableBGTitle !~ /[\d]/)       { $color_TableBGTitle="666666"; }
-	$color_TableRowTitle =~ s/#//g; if ($color_TableRowTitle !~ /[\d]/)     { $color_TableRowTitle="FFFFFF"; }
-	$color_TableBGRowTitle =~ s/#//g; if ($color_TableBGRowTitle !~ /[\d]/) { $color_TableBGRowTitle="BBBBBB"; }
-	$color_link =~ s/#//g; if ($color_link !~ /[\d]/)         { $color_link="4000FF"; }
-	$color_hover =~ s/#//g; if ($color_hover !~ /[\d]/)       { $color_hover="4000FF"; }
-	$color_text =~ s/#//g; if ($color_text !~ /[\d]/)         { $color_text="000000"; }
-	$color_titletext =~ s/#//g; if ($color_titletext !~ /[\d]/) { $color_titletext="000000"; }
-	$color_v =~ s/#//g; if ($color_v !~ /[\d]/)               { $color_v="F3F300"; }
-	$color_w =~ s/#//g; if ($color_w !~ /[\d]/)               { $color_w="FF9933"; }
-	$color_w =~ s/#//g; if ($color_p !~ /[\d]/)               { $color_p="4477DD"; }
-	$color_h =~ s/#//g; if ($color_h !~ /[\d]/)               { $color_h="66F0FF"; }
-	$color_k =~ s/#//g; if ($color_k !~ /[\d]/)               { $color_k="339944"; }
-	$color_s =~ s/#//g; if ($color_s !~ /[\d]/)               { $color_s="8888DD"; }
+	if ($PurgeLogFile !~ /[0-1]/)                { $PurgeLogFile=0; }
+	if ($ArchiveLogRecords !~ /[0-1]/)           { $ArchiveLogRecords=1; }
+	if ($Lang !~ /[0-9]/)                        { $Lang=0; }
+	if ($DefaultFile eq "")                      { $DefaultFile="index.html"; }
+	if ($WarningMessages !~ /[0-1]/)             { $WarningMessages=1; }
+	if ($ShowLinksOnURL !~ /[0-1]/)              { $ShowLinksOnURL=1; }
+	if ($ShowFlagLinks !~ /[0-1]/)               { $ShowFlagLinks=1; }
+	if ($BarWidth !~ /^[\d][\d]*/)               { $BarWidth=260; }
+	if ($BarHeight !~ /^[\d][\d]*/)              { $BarHeight=220; }
+	if ($MaxNbOfDomain !~ /^[\d][\d]*/)          { $MaxNbOfDomain=25; }
+	if ($MaxNbOfHostsShown !~ /^[\d][\d]*/)      { $MaxNbOfHostsShown=25; }
+	if ($MinHitHost !~ /^[\d][\d]*/)             { $MinHitHost=1; }
+	if ($MaxNbOfRobotShown !~ /^[\d][\d]*/)      { $MaxNbOfRobotShown=25; }
+	if ($MinHitRobot !~ /^[\d][\d]*/)            { $MinHitRobot=1; }
+	if ($MaxNbOfPageShown !~ /^[\d][\d]*/)       { $MaxNbOfPageShown=25; }
+	if ($MinHitFile !~ /^[\d][\d]*/)             { $MinHitFile=1; }
+	if ($MaxNbOfRefererShown !~ /^[\d][\d]*/)    { $MaxNbOfRefererShown=25; }
+	if ($MinHitRefer !~ /^[\d][\d]*/)            { $MinHitRefer=1; }
+	if ($MaxNbOfKeywordsShown !~ /^[\d][\d]*/)   { $MaxNbOfKeywordsShown=25; }
+	if ($MinHitKeyword !~ /^[\d][\d]*/)          { $MinHitKeyword=1; }
+	if ($SplitSearchString !~ /[0-1]/)           { $SplitSearchString=0; }
+	if ($Logo eq "")                             { $Logo="awstats_logo1.png"; }
+	$color_Background =~ s/#//g; if ($color_Background !~ /^[0-9|A-Z]*$/i)           { $color_Background="FFFFFF";	}
+	$color_TableBGTitle =~ s/#//g; if ($color_TableBGTitle !~ /^[0-9|A-Z]*$/i)       { $color_TableBGTitle="CCCCCC"; }
+	$color_TableTitle =~ s/#//g; if ($color_TableTitle !~ /^[0-9|A-Z]*$/i)           { $color_TableTitle="000000"; }
+	$color_TableBG =~ s/#//g; if ($color_TableBG !~ /^[0-9|A-Z]*$/i)                 { $color_TableBG="CCCCDD"; }
+	$color_TableRowTitle =~ s/#//g; if ($color_TableRowTitle !~ /^[0-9|A-Z]*$/i)     { $color_TableRowTitle="FFFFFF"; }
+	$color_TableBGRowTitle =~ s/#//g; if ($color_TableBGRowTitle !~ /^[0-9|A-Z]*$/i) { $color_TableBGRowTitle="ECECEC"; }
+	$color_TableBorder =~ s/#//g; if ($color_TableBorder !~ /^[0-9|A-Z]*$/i)         { $color_TableBorder="ECECEC"; }
+	$color_text =~ s/#//g; if ($color_text !~ /^[0-9|A-Z]*$/i)           { $color_text="000000"; }
+	$color_titletext =~ s/#//g; if ($color_titletext !~ /^[0-9|A-Z]*$/i) { $color_titletext="000000"; }
+	$color_link =~ s/#//g; if ($color_link !~ /^[0-9|A-Z]*$/i)           { $color_link="0011BB"; }
+	$color_hover =~ s/#//g; if ($color_hover !~ /^[0-9|A-Z]*$/i)         { $color_hover="605040"; }
+	$color_v =~ s/#//g; if ($color_v !~ /^[0-9|A-Z]*$/i)                 { $color_v="F3F300"; }
+	$color_w =~ s/#//g; if ($color_w !~ /^[0-9|A-Z]*$/i)                 { $color_w="FF9933"; }
+	$color_w =~ s/#//g; if ($color_p !~ /^[0-9|A-Z]*$/i)                 { $color_p="4477DD"; }
+	$color_h =~ s/#//g; if ($color_h !~ /^[0-9|A-Z]*$/i)                 { $color_h="66F0FF"; }
+	$color_k =~ s/#//g; if ($color_k !~ /^[0-9|A-Z]*$/i)                 { $color_k="339944"; }
+	$color_s =~ s/#//g; if ($color_s !~ /^[0-9|A-Z]*$/i)                 { $color_s="8888DD"; }
 }
 
 sub Read_History_File {
@@ -3386,17 +3390,16 @@ EOF
 print "$CENTER<a name=\"MENU\"></a><BR>";
 
 print "<table>";
-print "<tr><td class=LEFT colspan=2><font style=\"font: 14px arial,verdana,helvetica; font-weight: bold\">$message[7][$Lang] : <font style=\"font: 14px arial,verdana,helvetica; font-weight: normal\">$SiteToAnalyze</td></tr>";
-print "<tr><td class=LEFT style=\"font: 14px arial,verdana,helvetica; font-weight: bold\">Last update : <font style=\"font: 14px arial,verdana,helvetica; font-weight: normal\">";
+print "<tr><td class=LEFT><font style=\"font: 14px arial,verdana,helvetica; font-weight: bold\">$message[7][$Lang]: </td><td class=LEFT><font style=\"font: 14px arial,verdana,helvetica; font-weight: normal\">$SiteToAnalyze</td></tr>";
+print "<tr><td class=LEFT><font style=\"font: 14px arial,verdana,helvetica; font-weight: bold\">Last update: </td><td class=LEFT><font style=\"font: 14px arial,verdana,helvetica; font-weight: normal\">";
 foreach $key (keys %LastUpdate) { if ($LastUpdate < $LastUpdate{$key}) { $LastUpdate = $LastUpdate{$key}; } }
 $yearcon=substr($LastUpdate,0,4);$monthcon=substr($LastUpdate,4,2);$daycon=substr($LastUpdate,6,2);$hourcon=substr($LastUpdate,8,2);$mincon=substr($LastUpdate,10,2);
 if ($LastUpdate != 0) { print "$daycon&nbsp;$monthlib{$monthcon}&nbsp;$yearcon&nbsp;-&nbsp;$hourcon:$mincon"; }
 else { print "<font color=#880000>Never updated</font>"; }
-print "</font></td><td valign=center><font size=1>&nbsp;";
+print "</font>&nbsp; &nbsp; &nbsp; &nbsp;";
 if ($AllowToUpdateStatsFromBrowser) { print "<a href=\"$DirCgi$PROG.$Extension?update=1&site=$SiteToAnalyze&year=$YearRequired&month=$MonthRequired&lang=$Lang\">$message[74][$Lang]</a>"; }
-print "</td></tr></table>";
-print "<br>\n";
-print "<table>\n";
+print "</td></tr>\n";
+print "<tr><td>&nbsp;</td></tr>\n";
 print "<tr><td class=LEFT><font style=\"font: 14px arial,verdana,helvetica; font-weight: bold\">$message[16][$Lang]:</td>";
 print "<td class=LEFT><a href=\"#DOMAINS\">$message[17][$Lang]</a> &nbsp; <a href=\"#VISITOR\">".ucfirst($message[26][$Lang])."</a> &nbsp; <a href=\"#ROBOTS\">$message[53][$Lang]</a> &nbsp; <a href=\"#HOUR\">$message[20][$Lang]</a> &nbsp; <a href=\"$DirCgi$PROG.$Extension?action=unknownip&site=$SiteToAnalyze&year=$YearRequired&month=$MonthRequired&lang=$Lang\">$message[45][$Lang]</a><br></td></tr>\n";
 print "<tr><td class=LEFT><font style=\"font: 14px arial,verdana,helvetica; font-weight: bold\">Navigation:</td>";
@@ -3443,19 +3446,19 @@ if ($TotalVisits > 0) { $RatioPages=int($TotalPages/$TotalVisits*100)/100; }
 if ($TotalVisits > 0) { $RatioHits=int($TotalHits/$TotalVisits*100)/100; }
 if ($TotalVisits > 0) { $RatioBytes=int(($TotalBytes/1024)*100/$TotalVisits)/100; }
 
-print "<TR><TD><b>$message[8][$Lang]</b></TD>";
-if ($MonthRequired eq "year") { print "<TD colspan=3 rowspan=2><font style=\"font: 18px arial,verdana,helvetica; font-weight: bold\">$message[6][$Lang] $YearRequired</font><br>"; }
-else { print "<TD colspan=3 rowspan=2><font style=\"font: 18px arial,verdana,helvetica; font-weight: bold\">$message[5][$Lang] $monthlib{$MonthRequired} $YearRequired</font><br>"; }
+print "<TR bgcolor=#$color_TableBGRowTitle><TD><b>$message[8][$Lang]</b></TD>";
+if ($MonthRequired eq "year") { print "<TD colspan=3 rowspan=2><font style=\"font: 18px arial,verdana,helvetica; font-weight: normal\">$message[6][$Lang] $YearRequired</font><br>"; }
+else { print "<TD colspan=3 rowspan=2><font style=\"font: 18px arial,verdana,helvetica; font-weight: normal\">$message[5][$Lang] $monthlib{$MonthRequired} $YearRequired</font><br>"; }
 # Show links for possible years
 foreach $key (keys %listofyears) {
-	print "<a href=\"$DirCgi$PROG.$Extension?site=$SiteToAnalyze&year=$key&month=year&lang=$Lang\">$message[6][$Lang] $key</a> ";
+	print "<a href=\"$DirCgi$PROG.$Extension?site=$SiteToAnalyze&year=$key&month=year&lang=$Lang\">$message[6][$Lang] $key</a> &nbsp; ";
 }
 print "</TD>";
 print "<TD><b>$message[9][$Lang]</b></TD></TR>";
 
 $yearcon=substr($FirstTime,0,4);$monthcon=substr($FirstTime,4,2);$daycon=substr($FirstTime,6,2);$hourcon=substr($FirstTime,8,2);$mincon=substr($FirstTime,10,2);
-if ($FirstTime != 0) { print "<TR><TD>$daycon&nbsp;$monthlib{$monthcon}&nbsp;$yearcon&nbsp;-&nbsp;$hourcon:$mincon</TD>"; }
-else { print "<TR><TD>NA</TD>"; }
+if ($FirstTime != 0) { print "<TR bgcolor=#$color_TableBGRowTitle><TD>$daycon&nbsp;$monthlib{$monthcon}&nbsp;$yearcon&nbsp;-&nbsp;$hourcon:$mincon</TD>"; }
+else { print "<TR bgcolor=#$color_TableBGRowTitle><TD>NA</TD>"; }
 $yearcon=substr($LastTime,0,4);$monthcon=substr($LastTime,4,2);$daycon=substr($LastTime,6,2);$hourcon=substr($LastTime,8,2);$mincon=substr($LastTime,10,2);
 if ($LastTime != 0) { print "<TD>$daycon&nbsp;$monthlib{$monthcon}&nbsp;$yearcon&nbsp;-&nbsp;$hourcon:$mincon</TD></TR>"; }
 else { print "<TD>NA</TD></TR>\n"; }
@@ -3468,7 +3471,7 @@ print "<TD width=20% bgcolor=#$color_k onmouseover=\"ShowTooltip(5);\" onmouseou
 $kilo=int($TotalBytes/1024*100)/100;
 print "<TR><TD><b>$TotalVisits</b><br>&nbsp;</TD><TD><b>$TotalUnique</b><br>($RatioHosts&nbsp;$message[52][$Lang])</TD><TD><b>$TotalPages</b><br>($RatioPages&nbsp;".lc $message[56][$Lang]."/".lc $message[12][$Lang].")</TD>";
 print "<TD><b>$TotalHits</b><br>($RatioHits&nbsp;".lc $message[57][$Lang]."/".lc $message[12][$Lang].")</TD><TD><b>$kilo $message[44][$Lang]</b><br>($RatioBytes&nbsp;$message[44][$Lang]/".lc $message[12][$Lang].")</TD></TR>\n";
-print "<TR valign=bottom><TD colspan=5>";
+print "<TR valign=bottom><TD colspan=5 align=center>";
 print "<TABLE>";
 print "<TR valign=bottom>";
 $max_v=1;$max_p=1;$max_h=1;$max_k=1;
@@ -3633,7 +3636,7 @@ foreach $key (@sortrobot) {
 print "$CENTER<a name=\"HOUR\"></a><BR>";
 $tab_titre="$message[20][$Lang]";
 &tab_head;
-print "<TR><TD><TABLE><TR>\n";
+print "<TR><TD align=center><TABLE><TR>\n";
 $max_p=0;$max_h=0;$max_k=0;
 for ($ix=0; $ix<=23; $ix++) {
   print "<TH width=16>$ix</TH>";
