@@ -1419,6 +1419,7 @@ sub Check_Config {
 	if (! $Message[127]) { $Message[127]="Refering sites"; }
 	if (! $Message[128]) { $Message[128]="Summary"; }
 	if (! $Message[129]) { $Message[129]="Exact value not available in 'Year' view"; }
+	if (! $Message[130]) { $Message[130]="Data value arrays"; }
 
 	# Correct ShowFlagLinks
 	if ($ShowFlagLinks eq "0") { $ShowFlagLinks = ""; }					# For backward compatibility
