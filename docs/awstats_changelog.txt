@@ -4,17 +4,26 @@ AWStats Changelog
 
 5.0
 
+- Complete rewrite of update process and code to read/save history files.
+  AWStats 5.0 is still compatible with history files processed with 4.x.
+  However if you use awstats 5.0 runtime to read statistics for old month
+  build with 4.x, speed will be a little bit reduce but will works correctly.
+  If you want to benefit the speed improvement of 5.0 (4 times faster when
+  reading stats, less memory use) you can delete all your history files and
+  restart the update process with 5.0 from your old log files (if you kept
+  them).
 - New feature: Support DNS cache files for DNS lookup.
 - New feature: Added Plugins support and several working plugins:
   A GMT correcter, A hash file DNS cache saver/reader...
 - New feature: Use framed report (new UseFramesWhenCGI parameter).
-- Rewrite code to read history files to reduce time and memory to load.
 - "Never updated" is now in language files.
 - Reduce number of global vars in code.
 - New feature: DefaultFile parameter accepts several values.
 - New parameter: LogSeparator for log files with exotic separators.
 - New tag for logfile: %WY is replaced by week number in year.
-- Added slovak language files.
+- Added slovak language files and updated a lot of language files.
+- Updated belarus flag.
+- Other minor changes and bug fixes.
 
 
 4.1
