@@ -5,29 +5,34 @@ $Revision$ - $Author$ - $Date$
 6.0
 
 Fixes:
+- Fixed bug 599388: Search engines are not detected if domain is IP
+  address.
+- Fixed bug 711758.
+- Fixed bug 812681: bad case for ENV expansion in awstats.conf.
+- Fixed bug 813908: Incomplete documentation
 - Fixed bug 816267: onedigit dayofmonth breaks syslog regex
 - Fixed bug 817287,830458: wrong regexp in Read_DNS_Cache subroutine
-- Fixed bug 599388: Google search engines was not detected if
-  domain was ip.
-- Fixed bug 812681: bad case for ENV expansion in awstats.conf.
+- Fixed bug 817388: lib/referer_spam.pm & lib/robots.pm
 - Fixed bug 818704: Warning in IPv6 plugin when no reverse DNS
+- Fixed bug 841877: regex bug for parsing log lines
 - Fixed value for ValueSMTPCodes if not defined in config file.
 - Fixed pb when country code is not same than lang code (example:
   estonian has lang code 'et' and country code 'ee').
 - Replaced Kb/visits to Kb/mails for mail log analysis.
 - Remove some warnings that appears when running perl -W 
-- Other minor bugs (typo erros and other).
+- Other minor bugs (814970,823064,823323,831438,836315 ).
 
 New features/improvements:
 - Increased speed by 10 to 20%.
 - Some changes to make AWStats to be XML compliant ready.
-  Need to set the new parameter UseXMLForOutput to 1 in config file.
-- Can use UA and HOST fields to build personalized ExtraSection reports.
+  Need to set the new parameter BuildReportFormat to 'xml' in config file.
 - A new search engine database to allow several "match id" for same
   search engine. Example: All google ip referer id are recognised.
+- Can use UA and HOST fields to build personalized ExtraSection reports.
 - Support for right to left languages. Added 'he' language.
-- Added two level of detection for LevelForRobotsDetection.
-- Added LevelForFileTypesDetection parameter.
+- Added LevelForSearchEnginesDetection parameter to choose between 2 possible
+  levels of detection for search engines (like LevelForRobotsDetection).
+- Added LevelForFileTypesDetection parameter (2 possible levels).
 - Added percent column for file types.
 - Added experimental graphapplet plugin (graph are built by applet).
 - Webmin module updated to 1.210

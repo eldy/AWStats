@@ -9,7 +9,7 @@ Fixes:
 - Better error messages
 
 New features/improvements:
-- Added UseXMLForOutput parameter in edit config area.
+- Added BuildHistoryFormat and BuildReportFormat parameter in edit config area.
 - Added LevelForFileTypesDetection parameter in edit config area.
 - Module setup parameter awstats_conf has been removed since now
   directories into wich you can scan/edit AWStats configuration files

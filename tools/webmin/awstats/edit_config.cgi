@@ -153,6 +153,10 @@ if ($in{'advanced'} == 1) {
 	print &hblink($text{'help_help'}, "help.cgi?param=AllowAccessFromWebToFollowingIPAddresses")." </td> </tr>\n";
 	print "<tr> <td><b>CreateDirDataIfNotExists</b></td> <td> <input size=10 name=CreateDirDataIfNotExists type=text value='$lconf->{'CreateDirDataIfNotExists'}'> </td> <td> ";
 	print &hblink($text{'help_help'}, "help.cgi?param=CreateDirDataIfNotExists")." </td> </tr>\n";
+	print "<tr> <td><b>BuildHistoryFormat</b></td> <td> <input size=10 name=BuildHistoryFormat type=text value='$lconf->{'BuildHistoryFormat'}'> </td> <td> ";
+	print &hblink($text{'help_help'}, "help.cgi?param=BuildHistoryFormat")." </td> </tr>\n";
+	print "<tr> <td><b>BuildReportFormat</b></td> <td> <input size=10 name=BuildReportFormat type=text value='$lconf->{'BuildReportFormat'}'> </td> <td> ";
+	print &hblink($text{'help_help'}, "help.cgi?param=BuildReportFormat")." </td> </tr>\n";
 	print "<tr> <td><b>SaveDatabaseFilesWithPermissionsForEveryone</b></td> <td> <input size=10 name=SaveDatabaseFilesWithPermissionsForEveryone type=text value='$lconf->{'SaveDatabaseFilesWithPermissionsForEveryone'}'> </td> <td> ";
 	print &hblink($text{'help_help'}, "help.cgi?param=SaveDatabaseFilesWithPermissionsForEveryone")." </td> </tr>\n";
 	print "<tr> <td><b>PurgeLogFile</b></td> <td> <input size=10 name=PurgeLogFile type=text value='$lconf->{'PurgeLogFile'}'> </td> <td> ";
@@ -238,8 +242,6 @@ print "<tr> <td colspan=3><br>OPTIONAL APPEARANCE SETUP SECTION (Not required bu
 if ($in{'advanced'} == 3) {
 	print "<tr> <td><b>UseFramesWhenCGI</b></td> <td> <input size=10 name=UseFramesWhenCGI type=text value='$lconf->{'UseFramesWhenCGI'}'> </td> <td> ";
 	print &hblink($text{'help_help'}, "help.cgi?param=UseFramesWhenCGI")." </td> </tr>\n";
-	print "<tr> <td><b>UseXMLForOutput</b></td> <td> <input size=10 name=UseXMLForOutput type=text value='$lconf->{'UseXMLForOutput'}'> </td> <td> ";
-	print &hblink($text{'help_help'}, "help.cgi?param=UseXMLForOutput")." </td> </tr>\n";
 	print "<tr> <td><b>DetailedReportsOnNewWindows</b></td> <td> <input size=10 name=DetailedReportsOnNewWindows type=text value='$lconf->{'DetailedReportsOnNewWindows'}'> </td> <td> ";
 	print &hblink($text{'help_help'}, "help.cgi?param=DetailedReportsOnNewWindows")." </td> </tr>\n";
 	print "<tr> <td><b>Expires</b></td> <td> <input size=10 name=Expires type=text value='$lconf->{'Expires'}'> </td> <td> ";
