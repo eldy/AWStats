@@ -7,9 +7,11 @@ $Revision$ - $Author$ - $Date$
 
 New features/improvements:
 - Added the geoip_isp_maxmind and geoip_org_maxmind plugin.
+- Details firefox versions.
 
 Fixes:
-- The geoip_city_maxmind plugin was sometimes bind.
+- The geoip_city_maxmind plugin was sometimes bind and towns with
+  space in names are reported correctly.
 - Removed an unknown security hole.
 - Removed an other unknown security hole (found by iDEFENSE).
 
