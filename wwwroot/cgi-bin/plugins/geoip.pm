@@ -24,13 +24,14 @@ use strict;no strict "refs";
 # <-----
 # ENTER HERE THE MINIMUM AWSTATS VERSION REQUIRED BY YOUR PLUGIN
 # AND THE NAME OF ALL FUNCTIONS THE PLUGIN MANAGE.
-my $PluginNeedAWStatsVersion="5.2";
+my $PluginNeedAWStatsVersion="5.4";
 my $PluginHooksFunctions="GetCountryCodeByAddr GetCountryCodeByName";
 # ----->
 
 # <-----
 # IF YOUR PLUGIN NEED GLOBAL VARIABLES, THEY MUST BE DECLARED HERE.
 use vars qw/
+%TmpDomainLookup
 $gi
 /;
 # ----->
@@ -47,6 +48,7 @@ sub Init_geoip {
 	# <-----
 	# YOU CAN ENTER HERE CODE TO INIT PLUGIN GLOBAL VARIABLES
 	debug(" InitParams=$InitParams",1);
+	%TmpDomainLookup=();
 #	$gi = Geo::IP->new(GEOIP_STANDARD);
 	$gi = Geo::IP->new(GEOIP_MEMORY_CACHE);
 	# ----->
@@ -59,22 +61,36 @@ sub Init_geoip {
 #-----------------------------------------------------------------------------
 # PLUGIN FUNTION GetCountryCodeByName_pluginname
 # UNIQUE: YES (Only one function GetCountryName can exists for all loaded plugins)
-# GetCountryName is called to translate a host name or ip to a country name.
+# GetCountryCodeByName is called to translate a host name into a country name.
 #-----------------------------------------------------------------------------
 sub GetCountryCodeByName_geoip {
 	# <-----
-	$_[0]=lc($gi->country_code_by_name($_[0]));
+	my $res=$TmpDomainLookup{$_[0]}||"";
+	if (! $res) {
+		$res=lc($gi->country_code_by_name($_[0]));
+		$TmpDomainLookup{$_[0]}=$res;
+		if ($Debug) { debug(" GetCountryCodeByName for $_[0]: $res",5); }
+	}
+	elsif ($Debug) { debug(" GetCountryCodeByName for $_[0]: Already resolved to $res",5); }
+	return $res;
 	# ----->
 }
 
 #-----------------------------------------------------------------------------
 # PLUGIN FUNTION GetCountryCodeByAddr_pluginname
 # UNIQUE: YES (Only one function GetCountryName can exists for all loaded plugins)
-# GetCountryName is called to translate a host name or ip to a country name.
+# GetCountryCodeByAddr is called to translate an ip into a country name.
 #-----------------------------------------------------------------------------
 sub GetCountryCodeByAddr_geoip {
 	# <-----
-	$_[0]=lc($gi->country_code_by_addr($_[0]));
+	my $res=$TmpDomainLookup{$_[0]}||"";
+	if (! $res) {
+		$res=lc($gi->country_code_by_addr($_[0]));
+		$TmpDomainLookup{$_[0]}=$res;
+		if ($Debug) { debug(" GetCountryCodeByAddr for $_[0]: $res",5); }
+	}
+	elsif ($Debug) { debug(" GetCountryCodeByAddr for $_[0]: Already resolved to $res",5); }
+	return $res;
 	# ----->
 }
 

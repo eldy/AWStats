@@ -278,7 +278,7 @@ use vars qw/
 %_unknownreferer_l %_unknownrefererbrowser_l
 %_emails_h %_emails_k %_emails_l %_emailr_h %_emailr_k %_emailr_l
 %val %nextval %egal
-%TmpDNSLookup %TmpDomainLookup %TmpOS %TmpRefererServer %TmpRobot %TmpBrowser
+%TmpDNSLookup %TmpOS %TmpRefererServer %TmpRobot %TmpBrowser
 %MyDNSTable
 /;
 %HTMLOutput = ();
@@ -301,7 +301,7 @@ use vars qw/
 %_unknownreferer_l = %_unknownrefererbrowser_l = ();
 %_emails_h = %_emails_k = %_emails_l = %_emailr_h = %_emailr_k = %_emailr_l = ();
 %val = %nextval = %egal = ();
-%TmpDNSLookup = %TmpDomainLookup = %TmpOS = %TmpRefererServer = %TmpRobot = %TmpBrowser = ();
+%TmpDNSLookup = %TmpOS = %TmpRefererServer = %TmpRobot = %TmpBrowser = ();
 # ---------- Init Tie::hash arrays --------
 # Didn't find a tie that increase speed
 #use Tie::StdHash;
@@ -5354,32 +5354,18 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 		# Analyze: Country (Top-level domain)
 		#------------------------------------
 		my $Domain='ip';
-		# Resolve Domain from hostname
+		# Set $_ to host and resolve Domain from it
 		if ($HostResolved eq '*') {
 			# $Host is an IP address and is not resolved (failed or not asked) or resolution gives an IP address
 			$_ = $Host;
-			# Resolve Domain from plugin
-			if ($PluginsLoaded{'GetCountryCodeByAddr'}{'geoip'}) { 
-				$Domain=$TmpDomainLookup{$Host};
-				if (! $Domain) {
-					$Domain=$Host;		# We store ip to resolve it into country
-					GetCountryCodeByAddr_geoip($Domain);
-					$TmpDomainLookup{$Host}=$Domain;
-				}
-			}
+			# Resolve Domain
+			if ($PluginsLoaded{'GetCountryCodeByAddr'}{'geoip'}) { $Domain=GetCountryCodeByAddr_geoip($_); }
 		}
 		else {
 			# $Host has been resolved or was already a host name
 			$_ = lc($HostResolved?$HostResolved:$Host);
-			# Resolve Domain from plugin
-			if ($PluginsLoaded{'GetCountryCodeByName'}{'geoip'}) { 
-				$Domain=$TmpDomainLookup{$_};
-				if (! $Domain) {
-					$Domain=$_;			# We store hostname to resolve it into country
-					GetCountryCodeByName_geoip($Domain);
-					$TmpDomainLookup{$_}=$Domain;
-				}
-			}
+			# Resolve Domain
+			if ($PluginsLoaded{'GetCountryCodeByName'}{'geoip'}) { $Domain=GetCountryCodeByName_geoip($_); }
 			elsif (/\.(\w+)$/) { $Domain=$1; }
 		}
 		# Store country
@@ -5791,7 +5777,6 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 				else {
 					# Clean tmp hash arrays
 					#%TmpDNSLookup = ();
-					%TmpDomainLookup = ();
 					%TmpOS = %TmpRefererServer = %TmpRobot = %TmpBrowser = ();
 					# We flush if perl is not activestate
 					print "Flush history file on disk\n";
@@ -5817,7 +5802,7 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 		debug(" _host_p:".(scalar keys %_host_p)." _host_h:".(scalar keys %_host_h)." _host_k:".(scalar keys %_host_k)." _host_l:".(scalar keys %_host_l)." _host_s:".(scalar keys %_host_s)." _host_u:".(scalar keys %_host_u)."\n",1);
 		debug(" _url_p:".(scalar keys %_url_p)." _url_k:".(scalar keys %_url_k)." _url_e:".(scalar keys %_url_e)." _url_x:".(scalar keys %_url_x)."\n",1);
 		debug(" _waithost_e:".(scalar keys %_waithost_e)." _waithost_l:".(scalar keys %_waithost_l)." _waithost_s:".(scalar keys %_waithost_s)." _waithost_u:".(scalar keys %_waithost_u)."\n",1);
-		debug("End of processing log file (AWStats memory cache is TmpDNSLookup=".(scalar keys %TmpDNSLookup)." TmpDomainLookup=".(scalar keys %TmpDomainLookup)." TmpBrowser=".(scalar keys %TmpBrowser)." TmpOS=".(scalar keys %TmpOS)." TmpRefererServer=".(scalar keys %TmpRefererServer)." TmpRobot=".(scalar keys %TmpRobot).")",1);
+		debug("End of processing log file (AWStats memory cache is TmpDNSLookup=".(scalar keys %TmpDNSLookup)." TmpBrowser=".(scalar keys %TmpBrowser)." TmpOS=".(scalar keys %TmpOS)." TmpRefererServer=".(scalar keys %TmpRefererServer)." TmpRobot=".(scalar keys %TmpRobot).")",1);
 	}
 
 
@@ -7709,17 +7694,6 @@ EOF
 		&BuildKeyList($MaxNbOfHostsShown,$MinHitHost,\%_host_h,\%_host_p);
 		foreach my $key (@keylist) {
 			print "<TR>";
-			# Add flag for IP if geoip plugin enabled
-#			if ($PluginsLoaded{'GetCountryCodeByAddr'}{'geoip'}) { 
-#				my $countrycode=$key;		# We store hostname or ip to resolve it into country
-#				GetCountryCodeByAddr_geoip($countrycode);
-#				if ($DomainsHashIDLib{$countrycode}) {
-#					print "<TD width=$WIDTHCOLICON><img src=\"$DirIcons\/flags\/$countrycode.png\" height=14 alt=\"".$DomainsHashIDLib{$countrycode}."\"></TD>";
-#				}
-#				else {
-#					print "<TD width=$WIDTHCOLICON> &nbsp; </TD>";
-#				}
-#			}
 			print "<TD CLASS=AWL>$key</TD>";
 			if ($ShowLinksToWhoIs && $LinksToWhoIs) { ShowWhoIsCell($key); }
 			if ($ShowHostsStats =~ /P/i) { print "<TD>".($_host_p{$key}||"&nbsp")."</TD>"; }

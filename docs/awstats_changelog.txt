@@ -17,6 +17,7 @@ New features/improvments:
 - Added URL in possible values for ExtraSection first column.
 
 Other/Documentation:
+- GeoIP memory cache code is now stored inside plugin code.
 - Added list of loaded plugins in AWStats copyright string.
 - Updated documentation.
 
