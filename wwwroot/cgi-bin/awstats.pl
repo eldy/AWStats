@@ -48,7 +48,7 @@ $DIR, $DNSLookup, $Debug, $DefaultFile,
 $DirCgi, $DirData, $DirIcons, $DirLang,
 $Extension, $FileConfig, $FileSuffix,
 $FirstTime, $HTMLEndSection, $Host, $HostAlias, $LastTime, $LastUpdate,
-$LogFile, $LogFormat, $LogFormatString, $Logo,
+$LogFile, $LogFormat, $LogFormatString, $Logo, $LogoLink,
 $MaxNbOfDays, $MaxNbOfHostsShown, $MaxNbOfKeywordsShown,
 $MaxNbOfPageShown, $MaxNbOfRefererShown, $MaxNbOfRobotShown,
 $MinHitFile, $MinHitHost, $MinHitKeyword, $MinHitRefer, $MinHitRobot,
@@ -72,7 +72,7 @@ $total_h, $total_k, $total_p) = ();
 %MonthBytes = %MonthHits = %MonthHostsKnown = %MonthHostsUnknown = %MonthPages = %MonthUnique = %MonthVisits =
 %listofyears = %monthlib = %monthnum = ();
 
-$VERSION="3.1 (build 24)";
+$VERSION="3.1 (build 27)";
 $Lang="en";
 
 # Default value
@@ -757,7 +757,7 @@ EOF
 		print "<tr valign=middle><td class=AWL width=150 style=\"font: 18px arial,verdana,helvetica; font-weight: bold\">AWStats\n";
 		Show_Flag_Links($Lang);
 		print "</td>\n";
-		print "<td class=AWL width=450><a href=\"http://awstats.sourceforge.net\" target=\"_newawstats\"><img src=\"$DirIcons/other/$Logo\" border=0 alt=\"$PROG Official Web Site\" title=\"$PROG Official Web Site\"></a></td></tr>\n";
+		print "<td class=AWL width=450><a href=\"$LogoLink\" target=\"_newawstats\"><img src=\"$DirIcons/other/$Logo\" border=0 alt=\"$PROG Official Web Site\" title=\"$PROG Official Web Site\"></a></td></tr>\n";
 		#print "<b><font face=\"verdana\" size=1><a href=\"$HomeURL\">HomePage</a> &#149\; <a href=\"javascript:history.back()\">Back</a></font></b><br>\n";
 		print "<tr><td class=AWL colspan=2>$Message[54]</td></tr>\n";
 		print "</table>\n";
@@ -977,7 +977,8 @@ sub Read_Config_File {
 		if ($param =~ /^MaxNbOfKeywordsShown/)  { $MaxNbOfKeywordsShown=$value; next; }
 		if ($param =~ /^MinHitKeyword/)         { $MinHitKeyword=$value; next; }
 		if ($param =~ /^SplitSearchString/)     { $SplitSearchString=$value; next; }
-		if ($param =~ /^Logo/)                  { $Logo=$value; next; }
+		if ($param =~ /^Logo$/)                 { $Logo=$value; next; }
+		if ($param =~ /^LogoLink/)              { $LogoLink=$value; next; }
 		if ($param =~ /^color_Background/)      { $color_Background=$value; next; }
 		if ($param =~ /^color_TableTitle/)      { $color_TableTitle=$value; next; }
 		if ($param =~ /^color_TableBGTitle/)    { $color_TableBGTitle=$value; next; }
@@ -1116,8 +1117,10 @@ sub Check_Config {
 	if ($MinHitRefer !~ /^[\d][\d]*/)            { $MinHitRefer=1; }
 	if ($MaxNbOfKeywordsShown !~ /^[\d][\d]*/)   { $MaxNbOfKeywordsShown=25; }
 	if ($MinHitKeyword !~ /^[\d][\d]*/)          { $MinHitKeyword=1; }
+	if ($MaxNbOfLastHosts !~ /^[\d][\d]*/)       { $MaxNbOfLastHosts=1000; }
 	if ($SplitSearchString !~ /[0-1]/)           { $SplitSearchString=0; }
 	if ($Logo eq "")                             { $Logo="awstats_logo1.png"; }
+	if ($LogoLink eq "")                         { $LogoLink="http://awstats.sourceforge.net"; }
 	$color_Background =~ s/#//g; if ($color_Background !~ /^[0-9|A-Z][0-9|A-Z]*$/i)           { $color_Background="FFFFFF";	}
 	$color_TableBGTitle =~ s/#//g; if ($color_TableBGTitle !~ /^[0-9|A-Z][0-9|A-Z]*$/i)       { $color_TableBGTitle="CCCCDD"; }
 	$color_TableTitle =~ s/#//g; if ($color_TableTitle !~ /^[0-9|A-Z][0-9|A-Z]*$/i)           { $color_TableTitle="000000"; }
@@ -1217,6 +1220,10 @@ sub Check_Config {
 	if ($Message[77] eq "") { $Message[77]="Top"; }
 	if ($Message[78] eq "") { $Message[78]="dd mmm yyyy - HH:MM"; }
 	if ($Message[79] eq "") { $Message[79]="Filter"; }
+	if ($Message[80] eq "") { $Message[80]="Full list"; }
+	if ($Message[81] eq "") { $Message[81]="Hosts"; }
+	if ($Message[82] eq "") { $Message[82]="Known"; }
+	if ($Message[83] eq "") { $Message[83]="Robots"; }
 }
 
 #--------------------------------------------------------------------
@@ -1272,7 +1279,7 @@ sub Read_History_File {
 		        	$_hostmachine_p{$field[0]}+=$field[1];
 		        	$_hostmachine_h{$field[0]}+=$field[2];
 		        	$_hostmachine_k{$field[0]}+=$field[3];
-		        	if (! $_hostmachine_l{$field[0]}) { $_hostmachine_l{$field[0]}=int($field[4]); }
+		        	if (! $_hostmachine_l{$field[0]} && $field[4] > 0) { $_hostmachine_l{$field[0]}=int($field[4]); }
 				}
 				$_=<HISTORY>;
 				chomp $_; s/\r//;
@@ -1292,7 +1299,7 @@ sub Read_History_File {
 			while ($field[0] ne "END_UNKNOWNIP") {
 				$count++;
 		    	$MonthUnique{$year.$month}++; $MonthHostsUnknown{$year.$month}++;
-				if ($part && ($UpdateStats || $QueryString =~ /output=unknownip/i)) {	# Init of $_unknownip_l not needed in this case
+				if ($part && ($UpdateStats || $QueryString =~ /output=unknownip/i || $QueryString =~ /output=lasthosts/i)) {	# Init of $_unknownip_l not needed in other cases
 		        	if (! $_unknownip_l{$field[0]}) { $_unknownip_l{$field[0]}=int($field[1]); }
 				}
 				$_=<HISTORY>;
@@ -1613,10 +1620,10 @@ sub Init_HashArray {
 	%_sider404_h = %_sider_h = %_sider_k = %_sider_p = %_unknownip_l = %_unknownreferer_l =	%_unknownrefererbrowser_l = ();
 }
 
-#------------------------------------------------------------------------------
+#--------------------------------------------------------------------
 # Function:      Show flags for 5 major languages
 # Input:         Languade id (en, fr, ...)
-#------------------------------------------------------------------------------
+#--------------------------------------------------------------------
 sub Show_Flag_Links {
 	my $Lang = shift;
 	my @lngcode = ();
@@ -1670,18 +1677,20 @@ sub Format_Date {
 	return "$dateformat";
 }
 
-#------------------------------------------------------------------------------
+#--------------------------------------------------------------------
 # Function:      This function do nothing. Can be filled by code to change URL list feature
 # Input:         $URLFilter $QueryString %_sider_p
 # Output:        Modified %_sider_p
-#------------------------------------------------------------------------------
+#--------------------------------------------------------------------
 sub AddOn_Filter {
 }
 
 
-#-------------------------------------------------------
+
+
+#--------------------------------------------------------------------
 # MAIN
-#-------------------------------------------------------
+#--------------------------------------------------------------------
 if ($ENV{"GATEWAY_INTERFACE"} ne "") {	# Run from a browser
 	print("Content-type: text/html\n\n\n");
 	if ($ENV{"CONTENT_LENGTH"} ne "") {
@@ -1692,8 +1701,8 @@ if ($ENV{"GATEWAY_INTERFACE"} ne "") {	# Run from a browser
 		$QueryString = $ENV{"QUERY_STRING"};
 	}
 	$QueryString =~ s/<script.*$//i;						# This is to avoid 'Cross Site Scripting attacks'
-	if ($QueryString =~ /site=/)   { $SiteConfig=$QueryString; $SiteConfig =~ s/.*site=//;   $SiteConfig =~ s/&.*//; $SiteConfig =~ s/ .*//; }	# For backward compatibility
-	if ($QueryString =~ /config=/) { $SiteConfig=$QueryString; $SiteConfig =~ s/.*config=//; $SiteConfig =~ s/&.*//; $SiteConfig =~ s/ .*//; }
+	if ($QueryString =~ /site=/i)   { $SiteConfig=$QueryString; $SiteConfig =~ s/.*site=//i;   $SiteConfig =~ s/&.*//; $SiteConfig =~ s/ .*//; }	# For backward compatibility
+	if ($QueryString =~ /config=/i) { $SiteConfig=$QueryString; $SiteConfig =~ s/.*config=//i; $SiteConfig =~ s/&.*//; $SiteConfig =~ s/ .*//; }
 	$UpdateStats=0; $HTMLOutput=1;							# No update but report by default when run from a browser
 	if ($QueryString =~ /update=1/i)   { $UpdateStats=1; }					# Update is required
 }
@@ -1701,15 +1710,15 @@ else {									# Run from command line
 	if ($ARGV[0] eq "-h") { $SiteConfig = $ARGV[1]; }		# Kept for backward compatibility but useless
 	$QueryString=""; for (0..@ARGV-1) { $QueryString .= "$ARGV[$_] "; }
 	$QueryString =~ s/<script.*$//i;						# This is to avoid 'Cross Site Scripting attacks'
-	if ($QueryString =~ /site=/)   { $SiteConfig=$QueryString; $SiteConfig =~ s/.*site=//;   $SiteConfig =~ s/&.*//; $SiteConfig =~ s/ .*//; }	# For backward compatibility
-	if ($QueryString =~ /config=/) { $SiteConfig=$QueryString; $SiteConfig =~ s/.*config=//; $SiteConfig =~ s/&.*//; $SiteConfig =~ s/ .*//; }
+	if ($QueryString =~ /site=/i)   { $SiteConfig=$QueryString; $SiteConfig =~ s/.*site=//i;   $SiteConfig =~ s/&.*//; $SiteConfig =~ s/ .*//; }	# For backward compatibility
+	if ($QueryString =~ /config=/i) { $SiteConfig=$QueryString; $SiteConfig =~ s/.*config=//i; $SiteConfig =~ s/&.*//; $SiteConfig =~ s/ .*//; }
 	$UpdateStats=1;	$HTMLOutput=0;							# Update with no report by default when run from command line
 	if ($QueryString =~ /-output/i)    { $UpdateStats=0; $HTMLOutput=1; }	# Report and no update if an output is required
 	if ($QueryString =~ /-update/i)    { $UpdateStats=1; }					# Except if -update specified
 	if ($QueryString =~ /-showsteps/i) { $ShowSteps=1; } else { $ShowSteps=0; }
 }
 if ($QueryString =~ /sort=/i)  		{ $Sort=$QueryString;  $Sort =~ s/.*sort=//i;  $Sort =~ s/&.*//;  $Sort =~ s/ .*//; }
-if ($QueryString =~ /debug=/i) 		{ $Debug=$QueryString; $Debug =~ s/.*debug=//; $Debug =~ s/&.*//; $Debug =~ s/ .*//; }
+if ($QueryString =~ /debug=/i) 		{ $Debug=$QueryString; $Debug =~ s/.*debug=//i; $Debug =~ s/&.*//; $Debug =~ s/ .*//; }
 if ($QueryString =~ /output=urldetail:/i) 	{	
 	# A filter can be defined with output=urldetail to reduce number of lines read and showed
 	$URLFilter=$QueryString; $URLFilter =~ s/.*output=urldetail://; $URLFilter =~ s/&.*//; $URLFilter =~ s/ .*//;
@@ -2556,15 +2565,15 @@ if ($HTMLOutput) {
 		}
 	</script>
 EOF
-	
+
 
 	# INFO
 	#---------------------------------------------------------------------
 	print "$CENTER<a name=\"MENU\">&nbsp;</a><BR>";
 	print "<table>";
-	print "<tr><th class=AWL>$Message[7] : </th><td class=AWL><font style=\"font: 14px;\">$SiteToAnalyze</font></th></tr>";
+	print "<tr><th class=AWL>$Message[7] : </th><td class=AWL><font style=\"font-size: 14px;\">$SiteToAnalyze</font></th></tr>";
 	print "<tr><th class=AWL valign=top>$Message[35] : </th>";
-	print "<td class=AWL><font style=\"font: 14px;\">";
+	print "<td class=AWL><font style=\"font-size: 14px;\">";
 	foreach my $key (sort keys %LastUpdate) { if ($LastUpdate < $LastUpdate{$key}) { $LastUpdate = $LastUpdate{$key}; } }
 	if ($LastUpdate) { print Format_Date($LastUpdate); }
 	else { print "<font color=#880000>Never updated</font>"; }
@@ -2593,17 +2602,90 @@ EOF
 	print "<br>\n\n";
 	
 	
+	if ($QueryString =~ /output=lasthosts/i) {
+		print "$CENTER<a name=\"HOSTSLIST\">&nbsp;</a><BR>";
+		&tab_head("$Message[9]");
+		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[81] + $Message[83]</TH><TH>$Message[9]</TH></TR>\n";
+		my $count=0; my $rest=0;
+		# Create %lasthost = %_unknownip_l + %_hostmachine_l + %_robot_l
+		my %lasthosts=%_unknownip_l;
+		foreach $key (keys %_hostmachine_l) { $lasthosts{$key}=$_hostmachine_l{$key}; }
+		foreach $key (keys %_robot_l) { $lasthosts{$key}=$_robot_l{$key}; }
+		foreach my $key (sort { $SortDir*$lasthosts{$a} <=> $SortDir*$lasthosts{$b} } keys %lasthosts) {
+			if ($count>=$MAXROWS || $count>=$MaxNbOfLastHosts) { $rest++; next; }
+			$key =~ s/<script.*$//gi;				# This is to avoid 'Cross Site Scripting attacks'
+			print "<tr><td>$key </td><td>".Format_Date($lasthosts{$key})."</td></tr>\n";
+			$count++;
+		}
+		if ($rest) {
+			print "<tr><td>$Message[2]</td><td>...</td></tr>\n";
+		}
+		&tab_end;
+		&html_end;
+		exit(0);
+	}
+	if ($QueryString =~ /output=urldetail/i) {
+		AddOn_Filter();		# This function do nothing in standard version.
+		print "$CENTER<a name=\"URLDETAIL\">&nbsp;</a><BR>";
+		&tab_head($Message[19]);
+		if ($URLFilter) { print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[79]: <b>$URLFilter</b> - ".(scalar keys %_sider_p)." $Message[28]</TH><TH bgcolor=\"#$color_p\">&nbsp;$Message[29]&nbsp;</TH><TH>&nbsp;</TH></TR>\n"; }
+		else { print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>".(scalar keys %_sider_p)."&nbsp; $Message[28]</TH><TH bgcolor=\"#$color_p\">&nbsp;$Message[29]&nbsp;</TH><TH>&nbsp;</TH></TR>\n"; }
+		my $max_p=1; foreach my $key (values %_sider_p) { if ($key > $max_p) { $max_p = $key; } }
+		my $count=0; my $rest=0;
+		foreach my $key (sort { $SortDir*$_sider_p{$a} <=> $SortDir*$_sider_p{$b} } keys (%_sider_p)) {
+			if ($count>=$MAXROWS) { $rest+=$_sider_p{$key}; next; }
+			if ($_sider_p{$key}<$MinHitFile) { $rest+=$_sider_p{$key}; next; }
+	    	print "<TR><TD CLASS=AWL>";
+			my $nompage=$Aliases{$key};
+			if ($nompage eq "") { $nompage=$key; }
+			if (length($nompage)>$MaxLengthOfURL) { $nompage=substr($nompage,0,$MaxLengthOfURL)."..."; }
+		    if ($ShowLinksOnUrl) { print "<A HREF=\"http://$SiteToAnalyze$key\">$nompage</A>"; }
+		    else              	 { print "$nompage"; }
+		    my $bredde=int($BarWidth*$_sider_p{$key}/$max_p)+1;
+			print "</TD><TD>$_sider_p{$key}</TD><TD CLASS=AWL><IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_p\" WIDTH=$bredde HEIGHT=8></TD></TR>\n";
+			$count++;
+		}
+		&tab_end;
+		&html_end;
+		exit(0);
+	}
 	if ($QueryString =~ /output=unknownip/i) {
 		print "$CENTER<a name=\"UNKOWNIP\">&nbsp;</a><BR>";
 		&tab_head($Message[45]);
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[48] (".(scalar keys %_unknownip_l).")</TH><TH>$Message[9]</TH>\n";
 		my $count=0; my $rest=0;
 		foreach my $key (sort { $SortDir*$_unknownip_l{$a} <=> $SortDir*$_unknownip_l{$b} } keys (%_unknownip_l)) {
-			if ($count>=$MAXROWS) { $rest+=$_sider404_h{$key}; next; }
+			if ($count>=$MAXROWS) { $rest++; next; }
 			$key =~ s/<script.*$//gi;				# This is to avoid 'Cross Site Scripting attacks'
 			print "<tr><td>$key</td><td>".Format_Date($_unknownip_l{$key})."</td></tr>\n";
 			$count++;
+		}
+		&tab_end;
+		&html_end;
+		exit(0);
+	}
+	if ($QueryString =~ /output=browserdetail/i) {
+		print "$CENTER<a name=\"NETSCAPE\">&nbsp;</a><BR>";
+		&tab_head("$Message[33]<br><img src=\"$DirIcons/browser/netscape.png\">");
+		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[58]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH bgcolor=\"#$color_h\" width=40>$Message[15]</TH></TR>\n";
+		for (my $i=1; $i<=$#_nsver_h; $i++) {
+			my $h="&nbsp;"; my $p="&nbsp;";
+			if ($_nsver_h[$i] > 0 && $_browser_h{"netscape"} > 0) {
+				$h=$_nsver_h[$i]; $p=int($_nsver_h[$i]/$_browser_h{"netscape"}*1000)/10; $p="$p&nbsp;%";
 			}
+			print "<TR><TD CLASS=AWL>Mozilla/$i.xx</TD><TD>$h</TD><TD>$p</TD></TR>\n";
+		}
+		&tab_end;
+		print "<a name=\"MSIE\">&nbsp;</a><BR>";
+		&tab_head("$Message[34]<br><img src=\"$DirIcons/browser/msie.png\">");
+		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[58]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH bgcolor=\"#$color_h\" width=40>$Message[15]</TH></TR>\n";
+		for ($i=1; $i<=$#_msiever_h; $i++) {
+			my $h="&nbsp;"; my $p="&nbsp;";
+			if ($_msiever_h[$i] > 0 && $_browser_h{"msie"} > 0) {
+				$h=$_msiever_h[$i]; $p=int($_msiever_h[$i]/$_browser_h{"msie"}*1000)/10; $p="$p&nbsp;%";
+			}
+			print "<TR><TD CLASS=AWL>MSIE/$i.xx</TD><TD>$h</TD><TD>$p</TD></TR>\n";
+		}
 		&tab_end;
 		&html_end;
 		exit(0);
@@ -2650,57 +2732,6 @@ EOF
 			#if (length($nompage)>$MaxLengthOfURL) { $nompage=substr($nompage,0,$MaxLengthOfURL)."..."; }
 			my $referer=$_referer404_h{$key}; $referer =~ s/<script.*$//gi;	# This is to avoid 'Cross Site Scripting attacks'
 			print "<tr><td CLASS=AWL>$nompage</td><td>$_sider404_h{$key}</td><td>$referer&nbsp;</td></tr>\n";
-			$count++;
-		}
-		&tab_end;
-		&html_end;
-		exit(0);
-	}
-	if ($QueryString =~ /output=browserdetail/i) {
-		print "$CENTER<a name=\"NETSCAPE\">&nbsp;</a><BR>";
-		&tab_head("$Message[33]<br><img src=\"$DirIcons/browser/netscape.png\">");
-		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[58]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH bgcolor=\"#$color_h\" width=40>$Message[15]</TH></TR>\n";
-		for (my $i=1; $i<=$#_nsver_h; $i++) {
-			my $h="&nbsp;"; my $p="&nbsp;";
-			if ($_nsver_h[$i] > 0 && $_browser_h{"netscape"} > 0) {
-				$h=$_nsver_h[$i]; $p=int($_nsver_h[$i]/$_browser_h{"netscape"}*1000)/10; $p="$p&nbsp;%";
-			}
-			print "<TR><TD CLASS=AWL>Mozilla/$i.xx</TD><TD>$h</TD><TD>$p</TD></TR>\n";
-		}
-		&tab_end;
-		print "<a name=\"MSIE\">&nbsp;</a><BR>";
-		&tab_head("$Message[34]<br><img src=\"$DirIcons/browser/msie.png\">");
-		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[58]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH bgcolor=\"#$color_h\" width=40>$Message[15]</TH></TR>\n";
-		for ($i=1; $i<=$#_msiever_h; $i++) {
-			my $h="&nbsp;"; my $p="&nbsp;";
-			if ($_msiever_h[$i] > 0 && $_browser_h{"msie"} > 0) {
-				$h=$_msiever_h[$i]; $p=int($_msiever_h[$i]/$_browser_h{"msie"}*1000)/10; $p="$p&nbsp;%";
-			}
-			print "<TR><TD CLASS=AWL>MSIE/$i.xx</TD><TD>$h</TD><TD>$p</TD></TR>\n";
-		}
-		&tab_end;
-		&html_end;
-		exit(0);
-	}
-	if ($QueryString =~ /output=urldetail/i) {
-		AddOn_Filter();		# This function do nothing in standard version.
-		print "$CENTER<a name=\"URLDETAIL\">&nbsp;</a><BR>";
-		&tab_head($Message[19]);
-		if ($URLFilter) { print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[79]: <b>$URLFilter</b> - ".(scalar keys %_sider_p)." $Message[28]</TH><TH bgcolor=\"#$color_p\">&nbsp;$Message[29]&nbsp;</TH><TH>&nbsp;</TH></TR>\n"; }
-		else { print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>".(scalar keys %_sider_p)."&nbsp; $Message[28]</TH><TH bgcolor=\"#$color_p\">&nbsp;$Message[29]&nbsp;</TH><TH>&nbsp;</TH></TR>\n"; }
-		my $max_p=1; foreach my $key (values %_sider_p) { if ($key > $max_p) { $max_p = $key; } }
-		my $count=0; my $rest=0;
-		foreach my $key (sort { $SortDir*$_sider_p{$a} <=> $SortDir*$_sider_p{$b} } keys (%_sider_p)) {
-			if ($count>=$MAXROWS) { $rest+=$_sider_p{$key}; next; }
-			if ($_sider_p{$key}<$MinHitFile) { $rest+=$_sider_p{$key}; next; }
-	    	print "<TR><TD CLASS=AWL>";
-			my $nompage=$Aliases{$key};
-			if ($nompage eq "") { $nompage=$key; }
-			if (length($nompage)>$MaxLengthOfURL) { $nompage=substr($nompage,0,$MaxLengthOfURL)."..."; }
-		    if ($ShowLinksOnUrl) { print "<A HREF=\"http://$SiteToAnalyze$key\">$nompage</A>"; }
-		    else              	 { print "$nompage"; }
-		    my $bredde=int($BarWidth*$_sider_p{$key}/$max_p)+1;
-			print "</TD><TD>$_sider_p{$key}</TD><TD CLASS=AWL><IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_p\" WIDTH=$bredde HEIGHT=8></TD></TR>\n";
 			$count++;
 		}
 		&tab_end;
@@ -2915,15 +2946,15 @@ EOF
 	#--------------------------
 	print "$CENTER<a name=\"VISITOR\">&nbsp;</a><BR>";
 	$MaxNbOfHostsShown = $TotalHostsKnown+($_hostmachine_h{"Unknown"}?1:0) if $MaxNbOfHostsShown > $TotalHostsKnown;
-	&tab_head("$Message[77] $MaxNbOfHostsShown $Message[55] ".($TotalHostsKnown+$TotalHostsUnknown)." $Message[26] ($TotalUnique $Message[11])");
-	print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[18]</TH><TH bgcolor=\"#$color_p\" width=80>$Message[56]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH bgcolor=\"#$color_k\">$Message[75]</TH><TH>$Message[9]</TH></TR>\n";
+	&tab_head("$Message[77] $MaxNbOfHostsShown $Message[55] ".($TotalHostsKnown+$TotalHostsUnknown)." $Message[26] ($TotalUnique $Message[11]) &nbsp; - &nbsp; <a href=\"$DirCgi$PROG.$Extension?output=lasthosts&".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang\">$Message[9]</a>");
+	print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[81] : $TotalHostsKnown $Message[82], $TotalHostsUnknown $Message[1]</TH><TH bgcolor=\"#$color_p\" width=80>$Message[56]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH bgcolor=\"#$color_k\">$Message[75]</TH><TH>$Message[9]</TH></TR>\n";
 	my $total_p=0;my $total_h=0;my $total_k=0;
 	my $count=0;
 	foreach my $key (sort { $SortDir*$_hostmachine_p{$a} <=> $SortDir*$_hostmachine_p{$b} } keys (%_hostmachine_p)) {
 		if ($count>=$MaxNbOfPageShown) { last; }
 		if ($_hostmachine_h{$key}<$MinHitHost) { last; }
 		if ($key eq "Unknown") {
-			print "<TR><TD CLASS=AWL><a href=\"$DirCgi$PROG.$Extension?output=unknownip&".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang\">$Message[1]</a> &nbsp; ($TotalHostsUnknown)</TD><TD>$_hostmachine_p{$key}</TD><TD>$_hostmachine_h{$key}</TD><TD>".Format_Bytes($_hostmachine_k{$key})."</TD><TD><a href=\"$DirCgi$PROG.$Extension?output=unknownip&".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang\">$Message[3]</a></TD></TR>\n";
+			print "<TR><TD CLASS=AWL><a href=\"$DirCgi$PROG.$Extension?output=unknownip&".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang\">$Message[1]</a></TD><TD>$_hostmachine_p{$key}</TD><TD>$_hostmachine_h{$key}</TD><TD>".Format_Bytes($_hostmachine_k{$key})."</TD><TD><a href=\"$DirCgi$PROG.$Extension?output=unknownip&".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang\">$Message[3]</a></TD></TR>\n";
 			}
 		else {
 			print "<tr><td CLASS=AWL>$key</td><TD>$_hostmachine_p{$key}</TD><TD>$_hostmachine_h{$key}</TD><TD>".Format_Bytes($_hostmachine_k{$key})."</TD>";
@@ -2949,7 +2980,7 @@ EOF
 	#----------------------------
 	print "$CENTER<a name=\"ROBOTS\">&nbsp;</a><BR>";
 	&tab_head($Message[53]);
-	print "<TR bgcolor=\"#$color_TableBGRowTitle\" onmouseover=\"ShowTooltip(16);\" onmouseout=\"HideTooltip(16);\"><TH>Robot</TH><TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH>$Message[9]</TH></TR>\n";
+	print "<TR bgcolor=\"#$color_TableBGRowTitle\" onmouseover=\"ShowTooltip(16);\" onmouseout=\"HideTooltip(16);\"><TH>$Message[83]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH>$Message[9]</TH></TR>\n";
 	my $count=0;
 	foreach my $key (sort { $SortDir*$_robot_h{$a} <=> $SortDir*$_robot_h{$b} } keys (%_robot_h)) {
 		print "<tr><td CLASS=AWL>$RobotHash{$key}</td><td>$_robot_h{$key}</td><td>".Format_Date($_robot_l{$key})."</td></tr>";
