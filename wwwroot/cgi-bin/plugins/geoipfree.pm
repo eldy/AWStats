@@ -93,5 +93,10 @@ sub GetCountryCodeByAddr_geoipfree {
 	# ----->
 }
 
-
 1;	# Do not remove this line
+
+
+# Internal IP address:
+# 10.0.x.x
+# 192.168.0.x
+
