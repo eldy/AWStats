@@ -62,10 +62,10 @@ $color_TableTitle, $color_h, $color_k, $color_link, $color_p, $color_s, $color_v
 $color_w, $count, $date, $daycon, $endmonth, $found, $foundrobot,
 $h, $hourcon, $hr, $internal_link, $ix, $keep, $key, $kilo, $lien, $line,
 $max, $max_h, $max_k, $max_p, $max_v, $mincon, $monthcon, $monthfile, $monthix,
-$monthtoprocess, $nameicon, $new, $nompage, $nowday, $nowisdst, $nowmin, $nowmonth,
-$nowsec, $nowsmallyear, $nowwday, $nowyday, $nowyear, $p, $page, $param,
+$monthtoprocess, $nameicon, $new, $nompage, $nowday, $nowmin, $nowmonth,
+$nowsec, $nowsmallyear, $nowyear, $p, $page, $param,
 $paramtoexclude, $rest, $rest_h, $rest_k, $rest_p,
-$savetime, $savetmp, $tab_titre, $timeconnexion, $total_h, $total_k, $total_p,
+$tab_titre, $timeconnexion, $total_h, $total_k, $total_p,
 $word, $yearcon, $yearfile, $yearmonthfile, $yeartoprocess) = ();
 # ---------- Init arrays --------
 %DayBytes = %DayHits = %DayPage = %DayUnique = %DayVisits =
@@ -2086,7 +2086,7 @@ if (($ENV{"GATEWAY_INTERFACE"} eq "") && ($SiteToAnalyze eq "")) {
 	}
 
 # Get current time
-($nowsec,$nowmin,$nowhour,$nowday,$nowmonth,$nowyear,$nowwday,$nowyday,$nowisdst) = localtime(time);
+($nowsec,$nowmin,$nowhour,$nowday,$nowmonth,$nowyear) = localtime(time);
 if ($nowyear < 100) { $nowyear+=2000; } else { $nowyear+=1900; }
 $nowsmallyear=$nowyear;$nowsmallyear =~ s/^..//;
 if (++$nowmonth < 10) { $nowmonth = "0$nowmonth"; }
@@ -3472,14 +3472,14 @@ for ($ix=1; $ix<=12; $ix++) {
 	if ($MonthHits{$YearRequired.$monthix} > $max_h)   { $max_h=$MonthHits{$YearRequired.$monthix}; }
 	if ($MonthBytes{$YearRequired.$monthix} > $max_k)  { $max_k=$MonthBytes{$YearRequired.$monthix}; }
 }
-
 for ($ix=1; $ix<=12; $ix++) {
 	$monthix=$ix; if ($monthix < 10) { $monthix="0$monthix"; }
-	$bredde_v=$MonthVisits{$YearRequired.$monthix}/$max_v*$BarHeight/2;
-	$bredde_u=$MonthUnique{$YearRequired.$monthix}/$max_v*$BarHeight/2;
-	$bredde_p=$MonthPage{$YearRequired.$monthix}/$max_h*$BarHeight/2;
-	$bredde_h=$MonthHits{$YearRequired.$monthix}/$max_h*$BarHeight/2;
-	$bredde_k=$MonthBytes{$YearRequired.$monthix}/$max_k*$BarHeight/2;
+	$bredde_u=0;$bredde_v=0;$bredde_p=0;$bredde_h=0;$bredde_k=0;
+	if ($max_v > 0) { $bredde_v=$MonthVisits{$YearRequired.$monthix}/$max_v*$BarHeight/2; }
+	if ($max_v > 0) { $bredde_u=$MonthUnique{$YearRequired.$monthix}/$max_v*$BarHeight/2; }
+	if ($max_h > 0) { $bredde_p=$MonthPage{$YearRequired.$monthix}/$max_h*$BarHeight/2; }
+	if ($max_h > 0) { $bredde_h=$MonthHits{$YearRequired.$monthix}/$max_h*$BarHeight/2; }
+	if ($max_k > 0) { $bredde_k=$MonthBytes{$YearRequired.$monthix}/$max_k*$BarHeight/2; }
 	$kilo=int(($MonthBytes{$YearRequired.$monthix}/1024)*100)/100;
 	print "<TD>";
 	print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_v\" HEIGHT=$bredde_v WIDTH=8 ALT=\"$message[10][$Lang]: $MonthVisits{$YearRequired.$monthix}\" title=\"$message[10][$Lang]: $MonthVisits{$YearRequired.$monthix}\">";
@@ -3490,7 +3490,6 @@ for ($ix=1; $ix<=12; $ix++) {
 	print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_k\" HEIGHT=$bredde_k WIDTH=8 ALT=\"$message[44][$Lang]: $kilo\" title=\"$message[44][$Lang]: $kilo\">";
 	print "</TD>\n";
 }
-
 print "</TR><TR>";
 for ($ix=1; $ix<=12; $ix++) {
 	$monthix=$ix; if ($monthix < 10) { $monthix="0$monthix"; }
@@ -3515,6 +3514,7 @@ if ($SortDir<0) { $max_k=$_domener_k{$sortdomains_k[0]}; }
 else            { $max_k=$_domener_k{$sortdomains_k[$#sortdomains_k]}; }
 $count=0;$total_p=0;$total_h=0;$total_k=0;
 foreach $key (@sortdomains_p) {
+	$bredde_p=0;$bredde_h=0;$bredde_k=0;
 	if ($max_h > 0) { $bredde_p=$BarWidth*$_domener_p{$key}/$max_h+1; }	# use max_h to enable to compare pages with hits
 	if ($max_h > 0) { $bredde_h=$BarWidth*$_domener_h{$key}/$max_h+1; }
 	if ($max_k > 0) { $bredde_k=$BarWidth*$_domener_k{$key}/$max_k+1; }
@@ -3539,13 +3539,18 @@ foreach $key (@sortdomains_p) {
 }
 $rest_p=$TotalPages-$total_p;
 $rest_h=$TotalHits-$total_h;
-$rest_k=int((($TotalBytes-$total_k)/1024)*100)/100;
+$rest_k=$TotalBytes-$total_k;
 if ($rest_p > 0) { 	# All other domains (known or not)
+	$bredde_p=0;$bredde_h=0;$bredde_k=0;
+	if ($max_h > 0) { $bredde_p=$BarWidth*$rest_p/$max_h+1; }	# use max_h to enable to compare pages with hits
+	if ($max_h > 0) { $bredde_h=$BarWidth*$rest_h/$max_h+1; }
+	if ($max_k > 0) { $bredde_k=$BarWidth*$rest_k/$max_k+1; }
+	$kilo=int(($rest_k{$key}/1024)*100)/100;
 	print "<TR><TD colspan=3 CLASS=LEFT><font color=blue>$message[2][$Lang]</font></TD><TD>$rest_p</TD><TD>$rest_h</TD><TD>$rest_k</TD>\n";
 	print "<TD CLASS=LEFT>";
-	print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_p\" WIDTH=$bredde_p HEIGHT=6 ALT=\"$message[56][$Lang]: $_rest_p\" title=\"$message[56][$Lang]: $_rest_p\"><br>\n";
-	print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_h\" WIDTH=$bredde_h HEIGHT=6 ALT=\"$message[57][$Lang]: $_rest_h\" title=\"$message[57][$Lang]: $_rest_h\"><br>\n";
-	print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_k\" WIDTH=$bredde_k HEIGHT=6 ALT=\"$message[44][$Lang]: $_rest_k\" title=\"$message[44][$Lang]: $_rest_k\">";
+	print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_p\" WIDTH=$bredde_p HEIGHT=6 ALT=\"$message[56][$Lang]: $rest_p\" title=\"$message[56][$Lang]: $rest_p\"><br>\n";
+	print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_h\" WIDTH=$bredde_h HEIGHT=6 ALT=\"$message[57][$Lang]: $rest_h\" title=\"$message[57][$Lang]: $rest_h\"><br>\n";
+	print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_k\" WIDTH=$bredde_k HEIGHT=6 ALT=\"$message[44][$Lang]: $kilo\" title=\"$message[44][$Lang]: $rest_k\">";
 	print "</TD></TR>\n";
 	}
 &tab_end;
