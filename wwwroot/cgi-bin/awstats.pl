@@ -26,10 +26,10 @@ my $VERSION="5.0 (build $REVISION)";
 use vars qw/
 $DEBUGFORCED $NBOFLINESFORBENCHMARK $FRAMEWIDTH $NBOFLASTUPDATELOOKUPTOSAVE
 /;
-$DEBUGFORCED=0;					# Force debug level to log lesser level into debug.log file (Keep this value to 0)
-$NBOFLINESFORBENCHMARK=5000;	# Benchmark info are printing every NBOFLINESFORBENCHMARK lines
-$FRAMEWIDTH=260;
-$NBOFLASTUPDATELOOKUPTOSAVE=200;
+$DEBUGFORCED=0;						# Force debug level to log lesser level into debug.log file (Keep this value to 0)
+$NBOFLINESFORBENCHMARK=5000;		# Benchmark info are printing every NBOFLINESFORBENCHMARK lines
+$FRAMEWIDTH=260;					# Width of left frame when UseFramesWhenCGI is on
+$NBOFLASTUPDATELOOKUPTOSAVE=200;	# Nb of records to save in DNS last update cache file
 # Plugins variable
 use vars qw/ $Plugin_readgz $Plugin_graph3d $Plugin_hashfiles $Plugin_timehires $Plugin_timezone $Plugin_etf1 /;
 $Plugin_readgz=$Plugin_graph3d=$Plugin_hashfiles=$Plugin_timehires=$Plugin_timezone=$Plugin_etf1=0;
@@ -147,11 +147,11 @@ $LevelForSearchEnginesDetection, $LevelForKeywordsDetection)=
 (2,1,1,1,1,1);
 use vars qw/
 $DirCgi $DirData $DirIcons $DirLang $AWScript $ArchiveFileName
-@DefaultFile $HTMLHeadSection $HTMLEndSection $LinksToWhoIs
+$HTMLHeadSection $HTMLEndSection $LinksToWhoIs
 $LogFile $LogFormat $LogSeparator $Logo $LogoLink $StyleSheet $WrapperScript $SiteDomain
 /;
 ($DirCgi, $DirData, $DirIcons, $DirLang, $AWScript, $ArchiveFileName,
-@DefaultFile, $HTMLHeadSection, $HTMLEndSection, $LinksToWhoIs,
+$HTMLHeadSection, $HTMLEndSection, $LinksToWhoIs,
 $LogFile, $LogFormat, $LogSeparator, $Logo, $LogoLink, $StyleSheet, $WrapperScript, $SiteDomain)=
 ("","","","","","","","","","","","","","","","","","");
 use vars qw/
@@ -201,7 +201,7 @@ use vars qw/
 /;
 use vars qw/
 @SessionsRange @Message @HostAliases @AllowAccessFromWebToFollowingAuthenticatedUsers
-@OnlyFiles @SkipDNSLookupFor @SkipFiles @SkipHosts @PluginsToLoad
+@DefaultFile @OnlyFiles @SkipDNSLookupFor @SkipFiles @SkipHosts @PluginsToLoad
 @DOWIndex @RobotsSearchIDOrder
 @_msiever_h @_nsver_h @_from_p @_from_h @_time_p @_time_h @_time_k
 @keylist
@@ -210,7 +210,7 @@ use vars qw/
 @Message=();
 @HostAliases=();
 @AllowAccessFromWebToFollowingAuthenticatedUsers=();
-@OnlyFiles = @SkipDNSLookupFor = @SkipFiles = @SkipHosts = @PluginsToLoad = ();
+@DefaultFile = @OnlyFiles = @SkipDNSLookupFor = @SkipFiles = @SkipHosts = @PluginsToLoad = ();
 @DOWIndex = @RobotsSearchIDOrder = ();
 @_msiever_h = @_nsver_h = ();
 @_from_p = @_from_h = ();
@@ -224,7 +224,7 @@ use vars qw/
 %SearchEnginesHashIDLib %SearchEnginesKnownUrl
 /;
 use vars qw/
-%ValidHTTPCodes %TrapInfosForHTTPCodes %NotPageList %DayBytes %DayHits %DayPages %DayUnique %DayVisits
+%ValidHTTPCodes %TrapInfosForHTTPErrorCodes %NotPageList %DayBytes %DayHits %DayPages %DayUnique %DayVisits
 %FirstTime %LastTime %LastLine %LastUpdate
 %MonthBytes %MonthHits %MonthHostsKnown %MonthHostsUnknown %MonthPages %MonthUnique %MonthVisits
 %monthlib %monthnum
@@ -241,7 +241,7 @@ use vars qw/
 %MyDNSTable
 /;
 %ValidHTTPCodes=();
-%TrapInfosForHTTPCodes=(); $TrapInfosForHTTPCodes{404}=1;	# TODO Add this in config file
+%TrapInfosForHTTPErrorCodes=(); $TrapInfosForHTTPErrorCodes{404}=1;	# TODO Add this in config file
 %NotPageList=();
 %DayBytes = %DayHits = %DayPages = %DayUnique = %DayVisits = ();
 %FirstTime = %LastTime = %LastLine = %LastUpdate = ();
@@ -2573,8 +2573,9 @@ sub Save_History_File {
 #------------------------------------------------------------------------------
 # Function:     Load DNS cache file entries into a memory hash array
 # Parameters:	Hash array ref to load into,
-#               File name with data to load from,
-#               Save to hash file if not up to date
+#               File name to load,
+#				File suffix to use
+#               Save to a second plugin file if not up to date
 # Input:		None
 # Output:		Hash array is loaded
 # Return:		1 No DNS Cache file found, 0 OK
@@ -2582,70 +2583,51 @@ sub Save_History_File {
 sub Read_DNS_Cache_File {
 	my $hashtoload=shift;
 	my $dnscachefile=shift;
-	my $dnscacheext="";
+	my $filesuffix=shift;
 	my $savetohash=shift;
-	my $usefilesuffix=shift;	# TODO Use filesuffix
+
+	my $dnscacheext="";
 	my $filetoload="";
-	my $filehashtoload="";
 	my $timetoload = time();
-	my $hashfileuptodate=1;
 
 	if ($Debug) { debug("Call to Read_DNS_Cache_File [file=\"$dnscachefile\"]"); }
 	if ($dnscachefile =~ s/(\.\w+)$//) { $dnscacheext=$1; }
 	foreach my $dir ("$DirData",".","") {
 		my $searchdir=$dir;
 		if ($searchdir && (!($searchdir =~ /\/$/)) && (!($searchdir =~ /\\$/)) ) { $searchdir .= "/"; }
-		if (-f "${searchdir}$dnscachefile$dnscacheext") { $filetoload="${searchdir}$dnscachefile$dnscacheext"; }
-		if ($Plugin_hashfiles) {
-			if (-f "${searchdir}$dnscachefile.hash") {
-				my ($tmp1a,$tmp2a,$tmp3a,$tmp4a,$tmp5a,$tmp6a,$tmp7a,$tmp8a,$tmp9a,$datesource,$tmp10a,$tmp11a,$tmp12a) = stat("${searchdir}$dnscachefile$dnscacheext");
-				my ($tmp1b,$tmp2b,$tmp3b,$tmp4b,$tmp5b,$tmp6b,$tmp7b,$tmp8b,$tmp9b,$datehash,$tmp10b,$tmp11b,$tmp12b) = stat("${searchdir}$dnscachefile.hash");
-				if ($datesource && $datehash < $datesource) {
-					$hashfileuptodate=0;
-					debug(" Hash file not up to date. Will use source file $filetoload instead.");
-				}
-				else {
-					# There is no source file or there is and hash file is up to date. We can just load hash file
-					$filehashtoload="${searchdir}$dnscachefile.hash";
-				}
-			}
-			elsif ($filetoload) {
-				$hashfileuptodate=0;
-				debug(" Hash file not found. Will use source file $filetoload instead.");
-			}
-		}
-		if ($filetoload || $filehashtoload) { last; }	# We found a file to load
+		if (-f "${searchdir}$dnscachefile$filesuffix$dnscacheext") { $filetoload="${searchdir}$dnscachefile$filesuffix$dnscacheext"; }
+		# Plugin call : Change filetoload and hashfileuptodate
+		if ($Plugin_hashfiles) { SearchFile_hashfiles($searchdir,$dnscachefile,$filesuffix,$dnscacheext,$filetoload); }
+		if ($filetoload) { last; }	# We found a file to load
 	}
 
-	if (! $filetoload && ! $filehashtoload) {
+	if (! $filetoload) {
 		if ($Debug) { debug(" No DNS Cache file found"); }
 		return 1;
 	}
 
-	if ($filehashtoload) {
-		# There is no source file or there is and hash file is up to date. We can just load hash file
-		eval('%$hashtoload = %{ retrieve("$filehashtoload") };');
-	}
-	else {
+	# Plugin call : Load hashtoload
+	if ($Plugin_hashfiles) { LoadCache_hashfiles($filetoload,$hashtoload); }
+	
+	if (! scalar keys %$hashtoload) {
 		open(DNSFILE,"$filetoload") or error("Error: Couldn't open DNS Cache file \"$filetoload\": $!");
 		# This is the fastest way to load with regexp that I know of
 		%$hashtoload = map(/^\d+\s+(\d+\.\d+\.\d+\.\d+)\s+(.*)$/o, <DNSFILE>);
 	   	close DNSFILE;
-		if ($Plugin_hashfiles && ! $hashfileuptodate && $savetohash) {
-			my $filehashtosave=$filetoload;
-			$filehashtosave =~ s/(\.\w+)$//;
-			debug(" Save hash file $filehashtosave.hash");
-			eval('store(\%$hashtoload, "$filehashtosave.hash");');
+		if ($savetohash) {
+			# Plugin call : Save hash file with test if up to date to save
+			if ($Plugin_hashfiles) { SaveHash_hashfiles($filetoload,$hashtoload,1); }
 		}
 	}
-	if ($Debug) { debug(" Loaded ".(scalar keys %$hashtoload)." items from ".($filehashtoload?$filehashtoload:"$filetoload")." in ".(time()-$timetoload)." seconds.",1); }
+	if ($Debug) { debug(" Loaded ".(scalar keys %$hashtoload)." items from $filetoload in ".(time()-$timetoload)." seconds.",1); }
 	return 0;
 }
 
 #------------------------------------------------------------------------------
 # Function:     Save a memory hash array into a DNS cache file
 # Parameters:	Hash array ref to save,
-#               File name,
+#               File name to save,
+#				File suffix to use
 # Input:		None
 # Output:		None
 # Return:		0 OK, 1 Error
@@ -2653,9 +2635,10 @@ sub Read_DNS_Cache_File {
 sub Save_DNS_Cache_File {
 	my $hashtosave=shift;
 	my $dnscachefile=shift;
+	my $filesuffix=shift;
+
 	my $dnscacheext="";
-	my $usefilesuffix=shift;	# TODO Use filesuffix
-	my $filehashtosave="";
+	my $filetosave="";
 	my $timetosave = time();
 	my $nbofelemsaved=0;
 
@@ -2665,19 +2648,13 @@ sub Save_DNS_Cache_File {
 		return 0;	
 	}
 	if ($dnscachefile =~ s/(\.\w+)$//) { $dnscacheext=$1; }
-	if ($Plugin_hashfiles) {
-		# We try to save it as a hash file
-		debug(" Save hash file $dnscachefile.hash");
-		# TODO Limit size of save
-		eval('store(\%$hashtosave, "$dnscachefile.hash");');
-		$filehashtosave="$dnscachefile.hash";
-		$nbofelemsaved=scalar keys %$hashtosave;
-	}
-	if (! $filehashtosave) {
-		$nbofelemsaved=0;
-		debug(" Save file $dnscachefile$dnscacheext");
-		if (! open(DNSFILE,">$dnscachefile$dnscacheext")) {
-			warning("Warning: Failed to open for writing last update DNS Cache file \"$dnscachefile$dnscacheext\": $!");
+	$filetosave="$dnscachefile$filesuffix$dnscacheext";
+	# Plugin call : Save hash file with no test if up to date
+	if ($Plugin_hashfiles) { SaveHash_hashfiles($filetosave,$hashtosave,0,$nbofelemsaved); }
+	if (! $nbofelemsaved) {
+		debug(" Save file $dnscachefile$filesuffix$dnscacheext");
+		if (! open(DNSFILE,">$dnscachefile$filesuffix$dnscacheext")) {
+			warning("Warning: Failed to open for writing last update DNS Cache file \"$dnscachefile$filesuffix$dnscacheext\": $!");
 			return 1;
 		}
 		# TODO Limit size of save
@@ -2689,7 +2666,7 @@ sub Save_DNS_Cache_File {
 		}
 		close DNSFILE;
 	}
-	if ($Debug) { debug(" Saved $nbofelemsaved items into ".($filehashtosave?"$filehashtosave":"$dnscachefile$dnscacheext")." in ".(time()-$timetosave)." seconds.",1); }
+	if ($Debug) { debug(" Saved $nbofelemsaved items into $filetosave in ".(time()-$timetosave)." seconds.",1); }
 	return 0;
 }
 
@@ -2701,10 +2678,11 @@ sub Save_DNS_Cache_File {
 # Return:		Number of miliseconds elapsed since last call
 #------------------------------------------------------------------------------
 sub GetDelaySinceStart {
-	if (shift) { $StartSeconds=0;	}	# Reset counter
-	my ($newseconds, $newmicroseconds)=(0,0);
-	if ($Plugin_timehires) { ($newseconds, $newmicroseconds) = &gettimeofday; }
-	else { $newseconds=time(); }
+	if (shift) { $StartSeconds=0; }		# Reset counter
+	my ($newseconds, $newmicroseconds)=(time(),0);
+	# Plugin call : Return seconds and milliseconds
+	if ($Plugin_timehires) { GetTime_timehires($newseconds, $newmicroseconds); }
+#	if ($Plugin_timehires) { ($newseconds, $newmicroseconds)=&gettimeofday; }
 	if (! $StartSeconds) { $StartSeconds=$newseconds; $StartMicroseconds=$newmicroseconds; }
 	return ($newseconds*1000+int($newmicroseconds/1000)-$StartSeconds*1000-int($StartMicroseconds/1000));
 }
@@ -3587,9 +3565,8 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {
 	# Load DNS Cache Files
 	#------------------------------------------
 	if ($DNSLookup) {
-		# TODO Load DNSLastUpdateCacheFile for ok and ip
-		&Read_DNS_Cache_File(\%TmpDNSLookup,"$DNSLastUpdateCacheFile",0,1);		# Load with no save into hash file and with FileSuffix
-		&Read_DNS_Cache_File(\%MyDNSTable,"$DNSStaticCacheFile",1,0);			# Load with save into hash file if plugin enabled and hash not up to date and no use of FileSuffix
+		&Read_DNS_Cache_File(\%MyDNSTable,"$DNSStaticCacheFile","",1);					# Load with save into a second plugin file if plugin enabled and second file not up to date. No use of FileSuffix
+		&Read_DNS_Cache_File(\%TmpDNSLookup,"$DNSLastUpdateCacheFile","$FileSuffix",0);	# Load with no save into a second plugin file. Use FileSuffix
 	}
 
 	if ($Debug) { debug("Start Update process"); }
@@ -3879,8 +3856,9 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {
 		#-------------------------------------------
 		my $hourrecord=int($dateparts[3]);
 		if ($PageBool) {
-			# Replace default page name with / only
-			foreach my $elem (@DefaultFile) { if ($field[$pos_url] =~ s/\/$elem$/\//) { last; } }
+			# Replace default page name with / only (if increase speed in only 1 value)
+			if (@DefaultFile > 1) { foreach my $elem (@DefaultFile) { if ($field[$pos_url] =~ s/\/$elem$/\//) { last; } } }
+			else { $field[$pos_url] =~ s/\/$DefaultFile[0]$/\//; }
 
 			# FirstTime and LastTime are First and Last human visits (so changed if access to a page)
 			if (! $FirstTime{$yearmonthtoprocess}) { $FirstTime{$yearmonthtoprocess}=$timerecord; }
@@ -4330,8 +4308,7 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {
 	}
 
 	# Save hash
-	# TODO Save a file for ok and a file for ip
-	Save_DNS_Cache_File(\%TmpDNSLookup,"$DirData/$DNSLastUpdateCacheFile",1);	# Save into file using FileSuffix
+	Save_DNS_Cache_File(\%TmpDNSLookup,"$DirData/$DNSLastUpdateCacheFile","$FileSuffix");	# Save into file using FileSuffix
 }
 # End of log processing if ($UPdateStats)
 
@@ -5918,7 +5895,7 @@ EOF
 			#if ($httpcodewithtooltips{$key}) { print "<TR onmouseover=\"ShowTooltip($key);\" onmouseout=\"HideTooltip($key);\">"; }
 			#else { print "<TR>"; }
 			print "<TR onmouseover=\"ShowTooltip($key);\" onmouseout=\"HideTooltip($key);\">";
-			if ($TrapInfosForHTTPCodes{$key}) { print "<TD><a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=errors$key":"$PROG$StaticLinks.errors$key.html")."\"$NewLinkTarget>$key</a></TD>"; }
+			if ($TrapInfosForHTTPErrorCodes{$key}) { print "<TD><a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=errors$key":"$PROG$StaticLinks.errors$key.html")."\"$NewLinkTarget>$key</a></TD>"; }
 			else { print "<TD>$key</TD>"; }
 			print "<TD CLASS=AWL>".($httpcodelib{$key}?$httpcodelib{$key}:"Unknown error")."</TD><TD>$_errors_h{$key}</TD><TD>$p&nbsp;%</TD>";
 			print "</TR>\n";
