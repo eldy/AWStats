@@ -1,0 +1,11 @@
+***** Liste des actions à faire lors d'une release *****
+- Mettre a jour fichier README.txt
+- Mettre à jour numero version docs
+- Mettre a jour PAD
+- Regénérer PDF
+- Tagger CVS
+
+- makepack
+- Déplacer fichiers dans files
+- Uploader fichiers
+- Envoyer mail sur mailing list
