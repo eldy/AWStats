@@ -6810,8 +6810,9 @@ EOF
 		print "$Center<a name=\"FILETYPES\">&nbsp;</a><BR>\n";
 		my $Totalh=0; foreach my $key (keys %_filetypes_h) { $Totalh+=$_filetypes_h{$key}; }
 		my $Totalk=0; foreach my $key (keys %_filetypes_k) { $Totalk+=$_filetypes_k{$key}; }
-		if ($ShowCompressionStats) { &tab_head("$Message[73] - $Message[98]",19); }
-		else { &tab_head("$Message[73]",19); }
+		my $title="$Message[73]";
+		if ($ShowFileTypesStats =~ /C/i) { $title.=" - $Message[98]"; }
+		&tab_head("$title",19);
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[73]</TH>";
 		if ($ShowFileTypesStats =~ /H/i) { print "<TH bgcolor=\"#$color_h\" width=80>&nbsp;$Message[57]&nbsp;</TH><TH bgcolor=\"#$color_h\" width=80>$Message[15]</TH>"; }
 		if ($ShowFileTypesStats =~ /B/i) { print "<TH bgcolor=\"#$color_k\" width=80>$Message[75]</TH>"; }
