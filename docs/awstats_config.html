@@ -75,6 +75,7 @@ when reading it), follow the example:<br>
 <li><a href="#KeepBackupOfHistoricFiles">KeepBackupOfHistoricFiles</a>
 <li><a href="#DefaultFile">DefaultFile</a>
 <li><a href="#SkipHosts">SkipHosts</a>
+<li><a href="#SkipUserAgents">SkipUserAgents</a>
 <li><a href="#SkipFiles">SkipFiles</a>
 <li><a href="#OnlyFiles">OnlyFiles</a>
 <li><a href="#NotPageList">NotPageList</a>
@@ -600,6 +601,19 @@ when reading it), follow the example:<br>
 <br># Default: ""
 <br>#
 <br>SkipHosts=""
+
+<br><br><hr>
+
+<a name="SkipUserAgents"><b>SkipUserAgents</b></a><br>
+<b>Version : </b>5.1 +<br>
+<br># Do not include access from clients with a user agent that match following
+<br># criteria. If you want to exclude a robot, you should update the robots.pm
+<br># file instead of this parameter.
+<br># Note: Use space between each value. This parameter is not case sensitive.
+<br># Example: "konqueror"
+<br># Default: ""
+<br>#
+<br>SkipUserAgents=""
 
 <br><br><hr>
 

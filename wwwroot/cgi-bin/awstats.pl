@@ -204,8 +204,8 @@ use vars qw/
 /;
 use vars qw/
 @SessionsRange @Message @HostAliases @AllowAccessFromWebToFollowingAuthenticatedUsers
-@DefaultFile @OnlyFiles @SkipDNSLookupFor @SkipFiles @SkipHosts @PluginsToLoad
-@DOWIndex @RobotsSearchIDOrder
+@DefaultFile @OnlyFiles @SkipDNSLookupFor @SkipFiles @SkipHosts @SkipUserAgents
+@PluginsToLoad @DOWIndex @RobotsSearchIDOrder
 @_from_p @_from_h @_time_p @_time_h @_time_k
 @keylist
 /;
@@ -213,8 +213,8 @@ use vars qw/
 @Message=();
 @HostAliases=();
 @AllowAccessFromWebToFollowingAuthenticatedUsers=();
-@DefaultFile = @OnlyFiles = @SkipDNSLookupFor = @SkipFiles = @SkipHosts = @PluginsToLoad = ();
-@DOWIndex = @RobotsSearchIDOrder = ();
+@DefaultFile = @OnlyFiles = @SkipDNSLookupFor = @SkipFiles = @SkipHosts = @SkipUserAgents = ();
+@PluginsToLoad = @DOWIndex = @RobotsSearchIDOrder = ();
 @_from_p = @_from_h = ();
 @_time_p = @_time_h = @_time_k = ();
 @keylist=();
@@ -616,7 +616,7 @@ sub debug {
 
 #------------------------------------------------------------------------------
 # Function:     Optimize an array removing duplicate entries
-# Parameters:	@Array
+# Parameters:	@Array notcasesensitive mustbeequal
 # Input:        None
 # Output:		None
 # Return:		None
@@ -629,22 +629,23 @@ sub OptimizeArray {
 	if ($Debug) { debug("OptimizeArray (notcasesensitive=$notcasesensitive,mustbeequal=$mustbeequal)",4); }
 	while ($searchlist>-1 && @$array) {
 		my $elemtoremove=-1;
-		OPTIMIZELOOP: foreach my $i ($searchlist..(scalar @$array)-1) {
+		OPTIMIZELOOP:
+		foreach my $i ($searchlist..(scalar @$array)-1) {
 			# Search if $i elem is already treated by another elem
 			foreach my $j (0..(scalar @$array)-1) {
 				if ($i == $j) { next; }
 				my $parami=$notcasesensitive?lc(@$array[$i]):@$array[$i];
 				my $paramj=$notcasesensitive?lc(@$array[$j]):@$array[$j];
-				if ($Debug) { debug("Compare $i ($parami) to $j ($paramj)",4); }
+				if ($Debug) { debug(" Compare $i ($parami) to $j ($paramj)",4); }
 				if (($mustbeequal && $parami eq $paramj) || (! $mustbeequal && index($parami,$paramj)>-1)) {
-					if ($Debug) { debug("Elem $i (@$array[$i]) already treated with elem $j (@$array[$j])",4); }
+					if ($Debug) { debug(" Elem $i (@$array[$i]) already treated with elem $j (@$array[$j])",4); }
 					$elemtoremove=$i;
 					last OPTIMIZELOOP;
 				}
 			}
 		}
 		if ($elemtoremove > -1) {
-			if ($Debug) { debug("Remove elem $elemtoremove - @$array[$elemtoremove]",4); }
+			if ($Debug) { debug(" Remove elem $elemtoremove - @$array[$elemtoremove]",4); }
 			splice @$array, $elemtoremove, 1;
 			$searchlist=$elemtoremove;
 		}
@@ -655,13 +656,13 @@ sub OptimizeArray {
 }
 
 #------------------------------------------------------------------------------
-# Function:     Check if parameter is in SkiHosts array
-# Parameters:	host @SkipHosts
+# Function:     Check if parameter is in SkipDNSLookupFor array
+# Parameters:	ip @SkipDNSLookupFor
 # Return:		0 Not found, 1 Found
 #------------------------------------------------------------------------------
-sub SkipHost {
-	foreach my $match (@SkipHosts) { if ($_[0] =~ /$match/i) { return 1; } }
-	0; # Not in @SkipHosts
+sub SkipDNSLookup {
+	foreach my $match (@SkipDNSLookupFor) { if ($_[0] =~ /$match/i) { return 1; } }
+	0; # Not in @SkipDNSLookupFor
 }
 
 #------------------------------------------------------------------------------
@@ -675,6 +676,26 @@ sub SkipFile {
 }
 
 #------------------------------------------------------------------------------
+# Function:     Check if parameter is in SkiHosts array
+# Parameters:	host @SkipHosts
+# Return:		0 Not found, 1 Found
+#------------------------------------------------------------------------------
+sub SkipHost {
+	foreach my $match (@SkipHosts) { if ($_[0] =~ /$match/i) { return 1; } }
+	0; # Not in @SkipHosts
+}
+
+#------------------------------------------------------------------------------
+# Function:     Check if parameter is in UserAgent array
+# Parameters:	host @SkipHosts
+# Return:		0 Not found, 1 Found
+#------------------------------------------------------------------------------
+sub SkipUserAgent {
+	foreach my $match (@SkipUserAgents) { if ($_[0] =~ /$match/i) { return 1; } }
+	0; # Not in @SkipUserAgent
+}
+
+#------------------------------------------------------------------------------
 # Function:     Check if parameter is in OnlyFiles array
 # Parameters:	url @OnlyFiles
 # Return:		0 Not found, 1 Found
@@ -682,16 +703,6 @@ sub SkipFile {
 sub OnlyFile {
 	foreach my $match (@OnlyFiles) { if ($_[0] =~ /$match/i) { return 1; } }
 	0; # Not in @OnlyFiles
-}
-
-#------------------------------------------------------------------------------
-# Function:     Check if parameter is in SkipDNSLookupFor array
-# Parameters:	ip @SkipDNSLookupFor
-# Return:		0 Not found, 1 Found
-#------------------------------------------------------------------------------
-sub SkipDNSLookup {
-	foreach my $match (@SkipDNSLookupFor) { if ($_[0] =~ /$match/i) { return 1; } }
-	0; # Not in @SkipDNSLookupFor
 }
 
 #------------------------------------------------------------------------------
@@ -846,6 +857,11 @@ sub Read_Config {
 		if ($param =~ /^SkipHosts/) {
 			$value =~ s/\\\./\./g; $value =~ s/([^\\])\./$1\\\./g; $value =~ s/^\./\\\./;	# Replace . into \.
 			foreach my $elem (split(/\s+/,$value))	{ push @SkipHosts,$elem; }
+			next;
+			}
+		if ($param =~ /^SkipUserAgents/) {
+			$value =~ s/\\\./\./g; $value =~ s/([^\\])\./$1\\\./g; $value =~ s/^\./\\\./;	# Replace . into \.
+			foreach my $elem (split(/\s+/,$value))	{ push @SkipUserAgents,$elem; }
 			next;
 			}
 		if ($param =~ /^SkipFiles/) {
@@ -4006,6 +4022,7 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {	# Updat
 	# Optimize HostAliases, SkipHosts, SkipFiles, OnlyFiles, SkipDNSLookupFor array
 	&OptimizeArray(\@HostAliases,1,1); if ($Debug) { debug("HostAliases is now @HostAliases",1); }
 	&OptimizeArray(\@SkipHosts,1,0); if ($Debug) { debug("SkipHosts is now @SkipHosts",1); }
+	&OptimizeArray(\@SkipUserAgents,1,0); if ($Debug) { debug("SkipUserAgents is now @SkipUserAgents",1); }
 	&OptimizeArray(\@SkipFiles,0,0); if ($Debug) { debug("SkipFiles is now @SkipFiles",1); }
 	&OptimizeArray(\@OnlyFiles,0,0); if ($Debug) { debug("OnlyFiles is now @OnlyFiles",1); }
 	&OptimizeArray(\@SkipDNSLookupFor,1,0); if ($Debug) { debug("SkipDNSLookupFor is now @SkipDNSLookupFor",1); }
@@ -4375,6 +4392,7 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {	# Updat
 		if (@SkipHosts && &SkipHost($field[$pos_host]))     { $qualifdrop="Dropped record (host $field[$pos_host] not qualified by SkipHosts)"; }
 		elsif (@SkipFiles && &SkipFile($field[$pos_url]))   { $qualifdrop="Dropped record (URL $field[$pos_url] not qualified by SkipFiles)"; }
 		elsif (@OnlyFiles && ! &OnlyFile($field[$pos_url])) { $qualifdrop="Dropped record (URL $field[$pos_url] not qualified by OnlyFiles)"; }
+		elsif ($pos_agent >= 0 && @SkipUserAgents && &SkipUserAgent($field[$pos_agent]))	{ $qualifdrop="Dropped record (user agent $field[$pos_agent] not qualified by SkipUserAgents)"; }
 		if ($qualifdrop) {
 			$NbOfLinesDropped++;
 			if ($ShowDropped) { print "$qualifdrop: $_\n"; }
@@ -7000,9 +7018,15 @@ else {
 #     Drop wrong date
 #     If line older than LastLine, skip
 #     If new line
+#        Skip line for SkipHosts
+#        Skip line for SkipFiles
+#        Skip line for not OnlyFiles
+#        Skip line for SkipUserAgent
 #        If other month/year, create/update tmp file and purge data arrays with
 #          &Read_History_With_TmpUpdate(lastprocessedyear,lastprocessedmonth,UPDATE,PURGE,"all");
-#        Analyse record and complete data arrays
+#        Check protocol and complete %_error_, %_sider404 and %_referrer404
+#        Check robot and complete %_robot
+#        ...
 #        If too many records, we flush data arrays with
 #          &Read_History_With_TmpUpdate($lastprocessedyear,$lastprocessedmonth,UPDATE,PURGE,"all");
 #     End of new line
