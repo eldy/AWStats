@@ -93,7 +93,7 @@ $color_h, $color_k, $color_link, $color_p, $color_s, $color_u, $color_v, $color_
 %monthlib = %monthnum = ();
 
 
-$VERSION="3.2 (build 76)";
+$VERSION="3.2 (build 77)";
 $Lang="en";
 
 # Default value
@@ -2089,7 +2089,7 @@ if ($UpdateStats) {
 		#----------------------------------------------------------------------
 		if (! $field[$pos_code]) {
 			$NbOfLinesCorrupted++;
-			if ($ShowCorrupted) { print "Corrupted record: $_\n"; }
+			if ($ShowCorrupted) { print "Corrupted record (corrupted HTTP code): $_\n"; }
 			if ($NbOfLinesRead >= $NbOfLinesForCorruptedLog && $NbOfLinesCorrupted == $NbOfLinesRead) { error("Format error",$_,$LogFile); }	# Exit with format error
 			next;
 		}
@@ -2097,7 +2097,6 @@ if ($UpdateStats) {
 		# Check filters
 		#----------------------------------------------------------------------
 		if ($field[$pos_method] ne 'GET' && $field[$pos_method] ne 'POST' && $field[$pos_method] !~ /OK/) { next; }	# Keep only GET, POST (OK with Webstar) but not HEAD, OPTIONS
-		#if ($field[$pos_url] =~ /^RC=/) { $NbOfLinesCorrupted++; if ($ShowCorrupted) { print "Corrupted Record: $_\n"; } next; }			# A strange log record with IIS we need to forget
 		# Split DD/Month/YYYY:HH:MM:SS or YYYY-MM-DD HH:MM:SS or MM/DD/YY\tHH:MM:SS
 		$field[$pos_date] =~ tr/-\/ \t/::::/;
 		my @dateparts=split(/:/,$field[$pos_date]);
@@ -2107,13 +2106,13 @@ if ($UpdateStats) {
 		# Create $timeconnexion like YYYYMMDDHHMMSS
 		my $timeconnexion=int($dateparts[2].$dateparts[1].$dateparts[0].$dateparts[3].$dateparts[4].$dateparts[5]);
 		my $dayconnexion=$dateparts[2].$dateparts[1].$dateparts[0];
-		if ($timeconnexion < 10000000000000) { $NbOfLinesCorrupted++; if ($ShowCorrupted) { print "Corrupted record: $_\n"; } next; }		# Should not happen, kept in case of parasite/corrupted line
-		if ($timeconnexion > $timetomorrow) { $NbOfLinesCorrupted++; if ($ShowCorrupted) { print "Corrupted record: $_\n"; } next; }		# Should not happen, kept in case of parasite/corrupted line
+		if ($timeconnexion < 10000000000000) { $NbOfLinesCorrupted++; if ($ShowCorrupted) { print "Corrupted record (invalid date): $_\n"; } next; }		# Should not happen, kept in case of parasite/corrupted line
+		if ($timeconnexion > $timetomorrow) { $NbOfLinesCorrupted++; if ($ShowCorrupted) { print "Corrupted record (invalid date): $_\n"; } next; }		# Should not happen, kept in case of parasite/corrupted line
 
 		# Skip if not a new line
 		#-----------------------
 		if ($NowNewLinePhase) {
-			if ($timeconnexion < $LastLine{$yearmonth}) { $NbOfLinesCorrupted++; if ($ShowCorrupted) { print "Corrupted record: $_\n"; } next; }	# Should not happen, kept in case of parasite/corrupted old line
+			if ($timeconnexion < $LastLine{$yearmonth}) { $NbOfLinesCorrupted++; if ($ShowCorrupted) { print "Corrupted record (not sorted record): $_\n"; } next; }	# Should not happen, kept in case of parasite/corrupted old line
 		}
 		else {
 			if ($timeconnexion <= $LastLine{$yearmonth}) {
@@ -2171,7 +2170,7 @@ if ($UpdateStats) {
 				}
 				else {														# Bad format record (should not happen but when using MSIndex server), next
 					$NbOfLinesCorrupted++;
-					if ($ShowCorrupted) { print "Corrupted record: $_\n"; }
+					if ($ShowCorrupted) { print "Corrupted record (HTTP code not on 3 digits): $_\n"; }
 					next;
 				}
 			}
@@ -3072,17 +3071,12 @@ EOF
 		# Show daily stats
 		print "<TABLE>";
 		print "<TR valign=bottom>";
-		#my $firstdaytoshowtime=$lastdaytoshowtime;
 		# Get max_v, max_h and max_k values
 		$max_v=$max_h=$max_k=1;
-		#my $nbofdaysshown=0;
-		#for (my $daycursor=$lastdaytoshowtime; $nbofdaysshown<$MaxNbOfDays; $daycursor--) {
 		foreach my $daycursor ($firstdaytoshowtime..$lastdaytoshowtime) {
 			$daycursor =~ /^(\d\d\d\d)(\d\d)(\d\d)/;
 			my $year=$1; my $month=$2; my $day=$3;
 			if (! DateIsValid($day,$month,$year)) { next; }			# If not an existing day, go to next
-			#$nbofdaysshown++;
-			#$firstdaytoshowtime=$year.$month.$day;
 			if (($DayVisits{$year.$month.$day}||0) > $max_v)  { $max_v=$DayVisits{$year.$month.$day}; }
 			#if (($DayPages{$year.$month.$day}||0) > $max_p)  { $max_p=$DayPages{$year.$month.$day}; }
 			if (($DayHits{$year.$month.$day}||0) > $max_h)   { $max_h=$DayHits{$year.$month.$day}; }
@@ -3120,13 +3114,10 @@ EOF
 			$avg_day_h="?";
 			$avg_day_k="?";
 		}
-		#$nbofdaysshown=0;
-		#for (my $daycursor=$firstdaytoshowtime; $nbofdaysshown<$MaxNbOfDays; $daycursor++) {
 		foreach my $daycursor ($firstdaytoshowtime..$lastdaytoshowtime) {
 			$daycursor =~ /^(\d\d\d\d)(\d\d)(\d\d)/;
 			my $year=$1; my $month=$2; my $day=$3;
 			if (! DateIsValid($day,$month,$year)) { next; }			# If not an existing day, go to next
-			#$nbofdaysshown++;
 			my $bredde_v=0; my $bredde_p=0; my $bredde_h=0; my $bredde_k=0;
 			if ($max_v > 0) { $bredde_v=int(($DayVisits{$year.$month.$day}||0)/$max_v*$BarHeight/2)+1; }
 			if ($max_h > 0) { $bredde_p=int(($DayPages{$year.$month.$day}||0)/$max_h*$BarHeight/2)+1; }
@@ -3154,13 +3145,10 @@ EOF
 		print "</TD>\n";
 		print "</TR>\n";
 		print "<TR>";
-		#$nbofdaysshown=0;
-		#for (my $daycursor=$firstdaytoshowtime; $nbofdaysshown<$MaxNbOfDays; $daycursor++) {
 		foreach my $daycursor ($firstdaytoshowtime..$lastdaytoshowtime) {
 			$daycursor =~ /^(\d\d\d\d)(\d\d)(\d\d)/;
 			my $year=$1; my $month=$2; my $day=$3;
 			if (! DateIsValid($day,$month,$year)) { next; }			# If not an existing day, go to next
-			#$nbofdaysshown++;
 			my $dayofweekcursor=DayOfWeek($day,$month,$year);
 			print "<TD valign=middle".($dayofweekcursor==0||$dayofweekcursor==6?" bgcolor=\"#$color_weekend\"":"").">";
 			print ($day==$nowday && $month==$nowmonth?"<b>":"");
@@ -3186,12 +3174,6 @@ EOF
 		print "<TR valign=bottom>\n";
 		$max_h=$max_k=$max_v=1;
 		# Get average value for day of week
-		#my $FirstTimeDay=$FirstTime;
-		#my $LastTimeDay=$LastTime;
-		#debug("$FirstTimeDay..$LastTimeDay",2);
-		#$FirstTimeDay =~ /^(\d\d\d\d\d\d\d\d).*/; $FirstTimeDay=$1;
-		#$LastTimeDay =~ /^(\d\d\d\d\d\d\d\d).*/; $LastTimeDay=$1;
-		#foreach my $daycursor ($FirstTimeDay..$LastTimeDay) {
 		foreach my $daycursor ($firstdaytocountaverage..$lastdaytocountaverage) {
 			$daycursor =~ /^(\d\d\d\d)(\d\d)(\d\d)/;
 			my $year=$1; my $month=$2; my $day=$3;
