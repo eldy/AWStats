@@ -47,6 +47,21 @@ AWStats Changelog
 - Updated database.
 - Updated language files.
 
+Note 1:
+  AWStats 5.x are compatible with previous versions (3.x or 4.x).
+  However if you use awstats 5.x runtime to read statistics for old month
+  build with 3.x or 4.x, speed will be a little bit reduce but data will be
+  reported correctly.
+
+  To benefit the speed/memory improvement of 5.x (2 to 8 times faster when
+  reading stats, less memory use) you can migrate (after backup) your history
+  files with the command :
+    awstats.pl -migrate="/fullpath/awstatsMMYYYY.configval.txt"
+
+Note 2:
+  Old deprecated command line parameter site= has been removed.
+  Use config= instead (replace site= since 3.0).
+
 
 5.0
 
