@@ -1,10 +1,8 @@
 #!/usr/bin/perl
-# edit_log.cgi
-# Display a form for adding a new logfile or editing an existing one.
-# Allows you to set the schedule on which the log is analysed
+# edit_config.cgi
+# Display a form for adding a new config or editing an existing one.
 
 require './awstats-lib.pl';
-&foreign_require("cron", "cron-lib.pl");
 &ReadParse();
 
 if (! $access{'global'}) { &error($text{'edit_ecannot'}); }
