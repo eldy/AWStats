@@ -243,8 +243,7 @@ use vars qw/
 @MiscListOrder=('AddToFavourites','JavascriptDisabled','JavaEnabled','DirectorSupport','FlashSupport','RealPlayerSupport','QuickTimeSupport','WindowsMediaPlayerSupport','PDFSupport');
 %MiscListCalc=('TotalMisc'=>'','AddToFavourites'=>'u','JavascriptDisabled'=>'hm','JavaEnabled'=>'hm','DirectorSupport'=>'hm','FlashSupport'=>'hm','RealPlayerSupport'=>'hm','QuickTimeSupport'=>'hm','WindowsMediaPlayerSupport'=>'hm','PDFSupport'=>'hm');
 @OSFamily=('win','mac');
-#%BrowsersFamily=('msie'=>1,'netscape'=>2,'mozilla'=>3);
-%BrowsersFamily=('msie'=>1,'netscape'=>2);
+%BrowsersFamily=('msie'=>1,'firefox'=>2,'netscape'=>3);
 @SessionsRange=('0s-30s','30s-2mn','2mn-5mn','5mn-15mn','15mn-30mn','30mn-1h','1h+');
 %SessionsAverage=('0s-30s',15,'30s-2mn',75,'2mn-5mn',210,'5mn-15mn',600,'15mn-30mn',1350,'30mn-1h',2700,'1h+',3600);
 # HTTP-Accept or Lang parameter => AWStats code to use for lang
@@ -1351,7 +1350,7 @@ sub Parse_Config {
 sub Read_Ref_Data {
 	# Check lib files in common possible directories :
 	# Windows and standard package:        		"$DIR/lib" (lib in same dir than awstats.pl)
-	# Debian package :                    		"/usr/share/awstats/lib"
+	# Debian package:                    		"/usr/share/awstats/lib"
 	my @PossibleLibDir=("$DIR/lib","/usr/share/awstats/lib");
 	my %FilePath=(); my %DirAddedInINC=();
 	my @FileListToLoad=();
@@ -1382,9 +1381,9 @@ sub Read_Ref_Data {
 	}
 	# Sanity check (if loaded)
 	if ((scalar keys %OSHashID) && @OSSearchIDOrder != scalar keys %OSHashID) { error("Not same number of records of OSSearchIDOrder (".(@OSSearchIDOrder)." entries) and OSHashID (".(scalar keys %OSHashID)." entries) in OS database. Check your file ".$FilePath{"operating_systems.pm"}); }
-	if ((scalar keys %SearchEnginesHashID) && (@SearchEnginesSearchIDOrder_list1+@SearchEnginesSearchIDOrder_list2+@SearchEnginesSearchIDOrder_listgen) != scalar keys %SearchEnginesHashID) { error("Not same number of records of SearchEnginesSearchIDOrder_listx (total is ".(@SearchEnginesSearchIDOrder_list1+@SearchEnginesSearchIDOrder_list2+@SearchEnginesSearchIDOrder_listgen)." entries) and SearchEnginesHashID (".(scalar keys %SearchEnginesHashID)." entries) in Search Engines database. Check your file ".$FilePath{"search_engines.pm"}); }
-	if ((scalar keys %BrowsersHashIDLib) && @BrowsersSearchIDOrder != (scalar keys %BrowsersHashIDLib) - 2) { error("Not same number of records of BrowsersSearchIDOrder (".(@BrowsersSearchIDOrder)." entries) and BrowsersHashIDLib (".((scalar keys %BrowsersHashIDLib) - 2)." entries without msie and netscape) in Browsers database. Check your file ".$FilePath{"browsers.pm"}); }
-	if ((scalar keys %RobotsHashIDLib) && (@RobotsSearchIDOrder_list1+@RobotsSearchIDOrder_list2+@RobotsSearchIDOrder_listgen) != (scalar keys %RobotsHashIDLib) - 1) { error("Not same number of records of RobotsSearchIDOrder_listx (total is ".(@RobotsSearchIDOrder_list1+@RobotsSearchIDOrder_list2+@RobotsSearchIDOrder_listgen)." entries) and RobotsHashIDLib (".((scalar keys %RobotsHashIDLib) - 1)." entries without 'unknown') in Robots database. Check your file ".$FilePath{"robots.pm"}); }
+	if ((scalar keys %SearchEnginesHashID) && (@SearchEnginesSearchIDOrder_list1+@SearchEnginesSearchIDOrder_list2+@SearchEnginesSearchIDOrder_listgen) != scalar keys %SearchEnginesHashID) { error("Not same number of records of SearchEnginesSearchIDOrder_listx (total is ".(@SearchEnginesSearchIDOrder_list1+@SearchEnginesSearchIDOrder_list2+@SearchEnginesSearchIDOrder_listgen)." entries) and SearchEnginesHashID (".(scalar keys %SearchEnginesHashID)." entries) in Search Engines database. Check your file ".$FilePath{"search_engines.pm"}." is up to date."); }
+	if ((scalar keys %BrowsersHashIDLib) && @BrowsersSearchIDOrder != (scalar keys %BrowsersHashIDLib) - 3) { error("Not same number of records of BrowsersSearchIDOrder (".(@BrowsersSearchIDOrder)." entries) and BrowsersHashIDLib (".((scalar keys %BrowsersHashIDLib) - 3)." entries without msie,netscape,firefox) in Browsers database. May be you updated AWStats without updating browsers.pm file or you made changed into browsers.pm not correctly. Check your file ".$FilePath{"browsers.pm"}." is up to date."); }
+	if ((scalar keys %RobotsHashIDLib) && (@RobotsSearchIDOrder_list1+@RobotsSearchIDOrder_list2+@RobotsSearchIDOrder_listgen) != (scalar keys %RobotsHashIDLib) - 1) { error("Not same number of records of RobotsSearchIDOrder_listx (total is ".(@RobotsSearchIDOrder_list1+@RobotsSearchIDOrder_list2+@RobotsSearchIDOrder_listgen)." entries) and RobotsHashIDLib (".((scalar keys %RobotsHashIDLib) - 1)." entries without 'unknown') in Robots database. Check your file ".$FilePath{"robots.pm"}." is up to date."); }
 }
 
 
@@ -5919,6 +5918,7 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 	my $regipv6=qr/^[0-9A-F]*:/i;
 	my $regvermsie=qr/msie([+_ ]|)([\d\.]*)/i;
 	my $regvernetscape=qr/netscape.?\/([\d\.]*)/i;
+	my $regverfirefox=qr/firefox\/([\d\.]*)/i;
 	my $regvermozilla=qr/mozilla(\/|)([\d\.]*)/i;
 	my $regnotie=qr/webtv|omniweb|opera/i;
 	my $regnotnetscape=qr/gecko|compatible|opera|galeon|safari/i;
@@ -6718,6 +6718,11 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 					if ($UserAgent =~ /$regvermsie/o && $UserAgent !~ /$regnotie/o) {
 						$_browser_h{"msie$2"}++;
 						$TmpBrowser{$UserAgent}="msie$2";
+					}
+					# Firefox ?
+					elsif ($UserAgent =~ /$regverfirefox/o) {
+						$_browser_h{"firefox$1"}++;
+						$TmpBrowser{$UserAgent}="firefox$1";
 					}
 					# Netscape 6.x, 7.x ... ?
 					elsif ($UserAgent =~ /$regvernetscape/o) {

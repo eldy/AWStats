@@ -16,9 +16,8 @@
 # Note: Regex IDs are in lower case and ' ' and '+' are changed into '_'
 #-------------------------------------------------------
 @BrowsersSearchIDOrder = (
-# Most frequent standard web browsers are first in this list
+# Most frequent standard web browsers are first in this list (except msie, netscape and firefox)
 'firebird',
-'firefox',
 'go!zilla',
 'icab',
 'konqueror',
@@ -130,8 +129,9 @@
 # Common web browsers text
 'msie','MS Internet Explorer',
 'netscape','Netscape',
-'firebird','Firebird (Old Firefox)',
 'firefox','Firefox',
+
+'firebird','Firebird (Old Firefox)',
 'go!zilla','Go!Zilla',
 'icab','iCab',
 'konqueror','Konqueror',
@@ -258,9 +258,9 @@
 # Standard web browsers
 'msie','msie',
 'netscape','netscape',
+'firefox','firefox',
 
 'firebird','phoenix',
-'firefox','firefox',
 'go!zilla','gozilla',
 'icab','icab',
 'konqueror','konqueror',
@@ -344,36 +344,29 @@
 1;
 
 
-# TODO
-# Add Gecko category -> IE / Netscape / Gecko(except Netscape) / Other
-# IE (based on Mosaic)
-# Netscape family
-# Gecko except Netscape (Mozilla, Firebird (was Phoenix), Galeon, AmiZilla, Dino, and few others) 
-# Opera (Opera 6/7) 
-# KHTML (Konqueror, Safari) 
-
-
-# Browsers example
+# Browsers examples by engines
 #
+# -- Mosaic --
 # MSIE		4.0  	Mozilla/4.0 (compatible; MSIE 5.0; Windows 98; DigExt; KITV4 Wanadoo; KITV5 Wanadoo)
 #
+# -- Gecko Netscape --
 # Netscape	4.05	Mozilla/4.05 [fr]C-SYMPA (Win95; I)
 # Netscape	4.7     Mozilla/4.7 [fr] (Win95; I)
 # Netscape	6.0		Mozilla/5.0 (Macintosh; N; PPC; fr-FR; m18) Gecko/20001108 Netscape6/6.0
 # Netscape	7.02	Mozilla/5.0 (Platform; Security; OS-or-CPU; Localization; rv:1.0.2) Gecko/20030208 Netscape/7.02 
 #
+# -- Gecko others --
 # Mozilla	1.3		Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.3) Gecko/20030312
+# Firefox	0.9		Mozilla/5.0 (Windows; U; Windows NT 5.0; en-US; rv:1.5a) Gecko/20030728 Mozilla Firefox/0.9.1
+# Firebird,Phoenix,Galeon,AmiZilla,Dino
+# Autre             Mozilla/3.01 (compatible;)
 #
-# Firebird	0.6		Mozilla/5.0 (Windows; U; Windows NT 5.0; en-US; rv:1.5a) Gecko/20030728 Mozilla Firebird/0.6.1
-#
+# -- Opera --
 # Opera		6.03	Mozilla/3.0 (Windows 98; U) Opera 6.03  [en]
 # Opera		5.12    Mozilla/3.0 (Windows 98; U) Opera 5.12  [en]
 # Opera		3.21    Opera 3.21, Windows:
 #
-# Galeon
-#
+# -- KHTML --
 # Safari
-#
 # Konqueror
 #
-# Autre             Mozilla/3.01 (compatible;)
