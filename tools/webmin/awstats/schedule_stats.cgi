@@ -40,6 +40,12 @@ if ( foreign_installed('cron', 0) ) {
     foreach my $j (grep { $_->{'command'} =~ /$regupdate/ || $_->{'command'} =~ /$regupdateall/ } &foreign_call("cron","list_cron_jobs")) {
         my $global=0;
         if ($j->{'command'} =~ /$regupdateall/) { $globalupdate++; $global=1; }
+        my $confparam="";
+        if ($j->{'command'} =~ /$regupdate/) {
+            $j->{'command'} =~ /config=(\S+)/;
+            $confparam=$1;
+            if ($confparam ne $conf) { next; }
+        }
         print "<tr>";
         print "<td><b>".$j->{'user'}."</b></td>";
         print "<td>".$j->{'command'}."</td>";

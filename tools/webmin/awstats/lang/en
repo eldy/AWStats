@@ -13,6 +13,7 @@ index_noconfig=No config files were found or have been added for analysis.
 index_edit=Edit/Delete config
 index_del=Delete config
 index_scheduled=Scheduled
+index_sched2=Scheduler
 index_now=Now
 index_update=Update stats 
 index_update2=Update

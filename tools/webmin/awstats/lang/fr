@@ -14,6 +14,7 @@ index_edit=Edition/Suppression
 index_del=Suppression config
 index_scheduled=Programmée
 index_now=Immédiate
+index_sched2=Programme
 index_update=Mise à jour stats 
 index_update2=Mettre à jour
 index_view=Voir les stats

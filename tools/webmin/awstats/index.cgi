@@ -155,7 +155,7 @@ if (@config) {
 	
 		
 		if ($access{'update'}) {	# Update
-	        print "<td align=center><a href='schedule_stats.cgi?file=$l'>?</a></td>";
+	        print "<td align=center><a href='schedule_stats.cgi?file=$l'>$text{'index_sched2'}</a></td>";
 	        print "<td align=center><a href='update_stats.cgi?file=$l'>$text{'index_update2'}</a></td>\n";
 		}
 		else {
