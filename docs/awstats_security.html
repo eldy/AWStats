@@ -7,10 +7,10 @@
 <meta name="title" content="AWStats Documentation - Security page">
 <title>AWStats Documentation - Security page</title>
 <link rel="stylesheet" href="styles.css" type="text/css">
+<!-- $Revision$ - $Author$ - $Date$ -->
 </head>
 
 <body topmargin=10 leftmargin=5>
-<!-- $Revision$ - $Author$ - $Date$ -->
 
 
 <table style="font: 10pt arial,helvetica,verdana" cellpadding=0 cellspacing=0 border=0 bgcolor=#FFFFFF width=100%>
@@ -20,7 +20,7 @@
 <td bgcolor=#9999cc align=center><a href="/"><img src="images/awstats_logo4.png" border=0></a></td>
 <td bgcolor=#9999cc align=center>
 <br>
-<font style="font: 16pt Times;" color=#EEEEFF><b>AWStats logfile analyzer 4.0 Documentation</b></font><br>
+<font style="font: 16pt Times;" color=#EEEEFF><b>AWStats logfile analyzer 4.1 Documentation</b></font><br>
 <br>
 </td>
 <td bgcolor=#9999cc align=center>
@@ -57,7 +57,7 @@ be securely viewed by correct allowed users only (or sent by mails).<br>
 If users have a command line access (telnet) on statistics server, you must set correct permissions on AWStats
 database files. Set all AWStats database files (built by the update process) for config/domain1 to have read/write
 for <i>user1</i> (or an admin user) and NO read and NO write permissions for any other users.<br>
-Then, check that the <b>SaveDatabaseFilesWithPermissionsForEveryone</b> parameter is set 0 in your config/domain files.<br>
+Then, check that the "<a href="awstats_config.html#SaveDatabaseFilesWithPermissionsForEveryone">SaveDatabaseFilesWithPermissionsForEveryone</a>" parameter is set 0 in your config/domain files.<br>
 If AWStats database files for config/domain1 are read protected, only allowed users can see statistics for config/domain1.<br>
 If AWStats database files for config/domain1 are write protected, only allowed users can update statistics for config/domain1.<br>
 <br><br>
@@ -117,14 +117,14 @@ AuthType Basic<br>
 require valid-user<br>
 &lt;/Files&gt;
 </i><br>
-Then edit each config/domain file you want to be protected to set <b>AllowAccessFromWebToAuthenticatedUsersOnly</b> to 1.<br>
-You can also edit list of authorized users in the <b>AllowAccessFromWebToFollowingAuthenticatedUsers</b> parameter.<br>
+Then edit each config/domain file you want to be protected to set "<a href="awstats_config.html#AllowAccessFromWebToAuthenticatedUsersOnly">AllowAccessFromWebToAuthenticatedUsersOnly</a>" to 1.<br>
+You can also edit list of authorized users in the "<a href="awstats_config.html#AllowAccessFromWebToFollowingAuthenticatedUsers">AllowAccessFromWebToFollowingAuthenticatedUsers</a>" parameter.<br>
 <br>
 Other tip: If you define <b>AWSTATS_CONFIG</b> environment variable in your web server environment (Adding
 <i>SetEnv AWSTATS_CONFIG myconfigvalueformydomain</i> with other directives in your Apache VirtualHost config), AWStats
 will use the config file called <i>awstats.myconfigvalueformydomain.conf</i> to choose which statistics used,
 even if a visitor try to force the config/domain file with the URL '<i>http://mydomain.com/cgi-bin-awstats/awstats.pl?config=xxx</i>'.
-This can be usefull for thoose who edit their config/domain file with <i>AllowAccessFromWebToFollowingAuthenticatedUsers="__REMOTE_USER__"</i>.<br>
+This can be usefull for thoose who edit their config/domain file with <a href="awstats_config.html#AllowAccessFromWebToFollowingAuthenticatedUsers">AllowAccessFromWebToFollowingAuthenticatedUsers</a>="__REMOTE_USER__"</i>.<br>
 <br><br>
 
 <br><a name="3"><H2 style="font: 22px Times; color: #606060"><u>3) NO SECURITY POLICY</u></H2></a><br>

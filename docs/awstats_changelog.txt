@@ -1,6 +1,12 @@
 AWStats Changelog
 -----------------
 
+4.1
+
+- New feature: Report exit pages
+- New feature: Report visits duration
+
+
 4.0
 
   WARNING: 4.0 is not compatible with OLD history data files. If you use 4.0

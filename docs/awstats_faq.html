@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta name="description" content="AWStats Documentation - FAQ page">
-<meta name="keywords" content="awstats, awstat, faq, error, errors, frequently, asked, questions, support, help, problem, solution, troubleshooting">
+<meta name="keywords" content="awstats, awstat, faq, error, errors, frequently, asked, questions, support, help, problem, solution, troubleshooting, rotate log">
 <meta name="robots" content="index,follow">
 <meta name="title" content="AWStats Documentation - FAQs">
 <title>AWStats Documentation - FAQs</title>
@@ -20,7 +20,7 @@
 <td bgcolor=#9999cc align=center><a href="/"><img src="images/awstats_logo4.png" border=0></a></td>
 <td bgcolor=#9999cc align=center>
 <br>
-<font style="font: 16pt Times;" color=#EEEEFF><b>AWStats logfile analyzer 4.0 Documentation</b></font><br>
+<font style="font: 16pt Times;" color=#EEEEFF><b>AWStats logfile analyzer 4.1 Documentation</b></font><br>
 <br>
 </td>
 <td bgcolor=#9999cc align=center>
@@ -351,11 +351,30 @@ no s at the end (Rename your directory physically and change the DirIcons parame
 to reflect this change).<br>
 <br>
 
+<a name="ROTATE"></a><br>
+<b><u>FAQ-SET500 : HOW TO ROTATE MY LOGS WITHOUT LOOSING DATA</u></b><br>
+<font style="color: #660000">PROBLEM:</font> I want to archive/rotate my logs using my web server
+system options or a third software (rotatelog, cronolog) but don't want to loose any visits information
+during the rotate process.<br>
+<font style="color: #4444cc">SOLUTION:</font><br>
+If you use a rotate system (internal web server feature or third software), this means you probably not use
+AWStats <a href="awstats_config.html#PurgeLogFile">PurgeLogFile</a> nor <a href="awstats_config.html#ArchiveLogRecords">ArchiveLogRecords</a> parameter.
+To be sure to not loose any records in your log file during the rotate process, you can just run the AWStats update process 
+on the log file after it was archived.<br>
+Note: For Apache users, use of <a href="http://cronolog.org" target=awstatsbis>cronolog</a> seems to be a better choice
+than rotatelog (cronolog is available for Unix/Liux and Windows and is more flexible).<br>
+To use cronolog or rotatelog you must setup your web server log file name using a pipe like this example:<br>
+<i>CustomLog "|/usr/sbin/cronolog [cronolog_options] /var/logs/access.%Y%m%d.log" combined</i><br>
+<br>
+
+
+
 <a name="CRONTAB"></a><br>
 <b><u>FAQ-SET550 : HOW TO RUN AWSTATS FREQUENTLY</u></b><br>
 <font style="color: #660000">PROBLEM:</font> AWStats must be ran frequently to update statistics.
 How can I do this ?<br>
 <font style="color: #4444cc">SOLUTION:</font><br>
+<br>
 <u>With Windows</u>, you can use the internal task scheduler.
 The use of this tool is not an AWStats related problem, so please take a look at your Windows manual.
 Warning, if you use <i>"awstats.pl -config=mysite -update"</i> in your scheduled task, you might
@@ -364,7 +383,8 @@ experience problem of failing task. Try this instead<br>
 or<br>
 <i>"C:\[perl_path]\perl.exe C:\[awstats_path]\awstats.pl -config=mysite -update"</i><br>
 A lot of other scheduler (sharewares/freewares) are very good.<br>
-<u>With unix-like operating systems</u>, you can use the "crontab".<br>
+<br>
+<u>With unix-like operating systems</u>, you can use the "<b>crontab</b>".<br>
 This is examples of lines you can add in the cron file (see your unix reference manual for cron) :<br>
 To run update every day at 04:00, use :<br>
 <i>0 4 * * * /opt/awstats/wwwroot/cgi-bin/awstats.pl -config=mysite -update</i><br>
@@ -404,8 +424,8 @@ log, since last run, to process). See the <a href="awstats_benchmark.html">Bench
 get examples of launching frequency according to your web traffic<br>
 - You can disable <i>DNSLookup</i> in configure file (set <i>DNSLookup=0</i>) 
 <u>but this requires absolutely that hosts addresses in your log file are already 
-resolved</u> (need to setup your web server to do so). Speed can be increased 
-up by <b>2 to 50</b> times !<br>
+resolved</u> (need to setup your web server to do so).
+Log analyze speed can be increased by 2 to 50 times but your web server will be slowed.<br>
 If you don't understand what is an "already resolved reverse DNS lookup", keep 
 this parameter to 1.<br>
 - If you use Apache, set <i>PurgeLogFile</i> to 1 (By default, to avoid bad surprise, 
@@ -419,7 +439,8 @@ to purge the log file after processing it. This increase speed for next run).<br
 <font style="color: #660000">PROBLEM:</font> What is AWStats speed ?<br>
 <font style="color: #660000">PROBLEM:</font> What is the frequency to launch AWStats process to update my statistics ?<br>
 <font style="color: #4444cc">SOLUTION:</font>
-All benchmarks information and advice on frequency for update process are related into the <a href="awstats_benchmark.html">Benchmark page</a>.
+All benchmarks information and advice on frequency for update process are related into
+the <a href="awstats_benchmark.html">Benchmark page</a>.
 <br>
 
 
@@ -429,8 +450,8 @@ All benchmarks information and advice on frequency for update process are relate
 has no hostnames, only IP addresses, countries reported are all "unknown".<br>
 <font style="color: #4444cc">SOLUTION:</font> When AWStats find an IP address 
 in your log file, it tries a reverse DNS lookup to find the hostname and domain 
-if the <i>DNSLookup</i> parameter, in your AWStats config file, is <i>DNSLookup=1</i> 
-(Default value). So, first, check if you have the good value. The <i>DNSLookup=0</i> 
+if the <a href="awstats_tools.html#DNSLookup">DNSLookup</a> parameter, in your AWStats config file, is <a href="awstats_config.html#DNSLookup">DNSLookup</a>=1
+(Default value). So, first, check if you have the good value. The <a href="awstats_config.html#DNSLookup">DNSLookup</a>=0 
 must be used only if your log file contains already resolved IP address. For example, 
 when you set up Apache with the <i>HostNameLookups=on</i> directive. When you 
 ask your web server to make itself the reverse DNS lookup to log hostname instead 
@@ -438,16 +459,11 @@ of IP address, you will still find some IP addresses in your log file because
 the reverse DNS lookup is not always possible. But if your web server fails in 
 it, AWStats will also fails (All reverse DNS lookups use the same system API). 
 So to avoid AWStats to make an already done lookup (with success or not), you 
-can set <i>DNSLookup=0</i> in AWStats config file. Since 2.23, because a lot of users
-don't know this option, when AWStats find an already resolved IP Address in your log 
-file, it disables itself the reverse DNS lookup because it means that reverse lookup 
-is already done in log file. If IIS or Apache has made one DNS lookup resolution 
-for one record in your log file, they must have done it for all the file. If 
-you find only few lines with hostnames and others with IP Address, it means your 
-web server failed in resolving them. Check your DNS reverse system with the <i>nslookup</i> 
-command (available on NT/2000 and Unix).<br>
-Apache users might be interesting in knowing there is a tool called <i>logresolve</i> with
-Apache distribution, that can convert a logfile with IP Addresses into a logfile with resolved hostnames.<br>
+can set <a href="awstats_config.html#DNSLookup">DNSLookup</a>=0 in AWStats config file.
+If you prefer, you can make the reverse DNS lookup on a log file before running
+your log analyzer (If you only need to convert a logfile with IP Addresses into a
+logfile with resolved hostnames). You can use for this <a href="awstats_config.html#logresolvemerge">logresolvemerge</a> tool
+provided with AWStats distribution (This tools is an improved version of <i>logresolve</i> provided with Apache).<br>
 <br>
 
 <a name="DIFFERENT_RESULTS"></a><br>
