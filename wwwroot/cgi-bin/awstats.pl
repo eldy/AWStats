@@ -337,7 +337,7 @@ use vars qw/ @Message /;
 'Day',
 'Month',
 'Year',
-'Statistics of',
+'Statistics for',
 'First visit',
 'Last visit',
 'Number of visits',
@@ -403,7 +403,7 @@ use vars qw/ @Message /;
 'Nov',
 'Dec',
 'Navigation',
-'Files type',
+'File type',
 'Update now',
 'Bandwidth',
 'Back to main page',
@@ -1628,7 +1628,7 @@ sub Check_Config {
 	# Convert extra sections data into @ExtraConditionType, @ExtraConditionTypeVal...
 	foreach my $extranum (1..@ExtraName-1) {
 		my $part=0;
-		foreach my $conditioncouple (split(/\s\|\s/, $ExtraCondition[$extranum])) {
+		foreach my $conditioncouple (split(/\s*\|\s*/, $ExtraCondition[$extranum])) {
 	 		my ($conditiontype, $conditiontypeval)=split(/,/,$conditioncouple,2);
 	 		$ExtraConditionType[$extranum][$part]=$conditiontype;
 			if ($conditiontypeval =~ /^REGEX\[(.*)\]$/i) { $conditiontypeval=$1; }
@@ -1637,7 +1637,7 @@ sub Check_Config {
 			$part++;
 	 	}
 		$part=0;
-		foreach my $rowkeycouple (split(/\s\|\s/, $ExtraFirstColumnValues[$extranum])) {
+		foreach my $rowkeycouple (split(/\s*\|\s*/, $ExtraFirstColumnValues[$extranum])) {
 	 		my ($rowkeytype, $rowkeytypeval)=split(/,/,$rowkeycouple,2);
 	 		$ExtraFirstColumnValuesType[$extranum][$part]=$rowkeytype;
 			if ($rowkeytypeval =~ /^REGEX\[(.*)\]$/i) { $rowkeytypeval=$1; }
@@ -2375,7 +2375,7 @@ sub Read_History_With_TmpUpdate {
 					chomp $_; s/\r//;
 					@field=split(/\s+/,$_); $countlines++;
 				}
-				until ($field[0] eq 'END_UNKOWNIP' || ! $_);
+				until ($field[0] eq 'END_UNKNOWNIP' || ! $_);
 				if ($field[0] ne 'END_UNKNOWNIP') { error("History file \"$filetoread\" is corrupted (End of section UNKOWNIP not found).\nRestore a recent backup of this file (data for this month will be restored to backup date), remove it (data for month will be lost), or remove the corrupted section in file (data for at least this section will be lost).","","",1); }
 				if ($Debug) { debug(" End of UNKOWNIP section ($count entries, $countloaded loaded)"); }
 				delete $SectionsToLoad{'visitor'};
@@ -4021,7 +4021,7 @@ sub Init_HashArray {
 # Return:		decodedstring
 #------------------------------------------------------------------------------
 sub ChangeWordSeparatorsIntoSpace {
-	$_[0] =~ s/%1[03]/ /g;				# LF,CR
+	$_[0] =~ s/%0[ad]/ /ig;				# LF,CR
 	$_[0] =~ s/%2[02789abc]/ /ig;		# 
 	$_[0] =~ s/%3a/ /ig;				# :
 	$_[0] =~ tr/\+\'\(\)\"\*,:/        /s;		# "&" and "=" must not be in this list
@@ -5618,7 +5618,7 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 	my $regnotnetscape=qr/gecko|compatible|opera|galeon|safari/i;
 	my $regreferer=qr/^(\w+):\/\/([^\/:]+)(:\d+|)/;
 	my $regreferernoquery=qr/^([^$URLQuerySeparators]+)/;
-	
+
 	# Define value of $PerlParsingFormat and @fieldlib
 	&DefinePerlParsingFormat();
 
@@ -9884,9 +9884,9 @@ if (scalar keys %HTMLOutput) {
 			if ($ExtraAddAverageRow[$extranum]) {
 	 			print "<tr>";
 	 			print "<td class=\"aws\"><b>$Message[96]</b></td>";
-	 			if ($ExtraStatTypes[$extranum] =~ m/P/i) { print "<td>" . ($total_p/$count) . "</td>"; }
-	 			if ($ExtraStatTypes[$extranum] =~ m/H/i) { print "<td>" . ($total_h/$count) . "</td>"; }
-	 			if ($ExtraStatTypes[$extranum] =~ m/B/i) { print "<td>" . Format_Bytes(($total_k/$count)) . "</td>"; }
+	 			if ($ExtraStatTypes[$extranum] =~ m/P/i) { print "<td>" . ($count?($total_p/$count):"&nbsp;") . "</td>"; }
+	 			if ($ExtraStatTypes[$extranum] =~ m/H/i) { print "<td>" . ($count?($total_h/$count):"&nbsp;") . "</td>"; }
+	 			if ($ExtraStatTypes[$extranum] =~ m/B/i) { print "<td>" . ($count?Format_Bytes($total_k/$count):"&nbsp;") . "</td>"; }
 	 			if ($ExtraStatTypes[$extranum] =~ m/L/i) { print "<td>&nbsp;</td>"; }
 	 			print "</tr>\n";
 			}
