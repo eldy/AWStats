@@ -118,6 +118,7 @@ $DNSLastUpdateCacheFile='dnscachelastupdate.txt';
 $MiscTrackerUrl=quotemeta('/js/awstats_misc_tracker.js');
 $Lang='auto';
 $MaxRowsInHTMLOutput=1000;
+$MaxLengthOfURL=72;
 $MaxLengthOfStoredURL=256;			# Note: Apache LimitRequestLine is default to 8190
 $MaxLengthOfStoredUA=256;
 %BarPng=('vv'=>'vv.png','vu'=>'vu.png','hu'=>'hu.png','vp'=>'vp.png','hp'=>'hp.png',
@@ -135,7 +136,7 @@ $Expires $UpdateStats $MigrateStats $URLNotCaseSensitive $URLWithQuery $URLRefer
 $UseFramesWhenCGI $DecodeUA
 /;
 ($EnableLockForUpdate, $DNSLookup, $AllowAccessFromWebToAuthenticatedUsersOnly,
-$BarHeight, $BarWidth, $CreateDirDataIfNotExists, $KeepBackupOfHistoricFiles, $MaxLengthOfURL,
+$BarHeight, $BarWidth, $CreateDirDataIfNotExists, $KeepBackupOfHistoricFiles,
 $NbOfLinesParsed, $NbOfLinesDropped, $NbOfLinesCorrupted, $NbOfOldLines, $NbOfNewLines,
 $NbOfLinesShowsteps, $NewLinePhase, $NbOfLinesForCorruptedLog, $PurgeLogFile,
 $ShowAuthenticatedUsers, $ShowFileSizesStats, $ShowScreenSizeStats, $ShowSMTPErrorsStats,
