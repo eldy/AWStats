@@ -1819,15 +1819,14 @@ sub Read_Plugins {
 		my $pluginname=$1;
 		if ($pluginname) {
 			if (! $PluginsLoaded{'init'}{"$pluginname"}) {		# Plugin not already loaded
-				my %pluginisfor=('ipv6'=>'u','hashfiles'=>'u','geoip'=>'u','geoipfree'=>'u','timehires'=>'u','timezone'=>'ou',
+				my %pluginisfor=('ipv6'=>'u','hashfiles'=>'u','geoip'=>'u','geoipfree'=>'u','geoip_region_maxmind'=>'u','timehires'=>'u','timezone'=>'ou',
 								 'decodeutfkeys'=>'o','hostinfo'=>'o','userinfo'=>'o','urlalias'=>'o','tooltips'=>'o');
-				if ($pluginisfor{$pluginname}) {
+				if ($pluginisfor{$pluginname}) {    # If it's a known plugin, may be we don't need to load it
 					# Do not load "update plugins" if output only
 					if (! $UpdateStats && scalar keys %HTMLOutput && $pluginisfor{$pluginname} !~ /o/) { $PluginsLoaded{'init'}{"$pluginname"}=1; next; }
 					# Do not load "output plugins" if update only
 					if ($UpdateStats && ! scalar keys %HTMLOutput && $pluginisfor{$pluginname} !~ /u/) { $PluginsLoaded{'init'}{"$pluginname"}=1; next; }
 				}
-				else { $PluginsLoaded{'init'}{"$pluginname"}=1; }	# Unknown plugins always loaded
 				# Load plugin
 				foreach my $dir (@PossiblePluginsDir) {
 					my $searchdir=$dir;
@@ -1844,7 +1843,6 @@ sub Read_Plugins {
 						my $modperl=$ENV{"MOD_PERL"}? eval { require mod_perl; $mod_perl::VERSION >= 1.99 ? 2 : 1 } : 0;
 						if ($modperl == 2) { $loadret=require "$pluginpath"; }
 						else { $loadret=require "$pluginfile.pm"; }
-	
 						if (! $loadret || $loadret =~ /^error/i) {
 							# Load failed, we stop here
 							error("Plugin load for plugin '$pluginname' failed with return code: $loadret");
@@ -1885,7 +1883,7 @@ sub Read_Plugins {
 					}
 				}
 				if (! $PluginsLoaded{'init'}{"$pluginname"}) {
-					error("Can't open plugin file \"$pluginfile.pm\" for read.\nCheck if file is in \"".($PossiblePluginsDir[0])."\" directory and is readable.");
+					error("AWStats config file contains a directive to load plugin \"$pluginname\" (LoadPlugin=\"$plugininfo\") but AWStats can't open plugin file \"$pluginfile.pm\" for read.\nCheck if file is in \"".($PossiblePluginsDir[0])."\" directory and is readable.");
 				}
 			}
 			else {
@@ -3209,7 +3207,7 @@ sub Read_History_With_TmpUpdate {
 			}
 
 			# BEGIN_PLUGINS
-           	if ($AtLeastOneSectionPlugin && $field[0] =~ /^BEGIN_PLUGIN_(\w)$/i)   {
+           	if ($AtLeastOneSectionPlugin && $field[0] =~ /^BEGIN_PLUGIN_(\w+)$/i)   {
           	    my $pluginname=$1;
           	    my $found=0;
           	    foreach (keys %{$PluginsLoaded{'SectionInitHashArray'}})  {
@@ -3217,9 +3215,8 @@ sub Read_History_With_TmpUpdate {
                         # The plugin for this section was loaded
                		    $found=1;
                	        my $issectiontoload=$SectionsToLoad{"plugin_$pluginname"};
-               		    my $function="SectionReadHistory_$pluginname(\$issectiontoload,\$xmlold,\$xmleb,\\\@field)";
+               		    my $function="SectionReadHistory_$pluginname(\$issectiontoload,\$xmlold,\$xmleb,\$countlines)";
                		    eval("$function");
-
         				delete $SectionsToLoad{"plugin_$pluginname"};
         				if ($SectionsToSave{"plugin_$pluginname"}) {
         					Save_History("plugin_$pluginname",$year,$month); delete $SectionsToSave{"plugin_$pluginname"};
@@ -3801,13 +3798,13 @@ sub Save_History {
 			$keysinkeylist{$_}=1;
 			my $newkey=$_;
 			$newkey =~ s/^http(s|):\/\/([^\/]+)\/$/http$1:\/\/$2/i;	# Remove / at end of http://.../ but not at end of http://.../dir/
-			print HISTORYTMP "${xmlrb}".XMLEncodeForH($newkey)."${xmlrs}".int($_pagesrefs_p{$_}||0)."${xmlrs}$_pagesrefs_h{$_}${xmlre}\n";
+			print HISTORYTMP "${xmlrb}".XMLEncodeForHisto($newkey)."${xmlrs}".int($_pagesrefs_p{$_}||0)."${xmlrs}$_pagesrefs_h{$_}${xmlre}\n";
 		}
 		foreach (keys %_pagesrefs_h) {
 			if ($keysinkeylist{$_}) { next; }
 			my $newkey=$_;
 			$newkey =~ s/^http(s|):\/\/([^\/]+)\/$/http$1:\/\/$2/i;	# Remove / at end of http://.../ but not at end of http://.../dir/
-			print HISTORYTMP "${xmlrb}".XMLEncodeForH($newkey)."${xmlrs}".int($_pagesrefs_p{$_}||0)."${xmlrs}$_pagesrefs_h{$_}${xmlre}\n";
+			print HISTORYTMP "${xmlrb}".XMLEncodeForHisto($newkey)."${xmlrs}".int($_pagesrefs_p{$_}||0)."${xmlrs}$_pagesrefs_h{$_}${xmlre}\n";
 		}
 		print HISTORYTMP "${xmleb}END_PAGEREFS${xmlee}\n";
 	}
@@ -3900,7 +3897,7 @@ sub Save_History {
 			foreach (keys %_sider404_h) {
 				my $newkey=$_;
 				my $newreferer=$_referer404_h{$_}||'';
-				print HISTORYTMP "${xmlrb}".XMLEncodeForH($newkey)."${xmlrs}$_sider404_h{$_}${xmlrs}".XMLEncodeForH($newreferer)."${xmlre}\n";
+				print HISTORYTMP "${xmlrb}".XMLEncodeForHisto($newkey)."${xmlrs}$_sider404_h{$_}${xmlrs}".XMLEncodeForHisto($newreferer)."${xmlre}\n";
 			}
 			print HISTORYTMP "${xmleb}END_SIDER_$code${xmlee}\n";
 		}
@@ -3934,8 +3931,15 @@ sub Save_History {
 		}
  	}
 	
-	# TODO Save
-	
+ 	# Other - Plugin sections
+   	if ($AtLeastOneSectionPlugin && $sectiontosave =~ /^plugin_(\w+)$/i)   {
+  	    my $pluginname=$1;
+  	    if ($PluginsLoaded{'SectionInitHashArray'}{"$pluginname"})  {
+   		    my $function="SectionWriteHistory_$pluginname(\$xml,\$xmlbb,\$xmlbs,\$xmlbe,\$xmlrb,\$xmlrs,\$xmlre,\$xmleb,\$xmlee)";
+  		    eval("$function");
+            last;
+        }
+    }
 
 	%keysinkeylist=();
 }
@@ -4171,10 +4175,10 @@ sub Init_HashArray {
 # Return:		decodedstring
 #------------------------------------------------------------------------------
 sub ChangeWordSeparatorsIntoSpace {
-	$_[0] =~ s/%0[ad]/ /ig;				# LF,CR
-	$_[0] =~ s/%2[02789abc]/ /ig;		# 
+	$_[0] =~ s/%0[ad]/ /ig;				# LF CR
+	$_[0] =~ s/%2[02789abc]/ /ig;		# space " ' ( ) * + ,
 	$_[0] =~ s/%3a/ /ig;				# :
-	$_[0] =~ tr/\+\'\(\)\"\*,:/        /s;		# "&" and "=" must not be in this list
+	$_[0] =~ tr/\+\'\(\)\"\*,:/        /s;	# "&" and "=" must not be in this list
 }
 
 #------------------------------------------------------------------------------
@@ -4194,7 +4198,7 @@ sub XMLEncode {
 # Parameters:	stringtoencode
 # Return:		encodedstring
 #------------------------------------------------------------------------------
-sub XMLEncodeForH {
+sub XMLEncodeForHisto {
 	my $string = shift;
     $string =~ s/\s/%20/g;
 	if ($BuildHistoryFormat ne 'xml') { return $string; }
@@ -4525,7 +4529,7 @@ sub BuildKeyList {
 	my $MinValue=shift||error("System error. Call to BuildKeyList function with incorrect value for second param","","",1);
 	my $hashforselect=shift;
 	my $hashfororder=shift;
-	if ($Debug) { debug(" BuildKeyList($ArraySize,$MinValue,$hashforselect with size=".(scalar keys %$hashforselect).",$hashfororder with size=".(scalar keys %$hashfororder).")",2); }
+	if ($Debug) { debug("  BuildKeyList($ArraySize,$MinValue,$hashforselect with size=".(scalar keys %$hashforselect).",$hashfororder with size=".(scalar keys %$hashfororder).")",3); }
 	delete $hashforselect->{0};delete $hashforselect->{''};		# Those is to protect from infinite loop when hash array has an incorrect null key
 	my $count=0;
 	$lowerval=0;	# Global because used in AddInTree and Removelowerval
@@ -4548,13 +4552,13 @@ sub BuildKeyList {
 	}
 
 	# Build key list and sort it
-	if ($Debug) { debug("  Build key list and sort it. lowerval=$lowerval, nb elem val=".(scalar keys %val).", nb elem egal=".(scalar keys %egal).".",2); }
+	if ($Debug) { debug("  Build key list and sort it. lowerval=$lowerval, nb elem val=".(scalar keys %val).", nb elem egal=".(scalar keys %egal).".",3); }
 	my %notsortedkeylist=();
 	foreach my $key (values %val) {	$notsortedkeylist{$key}=1; }
 	foreach my $key (values %egal) { $notsortedkeylist{$key}=1; }
 	@keylist=();
 	@keylist=(sort {($hashfororder->{$b}||0) <=> ($hashfororder->{$a}||0) } keys %notsortedkeylist);
-	if ($Debug) { debug(" BuildKeyList End (keylist size=".(@keylist).")",2); }
+	if ($Debug) { debug("  BuildKeyList End (keylist size=".(@keylist).")",3); }
 	return;
 }
 
@@ -6450,20 +6454,38 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 			# Resolve Domain
 			if ($PluginsLoaded{'GetCountryCodeByAddr'}{'geoipfree'}) { $Domain=GetCountryCodeByAddr_geoipfree($HostResolved); }
 			elsif ($PluginsLoaded{'GetCountryCodeByAddr'}{'geoip'}) { $Domain=GetCountryCodeByAddr_geoip($HostResolved); }
+            if ($AtLeastOneSectionPlugin) {
+               	foreach my $pluginname (keys %{$PluginsLoaded{'SectionProcessHost'}})  {
+               		my $function="SectionProcessHost_$pluginname(\$HostResolved)";
+               		eval("$function");
+                }
+   		    }
 		}
 		else {
-			# $Host was already a host name ($Host=name => $HostResolved='', $ip=0) or has been resolved ($Host=ip => $HostResolved defined, $ip>0)
+			# $Host was already a host name ($ip=0, $Host=name, $HostResolved='') or has been resolved ($ip>0, $Host=ip, $HostResolved defined)
 			$HostResolved = lc($HostResolved?$HostResolved:$Host);
 			# Resolve Domain
-			if ($ip) {
+			if ($ip) {  # If we have ip, we use it in priority instead of hostname
 				if ($PluginsLoaded{'GetCountryCodeByAddr'}{'geoipfree'}) { $Domain=GetCountryCodeByAddr_geoipfree($Host); }
 				elsif ($PluginsLoaded{'GetCountryCodeByAddr'}{'geoip'}) { $Domain=GetCountryCodeByAddr_geoip($Host); }
 				elsif ($HostResolved =~ /\.(\w+)$/) { $Domain=$1; }
+                if ($AtLeastOneSectionPlugin) {
+                   	foreach my $pluginname (keys %{$PluginsLoaded{'SectionProcessHostname'}})  {
+                   		my $function="SectionProcessHostname_$pluginname(\$Host)";
+                   		eval("$function");
+                    }
+                }
 			}
 			else {
 				if ($PluginsLoaded{'GetCountryCodeByName'}{'geoipfree'}) { $Domain=GetCountryCodeByName_geoipfree($HostResolved); }
 				elsif ($PluginsLoaded{'GetCountryCodeByName'}{'geoip'}) { $Domain=GetCountryCodeByName_geoip($HostResolved); }
 				elsif ($HostResolved =~ /\.(\w+)$/) { $Domain=$1; }
+                if ($AtLeastOneSectionPlugin) {
+                   	foreach my $pluginname (keys %{$PluginsLoaded{'SectionProcessHostname'}})  {
+                   		my $function="SectionProcessHostname_$pluginname(\$HostResolved)";
+                   		eval("$function");
+                    }
+                }
 			}
 		}
 		# Store country
