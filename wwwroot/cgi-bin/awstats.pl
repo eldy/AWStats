@@ -121,10 +121,6 @@ $ShowEMailSenders, $ShowEMailReceivers,
 $Expires, $UpdateStats, $MigrateStats, $URLWithQuery, $UseFramesWhenCGI, $Spec)=
 (0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
 use vars qw/
-$PosTotalVisits $PosTotalUnique $PosMonthHostsKnown $PosMonthHostsUnknown
-/;
-($PosTotalVisits, $PosTotalUnique, $PosMonthHostsKnown, $PosMonthHostsUnknown)=(0,0,0,0);
-use vars qw/
 $AllowToUpdateStatsFromBrowser $ArchiveLogRecords $DetailedReportsOnNewWindows
 $FirstDayOfWeek $KeyWordsNotSensitive $SaveDatabaseFilesWithPermissionsForEveryone
 $ShowHeader $ShowMenu $ShowMonthDayStats $ShowDaysOfWeekStats
@@ -238,7 +234,7 @@ use vars qw/
 %ValidHTTPCodes %TrapInfosForHTTPErrorCodes %NotPageList %DayBytes %DayHits %DayPages %DayVisits
 %FirstTime %LastTime
 %MonthUnique %MonthVisits %MonthPages %MonthHits %MonthBytes %MonthHostsKnown %MonthHostsUnknown
-%ListOfYears %HistoryAlreadyFlushed
+%ListOfYears %HistoryAlreadyFlushed %PosInFile %ValueInFile
 %_session %_browser_h %_domener_h %_domener_k %_domener_p %_errors_h
 %_filetypes_h %_filetypes_k %_filetypes_gz_in %_filetypes_gz_out
 %_host_p %_host_h %_host_k %_host_l %_host_s %_host_u
@@ -259,7 +255,7 @@ use vars qw/
 %DayBytes = %DayHits = %DayPages = %DayVisits = ();
 %FirstTime = %LastTime = ();
 %MonthUnique = %MonthVisits = %MonthPages = %MonthHits = %MonthBytes = %MonthHostsKnown = %MonthHostsUnknown = ();
-%ListOfYears = %HistoryAlreadyFlushed = ();
+%ListOfYears = %HistoryAlreadyFlushed = %PosInFile = %ValueInFile = ();
 %_session = %_browser_h = %_domener_h = %_domener_k = %_domener_p = %_errors_h = ();
 %_filetypes_h = %_filetypes_k = %_filetypes_gz_in = %_filetypes_gz_out = ();
 %_host_p = %_host_h = %_host_k = %_host_l = %_host_s = %_host_u = ();
@@ -2522,16 +2518,22 @@ sub Read_History_With_TmpUpdate {
 	# Update last data in general section and close files
 	if ($withupdate) {
 		# Save last data in general sections
-		debug(" Mise a jour MonthVisits=$MonthVisits{$year.$month} en position $PosTotalVisits");
-		seek(HISTORYTMP,$PosTotalVisits,0);	print HISTORYTMP $MonthVisits{$year.$month};
-		debug(" Mise a jour MonthUnique=$MonthUnique{$year.$month} en position $PosTotalUnique");
-		seek(HISTORYTMP,$PosTotalUnique,0);	print HISTORYTMP $MonthUnique{$year.$month};
-		debug(" Mise a jour MonthHostsKnown=$MonthHostsKnown{$year.$month} en position $PosMonthHostsKnown");
-		seek(HISTORYTMP,$PosMonthHostsKnown,0);	print HISTORYTMP $MonthHostsKnown{$year.$month};
-		debug(" Mise a jour MonthHostsUnknown=$MonthHostsUnknown{$year.$month} en position $PosMonthHostsUnknown");
-		seek(HISTORYTMP,$PosMonthHostsUnknown,0); print HISTORYTMP $MonthHostsUnknown{$year.$month};
+		foreach my $key (sort { $PosInFile{$a} <=> $PosInFile{$b} } keys %ValueInFile) {
+			debug(" Update offset of section $key=$ValueInFile{$key} in file at offset $PosInFile{$key}");
+			if ($PosInFile{"$key"}) {
+				seek(HISTORYTMP,$PosInFile{"$key"},0); print HISTORYTMP $ValueInFile{"$key"};
+			}
+		}
+		debug(" Update MonthVisits=$MonthVisits{$year.$month} in file at offset $PosInFile{TotalVisits}");
+		seek(HISTORYTMP,$PosInFile{"TotalVisits"},0); print HISTORYTMP $MonthVisits{$year.$month};
+		debug(" Update MonthUnique=$MonthUnique{$year.$month} in file at offset $PosInFile{TotalUnique}");
+		seek(HISTORYTMP,$PosInFile{"TotalUnique"},0); print HISTORYTMP $MonthUnique{$year.$month};
+		debug(" Update MonthHostsKnown=$MonthHostsKnown{$year.$month} in file at offset $PosInFile{MonthHostsKnown}");
+		seek(HISTORYTMP,$PosInFile{"MonthHostsKnown"},0); print HISTORYTMP $MonthHostsKnown{$year.$month};
+		debug(" Update MonthHostsUnknown=$MonthHostsUnknown{$year.$month} in file at offset $PosInFile{MonthHostsUnknown}");
+		seek(HISTORYTMP,$PosInFile{"MonthHostsUnknown"},0); print HISTORYTMP $MonthHostsUnknown{$year.$month};
 		# Set cursor at end of file
-		seek(HISTORYTMP,0,2);
+#		seek(HISTORYTMP,0,2);
 		close(HISTORYTMP) || error("Failed to write temporary history file");
 	}
 	if ($withread) {
@@ -2572,6 +2574,7 @@ sub Save_History {
 	my $month=shift||"";
 
 	if ($Debug) { debug(" Save_History (sectiontosave=$sectiontosave year=$year month=$month)",3); }
+	my $spacebar="                    ";
 	my %keysinkeylist=();
 
 	# Header
@@ -2579,31 +2582,34 @@ sub Save_History {
 		print HISTORYTMP "AWSTATS DATA FILE $VERSION\n";
 		print HISTORYTMP "# If you remove this file, all statistics for date $year-$month will be lost/reset.\n";
 		print HISTORYTMP "\n";
-		print HISTORYTMP "# This section is not used yet\n";
+		print HISTORYTMP "# Position (offset in bytes) in this file of beginning of each section\n";
+		print HISTORYTMP "# for direct I/O access. If you made changes somewhere in this file, you\n";
+		print HISTORYTMP "# should also remove completely the MAP section (AWStats will rewrite it\n";
+		print HISTORYTMP "# at next update).\n";
 		print HISTORYTMP "BEGIN_MAP 23\n";
-		print HISTORYTMP "POS_GENERAL                                \n";
-		print HISTORYTMP "POS_TIME                                   \n";
-		print HISTORYTMP "POS_VISITOR                                \n";
-		print HISTORYTMP "POS_DAY                                    \n";
-		print HISTORYTMP "POS_LOGIN                                  \n";
-		print HISTORYTMP "POS_DOMAIN                                 \n";
-		print HISTORYTMP "POS_SESSION                                \n";
-		print HISTORYTMP "POS_BROWSER                                \n";
-		print HISTORYTMP "POS_OS                                     \n";
-		print HISTORYTMP "POS_UNKNOWNREFERER                         \n";
-		print HISTORYTMP "POS_UNKNOWNREFERERBROWSER                  \n";
-		print HISTORYTMP "POS_ROBOT                                  \n";
-		print HISTORYTMP "POS_SIDER                                  \n";
-		print HISTORYTMP "POS_FILETYPES                              \n";
-		print HISTORYTMP "POS_ORIGIN                                 \n";
-		print HISTORYTMP "POS_SEREFERRALS                            \n";
-		print HISTORYTMP "POS_PAGEREFS                               \n";
-		print HISTORYTMP "POS_SEARCHWORDS                            \n";
-		print HISTORYTMP "POS_KEYWORDS                               \n";
-		print HISTORYTMP "POS_ERRORS                                 \n";
-		print HISTORYTMP "POS_SIDER_404                              \n";
-		print HISTORYTMP "POS_EMAILSENDER                            \n";
-		print HISTORYTMP "POS_EMAILRECEIVER                          \n";
+		print HISTORYTMP "POS_GENERAL ";$PosInFile{"general"}=tell HISTORYTMP;print HISTORYTMP "$spacebar\n";
+		print HISTORYTMP "POS_TIME ";$PosInFile{"time"}=tell HISTORYTMP;print HISTORYTMP "$spacebar\n";
+		print HISTORYTMP "POS_VISITOR ";$PosInFile{"visitor"}=tell HISTORYTMP;print HISTORYTMP "$spacebar\n";
+		print HISTORYTMP "POS_DAY ";$PosInFile{"day"}=tell HISTORYTMP;print HISTORYTMP "$spacebar\n";
+		print HISTORYTMP "POS_LOGIN ";$PosInFile{"login"}=tell HISTORYTMP;print HISTORYTMP "$spacebar\n";
+		print HISTORYTMP "POS_DOMAIN ";$PosInFile{"domain"}=tell HISTORYTMP;print HISTORYTMP "$spacebar\n";
+		print HISTORYTMP "POS_SESSION ";$PosInFile{"session"}=tell HISTORYTMP;print HISTORYTMP "$spacebar\n";
+		print HISTORYTMP "POS_BROWSER ";$PosInFile{"browser"}=tell HISTORYTMP;print HISTORYTMP "$spacebar\n";
+		print HISTORYTMP "POS_OS ";$PosInFile{"os"}=tell HISTORYTMP;print HISTORYTMP "$spacebar\n";
+		print HISTORYTMP "POS_UNKNOWNREFERER ";$PosInFile{"unknownreferer"}=tell HISTORYTMP;print HISTORYTMP "$spacebar\n";
+		print HISTORYTMP "POS_UNKNOWNREFERERBROWSER ";$PosInFile{"unknownrefererbrowser"}=tell HISTORYTMP;print HISTORYTMP "$spacebar\n";
+		print HISTORYTMP "POS_ROBOT ";$PosInFile{"robot"}=tell HISTORYTMP;print HISTORYTMP "$spacebar\n";
+		print HISTORYTMP "POS_SIDER ";$PosInFile{"sider"}=tell HISTORYTMP;print HISTORYTMP "$spacebar\n";
+		print HISTORYTMP "POS_FILETYPES ";$PosInFile{"filetypes"}=tell HISTORYTMP;print HISTORYTMP "$spacebar\n";
+		print HISTORYTMP "POS_ORIGIN ";$PosInFile{"origin"}=tell HISTORYTMP;print HISTORYTMP "$spacebar\n";
+		print HISTORYTMP "POS_SEREFERRALS ";$PosInFile{"sereferrals"}=tell HISTORYTMP;print HISTORYTMP "$spacebar\n";
+		print HISTORYTMP "POS_PAGEREFS ";$PosInFile{"pagerefs"}=tell HISTORYTMP;print HISTORYTMP "$spacebar\n";
+		print HISTORYTMP "POS_SEARCHWORDS ";$PosInFile{"searchwords"}=tell HISTORYTMP;print HISTORYTMP "$spacebar\n";
+		print HISTORYTMP "POS_KEYWORDS ";$PosInFile{"keywords"}=tell HISTORYTMP;print HISTORYTMP "$spacebar\n";
+		print HISTORYTMP "POS_ERRORS ";$PosInFile{"errors"}=tell HISTORYTMP;print HISTORYTMP "$spacebar\n";
+		print HISTORYTMP "POS_SIDER_404 ";$PosInFile{"sider_404"}=tell HISTORYTMP;print HISTORYTMP "$spacebar\n";
+		print HISTORYTMP "POS_EMAILSENDER ";$PosInFile{"emailsender"}=tell HISTORYTMP;print HISTORYTMP "$spacebar\n";
+		print HISTORYTMP "POS_EMAILRECEIVER ";$PosInFile{"emailreceiver"}=tell HISTORYTMP;print HISTORYTMP "$spacebar\n";
 		print HISTORYTMP "END_MAP\n";
 	}
 
@@ -2619,15 +2625,16 @@ sub Save_History {
 		print HISTORYTMP "# TotalUnique = Number of unique visitors\n";
 		print HISTORYTMP "# MonthHostsKnown   = Number of hosts known\n";
 		print HISTORYTMP "# MonthHostsUnKnown = Number of hosts unknown\n";
+		$ValueInFile{$sectiontosave}=tell HISTORYTMP;
 		print HISTORYTMP "BEGIN_GENERAL 8\n";
 		print HISTORYTMP "LastLine ".($LastLine>0?$LastLine:$LastTime{$year.$month})."\n";
 		print HISTORYTMP "FirstTime $FirstTime{$year.$month}\n";
 		print HISTORYTMP "LastTime $LastTime{$year.$month}\n";
 		print HISTORYTMP "LastUpdate $LastUpdate $NbOfLinesRead $NbOfOldLines $NbOfNewLines $NbOfLinesCorrupted $NbOfLinesDropped\n";
-		print HISTORYTMP "TotalVisits ";$PosTotalVisits=tell HISTORYTMP;print HISTORYTMP "                    \n";
-		print HISTORYTMP "TotalUnique ";$PosTotalUnique=tell HISTORYTMP;print HISTORYTMP "                    \n";
-		print HISTORYTMP "MonthHostsKnown ";$PosMonthHostsKnown=tell HISTORYTMP;print HISTORYTMP "                    \n";
-		print HISTORYTMP "MonthHostsUnknown ";$PosMonthHostsUnknown=tell HISTORYTMP;print HISTORYTMP "                    \n";
+		print HISTORYTMP "TotalVisits ";$PosInFile{"TotalVisits"}=tell HISTORYTMP;print HISTORYTMP "$spacebar\n";
+		print HISTORYTMP "TotalUnique ";$PosInFile{"TotalUnique"}=tell HISTORYTMP;print HISTORYTMP "$spacebar\n";
+		print HISTORYTMP "MonthHostsKnown ";$PosInFile{"MonthHostsKnown"}=tell HISTORYTMP;print HISTORYTMP "$spacebar\n";
+		print HISTORYTMP "MonthHostsUnknown ";$PosInFile{"MonthHostsUnknown"}=tell HISTORYTMP;print HISTORYTMP "$spacebar\n";
 		print HISTORYTMP "END_GENERAL\n";
 	}
 
@@ -2635,6 +2642,7 @@ sub Save_History {
 	if ($sectiontosave eq "time") {
 		print HISTORYTMP "\n";
 		print HISTORYTMP "# Hour - Pages - Hits - Bandwidth\n";
+		$ValueInFile{$sectiontosave}=tell HISTORYTMP;
 		print HISTORYTMP "BEGIN_TIME 24\n";
 		for (my $ix=0; $ix<=23; $ix++) { print HISTORYTMP "$ix ".int($_time_p[$ix])." ".int($_time_h[$ix])." ".int($_time_k[$ix])."\n"; }
 		print HISTORYTMP "END_TIME\n";
@@ -2642,6 +2650,7 @@ sub Save_History {
 	if ($sectiontosave eq "day") {	# This section must be saved after VISITOR section is read
 		print HISTORYTMP "\n";
 		print HISTORYTMP "# Date - Pages - Hits - Bandwidth - Visits\n";
+		$ValueInFile{$sectiontosave}=tell HISTORYTMP;
 		print HISTORYTMP "BEGIN_DAY ".(scalar keys %DayHits)."\n";
 		my $monthvisits=0;
 		foreach my $key (sort keys %DayHits) {
@@ -2662,6 +2671,7 @@ sub Save_History {
 	if ($sectiontosave eq "domain") {
 		print HISTORYTMP "\n";
 		print HISTORYTMP "# Domain - Pages - Hits - Bandwidth\n";
+		$ValueInFile{$sectiontosave}=tell HISTORYTMP;
 		print HISTORYTMP "BEGIN_DOMAIN ".(scalar keys %_domener_h)."\n";
 		foreach my $key (keys %_domener_h) {
 			my $page=$_domener_p{$key}||0;
@@ -2675,6 +2685,7 @@ sub Save_History {
 		print HISTORYTMP "# Host - Pages - Hits - Bandwidth - Last visit date - [Start of last visit date] - [Last page of last visit]\n";
 		print HISTORYTMP "# [Start of last visit date] and [Last page of last visit] are saved only if session is not finished\n";
 		print HISTORYTMP "# The $MaxNbOfHostsShown first Hits must be first (order not required for others)\n";
+		$ValueInFile{$sectiontosave}=tell HISTORYTMP;
 		print HISTORYTMP "BEGIN_VISITOR ".(scalar keys %_host_h)."\n";
 		my $monthhostsknown=0;
 		# We save page list in score sorted order to get a -output faster and with less use of memory.
@@ -2742,6 +2753,7 @@ sub Save_History {
 	if ($sectiontosave eq "session") {	# This section must be saved after VISITOR section is read
 		print HISTORYTMP "\n";
 		print HISTORYTMP "# Session range - Number of visits\n";
+		$ValueInFile{$sectiontosave}=tell HISTORYTMP;
 		print HISTORYTMP "BEGIN_SESSION ".(scalar keys %_session)."\n";
 		foreach my $key (keys %_session) { print HISTORYTMP "$key ".int($_session{$key})."\n"; }
 		print HISTORYTMP "END_SESSION\n";
@@ -2749,6 +2761,7 @@ sub Save_History {
 	if ($sectiontosave eq "login") {
 		print HISTORYTMP "\n";
 		print HISTORYTMP "# Login - Pages - Hits - Bandwidth\n";
+		$ValueInFile{$sectiontosave}=tell HISTORYTMP;
 		print HISTORYTMP "BEGIN_LOGIN ".(scalar keys %_login_h)."\n";
 		foreach my $key (keys %_login_h) { print HISTORYTMP "$key ".int($_login_p{$key})." ".int($_login_h{$key})." ".int($_login_k{$key})." $_login_l{$key}\n"; }
 		print HISTORYTMP "END_LOGIN\n";
@@ -2756,6 +2769,7 @@ sub Save_History {
 	if ($sectiontosave eq "robot") {
 		print HISTORYTMP "\n";
 		print HISTORYTMP "# Robot ID - Hits - Last visit\n";
+		$ValueInFile{$sectiontosave}=tell HISTORYTMP;
 		print HISTORYTMP "BEGIN_ROBOT ".(scalar keys %_robot_h)."\n";
 		foreach my $key (keys %_robot_h) { print HISTORYTMP "$key ".int($_robot_h{$key})." $_robot_l{$key}\n"; }
 		print HISTORYTMP "END_ROBOT\n";
@@ -2766,6 +2780,7 @@ sub Save_History {
 		print HISTORYTMP "\n";
 		print HISTORYTMP "# URL - Pages - Bandwidth - Entry - Exit\n";
 		print HISTORYTMP "# The $MaxNbOfPageShown first Pages must be first (order not required for others)\n";
+		$ValueInFile{$sectiontosave}=tell HISTORYTMP;
 		print HISTORYTMP "BEGIN_SIDER ".(scalar keys %_url_p)."\n";
 		# We save page list in score sorted order to get a -output faster and with less use of memory.
 		&BuildKeyList($MaxNbOfPageShown,$MinHitFile,\%_url_p,\%_url_p);
@@ -2787,6 +2802,7 @@ sub Save_History {
 	if ($sectiontosave eq "filetypes") {
 		print HISTORYTMP "\n";
 		print HISTORYTMP "# Files type - Hits - Bandwidth - Bandwidth without compression - Bandwidth after compression\n";
+		$ValueInFile{$sectiontosave}=tell HISTORYTMP;
 		print HISTORYTMP "BEGIN_FILETYPES ".(scalar keys %_filetypes_h)."\n";
 		foreach my $key (keys %_filetypes_h) {
 			my $hits=$_filetypes_h{$key}||0;
@@ -2800,6 +2816,7 @@ sub Save_History {
 	if ($sectiontosave eq "browser") {
 		print HISTORYTMP "\n";
 		print HISTORYTMP "# Browser ID - Hits\n";
+		$ValueInFile{$sectiontosave}=tell HISTORYTMP;
 		print HISTORYTMP "BEGIN_BROWSER ".(scalar keys %_browser_h)."\n";
 		foreach my $key (keys %_browser_h) { print HISTORYTMP "$key $_browser_h{$key}\n"; }
 		print HISTORYTMP "END_BROWSER\n";
@@ -2807,6 +2824,7 @@ sub Save_History {
 	if ($sectiontosave eq "os") {
 		print HISTORYTMP "\n";
 		print HISTORYTMP "# OS ID - Hits\n";
+		$ValueInFile{$sectiontosave}=tell HISTORYTMP;
 		print HISTORYTMP "BEGIN_OS ".(scalar keys %_os_h)."\n";
 		foreach my $key (keys %_os_h) { print HISTORYTMP "$key $_os_h{$key}\n"; }
 		print HISTORYTMP "END_OS\n";
@@ -2816,6 +2834,7 @@ sub Save_History {
 	if ($sectiontosave eq "unknownreferer") {
 		print HISTORYTMP "\n";
 		print HISTORYTMP "# Unknown referer OS - Last visit date\n";
+		$ValueInFile{$sectiontosave}=tell HISTORYTMP;
 		print HISTORYTMP "BEGIN_UNKNOWNREFERER ".(scalar keys %_unknownreferer_l)."\n";
 		foreach my $key (keys %_unknownreferer_l) { print HISTORYTMP "$key $_unknownreferer_l{$key}\n"; }
 		print HISTORYTMP "END_UNKNOWNREFERER\n";
@@ -2823,6 +2842,7 @@ sub Save_History {
 	if ($sectiontosave eq "unknownrefererbrowser") {
 		print HISTORYTMP "\n";
 		print HISTORYTMP "# Unknown referer Browser - Last visit date\n";
+		$ValueInFile{$sectiontosave}=tell HISTORYTMP;
 		print HISTORYTMP "BEGIN_UNKNOWNREFERERBROWSER ".(scalar keys %_unknownrefererbrowser_l)."\n";
 		foreach my $key (keys %_unknownrefererbrowser_l) { print HISTORYTMP "$key $_unknownrefererbrowser_l{$key}\n"; }
 		print HISTORYTMP "END_UNKNOWNREFERERBROWSER\n";
@@ -2830,6 +2850,7 @@ sub Save_History {
 	if ($sectiontosave eq "origin") {
 		print HISTORYTMP "\n";
 		print HISTORYTMP "# Origin - Pages - Hits \n";
+		$ValueInFile{$sectiontosave}=tell HISTORYTMP;
 		print HISTORYTMP "BEGIN_ORIGIN 6\n";
 		print HISTORYTMP "From0 ".int($_from_p[0])." ".int($_from_h[0])."\n";
 		print HISTORYTMP "From1 ".int($_from_p[1])." ".int($_from_h[1])."\n";
@@ -2849,6 +2870,7 @@ sub Save_History {
 	if ($sectiontosave eq "pagerefs") {
 		print HISTORYTMP "\n";
 		print HISTORYTMP "# External page referers - Hits\n";
+		$ValueInFile{$sectiontosave}=tell HISTORYTMP;
 		print HISTORYTMP "BEGIN_PAGEREFS ".(scalar keys %_pagesrefs_h)."\n";
 		foreach my $key (keys %_pagesrefs_h) {
 			my $newkey=$key;
@@ -2862,6 +2884,7 @@ sub Save_History {
 		print HISTORYTMP "\n";
 		print HISTORYTMP "# Search keyphrases - Number of search\n";
 		print HISTORYTMP "# The $MaxNbOfKeyphrasesShown first number of search must be first (order not required for others)\n";
+		$ValueInFile{$sectiontosave}=tell HISTORYTMP;
 		print HISTORYTMP "BEGIN_SEARCHWORDS ".(scalar keys %_keyphrases)."\n";
 		# We will also build _keywords
 		%_keywords=();
@@ -2885,6 +2908,7 @@ sub Save_History {
 		print HISTORYTMP "\n";
 		print HISTORYTMP "# Search keywords - Number of search\n";
 		print HISTORYTMP "# The $MaxNbOfKeywordsShown first number of search must be first (order not required for others)\n";
+		$ValueInFile{"keywords"}=tell HISTORYTMP;
 		print HISTORYTMP "BEGIN_KEYWORDS ".(scalar keys %_keywords)."\n";
 		# We save key list in score sorted order to get a -output faster and with less use of memory.
 		&BuildKeyList($MaxNbOfKeywordsShown,$MinHitKeyword,\%_keywords,\%_keywords);
@@ -2906,6 +2930,7 @@ sub Save_History {
 	if ($sectiontosave eq "errors") {
 		print HISTORYTMP "\n";
 		print HISTORYTMP "# Errors - Hits\n";
+		$ValueInFile{$sectiontosave}=tell HISTORYTMP;
 		print HISTORYTMP "BEGIN_ERRORS ".(scalar keys %_errors_h)."\n";
 		foreach my $key (keys %_errors_h) { print HISTORYTMP "$key $_errors_h{$key}\n"; }
 		print HISTORYTMP "END_ERRORS\n";
@@ -2913,6 +2938,7 @@ sub Save_History {
 	if ($sectiontosave eq "sider_404") {
 		print HISTORYTMP "\n";
 		print HISTORYTMP "# URL with 404 errors - Hits - Last URL referer\n";
+		$ValueInFile{$sectiontosave}=tell HISTORYTMP;
 		print HISTORYTMP "BEGIN_SIDER_404 ".(scalar keys %_sider404_h)."\n";
 		foreach my $key (keys %_sider404_h) {
 			my $newkey=$key;
