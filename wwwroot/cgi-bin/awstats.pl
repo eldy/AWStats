@@ -93,7 +93,7 @@ $color_h, $color_k, $color_link, $color_p, $color_s, $color_u, $color_v, $color_
 %monthlib = %monthnum = ();
 
 
-$VERSION="3.2 (build 75)";
+$VERSION="3.2 (build 76)";
 $Lang="en";
 
 # Default value
@@ -2942,7 +2942,7 @@ EOF
 		&html_end;
 		exit(0);
 	}
-	
+
 	# FirstTime LastTime TotalVisits TotalUnique TotalHostsKnown TotalHostsUnknown
 	my $beginmonth=$MonthRequired;my $endmonth=$MonthRequired;
 	if ($MonthRequired eq "year") { $beginmonth=1;$endmonth=12; }
@@ -2966,6 +2966,30 @@ EOF
 	if ($TotalVisits > 0) { $RatioPages=int($TotalPages/$TotalVisits*100)/100; }
 	if ($TotalVisits > 0) { $RatioHits=int($TotalHits/$TotalVisits*100)/100; }
 	if ($TotalVisits > 0) { $RatioBytes=int(($TotalBytes/1024)*100/$TotalVisits)/100; }
+	# Define firstdaytocountaverage, lastdaytocountaverage, firstdaytoshowtime, lastdaytoshowtime
+	my $firstdaytocountaverage=$nowyear.$nowmonth."01";				# Set day cursor to 1st day of month
+	my $firstdaytoshowtime=$nowyear.$nowmonth."01";					# Set day cursor to 1st day of month
+	my $lastdaytocountaverage=$nowyear.$nowmonth.$nowday;			# Set day cursor to today
+	my $lastdaytoshowtime=$nowyear.$nowmonth."31";					# Set day cursor to last day of month
+	if ($MonthRequired eq "year") {
+		$firstdaytocountaverage=$YearRequired."0101";				# Set day cursor to 1st day of the required year
+	}
+	if (($MonthRequired ne $nowmonth && $MonthRequired ne "year") || $YearRequired ne $nowyear) { 
+		if ($MonthRequired eq "year") {
+			$firstdaytocountaverage=$YearRequired."0101";			# Set day cursor to 1st day of the required year
+			$firstdaytoshowtime=$YearRequired."1201";				# Set day cursor to 1st day of last month of required year
+			$lastdaytocountaverage=$YearRequired."1231";			# Set day cursor to last day of the required year
+			$lastdaytoshowtime=$YearRequired."1231";				# Set day cursor to last day of last month of required year
+		}
+		else {
+			$firstdaytocountaverage=$YearRequired.$MonthRequired."01";	# Set day cursor to 1st day of the required month
+			$firstdaytoshowtime=$YearRequired.$MonthRequired."01";		# Set day cursor to 1st day of the required month
+			$lastdaytocountaverage=$YearRequired.$MonthRequired."31";	# Set day cursor to last day of the required month
+			$lastdaytoshowtime=$YearRequired.$MonthRequired."31";		# Set day cursor to last day of the required month
+		}
+	}
+	debug("firstdaytocountaverage=$firstdaytocountaverage, lastdaytocountaverage=$lastdaytocountaverage",1);
+	debug("firstdaytoshowtime=$firstdaytoshowtime, lastdaytoshowtime=$lastdaytoshowtime",1);
 	
 	# SUMMARY
 	#---------------------------------------------------------------------
@@ -3048,56 +3072,30 @@ EOF
 		# Show daily stats
 		print "<TABLE>";
 		print "<TR valign=bottom>";
-		$max_v=$max_h=$max_k=1;
-		my $lastdaytoshowtime=$nowyear.$nowmonth.$nowday;				# Set day cursor to today
-		if (($MonthRequired ne $nowmonth && $MonthRequired ne "year") || $YearRequired ne $nowyear) { 
-			if ($MonthRequired eq "year") {
-				$lastdaytoshowtime=$YearRequired."1231";				# Set day cursor to last day of the required year
-			}
-			else {
-				$lastdaytoshowtime=$YearRequired.$MonthRequired."31";	# Set day cursor to last day of the required month
-			}
-		}
-		my $firstdaytoshowtime=$lastdaytoshowtime;
+		#my $firstdaytoshowtime=$lastdaytoshowtime;
 		# Get max_v, max_h and max_k values
-		my $nbofdaysshown=0;
-		for (my $daycursor=$lastdaytoshowtime; $nbofdaysshown<$MaxNbOfDays; $daycursor--) {
+		$max_v=$max_h=$max_k=1;
+		#my $nbofdaysshown=0;
+		#for (my $daycursor=$lastdaytoshowtime; $nbofdaysshown<$MaxNbOfDays; $daycursor--) {
+		foreach my $daycursor ($firstdaytoshowtime..$lastdaytoshowtime) {
 			$daycursor =~ /^(\d\d\d\d)(\d\d)(\d\d)/;
 			my $year=$1; my $month=$2; my $day=$3;
 			if (! DateIsValid($day,$month,$year)) { next; }			# If not an existing day, go to next
-			$nbofdaysshown++;
-			$firstdaytoshowtime=$year.$month.$day;
+			#$nbofdaysshown++;
+			#$firstdaytoshowtime=$year.$month.$day;
 			if (($DayVisits{$year.$month.$day}||0) > $max_v)  { $max_v=$DayVisits{$year.$month.$day}; }
 			#if (($DayPages{$year.$month.$day}||0) > $max_p)  { $max_p=$DayPages{$year.$month.$day}; }
 			if (($DayHits{$year.$month.$day}||0) > $max_h)   { $max_h=$DayHits{$year.$month.$day}; }
 			if (($DayBytes{$year.$month.$day}||0) > $max_k)  { $max_k=$DayBytes{$year.$month.$day}; }
 		}
-		$nbofdaysshown=0;
-		for (my $daycursor=$firstdaytoshowtime; $nbofdaysshown<$MaxNbOfDays; $daycursor++) {
-			$daycursor =~ /^(\d\d\d\d)(\d\d)(\d\d)/;
-			my $year=$1; my $month=$2; my $day=$3;
-			if (! DateIsValid($day,$month,$year)) { next; }			# If not an existing day, go to next
-			$nbofdaysshown++;
-			my $bredde_v=0; my $bredde_p=0; my $bredde_h=0; my $bredde_k=0;
-			if ($max_v > 0) { $bredde_v=int(($DayVisits{$year.$month.$day}||0)/$max_v*$BarHeight/2)+1; }
-			if ($max_h > 0) { $bredde_p=int(($DayPages{$year.$month.$day}||0)/$max_h*$BarHeight/2)+1; }
-			if ($max_h > 0) { $bredde_h=int(($DayHits{$year.$month.$day}||0)/$max_h*$BarHeight/2)+1; }
-			if ($max_k > 0) { $bredde_k=int(($DayBytes{$year.$month.$day}||0)/$max_k*$BarHeight/2)+1; }
-			print "<TD>";
-			print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_v\" HEIGHT=$bredde_v WIDTH=4 ALT=\"$Message[10]: ".int($DayVisits{$year.$month.$day}||0)."\" title=\"$Message[10]: ".int($DayVisits{$year.$month.$day}||0)."\">";
-			print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_p\" HEIGHT=$bredde_p WIDTH=4 ALT=\"$Message[56]: ".int($DayPages{$year.$month.$day}||0)."\" title=\"$Message[56]: ".int($DayPages{$year.$month.$day}||0)."\">";
-			print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_h\" HEIGHT=$bredde_h WIDTH=4 ALT=\"$Message[57]: ".int($DayHits{$year.$month.$day}||0)."\" title=\"$Message[57]: ".int($DayHits{$year.$month.$day}||0)."\">";
-			print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_k\" HEIGHT=$bredde_k WIDTH=4 ALT=\"$Message[75]: ".Format_Bytes($DayBytes{$year.$month.$day})."\" title=\"$Message[75]: ".Format_Bytes($DayBytes{$year.$month.$day})."\">";
-			print "</TD>\n";
-		}
-		print "<TD> &nbsp; </TD>";
 		# Calculate average values
 		my $avg_day_nb=0; my $avg_day_v=0; my $avg_day_p=0; my $avg_day_h=0; my $avg_day_k=0;
-		my $FirstTimeDay=$FirstTime;
-		my $LastTimeDay=$LastTime;
-		$FirstTimeDay =~ /^(\d\d\d\d\d\d\d\d).*/; $FirstTimeDay=$1;
-		$LastTimeDay =~ /^(\d\d\d\d\d\d\d\d).*/; $LastTimeDay=$1;
-		foreach my $daycursor ($FirstTimeDay..$LastTimeDay) {
+		#my $FirstTimeDay=$FirstTime;
+		#my $LastTimeDay=$LastTime;
+		#$FirstTimeDay =~ /^(\d\d\d\d\d\d\d\d).*/; $FirstTimeDay=$1;
+		#$LastTimeDay =~ /^(\d\d\d\d\d\d\d\d).*/; $LastTimeDay=$1;
+		#foreach my $daycursor ($FirstTimeDay..$LastTimeDay) {
+		foreach my $daycursor ($firstdaytocountaverage..$lastdaytocountaverage) {
 			$daycursor =~ /^(\d\d\d\d)(\d\d)(\d\d)/;
 			my $year=$1; my $month=$2; my $day=$3;
 			if (! DateIsValid($day,$month,$year)) { next; }			# If not an existing day, go to next
@@ -3112,6 +3110,9 @@ EOF
 			$avg_day_p=sprintf("%.2f",$avg_day_p/$avg_day_nb);
 			$avg_day_h=sprintf("%.2f",$avg_day_h/$avg_day_nb);
 			$avg_day_k=sprintf("%.2f",$avg_day_k/$avg_day_nb);
+			if ($avg_day_v > $max_v) { $max_v=$avg_day_v; }
+			if ($avg_day_h > $max_h) { $max_h=$avg_day_h; }
+			if ($avg_day_k > $max_k) { $max_k=$avg_day_k; }
 		}
 		else {
 			$avg_day_v="?";
@@ -3119,6 +3120,26 @@ EOF
 			$avg_day_h="?";
 			$avg_day_k="?";
 		}
+		#$nbofdaysshown=0;
+		#for (my $daycursor=$firstdaytoshowtime; $nbofdaysshown<$MaxNbOfDays; $daycursor++) {
+		foreach my $daycursor ($firstdaytoshowtime..$lastdaytoshowtime) {
+			$daycursor =~ /^(\d\d\d\d)(\d\d)(\d\d)/;
+			my $year=$1; my $month=$2; my $day=$3;
+			if (! DateIsValid($day,$month,$year)) { next; }			# If not an existing day, go to next
+			#$nbofdaysshown++;
+			my $bredde_v=0; my $bredde_p=0; my $bredde_h=0; my $bredde_k=0;
+			if ($max_v > 0) { $bredde_v=int(($DayVisits{$year.$month.$day}||0)/$max_v*$BarHeight/2)+1; }
+			if ($max_h > 0) { $bredde_p=int(($DayPages{$year.$month.$day}||0)/$max_h*$BarHeight/2)+1; }
+			if ($max_h > 0) { $bredde_h=int(($DayHits{$year.$month.$day}||0)/$max_h*$BarHeight/2)+1; }
+			if ($max_k > 0) { $bredde_k=int(($DayBytes{$year.$month.$day}||0)/$max_k*$BarHeight/2)+1; }
+			print "<TD>";
+			print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_v\" HEIGHT=$bredde_v WIDTH=4 ALT=\"$Message[10]: ".int($DayVisits{$year.$month.$day}||0)."\" title=\"$Message[10]: ".int($DayVisits{$year.$month.$day}||0)."\">";
+			print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_p\" HEIGHT=$bredde_p WIDTH=4 ALT=\"$Message[56]: ".int($DayPages{$year.$month.$day}||0)."\" title=\"$Message[56]: ".int($DayPages{$year.$month.$day}||0)."\">";
+			print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_h\" HEIGHT=$bredde_h WIDTH=4 ALT=\"$Message[57]: ".int($DayHits{$year.$month.$day}||0)."\" title=\"$Message[57]: ".int($DayHits{$year.$month.$day}||0)."\">";
+			print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_k\" HEIGHT=$bredde_k WIDTH=4 ALT=\"$Message[75]: ".Format_Bytes($DayBytes{$year.$month.$day})."\" title=\"$Message[75]: ".Format_Bytes($DayBytes{$year.$month.$day})."\">";
+			print "</TD>\n";
+		}
+		print "<TD> &nbsp; </TD>";
 		# Show average values
 		print "<TD>";
 		my $bredde_v=0; my $bredde_p=0; my $bredde_h=0; my $bredde_k=0;
@@ -3133,12 +3154,13 @@ EOF
 		print "</TD>\n";
 		print "</TR>\n";
 		print "<TR>";
-		$nbofdaysshown=0;
-		for (my $daycursor=$firstdaytoshowtime; $nbofdaysshown<$MaxNbOfDays; $daycursor++) {
+		#$nbofdaysshown=0;
+		#for (my $daycursor=$firstdaytoshowtime; $nbofdaysshown<$MaxNbOfDays; $daycursor++) {
+		foreach my $daycursor ($firstdaytoshowtime..$lastdaytoshowtime) {
 			$daycursor =~ /^(\d\d\d\d)(\d\d)(\d\d)/;
 			my $year=$1; my $month=$2; my $day=$3;
 			if (! DateIsValid($day,$month,$year)) { next; }			# If not an existing day, go to next
-			$nbofdaysshown++;
+			#$nbofdaysshown++;
 			my $dayofweekcursor=DayOfWeek($day,$month,$year);
 			print "<TD valign=middle".($dayofweekcursor==0||$dayofweekcursor==6?" bgcolor=\"#$color_weekend\"":"").">";
 			print ($day==$nowday && $month==$nowmonth?"<b>":"");
@@ -3164,25 +3186,27 @@ EOF
 		print "<TR valign=bottom>\n";
 		$max_h=$max_k=$max_v=1;
 		# Get average value for day of week
-		my $FirstTimeDay=$FirstTime;
-		my $LastTimeDay=$LastTime;
-		$FirstTimeDay =~ /^(\d\d\d\d\d\d\d\d).*/; $FirstTimeDay=$1;
-		$LastTimeDay =~ /^(\d\d\d\d\d\d\d\d).*/; $LastTimeDay=$1;
-		foreach my $daycursor ($FirstTimeDay..$LastTimeDay) {
+		#my $FirstTimeDay=$FirstTime;
+		#my $LastTimeDay=$LastTime;
+		#debug("$FirstTimeDay..$LastTimeDay",2);
+		#$FirstTimeDay =~ /^(\d\d\d\d\d\d\d\d).*/; $FirstTimeDay=$1;
+		#$LastTimeDay =~ /^(\d\d\d\d\d\d\d\d).*/; $LastTimeDay=$1;
+		#foreach my $daycursor ($FirstTimeDay..$LastTimeDay) {
+		foreach my $daycursor ($firstdaytocountaverage..$lastdaytocountaverage) {
 			$daycursor =~ /^(\d\d\d\d)(\d\d)(\d\d)/;
 			my $year=$1; my $month=$2; my $day=$3;
 			if (! DateIsValid($day,$month,$year)) { next; }			# If not an existing day, go to next
 			my $dayofweekcursor=DayOfWeek($day,$month,$year);
-			$avg_dayofweek[$dayofweekcursor]++;						# Increase number of day used to count for this day of week
+			$avg_dayofweek_nb[$dayofweekcursor]++;					# Increase number of day used to count for this day of week
 			$avg_dayofweek_p[$dayofweekcursor]+=($DayPages{$daycursor}||0);
 			$avg_dayofweek_h[$dayofweekcursor]+=($DayHits{$daycursor}||0);
 			$avg_dayofweek_k[$dayofweekcursor]+=($DayBytes{$daycursor}||0);
 		}
 		for (0..6) {
-			if ($avg_dayofweek[$_]) { 
-				$avg_dayofweek_p[$_]=sprintf("%.2f",$avg_dayofweek_p[$_]/$avg_dayofweek[$_]);
-				$avg_dayofweek_h[$_]=sprintf("%.2f",$avg_dayofweek_h[$_]/$avg_dayofweek[$_]);
-				$avg_dayofweek_k[$_]=sprintf("%.2f",$avg_dayofweek_k[$_]/$avg_dayofweek[$_]);
+			if ($avg_dayofweek_nb[$_]) { 
+				$avg_dayofweek_p[$_]=sprintf("%.2f",$avg_dayofweek_p[$_]/$avg_dayofweek_nb[$_]);
+				$avg_dayofweek_h[$_]=sprintf("%.2f",$avg_dayofweek_h[$_]/$avg_dayofweek_nb[$_]);
+				$avg_dayofweek_k[$_]=sprintf("%.2f",$avg_dayofweek_k[$_]/$avg_dayofweek_nb[$_]);
 				#if ($avg_dayofweek_p[$_] > $max_p) { $max_p = $avg_dayofweek_p[$_]; }
 				if ($avg_dayofweek_h[$_] > $max_h) { $max_h = $avg_dayofweek_h[$_]; }
 				if ($avg_dayofweek_k[$_] > $max_k) { $max_k = $avg_dayofweek_k[$_]; }
