@@ -9,6 +9,7 @@ Fixes:
 - The -configdir parameter in awstats_updateall.pl is now working coorectly.
 - Fix failing call to ipv6 plugin.
 - Pb with some regex value used in the new REGEX fields added in 5.6.
+- Better support for WebStar log files.
 - Count for add to favourites is done on hits to favicon.ico for IE only. This
   avoid counting wrong "Add" done by browsers that hit the file even when no
   add is done. Value reported is the (count for IE) / (ratio of IE among all
@@ -28,6 +29,7 @@ Fixes:
 New features/improvements:
 - Added 'rawlog' plugin to add a form to show raw log content with filter
   capabilities.
+- Added a dynamic exclude filter on CGI full list report pages.
 - Added maillogconvert.pl for analyzing mail log files (better support
   for sendmail, postfix and qmail log files).
 - Added -addfilenum option in logresolvemerge.pl

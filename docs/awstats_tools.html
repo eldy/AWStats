@@ -51,15 +51,15 @@ All those tools are available in <b>tools</b> directory of AWStats distribution.
 
 <br>
 <br><a name="awstats_updateall"><H2 style="font: 22px arial,helvetica,sanserif color: #606060"><u>awstats_updateall.pl</u></H2></a>
-<br>awstats_updateall launches update process for all AWStats config files found in
-<br>a particular directory, so you can easily setup a cron/scheduler job.
-<br>This directory is by default /etc/awstats.
+<br>awstats_updateall launches update process for all AWStats config files (except
+<br>awstats.model.conf) found in a particular directory, so you can easily setup a
+<br>cron/scheduler job. The scanned directory is by default /etc/awstats.
 <br>
 <br>Usage:  awstats_updateall.pl now [options]
 <br>
 <br>Where options are:
 <br>  -awstatsprog=pathtoawstatspl
-<br>  -confdir=confdirtoscan
+<br>  -configdir=confdirtoscan
 
 <br>
 <br>
@@ -82,7 +82,11 @@ All those tools are available in <b>tools</b> directory of AWStats distribution.
 <br>  and awstatsbuildstaticpages_options can be
 <br>   -awstatsprog=pathtoawstatspl gives AWStats software (awstats.pl) path
 <br>   -dir=outputdir               to set output directory for generated pages
-<br>   -date                        used to add build date in built pages file name
+<br>   -date                        Used to add build date in built pages file name
+<br>   -staticlinksext=xxx          For pages with .xxx extension instead of .html
+<br>   -buildpdf[=pathtohtmldoc]    Build a PDF file after building HTML pages.
+<br>                                 Output directory must contains icon directory
+<br>                                 when this option is used (need 'htmldoc').
 <br>
 <br>New versions and FAQ at http://awstats.sourceforge.net
 <br>
@@ -107,8 +111,8 @@ All those tools are available in <b>tools</b> directory of AWStats distribution.
 <br>	If this file is an AWStats history file then urlaliasbuilder will use the
 <br>    SIDER section of this file as its input URL's list.
 <br>  -urlaliasfile=Output urlalias file to build
-<br>  -overwrite
-<br>  -secure
+<br>  -overwrite    Overwrite output file if exists
+<br>  -secure       Use https protocol
 <br>
 <br>Example: urlaliasbuilder.pl -site=www.someotherhost.com
 <br>
@@ -132,8 +136,11 @@ All those tools are available in <b>tools</b> directory of AWStats distribution.
 <br>  logresolvemerge.pl [options] file1 ... filen
 <br>  logresolvemerge.pl [options] *.*
 <br>Options:
-<br>  -dnslookup    make a reverse DNS lookup on IP adresses (not done by default)
-<br>  -showsteps    to add benchmark informations every 5000 lines processed
+<br>  -dnslookup     make a reverse DNS lookup on IP adresses
+<br>  -dnscache=file make DNS lookup from cache file first before network lookup
+<br>  -showsteps     print on stderr benchmark information every 8192 lines
+<br>  -addfilenum    if used with several files, file number can be added in first
+<br>                 field of output file.
 <br>
 <br>This runs logresolvemerge in command line to open one or several web
 <br>server log files to merge them (sorted on date) and/or to make a reverse
@@ -145,7 +152,7 @@ All those tools are available in <b>tools</b> directory of AWStats distribution.
 <br>(but that is the case in all web server log files).
 <br>logresolvemerge is particularly usefull when you want to merge large log
 <br>files in a fast process and with a low use of memory getting records in a
-<br>chronological order from a pipe (for use by a log analyzer).
+<br>chronological order through a pipe (for use by third tool, like log analyzer).
 <br>
 <br>Now supports/detects:
 <br>  Automatic detection of log format

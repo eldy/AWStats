@@ -677,7 +677,7 @@ when reading it), follow the example:<br>
 <br># Note: Use space between each value.
 <br># Note: You can use regular expression values writing value with REGEX[value].
 <br># Change : Effective for new updates only
-<br># Example: "127.0.0.1 REGEX[^192\.168\.] REGEX[^10\.0\.]"
+<br># Example: "127.0.0.1 REGEX[^192\.168\.] REGEX[^10\.0\.0\.]"
 <br># Example: "localhost REGEX[^.*\.localdomain$]"
 <br># Default: ""
 <br>#
@@ -705,12 +705,11 @@ when reading it), follow the example:<br>
 <br># Use SkipFiles to ignore access to URLs that match one of following entries.
 <br># You can enter a list of not important URLs (like framed menus, hidden pages,
 <br># etc...) to exclude them from statistics. You must enter here exact relative
-<br># URL as found in log file or some REGEX values.
-<br># For example, to ignore /badpage.html, just add "/badpage.html", to ignore
+<br># URL as found in log file, or a matching REGEX value.
+<br># For example, to ignore /badpage.html, just add "/badpage.html". To ignore
 <br># all pages in a particular directory, add "REGEX[^\/directorytoexclude]".
 <br># The opposite parameter of "SkipFiles" is "OnlyFiles".
-<br># Note: This parameter is not case sensitive.
-<br># Note: Use space between each value and do not remove default values.
+<br># Note: Use space between each value. This parameter is not case sensitive.
 <br># Note: You can use regular expression values writing value with REGEX[value].
 <br># Change : Effective for new updates only
 <br># Example: "/badpage.html REGEX[^\/excludedirectory]"
@@ -729,11 +728,10 @@ when reading it), follow the example:<br>
 <br># If DNS lookup is already done in your log file, you must enter here hostname
 <br># criteria, else enter ip address criteria.
 <br># The opposite parameter of "OnlyHosts" is "SkipHosts".
-<br># Note: This parameter is not case sensitive.
-<br># Note: Use space between each value.
+<br># Note: Use space between each value. This parameter is not case sensitive.
 <br># Note: You can use regular expression values writing value with REGEX[value].
 <br># Change : Effective for new updates only
-<br># Example: "127.0.0.1 REGEX[^192\.168\.] REGEX[^10\.0\.]"
+<br># Example: "127.0.0.1 REGEX[^192\.168\.] REGEX[^10\.0\.0\.]"
 <br># Default: ""
 <br>#
 <br>OnlyHosts=""
@@ -747,8 +745,7 @@ when reading it), follow the example:<br>
 <br># match a particular string, like a particular directory, you can add this
 <br># directory name in this parameter.
 <br># The opposite parameter of "OnlyFiles" is "SkipFiles".
-<br># Note: This parameter is not case sensitive.
-<br># Note: Use space between each value and do not remove default values
+<br># Note: Use space between each value. This parameter is not case sensitive.
 <br># Note: You can use regular expression values writing value with REGEX[value].
 <br># Change : Effective for new updates only
 <br># Example: "REGEX[marketing_directory] REGEX[office\/.*\.(csv|sxw)$]"
@@ -765,10 +762,10 @@ when reading it), follow the example:<br>
 <br># images extensions as they are hit downloaded that must be counted but they
 <br># are not viewed pages. URLs with such extensions are not included in the TOP
 <br># Pages/URL report.
-<br># Note: If you want to exclude your own URLs from stats (No Pages and no Hits
-<br># reported), you should use SkipFiles parameter instead.
-<br># Example: ""
+<br># Note: If you want to exclude particular URLs from stats (No Pages and no
+<br># Hits reported), you must use SkipFiles parameter.
 <br># Example: "css js class gif jpg jpeg png bmp zip arj gz z wav mp3 wma mpg"
+<br># Example: ""
 <br># Default: "css js class gif jpg jpeg png bmp"
 <br>#
 <br>NotPageList="css js class gif jpg jpeg png bmp"
