@@ -1008,10 +1008,8 @@ sub Read_Config {
 	}
 	if (! $FileConfig) { error("Couldn't open config file \"$PROG.$SiteConfig.conf\" nor \"$PROG.conf\" : $!"); }
 
-	# Analyze config file content
+	# Analyze config file content and close it
 	&Parse_Config( *CONFIG , 1 , $FileConfig);
-
-	# Close config file
 	close CONFIG;
 	
 	# If parameter NotPageList not found, init for backward compatibility
@@ -1030,7 +1028,7 @@ sub Read_Config {
 
 #------------------------------------------------------------------------------
 # Function:     Parse content of a config file
-# Parameters:	file handle, depth level, file name
+# Parameters:	opened file handle, depth level, file name
 # Input:        -
 # Output:		Global variables
 # Return:		-
@@ -1084,11 +1082,13 @@ sub Parse_Config {
 		$_ =~ s/\s#.*$//;
 
 		# Extract param and value
-		#if ($Debug) { debug("$_",2); }
-		my @felter=split(/=/,$_,2);
-		my $param=$felter[0]||next;			# If not a param=value, try with next line
-		my $value=$felter[1];
+		my ($param,$value)=split(/=/,$_,2);
 		$param =~ s/^\s+//; $param =~ s/\s+$//;
+
+		# If not a param=value, try with next line
+		if (! $param) { warning("Warning: Syntax error in file '$configFile'. Config line is ignored: $_\n"); next; }
+		if (! defined $value) { warning("Warning: Syntax error in file '$configFile'. Config line is ignored: $_\n"); next; }
+
 		if ($value) {
 			$value =~ s/^\s+//; $value =~ s/\s+$//;
 			$value =~ s/^\"//; $value =~ s/\";?$//;
@@ -1204,7 +1204,6 @@ sub Parse_Config {
 		# If parameters was not found previously, defined variable with name of param to value
 		$$param=$value;
 	}
-	close $confighandle;
 
 	# For backward compatibility
 	if ($versionnum < 5001) { $BarHeight=$BarHeight>>1; }
