@@ -82,7 +82,7 @@ $WarningMessages= 1;
 %MonthBytes = %MonthHits = %MonthHostsKnown = %MonthHostsUnknown = %MonthPages = %MonthUnique = %MonthVisits =
 %monthlib = %monthnum = ();
 
-$VERSION="3.2 (build 26)";
+$VERSION="3.2 (build 27)";
 $Lang="en";
 
 # Default value
@@ -128,7 +128,7 @@ $AddOn=0;
 			"/cgi-bin/awstats.pl",					"<b>AWStats stats page</b>",
 			"/cgi-bin/awstats/awstats.pl",			"<b>AWStats stats page</b>",
 			# Following the same example, you can put here HTML text you want to see in links instead of URL text.
-			"/YourRelativeUrl",						"<b>Your HTML text</b>",
+			"/YourRelativeUrl",						"<b>Your HTML text</b>"
 			);
 
 # These table is used to make fast reverse DNS lookup for particular IP adresses. You can add your own IP addresses resolutions.
@@ -177,16 +177,16 @@ TH { font: 12px arial, verdana, helvetica, sans-serif; text-align:center; color:
 TH.AWL { font-size: 14px; font-weight: bold; }
 TD { font: 12px arial, verdana, helvetica, sans-serif; text-align:center; color: #$color_text; }
 .AWL { font: 12px arial, verdana, helvetica, sans-serif; text-align:left; color: #$color_text; }
-A { font: normal 12px arial, verdana, helvetica, sans-serif; }
+A { font: 12px arial, verdana, helvetica, sans-serif; }
 A:link    { color: #$color_link; text-decoration: none; }
 A:visited { color: #$color_link; text-decoration: none; }
 A:hover   { color: #$color_hover; text-decoration: underline; }
 DIV { font: 12px arial,verdana,helvetica; text-align:justify; }
 .TABLEBORDER { background-color: #$color_TableBorder; }
-.TABLEFRAME { background-color: #$color_TableBG; padding: 2px 2px  2px 2px; margin-top: 0 }
+.TABLEFRAME { background-color: #$color_TableBG; padding: 2px 2px 2px 2px; margin-top: 0 }
 .TABLEDATA { background-color: #$color_Background; }
-.TABLETITLEFULL  { font: bold 14px verdana, arial, helvetica, sans-serif; background-color: #$color_TableBGTitle; text-align: center; width: 66%; margin-bottom: 0; padding: 2px; }
-.TABLETITLEBLANK { font: bold 14px verdana, arial, helvetica, sans-serif; background-color: #$color_Background; }
+.TABLETITLEFULL  { font: 14px verdana, arial, helvetica, sans-serif; font-weight: bold; background-color: #$color_TableBGTitle; text-align: center; width: 66%; margin-bottom: 0; padding: 2px; }
+.TABLETITLEBLANK { font: 14px verdana, arial, helvetica, sans-serif; background-color: #$color_Background; }
 .CTooltip { position:absolute; top:0px; left:0px; z-index:2; width:280; visibility:hidden; font: 8pt MS Comic Sans,arial,sans-serif; background-color: #FFFFE6; padding: 8px; border: 1px solid black; }
 
 .tablecontainer  { width: 100% }
@@ -651,7 +651,7 @@ sub Read_Language_Tooltip {
 sub Check_Config {
 	&debug("Call to Check_Config");
 	# Main section
-	if ($LogFormat =~ /^[\d]$/ && $LogFormat !~ /[1-4]/)  { error("Error: LogFormat parameter is wrong. Value is '$LogFormat' (should be 1 or 2 or a 'personalised AWtats log format string')"); }
+	if ($LogFormat =~ /^[\d]$/ && $LogFormat !~ /[1-4]/)  { error("Error: LogFormat parameter is wrong. Value is '$LogFormat' (should be 1,2,3,4 or a 'personalised AWtats log format string')"); }
 	if ($DNSLookup !~ /[0-1]/)                            { error("Error: DNSLookup parameter is wrong. Value is '$DNSLookup' (should be 0 or 1)"); }
 	if ($AllowToUpdateStatsFromBrowser !~ /[0-1]/) { $AllowToUpdateStatsFromBrowser=1; }	# For compatibility, is 1 if not defined
 	if ($PurgeLogFile !~ /[0-1]/)                 { $PurgeLogFile=0; }
@@ -1523,10 +1523,11 @@ if ($QueryString =~ /day=/i)	{ $DayRequired=$QueryString; $DayRequired =~ s/.*da
 &html_head;
 
 if ($DNSLookup) {
-	eval 'use Socket';
-	if ($@){
-		error("Error: The perl 'Socket' module is not installed. Install it from CPAN or use a more 'standard' perl interpreter.\n");
-	}
+#	eval 'use Socket';
+#	if ($@){
+#		error("Error: The perl 'Socket' module is not installed. Install it from CPAN or use a more 'standard' perl interpreter.\n");
+#	}
+	use Socket;
 }
 
 $NewDNSLookup=$DNSLookup;
@@ -1954,8 +1955,8 @@ if ($UpdateStats) {
 				if (!$newip) {						# if $newip undefined, $Host not yet resolved
 					&debug("Start of reverse DNS lookup for $Host",4);
 					if ($MyDNSTable{$Host}) {
-						&debug("End of reverse DNS lookup, found resolution of $Host in local MyDNSTable",4);
 	  					$newip = $MyDNSTable{$Host};
+						&debug("End of reverse DNS lookup for $Host. Found '$newip' in local MyDNSTable",4);
 					}
 					else {
 						if (&SkipDNSLookup($Host)) {
@@ -1964,7 +1965,7 @@ if ($UpdateStats) {
 						else {
 							$newip=gethostbyaddr(pack("C4",split(/\./,$Host)),AF_INET);	# This is very slow, may took 20 seconds
 						}
-						&debug("End of reverse DNS lookup for $Host",4);
+						&debug("End of reverse DNS lookup for $Host. Found '$newip'",4);
 					}
 					if ($newip eq "") { $newip="ip"; }
 					$TmpHashDNSLookup{$Host}=$newip;
