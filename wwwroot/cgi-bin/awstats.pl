@@ -4527,7 +4527,7 @@ sub DefinePerlParsingFormat {
 				$PerlParsingFormat .= "([^$LogSeparatorWithoutStar]+)";
 			}
 			elsif ($f =~ /%syslog$/) {		# Added for syslog time and host stamp, fields are skipped and not analyzed
-				$PerlParsingFormat .= "\\w\\w\\w \\d+ \\d\\d:\\d\\d:\\d\\d \\w+";
+				$PerlParsingFormat .= "\\w\\w\\w \\d+ \\d\\d:\\d\\d:\\d\\d [^$LogSeparatorWithoutStar]+";
 			}
 			elsif ($f =~ /%email_r$/) {
 				$pos_emailr = $i; $i++; push @fieldlib, 'email_r';
