@@ -1,8 +1,5 @@
 # Italian message file
 # $Revision$ - $Date$
-# Based on Francesco Potort“'s work.
-# Revision 2002-01-10 by iDave <idave@idave.it> and Salvo <salvo@scicli.com>
-# Revision 2002-09-10 by CereS <ceres@divxmania.it>
 # Francesco Potorti' - pot@gnu.org
 # iDave - idave@idave.it
 # Salvo - salvo@scicli.com
@@ -135,3 +132,6 @@ message124=Altre frasi
 message125=Utenti anonimi
 message126=Motori di ricerca
 message127=Siti
+message128=Sommario
+message129=Valori esatti non disponibili nella vista 'Anno'
+message130=Tabelle dei valori

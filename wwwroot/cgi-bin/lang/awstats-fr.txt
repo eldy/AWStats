@@ -131,3 +131,5 @@ message127=Sites référenceurs
 message128=Résumé
 message129=Valeur exacte indisponible en vue 'annuelle'
 message130=Tableaux des valeurs
+message131=EMail Emetteur
+message132=EMail Destinataire
