@@ -26,7 +26,7 @@ $VERSION="5.2 (build $REVISION)";
 # Constants
 use vars qw/
 $DEBUGFORCED $NBOFLINESFORBENCHMARK $FRAMEWIDTH $TOOLTIPWIDTH $NBOFLASTUPDATELOOKUPTOSAVE
-$LIMITFLUSH $VISITTIMEOUT $NOTSORTEDRECORDTOLERANCE
+$LIMITFLUSH $VISITTIMEOUT $NOTSORTEDRECORDTOLERANCE $MAXDIFFEXTRA
 /;
 $DEBUGFORCED=0;						# Force debug level to log lesser level into debug.log file (Keep this value to 0)
 $NBOFLINESFORBENCHMARK=5000;		# Benchmark info are printing every NBOFLINESFORBENCHMARK lines
@@ -36,6 +36,7 @@ $NBOFLASTUPDATELOOKUPTOSAVE=200;	# Nb of records to save in DNS last update cach
 $LIMITFLUSH=4000;					# Nb of records in data arrays after how we need to flush data on disk
 $VISITTIMEOUT=10000;				# Laps of time to consider a page load as a new visit. 10000 = 1 hour (Default = 10000)
 $NOTSORTEDRECORDTOLERANCE=10000;	# Laps of time to accept a record if not in correct order. 10000 = 1 hour (Default = 10000)
+$MAXDIFFEXTRA=500;
 # Plugins variable
 use vars qw/ %PluginsLoaded /;
 %PluginsLoaded=();
@@ -1520,7 +1521,7 @@ sub Check_Config {
 	if ($KeepBackupOfHistoricFiles !~ /[0-1]/)     	{ $KeepBackupOfHistoricFiles=0; }
 	if (! $DefaultFile[0])                          { $DefaultFile[0]="index.html"; }
 	if ($URLNotCaseSensitive !~ /[0-1]/)           	{ $URLNotCaseSensitive=0; }
-	if (! $URLQuerySeparators)                 		{ $URLQuerySeparators='?'; }
+	if (! $URLQuerySeparators)                 		{ $URLQuerySeparators='?;'; }
 	if ($URLWithQuery !~ /[0-1]/)                 	{ $URLWithQuery=0; }
 	if ($URLReferrerWithQuery !~ /[0-1]/)          	{ $URLReferrerWithQuery=0; }
 	if ($WarningMessages !~ /[0-1]/)              	{ $WarningMessages=1; }
@@ -5438,7 +5439,7 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 		if ($pos_referer >= 0 && $LevelForRefererAnalyze && $field[$pos_referer]) {
 
 			# Direct ?
-			if ($field[$pos_referer] eq "-" || $field[$pos_referer] eq "bookmarks") {	# "bookmarks" is sent by Netscape, "-" by all others browsers
+			if ($field[$pos_referer] eq '-' || $field[$pos_referer] eq 'bookmarks') {	# "bookmarks" is sent by Netscape, "-" by all others browsers
 				if ($PageBool) { $_from_p[0]++; }
 				$_from_h[0]++;
 				$found=1;
@@ -5456,7 +5457,7 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 						if ($refererserver =~ /^(www\.|)$SiteToAnalyzeWithoutwww/i) {
 							# Intern (This hit came from another page of the site)
 							if ($Debug) { debug("Server $refererserver is added to TmpRefererServer with value '='",2); }
-							$TmpRefererServer{$refererserver}="=";
+							$TmpRefererServer{$refererserver}='=';
 							$found=1;
 						}
 						if (! $found) {
@@ -5464,7 +5465,7 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 								if ($refererserver =~ /^$key/i) {
 									# Intern (This hit came from another page of the site)
 									if ($Debug) { debug("Server $refererserver is added to TmpRefererServer with value '='",2); }
-									$TmpRefererServer{$refererserver}="=";
+									$TmpRefererServer{$refererserver}='=';
 									$found=1;
 									last;
 								}
@@ -5489,7 +5490,7 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 					}
 
 					if ($TmpRefererServer{$refererserver}) {
-						if ($TmpRefererServer{$refererserver} eq "=") {
+						if ($TmpRefererServer{$refererserver} eq '=') {
 							# Intern (This hit came from another page of the site)
 							if ($PageBool) { $_from_p[4]++; }
 							$_from_h[4]++;
@@ -5501,7 +5502,7 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 							$_from_h[2]++;
 							$_se_referrals_h{$TmpRefererServer{$refererserver}}++;
 							$found=1;
-							my @refurl=split(/\?/,$field[$pos_referer],2);
+							my @refurl=split(/\?/,$field[$pos_referer],2);	# TODO Use \? or [$URLQuerySeparators] ?
 							if ($refurl[1]) {
 								# Extract keywords
 								my @paramlist=split(/&/,$KeyWordsNotSensitive?lc($refurl[1]):$refurl[1]);
@@ -5547,7 +5548,7 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 							$_pagesrefs_h{$field[$pos_referer]}++;
 						}
 						else {
-							if ($field[$pos_referer]=~/^(.*)\?/) { $_pagesrefs_h{"$1"}++; }
+							if ($field[$pos_referer]=~/^([^$URLQuerySeparators]+)/) { $_pagesrefs_h{"$1"}++; }
 							else { $_pagesrefs_h{$field[$pos_referer]}++; }
 						}
 						$found=1;
@@ -5664,9 +5665,8 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
  				if (${'_section_' . $extranum . '_l'}{$rowkeyval} < $timerecord) { ${'_section_' . $extranum . '_l'}{$rowkeyval}=$timerecord; }
  			}
 			# Check to avoid too large extra sections
-			my $MaxDiffExtra=500;
-			if (scalar keys %{'_section_' . $extranum . '_h'} > $MaxDiffExtra) {
-				error("Too many (more than $MaxDiffExtra) different values for row keys of extra section $extranum. Your setup is probably wrong.");
+			if (scalar keys %{'_section_' . $extranum . '_h'} > $MAXDIFFEXTRA) {
+				error("Too many (more than $MAXDIFFEXTRA) different values for row keys of extra section $extranum. Your setup is probably wrong.");
 			}
  		}
 
