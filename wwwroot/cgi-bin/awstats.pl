@@ -82,7 +82,7 @@ $WarningMessages= 1;
 %MonthBytes = %MonthHits = %MonthHostsKnown = %MonthHostsUnknown = %MonthPages = %MonthUnique = %MonthVisits =
 %monthlib = %monthnum = ();
 
-$VERSION="3.2 (build 55)";
+$VERSION="3.2 (build 56)";
 $Lang="en";
 
 # Default value
@@ -877,8 +877,7 @@ sub Read_History_File {
 		return 0;
 	}
 
-	# If session for read (no update), file can be open with share
-	# POSSIBLE CHANGE HERE	
+	# If session for read (no update), file can be open with share. So POSSIBLE CHANGE HERE	
 	open(HISTORY,"$DirData/$PROG$DayRequired$month$year$FileSuffix.txt") || error("Error: Couldn't open for read file \"$DirData/$PROG$DayRequired$month$year$FileSuffix.txt\" : $!");	# Month before Year kept for backward compatibility
 	$MonthUnique{$year.$month}=0; $MonthPages{$year.$month}=0; $MonthHits{$year.$month}=0; $MonthBytes{$year.$month}=0; $MonthHostsKnown{$year.$month}=0; $MonthHostsUnKnown{$year.$month}=0;
 	my $readdomain=0;my $readbrowser=0;my $readnsver=0;my $readmsiever=0;
@@ -907,7 +906,7 @@ sub Read_History_File {
 			&debug(" Begin of VISITOR section");
 			$_=<HISTORY>;
 			chomp $_; s/\r//;
-			if ($_ eq "") { error("Error: History file \"$DirData/$PROG$month$year$FileSuffix.txt\" is corrupted (in section VISITOR). Last line read is number $countlines.\nRestore a recent backup of this file, or remove it (data for this month will be lost)."); }
+			if ($_ eq "") { error("Error: History file \"$DirData/$PROG$month$year$FileSuffix.txt\" is corrupted (in section VISITOR). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
 			my @field=split(/\s+/,$_); $countlines++;
 			my $count=0;
 			while ($field[0] ne "END_VISITOR") {
@@ -921,7 +920,7 @@ sub Read_History_File {
 				}
 				$_=<HISTORY>;
 				chomp $_; s/\r//;
-				if ($_ eq "") { error("Error: History file \"$DirData/$PROG$month$year$FileSuffix.txt\" is corrupted (in section VISITOR). Last line read is number $countlines.\nRestore a recent backup of this file, or remove it (data for this month will be lost)."); }
+				if ($_ eq "") { error("Error: History file \"$DirData/$PROG$month$year$FileSuffix.txt\" is corrupted (in section VISITOR). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
 				@field=split(/\s+/,$_); $countlines++;
 			}
 			&debug(" End of VISITOR section ($count entries)");
@@ -931,7 +930,7 @@ sub Read_History_File {
 			&debug(" Begin of UNKNOWNIP section");
 			$_=<HISTORY>;
 			chomp $_; s/\r//;
-			if ($_ eq "") { error("Error: History file \"$DirData/$PROG$month$year$FileSuffix.txt\" is corrupted (in section UNKNOWNIP). Last line read is number $countlines.\nRestore a recent backup of this file, or remove it (data for this month will be lost)."); }
+			if ($_ eq "") { error("Error: History file \"$DirData/$PROG$month$year$FileSuffix.txt\" is corrupted (in section UNKNOWNIP). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
 			my @field=split(/\s+/,$_); $countlines++;
 			my $count=0;
 			while ($field[0] ne "END_UNKNOWNIP") {
@@ -942,7 +941,7 @@ sub Read_History_File {
 				}
 				$_=<HISTORY>;
 				chomp $_; s/\r//;
-				if ($_ eq "") { error("Error: History file \"$DirData/$PROG$month$year$FileSuffix.txt\" is corrupted (in section UNKNOWNIP). Last line read is number $countlines.\nRestore a recent backup of this file, or remove it (data for this month will be lost)."); }
+				if ($_ eq "") { error("Error: History file \"$DirData/$PROG$month$year$FileSuffix.txt\" is corrupted (in section UNKNOWNIP). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
 				@field=split(/\s+/,$_); $countlines++;
 			}
 			&debug(" End of UNKNOWN_IP section ($count entries)");
@@ -952,7 +951,7 @@ sub Read_History_File {
 			&debug(" Begin of LOGIN section");
 			$_=<HISTORY>;
 			chomp $_; s/\r//;
-			if ($_ eq "") { error("Error: History file \"$DirData/$PROG$month$year$FileSuffix.txt\" is corrupted (in section LOGIN). Last line read is number $countlines.\nRestore a recent backup of this file, or remove it (data for this month will be lost)."); }
+			if ($_ eq "") { error("Error: History file \"$DirData/$PROG$month$year$FileSuffix.txt\" is corrupted (in section LOGIN). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
 			my @field=split(/\s+/,$_); $countlines++;
 			my $count=0;
 			while ($field[0] ne "END_LOGIN") {
@@ -965,7 +964,7 @@ sub Read_History_File {
 				}
 				$_=<HISTORY>;
 				chomp $_; s/\r//;
-				if ($_ eq "") { error("Error: History file \"$DirData/$PROG$month$year$FileSuffix.txt\" is corrupted (in section LOGIN). Last line read is number $countlines.\nRestore a recent backup of this file, or remove it (data for this month will be lost)."); }
+				if ($_ eq "") { error("Error: History file \"$DirData/$PROG$month$year$FileSuffix.txt\" is corrupted (in section LOGIN). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
 				@field=split(/\s+/,$_); $countlines++;
 			}
 			&debug(" End of LOGIN section ($count entries)");
@@ -975,7 +974,7 @@ sub Read_History_File {
 			&debug(" Begin of TIME section");
 			$_=<HISTORY>;
 			chomp $_; s/\r//;
-			if ($_ eq "") { error("Error: History file \"$DirData/$PROG$month$year$FileSuffix.txt\" is corrupted (in section TIME). Last line read is number $countlines.\nRestore a recent backup of this file, or remove it (data for this month will be lost)."); }
+			if ($_ eq "") { error("Error: History file \"$DirData/$PROG$month$year$FileSuffix.txt\" is corrupted (in section TIME). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
 			my @field=split(/\s+/,$_); $countlines++;
 			my $count=0;
 			while ($field[0] ne "END_TIME") {
@@ -988,7 +987,7 @@ sub Read_History_File {
 				}
 				$_=<HISTORY>;
 				chomp $_; s/\r//;
-				if ($_ eq "") { error("Error: History file \"$DirData/$PROG$month$year$FileSuffix.txt\" is corrupted (in section TIME). Last line read is number $countlines.\nRestore a recent backup of this file, or remove it (data for this month will be lost)."); }
+				if ($_ eq "") { error("Error: History file \"$DirData/$PROG$month$year$FileSuffix.txt\" is corrupted (in section TIME). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
 				@field=split(/\s+/,$_); $countlines++;
 			}
 			&debug(" End of TIME section ($count entries)");
@@ -998,7 +997,7 @@ sub Read_History_File {
 			&debug(" Begin of DAY section");
 			$_=<HISTORY>;
 			chomp $_; s/\r//;
-			if ($_ eq "") { error("Error: History file \"$DirData/$PROG$month$year$FileSuffix.txt\" is corrupted (in section DAY). Last line read is number $countlines.\nRestore a recent backup of this file, or remove it (data for this month will be lost)."); }
+			if ($_ eq "") { error("Error: History file \"$DirData/$PROG$month$year$FileSuffix.txt\" is corrupted (in section DAY). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
 			my @field=split(/\s+/,$_); $countlines++;
 			my $count=0;
 			while ($field[0] ne "END_DAY" ) {
@@ -1008,7 +1007,7 @@ sub Read_History_File {
 				}
 				$_=<HISTORY>;
 				chomp $_; s/\r//;
-				if ($_ eq "") { error("Error: History file \"$DirData/$PROG$month$year$FileSuffix.txt\" is corrupted (in section DAY). Last line read is number $countlines.\nRestore a recent backup of this file, or remove it (data for this month will be lost)."); }
+				if ($_ eq "") { error("Error: History file \"$DirData/$PROG$month$year$FileSuffix.txt\" is corrupted (in section DAY). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
 				@field=split(/\s+/,$_); $countlines++;
 			}
 			&debug(" End of DAY section ($count entries)");
@@ -1018,7 +1017,7 @@ sub Read_History_File {
 			&debug(" Begin of SIDER section");
 			$_=<HISTORY>;
 			chomp $_; s/\r//;
-			if ($_ eq "") { error("Error: History file \"$DirData/$PROG$month$year$FileSuffix.txt\" is corrupted (in section SIDER). Last line read is number $countlines.\nRestore a recent backup of this file, or remove it (data for this month will be lost)."); }
+			if ($_ eq "") { error("Error: History file \"$DirData/$PROG$month$year$FileSuffix.txt\" is corrupted (in section SIDER). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
 			my @field=split(/\s+/,$_); $countlines++;
 			my $count=0;my $countadd=0;
 			while ($field[0] ne "END_SIDER") {
@@ -1042,7 +1041,7 @@ sub Read_History_File {
 				}
 				$_=<HISTORY>;
 				chomp $_; s/\r//;
-				if ($_ eq "") { error("Error: History file \"$DirData/$PROG$month$year$FileSuffix.txt\" is corrupted (in section SIDER). Last line read is number $countlines.\nRestore a recent backup of this file, or remove it (data for this month will be lost)."); }
+				if ($_ eq "") { error("Error: History file \"$DirData/$PROG$month$year$FileSuffix.txt\" is corrupted (in section SIDER). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
 				@field=split(/\s+/,$_); $countlines++;
 			}
 			&debug(" End of SIDER section ($count entries loaded)");
@@ -1052,7 +1051,7 @@ sub Read_History_File {
 			&debug(" Begin of PAGEREFS section");
 			$_=<HISTORY>;
 			chomp $_; s/\r//;
-			if ($_ eq "") { error("Error: History file \"$DirData/$PROG$month$year$FileSuffix.txt\" is corrupted (in section PAGEREFS). Last line read is number $countlines.\nRestore a recent backup of this file, or remove it (data for this month will be lost)."); }
+			if ($_ eq "") { error("Error: History file \"$DirData/$PROG$month$year$FileSuffix.txt\" is corrupted (in section PAGEREFS). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
 			my @field=split(/\s+/,$_); $countlines++;
 			my $count=0;
 			while ($field[0] ne "END_PAGEREFS") {
@@ -1062,7 +1061,7 @@ sub Read_History_File {
 				}
 				$_=<HISTORY>;
 				chomp $_; s/\r//;
-				if ($_ eq "") { error("Error: History file \"$DirData/$PROG$month$year$FileSuffix.txt\" is corrupted (in section PAGEREFS). Last line read is number $countlines.\nRestore a recent backup of this file, or remove it (data for this month will be lost)."); }
+				if ($_ eq "") { error("Error: History file \"$DirData/$PROG$month$year$FileSuffix.txt\" is corrupted (in section PAGEREFS). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
 				@field=split(/\s+/,$_); $countlines++;
 			}
 			&debug(" End of PAGEREFS section ($count entries)");
@@ -1072,7 +1071,7 @@ sub Read_History_File {
 			&debug(" Begin of FILETYPES section");
 			$_=<HISTORY>;
 			chomp $_; s/\r//;
-			if ($_ eq "") { error("Error: History file \"$DirData/$PROG$month$year$FileSuffix.txt\" is corrupted (in section FILETYPES). Last line read is number $countlines.\nRestore a recent backup of this file, or remove it (data for this month will be lost)."); }
+			if ($_ eq "") { error("Error: History file \"$DirData/$PROG$month$year$FileSuffix.txt\" is corrupted (in section FILETYPES). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
 			my @field=split(/\s+/,$_); $countlines++;
 			my $count=0;
 			while ($field[0] ne "END_FILETYPES") {
@@ -1085,7 +1084,7 @@ sub Read_History_File {
 				}
 				$_=<HISTORY>;
 				chomp $_; s/\r//;
-				if ($_ eq "") { error("Error: History file \"$DirData/$PROG$month$year$FileSuffix.txt\" is corrupted (in section FILETYPES). Last line read is number $countlines.\nRestore a recent backup of this file, or remove it (data for this month will be lost)."); }
+				if ($_ eq "") { error("Error: History file \"$DirData/$PROG$month$year$FileSuffix.txt\" is corrupted (in section FILETYPES). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
 				@field=split(/\s+/,$_); $countlines++;
 			}
 			&debug(" End of FILETYPES section ($count entries)");
@@ -1095,7 +1094,7 @@ sub Read_History_File {
 			&debug(" Begin of SEARCHWORDS section");
 			$_=<HISTORY>;
 			chomp $_; s/\r//;
-			if ($_ eq "") { error("Error: History file \"$DirData/$PROG$month$year$FileSuffix.txt\" is corrupted (in section SEARCHWORDS). Last line read is number $countlines.\nRestore a recent backup of this file, or remove it (data for this month will be lost)."); }
+			if ($_ eq "") { error("Error: History file \"$DirData/$PROG$month$year$FileSuffix.txt\" is corrupted (in section SEARCHWORDS). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
 			my @field=split(/\s+/,$_); $countlines++;
 			my $count=0;
 			while ($field[0] ne "END_SEARCHWORDS") {
@@ -1105,7 +1104,7 @@ sub Read_History_File {
 				}
 				$_=<HISTORY>;
 				chomp $_; s/\r//;
-				if ($_ eq "") { error("Error: History file \"$DirData/$PROG$month$year$FileSuffix.txt\" is corrupted (in section SEARCHWORDS). Last line read is number $countlines.\nRestore a recent backup of this file, or remove it (data for this month will be lost)."); }
+				if ($_ eq "") { error("Error: History file \"$DirData/$PROG$month$year$FileSuffix.txt\" is corrupted (in section SEARCHWORDS). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
 				@field=split(/\s+/,$_); $countlines++;
 			}
 			&debug(" End of SEARCHWORDS section ($count entries)");
@@ -1115,7 +1114,7 @@ sub Read_History_File {
 			&debug(" Begin of SIDER_404 section");
 			$_=<HISTORY>;
 			chomp $_; s/\r//;
-			if ($_ eq "") { error("Error: History file \"$DirData/$PROG$month$year$FileSuffix.txt\" is corrupted (in section SIDER_404). Last line read is number $countlines.\nRestore a recent backup of this file, or remove it (data for this month will be lost)."); }
+			if ($_ eq "") { error("Error: History file \"$DirData/$PROG$month$year$FileSuffix.txt\" is corrupted (in section SIDER_404). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
 			my @field=split(/\s+/,$_); $countlines++;
 			my $count=0;
 			while ($field[0] ne "END_SIDER_404") {
@@ -1128,7 +1127,7 @@ sub Read_History_File {
 				}
 				$_=<HISTORY>;
 				chomp $_; s/\r//;
-				if ($_ eq "") { error("Error: History file \"$DirData/$PROG$month$year$FileSuffix.txt\" is corrupted (in section SIDER_404). Last line read is number $countlines.\nRestore a recent backup of this file, or remove it (data for this month will be lost)."); }
+				if ($_ eq "") { error("Error: History file \"$DirData/$PROG$month$year$FileSuffix.txt\" is corrupted (in section SIDER_404). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
 				@field=split(/\s+/,$_); $countlines++;
 			}
 			&debug(" End of SIDER_404 section ($count entries)");
@@ -1365,19 +1364,14 @@ sub Init_HashArray {
 
 
 #--------------------------------------------------------------------
-# Function:     ChangeWordSeparatorsIntoSpace
+# Function:     Change word separators into space and remove bad coded chars
 # Input:        stringtodecode
 # Return:		decodedstring
 #--------------------------------------------------------------------
 sub ChangeWordSeparatorsIntoSpace {
-	$_[0] =~ s/%20/ /g;
-	$_[0] =~ s/%22/ /g;
-	$_[0] =~ s/%27/ /g;
-	$_[0] =~ s/%28/ /g;
-	$_[0] =~ s/%29/ /g;
-	$_[0] =~ s/%2b/ /g;
-	$_[0] =~ s/%2c/ /g;
-	$_[0] =~ tr/\+\'\(\)\",/      /s;								# "&" and "=" must not be in this list
+	$_[0] =~ s/%1[03]/ /g;
+	$_[0] =~ s/%2[02789abc]/ /g;
+	$_[0] =~ tr/\+\'\(\)\"\*,/       /s;								# "&" and "=" must not be in this list
 }
 
 
