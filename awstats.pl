@@ -1276,72 +1276,73 @@ sub Read_Config_File {
 	if ($FileConfig eq "") { if (open(CONFIG,"$DirConfig$PROG.conf"))  { $FileConfig="$DirConfig$PROG.conf"; $FileSuffix=""; } }
 	if ($FileConfig eq "") { $FileConfig="$PROG.conf"; error("Error: Couldn't open config file [$PROG.$LocalSite.conf] nor [$PROG.conf]: $!"); }
 	while (<CONFIG>) {
-		$_ =~ s/\n//;
-		$line=$_; $line =~ s/#.*//; $line =~ s/	/¥/g; $line =~ s/ /¥/g;
-		@felter=split(/=/,$line);
-		$param=$felter[1]; $param =~ s/¥*$//g; $param =~ s/^¥*//g; $param =~ s/¥/ /g; $param =~ s/^\"//; $param =~ s/\"$//;
+		chomp $_;									# $_ =~ s/\n//;
+		$_ =~ s/#.*//;								# Remove comments
+		$_ =~ s/	/¥/g; $_ =~ s/ /¥/g;			# Change all blanks into "¥"
+		$_ =~ s/=/§/; @felter=split(/§/,$_);		# Change first "=" into "§"
+		$param=$felter[0]; $value=$felter[1]; $value =~ s/¥*$//g; $value =~ s/^¥*//g; $value =~ s/¥/ /g; $value =~ s/^\"//; $value =~ s/\"$//;
 		# Read main section
-		if ($line =~ /^LogFile/)               { $LogFile=$param; next; }
-		if ($line =~ /^LogFormat/)             { $LogFormat=$param; next; }
-		if ($line =~ /^HostAliases/) {
-			@felter=split(/ /,$param);
+		if ($param =~ /^LogFile/)               { $LogFile=$value; next; }
+		if ($param =~ /^LogFormat/)             { $LogFormat=$value; next; }
+		if ($param =~ /^HostAliases/) {
+			@felter=split(/ /,$value);
 			$i=0; foreach $elem (@felter)      { $HostAliases[$i]=$elem; $i++; }
 			next;
 			}
-		if ($line =~ /^SkipFiles/) {
-			@felter=split(/ /,$param);
+		if ($param =~ /^SkipFiles/) {
+			@felter=split(/ /,$value);
 			$i=0; foreach $elem (@felter)      { $SkipFiles[$i]=$elem; $i++; }
 			next;
 			}
-		if ($line =~ /^SkipHosts/) {
-			@felter=split(/ /,$param);
+		if ($param =~ /^SkipHosts/) {
+			@felter=split(/ /,$value);
 			$i=0; foreach $elem (@felter)      { $SkipHosts[$i]=$elem; $i++; }
 			next;
 			}
-		if ($line =~ /^DirData/)               { $DirData=$param; next; }
-		if ($line =~ /^DirCgi/)                { $DirCgi=$param; next; }
-		if ($line =~ /^DirIcons/)              { $DirIcons=$param; next; }
-		if ($line =~ /^DNSLookup/)             { $DNSLookup=$param; next; }
-		if ($line =~ /^PurgeLogFile/)          { $PurgeLogFile=$param; next; }
-		if ($line =~ /^ArchiveLogRecords/)     { $ArchiveLogRecords=$param; next; }
+		if ($param =~ /^DirData/)               { $DirData=$value; next; }
+		if ($param =~ /^DirCgi/)                { $DirCgi=$value; next; }
+		if ($param =~ /^DirIcons/)              { $DirIcons=$value; next; }
+		if ($param =~ /^DNSLookup/)             { $DNSLookup=$value; next; }
+		if ($param =~ /^PurgeLogFile/)          { $PurgeLogFile=$value; next; }
+		if ($param =~ /^ArchiveLogRecords/)     { $ArchiveLogRecords=$value; next; }
 		# Read optional section
-		if ($line =~ /^Lang/)                  { $Lang=$param; next; }
-		if ($line =~ /^DefaultFile/)           { $DefaultFile=$param; next; }
-		if ($line =~ /^WarningMessages/)       { $WarningMessages=$param; next; }
-		if ($line =~ /^ShowLinksOnUrl/)        { $ShowLinksOnUrl=$param; next; }
-		if ($line =~ /^ShowFlagLinks/)         { $ShowFlagLinks=$param; next; }
-		if ($line =~ /^HTMLEndSection/)        { $HTMLEndSection=$param; next; }
-		if ($line =~ /^BarWidth/)              { $BarWidth=$param; next; }
-		if ($line =~ /^BarHeight/)             { $BarHeight=$param; next; }
-		if ($line =~ /^MaxNbOfHostsShown/)     { $MaxNbOfHostsShown=$param; next; }
-		if ($line =~ /^MinHitHost/)            { $MinHitHost=$param; next; }
-		if ($line =~ /^MaxNbOfRobotShown/)     { $MaxNbOfRobotShown=$param; next; }
-		if ($line =~ /^MinHitRobot/)           { $MinHitRobot=$param; next; }
-		if ($line =~ /^MaxNbOfPageShown/)      { $MaxNbOfPageShown=$param; next; }
-		if ($line =~ /^MinHitFile/)            { $MinHitFile=$param; next; }
-		if ($line =~ /^MaxNbOfRefererShown/)   { $MaxNbOfRefererShown=$param; next; }
-		if ($line =~ /^MinHitRefer/)           { $MinHitRefer=$param; next; }
-		if ($line =~ /^MaxNbOfKeywordsShown/)  { $MaxNbOfKeywordsShown=$param; next; }
-		if ($line =~ /^MinHitKeyword/)         { $MinHitKeyword=$param; next; }
-		if ($line =~ /^SplitSearchString/)     { $SplitSearchString=$param; next; }
-		if ($line =~ /^Logo/)                  { $Logo=$param; next; }
-		if ($line =~ /^color_Background/)      { $color_Background=$param; next; }
-		if ($line =~ /^color_TableTitle/)      { $color_TableTitle=$param; next; }
-		if ($line =~ /^color_TableBGTitle/)    { $color_TableBGTitle=$param; next; }
-		if ($line =~ /^color_TableRowTitle/)   { $color_TableRowTitle=$param; next; }
-		if ($line =~ /^color_TableBGRowTitle/) { $color_TableBGRowTitle=$param; next; }
-		if ($line =~ /^color_TableBorder/)     { $color_TableBorder=$param; next; }
-		if ($line =~ /^color_TableBG/)         { $color_TableBG=$param; next; }
-		if ($line =~ /^color_link/)            { $color_link=$param; next; }
-		if ($line =~ /^color_hover/)           { $color_hover=$param; next; }
-		if ($line =~ /^color_text/)            { $color_text=$param; next; }
-		if ($line =~ /^color_titletext/)       { $color_titletext=$param; next; }
-		if ($line =~ /^color_v/)               { $color_v=$param; next; }
-		if ($line =~ /^color_w/)               { $color_w=$param; next; }
-		if ($line =~ /^color_p/)               { $color_p=$param; next; }
-		if ($line =~ /^color_h/)               { $color_h=$param; next; }
-		if ($line =~ /^color_k/)               { $color_k=$param; next; }
-		if ($line =~ /^color_s/)               { $color_s=$param; next; }
+		if ($param =~ /^Lang/)                  { $Lang=$value; next; }
+		if ($param =~ /^DefaultFile/)           { $DefaultFile=$value; next; }
+		if ($param =~ /^WarningMessages/)       { $WarningMessages=$value; next; }
+		if ($param =~ /^ShowLinksOnUrl/)        { $ShowLinksOnUrl=$value; next; }
+		if ($param =~ /^ShowFlagLinks/)         { $ShowFlagLinks=$value; next; }
+		if ($param =~ /^HTMLEndSection/)        { $HTMLEndSection=$value; next; }
+		if ($param =~ /^BarWidth/)              { $BarWidth=$value; next; }
+		if ($param =~ /^BarHeight/)             { $BarHeight=$value; next; }
+		if ($param =~ /^MaxNbOfHostsShown/)     { $MaxNbOfHostsShown=$value; next; }
+		if ($param =~ /^MinHitHost/)            { $MinHitHost=$value; next; }
+		if ($param =~ /^MaxNbOfRobotShown/)     { $MaxNbOfRobotShown=$value; next; }
+		if ($param =~ /^MinHitRobot/)           { $MinHitRobot=$value; next; }
+		if ($param =~ /^MaxNbOfPageShown/)      { $MaxNbOfPageShown=$value; next; }
+		if ($param =~ /^MinHitFile/)            { $MinHitFile=$value; next; }
+		if ($param =~ /^MaxNbOfRefererShown/)   { $MaxNbOfRefererShown=$value; next; }
+		if ($param =~ /^MinHitRefer/)           { $MinHitRefer=$value; next; }
+		if ($param =~ /^MaxNbOfKeywordsShown/)  { $MaxNbOfKeywordsShown=$value; next; }
+		if ($param =~ /^MinHitKeyword/)         { $MinHitKeyword=$value; next; }
+		if ($param =~ /^SplitSearchString/)     { $SplitSearchString=$value; next; }
+		if ($param =~ /^Logo/)                  { $Logo=$value; next; }
+		if ($param =~ /^color_Background/)      { $color_Background=$value; next; }
+		if ($param =~ /^color_TableTitle/)      { $color_TableTitle=$value; next; }
+		if ($param =~ /^color_TableBGTitle/)    { $color_TableBGTitle=$value; next; }
+		if ($param =~ /^color_TableRowTitle/)   { $color_TableRowTitle=$value; next; }
+		if ($param =~ /^color_TableBGRowTitle/) { $color_TableBGRowTitle=$value; next; }
+		if ($param =~ /^color_TableBorder/)     { $color_TableBorder=$value; next; }
+		if ($param =~ /^color_TableBG/)         { $color_TableBG=$value; next; }
+		if ($param =~ /^color_link/)            { $color_link=$value; next; }
+		if ($param =~ /^color_hover/)           { $color_hover=$value; next; }
+		if ($param =~ /^color_text/)            { $color_text=$value; next; }
+		if ($param =~ /^color_titletext/)       { $color_titletext=$value; next; }
+		if ($param =~ /^color_v/)               { $color_v=$value; next; }
+		if ($param =~ /^color_w/)               { $color_w=$value; next; }
+		if ($param =~ /^color_p/)               { $color_p=$value; next; }
+		if ($param =~ /^color_h/)               { $color_h=$value; next; }
+		if ($param =~ /^color_k/)               { $color_k=$value; next; }
+		if ($param =~ /^color_s/)               { $color_s=$value; next; }
 	}
 	close CONFIG;
 }
