@@ -58,4 +58,16 @@
 'unknown','Unknown worm'
 );
 
+# WormsHashTarget
+# Worms target list ('worm unique id in lower case','worm target clear text')
+# Each unique ID string is associated to a target
+#-----------------------------------------------------------------------------
+%WormsHashTarget = (
+'code_red','IIS',
+'mpex','IIS',
+'nimda','IIS',
+'sumthin','?',
+'unknown','MS products',
+);
+
 1;
