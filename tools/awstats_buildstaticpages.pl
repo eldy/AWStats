@@ -201,7 +201,7 @@ sub Parse_Config {
 		}
 
 		# Remove comments
-		if ($_ =~ /^#/) { next; }
+		if ($_ =~ /^\s*#/) { next; }
 		$_ =~ s/\s#.*$//;
 
 		# Extract param and value
@@ -216,7 +216,8 @@ sub Parse_Config {
 			$value =~ s/^\s+//; $value =~ s/\s+$//;
 			$value =~ s/^\"//; $value =~ s/\";?$//;
 			# Replace __MONENV__ with value of environnement variable MONENV
-			while ($value =~ /__(\w+)__/) {	my $var=$1;	$value =~ s/__${var}__/$ENV{$var}/g; }
+			# Must be able to replace __VAR_1____VAR_2__
+			while ($value =~ /__([^\s_]+(?:_[^\s_]+)*)__/) { my $var=$1; $value =~ s/__${var}__/$ENV{$var}/g; }
 		}
 
 		# If parameters was not found previously, defined variable with name of param to value
