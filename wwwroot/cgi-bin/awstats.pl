@@ -1040,9 +1040,7 @@ sub Parse_Config {
 	my $configFile = $_[2];
 	my $versionnum=0;
 
-	if ($level > 10) {
-		error("$PROG can't read down more than 10 level of includes. Check that no 'included' config files include their parent config file (this cause infinite loop).");
-	}
+	if ($level > 10) { error("$PROG can't read down more than 10 level of includes. Check that no 'included' config files include their parent config file (this cause infinite loop)."); }
 
    	while (<$confighandle>) {
 		chomp $_; s/\r//;
@@ -1057,7 +1055,7 @@ sub Parse_Config {
 		if ($_ =~ /^$/) { next; }
 
 		# Check includes
-		if ($_ =~ /^Include "([^\"]+)"/ || $_ =~ /^#include "([^\"]+)"/) {	# #include kept fr backward compatibility
+		if ($_ =~ /^Include "([^\"]+)"/ || $_ =~ /^#include "([^\"]+)"/) {	# #include kept for backward compatibility
 		    my $includeFile = $1;
 			if ($Debug) { debug("Found an include : $includeFile",2); }
 		    if ( $includeFile !~ /^[\\\/]/ ) {
@@ -1070,13 +1068,14 @@ sub Parse_Config {
 		    }
 		    else {
 				error("Could not open include file: $includeFile" );
-				next;
 		    }
+			next;
 		}
 
 		# Remove comments
 		if ($_ =~ /^#/) { next; }
 		$_ =~ s/\s#.*$//;
+
 		# Extract param and value
 		#if ($Debug) { debug("$_",2); }
 		my @felter=split(/=/,$_,2);
@@ -1089,18 +1088,12 @@ sub Parse_Config {
 			# Replace __MONENV__ with value of environnement variable MONENV
 			while ($value =~ /__(\w+)__/) {	my $var=$1;	$value =~ s/__${var}__/$ENV{$var}/g; }
 		}
+
 		# Initialize parameter for (param,value)
-		# Read main section
 		if ($param =~ /^LogFile/) {
 			if ($QueryString !~ /logfile=([^\s&]+)/i) { $LogFile=$value; }
 			next;
 			}
-		if ($param =~ /^LogFormat/)            	{ $LogFormat=$value; next; }
-		if ($param =~ /^LogSeparator/)         	{ $LogSeparator=$value; next; }
-		if ($param =~ /^DirData/) 				{ $DirData=$value; next; }
-		if ($param =~ /^DirCgi/)                { $DirCgi=$value; next; }
-		if ($param =~ /^DirIcons/)              { $DirIcons=$value; next; }
-		if ($param =~ /^DNSLookup/)             { $DNSLookup=$value; next; }
 		if ($param =~ /^SiteDomain/)			{
 			#$value =~ s/\\\./\./g; $value =~ s/([^\\])\./$1\\\./g; $value =~ s/^\./\\\./;	# SiteDomain is not used in regex. Must not replace . into \.
 			$SiteDomain=$value;
@@ -1111,27 +1104,16 @@ sub Parse_Config {
 			foreach my $elem (split(/\s+/,$value))	{ push @HostAliases,$elem; }
 			next;
 			}
-		if ($param =~ /^AllowToUpdateStatsFromBrowser/)	{ $AllowToUpdateStatsFromBrowser=$value; next; }
-		# Read optional setup section
-		if ($param =~ /^EnableLockForUpdate/)		{ $EnableLockForUpdate=$value; next; }
-		if ($param =~ /^DNSStaticCacheFile/)		{ $DNSStaticCacheFile=$value; next; }
-		if ($param =~ /^DNSLastUpdateCacheFile/)	{ $DNSLastUpdateCacheFile=$value; next; }
+		# Special optional setup params
 		if ($param =~ /^SkipDNSLookupFor/) {
 			$value =~ s/\\\./\./g; $value =~ s/([^\\])\./$1\\\./g; $value =~ s/^\./\\\./;	# Replace . into \.
 			foreach my $elem (split(/\s+/,$value))	{ push @SkipDNSLookupFor,$elem; }
 			next;
 			}
-		if ($param =~ /^AllowAccessFromWebToAuthenticatedUsersOnly/)	{ $AllowAccessFromWebToAuthenticatedUsersOnly=$value; next; }
 		if ($param =~ /^AllowAccessFromWebToFollowingAuthenticatedUsers/) {
 			foreach my $elem (split(/\s+/,$value))	{ push @AllowAccessFromWebToFollowingAuthenticatedUsers,$elem; }
 			next;
 			}
-		if ($param =~ /^AllowAccessFromWebToFollowingIPAddresses/)		{ $AllowAccessFromWebToFollowingIPAddresses=$value; next; }
-		if ($param =~ /^CreateDirDataIfNotExists/)	{ $CreateDirDataIfNotExists=$value; next; }
-		if ($param =~ /^SaveDatabaseFilesWithPermissionsForEveryone/)   { $SaveDatabaseFilesWithPermissionsForEveryone=$value; next; }
-		if ($param =~ /^PurgeLogFile/)          { $PurgeLogFile=$value; next; }
-		if ($param =~ /^ArchiveLogRecords/)     { $ArchiveLogRecords=$value; next; }
-		if ($param =~ /^KeepBackupOfHistoricFiles/)	{ $KeepBackupOfHistoricFiles=$value; next; }
 		if ($param =~ /^DefaultFile/)           {
 			$value =~ s/\\\./\./g; $value =~ s/([^\\])\./$1\\\./g; $value =~ s/^\./\\\./;   # Replace . into \.
 			foreach my $elem (split(/\s+/,$value))	{ push @DefaultFile,$elem; }
@@ -1177,127 +1159,22 @@ sub Parse_Config {
 			$FoundValidSMTPCodes=1;
 			next;
 			}
-		if ($param =~ /^AuthenticatedUsersNotCaseSensitive$/)		{ $AuthenticatedUsersNotCaseSensitive=$value; next; }
-		if ($param =~ /^URLNotCaseSensitive$/)		{ $URLNotCaseSensitive=$value; next; }
-		if ($param =~ /^URLWithAnchor$/)			{ $URLWithAnchor=$value; next; }
-		if ($param =~ /^URLQuerySeparators$/)		{ $URLQuerySeparators=$value; next; }
-		if ($param =~ /^URLWithQuery$/)				{ $URLWithQuery=$value; next; }
 		if ($param =~ /^URLWithQueryWithoutFollowingParameters$/)	{
 			foreach my $elem (split(/\s+/,$value))	{ push @URLWithQueryWithoutFollowingParameters,$elem; }
 			next;
 			}
-		if ($param =~ /^URLReferrerWithQuery$/)		{ $URLReferrerWithQuery=$value; next; }
-		if ($param =~ /^WarningMessages/)       	{ $WarningMessages=$value; next; }
-		if ($param =~ /^ErrorMessages/)       		{ $ErrorMessages=$value; next; }
-		if ($param =~ /^DebugMessages/)       		{ $DebugMessages=$value; next; }
-		if ($param =~ /^NbOfLinesForCorruptedLog/) 	{ $NbOfLinesForCorruptedLog=$value; next; }
-		if ($param =~ /^Expires/)               	{ $Expires=$value; next; }
-		if ($param =~ /^WrapperScript/)         	{ $WrapperScript=$value; next; }
-		if ($param =~ /^DecodeUA/)         			{ $DecodeUA=$value; next; }
-		if ($param =~ /^LogScreenSizeUrl/)			{ $LogScreenSizeUrl=$value; next; }
-		# Read optional accuracy setup section
-		if ($param =~ /^LevelForRobotsDetection/)			{ $LevelForRobotsDetection=$value; next; }
-		if ($param =~ /^LevelForBrowsersDetection/)			{ $LevelForBrowsersDetection=$value; next; }
-		if ($param =~ /^LevelForOSDetection/)				{ $LevelForOSDetection=$value; next; }
-		if ($param =~ /^LevelForRefererAnalyze/)			{ $LevelForRefererAnalyze=$value; next; }
-		if ($param =~ /^LevelForSearchEnginesDetection/)	{ $LevelForSearchEnginesDetection=$value; next; }
-		if ($param =~ /^LevelForKeywordsDetection/)			{ $LevelForKeywordsDetection=$value; next; }
- 		# Read extra stats setup section
+ 		# Extra parameters
  		if ($param =~ /^ExtraSectionName(\d+)/)			{ $ExtraName[$1]=$value; next; }
  		if ($param =~ /^ExtraSectionCondition(\d+)/)  	{ $ExtraCondition[$1]=$value; next; }
  		if ($param =~ /^ExtraSectionStatTypes(\d+)/)    { $ExtraStatTypes[$1]=$value; next; }
  		if ($param =~ /^ExtraSectionFirstColumnTitle(\d+)/) 	{ $ExtraFirstColumnTitle[$1]=$value; next; }
  		if ($param =~ /^ExtraSectionFirstColumnValues(\d+)/) 	{ $ExtraFirstColumnValues[$1]=$value; next; }
- 		if ($param =~ /^MaxNbOfExtra(\d+)/) 		{ $MaxNbOfExtra[$1]=$value; next; }
- 		if ($param =~ /^MinHitExtra(\d+)/) 			{ $MinHitExtra[$1]=$value; next; }
-		# Read optional appearance setup section
-		if ($param =~ /^MaxRowsInHTMLOutput/)   { $MaxRowsInHTMLOutput=$value; next; }
-		if ($param =~ /^Lang/)                 	{ $Lang=$value; next; }
-		if ($param =~ /^DirLang/)               { $DirLang=$value; next; }
-		if ($param =~ /^ShowMenu/)               { $ShowMenu=$value; next; }
-		if ($param =~ /^ShowMonthDayStats/)      { $ShowMonthDayStats=$value; next; }
-		if ($param =~ /^ShowDaysOfWeekStats/)    { $ShowDaysOfWeekStats=$value; next; }
-		if ($param =~ /^ShowHoursStats/)         { $ShowHoursStats=$value; next; }
-		if ($param =~ /^ShowDomainsStats/)       { $ShowDomainsStats=$value; next; }
-		if ($param =~ /^ShowHostsStats/)         { $ShowHostsStats=$value; next; }
-		if ($param =~ /^ShowAuthenticatedUsers/) { $ShowAuthenticatedUsers=$value; next; }
-		if ($param =~ /^ShowRobotsStats/)        { $ShowRobotsStats=$value; next; }
-		if ($param =~ /^ShowWormsStats/)         { $ShowWormsStats=$value; next; }
-		if ($param =~ /^ShowSessionsStats/)      { $ShowSessionsStats=$value; next; }
-		if ($param =~ /^ShowPagesStats/)         { $ShowPagesStats=$value; next; }
-		if ($param =~ /^ShowFileTypesStats/)     { $ShowFileTypesStats=$value; next; }
-		if ($param =~ /^ShowFileSizesStats/)     { $ShowFileSizesStats=$value; next; }
-		if ($param =~ /^ShowOSStats/)            { $ShowOSStats=$value; next; }
-		if ($param =~ /^ShowBrowsersStats/)      { $ShowBrowsersStats=$value; next; }
-		if ($param =~ /^ShowScreenSizeStats/)    { $ShowScreenSizeStats=$value; next; }
-		if ($param =~ /^ShowOriginStats/)        { $ShowOriginStats=$value; next; }
-		if ($param =~ /^ShowKeyphrasesStats/)    { $ShowKeyphrasesStats=$value; next; }
-		if ($param =~ /^ShowKeywordsStats/)      { $ShowKeywordsStats=$value; next; }
-		if ($param =~ /^ShowHTTPErrorsStats/)    { $ShowHTTPErrorsStats=$value; next; }
-		if ($param =~ /^ShowEMailSenders/)      { $ShowEMailSenders=$value; next; }
-		if ($param =~ /^ShowEMailReceivers/)    { $ShowEMailReceivers=$value; next; }
-		if ($param =~ /^AddDataArrayMonthDayStats/)			{ $AddDataArrayMonthDayStats=$value; next; }
-		if ($param =~ /^AddDataArrayShowDaysOfWeekStats/)	{ $AddDataArrayShowDaysOfWeekStats=$value; next; }
-		if ($param =~ /^AddDataArrayShowHoursStats/)		{ $AddDataArrayShowHoursStats=$value; next; }
-		if ($param =~ /^MaxNbOfDomain/)         { $MaxNbOfDomain=$value; next; }
-		if ($param =~ /^MinHitDomain/)          { $MinHitDomain=$value; next; }
-		if ($param =~ /^MaxNbOfHostsShown/)     { $MaxNbOfHostsShown=$value; next; }
-		if ($param =~ /^MinHitHost/)            { $MinHitHost=$value; next; }
-		if ($param =~ /^MaxNbOfRobotShown/)     { $MaxNbOfRobotShown=$value; next; }
-		if ($param =~ /^MaxNbOfWormsShown/)     { $MaxNbOfWormsShown=$value; next; }
-		if ($param =~ /^MinHitRobot/)           { $MinHitRobot=$value; next; }
-		if ($param =~ /^MaxNbOfLoginShown/)     { $MaxNbOfLoginShown=$value; next; }
-		if ($param =~ /^MinHitLogin/)           { $MinHitLogin=$value; next; }
-		if ($param =~ /^MaxNbOfPageShown/)      { $MaxNbOfPageShown=$value; next; }
-		if ($param =~ /^MinHitFile/)            { $MinHitFile=$value; next; }
-		if ($param =~ /^MaxNbOfRefererShown/)   { $MaxNbOfRefererShown=$value; next; }
-		if ($param =~ /^MinHitRefer/)           { $MinHitRefer=$value; next; }
-		if ($param =~ /^MaxNbOfKeyphrasesShown/) { $MaxNbOfKeyphrasesShown=$value; next; }
-		if ($param =~ /^MinHitKeyphrase/)        { $MinHitKeyphrase=$value; next; }
-		if ($param =~ /^MaxNbOfKeywordsShown/)  { $MaxNbOfKeywordsShown=$value; next; }
-		if ($param =~ /^MinHitKeyword/)         { $MinHitKeyword=$value; next; }
-		if ($param =~ /^MaxNbOfEMailsShown/)    { $MaxNbOfEMailsShown=$value; next; }
-		if ($param =~ /^MinHitEMail/)           { $MinHitEMail=$value; next; }
-		if ($param =~ /^FirstDayOfWeek/)       	{ $FirstDayOfWeek=$value; next; }
-		if ($param =~ /^UseFramesWhenCGI/)      { $UseFramesWhenCGI=$value; next; }
-		if ($param =~ /^DetailedReportsOnNewWindows/) { $DetailedReportsOnNewWindows=$value; next; }
-		if ($param =~ /^ShowFlagLinks/)         { $ShowFlagLinks=$value; next; }
-		if ($param =~ /^ShowLinksOnUrl/)        { $ShowLinksOnUrl=$value; next; }
-		if ($param =~ /^UseHTTPSLinkForUrl/)    { $UseHTTPSLinkForUrl=$value; next; }
-		if ($param =~ /^MaxLengthOfURL/)        { $MaxLengthOfURL=$value; next; }
-		if ($param =~ /^ShowLinksToWhoIs/)      { $ShowLinksToWhoIs=$value; next; }
-		if ($param =~ /^LinksToWhoIs/)          { $LinksToWhoIs=$value; next; }
-		if ($param =~ /^LinksToIPWhoIs/)        { $LinksToIPWhoIs=$value; next; }
-		if ($param =~ /^HTMLHeadSection/)       { $HTMLHeadSection=$value; next; }
-		if ($param =~ /^HTMLEndSection/)        { $HTMLEndSection=$value; next; }
-		if ($param =~ /^BarWidth/)              { $BarWidth=$value; next; }
-		if ($param =~ /^BarHeight/)             { $BarHeight=$value; next; }
-		if ($param =~ /^Logo$/)                 { $Logo=$value; next; }
-		if ($param =~ /^LogoLink/)              { $LogoLink=$value; next; }
-		if ($param =~ /^StyleSheet/)            { $StyleSheet=$value; next; }
-		if ($param =~ /^color_Background/)      { $color_Background=$value; next; }
-		if ($param =~ /^color_TableTitle/)      { $color_TableTitle=$value; next; }
-		if ($param =~ /^color_TableBGTitle/)    { $color_TableBGTitle=$value; next; }
-		if ($param =~ /^color_TableRowTitle/)   { $color_TableRowTitle=$value; next; }
-		if ($param =~ /^color_TableBGRowTitle/) { $color_TableBGRowTitle=$value; next; }
-		if ($param =~ /^color_TableBG/)         { $color_TableBG=$value; next; }
-		if ($param =~ /^color_TableBorder/)     { $color_TableBorder=$value; next; }
-		if ($param =~ /^color_textpercent/)     { $color_textpercent=$value; next; }
-		if ($param =~ /^color_text/)            { $color_text=$value; next; }
-		if ($param =~ /^color_titletext/)       { $color_titletext=$value; next; }
-		if ($param =~ /^color_weekend/)         { $color_weekend=$value; next; }
-		if ($param =~ /^color_link/)            { $color_link=$value; next; }
-		if ($param =~ /^color_hover/)           { $color_hover=$value; next; }
-		if ($param =~ /^color_other/)           { $color_other=$value; next; }
-		if ($param =~ /^color_u/)               { $color_u=$value; next; }
-		if ($param =~ /^color_v/)               { $color_v=$value; next; }
-		if ($param =~ /^color_p/)               { $color_p=$value; next; }
-		if ($param =~ /^color_h/)               { $color_h=$value; next; }
-		if ($param =~ /^color_k/)               { $color_k=$value; next; }
-		if ($param =~ /^color_s/)               { $color_s=$value; next; }
-		if ($param =~ /^color_e/)               { $color_e=$value; next; }
-		if ($param =~ /^color_x/)               { $color_x=$value; next; }
-		if ($param =~ /^LoadPlugin/)           	{ push @PluginsToLoad, $value; next; }
+ 		if ($param =~ /^MaxNbOfExtra(\d+)/) 			{ $MaxNbOfExtra[$1]=$value; next; }
+ 		if ($param =~ /^MinHitExtra(\d+)/) 				{ $MinHitExtra[$1]=$value; next; }
+		# Special appearance parameters
+		if ($param =~ /^LoadPlugin/)           			{ push @PluginsToLoad, $value; next; }
+		# If parameters was not found previously, defined variable with name of param to value
+		$$param=$value;
 	}
 	close $confighandle;
 
@@ -3494,7 +3371,7 @@ sub Save_History {
 		print HISTORYTMP "# Search engine referers ID - Pages - Hits\n";
 		$ValueInFile{$sectiontosave}=tell HISTORYTMP;
 		print HISTORYTMP "BEGIN_SEREFERRALS ".(scalar keys %_se_referrals_h)."\n";
-		foreach my $key (keys %_se_referrals_h) { print HISTORYTMP "$key ".int($_se_referrals_p{$key})." $_se_referrals_h{$key}\n"; }
+		foreach my $key (keys %_se_referrals_h) { print HISTORYTMP "$key ".int($_se_referrals_p{$key}||0)." $_se_referrals_h{$key}\n"; }
 		print HISTORYTMP "END_SEREFERRALS\n";
 	}
 	if ($sectiontosave eq 'pagerefs') {
@@ -3511,14 +3388,14 @@ sub Save_History {
 			my $newkey=$key;
 			$newkey =~ s/^http(s|):\/\/([^\/]+)\/$/http$1:\/\/$2/i;	# Remove / at end of http://.../ but not at end of http://.../dir/
 			$newkey =~ s/\s/%20/g;
-			print HISTORYTMP "$newkey ".int($_pagesrefs_p{$key})." $_pagesrefs_h{$key}\n";
+			print HISTORYTMP "$newkey ".int($_pagesrefs_p{$key}||0)." $_pagesrefs_h{$key}\n";
 		}
 		foreach my $key (keys %_pagesrefs_h) {
 			if ($keysinkeylist{$key}) { next; }
 			my $newkey=$key;
 			$newkey =~ s/^http(s|):\/\/([^\/]+)\/$/http$1:\/\/$2/i;	# Remove / at end of http://.../ but not at end of http://.../dir/
 			$newkey =~ s/\s/%20/g;
-			print HISTORYTMP "$newkey ".int($_pagesrefs_p{$key})." $_pagesrefs_h{$key}\n";
+			print HISTORYTMP "$newkey ".int($_pagesrefs_p{$key}||0)." $_pagesrefs_h{$key}\n";
 		}
 		print HISTORYTMP "END_PAGEREFS\n";
 	}
@@ -3574,7 +3451,7 @@ sub Save_History {
 		print HISTORYTMP "# Errors - Hits - Bandwidth\n";
 		$ValueInFile{$sectiontosave}=tell HISTORYTMP;
 		print HISTORYTMP "BEGIN_ERRORS ".(scalar keys %_errors_h)."\n";
-		foreach my $key (keys %_errors_h) { print HISTORYTMP "$key $_errors_h{$key} $_errors_k{$key}\n"; }
+		foreach my $key (keys %_errors_h) { print HISTORYTMP "$key $_errors_h{$key} ".int($_errors_k{$key}||0)."\n"; }
 		print HISTORYTMP "END_ERRORS\n";
 	}
  	# Other - Trapped errors
@@ -3586,9 +3463,8 @@ sub Save_History {
 			print HISTORYTMP "BEGIN_SIDER_$code ".(scalar keys %_sider404_h)."\n";
 			foreach my $key (keys %_sider404_h) {
 				my $newkey=$key;
-				my $newreferer=$_referer404_h{$key}||'';
-				$newreferer =~ s/\s/%20/g;
-				print HISTORYTMP "$newkey ".int($_sider404_h{$key})." $newreferer\n";
+				my $newreferer=$_referer404_h{$key}||''; $newreferer =~ s/\s/%20/g;
+				print HISTORYTMP "$newkey $_sider404_h{$key} $newreferer\n";
 			}
 			print HISTORYTMP "END_SIDER_$code\n";
 		}
@@ -4185,7 +4061,7 @@ sub BuildKeyList {
 	foreach my $key (values %val) {	$notsortedkeylist{$key}=1; }
 	foreach my $key (values %egal) { $notsortedkeylist{$key}=1; }
 	@keylist=();
-	@keylist=(sort {$hashfororder->{$b} <=> $hashfororder->{$a} } keys %notsortedkeylist);
+	@keylist=(sort {($hashfororder->{$b}||0) <=> ($hashfororder->{$a}||0) } keys %notsortedkeylist);
 	if ($Debug) { debug(" BuildKeyList End (keylist size=".(@keylist).")",2); }
 	return;
 }
