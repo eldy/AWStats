@@ -3186,11 +3186,11 @@ sub Save_History {
 		my %keysinkeylist=();
 		foreach my $key (@keylist) {
 			$keysinkeylist{$key}=1;
-			print HISTORYTMP "$key ".int($_login_p{$key})." ".int($_login_h{$key})." ".int($_login_k{$key})." $_login_l{$key}\n";
+			print HISTORYTMP "$key ".int($_login_p{$key}||0)." ".int($_login_h{$key}||0)." ".int($_login_k{$key}||0)." ".($_login_l{$key}||'')."\n";
 		}
 		foreach my $key (keys %_login_h) {
 			if ($keysinkeylist{$key}) { next; }
-			print HISTORYTMP "$key ".int($_login_p{$key})." ".int($_login_h{$key})." ".int($_login_k{$key})." $_login_l{$key}\n";
+			print HISTORYTMP "$key ".int($_login_p{$key}||0)." ".int($_login_h{$key}||0)." ".int($_login_k{$key}||0)." ".($_login_l{$key}||'')."\n";
 		}
 		print HISTORYTMP "END_LOGIN\n";
 	}
