@@ -1,7 +1,7 @@
 # French message file (eldy@users.sourceforge.net)
 # $Revision$ - $Date$
 message0=Inconnu
-message1=Inconnu (IP non résolue)
+message1=Inconnus (IP non résolue)
 message2=Autres
 message3=Voir détails
 message4=Jour
