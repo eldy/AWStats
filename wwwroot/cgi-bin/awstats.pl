@@ -5319,7 +5319,12 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 		}
 		# Check favicon
 		#-----------------------------------------------
-		elsif ($field[$pos_url] =~ /\/favicon\.ico$/i) { $_misc_h{'AddToFavourites'}++; next; }
+		elsif ($field[$pos_url] =~ /\/favicon\.ico$/i) {
+			if ($field[$pos_code] != 404 || $field[$pos_url] !~ /\/.+\/favicon\.ico$/i) {	# We don't count on hit if not on root and error as another hit will be made on root
+				$_misc_h{'AddToFavourites'}++;	# Hit on favicon on root or without error, we count it
+			}
+			next;
+		}
 		
 		# Check return status code
 		#-------------------------
