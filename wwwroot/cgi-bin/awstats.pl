@@ -5318,7 +5318,9 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 		# Check favicon
 		#-----------------------------------------------
 		elsif ($field[$pos_url] =~ /\/favicon\.ico$/i) {
-			if ($field[$pos_code] != 404 || $field[$pos_url] !~ /\/.+\/favicon\.ico$/i) {	# We don't count on hit if not on root and error as another hit will be made on root
+			if (($field[$pos_code] != 404 || $field[$pos_url] !~ /\/.+\/favicon\.ico$/i) && ($field[$pos_agent] =~ /MSIE/)) {
+				# We don't count one hit if (not on root and error) and MSIE
+				# If error not on root, another hit will be made on root. If not MSIE, hit are made not only for "Adding".
 				$_misc_h{'AddToFavourites'}++;	# Hit on favicon on root or without error, we count it
 			}
 			next;
@@ -8890,6 +8892,14 @@ if (scalar keys %HTMLOutput) {
 		if ($ShowMiscStats) {
 			if ($Debug) { debug("ShowMiscStats",2); }
 			print "$Center<a name=\"MISC\">&nbsp;</a><BR>\n";
+			my $Totalh=0; my %new_browser_h=();
+			if ($_misc_h{'AddToFavourites'}) {
+				foreach my $key (keys %_browser_h) {
+					$Totalh+=$_browser_h{$key};
+					if ($key =~ /^msie/i) { $new_browser_h{"msiecumul"}+=$_browser_h{$key}; }
+				}
+				if ($new_browser_h{'msiecumul'}) { $_misc_h{'AddToFavourites'}=int(0.5+$_misc_h{'AddToFavourites'}*$Totalh/$new_browser_h{'msiecumul'}); }
+			}
 			my $title="$Message[139]";
 			&tab_head("$title",19);
 			print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[139]</TH>";
@@ -8910,8 +8920,8 @@ if (scalar keys %HTMLOutput) {
 				if ($total) { $p=int($_misc_h{$key}/$total*1000)/10; }
 				print "<TR>";
 				print "<TD CLASS=AWS>".$label{$key}."</TD>";
-				if ($MiscListCalc{$key} eq 'v') { print "<TD>".int($_misc_h{$key}||0)." / $total $Message[12]</TD>"; }
-				if ($MiscListCalc{$key} eq 'u') { print "<TD>".int($_misc_h{$key}||0)." / $total $Message[18]</TD>"; }
+				if ($MiscListCalc{$key} eq 'v') { print "<TD>".($_misc_h{$key}||0)." / $total $Message[12]</TD>"; }
+				if ($MiscListCalc{$key} eq 'u') { print "<TD>".($_misc_h{$key}||0)." / $total $Message[18]</TD>"; }
 				if ($MiscListCalc{$key} eq 'hm') { print "<TD>-</TD>"; }
 				print "<TD>".($total?"$p %":"&nbsp;")."</TD>";
 				print "</TR>\n";
