@@ -912,7 +912,9 @@ sub DateIsValid {
 		if ($day > 30) { return 0; }
 	}
 	if ($month==2) {
-		if ($day > 28) { return 0; }
+		my $leapyear=($year%4==0?1:0);		# A leap year every 4 years
+		if ($year%100==0 && $year%400!=0) { $leapyear=0; }	# Except if year is 100x and not 400x
+		if ($day > (28+$leapyear)) { return 0; }
 	}
 	return 1;
 }
