@@ -111,7 +111,7 @@ sub _ShowForm {
 	print "<TABLE CLASS=\"AWS_DATA\" BORDER=0 CELLPADDING=1 CELLSPACING=0 WIDTH=\"100%\">\n";
 	print "<tr align=left><td align=left><b>Show content of file '$LogFile' ($MAXLINE first lines):</b></td></tr>\n";
 	print "<tr align=left><td align=left>$Message[79]: <input type=text name=filterrawlog value=\"$Filter\"><input type=submit value=\"List\" class=\"AWS_BUTTON\">\n";
-	print "<input type=hidden name=framename value=\"$FrameName\"><input type=hidden name=pluginmode value=\"rawlog\">";
+	print "<input type=hidden name=config value=\"$SiteConfig\"><input type=hidden name=framename value=\"$FrameName\"><input type=hidden name=pluginmode value=\"rawlog\">";
 	print "</td></tr>\n";
 	print "</TABLE>\n";
 	print "</TD></TR></TABLE>\n";
