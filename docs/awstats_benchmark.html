@@ -42,7 +42,7 @@ AWStats speed depends on AWStats version and options/setup you use in configurat
 <b><u>This is benchmark results with AWStats version 4.0 and a common configuration:</u></b><br>
 HARDWARE: Athlon 1 GHz / 128Mb<br>
 SOFTWARE: Windows 2000 / ActivePerl 5.6<br>
-CONFIG OPTIONS: LogFormat=1, DNSLookup=0<br>
+CONFIG OPTIONS: <a href="awstats_config.html#LogFormat">LogFormat</a>=1, <a href="awstats_config.html#DNSLookup">DNSLookup</a>=0<br>
 AVERAGE SPEED: <b>4100</b> lines by seconds<br>
 Other times for different kind of web sites are shown lower in this page...<br>
 <br>
@@ -75,21 +75,21 @@ So, have a look at the following chart to:<br>
 <tr><td>       1,000,000 - 5,000,000 visits/month</td><td>0</td><td colspan=3>AWStats is not a good choice for such web sites. Try a tool with less features but faster like <a href="http://www.analog.cx">Analog</a></td></tr>
 <tr><td>      +5,000,000 visits/month</td><td>0</td><td colspan=3>AWStats is not a good choice for such web sites. Try a tool with less features but faster like <a href="http://www.analog.cx">Analog</a></td></tr>
 </table>
-* You should set DNSLookup parameter to 0 if<br>
+* You should set <a href="awstats_config.html#DNSLookup">DNSLookup</a> parameter to 0 if<br>
 &nbsp;&nbsp; &nbsp;&nbsp; - reverse DNS lookup is already done in your log file<br>
 &nbsp;&nbsp; &nbsp;&nbsp; - or if you don't need the "domain/countries" report<br>
 &nbsp;&nbsp; &nbsp;&nbsp; - or if your web site has more than 250,000 visits a month.<br>
-** Free memory required for update process (in MB). Warning: If you use the "<a href="awstats_config.html#URLWithQuery">URLWithQuery</a>" option, this value is doubled.<br>
+** Free memory required for update process (in MB). Warning: If you use the <a href="awstats_config.html#URLWithQuery">URLWithQuery</a> option, this value is doubled.<br>
 *** Duration is with Athlon 1GHz/128Mb and LogFormat=1.<br>
 
 
 <br>
 <b><u>This is a summary of main ways to speed up AWStats:</u></b><br>
-- You can disable "<a href="awstats_config.html#DNSLookup">DNSLookup</a>" in AWStats (set DNSLookup=0) but this requires
+- You can disable <a href="awstats_config.html#DNSLookup">DNSLookup</a> in AWStats (set DNSLookup=0) but this requires
 that hosts addresses in your log file are already resolved (need to setup your
 web server to do so). Log analyze speed can be increased by 2 to 50 times but your web server will be slowed.<br>
-- If you use Apache, set "<a href="awstats_config.html#PurgeLogFile">PurgeLogFile</a>" to 1 (By default, to avoid bad surprise,
-PurgeLogFile is 0 in configure file, but you can set it to 1 to ask AWStats
+- If you use Apache, set <a href="awstats_config.html#PurgeLogFile">PurgeLogFile</a> to 1 (By default, to avoid bad surprise,
+<a href="awstats_config.html#PurgeLogFile">PurgeLogFile</a> is 0 in configure file, but you can set it to 1 to ask AWStats
 to purge log file after processing it, this increase speed for next run).<br>
 - Launch AWStats more often (from crontab or a scheduler). The more often you
 launch AWStats, the less AWStats has new lines in log to process.<br>

@@ -38,7 +38,7 @@
 They are described using a consistent format.<br>
 <br>
 <b>Notes</b>
-To include an environnement variable in any parameter (AWStats will replaced
+To include an environment variable in any parameter (AWStats will replaced
 it with its value when reading it), follow the example:<br>
 <i>Parameter="__ENVNAME__"</i>
 <br>
@@ -557,7 +557,7 @@ it with its value when reading it), follow the example:<br>
 <br># By default, AWStats considers that records found in log file are successful
 <br># hits if HTTP code returned by server is a valid HTTP code (200 and 304).
 <br># Any other code are reported in HTTP error chart.
-<br># However in some specific environnement, with web server HTTP redirection,
+<br># However in some specific environment, with web server HTTP redirection,
 <br># you can choose to also accept other codes.
 <br># Example: "200 304 302 305"
 <br># Default: "200 304"
@@ -566,44 +566,56 @@ it with its value when reading it), follow the example:<br>
 <br>
 <br><u>This is examples of current HTTP codes</u>
 <br><i>
-<br>200 OK
-<br>201 Created
-<br>202 Accepted
-<br>203 Non-Authorative Information
-<br>204 No Content
-<br>205 Reset Content
-<br>206 Partial Content
-<br>
-<br>300 Multiple Choices
-<br>301 Moved Permanently
-<br>302 Moved Temporarily
-<br>303 See Other
-<br>304 Not Modified
-<br>305 Use Proxy
-<br>
-<br>400 Bad Request
-<br>401 Authorization Required
-<br>402 Payment Required
-<br>403 Forbidden
-<br>404 Not Found
-<br>405 Method Not Allowed
-<br>406 Not Acceptable (encoding)
-<br>407 Proxy Authentication Required
-<br>408 Request Timed Out
-<br>409 Conflicting Request
-<br>410 Gone
-<br>411 Content Length Required
-<br>412 Precondition Failed
-<br>413 Request Entity Too Long
-<br>414 Request URI Too Long
-<br>415 Unsupported Media Type
-<br>
-<br>500 Internal Server Error
-<br>501 Not Implemented
-<br>502 Bad Gateway
-<br>503 Service Unavailable
-<br>504 Gateway Timeout
-<br>505 HTTP Version Not Supported
+<br>#[Miscellaneous successes]
+<br>"2xx", "[Miscellaneous successes]",
+<br>"200", "OK",								# HTTP request OK
+<br>"201", "Created",
+<br>"202", "Request recorded, will be executed later",
+<br>"203", "Non-authoritative information",
+<br>"204", "Request executed",
+<br>"205", "Reset document",
+<br>"206", "Partial Content",
+<br>#[Miscellaneous redirections]
+<br>"3xx", "[Miscellaneous redirections]",
+<br>"300", "Multiple documents available",
+<br>"301", "Moved Permanently",
+<br>"302", "Found",
+<br>"303", "See other document",
+<br>"304", "Not Modified since last retrieval",	# HTTP request OK
+<br>"305", "Use proxy",
+<br>"306", "Switch proxy",
+<br>"307", "Document moved temporarily",
+<br>#[Miscellaneous client/user errors]
+<br>"4xx", "[Miscellaneous client/user errors]",
+<br>"400", "Bad Request",
+<br>"401", "Unauthorized",
+<br>"402", "Payment required",
+<br>"403", "Forbidden",
+<br>"404", "Document Not Found",
+<br>"405", "Method not allowed",
+<br>"406", "ocument not acceptable to client",
+<br>"407", "Proxy authentication required",
+<br>"408", "Request Timeout",
+<br>"409", "Request conflicts with state of resource",
+<br>"410", "Document gone permanently",
+<br>"411", "Length required",
+<br>"412", "Precondition failed",
+<br>"413", "Request too long",
+<br>"414", "Requested filename too long",
+<br>"415", "Unsupported media type",
+<br>"416", "Requested range not valid",
+<br>"417", "Failed",
+<br>#[Miscellaneous server errors]
+<br>"5xx", "[Miscellaneous server errors]",
+<br>"500", "Internal server Error",
+<br>"501", "Not implemented",
+<br>"502", "Received bad response from real server",
+<br>"503", "Server busy",
+<br>"504", "Gateway timeout",
+<br>"505", "HTTP version not supported",
+<br>"506", "Redirection failed",
+<br>#[Unknown]
+<br>"xxx" ,"[Unknown]"
 </i>
 
 <br><br><hr>
@@ -614,7 +626,7 @@ it with its value when reading it), follow the example:<br>
 <br># pages. This is primarily used to differentiate between the URLs of dynamic
 <br># pages. If set to 1, mypage.html?id=x and mypage.html?id=y are counted as
 <br># two different pages. Warning, when set to 1, memory required to run AWStats
-<br># is doubled.
+<br># is doubled. Try to avoid using this parameter on very large web sites.
 <br># Possible values:
 <br># 0 - URLs are cleaned from the query string (ie: "/mypage.html")
 <br># 1 - Full URL with query string is used     (ie: "/mypage.html?x=y")
@@ -638,11 +650,12 @@ it with its value when reading it), follow the example:<br>
 <a name="NbOfLinesForCorruptedLog"><b>NbOfLinesForCorruptedLog</b></a><br>
 <b>Version : </b>3.2 +<br>
 <br># To help you to detect if your log format is good, AWStats report an error
-<br># if the first NbOfLinesForCorruptedLog lines have all a format that does not
+<br># if all the first NbOfLinesForCorruptedLog lines have a format that does not
 <br># match the LogFormat parameter.
 <br># However, some worm virus attack on your web server can result in a very high
 <br># number of corrupted lines in your log. So if you experience awstats stop
-<br># because of bad virus records, you can increase this parameter (very rare).
+<br># because of bad virus records at the beginning of your log file, you can
+<br># increase this parameter (very rare).
 <br># Default: 50
 <br>#
 <br>NbOfLinesForCorruptedLog=50
@@ -675,15 +688,16 @@ it with its value when reading it), follow the example:<br>
 
 <a name="LevelFor"><b>LevelFor</b></a><br>
 <b>Version : </b>4.0 +<br>
-<br># You can change value for following option to increase AWStats capabilities
-<br># (but this reduce AWStats speed).
-<br># Possible values: 0, 1 or 2
+<br># You can change value for following option to disable/enable AWStats capabilities.
+<br># Possible values: 0, 1
+<br># Possible values: 0, 1 or 2 for LevelForRobotsDetection
 <br># Default: 1
+<br># Default: 2 for LevelForRobotsDetection
 <br>#
-<br>LevelForRobotsDetection=1	# 0 will increase AWStats speed by 1%.
-<br>LevelForBrowsersDetection=1	# 0 disables Browsers detection. No speed gain.
-<br>LevelForOSDetection=1		# 0 disables OS detection. No speed gain.
-<br>LevelForRefererAnalyze=1	# 0 will increase AWStats speed by 6%.
+<br>LevelForRobotsDetection=2			# 0 will increase AWStats speed by 1%.
+<br>LevelForBrowsersDetection=1			# 0 disables Browsers detection. No speed gain.
+<br>LevelForOSDetection=1				# 0 disables OS detection. No speed gain.
+<br>LevelForRefererAnalyze=1			# 0 will increase AWStats speed by 6%.
 
 <br><br><hr>
 

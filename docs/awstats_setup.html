@@ -78,11 +78,11 @@ Whatever the name you choose, this new file must be stored in<br>
 - /etc/opt/awstats or /etc/awstats or /etc or same directory than awstats.pl (so cgi-bin) for Unix/Linux users.<br>
 - same directory than awstats.pl (so cgi-bin) for Windows and other OS.<br>
 Edit this new config file with your own setup :<br>
-- Change "<a href="awstats_config.html#LogFile">LogFile</a>" value with full path of your web server log file (You
+- Change <a href="awstats_config.html#LogFile">LogFile</a> value with full path of your web server log file (You
 can also use a relative path from your awstats.pl directory).<br>
-- Check if "<a href="awstats_config.html#LogFormat">LogFormat</a>" has the value "1" (it means "NCSA apache combined/ELF/XLF log format").<br>
-- Change "<a href="awstats_config.html#DirIcons">DirIcons</a>" parameter to reflect relative URL of icon directory.<br>
-- Edit "<a href="awstats_config.html#SiteDomain">SiteDomain</a>" parameter with the main domain name or the intranet 
+- Check if <a href="awstats_config.html#LogFormat">LogFormat</a> has the value "1" (it means "NCSA apache combined/ELF/XLF log format").<br>
+- Change <a href="awstats_config.html#DirIcons">DirIcons</a> parameter to reflect relative URL of icon directory.<br>
+- Edit <a href="awstats_config.html#SiteDomain">SiteDomain</a> parameter with the main domain name or the intranet 
 web server name used to reach the web site to analyze.<br>
 - You can change other parameters if you want.<br>
 <br>
@@ -128,11 +128,11 @@ awstats.virtualhostname.conf, and, if not found, will look for awstats.conf.<br>
 Whatever the name you choose, this new file must be stored in<br>
 - same directory than awstats.pl (so cgi-bin)<br>
 Edit this new config file with your own setup :<br>
-- Change "<a href="awstats_config.html#LogFile">LogFile</a>" value with full path of your web server log file (You
+- Change <a href="awstats_config.html#LogFile">LogFile</a> value with full path of your web server log file (You
 can also use a relative path from your awstats.pl directory).<br>
-- Change "<a href="awstats_config.html#LogFormat">LogFormat</a>" to value "2" (it means "IIS Extended W3C log format").<br>
-- Change "<a href="awstats_config.html#DirIcons">DirIcons</a>" parameter to reflect relative URL of icon directory.<br>
-- Edit "<a href="awstats_config.html#SiteDomain">SiteDomain</a>" parameter with the main domain name or the intranet
+- Change <a href="awstats_config.html#LogFormat">LogFormat</a> to value "2" (it means "IIS Extended W3C log format").<br>
+- Change <a href="awstats_config.html#DirIcons">DirIcons</a> parameter to reflect relative URL of icon directory.<br>
+- Edit <a href="awstats_config.html#SiteDomain">SiteDomain</a> parameter with the main domain name or the intranet
 web server name used to reach the web site to analyze.<br>
 - You can change other parameters if you want.<br>
 <br>
@@ -143,7 +143,7 @@ Install and Setup is finished. You can jump to the <a href="#BUILD_UPDATE">Build
 <b>3) With other web servers</b><br>
 <br>
 Setup process is similar to setup for Apache or IIS.<br>
-Use "<a href="awstats_config.html#LogFormat">LogFormat</a>" to value "3" if you have WebStar native log format.<br>
+Use <a href="awstats_config.html#LogFormat">LogFormat</a> to value "3" if you have WebStar native log format.<br>
 <br>
 
 
@@ -167,8 +167,8 @@ Found 0 old records,<br>
 Found 225601 new records.<br>
 </i><br>
 <b>Dropped records</b> are records discarded because they were not user HTTP request or requests were not qualified
-by AWStats filters (See "<a href="awstats_config.html#SkipHosts">SkipHosts</a>", "<a href="awstats_config.html#SkipFiles">SkipFiles</a>",
-and "<a href="awstats_config.html#OnlyFiles">OnlyFiles</a>" parameters).
+by AWStats filters (See <a href="awstats_config.html#SkipHosts">SkipHosts</a>, <a href="awstats_config.html#SkipFiles">SkipFiles</a>,
+and <a href="awstats_config.html#OnlyFiles">OnlyFiles</a> parameters).
 If you want to see which lines were dropped, you can add the <b>-showdropped</b> option on command line.<br>
 <b>Corrupted records</b> are records that does not match log format defined by "LogFormat" parameter in AWStats config/domain file.
 With all webservers you can experience a little bit corrupted records (<5%) even when everythings work correctly.
@@ -183,7 +183,7 @@ purge your log file after each update process even if it's HIGHLY recommended to
 <br>
 Note : A log analysis process is slow (one second for each 4100 lines of your
 logfile with Athlon 1Ghz, plus DNS resolution time for each different IP
-address in your logfile if "<a href="awstats_config.html#DNSLookup">DNSLookup</a>" is set to 1 and not already done in your log file).<br>
+address in your logfile if <a href="awstats_config.html#DNSLookup">DNSLookup</a> is set to 1 and not already done in your log file).<br>
 See <a href="awstats_benchmark.html">Benchmark page</a> for more accurate information.<br>
 <br>
 
@@ -199,7 +199,7 @@ For sites with:<br>
 This is ABSOLUTELY necessary to keep good performances.<br>
 See AWStats <a href="awstats_benchmark.html">Benchmark page</a> for more accurate information.<br>
 <br>
-!!! Warning, if you don't use (or can't use with IIS) the "<a href="awstats_config.html#PurgeLogFile">PurgeLogFile</a>" parameter,
+!!! Warning, if you don't use (or can't use with IIS) the <a href="awstats_config.html#PurgeLogFile">PurgeLogFile</a> parameter,
 it's very important that you don't forget to purge/rotate your log file yourself (or setup your web server to do it)
 frequently. Even if AWStats never analyzes twice the same log record, the more often you clean your log file, the
 faster AWStats will be.<br>
@@ -238,7 +238,7 @@ will use awstats.<i>virtualhostname</i>.conf file).<br>
 If you named your config file awstats.conf, just use URL:<br>
 <b><i>http://www.myserver.mydomain/cgi-bin/awstats.pl</i></b><br>
 <br>
-Note: If "<a href="awstats_config.html#AllowToUpdateStatsFromBrowser">AllowToUpdateStatsFromBrowser</a>" parameter is set to 1 in AWStats config/domain file,
+Note: If <a href="awstats_config.html#AllowToUpdateStatsFromBrowser">AllowToUpdateStatsFromBrowser</a> parameter is set to 1 in AWStats config/domain file,
 you will also be able to run the update process from your browser. Just click on link "Update now".<br>
 <br><br>
 
