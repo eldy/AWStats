@@ -129,8 +129,8 @@
 # Common web browsers text
 'msie','MS Internet Explorer',
 'netscape','Netscape',
-'firebird','Firebird (Old FireFox)',
-'firefox','FireFox',
+'firebird','Firebird (Old Firefox)',
+'firefox','Firefox',
 'go!zilla','Go!Zilla',
 'icab','iCab',
 'konqueror','Konqueror',
