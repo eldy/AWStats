@@ -147,7 +147,7 @@ $Expires, $UpdateStats, $MigrateStats, $URLNotCaseSensitive, $URLWithQuery, $URL
 $UseFramesWhenCGI, $DecodeUA)=
 (0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
 use vars qw/
-$AllowToUpdateStatsFromBrowser $AllowFullYearView
+$AllowToUpdateStatsFromBrowser
 $ArchiveLogRecords $DetailedReportsOnNewWindows
 $FirstDayOfWeek $KeyWordsNotSensitive $SaveDatabaseFilesWithPermissionsForEveryone
 $WarningMessages $DebugMessages $ShowLinksOnUrl
@@ -158,7 +158,7 @@ $ShowOSStats $ShowBrowsersStats $ShowOriginStats
 $ShowKeyphrasesStats $ShowKeywordsStats $ShowMiscStats $ShowHTTPErrorsStats
 $AddDataArrayMonthStats $AddDataArrayShowDaysOfMonthStats $AddDataArrayShowDaysOfWeekStats $AddDataArrayShowHoursStats
 /;
-($AllowToUpdateStatsFromBrowser, $AllowFullYearView,
+($AllowToUpdateStatsFromBrowser,
 $ArchiveLogRecords, $DetailedReportsOnNewWindows,
 $FirstDayOfWeek, $KeyWordsNotSensitive, $SaveDatabaseFilesWithPermissionsForEveryone,
 $WarningMessages, $DebugMessages, $ShowLinksOnUrl,
@@ -169,14 +169,15 @@ $ShowOSStats, $ShowBrowsersStats, $ShowOriginStats,
 $ShowKeyphrasesStats, $ShowKeywordsStats, $ShowMiscStats, $ShowHTTPErrorsStats,
 $AddDataArrayMonthStats, $AddDataArrayShowDaysOfMonthStats, $AddDataArrayShowDaysOfWeekStats, $AddDataArrayShowHoursStats
 )=
-(1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1);
+(1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1);
 use vars qw/
+$AllowFullYearView 
 $LevelForRobotsDetection $LevelForBrowsersDetection $LevelForOSDetection $LevelForRefererAnalyze
 $LevelForSearchEnginesDetection $LevelForKeywordsDetection
 /;
-($LevelForRobotsDetection, $LevelForBrowsersDetection, $LevelForOSDetection, $LevelForRefererAnalyze,
+($AllowFullYearView, $LevelForRobotsDetection, $LevelForBrowsersDetection, $LevelForOSDetection, $LevelForRefererAnalyze,
 $LevelForSearchEnginesDetection, $LevelForKeywordsDetection)=
-(2,2,2,2,2,2);
+(2,2,2,2,2,2,2);
 use vars qw/
 $DirLock $DirCgi $DirConfig $DirData $DirIcons $DirLang $AWScript $ArchiveFileName
 $AllowAccessFromWebToFollowingIPAddresses $HTMLHeadSection $HTMLEndSection $LinksToWhoIs $LinksToIPWhoIs
@@ -1540,7 +1541,7 @@ sub Check_Config {
 	if ($DNSLookup !~ /[0-2]/)                      { error("DNSLookup parameter is wrong in config/domain file. Value is '$DNSLookup' (should be 0 or 1)"); }
 	if (! $SiteDomain)                              { error("SiteDomain parameter not defined in your config/domain file. You must add it for using this version of AWStats."); }
 	if ($AllowToUpdateStatsFromBrowser !~ /[0-1]/) 	{ $AllowToUpdateStatsFromBrowser=0; }
-	if ($AllowFullYearView !~ /[0-2]/) 				{ $AllowFullYearView=1; }
+	if ($AllowFullYearView !~ /[0-3]/) 				{ $AllowFullYearView=2; }
 	# Optional setup section
 	if ($EnableLockForUpdate !~ /[0-1]/)           	{ $EnableLockForUpdate=0; }
 	$DNSStaticCacheFile||='dnscache.txt';
@@ -5390,7 +5391,7 @@ if (($UpdateStats || $MigrateStats) && (! $AllowToUpdateStatsFromBrowser) && $EN
 }
 if (scalar keys %HTMLOutput && $MonthRequired eq 'all') {
 	if (! $AllowFullYearView) { error("Full year view has not been allowed (AllowFullYearView is set to 0)."); }
-	if ($AllowFullYearView==1 && $ENV{'GATEWAY_INTERFACE'}) { error("Full year view has not been allowed from a browser (AllowFullYearView should be set to 2)."); }
+	if ($AllowFullYearView < 3 && $ENV{'GATEWAY_INTERFACE'}) { error("Full year view has not been allowed from a browser (AllowFullYearView should be set to 3)."); }
 }
 
 

@@ -489,17 +489,21 @@ when reading it), follow the example:<br>
 <b>Version : </b>5.9+<br>
 <br># AWStats save and sort its database on a month basis, this allows to build
 <br># build a report quickly. However, if you choose the -month=all from command
-<br># lien or the month='---' from CGI form to have a report for all year, AWStats
-<br># need to reload all data for full year, and resort them completely, requiring
-<br># a large amount of memory and CPU. This might be a problem for web hosting
-<br># providers that offer AWStats for large sites on shared servers to non CPU
-<br># cautious customers.
+<br># line or value '-Year-' from CGI combo form to have a report for all year,
+<br># AWStats needs to reload all data for full year, and resort them completely,
+<br># requiring a large amount of time, memory and CPU. This might be a problem
+<br># for web hosting providers that offer AWStats for large sites on shared
+<br># servers to non CPU cautious customers.
 <br># For this reason, the 'full year' is only enable on Command Line by default.
-<br># You can change this by setting this parameter to 0, 1 or 2.
-<br># Possible values: 0 (never allowed), 1 (on CLI only), 2 (on CLI and CGI)
-<br># Default: 1
+<br># You can change this by setting this parameter to 0, 1, 2 or 3.
+<br># Possible values:
+<br>#  0 - Never allowed
+<br>#  1 - Allowed on CLI only, -Year- value in combo is not visible
+<br>#  2 - Allowed on CLI only, -Year- value in combo is visible but not allowed
+<br>#  3 - Possible on CLI and CGI
+<br># Default: 2
 <br>#
-<br>AllowFullYearView=1
+<br>AllowFullYearView=2
 
 <br><br><hr>
 
