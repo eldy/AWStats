@@ -1688,7 +1688,7 @@ sub Check_Config {
 	# Convert extra sections data into @ExtraConditionType, @ExtraConditionTypeVal...
 	foreach my $extranum (1..@ExtraName-1) {
 		my $part=0;
-		foreach my $conditioncouple (split(/\s*\|\s*/, $ExtraCondition[$extranum])) {
+		foreach my $conditioncouple (split(/\s*\|\|\s*/, $ExtraCondition[$extranum])) {
 	 		my ($conditiontype, $conditiontypeval)=split(/[,:]/,$conditioncouple,2);
 	 		$ExtraConditionType[$extranum][$part]=$conditiontype;
 			if ($conditiontypeval =~ /^REGEX\[(.*)\]$/i) { $conditiontypeval=$1; }
@@ -1697,7 +1697,7 @@ sub Check_Config {
 			$part++;
 	 	}
 		$part=0;
-		foreach my $rowkeycouple (split(/\s*\|\s*/, $ExtraFirstColumnValues[$extranum])) {
+		foreach my $rowkeycouple (split(/\s*\|\|\s*/, $ExtraFirstColumnValues[$extranum])) {
 	 		my ($rowkeytype, $rowkeytypeval)=split(/[,:]/,$rowkeycouple,2);
 	 		$ExtraFirstColumnValuesType[$extranum][$part]=$rowkeytype;
 			if ($rowkeytypeval =~ /^REGEX\[(.*)\]$/i) { $rowkeytypeval=$1; }
