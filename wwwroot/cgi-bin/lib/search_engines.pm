@@ -73,7 +73,7 @@
 # Minor finnish search engines
 "haku\.www\.fi",
 # Minor french search engines
-"recherche\.aol\.fr","ctrouve\.","francite\.","\.lbb\.org","rechercher\.libertysurf\.fr", "search1-[12]\.free\.fr", "recherche\.club-internet\.fr",
+"recherche\.aol\.fr","ctrouve\.","francite\.","\.lbb\.org","rechercher\.libertysurf\.fr", "search\w+\.free\.fr", "recherche\.club-internet\.fr",
 # Minor german search engines
 "fireball\.de","infoseek\.de","suche\.web\.de","meta\.ger",
 "suchen\.abacho\.de","brisbane\.t-online\.de","allesklar\.de","meinestadt\.de",
@@ -266,7 +266,7 @@
 # Minor finnish search engines
 "haku\.www\.fi","Ihmemaa",										
 # Minor french search engines
-"recherche\.aol\.fr","AOL", "ctrouve\.","C'est trouvé", "francite\.","Francité", "\.lbb\.org", "LBB", "rechercher\.libertysurf\.fr", "Libertysurf", "search1-2\.free\.fr", "free.fr", "recherche\.club-internet\.fr", "Club-internet",
+"recherche\.aol\.fr","AOL", "ctrouve\.","C'est trouvé", "francite\.","Francité", "\.lbb\.org", "LBB", "rechercher\.libertysurf\.fr", "Libertysurf", "search\w+\.free\.fr", "Free.fr", "recherche\.club-internet\.fr", "Club-internet",
 # Minor german search engines
 "fireball\.de","Fireball", "infoseek\.de","Infoseek", "suche\.web\.de","Web.de", "meta\.ger","MetaGer",	
 "suchen\.abacho\.de","Abacho", "brisbane\.t-online\.de","T-Online", 
