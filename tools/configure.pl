@@ -36,20 +36,31 @@ use vars qw/
 );
 
 use vars qw/
-$WebServerChanged
+$WebServerChanged $UseAlias 
+%LogFormat %ConfToChange
 /;
 $WebServerChanged=0;
+$UseAlias=0;
+%LogFormat=();
+%ConfToChange=();
 
 
 
 #-------------------------------------------------------
 # Functions
 #-------------------------------------------------------
+
+#-------------------------------------------------------
+# error
+#-------------------------------------------------------
 sub error {
 	print "Error: $_[0].\n";
     exit 1;
 }
 
+#-------------------------------------------------------
+# debug
+#-------------------------------------------------------
 sub debug {
 	my $level = $_[1] || 1;
 	if ($Debug >= $level) { 
@@ -58,6 +69,120 @@ sub debug {
 		print "DEBUG $level - ".time." : $debugstring\n";
 		}
 	0;
+}
+
+#-------------------------------------------------------
+# update_httpd_config
+# Replace common to combined in Apache config file
+#-------------------------------------------------------
+sub update_httpd_config
+{
+	my $file=shift;
+	if (! $file) { error("Call to update_httpd_config with wrong parameter"); }
+	
+	open(FILE, $file) || error("Failed to open $file for update");
+	open(FILETMP, ">$file.tmp") || error("Failed to open $file.tmp for writing");
+	
+	# $%conf contains param and values
+	my %confchanged=();
+	my $conflinenb = 0;
+	
+	# First, change values that are already present in old config file
+	while(<FILE>) {
+		my $savline=$_;
+	
+		chomp $_; s/\r//;
+		$conflinenb++;
+	
+		# Remove comments not at beginning of line
+		$_ =~ s/\s#.*$//;
+	
+		# Change line
+		if ($_ =~ /^CustomLog\s(.*)\scommon$/i)	{ $savline="CustomLog $1 combined"; }
+		
+		# Write line
+		print FILETMP "$savline";	
+	}
+	
+	close(FILE);
+	close(FILETMP);
+	
+	# Move file to file.sav
+	if (rename("$file","$file.old")==0) {
+		error("Failed to make backup of current config file to $file.old");
+	}
+	
+	# Move tmp file into config file
+	if (rename("$file.tmp","$file")==0) {
+		error("Failed to move tmp config file $file.tmp to $file");
+	}
+	
+	return 0;
+}
+
+#-------------------------------------------------------
+# update_awstats_config
+# Update an awstats model [to another one]
+#-------------------------------------------------------
+sub update_awstats_config
+{
+my $file=shift;
+my $fileto=shift||"$file.tmp";
+
+if (! $file) { error("Call to update_awstats_config with wrong parameter"); }
+if ($file =~ /Developpements[\\\/]awstats/i) { return; }	# To avoid script working in my dev area
+
+open(FILE, $file) || error("Failed to open $file for update");
+open(FILETMP, ">$fileto") || error("Failed to open $fileto for writing");
+
+# $%conf contains param and values
+my %confchanged=();
+my $conflinenb = 0;
+
+# First, change values that are already present in old config file
+while(<FILE>) {
+	my $savline=$_;
+
+	chomp $_; s/\r//;
+	$conflinenb++;
+
+	# Remove comments not at beginning of line
+	$_ =~ s/\s#.*$//;
+
+	# Extract param and value
+	my ($param,$value)=split(/=/,$_,2);
+	$param =~ s/^\s+//; $param =~ s/\s+$//;
+	$value =~ s/#.*$//; 
+	$value =~ s/^[\s\'\"]+//; $value =~ s/[\s\'\"]+$//;
+
+	if ($param) {
+		# cleanparam is param without begining #
+		my $cleanparam=$param; my $wascleaned=0;
+		if ($cleanparam =~ s/^#//) { $wascleaned=1; }
+		if (defined($ConfToChange{"$cleanparam"}) && $ConfToChange{"$cleanparam"}) { $savline = ($wascleaned?"#":"")."$cleanparam=\"".$ConfToChange{"$cleanparam"}."\"\n"; }
+	}
+	# Write line
+	print FILETMP "$savline";	
+}
+
+close(FILE);
+close(FILETMP);
+
+if ($fileto eq "$file.tmp") {
+	# Move file to file.sav
+	if (rename("$file","$file.old")==0) {
+		error("Failed to make backup of current config file to $file.old");
+	}
+	
+	# Move tmp file into config file
+	if (rename("$fileto","$file")==0) {
+		error("Failed to move tmp config file $fileto to $file");
+	}
+	# Remove .old file
+	unlink "$file.old";
+}
+
+return 0;
 }
 
 
@@ -86,7 +211,7 @@ if (! $AWSTATSPATH) {
 
 # Show usage help
 if ($helpfound) {
-	print "----- $PROG $VERSION (c) Laurent Destailleur -----\n";
+	print "----- AWStats $PROG $VERSION (c) Laurent Destailleur -----\n";
 	print "$PROG is a tool to setup AWStats. It works with Apache only.\n";
 	print "- Get Apache config file from registry (ask if not found)\n";
 	print " - Add AWStats directives\n";
@@ -108,16 +233,25 @@ if ($nowhour < 10) { $nowhour = "0$nowhour"; }
 if ($nowmin < 10) { $nowmin = "0$nowmin"; }
 if ($nowsec < 10) { $nowsec = "0$nowsec"; }
 
+print "\n";
+print "----- AWStats $PROG $VERSION (c) Laurent Destailleur -----\n";
+print "This tool will help you to configure AWStats to analyze statistics for\n";
+print "one main web server. If you need to analyze several virtual servers,\n";
+print "load balanced servers, downloaded log files or mail or ftp log files,\n";
+print "you will have to complete the setup manually according to your needs.\n";
+print "Read the AWStats documentation (docs/index.html).\n";
+print "\n";
+
 # Detect web server path
 # ----------------------
 if (-d "/etc" && -d "/home") { $OS='linux'; $CR=''; }
 else { $OS='windows'; $CR="\r"; }
 #print "Running OS detected: $OS (Perl $^[)\n";
-print "Running OS detected: $OS\n";
+print "- Running OS detected: $OS\n";
 
 # Detect web server path
 # ----------------------
-print "Check for web server install...\n";
+print "- Check for web server install...\n";
 my %ApachePath=();		# All Apache path found
 my %ApacheConfPath=();	# All Apache config found
 my $tips;
@@ -125,7 +259,7 @@ if ($OS eq 'linux') {
 	my $found=0;
 	foreach my $conf (@WEBCONF) {
 		if (-s "$conf") {
-			print " Found Web server Apache config file '$conf'\n";
+			print "  Found Web server Apache config file '$conf'\n";
 			$ApacheConfPath{"$conf"}=++$found;
 		}
 	}
@@ -139,7 +273,7 @@ if ($OS eq 'windows') {
 			my $path=$Registry->{"LMachine/Software/Apache Group/Apache/$_/ServerRoot"};
 			$path=~s/[\\\/]$//;
 			if (-d "$path" && -s "$path/conf/httpd.conf") {
-				print " Found a Web server Apache install in '$path'\n";
+				print "  Found a Web server Apache install in '$path'\n";
 				$ApachePath{"$path"}=++$found;
 				$ApacheConfPath{"$path/conf/httpd.conf"}=++$found;
 			}
@@ -155,8 +289,10 @@ if (! scalar keys %ApacheConfPath) {
 # Open Apache config file
 # -----------------------
 foreach my $key (keys %ApacheConfPath) {
-	print "Check and complete web server config file '$key'...\n";
+	print "- Check and complete web server config file '$key'...\n";
 	# Read config file to search for awstats directives
+	READ:
+	$LogFormat{$key}=4;
 	open(CONF,"<$key") || error("Failed to open config file '$key' for reading");
 	binmode CONF;
 	my $awstatsjsfound=0;
@@ -165,6 +301,19 @@ foreach my $key (keys %ApacheConfPath) {
 	my $awstatsiconsfound=0;
 	my $awstatscgifound=0;
 	while(<CONF>) {
+		if ($_ =~ /^CustomLog\s(.*)\scommon$/i)	{
+			print "Warning: You Apache config file contains directives to write 'common' log files\n";
+			print "This means that some features can't work (os, browsers and keywords detection).\n";
+			print "Do you want me to setup Apache to write 'combined' log files [y/N] ?\n";
+			my $bidon='';
+			while ($bidon !~ /^[yN]$/) { read STDIN, $bidon, 1; }
+			if ($bidon eq 'y') {
+				close CONF;				
+				update_httpd_config("key");
+				goto READ;
+			}
+		}
+		if ($_ =~ /^CustomLog\s(.*)\scombined$/i)	{ $LogFormat{$key}=1; }
 		if ($_ =~ /Alias \/awstatsjs/) 			{ $awstatsjsfound=1; }
 		if ($_ =~ /Alias \/awstatsclasses/) 	{ $awstatsclassesfound=1; }
 		if ($_ =~ /Alias \/awstatscss/) 		{ $awstatscssfound=1; }
@@ -174,7 +323,8 @@ foreach my $key (keys %ApacheConfPath) {
 	close CONF;
 
 	if ($awstatsjsfound && $awstatsclassesfound && $awstatscssfound && $awstatsiconsfound && $awstatscgifound) {
-		print " Config file '$key' already setup\n";
+		$UseAlias=1;
+		print "  Config file already complete.\n";
 		next;
 	}
 	
@@ -206,23 +356,45 @@ foreach my $key (keys %ApacheConfPath) {
 			print CONF "ScriptAlias \/awstats\/ \"$AWSTATSPATH/wwwroot/cgi-bin/$CR\n";
 		}
 	close CONF;
+	$UseAlias=1;
 	$WebServerChanged=1;
 }
 
 # Define config file path
 # -----------------------
 my $configfile='';
-if ($OS eq 'linux') 	{ $configfile='/etc/awstats/awstats.conf'; }
-if ($OS eq 'windows') 	{ $configfile="$AWSTATSPATH\\wwwroot\\cgi-bin\\awstats.conf"; }
+my $modelfile='';
+if ($OS eq 'linux') 	{ $modelfile='/etc/awstats/awstats.model.conf'; $configfile='/etc/awstats/awstats.mysite.conf'; }
+if ($OS eq 'windows') 	{ $modelfile="$AWSTATSPATH\\wwwroot\\cgi-bin\\awstats.model.conf"; $configfile="$AWSTATSPATH\\wwwroot\\cgi-bin\\awstats.mysite.conf"; }
+
+# Update model config file
+# ------------------------
+print "- Update model config file...\n";
+%ConfToChange=();
+if ($OS eq 'linux') { $ConfToChange{'DirData'}='/var/lib/awstats'; }
+if ($OS eq 'windows') { $ConfToChange{'DirData'}='.'; }
+if ($UseAlias) {
+	$ConfToChange{'DirCgi'}='/awstats';
+	$ConfToChange{'DirIcons'}='/awstatsicons';
+	$ConfToChange{'MiscTrackerUrl'}='/awstatsjs/awstats_misc_tracker.js';
+}
+update_awstats_config("$modelfile");
 
 # Create awstats.conf file
 # -----------------------
-print "Create config file '$configfile' for main site\n";
-
-if (-s $configfile) { print " Config file already exists. No change made.\n"; }
+print "- Create config file '$configfile' for main site...\n";
+if (-s $configfile) { print "  Main config file already exists. No change made.\n"; }
 else {
-
-
+	%ConfToChange=();
+	if ($OS eq 'linux') { $ConfToChange{'DirData'}='/var/lib/awstats'; }
+	if ($OS eq 'windows') { $ConfToChange{'DirData'}='.'; }
+	if ($UseAlias) {
+		$ConfToChange{'DirCgi'}='/awstats';
+		$ConfToChange{'DirIcons'}='/awstatsicons';
+		$ConfToChange{'MiscTrackerUrl'}='/awstatsjs/awstats_misc_tracker.js';
+	}
+	$ConfToChange{'SiteDomain'}='localhost';
+	update_awstats_config("$modelfile","$configfile");
 }
 
 # Restart Apache if change were made
@@ -257,8 +429,10 @@ if ($WebServerChanged) {
 
 my $bidon;
 print "\n";
-print "You can send read your statistics with the following URL:\n";
-print "http://localhost/awstats/awstats.pl\n";
+print "You should now be able to read your statistics with the following URL:\n";
+print "http://localhost/awstats/awstats.pl?config=mysite\n";
+print "\n";
+print "Press a key to finish...\n";
 read STDIN, $bidon, 1;
 
 
