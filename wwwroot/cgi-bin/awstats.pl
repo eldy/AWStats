@@ -244,8 +244,8 @@ DIV { font: 12px arial,verdana,helvetica; text-align:justify; }
 .TABLEDATA { background-color: #$color_Background; }
 .TABLETITLEFULL  { font: 14px verdana, arial, helvetica, sans-serif; font-weight: bold; background-color: #$color_TableBGTitle; text-align: center; width: 66%; margin-bottom: 0; padding: 2px; }
 .TABLETITLEBLANK { font: 14px verdana, arial, helvetica, sans-serif; background-color: #$color_Background; }
+.CFormFields { font: 14px verdana, arial, helvetica; }
 .CTooltip { position:absolute; top:0px; left:0px; z-index:2; width:280; visibility:hidden; font: 8pt MS Comic Sans,arial,sans-serif; background-color: #FFFFE6; padding: 8px; border: 1px solid black; }
-.CField { font: 14px verdana, arial, helvetica; }
 .tablecontainer  { width: 100% }
 \@media projection {
 .tablecontainer { page-break-before: always; }
@@ -470,11 +470,11 @@ sub Read_Config_File {
 	if (! $SiteConfig) { $SiteConfig=$ENV{"SERVER_NAME"}; }		# For backward compatibility
 	foreach my $dir ("$DIR","/etc/opt/awstats","/etc/awstats","/etc","/usr/local/etc/awstats") {
 		my $searchdir=$dir;
-		if (($searchdir ne "") && (!($searchdir =~ /\/$/)) && (!($searchdir =~ /\\$/)) ) { $searchdir .= "/"; }
-		if ($FileConfig eq "") { if (open(CONFIG,"$searchdir$PROG.$SiteConfig.conf")) { $FileConfig="$searchdir$PROG.$SiteConfig.conf"; $FileSuffix=".$SiteConfig"; } }
-		if ($FileConfig eq "") { if (open(CONFIG,"$searchdir$PROG.conf"))  { $FileConfig="$searchdir$PROG.conf"; $FileSuffix=""; } }
+		if ($searchdir && (!($searchdir =~ /\/$/)) && (!($searchdir =~ /\\$/)) ) { $searchdir .= "/"; }
+		if (! $FileConfig) { if (open(CONFIG,"$searchdir$PROG.$SiteConfig.conf")) { $FileConfig="$searchdir$PROG.$SiteConfig.conf"; $FileSuffix=".$SiteConfig"; } }
+		if (! $FileConfig) { if (open(CONFIG,"$searchdir$PROG.conf"))  { $FileConfig="$searchdir$PROG.conf"; $FileSuffix=""; } }
 	}
-	if ($FileConfig eq "") { error("Error: Couldn't open config file \"$PROG.$SiteConfig.conf\" nor \"$PROG.conf\" : $!"); }
+	if (! $FileConfig) { error("Error: Couldn't open config file \"$PROG.$SiteConfig.conf\" nor \"$PROG.conf\" : $!"); }
 	if ($Debug) { debug("Call to Read_Config_File [FileConfig=\"$FileConfig\"]"); }
 	my $foundNotPageList = my $foundValidHTTPCodes = 0;
 	while (<CONFIG>) {
@@ -752,17 +752,17 @@ sub Read_Language_Tooltip {
 	my $FileLang="";
 	foreach my $dir ("$DirLang","${DIR}lang","./lang") {
 		my $searchdir=$dir;
-		if (($searchdir ne "") && (!($searchdir =~ /\/$/)) && (!($searchdir =~ /\\$/)) ) { $searchdir .= "/"; }
-		if ($FileLang eq "") { if (open(LANG,"${searchdir}awstats-tt-$_[0].txt")) { $FileLang="${searchdir}awstats-tt-$_[0].txt"; } }
+		if ($searchdir && (!($searchdir =~ /\/$/)) && (!($searchdir =~ /\\$/)) ) { $searchdir .= "/"; }
+		if (! $FileLang) { if (open(LANG,"${searchdir}awstats-tt-$_[0].txt")) { $FileLang="${searchdir}awstats-tt-$_[0].txt"; } }
 	}
 	# If file not found, we try english
 	foreach my $dir ("$DirLang","${DIR}lang","./lang") {
 		my $searchdir=$dir;
-		if (($searchdir ne "") && (!($searchdir =~ /\/$/)) && (!($searchdir =~ /\\$/)) ) { $searchdir .= "/"; }
-		if ($FileLang eq "") { if (open(LANG,"${searchdir}awstats-tt-en.txt")) { $FileLang="${searchdir}awstats-tt-en.txt"; } }
+		if ($searchdir && (!($searchdir =~ /\/$/)) && (!($searchdir =~ /\\$/)) ) { $searchdir .= "/"; }
+		if (! $FileLang) { if (open(LANG,"${searchdir}awstats-tt-en.txt")) { $FileLang="${searchdir}awstats-tt-en.txt"; } }
 	}
 	if ($Debug) { debug("Call to Read_Language_Tooltip [FileLang=\"$FileLang\"]"); }
-	if ($FileLang ne "") {
+	if ($FileLang) {
 		my $aws_VisitTimeout = $VisitTimeOut/10000*60;
 		my $aws_NbOfRobots = scalar keys %RobotsHashIDLib;
 		my $aws_NbOfSearchEngines = scalar keys %SearchEnginesHashIDLib;
@@ -1967,9 +1967,9 @@ sub Show_Flag_Links {
 	# Build flags link
 	my $NewLinkParams=$QueryString;
 	if ($ENV{"GATEWAY_INTERFACE"}) {
-		$NewLinkParams =~ s/update[=]*[^ &]*//;
-		$NewLinkParams =~ s/staticlinks[=]*[^ &]*//;
-		$NewLinkParams =~ s/lang=[^ &]*//;
+		$NewLinkParams =~ s/update[=]*[^ &]*//i;
+		$NewLinkParams =~ s/staticlinks[=]*[^ &]*//i;
+		$NewLinkParams =~ s/lang=[^ &]*//i;
 		$NewLinkParams =~ tr/&/&/s; $NewLinkParams =~ s/^&//; $NewLinkParams =~ s/&$//;
 		if ($NewLinkParams) { $NewLinkParams="${NewLinkParams}&"; }
 	}
@@ -2278,6 +2278,7 @@ if ($QueryString =~ /urlfilter=/i) 	{
 	# A filter on URL list can also be defined with urlfilter=filter
 	$URLFilter=$QueryString; $URLFilter =~ s/.*urlfilter=//i; $URLFilter =~ s/&.*//; $URLFilter =~ s/ .*//;
 }
+$URLFilter=DecodeEncodedString($URLFilter);
 ($DIR=$0) =~ s/([^\/\\]*)$//; ($PROG=$1) =~ s/\.([^\.]*)$//; $Extension=$1;
 if ($Debug) { debug("QUERY_STRING=$QueryString",2); }
 
@@ -3511,9 +3512,9 @@ EOF
 
 	# Define the NewLinkParams for main chart
 	my $NewLinkParams=${QueryString};
-	$NewLinkParams =~ s/update[=]*[^ &]*//;
-	$NewLinkParams =~ s/output[=]*[^ &]*//;
-	$NewLinkParams =~ s/staticlinks[=]*[^ &]*//;
+	$NewLinkParams =~ s/update[=]*[^ &]*//i;
+	$NewLinkParams =~ s/output[=]*[^ &]*//i;
+	$NewLinkParams =~ s/staticlinks[=]*[^ &]*//i;
 	$NewLinkParams =~ tr/&/&/s; $NewLinkParams =~ s/^&//; $NewLinkParams =~ s/&$//;
 	if ($NewLinkParams) { $NewLinkParams="${NewLinkParams}&"; }
 
@@ -3592,8 +3593,8 @@ EOF
 		print "</font>&nbsp; &nbsp; &nbsp; &nbsp;";
 		if ($AllowToUpdateStatsFromBrowser) {
 			my $NewLinkParams=${QueryString};
-			$NewLinkParams =~ s/update[=]*[^ &]*//;
-			$NewLinkParams =~ s/staticlinks[=]*[^ &]*//;
+			$NewLinkParams =~ s/update[=]*[^ &]*//i;
+			$NewLinkParams =~ s/staticlinks[=]*[^ &]*//i;
 			$NewLinkParams =~ tr/&/&/s; $NewLinkParams =~ s/^&//; $NewLinkParams =~ s/&$//;
 			if ($NewLinkParams) { $NewLinkParams="${NewLinkParams}&"; }
 			print "<a href=\"$AWScript?${NewLinkParams}update=1\">$Message[74]</a>";
@@ -3642,8 +3643,9 @@ EOF
 			if ($ShowHTTPErrorsStats)	 { print "<a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=errors404":"$PROG$FileSuffix.errors404.html")."\">$Message[31]</a><br></td></tr>\n"; }
 		}
 		else {
-			${NewLinkParams} =~ s/&+$//;
-			if ($ShowBackLink) { print "<tr><td class=AWL><a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript".(${NewLinkParams}ne""?"?${NewLinkParams}":""):"$PROG$FileSuffix.html")."\">$Message[76]</a></td></tr>\n"; }
+			$NewLinkParams =~ s/urlfilter[=]*[^ &]*//i;
+			$NewLinkParams =~ s/&+$//;
+			if ($ShowBackLink) { print "<tr><td class=AWL><a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript".(${NewLinkParams}?"?${NewLinkParams}":""):"$PROG$FileSuffix.html")."\">$Message[76]</a></td></tr>\n"; }
 		}
 		print "</table>\n";
 		print "<br>\n";
@@ -3762,12 +3764,12 @@ EOF
 		# Show filter form
 		if (! $StaticLinks) {
 			my $NewLinkParams=${QueryString};
-			$NewLinkParams =~ s/update[=]*[^ &]*//;
-			$NewLinkParams =~ s/output[=]*[^ &]*//;
-			$NewLinkParams =~ s/staticlinks[=]*[^ &]*//;
+			$NewLinkParams =~ s/update[=]*[^ &]*//i;
+			$NewLinkParams =~ s/output[=]*[^ &]*//i;
+			$NewLinkParams =~ s/staticlinks[=]*[^ &]*//i;
 			$NewLinkParams =~ tr/&/&/s; $NewLinkParams =~ s/^&//; $NewLinkParams =~ s/&$//;
 			if ($NewLinkParams) { $NewLinkParams="${NewLinkParams}&"; }
-			print "<FORM name=\"FormUrlFilter\" action=\"$AWScript?${NewLinkParams}\" class=TABLEBORDER>\n";
+			print "<FORM name=\"FormUrlFilter\" action=\"$AWScript?${NewLinkParams}\" class=\"TABLEFRAME\">\n";
 			print "<TABLE valign=center><TR>\n";
 			print "<TD>&nbsp; &nbsp; $Message[79] : &nbsp; &nbsp;\n";
 			print "<input type=hidden name=\"output\" value=\"urldetail\">\n";
@@ -3777,8 +3779,8 @@ EOF
 			if ($QueryString =~ /lang=(\w+)/i) { print "<input type=hidden name=\"lang\" value=\"$1\">\n"; }
 			if ($QueryString =~ /debug=(\d+)/i) { print "<input type=hidden name=\"debug\" value=\"$1\">\n"; }
 			print "</TD>\n";
-			print "<TD><input type=text name=\"urlfilter\" value=\"$URLFilter\" class=\"CField\"></TD>\n";
-			print "<TD><input type=submit value=\"$Message[115]\" class=\"CField\">\n";
+			print "<TD><input type=text name=\"urlfilter\" value=\"$URLFilter\" class=\"CFormFields\"></TD>\n";
+			print "<TD><input type=submit value=\"$Message[115]\" class=\"CFormFields\">\n";
 			print "</TR></TABLE>\n";
 			print "</FORM>\n";
 		}
@@ -3959,10 +3961,10 @@ EOF
 		else { print "<TD colspan=3 rowspan=2><font style=\"font: 18px arial,verdana,helvetica; font-weight: normal\">$Message[5] $monthlib{$MonthRequired} $YearRequired</font><br>"; }
 		# Show links for possible years
 		my $NewLinkParams=${QueryString};
-		$NewLinkParams =~ s/update[=]*[^ &]*//;
-		$NewLinkParams =~ s/year=[^ &]*//;
-		$NewLinkParams =~ s/month=[^ &]*//;
-		$NewLinkParams =~ s/staticlinks[=]*[^ &]*//;
+		$NewLinkParams =~ s/update[=]*[^ &]*//i;
+		$NewLinkParams =~ s/year=[^ &]*//i;
+		$NewLinkParams =~ s/month=[^ &]*//i;
+		$NewLinkParams =~ s/staticlinks[=]*[^ &]*//i;
 		$NewLinkParams =~ tr/&/&/s; $NewLinkParams =~ s/^&//; $NewLinkParams =~ s/&$//;
 		if ($NewLinkParams) { $NewLinkParams="${NewLinkParams}&"; }
 		foreach my $key (sort keys %listofyears) {
