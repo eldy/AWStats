@@ -92,43 +92,32 @@ print &hblink("Help", "help.cgi?param=AllowToUpdateStatsFromBrowser")." </td> </
 if (! $in{'advanced'}) {
 
 	print "<tr> <td colspan=3><br><hr></td> </tr>\n";
-
-        print "<tr> <td colspan=3 align=center><a href='edit_config.cgi?".($in{'new'}?"new=1&":"")."advanced=1&file=/etc/awstats/awstats.newconfig.conf'>$text{'index_advanced'}</a></td></tr>\n";
-
-        print "<tr> <td colspan=3><hr></td> </tr>\n";
-
+	print "<tr> <td colspan=3 align=center><a href='edit_config.cgi?".($in{'new'}?"new=1&":"")."advanced=1&file=$in{'file'}'>$text{'index_advanced'}</a></td></tr>\n";
+	print "<tr> <td colspan=3><hr></td> </tr>\n";
 	print "</table>\n";
-
-
 }
 else {
 
-print "<tr> <td colspan=3><br>OPTIONAL SETUP SECTION (Not required but increase AWStats features)<br><hr></td> </tr>\n";
+	print "<tr> <td colspan=3><br>OPTIONAL SETUP SECTION (Not required but increase AWStats features)<br><hr></td> </tr>\n";
+	print "<tr> <td colspan=3>Not available in this version of AWStats Webmin module</td> </tr>\n";
+	
+	print "<tr> <td colspan=3><br>OPTIONAL ACCURACY SETUP SECTION (Not required but increase AWStats features)<br><hr></td> </tr>\n";
+	print "<tr> <td><b>LevelForRobotsDetection</b></td> <td> <input type=text name=LevelForRobotsDetection value='$lconf->{'LevelForRobotsDetection'}'> </td> <td> ";
+	print &hblink("Help", "help.cgi?param=LevelForRobotsDetection")." </td> </tr>\n";
+	print "<tr> <td><b>LevelForBrowsersDetection</b></td> <td> <input type=text name=LevelForBrowsersDetection value='$lconf->{'LevelForBrowsersDetection'}'> </td> <td> ";
+	print &hblink("Help", "help.cgi?param=LevelForBrowsersDetection")." </td> </tr>\n";
+	print "<tr> <td><b>LevelForOSDetection</b></td> <td> <input type=text name=LevelForOSDetection value='$lconf->{'LevelForOSDetection'}'> </td> <td> ";
+	print &hblink("Help", "help.cgi?param=LevelForOSDetection")." </td> </tr>\n";
+	print "<tr> <td><b>LevelForRefererAnalyze</b></td> <td> <input type=text name=LevelForRefererAnalyze value='$lconf->{'LevelForRefererAnalyze'}'> </td> <td> ";
+	print &hblink("Help", "help.cgi?param=LevelForRefererAnalyze")." </td> </tr>\n";
+	
+	print "<tr> <td colspan=3><br>OPTIONAL APPEARANCE SETUP SECTION (Not required but increase AWStats features)<br><hr></td> </tr>\n";
+	print "<tr> <td colspan=3>Not available in this version of AWStats Webmin module</td> </tr>\n";
 
-print "<tr> <td colspan=3>Not available in this version of AWStats Webmin module</td> </tr>\n";
-
-print "<tr> <td colspan=3><br>OPTIONAL ACCURACY SETUP SECTION (Not required but increase AWStats features)<br><hr></td> </tr>\n";
-
-print "<tr> <td><b>LevelForRobotsDetection</b></td> <td> <input type=text name=LevelForRobotsDetection value='$lconf->{'LevelForRobotsDetection'}'> </td> <td> ";
-print &hblink("Help", "help.cgi?param=LevelForRobotsDetection")." </td> </tr>\n";
-print "<tr> <td><b>LevelForBrowsersDetection</b></td> <td> <input type=text name=LevelForBrowsersDetection value='$lconf->{'LevelForBrowsersDetection'}'> </td> <td> ";
-print &hblink("Help", "help.cgi?param=LevelForBrowsersDetection")." </td> </tr>\n";
-print "<tr> <td><b>LevelForOSDetection</b></td> <td> <input type=text name=LevelForOSDetection value='$lconf->{'LevelForOSDetection'}'> </td> <td> ";
-print &hblink("Help", "help.cgi?param=LevelForOSDetection")." </td> </tr>\n";
-print "<tr> <td><b>LevelForRefererAnalyze</b></td> <td> <input type=text name=LevelForRefererAnalyze value='$lconf->{'LevelForRefererAnalyze'}'> </td> <td> ";
-print &hblink("Help", "help.cgi?param=LevelForRefererAnalyze")." </td> </tr>\n";
-
-print "<tr> <td colspan=3><br>OPTIONAL APPEARANCE SETUP SECTION (Not required but increase AWStats features)<br><hr></td> </tr>\n";
-
-print "<tr> <td colspan=3>Not available in this version of AWStats Webmin module</td> </tr>\n";
-
-print "<tr> <td colspan=3><br><hr></td> </tr>\n";
-
-	print "<tr> <td colspan=3 align=center><a href='edit_config.cgi?".($in{'new'}?"new=1&":"")."file=/etc/awstats/awstats.newconfig.conf'>$text{'index_hideadvanced'}</a></td></tr>\n";
-
-        print "<tr> <td colspan=3><hr></td> </tr>\n";
-
-        print "</table>\n";
+	print "<tr> <td colspan=3><br><hr></td> </tr>\n";
+	print "<tr> <td colspan=3 align=center><a href='edit_config.cgi?".($in{'new'}?"new=1&":"")."file=$in{'file'}'>$text{'index_hideadvanced'}</a></td></tr>\n";
+	print "<tr> <td colspan=3><hr></td> </tr>\n";
+	print "</table>\n";
 
 }
 
