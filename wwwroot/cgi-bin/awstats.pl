@@ -22,7 +22,7 @@ use Socket;
 #------------------------------------------------------------------------------
 use vars qw/ $REVISION $VERSION /;
 $REVISION='$Revision$'; $REVISION =~ /\s(.*)\s/; $REVISION=$1;
-$VERSION="6.2 (build $REVISION)";
+$VERSION="6.3 (build $REVISION)";
 
 # ----- Constants -----
 use vars qw/
@@ -285,7 +285,7 @@ use vars qw/
 %MimeHashLib %MimeHashIcon %MimeHashFamily
 %OSHashID %OSHashLib
 %RobotsHashIDLib %RobotsAffiliateLib
-%SearchEnginesHashID %SearchEnginesHashLib %SearchEnginesKnownUrl %NotSearchEnginesKeys
+%SearchEnginesHashID %SearchEnginesHashLib %SearchEnginesWithKeysNotInQuery %SearchEnginesKnownUrl %NotSearchEnginesKeys
 %WormsHashID %WormsHashLib %WormsHashTarget
 /;
 use vars qw/
@@ -6831,8 +6831,9 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 						}
 					}
 
-					if ($TmpRefererServer{$refererserver}) {
-						if ($TmpRefererServer{$refererserver} eq '=') {
+					my $tmprefererserver=$TmpRefererServer{$refererserver};
+					if ($tmprefererserver) {
+						if ($tmprefererserver eq '=') {
 							# Intern (This hit came from another page of the site)
 							if ($PageBool) { $_from_p[4]++; }
 							$_from_h[4]++;
@@ -6840,19 +6841,18 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 						}
 						else {
 							# This hit came from a search engine
-							if ($PageBool) { $_from_p[2]++; $_se_referrals_p{$TmpRefererServer{$refererserver}}++; }
+							if ($PageBool) { $_from_p[2]++; $_se_referrals_p{$tmprefererserver}++; }
 							$_from_h[2]++;
-							$_se_referrals_h{$TmpRefererServer{$refererserver}}++;
+							$_se_referrals_h{$tmprefererserver}++;
 							$found=1;
 							if ($PageBool && $LevelForKeywordsDetection) {
 								# we will complete %_keyphrases hash array
 								my @refurl=split(/\?/,$field[$pos_referer],2);	# TODO Use \? or [$URLQuerySeparators] ?
 								if ($refurl[1]) {
 									# Extract params of referer query string (q=cache:mmm:www/zzz+aaa+bbb q=aaa+bbb/ccc key=ddd%20eee lang_en ie=UTF-8 ...)
-									if ($SearchEnginesKnownUrl{$TmpRefererServer{$refererserver}}) {	# Search engine with known URL syntax
-										my @paramlist=split(/&/,$KeyWordsNotSensitive?lc($refurl[1]):$refurl[1]);
-										foreach my $param (@paramlist) {
-											if ($param =~ s/^$SearchEnginesKnownUrl{$TmpRefererServer{$refererserver}}//) {
+									if ($SearchEnginesKnownUrl{$tmprefererserver}) {	# Search engine with known URL syntax
+										foreach my $param (split(/&/,$KeyWordsNotSensitive?lc($refurl[1]):$refurl[1])) {
+											if ($param =~ s/^$SearchEnginesKnownUrl{$tmprefererserver}//) {
 												# We found good parameter
 												# Now param is keyphrase: "cache:mmm:www/zzz+aaa+bbb/ccc+ddd%20eee'fff,ggg"
 												$param =~ s/^(cache|related):[^\+]+//;	# Should be useless since this is for hit on 'not pages'
@@ -6863,9 +6863,8 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 											}
 										}
 									}
-									elsif ($LevelForKeywordsDetection >= 2) {							# Search engine with unknown URL syntax
-										my @paramlist=split(/&/,$KeyWordsNotSensitive?lc($refurl[1]):$refurl[1]);
-										foreach my $param (@paramlist) {
+									elsif ($LevelForKeywordsDetection >= 2) {			# Search engine with unknown URL syntax
+										foreach my $param (split(/&/,$KeyWordsNotSensitive?lc($refurl[1]):$refurl[1])) {
 											my $foundexcludeparam=0;
 											foreach my $paramtoexclude (@WordsToCleanSearchUrl) {
 												if ($param =~ /$paramtoexclude/i) { $foundexcludeparam=1; last; } # Not the param with search criteria
@@ -6880,7 +6879,16 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 											if ((length $param) > 2) { $_keyphrases{$param}++; last; }
 										}
 									}
-								}	# End of if refurl[1]
+								}	# End of elsif refurl[1]
+								elsif ($SearchEnginesWithKeysNotInQuery{$tmprefererserver}) {
+								    # If search engine with key inside page url like a9 (www.a9.com/searchkey1%20searchkey2)
+                                    if ($refurl[0] =~ /$SearchEnginesKnownUrl{$tmprefererserver}(.*)$/) {
+                                        my $param=$1;
+                                        &ChangeWordSeparatorsIntoSpace($param);
+  										if ((length $param) > 0) { $_keyphrases{$param}++; }
+                                    }
+								}
+
 							}
 						}
 					}	# End of if ($TmpRefererServer)

@@ -31,6 +31,7 @@
 'alexa\.com',
 'alltheweb\.com',
 'altavista\.',
+'a9\.com',
 'dmoz\.org',
 'netscape\.',
 'search\.terra\.',
@@ -132,6 +133,7 @@
 'alexa\.com','alexa',
 'alltheweb\.com','alltheweb',
 'altavista\.','altavista',
+'a9\.com','a9',
 'dmoz\.org','dmoz',
 'netscape\.','netscape',
 'search\.terra\.','terra',
@@ -260,6 +262,13 @@
 );
 
 
+# SearchEnginesWithKeysNotInQuery
+# List of search engines that store keyword as page instead of query parameter
+#------------------------------------------------------------------------------
+%SearchEnginesWithKeysNotInQuery=(
+'a9',1    # www.a9.com/searckey1%20searchkey2
+);
+
 # SearchEnginesKnownUrl
 # Known rules to extract keywords from a referrer search engine URL
 #------------------------------------------------------------------------------
@@ -268,6 +277,7 @@
 'alexa','q=',
 'alltheweb','q(|uery)=',
 'altavista','q=',
+'a9','a9\.com\/', 
 'dmoz','search=',
 'google','(p|q)=',
 'google_image','(p|q)=',
@@ -376,6 +386,7 @@
 'alexa','Alexa',
 'alltheweb','AllTheWeb',
 'altavista','AltaVista',
+'a9', 'A9.com',
 'dmoz','DMOZ',
 'google','Google',
 'google_image','Google (Images)',
