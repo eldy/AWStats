@@ -4,9 +4,9 @@
 ------------------------------------
 
 Advanced Web Statistics (AWStats) is a powerfull web server logfile analyzer
-(Perl script) that shows you all your Web statistics including visitors,
-pages, hits, hours, search engines, keywords used to find your site, broken
-links, robots and more. It works with IIS 5.0+ or Apache webserver log files.
+that shows you all your Web statistics including visitors, pages, hits, hours,
+search engines, keywords used to find your site, broken links, robots and
+more. It works with IIS 5.0+, Apache and other web/wap/proxy server log files.
 
 License: GNU GPL (GNU General Public License. See COPYING.TXT)
 Version : 3.1 
@@ -125,16 +125,18 @@ II - 1) With Apache Server (on Unix/Linux or Windows)
     * Copy awstats.model.conf into awstats.virtualhostname.conf or awstats.conf
       (when you will run AWStats, it will first look for a config file named
       awstats.virtualhostname.conf, and, if not found, will look for
-      awstats.conf). Whatever the name you choose, this new file must be stored
-      in same directory than awstats.pl (so cgi-bin directory) or into
-      /etc/awstats or /etc directory, and edit it with your own setup :
-      - Edit "SiteDomain" parameter with the main domain name or the intranet
-        web server name used to reach the web site to analyse.
+      awstats.conf).
+      Whatever the name you choose, this new file must be stored in
+      - /etc/opt/awstats for unix/linux users.
+      - same directory than awstats.pl (so cgi-bin) for Windows and other OS.
+      Edit this new config file with your own setup :
       - Change "LogFile" value with full path of your web server log file (You
         can also use a relative path from your awstats.pl directory).
       - Check if "LogFormat" has the value "1" (it means "NCSA apache
         combined/ELF/XLF log format").
       - Change the "DirIcons" parameter to reflect URL of icons directory.
+      - Edit "SiteDomain" parameter with the main domain name or the intranet
+        web server name used to reach the web site to analyse.
       - You can change other parameters if you want.
 
     * To update statistics, launch awstats.pl from the command line interface
@@ -184,16 +186,17 @@ II - 2) With IIS Server
 
     * Copy awstats.model.conf into awstats.virtualhostname.conf or awstats.conf
       (when you will run AWStats, it will first look for a config file named
-      awstats.virtualhostname.conf, and, if not found, will 
-      look for awstats.conf). Whatever the name you choose, this new file must
-      be stored in same directory than awstats.pl (so cgi-bin directory) and
-      edit it with your own setup :
-      - Edit "SiteDomain" parameter with the main domain name or the intranet
-        web server name used to reach the web site to analyse.
+      awstats.virtualhostname.conf, and, if not found, will look for
+      awstats.conf).
+      Whatever the name you choose, this new file must be stored in same
+      directory than awstats.pl (so cgi-bin).
+      Edit this new config file with your own setup :
       - Change "LogFile" value with full path of your web server log file (You
         can also use a relative path from your awstats.pl directory).
       - Change "LogFormat" to value "2" (it means "IIS W3C log format").
-      - Change "DirIcons" parameter to reflect URL of icons directory.
+      - Change the "DirIcons" parameter to reflect URL of icons directory.
+      - Edit "SiteDomain" parameter with the main domain name or the intranet
+        web server name used to reach the web site to analyse.
       - You can change other parameters if you want.
 
     * To update statistics, launch awstats.pl from the command line interface
