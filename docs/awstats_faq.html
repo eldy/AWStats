@@ -83,7 +83,7 @@ FAQ-COM550 <a href="#EDITHISTORY">Can I safely remove an line in AWStats history
 Here, you can find the common questions about security problems when setting or using AWStats.<br>
 <ul>
 FAQ-SEC100 <a href="#CSSATTACK">Can AWStats be used to make Cross Site Scripting Attacks ?</a><br>
-<!--FAQ-SEC150 <a href="#SECUSER">How can I prevent some users to see statistics of other users ?</a><br>-->
+FAQ-SEC150 <a href="#SECUSER">How can I prevent some users to see statistics of other users ?</a><br>
 FAQ-SEC200 <a href="#WORMS">How to manage log files (and statistics) corrupted by worms attacks like 'Code Red Virus like'.</a><br>
 </ul>
 
@@ -550,20 +550,13 @@ No. AWStats use a filter to remove all scripts codes that was included in an URL
 log analyzer report page.<br>
 <br>
 
-<!--
 <a name="SECUSER"></a><br>
 <b><u>FAQ-SEC150 : HOW CAN I PREVENT SOME USERS TO SEE STATISTICS OF OTHER USERS ?</u></b><br>
 <font style="color: #660000">PROBLEM:</font> I don't want a user xxx (having a site www.xxx.com) to see statistics of user yyy (having
 a site www.yyy.com). How can i setup AWStats for this ?<br>
 <font style="color: #4444cc">SOLUTION:</font> 
-If you host different users/sites, it means you have different config files.<br>
-A common way to manage securities right is to put awstats.pl in a directory protected by an authentication (.htaccess with Apache).
-Then, you set all files permissions on user config files (awstats.xxx.conf, awstats.yyy.conf...) to be readable by owner user
-only (xxx for awstats.xxx.conf, yyy for awstats.yyy.conf...). With this setup, if a user xxx try to see statistics for user
-yyy (using the URL http://provider.com/cgi-bin/awstats.pl?config=yyy), AWStats will be ran by user xxx (because awstats.pl is in
-a protected directory) and won't be able to read config file for user yyy (because only user yyy can read his config file).<br>
+Take a look at the <a href="awstats_security.html">security page</a>.<br>
 <br>
--->
 
 <a name="WORMS"></a><br>
 <b><u>FAQ-SEC200 : HOW TO MANAGE LOG FILES (AND STATISTICS) CORRUPTED BY 'CODE RED VIRUS LIKE' ATTACKS ?</u></b><br>
