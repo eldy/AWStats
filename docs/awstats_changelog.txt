@@ -3,9 +3,29 @@ AWStats Changelog
 
 5.1
 
-- Added an AWStats version check in plugins
-- Added SkipUserAgents parameter
-- 
+- New feature: ShowxxxStats parmaters accept codes to decide which columns to
+  show in chart.
+- New parameter: Added SkipUserAgents parameter.
+- Fixed: Fixed pb in refreshing page when clicking on "Update Now" link (no
+  need to force the refresh).
+- Fixed: Pb with SAMBAR server (Expires line appears at the top of pages).
+- Fixed: Now last update DNS cache file is saved with same permissions than
+  history files so it depends on SaveDatabaseFilesWithPermissionsForEveryone.
+- Fixed: Some sorting function were still using old algorithm. Now all
+  sort uses new algorithm (so speed and memory use again increase for large
+  web sites with a lot of referers).
+- Fixed: Remove DecodeEncodedString on parameters sent by command line.
+- Rewrite plugins to match the same the standard for all of them (All use an
+  init function and a version check + no need of global vars in awstats.pl).
+- Can use the #include "configfile" directive in config files.
+- Added week-end color on week-end days in monthdayvalues report.
+- Added an AWStats version check in plugins.
+- Added 'spider' and 'crawler' in generic robots.
+- Updated graph colors.
+- Updated documentation.
+- Updated database.
+- Updated language files.
+
 
 5.0
 
