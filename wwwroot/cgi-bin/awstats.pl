@@ -1409,7 +1409,31 @@ sub Read_History_File {
 	my $month=sprintf("%02i",shift);
 	my $part=shift;
 
-	# A section not defined means do not load, value of 1 means load all section, 2 means load part of it
+	# In standard use of AWStats, the DayRequired variable is always empty
+	if ($DayRequired) { if ($Debug) { debug("Call to Read_History_File [$year,$month,$part] ($DayRequired)"); } }
+	else { if ($Debug) { debug("Call to Read_History_File [$year,$month,$part]"); } }
+	if ($HistoryFileAlreadyRead{"$year$month$DayRequired"}) {				# Protect code to invoke function only once for each month/year
+		if ($Debug) { debug(" Already loaded"); }
+		return 0;
+		}
+	$HistoryFileAlreadyRead{"$year$month$DayRequired"}=1;					# Protect code to invoke function only once for each month/year
+
+	# Define value for historyfilename
+	my $historyfilename="$DirData/$PROG$DayRequired$month$year$FileSuffix.txt";
+	if ($UseCompress) { $historyfilename.="\.gz"; }
+	if (! -s $historyfilename) {
+		# If file not exists, return
+		if ($Debug) { debug(" No history file $historyfilename"); }
+		$LastLine{$year.$month}=0;	# To avoid warning of undefinded value later (with 'use warnings')
+		return 0;
+	}
+	if ($UseCompress) {	$historyfilename="gzip -d <\"$historyfilename\" |"; }
+	if ($Debug) { debug(" History file is '$historyfilename'",2); }
+
+	open(HISTORY,$historyfilename) || error("Error: Couldn't open file \"$historyfilename\" for read: $!");	# Month before Year kept for backward compatibility
+
+	# Define which sections to load
+	# Not defined means do not load, value of 1 means load all section, 2 means load part of it
 	my %SectionsToLoad=();
 	if (! $part) {
 		# If part=0 we need only GENERAL section (LastUpdate, TotalVisits), part of TIME section and part of VISITOR section
@@ -1442,29 +1466,12 @@ sub Read_History_File {
 		if ($UpdateStats || $HTMLOutput eq "main" || $HTMLOutput eq "errors") { $SectionsToLoad{"errors"}=1; }
 		if ($UpdateStats || $HTMLOutput eq "main" || $HTMLOutput eq "errors404") { $SectionsToLoad{"sider_404"}=1; }
 	}
-
-	# In standard use of AWStats, the DayRequired variable is always empty
-	if ($DayRequired) { if ($Debug) { debug("Call to Read_History_File [$year,$month,$part] ($DayRequired)"); } }
-	else { if ($Debug) { debug("Call to Read_History_File [$year,$month,$part]"); } }
-	if ($HistoryFileAlreadyRead{"$year$month$DayRequired"}) {				# Protect code to invoke function only once for each month/year
-		if ($Debug) { debug(" Already loaded"); }
-		return 0;
-		}
-	$HistoryFileAlreadyRead{"$year$month$DayRequired"}=1;					# Protect code to invoke function only once for each month/year
-
-	# Define value for historyfilename
-	my $historyfilename="$DirData/$PROG$DayRequired$month$year$FileSuffix.txt";
-	if ($UseCompress) { $historyfilename.="\.gz"; }
-	if (! -s $historyfilename) {
-		# If file not exists, return
-		if ($Debug) { debug(" No history file $historyfilename"); }
-		$LastLine{$year.$month}=0;	# To avoid warning of undefinded value later (with 'use warnings')
-		return 0;
+	if ($Debug) {
+		foreach my $section (keys %SectionsToLoad) {
+			&debug(" Section $section is marked for load",3);
+		}	
 	}
-	if ($UseCompress) {	$historyfilename="gzip -d <\"$historyfilename\" |"; }
-	if ($Debug) { debug(" History file is '$historyfilename'",2); }
 
-	open(HISTORY,$historyfilename) || error("Error: Couldn't open file \"$historyfilename\" for read: $!");	# Month before Year kept for backward compatibility
 	$MonthUnique{$year.$month}=0; $MonthPages{$year.$month}=0; $MonthHits{$year.$month}=0; $MonthBytes{$year.$month}=0; $MonthHostsKnown{$year.$month}=0; $MonthHostsUnknown{$year.$month}=0;
 
 	my $versionnum=0; my $countlines=0;
@@ -1473,7 +1480,7 @@ sub Read_History_File {
 		# Analyze config line
 		if ($_ =~ /^AWSTATS DATA FILE (\d+).(\d+)/) {
 			$versionnum=($1*1000)+$2;
-			if ($Debug) { debug(" data file version is $versionnum",2); }
+			if ($Debug) { debug(" Data file version is $versionnum",2); }
 			next;
 		}
 		my @field=split(/\s+/,$_);
