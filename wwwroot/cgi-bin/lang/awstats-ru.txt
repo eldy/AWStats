@@ -76,4 +76,3 @@ message73=Статистика за день
 message74=Обновить
 message75=Bytes
 message76=Последнее обновление
-message77=Прочие сайты
