@@ -4404,6 +4404,8 @@ if ($Debug) {
 if ($Debug) { debug("UpdateStats is $UpdateStats",2); }
 if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {	# Update only on index page or when not framed to avoid update twice
 
+	print "Update for config '$FileConfig'\nWith data in log file '$LogFile'...\n";
+
 	my $lastprocessedyear=$lastyearbeforeupdate;
 	my $lastprocessedmonth=$ListOfYears{$lastyearbeforeupdate}||0;
 	my $lastprocessedyearmonth=sprintf("%04i%02i",$lastprocessedyear,$lastprocessedmonth);
@@ -4678,6 +4680,9 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {	# Updat
 	# Open log file
 	if ($Debug) { debug("Open log file \"$LogFile\""); }
 	open(LOG,"$LogFile") || error("Error: Couldn't open server log file \"$LogFile\" : $!");
+
+	# Avoid premature EOF due to log files corrupted with \cZ or bin chars
+	binmode LOG;
 
 	my @field=();
 	my $counter=0;
