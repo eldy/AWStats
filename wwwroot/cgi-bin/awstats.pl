@@ -34,7 +34,7 @@ $DEBUGFORCED=0;						# Force debug level to log lesser level into debug.log file
 $NBOFLINESFORBENCHMARK=8192;		# Benchmark info are printing every NBOFLINESFORBENCHMARK lines (Must be a power of 2)
 $FRAMEWIDTH=260;					# Width of left frame when UseFramesWhenCGI is on
 $NBOFLASTUPDATELOOKUPTOSAVE=200;	# Nb of records to save in DNS last update cache file
-$LIMITFLUSH=4000;					# Nb of records in data arrays after how we need to flush data on disk
+$LIMITFLUSH=5000;					# Nb of records in data arrays after how we need to flush data on disk
 $NEWDAYVISITTIMEOUT=764041;			# Delay between 01-23:59:59 and 02-00:00:00
 $VISITTIMEOUT=10000;				# Laps of time to consider a page load as a new visit. 10000 = 1 hour (Default = 10000)
 $NOTSORTEDRECORDTOLERANCE=10000;	# Laps of time to accept a record if not in correct order. 10000 = 1 hour (Default = 10000)
@@ -1108,7 +1108,7 @@ sub Parse_Config {
 			}
 		if ($param =~ /^HostAliases/) {
 			foreach my $elem (split(/\s+/,$value))	{
-				if ($elem!~s/^REGEX://i) { $elem =~ s/\\\./\./g; $elem =~ s/([^\\])\./$1\\\./g; $elem =~ s/^\./\\\./; }	# Replace . into \.
+				if ($elem!~s/^REGEX\[(.*)\]$/$1/i) { $elem =~ s/\\\./\./g; $elem =~ s/([^\\])\./$1\\\./g; $elem =~ s/^\./\\\./; }	# Replace . into \.
 				if ($elem) { push @HostAliases,$elem; }
 			}
 			next;
@@ -1116,7 +1116,7 @@ sub Parse_Config {
 		# Special optional setup params
 		if ($param =~ /^SkipDNSLookupFor/) {
 			foreach my $elem (split(/\s+/,$value))	{
-				if ($elem!~s/^REGEX://i) { $elem =~ s/\\\./\./g; $elem =~ s/([^\\])\./$1\\\./g; $elem =~ s/^\./\\\./; }	# Replace . into \.
+				if ($elem!~s/^REGEX\[(.*)\]$/$1/i) { $elem =~ s/\\\./\./g; $elem =~ s/([^\\])\./$1\\\./g; $elem =~ s/^\./\\\./; }	# Replace . into \.
 				if ($elem) { push @SkipDNSLookupFor,$elem; }
 			}
 			next;
@@ -1126,43 +1126,43 @@ sub Parse_Config {
 			next;
 			}
 		if ($param =~ /^DefaultFile/)           {
-			foreach my $elem (split(/\s+/,$value))	{
-				if ($elem!~s/^REGEX://i) { $elem =~ s/\\\./\./g; $elem =~ s/([^\\])\./$1\\\./g; $elem =~ s/^\./\\\./; }	# Replace . into \.
+			foreach my $elem (split(/\s+/,$value))	{	# No REGEX for this option
+				$elem =~ s/\\\./\./g; $elem =~ s/([^\\])\./$1\\\./g; $elem =~ s/^\./\\\./;	# Replace . into \.
 				if ($elem) { push @DefaultFile,$elem; }
 			}
 			next;
 			}
 		if ($param =~ /^SkipHosts/) {
 			foreach my $elem (split(/\s+/,$value))	{
-				if ($elem!~s/^REGEX://i) { $elem =~ s/\\\./\./g; $elem =~ s/([^\\])\./$1\\\./g; $elem =~ s/^\./\\\./; }	# Replace . into \.
+				if ($elem!~s/^REGEX\[(.*)\]$/$1/i) { $elem =~ s/\\\./\./g; $elem =~ s/([^\\])\./$1\\\./g; $elem =~ s/^\./\\\./; }	# Replace . into \.
 				if ($elem) { push @SkipHosts,$elem; }
 			}
 			next;
 			}
 		if ($param =~ /^SkipUserAgents/) {
 			foreach my $elem (split(/\s+/,$value))	{
-				if ($elem!~s/^REGEX://i) { $elem =~ s/\\\./\./g; $elem =~ s/([^\\])\./$1\\\./g; $elem =~ s/^\./\\\./; }	# Replace . into \.
+				if ($elem!~s/^REGEX\[(.*)\]$/$1/i) { $elem =~ s/\\\./\./g; $elem =~ s/([^\\])\./$1\\\./g; $elem =~ s/^\./\\\./; }	# Replace . into \.
 				if ($elem) { push @SkipUserAgents,$elem; }
 			}
 			next;
 			}
 		if ($param =~ /^SkipFiles/) {
 			foreach my $elem (split(/\s+/,$value))	{
-				if ($elem!~s/^REGEX://i) { $elem =~ s/\\\./\./g; $elem =~ s/([^\\])\./$1\\\./g; $elem =~ s/^\./\\\./; }	# Replace . into \.
+				if ($elem!~s/^REGEX\[(.*)\]$/$1/i) { $elem =~ s/\\\./\./g; $elem =~ s/([^\\])\./$1\\\./g; $elem =~ s/^\./\\\./; }	# Replace . into \.
 				if ($elem) { push @SkipFiles,$elem; }
 			}
 			next;
 			}
 		if ($param =~ /^OnlyHosts/) {
 			foreach my $elem (split(/\s+/,$value))	{
-				if ($elem!~s/^REGEX://i) { $elem =~ s/\\\./\./g; $elem =~ s/([^\\])\./$1\\\./g; $elem =~ s/^\./\\\./; }	# Replace . into \.
+				if ($elem!~s/^REGEX\[(.*)\]$/$1/i) { $elem =~ s/\\\./\./g; $elem =~ s/([^\\])\./$1\\\./g; $elem =~ s/^\./\\\./; }	# Replace . into \.
 				if ($elem) { push @OnlyHosts,$elem; }
 			}
 			next;
 			}
 		if ($param =~ /^OnlyFiles/) {
 			foreach my $elem (split(/\s+/,$value))	{
-				if ($elem!~s/^REGEX://i) { $elem =~ s/\\\./\./g; $elem =~ s/([^\\])\./$1\\\./g; $elem =~ s/^\./\\\./; }	# Replace . into \.
+				if ($elem!~s/^REGEX\[(.*)\]$/$1/i) { $elem =~ s/\\\./\./g; $elem =~ s/([^\\])\./$1\\\./g; $elem =~ s/^\./\\\./; }	# Replace . into \.
 				if ($elem) { push @OnlyFiles,$elem; }
 			}
 			next;
@@ -5733,7 +5733,7 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 						}
 						else {
 							foreach my $key (@HostAliases) {
-								if ($refererserver =~ /^$key$/i) {
+								if ($refererserver =~ /$key/i) {
 									# Intern (This hit came from another page of the site)
 									if ($Debug) { debug("  Server '$refererserver' is added to TmpRefererServer with value '='",2); }
 									$TmpRefererServer{$refererserver}='=';
@@ -6059,9 +6059,9 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 if (scalar keys %HTMLOutput) {
 
 	my $max_p; my $max_h; my $max_k; my $max_v;
-	my $total_u; my $total_v; my $total_p; my $total_h; my $total_k; my $total_e; my $total_x; my $total_s;
+	my $total_u; my $total_v; my $total_p; my $total_h; my $total_k; my $total_e; my $total_x; my $total_s; my $total_l;
 	my $average_u; my $average_v; my $average_p; my $average_h; my $average_k; my $average_s;
-	my $rest_p; my $rest_h; my $rest_k; my $rest_e; my $rest_x; my $rest_s;
+	my $rest_p; my $rest_h; my $rest_k; my $rest_e; my $rest_x; my $rest_s; my $rest_l;
 	my $average_nb;
 
 	# Define the NewLinkParams for main chart
@@ -7106,12 +7106,22 @@ if (scalar keys %HTMLOutput) {
 		my $title="$Message[46]";
 		&tab_head("$title",19);
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>User agent (".(scalar keys %_unknownreferer_l).")</TH><TH>$Message[9]</TH></TR>\n";
+		$total_l=0;
 		my $count=0;
 		&BuildKeyList($MaxRowsInHTMLOutput,1,\%_unknownreferer_l,\%_unknownreferer_l);
 		foreach my $key (@keylist) {
 			my $useragent=CleanFromCSSA($key);
-			print "<tr><td CLASS=AWL>$useragent</td><td>".Format_Date($_unknownreferer_l{$key},1)."</td></tr>\n";
+			print "<tr><td CLASS=AWL>$useragent</td>";
+			print "<td>".Format_Date($_unknownreferer_l{$key},1)."</td>";
+			print "</tr>\n";
+			$total_l+=1;
 			$count++;
+		}
+		$rest_l=(scalar keys %_unknownreferer_l)-$total_l;
+		if ($rest_l > 0) {
+			print "<TR><TD CLASS=AWL><font color=\"#$color_other\">$Message[2]</font></TD>";
+			print "<TD>-</TD>";
+			print "</TR>\n";
 		}
 		&tab_end;
 		&html_end;
@@ -7121,12 +7131,20 @@ if (scalar keys %HTMLOutput) {
 		my $title="$Message[50]";
 		&tab_head("$title",19);
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>User agent (".(scalar keys %_unknownrefererbrowser_l).")</TH><TH>$Message[9]</TH></TR>\n";
+		$total_l=0;
 		my $count=0;
 		&BuildKeyList($MaxRowsInHTMLOutput,1,\%_unknownrefererbrowser_l,\%_unknownrefererbrowser_l);
 		foreach my $key (@keylist) {
 			my $useragent=CleanFromCSSA($key);
 			print "<tr><td CLASS=AWL>$useragent</td><td>".Format_Date($_unknownrefererbrowser_l{$key},1)."</td></tr>\n";
+			$total_l+=1;
 			$count++;
+		}
+		$rest_l=(scalar keys %_unknownrefererbrowser_l)-$total_l;
+		if ($rest_l > 0) {
+			print "<TR><TD CLASS=AWL><font color=\"#$color_other\">$Message[2]</font></TD>";
+			print "<TD>-</TD>";
+			print "</TR>\n";
 		}
 		&tab_end;
 		&html_end;
@@ -7329,7 +7347,7 @@ if (scalar keys %HTMLOutput) {
 			if ($TotalSearchEnginesHits) { $p_h=int($rest_h/$TotalSearchEnginesHits*1000)/10; }
 			print "<TR><TD CLASS=AWL><font color=\"#$color_other\">$Message[2]</font></TD>";
 			print "<TD>".($rest_p?$rest_p:'&nbsp;')."</TD>";
-			print "<TD>".($rest_p?"%p_p %":'&nbsp;')."</TD>";
+			print "<TD>".($rest_p?"$p_p %":'&nbsp;')."</TD>";
 			print "<TD>$rest_h</TD>";
 			print "<TD>$p_h %</TD>";
 			print "</TR>\n";
