@@ -1320,17 +1320,17 @@ sub Read_Ref_Data {
 		foreach my $dir (@PossibleLibDir) {
 			my $searchdir=$dir;
 			if ($searchdir && (!($searchdir =~ /\/$/)) && (!($searchdir =~ /\\$/)) ) { $searchdir .= "/"; }
-			if (! $FilePath{$file}) {	# To not load twice same plugin in different path
+			if (! $FilePath{$file}) {	# To not load twice same file in different path
 				if (-s "${searchdir}${file}") {
 					$FilePath{$file}="${searchdir}${file}";
 					if ($Debug) { debug("Call to Read_Ref_Data [FilePath{$file}=\"$FilePath{$file}\"]"); }
 					# Note: cygwin perl 5.8 need a push + require file
-#					require "$FilePath{$file}";
-					if (! $DirAddedInINC{"$searchdir"}) { 
-						push @INC, "${searchdir}";
-						$DirAddedInINC{"$searchdir"}=1;
+					if (! $DirAddedInINC{"$dir"}) { 
+						push @INC, "$dir";
+						$DirAddedInINC{"$dir"}=1;
 					}
-					require "${file}";
+					#my $loadret=require "$FilePath{$file}";
+					my $loadret=(require "$FilePath{$file}"||require "${file}");
 				}
 			}
 		}
@@ -1378,6 +1378,7 @@ sub Read_Language_Data {
 	if ($Debug) { debug("Call to Read_Language_Data [FileLang=\"$FileLang\"]"); }
 	if ($FileLang) {
 		my $i = 0;
+		binmode LANG;	# Might avoid 'Malformed UTF-8 errors'
 		while (<LANG>) {
 			chomp $_; s/\r//;
 			if ($_ =~ /^PageCode/i) {
@@ -1761,7 +1762,8 @@ sub Read_Plugins {
 	# Debian package :                    		"/usr/share/awstats/plugins"
 	# Other possible directories :        		"./plugins"
 	my @PossiblePluginsDir=("${DIR}plugins","./plugins","/usr/local/awstats/wwwroot/cgi-bin/plugins","/usr/share/awstats/plugins");
-
+ 	my %DirAddedInINC=();
+ 
 	if ($Debug) { debug("Call to Read_Plugins with list: ".join(',',@PluginsToLoad)); }
 	foreach my $plugininfo (@PluginsToLoad) {
 		if ($NoLoadPlugin{$plugininfo}) {
@@ -1792,7 +1794,13 @@ sub Read_Plugins {
 					if (-s "$pluginpath") {
 						$PluginDir="${searchdir}";	# Set plugin dir
 						if ($Debug) { debug(" Try to init plugin '$pluginname' ($pluginpath) with param '$pluginparam'",1); }
-						my $loadret=require "$pluginpath";
+						if (! $DirAddedInINC{"$dir"}) { 
+							push @INC, "$dir";
+							$DirAddedInINC{"$dir"}=1;
+						}
+						#my $loadret=require "$pluginpath";
+						my $loadret=(require "$pluginpath"||require "${pluginfile}.pm");
+
 						if (! $loadret || $loadret =~ /^error/i) {
 							# Load failed, we stop here
 							error("Plugin load for plugin '$pluginname' failed with return code: $loadret");
@@ -1807,17 +1815,23 @@ sub Read_Plugins {
 						# Plugin load and init successfull
 						foreach my $elem (split(/\s+/,$initret)) {
 							# Some functions can only be plugged once
-							my @UniquePluginsFunctions=("ChangeTime","GetTimeZoneTitle","GetTime","SearchFile","LoadCache","SaveCash");
+							my @UniquePluginsFunctions=('GetCountryCodeByName','GetCountryCodeByAddr','ChangeTime','GetTimeZoneTitle','GetTime','SearchFile','LoadCache','SaveHash','ShowMenu');
+							my $isuniquefunc=0;
 							foreach my $function (@UniquePluginsFunctions) {
 								if ("$elem" eq "$function") {
 									# We try to load a 'unique' function, so we check and stop if already loaded
 									foreach my $otherpluginname (keys %{$PluginsLoaded{"$elem"}})  {
-										error("Conflict between plugin '$pluginname' and '$otherpluginname'. They implements both the 'must be unique' function '$elem'.\nYou can use only one of these plugins but not both of them.");
+										error("Conflict between plugin '$pluginname' and '$otherpluginname'. They both implements the 'must be unique' function '$elem'.\nYou must choose between one of them. Using together is not possible.");
 									}
+									$isuniquefunc=1;
 									last;
 								}
 							}
-							$PluginsLoaded{"$elem"}{"$pluginname"}=1;
+							if ($isuniquefunc) {
+								# TODO Use $PluginsLoaded{"$elem"}="$pluginname"; for unique func
+								$PluginsLoaded{"$elem"}{"$pluginname"}=1;
+							}
+							else { $PluginsLoaded{"$elem"}{"$pluginname"}=1; }
 						}
 						$PluginsLoaded{'init'}{"$pluginname"}=1;
 						if ($Debug) { debug(" Plugin '$pluginname' now hooks functions '$initret'",1); }
@@ -1836,6 +1850,7 @@ sub Read_Plugins {
 			error("Plugin \"$pluginfile\" is not a valid plugin name.");
 		}
 	}
+	# In output, geo ip plugins were not loaded, so message changes can't be done in plugin init function
 	if ($PluginsLoaded{'init'}{'geoip'} || $PluginsLoaded{'init'}{'geoipfree'}) { $Message[17]=$Message[25]=$Message[148]; }
 }
 
@@ -9291,8 +9306,13 @@ else {
 #-------------------------------------------------------
 # ALGORITHM SUMMARY
 #
-# Read config file
-# Check config and Init variables
+# Read_Config();
+# Check_Config() and Init variables
+# if 'frame not index'
+#	&Read_Language_Data($Lang);
+#	if 'frame not mainleft'
+#		&Read_Ref_Data();
+#		&Read_Plugins();
 # html_head
 #
 # If 'migrate'
