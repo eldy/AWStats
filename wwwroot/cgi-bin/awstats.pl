@@ -103,6 +103,7 @@ $NbOfLinesRead $NbOfLinesDropped $NbOfLinesCorrupted $NbOfOldLines $NbOfNewLines
 $NewLinePhase $NbOfLinesForCorruptedLog $PurgeLogFile
 $ShowAuthenticatedUsers $ShowCompressionStats $ShowFileSizesStats
 $ShowDropped $ShowCorrupted $ShowUnknownOrigin $ShowLinksToWhoIs
+$ShowEMailSenders $ShowEMailReceivers
 $Expires $UpdateStats $MigrateStats $URLWithQuery $UseFramesWhenCGI
 /;
 ($DNSLookup, $AllowAccessFromWebToAuthenticatedUsersOnly, $BarHeight, $BarWidth,
@@ -115,8 +116,9 @@ $NbOfLinesRead, $NbOfLinesDropped, $NbOfLinesCorrupted, $NbOfOldLines, $NbOfNewL
 $NewLinePhase, $NbOfLinesForCorruptedLog, $PurgeLogFile,
 $ShowAuthenticatedUsers, $ShowCompressionStats, $ShowFileSizesStats,
 $ShowDropped, $ShowCorrupted, $ShowUnknownOrigin, $ShowLinksToWhoIs,
+$ShowEMailSenders, $ShowEMailReceivers,
 $Expires, $UpdateStats, $MigrateStats, $URLWithQuery, $UseFramesWhenCGI)=
-(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
+(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
 use vars qw/
 $PosTotalVisits $PosTotalUnique $PosMonthHostsKnown $PosMonthHostsUnknown
 /;
@@ -180,11 +182,13 @@ $YearRequired, $QueryString, $SiteConfig, $StaticLinks, $URLFilter, $PageCode,
 $PerlParsingFormat, $SiteToAnalyze, $SiteToAnalyzeWithoutwww, $UserAgent)=
 ("","","","","","","","","","","","","","","","","","");
 use vars qw/
-$pos_vh $pos_rc $pos_logname $pos_date $pos_method $pos_url $pos_code $pos_size
+$pos_vh $pos_host $pos_logname $pos_date $pos_method $pos_url $pos_code $pos_size
 $pos_referer $pos_agent $pos_query $pos_gzipin $pos_gzipout $pos_gzipratio
+$pos_emails $pos_emailr $pos_hostr
 /;
-$pos_vh = $pos_rc = $pos_logname = $pos_date = $pos_method = $pos_url = $pos_code = $pos_size = -1;
+$pos_vh = $pos_host = $pos_logname = $pos_date = $pos_method = $pos_url = $pos_code = $pos_size = -1;
 $pos_referer = $pos_agent = $pos_query = $pos_gzipin = $pos_gzipout = $pos_gzipratio = -1;
+$pos_emails = $pos_emailr = $pos_hostr = -1;
 use vars qw/
 $lowerval
 $FirstTime $LastTime $LastLine $LastUpdate
@@ -888,6 +892,8 @@ sub Read_Config {
 		if ($param =~ /^ShowKeywordsStats/)      { $ShowKeywordsStats=$value; next; }
 		if ($param =~ /^ShowCompressionStats/)   { $ShowCompressionStats=$value; next; }
 		if ($param =~ /^ShowHTTPErrorsStats/)    { $ShowHTTPErrorsStats=$value; next; }
+		if ($param =~ /^ShowEMailSenders/)      { $ShowEMailSenders=$value; next; }
+		if ($param =~ /^ShowEMailReceivers/)    { $ShowEMailReceivers=$value; next; }
 		if ($param =~ /^MaxRowsInHTMLOutput/)   { $MaxRowsInHTMLOutput=$value; next; }	# Not used yet
 		if ($param =~ /^MaxNbOfDomain/)         { $MaxNbOfDomain=$value; next; }
 		if ($param =~ /^MaxNbOfHostsShown/)     { $MaxNbOfHostsShown=$value; next; }
@@ -1220,6 +1226,8 @@ sub Check_Config {
 	if ($ShowKeywordsStats !~ /[0-1]/)            	{ $ShowKeywordsStats=1; }
 	if ($ShowCompressionStats !~ /[0-1]/)         	{ $ShowCompressionStats=1; }
 	if ($ShowHTTPErrorsStats !~ /[0-1]/)          	{ $ShowHTTPErrorsStats=1; }
+	if ($ShowEMailSenders !~ /[0-1]/)          		{ $ShowEMailSenders=0; }
+	if ($ShowEMailReceivers !~ /[0-1]/)          	{ $ShowEMailReceivers=0; }
 	if ($MaxNbOfDomain !~ /^\d+$/ || $MaxNbOfDomain<1)           		 { $MaxNbOfDomain=20; }
 	if ($MaxNbOfHostsShown !~ /^\d+$/ || $MaxNbOfHostsShown<1)       	 { $MaxNbOfHostsShown=20; }
 	if ($MinHitHost !~ /^\d+$/ || $MinHitHost<1)              			 { $MinHitHost=1; }
@@ -1630,7 +1638,7 @@ sub Read_History_With_Update {
 					#if ($field[0]) {	# This test must not be here for TIME section (because field[0] is "0" for hour 0)
 						$count++;
 						if ($SectionsToLoad{"time"}) {
-							if ("$MonthRequired" eq "year" || "$MonthRequired" eq "$month") {	# Still required
+							if ($withupdate || "$MonthRequired" eq "year" || "$MonthRequired" eq "$month") {	# Still required
 								$countloaded++;
 								if ($field[1]) { $_time_p[$field[0]]+=int($field[1]); }
 								if ($field[2]) { $_time_h[$field[0]]+=int($field[2]); }
@@ -2544,7 +2552,7 @@ sub Save_History {
 		print HISTORYTMP "# If you remove this file, all statistics for date $year-$month will be lost/reset.\n";
 		print HISTORYTMP "\n";
 		print HISTORYTMP "# This section is not used yet\n";
-		print HISTORYTMP "BEGIN_MAP 22\n";
+		print HISTORYTMP "BEGIN_MAP 24\n";
 		print HISTORYTMP "POS_GENERAL                                \n";
 		print HISTORYTMP "POS_TIME                                   \n";
 		print HISTORYTMP "POS_VISITOR                                \n";
@@ -2567,6 +2575,8 @@ sub Save_History {
 		print HISTORYTMP "POS_KEYWORDS                               \n";
 		print HISTORYTMP "POS_ERRORS                                 \n";
 		print HISTORYTMP "POS_SIDER_404                              \n";
+		print HISTORYTMP "POS_EMAILSENDER                            \n";
+		print HISTORYTMP "POS_EMAILRECEIVER                          \n";
 		print HISTORYTMP "END_MAP\n";
 	}
 
@@ -3853,23 +3863,23 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {	# Updat
 	if ($LogFormat =~ /^[1-5]$/) {	# Pre-defined log format
 		if ($LogFormat eq "1") {	# Same than "%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\""
 			$PerlParsingFormat="([^ ]+) [^ ]+ ([^ ]+) \\[([^ ]+) [^ ]+\\] \\\"([^ ]+) ([^ ]+) [^\\\"]+\\\" ([\\d|-]+) ([\\d|-]+) \\\"(.*)\\\" \\\"([^\\\"]*)\\\"";	# referer and ua might be ""
-			$pos_rc=0;$pos_logname=1;$pos_date=2;$pos_method=3;$pos_url=4;$pos_code=5;$pos_size=6;$pos_referer=7;$pos_agent=8;
+			$pos_host=0;$pos_logname=1;$pos_date=2;$pos_method=3;$pos_url=4;$pos_code=5;$pos_size=6;$pos_referer=7;$pos_agent=8;
 		}
 		elsif ($LogFormat eq "2") {	# Same than "date time c-ip cs-username cs-method cs-uri-stem sc-status sc-bytes cs-version cs(User-Agent) cs(Referer)"
 			$PerlParsingFormat="([^\\s]+ [^\\s]+) ([^\\s]+) ([^\\s]+) ([^\\s]+) ([^\\s]+) ([\\d|-]+) ([\\d|-]+) [^\\s]+ ([^\\s]+) ([^\\s]+)";
-			$pos_date=0;$pos_rc=1;$pos_logname=2;$pos_method=3;$pos_url=4;$pos_code=5;$pos_size=6;$pos_agent=7;$pos_referer=8;
+			$pos_date=0;$pos_host=1;$pos_logname=2;$pos_method=3;$pos_url=4;$pos_code=5;$pos_size=6;$pos_agent=7;$pos_referer=8;
 		}
 		elsif ($LogFormat eq "3") {
 			$PerlParsingFormat="([^\\t]*\\t[^\\t]*)\\t([^\\t]*)\\t([\\d]*)\\t([^\\t]*)\\t([^\\t]*)\\t([^\\t]*)\\t[^\\t]*\\t.*:([^\\t]*)\\t([\\d]*)";
-			$pos_date=0;$pos_method=1;$pos_code=2;$pos_rc=3;$pos_agent=4;$pos_referer=5;$pos_url=6;$pos_size=7;
+			$pos_date=0;$pos_method=1;$pos_code=2;$pos_host=3;$pos_agent=4;$pos_referer=5;$pos_url=6;$pos_size=7;
 		}
 		elsif ($LogFormat eq "4") {	# Same than "%h %l %u %t \"%r\" %>s %b"
 			$PerlParsingFormat="([^ ]+) [^ ]+ ([^ ]+) \\[([^ ]+) [^ ]+\\] \\\"([^ ]+) ([^ ]+) [^\\\"]+\\\" ([\\d|-]+) ([\\d|-]+)";
-			$pos_rc=0;$pos_logname=1;$pos_date=2;$pos_method=3;$pos_url=4;$pos_code=5;$pos_size=6;
+			$pos_host=0;$pos_logname=1;$pos_date=2;$pos_method=3;$pos_url=4;$pos_code=5;$pos_size=6;
 		}
 		elsif ($LogFormat eq "5") {	# Same than "c-ip cs-username c-agent sc-authenticated date time s-svcname s-computername cs-referred r-host r-ip r-port time-taken cs-bytes sc-bytes cs-protocol cs-transport s-operation cs-uri cs-mime-type s-object-source sc-status s-cache-info"
 			$PerlParsingFormat="([^\\t]*)\\t([^\\t]*)\\t([^\\t]*)\\t[^\\t]*\\t([^\\t]*\\t[^\\t]*)\\t[^\\t]*\\t[^\\t]*\\t([^\\t]*)\\t[^\\t]*\\t[^\\t]*\\t[^\\t]*\\t[^\\t]*\\t[^\\t]*\\t([^\\t]*)\\t[^\\t]*\\t[^\\t]*\\t([^\\t]*)\\t([^\\t]*)\\t[^\\t]*\\t[^\\t]*\\t([^\\t]*)\\t[^\\t]*";
-			$pos_rc=0;$pos_logname=1;$pos_agent=2;$pos_date=3;$pos_referer=4;$pos_size=5;$pos_method=6;$pos_url=7;$pos_code=8;
+			$pos_host=0;$pos_logname=1;$pos_agent=2;$pos_date=3;$pos_referer=4;$pos_size=5;$pos_method=6;$pos_url=7;$pos_code=8;
 		}
 	}
 	else {							# Personalized log format
@@ -3925,8 +3935,12 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {	# Updat
 				$pos_vh = $i; $i++;
 				$PerlParsingFormat .= "([^$LogSeparator]+)";
 			}
+			elsif ($f =~ /%host_r$/) {
+				$pos_hostr = $i; $i++;
+				$PerlParsingFormat .= "([^$LogSeparator]+)";
+			}
 			elsif ($f =~ /%host$/) {
-				$pos_rc = $i; $i++;
+				$pos_host = $i; $i++;
 				$PerlParsingFormat .= "([^$LogSeparator]+)";
 			}
 			elsif ($f =~ /%logname$/) {
@@ -3939,9 +3953,6 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {	# Updat
 			}
 			elsif ($f =~ /%time1$/) {
 				$pos_date = $i;	$i++;
-				#$pos_zone = $i;
-				#$i++;
-				#$PerlParsingFormat .= "\\[([^$LogSeparator]+) ([^$LogSeparator]+)\\]";
 				$PerlParsingFormat .= "\\[([^$LogSeparator]+) [^$LogSeparator]+\\]";
 			}
 			elsif ($f =~ /%time2$/) {
@@ -4006,8 +4017,16 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {	# Updat
 				$pos_gzipratio=$i;$i++;
 				$PerlParsingFormat .= "([^$LogSeparator]+)";
 			}
-			elsif ($f =~ /%syslog$/) { # Added for syslog time and host stamp, fields are skipped and not analyzed
+			elsif ($f =~ /%syslog$/) {		# Added for syslog time and host stamp, fields are skipped and not analyzed
 				$PerlParsingFormat .= "[A-Z][a-z][a-z] .[0-9] ..:..:.. [A-Za-z]+";
+			}
+			elsif ($f =~ /%email_r$/) {
+				$pos_emailr = $i; $i++;
+				$PerlParsingFormat .= "([^$LogSeparator]+)";
+			}
+			elsif ($f =~ /%email$/) {
+				$pos_emails = $i; $i++;
+				$PerlParsingFormat .= "([^$LogSeparator]+)";
 			}
 			else {
 				$PerlParsingFormat .= "[^$LogSeparator]+";
@@ -4015,7 +4034,7 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {	# Updat
 		}
 		if (! $PerlParsingFormat) { error("Error: No recognized format tag in personalized LogFormat string"); }
 	}
-	if ($pos_rc < 0) { error("Error: Your personalized LogFormat does not include all fields required by AWStats (Add \%host in your LogFormat string)."); }
+	if ($pos_host < 0) { error("Error: Your personalized LogFormat does not include all fields required by AWStats (Add \%host in your LogFormat string)."); }
 	if ($pos_date < 0) { error("Error: Your personalized LogFormat does not include all fields required by AWStats (Add \%time1 or \%time2 in your LogFormat string)."); }
 	if ($pos_method < 0) { error("Error: Your personalized LogFormat does not include all fields required by AWStats (Add \%methodurl or \%method in your LogFormat string)."); }
 	if ($pos_url < 0) { error("Error: Your personalized LogFormat does not include all fields required by AWStats (Add \%methodurl or \%url in your LogFormat string)."); }
@@ -4085,8 +4104,9 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {	# Updat
 			next;
 		}
 
-		if ($Debug) { debug(" Correct format line $NbOfLinesRead : host=\"$field[$pos_rc]\", logname=\"$field[$pos_logname]\", date=\"$field[$pos_date]\", method=\"$field[$pos_method]\", url=\"$field[$pos_url]\", code=\"$field[$pos_code]\", size=\"$field[$pos_size]\", referer=\"$field[$pos_referer]\", agent=\"$field[$pos_agent]\"",4); }
+		if ($Debug) { debug(" Correct format line $NbOfLinesRead : host=\"$field[$pos_host]\", logname=\"$field[$pos_logname]\", date=\"$field[$pos_date]\", method=\"$field[$pos_method]\", url=\"$field[$pos_url]\", code=\"$field[$pos_code]\", size=\"$field[$pos_size]\", referer=\"$field[$pos_referer]\", agent=\"$field[$pos_agent]\"",4); }
 		#if ($Debug) { debug("$field[$pos_vh] - $field[$pos_gzipin] - $field[$pos_gzipout] - $field[$pos_gzipratio]\n",4); }
+		if ($Debug) { debug("$field[$pos_emails] - $field[$pos_emailr] - $field[$pos_hostr]\n",4); }
 
 		# Check virtual host name
 		#----------------------------------------------------------------------
@@ -4102,6 +4122,10 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {	# Updat
 		if ($field[$pos_method] eq 'GET' || $field[$pos_method] eq 'POST' || $field[$pos_method] eq 'HEAD' || $field[$pos_method] =~ /OK/i) {
 			# HTTP request.	Keep only GET, POST, HEAD, *OK* with Webstar but not OPTIONS
 			$protocol=1;
+		}
+		elsif ($field[$pos_method] eq 'SMTP') {
+			# Mail request.
+			$protocol=3;
 		}
 		elsif ($field[$pos_method] =~ /sent/i || $field[$pos_method] =~ /get/i) {
 			# FTP request.
@@ -4167,7 +4191,7 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {	# Updat
 
 		# Skip for some client host IP addresses, some URLs, other URLs
 		my $qualifdrop="";
-		if (@SkipHosts && &SkipHost($field[$pos_rc]))       { $qualifdrop="Dropped record (host $field[$pos_rc] not qualified by SkipHosts)"; }
+		if (@SkipHosts && &SkipHost($field[$pos_host]))     { $qualifdrop="Dropped record (host $field[$pos_host] not qualified by SkipHosts)"; }
 		elsif (@SkipFiles && &SkipFile($field[$pos_url]))   { $qualifdrop="Dropped record (URL $field[$pos_url] not qualified by SkipFiles)"; }
 		elsif (@OnlyFiles && ! &OnlyFile($field[$pos_url])) { $qualifdrop="Dropped record (URL $field[$pos_url] not qualified by OnlyFiles)"; }
 		if ($qualifdrop) {
@@ -4192,13 +4216,13 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {	# Updat
 			$lastprocessedyearmonth=sprintf("%04i%02i",$lastprocessedyear,$lastprocessedmonth);
 		}
 
-		# Check return code
-		#------------------
-		if ($protocol == 1) {	# HTTP record
+		# Check return status code
+		#-------------------------
+		if ($protocol == 1) {		# HTTP record
 			if ($ValidHTTPCodes{$field[$pos_code]}) {	# Code is valid
 				if ($field[$pos_code] == 304) { $field[$pos_size]=0; }
 			}
-			else {				# Code is not valid
+			else {										# Code is not valid
 				if ($field[$pos_code] =~ /^\d\d\d$/) { 					# Keep error code and next
 					$_errors_h{$field[$pos_code]}++;
 					if ($field[$pos_code] == 404) { $_sider404_h{$field[$pos_url]}++; $_referer404_h{$field[$pos_url]}=$field[$pos_referer]; }
@@ -4211,40 +4235,50 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {	# Updat
 				}
 			}
 		}
-
-		$field[$pos_agent] =~ tr/\+ /__/;		# Same Agent with different writing syntax have now same name
-		$field[$pos_agent] =~ s/%20/_/g;		# This is to support servers (like Roxen) that writes user agent with %20 in it
-		$UserAgent = lc($field[$pos_agent]);
+		elsif ($protocol == 3) {	# SMTP record
+			if ($field[$pos_code] != 1) {				# Code is not valid
+				$field[$pos_size]=0;
+				$_errors_h{$field[$pos_code]}++;
+				next;
+			}
+		}
 
 		# Analyze: Robot
 		#---------------
-		if ($LevelForRobotsDetection) {
+		if ($pos_agent >= 0) {
+			$field[$pos_agent] =~ tr/\+ /__/;		# Same Agent with different writing syntax have now same name
+			$field[$pos_agent] =~ s/%20/_/g;		# This is to support servers (like Roxen) that writes user agent with %20 in it
+			$UserAgent=lc($field[$pos_agent]);
 
-			my $uarobot=$TmpRobot{$UserAgent};
-			if (! $uarobot) {
-				# If made on each record -> -1300 rows/seconds
-				my $foundrobot=0;
-				#study $UserAgent;		Does not increase speed
-				foreach my $bot (@RobotsSearchIDOrder) {
-					if ($UserAgent =~ /$bot/i) {
-						$foundrobot=1;
-						$TmpRobot{$UserAgent}=$uarobot="$bot";	# Last time, we won't search if robot or not. We know it's is.
-						last;
+			if ($LevelForRobotsDetection) {
+	
+				my $uarobot=$TmpRobot{$UserAgent};
+				if (! $uarobot) {
+					# If made on each record -> -1300 rows/seconds
+					my $foundrobot=0;
+					#study $UserAgent;		Does not increase speed
+					foreach my $bot (@RobotsSearchIDOrder) {
+						if ($UserAgent =~ /$bot/i) {
+							$foundrobot=1;
+							$TmpRobot{$UserAgent}=$uarobot="$bot";	# Last time, we won't search if robot or not. We know it's is.
+							last;
+						}
+					}
+					if (! $foundrobot) {							# Last time, we won't search if robot or not. We know it's not.
+						$TmpRobot{$UserAgent}=$uarobot="-";
 					}
 				}
-				if (! $foundrobot) {							# Last time, we won't search if robot or not. We know it's not.
-					$TmpRobot{$UserAgent}=$uarobot="-";
+				# If robot, we stop here
+				if ($uarobot ne "-") {
+					if ($Debug) { debug("UserAgent $UserAgent contains robot ID '$uarobot'",2); }
+					$_robot_h{$uarobot}++; $_robot_l{$uarobot}=$timerecord;
+					next;
 				}
+	
 			}
-			# If robot, we stop here
-			if ($uarobot ne "-") {
-				if ($Debug) { debug("UserAgent $UserAgent contains robot ID '$uarobot'",2); }
-				$_robot_h{$uarobot}++; $_robot_l{$uarobot}=$timerecord;
-				next;
-			}
-
 		}
-
+		
+		
 		# Canonize and clean target URL and referrer URL. Possible URL syntax for $field[$pos_url]:
 		# /mydir/mypage.ext?param1=x&param2=y#aaa
 		# /mydir/mypage.ext#aaa
@@ -4325,7 +4359,7 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {	# Updat
 
 		# Do DNS lookup
 		#--------------
-		my $Host=$field[$pos_rc];
+		my $Host=$field[$pos_host];
 		my $HostResolved='';
 		if ($DNSLookup) {			# DNS lookup is 1 or 2
 			if ($Host =~ /^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/) {
@@ -4465,7 +4499,8 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {	# Updat
 		$_host_h{$_}++;
 		$_host_k{$_}+=$field[$pos_size];
 
-		if ($UserAgent) {	 # Made on each record -> -100 rows/seconds
+
+		if ($pos_agent >= 0 && $UserAgent) {	 # Made on each record -> -100 rows/seconds
 
 			if ($LevelForBrowsersDetection) {
 
@@ -4567,7 +4602,7 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {	# Updat
 		# Analyze: Referer
 		#-----------------
 		my $found=0;
-		if ($LevelForRefererAnalyze && $field[$pos_referer]) {
+		if ($pos_referer >= 0 && $LevelForRefererAnalyze && $field[$pos_referer]) {
 
 			# Direct ?
 			if ($field[$pos_referer] eq "-" || $field[$pos_referer] eq "bookmarks") {	# "bookmarks" is sent by Netscape, "-" by all others browsers
@@ -4815,7 +4850,7 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {	# Updat
 		my $bold=($ENV{"GATEWAY_INTERFACE"}?"<b>":"");
 		my $unbold=($ENV{"GATEWAY_INTERFACE"}?"</b>":"");
 		my $br=($ENV{"GATEWAY_INTERFACE"}?"<br>":"");
-		warning("Warning: $bold$PROG$unbold has detected that some hosts names were already resolved in your logfile $bold$DNSLookupAlreadyDone$unbold.$br\nIf DNS lookup was already made by the logger (web server), you should change your setup DNSLookup=1 into DNSLookup=0 to increase $PROG speed.");
+		warning("Warning: $bold$PROG$unbold has detected that some hosts names were already resolved in your logfile $bold$DNSLookupAlreadyDone$unbold.$br\nIf DNS lookup was already made by the logger (web server), you should change your setup DNSLookup=$DNSLookup into DNSLookup=0 to increase $PROG speed.");
 	}
 	if ($DNSLookup && $NbOfNewLines) {
 		# Save new DNS last update cache file
@@ -4990,21 +5025,24 @@ EOF
 		if (($HTMLOutput eq "main" && $FrameName ne "mainright") || $FrameName eq "mainleft") {	# If main page asked
 			my $linkpage=($FrameName eq "mainleft"?"$AWScript?${NewLinkParams}":""); $linkpage =~ s/&$//;
 			my $targetpage=($FrameName eq "mainleft"?" target=mainright":"");
+			my $linetitle=0;
 			print "<table".($frame?" cellspacing=0 cellpadding=0 border=0":"").">\n";
 			if ($frame) {
 				# Summary
 				#print "<tr><th class=AWL valign=top>$Message[128]</th>\n";
 			}
 			# When
-			print "<tr><th class=AWL valign=top>$Message[93] : </th>\n";
-			print ($frame?"</tr>\n":"<td class=AWL>");
+			$linetitle=$ShowMonthDayStats+$ShowDaysOfWeekStats+$ShowHoursStats;
+			if ($linetitle) { print "<tr><th class=AWL valign=top>$Message[93] : </th>\n"; }
+			if ($linetitle) { print ($frame?"</tr>\n":"<td class=AWL>"); }
 			if ($ShowMonthDayStats)		 { print ($frame?"<tr><td class=AWL>":""); print "<a href=\"$linkpage#SUMMARY\"$targetpage>$Message[5]/$Message[4]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
 			if ($ShowDaysOfWeekStats)	 { print ($frame?"<tr><td class=AWL>":""); print "<a href=\"$linkpage#DAYOFWEEK\"$targetpage>$Message[91]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
 			if ($ShowHoursStats)		 { print ($frame?"<tr><td class=AWL>":""); print "<a href=\"$linkpage#HOUR\"$targetpage>$Message[20]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
-			print ($frame?"":"</td></tr>\n");
+			if ($linetitle) { print ($frame?"":"</td></tr>\n"); }
 			# Who
-			print "<tr><th class=AWL valign=top>$Message[92] : </th>\n";
-			print ($frame?"</tr>\n":"<td class=AWL>");
+			$linetitle=$ShowDomainsStats+$ShowHostsStats+$ShowAuthenticatedUsers+$ShowEMailSenders+$ShowEMailReceivers+$ShowRobotsStats;
+			if ($linetitle) { print "<tr><th class=AWL valign=top>$Message[92] : </th>\n"; }
+			if ($linetitle) { print ($frame?"</tr>\n":"<td class=AWL>"); }
 			if ($ShowDomainsStats)		 { print ($frame?"<tr><td class=AWL>":""); print "<a href=\"$linkpage#DOMAINS\"$targetpage>$Message[17]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
 			if ($ShowHostsStats)		 { print ($frame?"<tr><td class=AWL>":""); print "<a href=\"$linkpage#VISITOR\"$targetpage>".ucfirst($Message[81])."</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
 			if ($ShowHostsStats)		 { print ($frame?"<tr><td class=AWL> &nbsp; <img height=8 width=9 src=\"$DirIcons/other/page.png\"> ":""); print "<a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=allhosts":"$PROG$StaticLinks.allhosts.html")."\"$NewLinkTarget>$Message[80]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
@@ -5016,10 +5054,11 @@ EOF
 			if ($ShowRobotsStats)		 { print ($frame?"<tr><td class=AWL>":""); print "<a href=\"$linkpage#ROBOTS\"$targetpage>$Message[53]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
 			if ($ShowRobotsStats) 		 { print ($frame?"<tr><td class=AWL> &nbsp; <img height=8 width=9 src=\"$DirIcons/other/page.png\"> ":""); print "<a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=allrobots":"$PROG$StaticLinks.allrobots.html")."\"$NewLinkTarget>$Message[80]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
 			if ($ShowRobotsStats) 		 { print ($frame?"<tr><td class=AWL> &nbsp; <img height=8 width=9 src=\"$DirIcons/other/page.png\"> ":""); print "<a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=lastrobots":"$PROG$StaticLinks.lastrobots.html")."\"$NewLinkTarget>$Message[9]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
-			print ($frame?"":"</td></tr>\n");
+			if ($linetitle) { print ($frame?"":"</td></tr>\n"); }
 			# Navigation
-			print "<tr><th class=AWL valign=top>$Message[72] : </th>\n";
-			print ($frame?"</tr>\n":"<td class=AWL>");
+			$linetitle=$ShowSessionsStats+$ShowPagesStats+$ShowFileTypesStats+$ShowFileSizesStats+$ShowOSStats+$ShowBrowsersStats;
+			if ($linetitle) { print "<tr><th class=AWL valign=top>$Message[72] : </th>\n"; }
+			if ($linetitle) { print ($frame?"</tr>\n":"<td class=AWL>"); }
 			if ($ShowSessionsStats)		 { print ($frame?"<tr><td class=AWL>":""); print "<a href=\"$linkpage#SESSIONS\"$targetpage>$Message[117]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
 			if ($ShowPagesStats)		 { print ($frame?"<tr><td class=AWL>":""); print "<a href=\"$linkpage#PAGE\"$targetpage>$Message[29]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
 			if ($ShowPagesStats)		 { print ($frame?"<tr><td class=AWL> &nbsp; <img height=8 width=9 src=\"$DirIcons/other/page.png\"> ":""); print "<a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=urldetail":"$PROG$StaticLinks.urldetail.html")."\"$NewLinkTarget>$Message[80]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
@@ -5032,24 +5071,26 @@ EOF
 			if ($ShowBrowsersStats)		 { print ($frame?"<tr><td class=AWL>":""); print "<a href=\"$linkpage#BROWSER\"$targetpage>$Message[21]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
 			if ($ShowBrowsersStats)		 { print ($frame?"<tr><td class=AWL> &nbsp; <img height=8 width=9 src=\"$DirIcons/other/page.png\"> ":""); print "<a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=browserdetail":"$PROG$StaticLinks.browserdetail.html")."\"$NewLinkTarget>$Message[58]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
 			if ($ShowBrowsersStats && $FrameName eq "mainleft")	{ print ($frame?"<tr><td class=AWL> &nbsp; <img height=8 width=9 src=\"$DirIcons/other/page.png\"> ":""); print "<a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=unknownbrowser":"$PROG$StaticLinks.unknownbrowser.html")."\"$NewLinkTarget>$Message[0]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
-			print ($frame?"":"</td></tr>\n");
+			if ($linetitle) { print ($frame?"":"</td></tr>\n"); }
 			# Referers
-			print "<tr><th class=AWL valign=top>$Message[23] : </th>\n";
-			print ($frame?"</tr>\n":"<td class=AWL>");
+			$linetitle=$ShowOriginStats+$ShowKeyphrasesStats+$ShowKeywordsStats;
+			if ($linetitle) { print "<tr><th class=AWL valign=top>$Message[23] : </th>\n"; }
+			if ($linetitle) { print ($frame?"</tr>\n":"<td class=AWL>"); }
 			if ($ShowOriginStats)		 { print ($frame?"<tr><td class=AWL>":""); print "<a href=\"$linkpage#REFERER\"$targetpage>$Message[37]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
 			if ($ShowOriginStats)		 { print ($frame?"<tr><td class=AWL> &nbsp; <img height=8 width=9 src=\"$DirIcons/other/page.png\"> ":""); print "<a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=refererse":"$PROG$StaticLinks.refererse.html")."\"$NewLinkTarget>$Message[126]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
 			if ($ShowOriginStats)		 { print ($frame?"<tr><td class=AWL> &nbsp; <img height=8 width=9 src=\"$DirIcons/other/page.png\"> ":""); print "<a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=refererpages":"$PROG$StaticLinks.refererpages.html")."\"$NewLinkTarget>$Message[127]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
 			if ($ShowKeyphrasesStats || $ShowKeywordsStats)	 { print ($frame?"<tr><td class=AWL>":""); print "<a href=\"$linkpage#KEYS\"$targetpage>$Message[14]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
 			if ($ShowKeyphrasesStats)	 { print ($frame?"<tr><td class=AWL> &nbsp; <img height=8 width=9 src=\"$DirIcons/other/page.png\"> ":""); print "<a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=keyphrases":"$PROG$StaticLinks.keyphrases.html")."\"$NewLinkTarget>$Message[120]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
 			if ($ShowKeywordsStats)	 	 { print ($frame?"<tr><td class=AWL> &nbsp; <img height=8 width=9 src=\"$DirIcons/other/page.png\"> ":""); print "<a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=keywords":"$PROG$StaticLinks.keywords.html")."\"$NewLinkTarget>$Message[121]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
-			print ($frame?"":"</td></tr>\n");
+			if ($linetitle) { print ($frame?"":"</td></tr>\n"); }
 			# Others
-			print "<tr><th class=AWL valign=top>$Message[2] : </th>\n";
-			print ($frame?"</tr>\n":"<td class=AWL>");
+			$linetitle=$ShowCompressionStats+$ShowHTTPErrorsStats;
+			if ($linetitle) { print "<tr><th class=AWL valign=top>$Message[2] : </th>\n"; }
+			if ($linetitle) { print ($frame?"</tr>\n":"<td class=AWL>"); }
 			if ($ShowCompressionStats)	 { print ($frame?"<tr><td class=AWL>":""); print "<a href=\"$linkpage#FILETYPES\"$targetpage>$Message[98]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
 			if ($ShowHTTPErrorsStats)	 { print ($frame?"<tr><td class=AWL>":""); print "<a href=\"$linkpage#ERRORS\"$targetpage>$Message[22]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
 			if ($ShowHTTPErrorsStats)	 { print ($frame?"<tr><td class=AWL> &nbsp; <img height=8 width=9 src=\"$DirIcons/other/page.png\"> ":""); print "<a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=errors404":"$PROG$StaticLinks.errors404.html")."\"$NewLinkTarget>$Message[31]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
-			print ($frame?"":"</td></tr>\n");
+			if ($linetitle) { print ($frame?"":"</td></tr>\n"); }
 			print "</table>\n";
 			print ($frame?"":"<br>\n");
 		}

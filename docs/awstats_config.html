@@ -230,31 +230,32 @@ when reading it), follow the example:<br>
 <br>#     With LogFormat=4, some features (browsers, os, keywords...) can't work.
 <br># 5 = ISA server standard log format
 <br># "your_own_personalized_log_format" = If your log is a personalized format,
-<br>#     you must use the following syntax keys to define the log format string:
-<br>#     %host             Host client name or IP address
-<br>#     %logname          Authenticated login/user used on protected pages
-<br>#     %time1            Date and time with format: [dd/mmm/yyyy:hh:mm:ss +0000]
-<br>#     %time2            Date and time with format: yyyy-mm-dd hh-mm-ss
-<br>#     %methodurl        Method and URL with format: "GET /index.html HTTP/x.x"
-<br>#     %methodurlnoprot  Method and URL with format: "GET /index.html"
-<br>#     %method           Method with format: GET
-<br>#     %url              URL only with format: /index.html
-<br>#     %query            Query string (used by URLWithQuery option)
-<br>#     %code             HTTP return code with format: 999
-<br>#     %bytesd           Size of document in bytes
-<br>#     %refererquot      Referer page with format: "http://from.com/from.htm"
-<br>#     %referer          Referer page with format: http://from.com/from.htm
-<br>#     %uaquot           User agent with format: "Mozilla/4.0 (compatible, ...)"
-<br>#     %ua               User agent with format: Mozilla/4.0_(compatible...)
-<br>#     %gzipin           Mod_gzip compression input bytes: In:XXX
-<br>#     %gzipout          Mod_gzip compression output bytes & ratio: Out:YYY:ZZZpct.
-<br>#     %gzipratio        Mod_gzip compression ratio: ZZZpct.
-<br>#     %syslog           Syslog-specific time and host stamp with format: Mon ddhh:mm:ss hostname
-<br>#     %virtualname      Web sever virtual hostname. Use this tag when same log
-<br>#                       file contains data of several virtual web servers. The
-<br>#                       SiteDomain will be used to filter the one you want.
-<br>#     If your log format has some fields not included in this list, use
-<br>#     %other            Means another field
+<br>#   you must use the following syntax keys to define the log format string:
+<br>#   %host             Host client name or IP address
+<br>#   %logname          Authenticated login/user used on protected pages
+<br>#   %time1            Date and time with format: [dd/mmm/yyyy:hh:mm:ss +0000]
+<br>#   %time1b           Date and time with format: [dd/mmm/yyyy:hh:mm:ss]
+<br>#   %time2            Date and time with format: yyyy-mm-dd hh-mm-ss
+<br>#   %methodurl        Method and URL with format: "GET /index.html HTTP/x.x"
+<br>#   %methodurlnoprot  Method and URL with format: "GET /index.html"
+<br>#   %method           Method with format: GET
+<br>#   %url              URL only with format: /index.html
+<br>#   %query            Query string (used by URLWithQuery option)
+<br>#   %code             Return code status (with format for web log: 999)
+<br>#   %bytesd           Size of document in bytes
+<br>#   %refererquot      Referer page with format: "http://from.com/from.htm"
+<br>#   %referer          Referer page with format: http://from.com/from.htm
+<br>#   %uaquot           User agent with format: "Mozilla/4.0 (compatible, ...)"
+<br>#   %ua               User agent with format: Mozilla/4.0_(compatible...)
+<br>#   %gzipin           Mod_gzip compression input bytes: In:XXX
+<br>#   %gzipout          Mod_gzip compression output bytes & ratio: Out:YYY:ZZZpct.
+<br>#   %gzipratio        Mod_gzip compression ratio: ZZZpct.
+<br>#   %syslog           Syslog-specific time and host stamp with format: Mon dd hh:mm:ss hostname
+<br>#   %virtualname      Web sever virtual hostname. Use this tag when same log
+<br>#                     file contains data of several virtual web servers. The
+<br>#                     SiteDomain will be used to filter the one you want.
+<br>#   If your log format has some fields not included in this list, use
+<br>#   %other            Means another field
 <br>#
 <br># Examples for Apache combined logs (this two examples are equivalent):
 <br># LogFormat = 1
