@@ -64,6 +64,8 @@ FAQ-SET450 <a href="#NO_ICON">No pictures/graphics shown.</a><br>
 FAQ-SET500 <a href="#ROTATE">How to rotate my logs without loosing data.</a><br>
 FAQ-SET550 <a href="#CRONTAB">How to run AWStats frequently ?</a><br>
 FAQ-SET600 <a href="#EXCLUDEHOSTS">How to exclude my IP address (or whole subnet mask) from stats ?</a><br>
+FAQ-SET700 <a href="#MIGRATEDOUBLED">My visits are doubled for old month I migrated from 3.2 to 5.x</a><br>
+
 </ul>
 <br>
 
@@ -582,6 +584,37 @@ For example, to exclude:<br>
 log file).<br>
 <br> 
 
+<a name="MIGRATEDOUBLED"></a><br>
+<b><u>FAQ-SET700 : MY VISITS ARE DOUBLED FOR OLD MONTH I MIGRATED FROM 3.2 TO 5.X</u></b><br>
+<font class=CProblem>PROBLEM:</font><br>
+After having migrated an old history file for a month, the number of visits for this month is doubled.
+So the number of "visits per visitor" is also doubled and "pages per visit" and "hits per visit" is divided by 2.
+All other data like "pages", "hits" and bandwith are correct.<br>
+<font class=CSolution>SOLUTION:</font><br>
+This problem occurs when migrating history files from 3.2 to 5.x.<br>
+To fix this you can use the following tip (warning, do this only after migrating from
+3.2 to 5.x and if your visit value is doubled). The goal is to remove a line
+in config file that looks like this<br>
+<i>YYYYMM00 999 999 999 999</i><br>
+where YYYY and MM are year and month of config file and 999 are numerical values.<br>
+<br>
+<u>So if your OS is Unix/Linux</u><br>
+<i>
+grep -vE '^[0-9]{6}00' $oldhistoryfile > $newhistoryfile<br>
+mv $newhistoryfile $oldhistoryfile<br>
+</i>
+And then run the migrate process again on the file.<br>
+<br>
+<u>If your OS is windows and got cygwin</u><br>
+You must follow same instructions than if OS is Unix/Linux BUT
+you must do this from a cygwin 'sh' shell and not from the DOS
+prompt (because the ^ is not understanded by DOS).<br>
+And then run the migrate process again on the file.<br>
+<br>
+<u>If your OS is windows and got cygwin or other OS</u><br>
+You must remove manually the line <i>YYYYMM00 999 999 999 999</i> (must find one)
+and then run the migrate process again on the file.<br>
+<br>
 
 <hr><br>
 
