@@ -1988,8 +1988,8 @@ sub Read_History_With_TmpUpdate {
 	if ($withupdate) { %SectionsToSave=%allsections; }
 
 	if ($Debug) {
-		foreach (sort { $SectionsToLoad{$a} <=> $SectionsToLoad{$b} } keys %SectionsToLoad) { debug(" Section '$_' is marked for load",2); }
-		foreach (sort { $SectionsToSave{$a} <=> $SectionsToSave{$b} } keys %SectionsToSave) { debug(" Section '$_' is marked for save",2); }
+        debug(" List of sections marked for load : ".join(' ',(sort { $SectionsToLoad{$a} <=> $SectionsToLoad{$b} } keys %SectionsToLoad)),2);
+        debug(" List of sections marked for save : ".join(' ',(sort { $SectionsToSave{$a} <=> $SectionsToSave{$b} } keys %SectionsToSave)),2);
 	}
 
 	# Define value for filetowrite and filetoread (Month before Year kept for backward compatibility)
@@ -8408,9 +8408,9 @@ if (scalar keys %HTMLOutput) {
 			my $count=0;
 			&BuildKeyList($MaxRowsInHTMLOutput,1,\%_sider404_h,\%_sider404_h);
 			foreach my $key (@keylist) {
-				my $nompage=CleanFromCSSA($key);
+                my $nompage=XMLEncode(CleanFromCSSA($key));
 				#if (length($nompage)>$MaxLengthOfShownURL) { $nompage=substr($nompage,0,$MaxLengthOfShownURL)."..."; }
-				my $referer=CleanFromCSSA($_referer404_h{$key});
+				my $referer=XMLEncode(CleanFromCSSA($_referer404_h{$key}));
 				print "<tr><td class=\"aws\">$nompage</td>";
 				print "<td>$_sider404_h{$key}</td>";
 				print "<td class=\"aws\">".($referer?"$referer":"&nbsp;")."</td>";
