@@ -37,7 +37,7 @@
 #use strict;
 # Uncomment following line and a line into GetDelaySinceStart function to get
 # miliseconds time in showsteps option
-#use Time::HiRes qw( gettimeofday );		
+use Time::HiRes qw( gettimeofday );		
 
 
 #-------------------------------------------------------
@@ -92,15 +92,15 @@ $color_h, $color_k, $color_p, $color_s, $color_u, $color_v)=
 %MonthBytes = %MonthHits = %MonthHostsKnown = %MonthHostsUnknown = %MonthPages = %MonthUnique = %MonthVisits =
 %monthlib = %monthnum = ();
 # ---------- Init Tie::hash arrays --------
-use Tie::Hash;
-tie %_hostmachine_p, 'Tie::StdHash';
-tie %_hostmachine_h, 'Tie::StdHash';
-tie %_hostmachine_k, 'Tie::StdHash';
-tie %_hostmachine_l, 'Tie::StdHash';
-tie %_url_p, 'Tie::StdHash';
-tie %_url_k, 'Tie::StdHash';
-tie %_url_e, 'Tie::StdHash';
-
+#use Tie::Hash;
+#tie %_hostmachine_p, 'Tie::StdHash';
+#tie %_hostmachine_h, 'Tie::StdHash';
+#tie %_hostmachine_k, 'Tie::StdHash';
+#tie %_hostmachine_l, 'Tie::StdHash';
+#tie %_url_p, 'Tie::StdHash';
+#tie %_url_k, 'Tie::StdHash';
+#tie %_url_e, 'Tie::StdHash';
+#
 #tie %_browser_h, 'Tie::StdHash';
 #tie %_domener_p, 'Tie::StdHash';
 #tie %_domener_h, 'Tie::StdHash';
@@ -126,7 +126,7 @@ tie %_url_e, 'Tie::StdHash';
 
 
 
-$VERSION="4.0 (build 4)";
+$VERSION="4.0 (build 5)";
 $Lang="en";
 
 # Default value
@@ -514,7 +514,7 @@ sub Read_Config_File {
 		if ($param =~ /^SiteDomain/)			{ $SiteDomain=$value; next; }
 		if ($param =~ /^HostAliases/) {
 			my @felter=split(/\s+/,$value);
-			$i=0; foreach my $elem (@felter)	{ $HostAliases[$i]=$elem; $i++; }
+			foreach my $elem (@felter)	  { push @HostAliases,$elem; }
 			next;
 			}
 		# Read optional section
@@ -526,27 +526,27 @@ sub Read_Config_File {
 		if ($param =~ /^DefaultFile/)           { $DefaultFile=$value; next; }
 		if ($param =~ /^SkipHosts/) {
 			my @felter=split(/\s+/,$value);
-			$i=0; foreach my $elem (@felter)    { $SkipHosts[$i]=$elem; $i++; }
+			foreach my $elem (@felter)    { push @SkipHosts,$elem; }
 			next;
 			}
 		if ($param =~ /^SkipDNSLookupFor/) {
 			my @felter=split(/\s+/,$value);
-			$i=0; foreach my $elem (@felter)    { $SkipDNSLookupFor[$i]=$elem; $i++; }
+			foreach my $elem (@felter)    { push @SkipDNSLookupFor,$elem; }
 			next;
 			}
 		if ($param =~ /^SkipFiles/) {
 			my @felter=split(/\s+/,$value);
-			$i=0; foreach my $elem (@felter)    { $SkipFiles[$i]=$elem; $i++; }
+			foreach my $elem (@felter)    { push @SkipFiles,$elem; }
 			next;
 			}
 		if ($param =~ /^OnlyFiles/) {
 			my @felter=split(/\s+/,$value);
-			$i=0; foreach my $elem (@felter)    { $OnlyFiles[$i]=$elem; $i++; }
+			foreach my $elem (@felter)    { push @OnlyFiles,$elem; }
 			next;
 			}
 		if ($param =~ /^NotPageList/) {
 			my @felter=split(/\s+/,$value);
-			$i=0; foreach my $elem (@felter)    { $NotPageList[$i]=$elem; $i++; }
+			foreach my $elem (@felter)    { push @NotPageList,$elem; }
 			$foundNotPageList=1;
 			next;
 			}
@@ -1387,7 +1387,7 @@ sub Read_History_File {
 			my $count=0;my $countloaded=0;
 			while ($field[0] ne "END_PAGEREFS") {
 				$count++;
-				if ($part && ($UpdateStats || $QueryString !~ /output=/i || $QueryString =~ /output=xxx/i)) {
+				if ($part && ($UpdateStats || $QueryString !~ /output=/i || $QueryString =~ /output=externalreferers/i)) {
 					$countloaded++;
 					if ($field[1]) { $_pagesrefs_h{$field[0]}+=int($field[1]); }
 				}
@@ -1399,7 +1399,7 @@ sub Read_History_File {
 			&debug(" End of PAGEREFS section ($count entries, $countloaded loaded)");
 			next;
     	}
-	    if ($field[0] eq "BEGIN_SEREFERRALS")   {
+		if ($field[0] eq "BEGIN_SEREFERRALS")   {
 			&debug(" Begin of SEREFERRALS section");
 			$_=<HISTORY>;
 			chomp $_; s/\r//;
@@ -1671,7 +1671,7 @@ sub GetDelaySinceStart {
 	if ($option) { $StartSeconds=0;	}	# Reset counter
 	my ($newseconds, $newmicroseconds)=(0,0);
 	my $usedTimeHires=0;
-	#($newseconds, $newmicroseconds) = gettimeofday; $usedTimeHires=1;	# Uncomment to use Time::HiRes function (provide milliseconds)
+	($newseconds, $newmicroseconds) = gettimeofday; $usedTimeHires=1;	# Uncomment to use Time::HiRes function (provide milliseconds)
 	if ((! $usedTimeHires) || ($newseconds eq "gettimeofday")) { $newseconds=time(); }
 	if (! $StartSeconds) { $StartSeconds=$newseconds; $StartMicroseconds=$newmicroseconds; }
 	my $nbms=$newseconds*1000+int($newmicroseconds/1000)-$StartSeconds*1000-int($StartMicroseconds/1000);
@@ -2222,12 +2222,12 @@ if ($UpdateStats) {
 	# Init HostAliases array
 	if (! @HostAliases) {
 		warning("Warning: HostAliases parameter is not defined, $PROG choose \"$SiteToAnalyze localhost 127.0.0.1\".");
-		$HostAliases[0]="$SiteToAnalyze"; $HostAliases[1]="localhost"; $HostAliases[2]="127.0.0.1";
+		push @HostAliases,"$SiteToAnalyze"; push @HostAliases,"localhost"; push @HostAliases,"127.0.0.1";
 	}
 	my $SiteToAnalyzeIsInHostAliases=0;
 	foreach my $elem (@HostAliases) { if ($elem eq $SiteToAnalyze) { $SiteToAnalyzeIsInHostAliases=1; last; } }
 	if (! $SiteToAnalyzeIsInHostAliases) { 
-		unshift @HostAliases,$SiteToAnalyze;	# Add SiteToAnalyze at beginning of HostAliases Array
+		unshift @HostAliases,"$SiteToAnalyze";	# Add SiteToAnalyze at beginning of HostAliases Array
 	}
 	debug("HostAliases is now @HostAliases",2);
 	# Init SkipFiles array
@@ -2782,14 +2782,12 @@ if ($UpdateStats) {
 			my $found=0;
 			if (!$TmpHashBrowser{$UserAgent}) {
 				# IE ? (For higher speed, we start whith IE, the most often used. This avoid other tests if found)
-				if ($UserAgent =~ /msie/) {
-					if (($UserAgent !~ /webtv/) && ($UserAgent !~ /omniweb/) && ($UserAgent !~ /opera/)) {
-						$_browser_h{"msie"}++;
-						if ($UserAgent =~ /msie_(\d)\./) {  # $1 now contains major version no
-							$_msiever_h[$1]++;
-							$found=1;
-							$TmpHashBrowser{$UserAgent}="msie_$1";
-						}
+				if (($UserAgent =~ /msie/) && ($UserAgent !~ /webtv/) && ($UserAgent !~ /omniweb/) && ($UserAgent !~ /opera/)) {
+					$_browser_h{"msie"}++;
+					if ($UserAgent =~ /msie_(\d)\./) {  # $1 now contains major version no
+						$_msiever_h[$1]++;
+						$found=1;
+						$TmpHashBrowser{$UserAgent}="msie_$1";
 					}
 				}
 		
@@ -2808,12 +2806,21 @@ if ($UpdateStats) {
 				# Other ?
 				if (!$found) {
 					foreach my $key (@BrowsersArrayID) {
-				    	if ($UserAgent =~ /$key/) { $_browser_h{$key}++; $found=1; $TmpHashBrowser{$UserAgent}=$key; last; }
+				    	if ($UserAgent =~ /$key/) {
+				    		$_browser_h{$key}++;
+				    		$found=1;
+				    		$TmpHashBrowser{$UserAgent}=$key;
+				    		last;
+				    	}
 					}
 				}
 	
 				# Unknown browser ?
-				if (!$found) { $_browser_h{"Unknown"}++; $_unknownrefererbrowser_l{$field[$pos_agent]}=$timeconnexion; }
+				if (!$found) {
+					$_browser_h{"Unknown"}++;
+					$_unknownrefererbrowser_l{$field[$pos_agent]}=$timeconnexion;
+#					$TmpHashBrowser{$UserAgent}="Unknown";
+				}
 			}
 			else {
 				if ($TmpHashBrowser{$UserAgent} =~ /^msie_(\d)/) { $_browser_h{"msie"}++; $_msiever_h[$1]++; $found=1; }
@@ -2827,10 +2834,19 @@ if ($UpdateStats) {
 				my $found=0;
 				# in OSHashID list ?
 				foreach my $key (@OSArrayID) {	# Searchin ID in order of OSArrayID
-					if ($UserAgent =~ /$key/) { $_os_h{$OSHashID{$key}}++; $TmpHashOS{$UserAgent}=$OSHashID{$key}; $found=1; last; }
+					if ($UserAgent =~ /$key/) {
+						$_os_h{$OSHashID{$key}}++;
+						$found=1;
+						$TmpHashOS{$UserAgent}=$OSHashID{$key};
+						last;
+					}
 				}
 				# Unknown OS ?
-				if (!$found) { $_os_h{"Unknown"}++; $_unknownreferer_l{$field[$pos_agent]}=$timeconnexion; }
+				if (!$found) {
+					$_os_h{"Unknown"}++;
+					$_unknownreferer_l{$field[$pos_agent]}=$timeconnexion;
+#					$TmpHashOS{$UserAgent}="Unknwon";
+				}
 			}
 			else {
 				$_os_h{$TmpHashOS{$UserAgent}}++;
@@ -2840,6 +2856,9 @@ if ($UpdateStats) {
 			$_browser_h{"Unknown"}++;
 			$_os_h{"Unknown"}++;
 		}		
+
+
+
 
 		# Analyze: Referer
 		#-----------------
@@ -2853,101 +2872,128 @@ if ($UpdateStats) {
 				$found=1;
 			}
 			else {	
+				$field[$pos_referer] =~ /^(\w+):\/\/([^\/]*)\//;
+				my $refererprot=$1;
+				my $refererserver=$2;
+
 				# HTML link ?
-				if ($field[$pos_referer] =~ /^http(s|):\/\/(.*)/i) {
-					my $refererwithouthttp=$2;
-					my $internal_link=0;
-					if ($refererwithouthttp =~ /^(www\.|)$SiteToAnalyzeWithoutwww/i) { $internal_link=1; }
-					else {
-						foreach my $key (@HostAliases) {
-							if ($refererwithouthttp =~ /^$key/i) { $internal_link=1; last; }
+				if ($refererprot =~ /^http/i) {
+
+					# Kind of origin
+					if (!$TmpHashServer{$refererserver}) {
+						if ($refererserver =~ /^(www\.|)$SiteToAnalyzeWithoutwww/i) {
+						    # Intern (This hit came from another page of the site)
+							debug("Server $refererserver is added to TmpHashServer with value '='",2);
+							$TmpHashServer{$refererserver}="=";
+							$found=1;
+						}
+						if (! $found) {
+							foreach my $key (@HostAliases) {
+								if ($refererserver =~ /^$key/i) {
+								    # Intern (This hit came from another page of the site)
+									debug("Server $refererserver is added to TmpHashServer with value '='",2);
+									$TmpHashServer{$refererserver}="=";
+									$found=1;
+									last;
+								}
 							}
-					}
-
-					if ($internal_link) {
-					    # Intern (This hit came from another page of the site)
-						if ($PageBool) { $_from_p[4]++; }
-					    $_from_h[4]++;
-						$found=1;
-					}
-					else {	# If made on each record -> -1700 rows/seconds (should be made on 10% of records only)
-					    # Extern (This hit came from an external web site). 
-						my @refurl=split(/\?/,$refererwithouthttp,2);
-						$refurl[0] =~ tr/A-Z/a-z/;
-
-					    foreach my $key (keys %SearchEnginesHashIDLib) {
-							if ($refurl[0] =~ /$key/) {
+						}
+						if (! $found) {
+						    # Extern (This hit came from an external web site). 
+							# If made on each record -> -1700 rows/seconds (should be made on 10% of records only)
+						    foreach my $key (keys %SearchEnginesHashIDLib) {
 								# This hit came from the search engine $key
-								if ($PageBool) { $_from_p[2]++; }
-								$_from_h[2]++;
-								$_se_referrals_h{$key}++;
-								$found=1;
-								if ($refurl[1]) {								
-									# Extract keywords
-									$refurl[1] =~ tr/A-Z/a-z/;				# Full param string in lowcase
-									my @paramlist=split(/&/,$refurl[1]);
-									if ($SearchEnginesKnownUrl{$key}) {		# Search engine with known URL syntax
-										foreach my $param (@paramlist) {
-											#if ($param =~ /^$SearchEnginesKnownUrl{$key}/) { 	# We found good parameter
-											#	$param =~ s/^$SearchEnginesKnownUrl{$key}//;	# Cut "xxx="
-											if ($param =~ s/^$SearchEnginesKnownUrl{$key}//) { 	# We found good parameter
-												# Ok, "cache:mmm:www/zzz+aaa+bbb/ccc+ddd%20eee'fff,ggg" is a search parameter line
-												$param =~ s/^cache:[^\+]*//;
-												$param =~ s/^related:[^\+]*//;
-												&ChangeWordSeparatorsIntoSpace($param);			# Change [ aaa+bbb/ccc+ddd%20eee'fff,ggg ] into [ aaa bbb/ccc ddd eee fff ggg]
-												if ($SplitSearchString) {
-													my @wordlist=split(/ /,$param);	# Split aaa bbb ccc ddd eee fff into a wordlist array
-													foreach $word (@wordlist) {
-														if ((length $word) > 0) { $_keyphrases{$word}++; }
-													}
-												}
-												else {
-													$param =~ s/^ +//; $param =~ s/ +$//; $param =~ tr/ /\+/s;
-													if ((length $param) > 0) { $_keyphrases{$param}++; }
-												}
-												last;
-											}
-										}
-									}
-									else {									# Search engine with unknown URL syntax
-										foreach my $param (@paramlist) {
-											&ChangeWordSeparatorsIntoSpace($param);				# Change [ xxx=cache:www/zzz+aaa+bbb/ccc+ddd%20eee'fff,ggg ] into [ xxx=cache:www/zzz aaa bbb/ccc ddd eee fff ggg ]
-											my $foundparam=1;
-											foreach $paramtoexclude (@WordsToCleanSearchUrl) {
-												if ($param =~ /.*$paramtoexclude.*/) { $foundparam=0; last; } # Not the param with search criteria
-											}
-											if ($foundparam == 0) { next; }			# Do not keep this URL parameter because is in exclude list
-											# Ok, "xxx=cache:www/zzz aaa bbb/ccc ddd eee fff ggg" is a search parameter line
-											$param =~ s/.*=//;						# Cut "xxx="
-											$param =~ s/^cache:[^ ]*//;
-											$param =~ s/^related:[^ ]*//;
+								if ($refererserver =~ /$key/i) {
+									debug("Server $refererserver is added to TmpHashServer with value '$key'",2);
+									$TmpHashServer{$refererserver}="$key";
+									$found=1;
+								}
+							}
+						}
+					}
+					
+					if ($TmpHashServer{$refererserver}) {
+						if ($TmpHashServer{$refererserver} eq "=") {
+						    # Intern (This hit came from another page of the site)
+							if ($PageBool) { $_from_p[4]++; }
+					    	$_from_h[4]++;
+					    }
+					    else {
+							# This hit came from the search engine
+							if ($PageBool) { $_from_p[2]++; }
+							$_from_h[2]++;
+							$_se_referrals_h{$TmpHashServer{$refererserver}}++;
+							$found=1;
+							my @refurl=split(/\?/,$field[$pos_referer],2);
+							if ($refurl[1]) {								
+								# Extract keywords
+								$refurl[1] =~ tr/A-Z/a-z/;				# Full param string in lowcase
+								my @paramlist=split(/&/,$refurl[1]);
+								if ($SearchEnginesKnownUrl{$TmpHashServer{$refererserver}}) {	# Search engine with known URL syntax
+									foreach my $param (@paramlist) {
+										#if ($param =~ /^$SearchEnginesKnownUrl{$key}/) { 	# We found good parameter
+										#	$param =~ s/^$SearchEnginesKnownUrl{$key}//;	# Cut "xxx="
+										if ($param =~ s/^$SearchEnginesKnownUrl{$TmpHashServer{$refererserver}}//) { 	# We found good parameter
+											# Ok, "cache:mmm:www/zzz+aaa+bbb/ccc+ddd%20eee'fff,ggg" is a search parameter line
+											$param =~ s/^cache:[^\+]*//;
+											$param =~ s/^related:[^\+]*//;
+											&ChangeWordSeparatorsIntoSpace($param);			# Change [ aaa+bbb/ccc+ddd%20eee'fff,ggg ] into [ aaa bbb/ccc ddd eee fff ggg]
 											if ($SplitSearchString) {
-												my @wordlist=split(/ /,$param);		# Split aaa bbb ccc ddd eee fff into a wordlist array
+												my @wordlist=split(/ /,$param);	# Split aaa bbb ccc ddd eee fff into a wordlist array
 												foreach $word (@wordlist) {
-													if ((length $word) > 2) { $_keyphrases{$word}++; }	# Keep word only if word length is 3 or more
+													if ((length $word) > 0) { $_keyphrases{$word}++; }
 												}
 											}
 											else {
 												$param =~ s/^ +//; $param =~ s/ +$//; $param =~ tr/ /\+/s;
-												if ((length $param) > 2) { $_keyphrases{$param}++; }
+												if ((length $param) > 0) { $_keyphrases{$param}++; }
 											}
+											last;
 										}
 									}
-								}	# End of if refurl[1]
-								last;
-							}
+								}
+								else {									# Search engine with unknown URL syntax
+									foreach my $param (@paramlist) {
+										&ChangeWordSeparatorsIntoSpace($param);				# Change [ xxx=cache:www/zzz+aaa+bbb/ccc+ddd%20eee'fff,ggg ] into [ xxx=cache:www/zzz aaa bbb/ccc ddd eee fff ggg ]
+										my $foundparam=1;
+										foreach $paramtoexclude (@WordsToCleanSearchUrl) {
+											if ($param =~ /.*$paramtoexclude.*/) { $foundparam=0; last; } # Not the param with search criteria
+										}
+										if ($foundparam == 0) { next; }			# Do not keep this URL parameter because is in exclude list
+										# Ok, "xxx=cache:www/zzz aaa bbb/ccc ddd eee fff ggg" is a search parameter line
+										$param =~ s/.*=//;						# Cut "xxx="
+										$param =~ s/^cache:[^ ]*//;
+										$param =~ s/^related:[^ ]*//;
+										if ($SplitSearchString) {
+											my @wordlist=split(/ /,$param);		# Split aaa bbb ccc ddd eee fff into a wordlist array
+											foreach $word (@wordlist) {
+												if ((length $word) > 2) { $_keyphrases{$word}++; }	# Keep word only if word length is 3 or more
+											}
+										}
+										else {
+											$param =~ s/^ +//; $param =~ s/ +$//; $param =~ tr/ /\+/s;
+											if ((length $param) > 2) { $_keyphrases{$param}++; }
+										}
+									}
+								}
+							}	# End of if refurl[1]
 						}
-						
-						if (!$found) {
-							# This hit came from a site other than a search engine
-							if ($PageBool) { $_from_p[3]++; }
-							$_from_h[3]++;
-							# http://www.mysite.com/ must be same referer than http://www.mysite.com but .../mypage/ differs of .../mypage
-							#if ($refurl[0] =~ /^[^\/]+\/$/) { $field[$pos_referer] =~ s/\/$//; }	# Code moved in save
-							$_pagesrefs_h{$field[$pos_referer]}++;
-							$found=1;
-						}
+					}	# End of if ($TmpHashServer) 
+					else {
+						# This hit came from a site other than a search engine
+						if ($PageBool) { $_from_p[3]++; }
+						$_from_h[3]++;
+						# http://www.mysite.com/ must be same referer than http://www.mysite.com but .../mypage/ differs of .../mypage
+						#if ($refurl[0] =~ /^[^\/]+\/$/) { $field[$pos_referer] =~ s/\/$//; }	# Code moved in save
+						$_pagesrefs_h{$field[$pos_referer]}++;
+						$found=1;
 					}
+				}
+
+				# News Link ?
+				if (! $found && $refererprot =~ /^news/i) {
+					$found=1;
+					# TODO
 				}
 			}
 		}	
@@ -3617,9 +3663,9 @@ EOF
 			if (! DateIsValid($day,$month,$year)) { next; }			# If not an existing day, go to next
 			my $dayofweekcursor=DayOfWeek($day,$month,$year);
 			print "<TD valign=middle".($dayofweekcursor==0||$dayofweekcursor==6?" bgcolor=\"#$color_weekend\"":"").">";
-			print ($day==$nowday && $month==$nowmonth?"<b>":"");
+			print ($day==$nowday && $month==$nowmonth && $year==$nowyear?"<b>":"");
 			print "$day<br><font style=\"font: 10px;\">".$monthlib{$month}."</font>";
-			print ($day==$nowday && $month==$nowmonth?"</b></TD>":"</TD>\n");
+			print ($day==$nowday && $month==$nowmonth && $year==$nowyear?"</b></TD>":"</TD>\n");
 		}
 		print "<TD> &nbsp; </TD>";
 		print "<TD valign=middle onmouseover=\"ShowTooltip(18);\" onmouseout=\"HideTooltip(18);\">$Message[96]</TD>\n";
