@@ -14,7 +14,55 @@
 #-------------------------------------------------------
 # Defines
 #-------------------------------------------------------
-$VERSION="2.24 (build 24)";
+
+# ---------- Init variables --------
+($ArchiveFileName, $ArchiveLogRecords, $BarHeight, $BarWidth,
+$DIR, $DNSLookup, $DefaultFile, $DirCgi, $DirConfig, $DirData,
+$DirIcons, $Extension, $FileConfig, $FileSuffix, $FirstTime,
+$HTMLEndSection, $Host, $HostAlias, $LastTime, $LocalSite,
+$LocalSiteIsInHostAliases, $LocalSiteWithoutwww, $LogFile, $LogFileWithoutLog,
+$LogFormat, $Logo, $MaxNbOfHostsShown, $MaxNbOfKeywordsShown,
+$MaxNbOfPageShown, $MaxNbOfRefererShown, $MaxNbOfRobotShown, $MinHitFile,
+$MinHitHost, $MinHitKeyword, $MinHitRefer, $MinHitRobot, $MonthRequired,
+$NewDNSLookup, $NowNewLinePhase, $OpenFileError, $PROG, $PageBool, $PurgeLogFile,
+$QueryString, $RatioBytes, $RatioHits, $RatioHosts, $RatioPages, 
+$ShowFlagLinks, $ShowLinksOnURL, $ShowLinksOnUrl, $TotalBytes,
+$TotalDifferentKeywords, $TotalDifferentPages, $TotalErrors, $TotalHits,
+$TotalHosts, $TotalKeywords, $TotalPages, $TotalUnique, $TotalVisits, $UserAgent,
+$WarningMessages, $YearRequired, 
+$allok, $beginmonth, $bredde, $bredde_h, $bredde_k, $bredde_p, $bredde_u,
+$bredde_v, $color_Background, $color_TableBG, $color_TableBGRowTitle,
+$color_TableBGTitle, $color_TableBorder, $color_TableRowTitle,
+$color_TableTitle, $color_h, $color_k, $color_link, $color_p, $color_s, $color_v,
+$color_w, $count, $date, $daycon, $endmonth, $found, $foundrobot,
+$h, $hourcon, $hr, $internal_link, $ix, $keep, $key, $kilo, $lien, $line,
+$max, $max_h, $max_k, $max_p, $max_v, $mincon, $monthcon, $monthfile, $monthix,
+$monthtoprocess, $nameicon, $new, $nompage, $nowday, $nowisdst, $nowmin, $nowmonth,
+$nowsec, $nowsmallyear, $nowwday, $nowyday, $nowyear, $p, $page, $param,
+$paramtoexclude, $readbrowser, $readdomain, $readerrors, $readerrors404,
+$readmsiever, $readnsver, $reados, $readpagerefs, $readrobot, $readse,
+$readsearchwords, $readsider, $readtime, $readunknownip, $readunknownreferer,
+$readunknownrefererbrowser, $readvisitor, $rest, $rest_h, $rest_k, $rest_p,
+$savetime, $savetmp, $tab_titre, $timeconnexion, $total_h, $total_k, $total_p,
+$word, $yearcon, $yearfile, $yearmonth, $yearmonthchoosed, $yeartoprocess) = ();
+# ---------- Init arrays --------
+%FirstTime = %HistoryFileAlreadyRead = %LastTime = %MonthBytes = %MonthHits = %MonthPage = %MonthUnique = %MonthVisits =
+%TmpHashDNSLookup = %TmpHashNotRobot = %TmpHashOS = %_browser_h = %_domener_h = %_domener_k = %_domener_p =
+%_errors_h = %_hostmachine_h = %_hostmachine_k = %_hostmachine_l = %_hostmachine_p =
+%_keywords = %_os_h = %_pagesrefs_h = %_robot_h = %_robot_l = %_se_referrals_h =
+%_sider404_h = %_sider_h = %_sider_k = %_sider_p = %_unknownip_l = %_unknownreferer_l =
+%_unknownrefererbrowser_l = %listofyears = %monthlib = %monthnum = ();
+# ---------- Init hash arrays --------
+@BrowserArray = @DomainsArray = @HostAliases = @OSArray =
+@PageCode = @RobotArray = @SearchEnginesArray = @SkipFiles =
+@SkipHosts = @_from_h = @_msiever_h = @_nsver_h = @_time_h =
+@_time_k = @_time_p = @datep = @dateparts = @felter = @field = @filearray = @message =
+@paramlist = @refurl = @sortbrowsers = @sortdomains_h = @sortdomains_k =
+@sortdomains_p = @sorterrors = @sorthosts_p = @sortos = @sortpagerefs = @sortrobot =
+@sortsearchwords = @sortsereferrals = @sortsider404 = @sortsiders = @sortunknownip =
+@sortunknownreferer = @sortunknownrefererbrowser = @wordlist = ();
+
+$VERSION="2.24 (build 25)";
 $Lang=0;
 
 # Default value
@@ -35,7 +83,7 @@ $BarImageHorizontal_h = "barrehh.png";
 $BarImageVertical_k   = "barrevk.png";
 $BarImageHorizontal_k = "barrehk.png";
 
-# URL with such end signature are king of URL we only need hits
+# URL with such end signature are kind of URL we only need to count as hits
 @NotPageList= (
 			"\\.gif","\\.jpg","\\.png","\\.bmp",
 #			"\\.zip","\\.arj","\\.gz","\\.z",
@@ -54,7 +102,7 @@ $BarImageHorizontal_k = "barrehk.png";
 			);
 
 
-# ---------- Search engines names database ---------- (update the 10th january 2001)
+# Search engines names database (update the 10th january 2001)
 %SearchEnginesHash=(
 # Most common search engines
 "yahoo\.","Yahoo",
@@ -91,9 +139,7 @@ $BarImageHorizontal_k = "barrehk.png";
 "search\..*com","Other search engines"
 );
 
-
-
-# ---------- Search engines known URL database ---------- (update the 10th january 2001)
+# Search engines known URLs database (update the 10th january 2001)
 %SearchEngineKnownUrl=(
 # Most common search engines
 "yahoo\.","p=",
@@ -125,10 +171,9 @@ $BarImageHorizontal_k = "barrehk.png";
 "fireball\.de","q=", "suche\.web\.de","su="
 );
 @WordsToCleanSearchUrl= ("act=","annuaire=","btng=","categoria=","cfg=","cou=","dd=","domain=","dt=","dw=","exec=","geo=","hc=","height=","hl=","hs=","kl=","lang=","loc=","lr=","matchmode=","medor=","message=","meta=","mode=","order=","page=","par=","pays=","pg=","pos=","prg=","qc=","refer=","sa=","safe=","sc=","sort=","src=","start=","stype=","tag=","temp=","theme=","url=","user=","width=","what=","\\.x=","\\.y=");
-# Never put the following exclusion ("Claus=","kw=","keyword=","MT","p=","q=","qr=","qt=","query=","s=","search=","searchText=") because they are strings that contain keywords we're looking for.
+# Never put the following exclusion ("ask=","claus=","general=","kw=","keyword=","MT","p=","q=","qr=","qt=","query=","s=","search=","searchText=","string=","su=") because they are strings that contain keywords we're looking for.
 
-
-# ---------- HTTP Code with tooltip --------
+# HTTP codes with tooltip
 %httpcode = (
 "201", "Partial Content", "202", "Request recorded, will be executed later", "204", "Request executed", "206", "Partial Content",
 "301", "Moved Permanently", "302", "Found",
@@ -138,6 +183,437 @@ $BarImageHorizontal_k = "barrehk.png";
 "200", "OK", "304", "Not Modified"	# 200 and 304 are not errors
 );
 
+# Browser lists ("browser id in lower case", "browser text")
+%BrowsersHash = (
+"netscape","defined_later",
+"msie","defined_later",
+
+"libwww","LibWWW",
+"wget","Wget",
+"lynx","Lynx",
+"opera","Opera",
+"22acidownload","22AciDownload",
+"aol\\-iweng","AOL-Iweng",
+"amigavoyager","AmigaVoyager",
+"antfresco","ANT Fresco",
+"bpftp","BPFTP",
+"cyberdog","Cyberdog",
+"dreamcast","Dreamcast",
+"downloadagent","DownloadAgent",
+"ecatch", "eCatch",
+"emailsiphon","EmailSiphon",
+"friendlyspider","FriendlySpider",
+"getright","GetRight",
+"headdump","HeadDump",
+"hotjava","Sun HotJava",
+"ibrowse","IBrowse",
+"icab","iCab",
+"intergo","InterGO",
+"konqueror","Konqueror",
+"linemodebrowser","W3C Line Mode Browser",
+"lotus-notes","Lotus Notes web client",
+"macweb","MacWeb",							#
+"ncsa_mosaic","NCSA Mosaic",
+"netpositive","NetPositive",
+"nutscrape", "Nutscrape",
+"mspie","MS Pocket Internet Explorer",
+"msfrontpageexpress","MS FrontPage Express",
+"omniweb","OmniWeb",
+"real","RealAudio or compatible player",
+"teleport","TelePort Pro (Site grabber)",
+"tzgeturl","TZGETURL",
+"viking","Viking",
+"webcapture","Acrobat (Site grabber)",
+"webfetcher","WebFetcher",
+"webtv","WebTV browser",
+"webexplorer","IBM-WebExplorer",
+"webmirror","WebMirror",
+"webvcr","WebVCR",
+"webzip","WebZIP"
+);
+
+# OS lists ("os detector in lower case","os text")
+%OSHash      = (
+"win2000","Windows 2000",
+"winnt","Windows NT",
+"win98","Windows 98",
+"win95","Windows 95",
+"win16","Windows 3.xx",
+"wince","Windows CE",
+"beos","BeOS",
+"macintosh","Mac OS",
+"unix","Unknown Unix system",
+"linux","Linux",
+"os/2","Warp OS/2",
+"amigaos","AmigaOS",
+"sunos","Sun Solaris",
+"irix","Irix",
+"osf","OSF Unix",
+"hp-ux","HP Unix",
+"aix","Aix",
+"netbsd","NetBSD",
+"bsdi","BSDi",
+"freebsd","FreeBSD",
+"webtv","WebTV",
+"cp/m","CPM",
+"crayos","CrayOS",
+"riscos","Acorn RISC OS"
+);
+
+# OS AliasHash ("text that match in log after changing ' ' or '+' into '_' ","osid")
+%OSAliasHash	= (
+"windows_nt_5","win2000",
+"windows_nt","winnt",
+"windows-nt","winnt",
+"win32","winnt",
+"windows_98","win98",
+"windows_95","win95",
+"windows_3","win16",			# This works for windows_31 and windows_3.1
+"windows;i;16","win16",
+"windowsce","wince",
+"mac_p","macintosh",			# This works for mac_ppc and mac_powerpc
+"mac_68","macintosh",			# This works for mac_6800 and mac_68k
+"macppc","macintosh",
+"macweb","macintosh"
+);
+
+# Robots list
+# List can be found at http://info.webcrawler.com/mak/projects/robots/active.html and the next command show how to generate tab list from this file:
+# cat robotslist.txt | sed 's/:/ /' | awk ' /robot-id/ { name=tolower($2); } /robot-name/ { print "\""name"\", \""$0"\"," } ' | sed 's/robot-name *//g' > file
+# Rem: To avoid bad detection, some robots id were removed from this list:
+#      - Robots with ID of 2 letters only
+#      - Robot called "webs"
+# Rem: directhit is changed in direct_hit (it's real id)
+%RobotHash   = (
+"acme.spider", "Acme.Spider",
+"ahoythehomepagefinder", "Ahoy! The Homepage Finder",
+"alkaline", "Alkaline",
+"appie", "Walhello appie",
+"arachnophilia", "Arachnophilia",
+"architext", "ArchitextSpider",
+"aretha", "Aretha",
+"ariadne", "ARIADNE",
+"aspider", "ASpider (Associative Spider)",
+"atn.txt", "ATN Worldwide",
+"atomz", "Atomz.com Search Robot",
+"auresys", "AURESYS",
+"backrub", "BackRub",
+"bigbrother", "Big Brother",
+"bjaaland", "Bjaaland",
+"blackwidow", "BlackWidow",
+"blindekuh", "Die Blinde Kuh",
+"bloodhound", "Bloodhound",
+"brightnet", "bright.net caching robot",
+"bspider", "BSpider",
+"cactvschemistryspider", "CACTVS Chemistry Spider",
+"calif", "Calif",
+"cassandra", "Cassandra",
+"cgireader", "Digimarc Marcspider/CGI",
+"checkbot", "Checkbot",
+"churl", "churl",
+"cmc", "CMC/0.01",
+"collective", "Collective",
+"combine", "Combine System",
+"conceptbot", "Conceptbot",
+"core", "Web Core / Roots",
+"cshkust", "CS-HKUST WISE: WWW Index and Search Engine",
+"cusco", "Cusco",
+"cyberspyder", "CyberSpyder Link Test",
+"deweb", "DeWeb(c) Katalog/Index",
+"dienstspider", "DienstSpider",
+"diibot", "Digital Integrity Robot",
+"direct_hit", "Direct Hit Grabber",
+"dnabot", "DNAbot",
+"download_express", "DownLoad Express",
+"dragonbot", "DragonBot",
+"dwcp", "DWCP (Dridus' Web Cataloging Project)",
+"ebiness", "EbiNess",
+"eit", "EIT Link Verifier Robot",
+"emacs", "Emacs-w3 Search Engine",
+"emcspider", "ananzi",
+"esther", "Esther",
+"evliyacelebi", "Evliya Celebi",
+"fdse", "Fluid Dynamics Search Engine robot",
+"felix", "	Felix IDE",
+"ferret", "Wild Ferret Web Hopper #1, #2, #3",
+"fetchrover", "FetchRover",
+"fido", "fido",
+"finnish", "Hämähäkki",
+"fireball", "KIT-Fireball",
+"fish", "Fish search",
+"fouineur", "Fouineur",
+"francoroute", "Robot Francoroute",
+"freecrawl", "Freecrawl",
+"funnelweb", "FunnelWeb",
+"gazz", "gazz",
+"gcreep", "GCreep",
+"getbot", "GetBot",
+"geturl", "GetURL",
+"golem", "Golem",
+"googlebot", "Googlebot",
+"grapnel", "Grapnel/0.01 Experiment",
+"griffon", "Griffon                                                               ",
+"gromit", "Gromit",
+"gulliver", "Northern Light Gulliver",
+"hambot", "HamBot",
+"harvest", "Harvest",
+"havindex", "havIndex",
+"hometown", "Hometown Spider Pro",
+"wired-digital", "Wired Digital",
+"htdig", "ht://Dig",
+"htmlgobble", "HTMLgobble",
+"hyperdecontextualizer", "Hyper-Decontextualizer",
+"ibm", "IBM_Planetwide",
+"iconoclast", "Popular Iconoclast",
+"ilse", "Ingrid",
+"imagelock", "Imagelock ",
+"incywincy", "IncyWincy",
+"informant", "Informant",
+"infoseek", "InfoSeek Robot 1.0",
+"infoseeksidewinder", "Infoseek Sidewinder",
+"infospider", "InfoSpiders",
+"inspectorwww", "Inspector Web",
+"intelliagent", "IntelliAgent",
+"iron33", "Iron33",
+"israelisearch", "Israeli-search",
+"javabee", "JavaBee",
+"jcrawler", "JCrawler",
+"jeeves", "Jeeves",
+"jobot", "Jobot",
+"joebot", "JoeBot",
+"jubii", "The Jubii Indexing Robot",
+"jumpstation", "JumpStation",
+"katipo", "Katipo",
+"kdd", "KDD-Explorer",
+"kilroy", "Kilroy",
+"ko_yappo_robot", "KO_Yappo_Robot",
+"labelgrabber.txt", "LabelGrabber",
+"larbin", "larbin",
+"legs", "legs",
+"linkscan", "LinkScan",
+"linkwalker", "LinkWalker",
+"lockon", "Lockon",
+"logo_gif", "logo.gif Crawler",
+"lycos", "Lycos",
+"macworm", "Mac WWWWorm",
+"magpie", "Magpie",
+"mediafox", "MediaFox",
+"merzscope", "MerzScope",
+"meshexplorer", "		NEC-MeshExplorer",
+"mindcrawler", "MindCrawler",
+"moget", "moget",
+"momspider", "MOMspider",
+"monster", "Monster",
+"motor", "Motor",
+"muscatferret", "Muscat Ferret",
+"mwdsearch", "Mwd.Search",
+"myweb", "Internet Shinchakubin",
+"netcarta", "NetCarta WebMap Engine",
+"netmechanic", "NetMechanic",
+"netscoop", "NetScoop",
+"newscan-online", "newscan-online",
+"nhse", "NHSE Web Forager",
+"nomad", "Nomad",
+"northstar", "The NorthStar Robot",
+"nzexplorer", "nzexplorer",
+"occam", "Occam",
+"octopus", "HKU WWW Octopus",
+"orb_search", "Orb Search",
+"packrat", "Pack Rat",
+"pageboy", "PageBoy",
+"parasite", "ParaSite",
+"patric", "Patric",
+"perignator", "The Peregrinator",
+"perlcrawler", "PerlCrawler 1.0",
+"phantom", "Phantom",
+"piltdownman", "PiltdownMan",
+"pioneer", "Pioneer",
+"pitkow", "html_analyzer",
+"pjspider", "Portal Juice Spider",
+"pka", "PGP Key Agent",
+"plumtreewebaccessor", "PlumtreeWebAccessor ",
+"poppi", "Poppi",
+"portalb", "PortalB Spider",
+"puu", "GetterroboPlus Puu",
+"python", "The Python Robot",
+"raven", "Raven Search",
+"rbse", "RBSE Spider",
+"resumerobot", "Resume Robot",
+"rhcs", "RoadHouse Crawling System",
+"roadrunner", "Road Runner: The ImageScape Robot",
+"robbie", "Robbie the Robot",
+"robi", "ComputingSite Robi/1.0",
+"roverbot", "Roverbot",
+"safetynetrobot", "SafetyNet Robot",
+"scooter", "Scooter",
+"search_au", "Search.Aus-AU.COM",
+"searchprocess", "SearchProcess",
+"senrigan", "Senrigan",
+"sgscout", "SG-Scout",
+"shaggy", "ShagSeeker",
+"shaihulud", "Shai'Hulud",
+"sift", "Sift",
+"simbot", "Simmany Robot Ver1.0",
+"site-valet", "Site Valet",
+"sitegrabber", "Open Text Index Robot",
+"sitetech", "SiteTech-Rover",
+"slurp", "Inktomi Slurp",
+"smartspider", "Smart Spider",
+"snooper", "Snooper",
+"solbot", "Solbot",
+"spanner", "Spanner",
+"speedy", "Speedy Spider",
+"spider_monkey", "spider_monkey",
+"spiderbot", "SpiderBot",
+"spiderman", "SpiderMan",
+"spry", "Spry Wizard Robot",
+"ssearcher", "Site Searcher",
+"suke", "Suke",
+"sven", "Sven",
+"tach_bw", "TACH Black Widow",
+"tarantula", "Tarantula",
+"tarspider", "tarspider",
+"tcl", "Tcl W3 Robot",
+"techbot", "TechBOT",
+"templeton", "Templeton",
+"titin", "TitIn",
+"titan", "TITAN",
+"tkwww", "The TkWWW Robot",
+"tlspider", "TLSpider",
+"ucsd", "UCSD Crawl",
+"udmsearch", "UdmSearch",
+"urlck", "URL Check",
+"valkyrie", "Valkyrie",
+"victoria", "Victoria",
+"visionsearch", "vision-search",
+"voyager", "Voyager",
+"vwbot", "VWbot",
+"w3index", "The NWI Robot",
+"w3m2", "W3M2",
+"wanderer", "the World Wide Web Wanderer",
+"webbandit", "WebBandit Web Spider",
+"webcatcher", "WebCatcher",
+"webcopy", "WebCopy",
+"webfetcher", "webfetcher",
+"webfoot", "The Webfoot Robot",
+"weblayers", "Weblayers",
+"weblinker", "WebLinker",
+"webmirror", "WebMirror",
+"webmoose", "The Web Moose",
+"webquest", "WebQuest",
+"webreader", "Digimarc MarcSpider",
+"webreaper", "WebReaper",
+"websnarf", "Websnarf",
+"webspider", "WebSpider",
+"webvac", "WebVac",
+"webwalk", "webwalk",
+"webwalker", "WebWalker",
+"webwatch", "WebWatch",
+"wget", "Wget",
+"whowhere", "WhoWhere Robot",
+"wmir", "w3mir",
+"wolp", "WebStolperer",
+"wombat", "The Web Wombat ",
+"worm", "The World Wide Web Worm",
+"wwwc", "WWWC Ver 0.2.5",
+"wz101", "WebZinger",
+"xget", "XGET",
+"nederland.zoek", "Nederland.zoek",
+
+# Not declared robots
+"antibot", "Antibot (Not referenced robot)",
+"daviesbot", "DaviesBot (Not referenced robot)",
+"ezresult",	"Ezresult (Not referenced robot)",
+"fast-webcrawler", "Fast-Webcrawler (Not referenced robot)",
+"jennybot", "JennyBot (Not referenced robot)",
+"justview", "JustView (Not referenced robot)",
+"mercator", "Mercator (Not referenced robot)",
+#"msiecrawler", "MSIECrawler (Not referenced robot)",	MSIECrawler seems to be a grabber not a robot
+"perman surfer", "Perman surfer (Not referenced robot)",
+"unlost_web_crawler", "Unlost_Web_Crawler (Not referenced robot)",
+"webbase", "WebBase (Not referenced robot)",
+# Supposed to be robots
+"webcompass", "webcompass (Not referenced robot)",
+"digout4u", "digout4u (Not referenced robot)",
+"echo", "EchO! (Not referenced robot)",
+"voila", "Voila (Not referenced robot)",
+"boris", "Boris (Not referenced robot)",
+"ultraseek", "Ultraseek (Not referenced robot)",
+"ia_archiver", "ia_archiver (Not referenced robot)",
+# Generic ID
+"robot", "Unknown robot (Not referenced robot)"
+);
+
+# Domains list
+%DomainsHash = (
+"localhost","localhost",
+
+"ad","Andorra","ae","United Arab Emirates","af","Afghanistan","ag",
+"Antigua and Barbuda","ai","Anguilla","al","Albania","am",
+"Armenia","an","Netherlands Antilles","ao","Angola","aq",
+"Antarctica","ar","Argentina","arpa","Old style Arpanet","as",
+"American Samoa","at","Austria","au","Australia","aw","Aruba","az",
+"Azerbaidjan","ba","Bosnia-Herzegovina","bb","Barbados","bd",
+"Bangladesh","be","Belgium","bf","Burkina Faso","bg","Bulgaria",
+"bh","Bahrain","bi","Burundi","bj","Benin","bm","Bermuda","bn",
+"Brunei Darussalam","bo","Bolivia","br","Brazil","bs","Bahamas",
+"bt","Bhutan","bv","Bouvet Island","bw","Botswana","by","Belarus",
+"bz","Belize","ca","Canada","cc","Cocos (Keeling) Islands","cf",
+"Central African Republic","cg","Congo","ch","Switzerland","ci",
+"Ivory Coast (Cote D'Ivoire)","ck","Cook Islands","cl","Chile","cm","Cameroon",
+"cn","China","co","Colombia","com","Commercial","cr","Costa Rica",
+"cs","Former Czechoslovakia","cu","Cuba","cv","Cape Verde","cx",
+"Christmas Island","cy","Cyprus","cz","Czech Republic","de","Germany",
+"dj","Djibouti","dk","Denmark","dm","Dominica","do","Dominican Republic",
+"dz","Algeria","ec","Ecuador","edu","USA Educational","ee","Estonia",
+"eg","Egypt","eh","Western Sahara","es","Spain","et","Ethiopia","fi","Finland","fj","Fiji","fk",
+"Falkland Islands","fm","Micronesia","fo","Faroe Islands",
+"fr","France","fx","France (European Territory)","ga","Gabon","gb",
+"Great Britain","gd","Grenada","ge","Georgia","gf","French Guyana","gh","Ghana","gi","Gibraltar",
+"gl","Greenland","gm","Gambia","gn","Guinea","gov","USA Government","gp","Guadeloupe (French)","gq",
+"Equatorial Guinea","gr","Greece","gs","S. Georgia &amp; S. Sandwich Isls.",
+"gt","Guatemala","gu","Guam (USA)","gw","Guinea Bissau","gy","Guyana",
+"hk","Hong Kong","hm","Heard and McDonald Islands","hn","Honduras","hr",
+"Croatia","ht","Haiti","hu","Hungary","id","Indonesia","ie","Ireland","il","Israel",
+"in","India","int","International","io","British Indian Ocean Territory",
+"iq","Iraq","ir","Iran","is","Iceland","it","Italy","jm",
+"Jamaica","jo","Jordan","jp","Japan","ke","Kenya","kg","Kyrgyzstan",
+"kh","Cambodia","ki","Kiribati","km","Comoros","kn","Saint Kitts &amp; Nevis Anguilla",
+"kp","North Korea","kr","South Korea","kw","Kuwait","ky",
+"Cayman Islands","kz","Kazakhstan","la","Laos","lb","Lebanon","lc","Saint Lucia",
+"li","Liechtenstein","lk","Sri Lanka","lr","Liberia","ls","Lesotho","lt","Lithuania",
+"lu","Luxembourg","lv","Latvia","ly","Libya","ma","Morocco","mc","Monaco",
+"md","Moldavia","mg","Madagascar","mh","Marshall Islands","mil","USA Military","mk",
+"Macedonia","ml","Mali","mm","Myanmar","mn","Mongolia","mo","Macau",
+"mp","Northern Mariana Islands","mq","Martinique (French)","mr","Mauritania",
+"ms","Montserrat","mt","Malta","mu","Mauritius","mv","Maldives","mw",
+"Malawi","mx","Mexico","my","Malaysia","mz","Mozambique","na","Namibia","nato","NATO",
+"nc","New Caledonia (French)","ne","Niger","net","Network","nf","Norfolk Island",
+"ng","Nigeria","ni","Nicaragua","nl","Netherlands","no","Norway",
+"np","Nepal","nr","Nauru","nt","Neutral Zone","nu","Niue","nz","New Zealand","om","Oman","org",
+"Non-Profit Organizations","pa","Panama","pe","Peru","pf","Polynesia (French)",
+"pg","Papua New Guinea","ph","Philippines","pk","Pakistan","pl","Poland",
+"pm","Saint Pierre and Miquelon","pn","Pitcairn Island","pr",
+"Puerto Rico","pt","Portugal","pw","Palau","py","Paraguay","qa","Qatar",
+"re","Reunion (French)","ro","Romania","ru","Russian Federation","rw","Rwanda",
+"sa","Saudi Arabia","sb","Solomon Islands","sc","Seychelles","sd",
+"Sudan","se","Sweden","sg","Singapore","sh","Saint Helena","si","Slovenia",
+"sj","Svalbard and Jan Mayen Islands","sk","Slovak Republic","sl","Sierra Leone",
+"sm","San Marino","sn","Senegal","so","Somalia","sr","Suriname","st",
+"Saint Tome and Principe","su","Former USSR","sv","El Salvador","sy","Syria","sz","Swaziland","tc",
+"Turks and Caicos Islands","td","Chad","tf","French Southern Territories","tg","Togo",
+"th","Thailand","tj","Tadjikistan","tk","Tokelau","tm","Turkmenistan","tn","Tunisia",
+"to","Tonga","tp","East Timor","tr","Turkey","tt","Trinidad and Tobago","tv","Tuvalu",
+"tw","Taiwan","tz","Tanzania","ua","Ukraine","ug","Uganda","uk",
+"United Kingdom","um","USA Minor Outlying Islands","us","United States",
+"uy","Uruguay","uz","Uzbekistan","va","Vatican City State","vc",
+"Saint Vincent &amp; Grenadines","ve","Venezuela","vg","Virgin Islands (British)",
+"vi","Virgin Islands (USA)","vn","Vietnam","vu","Vanuatu","wf","Wallis and Futuna Islands",
+"ws","Samoa","ye","Yemen","yt","Mayotte","yu","Yugoslavia","za","South Africa",
+"zm","Zambia","zr","Zaire","zw","Zimbabwe"
+);
+
+# ---------- Translation tables --------
 # English
 $message[0][0]="Unknown";
 $message[1][0]="Unknown (unresolved ip)";
@@ -893,441 +1369,6 @@ $message[72][9]="Portuguese pt.png";
 
 
 
-# ---------- Browser lists ----------------
-# ("browser id in lower case", "browser text")
-%BrowsersHash = (
-"netscape","defined_later",
-"msie","defined_later",
-
-"libwww","LibWWW",
-"wget","Wget",
-"lynx","Lynx",
-"opera","Opera",
-"22acidownload","22AciDownload",
-"aol\\-iweng","AOL-Iweng",
-"amigavoyager","AmigaVoyager",
-"antfresco","ANT Fresco",
-"bpftp","BPFTP",
-"cyberdog","Cyberdog",
-"dreamcast","Dreamcast",
-"downloadagent","DownloadAgent",
-"ecatch", "eCatch",
-"emailsiphon","EmailSiphon",
-"friendlyspider","FriendlySpider",
-"getright","GetRight",
-"headdump","HeadDump",
-"hotjava","Sun HotJava",
-"ibrowse","IBrowse",
-"icab","iCab",
-"intergo","InterGO",
-"konqueror","Konqueror",
-"linemodebrowser","W3C Line Mode Browser",
-"lotus-notes","Lotus Notes web client",
-"macweb","MacWeb",							#
-"ncsa_mosaic","NCSA Mosaic",
-"netpositive","NetPositive",
-"nutscrape", "Nutscrape",
-"mspie","MS Pocket Internet Explorer",
-"msfrontpageexpress","MS FrontPage Express",
-"omniweb","OmniWeb",
-"real","RealAudio or compatible player",
-"teleport","TelePort Pro (Site grabber)",
-"tzgeturl","TZGETURL",
-"viking","Viking",
-"webcapture","Acrobat (Site grabber)",
-"webfetcher","WebFetcher",
-"webtv","WebTV browser",
-"webexplorer","IBM-WebExplorer",
-"webmirror","WebMirror",
-"webvcr","WebVCR",
-"webzip","WebZIP"
-);
-
-# ---------- OS lists --------------------
-
-# ("os detector in lower case","os text")
-%OSHash      = (
-"win16","Windows 3.xx",
-"win95","Windows 95",
-"win98","Windows 98",
-"winnt","Windows NT",
-"win2000","Windows 2000",
-"wince","Windows CE",
-"beos","BeOS",
-"macintosh","Mac OS",
-"unix","Unknown Unix system",
-"linux","Linux",
-"os/2","Warp OS/2",
-"amigaos","AmigaOS",
-"sunos","Sun Solaris",
-"irix","Irix",
-"osf","OSF Unix",
-"hp-ux","HP Unix",
-"aix","Aix",
-"netbsd","NetBSD",
-"bsdi","BSDi",
-"freebsd","FreeBSD",
-"webtv","WebTV",
-"cp/m","CPM",
-"crayos","CrayOS",
-"riscos","Acorn RISC OS"
-);
-
-# ("text that match in log after changing ' ' or '+' into '_' ","osid")
-%OSAlias     = (
-"windows_98","win98",
-"windows_nt_5","win2000",
-"windows_nt","winnt",
-"windows-nt","winnt",
-"windows_95","win95",
-"win32","winnt",
-"windows_3","win16",			# This works for windows_31 and windows_3.1
-"windows;i;16","win16",
-"windowsce","wince",
-"mac_p","macintosh",			# This works for mac_ppc and mac_powerpc
-"mac_68","macintosh",			# This works for mac_6800 and mac_68k
-"macppc","macintosh",
-"macweb","macintosh"
-);
-
-
-# ---------- Robot lists ------------
-# List can be found at http://info.webcrawler.com/mak/projects/robots/active.html and the next command show how to generate tab list from this file:
-# cat robotslist.txt | sed 's/:/ /' | awk ' /robot-id/ { name=tolower($2); } /robot-name/ { print "\""name"\", \""$0"\"," } ' | sed 's/robot-name *//g' > file
-# Rem: To avoid bad detection, some robots id were removed from this list:
-#      - Robots with ID of 2 letters only
-#      - Robot called "webs"
-# Rem: directhit is changed in direct_hit (it's real id)
-%RobotHash   = (
-"acme.spider", "Acme.Spider",
-"ahoythehomepagefinder", "Ahoy! The Homepage Finder",
-"alkaline", "Alkaline",
-"appie", "Walhello appie",
-"arachnophilia", "Arachnophilia",
-"architext", "ArchitextSpider",
-"aretha", "Aretha",
-"ariadne", "ARIADNE",
-"aspider", "ASpider (Associative Spider)",
-"atn.txt", "ATN Worldwide",
-"atomz", "Atomz.com Search Robot",
-"auresys", "AURESYS",
-"backrub", "BackRub",
-"bigbrother", "Big Brother",
-"bjaaland", "Bjaaland",
-"blackwidow", "BlackWidow",
-"blindekuh", "Die Blinde Kuh",
-"bloodhound", "Bloodhound",
-"brightnet", "bright.net caching robot",
-"bspider", "BSpider",
-"cactvschemistryspider", "CACTVS Chemistry Spider",
-"calif", "Calif",
-"cassandra", "Cassandra",
-"cgireader", "Digimarc Marcspider/CGI",
-"checkbot", "Checkbot",
-"churl", "churl",
-"cmc", "CMC/0.01",
-"collective", "Collective",
-"combine", "Combine System",
-"conceptbot", "Conceptbot",
-"core", "Web Core / Roots",
-"cshkust", "CS-HKUST WISE: WWW Index and Search Engine",
-"cusco", "Cusco",
-"cyberspyder", "CyberSpyder Link Test",
-"deweb", "DeWeb(c) Katalog/Index",
-"dienstspider", "DienstSpider",
-"diibot", "Digital Integrity Robot",
-"direct_hit", "Direct Hit Grabber",
-"dnabot", "DNAbot",
-"download_express", "DownLoad Express",
-"dragonbot", "DragonBot",
-"dwcp", "DWCP (Dridus' Web Cataloging Project)",
-"ebiness", "EbiNess",
-"eit", "EIT Link Verifier Robot",
-"emacs", "Emacs-w3 Search Engine",
-"emcspider", "ananzi",
-"esther", "Esther",
-"evliyacelebi", "Evliya Celebi",
-"fdse", "Fluid Dynamics Search Engine robot",
-"felix", "	Felix IDE",
-"ferret", "Wild Ferret Web Hopper #1, #2, #3",
-"fetchrover", "FetchRover",
-"fido", "fido",
-"finnish", "Hämähäkki",
-"fireball", "KIT-Fireball",
-"fish", "Fish search",
-"fouineur", "Fouineur",
-"francoroute", "Robot Francoroute",
-"freecrawl", "Freecrawl",
-"funnelweb", "FunnelWeb",
-"gazz", "gazz",
-"gcreep", "GCreep",
-"getbot", "GetBot",
-"geturl", "GetURL",
-"golem", "Golem",
-"googlebot", "Googlebot",
-"grapnel", "Grapnel/0.01 Experiment",
-"griffon", "Griffon                                                               ",
-"gromit", "Gromit",
-"gulliver", "Northern Light Gulliver",
-"hambot", "HamBot",
-"harvest", "Harvest",
-"havindex", "havIndex",
-"hometown", "Hometown Spider Pro",
-"wired-digital", "Wired Digital",
-"htdig", "ht://Dig",
-"htmlgobble", "HTMLgobble",
-"hyperdecontextualizer", "Hyper-Decontextualizer",
-"ibm", "IBM_Planetwide",
-"iconoclast", "Popular Iconoclast",
-"ilse", "Ingrid",
-"imagelock", "Imagelock ",
-"incywincy", "IncyWincy",
-"informant", "Informant",
-"infoseek", "InfoSeek Robot 1.0",
-"infoseeksidewinder", "Infoseek Sidewinder",
-"infospider", "InfoSpiders",
-"inspectorwww", "Inspector Web",
-"intelliagent", "IntelliAgent",
-"iron33", "Iron33",
-"israelisearch", "Israeli-search",
-"javabee", "JavaBee",
-"jcrawler", "JCrawler",
-"jeeves", "Jeeves",
-"jobot", "Jobot",
-"joebot", "JoeBot",
-"jubii", "The Jubii Indexing Robot",
-"jumpstation", "JumpStation",
-"katipo", "Katipo",
-"kdd", "KDD-Explorer",
-"kilroy", "Kilroy",
-"ko_yappo_robot", "KO_Yappo_Robot",
-"labelgrabber.txt", "LabelGrabber",
-"larbin", "larbin",
-"legs", "legs",
-"linkscan", "LinkScan",
-"linkwalker", "LinkWalker",
-"lockon", "Lockon",
-"logo_gif", "logo.gif Crawler",
-"lycos", "Lycos",
-"macworm", "Mac WWWWorm",
-"magpie", "Magpie",
-"mediafox", "MediaFox",
-"merzscope", "MerzScope",
-"meshexplorer", "		NEC-MeshExplorer",
-"mindcrawler", "MindCrawler",
-"moget", "moget",
-"momspider", "MOMspider",
-"monster", "Monster",
-"motor", "Motor",
-"muscatferret", "Muscat Ferret",
-"mwdsearch", "Mwd.Search",
-"myweb", "Internet Shinchakubin",
-"netcarta", "NetCarta WebMap Engine",
-"netmechanic", "NetMechanic",
-"netscoop", "NetScoop",
-"newscan-online", "newscan-online",
-"nhse", "NHSE Web Forager",
-"nomad", "Nomad",
-"northstar", "The NorthStar Robot",
-"nzexplorer", "nzexplorer",
-"occam", "Occam",
-"octopus", "HKU WWW Octopus",
-"orb_search", "Orb Search",
-"packrat", "Pack Rat",
-"pageboy", "PageBoy",
-"parasite", "ParaSite",
-"patric", "Patric",
-"perignator", "The Peregrinator",
-"perlcrawler", "PerlCrawler 1.0",
-"phantom", "Phantom",
-"piltdownman", "PiltdownMan",
-"pioneer", "Pioneer",
-"pitkow", "html_analyzer",
-"pjspider", "Portal Juice Spider",
-"pka", "PGP Key Agent",
-"plumtreewebaccessor", "PlumtreeWebAccessor ",
-"poppi", "Poppi",
-"portalb", "PortalB Spider",
-"puu", "GetterroboPlus Puu",
-"python", "The Python Robot",
-"raven", "Raven Search",
-"rbse", "RBSE Spider",
-"resumerobot", "Resume Robot",
-"rhcs", "RoadHouse Crawling System",
-"roadrunner", "Road Runner: The ImageScape Robot",
-"robbie", "Robbie the Robot",
-"robi", "ComputingSite Robi/1.0",
-"roverbot", "Roverbot",
-"safetynetrobot", "SafetyNet Robot",
-"scooter", "Scooter",
-"search_au", "Search.Aus-AU.COM",
-"searchprocess", "SearchProcess",
-"senrigan", "Senrigan",
-"sgscout", "SG-Scout",
-"shaggy", "ShagSeeker",
-"shaihulud", "Shai'Hulud",
-"sift", "Sift",
-"simbot", "Simmany Robot Ver1.0",
-"site-valet", "Site Valet",
-"sitegrabber", "Open Text Index Robot",
-"sitetech", "SiteTech-Rover",
-"slurp", "Inktomi Slurp",
-"smartspider", "Smart Spider",
-"snooper", "Snooper",
-"solbot", "Solbot",
-"spanner", "Spanner",
-"speedy", "Speedy Spider",
-"spider_monkey", "spider_monkey",
-"spiderbot", "SpiderBot",
-"spiderman", "SpiderMan",
-"spry", "Spry Wizard Robot",
-"ssearcher", "Site Searcher",
-"suke", "Suke",
-"sven", "Sven",
-"tach_bw", "TACH Black Widow",
-"tarantula", "Tarantula",
-"tarspider", "tarspider",
-"tcl", "Tcl W3 Robot",
-"techbot", "TechBOT",
-"templeton", "Templeton",
-"titin", "TitIn",
-"titan", "TITAN",
-"tkwww", "The TkWWW Robot",
-"tlspider", "TLSpider",
-"ucsd", "UCSD Crawl",
-"udmsearch", "UdmSearch",
-"urlck", "URL Check",
-"valkyrie", "Valkyrie",
-"victoria", "Victoria",
-"visionsearch", "vision-search",
-"voyager", "Voyager",
-"vwbot", "VWbot",
-"w3index", "The NWI Robot",
-"w3m2", "W3M2",
-"wanderer", "the World Wide Web Wanderer",
-"webbandit", "WebBandit Web Spider",
-"webcatcher", "WebCatcher",
-"webcopy", "WebCopy",
-"webfetcher", "webfetcher",
-"webfoot", "The Webfoot Robot",
-"weblayers", "Weblayers",
-"weblinker", "WebLinker",
-"webmirror", "WebMirror",
-"webmoose", "The Web Moose",
-"webquest", "WebQuest",
-"webreader", "Digimarc MarcSpider",
-"webreaper", "WebReaper",
-"websnarf", "Websnarf",
-"webspider", "WebSpider",
-"webvac", "WebVac",
-"webwalk", "webwalk",
-"webwalker", "WebWalker",
-"webwatch", "WebWatch",
-"wget", "Wget",
-"whowhere", "WhoWhere Robot",
-"wmir", "w3mir",
-"wolp", "WebStolperer",
-"wombat", "The Web Wombat ",
-"worm", "The World Wide Web Worm",
-"wwwc", "WWWC Ver 0.2.5",
-"wz101", "WebZinger",
-"xget", "XGET",
-"nederland.zoek", "Nederland.zoek",
-
-# Not declared robots
-"antibot", "Antibot (Not referenced robot)",
-"daviesbot", "DaviesBot (Not referenced robot)",
-"ezresult",	"Ezresult (Not referenced robot)",
-"fast-webcrawler", "Fast-Webcrawler (Not referenced robot)",
-"jennybot", "JennyBot (Not referenced robot)",
-"justview", "JustView (Not referenced robot)",
-"mercator", "Mercator (Not referenced robot)",
-#"msiecrawler", "MSIECrawler (Not referenced robot)",	MSIECrawler seems to be a grabber not a robot
-"perman surfer", "Perman surfer (Not referenced robot)",
-"unlost_web_crawler", "Unlost_Web_Crawler (Not referenced robot)",
-"webbase", "WebBase (Not referenced robot)",
-# Supposed to be robots
-"webcompass", "webcompass (Not referenced robot)",
-"digout4u", "digout4u (Not referenced robot)",
-"echo", "EchO! (Not referenced robot)",
-"voila", "Voila (Not referenced robot)",
-"boris", "Boris (Not referenced robot)",
-"ultraseek", "Ultraseek (Not referenced robot)",
-"ia_archiver", "ia_archiver (Not referenced robot)",
-# Generic ID
-"robot", "Unknown robot (Not referenced robot)"
-);
-
-# ---------- Domains --------------------
-%DomainsHash = (
-"localhost","localhost",
-
-"ad","Andorra","ae","United Arab Emirates","af","Afghanistan","ag",
-"Antigua and Barbuda","ai","Anguilla","al","Albania","am",
-"Armenia","an","Netherlands Antilles","ao","Angola","aq",
-"Antarctica","ar","Argentina","arpa","Old style Arpanet","as",
-"American Samoa","at","Austria","au","Australia","aw","Aruba","az",
-"Azerbaidjan","ba","Bosnia-Herzegovina","bb","Barbados","bd",
-"Bangladesh","be","Belgium","bf","Burkina Faso","bg","Bulgaria",
-"bh","Bahrain","bi","Burundi","bj","Benin","bm","Bermuda","bn",
-"Brunei Darussalam","bo","Bolivia","br","Brazil","bs","Bahamas",
-"bt","Bhutan","bv","Bouvet Island","bw","Botswana","by","Belarus",
-"bz","Belize","ca","Canada","cc","Cocos (Keeling) Islands","cf",
-"Central African Republic","cg","Congo","ch","Switzerland","ci",
-"Ivory Coast (Cote D'Ivoire)","ck","Cook Islands","cl","Chile","cm","Cameroon",
-"cn","China","co","Colombia","com","Commercial","cr","Costa Rica",
-"cs","Former Czechoslovakia","cu","Cuba","cv","Cape Verde","cx",
-"Christmas Island","cy","Cyprus","cz","Czech Republic","de","Germany",
-"dj","Djibouti","dk","Denmark","dm","Dominica","do","Dominican Republic",
-"dz","Algeria","ec","Ecuador","edu","USA Educational","ee","Estonia",
-"eg","Egypt","eh","Western Sahara","es","Spain","et","Ethiopia","fi","Finland","fj","Fiji","fk",
-"Falkland Islands","fm","Micronesia","fo","Faroe Islands",
-"fr","France","fx","France (European Territory)","ga","Gabon","gb",
-"Great Britain","gd","Grenada","ge","Georgia","gf","French Guyana","gh","Ghana","gi","Gibraltar",
-"gl","Greenland","gm","Gambia","gn","Guinea","gov","USA Government","gp","Guadeloupe (French)","gq",
-"Equatorial Guinea","gr","Greece","gs","S. Georgia &amp; S. Sandwich Isls.",
-"gt","Guatemala","gu","Guam (USA)","gw","Guinea Bissau","gy","Guyana",
-"hk","Hong Kong","hm","Heard and McDonald Islands","hn","Honduras","hr",
-"Croatia","ht","Haiti","hu","Hungary","id","Indonesia","ie","Ireland","il","Israel",
-"in","India","int","International","io","British Indian Ocean Territory",
-"iq","Iraq","ir","Iran","is","Iceland","it","Italy","jm",
-"Jamaica","jo","Jordan","jp","Japan","ke","Kenya","kg","Kyrgyzstan",
-"kh","Cambodia","ki","Kiribati","km","Comoros","kn","Saint Kitts &amp; Nevis Anguilla",
-"kp","North Korea","kr","South Korea","kw","Kuwait","ky",
-"Cayman Islands","kz","Kazakhstan","la","Laos","lb","Lebanon","lc","Saint Lucia",
-"li","Liechtenstein","lk","Sri Lanka","lr","Liberia","ls","Lesotho","lt","Lithuania",
-"lu","Luxembourg","lv","Latvia","ly","Libya","ma","Morocco","mc","Monaco",
-"md","Moldavia","mg","Madagascar","mh","Marshall Islands","mil","USA Military","mk",
-"Macedonia","ml","Mali","mm","Myanmar","mn","Mongolia","mo","Macau",
-"mp","Northern Mariana Islands","mq","Martinique (French)","mr","Mauritania",
-"ms","Montserrat","mt","Malta","mu","Mauritius","mv","Maldives","mw",
-"Malawi","mx","Mexico","my","Malaysia","mz","Mozambique","na","Namibia","nato","NATO",
-"nc","New Caledonia (French)","ne","Niger","net","Network","nf","Norfolk Island",
-"ng","Nigeria","ni","Nicaragua","nl","Netherlands","no","Norway",
-"np","Nepal","nr","Nauru","nt","Neutral Zone","nu","Niue","nz","New Zealand","om","Oman","org",
-"Non-Profit Organizations","pa","Panama","pe","Peru","pf","Polynesia (French)",
-"pg","Papua New Guinea","ph","Philippines","pk","Pakistan","pl","Poland",
-"pm","Saint Pierre and Miquelon","pn","Pitcairn Island","pr",
-"Puerto Rico","pt","Portugal","pw","Palau","py","Paraguay","qa","Qatar",
-"re","Reunion (French)","ro","Romania","ru","Russian Federation","rw","Rwanda",
-"sa","Saudi Arabia","sb","Solomon Islands","sc","Seychelles","sd",
-"Sudan","se","Sweden","sg","Singapore","sh","Saint Helena","si","Slovenia",
-"sj","Svalbard and Jan Mayen Islands","sk","Slovak Republic","sl","Sierra Leone",
-"sm","San Marino","sn","Senegal","so","Somalia","sr","Suriname","st",
-"Saint Tome and Principe","su","Former USSR","sv","El Salvador","sy","Syria","sz","Swaziland","tc",
-"Turks and Caicos Islands","td","Chad","tf","French Southern Territories","tg","Togo",
-"th","Thailand","tj","Tadjikistan","tk","Tokelau","tm","Turkmenistan","tn","Tunisia",
-"to","Tonga","tp","East Timor","tr","Turkey","tt","Trinidad and Tobago","tv","Tuvalu",
-"tw","Taiwan","tz","Tanzania","ua","Ukraine","ug","Uganda","uk",
-"United Kingdom","um","USA Minor Outlying Islands","us","United States",
-"uy","Uruguay","uz","Uzbekistan","va","Vatican City State","vc",
-"Saint Vincent &amp; Grenadines","ve","Venezuela","vg","Virgin Islands (British)",
-"vi","Virgin Islands (USA)","vn","Vietnam","vu","Vanuatu","wf","Wallis and Futuna Islands",
-"ws","Samoa","ye","Yemen","yt","Mayotte","yu","Yugoslavia","za","South Africa",
-"zm","Zambia","zr","Zaire","zw","Zimbabwe"
-);
-
-
 #-------------------------------------------------------
 # Functions
 #-------------------------------------------------------
@@ -1539,7 +1580,7 @@ sub Check_Config {
 	if (! ($ArchiveLogRecords =~ /[0-1]/))    { $ArchiveLogRecords=1; }
 	if (! ($Lang =~ /[0-9]/))                 { $Lang=0; }
 	if ($DefaultFile eq "")                   { $DefaultFile="index.html"; }
-	if (! ($WarningMessages =~ /[0-1]/))      { $WarningMesages=1; }
+	if (! ($WarningMessages =~ /[0-1]/))      { $WarningMessages=1; }
 	if (! ($ShowLinksOnURL =~ /[0-1]/))       { $ShowLinksOnURL=1; }
 	if (! ($ShowFlagLinks =~ /[0-1]/))        { $ShowFlagLinks=1; }
 	if (! ($BarWidth =~ /[\d]/))              { $BarWidth=260; }
@@ -2218,10 +2259,10 @@ if (($YearRequired == $nowyear) && ($MonthRequired eq "year" || $MonthRequired =
 			foreach $key (keys %OSHash) {
 				if ($UserAgent =~ /$key/) { $_os_h{$key}++; $found=1; $TmpHashOS{$UserAgent}=$key; last; }
 			}
-			# OSAlias list ?
+			# OSAliasHash list ?
 			if (!$found) {
-				foreach $key (keys %OSAlias) {
-					if ($UserAgent =~ /$key/) { $_os_h{$OSAlias{$key}}++; $found=1; $TmpHashOS{$UserAgent}=$OSAlias{$key}; last; }
+				foreach $key (keys %OSAliasHash) {
+					if ($UserAgent =~ /$key/) { $_os_h{$OSAliasHash{$key}}++; $found=1; $TmpHashOS{$UserAgent}=$OSAliasHash{$key}; last; }
 				}
 			}
 			# Unknown OS ?
@@ -2749,6 +2790,7 @@ if ($Lang == 1) {
 	";
 }
 
+# Dutch tooltips
 if ($Lang == 2) {
 	print "
 	<DIV CLASS=\"classTooltip\" ID=\"tt1\">
@@ -3312,9 +3354,8 @@ for ($ix=0; $ix<=23; $ix++) {
 print "</TR>\n";
 
 print "<TR>\n";
-for ($ix=0; $ix<=23; $ix++) {
-	$hr=$ix+1;
-	if ($ix>11) { $hr=$ix-11; }
+for ($ix=1; $ix<=24; $ix++) {
+	$hr=$ix; if ($hr>12) { $hr=$hr-12; }
 	print "<TH><IMG SRC=\"$DirIcons\/clock\/hr$hr.png\" width=10></TH>";
 }
 print "</TR>\n";
@@ -3390,8 +3431,8 @@ print "<TR><TD CLASS=LEFT><b>$message[39][$Lang]:</b></TD><TD>$_from_h[1]&nbsp;<
 if ($TotalHits > 0) { $_=int($_from_h[2]/$TotalHits*1000)/10; }
 print "<TR onmouseover=\"ShowTooltip(13);\" onmouseout=\"HideTooltip(13);\"><TD CLASS=LEFT><b>$message[40][$Lang] :</b><br>\n";
 print "<TABLE>\n";
-foreach $SE (@sortsereferrals) {
-	print "<TR><TD CLASS=LEFT>- $SearchEnginesHash{$SE} </TD><TD align=right>$_se_referrals_h{\"$SE\"}</TD></TR>\n";
+foreach $se (@sortsereferrals) {
+	print "<TR><TD CLASS=LEFT>- $SearchEnginesHash{$se} </TD><TD align=right>$_se_referrals_h{\"$se\"}</TD></TR>\n";
 }
 print "</TABLE></TD>\n";
 print "<TD valign=top>$_from_h[2]&nbsp;</TD><TD valign=top>$_&nbsp;%</TD>\n</TR>\n";
@@ -3408,7 +3449,7 @@ foreach $from (@sortpagerefs) {
 		$lien=$from;
 		$lien =~ s/\"//g;
 		$lien=substr($lien,0,$MaxLengthOfURL);
-		if ($ShowLinksOnUrl && ($lien =~ /(ftp|http):\/\//)) {
+		if ($ShowLinksOnUrl && ($lien =~ /(ftp|http|https):\/\//)) {
 		    print "<TR><TD CLASS=LEFT>- <A HREF=$from>$lien</A></TD> <TD>$_pagesrefs_h{$from}</TD></TR>\n";
 		} else {
 			print "<TR><TD CLASS=LEFT>- $lien </TD><TD>$_pagesrefs_h{$from}</TD></TR>\n";
