@@ -5,11 +5,11 @@
 #------------------------------------------------------------------------------
 # $Revision$ - $Author$ - $Date$
 
-# use strict is commented to make AWStats working with old perl.
-use strict;no strict "refs";
+#$|=1;
 #use warnings;		# Must be used in test mode only. This reduce a little process speed
 #use diagnostics;	# Must be used in test mode only. This reduce a lot of process speed
-#use Thread;
+use strict;no strict "refs";
+use Time::Local;	# use Time::Local 'timelocal_nocheck' is faster but not supported by all Time::Local modules
 
 
 #------------------------------------------------------------------------------
@@ -26,7 +26,7 @@ my $Extension;
 my $SiteConfig;
 my $Update=0;
 my $BuildPDF=0;
-my $Date=0;
+my $BuildDate=0;
 my $Lang;
 my $YearRequired;
 my $MonthRequired;
@@ -48,6 +48,13 @@ $ShowDomainsStats $ShowHostsStats $ShowAuthenticatedUsers $ShowRobotsStats
 $ShowEMailSenders $ShowEMailReceivers $ShowSessionsStats $ShowPagesStats $ShowFileTypesStats
 $ShowOSStats $ShowBrowsersStats $ShowScreenSizeStats $ShowOriginStats $ShowKeyphrasesStats
 $ShowKeywordsStats $ShowMiscStats $ShowHTTPErrorsStats $ShowSMTPErrorsStats
+/;
+# ----- Time vars -----
+use vars qw/
+$starttime
+$nowtime $tomorrowtime
+$nowweekofmonth $nowweekofyear $nowdaymod $nowsmallyear
+$nowsec $nowmin $nowhour $nowday $nowmonth $nowyear $nowwday $nowyday $nowns
 /;
 
 
@@ -232,7 +239,8 @@ if ($QueryString =~ /(^|-|&)staticlinksext=([^&]+)/i)	{ $StaticExt="$2"; }
 if ($QueryString =~ /(^|-|&)dir=([^&]+)/i)			{ $OutputDir="$2"; }
 if ($QueryString =~ /(^|-|&)diricons=([^&]+)/i)		{ $DirIcons="$2"; }
 if ($QueryString =~ /(^|-|&)update/i)				{ $Update=1; }
-if ($QueryString =~ /(^|-|&)date/i)					{ $Date=1; }
+if ($QueryString =~ /(^|-|&)date/i)					{ $BuildDate='%YY%MM%DD'; }		# For backward compatibility
+if ($QueryString =~ /(^|-|&)builddate=?([^&]*)/i)	{ $BuildDate=$2||'%YY%MM%DD'; }
 if ($QueryString =~ /(^|-|&)year=(\d\d\d\d)/i) 		{ $YearRequired="$2"; }
 if ($QueryString =~ /(^|-|&)month=(\d{1,2})/i || $QueryString =~ /(^|-|&)month=(all)/i) { $MonthRequired="$2"; }
 if ($QueryString =~ /(^|-|&)lang=([^&]+)/i)			{ $Lang="$2"; }
@@ -258,7 +266,7 @@ if (! $SiteConfig) {
 	print "   -awstatsprog=pathtoawstatspl AWStats software (awstats.pl) path\n";
 	print "   -dir=outputdir               Output directory for generated pages\n";
 	print "   -diricons=icondir            Relative path to use as icon dir in <img> links\n";
-	print "   -date                        Used to add build date in built pages file name\n";
+	print "   -builddate=%YY%MM%DD         Used to add build date in built pages filenames\n";
 	print "   -staticlinksext=xxx          For pages with .xxx extension instead of .html\n";
 	print "   -buildpdf[=pathtohtmldoc]    Build a PDF file after building HTML pages.\n";
 	print "                                 Output directory must contains icon directory\n";
@@ -334,13 +342,41 @@ if ($Update) {
 
 # Built the OutputSuffix value (used later to build page name)
 $OutputSuffix=$SiteConfig;
-if ($Date) {
-	my ($nowsec,$nowmin,$nowhour,$nowday,$nowmonth,$nowyear,$nowwday) = localtime(time);
+if ($BuildDate) {
+	($nowsec,$nowmin,$nowhour,$nowday,$nowmonth,$nowyear,$nowwday,$nowyday) = localtime(time);
+	$nowweekofmonth=int($nowday/7);
+	$nowweekofyear=int(($nowyday-1+6-($nowwday==0?6:$nowwday-1))/7)+1; if ($nowweekofyear > 52) { $nowweekofyear = 1; }
+	$nowdaymod=$nowday%7;
+	$nowwday++;
+	$nowns=Time::Local::timegm(0,0,0,$nowday,$nowmonth,$nowyear);
+	if ($nowdaymod <= $nowwday) { if (($nowwday != 7) || ($nowdaymod != 0)) { $nowweekofmonth=$nowweekofmonth+1; } }
+	if ($nowdaymod >  $nowwday) { $nowweekofmonth=$nowweekofmonth+2; }
+	# Change format of time variables
+	$nowweekofmonth="0$nowweekofmonth";
+	if ($nowweekofyear < 10) { $nowweekofyear = "0$nowweekofyear"; }
 	if ($nowyear < 100) { $nowyear+=2000; } else { $nowyear+=1900; }
-	++$nowmonth;
-	$OutputSuffix.=".".sprintf("%04s%02s%02s",$nowyear,$nowmonth,$nowday);
+	$nowsmallyear=$nowyear;$nowsmallyear =~ s/^..//;
+	if (++$nowmonth < 10) { $nowmonth = "0$nowmonth"; }
+	if ($nowday < 10) { $nowday = "0$nowday"; }
+	if ($nowhour < 10) { $nowhour = "0$nowhour"; }
+	if ($nowmin < 10) { $nowmin = "0$nowmin"; }
+	if ($nowsec < 10) { $nowsec = "0$nowsec"; }
+	# Replace tag with new value
+	$BuildDate =~ s/%YYYY/$nowyear/ig;
+	$BuildDate =~ s/%YY/$nowsmallyear/ig;
+	$BuildDate =~ s/%MM/$nowmonth/ig;
+	#$BuildDate =~ s/%MO/$MonthNumLibEn{$nowmonth}/ig;
+	$BuildDate =~ s/%DD/$nowday/ig;
+	$BuildDate =~ s/%HH/$nowhour/ig;
+	$BuildDate =~ s/%NS/$nowns/ig;
+	$BuildDate =~ s/%WM/$nowweekofmonth/g;
+	my $nowweekofmonth0=$nowweekofmonth-1; $BuildDate =~ s/%Wm/$nowweekofmonth0/g;
+	$BuildDate =~ s/%WY/$nowweekofyear/g;
+	my $nowweekofyear0=sprintf("%02d",$nowweekofyear-1); $BuildDate =~ s/%Wy/$nowweekofyear0/g;
+	$BuildDate =~ s/%DW/$nowwday/g;
+	my $nowwday0=$nowwday-1; $BuildDate =~ s/%Dw/$nowwday0/g;
+	$OutputSuffix.=".$BuildDate";
 }
-
 
 my $cpt=0;
 my $NoLoadPlugin="";

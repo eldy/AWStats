@@ -62,6 +62,8 @@ New features/improvements:
 - Reports look better on Mozilla browsers.
 - configure.pl: A new script to configure AWStats and Apache and
   build a simple config file.
+- awstats_buildstaticpages.pl: The -date option has been replaced
+  by the -buildate=%YY%MM%DD option so you can choose your own date format.
 - logresolvemerge.pl: can use several threads for reverse DNS lookup
   with Perl 5.8.
 - maillogconvert.pl: Allow to process qmail log preprocessed by
