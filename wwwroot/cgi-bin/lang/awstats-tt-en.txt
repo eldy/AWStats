@@ -20,7 +20,7 @@
 	#PROG# recognizes each access to your site after a <b>search</b> from the <b>#SearchEnginesArray# most popular Internet Search Engines and Directories</b> (such as Yahoo, Altavista, Lycos, Google, Voila, etc...).
 	</DIV>
 	<DIV CLASS="CTooltip" ID="tt14">
-	List of all <b>external pages</b> which were used to link (or eneter) to your site (Only the <b>#MaxNbOfRefererShown#</b> most often used external pages are shown.
+	List of all <b>external pages</b> which were used to link (and enter) to your site (Only the <b>#MaxNbOfRefererShown#</b> most often used external pages are shown).
 	Links used by the results of the search engines are excluded here because they have already been included on the previous line within this table.
 	</DIV>
 	<DIV CLASS="CTooltip" ID="tt15">
@@ -36,7 +36,7 @@
 	<DIV CLASS="CTooltip" ID="tt202"> Request was understood by server but will be processed later. </DIV>
 	<DIV CLASS="CTooltip" ID="tt204"> Server has processed the request but there is no document to send. </DIV>
 	<DIV CLASS="CTooltip" ID="tt206"> Partial content. </DIV>
-	<DIV CLASS="CTooltip" ID="tt301"> Requested document was moved and is now at another address given in awnswer. </DIV>
+	<DIV CLASS="CTooltip" ID="tt301"> Requested document was moved and is now at another address given in answer. </DIV>
 	<DIV CLASS="CTooltip" ID="tt302"> No description for this error. </DIV>
 	<DIV CLASS="CTooltip" ID="tt400"> Syntax error, server didn't understand request. </DIV>
 	<DIV CLASS="CTooltip" ID="tt401"> Tried to reach an <b>URL where a login/password pair was required</b>.<br>A high number within this item could mean that someone (such as a hacker) is attempting to crack, or enter into your site (hoping to enter a secured area by trying different login/password pairs, for instance). </DIV>
