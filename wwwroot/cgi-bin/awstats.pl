@@ -165,7 +165,7 @@ use vars qw/
 $DirLock $DirCgi $DirData $DirIcons $DirLang $AWScript $ArchiveFileName
 $AllowAccessFromWebToFollowingIPAddresses $HTMLHeadSection $HTMLEndSection $LinksToWhoIs $LinksToIPWhoIs
 $LogFile $LogFormat $LogSeparator $Logo $LogoLink $StyleSheet $WrapperScript $SiteDomain
-$UseHTTPSLinkForUrl $URLQuerySeparators $ErrorMessages
+$UseHTTPSLinkForUrl $URLQuerySeparators $URLWithAnchor $ErrorMessages
 /;
 ($DirLock, $DirCgi, $DirData, $DirIcons, $DirLang, $AWScript, $ArchiveFileName,
 $AllowAccessFromWebToFollowingIPAddresses, $HTMLHeadSection, $HTMLEndSection, $LinksToWhoIs, $LinksToIPWhoIs,
@@ -1144,6 +1144,7 @@ sub Parse_Config {
 			}
 		if ($param =~ /^AuthenticatedUsersNotCaseSensitive$/)		{ $AuthenticatedUsersNotCaseSensitive=$value; next; }
 		if ($param =~ /^URLNotCaseSensitive$/)		{ $URLNotCaseSensitive=$value; next; }
+		if ($param =~ /^URLWithAnchor$/)			{ $URLWithAnchor=$value; next; }
 		if ($param =~ /^URLQuerySeparators$/)		{ $URLQuerySeparators=$value; $URLQuerySeparators =~ s/\s//g; next; }
 		if ($param =~ /^URLWithQuery$/)				{ $URLWithQuery=$value; next; }
 		if ($param =~ /^URLWithQueryWithoutFollowingParameters$/)	{
@@ -1521,6 +1522,7 @@ sub Check_Config {
 	if (! $DefaultFile[0])                          { $DefaultFile[0]="index.html"; }
 	if ($AuthenticatedUsersNotCaseSensitive !~ /[0-1]/)       { $AuthenticatedUsersNotCaseSensitive=0; }
 	if ($URLNotCaseSensitive !~ /[0-1]/)           	{ $URLNotCaseSensitive=0; }
+	if ($URLWithAnchor !~ /[0-1]/)                 	{ $URLWithAnchor=0; }
 	if (! $URLQuerySeparators)                 		{ $URLQuerySeparators='?;'; }
 	if ($URLWithQuery !~ /[0-1]/)                 	{ $URLWithQuery=0; }
 	if ($URLReferrerWithQuery !~ /[0-1]/)          	{ $URLReferrerWithQuery=0; }
@@ -5196,9 +5198,8 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 		if ($URLNotCaseSensitive) { $field[$pos_url] =~ tr/A-Z/a-z/; }
 		if ($protocol == 2) { $field[$pos_url] =~ s/\s/%20/g; }
 		# Possible URL syntax for $field[$pos_url]: /mydir/mypage.ext?param1=x&param2=y#aaa, /mydir/mypage.ext#aaa, /
-		my $urlwithnoquery;
-		my $tokenquery;
-		my $standalonequery;
+		my $urlwithnoquery; my $tokenquery; my $standalonequery; my $anchor='';
+		if ($field[$pos_url] =~ s/#(\w*)$//) { $anchor=$1; }	# Remove and save anchor
 		if ($URLWithQuery) {
 			$urlwithnoquery=$field[$pos_url];
 			my $foundparam=($urlwithnoquery =~ s/([$URLQuerySeparators])(.*)$//);
@@ -5222,13 +5223,15 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
  			}
 		}
 		else {
-			# Trunc CGI parameters in URL
+			# Trunc parameters of URL
 			$field[$pos_url] =~ s/([$URLQuerySeparators])(.*)$//;
 			$urlwithnoquery=$field[$pos_url];
 			$tokenquery=$1||'';
 			$standalonequery=$2||'';
 		}
-		# Here now urlwithnoquery is /mydir/mypage.ext, /mydir, /
+		if ($URLWithAnchor && $anchor) { $field[$pos_url].="#$anchor"; }	# Restore anchor
+
+		# Here now urlwithnoquery is /mydir/mypage.ext, /mydir, /, /page#XXX
 		# Here now tokenquery is '' or '?' or ';'
 		# Here now standalonequery is '' or 'param1=x'
 

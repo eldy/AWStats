@@ -13,8 +13,9 @@ Fixes:
 - Tooltips now works correctly with Netscape (>= 5.0).
 
 New features/improvments:
-- Added urlbuildalias.pl tool.
+- Added urlaliasbuilder.pl tool.
 - Added URL in possible values for ExtraSection first column.
+- New parameter: URLWithAnchor.
 
 Other/Documentation:
 - GeoIP memory cache code is now stored inside plugin code.
