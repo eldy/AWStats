@@ -203,6 +203,7 @@ $message[68][0]="Sep";
 $message[69][0]="Oct";
 $message[70][0]="Nov";
 $message[71][0]="Dec";
+$message[72][0]="English us.png";
 
 # French
 $message[0][1]="Inconnus";
@@ -277,6 +278,7 @@ $message[68][1]="Sep";
 $message[69][1]="Oct";
 $message[70][1]="Nov";
 $message[71][1]="Déc";
+$message[72][1]="French fr.png";
 
 # Dutch
 $message[0][2]="Onbekend";
@@ -351,6 +353,7 @@ $message[68][2]="Sep";
 $message[69][2]="Oct";																																																										
 $message[70][2]="Nov";																																																										
 $message[71][2]="Dec";
+$message[72][2]="Dutch nl.png";
 
 # Spanish
 $message[0][3]="Desconocido";
@@ -425,6 +428,7 @@ $message[68][3]="Sep";
 $message[69][3]="Oct";
 $message[70][3]="Nov";
 $message[71][3]="Dic";
+$message[72][3]="Spanish es.png";
 
 # Italian
 $message[0][4]="Sconosciuto";
@@ -499,6 +503,7 @@ $message[68][4]="Sep";
 $message[69][4]="Oct";
 $message[70][4]="Nov";
 $message[71][4]="Dic";
+$message[72][4]="Italian it.png";
 
 # German
 $message[0][5]="Unbekannt";
@@ -573,6 +578,7 @@ $message[68][5]="Sep";
 $message[69][5]="Oct";
 $message[70][5]="Nov";
 $message[71][5]="Dez";
+$message[72][5]="German de.png";
 
 # Polish
 $PageCode[6]="<META HTTP-EQUIV=\"content-type\" CONTENT=\"text/html; charset=iso-8859-2\">";
@@ -648,6 +654,7 @@ $message[68][6]="Wrzesieñ";
 $message[69][6]="Pa¼dziernik";
 $message[70][6]="Listopad";
 $message[71][6]="Grudzieñ";
+$message[72][6]="Polish pl.png";
 
 # Greek (simos@hellug.gr)
 $PageCode[7]="<META HTTP-EQUIV=\"content-type\" CONTENT=\"text/html; charset=iso-8859-7\">";
@@ -723,6 +730,7 @@ $message[68][7]="Óåð";
 $message[69][7]="Ïêô";
 $message[70][7]="ÍïÝ";
 $message[71][7]="Äåê";
+$message[72][7]="Greek gr.png";
 
 
 # ---------- Browser lists ----------------
@@ -756,6 +764,7 @@ $message[71][7]="Äåê";
 "lotus-notes","Lotus Notes web client",
 "macweb","MacWeb",							#
 "ncsa_mosaic","NCSA Mosaic",
+"netpositive","NetPositive",
 "nutscrape", "Nutscrape",
 "mspie","MS Pocket Internet Explorer",
 "msfrontpageexpress","MS FrontPage Express",
@@ -783,23 +792,24 @@ $message[71][7]="Äåê";
 "winnt","Windows NT",
 "win2000","Windows 2000",
 "wince","Windows CE",
-"cp/m","CPM",
-"sunos","Sun Solaris",
-"irix","Irix",
+"beos","BeOS", 
 "macintosh","Mac OS",
 "unix","Unknown Unix system",
 "linux","Linux",
 "os/2","Warp OS/2",
-"osf","OSF Unix",
-"crayos","CrayOS",
 "amigaos","AmigaOS",
+"sunos","Sun Solaris",
+"irix","Irix",
+"osf","OSF Unix",
 "hp-ux","HP Unix",
-"riscos","Acorn RISC OS",
 "aix","Aix",
 "netbsd","NetBSD",
 "bsdi","BSDi",
 "freebsd","FreeBSD",
-"webtv","WebTV"
+"webtv","WebTV",
+"cp/m","CPM",
+"crayos","CrayOS",
+"riscos","Acorn RISC OS"
 );
 
 # ("text that match in log after changing ' ' or '+' into '_' ","osid")
@@ -1614,17 +1624,12 @@ if ($ENV{"GATEWAY_INTERFACE"} ne "") {
 	$QueryString = $ENV{"QUERY_STRING"};
 	if ($QueryString =~ /site=/) { $LocalSite=$QueryString; $LocalSite =~ s/.*site=//; $LocalSite =~ s/&.*//; }
 	else { $LocalSite = $ENV{"SERVER_NAME"}; }
-	$PROG=$0; $PROG =~ s/.*\\//; $PROG =~ s/.*\///; $DIR=$0; $DIR =~ s/$PROG//;
-	$Extension=$PROG; $Extension =~ s/.*\.pl?/pl/;
-	$PROG =~ s/\.$Extension$//;
 	print("Content-type: text/html\n\n\n");
-	}
+}
 else {
 	$LocalSite = $ARGV[1];
-	$PROG=$0; $PROG =~ s/.*\\//; $PROG =~ s/.*\///; $DIR=$0; $DIR =~ s/$PROG//;
-	$Extension=$PROG; $Extension =~ s/.*\.pl?/pl/;
-	$PROG =~ s/\.$Extension$//;
-	}
+}
+($DIR=$0) =~ s/([^\/\\]*)$//; ($PROG=$1) =~ s/\.([^\.]*)$//; $Extension=$1;
 $LocalSite =~ tr/A-Z/a-z/;
 $LocalSiteWithoutwww = $LocalSite; $LocalSiteWithoutwww =~ s/www\.//;
 if (($ENV{"GATEWAY_INTERFACE"} eq "") && ($ARGV[0] eq "" || $ARGV[0] ne "-h" || $ARGV[1] eq "")) {
@@ -1718,14 +1723,16 @@ for ($ix=0; $ix<5; $ix++) {	$_from_h[$ix]=0; }
 
 print "<a href=\"http://awstats.sourceforge.net\" target=_newawstats><img src=$DirIcons/other/$Logo border=0 alt=\"$PROG Official Web Site\" title=\"$PROG Official Web Site\"></a><br>\n";
 if ($ShowFlagLinks == 1) { 
-	if ($Lang != 0) { print "<a href=\"$DirCgi$PROG.$Extension?site=$LocalSite&year=$YearRequired&month=$MonthRequired&lang=0\"><img src=\"$DirIcons\/flags\/us.png\" height=14 border=0 alt=\"English\" title=\"English\"></a>\n"; }
-	if ($Lang != 1) { print " &nbsp; <a href=\"$DirCgi$PROG.$Extension?site=$LocalSite&year=$YearRequired&month=$MonthRequired&lang=1\"><img src=\"$DirIcons\/flags\/fr.png\" height=14 border=0 alt=\"French\" title=\"French\"></a>\n"; }
-	if ($Lang != 2) { print " &nbsp; <a href=\"$DirCgi$PROG.$Extension?site=$LocalSite&year=$YearRequired&month=$MonthRequired&lang=2\"><img src=\"$DirIcons\/flags\/nl.png\" height=14 border=0 alt=\"Dutch\" title=\"Dutch\"></a>\n"; }
-	if ($Lang != 3) { print " &nbsp; <a href=\"$DirCgi$PROG.$Extension?site=$LocalSite&year=$YearRequired&month=$MonthRequired&lang=3\"><img src=\"$DirIcons\/flags\/es.png\" height=14 border=0 alt=\"Spanish\" title=\"Spanish\"></a>\n"; }
-	if ($Lang != 4) { print " &nbsp; <a href=\"$DirCgi$PROG.$Extension?site=$LocalSite&year=$YearRequired&month=$MonthRequired&lang=4\"><img src=\"$DirIcons\/flags\/it.png\" height=14 border=0 alt=\"Italian\" title=\"Italian\"></a>\n"; }
-	if ($Lang != 5) { print " &nbsp; <a href=\"$DirCgi$PROG.$Extension?site=$LocalSite&year=$YearRequired&month=$MonthRequired&lang=5\"><img src=\"$DirIcons\/flags\/de.png\" height=14 border=0 alt=\"German\" title=\"German\"></a>\n"; }
-	print "<br>";
+	my $sp = '';
+	for (0..5) {		# Only flags for 5 major languages
+		if ($Lang != $_) {
+			my ($lng, $flg) = split(/\s+/, $message[72][$_]);
+			print "$sp<a href=\"$DirCgi$PROG.$Extension?site=$LocalSite&year=$YearRequired&month=$MonthRequired&lang=$_\"><img src=\"$DirIcons\/flags\/$flg\" height=14 border=0 alt=\"$lng\" title=\"$lng\"></a>\n";
+			$sp = '&nbsp;';
+		}
 	}
+	print "<br>";
+}
 #print "<b><font face=\"verdana\" size=1><a href=\"$HomeURL\">HomePage</a> &#149\; <a href=\"javascript:history.back()\">Back</a></font></b><br>\n";
 print "<font size=1>$message[54][$Lang]</font><br>\n";
 print "<BR><BR>\n";
@@ -2090,11 +2097,11 @@ if (($YearRequired == $nowyear) && ($MonthRequired eq "year" || $MonthRequired =
 							$found=1;
 							# Extract keywords
 							$refurl[1] =~ tr/A-Z/a-z/;				# Full param string in lowcase
-							&UnescapeURLParam($refurl[1]);			# Change [ xxx=cache:www+aaa+bbb/ccc+ddd%20eee'fff&yyy=123 ] into [ xxx=cache:www aaa bbb ccc ddd eee fff&yyy=123 ]
 							@paramlist=split(/&/,$refurl[1]);
 							if ($SearchEngineKnownUrl{$key}) {		# Search engine with known URL syntax
 								foreach $param (@paramlist) {
 									if ($param =~ /^$SearchEngineKnownUrl{$key}/) { # We found good parameter
+										&UnescapeURLParam($param);			# Change [ xxx=cache:www+aaa+bbb/ccc+ddd%20eee'fff ] into [ xxx=cache:www aaa bbb ccc ddd eee fff ]
 										# Ok, "xxx=cache:www aaa bbb ccc ddd eee fff" is a search parameter line
 										$param =~ s/.*=//;					# Cut "xxx="
 										$param =~ s/^cache:[^ ]* //;
@@ -2115,6 +2122,7 @@ if (($YearRequired == $nowyear) && ($MonthRequired eq "year" || $MonthRequired =
 							}
 							else {									# Search engine with unknown URL syntax
 								foreach $param (@paramlist) {
+									&UnescapeURLParam($param);		# Change [ xxx=cache:www+aaa+bbb/ccc+ddd%20eee'fff ] into [ xxx=cache:www aaa bbb ccc ddd eee fff ]
 									$keep=1;
 									foreach $paramtoexclude (@WordsToCleanSearchUrl) {
 										if ($param =~ /.*$paramtoexclude.*/) { $keep=0; last; } # Not the param with search criteria
