@@ -5,7 +5,7 @@
 #-------------------------------------------------------
 # Tool built from original work of Odd-Jarle Kristoffersen
 # Note 1: QMail must log in syslog format for timestamps to work.
-# Note 2: Qmail logging is not 100% accurate. Some messages might
+# Note 2: QMail logging is not 100% accurate. Some messages might
 # not be logged correctly or completely.
 #-------------------------------------------------------
 use strict;no strict "refs";
@@ -14,11 +14,13 @@ use strict;no strict "refs";
 #-------------------------------------------------------
 # Defines
 #-------------------------------------------------------
-my $REVISION='$Revision$'; $REVISION =~ /\s(.*)\s/; $REVISION=$1;
-my $VERSION="1.0 (build $REVISION)";
+use vars qw/ $REVISION $VERSION /;
+$REVISION='$Revision$'; $REVISION =~ /\s(.*)\s/; $REVISION=$1;
+$VERSION="1.1 (build $REVISION)";
 
 use vars qw/
 $DIR $PROG $Extension
+$Debug
 %entry $help
 $mode $year $Debug
 /;
@@ -56,11 +58,15 @@ sub CleanEmail { $_=shift;
 }
 
 # Clean host addresses
-# Input:  servername[123.123.123.123]
+# Input:  "servername[123.123.123.123]", "servername [123.123.123.123]"
+#         "root@servername", "[123.123.123.123]"
 # Return: servername or 123.123.123.123 if servername is 'unknown'
-sub CleanHost { $_=shift;
-	if (/^unknown\[/) { $_ =~ /\[(.*)\]/; $_=$1; }
-	else { $_ =~ s/\[.*$//; }
+sub CleanHost {
+	$_=shift;
+	if (/^\[(.*)\]$/) { $_=$1; }						# If [ip] we keep ip
+	if (/^unknown\s*\[/) { $_ =~ /\[(.*)\]/; $_=$1; }	# If unknown [ip], we keep ip
+	else { $_ =~ s/\s*\[.*$//; }
+	$_ =~ s/^.*\@//;									# If x@y, we keep y
 	return $_;
 }
 
@@ -71,6 +77,13 @@ sub CleanDomain { $_=shift;
 	s/>.*$//; s/[<>]//g;
 	s/^.*@//; 
 	if (! $_) { $_ = 'localhost'; }
+	return $_;
+}
+
+# Return string without starting and ending space
+#
+sub trim { $_=shift;
+	s/^\s+//; s/\s+$//;
 	return $_;
 }
 
@@ -111,7 +124,8 @@ sub OutputRecord {
 	# Clean to
 	if ($mode eq 'vadmin') { $entry{$id}{'to'}=&CleanVadminUser($entry{$id}{'to'}); }
 	else { $entry{$id}{'to'}=&CleanEmail($entry{$id}{'to'}); }
-
+	$entry{$id}{'to'}||='<>';
+	
 	# Write line
 	print "$year-$entry{$id}{mon}-$entry{$id}{day} $entry{$id}{time} $entry{$id}{from} $entry{$id}{to} $entry{$id}{relay_s} $entry{$id}{relay_r} SMTP - $entry{$id}{code} ".($entry{$id}{size}||0)."\n";
 	undef $entry{$id};
@@ -122,8 +136,15 @@ sub OutputRecord {
 #-------------------------------------------------------
 # MAIN
 #-------------------------------------------------------
-$mode=lc(shift);
-$year=shift;
+
+# Prepare QueryString
+my %param=();
+for (0..@ARGV-1) { $param{$_}=$ARGV[$_]; }
+foreach my $key (sort keys %param) {
+	if ($param{$key} =~ /(^|-|&)debug=([^&]+)/i) { $Debug=$2; shift; next; }
+	if ($param{$key} =~ /^(\d+)$/) { $year=$1; shift; next; }
+	if ($param{$key} =~ /^(standard|vadmin)$/i) { $mode=$1; shift; next; }
+}
 if ($mode ne 'standard' and $mode ne 'vadmin') { $help = 1; }
 
 ($DIR=$0) =~ s/([^\/\\]*)$//; ($PROG=$1) =~ s/\.([^\.]*)$//; $Extension=$1;
@@ -159,6 +180,8 @@ HELPTEXT
 # Start Processing Input Logfile
 #
 while (<>) {
+	chomp $_; s/\r//;
+
 	my $rowid=0;
 
 	#
@@ -168,27 +191,53 @@ while (<>) {
 		my ($id,$relay_s)=m/\w+\s+\d+\s+\d+:\d+:\d+\s+\w+\s+(?:sendmail|postfix\/smtpd|postfix\/smtp)\[\d+\]:\s+(.*?):\s+client=(.*)/;
 		$rowid=$id;
 		$entry{$id}{'relay_s'}=$relay_s;
-#		print "Found host sender on a 'client' line: $entry{$id}{'relay_s'}\n";
+		debug("For id=$id, found host sender on a 'client' line: $entry{$id}{'relay_s'}");
 	}
 
 	#
-	# See if we received sendmail or postfix email reject error
+	# See if we received postfix email reject error
 	#
 	elsif (/: reject/ ne undef) {
-		# TODO Trap SMTP erros
-		my ($mon,$day,$time,$id,$code,$from,$to)=m/(\w+)\s+(\d+)\s+(\d+:\d+:\d+)\s+\w+\s+(?:sendmail|postfix\/smtpd|postfix\/smtp)\[\d+\]:\s+(.*?):\s+(.*)\s+from=([^\s,]*)\s+to=([^\s,]*)\s/;
+		# Example: 
+		# postfix:  Jun 29 04:19:04 apollon postfix/smtpd[26553]: 1954F3B8A4: reject: RCPT from unknown[80.245.33.2]: 450 <partenaires@chiensderace.com>: User unknown in local recipient table; from=<httpd@fozzy2.dpi-europe.fr> to=<partenaires@chiensderace.com> proto=ESMTP helo=<fozzy2.dpi-europe.fr>
+		#
+		my ($mon,$day,$time,$id,$code,$from,$to)=m/(\w+)\s+(\d+)\s+(\d+:\d+:\d+)\s+\w+\s+(?:postfix\/smtpd|postfix\/smtp)\[\d+\]:\s+(.*?):\s+(.*)\s+from=([^\s,]*)\s+to=([^\s,]*)\s/;
 		$rowid=$id;
 		# $code='reject: RCPT from c66.191.66.89.dul.mn.charter.com[66.191.66.89]: 450 <partenaires@chiensderace.com>: User unknown in local recipient table;'
-		if ($code =~ /\s+(\d\d\d)\s+/) { $entry{$id}{'code'}=$1; }
-		else { $entry{$id}{'code'}=999; }	# Unkown error
-		$entry{$id}{'from'}=$from;
-		$entry{$id}{'to'}=$to;
-		$entry{$id}{'mon'}=$mon;
-		$entry{$id}{'day'}=$day;
-		$entry{$id}{'time'}=$time;
-#		print "Found an error incoming message: id=$id code=$entry{$id}{'code'} from=$entry{$id}{'from'} to=$entry{$id}{'to'}\n";
+		if ($rowid) {
+			if ($code =~ /\s+(\d\d\d)\s+/) { $entry{$id}{'code'}=$1; }
+			else { $entry{$id}{'code'}=999; }	# Unkown error
+			$entry{$id}{'from'}=&trim($from);
+			$entry{$id}{'to'}=&trim($to);
+			$entry{$id}{'mon'}=$mon;
+			$entry{$id}{'day'}=$day;
+			$entry{$id}{'time'}=$time;
+			debug("For id=$id, found a postfix error incoming message: id=$id code=$entry{$id}{'code'} from=$entry{$id}{'from'} to=$entry{$id}{'to'}");
+		}
 	}
-
+	#
+	# See if we received sendmail reject error
+	#
+	elsif (/, reject/ ne undef) {
+		# Example: 
+		# sm-mta:   Jul 27 04:06:05 androneda sm-mta[6641]: h6RB44tg006641: ruleset=check_mail, arg1=<7ms93d4ms@topprodsource.com>, relay=crelay1.easydns.com [216.220.57.222], reject=451 4.1.8 Domain of sender address 7ms93d4ms@topprodsource.com does not resolve
+		# sm-mta:	Jul 27 06:21:24 androneda sm-mta[11461]: h6RDLNtg011461: ruleset=check_rcpt, arg1=<nobody@nova.dice.net>, relay=freedom.myhostdns.com [66.246.77.42], reject=550 5.7.1 <nobody@nova.dice.net>... Relaying denied
+		# sendmail: Sep 30 04:21:32 halley sendmail[3161]: g8U2LVi03161: ruleset=check_rcpt, arg1=<amber3624@netzero.net>, relay=moon.partenor.fr [10.0.0.254], reject=550 5.7.1 <amber3624@netzero.net>... Relaying denied
+		my ($mon,$day,$time,$id,$ruleset,$arg,$relay_s,$code)=m/(\w+)\s+(\d+)\s+(\d+:\d+:\d+)\s+\w+\s+(?:sendmail|sm-mta)\[\d+\]:\s+(.*?):\sruleset=(\w+),\s+arg1=(.*),\s+relay=(.*),\s+(reject=.*)/;
+		$rowid=$id;
+		if ($rowid) {
+			if ($ruleset eq 'check_mail') { $entry{$id}{'from'}=$arg; }
+			if ($ruleset eq 'check_rcpt') { $entry{$id}{'to'}=$arg; }
+			$entry{$id}{'relay_s'}=$relay_s;
+			# $code='reject=550 5.7.1 <amber3624@netzero.net>... Relaying denied'
+			if ($code =~ /=(\d\d\d)\s+/) { $entry{$id}{'code'}=$1; }
+			else { $entry{$id}{'code'}=999; }	# Unkown error
+			$entry{$id}{'mon'}=$mon;
+			$entry{$id}{'day'}=$day;
+			$entry{$id}{'time'}=$time;
+			debug("For id=$id, found a sendmail error incoming message: id=$id code=$entry{$id}{'code'} from=$entry{$id}{'from'} to=$entry{$id}{'to'} relay_s=$entry{$id}{'relay_s'}");
+		}
+	}
 	#
 	# See if we received sendmail, postfix or qmail email
 	#
@@ -199,23 +248,25 @@ while (<>) {
 			#
 			my ($id,$size,$from)=m/info msg (\d+): bytes (\d+) from <(.*)>/;
 			$rowid=$id;
-			$entry{$id}{'code'}=1;
-			$entry{$id}{'from'}=$from;
+			if (! $entry{$id}{'code'}) { $entry{$id}{'code'}=1; }	# If not already defined, we define it
+			if ($entry{$id}{'from'} ne '<>') { $entry{$id}{'from'}=$from; }
 			$entry{$id}{'size'}=$size;
-			if (m/\s+relay=([^\s,]*)[\s,]/) { $entry{$id}{'relay_s'}=$1; }
-#			print "Found an incoming message: id=$id from=$entry{$id}{'from'} size=$entry{$id}{'size'} relay_s=$entry{$id}{'relay_s'}\n";
+			if (m/\s+relay=([^\,]+)[\s\,]/ || m/\s+relay=([^\s\,]+)$/) { $entry{$id}{'relay_s'}=$1; }
+			debug("For id=$id, found a qmail incoming message: id=$id from=$entry{$id}{'from'} size=$entry{$id}{'size'} relay_s=$entry{$id}{'relay_s'}");
 		}
 		elsif (/: from=/ ne undef) {
 			#
 			# Matched incoming sendmail or postfix message
 			#
-			my ($id,$from,$size)=m/\w+\s+\d+\s+\d+:\d+:\d+\s+\w+\s+(?:sendmail|postfix\/qmgr|postfix\/nqmgr)\[\d+\]:\s+(.*?):\s+from=(.*?),\s+size=(.*?),/;
+			# sm-mta:  Jul 28 06:55:13 androneda sm-mta[28877]: h6SDtCtg028877: from=<4cmkh79eob@webtv.net>, size=2556, class=0, nrcpts=1, msgid=<w1$kqj-9-o2m45@0h2i38.4.m0.5u>, proto=ESMTP, daemon=MTA, relay=smtp.easydns.com [205.210.42.50]
+			# postfix: Jul  3 15:32:26 apollon postfix/qmgr[13860]: 08FB63B8A4: from=<nobody@ns3744.ovh.net>, size=3302, nrcpt=1 (queue active)
+			my ($id,$from,$size)=m/\w+\s+\d+\s+\d+:\d+:\d+\s+\w+\s+(?:sm-mta|sendmail|postfix\/qmgr|postfix\/nqmgr)\[\d+\]:\s+(.*?):\s+from=(.*?),\s+size=(.*?),/;
 			$rowid=$id;
-			$entry{$id}{'code'}=1;
-			$entry{$id}{'from'}=$from;
+			if (! $entry{$id}{'code'}) { $entry{$id}{'code'}=1; }	# If not already defined, we define it
+			if ($entry{$id}{'from'} ne '<>') { $entry{$id}{'from'}=$from; }
 			$entry{$id}{'size'}=$size;
-			if (m/\s+relay=([^\s,]*)[\s,]/) { $entry{$id}{'relay_s'}=$1; }
-#			print "Found an incoming message: id=$id from=$entry{$id}{'from'} size=$entry{$id}{'size'} relay_s=$entry{$id}{'relay_s'}\n";
+			if (m/\s+relay=([^\,]+)[\s\,]/ || m/\s+relay=([^\s\,]+)$/) { $entry{$id}{'relay_s'}=$1; }
+			debug("For id=$id, found a sendmail/postfix incoming message: id=$id from=$entry{$id}{'from'} size=$entry{$id}{'size'} relay_s=$entry{$id}{'relay_s'}");
 		}
 	}
 
@@ -225,17 +276,17 @@ while (<>) {
 	elsif ((/: to=.*stat(us)?=sent/i ne undef) || (/starting delivery/ ne undef)) {
 		if (/: to=.*stat(us)?=sent/i ne undef) {
 			#
-			# Matched outgoing sendmail message
+			# Matched arrival sendmail/postfix message
 			#
-			my ($mon,$day,$time,$id,$to)=m/(\w+)\s+(\d+)\s+(\d+:\d+:\d+)\s+\w+\s+(?:sendmail|postfix\/(?:local|smtpd|smtp))\[.*?\]:\s+(.*?):\s+to=(.*?),/;
+			my ($mon,$day,$time,$id,$to)=m/(\w+)\s+(\d+)\s+(\d+:\d+:\d+)\s+\w+\s+(?:sm-mta|sendmail|postfix\/(?:local|smtpd|smtp))\[.*?\]:\s+(.*?):\s+to=(.*?),/;
 			$rowid=$id;
 			if (m/\s+relay=([^\s,]*)[\s,]/) { $entry{$id}{'relay_r'}=$1; }
 			elsif (m/\s+mailer=local/) { $entry{$id}{'relay_r'}='localhost'; }
 			$entry{$id}{'mon'}=$mon;
 			$entry{$id}{'day'}=$day;
 			$entry{$id}{'time'}=$time;
-			$entry{$id}{'to'}=$to;
-#			print "Found a record: id=$id mon=$entry{$id}{'mon'} day=$entry{$id}{'day'} time=$entry{$id}{'time'} to=$entry{$id}{'to'} relay_r=$entry{$id}{'relay_r'}\n";
+			$entry{$id}{'to'}=&trim($to);
+			debug("For id=$id, found a record: id=$id mon=$entry{$id}{'mon'} day=$entry{$id}{'day'} time=$entry{$id}{'time'} to=$entry{$id}{'to'} relay_r=$entry{$id}{'relay_r'}");
 		}
 		elsif (/starting delivery/ ne undef) {
 			#
@@ -248,14 +299,19 @@ while (<>) {
 			$entry{$id}{'mon'}=$mon;
 			$entry{$id}{'day'}=$day;
 			$entry{$id}{'time'}=$time;
-			$entry{$id}{'to'}=$to;
+			$entry{$id}{'to'}=&trim($to);
+			debug("For id=$id, found a qmail record: id=$id mon=$entry{$id}{'mon'} day=$entry{$id}{'day'} time=$entry{$id}{'time'} to=$entry{$id}{'to'} relay_r=$entry{$id}{'relay_r'}");
 		}
 	}
 
 	#
 	# Write record if full
 	#
-	if ($rowid && $entry{$rowid}{'from'} && $entry{$rowid}{'to'}) { &OutputRecord($rowid) }
+	debug("ROWID:$rowid FROM:$entry{$rowid}{'from'} TO:$entry{$rowid}{'to'} CODE:$entry{$rowid}{'code'}");
+	if ($rowid && (
+		   ($entry{$rowid}{'from'} && $entry{$rowid}{'to'})
+		|| ($entry{$rowid}{'from'} && $entry{$rowid}{'code'} > 1)
+		)) { &OutputRecord($rowid) }
 
 }
 
@@ -264,4 +320,10 @@ while (<>) {
 
 # SMTP Postfix errors:
 # 450 User unknown
+# 451 Domain of sender address
+# 550 Relaying denied
 # 554 Relay denied
+
+
+
+
