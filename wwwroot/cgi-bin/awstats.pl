@@ -5975,7 +5975,7 @@ EOF
 		if (! $StaticLinks) { Show_Flag_Links($Lang); }
 		print "</td>\n";
 		if ($LogoLink =~ "http://awstats.sourceforge.net") {
-			print "<td class=AWL><a href=\"$LogoLink\" target=\"awstatshome\"><img src=\"$DirIcons/other/$Logo\" border=0 alt=\"$PROG Official Web Site\" title=\"$PROG Official Web Site\"></a></td></tr>\n";
+			print "<td class=AWL><a href=\"$LogoLink\" target=\"awstatshome\"><img src=\"$DirIcons/other/$Logo\" border=0 alt=\"".ucfirst($PROG)." Web Site\" title=\"".ucfirst($PROG)." Web Site\"></a></td></tr>\n";
 		}
 		else {
 			print "<td class=AWL><a href=\"$LogoLink\" target=\"awstatshome\"><img src=\"$DirIcons/other/$Logo\" border=0></a></td></tr>\n";
@@ -6041,13 +6041,13 @@ EOF
 			print "<td class=AWL valign=top>";
 			if ($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks) {
 				print "<select class=CFormFields name=\"month\">\n";
-				foreach my $ix (1..12) { my $monthix=sprintf("%02s",$ix); print "<option".($MonthRequired eq "$monthix"?" selected":"")." value=\"$monthix\">".$MonthLib{$monthix}; }
-				print "<option".($MonthRequired eq 'year'?" selected":"")." value=\"year\">-";
+				foreach my $ix (1..12) { my $monthix=sprintf("%02s",$ix); print "<option".($MonthRequired eq "$monthix"?" selected":"")." value=\"$monthix\">$MonthLib{$monthix}\n"; }
+				print "<option".($MonthRequired eq 'year'?" selected":"")." value=\"year\">-\n";
 				print "</select>\n";
 				print "<select class=CFormFields name=\"year\">\n";
 				# Add YearRequired in list if not in ListOfYears
 				if (! $ListOfYears{$YearRequired}) { $ListOfYears{$YearRequired}=$MonthRequired; }
-				foreach my $key (sort keys %ListOfYears) { print "<option".($YearRequired eq "$key"?" selected":"")." value=\"$key\">$key"; }
+				foreach my $key (sort keys %ListOfYears) { print "<option".($YearRequired eq "$key"?" selected":"")." value=\"$key\">$key\n"; }
 				print "</select>\n";
 				print "<input type=hidden name=\"output\" value=\"".join(',',keys %HTMLOutput)."\">\n";
 				if ($SiteConfig) { print "<input type=hidden name=\"config\" value=\"$SiteConfig\">\n"; }
@@ -6591,7 +6591,11 @@ EOF
 		&tab_head("$Message[45]",19);
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>".(scalar keys %_host_h)." $Message[1]</TH>";
 		if ($ShowLinksToWhoIs && $LinksToWhoIs) { print "<TH width=80>$Message[114]</TH>"; }
-		print "<TH bgcolor=\"#$color_p\" width=80>$Message[56]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH bgcolor=\"#$color_k\" width=80>$Message[75]</TH><TH width=120>$Message[9]</TH></TR>\n";
+		if ($ShowHostsStats =~ /P/i) { print "<TH bgcolor=\"#$color_p\" width=80>$Message[56]</TH>"; }
+		if ($ShowHostsStats =~ /H/i) { print "<TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH>"; }
+		if ($ShowHostsStats =~ /B/i) { print "<TH bgcolor=\"#$color_k\" width=80>$Message[75]</TH>"; }
+		if ($ShowHostsStats =~ /L/i) { print "<TH width=120>$Message[9]</TH>"; }
+		print "</TR>\n";
 		$total_p=$total_h=$total_k=0;
 		my $count=0;
 		&BuildKeyList($MaxRowsInHTMLOutput,$MinHitHost,\%_host_h,\%_host_p);
@@ -6620,6 +6624,104 @@ EOF
 			if ($ShowHostsStats =~ /H/i) { print "<TD>$rest_h</TD>"; }
 			if ($ShowHostsStats =~ /B/i) { print "<TD>".Format_Bytes($rest_k)."</TD>"; }
 			if ($ShowHostsStats =~ /L/i) { print "<TD>&nbsp;</TD>"; }
+			print "</TR>\n";
+		}
+		&tab_end;
+		&html_end;
+		exit(0);
+	}
+	if ($HTMLOutput{'allemails'} || $HTMLOutput{'lastemails'}) {
+		print "$Center<a name=\"EMAILSLIST\">&nbsp;</a><BR>\n";
+		# Show filter form
+		#&ShowFormFilter("emailsfilter",$EmailsFilter);
+		# Show emails list
+		my $title="$Message[131]";
+		&tab_head("$title",19);
+		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[131] : ".(scalar keys %_emails_h)."</TH>";
+		if ($ShowEMailSenders =~ /H/i) { print "<TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH>"; }
+		if ($ShowEMailSenders =~ /B/i) { print "<TH bgcolor=\"#$color_k\" width=80>$Message[75]</TH>"; }
+		if ($ShowEMailSenders =~ /M/i) { print "<TH bgcolor=\"#$color_k\" width=80>$Message[106]</TH>"; }
+		if ($ShowEMailSenders =~ /L/i) { print "<TH width=120>$Message[9]</TH>"; }
+		print "</TR>\n";
+		$total_p=$total_h=$total_k=0;
+		$max_h=1; foreach my $key (values %_emails_h) { if ($key > $max_h) { $max_h = $key; } }
+		$max_k=1; foreach my $key (values %_emails_k) { if ($key > $max_k) { $max_k = $key; } }
+		my $count=0;
+		if ($HTMLOutput{'allemails'})  { &BuildKeyList($MaxRowsInHTMLOutput,$MinHitEMail,\%_emails_h,\%_emails_h); }
+		if ($HTMLOutput{'lastemails'}) { &BuildKeyList($MaxRowsInHTMLOutput,$MinHitEMail,\%_emails_h,\%_emails_l); }
+		foreach my $key (@keylist) {
+			my $bredde_h=0;my $bredde_k=0;
+			if ($max_h > 0) { $bredde_h=int($BarWidth*$_emails_h{$key}/$max_h)+1; }
+			if ($max_k > 0) { $bredde_k=int($BarWidth*$_emails_k{$key}/$max_k)+1; }
+			print "<TR><TD CLASS=AWL>$key</TD>";
+			if ($ShowEMailSenders =~ /H/i) { print "<TD>$_emails_h{$key}</TD>"; }
+			if ($ShowEMailSenders =~ /B/i) { print "<TD>".Format_Bytes($_emails_k{$key})."</TD>"; }
+			if ($ShowEMailSenders =~ /M/i) { print "<TD>".Format_Bytes($_emails_k{$key}/($_emails_h{$key}||1))."</TD>"; }
+			if ($ShowEMailSenders =~ /L/i) { print "<TD>".($_emails_l{$key}?Format_Date($_emails_l{$key},1):'-')."</TD>"; }
+			print "</TR>\n";
+			#$total_p += $_emails_p{$key};
+			$total_h += $_emails_h{$key};
+			$total_k += $_emails_k{$key};
+			$count++;
+		}
+		$rest_p=0;	# $rest_p=$TotalPages-$total_p;
+		$rest_h=$TotalHits-$total_h;
+		$rest_k=$TotalBytes-$total_k;
+		if ($rest_p > 0 || $rest_h > 0 || $rest_k > 0) {	# All other sender emails
+			print "<TR><TD CLASS=AWL><font color=\"#$color_other\">$Message[2]</font></TD>";
+			if ($ShowEMailSenders =~ /H/i) { print "<TD>$rest_h</TD>"; }
+			if ($ShowEMailSenders =~ /B/i) { print "<TD>".Format_Bytes($rest_k)."</TD>"; }
+			if ($ShowEMailSenders =~ /M/i) { print "<TD>".Format_Bytes($rest_k/($rest_h||1))."</TD>"; }
+			if ($ShowEMailSenders =~ /L/i) { print "<TD>&nbsp;</TD>"; }
+			print "</TR>\n";
+		}
+		&tab_end;
+		&html_end;
+		exit(0);
+	}
+	if ($HTMLOutput{'allemailr'} || $HTMLOutput{'lastemailr'}) {
+		print "$Center<a name=\"EMAILRLIST\">&nbsp;</a><BR>\n";
+		# Show filter form
+		#&ShowFormFilter("emailrfilter",$EmailrFilter);
+		# Show emails list
+		my $title="$Message[132]";
+		&tab_head("$title",19);
+		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[132] : ".(scalar keys %_emailr_h)."</TH>";
+		if ($ShowEMailReceivers =~ /H/i) { print "<TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH>"; }
+		if ($ShowEMailReceivers =~ /B/i) { print "<TH bgcolor=\"#$color_k\" width=80>$Message[75]</TH>"; }
+		if ($ShowEMailReceivers =~ /M/i) { print "<TH bgcolor=\"#$color_k\" width=80>$Message[106]</TH>"; }
+		if ($ShowEMailReceivers =~ /L/i) { print "<TH width=120>$Message[9]</TH>"; }
+		print "</TR>\n";
+		$total_p=$total_h=$total_k=0;
+		$max_h=1; foreach my $key (values %_emailr_h) { if ($key > $max_h) { $max_h = $key; } }
+		$max_k=1; foreach my $key (values %_emailr_k) { if ($key > $max_k) { $max_k = $key; } }
+		my $count=0;
+		if ($HTMLOutput{'allemailr'})  { &BuildKeyList($MaxRowsInHTMLOutput,$MinHitEMail,\%_emailr_h,\%_emailr_h); }
+		if ($HTMLOutput{'lastemailr'}) { &BuildKeyList($MaxRowsInHTMLOutput,$MinHitEMail,\%_emailr_h,\%_emailr_l); }
+		foreach my $key (@keylist) {
+			my $bredde_h=0;my $bredde_k=0;
+			if ($max_h > 0) { $bredde_h=int($BarWidth*$_emailr_h{$key}/$max_h)+1; }
+			if ($max_k > 0) { $bredde_k=int($BarWidth*$_emailr_k{$key}/$max_k)+1; }
+			print "<TR><TD CLASS=AWL>$key</TD>";
+			if ($ShowEMailReceivers =~ /H/i) { print "<TD>$_emailr_h{$key}</TD>"; }
+			if ($ShowEMailReceivers =~ /B/i) { print "<TD>".Format_Bytes($_emailr_k{$key})."</TD>"; }
+			if ($ShowEMailReceivers =~ /M/i) { print "<TD>".Format_Bytes($_emailr_k{$key}/($_emailr_h{$key}||1))."</TD>"; }
+			if ($ShowEMailReceivers =~ /L/i) { print "<TD>".($_emailr_l{$key}?Format_Date($_emailr_l{$key},1):'-')."</TD>"; }
+			print "</TR>\n";
+			#$total_p += $_emailr_p{$key};
+			$total_h += $_emailr_h{$key};
+			$total_k += $_emailr_k{$key};
+			$count++;
+		}
+		$rest_p=0;	# $rest_p=$TotalPages-$total_p;
+		$rest_h=$TotalHits-$total_h;
+		$rest_k=$TotalBytes-$total_k;
+		if ($rest_p > 0 || $rest_h > 0 || $rest_k > 0) {	# All other receiver emails
+			print "<TR><TD CLASS=AWL><font color=\"#$color_other\">$Message[2]</font></TD>";
+			if ($ShowEMailReceivers =~ /H/i) { print "<TD>$rest_h</TD>"; }
+			if ($ShowEMailReceivers =~ /B/i) { print "<TD>".Format_Bytes($rest_k)."</TD>"; }
+			if ($ShowEMailReceivers =~ /M/i) { print "<TD>".Format_Bytes($rest_k/($rest_h||1))."</TD>"; }
+			if ($ShowEMailReceivers =~ /L/i) { print "<TD>&nbsp;</TD>"; }
 			print "</TR>\n";
 		}
 		&tab_end;
