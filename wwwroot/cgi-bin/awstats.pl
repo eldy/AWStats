@@ -6056,7 +6056,7 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 			elsif ($PluginsLoaded{'GetCountryCodeByAddr'}{'geoip'}) { $Domain=GetCountryCodeByAddr_geoip($HostResolved); }
 		}
 		else {
-			# $Host was already a host name ($HostResolved='', $ip=0) or has been resolved ($HostResolved defined, $ip>0)
+			# $Host was already a host name ($Host=name => $HostResolved='', $ip=0) or has been resolved ($Host=ip => $HostResolved defined, $ip>0)
 			$HostResolved = lc($HostResolved?$HostResolved:$Host);
 			# Resolve Domain
 			if ($ip) {
