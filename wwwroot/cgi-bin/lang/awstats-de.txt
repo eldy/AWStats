@@ -1,4 +1,5 @@
 # German message file
+# $Revision$ - $Date$
 message0=Unbekannt
 message1=Unbekannte (IP konnte nicht aufgel&ouml;st werden )
 message2=Sonstige
@@ -23,7 +24,7 @@ message20=Stunden (Serverzeit)
 message21=Browser
 message22=HTTP Fehlermeldungen
 message23=Verweise
-message24=Suchbegriffe
+message24=Noch nie aktualisiert
 message25=Domains/L&auml;nder der Besucher
 message26=Rechner
 message27=Seiten
