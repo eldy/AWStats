@@ -349,22 +349,26 @@ What do I have to do to use AWStats to analyze some FTP server log files.<br>
 AWStats was built to analyze web,wap or proxy server's log files. However it can be used with some FTP server log files.<br>
 <u>Setup your ProFTP logformat:</u><br>
 Modify the proftpd.conf file to add the following two lines :
-<i>
-<br>LogFormat awstats "%t %h %u %m %f %s %b"
-<br>ExtendedLog /var/log/xferlog read,write awstats
-</i>
+<!--<br>With ProFTPd 1.2.2:-->
+<i><br>LogFormat awstats "%t %h %u %m %f %s %b"</i> &nbsp; &nbsp; # WARNING: You must use a tab char between % tags and not a space !
+<i><br>ExtendedLog /var/log/xferlog read,write awstats</i> &nbsp; &nbsp; # WARNING: ExtendedLog directive might need to be placed inside a virtual host context if you use them.
+<!--<br>With ProFTPd 1.2.6:
+<i><br>LogFormat awstats ""${%F %H-%M-%S}t %h %u %m %F %s %b"</i> &nbsp; &nbsp; # WARNING: You must use a tab char between % tags and not a space !
+<i><br>ExtendedLog /var/log/xferlog read,write awstats</i> &nbsp; &nbsp; # WARNING: ExtendedLog directive might need to be placed inside a virtual host context if you use them.
+-->
 <br>Then turn off old format Transfer log:
 <i>
-<br>TransferLog none
+<br>TransferLog none &nbsp; &nbsp; # WARNING: TransferLog directive might need to be placed inside a virtual host context if you use them.
 </i>
 <br>
-To have the change effective, stop your server, remove old log files and restart the server.<br>
+To have the change effective, stop your server, remove old log file /var/log/xferlog and restart the server.<br>
 <u>Setup AWStats to analyze those FTP log files:</u><br>
 Copy config awstats.model.conf file to "awstats.proftp.conf".<br>
 Modify this new config file:
 <i>
 <br>LogFile="/var/log/xferlog"
 <br>LogFormat="%time1 %host %logname %method %url %code %bytesd"
+<br>LogSeparator="\t"
 <br>DNSLookup=0
 <br>SkipFiles=""
 <br>NotPageList=""
@@ -393,8 +397,6 @@ Modify this new config file:
 </i>
 <br><br>
 Now you can use AWStats as usual (run the update process and read statistics).<br>
-Warning: This tip doesn't work for FTPed files that contains spaces in them (they are not reported). You can still convert your
-log file to replace 'space' char into '_'...<br>
 <br>
 
 <a name="MAIL"></a><br>
