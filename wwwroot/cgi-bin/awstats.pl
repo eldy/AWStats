@@ -2911,7 +2911,7 @@ sub Save_History {
 		print HISTORYTMP "# for direct I/O access. If you made changes somewhere in this file, you\n";
 		print HISTORYTMP "# should also remove completely the MAP section (AWStats will rewrite it\n";
 		print HISTORYTMP "# at next update).\n";
-		print HISTORYTMP "BEGIN_MAP 25\n";
+		print HISTORYTMP "BEGIN_MAP ".(22+(scalar %TrapInfosForHTTPErrorCodes)+(@ExtraSectionName?@ExtraSectionName-1:0))."\n";
 		print HISTORYTMP "POS_GENERAL ";$PosInFile{"general"}=tell HISTORYTMP;print HISTORYTMP "$spacebar\n";
 		# When
 		print HISTORYTMP "POS_TIME ";$PosInFile{"time"}=tell HISTORYTMP;print HISTORYTMP "$spacebar\n";
@@ -2941,6 +2941,9 @@ sub Save_History {
 		print HISTORYTMP "POS_ERRORS ";$PosInFile{"errors"}=tell HISTORYTMP;print HISTORYTMP "$spacebar\n";
 		foreach my $code (keys %TrapInfosForHTTPErrorCodes) {
 			print HISTORYTMP "POS_SIDER_$code ";$PosInFile{"sider_$code"}=tell HISTORYTMP;print HISTORYTMP "$spacebar\n";
+		}
+		foreach my $extranum (1..@ExtraSectionName-1) {
+			print HISTORYTMP "POS_EXTRA_$extranum ";$PosInFile{"extra_$extranum"}=tell HISTORYTMP;print HISTORYTMP "$spacebar\n";
 		}
 		print HISTORYTMP "END_MAP\n";
 	}
@@ -3305,6 +3308,7 @@ sub Save_History {
 		if ($sectiontosave eq "extra_$extranum") {
 			print HISTORYTMP "\n";
 			print HISTORYTMP "# Extra sections...\n";
+			$ValueInFile{$sectiontosave}=tell HISTORYTMP;
 	 		print HISTORYTMP "BEGIN_EXTRA_$extranum\n";
 	 		&BuildKeyList($MaxNbOfExtra[$extranum],$MinHitExtra[$extranum],\%{'_section_' . $extranum . '_h'},\%{'_section_' . $extranum . '_p'});
 	 		%keysinkeylist=();
@@ -4714,7 +4718,7 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {	# Updat
 					my $delay=&GetDelaySinceStart(0);
 					print "".($NbOfLinesRead-1)." lines processed (".($delay>0?$delay:1000)." ms, ".int(1000*($NbOfLinesShowsteps-1)/($delay>0?$delay:1000))." lines/second)\n";
 				}
-				print "Phase 2 : Now process new records (Disk flush every $LIMITFLUSH)\n";
+				print "Phase 2 : Now process new records (Flush history on disk every ".($LIMITFLUSH<<2)." uniques)\n";
 				&GetDelaySinceStart(1);	$NbOfLinesShowsteps=1;
 			}
 		}
