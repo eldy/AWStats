@@ -1503,7 +1503,7 @@ sub Read_History_With_Update {
 			chomp $_; s/\r//; $countlines++;
 	
 			# Analyze config line
-			if ($_ =~ /^AWSTATS DATA FILE (\d+).(\d+)/i) {
+			if (! $versionnum && $_ =~ /^AWSTATS DATA FILE (\d+).(\d+)/i) {
 				$versionnum=($1*1000)+$2;
 				if ($Debug) { debug(" Data file version is $versionnum",1); }
 				next;
@@ -1542,7 +1542,7 @@ sub Read_History_With_Update {
 				delete $SectionsToLoad{"general"};
 				if ($SectionsToSave{"general"}) { Save_History("general",$year,$month); delete $SectionsToSave{"general"}; }
 				if (! scalar %SectionsToLoad) { debug(" Stop reading history file. Got all we need."); last; }
-				next;
+				if ($versionnum >= 5000) { next; }
 			}
 
 			# BEGIN_ORIGIN
@@ -5573,7 +5573,7 @@ EOF
 			my $dayofweekcursor=DayOfWeek($day,$month,$year);
 			print "<TD valign=middle".($dayofweekcursor==0||$dayofweekcursor==6?" bgcolor=\"#$color_weekend\"":"").">";
 			print ($day==$nowday && $month==$nowmonth && $year==$nowyear?"<b>":"");
-			print "$day<br><font style=\"font: 10px;\">".$monthlib{$month}."</font>";
+			print "$day<br><font style=\"font: ".($FrameName ne "mainright"?"10":"9")."px;\">".$monthlib{$month}."</font>";
 			print ($day==$nowday && $month==$nowmonth && $year==$nowyear?"</b>":"");
 			print "</TD>\n";
 		}
