@@ -82,7 +82,7 @@ $WarningMessages= 1;
 %MonthBytes = %MonthHits = %MonthHostsKnown = %MonthHostsUnknown = %MonthPages = %MonthUnique = %MonthVisits =
 %monthlib = %monthnum = ();
 
-$VERSION="3.2 (build 37)";
+$VERSION="3.2 (build 40)";
 $Lang="en";
 
 # Default value
@@ -852,7 +852,10 @@ sub Read_History_File {
 	my $month=sprintf("%02i",shift);
 	my $part=shift;
 	&debug("Call to Read_History_File [$year,$month,$part] ($DayRequired)");	# In standard use of AWStats, the DayRequired variable is always empty
-	if ($HistoryFileAlreadyRead{"$year$month$DayRequired"}) { return 0; }	# Protect code to invoke function only once for each month/year
+	if ($HistoryFileAlreadyRead{"$year$month$DayRequired"}) {				# Protect code to invoke function only once for each month/year
+		&debug(" Already loaded");
+		return 0;
+		}
 	$HistoryFileAlreadyRead{"$year$month$DayRequired"}=1;					# Protect code to invoke function only once for each month/year
 	if (! -s "$DirData/$PROG$DayRequired$month$year$FileSuffix.txt") {
 		# If file not exists, return
@@ -892,9 +895,11 @@ sub Read_History_File {
 			chomp $_; s/\r//;
 			if ($_ eq "") { error("Error: History file \"$DirData/$PROG$month$year$FileSuffix.txt\" is corrupted (in section VISITOR). Last line read is number $countlines.\nRestore a recent backup of this file, or remove it (data for this month will be lost)."); }
 			my @field=split(/\s+/,$_); $countlines++;
+			my $count=0;
 			while ($field[0] ne "END_VISITOR") {
+				$count++;
 		    	if ($field[0] ne "Unknown") { if ($field[1] > 0) { $MonthUnique{$year.$month}++; } $MonthHostsKnown{$year.$month}++; }
-				if ($part && ($QueryString !~ /output=/i || $QueryString =~ /output=lasthosts/i)) {
+				if ($part && ($UpdateStats || $QueryString !~ /output=/i || $QueryString =~ /output=lasthosts/i)) {
 		        	if ($field[1] > 0) { $_hostmachine_p{$field[0]}+=$field[1]; }
 		        	if ($field[2] > 0) { $_hostmachine_h{$field[0]}+=$field[2]; }
 		        	if ($field[3] > 0) { $_hostmachine_k{$field[0]}+=$field[3]; }
@@ -905,7 +910,7 @@ sub Read_History_File {
 				if ($_ eq "") { error("Error: History file \"$DirData/$PROG$month$year$FileSuffix.txt\" is corrupted (in section VISITOR). Last line read is number $countlines.\nRestore a recent backup of this file, or remove it (data for this month will be lost)."); }
 				@field=split(/\s+/,$_); $countlines++;
 			}
-			&debug(" End of VISITOR section");
+			&debug(" End of VISITOR section ($count entries)");
 			next;
     	}
 	    if ($field[0] eq "BEGIN_UNKNOWNIP")   {
@@ -938,7 +943,7 @@ sub Read_History_File {
 			my $count=0;
 			while ($field[0] ne "END_LOGIN") {
 				$count++;
-            	if ($part) {
+				if ($part && ($UpdateStats || $QueryString !~ /output=/i)) {
 			    	if ($field[1] > 0) { $_login_p{$field[0]}+=$field[1]; }
 			    	if ($field[2] > 0) { $_login_h{$field[0]}+=$field[2]; }
 			    	if ($field[3] > 0) { $_login_k{$field[0]}+=$field[3]; }
@@ -958,9 +963,11 @@ sub Read_History_File {
 			chomp $_; s/\r//;
 			if ($_ eq "") { error("Error: History file \"$DirData/$PROG$month$year$FileSuffix.txt\" is corrupted (in section TIME). Last line read is number $countlines.\nRestore a recent backup of this file, or remove it (data for this month will be lost)."); }
 			my @field=split(/\s+/,$_); $countlines++;
+			my $count=0;
 			while ($field[0] ne "END_TIME") {
+				$count++;
 		    	$MonthPages{$year.$month}+=$field[1]; $MonthHits{$year.$month}+=$field[2]; $MonthBytes{$year.$month}+=$field[3];
-				if ($part) {
+				if ($part && ($UpdateStats || $QueryString !~ /output=/i)) {
 		        	$_time_p[$field[0]]+=$field[1];
 		        	$_time_h[$field[0]]+=$field[2];
 		        	$_time_k[$field[0]]+=$field[3];
@@ -970,7 +977,7 @@ sub Read_History_File {
 				if ($_ eq "") { error("Error: History file \"$DirData/$PROG$month$year$FileSuffix.txt\" is corrupted (in section TIME). Last line read is number $countlines.\nRestore a recent backup of this file, or remove it (data for this month will be lost)."); }
 				@field=split(/\s+/,$_); $countlines++;
 			}
-			&debug(" End of TIME section");
+			&debug(" End of TIME section ($count entries)");
 			next;
 	    }
 	    if ($field[0] eq "BEGIN_DAY")      {
@@ -979,8 +986,10 @@ sub Read_History_File {
 			chomp $_; s/\r//;
 			if ($_ eq "") { error("Error: History file \"$DirData/$PROG$month$year$FileSuffix.txt\" is corrupted (in section DAY). Last line read is number $countlines.\nRestore a recent backup of this file, or remove it (data for this month will be lost)."); }
 			my @field=split(/\s+/,$_); $countlines++;
+			my $count=0;
 			while ($field[0] ne "END_DAY" ) {
-				if ($QueryString !~ /output=/i) {
+				$count++;
+				if ($UpdateStats || $QueryString !~ /output=/i) {
 					$DayPages{$field[0]}=int($field[1]); $DayHits{$field[0]}=int($field[2]); $DayBytes{$field[0]}=int($field[3]); $DayVisits{$field[0]}=int($field[4]); $DayUnique{$field[0]}=int($field[5]);
 				}
 				$_=<HISTORY>;
@@ -988,7 +997,7 @@ sub Read_History_File {
 				if ($_ eq "") { error("Error: History file \"$DirData/$PROG$month$year$FileSuffix.txt\" is corrupted (in section DAY). Last line read is number $countlines.\nRestore a recent backup of this file, or remove it (data for this month will be lost)."); }
 				@field=split(/\s+/,$_); $countlines++;
 			}
-			&debug(" End of DAY section");
+			&debug(" End of DAY section ($count entries)");
 			next;
 	    }
 		if ($field[0] eq "BEGIN_SIDER")  {
@@ -1002,12 +1011,14 @@ sub Read_History_File {
 				$count++;
 				if ($part) {
 					my $addsider=0;
-					if ($UpdateStats) { $addsider=1; }
-					if (!$UpdateStats) {
+					if ($UpdateStats) {
+						$addsider=1;
+					}
+					else {
 						# In this case we count TotalDifferentPages because we won't fill _url_p completely
 						$TotalDifferentPages++;
-						if ($HTMLOutput && $QueryString =~ /output=urldetail/i && (!$URLFilter || $field[0] =~ /$URLFilter/)) { $addsider=1; }
-						if ($HTMLOutput && $QueryString !~ /output=/i && $countadd < $MaxNbOfPageShown) { $addsider=1; }
+						if ($QueryString =~ /output=urldetail/i && (!$URLFilter || $field[0] =~ /$URLFilter/)) { $addsider=1; }
+						if ($QueryString !~ /output=/i && $countadd < $MaxNbOfPageShown) { $addsider=1; }
 					}
 					if ($addsider) {					
 						$countadd++;
@@ -1032,7 +1043,7 @@ sub Read_History_File {
 			my $count=0;
 			while ($field[0] ne "END_PAGEREFS") {
 				$count++;
-				if ($part) {
+				if ($part && ($UpdateStats || $QueryString !~ /output=/i)) {
 					$_pagesrefs_h{$field[0]}+=$field[1];
 				}
 				$_=<HISTORY>;
@@ -1052,7 +1063,7 @@ sub Read_History_File {
 			my $count=0;
 			while ($field[0] ne "END_FILETYPES") {
 				$count++;
-				if ($part) {
+				if ($part && ($UpdateStats || $QueryString !~ /output=/i)) {
 					$_filetypes_h{$field[0]}+=$field[1];
 					$_filetypes_k{$field[0]}+=$field[2];
 					$_filetypes_gz_in{$field[0]}+=$field[3];
@@ -1075,7 +1086,7 @@ sub Read_History_File {
 			my $count=0;
 			while ($field[0] ne "END_SEARCHWORDS") {
 				$count++;
-				if ($part) {
+				if ($part && ($UpdateStats || $QueryString !~ /output=/i)) {
 					$_keyphrases{$field[0]}+=$field[1];
 				}
 				$_=<HISTORY>;
@@ -1095,7 +1106,7 @@ sub Read_History_File {
 			my $count=0;
 			while ($field[0] ne "END_SIDER_404") {
 				$count++;
-				if ($part) {
+				if ($part && ($UpdateStats || $QueryString !~ /output=/i || $QueryString =~ /output=notfounderror/i)) {
 					$_sider404_h{$field[0]}+=$field[1];
 					if ($UpdateStats || $QueryString =~ /output=notfounderror/i) {
 						$_referer404_h{$field[0]}=$field[2];
@@ -3021,7 +3032,7 @@ EOF
 		$total_p=$total_h=$total_k=0;
 		$count=0;
 		foreach my $key (sort { $SortDir*$_hostmachine_p{$a} <=> $SortDir*$_hostmachine_p{$b} } keys (%_hostmachine_p)) {
-			if ($count>=MaxNbOfHostsShown) { last; }
+			if ($count>=$MaxNbOfHostsShown) { last; }
 			if ($_hostmachine_h{$key}<$MinHitHost) { last; }
 			if ($key eq "Unknown") {
 				print "<TR><TD CLASS=AWL><a href=\"$DirCgi$PROG.$Extension?${LinkParamB}output=unknownip\">$Message[1]</a></TD><TD>$_hostmachine_p{$key}</TD><TD>$_hostmachine_h{$key}</TD><TD>".Format_Bytes($_hostmachine_k{$key})."</TD><TD><a href=\"$DirCgi$PROG.$Extension?${LinkParamB}output=unknownip\">$Message[3]</a></TD></TR>\n";
