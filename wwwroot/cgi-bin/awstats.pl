@@ -86,7 +86,7 @@ $LevelForRobotsDetection, $LevelForBrowsersDetection, $LevelForOSDetection,
 $LevelForSearchEnginesDetection, $LevelForKeywordsDetection, $LevelForRefererAnalyze,
 $ShowHeader, $ShowMenu, $ShowMonthDayStats, $ShowDaysOfWeekStats,
 $ShowHoursStats, $ShowDomainsStats, $ShowHostsStats,
-$ShowRobotsStats, $ShowPagesStats, $ShowFileTypesStats,
+$ShowRobotsStats, $ShowSessionsStats, $ShowPagesStats, $ShowFileTypesStats,
 $ShowBrowsersStats, $ShowOSStats, $ShowOriginStats, $ShowKeyphrasesStats,
 $ShowKeywordsStats,  $ShowHTTPErrorsStats,
 $ShowFlagLinks, $ShowLinksOnUrl,
@@ -609,6 +609,7 @@ sub Read_Config_File {
 		if ($param =~ /^ShowHostsStats/)         { $ShowHostsStats=$value; next; }
 		if ($param =~ /^ShowAuthenticatedUsers/) { $ShowAuthenticatedUsers=$value; next; }
 		if ($param =~ /^ShowRobotsStats/)        { $ShowRobotsStats=$value; next; }
+		if ($param =~ /^ShowSessionsStats/)      { $ShowSessionsStats=$value; next; }
 		if ($param =~ /^ShowPagesStats/)         { $ShowPagesStats=$value; next; }
 		if ($param =~ /^ShowFileTypesStats/)     { $ShowFileTypesStats=$value; next; }
 		if ($param =~ /^ShowFileSizesStats/)     { $ShowFileSizesStats=$value; next; }
@@ -885,6 +886,7 @@ sub Check_Config {
 	if ($ShowHostsStats !~ /[0-1]/)               	{ $ShowHostsStats=1; }
 	if ($ShowAuthenticatedUsers !~ /[0-1]/)       	{ $ShowAuthenticatedUsers=1; }
 	if ($ShowRobotsStats !~ /[0-1]/)              	{ $ShowRobotsStats=1; }
+	if ($ShowSessionsStats !~ /[0-1]/)             	{ $ShowSessionsStats=1; }
 	if ($ShowPagesStats !~ /[0-1]/)               	{ $ShowPagesStats=1; }
 	if ($ShowFileTypesStats !~ /[0-1]/)           	{ $ShowFileTypesStats=1; }
 	if ($ShowFileSizesStats !~ /[0-1]/)           	{ $ShowFileSizesStats=1; }
@@ -1092,7 +1094,8 @@ sub Read_History_File {
 		return 0;
 	}
 
-	# If session for read (no update), file can be open with share. So POSSIBLE CHANGE HERE
+	# TODO If session for read (no update), file can be open with share. So POSSIBLE CHANGE HERE
+	# TODO Whith particular option file reading can be stopped if section all read
 	open(HISTORY,"$DirData/$PROG$DayRequired$month$year$FileSuffix.txt") || error("Error: Couldn't open for read file \"$DirData/$PROG$DayRequired$month$year$FileSuffix.txt\" : $!");	# Month before Year kept for backward compatibility
 	$MonthUnique{$year.$month}=0; $MonthPages{$year.$month}=0; $MonthHits{$year.$month}=0; $MonthBytes{$year.$month}=0; $MonthHostsKnown{$year.$month}=0; $MonthHostsUnknown{$year.$month}=0;
 
@@ -1303,6 +1306,29 @@ sub Read_History_File {
 				@field=split(/\s+/,$_); $countlines++;
 			}
 			if ($Debug) { debug(" End of DOMAIN section ($count entries, $countloaded loaded)"); }
+			next;
+		}
+		if ($field[0] eq "BEGIN_SESSION")   {
+			if ($Debug) { debug(" Begin of SESSION section"); }
+			$_=<HISTORY>;
+			chomp $_; s/\r//;
+			if (! $_) { error("Error: History file \"$DirData/$PROG$month$year$FileSuffix.txt\" is corrupted (in section SESSION). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
+			my @field=split(/\s+/,$_); $countlines++;
+			my $count=0;my $countloaded=0;
+			while ($field[0] ne "END_SESSION") {
+				if ($field[0]) {
+					$count++;
+					if ($part && ($UpdateStats || $QueryString !~ /output=/i || $QueryString =~ /output=sessions/i)) {
+						$countloaded++;
+						if ($field[1]) { $_session{$field[0]}+=$field[1]; }
+					}
+				}
+				$_=<HISTORY>;
+				chomp $_; s/\r//;
+				if (! $_) { error("Error: History file \"$DirData/$PROG$month$year$FileSuffix.txt\" is corrupted (in section SESSION). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
+				@field=split(/\s+/,$_); $countlines++;
+			}
+			if ($Debug) { debug(" End of SESSION section ($count entries, $countloaded loaded)"); }
 			next;
 		}
 		if ($field[0] eq "BEGIN_BROWSER")   {
@@ -3124,10 +3150,10 @@ if ($UpdateStats) {
 				# This is a new visit
 				if ($_hostmachine_l{$_} && $_hostmachine_s{$_} && $_hostmachine_u{$_}) {	# If there was a preceding session running
 					# Session for $_ is expired so we close and count it
-					$_url_x{$_hostmachine_u{$_}}++;
+					$_url_x{$_hostmachine_u{$_}}++;	# Increase exit page
 					$_session{SessionLastToSessionRange($_hostmachine_l{$_},$_hostmachine_s{$_})}++;
-#					delete $_hostmachine_s{$_};
-#					delete $_hostmachine_u{$_};
+					#delete $_hostmachine_s{$_};
+					#delete $_hostmachine_u{$_};
 				}
 
 				$MonthVisits{$yearmonth}++;
@@ -3686,8 +3712,10 @@ EOF
 			# Navigation
 			print "<tr><th class=AWL>$Message[72] : </th>";
 			print "<td class=AWL>";
+			if ($ShowSessionsStats)		 { print "<a href=\"#SESSIONS\">$Message[117]</a> &nbsp; "; }
 			if ($ShowPagesStats)		 { print "<a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=urldetail":"$PROG$FileSuffix.urldetail.html")."\">$Message[29]</a> &nbsp; "; }
 			if ($ShowPagesStats)		 { print "<a href=\"#ENTRY\">$Message[104]</a> &nbsp; "; }
+			if ($ShowPagesStats)		 { print "<a href=\"#EXIT\">$Message[116]</a> &nbsp; "; }
 			if ($ShowFileTypesStats)	 { print "<a href=\"#FILETYPES\">$Message[73]</a> &nbsp; "; }
 			if ($ShowFileSizesStats)	 {  }
 			if ($ShowOSStats)			 { print "<a href=\"#OS\">$Message[59]</a> &nbsp; "; }
@@ -4458,11 +4486,31 @@ EOF
 		&tab_end;
 	}
 
+	# BY SESSION
+	#----------------------------
+	if ($ShowSessionsStats) {
+		if ($Debug) { debug("ShowSessionsStats",2); }
+		print "$CENTER<a name=\"SESSIONS\">&nbsp;</a><BR>";
+		&tab_head($Message[117],19);
+		print "<TR bgcolor=\"#$color_TableBGRowTitle\" onmouseover=\"ShowTooltip(16);\" onmouseout=\"HideTooltip(16);\"><TH>$Message[117]</TH><TH bgcolor=\"#$color_s\" width=80>$Message[10]</TH></TR>\n";
+		$total_s=0;
+		my $count=0;
+		foreach my $key (keys %_session) {
+			$total_s+=$_session{$key};
+			print "<tr><td CLASS=AWL>$key</td><td>$_session{$key}</td></tr>\n";
+			$count++;
+		}
+		if ($TotalVisits > $total_s) {
+			print "<tr><td CLASS=AWL>$Message[0]</td><td>".($TotalVisits-$total_s)."</td></tr>\n";
+		}
+		&tab_end;
+	}
+
 	# BY URL
 	#-------------------------
 	if ($ShowPagesStats) {
 		if ($Debug) { debug("ShowPagesStats (MaxNbOfPageShown=$MaxNbOfPageShown TotalDifferentPages=$TotalDifferentPages)",2); }
-		print "$CENTER<a name=\"PAGE\">&nbsp;</a><a name=\"ENTRY\">&nbsp;</a><BR>";
+		print "$CENTER<a name=\"PAGE\">&nbsp;</a><a name=\"ENTRY\">&nbsp;</a><a name=\"EXIT\">&nbsp;</a><BR>";
 		$MaxNbOfPageShown = $TotalDifferentPages if $MaxNbOfPageShown > $TotalDifferentPages;
 		&tab_head("$Message[19] ($Message[77] $MaxNbOfPageShown) &nbsp; - &nbsp; <a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=urldetail":"$PROG$FileSuffix.urldetail.html")."\">$Message[80]</a>",19);
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$TotalDifferentPages $Message[28]</TH>";
