@@ -1,4 +1,11 @@
 #!/usr/bin/perl
+#----------------------------------------------------------------------------
+# \file         make/makepack-awstats.pl
+# \brief        Package builder (tgz, zip, rpm, deb, exe)
+# \version      $Revision$
+# \author       (c)2004-2005 Laurent Destailleur  <eldy@users.sourceforge.net>
+#----------------------------------------------------------------------------
+
 use Cwd;
 
 $PROJECT="awstats";
@@ -10,9 +17,10 @@ $RPMSUBVERSION="1";
 %REQUIREMENTTARGET=(                            # Tool requirement for each package
 "TGZ"=>"tar",
 "ZIP"=>"7z",
-"RPM"=>"rpm",
+"RPM"=>"rpmbuild",
 "DEB"=>"dpkg-buildpackage",
-"EXE"=>"makensis.exe");
+"EXE"=>"makensis.exe"
+);
 %ALTERNATEPATH=(
 "7z"=>"7-ZIP",
 "makensis.exe"=>"NSIS"
@@ -24,6 +32,14 @@ $FILENAMEZIP="$PROJECT-$MAJOR.$MINOR";
 $FILENAMERPM="$PROJECT-$MAJOR.$MINOR-$RPMSUBVERSION";
 $FILENAMEDEB="$PROJECT-$MAJOR.$MINOR";
 $FILENAMEEXE="$PROJECT-$MAJOR.$MINOR";
+if (-d "/usr/src/redhat") {
+    # redhat
+    $RPMDIR="/usr/src/redhat";
+}
+if (-d "/usr/src/RPM") {
+    # mandrake
+    $RPMDIR="/usr/src/RPM";
+}
 use vars qw/ $REVISION $VERSION /;
 $REVISION='$Revision$'; $REVISION =~ /\s(.*)\s/; $REVISION=$1;
 $VERSION="1.0 (build $REVISION)";
@@ -45,9 +61,9 @@ if ("$^O" =~ /linux/i || (-d "/etc" && -d "/var" && "$^O" !~ /cygwin/i)) { $OS='
 elsif (-d "/etc" && -d "/Users") { $OS='macosx'; $CR=''; }
 elsif ("$^O" =~ /cygwin/i || "$^O" =~ /win32/i) { $OS='windows'; $CR="\r"; }
 if (! $OS) {
-    print "makepack-dolbarr.pl was not able to detect your OS.\n";
+    print "$PROG was not able to detect your OS.\n";
 	print "Can't continue.\n";
-	print "makepack-dolibarr.pl aborted.\n";
+	print "$PROG aborted.\n";
     sleep 2;
 	exit 1;
 }
@@ -74,11 +90,23 @@ if (! $TEMP || ! -d $TEMP) {
 $BUILDROOT="$TEMP/buildroot";
 
 
+my $copyalreadydone=0;
+my $batch=0;
+
+print "Makepack version $VERSION\n";
+print "Building package name: $PROJECT\n";
+print "Building package version: $MAJOR.$MINOR\n";
+
+for (0..@ARGV-1) {
+	if ($ARGV[$_] =~ /^-*target=(\w+)/i)    { $target=$1; $batch=1; }
+}
 
 # Choose package targets
 #-----------------------
-print "Makepack version $VERSION\n";
-print "Building package for $PROJECT $MAJOR.$MINOR\n";
+if ($target) {
+    $CHOOSEDTARGET{uc($target)}=1;
+}
+else {
 my $found=0;
 my $NUM_SCRIPT;
 while (! $found) {
@@ -118,6 +146,7 @@ else {
 	    $CHOOSEDTARGET{$key}=1;
     }
 }
+}
 
 # Test if requirement is ok
 #--------------------------
@@ -148,9 +177,18 @@ foreach my $target (keys %CHOOSEDTARGET) {
 
 print "\n";
 
+# Check if there is at least on target to build
+#----------------------------------------------
+$nboftargetok=0;
+foreach my $target (keys %CHOOSEDTARGET) {
+    if ($CHOOSEDTARGET{$target} < 0) { next; }
+    $nboftargetok++;
+}
+
+if ($nboftargetok) {
+
 # Update buildroot
 #-----------------
-my $copyalreadydone=0;
 if (! $copyalreadydone) {
 	print "Delete directory $BUILDROOT\n";
 	$ret=`rm -fr "$BUILDROOT"`;
@@ -213,43 +251,48 @@ $ret=`rm -fr $BUILDROOT/$PROJECT/CVS* $BUILDROOT/$PROJECT/*/CVS* $BUILDROOT/$PRO
 
 rename("$BUILDROOT/$PROJECT","$BUILDROOT/$FILENAMETGZ");
 
-# Generation des packages
-#------------------------
-
 # Build package for each target
 #------------------------------
-foreach $target (keys %CHOOSEDTARGET) {
+    foreach my $target (keys %CHOOSEDTARGET) {
     if ($CHOOSEDTARGET{$target} < 0) { next; }
 
-    print "\nBuild pack for target $target\n";
+        print "\nBuild package for target $target\n";
 
-	if ($target eq 'TGZ') {
-		unlink $FILENAMETGZ.tgz;
-		print "Compression en $FILENAMETGZ.tgz de $FILENAMETGZ\n";
-		$ret=`tar --directory="$BUILDROOT" -czvf $FILENAMETGZ.tgz $FILENAMETGZ`;
-		print "Déplacement de $FILENAMETGZ.tgz dans $DESTI\n";
-		rename("$FILENAMETGZ.tgz","$DESTI/$FILENAMETGZ.tgz");
-		next;
-	}	
+    	if ($target eq 'TGZ') {
+    		unlink $FILENAMETGZ.tgz;
+    		print "Compress $FILENAMETGZ.tgz into $FILENAMETGZ\n";
+    		$ret=`tar --directory="$BUILDROOT" -czvf $FILENAMETGZ.tgz $FILENAMETGZ`;
+    		print "Move $FILENAMETGZ.tgz to $DESTI\n";
+    		rename("$FILENAMETGZ.tgz","$DESTI/$FILENAMETGZ.tgz");
+    		next;
+    	}	
+    
+    	if ($target eq 'ZIP') {
+        		unlink $FILENAMEZIP.zip;
+        		print "Compress $FILENAMETGZ into $FILENAMEZIP.zip...\n";
+     		chdir("$BUILDROOT");
+    		#print "cd $BUILDROOTNT & 7z a -r -tzip -mx $BUILDROOT/$FILENAMEZIP.zip $FILENAMETGZ\\*.*\n";
+    		#$ret=`cd $BUILDROOTNT & 7z a -r -tzip -mx $BUILDROOT/$FILENAMEZIP.zip $FILENAMETGZ\\*.*`;
+    		$ret=`7z a -r -tzip -mx $BUILDROOT/$FILENAMEZIP.zip $FILENAMETGZ\\*.*`;
+    		print "Move $FILENAMEZIP.zip to $DESTI\n";
+    		rename("$BUILDROOT/$FILENAMEZIP.zip","$DESTI/$FILENAMEZIP.zip");
+    		next;
+    	}
 
-	if ($target eq 'ZIP') {
-		unlink "$BUILDROOT/$FILENAMEZIP.zip de $FILENAMETGZ";
-		print "Compression en $FILENAMEZIP.zip\n";
- 		chdir("$BUILDROOT");
-		#print "cd $BUILDROOTNT & 7z a -r -tzip -mx $BUILDROOT/$FILENAMEZIP.zip $FILENAMETGZ\\*.*\n";
-		#$ret=`cd $BUILDROOTNT & 7z a -r -tzip -mx $BUILDROOT/$FILENAMEZIP.zip $FILENAMETGZ\\*.*`;
-		$ret=`7z a -r -tzip -mx $BUILDROOT/$FILENAMEZIP.zip $FILENAMETGZ\\*.*`;
-		print "Déplacement de $FILENAMEZIP.zip dans $DESTI\n";
-		rename("$BUILDROOT/$FILENAMEZIP.zip","$DESTI/$FILENAMEZIP.zip");
-		next;
-	}
+    	if ($target eq 'RPM') {                 # Linux only
+    		$BUILDFIC="$FILENAME.spec";
+    		unlink $FILENAMETGZ.tgz;
+    		print "Compress $FILENAMETGZ into $FILENAMETGZ.tgz...\n";
+    		$ret=`tar --exclude-from "$SOURCE/make/tgz/tar.exclude" --directory "$BUILDROOT" -czvf "$BUILDROOT/$FILENAMETGZ.tgz" $FILENAMETGZ`;
 
-	if ($target eq 'RPM') {
-		# Copie fichier spec
-		$BUILDFIC="$FILENAMETGZ.spec";
-		print "Recopie fichiers build $SOURCE/make/rpm/${BUILDFIC} en z:/tmp\n";
-        open (SPECFROM,"<$SOURCE/make/rpm/${BUILDFIC}") || die "Error, can't open input file";
-        open (SPECTO,">z:/tmp") || die "Error, can't open output file";
+    		print "Move $FILENAMETGZ.tgz to $RPMDIR/SOURCES/$FILENAMETGZ.tgz\n";
+    		$cmd="mv \"$BUILDROOT/$FILENAMETGZ.tgz\" \"$RPMDIR/SOURCES/$FILENAMETGZ.tgz\"";
+            $ret=`$cmd`;
+
+    		print "Copy $SOURCE/make/rpm/${BUILDFIC} to $BUILDROOT\n";
+#    		$ret=`cp -p "$SOURCE/make/rpm/${BUILDFIC}" "$BUILDROOT"`;
+            open (SPECFROM,"<$SOURCE/make/rpm/${BUILDFIC}") || die "Error";
+            open (SPECTO,">$BUILDROOT/$BUILDFIC") || die "Error";
         while (<SPECFROM>) {
             $_ =~ s/__VERSION__/$MAJOR.$MINOR.$BUILD/;
             print SPECTO $_;
@@ -257,17 +300,12 @@ foreach $target (keys %CHOOSEDTARGET) {
         close SPECFROM;
         close SPECTO;
 
-		unlink $FILENAMETGZ.tgz;
-		print "Compression en $FILENAMETGZ.tgz de $FILENAMETGZ\n";
-		$ret=`tar --directory="$BUILDROOT" -czvf $FILENAMETGZ.tgz $FILENAMETGZ`;
-		print "Déplacement de $FILENAMETGZ.tgz dans z:/usr/src/RPM/SOURCES/\n";
-		$ret=`cp "$FILENAMETGZ.tgz" "z:/usr/src/RPM/SOURCES/"`;
-
-		print "Lancer la generation du RPM (rpm --clean -ba /tmp/${BUILDFIC})\n";
-		my $WAITKEY=<STDIN>;
+    		print "Launch RPM build (rpm --clean -ba $BUILDROOT/${BUILDFIC})\n";
+    		$ret=`rpm --clean -ba $BUILDROOT/${BUILDFIC}`;
 	
-		print "Recopie de z:/usr/src/RPM/RPMS/noarch/${FILENAMERPM}.noarch.rpm en $DESTI\n";
-		rename("z:/usr/src/RPM/RPMS/noarch/${FILENAMERPM}.noarch.rpm","$DESTI/${FILENAMERPM}.noarch.rpm");
+   		    print "Move $RPMDIR/RPMS/noarch/${FILENAMERPM}.noarch.rpm into $DESTI/${FILENAMERPM}.noarch.rpm\n";
+   		    $cmd="mv \"$RPMDIR/RPMS/noarch/${FILENAMERPM}.noarch.rpm\" \"$DESTI/${FILENAMERPM}.noarch.rpm\"";
+    		$ret=`$cmd`;
 		next;
 	}
 	
@@ -276,9 +314,9 @@ foreach $target (keys %CHOOSEDTARGET) {
     }
     
 	if ($target eq 'EXE') {
-		unlink "$BUILDROOT/$FILENAMEEXE.exe";
-		print "Compression en $FILENAMEEXE.exe par $FILENAME.nsi\n";
-		$command="\"c:\\Program Files\\NSIS\\makensis.exe\" /DMUI_VERSION_DOT=$MAJOR.$MINOR /X\"SetCompressor bzip2\" \"$SOURCE\\make\\exe\\$FILENAME.nsi\"";
+    		unlink "$FILENAMEEXE.exe";
+    		print "Compress into $FILENAMEEXE.exe by $FILENAME.nsi...\n";
+    		$command="\"$REQUIREMENTTARGET{$target}\" /DMUI_VERSION_DOT=$MAJOR.$MINOR /X\"SetCompressor bzip2\" \"$SOURCE\\make\\exe\\$FILENAME.nsi\"";
         print "$command\n";
 		$ret=`$command`;
 		print "Move $FILENAMEEXE.exe to $DESTI\n";
@@ -288,8 +326,10 @@ foreach $target (keys %CHOOSEDTARGET) {
 
 }
 
+}
+
 print "\n----- Summary -----\n";
-foreach $target (keys %CHOOSEDTARGET) {
+foreach my $target (keys %CHOOSEDTARGET) {
     if ($CHOOSEDTARGET{$target} < 0) {
         print "Package $target not built (bad requirement).\n";
     } else {
@@ -297,7 +337,9 @@ foreach $target (keys %CHOOSEDTARGET) {
     }
 }
 
-print "\nPress key to finish...";
-my $WAITKEY=<STDIN>;
+if (! $btach) {
+	print "\nPress key to finish...";
+	my $WAITKEY=<STDIN>;
+}
 
 0;

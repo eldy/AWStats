@@ -1,35 +1,118 @@
 #!/usr/bin/perl
+#----------------------------------------------------------------------------
+# \file         make/makepack-awstats_webmin.pl
+# \brief        Package builder (tgz, zip, rpm, deb, exe)
+# \version      $Revision$
+# \author       (c)2004-2005 Laurent Destailleur  <eldy@users.sourceforge.net>
+#----------------------------------------------------------------------------
+
 use Cwd;
 
 $PROJECT="awstats";
 $MAJOR="1";
 $MINOR="5";
+@LISTETARGET=("WBM");   # Possible packages
+%REQUIREMENTTARGET=(                            # Tool requirement for each package
+"WBM"=>"tar",
+"TGZ"=>"tar",
+"ZIP"=>"7z",
+"RPM"=>"rpmbuild",
+"DEB"=>"dpkg-buildpackage",
+"EXE"=>"makensis.exe"
+);
+%ALTERNATEPATH=(
+"7z"=>"7-ZIP",
+"makensis.exe"=>"NSIS"
+);
 
+$FILENAME="$PROJECT";
 $FILENAMEWBM="$PROJECT-$MAJOR.$MINOR";
-$SOURCE="C:/Mes developpements/$PROJECT/tools/webmin";
-$DESTI="C:/Mes sites/Web/$PROJECT/wwwroot/files";
-$BUILDROOT="c:/temp/buildroot";
+if (-d "/usr/src/redhat") {
+    # redhat
+    $RPMDIR="/usr/src/redhat";
+}
+if (-d "/usr/src/RPM") {
+    # mandrake
+    $RPMDIR="/usr/src/RPM";
+}
+use vars qw/ $REVISION $VERSION /;
+$REVISION='$Revision$'; $REVISION =~ /\s(.*)\s/; $REVISION=$1;
+$VERSION="1.0 (build $REVISION)";
 
-@LISTETARGET=("WBM");
-@CHOOSEDTARGET=();
+
+#------------------------------------------------------------------------------
+# MAIN
+#------------------------------------------------------------------------------
+($DIR=$0) =~ s/([^\/\\]+)$//; ($PROG=$1) =~ s/\.([^\.]*)$//; $Extension=$1;
+$DIR||='.'; $DIR =~ s/([^\/\\])[\\\/]+$/$1/;
+
+$SOURCE="$DIR/../../awstats/tools/webmin";
+$DESTI="$SOURCE/../../make";
+
+# Detect OS type
+# --------------
+if ("$^O" =~ /linux/i || (-d "/etc" && -d "/var" && "$^O" !~ /cygwin/i)) { $OS='linux'; $CR=''; }
+elsif (-d "/etc" && -d "/Users") { $OS='macosx'; $CR=''; }
+elsif ("$^O" =~ /cygwin/i || "$^O" =~ /win32/i) { $OS='windows'; $CR="\r"; }
+if (! $OS) {
+    print "$PROG was not able to detect your OS.\n";
+	print "Can't continue.\n";
+	print "$PROG aborted.\n";
+    sleep 2;
+	exit 1;
+}
+
+# Define buildroot
+# ----------------
+if ($OS =~ /linux/) {
+    $TEMP=$ENV{"TEMP"}||$ENV{"TMP"}||"/tmp";
+}
+if ($OS =~ /macos/) {
+    $TEMP=$ENV{"TEMP"}||$ENV{"TMP"}||"/tmp";
+}
+if ($OS =~ /windows/) {
+    $TEMP=$ENV{"TEMP"}||$ENV{"TMP"}||"c:/temp";
+    $PROGPATH=$ENV{"ProgramFiles"};
+}
+if (! $TEMP || ! -d $TEMP) {
+    print "Error: A temporary directory can not be find.\n";
+    print "Check that TEMP or TMP environment variable is set correctly.\n";
+	print "makepack-dolibarr.pl aborted.\n";
+    sleep 2;
+    exit 2;
+} 
+$BUILDROOT="$TEMP/buildroot";
 
 
-# Choose package
-#---------------
-print "Building package for $PROJECT $MAJOR.$MINOR\n";
 my $copyalreadydone=0;
+my $batch=0;
+
+print "Makepack version $VERSION\n";
+print "Building package name: $PROJECT\n";
+print "Building package version: $MAJOR.$MINOR\n";
+
+for (0..@ARGV-1) {
+	if ($ARGV[$_] =~ /^-*target=(\w+)/i)    { $target=$1; $batch=1; }
+}
+
+# Choose package targets
+#-----------------------
+if ($target) {
+    $CHOOSEDTARGET{uc($target)}=1;
+}
+else {
 my $found=0;
 my $NUM_SCRIPT;
 while (! $found) {
 	my $cpt=0;
-	print "$cpt - All\n";
+	printf(" %d - %3s    (%s)\n",$cpt,"All","Need ".join(",",values %REQUIREMENTTARGET));
 	foreach my $target (@LISTETARGET) {
 		$cpt++;
-		print "$cpt - $target\n";
+		printf(" %d - %3s    (%s)\n",$cpt,$target,"Need ".$REQUIREMENTTARGET{$target});
 	}
 
 	# On demande de choisir le fichier à passer
-	print "Choose package number (or several separated by space): ";
+	print "Choose one package number or several separated with space: ";
 	$NUM_SCRIPT=<STDIN>; 
 	chomp($NUM_SCRIPT);
 	if ($NUM_SCRIPT =~ s/-//g) {
@@ -49,56 +132,110 @@ while (! $found) {
 print "\n";
 if ($NUM_SCRIPT) {
 	foreach my $num (split(/\s+/,$NUM_SCRIPT)) {
-		push @CHOOSEDTARGET, $LISTETARGET[$num-1];
+		$CHOOSEDTARGET{$LISTETARGET[$num-1]}=1;
 	}
 }
 else {
-	@CHOOSEDTARGET=@LISTETARGET;	
+	foreach my $key (@LISTETARGET) {
+	    $CHOOSEDTARGET{$key}=1;
+    }
+}
 }
 
+# Test if requirement is ok
+#--------------------------
+foreach my $target (keys %CHOOSEDTARGET) {
+    foreach my $req (split(/[,\s]/,$REQUIREMENTTARGET{$target})) {
+        # Test    
+        print "Test requirement for target $target: Search '$req'... ";
+        $ret=`"$req" 2>&1`;
+        $coderetour=$?; $coderetour2=$coderetour>>8;
+        if ($coderetour != 0 && (($coderetour2 == 1 && $OS =~ /windows/ && $ret !~ /Usage/i) || ($coderetour2 == 127 && $OS !~ /windows/)) && $PROGPATH) { 
+            # Not found error, we try in PROGPATH
+            $ret=`"$PROGPATH/$ALTERNATEPATH{$req}/$req\" 2>&1`;
+            $coderetour=$?; $coderetour2=$coderetour>>8;
+            $REQUIREMENTTARGET{$target}="$PROGPATH/$ALTERNATEPATH{$req}/$req";
+        }    
 
-# Mise à jour du buildroot
-#-------------------------
-
-if (! $copyalreadydone) {
-	print "Suppression du repertoire $BUILDROOT\n";
-	$ret=`rm -fr "$BUILDROOT"`;
-
-	mkdir "$BUILDROOT";
-	print "Recopie de $SOURCE dans $BUILDROOT/$PROJECT\n";
-	mkdir "$BUILDROOT/$PROJECT";
-	$ret=`cp -pr "$SOURCE/$PROJECT" "$BUILDROOT"`;
-
-}
-
-print "Nettoyage de $BUILDROOT\n";
-$ret=`rm -f $BUILDROOT/$PROJECT/webmin/*.wbm`;
-$ret=`rm -f $BUILDROOT/$PROJECT/webmin/*.tar`;
-$ret=`rm -fr $BUILDROOT/$PROJECT/Thumbs.db $BUILDROOT/$PROJECT/*/Thumbs.db $BUILDROOT/$PROJECT/*/*/Thumbs.db $BUILDROOT/$PROJECT/*/*/*/Thumbs.db`;
-$ret=`rm -fr $BUILDROOT/$PROJECT/CVS* $BUILDROOT/$PROJECT/*/CVS* $BUILDROOT/$PROJECT/*/*/CVS* $BUILDROOT/$PROJECT/*/*/*/CVS* $BUILDROOT/$PROJECT/*/*/*/*/CVS* $BUILDROOT/$PROJECT/*/*/*/*/*/CVS*`;
-
-
-# Generation des packages
-#------------------------
-
-foreach $target (@CHOOSEDTARGET) {
-
-	if ($target eq 'WBM') {
-		unlink $FILENAMEWBM.wbm;
-		print "Creation archive $FILENAMEWBM.wbm de $PROJECT\n";
-		$ret=`tar --directory="$BUILDROOT" -cvf $FILENAMEWBM.wbm $PROJECT`;
-		print "Déplacement de $FILENAMEWBM.wbm dans $SOURCE/$FILENAMEWBM.wbm\n";
-		rename("$FILENAMEWBM.wbm","$SOURCE/$FILENAMEWBM.wbm");
-		$ret=`cp -pr "$SOURCE/$FILENAMEWBM.wbm" "$DESTI/$FILENAMEWBM.wbm"`;
-	}	
-
+        if ($coderetour != 0 && (($coderetour2 == 1 && $OS =~ /windows/ && $ret !~ /Usage/i) || ($coderetour2 == 127 && $OS !~ /windows/))) {
+            # Not found error
+            print "Not found\nCan't build target $target. Requirement '$req' not found in PATH\n";
+            $CHOOSEDTARGET{$target}=-1;
+            last;
+        } else {
+            # Pas erreur ou erreur autre que programme absent
+            print " Found ".$REQUIREMENTTARGET{$target}."\n";
+        }
+    }
 }
 
 print "\n";
-foreach $target (@CHOOSEDTARGET) {
-	print "Fichiers de type $target genere en $DESTI avec succes.\n";
+
+# Check if there is at least on target to build
+#----------------------------------------------
+$nboftargetok=0;
+foreach my $target (keys %CHOOSEDTARGET) {
+    if ($CHOOSEDTARGET{$target} < 0) { next; }
+    $nboftargetok++;
 }
 
-my $WAITKEY=<STDIN>;
+if ($nboftargetok) {
+
+    # Update buildroot
+    #-----------------
+    if (! $copyalreadydone) {
+    	print "Delete directory $BUILDROOT\n";
+    	$ret=`rm -fr "$BUILDROOT"`;
+    
+    	mkdir "$BUILDROOT";
+    	print "Recopie de $SOURCE dans $BUILDROOT/$PROJECT\n";
+    	mkdir "$BUILDROOT/$PROJECT";
+    	$ret=`cp -pr "$SOURCE/$PROJECT" "$BUILDROOT"`;
+    
+    }
+    
+    print "Nettoyage de $BUILDROOT\n";
+    $ret=`rm -f $BUILDROOT/$PROJECT/webmin/*.wbm`;
+    $ret=`rm -f $BUILDROOT/$PROJECT/webmin/*.tar`;
+    $ret=`rm -fr $BUILDROOT/$PROJECT/Thumbs.db $BUILDROOT/$PROJECT/*/Thumbs.db $BUILDROOT/$PROJECT/*/*/Thumbs.db $BUILDROOT/$PROJECT/*/*/*/Thumbs.db`;
+    $ret=`rm -fr $BUILDROOT/$PROJECT/CVS* $BUILDROOT/$PROJECT/*/CVS* $BUILDROOT/$PROJECT/*/*/CVS* $BUILDROOT/$PROJECT/*/*/*/CVS* $BUILDROOT/$PROJECT/*/*/*/*/CVS* $BUILDROOT/$PROJECT/*/*/*/*/*/CVS*`;
+    
+    #rename("$BUILDROOT/$PROJECT","$BUILDROOT/$FILENAMETGZ");
+    
+    # Build package for each target
+    #------------------------------
+        foreach my $target (keys %CHOOSEDTARGET) {
+        if ($CHOOSEDTARGET{$target} < 0) { next; }
+    
+            print "\nBuild package for target $target\n";
+    
+    	if ($target eq 'WBM') {
+    		unlink $FILENAMEWBM.wbm;
+    		print "Creation archive $FILENAMEWBM.wbm de $PROJECT\n";
+    		$ret=`tar --directory="$BUILDROOT" -cvf $FILENAMEWBM.wbm $PROJECT`;
+    		print "Déplacement de $FILENAMEWBM.wbm dans $SOURCE/$FILENAMEWBM.wbm\n";
+    		rename("$FILENAMEWBM.wbm","$SOURCE/$FILENAMEWBM.wbm");
+    		$ret=`cp -pr "$SOURCE/$FILENAMEWBM.wbm" "$DESTI/$FILENAMEWBM.wbm"`;
+#    		$ret=`cp -pr "$SOURCE/$FILENAMEWBM.wbm" "$DESTI/$FILENAMEWBM.wbm"`;
+    		next;
+    	}	
+    
+    }
+
+}
+
+print "\n----- Summary -----\n";
+foreach my $target (keys %CHOOSEDTARGET) {
+    if ($CHOOSEDTARGET{$target} < 0) {
+        print "Package $target not built (bad requirement).\n";
+    } else {
+        print "Package $target built succeessfully in $DESTI\n";
+    }
+}
+
+if (! $btach) {
+	print "\nPress key to finish...";
+	my $WAITKEY=<STDIN>;
+}
 
 0;
