@@ -72,7 +72,7 @@ $total_h, $total_k, $total_p) = ();
 %MonthBytes = %MonthHits = %MonthHostsKnown = %MonthHostsUnknown = %MonthPages = %MonthUnique = %MonthVisits =
 %listofyears = %monthlib = %monthnum = ();
 
-$VERSION="3.1 (build 23)";
+$VERSION="3.1 (build 24)";
 $Lang="en";
 
 # Default value
@@ -80,7 +80,7 @@ $MAXROWS       = 200000;	# Max number of rows for not limited HTML arrays
 $SortDir       = -1;		# -1 = Sort order from most to less, 1 = reverse order (Default = -1)
 $VisitTimeOut  = 10000;		# Laps of time to consider a page load as a new visit. 10000 = one hour (Default = 10000)
 $FullHostName  = 1;			# 1 = Use name.domain.zone to refer host clients, 0 = all hosts in same domain.zone are one host (Default = 1, 0 never tested)
-$MaxLengthOfURL= 70;		# Maximum length of URL shown on stats page. This affects only URL visible text, link still work (Default = 70)
+$MaxLengthOfURL= 72;		# Maximum length of URL shown on stats page. This affects only URL visible text, link still work (Default = 72)
 $MaxNbOfDays   = 31;
 $NbOfLinesForBenchmark=5000;
 $NbOfLinesForCorruptedLog=10;
@@ -2601,7 +2601,7 @@ EOF
 		foreach my $key (sort { $SortDir*$_unknownip_l{$a} <=> $SortDir*$_unknownip_l{$b} } keys (%_unknownip_l)) {
 			if ($count>=$MAXROWS) { $rest+=$_sider404_h{$key}; next; }
 			$key =~ s/<script.*$//gi;				# This is to avoid 'Cross Site Scripting attacks'
-			print "<tr><td>$key</td><td>".Format_Date($_unknownip_l{$key})."</td></tr>";
+			print "<tr><td>$key</td><td>".Format_Date($_unknownip_l{$key})."</td></tr>\n";
 			$count++;
 			}
 		&tab_end;
@@ -2616,7 +2616,7 @@ EOF
 		foreach my $key (sort { $SortDir*$_unknownrefererbrowser_l{$a} <=> $SortDir*$_unknownrefererbrowser_l{$b} } keys (%_unknownrefererbrowser_l)) {
 			if ($count>=$MAXROWS) { $rest+=$_sider404_h{$key}; next; }
 			$key =~ s/<script.*$//gi;				# This is to avoid 'Cross Site Scripting attacks'
-			print "<tr><td CLASS=AWL>$key</td><td>".Format_Date($_unknownrefererbrowser_l{$key})."</td></tr>";
+			print "<tr><td CLASS=AWL>$key</td><td>".Format_Date($_unknownrefererbrowser_l{$key})."</td></tr>\n";
 			$count++;
 		}
 		&tab_end;
@@ -2631,7 +2631,7 @@ EOF
 		foreach my $key (sort { $SortDir*$_unknownreferer_l{$a} <=> $SortDir*$_unknownreferer_l{$b} } keys (%_unknownreferer_l)) {
 			if ($count>=$MAXROWS) { $rest+=$_sider404_h{$key}; next; }
 			$key =~ s/<script.*$//gi;				# This is to avoid 'Cross Site Scripting attacks'
-			print "<tr><td CLASS=AWL>$key</td><td>".Format_Date($_unknownreferer_l{$key})."</td></tr>";
+			print "<tr><td CLASS=AWL>$key</td><td>".Format_Date($_unknownreferer_l{$key})."</td></tr>\n";
 			$count++;
 		}
 		&tab_end;
@@ -2649,7 +2649,7 @@ EOF
 			my $nompage=$key;
 			#if (length($nompage)>$MaxLengthOfURL) { $nompage=substr($nompage,0,$MaxLengthOfURL)."..."; }
 			my $referer=$_referer404_h{$key}; $referer =~ s/<script.*$//gi;	# This is to avoid 'Cross Site Scripting attacks'
-			print "<tr><td CLASS=AWL>$nompage</td><td>$_sider404_h{$key}</td><td>$referer&nbsp;</td></tr>";
+			print "<tr><td CLASS=AWL>$nompage</td><td>$_sider404_h{$key}</td><td>$referer&nbsp;</td></tr>\n";
 			$count++;
 		}
 		&tab_end;
