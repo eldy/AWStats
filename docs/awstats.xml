@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="Windows-1252" ?>
 <XML_DIZ_INFO>
 <MASTER_PAD_VERSION_INFO>
-    <MASTER_PAD_VERSION>1.10</MASTER_PAD_VERSION>
+    <MASTER_PAD_VERSION>1.15</MASTER_PAD_VERSION>
     <MASTER_PAD_INFO>Portable Application Description, or PAD for short, is a data set that is used by shareware authors to disseminate information to anyone interested in their software products. To find out more go to http://www.asp-shareware.org/pad</MASTER_PAD_INFO>
 </MASTER_PAD_VERSION_INFO>
 <Company_Info>
@@ -38,16 +38,13 @@
         <Program_Release_Day>27</Program_Release_Day>
         <Program_Release_Year>2001</Program_Release_Year>
         <Program_Cost_Dollars>0</Program_Cost_Dollars>
+        <Program_Cost_Other_Code />
         <Program_Cost_Other>0</Program_Cost_Other>
         <Program_Type>Freeware</Program_Type>
         <Program_Release_Status>Major Update</Program_Release_Status>
         <Program_Install_Support>No Install Support</Program_Install_Support>
-        <Program_OS_Support>Win95,Win98,WinME,WinNT 4.x,Windows2000,Unix,Linux,OS/2,OS/2 Warp,OS/2 Warp 4,MAC 68k,Mac PPC</Program_OS_Support>
+        <Program_OS_Support>Win95,Win98,WinME,WinNT 4.x,WinXP,Windows2000,Unix,Linux,OS/2,OS/2 Warp,OS/2 Warp 4,MAC 68k,Mac PPC</Program_OS_Support>
         <Program_Language>English,Spanish,French,German,Italian,Japanese,ChineseSimplified,ChineseTraditional,Russian</Program_Language>
-        <Program_Change_Info />
-        <Program_System_Requirements>None</Program_System_Requirements>
-        <Program_Specific_Category>Internet</Program_Specific_Category>
-        <Program_Categories>Log analyzer</Program_Categories>
 <File_Info>
         <Filename_Versioned>awstats.zip</Filename_Versioned>
         <Filename_Previous>awstats.zip</Filename_Previous>
@@ -66,6 +63,10 @@
         <Expire_Day />
         <Expire_Year />
     </Expire_Info>
+        <Program_Change_Info />
+        <Program_Specific_Category>Internet</Program_Specific_Category>
+        <Program_Categories>Log analyzer</Program_Categories>
+        <Program_System_Requirements>None</Program_System_Requirements>
         <Includes_JAVA_VM>N</Includes_JAVA_VM>
         <Includes_VB_Runtime>N</Includes_VB_Runtime>
         <Includes_DirectX>N</Includes_DirectX>
@@ -118,10 +119,10 @@ Fonctionne avec les log de IIS 5.0+ et Apache. Gratuit (GNU General Public Licen
 <Simtel>
     <Simtel_Email>eldy@users.sourceforge.net</Simtel_Email>
     <Simtel_FORM>Y</Simtel_FORM>
-    <Simtel_DOS_Category>Select - MS-DOS Platform</Simtel_DOS_Category>
-    <Simtel_Win31_Category>Select - Win3 Platform</Simtel_Win31_Category>
-    <Simtel_WinXX_Category>Internet - html HTML Tools</Simtel_WinXX_Category>
-    <Simtel_Category>Web Development - Site Management</Simtel_Category>
-    <SIMTEL_FORM_VER>1.03 04/09/2001</SIMTEL_FORM_VER>
+    <Simtel_DOS_Category />
+    <Simtel_Win31_Category />
+    <Simtel_Platform />
+    <Simtel_Category>Internet - inet Programs for Using the Internet</Simtel_Category>
+    <SIMTEL_FORM_VER>1.1 12/07/2001</SIMTEL_FORM_VER>
 </Simtel>
 </XML_DIZ_INFO>
