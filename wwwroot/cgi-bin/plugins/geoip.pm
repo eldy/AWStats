@@ -1,4 +1,5 @@
 #!/usr/bin/perl
+#!/usr/bin/perl
 #-----------------------------------------------------------------------------
 # GeoIp AWStats plugin
 # This plugin allow you to get AWStats country report with countries detected
@@ -15,7 +16,7 @@
 if (!eval ('require "Geo/IP.pm";')) 	{ return "Error: Need Perl module Geo::IP"; }		# For GeoIP
 #if (!eval ('require "Geo/IPfree.pm";')) { return "Error: Need Perl module Geo::IPfree"; }	# For GeoIPfree
 # ----->
-#use strict;no strict "refs";
+use strict;no strict "refs";
 
 
 
@@ -55,9 +56,13 @@ sub Init_geoip {
 	# <-----
 	# ENTER HERE CODE TO DO INIT PLUGIN ACTIONS
 	debug(" InitParams=$InitParams",1);
+	my $mode=$InitParams;
+	if ($mode eq '' || $mode eq 'GEOIP_MEMORY_CACHE')  { $mode=Geo::IP::GEOIP_MEMORY_CACHE(); }
+	else { $mode=Geo::IP::GEOIP_STANDARD(); }
 	%TmpDomainLookup=();
-	$gi = Geo::IP->new(GEOIP_MEMORY_CACHE);		# For GeoIP	(Can also use GEOIP_STANDARD)
-#	$gi = Geo::IPfree::new();					# For GeoIPfree
+	debug(" GeoIP working in mode $mode",1);
+	$gi = Geo::IP->new($mode);		# For GeoIP
+#	$gi = Geo::IPfree::new();		# For GeoIPfree
 	# ----->
 
 	return ($checkversion?$checkversion:"$PluginHooksFunctions");
