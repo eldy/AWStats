@@ -453,7 +453,7 @@
 # Minor Swiss search engines
 'searchch', 'search.ch', 'bluewin', 'search.bluewin.ch',								
 # Generic search engines
-'search','Other search engines'
+'search','Unknown search engines'
 );
 
 
