@@ -77,7 +77,7 @@ $found, $internal_link) = ();
 %MonthBytes = %MonthHits = %MonthHostsKnown = %MonthHostsUnknown = %MonthPages = %MonthUnique = %MonthVisits =
 %monthlib = %monthnum = ();
 
-$VERSION="3.2 (build 5)";
+$VERSION="3.2 (build 6)";
 $Lang="en";
 
 # Default value
@@ -933,8 +933,14 @@ sub error {
 
 sub warning {
 	if ($WarningMessages == 1) {
-    	print "$_[0]<br>\n";
-		#print "You can now remove this warning by changing <b>\$WarningMessages=1</b> parameter into <b>\$WarningMessages=0</b> in $PROG config file (<b>$FileConfig</b>).<br><br>\n"; }
+		my $messagestring=$_[0];
+    	if ($ENV{"GATEWAY_INTERFACE"} ne "") {
+    		$messagestring =~ s/\n/\<br\>/g;
+    		print "$messagestring<br>\n";
+    	}
+    	else {
+	    	print "$messagestring\n";
+    	}
 	}
 }
 
@@ -1996,7 +2002,7 @@ if ($ENV{"GATEWAY_INTERFACE"} ne "") { $DirCgi=""; }
 if (($DirCgi ne "") && !($DirCgi =~ /\/$/) && !($DirCgi =~ /\\$/)) { $DirCgi .= "/"; }
 if ($DirData eq "" || $DirData eq ".") { $DirData=$DIR; }	# If not defined or chosen to "." value then DirData is current dir
 if ($DirData eq "")  { $DirData="."; }						# If current dir not defined then we put it to "."
-$DirData =~ s/\/$//;
+$DirData =~ s/\/$//; $DirData =~ s/\\$//;
 $SiteToAnalyze=$SiteDomain;
 if ($SiteToAnalyze eq "") { $SiteToAnalyze=$SiteConfig; }
 $SiteToAnalyze =~ tr/A-Z/a-z/;
@@ -2670,6 +2676,9 @@ if ($UpdateStats) {
 			if (-s "$DirData/$PROG$1$FileSuffix.tmp.$$") {	# Rename files of this session with size > 0
 				if (rename("$DirData/$PROG$1$FileSuffix.tmp.$$", "$DirData/$PROG$1$FileSuffix.txt")==0) {
 					$allok=0;	# At least one error in renaming working files
+					# Remove file
+					unlink "$DirData/$PROG$1$FileSuffix.tmp.$$";
+					warning("Warning: Failed to rename \"$DirData/$PROG$1$FileSuffix.tmp.$$\" into \"$DirData/$PROG$1$FileSuffix.txt\".\nWrite permissions on \"$PROG$1$FileSuffix.txt\" might be wrong".($ENV{"GATEWAY_INTERFACE"} ne ""?" for an 'update from web'":"")." or file might be opened.");
 					last;
 				}
 				chmod 0666,"$DirData/$PROG$1$FileSuffix.txt";
