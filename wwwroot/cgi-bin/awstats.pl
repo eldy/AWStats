@@ -239,8 +239,8 @@ use vars qw/
 @ExtraAddAverageRow @ExtraAddSumRow
 @PluginsToLoad 
 /;
-@MiscListOrder=('AddToFavourites','JavaEnabled','DirectorSupport','FlashSupport','RealPlayerSupport','QuickTimeSupport','WindowsMediaPlayerSupport','PDFSupport');
-%MiscListCalc=('TotalMisc'=>'','AddToFavourites'=>'u','JavaEnabled'=>'hm','DirectorSupport'=>'hm','FlashSupport'=>'hm','RealPlayerSupport'=>'hm','QuickTimeSupport'=>'hm','WindowsMediaPlayerSupport'=>'hm','PDFSupport'=>'hm');
+@MiscListOrder=('AddToFavourites','JavascriptDisabled','JavaEnabled','DirectorSupport','FlashSupport','RealPlayerSupport','QuickTimeSupport','WindowsMediaPlayerSupport','PDFSupport');
+%MiscListCalc=('TotalMisc'=>'','AddToFavourites'=>'u','JavascriptDisabled'=>'hm','JavaEnabled'=>'hm','DirectorSupport'=>'hm','FlashSupport'=>'hm','RealPlayerSupport'=>'hm','QuickTimeSupport'=>'hm','WindowsMediaPlayerSupport'=>'hm','PDFSupport'=>'hm');
 @OSFamily=('win','mac');
 #%BrowsersFamily=('msie'=>1,'netscape'=>2,'mozilla'=>3);
 %BrowsersFamily=('msie'=>1,'netscape'=>2);
@@ -515,7 +515,8 @@ use vars qw/ @Message /;
 'different worms',
 'Mails successfully sent',
 'Mails failed/refused',
-'Sensitive targets'
+'Sensitive targets',
+'Javascript disabled'
 );
 
 
@@ -1617,7 +1618,7 @@ sub Check_Config {
 	if ($ShowKeyphrasesStats !~ /[01]/)          	{ $ShowKeyphrasesStats=1; }
 	if ($ShowKeywordsStats !~ /[01]/)            	{ $ShowKeywordsStats=1; }
 	if ($ShowClusterStats !~ /[01PHB]/)    	    	{ $ShowClusterStats=0; }
-	if ($ShowMiscStats !~ /[01ajdfrqwp]/)     	    { $ShowMiscStats='a'; }
+	if ($ShowMiscStats !~ /[01anjdfrqwp]/)     	    { $ShowMiscStats='a'; }
 	if ($ShowHTTPErrorsStats !~ /[01]/)          	{ $ShowHTTPErrorsStats=1; }
 	if ($ShowSMTPErrorsStats !~ /[01]/)          	{ $ShowSMTPErrorsStats=0; }
 	if ($AddDataArrayMonthStats !~ /[01]/)        	{ $AddDataArrayMonthStats=1; }
@@ -1683,7 +1684,7 @@ sub Check_Config {
 	if ($ShowFileTypesStats eq '1') 	{ $ShowFileTypesStats = 'HB'; }
 	if ($ShowOriginStats eq '1') 		{ $ShowOriginStats = 'PH'; }
 	if ($ShowClusterStats eq '1') 		{ $ShowClusterStats = 'PHB'; }
-	if ($ShowMiscStats eq '1') 			{ $ShowMiscStats = 'ajdfrqwp'; }
+	if ($ShowMiscStats eq '1') 			{ $ShowMiscStats = 'anjdfrqwp'; }
 
 	# Convert extra sections data into @ExtraConditionType, @ExtraConditionTypeVal...
 	foreach my $extranum (1..@ExtraName-1) {
@@ -6228,6 +6229,7 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 			foreach (split(/&/,$standalonequery)) {
 				if ($_ =~ /^screen=(\d+)x(\d+)/i) 	{ $foundparam++; $_screensize_h{"$1x$2"}++; next; }
 				#if ($_ =~ /cdi=(\d+)/i) 			{ $foundparam++; $_screendepth_h{"$1"}++; next; }
+				if ($_ =~ /^nojs=(\w+)/i)	 		{ $foundparam++; if ($1 eq 'y')    { $_misc_h{"JavaScriptDisabled"}++; } next; }
 				if ($_ =~ /^java=(\w+)/i)	 		{ $foundparam++; if ($1 eq 'true') { $_misc_h{"JavaEnabled"}++; } next; }
 				if ($_ =~ /^shk=(\w+)/i) 			{ $foundparam++; if ($1 eq 'y')    { $_misc_h{"DirectorSupport"}++; } next; }
 				if ($_ =~ /^fla=(\w+)/i) 			{ $foundparam++; if ($1 eq 'y')    { $_misc_h{"FlashSupport"}++; } next; }
@@ -9860,7 +9862,7 @@ if (scalar keys %HTMLOutput) {
 			print "<th width=\"100\">&nbsp;</th>";
 			print "<th width=\"100\">&nbsp;</th>";
 			print "</tr>\n";
-			my %label=('AddToFavourites'=>$Message[137],'JavaEnabled'=>$Message[140],'DirectorSupport'=>$Message[141],
+			my %label=('AddToFavourites'=>$Message[137],'JavaScriptDisabled'=>$Message[168],'JavaEnabled'=>$Message[140],'DirectorSupport'=>$Message[141],
 			'FlashSupport'=>$Message[142],'RealPlayerSupport'=>$Message[143],'QuickTimeSupport'=>$Message[144],
 			'WindowsMediaPlayerSupport'=>$Message[145],'PDFSupport'=>$Message[146]);
 			foreach my $key (@MiscListOrder) {

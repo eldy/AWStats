@@ -168,3 +168,4 @@ message164=different worms
 message165=Mails successfully sent
 message166=Mails failed/refused
 message167=Sensitive targets
+message168=Javascript disabled
