@@ -3,21 +3,25 @@ AWStats-Webmin module Changelog
 $Revision$ - $Author$ - $Date$ 
 
 
-1.2
+1.210
 
 Fixes:
-- None
+- Better error messages
 
 New features/improvements:
-- Added UseXMLForOutput parameter in edit config area
-- Added LevelForFileTypesDetection parameter in edit config area
+- Added UseXMLForOutput parameter in edit config area.
+- Added LevelForFileTypesDetection parameter in edit config area.
+- Module setup parameter awstats_conf has been removed since now
+  directories into wich you can scan/edit AWStats configuration files
+  are defined in ACL users. Defined to /etc/awstats by default.
+  Also added a link the the ACL page to edit this directory listing.
 
 Other/Documentation:
 - None
 
 
 
-1.1
+1.100
 
 Fixes:
 - Modify of old config files add the new parameters if not found.
@@ -40,6 +44,6 @@ Other/Documentation:
 
 
 
-1.0
+1.000
 
 - First release version.

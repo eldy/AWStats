@@ -267,15 +267,16 @@ print "</table>\n";
 }
 
 # scan_config_dir()
+# Scan directory $dir for config file. Return an array with full path
 sub scan_config_dir
 {
-# Scan directory $DIRCONFIG
-opendir(DIR, $config{'awstats_conf'}) || die "Can't scan directory $DIRCONFIG";
+my $dir=shift;
+opendir(DIR, $dir) || die "Can't scan directory $dir";
 local @rv = grep { /^awstats\.(.*)conf$/ } sort readdir(DIR);
 closedir(DIR);
 foreach my $file (0..@rv-1) {
 	if ($rv[$file] eq 'awstats.model.conf') { next; }
-	$rv[$file]="$config{'awstats_conf'}/".$rv[$file];
+	$rv[$file]="$dir/".$rv[$file];
 	#print "$rv[0]\n<br>";
 }
 return @rv;
