@@ -257,7 +257,7 @@ use vars qw/
 %MimeHashLib %MimeHashIcon %MimeHashFamily
 %OSHashID %OSHashLib
 %RobotsHashIDLib
-%SearchEnginesHashIDLib %SearchEnginesKnownUrl
+%SearchEnginesHashIDLib %SearchEnginesKnownUrl %NotSearchEnginesKeys
 %WormsHashID %WormsHashLib
 /;
 use vars qw/
@@ -6321,7 +6321,7 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 					#if ($Debug) { debug("  Analyze referer refererprot=$refererprot refererserver=$refererserver",5); }
 
 					# Kind of origin
-					if (!$TmpRefererServer{$refererserver}) {
+					if (!$TmpRefererServer{$refererserver}) {	# is "=" if same site, "search egine key" if search engine, not defined otherwise
 						if ($refererserver =~ /^(www\.|)$SiteToAnalyzeWithoutwww/i) {
 							# Intern (This hit came from another page of the site)
 							if ($Debug) { debug("  Server '$refererserver' is added to TmpRefererServer with value '='",2); }
@@ -6345,10 +6345,12 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 	
 									foreach my $key (@SearchEnginesSearchIDOrder) {		# Search ID in order of SearchEnginesSearchIDOrder
 										if ($refererserver =~ /$key/i) {
-											# This hit came from the search engine $key
-											if ($Debug) { debug("  Server '$refererserver' is added to TmpRefererServer with value '$key'",2); }
-											$TmpRefererServer{$refererserver}="$key";
-											$found=1;
+											if (! $NotSearchEnginesKeys{$key} || $refererserver !~ /$NotSearchEnginesKeys{$key}/i) {
+												# This hit came from the search engine $key
+												if ($Debug) { debug("  Server '$refererserver' is added to TmpRefererServer with value '$key'",2); }
+												$TmpRefererServer{$refererserver}="$key";
+												$found=1;
+											}
 											last;
 										}
 									}
@@ -6413,6 +6415,7 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 						$_from_h[3]++;
 						# http://www.mysite.com/ must be same referer than http://www.mysite.com but .../mypage/ differs of .../mypage
 						#if ($refurl[0] =~ /^[^\/]+\/$/) { $field[$pos_referer] =~ s/\/$//; }	# Code moved in Save_History
+						# TODO: lowercase the value for referer server to have refering server not case sensitive
 						if ($URLReferrerWithQuery) {
 							if ($PageBool) { $_pagesrefs_p{$field[$pos_referer]}++; }
 							$_pagesrefs_h{$field[$pos_referer]}++;
