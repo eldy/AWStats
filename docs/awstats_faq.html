@@ -57,7 +57,7 @@ FAQ-SET220 <a href="#CRASH">Crash while running awstats.pl or page content only 
 FAQ-SET250 <a href="#PERSONALIZEDLOG">Log format setup or errors.</a><br>
 FAQ-SET260 <a href="#FTP">Setup for FTP server log files.</a><br>
 FAQ-SET270 <a href="#MAIL">Setup for MAIL log files (Sendmail, Postfix, Exchange).</a><br>
-FAQ-SET272 <a href="#MEDIASERVER">Setup for WINDOWS MEDIA SERVER log files.</a><br>
+FAQ-SET272 <a href="#MEDIASERVER">Setup for MEDIA SERVER log files (Realmedia, Windows media server).</a><br>
 FAQ-SET280 <a href="#NOTSAMENUMBER">Error "Not same number of records of...".</a><br>
 FAQ-SET300 <a href="#COULDNOTOPEN">Error "Couldn't open file ..."</a><br>
 FAQ-SET350 <a href="#EMPTY_STATS">Empty or null statistics reported.</a><br>
@@ -326,7 +326,7 @@ See <a href="#FTP">FAQ-SET260</a>.<br>
 See <a href="#MAIL">FAQ-SET270</a>.<br>
 </td></tr></table>
 
-<u>If you use <b>Windows Media Server</b>:</u><br>
+<u>If you use a Media Server (<b>Realmedia</b>, <b>Windows Media Server</b>):</u><br>
 See <a href="#FTP">FAQ-SET272</a>.<br>
 
 <table bgcolor=#F0F0F0 width="100%" class=CFAQ><tr class=CFAQ><td class=CFAQ>
@@ -347,33 +347,41 @@ support other various log formats.<br>
 What do I have to do to use AWStats to analyze some FTP server log files.<br>
 <font class=CSolution>SOLUTION:</font><br>
 AWStats was built to analyze web,wap or proxy server's log files. However it can be used with some FTP server log files.<br>
-<u>Setup your ProFTP logformat:</u><br>
-Modify the proftpd.conf file to add the following two lines :
+<br>
+1- Setup your FTP log file format:<br>
+<br>
+With ProFTP, modify the proftpd.conf file to add the following two lines :
+<table width="95%" border=1 cellpadding=0 cellspacing=0><tr class=CFAQ><td class=CFAQ>
 <!--<br>With ProFTPd 1.2.2:-->
-<i><br>LogFormat awstats "%t %h %u %m %f %s %b"</i> &nbsp; &nbsp; # WARNING: You must use a tab char between % tags and not a space !
+<i>LogFormat awstats "%t %h %u %m %f %s %b"</i> &nbsp; &nbsp; # WARNING: You must use a tab char between % tags and not a space !
 <i><br>ExtendedLog /var/log/xferlog read,write awstats</i> &nbsp; &nbsp; # WARNING: ExtendedLog directive might need to be placed inside a virtual host context if you use them.
 <!--<br>With ProFTPd 1.2.6:
 <i><br>LogFormat awstats ""${%F %H-%M-%S}t %h %u %m %F %s %b"</i> &nbsp; &nbsp; # WARNING: You must use a tab char between % tags and not a space !
 <i><br>ExtendedLog /var/log/xferlog read,write awstats</i> &nbsp; &nbsp; # WARNING: ExtendedLog directive might need to be placed inside a virtual host context if you use them.
 -->
-<br>Then turn off old format Transfer log:
-<i>
-<br>TransferLog none &nbsp; &nbsp; # WARNING: TransferLog directive might need to be placed inside a virtual host context if you use them.
-</i>
+</td></tr></table>
+Then turn off old format Transfer log:
+<table width="95%" border=1 cellpadding=0 cellspacing=0><tr class=CFAQ><td class=CFAQ>
+<i>TransferLog none</i> &nbsp; &nbsp; # WARNING: TransferLog directive might need to be placed inside a virtual host context if you use them.
+</td></tr></table>
 <br>
 To have the change effective, stop your server, remove old log file /var/log/xferlog and restart the server.<br>
-<u>Setup AWStats to analyze those FTP log files:</u><br>
+Download a file by FTP and check that your new log file looks like this:<br>
+<i>[01/Jan/2001:21:49:57 +0200]	ftp.server.com	user	RETR	/home/fileiget.txt	226	1499</i><br>
+<br>
+2- Then setup AWStats to analyze the FTP log file:<br>
+<br>
 Copy config awstats.model.conf file to "awstats.proftp.conf".<br>
 Modify this new config file:
+<table width="95%" border=1 cellpadding=0 cellspacing=0><tr class=CFAQ><td class=CFAQ>
 <i>
-<br>LogFile="/var/log/xferlog"
+LogFile="/var/log/xferlog"
 <br>LogFormat="%time1 %host %logname %method %url %code %bytesd"
 <br>LogSeparator="\t"
 <br>DNSLookup=0
 <br>SkipFiles=""
 <br>NotPageList=""
 <br>ShowLinksOnUrl=0
-<br>ShowHeader=1
 <br>ShowMenu=1
 <br>ShowMonthDayStats=UVHB
 <br>ShowDaysOfWeekStats=HB
@@ -394,8 +402,8 @@ Modify this new config file:
 <br>ShowKeyphrasesStats=0
 <br>ShowKeywordsStats=0
 <br>ShowHTTPErrorsStats=0
-</i>
-<br><br>
+</i></td></tr></table>
+<br>
 Now you can use AWStats as usual (run the update process and read statistics).<br>
 <br>
 
@@ -408,14 +416,15 @@ What do I have to do to use AWStats to analyze my mail log files.<br>
 <u>For Sendmail or PostFix log files</u><br>
 <br>
 1- First, install a mail log convertor like <a href="http://www.klake.org/sma/">SMA</a> to use it
-as a post-processor for AWStats update process.<br>
-Setup SMA to convert your mail log into a format readable by AWStats:</u><br>
-Copy sma (or sma.exe) file and sma.conf into same directory than awstats.pl file.<br>
+as a pre-processor for AWStats update process (to convert your mail log into a readable format):<br>
+For this, you can download an copy sma (or sma.exe) file and sma.conf into same directory
+than awstats.pl file.<br>
 Edit sma.conf to change the ClogFormat and ClogSentOnly parameter to :
-<i>
-<br>ClogFormat "%y-%m-%d %h:%n:%s %f %t %F %T SMTP - %S %z"
+<table width="95%" border=1 cellpadding=0 cellspacing=0><tr class=CFAQ><td class=CFAQ>
+<i>ClogFormat "%y-%m-%d %h:%n:%s %f %t %F %T SMTP - %S %z"
 <br>ClogSentOnly no
 </i>
+</td></tr></table>
 <br>
 <!--To have the change effective, stop your mail daemon, remove old log file and restart mail daemon.<br>
 Send a mail and check in your mail that your log file looks like this:<br>-->
@@ -424,18 +433,17 @@ To check that your sma config is correct, run the following command:<br>
 The resulting convertedmaillog file must have records that match the following format:<br>
 <i>2001-01-01 05:38:08 sender@mailsender.com receiver@mailreceiver.com hostrelaysender hostrelayreceiver SMTP - 1 31357</i><br>
 Warning: some sma versions (1.3) have been reported to not convert month correctly, giving
-for example a date like this 2001-#01-01 instead of 2001-01-01. This makes AWStats analyze
-fails so check your sma output and change version if error.<br>
+for example a date like this 2001-#01-01 or 2001-00-01 instead of 2001-01-01. This makes AWStats
+analyze fails so check your sma output and change version if error.<br>
 <br>
 2- Then setup AWStats to analyze SMA processed mail log:<br>
 Copy config awstats.model.conf file to "awstats.mail.conf".<br>
 Modify this new config file:
+<table width="95%" border=1 cellpadding=0 cellspacing=0><tr class=CFAQ><td class=CFAQ>
 <i>
-<br>LogFile="/pathtosma/sma -O clog -f /pathtosmaconf/sma.conf /pathtomaillog/maillog |"
+LogFile="/pathtosma/sma -O clog -f /pathtosmaconf/sma.conf /pathtomaillog/maillog |"
 <br>LogFormat="%time2 %email %email_r %host %host_r %method %url %code %bytesd"
-<br>DNSLookup=0
 <br>ValidSMTPCodes="1"
-<br>ShowHeader=1
 <br>ShowMenu=1
 <br>ShowMonthDayStats=HB
 <br>ShowDaysOfWeekStats=HB
@@ -457,7 +465,8 @@ Modify this new config file:
 <br>ShowKeywordsStats=0
 <br>ShowHTTPErrorsStats=0
 </i>
-<br><br>
+</td></tr></table>
+<br>
 Now you can use AWStats as usual (run the update process and read statistics).<br>
 <br>
 <u>For Exchange log files</u><br>
@@ -473,17 +482,57 @@ Modify this new config file:
 <br>LogFile="yourmaillogfilename"
 <br>LogFormat="%time2 %other %host %other %other %other %email %method %other %url %code %bytesd %other %other %other %other %other %other %email_r"
 <br>LogSeparator="\t"
-<br>DNSLookup=0
 -->
 <br>
 
 <a name="MEDIASERVER"></a><br>
-<b><u>FAQ-SET272 : SETUP FOR WINDOWS MEDIA SERVER</u></b><br>
+<b><u>FAQ-SET272 : SETUP FOR A MEDIA SERVER (REALMEDIA, WINDOWS MEDIA SERVER)</u></b><br>
 <font class=CProblem>PROBLEM:</font><br>
-What do I have to do to use AWStats to analyze my Windows Media Server log files.<br>
+What do I have to do to use AWStats to analyze my Media Server log files.<br>
 <font class=CSolution>SOLUTION:</font><br>
 <br>
-<u>If your Windows Media Server version allows it, setup your log format to write the following fields:</u>
+<u>For Realmedia</u><br>
+<br>
+Your log file will probably looks like this:<br>
+<i>
+216.125.146.50 - - [16/Sep/2002:14:57:21 -0500]  "GET cme/rhythmcity/rcitycaddy.rm?cloakport=8080,554,7070 RTSP/1.0" 200 6672 [Win95_4.0_6.0.9.374_play32_NS80_en-US_586] [80d280e1-c9ae-11d6-fa53-d52aaed98681] [UNKNOWN] 281712 141 3 0 0 494<br>
+</i>
+<br>
+Copy config awstats.model.conf file to "awstats.mediaserver.conf".
+Modify this new config file:
+<table width="95%" border=1 cellpadding=0 cellspacing=0><tr class=CFAQ><td class=CFAQ>
+<i>LogFile="/pathtomediaserver/mediaserverlog"
+<br>LogFormat="%host %other %logname %time1 %methodurl %code %bytesd %uabracket %other %other %other %other %other %other %other %other"
+<br>LogSeparator="\s+"
+<br>ShowMenu=1
+<br>ShowMonthDayStats=UHB
+<br>ShowDaysOfWeekStats=HB
+<br>ShowHoursStats=HB
+<br>ShowDomainsStats=HB
+<br>ShowHostsStats=HBL
+<br>ShowAuthenticatedUsers=0
+<br>ShowRobotsStats=0
+<br>ShowEMailSenders=0
+<br>ShowEMailReceivers=0
+<br>ShowSessionsStats=0
+<br>ShowPagesStats=PB
+<br>ShowFileTypesStats=HB
+<br>ShowFileSizesStats=0
+<br>ShowBrowsersStats=1
+<br>ShowOSStats=1
+<br>ShowOriginStats=PH
+<br>ShowKeyphrasesStats=0
+<br>ShowKeywordsStats=0
+<br>ShowHTTPErrorsStats=1
+</i>
+</td></tr></table>
+<br>
+Now you can use AWStats as usual (run the update process and read statistics).<br>
+<br>
+<br>
+<u>For Windows Media Server</u><br>
+<br>
+1- If your Windows Media Server version allows it, setup your log format to write the following fields:
 <i>
 <br>c-ip
 <br>date
@@ -519,15 +568,32 @@ Listen to streaming files and check that your new log file looks like this:<br>
 <i>
 80.223.91.37 2002-10-08 14:18:58 mmst://mydomain.com/mystream 0 106 1 200 {F4A826EE-FA46-480F-A49B-76786320FC6B} 8.0.0.4477 fi-FI - - wmplayer.exe 8.0.0.4477 Windows_2000 5.1.0.2600 Pentium 0 0 20702 mms TCP Windows_Media_Audio_9 - - 277721
 </i>
-<br><br>
-<u>Then setup AWStats to analyze your Media Server log:</u><br>
+<br>
+<br>
+If your Windows Media Server version does not allow to define your log format:<br>
+Just follow instructions in step 2 directly but use the log format string found in first
+lines of your log files as value for AWStats LogFormat parameter, for example:<br>
+<i>
+LogFormat="c-ip date time c-dns cs-uri-stem c-starttime x-duration c-rate
+c-status c-playerid c-playerversion c-playerlanguage cs(User-Agent)
+cs(Referer) c-hostexe c-hostexever c-os c-osversion c-cpu filelength
+filesize avgbandwidth protocol transport audiocodec videocodec channelURL
+sc-bytes c-bytes s-pkts-sent c-pkts-received c-pkts-lost-client
+c-pkts-lost-net c-pkts-lost-cont-net c-resendreqs c-pkts-recovered-ECC
+c-pkts-recovered-resent c-buffercount c-totalbuffertime c-quality s-ip s-dns
+s-totalclients s-cpu-util"
+</i>
+<br>This means you don't use the AWStats tags but AWStats can often also understand all the IIS and/or
+Windows Media Server tags.<br>
+
+<br>
+2- Then setup AWStats to analyze your Media Server log:<br>
 Copy config awstats.model.conf file to "awstats.mediaserver.conf".<br>
 Modify this new config file:
+<table width="95%" border=1 cellpadding=0 cellspacing=0><tr class=CFAQ><td class=CFAQ>
 <i>
-<br>LogFile="/pathtomediaserver/mediaserverlog"
+LogFile="/pathtomediaserver/mediaserverlog"
 <br>LogFormat="c-ip date time cs-uri-stem c-starttime x-duration c-rate c-status c-playerid c-playerversion c-playerlanguage cs(User-Agent) cs(Referer) c-hostexe c-hostexever c-os c-osversion c-cpu filelength filesize avgbandwidth protocol transport audiocodec videocodec channelURL sc-bytes"
-<br>DNSLookup=0
-<br>ShowHeader=1
 <br>ShowMenu=1
 <br>ShowMonthDayStats=UHB
 <br>ShowDaysOfWeekStats=HB
@@ -549,24 +615,9 @@ Modify this new config file:
 <br>ShowKeywordsStats=0
 <br>ShowHTTPErrorsStats=1
 </i>
-<br><br>
-Now you can use AWStats as usual (run the update process and read statistics).<br>
+</td></tr></table>
 <br>
-<u>If your Windows Media Server version does not allow to define your log format</u>, just try to use
-same setup for AWStats than previously described but use the log format string found in first
-lines of your log files as value for AWStats LogFormat parameter, for example:<br>
-<i>
-LogFormat="c-ip date time c-dns cs-uri-stem c-starttime x-duration c-rate
-c-status c-playerid c-playerversion c-playerlanguage cs(User-Agent)
-cs(Referer) c-hostexe c-hostexever c-os c-osversion c-cpu filelength
-filesize avgbandwidth protocol transport audiocodec videocodec channelURL
-sc-bytes c-bytes s-pkts-sent c-pkts-received c-pkts-lost-client
-c-pkts-lost-net c-pkts-lost-cont-net c-resendreqs c-pkts-recovered-ECC
-c-pkts-recovered-resent c-buffercount c-totalbuffertime c-quality s-ip s-dns
-s-totalclients s-cpu-util"
-</i>
-<br>This means you don't use the AWStats tags but AWStats can often also understand the IIS and/or
-Windows Media Server tags.<br>
+Now you can use AWStats as usual (run the update process and read statistics).<br>
 <br>
 
 <a name="NOTSAMENUMBER"></a><br>

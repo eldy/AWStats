@@ -4397,7 +4397,7 @@ sub DefinePerlParsingFormat() {
 				$PerlParsingFormat .= "([\\d|-]+)";
 			}
 			elsif ($f =~ /%refererquot$/) {
-				$pos_referer = $i; $i++; push @fieldlib, 'host';
+				$pos_referer = $i; $i++; push @fieldlib, 'referer';
 				$PerlParsingFormat .= "\\\"(.*)\\\""; 		# referer might be ""
 			}
 			elsif ($f =~ /%referer$/) {
@@ -4407,6 +4407,10 @@ sub DefinePerlParsingFormat() {
 			elsif ($f =~ /%uaquot$/) {
 				$pos_agent = $i; $i++; push @fieldlib, 'ua';
 				$PerlParsingFormat .= "\\\"([^\\\"]*)\\\"";	# ua might be ""
+			}
+			elsif ($f =~ /%uabracket$/) {
+				$pos_agent = $i; $i++; push @fieldlib, 'ua';
+				$PerlParsingFormat .= "\\\[(.*)\\\]"; 		# ua might be []
 			}
 			elsif ($f =~ /%ua$/) {
 				$pos_agent = $i; $i++; push @fieldlib, 'ua';
@@ -7220,9 +7224,9 @@ if (scalar keys %HTMLOutput) {
 			print "<TD><b>$Message[9]</b></TD></TR>\n";
 			if ($FirstTime) { print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TD>".Format_Date($FirstTime,0)."</TD>"; }
 			else { print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TD>NA</TD>"; }
-			print "<TD colspan=3>";
+			print "<TD colspan=3><b>";
 			print ($MonthRequired eq 'all'?"$Message[6] $YearRequired":"$Message[5] ".$MonthLib{$MonthRequired}." $YearRequired");
-			print "</TD>";
+			print "</b></TD>";
 			if ($LastTime) { print "<TD>".Format_Date($LastTime,0)."</TD></TR>\n"; }
 			else { print "<TD>NA</TD></TR>\n"; }
 			# Show main indicators
@@ -7249,7 +7253,6 @@ if (scalar keys %HTMLOutput) {
 			$total_u=$total_v=$total_p=$total_h=$total_k=0;
 			print "<CENTER>";
 			print "<TABLE>";
-			print "<TR valign=bottom><td>&nbsp;</td>\n";
 			$max_v=$max_p=$max_h=$max_k=1;
 			# Define total and max
 			for (my $ix=1; $ix<=12; $ix++) {
@@ -7268,6 +7271,8 @@ if (scalar keys %HTMLOutput) {
 			# Define average
 			# TODO
 			# Show bars for month
+			print "<TR valign=bottom>";
+			print "<TD>&nbsp;</TD>\n";
 			for (my $ix=1; $ix<=12; $ix++) {
 				my $monthix=sprintf("%02s",$ix);
 				my $bredde_u=0; my $bredde_v=0;my $bredde_p=0;my $bredde_h=0;my $bredde_k=0;
@@ -7285,13 +7290,31 @@ if (scalar keys %HTMLOutput) {
 				if ($ShowMonthDayStats =~ /B/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_k\" HEIGHT=$bredde_k WIDTH=6 ALT=\"$Message[75]: ".Format_Bytes($MonthBytes{$YearRequired.$monthix})."\" title=\"$Message[75]: ".Format_Bytes($MonthBytes{$YearRequired.$monthix})."\">"; }
 				print "</TD>\n";
 			}
+			print "<TD>&nbsp;</TD>";
 			print "</TR>\n";
 			# Show lib for month
-			print "<TR valign=middle><td>&nbsp;</td>";
+			print "<TR valign=middle>";
+#			if ($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks) {
+#				print "<TD><a href=\"$AWScript?${NewLinkParams}month=12&year=".($YearRequired-1)."\">&lt;&lt;</a></TD>";
+#			}
+#			else {
+				print "<TD>&nbsp;</TD>";
+#			}
 			for (my $ix=1; $ix<=12; $ix++) {
 				my $monthix=sprintf("%02s",$ix);
-				print "<TD>$MonthLib{$monthix}</TD>";
+#				if ($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks) {
+#					print "<TD><a href=\"$AWScript?${NewLinkParams}month=$monthix&year=$YearRequired\">$MonthLib{$monthix}<br>$YearRequired</a></TD>";
+#				}
+#				else {
+					print "<TD>$MonthLib{$monthix}<br>$YearRequired</TD>";
+#				}
 			}
+#			if ($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks) {
+#				print "<TD><a href=\"$AWScript?${NewLinkParams}month=1&year=".($YearRequired+1)."\">&gt;&gt;</a></TD>";
+#			}
+#			else {
+				print "<TD>&nbsp;</TD>";
+#			}
 			print "</TR>\n";
 			print "</TABLE>\n<br>\n";
 	
@@ -7308,7 +7331,7 @@ if (scalar keys %HTMLOutput) {
 				for (my $ix=1; $ix<=12; $ix++) {
 					my $monthix=sprintf("%02s",$ix);
 					print "<TR>";
-					print "<TD>",$MonthLib{$monthix},"</TD>";
+					print "<TD>$MonthLib{$monthix} $YearRequired</TD>";
 					if ($ShowMonthDayStats =~ /U/i) { print "<TD>",$MonthUnique{$YearRequired.$monthix}?$MonthUnique{$YearRequired.$monthix}:"0","</TD>"; }
 					if ($ShowMonthDayStats =~ /V/i) { print "<TD>",$MonthVisits{$YearRequired.$monthix}?$MonthVisits{$YearRequired.$monthix}:"0","</TD>"; }
 					if ($ShowMonthDayStats =~ /P/i) { print "<TD>",$MonthPages{$YearRequired.$monthix}?$MonthPages{$YearRequired.$monthix}:"0","</TD>"; }

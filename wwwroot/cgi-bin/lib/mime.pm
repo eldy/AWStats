@@ -76,6 +76,7 @@
 # Audio
 'mp3','audio',
 'ogg','audio',
+'rm','audio',
 'wma','audio',
 'wav','audio',
 # Video
@@ -140,6 +141,7 @@
 # Audio
 'mp3','audio',
 'ogg','audio',
+'rm','audio',
 'wav','audio',
 'wma','audio',
 # Video
