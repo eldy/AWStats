@@ -126,8 +126,8 @@ II - 1) With Apache Server (on Unix/Linux or Windows)
       look for awstats.conf). Whatever the name you choose, this new file must
       be stored in same directory than awstats.pl (so cgi-bin directory) and
       edit it with your own setup :
-      - Change "LogFile" value with full path of your web server log file or
-        with relative path from your awstats.pl directory.
+      - Change "LogFile" value with full path of your web server log file (You
+        can also use a relative path from your awstats.pl directory).
       - Check if "LogFormat" has the value "1" (it means "apache combined log
         format").
       - Change the "DirIcons" parameter to reflect URL of icons directory.
@@ -136,16 +136,15 @@ II - 1) With Apache Server (on Unix/Linux or Windows)
     * To update statistics and generate the HTML report page, launch 
       awstats.pl from the command line interface (the first time, process may
       be long), like this:
-      awstats.pl site=www.myserver.mydomain > result.html
-      where www.myserver.mydomain is the URL you use to access your web site.
+       awstats.pl conf=www.myserver.mydomain > result.html
       AWStats will use awstats.www.myserver.mydomain.conf config file, and, if
       not found, will use awstats.conf.
       This command create/update database where AWStats store all summary
-      informations issued from analysed log files and create an HTML result
-      page that show all this informations.
+      informations issued from analyzed log files and create an HTML result
+      page that shows all those informations.
       A log analysis process is slow (one second for each 570 lines of your
       logfile with Pentium 300, plus DNS resolution time for each different IP
-      address in your logfile).
+      address in your logfile if DNSLookup=1).
 
     * Add instructions in your crontab (Unix/Linux) or your scheduler (for
       Windows), to launch frequently this Awstats update process.
@@ -168,7 +167,7 @@ II - 1) With Apache Server (on Unix/Linux or Windows)
       For this, if you called your config file awstats.conf, just use URL:
        htpp://www.myserver.mydomain/cgi-bin/awstats.pl
       If you called your config file awstats.virtualhost.conf, use URL:
-       htpp://www.myserver.mydomain/cgi-bin/awstats.pl?site=virtualhost
+       htpp://www.myserver.mydomain/cgi-bin/awstats.pl?conf=virtualhost
       where virtualhost is used to know which config file to use (AWStats will
       use awstats.virtualhost.conf file).
 
@@ -196,8 +195,8 @@ II - 2) With IIS Server
       look for awstats.conf). Whatever the name you choose, this new file must
       be stored in same directory than awstats.pl (so cgi-bin directory) and
       edit it with your own setup :
-      - Change "LogFile" value with full path of your web server log file or
-        with relative path from your awstats.pl directory.
+      - Change "LogFile" value with full path of your web server log file (You
+        can also use a relative path from your awstats.pl directory).
       - Change "LogFormat" to value "2" (it means "IIS log format").
       - Change "DirIcons" parameter to reflect URL of icons directory.
       - You can change other parameters if you want.
@@ -205,16 +204,15 @@ II - 2) With IIS Server
     * To update statistics and generate the HTML report page, launch 
       awstats.pl from the command line interface (the first time, process may
       be long), like this:
-      awstats.pl site=www.myserver.mydomain > result.html
-      where www.myserver.mydomain is the URL you use to access your web site.
+       awstats.pl conf=www.myserver.mydomain > result.html
       AWStats will use awstats.www.myserver.mydomain.conf config file, and, if
       not found, will use awstats.conf.
       This command create/update database where AWStats store all summary
-      informations issued from analysed log files and create an HTML result
-      page that show all this informations.
+      informations issued from analyzed log files and create an HTML result
+      page that shows all those informations.
       A log analysis process is slow (one second for each 570 lines of your
       logfile with Pentium 300, plus DNS resolution time for each different IP
-      address in your logfile).
+      address in your logfile if DNSLookup=1).
 
     * Add instructions in a task scheduler to launch frequently this Awstats
       update process.
@@ -245,7 +243,7 @@ II - 2) With IIS Server
       For this, if you called your config file awstats.conf, just use URL:
        htpp://www.myserver.mydomain/cgi-bin/awstats.pl
       If you called your config file awstats.virtualhost.conf, use URL:
-       htpp://www.myserver.mydomain/cgi-bin/awstats.pl?site=virtualhost
+       htpp://www.myserver.mydomain/cgi-bin/awstats.pl?conf=virtualhost
       where virtualhost is used to know which config file to use (AWStats will
       use awstats.virtualhost.conf file).
 
@@ -284,7 +282,7 @@ http://awstats.sourceforge.net
 
 V - ABOUT THE AUTHOR, LICENSE AND SUPPORT
 -----------------------------------------
-Copyright (C) 2000  Laurent Destailleur
+Copyright (C) 2000 - Laurent Destailleur - eldy@users.sourceforge.net
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -303,5 +301,3 @@ the Free Software Foundation, Inc.,
 You can download latest version at the following URL:
 http://awstats.sourceforge.net
 
-You can send or ask help to:
-eldy@users.sourceforge.net
