@@ -1180,7 +1180,7 @@ sub Parse_Config {
 		if ($param =~ /^HostAliases/) {
 			foreach my $elem (split(/\s+/,$value))	{
 			    if ($elem =~ s/^\@//) { # If list of hostaliases in a file
-			        open(DATAFILE,"<$elem") || error("Failed to open file '$elem'");
+			        open(DATAFILE,"<$elem") || error("Failed to open file '$elem' declared in HostAliases parameter");
 			        my @val=map(/^(.*)$/i,<DATAFILE>);
 			        push @HostAliases, map{qr/^$_$/i} @val;
 			        close(DATAFILE);
