@@ -4,9 +4,10 @@
 # With Apache for Windows and ActiverPerl, first line may be
 #!c:/program files/activeperl/bin/perl
 #-Description-------------------------------------------
-# Change a log file to make reverse DNS lookup on IPAdresses
-# Merge several log files into one
-# This tool is part of AWStats software
+# Merge several log files into one and replace all IP addresses
+# with resolved DNS host name.
+# This tool is part of AWStats log analyzer but can be use
+# alone for any other log analyzer.
 # See COPYING.TXT file about AWStats GNU General Public License.
 #-------------------------------------------------------
 #use diagnostics;
@@ -18,14 +19,14 @@
 #-------------------------------------------------------
 
 # ---------- Init variables (Variable $TmpHashxxx are not initialized) --------
-($LogFile)=();
+($ParamFile)=();
 # ---------- Init arrays --------
 @wordlist = ();
 # ---------- Init hash arrays --------
 %monthnum = ();
 
-$VERSION="1.0 (build 1)";
-$Lang="en";
+$VERSION="1.0 (build 2)";
+$LookupPool=10;
 $NbOfLinesForBenchmark=5000;
 
 # These table is used to make fast reverse DNS lookup for particular IP adresses. You can add your own IP adresses resolutions.
@@ -41,7 +42,7 @@ $NbOfLinesForBenchmark=5000;
 #-------------------------------------------------------
 sub error {
 	print "Error: $_[0].\n";
-    die;
+    exit 1;
 }
 
 sub debug {
@@ -64,34 +65,42 @@ sub SkipDNSLookup {
 #-------------------------------------------------------
 # MAIN
 #-------------------------------------------------------
-my $cpt=1;
-for (0..@ARGV-1) {
-	if ($ARGV[$_] =~ /^-/) { last; }
-	$LogFile{$cpt}=$ARGV[$_];
-	$cpt++;
-}
 $QueryString=""; for (0..@ARGV-1) { $QueryString .= "$ARGV[$_] "; }
 if ($QueryString =~ /debug=/i) { $Debug=$QueryString; $Debug =~ s/.*debug=//; $Debug =~ s/&.*//; $Debug =~ s/ .*//; }
 if ($QueryString =~ /dnslookup/i) { $DNSLookup=1; }
-if ($QueryString =~ /-showsteps/i) { $ShowSteps=1; }
+if ($QueryString =~ /showsteps/i) { $ShowSteps=1; }
 ($DIR=$0) =~ s/([^\/\\]*)$//; ($PROG=$1) =~ s/\.([^\.]*)$//; $Extension=$1;
-if (scalar keys %LogFile == 0) {
+
+my $cpt=1;
+for (0..@ARGV-1) {
+	if ($ARGV[$_] =~ /^-/) { last; }
+	$ParamFile{$cpt}=$ARGV[$_];
+	$cpt++;
+}
+if (scalar keys %ParamFile == 0) {
 	print "----- $PROG $VERSION (c) Laurent Destailleur -----\n";
-	print "$PROG is a log file merger and fast reverse DNS resolver.\n";
+	print "$PROG allows you to merge several log files into one, sorting all\n";
+	print "records on date. It also makes a fast reverse DNS lookup to replace all IP\n";
+	print "addresses into host names in resulting log file.\n";
 	print "$PROG comes with ABSOLUTELY NO WARRANTY. It's a free software\n";
 	print "distributed with a GNU General Public License (See COPYING.txt file).\n";
+	print "$PROG is part of AWStats but can be used alone as a log merger before\n";
+	print "using any other log analyzer.\n";
 	print "\n";
-	print "Syntax: $PROG.$Extension file1 ... filen [-dnslookup]\n";
-	print "  This runs $PROG in command line to open one or several web server\n";
-	print "  log files to merge them (sorted on date) and/or to make a reverse DNS lookup.\n";
-	print "  The result log file is sent on standard output.\n";
-	print "Option:\n";
+	print "Usage:\n";
+	print "  $PROG.$Extension file1 ... filen [-dnslookup]\n";
+	print "  $PROG.$Extension *.* [-dnslookup]\n";
+	print "Options:\n";
 	print "  -dnslookup  make a reverse DNS lookup on IP adresses (not done by default).\n";
 	print "  -showsteps  to add benchmark informations every $NbOfLinesForBenchmark lines processed\n";
 	print "\n";
+	print "This runs $PROG in command line to open one or several web server log\n";
+	print "files to merge them (sorted on date) and/or to make a reverse DNS lookup.\n";
+	print "The result log file is sent on standard output.\n";
+	print "\n";
 	print "Now supports/detects:\n";
 	print "  Automatic detection of log format\n";
-	print "  Multithreaded reverse DNS lookup ($LookupPool parallel request)\n";
+	print "  !!! Multithreaded reverse DNS lookup ($LookupPool parallel request) not yet developped\n";
 	print "  No need of extra Perl library\n";
 	print "New versions and FAQ at http://awstats.sourceforge.net\n";
 	exit 0;
@@ -133,17 +142,50 @@ $NewDNSLookup=$DNSLookup;
 #------------------------------------------
 # PROCESSING CURRENT LOG(s)
 #------------------------------------------
-&debug("Start of processing ".(scalar keys %LogFile)." log file(s)");
 %LogFileToDo=(); %NowNewLinePhase=(); %NbOfLinesRead=(); %NbOfLinesCorrupted=();
 $NbOfNewLinesProcessed=0; $NbOfNewLinesCorrupted=0;
 $logfilechosen=0;
 $starttime=time();
 
+# Define the LogFileToDo list
+my $cpt=1;
+foreach $key (keys %ParamFile) {
+	if ($ParamFile{$key} !~ /\*/ && $ParamFile{$key} !~ /\?/) {
+		&debug("Log file $ParamFile{$key} is added to LogFileToDo.");
+		$LogFileToDo{$cpt}=$ParamFile{$key};
+		$cpt++;
+	}
+	else {
+		my $DirFile=$ParamFile{$key}; $DirFile =~ s/([^\/\\]*)$//;
+		$ParamFile{$key} = $1;
+		if ($DirFile eq "") { $DirFile = "."; }
+		$ParamFile{$key} =~ s/\./\\\./g;
+		$ParamFile{$key} =~ s/\*/\.\*/g;
+		$ParamFile{$key} =~ s/\?/\./g;
+		&debug("Search for file \"$ParamFile{$key}\" into \"$DirFile\"");
+		opendir(DIR,"$DirFile");
+		@filearray = sort readdir DIR;
+		close DIR;
+		foreach $i (0..$#filearray) {
+			if ("$filearray[$i]" =~ /^$ParamFile{$key}$/ && "$filearray[$i]" ne "." && "$filearray[$i]" ne "..") {
+				&debug("Log file $filearray[$i] is added to LogFileToDo.");
+				$LogFileToDo{$cpt}="$DirFile/$filearray[$i]";
+				$cpt++;
+			}
+		}
+	}
+}
+
+# If no files to process
+if (scalar keys %LogFileToDo == 0) {
+	error("No input log file found");
+}
+
 # Open all log files
-foreach $logfilenb (keys %LogFile) {
-	&debug("Open log file number $logfilenb: \"$LogFile{$logfilenb}\"");
-	open("LOG$logfilenb","$LogFile{$logfilenb}") || error("Couldn't open server log file \"$LogFile{$logfilenb}\" : $!");
-	$LogFileToDo{$logfilenb}=$LogFile{$logfilenb};
+&debug("Start of processing ".(scalar keys %LogFileToDo)." log file(s)");
+foreach $logfilenb (keys %LogFileToDo) {
+	&debug("Open log file number $logfilenb: \"$LogFileToDo{$logfilenb}\"");
+	open("LOG$logfilenb","$LogFileToDo{$logfilenb}") || error("Couldn't open log file \"$LogFileToDo{$logfilenb}\" : $!");
 }
 
 while (1 == 1)
@@ -256,7 +298,7 @@ while (1 == 1)
 
 
 # Close all log files
-foreach $logfilenb (keys %LogFile) {
+foreach $logfilenb (keys %LogFileToDo) {
 	&debug("Close log file number $logfilenb");
 	close("LOG$logfilenb");
 }
