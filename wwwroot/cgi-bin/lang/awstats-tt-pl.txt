@@ -1,51 +1,52 @@
-	<DIV CLASS="CTooltip" ID="tt1">
-	Wizyty ka¿dego <b>nowego go¶cia</b>, który ogl±da³ stronê i nie ³±czy³ siê z ni± przez ostatnie <b>#VisitTimeOut# mn</b>.
-	</DIV>
-	<DIV CLASS="CTooltip" ID="tt2">
-	Adres numeryczny hosta klienta (<b>tzw. adres IP</b>) odwiedzaj±cego tê stronê.<br>
-	Ten numer mo¿e byæ identyczny dla <B>kilku ró¿nych Internautów</B> którzy odwiedzili stronê tego samego dnia.
-	</DIV>
-	<DIV CLASS="CTooltip" ID="tt3">
-	¦rednia liczba obejrzanych <B>stron</B> przypadaj±ca na jednego Internautê. (Suma go¶ci, wszystkich wizyt).<br>
-	Ten licznik ró¿ni siê od kolumny z prawej, gdy¿ zlicza on tylko strony html (bez obrazków i innych plików).
-	</DIV>
-	<DIV CLASS="CTooltip" ID="tt4">
-	Liczba wszystkich <b>stron, obrazków, d¼wiêków, plików</b>, które zosta³y <b>obejrzane</b> lub <b>¶ci±gniête</b> przez kogo¶.<br>
-	Warto¶æ jest jedynie orientacyjna, zaleca siê spogl±daæ na licznik "strony".
-	</DIV>
-	<DIV CLASS="CTooltip" ID="tt5">
-	Liczba <b>kilobajtów</b> ¶ci±gniêtych przez Internautów.<br>
-	Jest to suma wszystkich ¶ci±gniêtych danych <B>(strony html, obrazki, d¼wiêki)</B>.
-	</DIV>
-	<DIV CLASS="CTooltip" ID="tt13">
-	#PROG# rozró¿nia dostêp do stron <b>z zagranicznych wyszukiwarek</b> dziêki <b>#SearchEnginesArray# najpopularniejszym przegl±darkom internetowym</b> (Yahoo, Altavista, Lycos, Google, Voila, etc...).
-	</DIV>
-	<DIV CLASS="CTooltip" ID="tt14">
-	Lista wszystkich <b>stron spoza serwera</b> z których trafiono na ten serwer (wy¶wietlanych jest <b>#MaxNbOfRefererShown#</b> stron z których najczê¶ciej siê odwo³ywano.
-	</DIV>
-	<DIV CLASS="CTooltip" ID="tt15">
-	Ta kolumna pokazuje listê najczê¶ciej u¿ywanych <b>s³ów kluczowych</b>, dziêki którym znaleziono t± stronê w wyszukiwarkach.
-	(#PROG# rozró¿nia zapytania s³ów kluczowych z <b>#SearchEnginesArray#</b> najpopularniejszych wyszukiwarek, takich jak Yahoo, Altavista, Lycos, Google, Voila, etc...).
-	</DIV>
-	<DIV CLASS="CTooltip" ID="tt16">
-	Roboty s± <b>programami sieciowymi</b> skanuj±cymi strony w celu zebrania/aktualizacji danych (np. s³owa kluczowe do wyszukiwarek), lub sprawdzaj±cymi czy strona nadal istnieje w sieci.<br>
-	#PROG# rozró¿nia obecnie <b>#RobotArray#</b> robów.
-	</DIV>
+<!-- $Revision$ - $Date$ -->
+<DIV CLASS="CTooltip" ID="tt1">
+Wizyty ka¿dego <b>nowego go¶cia</b>, który ogl±da³ stronê i nie ³±czy³ siê z ni± przez ostatnie <b>#VisitTimeOut# mn</b>.
+</DIV>
+<DIV CLASS="CTooltip" ID="tt2">
+Adres numeryczny hosta klienta (<b>tzw. adres IP</b>) odwiedzaj±cego tê stronê.<br>
+Ten numer mo¿e byæ identyczny dla <B>kilku ró¿nych Internautów</B> którzy odwiedzili stronê tego samego dnia.
+</DIV>
+<DIV CLASS="CTooltip" ID="tt3">
+¦rednia liczba obejrzanych <B>stron</B> przypadaj±ca na jednego Internautê. (Suma go¶ci, wszystkich wizyt).<br>
+Ten licznik ró¿ni siê od kolumny z prawej, gdy¿ zlicza on tylko strony html (bez obrazków i innych plików).
+</DIV>
+<DIV CLASS="CTooltip" ID="tt4">
+Liczba wszystkich <b>stron, obrazków, d¼wiêków, plików</b>, które zosta³y <b>obejrzane</b> lub <b>¶ci±gniête</b> przez kogo¶.<br>
+Warto¶æ jest jedynie orientacyjna, zaleca siê spogl±daæ na licznik "strony".
+</DIV>
+<DIV CLASS="CTooltip" ID="tt5">
+Liczba <b>kilobajtów</b> ¶ci±gniêtych przez Internautów.<br>
+Jest to suma wszystkich ¶ci±gniêtych danych <B>(strony html, obrazki, d¼wiêki)</B>.
+</DIV>
+<DIV CLASS="CTooltip" ID="tt13">
+#PROG# rozró¿nia dostêp do stron <b>z zagranicznych wyszukiwarek</b> dziêki <b>#SearchEnginesArray# najpopularniejszym przegl±darkom internetowym</b> (Yahoo, Altavista, Lycos, Google, Voila, etc...).
+</DIV>
+<DIV CLASS="CTooltip" ID="tt14">
+Lista wszystkich <b>stron spoza serwera</b> z których trafiono na ten serwer (wy¶wietlanych jest <b>#MaxNbOfRefererShown#</b> stron z których najczê¶ciej siê odwo³ywano.
+</DIV>
+<DIV CLASS="CTooltip" ID="tt15">
+Ta kolumna pokazuje listê najczê¶ciej u¿ywanych <b>s³ów kluczowych</b>, dziêki którym znaleziono t± stronê w wyszukiwarkach.
+(#PROG# rozró¿nia zapytania s³ów kluczowych z <b>#SearchEnginesArray#</b> najpopularniejszych wyszukiwarek, takich jak Yahoo, Altavista, Lycos, Google, Voila, etc...).
+</DIV>
+<DIV CLASS="CTooltip" ID="tt16">
+Roboty s± <b>programami sieciowymi</b> skanuj±cymi strony w celu zebrania/aktualizacji danych (np. s³owa kluczowe do wyszukiwarek), lub sprawdzaj±cymi czy strona nadal istnieje w sieci.<br>
+#PROG# rozró¿nia obecnie <b>#RobotArray#</b> robów.
+</DIV>
 
-	<DIV CLASS="CTooltip" ID="tt201"> Zlecenie POST zosta³o zrealizowane pomy¶lnie. </DIV>
-	<DIV CLASS="CTooltip" ID="tt202"> ¯±danie zosta³o odebrane poprawnie, lecz jeszcze siê nie zakoñczy³o. </DIV>
-	<DIV CLASS="CTooltip" ID="tt204"> Serwer przetworzy³ ¿±danie, lecz nie posiada ¿adnych danych do wys³ania. </DIV>
-	<DIV CLASS="CTooltip" ID="tt206"> Czê¶ciowa zawarto¶æ.</DIV>
-	<DIV CLASS="CTooltip" ID="tt301"> Dokument zosta³ przeniesiony pod inny adres.</DIV>
-	<DIV CLASS="CTooltip" ID="tt302"> Dokument zosta³ czasowo przeniesiony pod iiny adres.</DIV>
-	<DIV CLASS="CTooltip" ID="tt400"> Zlecenie by³o b³êdne, lub niemo¿liwe do zrealizowania przez serwer.<BR>B³±d powstaje wtedy, kiedy serwer WWW otrzymuje do wykonania instrukcjê, której nie rozumie.</DIV>
-	<DIV CLASS="CTooltip" ID="tt401"> B³±d autoryzacji. Strona wymaga podania has³a i loginu - b³±d pokazuje siê wtedy, gdy które¶ z tych danych siê nie zgadza lub zosta³y podane niew³a¶ciwiwe.<BR>Je¶li liczba ta jest du¿a, jest to sygna³ dla webmastera, i¿ kto¶ próbuje z³amaæ has³o do strony nim zabezpieczonej.</DIV>
-	<DIV CLASS="CTooltip" ID="tt403"> B³±d wystêpuje wtedy, gdy katalog/strona do którego siê odwo³ywano nie ma ustawionych w³a¶ciwych praw dostêpu, lub prawa te nie pozwalaj± na obejrzenie zawarto¶ci katalogu/strony.</DIV>
-	<DIV CLASS="CTooltip" ID="tt404"> Spróbuj wpisaæ <b>nie istniej±cy adres URL</b> (np. adres tej strony ze skasowan± jedn± literk±). Znaczy to, ¿e posiadasz gdzie¶ na swoich stronach b³êdny link, lub link odnosz±cy siê do nieistniej±cej strony.</DIV>
-	<DIV CLASS="CTooltip" ID="tt408"> Przegl±darka nie wys³a³a ¿±dañ do serwera w czasie jego oczekiwania. Mo¿esz powtórzyæ ¿±danie bez jego modyfikacji w czasie pó¼niejszym. </DIV>
-	<DIV CLASS="CTooltip" ID="tt500"> B³±d wewnêtrzny. Ten b³±d czêsto pojawia siê, gdy aplikacja CGI nie zakoñczy³a siê normalnie (podobno ka¿dy program zawiera przynajmniej jeden b³±d...:-). </DIV>
-	<DIV CLASS="CTooltip" ID="tt501"> Serwer nie umo¿liwia obs³ugi mechanizmu. </DIV>
-	<DIV CLASS="CTooltip" ID="tt502"> Serwer jest chwilowo przeci±¿ony i nie mo¿e obs³u¿yæ zlecenia.</DIV>
-	<DIV CLASS="CTooltip" ID="tt503"> Serwer zdecydowa³ siê przerwaæ oczekiwanie na inny zasób lub us³ugê, i z tego powodu nie móg³ obs³u¿yæ zlecenia.</DIV>
-	<DIV CLASS="CTooltip" ID="tt504"> Serwer docelowy nie otrzyma³ odpowiedzi od serwera proxy, lub bramki.</DIV>
-	<DIV CLASS="CTooltip" ID="tt505"> Nie obs³ugiwana wesja protoko³u HTTP. </DIV>
+<DIV CLASS="CTooltip" ID="tt201"> Zlecenie POST zosta³o zrealizowane pomy¶lnie. </DIV>
+<DIV CLASS="CTooltip" ID="tt202"> ¯±danie zosta³o odebrane poprawnie, lecz jeszcze siê nie zakoñczy³o. </DIV>
+<DIV CLASS="CTooltip" ID="tt204"> Serwer przetworzy³ ¿±danie, lecz nie posiada ¿adnych danych do wys³ania. </DIV>
+<DIV CLASS="CTooltip" ID="tt206"> Czê¶ciowa zawarto¶æ.</DIV>
+<DIV CLASS="CTooltip" ID="tt301"> Dokument zosta³ przeniesiony pod inny adres.</DIV>
+<DIV CLASS="CTooltip" ID="tt302"> Dokument zosta³ czasowo przeniesiony pod iiny adres.</DIV>
+<DIV CLASS="CTooltip" ID="tt400"> Zlecenie by³o b³êdne, lub niemo¿liwe do zrealizowania przez serwer.<BR>B³±d powstaje wtedy, kiedy serwer WWW otrzymuje do wykonania instrukcjê, której nie rozumie.</DIV>
+<DIV CLASS="CTooltip" ID="tt401"> B³±d autoryzacji. Strona wymaga podania has³a i loginu - b³±d pokazuje siê wtedy, gdy które¶ z tych danych siê nie zgadza lub zosta³y podane niew³a¶ciwiwe.<BR>Je¶li liczba ta jest du¿a, jest to sygna³ dla webmastera, i¿ kto¶ próbuje z³amaæ has³o do strony nim zabezpieczonej.</DIV>
+<DIV CLASS="CTooltip" ID="tt403"> B³±d wystêpuje wtedy, gdy katalog/strona do którego siê odwo³ywano nie ma ustawionych w³a¶ciwych praw dostêpu, lub prawa te nie pozwalaj± na obejrzenie zawarto¶ci katalogu/strony.</DIV>
+<DIV CLASS="CTooltip" ID="tt404"> Spróbuj wpisaæ <b>nie istniej±cy adres URL</b> (np. adres tej strony ze skasowan± jedn± literk±). Znaczy to, ¿e posiadasz gdzie¶ na swoich stronach b³êdny link, lub link odnosz±cy siê do nieistniej±cej strony.</DIV>
+<DIV CLASS="CTooltip" ID="tt408"> Przegl±darka nie wys³a³a ¿±dañ do serwera w czasie jego oczekiwania. Mo¿esz powtórzyæ ¿±danie bez jego modyfikacji w czasie pó¼niejszym. </DIV>
+<DIV CLASS="CTooltip" ID="tt500"> B³±d wewnêtrzny. Ten b³±d czêsto pojawia siê, gdy aplikacja CGI nie zakoñczy³a siê normalnie (podobno ka¿dy program zawiera przynajmniej jeden b³±d...:-). </DIV>
+<DIV CLASS="CTooltip" ID="tt501"> Serwer nie umo¿liwia obs³ugi mechanizmu. </DIV>
+<DIV CLASS="CTooltip" ID="tt502"> Serwer jest chwilowo przeci±¿ony i nie mo¿e obs³u¿yæ zlecenia.</DIV>
+<DIV CLASS="CTooltip" ID="tt503"> Serwer zdecydowa³ siê przerwaæ oczekiwanie na inny zasób lub us³ugê, i z tego powodu nie móg³ obs³u¿yæ zlecenia.</DIV>
+<DIV CLASS="CTooltip" ID="tt504"> Serwer docelowy nie otrzyma³ odpowiedzi od serwera proxy, lub bramki.</DIV>
+<DIV CLASS="CTooltip" ID="tt505"> Nie obs³ugiwana wesja protoko³u HTTP. </DIV>

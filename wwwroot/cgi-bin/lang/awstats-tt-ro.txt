@@ -1,85 +1,86 @@
 <!-- Traducere in limba romana de Florin Radulescu: florin_ef309@yahoo.com -->
-	<DIV CLASS="CTooltip" ID="tt1">
-        O noua vizita este definita ca fiind orice <b>acces al unui vizitator</b>
-        care nu a fost conectat la site in ultimele <b>#VisitTimeOut# mn</b>.
-	</DIV>
-	<DIV CLASS="CTooltip" ID="tt2">
-	Numarul de masini client (<b>adresa IP</b>) care vin sa viziteze
-        site-ul (si care au vizionat cel putin o <b>pagina</b>).<br>
-	Aceste date se refera la numarul de <b>persoane fizice diferite</b>
-        care au ajuns pe site in oricare din zile.
-	</DIV>
-	<DIV CLASS="CTooltip" ID="tt3">
-        De cate ori o <b>pagina</b> a site-ului este vizionata (suma pentru
-        toti vizitatorii si toate vizitele).<br> Aceasta informatie difera de
-        "Accesari" deoarece numara doar paginile HTML si nu si imaginile sau alte
-        tipuri de fisiere.
-	</DIV>
-	<DIV CLASS="CTooltip" ID="tt4">
-        De cate ori o <b>pagina, imagine, fisier</b> de pe site a fost
-        <b>vizionata</b> sau <b>descarcata (download)</b> de catre
-        cineva.<br>
-        Aceasta informatie este furnizata doar ca referinta deoarece pentru
-        marketing este de multe ori preferat numarul de "pagini" vazute.
-	</DIV>
-	<DIV CLASS="CTooltip" ID="tt5">
-        Aceasta informatie contine traficul total de date pentru toate
-        <b>paginile</b>, <b>imaginile</b> si <b>fisierele</b> de pe site.<br>
-        Unitatea de masura este KB, MB sau GB (KiloBytes, MegaBytes sau GigaBytes)
-	</DIV>
-	<DIV CLASS="CTooltip" ID="tt13">
-        #PROG# recunoaste accesele la site rezultate dintr-o <b>cautare</b> efectuata cu ajutorul a <b>
-        #SearchEnginesArray# din cele mai cunoscute motoare de cautare si repertoare</b>
-	(ca Yahoo, Altavista, Lycos, Google, Voila, etc...).
-	</DIV>
-	<DIV CLASS="CTooltip" ID="tt14">
-        Lista tuturor <b>paginilor externe</b> care au fost punctul de plecare (si de intrare)
-        in site (sunt listate doar primele <b>#MaxNbOfRefererShown#</b> in ordinea numarului de utilizari).
-        Intrarile pe site din rezultatul generat de motoarele de cautare sunt excluse aici deoarece
-        ele au fost deja incluse in precedenta linie a acestui tabel.
-	</DIV>
-	<DIV CLASS="CTooltip" ID="tt15">
-        Acest tabel contine lista celor mai frecvente <b>cuvinte cheie</b> care au fost 
-        utilizate de motoarele de cautare sau repertoare pentru a gasi acest site.
-        (Cuvintele cheie folosite de cele mai cunoscute <b>#SearchEnginesArray#</b> 
-        motoare de cautare sau repertoare - Yahoo, Altavista, Lycos, Google, Voila, etc... - 
-        sunt recunoscute de #PROG#).
-	</DIV>
-	<DIV CLASS="CTooltip" ID="tt16">
-        Robotii sunt <b>programe vizitator automate</b> utilizate de multe motoare de cautare
-        si care scaneaza situl web pentru a-l indexa si evalua, pentru a colecta statistici 
-        despre siturile web din Internet si/sau pentru a verifica daca situl este online.<br> 
-	#PROG# recunoaste <b>#RobotArray#</b> roboti.
-	</DIV>
-	<DIV CLASS="CTooltip" ID="tt17">
-        Toate statisticile referitoare la timp sunt bazate pe timpul din masina care gazduieste 
-        serverul web.<br>
-	</DIV>
-	<DIV CLASS="CTooltip" ID="tt18">
-        Aici, datele listate sunt: <b>valori medii</b> (calculate din toate datele intre prima 
-        si ultima vizita)
-	</DIV>
-	<DIV CLASS="CTooltip" ID="tt19">
-        Aici, datele listate sunt: <b>insumari cumulative</b> (calculate din toate datele intre 
-        prima si ultima vizita)
-	</DIV>
+<!-- $Revision$ - $Date$ -->
+<DIV CLASS="CTooltip" ID="tt1">
+    O noua vizita este definita ca fiind orice <b>acces al unui vizitator</b>
+    care nu a fost conectat la site in ultimele <b>#VisitTimeOut# mn</b>.
+</DIV>
+<DIV CLASS="CTooltip" ID="tt2">
+Numarul de masini client (<b>adresa IP</b>) care vin sa viziteze
+    site-ul (si care au vizionat cel putin o <b>pagina</b>).<br>
+Aceste date se refera la numarul de <b>persoane fizice diferite</b>
+    care au ajuns pe site in oricare din zile.
+</DIV>
+<DIV CLASS="CTooltip" ID="tt3">
+    De cate ori o <b>pagina</b> a site-ului este vizionata (suma pentru
+    toti vizitatorii si toate vizitele).<br> Aceasta informatie difera de
+    "Accesari" deoarece numara doar paginile HTML si nu si imaginile sau alte
+    tipuri de fisiere.
+</DIV>
+<DIV CLASS="CTooltip" ID="tt4">
+    De cate ori o <b>pagina, imagine, fisier</b> de pe site a fost
+    <b>vizionata</b> sau <b>descarcata (download)</b> de catre
+    cineva.<br>
+    Aceasta informatie este furnizata doar ca referinta deoarece pentru
+    marketing este de multe ori preferat numarul de "pagini" vazute.
+</DIV>
+<DIV CLASS="CTooltip" ID="tt5">
+    Aceasta informatie contine traficul total de date pentru toate
+    <b>paginile</b>, <b>imaginile</b> si <b>fisierele</b> de pe site.<br>
+    Unitatea de masura este KB, MB sau GB (KiloBytes, MegaBytes sau GigaBytes)
+</DIV>
+<DIV CLASS="CTooltip" ID="tt13">
+    #PROG# recunoaste accesele la site rezultate dintr-o <b>cautare</b> efectuata cu ajutorul a <b>
+    #SearchEnginesArray# din cele mai cunoscute motoare de cautare si repertoare</b>
+(ca Yahoo, Altavista, Lycos, Google, Voila, etc...).
+</DIV>
+<DIV CLASS="CTooltip" ID="tt14">
+    Lista tuturor <b>paginilor externe</b> care au fost punctul de plecare (si de intrare)
+    in site (sunt listate doar primele <b>#MaxNbOfRefererShown#</b> in ordinea numarului de utilizari).
+    Intrarile pe site din rezultatul generat de motoarele de cautare sunt excluse aici deoarece
+    ele au fost deja incluse in precedenta linie a acestui tabel.
+</DIV>
+<DIV CLASS="CTooltip" ID="tt15">
+    Acest tabel contine lista celor mai frecvente <b>cuvinte cheie</b> care au fost 
+    utilizate de motoarele de cautare sau repertoare pentru a gasi acest site.
+    (Cuvintele cheie folosite de cele mai cunoscute <b>#SearchEnginesArray#</b> 
+    motoare de cautare sau repertoare - Yahoo, Altavista, Lycos, Google, Voila, etc... - 
+    sunt recunoscute de #PROG#).
+</DIV>
+<DIV CLASS="CTooltip" ID="tt16">
+    Robotii sunt <b>programe vizitator automate</b> utilizate de multe motoare de cautare
+    si care scaneaza situl web pentru a-l indexa si evalua, pentru a colecta statistici 
+    despre siturile web din Internet si/sau pentru a verifica daca situl este online.<br> 
+#PROG# recunoaste <b>#RobotArray#</b> roboti.
+</DIV>
+<DIV CLASS="CTooltip" ID="tt17">
+    Toate statisticile referitoare la timp sunt bazate pe timpul din masina care gazduieste 
+    serverul web.<br>
+</DIV>
+<DIV CLASS="CTooltip" ID="tt18">
+    Aici, datele listate sunt: <b>valori medii</b> (calculate din toate datele intre prima 
+    si ultima vizita)
+</DIV>
+<DIV CLASS="CTooltip" ID="tt19">
+    Aici, datele listate sunt: <b>insumari cumulative</b> (calculate din toate datele intre 
+    prima si ultima vizita)
+</DIV>
 
-	<DIV CLASS="CTooltip" ID="tt201"> Nici o descriere pentru aceasta eroare. </DIV>
-	<DIV CLASS="CTooltip" ID="tt202"> Cererea a fost inteleasa de server dar va fi procesata mai tarziu. </DIV>
-	<DIV CLASS="CTooltip" ID="tt204"> Serverul a procesat cererea dar nu exista nici un document de trimis. </DIV>
-	<DIV CLASS="CTooltip" ID="tt206"> Continut partial. </DIV>
-	<DIV CLASS="CTooltip" ID="tt301"> Documentul cerut a fost mutat si este acum la o alta adresa continuta in raspuns. </DIV>
-	<DIV CLASS="CTooltip" ID="tt302"> Nici o descriere pentru aceasta eroare. </DIV>
-	<DIV CLASS="CTooltip" ID="tt400"> Eroare de sintaxa, serverul nu a inteles cererea. </DIV>
-	<DIV CLASS="CTooltip" ID="tt401"> Incercare de a accesa un <b>URL unde este necesara autentificarea cu user/parola</b>.<br>Un numar mare in acest loc poate insemna ca cineva (de exemplu un hacker) incearca sa sparga sau sa intre in site (sperand sa intre intr-o zona securizata incercand de exemplu diferite perechi user/parola). </DIV>
-	<DIV CLASS="CTooltip" ID="tt403"> Incercare de a accesa un <b>URL care nu a fost configurat sa fie atins, nici macar cu o autentificare user/parola</b> (de exemplu un URL dintr-un director care nu este definit ca accesibil). </DIV>
-	<DIV CLASS="CTooltip" ID="tt404"> Incercare de a accesa un <b>URL inexistent</b>. Aceasta eroare inseamna adesea ca exista o legatura invalida undeva pe site sau ca un vizitator a tastat gresit un URL. </DIV>
-	<DIV CLASS="CTooltip" ID="tt408"> Serverul a consumat <b>prea mult timp</b> pentru a raspunde cererii. Aceasta eroare indica adesea un script CGI lent pe care serverul a incercat sa-l aborteze sau un server web extrem de incarcat. </DIV>
-	<DIV CLASS="CTooltip" ID="tt500"> Eroare interna. Aceasta eroare este deseori cauzata de un program CGI care s-a terminat anormal (de exemplu prin coredump). </DIV>
-	<DIV CLASS="CTooltip" ID="tt501"> Cerere de actiune necunoscuta. </DIV>
-	<DIV CLASS="CTooltip" ID="tt502"> Cod returnat de un server HTTP care lucreaza ca un proxy sau gateway in cazul in care un server tinta real nu a raspuns cu succes cererii client. </DIV>
-	<DIV CLASS="CTooltip" ID="tt503"> Eroare interna server. </DIV>
-	<DIV CLASS="CTooltip" ID="tt504"> Depasire timp la Gateway. </DIV>
-	<DIV CLASS="CTooltip" ID="tt505"> Versiune HTTP nesuportata. </DIV>
+<DIV CLASS="CTooltip" ID="tt201"> Nici o descriere pentru aceasta eroare. </DIV>
+<DIV CLASS="CTooltip" ID="tt202"> Cererea a fost inteleasa de server dar va fi procesata mai tarziu. </DIV>
+<DIV CLASS="CTooltip" ID="tt204"> Serverul a procesat cererea dar nu exista nici un document de trimis. </DIV>
+<DIV CLASS="CTooltip" ID="tt206"> Continut partial. </DIV>
+<DIV CLASS="CTooltip" ID="tt301"> Documentul cerut a fost mutat si este acum la o alta adresa continuta in raspuns. </DIV>
+<DIV CLASS="CTooltip" ID="tt302"> Nici o descriere pentru aceasta eroare. </DIV>
+<DIV CLASS="CTooltip" ID="tt400"> Eroare de sintaxa, serverul nu a inteles cererea. </DIV>
+<DIV CLASS="CTooltip" ID="tt401"> Incercare de a accesa un <b>URL unde este necesara autentificarea cu user/parola</b>.<br>Un numar mare in acest loc poate insemna ca cineva (de exemplu un hacker) incearca sa sparga sau sa intre in site (sperand sa intre intr-o zona securizata incercand de exemplu diferite perechi user/parola). </DIV>
+<DIV CLASS="CTooltip" ID="tt403"> Incercare de a accesa un <b>URL care nu a fost configurat sa fie atins, nici macar cu o autentificare user/parola</b> (de exemplu un URL dintr-un director care nu este definit ca accesibil). </DIV>
+<DIV CLASS="CTooltip" ID="tt404"> Incercare de a accesa un <b>URL inexistent</b>. Aceasta eroare inseamna adesea ca exista o legatura invalida undeva pe site sau ca un vizitator a tastat gresit un URL. </DIV>
+<DIV CLASS="CTooltip" ID="tt408"> Serverul a consumat <b>prea mult timp</b> pentru a raspunde cererii. Aceasta eroare indica adesea un script CGI lent pe care serverul a incercat sa-l aborteze sau un server web extrem de incarcat. </DIV>
+<DIV CLASS="CTooltip" ID="tt500"> Eroare interna. Aceasta eroare este deseori cauzata de un program CGI care s-a terminat anormal (de exemplu prin coredump). </DIV>
+<DIV CLASS="CTooltip" ID="tt501"> Cerere de actiune necunoscuta. </DIV>
+<DIV CLASS="CTooltip" ID="tt502"> Cod returnat de un server HTTP care lucreaza ca un proxy sau gateway in cazul in care un server tinta real nu a raspuns cu succes cererii client. </DIV>
+<DIV CLASS="CTooltip" ID="tt503"> Eroare interna server. </DIV>
+<DIV CLASS="CTooltip" ID="tt504"> Depasire timp la Gateway. </DIV>
+<DIV CLASS="CTooltip" ID="tt505"> Versiune HTTP nesuportata. </DIV>
 
 
