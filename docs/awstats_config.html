@@ -1712,7 +1712,9 @@ color_u,color_v,color_p,color_h,color_k,color_s<br>
 <br># This is particularly usefull for users who have a lot of virtual servers, so
 <br># a lot of config files and want to maintain common values in only one file.
 <br># Note that when a variable is defined both in a config file and in an
-<br># included file, AWStats will use the last value read.
+<br># included file, AWStats will use the last value read for parameters that
+<br># contains one value and AWStats will concat all values from both files for
+<br># parameters that are lists of value.
 <br>#
 <br>Include ""
 
