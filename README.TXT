@@ -13,7 +13,7 @@ Systems.
 
 License: GNU GPL (GNU General Public License. See LICENSE file)
 Version : 5.3
-Release date: December 2002
+Release date: January 2003
 Platforms: All (Linux, NT, SCO, BSD, Solaris and other *NIX's, BeOS, OS/2...)
 Author: Laurent Destailleur <eldy@users.sourceforge.net>
 AWStats official web site and latest version: http://awstats.sourceforge.net
