@@ -1316,7 +1316,8 @@ sub Read_History_File {
 	&debug("Call to Read_History_File [$year,$month,$part]");
 	if ($HistoryFileAlreadyRead{"$year$month"}) { return 0; }			# Protect code to invoke function only once for each month/year
 	$HistoryFileAlreadyRead{"$year$month"}=1;							# Protect code to invoke function only once for each month/year
-	if (! -s "$DirData/$PROG$month$year$FileSuffix.txt") {
+	if ($AddOn) { AddOn_Filename(); }
+	if (! -s "$DirData/$PROG$AddOnDay$month$year$FileSuffix.txt") {
 		# If file not exists, return
 		&debug(" No history file");
 		return 0;
@@ -1324,7 +1325,7 @@ sub Read_History_File {
 
 	# If session for read (no update), file can be open with share
 	# POSSIBLE CHANGE HERE	
-	open(HISTORY,"$DirData/$PROG$month$year$FileSuffix.txt") || error("Error: Couldn't open for read file \"$DirData/$PROG$month$year$FileSuffix.txt\" : $!");	# Month before Year kept for backward compatibility
+	open(HISTORY,"$DirData/$PROG$AddOnDay$month$year$FileSuffix.txt") || error("Error: Couldn't open for read file \"$DirData/$PROG$AddOnDay$month$year$FileSuffix.txt\" : $!");	# Month before Year kept for backward compatibility
 	$MonthUnique{$year.$month}=0; $MonthPages{$year.$month}=0; $MonthHits{$year.$month}=0; $MonthBytes{$year.$month}=0; $MonthHostsKnown{$year.$month}=0; $MonthHostsUnKnown{$year.$month}=0;
 	my $readdomain=0;my $readbrowser=0;my $readnsver=0;my $readmsiever=0;
 	my $reados=0;my $readrobot=0;my $readunknownreferer=0;my $readunknownrefererbrowser=0;
@@ -2677,7 +2678,6 @@ EOF
 	}
 	print "</table>\n";
 	print "<br>\n\n";
-	
 	
 	if ($QueryString =~ /output=lasthosts/i) {
 		print "$CENTER<a name=\"HOSTSLIST\">&nbsp;</a><BR>";
