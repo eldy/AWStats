@@ -27,7 +27,7 @@ $VERSION="5.4 (build $REVISION)";
 use vars qw/
 $DEBUGFORCED $NBOFLINESFORBENCHMARK $FRAMEWIDTH $TOOLTIPWIDTH $NBOFLASTUPDATELOOKUPTOSAVE
 $LIMITFLUSH $NEWDAYVISITTIMEOUT $VISITTIMEOUT $NOTSORTEDRECORDTOLERANCE $MAXDIFFEXTRA
-$WIDTHCOLICON
+$WIDTHCOLICON $WIDTHINFO $HEIGHTINFO
 /;
 $DEBUGFORCED=0;						# Force debug level to log lesser level into debug.log file (Keep this value to 0)
 $NBOFLINESFORBENCHMARK=8192;		# Benchmark info are printing every NBOFLINESFORBENCHMARK lines (Must be a power of 2)
@@ -40,6 +40,8 @@ $VISITTIMEOUT=10000;				# Laps of time to consider a page load as a new visit. 1
 $NOTSORTEDRECORDTOLERANCE=10000;	# Laps of time to accept a record if not in correct order. 10000 = 1 hour (Default = 10000)
 $MAXDIFFEXTRA=500;
 $WIDTHCOLICON=32;
+$WIDTHINFO=640;
+$HEIGHTINFO=480;
 # Plugins variable
 use vars qw/ %PluginsLoaded $PluginDir /;
 %PluginsLoaded=();
@@ -584,6 +586,18 @@ EOF
 			}
 		}
 		print "</head>\n\n";
+		if ($FrameName ne 'index' && $FrameName ne 'mainleft') {
+print <<EOF;
+<SCRIPT Javascript>
+function neww(a,b) {
+	var wfeatures="directories=0,menubar=1,status=0,resizable=1,scrollbars=1,toolbar=0,width=$WIDTHINFO,height=$HEIGHTINFO,left=" + eval("(screen.width - $WIDTHINFO)/2") + ",top=" + eval("(screen.height - $HEIGHTINFO)/2");
+	if (b==1) { fen=window.open('$LinksToWhoIs'+a,'whois',wfeatures); }
+	if (b==2) { fen=window.open('$LinksToIPWhoIs'+a,'whois',wfeatures); }
+}
+</SCRIPT>
+
+EOF
+		}
 		if ($FrameName ne 'index') { print "<body>\n"; }
 	}
 }
@@ -3865,19 +3879,19 @@ sub ShowWhoIsCell {
 	my $linkforwhois;
 	if ($keyurl =~ /^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/) {	# IPv4 address
 		$keyforwhois=$keyurl;
-		$linkforwhois="$LinksToIPWhoIs";
+		$linkforwhois=2;
 	}
 	elsif ($keyurl =~ /^[0-9A-F]*:/i) {							# IPv6 address
 		$keyforwhois=$keyurl;
-		$linkforwhois="$LinksToIPWhoIs";
+		$linkforwhois=2;
 	}
 	else {	# Hostname
-		$keyurl =~ /(\w+\.\w+)$/;
+		$keyurl =~ /(\w+\.\w+\.(au|uk|jp|nz))$/ or $keyurl =~ /(\w+\.\w+)$/;
 		$keyforwhois=$1;
-		$linkforwhois="$LinksToWhoIs";
+		$linkforwhois=1;
 	}
 	print "<td>";
-	if ($keyforwhois && $linkforwhois) { print "<a href=\"$linkforwhois$keyforwhois\" target=awstatswhois>?</a>"; }
+	if ($keyforwhois && $linkforwhois) { print "<a href=\"javascript:neww('$keyforwhois',$linkforwhois)\">?</a>"; }
 	else { print "&nbsp;" }
 	print "</td>";
 }

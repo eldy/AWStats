@@ -15,6 +15,7 @@ Fixes:
 - Users did not appear in Authenticated users list if hits on pages were 0.
 - Value of title "Top x" for domains chart was not always correct.
 - Fixed bug 620040 that prevented to use "#" char in HTMLHeadSection.
+- Whois link did not work for jp, au, uk and nz domains.
 
 New features/improvments:
 - Added urlaliasbuilder.pl tool.
@@ -24,9 +25,10 @@ New features/improvments:
 - Added average session length in Visit Duration report.
 - Added percentage in Visit Duration report.
 - logresolvemerge.pl can read .gz or .bz2 files.
-- Added icons and Mime label for file types.
-- Added parameter AddDataArrayMonthDayStats, AddDataArrayShowDaysOfWeekStats,
+- Added icons and Mime label for file types report.
+- Added parameters AddDataArrayMonthDayStats, AddDataArrayShowDaysOfWeekStats,
   and AddDataArrayShowHoursStats.
+- Added the Whois info in a centered popup window.
 
 Other/Documentation:
 - Replaced -month=year option by -month=all.
