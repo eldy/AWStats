@@ -8199,8 +8199,10 @@ if (scalar keys %HTMLOutput) {
 			# Show clock icon
 			print "<TR".($TOOLTIPON?" onmouseover=\"ShowTip(17);\" onmouseout=\"HideTip(17);\"":"").">\n";
 			for (my $ix=0; $ix<=23; $ix++) {
-				my $hr=($ix+1); if ($hr>12) { $hr=$hr-12; }
-				print "<TD><IMG SRC=\"$DirIcons\/clock\/hr$hr.png\" width=10 alt=\"$hr:00\"></TD>\n";
+				my $hrs=($ix>=12?$ix-12:$ix);
+				my $hre=($ix>=12?$ix-11:$ix+1);
+				my $apm=($ix>=12?"pm":"am");
+				print "<TD><IMG SRC=\"$DirIcons\/clock\/hr$hre.png\" width=10 alt=\"$hrs:00 - $hre:00 $apm\"></TD>\n";
 			}
 			print "</TR>\n";
 	
