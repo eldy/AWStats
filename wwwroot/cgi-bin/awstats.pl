@@ -80,7 +80,7 @@ $WarningMessages= 1;
 %MonthBytes = %MonthHits = %MonthHostsKnown = %MonthHostsUnknown = %MonthPages = %MonthUnique = %MonthVisits =
 %monthlib = %monthnum = ();
 
-$VERSION="3.2 (build 17)";
+$VERSION="3.2 (build 18)";
 $Lang="en";
 
 # Default value
@@ -112,10 +112,10 @@ $AddOn=0;
 
 # URL with such end signature are kind of URL we only need to count as hits
 @NotPageList= (
-			"\\.gif","\\.jpg","\\.jpeg","\\.png","\\.bmp",
-#			"\\.zip","\\.arj","\\.gz","\\.z",
-#			"\\.pdf","\\.doc","\\.ppt","\\.rtf","\\.txt",
-#			"\\.mp3","\\.wma"
+			"gif","jpg","jpeg","png","bmp",
+#			"zip","arj","gz","z",
+#			"pdf","doc","ppt","rtf","txt",
+#			"mp3","wma"
 			);
 
 # Those addresses are shown with those lib (First column is full exact relative URL, second column is text to show instead of URL)
@@ -1848,7 +1848,7 @@ if ($UpdateStats) {
 		if ($found) {
 			$extension=$1; $extension =~ tr/A-Z/a-z/;
 			# Check if not a page
-			foreach $cursor (@NotPageList) { if ($extension =~ /$cursor/i) { $PageBool=0; last; } }
+			foreach $cursor (@NotPageList) { if ($extension =~ /$cursor/) { $PageBool=0; last; } }
 		} else {
 			$extension="Unknown";
 		}
