@@ -171,3 +171,7 @@ message161=Traffico non visualizzato
 message162=Riepilogo mensile
 message163=Worm
 message164=worm diversi
+message165=Mail inviate correttamente
+message166=Mail fallite/rifiutate
+message167=Obiettivi sensibili
+message168=Javascript disabilitato
