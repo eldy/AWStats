@@ -1,10 +1,10 @@
 # Italian message file
-# translated 2001-10-25 for version 3.1 by Francesco Potortì
-# with the assistance of the Italian Free Translation Project
+# Based on Francesco Potort“'s work.
+# Translated 1/10/2002 by iDave <idave@idave.it> and Salvo <salvo@scicli.com>
 # 
-# Francesco Potorti` <pot@gnu.org>
-# <URL:http://www.linux.it/tp/>
-#
+# Francesco Potorti' - pot@gnu.org
+# iDave - idave@idave.it
+# Salvo - salvo@scicli.com
 message0=Sconosciuto
 message1=Sconosciuto (ip non risolto)
 message2=Altri
@@ -49,7 +49,7 @@ message40=Accessi da motore di ricerca
 message41=Accessi da pagina esterna (altri siti eccetto i motori di ricerca)
 message42=Accessi da pagina interna (altra pagina dello stesso sito)
 message43=parole chiave usati dai motori di ricerca
-message44=KiB
+message44=KB
 message45=Indirizzi IP non risolti
 message46=Sistemi operativi sconosciuti (campo Provenienza)
 message47=URL richiesta ma non trovata (codice HTTP 404)
@@ -83,6 +83,31 @@ message74=Aggiorna
 message75=Byte
 message76=Pagina principale
 message77=Prime
-message78=dd mmm yyyy, ore HH:MM
+message78=dd mmm yyyy / HH:MM
 message79=Filtro
 message80=Elenco completo
+message81=Hosts
+message82=Conosciuto/i
+message83=Robots
+message84=Dom
+message85=Lun
+message86=Mar
+message87=Mer
+message88=Gio
+message89=Ven
+message90=Sab
+message91=Giorni della settimana
+message92=Chi
+message93=Quando
+message94=Utenti autenticati
+message95=Min
+message96=Media
+message97=Max
+message98=Compressione Web
+message99=Banda risparmiata
+message100=Prima della compressione
+message101=Dopo la compressione
+message102=Totale
+message103=parole chiave diverse
+message104=Pagine iniziali
+message105=Codice
