@@ -74,7 +74,7 @@
 "uy","Uruguay","uz","Uzbekistan","va","Vatican City State","vc",
 "Saint Vincent &amp; Grenadines","ve","Venezuela","vg","Virgin Islands (British)",
 "vi","Virgin Islands (USA)","vn","Vietnam","vu","Vanuatu","wf","Wallis and Futuna Islands",
-"ws","Samoa","ye","Yemen","yt","Mayotte","yu","Yugoslavia","za","South Africa",
+"ws","Web sites","ye","Yemen","yt","Mayotte","yu","Yugoslavia","za","South Africa",
 "zm","Zambia","zr","Zaire","zw","Zimbabwe"
 );
 
