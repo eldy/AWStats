@@ -214,7 +214,8 @@ use vars qw/
 @DefaultFile @OnlyFiles @SkipDNSLookupFor @SkipFiles @SkipHosts @SkipUserAgents
 @URLWithQueryWithoutFollowingParameters
 @PluginsToLoad @DOWIndex @RobotsSearchIDOrder
-@_from_p @_from_h @_time_p @_time_h @_time_k
+@_from_p @_from_h
+@_time_p @_time_h @_time_k
 @keylist
 /;
 @SessionsRange=("0s-30s","30s-2mn","2mn-5mn","5mn-15mn","15mn-30mn","30mn-1h","1h+");
@@ -248,6 +249,7 @@ use vars qw/
 %_login_h %_login_p %_login_k %_login_l
 %_se_referrals_h %_sider404_h %_referer404_h %_url_p %_url_k %_url_e %_url_x
 %_unknownreferer_l %_unknownrefererbrowser_l
+%_emails_h %_emails_k %_emails_l %_emailr_h %_emailr_k %_emailr_l
 %val %nextval %egal
 %TmpDNSLookup %TmpOS %TmpRefererServer %TmpRobot %TmpBrowser
 %MyDNSTable
@@ -269,6 +271,7 @@ use vars qw/
 %_login_h = %_login_p = %_login_k = %_login_l = ();
 %_se_referrals_h = %_sider404_h = %_referer404_h = %_url_p = %_url_k = %_url_e = %_url_x = ();
 %_unknownreferer_l = %_unknownrefererbrowser_l = ();
+%_emails_h = %_emails_k = %_emails_l = %_emailr_h = %_emailr_k = %_emailr_l = ();
 %val = %nextval = %egal = ();
 %TmpDNSLookup = %TmpOS = %TmpRefererServer = %TmpRobot = %TmpBrowser = ();
 # ---------- Init Tie::hash arrays --------
@@ -1670,10 +1673,15 @@ sub Read_History_With_TmpUpdate {
 	my $withupdate=shift||0;
 	my $withpurge=shift||0;
 	my $part=shift||"";
-	my %allsections=("general"=>1,"time"=>2,"visitor"=>3,"day"=>4,"login"=>5,"domain"=>6,"session"=>7,"browser"=>8,
-					 "os"=>11,"unknownreferer"=>12,"unknownrefererbrowser"=>13,"robot"=>14,"sider"=>15,
-					 "filetypes"=>16,"origin"=>17,"sereferrals"=>18,"pagerefs"=>19,"searchwords"=>20,"keywords"=>21,
-					 "errors"=>22,"sider_404"=>23);
+	my %allsections=("general"=>1,"time"=>2,"visitor"=>3,"day"=>4,
+					 "domain"=>5,"login"=>6,"robot"=>7,"emailsender"=>8,"emailreceiver"=>9,
+					 "session"=>10,"sider"=>11,"filetypes"=>12,
+					 "browser"=>13,"os"=>14,"unknownreferer"=>15,"unknownrefererbrowser"=>16,
+					 "origin"=>17,"sereferrals"=>18,"pagerefs"=>19,
+					 "searchwords"=>20,"keywords"=>21,
+					 "errors"=>22);
+	my $order=23;
+	foreach my $code (keys %TrapInfosForHTTPErrorCodes) { $allsections{"sider_$code"}=$order++; }
 
 	my $withread=0;
 
@@ -1686,28 +1694,38 @@ sub Read_History_With_TmpUpdate {
 
 	# Define SectionsToLoad (which sections to load)
 	my %SectionsToLoad = ();
-	if ($part eq "all") {	# Load all needed sections
-		$SectionsToLoad{"general"}=1;
-		$SectionsToLoad{"time"}=2;
-		if ($UpdateStats || $MigrateStats || $HTMLOutput eq "main" || $HTMLOutput eq "allhosts" || $HTMLOutput eq "lasthosts" || $HTMLOutput eq "unknownip") { $SectionsToLoad{"visitor"}=3; }	# before day, sider and session section
-		if ($UpdateStats || $MigrateStats || $HTMLOutput eq "main" || $HTMLOutput eq "days" || $HTMLOutput eq 'monthdayvalues')   { $SectionsToLoad{'day'}=4; }
-		if ($UpdateStats || $MigrateStats || $HTMLOutput eq "main" || $HTMLOutput eq "alllogins" || $HTMLOutput eq "lastlogins") { $SectionsToLoad{"login"}=5; }
-		if ($UpdateStats || $MigrateStats || $HTMLOutput eq "main" || $HTMLOutput eq "domains") { $SectionsToLoad{"domain"}=6; }
-		if ($UpdateStats || $MigrateStats || $HTMLOutput eq "main" || $HTMLOutput eq "sessions") { $SectionsToLoad{"session"}=7; }
-		if ($UpdateStats || $MigrateStats || $HTMLOutput eq "main" || $HTMLOutput eq "browserdetail") { $SectionsToLoad{"browser"}=8; }
-		if ($UpdateStats || $MigrateStats || $HTMLOutput eq "main" || $HTMLOutput eq "os") { $SectionsToLoad{"os"}=11; }
-		if ($UpdateStats || $MigrateStats || $HTMLOutput eq "main" || $HTMLOutput eq "unknownos")      { $SectionsToLoad{"unknownreferer"}=12; }
-		if ($UpdateStats || $MigrateStats || $HTMLOutput eq "main" || $HTMLOutput eq "unknownbrowser") { $SectionsToLoad{"unknownrefererbrowser"}=13; }
-		if ($UpdateStats || $MigrateStats || $HTMLOutput eq "main" || $HTMLOutput eq "allrobots" || $HTMLOutput eq "lastrobots") { $SectionsToLoad{"robot"}=14; }
-		if ($UpdateStats || $MigrateStats || $HTMLOutput eq "main" || $HTMLOutput eq "urldetail" || $HTMLOutput eq "urlentry" || $HTMLOutput eq "urlexit") { $SectionsToLoad{"sider"}=15; }
-		if ($UpdateStats || $MigrateStats || $HTMLOutput eq "main" || $HTMLOutput eq "filetypes") { $SectionsToLoad{"filetypes"}=16; }
-		if ($UpdateStats || $MigrateStats || $HTMLOutput eq "main" || $HTMLOutput eq "origin") { $SectionsToLoad{"origin"}=17; }
-		if ($UpdateStats || $MigrateStats || $HTMLOutput eq "main" || $HTMLOutput eq "refererse") { $SectionsToLoad{"sereferrals"}=18; }
-		if ($UpdateStats || $MigrateStats || $HTMLOutput eq "main" || $HTMLOutput eq "refererpages") { $SectionsToLoad{"pagerefs"}=19; }
-		if ($UpdateStats || $MigrateStats || $HTMLOutput eq "main" || $HTMLOutput eq "keyphrases" || $HTMLOutput eq "keywords") { $SectionsToLoad{"searchwords"}=20; }
-		if ($HTMLOutput eq "main") { $SectionsToLoad{"keywords"}=21; }
-		if ($UpdateStats || $MigrateStats || $HTMLOutput eq "main" || $HTMLOutput eq "errors") { $SectionsToLoad{"errors"}=22; }
-		if ($UpdateStats || $MigrateStats || $HTMLOutput eq "main" || $HTMLOutput eq "errors404") { $SectionsToLoad{"sider_404"}=23; }
+	if ($part eq 'all') {	# Load all needed sections
+		my $order=1;
+		$SectionsToLoad{'general'}=$order++;
+		# When
+		$SectionsToLoad{'time'}=$order++;	# Always loaded because needed to count TotalPages, TotalHits, TotalBandwidth
+		if ($UpdateStats || $MigrateStats || ($HTMLOutput eq 'main' && $ShowHostsStats) || $HTMLOutput =~ /allhosts/ || $HTMLOutput =~ /lasthosts/ || $HTMLOutput =~ /unknownip/) { $SectionsToLoad{'visitor'}=$order++; }	# Must be before day, sider and session section
+		if ($UpdateStats || $MigrateStats || ($HTMLOutput eq 'main' && ($ShowDaysOfWeekStats || $ShowMonthDayStats)) || $HTMLOutput eq 'monthdayvalues') { $SectionsToLoad{'day'}=$order++; }
+		# Who
+		if ($UpdateStats || $MigrateStats || ($HTMLOutput eq 'main' && $ShowDomainsStats) || $HTMLOutput eq 'domains') { $SectionsToLoad{'domain'}=$order++; }
+		if ($UpdateStats || $MigrateStats || ($HTMLOutput eq 'main' && $ShowAuthenticatedUsers) || $HTMLOutput =~ /alllogins/ || $HTMLOutput =~ /lastlogins/) { $SectionsToLoad{'login'}=$order++; }
+		if ($UpdateStats || $MigrateStats || ($HTMLOutput eq 'main' && $ShowRobotsStats) || $HTMLOutput =~ /allrobots/ || $HTMLOutput =~ /lastrobots/) { $SectionsToLoad{'robot'}=$order++; }
+		if ($UpdateStats || $MigrateStats || ($HTMLOutput eq 'main' && $ShowEMailSenders) || $HTMLOutput =~ /allemails/ || $HTMLOutput =~ /lastemails/) { $SectionsToLoad{'emailsender'}=$order++; }
+		if ($UpdateStats || $MigrateStats || ($HTMLOutput eq 'main' && $ShowEMailReceivers) || $HTMLOutput =~ /allemailr/ || $HTMLOutput =~ /lastemailr/) { $SectionsToLoad{'emailreceiver'}=$order++; }
+		# Navigation
+		if ($UpdateStats || $MigrateStats || ($HTMLOutput eq 'main' && $ShowSessionsStats) || $HTMLOutput eq 'sessions') { $SectionsToLoad{'session'}=$order++; }
+		if ($UpdateStats || $MigrateStats || ($HTMLOutput eq 'main' && $ShowPagesStats) || $HTMLOutput =~ /urldetail/ || $HTMLOutput =~ /urlentry/ || $HTMLOutput =~ /urlexit/) { $SectionsToLoad{'sider'}=$order++; }
+		if ($UpdateStats || $MigrateStats || ($HTMLOutput eq 'main' && $ShowFileTypesStats) || $HTMLOutput eq 'filetypes') { $SectionsToLoad{'filetypes'}=$order++; }
+		if ($UpdateStats || $MigrateStats || ($HTMLOutput eq 'main' && $ShowBrowsersStats) || $HTMLOutput eq 'browserdetail') { $SectionsToLoad{'browser'}=$order++; }
+		if ($UpdateStats || $MigrateStats || ($HTMLOutput eq 'main' && $ShowOSStats) || $HTMLOutput eq 'os') { $SectionsToLoad{'os'}=$order++; }
+		if ($UpdateStats || $MigrateStats || $HTMLOutput eq 'unknownos')      { $SectionsToLoad{'unknownreferer'}=$order++; }
+		if ($UpdateStats || $MigrateStats || $HTMLOutput eq 'unknownbrowser') { $SectionsToLoad{'unknownrefererbrowser'}=$order++; }
+		# Referers
+		if ($UpdateStats || $MigrateStats || ($HTMLOutput eq 'main' && $ShowOriginStats) || $HTMLOutput eq 'origin') { $SectionsToLoad{'origin'}=$order++; }
+		if ($UpdateStats || $MigrateStats || ($HTMLOutput eq 'main' && $ShowOriginStats) || $HTMLOutput eq 'refererse') { $SectionsToLoad{'sereferrals'}=$order++; }
+		if ($UpdateStats || $MigrateStats || ($HTMLOutput eq 'main' && $ShowOriginStats) || $HTMLOutput eq 'refererpages') { $SectionsToLoad{'pagerefs'}=$order++; }
+		if ($UpdateStats || $MigrateStats || ($HTMLOutput eq 'main' && $ShowKeyphrasesStats) || $HTMLOutput eq 'keyphrases' || $HTMLOutput eq 'keywords') { $SectionsToLoad{'searchwords'}=$order++; }
+		if ($HTMLOutput eq 'main' && $ShowKeywordsStats) { $SectionsToLoad{'keywords'}=$order++; }
+		# Others
+		if ($UpdateStats || $MigrateStats || ($HTMLOutput eq 'main' && $ShowHTTPErrorsStats) || $HTMLOutput eq 'errors') { $SectionsToLoad{'errors'}=$order++; }
+		foreach my $code (keys %TrapInfosForHTTPErrorCodes) {
+			if ($UpdateStats || $MigrateStats || $HTMLOutput eq "errors$code") { $SectionsToLoad{"sider_$code"}=$order++; }
+		}
 	}
 	else {					# Load only required sections
 		my $order=1;
@@ -2016,7 +2034,7 @@ sub Read_History_With_TmpUpdate {
 								if ($HTMLOutput eq "allhosts" || $HTMLOutput eq "lasthosts") { $loadrecord=1; }
 								elsif ($MonthRequired eq "year" || $field[2] >= $MinHitHost) {
 									if ($HTMLOutput eq "unknownip" && ($field[0] =~ /^\d+\.\d+\.\d+\.\d+$/)) { $loadrecord=1; }
-									elsif ($HTMLOutput eq "main" && ($MonthRequired eq "year" || $countloaded < $MaxNbOfHostsShown)) { $loadrecord=1; }
+									elsif ($HTMLOutput eq 'main' && ($MonthRequired eq "year" || $countloaded < $MaxNbOfHostsShown)) { $loadrecord=1; }
 								}
 							}
 							if ($loadrecord) {
@@ -2340,6 +2358,70 @@ sub Read_History_With_TmpUpdate {
 				if (! scalar %SectionsToLoad) { debug(" Stop reading history file. Got all we need."); last; }
 				next;
 			}
+			# BEGIN_EMAILS
+			if ($field[0] eq "BEGIN_EMAILSENDER")   {
+				if ($Debug) { debug(" Begin of EMAILSENDER section"); }
+				$_=<HISTORY>;
+				chomp $_; s/\r//;
+				if (! $_) { error("Error: History file \"$filetoread\" is corrupted (in section EMAILSENDER). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost).","","",1); }
+				my @field=split(/\s+/,$_); $countlines++;
+				my $count=0;my $countloaded=0;
+				while ($field[0] ne "END_EMAILSENDER") {
+					if ($field[0]) {
+						$count++;
+						if ($SectionsToLoad{"emailsender"}) {
+							$countloaded++;
+							if ($field[1]) { $_emails_h{$field[0]}+=$field[1]; }
+							if ($field[2]) { $_emails_k{$field[0]}+=$field[2]; }
+							if (! $_emails_l{$field[0]}) { $_emails_l{$field[0]}=int($field[3]); }
+						}
+					}
+					$_=<HISTORY>;
+					chomp $_; s/\r//;
+					if (! $_) { error("Error: History file \"$filetoread\" is corrupted (in section EMAILSENDER). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost).","","",1); }
+					@field=split(/\s+/,$_); $countlines++;
+				}
+				if ($Debug) { debug(" End of EMAILSENDER section ($count entries, $countloaded loaded)"); }
+				delete $SectionsToLoad{"emailsender"};
+				if ($SectionsToSave{"emailsender"}) {
+					Save_History("emailsender",$year,$month); delete $SectionsToSave{"emailsender"};
+					if ($withpurge) { %_emails_h=(); %_emails_k=(); %_emails_l=(); }
+				}
+				if (! scalar %SectionsToLoad) { debug(" Stop reading history file. Got all we need."); last; }
+				next;
+			}
+			# BEGIN_EMAILR
+			if ($field[0] eq "BEGIN_EMAILRECEIVER")   {
+				if ($Debug) { debug(" Begin of EMAILRECEIVER section"); }
+				$_=<HISTORY>;
+				chomp $_; s/\r//;
+				if (! $_) { error("Error: History file \"$filetoread\" is corrupted (in section EMAILRECEIVER). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost).","","",1); }
+				my @field=split(/\s+/,$_); $countlines++;
+				my $count=0;my $countloaded=0;
+				while ($field[0] ne "END_EMAILRECEIVER") {
+					if ($field[0]) {
+						$count++;
+						if ($SectionsToLoad{"emailreceiver"}) {
+							$countloaded++;
+							if ($field[1]) { $_emailr_h{$field[0]}+=$field[1]; }
+							if ($field[2]) { $_emailr_k{$field[0]}+=$field[2]; }
+							if (! $_emailr_l{$field[0]}) { $_emailr_l{$field[0]}=int($field[3]); }
+						}
+					}
+					$_=<HISTORY>;
+					chomp $_; s/\r//;
+					if (! $_) { error("Error: History file \"$filetoread\" is corrupted (in section EMAILRECEIVER). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost).","","",1); }
+					@field=split(/\s+/,$_); $countlines++;
+				}
+				if ($Debug) { debug(" End of EMAILRECEIVER section ($count entries, $countloaded loaded)"); }
+				delete $SectionsToLoad{"emailreceiver"};
+				if ($SectionsToSave{"emailreceiver"}) {
+					Save_History("emailreceiver",$year,$month); delete $SectionsToSave{"emailreceiver"};
+					if ($withpurge) { %_emailr_h=(); %_emailr_k=(); %_emailr_l=(); }
+				}
+				if (! scalar %SectionsToLoad) { debug(" Stop reading history file. Got all we need."); last; }
+				next;
+			}
 			# BEGIN_SIDER
 			if ($field[0] eq "BEGIN_SIDER")  {
 				if ($Debug) { debug(" Begin of SIDER section"); }
@@ -2357,7 +2439,7 @@ sub Read_History_With_TmpUpdate {
 								$loadrecord=1;
 							}
 							else {
-								if ($HTMLOutput eq "main") {
+								if ($HTMLOutput eq 'main') {
 									if ($MonthRequired eq "year") { $loadrecord=1; }
 									else {
 										if ($countloaded < $MaxNbOfPageShown && $field[1] >= $MinHitFile) { $loadrecord=1; }
@@ -2523,7 +2605,7 @@ sub Read_History_With_TmpUpdate {
 								$loadrecord=1;
 							}
 							else {
-								if ($HTMLOutput eq "main") {
+								if ($HTMLOutput eq 'main') {
 									if ($MonthRequired eq "year") { $loadrecord=1; }
 									else {
 										if ($countloaded < $MaxNbOfKeyphrasesShown && $field[1] >= $MinHitKeyphrase) { $loadrecord=1; }
@@ -2642,38 +2724,40 @@ sub Read_History_With_TmpUpdate {
 				if (! scalar %SectionsToLoad) { debug(" Stop reading history file. Got all we need."); last; }
 				next;
 			}
-			# BEGIN_SIDER_404
-			if ($field[0] eq "BEGIN_SIDER_404")   {
-				if ($Debug) { debug(" Begin of SIDER_404 section"); }
-				$_=<HISTORY>;
-				chomp $_; s/\r//;
-				if (! $_) { error("Error: History file \"$filetoread\" is corrupted (in section SIDER_404). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost).","","",1); }
-				my @field=split(/\s+/,$_); $countlines++;
-				my $count=0;my $countloaded=0;
-				while ($field[0] ne "END_SIDER_404") {
-					if ($field[0]) {
-						$count++;
-						if ($SectionsToLoad{"sider_404"}) {
-							$countloaded++;
-							if ($field[1]) { $_sider404_h{$field[0]}+=$field[1]; }
-							if ($withupdate || $HTMLOutput eq "errors404") {
-								if ($field[2]) { $_referer404_h{$field[0]}=$field[2]; }
-							}
-						}
-					}
+			# BEGIN_SIDER_xxx
+			foreach my $code (keys %TrapInfosForHTTPErrorCodes) {
+				if ($field[0] eq "BEGIN_SIDER_$code")   {
+					if ($Debug) { debug(" Begin of SIDER_$code section"); }
 					$_=<HISTORY>;
 					chomp $_; s/\r//;
-					if (! $_) { error("Error: History file \"$filetoread\" is corrupted (in section SIDER_404). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost).","","",1); }
-					@field=split(/\s+/,$_); $countlines++;
+					if (! $_) { error("Error: History file \"$filetoread\" is corrupted (in section SIDER_$code). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost).","","",1); }
+					my @field=split(/\s+/,$_); $countlines++;
+					my $count=0;my $countloaded=0;
+					while ($field[0] ne "END_SIDER_$code") {
+						if ($field[0]) {
+							$count++;
+							if ($SectionsToLoad{"sider_$code"}) {
+								$countloaded++;
+								if ($field[1]) { $_sider404_h{$field[0]}+=$field[1]; }
+								if ($withupdate || $HTMLOutput eq "errors$code") {
+									if ($field[2]) { $_referer404_h{$field[0]}=$field[2]; }
+								}
+							}
+						}
+						$_=<HISTORY>;
+						chomp $_; s/\r//;
+						if (! $_) { error("Error: History file \"$filetoread\" is corrupted (in section SIDER_$code). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost).","","",1); }
+						@field=split(/\s+/,$_); $countlines++;
+					}
+					if ($Debug) { debug(" End of SIDER_$code section ($count entries, $countloaded loaded)"); }
+					delete $SectionsToLoad{"sider_$code"};
+					if ($SectionsToSave{"sider_$code"}) {
+						Save_History("sider_$code",$year,$month); delete $SectionsToSave{"sider_$code"};
+						if ($withpurge) { %_sider404_h=(); %_referer404_h=(); }
+					}
+					if (! scalar %SectionsToLoad) { debug(" Stop reading history file. Got all we need."); last; }
+					next;
 				}
-				if ($Debug) { debug(" End of SIDER_404 section ($count entries, $countloaded loaded)"); }
-				delete $SectionsToLoad{"sider_404"};
-				if ($SectionsToSave{"sider_404"}) {
-					Save_History("sider_404",$year,$month); delete $SectionsToSave{"sider_404"};
-					if ($withpurge) { %_sider404_h=(); %_referer404_h=(); }
-				}
-				if (! scalar %SectionsToLoad) { debug(" Stop reading history file. Got all we need."); last; }
-				next;
 			}
 		}
 	}
@@ -2772,30 +2856,37 @@ sub Save_History {
 		print HISTORYTMP "# for direct I/O access. If you made changes somewhere in this file, you\n";
 		print HISTORYTMP "# should also remove completely the MAP section (AWStats will rewrite it\n";
 		print HISTORYTMP "# at next update).\n";
-		print HISTORYTMP "BEGIN_MAP 23\n";
+		print HISTORYTMP "BEGIN_MAP 25\n";
 		print HISTORYTMP "POS_GENERAL ";$PosInFile{"general"}=tell HISTORYTMP;print HISTORYTMP "$spacebar\n";
+		# When
 		print HISTORYTMP "POS_TIME ";$PosInFile{"time"}=tell HISTORYTMP;print HISTORYTMP "$spacebar\n";
 		print HISTORYTMP "POS_VISITOR ";$PosInFile{"visitor"}=tell HISTORYTMP;print HISTORYTMP "$spacebar\n";
 		print HISTORYTMP "POS_DAY ";$PosInFile{"day"}=tell HISTORYTMP;print HISTORYTMP "$spacebar\n";
-		print HISTORYTMP "POS_LOGIN ";$PosInFile{"login"}=tell HISTORYTMP;print HISTORYTMP "$spacebar\n";
+		# Who
 		print HISTORYTMP "POS_DOMAIN ";$PosInFile{"domain"}=tell HISTORYTMP;print HISTORYTMP "$spacebar\n";
+		print HISTORYTMP "POS_LOGIN ";$PosInFile{"login"}=tell HISTORYTMP;print HISTORYTMP "$spacebar\n";
+		print HISTORYTMP "POS_ROBOT ";$PosInFile{"robot"}=tell HISTORYTMP;print HISTORYTMP "$spacebar\n";
+		print HISTORYTMP "POS_EMAILSENDER ";$PosInFile{"emailsender"}=tell HISTORYTMP;print HISTORYTMP "$spacebar\n";
+		print HISTORYTMP "POS_EMAILRECEIVER ";$PosInFile{"emailreceiver"}=tell HISTORYTMP;print HISTORYTMP "$spacebar\n";
+		# Navigation
 		print HISTORYTMP "POS_SESSION ";$PosInFile{"session"}=tell HISTORYTMP;print HISTORYTMP "$spacebar\n";
+		print HISTORYTMP "POS_SIDER ";$PosInFile{"sider"}=tell HISTORYTMP;print HISTORYTMP "$spacebar\n";
+		print HISTORYTMP "POS_FILETYPES ";$PosInFile{"filetypes"}=tell HISTORYTMP;print HISTORYTMP "$spacebar\n";
 		print HISTORYTMP "POS_BROWSER ";$PosInFile{"browser"}=tell HISTORYTMP;print HISTORYTMP "$spacebar\n";
 		print HISTORYTMP "POS_OS ";$PosInFile{"os"}=tell HISTORYTMP;print HISTORYTMP "$spacebar\n";
 		print HISTORYTMP "POS_UNKNOWNREFERER ";$PosInFile{"unknownreferer"}=tell HISTORYTMP;print HISTORYTMP "$spacebar\n";
 		print HISTORYTMP "POS_UNKNOWNREFERERBROWSER ";$PosInFile{"unknownrefererbrowser"}=tell HISTORYTMP;print HISTORYTMP "$spacebar\n";
-		print HISTORYTMP "POS_ROBOT ";$PosInFile{"robot"}=tell HISTORYTMP;print HISTORYTMP "$spacebar\n";
-		print HISTORYTMP "POS_SIDER ";$PosInFile{"sider"}=tell HISTORYTMP;print HISTORYTMP "$spacebar\n";
-		print HISTORYTMP "POS_FILETYPES ";$PosInFile{"filetypes"}=tell HISTORYTMP;print HISTORYTMP "$spacebar\n";
+		# Referers
 		print HISTORYTMP "POS_ORIGIN ";$PosInFile{"origin"}=tell HISTORYTMP;print HISTORYTMP "$spacebar\n";
 		print HISTORYTMP "POS_SEREFERRALS ";$PosInFile{"sereferrals"}=tell HISTORYTMP;print HISTORYTMP "$spacebar\n";
 		print HISTORYTMP "POS_PAGEREFS ";$PosInFile{"pagerefs"}=tell HISTORYTMP;print HISTORYTMP "$spacebar\n";
 		print HISTORYTMP "POS_SEARCHWORDS ";$PosInFile{"searchwords"}=tell HISTORYTMP;print HISTORYTMP "$spacebar\n";
 		print HISTORYTMP "POS_KEYWORDS ";$PosInFile{"keywords"}=tell HISTORYTMP;print HISTORYTMP "$spacebar\n";
+		# Others
 		print HISTORYTMP "POS_ERRORS ";$PosInFile{"errors"}=tell HISTORYTMP;print HISTORYTMP "$spacebar\n";
-		print HISTORYTMP "POS_SIDER_404 ";$PosInFile{"sider_404"}=tell HISTORYTMP;print HISTORYTMP "$spacebar\n";
-		print HISTORYTMP "POS_EMAILSENDER ";$PosInFile{"emailsender"}=tell HISTORYTMP;print HISTORYTMP "$spacebar\n";
-		print HISTORYTMP "POS_EMAILRECEIVER ";$PosInFile{"emailreceiver"}=tell HISTORYTMP;print HISTORYTMP "$spacebar\n";
+		foreach my $code (keys %TrapInfosForHTTPErrorCodes) {
+			print HISTORYTMP "POS_SIDER_$code ";$PosInFile{"sider_$code"}=tell HISTORYTMP;print HISTORYTMP "$spacebar\n";
+		}
 		print HISTORYTMP "END_MAP\n";
 	}
 
@@ -2936,14 +3027,6 @@ sub Save_History {
 		$MonthHostsUnknown{$year.$month}=(scalar keys %_host_h) - $monthhostsknown;
 		print HISTORYTMP "END_VISITOR\n";
 	}
-	if ($sectiontosave eq "session") {	# This section must be saved after VISITOR section is read
-		print HISTORYTMP "\n";
-		print HISTORYTMP "# Session range - Number of visits\n";
-		$ValueInFile{$sectiontosave}=tell HISTORYTMP;
-		print HISTORYTMP "BEGIN_SESSION ".(scalar keys %_session)."\n";
-		foreach my $key (keys %_session) { print HISTORYTMP "$key ".int($_session{$key})."\n"; }
-		print HISTORYTMP "END_SESSION\n";
-	}
 	if ($sectiontosave eq "login") {
 		print HISTORYTMP "\n";
 		print HISTORYTMP "# Login - Pages - Hits - Bandwidth\n";
@@ -2960,8 +3043,32 @@ sub Save_History {
 		foreach my $key (keys %_robot_h) { print HISTORYTMP "$key ".int($_robot_h{$key})." ".int($_robot_k{$key})." $_robot_l{$key}\n"; }
 		print HISTORYTMP "END_ROBOT\n";
 	}
+	if ($sectiontosave eq "emailsender") {
+		print HISTORYTMP "\n";
+		print HISTORYTMP "# EMail - Hits - Bandwidth - Last visit\n";
+		$ValueInFile{$sectiontosave}=tell HISTORYTMP;
+		print HISTORYTMP "BEGIN_EMAILSENDER ".(scalar keys %_emails_h)."\n";
+		foreach my $key (keys %_emails_h) { print HISTORYTMP "$key ".int($_emails_h{$key})." ".int($_emails_k{$key})." $_emails_l{$key}\n"; }
+		print HISTORYTMP "END_EMAILSENDER\n";
+	}
+	if ($sectiontosave eq "emailreceiver") {
+		print HISTORYTMP "\n";
+		print HISTORYTMP "# EMail - Hits - Bandwidth - Last visit\n";
+		$ValueInFile{$sectiontosave}=tell HISTORYTMP;
+		print HISTORYTMP "BEGIN_EMAILRECEIVER ".(scalar keys %_emailr_h)."\n";
+		foreach my $key (keys %_emailr_h) { print HISTORYTMP "$key ".int($_emailr_h{$key})." ".int($_emailr_k{$key})." $_emailr_l{$key}\n"; }
+		print HISTORYTMP "END_EMAILRECEIVER\n";
+	}
 
 	# Navigation
+	if ($sectiontosave eq "session") {	# This section must be saved after VISITOR section is read
+		print HISTORYTMP "\n";
+		print HISTORYTMP "# Session range - Number of visits\n";
+		$ValueInFile{$sectiontosave}=tell HISTORYTMP;
+		print HISTORYTMP "BEGIN_SESSION ".(scalar keys %_session)."\n";
+		foreach my $key (keys %_session) { print HISTORYTMP "$key ".int($_session{$key})."\n"; }
+		print HISTORYTMP "END_SESSION\n";
+	}
 	if ($sectiontosave eq "sider") {	# This section must be saved after VISITOR section is read
 		print HISTORYTMP "\n";
 		print HISTORYTMP "# URL - Pages - Bandwidth - Entry - Exit\n";
@@ -3122,20 +3229,22 @@ sub Save_History {
 		foreach my $key (keys %_errors_h) { print HISTORYTMP "$key $_errors_h{$key} $_errors_k{$key}\n"; }
 		print HISTORYTMP "END_ERRORS\n";
 	}
-	if ($sectiontosave eq "sider_404") {
-		print HISTORYTMP "\n";
-		print HISTORYTMP "# URL with 404 errors - Hits - Last URL referer\n";
-		$ValueInFile{$sectiontosave}=tell HISTORYTMP;
-		print HISTORYTMP "BEGIN_SIDER_404 ".(scalar keys %_sider404_h)."\n";
-		foreach my $key (keys %_sider404_h) {
-			my $newkey=$key;
-			my $newreferer=$_referer404_h{$key}||"";
-			$newreferer =~ s/\s/%20/g;
-			print HISTORYTMP "$newkey ".int($_sider404_h{$key})." $newreferer\n";
+	foreach my $code (keys %TrapInfosForHTTPErrorCodes) {
+		if ($sectiontosave eq "sider_$code") {
+			print HISTORYTMP "\n";
+			print HISTORYTMP "# URL with $code errors - Hits - Last URL referer\n";
+			$ValueInFile{$sectiontosave}=tell HISTORYTMP;
+			print HISTORYTMP "BEGIN_SIDER_$code ".(scalar keys %_sider404_h)."\n";
+			foreach my $key (keys %_sider404_h) {
+				my $newkey=$key;
+				my $newreferer=$_referer404_h{$key}||"";
+				$newreferer =~ s/\s/%20/g;
+				print HISTORYTMP "$newkey ".int($_sider404_h{$key})." $newreferer\n";
+			}
+			print HISTORYTMP "END_SIDER_$code\n";
 		}
-		print HISTORYTMP "END_SIDER_404\n";
 	}
-
+	
 	%keysinkeylist=();
 }
 
@@ -3776,7 +3885,7 @@ if ($ENV{"GATEWAY_INTERFACE"}) {	# Run from a browser
 	if ($ENV{"QUERY_STRING"}) { $QueryString = $ENV{"QUERY_STRING"}; }
 	$QueryString = CleanFromCSSA($QueryString);
 	if ($QueryString =~ /config=([^\s&]+)/i)	{ $SiteConfig=&DecodeEncodedString("$1"); }
-	$UpdateStats=0; $HTMLOutput="main";														# No update but report by default when run from a browser
+	$UpdateStats=0; $HTMLOutput='main';														# No update but report by default when run from a browser
 	if ($QueryString =~ /update=1/i)			{ $UpdateStats=1; }							# Update is required
 	if ($QueryString =~ /migrate=([^\s&]+)/i)	{ 
 		$MigrateStats=&DecodeEncodedString("$1"); 
@@ -3825,7 +3934,7 @@ if ($QueryString =~ /debug=(\d+)/i)				{ $Debug=$1; }
 # Define output option
 if ($QueryString =~ /output=.*output=/i) { error("Only 1 output option is allowed"); }
 if ($QueryString =~ /output/i) {
-	$HTMLOutput="main";
+	$HTMLOutput='main';
 	if (! $ENV{"GATEWAY_INTERFACE"} && $QueryString !~ /update/i) { $UpdateStats=0; }	# If output only, on command line, no update
 	if ($QueryString =~ /output=([^\s&:]+)/i) { $HTMLOutput=lc($1); }
 }
@@ -3982,8 +4091,8 @@ if ($Lang eq "10") { $Lang="kr"; }
 
 # Define frame name and correct variable for frames
 if (! $FrameName) {
-	if ($ENV{"GATEWAY_INTERFACE"} && $UseFramesWhenCGI && $HTMLOutput eq "main") { $FrameName="index"; }
-	else { $FrameName="main"; }
+	if ($ENV{"GATEWAY_INTERFACE"} && $UseFramesWhenCGI && $HTMLOutput eq 'main') { $FrameName="index"; }
+	else { $FrameName='main'; }
 }
 
 # Load Message and Plugins
@@ -4560,7 +4669,9 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {	# Updat
 				if ($field[$pos_code] =~ /^\d\d\d$/) { 					# Keep error code and next
 					$_errors_h{$field[$pos_code]}++;
 					$_errors_k{$field[$pos_code]}+=$field[$pos_size];
-					if ($field[$pos_code] == 404) { $_sider404_h{$field[$pos_url]}++; $_referer404_h{$field[$pos_url]}=$field[$pos_referer]; }
+					foreach my $code (keys %TrapInfosForHTTPErrorCodes) {
+						if ($field[$pos_code] == $code) { $_sider404_h{$field[$pos_url]}++; $_referer404_h{$field[$pos_url]}=$field[$pos_referer]; }
+					}
 					next;
 				}
 				else {													# Bad format record (should not happen but when using MSIndex server), next
@@ -5266,7 +5377,7 @@ EOF
 			if ($MonthRequired eq "year" || $monthix eq $MonthRequired) {
 				&Read_History_With_TmpUpdate($YearRequired,$monthix,0,0,"all");				# Read full history file
 			}
-			elsif (($HTMLOutput eq "main" && $ShowMonthDayStats) || $HTMLOutput eq "monthdayvalues") {
+			elsif (($HTMLOutput eq 'main' && $ShowMonthDayStats) || $HTMLOutput eq "monthdayvalues") {
 				&Read_History_With_TmpUpdate($YearRequired,$monthix,0,0,"general time");	# Read general and time sections.
 			}
 		}
@@ -5337,7 +5448,7 @@ EOF
 		print "</table>\n";
 		print "<br>\n";
 		# Print menu links
-		if (($HTMLOutput eq "main" && $FrameName ne "mainright") || $FrameName eq "mainleft") {	# If main page asked
+		if (($HTMLOutput eq 'main' && $FrameName ne "mainright") || $FrameName eq "mainleft") {	# If main page asked
 			my $linkpage=($FrameName eq "mainleft"?"$AWScript?${NewLinkParams}":""); $linkpage =~ s/&$//;
 			my $targetpage=($FrameName eq "mainleft"?" target=mainright":"");
 			my $linetitle=1;
@@ -5407,13 +5518,15 @@ EOF
 			if ($linetitle) { print ($frame?"</tr>\n":"<td class=AWL>"); }
 			if ($ShowFileTypesStats =~ /C/i)	 { print ($frame?"<tr><td class=AWL>":""); print "<a href=\"$linkpage#FILETYPES\"$targetpage>$Message[98]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
 			if ($ShowHTTPErrorsStats)	 { print ($frame?"<tr><td class=AWL>":""); print "<a href=\"$linkpage#ERRORS\"$targetpage>$Message[22]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
-			if ($ShowHTTPErrorsStats)	 { print ($frame?"<tr><td class=AWL> &nbsp; <img height=8 width=9 src=\"$DirIcons/other/page.png\" alt=\"...\"> ":""); print "<a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=errors404":"$PROG$StaticLinks.errors404.html")."\"$NewLinkTarget>$Message[31]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
+			foreach my $code (keys %TrapInfosForHTTPErrorCodes) {
+				if ($ShowHTTPErrorsStats)	 { print ($frame?"<tr><td class=AWL> &nbsp; <img height=8 width=9 src=\"$DirIcons/other/page.png\" alt=\"...\"> ":""); print "<a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=errors$code":"$PROG$StaticLinks.errors$code.html")."\"$NewLinkTarget>$Message[31]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
+			}
 			if ($linetitle) { print ($frame?"":"</td></tr>\n"); }
 			print "</table>\n";
 			print ($frame?"":"<br>\n");
 		}
 		# Print Back link
-		elsif ($HTMLOutput ne "main") {
+		elsif ($HTMLOutput ne 'main') {
 			print "<table>\n";
 			$NewLinkParams =~ s/urlfilter=[^ &]*//i;
 			$NewLinkParams =~ tr/&/&/s; $NewLinkParams =~ s/&$//;
@@ -5756,8 +5869,8 @@ EOF
 		if ($rest_p > 0 || $rest_h > 0 || $rest_k > 0) {	# All other visitors (known or not)
 			print "<TR><TD CLASS=AWL><font color=\"#$color_other\">$Message[2]</font></TD>";
 			if ($ShowLinksToWhoIs && $LinksToWhoIs) { ShowWhoIsCell(""); }
-			if ($ShowHostsStats =~ /P/i) { print "<TD>$rest_p</TD>"; }
-			if ($ShowHostsStats =~ /H/i) { print "<TD>".($rest_h?$rest_h:"&nbsp;")."</TD>"; }
+			if ($ShowHostsStats =~ /P/i) { print "<TD>".($rest_p?$rest_p:"&nbsp;")."</TD>"; }
+			if ($ShowHostsStats =~ /H/i) { print "<TD>$rest_h</TD>"; }
 			if ($ShowHostsStats =~ /B/i) { print "<TD>".Format_Bytes($rest_k)."</TD>"; }
 			if ($ShowHostsStats =~ /L/i) { print "<TD>&nbsp;</TD>"; }
 			print "</TR>\n";
@@ -5796,8 +5909,8 @@ EOF
 		if ($rest_p > 0 || $rest_h > 0 || $rest_k > 0) {	# All other visitors (known or not)
 			print "<TR><TD CLASS=AWL><font color=\"#$color_other\">$Message[82]</font></TD>";
 			if ($ShowLinksToWhoIs && $LinksToWhoIs) { ShowWhoIsCell(""); }
-			if ($ShowHostsStats =~ /P/i) { print "<TD>$rest_p</TD>"; }
-			if ($ShowHostsStats =~ /H/i) { print "<TD>".($rest_h?$rest_h:"&nbsp;")."</TD>"; }
+			if ($ShowHostsStats =~ /P/i) { print "<TD>".($rest_p?$rest_p:"&nbsp;")."</TD>"; }
+			if ($ShowHostsStats =~ /H/i) { print "<TD>$rest_h</TD>"; }
 			if ($ShowHostsStats =~ /B/i) { print "<TD>".Format_Bytes($rest_k)."</TD>"; }
 			if ($ShowHostsStats =~ /L/i) { print "<TD>&nbsp;</TD>"; }
 			print "</TR>\n";
@@ -5824,7 +5937,7 @@ EOF
 		if ($HTMLOutput eq "lastlogins") { &BuildKeyList($MaxRowsInHTMLOutput,$MinHitHost,\%_login_h,\%_login_l); }
 		foreach my $key (@keylist) {
 			print "<TR><TD CLASS=AWL>$key</TD>";
-			if ($ShowAuthenticatedUsers =~ /P/i) { print "<TD>$_login_p{$key}</TD>"; }
+			if ($ShowAuthenticatedUsers =~ /P/i) { print "<TD>".($_login_p{$key}?$_login_p{$key}:"&nbsp;")."</TD>"; }
 			if ($ShowAuthenticatedUsers =~ /H/i) { print "<TD>$_login_h{$key}</TD>"; }
 			if ($ShowAuthenticatedUsers =~ /B/i) { print  "<TD>".Format_Bytes($_login_k{$key})."</TD>"; }
 			if ($ShowAuthenticatedUsers =~ /L/i) { print "<td>".($_login_l{$key}?Format_Date($_login_l{$key},1):"-")."</td>"; }
@@ -5840,7 +5953,7 @@ EOF
 		$rest_k=$TotalBytes-$total_k;
 		if ($rest_p > 0 || $rest_h > 0 || $rest_k > 0) {	# All other logins and/or anonymous
 			print "<TR><TD CLASS=AWL><font color=\"#$color_other\">$Message[125]</font></TD>";
-			if ($ShowAuthenticatedUsers =~ /P/i) { print "<TD>$rest_p</TD>"; }
+			if ($ShowAuthenticatedUsers =~ /P/i) { print "<TD>".($rest_p?$rest_p:"&nbsp;")."</TD>"; }
 			if ($ShowAuthenticatedUsers =~ /H/i) { print "<TD>$rest_h</TD>"; }
 			if ($ShowAuthenticatedUsers =~ /B/i) { print "<TD>".Format_Bytes($rest_k)."</TD>"; }
 			if ($ShowAuthenticatedUsers =~ /L/i) { print "<TD>&nbsp;</TD>"; }
@@ -6215,22 +6328,24 @@ EOF
 		&html_end;
 		exit(0);
 	}
-	if ($HTMLOutput eq "errors404") {
-		print "$Center<a name=\"NOTFOUNDERROR\">&nbsp;</a><BR>\n";
-		&tab_head($Message[47],19);
-		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>URL (".(scalar keys %_sider404_h).")</TH><TH bgcolor=\"#$color_h\">$Message[49]</TH><TH>$Message[23]</TH></TR>\n";
-		my $count=0;
-		&BuildKeyList($MaxRowsInHTMLOutput,1,\%_sider404_h,\%_sider404_h);
-		foreach my $key (@keylist) {
-			my $nompage=CleanFromCSSA($key);
-			#if (length($nompage)>$MaxLengthOfURL) { $nompage=substr($nompage,0,$MaxLengthOfURL)."..."; }
-			my $referer=CleanFromCSSA($_referer404_h{$key});
-			print "<tr><td CLASS=AWL>$nompage</td><td>$_sider404_h{$key}</td><td CLASS=AWL>".($referer?"$referer":"&nbsp;")."</td></tr>\n";
-			$count++;
+	foreach my $code (keys %TrapInfosForHTTPErrorCodes) {
+		if ($HTMLOutput eq "errors$code") {
+			print "$Center<a name=\"NOTFOUNDERROR\">&nbsp;</a><BR>\n";
+			&tab_head($Message[47],19);
+			print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>URL (".(scalar keys %_sider404_h).")</TH><TH bgcolor=\"#$color_h\">$Message[49]</TH><TH>$Message[23]</TH></TR>\n";
+			my $count=0;
+			&BuildKeyList($MaxRowsInHTMLOutput,1,\%_sider404_h,\%_sider404_h);
+			foreach my $key (@keylist) {
+				my $nompage=CleanFromCSSA($key);
+				#if (length($nompage)>$MaxLengthOfURL) { $nompage=substr($nompage,0,$MaxLengthOfURL)."..."; }
+				my $referer=CleanFromCSSA($_referer404_h{$key});
+				print "<tr><td CLASS=AWL>$nompage</td><td>$_sider404_h{$key}</td><td CLASS=AWL>".($referer?"$referer":"&nbsp;")."</td></tr>\n";
+				$count++;
+			}
+			&tab_end;
+			&html_end;
+			exit(0);
 		}
-		&tab_end;
-		&html_end;
-		exit(0);
 	}
 	if ($HTMLOutput eq "info") {
 		# Not yet available
@@ -6773,7 +6888,7 @@ EOF
 		$rest_p=$TotalPages-$total_p;
 		$rest_h=$TotalHits-$total_h;
 		$rest_k=$TotalBytes-$total_k;
-		if ($rest_p > 0 || $rest_h > 0 || $rest_k > 0) {	# All other login
+		if ($rest_p > 0 || $rest_h > 0 || $rest_k > 0) {	# All other logins
 			print "<TR><TD CLASS=AWL><font color=\"#$color_other\">$Message[125]</font></TD>";
 			if ($ShowAuthenticatedUsers =~ /P/i) { print "<TD>$rest_p</TD>"; }
 			if ($ShowAuthenticatedUsers =~ /H/i) { print "<TD>$rest_h</TD>"; }
@@ -6813,8 +6928,12 @@ EOF
 		$rest_p=0;	#$rest_p=$TotalPagesRobots-$total_p;
 		$rest_h=$TotalHitsRobots-$total_h;
 		$rest_k=$TotalBytesRobots-$total_k;
-		if ($rest_p > 0 || $rest_h > 0 || $rest_k > 0) {	# All other login
-			print "<TR><TD CLASS=AWL><font color=\"#$color_other\">$Message[2]</font></TD><TD>$rest_h</TD><TD>".(Format_Bytes($rest_k))."</TD><TD>&nbsp;</TD></TR>\n";
+		if ($rest_p > 0 || $rest_h > 0 || $rest_k > 0) {	# All other robots
+			print "<TR><TD CLASS=AWL><font color=\"#$color_other\">$Message[2]</font></TD>";
+			print "<TD>$rest_h</TD>";
+			print "<TD>".(Format_Bytes($rest_k))."</TD>";
+			print "<TD>&nbsp;</TD>";
+			print "</TR>\n";
 		}
 		&tab_end;
 	}
@@ -6835,8 +6954,11 @@ EOF
 			print "<tr><td CLASS=AWL>$key</td><td>".($_session{$key}?$_session{$key}:"&nbsp;")."</td></tr>\n";
 			$count++;
 		}
-		if ($TotalVisits > $total_s) {
-			print "<tr onmouseover=\"ShowTip(20);\" onmouseout=\"HideTip(20);\"><td CLASS=AWL>$Message[0]</td><td>".($TotalVisits-$total_s)."</td></tr>\n";
+		$rest_s=$TotalVisits-$total_s;
+		if ($rest_s > 0) {	# All others sessions
+			print "<tr onmouseover=\"ShowTip(20);\" onmouseout=\"HideTip(20);\"><td CLASS=AWL><font color=\"#$color_other\">$Message[0]</font></td>";
+			print "<td>$rest_s</td>";
+			print "</tr>\n";
 		}
 		&tab_end;
 	}
