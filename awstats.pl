@@ -1538,7 +1538,7 @@ if (($YearRequired == $nowyear) && ($MonthRequired eq "year" || $MonthRequired =
 
 	# Search last file
 	opendir(DIR,"$DirData");
-	@filearray = sort grep -f, readdir DIR;
+	@filearray = sort readdir DIR;
 	close DIR;
 	$yearmonthchoosed=0;
 	foreach $i (0..$#filearray) {
@@ -1928,7 +1928,7 @@ if (($YearRequired == $nowyear) && ($MonthRequired eq "year" || $MonthRequired =
 	# Rename all HISTORYTMP files into HISTORYTXT
 	$allok=1;
 	opendir(DIR,"$DirData");
-	@filearray = sort grep -f, readdir DIR;
+	@filearray = sort readdir DIR;
 	close DIR;
 	foreach $i (0..$#filearray) {
 		if ("$filearray[$i]" =~ /^$PROG[\d][\d][\d][\d][\d][\d]$FileSuffix\.tmp\..*$/) {
@@ -1954,7 +1954,7 @@ if (($YearRequired == $nowyear) && ($MonthRequired eq "year" || $MonthRequired =
 
 # Get list of all possible years
 opendir(DIR,"$DirData");
-@filearray = sort grep -f, readdir DIR;
+@filearray = sort readdir DIR;
 close DIR;
 foreach $i (0..$#filearray) {
 	if ("$filearray[$i]" =~ /^$PROG[\d][\d][\d][\d][\d][\d]$FileSuffix\.txt$/) {
