@@ -1021,7 +1021,8 @@ AWStats 4.1+ supports both keywords AND keyphrases by default with no need of an
 <br>#   &lt;/script&gt;
 <br># If code is not added in index page, or if value of "logscreensizeurl" in
 <br># this code does not match value defined in LogScreenSizeUrl config parameter,
-<br># screen size detection won't work, so you should set ShowScreenSizeStats to 0.
+<br># screen size detection won't work.
+<br># You must also change ShowScreenSizeStats parameter to 1 to report results.
 <br># Change : Effective for new updates only.
 <br># Possible value: Any string but same than the one used in added HTML code.
 <br># Default: "logscreensizeurl"
@@ -1204,8 +1205,8 @@ ShowOSStats,ShowOriginStats,ShowKeyphrasesStats,ShowKeywordsStats,ShowHTTPErrors
 <br># Default: 1, Possible codes: None
 <br>ShowBrowsersStats=1
 <br># Show screen size chart
-<br># Default: 1, Possible codes: None
-<br>ShowScreenSizeStats=1
+<br># Default: 0 (See LogScreenSizeUrl if set to 1), Possible codes: None
+<br>ShowScreenSizeStats=0
 <br># Show origin chart
 <br># Default: PH, Possible codes: HB
 <br>ShowOriginStats=PH
