@@ -13,19 +13,21 @@ Fixes:
   several recipients when one recipient was in error.
 - Fixed wrong percentage in cluster report.
 - Fixed wrong parsing for qmail log files.
-- Return code for postfix log were all reported in error for mails sent to several
-  recipients when one recipient was in error.
+- Return code for postfix log were all reported in error for mails sent to
+  several recipients when one recipient was in error.
 - Fix a not closing HTML TR tag in full list of hosts.
 - awstats_buildstaticpages.pl can accept month on 1 digit.
-- awstats_buildstaticpages.pl no more try to build pages awstats.misc.html and
-  awstats.filetypes.html that does not exists.
+- awstats_buildstaticpages.pl no more try to build pages awstats.misc.html
+  and awstats.filetypes.html that does not exists.
 - A lot of fix in PDF export:
   Graph in PDF export are no more inverted.
-  The link "close window" in generated PDF pages is replaced by "back
-  to main page".
-  Infos popup window from hostinfo plugin is not included in PDF export. Popup can't
-  work into PDF.
+  The link "close window" in generated PDF pages is replaced by "back to main
+  page".
+  Infos popup window from hostinfo plugin is not included in PDF export. Popup
+  can't work into PDF.
   PDF export seems to work correctly now.
+- mail.yahoo.* and hotmail.msn.* refering pages are not more reported as
+  search engines.
 
 New features/improvements:
 - AWStats Webmin module updated to 1.1
