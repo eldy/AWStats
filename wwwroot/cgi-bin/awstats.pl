@@ -34,7 +34,7 @@ $NBOFLINESFORBENCHMARK=5000;		# Benchmark info are printing every NBOFLINESFORBE
 $FRAMEWIDTH=260;					# Width of left frame when UseFramesWhenCGI is on
 $TOOLTIPWIDTH=380;					# Width of tooltips
 $NBOFLASTUPDATELOOKUPTOSAVE=200;	# Nb of records to save in DNS last update cache file
-$LIMITFLUSH=1000;					# Nb of records in data arrays after how we need to flush data on disk
+$LIMITFLUSH=4000;					# Nb of records in data arrays after how we need to flush data on disk
 $VISITTIMEOUT=10000;				# Laps of time to consider a page load as a new visit. 10000 = 1 hour (Default = 10000)
 $NOTSORTEDRECORDTOLERANCE=10000;	# Laps of time to accept a record if not in correct order. 10000 = 1 hour (Default = 10000)
 $MAXDIFFEXTRA=500;
