@@ -4610,9 +4610,10 @@ $QueryString=~s/(^|&)output(&|$)//i; $QueryString=~s/&+$//;
 
 # Check year and month parameters
 if ($QueryString =~ /(^|&)month=(year)/i) { error("month=year is a deprecated option. Use month=all instead."); }
-if ($QueryString =~ /(^|&)year=(\d\d\d\d)/i) { $YearRequired="$2"; }
+if ($QueryString =~ /(^|&)year=(\d\d\d\d)/i) { $YearRequired=sprintf("%04d",$2); }
 else { $YearRequired="$nowyear"; }
-if ($QueryString =~ /(^|&)month=(\d{1,2})/i || $QueryString =~ /(^|&)month=(all)/i) { $MonthRequired=sprintf("%02d",$2); }
+if ($QueryString =~ /(^|&)month=(\d{1,2})/i) { $MonthRequired=sprintf("%02d",$2); }
+elsif ($QueryString =~ /(^|&)month=(all)/i) { $MonthRequired='all'; }
 else { $MonthRequired="$nowmonth"; }
 if ($QueryString =~ /(^|&)day=(\d{1,2})/i) { $DayRequired=sprintf("%02d",$2); }	# day is a hidden option. Must not be used (Make results not understandable). Available for users that rename history files with day.
 else { $DayRequired=''; }
