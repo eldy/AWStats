@@ -35,6 +35,7 @@ New features/improvements:
 - maillogconvert.pl:
   Update value of NBOFENTRYFOFLUSH
 - Added firefox to browser database.
+- AllowAccessFromWebToFollowingAuthenticatedUsers is no more case sensitive.
 
 Other/Documentation:
 - Updated language file.
