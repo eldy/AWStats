@@ -36,6 +36,7 @@ my $MonthRequired;
 my $Awstats='awstats.pl';
 my $HtmlDoc='htmldoc';		# ghtmldoc.exe
 my $StaticExt='html';
+my $DirIcons='';
 my $OutputDir='';
 my $OutputSuffix;
 my $OutputFile;
@@ -104,6 +105,7 @@ if ($QueryString =~ /(^|-|&)awstatsprog=([^&]+)/i)	{ $Awstats="$2"; }
 if ($QueryString =~ /(^|-|&)buildpdf=([^&]+)/i)		{ $HtmlDoc="$2"; }
 if ($QueryString =~ /(^|-|&)staticlinksext=([^&]+)/i)	{ $StaticExt="$2"; }
 if ($QueryString =~ /(^|-|&)dir=([^&]+)/i)			{ $OutputDir="$2"; }
+if ($QueryString =~ /(^|-|&)diricons=([^&]+)/i)		{ $DirIcons="$2"; }
 if ($QueryString =~ /(^|-|&)update/i)				{ $Update=1; }
 if ($QueryString =~ /(^|-|&)date/i)					{ $Date=1; }
 if ($QueryString =~ /(^|-|&)year=(\d\d\d\d)/i) 		{ $YearRequired="$2"; }
@@ -132,7 +134,9 @@ if (! $Config) {
 	print "   -dir=outputdir               Output directory for generated pages\n";
 	print "   -date                        Used to add build date in built pages file name\n";
 	print "   -staticlinksext=xxx          For pages with .xxx extension instead of .html\n";
-#	print "   -buildpdf[=pathtohtmldoc]    Build a PDF file after building HTML pages.\n";
+	print "   -buildpdf[=pathtohtmldoc]    Build a PDF file after building HTML pages.\n";
+	print "                                 Output directory must contains icons directory\n";
+	print "                                 when this option is used.\n";
 	print "\n";
 	print "New versions and FAQ at http://awstats.sourceforge.net\n";
 	exit 0;
@@ -144,13 +148,27 @@ my $retour;
 # Check if AWSTATS prog is found
 my $AwstatsFound=0;
 if (-s "$Awstats") { $AwstatsFound=1; }
-else {
-	$Awstats='/usr/local/awstats/wwwroot/cgi-bin/awstats.pl';
-	if (-s "$Awstats") { $AwstatsFound=1; }
+elsif (-s "/usr/local/awstats/wwwroot/cgi-bin/awstats.pl") {
+	$Awstats="/usr/local/awstats/wwwroot/cgi-bin/awstats.pl";
+	$AwstatsFound=1;
 }
 if (! $AwstatsFound) {
 	error("Can't find AWStats program ('$Awstats').\nUse -awstatsprog option to solve this");
 	exit 1;
+}
+
+# Check if HTMLDOC prog is found
+if ($QueryString =~ /(^|-|&)buildpdf/i) {
+	my $HtmlDocFound=0;
+	if (-s "$HtmlDoc") { $HtmlDocFound=1; }
+	elsif (-s "/usr/bin/htmldoc") {
+		$HtmlDoc='/usr/bin/htmldoc';
+		$HtmlDocFound=1;
+	}
+	if (! $HtmlDocFound) {
+		error("Can't find htmldoc program ('$HtmlDoc').\nUse -buildpdf=htmldocprog option to solve this");
+		exit 1;
+	}
 }
 
 # Launch awstats update
@@ -173,8 +191,9 @@ if ($Date) {
 
 
 my $cpt=0;
-my $smallcommand="\"$Awstats\" -config=$Config -staticlinks".($OutputSuffix ne $Config?"=$OutputSuffix":"");
+my $smallcommand="\"$Awstats\" -config=$Config -noloadplugin=tooltips -staticlinks".($OutputSuffix ne $Config?"=$OutputSuffix":"");
 if ($StaticExt && $StaticExt ne 'html')     { $smallcommand.=" -staticlinksext=$StaticExt"; }
+if ($DirIcons)      { $smallcommand.=" -diricons=$DirIcons"; }
 if ($Lang)          { $smallcommand.=" -lang=$Lang"; }
 if ($MonthRequired) { $smallcommand.=" -month=$MonthRequired"; }
 if ($YearRequired)  { $smallcommand.=" -year=$YearRequired"; }
@@ -206,17 +225,22 @@ for my $output (@OutputList) {
 # Build pdf file
 if ($QueryString =~ /(^|-|&)buildpdf/i) {
 #	my $pdffile=$pages[0]; $pdffile=~s/\.\w+$/\.pdf/;
-	my $command="\"$HtmlDoc\" -t pdf --quiet --webpage --no-title --textfont helvetica  --left 16 --bottom 8 --top 8 --browserwidth 800 --headfootsize 7.0 --fontsize 7.0 @pages > awstats.$OutputSuffix.pdf\n";
+	my $command="\"$HtmlDoc\" -t pdf --webpage --quiet --no-title --textfont helvetica --left 16 --bottom 8 --top 8 --browserwidth 800 --headfootsize 8.0 --fontsize 7.0 --outfile awstats.$OutputSuffix.pdf @pages\n";
 	print "Build PDF file : $command\n";
 	$retour=`$command  2>&1`;
-	my $res=$?>>8;
-	if ($res || $retour =~ /error/) {
-		error("Failed to build PDF file with following error: $retour\n");
+	my $signal_num=$? & 127;
+	my $dumped_core=$? & 128;
+	my $exit_value=$? >> 8;
+	if ($? || $retour =~ /error/) {
+		if ($retour) { error("Failed to build PDF file with following error: $retour"); }
+		else { error("Failed to launch htmldoc process with exit: Return code=$exit_value, Killer signal num=$signal_num, Core dump=$dumped_core"); }
 	}
 	$cpt++;
 }
 
 
-print "$cpt files built. Main page is 'awstats.$OutputSuffix.$StaticExt'\n";
+print "$cpt files built.\n";
+print "Main HTML page is 'awstats.$OutputSuffix.$StaticExt'.\n";
+if ($QueryString =~ /(^|-|&)buildpdf/i) { print "PDF file is 'awstats.$OutputSuffix.pdf'.\n"; }
 
 0;	# Do not remove this line

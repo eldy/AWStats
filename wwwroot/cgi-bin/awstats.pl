@@ -256,7 +256,7 @@ use vars qw/
 %WormsHashID %WormsHashLib
 /;
 use vars qw/
-%HTMLOutput
+%HTMLOutput %NoLoadPlugin
 %BadFormatWarning
 %MonthLib %MonthNum
 %ValidHTTPCodes %ValidSMTPCodes
@@ -278,7 +278,7 @@ use vars qw/
 %val %nextval %egal
 %TmpDNSLookup %TmpOS %TmpRefererServer %TmpRobot %TmpBrowser %MyDNSTable
 /;
-%HTMLOutput = ();
+%HTMLOutput = %NoLoadPlugin = ();
 %BadFormatWarning = ();
 %MonthLib = %MonthNum = ();
 %ValidHTTPCodes = %ValidSMTPCodes = ();
@@ -639,6 +639,7 @@ sub html_end {
 		print "\n";
 		if ($FrameName ne 'index') { print "</body>\n"; }
 		print "</html>\n";
+#		print "<!-- NEW PAGE --><!-- NEW SHEET -->\n";
 	}
 }
 
@@ -1099,6 +1100,10 @@ sub Parse_Config {
 			if ($QueryString !~ /logfile=([^\s&]+)/i) { $LogFile=$value; }
 			next;
 			}
+		if ($param =~ /^DirIcons/) {
+			if ($QueryString !~ /diricons=([^\s&]+)/i) { $DirIcons=$value; }
+			next;
+			}
 		if ($param =~ /^SiteDomain/)			{
 			#$value =~ s/\\\./\./g; $value =~ s/([^\\])\./$1\\\./g; $value =~ s/^\./\\\./;	# SiteDomain is not used in regex. Must not replace . into \.
 			$SiteDomain=$value;
@@ -1193,7 +1198,7 @@ sub Parse_Config {
  		if ($param =~ /^MaxNbOfExtra(\d+)/) 			{ $MaxNbOfExtra[$1]=$value; next; }
  		if ($param =~ /^MinHitExtra(\d+)/) 				{ $MinHitExtra[$1]=$value; next; }
 		# Special appearance parameters
-		if ($param =~ /^LoadPlugin/)           			{ push @PluginsToLoad, $value; next; }
+		if ($param =~ /^LoadPlugin/)          			{ push @PluginsToLoad, $value; next; }
 		# Other that we need to put after MaxNbOfExtra and MinHitExtra
  		if ($param =~ /^MaxNbOf(\w+)/) 	{ $MaxNbOf{$1}=$value; next; }
  		if ($param =~ /^MinHit(\w+)/) 	{ $MinHit{$1}=$value; next; }
@@ -1652,6 +1657,10 @@ sub Read_Plugins {
 
 	if ($Debug) { debug("Call to Read_Plugins with list: @PluginsToLoad"); }
 	foreach my $plugininfo (@PluginsToLoad) {
+		if ($NoLoadPlugin{$plugininfo}) {
+			if ($Debug) { debug(" Plugin load for '$plugininfo' has been disabled from command line"); }
+			next;	
+		}
 		my @loadplugin=split(/\s+/,$plugininfo,2);
 		my $pluginfile=$loadplugin[0]; $pluginfile =~ s/\.pm$//i;
 		my $pluginparam=$loadplugin[1]||'';
@@ -4591,7 +4600,8 @@ $tomorrowtime=int($tomorrowyear.$tomorrowmonth.$tomorrowday.$tomorrowhour.$tomor
 
 my @AllowedArgs=('-migrate','-config',
 '-showsteps','-showdropped','-showcorrupted','-showunknownorigin',
-'-logfile','-output','-runascli','-staticlinks','-staticlinksext','-update',
+'-logfile','-output','-runascli','-update',
+'-staticlinks','-staticlinksext','noloadplugin',
 '-lang','-hostfilter','-urlfilter','-refererpagesfilter',
 '-month','-year','-framename','-debug','-limitflush','-from','-updatefor');
 
@@ -4616,6 +4626,7 @@ if ($ENV{'GATEWAY_INTERFACE'}) {	# Run from a browser as CGI
 
 	if ($QueryString =~ /config=([^&]+)/i)				{ $SiteConfig=&DecodeEncodedString("$1"); }
 	if ($QueryString =~ /logfile=([^&]+)/i)				{ $LogFile=&DecodeEncodedString("$1"); }
+	if ($QueryString =~ /diricons=([^&]+)/i)			{ $DirIcons=&DecodeEncodedString("$1"); }
 	# All filters
 	if ($QueryString =~ /hostfilter=([^&]+)/i)			{ $HostFilter=&DecodeEncodedString("$1"); }			# Filter on host list can also be defined with hostfilter=filter
 	if ($QueryString =~ /urlfilter=([^&]+)/i)			{ $URLFilter=&DecodeEncodedString("$1"); }			# Filter on URL list can also be defined with urlfilter=filter
@@ -4654,6 +4665,7 @@ else {								# Run from command line
 
 	if ($QueryString =~ /config=([^&]+)/i)				{ $SiteConfig="$1"; }
 	if ($QueryString =~ /logfile=([^&]+)/i)				{ $LogFile="$1"; }
+	if ($QueryString =~ /diricons=([^&]+)/i)			{ $DirIcons="$1"; }
 	# All filters
 	if ($QueryString =~ /hostfilter=([^&]+)/i)			{ $HostFilter="$1"; }			# Filter on host list can also be defined with hostfilter=filter
 	if ($QueryString =~ /urlfilter=([^&]+)/i)			{ $URLFilter="$1"; }			# Filter on URL list can also be defined with urlfilter=filter
@@ -4676,6 +4688,7 @@ if ($QueryString =~ /(^|&)staticlinksext=([^&]+)/i) { $StaticExt="$2"; }
 if ($QueryString =~ /(^|&)framename=([^&]+)/i)		{ $FrameName="$2"; }
 if ($QueryString =~ /(^|&)debug=(\d+)/i)			{ $Debug=$2; }
 if ($QueryString =~ /(^|&)updatefor=(\d+)/i)		{ $UpdateFor=$2; }
+if ($QueryString =~ /(^|&)noloadplugin=([^&]+)/i)	{ $NoLoadPlugin{"$2"}=1; }
 if ($QueryString =~ /(^|&)limitflush=(\d+)/i)		{ $LIMITFLUSH=$2; }
 # Get/Define output
 if ($QueryString =~ /(^|&)output(=[^&]*|)(.*)&output(=[^&]*|)(&|$)/i) { error("Only 1 output option is allowed","","",1); }

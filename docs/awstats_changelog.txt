@@ -16,9 +16,11 @@ Fixes:
 - Road runner browsers detection problems.
 - syslog tag can accept hostname with not only a-z chars.
 - "&nbsp" changed to "&nbsp;" in miscellanous chart.
+- maillogconvert.pl did not support all sendmail setup.
 
 New features/improvments:
 - Added support for Darwin streaming server.
+- awstats_buildstaticpages.pl can also build one PDF file (use htmldoc).
 
 Other/Documentation:
 - Added mp4 mime type.
