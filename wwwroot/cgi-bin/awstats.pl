@@ -2,8 +2,9 @@
 #-----------------------------------------------------------------------------
 # Free realtime web server logfile analyzer to show advanced web statistics.
 # Works from command line or as a CGI. You must use this script as often as
-# necessary from your scheduler to update your statistics.
-# See AWStats documenation (in docs/ directory) for all setup instructions.
+# necessary from your scheduler to update your statistics and from command
+# line or a browser to read report results.
+# See AWStats documentation (in docs/ directory) for all setup instructions.
 #-----------------------------------------------------------------------------
 # $Revision$ - $Author$ - $Date$
 
@@ -167,16 +168,16 @@ $LevelForSearchEnginesDetection $LevelForKeywordsDetection
 $LevelForSearchEnginesDetection, $LevelForKeywordsDetection)=
 (2,2,2,2,2,2);
 use vars qw/
-$LastLineChecksum $DirLock $DirCgi $DirData $DirIcons $DirLang $AWScript $ArchiveFileName
+$DirLock $DirCgi $DirData $DirIcons $DirLang $AWScript $ArchiveFileName
 $AllowAccessFromWebToFollowingIPAddresses $HTMLHeadSection $HTMLEndSection $LinksToWhoIs $LinksToIPWhoIs
 $LogFile $LogFormat $LogSeparator $Logo $LogoLink $StyleSheet $WrapperScript $SiteDomain
 $UseHTTPSLinkForUrl $URLQuerySeparators $URLWithAnchor $ErrorMessages
 /;
-($LastLineChecksum, $DirLock, $DirCgi, $DirData, $DirIcons, $DirLang, $AWScript, $ArchiveFileName,
+($DirLock, $DirCgi, $DirData, $DirIcons, $DirLang, $AWScript, $ArchiveFileName,
 $AllowAccessFromWebToFollowingIPAddresses, $HTMLHeadSection, $HTMLEndSection, $LinksToWhoIs, $LinksToIPWhoIs,
 $LogFile, $LogFormat, $LogSeparator, $Logo, $LogoLink, $StyleSheet, $WrapperScript, $SiteDomain,
 $UseHTTPSLinkForUrl, $URLQuerySeparators, $URLWithAnchor, $ErrorMessages)=
-('','','','','','','','','','','','','','','','','','','','','','','','','');
+('','','','','','','','','','','','','','','','','','','','','','','','');
 use vars qw/
 $color_Background $color_TableBG $color_TableBGRowTitle
 $color_TableBGTitle $color_TableBorder $color_TableRowTitle $color_TableTitle
@@ -209,14 +210,14 @@ $pos_referer = $pos_agent = $pos_query = $pos_gzipin = $pos_gzipout = $pos_gzipr
 $pos_emails = $pos_emailr = $pos_hostr = -1;
 use vars qw/
 $lowerval
-$LastLine $LastLineOffset $LastUpdate
+$LastLine $LastLineOffset $LastLineChecksum $LastUpdate
 $TotalUnique $TotalVisits $TotalHostsKnown $TotalHostsUnknown
 $TotalPages $TotalHits $TotalBytes $TotalEntries $TotalExits $TotalBytesPages $TotalDifferentPages
 $TotalKeyphrases $TotalKeywords $TotalDifferentKeyphrases $TotalDifferentKeywords
 $TotalSearchEnginesPages $TotalSearchEnginesHits $TotalRefererPages $TotalRefererHits $TotalDifferentSearchEngines $TotalDifferentReferer
 /;
 $lowerval = 0;
-$LastLine = $LastLineOffset = $LastUpdate = 0;
+$LastLine = $LastLineOffset = $LastLineChecksum = $LastUpdate = 0;
 $TotalUnique = $TotalVisits = $TotalHostsKnown = $TotalHostsUnknown = 0;
 $TotalPages = $TotalHits = $TotalBytes = $TotalEntries = $TotalExits = $TotalBytesPages = $TotalDifferentPages = 0;
 $TotalKeyphrases = $TotalKeywords = $TotalDifferentKeyphrases = $TotalDifferentKeywords = 0;
@@ -1589,7 +1590,7 @@ sub Check_Plugin_Version {
 # Parameters:	Array of string
 # Input:		None
 # Output:		None
-# Return: 		Checksum
+# Return: 		Checksum number
 #------------------------------------------------------------------------------
 sub CheckSum {
 	my $string=shift;
@@ -1603,7 +1604,7 @@ sub CheckSum {
 		if ($j++ > 3) { $j=0; }
 		$i++;
 	}
- 	return "$checksum";
+ 	return $checksum;
 }
 
 
@@ -1699,7 +1700,7 @@ sub Read_History_With_TmpUpdate {
 	my $part=shift||'';
 
 	my $lastlineoffset=shift||0;
-	my $lastlinechecksum=shift||'';
+	my $lastlinechecksum=shift||0;
 
 	my %allsections=('general'=>1,'time'=>2,'visitor'=>3,'day'=>4,
 					 'domain'=>5,'login'=>6,'robot'=>7,'worms'=>8,'emailsender'=>9,'emailreceiver'=>10,
@@ -1830,7 +1831,7 @@ sub Read_History_With_TmpUpdate {
 			if ($field[0] eq 'LastLine')        {
 				if (! $LastLine || $LastLine < int($field[1])) { $LastLine=int($field[1]); };
 				if ($field[2]) { $LastLineOffset=int($field[2]); }
-				if ($field[3]) { $LastLineChecksum=$field[3]; }
+				if ($field[3]) { $LastLineChecksum=int($field[3]); }
 				next;
 			}
 			if ($field[0] eq 'FirstTime')       { if (! $FirstTime{$year.$month} || $FirstTime{$year.$month} > int($field[1])) { $FirstTime{$year.$month}=int($field[1]); }; next; }
