@@ -126,7 +126,7 @@ tie %_url_e, 'Tie::StdHash';
 
 
 
-$VERSION="4.0 (build 3)";
+$VERSION="4.0 (build 4)";
 $Lang="en";
 
 # Default value
@@ -193,10 +193,7 @@ sub html_head {
 	    print "<html>\n";
 		print "<head>\n";
 		if ($PageCode) { print "<META HTTP-EQUIV=\"content-type\" CONTENT=\"text/html; charset=$PageCode\"\n"; }		# If not defined, iso-8859-1 is used in major countries
-		if ($Expires)  {
-			my $date=localtime(time()+$Expires);
-			print "<META HTTP-EQUIV=\"expires\" CONTENT=\"$date\">\n";
-		} 
+		if ($Expires)  { print "<META HTTP-EQUIV=\"expires\" CONTENT=\"".(localtime(time()+$Expires))."\">\n"; } 
 		print "<meta http-equiv=\"description\" content=\"$PROG - Advanced Web Statistics for $sitetoanalyze\">\n";
 		print "<meta http-equiv=\"keywords\" content=\"$sitetoanalyze, free, advanced, realtime, web, server, logfile, log, analyzer, analysis, statistics, stats, perl, analyse, performance, hits, visits\">\n";
 		print "<meta name=\"robots\" content=\"index,follow\">\n";
@@ -1982,6 +1979,7 @@ sub BuildKeyList {
 # MAIN
 #--------------------------------------------------------------------
 if ($ENV{"GATEWAY_INTERFACE"}) {	# Run from a browser
+	#print "Expires: ".(localtime(time()+3600))."\n";
 	print("Content-type: text/html\n\n\n");
 	if ($ENV{"CONTENT_LENGTH"}) {
 		binmode STDIN;
