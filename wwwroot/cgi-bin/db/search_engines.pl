@@ -1,12 +1,12 @@
 # AWSTATS SEARCH ENGINES DATABASE
 #--------------------------------
-# Last update: 2001-12-02
+# Last update: 2002-03-06
 
 
 # Search engines names database
 # To add a search engine, add a new line:
 # "match_string_in_url_that_identify_engine", "search_engine_name",
-#-------------------------------------------------------
+#-----------------------------------------------------------------
 %SearchEnginesHashIDLib=(
 # Most common search engines
 "yahoo\.","Yahoo",
@@ -56,8 +56,8 @@
 "search\..*com","Other search engines"
 );
 
-# Search engines known URLs rules to find keywords (update the 10th january 2001)
-#-------------------------------------------------------
+# Search engines known URLs rules to find keywords
+#-------------------------------------------------
 %SearchEnginesKnownUrl=(
 # Most common search engines
 "yahoo\.","p=",
@@ -65,6 +65,7 @@
 "msn\.","q=",
 "voila\.","kw=",
 "lycos\.","query=",
+"search\.terra\.","query=",
 "google\.","q=",
 "alltheweb\.com","q(|uery)=",
 "netscape\.","search=",
