@@ -3337,7 +3337,7 @@ sub Save_History {
 	my $month=shift||'';
 
 	my $xml=($BuildHistoryFormat eq 'xml'?1:0);
-	my ($xmlbb,$xmlbs,$xmlbe,$xmlhb,$xmlhs,$xmlhe,$xmlrb,$xmlrs,$xmlre,$xmleb,$xmlee)=();
+	my ($xmlbb,$xmlbs,$xmlbe,$xmlhb,$xmlhs,$xmlhe,$xmlrb,$xmlrs,$xmlre,$xmleb,$xmlee)=('','','','','','','','','','','');
 	if ($xml) { ($xmlbb,$xmlbs,$xmlbe,$xmlhb,$xmlhs,$xmlhe,$xmlrb,$xmlrs,$xmlre,$xmleb,$xmlee)=("</comment><nu>\n",'</nu><recnb>','</recnb><table>','<tr><th>','</th><th>','</th></tr>','<tr><td>','</td><td>','</td></tr>','</table><nu>',"\n</nu></section>" ); }
 	else { $xmlbs=' '; $xmlhs=' '; $xmlrs=' '; }
 			
@@ -4890,7 +4890,7 @@ sub DefinePerlParsingFormat {
 				$PerlParsingFormat .= "\\\"?([^\\\"]*)\\\"?";			# logname can be "value", "" and - in same log (Lotus notes)
 			}
 			# Date format
-			elsif ($f =~ /%time1$/ || $f =~ /%time1b$/) {	# [dd/mmm/yyyy:hh:mm:ss +0000] ou [dd/mmm/yyyy:hh:mm:ss],  time1b kept for backward compatibility
+			elsif ($f =~ /%time1$/ || $f =~ /%time1b$/) {	# [dd/mmm/yyyy:hh:mm:ss +0000] or [dd/mmm/yyyy:hh:mm:ss],  time1b kept for backward compatibility
 				$pos_date = $i;	$i++; push @fieldlib, 'date';
 				$pos_tz = $i; $i++; push @fieldlib, 'tz';
 				$PerlParsingFormat .= "\\[([^$LogSeparatorWithoutStar]+)( [^$LogSeparatorWithoutStar]+)?\\]";
@@ -4899,9 +4899,9 @@ sub DefinePerlParsingFormat {
 				$pos_date = $i;	$i++; push @fieldlib, 'date';
 				$PerlParsingFormat .= "([^$LogSeparatorWithoutStar]+\\s[^$LogSeparatorWithoutStar]+)";	# Need \s for Exchange log files
 			}
-			elsif ($f =~ /%time3$/) {	# mon d hh:mm:ss
+			elsif ($f =~ /%time3$/) {	# mon d hh:mm:ss  or  mon dd hh:mm:ss yyyy  or  day mon dd hh:mm:ss  or  day mon dd hh:mm:ss yyyy
 				$pos_date = $i;	$i++; push @fieldlib, 'date';
-				$PerlParsingFormat .= "(\\w\\w\\w \\s?\\d+ \\d\\d:\\d\\d:\\d\\d)";
+				$PerlParsingFormat .= "(?:\\w\\w\\w )?(\\w\\w\\w \\s?\\d+ \\d\\d:\\d\\d:\\d\\d(?: \\d\\d\\d\\d)?)";
 			}
 			elsif ($f =~ /%time4$/) {	# ddddddddddddd
 				$pos_date = $i;	$i++; push @fieldlib, 'date';
@@ -5975,7 +5975,7 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 		}
 		elsif ($dateparts[0] =~ /^....$/) { my $tmp=$dateparts[0]; $dateparts[0]=$dateparts[2]; $dateparts[2]=$tmp; }
 		elsif ($field[$pos_date] =~ /^..:..:..:/) { $dateparts[2]+=2000; my $tmp=$dateparts[0]; $dateparts[0]=$dateparts[1]; $dateparts[1]=$tmp; }
-		elsif ($dateparts[0] =~ /^...$/)  { my $tmp=$dateparts[0]; $dateparts[0]=$dateparts[1]; $dateparts[1]=$tmp; $dateparts[5]=$dateparts[4]; $dateparts[4]=$dateparts[3]; $dateparts[3]=$dateparts[2]; $dateparts[2]=$nowyear; }
+		elsif ($dateparts[0] =~ /^...$/)  { my $tmp=$dateparts[0]; $dateparts[0]=$dateparts[1]; $dateparts[1]=$tmp; $tmp=$dateparts[5]; $dateparts[5]=$dateparts[4]; $dateparts[4]=$dateparts[3]; $dateparts[3]=$dateparts[2]; $dateparts[2]=$tmp||$nowyear; }
 		if ($MonthNum{$dateparts[1]}) { $dateparts[1]=$MonthNum{$dateparts[1]}; }	# Change lib month in num month if necessary
 
 		# Now @dateparts is (DD,MM,YYYY,HH,MM,SS) and we're going to create $timerecord=YYYYMMDDHHMMSS

@@ -49,7 +49,7 @@ Here, you can find the most common questions and answers about AWStats setup/usa
 <ul>
 FAQ-COM025 <a href="#NOLOG">How to use AWStats with no server log</a><br>
 FAQ-COM050 <a href="#LIMITLOG">What is the log size limit AWStats can analyze ?</a><br>
-FAQ-COM090 <a href="#FTP">Setup for FTP server log files.</a><br>
+FAQ-COM090 <a href="#FTP">Setup for FTP server log files (proftpd, vsftpd, ...).</a><br>
 FAQ-COM100 <a href="#MAIL">Setup for MAIL log files (Postfix, Sendmail, QMail, MDaemon, Exchange).</a><br>
 FAQ-COM110 <a href="#MEDIASERVER">Setup for MEDIA SERVER log files (Realmedia, Windows media, Darwin streaming server).</a><br>
 FAQ-COM120 <a href="#ROTATE">How to rotate my logs without loosing data.</a><br>
@@ -121,7 +121,7 @@ Examples of used platforms (bold means 'tested by author', others were reported 
 <b>Apache 1.3.x and 2.x</b>, <b>IIS 5.0 and 6.0</b>, WebStar, WebLogic, WebSite, <b>Windows Media Server</b>, Tomcat, <b>Squid</b>,
 Sambar, Roxen, Resin, RealMedia server, Oracle9iAS, <b>Lotus Notes/Domino</b>, Darwin, IPlanet, IceCast, ZeroBrand, Zeus, Zope, Abyss...<br>
 <u>FTP servers</u><br>
-<b>ProFTP</b>, ...<br>
+<b>ProFTPd</b>, vsFTPd...<br>
 <u>Mails servers</u><br>
 <b>Postfix</b>, <b>Sendmail</b>, QMail, <b>Mdaemon</b>, www4mail, ...<br>
 <u>Perl interpreters (all Perl >= 5.005):</u><br>
@@ -144,7 +144,7 @@ Any other personalized Apache log format,<br>
 Any IIS log format (known as W3C format),<br>
 Webstar native log format,<br>
 Realmedia server, Windows Media Server, Darwin streaming server,<br>
-ProFTP server,<br>
+ProFTPd server, vsFTPd server,<br>
 Postfix, Sendmail, QMail, Mdaemon<br>
 A lot of web/wap/proxy/streaming servers log format<br>
 <br>
@@ -223,15 +223,17 @@ If you can't find it nor build it, you can try to use a LogFile parameter that l
 <br>
 
 <a name="FTP"></a><br>
-<b><u>FAQ-COM090 : SETUP FOR FTP SERVER LOG FILES</u></b><br>
+<b><u>FAQ-COM090 : SETUP FOR FTP SERVER LOG FILES (proftpd, vsftpd, ...)</u></b><br>
 <font class=CProblem>PROBLEM:</font><br>
-What do I have to do to use AWStats to analyze some FTP server log files.<br>
+What do I have to do to use AWStats to analyze some FTP server log files ?<br>
 <font class=CSolution>SOLUTION:</font><br>
 AWStats can be used with some FTP server log files.<br>
 <br>
-1- Setup your FTP log file format:<br>
+<u>With ProFTPd</u>:<br>
 <br>
-With ProFTP, modify the proftpd.conf file to add the following two lines :
+1- Setup your server log file format:<br>
+<br>
+Modify the proftpd.conf file to add the following two lines :
 <table width="95%" border=1 cellpadding=0 cellspacing=0><tr class=CFAQ><td class=CFAQ>
 <!--<br>With ProFTPd 1.2.2:-->
 <i>LogFormat awstats "%t %h %u %m %f %s %b"</i> &nbsp; &nbsp; # WARNING: You must use a tab char between % tags and not a space !
@@ -252,7 +254,7 @@ Download a file by FTP and check that your new log file looks like this:<br>
 <br>
 2- Then setup AWStats to analyze the FTP log file:<br>
 <br>
-Copy config awstats.model.conf file to "awstats.proftp.conf".<br>
+Copy config file "awstats.model.conf" to "awstats.ftp.conf".<br>
 Modify this new config file:
 <table width="95%" border=1 cellpadding=0 cellspacing=0><tr class=CFAQ><td class=CFAQ>
 <i>
@@ -295,11 +297,68 @@ LogFile="/var/log/xferlog"
 <br>
 Now you can use AWStats as usual (run the update process and read statistics).<br>
 <br>
+<br>
+<u>With vsFTPd, or any FTP server that log with xferlog format</u>:<br>
+<br>
+1- Check your server log file format:<br>
+<br>
+Take a look at your FTP server log file. You must have a format that match the following example to
+use this FAQ :<br>
+<table width="95%" border=1 cellpadding=0 cellspacing=0><tr class=CFAQ><td class=CFAQ>
+<i>Wed Jan 01 19:29:35 2001 1 192.168.1.1 102 /home/file1.txt b _ o r username ftp 0 * c</i>
+</td></tr></table>
+<br>
+2- Then setup AWStats to analyze the FTP log file:<br>
+<br>
+If your FTP log file format looks good, copy config file "awstats.model.conf" to "awstats.ftp.conf".<br>
+Modify this new config file:
+<table width="95%" border=1 cellpadding=0 cellspacing=0><tr class=CFAQ><td class=CFAQ>
+<i>
+LogFile="/var/log/xferlog"
+<br>LogType=F
+<br>LogFormat="%time3 %other %host %bytesd %url %other %other %method %other %logname %other %code %other %other"
+<br>LogSeparator="\s"
+<br>NotPageList=""
+<br>LevelForBrowsersDetection=0
+<br>LevelForOSDetection=0
+<br>LevelForRefererAnalyze=0
+<br>LevelForRobotsDetection=0
+<br>LevelForWormsDetection=0
+<br>LevelForSearchEnginesDetection=0
+<br>ShowLinksOnUrl=0
+<br>ShowMenu=1
+<br>ShowMonthStats=UVHB
+<br>ShowDaysOfMonthStats=HB
+<br>ShowDaysOfWeekStats=HB
+<br>ShowHoursStats=HB
+<br>ShowDomainsStats=HB
+<br>ShowHostsStats=HBL
+<br>ShowAuthenticatedUsers=HBL
+<br>ShowRobotsStats=0
+<br>ShowEMailSenders=0
+<br>ShowEMailReceivers=0
+<br>ShowSessionsStats=1
+<br>ShowPagesStats=PBEX
+<br>ShowFileTypesStats=HB
+<br>ShowFileSizesStats=0
+<br>ShowBrowsersStats=0
+<br>ShowOSStats=0
+<br>ShowOriginStats=0
+<br>ShowKeyphrasesStats=0
+<br>ShowKeywordsStats=0
+<br>ShowMiscStats=0
+<br>ShowHTTPErrorsStats=0
+<br>ShowSMTPErrorsStats=0
+</i></td></tr></table>
+<br>
+Now you can use AWStats as usual (run the update process and read statistics).<br>
+<br>
+
 
 <a name="MAIL"></a><br>
-<b><u>FAQ-COM100 : SETUP FOR MAIL LOG FILES (POSTFIX, SENDMAIL, QMAIL, MDAEMON, EXCHANGE...)</u></b><br>
+<b><u>FAQ-COM100 : SETUP FOR MAIL LOG FILES (Postfix, Sendmail, Qmail, MDaemon, Exchange...)</u></b><br>
 <font class=CProblem>PROBLEM:</font><br>
-What do I have to do to use AWStats to analyze my mail log files.<br>
+What do I have to do to use AWStats to analyze my mail log files ?<br>
 <font class=CSolution>SOLUTION:</font><br>
 <br>
 This tip works with AWStats 5.5 or higher.<br>
@@ -374,7 +433,7 @@ messy data, no id to join multiple records for same mail, etc...).
 For this reason, an "exact" log analysis is a joke with Exchange log files.
 However a little support is provided. In order to analyze Exchange traffic, you have to
 enable "Message Tracking" (see article http://support.microsoft.com/default.aspx?scid=kb;EN-US;246856).<br>
-Copy config awstats.model.conf file to "awstats.mail.conf".<br>
+Then copy config awstats.model.conf file to "awstats.mail.conf".<br>
 Modify this new config file:
 <table width="95%" border=1 cellpadding=0 cellspacing=0><tr class=CFAQ><td class=CFAQ>
 <i>
@@ -417,8 +476,8 @@ LogType=M
 Also don't forget that with Exchange, informations in a log analyses can't be exact.
 Do not send any questions or requests for using AWStats with Exchange, this is not a problem in
 AWStats and we have no time to support non opened products.<br>
-If you want to have complete and accurate information, forget using AWStats or use a more serious
-mail serveur (Postfix, Sendmail, QMail...)<br>
+If you want to have complete and accurate information with Exchange, forget using AWStats or use a
+more serious mail serveur (Postfix, Sendmail, QMail...)<br>
 <br>
 
 <a name="MEDIASERVER"></a><br>
@@ -1174,7 +1233,7 @@ You must use : <i>LogFormat="%host %logname %time1 %method %url %other %code %by
 and <i>LogSeparator="\s+"</i><br>
 
 <table bgcolor=#F4F4F4 width="100%" class=CFAQ><tr class=CFAQ><td class=CFAQ>
-<u>If you use a FTP server like <b>ProFTP</b>:</u><br>
+<u>If you use a FTP server like <b>ProFTPd</b>:</u><br>
 See <a href="#FTP">FAQ-COM090</a>.<br>
 </td></tr></table>
 
