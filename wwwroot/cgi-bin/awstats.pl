@@ -46,7 +46,7 @@
 ($AddOn, $ArchiveFileName, $ArchiveLogRecords, $BarHeight, $BarWidth,
 $DIR, $DNSLookup, $Debug, $DefaultFile,
 $DirCgi, $DirData, $DirIcons, $DirLang,
-$Extension, $FileConfig, $FileSuffix,
+$Expires, $Extension, $FileConfig, $FileSuffix,
 $FirstTime, $HTMLEndSection, $Host, $HostAlias, $LastTime, $LastUpdate,
 $LogFile, $LogFormat, $LogFormatString, $Logo, $LogoLink,
 $MaxNbOfDays, $MaxNbOfHostsShown, $MaxNbOfKeywordsShown,
@@ -71,7 +71,7 @@ $found, $internal_link, $new) = ();
 %MonthBytes = %MonthHits = %MonthHostsKnown = %MonthHostsUnknown = %MonthPages = %MonthUnique = %MonthVisits =
 %listofyears = %monthlib = %monthnum = ();
 
-$VERSION="3.1 (build 29)";
+$VERSION="3.1 (build 31)";
 $Lang="en";
 
 # Default value
@@ -100,7 +100,7 @@ $BarImageVertical_k   = "barrevk.png";
 $BarImageHorizontal_k = "barrehk.png";
 
 $AddOn=0;
-require "${DIR}addon.pl"; $AddOn=1; 		# Keep this line commented in standard version
+#require "${DIR}addon.pl"; $AddOn=1; 		# Keep this line commented in standard version
 
 # URL with such end signature are kind of URL we only need to count as hits
 @NotPageList= (
@@ -716,7 +716,11 @@ sub html_head {
 	  	print "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">\n\n";
 	    print "<html>\n";
 		print "<head>\n";
-		if ($PageCode ne "") { print "<META HTTP-EQUIV=\"content-type\" CONTENT=\"text/html; charset=$PageCode\"\n"; }		# If not defined, iso-8859-1 is used in major countries
+		if ($PageCode) { print "<META HTTP-EQUIV=\"content-type\" CONTENT=\"text/html; charset=$PageCode\"\n"; }		# If not defined, iso-8859-1 is used in major countries
+		if ($Expires)  {
+			my $date=localtime(time()+$Expires);
+			print "<META HTTP-EQUIV=\"expires\" CONTENT=\"$date\">\n";
+		} 
 		print "<meta http-equiv=\"description\" content=\"$PROG - Advanced Web Statistics for $sitetoanalyze\">\n";
 		print "<meta http-equiv=\"keywords\" content=\"$sitetoanalyze, free, advanced, realtime, web, server, logfile, log, analyzer, analysis, statistics, stats, perl, analyse, performance, hits, visits\">\n";
 		print "<meta name=\"robots\" content=\"index,follow\">\n";
@@ -960,8 +964,9 @@ sub Read_Config_File {
 		if ($param =~ /^DirLang/)               { $DirLang=$value; next; }
 		if ($param =~ /^DefaultFile/)           { $DefaultFile=$value; next; }
 		if ($param =~ /^WarningMessages/)       { $WarningMessages=$value; next; }
-		if ($param =~ /^ShowLinksOnUrl/)        { $ShowLinksOnUrl=$value; next; }
+		if ($param =~ /^Expires/)               { $Expires=$value; next; }
 		if ($param =~ /^ShowFlagLinks/)         { $ShowFlagLinks=$value; next; }
+		if ($param =~ /^ShowLinksOnUrl/)        { $ShowLinksOnUrl=$value; next; }
 		if ($param =~ /^HTMLEndSection/)        { $HTMLEndSection=$value; next; }
 		if ($param =~ /^BarWidth/)              { $BarWidth=$value; next; }
 		if ($param =~ /^BarHeight/)             { $BarHeight=$value; next; }
@@ -1102,8 +1107,9 @@ sub Check_Config {
 	if ($ArchiveLogRecords !~ /[0-1]/)           { $ArchiveLogRecords=1; }
 	if ($DefaultFile eq "")                      { $DefaultFile="index.html"; }
 	if ($WarningMessages !~ /[0-1]/)             { $WarningMessages=1; }
-	if ($ShowLinksOnURL !~ /[0-1]/)              { $ShowLinksOnURL=1; }
+	if ($Expires !~ /^[\d][\d]*/)                { $Expires=0; }
 	if ($ShowFlagLinks !~ /[0-1]/)               { $ShowFlagLinks=1; }
+	if ($ShowLinksOnURL !~ /[0-1]/)              { $ShowLinksOnURL=1; }
 	if ($BarWidth !~ /^[\d][\d]*/)               { $BarWidth=260; }
 	if ($BarHeight !~ /^[\d][\d]*/)              { $BarHeight=180; }
 	if ($MaxNbOfDomain !~ /^[\d][\d]*/)          { $MaxNbOfDomain=25; }
