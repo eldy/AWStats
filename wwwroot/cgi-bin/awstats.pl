@@ -910,7 +910,6 @@ sub SkipUserAgent {
 # Return:		0 Not found, 1 Found
 #------------------------------------------------------------------------------
 sub SkipFile {
-	debug("    Call to SkipFile to check $_[0]");
 	foreach (@SkipFiles) { if ($_[0] =~ /$_/) { return 1; } }
 	0; # Not in @SkipFiles
 }
@@ -1766,8 +1765,8 @@ sub Read_Plugins {
 		my $pluginname=$1;
 		if ($pluginname) {
 			if (! $PluginsLoaded{'init'}{"$pluginname"}) {		# Plugin not already loaded
-				my %pluginisfor=('tooltips'=>'o','ipv6'=>'u','hashfiles'=>'u','geoip'=>'u',
-				'geoipfree'=>'u','hostinfo'=>'o','userinfo'=>'o','urlalias'=>'o','timehires'=>'u','timezone'=>'ou');
+				my %pluginisfor=('ipv6'=>'u','hashfiles'=>'u','geoip'=>'u','geoipfree'=>'u','timehires'=>'u','timezone'=>'ou',
+								 'decodeutfkeys'=>'o','hostinfo'=>'o','userinfo'=>'o','urlalias'=>'o','tooltips'=>'o');
 				if ($pluginisfor{$pluginname}) {
 					# Do not load "update plugins" if output only
 					if (! $UpdateStats && scalar keys %HTMLOutput && $pluginisfor{$pluginname} !~ /o/) { $PluginsLoaded{'init'}{"$pluginname"}=1; next; }
@@ -4015,39 +4014,14 @@ sub Init_HashArray {
 # Return:		decodedstring
 #------------------------------------------------------------------------------
 sub ChangeWordSeparatorsIntoSpace {
-	$_[0] =~ s/%1[03]/ /g;
-	$_[0] =~ s/%2[02789abc]/ /ig;
-	$_[0] =~ s/%3a/ /ig;
+	$_[0] =~ s/%1[03]/ /g;				# LF,CR
+	$_[0] =~ s/%2[02789abc]/ /ig;		# 
+	$_[0] =~ s/%3a/ /ig;				# :
 	$_[0] =~ tr/\+\'\(\)\"\*,:/        /s;		# "&" and "=" must not be in this list
 }
 
 #------------------------------------------------------------------------------
-# Function:     Converts an UTF8 string to specified Charset
-# Parameters:	utfstringtodecode charsettoencode
-# Return:		newencodedstring
-#------------------------------------------------------------------------------
-sub Utf8_To_Ascii {
-#Function to prepare 'decodeUTFkeys' plugin
-#use Encode;
-#use URI::Escape;
-#my $string = shift;
-#my $encoding = shift;
-#if ( $string =~ m/^([\x00-\x7f]|[\xc2-\xdf][\x80-\xbf]|\xe0[\xa0-\xbf][\x80-\xbf]|[\xe1-\xef][\x80-\xbf][\x80-\xbf]|\xf0[\x90-\xbf][\x80-\xbf][\x80-\xbf]|[\xf1-\xf7][\x80-\xbf][\x80-\xbf][\x80-\xbf])*$/ )
-#{
-#     $string = decode("utf-8", $string);
-#     $string = encode($encoding, $string);
-#}
-## trim space
-#$string =~ s/^ +//;
-#$string =~ s/ +$//;
-## reverse "+", ";" to space
-#$string =~ s/;+/\+/g;
-#$string =~ s/\s+/\+/g;
-#return $string;
-}
-
-#------------------------------------------------------------------------------
-# Function:		Encode URL to XML (Transforms & into &amp; as needed in XML/XHTML)
+# Function:		Transforms & into &amp; as needed in XML/XHTML
 # Parameters:	stringtoencode
 # Return:		encodedstring
 #------------------------------------------------------------------------------
@@ -6520,7 +6494,6 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 											# Now param is keyphrase: "cache:mmm:www/zzz+aaa+bbb/ccc+ddd%20eee'fff,ggg"
 											$param =~ s/^(cache|related):[^\+]+//;
 											&ChangeWordSeparatorsIntoSpace($param);		# Change [ aaa+bbb/ccc+ddd%20eee'fff,ggg ] into [ aaa bbb/ccc ddd eee fff ggg]
-											# TODO Add a plugin to convert utf8 coded params (google, alltheweb) into locally coded string ($PageCode)
 											$param =~ s/^ +//; $param =~ s/ +$//; $param =~ tr/ /\+/s;
 											if ((length $param) > 0) { $_keyphrases{$param}++; }
 											last;
@@ -6539,7 +6512,6 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 										# Now param is keyphrase: "aaa+bbb/ccc+ddd%20eee'fff,ggg"
 										$param =~ s/^(cache|related):[^\+]+//;
 										&ChangeWordSeparatorsIntoSpace($param);			# Change [ aaa+bbb/ccc+ddd%20eee'fff,ggg ] into [ aaa bbb/ccc ddd eee fff ggg ]
-										# TODO Add a plugin to convert utf8 coded params (google, alltheweb) into locally coded string ($PageCode)
 										$param =~ s/^ +//; $param =~ s/ +$//; $param =~ tr/ /\+/s;
 										if ((length $param) > 2) { $_keyphrases{$param}++; last; }
 									}
@@ -6863,7 +6835,7 @@ if (scalar keys %HTMLOutput) {
 
 	# HTMLHeadSection
 	if ($FrameName ne 'index' && $FrameName ne 'mainleft') {
-		print "<a name=\"TOP\">&nbsp;</a>\n\n";
+		print "<a name=\"top\">&nbsp;</a>\n\n";
 		print "$HTMLHeadSection\n";
 		print "\n";
 	}
@@ -6879,7 +6851,7 @@ if (scalar keys %HTMLOutput) {
 	if ($ShowMenu || $FrameName eq 'mainleft') {
 		if ($Debug) { debug("ShowMenu",2); }
 		my $frame=($FrameName eq 'mainleft');
-		print "$Center<a name=\"MENU\">&nbsp;</a>\n";
+		print "$Center<a name=\"menu\">&nbsp;</a>\n";
 
 		my $WIDTHMENU1=($FrameName eq 'mainleft'?$FRAMEWIDTH:150);
 		
@@ -7232,7 +7204,7 @@ if (scalar keys %HTMLOutput) {
 
 #	if ($HTMLOutput{'alldays'}) {
 #		if ($Debug) { debug("ShowMonthDayStats",2); }
-#		print "$Center<a name=\"MONTHDAY\">&nbsp;</a><br />\n";
+#		print "$Center<a name=\"monthday\">&nbsp;</a><br />\n";
 #		&tab_head("$Message[5]",0,0,"alldays");
 #
 #		my $NewLinkParams=${QueryString};
@@ -8163,7 +8135,10 @@ if (scalar keys %HTMLOutput) {
 		my $count=0;
 		&BuildKeyList($MaxRowsInHTMLOutput,$MinHit{'Keyphrase'},\%_keyphrases,\%_keyphrases);
 		foreach my $key (@keylist) {
-			my $mot = CleanFromCSSA(DecodeEncodedString($key));
+			my $mot;
+			# Convert coded keywords (utf8,...) to be correctly reported in HTML page.
+			if ($PluginsLoaded{'DecodeKey'}{'decodeutfkeys'})  { $mot=CleanFromCSSA(DecodeKey_decodeutfkeys($key,$PageCode||'iso-8859-1')); }
+			else { $mot = CleanFromCSSA(DecodeEncodedString($key)); }
 			my $p;
 			if ($TotalKeyphrases) { $p=int($_keyphrases{$key}/$TotalKeyphrases*1000)/10; }
 			print "<tr><td class=\"aws\">".XMLEncode($mot)."</td><td>$_keyphrases{$key}</td><td>$p %</td></tr>\n";
@@ -8189,7 +8164,10 @@ if (scalar keys %HTMLOutput) {
 		my $count=0;
 		&BuildKeyList($MaxRowsInHTMLOutput,$MinHit{'Keyword'},\%_keywords,\%_keywords);
 		foreach my $key (@keylist) {
-			my $mot = CleanFromCSSA(DecodeEncodedString($key));
+			my $mot;
+			# Convert coded keywords (utf8,...) to be correctly reported in HTML page.
+			if ($PluginsLoaded{'DecodeKey'}{'decodeutfkeys'})  { $mot=CleanFromCSSA(DecodeKey_decodeutfkeys($key,$PageCode||'iso-8859-1')); }
+			else { $mot = CleanFromCSSA(DecodeEncodedString($key)); }
 			my $p;
 			if ($TotalKeywords) { $p=int($_keywords{$key}/$TotalKeywords*1000)/10; }
 			print "<tr><td class=\"aws\">".XMLEncode($mot)."</td><td>$_keywords{$key}</td><td>$p %</td></tr>\n";
@@ -8243,7 +8221,7 @@ if (scalar keys %HTMLOutput) {
 	}
 	if ($HTMLOutput{'info'}) {
 		# Not yet available
-		print "$Center<a name=\"INFO\">&nbsp;</a><br />";
+		print "$Center<a name=\"info\">&nbsp;</a><br />";
 		&html_end;
 	}
 	if ($HTMLOutput{'main'}) {
@@ -8467,7 +8445,7 @@ if (scalar keys %HTMLOutput) {
 		}
 		}
 
-		print "\n<a name=\"WHEN\">&nbsp;</a>\n\n";
+		print "\n<a name=\"when\">&nbsp;</a>\n\n";
 
 		# BY DAY OF MONTH
 		#---------------------------------------------------------------------
@@ -8909,7 +8887,7 @@ if (scalar keys %HTMLOutput) {
 			&tab_end;
 		}
 	
-		print "\n<a name=\"WHO\">&nbsp;</a>\n\n";
+		print "\n<a name=\"who\">&nbsp;</a>\n\n";
 	
 		# BY COUNTRY/DOMAIN
 		#---------------------------
@@ -9173,7 +9151,7 @@ if (scalar keys %HTMLOutput) {
 			&tab_end("* $Message[158]");
 		}
 	
-		print "\n<a name=\"HOW\">&nbsp;</a>\n\n";
+		print "\n<a name=\"how\">&nbsp;</a>\n\n";
 	
 		# BY SESSION
 		#----------------------------
@@ -9289,7 +9267,7 @@ if (scalar keys %HTMLOutput) {
 		#-------------------------
 		if ($ShowPagesStats) {
 			if ($Debug) { debug("ShowPagesStats (MaxNbOf{'PageShown'}=$MaxNbOf{'PageShown'} TotalDifferentPages=$TotalDifferentPages)",2); }
-			print "$Center<a name=\"urls\">&nbsp;</a><a name=\"ENTRY\">&nbsp;</a><a name=\"EXIT\">&nbsp;</a><br />\n";
+			print "$Center<a name=\"urls\">&nbsp;</a><a name=\"entry\">&nbsp;</a><a name=\"exit\">&nbsp;</a><br />\n";
 			my $title="$Message[19] ($Message[77] $MaxNbOf{'PageShown'}) &nbsp; - &nbsp; <a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?XMLEncode("$AWScript?${NewLinkParams}output=urldetail"):"$PROG$StaticLinks.urldetail.$StaticExt")."\"$NewLinkTarget>$Message[80]</a>";
 			if ($ShowPagesStats =~ /E/i) { $title.=" &nbsp; - &nbsp; <a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?XMLEncode("$AWScript?${NewLinkParams}output=urlentry"):"$PROG$StaticLinks.urlentry.$StaticExt")."\"$NewLinkTarget>$Message[104]</a>"; }
 			if ($ShowPagesStats =~ /X/i) { $title.=" &nbsp; - &nbsp; <a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?XMLEncode("$AWScript?${NewLinkParams}output=urlexit"):"$PROG$StaticLinks.urlexit.$StaticExt")."\"$NewLinkTarget>$Message[116]</a>"; }
@@ -9501,7 +9479,7 @@ if (scalar keys %HTMLOutput) {
 			&tab_end;
 		}
 
-		print "\n<a name=\"REFERING\">&nbsp;</a>\n\n";
+		print "\n<a name=\"refering\">&nbsp;</a>\n\n";
 	
 		# BY REFERENCE
 		#---------------------------
@@ -9621,7 +9599,7 @@ if (scalar keys %HTMLOutput) {
 			&tab_end;
 		}
 	
-		print "\n<a name=\"KEYS\">&nbsp;</a>\n\n";
+		print "\n<a name=\"keys\">&nbsp;</a>\n\n";
 	
 		# BY SEARCH KEYWORDS AND/OR KEYPHRASES
 		#-------------------------------------
@@ -9639,10 +9617,13 @@ if (scalar keys %HTMLOutput) {
 			my $count=0;
 			&BuildKeyList($MaxNbOf{'KeyphrasesShown'},$MinHit{'Keyphrase'},\%_keyphrases,\%_keyphrases);
 			foreach my $key (@keylist) {
-				my $mot = CleanFromCSSA(DecodeEncodedString($key));
+				my $mot;
+				# Convert coded keywords (utf8,...) to be correctly reported in HTML page.
+				if ($PluginsLoaded{'DecodeKey'}{'decodeutfkeys'})  { $mot=CleanFromCSSA(DecodeKey_decodeutfkeys($key,$PageCode||'iso-8859-1')); }
+				else { $mot = CleanFromCSSA(DecodeEncodedString($key)); }
 				my $p;
 				if ($TotalKeyphrases) { $p=int($_keyphrases{$key}/$TotalKeyphrases*1000)/10; }
-				print "<tr><td class=\"aws\">$mot</td><td>$_keyphrases{$key}</td><td>$p %</td></tr>\n";
+				print "<tr><td class=\"aws\">".XMLEncode($mot)."</td><td>$_keyphrases{$key}</td><td>$p %</td></tr>\n";
 				$total_s += $_keyphrases{$key};
 				$count++;
 			}
@@ -9668,10 +9649,13 @@ if (scalar keys %HTMLOutput) {
 			my $count=0;
 			&BuildKeyList($MaxNbOf{'KeywordsShown'},$MinHit{'Keyword'},\%_keywords,\%_keywords);
 			foreach my $key (@keylist) {
-				my $mot = CleanFromCSSA(DecodeEncodedString($key));
+				my $mot;
+				# Convert coded keywords (utf8,...) to be correctly reported in HTML page.
+				if ($PluginsLoaded{'DecodeKey'}{'decodeutfkeys'})  { $mot=CleanFromCSSA(DecodeKey_decodeutfkeys($key,$PageCode||'iso-8859-1')); }
+				else { $mot = CleanFromCSSA(DecodeEncodedString($key)); }
 				my $p;
 				if ($TotalKeywords) { $p=int($_keywords{$key}/$TotalKeywords*1000)/10; }
-				print "<tr><td class=\"aws\">$mot</td><td>$_keywords{$key}</td><td>$p %</td></tr>\n";
+				print "<tr><td class=\"aws\">".XMLEncode($mot)."</td><td>$_keywords{$key}</td><td>$p %</td></tr>\n";
 				$total_s += $_keywords{$key};
 				$count++;
 			}
@@ -9688,7 +9672,7 @@ if (scalar keys %HTMLOutput) {
 		}
 		if ($ShowKeyphrasesStats && $ShowKeywordsStats) { print "</tr></table>\n"; }
 	
-		print "\n<a name=\"OTHER\">&nbsp;</a>\n\n";
+		print "\n<a name=\"other\">&nbsp;</a>\n\n";
 	
 		# BY MISC
 		#----------------------------

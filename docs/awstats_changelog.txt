@@ -30,6 +30,7 @@ Fixes:
 - Click on "Summary" now returns to top of page even with rawlog plugin.
 - Fixed AmigaVoyager detection.
 - Fixed bug in SkipHosts filter for mail log files.
+- Fixed not working link for search keywords/keyphrase in menu with FireBird.
 
 New features/improvements:
 - Increased speed by 10 to 20%.
@@ -61,6 +62,9 @@ New features/improvements:
 - Webmin module updated to 1.210 to integrate all new parameters.
 - Better setup error messages for newbie.
 - Reports look better on Mozilla browsers.
+- Added decodeUTFkeys plugin to AWStats to show correctly (in language
+  charset) keywords/keyphrases strings even if they were UTF8 coded by
+  the referer search engine.
 - configure.pl: A new script to configure AWStats and Apache and
   build a simple config file.
 - awstats_buildstaticpages.pl: The -date option has been replaced
@@ -82,7 +86,6 @@ Other/Documentation:
 - Documentation seriously updated.
 - FAQ updated.
 - Debian, Amigavoyager and some missing country flags icons added.
-- Prepare code for decodeUTFkeys plugin.
 - Added Hebrew and Galician language.
 
 Note 1: When migrating to 6.x series, if you use the ExtraSections feature,
