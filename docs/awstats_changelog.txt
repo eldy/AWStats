@@ -4,6 +4,8 @@ AWStats Changelog
 
 5.2
 
+- Added geoip plugin to track countries from IP location instead of domain
+  value.
 - Support for postfix mail log.
 - Added total and average row at bottom of day data array.
 - Added dynamic filter in Host and Referer pages when used as CGI like
