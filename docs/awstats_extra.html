@@ -69,6 +69,26 @@ user or agent, etc...<br>
 <br>
 
 <br>
+<br><a name="productorders"><H2 style="font: 22px arial,helvetica,sanserif color: #606060"><u>Tracking Product orders</u></H2></a>
+Image your web site is an e-store that sells 80 different products. Each of them has an id.
+Each time, someone make an order for product 49, the order.cgi script is called with in URL
+query parameter the id of the product, so you get in your log file a hit that looks like this:<br>
+<i>GET /cgi-bin/order.cgi?productid=49&session=A0B1C2</i>
+<br>
+So this is an example on how to setup your ExtraSection, to track your product orders:<br>
+<i>
+ExtraSectionName1="Product orders"<br>
+ExtraSectionCondition1="URL,/cgi-bin/order.cgi"<br>
+ExtraSectionFirstColumnTitle1="Product ID"<br>
+ExtraSectionFirstColumnValues1="QUERY_STRING,productid=([^&]+)"<br>
+ExtraSectionStatTypes1=PL<br>
+MaxNbOfExtra1=100<br>
+MinHitExtra1=1<br>
+</i>
+<br>
+
+
+<br>
 <br><a name="bugzilla"><H2 style="font: 22px arial,helvetica,sanserif color: #606060"><u>Tracking Bugzilla most frequently viewed bugs</u></H2></a>
 This is an example on how to setup your ExtraSection:<br>
 <i>
@@ -81,7 +101,8 @@ MaxNbOfExtra1=10<br>
 MinHitExtra1=1<br>
 </i>
 <br>
-<br>
+
+
 
 <br>
 <hr>
