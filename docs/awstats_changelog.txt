@@ -4,15 +4,20 @@ AWStats Changelog
 
 5.3
 
-- Added awstats_exportlib.pl tool.
-- Added 'Full List' view for Domains/Country report.
 - Fixed: Bad documentation for use of ExtraSection.
 - Fixed: Bug in ValidSMTPCodes parameter.
-- Added a memory cache for GeoIP plugin resolution.
-- Added awstats_logo3.png
 - Fixed: Remove AWStats header on left frame if ShowHeader=0.
+- Fixed: 29th february 2004 will be correctly handled.
+
+- Added awstats_exportlib.pl tool.
+- Added 'Full List' view for Domains/Country report.
+- Added a memory cache for GeoIP plugin resolution (geoip is faster).
+- Added awstats_logo3.png
 - Added X11 as Unknown Unix OS, and Atari OS.
 - New parameter: Added AuthenticatedUsersNotCaseSensitive.
+
+- Speed increased when ExtraSection is used.
+- Updated documentation.
 
 
 5.2
