@@ -5587,8 +5587,10 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 	@OnlyHosts=&OptimizeArray(\@OnlyHosts,1); if ($Debug) { debug("OnlyHosts precompiled regex list is now @OnlyHosts",1); }
 	@OnlyUserAgents=&OptimizeArray(\@OnlyUserAgents,1); if ($Debug) { debug("OnlyUserAgents precompiled regex list is now @OnlyUserAgents",1); }
 	@OnlyFiles=&OptimizeArray(\@OnlyFiles,$URLNotCaseSensitive); if ($Debug) { debug("OnlyFiles precompiled regex list is now @OnlyFiles",1); }
+	# Precompile the regex search strings with qr
 	$MiscTrackerUrl=qr/^$MiscTrackerUrl/;
 	@RobotsSearchIDOrder=map{qr/$_/i} @RobotsSearchIDOrder;
+	@WormsSearchIDOrder=map{qr/$_/i} @WormsSearchIDOrder;
 	@BrowsersSearchIDOrder=map{qr/$_/i} @BrowsersSearchIDOrder;
 	@OSSearchIDOrder=map{qr/$_/i} @OSSearchIDOrder;
 	@SearchEnginesSearchIDOrder=map{qr/$_/i} @SearchEnginesSearchIDOrder;
@@ -5984,7 +5986,9 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 			foreach (@WormsSearchIDOrder) {
 				if ($field[$pos_url] =~ /$_/) {
 					# It's a worm
-					my $worm=$WormsHashID{$_};
+					my $worm=&UnCompileRegex($_);
+					if ($Debug) { debug(" Record is a hit from a worm identified by '$worm'",2); }
+					$worm=$WormsHashID{$worm}||'unknown';
 					$_worm_h{$worm}++;
 					$_worm_k{$worm}+=int($field[$pos_size]);
 					$_worm_l{$worm}=$timerecord;
