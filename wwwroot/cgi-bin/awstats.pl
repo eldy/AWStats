@@ -21,7 +21,7 @@ use vars qw(%DomainsHashIDLib @RobotsSearchIDOrder_list1 @RobotsSearchIDOrder_li
 #-------------------------------------------------------
 # Defines
 #-------------------------------------------------------
-my $VERSION="4.0 (build 51)";
+my $VERSION="4.0 (build 52)";
 
 # ---------- Init variables -------
 my $Debug=0;
@@ -67,12 +67,12 @@ $MaxNbOfDomain, $MaxNbOfHostsShown, $MaxNbOfKeywordsShown, $MaxNbOfLoginShown,
 $MaxNbOfPageShown, $MaxNbOfRefererShown, $MaxNbOfRobotShown,
 $MinHitFile, $MinHitHost, $MinHitKeyword,
 $MinHitLogin, $MinHitRefer, $MinHitRobot,
-$NbOfLinesRead, $NbOfLinesDropped, $NbOfLinesCorrupted, $NbOfNewLinesProcessed,
+$NbOfLinesRead, $NbOfLinesDropped, $NbOfLinesCorrupted, $NbOfOldLines, $NbOfNewLines,
 $NowNewLinePhase, $NbOfLinesForCorruptedLog, $PurgeLogFile,
 $ShowAuthenticatedUsers, $ShowCompressionStats, $ShowFileSizesStats,
 $ShowDropped, $ShowCorrupted, $ShowUnknownOrigin, $SplitSearchString, $StartSeconds, $StartMicroseconds,
 $StaticLinks, $UpdateStats, $URLWithQuery)=
-(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
+(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
 my ($AllowToUpdateStatsFromBrowser, $ArchiveLogRecords, $DetailedReportsOnNewWindows,
 $FirstDayOfWeek, $SaveDatabaseFilesWithPermissionsForEveryone,
 $LevelForRobotsDetection, $LevelForBrowsersDetection, $LevelForOSDetection,
@@ -1661,7 +1661,7 @@ sub Save_History_File {
 	print HISTORYTMP "FirstTime $FirstTime{$year.$month}\n";
 	print HISTORYTMP "LastTime $LastTime{$year.$month}\n";
 	if ($LastUpdate{$year.$month} < int("$nowyear$nowmonth$nowday$nowhour$nowmin$nowsec")) { $LastUpdate{$year.$month}=int("$nowyear$nowmonth$nowday$nowhour$nowmin$nowsec"); }
-	print HISTORYTMP "LastUpdate $LastUpdate{$year.$month} $NbOfLinesRead $NbOfNewLinesProcessed $NbOfLinesCorrupted $NbOfLinesDropped\n";
+	print HISTORYTMP "LastUpdate $LastUpdate{$year.$month} $NbOfLinesRead $NbOfOldLines $NbOfNewLines $NbOfLinesCorrupted $NbOfLinesDropped\n";
 	print HISTORYTMP "TotalVisits $MonthVisits{$year.$month}\n";
 
 	# When
@@ -2517,19 +2517,19 @@ if ($UpdateStats) {
 	}
 	if ($LogFormat lt "1" || $LogFormat gt "5") {
 		# Scan $LogFormat to found all required fields and generate PerlParsing
-		my @fields = split(/ +/, $LogFormatString); # make array of entries
+		my @fields = split(/\s+/, $LogFormatString); # make array of entries
 		my $i = 1;
 		foreach my $f (@fields) {
 			my $found=0;
 			if ($f =~ /%host$/) {
 				$found=1;
 				$pos_rc = $i; $i++;
-				$PerlParsingFormat .= "([^\\s]*) ";
+				$PerlParsingFormat .= "([^\\s]*)";
 			}
 			if ($f =~ /%logname$/) {
 				$found=1;
 				$pos_logname = $i; $i++;
-				$PerlParsingFormat .= "([^\\s]*) ";
+				$PerlParsingFormat .= "([^\\s]*)";
 			}
 			if ($f =~ /%time1$/) {
 				$found=1;
@@ -2537,13 +2537,13 @@ if ($UpdateStats) {
 				$i++;
 				#$pos_zone = $i;
 				$i++;
-				$PerlParsingFormat .= "\\[([^\\s]*) ([^\\s]*)\\] ";
+				$PerlParsingFormat .= "\\[([^\\s]*) ([^\\s]*)\\]";
 			}
 			if ($f =~ /%time2$/) {
 				$found=1;
 				$pos_date = $i;
 				$i++;
-				$PerlParsingFormat .= "([^\\s]* [^\\s]*) ";
+				$PerlParsingFormat .= "([^\\s]* [^\\s]*)";
 			}
 			if ($f =~ /%methodurl$/) {
 				$found=1;
@@ -2551,7 +2551,7 @@ if ($UpdateStats) {
 				$i++;
 				$pos_url = $i;
 				$i++;
-				$PerlParsingFormat .= "\\\"([^\\s]*) ([^\\s]*) [^\\\"]*\\\" ";
+				$PerlParsingFormat .= "\\\"([^\\s]*) ([^\\s]*) [^\\\"]*\\\"";
 			}
 			if ($f =~ /%methodurlnoprot$/) {
 				$found=1;
@@ -2559,76 +2559,77 @@ if ($UpdateStats) {
 				$i++;
 				$pos_url = $i;
 				$i++;
-				$PerlParsingFormat .= "\\\"([^\\s]*) ([^\\s]*)\\\" ";
+				$PerlParsingFormat .= "\\\"([^\\s]*) ([^\\s]*)\\\"";
 			}
 			if ($f =~ /%method$/) {
 				$found=1;
 				$pos_method = $i;
 				$i++;
-				$PerlParsingFormat .= "([^\\s]*) ";
+				$PerlParsingFormat .= "([^\\s]*)";
 			}
 			if ($f =~ /%url$/) {
 				$found=1;
 				$pos_url = $i;
 				$i++;
-				$PerlParsingFormat .= "([^\\s]*) ";
+				$PerlParsingFormat .= "([^\\s]*)";
 			}
 			if ($f =~ /%query$/) {
 				$found=1;
 				$pos_query = $i;
 				$i++;
-				$PerlParsingFormat .= "([^\\s]*) ";
+				$PerlParsingFormat .= "([^\\s]*)";
 			}
 			if ($f =~ /%code$/) {
 				$found=1;
 				$pos_code = $i;
 				$i++;
-				$PerlParsingFormat .= "([\\d|-]*) ";
+				$PerlParsingFormat .= "([\\d|-]*)";
 			}
 			if ($f =~ /%bytesd$/) {
 				$found=1;
 				$pos_size = $i; $i++;
-				$PerlParsingFormat .= "([\\d|-]*) ";
+				$PerlParsingFormat .= "([\\d|-]*)";
 			}
 			if ($f =~ /%refererquot$/) {
 				$found=1;
 				$pos_referer = $i; $i++;
-				$PerlParsingFormat .= "\\\"(.*)\\\" ";
+				$PerlParsingFormat .= "\\\"(.*)\\\"";
 			}
 			if ($f =~ /%referer$/) {
 				$found=1;
 				$pos_referer = $i; $i++;
-				$PerlParsingFormat .= "([^\\s]*) ";
+				$PerlParsingFormat .= "([^\\s]*)";
 			}
 			if ($f =~ /%uaquot$/) {
 				$found=1;
 				$pos_agent = $i; $i++;
-				$PerlParsingFormat .= "\\\"([^\\\"]*)\\\" ";
+				$PerlParsingFormat .= "\\\"([^\\\"]*)\\\"";
 			}
 			if ($f =~ /%ua$/) {
 				$found=1;
 				$pos_agent = $i; $i++;
-				$PerlParsingFormat .= "([^\\s]*) ";
+				$PerlParsingFormat .= "([^\\s]*)";
 			}
 			if ($f =~ /%gzipin$/ ) {
 				$found=1;
 				$pos_gzipin=$i;$i++;
-				$PerlParsingFormat .= "([^\\s]*) ";
+				$PerlParsingFormat .= "([^\\s]*)";
 			}
 			if ($f =~ /%gzipout$/ ) {
 				$found=1;
 				$pos_gzipout=$i;$i++;
-				$PerlParsingFormat .= "([^\\s]*) ";
+				$PerlParsingFormat .= "([^\\s]*)";
 			}
 			if ($f =~ /%gzipres$/ ) {
 				$found=1;
 				$pos_gzipres=$i;$i++;
-				$PerlParsingFormat .= "([^\\s]*) ";
+				$PerlParsingFormat .= "([^\\s]*)";
 			}
-			if (! $found) { $found=1; $PerlParsingFormat .= "[^\\s]* "; }
+			if (! $found) { $found=1; $PerlParsingFormat .= "[^\\s]*"; }
+			$PerlParsingFormat.="\\s";
 		}
-		# Remove last space char
-		($PerlParsingFormat) ? chop($PerlParsingFormat) : error("Error: No recognised format tag in personalised LogFormat string");
+		if (! $PerlParsingFormat) { error("Error: No recognised format tag in personalised LogFormat string"); }
+		chop($PerlParsingFormat); chop($PerlParsingFormat);		# Remove last separator char "\s"
 		$lastrequiredfield=$i--;
 	}
 	if (! $pos_rc) { error("Error: Your personalised LogFormat does not include all fields required by AWStats (Add \%host in your LogFormat string)."); }
@@ -2668,7 +2669,7 @@ if ($UpdateStats) {
 	#------------------------------------------
 	if ($Debug) { debug("Start of processing log file (monthtoprocess=$monthtoprocess, yeartoprocess=$yeartoprocess)"); }
 	my $yearmonth=sprintf("%04i%02i",$yeartoprocess,$monthtoprocess);
-	$NbOfLinesRead=$NbOfLinesDropped=$NbOfLinesCorrupted=$NbOfNewLinesProcessed=0;
+	$NbOfLinesRead=$NbOfLinesDropped=$NbOfLinesCorrupted=$NbOfOldLines=$NbOfNewLines=0;
 	$NowNewLinePhase=0;
 
 	# Open log file
@@ -2696,8 +2697,8 @@ if ($UpdateStats) {
 		# Parse line record to get all required fields
 		if (! /^$PerlParsingFormat/) {	# !!!!!!!!!
 			$NbOfLinesCorrupted++;
-			if ($ShowCorrupted && ($_ =~ /^#/ || $_ =~ /^!/ || $_ =~ /^\s*$/)) { print "Corrupted record line $NbOfLinesRead (comment or blank line)\n"; }
-			if ($ShowCorrupted && $_ !~ /^\s*$/) { print "Corrupted record line $NbOfLinesRead (record format does not match LogFormat parameter): $_\n"; }
+			if ($ShowCorrupted && ($_ =~ /^#/ || $_ =~ /^!/ || $_ =~ /^\s*$/)) { print "Corrupted record line $NbOfLinesRead (comment or blank line)\n"; next; }
+			if ($ShowCorrupted && $_ !~ /^\s*$/) { print "Corrupted record line $NbOfLinesRead (record format does not match LogFormat parameter): $_\n"; next; }
 			if ($NbOfLinesRead >= $NbOfLinesForCorruptedLog && $NbOfLinesCorrupted == $NbOfLinesRead) { error("Format error",$_,$LogFile); }	# Exit with format error
 			next;
 		}
@@ -2747,6 +2748,7 @@ if ($UpdateStats) {
 		}
 		else {
 			if ($timerecord <= $LastLine{$yearmonth}) {
+				$NbOfOldLines++;
 				if ($ShowSteps && ($NbOfLinesRead % $NbOfLinesForBenchmark == 0)) {
 					my $delay=GetDelaySinceStart(0); if ($delay < 1) { $delay=1000; }
 					print "$NbOfLinesRead lines read already processed ($delay ms, ".int(1000*$NbOfLinesRead/$delay)." lines/seconds)\n";
@@ -2776,10 +2778,10 @@ if ($UpdateStats) {
 
 		# Record is approved
 		#-------------------
-		$NbOfNewLinesProcessed++;
-		if ($ShowSteps && ($NbOfNewLinesProcessed % $NbOfLinesForBenchmark == 0)) {
+		$NbOfNewLines++;
+		if ($ShowSteps && ($NbOfNewLines % $NbOfLinesForBenchmark == 0)) {
 			my $delay=GetDelaySinceStart(0);
-			print "$NbOfNewLinesProcessed lines processed ($delay ms, ".int(1000*$NbOfNewLinesProcessed/($delay>0?$delay:1))." lines/seconds)\n";
+			print "$NbOfNewLines lines processed ($delay ms, ".int(1000*$NbOfNewLines/($delay>0?$delay:1))." lines/seconds)\n";
 		}
 
 		# Is it in a new month section ?
@@ -4546,7 +4548,8 @@ else {
 	print "Lines in file: $NbOfLinesRead\n";
 	print "Found $NbOfLinesDropped dropped records,\n";
 	print "Found $NbOfLinesCorrupted corrupted records,\n";
-	print "Found $NbOfNewLinesProcessed new records.\n";
+	print "Found $NbOfOldLines old records,\n";
+	print "Found $NbOfNewLines new records.\n";
 }
 
 0;	# Do not remove this line
