@@ -3,8 +3,6 @@
 Een nieuw bezoek is elke <b>binnenkomende bezoeker</b> (die een pagina bekijkt) die de laatste <b>#VisitTimeOut# mn</b> niet met uw site verbonden was.
 </DIV>
 <DIV CLASS="CTooltip" ID="tt2">
-Number of client hosts (<b>IP address</b>) who came to visit the site (and who viewed at least one <b>page</b>).<br>
-This data refers to the number of <b>different physical persons</b> who had reached the site in any one day.
 Aantal client hosts (<b>IP adres</b>) die de site bezochten (en minimaal een <b>pagina</b> bekeken).<br>
 Dit geeft aan hoeveel <b>verschillende fysieke personen</b> de site op een bepaalde dag bezocht hebben.
 </DIV>
@@ -17,8 +15,8 @@ Aantal malen dat een <b>pagina</b>, <b>plaatje</b> of <b>bestand</b> op de site 
 Dit onderdeel is alleen als referentie gegeven, omdat het aantal bekeken "pagina's" voor marketingdoeleinden de voorkeur heeft.
 </DIV>
 <DIV CLASS="CTooltip" ID="tt5">
-Aantal door uw bezoekers gedownloade <b>kilobytes</b>.<br>
-Dit onderdeel geeft de hoeveelheid gedownloade gegevens in alle <b>pagina's</b>, <b>plaatjes</b> en <b>bestanden</b> van uw site, gemeten in KBs.
+Aantal door uw bezoekers gedownloade <b>kibibytes</b>.<br>
+Dit onderdeel geeft de hoeveelheid gedownloade gegevens in alle <b>pagina's</b>, <b>plaatjes</b> en <b>bestanden</b> van uw site, gemeten in KiBs.
 </DIV>
 <DIV CLASS="CTooltip" ID="tt13">
 Dit programma, #PROG#, herkent elke benadering van uw site na een <b>zoekopdracht</b> van de <b>#SearchEnginesArray# meest populaire Internet zoekmachines</b> (zoals Yahoo, Altavista, Lycos, Google, Voila, etc...).
