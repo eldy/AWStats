@@ -1,8 +1,7 @@
 #!/usr/bin/perl
-#!c:/program files/activeperl/bin/perl
-# With some other Unix Os, first line might be
+# With some other Unix Os, first line may be
 #!/usr/local/bin/perl
-# With Apache for Windows and ActiverPerl, first line might be
+# With Apache for Windows and ActiverPerl, first line may be
 #!c:/program files/activeperl/bin/perl
 # use diagnostics;
 # use strict;
@@ -67,7 +66,7 @@ $word, $yearcon, $yearfile, $yearmonthfile, $yeartoprocess) = ();
 @sortsearchwords = @sortsereferrals = @sortsider404 = @sortsiders = @sortunknownip =
 @sortunknownreferer = @sortunknownrefererbrowser = @wordlist = ();
 
-$VERSION="2.5 (build 10)";
+$VERSION="2.5 (build 11)";
 $Lang=0;
 
 # Default value
@@ -1492,18 +1491,18 @@ sub html_head {
 	print "<title>$message[7][$Lang] $SiteToAnalyze</title>\n";
 	print "<STYLE TYPE=text/css>
 <!--
-	BODY { font-family: arial, verdana, helvetica, sans-serif; font: 12px arial,verdana,helvetica; background-color:$color_Background; }
-	TH { font-family: arial, verdana, helvetica, sans-serif; font: 12px arial,verdana,helvetica; text-align:center; color:$color_titletext}
-	TD { font-family: arial, verdana, helvetica, sans-serif; font: 12px arial,verdana,helvetica; text-align:center; color:$color_text}
-	TD.LEFT { font-family: arial, verdana, helvetica, sans-serif; font: 12px arial,verdana,helvetica; text-align:left; color:$color_text }
-	A {	font-family: arial, verdana helvetica, sans-serif; font: 12px arial,verdana,helvetica; font-style:normal; color:$color_link; }
-	A:hover { color:$color_hover; }
-	DIV { font: 12px arial,verdana,helvetica; text-align:justify; }
-	.TABLEBORDER { background-color:$color_TableBorder; }
-	.TABLEFRAME { background-color:$color_TableBG; }
-	.TABLEDATA { background-color:$color_Background; }
-	.TABLETITLE { font-family: verdana, arial, helvetica, sans-serif; font: 14px arial,verdana,helvetica; font-weight:bold; color:$color_TableTitle; background-color:$color_TableBGTitle; }
-	.CTooltip { position:absolute; top:0px; left:0px; z-index:2; width:280; visibility:hidden; font:8pt MS Comic Sans,arial,sans-serif; background-color:#FFFFE6; padding:8px 8px; border:1px solid black; }
+BODY { font: 12px arial, verdana, helvetica, sans-serif; background-color: #$color_Background; }
+TH { font: 12px arial, verdana, helvetica, sans-serif; text-align:center; color: #$color_titletext }
+TD { font: 12px arial, verdana, helvetica, sans-serif; text-align:center; color: #$color_text }
+TD.LEFT { font: 12px arial, verdana, helvetica, sans-serif; text-align:left; color: #$color_text }
+A { font: normal 12px arial, verdana, helvetica, sans-serif; color: #$color_link; text-decoration: underline; }
+A:hover { color: #$color_hover; text-decoration: underline; }
+DIV { font: 12px arial,verdana,helvetica; text-align:justify; }
+.TABLEBORDER { background-color: #$color_TableBorder; }
+.TABLEFRAME { background-color: #$color_TableBG; }
+.TABLEDATA { background-color: #$color_Background; }
+.TABLETITLE { font: bold 16px verdana, arial, helvetica, sans-serif; color: #$color_TableTitle; background-color: #$color_TableBGTitle; }
+.CTooltip { position:absolute; top:0px; left:0px; z-index:2; width:280; visibility:hidden; font: 8pt MS Comic Sans,arial,sans-serif; background-color:#FFFFE6; padding: 8px 8px; border: 1px solid black; }
 //-->
 </STYLE>\n
 ";
@@ -1733,23 +1732,23 @@ sub Check_Config {
 	if (! ($MinHitKeyword =~ /[\d]/))         { $MinHitKeyword=1; }
 	if (! ($SplitSearchString =~ /[0-1]/))    { $SplitSearchString=0; }
 	if ($Logo eq "")                          { $Logo="awstats_logo1.png"; }
-	if (! ($color_Background =~ /[\d]/))      { $color_Background="#FFFFFF";	}
-	if (! ($color_TableBorder =~ /[\d]/))     { $color_TableBorder="#000000"; }
-	if (! ($color_TableBG =~ /[\d]/))         { $color_TableBG="#DDDDBB"; }
-	if (! ($color_TableTitle =~ /[\d]/))      { $color_TableTitle="#FFFFFF"; }
-	if (! ($color_TableBGTitle =~ /[\d]/))    { $color_TableBGTitle="#666666"; }
-	if (! ($color_TableRowTitle =~ /[\d]/))   { $color_TableRowTitle="#FFFFFF"; }
-	if (! ($color_TableBGRowTitle =~ /[\d]/)) { $color_TableBGRowTitle="#BBBBBB"; }
-	if (! ($color_link =~ /[\d]/))            { $color_link="#4000FF"; }
-	if (! ($color_hover =~ /[\d]/))           { $color_hover="#4000FF"; }
-	if (! ($color_text =~ /[\d]/))            { $color_text="#000000"; }
-	if (! ($color_titletext =~ /[\d]/))       { $color_titletext="#000000"; }
-	if (! ($color_v =~ /[\d]/))               { $color_v="#F3F300"; }
-	if (! ($color_w =~ /[\d]/))               { $color_w="#FF9933"; }
-	if (! ($color_p =~ /[\d]/))               { $color_p="#4477DD"; }
-	if (! ($color_h =~ /[\d]/))               { $color_h="#66F0FF"; }
-	if (! ($color_k =~ /[\d]/))               { $color_k="#339944"; }
-	if (! ($color_s =~ /[\d]/))               { $color_s="#8888DD"; }
+	$color_Background =~ s/#//g; if (! ($color_Background =~ /[\d]/))           { $color_Background="FFFFFF";	}
+	$color_TableBorder =~ s/#//g; if (! ($color_TableBorder =~ /[\d]/))         { $color_TableBorder="000000"; }
+	$color_TableBG =~ s/#//g; if (! ($color_TableBG =~ /[\d]/))                 { $color_TableBG="DDDDBB"; }
+	$color_TableTitle =~ s/#//g; if (! ($color_TableTitle =~ /[\d]/))           { $color_TableTitle="FFFFFF"; }
+	$color_TableBGTitle =~ s/#//g; if (! ($color_TableBGTitle =~ /[\d]/))       { $color_TableBGTitle="666666"; }
+	$color_TableRowTitle =~ s/#//g; if (! ($color_TableRowTitle =~ /[\d]/))     { $color_TableRowTitle="FFFFFF"; }
+	$color_TableBGRowTitle =~ s/#//g; if (! ($color_TableBGRowTitle =~ /[\d]/)) { $color_TableBGRowTitle="BBBBBB"; }
+	$color_link =~ s/#//g; if (! ($color_link =~ /[\d]/))           { $color_link="4000FF"; }
+	$color_hover =~ s/#//g; if (! ($color_hover =~ /[\d]/))         { $color_hover="4000FF"; }
+	$color_text =~ s/#//g; if (! ($color_text =~ /[\d]/))           { $color_text="000000"; }
+	$color_titletext =~ s/#//g; if (! ($color_titletext =~ /[\d]/)) { $color_titletext="000000"; }
+	$color_v =~ s/#//g; if (! ($color_v =~ /[\d]/))               { $color_v="F3F300"; }
+	$color_w =~ s/#//g; if (! ($color_w =~ /[\d]/))               { $color_w="FF9933"; }
+	$color_w =~ s/#//g; if (! ($color_p =~ /[\d]/))               { $color_p="4477DD"; }
+	$color_h =~ s/#//g; if (! ($color_h =~ /[\d]/))               { $color_h="66F0FF"; }
+	$color_k =~ s/#//g; if (! ($color_k =~ /[\d]/))               { $color_k="339944"; }
+	$color_s =~ s/#//g; if (! ($color_s =~ /[\d]/))               { $color_s="8888DD"; }
 }
 
 sub Read_History_File {
@@ -2670,7 +2669,7 @@ if ($QueryString =~ /action=unknownip/i) {
 	print "$CENTER<a name=\"UNKOWNIP\"></a><BR>";
 	$tab_titre=$message[45][$Lang];
 	&tab_head;
-	print "<TR BGCOLOR=$color_TableBGRowTitle color=#770000><TH>$message[48][$Lang]</TH><TH>$message[9][$Lang]</TH>\n";
+	print "<TR bgcolor=#$color_TableBGRowTitle><TH>$message[48][$Lang]</TH><TH>$message[9][$Lang]</TH>\n";
 	@sortunknownip=sort { $SortDir*$_unknownip_l{$a} <=> $SortDir*$_unknownip_l{$b} } keys (%_unknownip_l);
 	foreach $key (@sortunknownip) {
 		$yearcon=substr($_unknownip_l{$key},0,4);
@@ -2689,7 +2688,7 @@ if ($QueryString =~ /action=unknownrefererbrowser/i) {
 	print "$CENTER<a name=\"UNKOWNREFERERBROWSER\"></a><BR>";
 	$tab_titre=$message[50][$Lang];
 	&tab_head;
-	print "<TR BGCOLOR=$color_TableBGRowTitle><TH>Referer</TH><TH>$message[9][$Lang]</TH></TR>\n";
+	print "<TR bgcolor=#$color_TableBGRowTitle><TH>Referer</TH><TH>$message[9][$Lang]</TH></TR>\n";
 	@sortunknownrefererbrowser=sort { $SortDir*$_unknownrefererbrowser_l{$a} <=> $SortDir*$_unknownrefererbrowser_l{$b} } keys (%_unknownrefererbrowser_l);
 	foreach $key (@sortunknownrefererbrowser) {
 		$yearcon=substr($_unknownrefererbrowser_l{$key},0,4);
@@ -2709,7 +2708,7 @@ if ($QueryString =~ /action=unknownreferer/i) {
 	print "$CENTER<a name=\"UNKOWNREFERER\"></a><BR>";
 	$tab_titre=$message[46][$Lang];
 	&tab_head;
-	print "<TR BGCOLOR=$color_TableBGRowTitle><TH>Referer</TH><TH>$message[9][$Lang]</TH></TR>\n";
+	print "<TR bgcolor=#$color_TableBGRowTitle><TH>Referer</TH><TH>$message[9][$Lang]</TH></TR>\n";
 	@sortunknownreferer=sort { $SortDir*$_unknownreferer_l{$a} <=> $SortDir*$_unknownreferer_l{$b} } keys (%_unknownreferer_l);
 	foreach $key (@sortunknownreferer) {
 		$yearcon=substr($_unknownreferer_l{$key},0,4);
@@ -2729,7 +2728,7 @@ if ($QueryString =~ /action=notfounderror/i) {
 	print "$CENTER<a name=\"NOTFOUNDERROR\"></a><BR>";
 	$tab_titre=$message[47][$Lang];
 	&tab_head;
-	print "<TR bgcolor=$color_TableBGRowTitle><TH>URL</TH><TH bgcolor=$color_h>$message[49][$Lang]</TH><TH>$message[23][$Lang]</TH></TR>\n";
+	print "<TR bgcolor=#$color_TableBGRowTitle><TH>URL</TH><TH bgcolor=#$color_h>$message[49][$Lang]</TH><TH>$message[23][$Lang]</TH></TR>\n";
 	@sortsider404=sort { $SortDir*$_sider404_h{$a} <=> $SortDir*$_sider404_h{$b} } keys (%_sider404_h);
 	foreach $key (@sortsider404) {
 		$url=$key; $url =~ s/<script.*$//gi; 							# This is to avoid 'Cross Site Scripting attacks'
@@ -2744,7 +2743,7 @@ if ($QueryString =~ /action=browserdetail/i) {
 	print "$CENTER<a name=\"NETSCAPE\"></a><BR>";
 	$tab_titre=$message[33][$Lang]."<br><img src=\"$DirIcons/browser/netscape.png\">";
 	&tab_head;
-	print "<TR BGCOLOR=$color_TableBGRowTitle><TH>Version</TH><TH bgcolor=$color_h width=40>Hits</TH><TH bgcolor=$color_h width=40>$message[15][$Lang]</TH></TR>\n";
+	print "<TR bgcolor=#$color_TableBGRowTitle><TH>Version</TH><TH bgcolor=#$color_h width=40>Hits</TH><TH bgcolor=#$color_h width=40>$message[15][$Lang]</TH></TR>\n";
 	for ($i=1; $i<=$#_nsver_h; $i++) {
 		if ($_nsver_h[$i] gt 0) {
 			$h=$_nsver_h[$i]; $p=int($_nsver_h[$i]/$_browser_h{"netscape"}*1000)/10; $p="$p&nbsp;%";
@@ -2758,7 +2757,7 @@ if ($QueryString =~ /action=browserdetail/i) {
 	print "<a name=\"MSIE\"></a><BR>";
 	$tab_titre=$message[34][$Lang]."<br><img src=\"$DirIcons/browser/msie.png\">";
 	&tab_head;
-	print "<TR BGCOLOR=$color_TableBGRowTitle><TH>Version</TH><TH bgcolor=$color_h width=40>Hits</TH><TH bgcolor=$color_h width=40>$message[15][$Lang]</TH></TR>\n";
+	print "<TR bgcolor=#$color_TableBGRowTitle><TH>Version</TH><TH bgcolor=#$color_h width=40>Hits</TH><TH bgcolor=#$color_h width=40>$message[15][$Lang]</TH></TR>\n";
 	for ($i=1; $i<=$#_msiever_h; $i++) {
 		if ($_msiever_h[$i] gt 0) {
 			$h=$_msiever_h[$i]; $p=int($_msiever_h[$i]/$_browser_h{"msie"}*1000)/10; $p="$p&nbsp;%";
@@ -3305,8 +3304,8 @@ if ($TotalVisits > 0) { $RatioHits=int($TotalHits/$TotalVisits*100)/100; }
 if ($TotalVisits > 0) { $RatioBytes=int(($TotalBytes/1024)*100/$TotalVisits)/100; }
 
 print "<TR><TD><b>$message[8][$Lang]</b></TD>";
-if ($MonthRequired eq "year") { print "<TD colspan=3 rowspan=2><font style=\"font: 10pt arial,verdana,helvetica\"><b>$message[6][$Lang] $YearRequired</b></font><br>"; }
-else { print "<TD colspan=3 rowspan=2><font style=\"font: 10pt arial,verdana,helvetica\"><b>$message[5][$Lang] $monthlib{$MonthRequired} $YearRequired</b></font><br>"; }
+if ($MonthRequired eq "year") { print "<TD colspan=3 rowspan=2><font style=\"font: 18px arial,verdana,helvetica; font-weight: bold\">$message[6][$Lang] $YearRequired</font><br>"; }
+else { print "<TD colspan=3 rowspan=2><font style=\"font: 18px arial,verdana,helvetica; font-weight: bold\">$message[5][$Lang] $monthlib{$MonthRequired} $YearRequired</font><br>"; }
 # Show links for possible years
 foreach $key (keys %listofyears) {
 	print "<a href=\"$DirCgi$PROG.$Extension?site=$SiteToAnalyze&year=$key&month=year&lang=$Lang\">$message[6][$Lang] $key</a> ";
@@ -3321,11 +3320,11 @@ $yearcon=substr($LastTime,0,4);$monthcon=substr($LastTime,4,2);$daycon=substr($L
 if ($LastTime != 0) { print "<TD>$daycon&nbsp;$monthlib{$monthcon}&nbsp;$yearcon&nbsp;-&nbsp;$hourcon:$mincon</TD></TR>"; }
 else { print "<TD>NA</TD></TR>\n"; }
 print "<TR>";
-print "<TD width=20% bgcolor=$color_v onmouseover=\"ShowTooltip(1);\" onmouseout=\"HideTooltip(1);\">$message[10][$Lang]</TD>";
-print "<TD width=20% bgcolor=$color_w onmouseover=\"ShowTooltip(2);\" onmouseout=\"HideTooltip(2);\">$message[11][$Lang]</TD>";
-print "<TD width=20% bgcolor=$color_p onmouseover=\"ShowTooltip(3);\" onmouseout=\"HideTooltip(3);\">$message[56][$Lang]</TD>";
-print "<TD width=20% bgcolor=$color_h onmouseover=\"ShowTooltip(4);\" onmouseout=\"HideTooltip(4);\">$message[57][$Lang]</TD>";
-print "<TD width=20% bgcolor=$color_k onmouseover=\"ShowTooltip(5);\" onmouseout=\"HideTooltip(5);\">$message[44][$Lang]</TD></TR>";
+print "<TD width=20% bgcolor=#$color_v onmouseover=\"ShowTooltip(1);\" onmouseout=\"HideTooltip(1);\">$message[10][$Lang]</TD>";
+print "<TD width=20% bgcolor=#$color_w onmouseover=\"ShowTooltip(2);\" onmouseout=\"HideTooltip(2);\">$message[11][$Lang]</TD>";
+print "<TD width=20% bgcolor=#$color_p onmouseover=\"ShowTooltip(3);\" onmouseout=\"HideTooltip(3);\">$message[56][$Lang]</TD>";
+print "<TD width=20% bgcolor=#$color_h onmouseover=\"ShowTooltip(4);\" onmouseout=\"HideTooltip(4);\">$message[57][$Lang]</TD>";
+print "<TD width=20% bgcolor=#$color_k onmouseover=\"ShowTooltip(5);\" onmouseout=\"HideTooltip(5);\">$message[44][$Lang]</TD></TR>";
 $kilo=int($TotalBytes/1024*100)/100;
 print "<TR><TD><b>$TotalVisits</b><br>&nbsp;</TD><TD><b>$TotalUnique</b><br>($RatioHosts&nbsp;$message[52][$Lang])</TD><TD><b>$TotalPages</b><br>($RatioPages&nbsp;".lc $message[56][$Lang]."/".lc $message[12][$Lang].")</TD>";
 print "<TD><b>$TotalHits</b><br>($RatioHits&nbsp;".lc $message[57][$Lang]."/".lc $message[12][$Lang].")</TD><TD><b>$kilo $message[44][$Lang]</b><br>($RatioBytes&nbsp;$message[44][$Lang]/".lc $message[12][$Lang].")</TD></TR>\n";
@@ -3377,7 +3376,7 @@ print "<br><hr>\n";
 print "$CENTER<a name=\"DOMAINS\"></a><BR>";
 $tab_titre="$message[25][$Lang]";
 &tab_head;
-print "<TR BGCOLOR=$color_TableBGRowTitle><TH colspan=2>$message[17][$Lang]</TH><TH>Code</TH><TH bgcolor=$color_p>$message[56][$Lang]</TH><TH bgcolor=$color_h>$message[57][$Lang]</TH><TH bgcolor=$color_k>$message[44][$Lang]</TH><TH>&nbsp;</TH></TR>\n";
+print "<TR bgcolor=#$color_TableBGRowTitle><TH colspan=2>$message[17][$Lang]</TH><TH>Code</TH><TH bgcolor=#$color_p>$message[56][$Lang]</TH><TH bgcolor=#$color_h>$message[57][$Lang]</TH><TH bgcolor=#$color_k>$message[44][$Lang]</TH><TH>&nbsp;</TH></TR>\n";
 if ($SortDir<0) { $max_h=$_domener_h{$sortdomains_h[0]}; }
 else            { $max_h=$_domener_h{$sortdomains_h[$#sortdomains_h]}; }
 if ($SortDir<0) { $max_k=$_domener_k{$sortdomains_k[0]}; }
@@ -3425,7 +3424,7 @@ if ($rest_p > 0) { 	# All other domains (known or not)
 print "$CENTER<a name=\"VISITOR\"></a><BR>";
 $tab_titre="TOP $MaxNbOfHostsShown $message[55][$Lang] $TotalHosts $message[26][$Lang] ($TotalUnique $message[11][$Lang])";
 &tab_head;
-print "<TR BGCOLOR=$color_TableBGRowTitle><TH>$message[18][$Lang]</TH><TH bgcolor=$color_p>$message[56][$Lang]</TH><TH bgcolor=$color_h>$message[57][$Lang]</TH><TH bgcolor=$color_k>$message[44][$Lang]</TH><TH>$message[9][$Lang]</TH></TR>\n";
+print "<TR bgcolor=#$color_TableBGRowTitle><TH>$message[18][$Lang]</TH><TH bgcolor=#$color_p>$message[56][$Lang]</TH><TH bgcolor=#$color_h>$message[57][$Lang]</TH><TH bgcolor=#$color_k>$message[44][$Lang]</TH><TH>$message[9][$Lang]</TH></TR>\n";
 $count=0;$total_p=0;$total_h=0;$total_k=0;
 foreach $key (@sorthosts_p)
 {
@@ -3468,7 +3467,7 @@ if ($rest_p > 0) { print "<TR><TD CLASS=LEFT><font color=blue>$message[2][$Lang]
 print "$CENTER<a name=\"ROBOTS\"></a><BR>";
 $tab_titre=$message[53][$Lang];
 &tab_head;
-print "<TR BGCOLOR=$color_TableBGRowTitle onmouseover=\"ShowTooltip(16);\" onmouseout=\"HideTooltip(16);\"><TH>Robot</TH><TH bgcolor=$color_h width=80>Hits</TH><TH>$message[9][$Lang]</TH></TR>\n";
+print "<TR bgcolor=#$color_TableBGRowTitle onmouseover=\"ShowTooltip(16);\" onmouseout=\"HideTooltip(16);\"><TH>Robot</TH><TH bgcolor=#$color_h width=80>Hits</TH><TH>$message[9][$Lang]</TH></TR>\n";
 @sortrobot=sort { $SortDir*$_robot_h{$a} <=> $SortDir*$_robot_h{$b} } keys (%_robot_h);
 foreach $key (@sortrobot) {
 	$yearcon=substr($_robot_l{$key},0,4);
@@ -3524,7 +3523,7 @@ print "</TR></TABLE></TD></TR>\n";
 print "$CENTER<a name=\"PAGE\"></a><BR>";
 $tab_titre="TOP $MaxNbOfPageShown $message[55][$Lang] $TotalDifferentPages $message[27][$Lang]";
 &tab_head;
-print "<TR BGCOLOR=$color_TableBGRowTitle><TH>Page-URL</TH><TH bgcolor=$color_p>&nbsp;$message[29][$Lang]&nbsp;</TH><TH>&nbsp;</TH></TR>\n";
+print "<TR bgcolor=#$color_TableBGRowTitle><TH>Page-URL</TH><TH bgcolor=#$color_p>&nbsp;$message[29][$Lang]&nbsp;</TH><TH>&nbsp;</TH></TR>\n";
 if ($SortDir<0) { $max=$_sider_p{$sortsiders[0]}; }
 else            { $max=$_sider_p{$sortsiders[$#sortsiders]}; }
 $count=0;
@@ -3549,7 +3548,7 @@ foreach $key (@sortsiders) {
 print "$CENTER<a name=\"BROWSER\"></a><BR>";
 $tab_titre="$message[21][$Lang]";
 &tab_head;
-print "<TR BGCOLOR=$color_TableBGRowTitle><TH>Browser</TH><TH bgcolor=$color_h width=40>Hits</TH><TH bgcolor=$color_h width=40>$message[15][$Lang]</TH></TR>\n";
+print "<TR bgcolor=#$color_TableBGRowTitle><TH>Browser</TH><TH bgcolor=#$color_h width=40>Hits</TH><TH bgcolor=#$color_h width=40>$message[15][$Lang]</TH></TR>\n";
 foreach $key (@sortbrowsers) {
 	$p=int($_browser_h{$key}/$TotalHits*1000)/10;
 	if ($key eq "Unknown") {
@@ -3567,7 +3566,7 @@ foreach $key (@sortbrowsers) {
 print "$CENTER<a name=\"OS\"></a><BR>";
 $tab_titre=$message[59][$Lang];
 &tab_head;
-print "<TR BGCOLOR=$color_TableBGRowTitle><TH colspan=2>OS</TH><TH bgcolor=$color_h width=40>Hits</TH><TH bgcolor=$color_h width=40>$message[15][$Lang]</TH></TR>\n";
+print "<TR bgcolor=#$color_TableBGRowTitle><TH colspan=2>OS</TH><TH bgcolor=#$color_h width=40>Hits</TH><TH bgcolor=#$color_h width=40>$message[15][$Lang]</TH></TR>\n";
 foreach $key (@sortos) {
 	$p=int($_os_h{$key}/$TotalHits*1000)/10;
 	if ($key eq "Unknown") {
@@ -3588,7 +3587,7 @@ foreach $key (@sortos) {
 print "$CENTER<a name=\"REFERER\"></a><BR>";
 $tab_titre="$message[36][$Lang]";
 &tab_head;
-print "<TR BGCOLOR=$color_TableBGRowTitle><TH>$message[37][$Lang]</TH><TH bgcolor=$color_h width=40>Hits</TH><TH bgcolor=$color_h width=40>$message[15][$Lang]</TH></TR>\n";
+print "<TR bgcolor=#$color_TableBGRowTitle><TH>$message[37][$Lang]</TH><TH bgcolor=#$color_h width=40>Hits</TH><TH bgcolor=#$color_h width=40>$message[15][$Lang]</TH></TR>\n";
 if ($TotalHits > 0) { $_=int($_from_h[0]/$TotalHits*1000)/10; }
 print "<TR><TD CLASS=LEFT><b>$message[38][$Lang]:</b></TD><TD>$_from_h[0]&nbsp;</TD><TD>$_&nbsp;%</TD></TR>\n";
 if ($TotalHits > 0) { $_=int($_from_h[1]/$TotalHits*1000)/10; }
@@ -3635,7 +3634,7 @@ print "<TR><TD CLASS=LEFT><b>$message[42][$Lang] :</b></TD><TD>$_from_h[4]&nbsp;
 print "$CENTER<a name=\"SEARCHWORDS\"></a><BR>";
 $tab_titre="TOP $MaxNbOfKeywordsShown $message[55][$Lang] $TotalDifferentKeywords $message[43][$Lang]";
 &tab_head;
-print "<TR BGCOLOR=$color_TableBGRowTitle onmouseover=\"ShowTooltip(15);\" onmouseout=\"HideTooltip(15);\"><TH>$message[13][$Lang]</TH><TH bgcolor=$color_s width=40>$message[14][$Lang]</TH><TH bgcolor=$color_s width=40>$message[15][$Lang]</TH></TR>\n";
+print "<TR bgcolor=#$color_TableBGRowTitle onmouseover=\"ShowTooltip(15);\" onmouseout=\"HideTooltip(15);\"><TH>$message[13][$Lang]</TH><TH bgcolor=#$color_s width=40>$message[14][$Lang]</TH><TH bgcolor=#$color_s width=40>$message[15][$Lang]</TH></TR>\n";
 $count=0;
 foreach $key (@sortsearchwords) {
 	if ( $count>=$MaxNbOfKeywordsShown ) { last; }
@@ -3662,7 +3661,7 @@ if ($rest >0) {
 print "$CENTER<a name=\"ERRORS\"></a><BR>";
 $tab_titre=$message[32][$Lang];
 &tab_head;
-print "<TR BGCOLOR=$color_TableBGRowTitle><TH colspan=2>$message[32][$Lang]</TH><TH bgcolor=$color_h width=40>Hits</TH><TH bgcolor=$color_h width=40>$message[15][$Lang]</TH></TR>\n";
+print "<TR bgcolor=#$color_TableBGRowTitle><TH colspan=2>$message[32][$Lang]</TH><TH bgcolor=#$color_h width=40>Hits</TH><TH bgcolor=#$color_h width=40>$message[15][$Lang]</TH></TR>\n";
 foreach $key (@sorterrors) {
 	$p=int($_errors_h{$key}/$TotalErrors*1000)/10;
 	if ($httpcode{$key}) { print "<TR onmouseover=\"ShowTooltip($key);\" onmouseout=\"HideTooltip($key);\">"; }
