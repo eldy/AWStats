@@ -5022,9 +5022,11 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 	open(LOG,"$LogFile") || error("Couldn't open server log file \"$LogFile\" : $!");
 	binmode LOG;	# Avoid premature EOF due to log files corrupted with \cZ or bin chars
 
+	# Define local variables for loop scan
 	my @field=();
 	my $lastlinenumber=0; my $lastlineoffset=0; my $lastlineoffsetnext=0;
 	my $counterforflushtest=0;
+	my $qualifdrop='';
 	# Reset chrono for benchmark (first call to GetDelaySinceStart)
 	&GetDelaySinceStart(1);
 	if (! scalar keys %HTMLOutput) { print "Phase 1 : First bypass old records, searching new record...\n"; }
@@ -5200,14 +5202,17 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 
 		# We found a new line
 		#----------------------------------------
-		if ($timerecord > $LastLine) {
-			$LastLine = $timerecord;
-		}	# Test should always be true except with not sorted log files.
+		if ($timerecord > $LastLine) { $LastLine = $timerecord; }	# Test should always be true except with not sorted log files
 
 		# TODO. Add robot in a list if URL is robots.txt (Note: robot referer value can be same than a normal browser)
 
+
+
+
+
+
+
 		# Skip for some client host IP addresses, some URLs, other URLs
-		my $qualifdrop='';
 		if    (@SkipHosts && (&SkipHost($field[$pos_host]) || ($pos_hostr && &SkipHost($field[$pos_host]))))   { $qualifdrop="Dropped record (host $field[$pos_host] not qualified by SkipHosts)"; }
 		elsif (@SkipFiles && &SkipFile($field[$pos_url]))    { $qualifdrop="Dropped record (URL $field[$pos_url] not qualified by SkipFiles)"; }
 		elsif (@OnlyHosts && ! &OnlyHost($field[$pos_host]) && (! $pos_hostr || ! &OnlyHost($field[$pos_hostr]))) { $qualifdrop="Dropped record (host $field[$pos_host]".($pos_hostr?" and $field[$pos_hostr]":"")." not qualified by OnlyHosts)"; } 
@@ -5217,12 +5222,12 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 			$NbOfLinesDropped++;
 			if ($Debug) { debug("$qualifdrop: $_",4); }
 			if ($ShowDropped) { print "$qualifdrop: $_\n"; }
+			$qualifdrop='';
 			next;
 		}
 
 		# Record is approved
 		#-------------------
-		$NbOfNewLines++;
 
 		# Is it in a new month section ?
 		#-------------------------------
@@ -5233,16 +5238,17 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 				&Read_History_With_TmpUpdate($lastprocessedyear,$lastprocessedmonth,1,1,"all",($lastlinenumber+$NbOfLinesParsed),$lastlineoffset,&CheckSum($_));
 				$counterforflushtest=0;	# We reset counterforflushtest
 			}
-			$lastprocessedmonth=$monthrecord;$lastprocessedyear=$yearrecord;
-			$lastprocessedyearmonth=sprintf("%04i%02i",$lastprocessedyear,$lastprocessedmonth);
+			$lastprocessedyearmonth=sprintf("%04i%02i",$lastprocessedyear=$yearrecord,$lastprocessedmonth=$monthrecord);
 		}
+
+		$NbOfNewLines++;
 
 		# Convert $field[$pos_size]
 		# if ($field[$pos_size] eq '-') { $field[$pos_size]=0; }
 
-		# Check screen size
-		#------------------
-		if ($field[$pos_url] =~ /$LogScreenSizeUrl/) {
+		# Check screen size (must be before return code)
+		#-----------------------------------------------
+		if ($field[$pos_url] =~ /^\/$LogScreenSizeUrl/) {
 			if ($pos_query >=0 && $field[$pos_query]) { # For this fucking IIS in pos_query mode
 				if ($field[$pos_query] =~ /w=(\d+)&h=(\d+)/) { $_screensize_h{"$1x$2"}++; next; }
 			}
@@ -5300,17 +5306,15 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 
 				my $uarobot=$TmpRobot{$UserAgent};
 				if (! $uarobot) {
-					my $foundrobot=0;
 					#study $UserAgent;		Does not increase speed
 					foreach my $bot (@RobotsSearchIDOrder) {
 						if ($UserAgent =~ /$bot/i) {
-							$foundrobot=1;
 							$TmpRobot{$UserAgent}=$uarobot="$bot";	# Last time, we won't search if robot or not. We know it is.
 							if ($Debug) { debug(" UserAgent '$UserAgent' is added to TmpRobot with value '$bot'",2); }
 							last;
 						}
 					}
-					if (! $foundrobot) {							# Last time, we won't search if robot or not. We know it's not.
+					if (! $uarobot) {								# Last time, we won't search if robot or not. We know it's not.
 						$TmpRobot{$UserAgent}=$uarobot='-';
 					}
 				}
