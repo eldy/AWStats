@@ -53,6 +53,7 @@ it with its value when reading it), follow the example:<br>
 <li><a href="#DirIcons">DirIcons</a>
 <li><a href="#SiteDomain">SiteDomain</a>
 <li><a href="#HostAliases">HostAliases</a>
+<li><a href="#AllowToUpdateStatsFromBrowser">AllowToUpdateStatsFromBrowser</a>
 </ul>
 
 
@@ -70,6 +71,7 @@ it with its value when reading it), follow the example:<br>
 <li><a href="#SkipFiles">SkipFiles</a>
 <li><a href="#OnlyFiles">OnlyFiles</a>
 <li><a href="#NotPageList">NotPageList</a>
+<li><a href="#ValidHTTPCodes">ValidHTTPCodes</a>
 <li><a href="#URLWithQuery">URLWithQuery</a>
 <li><a href="#WarningMessages">WarningMessages</a>
 <li><a href="#NbOfLinesForCorruptedLog">NbOfLinesForCorruptedLog</a>
@@ -117,32 +119,32 @@ it with its value when reading it), follow the example:<br>
 <li><a href="#BarWidth">BarWidth</a>
 <li><a href="#BarHeight">BarHeight</a>
 <li><a href="#Logo">Logo</a>
-<li><a href="#LogoLink">LogoLink</a>
+<li><a href="#Logo">LogoLink</a>
 <li><a href="#StyleSheet">StyleSheet</a>
-<li><a href="#color_Background">color_Background</a>
-<li><a href="#color_TableBGTitle">color_TableBGTitle</a>
-<li><a href="#color_TableTitle">color_TableTitle</a>
-<li><a href="#color_TableBG">color_TableBG</a>
-<li><a href="#color_TableRowTitle">color_TableRowTitle</a>
-<li><a href="#color_TableBGRowTitle">color_TableBGRowTitle</a>
-<li><a href="#color_TableBorder">color_TableBorder</a>
-<li><a href="#color_text">color_text</a>
-<li><a href="#color_titletext">color_titletext</a>
-<li><a href="#color_weekend">color_weekend</a>
-<li><a href="#color_link">color_link</a>
-<li><a href="#color_hover">color_hover</a>
-<li><a href="#color_u">color_u</a>
-<li><a href="#color_v">color_v</a>
-<li><a href="#color_p">color_p</a>
-<li><a href="#color_h">color_h</a>
-<li><a href="#color_k">color_k</a>
-<li><a href="#color_s">color_s</a>
+<li><a href="#color_">color_Background</a>
+<li><a href="#color_">color_TableBGTitle</a>
+<li><a href="#color_">color_TableTitle</a>
+<li><a href="#color_">color_TableBG</a>
+<li><a href="#color_">color_TableRowTitle</a>
+<li><a href="#color_">color_TableBGRowTitle</a>
+<li><a href="#color_">color_TableBorder</a>
+<li><a href="#color_">color_text</a>
+<li><a href="#color_">color_titletext</a>
+<li><a href="#color_">color_weekend</a>
+<li><a href="#color_">color_link</a>
+<li><a href="#color_">color_hover</a>
+<li><a href="#color_">color_u</a>
+<li><a href="#color_">color_v</a>
+<li><a href="#color_">color_p</a>
+<li><a href="#color_">color_h</a>
+<li><a href="#color_">color_k</a>
+<li><a href="#color_">color_s</a>
 </ul>
 
 
 <br><br><hr>
 
-
+<a name="LogFile"><b>LogFile</b></a><br>
 <br># "LogFile" contains the web server logfile to analyze.
 <br># You can use a full path or relative path from awstats.pl directory.
 <br># Example: "/var/log/apache/access.log"
@@ -165,6 +167,7 @@ it with its value when reading it), follow the example:<br>
 
 <br><br><hr>
 
+<a name="LogFormat"><b>LogFormat</b></a><br>
 <br># Put here your log format (Must agree with your web server. See setup
 <br># instructions in README.txt to know how to configure your web server to have
 <br># the required log format).
@@ -209,6 +212,7 @@ it with its value when reading it), follow the example:<br>
 
 <br><br><hr>
 
+<a name="DNSLookup"><b>DNSLookup</b></a><br>
 <br># If you want to have informations on domains/countries visitors, you must ask
 <br># AWStats to make reverse DNS lookup (if not already done in your log file).
 <br># If you set DNSLookup to 1, don't forget that reverse DNS lookup decrease
@@ -223,6 +227,7 @@ it with its value when reading it), follow the example:<br>
 
 <br><br><hr>
 
+<a name="DirData"><b>DirData</b></a><br>
 <br># When AWStats updates its statistics, it stores results of its analysis in 
 <br># files (AWStats database). All thoose files are written in the directory
 <br># defined by the "DirData" parameter. Set this value to the directory where
@@ -239,6 +244,7 @@ it with its value when reading it), follow the example:<br>
 
 <br><br><hr>
 
+<a name="DirCgi"><b>DirCgi</b></a><br>
 <br># Relative or absolute web URL of your awstats.pl directory.
 <br># This parameter is used only when AWStats is runned from command line
 <br># with -output option (to generate links in HTML reported page).
@@ -248,6 +254,7 @@ it with its value when reading it), follow the example:<br>
 
 <br><br><hr>
 
+<a name="DirIcons"><b>DirIcons</b></a><br>
 <br># Relative or absolute web URL of all icons subdirectories.
 <br># Default: "/icon" (means you must copy icon directories in "/mywwwroot/icon")
 <br>#
@@ -255,6 +262,7 @@ it with its value when reading it), follow the example:<br>
 
 <br><br><hr>
 
+<a name="SiteDomain"><b>SiteDomain</b></a><br>
 <br># "SiteDomain" must contain the main domain name or the main intranet web
 <br># server name used to reach the web site.
 <br># This parameter is only used to generate full URLs links when ShowLinksOnUrl
@@ -269,6 +277,7 @@ it with its value when reading it), follow the example:<br>
 
 <br><br><hr>
 
+<a name="Hostaliases"><b>Hostaliases</b></a><br>
 <br># Put here all other possible domain names, addresses or virtual host aliases
 <br># someone can use to access your site. Try to keep only the minimum number of
 <br># possible names/adresses to have the best performances.
@@ -284,6 +293,7 @@ it with its value when reading it), follow the example:<br>
 
 <br><br><hr>
 
+<a name="AllowToUpdateStatsFromBrowser"><b>AllowToUpdateStatsFromBrowser</b></a><br>
 <br># When this parameter is set to 1, AWStats add a button on report page to
 <br># allow to "update" statistics from a web browser. Warning, when "update" is
 <br># made from a browser, AWStats is runned as a CGI by the web server user
@@ -459,6 +469,22 @@ it with its value when reading it), follow the example:<br>
 
 <br><br><hr>
 
+<a name="ValidHTTPCodes"><b>ValidHTTPCodes</b></a><br>
+<b>Version : </b>4.0 +<br>
+<br># By default, AWStats considers that records found in log file are successfull
+<br># hits if HTTP code returned by server is a valid HTTP code (200 and 302).
+<br># Any other code are reported in HTTP error chart.
+<br># However in some specific environnement, whith web server HTTP redirection,
+<br># you can choose to also accept other codes (like 304).
+<br># Example: "200 302 304"
+<br># Default: "200 302"
+<br>#
+<br>ValidHTTPCodes="200 302"
+
+<br><br><hr>
+
+<a name="URLWithQuery"><b>URLWithquery</b></a><br>
+<b>Version : </b>3.2 +<br>
 <br># Keep or attach the query string to the URL in the statistics for individual
 <br># pages. This is primarily used to differentiate between the URLs of dynamic
 <br># pages. If set to 1, mypage.html?id=x and mypage.html?id=y are counted as
@@ -473,6 +499,8 @@ it with its value when reading it), follow the example:<br>
 
 <br><br><hr>
 
+<a name="WarningMessages"><b>WarningMessages</b></a><br>
+<b>Version : </b>1.0 +<br>
 <br># AWStats can detect setup problems or show you important informations to have
 <br># a better use. Keep this to 1, except if AWStats says you can change it.
 <br># Possible values: 1 or 0
@@ -635,6 +663,8 @@ it with its value when reading it), follow the example:<br>
 
 <br><br><hr>
 
+<a name="Logo"><b>Logo...</b></a><br>
+<b>Version : </b>3.1<br>
 <br># You can set Logo and LogoLink to use your own logo.
 <br># Logo must be the name of image file (must be in $DirIcons/other directory).
 <br># LogoLink is the expected URL when clicking on Logo.
@@ -645,6 +675,8 @@ it with its value when reading it), follow the example:<br>
 
 <br><br><hr>
 
+<a name="StyleSheet"><b>StyleSheet</b></a><br>
+<b>Version : </b>Not yet available<br>
 <br># You can ask AWStats to use a particular CSS (Cascading Style Sheet) to
 <br># change its look.
 <br># Example: "/css/awstats.css"
@@ -654,6 +686,8 @@ it with its value when reading it), follow the example:<br>
 
 <br><br><hr>
 
+<a name="color_"><b>color_...</b></a><br>
+<b>Version : </b>Variable<br>
 <br># Those colors parameters can be used (if StyleSheet parameter is not used)
 <br># to change AWStats look.
 <br># Example: color_name="RRGGBB"	# RRGGBB is Red Green Blue components in Hex
@@ -667,7 +701,7 @@ it with its value when reading it), follow the example:<br>
 <br>color_TableBorder="ECECEC"		# Table border color (Default = "ECECEC")
 <br>color_text="000000"				# Color of main body text (Default = "000000")
 <br>color_titletext="000000"		# Color of text title within colored Title Rows (Default = "000000")
-<br>color_weekend="EAEAEA"			# Color for week-end days
+<br>color_weekend="EAEAEA"			# Color for week-end days (Default = "EAEAEA")
 <br>color_link="0011BB"				# Color of HTML links (Default = "0011BB")
 <br>color_hover="605040"			# Color of HTML on-mouseover links (Default = "605040") 
 <br>color_u="FF9933"				# Background color for number of unique visitors (Default = "FF9933")
