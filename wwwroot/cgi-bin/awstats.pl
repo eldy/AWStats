@@ -81,7 +81,7 @@ $word, $yearcon, $yearfile, $yearmonthfile, $yeartoprocess) = ();
 %MonthBytes = %MonthHits = %MonthPages = %MonthUnique = %MonthVisits =
 %listofyears = %monthlib = %monthnum = ();
 
-$VERSION="3.0 (build 1)";
+$VERSION="3.0 (build 2)";
 $Lang="en";
 
 # Default value
@@ -586,6 +586,7 @@ $BarImageHorizontal_k = "barrehk.png";
 "mercator", "Mercator (Not referenced robot)",
 #"msiecrawler", "MSIECrawler (Not referenced robot)",	MSIECrawler seems to be a grabber not a robot
 "perman surfer", "Perman surfer (Not referenced robot)",
+"redalert", "Red Alert (Not referenced robot)",
 "shoutcast","Shoutcast Directory Service (Not referenced robot)",
 "unlost_web_crawler", "Unlost_Web_Crawler (Not referenced robot)",
 "webbase", "WebBase (Not referenced robot)",
