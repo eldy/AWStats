@@ -169,7 +169,7 @@ sub _ReadAndOutputTooltipFile {
 			if ($_ =~ /\<!--/) { next; }	# Remove comment
 			# Search for replaceable parameters
 			s/#PROG#/$aws_PROG/;
-			s/#MaxNbOfRefererShown#/$MaxNbOfRefererShown/;
+			s/#MaxNbOfRefererShown#/$MaxNbOf{'RefererShown'}/;
 			s/#VisitTimeOut#/$aws_VisitTimeout/;
 			s/#RobotArray#/$aws_NbOfRobots/;
 			s/#SearchEnginesArray#/$aws_NbOfSearchEngines/;
