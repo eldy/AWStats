@@ -87,7 +87,7 @@ $word, $yearcon, $yearfile, $yearmonthfile, $yeartoprocess) = ();
 @sortsearchwords = @sortsereferrals = @sortsider404 = @sortsiders = @sortunknownip =
 @sortunknownreferer = @sortunknownrefererbrowser = @wordlist = ();
 
-$VERSION="2.5 (build 15)";
+$VERSION="2.5 (build 16)";
 $Lang=0;
 
 # Default value
@@ -265,6 +265,7 @@ $BarImageHorizontal_k = "barrehk.png";
 
 # OS lists ("os detector in lower case","os text")
 %OSHash      = (
+"winme","Windows Me",
 "win2000","Windows 2000",
 "winnt","Windows NT",
 "win98","Windows 98",
@@ -294,6 +295,7 @@ $BarImageHorizontal_k = "barrehk.png";
 
 # OS AliasHash ("text that match in log after changing ' ' or '+' into '_' ","osid")
 %OSAliasHash	= (
+"windows_me","winme",
 "windows_2000","win2000",
 "windows_nt_5","win2000",
 "windows_nt","winnt",
