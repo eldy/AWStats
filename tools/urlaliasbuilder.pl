@@ -2,9 +2,13 @@
 #-Description-------------------------------------------
 # Small script to auto-generate URL Alias files for 5.2+ AWStats
 # Requires two Perl modules below.
-# Note: Doesn't currently support https.
-# From original title-grabber.pl file (Feedback to: simonjw@users.sourceforge.net)
-# Changed by eldy@users.sourceforge.net
+# From original title-grabber.pl file
+# 		(Feedback/suggestions to: simonjw@users.sourceforge.net)
+# Modified by eldy@users.sourceforge.net
+# 
+# Note: If you want to retrieve document titles over SSL you must have OpenSSL and
+#       the Net::SSL(eay) Perl Module available.  This code will check that SSL is
+#		supported before attempting to retrieve via it.
 #-------------------------------------------------------
 use LWP::UserAgent;
 use HTML::TokeParser;
@@ -16,16 +20,25 @@ use strict;no strict "refs";
 my $REVISION='$Revision$'; $REVISION =~ /\s(.*)\s/; $REVISION=$1;
 my $VERSION="1.0 (build $REVISION)";
 
+############### EDIT HERE ###############
+
+# you can set this manually if you will only grep one site
 my $SITECONFIG = "";
-my $FILEMARKER1 = "BEGIN_SIDER";
-my $FILEMARKER2 = "END_SIDER";
 
-my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = localtime(time);
-my $fullMonth = sprintf("%02d",$mon+1);
-my $fullYear = sprintf("%04d",$year+1900);
-
-# Where everything we need to know is installed
+# Where the default input is located.
 my $awStatsDataDir = "/var/cache/awstats";
+
+# Throttle HTTP requests - help avoid DoS-like results if on a quick network.
+# Number is the number of seconds to pause between requests. Set to zero for
+# no throttling.
+my $throttleRequestsTime = 0;
+
+# LWP settings
+# UA string passed to server.  You should add this to SkipUserAgents in the
+# awstats.conf file if you want to ignore hits from this code.
+my $userAgent = "urlaliasbuilder/$VERSION";
+# Put a sensible e-mail address here
+my $spiderOwner = "simon\@cis.net.au";
 
 # Timeout (in seconds) for each HTTP request (increase on slow connections)
 my $getTimeOut = 2;
@@ -35,22 +48,26 @@ my $proxyServer = "";
 # Hosts not to use a proxy for
 my @hostsNoProxy = ("host1","host1.my.domain.name");
 
+############### DON'T EDIT BELOW HERE ###############
+
+# Don't edit these
+my $FILEMARKER1 = "BEGIN_SIDER";
+my $FILEMARKER2 = "END_SIDER";
+
+my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = localtime(time);
+
+my $fullMonth = sprintf("%02d",$mon+1);
+my $fullYear = sprintf("%04d",$year+1900);
 
 
-# ====== main
-my $DIR; my $PROG; my $Extension;
-($DIR=$0) =~ s/([^\/\\]*)$//; ($PROG=$1) =~ s/\.([^\.]*)$//; $Extension=$1;
-
-# LWP settings
-# UA string passed to server.  You should add this to SkipUserAgents in the
-# awstats.conf file if you want to ignore hits from this code.
-my $userAgent = ucfirst($PROG)."/$VERSION";
+# ====== main ======
 
 # Change default value if options are used
 my $helpfound=0;
 my $nohosts=0;
 my $overwritedata=0;
 my $hostname="";
+my $useHTTPS=0;
 
 # Data file to open
 my $fileToOpen = $awStatsDataDir . "/awstats" . $fullMonth . $fullYear . ($SITECONFIG?".$SITECONFIG":"") . ".txt";
@@ -60,18 +77,21 @@ my $urlAliasFile = "urlalias" . ($SITECONFIG?".$SITECONFIG":"") . ".txt";
 for (0..@ARGV-1) {
 	if ($ARGV[$_] =~ /^-*urllistfile=([^\s&]+)/i) 	{ $fileToOpen="$1"; next; }
 	if ($ARGV[$_] =~ /^-*urlaliasfile=([^\s&]+)/i) 	{ $urlAliasFile="$1"; next; }
-	if ($ARGV[$_] =~ /^-*server=(.*)/i)      		{ $hostname="$1"; next; }
+	if ($ARGV[$_] =~ /^-*site=(.*)/i)      			{ $hostname="$1"; next; }
 	if ($ARGV[$_] =~ /^-*h/i)     		  			{ $helpfound=1; next; }
 	if ($ARGV[$_] =~ /^-*overwrite/i)     	 		{ $overwritedata=1; next; }
+	if ($ARGV[$_] =~ /^-*secure/i)     	 			{ $useHTTPS=1; next; }	
 }
 
 # if no host information provided, we bomb out to usage
 if(! $hostname && ! $SITECONFIG) { $nohosts=1; }
 
-# if no hostname set (i.e. -server=) then we use the config value
+# if no hostname set (i.e. -site=) then we use the config value
 if(! $hostname && $SITECONFIG) { $hostname=$SITECONFIG; }
 
 # Show usage help
+my $DIR; my $PROG; my $Extension;
+($DIR=$0) =~ s/([^\/\\]*)$//; ($PROG=$1) =~ s/\.([^\.]*)$//; $Extension=$1;
 if ($nohosts || $helpfound || ! @ARGV) {
 	print "\n----- $PROG $VERSION -----\n";
 	print ucfirst($PROG)." generates an 'urlalias' file from an input file.\n";
@@ -83,23 +103,24 @@ if ($nohosts || $helpfound || ! @ARGV) {
 	print "- The second is title caught from web page.\n";
 	print "This resulting file can be used by AWStats urlalias plugin.\n";
 	print "\n";
-	print "Usage:  $PROG.$Extension -server=www.myserver.com [options]\n";
+	print "Usage:  $PROG.$Extension  -site=www.myserver.com  [options]\n";
 	print "\n";
-	print "The server parameter contains the web server to get the page from.\n";
+	print "The site parameter contains the web server to get the page from.\n";
 	print "Where options are:\n";
 	print "  -urllistfile=Input urllist file\n";
 	print "    If this file is an AWStats history file then urlaliasbuilder will use the\n";
 	print "    SIDER section of this file as its input URL's list.\n";
 	print "  -urlaliasfile=Output urlalias file to build\n";
 	print "  -overwrite\n";
+	print "  -secure\n";
 	print "\n";
-	print "Example: $PROG.$Extension -server=www.someotherhost.com\n";
+	print "Example: $PROG.$Extension -site=www.someotherhost.com\n";
 	print "\n";
 	print "This is default configuration used if no option is used on command line:\n";
 	print "Input urllist file: $fileToOpen (overwritten by -urllistfile option)\n";
 	print "Output urlalias file: $urlAliasFile (overwritten by -urlaliasfile option)\n";
 	print "\n";	
-	print "This script was written from simonjw original works title-grabber.pl.\n";
+	print "This script was written from Simon Waight original works title-grabber.pl.\n";
 	print "\n";
 	exit 0;
 }
@@ -124,8 +145,8 @@ if($overwritedata == 0) {
 	@bits = ();
 }
 
-# open current months AWStats data file
-print "Open input file $fileToOpen\n";
+# open input file (might be an AWStats history data file)
+print "Reading input file: $fileToOpen\n";
 open(FILE,$fileToOpen) || die "Error: Can't open input urllist file $fileToOpen";
 binmode FILE;
 
@@ -186,18 +207,25 @@ while (<FILE>) {
 	}
 }
 
-print "Found " . $addToAliasFileCount . " new URLs with no alias.\n";
-
 close(FILE);
+
+if($addToAliasFileCount == 0) {
+	print "Found no new documents.\n\n" ;
+	exit();
+}
+
+print "Found " . $addToAliasFileCount . " new documents with no alias.\n";
 
 my $fileOutput = "";
 
-print "Looking thoose pages on server '$hostname' to get alias...\n";
+print "Looking thoose pages on web site '$hostname' to get alias...\n";
 
 # Create a user agent (browser) object
 my $ua = new LWP::UserAgent;
 # set user agent name
 $ua->agent($userAgent);
+# set user agents owners e-mail address
+$ua->from($spiderOwner);
 # set timeout for requests
 $ua->timeout($getTimeOut);
 if ($proxyServer) {
@@ -206,19 +234,29 @@ if ($proxyServer) {
 	# avoid proxy for these hosts
 	$ua->no_proxy(@hostsNoProxy);
 }
+if(!($ua->is_protocol_supported('https')) && $useHTTPS) {
+	print "SSL is not supported on this machine.\n\n";
+	exit();
+}
 
-# Write the data back to urlalias file
+my $fileOutput = "";
+
+# Now lets build the contents to write (or append) to urlalias file
+foreach my $newAlias (@addToAliasFile) {
+	sleep $throttleRequestsTime;
+	my $newAliasEntry = &Generate_Alias_List_Entry($newAlias);
+	$fileOutput .= $newAliasEntry . "\n";
+}
+
+# write the data back to urlalias file
 if (! $overwritedata) {
 	# Append to file
-	open(FILE,">>$urlAliasFile") || die "Error: Failed to open file for writing: $_";;
-	foreach my $newAlias (@addToAliasFile) {
-		my $newAliasEntry = &Generate_Alias_List_Entry($newAlias);
-		print FILE "$newAliasEntry\n";
-	}
+	open(FILE,">>$urlAliasFile") || die "Error: Failed to open file for writing: $_\n\n";
+	print FILE $fileOutput;
 	close(FILE);
 } else {
 	# Overwrite the file
-	open(FILE,">$urlAliasFile") || die "Error: Failed to open file for writing: $_";;
+	open(FILE,">$urlAliasFile") || die "Error: Failed to open file for writing: $_\n\n";
 	foreach my $newAlias (@addToAliasFile) {
 		my $newAliasEntry = &Generate_Alias_List_Entry($newAlias);
 		print FILE "$newAliasEntry\n";
@@ -241,18 +279,23 @@ sub Generate_Alias_List_Entry {
 	# take in the path & document
 	my $urltoget = shift;
 
+	my $urlPrefix = "http://";
+	
+	if($useHTTPS) {
+		$urlPrefix = "https://";
+	}
+
 	my $AliasLine = "";
 	$pageTitle = "";
 	$AliasLine = $urltoget;
 	$AliasLine .= "\t";
 
 	# build a full HTTP request to pass to user agent
-	my $fullurltoget =	"http://" . $hostname . $urltoget;
-
-	#print $fullurltoget . "\n";
+	my $fullurltoget = $urlPrefix . $hostname . $urltoget;
 
 	# Create a HTTP request
-	print "Download page $fullurltoget\n";
+	print "Getting page $fullurltoget\n";
+		
 	my $req = new HTTP::Request GET => $fullurltoget;
 
 	# Pass request to the user agent and get a response back
