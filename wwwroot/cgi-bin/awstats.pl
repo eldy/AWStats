@@ -2933,7 +2933,7 @@ sub Save_History {
 		print HISTORYTMP "# for direct I/O access. If you made changes somewhere in this file, you\n";
 		print HISTORYTMP "# should also remove completely the MAP section (AWStats will rewrite it\n";
 		print HISTORYTMP "# at next update).\n";
-		print HISTORYTMP "BEGIN_MAP ".(22+(scalar %TrapInfosForHTTPErrorCodes)+(@ExtraSectionName?@ExtraSectionName-1:0))."\n";
+		print HISTORYTMP "BEGIN_MAP ".(22+(scalar keys %TrapInfosForHTTPErrorCodes)+(scalar @ExtraSectionName?scalar @ExtraSectionName-1:0))."\n";
 		print HISTORYTMP "POS_GENERAL ";$PosInFile{"general"}=tell HISTORYTMP;print HISTORYTMP "$spacebar\n";
 		# When
 		print HISTORYTMP "POS_TIME ";$PosInFile{"time"}=tell HISTORYTMP;print HISTORYTMP "$spacebar\n";
