@@ -10,7 +10,6 @@
 //   screen height and width attributes until it begins to render the
 //   body.
 //
-
 // This allows AWStats to be enhanced with some miscellanous features:
 // - Screen size detection (TRKscreen)
 // - Screen color depth detection (TRKcdi)
