@@ -20,7 +20,7 @@ use Socket;
 #-----------------------------------------------------------------------------
 use vars qw/ $REVISION $VERSION /;
 $REVISION='$Revision$'; $REVISION =~ /\s(.*)\s/; $REVISION=$1;
-$VERSION="5.2 (build $REVISION)";
+$VERSION="5.3 (build $REVISION)";
 
 # ---------- Init variables -------
 # Constants
@@ -233,8 +233,10 @@ use vars qw/
 @SkipHosts @SkipUserAgents @SkipFiles
 @OnlyHosts @OnlyFiles 
 @URLWithQueryWithoutFollowingParameters
-@ExtraSectionName @ExtraSectionCondition @ExtraSectionStatTypes @MaxNbOfExtra @MinHitExtra
-@ExtraSectionFirstColumnTitle @ExtraSectionFirstColumnValues
+@ExtraName @ExtraCondition @ExtraStatTypes @MaxNbOfExtra @MinHitExtra
+@ExtraFirstColumnTitle @ExtraFirstColumnValues
+@ExtraConditionType @ExtraConditionTypeVal
+@ExtraFirstColumnValuesType @ExtraFirstColumnValuesTypeVal
 @PluginsToLoad 
 /;
 @SessionsRange=('0s-30s','30s-2mn','2mn-5mn','5mn-15mn','15mn-30mn','30mn-1h','1h+');
@@ -244,8 +246,8 @@ use vars qw/
 @SkipHosts = @SkipUserAgents = @SkipFiles = ();
 @OnlyHosts = @OnlyFiles = ();
 @URLWithQueryWithoutFollowingParameters = ();
-@ExtraSectionName = @ExtraSectionCondition = @ExtraSectionStatTypes = @MaxNbOfExtra = @MinHitExtra = ();
-@ExtraSectionFirstColumnTitle = @ExtraSectionFirstColumnValues = ();
+@ExtraName = @ExtraCondition = @ExtraStatTypes = @MaxNbOfExtra = @MinHitExtra = ();
+@ExtraFirstColumnTitle = @ExtraFirstColumnValues = ();
 @PluginsToLoad = ();
 # ---------- Init hash arrays --------
 use vars qw/
@@ -1156,11 +1158,11 @@ sub Parse_Config {
 		if ($param =~ /^LevelForSearchEnginesDetection/)	{ $LevelForSearchEnginesDetection=$value; next; }
 		if ($param =~ /^LevelForKeywordsDetection/)			{ $LevelForKeywordsDetection=$value; next; }
  		# Read extra stats setup section
- 		if ($param =~ /^ExtraSectionName(\d+)/)			{ $ExtraSectionName[$1]=$value; next; }
- 		if ($param =~ /^ExtraSectionCondition(\d+)/)  	{ $ExtraSectionCondition[$1]=$value; next; }
- 		if ($param =~ /^ExtraSectionStatTypes(\d+)/)    { $ExtraSectionStatTypes[$1]=$value; next; }
- 		if ($param =~ /^ExtraSectionFirstColumnTitle(\d+)/) 	{ $ExtraSectionFirstColumnTitle[$1]=$value; next; }
- 		if ($param =~ /^ExtraSectionFirstColumnValues(\d+)/) 	{ $ExtraSectionFirstColumnValues[$1]=$value; next; }
+ 		if ($param =~ /^ExtraSectionName(\d+)/)			{ $ExtraName[$1]=$value; next; }
+ 		if ($param =~ /^ExtraSectionCondition(\d+)/)  	{ $ExtraCondition[$1]=$value; next; }
+ 		if ($param =~ /^ExtraSectionStatTypes(\d+)/)    { $ExtraStatTypes[$1]=$value; next; }
+ 		if ($param =~ /^ExtraSectionFirstColumnTitle(\d+)/) 	{ $ExtraFirstColumnTitle[$1]=$value; next; }
+ 		if ($param =~ /^ExtraSectionFirstColumnValues(\d+)/) 	{ $ExtraFirstColumnValues[$1]=$value; next; }
  		if ($param =~ /^MaxNbOfExtra(\d+)/) 		{ $MaxNbOfExtra[$1]=$value; next; }
  		if ($param =~ /^MinHitExtra(\d+)/) 			{ $MinHitExtra[$1]=$value; next; }
 		# Read optional appearance setup section
@@ -1417,6 +1419,22 @@ sub Read_Language_Tooltip {
 #------------------------------------------------------------------------------
 sub Check_Config {
 	if ($Debug) { debug("Call to Check_Config"); }
+
+	# Show initial values of main parameters before check
+	if ($Debug) {
+		debug(" LogFile='$LogFile'",2);
+		debug(" LogFormat='$LogFormat'",2);
+		debug(" LogSeparator='$LogSeparator'",2);
+		debug(" DNSLookup='$DNSLookup'",2);
+		debug(" DirData='$DirData'",2);
+		debug(" DirCgi='$DirCgi'",2);
+		debug(" DirIcons='$DirIcons'",2);
+		debug(" NotPageList ".(scalar keys %NotPageList),2);
+		debug(" ValidHTTPCodes ".(scalar keys %ValidHTTPCodes),2);
+		debug(" ValidSMTPCodes ".(scalar keys %ValidSMTPCodes),2);
+		debug(" UseFramesWhenCGI=$UseFramesWhenCGI",2);
+	}
+
 	# Main section
 	while ($LogFile =~ /%([ymdhwYMDHWNS]+)-(\d+)/) {
 		my $timetag=$1;
@@ -1471,32 +1489,10 @@ sub Check_Config {
 	$LogFile =~ s/%DW/$nowwday/g;
 	my $nowwday0=$nowwday-1; $LogFile =~ s/%Dw/$nowwday0/g;
 	$LogFormat =~ s/\\//g;
-	if ($Debug) {
-		debug(" LogFile='$LogFile'",2);
-		debug(" LogFormat='$LogFormat'",2);
-		debug(" LogSeparator='$LogSeparator'",2);
-		debug(" DNSLookup='$DNSLookup'",2);
-		debug(" DirData='$DirData'",2);
-		debug(" DirCgi='$DirCgi'",2);
-		debug(" DirIcons='$DirIcons'",2);
-		debug(" NotPageList ".(scalar keys %NotPageList));
-		debug(" ValidHTTPCodes ".(scalar keys %ValidHTTPCodes));
-		debug(" ValidSMTPCodes ".(scalar keys %ValidSMTPCodes));
-		debug(" UseFramesWhenCGI=$UseFramesWhenCGI");
-	}
 	if (! $LogFile)   { error("Error: LogFile parameter is not defined in config/domain file"); }
 	if (! $LogFormat) { error("Error: LogFormat parameter is not defined in config/domain file"); }
 	if ($LogFormat =~ /^\d$/ && $LogFormat !~ /[1-6]/)  { error("Error: LogFormat parameter is wrong in config/domain file. Value is '$LogFormat' (should be 1,2,3,4,5 or a 'personalized AWStats log format string')"); }
 	if (! $LogSeparator) { $LogSeparator="\\s"; }
-	if ($Debug) {
-		debug(" LogFile='$LogFile'",2);
-		debug(" LogFormat='$LogFormat'",2);
-		debug(" LogSeparator='$LogSeparator'",2);
-		debug(" DNSLookup='$DNSLookup'",2);
-		debug(" DirData='$DirData'",2);
-		debug(" DirCgi='$DirCgi'",2);
-		debug(" DirIcons='$DirIcons'",2);
-	}
 	if (! $DirData)   { $DirData="."; }
 	if (! $DirCgi)    { $DirCgi="/cgi-bin"; }
 	if (! $DirIcons)  { $DirIcons="/icon"; }
@@ -1532,11 +1528,11 @@ sub Check_Config {
 	if ($LevelForSearchEnginesDetection !~ /^\d+/)	{ $LevelForSearchEnginesDetection=1; }
 	if ($LevelForKeywordsDetection !~ /^\d+/)  		{ $LevelForKeywordsDetection=1; }
 	# Optional extra setup section
-	foreach my $extracpt (1..@ExtraSectionName-1) {
-		if ($ExtraSectionStatTypes[$extracpt] !~ /[PHBL]/)  { $ExtraSectionStatTypes[$extracpt]='PHBL'; }
+	foreach my $extracpt (1..@ExtraName-1) {
+		if ($ExtraStatTypes[$extracpt] !~ /[PHBL]/)  { $ExtraStatTypes[$extracpt]='PHBL'; }
 		if ($MaxNbOfExtra[$extracpt] !~ /^\d+$/ || $MaxNbOfExtra[$extracpt]<1) { $MaxNbOfExtra[$extracpt]=20; }
 		if ($MinHitExtra[$extracpt] !~ /^\d+$/ || $MinHitExtra[$extracpt]<1) { $MinHitExtra[$extracpt]=1; }
-		if (! $ExtraSectionFirstColumnValues[$extracpt]) { error("Error: Extra section number $extracpt is defined without ExtraSectionFirstColumnValues$extracpt parameter"); }
+		if (! $ExtraFirstColumnValues[$extracpt]) { error("Error: Extra section number $extracpt is defined without ExtraSectionFirstColumnValues$extracpt parameter"); }
 	}
 	# Optional appearance setup section
 	if ($MaxRowsInHTMLOutput !~ /^\d+/ || $MaxRowsInHTMLOutput<1)     { $MaxRowsInHTMLOutput=1000; }
@@ -1624,6 +1620,41 @@ sub Check_Config {
 	if ($ShowPagesStats eq '1') 		{ $ShowPagesStats = 'PBEX'; }
 	if ($ShowFileTypesStats eq '1') 	{ $ShowFileTypesStats = 'HB'; }
 	if ($ShowOriginStats eq '1') 		{ $ShowOriginStats = 'PH'; }
+
+	# Convert extra sections data
+	foreach my $extranum (1..@ExtraName-1) {
+		my $part=0;
+		foreach my $conditioncouple (split(/\s\|\s/, $ExtraCondition[$extranum])) {
+	 		my ($conditiontype, $conditiontypeval)=split(/,/,$conditioncouple,2);
+	 		$ExtraConditionType[$extranum][$part]=$conditiontype;
+	 		$ExtraConditionTypeVal[$extranum][$part]=($URLNotCaseSensitive?lc($conditiontypeval):$conditiontypeval);
+			$part++;
+	 	}
+		my $part=0;
+		foreach my $rowkeycouple (split(/\s\|\s/, $ExtraFirstColumnValues[$extranum])) {
+	 		my ($rowkeytype, $rowkeytypeval)=split(/,/,$rowkeycouple,2);
+	 		$ExtraFirstColumnValuesType[$extranum][$part]=$rowkeytype;
+	 		$ExtraFirstColumnValuesTypeVal[$extranum][$part]=($URLNotCaseSensitive?lc($rowkeytypeval):$rowkeytypeval);
+			$part++;
+	 	}
+	}
+
+	# Show definitive values for major parameters
+	if ($Debug) {
+		debug(" LogFile='$LogFile'",2);
+		debug(" LogFormat='$LogFormat'",2);
+		debug(" LogSeparator='$LogSeparator'",2);
+		debug(" DNSLookup='$DNSLookup'",2);
+		debug(" DirData='$DirData'",2);
+		debug(" DirCgi='$DirCgi'",2);
+		debug(" DirIcons='$DirIcons'",2);
+	}
+	foreach my $extranum (1..@ExtraName-1) {
+		debug(" ExtraConditionType[$extranum] is array ".join(',',@{$ExtraConditionType[$extranum]}),2);
+		debug(" ExtraConditionTypeVal[$extranum] is array ".join(',',@{$ExtraConditionTypeVal[$extranum]}),2);
+		debug(" ExtraFirstColumnValuesType[$extranum] is array ".join(',',@{$ExtraFirstColumnValuesType[$extranum]}),2);
+		debug(" ExtraFirstColumnValuesTypeVal[$extranum] is array ".join(',',@{$ExtraFirstColumnValuesTypeVal[$extranum]}),2);
+	}
 
 	# Refuse LogFile if contains a pipe and PurgeLogFile || ArchiveLogRecords set on
 	if (($PurgeLogFile || $ArchiveLogRecords) && $LogFile =~ /\|\s*$/) {
@@ -1763,7 +1794,7 @@ sub Read_History_With_TmpUpdate {
 					 'errors'=>22);
 	my $order=23;
 	foreach my $code (keys %TrapInfosForHTTPErrorCodes) { $allsections{"sider_$code"}=$order++; }
-	foreach my $extranum (1..@ExtraSectionName-1) { $allsections{"extra_$extranum"}=$order++; }
+	foreach my $extranum (1..@ExtraName-1) { $allsections{"extra_$extranum"}=$order++; }
 
 	my $withread=0;
 
@@ -1808,8 +1839,8 @@ sub Read_History_With_TmpUpdate {
 		foreach my $code (keys %TrapInfosForHTTPErrorCodes) {
 			if ($UpdateStats || $MigrateStats || $HTMLOutput eq "errors$code") { $SectionsToLoad{"sider_$code"}=$order++; }
 		}
-		foreach my $extranum (1..@ExtraSectionName-1) {
-			if ($UpdateStats || $MigrateStats || ($HTMLOutput eq 'main' && $ExtraSectionStatTypes[$extranum]) || $HTMLOutput eq "extra$extranum") { $SectionsToLoad{"extra_$extranum"}=$order++; }
+		foreach my $extranum (1..@ExtraName-1) {
+			if ($UpdateStats || $MigrateStats || ($HTMLOutput eq 'main' && $ExtraStatTypes[$extranum]) || $HTMLOutput eq "extra$extranum") { $SectionsToLoad{"extra_$extranum"}=$order++; }
 		}
 	}
 	else {					# Load only required sections
@@ -2859,7 +2890,7 @@ sub Read_History_With_TmpUpdate {
 				}
 			}
 			# BEGIN_EXTRA_xxx
-			foreach my $extranum (1..@ExtraSectionName-1) {
+			foreach my $extranum (1..@ExtraName-1) {
 				if ($field[0] eq "BEGIN_EXTRA_$extranum")   {
 					if ($Debug) { debug(" Begin of EXTRA_$extranum"); }
 					$_=<HISTORY>;
@@ -2871,10 +2902,10 @@ sub Read_History_With_TmpUpdate {
 						# if ($field[0]) {
 							$count++;
 							if ($SectionsToLoad{"extra_$extranum"}) {
-								if ($ExtraSectionStatTypes[$extranum] =~ m/P/i && $field[1]) { ${'_section_' . $extranum . '_p'}{$field[0]}+=$field[1]; }
+								if ($ExtraStatTypes[$extranum] =~ m/P/i && $field[1]) { ${'_section_' . $extranum . '_p'}{$field[0]}+=$field[1]; }
 								${'_section_' . $extranum . '_h'}{$field[0]}+=$field[2];
-								if ($ExtraSectionStatTypes[$extranum] =~ m/B/i && $field[3]) { ${'_section_' . $extranum . '_k'}{$field[0]}+=$field[3]; }
-								if ($ExtraSectionStatTypes[$extranum] =~ m/L/i && ! ${'_section_' . $extranum . '_l'}{$field[0]} && $field[4]) { ${'_section_' . $extranum . '_l'}{$field[0]}=int($field[4]); }
+								if ($ExtraStatTypes[$extranum] =~ m/B/i && $field[3]) { ${'_section_' . $extranum . '_k'}{$field[0]}+=$field[3]; }
+								if ($ExtraStatTypes[$extranum] =~ m/L/i && ! ${'_section_' . $extranum . '_l'}{$field[0]} && $field[4]) { ${'_section_' . $extranum . '_l'}{$field[0]}=int($field[4]); }
 								$countloaded++;
 							}
 						# }
@@ -2985,7 +3016,7 @@ sub Save_History {
 		print HISTORYTMP "# for direct I/O access. If you made changes somewhere in this file, you\n";
 		print HISTORYTMP "# should also remove completely the MAP section (AWStats will rewrite it\n";
 		print HISTORYTMP "# at next update).\n";
-		print HISTORYTMP "BEGIN_MAP ".(22+(scalar keys %TrapInfosForHTTPErrorCodes)+(scalar @ExtraSectionName?scalar @ExtraSectionName-1:0))."\n";
+		print HISTORYTMP "BEGIN_MAP ".(22+(scalar keys %TrapInfosForHTTPErrorCodes)+(scalar @ExtraName?scalar @ExtraName-1:0))."\n";
 		print HISTORYTMP "POS_GENERAL ";$PosInFile{"general"}=tell HISTORYTMP;print HISTORYTMP "$spacebar\n";
 		# When
 		print HISTORYTMP "POS_TIME ";$PosInFile{"time"}=tell HISTORYTMP;print HISTORYTMP "$spacebar\n";
@@ -3016,7 +3047,7 @@ sub Save_History {
 		foreach my $code (keys %TrapInfosForHTTPErrorCodes) {
 			print HISTORYTMP "POS_SIDER_$code ";$PosInFile{"sider_$code"}=tell HISTORYTMP;print HISTORYTMP "$spacebar\n";
 		}
-		foreach my $extranum (1..@ExtraSectionName-1) {
+		foreach my $extranum (1..@ExtraName-1) {
 			print HISTORYTMP "POS_EXTRA_$extranum ";$PosInFile{"extra_$extranum"}=tell HISTORYTMP;print HISTORYTMP "$spacebar\n";
 		}
 		print HISTORYTMP "END_MAP\n";
@@ -3433,7 +3464,7 @@ sub Save_History {
 		}
 	}
  	# Other - Extra stats sections
- 	foreach my $extranum (1..@ExtraSectionName-1) {
+ 	foreach my $extranum (1..@ExtraName-1) {
 		if ($sectiontosave eq "extra_$extranum") {
 			print HISTORYTMP "\n";
 			print HISTORYTMP "# Extra sections...\n";
@@ -3669,7 +3700,7 @@ sub Init_HashArray {
 	%_se_referrals_h = %_sider404_h = %_referer404_h = %_url_p = %_url_k = %_url_e = %_url_x = ();
 	%_unknownreferer_l = %_unknownrefererbrowser_l = ();
 	%_emails_h = %_emails_k = %_emails_l = %_emailr_h = %_emailr_k = %_emailr_l = ();
- 	for (my $ix=1; $ix < @ExtraSectionName; $ix++) {
+ 	for (my $ix=1; $ix < @ExtraName; $ix++) {
  		%{'_section_' . $ix . '_h'} = %{'_section_' . $ix . '_o'} = %{'_section_' . $ix . '_k'}	=
  		%{'_section_' . $ix . '_l'} = %{'_section_' . $ix . '_p'} = ();
  	}
@@ -5643,80 +5674,54 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 
 		# Analyze: Extra
 		#---------------
- 		foreach my $extranum (1..@ExtraSectionName-1) {
+ 		foreach my $extranum (1..@ExtraName-1) {
 			if ($Debug) { debug("Process extra analyze $extranum",4); }
 
  			# Check conditions
- 			my $conditionok = 0;
- 			if ($ExtraSectionCondition[$extranum]) {
-	 			foreach my $conditioncouple (split(/\s\|\s/, $ExtraSectionCondition[$extranum])) {
-	 				my ($conditiontype, $conditiontypeval)=split(/,/,$conditioncouple,2);
-	 				# Check if does not pass condition, move to next condition if exists.
-	 				if ($conditiontype eq 'URL') {
-						if ($Debug) { debug(" Check condition '$conditiontype' must contain '$conditiontypeval' in $urlwithnoquery.",5); }
-	 					if ($urlwithnoquery =~ m/$conditiontypeval/) {
-	 						$conditionok = 1;
-	 						last;
-	 					}
-	 				}
-	 				elsif ($conditiontype eq 'QUERY_STRING') {
-						if ($Debug) { debug(" Check condition '$conditiontype' must contain '$conditiontypeval' in $standalonequery.",5); }
-	 					if ($standalonequery =~ m/$conditiontypeval/) {
-	 						$conditionok = 1;
-	 						last;
-	 					}
-	 				}
-	 				elsif ($conditiontype eq 'REFERER') {
-						if ($Debug) { debug(" Check condition '$conditiontype' must contain '$conditiontypeval' in $field[$pos_referer]",5); }
-	 					if ($field[$pos_referer] =~ m/$conditiontypeval/) {
-	 						$conditionok = 1;
-	 						last;
-	 					}
-	 				}
-	 				else { error("Wrong value of parameter ExtraSectionCondition$extranum"); }
-	 			}
-	 			next unless $conditionok;
-				if ($Debug) { debug(" Condition is OK. Now we extract value for first column of extra chart.",5); }
-			}
-			else {
-				if ($Debug) { debug(" No condition. Now we extract value for first column of extra chart.",5); }
-			}
+ 			my $conditionok=0;
+ 			foreach my $condnum (0..@{$ExtraConditionType[$extranum]}-1) {
+ 				my $conditiontype=$ExtraConditionType[$extranum][$condnum];
+ 				my $conditiontypeval=$ExtraConditionTypeVal[$extranum][$condnum];
+ 				if ($conditiontype eq 'URL') {
+					if ($Debug) { debug(" Check condition '$conditiontype' must contain '$conditiontypeval' in $urlwithnoquery.",5); }
+ 					if ($urlwithnoquery =~ m/$conditiontypeval/) { $conditionok=1; last; }
+ 				}
+ 				elsif ($conditiontype eq 'QUERY_STRING') {
+					if ($Debug) { debug(" Check condition '$conditiontype' must contain '$conditiontypeval' in $standalonequery.",5); }
+ 					if ($standalonequery =~ m/$conditiontypeval/) {	$conditionok=1; last; }
+ 				}
+ 				elsif ($conditiontype eq 'REFERER') {
+					if ($Debug) { debug(" Check condition '$conditiontype' must contain '$conditiontypeval' in $field[$pos_referer]",5); }
+ 					if ($field[$pos_referer] =~ m/$conditiontypeval/) { $conditionok=1; last; }
+ 				}
+ 				else { error("Wrong value of parameter ExtraSectionCondition$extranum"); }
+ 			}
+			if (! $conditionok && @{$ExtraConditionType[$extranum]}) { next; }	# End for this section
+			
+			if ($Debug) { debug(" No condition or Condition is OK. Now we extract value for first column of extra chart.",5); }
 			
  			# Determine actual column value to use.
-			my $rowkeyval='';
- 			my $rowkeyok = 0;
- 			foreach my $rowkeycouple (split(/\s\|\s/, $ExtraSectionFirstColumnValues[$extranum])) {
- 				my ($rowkeytype, $rowkeytypeval)=split(/,/,$rowkeycouple,2);
+ 			my $rowkeyval;
+			my $rowkeyok=0;
+ 			foreach my $rowkeynum (0..@{$ExtraFirstColumnValuesType[$extranum]}-1) {
+ 				my $rowkeytype=$ExtraFirstColumnValuesType[$extranum][$rowkeynum];
+ 				my $rowkeytypeval=$ExtraFirstColumnValuesTypeVal[$extranum][$rowkeynum];
  				if ($rowkeytype eq 'QUERY_STRING') {
- 					if ($standalonequery =~ m/$rowkeytypeval/) {
- 						$rowkeyval = "$1";
- 						$rowkeyok = 1;
- 						last;
- 					}
-					next;
+ 					if ($standalonequery =~ m/$rowkeytypeval/) { $rowkeyval = "$1"; $rowkeyok = 1; last; }
  				}
  				elsif ($rowkeytype eq 'REFERER') {
- 					if ($field[$pos_referer] =~ m/$rowkeytypeval/) {
- 						$rowkeyval = "$1";
- 						$rowkeyok = 1;
- 						last;
- 					}
-					next;
+ 					if ($field[$pos_referer] =~ m/$rowkeytypeval/) { $rowkeyval = "$1"; $rowkeyok = 1; last; }
  				}
- 				else {
-					# Failed to extract rowkey value
- 					last;
- 				}
- 						
+ 				else { error("Wrong value of parameter ExtraSectionFirstColumnValues$extranum"); }
  			}
- 			next unless $rowkeyok;
+			if (! $rowkeyok) { next; }	# End for this section
 			if ($Debug) { debug(" Key val was found: $rowkeyval",5); }
 
  			# Here we got all values to increase counters
- 			if ($PageBool && $ExtraSectionStatTypes[$extranum] =~ /P/i) { ${'_section_' . $extranum . '_p'}{$rowkeyval}++; }
+ 			if ($PageBool && $ExtraStatTypes[$extranum] =~ /P/i) { ${'_section_' . $extranum . '_p'}{$rowkeyval}++; }
  			${'_section_' . $extranum . '_h'}{$rowkeyval}++;	# Must be set
- 			if ($ExtraSectionStatTypes[$extranum] =~ /B/i) { ${'_section_' . $extranum . '_k'}{$rowkeyval}+=int($field[$pos_size]); }
- 			if ($ExtraSectionStatTypes[$extranum] =~ /L/i) {
+ 			if ($ExtraStatTypes[$extranum] =~ /B/i) { ${'_section_' . $extranum . '_k'}{$rowkeyval}+=int($field[$pos_size]); }
+ 			if ($ExtraStatTypes[$extranum] =~ /L/i) {
  				if (${'_section_' . $extranum . '_l'}{$rowkeyval} < $timerecord) { ${'_section_' . $extranum . '_l'}{$rowkeyval}=$timerecord; }
  			}
 			# Check to avoid too large extra sections
@@ -6107,8 +6112,8 @@ EOF
 			foreach my $code (keys %TrapInfosForHTTPErrorCodes) {
 				if ($ShowHTTPErrorsStats)	 { print ($frame?"<tr><td class=AWL> &nbsp; <img height=8 width=9 src=\"$DirIcons/other/page.png\" alt=\"...\"> ":""); print "<a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=errors$code":"$PROG$StaticLinks.errors$code.html")."\"$NewLinkTarget>$Message[31]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
 			}
-		 	foreach my $extranum (1..@ExtraSectionName-1) {
-				print ($frame?"<tr><td class=AWL>":""); print "<a href=\"$linkanchor#EXTRA$extranum\"$targetpage>$ExtraSectionName[$extranum]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; ");
+		 	foreach my $extranum (1..@ExtraName-1) {
+				print ($frame?"<tr><td class=AWL>":""); print "<a href=\"$linkanchor#EXTRA$extranum\"$targetpage>$ExtraName[$extranum]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; ");
 			}
 			if ($linetitle) { print ($frame?"":"</td></tr>\n"); }
 			print "</table>\n";
@@ -8137,22 +8142,22 @@ EOF
 
  	# BY EXTRA SECTIONS
  	#----------------------------
- 	foreach my $extranum (1..@ExtraSectionName-1) {
- 		if ($Debug) { debug("ExtraSectionName$extranum",2); }
+ 	foreach my $extranum (1..@ExtraName-1) {
+ 		if ($Debug) { debug("ExtraName$extranum",2); }
  		print "$Center<a name=\"EXTRA$extranum\">&nbsp;</a><BR>";
-		my $title=$ExtraSectionName[$extranum];
+		my $title=$ExtraName[$extranum];
  		&tab_head("$title",19);
- 		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>".$ExtraSectionFirstColumnTitle[$extranum]."</TH>";
- 		if ($ExtraSectionStatTypes[$extranum] =~ m/P/i) { print "<TH bgcolor=\"#$color_p\" width=80>$Message[56]</TH>"; }
- 		if ($ExtraSectionStatTypes[$extranum] =~ m/H/i) { print "<TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH>"; }
- 		if ($ExtraSectionStatTypes[$extranum] =~ m/B/i) { print "<TH bgcolor=\"#$color_k\" width=80>$Message[75]</TH>"; }
- 		if ($ExtraSectionStatTypes[$extranum] =~ m/L/i) { print "<TH width=120>$Message[9]</TH>"; }
+ 		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>".$ExtraFirstColumnTitle[$extranum]."</TH>";
+ 		if ($ExtraStatTypes[$extranum] =~ m/P/i) { print "<TH bgcolor=\"#$color_p\" width=80>$Message[56]</TH>"; }
+ 		if ($ExtraStatTypes[$extranum] =~ m/H/i) { print "<TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH>"; }
+ 		if ($ExtraStatTypes[$extranum] =~ m/B/i) { print "<TH bgcolor=\"#$color_k\" width=80>$Message[75]</TH>"; }
+ 		if ($ExtraStatTypes[$extranum] =~ m/L/i) { print "<TH width=120>$Message[9]</TH>"; }
  		print "</TR>\n";
  		$total_p=$total_h=$total_k=0;
  		#$max_h=1; foreach my $key (values %_login_h) { if ($key > $max_h) { $max_h = $key; } }
  		#$max_k=1; foreach my $key (values %_login_k) { if ($key > $max_k) { $max_k = $key; } }
  		my $count=0;
- 		if ($ExtraSectionStatTypes[$extranum] =~ m/P/i) { 
+ 		if ($ExtraStatTypes[$extranum] =~ m/P/i) { 
  			&BuildKeyList($MaxNbOfExtra[$extranum],$MinHitExtra[$extranum],\%{'_section_' . $extranum . '_h'},\%{'_section_' . $extranum . '_p'});
  		}
  		else {
@@ -8161,10 +8166,10 @@ EOF
 		foreach my $key (@keylist) {
  			my $firstcol = DecodeEncodedString(CleanFromCSSA($key));
  			print "<TR><TD CLASS=AWL>$firstcol</TD>";
- 			if ($ExtraSectionStatTypes[$extranum] =~ m/P/i) { print "<TD>" . ${'_section_' . $extranum . '_p'}{$key} . "</TD>"; }
- 			if ($ExtraSectionStatTypes[$extranum] =~ m/H/i) { print "<TD>" . ${'_section_' . $extranum . '_h'}{$key} . "</TD>"; }
- 			if ($ExtraSectionStatTypes[$extranum] =~ m/B/i) { print "<TD>" . Format_Bytes(${'_section_' . $extranum . '_k'}{$key}) . "</TD>"; }
- 			if ($ExtraSectionStatTypes[$extranum] =~ m/L/i) { print "<TD>" . (${'_section_' . $extranum . '_l'}{$key}?Format_Date(${'_section_' . $extranum . '_l'}{$key},1):'-') . "</TD>"; }
+ 			if ($ExtraStatTypes[$extranum] =~ m/P/i) { print "<TD>" . ${'_section_' . $extranum . '_p'}{$key} . "</TD>"; }
+ 			if ($ExtraStatTypes[$extranum] =~ m/H/i) { print "<TD>" . ${'_section_' . $extranum . '_h'}{$key} . "</TD>"; }
+ 			if ($ExtraStatTypes[$extranum] =~ m/B/i) { print "<TD>" . Format_Bytes(${'_section_' . $extranum . '_k'}{$key}) . "</TD>"; }
+ 			if ($ExtraStatTypes[$extranum] =~ m/L/i) { print "<TD>" . (${'_section_' . $extranum . '_l'}{$key}?Format_Date(${'_section_' . $extranum . '_l'}{$key},1):'-') . "</TD>"; }
  			print "</TR>\n";
  			$count++;
 		}
