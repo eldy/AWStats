@@ -23,14 +23,14 @@ Fixes:
   when DNSLookup and Geoip are both enabled.
 
 New features/improvements:
-- Added support for Darwin streaming server.
-- Added Firebird browser detection.
-- awstats_buildstaticpages.pl can also build one PDF file (need htmldoc).
-- Added maillogconvert.p for analyzing mail log files (support better
-  sendmail, postfix and qmail log files).
+- Added maillogconvert.pl for analyzing mail log files (better support
+  for sendmail, postfix and qmail log files).
 - Added -addfilenum option in logresolvemerge.pl
 - Added -updatefor option to limit number of lines parsed in one update
   session.
+- Added support for Darwin streaming server.
+- Added Firebird browser detection.
+- awstats_buildstaticpages.pl can also build one PDF file (need htmldoc).
 - Better management of plugin load failure.
 - Added LogType parameter.
 - Added option -dnscache= in logresolvemerge.pl to use dns static file.
@@ -42,7 +42,7 @@ Other/Documentation:
 
 Note 1:
   The ShowLinksToWhoIs parameter has been removed. You must enable the plugin
-  'hostinfo' to get the same result if it was used.
+  'hostinfo' to get the same result, if it was used.
 
 
 
