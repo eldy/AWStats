@@ -4576,11 +4576,11 @@ if ((! $ENV{'GATEWAY_INTERFACE'}) && (! $SiteConfig)) {
 	print "  the log file defined in config file, and/or returns a HTML report.\n";
 	print "  First, $PROG tries to read $PROG.virtualhostname.conf as the config file.\n";
 	print "  If not found, $PROG tries to read $PROG.conf\n";
-	print "  Note 1: If AWSTATS_CONFIG environment variable is defined, AWStats will use\n";
-	print "  it as the \"config\" value, whatever is the value on command line.\n";
-	print "  Note 2: Config files ($PROG.virtualhostname.conf or $PROG.conf) must be\n";
+	print "  Note 1: Config files ($PROG.virtualhostname.conf or $PROG.conf) must be\n";
 	print "  in /etc/opt/awstats, /etc/awstats, /etc or same directory than awstats.pl\n";
 	print "  file.\n";
+	print "  Note 2: If AWSTATS_CONFIG environment variable is defined, AWStats will use\n";
+	print "  it as the \"config\" value, whatever is the value on command line.\n";
 	print "  See AWStats documentation for all setup instrutions.\n";
 	print "\n";
 	print "Options to update statistics:\n";
@@ -4597,6 +4597,10 @@ if ((! $ENV{'GATEWAY_INTERFACE'}) && (! $SiteConfig)) {
 	print "               allhosts         to build page of all hosts\n";
 	print "               lasthosts        to build page of last hits for hosts\n";
 	print "               unknownip        to build page of all unresolved IP\n";
+	print "               allemails        to build page of all email senders (maillog)\n";
+	print "               lastemails       to build page of last email senders (maillog)\n";
+	print "               allemailr        to build page of all email receivers (maillog)\n";
+	print "               lastemailr       to build page of last email receivers (maillog)\n";
 	print "               alllogins        to build page of all logins used\n";
 	print "               lastlogins       to build page of last hits for logins\n";
 	print "               allrobots        to build page of all robots/spider visits\n";
@@ -4628,7 +4632,8 @@ if ((! $ENV{'GATEWAY_INTERFACE'}) && (! $SiteConfig)) {
 	print "  -debug=X     to add debug informations lesser than level X (speed reduced)\n";
 	print "\n";
 	print "Now supports/detects:\n";
-	print "  Reverse DNS lookup\n";
+	print "  Web/Ftp/Mail log analyze\n";
+	print "  Reverse DNS lookup and/or GeoIP lookup\n";
 	print "  Number of visits, number of unique visitors\n";
 	print "  Visits duration and list of last visits\n";
 	print "  Authenticated users\n";
@@ -4636,6 +4641,7 @@ if ((! $ENV{'GATEWAY_INTERFACE'}) && (! $SiteConfig)) {
 	print "  Hosts list and unresolved IP addresses list\n";
 	print "  Most viewed, entry and exit pages\n";
 	print "  Files type and Web compression\n";
+	print "  Personalized reports\n";
 	print "  ".(scalar keys %DomainsHashIDLib)." domains/countries\n";
 	print "  ".(scalar keys %BrowsersHashIDLib)." browsers\n";
 	print "  ".(scalar keys %OSHashLib)." operating systems\n";
