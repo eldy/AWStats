@@ -10,7 +10,9 @@ AWStats Changelog
 
 - Increased speed and reduce memory use for very large web sites.
 - Unresolved ip are now processed like resolved one.
+- New feature: Added average files size in Pages/URL report chart.
 - New feature: You can put dynamic environnement variables into config file.
+- New feature: Keyphrases list can be viewed entirely (not only most used).
 - New tool: A log format converter common2combined.pl
 - New option: -staticlinks to build static links in report page (to use
   AWStats with no web servers).
