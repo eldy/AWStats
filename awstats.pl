@@ -14,7 +14,7 @@
 #-------------------------------------------------------
 # Defines
 #-------------------------------------------------------
-$VERSION="2.24 (build 3)";
+$VERSION="2.24 (build 4)";
 $Lang=0;
 
 # Default value
@@ -681,7 +681,8 @@ $message[71][6]="Grudzieñ";
 "win16","Windows 3.xx",
 "win95","Windows 95",
 "win98","Windows 98",
-"winnt","Windows NT / Windows 2000",
+"winnt","Windows NT",
+"win2000","Windows 2000",
 "wince","Windows CE",
 "cp/m","CPM",
 "sunos","Sun Solaris",
@@ -705,10 +706,11 @@ $message[71][6]="Grudzieñ";
 # ("text that match in log after changing ' ' or '+' into '_' ","osid")
 %OSAlias     = (
 "windows_98","win98",
+"windows_nt_5","win2000",
 "windows_nt","winnt",
 "windows-nt","winnt",
-"win32","winnt",
 "windows_95","win95",
+"win32","winnt",
 "windows_3","win16",			# This works for windows_31 and windows_3.1
 "windows;i;16","win16",
 "windowsce","wince",
@@ -2290,7 +2292,7 @@ if (($Lang != 1) && ($Lang != 3) && ($Lang != 6)) {
 	</DIV>
 	<DIV CLASS=\"classTooltip\" ID=\"tt16\">
 	Robots (sometimes refer to Spiders) are <b>automatic computer visitors</b> used by many search engines that scan your web site to (1) index it and rank it, (2) collect statistics on Internet Web sites and/or (3) see if your site is still online.<br>
-	This program, $PROG, is able to recognize up to <b>".(@RobotArray)."</b> robots</b>.
+	This program, $PROG, is able to recognize up to <b>".(@RobotArray)."</b> robots.
 	</DIV>";
 
 	print "
@@ -2580,7 +2582,7 @@ if ($Lang == 6) {
 	</DIV>
 	<DIV CLASS=\"classTooltip\" ID=\"tt16\">
 	Roboty s± <b>programami sieciowymi</b> skanuj±cymi strony w celu zebrania/aktualizacji danych (np. s³owa kluczowe do wyszukiwarek), lub sprawdzaj±cymi czy strona nadal istnieje w sieci.<br>
-	$PROG rozró¿nia obecnie <b>".(@RobotArray)."</b> robów</b>.
+	$PROG rozró¿nia obecnie <b>".(@RobotArray)."</b> robów.
 	</DIV>";
 	
 	print "
