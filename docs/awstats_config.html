@@ -81,6 +81,7 @@ when reading it), follow the example:<br>
 <li><a href="#OnlyFiles">OnlyFiles</a>
 <li><a href="#NotPageList">NotPageList</a>
 <li><a href="#ValidHTTPCodes">ValidHTTPCodes</a>
+<li><a href="#ValidSMTPCodes">ValidSMTPCodes</a>
 <li><a href="#URLNotCaseSensitive">URLNotCaseSensitive</a>
 <li><a href="#URLQuerySeparators">URLQuerySeparators</a>
 <li><a href="#URLWithQuery">URLWithQuery</a>
@@ -781,6 +782,19 @@ when reading it), follow the example:<br>
 <br>#[Unknown]
 <br>"xxx" ,"[Unknown]"
 </i>
+
+<br><br><hr>
+
+<a name="ValidSMTPCodes"><b>ValidSMTPCodes</b></a><br>
+<b>Version : </b>5.0 +<br>
+<br># By default, AWStats considers that records found in mail log file are
+<br># successful mail transfers if code saved in log file is a valid code (1 for
+<br># sendmail, 0 for postfix).
+<br># Example: "1"
+<br># Example: "0"
+<br># Default: "1"
+<br>#
+<br>ValidSMTPCodes="1"
 
 <br><br><hr>
 

@@ -55,7 +55,7 @@ FAQ-SET210 <a href="#SPEED">"Internal Error" after a long time in my browser (Se
 FAQ-SET220 <a href="#CRASH">Crash while running awstats.pl or page content only partialy loaded</a><br>
 FAQ-SET250 <a href="#PERSONALIZEDLOG">Log format setup or errors.</a><br>
 FAQ-SET260 <a href="#FTP">Setup for FTP server log files.</a><br>
-FAQ-SET270 <a href="#MAIL">Setup for MAIL log files (Sendmail, Exchange).</a><br>
+FAQ-SET270 <a href="#MAIL">Setup for MAIL log files (Sendmail, Postfix, Exchange).</a><br>
 FAQ-SET272 <a href="#MEDIASERVER">Setup for WINDOWS MEDIA SERVER log files.</a><br>
 FAQ-SET280 <a href="#NOTSAMENUMBER">Error "Not same number of records of...".</a><br>
 FAQ-SET300 <a href="#COULDNOTOPEN">Error "Couldn't open file ..."</a><br>
@@ -110,7 +110,7 @@ Examples of used platforms (bold means 'tested by author', others were reported 
 <u>OS:</u><br>
 <b>Windows 2000</b>, <b>Windows NT 4.0</b>, Windows Me, <b>Linux</b>, Macintosh, <b>Solaris</b>, <b>Aix</b>, BeOS, ...<br>
 <u>Web/Wap/Proxy/FTP/Mails/Streaming servers</u><br>
-<b>Apache 1.3.x and 2</b>, <b>IIS 5.0</b>, WebStar, WebLogic, WebSite, <b>Windows Media Server</b>, Tomcat, <b>Squid</b>, <b>Sendmail</b>,
+<b>Apache 1.3.x and 2</b>, <b>IIS 5.0</b>, WebStar, WebLogic, WebSite, <b>Windows Media Server</b>, Tomcat, <b>Squid</b>, <b>Sendmail</b>, <b>Postfix</b>,
 Roxen, Resin, <b>ProFTP</b>, Lotus Notes/Domino, IPlanet, IceCast, Zope, ZeroBrand, www4mail, ...<br>
 <u>Perl interpreters:</u><br>
 <b>ActivePerl 5.6</b>, <b>Perl 5.8</b>, <b>Perl 5.6</b>, <b>Perl 5.0</b>, <b>mod_perl for Apache</b>, ...<br>
@@ -385,12 +385,12 @@ log file to replace 'space' char into '_'...<br>
 <br>
 
 <a name="MAIL"></a><br>
-<b><u>FAQ-SET270 : SETUP FOR MAIL LOG FILES (SENDMAIL, EXCHANGE...)</u></b><br>
+<b><u>FAQ-SET270 : SETUP FOR MAIL LOG FILES (SENDMAIL, POSTFIX, EXCHANGE...)</u></b><br>
 <font class=CProblem>PROBLEM:</font><br>
 What do I have to do to use AWStats to analyze my mail log files.<br>
 <font class=CSolution>SOLUTION:</font><br>
 <br>
-<u>For Sendmail log files</u><br>
+<u>For Sendmail or PostFix log files</u><br>
 <br>
 1- First, install a mail log convertor like <a href="http://www.klake.org/sma/">SMA</a> to use it
 as a post-processor for AWStats update process.<br>
