@@ -5,14 +5,14 @@ AWStats Changelog
 5.0
 
 - Complete rewrite of update process and code to read/save history files.
-  AWStats 5.0 is still compatible with history files processed with 4.x.
+  AWStats 5.0 is compatible with previous versions (3.x or 4.x).
   However if you use awstats 5.0 runtime to read statistics for old month
-  build with 3.x or 4.x, speed will be a little bit reduce but data will
-  be reported correctly.
+  build with 3.x or 4.x, speed will be a little bit reduce but data will be
+  reported correctly.
 
-  To benefit the speed/memory improvement of 5.0 (2 to 8 times faster
-  when reading stats, less memory use) you can migrate your history files
-  with the command :
+  To benefit the speed/memory improvement of 5.0 (2 to 8 times faster when
+  reading stats, less memory use) you can migrate your history files with the
+  command :
     awstats.pl -migrate="/fullpath/awstatsMMYYYY.configval.txt"
 
 - Fixed: pb when using several tags with different offset in LogFile name.
