@@ -119,10 +119,10 @@ if (! @configdirtoscan) {
 %auto = map { $_, 1 } split(/,/, $config{'auto'});
 if (&foreign_check("apache") && $auto{'apache'}) {
 	&foreign_require("apache", "apache-lib.pl");
-	$conf = &apache::get_config();
-	@dirs = ( &apache::find_all_directives($conf, "CustomLog"),
-		  &apache::find_all_directives($conf, "TransferLog") );
-	$root = &apache::find_directive_struct("ServerRoot", $conf);
+	$confapache = &apache::get_config();
+	@dirs = ( &apache::find_all_directives($confapache, "CustomLog"),
+		  &apache::find_all_directives($confapache, "TransferLog") );
+	$root = &apache::find_directive_struct("ServerRoot", $confapache);
 	foreach $d (@dirs) {
 		local $lf = $d->{'words'}->[0];
 		next if ($lf =~ /^\|/);
@@ -192,8 +192,9 @@ if (scalar @config) {
 		#next if (!@files);
 		local $lconf = &get_config($l);
 		my $conf=""; my $dir="";
-		if ($l =~ /awstats\.(.*)\.conf$/) { $conf=$1; }
+		if ($l =~ /awstats([^\\\/]*)\.conf$/) { $conf=$1; }
 		if ($l =~ /^(.*)[\\\/][^\\\/]+$/) { $dir=$1; }
+        my $confwithoutdot=$conf; $confwithoutdot =~ s/^\.+//;
 
 		local ($size, $latest);
 		local @st=stat($l);
@@ -210,7 +211,7 @@ if (scalar @config) {
     	print "<td width=\"40\" align=\"center\">$nbofallowedconffound</td>";
         print "<td align=\"center\" width=\"20\" onmouseover=\"ShowTip($nbofallowedconffound);\" onmouseout=\"HideTip($nbofallowedconffound);\"><img src=\"images/info.png\"></td>";
 		print "<td>";
-		print "$conf";
+		print "$confwithoutdot";
 		if ($access{'global'}) {	# Edit config
 	        print "<br><a href='edit_config.cgi?file=$l'>$text{'index_edit'}</a>\n";
 		}
@@ -240,7 +241,7 @@ if (scalar @config) {
 
 		if ($access{'view'}) {
 			if ($config{'awstats_cgi'}) {
-				print "<td align=center><a href='$config{'awstats_cgi'}?".($conf?"config=$conf":"").($dir?"&configdir=$dir":"")."' target=awstats>$text{'index_view2'}</a></td>\n";
+				print "<td align=center><a href='$config{'awstats_cgi'}?".($confwithoutdot?"config=$confwithoutdot":"").($dir?"&configdir=$dir":"")."' target=awstats>$text{'index_view2'}</a></td>\n";
 			}
 			else {
 				print "<td align=center>".&text('index_cgi', "$gconfig{'webprefix'}/config.cgi?$module_name")."</td>";	

@@ -15,7 +15,13 @@ $cron_cmd = "$module_config_directory/awstats.pl";
 %access = &get_module_acl();
 
 
-# Show help tooltip
+#------------------------------------------------------------------------------
+# Function:     Show help tooltip
+# Parameters:   message urltotooltip
+# Input:        None
+# Output:       None
+# Return:		None
+#------------------------------------------------------------------------------
 sub hblink
 {
     my $t=shift;
@@ -24,8 +30,13 @@ sub hblink
 }
 
 
-# update_config($configfile,%conf)
-# Update the awstats config file
+#------------------------------------------------------------------------------
+# Function:     Update the awstats config file
+# Parameters:   configfile conf
+# Input:        None
+# Output:       None
+# Return:		None
+#------------------------------------------------------------------------------
 sub update_config
 {
     my ($file,$conf)=@_;
@@ -116,8 +127,14 @@ sub update_config
     return 0;
 }
 
-# get_dirdata($configfile)
-# Read config file to return value of dirdata parameter
+
+#------------------------------------------------------------------------------
+# Function:     Read config file to return value of dirdata parameter
+# Parameters:   configfile
+# Input:        None
+# Output:       None
+# Return:		string  dirdata
+#------------------------------------------------------------------------------
 sub get_dirdata
 {
     my $dirdata="notfound";
@@ -157,6 +174,7 @@ sub get_dirdata
     return $dirdata;
 }
 
+
 use vars qw/ $regclean1 $regclean2 /;
 $regclean1=qr/<(recnb|\/td)>/i;
 $regclean2=qr/<\/?[^<>]+>/i;
@@ -175,7 +193,49 @@ sub CleanFromTags {
 	return $stringtoclean;
 }
 
-# save_directive(&config, name, [value]*)
+
+#------------------------------------------------------------------------------
+# Function:		Format value in bytes in a string (Bytes, Kb, Mb, Gb)
+# Parameters:   bytes (integer value or "0.00")
+# Input:        None
+# Output:       None
+# Return:       "x.yz MB" or "x.yy KB" or "x Bytes" or "0"
+#------------------------------------------------------------------------------
+sub Format_Bytes {
+	my $bytes = shift||0;
+	my $fudge = 1;
+	# Do not use exp/log function to calculate 1024power, function make segfault on some unix/perl versions
+	if ($bytes >= ($fudge << 30)) { return sprintf("%.2f", $bytes/1073741824)." $text{'all_gb'}"; }
+	if ($bytes >= ($fudge << 20)) { return sprintf("%.2f", $bytes/1048576)."  $text{'all_mb'}"; }
+	if ($bytes >= ($fudge << 10)) { return sprintf("%.2f", $bytes/1024)."  $text{'all_kb'}"; }
+	if ($bytes < 0) { $bytes="?"; }
+	return int($bytes).(int($bytes)?" $text{'all_b'}":"");
+}
+
+
+#------------------------------------------------------------------------------
+# Function:		Format a number
+# Parameters:   number
+# Input:        None
+# Output:       None
+# Return:       "999 999 999 999"
+#------------------------------------------------------------------------------
+sub Format_Number {
+	my $number = shift||0;
+	$number=~s/(\d)(\d\d\d)$/$1 $2/;
+	$number=~s/(\d)(\d\d\d\s\d\d\d)$/$1 $2/;
+	$number=~s/(\d)(\d\d\d\s\d\d\d\s\d\d\d)$/$1 $2/;
+	return $number;
+}
+
+
+#------------------------------------------------------------------------------
+# Function:		save_directive(&config, name, [value]*)
+# Parameters:   &config name [value]*
+# Input:        None
+# Output:       None
+# Return:       None
+#------------------------------------------------------------------------------
 sub save_directive
 {
     local ($conf, $name, @values) = @_;
@@ -208,7 +268,14 @@ sub save_directive
     }
 }
 
-# renumber(&config, line, offset)
+
+#------------------------------------------------------------------------------
+# Function:		renumber
+# Parameters:   &config line offset
+# Input:        None
+# Output:       None
+# Return:       None
+#------------------------------------------------------------------------------
 sub renumber
 {
     foreach $c (@{$_[0]}) {
@@ -216,7 +283,13 @@ sub renumber
     }
 }
 
-# temp_file_name(file)
+#------------------------------------------------------------------------------
+# Function:		temp_file_name
+# Parameters:   file
+# Input:        None
+# Output:       None
+# Return:       temp_file
+#------------------------------------------------------------------------------
 sub temp_file_name
 {
     local $p = $_[0];
@@ -225,7 +298,11 @@ sub temp_file_name
     return "$module_config_directory/$p.tmp";
 }
 
-# find(name, &config)
+
+#------------------------------------------------------------------------------
+# Function:		find
+# Parameters:   name &config
+#------------------------------------------------------------------------------
 sub find
 {
     local @rv;
@@ -235,14 +312,22 @@ sub find
     return wantarray ? @rv : $rv[0];
 }
 
-# find_value(name, &config)
+
+#------------------------------------------------------------------------------
+# Function:		find_value
+# Parameters:   name &config
+#------------------------------------------------------------------------------
 sub find_value
 {
     local @rv = map { $_->{'value'} } &find(@_);
     return wantarray ? @rv : $rv[0];
 }
 
-# all_config_files(file)
+
+#------------------------------------------------------------------------------
+# Function:		all_config_files
+# Parameters:   file
+#------------------------------------------------------------------------------
 sub all_config_files
 {
     $_[0] =~ /^(.*)\/([^\/]+)$/;
@@ -259,8 +344,11 @@ sub all_config_files
     return @rv;
 }
 
-# get_config(path)
-# Get the configuration for some log file
+
+#------------------------------------------------------------------------------
+# Function:		Get the configuration for some log file
+# Parameters:   path
+#------------------------------------------------------------------------------
 sub get_config
 {
     local %rv;
@@ -268,7 +356,11 @@ sub get_config
     return \%rv;
 }
 
-# generate_report_as_pdf(file, handle, escape)
+
+#------------------------------------------------------------------------------
+# Function:		generate_report_as_pdf
+# Parameters:   file, handle, escape
+#------------------------------------------------------------------------------
 sub generate_report_as_pdf
 {
     local $h = $_[1];
@@ -312,7 +404,10 @@ sub generate_report_as_pdf
     return 1;
 }
 
-# spaced_buttons(button, ...)
+
+#------------------------------------------------------------------------------
+# Function:		spaced_buttons
+#------------------------------------------------------------------------------
 sub spaced_buttons
 {
     local $pc = int(100 / scalar(@_));
@@ -325,8 +420,10 @@ sub spaced_buttons
     print "</table>\n";
 }
 
-# scan_config_dir()
-# Scan directory $dir for config file. Return an array with full path
+
+#------------------------------------------------------------------------------
+# Function:		Scan directory $dir for config file. Return an array with full path
+#------------------------------------------------------------------------------
 sub scan_config_dir
 {
     my $dir=shift;
@@ -341,7 +438,10 @@ sub scan_config_dir
     return @rv;
 }
 
-# can_edit_config(file)
+
+#------------------------------------------------------------------------------
+# Function:		can_edit_config
+#------------------------------------------------------------------------------
 sub can_edit_config
 {
     foreach $d (split(/\s+/, $access{'dir'})) {

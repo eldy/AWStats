@@ -6,6 +6,10 @@
 require './awstats-lib.pl';
 &ReadParse();
 
+
+my $BarWidth=120;
+my $BarHeight=3;
+
 # Check if awstats is actually installed
 if (!&has_command($config{'awstats'})) {
 	&header($text{'index_title'}, "", undef, 1, 1, 0, undef);
@@ -119,6 +123,14 @@ my %view_k=();
 my %notview_p=();
 my %notview_h=();
 my %notview_k=();
+my $max_u=0;
+my $max_v=0;
+my $max_p=0;
+my $max_h=0;
+my $max_k=0;
+my $nomax_p=0;
+my $nomax_h=0;
+my $nomax_k=0;
 my %ListOfYears=("2004"=>1);
 # If required year not in list, we add it
 $ListOfYears{$YearRequired}||=$MonthRequired;
@@ -139,65 +151,36 @@ if (scalar @config) {
 
 
 # Show summary informations
-my $nbofallowedconffound=0;
+$nbofallowedconffound=0;
 if (scalar @config) {
 
-	# Loop on each config file
+    my %foundendmap=();
+    my %error=();
+
+	# Loop on each config file to get info
+	#--------------------------------------
 	foreach my $l (@config) {
 		next if (!&can_edit_config($l));
-		$nbofallowedconffound++;
         
-		# Head of config file's table list
-		if ($nbofallowedconffound == 1) {
-			print "<table border width=100%>\n";
-			print "<form method=\"post\" action=\"view_all.cgi\">\n";
-			print "<tr><td valign=\"middle\"><b>".&text('viewall_period').":</b></td>";
-			print "<td valign=\"middle\">";
-			print "<select name=\"month\">\n";
-			foreach (1..12) { my $monthix=sprintf("%02s",$_); print "<option".($MonthRequired eq "$monthix"?" selected=\"true\"":"")." value=\"$monthix\">".&text("month$monthix")."</option>\n"; }
-			print "</select>\n";
-			print "<select name=\"year\">\n";
-			# Add YearRequired in list if not in ListOfYears
-			$ListOfYears{$YearRequired}||=$MonthRequired;
-			foreach (sort keys %ListOfYears) { print "<option".($YearRequired eq "$_"?" selected=\"true\"":"")." value=\"$_\">$_</option>\n"; }
-			print "</select>\n";
-			print "<input type=\"submit\" value=\" Go \" class=\"aws_button\" />";
-			print "</td></tr>\n";
-            print "</form>\n";
-            print "</table>\n";
-
-			print "<table border width=\"100%\">\n";
-			print "<tr $tb>";
-			print "<td colspan=\"3\"><b>$text{'index_path'}</b></td>";
-			print "<td width=80 bgcolor=#FFB055 align=center><b>$text{'viewall_u'}</b></td>";
-			print "<td width=80 bgcolor=#F8E880 align=center><b>$text{'viewall_v'}</b></td>";
-			print "<td width=80 bgcolor=#4477DD align=center><b>$text{'viewall_p'}</b></td>";
-			print "<td width=80 bgcolor=#66F0FF align=center><b>$text{'viewall_h'}</b></td>";
-			print "<td width=80 bgcolor=#2EA495 align=center><b>$text{'viewall_k'}</b></td>";
-			print "<td align=center><b>$text{'index_view'}</b></td>";
-			print "</tr>\n";
-		}
-
 		# Config file line
 		#local @files = &all_config_files($l);
 		#next if (!@files);
 		local $lconf = &get_config($l);
 		my $conf=""; my $dir="";
-		if ($l =~ /awstats\.(.*)\.conf$/) { $conf=$1; }
+		if ($l =~ /awstats([^\\\/]*)\.conf$/) { $conf=$1; }
 		if ($l =~ /^(.*)[\\\/][^\\\/]+$/) { $dir=$1; }
+        my $confwithoutdot=$conf; $confwithoutdot =~ s/^\.+//;
 
         # Read data file for config $l
         my $dirdata=$dirdata{$l};
         if (! $dirdata) { $dirdata="."; }
-        my $filedata=$dirdata."/awstats$MonthRequired$YearRequired.$conf.txt";
+        my $filedata=$dirdata."/awstats${MonthRequired}${YearRequired}${conf}.txt";
 
         my $linenb=0;
         my $version=0;
         my $posgeneral=0;
-        my $foundendmap=0;
-        my $error="";
         if (! -f "$filedata") {
-            $error="No data for this month";
+            $error{$l}="No data for this month";
         }
         elsif (open(FILE, "<$filedata")) {
             $linenb=0;
@@ -228,40 +211,128 @@ if (scalar @config) {
                         $posgeneral=$1;
                         next;
                     }
+                    if ($cleanparam =~ /^POS_TIME\s+(\d+)/) {
+                        $postime=$1;
+                        next;
+                    }
                     if ($cleanparam =~ /^END_MAP/) {
-                        $foundendmap=1;
+                        $foundendmap{$l}=1;
                         last;
                     }
                 }
 
             }
-            if ($foundendmap) {
-                # Map section was completely read, we can jump to data
+            if ($foundendmap{$l}) {
+
+                # Map section was completely read, we can jump to data GENERAL
                 if ($posgeneral) {
-                    seek(FILE,$posgeneral,0);
             		$linenb=0;
+                    my ($foundu,$foundv)=(0,0);
+                    seek(FILE,$posgeneral,0);
                     while (<FILE>) {
-                        if ($linenb++ > 100) { last; }
+                        if ($linenb++ > 50) { last; }  # To protect against full file scan
                         $line=$_;
                  		chomp $line; $line =~ s/\r$//;
-
-                        $view_u{$l}='not yet available';
-                        $view_v{$l}='not yet available';
-                        $view_p{$l}='not yet available';
-                        $view_h{$l}='not yet available';
-                        $view_k{$l}='not yet available';
-                        $noview_h{$l}='not yet available';
-                        $noview_k{$l}='not yet available';
-
+                        $line=CleanFromTags($line);
+                        
+                        if ($line =~ /TotalUnique\s+(\d+)/) { $view_u{$l}=$1; if ($1 > $max_u) { $max_u=$1; } $foundu++; }
+                        elsif ($line =~ /TotalVisits\s+(\d+)/) { $view_v{$l}=$1; if ($1 > $max_v) { $max_v=$1; }  $foundv++; }
+                        
+                        if ($foundu && $foundv) { last; }
                     }
                 } else {
-                    $error="Mapping for section GENERAL was wrong";
+                    $error{$l}.="Mapping for section GENERAL was wrong.";
                 }
+
+                # Map section was completely read, we can jump to data TIME
+                if ($postime) {
+                    seek(FILE,$postime,0);
+            		$linenb=0;
+                    while (<FILE>) {
+                        if ($linenb++ > 50) { last; }  # To protect against full file scan
+                        $line=$_;
+                 		chomp $line; $line =~ s/\r$//;
+                        $line=CleanFromTags($line);
+                        
+                        if ($line =~ /^(\d+)\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+)/) {
+                            $view_p{$l}+=$2;
+                            $view_h{$l}+=$3;
+                            $view_k{$l}+=$4;
+                            $noview_p{$l}+=$5;
+                            $noview_h{$l}+=$6;
+                            $noview_k{$l}+=$7;
+                        }
+                        
+                        if ($line =~ /^END_TIME/) { last; }
+                    }
+                    if ($view_p{$l} > $max_p) { $max_p=$view_p{$l}; } 
+                    if ($view_h{$l} > $max_h) { $max_h=$view_h{$l}; }
+                    if ($view_k{$l} > $max_k) { $max_k=$view_k{$l}; } 
+                    if ($noview_p{$l} > $nomax_p) { $nomax_p=$noview_p{$l}; }
+                    if ($noview_h{$l} > $nomax_h) { $nomax_h=$noview_h{$l}; }
+                    if ($noview_k{$l} > $nomax_k) { $nomax_k=$noview_k{$l}; }
+                   } else {
+                    $error{$l}.="Mapping for section TIME was wrong.";
+                }
+                
             }
             close(FILE);
         } else {
-            $error="Failed to open $filedata for read";
+            $error{$l}="Failed to open $filedata for read";
         }
+    }
+
+	# Loop on each config file to show info
+	#--------------------------------------
+	foreach my $l (@config) {
+		next if (!&can_edit_config($l));
+		$nbofallowedconffound++;
+        
+		# Config file line
+		#local @files = &all_config_files($l);
+		#next if (!@files);
+		local $lconf = &get_config($l);
+		my $conf=""; my $dir="";
+		if ($l =~ /awstats([^\\\/]*)\.conf$/) { $conf=$1; }
+		if ($l =~ /^(.*)[\\\/][^\\\/]+$/) { $dir=$1; }
+        my $confwithoutdot=$conf; $confwithoutdot =~ s/^\.+//;
+
+        # Read data file for config $l
+        my $dirdata=$dirdata{$l};
+        if (! $dirdata) { $dirdata="."; }
+        my $filedata=$dirdata."/awstats${MonthRequired}${YearRequired}${conf}.txt";
+
+		# Head of config file's table list
+		if ($nbofallowedconffound == 1) {
+			print "<table border width=100%>\n";
+			print "<form method=\"post\" action=\"view_all.cgi\">\n";
+			print "<tr><td valign=\"middle\"><b>".&text('viewall_period').":</b></td>";
+			print "<td valign=\"middle\">";
+			print "<select name=\"month\">\n";
+			foreach (1..12) { my $monthix=sprintf("%02s",$_); print "<option".($MonthRequired eq "$monthix"?" selected=\"true\"":"")." value=\"$monthix\">".&text("month$monthix")."</option>\n"; }
+			print "</select>\n";
+			print "<select name=\"year\">\n";
+			# Add YearRequired in list if not in ListOfYears
+			$ListOfYears{$YearRequired}||=$MonthRequired;
+			foreach (sort keys %ListOfYears) { print "<option".($YearRequired eq "$_"?" selected=\"true\"":"")." value=\"$_\">$_</option>\n"; }
+			print "</select>\n";
+			print "<input type=\"submit\" value=\" Go \" class=\"aws_button\" />";
+			print "</td></tr>\n";
+            print "</form>\n";
+            print "</table>\n";
+
+			print "<table border width=\"100%\">\n";
+			print "<tr $tb>";
+			print "<td colspan=\"3\"><b>$text{'index_path'}</b></td>";
+			print "<td width=80 bgcolor=#FFB055 align=center><b>$text{'viewall_u'}</b></td>";
+			print "<td width=80 bgcolor=#F8E880 align=center><b>$text{'viewall_v'}</b></td>";
+			print "<td width=80 bgcolor=#4477DD align=center><b>$text{'viewall_p'}</b></td>";
+			print "<td width=80 bgcolor=#66F0FF align=center><b>$text{'viewall_h'}</b></td>";
+			print "<td width=80 bgcolor=#2EA495 align=center><b>$text{'viewall_k'}</b></td>";
+			print "<td width=\"".($BarWidth+5)."\">&nbsp;</td>";
+			print "<td align=center><b>$text{'index_view'}</b></td>";
+			print "</tr>\n";
+		}
 
 		my @st=stat($l);
 		my $size = $st[7];
@@ -285,43 +356,60 @@ if (scalar @config) {
 		print "<td>$nbofallowedconffound</td>";
         print "<td align=\"center\" width=\"20\" onmouseover=\"ShowTip($nbofallowedconffound);\" onmouseout=\"HideTip($nbofallowedconffound);\"><img src=\"images/info.png\"></td>";
 		print "<td>";
-        print "$conf";
+        print "$confwithoutdot";
 		if ($access{'global'}) {	# Edit config
 	    	print "<br><a href=\"edit_config.cgi?file=$l\">$text{'index_edit'}</a>";
 		}
 		print "</td>";
 
-		if ($error) {
-		    print "<td colspan=5>";
-		    print "$error";
+		if ($error{$l}) {
+		    print "<td colspan=\"6\" align=\"center\">";
+		    print "$error{$l}";
 		    print "</td>";
 		}
-		elsif (! $foundendmap) {
-		    print "<td colspan=5>";
+		elsif (! $foundendmap{$l}) {
+		    print "<td colspan=\"6\">";
 		    print "Unable to read summary info in data file. File may have been built by a too old AWStats version. File was built by version: $version.";
 		    print "</td>";
 		}
         else {
-    		print "<td>";
-    		print "$view_u{$l}";
+    		print "<td align=\"right\">";
+    		print Format_Number($view_u{$l});
     		print "</td>";
-    		print "<td>";
-    		print "$view_v{$l}";
+    		print "<td align=\"right\">";
+    		print Format_Number($view_v{$l});
     		print "</td>";
-    		print "<td>";
-    		print "$view_p{$l}";
+    		print "<td align=\"right\">";
+    		print Format_Number($view_p{$l});
     		print "</td>";
-    		print "<td>";
-    		print "$view_h{$l}";
+    		print "<td align=\"right\">";
+    		print Format_Number($view_h{$l});
     		print "</td>";
-    		print "<td>";
-    		print "$view_k{$l}";
+    		print "<td align=\"right\">";
+    		print Format_Bytes($view_k{$l});
     		print "</td>";
+            # Print bargraph
+            print '<td>';
+			my $bredde_u=0; my $bredde_v=0; my $bredde_p=0; my $bredde_h=0; my $bredde_k=0; my $nobredde_p=0; my $nobredde_h=0; my $nobredde_k=0;
+			if ($max_u > 0) { $bredde_u=int($BarWidth*($view_u{$l}||0)/$max_u)+1; }
+			if ($max_v > 0) { $bredde_v=int($BarWidth*($view_v{$l}||0)/$max_v)+1; }
+			if ($max_p > 0) { $bredde_p=int($BarWidth*($view_p{$l}||0)/$max_p)+1; }
+			if ($max_h > 0) { $bredde_h=int($BarWidth*($view_h{$l}||0)/$max_h)+1; }
+			if ($max_k > 0) { $bredde_k=int($BarWidth*($view_k{$l}||0)/$max_k)+1; }
+			if ($nomax_p > 0) { $nobredde_p=int($BarWidth*($noview_p{$l}||0)/$nomax_p)+1; }
+			if ($nomax_h > 0) { $nobredde_h=int($BarWidth*($noview_h{$l}||0)/$nomax_h)+1; }
+			if ($nomax_k > 0) { $nobredde_k=int($BarWidth*($noview_k{$l}||0)/$nomax_k)+1; }
+   			if (1) { print "<img src=\"images/hu.png\" width=\"$bredde_u\" height=\"$BarHeight\" /><br />"; }
+   			if (1) { print "<img src=\"images/hv.png\" width=\"$bredde_v\" height=\"$BarHeight\" /><br />"; }
+   			if (1) { print "<img src=\"images/hp.png\" width=\"$bredde_p\" height=\"$BarHeight\" /><br />"; }
+   			if (1) { print "<img src=\"images/hh.png\" width=\"$bredde_h\" height=\"$BarHeight\" /><br />"; }
+   			if (1) { print "<img src=\"images/hk.png\" width=\"$bredde_k\" height=\"$BarHeight\" /><br />"; }
+            print '</td>';
         }
 
 		if ($access{'view'}) {
 			if ($config{'awstats_cgi'}) {
-				print "<td align=center><a href='$config{'awstats_cgi'}?".($conf?"config=$conf":"").($dir?"&configdir=$dir":"")."' target=awstats>$text{'index_view2'}</a></td>\n";
+				print "<td align=center><a href='$config{'awstats_cgi'}?".($confwithoutdot?"config=$confwithoutdot":"").($dir?"&configdir=$dir":"")."' target=awstats>$text{'index_view2'}</a></td>\n";
 			}
 			else {
 				print "<td align=center>".&text('index_cgi', "$gconfig{'webprefix'}/config.cgi?$module_name")."</td>";	

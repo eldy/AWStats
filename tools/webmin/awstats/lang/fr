@@ -1,3 +1,8 @@
+all_gb=Go
+all_mb=Mo
+all_kb=Ko
+all_b=Octets
+
 index_title=Analyseur de Logs AWStats
 index_version=AWStats version $1
 index_eawstats=La commande du log analyseur $1 n'a pas été trouvée sur le système. Peut-etre AWStats n'est-il pas installé, ou la <a href='$2'>configuration du module</a> est incorrecte.

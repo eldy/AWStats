@@ -1,3 +1,8 @@
+all_gb=GB
+all_mb=MB
+all_kb=KB
+all_b=Bytes
+
 index_title=AWStats Logfile Analyzer
 index_version=AWStats version $1
 index_eawstats=The logfile analysis command $1 was not found on your system. Maybe AWStats is not installed, or your <a href='$2'>module configuration</a> is incorrect.
