@@ -43,17 +43,22 @@
 # Defines
 #-------------------------------------------------------
 
-# ---------- Init variables (Variable $TmpHashxxx are not initialized) --------
-($AddOn, $ArchiveFileName, $ArchiveLogRecords, $KeepBackupOfHistoricFiles, $BarHeight, $BarWidth,
-$DEBUGRESET, $DIR, $DNSLookup, $DayRequired, $Debug, $DefaultFile,
+# ---------- Init variables (Variable $TmpHashxxx are not initialized) -------
+($AddOn,$BarHeight,$BarWidth,$Debug,$DebugResetDone,$DNSLookup,$Expires, 
+$KeepBackupOfHistoricFiles,
+$NbOfLinesForCorruptedLog,$startseconds,$startmicroseconds)=
+(0,0,0,0,0,0,0,0,0,0,0);
+($ArchiveLogRecords, $FirstDayOfWeek,$WarningMessages)=
+(1,1,1);
+($ArchiveFileName, $DIR, $DayRequired, $DefaultFile,
 $DirCgi, $DirData, $DirIcons, $DirLang,
-$DetailedReportsOnNewWindows, $Expires, $Extension, $FileConfig, $FileSuffix, $FirstDayOfWeek,
+$DetailedReportsOnNewWindows, $Extension, $FileConfig, $FileSuffix, 
 $FirstTime, $HTMLHeadSection, $HTMLEndSection, $Host, $KeepBackupOfHistoricFiles,
 $LastTime, $LastUpdate, $LogFile, $LogFormat, $LogFormatString, $Logo, $LogoLink,
 $MaxNbOfDays, $MaxNbOfHostsShown, $MaxNbOfKeywordsShown, $MaxNbOfLoginShown,
 $MaxNbOfPageShown, $MaxNbOfRefererShown, $MaxNbOfRobotShown,
 $MinHitFile, $MinHitHost, $MinHitKeyword, $MinHitLogin, $MinHitRefer, $MinHitRobot,
-$MonthRequired, $NbOfLinesForCorruptedLog,
+$MonthRequired,
 $HTMLOutput, $PROG, $PageCode,
 $PurgeLogFile, $QueryString, $RatioBytes, $RatioHits, $RatioHosts, $RatioPages,
 $ShowHeader, $ShowMenu, $ShowMonthDayStats,
@@ -70,19 +75,19 @@ $TotalHostsKnown, $TotalHostsUnKnown, $TotalPages, $TotalUnique, $TotalVisits,
 $URLFilter, $URLWithQuery, $UserAgent, $YearRequired, 
 $color_Background, $color_TableBG, $color_TableBGRowTitle,
 $color_TableBGTitle, $color_TableBorder, $color_TableRowTitle, $color_TableTitle,
-$color_h, $color_k, $color_link, $color_p, $color_s, $color_u, $color_v, $color_weekend,
-$found) = ();
-$startseconds=$startmicroseconds=0;
-$WarningMessages= 1;
+$color_h, $color_k, $color_link, $color_p, $color_s, $color_u, $color_v, $color_weekend)=
+();
 # ---------- Init arrays --------
 @HostAliases = @Message = @OnlyFiles = @SkipDNSLookupFor = @SkipFiles = @SkipHosts = @DOWIndex = ();
+@WordsToCleanSearchUrl = ();
 # ---------- Init hash arrays --------
 %DayBytes = %DayHits = %DayPages = %DayUnique = %DayVisits =
-%FirstTime = %HistoryFileAlreadyRead = %LastTime = %LastUpdate =
+%FirstTime = %LastTime = %LastUpdate =
 %MonthBytes = %MonthHits = %MonthHostsKnown = %MonthHostsUnknown = %MonthPages = %MonthUnique = %MonthVisits =
 %monthlib = %monthnum = ();
 
-$VERSION="3.2 (build 66)";
+
+$VERSION="3.2 (build 67)";
 $Lang="en";
 
 # Default value
@@ -328,7 +333,7 @@ sub debug {
 	if ($DEBUGFORCED >= $level) { 
 		my $debugstring = $_[0];
 		if ($DEBUGFORCED >= $level) {
-			if ($DEBUGRESET == 0) {	open(DEBUGFORCEDFILE,"debug.log"); close DEBUGFORCEDFILE; chmod 0666,"debug.log"; $DEBUGRESET=1; }
+			if (! $DebugResetDone) { open(DEBUGFORCEDFILE,"debug.log"); close DEBUGFORCEDFILE; chmod 0666,"debug.log"; $DebugResetDone=1; }
 			open(DEBUGFORCEDFILE,">>debug.log");
 			print DEBUGFORCEDFILE localtime(time)." - $$ - DEBUG $level - $debugstring\n";
 			close DEBUGFORCEDFILE;
@@ -412,15 +417,14 @@ sub Read_Config_File {
 	my $foundNotPageList=0;
 	while (<CONFIG>) {
 		chomp $_; s/\r//;
-		$_ =~ s/#.*//;						# Remove comments
-		$_ =~ tr/\t /  /s;					# Change all blanks into " "
-		$_ =~ s/=/§/;						# Change first "=" into "§" to split
-		$_ =~ s/__SITE__/$SiteConfig/s;		# You can use __SITE__ in config file, if you want to have one generic config file for several config
-		my @felter=split(/§/,$_);						
-		my $param=$felter[0];
+		$_ =~ s/#.*//;							# Remove comments
+		my @felter=split(/=/,$_,2);						
+		my $param=$felter[0]||next;				# If not a param=value, try with next line
 		my $value=$felter[1];
+		$param =~ s/^\s+//; $value =~ s/\s+$//;
 		$value =~ s/^\s+//; $value =~ s/\s+$//;
 		$value =~ s/^\"//; $value =~ s/\"$//;
+		$value =~ s/__SITE__/$SiteConfig/s;		# You can use __SITE__ in config file, if you want to have one generic config file for several config
 		# Read main section
 		if ($param =~ /^LogFile/) {
 			$LogFile=$value;
@@ -954,7 +958,7 @@ sub Read_History_File {
 		        	if ($field[1] > 0) { $_hostmachine_p{$field[0]}+=$field[1]; }
 		        	if ($field[2] > 0) { $_hostmachine_h{$field[0]}+=$field[2]; }
 		        	if ($field[3] > 0) { $_hostmachine_k{$field[0]}+=$field[3]; }
-		        	if (! $_hostmachine_l{$field[0]} && $field[4] > 0) { $_hostmachine_l{$field[0]}=int($field[4]); }
+		        	if (! $_hostmachine_l{$field[0]} && $field[4]) { $_hostmachine_l{$field[0]}=int($field[4]); }
 				}
 				$_=<HISTORY>;
 				chomp $_; s/\r//;
@@ -1041,7 +1045,11 @@ sub Read_History_File {
 			while ($field[0] ne "END_DAY" ) {
 				$count++;
 				if ($UpdateStats || $QueryString !~ /output=/i) {
-					$DayPages{$field[0]}=int($field[1]); $DayHits{$field[0]}=int($field[2]); $DayBytes{$field[0]}=int($field[3]); $DayVisits{$field[0]}=int($field[4]); $DayUnique{$field[0]}=int($field[5]);
+					$DayPages{$field[0]}=int($field[1]||0);
+					$DayHits{$field[0]}=int($field[2]||0);
+					$DayBytes{$field[0]}=int($field[3]||0);
+					$DayVisits{$field[0]}=int($field[4]||0);
+					$DayUnique{$field[0]}=int($field[5]||0);
 				}
 				$_=<HISTORY>;
 				chomp $_; s/\r//;
@@ -1490,12 +1498,12 @@ sub Show_Flag_Links {
 # Input:         bytes
 #--------------------------------------------------------------------
 sub Format_Bytes {
-	my $bytes = shift;
+	my $bytes = shift||0;
 	my $fudge = 1;
 	if ($bytes >= $fudge * exp(3*log(1024))) { return sprintf("%.2f", $bytes/exp(3*log(1024)))." Gb"; }
 	if ($bytes >= $fudge * exp(2*log(1024))) { return sprintf("%.2f", $bytes/exp(2*log(1024)))." Mb"; }
 	if ($bytes >= $fudge * exp(1*log(1024))) { return sprintf("%.2f", $bytes/exp(1*log(1024)))." $Message[44]"; }
-	if ($bytes eq "") { $bytes="?"; }
+	if ($bytes < 0) { $bytes="?"; }
 	return "$bytes $Message[75]";
 }
 
@@ -1541,7 +1549,7 @@ sub IsAscii {
 #--------------------------------------------------------------------
 # MAIN
 #--------------------------------------------------------------------
-if ($ENV{"GATEWAY_INTERFACE"} ne "") {	# Run from a browser
+if ($ENV{"GATEWAY_INTERFACE"}) {	# Run from a browser
 	print("Content-type: text/html\n\n\n");
 	if ($ENV{"CONTENT_LENGTH"} ne "") {
 		binmode STDIN;
@@ -1557,7 +1565,7 @@ if ($ENV{"GATEWAY_INTERFACE"} ne "") {	# Run from a browser
 	if ($QueryString =~ /update=1/i)   { $UpdateStats=1; }					# Update is required
 }
 else {									# Run from command line
-	if ($ARGV[0] eq "-h") { $SiteConfig = $ARGV[1]; }		# Kept for backward compatibility but useless
+	if ($ARGV[0] && $ARGV[0] eq "-h") { $SiteConfig = $ARGV[1]; }		# Kept for backward compatibility but useless
 	$QueryString=""; for (0..@ARGV-1) { $QueryString .= "$ARGV[$_] "; }
 	$QueryString =~ s/<script.*$//i;						# This is to avoid 'Cross Site Scripting attacks'
 	if ($QueryString =~ /site=/i)   { $SiteConfig=$QueryString; $SiteConfig =~ s/.*site=//i;   $SiteConfig =~ s/&.*//; $SiteConfig =~ s/ .*//; }	# For backward compatibility
@@ -1580,7 +1588,7 @@ if ($QueryString =~ /output=urldetail:/i) 	{
 # Read reference databases
 &Read_Ref_Data();
 
-if (($ENV{"GATEWAY_INTERFACE"} eq "") && ($SiteConfig eq "")) {
+if ((! $ENV{"GATEWAY_INTERFACE"}) && (! $SiteConfig)) {
 	print "----- $PROG $VERSION (c) Laurent Destailleur -----\n";
 	print "$PROG is a free web server logfile analyzer to show you advanced web\n";
 	print "statistics.\n";
@@ -1645,7 +1653,6 @@ if ($nowday < 10) { $nowday = "0$nowday"; }
 if ($nowhour < 10) { $nowhour = "0$nowhour"; }
 if ($nowmin < 10) { $nowmin = "0$nowmin"; }
 if ($nowsec < 10) { $nowsec = "0$nowsec"; }
-if ($nowweek < 10) { $nowweek = "0$nowweek"; }
 # Get tomorrow time (will be used to discard some record with corrupted date (future date))
 ($tomorrowsec,$tomorrowmin,$tomorrowhour,$tomorrowday,$tomorrowmonth,$tomorrowyear) = localtime($nowtime+86400);
 if ($tomorrowyear < 100) { $tomorrowyear+=2000; } else { $tomorrowyear+=1900; }
@@ -1827,9 +1834,9 @@ if ($UpdateStats) {
 	if ($LogFormat < 1 || $LogFormat > 5) {
 		# Scan $LogFormat to found all required fields and generate PerlParsing
 		my @fields = split(/ +/, $LogFormatString); # make array of entries
-		$i = 1;
-		foreach $f (@fields) {
-			$found=0;
+		my $i = 1;
+		foreach my $f (@fields) {
+			my $found=0;
 			if ($f =~ /%host$/) {
 				$found=1; 
 				$pos_rc = $i; $i++;
@@ -1936,7 +1943,7 @@ if ($UpdateStats) {
 			}
 			if (! $found) { $found=1; $PerlParsingFormat .= "[^\\s]* "; }
 		}
-		($PerlParsingFormat) ? chop($PerlParsingFormat) : error("Error: No recognised format commands in personalised LogFormat string"); 
+		($PerlParsingFormat) ? chop($PerlParsingFormat) : error("Error: No recognised format tag in personalised LogFormat string"); 
 		$lastrequiredfield=$i--;
 	}
 	if ($pos_rc eq "") { error("Error: Your personalised LogFormat does not include all fields required by AWStats (Add \%host in your LogFormat string)."); }
@@ -1955,7 +1962,7 @@ if ($UpdateStats) {
 	@filearray = sort readdir DIR;
 	close DIR;
 	my $yearmonthmax=0;
-	foreach $i (0..$#filearray) {
+	foreach my $i (0..$#filearray) {
 		if ("$filearray[$i]" =~ /^$PROG([\d][\d])([\d][\d][\d][\d])$FileSuffix\.txt$/) {
 			if (int("$2$1") > $yearmonthmax) { $yearmonthmax=int("$2$1"); }
 		}
@@ -2167,7 +2174,7 @@ if ($UpdateStats) {
 
 		# Analyze: IP-address
 		#--------------------
-		$found=0;
+		my $found=0;
 		$Host=$field[$pos_rc];
 		if ($Host =~ /^[\d]+\.[\d]+\.[\d]+\.[\d]+$/) {
 			my $newip;
@@ -2328,7 +2335,7 @@ if ($UpdateStats) {
 
 		# Analyze: Referer
 		#-----------------
-		my $found=0;
+		$found=0;
 		if ($field[$pos_referer]) {
 
 			# Direct ?
@@ -2606,7 +2613,7 @@ EOF
 	$NewLinkParams =~ s/update=[^ &]*//;
 	$NewLinkParams =~ s/output=[^ &]*//;
 	$NewLinkParams =~ tr/&/&/s; $NewLinkParams =~ s/&$//;
-	if ($ENV{"GATEWAY_INTERFACE"} ne "") {
+	if ($ENV{"GATEWAY_INTERFACE"}) {
 		# If runned from a browser, we keep same parameters string
 		if ($NewLinkParams) {
 			$LinkParamA="?$NewLinkParams";
@@ -2731,7 +2738,7 @@ EOF
 			if (length($nompage)>$MaxLengthOfURL) { $nompage=substr($nompage,0,$MaxLengthOfURL)."..."; }
 		    if ($ShowLinksOnUrl) { print "<A HREF=\"http://$SiteToAnalyze$key\">$nompage</A>"; }
 		    else              	 { print "$nompage"; }
-			my $bredde_p=0; my $bredde_s=0;
+			my $bredde_p=0; my $bredde_e=0;
 			if ($max_p > 0) { $bredde_p=int($BarWidth*$_url_p{$key}/$max_p)+1; }
 			if ($_url_p{$key} && ($bredde_p==1)) { $bredde_p=2; }
 			if ($max_p > 0) { $bredde_e=int($BarWidth*$_url_e{$key}/$max_p)+1; }
@@ -2969,10 +2976,10 @@ EOF
 			if (! DateIsValid($day,$month,$year)) { next; }			# If not an existing day, go to next
 			$nbofdaysshown++;
 			$firstdaytoshowtime=$year.$month.$day;
-			if ($DayVisits{$year.$month.$day} > $max_v)  { $max_v=$DayVisits{$year.$month.$day}; }
-			#if ($DayPages{$year.$month.$day} > $max_p)  { $max_p=$DayPages{$year.$month.$day}; }
-			if ($DayHits{$year.$month.$day} > $max_h)   { $max_h=$DayHits{$year.$month.$day}; }
-			if ($DayBytes{$year.$month.$day} > $max_k)  { $max_k=$DayBytes{$year.$month.$day}; }
+			if (($DayVisits{$year.$month.$day}||0) > $max_v)  { $max_v=$DayVisits{$year.$month.$day}; }
+			#if (($DayPages{$year.$month.$day}||0) > $max_p)  { $max_p=$DayPages{$year.$month.$day}; }
+			if (($DayHits{$year.$month.$day}||0) > $max_h)   { $max_h=$DayHits{$year.$month.$day}; }
+			if (($DayBytes{$year.$month.$day}||0) > $max_k)  { $max_k=$DayBytes{$year.$month.$day}; }
 		}
 		$nbofdaysshown=0;
 		for (my $daycursor=$firstdaytoshowtime; $nbofdaysshown<$MaxNbOfDays; $daycursor++) {
@@ -2981,14 +2988,14 @@ EOF
 			if (! DateIsValid($day,$month,$year)) { next; }			# If not an existing day, go to next
 			$nbofdaysshown++;
 			my $bredde_v=0; my $bredde_p=0; my $bredde_h=0; my $bredde_k=0;
-			if ($max_v > 0) { $bredde_v=int($DayVisits{$year.$month.$day}/$max_v*$BarHeight/2)+1; }
-			if ($max_h > 0) { $bredde_p=int($DayPages{$year.$month.$day}/$max_h*$BarHeight/2)+1; }
-			if ($max_h > 0) { $bredde_h=int($DayHits{$year.$month.$day}/$max_h*$BarHeight/2)+1; }
-			if ($max_k > 0) { $bredde_k=int($DayBytes{$year.$month.$day}/$max_k*$BarHeight/2)+1; }
+			if ($max_v > 0) { $bredde_v=int(($DayVisits{$year.$month.$day}||0)/$max_v*$BarHeight/2)+1; }
+			if ($max_h > 0) { $bredde_p=int(($DayPages{$year.$month.$day}||0)/$max_h*$BarHeight/2)+1; }
+			if ($max_h > 0) { $bredde_h=int(($DayHits{$year.$month.$day}||0)/$max_h*$BarHeight/2)+1; }
+			if ($max_k > 0) { $bredde_k=int(($DayBytes{$year.$month.$day}||0)/$max_k*$BarHeight/2)+1; }
 			print "<TD>";
-			print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_v\" HEIGHT=$bredde_v WIDTH=4 ALT=\"$Message[10]: ".int($DayVisits{$year.$month.$day})."\" title=\"$Message[10]: ".int($DayVisits{$year.$month.$day})."\">";
-			print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_p\" HEIGHT=$bredde_p WIDTH=4 ALT=\"$Message[56]: ".int($DayPages{$year.$month.$day})."\" title=\"$Message[56]: ".int($DayPages{$year.$month.$day})."\">";
-			print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_h\" HEIGHT=$bredde_h WIDTH=4 ALT=\"$Message[57]: ".int($DayHits{$year.$month.$day})."\" title=\"$Message[57]: ".int($DayHits{$year.$month.$day})."\">";
+			print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_v\" HEIGHT=$bredde_v WIDTH=4 ALT=\"$Message[10]: ".int($DayVisits{$year.$month.$day}||0)."\" title=\"$Message[10]: ".int($DayVisits{$year.$month.$day}||0)."\">";
+			print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_p\" HEIGHT=$bredde_p WIDTH=4 ALT=\"$Message[56]: ".int($DayPages{$year.$month.$day}||0)."\" title=\"$Message[56]: ".int($DayPages{$year.$month.$day}||0)."\">";
+			print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_h\" HEIGHT=$bredde_h WIDTH=4 ALT=\"$Message[57]: ".int($DayHits{$year.$month.$day}||0)."\" title=\"$Message[57]: ".int($DayHits{$year.$month.$day}||0)."\">";
 			print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_k\" HEIGHT=$bredde_k WIDTH=4 ALT=\"$Message[75]: ".Format_Bytes($DayBytes{$year.$month.$day})."\" title=\"$Message[75]: ".Format_Bytes($DayBytes{$year.$month.$day})."\">";
 			print "</TD>\n";
 		}
@@ -3004,10 +3011,10 @@ EOF
 			my $year=$1; my $month=$2; my $day=$3;
 			if (! DateIsValid($day,$month,$year)) { next; }			# If not an existing day, go to next
 			$avg_day_nb++;											# Increase number of day used to count
-			$avg_day_v+=$DayVisits{$daycursor};
-			$avg_day_p+=$DayPages{$daycursor};
-			$avg_day_h+=$DayHits{$daycursor};
-			$avg_day_k+=$DayBytes{$daycursor};
+			$avg_day_v+=($DayVisits{$daycursor}||0);
+			$avg_day_p+=($DayPages{$daycursor}||0);
+			$avg_day_h+=($DayHits{$daycursor}||0);
+			$avg_day_k+=($DayBytes{$daycursor}||0);
 		}
 		if ($avg_day_nb) {
 			$avg_day_v=sprintf("%.2f",$avg_day_v/$avg_day_nb);
@@ -3075,10 +3082,10 @@ EOF
 			my $year=$1; my $month=$2; my $day=$3;
 			if (! DateIsValid($day,$month,$year)) { next; }			# If not an existing day, go to next
 			my $dayofweekcursor=DayOfWeek($day,$month,$year);
-			$avg_dayofweek[$dayofweekcursor]++;							# Increase number of day used to count for this day of week
-			$avg_dayofweek_p[$dayofweekcursor]+=$DayPages{$daycursor};
-			$avg_dayofweek_h[$dayofweekcursor]+=$DayHits{$daycursor};
-			$avg_dayofweek_k[$dayofweekcursor]+=$DayBytes{$daycursor};
+			$avg_dayofweek[$dayofweekcursor]++;						# Increase number of day used to count for this day of week
+			$avg_dayofweek_p[$dayofweekcursor]+=($DayPages{$daycursor}||0);
+			$avg_dayofweek_h[$dayofweekcursor]+=($DayHits{$daycursor}||0);
+			$avg_dayofweek_k[$dayofweekcursor]+=($DayBytes{$daycursor}||0);
 		}
 		for (0..6) {
 			if ($avg_dayofweek[$_]) { 
@@ -3307,8 +3314,7 @@ EOF
 			if ($count>=$MaxNbOfPageShown) { $rest_p+=$_url_p{$key}; next; }
 			if ($_url_p{$key}<$MinHitFile) { $rest_p+=$_url_p{$key}; next; }
 		    print "<TR><TD CLASS=AWL>";
-			my $nompage=$Aliases{$key};
-			if ($nompage eq "") { $nompage=$key; }
+			my $nompage=$Aliases{$key}||$key;
 			if (length($nompage)>$MaxLengthOfURL) { $nompage=substr($nompage,0,$MaxLengthOfURL)."..."; }
 			if ($ShowLinksOnUrl) { 
 				if ($key =~ /^http(s|):/i) {
@@ -3323,15 +3329,15 @@ EOF
 			else {
 				print "$nompage";
 			}
-			my $bredde_p=0; my $bredde_s=0;
-			if ($max_p > 0) { $bredde_p=int($BarWidth*$_url_p{$key}/$max_p)+1; }
-			if ($_url_p{$key} && ($bredde_p==1)) { $bredde_p=2; }
-			if ($max_p > 0) { $bredde_e=int($BarWidth*$_url_e{$key}/$max_p)+1; }
-			if ($_url_e{$key} && ($bredde_e==1)) { $bredde_e=2; }
+			my $bredde_p=0; my $bredde_e=0;
+			if ($max_p > 0) { $bredde_p=int($BarWidth*($_url_p{$key}||0)/$max_p)+1; }
+			if (($bredde_p==1) && $_url_p{$key}) { $bredde_p=2; }
+			if ($max_p > 0) { $bredde_e=int($BarWidth*($_url_e{$key}||0)/$max_p)+1; }
+			if (($bredde_e==1) && $_url_e{$key}) { $bredde_e=2; }
 			print "</TD><TD>$_url_p{$key}</TD><TD>".($_url_e{$key}?$_url_e{$key}:"&nbsp;")."</TD>";
 			print "<TD CLASS=AWL>";
-			print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_p\" WIDTH=$bredde_p HEIGHT=8 ALT=\"$Message[56]: ".int($_url_p{$key})."\" title=\"$Message[56]: ".int($_url_p{$key})."\"><br>";
-			print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_e\" WIDTH=$bredde_e HEIGHT=8 ALT=\"$Message[104]: ".int($_url_e{$key})."\" title=\"$Message[104]: ".int($_url_e{$key})."\">";
+			print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_p\" WIDTH=$bredde_p HEIGHT=8 ALT=\"$Message[56]: ".int($_url_p{$key}||0)."\" title=\"$Message[56]: ".int($_url_p{$key}||0)."\"><br>";
+			print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_e\" WIDTH=$bredde_e HEIGHT=8 ALT=\"$Message[104]: ".int($_url_e{$key}||0)."\" title=\"$Message[104]: ".int($_url_e{$key}||0)."\">";
 			print "</TD></TR>\n";
 			$count++;
 		}
