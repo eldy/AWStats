@@ -116,6 +116,7 @@ I - 3) Files
 	wwwroot/icon/flags                  Directory with country flag icons
 	wwwroot/icon/os                     Directory with OS icons
 	wwwroot/icon/other                  Directory with all others icons
+	wwwroot/classes                     Java applet for graphapplet plugin
 	wwwroot/css                         Samples of CSS files
 	wwwroot/js                          Javascript sources for "Misc" feature
 	tools/*                             Other provided tools
