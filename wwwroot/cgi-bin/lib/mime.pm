@@ -39,6 +39,7 @@
 'html','html',
 'htm','html',
 # HTML Dynamic pages or script
+'asp','script',
 'cgi','script',
 'ksh','script',
 'php','script',
@@ -104,6 +105,7 @@
 'html','page',
 'htm','page',
 # HTML Dynamic pages or script
+'asp','script',
 'cgi','script',
 'ksh','script',
 'php','script',
