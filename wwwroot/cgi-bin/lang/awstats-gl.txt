@@ -165,3 +165,6 @@ message161=Tráfico non visto
 message162=Historial mensual
 message163=Gusanos
 message164=gusanos distintos
+message165=Mensaxes enviadas con éxito
+message166=Mensaxes fallidas/rexeitadas
+message167=obxectivos sensibles
