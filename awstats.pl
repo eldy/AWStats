@@ -1170,6 +1170,7 @@ $message[72][7]="Greek gr.png";
 #-------------------------------------------------------
 # Functions
 #-------------------------------------------------------
+
 sub html_head {
 	print "<html>\n";
 	print "<head>\n";
@@ -1199,8 +1200,9 @@ sub html_head {
 	print "\n";
 	print "<body>\n";
 	print "<center><br>\n";
-	print "<font size=2><b>AWStats</b></font><br>";
+	print "<font size=2><b>AWStats</b></font><br>\n\n";
 }
+
 
 sub html_end {
 	$date=localtime();
@@ -1680,7 +1682,7 @@ else {
 	}
 if (($DirCgi ne "") && !($DirCgi =~ /\/$/) && !($DirCgi =~ /\\$/)) { $DirCgi .= "/"; }
 if ($DirData eq "" || $DirData eq ".") { $DirData=$DIR; }	# If not defined or choosed to "." value then DirData is current dir
-if ($DirData eq "")  { $DirData="."; }						# If current dir not defined them we put it to "."
+if ($DirData eq "")  { $DirData="."; }						# If current dir not defined then we put it to "."
 $DirData =~ s/\/$//;
 
 # Init other parameters
@@ -1723,6 +1725,7 @@ for ($ix=1; $ix<=12; $ix++) {
 	$MonthVisits{$monthix.$YearRequired}=0;$MonthUnique{$monthix.$YearRequired}=0;$MonthPage{$monthix.$YearRequired}=0;$MonthHits{$monthix.$YearRequired}=0;$MonthBytes{$monthix.$YearRequired}=0;
 	}
 for ($ix=0; $ix<5; $ix++) {	$_from_h[$ix]=0; }
+
 
 print "<a href=\"http://awstats.sourceforge.net\" target=_newawstats><img src=$DirIcons/other/$Logo border=0 alt=\"$PROG Official Web Site\" title=\"$PROG Official Web Site\"></a><br>\n";
 if ($ShowFlagLinks == 1) { 
@@ -2256,11 +2259,11 @@ for ($ix=12; $ix>=1; $ix--) {
 }
 
 
+
 #---------------------------------------------------------------------
 # SHOW STATISTICS
 #---------------------------------------------------------------------
-
-if ($QueryString =~ /unknownip/) {
+if ($QueryString =~ /action=unknownip/) {
 	print "<CENTER><a name=\"UNKOWNIP\"></a>";
 	$tab_titre=$message[45][$Lang];
 	&tab_head;
@@ -2279,7 +2282,7 @@ if ($QueryString =~ /unknownip/) {
 	&html_end;
 	exit(0);
 	}
-if ($QueryString =~ /unknownrefererbrowser/) {
+if ($QueryString =~ /action=unknownrefererbrowser/) {
 	print "<CENTER><a name=\"UNKOWNREFERERBROWSER\"></a>";
 	$tab_titre=$message[50][$Lang];
 	&tab_head;
@@ -2298,7 +2301,7 @@ if ($QueryString =~ /unknownrefererbrowser/) {
 	&html_end;
 	exit(0);
 	}
-if ($QueryString =~ /unknownreferer/) {
+if ($QueryString =~ /action=unknownreferer/) {
 	print "<CENTER><a name=\"UNKOWNREFERER\"></a>";
 	$tab_titre=$message[46][$Lang];
 	&tab_head;
@@ -2317,7 +2320,7 @@ if ($QueryString =~ /unknownreferer/) {
 	&html_end;
 	exit(0);
 	}
-if ($QueryString =~ /notfounderror/) {
+if ($QueryString =~ /action=notfounderror/) {
 	print "<CENTER><a name=\"NOTFOUNDERROR\"></a>";
 	$tab_titre=$message[47][$Lang];
 	&tab_head;
@@ -2330,7 +2333,7 @@ if ($QueryString =~ /notfounderror/) {
 	&html_end;
 	exit(0);
 	}
-if ($QueryString =~ /browserdetail/) {
+if ($QueryString =~ /action=browserdetail/) {
 	print "<CENTER><a name=\"BROWSERDETAIL\"></a>";
 
 	print "<a name=\"NETSCAPE\"></a><BR>";
@@ -2366,7 +2369,7 @@ if ($QueryString =~ /browserdetail/) {
 	&html_end;
 	exit(0);
 	}
-if ($QueryString =~ /info/) {
+if ($QueryString =~ /action=info/) {
 	# Not yet available
 	print "<CENTER><a name=\"INFO\"></a>";
 	
@@ -2846,6 +2849,7 @@ for ($ix=1; $ix<=12; $ix++) {
 	if ($MonthHits{$monthix.$YearRequired} > $max_h)   { $max_h=$MonthHits{$monthix.$YearRequired}; }
 	if ($MonthBytes{$monthix.$YearRequired} > $max_k)  { $max_k=$MonthBytes{$monthix.$YearRequired}; }
 }
+
 for ($ix=1; $ix<=12; $ix++) {
 	$monthix=$ix; if ($monthix < 10) { $monthix="0$monthix"; }
 	$bredde_v=$MonthVisits{$monthix.$YearRequired}/$max_v*$BarHeight/2;
@@ -3202,7 +3206,6 @@ foreach $key (@sorterrors) {
 	else { print "<TD CLASS=LEFT>Unknown error</TD><TD>$_errors_h{$key}</TD><TD>$p&nbsp;%</TD></TR>\n"; }
 }
 &tab_end;
-
 
 &html_end;
 
