@@ -14,7 +14,7 @@
 #-------------------------------------------------------
 # Defines
 #-------------------------------------------------------
-$VERSION="2.24 (build 12)";
+$VERSION="2.24 (build 13)";
 $Lang=0;
 
 # Default value
@@ -78,7 +78,9 @@ $BarImageHorizontal_k = "barrehk.png";
 "excite\.","Excite",
 "lokace\.", "Lokace",
 "spray\.","Spray",
-"ctrouve\.","C'est trouvé",		"francite\.","Francité",	"\.lbb\.org", "LBB",	"rechercher\.libertysurf\.fr","Libertysurf",
+"ctrouve\.","C'est trouvé",
+"francite\.","Francité",
+"\.lbb\.org", "LBB",	"rechercher\.libertysurf\.fr","Libertysurf",
 "netfind\.aol\.com","AOL",		"recherche\.aol\.fr","AOL",
 "nbci\.com/search","NBCI",
 "askjeeves\.","Ask Jeeves",
@@ -92,7 +94,7 @@ $BarImageHorizontal_k = "barrehk.png";
 # Most common search engines
 "yahoo\.","p=",
 "altavista\.","q=",
-"msn\.","mt=",
+"msn\.","q=",
 "voila\.","kw=",
 "lycos\.","query=",
 "google\.","q=",
@@ -110,11 +112,12 @@ $BarImageHorizontal_k = "barrehk.png";
 "euroseek\.","query=",
 "excite\.","search=",
 "spray\.","string=",
+"francite\.","name=",
 "nbci\.com/search","keyword=",
 "askjeeves\.","ask=",
 "mamma\.","query="
 );
-@WordsToCleanSearchUrl= ("act=","annuaire=","btng=","categoria=","cou=","dd=","domain=","dt=","dw=","exec=","geo=","hc=","height=","hl=","hs=","kl=","lang=","loc=","lr=","matchmode=","medor=","message=","meta=","mode=","order=","page=","par=","pays=","pg=","pos=","prg=","qc=","refer=","sa=","safe=","sc=","sort=","src=","start=","stype=","tag=","temp=","theme=","url=","user=","width=","what=","\\.x=","\\.y=");
+@WordsToCleanSearchUrl= ("act=","annuaire=","btng=","categoria=","cfg=","cou=","dd=","domain=","dt=","dw=","exec=","geo=","hc=","height=","hl=","hs=","kl=","lang=","loc=","lr=","matchmode=","medor=","message=","meta=","mode=","order=","page=","par=","pays=","pg=","pos=","prg=","qc=","refer=","sa=","safe=","sc=","sort=","src=","start=","stype=","tag=","temp=","theme=","url=","user=","width=","what=","\\.x=","\\.y=");
 # Never put the following exclusion ("Claus=","kw=","keyword=","MT","p=","q=","qr=","qt=","query=","s=","search=","searchText=") because they are strings that contain keywords we're looking for.
 
 # ---------- HTTP Code with tooltip --------
@@ -1280,7 +1283,8 @@ sub Read_Config_File {
 		$_ =~ s/#.*//;								# Remove comments
 		$_ =~ s/	/¥/g; $_ =~ s/ /¥/g;			# Change all blanks into "¥"
 		$_ =~ s/=/§/; @felter=split(/§/,$_);		# Change first "=" into "§"
-		$param=$felter[0]; $value=$felter[1]; $value =~ s/¥*$//g; $value =~ s/^¥*//g; $value =~ s/¥/ /g; $value =~ s/^\"//; $value =~ s/\"$//;
+		$param=$felter[0]; $value=$felter[1];
+		$value =~ s/¥*$//g; $value =~ s/^¥*//g; $value =~ s/¥/ /g; $value =~ s/^\"//; $value =~ s/\"$//;
 		# Read main section
 		if ($param =~ /^LogFile/)               { $LogFile=$value; next; }
 		if ($param =~ /^LogFormat/)             { $LogFormat=$value; next; }
@@ -1349,8 +1353,8 @@ sub Read_Config_File {
 
 sub Check_Config {
 	# Main section
-	if (! ($LogFormat =~ /[1-2]/))            { error("Error: LogFormat parameter is wrong. Value is $LogFormat (should be 1 or 2)"); }
-	if (! ($DNSLookup =~ /[0-1]/))            { error("Error: DNSLookup parameter is wrong. Value is $DNSLookup (should be 0 or 1)"); }
+	if (! ($LogFormat =~ /[1-2]/))            { error("Error: LogFormat parameter is wrong. Value is '$LogFormat' (should be 1 or 2)"); }
+	if (! ($DNSLookup =~ /[0-1]/))            { error("Error: DNSLookup parameter is wrong. Value is '$DNSLookup' (should be 0 or 1)"); }
 	# Optional section
 	if (! ($PurgeLogFile =~ /[0-1]/))         { $PurgeLogFile=0; }
 	if (! ($ArchiveLogRecords =~ /[0-1]/))    { $ArchiveLogRecords=1; }
@@ -1400,7 +1404,7 @@ if (open(HISTORY,"$DirData/$PROG$_[0]$_[1]$FileSuffix.txt")) {
 	$reados=0;$readrobot=0;$readunknownreferer=0;$readunknownrefererbrowser=0;$readpagerefs=0;$readse=0;
 	$readsearchwords=0;$readerrors=0;$readerrors404=0;
 	while (<HISTORY>) {
-		$_ =~ s/\n//;
+		chomp $_;		# $_ =~ s/\n//;
 		@field=split(/ /,$_);
 		if ($field[0] eq "FirstTime")       { $FirstTime{$_[0].$_[1]}=$field[1]; next; }
         if ($field[0] eq "LastTime")        { if ($LastTime{$_[0].$_[1]} < $field[1]) { $LastTime{$_[0].$_[1]}=$field[1]; }; next; }
@@ -1771,7 +1775,7 @@ if (($YearRequired == $nowyear) && ($MonthRequired eq "year" || $MonthRequired =
 		# Get log line
 		#-------------
 		$line=$_;
-		$_ =~ s/\n//;	# Needed because IIS log file end with CRLF and perl read lines until LF
+		chomp $_;	# $_ =~ s/\n//;	# Needed because IIS log file end with CRLF and perl read lines until LF
 		$_ =~ s/\" / /g; $_ =~ s/ \"/ /g; $_ =~ s/\"$//;	# Suppress "
 		if (/^$/) { next; }								# To ignore blank line (With ISS: happens sometimes, with Apache: possible when editing log file)
 		if ($LogFormat == 2) {
@@ -2096,7 +2100,7 @@ if (($YearRequired == $nowyear) && ($MonthRequired eq "year" || $MonthRequired =
 											}
 										}
 										else {
-											$param =~ s/^ *//; $param =~ s/ *$//; $param =~ s/ */ /g;
+											$param =~ s/^ *//; $param =~ s/ *$//; $param =~ s/ ( *)/ /g;
 											if ((length $param) > 0) { $param =~ s/ /+/g; $_keywords{$param}++; }
 										}
 										last;
@@ -2119,7 +2123,7 @@ if (($YearRequired == $nowyear) && ($MonthRequired eq "year" || $MonthRequired =
 										}
 									}
 									else {
-										$param =~ s/^ *//; $param =~ s/ *$//; $param =~ s/ */ /g;
+										$param =~ s/^ *//; $param =~ s/ *$//; $param =~ s/ ( *)/ /g;
 										if ((length $param) > 2) { $param =~ s/ /+/g; $_keywords{$param}++; }
 									}
 								}
