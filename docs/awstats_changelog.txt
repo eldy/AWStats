@@ -17,6 +17,8 @@ New features/improvments:
   SkipDNSLookupFor, ...)
 - StyleSheet parameter works completely now and sample of CSS files are
   provided.
+- Add meta tags robots noindex,nofollow to avoid indexing of stats pages by
+  robots.
 - Added count for "Add to favourites"
 
 Other/Documentation:

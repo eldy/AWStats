@@ -533,7 +533,7 @@ use vars qw/ @Message /;
 #------------------------------------------------------------------------------
 sub html_head {
 	if (scalar keys %HTMLOutput) {
-		my $AllowIndex=1;
+		my $AllowIndex=0;
 		# Write head section
 		if ($FrameName ne 'index') { print "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">\n\n";  }
 		else { print "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Frameset//EN\">\n\n"; }
