@@ -81,9 +81,9 @@ if (window.location.search == "") {
 		var TRKmov = awstats_detectIE("QuickTimeCheckObject.QuickTimeCheck.1")
 		var TRKwma = awstats_detectIE("MediaPlayer.MediaPlayer.1")
 		var TRKpdf = 'n'; 
-		if (awstats_detectIE('PDF.PdfCtrl.5') == 'y' || awstats_detectIE('PDF.PdfCtrl.6') == 'y') {
-			TRKpdf = 'y';
-		}
+        if (awstats_detectIE("PDF.PdfCtrl.1") == 'y') { TRKpdf = 'y'; }
+	    if (awstats_detectIE('PDF.PdfCtrl.5') == 'y') { TRKpdf = 'y'; }
+		if (awstats_detectIE('PDF.PdfCtrl.6') == 'y') { TRKpdf = 'y'; }
 	}
 	if (TRKns || !TRKwin) {
 		TRKnse = ""; for (var TRKi=0;TRKi<navigator.mimeTypes.length;TRKi++) TRKnse += navigator.mimeTypes[TRKi].type.toLowerCase();
