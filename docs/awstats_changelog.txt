@@ -26,6 +26,7 @@ New features/improvements:
 - awstats_buildstaticpages.pl can also build one PDF file (need htmldoc).
 - Added maillogconvert.p for analyzing mail log files (support better
   sendmail, postfix and qmail log files).
+- Added -addfilenum option in logresolvemerge.pl
 
 Other/Documentation:
 - Added mp4 mime type.
