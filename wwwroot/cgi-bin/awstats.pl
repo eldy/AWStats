@@ -1760,23 +1760,23 @@ sub Check_Config {
 	if ($MinHitKeyword !~ /^[\d][\d]*/)          { $MinHitKeyword=1; }
 	if ($SplitSearchString !~ /[0-1]/)           { $SplitSearchString=0; }
 	if ($Logo eq "")                             { $Logo="awstats_logo1.png"; }
-	$color_Background =~ s/#//g; if ($color_Background !~ /^[0-9|A-Z]*$/i)           { $color_Background="FFFFFF";	}
-	$color_TableBGTitle =~ s/#//g; if ($color_TableBGTitle !~ /^[0-9|A-Z]*$/i)       { $color_TableBGTitle="CCCCCC"; }
-	$color_TableTitle =~ s/#//g; if ($color_TableTitle !~ /^[0-9|A-Z]*$/i)           { $color_TableTitle="000000"; }
-	$color_TableBG =~ s/#//g; if ($color_TableBG !~ /^[0-9|A-Z]*$/i)                 { $color_TableBG="CCCCDD"; }
-	$color_TableRowTitle =~ s/#//g; if ($color_TableRowTitle !~ /^[0-9|A-Z]*$/i)     { $color_TableRowTitle="FFFFFF"; }
-	$color_TableBGRowTitle =~ s/#//g; if ($color_TableBGRowTitle !~ /^[0-9|A-Z]*$/i) { $color_TableBGRowTitle="ECECEC"; }
-	$color_TableBorder =~ s/#//g; if ($color_TableBorder !~ /^[0-9|A-Z]*$/i)         { $color_TableBorder="ECECEC"; }
-	$color_text =~ s/#//g; if ($color_text !~ /^[0-9|A-Z]*$/i)           { $color_text="000000"; }
-	$color_titletext =~ s/#//g; if ($color_titletext !~ /^[0-9|A-Z]*$/i) { $color_titletext="000000"; }
-	$color_link =~ s/#//g; if ($color_link !~ /^[0-9|A-Z]*$/i)           { $color_link="0011BB"; }
-	$color_hover =~ s/#//g; if ($color_hover !~ /^[0-9|A-Z]*$/i)         { $color_hover="605040"; }
-	$color_v =~ s/#//g; if ($color_v !~ /^[0-9|A-Z]*$/i)                 { $color_v="F3F300"; }
-	$color_w =~ s/#//g; if ($color_w !~ /^[0-9|A-Z]*$/i)                 { $color_w="FF9933"; }
-	$color_w =~ s/#//g; if ($color_p !~ /^[0-9|A-Z]*$/i)                 { $color_p="4477DD"; }
-	$color_h =~ s/#//g; if ($color_h !~ /^[0-9|A-Z]*$/i)                 { $color_h="66F0FF"; }
-	$color_k =~ s/#//g; if ($color_k !~ /^[0-9|A-Z]*$/i)                 { $color_k="339944"; }
-	$color_s =~ s/#//g; if ($color_s !~ /^[0-9|A-Z]*$/i)                 { $color_s="8888DD"; }
+	$color_Background =~ s/#//g; if ($color_Background !~ /^[0-9|A-Z][0-9|A-Z]*$/i)           { $color_Background="FFFFFF";	}
+	$color_TableBGTitle =~ s/#//g; if ($color_TableBGTitle !~ /^[0-9|A-Z][0-9|A-Z]*$/i)       { $color_TableBGTitle="CCCCDD"; }
+	$color_TableTitle =~ s/#//g; if ($color_TableTitle !~ /^[0-9|A-Z][0-9|A-Z]*$/i)           { $color_TableTitle="000000"; }
+	$color_TableBG =~ s/#//g; if ($color_TableBG !~ /^[0-9|A-Z][0-9|A-Z]*$/i)                 { $color_TableBG="CCCCDD"; }
+	$color_TableRowTitle =~ s/#//g; if ($color_TableRowTitle !~ /^[0-9|A-Z][0-9|A-Z]*$/i)     { $color_TableRowTitle="FFFFFF"; }
+	$color_TableBGRowTitle =~ s/#//g; if ($color_TableBGRowTitle !~ /^[0-9|A-Z][0-9|A-Z]*$/i) { $color_TableBGRowTitle="ECECEC"; }
+	$color_TableBorder =~ s/#//g; if ($color_TableBorder !~ /^[0-9|A-Z][0-9|A-Z]*$/i)         { $color_TableBorder="ECECEC"; }
+	$color_text =~ s/#//g; if ($color_text !~ /^[0-9|A-Z][0-9|A-Z]*$/i)           { $color_text="000000"; }
+	$color_titletext =~ s/#//g; if ($color_titletext !~ /^[0-9|A-Z][0-9|A-Z]*$/i) { $color_titletext="000000"; }
+	$color_link =~ s/#//g; if ($color_link !~ /^[0-9|A-Z][0-9|A-Z]*$/i)           { $color_link="0011BB"; }
+	$color_hover =~ s/#//g; if ($color_hover !~ /^[0-9|A-Z][0-9|A-Z]*$/i)         { $color_hover="605040"; }
+	$color_v =~ s/#//g; if ($color_v !~ /^[0-9|A-Z][0-9|A-Z]*$/i)                 { $color_v="F3F300"; }
+	$color_w =~ s/#//g; if ($color_w !~ /^[0-9|A-Z][0-9|A-Z]*$/i)                 { $color_w="FF9933"; }
+	$color_w =~ s/#//g; if ($color_p !~ /^[0-9|A-Z][0-9|A-Z]*$/i)                 { $color_p="4477DD"; }
+	$color_h =~ s/#//g; if ($color_h !~ /^[0-9|A-Z][0-9|A-Z]*$/i)                 { $color_h="66F0FF"; }
+	$color_k =~ s/#//g; if ($color_k !~ /^[0-9|A-Z][0-9|A-Z]*$/i)                 { $color_k="339944"; }
+	$color_s =~ s/#//g; if ($color_s !~ /^[0-9|A-Z][0-9|A-Z]*$/i)                 { $color_s="8888DD"; }
 }
 
 sub Read_History_File {
