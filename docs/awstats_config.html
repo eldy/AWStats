@@ -47,6 +47,7 @@ when reading it), follow the example:<br>
 <br><b>MAIN SETUP SECTION (Required to make AWStats work)</b><br>
 <ul>
 <li><a href="#LogFile">LogFile</a>
+<li><a href="#LogType">LogType</a>
 <li><a href="#LogFormat">LogFormat</a>
 <li><a href="#LogSeparator">LogSeparator</a>
 <li><a href="#DNSLookup">DNSLookup</a>
@@ -263,6 +264,20 @@ when reading it), follow the example:<br>
 
 <br><br><hr>
 
+<a name="LogType"><b>LogType</b></a><br>
+<b>Version : </b>5.7+<br>
+<br># Enter the log file type you want to analyze.
+<br># Possible values:
+<br>#  W - For a web log file
+<br>#  M - For a mail log file
+<br>#  F - For a ftp log file
+<br># Example: W
+<br># Default: W
+<br>#
+<br>LogType=W
+
+<br><br><hr>
+
 <a name="LogFormat"><b>LogFormat</b></a><br>
 <b>Version : </b>2.1+<br>
 3.1+ for tags %host,%logname,%time1,%time2,%methodurl,%methodurlnoprot,%method,%url,
@@ -332,6 +347,7 @@ when reading it), follow the example:<br>
 <br># Example: "|"
 <br># Default: " "
 <br>#
+<br>LogSeparator=" "
 
 <br><br><hr>
 

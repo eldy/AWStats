@@ -174,14 +174,14 @@ $LevelForSearchEnginesDetection, $LevelForKeywordsDetection)=
 use vars qw/
 $DirLock $DirCgi $DirData $DirIcons $DirLang $AWScript $ArchiveFileName
 $AllowAccessFromWebToFollowingIPAddresses $HTMLHeadSection $HTMLEndSection $LinksToWhoIs $LinksToIPWhoIs
-$LogFile $LogFormat $LogSeparator $Logo $LogoLink $StyleSheet $WrapperScript $SiteDomain
+$LogFile $LogType $LogFormat $LogSeparator $Logo $LogoLink $StyleSheet $WrapperScript $SiteDomain
 $UseHTTPSLinkForUrl $URLQuerySeparators $URLWithAnchor $ErrorMessages $ShowFlagLinks
 /;
 ($DirLock, $DirCgi, $DirData, $DirIcons, $DirLang, $AWScript, $ArchiveFileName,
 $AllowAccessFromWebToFollowingIPAddresses, $HTMLHeadSection, $HTMLEndSection, $LinksToWhoIs, $LinksToIPWhoIs,
-$LogFile, $LogFormat, $LogSeparator, $Logo, $LogoLink, $StyleSheet, $WrapperScript, $SiteDomain,
+$LogFile, $LogType, $LogFormat, $LogSeparator, $Logo, $LogoLink, $StyleSheet, $WrapperScript, $SiteDomain,
 $UseHTTPSLinkForUrl, $URLQuerySeparators, $URLWithAnchor, $ErrorMessages, $ShowFlagLinks)=
-('','','','','','','','','','','','','','','','','','','','','','','','','');
+('','','','','','','','','','','','','','','','','','','','','','','','','','');
 use vars qw/
 $color_Background $color_TableBG $color_TableBGRowTitle
 $color_TableBGTitle $color_TableBorder $color_TableRowTitle $color_TableTitle
@@ -398,7 +398,7 @@ use vars qw/ @Message /;
 'Pages-URL',
 'Hours',
 'Browsers',
-'HTTP Errors',
+'',
 'Referers',
 'Never updated',
 'Visitors domains/countries',
@@ -524,7 +524,8 @@ use vars qw/ @Message /;
 'Browsers with Windows Media audio playing support',
 'Browsers with PDF support',
 'SMTP Error codes',
-'Countries'
+'Countries',
+'Mails'
 );
 
 
@@ -1312,6 +1313,8 @@ sub Read_Language_Data {
 	else {
 		warning("Warning: Can't find language files for \"$_[0]\". English will be used.");
 	}
+	# Some language string changes
+	if ($LogType eq 'M') { $Message[57]=$Message[149]; }
 }
 
 
@@ -1328,6 +1331,7 @@ sub Check_Config {
 	# Show initial values of main parameters before check
 	if ($Debug) {
 		debug(" LogFile='$LogFile'",2);
+		debug(" LogType='$LogType'",2);
 		debug(" LogFormat='$LogFormat'",2);
 		debug(" LogSeparator='$LogSeparator'",2);
 		debug(" DNSLookup='$DNSLookup'",2);
@@ -1393,8 +1397,9 @@ sub Check_Config {
 	my $nowweekofyear0=$nowweekofyear-1; $LogFile =~ s/%Wy/$nowweekofyear0/g;
 	$LogFile =~ s/%DW/$nowwday/g;
 	my $nowwday0=$nowwday-1; $LogFile =~ s/%Dw/$nowwday0/g;
-	$LogFormat =~ s/\\//g;
 	if (! $LogFile)   { error("LogFile parameter is not defined in config/domain file"); }
+	if ($LogType !~ /[WMF]/i) { $LogType='W'; }
+	$LogFormat =~ s/\\//g;
 	if (! $LogFormat) { error("LogFormat parameter is not defined in config/domain file"); }
 	if ($LogFormat =~ /^\d$/ && $LogFormat !~ /[1-6]/)  { error("LogFormat parameter is wrong in config/domain file. Value is '$LogFormat' (should be 1,2,3,4,5 or a 'personalized AWStats log format string')"); }
 	$LogSeparator||="\\s";
@@ -4347,8 +4352,7 @@ sub DefinePerlParsingFormat {
 	# IIS: 2000-07-19 14:14:14 62.161.78.73 - GET / 200 1234 HTTP/1.1 Mozilla/4.0+(compatible;+MSIE+5.01;+Windows+NT+5.0) http://www.from.com/from.htm
 	# WebStar: 05/21/00	00:17:31	OK  	200	212.242.30.6	Mozilla/4.0 (compatible; MSIE 5.0; Windows 98; DigExt)	http://www.cover.dk/	"www.cover.dk"	:Documentation:graphics:starninelogo.white.gif	1133
 	# Squid extended: 12.229.91.170 - - [27/Jun/2002:03:30:50 -0700] "GET http://www.callistocms.com/images/printable.gif HTTP/1.1" 304 354 "-" "Mozilla/5.0 Galeon/1.0.3 (X11; Linux i686; U;) Gecko/0" TCP_REFRESH_HIT:DIRECT
-	if ($Debug) { debug("Call To DefinePerlParsingFormat"); }
-	if ($Debug) { debug(" LogFormat=$LogFormat"); }
+	if ($Debug) { debug("Call To DefinePerlParsingFormat (LogType='$LogType', LogFormat='$LogFormat')"); }
 	@fieldlib=();
 	if ($LogFormat =~ /^[1-6]$/) {	# Pre-defined log format
 		if ($LogFormat eq '1' || $LogFormat eq '6') {	# Same than "%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\"".
@@ -6433,7 +6437,7 @@ if (scalar keys %HTMLOutput) {
 				if ($linetitle) { print ($frame?"</tr>\n":"<td class=AWS>"); }
 				if ($ShowFileTypesStats =~ /C/i)	 { print ($frame?"<tr><td class=AWS>":""); print "<a href=\"$linkanchor#FILETYPES\"$targetpage>$Message[98]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
 				if ($ShowMiscStats)	 		 { print ($frame?"<tr><td class=AWS>":""); print "<a href=\"$linkanchor#MISC\"$targetpage>$Message[139]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
-				if ($ShowHTTPErrorsStats)	 { print ($frame?"<tr><td class=AWS>":""); print "<a href=\"$linkanchor#ERRORS\"$targetpage>$Message[22]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
+				if ($ShowHTTPErrorsStats)	 { print ($frame?"<tr><td class=AWS>":""); print "<a href=\"$linkanchor#ERRORS\"$targetpage>$Message[32]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
 				foreach my $code (keys %TrapInfosForHTTPErrorCodes) {
 					if ($ShowHTTPErrorsStats)	 { print ($frame?"<tr><td class=AWS> &nbsp; <img height=8 width=9 src=\"$DirIcons/other/page.png\" alt=\"...\"> ":""); print "<a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=errors$code":"$PROG$StaticLinks.errors$code.$StaticExt")."\"$NewLinkTarget>$Message[31]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
 				}

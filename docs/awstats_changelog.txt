@@ -30,6 +30,7 @@ New features/improvements:
 - Added -updatefor option to limit number of lines parsed in one update
   session.
 - Better management of plugin load failure.
+- Added LogType parameter.
 
 Other/Documentation:
 - The "Popup WhoIs link" code is now handled by new 'hostinfo' plugin.
