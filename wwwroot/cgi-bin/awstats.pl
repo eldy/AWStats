@@ -910,6 +910,7 @@ sub SkipUserAgent {
 # Return:		0 Not found, 1 Found
 #------------------------------------------------------------------------------
 sub SkipFile {
+	debug("    Call to SkipFile to check $_[0]");
 	foreach (@SkipFiles) { if ($_[0] =~ /$_/) { return 1; } }
 	0; # Not in @SkipFiles
 }
@@ -5836,7 +5837,7 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 		if ($timerecord > $LastLine) { $LastLine = $timerecord; }	# Test should always be true except with not sorted log files
 
 		# Skip for some client host IP addresses, some URLs, other URLs
-		elsif (@SkipHosts && (&SkipHost($field[$pos_host]) || ($pos_hostr && &SkipHost($field[$pos_host]))))   { $qualifdrop="Dropped record (host $field[$pos_host] not qualified by SkipHosts)"; }
+		if    (@SkipHosts && (&SkipHost($field[$pos_host]) || ($pos_hostr && &SkipHost($field[$pos_host]))))   { $qualifdrop="Dropped record (host $field[$pos_host] not qualified by SkipHosts)"; }
 		elsif (@SkipFiles && &SkipFile($field[$pos_url]))    { $qualifdrop="Dropped record (URL $field[$pos_url] not qualified by SkipFiles)"; }
 		elsif (@SkipUserAgents && $pos_agent >= 0 && &SkipUserAgent($field[$pos_agent]))	{ $qualifdrop="Dropped record (user agent '$field[$pos_agent]' not qualified by SkipUserAgents)"; }
 		elsif (@OnlyHosts && ! &OnlyHost($field[$pos_host]) && (! $pos_hostr || ! &OnlyHost($field[$pos_hostr]))) { $qualifdrop="Dropped record (host $field[$pos_host]".($pos_hostr?" and $field[$pos_hostr]":"")." not qualified by OnlyHosts)"; } 
