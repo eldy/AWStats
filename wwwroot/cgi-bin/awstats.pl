@@ -49,7 +49,7 @@ $SiteToAnalyzeIsInHostAliases, $SiteToAnalyzeWithoutwww, $LogFile,
 $LogFormat, $LogFormatString, $Logo, $MaxNbOfDays, $MaxNbOfHostsShown, $MaxNbOfKeywordsShown,
 $MaxNbOfPageShown, $MaxNbOfRefererShown, $MaxNbOfRobotShown, $MinHitFile,
 $MinHitHost, $MinHitKeyword, $MinHitRefer, $MinHitRobot, $MonthRequired,
-$NewDNSLookup, $NowNewLinePhase, $OpenFileError, $PROG, $PageBool, $PageCode,
+$OpenFileError, $PROG, $PageBool, $PageCode,
 $PurgeLogFile, $QueryString, $RatioBytes, $RatioHits, $RatioHosts, $RatioPages,
 $ShowFlagLinks, $ShowLinksOnURL, $ShowLinksOnUrl, $TotalBytes,
 $TotalDifferentKeywords, $TotalDifferentPages, $TotalErrors, $TotalHits,
@@ -1100,7 +1100,16 @@ sub Read_History_File {
 		if ($field[0] eq "FirstTime")       { $FirstTime{$_[0].$_[1]}=$field[1]; next; }
 	    if ($field[0] eq "LastTime")        { if ($LastTime{$_[0].$_[1]} < $field[1]) { $LastTime{$_[0].$_[1]}=$field[1]; }; next; }
 		if ($field[0] eq "TotalVisits")     { $MonthVisits{$_[0].$_[1]}=$field[1]; next; }
-	    if ($field[0] eq "LastUpdate")      { if ($LastUpdate{$_[0].$_[1]} < $field[1]) { $LastUpdate{$_[0].$_[1]}=$field[1]; }; next; }
+	    if ($field[0] eq "LastUpdate")      {
+	    	if ($LastUpdate{$_[0].$_[1]} < $field[1]) {
+		    	$LastUpdate{$_[0].$_[1]}=$field[1];
+		    	$LastUpdateLinesRead{$_[0].$_[1]}=$field[2];
+		    	$LastUpdateNewLinesRead{$_[0].$_[1]}=$field[3];
+		    	$LastUpdateLinesCorrupted{$_[0].$_[1]}=$field[4]; 
+		    	$LastUpdateNewLinesCorrupted{$_[0].$_[1]}=$field[5];
+		    };
+	    	next;
+	    }
 	    if ($field[0] eq "BEGIN_VISITOR")   { $readvisitor=1; next; }
 	    if ($field[0] eq "END_VISITOR")     { $readvisitor=0; next; }
 	    if ($field[0] eq "BEGIN_UNKNOWNIP") { $readunknownip=1; next; }
@@ -1224,7 +1233,7 @@ sub Save_History_File {
 	print HISTORYTMP "FirstTime $FirstTime{$_[0].$_[1]}\n";
 	print HISTORYTMP "LastTime $LastTime{$_[0].$_[1]}\n";
 	if ($LastUpdate{$_[0].$_[1]} lt "$nowyear$nowmonth$nowday$nowhour$nowmin$nowsec") { $LastUpdate{$_[0].$_[1]}="$nowyear$nowmonth$nowday$nowhour$nowmin$nowsec"; }
-	print HISTORYTMP "LastUpdate $LastUpdate{$_[0].$_[1]}\n";
+	print HISTORYTMP "LastUpdate $LastUpdate{$_[0].$_[1]} $NbOfLinesProcessed $NbOfNewLinesProcessed $NbOfLinesCorrupted $NbOfNewLinesCorrupted\n";
 	print HISTORYTMP "TotalVisits $MonthVisits{$_[0].$_[1]}\n";
 
 	print HISTORYTMP "BEGIN_DOMAIN\n";
@@ -1683,7 +1692,9 @@ if ($UpdateStats) {
 	&debug("Start of processing log file $LogFile (monthtoprocess=$monthtoprocess, yeartoprocess=$yeartoprocess)");
 	$OpenFileError=1; if (open(LOG,"$LogFile")) { $OpenFileError=0; }
 	if ($OpenFileError) { error("Error: Couldn't open server log file \"$LogFile\" : $!"); }
-	$NbOfLinesProcessed=0; $NowNewLinePhase=0;
+	$NbOfLinesProcessed=0; $NbOfLinesCorrupted=0; 
+	$NbOfNewLinesProcessed=0; $NbOfNewLinesCorrupted=0;
+	$NowNewLinePhase=0;
 	while (<LOG>)
 	{
 		$savedline=$_;
@@ -1701,8 +1712,8 @@ if ($UpdateStats) {
 		# Check parsed parameters
 		#----------------------------------------------------------------------
 		if ($field[$pos_code] eq "") {
-			$corrupted++;
-			if ($NbOfLinesProcessed >= 10 && $corrupted == $NbOfLinesProcessed) {
+			$NbOfLinesCorrupted++;
+			if ($NbOfLinesProcessed >= 10 && $NbOfLinesCorrupted == $NbOfLinesProcessed) {
 				# Files seems to have bad format
 				print "AWStats did not found any valid log lines that match your <b>LogFormat</b> parameter, in the 10th first non commented lines of your log.<br>\n";
 				print "<font color=#880000>Your log file <b>$LogFile</b> must have a bad format or <b>LogFormat</b> parameter setup is wrong.</font><br><br>\n";
@@ -1720,17 +1731,18 @@ if ($UpdateStats) {
 					print "<font color=#888888><i>$LogFormat</i></font><br>\n";
 				}
 				print "<br>";
-				print "This is a sample of what AWStats found (10th non commented line):<br>\n";
+				print "And this is a sample of what AWStats found (the 10th non commented line):<br>\n";
 				print "<font color=#888888><i>$_</i></font><br>\n";
 
 				error("");	# Exit with format error
 			}
+			next;
 		}
 
 		# Check filters
 		#----------------------------------------------------------------------
 		if ($field[$pos_method] ne 'GET' && $field[$pos_method] ne 'POST' && $field[$pos_method] !~ /OK/) { next; }	# Keep only GET, POST but not HEAD, OPTIONS
-		if ($field[$pos_url] =~ /^RC=/) { $corrupted++; next; }						# A strange log record with IIS we need to forget
+		if ($field[$pos_url] =~ /^RC=/) { $NbOfLinesCorrupted++; next; }			# A strange log record with IIS we need to forget
 		# Split DD/Month/YYYY:HH:MM:SS or YYYY-MM-DD HH:MM:SS or MM/DD/YY\tHH:MM:SS
 		$field[$pos_date] =~ tr/-\/ \t/::::/;
 		@dateparts=split(/:/,$field[$pos_date]);
@@ -1740,8 +1752,8 @@ if ($UpdateStats) {
 		# Create $timeconnexion like YYYYMMDDHHMMSS
 		my $timeconnexion=$dateparts[2].$dateparts[1].$dateparts[0].$dateparts[3].$dateparts[4].$dateparts[5];
 		my $dayconnexion=$dateparts[2].$dateparts[1].$dateparts[0];
-		if ($timeconnexion < 10000000000000) { $corrupted++; next; }				# Should not happen, kept in case of parasite/corrupted line
-		if ($timeconnexion > $timetomorrow) { $corrupted++; next; }					# Should not happen, kept in case of parasite/corrupted line
+		if ($timeconnexion < 10000000000000) { $NbOfLinesCorrupted++; next; }		# Should not happen, kept in case of parasite/corrupted line
+		if ($timeconnexion > $timetomorrow) { $NbOfLinesCorrupted++; next; }		# Should not happen, kept in case of parasite/corrupted line
 		
 		# Skip if not a new line
 		#-----------------------
@@ -1753,12 +1765,16 @@ if ($UpdateStats) {
 			$NowNewLinePhase=1;	# This will stop comparison "<=" between timeconnexion and LastTime (we should have only new lines now)
 		}
 
+		# Record is approved. We found a new line
+		#----------------------------------------
+		$NbOfNewLinesProcessed++;
+
 		if (&SkipHost($field[$pos_rc])) { next; }		# Skip with some client host IP addresses
 		if (&SkipFile($field[$pos_url])) { next; }		# Skip with some URLs
 		if (! &OnlyFile($field[$pos_url])) { next; }	# Skip with other URLs
 
-		# Record is approved. We found a new line. Is it in a new month section ?
-		#------------------------------------------------------------------------
+		# Is it in a new month section ?
+		#-------------------------------
 		if ((($dateparts[1] > $monthtoprocess) && ($dateparts[2] >= $yeartoprocess)) || ($dateparts[2] > $yeartoprocess)) {
 			# Yes, a new month to process
 			if ($monthtoprocess > 0) {
@@ -1778,7 +1794,7 @@ if ($UpdateStats) {
 				next;
 			}
 			else {														# Bad format record (should not happen but when using MSIndex server), next
-				$corrupted++; next;
+				$NbOfNewLinesCorrupted++; next;
 			}
 		}
 
@@ -2336,12 +2352,21 @@ print "$CENTER<a name=\"MENU\"></a><BR>";
 print "<table>";
 print "<tr><td class=LEFT><font style=\"font: 14px arial,verdana,helvetica; font-weight: bold\">$message[7]: </td><td class=LEFT><font style=\"font: 14px arial,verdana,helvetica; font-weight: normal\">$SiteToAnalyze</td></tr>";
 print "<tr><td class=LEFT><font style=\"font: 14px arial,verdana,helvetica; font-weight: bold\">$message[75]: </td><td class=LEFT><font style=\"font: 14px arial,verdana,helvetica; font-weight: normal\">";
-foreach $key (keys %LastUpdate) { if ($LastUpdate < $LastUpdate{$key}) { $LastUpdate = $LastUpdate{$key}; } }
+foreach $key (keys %LastUpdate) { if ($LastUpdate < $LastUpdate{$key}) { $choosedkey=$key; $LastUpdate = $LastUpdate{$key}; } }
 $yearcon=substr($LastUpdate,0,4);$monthcon=substr($LastUpdate,4,2);$daycon=substr($LastUpdate,6,2);$hourcon=substr($LastUpdate,8,2);$mincon=substr($LastUpdate,10,2);
-if ($LastUpdate != 0) { print "$daycon&nbsp;$monthlib{$monthcon}&nbsp;$yearcon&nbsp;-&nbsp;$hourcon:$mincon"; }
+if ($LastUpdate != 0) { print "$daycon&nbsp;$monthlib{$monthcon}&nbsp;$yearcon&nbsp;-&nbsp;$hourcon:$mincon &nbsp;"; }
 else { print "<font color=#880000>Never updated</font>"; }
 print "</font>&nbsp; &nbsp; &nbsp; &nbsp;";
-if ($AllowToUpdateStatsFromBrowser) { print "<a href=\"$DirCgi$PROG.$Extension?update=1&site=$SiteToAnalyze&year=$YearRequired&month=$MonthRequired&lang=$Lang\">$message[74]</a>"; }
+if ($UpdateStats) {
+	print " (New lines processed: $NbOfNewLinesProcessed, New lines corrupted: $NbOfNewLinesCorrupted)";
+}
+else {
+	print " (New lines processed: $LastUpdateNewLinesRead{$choosedkey}, New lines corrupted: $LastUpdateNewLinesCorrupted{$choosedkey})";
+}
+if ($AllowToUpdateStatsFromBrowser) {
+	print "</td></tr><tr><td>&nbsp;</td><td class=LEFT>";
+	print "<a href=\"$DirCgi$PROG.$Extension?update=1&site=$SiteToAnalyze&year=$YearRequired&month=$MonthRequired&lang=$Lang\">$message[74]</a>";
+}
 print "</td></tr>\n";
 print "<tr><td>&nbsp;</td></tr>\n";
 print "<tr><td class=LEFT><font style=\"font: 14px arial,verdana,helvetica; font-weight: bold\">$message[16]:</td>";
