@@ -1,9 +1,14 @@
 # AWSTATS DOMAINS DATABASE
-#--------------------------
-# Last change $Revision$ - $Author$ - $Date$
+#-------------------------------------------------------
+# If you want to add a new domain to extend AWStats database detection capabilities,
+# you must add an entry in DomainsHashIDLib.
+#-------------------------------------------------------
+# $Revision$ - $Author$ - $Date$
 
 
-# Domains name list ("domain id", "Domain name")
+
+# DomainsHashIDLib
+# List of domain with their name ("domain id", "Domain name")
 #-------------------------------------------------------
 %DomainsHashIDLib = (
 "localhost","localhost",

@@ -1,17 +1,21 @@
 # AWSTATS ROBOTS DATABASE
-#------------------------
-# Last change $Revision$ - $Author$ - $Date$
-
+#-------------------------------------------------------
 # If you want to add robots to extend AWStats database detection capabilities,
 # you must add an entry in RobotsSearchIDOrder_listx and RobotsHashIDLib.
+#-------------------------------------------------------
+# $Revision$ - $Author$ - $Date$
+
 
 # Robots list was found at http://www.robotstxt.org/wc/active/all.txt
+# Other robots can be found at http://www.jafsoft.com/searchengines/webbots.html 
 # Rem: To avoid bad detection, some robots id were removed from this list:
 #      - Robots with ID of 2 letters only
 #      - Robot called "webs"
 # Rem: directhit is changed into direct_hit (its real id)
 # Rem: calif is changed into calif[^r] to avoid confusion between Tiscalifreenet browser
 # Rem: fish is changed into [^a]fish to avoid confusion between Madsafish browser
+
+
 
 # RobotsSearchIDOrder
 # This list is used to know in which order to search Robot IDs (Most frequent one
@@ -317,7 +321,8 @@
 
 
 
-# Robot name list ("robot id","robot clear text")
+# RobotsHashIDLib
+# List of robots names ("robot id","robot clear text")
 #-------------------------------------------------------
 %RobotsHashIDLib   = (
 "acme.spider","Acme.Spider",
@@ -607,7 +612,6 @@
 "webcompass", "webcompass",
 "wisenutbot","WISENutbot",
 "yandex", "Yandex bot",
-# Other robots can be found at http://www.jafsoft.com/searchengines/webbots.html 
 # Generic root ID
 "robot", "Unknown robot"
 );

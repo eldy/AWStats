@@ -1,9 +1,10 @@
 # AWSTATS OPERATING SYSTEMS DATABASE
-#------------------------------------
-# Last change $Revision$ - $Author$ - $Date$
-
+#-------------------------------------------------------
 # If you want to add an OS to extend AWStats database detection capabilities,
 # you must add an entry in OSSearchIDOrder, in OSHashID and in OSHashLib.
+#-------------------------------------------------------
+# $Revision$ - $Author$ - $Date$
+
 
 
 # OSSearchIDOrder
@@ -51,6 +52,7 @@
 "riscos",
 "webtv"
 );
+
 
 # OSHashID
 # Each OS Search ID is associated to a string that is also the name of icon
