@@ -1,9 +1,9 @@
 <!-- $Revision$ - $Date$ -->
 <div class="CTooltip" id="tt1">
-Eit nytt besøk er ein ny <b>gjest</b> som ikkje har vore tilkopla nettstaden siste <b>#VisitTimeOut# min</b>.
+Eit nytt besøk er ein ny <b>gjest</b> som ikkje har vore tilkopla nettstaden siste <b>#VisitTimeOut# minutt</b>.
 </div>
 <div class="CTooltip" id="tt2">
-Talet på klientvertar (<b>IP-adresser</b>) som har besøkt nettstaden, og har sett minst ei  <b>side</b>).<br>
+Talet på klientvertar (<b>IP-adresser</b>) som har besøkt nettstaden, og har sett minst éi <b>side</b>).<br>
 Denne informasjonen gjeld talet på <b>forskjellige personar</b> som har besøkt sida.
 </div>
 <div class="CTooltip" id="tt3">
@@ -18,23 +18,23 @@ Denne informasjonen viser kor mykje data som har blitt lasta ned totalt (<b>side
 Einingane er KiB, MiB eller GiB (kibibyte, mebibyte eller gibibyte)
 </div>
 <div class="CTooltip" id="tt13">
-#PROG# kan sjå når eit besøk på nettstaden din kjem frå eit <b>søk</b> på dei <b>#SearchEnginesArray# mest populære søkemotorane og emnekatalogane</b> (f.eks.&nbsp;Yahoo, Altavista, Lycos, Google og Kvasir).
+#PROG# kan sjå når eit besøk på nettstaden din kjem frå eit <b>søk</b> på dei <b>#SearchEnginesArray# mest populære søkjemotorane og emnekatalogane</b> (f.eks.&nbsp;Yahoo, Altavista, Lycos, Google og Kvasir).
 </div>
 <div class="CTooltip" id="tt14">
 Liste over alle <b>eksterne sider</b> som har lenkjer til nettstaden din (berre dei <b>#MaxNbOfRefererShown#</b> mest brukte eksterne sider blir vist).
-Lenkjer frå søkemotorar er ikkje inkludert her, sidan desse allereie er oppført i førre del av denne tabellen.
+Lenkjer frå søkjemotorar er ikkje tatt med her, då desse allereie er oppført i tidlegare i tabellen.
 </div>
 <div class="CTooltip" id="tt15">
-Denne tabellen viser dei mest brukte <b>søkeorda og søkeuttrykka</b> brukt til å finna nettstaden din i søkemotorar og emnekatalogar.
-(Søkeord frå dei <b>#SearchEnginesArray#</b> mest populære søkemotorane og emnekatalogane kan lesast av #PROG#, f.eks.&nbsp;Yahoo, Altavista, Lycos, Google, og Kvasir).<br>
-Merk at talet på søkeord kan vera høgare enn talet på søkeuttrykk, for når to eller fleire søkeord blir brukt i same søk, vil kvart ord telja med i oversikta over søkeord.
+Denne tabellen viser dei mest brukte <b>søkjeorda og søkjeuttrykka</b> brukt til å finna nettstaden i søkjemotorar og emnekatalogar.
+(Søkjeord frå dei <b>#SearchEnginesArray#</b> mest populære søkjemotorane og emnekatalogane kan lesast av #PROG#, f.eks.&nbsp;Yahoo, Altavista, Lycos, Google, og Kvasir).<br>
+Merk at talet på søkjeord kan vera høgare enn talet på søkjeuttrykk, for når to eller fleire søkjeord blir brukt i same søk, vil kvart ord telja med i oversikta over søkjeord.
 </div>
 <div class="CTooltip" id="tt16">
-Robotar blir brukt av mange søkemotorar som besøker nettstaden din for å indeksera og rangera han, samla statistikk om nettstader, og/eller sjå om nettstaden framleis er tilgjengeleg.<br>
+Robotar blir brukt av mange søkjemotorar som besøkjer nettstaden din for å indeksera og rangera han, samla statistikk om nettstader, og/eller sjå om nettstaden framleis er tilgjengeleg.<br>
 #PROG# kjenner til <b>#RobotArray#</b> robotar.
 </div>
 <div class="CTooltip" ID="tt17">
-All tidsrelatert statistikk er basert på tenartid.<br>
+All tidsrelatert statistikk er basert på tenartida.<br>
 </div>
 <div class="CTooltip" id="tt18">
 Rapporterte tal er <b>gjennomsnittsverdiar</b> (rekna ut frå all data mellom første og siste besøk)
@@ -44,8 +44,8 @@ Rapporterte tal er <b>kumulative summar</b> (rekna ut frå all data mellom første
 </div>
 <div class="CTooltip" id="tt20">
 Nokre <b>besøkslengder</b> er «ukjente» fordi dei ikkje kan reknast ut. Hovudgrunnane for dette er:<br>
-- Besøket er ikkje ferdig når rapportoppdateringa skjer.<br>
-- Besøket starta etter klokka 23:00 på den siste dagen i månaden. (Tekniske grunnar hindrar AWStats å rekna ut besøkslengda i desse tilfella.)
+&#8211; Besøket er ikkje ferdig når rapportoppdateringa skjer.<br>
+&#8211; Besøket starta etter klokka 23:00 på den siste dagen i månaden. (Tekniske grunnar hindrar AWStats å rekna ut besøkslengda i desse tilfella.)
 </div>
 
 <div class="CTooltip" id="tt201"> Inga beskriving av denne feilen. </div>
