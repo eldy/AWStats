@@ -16,8 +16,12 @@ use strict;no strict "refs";
 #-----------------------------------------------------------------------------
 # PLUGIN VARIABLES
 #-----------------------------------------------------------------------------
+# <-----
+# ENTER HERE THE MINIMUM AWSTATS VERSION REQUIRED BY YOUR PLUGIN
+# AND THE NAME OF ALL FUNCTIONS THE PLUGIN MANAGE.
 my $PluginNeedAWStatsVersion="5.1";
 my $PluginHooksFunctions="GetTime";
+# ----->
 
 
 
@@ -27,6 +31,11 @@ my $PluginHooksFunctions="GetTime";
 sub Init_timehires {
 	my $InitParams=shift;
 	my $checkversion=&Check_Plugin_Version($PluginNeedAWStatsVersion);
+
+	# <-----
+	# YOU CAN ENTER HERE CODE TO INIT PLUGIN GLOBAL VARIABLES
+	# ----->
+
 	return ($checkversion?$checkversion:"$PluginHooksFunctions");
 }
 

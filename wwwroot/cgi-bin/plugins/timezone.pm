@@ -9,9 +9,9 @@
 # $Revision$ - $Author$ - $Date$
 
 
-# !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-# !!!!!!! This plugin reduces AWStats speed by 30% !!!!!!!
-# !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+# !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+# !!!!! This plugin reduces AWStats speed by 30% !!!!!
+# !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 # <-----
 # ENTER HERE THE USE COMMAND FOR ALL REQUIRED PERL MODULES
 #use Time::Local 'timelocal_nocheck';
@@ -23,11 +23,15 @@ use strict;no strict "refs";
 #-----------------------------------------------------------------------------
 # PLUGIN VARIABLES
 #-----------------------------------------------------------------------------
+# <-----
+# ENTER HERE THE MINIMUM AWSTATS VERSION REQUIRED BY YOUR PLUGIN
+# AND THE NAME OF ALL FUNCTIONS THE PLUGIN MANAGE.
 my $PluginNeedAWStatsVersion="5.1";
 my $PluginHooksFunctions="ChangeTime GetTimeZoneTitle";
+# ----->
 
 # <-----
-# IF YOUR PLUGIN NEED GLOBAL VARIABLES, THEY MUST BE DECLARED HERE
+# IF YOUR PLUGIN NEED GLOBAL VARIABLES, THEY MUST BE DECLARED HERE.
 use vars qw/
 $PluginTimeZoneSeconds
 /;

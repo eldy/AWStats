@@ -20,11 +20,15 @@ use strict;no strict "refs";
 #-----------------------------------------------------------------------------
 # PLUGIN VARIABLES
 #-----------------------------------------------------------------------------
+# <-----
+# ENTER HERE THE MINIMUM AWSTATS VERSION REQUIRED BY YOUR PLUGIN
+# AND THE NAME OF ALL FUNCTIONS THE PLUGIN MANAGE.
 my $PluginNeedAWStatsVersion="5.1";
 my $PluginHooksFunctions="SearchFile LoadCache SaveHash";
+# ----->
 
 # <-----
-# IF YOUR PLUGIN NEED GLOBAL VARIABLES, THEY MUST BE DECLARED HERE
+# IF YOUR PLUGIN NEED GLOBAL VARIABLES, THEY MUST BE DECLARED HERE.
 use vars qw/
 $PluginHashfilesUpToDate
 /;
