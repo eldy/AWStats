@@ -76,7 +76,7 @@ No way to have 2 configurations files for 1 particular domain.<br>
 <font color=blue><b>How</b></font>:<br>
 First, AWStats must be placed in its own cgi-bin-awstats directory with no way for users to
 put in it a hacked version of AWStats (an unwritable directory).<br>
-Then, you must add an environment variable called <b>AWSTATS_CONFIG</b> in the web server environment
+Then, you must add an environment variable called <b>AWSTATS_FORCE_CONFIG</b> in the web server environment
 for each domain to say which config file to use for a particular domain.<br>
 <u>With Apache web server, you must use the '<i>SetEnv</i>' directive. This is an example:</u><br><i>
 &lt;VirtualHost www.xxx.yyy.zzz&gt;<br>
@@ -84,7 +84,7 @@ for each domain to say which config file to use for a particular domain.<br>
 &nbsp; ServerName   mydomain.com<br>
 &nbsp; ScriptAlias  /cgi-bin-awstats/<br>
 &nbsp; DocumentRoot /usr/local/apache/html<br>
-&nbsp; SetEnv AWSTATS_CONFIG myconfigvalueformydomain<br>
+&nbsp; SetEnv AWSTATS_FORCE_CONFIG myconfigvalueformydomain<br>
 &lt;/VirtualHost&gt;<br>
 </i>
 When using AWStats as a CGI with the following URL '<i>http://mydomain.com/cgi-bin-awstats/awstats.pl</i>', AWStats
@@ -126,13 +126,18 @@ To known how to create a protected realm for servers other than Apache, see your
 Then edit each config/domain file you want to be protected to set <a href="awstats_config.html#AllowAccessFromWebToAuthenticatedUsersOnly">AllowAccessFromWebToAuthenticatedUsersOnly</a> to 1.<br>
 You can also edit list of authorized users in the <a href="awstats_config.html#AllowAccessFromWebToFollowingAuthenticatedUsers">AllowAccessFromWebToFollowingAuthenticatedUsers</a> parameter.<br>
 You can also specify a range of allowed browsers IP Addresses with the <a href="awstats_config.html#AllowAccessFromWebToFollowingIPAddresses">AllowAccessFromWebToFollowingIPAddresses</a> parameter.<br>
+The following parameters <a href="awstats_config.html#ErrorMessages">ErrorMessages</a> and <a href="awstats_config.html#DebugMessages">DebugMessages</a> are
+also related to security parameters.<br>
 <br>
-Other tip: If you define <b>AWSTATS_CONFIG</b> environment variable in your web server environment (Adding
-<i>SetEnv AWSTATS_CONFIG myconfigvalueformydomain</i> with other directives in your Apache VirtualHost config), AWStats
-will use the config file called <i>awstats.myconfigvalueformydomain.conf</i> to choose which statistics used,
+Other tip: If the <b>AWSTATS_FORCE_CONFIG</b> environment variable is defined, AWStats will always use
+the config file <i>awstats.VALUE_OF_AWSTATS_FORCE_CONFIG.conf</i> as the config/domain file.
+So if you add this environment variable into your web server environment, for example by adding the line<br>
+<i>SetEnv AWSTATS_FORCE_CONFIG configvalueforthisdomain</i><br>
+with other directives in your Apache <i>&lt;VirtualHost&gt;</i> directive group in httpd.conf), AWStats will use the config file
+called <i>awstats.configvalueforthisdomain.conf</i> to choose which statistics used,
 even if a visitor try to force the config/domain file with the URL '<i>http://mydomain/cgi-bin/awstats.pl?config=otherdomain</i>'.
 This might be usefull for thoose who edit their config/domain file with <a href="awstats_config.html#AllowAccessFromWebToFollowingAuthenticatedUsers">AllowAccessFromWebToFollowingAuthenticatedUsers</a>="__REMOTE_USER__"</i>
-to avoid managing account lists in AWStats config files.<br>
+instead of maintaning the list of authorized users into each AWStats config file.<br>
 <br><br>
 
 <br><a name="3"><H2 style="font: 22px arial,helvetica,sanserif color: #606060"><u>3) NO SECURITY POLICY</u></H2></a><br>
