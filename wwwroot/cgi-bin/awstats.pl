@@ -13,6 +13,7 @@
 #-------------------------------------------------------
 # ALGORITHM SUMMARY
 # Read config file
+# Init variables
 # If 'update'
 #   Get last history file name
 #   Read this last history file (LastTime, data arrays, ...)
@@ -722,7 +723,6 @@ DIV { font: 12px arial,verdana,helvetica; text-align:justify; }
 ";
 	print "</head>\n\n";
 	print "<body>\n";
-	&Init_HashArray;	# Should be useless (to avoid problem with mod_perl that keep variables in memory).
 }
 
 
@@ -1362,6 +1362,7 @@ sub Save_History_File {
 # Input: Global variables
 #--------------------------------------------------------------------
 sub Init_HashArray {
+	&debug("Call to Init_HashArray [$_[0],$_[1]]");
 	# We purge data read for year $_[0] and month $_[1] so it's like we never read it
 	$HistoryFileAlreadyRead{"$_[0]$_[1]"}=0;
 	# Delete/Reinit all arrays with name beginning by _
@@ -1558,7 +1559,6 @@ $NewDNSLookup=$DNSLookup;
 # monthnum must be in english because it's used to translate log date in apache log files which are always in english
 %monthnum =  ( "Jan","01","jan","01","Feb","02","feb","02","Mar","03","mar","03","Apr","04","apr","04","May","05","may","05","Jun","06","jun","06","Jul","07","jul","07","Aug","08","aug","08","Sep","09","sep","09","Oct","10","oct","10","Nov","11","nov","11","Dec","12","dec","12" );
 
-
 # Check year and month parameters
 if ($QueryString =~ /year=/i) 	{ $YearRequired=$QueryString; $YearRequired =~ s/.*year=//; $YearRequired =~ s/&.*//;  $YearRequired =~ s/ .*//; }
 if ($YearRequired !~ /^[\d][\d][\d][\d]$/) { $YearRequired=$nowyear; }
@@ -1583,7 +1583,7 @@ for ($ix=1; $ix<=12; $ix++) {
 	$FirstTime{$YearRequired.$monthix}=0;$LastTime{$YearRequired.$monthix}=0;$LastUpdate{$YearRequired.$monthix}=0;
 	$MonthVisits{$YearRequired.$monthix}=0;$MonthUnique{$YearRequired.$monthix}=0;$MonthPages{$YearRequired.$monthix}=0;$MonthHits{$YearRequired.$monthix}=0;$MonthBytes{$YearRequired.$monthix}=0;
 	}
-&Init_HashArray;
+&Init_HashArray;	# Should be useless in perl (except with mod_perl that keep variables in memory).
 
 # Show logo
 print "<table WIDTH=$WIDTH>\n";
@@ -1604,6 +1604,7 @@ print "<hr>\n";
 #if (($YearRequired == $nowyear) && ($MonthRequired eq "year" || $MonthRequired == $nowmonth)) {
 # No update (no log processing) if UpdateStats != 1
 if ($UpdateStats) {
+	&debug("Start Update process");
 
 	#------------------------------------------
 	# READING THE LAST PROCESSED HISTORY FILE
@@ -2159,7 +2160,8 @@ if ($UpdateStats) {
 	# Save current processed month $monthtoprocess
 	if ($UpdateStats && $monthtoprocess) {	# If monthtoprocess is still 0, it means there was no history files and we found no valid lines in log file
 		&Save_History_File($yeartoprocess,$monthtoprocess);		# We save data for this month,year
-		if (($MonthRequired ne "year") && ($monthtoprocess != $MonthRequired)) { &Init_HashArray($yeartoprocess,$monthtoprocess); }	# Not a desired month, so we clean data
+		if (($MonthRequired ne "year") && ($monthtoprocess != $MonthRequired)) { &Init_HashArray($yeartoprocess,$monthtoprocess); }	# Not a desired month (wrong month), so we clean data arrays
+		if (($MonthRequired eq "year") && ($yeartoprocess != $YearRequired)) { &Init_HashArray($yeartoprocess,$monthtoprocess); }	# Not a desired month (wrong year), so we clean data arrays
 	}
 
 	# Archive LOG file into ARCHIVELOG
