@@ -5,7 +5,12 @@ $Revision$ - $Author$ - $Date$
 5.91
 
 Fixes:
-- Fixed bug 816267.
+- Fixed bug 816267: onedigit dayofmonth breaks syslog regex
+- Fixed bug 817287,830458: wrong regexp in Read_DNS_Cache subroutine
+- Fixed bug 599388: Google search engines was not detected if
+  domain was ip.
+- Fixed bug 812681: bad case for ENV expansion in awstats.conf.
+- Fixed bug 818704: Warning in IPv6 plugin when no reverse DNS
 - Fixed minor typo errors.
 - Fixed value for ValueSMTPCodes if not defined in config file.
 - Replaced Kb/visits to Kb/mails for mail log analysis.
