@@ -62,6 +62,7 @@ sub GetResolvedIP_ipv6 {
 	my $ip = new Net::IP($_[0]);
 	my $reverseip= $ip->reverse_ip();
 	my $query = $resolver->query($reverseip, "PTR");
+	if (! defined($query)) { return; }
 	my @result=split(/\s/, ($query->answer)[0]->string);
 	return $result[4];
 	# ----->
