@@ -18,9 +18,9 @@ Fixes:
 - "&nbsp" changed to "&nbsp;" in miscellanous chart.
 - maillogconvert.pl did not support all sendmail setup.
 
-New features/improvments:
+New features/improvements:
 - Added support for Darwin streaming server.
-- awstats_buildstaticpages.pl can also build one PDF file (use htmldoc).
+- awstats_buildstaticpages.pl can also build one PDF file (need htmldoc).
 
 Other/Documentation:
 - Added mp4 mime type.
@@ -35,7 +35,7 @@ Fixes:
 - percent for other in full list of "links for internet search engines"
   has been fixed.
 
-New features/improvments:
+New features/improvements:
 - Report compression ratios with mod_deflate feature (Apache 2).
 - A better browser detection.
 - Can add regex values for a lot of list parameters (HostAliases,
@@ -53,7 +53,7 @@ New features/improvments:
   update is ran. If it fails (file changed or wrong checksum of record), then
   it does a scan from the beginning of file until a new date has been
   reached (This was the only way of working on older version). So now update
-  process is very much faster for thoose who don't purge/rotate their log
+  process is very much faster for those who don't purge/rotate their log
   file between two update process (direct access is faster than full scan).
 - Better look for report pages on Netscape/Mozilla browsers.
 
@@ -63,7 +63,7 @@ Other/Documentation:
 
 Note 1:
   You should remove the "robots.txt" and "favicon.ico" entries in the SkipFiles
-  parameter in your config files after updgrading to 5.6.
+  parameter in your config files after upgrading to 5.6.
   
 
 
@@ -79,7 +79,7 @@ Fixes:
   value and another parameter was ended with this value, the wrong parameter
   was truncated from URL.
 
-New features/improvments:
+New features/improvements:
 - Added a 'Screen Size' report.
 - Group OS by families. Added a detailed OS version chart.
 - Better 404 errors management. URLs are always cleaned from their parameter
@@ -136,7 +136,7 @@ Fixes:
 - WhoIs link did not work if host name contained a "-" char.
 - Fixed a bug in mod_gzip stats when only ratio was given in log.
 
-New features/improvments:
+New features/improvements:
 - Lang parameter accepts 'auto' value (Choose first available language
   accepted by browser).
 - Little support for realmedia server.
@@ -196,7 +196,7 @@ Fixes:
 - Fixed: Columns not aligned in allhosts and lasthosts view when not all
   fields are choosed.
 
-New features/improvments:
+New features/improvements:
 - Added awstats_exportlib.pl tool.
 - Added 'Full list' view for Domains/Country report.
 - Added 'Full list' and 'Last visits' for email senders/receivers chart.
