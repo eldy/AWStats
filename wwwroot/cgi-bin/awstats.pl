@@ -1794,7 +1794,7 @@ sub Format_Bytes {
 	if ($bytes >= $fudge * exp(2*log(1024))) { return sprintf("%.2f", $bytes/exp(2*log(1024)))." Mb"; }
 	if ($bytes >= $fudge * exp(1*log(1024))) { return sprintf("%.2f", $bytes/exp(1*log(1024)))." $Message[44]"; }
 	if ($bytes < 0) { $bytes="?"; }
-	return "$bytes $Message[75]";
+	return int($bytes)." $Message[75]";
 }
 
 #------------------------------------------------------------------------------
