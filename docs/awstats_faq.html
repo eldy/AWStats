@@ -52,6 +52,7 @@ FAQ-SET100 <a href="#CGISOURCE">I see Perl script's source instead of its execut
 FAQ-SET150 <a href="#SPAWNERROR">Error "...couldn't create/spawn child process..." with Apache for windows.</a><br>
 FAQ-SET200 <a href="#INTERNAL">"Internal Error" or "Error 500" in a browser connecting to Apache.</a><br>
 FAQ-SET210 <a href="#SPEED">"Internal Error" after a long time in my browser (See FAQ-COM100 "AWStats speed/timeout problems").</a><br>
+FAQ-SET220 <a href="#IE6CRASH">IE6 crash while running awstats.pl</a><br>
 FAQ-SET250 <a href="#PERSONALIZEDLOG">Log format setup or errors.</a><br>
 FAQ-SET260 <a href="#FTP">Setup for FTP server log files.</a><br>
 FAQ-SET280 <a href="#NOTSAMENUMBER">Error "Not same number of records of...".</a><br>
@@ -204,6 +205,15 @@ Then restart Apache. This will tell Apache to look into the registry to find the
 Example with Windows OS and ActivePerl Perl interpreter (installed in C:\Program Files\ActiveState\ActivePerl),
 you must change the first line of awstats.pl file with:<br>
 <i>#!c:/program files/activestate/activeperl/bin/perl</i><br>
+<br>
+
+<a name="IE6CRASH"></a><a name="IE6CRASH"></a><br>
+<b><u>FAQ-SET220 : IE6 CRASH WHILE RUNNING AWSTATS.PL</u></b><br>
+<font class=CProblem>PROBLEM:</font> Sometimes IE6 crash while running awstats.pl with some AWStats configuration. Other versions or browsers works fine.<br>
+<font class=CSolution>SOLUTION:</font>
+A lot of users had experienced problems with IE6. It seems that this browser is not able to load a 60k text
+served by perl script which would read the 60k text file and then display the html page.
+The only solution is to wait of fix from MS or use another version (5.0, 5.5...) or browser (Netscape, Opera...).<br>
 <br>
 
 <a name="PERSONALIZEDLOG"></a><br>
