@@ -5260,7 +5260,7 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 
 		# Check screen size
 		#------------------
-		if ($field[$pos_url] =~ /$LogScreenSizeUrl#w=(\d+)&h=(\d+)/) { $_screensize_h{"$1x$2"}++; next; }
+		if ($field[$pos_url] =~ /$LogScreenSizeUrl\?w=(\d+)&h=(\d+)/) { $_screensize_h{"$1x$2"}++; next; }
 		
 		# Check return status code
 		#-------------------------
