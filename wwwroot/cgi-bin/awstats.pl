@@ -71,7 +71,7 @@ $found, $internal_link, $new) = ();
 %MonthBytes = %MonthHits = %MonthHostsKnown = %MonthHostsUnknown = %MonthPages = %MonthUnique = %MonthVisits =
 %monthlib = %monthnum = ();
 
-$VERSION="3.1 (build 38)";
+$VERSION="3.1 (build 39)";
 $Lang="en";
 
 # Default value
@@ -830,7 +830,12 @@ EOF
 		print "<tr valign=middle><td class=AWL width=150 style=\"font: 18px arial,verdana,helvetica; font-weight: bold\">AWStats\n";
 		Show_Flag_Links($Lang);
 		print "</td>\n";
-		print "<td class=AWL width=450><a href=\"$LogoLink\" target=\"_newawstats\"><img src=\"$DirIcons/other/$Logo\" border=0 alt=\"$PROG Official Web Site\" title=\"$PROG Official Web Site\"></a></td></tr>\n";
+		if ($LogoLink =~ "http://awstats.sourceforge.net") {
+			print "<td class=AWL width=450><a href=\"$LogoLink\" target=\"_newawstats\"><img src=\"$DirIcons/other/$Logo\" border=0 alt=\"$PROG Official Web Site\" title=\"$PROG Official Web Site\"></a></td></tr>\n";
+		}
+		else {
+			print "<td class=AWL width=450><a href=\"$LogoLink\" target=\"_newawstats\"><img src=\"$DirIcons/other/$Logo\" border=0></a></td></tr>\n";
+		}
 		#print "<b><font face=\"verdana\" size=1><a href=\"$HomeURL\">HomePage</a> &#149\; <a href=\"javascript:history.back()\">Back</a></font></b><br>\n";
 		print "<tr><td class=AWL colspan=2>$Message[54]</td></tr>\n";
 		print "</table>\n";
