@@ -1558,7 +1558,8 @@ if ($DNSLookup) { use Socket; }
 $NewDNSLookup=$DNSLookup;
 $LogFileWithoutLog=$LogFile;$LogFileWithoutLog =~ s/\.log$//;
 %monthlib =  ( "01","$message[60][$Lang]","02","$message[61][$Lang]","03","$message[62][$Lang]","04","$message[63][$Lang]","05","$message[64][$Lang]","06","$message[65][$Lang]","07","$message[66][$Lang]","08","$message[67][$Lang]","09","$message[68][$Lang]","10","$message[69][$Lang]","11","$message[70][$Lang]","12","$message[71][$Lang]" );
-%monthnum =  ( "$message[60][$Lang]","01","$message[61][$Lang]","02","$message[62][$Lang]","03","$message[63][$Lang]","04","$message[64][$Lang]","05","$message[65][$Lang]","06","$message[66][$Lang]","07","$message[67][$Lang]","08","$message[68][$Lang]","09","$message[69][$Lang]","10","$message[70][$Lang]","11","$message[71][$Lang]","12" );
+# monthnum must be in english because it's used to translate log date in log files which are always in english
+%monthnum =  ( "Jan","01","Feb","02","Mar","03","Apr","04","May","05","Jun","06","Jul","07","Aug","08","Sep","09","Oct","10","Nov","11","Dec","12" );
 
 ($nowsec,$nowmin,$nowmin,$nowday,$nowmonth,$nowyear,$nowwday,$nowyday,$nowisdst) = localtime(time);
 if ($nowyear < 100) { $nowyear+=2000; } else { $nowyear+=1900; }
