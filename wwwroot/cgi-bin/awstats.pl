@@ -212,14 +212,14 @@ $LastLine $LastUpdate
 $TotalUnique $TotalVisits $TotalHostsKnown $TotalHostsUnknown
 $TotalPages $TotalHits $TotalBytes $TotalEntries $TotalExits $TotalBytesPages $TotalDifferentPages
 $TotalKeyphrases $TotalKeywords $TotalDifferentKeyphrases $TotalDifferentKeywords
-$TotalSearchEngines $TotalRefererPages $TotalDifferentSearchEngines $TotalDifferentRefererPages
+$TotalSearchEnginesPages $TotalSearchEnginesHits $TotalRefererPages $TotalRefererHits $TotalDifferentSearchEngines $TotalDifferentReferer
 /;
 $lowerval = 0;
 $LastLine = $LastUpdate = 0;
 $TotalUnique = $TotalVisits = $TotalHostsKnown = $TotalHostsUnknown = 0;
 $TotalPages = $TotalHits = $TotalBytes = $TotalEntries = $TotalExits = $TotalBytesPages = $TotalDifferentPages = 0;
 $TotalKeyphrases = $TotalKeywords = $TotalDifferentKeyphrases = $TotalDifferentKeywords = 0;
-$TotalSearchEngines = $TotalRefererPages = $TotalDifferentSearchEngines = $TotalDifferentRefererPages = 0;
+$TotalSearchEnginesPages = $TotalSearchEnginesHits = $TotalRefererPages = $TotalRefererHits = $TotalDifferentSearchEngines = $TotalDifferentReferer = 0;
 # ---------- Init arrays --------
 use vars qw/
 @RobotsSearchIDOrder_list1 @RobotsSearchIDOrder_list2 @RobotsSearchIDOrder_list3
@@ -280,9 +280,9 @@ use vars qw/
 %_filetypes_h %_filetypes_k %_filetypes_gz_in %_filetypes_gz_out
 %_host_p %_host_h %_host_k %_host_l %_host_s %_host_u
 %_waithost_e %_waithost_l %_waithost_s %_waithost_u
-%_keyphrases %_keywords %_os_h %_pagesrefs_h %_robot_h %_robot_k %_robot_l
+%_keyphrases %_keywords %_os_h %_pagesrefs_p %_pagesrefs_h %_robot_h %_robot_k %_robot_l
 %_login_h %_login_p %_login_k %_login_l
-%_se_referrals_h %_sider404_h %_referer404_h %_url_p %_url_k %_url_e %_url_x
+%_se_referrals_p %_se_referrals_h %_sider404_h %_referer404_h %_url_p %_url_k %_url_e %_url_x
 %_unknownreferer_l %_unknownrefererbrowser_l
 %_emails_h %_emails_k %_emails_l %_emailr_h %_emailr_k %_emailr_l
 %val %nextval %egal
@@ -303,9 +303,9 @@ use vars qw/
 %_filetypes_h = %_filetypes_k = %_filetypes_gz_in = %_filetypes_gz_out = ();
 %_host_p = %_host_h = %_host_k = %_host_l = %_host_s = %_host_u = ();
 %_waithost_e = %_waithost_l = %_waithost_s = %_waithost_u = ();
-%_keyphrases = %_keywords = %_os_h = %_pagesrefs_h = %_robot_h = %_robot_k = %_robot_l = ();
+%_keyphrases = %_keywords = %_os_h = %_pagesrefs_p = %_pagesrefs_h = %_robot_h = %_robot_k = %_robot_l = ();
 %_login_h = %_login_p = %_login_k = %_login_l = ();
-%_se_referrals_h = %_sider404_h = %_referer404_h = %_url_p = %_url_k = %_url_e = %_url_x = ();
+%_se_referrals_p = %_se_referrals_h = %_sider404_h = %_referer404_h = %_url_p = %_url_k = %_url_e = %_url_x = ();
 %_unknownreferer_l = %_unknownrefererbrowser_l = ();
 %_emails_h = %_emails_k = %_emails_l = %_emailr_h = %_emailr_k = %_emailr_l = ();
 %val = %nextval = %egal = ();
@@ -2647,7 +2647,12 @@ sub Read_History_With_TmpUpdate {
 						$count++;
 						if ($SectionsToLoad{'sereferrals'}) {
 							$countloaded++;
-							if ($field[1]) { $_se_referrals_h{$field[0]}+=$field[1]; }
+							if ($versionnum < 5004) {	# For history files < 5.4
+								if ($field[1]) { $_se_referrals_h{$field[0]}+=$field[1]; }
+							} else {
+								if ($field[1]) { $_se_referrals_p{$field[0]}+=$field[1]; }
+								if ($field[2]) { $_se_referrals_h{$field[0]}+=$field[2]; }
+							}
 						}
 					}
 					$_=<HISTORY>;
@@ -2659,7 +2664,7 @@ sub Read_History_With_TmpUpdate {
 				delete $SectionsToLoad{'sereferrals'};
 				if ($SectionsToSave{'sereferrals'}) {
 					Save_History('sereferrals',$year,$month); delete $SectionsToSave{'sereferrals'};
-					if ($withpurge) { %_se_referrals_h=(); }
+					if ($withpurge) { %_se_referrals_p=(); %_se_referrals_h=(); }
 				}
 				if (! scalar %SectionsToLoad) { debug(" Stop reading history file. Got all we need."); last; }
 				next;
@@ -2684,7 +2689,12 @@ sub Read_History_With_TmpUpdate {
 								if (!$RefererPagesFilter || $field[0] =~ /$RefererPagesFilter/) { $loadrecord=1; }
 							}
 							if ($loadrecord) {
-								if ($field[1]) { $_pagesrefs_h{$field[0]}+=int($field[1]); }
+								if ($versionnum < 5004) {	# For history files < 5.4
+									if ($field[1]) { $_pagesrefs_h{$field[0]}+=int($field[1]); }
+								} else {
+									if ($field[1]) { $_pagesrefs_p{$field[0]}+=int($field[1]); }
+									if ($field[2]) { $_pagesrefs_h{$field[0]}+=int($field[2]); }
+								}
 								$countloaded++;
 							}
 						}
@@ -2698,7 +2708,7 @@ sub Read_History_With_TmpUpdate {
 				delete $SectionsToLoad{'pagerefs'};
 				if ($SectionsToSave{'pagerefs'}) {
 					Save_History('pagerefs',$year,$month); delete $SectionsToSave{'pagerefs'};
-					if ($withpurge) { %_pagesrefs_h=(); }
+					if ($withpurge) { %_pagesrefs_p=(); %_pagesrefs_h=(); }
 				}
 				if (! scalar %SectionsToLoad) { debug(" Stop reading history file. Got all we need."); last; }
 				next;
@@ -3356,22 +3366,34 @@ sub Save_History {
 	}
 	if ($sectiontosave eq 'sereferrals') {
 		print HISTORYTMP "\n";
-		print HISTORYTMP "# Search engine referers ID - Hits\n";
+		print HISTORYTMP "# Search engine referers ID - Pages - Hits\n";
 		$ValueInFile{$sectiontosave}=tell HISTORYTMP;
 		print HISTORYTMP "BEGIN_SEREFERRALS ".(scalar keys %_se_referrals_h)."\n";
-		foreach my $key (keys %_se_referrals_h) { print HISTORYTMP "$key $_se_referrals_h{$key}\n"; }
+		foreach my $key (keys %_se_referrals_h) { print HISTORYTMP "$key ".int($_se_referrals_p{$key})." $_se_referrals_h{$key}\n"; }
 		print HISTORYTMP "END_SEREFERRALS\n";
 	}
 	if ($sectiontosave eq 'pagerefs') {
 		print HISTORYTMP "\n";
-		print HISTORYTMP "# External page referers - Hits\n";
+		print HISTORYTMP "# External page referers - Pages - Hits\n";
+		print HISTORYTMP "# The $MaxNbOfRefererShown first Pages must be first (order not required for others)\n";
 		$ValueInFile{$sectiontosave}=tell HISTORYTMP;
 		print HISTORYTMP "BEGIN_PAGEREFS ".(scalar keys %_pagesrefs_h)."\n";
-		foreach my $key (keys %_pagesrefs_h) {
+		# We save page list in score sorted order to get a -output faster and with less use of memory.
+		&BuildKeyList($MaxNbOfRefererShown,$MinHitRefer,\%_pagesrefs_h,\%_pagesrefs_p);
+		%keysinkeylist=();
+		foreach my $key (@keylist) {
+			$keysinkeylist{$key}=1;
 			my $newkey=$key;
 			$newkey =~ s/^http(s|):\/\/([^\/]+)\/$/http$1:\/\/$2/i;	# Remove / at end of http://.../ but not at end of http://.../dir/
 			$newkey =~ s/\s/%20/g;
-			print HISTORYTMP "$newkey $_pagesrefs_h{$key}\n";
+			print HISTORYTMP "$newkey ".int($_pagesrefs_p{$key})." $_pagesrefs_h{$key}\n";
+		}
+		foreach my $key (keys %_pagesrefs_h) {
+			if ($keysinkeylist{$key}) { next; }
+			my $newkey=$key;
+			$newkey =~ s/^http(s|):\/\/([^\/]+)\/$/http$1:\/\/$2/i;	# Remove / at end of http://.../ but not at end of http://.../dir/
+			$newkey =~ s/\s/%20/g;
+			print HISTORYTMP "$newkey ".int($_pagesrefs_p{$key})." $_pagesrefs_h{$key}\n";
 		}
 		print HISTORYTMP "END_PAGEREFS\n";
 	}
@@ -3678,9 +3700,9 @@ sub Init_HashArray {
 	%_filetypes_h = %_filetypes_k = %_filetypes_gz_in = %_filetypes_gz_out = ();
 	%_host_p = %_host_h = %_host_k = %_host_l = %_host_s = %_host_u = ();
 	%_waithost_e = %_waithost_l = %_waithost_s = %_waithost_u = ();
-	%_keyphrases = %_keywords = %_os_h = %_pagesrefs_h = %_robot_h = %_robot_k = %_robot_l = ();
+	%_keyphrases = %_keywords = %_os_h = %_pagesrefs_p = %_pagesrefs_h = %_robot_h = %_robot_k = %_robot_l = ();
 	%_login_p = %_login_h = %_login_k = %_login_l = ();
-	%_se_referrals_h = %_sider404_h = %_referer404_h = %_url_p = %_url_k = %_url_e = %_url_x = ();
+	%_se_referrals_p = %_se_referrals_h = %_sider404_h = %_referer404_h = %_url_p = %_url_k = %_url_e = %_url_x = ();
 	%_unknownreferer_l = %_unknownrefererbrowser_l = ();
 	%_emails_h = %_emails_k = %_emails_l = %_emailr_h = %_emailr_k = %_emailr_l = ();
  	for (my $ix=1; $ix < @ExtraName; $ix++) {
@@ -5578,7 +5600,7 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 						}
 						else {
 							# This hit came from a search engine
-							if ($PageBool) { $_from_p[2]++; }
+							if ($PageBool) { $_from_p[2]++; $_se_referrals_p{$TmpRefererServer{$refererserver}}++; }
 							$_from_h[2]++;
 							$_se_referrals_h{$TmpRefererServer{$refererserver}}++;
 							$found=1;
@@ -5623,13 +5645,20 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 						if ($PageBool) { $_from_p[3]++; }
 						$_from_h[3]++;
 						# http://www.mysite.com/ must be same referer than http://www.mysite.com but .../mypage/ differs of .../mypage
-						#if ($refurl[0] =~ /^[^\/]+\/$/) { $field[$pos_referer] =~ s/\/$//; }	# Code moved in SaveHistory
+						#if ($refurl[0] =~ /^[^\/]+\/$/) { $field[$pos_referer] =~ s/\/$//; }	# Code moved in Save_History
 						if ($URLReferrerWithQuery) {
+							if ($PageBool) { $_pagesrefs_p{$field[$pos_referer]}++; }
 							$_pagesrefs_h{$field[$pos_referer]}++;
 						}
 						else {
-							if ($field[$pos_referer]=~/^([^$URLQuerySeparators]+)/) { $_pagesrefs_h{"$1"}++; }
-							else { $_pagesrefs_h{$field[$pos_referer]}++; }
+							if ($field[$pos_referer]=~/^([^$URLQuerySeparators]+)/) {
+								if ($PageBool) { $_pagesrefs_p{"$1"}++; }
+								$_pagesrefs_h{"$1"}++;
+							}
+							else {
+								if ($PageBool) { $_pagesrefs_p{$field[$pos_referer]}++; }
+								$_pagesrefs_h{$field[$pos_referer]}++;
+							}
 						}
 						$found=1;
 					}
@@ -6193,10 +6222,14 @@ EOF
 	if (!$TotalKeyphrases) { foreach my $key (keys %_keyphrases) { $TotalKeyphrases+=$_keyphrases{$key}; } }
 	# TotalKeywords (if not already specifically counted, we init it from _keywords hash table)
 	if (!$TotalKeywords) { foreach my $key (keys %_keywords) { $TotalKeywords+=$_keywords{$key}; } }
-	# TotalSearchEngines (if not already specifically counted, we init it from _se_referrals_h hash table)
-	if (!$TotalSearchEngines) { foreach my $key (keys %_se_referrals_h) { $TotalSearchEngines+=$_se_referrals_h{$key}; } }
-	# TotalRefererPages (if not already specifically counted, we init it from _pagesrefs_h hash table)
-	if (!$TotalRefererPages) { foreach my $key (keys %_pagesrefs_h) { $TotalRefererPages+=$_pagesrefs_h{$key}; } }
+	# TotalSearchEnginesPages (if not already specifically counted, we init it from _se_referrals_p hash table)
+	if (!$TotalSearchEnginesPages) { foreach my $key (keys %_se_referrals_p) { $TotalSearchEnginesPages+=$_se_referrals_p{$key}; } }
+	# TotalSearchEnginesHits (if not already specifically counted, we init it from _se_referrals_h hash table)
+	if (!$TotalSearchEnginesHits) { foreach my $key (keys %_se_referrals_h) { $TotalSearchEnginesHits+=$_se_referrals_h{$key}; } }
+	# TotalRefererPages (if not already specifically counted, we init it from _pagesrefs_p hash table)
+	if (!$TotalRefererPages) { foreach my $key (keys %_pagesrefs_p) { $TotalRefererPages+=$_pagesrefs_p{$key}; } }
+	# TotalRefererHits (if not already specifically counted, we init it from _pagesrefs_h hash table)
+	if (!$TotalRefererHits) { foreach my $key (keys %_pagesrefs_h) { $TotalRefererHits+=$_pagesrefs_h{$key}; } }
 	# TotalDifferentPages (if not already specifically counted, we init it from _url_p hash table)
 	if (!$TotalDifferentPages) { $TotalDifferentPages=scalar keys %_url_p; }
 	# TotalDifferentKeyphrases (if not already specifically counted, we init it from _keyphrases hash table)
@@ -6205,8 +6238,8 @@ EOF
 	if (!$TotalDifferentKeywords) { $TotalDifferentKeywords=scalar keys %_keywords; }
 	# TotalDifferentSearchEngines (if not already specifically counted, we init it from _se_referrals_h hash table)
 	if (!$TotalDifferentSearchEngines) { $TotalDifferentSearchEngines=scalar keys %_se_referrals_h; }
-	# TotalDifferentRefererPages (if not already specifically counted, we init it from _pagesrefs_h hash table)
-	if (!$TotalDifferentRefererPages) { $TotalDifferentRefererPages=scalar keys %_pagesrefs_h; }
+	# TotalDifferentReferer (if not already specifically counted, we init it from _pagesrefs_h hash table)
+	if (!$TotalDifferentReferer) { $TotalDifferentReferer=scalar keys %_pagesrefs_h; }
 
 	# Define firstdaytocountaverage, lastdaytocountaverage, firstdaytoshowtime, lastdaytoshowtime
 	my $firstdaytocountaverage=$nowyear.$nowmonth."01";				# Set day cursor to 1st day of month
@@ -6968,26 +7001,40 @@ EOF
 		my $title="$Message[40]";
 		&tab_head("$title",19);
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$TotalDifferentSearchEngines $Message[122]</TH>";
-		#print "<TH bgcolor=\"#$color_p\" width=80>$Message[56]</TH><TH bgcolor=\"#$color_p\" width=80>$Message[15]</TH>";
-		print "<TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[15]</TH></TR>\n";
+		print "<TH bgcolor=\"#$color_p\" width=80>$Message[56]</TH><TH bgcolor=\"#$color_p\" width=80>$Message[15]</TH>";
+		print "<TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[15]</TH>";
+		print "</TR>\n";
 		$total_s=0;
 		my $count=0;
-		&BuildKeyList($MaxRowsInHTMLOutput,$MinHitRefer,\%_se_referrals_h,\%_se_referrals_h);
+		&BuildKeyList($MaxRowsInHTMLOutput,$MinHitRefer,\%_se_referrals_h,\%_se_referrals_p);
 		foreach my $key (@keylist) {
 			my $newreferer=CleanFromCSSA($SearchEnginesHashIDLib{$key}||$key);
-			my $p;
-			if ($TotalSearchEngines) { $p=int($_se_referrals_h{$key}/$TotalSearchEngines*1000)/10; }
-			print "<TR><TD CLASS=AWL>$newreferer</TD><TD>$_se_referrals_h{$key}</TD><TD>$p %</TD></TR>\n";
-			$total_s += $_se_referrals_h{$key};
+			my $p_p; my $p_h;
+			if ($TotalSearchEnginesPages) { $p_p=int($_se_referrals_p{$key}/$TotalSearchEnginesPages*1000)/10; }
+			if ($TotalSearchEnginesHits) { $p_h=int($_se_referrals_h{$key}/$TotalSearchEnginesHits*1000)/10; }
+			print "<TR><TD CLASS=AWL>$newreferer</TD>";
+			print "<TD>".($_se_referrals_p{$key}?$_se_referrals_p{$key}:'&nbsp;')."</TD>";
+			print "<TD>".($_se_referrals_p{$key}?"$p_p %":'&nbsp;')."</TD>";
+			print "<TD>$_se_referrals_h{$key}</TD>";
+			print "<TD>$p_h %</TD>";
+			print "</TR>\n";
+			$total_p += $_se_referrals_p{$key};
+			$total_h += $_se_referrals_h{$key};
 			$count++;
 		}
-		if ($Debug) { debug("Total real / shown : $TotalSearchEngines / $total_s",2); }
-		$rest_s=$TotalSearchEngines-$total_s;
-		if ($rest_s > 0) {
-			my $p;
-			if ($TotalSearchEngines) { $p=int($rest_s/$TotalSearchEngines*1000)/10; }
-			print "<TR><TD CLASS=AWL><font color=\"#$color_other\">$Message[2]</font></TD><TD>$rest_s</TD>";
-			print "<TD>$p %</TD></TR>\n";
+		if ($Debug) { debug("Total real / shown : $TotalSearchEnginesPages / $total_p - $TotalSearchEnginesHits / $total_h",2); }
+		$rest_p=$TotalSearchEnginesPages-$total_p;
+		$rest_h=$TotalSearchEnginesHits-$total_h;
+		if ($rest_p > 0 || $rest_h > 0) {
+			my $p_p;my $p_h;
+			if ($TotalSearchEnginesPages) { $p_p=int($rest_p/$TotalSearchEnginesPages*1000)/10; }
+			if ($TotalSearchEnginesHits) { $p_h=int($rest_h/$TotalSearchEnginesHits*1000)/10; }
+			print "<TR><TD CLASS=AWL><font color=\"#$color_other\">$Message[2]</font></TD>";
+			print "<TD>".($rest_p?$rest_p:'&nbsp;')."</TD>";
+			print "<TD>".($rest_p?"%p_p %":'&nbsp;')."</TD>";
+			print "<TD>$rest_h</TD>";
+			print "<TD>$p_h %</TD>";
+			print "</TR>\n";
 		}
 		&tab_end;
 		&html_end;
@@ -7008,33 +7055,41 @@ EOF
 		}
 		else { print "$Message[102]: $cpt $Message[28]"; }
 		print "</TH>";
-		#print "<TH bgcolor=\"#$color_p\" width=80>$Message[56]</TH><TH bgcolor=\"#$color_p\" width=80>$Message[15]</TH>";
-		print "<TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH>";
-		print "<TH bgcolor=\"#$color_h\" width=80>$Message[15]</TH>";
+		print "<TH bgcolor=\"#$color_p\" width=80>$Message[56]</TH><TH bgcolor=\"#$color_p\" width=80>$Message[15]</TH>";
+		print "<TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[15]</TH>";
 		print "</TR>\n";
 		$total_s=0;
 		my $count=0;
-		&BuildKeyList($MaxRowsInHTMLOutput,$MinHitRefer,\%_pagesrefs_h,\%_pagesrefs_h);
+		&BuildKeyList($MaxRowsInHTMLOutput,$MinHitRefer,\%_pagesrefs_h,\%_pagesrefs_p);
 		foreach my $key (@keylist) {
 			my $nompage=CleanFromCSSA($key);
 			if (length($nompage)>$MaxLengthOfURL) { $nompage=substr($nompage,0,$MaxLengthOfURL)."..."; }
-			my $p;
-			if ($TotalRefererPages) { $p=int($_pagesrefs_h{$key}/$TotalRefererPages*1000)/10; }
+			my $p_p; my $p_h;
+			if ($TotalRefererPages) { $p_p=int($_pagesrefs_p{$key}/$TotalRefererPages*1000)/10; }
+			if ($TotalRefererHits) { $p_h=int($_pagesrefs_h{$key}/$TotalRefererHits*1000)/10; }
 			print "<TR><TD CLASS=AWL>";
 			&ShowURL($key);
 			print "</TD>";
-			print "<TD>$_pagesrefs_h{$key}</TD><TD>$p %</TD>";
+			print "<TD>".($_pagesrefs_p{$key}?$_pagesrefs_p{$key}:'&nbsp;')."</TD><TD>".($_pagesrefs_p{$key}?"$p_p %":'&nbsp;')."</TD>";
+			print "<TD>".($_pagesrefs_h{$key}?$_pagesrefs_h{$key}:'&nbsp;')."</TD><TD>".($_pagesrefs_h{$key}?"$p_h %":'&nbsp;')."</TD>";
 			print "</TR>\n";
-			$total_s += $_pagesrefs_h{$key};
+			$total_p += $_pagesrefs_p{$key};
+			$total_h += $_pagesrefs_h{$key};
 			$count++;
 		}
-		if ($Debug) { debug("Total real / shown : $TotalRefererPages / $total_s",2); }
-		$rest_s=$TotalRefererPages-$total_s;
-		if ($rest_s > 0) {
-			my $p;
-			if ($TotalRefererPages) { $p=int($rest_s/$TotalRefererPages*1000)/10; }
-			print "<TR><TD CLASS=AWL><font color=\"#$color_other\">$Message[2]</font></TD><TD>$rest_s</TD>";
-			print "<TD>$p %</TD></TR>\n";
+		if ($Debug) { debug("Total real / shown : $TotalRefererPages / $total_p - $TotalRefererHits / $total_h",2); }
+		$rest_p=$TotalRefererPages-$total_p;
+		$rest_h=$TotalRefererHits-$total_h;
+		if ($rest_p > 0 || $rest_h > 0) {
+			my $p_p; my $p_h;
+			if ($TotalRefererPages) { $p_p=int($rest_p/$TotalRefererPages*1000)/10; }
+			if ($TotalRefererHits) { $p_h=int($rest_h/$TotalRefererHits*1000)/10; }
+			print "<TR><TD CLASS=AWL><font color=\"#$color_other\">$Message[2]</font></TD>";
+			print "<TD>$rest_p</TD>";
+			print "<TD>$p_p %</TD>";
+			print "<TD>$rest_h</TD>";
+			print "<TD>$p_h %</TD>";
+			print "</TR>\n";
 		}
 		&tab_end;
 		&html_end;
@@ -8161,19 +8216,27 @@ EOF
 			print "<TR onmouseover=\"ShowTip(13);\" onmouseout=\"HideTip(13);\"><TD CLASS=AWL><b>$Message[40]</b> - <a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=refererse":"$PROG$StaticLinks.refererse.html")."\"$NewLinkTarget>$Message[80]</a><br>\n";
 			if (scalar keys %_se_referrals_h) {
 				print "<TABLE>\n";
-				$total_h=0;
+				$total_p=0; $total_h=0;
 				my $count=0;
-				&BuildKeyList($MaxNbOfRefererShown,$MinHitRefer,\%_se_referrals_h,\%_se_referrals_h);
+				&BuildKeyList($MaxNbOfRefererShown,$MinHitRefer,\%_se_referrals_h,\%_se_referrals_p);
 				foreach my $key (@keylist) {
 					my $newreferer=CleanFromCSSA($SearchEnginesHashIDLib{$key}||$key);
-					print "<TR><TD CLASS=AWL>- $newreferer</TD><TD align=right> $_se_referrals_h{$key} </TD></TR>\n";
+					print "<TR><TD CLASS=AWL>- $newreferer</TD>";
+					print "<TD>".($_se_referrals_p{$key}?$_se_referrals_p{$key}:'0')."</TD>";
+					print "<TD>$_se_referrals_h{$key}</TD>";
+					print "</TR>\n";
+					$total_p += $_se_referrals_p{$key};
 					$total_h += $_se_referrals_h{$key};
 					$count++;
 				}
-				if ($Debug) { debug("Total real / shown : $TotalDifferentSearchEngines / $total_h",2); }
-				$rest_h=$TotalSearchEngines-$total_h;
-				if ($rest_h > 0) {
-					print "<TR><TD CLASS=AWL><font color=\"#$color_other\">- $Message[2]</font></TD><TD>$rest_h</TD>";
+				if ($Debug) { debug("Total real / shown : $TotalSearchEnginesPages / $total_p -  $TotalSearchEnginesHits / $total_h",2); }
+				$rest_p=$TotalSearchEnginesPages-$total_p;
+				$rest_h=$TotalSearchEnginesHits-$total_h;
+				if ($rest_p > 0 || $rest_h > 0) {
+					print "<TR><TD CLASS=AWL><font color=\"#$color_other\">- $Message[2]</font></TD>";
+					print "<TD>$rest_p</TD>";
+					print "<TD>$rest_h</TD>";
+					print "</TR>\n";
 				}
 				print "</TABLE>";
 			}
@@ -8185,22 +8248,28 @@ EOF
 			print "<TR onmouseover=\"ShowTip(14);\" onmouseout=\"HideTip(14);\"><TD CLASS=AWL><b>$Message[41]</b> - <a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=refererpages":"$PROG$StaticLinks.refererpages.html")."\"$NewLinkTarget>$Message[80]</a><br>\n";
 			if (scalar keys %_pagesrefs_h) {
 				print "<TABLE>\n";
-				$total_h=0;
+				$total_p=0; $total_h=0;
 				my $count=0;
-				&BuildKeyList($MaxNbOfRefererShown,$MinHitRefer,\%_pagesrefs_h,\%_pagesrefs_h);
+				&BuildKeyList($MaxNbOfRefererShown,$MinHitRefer,\%_pagesrefs_h,\%_pagesrefs_p);
 				foreach my $key (@keylist) {
 					print "<TR><TD CLASS=AWL>- ";
 					&ShowURL($key);
 					print "</TD>";
+					print "<TD>".($_pagesrefs_p{$key}?$_pagesrefs_p{$key}:'0')."</TD>";
 					print "<TD>$_pagesrefs_h{$key}</TD>";
 					print "</TR>\n";
+					$total_p += $_pagesrefs_p{$key};
 					$total_h += $_pagesrefs_h{$key};
 					$count++;
 				}
-				if ($Debug) { debug("Total real / shown : $TotalRefererPages / $total_h",2); }
-				$rest_h=$TotalRefererPages-$total_h;
-				if ($rest_h > 0) {
-					print "<TR><TD CLASS=AWL><font color=\"#$color_other\">- $Message[2]</font></TD><TD>$rest_h</TD>";
+				if ($Debug) { debug("Total real / shown : $TotalRefererPages / $total_p - $TotalRefererHits / $total_h",2); }
+				$rest_p=$TotalRefererPages-$total_p;
+				$rest_h=$TotalRefererHits-$total_h;
+				if ($rest_p > 0 || $rest_h > 0) {
+					print "<TR><TD CLASS=AWL><font color=\"#$color_other\">- $Message[2]</font></TD>";
+					print "<TD>$rest_p</TD>";
+					print "<TD>$rest_h</TD>";
+					print "</TR>\n";
 				}
 				print "</TABLE>";
 			}
