@@ -218,7 +218,7 @@ use vars qw/
 @DOWIndex = @fieldlib = @keylist = ();
 use vars qw/
 @MiscListOrder %MiscListCalc
-@OSFamily @BrowsersFamily @SessionsRange %SessionsAverage
+@OSFamily %BrowsersFamily @SessionsRange %SessionsAverage
 %LangBrowserToLangAwstats %LangAWStatsToCountryAwstats
 @HostAliases @AllowAccessFromWebToFollowingAuthenticatedUsers
 @DefaultFile @SkipDNSLookupFor
@@ -235,7 +235,8 @@ use vars qw/
 @MiscListOrder=('AddToFavourites','JavaEnabled','DirectorSupport','FlashSupport','RealPlayerSupport','QuickTimeSupport','WindowsMediaPlayerSupport','PDFSupport');
 %MiscListCalc=('TotalMisc'=>'','AddToFavourites'=>'u','JavaEnabled'=>'hm','DirectorSupport'=>'hm','FlashSupport'=>'hm','RealPlayerSupport'=>'hm','QuickTimeSupport'=>'hm','WindowsMediaPlayerSupport'=>'hm','PDFSupport'=>'hm');
 @OSFamily=('win','mac');
-@BrowsersFamily=('msie','netscape');
+#%BrowsersFamily=('msie'=>1,'netscape'=>2,'mozilla'=>3);
+%BrowsersFamily=('msie'=>1,'netscape'=>2);
 @SessionsRange=('0s-30s','30s-2mn','2mn-5mn','5mn-15mn','15mn-30mn','30mn-1h','1h+');
 %SessionsAverage=('0s-30s',15,'30s-2mn',75,'2mn-5mn',210,'5mn-15mn',600,'15mn-30mn',1350,'30mn-1h',2700,'1h+',3600);
 # Values reported by HTTP-Accept with AWStats code to use
@@ -305,20 +306,6 @@ use vars qw/
 %_emails_h %_emails_k %_emails_l %_emailr_h %_emailr_k %_emailr_l
 /;
 &Init_HashArray();
-#%FirstTime = %LastTime = ();
-#%MonthUnique = %MonthVisits = %MonthPages = %MonthHits = %MonthBytes = %MonthHostsKnown = %MonthHostsUnknown = ();
-#%_session = %_browser_h = ();
-#%_domener_p = %_domener_h = %_domener_k = %_errors_h = %_errors_k = ();
-#%_filetypes_h = %_filetypes_k = %_filetypes_gz_in = %_filetypes_gz_out = ();
-#%_host_p = %_host_h = %_host_k = %_host_l = %_host_s = %_host_u = ();
-#%_waithost_e = %_waithost_l = %_waithost_s = %_waithost_u = ();
-#%_keyphrases = %_keywords = %_os_h = %_pagesrefs_p = %_pagesrefs_h = %_robot_h = %_robot_k = %_robot_l = %_robot_r = ();
-#%_worm_h = %_worm_l = %_login_h = %_login_p = %_login_k = %_login_l = %_screensize_h = ();
-#%_misc_p = %_misc_h = %_misc_k = ();
-#%_cluster_p = %_cluster_h = %_cluster_k = ();
-#%_se_referrals_p = %_se_referrals_h = %_sider404_h = %_referer404_h = %_url_p = %_url_k = %_url_e = %_url_x = ();
-#%_unknownreferer_l = %_unknownrefererbrowser_l = ();
-#%_emails_h = %_emails_k = %_emails_l = %_emailr_h = %_emailr_k = %_emailr_l = ();
 
 # ---------- Init Tie::hash arrays --------
 # Didn't find a tie that increase speed
@@ -1285,9 +1272,9 @@ sub Read_Ref_Data {
 	}
 	# Sanity check.
 	if (@OSSearchIDOrder != scalar keys %OSHashID) { error("Not same number of records of OSSearchIDOrder (".(@OSSearchIDOrder)." entries) and OSHashID (".(scalar keys %OSHashID)." entries) in OS database. Check your file ".$FilePath{"operating_systems.pm"}); }
-	if (@BrowsersSearchIDOrder != scalar keys %BrowsersHashIDLib) { error("Not same number of records of BrowsersSearchIDOrder (".(@BrowsersSearchIDOrder)." entries) and BrowsersHashIDLib (".(scalar keys %BrowsersHashIDLib)." entries) in Browsers database. Check your file ".$FilePath{"browsers.pm"}); }
+	if (@BrowsersSearchIDOrder != (scalar keys %BrowsersHashIDLib) - 2) { error("Not same number of records of BrowsersSearchIDOrder (".(@BrowsersSearchIDOrder)." entries) and BrowsersHashIDLib (".((scalar keys %BrowsersHashIDLib) - 2)." entries without msie and netscape) in Browsers database. Check your file ".$FilePath{"browsers.pm"}); }
 	if ((@SearchEnginesSearchIDOrder_list1+@SearchEnginesSearchIDOrder_list2+@SearchEnginesSearchIDOrder_listgen) != scalar keys %SearchEnginesHashID) { error("Not same number of records of SearchEnginesSearchIDOrder_listx (total is ".(@SearchEnginesSearchIDOrder_list1+@SearchEnginesSearchIDOrder_list2+@SearchEnginesSearchIDOrder_listgen)." entries) and SearchEnginesHashID (".(scalar keys %SearchEnginesHashID)." entries) in Search Engines database. Check your file ".$FilePath{"search_engines.pm"}); }
-	if ((@RobotsSearchIDOrder_list1+@RobotsSearchIDOrder_list2+@RobotsSearchIDOrder_listgen) != (scalar keys %RobotsHashIDLib) - 1) { error("Not same number of records of RobotsSearchIDOrder_listx (total is ".(@RobotsSearchIDOrder_list1+@RobotsSearchIDOrder_list2+@RobotsSearchIDOrder_listgen)." entries) and RobotsHashIDLib (".(scalar keys %RobotsHashIDLib)." entries) in Robots database. Check your file ".$FilePath{"robots.pm"}); }
+	if ((@RobotsSearchIDOrder_list1+@RobotsSearchIDOrder_list2+@RobotsSearchIDOrder_listgen) != (scalar keys %RobotsHashIDLib) - 1) { error("Not same number of records of RobotsSearchIDOrder_listx (total is ".(@RobotsSearchIDOrder_list1+@RobotsSearchIDOrder_list2+@RobotsSearchIDOrder_listgen)." entries) and RobotsHashIDLib (".((scalar keys %RobotsHashIDLib) - 1)." entries without 'unknown') in Robots database. Check your file ".$FilePath{"robots.pm"}); }
 }
 
 
@@ -2145,12 +2132,12 @@ sub Read_History_With_TmpUpdate {
 					if ($field[0]) {
 						$count++;
 						if ($SectionsToLoad{'origin'}) {
-							if ($field[0] eq 'From0') { $_from_p[0]+=$field[1]; $_from_h[0]+=$field[2]; next; }
-							if ($field[0] eq 'From1') { $_from_p[1]+=$field[1]; $_from_h[1]+=$field[2]; next; }
-							if ($field[0] eq 'From2') { $_from_p[2]+=$field[1]; $_from_h[2]+=$field[2]; next; }
-							if ($field[0] eq 'From3') { $_from_p[3]+=$field[1]; $_from_h[3]+=$field[2]; next; }
-							if ($field[0] eq 'From4') { $_from_p[4]+=$field[1]; $_from_h[4]+=$field[2]; next; }
-							if ($field[0] eq 'From5') { $_from_p[5]+=$field[1]; $_from_h[5]+=$field[2]; next; }
+							if ($field[0] eq 'From0') { $_from_p[0]+=$field[1]; $_from_h[0]+=$field[2]; }
+							elsif ($field[0] eq 'From1') { $_from_p[1]+=$field[1]; $_from_h[1]+=$field[2]; }
+							elsif ($field[0] eq 'From2') { $_from_p[2]+=$field[1]; $_from_h[2]+=$field[2]; }
+							elsif ($field[0] eq 'From3') { $_from_p[3]+=$field[1]; $_from_h[3]+=$field[2]; }
+							elsif ($field[0] eq 'From4') { $_from_p[4]+=$field[1]; $_from_h[4]+=$field[2]; }
+							elsif ($field[0] eq 'From5') { $_from_p[5]+=$field[1]; $_from_h[5]+=$field[2]; }
 						}
 					}
 					$_=<HISTORY>;
@@ -6240,7 +6227,7 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 						$TmpBrowser{$UserAgent}="netscape$1";
 					}
 					# Netscape 3.x, 4.x ... ?
-					if ($UserAgent =~ /$regvermozilla/o && $UserAgent !~ /$regnotnetscape/o) {
+					elsif ($UserAgent =~ /$regvermozilla/o && $UserAgent !~ /$regnotnetscape/o) {
 						$_browser_h{"netscape$2"}++;
 						$TmpBrowser{$UserAgent}="netscape$2";
 					}
@@ -6250,6 +6237,7 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 						foreach (@BrowsersSearchIDOrder) {	# Search ID in order of BrowsersSearchIDOrder
 							if ($UserAgent =~ /$_/) {
 								my $browser=&UnCompileRegex($_);
+								# TODO If browser is in a family, use version
 								$_browser_h{"$browser"}++;
 								$TmpBrowser{$UserAgent}="$browser";
 								$found=1;
@@ -7833,10 +7821,10 @@ if (scalar keys %HTMLOutput) {
 		BROWSERLOOP: foreach my $key (@keylist) {
 			$Total+=$_browser_h{$key};
 			if ($_browser_h{$key} > $max_h) { $max_h = $_browser_h{$key}; }
-			foreach my $family (@BrowsersFamily) { if ($key =~ /^$family/i) { $totalfamily_h{$family}+=$_browser_h{$key}; next BROWSERLOOP; } }
+			foreach my $family (keys %BrowsersFamily) { if ($key =~ /^$family/i) { $totalfamily_h{$family}+=$_browser_h{$key}; next BROWSERLOOP; } }
 		}
 		# Write records grouped in a browser family
-		foreach my $family (@BrowsersFamily) {
+		foreach my $family (sort { $BrowsersFamily{$a} <=> $BrowsersFamily{$b} } keys %BrowsersFamily) {
 			my $p='&nbsp;';
 			if ($Total) { $p=int($totalfamily_h{$family}/$Total*1000)/10; $p="$p %"; }
 			print "<tr bgcolor=\"#F8F8F8\"><td class=\"aws\" colspan=\"2\"><b>".uc($family)."</b></td>";
@@ -9171,7 +9159,7 @@ if (scalar keys %HTMLOutput) {
 			my $Totalh=0; my %new_browser_h=();
 			BROWSERLOOP: foreach my $key (keys %_browser_h) {
 				$Totalh+=$_browser_h{$key};
-				foreach my $family (@BrowsersFamily) { if ($key =~ /^$family/i) { $new_browser_h{"${family}cumul"}+=$_browser_h{$key}; next BROWSERLOOP; } }
+				foreach my $family (keys %BrowsersFamily) { if ($key =~ /^$family/i) { $new_browser_h{"${family}cumul"}+=$_browser_h{$key}; next BROWSERLOOP; } }
 				$new_browser_h{$key}+=$_browser_h{$key};
 			}
 			my $title="$Message[21] ($Message[77] $MaxNbOf{'BrowsersShown'}) &nbsp; - &nbsp; <a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?XMLEncode("$AWScript?${NewLinkParams}output=browserdetail"):"$PROG$StaticLinks.browserdetail.$StaticExt")."\"$NewLinkTarget>$Message[80]/$Message[58]</a> &nbsp; - &nbsp; <a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?XMLEncode("$AWScript?${NewLinkParams}output=unknownbrowser"):"$PROG$StaticLinks.unknownbrowser.$StaticExt")."\"$NewLinkTarget>$Message[0]</a>";
@@ -9190,9 +9178,7 @@ if (scalar keys %HTMLOutput) {
 					my $keywithoutcumul=$key; $keywithoutcumul =~ s/cumul$//i;
 					my $libbrowser=$BrowsersHashIDLib{$keywithoutcumul}||$keywithoutcumul;
 					my $nameicon=$BrowsersHashIcon{$keywithoutcumul}||"notavailable";
-					# TODO Use BrowsersFamilyLib
-					if ($libbrowser eq 'netscape') { $libbrowser="<b>Netscape</b>"; }
-					if ($libbrowser eq 'msie')     { $libbrowser="<b>MS Internet Explorer</b>"; }
+					if ($BrowsersFamily{$keywithoutcumul}) { $libbrowser="<b>$libbrowser</b>"; }
 					print "<tr><td".($count?"":" width=\"$WIDTHCOLICON\"")."><img src=\"$DirIcons\/browser\/$nameicon.png\"".AltTitle("")." /></td><td class=\"aws\">$libbrowser</td><td>".($BrowsersHereAreGrabbers{$key}?"<b>$Message[112]</b>":"$Message[113]")."</td><td>$new_browser_h{$key}</td><td>$p</td></tr>\n";
 				}
 				$total_h += $new_browser_h{$key};

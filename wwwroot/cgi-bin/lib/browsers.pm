@@ -124,7 +124,9 @@
 # List of browser's name ('browser id in lower case', 'browser text')
 #---------------------------------------------------------------
 %BrowsersHashIDLib = (
-# Common web browsers text (IE and Netscape must not be in this list)
+# Common web browsers text
+'msie','MS Internet Explorer',
+'netscape','Netscape',
 'firebird','Firebird',
 'go!zilla','Go!Zilla',
 'icab','iCab',
@@ -224,7 +226,7 @@
 'wdg_validator','WDG HTML Validator',
 'webzip','WebZIP',
 'staroffice','StarOffice',
-'mozilla','Other Mozilla browsers',
+'mozilla','Mozilla',
 'libwww','LibWWW',
 );
 
