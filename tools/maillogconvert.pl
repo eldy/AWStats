@@ -453,18 +453,22 @@ while (<>) {
 	#
 	elsif (/starting delivery/ ne undef) {
 		# Example: Sep 14 09:58:09 gandalf qmail: 1063526289.574100 starting delivery 251: msg 270182 to local spamreport@john.do
+		# Example: 2003-09-27 11:22:07.039237500 starting delivery 3714: msg 163844 to local name_also_removed@maildomain.com
 		$MailType||='qmail';
-		#my ($mon,$day,$time,$id,$to)=m/^(\w+)\s+(\d+)\s+(\d+:\d+:\d+)\s+.*\s+(\d+)(?:\.\d+)?\s+starting delivery \d+:\s+msg\s+\d+\s+to\s+.*?\s+(.*)$/;
-		my ($mon,$day,$time,$delivery,$id,$to)=m/^(\w+)\s+(\d+)\s+(\d+:\d+:\d+)\s+.*\s+\d+(?:\.\d+)?\s+starting delivery (\d+):\s+msg\s+(\d+)\s+to\s+.*?\s+(.*)$/;
+		my ($yea,$mon,$day,$time,$delivery,$id,$relay_r,$to)=();
+		($mon,$day,$time,$delivery,$id,$relay_r,$to)=m/^(\w+)\s+(\d+)\s+(\d+:\d+:\d+)\s+.*\s+\d+(?:\.\d+)?\s+starting delivery (\d+):\s+msg\s+(\d+)\s+to\s+(.*)?\s+(.*)$/;
+		if (! $id) { ($yea,$mon,$day,$time,$delivery,$id,$relay_r,$to)=m/^(\d+)-(\d+)-(\d+)\s+(\d+:\d+:\d+).*\s+starting delivery (\d+):\s+msg\s+(\d+)\s+to\s+(.*)?\s+(.*)$/; }
 		$mailid=$id;
-		if (m/\s+relay=([^\s,]*)[\s,]/) { $mail{$id}{'relay_r'}=$1; }
+		if ($relay_r eq 'local') { $mail{$id}{'relay_r'}='localhost'; }
+		elsif (m/\s+relay=([^\s,]*)[\s,]/) { $mail{$id}{'relay_r'}=$1; }
 		elsif (m/\s+mailer=local/) { $mail{$id}{'relay_r'}='localhost'; }
 		$qmaildelivery{$delivery}=$id;		# Save mail id for this delivery to be able to get error code
+		if ($yea) { $mail{$id}{'year'}=$yea; }
 		$mail{$id}{'mon'}=$mon;
 		$mail{$id}{'day'}=$day;
 		$mail{$id}{'time'}=$time;
 		$mail{$id}{'to'}{$delivery}=&trim($to);
-		debug("For id=$id, found a qmail 'start delivery' record: mon=$mail{$id}{'mon'} day=$mail{$id}{'day'} time=$mail{$id}{'time'} to=$mail{$id}{'to'}{$delivery} relay_r=$mail{$id}{'relay_r'} delivery=$delivery");
+		debug("For id=$id, found a qmail 'start delivery' record: year=$mail{$id}{'year'} mon=$mail{$id}{'mon'} day=$mail{$id}{'day'} time=$mail{$id}{'time'} to=$mail{$id}{'to'}{$delivery} relay_r=$mail{$id}{'relay_r'} delivery=$delivery");
 	}
 
 	#
@@ -472,6 +476,7 @@ while (<>) {
 	#
 	elsif (/delivery (\d+): (\w+):/ ne undef) {
 		# Example: Sep 14 09:58:09 gandalf qmail: 1063526289.744259 delivery 251: success: did_0+0+1/
+		# Example: 2003-09-27 11:22:07.070367500 delivery 3714: success: did_1+0+0/
 		$MailType||='qmail';
 		my ($delivery,$code)=($1,$2);
 		my $id=$qmaildelivery{$delivery};
@@ -524,7 +529,7 @@ while (<>) {
 
 		# If we can
 		if ($canoutput) {
-			&OutputRecord($year,$mail{$mailid}{'mon'},$mail{$mailid}{'day'},$mail{$mailid}{'time'},$mail{$mailid}{'from'},$to,$mail{$mailid}{'relay_s'},$mail{$mailid}{'relay_r'},$code,$mail{$mailid}{'size'},$mail{$mailid}{'forwardto'});
+			&OutputRecord($mail{$mailid}{'year'}?$mail{$mailid}{'year'}:$year,$mail{$mailid}{'mon'},$mail{$mailid}{'day'},$mail{$mailid}{'time'},$mail{$mailid}{'from'},$to,$mail{$mailid}{'relay_s'},$mail{$mailid}{'relay_r'},$code,$mail{$mailid}{'size'},$mail{$mailid}{'forwardto'});
 			# Delete mail with generic unknown id (This id can by used by another mail)
 			if ($mailid == 999) {
 				debug(" Delete mail for id=$mailid",3);
