@@ -21,14 +21,19 @@ if (!&has_command($config{'awstats'})) {
 
 # Get the version number
 $out = `$config{'awstats'} 2>&1`;
-if ($out !~ /----- awstats (\S+)\.(\S+)\s(\S+\s\S+)/) {
+if ($out !~ /^----- awstats (\S+)\.(\S+)\s(\S+\s\S+)/) {
 	&header($text{'index_title'}, "", undef, 1, 1, 0, undef);
 
+	if ($out =~ /^Content-type/) {
+		# To old version. Does not support CLI launch from CGI_GATEWAY interface
+		print "<p>",&text('index_eversion', "<tt>$config{'awstats'}</tt>", "5.7 or older", "5.8"),"<p>\n";
+		print "<hr>\n";
+		&footer("/", $text{'index'});
+		exit;
+	}
+
 	print "<hr>\n";
-	print "<p>",&text('index_egetversion',
-			  "<tt>$config{'awstats'}</tt>",
-			  "<pre>$out</pre>",
-			  "$gconfig{'webprefix'}/config.cgi?$module_name"),"<p>\n";
+	print "<p>",&text('index_egetversion', "<tt>$config{'awstats'}</tt>", "<pre>$out</pre>", "$gconfig{'webprefix'}/config.cgi?$module_name"),"<p>\n";
 	print "<hr>\n";
 	&footer("/", $text{'index'});
 	exit;

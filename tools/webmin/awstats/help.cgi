@@ -6,7 +6,7 @@ require './awstats-lib.pl';
 &ReadParse();
 
 # Display file contents
-&header($title || $text{'help_title'}, "");
+&header($title || $text{'help_title'}, "", undef, 0, 1, 1);
 print "<hr>\n";
 
 my $helpparam=$in{'param'};
