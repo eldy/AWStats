@@ -379,8 +379,10 @@ if ($DNSCache) {
 	open(CACHE, "<$DNSCache") or error("Can't open cache file $DNSCache");
 	while (<CACHE>) {
 		my ($time, $ip, $name) = split;
-		$name='ip' if $name eq '*';
-		$MyDNSTable{$ip}=$name;
+        if ($ip && $name) {
+            $name="$ip" if $name eq '*';
+    		$MyDNSTable{$ip}=$name;
+        }
 	}
 	close CACHE;
 }
@@ -502,8 +504,8 @@ while (1 == 1)
 	# END Read new lines for each log file. After this, following var are filled
 	# $timerecord{$logfilenb}
 
-	# We choose wich record of wich log file to process
-	if ($Debug) { debug("Choose of wich record of which log file to process",3); }
+	# We choose which record of which log file to process
+	if ($Debug) { debug("Choose which record of which log file to process",3); }
 	$logfilechosen=-1;
 	my $timeref="99999999999999";
 	foreach my $logfilenb (keys %LogFileToDo) {
