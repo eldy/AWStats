@@ -1730,7 +1730,7 @@ sub Read_Config_File {
 sub Check_Config {
 	&debug("Call to Check_Config");
 	# Main section
-	if ($LogFormat =~ /^[\d]$/ && $LogFormat !~ /[1-2]/)  { error("Error: LogFormat parameter is wrong. Value is '$LogFormat' (should be 1 or 2 or a 'like-apache log format' string)"); }
+	if ($LogFormat =~ /^[\d]$/ && $LogFormat !~ /[1-3]/)  { error("Error: LogFormat parameter is wrong. Value is '$LogFormat' (should be 1 or 2 or a 'personalised AWtats log format string')"); }
 	if ($DNSLookup !~ /[0-1]/)             { error("Error: DNSLookup parameter is wrong. Value is '$DNSLookup' (should be 0 or 1)"); }
 	# Optional section
 	if ($AllowToUpdateStatsFromBrowser !~ /[0-1]/) { $AllowToUpdateStatsFromBrowser=1; }	# For compatibility, is 1 if not defined
@@ -2212,33 +2212,21 @@ if ($UpdateStats) {
 	$PerlParsingFormat="";
 	if ($LogFormat == 1) {
 		$PerlParsingFormat="([^\\s]*) ([^\\s]*) ([^\\s]*) \\[([^\\s]*) ([^\\s]*)\\] \\\"([^\\s]*) ([^\\s]*) [^\\\"]*\\\" ([\\d|-]*) ([\\d|-]*) \\\"([^\\\"]*)\\\" \\\"([^\\\"]*)\\\"";
-		$pos_rc=1;
-		$pos_logname=2;
-		$pos_user=3;
-		$pos_date=4;
-		$pos_zone=5;
-		$pos_method=6;
-		$pos_url=7;
-		$pos_code=8;
-		$pos_size=9;
-		$pos_referer=10;
-		$pos_agent=11;
+		$pos_rc=1;$pos_logname=2;$pos_user=3;$pos_date=4;$pos_zone=5;$pos_method=6;$pos_url=7;$pos_code=8;$pos_size=9;$pos_referer=10;$pos_agent=11;
 		$lastrequiredfield=11;
 	}
 	if ($LogFormat == 2) {
 		$PerlParsingFormat="([^\\s]* [^\\s]*) ([^\\s]*) ([^\\s]*) ([^\\s]*) ([^\\s]*) ([\\d|-]*) ([\\d|-]*) [^\\s]* ([^\\s]*) ([^\\s]*)";
-		$pos_date=1;
-		$pos_rc=2;
-		$pos_logname=3;
-		$pos_method=4;
-		$pos_url=5;
-		$pos_code=6;
-		$pos_size=7;
-		$pos_agent=8;
-		$pos_referer=9;
+		$pos_date=1;$pos_rc=2;$pos_logname=3;$pos_method=4;$pos_url=5;$pos_code=6;$pos_size=7;$pos_agent=8;$pos_referer=9;
 		$lastrequiredfield=9;
 	}
-	if ($LogFormat != 1 && $LogFormat != 2) {
+	if ($LogFormat == 3) {
+#		$PerlParsingFormat="([^\\t]*\\t[^\\t]*)\\t([^\\t]*)\\t([\\d]*)\\t([^\\t]*)\\t([^\\t]*)\\t([^\\t]*)\\t[^\\t]*\\t.*:([^\\t]*)\\t([\\d]*)";
+		$PerlParsingFormat="([^\\t]*\\t[^\\t]*)\\t([^\\t]*)\\t([\\d]*)\\t([^\\t]*)\\t([^\\t]*)\\t([^\\t]*)\\t[^\\t]*\\t.*:([^\\t]*)\\t([\\d]*)";
+		$pos_date=1;$pos_method=2;$pos_code=3;$pos_rc=4;$pos_agent=5;$pos_referer=6;$pos_url=7;$pos_size=8;
+		$lastrequiredfield=8;
+	}
+	if ($LogFormat != 1 && $LogFormat != 2 && $LogFormat != 3) {
 		# Scan $LogFormat to found all required fields and generate PerlParsing
 		@fields = split(/ +/, $LogFormatString); # make array of entries
 		$i = 1;
@@ -2349,7 +2337,7 @@ if ($UpdateStats) {
 		# Parse line record to get all required fields
 		$_ =~ /^$PerlParsingFormat/;
 		foreach $i (1..$lastrequiredfield) { $field[$i]=$$i; }
-		&debug("$field[$pos_rc] ; - ; - ; $field[$pos_date] ; $field[$pos_zone]; $field[$pos_method] ; $field[$pos_url] ; $field[$pos_code] ; $field[$pos_size] ; $field[$pos_referer] ; $field[$pos_agent]",3);
+		&debug("Fields for record $NbOfLinesProcessed: $field[$pos_rc] ; - ; - ; $field[$pos_date] ; TZ; $field[$pos_method] ; $field[$pos_url] ; $field[$pos_code] ; $field[$pos_size] ; $field[$pos_referer] ; $field[$pos_agent]",3);
 
 		# Check parsed parameters
 		#----------------------------------------------------------------------
@@ -2382,14 +2370,14 @@ if ($UpdateStats) {
 
 		# Check filters
 		#----------------------------------------------------------------------
-		if ($field[$pos_method] ne 'GET' && $field[$pos_method] ne 'POST') { next; }	# Keep only GET, POST but not HEAD, OPTIONS
-		if ($field[$pos_url] =~ /^RC=/) { $_corrupted++; next; }						# A strange log record we need to forget
-
-		# Split DD/Month/YYYY:HH:MM:SS or YYYY-MM-DD HH:MM:SS
-		$field[$pos_date] =~ tr/-\/ /:::/;
+		if ($field[$pos_method] ne 'GET' && $field[$pos_method] ne 'POST' && $field[$pos_method] !~ /OK/) { next; }	# Keep only GET, POST but not HEAD, OPTIONS
+		if ($field[$pos_url] =~ /^RC=/) { $_corrupted++; next; }						# A strange log record with IIS we need to forget
+		# Split DD/Month/YYYY:HH:MM:SS or YYYY-MM-DD HH:MM:SS or MM/DD/YY\tHH:MM:SS
+		$field[$pos_date] =~ tr/-\/ \t/::::/;
 		@dateparts=split(/:/,$field[$pos_date]);
-		if ($dateparts[0] > 1000) { $tmp=$dateparts[0]; $dateparts[0]=$dateparts[2]; $dateparts[2]=$tmp; }
-		if ( $monthnum{$dateparts[1]} ) { $dateparts[1]=$monthnum{$dateparts[1]}; }	# Change lib month in num month if necessary
+		if ($field[$pos_date] =~ /^....:..:..:/) { $tmp=$dateparts[0]; $dateparts[0]=$dateparts[2]; $dateparts[2]=$tmp; }
+		if ($field[$pos_date] =~ /^..:..:..:/) { $dateparts[2]+=2000; $tmp=$dateparts[0]; $dateparts[0]=$dateparts[1]; $dateparts[1]=$tmp; }
+		if ($monthnum{$dateparts[1]}) { $dateparts[1]=$monthnum{$dateparts[1]}; }	# Change lib month in num month if necessary
 		# Create $timeconnexion like YYYYMMDDHHMMSS
 		$timeconnexion=$dateparts[2].$dateparts[1].$dateparts[0].$dateparts[3].$dateparts[4].$dateparts[5];
 		if ($timeconnexion < 10000000000000) { $corrupted++; next; }
