@@ -33,10 +33,10 @@
 </Company_Info>
 <Program_Info>
         <Program_Name>AWStats</Program_Name>
-        <Program_Version>6.2</Program_Version>
-        <Program_Release_Month>11</Program_Release_Month>
-        <Program_Release_Day>06</Program_Release_Day>
-        <Program_Release_Year>2004</Program_Release_Year>
+        <Program_Version>6.3</Program_Version>
+        <Program_Release_Month>01</Program_Release_Month>
+        <Program_Release_Day>28</Program_Release_Day>
+        <Program_Release_Year>2005</Program_Release_Year>
         <Program_Cost_Dollars>0</Program_Cost_Dollars>
         <Program_Cost_Other_Code />
         <Program_Cost_Other>0</Program_Cost_Other>
@@ -46,8 +46,8 @@
         <Program_OS_Support>Win95,Win98,WinME,WinNT 4.x,WinXP,Windows2000,Unix,Linux,OS/2,OS/2 Warp,OS/2 Warp 4,MAC 68k,Mac PPC</Program_OS_Support>
         <Program_Language>English,Spanish,French,German,Italian,Japanese,ChineseSimplified,ChineseTraditional,Russian</Program_Language>
 <File_Info>
-        <Filename_Versioned>awstats-62.zip</Filename_Versioned>
-        <Filename_Previous>awstats-61.zip</Filename_Previous>
+        <Filename_Versioned>awstats-63.zip</Filename_Versioned>
+        <Filename_Previous>awstats-62.zip</Filename_Previous>
         <Filename_Generic>awstats-.zip</Filename_Generic>
         <Filename_Long>awstats.zip</Filename_Long>
         <File_Size_Bytes>1016660</File_Size_Bytes>
