@@ -3238,7 +3238,8 @@ sub Read_History_With_TmpUpdate {
                		    eval("$function");
         				delete $SectionsToLoad{"plugin_$pluginname"};
         				if ($SectionsToSave{"plugin_$pluginname"}) {
-        					Save_History("plugin_$pluginname",$year,$month); delete $SectionsToSave{"plugin_$pluginname"};
+        					Save_History("plugin_$pluginname",$year,$month);
+        					delete $SectionsToSave{"plugin_$pluginname"};
         					if ($withpurge) {
                            		my $function="SectionInitHashArray_$pluginname()";
                            		eval("$function");
@@ -3290,6 +3291,7 @@ sub Read_History_With_TmpUpdate {
 	}
 
 	# Write all unwrote sections in section order ('general','time', 'day','sider','session' and other...)
+	if ($Debug) { debug(" Check and write all unwrote sections: ".join(',',keys %SectionsToSave),2); }
 	foreach my $key (sort { $SectionsToSave{$a} <=> $SectionsToSave{$b} } keys %SectionsToSave) {
 		Save_History("$key",$year,$month,$lastlinenb,$lastlineoffset,$lastlinechecksum);
 	}
@@ -3957,7 +3959,6 @@ sub Save_History {
   	    if ($PluginsLoaded{'SectionInitHashArray'}{"$pluginname"})  {
    		    my $function="SectionWriteHistory_$pluginname(\$xml,\$xmlbb,\$xmlbs,\$xmlbe,\$xmlrb,\$xmlrs,\$xmlre,\$xmleb,\$xmlee)";
   		    eval("$function");
-            last;
         }
     }
 
@@ -5327,7 +5328,6 @@ if ($ENV{'GATEWAY_INTERFACE'}) {	# Run from a browser as CGI
 	$UpdateStats=($QueryString=~/update=1/i?1:0);
 
 	if ($QueryString =~ /config=([^&]+)/i)				{ $SiteConfig=&DecodeEncodedString("$1"); }
-	if ($QueryString =~ /logfile=([^&]+)/i)				{ $LogFile=&DecodeEncodedString("$1"); }
 	if ($QueryString =~ /diricons=([^&]+)/i)			{ $DirIcons=&DecodeEncodedString("$1"); }
 	if ($QueryString =~ /pluginmode=([^&]+)/i)			{ $PluginMode=&DecodeEncodedString("$1"); }
 	if ($QueryString =~ /configdir=([^&]+)/i)			{ $DirConfig=&DecodeEncodedString("$1"); }
@@ -5343,6 +5343,8 @@ if ($ENV{'GATEWAY_INTERFACE'}) {	# Run from a browser as CGI
 	if ($QueryString =~ /output=lasthosts:([^&]+)/i)	{ $FilterIn{'host'}=&DecodeEncodedString("$1"); }			# Filter on host list can be defined with output=lasthosts:filter to reduce number of lines read and showed
 	if ($QueryString =~ /output=urldetail:([^&]+)/i)	{ $FilterIn{'url'}=&DecodeEncodedString("$1"); }			# Filter on URL list can be defined with output=urldetail:filter to reduce number of lines read and showed
 	if ($QueryString =~ /output=refererpages:([^&]+)/i)	{ $FilterIn{'refererpages'}=&DecodeEncodedString("$1"); }	# Filter on referer list can be defined with output=refererpages:filter to reduce number of lines read and showed
+    # Config parameters
+	if ($QueryString =~ /LogFile=([^&]+)/i)				{ $LogFile=&DecodeEncodedString("$1"); }
 
 	# If migrate
 	if ($QueryString =~ /(^|-|&)migrate=([^&]+)/i)	{
@@ -5372,7 +5374,6 @@ else {								# Run from command line
 	$UpdateStats=1;
 
 	if ($QueryString =~ /config=([^&]+)/i)				{ $SiteConfig="$1"; }
-	if ($QueryString =~ /logfile=([^&]+)/i)				{ $LogFile="$1"; }
 	if ($QueryString =~ /diricons=([^&]+)/i)			{ $DirIcons="$1"; }
 	if ($QueryString =~ /pluginmode=([^&]+)/i)			{ $PluginMode="$1"; }
 	if ($QueryString =~ /configdir=([^&]+)/i)			{ $DirConfig="$1"; }
@@ -5388,7 +5389,9 @@ else {								# Run from command line
 	if ($QueryString =~ /output=lasthosts:([^&]+)/i)	{ $FilterIn{'host'}="$1"; }			# Filter on host list can be defined with output=lasthosts:filter to reduce number of lines read and showed
 	if ($QueryString =~ /output=urldetail:([^&]+)/i)	{ $FilterIn{'url'}="$1"; }			# Filter on URL list can be defined with output=urldetail:filter to reduce number of lines read and showed
 	if ($QueryString =~ /output=refererpages:([^&]+)/i)	{ $FilterIn{'refererpages'}="$1"; }	# Filter on referer list can be defined with output=refererpages:filter to reduce number of lines read and showed
-
+    # Config parameters
+	if ($QueryString =~ /LogFile=([^&]+)/i)				{ $LogFile="$1"; }
+    
 	# If show options
 	if ($QueryString =~ /showsteps/i) 					{ $ShowSteps=1; $QueryString=~s/showsteps[^&]*//i; }
 	if ($QueryString =~ /showcorrupted/i) 				{ $ShowCorrupted=1; $QueryString=~s/showcorrupted[^&]*//i; }
@@ -5485,8 +5488,8 @@ if ((! $ENV{'GATEWAY_INTERFACE'}) && (! $SiteConfig)) {
 	print "  -showsteps     to add benchmark information every $NBOFLINESFORBENCHMARK lines processed\n";
 	print "  -showcorrupted to add output for each corrupted lines found, with reason\n";
 	print "  -showdropped   to add output for each dropped lines found, with reason\n";
-	print "  -logfile=x     to change log to analyze whatever is 'LogFile' in config file\n";
 	print "  -updatefor=n   to stop the update process after parsing n lines\n";
+	print "  -LogFile=x     to change log to analyze whatever is 'LogFile' in config file\n";
 	print "  Be care to process log files in chronological order when updating statistics.\n";
 	print "\n";
 	print "Options to show statistics:\n";
@@ -6535,8 +6538,8 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 			if ($PluginsLoaded{'GetCountryCodeByAddr'}{'geoipfree'}) { $Domain=GetCountryCodeByAddr_geoipfree($HostResolved); }
 			elsif ($PluginsLoaded{'GetCountryCodeByAddr'}{'geoip'}) { $Domain=GetCountryCodeByAddr_geoip($HostResolved); }
             if ($AtLeastOneSectionPlugin) {
-               	foreach my $pluginname (keys %{$PluginsLoaded{'SectionProcessHost'}})  {
-               		my $function="SectionProcessHost_$pluginname(\$HostResolved)";
+               	foreach my $pluginname (keys %{$PluginsLoaded{'SectionProcessIp'}})  {
+               		my $function="SectionProcessIp_$pluginname(\$HostResolved)";
                		eval("$function");
                 }
    		    }
@@ -6550,8 +6553,8 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 				elsif ($PluginsLoaded{'GetCountryCodeByAddr'}{'geoip'}) { $Domain=GetCountryCodeByAddr_geoip($Host); }
 				elsif ($HostResolved =~ /\.(\w+)$/) { $Domain=$1; }
                 if ($AtLeastOneSectionPlugin) {
-                   	foreach my $pluginname (keys %{$PluginsLoaded{'SectionProcessHostname'}})  {
-                   		my $function="SectionProcessHostname_$pluginname(\$Host)";
+                   	foreach my $pluginname (keys %{$PluginsLoaded{'SectionProcessIp'}})  {
+                   		my $function="SectionProcessIp_$pluginname(\$Host)";
                    		eval("$function");
                     }
                 }
@@ -8576,7 +8579,8 @@ if (scalar keys %HTMLOutput) {
 #					else {
     					print "<td>".(! $StaticLinks && $monthix==$nowmonth && $YearRequired==$nowyear?'<font class="currentday">':'');
 						print "$MonthNumLib{$monthix}<br />$YearRequired";
-    					print (! $StaticLinks && $monthix==$nowmonth && $YearRequired==$nowyear?'<font class="currentday">':'')."</td>";
+    					print (! $StaticLinks && $monthix==$nowmonth && $YearRequired==$nowyear?'</font>':'');
+    					print "</td>";
 #					}
 				}
 #				if (!$StaticLinks) {
@@ -8605,7 +8609,8 @@ if (scalar keys %HTMLOutput) {
 					print "<tr>";
 					print "<td>".(! $StaticLinks && $monthix==$nowmonth && $YearRequired==$nowyear?'<font class="currentday">':'');
 					print "$MonthNumLib{$monthix} $YearRequired";
-					print (! $StaticLinks && $monthix==$nowmonth && $YearRequired==$nowyear?'</font>':'')."</td>";
+					print (! $StaticLinks && $monthix==$nowmonth && $YearRequired==$nowyear?'</font>':'');
+					print "</td>";
 					if ($ShowMonthStats =~ /U/i) { print "<td>",$MonthUnique{$YearRequired.$monthix}?$MonthUnique{$YearRequired.$monthix}:"0","</td>"; }
 					if ($ShowMonthStats =~ /V/i) { print "<td>",$MonthVisits{$YearRequired.$monthix}?$MonthVisits{$YearRequired.$monthix}:"0","</td>"; }
 					if ($ShowMonthStats =~ /P/i) { print "<td>",$MonthPages{$YearRequired.$monthix}?$MonthPages{$YearRequired.$monthix}:"0","</td>"; }
@@ -8807,7 +8812,8 @@ if (scalar keys %HTMLOutput) {
 					print "<tr".($dayofweekcursor=~/[06]/?" bgcolor=\"#$color_weekend\"":"").">";
 					print "<td>".(! $StaticLinks && $day==$nowday && $month==$nowmonth && $year==$nowyear?'<font class="currentday">':'');
                     print Format_Date("$year$month$day"."000000",2);
-                    print (! $StaticLinks && $day==$nowday && $month==$nowmonth && $year==$nowyear?'</font>':'')."</td>";
+                    print (! $StaticLinks && $day==$nowday && $month==$nowmonth && $year==$nowyear?'</font>':'');
+                    print "</td>";
 					if ($ShowDaysOfMonthStats =~ /V/i) { print "<td>",$DayVisits{$year.$month.$day}?$DayVisits{$year.$month.$day}:"0","</td>"; }
 					if ($ShowDaysOfMonthStats =~ /P/i) { print "<td>",$DayPages{$year.$month.$day}?$DayPages{$year.$month.$day}:"0","</td>"; }
 					if ($ShowDaysOfMonthStats =~ /H/i) { print "<td>",$DayHits{$year.$month.$day}?$DayHits{$year.$month.$day}:"0","</td>"; }
@@ -8929,7 +8935,8 @@ if (scalar keys %HTMLOutput) {
 				for (@DOWIndex) {
 					print "<td".($_=~/[06]/?" bgcolor=\"#$color_weekend\"":"").">".(! $StaticLinks && $_==($nowwday-1) && $MonthRequired==$nowmonth && $YearRequired==$nowyear?'<font class="currentday">':'');
 					print $Message[$_+84];
-					print (! $StaticLinks && $_==($nowwday-1) && $MonthRequired==$nowmonth && $YearRequired==$nowyear?'<font class="currentday">':'')."</td>";
+					print (! $StaticLinks && $_==($nowwday-1) && $MonthRequired==$nowmonth && $YearRequired==$nowyear?'</font>':'');
+					print "</td>";
 				}
 				print "</tr>\n</table>\n";
 			}
@@ -8946,6 +8953,7 @@ if (scalar keys %HTMLOutput) {
 					print "<tr".($_=~/[06]/?" bgcolor=\"#$color_weekend\"":"").">";
 					print "<td>".(! $StaticLinks && $_==($nowwday-1) && $MonthRequired==$nowmonth && $YearRequired==$nowyear?'<font class="currentday">':'');
 					print $Message[$_+84];
+					print (! $StaticLinks && $_==($nowwday-1) && $MonthRequired==$nowmonth && $YearRequired==$nowyear?'</font>':'');
 					print "</td>";
 					if ($ShowDaysOfWeekStats =~ /P/i) { print "<td>",$avg_dayofweek_p[$_],"</td>"; }
 					if ($ShowDaysOfWeekStats =~ /H/i) { print "<td>",$avg_dayofweek_h[$_],"</td>"; }
