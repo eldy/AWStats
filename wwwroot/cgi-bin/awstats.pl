@@ -115,6 +115,7 @@ my $TotalUnique = my $TotalVisits = my $TotalHostsKnown = my $TotalHostsUnknown 
 my $TotalPages = my $TotalHits = my $TotalBytes = my $TotalEntries = my $TotalExits = my $TotalBytesPages = 0;
 my $TotalKeyphrases = my $TotalDifferentPages = my $TotalDifferentKeyphrases = 0;
 # ---------- Init arrays --------
+my @SessionsRange=("0s-30s","30s-2mn","2mn-5mn","5mn-15mn","15mn-30mn","30mn-1h","1h+");
 my @Message=();
 my @HostAliases=();
 my @AllowAccessFromWebToFollowingAuthenticatedUsers=();
@@ -539,19 +540,18 @@ sub DateIsValid {
 # Output:		A string that identify the visit duration range
 #------------------------------------------------------------------------------
 sub SessionLastToSessionRange {
-	my @range=("0s-30s","30s-2mn","2mn-5mn","5mn-15mn","15mn-30mn","30mn-1h","1h+");
 	my $starttime = my $endtime;
 	if (shift =~ /(\d\d\d\d)(\d\d)(\d\d)(\d\d)(\d\d)(\d\d)/) { $endtime = Time::Local::timelocal($6,$5,$4,$3,$2,$1); }
 	if (shift =~ /(\d\d\d\d)(\d\d)(\d\d)(\d\d)(\d\d)(\d\d)/) { $starttime = Time::Local::timelocal($6,$5,$4,$3,$2,$1); }
 	my $delay=$endtime-$starttime;
 	debug("SessionLastToSessionRange $endtime - $starttime = $delay",4);
-	if ($delay <= 30) { return $range[0]; }
-	if ($delay > 30 && $delay <= 120) { return $range[1]; }
-	if ($delay > 120 && $delay <= 300) { return $range[2]; }
-	if ($delay > 300 && $delay <= 900) { return $range[3]; }
-	if ($delay > 900 && $delay <= 1800) { return $range[4]; }
-	if ($delay > 1800 && $delay <= 3600) { return $range[5]; }
-	if ($delay > 3600) { return $range[6]; }
+	if ($delay <= 30) { return $SessionsRange[0]; }
+	if ($delay > 30 && $delay <= 120) { return $SessionsRange[1]; }
+	if ($delay > 120 && $delay <= 300) { return $SessionsRange[2]; }
+	if ($delay > 300 && $delay <= 900) { return $SessionsRange[3]; }
+	if ($delay > 900 && $delay <= 1800) { return $SessionsRange[4]; }
+	if ($delay > 1800 && $delay <= 3600) { return $SessionsRange[5]; }
+	if ($delay > 3600) { return $SessionsRange[6]; }
 	return "error";
 }
 
@@ -2290,55 +2290,12 @@ sub Removelowerval {
 	}
 	if ($Debug) { debug("  new lower value=$lowerval, val size=".(scalar keys %val).", egal size=".(scalar keys %egal),4); }
 }
-#sub AddInTree {
-#	my $keytoadd=shift;
-#	my $keycursor=shift;
-#	$countaddintree++;
-#	if ($countaddintree % 100 == 0) { if ($Debug) { debug("AddInTree Start of 100 ($count already processed: 1 root + ".(scalar keys %left)." left + ".(scalar keys %right)." right",2); } }
-#	my $value=$hashfororder->{$keytoadd};
-#	if ($keytoadd eq $keyroot || $left{$keytoadd} || $right{$keytoadd}) {	# Key $keytoadd already exists. Should not be possible
-#		warning("Error during sort process (Key $keytoadd is already in tree with root key $keycursor).");
-#		return;
-#	}
-#	while (1) {
-#		if ($value < $hashfororder->{$keycursor}) {
-#			if ($left{$keycursor}) { $keycursor=$left{$keycursor}; next; }
-#			$left{$keycursor}=$keytoadd; last;
-#		}
-#		if ($value >= $hashfororder->{$keycursor}) {
-#			if ($right{$keycursor}) { $keycursor=$right{$keycursor}; next; }
-#			$right{$keycursor}=$keytoadd; last;
-#		}
-#	}
-#	if ($countaddintree % 100 == 99) { if ($Debug) { debug("AddInTree End of 100",2); } }
-#}
-#
-#sub Removelowerval {
-#	my $keycursor=$keysaved=shift;
-#	while ($left{$keycursor}) { $keysaved=$keycursor; $keycursor=$left{$keycursor}; }
-#	# We found lower key
-#	if ($Debug) { debug("  remove $keycursor, value=$hashfororder->{$keycursor}",2); }
-#	if (! $right{$keycursor}) {			# Nothing higher
-#		delete $left{$keysaved};
-#		$lowerval=$hashfororder->{$keysaved}||0;
-#	}
-#	else {
-#		if ($keycursor ne $keysaved) {	# lower key was not root key
-#			$left{$keysaved}=$right{$keycursor};
-#			delete $right{$keycursor};
-#			$keycursor=$keysaved;
-#		}
-#		else {	# lower key was root key
-#			$keyroot=$right{$keycursor};
-#			delete $right{$keycursor};
-#			$keycursor=$keyroot;
-#		}
-#		while ($left{$keycursor}) { $keycursor=$left{$keycursor}; }
-#		$lowerval=$hashfororder->{$keycursor}||0;
-#	}
-#	if ($Debug) { debug("  new lower value is $lowerval",2); }
-#}
-#
+
+#--------------------------------------------------------------------
+# Function:     Return the lower value between 2
+# Input:        Val1 and Val2
+# Return:       min(Val1,Val2)
+#--------------------------------------------------------------------
 sub Minimum {
 	my ($val1,$val2)=@_;
 	return ($val1<$val2?$val1:$val2);
@@ -2996,7 +2953,8 @@ if ($UpdateStats) {
 		#-----------------------
 		if ($NowNewLinePhase) {
 			if ($timerecord < $LastLine{$yearmonth}) {
-				$NbOfLinesCorrupted++; if ($ShowCorrupted) { print "Corrupted record (not sorted record): $_\n"; } next; }	# Should not happen, kept in case of parasite/corrupted old line
+				$NbOfLinesCorrupted++; if ($ShowCorrupted) { print "Corrupted record (not sorted record): $_\n"; } next;
+			}	# Should not happen, kept in case of parasite/corrupted old line
 		}
 		else {
 			if ($timerecord <= $LastLine{$yearmonth}) {
@@ -4573,8 +4531,8 @@ EOF
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\" onmouseover=\"ShowTooltip(16);\" onmouseout=\"HideTooltip(16);\"><TH>$Message[117]</TH><TH bgcolor=\"#$color_s\" width=80>$Message[10]</TH></TR>\n";
 		$total_s=0;
 		my $count=0;
-		foreach my $key (keys %_session) {
-			$total_s+=$_session{$key};
+		foreach my $key (@SessionsRange) {
+			$total_s+=$_session{$key}||0;
 			print "<tr><td CLASS=AWL>$key</td><td>$_session{$key}</td></tr>\n";
 			$count++;
 		}
