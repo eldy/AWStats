@@ -125,12 +125,12 @@ $color_h, $color_k, $color_p, $color_s, $color_u, $color_v)=
 
 
 
-$VERSION="4.0 (build 13)";
+$VERSION="4.0 (build 16)";
 $Lang="en";
 
 # Default value
 $DEBUGFORCED   = 0;			# Force debug level to log lesser level into debug.log file (Keep this value to 0)
-$MAXROWS       = 2000;		# Max number of rows for not limited HTML arrays
+$MAXROWS       = 1000;		# Max number of rows for not limited HTML arrays
 $VisitTimeOut  = 10000;		# Laps of time to consider a page load as a new visit. 10000 = one hour (Default = 10000)
 $FullHostName  = 1;			# 1 = Use name.domain.zone to refer host clients, 0 = all hosts in same domain.zone are one host (Default = 1, 0 never tested)
 $NbOfLinesForBenchmark=5000;
@@ -981,7 +981,7 @@ sub Read_History_File {
 
 	# If session for read (no update), file can be open with share. So POSSIBLE CHANGE HERE	
 	open(HISTORY,"$DirData/$PROG$DayRequired$month$year$FileSuffix.txt") || error("Error: Couldn't open for read file \"$DirData/$PROG$DayRequired$month$year$FileSuffix.txt\" : $!");	# Month before Year kept for backward compatibility
-	$MonthUnique{$year.$month}=0; $MonthPages{$year.$month}=0; $MonthHits{$year.$month}=0; $MonthBytes{$year.$month}=0; $MonthHostsKnown{$year.$month}=0; $MonthHostsUnKnown{$year.$month}=0;
+	$MonthUnique{$year.$month}=0; $MonthPages{$year.$month}=0; $MonthHits{$year.$month}=0; $MonthBytes{$year.$month}=0; $MonthHostsKnown{$year.$month}=0; $MonthHostsUnknown{$year.$month}=0;
 	
 	my $versionmaj=$versionmin=0;
 	my $countlines=0;
@@ -1081,7 +1081,7 @@ sub Read_History_File {
 			my $count=0;my $countloaded=0;
 			while ($field[0] ne "END_VISITOR") {
 				$count++;
-				# We always read this to build the month graph (MonthUnique, MonthHostsKnwon, MonthHostsUnknown)
+				# We always read this to build the month graph (MonthUnique, MonthHostsKnown, MonthHostsUnknown)
 		    	if ($field[0] ne "Unknown") {	# If and else is kept for backward compatibility
 		    		if (($field[1]||0) > 0) { $MonthUnique{$year.$month}++; }
 					if ($field[0] !~ /^[\d]+\.[\d]+\.[\d]+\.[\d]+$/) { $MonthHostsKnown{$year.$month}++; }
@@ -1883,20 +1883,42 @@ sub IsAscii {
 sub AddInTree {
 	my $keytoadd=shift;
 	my $keyval=shift;
-	$countaddintree++;
-	if ($countaddintree % 100 == 1) { debug(" AddInTree Start of 100 (lowerval=$lowerval)",3); }
-	if ($val{$keyval}) { 	# Key with same value already in hash
+	my $firstadd=shift||0;	
+#	$countaddintree++;
+#	if ($countaddintree % 100 == 1) { debug(" AddInTree Start of 100 (lowerval=$lowerval)",3); }
+	if ($firstadd==1) {			# Val is the first one
+		debug(" firstadd",4);
+		$val{$keyval}=$keytoadd;
+		$lowerval=$keyval;
+		debug(" lowerval=$lowerval, nb elem val=".(scalar keys %val).", nb elem egal=".(scalar keys %egal).".",4);
+		return;
+	}
+	if ($val{$keyval}) { 		# Val is already in tree
+		debug(" val is already in tree",4);
 		$egal{$keytoadd}=$val{$keyval};
 		$val{$keyval}=$keytoadd;
+		debug(" lowerval=$lowerval, nb elem val=".(scalar keys %val).", nb elem egal=".(scalar keys %egal).".",4);
+		return;
 	}
-	else {
+	if ($keyval <= $lowerval) {	# Val is a new one lower (should happens only when tree is not full)
+		debug(" keytoadd val=$keyval is lower or equal to lowerval=$lowerval",4);
 		$val{$keyval}=$keytoadd;
-		my $valcursor=$lowerval;
-		while ($nextval{$valcursor} && ($nextval{$valcursor} < $keyval)) { $valcursor=$nextval{$valcursor}; }
-		if ($nextval{$valcursor}) { $nextval{$keyval}=$nextval{$valcursor}; }
-		if ($valcursor!=$keyval) { $nextval{$valcursor}=$keyval; }
+		$nextval{$keyval}=$lowerval;
+		$lowerval=$keyval;
+		debug(" lowerval=$lowerval, nb elem val=".(scalar keys %val).", nb elem egal=".(scalar keys %egal).".",4);
+		return;
 	}
-	if ($countaddintree % 100 == 0) { debug(" AddInTree End of 100",3); }
+	# Val is a new one higher
+	debug(" keytoadd val=$keyval is higher than lowerval=$lowerval",4);
+	$val{$keyval}=$keytoadd;
+	my $valcursor=$lowerval;	# valcursor is value just before keyval
+	while ($nextval{$valcursor} && ($nextval{$valcursor} < $keyval)) { $valcursor=$nextval{$valcursor}; }
+	if ($nextval{$valcursor}) {	# keyval is beetween valcursor and nextval{valcursor}
+		$nextval{$keyval}=$nextval{$valcursor};
+	}
+	$nextval{$valcursor}=$keyval; 
+	debug(" lowerval=$lowerval, nb elem val=".(scalar keys %val).", nb elem egal=".(scalar keys %egal).".",4);
+#	if ($countaddintree % 100 == 0) { debug(" AddInTree End of 100",3); }
 }
 
 sub Removelowerval {
@@ -1970,7 +1992,7 @@ sub Minimum {
 
 #--------------------------------------------------------------------
 # Function:     Build keylist array
-# Input:        Size of keylist array, min value, hash for select, hash for order
+# Input:        Size of keylist array, min value in hash for select, hash for select, hash for order
 # Return:       keylist array
 #--------------------------------------------------------------------
 sub BuildKeyList {
@@ -1980,20 +2002,18 @@ sub BuildKeyList {
 	my $hashfororder=shift;
 	debug("BuildKeyList($ArraySize,$MinValue,$hashforselect with size=".(scalar keys %$hashforselect).",$hashfororder with size=".(scalar keys %$hashfororder).")",2);
 	my $count=0;
-	$lowerval=0;	# Global because used in Removelowerval
-	%val=(); %egal=(); %nextval=();
+	$lowerval=0;	# Global because used in AddInTree and Removelowerval
+	%val=(); %nextval=(); %egal=();
 	foreach my $key (keys %$hashforselect) {
 		if ($count < $ArraySize) {
 			if ($hashforselect->{$key} >= $MinValue) {
-				debug(" Add in tree entry $count : $key (value=".($hashfororder->{$key}||0).", tree not full)",4);
-				if (! $count) { $lowerval=($hashfororder->{$key}||0); }
-				else { $lowerval=Minimum($lowerval,$hashfororder->{$key}||0); }
-				AddInTree($key,$hashfororder->{$key}||0);
 				$count++;
+				debug(" Add in tree entry $count : $key (value=".($hashfororder->{$key}||0).", tree not full)",4);
+				AddInTree($key,$hashfororder->{$key}||0,$count);
 			}
 			next;
 		}
-		if ($hashfororder->{$key}<=$lowerval) {
+		if (($hashfororder->{$key}||0)<=$lowerval) {
 			$count++;
 			next;
 		}
@@ -2221,7 +2241,7 @@ $TotalEntries=0; $TotalBytesPages=0; $TotalDifferentPages=0;
 for (my $ix=1; $ix<=12; $ix++) {
 	my $monthix=$ix;if ($monthix < 10) { $monthix  = "0$monthix"; }
 	$LastLine{$YearRequired.$monthix}=0;$FirstTime{$YearRequired.$monthix}=0;$LastTime{$YearRequired.$monthix}=0;$LastUpdate{$YearRequired.$monthix}=0;
-	$MonthVisits{$YearRequired.$monthix}=0;$MonthUnique{$YearRequired.$monthix}=0;$MonthPages{$YearRequired.$monthix}=0;$MonthHits{$YearRequired.$monthix}=0;$MonthBytes{$YearRequired.$monthix}=0;$MonthHostsKnown{$YearRequired.$monthix}=0;$MonthHostsUnKnown{$YearRequired.$monthix}=0;
+	$MonthVisits{$YearRequired.$monthix}=0;$MonthUnique{$YearRequired.$monthix}=0;$MonthPages{$YearRequired.$monthix}=0;$MonthHits{$YearRequired.$monthix}=0;$MonthBytes{$YearRequired.$monthix}=0;$MonthHostsKnown{$YearRequired.$monthix}=0;$MonthHostsUnknown{$YearRequired.$monthix}=0;
 }
 &Init_HashArray;	# Should be useless in perl (except with mod_perl that keep variables in memory).
 
@@ -2777,7 +2797,7 @@ if ($UpdateStats) {
 						$_hostmachine_l{$Host}=$timeconnexion;
 						$_domener_p{"ip"}++;
 				}
-				if (! $_hostmachine_h{$Host}) { $MonthHostsUnKnown{$yearmonth}++; }
+				if (! $_hostmachine_h{$Host}) {	$MonthHostsUnknown{$yearmonth}++; }
 				$_hostmachine_h{$Host}++;
 				$_hostmachine_k{$Host}+=$field[$pos_size];
 				$_domener_h{"ip"}++;
@@ -3436,7 +3456,7 @@ EOF
 			} else {
 				print "<tr><td CLASS=AWL>$key</td>";
 			}
-			print "<TD>$_hostmachine_p{$key}</TD><TD>$_hostmachine_h{$key}</TD><TD>".Format_Bytes($_hostmachine_k{$key})."</TD>";
+			print "<TD>".($_hostmachine_p{$key}?$_hostmachine_p{$key}:"&nbsp;")."</TD><TD>$_hostmachine_h{$key}</TD><TD>".Format_Bytes($_hostmachine_k{$key})."</TD>";
 			if ($_hostmachine_l{$key}) { print "<td>".Format_Date($_hostmachine_l{$key},1)."</td>"; }
 			else { print "<td>-</td>"; }
 			print "</tr>\n";
