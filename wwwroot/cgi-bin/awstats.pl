@@ -4519,7 +4519,7 @@ if ($tomorrowsec < 10) { $tomorrowsec = "0$tomorrowsec"; }
 $tomorrowtime=int($tomorrowyear.$tomorrowmonth.$tomorrowday.$tomorrowhour.$tomorrowmin.$tomorrowsec);
 
 my @AllowedArgs=('-site','-config','-showsteps','-showdropped','-showcorrupted',
-'-showunknownorigin','-logfile','-output','-staticlinks','-lang',
+'-showunknownorigin','-logfile','-output','-staticlinks','-staticlinksext','-lang',
 '-hostfilter','-urlfilter','-refererpagesfilter',
 '-month','-year','-framename','-debug','-limitflush');
 
@@ -4635,6 +4635,9 @@ elsif ($QueryString =~ /(^|&)month=(all)/i) { $MonthRequired='all'; }
 else { $MonthRequired="$nowmonth"; }
 if ($QueryString =~ /(^|&)day=(\d{1,2})/i) { $DayRequired=sprintf("%02d",$2); }	# day is a hidden option. Must not be used (Make results not understandable). Available for users that rename history files with day.
 else { $DayRequired=''; }
+
+# Check parameter validity
+# TODO
 
 # Print AWStats and Perl version 
 if ($Debug) {
