@@ -1578,8 +1578,8 @@ sub Check_Config {
 	if (($PurgeLogFile || $ArchiveLogRecords) && $LogFile =~ /\|\s*$/) {
 		error("Error: A pipe in log file name is not allowed if PurgeLogFile and ArchiveLogRecords are not set to 0");
 	}
-	# Check if DirData is OK
-	if (! -d $DirData) {
+	# If not a migrate, check if DirData is OK
+	if (! $MigrateStats && ! -d $DirData) {
 		if ($CreateDirDataIfNotExists) {
 			if ($Debug) { debug(" Make directory $DirData",2); }
 			my $mkdirok=mkdir "$DirData", 0766;
@@ -3997,7 +3997,7 @@ else {								# Run from command line
 			$MigrateStats=$ARGV[$_];
 			$MigrateStats =~ /^(.*)$PROG(\d{0,2})(\d\d)(\d\d\d\d)(.*)\.txt$/;
 			$SiteConfig=$5?$5:"xxx"; $SiteConfig =~ s/^\.//;	# SiteConfig is not required for migrate
-			last;
+			next;
 		}
 		# TODO Check if ARGV is an AllowedArg
 		if ($_ > 0) { $QueryString .= "&"; }
