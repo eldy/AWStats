@@ -689,7 +689,7 @@ products, and easy to setup. You will notice that you can "lose" some hits:<br>
 If you use the -HUP signal, you will only lose all hits that were written during D and E.
 Note that you will also break all requests still running at G. In the example, it's a 
 1 minute lost (for small or medium web sites, it will be less than few seconds), so this
-give you an error less than 0.07% (less for small web sites). This is not significant,
+give you an error lower than 0.07% (less for small web sites). This is not significant,
 above all for a "statistics" progam.<br>
 If you use the -USR1 signal, you will not kill any request. But you will lose all hits that
 were wrote during D and E (like with -HUP) but also all hits that are still running after H
