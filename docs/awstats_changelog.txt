@@ -19,6 +19,7 @@ Fixes:
 - WhoIs link did not work if host name contained a "-" char.
 
 New features/improvments:
+- Little support for realmedia server.
 - Added urlaliasbuilder.pl tool.
 - Added URL in possible values for ExtraSection first column.
 - New parameter: URLWithAnchor (set to 0 by default).
@@ -30,16 +31,21 @@ New features/improvments:
 - Added parameters AddDataArrayMonthDayStats, AddDataArrayShowDaysOfWeekStats,
   and AddDataArrayShowHoursStats.
 - Added the Whois info in a centered popup window.
+- Cosmetic change of browsers reports (group by family and add bar in
+  browserdetail).
+- Other minor cosmetic change (remove ShowHeader parameter).
+- Authenticated user field in log file can contain space with LogFormat=1,
+  and they are purged of " with Logformat=6 (Lotus Notes/Domino).
 
 Other/Documentation:
 - Replaced -month=year option by -month=all.
-- With Logformat=6 (Lotus Notes/Domino), usernames with " are allowed.
 - Added an error message if a -migrate is done on an history file with
   wrong file name.
 - GeoIP memory cache code is now stored inside plugin code.
 - All tooltips code has been moved into tooltip plugin.
 - Added list of loaded plugins in AWStats copyright string.
-- Minor cosmetic change (remove ShowHeader parameter).
+- Added European and Sao Tome And Principe country flag.
+- Added Safari browser icon.
 - Updated documentation.
 
 Note 1:
