@@ -109,9 +109,7 @@ $BarImageHorizontal_k = 'hk.png';
 use vars qw/
 $EnableLockForUpdate $DNSLookup $AllowAccessFromWebToAuthenticatedUsersOnly
 $BarHeight $BarWidth $CreateDirDataIfNotExists $KeepBackupOfHistoricFiles $MaxLengthOfURL
-$MaxNbOfDomain $MaxNbOfHostsShown $MaxNbOfKeyphrasesShown $MaxNbOfKeywordsShown
-$MaxNbOfLoginShown $MaxNbOfPageShown $MaxNbOfRefererShown $MaxNbOfRobotShown $MaxNbOfWormsShown 
-$MaxNbOfEMailsShown $NbOfLinesRead $NbOfLinesDropped $NbOfLinesCorrupted $NbOfOldLines $NbOfNewLines
+$NbOfLinesRead $NbOfLinesDropped $NbOfLinesCorrupted $NbOfOldLines $NbOfNewLines
 $NbOfLinesShowsteps $NewLinePhase $NbOfLinesForCorruptedLog $PurgeLogFile
 $ShowAuthenticatedUsers $ShowFileSizesStats $ShowScreenSizeStats 
 $ShowDropped $ShowCorrupted $ShowUnknownOrigin $ShowLinksToWhoIs
@@ -122,9 +120,7 @@ $UseFramesWhenCGI $DecodeUA
 /;
 ($EnableLockForUpdate, $DNSLookup, $AllowAccessFromWebToAuthenticatedUsersOnly,
 $BarHeight, $BarWidth, $CreateDirDataIfNotExists, $KeepBackupOfHistoricFiles, $MaxLengthOfURL,
-$MaxNbOfDomain, $MaxNbOfHostsShown, $MaxNbOfKeyphrasesShown, $MaxNbOfKeywordsShown,
-$MaxNbOfLoginShown, $MaxNbOfPageShown, $MaxNbOfRefererShown, $MaxNbOfRobotShown, $MaxNbOfWormsShown,
-$MaxNbOfEMailsShown, $NbOfLinesRead, $NbOfLinesDropped, $NbOfLinesCorrupted, $NbOfOldLines, $NbOfNewLines,
+$NbOfLinesRead, $NbOfLinesDropped, $NbOfLinesCorrupted, $NbOfOldLines, $NbOfNewLines,
 $NbOfLinesShowsteps, $NewLinePhase, $NbOfLinesForCorruptedLog, $PurgeLogFile,
 $ShowAuthenticatedUsers, $ShowFileSizesStats, $ShowScreenSizeStats,
 $ShowDropped, $ShowCorrupted, $ShowUnknownOrigin, $ShowLinksToWhoIs,
@@ -132,7 +128,7 @@ $ShowEMailSenders, $ShowEMailReceivers,
 $AuthenticatedUsersNotCaseSensitive,
 $Expires, $UpdateStats, $MigrateStats, $URLNotCaseSensitive, $URLWithQuery, $URLReferrerWithQuery,
 $UseFramesWhenCGI, $DecodeUA)=
-(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
+(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
 use vars qw/
 $AllowToUpdateStatsFromBrowser $ArchiveLogRecords $DetailedReportsOnNewWindows
 $FirstDayOfWeek $KeyWordsNotSensitive $SaveDatabaseFilesWithPermissionsForEveryone
@@ -144,8 +140,6 @@ $ShowOSStats $ShowBrowsersStats $ShowOriginStats
 $ShowKeyphrasesStats $ShowKeywordsStats $ShowHTTPErrorsStats
 $ShowFlagLinks $ShowLinksOnUrl
 $AddDataArrayMonthDayStats $AddDataArrayShowDaysOfWeekStats $AddDataArrayShowHoursStats
-$MinHitFile $MinHitDomain $MinHitHost $MinHitKeyphrase $MinHitKeyword
-$MinHitLogin $MinHitRefer $MinHitRobot $MinHitWorm $MinHitEMail
 /;
 ($AllowToUpdateStatsFromBrowser, $ArchiveLogRecords, $DetailedReportsOnNewWindows,
 $FirstDayOfWeek, $KeyWordsNotSensitive, $SaveDatabaseFilesWithPermissionsForEveryone,
@@ -156,10 +150,9 @@ $ShowRobotsStats, $ShowWormsStats, $ShowSessionsStats, $ShowPagesStats, $ShowFil
 $ShowOSStats, $ShowBrowsersStats, $ShowOriginStats,
 $ShowKeyphrasesStats, $ShowKeywordsStats, $ShowHTTPErrorsStats,
 $ShowFlagLinks, $ShowLinksOnUrl,
-$AddDataArrayMonthDayStats, $AddDataArrayShowDaysOfWeekStats, $AddDataArrayShowHoursStats,
-$MinHitFile, $MinHitDomain, $MinHitHost, $MinHitKeyphrase, $MinHitKeyword,
-$MinHitLogin, $MinHitRefer, $MinHitRobot, $MinHitWorm, $MinHitEMail)=
-(1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1);
+$AddDataArrayMonthDayStats, $AddDataArrayShowDaysOfWeekStats, $AddDataArrayShowHoursStats
+)=
+(1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1);
 use vars qw/
 $LevelForRobotsDetection $LevelForBrowsersDetection $LevelForOSDetection $LevelForRefererAnalyze
 $LevelForSearchEnginesDetection $LevelForKeywordsDetection
@@ -281,6 +274,7 @@ use vars qw/
 %MonthLib %MonthNum
 %ValidHTTPCodes %ValidSMTPCodes
 %TrapInfosForHTTPErrorCodes %NotPageList %DayBytes %DayHits %DayPages %DayVisits
+%MaxNbOf %MinHit
 %FirstTime %LastTime
 %MonthUnique %MonthVisits %MonthPages %MonthHits %MonthBytes %MonthHostsKnown %MonthHostsUnknown
 %ListOfYears %HistoryAlreadyFlushed %PosInFile %ValueInFile
@@ -304,6 +298,7 @@ use vars qw/
 %TrapInfosForHTTPErrorCodes=(); $TrapInfosForHTTPErrorCodes{404}=1;	# TODO Add this in config file
 %NotPageList=();
 %DayBytes = %DayHits = %DayPages = %DayVisits = ();
+%MaxNbOf = %MinHit = ();
 %FirstTime = %LastTime = ();
 %MonthUnique = %MonthVisits = %MonthPages = %MonthHits = %MonthBytes = %MonthHostsKnown = %MonthHostsUnknown = ();
 %ListOfYears = %HistoryAlreadyFlushed = %PosInFile = %ValueInFile = ();
@@ -1174,6 +1169,9 @@ sub Parse_Config {
  		if ($param =~ /^MinHitExtra(\d+)/) 				{ $MinHitExtra[$1]=$value; next; }
 		# Special appearance parameters
 		if ($param =~ /^LoadPlugin/)           			{ push @PluginsToLoad, $value; next; }
+		# Other that we need to put after MaxNbOfExtra and MinHitExtra
+ 		if ($param =~ /^MaxNbOf(\w+)/) 	{ $MaxNbOf{$1}=$value; next; }
+ 		if ($param =~ /^MinHit(\w+)/) 	{ $MinHit{$1}=$value; next; }
 		# If parameters was not found previously, defined variable with name of param to value
 		$$param=$value;
 	}
@@ -1442,26 +1440,16 @@ sub Check_Config {
 	if ($AddDataArrayMonthDayStats !~ /[0-1]/)          	{ $AddDataArrayMonthDayStats=1; }
 	if ($AddDataArrayShowDaysOfWeekStats !~ /[0-1]/)       	{ $AddDataArrayShowDaysOfWeekStats=1; }
 	if ($AddDataArrayShowHoursStats !~ /[0-1]/)          	{ $AddDataArrayShowHoursStats=1; }
-	if ($MaxNbOfDomain !~ /^\d+$/ || $MaxNbOfDomain<1)           		 { $MaxNbOfDomain=20; }
-	if ($MinHitDomain !~ /^\d+$/ || $MinHitDomain<1)           		     { $MinHitDomain=1; }
-	if ($MaxNbOfHostsShown !~ /^\d+$/ || $MaxNbOfHostsShown<1)       	 { $MaxNbOfHostsShown=20; }
-	if ($MinHitHost !~ /^\d+$/ || $MinHitHost<1)              			 { $MinHitHost=1; }
-	if ($MaxNbOfLoginShown !~ /^\d+$/ || $MaxNbOfLoginShown<1)       	 { $MaxNbOfLoginShown=10; }
-	if ($MinHitLogin !~ /^\d+$/ || $MinHitLogin<1)  		           	 { $MinHitLogin=1; }
-	if ($MaxNbOfRobotShown !~ /^\d+$/ || $MaxNbOfRobotShown<1)       	 { $MaxNbOfRobotShown=10; }
-	if ($MinHitRobot !~ /^\d+$/ || $MinHitRobot<1)           	  		 { $MinHitRobot=1; }
-	if ($MaxNbOfWormsShown !~ /^\d+$/ || $MaxNbOfWormsShown<1)       	 { $MaxNbOfWormsShown=10; }
-	if ($MinHitWorm !~ /^\d+$/ || $MinHitWorm<1)           	  		 	 { $MinHitWorm=1; }
-	if ($MaxNbOfPageShown !~ /^\d+$/ || $MaxNbOfPageShown<1)	         { $MaxNbOfPageShown=20; }
-	if ($MinHitFile !~ /^\d+$/ || $MinHitFile<1)              			 { $MinHitFile=1; }
-	if ($MaxNbOfRefererShown !~ /^\d+$/ || $MaxNbOfRefererShown<1)    	 { $MaxNbOfRefererShown=10; }
-	if ($MinHitRefer !~ /^\d+$/ || $MinHitRefer<1)             			 { $MinHitRefer=1; }
-	if ($MaxNbOfKeyphrasesShown !~ /^\d+$/ || $MaxNbOfKeyphrasesShown<1) { $MaxNbOfKeyphrasesShown=20; }
-	if ($MinHitKeyphrase !~ /^\d+$/ || $MinHitKeyphrase<1)           	 { $MinHitKeyphrase=1; }
-	if ($MaxNbOfKeywordsShown !~ /^\d+$/ || $MaxNbOfKeywordsShown<1)	 { $MaxNbOfKeywordsShown=20; }
-	if ($MinHitKeyword !~ /^\d+$/ || $MinHitKeyword<1)           		 { $MinHitKeyword=1; }
-	if ($MaxNbOfEMailsShown !~ /^\d+$/ || $MaxNbOfEMailsShown<1)       	 { $MaxNbOfEMailsShown=20; }
-	if ($MinHitEMail !~ /^\d+$/ || $MinHitEMail<1)  		           	 { $MinHitEMail=1; }
+	my @maxnboflist=('Domain','HostsShown','LoginShown','RobotShown','WormsShown','PageShown','ScreenSizesShown','RefererShown','KeyphrasesShown','KeywordsShown','EMailsShown');
+	my @maxnboflistdefaultval=(10,10,10,10,10,10,5,10,10,10,20);
+	foreach my $i (0..(@maxnboflist-1)) {
+		if (! $MaxNbOf{$maxnboflist[$i]} || $MaxNbOf{$maxnboflist[$i]} !~ /^\d+$/ || $MaxNbOf{$maxnboflist[$i]}<1) 	{ $MaxNbOf{$maxnboflist[$i]}=$maxnboflistdefaultval[$i]; }
+	}
+	my @minhitlist=('Domain','Host','Login','Robot','Worm','File','ScreenSize','Refer','Keyphrase','Keyword','EMail');
+	my @minhitlistdefaultval=(1,1,1,1,1,1,1,1,1,1,1);
+	foreach my $i (0..(@minhitlist-1)) {
+		if (! $MinHit{$minhitlist[$i]} || $MinHit{$minhitlist[$i]} !~ /^\d+$/ || $MinHit{$minhitlist[$i]}<1) 	{ $MinHit{$minhitlist[$i]}=$minhitlistdefaultval[$i]; }
+	}
 	if ($FirstDayOfWeek !~ /[0-1]/)               	{ $FirstDayOfWeek=1; }
 	if ($UseFramesWhenCGI !~ /[0-1]/)  				{ $UseFramesWhenCGI=0; }
 	if ($DetailedReportsOnNewWindows !~ /[0-2]/)  	{ $DetailedReportsOnNewWindows=1; }
@@ -1538,6 +1526,12 @@ sub Check_Config {
 		debug(" DirCgi='$DirCgi'",2);
 		debug(" DirIcons='$DirIcons'",2);
 		debug(" SiteDomain=$SiteDomain",2);
+		foreach my $key (keys %MaxNbOf) {
+			debug(" MaxNbOf{$key}=$MaxNbOf{$key}",2);
+		}
+		foreach my $key (keys %MinHit) {
+			debug(" MinHit{$key}=$MinHit{$key}",2);
+		}
 	}
 	foreach my $extranum (1..@ExtraName-1) {
 		debug(" ExtraConditionType[$extranum] is array ".join(',',@{$ExtraConditionType[$extranum]}),2);
@@ -2078,9 +2072,9 @@ sub Read_History_With_TmpUpdate {
 								if ($HTMLOutput{'allhosts'} || $HTMLOutput{'lasthosts'}) {
 									if (!$HostFilter || $field[0] =~ /$HostFilter/) { $loadrecord=1; }
 								}
-								elsif ($MonthRequired eq 'all' || $field[2] >= $MinHitHost) {
+								elsif ($MonthRequired eq 'all' || $field[2] >= $MinHit{'Host'}) {
 									if ($HTMLOutput{'unknownip'} && ($field[0] =~ /^\d+\.\d+\.\d+\.\d+$/ || $field[0] =~ /^[0-9A-F]*:/i)) { $loadrecord=1; }
-									elsif ($HTMLOutput{'main'} && ($MonthRequired eq 'all' || $countloaded < $MaxNbOfHostsShown)) { $loadrecord=1; }
+									elsif ($HTMLOutput{'main'} && ($MonthRequired eq 'all' || $countloaded < $MaxNbOf{'HostsShown'})) { $loadrecord=1; }
 								}
 							}
 							if ($loadrecord) {
@@ -2518,7 +2512,7 @@ sub Read_History_With_TmpUpdate {
 								if ($HTMLOutput{'main'}) {
 									if ($MonthRequired eq 'all') { $loadrecord=1; }
 									else {
-										if ($countloaded < $MaxNbOfPageShown && $field[1] >= $MinHitFile) { $loadrecord=1; }
+										if ($countloaded < $MaxNbOf{'PageShown'} && $field[1] >= $MinHit{'File'}) { $loadrecord=1; }
 										$TotalDifferentPages++;
 									}
 								}
@@ -2527,7 +2521,7 @@ sub Read_History_With_TmpUpdate {
 										if (!$URLFilter || $field[0] =~ /$URLFilter/) { $loadrecord=1; }
 									}
 									else {
-										if ((!$URLFilter || $field[0] =~ /$URLFilter/) && $field[1] >= $MinHitFile) { $loadrecord=1; }
+										if ((!$URLFilter || $field[0] =~ /$URLFilter/) && $field[1] >= $MinHit{'File'}) { $loadrecord=1; }
 										$TotalDifferentPages++;
 									}
 								}
@@ -2685,7 +2679,7 @@ sub Read_History_With_TmpUpdate {
 			}
 			# BEGIN_SEARCHWORDS
 			if ($field[0] eq 'BEGIN_SEARCHWORDS')   {
-				if ($Debug) { debug(" Begin of SEARCHWORDS section ($MaxNbOfKeyphrasesShown,$MinHitKeyphrase)"); }
+				if ($Debug) { debug(" Begin of SEARCHWORDS section ($MaxNbOf{'KeyphrasesShown'},$MinHit{'Keyphrase'})"); }
 				$_=<HISTORY>;
 				chomp $_; s/\r//;
 				if (! $_) { error("History file \"$filetoread\" is corrupted (in section SEARCHWORDS). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost).","","",1); }
@@ -2703,7 +2697,7 @@ sub Read_History_With_TmpUpdate {
 								if ($HTMLOutput{'main'}) {
 									if ($MonthRequired eq 'all') { $loadrecord=1; }
 									else {
-										if ($countloaded < $MaxNbOfKeyphrasesShown && $field[1] >= $MinHitKeyphrase) { $loadrecord=1; }
+										if ($countloaded < $MaxNbOf{'KeyphrasesShown'} && $field[1] >= $MinHit{'Keyphrase'}) { $loadrecord=1; }
 										$TotalDifferentKeyphrases++;
 										$TotalKeyphrases+=($field[1]||0);
 									}
@@ -2711,7 +2705,7 @@ sub Read_History_With_TmpUpdate {
 								elsif ($HTMLOutput{'keyphrases'}) {	# Load keyphrases for keyphrases chart
 									if ($MonthRequired eq 'all' ) { $loadrecord=1; }
 									else {
-										if ($field[1] >= $MinHitKeyphrase) { $loadrecord=1; }
+										if ($field[1] >= $MinHit{'Keyphrase'}) { $loadrecord=1; }
 										$TotalDifferentKeyphrases++;
 										$TotalKeyphrases+=($field[1]||0);
 									}
@@ -2751,7 +2745,7 @@ sub Read_History_With_TmpUpdate {
 			}
 			# BEGIN_KEYWORDS
 			if ($field[0] eq 'BEGIN_KEYWORDS')   {
-				if ($Debug) { debug(" Begin of KEYWORDS section ($MaxNbOfKeywordsShown,$MinHitKeyword)"); }
+				if ($Debug) { debug(" Begin of KEYWORDS section ($MaxNbOf{'KeywordsShown'},$MinHit{'Keyword'})"); }
 				$_=<HISTORY>;
 				chomp $_; s/\r//;
 				if (! $_) { error("History file \"$filetoread\" is corrupted (in section KEYWORDS). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost).","","",1); }
@@ -2764,7 +2758,7 @@ sub Read_History_With_TmpUpdate {
 							my $loadrecord=0;
 							if ($MonthRequired eq 'all') { $loadrecord=1; }
 							else {
-								if ($countloaded < $MaxNbOfKeywordsShown && $field[1] >= $MinHitKeyword) { $loadrecord=1; }
+								if ($countloaded < $MaxNbOf{'KeywordsShown'} && $field[1] >= $MinHit{'Keyword'}) { $loadrecord=1; }
 								$TotalDifferentKeywords++;
 								$TotalKeywords+=($field[1]||0);
 							}
@@ -3080,11 +3074,11 @@ sub Save_History {
 	if ($sectiontosave eq 'domain') {
 		print HISTORYTMP "\n";
 		print HISTORYTMP "# Domain - Pages - Hits - Bandwidth\n";
-		print HISTORYTMP "# The $MaxNbOfDomain first Pages must be first (order not required for others)\n";
+		print HISTORYTMP "# The $MaxNbOf{'Domain'} first Pages must be first (order not required for others)\n";
 		$ValueInFile{$sectiontosave}=tell HISTORYTMP;
 		print HISTORYTMP "BEGIN_DOMAIN ".(scalar keys %_domener_h)."\n";
 		# We save page list in score sorted order to get a -output faster and with less use of memory.
-		&BuildKeyList($MaxNbOfDomain,$MinHitDomain,\%_domener_h,\%_domener_p);
+		&BuildKeyList($MaxNbOf{'Domain'},$MinHit{'Domain'},\%_domener_h,\%_domener_p);
 		my %keysinkeylist=();
 		foreach my $key (@keylist) {
 			$keysinkeylist{$key}=1;
@@ -3104,12 +3098,12 @@ sub Save_History {
 		print HISTORYTMP "\n";
 		print HISTORYTMP "# Host - Pages - Hits - Bandwidth - Last visit date - [Start of last visit date] - [Last page of last visit]\n";
 		print HISTORYTMP "# [Start of last visit date] and [Last page of last visit] are saved only if session is not finished\n";
-		print HISTORYTMP "# The $MaxNbOfHostsShown first Hits must be first (order not required for others)\n";
+		print HISTORYTMP "# The $MaxNbOf{'HostsShown'} first Hits must be first (order not required for others)\n";
 		$ValueInFile{$sectiontosave}=tell HISTORYTMP;
 		print HISTORYTMP "BEGIN_VISITOR ".(scalar keys %_host_h)."\n";
 		my $monthhostsknown=0;
 		# We save page list in score sorted order to get a -output faster and with less use of memory.
-		&BuildKeyList($MaxNbOfHostsShown,$MinHitHost,\%_host_h,\%_host_p);
+		&BuildKeyList($MaxNbOf{'HostsShown'},$MinHit{'Host'},\%_host_h,\%_host_p);
 		my %keysinkeylist=();
 		foreach my $key (@keylist) {
 			if ($key !~ /^\d+\.\d+\.\d+\.\d+$/ &&  $key !~ /^[0-9A-F]*:/i) { $monthhostsknown++; }
@@ -3173,11 +3167,11 @@ sub Save_History {
 	if ($sectiontosave eq 'login') {
 		print HISTORYTMP "\n";
 		print HISTORYTMP "# Login - Pages - Hits - Bandwidth - Last visit\n";
-		print HISTORYTMP "# The $MaxNbOfLoginShown first Pages must be first (order not required for others)\n";
+		print HISTORYTMP "# The $MaxNbOf{'LoginShown'} first Pages must be first (order not required for others)\n";
 		$ValueInFile{$sectiontosave}=tell HISTORYTMP;
 		print HISTORYTMP "BEGIN_LOGIN ".(scalar keys %_login_h)."\n";
 		# We save login list in score sorted order to get a -output faster and with less use of memory.
-		&BuildKeyList($MaxNbOfLoginShown,$MinHitLogin,\%_login_h,\%_login_p);
+		&BuildKeyList($MaxNbOf{'LoginShown'},$MinHit{'Login'},\%_login_h,\%_login_p);
 		my %keysinkeylist=();
 		foreach my $key (@keylist) {
 			$keysinkeylist{$key}=1;
@@ -3192,11 +3186,11 @@ sub Save_History {
 	if ($sectiontosave eq 'robot') {
 		print HISTORYTMP "\n";
 		print HISTORYTMP "# Robot ID - Hits - Bandwidth - Last visit\n";
-		print HISTORYTMP "# The $MaxNbOfRobotShown first Hits must be first (order not required for others)\n";
+		print HISTORYTMP "# The $MaxNbOf{'RobotShown'} first Hits must be first (order not required for others)\n";
 		$ValueInFile{$sectiontosave}=tell HISTORYTMP;
 		print HISTORYTMP "BEGIN_ROBOT ".(scalar keys %_robot_h)."\n";
 		# We save robot list in score sorted order to get a -output faster and with less use of memory.
-		&BuildKeyList($MaxNbOfRobotShown,$MinHitRobot,\%_robot_h,\%_robot_h);
+		&BuildKeyList($MaxNbOf{'RobotShown'},$MinHit{'Robot'},\%_robot_h,\%_robot_h);
 		my %keysinkeylist=();
 		foreach my $key (@keylist) {
 			$keysinkeylist{$key}=1;
@@ -3211,11 +3205,11 @@ sub Save_History {
 	if ($sectiontosave eq 'worms') {
 		print HISTORYTMP "\n";
 		print HISTORYTMP "# Worm ID - Hits - Last visit\n";
-		print HISTORYTMP "# The $MaxNbOfWormsShown first Hits must be first (order not required for others)\n";
+		print HISTORYTMP "# The $MaxNbOf{'WormsShown'} first Hits must be first (order not required for others)\n";
 		$ValueInFile{$sectiontosave}=tell HISTORYTMP;
 		print HISTORYTMP "BEGIN_WORMS ".(scalar keys %_worm_h)."\n";
 		# We save robot list in score sorted order to get a -output faster and with less use of memory.
-		&BuildKeyList($MaxNbOfWormsShown,$MinHitWorm,\%_worm_h,\%_worm_h);
+		&BuildKeyList($MaxNbOf{'WormsShown'},$MinHit{'Worm'},\%_worm_h,\%_worm_h);
 		my %keysinkeylist=();
 		foreach my $key (@keylist) {
 			$keysinkeylist{$key}=1;
@@ -3230,11 +3224,11 @@ sub Save_History {
 	if ($sectiontosave eq 'emailsender') {
 		print HISTORYTMP "\n";
 		print HISTORYTMP "# EMail - Hits - Bandwidth - Last visit\n";
-		print HISTORYTMP "# The $MaxNbOfEMailsShown first Hits must be first (order not required for others)\n";
+		print HISTORYTMP "# The $MaxNbOf{'EMailsShown'} first Hits must be first (order not required for others)\n";
 		$ValueInFile{$sectiontosave}=tell HISTORYTMP;
 		print HISTORYTMP "BEGIN_EMAILSENDER ".(scalar keys %_emails_h)."\n";
 		# We save sender email list in score sorted order to get a -output faster and with less use of memory.
-		&BuildKeyList($MaxNbOfEMailsShown,$MinHitEMail,\%_emails_h,\%_emails_h);
+		&BuildKeyList($MaxNbOf{'EMailsShown'},$MinHit{'EMail'},\%_emails_h,\%_emails_h);
 		my %keysinkeylist=();
 		foreach my $key (@keylist) {
 			$keysinkeylist{$key}=1;
@@ -3249,11 +3243,11 @@ sub Save_History {
 	if ($sectiontosave eq 'emailreceiver') {
 		print HISTORYTMP "\n";
 		print HISTORYTMP "# EMail - Hits - Bandwidth - Last visit\n";
-		print HISTORYTMP "# The $MaxNbOfEMailsShown first hits must be first (order not required for others)\n";
+		print HISTORYTMP "# The $MaxNbOf{'EMailsShown'} first hits must be first (order not required for others)\n";
 		$ValueInFile{$sectiontosave}=tell HISTORYTMP;
 		print HISTORYTMP "BEGIN_EMAILRECEIVER ".(scalar keys %_emailr_h)."\n";
 		# We save receiver email list in score sorted order to get a -output faster and with less use of memory.
-		&BuildKeyList($MaxNbOfEMailsShown,$MinHitEMail,\%_emailr_h,\%_emailr_h);
+		&BuildKeyList($MaxNbOf{'EMailsShown'},$MinHit{'EMail'},\%_emailr_h,\%_emailr_h);
 		my %keysinkeylist=();
 		foreach my $key (@keylist) {
 			$keysinkeylist{$key}=1;
@@ -3278,11 +3272,11 @@ sub Save_History {
 	if ($sectiontosave eq 'sider') {	# This section must be saved after VISITOR section is read
 		print HISTORYTMP "\n";
 		print HISTORYTMP "# URL - Pages - Bandwidth - Entry - Exit\n";
-		print HISTORYTMP "# The $MaxNbOfPageShown first Pages must be first (order not required for others)\n";
+		print HISTORYTMP "# The $MaxNbOf{'PageShown'} first Pages must be first (order not required for others)\n";
 		$ValueInFile{$sectiontosave}=tell HISTORYTMP;
 		print HISTORYTMP "BEGIN_SIDER ".(scalar keys %_url_p)."\n";
 		# We save page list in score sorted order to get a -output faster and with less use of memory.
-		&BuildKeyList($MaxNbOfPageShown,$MinHitFile,\%_url_p,\%_url_p);
+		&BuildKeyList($MaxNbOf{'PageShown'},$MinHit{'File'},\%_url_p,\%_url_p);
 		%keysinkeylist=();
 		foreach my $key (@keylist) {
 			$keysinkeylist{$key}=1;
@@ -3378,11 +3372,11 @@ sub Save_History {
 	if ($sectiontosave eq 'pagerefs') {
 		print HISTORYTMP "\n";
 		print HISTORYTMP "# External page referers - Pages - Hits\n";
-		print HISTORYTMP "# The $MaxNbOfRefererShown first Pages must be first (order not required for others)\n";
+		print HISTORYTMP "# The $MaxNbOf{'RefererShown'} first Pages must be first (order not required for others)\n";
 		$ValueInFile{$sectiontosave}=tell HISTORYTMP;
 		print HISTORYTMP "BEGIN_PAGEREFS ".(scalar keys %_pagesrefs_h)."\n";
 		# We save page list in score sorted order to get a -output faster and with less use of memory.
-		&BuildKeyList($MaxNbOfRefererShown,$MinHitRefer,\%_pagesrefs_h,\%_pagesrefs_p);
+		&BuildKeyList($MaxNbOf{'RefererShown'},$MinHit{'Refer'},\%_pagesrefs_h,\%_pagesrefs_p);
 		%keysinkeylist=();
 		foreach my $key (@keylist) {
 			$keysinkeylist{$key}=1;
@@ -3403,13 +3397,13 @@ sub Save_History {
 	if ($sectiontosave eq 'searchwords') {
 		print HISTORYTMP "\n";
 		print HISTORYTMP "# Search keyphrases - Number of search\n";
-		print HISTORYTMP "# The $MaxNbOfKeyphrasesShown first number of search must be first (order not required for others)\n";
+		print HISTORYTMP "# The $MaxNbOf{'KeyphrasesShown'} first number of search must be first (order not required for others)\n";
 		$ValueInFile{$sectiontosave}=tell HISTORYTMP;
 		print HISTORYTMP "BEGIN_SEARCHWORDS ".(scalar keys %_keyphrases)."\n";
 		# We will also build _keywords
 		%_keywords=();
 		# We save key list in score sorted order to get a -output faster and with less use of memory.
-		&BuildKeyList($MaxNbOfKeywordsShown,$MinHitKeyword,\%_keyphrases,\%_keyphrases);
+		&BuildKeyList($MaxNbOf{'KeywordsShown'},$MinHit{'Keyword'},\%_keyphrases,\%_keyphrases);
 		%keysinkeylist=();
 		foreach my $key (@keylist) {
 			$keysinkeylist{$key}=1;
@@ -3427,11 +3421,11 @@ sub Save_History {
 		# Now save keywords section
 		print HISTORYTMP "\n";
 		print HISTORYTMP "# Search keywords - Number of search\n";
-		print HISTORYTMP "# The $MaxNbOfKeywordsShown first number of search must be first (order not required for others)\n";
+		print HISTORYTMP "# The $MaxNbOf{'KeywordsShown'} first number of search must be first (order not required for others)\n";
 		$ValueInFile{"keywords"}=tell HISTORYTMP;
 		print HISTORYTMP "BEGIN_KEYWORDS ".(scalar keys %_keywords)."\n";
 		# We save key list in score sorted order to get a -output faster and with less use of memory.
-		&BuildKeyList($MaxNbOfKeywordsShown,$MinHitKeyword,\%_keywords,\%_keywords);
+		&BuildKeyList($MaxNbOf{'KeywordsShown'},$MinHit{'Keyword'},\%_keywords,\%_keywords);
 		%keysinkeylist=();
 		foreach my $key (@keylist) {
 			$keysinkeylist{$key}=1;
@@ -5795,7 +5789,7 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
  			${'_section_' . $extranum . '_h'}{$rowkeyval}++;	# Must be set
  			if ($ExtraStatTypes[$extranum] =~ /B/i) { ${'_section_' . $extranum . '_k'}{$rowkeyval}+=int($field[$pos_size]); }
  			if ($ExtraStatTypes[$extranum] =~ /L/i) {
- 				if (${'_section_' . $extranum . '_l'}{$rowkeyval} < $timerecord) { ${'_section_' . $extranum . '_l'}{$rowkeyval}=$timerecord; }
+ 				if (${'_section_' . $extranum . '_l'}{$rowkeyval}||0 < $timerecord) { ${'_section_' . $extranum . '_l'}{$rowkeyval}=$timerecord; }
  			}
 			# Check to avoid too large extra sections
 			if (scalar keys %{'_section_' . $extranum . '_h'} > $MAXDIFFEXTRA) {
@@ -6598,8 +6592,8 @@ if (scalar keys %HTMLOutput) {
 		print "</TR>\n";
 		$total_p=$total_h=$total_k=0;
 		my $count=0;
-		if ($HTMLOutput{'allhosts'})  { &BuildKeyList($MaxRowsInHTMLOutput,$MinHitHost,\%_host_h,\%_host_p); }
-		if ($HTMLOutput{'lasthosts'}) { &BuildKeyList($MaxRowsInHTMLOutput,$MinHitHost,\%_host_h,\%_host_l); }
+		if ($HTMLOutput{'allhosts'})  { &BuildKeyList($MaxRowsInHTMLOutput,$MinHit{'Host'},\%_host_h,\%_host_p); }
+		if ($HTMLOutput{'lasthosts'}) { &BuildKeyList($MaxRowsInHTMLOutput,$MinHit{'Host'},\%_host_h,\%_host_l); }
 		foreach my $key (@keylist) {
 			my $host=CleanFromCSSA($key);
 			print "<tr><td CLASS=AWL>".($_robot_l{$key}?'<b>':'')."$host".($_robot_l{$key}?'</b>':'')."</td>";
@@ -6641,7 +6635,7 @@ if (scalar keys %HTMLOutput) {
 		print "</TR>\n";
 		$total_p=$total_h=$total_k=0;
 		my $count=0;
-		&BuildKeyList($MaxRowsInHTMLOutput,$MinHitHost,\%_host_h,\%_host_p);
+		&BuildKeyList($MaxRowsInHTMLOutput,$MinHit{'Host'},\%_host_h,\%_host_p);
 		foreach my $key (@keylist) {
 			my $host=CleanFromCSSA($key);
 			print "<tr><td CLASS=AWL>$host</td>";
@@ -6689,8 +6683,8 @@ if (scalar keys %HTMLOutput) {
 		$max_h=1; foreach my $key (values %_emails_h) { if ($key > $max_h) { $max_h = $key; } }
 		$max_k=1; foreach my $key (values %_emails_k) { if ($key > $max_k) { $max_k = $key; } }
 		my $count=0;
-		if ($HTMLOutput{'allemails'})  { &BuildKeyList($MaxRowsInHTMLOutput,$MinHitEMail,\%_emails_h,\%_emails_h); }
-		if ($HTMLOutput{'lastemails'}) { &BuildKeyList($MaxRowsInHTMLOutput,$MinHitEMail,\%_emails_h,\%_emails_l); }
+		if ($HTMLOutput{'allemails'})  { &BuildKeyList($MaxRowsInHTMLOutput,$MinHit{'EMail'},\%_emails_h,\%_emails_h); }
+		if ($HTMLOutput{'lastemails'}) { &BuildKeyList($MaxRowsInHTMLOutput,$MinHit{'EMail'},\%_emails_h,\%_emails_l); }
 		foreach my $key (@keylist) {
 			my $bredde_h=0;my $bredde_k=0;
 			if ($max_h > 0) { $bredde_h=int($BarWidth*$_emails_h{$key}/$max_h)+1; }
@@ -6737,8 +6731,8 @@ if (scalar keys %HTMLOutput) {
 		$max_h=1; foreach my $key (values %_emailr_h) { if ($key > $max_h) { $max_h = $key; } }
 		$max_k=1; foreach my $key (values %_emailr_k) { if ($key > $max_k) { $max_k = $key; } }
 		my $count=0;
-		if ($HTMLOutput{'allemailr'})  { &BuildKeyList($MaxRowsInHTMLOutput,$MinHitEMail,\%_emailr_h,\%_emailr_h); }
-		if ($HTMLOutput{'lastemailr'}) { &BuildKeyList($MaxRowsInHTMLOutput,$MinHitEMail,\%_emailr_h,\%_emailr_l); }
+		if ($HTMLOutput{'allemailr'})  { &BuildKeyList($MaxRowsInHTMLOutput,$MinHit{'EMail'},\%_emailr_h,\%_emailr_h); }
+		if ($HTMLOutput{'lastemailr'}) { &BuildKeyList($MaxRowsInHTMLOutput,$MinHit{'EMail'},\%_emailr_h,\%_emailr_l); }
 		foreach my $key (@keylist) {
 			my $bredde_h=0;my $bredde_k=0;
 			if ($max_h > 0) { $bredde_h=int($BarWidth*$_emailr_h{$key}/$max_h)+1; }
@@ -6782,8 +6776,8 @@ if (scalar keys %HTMLOutput) {
 		print "</TR>\n";
 		$total_p=$total_h=$total_k=0;
 		my $count=0;
-		if ($HTMLOutput{'alllogins'}) { &BuildKeyList($MaxRowsInHTMLOutput,$MinHitHost,\%_login_h,\%_login_p); }
-		if ($HTMLOutput{'lastlogins'}) { &BuildKeyList($MaxRowsInHTMLOutput,$MinHitHost,\%_login_h,\%_login_l); }
+		if ($HTMLOutput{'alllogins'}) { &BuildKeyList($MaxRowsInHTMLOutput,$MinHit{'Host'},\%_login_h,\%_login_p); }
+		if ($HTMLOutput{'lastlogins'}) { &BuildKeyList($MaxRowsInHTMLOutput,$MinHit{'Host'},\%_login_h,\%_login_l); }
 		foreach my $key (@keylist) {
 			print "<TR><TD CLASS=AWL>$key</TD>";
 			if ($ShowAuthenticatedUsers =~ /P/i) { print "<TD>".($_login_p{$key}?$_login_p{$key}:"&nbsp;")."</TD>"; }
@@ -6821,8 +6815,8 @@ if (scalar keys %HTMLOutput) {
 		print "<TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH bgcolor=\"#$color_k\" width=80>$Message[75]</TH><TH width=120>$Message[9]</TH></TR>\n";
 		$total_p=$total_h=$total_k=0;
 		my $count=0;
-		if ($HTMLOutput{'allrobots'})  { &BuildKeyList($MaxRowsInHTMLOutput,$MinHitRobot,\%_robot_h,\%_robot_h); }
-		if ($HTMLOutput{'lastrobots'}) { &BuildKeyList($MaxRowsInHTMLOutput,$MinHitRobot,\%_robot_h,\%_robot_l); }
+		if ($HTMLOutput{'allrobots'})  { &BuildKeyList($MaxRowsInHTMLOutput,$MinHit{'Robot'},\%_robot_h,\%_robot_h); }
+		if ($HTMLOutput{'lastrobots'}) { &BuildKeyList($MaxRowsInHTMLOutput,$MinHit{'Robot'},\%_robot_h,\%_robot_l); }
 		foreach my $key (@keylist) {
 			print "<TR><TD CLASS=AWL>".($RobotsHashIDLib{$key}?$RobotsHashIDLib{$key}:$key)."</TD>";
 			if ($ShowRobotsStats =~ /H/i) { print "<TD>$_robot_h{$key}</TD>"; }
@@ -6888,9 +6882,9 @@ if (scalar keys %HTMLOutput) {
 		print "<TH>&nbsp;</TH></TR>\n";
 		$total_p=$total_k=$total_e=$total_x=0;
 		my $count=0;
-		if ($HTMLOutput{'urlentry'}) { &BuildKeyList($MaxRowsInHTMLOutput,$MinHitFile,\%_url_e,\%_url_e); }
-		elsif ($HTMLOutput{'urlexit'}) { &BuildKeyList($MaxRowsInHTMLOutput,$MinHitFile,\%_url_x,\%_url_x); }
-		else { &BuildKeyList($MaxRowsInHTMLOutput,$MinHitFile,\%_url_p,\%_url_p); }
+		if ($HTMLOutput{'urlentry'}) { &BuildKeyList($MaxRowsInHTMLOutput,$MinHit{'File'},\%_url_e,\%_url_e); }
+		elsif ($HTMLOutput{'urlexit'}) { &BuildKeyList($MaxRowsInHTMLOutput,$MinHit{'File'},\%_url_x,\%_url_x); }
+		else { &BuildKeyList($MaxRowsInHTMLOutput,$MinHit{'File'},\%_url_p,\%_url_p); }
 		$max_p=1; $max_k=1;
 		foreach my $key (@keylist) {
 			if ($_url_p{$key} > $max_p) { $max_p = $_url_p{$key}; }
@@ -7078,7 +7072,7 @@ if (scalar keys %HTMLOutput) {
 		print "</TR>\n";
 		$total_s=0;
 		my $count=0;
-		&BuildKeyList($MaxRowsInHTMLOutput,$MinHitRefer,\%_se_referrals_h,\%_se_referrals_p);
+		&BuildKeyList($MaxRowsInHTMLOutput,$MinHit{'Refer'},\%_se_referrals_h,\%_se_referrals_p);
 		foreach my $key (@keylist) {
 			my $newreferer=CleanFromCSSA($SearchEnginesHashIDLib{$key}||$key);
 			my $p_p; my $p_h;
@@ -7132,7 +7126,7 @@ if (scalar keys %HTMLOutput) {
 		print "</TR>\n";
 		$total_s=0;
 		my $count=0;
-		&BuildKeyList($MaxRowsInHTMLOutput,$MinHitRefer,\%_pagesrefs_h,\%_pagesrefs_p);
+		&BuildKeyList($MaxRowsInHTMLOutput,$MinHit{'Refer'},\%_pagesrefs_h,\%_pagesrefs_p);
 		foreach my $key (@keylist) {
 			my $nompage=CleanFromCSSA($key);
 			if (length($nompage)>$MaxLengthOfURL) { $nompage=substr($nompage,0,$MaxLengthOfURL)."..."; }
@@ -7172,7 +7166,7 @@ if (scalar keys %HTMLOutput) {
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\"".($TOOLTIPON?" onmouseover=\"ShowTip(15);\" onmouseout=\"HideTip(15);\"":"")."><TH>$TotalDifferentKeyphrases $Message[103]</TH><TH bgcolor=\"#$color_s\" width=80>$Message[14]</TH><TH bgcolor=\"#$color_s\" width=80>$Message[15]</TH></TR>\n";
 		$total_s=0;
 		my $count=0;
-		&BuildKeyList($MaxRowsInHTMLOutput,$MinHitKeyphrase,\%_keyphrases,\%_keyphrases);
+		&BuildKeyList($MaxRowsInHTMLOutput,$MinHit{'Keyphrase'},\%_keyphrases,\%_keyphrases);
 		foreach my $key (@keylist) {
 			my $mot = DecodeEncodedString(CleanFromCSSA($key));
 			my $p;
@@ -7198,7 +7192,7 @@ if (scalar keys %HTMLOutput) {
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\"".($TOOLTIPON?" onmouseover=\"ShowTip(15);\" onmouseout=\"HideTip(15);\"":"")."><TH>$TotalDifferentKeywords $Message[13]</TH><TH bgcolor=\"#$color_s\" width=80>$Message[14]</TH><TH bgcolor=\"#$color_s\" width=80>$Message[15]</TH></TR>\n";
 		$total_s=0;
 		my $count=0;
-		&BuildKeyList($MaxRowsInHTMLOutput,$MinHitKeyword,\%_keywords,\%_keywords);
+		&BuildKeyList($MaxRowsInHTMLOutput,$MinHit{'Keyword'},\%_keywords,\%_keywords);
 		foreach my $key (@keylist) {
 			my $mot = DecodeEncodedString(CleanFromCSSA($key));
 			my $p;
@@ -7729,7 +7723,7 @@ if (scalar keys %HTMLOutput) {
 		if ($ShowDomainsStats) {
 			if ($Debug) { debug("ShowDomainsStats",2); }
 			print "$Center<a name=\"DOMAINS\">&nbsp;</a><BR>\n";
-			my $title="$Message[25] ($Message[77] $MaxNbOfDomain) &nbsp; - &nbsp; <a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=alldomains":"$PROG$StaticLinks.alldomains.html")."\"$NewLinkTarget>$Message[80]</a>";
+			my $title="$Message[25] ($Message[77] $MaxNbOf{'Domain'}) &nbsp; - &nbsp; <a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=alldomains":"$PROG$StaticLinks.alldomains.html")."\"$NewLinkTarget>$Message[80]</a>";
 			&tab_head("$title",19);
 			print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH width=$WIDTHCOLICON>&nbsp;</TH><TH colspan=2>$Message[17]</TH>";
 			if ($ShowDomainsStats =~ /P/i) { print "<TH bgcolor=\"#$color_p\" width=80>$Message[56]</TH>"; }
@@ -7741,7 +7735,7 @@ if (scalar keys %HTMLOutput) {
 			$max_h=1; foreach my $key (values %_domener_h) { if ($key > $max_h) { $max_h = $key; } }
 			$max_k=1; foreach my $key (values %_domener_k) { if ($key > $max_k) { $max_k = $key; } }
 			my $count=0;
-			&BuildKeyList($MaxNbOfDomain,$MinHitDomain,\%_domener_p,\%_domener_p);
+			&BuildKeyList($MaxNbOf{'Domain'},$MinHit{'Domain'},\%_domener_p,\%_domener_p);
 			foreach my $key (@keylist) {
 				my $bredde_p=0;my $bredde_h=0;my $bredde_k=0;
 				if ($max_h > 0) { $bredde_p=int($BarWidth*$_domener_p{$key}/$max_h)+1; }	# use max_h to enable to compare pages with hits
@@ -7790,7 +7784,7 @@ if (scalar keys %HTMLOutput) {
 		if ($ShowHostsStats) {
 			if ($Debug) { debug("ShowHostsStats",2); }
 			print "$Center<a name=\"VISITOR\">&nbsp;</a><BR>\n";
-			my $title="$Message[81] ($Message[77] $MaxNbOfHostsShown) &nbsp; - &nbsp; <a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=allhosts":"$PROG$StaticLinks.allhosts.html")."\"$NewLinkTarget>$Message[80]</a> &nbsp; - &nbsp; <a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=lasthosts":"$PROG$StaticLinks.lasthosts.html")."\"$NewLinkTarget>$Message[9]</a> &nbsp; - &nbsp; <a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=unknownip":"$PROG$StaticLinks.unknownip.html")."\"$NewLinkTarget>$Message[45]</a>";
+			my $title="$Message[81] ($Message[77] $MaxNbOf{'HostsShown'}) &nbsp; - &nbsp; <a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=allhosts":"$PROG$StaticLinks.allhosts.html")."\"$NewLinkTarget>$Message[80]</a> &nbsp; - &nbsp; <a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=lasthosts":"$PROG$StaticLinks.lasthosts.html")."\"$NewLinkTarget>$Message[9]</a> &nbsp; - &nbsp; <a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=unknownip":"$PROG$StaticLinks.unknownip.html")."\"$NewLinkTarget>$Message[45]</a>";
 			&tab_head("$title",19);
 			print "<TR bgcolor=\"#$color_TableBGRowTitle\">";
 	#		print "<TH".($PluginsLoaded{'GetCountryCodeByAddr'}{'geoip'}?" colspan=2":"").">";
@@ -7805,7 +7799,7 @@ if (scalar keys %HTMLOutput) {
 			print "</TR>\n";
 			$total_p=$total_h=$total_k=0;
 			my $count=0;
-			&BuildKeyList($MaxNbOfHostsShown,$MinHitHost,\%_host_h,\%_host_p);
+			&BuildKeyList($MaxNbOf{'HostsShown'},$MinHit{'Host'},\%_host_h,\%_host_p);
 			foreach my $key (@keylist) {
 				print "<TR>";
 				print "<TD CLASS=AWL>$key</TD>";
@@ -7841,7 +7835,7 @@ if (scalar keys %HTMLOutput) {
 		if ($ShowEMailSenders) {
 			if ($Debug) { debug("ShowEMailSenders",2); }
 			print "$Center<a name=\"EMAILSENDERS\">&nbsp;</a><BR>\n";
-			my $title="$Message[131] ($Message[77] $MaxNbOfEMailsShown) &nbsp; - &nbsp; <a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=allemails":"$PROG$StaticLinks.allemails.html")."\"$NewLinkTarget>$Message[80]</a>";
+			my $title="$Message[131] ($Message[77] $MaxNbOf{'EMailsShown'}) &nbsp; - &nbsp; <a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=allemails":"$PROG$StaticLinks.allemails.html")."\"$NewLinkTarget>$Message[80]</a>";
 			if ($ShowEMailSenders =~ /L/i) { $title.=" &nbsp; - &nbsp; <a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=lastemails":"$PROG$StaticLinks.lastemails.html")."\"$NewLinkTarget>$Message[9]</a>"; }
 			&tab_head("$title",19);
 			print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[131] : ".(scalar keys %_emails_h)."</TH>";
@@ -7854,7 +7848,7 @@ if (scalar keys %HTMLOutput) {
 			$max_h=1; foreach my $key (values %_emails_h) { if ($key > $max_h) { $max_h = $key; } }
 			$max_k=1; foreach my $key (values %_emails_k) { if ($key > $max_k) { $max_k = $key; } }
 			my $count=0;
-			&BuildKeyList($MaxNbOfEMailsShown,$MinHitEMail,\%_emails_h,\%_emails_h);
+			&BuildKeyList($MaxNbOf{'EMailsShown'},$MinHit{'EMail'},\%_emails_h,\%_emails_h);
 			foreach my $key (@keylist) {
 				my $bredde_h=0;my $bredde_k=0;
 				if ($max_h > 0) { $bredde_h=int($BarWidth*$_emails_h{$key}/$max_h)+1; }
@@ -7889,7 +7883,7 @@ if (scalar keys %HTMLOutput) {
 		if ($ShowEMailReceivers) {
 			if ($Debug) { debug("ShowEMailReceivers",2); }
 			print "$Center<a name=\"EMAILRECEIVERS\">&nbsp;</a><BR>\n";
-			my $title="$Message[132] ($Message[77] $MaxNbOfEMailsShown) &nbsp; - &nbsp; <a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=allemailr":"$PROG$StaticLinks.allemailr.html")."\"$NewLinkTarget>$Message[80]</a>";
+			my $title="$Message[132] ($Message[77] $MaxNbOf{'EMailsShown'}) &nbsp; - &nbsp; <a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=allemailr":"$PROG$StaticLinks.allemailr.html")."\"$NewLinkTarget>$Message[80]</a>";
 			if ($ShowEMailReceivers =~ /L/i) { $title.=" &nbsp; - &nbsp; <a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=lastemailr":"$PROG$StaticLinks.lastemailr.html")."\"$NewLinkTarget>$Message[9]</a>"; }
 			&tab_head("$title",19);
 			print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[132] : ".(scalar keys %_emailr_h)."</TH>";
@@ -7902,7 +7896,7 @@ if (scalar keys %HTMLOutput) {
 			$max_h=1; foreach my $key (values %_emailr_h) { if ($key > $max_h) { $max_h = $key; } }
 			$max_k=1; foreach my $key (values %_emailr_k) { if ($key > $max_k) { $max_k = $key; } }
 			my $count=0;
-			&BuildKeyList($MaxNbOfEMailsShown,$MinHitEMail,\%_emailr_h,\%_emailr_h);
+			&BuildKeyList($MaxNbOf{'EMailsShown'},$MinHit{'EMail'},\%_emailr_h,\%_emailr_h);
 			foreach my $key (@keylist) {
 				my $bredde_h=0;my $bredde_k=0;
 				if ($max_h > 0) { $bredde_h=int($BarWidth*$_emailr_h{$key}/$max_h)+1; }
@@ -7937,7 +7931,7 @@ if (scalar keys %HTMLOutput) {
 		if ($ShowAuthenticatedUsers) {
 			if ($Debug) { debug("ShowAuthenticatedUsers",2); }
 			print "$Center<a name=\"LOGIN\">&nbsp;</a><BR>\n";
-			my $title="$Message[94] ($Message[77] $MaxNbOfLoginShown) &nbsp; - &nbsp; <a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=alllogins":"$PROG$StaticLinks.alllogins.html")."\"$NewLinkTarget>$Message[80]</a>";
+			my $title="$Message[94] ($Message[77] $MaxNbOf{'LoginShown'}) &nbsp; - &nbsp; <a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=alllogins":"$PROG$StaticLinks.alllogins.html")."\"$NewLinkTarget>$Message[80]</a>";
 			if ($ShowAuthenticatedUsers =~ /L/i) { $title.=" &nbsp; - &nbsp; <a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=lastlogins":"$PROG$StaticLinks.lastlogins.html")."\"$NewLinkTarget>$Message[9]</a>"; }
 			&tab_head("$title",19);
 			print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[94] : ".(scalar keys %_login_h)."</TH>";
@@ -7950,7 +7944,7 @@ if (scalar keys %HTMLOutput) {
 			$max_h=1; foreach my $key (values %_login_h) { if ($key > $max_h) { $max_h = $key; } }
 			$max_k=1; foreach my $key (values %_login_k) { if ($key > $max_k) { $max_k = $key; } }
 			my $count=0;
-			&BuildKeyList($MaxNbOfLoginShown,$MinHitLogin,\%_login_h,\%_login_p);
+			&BuildKeyList($MaxNbOf{'LoginShown'},$MinHit{'Login'},\%_login_h,\%_login_p);
 			foreach my $key (@keylist) {
 				my $bredde_p=0;my $bredde_h=0;my $bredde_k=0;
 				if ($max_h > 0) { $bredde_p=int($BarWidth*$_login_p{$key}/$max_h)+1; }	# use max_h to enable to compare pages with hits
@@ -7991,7 +7985,7 @@ if (scalar keys %HTMLOutput) {
 		if ($ShowRobotsStats) {
 			if ($Debug) { debug("ShowRobotStats",2); }
 			print "$Center<a name=\"ROBOTS\">&nbsp;</a><BR>\n";
-			&tab_head("$Message[53] ($Message[77] $MaxNbOfRobotShown) &nbsp; - &nbsp; <a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=allrobots":"$PROG$StaticLinks.allrobots.html")."\"$NewLinkTarget>$Message[80]</a> &nbsp; - &nbsp; <a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=lastrobots":"$PROG$StaticLinks.lastrobots.html")."\"$NewLinkTarget>$Message[9]</a>",19);
+			&tab_head("$Message[53] ($Message[77] $MaxNbOf{'RobotShown'}) &nbsp; - &nbsp; <a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=allrobots":"$PROG$StaticLinks.allrobots.html")."\"$NewLinkTarget>$Message[80]</a> &nbsp; - &nbsp; <a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=lastrobots":"$PROG$StaticLinks.lastrobots.html")."\"$NewLinkTarget>$Message[9]</a>",19);
 			print "<TR bgcolor=\"#$color_TableBGRowTitle\"".($TOOLTIPON?" onmouseover=\"ShowTip(16);\" onmouseout=\"HideTip(16);\"":"")."><TH>".(scalar keys %_robot_h)." $Message[51]</TH>";
 			if ($ShowRobotsStats =~ /H/i) { print "<TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH>"; }
 			if ($ShowRobotsStats =~ /B/i) { print "<TH bgcolor=\"#$color_k\" width=80>$Message[75]</TH>"; }
@@ -7999,7 +7993,7 @@ if (scalar keys %HTMLOutput) {
 			print "</TR>\n";
 			$total_p=$total_h=$total_k=0;
 			my $count=0;
-			&BuildKeyList($MaxNbOfRobotShown,$MinHitRobot,\%_robot_h,\%_robot_h);
+			&BuildKeyList($MaxNbOf{'RobotShown'},$MinHit{'Robot'},\%_robot_h,\%_robot_h);
 			foreach my $key (@keylist) {
 				print "<TR><TD CLASS=AWL>".($RobotsHashIDLib{$key}?$RobotsHashIDLib{$key}:$key)."</TD>";
 				if ($ShowRobotsStats =~ /H/i) { print "<TD>$_robot_h{$key}</TD>"; }
@@ -8121,9 +8115,9 @@ if (scalar keys %HTMLOutput) {
 		# BY FILE/URL
 		#-------------------------
 		if ($ShowPagesStats) {
-			if ($Debug) { debug("ShowPagesStats (MaxNbOfPageShown=$MaxNbOfPageShown TotalDifferentPages=$TotalDifferentPages)",2); }
+			if ($Debug) { debug("ShowPagesStats (MaxNbOf{'PageShown'}=$MaxNbOf{'PageShown'} TotalDifferentPages=$TotalDifferentPages)",2); }
 			print "$Center<a name=\"PAGE\">&nbsp;</a><a name=\"ENTRY\">&nbsp;</a><a name=\"EXIT\">&nbsp;</a><BR>\n";
-			my $title="$Message[19] ($Message[77] $MaxNbOfPageShown) &nbsp; - &nbsp; <a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=urldetail":"$PROG$StaticLinks.urldetail.html")."\"$NewLinkTarget>$Message[80]</a>";
+			my $title="$Message[19] ($Message[77] $MaxNbOf{'PageShown'}) &nbsp; - &nbsp; <a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=urldetail":"$PROG$StaticLinks.urldetail.html")."\"$NewLinkTarget>$Message[80]</a>";
 			if ($ShowPagesStats =~ /E/i) { $title.=" &nbsp; - &nbsp; <a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=urlentry":"$PROG$StaticLinks.urlentry.html")."\"$NewLinkTarget>$Message[104]</a>"; }
 			if ($ShowPagesStats =~ /X/i) { $title.=" &nbsp; - &nbsp; <a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=urlexit":"$PROG$StaticLinks.urlexit.html")."\"$NewLinkTarget>$Message[116]</a>"; }
 			&tab_head("$title",19);
@@ -8141,7 +8135,7 @@ if (scalar keys %HTMLOutput) {
 			$total_p=$total_e=$total_x=$total_k=0;
 			$max_p=1; $max_k=1;
 			my $count=0;
-			&BuildKeyList($MaxNbOfPageShown,$MinHitFile,\%_url_p,\%_url_p);
+			&BuildKeyList($MaxNbOf{'PageShown'},$MinHit{'File'},\%_url_p,\%_url_p);
 			foreach my $key (@keylist) {
 				if ($_url_p{$key} > $max_p) { $max_p = $_url_p{$key}; }
 				if ($_url_k{$key}/($_url_p{$key}||1) > $max_k) { $max_k = $_url_k{$key}/($_url_p{$key}||1); }
@@ -8274,11 +8268,13 @@ if (scalar keys %HTMLOutput) {
 			my $title="$Message[135]";
 			&tab_head("$title",19);
 			print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[135]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[15]</TH></TR>\n";
+			my $total_h=0;
 			my $count=0;
-			&BuildKeyList($MaxRowsInHTMLOutput,1,\%_screensize_h,\%_screensize_h);
+			&BuildKeyList($MaxNbOf{'ScreenSizes'},$MinHit{'ScreenSizes'},\%_screensize_h,\%_screensize_h);
 			foreach my $key (@keylist) {
 				my $p='&nbsp;';
 				if ($Totalh) { $p=int($_screensize_h{$key}/$Totalh*1000)/10; $p="$p %"; }
+				$total_h+=$_screensize_h{$key}||0;
 				print "<TR>";
 				if ($key eq 'Unknown') {
 					print "<TD CLASS=AWL><font color=\"#$color_other\">$Message[0]</font></TD>";
@@ -8291,6 +8287,14 @@ if (scalar keys %HTMLOutput) {
 				}
 				print "</TR>\n";
 				$count++;
+			}
+			$rest_h=$Totalh-$total_s;
+			if ($rest_h > 0) {	# All others sessions
+				my $p=0;
+				if ($Totalh) { $p=int($rest_h/$Totalh*1000)/10; }
+				print "<tr".($TOOLTIPON?" onmouseover=\"ShowTip(20);\" onmouseout=\"HideTip(20);\"":"")."><td CLASS=AWL><font color=\"#$color_other\">$Message[0]</font></td>";
+				print "<td>".($rest_h?"$p %":"&nbsp;")."</td>";
+				print "</tr>\n";
 			}
 			&tab_end;
 		}
@@ -8343,7 +8347,7 @@ if (scalar keys %HTMLOutput) {
 				print "<TABLE>\n";
 				$total_p=0; $total_h=0;
 				my $count=0;
-				&BuildKeyList($MaxNbOfRefererShown,$MinHitRefer,\%_se_referrals_h,\%_se_referrals_p);
+				&BuildKeyList($MaxNbOf{'RefererShown'},$MinHit{'Refer'},\%_se_referrals_h,\%_se_referrals_p);
 				foreach my $key (@keylist) {
 					my $newreferer=CleanFromCSSA($SearchEnginesHashIDLib{$key}||$key);
 					print "<TR><TD CLASS=AWL>- $newreferer</TD>";
@@ -8375,7 +8379,7 @@ if (scalar keys %HTMLOutput) {
 				print "<TABLE>\n";
 				$total_p=0; $total_h=0;
 				my $count=0;
-				&BuildKeyList($MaxNbOfRefererShown,$MinHitRefer,\%_pagesrefs_h,\%_pagesrefs_p);
+				&BuildKeyList($MaxNbOf{'RefererShown'},$MinHit{'Refer'},\%_pagesrefs_h,\%_pagesrefs_p);
 				foreach my $key (@keylist) {
 					print "<TR><TD CLASS=AWL>- ";
 					&ShowURL($key);
@@ -8427,11 +8431,11 @@ if (scalar keys %HTMLOutput) {
 			# By Keyphrases
 			if ($ShowKeyphrasesStats && $ShowKeywordsStats) { print "<td width=\"50%\" valign=top>\n";	}
 			if ($Debug) { debug("ShowKeyphrasesStats",2); }
-			&tab_head("$Message[120] ($Message[77] $MaxNbOfKeyphrasesShown)<br><a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=keyphrases":"$PROG$StaticLinks.keyphrases.html")."\"$NewLinkTarget>$Message[80]</a>",19,($ShowKeyphrasesStats && $ShowKeywordsStats)?95:70);
+			&tab_head("$Message[120] ($Message[77] $MaxNbOf{'KeyphrasesShown'})<br><a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=keyphrases":"$PROG$StaticLinks.keyphrases.html")."\"$NewLinkTarget>$Message[80]</a>",19,($ShowKeyphrasesStats && $ShowKeywordsStats)?95:70);
 			print "<TR bgcolor=\"#$color_TableBGRowTitle\"".($TOOLTIPON?" onmouseover=\"ShowTip(15);\" onmouseout=\"HideTip(15);\"":"")."><TH>$TotalDifferentKeyphrases $Message[103]</TH><TH bgcolor=\"#$color_s\" width=80>$Message[14]</TH><TH bgcolor=\"#$color_s\" width=80>$Message[15]</TH></TR>\n";
 			$total_s=0;
 			my $count=0;
-			&BuildKeyList($MaxNbOfKeyphrasesShown,$MinHitKeyphrase,\%_keyphrases,\%_keyphrases);
+			&BuildKeyList($MaxNbOf{'KeyphrasesShown'},$MinHit{'Keyphrase'},\%_keyphrases,\%_keyphrases);
 			foreach my $key (@keylist) {
 				my $mot = DecodeEncodedString(CleanFromCSSA($key));
 				my $p;
@@ -8455,11 +8459,11 @@ if (scalar keys %HTMLOutput) {
 			# By Keywords
 			if ($ShowKeyphrasesStats && $ShowKeywordsStats) { print "<td width=\"50%\" valign=top>\n";	}
 			if ($Debug) { debug("ShowKeywordsStats",2); }
-			&tab_head("$Message[121] ($Message[77] $MaxNbOfKeywordsShown)<br><a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=keywords":"$PROG$StaticLinks.keywords.html")."\"$NewLinkTarget>$Message[80]</a>",19,($ShowKeyphrasesStats && $ShowKeywordsStats)?95:70);
+			&tab_head("$Message[121] ($Message[77] $MaxNbOf{'KeywordsShown'})<br><a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=keywords":"$PROG$StaticLinks.keywords.html")."\"$NewLinkTarget>$Message[80]</a>",19,($ShowKeyphrasesStats && $ShowKeywordsStats)?95:70);
 			print "<TR bgcolor=\"#$color_TableBGRowTitle\"".($TOOLTIPON?" onmouseover=\"ShowTip(15);\" onmouseout=\"HideTip(15);\"":"")."><TH>$TotalDifferentKeywords $Message[13]</TH><TH bgcolor=\"#$color_s\" width=80>$Message[14]</TH><TH bgcolor=\"#$color_s\" width=80>$Message[15]</TH></TR>\n";
 			$total_s=0;
 			my $count=0;
-			&BuildKeyList($MaxNbOfKeywordsShown,$MinHitKeyword,\%_keywords,\%_keywords);
+			&BuildKeyList($MaxNbOf{'KeywordsShown'},$MinHit{'Keyword'},\%_keywords,\%_keywords);
 			foreach my $key (@keylist) {
 				my $mot = DecodeEncodedString(CleanFromCSSA($key));
 				my $p;
