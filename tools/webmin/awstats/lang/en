@@ -12,19 +12,24 @@ index_create=Created/Modified
 index_noconfig=No config files were found or have been added for analysis.
 index_edit=Edit/Delete config
 index_del=Delete config
+index_scheduled=Scheduled
+index_now=Now
 index_update=Update stats 
+index_update2=Update
 index_view=View stats
+index_view2=View
 index_return=Config files list
 index_eversion=The AWStats command $1 on your system is version $2, but this module only supports versions $3 and above.
 index_egetversion=Failed to get the version of AWStats. Command $1 returned : $2.<br>May be your <a href='$3'>module configuration</a> is incorrect.
-index_advanced=Show optional setup directives
-index_advanced2=Show plugins setup directives
-index_advanced3=Show ExtraSections setup directives
-index_hideadvanced=Show only main setup directives
+index_advanced1=View directives for OPTIONAL SETUP SECTION
+index_advanced2=View directives for OPTIONAL ACCURACY SETUP SECTION
+index_advanced3=View directives for OPTIONAL APPEARANCE SETUP SECTION
+index_hideadvanced=Hide optional directives
 
 edit_title1=Add config File
 edit_title2=Edit config File
-edit_header=Config file Builder for $1
+edit_header=Editor Assistant for config file $1
+edit_headernew=Config file Builder Assistant
 edit_file=File content
 edit_add=Config file name to create
 edit_user=Run AWStats as user
@@ -49,7 +54,10 @@ view_eopen=Failed to open report file
 view_title=View Report
 
 update_title=Update statistics
-update_ecannot=You are only allowed to update statistics for config $1
+update_ecannot=You are not allowed to update statistics
+
+scheduled_title=Schedule statistic's update
+scheduled_ecannot=You are not allowed to update or schedule update process
 
 log_create_log=Created AWStats config file $1
 log_modify_log=Modified AWStats config file $1
@@ -66,4 +74,5 @@ acl_any=Any user
 acl_dir=Only allow viewing reports and editing config for config files under
 
 help_title=Help page
-
+help_subtitle=<b>Help for config file parameter $1</b>
+help_notfound=Parameter not found in your sample file $1.<br>May be your AWStats version does not support it, so no help is available.

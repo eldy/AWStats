@@ -8,12 +8,17 @@ $Revision$ - $Author$ - $Date$
 Fixes:
 - Modify of old config files add the new parameters if not found.
 - Fixed wrong value saved for LogSeparator parameter.
+- Better check of old versions incompatibility.
+- Fix help page for parameters not found in model config file.
+- Minor bug fixes.
 
 New features/improvements:
+- All AWStats config parameters can be edited.
+- Added a file/dir selector for parameters that are files or directories.
 - Added javascript test in edit config pages.
 
 Other/Documentation:
-- Added french translation.
+- Added French translation.
 - Removed unused language message files.
 
 

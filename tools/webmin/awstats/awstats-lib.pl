@@ -2,6 +2,7 @@
 # Common functions for editing the awstats config file
 
 do '../web-lib.pl';
+require '../javascript-lib.pl'; 
 &init_config();
 
 #$config{'awstats'}||='/usr/local/awstats/wwwroot/cgi-bin/awstats.pl';
@@ -19,7 +20,7 @@ sub hblink
 {
 	my $t=shift;
 	my $url=shift;
-	print "<a href='$url' target=help>$t</a>";
+	print "<a href=\"javascript:neww('$url');\">$t</a>";
 }
 
 
@@ -232,10 +233,10 @@ sub spaced_buttons
 local $pc = int(100 / scalar(@_));
 print "<table width=100%><tr>\n";
 foreach $b (@_) {
-	local $al = $b eq $_[0] ? "align=left" :
-		    $b eq $_[@_-1] ? "align=right" : "align=center";
+	local $al = $b eq $_[0] && scalar(@_) != 1 ? "align=left" : $b eq $_[@_-1] && scalar(@_) != 1 ? "align=right" : "align=center";
 	print "<td width=$pc% $al>$b</td>\n";
 	}
+print "</tr>\n";
 print "</table>\n";
 }
 

@@ -96,16 +96,22 @@ if (@config) {
 	print "<a href='edit_config.cgi?new=1'>$text{'index_add'}</a>\n"
 		if ($access{'add'});
 	print "<table border width=100%>\n";
-	print "<tr $tb> <td><b>$text{'index_path'}</b></td> ",
-	      "<td><b>$text{'index_create'}</b></td> ",
-	      "<td><b>$text{'index_edit'}</b></td> ",
- 	      "<td><b>$text{'index_update'}</b></td> ",
-	      "<td><b>$text{'index_view'}</b></td> </tr>\n";
+	print "<tr $tb> <td rowspan=2><b>$text{'index_path'}</b></td> ",
+	      "<td rowspan=2 align=center><b>$text{'index_create'}</b></td> ",
+ 	      "<td colspan=2 align=center><b>$text{'index_update'}</b></td> ",
+	      "<td rowspan=2 align=center><b>$text{'index_view'}</b></td> </tr>\n";
+	print "<tr $tb><td align=center>$text{'index_scheduled'}</td><td align=center>$text{'index_now'}</td></tr>\n";
+
+	# Loop on each config file
 	foreach my $l (@config) {
 		next if (!&can_edit_config($l));
 		local @files = &all_config_files($l);
 		next if (!@files);
 		local $lconf = &get_config($l);
+		my $conf=""; my $dir="";
+		if ($l =~ /awstats\.(.*)\.conf$/) { $conf=$1; }
+		if ($l =~ /^(.*)[\\\/][^\\\/]+$/) { $dir=$1; }
+
 		print "<tr $cb>\n";
 
 		local ($size, $latest);
@@ -116,28 +122,27 @@ if (@config) {
 #			}
 #		$latest = $latest ? localtime($latest) : "<br>";
 
-		print "<td>$l</td>";
+		print "<td>";
+		print "$l";
+		if ($access{'global'}) {	# Edit config
+	        print "<br><a href='edit_config.cgi?file=$l'>$text{'index_edit'}</a>\n";
+		}
+		print "</td>";
+
 		local @st=stat($l);
-		print "<td>".make_date($st[10])."</td>";
-
-                my $conf=""; my $dir="";
-                if ($l =~ /awstats\.(.*)\.conf$/) { $conf=$1; }
-                if ($l =~ /^(.*)[\\\/][^\\\/]+$/) { $dir=$1; }
-
-                if ($access{'global'}) {
-                        print "<td><a href='edit_config.cgi?file=$l'>$text{'index_edit'}</a></td>\n";
-                }
+		my ($sec,$min,$hour,$day,$month,$year,$wday,$yday) = localtime($st[10]);
+		$year+=1900; $month++;
+		printf("<td align=center>%04s-%02s-%02s %02s:%02s:%02s</td>",$year,$month,$day,$hour,$min,$sec);
+	
+		
+		if ($access{'update'}) {	# Update
+	        print "<td align=center><a href='schedule_stats.cgi?file=$l'>?</a></td>";
+	        print "<td align=center><a href='update_stats.cgi?file=$l'>$text{'index_update2'}</a></td>\n";
+		}
 		else {
-                        print "<td>&nbsp;</td>\n";
-                }
-
-               	if ($access{'update'}) {
-                        print "<td><a href='update_stats.cgi?file=$l'>$text{'index_update'}</a></td>\n";
-                }
-		else {
-                        print "<td>&nbsp;</td>\n";
-                }
- 
+	        print "<td align=center>NA</td>";
+	        print "<td align=center>NA</td>";
+		}
 
 #		print "<td>",$size > 10*1024*1024 ? int($size/1024/1024)." MB" :
 #			     $size > 10*1024 ? int($size/1024)." KB" :
@@ -146,16 +151,17 @@ if (@config) {
 #		print "<td>",$lconf->{'sched'} ? $text{'yes'}
 #					       : $text{'no'},"</td>\n";
 #		if ($lconf->{'dir'} && -r "$lconf->{'dir'}/index.html") {
+
 		if ($access{'view'}) {
 			if ($config{'awstats_cgi'}) {
-				print "<td><a href='$config{'awstats_cgi'}?".($conf?"config=$conf":"").($dir?"&configdir=$dir":"")."' target=awstats>$text{'index_view'}</a></td>\n";
+				print "<td align=center><a href='$config{'awstats_cgi'}?".($conf?"config=$conf":"").($dir?"&configdir=$dir":"")."' target=awstats>$text{'index_view2'}</a></td>\n";
 			}
 			else {
-				print "<td>".&text('index_cgi', "$gconfig{'webprefix'}/config.cgi?$module_name")."</td>";	
+				print "<td align=center>".&text('index_cgi', "$gconfig{'webprefix'}/config.cgi?$module_name")."</td>";	
 			}
 		}
 		else {
-			print "<td>&nbsp;</td>\n";
+	        print "<td align=center>NA</td>";
 		}
 		print "</tr>\n";
 		}

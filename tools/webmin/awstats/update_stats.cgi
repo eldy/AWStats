@@ -7,15 +7,14 @@ require './awstats-lib.pl';
 
 if (! $access{'update'}) { &error($text{'update_ecannot'}); }
 
+my $conf=""; my $dir="";
+if ($in{'file'} =~ /awstats\.(.*)\.conf$/) { $conf=$1; }
+if ($in{'file'} =~ /^(.*)[\\\/][^\\\/]+$/) { $dir=$1; }
+
 
 # Display file contents
 &header($title || $text{'update_title'}, "");
 print "<hr>\n";
-
-
-my $conf=""; my $dir="";
-if ($in{'file'} =~ /awstats\.(.*)\.conf$/) { $conf=$1; }
-if ($in{'file'} =~ /^(.*)[\\\/][^\\\/]+$/) { $dir=$1; }
 
 my $command=$config{'awstats'}." -update -config=$conf -configdir=$dir";
 print "Run update process with command:\n<br>\n";
@@ -33,3 +32,4 @@ proc::safe_process_exec($command,$config{'user'},undef, STDOUT,undef, 1, 1);
 print "<hr>\n";
 print "Update process finished\n";
 
+0;

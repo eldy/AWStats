@@ -4,7 +4,7 @@ index_eawstats=La commande du log analyseur $1 n'a pas été trouvée sur le systèm
 index_econfdir=Le répertoire des fichiers de configuration AWStats $1 n'a pas été trouvé sur le système. Peut-etre AWStats n'est-il pas installé, ou la <a href='$2'>configuration du module</a> est incorrecte.
 index_econf=Le fichier de configuration modèle $1 n'a pas été trouvé sur le système. Peut-etre AWStats n'est-il pas installé, ou la <a href='$2'>configuration du module</a> est incorrecte.
 index_cgi=<a href='$1'>CGI path non configuré</a>
-index_add=Ajout d'un nouveau fichier config d'analyse
+index_add=Ajout d'un nouveau fichier de configuration d'analyse
 index_path=Fichier configuration
 index_type=Type
 index_size=Taille
@@ -12,19 +12,24 @@ index_create=Créé/Modifié
 index_noconfig=Aucun fichier de configuration n'a été trouvé ou ajouté pour analyse.
 index_edit=Edition/Suppression
 index_del=Suppression config
+index_scheduled=Programmée
+index_now=Immédiate
 index_update=Mise à jour stats 
+index_update2=Mettre à jour
 index_view=Voir les stats
+index_view2=Voir
 index_return=Liste des fichiers de configuration
 index_eversion=La commande AWStats $1 sur votre système est en version $2, mais ce module ne gère que les version $3 ou supérieures.
 index_egetversion=Echec de la récupération de la varsion d'AWStats. La command $1 a retourné : $2.<br>Peut-etre la <a href='$3'>configuration du module</a> est incorrecte.
-index_advanced=Voir le paramétrage optionnel
-index_advanced2=Voir le paramétrage des plugins
-index_advanced3=Voir le paramétrage des ExtraSections
-index_hideadvanced=Voir uniquement le paramétrage principal
+index_advanced1=Voir paramètres de la 'OPTIONAL SETUP SECTION'
+index_advanced2=Voir paramètres de la 'OPTIONAL ACCURACY SETUP SECTION'
+index_advanced3=Voir paramètres de la 'OPTIONAL APPEARANCE SETUP SECTION'
+index_hideadvanced=Cacher paramètres optionnels
 
 edit_title1=Ajout d'un fichier de config
 edit_title2=Edition d'un fichier de config
-edit_header=Constructeur de fichier de configuration pour $1
+edit_header=Assistant d'édition du fichier de configuration $1
+edit_headernew=Assistant de création de nouveau fichier de configuration
 edit_file=Contenu du fichier
 edit_add=Nom du fichier de config à créer
 edit_user=Lancer AWStats sous l'utilisateur
@@ -49,7 +54,10 @@ view_eopen=Failed to open report file
 view_title=View Report
 
 update_title=Mise à jour des statistiques
-update_ecannot=You are only allowed to update statistics for config $1
+update_ecannot=Vous n'êtes pas autorisé à mettre à jour les statistiques
+
+scheduled_title=Programmation de mise à jour
+scheduled_ecannot=Vous n'êtes pas autorisé à mettre à jour ou programmer une mise à jour des statistiques
 
 log_create_log=Fichier de config AWStats $1 créé
 log_modify_log=Fichier de config AWStats $1 modifié
@@ -66,4 +74,5 @@ acl_any=Tout utilisateur
 acl_dir=Autorise la vue de stats et l'édition de fichier de config pour les fichiers config dans
 
 help_title=Page d'aide
-
+help_subtitle=<b>Aide sur le paramètre de configuration $1</b>
+help_notfound=Paramètre non trouvé dans votre fichier de configuration modèle $1.<br>Peut-être votre version d'AWStats ne le supporte pas, aussi aucune aide n'est disponible.

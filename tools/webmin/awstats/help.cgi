@@ -11,11 +11,12 @@ print "<hr>\n";
 
 my $helpparam=$in{'param'};
 
-print "<b>Help for config file parameter $helpparam :</b><br><br>\n";
+print &text('help_subtitle',$helpparam)."<br><br>\n";
 
 open(CONF, $config{'alt_conf'}) || &error("eee");
 my $output="";
 my $savoutput="";
+my $found=0;
 while(<CONF>) {
         chomp $_; s/\r//;
 
@@ -32,27 +33,31 @@ while(<CONF>) {
 		$output.="$line<br>";
 	}
 	else {
-
-	        # Remove comments
-	        $_ =~ s/\s#.*$//;
-
-        	# Extract param and value
-	        my ($param,$value)=split(/=/,$_,2);
-	        $param =~ s/^\s+//; $param =~ s/\s+$//;
-
-	        if (defined($param) && defined($value)) {
- 			if ($param =~ /$helpparam/i) { last; }
+		# Remove comments
+		$_ =~ s/\s#.*$//;
+		
+		# Extract param and value
+		my ($param,$value)=split(/=/,$_,2);
+		$param =~ s/^\s+//; $param =~ s/\s+$//;
+		
+		if (defined($param) && defined($value)) {
+			if ($param =~ /$helpparam/i) { $found=1; last; }
 			else {
 				if ($output) { $savoutput=$output; }
 				$output="";
 			}
-	        }
-
+		}
 	}
 }
 close(CONF);
 
-if ($output) { print "$output\n"; }
-else { print "$savoutput"; }
-
-
+if ($found) {
+	if ($output) { print "$output\n"; }
+	else { print "$savoutput"; }
+}
+else {
+	print &text('help_notfound',$config{'alt_conf'});
+#	print "Parameter not found in your sample file $config{'alt_conf'}.\nMay be your AWStats version does not support it, so no help is available.";
+}
+	
+0;
