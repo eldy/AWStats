@@ -5797,6 +5797,12 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 
 		# Check date
 		#-----------------------
+		if ($LogType eq 'M' && $timerecord > $tomorrowtime) {
+			# Postfix/Sendmail does not store year, so we assume that year is year-1 if record is in future
+			$yearrecord--;
+			$yearmonthdayrecord=sprintf("$yearrecord%02i%02i",$dateparts[1],$dateparts[0]);
+			$timerecord=((int("$yearmonthdayrecord")*100+$dateparts[3])*100+$dateparts[4])*100+$dateparts[5];
+		}
 		if ($timerecord < 10000000000000 || $timerecord > $tomorrowtime) {
 			$NbOfLinesCorrupted++;
 			if ($ShowCorrupted) { print "Corrupted record (invalid date, timerecord=$timerecord): $line\n"; }
