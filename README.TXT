@@ -51,7 +51,7 @@ I - 1) Features
 	* Search engines, keyphrases and keywords used to find your site
 	* HTTP errors (Page not found with last referer, etc,)
 	* Screen size report
-	* Number of times your site is "added to favourites bookmarks"
+	* Number of times your site is "added to favourites bookmarks"
 	* Ratio of Browsers that support: Java, Flash, RealG2 reader,
 	  Quicktime reader, WMA reader, PDF reader
 	* Cluster report for load balanced servers ratio
@@ -74,13 +74,14 @@ I - 1) Features
 	* Several languages
 	* No need of rare perl libraries
 	* Dynamic reports as CGI output
-	* Static reports in one or framed HTML/XML pages, experimental PDF export
+	* Static reports in one or framed HTML/XHTML pages
+	* Experimental PDF export
 	* Look and colors can match your site design (CSS)
 	* Help and tooltips on HTML reported pages
-	* Experimental PDF export
 	* Easy to use (Just one configuration file to edit)
-	* Free (GNU GPL) with sources (perl scripts)
+	* Analysis database can be stored in XML format for XSLT processing
 	* A Webmin module
+	* Free (GNU GPL) with sources (perl scripts)
 	* Available on all platforms
 
 
@@ -120,6 +121,7 @@ I - 3) Files
 	wwwroot/css                         Samples of CSS files
 	wwwroot/js                          Javascript sources for "Misc" feature
 	tools/*                             Other provided tools
+	tools/xslt/*                        Demo to manipulate AWStats XML database
 	tools/webmin/awstats-x.x.wbm        A Webmin module for AWStats
 
 
