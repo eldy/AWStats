@@ -1465,7 +1465,7 @@ sub Check_Config {
 	if ($ShowOriginStats !~ /[01PH]/)              	{ $ShowOriginStats='PH'; }
 	if ($ShowKeyphrasesStats !~ /[01]/)          	{ $ShowKeyphrasesStats=1; }
 	if ($ShowKeywordsStats !~ /[01]/)            	{ $ShowKeywordsStats=1; }
-	if ($ShowMiscStats !~ /[01AJDFRQWP]/)     	    { $ShowMiscStats='AJDFRQWP'; }
+	if ($ShowMiscStats !~ /[01ajdfrqwp]/)     	    { $ShowMiscStats='ajdfrqwp'; }
 	if ($ShowHTTPErrorsStats !~ /[01]/)          	{ $ShowHTTPErrorsStats=1; }
 	if ($ShowSMTPErrorsStats !~ /[01]/)          	{ $ShowSMTPErrorsStats=0; }
 	if ($AddDataArrayMonthStats !~ /[01]/)        	{ $AddDataArrayMonthStats=1; }
@@ -1530,7 +1530,7 @@ sub Check_Config {
 	if ($ShowPagesStats eq '1') 		{ $ShowPagesStats = 'PBEX'; }
 	if ($ShowFileTypesStats eq '1') 	{ $ShowFileTypesStats = 'HB'; }
 	if ($ShowOriginStats eq '1') 		{ $ShowOriginStats = 'PH'; }
-	if ($ShowMiscStats eq '1') 			{ $ShowMiscStats = 'AJDFRQWP'; }
+	if ($ShowMiscStats eq '1') 			{ $ShowMiscStats = 'ajdfrqwp'; }
 
 	# Convert extra sections data into @ExtraConditionType, @ExtraConditionTypeVal...
 	foreach my $extranum (1..@ExtraName-1) {
