@@ -14,7 +14,7 @@
 #-------------------------------------------------------
 # Defines
 #-------------------------------------------------------
-$VERSION="2.24 (build 13)";
+$VERSION="2.24 (build 14)";
 $Lang=0;
 
 # Default value
@@ -1234,6 +1234,7 @@ sub UnescapeURLParam {
 	$_[0] =~ s/%3c/ /gi;	#<
 	$_[0] =~ s/%3d/ /gi;	#=
 	$_[0] =~ s/%3e/ /gi;	#>
+	$_[0] =~ s/%3f/?/gi;	#?
 	$_[0] =~ s/%c9/é/gi;	#é maj
 	$_[0] =~ s/%e0/à/gi;	#à
 	$_[0] =~ s/%e8/è/gi;	#è
@@ -1265,7 +1266,7 @@ sub warning {
 }
 
 sub SkipHost {
-	foreach $Skip (@SkipHosts) { if ($_[0] =~ /$Skip/) { return 1; } }
+	foreach $Skip (@SkipHosts) { if ($_[0] =~ /$Skip/i) { return 1; } }
 	0; # Not in @SkipHosts
 }
 
@@ -1280,12 +1281,13 @@ sub Read_Config_File {
 	if ($FileConfig eq "") { if (open(CONFIG,"$DirConfig$PROG.conf"))  { $FileConfig="$DirConfig$PROG.conf"; $FileSuffix=""; } }
 	if ($FileConfig eq "") { $FileConfig="$PROG.conf"; error("Error: Couldn't open config file [$PROG.$LocalSite.conf] nor [$PROG.conf]: $!"); }
 	while (<CONFIG>) {
-		chomp $_;									# $_ =~ s/\n//;
+		chomp $_;
 		$_ =~ s/#.*//;								# Remove comments
-		$_ =~ s/	/¥/g; $_ =~ s/ /¥/g;			# Change all blanks into "¥"
-		$_ =~ s/=/§/; @felter=split(/§/,$_);		# Change first "=" into "§"
+		$_ =~ tr/	 /  /s;							# Change all blanks into " "
+		$_ =~ s/=/§/; @felter=split(/§/,$_);		# Change first "=" into "§" to split
 		$param=$felter[0]; $value=$felter[1];
-		$value =~ s/¥*$//g; $value =~ s/^¥*//g; $value =~ s/¥/ /g; $value =~ s/^\"//; $value =~ s/\"$//;
+		$value =~ s/^ //; $value =~ s/ $//;
+		$value =~ s/^\"//; $value =~ s/\"$//;
 		# Read main section
 		if ($param =~ /^LogFile/)               { $LogFile=$value; next; }
 		if ($param =~ /^LogFormat/)             { $LogFormat=$value; next; }
@@ -1405,7 +1407,7 @@ if (open(HISTORY,"$DirData/$PROG$_[0]$_[1]$FileSuffix.txt")) {
 	$reados=0;$readrobot=0;$readunknownreferer=0;$readunknownrefererbrowser=0;$readpagerefs=0;$readse=0;
 	$readsearchwords=0;$readerrors=0;$readerrors404=0;
 	while (<HISTORY>) {
-		chomp $_;		# $_ =~ s/\n//;
+		chomp $_;
 		@field=split(/ /,$_);
 		if ($field[0] eq "FirstTime")       { $FirstTime{$_[0].$_[1]}=$field[1]; next; }
         if ($field[0] eq "LastTime")        { if ($LastTime{$_[0].$_[1]} < $field[1]) { $LastTime{$_[0].$_[1]}=$field[1]; }; next; }
@@ -1775,10 +1777,10 @@ if (($YearRequired == $nowyear) && ($MonthRequired eq "year" || $MonthRequired =
 	{
 		# Get log line
 		#-------------
-		$line=$_;
-		chomp $_;	# $_ =~ s/\n//;	# Needed because IIS log file end with CRLF and perl read lines until LF
+		$savedline=$_;
+		chomp $_;		# Needed because IIS log file end with CRLF and perl read lines until LF
 		$_ =~ s/\" / /g; $_ =~ s/ \"/ /g; $_ =~ s/\"$//;	# Suppress "
-		if (/^$/) { next; }								# To ignore blank line (With ISS: happens sometimes, with Apache: possible when editing log file)
+		if (/^$/) { next; }								# Ignore blank line (With ISS: happens sometimes, with Apache: possible when editing log file)
 		if ($LogFormat == 2) {
 			if (/^#/) { next; }							# ISS writes such comments, we forget line
 			@felter=split(/ /,$_);
@@ -1833,7 +1835,7 @@ if (($YearRequired == $nowyear) && ($MonthRequired eq "year" || $MonthRequired =
 			# ...
 			if ($GoodFormat == 0) {
 				print "Log file <b>$LogFile</b> doesn't seem to have good format. Suspect line is<br>";
-				print "<font color=#888888><i>$line</i></font><br>";
+				print "<font color=#888888><i>$savedline</i></font><br>";
 				print "<br><b>LogFormat</b> parameter is <b>$LogFormat</b>, this means each line in your log file need to have ";
 				if ($LogFormat == 2) {
 						print "<b>\"MSIE Extended W3C log format\"</b> like this:<br>";
@@ -2084,16 +2086,18 @@ if (($YearRequired == $nowyear) && ($MonthRequired eq "year" || $MonthRequired =
 							# This hit came from the search engine $key
 							$_from_h[2]++;
 							$_se_referrals_h{$key}++;
-							$found=1;									
+							$found=1;
 							# Extract keywords
 							$refurl[1] =~ tr/A-Z/a-z/;				# Full param string in lowcase
-							&UnescapeURLParam($refurl[1]);			# Change [ xxx=123&yyy=aaa+bbb/ccc+ddd%20eee'fff ] into [ xxx=123&yyy=aaa bbb ccc ddd eee fff ]
+							&UnescapeURLParam($refurl[1]);			# Change [ xxx=cache:www+aaa+bbb/ccc+ddd%20eee'fff&yyy=123 ] into [ xxx=cache:www aaa bbb ccc ddd eee fff&yyy=123 ]
 							@paramlist=split(/&/,$refurl[1]);
 							if ($SearchEngineKnownUrl{$key}) {		# Search engine with known URL syntax
 								foreach $param (@paramlist) {
 									if ($param =~ /^$SearchEngineKnownUrl{$key}/) { # We found good parameter
-										# Ok. xxx=aaa bbb ccc ddd eee fff is a search parameter line
-										$param =~ s/.*=//g;					# Cut "yyy=" out of line
+										# Ok, "xxx=cache:www aaa bbb ccc ddd eee fff" is a search parameter line
+										$param =~ s/.*=//;					# Cut "xxx="
+										$param =~ s/^cache:[^ ]* //;
+										$param =~ s/^related:[^ ]* //;
 										if ($SplitSearchString) {
 											@wordlist=split(/ /,$param);	# Split aaa bbb ccc ddd eee fff into a wordlist array
 											foreach $word (@wordlist) {
@@ -2101,8 +2105,8 @@ if (($YearRequired == $nowyear) && ($MonthRequired eq "year" || $MonthRequired =
 											}
 										}
 										else {
-											$param =~ s/^ *//; $param =~ s/ *$//; $param =~ s/ ( *)/ /g;
-											if ((length $param) > 0) { $param =~ s/ /+/g; $_keywords{$param}++; }
+											$param =~ s/^ *//; $param =~ s/ *$//; $param =~ tr/ / /s;
+											if ((length $param) > 0) { $param =~ tr/ /+/; $_keywords{$param}++; }
 										}
 										last;
 									}
@@ -2115,17 +2119,19 @@ if (($YearRequired == $nowyear) && ($MonthRequired eq "year" || $MonthRequired =
 										if ($param =~ /.*$paramtoexclude.*/) { $keep=0; last; } # Not the param with search criteria
 									}
 									if ($keep == 0) { next; }			# Do not keep this URL parameter because is in exclude list
-									# Ok. xxx=aaa bbb ccc ddd eee fff is a search parameter line
-									$param =~ s/.*=//g;					# Cut chars xxx=
+									# Ok, "xxx=cache:www aaa bbb ccc ddd eee fff" is a search parameter line
+									$param =~ s/.*=//;					# Cut "xxx="
+									$param =~ s/^cache:[^ ]* //;
+									$param =~ s/^related:[^ ]* //;
 									if ($SplitSearchString) {
-										@wordlist=split(/ /,$param);		# Split aaa bbb ccc ddd eee fff into a wordlist array
+										@wordlist=split(/ /,$param);	# Split aaa bbb ccc ddd eee fff into a wordlist array
 										foreach $word (@wordlist) {
 											if ((length $word) > 2) { $_keywords{$word}++; }	# Keep word only if word length is 3 or more
 										}
 									}
 									else {
-										$param =~ s/^ *//; $param =~ s/ *$//; $param =~ s/ ( *)/ /g;
-										if ((length $param) > 2) { $param =~ s/ /+/g; $_keywords{$param}++; }
+										$param =~ s/^ *//; $param =~ s/ *$//; $param =~ tr/ / /s;
+										if ((length $param) > 2) { $param =~ tr/ /+/; $_keywords{$param}++; }
 									}
 								}
 							}
@@ -3173,3 +3179,4 @@ foreach $key (@sorterrors) {
 &html_end;
 
 0;	# Do not remove this line
+
