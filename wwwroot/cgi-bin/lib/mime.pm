@@ -92,6 +92,7 @@
 # Video
 'avi','video',
 'divx','video',
+'mp4','video',
 'mpeg','video',
 'mpg','video',
 'swf','video',
@@ -165,6 +166,7 @@
 # Video
 'avi','video',
 'divx','video',
+'mp4','video',
 'mpeg','video',
 'mpg','video',
 'swf','swf',
