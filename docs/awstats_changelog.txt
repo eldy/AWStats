@@ -1,11 +1,15 @@
 AWStats Changelog
 -----------------
 
+
 5.1
 
 - New feature: ShowxxxStats parmaters accept codes to decide which columns to
   show in chart.
-- New parameter: Added SkipUserAgents parameter.
+- New parameter: Added SkipUserAgents parameter to exclude some user agent
+  from statistics.
+- New parameter: Added URLWithQueryWithoutFollowingParameters to exclude some
+  parameters from URL when URLWithQuery is on.
 - Fixed: Fixed pb in refreshing page when clicking on "Update Now" link (no
   need to force the refresh).
 - Fixed: Pb with SAMBAR server ('Expires' line appears at the top of pages).

@@ -212,6 +212,7 @@ use vars qw/
 use vars qw/
 @SessionsRange @HostAliases @AllowAccessFromWebToFollowingAuthenticatedUsers
 @DefaultFile @OnlyFiles @SkipDNSLookupFor @SkipFiles @SkipHosts @SkipUserAgents
+@URLWithQueryWithoutFollowingParameters
 @PluginsToLoad @DOWIndex @RobotsSearchIDOrder
 @_from_p @_from_h @_time_p @_time_h @_time_k
 @keylist
@@ -220,6 +221,7 @@ use vars qw/
 @HostAliases=();
 @AllowAccessFromWebToFollowingAuthenticatedUsers=();
 @DefaultFile = @OnlyFiles = @SkipDNSLookupFor = @SkipFiles = @SkipHosts = @SkipUserAgents = ();
+@URLWithQueryWithoutFollowingParameters = ();
 @PluginsToLoad = @DOWIndex = @RobotsSearchIDOrder = ();
 @_from_p = @_from_h = ();
 @_time_p = @_time_h = @_time_k = ();
@@ -1095,7 +1097,11 @@ sub Parse_Config {
 			$FoundValidHTTPCodes=1;
 			next;
 			}
-		if ($param =~ /^URLWithQuery/)			{ $URLWithQuery=$value; next; }
+		if ($param =~ /^URLWithQuery$/)			{ $URLWithQuery=$value; next; }
+		if ($param =~ /^URLWithQueryWithoutFollowingParameters$/)	{
+			foreach my $elem (split(/\s+/,$value))	{ push @URLWithQueryWithoutFollowingParameters,$elem; }
+			next;
+			}
 		if ($param =~ /^WarningMessages/)       { $WarningMessages=$value; next; }
 		if ($param =~ /^NbOfLinesForCorruptedLog/) { $NbOfLinesForCorruptedLog=$value; next; }
 		if ($param =~ /^Expires/)               { $Expires=$value; next; }
@@ -4612,9 +4618,20 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {	# Updat
 		my $urlwithnoquery;
 		if ($URLWithQuery) {
 			$urlwithnoquery=$field[$pos_url];
-			$urlwithnoquery =~ s/\?.*//;
+			my $foundparam=($urlwithnoquery =~ s/\?.*//);
 			# We combine the URL and query strings (for some IIS setup).
-			if ($pos_query >=0 && $field[$pos_query] && $field[$pos_query] ne "-") { $field[$pos_url] .= "?" . $field[$pos_query]; }
+			if (! $foundparam && $pos_query >=0 && $field[$pos_query] && $field[$pos_query] ne "-") {
+				$foundparam=1;
+				$field[$pos_url] .= "?" . $field[$pos_query];
+			}
+ 			# Remove params that are marked to be ignored in URLWithQueryWithoutFollowingParameters
+			if ($foundparam && @URLWithQueryWithoutFollowingParameters) {
+ 				map {$field[$pos_url] =~ s/$_=[^&]*//;} @URLWithQueryWithoutFollowingParameters;
+ 				# Cut starting or trailing ? or &
+ 				$field[$pos_url] =~ tr/&/&/s;
+ 				$field[$pos_url] =~ s/\?&/\?/;
+ 				$field[$pos_url] =~ s/[\?&]$//;
+ 			}
 		}
 		else {
 			# Trunc CGI parameters in URL
