@@ -1731,11 +1731,11 @@ if (($YearRequired == $nowyear) && ($MonthRequired eq "year" || $MonthRequired =
 		$timeconnexion=$dateparts[2].$dateparts[1].$dateparts[0].$dateparts[3].$dateparts[4].$dateparts[5];	# YYYYMMDDHHMMSS
 		# Skip if not a new line
 		if ($NowNewLinePhase) {
-			if ($timeconnexion < $LastTime{$monthtoprocess.$yeartoprocess}) { next; }	# Should not happen, kept in case of parasite lines
+			if ($timeconnexion < $LastTime{$monthtoprocess.$yeartoprocess}) { next; }	# Should not happen, kept in case of parasite old lines
 			}
 		else {
 			if ($timeconnexion <= $LastTime{$monthtoprocess.$yeartoprocess}) { next; }	# Already processed
-			$NowNewLinePhase=1;
+			$NowNewLinePhase=1;	# This will stop comparison between timeconnexion and LastTime (we should have only new lines now)
 			}
 
 		if (&SkipFile($felter[6])) { next; }			# Skip with some URL
@@ -1760,6 +1760,7 @@ if (($YearRequired == $nowyear) && ($MonthRequired eq "year" || $MonthRequired =
 				if ($felter[8] == 404) { $_sider404_h{$felter[6]}++; }
 				next;
 				}
+			if ($felter[8] == 1) { next }						# This avoid error when using MS IndexServer that returns non standard HTTP code
 			print "Log file <b>$LogFile</b> doesn't seem to have good format. Suspect line is<br>";
 			print "<font color=#888888><i>$line</i></font><br>";
 			print "<br><b>LogFormat</b> parameter is <b>$LogFormat</b>, this means each line in your log file need to have ";
