@@ -55,7 +55,7 @@ FAQ-SET210 <a href="#SPEED">"Internal Error" after a long time in my browser (Se
 FAQ-SET220 <a href="#CRASH">Crash while running awstats.pl or page content only partialy loaded</a><br>
 FAQ-SET250 <a href="#PERSONALIZEDLOG">Log format setup or errors.</a><br>
 FAQ-SET260 <a href="#FTP">Setup for FTP server log files.</a><br>
-FAQ-SET270 <a href="#SENDMAIL">Setup for SENDMAIL log files.</a><br>
+FAQ-SET270 <a href="#MAIL">Setup for MAIL log files (Sendmail, Exchange).</a><br>
 FAQ-SET272 <a href="#MEDIASERVER">Setup for WINDOWS MEDIA SERVER log files.</a><br>
 FAQ-SET280 <a href="#NOTSAMENUMBER">Error "Not same number of records of...".</a><br>
 FAQ-SET300 <a href="#COULDNOTOPEN">Error "Couldn't open file ..."</a><br>
@@ -110,7 +110,7 @@ Examples of used platforms (bold means 'tested by author', others were reported 
 <u>OS:</u><br>
 <b>Windows 2000</b>, <b>Windows NT 4.0</b>, Windows Me, <b>Linux</b>, Macintosh, <b>Solaris</b>, <b>Aix</b>, BeOS, ...<br>
 <u>Web/Wap/Proxy/FTP/Mails/Streaming servers</u><br>
-<b>Apache 1.3.x and 2</b>, <b>IIS 5.0</b>, WebStar, WebLogic, WebSite, <b>Windows Media Server</b>, Tomcat, <b>Squid</b>, <b>Sendmail</b>,
+<b>Apache 1.3.x and 2</b>, <b>IIS 5.0</b>, WebStar, WebLogic, WebSite, <b>Windows Media Server</b>, Tomcat, <b>Squid</b>, <b>Sendmail</b>, <b>Exchange</b>,
 Roxen, Resin, <b>ProFTP</b>, Lotus Notes/Domino, IPlanet, IceCast, Zope, ZeroBrand, www4mail, ...<br>
 <u>Perl interpreters:</u><br>
 <b>ActivePerl 5.6</b>, <b>Perl 5.8</b>, <b>Perl 5.6</b>, <b>Perl 5.0</b>, <b>mod_perl for Apache</b>, ...<br>
@@ -309,8 +309,8 @@ You must use : <i>LogFormat=6</i><br>
 See <a href="#FTP">FAQ-SET260</a>.<br>
 
 <table bgcolor=#F0F0F0 width="100%" class=CFAQ><tr class=CFAQ><td class=CFAQ>
-<u>If you want to analyze a <b>Sendmail</b> logfile:</u><br>
-See <a href="#SENDMAIL">FAQ-SET270</a>.<br>
+<u>If you want to analyze a mail log file (<b>Sendmail</b>, <b>Exchange</b>):</u><br>
+See <a href="#MAIL">FAQ-SET270</a>.<br>
 </td></tr></table>
 
 <u>If you use <b>Windows Media Server</b>:</u><br>
@@ -384,13 +384,15 @@ Warning: This tip doesn't work for FTPed files that contains spaces in them (the
 log file to replace 'space' char into '_'...<br>
 <br>
 
-<a name="SENDMAIL"></a><br>
-<b><u>FAQ-SET270 : SETUP FOR SENDMAIL LOG FILES</u></b><br>
+<a name="MAIL"></a><br>
+<b><u>FAQ-SET270 : SETUP FOR MAIL LOG FILES (SENDMAIL, EXCHANGE...)</u></b><br>
 <font class=CProblem>PROBLEM:</font><br>
-What do I have to do to use AWStats to analyze my Sendmail log files.<br>
+What do I have to do to use AWStats to analyze my mail log files.<br>
 <font class=CSolution>SOLUTION:</font><br>
 <br>
-<u>First, install a mail log convertor</u> like <a href="http://www.klake.org/sma/">SMA</a> to use it
+<u>For Sendmail log files</u><br>
+<br>
+1- First, install a mail log convertor like <a href="http://www.klake.org/sma/">SMA</a> to use it
 as a post-processor for AWStats update process.<br>
 Setup SMA to convert your mail log into a format readable by AWStats:</u><br>
 Copy sma (or sma.exe) file and sma.conf into same directory than awstats.pl file.<br>
@@ -410,8 +412,8 @@ Warning: some sma versions (1.3) have been reported to not convert month correct
 for example a date like this 2001-#01-01 instead of 2001-01-01. This makes AWStats analyze
 fails so check your sma output and change version if error.<br>
 <br>
-<u>Then setup AWStats to analyze SMA processed mail log:</u><br>
-Copy config awstats.model.conf file to "awstats.sendmail.conf".<br>
+2- Then setup AWStats to analyze SMA processed mail log:<br>
+Copy config awstats.model.conf file to "awstats.mail.conf".<br>
 Modify this new config file:
 <i>
 <br>LogFile="/pathtosma/sma -O clog -f /pathtosmaconf/sma.conf /pathtomaillog/maillog |"
@@ -441,6 +443,22 @@ Modify this new config file:
 </i>
 <br><br>
 Now you can use AWStats as usual (run the update process and read statistics).<br>
+<br>
+<u>For Exchange log files</u><br>
+If someone can understand the Exchange log format, he can explain it to me at eldy@users.sourceforge.net.<br>
+Until this server won't log in a clever way, just forget using AWStats or use a more serious
+mail server (sendmail, postfix, ...). Sorry.<br>
+<!--
+Your Exchange mail log file might looks like this:<br>
+<i>2002-9-29	0:3:2 GMT	-	-	-	S_EXCHANG01	-	/O=INVESTMENT SCORECARD INC/OU=MAIL/CN=RECIPIENTS/CN=KJOHNSON	1027	1640EF7202084243942C5EC620117D376B68AA@s_exchang01.investmentscorecard.com	0	0	1943	2	2002-9-29 0:3:2 GMT	0	-	c=US;a= ;p=Investment Score;l=S_EXCHANG01-020929000302Z-2583	Dev Request Late Notification: KS_CM00004271	EX:/O=INVESTMENT SCORECARD INC/OU=MAIL/CN=RECIPIENTS/CN=CLEARQUEST(KS_CM)	-</i><br>
+Copy config awstats.model.conf file to "awstats.mail.conf".<br>
+Modify this new config file:
+<i>
+<br>LogFile="yourmaillogfilename"
+<br>LogFormat="%time2 %other %host %other %other %other %email %method %other %url %code %bytesd %other %other %other %other %other %other %email_r"
+<br>LogSeparator="\t"
+<br>DNSLookup=0
+-->
 <br>
 
 <a name="MEDIASERVER"></a><br>
