@@ -28,7 +28,7 @@ $DEBUGFORCED $NBOFLINESFORBENCHMARK $FRAMEWIDTH
 /;
 $DEBUGFORCED=0;					# Force debug level to log lesser level into debug.log file (Keep this value to 0)
 $NBOFLINESFORBENCHMARK=5000;	# Benchmark info are printing every NBOFLINESFORBENCHMARK lines
-$FRAMEWIDTH=290;
+$FRAMEWIDTH=260;
 # Plugins variable
 use vars qw/ $PluginCompress $PluginGraph3D $PluginHashFiles $PluginTimeHiRes $UseTimeZone $PluginETF1 /;
 $PluginCompress=$PluginGraph3D=$PluginHashFiles=$PluginTimeHiRes=$UseTimeZone=$PluginETF1=0;
@@ -434,6 +434,7 @@ EOF
 			print "<link rel=\"stylesheet\" href=\"$StyleSheet\">\n";
 		}
 		print "</head>\n\n";
+		if ($FrameName ne "index") { print "<body>\n"; }
 	}
 }
 
@@ -452,7 +453,8 @@ sub html_end {
 			print "<br>\n";
 			print "$HTMLEndSection\n";
 		}
-		print "</body>\n";
+		print "\n";
+		if ($FrameName ne "index") { print "</body>\n"; }
 		print "</html>\n";
 	}
 }
@@ -1358,6 +1360,7 @@ sub Check_Config {
 	if (! $Message[125]) { $Message[125]="Anonymous users"; }
 	if (! $Message[126]) { $Message[126]="Refering search engines"; }
 	if (! $Message[127]) { $Message[127]="Refering sites"; }
+	if (! $Message[128]) { $Message[128]="Summary"; }
 
 	# Correct ShowFlagLinks
 	if ($ShowFlagLinks eq "0") { $ShowFlagLinks = ""; }					# For backward compatibility
@@ -2711,10 +2714,13 @@ sub Show_Flag_Links {
 
 	# Build flags link
 	my $NewLinkParams=$QueryString;
+	my $NewLinkTarget="";
 	if ($ENV{"GATEWAY_INTERFACE"}) {
 		$NewLinkParams =~ s/update[=]*[^ &]*//i;
 		$NewLinkParams =~ s/staticlinks[=]*[^ &]*//i;
+		$NewLinkParams =~ s/framename[=]*[^ &]*//i;
 		$NewLinkParams =~ s/lang=[^ &]*//i;
+		if ($FrameName eq "mainleft") { $NewLinkTarget=" target=\"_parent\""; }
 		$NewLinkParams =~ tr/&/&/s; $NewLinkParams =~ s/^&//; $NewLinkParams =~ s/&$//;
 		if ($NewLinkParams) { $NewLinkParams="${NewLinkParams}&"; }
 	}
@@ -2732,7 +2738,7 @@ sub Show_Flag_Links {
 			if ($flag eq "it") { $lng="Italian"; }
 			if ($flag eq "nl") { $lng="Dutch"; }
 			if ($flag eq "es") { $lng="Spanish"; }
-			print "<a href=\"$AWScript?${NewLinkParams}lang=$flag\"><img src=\"$DirIcons\/flags\/$flag.png\" height=14 border=0 alt=\"$lng\" title=\"$lng\"></a>&nbsp;\n";
+			print "<a href=\"$AWScript?${NewLinkParams}lang=$flag\"$NewLinkTarget><img src=\"$DirIcons\/flags\/$flag.png\" height=14 border=0 alt=\"$lng\" title=\"$lng\"></a>&nbsp;\n";
 		}
 	}
 }
@@ -2962,8 +2968,8 @@ sub BuildKeyList {
 $starttime=time;
 
 if ($ENV{"GATEWAY_INTERFACE"}) {	# Run from a browser
-	# $ExpireDelayInHTTPHeader=3600;
-	# print "Expires: ".(localtime($starttime+$ExpireDelayInHTTPHeader)."\n";
+	my $ExpireDelayInHTTPHeader=0;
+	print "Expires: ".(localtime($starttime+$ExpireDelayInHTTPHeader))."\n";
 	print "Content-type: text/html\n";
 	print "\n\n";
 	if ($ENV{"CONTENT_LENGTH"}) {
@@ -3026,10 +3032,8 @@ if ($ENV{"AWSTATS_CONFIG"}) {
 	$SiteConfig=$ENV{"AWSTATS_CONFIG"};
 }
 
-# Read reference databases
-&Read_Ref_Data();
-
 if ((! $ENV{"GATEWAY_INTERFACE"}) && (! $SiteConfig)) {
+	&Read_Ref_Data();
 	print "----- $PROG $VERSION (c) Laurent Destailleur -----\n";
 	print "$PROG is a free web server logfile analyzer to show you advanced web\n";
 	print "statistics.\n";
@@ -3162,12 +3166,14 @@ if (! $FrameName) {
 	if ($ENV{"GATEWAY_INTERFACE"} && $UseFramesWhenCGI && $HTMLOutput eq "main") { $FrameName="index"; }
 	else { $FrameName="main"; }
 }
-if ($FrameName eq "index" || $FrameName eq "mainleft") { $UpdateStats=0; }
 	
 # Load Message and Plugins
 if ($FrameName ne "index") {
 	&Read_Language_Data($Lang);
-	&Read_Plugins();
+	if ($FrameName ne "mainleft") {
+		&Read_Ref_Data();
+		&Read_Plugins();
+	}
 }
 
 # Here SiteDomain is always defined
@@ -3201,45 +3207,41 @@ if ($Debug) { debug("YearRequired=$YearRequired MonthRequired=$MonthRequired",2)
 # Print html header
 &html_head;
 
-# Output main frame page and exit
+# Security check
+if ($AllowAccessFromWebToAuthenticatedUsersOnly && $ENV{"GATEWAY_INTERFACE"}) {
+	if ($Debug) { debug("REMOTE_USER is ".$ENV{"REMOTE_USER"}); }
+	if (! $ENV{"REMOTE_USER"}) {
+		error("Error: Access to statistics is only allowed from an authenticated session to authenticated users.");
+	}
+	if (@AllowAccessFromWebToFollowingAuthenticatedUsers) {
+		my $userisinlist=0;
+		foreach my $key (@AllowAccessFromWebToFollowingAuthenticatedUsers) {
+			if ($ENV{"REMOTE_USER"} eq $key) { $userisinlist=1; last; }
+		}
+		if (! $userisinlist) {
+			error("Error: User <b>".$ENV{"REMOTE_USER"}."</b> is not allowed to access statistics of this domain/config.");
+		}
+	}
+}
+if ($UpdateStats && (! $AllowToUpdateStatsFromBrowser) && $ENV{"GATEWAY_INTERFACE"}) {
+	error("Error: Update of statistics is not allowed from a browser.");
+}
+
+# Output main frame page and exit. This must be after the security check.
 if ($FrameName eq "index") {
+	#$AWScript="ee";
 	# Define the NewLinkParams for main chart
 	my $NewLinkParams=${QueryString};
 	$NewLinkParams =~ s/framename[=]*[^\s&]*//i;
 	if ($NewLinkParams) { $NewLinkParams="${NewLinkParams}&"; }
 	# Exit if main frame
-	print "<frameset cols=\"$FRAMEWIDTH,*\" border=2 framespacing=4 frameborder=0>\n";
+	print "<frameset cols=\"$FRAMEWIDTH,*\" border=2 framespacing=2 frameborder=0>\n";
 	print "<frame name=\"mainleft\"  src=\"$AWScript?${NewLinkParams}framename=mainleft\" noresize scrolling=\"NO\" noborder>\n";
 	print "<frame name=\"mainright\" src=\"$AWScript?${NewLinkParams}framename=mainright\" noresize scrolling=\"YES\" noborder>\n";
 	print "<noframes><body>Your browser does not support frames. Change AWStats UseFramesWhenCGI parameter to see your reports</body></noframes>\n";
 	print "</frameset>\n";
 	&html_end();
 	exit 0;
-}
-
-# End of html header
-print "<body>\n";
-
-# Security check
-if ($FrameName ne "index" || $FrameName ne "mainleft") {
-	if ($AllowAccessFromWebToAuthenticatedUsersOnly && $ENV{"GATEWAY_INTERFACE"}) {
-		if ($Debug) { debug("REMOTE_USER is ".$ENV{"REMOTE_USER"}); }
-		if (! $ENV{"REMOTE_USER"}) {
-			error("Error: Access to statistics is only allowed from an authenticated session to authenticated users.");
-		}
-		if (@AllowAccessFromWebToFollowingAuthenticatedUsers) {
-			my $userisinlist=0;
-			foreach my $key (@AllowAccessFromWebToFollowingAuthenticatedUsers) {
-				if ($ENV{"REMOTE_USER"} eq $key) { $userisinlist=1; last; }
-			}
-			if (! $userisinlist) {
-				error("Error: User <b>".$ENV{"REMOTE_USER"}."</b> is not allowed to access statistics of this domain/config.");
-			}
-		}
-	}
-	if ($UpdateStats && (! $AllowToUpdateStatsFromBrowser) && $ENV{"GATEWAY_INTERFACE"}) {
-		error("Error: Update of statistics is not allowed from a browser.");
-	}
 }
 
 # Init global variables required for output and update process
@@ -3257,7 +3259,8 @@ for (my $ix=1; $ix<=12; $ix++) {
 # UPDATE PROCESS
 #------------------------------------------
 if ($Debug) { debug("UpdateStats is $UpdateStats",2); }
-if ($UpdateStats) {
+if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {
+	# Update only on index page or when not framed to avoid update twice
 
 	# Init RobotsSearchIDOrder required for update process
 	my @RobotArrayList;
@@ -3493,13 +3496,11 @@ if ($UpdateStats) {
 	# Search last history file $PROG(MM)(YYYY)$FileSuffix.txt
 	my $yearmonthmax=0;
 	opendir(DIR,"$DirData");
-	my @filearray = sort readdir DIR;
-	close DIR;
-	foreach my $i (0..$#filearray) {
-		if ("$filearray[$i]" =~ /^$PROG(\d\d)(\d\d\d\d)$FileSuffix\.txt$/ || "$filearray[$i]" =~ /^$PROG(\d\d)(\d\d\d\d)$FileSuffix\.txt\.gz$/) {
-			if (int("$2$1") > $yearmonthmax) { $yearmonthmax=int("$2$1"); }
-		}
+	foreach (grep /^$PROG(\d\d)(\d\d\d\d)$FileSuffix\.txt(|\.gz)$/, sort readdir DIR) {
+		/^$PROG(\d\d)(\d\d\d\d)$FileSuffix\.txt(|\.gz)$/;
+		if (int("$2$1") > $yearmonthmax) { $yearmonthmax=int("$2$1"); }
 	}
+	close DIR;
 	# We read last history file if found
 	if ($yearmonthmax =~ /^(\d\d\d\d)(\d\d)$/) {
 		$monthtoprocess=int($2);$yeartoprocess=int($1);
@@ -4163,42 +4164,40 @@ if ($UpdateStats) {
 	}
 
 	# Rename all HISTORYTMP files into HISTORYTXT
+	my $pid=$$;
 	opendir(DIR,"$DirData");
-	@filearray = sort readdir DIR;
-	close DIR;
-	foreach my $i (0..$#filearray) {
-		my $pid=$$;
-		if ("$filearray[$i]" =~ /^$PROG(\d\d\d\d\d\d)$FileSuffix\.tmp\.$pid$/) {
-			if ($Debug) { debug("Rename new tmp historic $PROG$1$FileSuffix.tmp.$$ into $PROG$1$FileSuffix.txt",1); }
-			if (-s "$DirData/$PROG$1$FileSuffix.tmp.$$") {		# Rename files of this session with size > 0
-				if ($KeepBackupOfHistoricFiles) {
-					if (-s "$DirData/$PROG$1$FileSuffix.txt") {	# Historic file already exists. We backup it
-						if ($Debug) { debug(" Make a backup of old historic file into $PROG$1$FileSuffix.bak before",1); }
-						#if (FileCopy("$DirData/$PROG$1$FileSuffix.txt","$DirData/$PROG$1$FileSuffix.bak")) {
-						if (rename("$DirData/$PROG$1$FileSuffix.txt", "$DirData/$PROG$1$FileSuffix.bak")==0) {
-							warning("Warning: Failed to make a backup of \"$DirData/$PROG$1$FileSuffix.txt\" into \"$DirData/$PROG$1$FileSuffix.bak\".");
-						}
-						if ($SaveDatabaseFilesWithPermissionsForEveryone) {
-							chmod 0666,"$DirData/$PROG$1$FileSuffix.bak";
-						}
+	foreach (grep /^$PROG(\d\d\d\d\d\d)$FileSuffix\.tmp\.$pid$/, sort readdir DIR) {
+		/^$PROG(\d\d\d\d\d\d)$FileSuffix\.tmp\.$pid$/;
+		if ($Debug) { debug("Rename new tmp historic $PROG$1$FileSuffix.tmp.$$ into $PROG$1$FileSuffix.txt",1); }
+		if (-s "$DirData/$PROG$1$FileSuffix.tmp.$$") {		# Rename files of this session with size > 0
+			if ($KeepBackupOfHistoricFiles) {
+				if (-s "$DirData/$PROG$1$FileSuffix.txt") {	# Historic file already exists. We backup it
+					if ($Debug) { debug(" Make a backup of old historic file into $PROG$1$FileSuffix.bak before",1); }
+					#if (FileCopy("$DirData/$PROG$1$FileSuffix.txt","$DirData/$PROG$1$FileSuffix.bak")) {
+					if (rename("$DirData/$PROG$1$FileSuffix.txt", "$DirData/$PROG$1$FileSuffix.bak")==0) {
+						warning("Warning: Failed to make a backup of \"$DirData/$PROG$1$FileSuffix.txt\" into \"$DirData/$PROG$1$FileSuffix.bak\".");
 					}
-					else {
-						if ($Debug) { debug(" No need to backup old historic file",1); }
+					if ($SaveDatabaseFilesWithPermissionsForEveryone) {
+						chmod 0666,"$DirData/$PROG$1$FileSuffix.bak";
 					}
 				}
-				if (rename("$DirData/$PROG$1$FileSuffix.tmp.$$", "$DirData/$PROG$1$FileSuffix.txt")==0) {
-					$renameok=0;	# At least one error in renaming working files
-					# Remove file
-					unlink "$DirData/$PROG$1$FileSuffix.tmp.$$";
-					warning("Warning: Failed to rename \"$DirData/$PROG$1$FileSuffix.tmp.$$\" into \"$DirData/$PROG$1$FileSuffix.txt\".\nWrite permissions on \"$PROG$1$FileSuffix.txt\" might be wrong".($ENV{"GATEWAY_INTERFACE"}?" for an 'update from web'":"")." or file might be opened.");
-					last;
+				else {
+					if ($Debug) { debug(" No need to backup old historic file",1); }
 				}
-				if ($SaveDatabaseFilesWithPermissionsForEveryone) {
-					chmod 0666,"$DirData/$PROG$1$FileSuffix.txt";
-				}
+			}
+			if (rename("$DirData/$PROG$1$FileSuffix.tmp.$$", "$DirData/$PROG$1$FileSuffix.txt")==0) {
+				$renameok=0;	# At least one error in renaming working files
+				# Remove file
+				unlink "$DirData/$PROG$1$FileSuffix.tmp.$$";
+				warning("Warning: Failed to rename \"$DirData/$PROG$1$FileSuffix.tmp.$$\" into \"$DirData/$PROG$1$FileSuffix.txt\".\nWrite permissions on \"$PROG$1$FileSuffix.txt\" might be wrong".($ENV{"GATEWAY_INTERFACE"}?" for an 'update from web'":"")." or file might be opened.");
+				last;
+			}
+			if ($SaveDatabaseFilesWithPermissionsForEveryone) {
+				chmod 0666,"$DirData/$PROG$1$FileSuffix.txt";
 			}
 		}
 	}
+	close DIR;
 
 	# Purge Log file if option is on and all renaming are ok
 	if ($PurgeLogFile == 1) {
@@ -4207,7 +4206,6 @@ if ($UpdateStats) {
 			if ($Debug) { debug("Start of archiving log file"); }
 			open(ARCHIVELOG,">>$ArchiveFileName") || error("Error: Couldn't open file \"$ArchiveFileName\" to archive log: $!");
 			while (<LOG>) {
-#				print ARCHIVELOG $_;
 				if (! print ARCHIVELOG $_) { $archiveok=0; last; }
 			}
 			close(ARCHIVELOG) || error("Error: Archiving failed during closing archive: $!");
@@ -4225,15 +4223,14 @@ if ($UpdateStats) {
 # End of log processing if ($UPdateStats)
 
 
-
 #---------------------------------------------------------------------
 # SHOW REPORT
 #---------------------------------------------------------------------
 
 if ($HTMLOutput) {
 
-	my @filearray;
 	my %listofyears;
+	my $lastupdate=0;
 	my $max_p; my $max_h; my $max_k; my $max_v;
 	my $rest_p; my $rest_h; my $rest_k; my $rest_e; my $rest_x; my $rest_s;
 	my $total_p; my $total_h; my $total_k; my $total_e; my $total_x; my $total_s;
@@ -4299,48 +4296,71 @@ if ($HTMLOutput) {
 		</script>
 
 EOF
-	}
-
-	# BUILD listofyears LIST
-	#-----------------------
-
-	# Get list of all possible years
-	# TODO Use of grep to limit list of readdir
-	opendir(DIR,"$DirData");
-	@filearray = sort readdir DIR;
-	close DIR;
-	my $maxyear="0000";
-	foreach my $i (0..$#filearray) {
-		if ("$filearray[$i]" =~ /^$PROG(\d\d)(\d\d\d\d)$FileSuffix\.txt$/) {
+	
+		# BUILD listofyears LIST
+		#-----------------------
+	
+		# Get list of all possible years
+		my $maxyear=0;
+		opendir(DIR,"$DirData");
+		foreach (grep /^$PROG(\d\d)(\d\d\d\d)$FileSuffix\.txt$/, sort readdir DIR) {
+			/^$PROG(\d\d)(\d\d\d\d)$FileSuffix\.txt$/;
 			if (! $listofyears{"$2"} || "$1" gt $listofyears{"$2"}) {
 				$listofyears{"$2"}="$1";	# listofyear contains max month found
 				if ("$2" gt $maxyear) { $maxyear="$2"; }
 			}
 		}
+		close DIR;
+		
+	
+		# Here, first part of data for processed month (old and current) are still in memory
+		# If a month was already processed, then $HistoryFileAlreadyRead{"MMYYYY"} value is 1
+	
+		# READING NOW ALL NOT ALREADY READ HISTORY FILES FOR THE MONTHS CHART
+		#--------------------------------------------------------------------
+		# Loop on each month of year but only existing and not already read will be read by Read_History_File function
+		for (my $ix=12; $ix>=1; $ix--) {
+			my $monthix=sprintf("%02s",$ix);
+			if ($MonthRequired eq "year" || $monthix eq $MonthRequired) {
+				&Read_History_File($YearRequired,$monthix,1);	# Read full history file
+			}
+			else {
+				# TODO We can store nb of hits,pages,bandwith and visits,visitors for month in general section to avoid reading time and visitor section here
+				# However this duplicate info and can create incorrect sync.
+				&Read_History_File($YearRequired,$monthix,0);	# Read first part of history file is enough (general, time, partialy visitor)
+			}
+		}
+		# If LastUpdate still no initialized, we read last existing history file
+		foreach my $key (sort keys %LastUpdate) { if ($lastupdate < $LastUpdate{$key}) { $lastupdate = $LastUpdate{$key}; } }
+		if (! $lastupdate) {
+			# Read 'general' section of this history file for LastUpdate
+			&Read_History_File($maxyear,$listofyears{$maxyear},"general");
+			$lastupdate=$LastUpdate{$maxyear.$listofyears{$maxyear}};
+		}
+	
 	}
 
-	# Read LastUpdate
-	if ($FrameName ne "index" && $FrameName ne "mainright") {
-		# Read 'general' section of this history file for LastUpdate
-		&Read_History_File($maxyear,$listofyears{$maxyear},"general");
-	}
 
-	if ($FrameName ne "index" && $FrameName ne "mainleft") { print "$HTMLHeadSection\n"; }
+	# HTMLHeadSection
+	if ($FrameName ne "index" && $FrameName ne "mainleft") {
+		print "<a name=\"SUMMARY\">&nbsp;</a>\n\n";
+		print "$HTMLHeadSection\n";
+	}
 
 	# LOGO AND FLAGS
 	#---------------------------------------------------------------------
 	if (($ShowHeader && $FrameName ne "mainright") || $FrameName eq "mainleft") {
 		print "<table>\n";
-		print "<tr><td class=AWL width=150 style=\"font: 18px arial,verdana,helvetica; font-weight: bold\">AWStats\n";
+		print "<tr><td width=120 class=AWL style=\"font: 18px arial,verdana,helvetica; font-weight: bold\">AWStats\n";
 		if (! $StaticLinks) { Show_Flag_Links($Lang); }
 		print "</td>\n";
 		if ($LogoLink =~ "http://awstats.sourceforge.net") {
-			print "<td width=200 class=AWL><a href=\"$LogoLink\" target=\"awstatshome\"><img src=\"$DirIcons/other/$Logo\" border=0 alt=\"$PROG Official Web Site\" title=\"$PROG Official Web Site\"></a></td></tr>\n";
+			print "<td class=AWL><a href=\"$LogoLink\" target=\"awstatshome\"><img src=\"$DirIcons/other/$Logo\" border=0 alt=\"$PROG Official Web Site\" title=\"$PROG Official Web Site\"></a></td></tr>\n";
 		}
 		else {
-			print "<td width=200 class=AWL><a href=\"$LogoLink\" target=\"awstatshome\"><img src=\"$DirIcons/other/$Logo\" border=0></a></td></tr>\n";
+			print "<td class=AWL><a href=\"$LogoLink\" target=\"awstatshome\"><img src=\"$DirIcons/other/$Logo\" border=0></a></td></tr>\n";
 		}
-		print "<tr><td class=AWL colspan=2>$Message[54]</td></tr>\n";
+		if ($FrameName ne "mainleft") { print "<tr><td class=AWL colspan=2>$Message[54]</td></tr>\n"; }
 		print "</table>\n";
 	}
 
@@ -4348,18 +4368,19 @@ EOF
 	#---------------------------------------------------------------------
 	if ($ShowMenu || $FrameName eq "mainleft") {
 		if ($Debug) { debug("ShowMenu",2); }
-		my $table=0;
+		my $frame=($FrameName eq "mainleft");
+		print "$Center<a name=\"MENU\">&nbsp;</a><br>\n";
+		print "<table".($frame?" cellspacing=0 cellpadding=0 border=0":"").">\n";
 		if ($FrameName ne "mainright") {
-			if (! $table) { print "$Center<a name=\"MENU\">&nbsp;</a><BR>"; print "<table>"; $table=1; }
 			# Print site name
-			print "<tr><th class=AWL>$Message[7] : </th><td class=AWL><font style=\"font-size: 14px;\">$SiteDomain</font></td></tr>";
-			print "<tr><th class=AWL valign=top>$Message[35] : </th>";
-			print "<td class=AWL><font style=\"font-size: 14px;\">";
+			print "<tr><th class=AWL>$Message[7] : </th><td class=AWL><font style=\"font-size: 14px;\">".($frame?"&nbsp; ":"")."$SiteDomain</font></td></tr>\n";
+		}
+		if ($FrameName ne "mainleft") {
 			# Print LastUpdate
-			my $lastupdate=0;
-			foreach my $key (sort keys %LastUpdate) { if ($lastupdate < $LastUpdate{$key}) { $lastupdate = $LastUpdate{$key}; } }
+			print "<tr><th class=AWL valign=top>$Message[35] :</th>";
+			print "<td class=AWL><font style=\"font-size: 14px;\">";
 			if ($lastupdate) { print Format_Date($lastupdate,0); }
-			else { print "<font color=#880000>$Message[24]</font>"; }
+			else { print " <font color=#880000>$Message[24]</font>"; }
 			print "</font>";
 			# Print selected period of analysis
 			# ...
@@ -4369,73 +4390,82 @@ EOF
 				$NewLinkParams =~ s/update[=]*[^ &]*//i;
 				$NewLinkParams =~ s/staticlinks[=]*[^ &]*//i;
 				$NewLinkParams =~ s/framename[=]*[^ &]*//i;
+				if ($FrameName eq "mainright") { $NewLinkParams.="&framename=mainright"; }
 				$NewLinkParams =~ tr/&/&/s; $NewLinkParams =~ s/^&//; $NewLinkParams =~ s/&$//;
 				if ($NewLinkParams) { $NewLinkParams="${NewLinkParams}&"; }
-				my $NewLinkTarget="";
-				if ($FrameName eq "mainleft") { $NewLinkTarget=" target=_top"; print "<br>"; }
-				else { print "&nbsp; &nbsp; &nbsp; &nbsp;"; }
-				print "<a href=\"$AWScript?${NewLinkParams}update=1\"$NewLinkTarget>$Message[74]</a>";
+				print "&nbsp; &nbsp; &nbsp; &nbsp;";
+				print "<a href=\"$AWScript?${NewLinkParams}update=1\">$Message[74]</a>";
 			}
 			print "</td></tr>\n";
 		}
+		print "</table>\n";
+		print "<br>\n";
 		# Print menu links
 		if (($HTMLOutput eq "main" && $FrameName ne "mainright") || $FrameName eq "mainleft") {	# If main page asked
-			my $linkpage=($FrameName eq "mainleft"?"$AWScript?${NewLinkParams}framename=mainright":"");
+			my $linkpage=($FrameName eq "mainleft"?"$AWScript?${NewLinkParams}":""); $linkpage =~ s/&$//;
 			my $targetpage=($FrameName eq "mainleft"?" target=mainright":"");
-			if (! $table) { print "$Center<a name=\"MENU\">&nbsp;</a><BR>"; print "<table>"; $table=1; }
-			print "<tr><td>&nbsp;</td></tr>\n";
+			print "<table".($frame?" cellspacing=0 cellpadding=0 border=0":"").">\n";
+			if ($frame) {
+				# Summary
+				#print "<tr><th class=AWL valign=top>$Message[128]</th>\n";
+			}
 			# When
-			print "<tr><th class=AWL>$Message[93] : </th>";
-			print "<td class=AWL>";
-			if ($ShowMonthDayStats)		 { print "<a href=\"$linkpage#SUMMARY\"$targetpage>$Message[5]/$Message[4]</a> &nbsp; "; }
-			if ($ShowDaysOfWeekStats)	 { print "<a href=\"$linkpage#DAYOFWEEK\"$targetpage>$Message[91]</a> &nbsp; "; }
-			if ($ShowHoursStats)		 { print "<a href=\"$linkpage#HOUR\"$targetpage>$Message[20]</a> &nbsp; "; }
-			print "<br></td></tr>";
+			print "<tr><th class=AWL valign=top>$Message[93] : </th>\n";
+			print ($frame?"</tr>\n":"<td class=AWL>");
+			if ($ShowMonthDayStats)		 { print ($frame?"<tr><td class=AWL>":""); print "<a href=\"$linkpage#SUMMARY\"$targetpage>$Message[5]/$Message[4]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
+			if ($ShowDaysOfWeekStats)	 { print ($frame?"<tr><td class=AWL>":""); print "<a href=\"$linkpage#DAYOFWEEK\"$targetpage>$Message[91]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
+			if ($ShowHoursStats)		 { print ($frame?"<tr><td class=AWL>":""); print "<a href=\"$linkpage#HOUR\"$targetpage>$Message[20]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
+			print ($frame?"":"</td></tr>\n");
 			# Who
-			print "<tr><th class=AWL>$Message[92] : </th>";
-			print "<td class=AWL>";
-			if ($ShowDomainsStats)		 { print "<a href=\"$linkpage#DOMAINS\"$targetpage>$Message[17]</a> &nbsp; "; }
-			if ($ShowHostsStats)		 { print "<a href=\"$linkpage#VISITOR\"$targetpage>".ucfirst($Message[81])."</a> &nbsp; "; }
-			if ($ShowHostsStats)		 { print "<a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=allhosts":"$PROG$StaticLinks.lasthosts.html")."\"$NewLinkTarget>$Message[80]</a> &nbsp;\n"; }
-			if ($ShowHostsStats)		 { print "<a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=lasthosts":"$PROG$StaticLinks.lasthosts.html")."\"$NewLinkTarget>$Message[9]</a> &nbsp;\n"; }
-			if ($ShowHostsStats)		 { print "<a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=unknownip":"$PROG$StaticLinks.unknownip.html")."\"$NewLinkTarget>$Message[45]</a> &nbsp;\n"; }
-			if ($ShowAuthenticatedUsers) { print "<a href=\"$linkpage#LOGIN\"$targetpage>$Message[94]</a> &nbsp; "; }
-			if ($ShowRobotsStats)		 { print "<a href=\"$linkpage#ROBOTS\"$targetpage>$Message[53]</a> &nbsp; "; }
-			print "<br></td></tr>";
+			print "<tr><th class=AWL valign=top>$Message[92] : </th>\n";
+			print ($frame?"</tr>\n":"<td class=AWL>");
+			if ($ShowDomainsStats)		 { print ($frame?"<tr><td class=AWL>":""); print "<a href=\"$linkpage#DOMAINS\"$targetpage>$Message[17]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
+			if ($ShowHostsStats)		 { print ($frame?"<tr><td class=AWL>":""); print "<a href=\"$linkpage#VISITOR\"$targetpage>".ucfirst($Message[81])."</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
+			if ($ShowHostsStats)		 { print ($frame?"<tr><td class=AWL> &nbsp; <img height=8 width=9 src=\"$DirIcons/other/page.png\"> ":""); print "<a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=allhosts":"$PROG$StaticLinks.lasthosts.html")."\"$NewLinkTarget>$Message[80]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
+			if ($ShowHostsStats)		 { print ($frame?"<tr><td class=AWL> &nbsp; <img height=8 width=9 src=\"$DirIcons/other/page.png\"> ":""); print "<a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=lasthosts":"$PROG$StaticLinks.lasthosts.html")."\"$NewLinkTarget>$Message[9]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
+			if ($ShowHostsStats)		 { print ($frame?"<tr><td class=AWL> &nbsp; <img height=8 width=9 src=\"$DirIcons/other/page.png\"> ":""); print "<a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=unknownip":"$PROG$StaticLinks.unknownip.html")."\"$NewLinkTarget>$Message[45]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
+			if ($ShowAuthenticatedUsers) { print ($frame?"<tr><td class=AWL>":""); print "<a href=\"$linkpage#LOGIN\"$targetpage>$Message[94]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
+			if ($ShowRobotsStats)		 { print ($frame?"<tr><td class=AWL>":""); print "<a href=\"$linkpage#ROBOTS\"$targetpage>$Message[53]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
+			print ($frame?"":"</td></tr>\n");
 			# Navigation
-			print "<tr><th class=AWL>$Message[72] : </th>";
-			print "<td class=AWL>";
-			if ($ShowSessionsStats)		 { print "<a href=\"$linkpage#SESSIONS\"$targetpage>$Message[117]</a> &nbsp; "; }
-			if ($ShowPagesStats)		 { print "<a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=urldetail":"$PROG$StaticLinks.urldetail.html")."\"$NewLinkTarget>$Message[29]</a> &nbsp;\n"; }
-			if ($ShowPagesStats)		 { print "<a href=\"$linkpage#ENTRY\"$targetpage>$Message[104]</a> &nbsp; "; }
-			if ($ShowPagesStats)		 { print "<a href=\"$linkpage#EXIT\"$targetpage>$Message[116]</a> &nbsp; "; }
-			if ($ShowFileTypesStats)	 { print "<a href=\"$linkpage#FILETYPES\"$targetpage>$Message[73]</a> &nbsp; "; }
+			print "<tr><th class=AWL valign=top>$Message[72] : </th>\n";
+			print ($frame?"</tr>\n":"<td class=AWL>");
+			if ($ShowSessionsStats)		 { print ($frame?"<tr><td class=AWL>":""); print "<a href=\"$linkpage#SESSIONS\"$targetpage>$Message[117]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
+			if ($ShowPagesStats)		 { print ($frame?"<tr><td class=AWL>":""); print "<a href=\"$linkpage#PAGE\"$targetpage>$Message[29]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
+			if ($ShowPagesStats)		 { print ($frame?"<tr><td class=AWL> &nbsp; <img height=8 width=9 src=\"$DirIcons/other/page.png\"> ":""); print "<a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=urldetail":"$PROG$StaticLinks.urldetail.html")."\"$NewLinkTarget>$Message[80]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
+			if ($ShowPagesStats)		 { print ($frame?"<tr><td class=AWL>":""); print "<a href=\"$linkpage#ENTRY\"$targetpage>$Message[104]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
+			if ($ShowPagesStats)		 { print ($frame?"<tr><td class=AWL>":""); print "<a href=\"$linkpage#EXIT\"$targetpage>$Message[116]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
+			if ($ShowFileTypesStats)	 { print ($frame?"<tr><td class=AWL>":""); print "<a href=\"$linkpage#FILETYPES\"$targetpage>$Message[73]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
 			if ($ShowFileSizesStats)	 {  }
-			if ($ShowOSStats)			 { print "<a href=\"$linkpage#OS\"$targetpage>$Message[59]</a> &nbsp; "; }
-			if ($ShowBrowsersStats)		 { print "<a href=\"$linkpage#BROWSER\"$targetpage>$Message[21]</a> &nbsp; "; }
-			if ($ShowBrowsersStats)		 { print "<a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=browserdetail":"$PROG$StaticLinks.browserdetail.html")."\"$NewLinkTarget>$Message[33]</a> &nbsp;\n"; }
-			if ($ShowBrowsersStats)		 { print "<a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=browserdetail":"$PROG$StaticLinks.browserdetail.html")."\"$NewLinkTarget>$Message[34]</a> &nbsp;\n"; }
-			print "<br></td></tr>";
+			if ($ShowOSStats)			 { print ($frame?"<tr><td class=AWL>":""); print "<a href=\"$linkpage#OS\"$targetpage>$Message[59]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
+			if ($ShowOSStats && $FrameName eq "mainleft")		{ print ($frame?"<tr><td class=AWL> &nbsp; <img height=8 width=9 src=\"$DirIcons/other/page.png\"> ":""); print "<a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=unknownos":"$PROG$StaticLinks.unknownos.html")."\"$NewLinkTarget>$Message[0]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
+			if ($ShowBrowsersStats)		 { print ($frame?"<tr><td class=AWL>":""); print "<a href=\"$linkpage#BROWSER\"$targetpage>$Message[21]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
+			if ($ShowBrowsersStats)		 { print ($frame?"<tr><td class=AWL> &nbsp; <img height=8 width=9 src=\"$DirIcons/other/page.png\"> ":""); print "<a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=browserdetail":"$PROG$StaticLinks.browserdetail.html")."\"$NewLinkTarget>$Message[58]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
+			if ($ShowBrowsersStats && $FrameName eq "mainleft")	{ print ($frame?"<tr><td class=AWL> &nbsp; <img height=8 width=9 src=\"$DirIcons/other/page.png\"> ":""); print "<a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=unknownbrowser":"$PROG$StaticLinks.unknownbrowser.html")."\"$NewLinkTarget>$Message[0]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
+			print ($frame?"":"</td></tr>\n");
 			# Referers
-			print "<tr><th class=AWL>$Message[23] : </th>";
-			print "<td class=AWL>";
-			if ($ShowOriginStats)		 { print "<a href=\"$linkpage#REFERER\"$targetpage>$Message[37]</a> &nbsp;\n"; }
-			if ($ShowOriginStats)		 { print "<a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=refererse":"$PROG$StaticLinks.refererse.html")."\"$NewLinkTarget>$Message[126]</a> &nbsp;\n"; }
-			if ($ShowOriginStats)		 { print "<a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=refererpages":"$PROG$StaticLinks.refererpages.html")."\"$NewLinkTarget>$Message[127]</a> &nbsp;\n"; }
-			if ($ShowKeyphrasesStats)	 { print "<a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=keyphrases":"$PROG$StaticLinks.keyphrases.html")."\"$NewLinkTarget>$Message[120]</a> &nbsp;\n"; }
-			if ($ShowKeywordsStats)	 	 { print "<a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=keywords":"$PROG$StaticLinks.keywords.html")."\"$NewLinkTarget>$Message[121]</a> &nbsp;\n"; }
-			print "<br></td></tr>";
+			print "<tr><th class=AWL valign=top>$Message[23] : </th>\n";
+			print ($frame?"</tr>\n":"<td class=AWL>");
+			if ($ShowOriginStats)		 { print ($frame?"<tr><td class=AWL>":""); print "<a href=\"$linkpage#REFERER\"$targetpage>$Message[37]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
+			if ($ShowOriginStats)		 { print ($frame?"<tr><td class=AWL> &nbsp; <img height=8 width=9 src=\"$DirIcons/other/page.png\"> ":""); print "<a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=refererse":"$PROG$StaticLinks.refererse.html")."\"$NewLinkTarget>$Message[126]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
+			if ($ShowOriginStats)		 { print ($frame?"<tr><td class=AWL> &nbsp; <img height=8 width=9 src=\"$DirIcons/other/page.png\"> ":""); print "<a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=refererpages":"$PROG$StaticLinks.refererpages.html")."\"$NewLinkTarget>$Message[127]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
+			if ($ShowKeyphrasesStats || $ShowKeywordsStats)	 { print ($frame?"<tr><td class=AWL>":""); print "<a href=\"$linkpage#KEYS\"$targetpage>$Message[14]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
+			if ($ShowKeyphrasesStats)	 { print ($frame?"<tr><td class=AWL> &nbsp; <img height=8 width=9 src=\"$DirIcons/other/page.png\"> ":""); print "<a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=keyphrases":"$PROG$StaticLinks.keyphrases.html")."\"$NewLinkTarget>$Message[120]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
+			if ($ShowKeywordsStats)	 	 { print ($frame?"<tr><td class=AWL> &nbsp; <img height=8 width=9 src=\"$DirIcons/other/page.png\"> ":""); print "<a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=keywords":"$PROG$StaticLinks.keywords.html")."\"$NewLinkTarget>$Message[121]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
+			print ($frame?"":"</td></tr>\n");
 			# Others
-			print "<tr><th class=AWL>$Message[2] : </th>";
-			print "<td class=AWL>";
-			if ($ShowCompressionStats)	 { print "<a href=\"$linkpage#FILETYPES\"$targetpage>$Message[98]</a> &nbsp; "; }
-			if ($ShowHTTPErrorsStats)	 { print "<a href=\"$linkpage#ERRORS\"$targetpage>$Message[22]</a> &nbsp; "; }
-			if ($ShowHTTPErrorsStats)	 { print "<a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=errors404":"$PROG$StaticLinks.errors404.html")."\"$NewLinkTarget>$Message[31]</a>\n"; }
-			print "<br></td></tr>";
+			print "<tr><th class=AWL valign=top>$Message[2] : </th>\n";
+			print ($frame?"</tr>\n":"<td class=AWL>");
+			if ($ShowCompressionStats)	 { print ($frame?"<tr><td class=AWL>":""); print "<a href=\"$linkpage#FILETYPES\"$targetpage>$Message[98]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
+			if ($ShowHTTPErrorsStats)	 { print ($frame?"<tr><td class=AWL>":""); print "<a href=\"$linkpage#ERRORS\"$targetpage>$Message[22]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
+			if ($ShowHTTPErrorsStats)	 { print ($frame?"<tr><td class=AWL> &nbsp; <img height=8 width=9 src=\"$DirIcons/other/page.png\"> ":""); print "<a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=errors404":"$PROG$StaticLinks.errors404.html")."\"$NewLinkTarget>$Message[31]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
+			print ($frame?"":"</td></tr>\n");
+			print "</table>\n";
+			print ($frame?"":"<br>\n");
 		}
 		# Print Back link
 		elsif ($HTMLOutput ne "main") {
-			if (! $table) { print "$Center<a name=\"MENU\">&nbsp;</a><BR>"; print "<table>"; $table=1; }
+			print "<table>\n";
 			$NewLinkParams =~ s/urlfilter[=]*[^ &]*//i;
 			$NewLinkParams =~ s/&+$//;
 			if (! $DetailedReportsOnNewWindows || $FrameName eq "mainright") {
@@ -4444,36 +4474,14 @@ EOF
 			else {
 				print "<tr><td class=AWL><a href=\"javascript:parent.window.close();\">$Message[118]</a></td></tr>\n";
 			}
-		}
-		if ($table) { print "</table>\n<br>\n"; }
-
-		if ($FrameName ne "mainleft" && $FrameName ne "mainright") { print "<hr>\n\n"; }
-
-		# Exit if left frame
-		if ($FrameName eq "mainleft") {
-			# TODO Print created by
-			
-			&html_end();
-			exit 0;
+			print "</table>\n";
 		}
 	}
 
-	# Here, first part of data for processed month (old and current) are still in memory
-	# If a month was already processed, then $HistoryFileAlreadyRead{"MMYYYY"} value is 1
-
-	# READING NOW ALL NOT ALREADY READ HISTORY FILES FOR ALL MONTHS OF REQUIRED YEAR
-	#-------------------------------------------------------------------------------
-	# Loop on each month of year but only existing and not already read will be read by Read_History_File function
-	for (my $ix=12; $ix>=1; $ix--) {
-		my $monthix=sprintf("%02s",$ix);
-		if ($MonthRequired eq "year" || $monthix eq $MonthRequired) {
-			&Read_History_File($YearRequired,$monthix,1);	# Read full history file
-		}
-		else {
-			# TODO We can store nb of hits,pages,bandwith and visits,visitors for month in general section to avoid reading time and visitor section here
-			# However this duplicate info and can create incorrect sync.
-			&Read_History_File($YearRequired,$monthix,0);	# Read first part of history file is enough (general, time, partialy visitor)
-		}
+	# Exit if left frame
+	if ($FrameName eq "mainleft") {
+		&html_end();
+		exit 0;
 	}
 
 	# FirstTime LastTime TotalVisits TotalUnique TotalHostsKnown TotalHostsUnknown
@@ -4552,7 +4560,7 @@ EOF
 
 
 	if ($HTMLOutput eq "allhosts") {
-		print "$Center<a name=\"HOSTSLIST\">&nbsp;</a><BR>";
+		print "$Center<a name=\"HOSTSLIST\">&nbsp;</a><BR>\n";
 		&tab_head($Message[81],19);
 		if ($MonthRequired ne "year") { print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[81] : $TotalHostsKnown $Message[82], $TotalHostsUnknown $Message[1] - $TotalUnique $Message[11]</TH>"; }
 		else { print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[81] : ".(scalar keys %_host_h)."</TH>"; }
@@ -4588,7 +4596,7 @@ EOF
 		exit(0);
 	}
 	if ($HTMLOutput eq "lasthosts") {
-		print "$Center<a name=\"HOSTSLIST\">&nbsp;</a><BR>";
+		print "$Center<a name=\"HOSTSLIST\">&nbsp;</a><BR>\n";
 		&tab_head($Message[9],19);
 		if ($MonthRequired ne "year") { print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[81] : $TotalHostsKnown $Message[82], $TotalHostsUnknown $Message[1] - $TotalUnique $Message[11]</TH>"; }
 		else { print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[81] : ".(scalar keys %_host_h)."</TH>"; }
@@ -4624,7 +4632,7 @@ EOF
 		exit(0);
 	}
 	if ($HTMLOutput eq "unknownip") {
-		print "$Center<a name=\"UNKOWNIP\">&nbsp;</a><BR>";
+		print "$Center<a name=\"UNKOWNIP\">&nbsp;</a><BR>\n";
 		&tab_head($Message[45],19);
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>".(scalar keys %_host_h)." $Message[1]</TH>";
 		if ($ShowLinksToWhoIs && $LinksToWhoIs) { print "<TH width=80>$Message[114]</TH>"; }
@@ -4660,7 +4668,7 @@ EOF
 	}
 	if ($HTMLOutput eq "urldetail") {
 		if ($PluginETF1) { AddOn_Filter(); }
-		print "$Center<a name=\"URLDETAIL\">&nbsp;</a><BR>";
+		print "$Center<a name=\"URLDETAIL\">&nbsp;</a><BR>\n";
 		# Show filter form
 		if (! $StaticLinks) {
 			my $NewLinkParams=${QueryString};
@@ -4767,7 +4775,7 @@ EOF
 		exit(0);
 	}
 	if ($HTMLOutput eq "unknownos") {
-		print "$Center<a name=\"UNKOWNOS\">&nbsp;</a><BR>";
+		print "$Center<a name=\"UNKOWNOS\">&nbsp;</a><BR>\n";
 		&tab_head($Message[46],19);
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>Referer (".(scalar keys %_unknownreferer_l).")</TH><TH>$Message[9]</TH></TR>\n";
 		my $count=0;
@@ -4782,7 +4790,7 @@ EOF
 		exit(0);
 	}
 	if ($HTMLOutput eq "unknownbrowser") {
-		print "$Center<a name=\"UNKOWNBROWSER\">&nbsp;</a><BR>";
+		print "$Center<a name=\"UNKOWNBROWSER\">&nbsp;</a><BR>\n";
 		&tab_head($Message[50],19);
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>Referer (".(scalar keys %_unknownrefererbrowser_l).")</TH><TH>$Message[9]</TH></TR>\n";
 		my $count=0;
@@ -4797,7 +4805,7 @@ EOF
 		exit(0);
 	}
 	if ($HTMLOutput eq "browserdetail") {
-		print "$Center<a name=\"NETSCAPE\">&nbsp;</a><BR>";
+		print "$Center<a name=\"NETSCAPE\">&nbsp;</a><BR>\n";
 		&tab_head("$Message[33]<br><img src=\"$DirIcons/browser/netscape_large.png\">",19);
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[58]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[15]</TH></TR>\n";
 		for (my $i=1; $i<=$#_nsver_h; $i++) {
@@ -4823,7 +4831,7 @@ EOF
 		exit(0);
 	}
 	if ($HTMLOutput eq "refererse") {
-		print "$Center<a name=\"REFERERSE\">&nbsp;</a><BR>";
+		print "$Center<a name=\"REFERERSE\">&nbsp;</a><BR>\n";
 		&tab_head($Message[40],19);
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$TotalDifferentSearchEngines $Message[122]</TH>";
 		#print "<TH bgcolor=\"#$color_p\" width=80>$Message[56]</TH><TH bgcolor=\"#$color_p\" width=80>$Message[15]</TH>";
@@ -4852,7 +4860,7 @@ EOF
 		exit(0);
 	}
 	if ($HTMLOutput eq "refererpages") {
-		print "$Center<a name=\"REFERERPAGES\">&nbsp;</a><BR>";
+		print "$Center<a name=\"REFERERPAGES\">&nbsp;</a><BR>\n";
 		&tab_head($Message[41],19);
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$TotalDifferentRefererPages $Message[28]</TH>";
 		#print "<TH bgcolor=\"#$color_p\" width=80>$Message[56]</TH><TH bgcolor=\"#$color_p\" width=80>$Message[15]</TH>";
@@ -4887,7 +4895,7 @@ EOF
 		exit(0);
 	}
 	if ($HTMLOutput eq "keyphrases") {
-		print "$Center<a name=\"KEYPHRASES\">&nbsp;</a><BR>";
+		print "$Center<a name=\"KEYPHRASES\">&nbsp;</a><BR>\n";
 		&tab_head($Message[43],19);
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\" onmouseover=\"ShowTooltip(15);\" onmouseout=\"HideTooltip(15);\"><TH>$TotalDifferentKeyphrases $Message[103]</TH><TH bgcolor=\"#$color_s\" width=80>$Message[14]</TH><TH bgcolor=\"#$color_s\" width=80>$Message[15]</TH></TR>\n";
 		$total_s=0;
@@ -4914,7 +4922,7 @@ EOF
 		exit(0);
 	}
 	if ($HTMLOutput eq "keywords") {
-		print "$Center<a name=\"KEYWORDS\">&nbsp;</a><BR>";
+		print "$Center<a name=\"KEYWORDS\">&nbsp;</a><BR>\n";
 		&tab_head($Message[44],19);
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\" onmouseover=\"ShowTooltip(15);\" onmouseout=\"HideTooltip(15);\"><TH>$TotalDifferentKeywords $Message[13]</TH><TH bgcolor=\"#$color_s\" width=80>$Message[14]</TH><TH bgcolor=\"#$color_s\" width=80>$Message[15]</TH></TR>\n";
 		$total_s=0;
@@ -4941,7 +4949,7 @@ EOF
 		exit(0);
 	}
 	if ($HTMLOutput eq "errors404") {
-		print "$Center<a name=\"NOTFOUNDERROR\">&nbsp;</a><BR>";
+		print "$Center<a name=\"NOTFOUNDERROR\">&nbsp;</a><BR>\n";
 		&tab_head($Message[47],19);
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>URL (".(scalar keys %_sider404_h).")</TH><TH bgcolor=\"#$color_h\">$Message[49]</TH><TH>$Message[23]</TH></TR>\n";
 		my $count=0;
@@ -4950,7 +4958,7 @@ EOF
 			my $nompage=CleanFromCSSA($key);
 			#if (length($nompage)>$MaxLengthOfURL) { $nompage=substr($nompage,0,$MaxLengthOfURL)."..."; }
 			my $referer=CleanFromCSSA($_referer404_h{$key});
-			print "<tr><td CLASS=AWL>$nompage</td><td>$_sider404_h{$key}</td><td>$referer&nbsp;</td></tr>\n";
+			print "<tr><td CLASS=AWL>$nompage</td><td>$_sider404_h{$key}</td><td CLASS=AWL>".($referer?"$referer":"&nbsp;")."</td></tr>\n";
 			$count++;
 		}
 		&tab_end;
@@ -4964,11 +4972,12 @@ EOF
 		exit(0);
 	}
 
-	# SUMMARY
+
+	# MONTHDAY
 	#---------------------------------------------------------------------
 	if ($ShowMonthDayStats) {
 		if ($Debug) { debug("ShowMonthDayStats",2); }
-		print "$Center<a name=\"SUMMARY\">&nbsp;</a><BR>";
+		print "$Center<a name=\"MONTHDAY\">&nbsp;</a><BR>\n";
 		&tab_head("$Message[7] $SiteDomain",0);
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TD><b>$Message[8]</b></TD>";
 		if ($MonthRequired eq "year") { print "<TD colspan=3 rowspan=2><font style=\"font: 18px arial,verdana,helvetica; font-weight: normal\">$Message[6] $YearRequired</font><br>"; }
@@ -4983,7 +4992,7 @@ EOF
 		$NewLinkParams =~ tr/&/&/s; $NewLinkParams =~ s/^&//; $NewLinkParams =~ s/&$//;
 		if ($NewLinkParams) { $NewLinkParams="${NewLinkParams}&"; }
 		my $NewLinkTarget="";
-		if ($FrameName eq "mainright") { $NewLinkTarget=" target=_top"; }
+		if ($FrameName eq "mainright") { $NewLinkTarget=" target=_parent"; }
 
 		foreach my $key (sort keys %listofyears) {
 			if ($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks) {
@@ -5178,11 +5187,13 @@ EOF
 		&tab_end;
 	}
 
+	print "\n<a name=\"WHEN\">&nbsp;</a>\n\n";
+
 	# BY DAY OF WEEK
 	#-------------------------
 	if ($ShowDaysOfWeekStats) {
 		if ($Debug) { debug("ShowDaysOfWeekStats",2); }
-		print "$Center<a name=\"DAYOFWEEK\">&nbsp;</a><BR>";
+		print "$Center<a name=\"DAYOFWEEK\">&nbsp;</a><BR>\n";
 		&tab_head($Message[91],18);
 		print "<TR>";
 		print "<TD align=center><center><TABLE>";
@@ -5245,7 +5256,7 @@ EOF
 	#----------------------------
 	if ($ShowHoursStats) {
 		if ($Debug) { debug("ShowHoursStats",2); }
-		print "$Center<a name=\"HOUR\">&nbsp;</a><BR>";
+		print "$Center<a name=\"HOUR\">&nbsp;</a><BR>\n";
 		&tab_head($Message[20],19);
 		print "<TR><TD align=center><center><TABLE><TR>\n";
 		$max_h=$max_k=1;
@@ -5278,11 +5289,13 @@ EOF
 		&tab_end;
 	}
 
+	print "\n<a name=\"WHO\">&nbsp;</a>\n\n";
+
 	# BY COUNTRY/DOMAIN
 	#---------------------------
 	if ($ShowDomainsStats) {
 		if ($Debug) { debug("ShowDomainsStats",2); }
-		print "$Center<a name=\"DOMAINS\">&nbsp;</a><BR>";
+		print "$Center<a name=\"DOMAINS\">&nbsp;</a><BR>\n";
 		&tab_head($Message[25],19);
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH colspan=2>$Message[17]</TH><TH>$Message[105]</TH><TH bgcolor=\"#$color_p\" width=80>$Message[56]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH bgcolor=\"#$color_k\" width=80>$Message[75]</TH><TH>&nbsp;</TH></TR>\n";
 		$total_p=$total_h=$total_k=0;
@@ -5340,7 +5353,7 @@ EOF
 	#--------------------------
 	if ($ShowHostsStats) {
 		if ($Debug) { debug("ShowHostsStats",2); }
-		print "$Center<a name=\"VISITOR\">&nbsp;</a><BR>";
+		print "$Center<a name=\"VISITOR\">&nbsp;</a><BR>\n";
 		$MaxNbOfHostsShown = (scalar keys %_host_h) if $MaxNbOfHostsShown > (scalar keys %_host_h);
 		&tab_head("$Message[81] ($Message[77] $MaxNbOfHostsShown) &nbsp; - &nbsp; <a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=allhosts":"$PROG$StaticLinks.allhosts.html")."\"$NewLinkTarget>$Message[80]</a> &nbsp; - &nbsp; <a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=lasthosts":"$PROG$StaticLinks.lasthosts.html")."\"$NewLinkTarget>$Message[9]</a> &nbsp; - &nbsp; <a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=unknownip":"$PROG$StaticLinks.unknownip.html")."\"$NewLinkTarget>$Message[45]</a>",19);
 		if ($MonthRequired ne "year") { print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[81] : $TotalHostsKnown $Message[82], $TotalHostsUnknown $Message[1] - $TotalUnique $Message[11]</TH>"; }
@@ -5378,7 +5391,7 @@ EOF
 	#----------------------------
 	if ($ShowAuthenticatedUsers) {
 		if ($Debug) { debug("ShowAuthenticatedUsers",2); }
-		print "$Center<a name=\"LOGIN\">&nbsp;</a><BR>";
+		print "$Center<a name=\"LOGIN\">&nbsp;</a><BR>\n";
 		&tab_head($Message[94],19);
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[94]</TH><TH bgcolor=\"#$color_p\" width=80>$Message[56]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH bgcolor=\"#$color_k\" width=80>$Message[75]</TH><TH width=120>$Message[9]</TH></TR>\n";
 		$total_p=$total_h=$total_k=0;
@@ -5419,7 +5432,7 @@ EOF
 	#----------------------------
 	if ($ShowRobotsStats) {
 		if ($Debug) { debug("ShowRobotStats",2); }
-		print "$Center<a name=\"ROBOTS\">&nbsp;</a><BR>";
+		print "$Center<a name=\"ROBOTS\">&nbsp;</a><BR>\n";
 		&tab_head($Message[53],19);
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\" onmouseover=\"ShowTooltip(16);\" onmouseout=\"HideTooltip(16);\"><TH>$Message[83]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH width=120>$Message[9]</TH></TR>\n";
 		my $count=0;
@@ -5430,11 +5443,13 @@ EOF
 		&tab_end;
 	}
 
+	print "\n<a name=\"HOW\">&nbsp;</a>\n\n";
+
 	# BY SESSION
 	#----------------------------
 	if ($ShowSessionsStats) {
 		if ($Debug) { debug("ShowSessionsStats",2); }
-		print "$Center<a name=\"SESSIONS\">&nbsp;</a><BR>";
+		print "$Center<a name=\"SESSIONS\">&nbsp;</a><BR>\n";
 		&tab_head($Message[117],19);
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\" onmouseover=\"ShowTooltip(1);\" onmouseout=\"HideTooltip(1);\"><TH>$Message[117]</TH><TH bgcolor=\"#$color_s\" width=80>$Message[10]</TH></TR>\n";
 		$total_s=0;
@@ -5454,7 +5469,7 @@ EOF
 	#-------------------------
 	if ($ShowPagesStats) {
 		if ($Debug) { debug("ShowPagesStats (MaxNbOfPageShown=$MaxNbOfPageShown TotalDifferentPages=$TotalDifferentPages)",2); }
-		print "$Center<a name=\"PAGE\">&nbsp;</a><a name=\"ENTRY\">&nbsp;</a><a name=\"EXIT\">&nbsp;</a><BR>";
+		print "$Center<a name=\"PAGE\">&nbsp;</a><a name=\"ENTRY\">&nbsp;</a><a name=\"EXIT\">&nbsp;</a><BR>\n";
 		$MaxNbOfPageShown = $TotalDifferentPages if $MaxNbOfPageShown > $TotalDifferentPages;
 		&tab_head("$Message[19] ($Message[77] $MaxNbOfPageShown) &nbsp; - &nbsp; <a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=urldetail":"$PROG$StaticLinks.urldetail.html")."\"$NewLinkTarget>$Message[80]</a>",19);
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$TotalDifferentPages $Message[28]</TH>";
@@ -5530,7 +5545,7 @@ EOF
 	#-------------------------
 	if ($ShowFileTypesStats) {
 		if ($Debug) { debug("ShowFileTypesStatsCompressionStats",2); }
-		print "$Center<a name=\"FILETYPES\">&nbsp;</a><BR>";
+		print "$Center<a name=\"FILETYPES\">&nbsp;</a><BR>\n";
 		my $Totalh=0; foreach my $key (keys %_filetypes_h) { $Totalh+=$_filetypes_h{$key}; }
 		my $Totalk=0; foreach my $key (keys %_filetypes_k) { $Totalk+=$_filetypes_k{$key}; }
 		if ($ShowCompressionStats) { &tab_head("$Message[73] - $Message[98]",19); }
@@ -5578,37 +5593,11 @@ EOF
 
 	}
 
-	# BY BROWSER
-	#----------------------------
-	if ($ShowBrowsersStats) {
-		if ($Debug) { debug("ShowBrowsersStats",2); }
-		print "$Center<a name=\"BROWSER\">&nbsp;</a><BR>";
-		my $Total=0; foreach my $key (keys %_browser_h) { $Total+=$_browser_h{$key}; }
-		&tab_head($Message[21],19);
-		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH colspan=2>Browser</TH><TH width=80>$Message[111]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[15]</TH></TR>\n";
-		my $count=0;
-		foreach my $key (sort { $_browser_h{$b} <=> $_browser_h{$a} } keys (%_browser_h)) {
-			my $p=int($_browser_h{$key}/$Total*1000)/10;
-			if ($key eq "Unknown") {
-				print "<TR><TD width=100><IMG SRC=\"$DirIcons\/browser\/unknown.png\"></TD><TD CLASS=AWL><a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=unknownbrowser":"$PROG$StaticLinks.unknownbrowser.html")."\"$NewLinkTarget>$Message[0]</a></TD><TD width=80>?</TD><TD>$_browser_h{$key}</TD><TD>$p&nbsp;%</TD></TR>\n";
-			}
-			else {
-				my $nameicon=$BrowsersHashIcon{$key}||"notavailable"; $nameicon =~ s/\s.*//; $nameicon =~ tr/A-Z/a-z/;
-				my $newbrowser=$BrowsersHashIDLib{$key}||$key;
-				if ($newbrowser eq "netscape") { $newbrowser="<font color=blue>Netscape</font> <a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=browserdetail":"$PROG$StaticLinks.browserdetail.html")."\"$NewLinkTarget>($Message[58])</a>"; }
-				if ($newbrowser eq "msie") { $newbrowser="<font color=blue>MS Internet Explorer</font> <a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=browserdetail":"$PROG$StaticLinks.browserdetail.html")."\"$NewLinkTarget>($Message[58])</a>"; }
-				print "<TR><TD width=100><IMG SRC=\"$DirIcons\/browser\/$nameicon.png\"></TD><TD CLASS=AWL>$newbrowser</TD><TD width=80>".($BrowsersHereAreGrabbers{$key}?"<b>$Message[112]</b>":"$Message[113]")."</TD><TD>$_browser_h{$key}</TD><TD>$p&nbsp;%</TD></TR>\n";
-			}
-			$count++;
-		}
-		&tab_end;
-	}
-
 	# BY OS
 	#----------------------------
 	if ($ShowOSStats) {
 		if ($Debug) { debug("ShowOSStats",2); }
-		print "$Center<a name=\"OS\">&nbsp;</a><BR>";
+		print "$Center<a name=\"OS\">&nbsp;</a><BR>\n";
 		my $Total=0; foreach my $key (keys %_os_h) { $Total+=$_os_h{$key}; }
 		&tab_head($Message[59],19);
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH colspan=2>OS</TH><TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[15]</TH></TR>\n";
@@ -5630,11 +5619,39 @@ EOF
 		&tab_end;
 	}
 
+	# BY BROWSER
+	#----------------------------
+	if ($ShowBrowsersStats) {
+		if ($Debug) { debug("ShowBrowsersStats",2); }
+		print "$Center<a name=\"BROWSER\">&nbsp;</a><BR>\n";
+		my $Total=0; foreach my $key (keys %_browser_h) { $Total+=$_browser_h{$key}; }
+		&tab_head($Message[21],19);
+		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH colspan=2>Browser</TH><TH width=80>$Message[111]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[15]</TH></TR>\n";
+		my $count=0;
+		foreach my $key (sort { $_browser_h{$b} <=> $_browser_h{$a} } keys (%_browser_h)) {
+			my $p=int($_browser_h{$key}/$Total*1000)/10;
+			if ($key eq "Unknown") {
+				print "<TR><TD width=100><IMG SRC=\"$DirIcons\/browser\/unknown.png\"></TD><TD CLASS=AWL><a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=unknownbrowser":"$PROG$StaticLinks.unknownbrowser.html")."\"$NewLinkTarget>$Message[0]</a></TD><TD width=80>?</TD><TD>$_browser_h{$key}</TD><TD>$p&nbsp;%</TD></TR>\n";
+			}
+			else {
+				my $nameicon=$BrowsersHashIcon{$key}||"notavailable"; $nameicon =~ s/\s.*//; $nameicon =~ tr/A-Z/a-z/;
+				my $newbrowser=$BrowsersHashIDLib{$key}||$key;
+				if ($newbrowser eq "netscape") { $newbrowser="<font color=blue>Netscape</font> <a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=browserdetail":"$PROG$StaticLinks.browserdetail.html")."\"$NewLinkTarget>($Message[58])</a>"; }
+				if ($newbrowser eq "msie") { $newbrowser="<font color=blue>MS Internet Explorer</font> <a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=browserdetail":"$PROG$StaticLinks.browserdetail.html")."\"$NewLinkTarget>($Message[58])</a>"; }
+				print "<TR><TD width=100><IMG SRC=\"$DirIcons\/browser\/$nameicon.png\"></TD><TD CLASS=AWL>$newbrowser</TD><TD width=80>".($BrowsersHereAreGrabbers{$key}?"<b>$Message[112]</b>":"$Message[113]")."</TD><TD>$_browser_h{$key}</TD><TD>$p&nbsp;%</TD></TR>\n";
+			}
+			$count++;
+		}
+		&tab_end;
+	}
+
+	print "\n<a name=\"REFERER\">&nbsp;</a>\n\n";
+
 	# BY REFERENCE
 	#---------------------------
 	if ($ShowOriginStats) {
 		if ($Debug) { debug("ShowOriginStats",2); }
-		print "$Center<a name=\"REFERER\">&nbsp;</a><BR>";
+		print "$Center<a name=\"REFERER\">&nbsp;</a><BR>\n";
 		my $Totalp=0; foreach my $i (0..5) { $Totalp+=$_from_p[$i]; }
 		my $Totalh=0; foreach my $i (0..5) { $Totalh+=$_from_h[$i]; }
 		&tab_head($Message[36],19);
@@ -5707,14 +5724,18 @@ EOF
 		&tab_end;
 	}
 
+	print "\n<a name=\"KEYS\">&nbsp;</a>\n\n";
+
 	# BY SEARCH KEYWORDS AND/OR KEYPHRASES
 	#-------------------------------------
+	if ($ShowKeyphrasesStats) { print "$Center<a name=\"KEYPHRASES\">&nbsp;</a>"; }
+	if ($ShowKeywordsStats)   {	print "$Center<a name=\"KEYWORDS\">&nbsp;</a>"; }
+	if ($ShowKeyphrasesStats || $ShowKeywordsStats) { print "<BR>\n"; }
 	if ($ShowKeyphrasesStats && $ShowKeywordsStats) { print "<table width=100%><tr>"; }
 	if ($ShowKeyphrasesStats) {
 		# By Keyphrases
 		if ($ShowKeyphrasesStats && $ShowKeywordsStats) { print "<td width=50% valign=top>\n";	}
 		if ($Debug) { debug("ShowKeyphrasesStats",2); }
-		print "$Center<a name=\"KEYPHRASES\">&nbsp;</a><BR>";
 		$MaxNbOfKeyphrasesShown = $TotalDifferentKeyphrases if $MaxNbOfKeyphrasesShown > $TotalDifferentKeyphrases;
 		&tab_head("$Message[43] ($Message[77] $MaxNbOfKeyphrasesShown)<br><a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=keyphrases":"$PROG$StaticLinks.keyphrases.html")."\"$NewLinkTarget>$Message[80]</a>",19,($ShowKeyphrasesStats && $ShowKeywordsStats)?95:70);
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\" onmouseover=\"ShowTooltip(15);\" onmouseout=\"HideTooltip(15);\"><TH>$TotalDifferentKeyphrases $Message[103]</TH><TH bgcolor=\"#$color_s\" width=80>$Message[14]</TH><TH bgcolor=\"#$color_s\" width=80>$Message[15]</TH></TR>\n";
@@ -5743,7 +5764,6 @@ EOF
 		# By Keywords
 		if ($ShowKeyphrasesStats && $ShowKeywordsStats) { print "<td width=50% valign=top>\n";	}
 		if ($Debug) { debug("ShowKeywordsStats",2); }
-		print "$Center<a name=\"KEYWORDS\">&nbsp;</a><BR>";
 		$MaxNbOfKeywordsShown = $TotalDifferentKeywords if $MaxNbOfKeywordsShown > $TotalDifferentKeywords;
 		&tab_head("$Message[44] ($Message[77] $MaxNbOfKeywordsShown)<br><a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=keywords":"$PROG$StaticLinks.keywords.html")."\"$NewLinkTarget>$Message[80]</a>",19,($ShowKeyphrasesStats && $ShowKeywordsStats)?95:70);
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\" onmouseover=\"ShowTooltip(15);\" onmouseout=\"HideTooltip(15);\"><TH>$TotalDifferentKeywords $Message[13]</TH><TH bgcolor=\"#$color_s\" width=80>$Message[14]</TH><TH bgcolor=\"#$color_s\" width=80>$Message[15]</TH></TR>\n";
@@ -5768,13 +5788,15 @@ EOF
 		&tab_end;
 		if ($ShowKeyphrasesStats && $ShowKeywordsStats) { print "</td>\n";	}
 	}
-	if ($ShowKeyphrasesStats && $ShowKeywordsStats) { print "</tr></table>"; }
+	if ($ShowKeyphrasesStats && $ShowKeywordsStats) { print "</tr></table>\n"; }
+
+	print "\n<a name=\"OTHER\">&nbsp;</a>\n\n";
 
 	# BY ERRORS
 	#----------------------------
 	if ($ShowHTTPErrorsStats) {
 		if ($Debug) { debug("ShowHTTPErrorsStats",2); }
-		print "$Center<a name=\"ERRORS\">&nbsp;</a><BR>";
+		print "$Center<a name=\"ERRORS\">&nbsp;</a><BR>\n";
 		&tab_head($Message[32],19);
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH colspan=2>$Message[32]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[15]</TH></TR>\n";
 		my $count=0;
