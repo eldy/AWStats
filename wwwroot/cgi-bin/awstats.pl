@@ -223,8 +223,8 @@ use vars qw/
 @ExtraFirstColumnValuesType @ExtraFirstColumnValuesTypeVal
 @PluginsToLoad 
 /;
-@MiscListOrder=('AddToFavourites','JavaEnabled','DirectorSupport','FlashSupport','RealPlayerSupport','QuickTimeSupport','MediaPlayerSupport','PDFSupport');
-%MiscListCalc=('TotalMisc'=>'','AddToFavourites'=>'u','JavaEnabled'=>'hm','DirectorSupport'=>'hm','FlashSupport'=>'hm','RealPlayerSupport'=>'hm','QuickTimeSupport'=>'hm','MediaPlayerSupport'=>'hm','PDFSupport'=>'hm');
+@MiscListOrder=('AddToFavourites','JavaEnabled','DirectorSupport','FlashSupport','RealPlayerSupport','QuickTimeSupport','WindowsMediaPlayerSupport','PDFSupport');
+%MiscListCalc=('TotalMisc'=>'','AddToFavourites'=>'u','JavaEnabled'=>'hm','DirectorSupport'=>'hm','FlashSupport'=>'hm','RealPlayerSupport'=>'hm','QuickTimeSupport'=>'hm','WindowsMediaPlayerSupport'=>'hm','PDFSupport'=>'hm');
 @OSFamily=('win','mac');
 @BrowsersFamily=('msie','netscape');
 @SessionsRange=('0s-30s','30s-2mn','2mn-5mn','5mn-15mn','15mn-30mn','30mn-1h','1h+');
