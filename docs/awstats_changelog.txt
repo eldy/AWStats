@@ -37,6 +37,7 @@ AWStats Changelog
 - Other minor updates (new flags, reference database updates, ...)
 - Fixed: Parameter MaxNbOfHostsShown was not working correctly.
 - New languages.
+- Added an HTML documentation.
 
 
 3.1
