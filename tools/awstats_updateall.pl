@@ -15,8 +15,12 @@ my $VERSION="1.0 (build $REVISION)";
 # Default value of DIRCONFIG
 my $DIRCONFIG = "/etc/awstats";
 
+my $Debug=0;
+
 my $Awstats='awstats.pl';
+
 my $AwstatsDir='';
+my $AwstatsProg='';
 
 
 
@@ -64,6 +68,7 @@ for (0..@ARGV-1) {
 	if ($ARGV[$_] =~ /^-*h/i)     		  	 { $helpfound=1; last; }
 	if ($ARGV[$_] =~ /^-*awstatsprog=(.*)/i) { $Awstats="$1"; next; }
 	if ($ARGV[$_] =~ /^-*configdir=(.*)/i)   { $DIRCONFIG="$1"; next; }
+	if ($ARGV[$_] =~ /^-*debug=(\d+)/i)  	 { $debug=$1; next; }
 	if ($ARGV[$_] =~ /^now/i)     		  	 { $nowfound=1; next; }
 }
 
@@ -103,15 +108,18 @@ if (@files) {
 		error("Can't find AWStats program ('$Awstats').\nUse -awstatsprog option to solve this");
 		exit 1;
 	}
-	$AwstatsDir=$Awstats; $AwstatsDir =~ s/[\\\/][^\\\/]*$//;
+	# Define AwstatsDir and AwstatsProg
+	($AwstatsDir=$Awstats) =~ s/([^\/\\]+)$//; $AwstatsProg=$1;
+	$AwstatsDir||='.'; $AwstatsDir =~ s/([^\/\\])[\\\/]+$/$1/;
 	debug("AwstatsDir=$AwstatsDir");
+	debug("AwstatsProg=$AwstatsProg");
 
 	foreach (@files) {
 		if ($_ =~ /^awstats\.(.*)conf$/) {
 			my $domain = $1||"default"; $domain =~ s/\.$//;
 			if ($domain eq 'model') { next; }
 			# Define command line
-			my $command="\"$Awstats\" -update -config=$domain";
+			my $command="\"$AwstatsDir/$AwstatsProg\" -update -config=$domain";
 			$command.=" -configdir=\"$DIRCONFIG\"";
 			# Run command line
 			print "Running '$command' to update config $domain\n";

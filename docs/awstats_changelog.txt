@@ -34,6 +34,8 @@ Fixes:
 - Fixed not working link for search keywords/keyphrase in menu with FireBird.
 - Fixed pb in loading plugins with mod_perl2.
 - Fixed not found relative DirData path with some Perl/OS versions.
+- Fixed error in awstats_updateall.pl when current directory, while running
+  it, is where awstats.pl is stored.
 
 New features/improvements:
 - Increased speed by 10 to 20%.
