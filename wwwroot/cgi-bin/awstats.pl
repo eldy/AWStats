@@ -93,7 +93,7 @@ $color_h, $color_k, $color_link, $color_p, $color_s, $color_u, $color_v, $color_
 %monthlib = %monthnum = ();
 
 
-$VERSION="3.2 (build 79)";
+$VERSION="3.2 (build 80)";
 $Lang="en";
 
 # Default value
@@ -410,7 +410,7 @@ sub DateIsValid {
 sub Read_Config_File {
 	$FileConfig=""; $FileSuffix="";
 	if (! $SiteConfig) { $SiteConfig=$ENV{"SERVER_NAME"}; }		# For backward compatibility
-	foreach my $dir ("$DIR","/etc/opt/awstats","/etc/awstats","/etc") {
+	foreach my $dir ("$DIR","/etc/opt/awstats","/etc/awstats","/etc","/usr/local/etc/awstats") {
 		my $searchdir=$dir;
 		if (($searchdir ne "") && (!($searchdir =~ /\/$/)) && (!($searchdir =~ /\\$/)) ) { $searchdir .= "/"; }
 		if ($FileConfig eq "") { if (open(CONFIG,"$searchdir$PROG.$SiteConfig.conf")) { $FileConfig="$searchdir$PROG.$SiteConfig.conf"; $FileSuffix=".$SiteConfig"; } }

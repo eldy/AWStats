@@ -1,4 +1,0 @@
-<!ELEMENT log EMPTY>
-	<!ATTLIST log 
-		month CDATA #REQUIRED
-		year CDATA #REQUIRED >
