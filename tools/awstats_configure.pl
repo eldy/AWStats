@@ -652,9 +652,15 @@ if ($bidon =~ /^y/i) {
 # ----------------------------------
 if ($WebServerChanged) {
 	if ($OS eq 'linux') 	{
-		print "\n-----> Restart Web server with '/sbin/service httpd restart'\n";
-	 	my $ret=`/sbin/service httpd restart`;
-	 	print "$ret";
+	 	my $command="/sbin/service";
+	 	if (-x $command) {
+    		print "\n-----> Restart Web server with '/sbin/service httpd restart'\n";
+	 	    my $ret=`/sbin/service httpd restart`;
+	 	    print "$ret";
+	 	}
+	 	else {
+    		print "\n-----> Don't forget to restart manually your web server\n";
+	 	}
 	}
 	elsif ($OS eq 'macosx')	{
 		print "\n-----> Restart Web server with '/usr/sbin/apachectl restart'\n";
