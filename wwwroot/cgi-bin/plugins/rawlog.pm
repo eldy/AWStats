@@ -45,7 +45,10 @@ sub Init_rawlog {
 	# <-----
 	# ENTER HERE CODE TO DO INIT PLUGIN ACTIONS
 	debug(" InitParams=$InitParams",1);
-	$MAXLINE=5000;
+
+	if ($QueryString =~ /rawlog_maxlines=(\d+)/i) { $MAXLINE=&DecodeEncodedString("$1"); }
+	else { $MAXLINE=5000; }
+
 	# ----->
 
 	return ($checkversion?$checkversion:"$PluginHooksFunctions");
@@ -87,16 +90,19 @@ sub BuildFullHTMLOutput_rawlog {
 	print "<hr />\n";
 	
 	# Show raws
+	my $xml=($BuildReportFormat eq 'xhtml');
 	open(LOG,"$LogFile") || error("Couldn't open server log file \"$LogFile\" : $!");
 	binmode LOG;	# Avoid premature EOF due to log files corrupted with \cZ or bin chars
 	my $i=0;
+	print "<pre>";
 	while (<LOG>) {
 		chomp $_; $_ =~ s/\r//;
 		if ($Filter && $_ !~ /$Filter/o) { next; }
-		print "$_<br />\n";
-		if (++$i > $MAXLINE) { last; }
+		print ($xml?XMLEncode("$_"):"$_");
+		print "\n";
+		if (++$i >= $MAXLINE) { last; }
 	}
-	print "<br>\n<b>$i lines.</b><br />";
+	print "</pre><br />\n<b>$i lines.</b><br />";
 	return 1;
 	# ----->
 }
@@ -109,7 +115,7 @@ sub _ShowForm {
 	print "<tr><td>";
 	print "<table class=\"aws_data\" border=\"0\" cellpadding=\"1\" cellspacing=\"0\" width=\"100%\">\n";
 	print "<tr><td><span dir=\"ltr\"><b>Show content of file '$LogFile' ($MAXLINE first lines):</b></span></td></tr>\n";
-	print "<tr><td>$Message[79]: <input type=\"text\" name=\"filterrawlog\" value=\"$Filter\" /><input type=\"submit\" value=\"List\" class=\"aws_button\" />\n";
+	print "<tr><td>$Message[79]: <input type=\"text\" name=\"filterrawlog\" value=\"$Filter\" /> &nbsp; &nbsp; &nbsp; Max Number of Lines: <input type=\"text\" name=\"rawlog_maxlines\" size=\"5\" value=\"$MAXLINE\" /> &nbsp; &nbsp; &nbsp; <input type=\"submit\" value=\"List\" class=\"aws_button\" />\n";
 	print "<input type=\"hidden\" name=\"config\" value=\"$SiteConfig\" /><input type=\"hidden\" name=\"framename\" value=\"$FrameName\" /><input type=\"hidden\" name=\"pluginmode\" value=\"rawlog\" />";
 	print "</td></tr>\n";
 	print "</table>\n";
