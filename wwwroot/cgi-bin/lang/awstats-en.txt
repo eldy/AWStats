@@ -151,3 +151,5 @@ message147=SMTP Error codes
 message148=Countries
 message149=Mails
 message150=Size
+message151=First
+message152=Last
