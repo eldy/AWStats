@@ -295,18 +295,25 @@ while (<>) {
 			$rowid=$id;
 			if (m/\s+relay=([^\s,]*)[\s,]/) { $entry{$id}{'relay_r'}=$1; }
 			elsif (m/\s+mailer=local/) { $entry{$id}{'relay_r'}='localhost'; }
-			if (m/\s+orig_to=([^\s,]*)[\s,]/) {
-				# If we have a orig_to, we used it as receiver
-				$entry{$id}{'to'}=&trim($1);
-				$entry{$id}{'forwardedto'}=&trim($to);
+			if (m/forwarded as/) {
+				# If 'forwarded as idnewmail' is found, we discard this mail to avoid counting it twice
+				debug("For id=$id, mail was forwarded to other id, we discard it");
+				undef $entry{$id};
 			}
 			else {
-				$entry{$id}{'to'}=&trim($to);
+				if (m/\s+orig_to=([^\s,]*)[\s,]/) {
+					# If we have a orig_to, we used it as receiver
+					$entry{$id}{'to'}=&trim($1);
+					$entry{$id}{'forwardedto'}=&trim($to);
+				}
+				else {
+					$entry{$id}{'to'}=&trim($to);
+				}
+				$entry{$id}{'mon'}=$mon;
+				$entry{$id}{'day'}=$day;
+				$entry{$id}{'time'}=$time;
+				debug("For id=$id, found a sendmail/postfix record: mon=$entry{$id}{'mon'} day=$entry{$id}{'day'} time=$entry{$id}{'time'} to=$entry{$id}{'to'} relay_r=$entry{$id}{'relay_r'}");
 			}
-			$entry{$id}{'mon'}=$mon;
-			$entry{$id}{'day'}=$day;
-			$entry{$id}{'time'}=$time;
-			debug("For id=$id, found a sendmail/postfix record: mon=$entry{$id}{'mon'} day=$entry{$id}{'day'} time=$entry{$id}{'time'} to=$entry{$id}{'to'} relay_r=$entry{$id}{'relay_r'}");
 		}
 		elsif (/starting delivery/ ne undef) {
 			#
