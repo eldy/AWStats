@@ -146,7 +146,7 @@ sub _ReadAndOutputTooltipFile {
 	my @PossibleLangDir=("$DirLang","${DIR}lang","/usr/share/awstats/lang","./lang");
 
 	my $FileLang='';
-	my $logtype=lc($LogType);
+	my $logtype=lc($LogType ne 'S'?$LogType:'W');
 	foreach my $dir (@PossibleLangDir) {
 		my $searchdir=$dir;
 		if ($searchdir && (!($searchdir =~ /\/$/)) && (!($searchdir =~ /\\$/)) ) { $searchdir .= "/"; }

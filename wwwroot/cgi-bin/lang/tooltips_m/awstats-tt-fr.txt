@@ -3,16 +3,16 @@
 <div class="CTooltip" id="tt1">
 </div>
 <div class="CTooltip" id="tt2">
-Nombre de hotes (<b>adresse IP</b>) utilisés pour accéder au site (et voir au moins une <b>page</b>).<br />
-Ce chiffre reflète le nombre de <b>personnes physiques</b> différentes ayant un jour accédées au site.
+Nombre de hotes (<b>adresses IP</b>) utilisés pour envoyés un mail.<br />
 </div>
 <div class="CTooltip" id="tt3">
 </div>
 <div class="CTooltip" id="tt4">
-Nombre de fois qu un <b>email</b> a été <b>transféré</b> avec succès.<br />
+Nombre de fois qu'un <b>email</b> a été <b>transféré</b> avec succès.<br />
 </div>
 <div class="CTooltip" id="tt5">
 Nombre d'<b>octets</b> représentant le volume des mails transférés.<br />
+Les unités sont en Ko, Mo ou Go (Kilooctets, Megaoctets or Gigaoctets)
 </div>
 <div class="CTooltip" id="tt13">
 </div>
@@ -26,28 +26,12 @@ Nombre d'<b>octets</b> représentant le volume des mails transférés.<br />
 Toutes les statistiques en rapport avec le temps sont basées sur les heures du serveur.<br />
 </div>
 <div class="CTooltip" id="tt18">
-Ici les données rapportées sont des: <b>valeurs moyennes</b> (calculées à partir des données entre la première et dernière visite de la période analysée)
+Ici les données rapportées sont des: <b>valeurs moyennes</b> (calculées à partir des données entre le premier et dernier email de la période analysée)
 </div>
 <div class="CTooltip" id="tt19">
-Ici les données rapportées sont des: <b>sommes cumulées</b> (calculées à partir des données entre la première et dernière visite de la période analysée)
+Ici les données rapportées sont des: <b>sommes cumulées</b> (calculées à partir des données entre le premier et dernier email de la période analysée)
 </div>
 <div class="CTooltip" id="tt20">
 </div>
 
-<div class="CTooltip" id="tt201">Contenu partiel renvoyé.</div>
-<div class="CTooltip" id="tt202">La requête a été enregistrée par le serveur mais sera exécutée plus tard.</div>
-<div class="CTooltip" id="tt204">Le serveur a traité la demande mais il n'existe aucun document à renvoyer.</div>
-<div class="CTooltip" id="tt206">Contenu partiel renvoyé.</div>
-<div class="CTooltip" id="tt301">Le document réclamé a été déplacé et se trouve maintenant à une autre adresse mentionnée dans la réponse.</div>
-<div class="CTooltip" id="tt302">Aucun descriptif pour cette erreur.</div>
-<div class="CTooltip" id="tt400">Erreur de syntaxe, le serveur n'a pas compris la requête.</div>
-<div class="CTooltip" id="tt401">Tentatives d'accès à une <b>URL nécessitant identification avec un login/mot de passe invalide</b>.<br />Un nombre trop élévé peut mettre en évidence une tentative de crackage brute du site (par accès répété de différents logins/mots de passe).</div>
-<div class="CTooltip" id="tt403">Tentatives d'accès à une <b>URL non configurée pour etre accessible, même avec une identification</b> (par exemple, une URL d'un répertoire non défini comme étant "listable").</div>
-<div class="CTooltip" id="tt404">Tentatives d'accès à une <b>URL inexistante</b>. Il s'agit donc d'un lien invalide sur le site ou d'une faute de frappe d'un visiteur qui a saisie une mauvaise URL directement.</div>
-<div class="CTooltip" id="tt408">Le serveur mis un <b>temps trop important</b> pour répondre à la requête. Il peut s'agir d'un script CGI trop lent sur le serveur forcé d'abandonner le traitement ou d'une saturation du site.</div>
-<div class="CTooltip" id="tt500">Erreur interne au serveur. Cette erreur est le plus souvant renvoyé lors de l'arrêt anormal d'un script CGI (par exemple suite à un coredump du CGI).</div>
-<div class="CTooltip" id="tt501">Le serveur ne prend pas en charge l'action demandée.</div>
-<div class="CTooltip" id="tt502">Code renvoyé par un serveur HTTP qui fonctionne comme proxy ou gateway lorsque le serveur réel consulté ne réagit pas avec succès à la demande du client.</div>
-<div class="CTooltip" id="tt503">Erreur interne au serveur.</div>
-<div class="CTooltip" id="tt504">Gateway Time-out.</div>
-<div class="CTooltip" id="tt505">Version HTTP non supporté.</div>
+<div class="CTooltip" id="tt450">Temporary error: no description available</div>
