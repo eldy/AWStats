@@ -369,7 +369,7 @@ sub html_head {
 		print "<html lang='$Lang'>\n";
 		print "<head>\n";
 		if ($PageCode) { print "<META HTTP-EQUIV=\"content-type\" CONTENT=\"text/html; charset=$PageCode\"\n"; }		# If not defined, iso-8859-1 is used in major countries
-		if ($Expires)  { print "<META HTTP-EQUIV=\"expires\" CONTENT=\"".(localtime(time()+$Expires))."\">\n"; }
+		if ($Expires)  { print "<META HTTP-EQUIV=\"expires\" CONTENT=\"".(gmtime(time()+$Expires))."\">\n"; }
 		print "<meta http-equiv=\"description\" content=\"".ucfirst($PROG)." - Advanced Web Statistics for $SiteDomain\">\n";
 		if ($FrameName ne "mainleft") { print "<meta http-equiv=\"keywords\" content=\"$SiteDomain, free, advanced, realtime, web, server, logfile, log, analyzer, analysis, statistics, stats, perl, analyse, performance, hits, visits\">\n"; }
 		print "<meta name=\"robots\" content=\"".($FrameName eq "mainleft"?"no":"")."index,follow\">\n";
@@ -3688,9 +3688,10 @@ my @AllowedArgs=('-site','-config','-showsteps','-showdropped','-showcorrupted',
 '-month','-year','-framename','-debug');
 
 if ($ENV{"GATEWAY_INTERFACE"}) {	# Run from a browser
-	#my $ExpireDelayInHTTPHeader=0;
-	#print "Expires: ".(localtime($starttime+$ExpireDelayInHTTPHeader))."\n";
 	print "Content-type: text/html\n";
+	# Expires is GMT ANSI asctime and must be after Content-type to avoid pb with some servers (SAMBAR)
+	#my $ExpireDelayInHTTPHeader=0;
+	#print "Expires: ".(gmtime($starttime()+$ExpireDelayInHTTPHeader))."\n";
 	print "\n\n";
 	if ($ENV{"CONTENT_LENGTH"}) {
 		binmode STDIN;
