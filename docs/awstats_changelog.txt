@@ -23,6 +23,9 @@ New features/improvments:
 - Added average session length in Visit Duration report.
 - Added percentage in Visit Duration report.
 - logresolvemerge.pl can read .gz or .bz2 files.
+- Added icons and Mime label for file types.
+- Added parameter AddDataArrayMonthDayStats, AddDataArrayShowDaysOfWeekStats,
+  and AddDataArrayShowHoursStats.
 
 Other/Documentation:
 - Replaced -month=year option by -month=all.
