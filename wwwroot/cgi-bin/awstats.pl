@@ -2587,14 +2587,6 @@ for (my $ix=1; $ix<=12; $ix++) {
 if ($Debug) { debug("UpdateStats is $UpdateStats",2); }
 if ($UpdateStats) {
 
-	if ($DNSLookup) {
-	#	eval { use Socket; };
-	#	if ($@){
-	#		error("Error: The perl 'Socket' module is not installed. Install it from CPAN or use a more 'standard' perl interpreter.\n");
-	#	}
-		use Socket;
-	}
-
 	# Init RobotsSearchIDOrder required for update process
 	push @RobotArrayList,"list1";
 	push @RobotArrayList,"list2";
