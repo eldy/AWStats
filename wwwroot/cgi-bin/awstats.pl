@@ -5324,6 +5324,10 @@ if ($ENV{'GATEWAY_INTERFACE'}) {	# Run from a browser as CGI
 	if ($ENV{'QUERY_STRING'}) { $QueryString = $ENV{'QUERY_STRING'}; }
 
 	$QueryString = CleanFromCSSA($QueryString);
+
+    # Security test
+	if ($QueryString =~ /LogFile=([^&]+)/i)				{ error("Logfile parameter can't be overwritten when AWStats is used from a CGI"); }
+
 	# No update but report by default when run from a browser
 	$UpdateStats=($QueryString=~/update=1/i?1:0);
 
@@ -5343,8 +5347,6 @@ if ($ENV{'GATEWAY_INTERFACE'}) {	# Run from a browser as CGI
 	if ($QueryString =~ /output=lasthosts:([^&]+)/i)	{ $FilterIn{'host'}=&DecodeEncodedString("$1"); }			# Filter on host list can be defined with output=lasthosts:filter to reduce number of lines read and showed
 	if ($QueryString =~ /output=urldetail:([^&]+)/i)	{ $FilterIn{'url'}=&DecodeEncodedString("$1"); }			# Filter on URL list can be defined with output=urldetail:filter to reduce number of lines read and showed
 	if ($QueryString =~ /output=refererpages:([^&]+)/i)	{ $FilterIn{'refererpages'}=&DecodeEncodedString("$1"); }	# Filter on referer list can be defined with output=refererpages:filter to reduce number of lines read and showed
-    # Config parameters
-	if ($QueryString =~ /LogFile=([^&]+)/i)				{ $LogFile=&DecodeEncodedString("$1"); }
 
 	# If migrate
 	if ($QueryString =~ /(^|-|&)migrate=([^&]+)/i)	{
@@ -5370,6 +5372,10 @@ else {								# Run from command line
 	}
 
 	$QueryString = CleanFromCSSA($QueryString);
+
+    # Security test
+	if ($ENV{'AWSTATS_DEL_GATEWAY_INTERFACE'} && $QueryString =~ /LogFile=([^&]+)/i)	{ error("Logfile parameter can't be overwritten when AWStats is used from a CGI"); }
+
 	# Update with no report by default when run from command line
 	$UpdateStats=1;
 
