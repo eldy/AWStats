@@ -12,8 +12,8 @@ server log files (and even syslog, ftp servers or mail logs) on all Operating
 Systems.
 
 License: GNU GPL (GNU General Public License. See LICENSE file)
-Version : 5.1
-Release date: October 2002
+Version : 5.2
+Release date: November 2002
 Platforms: All (Linux, NT, SCO, BSD, Solaris and other *NIX's, BeOS, OS/2...)
 Author: Laurent Destailleur <eldy@users.sourceforge.net>
 AWStats official web site and latest version: http://awstats.sourceforge.net
@@ -47,6 +47,7 @@ I - 1) Features
 	* OS used (pages, hits, KB for each OS),
 	* Visits of robots,
 	* Search engines, keyphrases and keywords used to find your site,
+	* Other personalized reports,
 	* HTTP errors (Page not found with last referer, ...).
 
 	It supports the following features as well:
