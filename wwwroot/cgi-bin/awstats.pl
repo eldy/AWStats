@@ -69,7 +69,7 @@ $tab_titre, $total_h, $total_k, $total_p, $yearmonth, $yeartoprocess) = ();
 %MonthBytes = %MonthHits = %MonthHostsKnown = %MonthHostsUnknown = %MonthPages = %MonthUnique = %MonthVisits =
 %listofyears = %monthlib = %monthnum = ();
 
-$VERSION="3.1 (build 15)";
+$VERSION="3.1 (build 16)";
 $Lang="en";
 $Sort="";
 
@@ -878,10 +878,10 @@ sub SkipDNSLookup {
 sub Read_Config_File {
 	$FileConfig="";
 	my $Dir=$DIR; if (($Dir ne "") && (!($Dir =~ /\/$/)) && (!($Dir =~ /\\$/)) ) { $Dir .= "/"; }
-	if ($FileConfig eq "") { if (open(CONFIG,"$Dir$PROG.$SiteToAnalyze.conf")) { $FileConfig="$Dir$PROG.$SiteToAnalyze.conf"; $FileSuffix=".$SiteToAnalyze"; } }
-	if ($FileConfig eq "") { if (open(CONFIG,"$Dir$PROG.conf"))  { $FileConfig="$Dir$PROG.conf"; $FileSuffix=""; } }
-	if ($FileConfig eq "") { if (open(CONFIG,"/etc/$PROG.$SiteToAnalyze.conf"))  { $FileConfig="/etc/$PROG.$SiteToAnalyze.conf"; $FileSuffix=".$SiteToAnalyze"; } }
-	if ($FileConfig eq "") { if (open(CONFIG,"/etc/$PROG.conf"))  { $FileConfig="/etc/$PROG.conf"; $FileSuffix=""; } }
+	foreach my $searchdir ("$Dir","/etc/awstats","/etc") {
+		if ($FileConfig eq "") { if (open(CONFIG,"$searchdir$PROG.$SiteToAnalyze.conf")) { $FileConfig="$searchdir$PROG.$SiteToAnalyze.conf"; $FileSuffix=".$SiteToAnalyze"; } }
+		if ($FileConfig eq "") { if (open(CONFIG,"$searchdir$PROG.conf"))  { $FileConfig="$searchdir$PROG.conf"; $FileSuffix=""; } }
+	}
 	if ($FileConfig eq "") { error("Error: Couldn't open config file \"$PROG.$SiteToAnalyze.conf\" nor \"$PROG.conf\" : $!"); }
 	&debug("Call to Read_Config_File [FileConfig=\"$FileConfig\"]");
 	while (<CONFIG>) {
@@ -1469,9 +1469,9 @@ sub Save_History_File {
 #	foreach my $key (sort keys %_unknownip_l) { print HISTORYTMP "$key $_unknownip_l{$key}\n"; next; }
 	print HISTORYTMP "END_UNKNOWNIP\n";
 
+	# Save page list in score sorted order to allow to show reports faster and saving memory.
 	print HISTORYTMP "BEGIN_SIDER\n";
-	foreach my $key (keys %_sider_p) { print HISTORYTMP "$key $_sider_p{$key}\n"; next; }
-#	foreach my $key (sort keys %_sider_p) { print HISTORYTMP "$key $_sider_p{$key}\n"; next; }
+	foreach my $key (sort {$SortDir*$_sider_p{$a} <=> $SortDir*$_sider_p{$b}} keys %_sider_p) { print HISTORYTMP "$key $_sider_p{$key}\n"; next; }
 	print HISTORYTMP "END_SIDER\n";
 
 	print HISTORYTMP "BEGIN_TIME\n";
