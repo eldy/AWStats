@@ -273,7 +273,7 @@ use vars qw/
 %_unknownreferer_l %_unknownrefererbrowser_l
 %_emails_h %_emails_k %_emails_l %_emailr_h %_emailr_k %_emailr_l
 %val %nextval %egal
-%TmpDNSLookup %TmpOS %TmpRefererServer %TmpRobot %TmpBrowser
+%TmpDNSLookup %TmpDomainLookup %TmpOS %TmpRefererServer %TmpRobot %TmpBrowser
 %MyDNSTable
 /;
 %BadFormatWarning = ();
@@ -295,7 +295,7 @@ use vars qw/
 %_unknownreferer_l = %_unknownrefererbrowser_l = ();
 %_emails_h = %_emails_k = %_emails_l = %_emailr_h = %_emailr_k = %_emailr_l = ();
 %val = %nextval = %egal = ();
-%TmpDNSLookup = %TmpOS = %TmpRefererServer = %TmpRobot = %TmpBrowser = ();
+%TmpDNSLookup = %TmpDomainLookup = %TmpOS = %TmpRefererServer = %TmpRobot = %TmpBrowser = ();
 # ---------- Init Tie::hash arrays --------
 # Didn't find a tie that increase speed
 #use Tie::StdHash;
@@ -5070,8 +5070,8 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 				}
 			}
 		}
-		elsif ($protocol == 3 || $protocol == 5) {						# Mail record
-			if ($field[$pos_code] != $ValidSMTPCodes{$field[$pos_code]}) {	# Code is not valid
+		elsif ($protocol == 3 || $protocol == 5) {		# Mail record
+			if (! $ValidSMTPCodes{$field[$pos_code]}) {	# Code is not valid
 				$field[$pos_size]=0;
 				$_errors_h{$field[$pos_code]}++;
 				$_errors_k{$field[$pos_code]}+=int($field[$pos_size]);
@@ -5281,8 +5281,12 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 			$_ = $Host;
 			# Resolve Domain from plugin
 			if ($PluginsLoaded{'GetCountryCodeByAddr'}{'geoip'}) { 
-				$Domain=$_;		# We store hostname or ip to resolve it into country
-				GetCountryCodeByAddr_geoip($Domain);
+				$Domain=$TmpDomainLookup{$Host};
+				if (! $Domain) {
+					$Domain=$Host;		# We store ip to resolve it into country
+					GetCountryCodeByAddr_geoip($Domain);
+					$TmpDomainLookup{$Host}=$Domain;
+				}
 			}
 		}
 		else {
@@ -5290,8 +5294,12 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 			$_ = lc($HostResolved?$HostResolved:$Host);
 			# Resolve Domain from plugin
 			if ($PluginsLoaded{'GetCountryCodeByName'}{'geoip'}) { 
-				$Domain=$_;		# We store hostname or ip to resolve it into country
-				GetCountryCodeByName_geoip($Domain);
+				$Domain=$TmpDomainLookup{$_};
+				if (! $Domain) {
+					$Domain=$_;			# We store hostname to resolve it into country
+					GetCountryCodeByName_geoip($Domain);
+					$TmpDomainLookup{$_}=$Domain;
+				}
 			}
 			elsif (/\.(\w+)$/) { $Domain=$1; }
 		}
@@ -5640,7 +5648,7 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
  			# Check conditions
  			my $conditionok = 0;
  			if ($ExtraSectionCondition[$extranum]) {
-	 			foreach my $conditioncouple (split(/\|/, $ExtraSectionCondition[$extranum])) {
+	 			foreach my $conditioncouple (split(/\s\|\s/, $ExtraSectionCondition[$extranum])) {
 	 				my ($conditiontype, $conditiontypeval)=split(/,/,$conditioncouple,2);
 	 				# Check if does not pass condition, move to next condition if exists.
 	 				if ($conditiontype eq 'URL') {
@@ -5676,7 +5684,7 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
  			# Determine actual column value to use.
 			my $rowkeyval='';
  			my $rowkeyok = 0;
- 			foreach my $rowkeycouple (split(/\|/, $ExtraSectionFirstColumnValues[$extranum])) {
+ 			foreach my $rowkeycouple (split(/\s\|\s/, $ExtraSectionFirstColumnValues[$extranum])) {
  				my ($rowkeytype, $rowkeytypeval)=split(/,/,$rowkeycouple,2);
  				if ($rowkeytype eq 'QUERY_STRING') {
  					if ($standalonequery =~ m/$rowkeytypeval/) {
@@ -5704,10 +5712,10 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 			if ($Debug) { debug(" Key val was found: $rowkeyval",5); }
 
  			# Here we got all values to increase counters
- 			if ($PageBool && $ExtraSectionStatTypes[$extranum] =~ m/P/i) { ${'_section_' . $extranum . '_p'}{$rowkeyval}++; }
+ 			if ($PageBool && $ExtraSectionStatTypes[$extranum] =~ /P/i) { ${'_section_' . $extranum . '_p'}{$rowkeyval}++; }
  			${'_section_' . $extranum . '_h'}{$rowkeyval}++;	# Must be set
- 			if ($ExtraSectionStatTypes[$extranum] =~ m/B/i) { ${'_section_' . $extranum . '_k'}{$rowkeyval}+=int($field[$pos_size]); }
- 			if ($ExtraSectionStatTypes[$extranum] =~ m/L/i) {
+ 			if ($ExtraSectionStatTypes[$extranum] =~ /B/i) { ${'_section_' . $extranum . '_k'}{$rowkeyval}+=int($field[$pos_size]); }
+ 			if ($ExtraSectionStatTypes[$extranum] =~ /L/i) {
  				if (${'_section_' . $extranum . '_l'}{$rowkeyval} < $timerecord) { ${'_section_' . $extranum . '_l'}{$rowkeyval}=$timerecord; }
  			}
 			# Check to avoid too large extra sections
@@ -5724,6 +5732,10 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 					# We don't flush if perl is activestate to avoid slowing process because of memory hole
 				}
 				else {
+					# Clean tmp hash arrays
+					#%TmpDNSLookup = ();
+					%TmpDomainLookup = ();
+					%TmpOS = %TmpRefererServer = %TmpRobot = %TmpBrowser = ();
 					# We flush if perl is not activestate
 					if ($Debug) {
 						debug("End of set of ".($counter-1)." records: Some hash arrays are too large. We flush and clean some.",2);
@@ -5731,7 +5743,6 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 						print " _url_p:".(scalar keys %_url_p)." _url_k:".(scalar keys %_url_k)." _url_e:".(scalar keys %_url_e)." _url_x:".(scalar keys %_url_x)."\n";
 						print " _waithost_e:".(scalar keys %_waithost_e)." _waithost_l:".(scalar keys %_waithost_l)." _waithost_s:".(scalar keys %_waithost_s)." _waithost_u:".(scalar keys %_waithost_u)."\n";
 					}
-					%TmpOS = %TmpRefererServer = %TmpRobot = %TmpBrowser =();
 					&Read_History_With_TmpUpdate($lastprocessedyear,$lastprocessedmonth,1,1,"all");
 					&GetDelaySinceStart(1);	$NbOfLinesShowsteps=1;
 				}
@@ -5748,7 +5759,7 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 		debug(" _host_p:".(scalar keys %_host_p)." _host_h:".(scalar keys %_host_h)." _host_k:".(scalar keys %_host_k)." _host_l:".(scalar keys %_host_l)." _host_s:".(scalar keys %_host_s)." _host_u:".(scalar keys %_host_u)."\n",1);
 		debug(" _url_p:".(scalar keys %_url_p)." _url_k:".(scalar keys %_url_k)." _url_e:".(scalar keys %_url_e)." _url_x:".(scalar keys %_url_x)."\n",1);
 		debug(" _waithost_e:".(scalar keys %_waithost_e)." _waithost_l:".(scalar keys %_waithost_l)." _waithost_s:".(scalar keys %_waithost_s)." _waithost_u:".(scalar keys %_waithost_u)."\n",1);
-		debug("End of processing log file (AWStats memory cache is TmpDNSLookup=".(scalar keys %TmpDNSLookup)." TmpBrowser=".(scalar keys %TmpBrowser)." TmpOS=".(scalar keys %TmpOS)." TmpRefererServer=".(scalar keys %TmpRefererServer)." TmpRobot=".(scalar keys %TmpRobot).")",1);
+		debug("End of processing log file (AWStats memory cache is TmpDNSLookup=".(scalar keys %TmpDNSLookup)." TmpDomainLookup=".(scalar keys %TmpDomainLookup)." TmpBrowser=".(scalar keys %TmpBrowser)." TmpOS=".(scalar keys %TmpOS)." TmpRefererServer=".(scalar keys %TmpRefererServer)." TmpRobot=".(scalar keys %TmpRobot).")",1);
 	}
 
 
