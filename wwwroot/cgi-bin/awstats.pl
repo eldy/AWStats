@@ -21,7 +21,7 @@ use vars qw(%DomainsHashIDLib @RobotsSearchIDOrder_list1 @RobotsSearchIDOrder_li
 #-------------------------------------------------------
 # Defines
 #-------------------------------------------------------
-my $VERSION="4.0 (build 39)";
+my $VERSION="4.0 (build 40)";
 
 # ---------- Init variables -------
 my $Debug=0;
@@ -4311,7 +4311,7 @@ EOF
 			else {
 				my $nameicon=$BrowsersHashIcon{$key}||"notavailable"; $nameicon =~ s/\s.*//; $nameicon =~ tr/A-Z/a-z/;
 				my $newbrowser=$BrowsersHashIDLib{$key}||$key;
-				print "<TR><TD width=80><IMG SRC=\"$DirIcons\/browser\/$nameicon.png\"></TD><TD CLASS=AWL>$newbrowser</TD><TD width=80>".($BrowsersHereAreGrabbers{$key}?"<b>$Message[112]</b>":"$Message[113]")."<TD>$_browser_h{$key}</TD><TD>$p&nbsp;%</TD></TR>\n";
+				print "<TR><TD width=80><IMG SRC=\"$DirIcons\/browser\/$nameicon.png\"></TD><TD CLASS=AWL>$newbrowser</TD><TD width=80>".($BrowsersHereAreGrabbers{$key}?"<b>$Message[112]</b>":"$Message[113]")."</TD><TD>$_browser_h{$key}</TD><TD>$p&nbsp;%</TD></TR>\n";
 			}
 			$count++;
 		}
