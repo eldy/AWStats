@@ -104,11 +104,11 @@ FAQ-SEC200 <a href="#WORMS">How to manage log files (and statistics) corrupted b
 <a name="SERVERSOS"></a><br>
 <b><u>FAQ-ABO100 : WHICH SERVER LOG FILES OR OS ARE SUPPORTED ?</u></b><br>
 AWStats can works with :<br>
-- All web server able to write log file with a <u>combined log format (XLF/ELF)</u> like Apache,
+<li> All web server able to write log file with a <u>combined log format (XLF/ELF)</u> like Apache,
 a <u>common log format (CLF)</u> like Apache or Squid, a <u>W3C log format</u> like IIS 5.0 or higher,
 or any other log format that contains all information AWStats expect to find.<br>
-- Most of all others Web/Wap/Proxy/Streaming servers.<br>
-- Some FTP, Syslog or Mail log files.<br>
+<li> Most of all others Web/Wap/Proxy/Streaming servers.<br>
+<li> Some FTP, Syslog or Mail log files.<br>
 Because AWStats is in Perl, it can works on all Operating Systems.<br>
 Examples of used platforms (bold means 'tested by author', others were reported by AWStats users to work correctly) :<br>
 <table bgcolor=#F0F0F0 width="100%" class=CFAQ><tr class=CFAQ><td class=CFAQ>
@@ -148,19 +148,19 @@ See also <a href="#PERSONALIZEDLOG">F.A.Q.: LOG FORMAT SETUP OR ERRORS </a>.<br>
 
 <a name="LANG"></a><br>
 <b><u>FAQ-ABO200 : WHICH LANGUAGES ARE AVAILABLE ?</u></b><br>
-AWStats can make reports in 33 languages. This is a list of all of them, for last version, in
+AWStats can make reports in 35 languages. This is a list of all of them, for last version, in
 alphabetical order (with the code you can use for <a href="awstats_config.html#Lang">Lang</a>
 and <a href="awstats_config.html#ShowFlagLinks">ShowFlagLinks</a> parameter) :<br>
 <i>
 <table bgcolor=#F0F0F0 width="100%" class=CFAQ><tr class=CFAQ><td class=CFAQ>
 Albanian=al, Bosnian=ba, Bulgarian=bg,
 Chinese (Taiwan)=tw, Chinese (Simpliefied)=cn, Czech=cz,
-Danish=dk, Dutch=nl, English=en, Finnish=fi, French=fr, German=de,
-Greek=gr, Hungarian=hu, Indonesian=id, Italian=it, Japanese=jp, Korean=kr,
-Latvian=lv, Norwegian (Nynorsk)=nn, Norwegian (Bokmal)=nb, Polish=pl,
-Portuguese=pt, Portuguese (Brazilian)=br, Romanian=ro, Russian=ru,
-Slovak=sk, Spanish=es, Spanish (Catalan)=es_cat, Swedish=se, Turkish=tr,
-Ukrainian=ua, Welsh=wlk
+Danish=dk, Dutch=nl, English=en, Estonian=et, Finnish=fi, French=fr,
+German=de, Greek=gr, Hungarian=hu, Indonesian=id, Italian=it, Japanese=jp,
+Korean=kr, Latvian=lv, Norwegian (Nynorsk)=nn, Norwegian (Bokmal)=nb,
+Polish=pl, Portuguese=pt, Portuguese (Brazilian)=br, Romanian=ro,
+Russian=ru, Serbian=sr, Slovak=sk, Spanish=es, Spanish (Catalan)=es_cat,
+Swedish=se, Turkish=tr, Ukrainian=ua, Welsh=wlk
 </td></tr></table>
 </i>
 However, AWStats documentation is only provided in English.<br>
@@ -188,7 +188,8 @@ you have nothing to analyze and you should not be able to use AWStats.
 However, this is a trick that you can use to have a log file be build. You must add
 a tag to call a CGI script like pslogger into each of your web pages. This will
 allow you to have an artificial log file that can be analyzed by AWStats.<br>
-You can find a version of pslogger enhanced by AWStats auhtor <a href="/files/pslogger.pl">here</a>.
+You can find a version of pslogger enhanced by AWStats author <a href="/files/pslogger.pl">here</a>,
+otherwise pslogger official site is <a href="http://pscripts.psyon.org/pslogger/index.shtml">here</a>.
 <br>
 
 <a name="#LIMITLOG"></a><br>
@@ -495,10 +496,10 @@ cronolog) but don't want to loose any visits information during the rotate proce
 <font class=CSolution>SOLUTION:</font><br>
 If you use a rotate system (internal web server feature or third software), this means you probably not use
 AWStats <a href="awstats_config.html#PurgeLogFile">PurgeLogFile</a> nor <a href="awstats_config.html#ArchiveLogRecords">ArchiveLogRecords</a> parameter.<br>
-* If your config file is setup to process current log file (because you want to use the <a href="awstats_config.html#AllowToUpdateStatsFromBrowser">AllowToUpdateStatsFromBrowser</a>
+<li> If your config file is setup to process current log file (because you want to use the <a href="awstats_config.html#AllowToUpdateStatsFromBrowser">AllowToUpdateStatsFromBrowser</a>
 option), if you don't want to loose any records during the rotate process, you can just run the AWStats update process 
 on the archived log file just after the update process using the -logfile option (This will avoid you to change the config file).<br>
-* If you choose (for security reason, to avoid CPU abuse on large web site or other) to make updates by your scheduler only on archive files, this means
+<li> If you choose (for security reason, to avoid CPU abuse on large web site or other) to make updates by your scheduler only on archive files, this means
 you don't use the <a href="awstats_config.html#AllowToUpdateStatsFromBrowser">AllowToUpdateStatsFromBrowser</a> "real-time" feature of AWStats.
 In this case all you have to do is to run the update process just after the rotate was done using a config/domain file configured to
 process the archived log files (using date tags of <a href="awstats_config.html#LogFile">LogFile</a> for examples).<br>
@@ -538,9 +539,9 @@ I don't want to see my own IP address in the stats or I want to exclude counting
 <font class=CSolution>SOLUTION:</font><br>
 You must edit the config file to change the <a href="awstats_config.html#SkipHosts">SkipHosts</a> parameter.<br>
 For example, to exclude:<br>
-- your own IP address 123.123.123.123, use <a href="awstats_config.html#SkipHosts">SkipHosts</a>="123.123.123.123"<br>
-- the whole subnet 123.123.123.xxx, use <a href="awstats_config.html#SkipHosts">SkipHosts</a>="123.123.123"<br>
-- all sub hosts xxx.myintranet.com, use <a href="awstats_config.html#SkipHosts">SkipHosts</a>=".myintranet.com" (This one works only if DNS lookup is already done in your
+<li> your own IP address 123.123.123.123, use <a href="awstats_config.html#SkipHosts">SkipHosts</a>="123.123.123.123"<br>
+<li> the whole subnet 123.123.123.xxx, use <a href="awstats_config.html#SkipHosts">SkipHosts</a>="123.123.123"<br>
+<li> all sub hosts xxx.myintranet.com, use <a href="awstats_config.html#SkipHosts">SkipHosts</a>=".myintranet.com" (This one works only if DNS lookup is already done in your
 log file).<br>
 <br> 
 
@@ -580,30 +581,48 @@ provided with AWStats distribution (This tools is an improved version of <i>logr
 <a name="DIFFERENT_RESULTS"></a><br>
 <b><u>FAQ-COM250 : DIFFERENT RESULTS THAN OTHER ANALYZER</u></b><br>
 <font class=CProblem>PROBLEM:</font><br>
-I also use webalizer (or another log analyzer) and it doesn't report the same results than AWStats. Why ?<br>
+I also use Webalizer, Analog (or another log analyzer) and it doesn't report the same results than AWStats. Why ?<br>
 <font class=CSolution>SOLUTION:</font><br>
 If you compare AWStats results with an other log file analyzer, you will found some differences,
 sometimes very important. In fact, all analyzer (even AWStats) make "over reporting" because of the
 problem of proxy-servers and robots. However AWStats is one the most accurate and its "over reporting"
 is very low where all other analyzers, even the most famous, have a very high error rate (10% to 2x more than reality).<br>
 This is the most important reasons why you will find differences:<br>
-- Some dynamic pages generated by CGI programs are not counted by some analyzer (ie Webalizer) like
-a "Page" (but only like a "Hit") if CGI prog has not a .cgi extension, so they are not included
-correctly in their statistics. AWStats does not make this error and all CGI pages are pages.<br>
-- AWStats is the alone analyzer (that i know for the moment) able to detect robots visits.
-All other analyzers think it's a human visitor. This error make them to report more visits and visitors
-than reality. This does not happen with AWStats. When it tells "1 visitor", it means "1 human visitor".
-All robots hits are reported in the "Robots/Spiders visitors" chart.<br>
-- A lot of analyzer (ie webalizer) use the "Hits" to count visitors. This is not a good way of working :
+<li> Some dynamic pages generated by CGI programs are not counted by some analyzer (ie Webalizer) like
+a "Page" (but only like a "Hit") if CGI prog does not end with a defined extension (.cgi, ...), so they are not included
+correctly in their statistics. AWStats use on oposite policy, assuming a file is a page except if 
+type is in a list (See <a href="awstats_config.html#NotPageList">NotPageList</a> parameter). Error rate
+with a such policy is lower.<br>
+<li> AWStats is able to detect robots visits. Most analyzers think robots visits are human visitors.
+This error make them to report more visits and visitors than reality.
+When AWStats reports a "1 visitor", it means "1 human visitor" (even if it's not posible to detect
+all robots, most of them are detected). "Robots visitors" are reported separately in the "Robots/Spiders visitors" chart.<br>
+<li> Some log analyzers use the "Hits" to count visitors. This is a very bad way of working :
 Some visitors use a lot of proxy servers to surf (ie: AOL users), this means it's possible that several
 hosts (with several IP addresses) are used to reach your site for only one visitor (ie: one proxy server download
 the page and 2 other servers download all images). Because of this, if stats of unique visitors are made on "hits",
-3 users are reported but it's wrong. So AWStats, like HitBox, considers only HTML "Pages" to count unique visitors.
+3 users are reported but it's wrong. So AWStats considers only HTML "Pages" to count unique visitors.
 This decrease the error, not completely, because it's always possible that a proxy server download one HTML frame and
 another one download another frame, but this make the over-reporting of unique visitors less important.<br>
-There is also differences in log analyzers databases and algorithms that make details of results less or more accurate:<br>
-- AWStats has a larger browser, os and search engine database, so reports concerning this are more accurate.<br>
-- AWStats has url syntax rules to find keywords or keyphrases used to find your site, but AWStats has also
+<li> Another important reason to have difference is that an error log files is not always completely sorted
+but only "nearly" sorted because of cache and writing log engines used by server. Nearly all log
+analyzers (commercial and not) assumes that log file is "exactly" sorted by hit date to calculate
+visits, entry and exit pages. AWstats has an advanced parsing algorithm that is able to count visits,
+entry and exit pages even if log file is only "nearly" sorted.<br>
+<li> To differenciate new visits of a same visitor, log analyers uses a visit time-out. If value differs,
+then results differ (on visit count and entry and exit pages).
+A such time-out is a fixed value (For example 60 minutes) meaning if a visitor make a hit
+59 minutes after downloading the previous page, it's the same visits, if he make it 61 minutes after, it's a new visit.
+Of course, there is no realy difference between 59 and 61, but couting visits without
+time-out is not possible. And because the most important is to have a time-out (and not
+really it's value), AWStats time-out is not an "exact" value but is "around" 60 minutes.
+This allows AWStats to have better speed processing time, so you also might experience
+little differences, in visit count, between AWStats and another log analyzer even if
+their time-out are both defined to same value (because AWStats time-out is not exactly
+but nearly value defined).<br>
+<li> There is also differences in log analyzers databases and algorithms that make details of results less or more accurate:<br>
+AWStats has a larger browsers, os' and search engines database, so reports concerning this are more accurate.<br>
+AWStats has url syntax rules to find keywords or keyphrases used to find your site, but AWStats has also
 an algorithm to detect keywords of unknown search engines with unknown url syntax rule.<br>
 <br>
 
@@ -750,11 +769,11 @@ With some other versions or browsers, page content is partialy loaded.<br>
 <font class=CSolution>SOLUTION:</font><br>
 Problem was with WinXP and WinXPpro as documented at MS site Q317949;<br>
 "Socket Sharing Creates Data Loss When Listen and Accept Occur on Different Processes"<br>
-Result was that MSIE would crash or display nothing. Netscaep and Opera handled the socket better but displayed the pages partially.<br>
-The efffect of the bug was more prononced as the page contents increased(above 30k).<br>
-http://support.microsoft.com/default.aspx?scid=kb;EN-US;q317949<br>
+Result was that MSIE would crash or display nothing. Netscape and Opera handled the socket better but displayed the pages partially.<br>
+The effect of the bug was more prononced as the page contents increased (above 30k).<br>
+<a href="http://support.microsoft.com/default.aspx?scid=kb;EN-US;q317949">http://support.microsoft.com/default.aspx?scid=kb;EN-US;q317949</a><br>
 And also at Apache.org<br>
-http://www.apache.org/dist/httpd/binaries/win32/<br>
+<a href="http://www.apache.org/dist/httpd/binaries/win32/">http://www.apache.org/dist/httpd/binaries/win32/</a><br>
 MS produced a Hotfix which is now included in SP1.<br>
 <br>
 
@@ -886,8 +905,9 @@ responsible for the error.<br>
 But if simply a "0" returns or some other error, this is an indication of your glibc beeing corrupt.<br>
 ATTENTION: The only solution in this case might be to recompile your GLIBC. This can be a quite tricky
 task. Please consult the documentation and F.A.Q.s of your linux distribution first!! (experts: first
-check your global compile flags, eg. march=Pentium4 < for almost sure, you will run into trouble).<br>
-NOTE: In some cases, this error might occour "suddenly", even though AWStats was aleady running
+check your global compile flags, eg. march=Pentium4. Trying with other compile flags can solve problem
+quickly in some cases.<br>
+NOTE: In some cases, this error might occour "suddenly", even though AWStats was already running
 perfect already.<br>
 <br> 
 
