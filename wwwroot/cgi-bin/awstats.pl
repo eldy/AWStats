@@ -3023,7 +3023,7 @@ if ($UpdateStats) {
 			$lastrequiredfield=8;
 		}
 		elsif ($LogFormat eq "4") {
-			$PerlParsingFormat="([^\\s]*) [^\\s]* ([^\\s]*) \\[([^\\s]*) [^\\s]*\\] \\\"([^\\s]*) ([^\\s]*) [^\\\"]*\\\" ([\\d|-]*) ([\\d|-]*)";
+			$PerlParsingFormat="([^\\s]+) [^\\s]+ ([^\\s]+) \\[([^\\s]+) [^\\s]+\\] \\\"([^\\s]+) ([^\\s]+) [^\\\"]+\\\" ([\\d|-]+) ([\\d|-]+)";
 			$pos_rc=1;$pos_logname=2;$pos_date=3;$pos_method=4;$pos_url=5;$pos_code=6;$pos_size=7;
 			$lastrequiredfield=7;
 		}
@@ -3080,132 +3080,114 @@ if ($UpdateStats) {
 		my @fields = split(/\s+/,$LogFormatString); # make array of entries
 		my $i = 1;
 		foreach my $f (@fields) {
-			my $found=0;
+			# Add separator for next field
+			if ($PerlParsingFormat) { $PerlParsingFormat.=$LogSeparator; }
 			if ($f =~ /%virtualname$/) {
-				$found=1;
 				$pos_vh = $i; $i++;
-				$PerlParsingFormat .= "([^$LogSeparator]*)";
+				$PerlParsingFormat .= "([^$LogSeparator]+)";
 			}
 			elsif ($f =~ /%host$/) {
-				$found=1;
 				$pos_rc = $i; $i++;
-				$PerlParsingFormat .= "([^$LogSeparator]*)";
+				$PerlParsingFormat .= "([^$LogSeparator]+)";
 			}
 			elsif ($f =~ /%logname$/) {
-				$found=1;
 				$pos_logname = $i; $i++;
-				$PerlParsingFormat .= "([^$LogSeparator]*)";
+				$PerlParsingFormat .= "([^$LogSeparator]+)";
 			}
 			elsif ($f =~ /%time1b$/) {
-				$found=1;
 				$pos_date = $i;
 				$i++;
-				$PerlParsingFormat .= "\\[([^$LogSeparator]*)\\]";
+				$PerlParsingFormat .= "\\[([^$LogSeparator]+)\\]";
 			}
 			elsif ($f =~ /%time1$/) {
-				$found=1;
 				$pos_date = $i;
 				$i++;
 				#$pos_zone = $i;
-				$i++;
-				$PerlParsingFormat .= "\\[([^$LogSeparator]*) ([^$LogSeparator]*)\\]";
+				#$i++;
+				#$PerlParsingFormat .= "\\[([^$LogSeparator]+) ([^$LogSeparator]+)\\]";
+				$PerlParsingFormat .= "\\[([^$LogSeparator]+) [^$LogSeparator]+\\]";
 			}
 			elsif ($f =~ /%time2$/) {
-				$found=1;
 				$pos_date = $i;
 				$i++;
-				$PerlParsingFormat .= "([^$LogSeparator]* [^$LogSeparator]*)";
+				$PerlParsingFormat .= "([^$LogSeparator]+ [^$LogSeparator]+)";
 			}
 			elsif ($f =~ /%methodurl$/) {
-				$found=1;
 				$pos_method = $i;
 				$i++;
 				$pos_url = $i;
 				$i++;
-				$PerlParsingFormat .= "\\\"([^$LogSeparator]*) ([^$LogSeparator]*) [^\\\"]*\\\"";
+				$PerlParsingFormat .= "\\\"([^$LogSeparator]+) ([^$LogSeparator]+) [^\\\"]+\\\"";
 			}
 			elsif ($f =~ /%methodurlnoprot$/) {
-				$found=1;
 				$pos_method = $i;
 				$i++;
 				$pos_url = $i;
 				$i++;
-				$PerlParsingFormat .= "\\\"([^$LogSeparator]*) ([^$LogSeparator]*)\\\"";
+				$PerlParsingFormat .= "\\\"([^$LogSeparator]+) ([^$LogSeparator]+)\\\"";
 			}
 			elsif ($f =~ /%method$/) {
-				$found=1;
 				$pos_method = $i;
 				$i++;
-				$PerlParsingFormat .= "([^$LogSeparator]*)";
+				$PerlParsingFormat .= "([^$LogSeparator]+)";
 			}
 			elsif ($f =~ /%url$/) {
-				$found=1;
 				$pos_url = $i;
 				$i++;
-				$PerlParsingFormat .= "([^$LogSeparator]*)";
+				$PerlParsingFormat .= "([^$LogSeparator]+)";
 			}
 			elsif ($f =~ /%query$/) {
-				$found=1;
 				$pos_query = $i;
 				$i++;
-				$PerlParsingFormat .= "([^$LogSeparator]*)";
+				$PerlParsingFormat .= "([^$LogSeparator]+)";
 			}
 			elsif ($f =~ /%code$/) {
-				$found=1;
 				$pos_code = $i;
 				$i++;
-				$PerlParsingFormat .= "([\\d|-]*)";
+				$PerlParsingFormat .= "([\\d|-]+)";
 			}
 			elsif ($f =~ /%bytesd$/) {
-				$found=1;
 				$pos_size = $i; $i++;
-				$PerlParsingFormat .= "([\\d|-]*)";
+				$PerlParsingFormat .= "([\\d|-]+)";
 			}
 			elsif ($f =~ /%refererquot$/) {
-				$found=1;
 				$pos_referer = $i; $i++;
-				$PerlParsingFormat .= "\\\"(.*)\\\"";
+				$PerlParsingFormat .= "\\\"(.*)\\\"";		# referer might be ""
 			}
 			elsif ($f =~ /%referer$/) {
-				$found=1;
 				$pos_referer = $i; $i++;
-				$PerlParsingFormat .= "([^$LogSeparator]*)";
+				$PerlParsingFormat .= "([^$LogSeparator]+)";
 			}
 			elsif ($f =~ /%uaquot$/) {
-				$found=1;
 				$pos_agent = $i; $i++;
-				$PerlParsingFormat .= "\\\"([^\\\"]*)\\\"";
+				$PerlParsingFormat .= "\\\"([^\\\"]*)\\\"";	# ua might be ""
 			}
 			elsif ($f =~ /%ua$/) {
-				$found=1;
 				$pos_agent = $i; $i++;
-				$PerlParsingFormat .= "([^$LogSeparator]*)";
+				$PerlParsingFormat .= "([^$LogSeparator]+)";
 			}
 			elsif ($f =~ /%gzipin$/ ) {
-				$found=1;
 				$pos_gzipin=$i;$i++;
-				$PerlParsingFormat .= "([^$LogSeparator]*)";
+				$PerlParsingFormat .= "([^$LogSeparator]+)";
 			}
 			elsif ($f =~ /%gzipout/ ) {		# Compare $f to /%gzipout/ and not to /%gzipout$/ like other fields
-				$found=1;
 				$pos_gzipout=$i;$i++;
-				$PerlParsingFormat .= "([^$LogSeparator]*)";
+				$PerlParsingFormat .= "([^$LogSeparator]+)";
 			}
 			elsif ($f =~ /%gzipratio/ ) {	# Compare $f to /%gzipratio/ and not to /%gzipratio$/ like other fields
-				$found=1;
 				$pos_gzipratio=$i;$i++;
-				$PerlParsingFormat .= "([^$LogSeparator]*)";
+				$PerlParsingFormat .= "([^$LogSeparator]+)";
 			}
 			elsif ($f =~ /%syslog$/) { # Added for syslog time and host stamp, fields are skipped and not analyzed
-				 $found=1;
-				 $PerlParsingFormat .= "[A-Z][a-z][a-z] .[0-9] ..:..:.. [A-Za-z]+";
+				$PerlParsingFormat .= "[A-Z][a-z][a-z] .[0-9] ..:..:.. [A-Za-z]+";
 			}
-			if (! $found) { $found=1; $PerlParsingFormat .= "[^$LogSeparator]*"; }
-			$PerlParsingFormat.=$LogSeparator;
+			else {
+				$PerlParsingFormat .= "[^$LogSeparator]+";
+			}
 		}
 		if (! $PerlParsingFormat) { error("Error: No recognized format tag in personalized LogFormat string"); }
-		chop($PerlParsingFormat); chop($PerlParsingFormat);		# Remove last separator char "\s"
-		$lastrequiredfield=$i--;
+		$lastrequiredfield=--$i;
+		if ($Debug) { debug("lastrequiredfield=$lastrequiredfield"); }
 	}
 	if (! $pos_rc) { error("Error: Your personalized LogFormat does not include all fields required by AWStats (Add \%host in your LogFormat string)."); }
 	if (! $pos_date) { error("Error: Your personalized LogFormat does not include all fields required by AWStats (Add \%time1 or \%time2 in your LogFormat string)."); }
