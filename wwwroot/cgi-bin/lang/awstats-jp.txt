@@ -1,4 +1,4 @@
-# Japanese message file (info@kchosting.jp)
+﻿# Japanese message file (info@kchosting.jp)
 # $Revision$ - $Date$
 PageCode=UTF-8
 message0=不明
@@ -37,9 +37,9 @@ message32=HTTPエラーコード
 message33=Netscapeバージョン
 message34=IEバージョン
 message35=最終の更新 
-message36=接続
-message37=起点
-message38=ダイレクトアドレス/ブックマーク
+message36=このサイトへのアクセス元
+message37=アクセス元
+message38=直接URLを入力/お気に入りからのアクセス
 message39=起点が不明
 message40=インターネット検索エンジンからのリンク
 message41=外部ページからのリンク(検索エンジンを除く他のホームページ)
@@ -166,3 +166,6 @@ message161=閲覧に含まれないアクセス
 message162=月
 message163=ワーム
 message164=その他のワーム
+message165=Mails successfully sent
+message166=Mails failed/refused
+message167=Sensitive targets
