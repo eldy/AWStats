@@ -523,7 +523,7 @@ use vars qw/ @Message /;
 sub html_head {
 	if ($HTMLOutput) {
 		# Write head section
-		if ($FrameName ne "index") { print "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">\n\n";  }
+		if ($FrameName ne 'index') { print "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">\n\n";  }
 		else { print "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Frameset//EN\">\n\n"; }
 		print "<html lang='$Lang'>\n";
 		print "<head>\n";
@@ -532,7 +532,7 @@ sub html_head {
 		#else { print "<meta HTTP-EQUIV=\"content-type\" CONTENT=\"text/html; charset=UTF-8\">\n"; }
 		if ($Expires)  { print "<META HTTP-EQUIV=\"expires\" CONTENT=\"".(gmtime(time()+$Expires))."\">\n"; }
 		print "<meta http-equiv=\"description\" content=\"".ucfirst($PROG)." - Advanced Web Statistics for $SiteDomain\">\n";
-		if ($FrameName ne "mainleft") { print "<meta http-equiv=\"keywords\" content=\"$SiteDomain, free, advanced, realtime, web, server, logfile, log, analyzer, analysis, statistics, stats, perl, analyse, performance, hits, visits\">\n"; }
+		if ($FrameName ne 'mainleft') { print "<meta http-equiv=\"keywords\" content=\"$SiteDomain, free, advanced, realtime, web, server, logfile, log, analyzer, analysis, statistics, stats, perl, analyse, performance, hits, visits\">\n"; }
 		print "<meta name=\"robots\" content=\"".($FrameName eq "mainleft"?"no":"")."index,follow\">\n";
 		print "<title>$Message[7] $SiteDomain</title>\n";
 		if ($FrameName ne 'index') {
@@ -1875,10 +1875,12 @@ sub Read_History_With_TmpUpdate {
 
 				# Show migrate warning for backward compatibility
 				if ($versionnum < 5000 && ! $MigrateStats && ! $BadFormatWarning{$year.$month}) {
-					$BadFormatWarning{$year.$month}=1;
-					my $message="Warning: Data file '$filetoread' has an old history file format (version $versionnum). You should upgrade it...\nFrom command line: $PROG.$Extension -migrate=\"$filetoread\"";
-					if ($ENV{"GATEWAY_INTERFACE"} && $AllowToUpdateStatsFromBrowser) { $message.="\nFrom your browser with URL: <a href=\"http://".$ENV{"SERVER_NAME"}.$ENV{"SCRIPT_NAME"}."?migrate=$filetoread\">http://".$ENV{"SERVER_NAME"}.$ENV{"SCRIPT_NAME"}."?migrate=$filetoread</a>"; }
-					warning("$message");
+					if ($FrameName ne 'mainleft') {
+						$BadFormatWarning{$year.$month}=1;
+						my $message="Warning: Data file '$filetoread' has an old history file format (version $versionnum). You should upgrade it...\nFrom command line: $PROG.$Extension -migrate=\"$filetoread\"";
+						if ($ENV{"GATEWAY_INTERFACE"} && $AllowToUpdateStatsFromBrowser) { $message.="\nFrom your browser with URL: <a href=\"http://".$ENV{"SERVER_NAME"}.$ENV{"SCRIPT_NAME"}."?migrate=$filetoread\">http://".$ENV{"SERVER_NAME"}.$ENV{"SCRIPT_NAME"}."?migrate=$filetoread</a>"; }
+						warning("$message");
+					}
 				}
 				if (! ($versionnum < 5000) && $MigrateStats && ! $BadFormatWarning{$year.$month}) {
 					$BadFormatWarning{$year.$month}=1;
@@ -4290,14 +4292,14 @@ if ($Lang eq "10") { $Lang="kr"; }
 
 # Define frame name and correct variable for frames
 if (! $FrameName) {
-	if ($ENV{"GATEWAY_INTERFACE"} && $UseFramesWhenCGI && $HTMLOutput eq 'main') { $FrameName="index"; }
+	if ($ENV{"GATEWAY_INTERFACE"} && $UseFramesWhenCGI && $HTMLOutput eq 'main') { $FrameName='index'; }
 	else { $FrameName='main'; }
 }
 
 # Load Message and Plugins
-if ($FrameName ne "index") {
+if ($FrameName ne 'index') {
 	&Read_Language_Data($Lang);
-	if ($FrameName ne "mainleft") {
+	if ($FrameName ne 'mainleft') {
 		&Read_Ref_Data();
 		&Read_Plugins();
 	}
@@ -4393,7 +4395,7 @@ if ($MigrateStats) {
 }
 
 # Output main frame page and exit. This must be after the security check.
-if ($FrameName eq "index") {
+if ($FrameName eq 'index') {
 	# Define the NewLinkParams for main chart
 	my $NewLinkParams=${QueryString};
 	$NewLinkParams =~ s/framename=[^ &]*//i;
@@ -4443,7 +4445,7 @@ if ($Debug) {
 # UPDATE PROCESS
 #------------------------------------------
 if ($Debug) { debug("UpdateStats is $UpdateStats",2); }
-if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {	# Update only on index page or when not framed to avoid update twice
+if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Update only on index page or when not framed to avoid update twice
 
 	if (! $HTMLOutput) {
 		print "Update for config '$FileConfig'\n";
@@ -5658,7 +5660,7 @@ if ($HTMLOutput) {
 	$NewLinkParams =~ s/framename=[^ &]*//i;
 	my $NewLinkTarget="";
 	if ($DetailedReportsOnNewWindows) { $NewLinkTarget=" target=\"awstatsbis\""; }
-	if (($FrameName eq "mainleft" || $FrameName eq "mainright") && $DetailedReportsOnNewWindows < 2) {
+	if (($FrameName eq 'mainleft' || $FrameName eq 'mainright') && $DetailedReportsOnNewWindows < 2) {
 		$NewLinkParams.="&framename=mainright";
 		$NewLinkTarget=" target=\"mainright\"";
 	}
@@ -5667,7 +5669,7 @@ if ($HTMLOutput) {
 
 	# WRITE TOOLTIPS INFO
 	#---------------------------------------------------------------------
-	if ($FrameName ne "mainleft") {
+	if ($FrameName ne 'mainleft') {
 
 		# Get the tooltips texts
 		&Read_Language_Tooltip($Lang);
@@ -5729,7 +5731,7 @@ EOF
 	}
 
 	# HTMLHeadSection
-	if ($FrameName ne "index" && $FrameName ne "mainleft") {
+	if ($FrameName ne 'index' && $FrameName ne 'mainleft') {
 		print "<a name=\"TOP\">&nbsp;</a>\n\n";
 		print "$HTMLHeadSection\n";
 		print "\n";
@@ -5737,7 +5739,7 @@ EOF
 
 	# LOGO AND FLAGS
 	#---------------------------------------------------------------------
-	if (($ShowHeader && $FrameName ne "mainright") || $FrameName eq "mainleft") {
+	if (($ShowHeader && $FrameName ne 'mainright') || $FrameName eq 'mainleft') {
 		print "<table>\n";
 		print "<tr><td width=120 class=AWL style=\"font-size: 18px arial,verdana,helvetica; font-weight: bold\">AWStats\n";
 		if (! $StaticLinks) { Show_Flag_Links($Lang); }
@@ -5748,18 +5750,18 @@ EOF
 		else {
 			print "<td class=AWL><a href=\"$LogoLink\" target=\"awstatshome\"><img src=\"$DirIcons/other/$Logo\" border=0></a></td></tr>\n";
 		}
-		if ($FrameName ne "mainleft") { print "<tr><td class=AWL colspan=2>$Message[54]</td></tr>\n"; }
+		if ($FrameName ne 'mainleft') { print "<tr><td class=AWL colspan=2>$Message[54]</td></tr>\n"; }
 		print "</table>\n";
 	}
 
 	# MENU
 	#---------------------------------------------------------------------
-	if ($ShowMenu || $FrameName eq "mainleft") {
+	if ($ShowMenu || $FrameName eq 'mainleft') {
 		if ($Debug) { debug("ShowMenu",2); }
-		my $frame=($FrameName eq "mainleft");
+		my $frame=($FrameName eq 'mainleft');
 		print "$Center<a name=\"MENU\">&nbsp;</a>\n";
 
-		if ($FrameName ne "mainleft") {
+		if ($FrameName ne 'mainleft') {
 			my $NewLinkParams=${QueryString};
 			$NewLinkParams =~ s/update(=\w*|$|[ &]+)//i;
 			$NewLinkParams =~ s/staticlinks(=\w*|$|[ &]+)//i;
@@ -5768,17 +5770,17 @@ EOF
 			$NewLinkParams =~ s/framename=[^ &]*//i;
 			$NewLinkParams =~ tr/&/&/s; $NewLinkParams =~ s/^&//; $NewLinkParams =~ s/&$//;
 			my $NewLinkTarget="";
-			if ($FrameName eq "mainright") { $NewLinkTarget=" target=_parent"; }
+			if ($FrameName eq 'mainright') { $NewLinkTarget=" target=_parent"; }
 			print "<FORM name=\"FormDateFilter\" action=\"$AWScript?${NewLinkParams}\" style=\"padding: 2px 2px 2px 2px; margin-top: 0\"$NewLinkTarget>";
 		}
 
 		print "<table".($frame?" cellspacing=0 cellpadding=0 border=0":"").">\n";
 
-		if ($FrameName ne "mainright") {
+		if ($FrameName ne 'mainright') {
 			# Print site name
 			print "<tr><th class=AWL>$Message[7] : </th><td class=AWL><font style=\"font-size: 14px;\">".($frame?"&nbsp; ":"")."$SiteDomain</font></td></tr>\n";
 		}
-		if ($FrameName ne "mainleft") {
+		if ($FrameName ne 'mainleft') {
 
 			# Print LastUpdate
 			print "<tr><th class=AWL valign=top>$Message[35] :</th>";
@@ -5797,7 +5799,7 @@ EOF
 				$NewLinkParams =~ s/update(=\w*|$|[ &]+)//i;
 				$NewLinkParams =~ s/staticlinks(=\w*|$|[ &]+)//i;
 				$NewLinkParams =~ s/framename=[^ &]*//i;
-				if ($FrameName eq "mainright") { $NewLinkParams.="&framename=mainright"; }
+				if ($FrameName eq 'mainright') { $NewLinkParams.="&framename=mainright"; }
 				$NewLinkParams =~ tr/&/&/s; $NewLinkParams =~ s/^&//; $NewLinkParams =~ s/&$//;
 				if ($NewLinkParams) { $NewLinkParams="${NewLinkParams}&"; }
 				print "&nbsp; &nbsp; &nbsp; &nbsp;";
@@ -5821,7 +5823,7 @@ EOF
 				if ($SiteConfig) { print "<input type=hidden name=\"config\" value=\"$SiteConfig\">\n"; }
 				if ($QueryString =~ /lang=(\w+)/i) { print "<input type=hidden name=\"lang\" value=\"$1\">\n"; }
 				if ($QueryString =~ /debug=(\d+)/i) { print "<input type=hidden name=\"debug\" value=\"$1\">\n"; }
-				if ($FrameName eq "mainright") { print "<input type=hidden name=\"framename\" value=\"index\">\n"; }
+				if ($FrameName eq 'mainright') { print "<input type=hidden name=\"framename\" value=\"index\">\n"; }
 				print "<input type=submit value=\"OK\" class=\"CFormFields\">";
 			}
 			else {
@@ -5834,14 +5836,14 @@ EOF
 		}
 
 		print "</table>\n";
-		if ($FrameName ne "mainleft") { print "</FORM>\n"; }
+		if ($FrameName ne 'mainleft') { print "</FORM>\n"; }
 		else { print "<br>\n"; }
 		print "\n";
 	
 		# Print menu links
-		if (($HTMLOutput eq 'main' && $FrameName ne "mainright") || $FrameName eq "mainleft") {	# If main page asked
-			my $linkpage=($FrameName eq "mainleft"?"$AWScript?${NewLinkParams}":""); $linkpage =~ s/&$//;
-			my $targetpage=($FrameName eq "mainleft"?" target=mainright":"");
+		if (($HTMLOutput eq 'main' && $FrameName ne 'mainright') || $FrameName eq 'mainleft') {	# If main page asked
+			my $linkpage=($FrameName eq 'mainleft'?"$AWScript?${NewLinkParams}":""); $linkpage =~ s/&$//;
+			my $targetpage=($FrameName eq 'mainleft'?" target=mainright":"");
 			my $linetitle=1;
 			print "<table".($frame?" cellspacing=0 cellpadding=0 border=0":"").">\n";
 			# When
@@ -5883,10 +5885,10 @@ EOF
 			if ($ShowFileTypesStats)	 { print ($frame?"<tr><td class=AWL>":""); print "<a href=\"$linkpage#FILETYPES\"$targetpage>$Message[73]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
 			if ($ShowFileSizesStats)	 {  }
 			if ($ShowOSStats)			 { print ($frame?"<tr><td class=AWL>":""); print "<a href=\"$linkpage#OS\"$targetpage>$Message[59]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
-			if ($ShowOSStats && $FrameName eq "mainleft")		{ print ($frame?"<tr><td class=AWL> &nbsp; <img height=8 width=9 src=\"$DirIcons/other/page.png\" alt=\"...\"> ":""); print "<a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=unknownos":"$PROG$StaticLinks.unknownos.html")."\"$NewLinkTarget>$Message[0]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
+			if ($ShowOSStats && $FrameName eq 'mainleft')		{ print ($frame?"<tr><td class=AWL> &nbsp; <img height=8 width=9 src=\"$DirIcons/other/page.png\" alt=\"...\"> ":""); print "<a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=unknownos":"$PROG$StaticLinks.unknownos.html")."\"$NewLinkTarget>$Message[0]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
 			if ($ShowBrowsersStats)		 { print ($frame?"<tr><td class=AWL>":""); print "<a href=\"$linkpage#BROWSER\"$targetpage>$Message[21]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
 			if ($ShowBrowsersStats)		 { print ($frame?"<tr><td class=AWL> &nbsp; <img height=8 width=9 src=\"$DirIcons/other/page.png\" alt=\"...\"> ":""); print "<a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=browserdetail":"$PROG$StaticLinks.browserdetail.html")."\"$NewLinkTarget>$Message[58]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
-			if ($ShowBrowsersStats && $FrameName eq "mainleft")	{ print ($frame?"<tr><td class=AWL> &nbsp; <img height=8 width=9 src=\"$DirIcons/other/page.png\" alt=\"...\"> ":""); print "<a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=unknownbrowser":"$PROG$StaticLinks.unknownbrowser.html")."\"$NewLinkTarget>$Message[0]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
+			if ($ShowBrowsersStats && $FrameName eq 'mainleft')	{ print ($frame?"<tr><td class=AWL> &nbsp; <img height=8 width=9 src=\"$DirIcons/other/page.png\" alt=\"...\"> ":""); print "<a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=unknownbrowser":"$PROG$StaticLinks.unknownbrowser.html")."\"$NewLinkTarget>$Message[0]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
 			if ($linetitle) { print ($frame?"":"</td></tr>\n"); }
 			# Referers
 			$linetitle=&AtLeastOneNotNull($ShowOriginStats,$ShowKeyphrasesStats,$ShowKeywordsStats);
@@ -5918,7 +5920,7 @@ EOF
 			print "<table>\n";
 			$NewLinkParams =~ s/urlfilter=[^ &]*//i;
 			$NewLinkParams =~ tr/&/&/s; $NewLinkParams =~ s/&$//;
-			if (! $DetailedReportsOnNewWindows || $FrameName eq "mainright") {
+			if (! $DetailedReportsOnNewWindows || $FrameName eq 'mainright') {
 				print "<tr><td class=AWL><a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript".(${NewLinkParams}?"?${NewLinkParams}":""):"$PROG$StaticLinks.html")."\">$Message[76]</a></td></tr>\n";
 			}
 			else {
@@ -5930,7 +5932,7 @@ EOF
 	}
 
 	# Exit if left frame
-	if ($FrameName eq "mainleft") {
+	if ($FrameName eq 'mainleft') {
 		&html_end();
 		exit 0;
 	}
@@ -6023,7 +6025,7 @@ EOF
 #		$NewLinkParams =~ tr/&/&/s; $NewLinkParams =~ s/^&//; $NewLinkParams =~ s/&$//;
 #		if ($NewLinkParams) { $NewLinkParams="${NewLinkParams}&"; }
 #		my $NewLinkTarget="";
-#		if ($FrameName eq "mainright") { $NewLinkTarget=" target=_parent"; }
+#		if ($FrameName eq 'mainright') { $NewLinkTarget=" target=_parent"; }
 #
 #		# Show monthly stats
 #		print "<TR valign=bottom><TD align=center>";
@@ -6186,7 +6188,7 @@ EOF
 #			my $dayofweekcursor=DayOfWeek($day,$month,$year);
 #			print "<TD valign=middle".($dayofweekcursor=~/[06]/?" bgcolor=\"#$color_weekend\"":"").">";
 #			print ($day==$nowday && $month==$nowmonth && $year==$nowyear?"<b>":"");
-#			print "$day<br><font style=\"font-size: ".($FrameName ne "mainright"?"10":"9")."px;\">".$MonthLib{$month}."</font>";
+#			print "$day<br><font style=\"font-size: ".($FrameName ne 'mainright'?"10":"9")."px;\">".$MonthLib{$month}."</font>";
 #			print ($day==$nowday && $month==$nowmonth && $year==$nowyear?"</b>":"");
 #			print "</TD>\n";
 #		}
@@ -6761,7 +6763,7 @@ EOF
 		$NewLinkParams =~ tr/&/&/s; $NewLinkParams =~ s/^&//; $NewLinkParams =~ s/&$//;
 		if ($NewLinkParams) { $NewLinkParams="${NewLinkParams}&"; }
 		my $NewLinkTarget="";
-		if ($FrameName eq "mainright") { $NewLinkTarget=" target=_parent"; }
+		if ($FrameName eq 'mainright') { $NewLinkTarget=" target=_parent"; }
 
 		# Ratio
 		my $RatioVisits=0; my $RatioPages=0; my $RatioHits=0; my $RatioBytes=0;
@@ -6960,7 +6962,7 @@ EOF
 			my $dayofweekcursor=DayOfWeek($day,$month,$year);
 			print "<TD valign=middle".($dayofweekcursor=~/[06]/?" bgcolor=\"#$color_weekend\"":"").">";
 			print ($day==$nowday && $month==$nowmonth && $year==$nowyear?"<b>":"");
-			print "$day<br><font style=\"font-size: ".($FrameName ne "mainright"?"10":"9")."px;\">".$MonthLib{$month}."</font>";
+			print "$day<br><font style=\"font-size: ".($FrameName ne 'mainright'?"10":"9")."px;\">".$MonthLib{$month}."</font>";
 			print ($day==$nowday && $month==$nowmonth && $year==$nowyear?"</b>":"");
 			print "</TD>\n";
 		}
@@ -6994,7 +6996,7 @@ EOF
 
 		# Show data arrays link
 #		if ($DetailedReportsOnNewWindows) { $NewLinkTarget=" target=\"awstatsbis\""; }
-#		if (($FrameName eq "mainleft" || $FrameName eq "mainright") && $DetailedReportsOnNewWindows < 2) {
+#		if (($FrameName eq 'mainleft' || $FrameName eq 'mainright') && $DetailedReportsOnNewWindows < 2) {
 #			$NewLinkParams.="&framename=mainright";
 #			$NewLinkTarget=" target=\"mainright\"";
 #		}
