@@ -82,6 +82,7 @@ when reading it), follow the example:<br>
 <li><a href="#NotPageList">NotPageList</a>
 <li><a href="#ValidHTTPCodes">ValidHTTPCodes</a>
 <li><a href="#URLNotCaseSensitive">URLNotCaseSensitive</a>
+<li><a href="#URLQuerySeparators">URLQuerySeparators</a>
 <li><a href="#URLWithQuery">URLWithQuery</a>
 <li><a href="#URLWithQueryWithoutFollowingParameters">URLWithQueryWithoutFollowingParameters</a>
 <li><a href="#URLReferrerWithQuery">URLReferrerWithQuery</a>
@@ -792,6 +793,19 @@ when reading it), follow the example:<br>
 <br># Default: 0
 <br># 
 <br>URLNotCaseSensitive=0
+
+<br><br><hr>
+
+<a name="URLQuerySeparators"><b>URLQuerySeparators</b></a><br>
+<b>Version : </b>5.2 +<br>
+<br># In URL links, "?" char is used to add parameters list in URLs. Syntax is:
+<br># /mypage.html?param1=value1
+<br># However, some servers/sites have also others chars to isolate dynamic part of
+<br># their URLs. You can complete this list with this parameter.
+<br># Example: "?;"
+<br># Default: "?"
+<br>#
+<br>URLQuerySeparators="?"
 
 <br><br><hr>
 

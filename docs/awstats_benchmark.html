@@ -93,7 +93,8 @@ So, have a look at the following chart to:<br>
 &nbsp;&nbsp; &nbsp;&nbsp; - or if you don't need the "domain/countries" report<br>
 &nbsp;&nbsp; &nbsp;&nbsp; - or if your web site has more than 250,000 visits a month.<br>
 ** Free memory required for update process (in MB).<br>
-Warning: If you use the <a href="awstats_config.html#URLWithQuery">URLWithQuery</a> or <a href="awstats_config.html#URLReferrerWithQuery">URLReferrerWithQuery</a> option, this value can be dramatically increased.<br>
+Warning: If you use the <a href="awstats_config.html#URLWithQuery">URLWithQuery</a> or <a href="awstats_config.html#URLReferrerWithQuery">URLReferrerWithQuery</a> option, or forget
+to complete correctly <a href="awstats_config.html#URLQuerySeparators">URLQuerySeparators</a> for some sites, this value can be dramatically increased.<br>
 *** Duration is with Athlon 1GHz/128Mb and LogFormat=1.<br>
 
 <br>
@@ -106,8 +107,8 @@ Note that with DNSLookup disabled if you still want to have the 'country/domain'
 in your log file are already resolved (need to setup your web server to do so, your web server will be slowed).
 Without DNSLookup, log analyze speed can be increased by 10 to 100 times.<br>
 <img src="images/star.png"><img src="images/star.png"><img src="images/star.png"><img src="images/star.png">
-- Use carefully parameters <a href="awstats_config.html#URLWithQuery">URLWithQuery</a> and <a href="awstats_config.html#URLReferrerWithQuery">URLReferrerWithQuery</a>.
-Let them set to 0 if you don't know what they means.<br>
+- Use carefully parameters <a href="awstats_config.html#URLWithQuery">URLWithQuery</a> and <a href="awstats_config.html#URLReferrerWithQuery">URLReferrerWithQuery</a>
+(Let them set to 0 if you don't know what they means) and check your web site URLs' syntax to known if you need to complete parameter <a href="awstats_config.html#URLQuerySeparators">URLQuerySeparators</a>.<br>
 <img src="images/star.png"><img src="images/star.png"><img src="images/star.png"><img src="images/star.png">
 - Be sure that your <a href="awstats_config.html#HostAliases">HostAliases</a> parameter list is complete.<br>
 <img src="images/star.png"><img src="images/star.png"><img src="images/star.png"><img src="images/star.png">

@@ -45,7 +45,7 @@ $DIR $PROG $Extension
 $Debug $ShowSteps
 $DebugResetDone $DNSLookupAlreadyDone
 /;
-$DIR=$PROG=$Extension="";
+$DIR=$PROG=$Extension='';
 $Debug=$ShowSteps=0;
 $DebugResetDone=$DNSLookupAlreadyDone=0;
 # Time vars
@@ -160,13 +160,13 @@ use vars qw/
 $DirLock $DirCgi $DirData $DirIcons $DirLang $AWScript $ArchiveFileName
 $AllowAccessFromWebToFollowingIPAddresses $HTMLHeadSection $HTMLEndSection $LinksToWhoIs $LinksToIPWhoIs
 $LogFile $LogFormat $LogSeparator $Logo $LogoLink $StyleSheet $WrapperScript $SiteDomain
-$ErrorMessages
+$URLQuerySeparators $ErrorMessages
 /;
 ($DirLock, $DirCgi, $DirData, $DirIcons, $DirLang, $AWScript, $ArchiveFileName,
 $AllowAccessFromWebToFollowingIPAddresses, $HTMLHeadSection, $HTMLEndSection, $LinksToWhoIs, $LinksToIPWhoIs,
 $LogFile, $LogFormat, $LogSeparator, $Logo, $LogoLink, $StyleSheet, $WrapperScript, $SiteDomain,
-$ErrorMessages)=
-('','','','','','','','','','','','','','','','','','','','','');
+$URLQuerySeparators, $ErrorMessages)=
+('','','','','','','','','','','','','','','','','','','','','','');
 use vars qw/
 $color_Background $color_TableBG $color_TableBGRowTitle
 $color_TableBGTitle $color_TableBorder $color_TableRowTitle $color_TableTitle
@@ -1128,6 +1128,7 @@ sub Parse_Config {
 			next;
 			}
 		if ($param =~ /^URLNotCaseSensitive$/)		{ $URLNotCaseSensitive=$value; next; }
+		if ($param =~ /^URLQuerySeparators$/)		{ $URLQuerySeparators=$value; $URLQuerySeparators =~ s/\s//g; next; }
 		if ($param =~ /^URLWithQuery$/)				{ $URLWithQuery=$value; next; }
 		if ($param =~ /^URLWithQueryWithoutFollowingParameters$/)	{
 			foreach my $elem (split(/\s+/,$value))	{ push @URLWithQueryWithoutFollowingParameters,$elem; }
@@ -1506,6 +1507,7 @@ sub Check_Config {
 	if ($KeepBackupOfHistoricFiles !~ /[0-1]/)     	{ $KeepBackupOfHistoricFiles=0; }
 	if (! $DefaultFile[0])                          { $DefaultFile[0]="index.html"; }
 	if ($URLNotCaseSensitive !~ /[0-1]/)           	{ $URLNotCaseSensitive=0; }
+	if (! $URLQuerySeparators)                 		{ $URLQuerySeparators='?'; }
 	if ($URLWithQuery !~ /[0-1]/)                 	{ $URLWithQuery=0; }
 	if ($URLReferrerWithQuery !~ /[0-1]/)          	{ $URLReferrerWithQuery=0; }
 	if ($WarningMessages !~ /[0-1]/)              	{ $WarningMessages=1; }
@@ -4990,16 +4992,19 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 		#-----------------------------------------------
 		# Possible URL syntax for $field[$pos_url]: /mydir/mypage.ext?param1=x&param2=y#aaa, /mydir/mypage.ext#aaa, /
 		my $urlwithnoquery;
+		my $tokenquery;
 		my $standalonequery;
 		if ($URLWithQuery) {
 			if ($URLNotCaseSensitive) { $field[$pos_url] =~ tr/A-Z/a-z/; }
 			$urlwithnoquery=$field[$pos_url];
-			my $foundparam=($urlwithnoquery =~ s/\?(.*)$//);
-			$standalonequery="$1";
+			my $foundparam=($urlwithnoquery =~ s/([$URLQuerySeparators])(.*)$//);
+			$tokenquery="$1";
+			$standalonequery="$2";
 			# For IIS setup, if pos_query is enabled we need to combine the URL to query strings
-			if (! $foundparam && $pos_query >=0 && $field[$pos_query] && $field[$pos_query] ne "-") {
+			if (! $foundparam && $pos_query >=0 && $field[$pos_query] && $field[$pos_query] ne '-') {
 				$foundparam=1;
-				$field[$pos_url] .= "?" . $field[$pos_query];
+				$field[$pos_url] .= '?'.$field[$pos_query];
+				$tokenquery='?';
 				$standalonequery=$field[$pos_query];
 			}
  			# Remove params that are marked to be ignored in URLWithQueryWithoutFollowingParameters
@@ -5008,16 +5013,17 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 				else { map {$field[$pos_url] =~ s/$_=[^&]*//;} @URLWithQueryWithoutFollowingParameters; }
  				# Cut starting or trailing ? or &
  				$field[$pos_url] =~ tr/&/&/s;
- 				$field[$pos_url] =~ s/\?&/\?/;
- 				$field[$pos_url] =~ s/[\?&]$//;
+ 				$field[$pos_url] =~ s/[$tokenquery]&/$tokenquery/;
+ 				$field[$pos_url] =~ s/[$tokenquery&]$//;
  			}
 		}
 		else {
 			# Trunc CGI parameters in URL
 			if ($URLNotCaseSensitive) { $field[$pos_url] =~ tr/A-Z/a-z/; }
-			$field[$pos_url] =~ s/\?(.*)$//;
+			$field[$pos_url] =~ s/([$URLQuerySeparators])(.*)$//;
 			$urlwithnoquery=$field[$pos_url];
-			$standalonequery=$1||"";
+			$tokenquery="$1";
+			$standalonequery="$2";
 		}
 		# Here now urlwithnoquery is /mydir/mypage.ext, /mydir, /
 
