@@ -580,7 +580,7 @@ if ($bidon =~ /^y/i) {
 if ($WebServerChanged) {
 	if ($OS eq 'linux') 	{
 		print "\n-----> Restart Apache with '/usr/bin/service httpd restart'\n";
-	 	my $ret=`/usr/bin/service httpd restart`;
+	 	my $ret=`/sbin/service httpd restart`;
 	}
 	elsif ($OS eq 'windows')	{
 		foreach my $key (keys %ApachePath) {
