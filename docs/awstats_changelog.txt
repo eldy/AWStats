@@ -63,6 +63,8 @@ New features/improvements:
 - Added percent column for file types.
 - The robot chart now shows details between hits on robots.txt file and
   other hits.
+- Count of keywords/keyphrases does not increment counter for hits made
+  on images from a google cached page.
 - Added patch 857319: Allow several IPs and IP ranges in
   AllowAccessFromWebToFollowingIPAddresses parameter.
 - Added experimental graphapplet plugin (graph are built by applet).
