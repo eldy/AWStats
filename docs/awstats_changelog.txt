@@ -19,9 +19,11 @@ New features/improvments:
   provided.
 - Add meta tags robots noindex,nofollow to avoid indexing of stats pages by
   compliant robots.
-- Added count for "Add to favourites" (must remove the "robots.txt" and
-  "favicon.ico" entries off your SkipFiles parameter in your config file to
-  have this feature working.
+- Added a "Miscellanous chart" to report ratio of Browsers that support:
+  Java, Flash, Real reader, Quicktime reader, WMA reader, PDF reader.
+- "Miscellanous chart" also report the "Add to favourites" (must remove the
+  "robots.txt" and "favicon.ico" entries off your SkipFiles parameter in your
+  config file to have this feature working.
 
 Other/Documentation:
 - Updated documentation.

@@ -104,7 +104,7 @@ use vars qw/
 $StaticExt
 $DNSStaticCacheFile
 $DNSLastUpdateCacheFile
-$LogScreenSizeUrl
+$MiscTrackerUrl
 $Lang
 $MaxRowsInHTMLOutput
 $MaxLengthOfURL
@@ -115,7 +115,7 @@ $MaxLengthOfStoredUA
 $StaticExt='html';
 $DNSStaticCacheFile='dnscache.txt';
 $DNSLastUpdateCacheFile='dnscachelastupdate.txt';
-$LogScreenSizeUrl='logscreensizeurl';
+$MiscTrackerUrl=quotemeta('/js/awstats_misc_tracker.js');
 $Lang='auto';
 $MaxRowsInHTMLOutput=1000;
 $MaxLengthOfStoredURL=256;			# Note: Apache LimitRequestLine is default to 8190
@@ -211,6 +211,7 @@ use vars qw/
 @_from_p = @_from_h = @_time_p = @_time_h = @_time_k = ();
 @fieldlib = @keylist = ();
 use vars qw/
+@MiscListOrder %MiscListCalc
 @OSFamily @BrowsersFamily @SessionsRange %SessionsAverage %LangBrowserToAwstats
 @HostAliases @AllowAccessFromWebToFollowingAuthenticatedUsers
 @DefaultFile @SkipDNSLookupFor
@@ -223,6 +224,8 @@ use vars qw/
 @ExtraFirstColumnValuesType @ExtraFirstColumnValuesTypeVal
 @PluginsToLoad 
 /;
+@MiscListOrder=('AddToFavourites','JavaEnabled','DirectorSupport','FlashSupport','RealPlayerSupport','QuickTimeSupport','MediaPlayerSupport','PDFSupport');
+%MiscListCalc=('TotalMisc'=>'','AddToFavourites'=>'v','JavaEnabled'=>'hm','DirectorSupport'=>'hm','FlashSupport'=>'hm','RealPlayerSupport'=>'hm','QuickTimeSupport'=>'hm','MediaPlayerSupport'=>'hm','PDFSupport'=>'hm');
 @OSFamily=('win','mac');
 @BrowsersFamily=('msie','netscape');
 @SessionsRange=('0s-30s','30s-2mn','2mn-5mn','5mn-15mn','15mn-30mn','30mn-1h','1h+');
@@ -1409,7 +1412,7 @@ sub Check_Config {
 	if ($NbOfLinesForCorruptedLog !~ /^\d+/ || $NbOfLinesForCorruptedLog<1)	{ $NbOfLinesForCorruptedLog=50; }
 	if ($Expires !~ /^\d+/)                 		{ $Expires=0; }
 	if ($DecodeUA !~ /[0-1]/)						{ $DecodeUA=0; }
-	$LogScreenSizeUrl||='logscreensizeurl';
+	$MiscTrackerUrl||=quotemeta('/js/awstats_misc_tracker.js');
 	# Optional accuracy setup section
 	if ($LevelForRobotsDetection !~ /^\d+/)       	{ $LevelForRobotsDetection=2; }
 	if ($LevelForBrowsersDetection !~ /^\d+/)     	{ $LevelForBrowsersDetection=2; }
@@ -1932,9 +1935,9 @@ sub Read_History_With_TmpUpdate {
 					@field=split(/\s+/,$_); $countlines++;
 				}
 				if ($Debug) { debug(" End of MISC section ($count entries, $countloaded loaded)"); }
-				delete $SectionsToLoad{'time'};
-				if ($SectionsToSave{'time'}) {
-					Save_History('time',$year,$month); delete $SectionsToSave{'time'};
+				delete $SectionsToLoad{'misc'};
+				if ($SectionsToSave{'misc'}) {
+					Save_History('misc',$year,$month); delete $SectionsToSave{'misc'};
 					if ($withpurge) { %_misc_p=(); %_misc_h=(); %_misc_k=(); }
 				}
 				if (! scalar %SectionsToLoad) { debug(" Stop reading history file. Got all we need."); last; }
@@ -3500,8 +3503,8 @@ sub Save_History {
 		print HISTORYTMP "\n";
 		print HISTORYTMP "# Misc ID - Pages - Hits - Bandwidth\n";
 		$ValueInFile{$sectiontosave}=tell HISTORYTMP;
-		print HISTORYTMP "BEGIN_MISC ".(scalar keys %_misc_h)."\n";
-		foreach my $key (keys %_misc_h) { print HISTORYTMP "$key ".int($_misc_p{$key}||0)." $_misc_h{$key} ".int($_misc_k{$key}||0)."\n"; }
+		print HISTORYTMP "BEGIN_MISC ".(scalar keys %MiscListCalc)."\n";
+		foreach my $key (keys %MiscListCalc) { print HISTORYTMP "$key ".int($_misc_p{$key}||0)." ".int($_misc_h{$key}||0)." ".int($_misc_k{$key}||0)."\n"; }
 		print HISTORYTMP "END_MISC\n";
 	}
 	if ($sectiontosave eq 'errors') {
@@ -5228,7 +5231,7 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 		if ($timerecord > $LastLine) { $LastLine = $timerecord; }	# Test should always be true except with not sorted log files
 
 		# Skip for robot init
-		if ($field[$pos_url] =~ /^\/robots.txt$/i) {
+		if ($field[$pos_url] =~ /^\/robots\.txt$/i) {
 			# TODO. Add robot in a list if URL is robots.txt (Note: robot referer value can be same than a normal browser)
 			$qualifdrop="Dropped record (URL $field[$pos_url] is a robot init check)";
 		}
@@ -5266,13 +5269,24 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 		# Convert $field[$pos_size]
 		# if ($field[$pos_size] eq '-') { $field[$pos_size]=0; }
 
-		# Check screen size (must be before return code)
-		#-----------------------------------------------
-		if ($field[$pos_url] =~ /^\/$LogScreenSizeUrl/) {
-			if ($pos_query >=0 && $field[$pos_query]) { # For this fucking IIS in pos_query mode
-				if ($field[$pos_query] =~ /w=(\d+)&h=(\d+)/) { $_screensize_h{"$1x$2"}++; next; }
+		# Check misc tracker (must be before return code)
+		#------------------------------------------------
+		if ($field[$pos_url] =~ /^$MiscTrackerUrl/) {
+			my $query=$field[$pos_url];
+			if ($pos_query >=0 && $field[$pos_query]) { $query=$field[$pos_query]; } # For this fucking IIS in pos_query mode
+			my $foundparam=0;
+			foreach my $param (split(/&/,$query)) {
+				if ($param =~ /SCREEN=(\d+)x(\d+)/) { $foundparam++; $_screensize_h{"$1x$2"}++; next; }
+#				if ($param =~ /CDI=(\d+)/) 			{ $foundparam++; $_screendepth_h{"$1"}++; next; }
+				if ($param =~ /JAVA=(\w+)/) 		{ $foundparam++; if ($1 eq "true") { $_misc_h{"JavaEnabled"}++; } next; }
+				if ($param =~ /SHK=(\w+)/) 			{ $foundparam++; if ($1 eq "Y")    { $_misc_h{"DirectorSupport"}++; } next; }
+				if ($param =~ /FLA=(\w+)/) 			{ $foundparam++; if ($1 eq "Y")    { $_misc_h{"FlashSupport"}++; } next; }
+				if ($param =~ /RP=(\w+)/) 			{ $foundparam++; if ($1 eq "Y")    { $_misc_h{"RealPlayerSupport"}++; } next; }
+				if ($param =~ /MOV=(\w+)/) 			{ $foundparam++; if ($1 eq "Y")    { $_misc_h{"QuickTimeSupport"}++; } next; }
+				if ($param =~ /WMA=(\w+)/) 			{ $foundparam++; if ($1 eq "Y")    { $_misc_h{"MediaPlayerSupport"}++; } next; }
+				if ($param =~ /PDF=(\w+)/) 			{ $foundparam++; if ($1 eq "Y")    { $_misc_h{"PDFSupport"}++; } next; }
 			}
-			elsif ($field[$pos_url] =~ /w=(\d+)&h=(\d+)/) { $_screensize_h{"$1x$2"}++; next; }
+			if ($foundparam) { $_misc_h{"TotalMisc"}++; }
 		}
 		# Check favicon
 		#-----------------------------------------------
@@ -8822,10 +8836,13 @@ if (scalar keys %HTMLOutput) {
 			my $title="$Message[139]";
 			&tab_head("$title",19);
 			print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[139]</TH><TH width=80>&nbsp</TH></TR>\n";
-			foreach my $key (keys %_misc_h) {
+			foreach my $key (@MiscListOrder) {
 				print "<TR>";
 				print "<TD CLASS=AWS>$key</TD>";
-				print "<TD>$_misc_h{$key} / $TotalVisits</TD>";
+				print "<TD>".int($_misc_h{$key}||0)." / ";
+				if ($MiscListCalc{$key} eq 'v') { print $TotalVisits; }
+				if ($MiscListCalc{$key} eq 'hm') { print $_misc_h{'TotalMisc'}; }
+				print "</TD>";
 				print "</TR>\n";
 			}
 			&tab_end;
