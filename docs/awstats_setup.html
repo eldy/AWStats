@@ -189,7 +189,7 @@ See <a href="awstats_benchmark.html">Benchmark page</a> for more accurate inform
 <br>
 
 <br>
-* Then, new updates should be made from an automatic (command is same than first process)<br>
+* Then, new updates should be made from an automatic process (command is same than first process).<br>
 You can add instructions in your <b>crontab</b> (Unix/Linux) or your <b>task scheduler</b> (for
 Windows), to launch frequently this Awstats update process.<br>
 For sites with:<br>
@@ -220,8 +220,14 @@ This is how to use all other possible output options:<br>
 <b><i>perl awstats.pl -config=virtualhostname -output=allhosts -staticlinks > awstats.virtualhostname.allhosts.html</i></b><br>
 <b><i>perl awstats.pl -config=virtualhostname -output=lasthosts -staticlinks > awstats.virtualhostname.lasthosts.html</i></b><br>
 <b><i>perl awstats.pl -config=virtualhostname -output=unknownip -staticlinks > awstats.virtualhostname.unknownip.html</i></b><br>
+<b><i>perl awstats.pl -config=virtualhostname -output=alllogins -staticlinks > awstats.virtualhostname.alllogins.html</i></b><br>
+<b><i>perl awstats.pl -config=virtualhostname -output=lastlogins -staticlinks > awstats.virtualhostname.lastlogins.html</i></b><br>
 <b><i>perl awstats.pl -config=virtualhostname -output=urldetail -staticlinks > awstats.virtualhostname.urldetail.html</i></b><br>
 <b><i>perl awstats.pl -config=virtualhostname -output=urldetail:</b>filter<b> -staticlinks > awstats.virtualhostname.urldetailfiltered.html</i></b><br>
+<b><i>perl awstats.pl -config=virtualhostname -output=urlentry -staticlinks > awstats.virtualhostname.urlentry.html</i></b><br>
+<b><i>perl awstats.pl -config=virtualhostname -output=urlentry:</b>filter<b> -staticlinks > awstats.virtualhostname.urlentryfiltered.html</i></b><br>
+<b><i>perl awstats.pl -config=virtualhostname -output=urlexit -staticlinks > awstats.virtualhostname.urlexit.html</i></b><br>
+<b><i>perl awstats.pl -config=virtualhostname -output=urlexit:</b>filter<b> -staticlinks > awstats.virtualhostname.urlexitfiltered.html</i></b><br>
 <b><i>perl awstats.pl -config=virtualhostname -output=browserdetail -staticlinks > awstats.virtualhostname.browserdetail.html</i></b><br>
 <b><i>perl awstats.pl -config=virtualhostname -output=unknownbrowsers -staticlinks > awstats.virtualhostname.unknownbrowsers.html</i></b><br>
 <b><i>perl awstats.pl -config=virtualhostname -output=unknownos -staticlinks > awstats.virtualhostname.unknownos.html</i></b><br>
@@ -234,11 +240,10 @@ This is how to use all other possible output options:<br>
 Note: If you prefer, you can use <a href="awstats_tools.html#awstats_buildstaticpages">awstats_buildstaticpages</a> tool to
 build all those pages in one command.<br>
 <br>
-* If you prefer, you can also view dynamically your statistics from a browser.<br>
+* Another solution is to view dynamically your statistics from a browser.<br>
 If you named your config file awstats.<i>virtualhostname</i>.conf, use URL:<br>
 <b><i>http://www.myserver.mydomain/cgi-bin/awstats.pl?config=virtualhostname</i></b><br>
-where <i>virtualhostname</i> is used to know which config file to use (AWStats
-will use awstats.<i>virtualhostname</i>.conf file).<br>
+where <i>virtualhostname</i> is used to know which config file to use (AWStats will use awstats.<i>virtualhostname</i>.conf file).<br>
 If you named your config file awstats.conf, just use URL:<br>
 <b><i>http://www.myserver.mydomain/cgi-bin/awstats.pl</i></b><br>
 <br>
