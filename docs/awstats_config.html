@@ -186,6 +186,17 @@ when reading it), follow the example:<br>
 <li><a href="#LoadPlugin">LoadPlugin</a>
 </ul>
 
+<br><b>EXTRA</b><br>
+<ul>
+<li><a href="#Extra">ExtraSectionNameX</a>
+<li><a href="#Extra">ExtraSectionConditionX</a>
+<li><a href="#Extra">ExtraSectionFirstColumnTitleX</a>
+<li><a href="#Extra">ExtraSectionFirstColumnValuesX</a>
+<li><a href="#Extra">ExtraSectionStatTypesX</a>
+<li><a href="#Extra">MaxNbOfExtraX</a>        
+<li><a href="#Extra">MinHitExtraX</a>                 
+</ul>
+
 <br><b>INLUDES</b><br>
 <ul>
 <li><a href="#include">#include</a>
@@ -1359,6 +1370,45 @@ color_u,color_v,color_p,color_h,color_k,color_s<br>
 <br># Perl modules required: ...
 <br>#
 <br>LoadPlugin="pluginname"
+
+<br><br><hr>
+
+<a name="Extra"><b>Extra...</b></a><br>
+<b>Version : </b>5.2 +<br>
+<br># You can define your own charts, you choose here what are rows and columns
+<br># keys. This feature is particularly usefull for marketing purpose, tracking
+<br># products orders for example.
+<br># For this, edit all parameters of Extra section. Each set of parameter is a
+<br># different chart. For several charts, duplicate section changing the number.
+<br># Note that each Extra section reduces AWStats speed by 10%.
+<br>#
+<br># WARNING: A wrong setup of Extra section can result in a too large arrays
+<br># that will consume all your memory, making AWStats unusable after several
+<br># updates, so be sure to setup it correctly.
+<br># In most cases, you don't need this feature.
+<br>#
+<br># ExtraSectionNameX is title of your personalized chart.
+<br># ExtraSectionConditionalX are conditions on URL and/or QUERY_STRING and/or
+<br>#   REFERER you can use to count or not the hit. Use "|" for "OR".
+<br># ExtraSectionFirstColumnTitleX is the first column title of the chart.
+<br># ExtraSectionFirstColumnValuesX is a Regex string to tell AWStats how to 
+<br>#   extract the value used for first column. Each different value found will
+<br>#   be a different row. Be sure that list of different values is "limited" to
+<br>#   avoid "not enough memory" problems !
+<br># ExtraSectionStatTypesX are things you want to count. You can use standard
+<br>#   code letters (P for pages,H for hits,B for bandwidth,L for last access).
+<br># MaxNbOfExtraX is maximum number of rows shown in chart.
+<br># MinHitExtraX is minimum number of hits required to be shown in chart.
+<br>#
+<br>
+<br># Example to report the 20 products the most ordered by "order.cgi" script
+<br>ExtraSectionName1="Product orders"
+<br>ExtraSectionCondition1="URL,/cgi-bin/order.cgi"
+<br>ExtraSectionFirstColumnTitle1="Product ID"
+<br>ExtraSectionFirstColumnValues1="QUERY_STRING,productid=([^&]+)"
+<br>ExtraSectionStatTypes1=PL
+<br>MaxNbOfExtra1=20
+<br>MinHitExtra1=1
 
 <br><br><hr>
 
