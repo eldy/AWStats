@@ -4342,7 +4342,7 @@ sub AtLeastOneNotNull {
 #--------------------------------------------------------------------
 # Function:     Insert a form filter
 # Parameters:   Name of filter field, default for filter field, default for exclude filter field
-# Input:        $StaticLinks, $QueryString
+# Input:        $StaticLinks, $QueryString, $SiteConfig, $DirConfig
 # Output:       HTML Form
 # Return:       None
 #--------------------------------------------------------------------
@@ -4367,6 +4367,7 @@ sub ShowFormFilter {
 		print "<TD>";
 		print "<input type=hidden name=\"output\" value=\"".join(',',keys %HTMLOutput)."\">\n";
 		if ($SiteConfig) { print "<input type=hidden name=\"config\" value=\"$SiteConfig\">\n"; }
+ 		if ($DirConfig)  { print "<input type=hidden name=\"configdir\" value=\"$DirConfig\">\n"; }
 		if ($QueryString =~ /(^|&)year=(\d\d\d\d)/i) { print "<input type=hidden name=\"year\" value=\"$2\">\n"; }
 		if ($QueryString =~ /(^|&)month=(\d\d)/i || $QueryString =~ /(^|&)month=(all)/i) { print "<input type=hidden name=\"month\" value=\"$2\">\n"; }
 		if ($QueryString =~ /(^|&)lang=(\w+)/i) { print "<input type=hidden name=\"lang\" value=\"$2\">\n"; }
@@ -4927,7 +4928,7 @@ if ($ENV{'GATEWAY_INTERFACE'}) {	# Run from a browser as CGI
 	if ($QueryString =~ /logfile=([^&]+)/i)				{ $LogFile=&DecodeEncodedString("$1"); }
 	if ($QueryString =~ /diricons=([^&]+)/i)			{ $DirIcons=&DecodeEncodedString("$1"); }
 	if ($QueryString =~ /pluginmode=([^&]+)/i)			{ $PluginMode=&DecodeEncodedString("$1"); }
-	if ($QueryString =~ /configdir=([^&]+)/i)			{ $DirConfig="$1"; }
+	if ($QueryString =~ /configdir=([^&]+)/i)			{ $DirConfig=&DecodeEncodedString("$1"); }
 	# All filters
 	if ($QueryString =~ /hostfilter=([^&]+)/i)			{ $FilterIn{'host'}=&DecodeEncodedString("$1"); }			# Filter on host list can also be defined with hostfilter=filter
 	if ($QueryString =~ /hostfilterex=([^&]+)/i)		{ $FilterEx{'host'}=&DecodeEncodedString("$1"); }			#
@@ -6652,6 +6653,7 @@ if (scalar keys %HTMLOutput) {
 				print "</select>\n";
 				print "<input type=hidden name=\"output\" value=\"".join(',',keys %HTMLOutput)."\">\n";
 				if ($SiteConfig) { print "<input type=hidden name=\"config\" value=\"$SiteConfig\">\n"; }
+ 				if ($DirConfig)  { print "<input type=hidden name=\"configdir\" value=\"$DirConfig\">\n"; }
 				if ($QueryString =~ /lang=(\w+)/i) { print "<input type=hidden name=\"lang\" value=\"$1\">\n"; }
 				if ($QueryString =~ /debug=(\d+)/i) { print "<input type=hidden name=\"debug\" value=\"$1\">\n"; }
 				if ($FrameName eq 'mainright') { print "<input type=hidden name=\"framename\" value=\"index\">\n"; }
