@@ -666,7 +666,7 @@ print "\n-----> Add update process inside a scheduler\n";
 if ($OS eq 'linux' || $OS eq "macosx") {
 	print "Sorry, configure.pl does not support automatic add to cron yet.\n";
 	print "You can do it manually by adding the following command to your cron:\n";
-	print "$AWSTATS_CGI_PATH/awstats -update -config=".($site?$site:"myvirtualserver")."\n";
+	print "$AWSTATS_CGI_PATH/awstats.pl -update -config=".($site?$site:"myvirtualserver")."\n";
 	print "Or if you have several config files and prefer having only one command:\n";
 	print "$AWSTATS_PATH/tools/awstats_updateall.pl now\n";
 	print "Press ENTER to continue... ";
