@@ -1,4 +1,9 @@
 #
+# Content of this file, with correct values, can be automatically added to
+# your Apache server by using the AWStats configure.pl tool.
+#
+
+#
 # Directives to add to your Apache conf file to allow use of AWStats as a CGI.
 # Note that path "/usr/local/awstats/" must reflect your AWStats install path.
 #
