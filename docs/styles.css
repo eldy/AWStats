@@ -18,3 +18,5 @@ a:hover		{ font: 14px verdana,arial; color: #2200C0; font-family: sans-serif; te
 td.CFAQ		{ font: 14px verdana,arial; color: #000000; font-family: sans-serif; text-decoration: none; }
 .CProblem	{ font: 14px verdana,arial; color: #660000; font-family: sans-serif; text-decoration: none; }
 .CSolution	{ font: 14px verdana,arial; color: #448866; font-family: sans-serif; text-decoration: none; }
+
+input     { font: 12px verdana,arial; font-family: sans-serif; }
