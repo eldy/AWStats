@@ -517,7 +517,9 @@ use vars qw/ @Message /;
 'Mails successfully sent',
 'Mails failed/refused',
 'Sensitive targets',
-'Javascript disabled'
+'Javascript disabled',
+'Created by',
+'plugins'
 );
 
 
@@ -670,11 +672,12 @@ sub html_end {
 		if ($FrameName ne 'index' && $FrameName ne 'mainleft') {
 			print "$Center<br /><br />\n";
 			print "<span dir=\"ltr\" style=\"font: 11px verdana, arial, helvetica; color: #$color_text;\">";
-			print "<b>Advanced Web Statistics $VERSION</b> - <a href=\"http://awstats.sourceforge.net\" target=\"awstatshome\">Created by $PROG";
+			print "<b>Advanced Web Statistics $VERSION</b> - <a href=\"http://awstats.sourceforge.net\" target=\"awstatshome\">";
+			print $Message[169]." $PROG";
 			if ($listplugins) {
 				my $atleastoneplugin=0;
 				foreach my $pluginname (keys %{$PluginsLoaded{'init'}}) {
-					if (! $atleastoneplugin) { $atleastoneplugin=1; print " (with plugin "; }
+					if (! $atleastoneplugin) { $atleastoneplugin=1; print " ($Message[170]: "; }
 					else { print ", "; }
 					print "$pluginname";
 				}
@@ -9551,7 +9554,7 @@ if (scalar keys %HTMLOutput) {
 				if ($_url_k{$key}/($_url_p{$key}||1) > $max_k) { $max_k = $_url_k{$key}/($_url_p{$key}||1); }
 			}
 			foreach my $key (@keylist) {
-				print "<tr><td class=\"aws\">xx $key";
+				print "<tr><td class=\"aws\">";
 				&ShowURLInfo($key);
 				print "</td>";
 				my $bredde_p=0; my $bredde_e=0; my $bredde_x=0; my $bredde_k=0;
