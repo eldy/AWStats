@@ -38,18 +38,29 @@ AWStats update process must be ran frequently, so it's important to know what is
 speed to choose an optimum delay between each update process according to AWStats speed and
 the refresh rate you need to have.<br>
 AWStats speed depends on AWStats version and options/setup you use in configuration file.<br>
+
 <br>
-<b><u>This is benchmark results with AWStats version 4.0 and a common configuration:</u></b><br>
+<br>
+<b><u>This is benchmark results with AWStats version 4.1 and a common configuration:</u></b><br>
+<br>
 HARDWARE: Athlon 1 GHz / 128Mb<br>
 SOFTWARE: Windows 2000 / ActivePerl 5.6<br>
 CONFIG OPTIONS: <a href="awstats_config.html#LogFormat">LogFormat</a>=1, <a href="awstats_config.html#DNSLookup">DNSLookup</a>=0<br>
 AVERAGE SPEED: <b>4100</b> lines by seconds<br>
 Other times for different kind of web sites are shown lower in this page...<br>
+
+<br>
 <br>
 <b><u>This is other important information to know:</u></b><br>
+<br>
 - A log file size is about <b>150</b> (NCSA common/CLF log files) to <b>300 times</b> (NCSA extended/XLF/ELF log files) its number of lines,<br>
 - A <b>30Mb file</b> = <b>100,000 lines</b> = <b>20,000 pages</b> (with 5 hits/page) = <b>2,500 visits</b> (with 8 pages/visits) => <b>75 seconds</b> (Athlon 1GHz)<br>
-- History files resuming the log analyze is about <b>1/120</b> of source log file(s).<br>
+- History files (resuming the log analyze) has the following size (one file a month) :
+<!-- 15Ko + 60*(1*719/720+100*1/720)*x + 100*y + 2*100*x*4/100 + 20*x*1.4*10*10*(2/100+1/100) -->
+<b>15000+160*x+100*y bytes</b> (where x is number of unique visitors a month and y is number of different pages on web sites)<br>
+WARNING ! All those data are average values for a common public site. Calculation rule can be seriously changed
+according to web server or AWStats configuration and web site content.<br>
+
 <br>
 Don't forget that benchmarks of log analyzers are made without reverse DNS lookup
 because this depends on your system, networks and Internet and not on the
@@ -59,7 +70,9 @@ So, have a look at the following chart to:<br>
 - Get more information and advice on a good setup for your site.<br>
 
 <br>
+<br>
 <b><u>This is examples of frequency/parameters you should use to have a good use of AWStats:</u></b><br>
+<br>
 <table border=1 cellspacing=0 cellpadding=2 style="font: 12px; arial,verdana">
 <tr bgcolor=#EEEEEE><td rowspan=2>Your Web site size</td><td>Recommended values for parameters</td><td rowspan=2>Recommended update frequency<br>(Rotate log delay)</td><td rowspan=2>Memory required**</td><td rowspan=2>Duration***</td></tr>
 <tr bgcolor=#EEEEEE><td>DNSLookup*</td></tr>
@@ -82,9 +95,10 @@ So, have a look at the following chart to:<br>
 ** Free memory required for update process (in MB). Warning: If you use the <a href="awstats_config.html#URLWithQuery">URLWithQuery</a> option, this value is doubled.<br>
 *** Duration is with Athlon 1GHz/128Mb and LogFormat=1.<br>
 
-
+<br>
 <br>
 <b><u>This is a summary of main ways to speed up AWStats:</u></b><br>
+<br>
 - You can disable <a href="awstats_config.html#DNSLookup">DNSLookup</a> in AWStats (set DNSLookup=0) but this requires
 that hosts addresses in your log file are already resolved (need to setup your
 web server to do so). Log analyze speed can be increased by 2 to 50 times but your web server will be slowed.<br>
