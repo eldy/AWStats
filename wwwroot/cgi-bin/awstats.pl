@@ -69,9 +69,9 @@ $found, $internal_link, $new) = ();
 %DayBytes = %DayHits = %DayPages = %DayUnique = %DayVisits =
 %FirstTime = %HistoryFileAlreadyRead = %LastTime = %LastUpdate =
 %MonthBytes = %MonthHits = %MonthHostsKnown = %MonthHostsUnknown = %MonthPages = %MonthUnique = %MonthVisits =
-%listofyears = %monthlib = %monthnum = ();
+%monthlib = %monthnum = ();
 
-$VERSION="3.1 (build 33)";
+$VERSION="3.1 (build 35)";
 $Lang="en";
 
 # Default value
@@ -346,7 +346,7 @@ $AddOn=0;
 # OSHashID ("text that match in log after changing ' ' or '+' into '_' ", "osid")
 %OSHashID	= (
 # Windows OS family
-"win_9x_4\.9","winme",			# Must be before windows_98
+"win_9x_4\.9","winme",
 "windows2000","win2000",
 "windows_2000","win2000",
 "windows_nt_5","win2000",
@@ -360,13 +360,13 @@ $AddOn=0;
 "win95","win95",
 "windows_95","win95",
 "win16","win16",
-"windows_3","win16",			# This works for windows_31 and windows_3.1
+"windows_3","win16",
 "windows;i;16","win16",
 "wince","wince",
 "windows_ce","wince",
 # Macintosh OS family
-"mac_p","macintosh",			# This works for mac_ppc and mac_powerpc
-"mac_68","macintosh",			# This works for mac_6800 and mac_68k
+"mac_p","macintosh",
+"mac_68","macintosh",
 "macppc","macintosh",
 "macweb","macintosh",
 "macintosh","macintosh",
@@ -2574,6 +2574,7 @@ if ($UpdateStats) {
 if ($HTMLOutput) {
 	
 	my @filearray;
+	my %listofyears;
 	my $max_p; my $max_h; my $max_k; my $max_v;
 	my $rest_p; my $rest_h; my $rest_k; my $rest;
 	my $total_p; my $total_h;my $total_k;
