@@ -1,6 +1,6 @@
 # AWSTATS ROBOTS DATABASE
 #------------------------
-# Last update: 2001-12-02
+# Last update: 2001-12-10
 
 
 # List of active major robots
@@ -9,20 +9,20 @@
 "tcl",
 "ia_archiver",
 "scooter",
-"fast-Webcrawler",
+"fast-webcrawler",
 "bjaaland",
 "echo",
 "jeeves",
 "voila",
 "voyager",
 "mercator",
-"linkWalker",
+"linkwalker",
 "slurp",
 "wisenutbot",
 "gulliver",
 "myweb",
 "wget",
-"architextspider",
+"architext",
 "webbase",
 "muscatferret",
 "lycos",

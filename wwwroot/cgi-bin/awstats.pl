@@ -93,7 +93,7 @@ $color_h, $color_k, $color_link, $color_p, $color_s, $color_u, $color_v, $color_
 %monthlib = %monthnum = ();
 
 
-$VERSION="3.2 (build 77)";
+$VERSION="3.2 (build 78)";
 $Lang="en";
 
 # Default value
@@ -102,7 +102,6 @@ $MAXROWS       = 200000;	# Max number of rows for not limited HTML arrays
 $SortDir       = -1;		# -1 = Sort order from most to less, 1 = reverse order (Default = -1)
 $VisitTimeOut  = 10000;		# Laps of time to consider a page load as a new visit. 10000 = one hour (Default = 10000)
 $FullHostName  = 1;			# 1 = Use name.domain.zone to refer host clients, 0 = all hosts in same domain.zone are one host (Default = 1, 0 never tested)
-$MaxNbOfDays   = 31;
 $NbOfLinesForBenchmark=5000;
 $ShowBackLink  = 1;
 $Sort          = "";
@@ -409,7 +408,7 @@ sub DateIsValid {
 # Output:		Global variables
 #------------------------------------------------------------------------------
 sub Read_Config_File {
-	$FileConfig="";
+	$FileConfig=""; $FileSuffix="";
 	if (! $SiteConfig) { $SiteConfig=$ENV{"SERVER_NAME"}; }		# For backward compatibility
 	foreach my $dir ("$DIR","/etc/opt/awstats","/etc/awstats","/etc") {
 		my $searchdir=$dir;
@@ -469,7 +468,7 @@ sub Read_Config_File {
 			next;
 			}
 		if ($param =~ /^LogFormat/)            	{ $LogFormat=$value; next; }
-		if ($param =~ /^DirData/)               { 
+		if ($param =~ /^DirData/) { 
 			$DirData=$value; 
 			if (! -d $DirData) {
 				error("Error: AWStats database directory defined in config file by 'DirData' parameter ($DirData) does not exist or is not writable.");
@@ -482,7 +481,7 @@ sub Read_Config_File {
 		if ($param =~ /^SiteDomain/)			{ $SiteDomain=$value; next; }
 		if ($param =~ /^HostAliases/) {
 			my @felter=split(/\s+/,$value);
-			$i=0; foreach $elem (@felter)		{ $HostAliases[$i]=$elem; $i++; }
+			$i=0; foreach my $elem (@felter)	{ $HostAliases[$i]=$elem; $i++; }
 			next;
 			}
 		# Read optional section
@@ -494,27 +493,27 @@ sub Read_Config_File {
 		if ($param =~ /^DefaultFile/)           { $DefaultFile=$value; next; }
 		if ($param =~ /^SkipHosts/) {
 			my @felter=split(/\s+/,$value);
-			$i=0; foreach $elem (@felter)       { $SkipHosts[$i]=$elem; $i++; }
+			$i=0; foreach my $elem (@felter)    { $SkipHosts[$i]=$elem; $i++; }
 			next;
 			}
 		if ($param =~ /^SkipDNSLookupFor/) {
 			my @felter=split(/\s+/,$value);
-			$i=0; foreach $elem (@felter)       { $SkipDNSLookupFor[$i]=$elem; $i++; }
+			$i=0; foreach my $elem (@felter)    { $SkipDNSLookupFor[$i]=$elem; $i++; }
 			next;
 			}
 		if ($param =~ /^SkipFiles/) {
 			my @felter=split(/\s+/,$value);
-			$i=0; foreach $elem (@felter)       { $SkipFiles[$i]=$elem; $i++; }
+			$i=0; foreach my $elem (@felter)    { $SkipFiles[$i]=$elem; $i++; }
 			next;
 			}
 		if ($param =~ /^OnlyFiles/) {
 			my @felter=split(/\s+/,$value);
-			$i=0; foreach $elem (@felter)       { $OnlyFiles[$i]=$elem; $i++; }
+			$i=0; foreach my $elem (@felter)    { $OnlyFiles[$i]=$elem; $i++; }
 			next;
 			}
 		if ($param =~ /^NotPageList/) {
 			my @felter=split(/\s+/,$value);
-			$i=0; foreach $elem (@felter)       { $NotPageList[$i]=$elem; $i++; }
+			$i=0; foreach my $elem (@felter)    { $NotPageList[$i]=$elem; $i++; }
 			$foundNotPageList=1;
 			next;
 			}
@@ -1798,7 +1797,7 @@ if ($UpdateStats) {
 	}
 	$NewDNSLookup=$DNSLookup;
 
-	# Init global variables required for update process
+	# Init RobotArrayID required for update process
 	push @RobotArrayList,"major";
 	push @RobotArrayList,"other";
 	push @RobotArrayList,"generic";
@@ -1810,9 +1809,13 @@ if ($UpdateStats) {
 		else {
 			my $added=0;
 			foreach my $robotid (keys %RobotHashIDLib) {
-				# Check if robotid already in RobotArrayID
 				my $alreadyin=0;
+				# Check if robotid in RobotArrayID
 				foreach my $robotin (@RobotArrayID) {
+					if ($robotid eq $robotin) { $alreadyin=1; last; }
+				}
+				# Check if robotid in generic
+				foreach my $robotin (@{"RobotArrayID_generic"}) {
 					if ($robotid eq $robotin) { $alreadyin=1; last; }
 				}
 				if (! $alreadyin) {
@@ -1824,16 +1827,22 @@ if ($UpdateStats) {
 		}
 	}
 	debug("RobotArrayID has now ".@RobotArrayID." elements",2);
+	# Init HostAliases array
 	if (! @HostAliases) {
 		warning("Warning: HostAliases parameter is not defined, $PROG choose \"$SiteToAnalyze localhost 127.0.0.1\".");
 		$HostAliases[0]="$SiteToAnalyze"; $HostAliases[1]="localhost"; $HostAliases[2]="127.0.0.1";
 	}
 	my $SiteToAnalyzeIsInHostAliases=0;
 	foreach my $elem (@HostAliases) { if ($elem eq $SiteToAnalyze) { $SiteToAnalyzeIsInHostAliases=1; last; } }
-	if (! $SiteToAnalyzeIsInHostAliases) { $HostAliases[@HostAliases]=$SiteToAnalyze; }
+	if (! $SiteToAnalyzeIsInHostAliases) { 
+		unshift @HostAliases,$SiteToAnalyze;	# Add SiteToAnalyze at beginning of HostAliases Array
+	}
+	debug("HostAliases is now @HostAliases",2);
+	# Init SkipFiles array
 	if (! @SkipFiles) { $SkipFiles[0]="\.css\$";$SkipFiles[1]="\.js\$";$SkipFiles[2]="\.class\$";$SkipFiles[3]="robots\.txt\$"; }
+	debug("SkipFiles is now @SkipFiles",2);
 
-	&debug("Start Update process");
+	debug("Start Update process");
 
 	# GENERATING PerlParsingFormat
 	#------------------------------------------
@@ -2038,23 +2047,27 @@ if ($UpdateStats) {
 
 	# READING THE LAST PROCESSED HISTORY FILE
 	#------------------------------------------
-	# Search last file
+	my $monthtoprocess=0; my $yeartoprocess=0;
+
+	# Search last history file $PROG(MM)(YYYY)$FileSuffix.txt
+	my $yearmonthmax=0;
 	opendir(DIR,"$DirData");
 	@filearray = sort readdir DIR;
 	close DIR;
-	my $yearmonthmax=0;
 	foreach my $i (0..$#filearray) {
 		if ("$filearray[$i]" =~ /^$PROG([\d][\d])([\d][\d][\d][\d])$FileSuffix\.txt$/) {
 			if (int("$2$1") > $yearmonthmax) { $yearmonthmax=int("$2$1"); }
 		}
 	}
-	my $monthtoprocess=0; my $yeartoprocess=0;
-	if ($yearmonthmax =~ /^([\d][\d][\d][\d])([\d][\d])$/) {		# We found last history file
+	# We read last history file if found
+	if ($yearmonthmax =~ /^([\d][\d][\d][\d])([\d][\d])$/) {
 		$monthtoprocess=int($2);$yeartoprocess=int($1);
 		# We read LastTime in this last history file.
 		&Read_History_File($yeartoprocess,$monthtoprocess,1);
 	}
-
+	else {
+		$LastLine{"000000"}=0;
+	}
 
 	# PROCESSING CURRENT LOG
 	#------------------------------------------
@@ -2327,7 +2340,7 @@ if ($UpdateStats) {
 			# Count hostmachine
 			if (!$FullHostName) { s/^[\w\-]+\.//; };
 			if ($PageBool) {
-				if ($timeconnexion > ($_hostmachine_l{$_}+$VisitTimeOut)) {
+				if ($timeconnexion > (($_hostmachine_l{$_}||0)+$VisitTimeOut)) {
 					# This is a new visit
 					$MonthVisits{$yearmonth}++;
 					$DayVisits{$dayconnexion}++;
@@ -2575,8 +2588,9 @@ if ($UpdateStats) {
 	opendir(DIR,"$DirData");
 	@filearray = sort readdir DIR;
 	close DIR;
-	foreach $i (0..$#filearray) {
-		if ("$filearray[$i]" =~ /^$PROG(\d\d\d\d\d\d)$FileSuffix\.tmp\..*$/) {
+	foreach my $i (0..$#filearray) {
+		my $pid=$$;
+		if ("$filearray[$i]" =~ /^$PROG(\d\d\d\d\d\d)$FileSuffix\.tmp\.$pid$/) {
 			debug("Rename new tmp historic $PROG$1$FileSuffix.tmp.$$ into $PROG$1$FileSuffix.txt",1);
 			if (-s "$DirData/$PROG$1$FileSuffix.tmp.$$") {		# Rename files of this session with size > 0
 				if ($KeepBackupOfHistoricFiles) {
