@@ -12,6 +12,7 @@
 //
 // This allows AWStats to be enhanced with some miscellanous features:
 // - Screen size detection (TRKscreen)
+// - Window size detection (TRKwinsize)
 // - Screen color depth detection (TRKcdi)
 // - Java enabled detection (TRKjava)
 // - Macromedia Director plugin detection (TRKshk)
