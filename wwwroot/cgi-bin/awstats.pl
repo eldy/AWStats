@@ -3771,7 +3771,7 @@ EOF
 			if ($_url_k{$key}/($_url_p{$key}||1) > $max_k) { $max_k = $_url_k{$key}/($_url_p{$key}||1); }
 		}
 		foreach my $key (@keylist) {
-			my $nompage=CleanFromCSSA($Aliases{$key}?$Aliases{$key}:$key);
+			my $nompage=$Aliases{$key}?$Aliases{$key}:CleanFromCSSA($key);
 			print "<TR><TD CLASS=AWL>";
 			if (length($nompage)>$MaxLengthOfURL) { $nompage=substr($nompage,0,$MaxLengthOfURL)."..."; }
 			if ($ShowLinksOnUrl) { print "<A HREF=\"http://$SiteToAnalyze$key\">$nompage</A>"; }
@@ -4373,7 +4373,7 @@ EOF
 			if ($_url_k{$key}/($_url_p{$key}||1) > $max_k) { $max_k = $_url_k{$key}/($_url_p{$key}||1); }
 		}
 		foreach my $key (@keylist) {
-			my $nompage=CleanFromCSSA($Aliases{$key}?$Aliases{$key}:$key);
+			my $nompage=$Aliases{$key}?$Aliases{$key}:CleanFromCSSA($key);
 			print "<TR><TD CLASS=AWL>";
 			if (length($nompage)>$MaxLengthOfURL) { $nompage=substr($nompage,0,$MaxLengthOfURL)."..."; }
 			if ($ShowLinksOnUrl) {
