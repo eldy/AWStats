@@ -14,7 +14,7 @@
 #-------------------------------------------------------
 # Defines
 #-------------------------------------------------------
-$VERSION="2.24 (build 22)";
+$VERSION="2.24 (build 23)";
 $Lang=0;
 
 # Default value
@@ -53,6 +53,7 @@ $BarImageHorizontal_k = "barrehk.png";
 			"/YourRelativeUrl",						"<b>Your HTML text</b>"
 			);
 
+
 # ---------- Search engines names database ---------- (update the 10th january 2001)
 %SearchEnginesHash=(
 # Most common search engines
@@ -69,7 +70,6 @@ $BarImageHorizontal_k = "barrehk.png";
 "dmoz\.org","DMOZ",
 "search\.aol\.co","AOL",
 # Others
-"nomade\.fr/","Nomade",
 "hotbot\.","Hotbot",
 "webcrawler\.","WebCrawler",
 "metacrawler\.","MetaCrawler (Metamoteur)",
@@ -79,16 +79,19 @@ $BarImageHorizontal_k = "barrehk.png";
 "excite\.","Excite",
 "lokace\.", "Lokace",
 "spray\.","Spray",
-"ctrouve\.","C'est trouvé",
-"francite\.","Francité",
-"\.lbb\.org", "LBB",	"rechercher\.libertysurf\.fr","Libertysurf",
-"netfind\.aol\.com","AOL",		"recherche\.aol\.fr","AOL",
+"netfind\.aol\.com","AOL",
+"recherche\.aol\.fr","AOL",
 "nbci\.com/search","NBCI",
 "askjeeves\.","Ask Jeeves",
 "mamma\.","Mamma",
 "dejanews\.","DejaNews",
-"search\.com","Other search engines"
+"search\.dogpile\.com","Dogpile",
+"nomade\.fr/","Nomade", "ctrouve\.","C'est trouvé", "francite\.","Francité", "\.lbb\.org", "LBB", "rechercher\.libertysurf\.fr", "Libertysurf",
+"fireball\.de","Fireball", "suche\.web\.de","Web.de", "meta\.ger","MetaGer",
+"search\..*com","Other search engines"
 );
+
+
 
 # ---------- Search engines known URL database ---------- (update the 10th january 2001)
 %SearchEngineKnownUrl=(
@@ -105,7 +108,6 @@ $BarImageHorizontal_k = "barrehk.png";
 "dmoz\.org","search=",
 "search\.aol\.co","query=",
 # Others
-"nomade\.fr/","s=",
 "hotbot\.","mt=",
 "webcrawler","searchText=",
 "metacrawler\.","general=",
@@ -117,10 +119,14 @@ $BarImageHorizontal_k = "barrehk.png";
 "francite\.","name=",
 "nbci\.com/search","keyword=",
 "askjeeves\.","ask=",
-"mamma\.","query="
+"mamma\.","query=",
+"search\.dogpile\.com", "q=",
+"nomade\.fr/","s=",
+"fireball\.de","q=", "suche\.web\.de","su="
 );
 @WordsToCleanSearchUrl= ("act=","annuaire=","btng=","categoria=","cfg=","cou=","dd=","domain=","dt=","dw=","exec=","geo=","hc=","height=","hl=","hs=","kl=","lang=","loc=","lr=","matchmode=","medor=","message=","meta=","mode=","order=","page=","par=","pays=","pg=","pos=","prg=","qc=","refer=","sa=","safe=","sc=","sort=","src=","start=","stype=","tag=","temp=","theme=","url=","user=","width=","what=","\\.x=","\\.y=");
 # Never put the following exclusion ("Claus=","kw=","keyword=","MT","p=","q=","qr=","qt=","query=","s=","search=","searchText=") because they are strings that contain keywords we're looking for.
+
 
 # ---------- HTTP Code with tooltip --------
 %httpcode = (
@@ -1452,10 +1458,10 @@ sub Read_Config_File {
 	while (<CONFIG>) {
 		chomp $_;
 		$_ =~ s/#.*//;								# Remove comments
-		$_ =~ tr/	 /  /s;							# Change all blanks into " "
+		$_ =~ tr/\t /  /s;							# Change all blanks into " "
 		$_ =~ s/=/§/; @felter=split(/§/,$_);		# Change first "=" into "§" to split
 		$param=$felter[0]; $value=$felter[1];
-		$value =~ s/^ //; $value =~ s/ $//;
+		$value =~ s/^ *//; $value =~ s/ *$//;
 		$value =~ s/^\"//; $value =~ s/\"$//;
 		# Read main section
 		if ($param =~ /^LogFile/)               { $LogFile=$value; next; }
@@ -1791,7 +1797,7 @@ else {
 }
 ($DIR=$0) =~ s/([^\/\\]*)$//; ($PROG=$1) =~ s/\.([^\.]*)$//; $Extension=$1;
 $LocalSite =~ tr/A-Z/a-z/;
-$LocalSite =~ s/<//;		# This is to avoid 'Cross Site Scripting attacks'
+$LocalSite =~ s/<//g; $LocalSite =~ s/%//g;		# This is to avoid 'Cross Site Scripting attacks'
 $LocalSiteWithoutwww = $LocalSite; $LocalSiteWithoutwww =~ s/www\.//;
 if (($ENV{"GATEWAY_INTERFACE"} eq "") && ($ARGV[0] eq "" || $ARGV[0] ne "-h" || $ARGV[1] eq "")) {
 	print "----- $PROG $VERSION (c) Laurent Destailleur -----\n";
@@ -1979,19 +1985,21 @@ if (($YearRequired == $nowyear) && ($MonthRequired eq "year" || $MonthRequired =
 			#print "$#felter: $felter[0] $felter[1] $felter[2] $felter[3] $felter[4] $felter[5] $felter[6] $felter[7] $felter[8] $felter[9] $felter[10] $felter[11]<br>";
 		}
 		else {
-			$_ =~ s/ GET .* .* HTTP\// GET BAD_URL HTTP\//;		# Change ' GET x y z HTTP/' into ' GET x%20y%20z HTTP/'
+			#$_ =~ s/ GET .* .* HTTP\// GET BAD_URL HTTP\//;
+			if ($_ =~ / GET .* .* HTTP\//) { $_corrupted++; next; }
 			@felter=split(/ /,$_);
 		}
 #		$felter[1]=$felter[0]; shift @felter;					# This is for test when log format is "hostname ip_adress ...	"
 
 		# Check filters (here, log is in apache combined format, even with IIS)
 		#----------------------------------------------------------------------
-		if ($felter[5] eq 'HEAD') { next; }				# Keep only GET, POST but not HEAD, OPTIONS
-		if ($felter[5] eq 'OPTIONS') { next; }			# Keep only GET, POST but not HEAD, OPTIONS
-		if ($felter[6] =~ /^RC=/) { next; }				# A strange log record we need to forget
+		if ($felter[5] ne 'GET' && $felter[5] ne 'POST') {
+			if ($felter[5] ne 'HEAD' && $felter[5] ne 'OPTIONS') { $_corrupted++; }
+			next; }											# Keep only GET, POST but not HEAD, OPTIONS
+		if ($felter[6] =~ /^RC=/) { $_corrupted++; next; }	# A strange log record we need to forget
 
-		$felter[3] =~ s/\//:/g;
-		$felter[3] =~ s/\[//;
+		$felter[3] =~ s/^\[//;
+		$felter[3] =~ tr/\//:/;
 		@dateparts=split(/:/,$felter[3]);				# Split DD:Month:YYYY:HH:MM:SS
 		if ( $monthnum{$dateparts[1]} ) { $dateparts[1]=$monthnum{$dateparts[1]}; }	# Change lib month in num month if necessary
 		$timeconnexion=$dateparts[2].$dateparts[1].$dateparts[0].$dateparts[3].$dateparts[4].$dateparts[5];	# YYYYMMDDHHMMSS
@@ -2068,7 +2076,7 @@ if (($YearRequired == $nowyear) && ($MonthRequired eq "year" || $MonthRequired =
 			}
 		}
 	
-		$felter[11] =~ s/\+/_/g;
+		$felter[11] =~ tr/\+/_/;
 		$UserAgent = $felter[11];
 		$UserAgent =~ tr/A-Z/a-z/;
 	
@@ -2551,7 +2559,7 @@ if ($BenchMark) { print "Start of sorting hash arrays: ".time."<br>\n"; }
 if ($BenchMark) { print "End of sorting hash arrays: ".time."<br>\n"; }
 
 # English tooltips
-if (($Lang != 1) && ($Lang != 3) && ($Lang != 6)) {
+if (($Lang != 1) && ($Lang != 2) && ($Lang != 3) && ($Lang != 6)) {
 	print "
 	<DIV CLASS=\"classTooltip\" ID=\"tt1\">
 	A new visits is defined as each new <b>incoming visitor</b> (viewing or browsing a page) who was not connected to your site during last <b>".($VisitTimeOut/10000*60)." mn</b>.
@@ -2742,6 +2750,105 @@ if ($Lang == 1) {
 	</DIV>
 	";
 }
+
+if ($Lang == 2) {
+	print "
+	<DIV CLASS=\"classTooltip\" ID=\"tt1\">
+	Een nieuw bezoek is elke <b>binnenkomende bezoeker</b> (die een pagina bekijkt) die de laatste <b>".($VisitTimeOut/10000*60)." mn</b> niet met uw site verbonden was.
+	</DIV>
+	<DIV CLASS=\"classTooltip\" ID=\"tt2\">
+	Number of client hosts (<b>IP address</b>) who came to visit the site (and who viewed at least one <b>page</b>).<br>
+	This data refers to the number of <b>different physical persons</b> who had reached the site in any one day.
+	Aantal client hosts (<b>IP adres</b>) die de site bezochten (en minimaal een <b>pagina</b> bekeken).<br>
+	Dit geeft aan hoeveel <b>verschillende fysieke personen</b> de site op een bepaalde dag bezocht hebben.
+	</DIV>
+	<DIV CLASS=\"classTooltip\" ID=\"tt3\">
+	Aantal malen dat een <b>pagina</b> van de site <b>bekeken</b> is (Som voor alle bezoekers voor alle bezoeken).<br>
+	Dit onderdeel verschilt van \"hits\" in het feit dat het alleen HTML pagina\'s telt, in tegenstelling tot plaatjes en andere bestanden.
+	</DIV>
+	<DIV CLASS=\"classTooltip\" ID=\"tt4\">
+	Aantal malen dat een <b>pagina</b>, <b>plaatje</b> of <b>bestand</b> op de site door iemand is <b>bekeken</b> of <b>gedownload</b>.<br>
+	Dit onderdeel is alleen als referentie gegeven, omdat het aantal bekeken \"pagina\'s\" voor marketingdoeleinden de voorkeur heeft.
+	</DIV>
+	<DIV CLASS=\"classTooltip\" ID=\"tt5\">
+	Aantal door uw bezoekers gedownloade <b>kilobytes</b>.<br>
+	Dit onderdeel geeft de hoeveelheid gedownloade gegevens in alle <b>pagina\'s</b>, <b>plaatjes</b> en <b>bestanden</b> van uw site, gemeten in KBs.
+	</DIV>
+	<DIV CLASS=\"classTooltip\" ID=\"tt13\">
+	Dit programma, $PROG, herkent elke benadering van uw site na een <b>zoekopdracht</b> van de <b>".(@SearchEnginesArray)." meest populaire Internet zoekmachines</b> (zoals Yahoo, Altavista, Lycos, Google, Voila, etc...).
+	</DIV>
+	<DIV CLASS=\"classTooltip\" ID=\"tt14\">
+	Lijst van alle <b>externe pagina\'s</b> die zijn gebruikt om naar uw site te linken (of deze te benaderen) (Alleen de <b>$MaxNbOfRefererShown</b> meest gebruikte externe pagina\'s zijn getoond.\n
+	Links gebruikt door de resultaten van zoekmachines worden hiet niet getoond omdat deze al zijn opgenomen in de vorige regel van deze tabel.
+	</DIV>
+	<DIV CLASS=\"classTooltip\" ID=\"tt15\">
+	Deze tabel toont de lijst van <b>keywords</b> die het meest zijn gebruikt om uw site te vindein in Internet zoekmachines.
+	(Keywords van de <b>".(@SearchEnginesArray)."</b> meest populaire zoekmachines worden door $PROG herkend, zoals Yahoo, Altavista, Lycos, Google, Voila, etc...).
+	</DIV>
+	<DIV CLASS=\"classTooltip\" ID=\"tt16\">
+	Robots (soms Spiders genoemd) zijn <b>automatische bezoekcomputers</b> die door veel zoekmachines worden gebruikt om uw site te scannen om (1) deze te indexeren, (2) statistieken over Internet sites te verzamelen en/of (3) te kijken of site nog steeds on-line is.<br>
+	Dit programma, $PROG, is in staat maximaal <b>".(@RobotArray)."</b> robots te herkennen</b>.
+	</DIV>";
+
+	print "
+	<DIV CLASS=\"classTooltip\" ID=\"tt201\">
+	Geen beschrijving voor deze foutmelding.
+	</DIV>
+	<DIV CLASS=\"classTooltip\" ID=\"tt202\">
+	De server heeft het verzoek begrepen, maar zal deze later behandelen.
+	</DIV>
+	<DIV CLASS=\"classTooltip\" ID=\"tt204\">
+	De server heeft het verzoek verwerkt, maar er is geen document om te verzenden.
+	</DIV>
+	<DIV CLASS=\"classTooltip\" ID=\"tt206\">
+	Gedeeltelijke inhoud.
+	</DIV>
+
+	<DIV CLASS=\"classTooltip\" ID=\"tt301\">
+	Het aangevraagde document is verplaatst en is nu op een andere locatie die in het antwoord gegeven is.
+	</DIV>
+	<DIV CLASS=\"classTooltip\" ID=\"tt302\">
+	Geen beschrijving voor deze foutmelding.
+	</DIV>
+
+	<DIV CLASS=\"classTooltip\" ID=\"tt400\">
+	\"Taalfout\", de server begreep het verzoek niet.
+	</DIV>
+	<DIV CLASS=\"classTooltip\" ID=\"tt401\">
+	Er is gepoogd een <b>URL waarvoor een usernaam/wachtwoord noodzakelijk is</b> te benaderen.<br>
+	Een hoog aantal van deze meldingen kan betekenen dat iemand (zoals een hacker) probeert uw site te kraken, of uw site binnen te komen (pogend een beveiligd onderdeel van uw site te benaderen door verschillende usernamen/wachtwoorden te proberen, bijvoorbeeld).
+	</DIV>
+	<DIV CLASS=\"classTooltip\" ID=\"tt403\">
+	Er is gepoogd een <b>URL die is ingesteld om niet benaderbaar te zijn, zelfs met usernaam/wachtwoord</b> te benaderen (bijvoorbeeld, een URL in een directory die niet \"doorbladerbaar\" is).
+	</DIV>
+	<DIV CLASS=\"classTooltip\" ID=\"tt404\">
+	Er is gepoogd een <b>niet bestaande URL</b> te benaderen. Deze fout betekent vaak dat er een ongeldige link in uw site zit of dat een bezoeker een URL foutief heeft ingevoerd.
+	</DIV>
+	<DIV CLASS=\"classTooltip\" ID=\"tt408\">
+	De server heeft er <b>te lang</b> over gedaan om een antwoord op een aanvraag te geven. Het kan een CGI script zijn dat zo traag is dat de server hem heeft moeten afbreken of een overbelaste web server.
+	</DIV>
+
+	<DIV CLASS=\"classTooltip\" ID=\"tt500\">
+	Interne fout. Deze error wordt vaak veroorzaakt door een CGI programma dat abnormaal is beeindigd (een core dump, bijvoorbeeld).
+	</DIV>
+	<DIV CLASS=\"classTooltip\" ID=\"tt501\">
+	Onbekende actie aangevraagd.
+	</DIV>
+	<DIV CLASS=\"classTooltip\" ID=\"tt502\">
+	Melding die door een proxy of gateway HTTP server wordt gegeven als een echte doelserver niet succesvol op de aanvraag van een client antwoordt.
+	</DIV>
+	<DIV CLASS=\"classTooltip\" ID=\"tt503\">
+	Interne server fout.
+	</DIV>
+	<DIV CLASS=\"classTooltip\" ID=\"tt504\">
+	Gateway time-out.
+	</DIV>
+	<DIV CLASS=\"classTooltip\" ID=\"tt505\">
+	HTTP versie niet ondersteund.
+	</DIV>
+	";
+}
+
 
 # Spanish tooltips
 if ($Lang == 3) {
