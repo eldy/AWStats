@@ -9358,20 +9358,24 @@ if (scalar keys %HTMLOutput) {
 			if ($ShowClusterStats =~ /B/i) { print "<th bgcolor=\"#$color_k\" width=\"80\">$Message[75]</th><th bgcolor=\"#$color_k\" width=\"80\">$Message[15]</th>"; }
 			print "</tr>\n";
 			$total_p=$total_h=$total_k=0;
+			# Cluster feature might have been enable in middle of month so we recalculate
+			# total for cluster section only, to calculate ratio, instead of using global total
+			foreach my $key (keys %_cluster_h) {
+				$total_p+=int($_cluster_p{$key}||0);
+				$total_h+=int($_cluster_h{$key}||0);
+				$total_k+=int($_cluster_k{$key}||0);
+			}
 			my $count=0;
 			foreach my $key (keys %_cluster_h) {
-				my $p_p=int($_cluster_p{$key}/$TotalPages*1000)/10;
-				my $p_h=int($_cluster_h{$key}/$TotalHits*1000)/10;
-				my $p_k=int($_cluster_k{$key}/$TotalBytes*1000)/10;
+				my $p_p=int($_cluster_p{$key}/$total_p*1000)/10;
+				my $p_h=int($_cluster_h{$key}/$total_h*1000)/10;
+				my $p_k=int($_cluster_k{$key}/$total_k*1000)/10;
 				print "<tr>";
 				print "<td class=\"aws\" colspan=\"2\">Computer $key</td>";
 				if ($ShowClusterStats =~ /P/i) { print "<td>".($_cluster_p{$key}?$_cluster_p{$key}:"&nbsp;")."</td><td>$p_p %</td>"; }
 				if ($ShowClusterStats =~ /H/i) { print "<td>$_cluster_h{$key}</td><td>$p_h %</td>"; }
 				if ($ShowClusterStats =~ /B/i) { print "<td>".Format_Bytes($_cluster_k{$key})."</td><td>$p_k %</td>"; }
 				print "</tr>\n";
-				$total_p+=$_cluster_p{$key};
-				$total_h+=$_cluster_h{$key};
-				$total_k+=$_cluster_h{$key};
 				$count++;
 			}
 			&tab_end;
