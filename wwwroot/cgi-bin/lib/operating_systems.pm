@@ -125,7 +125,7 @@
 "bsdi","BSDi",
 "freebsd","FreeBSD",
 "openbsd","OpenBSD",
-"gnu","GNU/Linux",
+"gnu","GNU",
 "unix","Unknown Unix system",
 # Other famous OS
 "beos","BeOS",
