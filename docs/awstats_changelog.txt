@@ -9,9 +9,13 @@ New features/improvements:
 
 Fixes:
 - Fix not recognized %time3 tag in LogFormat
+- Fix bad html generated with buildpdf option.
+- maillogconvert.pl: Added patch to work correctly with sendmail
+when recipient is redirected through a pipe.
 
 Other/Documentation:
 - Some changes to allow plugins to add new charts.
+- Better log message in plugins.
 - Updated documentation.
 - Renamed configure.pl into awstats_configure.pl.
 
