@@ -114,7 +114,7 @@ $DNSLastUpdateCacheFile='dnscachelastupdate.txt';
 $MiscTrackerUrl=quotemeta('/js/awstats_misc_tracker.js');
 $Lang='auto';
 $MaxRowsInHTMLOutput=1000;
-$MaxLengthOfURL=72;
+$MaxLengthOfURL=70;
 $MaxLengthOfStoredURL=256;			# Note: Apache LimitRequestLine is default to 8190
 $MaxLengthOfStoredUA=256;
 %BarPng=('vv'=>'vv.png','vu'=>'vu.png','hu'=>'hu.png','vp'=>'vp.png','hp'=>'hp.png',
@@ -528,7 +528,8 @@ use vars qw/ @Message /;
 'Mails',
 'Size',
 'First',
-'Last'
+'Last',
+'Exclude filter'
 );
 
 
@@ -2175,7 +2176,8 @@ sub Read_History_With_TmpUpdate {
 							}
 							else {
 								if ($HTMLOutput{'allhosts'} || $HTMLOutput{'lasthosts'}) {
-									if (!$FilterIn{'host'} || $field[0] =~ /$FilterIn{'host'}/) { $loadrecord=1; }
+									if ((!$FilterIn{'host'} || $field[0] =~ /$FilterIn{'host'}/)
+									 && (!$FilterEx{'host'} || $field[0] !~ /$FilterEx{'host'}/)) { $loadrecord=1; }
 								}
 								elsif ($MonthRequired eq 'all' || $field[2] >= $MinHit{'Host'}) {
 									if ($HTMLOutput{'unknownip'} && ($field[0] =~ /^\d+\.\d+\.\d+\.\d+$/ || $field[0] =~ /^[0-9A-F]*:/i)) { $loadrecord=1; }
@@ -2623,10 +2625,13 @@ sub Read_History_With_TmpUpdate {
 								}
 								else {	# This is for $HTMLOutput = urldetail, urlentry or urlexit
 									if ($MonthRequired eq 'all' ) {
-										if (!$FilterIn{'url'} || $field[0] =~ /$FilterIn{'url'}/) { $loadrecord=1; }
+										if ((!$FilterIn{'url'} || $field[0] =~ /$FilterIn{'url'}/)
+										 && (!$FilterEx{'url'} || $field[0] !~ /$FilterEx{'url'}/)) { $loadrecord=1; }
 									}
 									else {
-										if ((!$FilterIn{'url'} || $field[0] =~ /$FilterIn{'url'}/) && $field[1] >= $MinHit{'File'}) { $loadrecord=1; }
+										if ((!$FilterIn{'url'} || $field[0] =~ /$FilterIn{'url'}/)
+										 && (!$FilterEx{'url'} || $field[0] !~ /$FilterEx{'url'}/)
+										 && $field[1] >= $MinHit{'File'}) { $loadrecord=1; }
 										$TotalDifferentPages++;
 									}
 								}
@@ -4241,14 +4246,15 @@ sub AtLeastOneNotNull {
 
 #--------------------------------------------------------------------
 # Function:     Insert a form filter
-# Parameters:   name of filter field, default value for filter field
+# Parameters:   Name of filter field, default for filter field, default for exclude filter field
 # Input:        $StaticLinks, $QueryString
 # Output:       HTML Form
 # Return:       None
 #--------------------------------------------------------------------
 sub ShowFormFilter {
 	my $fieldfiltername=shift;
-	my $fieldfiltervalue=shift;
+	my $fieldfilterinvalue=shift;
+	my $fieldfilterexvalue=shift;
 	if (! $StaticLinks) {
 		my $NewLinkParams=${QueryString};
 		$NewLinkParams =~ s/(^|&)update(=\w*|$)//i;
@@ -4257,8 +4263,13 @@ sub ShowFormFilter {
 		$NewLinkParams =~ tr/&/&/s; $NewLinkParams =~ s/^&//; $NewLinkParams =~ s/&$//;
 		if ($NewLinkParams) { $NewLinkParams="${NewLinkParams}&"; }
 		print "\n<FORM name=\"FormFilter\" action=\"$AWScript?${NewLinkParams}\" class=\"AWS_BORDER\">\n";
-		print "<TABLE valign=middle><TR>\n";
-		print "<TD>&nbsp; &nbsp; $Message[79] : &nbsp; &nbsp;\n";
+		print "<TABLE valign=middle width=\"99%\" border=0 cellspacing=0 cellpadding=2><TR>\n";
+		print "<TD align=\"left\" width=50>$Message[79]&nbsp;:</TD>\n";
+		print "<TD align=\"left\" width=100><input type=text name=\"${fieldfiltername}\" value=\"$fieldfilterinvalue\" class=\"AWS_FORMFIELD\"></TD>\n";
+		print "<TD> &nbsp; </TD>";
+		print "<TD align=\"left\" width=100>$Message[153]&nbsp;:</TD>\n";
+		print "<TD align=\"left\" width=100><input type=text name=\"${fieldfiltername}ex\" value=\"$fieldfilterexvalue\" class=\"AWS_FORMFIELD\"></TD>\n";
+		print "<TD>";
 		print "<input type=hidden name=\"output\" value=\"".join(',',keys %HTMLOutput)."\">\n";
 		if ($SiteConfig) { print "<input type=hidden name=\"config\" value=\"$SiteConfig\">\n"; }
 		if ($QueryString =~ /(^|&)year=(\d\d\d\d)/i) { print "<input type=hidden name=\"year\" value=\"$2\">\n"; }
@@ -4266,9 +4277,8 @@ sub ShowFormFilter {
 		if ($QueryString =~ /(^|&)lang=(\w+)/i) { print "<input type=hidden name=\"lang\" value=\"$2\">\n"; }
 		if ($QueryString =~ /(^|&)debug=(\d+)/i) { print "<input type=hidden name=\"debug\" value=\"$2\">\n"; }
 		if ($QueryString =~ /(^|&)framename=(\w+)/i) { print "<input type=hidden name=\"framename\" value=\"$2\">\n"; }
-		print "</TD>\n";
-		print "<TD><input type=text name=\"$fieldfiltername\" value=\"$fieldfiltervalue\" class=\"AWS_FORMFIELD\"></TD>\n";
-		print "<TD><input type=submit value=\" $Message[115] \" class=\"AWS_BUTTON\"></TD>\n";
+		print "<input type=submit value=\" $Message[115] \" class=\"AWS_BUTTON\"></TD>\n";
+		print "<TD> &nbsp; </TD>";
 		print "</TR></TABLE>\n";
 		print "</FORM>\n\n";
 	}
@@ -5493,7 +5503,7 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 		# Here now tokenquery is '' or '?' or ';'
 		# Here now standalonequery is '' or 'param1=x'
 
-		# Analyze: File type and compression
+		# Analyze: File type - Compression
 		#-----------------------------------
 		my $PageBool=1;
 		my $extension;
@@ -5739,8 +5749,8 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 		$_host_h{$HostResolved}++;
 		$_host_k{$HostResolved}+=int($field[$pos_size]);
 
-		# Analyze: Browser and OS
-		#------------------------
+		# Analyze: Browser - OS
+		#----------------------
 		if ($pos_agent >= 0 && $UserAgent) {
 
 			if ($LevelForBrowsersDetection) {
@@ -6828,9 +6838,9 @@ if (scalar keys %HTMLOutput) {
 			if ($ShowDomainsStats =~ /H/i) { print "<TD>$_domener_h{$key}</TD>"; }
 			if ($ShowDomainsStats =~ /B/i) { print "<TD>".Format_Bytes($_domener_k{$key})."</TD>"; }
 			print "<TD CLASS=AWS>";
-			if ($ShowDomainsStats =~ /P/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarPng{'hp'}\" WIDTH=$bredde_p HEIGHT=6".AltTitle("$Message[56]: ".int($_domener_p{$key}))."><br>\n"; }
-			if ($ShowDomainsStats =~ /H/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarPng{'hh'}\" WIDTH=$bredde_h HEIGHT=6".AltTitle("$Message[57]: ".int($_domener_h{$key}))."><br>\n"; }
-			if ($ShowDomainsStats =~ /B/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarPng{'hk'}\" WIDTH=$bredde_k HEIGHT=6".AltTitle("$Message[75]: ".Format_Bytes($_domener_k{$key})).">"; }
+			if ($ShowDomainsStats =~ /P/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarPng{'hp'}\" WIDTH=$bredde_p HEIGHT=5".AltTitle("$Message[56]: ".int($_domener_p{$key}))."><br>\n"; }
+			if ($ShowDomainsStats =~ /H/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarPng{'hh'}\" WIDTH=$bredde_h HEIGHT=5".AltTitle("$Message[57]: ".int($_domener_h{$key}))."><br>\n"; }
+			if ($ShowDomainsStats =~ /B/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarPng{'hk'}\" WIDTH=$bredde_k HEIGHT=5".AltTitle("$Message[75]: ".Format_Bytes($_domener_k{$key})).">"; }
 			print "</TD>";
 			print "</TR>\n";
 			$total_p += $_domener_p{$key};
@@ -6855,20 +6865,24 @@ if (scalar keys %HTMLOutput) {
 	if ($HTMLOutput{'allhosts'} || $HTMLOutput{'lasthosts'}) {
 		print "$Center<a name=\"HOSTSLIST\">&nbsp;</a><BR>\n";
 		# Show filter form
-		&ShowFormFilter("hostfilter",$FilterIn{'host'});
+		&ShowFormFilter("hostfilter",$FilterIn{'host'},$FilterEx{'host'});
 		# Show hosts list
 		my $title=''; my $cpt=0;
 		if ($HTMLOutput{'allhosts'})  { $title.="$Message[81]"; $cpt=(scalar keys %_host_h); }
 		if ($HTMLOutput{'lasthosts'}) { $title.="$Message[9]"; $cpt=(scalar keys %_host_h); }
 		&tab_head("$title",19);
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>";
-		if ($FilterIn{'host'}) {
-			print "$Message[79] <b>$FilterIn{'host'}</b>: $cpt $Message[81]";
+		if ($FilterIn{'host'} || $FilterEx{'host'}) {	# With filter
+			if ($FilterIn{'host'}) { print "$Message[79] '<b>$FilterIn{'host'}</b>'"; }
+			if ($FilterIn{'host'} && $FilterEx{'host'}) { print " - "; }
+			if ($FilterEx{'host'}) { print " Exlude $Message[79] '<b>$FilterEx{'host'}</b>'"; }
+			if ($FilterIn{'host'} || $FilterEx{'host'}) { print ": "; }
+			print "$cpt $Message[81]";
 			if ($MonthRequired ne 'all') {
 				if ($HTMLOutput{'allhosts'} || $HTMLOutput{'lasthosts'}) { print "<br>$Message[102]: $TotalHostsKnown $Message[82], $TotalHostsUnknown $Message[1] - $TotalUnique $Message[11]"; }
 			}
 		}
-		else {
+		else {	# Without filter
 			if ($MonthRequired ne 'all') { print "$Message[102] : $TotalHostsKnown $Message[82], $TotalHostsUnknown $Message[1] - $TotalUnique $Message[11]"; }
 			else { print "$Message[102] : ".(scalar keys %_host_h); }
 		}
@@ -7149,7 +7163,7 @@ if (scalar keys %HTMLOutput) {
 		}
 		print "$Center<a name=\"URLDETAIL\">&nbsp;</a><BR>\n";
 		# Show filter form
-		&ShowFormFilter("urlfilter",$FilterIn{'url'});
+		&ShowFormFilter("urlfilter",$FilterIn{'url'},$FilterEx{'url'});
 		# Show URL list
 		my $title=''; my $cpt=0;
 		if ($HTMLOutput{'urldetail'}) { $title=$Message[19]; $cpt=(scalar keys %_url_p); }
@@ -7157,8 +7171,12 @@ if (scalar keys %HTMLOutput) {
 		if ($HTMLOutput{'urlexit'})   { $title=$Message[116]; $cpt=(scalar keys %_url_x); }
 		&tab_head("$title",19);
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>";
-		if ($FilterIn{'url'}) {
-			print "$Message[79] <b>$FilterIn{'url'}</b>: $cpt $Message[28]";
+		if ($FilterIn{'url'} || $FilterEx{'url'}) {
+			if ($FilterIn{'url'}) { print "$Message[79] <b>$FilterIn{'url'}</b>"; }
+			if ($FilterIn{'url'} && $FilterEx{'url'}) { print " - "; }
+			if ($FilterEx{'url'}) { print "Exclude $Message[79] <b>$FilterEx{'url'}</b>"; }
+			if ($FilterIn{'url'} || $FilterEx{'url'}) { print ": "; }
+			print "$cpt $Message[28]";
 			if ($MonthRequired ne 'all') {
 				if ($HTMLOutput{'urldetail'}) { print "<br>$Message[102]: $TotalDifferentPages $Message[28]"; }
 			}
@@ -7209,10 +7227,10 @@ if (scalar keys %HTMLOutput) {
 			}
 			print "<TD CLASS=AWS>";
 			# alt and title are not provided to reduce page size
-			if ($ShowPagesStats =~ /P/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarPng{'hp'}\" WIDTH=$bredde_p HEIGHT=6><br>"; }
-			if ($ShowPagesStats =~ /B/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarPng{'hk'}\" WIDTH=$bredde_k HEIGHT=6><br>"; }
-			if ($ShowPagesStats =~ /E/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarPng{'he'}\" WIDTH=$bredde_e HEIGHT=6><br>"; }
-			if ($ShowPagesStats =~ /X/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarPng{'hx'}\" WIDTH=$bredde_x HEIGHT=6>"; }
+			if ($ShowPagesStats =~ /P/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarPng{'hp'}\" WIDTH=$bredde_p HEIGHT=4><br>"; }
+			if ($ShowPagesStats =~ /B/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarPng{'hk'}\" WIDTH=$bredde_k HEIGHT=4><br>"; }
+			if ($ShowPagesStats =~ /E/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarPng{'he'}\" WIDTH=$bredde_e HEIGHT=4><br>"; }
+			if ($ShowPagesStats =~ /X/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarPng{'hx'}\" WIDTH=$bredde_x HEIGHT=4>"; }
 			print "</TD></TR>\n";
 			$total_p += $_url_p{$key};
 			$total_e += $_url_e{$key};
@@ -7332,7 +7350,7 @@ if (scalar keys %HTMLOutput) {
 					print "<TD>$_os_h{$key}</TD><TD>$p</TD>";
 					print "<TD CLASS=AWS>";
 					# alt and title are not provided to reduce page size
-					if ($ShowOSStats) { print "<IMG SRC=\"$DirIcons\/other\/$BarPng{'hh'}\" WIDTH=$bredde_h HEIGHT=6><br>"; }
+					if ($ShowOSStats) { print "<IMG SRC=\"$DirIcons\/other\/$BarPng{'hh'}\" WIDTH=$bredde_h HEIGHT=5><br>"; }
 					print "</TD>";
 					print "</TR>\n";
 					$count++;
@@ -7363,7 +7381,7 @@ if (scalar keys %HTMLOutput) {
 			print "<TD>$_os_h{$key}</TD><TD>$p</TD>";
 			print "<TD CLASS=AWS>";
 			# alt and title are not provided to reduce page size
-			if ($ShowOSStats) { print "<IMG SRC=\"$DirIcons\/other\/$BarPng{'hh'}\" WIDTH=$bredde_h HEIGHT=6><br>"; }
+			if ($ShowOSStats) { print "<IMG SRC=\"$DirIcons\/other\/$BarPng{'hh'}\" WIDTH=$bredde_h HEIGHT=5><br>"; }
 			print "</TD>";
 			print "</TR>\n";
 		}
@@ -7414,7 +7432,7 @@ if (scalar keys %HTMLOutput) {
 					print "<TD>$_browser_h{$key}</TD><TD>$p</TD>";
 					print "<TD CLASS=AWS>";
 					# alt and title are not provided to reduce page size
-					if ($ShowBrowsersStats) { print "<IMG SRC=\"$DirIcons\/other\/$BarPng{'hh'}\" WIDTH=$bredde_h HEIGHT=6><br>"; }
+					if ($ShowBrowsersStats) { print "<IMG SRC=\"$DirIcons\/other\/$BarPng{'hh'}\" WIDTH=$bredde_h HEIGHT=5><br>"; }
 					print "</TD>";
 					print "</TR>\n";
 					$count++;
@@ -7445,7 +7463,7 @@ if (scalar keys %HTMLOutput) {
 			print "<TD>$_browser_h{$key}</TD><TD>$p</TD>";
 			print "<TD CLASS=AWS>";
 			# alt and title are not provided to reduce page size
-			if ($ShowBrowsersStats) { print "<IMG SRC=\"$DirIcons\/other\/$BarPng{'hh'}\" WIDTH=$bredde_h HEIGHT=6><br>"; }
+			if ($ShowBrowsersStats) { print "<IMG SRC=\"$DirIcons\/other\/$BarPng{'hh'}\" WIDTH=$bredde_h HEIGHT=5><br>"; }
 			print "</TD>";
 			print "</TR>\n";
 		}
@@ -7498,13 +7516,17 @@ if (scalar keys %HTMLOutput) {
 	if ($HTMLOutput{'refererpages'}) {
 		print "$Center<a name=\"REFERERPAGES\">&nbsp;</a><BR>\n";
 		# Show filter form
-		&ShowFormFilter("refererpagesfilter",$FilterIn{'refererpages'});
+		&ShowFormFilter("refererpagesfilter",$FilterIn{'refererpages'},$FilterEx{'refererpages'});
 		my $title="$Message[41]"; my $cpt=0;
 		$cpt=(scalar keys %_pagesrefs_h);
 		&tab_head("$title",19);
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>";
-		if ($FilterIn{'refererpages'}) {
-			print "$Message[79] <b>$FilterIn{'refererpages'}</b>: $cpt $Message[28]";
+		if ($FilterIn{'refererpages'} || $FilterEx{'refererpages'}) {
+			if ($FilterIn{'refererpages'}) { print "$Message[79] <b>$FilterIn{'refererpages'}</b>"; }
+			if ($FilterIn{'refererpages'} && $FilterEx{'refererpages'}) { print " - "; }
+			if ($FilterEx{'refererpages'}) { print "Exclude $Message[79] <b>$FilterEx{'refererpages'}</b>"; }
+			if ($FilterIn{'refererpages'} || $FilterEx{'refererpages'}) { print ": "; }
+			print "$cpt $Message[28]";
 			#if ($MonthRequired ne 'all') {
 			#	if ($HTMLOutput{'refererpages'}) { print "<br>$Message[102]: $TotalDifferentPages $Message[28]"; }
 			#}
@@ -7541,8 +7563,8 @@ if (scalar keys %HTMLOutput) {
 			if ($TotalRefererPages) { $p_p=int($rest_p/$TotalRefererPages*1000)/10; }
 			if ($TotalRefererHits) { $p_h=int($rest_h/$TotalRefererHits*1000)/10; }
 			print "<TR><TD CLASS=AWS><font color=\"#$color_other\">$Message[2]</font></TD>";
-			print "<TD>$rest_p</TD>";
-			print "<TD>$p_p %</TD>";
+			print "<TD>".($rest_p?$rest_p:'&nbsp;')."</TD>";
+			print "<TD>".($rest_p?"$p_p %":'&nbsp;')."</TD>";
 			print "<TD>$rest_h</TD>";
 			print "<TD>$p_h %</TD>";
 			print "</TR>\n";
@@ -8184,9 +8206,9 @@ if (scalar keys %HTMLOutput) {
 				if ($ShowDomainsStats =~ /H/i) { print "<TD>$_domener_h{$key}</TD>"; }
 				if ($ShowDomainsStats =~ /B/i) { print "<TD>".Format_Bytes($_domener_k{$key})."</TD>"; }
 				print "<TD CLASS=AWS>";
-				if ($ShowDomainsStats =~ /P/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarPng{'hp'}\" WIDTH=$bredde_p HEIGHT=6".AltTitle("")."><br>\n"; }
-				if ($ShowDomainsStats =~ /H/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarPng{'hh'}\" WIDTH=$bredde_h HEIGHT=6".AltTitle("")."><br>\n"; }
-				if ($ShowDomainsStats =~ /B/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarPng{'hk'}\" WIDTH=$bredde_k HEIGHT=6".AltTitle("").">"; }
+				if ($ShowDomainsStats =~ /P/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarPng{'hp'}\" WIDTH=$bredde_p HEIGHT=5".AltTitle("")."><br>\n"; }
+				if ($ShowDomainsStats =~ /H/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarPng{'hh'}\" WIDTH=$bredde_h HEIGHT=5".AltTitle("")."><br>\n"; }
+				if ($ShowDomainsStats =~ /B/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarPng{'hk'}\" WIDTH=$bredde_k HEIGHT=5".AltTitle("").">"; }
 				print "</TD>";
 				print "</TR>\n";
 				$total_p += $_domener_p{$key};
@@ -8589,10 +8611,10 @@ if (scalar keys %HTMLOutput) {
 					eval("$function");
 				}
 				print "<TD CLASS=AWS>";
-				if ($ShowPagesStats =~ /P/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarPng{'hp'}\" WIDTH=$bredde_p HEIGHT=6".AltTitle("")."><br>"; }
-				if ($ShowPagesStats =~ /B/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarPng{'hk'}\" WIDTH=$bredde_k HEIGHT=6".AltTitle("")."><br>"; }
-				if ($ShowPagesStats =~ /E/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarPng{'he'}\" WIDTH=$bredde_e HEIGHT=6".AltTitle("")."><br>"; }
-				if ($ShowPagesStats =~ /X/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarPng{'hx'}\" WIDTH=$bredde_x HEIGHT=6".AltTitle("").">"; }
+				if ($ShowPagesStats =~ /P/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarPng{'hp'}\" WIDTH=$bredde_p HEIGHT=4".AltTitle("")."><br>"; }
+				if ($ShowPagesStats =~ /B/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarPng{'hk'}\" WIDTH=$bredde_k HEIGHT=4".AltTitle("")."><br>"; }
+				if ($ShowPagesStats =~ /E/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarPng{'he'}\" WIDTH=$bredde_e HEIGHT=4".AltTitle("")."><br>"; }
+				if ($ShowPagesStats =~ /X/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarPng{'hx'}\" WIDTH=$bredde_x HEIGHT=4".AltTitle("").">"; }
 				print "</TD></TR>\n";
 				$total_p += $_url_p{$key};
 				$total_e += $_url_e{$key};
@@ -9125,9 +9147,21 @@ else {
 #     So it's new line approved
 #     If other month/year, create/update tmp file and purge data arrays with
 #       &Read_History_With_TmpUpdate(lastprocessedyear,lastprocessedmonth,UPDATE,PURGE,"all",lastlinenumber,lastlineoffset,CheckSum($_));
-#     Check protocol and complete %_error_, %_sider404 and %_referrer404
-#     Check robot and complete %_robot
-#     ...
+#     Check misc tracker --> next on loop
+#     Check add to favorites --> next on loop
+#     Check protocol and complete %_error_, %_sider404 and %_referrer404 --> next on loop
+#     Check robot and complete %_robot --> next on loop
+#     Clean Url and Query
+#     Analyze: File types - Compression
+#     Analyze: Date - Hour - Pages - Hits - Kilo
+#     Analyze: Login
+#     Analyze: Lookup
+#     Analyze: Country
+#     Analyze: Host - Url - Session
+#     Analyze: Browser - OS
+#     Analyze: Referer
+#     Analyze: EMail
+#     Analyze: Extra
 #     If too many records, we flush data arrays with
 #       &Read_History_With_TmpUpdate($lastprocessedyear,$lastprocessedmonth,UPDATE,PURGE,"all",lastlinenumber,lastlineoffset,CheckSum($_));
 #   End of loop
@@ -9149,9 +9183,9 @@ else {
 #-------------------------------------------------------
 
 #-------------------------------------------------------
-# DNS CACHE FILE FORMATS
-# /etc/hosts    x.y.z.w hostname
-# Analog		UT/60 x.y.z.w hostname
+# DNS CACHE FILE FORMATS SUPPORTED BY AWSTATS
+# Format /etc/hosts     x.y.z.w hostname
+# Format analog         UT/60 x.y.z.w hostname
 #-------------------------------------------------------
 
 #-------------------------------------------------------
