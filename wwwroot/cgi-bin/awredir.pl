@@ -77,8 +77,8 @@ if (! $ENV{'GATEWAY_INTERFACE'}) {	# Run from command line
 	print "\n";
 	print "For your web visitor, there is no difference. However this allow you to track\n";
 	print "clicks done on links onto your web pages that point to external web sites,\n";
-	print "because an entry will be seen in your own server log to awredir.pl local script,\n";
-	print "with its parameter, even if link was pointing to another external web server.\n";
+	print "because an entry will be seen in your own server log, to awredir.pl script\n";
+	print "with url parameter, even if link was pointing to another external web server.\n";
 	print "\n";
 	sleep 2;
 	exit 0;
