@@ -38,6 +38,7 @@ my $OutputDir="";
 my $OutputSuffix;
 my $OutputFile;
 my @OutputList=(
+"alldomains",
 "allhosts","lasthosts","unknownip",
 "alllogins","lastlogins",
 "allrobots","lastrobots",
