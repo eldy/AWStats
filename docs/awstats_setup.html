@@ -260,6 +260,10 @@ build all those pages in one command.<br>
 <br>
 Note (2): <i>filter</i> can be a regexp on the full filenames you want awstats to present information about.<br>
 <br>
+Note (3): If you want to build a report for a particular month, add options <i><b>-month=MM -year=YYYY</b></i>.<br>
+To build a report for full year (warning: This may use a lot of memory and CPU), add options <i><b>-month=year -year=YYYY</b></i>.<br>
+
+<br><br>
 * Another solution is to view dynamically your statistics from a browser.<br>
 If you named your config file awstats.<i>virtualhostname</i>.conf, use URL:<br>
 <b><i>http://www.myserver.mydomain/cgi-bin/awstats.pl?config=virtualhostname</i></b><br>
@@ -267,7 +271,10 @@ where <i>virtualhostname</i> is used to know which config file to use (AWStats w
 If you named your config file awstats.conf, just use URL:<br>
 <b><i>http://www.myserver.mydomain/cgi-bin/awstats.pl</i></b><br>
 <br>
-Note: If <a href="awstats_config.html#AllowToUpdateStatsFromBrowser">AllowToUpdateStatsFromBrowser</a> parameter is set to 1 in AWStats config/domain file,
+Note (1): All output command line options (except -staticlinks) are still available when using AWStats as a browser.<br>
+Just use them as URL parameters like this example <b><i>http://www.myserver.mydomain/cgi-bin/awstats.pl?month=MM&year=YYYY&output=unknownos</i></b><br>
+<br>
+Note (2): If <a href="awstats_config.html#AllowToUpdateStatsFromBrowser">AllowToUpdateStatsFromBrowser</a> parameter is set to 1 in AWStats config/domain file,
 you will also be able to run the update process from your browser. Just click on link "Update now".<br>
 <br><br>
 
