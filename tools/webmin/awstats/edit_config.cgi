@@ -272,6 +272,8 @@ if ($in{'advanced'} == 3) {
 	print &hblink($text{'help_help'}, "help.cgi?param=ShowAuthenticatedUsers")." </td> </tr>\n";
 	print "<tr> <td><b>ShowRobotsStats</b></td> <td> <input size=10 name=ShowRobotsStats type=text value='$lconf->{'ShowRobotsStats'}'> </td> <td> ";
 	print &hblink($text{'help_help'}, "help.cgi?param=ShowRobotsStats")." </td> </tr>\n";
+	print "<tr> <td><b>ShowWormsStats</b></td> <td> <input size=10 name=ShowWormsStats type=text value='$lconf->{'ShowWormsStats'}'> </td> <td> ";
+	print &hblink($text{'help_help'}, "help.cgi?param=ShowWormsStats")." </td> </tr>\n";
 	print "<tr> <td><b>ShowEMailSenders</b></td> <td> <input size=10 name=ShowEMailSenders type=text value='$lconf->{'ShowEMailSenders'}'> </td> <td> ";
 	print &hblink($text{'help_help'}, "help.cgi?param=ShowEMailSenders")." </td> </tr>\n";
 	print "<tr> <td><b>ShowEMailReceivers</b></td> <td> <input size=10 name=ShowEMailReceivers type=text value='$lconf->{'ShowEMailReceivers'}'> </td> <td> ";
@@ -368,8 +370,8 @@ if ($in{'advanced'} == 3) {
 	print &hblink($text{'help_help'}, "help.cgi?param=ShowLinksOnUrl")." </td> </tr>\n";
 	print "<tr> <td><b>UseHTTPSLinkForUrl</b></td> <td> <input size=10 name=UseHTTPSLinkForUrl type=text value='$lconf->{'UseHTTPSLinkForUrl'}'> </td> <td> ";
 	print &hblink($text{'help_help'}, "help.cgi?param=UseHTTPSLinkForUrl")." </td> </tr>\n";
-	print "<tr> <td><b>MaxLengthOfURL</b></td> <td> <input size=10 name=MaxLengthOfURL type=text value='$lconf->{'MaxLengthOfURL'}'> </td> <td> ";
-	print &hblink($text{'help_help'}, "help.cgi?param=MaxLengthOfURL")." </td> </tr>\n";
+	print "<tr> <td><b>MaxLengthOfShownURL</b></td> <td> <input size=10 name=MaxLengthOfShownURL type=text value='$lconf->{'MaxLengthOfShownURL'}'> </td> <td> ";
+	print &hblink($text{'help_help'}, "help.cgi?param=MaxLengthOfShownURL")." </td> </tr>\n";
 #	print "<tr> <td><b>LinksToWhoIs</b></td> <td> <input size=40 name=LinksToWhoIs type=text value='$lconf->{'LinksToWhoIs'}'> </td> <td> ";
 #	print &hblink($text{'help_help'}, "help.cgi?param=LinksToWhoIs")." </td> </tr>\n";
 #	print "<tr> <td><b>LinksToIPWhoIs</b></td> <td> <input size=40 name=LinksToIPWhoIs type=text value='$lconf->{'LinksToIPWhoIs'}'> </td> <td> ";

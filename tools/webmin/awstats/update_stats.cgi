@@ -23,13 +23,16 @@ print "\Please wait...<br>\n";
 print "<br>\n";
 
 &foreign_require("proc", "proc-lib.pl");
-proc::safe_process_exec($command,$config{'user'},undef, STDOUT,undef, 1, 1);
+proc::safe_process_exec_log($command,$config{'user'},undef, STDOUT,undef, 1, 1, 0);
 
 
 #$retour=`$command 2>&1`;
 #print "$retour\n";
 
 print "<hr>\n";
-print "Update process finished\n";
+print "Update process finished<br>\n";
+print "<br>\n";
+
+&footer( "/", $text{ 'index' } );
 
 0;
