@@ -8747,8 +8747,8 @@ if (scalar keys %HTMLOutput) {
 					print "<tr><td".($count?"":" width=\"$WIDTHCOLICON\"")."><img src=\"$DirIcons\/mime\/$nameicon.png\"".AltTitle("")." /></td><td class=\"aws\">$key</td>";
 					print "<td class=\"aws\">$nametype</td>";
 				}
-				if ($ShowFileTypesStats =~ /H/i) { print "<td>$_filetypes_h{$key}</td><td>$p_h %</td>"; }
-				if ($ShowFileTypesStats =~ /B/i) { print "<td>".Format_Bytes($_filetypes_k{$key})."</td><td>$p_k %</td>"; }
+				if ($ShowFileTypesStats =~ /H/i) { print "<td>$_filetypes_h{$key}</td><td>$p_h</td>"; }
+				if ($ShowFileTypesStats =~ /B/i) { print "<td>".Format_Bytes($_filetypes_k{$key})."</td><td>$p_k</td>"; }
 				if ($ShowFileTypesStats =~ /C/i) {
 					if ($_filetypes_gz_in{$key}) {
 						my $percent=int(100*(1-$_filetypes_gz_out{$key}/$_filetypes_gz_in{$key}));
