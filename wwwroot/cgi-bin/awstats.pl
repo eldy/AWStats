@@ -59,17 +59,17 @@ $URLFilter, $UserAgent, $WarningMessages, $YearRequired,
 $color_Background, $color_TableBG, $color_TableBGRowTitle,
 $color_TableBGTitle, $color_TableBorder, $color_TableRowTitle, $color_TableTitle,
 $color_h, $color_k, $color_link, $color_p, $color_s, $color_v, $color_w, $color_weekend,
-$found, $internal_link, $monthtoprocess, $new,
-$tab_titre, $total_h, $total_k, $total_p, $yearmonth, $yeartoprocess) = ();
+$found, $internal_link, $new,
+$total_h, $total_k, $total_p) = ();
 # ---------- Init arrays --------
-@HostAliases = @Message = @OnlyFiles = @SkipDNSLookupFor = @SkipFiles = @SkipHosts = @felter = @field = ();
+@HostAliases = @Message = @OnlyFiles = @SkipDNSLookupFor = @SkipFiles = @SkipHosts = @field = ();
 # ---------- Init hash arrays --------
 %DayBytes = %DayHits = %DayPages = %DayUnique = %DayVisits =
 %FirstTime = %HistoryFileAlreadyRead = %LastTime = %LastUpdate =
 %MonthBytes = %MonthHits = %MonthHostsKnown = %MonthHostsUnknown = %MonthPages = %MonthUnique = %MonthVisits =
 %listofyears = %monthlib = %monthnum = ();
 
-$VERSION="3.1 (build 16)";
+$VERSION="3.1 (build 17)";
 $Lang="en";
 $Sort="";
 
@@ -81,8 +81,8 @@ $FullHostName  = 1;			# 1 = Use name.domain.zone to refer host clients, 0 = all 
 $MaxLengthOfURL= 70;		# Maximum length of URL shown on stats page. This affects only URL visible text, link still work (Default = 70)
 $MaxNbOfDays   = 31;
 $NbOfLinesForBenchmark=5000;
-#$NbOfLinesForCorruptedLog=10;
-$NbOfLinesForCorruptedLog=10000;	# ETF1
+$NbOfLinesForCorruptedLog=10;
+#$NbOfLinesForCorruptedLog=10000;	# ETF1
 $CENTER        = "";
 $WIDTH         = "600";
 # Images for graphics
@@ -765,11 +765,12 @@ sub html_end {
 }
 
 sub tab_head {
+	my $title=shift;
 	print "
 		<TABLE BORDER=0 CELLPADDING=1 CELLSPACING=0 WIDTH=\"100%\">
 		<TR><TD>
 		<TABLE CLASS=TABLEFRAME BORDER=0 CELLPADDING=3 CELLSPACING=0 WIDTH=\"100%\">
-		<TR><TD class=TABLETITLEFULL align=center width=\"60%\">$tab_titre </TD><TD class=TABLETITLEBLANK>&nbsp;</TD></TR>
+		<TR><TD class=TABLETITLEFULL align=center width=\"60%\">$title </TD><TD class=TABLETITLEBLANK>&nbsp;</TD></TR>
 		<TR><TD colspan=2>
 		<TABLE CLASS=TABLEDATA BORDER=1 BORDERCOLOR=\"#$color_TableBorder\" CELLPADDING=2 CELLSPACING=0 WIDTH=\"100%\">
 		";
@@ -1942,20 +1943,13 @@ if ($UpdateStats) {
 	close DIR;
 	my $yearmonthmax=0;
 	foreach $i (0..$#filearray) {
-		if ("$filearray[$i]" =~ /^$PROG[\d][\d][\d][\d][\d][\d]$FileSuffix\.txt$/) {
-			my $yearmonth=$filearray[$i]; $yearmonth =~ s/^$PROG//; $yearmonth =~ s/\..*//;
-			my $yearfile=$yearmonth; $yearfile =~ s/^..//;
-			my $monthfile=$yearmonth; $monthfile =~ s/....$//;
-			$yearmonth="$yearfile$monthfile";	# year and month have been inversed
-			if ($yearmonth > $yearmonthmax) { $yearmonthmax=$yearmonth; }
+		if ("$filearray[$i]" =~ /^$PROG([\d][\d])([\d][\d][\d][\d])$FileSuffix\.txt$/) {
+			if (int("$2$1") > $yearmonthmax) { $yearmonthmax=int("$2$1"); }
 		}
-	};
-
-	$monthtoprocess=0;$yeartoprocess=0;
-	if ($yearmonthmax) {	# We found last history file
-		$yeartoprocess=$yearmonthmax; $monthtoprocess=$yearmonthmax;
-		$yeartoprocess =~ s/..$//; $monthtoprocess =~ s/^....//;
-		$monthtoprocess=int($monthtoprocess);$yeartoprocess=int($yeartoprocess);
+	}
+	my $monthtoprocess=0; my $yeartoprocess=0;
+	if ($yearmonthmax =~ /^([\d][\d][\d][\d])([\d][\d])$/) {		# We found last history file
+		$monthtoprocess=int($2);$yeartoprocess=int($1);
 		# We read LastTime in this last history file.
 		&Read_History_File($yeartoprocess,$monthtoprocess,1);
 	}
@@ -1967,25 +1961,24 @@ if ($UpdateStats) {
 	my $yearmonth=sprintf("%04i%02i",$yeartoprocess,$monthtoprocess);
 	$NbOfLinesRead=0; $NbOfNewLinesProcessed=0; $NbOfLinesCorrupted=0;
 	$NowNewLinePhase=0;
-	$starttime=time();
 
 	# Open log file
 	&debug("Open log file \"$LogFile\"");
 	open(LOG,"$LogFile") || error("Error: Couldn't open server log file \"$LogFile\" : $!");
 
+	$starttime=time();
 	while (<LOG>)
 	{
-		chomp $_; s/\r//;
-		if (/^#/) { next; }									# Ignore comment lines (ISS writes such comments)
-		if (/^!!/) { next; }								# Ignore comment lines (Webstar writes such comments)
-		if (/^$/) { next; }									# Ignore blank lines (With ISS: happens sometimes, with Apache: possible when editing log file)
-
 		$NbOfLinesRead++;
+		if (/^#/) { next; }									# Ignore comment lines (ISS writes such comments)
+		if (/^!/) { next; }									# Ignore comment lines (Webstar writes such comments)
+#		if (/^$/) { next; }									# Ignore blank lines (With ISS: happens sometimes, with Apache: possible when editing log file)
+		chomp $_; s/\r//;
 
 		# Parse line record to get all required fields
-		$_ =~ /^$PerlParsingFormat/;
+		/^$PerlParsingFormat/;
 		foreach $i (1..$lastrequiredfield) { $field[$i]=$$i; }
-		&debug(" Record $NbOfLinesRead is: $field[$pos_rc] ; $field[$logname] ; - ; $field[$pos_date] ; TZ; $field[$pos_method] ; $field[$pos_url] ; $field[$pos_code] ; $field[$pos_size] ; $field[$pos_referer] ; $field[$pos_agent]",3);
+ 		&debug(" Record $NbOfLinesRead is: $field[$pos_rc] ; $field[$logname] ; - ; $field[$pos_date] ; TZ; $field[$pos_method] ; $field[$pos_url] ; $field[$pos_code] ; $field[$pos_size] ; $field[$pos_referer] ; $field[$pos_agent]",3);
 
 		# Check parsed parameters
 		#----------------------------------------------------------------------
@@ -1998,7 +1991,7 @@ if ($UpdateStats) {
 		# Check filters
 		#----------------------------------------------------------------------
 		if ($field[$pos_method] ne 'GET' && $field[$pos_method] ne 'POST' && $field[$pos_method] !~ /OK/) { next; }	# Keep only GET, POST (OK with Webstar) but not HEAD, OPTIONS
-		if ($field[$pos_url] =~ /^RC=/) { $NbOfLinesCorrupted++; next; }			# A strange log record with IIS we need to forget
+#		if ($field[$pos_url] =~ /^RC=/) { $NbOfLinesCorrupted++; next; }			# A strange log record with IIS we need to forget
 		# Split DD/Month/YYYY:HH:MM:SS or YYYY-MM-DD HH:MM:SS or MM/DD/YY\tHH:MM:SS
 		$field[$pos_date] =~ tr/-\/ \t/::::/;
 		my @dateparts=split(/:/,$field[$pos_date]);
@@ -2068,8 +2061,8 @@ if ($UpdateStats) {
 
 		# Robot ? If yes, we stop here
 		#-----------------------------
-		my $foundrobot=0;
 		if (!$TmpHashNotRobot{$UserAgent}) {	# TmpHashNotRobot is a temporary hash table to increase speed
+			my $foundrobot=0;
 			foreach $bot (keys %RobotHash) { if ($UserAgent =~ /$bot/) { $_robot_h{$bot}++; $_robot_l{$bot}=$timeconnexion; $foundrobot=1; last; }	}
 			if ($foundrobot == 1) { next; }
 			$TmpHashNotRobot{$UserAgent}=1;		# Last time, we won't search if robot or not. We know it's not.
@@ -2081,7 +2074,7 @@ if ($UpdateStats) {
 		$field[$pos_url] =~ s/\/\//\//g;			# Because some targeted url were taped with 2 / (Ex: //rep//file.htm)
 
 		# Check if page or not
-		$PageBool=1;
+		my $PageBool=1;
 		foreach $cursor (@NotPageList) { if ($field[$pos_url] =~ /$cursor$/i) { $PageBool=0; last; } }
 
 		# Analyze: Date - Hour - Pages - Hits - Kilo
@@ -2115,7 +2108,7 @@ if ($UpdateStats) {
 					}
 					else {
 						if (&SkipDNSLookup($Host)) {
-							&debug("(Skipping this DNS lookup at user request.)",4);
+							&debug("Skip this DNS lookup at user request",4);
 						}
 						else {
 							$new=gethostbyaddr(pack("C4",split(/\./,$Host)),AF_INET);	# This is very slow, may took 20 seconds
@@ -2143,7 +2136,7 @@ if ($UpdateStats) {
 				  $_domener_k{"ip"}+=$field[$pos_size];
 				  $found=1;
 		      }
-	    }
+		}
 		else {
 			if ($Host =~ /[a-z]/) { 
 				&debug("The following hostname '$Host' seems to be already resolved.",3);
@@ -2152,9 +2145,10 @@ if ($UpdateStats) {
 		}	# Hosts seems to be already resolved, make DNS lookup inactive
 
 		# Here, $Host = hostname or xxx.xxx.xxx.xxx
-		if (!$found) {				# If not processed yet ($Host = hostname)
-			$Host =~ tr/A-Z/a-z/;
+		if (!$found) {	# If not processed yet
+			# Here $Host = hostname
 			$_ = $Host;
+			tr/A-Z/a-z/;
 
 			# Count hostmachine
 			if (!$FullHostName) { s/^[\w\-]+\.//; };
@@ -2185,7 +2179,7 @@ if ($UpdateStats) {
 		# Analyze: Browser
 		#-----------------
 		if ($UserAgent) {
-			$found=0;
+			my $found=0;
 
 			# IE ? (For higher speed, we start whith IE, the most often used. This avoid other tests if found)
 			if ($UserAgent =~ /msie/) {
@@ -2225,7 +2219,7 @@ if ($UpdateStats) {
 		# Analyze: OS
 		#------------
 		if ($UserAgent) {
-			$found=0;
+			my $found=0;
 
 			if (!$TmpHashOS{$UserAgent}) {
 				# OSHash list ?
@@ -2252,7 +2246,7 @@ if ($UpdateStats) {
 
 		# Analyze: Referer
 		#-----------------
-		$found=0;
+		my $found=0;
 		if ($field[$pos_referer]) {
 
 			# Direct ?
@@ -2261,9 +2255,8 @@ if ($UpdateStats) {
 				$_from_h[0]++;
 				$found=1;
 			}
-	
-			# HTML link ?
-			if (!$found) {
+			else {	
+				# HTML link ?
 				if ($field[$pos_referer] =~ /^http/i) {
 					$internal_link=0;
 					if ($field[$pos_referer] =~ /^http(s|):\/\/(www.|)$SiteToAnalyzeWithoutwww/i) { $internal_link=1; }
@@ -2399,14 +2392,13 @@ if ($UpdateStats) {
 	my @filearray = sort readdir DIR;
 	close DIR;
 	foreach $i (0..$#filearray) {
-		if ("$filearray[$i]" =~ /^$PROG[\d][\d][\d][\d][\d][\d]$FileSuffix\.tmp\..*$/) {
-			my $yearmonth=$filearray[$i]; $yearmonth =~ s/^$PROG//; $yearmonth =~ s/\..*//;
-			if (-s "$DirData/$PROG$yearmonth$FileSuffix.tmp.$$") {	# Rename only files for this session and with size > 0
-				if (rename("$DirData/$PROG$yearmonth$FileSuffix.tmp.$$", "$DirData/$PROG$yearmonth$FileSuffix.txt")==0) {
+		if ("$filearray[$i]" =~ /^$PROG([\d][\d][\d][\d][\d][\d])$FileSuffix\.tmp\..*$/) {
+			if (-s "$DirData/$PROG$1$FileSuffix.tmp.$$") {	# Rename files of this session with size > 0
+				if (rename("$DirData/$PROG$1$FileSuffix.tmp.$$", "$DirData/$PROG$1$FileSuffix.txt")==0) {
 					$allok=0;	# At least one error in renaming working files
 					last;
 				}
-				chmod 0666,"$DirData/$PROG$yearmonth$FileSuffix.txt";
+				chmod 0666,"$DirData/$PROG$1$FileSuffix.txt";
 			}
 		}
 	}
@@ -2432,11 +2424,7 @@ if ($HTMLOutput) {
 	my @filearray = sort readdir DIR;
 	close DIR;
 	foreach my $i (0..$#filearray) {
-		if ("$filearray[$i]" =~ /^$PROG[\d][\d][\d][\d][\d][\d]$FileSuffix\.txt$/) {
-			my $yearmonth=$filearray[$i]; $yearmonth =~ s/^$PROG//; $yearmonth =~ s/\..*//;
-			my $yearfile=$yearmonth; $yearfile =~ s/^..//;
-			$listofyears{$yearfile}=1;
-		}
+		if ("$filearray[$i]" =~ /^$PROG([\d][\d])([\d][\d][\d][\d])$FileSuffix\.txt$/) { $listofyears{$2}=1; }
 	}
 	
 	# Here, first part of data for processed month (old and current) are still in memory
@@ -2535,8 +2523,7 @@ EOF
 	
 	if ($QueryString =~ /output=unknownip/i) {
 		print "$CENTER<a name=\"UNKOWNIP\">&nbsp;</a><BR>";
-		$tab_titre=$Message[45];
-		&tab_head;
+		&tab_head($Message[45]);
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[48] (".(scalar keys %_unknownip_l).")</TH><TH>$Message[9]</TH>\n";
 		my $count=0; my $rest=0;
 		foreach my $key (sort { $SortDir*$_unknownip_l{$a} <=> $SortDir*$_unknownip_l{$b} } keys (%_unknownip_l)) {
@@ -2551,8 +2538,7 @@ EOF
 	}
 	if ($QueryString =~ /output=unknownrefererbrowser/i) {
 		print "$CENTER<a name=\"UNKOWNREFERERBROWSER\">&nbsp;</a><BR>";
-		$tab_titre=$Message[50];
-		&tab_head;
+		&tab_head($Message[50]);
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>Referer (".(scalar keys %_unknownrefererbrowser_l).")</TH><TH>$Message[9]</TH></TR>\n";
 		my $count=0; my $rest=0;
 		foreach my $key (sort { $SortDir*$_unknownrefererbrowser_l{$a} <=> $SortDir*$_unknownrefererbrowser_l{$b} } keys (%_unknownrefererbrowser_l)) {
@@ -2567,8 +2553,7 @@ EOF
 	}
 	if ($QueryString =~ /output=unknownreferer/i) {
 		print "$CENTER<a name=\"UNKOWNREFERER\">&nbsp;</a><BR>";
-		$tab_titre=$Message[46];
-		&tab_head;
+		&tab_head($Message[46]);
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>Referer (".(scalar keys %_unknownreferer_l).")</TH><TH>$Message[9]</TH></TR>\n";
 		my $count=0; my $rest=0;
 		foreach my $key (sort { $SortDir*$_unknownreferer_l{$a} <=> $SortDir*$_unknownreferer_l{$b} } keys (%_unknownreferer_l)) {
@@ -2583,8 +2568,7 @@ EOF
 	}
 	if ($QueryString =~ /output=notfounderror/i) {
 		print "$CENTER<a name=\"NOTFOUNDERROR\">&nbsp;</a><BR>";
-		$tab_titre=$Message[47];
-		&tab_head;
+		&tab_head($Message[47]);
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>URL (".(scalar keys %_sider404_h).")</TH><TH bgcolor=\"#$color_h\">$Message[49]</TH><TH>$Message[23]</TH></TR>\n";
 		my $count=0; my $rest=0;
 		foreach my $key (sort { $SortDir*$_sider404_h{$a} <=> $SortDir*$_sider404_h{$b} } keys (%_sider404_h)) {
@@ -2600,8 +2584,7 @@ EOF
 	}
 	if ($QueryString =~ /output=browserdetail/i) {
 		print "$CENTER<a name=\"NETSCAPE\">&nbsp;</a><BR>";
-		$tab_titre=$Message[33]."<br><img src=\"$DirIcons/browser/netscape.png\">";
-		&tab_head;
+		&tab_head("$Message[33]<br><img src=\"$DirIcons/browser/netscape.png\">");
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[58]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH bgcolor=\"#$color_h\" width=40>$Message[15]</TH></TR>\n";
 		for (my $i=1; $i<=$#_nsver_h; $i++) {
 			my $h="&nbsp;"; my $p="&nbsp;";
@@ -2612,8 +2595,7 @@ EOF
 		}
 		&tab_end;
 		print "<a name=\"MSIE\">&nbsp;</a><BR>";
-		$tab_titre=$Message[34]."<br><img src=\"$DirIcons/browser/msie.png\">";
-		&tab_head;
+		&tab_head("$Message[34]<br><img src=\"$DirIcons/browser/msie.png\">");
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[58]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH bgcolor=\"#$color_h\" width=40>$Message[15]</TH></TR>\n";
 		for ($i=1; $i<=$#_msiever_h; $i++) {
 			my $h="&nbsp;"; my $p="&nbsp;";
@@ -2628,8 +2610,7 @@ EOF
 	}
 	if ($QueryString =~ /output=urldetail/i) {
 		print "$CENTER<a name=\"URLDETAIL\">&nbsp;</a><BR>";
-		$tab_titre="$Message[19]";
-		&tab_head;
+		&tab_head($Message[19]);
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>".(scalar keys %_sider_p)."&nbsp; $Message[19] ".($URLFilter?"&nbsp; (Filter: $URLFilter)":"")."</TH><TH bgcolor=\"#$color_p\">&nbsp;$Message[29]&nbsp;</TH><TH>&nbsp;</TH></TR>\n";
 		my $max_p=1; foreach my $key (values %_sider_p) { if ($key > $max_p) { $max_p = $key; } }
 		my $count=0; my $rest=0;
@@ -2661,8 +2642,7 @@ EOF
 	# SUMMARY
 	#---------------------------------------------------------------------
 	print "$CENTER<a name=\"SUMMARY\">&nbsp;</a><BR>";
-	$tab_titre="$Message[7] $SiteToAnalyze";
-	&tab_head;
+	&tab_head("$Message[7] $SiteToAnalyze");
 	
 	# FirstTime LastTime TotalVisits TotalUnique TotalHostsKnown TotalHostsUnknown
 	my $beginmonth=$MonthRequired;my $endmonth=$MonthRequired;
@@ -2808,8 +2788,7 @@ EOF
 	#---------------------------
 	my @sortdomains_p=sort { $SortDir*$_domener_p{$a} <=> $SortDir*$_domener_p{$b} } keys (%_domener_p);
 	print "$CENTER<a name=\"DOMAINS\">&nbsp;</a><BR>";
-	$tab_titre="$Message[25]";
-	&tab_head;
+	&tab_head($Message[25]);
 	print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH colspan=2>$Message[17]</TH><TH>Code</TH><TH bgcolor=\"#$color_p\" width=80>$Message[56]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH bgcolor=\"#$color_k\">$Message[75]</TH><TH>&nbsp;</TH></TR>\n";
 	my $total_p=0;my $total_h=0;my $total_k=0;
 	my $max_h=1; foreach my $key (values %_domener_h) { if ($key > $max_h) { $max_h = $key; } }
@@ -2860,8 +2839,7 @@ EOF
 	#--------------------------
 	print "$CENTER<a name=\"VISITOR\">&nbsp;</a><BR>";
 	$MaxNbOfHostsShown = $TotalHostsKnown+($_hostmachine_h{"Unknown"}?1:0) if $MaxNbOfHostsShown > $TotalHostsKnown;
-	$tab_titre="$Message[77] $MaxNbOfHostsShown $Message[55] ".($TotalHostsKnown+$TotalHostsUnknown)." $Message[26] ($TotalUnique $Message[11])";
-	&tab_head;
+	&tab_head("$Message[77] $MaxNbOfHostsShown $Message[55] ".($TotalHostsKnown+$TotalHostsUnknown)." $Message[26] ($TotalUnique $Message[11])");
 	print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[18]</TH><TH bgcolor=\"#$color_p\" width=80>$Message[56]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH bgcolor=\"#$color_k\">$Message[75]</TH><TH>$Message[9]</TH></TR>\n";
 	my $total_p=0;my $total_h=0;my $total_k=0;
 	my $count=0;
@@ -2894,8 +2872,7 @@ EOF
 	# BY ROBOTS
 	#----------------------------
 	print "$CENTER<a name=\"ROBOTS\">&nbsp;</a><BR>";
-	$tab_titre=$Message[53];
-	&tab_head;
+	&tab_head($Message[53]);
 	print "<TR bgcolor=\"#$color_TableBGRowTitle\" onmouseover=\"ShowTooltip(16);\" onmouseout=\"HideTooltip(16);\"><TH>Robot</TH><TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH>$Message[9]</TH></TR>\n";
 	my $count=0;
 	foreach my $key (sort { $SortDir*$_robot_h{$a} <=> $SortDir*$_robot_h{$b} } keys (%_robot_h)) {
@@ -2908,8 +2885,7 @@ EOF
 	# BY HOUR
 	#----------------------------
 	print "$CENTER<a name=\"HOUR\">&nbsp;</a><BR>";
-	$tab_titre="$Message[20]";
-	&tab_head;
+	&tab_head($Message[20]);
 	print "<TR><TD align=center><center><TABLE><TR>\n";
 	my $max_p=1;my $max_h=1;my $max_k=1;
 	for (my $ix=0; $ix<=23; $ix++) {
@@ -2945,8 +2921,7 @@ EOF
 	#-------------------------
 	print "$CENTER<a name=\"PAGE\">&nbsp;</a><BR>";
 	$MaxNbOfPageShown = $TotalDifferentPages if $MaxNbOfPageShown > $TotalDifferentPages;
-	$tab_titre="$Message[77] $MaxNbOfPageShown $Message[55] $TotalDifferentPages $Message[27] &nbsp; - &nbsp; <a href=\"$DirCgi$PROG.$Extension?output=urldetail&site=$SiteToAnalyze&year=$YearRequired&month=$MonthRequired&lang=$Lang\">Full list</a>";
-	&tab_head;
+	&tab_head("$Message[77] $MaxNbOfPageShown $Message[55] $TotalDifferentPages $Message[27] &nbsp; - &nbsp; <a href=\"$DirCgi$PROG.$Extension?output=urldetail&site=$SiteToAnalyze&year=$YearRequired&month=$MonthRequired&lang=$Lang\">Full list</a>");
 	print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[19]</TH><TH bgcolor=\"#$color_p\">&nbsp;$Message[29]&nbsp;</TH><TH>&nbsp;</TH></TR>\n";
 	my $max_p=1; foreach my $key (values %_sider_p) { if ($key > $max_p) { $max_p = $key; } }
 	my $count=0; my $rest_p=0;
@@ -2969,8 +2944,7 @@ EOF
 	# BY BROWSER
 	#----------------------------
 	print "$CENTER<a name=\"BROWSER\">&nbsp;</a><BR>";
-	$tab_titre="$Message[21]";
-	&tab_head;
+	&tab_head($Message[21]);
 	print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>Browser</TH><TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH bgcolor=\"#$color_h\" width=40>$Message[15]</TH></TR>\n";
 	my $count=0; 
 	foreach my $key (sort { $SortDir*$_browser_h{$a} <=> $SortDir*$_browser_h{$b} } keys (%_browser_h)) {
@@ -2989,8 +2963,7 @@ EOF
 	# BY OS
 	#----------------------------
 	print "$CENTER<a name=\"OS\">&nbsp;</a><BR>";
-	$tab_titre=$Message[59];
-	&tab_head;
+	&tab_head($Message[59]);
 	print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH colspan=2>OS</TH><TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH bgcolor=\"#$color_h\" width=40>$Message[15]</TH></TR>\n";
 	my $count=0; 
 	foreach my $key (sort { $SortDir*$_os_h{$a} <=> $SortDir*$_os_h{$b} } keys (%_os_h)) {
@@ -3012,8 +2985,7 @@ EOF
 	# BY REFERENCE
 	#---------------------------
 	print "$CENTER<a name=\"REFERER\">&nbsp;</a><BR>";
-	$tab_titre="$Message[36]";
-	&tab_head;
+	&tab_head($Message[36]);
 	my @p_p=();
 	if ($TotalPages > 0) {
 		$p_p[0]=int($_from_p[0]/$TotalPages*1000)/10;
@@ -3075,8 +3047,7 @@ EOF
 	my $TotalKeywords=0; foreach my $key (keys %_keywords) { $TotalKeywords+=$_keywords{$key}; }
 	print "$CENTER<a name=\"SEARCHWORDS\">&nbsp;</a><BR>";
 	$MaxNbOfKeywordsShown = $TotalDifferentKeywords if $MaxNbOfKeywordsShown > $TotalDifferentKeywords;
-	$tab_titre="$Message[77] $MaxNbOfKeywordsShown $Message[55] $TotalDifferentKeywords $Message[43]";
-	&tab_head;
+	&tab_head("$Message[77] $MaxNbOfKeywordsShown $Message[55] $TotalDifferentKeywords $Message[43]");
 	print "<TR bgcolor=\"#$color_TableBGRowTitle\" onmouseover=\"ShowTooltip(15);\" onmouseout=\"HideTooltip(15);\"><TH>$Message[13]</TH><TH bgcolor=\"#$color_s\" width=80>$Message[14]</TH><TH bgcolor=\"#$color_s\" width=40>$Message[15]</TH></TR>\n";
 	my $count=0; my $rest=0;
 	foreach my $key (sort { $SortDir*$_keywords{$a} <=> $SortDir*$_keywords{$b} } keys (%_keywords)) {
@@ -3098,8 +3069,7 @@ EOF
 	# BY ERRORS
 	#----------------------------
 	print "$CENTER<a name=\"ERRORS\">&nbsp;</a><BR>";
-	$tab_titre=$Message[32];
-	&tab_head;
+	&tab_head($Message[32]);
 	print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH colspan=2>$Message[32]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH bgcolor=\"#$color_h\" width=40>$Message[15]</TH></TR>\n";
 	my $count=0;
 	foreach my $key (sort { $SortDir*$_errors_h{$a} <=> $SortDir*$_errors_h{$b} } keys (%_errors_h)) {
