@@ -22,10 +22,15 @@
 'audio','Audio',
 'video','Video',
 'javascript','Javascript file',
+'vbs','Visual Basic script',
 'conf','Config file',
-'css','Cascading Style Sheet',
+'css','Cascading Style Sheet file',
+'xsl','Extensible Stylesheet Language file',
 'runtime','HTML dynamic page or Binary runtime',
 'library','Binary library',
+'swf','Macromedia Flash Animation',
+'dtd','Document Type Definition',
+'csv','Comma Separated Value file'
 );
 
 # MimeHashIcon
@@ -40,6 +45,7 @@
 'htm','html',
 # HTML Dynamic pages or script
 'asp','script',
+'jsp','script',
 'cgi','script',
 'ksh','script',
 'php','script',
@@ -50,6 +56,7 @@
 'sh','script',
 'shtml','html',
 'tcl','script',
+'xsp','script',
 # Image
 'gif','image',
 'png','image',
@@ -66,6 +73,8 @@
 'sxc','other',
 'sxi','other',
 'sxd','other',
+'csv','other',
+'xsl','html',
 # Archive
 'zip','archive',
 'tgz','archive',
@@ -85,13 +94,16 @@
 'divx','video',
 'mpeg','video',
 'mpg','video',
-# JS
+'swf','video',
+# Web scripts
 'js','other',
+'vbs','other',
 # Config
 'cf','other',
 'conf','other',
 'css','other',
 'ini','other',
+'dtd','other',
 # Program
 'exe','script',
 'dll','script',
@@ -106,6 +118,7 @@
 'htm','page',
 # HTML Dynamic pages or script
 'asp','script',
+'jsp','script',
 'cgi','script',
 'ksh','script',
 'php','script',
@@ -116,6 +129,7 @@
 'sh','script',
 'shtml','script',
 'tcl','script',
+'xsp','script',
 # Image
 'gif','image',
 'png','image',
@@ -132,6 +146,8 @@
 'sxc','document',
 'sxi','document',
 'sxd','document',
+'csv','csv',
+'xsl','xsl',
 # Archive
 '7z','archive',
 'bz2','archive',
@@ -151,13 +167,16 @@
 'divx','video',
 'mpeg','video',
 'mpg','video',
-# JS
+'swf','swf',
+# Web scripts
 'js','javascript',
+'vbs','vbs',
 # Config
 'cf','conf',
 'conf','conf',
 'css','css',
 'ini','conf',
+'dtd','dtd',
 # Program
 'exe','runtime',
 'dll','library',
