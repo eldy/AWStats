@@ -1,63 +1,63 @@
 <!-- $Revision$ - $Date$ -->
-<!-- Japanese message file (info@kchostjp.com) -->
+<!-- Japanese message file (info@kchosting.jp) -->
 <DIV CLASS="CTooltip" ID="tt1">
-<b>#VisitTimeOut# ��</b>�O�܂ł̖K�␔�B
+<b>#VisitTimeOut# 分</b>前までの訪問数。
 </DIV>
 <DIV CLASS="CTooltip" ID="tt2">
-�Œ�<b>�P�y�[�W</b>��K�₵���N���C�A���g�z�X�g�i<b>IP�A�h���X</b>)�B<br>
-����͖K��҂̎����ł��B
+最低<b>１ページ</b>を訪問したクライアントホスト（<b>IPアドレス</b>)。<br>
+これは訪問者の実数です。
 <br>
 </DIV>
 <DIV CLASS="CTooltip" ID="tt3">
-�y�[�W���\�����ꂽ�񐔁i���ׂĂ̖K��҂ƖK��̍��v�j�B<br>
-���̃f�[�^�́u�����v�Ƃ͈Ⴂ�AHTML�t�@�C���݂̂������Ă��܂��B
+ページが表示された回数（すべての訪問者と訪問の合計）。<br>
+このデータは「件数」とは違い、HTMLファイルのみが入っています。
 </DIV>
 <DIV CLASS="CTooltip" ID="tt4">
-<b>�y�[�W�A�摜�A�t�@�C��</b>���\�����ꂽ�񐔁B<br>
-�Q�ƒ��x�ɂ��g�����������B
+<b>ページ、画像、ファイル</b>が表示された回数。<br>
+参照程度にお使いください。
 </DIV>
 <DIV CLASS="CTooltip" ID="tt5">
-���ׂĂ�<b>�y�[�W�A�摜�A�t�@�C��</b>�̃_�E�����[�h�ɂ��f�[�^�]���ʁB<br>
-�P�ʂ� KB �AMB �܂��� GB �B
+すべての<b>ページ、画像、ファイル</b>のダウンロードによるデータ転送量。<br>
+単位は KB 、MB または GB 。
 </DIV>
 <DIV CLASS="CTooltip" ID="tt13">
-�l�C�̂��錟���G���W��(Yahoo�AAltavista�ALycos�AGoogle�AVoila�Ȃǁj�ł̌����ɂ��A�N�Z�X�B
+人気のある検索エンジン(Yahoo、Altavista、Lycos、Google、Voilaなど）での検索によるアクセス。
 </DIV>
 <DIV CLASS="CTooltip" ID="tt14">
-���[�U�[(�R���s���[�^)�����̃T�C�g�ɂ��Ă̏��𓾂��O���y�[�W�B
+ユーザー(コンピュータ)がこのサイトについての情報を得た外部ページ。
 </DIV>
 <DIV CLASS="CTooltip" ID="tt15">
-���̃T�C�g�ɃA�N�Z�X���邽�߂Ɍ����G���W���œ��͂��ꂽ<b>�L�[���[�h</b>�̃��X�g�B
+このサイトにアクセスするために検索エンジンで入力された<b>キーワード</b>のリスト。
 </DIV>
 <DIV CLASS="CTooltip" ID="tt16">
-���{�b�g�i�ʖ��X�p�C�_�[�j�Ƃ́A�E�F�u���𓮂�����đS�ẴR���e���c�𒆉��T�[�o�[��ɕۑ�����R���s���[�^�[�E�v���O�����B</DIV>
+ロボット（別名スパイダー）とは、ウェブ中を動き回って全てのコンテンツを中央サーバー上に保存するコンピューター・プログラム。</DIV>
 <DIV CLASS="CTooltip" ID="tt17">
-�����̃f�[�^�̓T�[�o�[���ԂɊ�Â��Ă��܂��B<br>
+これらのデータはサーバー時間に基づいています。<br>
 </DIV>
 <DIV CLASS="CTooltip" ID="tt18">
-�ŏ�����Ō�܂ł̖K��ŏW�߂��f�[�^�ɂ���Čv�Z����<b>���ϐ�</b>�B 
+最初から最後までの訪問で集めたデータによって計算した<b>平均数</b>。 
 </DIV>
 <DIV CLASS="CTooltip" ID="tt19">
-�ŏ�����Ō�܂ł̖K��ŏW�߂��f�[�^�ɂ���Čv�Z����<b>����</b>�B 
+最初から最後までの訪問で集めたデータによって計算した<b>総数</b>。 
 </DIV>
 
-<DIV CLASS="CTooltip" ID="tt201"> POST �������B�܂���PUT ���V�����I�u�W�F�N�g���쐬�B</DIV>
-<DIV CLASS="CTooltip" ID="tt202"> �v���́A��t�����A�����������B</DIV>
-<DIV CLASS="CTooltip" ID="tt204"> �T�[�o�[�͗v������t�������A�Ԃ���񂪂Ȃ��B</DIV>
-<DIV CLASS="CTooltip" ID="tt206"> �T�[�o�[�́A���̈ꕔ�𓾂��B</DIV>
-<DIV CLASS="CTooltip" ID="tt301"> �v�����ꂽ���́A�P�v�I�Ɉړ������B</DIV>
-<DIV CLASS="CTooltip" ID="tt302"> �v�����ꂽ���́A�ꎞ�I�Ɉړ������B</DIV>
-<DIV CLASS="CTooltip" ID="tt400"> �v�������s�ł��Ȃ��B�i�\�����s���j </DIV>
-<DIV CLASS="CTooltip" ID="tt401"> ���̗v���ɔF�؂�K�v�Ƃ���B�܂��́A�F�؂̋��ہB</DIV>
-<DIV CLASS="CTooltip" ID="tt403"> �v���̋��ہB�F�؂��s���S�B</DIV>
-<DIV CLASS="CTooltip" ID="tt404"> �v�����ꂽ���i�t�@�C���j���Ȃ��B</DIV>
-<DIV CLASS="CTooltip" ID="tt408"> �T�[�o�[���ҋ@���ԓ��ɃN���C�A���g���v���𑗂�Ȃ������B</DIV>
-<DIV CLASS="CTooltip" ID="tt500"> �\�����Ȃ��T�[�o�[�G���[�̂��߁A�v�������s�ł��Ȃ������B</DIV>
-<DIV CLASS="CTooltip" ID="tt501"> �T�[�o�[�́A�v�����ꂽ�@�\���T�|�[�g���Ă��Ȃ��B</DIV>
-<DIV CLASS="CTooltip" ID="tt502"> �N���C�A���g��茩�āA�Q�[�g�E�G�C�܂��̓v���L�V�[�T�[�o�̐ڑ���T�[�o�̉������Ó��łȂ����Ƃ������B</DIV>
-<DIV CLASS="CTooltip" ID="tt503"> �T�[�r�X�i�T�[�o�[�j�������ׁBRetry-After�w�b�_�Ɏ������Ԍ�ɂ͊ɘa�����B����������Retry-After�w�b�_���Ȃ���΁A�N���C�A���g�͉�����500�ԂƓ����Ɉ����K�v������B </DIV>
-<DIV CLASS="CTooltip" ID="tt504"> �Q�[�g�E�G�C�܂��̓v���L�V�̉������Q�[�g�E�G�C�̎w�莞�ԓ��ɓ����Ȃ��B</DIV>
-<DIV CLASS="CTooltip" ID="tt505"> HTTP �o�[�W�������T�|�[�g���Ă��Ȃ��B</DIV>
+<DIV CLASS="CTooltip" ID="tt201"> POST が成功。またはPUT が新しいオブジェクトを作成。</DIV>
+<DIV CLASS="CTooltip" ID="tt202"> 要求は、受付たが、処理未完了。</DIV>
+<DIV CLASS="CTooltip" ID="tt204"> サーバーは要求を受付けたが、返す情報がない。</DIV>
+<DIV CLASS="CTooltip" ID="tt206"> サーバーは、情報の一部を得た。</DIV>
+<DIV CLASS="CTooltip" ID="tt301"> 要求された情報は、恒久的に移動した。</DIV>
+<DIV CLASS="CTooltip" ID="tt302"> 要求された情報は、一時的に移動した。</DIV>
+<DIV CLASS="CTooltip" ID="tt400"> 要求を実行できない。（構文が不正） </DIV>
+<DIV CLASS="CTooltip" ID="tt401"> 情報の要求に認証を必要とする。または、認証の拒否。</DIV>
+<DIV CLASS="CTooltip" ID="tt403"> 要求の拒否。認証が不完全。</DIV>
+<DIV CLASS="CTooltip" ID="tt404"> 要求された情報（ファイル）がない。</DIV>
+<DIV CLASS="CTooltip" ID="tt408"> サーバーが待機時間内にクライアントが要求を送れなかった。</DIV>
+<DIV CLASS="CTooltip" ID="tt500"> 予期しないサーバーエラーのため、要求を実行できなかった。</DIV>
+<DIV CLASS="CTooltip" ID="tt501"> サーバーは、要求された機能をサポートしていない。</DIV>
+<DIV CLASS="CTooltip" ID="tt502"> クライアントより見て、ゲートウエイまたはプロキシーサーバの接続先サーバの応答が妥当でないことを示す。</DIV>
+<DIV CLASS="CTooltip" ID="tt503"> サービス（サーバー）が高負荷。Retry-Afterヘッダに示す時間後には緩和される。応答文中にRetry-Afterヘッダがなければ、クライアントは応答を500番と同等に扱う必要がある。 </DIV>
+<DIV CLASS="CTooltip" ID="tt504"> ゲートウエイまたはプロキシの応答がゲートウエイの指定時間内に得られない。</DIV>
+<DIV CLASS="CTooltip" ID="tt505"> HTTP バージョンをサポートしていない。</DIV>
 
 
 
