@@ -25,6 +25,7 @@ New features/improvments:
 - month parameter can accept format -month=D, not only -month=DD
 - Optimized code size.
 - Optimized HTML output report size.
+- Better support for IPv6 in logresolvemerge.pl.
 
 Other/Documentation:
 - Added Isle of Man, Monserat, and Palestinian flag icon.
