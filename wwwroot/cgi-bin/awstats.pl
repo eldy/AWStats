@@ -54,7 +54,6 @@ $TotalKeyphrases $TotalKeywords $TotalDifferentKeyphrases $TotalDifferentKeyword
 $TotalSearchEnginesPages $TotalSearchEnginesHits $TotalRefererPages $TotalRefererHits $TotalDifferentSearchEngines $TotalDifferentReferer
 $FrameName $Center $FileConfig $FileSuffix $Host $DayRequired $MonthRequired $YearRequired
 $QueryString $SiteConfig $StaticLinks $PageCode $PerlParsingFormat
-$HostFilter $URLFilter $RefererPagesFilter
 $SiteToAnalyze $SiteToAnalyzeWithoutwww $UserAgent
 $pos_vh $pos_host $pos_logname $pos_date $pos_method $pos_url $pos_code $pos_size
 $pos_referer $pos_agent $pos_query $pos_gzipin $pos_gzipout $pos_compratio
@@ -73,9 +72,8 @@ $TotalKeyphrases = $TotalKeywords = $TotalDifferentKeyphrases = $TotalDifferentK
 $TotalSearchEnginesPages = $TotalSearchEnginesHits = $TotalRefererPages = $TotalRefererHits = $TotalDifferentSearchEngines = $TotalDifferentReferer = 0;
 ($FrameName, $Center, $FileConfig, $FileSuffix, $Host, $DayRequired, $MonthRequired, $YearRequired,
 $QueryString, $SiteConfig, $StaticLinks, $PageCode, $PerlParsingFormat,
-$HostFilter, $URLFilter, $RefererPagesFilter,
 $SiteToAnalyze, $SiteToAnalyzeWithoutwww, $UserAgent)=
-('','','','','','','','','','','','','','','','','','','');
+('','','','','','','','','','','','','','','','');
 $pos_vh = $pos_host = $pos_logname = $pos_date = $pos_method = $pos_url = $pos_code = $pos_size = -1;
 $pos_referer = $pos_agent = $pos_query = $pos_gzipin = $pos_gzipout = $pos_compratio = -1;
 $pos_emails = $pos_emailr = $pos_hostr = -1;
@@ -254,7 +252,7 @@ use vars qw/
 %WormsHashID %WormsHashLib
 /;
 use vars qw/
-%HTMLOutput %NoLoadPlugin
+%HTMLOutput %NoLoadPlugin %FilterIn %FilterEx
 %BadFormatWarning
 %MonthLib %MonthNum
 %ValidHTTPCodes %ValidSMTPCodes
@@ -276,7 +274,7 @@ use vars qw/
 %val %nextval %egal
 %TmpDNSLookup %TmpOS %TmpRefererServer %TmpRobot %TmpBrowser %MyDNSTable
 /;
-%HTMLOutput = %NoLoadPlugin = ();
+%HTMLOutput = %NoLoadPlugin = %FilterIn = %FilterEx = ();
 %BadFormatWarning = ();
 %MonthLib = %MonthNum = ();
 %ValidHTTPCodes = %ValidSMTPCodes = ();
@@ -572,6 +570,12 @@ print ".AWS_BLANK { font: 13px verdana, arial, helvetica, sans-serif; background
 print <<EOF;
 .AWS_DATA { background-color: #$color_Background; }
 .AWS_FORMFIELD { font: 13px verdana, arial, helvetica; }
+.AWS_BUTTON {
+	font-family: arial,verdana,helvetica, sans-serif;
+	font-size: 12px;
+	border: 1px solid #ccd7e0;
+	background-image : url($DirIcons/other/button.gif);
+}
 TH { font: 11px verdana, arial, helvetica, sans-serif; text-align:center; color: #$color_titletext; }
 TH.AWS { font-size: 13px; font-weight: bold; }
 TD { font: 11px verdana, arial, helvetica, sans-serif; text-align:center; color: #$color_text; }
@@ -2155,7 +2159,7 @@ sub Read_History_With_TmpUpdate {
 							}
 							else {
 								if ($HTMLOutput{'allhosts'} || $HTMLOutput{'lasthosts'}) {
-									if (!$HostFilter || $field[0] =~ /$HostFilter/) { $loadrecord=1; }
+									if (!$FilterIn{'host'} || $field[0] =~ /$FilterIn{'host'}/) { $loadrecord=1; }
 								}
 								elsif ($MonthRequired eq 'all' || $field[2] >= $MinHit{'Host'}) {
 									if ($HTMLOutput{'unknownip'} && ($field[0] =~ /^\d+\.\d+\.\d+\.\d+$/ || $field[0] =~ /^[0-9A-F]*:/i)) { $loadrecord=1; }
@@ -2603,14 +2607,14 @@ sub Read_History_With_TmpUpdate {
 								}
 								else {	# This is for $HTMLOutput = urldetail, urlentry or urlexit
 									if ($MonthRequired eq 'all' ) {
-										if (!$URLFilter || $field[0] =~ /$URLFilter/) { $loadrecord=1; }
+										if (!$FilterIn{'url'} || $field[0] =~ /$FilterIn{'url'}/) { $loadrecord=1; }
 									}
 									else {
-										if ((!$URLFilter || $field[0] =~ /$URLFilter/) && $field[1] >= $MinHit{'File'}) { $loadrecord=1; }
+										if ((!$FilterIn{'url'} || $field[0] =~ /$FilterIn{'url'}/) && $field[1] >= $MinHit{'File'}) { $loadrecord=1; }
 										$TotalDifferentPages++;
 									}
 								}
-								# Posssibilite de mettre if ($URLFilter && $field[0] =~ /$URLFilter/) mais il faut gerer TotalPages de la meme maniere
+								# Posssibilite de mettre if ($FilterIn{'host'} && $field[0] =~ /$FilterIn{'host'}/) mais il faut gerer TotalPages de la meme maniere
 								if ($versionnum < 4000) {	# For history files < 4.0
 									$TotalEntries+=($field[2]||0);
 								}
@@ -2735,7 +2739,7 @@ sub Read_History_With_TmpUpdate {
 								$loadrecord=1;
 							}
 							else {
-								if (!$RefererPagesFilter || $field[0] =~ /$RefererPagesFilter/) { $loadrecord=1; }
+								if (!$FilterIn{'refererpages'} || $field[0] =~ /$FilterIn{'refererpages'}/) { $loadrecord=1; }
 							}
 							if ($loadrecord) {
 								if ($versionnum < 5004) {	# For history files < 5.4
@@ -4247,7 +4251,7 @@ sub ShowFormFilter {
 		if ($QueryString =~ /(^|&)framename=(\w+)/i) { print "<input type=hidden name=\"framename\" value=\"$2\">\n"; }
 		print "</TD>\n";
 		print "<TD><input type=text name=\"$fieldfiltername\" value=\"$fieldfiltervalue\" class=\"AWS_FORMFIELD\"></TD>\n";
-		print "<TD><input type=submit value=\"$Message[115]\" class=\"AWS_FORMFIELD\">\n";
+		print "<TD><input type=submit value=\" $Message[115] \" class=\"AWS_BUTTON\">\n";
 		print "</TR></TABLE>\n";
 		print "</FORM>\n\n";
 	}
@@ -4630,14 +4634,14 @@ if ($ENV{'GATEWAY_INTERFACE'}) {	# Run from a browser as CGI
 	if ($QueryString =~ /logfile=([^&]+)/i)				{ $LogFile=&DecodeEncodedString("$1"); }
 	if ($QueryString =~ /diricons=([^&]+)/i)			{ $DirIcons=&DecodeEncodedString("$1"); }
 	# All filters
-	if ($QueryString =~ /hostfilter=([^&]+)/i)			{ $HostFilter=&DecodeEncodedString("$1"); }			# Filter on host list can also be defined with hostfilter=filter
-	if ($QueryString =~ /urlfilter=([^&]+)/i)			{ $URLFilter=&DecodeEncodedString("$1"); }			# Filter on URL list can also be defined with urlfilter=filter
-	if ($QueryString =~ /refererpagesfilter=([^&]+)/i)	{ $RefererPagesFilter=&DecodeEncodedString("$1"); }	# Filter on referer list can also be defined with refererpagesfilter=filter
+	if ($QueryString =~ /hostfilter=([^&]+)/i)			{ $FilterIn{'host'}=&DecodeEncodedString("$1"); }			# Filter on host list can also be defined with hostfilter=filter
+	if ($QueryString =~ /urlfilter=([^&]+)/i)			{ $FilterIn{'url'}=&DecodeEncodedString("$1"); }			# Filter on URL list can also be defined with urlfilter=filter
+	if ($QueryString =~ /refererpagesfilter=([^&]+)/i)	{ $FilterIn{'refererpages'}=&DecodeEncodedString("$1"); }	# Filter on referer list can also be defined with refererpagesfilter=filter
 	# All output
-	if ($QueryString =~ /output=allhosts:([^&]+)/i)		{ $HostFilter=&DecodeEncodedString("$1"); }			# Filter on host list can be defined with output=allhosts:filter to reduce number of lines read and showed
-	if ($QueryString =~ /output=lasthosts:([^&]+)/i)	{ $HostFilter=&DecodeEncodedString("$1"); }			# Filter on host list can be defined with output=lasthosts:filter to reduce number of lines read and showed
-	if ($QueryString =~ /output=urldetail:([^&]+)/i)	{ $URLFilter=&DecodeEncodedString("$1"); }			# Filter on URL list can be defined with output=urldetail:filter to reduce number of lines read and showed
-	if ($QueryString =~ /output=refererpages:([^&]+)/i)	{ $RefererPagesFilter=&DecodeEncodedString("$1"); }	# Filter on referer list can be defined with output=refererpages:filter to reduce number of lines read and showed
+	if ($QueryString =~ /output=allhosts:([^&]+)/i)		{ $FilterIn{'host'}=&DecodeEncodedString("$1"); }			# Filter on host list can be defined with output=allhosts:filter to reduce number of lines read and showed
+	if ($QueryString =~ /output=lasthosts:([^&]+)/i)	{ $FilterIn{'host'}=&DecodeEncodedString("$1"); }			# Filter on host list can be defined with output=lasthosts:filter to reduce number of lines read and showed
+	if ($QueryString =~ /output=urldetail:([^&]+)/i)	{ $FilterIn{'url'}=&DecodeEncodedString("$1"); }			# Filter on URL list can be defined with output=urldetail:filter to reduce number of lines read and showed
+	if ($QueryString =~ /output=refererpages:([^&]+)/i)	{ $FilterIn{'refererpages'}=&DecodeEncodedString("$1"); }	# Filter on referer list can be defined with output=refererpages:filter to reduce number of lines read and showed
 
 	# If migrate
 	if ($QueryString =~ /(^|-|&)migrate=([^&]+)/i)	{
@@ -4649,6 +4653,7 @@ if ($ENV{'GATEWAY_INTERFACE'}) {	# Run from a browser as CGI
 else {								# Run from command line
 	# Prepare QueryString
 	for (0..@ARGV-1) {
+		# If migrate
 		if ($ARGV[$_] =~ /(^|-|&)migrate=([^&]+)/i) {
 			$MigrateStats="$2";
 			$MigrateStats =~ /^(.*)$PROG(\d{0,2})(\d\d)(\d\d\d\d)(.*)\.txt$/;
@@ -4669,14 +4674,14 @@ else {								# Run from command line
 	if ($QueryString =~ /logfile=([^&]+)/i)				{ $LogFile="$1"; }
 	if ($QueryString =~ /diricons=([^&]+)/i)			{ $DirIcons="$1"; }
 	# All filters
-	if ($QueryString =~ /hostfilter=([^&]+)/i)			{ $HostFilter="$1"; }			# Filter on host list can also be defined with hostfilter=filter
-	if ($QueryString =~ /urlfilter=([^&]+)/i)			{ $URLFilter="$1"; }			# Filter on URL list can also be defined with urlfilter=filter
-	if ($QueryString =~ /refererpagesfilter=([^&]+)/i)	{ $RefererPagesFilter="$1"; }	# Filter on referer list can also be defined with refererpagesfilter=filter
+	if ($QueryString =~ /hostfilter=([^&]+)/i)			{ $FilterIn{'host'}="$1"; }			# Filter on host list can also be defined with hostfilter=filter
+	if ($QueryString =~ /urlfilter=([^&]+)/i)			{ $FilterIn{'url'}="$1"; }			# Filter on URL list can also be defined with urlfilter=filter
+	if ($QueryString =~ /refererpagesfilter=([^&]+)/i)	{ $FilterIn{'refererpages'}="$1"; }	# Filter on referer list can also be defined with refererpagesfilter=filter
 	# All output
-	if ($QueryString =~ /output=allhosts:([^&]+)/i)		{ $HostFilter="$1"; }			# Filter on host list can be defined with output=allhosts:filter to reduce number of lines read and showed
-	if ($QueryString =~ /output=lasthosts:([^&]+)/i)	{ $HostFilter="$1"; }			# Filter on host list can be defined with output=lasthosts:filter to reduce number of lines read and showed
-	if ($QueryString =~ /output=urldetail:([^&]+)/i)	{ $URLFilter="$1"; }			# Filter on URL list can be defined with output=urldetail:filter to reduce number of lines read and showed
-	if ($QueryString =~ /output=refererpages:([^&]+)/i)	{ $RefererPagesFilter="$1"; }	# Filter on referer list can be defined with output=refererpages:filter to reduce number of lines read and showed
+	if ($QueryString =~ /output=allhosts:([^&]+)/i)		{ $FilterIn{'host'}="$1"; }			# Filter on host list can be defined with output=allhosts:filter to reduce number of lines read and showed
+	if ($QueryString =~ /output=lasthosts:([^&]+)/i)	{ $FilterIn{'host'}="$1"; }			# Filter on host list can be defined with output=lasthosts:filter to reduce number of lines read and showed
+	if ($QueryString =~ /output=urldetail:([^&]+)/i)	{ $FilterIn{'url'}="$1"; }			# Filter on URL list can be defined with output=urldetail:filter to reduce number of lines read and showed
+	if ($QueryString =~ /output=refererpages:([^&]+)/i)	{ $FilterIn{'refererpages'}="$1"; }	# Filter on referer list can be defined with output=refererpages:filter to reduce number of lines read and showed
 
 	# If show options
 	if ($QueryString =~ /showsteps/i) 					{ $ShowSteps=1; $QueryString=~s/showsteps[^&]*//i; }
@@ -6315,7 +6320,7 @@ if (scalar keys %HTMLOutput) {
 				if ($QueryString =~ /lang=(\w+)/i) { print "<input type=hidden name=\"lang\" value=\"$1\">\n"; }
 				if ($QueryString =~ /debug=(\d+)/i) { print "<input type=hidden name=\"debug\" value=\"$1\">\n"; }
 				if ($FrameName eq 'mainright') { print "<input type=hidden name=\"framename\" value=\"index\">\n"; }
-				print "<input type=submit value=\"OK\" class=\"AWS_FORMFIELD\">";
+				print "<input type=submit value=\" $Message[115] \" class=\"AWS_BUTTON\">";
 			}
 			else {
 				print "<font style=\"font-size: 14px;\">";
@@ -6343,11 +6348,12 @@ if (scalar keys %HTMLOutput) {
 			my $linetitle;
 			# Print Menu
 			if (! $PluginsLoaded{'ShowMenu'}{'menuapplet'}) {
+				my $menuicon=0;
 				# Menu HTML
 				print "<table".($frame?" cellspacing=0 cellpadding=0 border=0":"").">\n";
 				# When
 				$linetitle=&AtLeastOneNotNull($ShowMonthStats,$ShowDaysOfMonthStats,$ShowDaysOfWeekStats,$ShowHoursStats);
-				if ($linetitle) { print "<tr><th class=AWS width=$WIDTHMENU1".($frame?"":" valign=top")."><img src=\"$DirIcons/other/menu4.png\">&nbsp;$Message[93]: </th>\n"; }
+				if ($linetitle) { print "<tr><th class=AWS width=$WIDTHMENU1".($frame?"":" valign=top").">".($menuicon?"<img src=\"$DirIcons/other/menu4.png\">&nbsp;":"")."$Message[93]: </th>\n"; }
 				if ($linetitle) { print ($frame?"</tr>\n":"<td class=AWS>"); }
 				if ($ShowMonthStats)		 { print ($frame?"<tr><td class=AWS>":""); print "<a href=\"$linkanchor#TOP\"$targetpage>$Message[128]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
 				#if ($ShowMonthDayStats)	 { print ($frame?"<tr><td class=AWS> &nbsp; <img height=8 width=9 src=\"$DirIcons/other/page.png\" alt=\"...\"> ":""); print "<a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=alldays":"$PROG$StaticLinks.alldays.$StaticExt")."\"$NewLinkTarget>$Message[130]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
@@ -6357,7 +6363,7 @@ if (scalar keys %HTMLOutput) {
 				if ($linetitle) { print ($frame?"":"</td></tr>\n"); }
 				# Who
 				$linetitle=&AtLeastOneNotNull($ShowDomainsStats,$ShowHostsStats,$ShowAuthenticatedUsers,$ShowEMailSenders,$ShowEMailReceivers,$ShowRobotsStats,$ShowWormsStats);
-				if ($linetitle) { print "<tr><th class=AWS".($frame?"":" valign=top")."><img src=\"$DirIcons/other/menu5.png\">&nbsp;$Message[92]: </th>\n"; }
+				if ($linetitle) { print "<tr><th class=AWS".($frame?"":" valign=top").">".($menuicon?"<img src=\"$DirIcons/other/menu5.png\">&nbsp;":"")."$Message[92]: </th>\n"; }
 				if ($linetitle) { print ($frame?"</tr>\n":"<td class=AWS>"); }
 				if ($ShowDomainsStats)		 { print ($frame?"<tr><td class=AWS>":""); print "<a href=\"$linkanchor#COUNTRIES\"$targetpage>$Message[148]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
 				if ($ShowDomainsStats)		 { print ($frame?"<tr><td class=AWS> &nbsp; <img height=8 width=9 src=\"$DirIcons/other/page.png\" alt=\"...\"> ":""); print "<a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=alldomains":"$PROG$StaticLinks.alldomains.$StaticExt")."\"$NewLinkTarget>$Message[80]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
@@ -6383,7 +6389,7 @@ if (scalar keys %HTMLOutput) {
 				if ($linetitle) { print ($frame?"":"</td></tr>\n"); }
 				# Navigation
 				$linetitle=&AtLeastOneNotNull($ShowSessionsStats,$ShowPagesStats,$ShowFileTypesStats,$ShowFileSizesStats,$ShowOSStats,$ShowBrowsersStats,$ShowScreenSizeStats);
-				if ($linetitle) { print "<tr><th class=AWS".($frame?"":" valign=top")."><img src=\"$DirIcons/other/menu2.png\">&nbsp;$Message[72]: </th>\n"; }
+				if ($linetitle) { print "<tr><th class=AWS".($frame?"":" valign=top").">".($menuicon?"<img src=\"$DirIcons/other/menu2.png\">&nbsp;":"")."$Message[72]: </th>\n"; }
 				if ($linetitle) { print ($frame?"</tr>\n":"<td class=AWS>"); }
 				if ($ShowSessionsStats)		 { print ($frame?"<tr><td class=AWS>":""); print "<a href=\"$linkanchor#SESSIONS\"$targetpage>$Message[117]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
 				if ($ShowFileTypesStats)	 { print ($frame?"<tr><td class=AWS>":""); print "<a href=\"$linkanchor#FILETYPES\"$targetpage>$Message[73]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
@@ -6401,7 +6407,7 @@ if (scalar keys %HTMLOutput) {
 				if ($linetitle) { print ($frame?"":"</td></tr>\n"); }
 				# Referers
 				$linetitle=&AtLeastOneNotNull($ShowOriginStats,$ShowKeyphrasesStats,$ShowKeywordsStats);
-				if ($linetitle) { print "<tr><th class=AWS".($frame?"":" valign=top")."><img src=\"$DirIcons/other/menu7.png\">&nbsp;$Message[23]: </th>\n"; }
+				if ($linetitle) { print "<tr><th class=AWS".($frame?"":" valign=top").">".($menuicon?"<img src=\"$DirIcons/other/menu7.png\">&nbsp;":"")."$Message[23]: </th>\n"; }
 				if ($linetitle) { print ($frame?"</tr>\n":"<td class=AWS>"); }
 				if ($ShowOriginStats)		 { print ($frame?"<tr><td class=AWS>":""); print "<a href=\"$linkanchor#REFERER\"$targetpage>$Message[37]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
 				if ($ShowOriginStats)		 { print ($frame?"<tr><td class=AWS> &nbsp; <img height=8 width=9 src=\"$DirIcons/other/page.png\" alt=\"...\"> ":""); print "<a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=refererse":"$PROG$StaticLinks.refererse.$StaticExt")."\"$NewLinkTarget>$Message[126]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
@@ -6412,7 +6418,7 @@ if (scalar keys %HTMLOutput) {
 				if ($linetitle) { print ($frame?"":"</td></tr>\n"); }
 				# Others
 				$linetitle=&AtLeastOneNotNull($ShowFileTypesStats=~/C/i,$ShowMiscStats,$ShowHTTPErrorsStats,$ShowSMTPErrorsStats);
-				if ($linetitle) { print "<tr><th class=AWS".($frame?"":" valign=top")."><img src=\"$DirIcons/other/menu8.png\">&nbsp;$Message[2]: </th>\n"; }
+				if ($linetitle) { print "<tr><th class=AWS".($frame?"":" valign=top").">".($menuicon?"<img src=\"$DirIcons/other/menu8.png\">&nbsp;":"")."$Message[2]: </th>\n"; }
 				if ($linetitle) { print ($frame?"</tr>\n":"<td class=AWS>"); }
 				if ($ShowFileTypesStats =~ /C/i)	 { print ($frame?"<tr><td class=AWS>":""); print "<a href=\"$linkanchor#FILETYPES\"$targetpage>$Message[98]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
 				if ($ShowMiscStats)	 		 { print ($frame?"<tr><td class=AWS>":""); print "<a href=\"$linkanchor#MISC\"$targetpage>$Message[139]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
@@ -6822,15 +6828,15 @@ if (scalar keys %HTMLOutput) {
 	if ($HTMLOutput{'allhosts'} || $HTMLOutput{'lasthosts'}) {
 		print "$Center<a name=\"HOSTSLIST\">&nbsp;</a><BR>\n";
 		# Show filter form
-		&ShowFormFilter("hostfilter",$HostFilter);
+		&ShowFormFilter("hostfilter",$FilterIn{'host'});
 		# Show hosts list
 		my $title=''; my $cpt=0;
 		if ($HTMLOutput{'allhosts'})  { $title.="$Message[81]"; $cpt=(scalar keys %_host_h); }
 		if ($HTMLOutput{'lasthosts'}) { $title.="$Message[9]"; $cpt=(scalar keys %_host_h); }
 		&tab_head("$title",19);
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>";
-		if ($HostFilter) {
-			print "$Message[79] <b>$HostFilter</b>: $cpt $Message[81]";
+		if ($FilterIn{'host'}) {
+			print "$Message[79] <b>$FilterIn{'host'}</b>: $cpt $Message[81]";
 			if ($MonthRequired ne 'all') {
 				if ($HTMLOutput{'allhosts'} || $HTMLOutput{'lasthosts'}) { print "<br>$Message[102]: $TotalHostsKnown $Message[82], $TotalHostsUnknown $Message[1] - $TotalUnique $Message[11]"; }
 			}
@@ -7116,7 +7122,7 @@ if (scalar keys %HTMLOutput) {
 		}
 		print "$Center<a name=\"URLDETAIL\">&nbsp;</a><BR>\n";
 		# Show filter form
-		&ShowFormFilter("urlfilter",$URLFilter);
+		&ShowFormFilter("urlfilter",$FilterIn{'url'});
 		# Show URL list
 		my $title=''; my $cpt=0;
 		if ($HTMLOutput{'urldetail'}) { $title=$Message[19]; $cpt=(scalar keys %_url_p); }
@@ -7124,8 +7130,8 @@ if (scalar keys %HTMLOutput) {
 		if ($HTMLOutput{'urlexit'})   { $title=$Message[116]; $cpt=(scalar keys %_url_x); }
 		&tab_head("$title",19);
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>";
-		if ($URLFilter) {
-			print "$Message[79] <b>$URLFilter</b>: $cpt $Message[28]";
+		if ($FilterIn{'url'}) {
+			print "$Message[79] <b>$FilterIn{'url'}</b>: $cpt $Message[28]";
 			if ($MonthRequired ne 'all') {
 				if ($HTMLOutput{'urldetail'}) { print "<br>$Message[102]: $TotalDifferentPages $Message[28]"; }
 			}
@@ -7465,13 +7471,13 @@ if (scalar keys %HTMLOutput) {
 	if ($HTMLOutput{'refererpages'}) {
 		print "$Center<a name=\"REFERERPAGES\">&nbsp;</a><BR>\n";
 		# Show filter form
-		&ShowFormFilter("refererpagesfilter",$RefererPagesFilter);
+		&ShowFormFilter("refererpagesfilter",$FilterIn{'refererpages'});
 		my $title="$Message[41]"; my $cpt=0;
 		$cpt=(scalar keys %_pagesrefs_h);
 		&tab_head("$title",19);
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>";
-		if ($RefererPagesFilter) {
-			print "$Message[79] <b>$RefererPagesFilter</b>: $cpt $Message[28]";
+		if ($FilterIn{'refererpages'}) {
+			print "$Message[79] <b>$FilterIn{'refererpages'}</b>: $cpt $Message[28]";
 			#if ($MonthRequired ne 'all') {
 			#	if ($HTMLOutput{'refererpages'}) { print "<br>$Message[102]: $TotalDifferentPages $Message[28]"; }
 			#}
