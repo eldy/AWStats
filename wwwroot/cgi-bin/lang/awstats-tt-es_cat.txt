@@ -5,7 +5,7 @@ Es considera una nova visita per <b>cada nou visitant</b> que consulta una pàgin
 </DIV>
 <DIV CLASS="CTooltip" ID="tt2">
 Nombre de clients (<b>adreces IP</b>) que entren a un lloc (i que com a mínim visiten una <b>página</b>).<br>
-Aquesta xifra reflexa el nombre de <b>persones físiques diferents</b> que han accedit al lloc en un dia.
+Aquesta xifra reflecteix el nombre de <b>persones físiques diferents</b> que han accedit al lloc en un dia.
 </DIV>
 <DIV CLASS="CTooltip" ID="tt3">
 Nombre de vegades que una <b>pàgina</b> del lloc ha estat <b>visual.litzada</b> (La suma de tots els visitants inclouen visites múltiples).<br>
@@ -17,14 +17,14 @@ Aquest contador serveix de referència, però el contador de "pàgines" representa 
 </DIV>
 <DIV CLASS="CTooltip" ID="tt5">
 El nombre de <b>kilo bytes</b> descagarregats pels visitants del lloc.<br>
-Es refereix al volum de dades descarregades per totes les <b>pàgines</b>, <b>imatges</b> i <b>arxius o fitxers</b> mesurats en kilo bytes.
+Es refereix al volum de dades descarregades per totes les <b>pàgines</b>, <b>imatges</b> i <b>arxius o fitxers</b> mesurats en bytes.
 </DIV>
 <DIV CLASS="CTooltip" ID="tt13">
 El programa #PROG# és capaç de reconèixer una visita a un lloc després de cadascuna de les <b>cerques</b> desde qualsevol dels <b>#SearchEnginesArray# motors de cerca i directoris Internet</b> més populars (Yahoo, Altavista, Lycos, Google, Terra, etc...).
 </DIV>
 <DIV CLASS="CTooltip" ID="tt14">
 Llista de <b>pàgines de llocs externs</b> util.lizades para accedir o enllaçar-se amb el seu lloc (Només les <b>#MaxNbOfRefererShown#</b> pàgines més util.litzades es troben numerades).
-Els enllaços emprats pels motors de cerca o directoris son exclosos perquè ja han estat comptabil.litzats a l'anterior apartat.
+Els enllaços emprats pels motors de cerca o directoris són exclosos perquè ja han estat comptabil.litzats a l'anterior apartat.
 </DIV>
 <DIV CLASS="CTooltip" ID="tt15">
 Aquesta taula mostra la llista de les <b>paraules clau</b> més util.litzades en els motors de cerca i directoris Internet per trobar el seu lloc.
