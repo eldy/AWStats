@@ -332,7 +332,12 @@ when reading it), follow the example:<br>
 
 <a name="DirIcons"><b>DirIcons</b></a><br>
 <b>Version : </b>1.0 +<br>
-<br># Relative or absolute web URL of all icons subdirectories.
+<br># If AWStats used as a CGI, enter relative or absolute web URL of all icons
+<br># subdirectories.
+<br># If you build static reports ("... -output > outputpath/output.html"), enter
+<br># path of icon directory relative to the directory outputpath.
+<br># Example: "/icon"
+<br># Example: "../icon"
 <br># Default: "/icon" (means you must copy icon directories in "/mywwwroot/icon")
 <br>#
 <br>DirIcons="/icon"
