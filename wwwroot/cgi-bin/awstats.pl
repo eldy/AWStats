@@ -93,15 +93,46 @@ $color_h, $color_k, $color_p, $color_s, $color_u, $color_v)=
 %FirstTime = %LastTime = %LastUpdate =
 %MonthBytes = %MonthHits = %MonthHostsKnown = %MonthHostsUnknown = %MonthPages = %MonthUnique = %MonthVisits =
 %monthlib = %monthnum = ();
+# ---------- Init Tie::hash arrays --------
+use Tie::Hash;
+tie %_browser_h, 'Tie::StdHash';
+tie %_domener_p, 'Tie::StdHash';
+tie %_domener_h, 'Tie::StdHash';
+tie %_domener_k, 'Tie::StdHash';
+tie %_errors_h, 'Tie::StdHash';
+tie %_filetypes_h, 'Tie::StdHash';
+tie %_filetypes_k, 'Tie::StdHash';
+tie %_filetypes_gz_in, 'Tie::StdHash';
+tie %_filetypes_gz_out, 'Tie::StdHash';
+tie %_hostmachine_p, 'Tie::StdHash';
+tie %_hostmachine_h, 'Tie::StdHash';
+tie %_hostmachine_k, 'Tie::StdHash';
+tie %_hostmachine_l, 'Tie::StdHash';
+tie %_keyphrases, 'Tie::StdHash';
+tie %_os_h, 'Tie::StdHash';
+tie %_pagesrefs_h, 'Tie::StdHash';
+tie %_robot_h, 'Tie::StdHash';
+tie %_robot_l, 'Tie::StdHash';
+tie %_login_p, 'Tie::StdHash';
+tie %_login_h, 'Tie::StdHash';
+tie %_login_k, 'Tie::StdHash';
+tie %_login_l, 'Tie::StdHash';
+tie %_se_referrals_h, 'Tie::StdHash';
+tie %_sider404_h, 'Tie::StdHash';
+tie %_url_p, 'Tie::StdHash';
+tie %_url_e, 'Tie::StdHash';
+#tie %_unknownip_l, 'Tie::StdHash';
+tie %_unknownreferer_l, 'Tie::StdHash';
+tie %_unknownrefererbrowser_l, 'Tie::StdHash';
 
 
-$VERSION="3.2 (build 84)";
+
+$VERSION="3.3 (build 1)";
 $Lang="en";
 
 # Default value
 $DEBUGFORCED   = 0;			# Force debug level to log lesser level into debug.log file (Keep this value to 0)
 $MAXROWS       = 200000;	# Max number of rows for not limited HTML arrays
-$SortDir       = -1;		# -1 = Sort order from most to less, 1 = reverse order (Default = -1)
 $VisitTimeOut  = 10000;		# Laps of time to consider a page load as a new visit. 10000 = one hour (Default = 10000)
 $FullHostName  = 1;			# 1 = Use name.domain.zone to refer host clients, 0 = all hosts in same domain.zone are one host (Default = 1, 0 never tested)
 $NbOfLinesForBenchmark=5000;
@@ -962,7 +993,15 @@ sub Read_History_File {
 			my $count=0;
 			while ($field[0] ne "END_VISITOR") {
 				$count++;
-		    	if ($field[0] ne "Unknown") { if (($field[1]||0) > 0) { $MonthUnique{$year.$month}++; } $MonthHostsKnown{$year.$month}++; }
+		    	if ($field[0] ne "Unknown") {	# If and else is kept for backward compatibility
+		    		if (($field[1]||0) > 0) { $MonthUnique{$year.$month}++; }
+					if ($field[0] !~ /^[\d]+\.[\d]+\.[\d]+\.[\d]+$/) { $MonthHostsKnown{$year.$month}++; }
+					else { $MonthHostsUnknown{$year.$month}++; }
+				}
+		    	else {
+		    		$MonthUnique{$year.$month}++;
+		    		$MonthHostsUnknown{$year.$month}++;
+		    	}
 				if ($part && ($UpdateStats || $QueryString !~ /output=/i || $QueryString =~ /output=lasthosts/i)) {
 		        	if ($field[1]) { $_hostmachine_p{$field[0]}+=$field[1]; }
 		        	if ($field[2]) { $_hostmachine_h{$field[0]}+=$field[2]; }
@@ -977,27 +1016,27 @@ sub Read_History_File {
 			&debug(" End of VISITOR section ($count entries)");
 			next;
     	}
-	    if ($field[0] eq "BEGIN_UNKNOWNIP")   {
-			&debug(" Begin of UNKNOWNIP section");
-			$_=<HISTORY>;
-			chomp $_; s/\r//;
-			if ($_ eq "") { error("Error: History file \"$DirData/$PROG$month$year$FileSuffix.txt\" is corrupted (in section UNKNOWNIP). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
-			my @field=split(/\s+/,$_); $countlines++;
-			my $count=0;
-			while ($field[0] ne "END_UNKNOWNIP") {
-				$count++;
-		    	$MonthUnique{$year.$month}++; $MonthHostsUnknown{$year.$month}++;
-				if ($part && ($UpdateStats || $QueryString =~ /output=unknownip/i || $QueryString =~ /output=lasthosts/i)) {	# Init of $_unknownip_l not needed in other cases
-		        	if (! $_unknownip_l{$field[0]}) { $_unknownip_l{$field[0]}=int($field[1]); }
-				}
-				$_=<HISTORY>;
-				chomp $_; s/\r//;
-				if ($_ eq "") { error("Error: History file \"$DirData/$PROG$month$year$FileSuffix.txt\" is corrupted (in section UNKNOWNIP). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
-				@field=split(/\s+/,$_); $countlines++;
-			}
-			&debug(" End of UNKNOWN_IP section ($count entries)");
-			next;
-    	}
+#	    if ($field[0] eq "BEGIN_UNKNOWNIP")   {
+#			&debug(" Begin of UNKNOWNIP section");
+#			$_=<HISTORY>;
+#			chomp $_; s/\r//;
+#			if ($_ eq "") { error("Error: History file \"$DirData/$PROG$month$year$FileSuffix.txt\" is corrupted (in section UNKNOWNIP). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
+#			my @field=split(/\s+/,$_); $countlines++;
+#			my $count=0;
+#			while ($field[0] ne "END_UNKNOWNIP") {
+#				$count++;
+#		    	$MonthUnique{$year.$month}++; $MonthHostsUnknown{$year.$month}++;
+#				if ($part && ($UpdateStats || $QueryString =~ /output=unknownip/i || $QueryString =~ /output=lasthosts/i)) {	# Init of $_unknownip_l not needed in other cases
+#		        	if (! $_unknownip_l{$field[0]}) { $_unknownip_l{$field[0]}=int($field[1]); }
+#				}
+#				$_=<HISTORY>;
+#				chomp $_; s/\r//;
+#				if ($_ eq "") { error("Error: History file \"$DirData/$PROG$month$year$FileSuffix.txt\" is corrupted (in section UNKNOWNIP). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
+#				@field=split(/\s+/,$_); $countlines++;
+#			}
+#			&debug(" End of UNKNOWN_IP section ($count entries)");
+#			next;
+#    	}
 	    if ($field[0] eq "BEGIN_LOGIN")   {
 			&debug(" Begin of LOGIN section");
 			$_=<HISTORY>;
@@ -1326,9 +1365,9 @@ sub Save_History_File {
 		print HISTORYTMP "$key $page $_hostmachine_h{$key} $bytes $lastaccess\n"; next;
 	}
 	print HISTORYTMP "END_VISITOR\n";
-	print HISTORYTMP "BEGIN_UNKNOWNIP\n";
-	foreach my $key (keys %_unknownip_l) { print HISTORYTMP "$key $_unknownip_l{$key}\n"; next; }
-	print HISTORYTMP "END_UNKNOWNIP\n";
+#	print HISTORYTMP "BEGIN_UNKNOWNIP\n";
+#	foreach my $key (keys %_unknownip_l) { print HISTORYTMP "$key $_unknownip_l{$key}\n"; next; }
+#	print HISTORYTMP "END_UNKNOWNIP\n";
 	print HISTORYTMP "BEGIN_LOGIN\n";
 	foreach my $key (keys %_login_h) { print HISTORYTMP "$key ".int($_login_p{$key})." ".int($_login_h{$key})." ".int($_login_k{$key})." $_login_l{$key}\n"; next; }
 	print HISTORYTMP "END_LOGIN\n";
@@ -1337,9 +1376,9 @@ sub Save_History_File {
 	print HISTORYTMP "END_ROBOT\n";
 
 	# Navigation
-	# We save page list in score sorted order to allow to show reports faster and save memory.
+	# We save page list in score sorted order to get a -output=urldetail faster and with less use of memory.
 	print HISTORYTMP "BEGIN_SIDER\n";
-	foreach my $key (sort {$SortDir*$_url_p{$a} <=> $SortDir*$_url_p{$b}} keys %_url_p) {
+	foreach my $key (sort {$_url_p{$b} <=> $_url_p{$a}} keys %_url_p) {
 		$newkey=$key;
 		$newkey =~ s/([^:])\/\//$1\//g;		# Because some targeted url were taped with 2 / (Ex: //rep//file.htm). We must keep http://rep/file.htm
 		my $entry=$_url_e{$key}||"";
@@ -1460,8 +1499,9 @@ sub Init_HashArray {
 	%_keyphrases = %_os_h = %_pagesrefs_h = %_robot_h = %_robot_l = 
 	%_login_h = %_login_p = %_login_k = %_login_l =
 	%_se_referrals_h = %_sider404_h = %_url_p = %_url_e =
-	%_unknownip_l = %_unknownreferer_l = %_unknownrefererbrowser_l = ();
+	%_unknownreferer_l = %_unknownrefererbrowser_l = ();
 }
+
 
 
 #--------------------------------------------------------------------
@@ -2330,23 +2370,30 @@ if ($UpdateStats) {
 			}
 		    # If we don't do lookup or if it failed, we still have an IP address in $Host
 		    if (!$NewDNSLookup || $newip eq "ip") {
-				  if ($PageBool) {
-				  		if ($timeconnexion > (($_unknownip_l{$Host}||0)+$VisitTimeOut)) {
+				if ($PageBool) {
+#				  		if ($timeconnexion > (($_unknownip_l{$Host}||0)+$VisitTimeOut)) {
+				  		if ($timeconnexion > (($_hostmachine_l{$Host}||0)+$VisitTimeOut)) {
 				  			$MonthVisits{$yearmonth}++;
 				  			$DayVisits{$dayconnexion}++;
-							if (! $_unknownip_l{$Host}) { $MonthUnique{$yearmonth}++; $MonthHostsUnknown{$yearmonth}++; }
+#							if (! $_unknownip_l{$Host}) { $MonthUnique{$yearmonth}++; $MonthHostsUnknown{$yearmonth}++; }
+							if (! $_hostmachine_l{$Host}) { $MonthUnique{$yearmonth}++; }
 							$_url_e{$field[$pos_url]}++; 	# Increase 'entry' page
 				  		}
-						$_unknownip_l{$Host}=$timeconnexion;		# Table of (all IP if !NewDNSLookup) or (all unknown IP) else
-						$_hostmachine_p{"Unknown"}++;
+#						$_unknownip_l{$Host}=$timeconnexion;		# Table of (all IP if !NewDNSLookup) or (all unknown IP) else
+#						$_hostmachine_p{"Unknown"}++;
+						$_hostmachine_p{$Host}++;
+						$_hostmachine_l{$Host}=$timeconnexion;
 						$_domener_p{"ip"}++;
-				  }
-				  $_hostmachine_h{"Unknown"}++;
-				  $_domener_h{"ip"}++;
-				  $_hostmachine_k{"Unknown"}+=$field[$pos_size];
-				  $_domener_k{"ip"}+=$field[$pos_size];
-				  $found=1;
-		      }
+				}
+				if (! $_hostmachine_h{$Host}) { $MonthHostsUnKnown{$yearmonth}++; }
+#				$_hostmachine_h{"Unknown"}++;
+#				$_hostmachine_k{"Unknown"}+=$field[$pos_size];
+				$_hostmachine_h{$Host}++;
+				$_hostmachine_k{$Host}+=$field[$pos_size];
+				$_domener_h{"ip"}++;
+				$_domener_k{"ip"}+=$field[$pos_size];
+				$found=1;
+			}
 		}
 		else {
 			if ($Host =~ /[a-z]/) { 
@@ -2826,16 +2873,21 @@ EOF
 	if ($QueryString =~ /output=lasthosts/i) {
 		print "$CENTER<a name=\"HOSTSLIST\">&nbsp;</a><BR>";
 		&tab_head("$Message[9]",19);
-		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[81] + $Message[83]</TH><TH>$Message[9]</TH></TR>\n";
+		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[81] + <b>$Message[83]</b></TH><TH>$Message[9]</TH></TR>\n";
 		my $count=0; my $rest=0;
 		# Create %lasthost = %_unknownip_l + %_hostmachine_l + %_robot_l
-		my %lasthosts=%_unknownip_l;
-		foreach $key (keys %_hostmachine_l) { $lasthosts{$key}=$_hostmachine_l{$key}; }
+#		my %lasthosts=%_unknownip_l;
+#		foreach $key (keys %_hostmachine_l) { $lasthosts{$key}=$_hostmachine_l{$key}; }
+		my %lasthosts=%_hostmachine_l;
 		foreach $key (keys %_robot_l) { $lasthosts{$key}=$_robot_l{$key}; }
-		foreach my $key (sort { $SortDir*$lasthosts{$a} <=> $SortDir*$lasthosts{$b} } keys %lasthosts) {
+		foreach my $key (sort { $lasthosts{$b} <=> $SortDir*$lasthosts{$a} } keys %lasthosts) {
 			if ($count>=$MAXROWS || $count>=$MaxNbOfLastHosts) { $rest++; next; }
 			$key =~ s/<script.*$//gi;				# This is to avoid 'Cross Site Scripting attacks'
-			print "<tr><td>$key </td><td>".Format_Date($lasthosts{$key})."</td></tr>\n";
+			if ($_robot_l{$key}) {
+				print "<tr><td><b>$key</b></td><td>".Format_Date($lasthosts{$key})."</td></tr>\n";
+			} else {
+				print "<tr><td>$key</td><td>".Format_Date($lasthosts{$key})."</td></tr>\n";
+			}
 			$count++;
 		}
 		if ($rest) {
@@ -2857,7 +2909,7 @@ EOF
 		print "<TH>&nbsp;</TH></TR>\n";
 		$max_p=1; foreach my $key (values %_url_p) { if ($key > $max_p) { $max_p = $key; } }
 		my $count=0; my $rest=0;
-		foreach my $key (sort { $SortDir*$_url_p{$a} <=> $SortDir*$_url_p{$b} } keys (%_url_p)) {
+		foreach my $key (sort { $_url_p{$b} <=> $_url_p{$a} } keys (%_url_p)) {
 			if ($count>=$MAXROWS) { $rest+=$_url_p{$key}; next; }
 			if ($_url_p{$key}<$MinHitFile) { $rest+=$_url_p{$key}; next; }
 	    	print "<TR><TD CLASS=AWL>";
@@ -2887,12 +2939,15 @@ EOF
 	if ($QueryString =~ /output=unknownip/i) {
 		print "$CENTER<a name=\"UNKOWNIP\">&nbsp;</a><BR>";
 		&tab_head($Message[45],19);
-		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[48] (".(scalar keys %_unknownip_l).")</TH><TH>$Message[9]</TH>\n";
+		# Remove all resolved IP in _hostname_l
+		# TODO
+		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[48] (".(scalar keys %_hostname_l).")</TH><TH>$Message[9]</TH>\n";
 		my $count=0; my $rest=0;
-		foreach my $key (sort { $SortDir*$_unknownip_l{$a} <=> $SortDir*$_unknownip_l{$b} } keys (%_unknownip_l)) {
+		foreach my $key (sort { $_hostname_l{$b} <=> $_hostname_l{$a} } keys (%_hostname_l)) {
+			if ($key !~ /^[\d]+\.[\d]+\.[\d]+\.[\d]+$/) { next; }
 			if ($count>=$MAXROWS) { $rest++; next; }
 			$key =~ s/<script.*$//gi;				# This is to avoid 'Cross Site Scripting attacks'
-			print "<tr><td>$key</td><td>".Format_Date($_unknownip_l{$key})."</td></tr>\n";
+			print "<tr><td>$key</td><td>".Format_Date($_hostname_l{$key})."</td></tr>\n";
 			$count++;
 		}
 		&tab_end;
@@ -2930,7 +2985,7 @@ EOF
 		&tab_head($Message[50],19);
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>Referer (".(scalar keys %_unknownrefererbrowser_l).")</TH><TH>$Message[9]</TH></TR>\n";
 		my $count=0; my $rest=0;
-		foreach my $key (sort { $SortDir*$_unknownrefererbrowser_l{$a} <=> $SortDir*$_unknownrefererbrowser_l{$b} } keys (%_unknownrefererbrowser_l)) {
+		foreach my $key (sort { $_unknownrefererbrowser_l{$b} <=> $_unknownrefererbrowser_l{$a} } keys (%_unknownrefererbrowser_l)) {
 			if ($count>=$MAXROWS) { $rest+=$_sider404_h{$key}; next; }
 			$key =~ s/<script.*$//gi;				# This is to avoid 'Cross Site Scripting attacks'
 			print "<tr><td CLASS=AWL>$key</td><td>".Format_Date($_unknownrefererbrowser_l{$key})."</td></tr>\n";
@@ -2945,7 +3000,7 @@ EOF
 		&tab_head($Message[46],19);
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>Referer (".(scalar keys %_unknownreferer_l).")</TH><TH>$Message[9]</TH></TR>\n";
 		my $count=0; my $rest=0;
-		foreach my $key (sort { $SortDir*$_unknownreferer_l{$a} <=> $SortDir*$_unknownreferer_l{$b} } keys (%_unknownreferer_l)) {
+		foreach my $key (sort { $_unknownreferer_l{$b} <=> $_unknownreferer_l{$a} } keys (%_unknownreferer_l)) {
 			if ($count>=$MAXROWS) { $rest+=$_sider404_h{$key}; next; }
 			$key =~ s/<script.*$//gi;				# This is to avoid 'Cross Site Scripting attacks'
 			print "<tr><td CLASS=AWL>$key</td><td>".Format_Date($_unknownreferer_l{$key})."</td></tr>\n";
@@ -2960,7 +3015,7 @@ EOF
 		&tab_head($Message[47],19);
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>URL (".(scalar keys %_sider404_h).")</TH><TH bgcolor=\"#$color_h\">$Message[49]</TH><TH>$Message[23]</TH></TR>\n";
 		my $count=0; my $rest=0;
-		foreach my $key (sort { $SortDir*$_sider404_h{$a} <=> $SortDir*$_sider404_h{$b} } keys (%_sider404_h)) {
+		foreach my $key (sort { $_sider404_h{$b} <=> $_sider404_h{$a} } keys (%_sider404_h)) {
 			if ($count>=$MAXROWS) { $rest+=$_sider404_h{$key}; next; }
 			$key =~ s/<script.*$//gi; 				# This is to avoid 'Cross Site Scripting attacks'
 			my $nompage=$key;
@@ -3045,7 +3100,7 @@ EOF
 		$NewLinkParams =~ s/month=[^ &]*//;
 		$NewLinkParams =~ tr/&/&/s; $NewLinkParams =~ s/^&//; $NewLinkParams =~ s/&$//;
 		if ($NewLinkParams) { $NewLinkParams="${NewLinkParams}&"; }
-		foreach my $key (keys %listofyears) {
+		foreach my $key (sort keys %listofyears) {
 			print "<a href=\"$DirCgi$PROG.$Extension?${NewLinkParams}year=$key&month=year\">$Message[6] $key</a> &nbsp; ";
 		}
 		print "</TD>";
@@ -3063,7 +3118,7 @@ EOF
 		print "<TD width=\"20%\" bgcolor=\"#$color_k\" onmouseover=\"ShowTooltip(5);\" onmouseout=\"HideTooltip(5);\">$Message[75]</TD>";
 		print "</TR>\n";
 		print "<TR>";
-		print "<TD>".($MonthRequired eq "year"?"<b>< $TotalUnique</b><br>Exact value not available in 'Year' view":"<b>$TotalUnique</b><br>&nbsp;")."</TD>";
+		print "<TD>".($MonthRequired eq "year"?"<b><= $TotalUnique</b><br>Exact value not available in 'Year' view":"<b>$TotalUnique</b><br>&nbsp;")."</TD>";
 		print "<TD><b>$TotalVisits</b><br>($RatioHosts&nbsp;$Message[52])</TD>";
 		print "<TD><b>$TotalPages</b><br>($RatioPages&nbsp;".lc($Message[56]."/".$Message[12]).")</TD>";
 		print "<TD><b>$TotalHits</b><br>($RatioHits&nbsp;".lc($Message[57]."/".$Message[12]).")</TD>";
@@ -3298,7 +3353,7 @@ EOF
 	# BY COUNTRY/DOMAIN
 	#---------------------------
 	if ($ShowDomainsStats) {
-		my @sortdomains_p=sort { $SortDir*$_domener_p{$a} <=> $SortDir*$_domener_p{$b} } keys (%_domener_p);
+		my @sortdomains_p=sort { $_domener_p{$b} <=> $_domener_p{$a} } keys (%_domener_p);
 		print "$CENTER<a name=\"DOMAINS\">&nbsp;</a><BR>";
 		&tab_head($Message[25],19);
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH colspan=2>$Message[17]</TH><TH>$Message[105]</TH><TH bgcolor=\"#$color_p\" width=80>$Message[56]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH bgcolor=\"#$color_k\" width=80>$Message[75]</TH><TH>&nbsp;</TH></TR>\n";
@@ -3357,23 +3412,23 @@ EOF
 	#--------------------------
 	if ($ShowHostsStats) {
 		print "$CENTER<a name=\"VISITOR\">&nbsp;</a><BR>";
-		$MaxNbOfHostsShown = $TotalHostsKnown+($_hostmachine_h{"Unknown"}?1:0) if $MaxNbOfHostsShown > $TotalHostsKnown;
+		$MaxNbOfHostsShown = (scalar keys %_hostmachine_h) if $MaxNbOfHostsShown > (scalar keys %_hostmachine_h);
 		&tab_head("$Message[81] ($Message[77] $MaxNbOfHostsShown) &nbsp; - &nbsp; <a href=\"$DirCgi$PROG.$Extension?${LinkParamB}output=lasthosts\">$Message[9]</a>",19);
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[81] : $TotalHostsKnown $Message[82], $TotalHostsUnknown $Message[1] - $TotalUnique $Message[11]</TH><TH bgcolor=\"#$color_p\" width=80>$Message[56]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH bgcolor=\"#$color_k\" width=80>$Message[75]</TH><TH width=120>$Message[9]</TH></TR>\n";
 		$total_p=$total_h=$total_k=0;
 		$count=0;
-		foreach my $key (sort { $SortDir*$_hostmachine_p{$a} <=> $SortDir*$_hostmachine_p{$b} } keys (%_hostmachine_p)) {
+		foreach my $key (sort { $_hostmachine_p{$b} <=> $_hostmachine_p{$a} } keys (%_hostmachine_h)) {
 			if ($count>=$MaxNbOfHostsShown) { last; }
 			if ($_hostmachine_h{$key}<$MinHitHost) { last; }
-			if ($key eq "Unknown") {
-				print "<TR><TD CLASS=AWL><a href=\"$DirCgi$PROG.$Extension?${LinkParamB}output=unknownip\">$Message[1]</a></TD><TD>$_hostmachine_p{$key}</TD><TD>$_hostmachine_h{$key}</TD><TD>".Format_Bytes($_hostmachine_k{$key})."</TD><TD><a href=\"$DirCgi$PROG.$Extension?${LinkParamB}output=unknownip\">$Message[3]</a></TD></TR>\n";
-				}
-			else {
+#			if ($key eq "Unknown") {
+#				print "<TR><TD CLASS=AWL><a href=\"$DirCgi$PROG.$Extension?${LinkParamB}output=unknownip\">$Message[1]</a></TD><TD>$_hostmachine_p{$key}</TD><TD>$_hostmachine_h{$key}</TD><TD>".Format_Bytes($_hostmachine_k{$key})."</TD><TD><a href=\"$DirCgi$PROG.$Extension?${LinkParamB}output=unknownip\">$Message[3]</a></TD></TR>\n";
+#				}
+#			else {
 				print "<tr><td CLASS=AWL>$key</td><TD>$_hostmachine_p{$key}</TD><TD>$_hostmachine_h{$key}</TD><TD>".Format_Bytes($_hostmachine_k{$key})."</TD>";
 				if ($_hostmachine_l{$key}) { print "<td>".Format_Date($_hostmachine_l{$key})."</td>"; }
 				else { print "<td>-</td>"; }
 				print "</tr>\n";
-			}
+#			}
 			$total_p += $_hostmachine_p{$key};
 			$total_h += $_hostmachine_h{$key};
 			$total_k += $_hostmachine_k{$key}||0;
@@ -3391,7 +3446,7 @@ EOF
 	# BY LOGIN
 	#----------------------------
 	if ($ShowAuthenticatedUsers) {
-		my @sortlogin_h=sort { $SortDir*$_login_h{$a} <=> $SortDir*$_login_h{$b} } keys (%_login_h);
+		my @sortlogin_h=sort { $_login_h{$b} <=> $_login_h{$a} } keys (%_login_h);
 		print "$CENTER<a name=\"LOGIN\">&nbsp;</a><BR>";
 		&tab_head($Message[94],19);
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[94]</TH><TH bgcolor=\"#$color_p\" width=80>$Message[56]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH bgcolor=\"#$color_k\" width=80>$Message[75]</TH><TH width=120>$Message[9]</TH></TR>\n";
@@ -3430,7 +3485,7 @@ EOF
 		&tab_head($Message[53],19);
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\" onmouseover=\"ShowTooltip(16);\" onmouseout=\"HideTooltip(16);\"><TH>$Message[83]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH width=120>$Message[9]</TH></TR>\n";
 		my $count=0;
-		foreach my $key (sort { $SortDir*$_robot_h{$a} <=> $SortDir*$_robot_h{$b} } keys (%_robot_h)) {
+		foreach my $key (sort { $_robot_h{$b} <=> $_robot_h{$a} } keys (%_robot_h)) {
 			print "<tr><td CLASS=AWL>$RobotHashIDLib{$key}</td><td>$_robot_h{$key}</td><td>".Format_Date($_robot_l{$key})."</td></tr>\n";
 			$count++;
 			}
@@ -3446,7 +3501,7 @@ EOF
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$TotalDifferentPages $Message[28]</TH><TH bgcolor=\"#$color_p\" width=80>$Message[29]</TH><TH bgcolor=\"#$color_s\" width=80>$Message[104]</TH><TH>&nbsp;</TH></TR>\n";
 		$max_p=1; foreach my $key (values %_url_p) { if ($key > $max_p) { $max_p = $key; } }
 		$count=0; $rest_p=0;
-		foreach my $key (sort { $SortDir*$_url_p{$a} <=> $SortDir*$_url_p{$b} } keys (%_url_p)) {
+		foreach my $key (sort { $_url_p{$b} <=> $_url_p{$a} } keys (%_url_p)) {
 			if ($count>=$MaxNbOfPageShown) { $rest_p+=$_url_p{$key}; next; }
 			if ($_url_p{$key}<$MinHitFile) { $rest_p+=$_url_p{$key}; next; }
 		    print "<TR><TD CLASS=AWL>";
@@ -3498,7 +3553,7 @@ EOF
 		}
 		print "</TR>\n";
 		$count=0; 
-		foreach my $key (sort { $SortDir*$_filetypes_h{$a} <=> $SortDir*$_filetypes_h{$b} } keys (%_filetypes_h)) {
+		foreach my $key (sort { $_filetypes_h{$b} <=> $_filetypes_h{$a} } keys (%_filetypes_h)) {
 			my $p=int($_filetypes_h{$key}/$Totalh*1000)/10;
 			if ($key eq "Unknown") {
 				print "<TR><TD CLASS=AWL>$Message[0]</a></TD>";
@@ -3610,7 +3665,7 @@ EOF
 		$count=0; 
 		foreach my $key (sort { $SortDir*$_se_referrals_h{$a} <=> $SortDir*$_se_referrals_h{$b} } keys (%_se_referrals_h)) {
 			my $newreferer=$SearchEnginesHashIDLib{$key}||$key;
-			print "<TR><TD CLASS=AWL>- $newreferer</TD><TD align=right> $_se_referrals_h{$key}</TD></TR>\n";
+			print "<TR><TD CLASS=AWL>- $newreferer</TD><TD align=right> $_se_referrals_h{$key} </TD></TR>\n";
 			$count++;
 		}
 		print "</TABLE></TD>\n";
