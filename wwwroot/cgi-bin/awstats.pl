@@ -6409,7 +6409,7 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 						$_url_e{$field[$pos_url]}++;
 						$DayVisits{$yearmonthdayrecord}++;
 						# We can't count session yet because we don't have the start so
-						# we save save params of first 'wait' session
+						# we save params of first 'wait' session
 						$_waithost_l{$HostResolved}=$timehostl;
 						$_waithost_s{$HostResolved}=$timehosts;
 						$_waithost_u{$HostResolved}=$page;
