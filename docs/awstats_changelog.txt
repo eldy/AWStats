@@ -10,18 +10,25 @@ Fixes:
   being limited to MaxNbOfRobotShown value.
 
 New features/improvments:
-- Added a screen size report.
+- Added a 'Screen Size' report.
 - Group OS by families. Added a detailed OS version chart.
 - Better 404 errors management. URLs are always cleaned from their
   parameter to build '404 not found' URLs list (because parameters are not
   interesting as they can't have effect as page is not found). Referrer
   URLs list for '404 not found' URLs are kept with parameters only if
   URLReferrerWithQuery is set to 1. This make this report more useful.
+- Added 'geoipfree' plugin (same than 'geoip' plugin but using the free
+  Perl module Geo::IPfree).
+- month parameter can accept format -month=D, not only -month=DD
 - Optimized code size.
 - Optimized HTML output report size.
 
 Other/Documentation:
 - Added Isle of Man, Monserat, and Palestinian flag icon.
+- Added "local network host" and "Satellite access host" in label of
+  possible countries and icons (They appears when using geoip plugins).
+- Better management of parsed lines counting. The last line number is
+  also stored in history file, for a future use.
 - Updated documentation.
 
 
