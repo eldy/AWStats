@@ -57,21 +57,20 @@ To be sure the log format change is effective, you can stop Apache, remove all o
 your homepage. This is an example of records you should get then in the new log file:<br>
 <i>62.161.78.75 - - [dd/mmm/yyyy:hh:mm:ss +0000] "GET / HTTP/1.1" 200 1234 "http://www.from.com/from.html" "Mozilla/4.0 (compatible; MSIE 5.01; Windows NT 5.0)"</i><br>
 <br>
-* Copy all the content of provided AWStats cgi-bin directory into your web 
-server cgi-bin directory (this includes <b>awstats.pl</b>, <b>awstats.model.conf</b>, and the <b>lang</b> and <b>lib</b> sub-directories).<br>
+* Copy the contents of the uncompressed cgi-bin folder from your hard drive to your server's cgi-bin
+directory (this includes <b>awstats.pl</b>, <b>awstats.model.conf</b>, and the <b>lang</b>, <b>lib</b> and <b>plugins</b> sub-directories).
 <br>
-* If necessary (should not with most perl interpreter), in awstats.pl file, edit the first line<br>
+* If necessary (should not with most Perl interpreter), edit the first (top-most) line of awstats.pl file that is<br>
 <i>#!/usr/bin/perl</i><br>
-to reflect the path were your perl interpreter is installed.<br>
-Default value works for most of Unix OS, but it also might be<br>
+to reflect the path were your perl interpreter is installed. Default value works for most of Unix OS, but it also might be<br>
 <i>#!/usr/local/bin/perl</i><br>
 With Apache for Windows and ActivePerl interpreter, it might be<br>
 <i>#!c:/program files/activeperl/bin/perl</i><br>
 <br>
-* Move all AWStats <b>icon sub-directories</b> into a directory readable by your
+* Move AWStats <b>icon sub-directories</b> and its content into a directory readable by your
 web server, for example /yourwwwroot/icon or /yourwwwroot/icons.<br>
 <br>
-* Copy awstats.model.conf into <b>awstats.virtualhostname.conf</b> (or awstats.conf).
+* Copy <b>awstats.model.conf</b> file into a new file named <b>awstats.virtualhostname.conf</b> (or awstats.conf).
 Note: When you will run AWStats, it will first look for a config file named
 awstats.virtualhostname.conf, and, if not found, will look for awstats.conf.<br>
 Whatever the name you choose, this new file must be stored in<br>
@@ -116,13 +115,13 @@ To be sure the log format change is effective, you must stop IIS, remove all old
 your homepage. This is an example of records you should get then in the new log file:<br>
 <i>2000-07-19 14:14:14 62.161.78.73 - GET / 200 1234 HTTP/1.1 Mozilla/4.0+(compatible;+MSIE+5.01;+Windows+NT+5.0) http://www.from.com/from.htm</i>
 <br>
-* Copy all the content of provided AWStats cgi-bin directory into your web 
-server cgi-bin directory (this includes <b>awstats.pl</b>, <b>awstats.model.conf</b>, and the <b>lang</b>, <b>lib</b> and <b>plugins</b> sub-directories).<br>
+* Copy the contents of the uncompressed cgi-bin folder from your hard drive to your server's cgi-bin
+directory (this includes <b>awstats.pl</b>, <b>awstats.model.conf</b>, and the <b>lang</b>, <b>lib</b> and <b>plugins</b> sub-directories).
 <br>	
-* Move all AWStats <b>icon sub-directories</b> into a directory readable by your
+* Move AWStats <b>icon sub-directories</b> and its content into a directory readable by your
 web server, for example C:\yourwwwroot\icon.<br>
 <br>
-* Copy awstats.model.conf into <b>awstats.virtualhostname.conf</b> (or awstats.conf).
+* Copy <b>awstats.model.conf</b> file into a new file named <b>awstats.virtualhostname.conf</b> (or awstats.conf).
 Note: When you will run AWStats, it will first look for a config file named
 awstats.virtualhostname.conf, and, if not found, will look for awstats.conf.<br>
 Whatever the name you choose, this new file must be stored in<br>
