@@ -8,8 +8,11 @@
 # See COPYING.TXT file about AWStats GNU General Public License.
 #-------------------------------------------------------
 # $Revision$ - $Author$ - $Date$
-use strict; no strict "refs";
-#use diagnostics;
+
+# use strict is commented to make AWStats working with old perl.
+use strict;no strict "refs";
+#use warnings;		# Must be used in test mode only. This reduce a little process speed
+#use diagnostics;	# Must be used in test mode only. This reduce a lot of process speed
 #use Thread;
 
 
@@ -26,8 +29,10 @@ my $PROG;
 my $Extension;
 my $Config;
 my $Update=0;
+my $Date=0;
 my $Awstats="awstats.pl";
 my $OutputDir="";
+my $OutputSuffix;
 my $OutputFile;
 
 
@@ -70,12 +75,14 @@ sub warning {
 # MAIN
 #-------------------------------------------------------
 my $QueryString=""; for (0..@ARGV-1) { $QueryString .= "$ARGV[$_] "; }
-if ($QueryString =~ /debug=/i) { $Debug=$QueryString; $Debug =~ s/.*debug=//; $Debug =~ s/&.*//; $Debug =~ s/ .*//; }
-if ($QueryString =~ /config=/i) { $Config=$QueryString; $Config =~ s/.*config=//; $Config =~ s/&.*//; $Config =~ s/ .*//; }
-if ($QueryString =~ /awstatsprog=/i) { $Awstats=$QueryString; $Awstats =~ s/.*awstatsprog=//; $Awstats =~ s/&.*//; $Awstats =~ s/ .*//; }
-if ($QueryString =~ /dir=/i) { $OutputDir=$QueryString; $OutputDir =~ s/.*dir=//; $OutputDir =~ s/&.*//; $OutputDir =~ s/ .*//; }
-if ($QueryString =~ /update/i) { $Update=1; }
+if ($QueryString =~ /-debug=/i)  { $Debug=$QueryString; $Debug =~ s/.*debug=//; $Debug =~ s/&.*//; $Debug =~ s/ .*//; }
+if ($QueryString =~ /-config=/i) { $Config=$QueryString; $Config =~ s/.*config=//; $Config =~ s/&.*//; $Config =~ s/ .*//; }
+if ($QueryString =~ /-awstatsprog=/i) { $Awstats=$QueryString; $Awstats =~ s/.*awstatsprog=//; $Awstats =~ s/&.*//; $Awstats =~ s/ .*//; }
+if ($QueryString =~ /-dir=/i)    { $OutputDir=$QueryString; $OutputDir =~ s/.*dir=//; $OutputDir =~ s/&.*//; $OutputDir =~ s/ .*//; }
+if ($QueryString =~ /-update/i)  { $Update=1; }
+if ($QueryString =~ /-date/i)    { $Date=1; }
 ($DIR=$0) =~ s/([^\/\\]*)$//; ($PROG=$1) =~ s/\.([^\.]*)$//; $Extension=$1;
+if ($OutputDir) { if ($OutputDir !~ /[\\\/]$/) { $OutputDir.="/"; } }
 
 if (! $Config) {
 	print "----- $PROG $VERSION (c) Laurent Destailleur -----\n";
@@ -83,11 +90,12 @@ if (! $Config) {
 	print "build all possible pages allowed by option -output.\n";
 	print "\n";
 	print "Usage:\n";
-	print "  $PROG.$Extension -config=configvalue -awstatsprog=pathtoawstatspl [-dir=outputdir] [-update] \n";
+	print "  $PROG.$Extension -config=configvalue -awstatsprog=pathtoawstatspl [-dir=outputdir] [-date] [-update] \n";
 	print "\n";
 	print "  where configvalue is value for config option of AWStats software.\n";
 	print "        pathtoawstatspl is name of AWStats software with path (awstats.pl).\n";
 	print "        outputdir is name of output directory for generated pages.\n";
+	print "        -date option is used to add build date in built files name.\n";
 	print "        -update option is used to update statistics before generate pages.\n";
 	print "\n";
 	print "New versions and FAQ at http://awstats.sourceforge.net\n";
@@ -105,27 +113,48 @@ if (! -s "$Awstats") {
 
 # Launch awstats update
 if ($Update) {
-	`"$Awstats" -config=$Config -update`;
+	my $command="\"$Awstats\" -config=$Config -update";
+	print "Launch update process : $command\n";
+	$retour=`$command  2>&1`;
 }
 
-# Define OutputFile name
-if ($OutputDir) { if ($OutputDir !~ /[\\\/]$/) { $OutputDir.="/"; } }
-$OutputFile=($OutputDir?$OutputDir:"")."awstats.$Config.html";
 
-# Launch all awstats output
-$retour=`"$Awstats" -config=$Config -staticlinks -output 2>&1`;
+
+# Built the OutputSuffix value (used later to build page name)
+$OutputSuffix=$Config;
+if ($Date) {
+	my ($nowsec,$nowmin,$nowhour,$nowday,$nowmonth,$nowyear,$nowwday) = localtime(time);
+	if ($nowyear < 100) { $nowyear+=2000; } else { $nowyear+=1900; }
+	++$nowmonth;
+	$OutputSuffix.=".".sprintf("%04s%02s%02s",$nowyear,$nowmonth,$nowday);
+}
+
+
+my $cpt=0;
+
+# Launch main awstats output
+my $command="\"$Awstats\" -config=$Config -staticlinks".($OutputSuffix ne $Config?"=$OutputSuffix":"")." -output";
+print "Build main page: $command\n";
+$retour=`$command  2>&1`;
+$OutputFile=($OutputDir?$OutputDir:"")."awstats.$OutputSuffix.html";
 open("OUTPUT",">$OutputFile") || error("Couldn't open log file \"$OutputFile\" for writing : $!");
 print OUTPUT $retour;
 close("OUTPUT");
+$cpt++;
+
+# Launch all other awstats output
 my @OutputList=("allhosts","lasthosts","unknownip","urldetail","unknownos","unknownbrowser","browserdetail","allkeyphrases","errors404");
 for my $output (@OutputList) {
-	$retour=`"$Awstats" -config=$Config -staticlinks -output=$output 2>&1`;
-	$OutputFile="awstats.$Config.$output.html";
-#	$OutputFile="awstats.$output.html";
+	my $command="\"$Awstats\" -config=$Config -staticlinks".($OutputSuffix ne $Config?"=$OutputSuffix":"")." -output=$output";
+	print "Build $output page: $command\n";
+	$retour=`$command  2>&1`;
+	$OutputFile=($OutputDir?$OutputDir:"")."awstats.$OutputSuffix.$output.html";
 	open("OUTPUT",">$OutputFile") || error("Couldn't open log file \"$OutputFile\" for writing : $!");
 	print OUTPUT $retour;
 	close("OUTPUT");
+	$cpt++;
 }
 
+print "$cpt files built. Main page is 'awstats.$OutputSuffix.html'\n";
 
 0;	# Do not remove this line
