@@ -98,7 +98,7 @@ sub ShowInfoHost_hostinfo {
     my $param="$_[0]";
 	# <-----
 	if ($param eq '__title__') {
-		print "<th width=\"80\">$Message[114]</th>";	
+		print "<th width=\"40\">$Message[114]</th>";	
 	}
 	elsif ($param) {
 		my $keyforwhois;

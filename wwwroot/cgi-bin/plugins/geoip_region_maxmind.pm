@@ -27,7 +27,7 @@ use strict;no strict "refs";
 # ENTER HERE THE MINIMUM AWSTATS VERSION REQUIRED BY YOUR PLUGIN
 # AND THE NAME OF ALL FUNCTIONS THE PLUGIN MANAGE.
 my $PluginNeedAWStatsVersion="6.2";
-my $PluginHooksFunctions="AddHTMLMenuLink SectionInitHashArray SectionProcessIp SectionProcessHostname SectionReadHistory SectionWriteHistory";
+my $PluginHooksFunctions="AddHTMLMenuLink AddHTMLGraph ShowInfoHost SectionInitHashArray SectionProcessIp SectionProcessHostname SectionReadHistory SectionWriteHistory";
 # ----->
 
 # <-----
@@ -41,7 +41,8 @@ $geoip_region_maxmind
 $MAXNBOFSECTIONGIR
 %region
 /;
-my %countrylib=('ca'=>'Canadian Regions','us'=>'US regions');
+my %countrylib=('ca'=>'Canada','us'=>'USA');
+my %countryregionlib=('ca'=>'Canadian Regions','us'=>'US regions');
 my %regca=(
 'AB',"Alberta",
 'BC',"British Columbia",
@@ -139,14 +140,14 @@ sub Init_geoip_region_maxmind {
 	# <-----
 	# ENTER HERE CODE TO DO INIT PLUGIN ACTIONS
 	debug(" Plugin geoip_region_maxmind: InitParams=$InitParams",1);
-    if ($UpdateStats) {
+#    if ($UpdateStats) {
     	my ($mode,$datafile)=split(/\s+/,$InitParams,2);
     	if (! $datafile) { $datafile="GeoIPRegion.dat"; }
     	if ($mode eq '' || $mode eq 'GEOIP_MEMORY_CACHE')  { $mode=Geo::IP::GEOIP_MEMORY_CACHE(); }
     	else { $mode=Geo::IP::GEOIP_STANDARD(); }
     	debug(" Plugin geoip_region_maxmind: GeoIP initialized in mode $mode",1);
         $geoip_region_maxmind = Geo::IP->open($datafile, $mode);
-    }
+#    }
 	# ----->
 
 	return ($checkversion?$checkversion:"$PluginHooksFunctions");
@@ -206,7 +207,7 @@ sub AddHTMLGraph_geoip_region_maxmind {
     # Group by country
     my @countrylist=('ca','us');
     foreach my $country (@countrylist) {
-	    print "<tr><td class=\"aws\"><b>".$countrylib{$country}."</b></td>";
+	    print "<tr><td class=\"aws\"><b>".$countryregionlib{$country}."</b></td>";
    		if ($ShowRegions =~ /P/i) { print "<td>&nbsp;</td>"; }
    		if ($ShowRegions =~ /P/i) { print "<td>&nbsp;</td>"; }
    		if ($ShowRegions =~ /H/i) { print "<td>&nbsp;</td>"; }
@@ -265,6 +266,70 @@ sub AddHTMLGraph_geoip_region_maxmind {
 
 	# ----->
 	return 0;
+}
+
+
+#-----------------------------------------------------------------------------
+# PLUGIN FUNCTION: ShowInfoHost_pluginname
+# UNIQUE: NO (Several plugins using this function can be loaded)
+# Function called to add additionnal columns to the Hosts report.
+# This function is called when building rows of the report (One call for each
+# row). So it allows you to add a column in report, for example with code :
+#   print "<TD>This is a new cell for $param</TD>";
+# Parameters: Host name or ip
+#-----------------------------------------------------------------------------
+sub ShowInfoHost_geoip_region_maxmind {
+    my $param="$_[0]";
+	# <-----
+	if ($param eq '__title__') {
+		print "<th width=\"80\">GeoIP<br>Region</th>";
+	}
+	elsif ($param) {
+        my $ip=0;
+		my $key;
+		if ($param =~ /^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/) {	# IPv4 address
+			$ip=4;
+			$key=$param;
+		}
+		elsif ($param =~ /^[0-9A-F]*:/i) {						# IPv6 address
+			$ip=6;
+			$key=$param;
+		}
+		print "<td>";
+		if ($key && $ip==4) {
+        	my ($res1,$res2,$countryregion)=();
+        	($res1,$res2)=$geoip_region_maxmind->region_by_name($param) if $geoip_region_maxmind;
+        	if ($Debug) { debug("  Plugin geoip_region_maxmind: GetRegionByIp for $param: [${res1}_${res2}]",5); }
+            if ($res1 =~ /\w\w/) { print $countrylib{lc($res1)}||uc($res1); }
+            else { print "<span style=\"color: #$color_other\">$Message[0]</span>"; }
+            if ($res1 =~ /\w\w/ && $res2 =~ /\w\w/) {
+                print "&nbsp;(";
+                print $region{lc($res1)}{uc($res2)};
+                print ")";
+            }
+		}
+		if ($key && $ip==6) {
+            print "<span style=\"color: #$color_other\">$Message[0]</span>";
+        }
+		if (! $key) {
+        	my ($res1,$res2,$countryregion)=();
+        	($res1,$res2)=$geoip_region_maxmind->region_by_name($param) if $geoip_region_maxmind;
+        	if ($Debug) { debug("  Plugin geoip_region_maxmind: GetRegionByName for $param: [${res1}_${res2}]",5); }
+            if ($res1 =~ /\w\w/) { print $countrylib{lc($res1)}||uc($res1); }
+            else { print "<span style=\"color: #$color_other\">$Message[0]</span>"; }
+            if ($res1 =~ /\w\w/ && $res2 =~ /\w\w/) {
+                print "&nbsp;(";
+                print $region{lc($res1)}{uc($res2)};
+                print ")";
+            }
+		}
+		print "</td>";
+	}
+	else {
+		print "<td>&nbsp;</td>";
+	}
+	return 1;
+	# ----->
 }
 
 

@@ -26,7 +26,7 @@ use strict;no strict "refs";
 # ENTER HERE THE MINIMUM AWSTATS VERSION REQUIRED BY YOUR PLUGIN
 # AND THE NAME OF ALL FUNCTIONS THE PLUGIN MANAGE.
 my $PluginNeedAWStatsVersion="6.2";
-my $PluginHooksFunctions="AddHTMLMenuLink SectionInitHashArray SectionProcessIp SectionReadHistory SectionWriteHistory";
+my $PluginHooksFunctions="AddHTMLMenuLink AddHTMLGraph ShowInfoHost SectionInitHashArray SectionProcessIp SectionReadHistory SectionWriteHistory";
 # ----->
 
 # <-----
@@ -142,14 +142,14 @@ sub Init_geoip_city_maxmind {
 	# <-----
 	# ENTER HERE CODE TO DO INIT PLUGIN ACTIONS
 	debug(" Plugin geoip_city_maxmind: InitParams=$InitParams",1);
-    if ($UpdateStats) {
+#    if ($UpdateStats) {
     	my ($mode,$datafile)=split(/\s+/,$InitParams,2);
     	if (! $datafile) { $datafile="GeoIPCity.dat"; }
     	if ($mode eq '' || $mode eq 'GEOIP_MEMORY_CACHE')  { $mode=Geo::IP::GEOIP_MEMORY_CACHE(); }
     	else { $mode=Geo::IP::GEOIP_STANDARD(); }
     	debug(" Plugin geoip_city_maxmind: GeoIP initialized in mode $mode",1);
         $geoip_city_maxmind = Geo::IP->open($datafile, $mode);
-    }
+#    }
 	# ----->
 
 	return ($checkversion?$checkversion:"$PluginHooksFunctions");
@@ -273,6 +273,58 @@ sub AddHTMLGraph_geoip_city_maxmind {
 
 	# ----->
 	return 0;
+}
+
+
+#-----------------------------------------------------------------------------
+# PLUGIN FUNCTION: ShowInfoHost_pluginname
+# UNIQUE: NO (Several plugins using this function can be loaded)
+# Function called to add additionnal columns to the Hosts report.
+# This function is called when building rows of the report (One call for each
+# row). So it allows you to add a column in report, for example with code :
+#   print "<TD>This is a new cell for $param</TD>";
+# Parameters: Host name or ip
+#-----------------------------------------------------------------------------
+sub ShowInfoHost_geoip_city_maxmind {
+    my $param="$_[0]";
+	# <-----
+	if ($param eq '__title__') {
+		print "<th width=\"80\">GeoIP<br>City</th>";
+	}
+	elsif ($param) {
+        my $ip=0;
+		my $key;
+		if ($param =~ /^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/) {	# IPv4 address
+		    $ip=4;
+			$key=$param;
+		}
+		elsif ($param =~ /^[0-9A-F]*:/i) {						# IPv6 address
+		    $ip=6;
+			$key=$param;
+		}
+		print "<td>";
+		if ($key && $ip==4) {
+        	my $record=();
+        	$record=$geoip_city_maxmind->record_by_addr($param) if $geoip_city_maxmind;
+        	if ($Debug) { debug("  Plugin geoip_city_maxmind: GetCityByIp for $param: [$record]",5); }
+            my $city;
+            $city=$record->city if $record;
+		    if ($city) { print "$city"; }
+		    else { print "<span style=\"color: #$color_other\">$Message[0]</span>"; }
+		}
+		if ($key && $ip==6) {
+		    print "<span style=\"color: #$color_other\">$Message[0]</span>";
+		}
+		if (! $key) {
+		    print "<span style=\"color: #$color_other\">$Message[0]</span>";
+		}
+		print "</td>";
+	}
+	else {
+		print "<td>&nbsp;</td>";
+	}
+	return 1;
+	# ----->
 }
 
 
