@@ -5321,8 +5321,8 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 			}
  			# Remove params that are marked to be ignored in URLWithQueryWithoutFollowingParameters
 			if ($foundparam && @URLWithQueryWithoutFollowingParameters) {
-				if ($URLNotCaseSensitive) { map {$field[$pos_url] =~ s/$_=[^&]*//i;} @URLWithQueryWithoutFollowingParameters; }
-				else { map {$field[$pos_url] =~ s/$_=[^&]*//;} @URLWithQueryWithoutFollowingParameters; }
+				if ($URLNotCaseSensitive) { map {$field[$pos_url] =~ s/([$tokenquery&])$_=[^&]*/$1/gi;} @URLWithQueryWithoutFollowingParameters; }
+				else { map {$field[$pos_url] =~ s/([$tokenquery&])$_=[^&]*/$1/g;} @URLWithQueryWithoutFollowingParameters; }
  				# Cut starting or trailing ? or &
  				$field[$pos_url] =~ tr/&/&/s;
  				$field[$pos_url] =~ s/[$tokenquery]&/$tokenquery/;
