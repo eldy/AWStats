@@ -12,17 +12,21 @@
 
 
 # SearchEnginesSearchIDOrder
-# This list is used to know in which order to search Search Engines IDs (Most
-# frequent search regex are first in this list to increase detect speed).
+# It contains all matching criteria to search for in log fields. This list is
+# used to know in which order to search Search Engines IDs.
+# Most frequent one are in list1, used when LevelForSearchEnginesDetection is 1 or more
+# Minor robots are in list2, used when LevelForSearchEnginesDetection is 2 or more
 # Note: Regex IDs are in lower case and ' ' and '+' are changed into '_'
 #------------------------------------------------------------------------------
-@SearchEnginesSearchIDOrder=(
+@SearchEnginesSearchIDOrder_list1=(
 # Major internationnal search engines
 'images\.google\.',
 'google\.','216\.239\.(35\.101|37\.101|39\.100|39\.101|51\.100|51\.101|35\.100)',
 'msn\.',
 'voila\.',
 'yahoo\.',
+'search\.aol\.co',
+'tiscali\.',
 'lycos\.',
 'alexa\.com',
 'alltheweb\.com',
@@ -31,8 +35,11 @@
 'netscape\.',
 'search\.terra\.',
 'www\.search\.com',
-'tiscali\.',
-'search\.aol\.co',
+'search\.sli\.sympatico\.ca', 
+'excite\.'
+);
+
+@SearchEnginesSearchIDOrder_list2=(
 # Minor internationnal search engines
 'northernlight\.',
 'hotbot\.',
@@ -42,7 +49,6 @@
 'go2net\.com',
 '(^|\.)go\.com',
 'euroseek\.',
-'excite\.',
 'looksmart\.',
 'spray\.',
 'nbci\.com/search',
@@ -58,7 +64,6 @@
 'wisenut\.com',
 'ixquick\.com',
 'search\.earthlink\.net', 
-'search\.sli\.sympatico\.ca', 
 'i-une\.com',
 # Minor brazilian search engines
 'engine\.exe', 'miner\.bol\.com\.br',
@@ -95,8 +100,10 @@
 # Minor swedish search engines
 'evreka\.passagen\.se',
 # Minor swiss search engines
-'search\.ch', 'search\.bluewin\.ch',
-# Other
+'search\.ch', 'search\.bluewin\.ch'
+);
+@SearchEnginesSearchIDOrder_listgen=(
+# Generic search engines
 'search\..*\.\w+'
 );
 
@@ -131,6 +138,8 @@
 'www\.search\.com','search.com',
 'tiscali\.','tiscali',
 'search\.aol\.co','aol',
+'search\.sli\.sympatico\.ca','sympatico',
+'excite\.','excite',
 # Minor internationnal search engines
 'northernlight\.','northernlight',
 'hotbot\.','hotbot',
@@ -140,7 +149,6 @@
 'go2net\.com','go2net',
 '(^|\.)go\.com','go',
 'euroseek\.','euroseek',
-'excite\.','excite',
 'looksmart\.','looksmart',
 'spray\.','spray',
 'nbci\.com/search','nbci',
@@ -156,7 +164,6 @@
 'wisenut\.com','wisenut',
 'ixquick\.com','ixquick',
 'search\.earthlink\.net','earthlink',
-'search\.sli\.sympatico\.ca','sympatico',
 'i-une\.com','iune',
 # Minor brazilian search engines
 'engine\.exe','engine',
@@ -248,7 +255,7 @@
 # Minor swiss search engines
 'search\.ch','searchch',
 'search\.bluewin\.ch','bluewin',
-# Other
+# Generic search engines
 'search\..*\.\w+','search'
 );
 
@@ -272,12 +279,13 @@
 'voila','kw=',
 'search.com','q=',
 'yahoo','p=',
+'sympatico', 'query=', 
+'excite','search=',
 # Minor internationnal search engines
 'go','qt=',
 'ask','ask=',
 'atomz','sp-q=',
 'euroseek','query=',
-'excite','search=',
 'findarticles','key=',
 'go2net','general=',
 'hotbot','mt=',
@@ -297,7 +305,6 @@
 'wisenut','query=', 
 'ixquick', 'query=',
 'earthlink', 'q=',
-'sympatico', 'query=', 
 'iune','(keywords|q)=',
 # Minor brazilian search engines
 'engine','p1=', 'miner','q=',
@@ -381,13 +388,14 @@
 'voila','Voila',
 'search.com','Search.com',
 'yahoo','Yahoo',
+'sympatico', 'Sympatico',
+'excite','Excite',
 # Minor internationnal search engines
 'go','Go.com',
 'ask','Ask Jeeves',
 'atomz','Atomz',
 'dejanews','DejaNews',
 'euroseek','Euroseek',
-'excite','Excite',
 'findarticles','Find Articles',
 'go2net','Go2Net (Metamoteur)',
 'hotbot','Hotbot',
@@ -406,7 +414,6 @@
 'wisenut','WISENut', 
 'ixquick', 'ix quick', 
 'earthlink', 'Earth Link',
-'sympatico', 'Sympatico',
 'iune','i-une.com',
 # Minor brazilian search engines
 'engine','Cade', 'miner','Meta Miner',
@@ -424,9 +431,9 @@
 # Minor finnish search engines
 'haku','Ihmemaa',										
 # Minor french search engines
-'aolfr','AOL', 'ctrouve','C\'est trouvé', 'francite','Francité', 'lbb', 'LBB', 'libertysurf', 'Libertysurf', 'free', 'Free.fr', 'clubinternet', 'Club-internet',
+'aolfr','AOL (fr)', 'ctrouve','C\'est trouvé', 'francite','Francité', 'lbb', 'LBB', 'libertysurf', 'Libertysurf', 'free', 'Free.fr', 'clubinternet', 'Club-internet',
 # Minor german search engines
-'aolde','AOL',
+'aolde','AOL (de)',
 'fireball','Fireball', 'infoseek','Infoseek', 'webde','Web.de',
 'abacho','Abacho', 't-online','T-Online', 
 'allesklar','allesklar.de', 'meinestadt','meinestadt.de', 
@@ -446,7 +453,7 @@
 'passagen','Evreka',
 # Minor Swiss search engines
 'searchch', 'search.ch', 'bluewin', 'search.bluewin.ch',								
-# Other
+# Generic search engines
 'search','Other search engines'
 );
 
@@ -454,7 +461,17 @@
 # Sanity check.
 # Enable this code and run perl search_engines.pm to check file entries are ok
 #-----------------------------------------------------------------------------
-#foreach my $key (@SearchEnginesSearchIDOrder) { if (! $SearchEnginesHashID{$key}) { error("Entry '$key' has been found in SearchEnginesSearchIDOrder with no value in SearchEnginesHashID"); } }
+#foreach my $key (@SearchEnginesSearchIDOrder_list1) {
+#	if (! $SearchEnginesHashID{$key}) { error("Entry '$key' has been found in SearchEnginesSearchIDOrder_list1 with no value in SearchEnginesHashID");
+#	foreach my $key2 (@SearchEnginesSearchIDOrder_list2) { if ($key2 eq $key) { error("$key is in 1 and 2\n"); } }
+#	foreach my $key2 (@SearchEnginesSearchIDOrder_listgen) { if ($key2 eq $key) { error("$key is in 1 and gen\n"); } }
+#} }
+#foreach my $key (@SearchEnginesSearchIDOrder_list2) {
+#	if (! $SearchEnginesHashID{$key}) { error("Entry '$key' has been found in SearchEnginesSearchIDOrder_list1 with no value in SearchEnginesHashID");
+#	foreach my $key2 (@SearchEnginesSearchIDOrder_list1) { if ($key2 eq $key) { error("$key is in 2 and 1\n"); } }
+#	foreach my $key2 (@SearchEnginesSearchIDOrder_listgen) { if ($key2 eq $key) { error("$key is in 2 and gen\n"); } }
+#} }
+#foreach my $key (@SearchEnginesSearchIDOrder_listgen) { if (! $SearchEnginesHashID{$key}) { error("Entry '$key' has been found in SearchEnginesSearchIDOrder_listgen with no value in SearchEnginesHashID"); } }
 #foreach my $key (keys %NotSearchEnginesKeys) { if (! $SearchEnginesHashID{$key}) { error("Entry '$key' has been found in NotSearchEnginesKeys with no value in SearchEnginesHashID"); } }
 #foreach my $key (keys %SearchEnginesKnownUrl) {
 #	my $found=0;
@@ -470,6 +487,6 @@
 #	}
 #	if (! $found) { die "Entry '$key' has been found in SearchEnginesHashLib with no value in SearchEnginesHashID"; }
 #}
-
+#print @SearchEnginesSearchIDOrder_list1." ".@SearchEnginesSearchIDOrder_list2." ".@SearchEnginesSearchIDOrder_listgen;
 
 1;

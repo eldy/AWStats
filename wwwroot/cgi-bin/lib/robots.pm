@@ -21,9 +21,10 @@
 
 
 # RobotsSearchIDOrder
-# This list is used to know in which order to search Robot IDs (Most frequent one
-# are in list1 to increase detection speed).
-# It contains all matching criteria to search for in log fields.
+# It contains all matching criteria to search for in log fields. This list is
+# used to know in which order to search Robot IDs.
+# Most frequent one are in list1, used when LevelForRobotsDetection is 1 or more
+# Minor robots are in list2, used when LevelForRobotsDetection is 2 or more
 # Note: Robots IDs are in lower case and ' ' and '+' are changed into '_'
 #-------------------------------------------------------
 @RobotsSearchIDOrder_list1 = (
@@ -345,7 +346,7 @@
 'zealbot',
 'zyborg'
 );
-@RobotsSearchIDOrder_list3 = (
+@RobotsSearchIDOrder_listgen = (
 # Generic robot
 'robot',
 'crawl',

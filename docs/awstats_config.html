@@ -104,11 +104,13 @@ when reading it), follow the example:<br>
 
 <br><b>OPTIONAL ACCURACY SETUP SECTION (Not required but increase AWStats features)</b><br>
 <ul>
-<li><a href="#LevelFor">LevelForRobotsDetection</a>
 <li><a href="#LevelFor">LevelForBrowsersDetection</a>
 <li><a href="#LevelFor">LevelForOSDetection</a>
 <li><a href="#LevelFor">LevelForRefererAnalyze</a>
+<li><a href="#LevelFor">LevelForRobotsDetection</a>
+<li><a href="#LevelFor">LevelForSearchEnginesDetection</a>
 <li><a href="#LevelFor">LevelForFileTypesDetection</a>
+
 </ul>
 
 <br><b>OPTIONAL APPEARANCE SETUP SECTION (Not required but increase AWStats features)</b><br>
@@ -1122,7 +1124,7 @@ AWStats 4.1+ supports both keywords AND keyphrases by default with no need of an
 
 <a name="LevelFor"><b>LevelFor</b></a><br>
 <b>Version : </b>4.0+<br>
-6.0+ for LevelForFileTypesDetection<br>
+6.0+ for LevelForFileTypesDetection, LevelForSearchEnginesDetection<br>
 <br># Following values allows you to define accuracy of AWStats entities (robots,
 <br># browsers, os, referers, file types) detection.
 <br># It is recommanded that very important web sites or ISP that provides AWStats
@@ -1134,10 +1136,11 @@ AWStats 4.1+ supports both keywords AND keyphrases by default with no need of an
 <br># Change : Effective for new updates only
 <br># Default: 2
 <br>#
-<br>LevelForRobotsDetection=2			# 0 disables Robots detection.
 <br>LevelForBrowsersDetection=2			# 0 disables Browsers detection.
 <br>LevelForOSDetection=2				# 0 disables OS detection.
 <br>LevelForRefererAnalyze=2			# 0 disables origin detection.
+<br>LevelForRobotsDetection=2			# 0 disables Robots detection.
+<br>LevelForSearchEnginesDetection=2	# 0 disables Search engines detection.
 <br>LevelForFileTypesDetection=2		# 0 disables file types detection.
 
 <br><br><hr>

@@ -28,6 +28,7 @@ use vars qw/
 $DEBUGFORCED $NBOFLINESFORBENCHMARK $FRAMEWIDTH $NBOFLASTUPDATELOOKUPTOSAVE
 $LIMITFLUSH $NEWDAYVISITTIMEOUT $VISITTIMEOUT $NOTSORTEDRECORDTOLERANCE $MAXDIFFEXTRA
 $WIDTHCOLICON $TOOLTIPON
+$lastyearbeforeupdate
 /;
 $DEBUGFORCED=0;						# Force debug level to log lesser level into debug.log file (Keep this value to 0)
 $NBOFLINESFORBENCHMARK=8192;		# Benchmark info are printing every NBOFLINESFORBENCHMARK lines (Must be a power of 2)
@@ -200,16 +201,17 @@ $color_h, $color_k, $color_p, $color_e, $color_x, $color_s, $color_u, $color_v)=
 ('','','','','','','','','','','','','','','','','','','','','','');
 # ---------- Init arrays --------
 use vars qw/
-@RobotsSearchIDOrder_list1 @RobotsSearchIDOrder_list2 @RobotsSearchIDOrder_list3
-@BrowsersSearchIDOrder @OSSearchIDOrder @SearchEnginesSearchIDOrder @WordsToExtractSearchUrl @WordsToCleanSearchUrl
+@RobotsSearchIDOrder_list1 @RobotsSearchIDOrder_list2 @RobotsSearchIDOrder_listgen
+@SearchEnginesSearchIDOrder_list1 @SearchEnginesSearchIDOrder_list2 @SearchEnginesSearchIDOrder_listgen
+@BrowsersSearchIDOrder @OSSearchIDOrder @WordsToExtractSearchUrl @WordsToCleanSearchUrl
 @WormsSearchIDOrder
-@DOWIndex @RobotsSearchIDOrder
+@RobotsSearchIDOrder @SearchEnginesSearchIDOrder
 @_from_p @_from_h @_time_p @_time_h @_time_k
-@fieldlib @keylist
+@DOWIndex @fieldlib @keylist
 /;
-@DOWIndex = @RobotsSearchIDOrder = ();
+@RobotsSearchIDOrder = @SearchEnginesSearchIDOrder = ();
 @_from_p = @_from_h = @_time_p = @_time_h = @_time_k = ();
-@fieldlib = @keylist = ();
+@DOWIndex = @fieldlib = @keylist = ();
 use vars qw/
 @MiscListOrder %MiscListCalc
 @OSFamily @BrowsersFamily @SessionsRange %SessionsAverage
@@ -1267,8 +1269,8 @@ sub Read_Ref_Data {
 	# Sanity check.
 	if (@OSSearchIDOrder != scalar keys %OSHashID) { error("Not same number of records of OSSearchIDOrder (".(@OSSearchIDOrder)." entries) and OSHashID (".(scalar keys %OSHashID)." entries) in OS database. Check your file ".$FilePath{"operating_systems.pm"}); }
 	if (@BrowsersSearchIDOrder != scalar keys %BrowsersHashIDLib) { error("Not same number of records of BrowsersSearchIDOrder (".(@BrowsersSearchIDOrder)." entries) and BrowsersHashIDLib (".(scalar keys %BrowsersHashIDLib)." entries) in Browsers database. Check your file ".$FilePath{"browsers.pm"}); }
-	if (@SearchEnginesSearchIDOrder != scalar keys %SearchEnginesHashID) { error("Not same number of records of SearchEnginesSearchIDOrder (".(@SearchEnginesSearchIDOrder)." entries) and SearchEnginesHashID (".(scalar keys %SearchEnginesHashID)." entries) in Search Engines database. Check your file ".$FilePath{"search_engines.pm"}); }
-	if ((@RobotsSearchIDOrder_list1+@RobotsSearchIDOrder_list2+@RobotsSearchIDOrder_list3) != scalar keys %RobotsHashIDLib) { error("Not same number of records of RobotsSearchIDOrder_listx (total is ".(@RobotsSearchIDOrder_list1+@RobotsSearchIDOrder_list2+@RobotsSearchIDOrder_list3)." entries) and RobotsHashIDLib (".(scalar keys %RobotsHashIDLib)." entries) in Robots database. Check your file ".$FilePath{"robots.pm"}); }
+	if ((@SearchEnginesSearchIDOrder_list1+@SearchEnginesSearchIDOrder_list2+@SearchEnginesSearchIDOrder_listgen) != scalar keys %SearchEnginesHashID) { error("Not same number of records of SearchEnginesSearchIDOrder_listx (total is ".(@SearchEnginesSearchIDOrder_list1+@SearchEnginesSearchIDOrder_list2+@SearchEnginesSearchIDOrder_listgen)." entries) and SearchEnginesHashID (".(scalar keys %SearchEnginesHashID)." entries) in Search Engines database. Check your file ".$FilePath{"search_engines.pm"}); }
+	if ((@RobotsSearchIDOrder_list1+@RobotsSearchIDOrder_list2+@RobotsSearchIDOrder_listgen) != scalar keys %RobotsHashIDLib) { error("Not same number of records of RobotsSearchIDOrder_listx (total is ".(@RobotsSearchIDOrder_list1+@RobotsSearchIDOrder_list2+@RobotsSearchIDOrder_listgen)." entries) and RobotsHashIDLib (".(scalar keys %RobotsHashIDLib)." entries) in Robots database. Check your file ".$FilePath{"robots.pm"}); }
 }
 
 
@@ -5400,7 +5402,7 @@ if ($FrameName eq 'index') {
 %MonthNumLib = ("01","$Message[60]","02","$Message[61]","03","$Message[62]","04","$Message[63]","05","$Message[64]","06","$Message[65]","07","$Message[66]","08","$Message[67]","09","$Message[68]","10","$Message[69]","11","$Message[70]","12","$Message[71]");
 
 # Build ListOfYears list with all existing years
-my $lastyearbeforeupdate=0;
+$lastyearbeforeupdate=0;
 opendir(DIR,"$DirData");
 foreach (grep /^$PROG(\d\d)(\d\d\d\d)$FileSuffix\.txt(|\.gz)$/, sort readdir DIR) {
 	/^$PROG(\d\d)(\d\d\d\d)$FileSuffix\.txt(|\.gz)$/;
@@ -5447,16 +5449,29 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 	my $lastprocessedmonth=$ListOfYears{$lastyearbeforeupdate}||0;
 	my $lastprocessedyearmonth=sprintf("%04i%02i",$lastprocessedyear,$lastprocessedmonth);
 
+	my @list;
 	# Init RobotsSearchIDOrder required for update process
-	my @robotlist;
-	if ($LevelForRobotsDetection >= 1) { push @robotlist,"list1"; }
-	if ($LevelForRobotsDetection >= 2) { push @robotlist,"list2"; }
-	if ($LevelForRobotsDetection >= 1) { push @robotlist,"list3"; }	# Always added
-	foreach my $key (@robotlist) {
+	@list=();
+	if ($LevelForRobotsDetection >= 1) {
+		foreach (1..$LevelForRobotsDetection) { push @list,"list$_"; }
+		push @list,"listgen";		# Always added
+	}
+	foreach my $key (@list) {
 		push @RobotsSearchIDOrder,@{"RobotsSearchIDOrder_$key"};
 		if ($Debug) { debug("Add ".@{"RobotsSearchIDOrder_$key"}." elements from RobotsSearchIDOrder_$key into RobotsSearchIDOrder",2); }
 	}
 	if ($Debug) { debug("RobotsSearchIDOrder has now ".@RobotsSearchIDOrder." elements",1); }
+	# Init SearchEnginesIDOrder required for update process
+	@list=();
+	if ($LevelForSearchEnginesDetection >= 1) {
+		foreach (1..$LevelForSearchEnginesDetection) { push @list,"list$_"; }
+		push @list,"listgen";		# Always added
+	}
+	foreach my $key (@list) {
+		push @SearchEnginesSearchIDOrder,@{"SearchEnginesSearchIDOrder_$key"};
+		if ($Debug) { debug("Add ".@{"SearchEnginesSearchIDOrder_$key"}." elements from SearchEnginesSearchIDOrder_$key into SearchEnginesSearchIDOrder",2); }
+	}
+	if ($Debug) { debug("SearchEnginesSearchIDOrder has now ".@SearchEnginesSearchIDOrder." elements",1); }
 
 	# Complete HostAliases array
 	if (! @HostAliases) {
