@@ -257,7 +257,7 @@ use vars qw/
 'el'=>'gr','hu'=>'hu','is'=>'is','in'=>'id','it'=>'it',
 'ja'=>'jp','ko'=>'kr','lv'=>'lv','nl'=>'nl','no'=>'nb','nb'=>'nb','nn'=>'nn',
 'pl'=>'pl','pt'=>'pt','pt-br'=>'br','ro'=>'ro','ru'=>'ru','sr'=>'sr','sk'=>'sk',
-'sv'=>'se','tr'=>'tr','uk'=>'ua','cy'=>'cy','wlk'=>'cy'
+'sv'=>'se','th'=>'th','tr'=>'tr','uk'=>'ua','cy'=>'cy','wlk'=>'cy'
 );
 %LangAWStatsToFlagAwstats=(  # If flag (country ISO-3166 two letters) is not same than AWStats Lang code
 'ca'=>'es_cat','et'=>'ee','eu','es_eu',
