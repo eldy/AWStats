@@ -21,7 +21,7 @@ use vars qw(%DomainsHashIDLib @RobotsSearchIDOrder_list1 @RobotsSearchIDOrder_li
 #-------------------------------------------------------
 # Defines
 #-------------------------------------------------------
-my $VERSION="4.0 (build 55)";
+my $VERSION="4.0 (build 56)";
 
 # ---------- Init variables -------
 my $Debug=0;
@@ -100,7 +100,7 @@ $color_text, $color_titletext, $color_weekend, $color_link, $color_hover,
 $color_h, $color_k, $color_p, $color_s, $color_u, $color_v)=
 ("","","","","","","","","","","","","","","","","","");
 my $pos_rc = my $pos_logname = my $pos_date = my $pos_method = my $pos_url = my $pos_code = my $pos_size = 0;
-my $pos_referer = my $pos_agent = my $pos_query = my $pos_gzipin = my $pos_gzipout = my $pos_gzipres = 0;
+my $pos_referer = my $pos_agent = my $pos_query = my $pos_gzipin = my $pos_gzipout = my $pos_gzipratio = 0;
 my $lastrequiredfield = my $lowerval = 0;
 my $FirstTime = my $LastTime = my $TotalUnique = my $TotalVisits = my $TotalHostsKnown = my $TotalHostsUnknown = 0;
 my $TotalPages = my $TotalHits = my $TotalBytes = 0;
@@ -2457,6 +2457,10 @@ if ($UpdateStats) {
 	# 05/21/00	00:17:31	OK  	200	212.242.30.6	Mozilla/4.0 (compatible; MSIE 5.0; Windows 98; DigExt)	http://www.cover.dk/	"www.cover.dk"	:Documentation:graphics:starninelogo.white.gif	1133
 	# Other example for error 408 with Apache
 	# 62.161.78.73 user - [dd/mmm/yyyy:hh:mm:ss +0000] "-" 408 - "-" "-"
+	# Other example for error 408 with Apache
+	# LogFormat "%h %l %u %t \"%r\" %>s %b mod_gzip: %{mod_gzip_compression_ratio}npct." common_with_mod_gzip_info1
+	# LogFormat "%h %l %u %t \"%r\" %>s %b mod_gzip: %{mod_gzip_result}n In:%{mod_gzip_input_size}n Out:%{mod_gzip_output_size}n:%{mod_gzip_compression_ratio}npct." common_with_mod_gzip_info2
+
 	$LogFormatString=$LogFormat;
 	if ($LogFormat eq "1") { $LogFormatString="%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\""; }
 	if ($LogFormat eq "2") { $LogFormatString="date time c-ip cs-username cs-method cs-uri-stem sc-status sc-bytes cs-version cs(User-Agent) cs(Referer)"; }
@@ -2472,6 +2476,9 @@ if ($UpdateStats) {
 	$LogFormatString =~ s/%b([\s])/%bytesd$1/g;	$LogFormatString =~ s/%b$/%bytesd/g;
 	$LogFormatString =~ s/\"%\(Referer\)i\"/%refererquot/g;
 	$LogFormatString =~ s/\"%\(User-Agent\)i\"/%uaquot/g;
+	$LogFormatString =~ s/%{mod_gzip_input_size}n/%gzipin/g;
+	$LogFormatString =~ s/%{mod_gzip_output_size}n/%gzipout/g;
+	$LogFormatString =~ s/%{mod_gzip_compression_ratio}n/%gzipratio/g;
 	# Replacement for a IIS and ISA format string
 	$LogFormatString =~ s/date\stime/%time2/g;
 	$LogFormatString =~ s/c-ip/%host/g;
@@ -2537,12 +2544,12 @@ if ($UpdateStats) {
 				$pos_rc = $i; $i++;
 				$PerlParsingFormat .= "([^\\s]*)";
 			}
-			if ($f =~ /%logname$/) {
+			elsif ($f =~ /%logname$/) {
 				$found=1;
 				$pos_logname = $i; $i++;
 				$PerlParsingFormat .= "([^\\s]*)";
 			}
-			if ($f =~ /%time1$/) {
+			elsif ($f =~ /%time1$/) {
 				$found=1;
 				$pos_date = $i;
 				$i++;
@@ -2550,13 +2557,13 @@ if ($UpdateStats) {
 				$i++;
 				$PerlParsingFormat .= "\\[([^\\s]*) ([^\\s]*)\\]";
 			}
-			if ($f =~ /%time2$/) {
+			elsif ($f =~ /%time2$/) {
 				$found=1;
 				$pos_date = $i;
 				$i++;
 				$PerlParsingFormat .= "([^\\s]* [^\\s]*)";
 			}
-			if ($f =~ /%methodurl$/) {
+			elsif ($f =~ /%methodurl$/) {
 				$found=1;
 				$pos_method = $i;
 				$i++;
@@ -2564,7 +2571,7 @@ if ($UpdateStats) {
 				$i++;
 				$PerlParsingFormat .= "\\\"([^\\s]*) ([^\\s]*) [^\\\"]*\\\"";
 			}
-			if ($f =~ /%methodurlnoprot$/) {
+			elsif ($f =~ /%methodurlnoprot$/) {
 				$found=1;
 				$pos_method = $i;
 				$i++;
@@ -2572,68 +2579,68 @@ if ($UpdateStats) {
 				$i++;
 				$PerlParsingFormat .= "\\\"([^\\s]*) ([^\\s]*)\\\"";
 			}
-			if ($f =~ /%method$/) {
+			elsif ($f =~ /%method$/) {
 				$found=1;
 				$pos_method = $i;
 				$i++;
 				$PerlParsingFormat .= "([^\\s]*)";
 			}
-			if ($f =~ /%url$/) {
+			elsif ($f =~ /%url$/) {
 				$found=1;
 				$pos_url = $i;
 				$i++;
 				$PerlParsingFormat .= "([^\\s]*)";
 			}
-			if ($f =~ /%query$/) {
+			elsif ($f =~ /%query$/) {
 				$found=1;
 				$pos_query = $i;
 				$i++;
 				$PerlParsingFormat .= "([^\\s]*)";
 			}
-			if ($f =~ /%code$/) {
+			elsif ($f =~ /%code$/) {
 				$found=1;
 				$pos_code = $i;
 				$i++;
 				$PerlParsingFormat .= "([\\d|-]*)";
 			}
-			if ($f =~ /%bytesd$/) {
+			elsif ($f =~ /%bytesd$/) {
 				$found=1;
 				$pos_size = $i; $i++;
 				$PerlParsingFormat .= "([\\d|-]*)";
 			}
-			if ($f =~ /%refererquot$/) {
+			elsif ($f =~ /%refererquot$/) {
 				$found=1;
 				$pos_referer = $i; $i++;
 				$PerlParsingFormat .= "\\\"(.*)\\\"";
 			}
-			if ($f =~ /%referer$/) {
+			elsif ($f =~ /%referer$/) {
 				$found=1;
 				$pos_referer = $i; $i++;
 				$PerlParsingFormat .= "([^\\s]*)";
 			}
-			if ($f =~ /%uaquot$/) {
+			elsif ($f =~ /%uaquot$/) {
 				$found=1;
 				$pos_agent = $i; $i++;
 				$PerlParsingFormat .= "\\\"([^\\\"]*)\\\"";
 			}
-			if ($f =~ /%ua$/) {
+			elsif ($f =~ /%ua$/) {
 				$found=1;
 				$pos_agent = $i; $i++;
 				$PerlParsingFormat .= "([^\\s]*)";
 			}
-			if ($f =~ /%gzipin$/ ) {
+			elsif ($f =~ /%gzipin$/ ) {
 				$found=1;
 				$pos_gzipin=$i;$i++;
 				$PerlParsingFormat .= "([^\\s]*)";
 			}
-			if ($f =~ /%gzipout$/ ) {
+			elsif ($f =~ /%gzipout$/ ) {
 				$found=1;
 				$pos_gzipout=$i;$i++;
 				$PerlParsingFormat .= "([^\\s]*)";
 			}
-			if ($f =~ /%gzipres$/ ) {
+			elsif ($f =~ /%gzipratio$/ ) {
 				$found=1;
-				$pos_gzipres=$i;$i++;
+				$pos_gzipratio=$i;$i++;
 				$PerlParsingFormat .= "([^\\s]*)";
 			}
 			if (! $found) { $found=1; $PerlParsingFormat .= "[^\\s]*"; }
@@ -2891,8 +2898,7 @@ if ($UpdateStats) {
 		$_filetypes_h{$extension}++;
 		$_filetypes_k{$extension}+=$field[$pos_size];
 		# Compression
-		if ($pos_gzipin && $field[$pos_gzipin]) {
-			my ($a,$b)=split(":",$field[$pos_gzipres]);
+		if ($pos_gzipin && $field[$pos_gzipin]) {	# Si in et out present
 			my ($notused,$in)=split(":",$field[$pos_gzipin]);
 			my ($notused1,$out,$notused2)=split(":",$field[$pos_gzipout]);
 			if ($out) {
@@ -2900,7 +2906,11 @@ if ($UpdateStats) {
 				$_filetypes_gz_out{$extension}+=$out;
 			}
 		}
-
+		elsif ($pos_gzipratio && ($field[$pos_gzipratio] =~ /(\d*)pct./)) {
+			$_filetypes_gz_in{$extension}+=$field[$pos_size];
+			$_filetypes_gz_out{$extension}+=int($field[$pos_size]*(1-$1/100));	# out size calculated from pct.
+		}
+		
 		# Analyze: Date - Hour - Pages - Hits - Kilo
 		#-------------------------------------------
 		my $hourrecord=int($dateparts[3]);
