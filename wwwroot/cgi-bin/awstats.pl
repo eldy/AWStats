@@ -20,7 +20,7 @@ use Socket;
 #-----------------------------------------------------------------------------
 use vars qw/ $REVISION $VERSION /;
 $REVISION='$Revision$'; $REVISION =~ /\s(.*)\s/; $REVISION=$1;
-$VERSION="5.1 (build $REVISION)";
+$VERSION="5.2 (build $REVISION)";
 
 # ---------- Init variables -------
 # Constants
@@ -81,23 +81,23 @@ $BarImageHorizontal_h
 $BarImageVertical_k
 $BarImageHorizontal_k
 /;
-$DNSStaticCacheFile="dnscache.txt";
-$DNSLastUpdateCacheFile="dnscachelastupdate.txt";
-$Lang="en";
+$DNSStaticCacheFile='dnscache.txt';
+$DNSLastUpdateCacheFile='dnscachelastupdate.txt';
+$Lang='en';
 $MaxRowsInHTMLOutput = 1000;
-$BarImageVertical_v   = "barrevv.png";
-#$BarImageHorizontal_v = "barrehv.png";
-$BarImageVertical_u   = "barrevu.png";
-#$BarImageHorizontal_u = "barrehu.png";
-$BarImageVertical_p   = "barrevp.png";
-$BarImageHorizontal_p = "barrehp.png";
-#$BarImageVertical_e = "barreve.png";
-$BarImageHorizontal_e = "barrehe.png";
-$BarImageHorizontal_x = "barrehx.png";
-$BarImageVertical_h   = "barrevh.png";
-$BarImageHorizontal_h = "barrehh.png";
-$BarImageVertical_k   = "barrevk.png";
-$BarImageHorizontal_k = "barrehk.png";
+$BarImageVertical_v   = 'barrevv.png';
+#$BarImageHorizontal_v = 'barrehv.png';
+$BarImageVertical_u   = 'barrevu.png';
+#$BarImageHorizontal_u = 'barrehu.png';
+$BarImageVertical_p   = 'barrevp.png';
+$BarImageHorizontal_p = 'barrehp.png';
+#$BarImageVertical_e = 'barreve.png';
+$BarImageHorizontal_e = 'barrehe.png';
+$BarImageHorizontal_x = 'barrehx.png';
+$BarImageVertical_h   = 'barrevh.png';
+$BarImageHorizontal_h = 'barrehh.png';
+$BarImageVertical_k   = 'barrevk.png';
+$BarImageHorizontal_k = 'barrehk.png';
 use vars qw/
 $EnableLockForUpdate $DNSLookup $AllowAccessFromWebToAuthenticatedUsersOnly
 $BarHeight $BarWidth $CreateDirDataIfNotExists $KeepBackupOfHistoricFiles $MaxLengthOfURL
@@ -137,7 +137,7 @@ $ShowBrowsersStats $ShowOSStats $ShowOriginStats
 $ShowKeyphrasesStats $ShowKeywordsStats
 $ShowHTTPErrorsStats
 $ShowFlagLinks $ShowLinksOnUrl
-$WarningMessages
+$WarningMessages $DebugMessages
 /;
 ($AllowToUpdateStatsFromBrowser, $ArchiveLogRecords, $DetailedReportsOnNewWindows,
 $FirstDayOfWeek, $KeyWordsNotSensitive, $SaveDatabaseFilesWithPermissionsForEveryone,
@@ -147,8 +147,8 @@ $ShowRobotsStats, $ShowSessionsStats, $ShowPagesStats, $ShowFileTypesStats,
 $ShowBrowsersStats, $ShowOSStats, $ShowOriginStats, $ShowKeyphrasesStats,
 $ShowKeywordsStats,  $ShowHTTPErrorsStats,
 $ShowFlagLinks, $ShowLinksOnUrl,
-$WarningMessages)=
-(1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1);
+$WarningMessages, $DebugMessages)=
+(1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1);
 use vars qw/
 $LevelForRobotsDetection $LevelForBrowsersDetection $LevelForOSDetection $LevelForRefererAnalyze
 $LevelForSearchEnginesDetection $LevelForKeywordsDetection
@@ -160,11 +160,13 @@ use vars qw/
 $DirLock $DirCgi $DirData $DirIcons $DirLang $AWScript $ArchiveFileName
 $AllowAccessFromWebToFollowingIPAddresses $HTMLHeadSection $HTMLEndSection $LinksToWhoIs $LinksToIPWhoIs
 $LogFile $LogFormat $LogSeparator $Logo $LogoLink $StyleSheet $WrapperScript $SiteDomain
+$ErrorMessages
 /;
 ($DirLock, $DirCgi, $DirData, $DirIcons, $DirLang, $AWScript, $ArchiveFileName,
 $AllowAccessFromWebToFollowingIPAddresses, $HTMLHeadSection, $HTMLEndSection, $LinksToWhoIs, $LinksToIPWhoIs,
-$LogFile, $LogFormat, $LogSeparator, $Logo, $LogoLink, $StyleSheet, $WrapperScript, $SiteDomain)=
-("","","","","","","","","","","","","","","","","","","","");
+$LogFile, $LogFormat, $LogSeparator, $Logo, $LogoLink, $StyleSheet, $WrapperScript, $SiteDomain,
+$ErrorMessages)=
+('','','','','','','','','','','','','','','','','','','','','');
 use vars qw/
 $color_Background $color_TableBG $color_TableBGRowTitle
 $color_TableBGTitle $color_TableBorder $color_TableRowTitle $color_TableTitle
@@ -175,7 +177,7 @@ $color_h $color_k $color_p $color_e $color_x $color_s $color_u $color_v
 $color_TableBGTitle, $color_TableBorder, $color_TableRowTitle, $color_TableTitle,
 $color_text, $color_textpercent, $color_titletext, $color_weekend, $color_link, $color_hover, $color_other,
 $color_h, $color_k, $color_p, $color_e, $color_x, $color_s, $color_u, $color_v)=
-("","","","","","","","","","","","","","","","","","","","","","");
+('','','','','','','','','','','','','','','','','','','','','','');
 use vars qw/
 $HTMLOutput $FrameName $Center $FileConfig $FileSuffix $Host $DayRequired $MonthRequired $YearRequired
 $QueryString $SiteConfig $StaticLinks $URLFilter $PageCode $PerlParsingFormat
@@ -184,7 +186,7 @@ $SiteToAnalyze $SiteToAnalyzeWithoutwww $UserAgent
 ($HTMLOutput, $FrameName, $Center, $FileConfig, $FileSuffix, $Host, $DayRequired, $MonthRequired,
 $YearRequired, $QueryString, $SiteConfig, $StaticLinks, $URLFilter, $PageCode,
 $PerlParsingFormat, $SiteToAnalyze, $SiteToAnalyzeWithoutwww, $UserAgent)=
-("","","","","","","","","","","","","","","","","","");
+('','','','','','','','','','','','','','','','','','');
 use vars qw/
 $pos_vh $pos_host $pos_logname $pos_date $pos_method $pos_url $pos_code $pos_size
 $pos_referer $pos_agent $pos_query $pos_gzipin $pos_gzipout $pos_gzipratio
@@ -230,7 +232,7 @@ use vars qw/
 @ExtraSectionFirstColumnTitle @ExtraSectionFirstColumnValues
 @PluginsToLoad 
 /;
-@SessionsRange=("0s-30s","30s-2mn","2mn-5mn","5mn-15mn","15mn-30mn","30mn-1h","1h+");
+@SessionsRange=('0s-30s','30s-2mn','2mn-5mn','5mn-15mn','15mn-30mn','30mn-1h','1h+');
 @HostAliases=();
 @AllowAccessFromWebToFollowingAuthenticatedUsers=();
 @DefaultFile = @SkipDNSLookupFor = ();
@@ -297,11 +299,11 @@ use vars qw/
 # Those addresses are shown with those lib (First column is full exact relative URL, second column is text to show instead of URL)
 use vars qw/ %Aliases /;
 %Aliases = (
-			"/",                            "<b>HOME PAGE</b>",
-			"/cgi-bin/awstats.pl",			"<b>AWStats stats page</b>",
-			"/cgi-bin/awstats/awstats.pl",	"<b>AWStats stats page</b>",
+			'/',                            '<b>HOME PAGE</b>',
+			'/cgi-bin/awstats.pl',			'<b>AWStats stats page</b>',
+			'/cgi-bin/awstats/awstats.pl',	'<b>AWStats stats page</b>',
 			# Following the same example, you can put here HTML text you want to see in links instead of URL text.
-#			"/YourRelativeUrl",				"<b>Your HTML text</b>"
+#			'/YourRelativeUrl',				'<b>Your HTML text</b>'
 			);
 
 
@@ -311,55 +313,55 @@ use vars qw/ %Aliases /;
 use vars qw/ %httpcodelib /;
 %httpcodelib = (
 #[Miscellaneous successes]
-"2xx", "[Miscellaneous successes]",
-"200", "OK",								# HTTP request OK
-"201", "Created",
-"202", "Request recorded, will be executed later",
-"203", "Non-authoritative information",
-"204", "Request executed",
-"205", "Reset document",
-"206", "Partial Content",
+'2xx', '[Miscellaneous successes]',
+'200', 'OK',								# HTTP request OK
+'201', 'Created',
+'202', 'Request recorded, will be executed later',
+'203', 'Non-authoritative information',
+'204', 'Request executed',
+'205', 'Reset document',
+'206', 'Partial Content',
 #[Miscellaneous redirections]
-"3xx", "[Miscellaneous redirections]",
-"300", "Multiple documents available",
-"301", "Moved Permanently",
-"302", "Found",
-"303", "See other document",
-"304", "Not Modified since last retrieval",	# HTTP request OK
-"305", "Use proxy",
-"306", "Switch proxy",
-"307", "Document moved temporarily",
+'3xx', '[Miscellaneous redirections]',
+'300', 'Multiple documents available',
+'301', 'Moved Permanently',
+'302', 'Found',
+'303', 'See other document',
+'304', 'Not Modified since last retrieval',	# HTTP request OK
+'305', 'Use proxy',
+'306', 'Switch proxy',
+'307', 'Document moved temporarily',
 #[Miscellaneous client/user errors]
-"4xx", "[Miscellaneous client/user errors]",
-"400", "Bad Request",
-"401", "Unauthorized",
-"402", "Payment required",
-"403", "Forbidden",
-"404", "Document Not Found",
-"405", "Method not allowed",
-"406", "Document not acceptable to client",
-"407", "Proxy authentication required",
-"408", "Request Timeout",
-"409", "Request conflicts with state of resource",
-"410", "Document gone permanently",
-"411", "Length required",
-"412", "Precondition failed",
-"413", "Request too long",
-"414", "Requested filename too long",
-"415", "Unsupported media type",
-"416", "Requested range not valid",
-"417", "Failed",
+'4xx', '[Miscellaneous client/user errors]',
+'400', 'Bad Request',
+'401', 'Unauthorized',
+'402', 'Payment required',
+'403', 'Forbidden',
+'404', 'Document Not Found',
+'405', 'Method not allowed',
+'406', 'Document not acceptable to client',
+'407', 'Proxy authentication required',
+'408', 'Request Timeout',
+'409', 'Request conflicts with state of resource',
+'410', 'Document gone permanently',
+'411', 'Length required',
+'412', 'Precondition failed',
+'413', 'Request too long',
+'414', 'Requested filename too long',
+'415', 'Unsupported media type',
+'416', 'Requested range not valid',
+'417', 'Failed',
 #[Miscellaneous server errors]
-"5xx", "[Miscellaneous server errors]",
-"500", "Internal server Error",
-"501", "Not implemented",
-"502", "Received bad response from real server",
-"503", "Server busy",
-"504", "Gateway timeout",
-"505", "HTTP version not supported",
-"506", "Redirection failed",
+'5xx', '[Miscellaneous server errors]',
+'500', 'Internal server Error',
+'501', 'Not implemented',
+'502', 'Received bad response from real server',
+'503', 'Server busy',
+'504', 'Gateway timeout',
+'505', 'HTTP version not supported',
+'506', 'Redirection failed',
 #[Unknown]
-"xxx" ,"[Unknown]"
+'xxx' ,'[Unknown]'
 );
 
 # FTP codes
@@ -375,140 +377,140 @@ use vars qw/ %smtpcodelib /;
 # DEFAULT MESSAGE
 use vars qw/ @Message /;
 @Message=(
-"Unknown",
-"Unknown (unresolved ip)",
-"Others",
-"View details",
-"Day",
-"Month",
-"Year",
-"Statistics of",
-"First visit",
-"Last visit",
-"Number of visits",
-"Unique visitors",
-"Visit",
-"different keywords",
-"Search",
-"Percent",
-"Traffic",
-"Domains/Countries",
-"Visitors",
-"Pages-URL",
-"Hours",
-"Browsers",
-"HTTP Errors",
-"Referers",
-"Never updated",
-"Visitors domains/countries",
-"hosts",
-"pages",
-"different pages-url",
-"Viewed",
-"Other words",
-"Pages not found",
-"HTTP Error codes",
-"Netscape versions",
-"IE versions",
-"Last Update",
-"Connect to site from",
-"Origin",
-"Direct address / Bookmarks",
-"Origin unknown",
-"Links from an Internet Search Engine",
-"Links from an external page (other web sites except search engines)",
-"Links from an internal page (other page on same site)",
-"Keyphrases used on search engines",
-"Keywords used on search engines",
-"Unresolved IP Address",
-"Unknown OS (Referer field)",
-"Required but not found URLs (HTTP code 404)",
-"IP Address",
-"Error&nbsp;Hits",
-"Unknown browsers (Referer field)",
-"different robots",
-"visits/visitor",
-"Robots/Spiders visitors",
-"Free realtime logfile analyzer for advanced web statistics",
-"of",
-"Pages",
-"Hits",
-"Versions",
-"Operating Systems",
-"Jan",
-"Feb",
-"Mar",
-"Apr",
-"May",
-"Jun",
-"Jul",
-"Aug",
-"Sep",
-"Oct",
-"Nov",
-"Dec",
-"Navigation",
-"Files type",
-"Update now",
-"Bandwidth",
-"Back to main page",
-"Top",
-"dd mmm yyyy - HH:MM",
-"Filter",
-"Full list",
-"Hosts",
-"Known",
-"Robots",
-"Sun",
-"Mon",
-"Tue",
-"Wed",
-"Thu",
-"Fri",
-"Sat",
-"Days of week",
-"Who",
-"When",
-"Authenticated users",
-"Min",
-"Average",
-"Max",
-"Web compression",
-"Bandwidth saved",
-"Compression on",
-"Compression result",
-"Total",
-"different keyphrases",
-"Entry",
-"Code",
-"Average size",
-"Links from a NewsGroup",
-"KB",
-"MB",
-"GB",
-"Grabber",
-"Yes",
-"No",
-"WhoIs info",
-"OK",
-"Exit",
-"Visits duration",
-"Close window",
-"Bytes",
-"Search&nbsp;Keyphrases",
-"Search&nbsp;Keywords",
-"different refering search engines",
-"different refering sites",
-"Other phrases",
-"Other logins (and/or anonymous users)",
-"Refering search engines",
-"Refering sites",
-"Summary",
-"Exact value not available in 'Year' view",
-"Data value arrays",
-"Sender EMail",
-"Receiver EMail",
-"Reported period"
+'Unknown',
+'Unknown (unresolved ip)',
+'Others',
+'View details',
+'Day',
+'Month',
+'Year',
+'Statistics of',
+'First visit',
+'Last visit',
+'Number of visits',
+'Unique visitors',
+'Visit',
+'different keywords',
+'Search',
+'Percent',
+'Traffic',
+'Domains/Countries',
+'Visitors',
+'Pages-URL',
+'Hours',
+'Browsers',
+'HTTP Errors',
+'Referers',
+'Never updated',
+'Visitors domains/countries',
+'hosts',
+'pages',
+'different pages-url',
+'Viewed',
+'Other words',
+'Pages not found',
+'HTTP Error codes',
+'Netscape versions',
+'IE versions',
+'Last Update',
+'Connect to site from',
+'Origin',
+'Direct address / Bookmarks',
+'Origin unknown',
+'Links from an Internet Search Engine',
+'Links from an external page (other web sites except search engines)',
+'Links from an internal page (other page on same site)',
+'Keyphrases used on search engines',
+'Keywords used on search engines',
+'Unresolved IP Address',
+'Unknown OS (Referer field)',
+'Required but not found URLs (HTTP code 404)',
+'IP Address',
+'Error&nbsp;Hits',
+'Unknown browsers (Referer field)',
+'different robots',
+'visits/visitor',
+'Robots/Spiders visitors',
+'Free realtime logfile analyzer for advanced web statistics',
+'of',
+'Pages',
+'Hits',
+'Versions',
+'Operating Systems',
+'Jan',
+'Feb',
+'Mar',
+'Apr',
+'May',
+'Jun',
+'Jul',
+'Aug',
+'Sep',
+'Oct',
+'Nov',
+'Dec',
+'Navigation',
+'Files type',
+'Update now',
+'Bandwidth',
+'Back to main page',
+'Top',
+'dd mmm yyyy - HH:MM',
+'Filter',
+'Full list',
+'Hosts',
+'Known',
+'Robots',
+'Sun',
+'Mon',
+'Tue',
+'Wed',
+'Thu',
+'Fri',
+'Sat',
+'Days of week',
+'Who',
+'When',
+'Authenticated users',
+'Min',
+'Average',
+'Max',
+'Web compression',
+'Bandwidth saved',
+'Compression on',
+'Compression result',
+'Total',
+'different keyphrases',
+'Entry',
+'Code',
+'Average size',
+'Links from a NewsGroup',
+'KB',
+'MB',
+'GB',
+'Grabber',
+'Yes',
+'No',
+'WhoIs info',
+'OK',
+'Exit',
+'Visits duration',
+'Close window',
+'Bytes',
+'Search&nbsp;Keyphrases',
+'Search&nbsp;Keywords',
+'different refering search engines',
+'different refering sites',
+'Other phrases',
+'Other logins (and/or anonymous users)',
+'Refering search engines',
+'Refering sites',
+'Summary',
+'Exact value not available in "Year" view',
+'Data value arrays',
+'Sender EMail',
+'Receiver EMail',
+'Reported period'
 );
 
 
@@ -520,7 +522,7 @@ use vars qw/ @Message /;
 #------------------------------------------------------------------------------
 # Function:		Write on ouput header of HTML page
 # Parameters:	None
-# Input:		$HTMLOutput $PageCode $Expires $HTMLHeadSection
+# Input:		$HTMLOutput $Expires $Lang $StyleSheet $HTMLHeadSection $PageCode
 # Output:		None
 # Return:		None
 #------------------------------------------------------------------------------
@@ -537,7 +539,7 @@ sub html_head {
 		if ($Expires)  { print "<META HTTP-EQUIV=\"expires\" CONTENT=\"".(gmtime(time()+$Expires))."\">\n"; }
 		print "<meta http-equiv=\"description\" content=\"".ucfirst($PROG)." - Advanced Web Statistics for $SiteDomain\">\n";
 		if ($FrameName ne 'mainleft') { print "<meta http-equiv=\"keywords\" content=\"$SiteDomain, free, advanced, realtime, web, server, logfile, log, analyzer, analysis, statistics, stats, perl, analyse, performance, hits, visits\">\n"; }
-		print "<meta name=\"robots\" content=\"".($FrameName eq "mainleft"?"no":"")."index,follow\">\n";
+		print "<meta name=\"robots\" content=\"".($FrameName eq 'mainleft'?'no':'')."index,follow\">\n";
 		print "<title>$Message[7] $SiteDomain</title>\n";
 		if ($FrameName ne 'index') {
 			# Do not use " for number in a style section
@@ -647,7 +649,7 @@ sub error {
 	my $thirdmessage=shift||"";
 	my $donotshowsetupinfo=shift||0;
 	if ($Debug) { debug("$message $secondmessage $thirdmessage",1); }
-	if ($message =~ /^Format error$/i) {
+	if (! $ErrorMessages && $message =~ /^Format error$/i) {
 		my $tagbold=""; my $tagunbold=""; my $tagbr=""; my $tagfontred=""; my $tagunfont="";
 		# Files seems to have bad format
 		if ($HTMLOutput) {
@@ -716,12 +718,12 @@ sub error {
 		#print "\n";
 	}
 	else {
-		print ($HTMLOutput?"<br><font color=#880000>":"");
-		print "$message";
-		print ($HTMLOutput?"</font><br>":"");
+		print ($HTMLOutput?'<br><font color=#880000>':'');
+		print ($ErrorMessages?"$ErrorMessages":"$message");
+		print ($HTMLOutput?'</font><br>':'');
 		print "\n";
 	}
-	if (! $donotshowsetupinfo) {
+	if (! $ErrorMessages && ! $donotshowsetupinfo) {
 		if ($HTMLOutput) { print "<br><b>\n"; }
 		print "Setup (".($FileConfig?"'".$FileConfig."'":"Config")." file, web server or permissions) may be wrong.\n";
 		if ($HTMLOutput) { print "</b><br>\n"; }
@@ -772,7 +774,7 @@ sub debug {
 		print DEBUGFORCEDFILE localtime(time)." - $$ - DEBUG $level - $debugstring\n";
 		close DEBUGFORCEDFILE;
 	}
-	if ($level <= $Debug) {
+	if ($DebugMessages && $level <= $Debug) {
 		my $debugstring = $_[0];
 		if ($HTMLOutput) { $debugstring =~ s/^ /&nbsp&nbsp /; $debugstring .= "<br>"; }
 		print localtime(time)." - DEBUG $level - $debugstring\n";
@@ -966,7 +968,6 @@ sub Read_Config {
 		if (open(CONFIG,"$searchdir$PROG.conf"))  				{ $FileConfig="$searchdir$PROG.conf"; $FileSuffix=""; last; }
 	}
 	if (! $FileConfig) { error("Error: Couldn't open config file \"$PROG.$SiteConfig.conf\" nor \"$PROG.conf\" : $!"); }
-	if ($Debug) { debug("Call to Read_Config [FileConfig=\"$FileConfig\"]"); }
 
 	# Analyze config file content
 	&Parse_Config( *CONFIG , 1 );
@@ -982,10 +983,6 @@ sub Read_Config {
 	if (! $FoundValidHTTPCodes) {
 		$ValidHTTPCodes{"200"}=$ValidHTTPCodes{"304"}=1;
 	}
-
-	if ($Debug) { debug(" NotPageList ".(scalar keys %NotPageList)); }
-	if ($Debug) { debug(" ValidHTTPCodes ".(scalar keys %ValidHTTPCodes)); }
-	if ($Debug) { debug(" UseFramesWhenCGI=$UseFramesWhenCGI"); }
 }
 
 #------------------------------------------------------------------------------
@@ -1000,7 +997,6 @@ sub Parse_Config {
 	my $level = $_[1];
 	my $versionnum=0;
 
-	if ($Debug) { debug("Call to Parse_Config level $level",2); }
 	if ($level > 10) {
 		error("Error: $PROG can't read down more than 10 level of includes. Check that no 'included' config files include their parent config file (this cause infinite loop).");
 	}
@@ -1011,7 +1007,7 @@ sub Parse_Config {
 		# Extract version from first line
 		if (! $versionnum && $_ =~ /^# AWSTATS CONFIGURE FILE (\d+).(\d+)/i) {
 			$versionnum=($1*1000)+$2;
-			if ($Debug) { debug(" Configure file version is $versionnum",1); }
+			#if ($Debug) { debug(" Configure file version is $versionnum",1); }
 			next;
 		}
 
@@ -1139,6 +1135,8 @@ sub Parse_Config {
 			}
 		if ($param =~ /^URLReferrerWithQuery$/)		{ $URLReferrerWithQuery=$value; next; }
 		if ($param =~ /^WarningMessages/)       	{ $WarningMessages=$value; next; }
+		if ($param =~ /^ErrorMessages/)       		{ $ErrorMessages=$value; next; }
+		if ($param =~ /^DebugMessages/)       		{ $DebugMessages=$value; next; }
 		if ($param =~ /^NbOfLinesForCorruptedLog/) 	{ $NbOfLinesForCorruptedLog=$value; next; }
 		if ($param =~ /^Expires/)               	{ $Expires=$value; next; }
 		if ($param =~ /^WrapperScript/)         	{ $WrapperScript=$value; next; }
@@ -1245,7 +1243,7 @@ sub Parse_Config {
 	# For backward compatibility
 	if ($versionnum < 5001) { $BarHeight=$BarHeight>>1; }
 
-	if ($Debug) { debug("End of Parse_Config level $level",2); }
+	if ($Debug) { debug("Config file read was [FileConfig=\"$FileConfig\"] (level $level)"); }
 }
 
 
@@ -1473,6 +1471,9 @@ sub Check_Config {
 		debug(" DirData='$DirData'",2);
 		debug(" DirCgi='$DirCgi'",2);
 		debug(" DirIcons='$DirIcons'",2);
+		debug(" NotPageList ".(scalar keys %NotPageList));
+		debug(" ValidHTTPCodes ".(scalar keys %ValidHTTPCodes));
+		debug(" UseFramesWhenCGI=$UseFramesWhenCGI");
 	}
 	if (! $LogFile)   { error("Error: LogFile parameter is not defined in config/domain file"); }
 	if (! $LogFormat) { error("Error: LogFormat parameter is not defined in config/domain file"); }
@@ -1508,6 +1509,7 @@ sub Check_Config {
 	if ($URLWithQuery !~ /[0-1]/)                 	{ $URLWithQuery=0; }
 	if ($URLReferrerWithQuery !~ /[0-1]/)          	{ $URLReferrerWithQuery=0; }
 	if ($WarningMessages !~ /[0-1]/)              	{ $WarningMessages=1; }
+	if ($DebugMessages !~ /[0-1]/)              	{ $DebugMessages=1; }
 	if ($NbOfLinesForCorruptedLog !~ /^\d+/ || $NbOfLinesForCorruptedLog<1)	{ $NbOfLinesForCorruptedLog=50; }
 	if ($Expires !~ /^\d+/)                 		{ $Expires=0; }
 	if ($DecodeUA !~ /[0-1]/)						{ $DecodeUA=0; }
@@ -1535,7 +1537,7 @@ sub Check_Config {
 	if ($ShowDomainsStats !~ /[01PHB]/)            	{ $ShowDomainsStats="PHB"; }
 	if ($ShowHostsStats !~ /[01PHBL]/)             	{ $ShowHostsStats="PHBL"; }
 	if ($ShowAuthenticatedUsers !~ /[01PHBL]/)     	{ $ShowAuthenticatedUsers=0; }
-	if ($ShowRobotsStats !~ /[0-1]/)              	{ $ShowRobotsStats=1; }
+	if ($ShowRobotsStats !~ /[01HBL]/)            	{ $ShowRobotsStats="HBL"; }
 	if ($ShowEMailSenders !~ /[01HBML]/)       		{ $ShowEMailSenders=0; }
 	if ($ShowEMailReceivers !~ /[01HBML]/)         	{ $ShowEMailReceivers=0; }
 	if ($ShowSessionsStats !~ /[0-1]/)             	{ $ShowSessionsStats=1; }
@@ -1599,17 +1601,18 @@ sub Check_Config {
 	$color_x =~ s/#//g; if ($color_x !~ /^[0-9|A-Z]+$/i)                 			 { $color_x="C1B2E2"; }
 
 	# Correct param if default value is asked
-	if ($ShowMonthDayStats eq "1")      { $ShowMonthDayStats = "UVPHB"; }
-	if ($ShowDaysOfWeekStats eq "1")    { $ShowDaysOfWeekStats = "PHBL"; }
-	if ($ShowHoursStats eq "1")         { $ShowHoursStats = "PHBL"; }
-	if ($ShowDomainsStats eq "1")       { $ShowDomainsStats = "PHB"; }
-	if ($ShowHostsStats eq "1")         { $ShowHostsStats = "PHBL"; }
-	if ($ShowEMailSenders eq "1")       { $ShowDomainsStats = "HBML"; }
-	if ($ShowEMailReceivers eq "1")     { $ShowDomainsStats = "HBML"; }
-	if ($ShowAuthenticatedUsers eq "1") { $ShowAuthenticatedUsers = "PHBL"; }
-	if ($ShowPagesStats eq "1") 		{ $ShowPagesStats = "PBEX"; }
-	if ($ShowFileTypesStats eq "1") 	{ $ShowFileTypesStats = "HB"; }
-	if ($ShowOriginStats eq "1") 		{ $ShowOriginStats = "PH"; }
+	if ($ShowMonthDayStats eq '1')      { $ShowMonthDayStats = "UVPHB"; }
+	if ($ShowDaysOfWeekStats eq '1')    { $ShowDaysOfWeekStats = "PHBL"; }
+	if ($ShowHoursStats eq '1')         { $ShowHoursStats = "PHBL"; }
+	if ($ShowDomainsStats eq '1')       { $ShowDomainsStats = "PHB"; }
+	if ($ShowHostsStats eq '1')         { $ShowHostsStats = "PHBL"; }
+	if ($ShowEMailSenders eq '1')       { $ShowDomainsStats = "HBML"; }
+	if ($ShowEMailReceivers eq '1')     { $ShowDomainsStats = "HBML"; }
+	if ($ShowAuthenticatedUsers eq '1') { $ShowAuthenticatedUsers = "PHBL"; }
+	if ($ShowRobotsStats eq '1') 		{ $ShowRobotsStats = "HBL"; }
+	if ($ShowPagesStats eq '1') 		{ $ShowPagesStats = "PBEX"; }
+	if ($ShowFileTypesStats eq '1') 	{ $ShowFileTypesStats = "HB"; }
+	if ($ShowOriginStats eq '1') 		{ $ShowOriginStats = "PH"; }
 
 	# Refuse LogFile if contains a pipe and PurgeLogFile || ArchiveLogRecords set on
 	if (($PurgeLogFile || $ArchiveLogRecords) && $LogFile =~ /\|\s*$/) {
@@ -2103,10 +2106,10 @@ sub Read_History_With_TmpUpdate {
 								$loadrecord=1;
 							}
 							else {
-								if ($HTMLOutput eq "allhosts" || $HTMLOutput eq "lasthosts") { $loadrecord=1; }
-								elsif ($MonthRequired eq "year" || $field[2] >= $MinHitHost) {
-									if ($HTMLOutput eq "unknownip" && ($field[0] =~ /^\d+\.\d+\.\d+\.\d+$/)) { $loadrecord=1; }
-									elsif ($HTMLOutput eq 'main' && ($MonthRequired eq "year" || $countloaded < $MaxNbOfHostsShown)) { $loadrecord=1; }
+								if ($HTMLOutput eq 'allhosts' || $HTMLOutput eq 'lasthosts') { $loadrecord=1; }
+								elsif ($MonthRequired eq 'year' || $field[2] >= $MinHitHost) {
+									if ($HTMLOutput eq 'unknownip' && ($field[0] =~ /^\d+\.\d+\.\d+\.\d+$/)) { $loadrecord=1; }
+									elsif ($HTMLOutput eq 'main' && ($MonthRequired eq 'year' || $countloaded < $MaxNbOfHostsShown)) { $loadrecord=1; }
 								}
 							}
 							if ($loadrecord) {
@@ -2512,14 +2515,14 @@ sub Read_History_With_TmpUpdate {
 							}
 							else {
 								if ($HTMLOutput eq 'main') {
-									if ($MonthRequired eq "year") { $loadrecord=1; }
+									if ($MonthRequired eq 'year') { $loadrecord=1; }
 									else {
 										if ($countloaded < $MaxNbOfPageShown && $field[1] >= $MinHitFile) { $loadrecord=1; }
 										$TotalDifferentPages++;
 									}
 								}
 								else {	# This is for $HTMLOutput = urldetail, urlentry or urlexit
-									if ($MonthRequired eq "year" ) {
+									if ($MonthRequired eq 'year' ) {
 										if (!$URLFilter || $field[0] =~ /$URLFilter/) { $loadrecord=1; }
 									}
 									else {
@@ -2678,22 +2681,22 @@ sub Read_History_With_TmpUpdate {
 							}
 							else {
 								if ($HTMLOutput eq 'main') {
-									if ($MonthRequired eq "year") { $loadrecord=1; }
+									if ($MonthRequired eq 'year') { $loadrecord=1; }
 									else {
 										if ($countloaded < $MaxNbOfKeyphrasesShown && $field[1] >= $MinHitKeyphrase) { $loadrecord=1; }
 										$TotalDifferentKeyphrases++;
 										$TotalKeyphrases+=($field[1]||0);
 									}
 								}
-								elsif ($HTMLOutput eq "keyphrases") {	# Load keyphrases for keyphrases chart
-									if ($MonthRequired eq "year" ) { $loadrecord=1; }
+								elsif ($HTMLOutput eq 'keyphrases') {	# Load keyphrases for keyphrases chart
+									if ($MonthRequired eq 'year' ) { $loadrecord=1; }
 									else {
 										if ($field[1] >= $MinHitKeyphrase) { $loadrecord=1; }
 										$TotalDifferentKeyphrases++;
 										$TotalKeyphrases+=($field[1]||0);
 									}
 								}
-								if ($HTMLOutput eq "keywords") {	# Load keyphrases for keywords chart
+								if ($HTMLOutput eq 'keywords') {	# Load keyphrases for keywords chart
 									$loadrecord=2;
 								}
 							}
@@ -4133,7 +4136,7 @@ else {								# Run from command line
 	}
 	$QueryString = CleanFromCSSA($QueryString);
 	if ($QueryString =~ /config=([^&]+)/i)		{ $SiteConfig=$1; }
-	$UpdateStats=1; $HTMLOutput="";                           								# Update with no report by default when run from command line
+	$UpdateStats=1; $HTMLOutput='';                           								# Update with no report by default when run from command line
 	if ($QueryString =~ /showsteps/i) 			{ $ShowSteps=1; }
 	$QueryString=~s/showsteps[^&]*//i;
 	if ($QueryString =~ /showcorrupted/i) 		{ $ShowCorrupted=1; }
@@ -4161,10 +4164,6 @@ if ($QueryString =~ /output/i) {
 $QueryString=~s/output(&|$)//i;	$QueryString=~s/&$//;	# -output with no = is same than nothing
 
 ($DIR=$0) =~ s/([^\/\\]*)$//; ($PROG=$1) =~ s/\.([^\.]*)$//; $Extension=$1;
-if ($Debug) {
-	debug("$PROG - $VERSION - Perl $^X $]",1);
-	debug("QUERY_STRING=$QueryString",2);
-}
 
 # Force SiteConfig if AWSTATS_CONFIG is defined
 if ($ENV{"AWSTATS_CONFIG"}) {
@@ -4291,23 +4290,24 @@ $tomorrowtime=int($tomorrowyear.$tomorrowmonth.$tomorrowday.$tomorrowhour.$tomor
 # Read config file (here SiteConfig is defined)
 &Read_Config;
 if ($QueryString =~ /lang=([^\s&]+)/i)	{ $Lang=$1; }
-if (! $Lang) { $Lang="en"; }
+if (! $Lang) { $Lang='en'; }
 
 # For backward compatibility
-if ($Lang eq "0") { $Lang="en"; }
-if ($Lang eq "1") { $Lang="fr"; }
-if ($Lang eq "2") { $Lang="nl"; }
-if ($Lang eq "3") { $Lang="es"; }
-if ($Lang eq "4") { $Lang="it"; }
-if ($Lang eq "5") { $Lang="de"; }
-if ($Lang eq "6") { $Lang="pl"; }
-if ($Lang eq "7") { $Lang="gr"; }
-if ($Lang eq "8") { $Lang="cz"; }
-if ($Lang eq "9") { $Lang="pt"; }
-if ($Lang eq "10") { $Lang="kr"; }
+if ($Lang eq '0') { $Lang='en'; }
+if ($Lang eq '1') { $Lang='fr'; }
+if ($Lang eq '2') { $Lang='nl'; }
+if ($Lang eq '3') { $Lang='es'; }
+if ($Lang eq '4') { $Lang='it'; }
+if ($Lang eq '5') { $Lang='de'; }
+if ($Lang eq '6') { $Lang='pl'; }
+if ($Lang eq '7') { $Lang='gr'; }
+if ($Lang eq '8') { $Lang='cz'; }
+if ($Lang eq '9') { $Lang='pt'; }
+if ($Lang eq '10') { $Lang='kr'; }
 
 # Check and correct bad parameters
 &Check_Config;
+# Now SiteDomain is defined
 
 # Define frame name and correct variable for frames
 if (! $FrameName) {
@@ -4324,9 +4324,6 @@ if ($FrameName ne 'index') {
 	}
 }
 
-# Here SiteDomain is always defined
-if ($Debug) { debug("Site domain to analyze: $SiteDomain"); }
-
 # Init other parameters
 if ($ENV{"GATEWAY_INTERFACE"}) { $DirCgi=""; }
 if ($DirCgi && !($DirCgi =~ /\/$/) && !($DirCgi =~ /\\$/)) { $DirCgi .= "/"; }
@@ -4342,17 +4339,24 @@ else { @DOWIndex = (0,1,2,3,4,5,6); }
 # Should we link to ourselves or to a wrapper script
 $AWScript=($WrapperScript?"$WrapperScript":"$DirCgi$PROG.$Extension");
 
+# Print html header (Need HTMLOutput,Expires,Lang,StyleSheet,HTMLHeadSectionExpires defined by Read_Config, PageCodes defined by Read_Language_Data)
+&html_head;
+
+# Print AWStats and Perl version 
+if ($Debug) {
+	debug(ucfirst($PROG)." - $VERSION - Perl $^X $]",1);
+	debug("QUERY_STRING=$QueryString",2);
+	debug("Site domain to analyze: $SiteDomain");
+}
+
 # Check year and month parameters
 if ($QueryString =~ /year=(\d\d\d\d)/i) { $YearRequired="$1"; }
 else { $YearRequired="$nowyear"; }
 if ($QueryString =~ /month=(\d\d)/i || $QueryString =~ /month=(year)/i) { $MonthRequired="$1"; }
 else { $MonthRequired="$nowmonth"; }
 if ($QueryString =~ /day=(\d\d)/i) { $DayRequired="$1"; }	# day is a hidden option. Must not be used (Make results not understandable). Available for users that rename history files with day.
-else { $DayRequired=""; }
+else { $DayRequired=''; }
 if ($Debug) { debug("YearRequired=$YearRequired MonthRequired=$MonthRequired",2); }
-
-# Print html header
-&html_head;
 
 # Security check
 if ($AllowAccessFromWebToAuthenticatedUsersOnly && $ENV{"GATEWAY_INTERFACE"}) {
@@ -4591,64 +4595,65 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 		# Scan $LogFormatString to found all required fields and generate PerlParsingFormat
 		my @fields = split(/\s+/,$LogFormatString); # make array of entries
 		my $i = 0;
+		my $LogSeparatorWithoutStar=$LogSeparator; $LogSeparatorWithoutStar =~ s/[\*\+]//g;
 		foreach my $f (@fields) {
 			# Add separator for next field
-			if ($PerlParsingFormat) { $PerlParsingFormat.=$LogSeparator; }
+			if ($PerlParsingFormat) { $PerlParsingFormat.="$LogSeparator"; }
 			if ($f =~ /%virtualname$/) {
 				$pos_vh = $i; $i++;
-				$PerlParsingFormat .= "([^$LogSeparator]+)";
+				$PerlParsingFormat .= "([^$LogSeparatorWithoutStar]+)";
 			}
 			elsif ($f =~ /%host_r$/) {
 				$pos_hostr = $i; $i++;
-				$PerlParsingFormat .= "([^$LogSeparator]+)";
+				$PerlParsingFormat .= "([^$LogSeparatorWithoutStar]+)";
 			}
 			elsif ($f =~ /%host$/) {
 				$pos_host = $i; $i++;
-				$PerlParsingFormat .= "([^$LogSeparator]+)";
+				$PerlParsingFormat .= "([^$LogSeparatorWithoutStar]+)";
 			}
 			elsif ($f =~ /%logname$/) {
 				$pos_logname = $i; $i++;
-				$PerlParsingFormat .= "([^$LogSeparator]+)";
+				$PerlParsingFormat .= "([^$LogSeparatorWithoutStar]+)";
 			}
 			elsif ($f =~ /%time1b$/) {
 				$pos_date = $i; $i++;
-				$PerlParsingFormat .= "\\[([^$LogSeparator]+)\\]";
+				$PerlParsingFormat .= "\\[([^$LogSeparatorWithoutStar]+)\\]";
 			}
 			elsif ($f =~ /%time1$/) {
 				$pos_date = $i;	$i++;
-				$PerlParsingFormat .= "\\[([^$LogSeparator]+) [^$LogSeparator]+\\]";
+				$PerlParsingFormat .= "\\[([^$LogSeparatorWithoutStar]+) [^$LogSeparatorWithoutStar]+\\]";
 			}
 			elsif ($f =~ /%time2$/) {
 				$pos_date = $i;	$i++;
-				$PerlParsingFormat .= "([^$LogSeparator]+ [^$LogSeparator]+)";
+				$PerlParsingFormat .= "([^$LogSeparatorWithoutStar]+\\s[^$LogSeparatorWithoutStar]+)";	# Need \s for Exchange log files
 			}
 			elsif ($f =~ /%methodurl$/) {
 				$pos_method = $i; $i++;
 				$pos_url = $i; $i++;
-				$PerlParsingFormat .= "\\\"([^$LogSeparator]+) ([^$LogSeparator]+) [^\\\"]+\\\"";
+				$PerlParsingFormat .= "\\\"([^$LogSeparatorWithoutStar]+) ([^$LogSeparatorWithoutStar]+) [^\\\"]+\\\"";
 			}
 			elsif ($f =~ /%methodurlnoprot$/) {
 				$pos_method = $i; $i++;
 				$pos_url = $i; $i++;
-				$PerlParsingFormat .= "\\\"([^$LogSeparator]+) ([^$LogSeparator]+)\\\"";
+				$PerlParsingFormat .= "\\\"([^$LogSeparatorWithoutStar]+) ([^$LogSeparatorWithoutStar]+)\\\"";
 			}
 			elsif ($f =~ /%method$/) {
 				$pos_method = $i; $i++;
-				$PerlParsingFormat .= "([^$LogSeparator]+)";
+				$PerlParsingFormat .= "([^$LogSeparatorWithoutStar]+)";
 			}
 			elsif ($f =~ /%protocolmms$/) {	# protocolmms is used for method if method not already found (for MMS)
 				if ($pos_method < 0) {
 					$pos_method = $i; $i++;
-					$PerlParsingFormat .= "([^$LogSeparator]+)";
+					$PerlParsingFormat .= "([^$LogSeparatorWithoutStar]+)";
 				}
 			}
 			elsif ($f =~ /%url$/) {
 				$pos_url = $i; $i++;
-				$PerlParsingFormat .= "([^$LogSeparator]+)";
+				$PerlParsingFormat .= "([^$LogSeparatorWithoutStar]+)";
 			}
 			elsif ($f =~ /%query$/) {
 				$pos_query = $i; $i++;
-				$PerlParsingFormat .= "([^$LogSeparator]+)";
+				$PerlParsingFormat .= "([^$LogSeparatorWithoutStar]+)";
 			}
 			elsif ($f =~ /%code$/) {
 				$pos_code = $i; $i++;
@@ -4670,7 +4675,7 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 			}
 			elsif ($f =~ /%referer$/) {
 				$pos_referer = $i; $i++;
-				$PerlParsingFormat .= "([^$LogSeparator]+)";
+				$PerlParsingFormat .= "([^$LogSeparatorWithoutStar]+)";
 			}
 			elsif ($f =~ /%uaquot$/) {
 				$pos_agent = $i; $i++;
@@ -4678,33 +4683,33 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 			}
 			elsif ($f =~ /%ua$/) {
 				$pos_agent = $i; $i++;
-				$PerlParsingFormat .= "([^$LogSeparator]+)";
+				$PerlParsingFormat .= "([^$LogSeparatorWithoutStar]+)";
 			}
 			elsif ($f =~ /%gzipin$/ ) {
 				$pos_gzipin=$i;$i++;
-				$PerlParsingFormat .= "([^$LogSeparator]+)";
+				$PerlParsingFormat .= "([^$LogSeparatorWithoutStar]+)";
 			}
 			elsif ($f =~ /%gzipout/ ) {		# Compare $f to /%gzipout/ and not to /%gzipout$/ like other fields
 				$pos_gzipout=$i;$i++;
-				$PerlParsingFormat .= "([^$LogSeparator]+)";
+				$PerlParsingFormat .= "([^$LogSeparatorWithoutStar]+)";
 			}
 			elsif ($f =~ /%gzipratio/ ) {	# Compare $f to /%gzipratio/ and not to /%gzipratio$/ like other fields
 				$pos_gzipratio=$i;$i++;
-				$PerlParsingFormat .= "([^$LogSeparator]+)";
+				$PerlParsingFormat .= "([^$LogSeparatorWithoutStar]+)";
 			}
 			elsif ($f =~ /%syslog$/) {		# Added for syslog time and host stamp, fields are skipped and not analyzed
 				$PerlParsingFormat .= "[A-Z][a-z][a-z] .[0-9] ..:..:.. [A-Za-z]+";
 			}
 			elsif ($f =~ /%email_r$/) {
 				$pos_emailr = $i; $i++;
-				$PerlParsingFormat .= "([^$LogSeparator]+)";
+				$PerlParsingFormat .= "([^$LogSeparatorWithoutStar]+)";
 			}
 			elsif ($f =~ /%email$/) {
 				$pos_emails = $i; $i++;
-				$PerlParsingFormat .= "([^$LogSeparator]+)";
+				$PerlParsingFormat .= "([^$LogSeparatorWithoutStar]+)";
 			}
 			else {
-				$PerlParsingFormat .= "[^$LogSeparator]+";
+				$PerlParsingFormat .= "[^$LogSeparatorWithoutStar]+";
 			}
 		}
 		if (! $PerlParsingFormat) { error("Error: No recognized format tag in personalized LogFormat string"); }
@@ -4799,7 +4804,7 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 			$protocol=1;
 		}
 		elsif ($field[$pos_method] eq 'SMTP') {
-			# Mail request
+			# Mail request ('SMTP' for sendmail with sma)
 			$protocol=3;
 		}
 		elsif ($field[$pos_method] eq 'RETR' || $field[$pos_method] =~ /get/i) {
@@ -4813,6 +4818,10 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 		elsif ($field[$pos_method] eq 'mms') {
 			# Streaming request
 			$protocol=4;
+		}
+		elsif ($field[$pos_method] =~ /\d\d\d\d/) {
+			# Mail request (\d\d\d\d for Exchange log)
+			$protocol=5;
 		}
 		else {
 			$NbOfLinesDropped++;
@@ -4933,8 +4942,8 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 				}
 			}
 		}
-		elsif ($protocol == 3) {						# SMTP record
-			if ($field[$pos_code] != 1) {				# Code is not valid
+		elsif ($protocol == 3 || $protocol == 5) {						# Mail record
+			if ($field[$pos_code] != ($protocol==3?1:0)) {				# Code is not valid
 				$field[$pos_size]=0;
 				$_errors_h{$field[$pos_code]}++;
 				$_errors_k{$field[$pos_code]}+=int($field[$pos_size]);
@@ -5747,10 +5756,10 @@ EOF
 		# Loop on each month of year
 		for (my $ix=12; $ix>=1; $ix--) {
 			my $monthix=sprintf("%02s",$ix);
-			if ($MonthRequired eq "year" || $monthix eq $MonthRequired) {
+			if ($MonthRequired eq 'year' || $monthix eq $MonthRequired) {
 				&Read_History_With_TmpUpdate($YearRequired,$monthix,0,0,"all");				# Read full history file
 			}
-			elsif (($HTMLOutput eq 'main' && $ShowMonthDayStats) || $HTMLOutput eq "alldays") {
+			elsif (($HTMLOutput eq 'main' && $ShowMonthDayStats) || $HTMLOutput eq 'alldays') {
 				&Read_History_With_TmpUpdate($YearRequired,$monthix,0,0,"general time");	# Read general and time sections.
 			}
 		}
@@ -5895,9 +5904,9 @@ EOF
 			if ($ShowAuthenticatedUsers =~ /L/i)	{ print ($frame?"<tr><td class=AWL> &nbsp; <img height=8 width=9 src=\"$DirIcons/other/page.png\" alt=\"...\"> ":""); print "<a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=lastlogins":"$PROG$StaticLinks.lastlogins.html")."\"$NewLinkTarget>$Message[9]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
 			if ($ShowEMailSenders)		 { print ($frame?"<tr><td class=AWL>":""); print "<a href=\"$linkpage#EMAILSENDERS\"$targetpage>$Message[131]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
 			if ($ShowEMailReceivers)	 { print ($frame?"<tr><td class=AWL>":""); print "<a href=\"$linkpage#EMAILRECEIVERS\"$targetpage>$Message[132]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
-			if ($ShowRobotsStats)		 { print ($frame?"<tr><td class=AWL>":""); print "<a href=\"$linkpage#ROBOTS\"$targetpage>$Message[53]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
-			if ($ShowRobotsStats) 		 { print ($frame?"<tr><td class=AWL> &nbsp; <img height=8 width=9 src=\"$DirIcons/other/page.png\" alt=\"...\"> ":""); print "<a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=allrobots":"$PROG$StaticLinks.allrobots.html")."\"$NewLinkTarget>$Message[80]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
-			if ($ShowRobotsStats) 		 { print ($frame?"<tr><td class=AWL> &nbsp; <img height=8 width=9 src=\"$DirIcons/other/page.png\" alt=\"...\"> ":""); print "<a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=lastrobots":"$PROG$StaticLinks.lastrobots.html")."\"$NewLinkTarget>$Message[9]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
+			if ($ShowRobotsStats)		  { print ($frame?"<tr><td class=AWL>":""); print "<a href=\"$linkpage#ROBOTS\"$targetpage>$Message[53]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
+			if ($ShowRobotsStats) 		  { print ($frame?"<tr><td class=AWL> &nbsp; <img height=8 width=9 src=\"$DirIcons/other/page.png\" alt=\"...\"> ":""); print "<a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=allrobots":"$PROG$StaticLinks.allrobots.html")."\"$NewLinkTarget>$Message[80]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
+			if ($ShowRobotsStats =~ /L/i) { print ($frame?"<tr><td class=AWL> &nbsp; <img height=8 width=9 src=\"$DirIcons/other/page.png\" alt=\"...\"> ":""); print "<a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=lastrobots":"$PROG$StaticLinks.lastrobots.html")."\"$NewLinkTarget>$Message[9]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
 			if ($linetitle) { print ($frame?"":"</td></tr>\n"); }
 			# Navigation
 			$linetitle=&AtLeastOneNotNull($ShowSessionsStats,$ShowPagesStats,$ShowFileTypesStats,$ShowFileSizesStats,$ShowOSStats+$ShowBrowsersStats);
@@ -6037,7 +6046,7 @@ EOF
 	}
 
 	# Output for detailed reports
-#	if ($HTMLOutput eq "alldays") {
+#	if ($HTMLOutput eq 'alldays') {
 #		if ($Debug) { debug("ShowMonthDayStats",2); }
 #		print "$Center<a name=\"MONTHDAY\">&nbsp;</a><BR>\n";
 #		&tab_head("$Message[5]",0);
@@ -6091,9 +6100,9 @@ EOF
 #		for (my $ix=1; $ix<=12; $ix++) {
 #			my $monthix=($ix<10?"0$ix":"$ix");
 #			print "<TD>";
-#			if (($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks) && $HTMLOutput ne "alldays") { print "<a href=\"$AWScript?${NewLinkParams}year=$YearRequired&month=$monthix\"$NewLinkTarget>"; }
+#			if (($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks) && $HTMLOutput ne 'alldays') { print "<a href=\"$AWScript?${NewLinkParams}year=$YearRequired&month=$monthix\"$NewLinkTarget>"; }
 #			print "$MonthLib{$monthix}";
-#			if (($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks) && $HTMLOutput ne "alldays") { print "</a>"; }
+#			if (($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks) && $HTMLOutput ne 'alldays') { print "</a>"; }
 #			print "</TD>\n";
 #		}
 #		print "</TR>\n";
@@ -6252,11 +6261,11 @@ EOF
 #		&html_end;
 #		exit(0);
 #	}
-	if ($HTMLOutput eq "allhosts" || $HTMLOutput eq "lasthosts") {
+	if ($HTMLOutput eq 'allhosts' || $HTMLOutput eq 'lasthosts') {
 		print "$Center<a name=\"HOSTSLIST\">&nbsp;</a><BR>\n";
 		my $title="";
-		if ($HTMLOutput eq "allhosts")  { $title.="$Message[81]"; }
-		if ($HTMLOutput eq "lasthosts") { $title.="$Message[9]"; }
+		if ($HTMLOutput eq 'allhosts')  { $title.="$Message[81]"; }
+		if ($HTMLOutput eq 'lasthosts') { $title.="$Message[9]"; }
 		&tab_head("$title",19);
 		if ($MonthRequired ne "year") { print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[81] : $TotalHostsKnown $Message[82], $TotalHostsUnknown $Message[1] - $TotalUnique $Message[11]</TH>"; }
 		else { print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[81] : ".(scalar keys %_host_h)."</TH>"; }
@@ -6264,8 +6273,8 @@ EOF
 		print "<TH bgcolor=\"#$color_p\" width=80>$Message[56]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH bgcolor=\"#$color_k\" width=80>$Message[75]</TH><TH width=120>$Message[9]</TH></TR>\n";
 		$total_p=$total_h=$total_k=0;
 		my $count=0;
-		if ($HTMLOutput eq "allhosts")  { &BuildKeyList($MaxRowsInHTMLOutput,$MinHitHost,\%_host_h,\%_host_p); }
-		if ($HTMLOutput eq "lasthosts") { &BuildKeyList($MaxRowsInHTMLOutput,$MinHitHost,\%_host_h,\%_host_l); }
+		if ($HTMLOutput eq 'allhosts')  { &BuildKeyList($MaxRowsInHTMLOutput,$MinHitHost,\%_host_h,\%_host_p); }
+		if ($HTMLOutput eq 'lasthosts') { &BuildKeyList($MaxRowsInHTMLOutput,$MinHitHost,\%_host_h,\%_host_l); }
 		foreach my $key (@keylist) {
 			my $host=CleanFromCSSA($key);
 			print "<tr><td CLASS=AWL>".($_robot_l{$key}?"<b>":"")."$host".($_robot_l{$key}?"</b>":"")."</td>";
@@ -6296,7 +6305,7 @@ EOF
 		&html_end;
 		exit(0);
 	}
-	if ($HTMLOutput eq "unknownip") {
+	if ($HTMLOutput eq 'unknownip') {
 		print "$Center<a name=\"UNKOWNIP\">&nbsp;</a><BR>\n";
 		&tab_head("$Message[45]",19);
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>".(scalar keys %_host_h)." $Message[1]</TH>";
@@ -6336,11 +6345,11 @@ EOF
 		&html_end;
 		exit(0);
 	}
-	if ($HTMLOutput eq "alllogins" || $HTMLOutput eq "lastlogins") {
+	if ($HTMLOutput eq 'alllogins' || $HTMLOutput eq 'lastlogins') {
 		print "$Center<a name=\"LOGINSLIST\">&nbsp;</a><BR>\n";
 		my $title="";
-		if ($HTMLOutput eq "alllogins") { $title.="$Message[94]"; }
-		if ($HTMLOutput eq "lastlogins") { $title.="$Message[9]"; }
+		if ($HTMLOutput eq 'alllogins') { $title.="$Message[94]"; }
+		if ($HTMLOutput eq 'lastlogins') { $title.="$Message[9]"; }
 		&tab_head("$title",19);
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[94] : ".(scalar keys %_login_h)."</TH>";
 		if ($ShowAuthenticatedUsers =~ /P/i) { print "<TH bgcolor=\"#$color_p\" width=80>$Message[56]</TH>"; }
@@ -6350,8 +6359,8 @@ EOF
 		print "</TR>\n";
 		$total_p=$total_h=$total_k=0;
 		my $count=0;
-		if ($HTMLOutput eq "alllogins") { &BuildKeyList($MaxRowsInHTMLOutput,$MinHitHost,\%_login_h,\%_login_p); }
-		if ($HTMLOutput eq "lastlogins") { &BuildKeyList($MaxRowsInHTMLOutput,$MinHitHost,\%_login_h,\%_login_l); }
+		if ($HTMLOutput eq 'alllogins') { &BuildKeyList($MaxRowsInHTMLOutput,$MinHitHost,\%_login_h,\%_login_p); }
+		if ($HTMLOutput eq 'lastlogins') { &BuildKeyList($MaxRowsInHTMLOutput,$MinHitHost,\%_login_h,\%_login_l); }
 		foreach my $key (@keylist) {
 			print "<TR><TD CLASS=AWL>$key</TD>";
 			if ($ShowAuthenticatedUsers =~ /P/i) { print "<TD>".($_login_p{$key}?$_login_p{$key}:"&nbsp;")."</TD>"; }
@@ -6380,23 +6389,23 @@ EOF
 		&html_end;
 		exit(0);
 	}
-	if ($HTMLOutput eq "allrobots" || $HTMLOutput eq "lastrobots") {
+	if ($HTMLOutput eq 'allrobots' || $HTMLOutput eq 'lastrobots') {
 		print "$Center<a name=\"ROBOTSLIST\">&nbsp;</a><BR>\n";
 		my $title="";
-		if ($HTMLOutput eq "allrobots")  { $title.="$Message[53]"; }
-		if ($HTMLOutput eq "lastrobots") { $title.="$Message[9]"; }
+		if ($HTMLOutput eq 'allrobots')  { $title.="$Message[53]"; }
+		if ($HTMLOutput eq 'lastrobots') { $title.="$Message[9]"; }
 		&tab_head("$title",19);
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>".(scalar keys %_robot_h)." $Message[51]</TH>";
 		print "<TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH bgcolor=\"#$color_k\" width=80>$Message[75]</TH><TH width=120>$Message[9]</TH></TR>\n";
 		$total_p=$total_h=$total_k=0;
 		my $count=0;
-		if ($HTMLOutput eq "allrobots")  { &BuildKeyList($MaxRowsInHTMLOutput,$MinHitRobot,\%_robot_h,\%_robot_h); }
-		if ($HTMLOutput eq "lastrobots") { &BuildKeyList($MaxRowsInHTMLOutput,$MinHitRobot,\%_robot_h,\%_robot_l); }
+		if ($HTMLOutput eq 'allrobots')  { &BuildKeyList($MaxRowsInHTMLOutput,$MinHitRobot,\%_robot_h,\%_robot_h); }
+		if ($HTMLOutput eq 'lastrobots') { &BuildKeyList($MaxRowsInHTMLOutput,$MinHitRobot,\%_robot_h,\%_robot_l); }
 		foreach my $key (@keylist) {
 			print "<TR><TD CLASS=AWL>".($RobotsHashIDLib{$key}?$RobotsHashIDLib{$key}:$key)."</TD>";
-			print "<TD>$_robot_h{$key}</TD>";
-			print "<TD>".Format_Bytes($_robot_k{$key})."</TD>";
-			print "<TD>".($_robot_l{$key}?Format_Date($_robot_l{$key},1):"-")."</TD>";
+			if ($ShowRobotsStats =~ /H/i) { print "<TD>$_robot_h{$key}</TD>"; }
+			if ($ShowRobotsStats =~ /B/i) { print "<TD>".Format_Bytes($_robot_k{$key})."</TD>"; }
+			if ($ShowRobotsStats =~ /L/i) { print "<TD>".($_robot_l{$key}?Format_Date($_robot_l{$key},1):"-")."</TD>"; }
 			print "</TR>\n";
 			#$total_p += $_robot_p{$key}||0;
 			$total_h += $_robot_h{$key};
@@ -6413,16 +6422,16 @@ EOF
 		if ($Debug) { debug("Total real / shown : $TotalPagesRobots / $total_p - $TotalHitsRobots / $total_h - $TotalBytesRobots / $total_k",2); }
 		if ($rest_p > 0 || $rest_h > 0 || $rest_k > 0) {	# All other login
 			print "<TR><TD CLASS=AWL><font color=\"#$color_other\">$Message[2]</font></TD>";
-			print "<TD>$rest_h</TD>";
-			print "<TD>".(Format_Bytes($rest_k))."</TD>";
-			print "<TD>&nbsp;</TD>";
+			if ($ShowRobotsStats =~ /H/i) { print "<TD>$rest_h</TD>"; }
+			if ($ShowRobotsStats =~ /B/i) { print "<TD>".(Format_Bytes($rest_k))."</TD>"; }
+			if ($ShowRobotsStats =~ /L/i) { print "<TD>&nbsp;</TD>"; }
 			print "</TR>\n";
 		}
 		&tab_end;
 		&html_end;
 		exit(0);
 	}
-	if ($HTMLOutput eq "urldetail" || $HTMLOutput eq "urlentry" || $HTMLOutput eq "urlexit") {
+	if ($HTMLOutput eq 'urldetail' || $HTMLOutput eq 'urlentry' || $HTMLOutput eq 'urlexit') {
 		# Call to plugin function ShowPagesFilter
 		foreach my $pluginname (keys %{$PluginsLoaded{"ShowPagesFilter"}})  {
 			my $function="ShowPagesFilter_$pluginname()";
@@ -6480,8 +6489,8 @@ EOF
 		print "<TH>&nbsp;</TH></TR>\n";
 		$total_p=$total_k=$total_e=$total_x=0;
 		my $count=0;
-		if ($HTMLOutput eq "urlentry") { &BuildKeyList($MaxRowsInHTMLOutput,$MinHitFile,\%_url_e,\%_url_e); }
-		elsif ($HTMLOutput eq "urlexit") { &BuildKeyList($MaxRowsInHTMLOutput,$MinHitFile,\%_url_x,\%_url_x); }
+		if ($HTMLOutput eq 'urlentry') { &BuildKeyList($MaxRowsInHTMLOutput,$MinHitFile,\%_url_e,\%_url_e); }
+		elsif ($HTMLOutput eq 'urlexit') { &BuildKeyList($MaxRowsInHTMLOutput,$MinHitFile,\%_url_x,\%_url_x); }
 		else { &BuildKeyList($MaxRowsInHTMLOutput,$MinHitFile,\%_url_p,\%_url_p); }
 		$max_p=1; $max_k=1;
 		foreach my $key (@keylist) {
@@ -6564,7 +6573,7 @@ EOF
 		&html_end;
 		exit(0);
 	}
-	if ($HTMLOutput eq "unknownos") {
+	if ($HTMLOutput eq 'unknownos') {
 		print "$Center<a name=\"UNKOWNOS\">&nbsp;</a><BR>\n";
 		&tab_head($Message[46],19);
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>User agent (".(scalar keys %_unknownreferer_l).")</TH><TH>$Message[9]</TH></TR>\n";
@@ -6579,7 +6588,7 @@ EOF
 		&html_end;
 		exit(0);
 	}
-	if ($HTMLOutput eq "unknownbrowser") {
+	if ($HTMLOutput eq 'unknownbrowser') {
 		print "$Center<a name=\"UNKOWNBROWSER\">&nbsp;</a><BR>\n";
 		&tab_head($Message[50],19);
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>User agent (".(scalar keys %_unknownrefererbrowser_l).")</TH><TH>$Message[9]</TH></TR>\n";
@@ -6594,7 +6603,7 @@ EOF
 		&html_end;
 		exit(0);
 	}
-	if ($HTMLOutput eq "browserdetail") {
+	if ($HTMLOutput eq 'browserdetail') {
 		# Count total of msie and netscape
 		my %total=();
 		foreach my $key (keys %_browser_h) {
@@ -6627,7 +6636,7 @@ EOF
 		&html_end;
 		exit(0);
 	}
-	if ($HTMLOutput eq "refererse") {
+	if ($HTMLOutput eq 'refererse') {
 		print "$Center<a name=\"REFERERSE\">&nbsp;</a><BR>\n";
 		&tab_head($Message[40],19);
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$TotalDifferentSearchEngines $Message[122]</TH>";
@@ -6656,7 +6665,7 @@ EOF
 		&html_end;
 		exit(0);
 	}
-	if ($HTMLOutput eq "refererpages") {
+	if ($HTMLOutput eq 'refererpages') {
 		print "$Center<a name=\"REFERERPAGES\">&nbsp;</a><BR>\n";
 		&tab_head($Message[41],19);
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$TotalDifferentRefererPages $Message[28]</TH>";
@@ -6691,7 +6700,7 @@ EOF
 		&html_end;
 		exit(0);
 	}
-	if ($HTMLOutput eq "keyphrases") {
+	if ($HTMLOutput eq 'keyphrases') {
 		print "$Center<a name=\"KEYPHRASES\">&nbsp;</a><BR>\n";
 		&tab_head($Message[43],19);
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\" onmouseover=\"ShowTip(15);\" onmouseout=\"HideTip(15);\"><TH>$TotalDifferentKeyphrases $Message[103]</TH><TH bgcolor=\"#$color_s\" width=80>$Message[14]</TH><TH bgcolor=\"#$color_s\" width=80>$Message[15]</TH></TR>\n";
@@ -6718,7 +6727,7 @@ EOF
 		&html_end;
 		exit(0);
 	}
-	if ($HTMLOutput eq "keywords") {
+	if ($HTMLOutput eq 'keywords') {
 		print "$Center<a name=\"KEYWORDS\">&nbsp;</a><BR>\n";
 		&tab_head($Message[44],19);
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\" onmouseover=\"ShowTip(15);\" onmouseout=\"HideTip(15);\"><TH>$TotalDifferentKeywords $Message[13]</TH><TH bgcolor=\"#$color_s\" width=80>$Message[14]</TH><TH bgcolor=\"#$color_s\" width=80>$Message[15]</TH></TR>\n";
@@ -6764,7 +6773,7 @@ EOF
 			exit(0);
 		}
 	}
-	if ($HTMLOutput eq "info") {
+	if ($HTMLOutput eq 'info') {
 		# Not yet available
 		print "$Center<a name=\"INFO\">&nbsp;</a><BR>";
 		&html_end;
@@ -7400,16 +7409,19 @@ EOF
 		if ($Debug) { debug("ShowRobotStats",2); }
 		print "$Center<a name=\"ROBOTS\">&nbsp;</a><BR>\n";
 		&tab_head("$Message[53] ($Message[77] $MaxNbOfRobotShown) &nbsp; - &nbsp; <a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=allrobots":"$PROG$StaticLinks.allrobots.html")."\"$NewLinkTarget>$Message[80]</a> &nbsp; - &nbsp; <a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=lastrobots":"$PROG$StaticLinks.lastrobots.html")."\"$NewLinkTarget>$Message[9]</a>",19);
-		print "<TR bgcolor=\"#$color_TableBGRowTitle\" onmouseover=\"ShowTip(16);\" onmouseout=\"HideTip(16);\"><TH>".(scalar keys %_robot_h)." $Message[51]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH bgcolor=\"#$color_k\" width=80>$Message[75]</TH><TH width=120>$Message[9]</TH></TR>\n";
+		print "<TR bgcolor=\"#$color_TableBGRowTitle\" onmouseover=\"ShowTip(16);\" onmouseout=\"HideTip(16);\"><TH>".(scalar keys %_robot_h)." $Message[51]</TH>";
+		if ($ShowRobotsStats =~ /H/i) { print "<TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH>"; }
+		if ($ShowRobotsStats =~ /B/i) { print "<TH bgcolor=\"#$color_k\" width=80>$Message[75]</TH>"; }
+		if ($ShowRobotsStats =~ /L/i) { print "<TH width=120>$Message[9]</TH>"; }
+		print "</TR>\n";
 		$total_p=$total_h=$total_k=0;
 		my $count=0;
 		&BuildKeyList($MaxNbOfRobotShown,$MinHitRobot,\%_robot_h,\%_robot_h);
 		foreach my $key (@keylist) {
 			print "<TR><TD CLASS=AWL>".($RobotsHashIDLib{$key}?$RobotsHashIDLib{$key}:$key)."</TD>";
-			print "<TD>$_robot_h{$key}</TD>";
-			print "<TD>".Format_Bytes($_robot_k{$key})."</TD>";
-			if ($_robot_l{$key}) { print "<td>".Format_Date($_robot_l{$key},1)."</td>"; }
-			else { print "<td>-</td>"; }
+			if ($ShowRobotsStats =~ /H/i) { print "<TD>$_robot_h{$key}</TD>"; }
+			if ($ShowRobotsStats =~ /B/i) { print "<TD>".Format_Bytes($_robot_k{$key})."</TD>"; }
+			if ($ShowRobotsStats =~ /L/i) { print "<td>".($_robot_l{$key}?Format_Date($_robot_l{$key},1):'-')."</td>"; }
 			print "</TR>\n";
 			#$total_p += $_robot_p{$key};
 			$total_h += $_robot_h{$key};
@@ -7425,9 +7437,9 @@ EOF
 		$rest_k=$TotalBytesRobots-$total_k;
 		if ($rest_p > 0 || $rest_h > 0 || $rest_k > 0) {	# All other robots
 			print "<TR><TD CLASS=AWL><font color=\"#$color_other\">$Message[2]</font></TD>";
-			print "<TD>$rest_h</TD>";
-			print "<TD>".(Format_Bytes($rest_k))."</TD>";
-			print "<TD>&nbsp;</TD>";
+			if ($ShowRobotsStats =~ /H/i) { print "<TD>$rest_h</TD>"; }
+			if ($ShowRobotsStats =~ /B/i) { print "<TD>".(Format_Bytes($rest_k))."</TD>"; }
+			if ($ShowRobotsStats =~ /L/i) { print "<TD>&nbsp;</TD>"; }
 			print "</TR>\n";
 		}
 		&tab_end;

@@ -8,10 +8,14 @@ AWStats Changelog
 - Removed "Bytes" text when values is 0.
 - Reduced main page size.
 - New parameter: Added OnlyHosts parameter.
-- Fixed a bug when using IIS and %query or cs-query-string tag in LogFormat
-  and URLWithQuery=1.
+- New parameter: Added ErrorMessages to use a personalized error messages.
+- New parameter: Added DebugMessages to not allow debug messages.
+- Report for robots accept codes like others charts ('HBL').
+- Can use "char+" instead of "char" for LogSeparator.
 - Records with bad http code for Microsoft Index Servers (on 1 digit instead
   of 3) are no more reported as corrupted records.
+- Fixed a bug when using IIS and %query or cs-query-string tag in LogFormat
+  and URLWithQuery=1.
 
 
 5.1

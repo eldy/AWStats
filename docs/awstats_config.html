@@ -86,6 +86,8 @@ when reading it), follow the example:<br>
 <li><a href="#URLWithQueryWithoutFollowingParameters">URLWithQueryWithoutFollowingParameters</a>
 <li><a href="#URLReferrerWithQuery">URLReferrerWithQuery</a>
 <li><a href="#WarningMessages">WarningMessages</a>
+<li><a href="#ErrorMessages">ErrorMessages</a>
+<li><a href="#DebugMessages">DebugMessages</a>
 <li><a href="#NbOfLinesForCorruptedLog">NbOfLinesForCorruptedLog</a>
 <li><a href="#SplitSearchString">SplitSearchString</a>
 <li><a href="#WrapperScript">WrapperScript</a>
@@ -293,6 +295,7 @@ when reading it), follow the example:<br>
 <a name="LogSeparator"><b>LogSeparator</b></a><br>
 <b>Version : </b>5.0 +<br>
 <br># If your log field's separator is not a space, you can change this parameter.
+<br># This parameter is not used if LogFormat is a predefined value (1,2,3,4,5,6)
 <br># Example: " "
 <br># Example: "\t"
 <br># Example: "|"
@@ -853,6 +856,30 @@ when reading it), follow the example:<br>
 <br># Default: 1
 <br>#
 <br>WarningMessages=1
+
+<br><br><hr>
+
+<a name="ErrorMessages"><b>ErrorMessages</b></a><br>
+<b>Version : </b>5.2 +<br>
+<br># When an error occurs, AWStats output a message related to errors. If you
+<br># want (in most cases for security reasons) to have no error messages, you
+<br># can set this parameter to your personalized generic message.
+<br># Example: "An error occured. Contact your Administrator"
+<br># Default: ""
+<br>#
+<br>ErrorMessages=""
+
+<br><br><hr>
+
+<a name="DebugMessages"><b>DebugMessages</b></a><br>
+<b>Version : </b>5.2 +<br>
+<br># AWStat can be run with debug=x parameter to ouput various informations
+<br># to help in debugging or solving troubles. If you wand (in most cases for 
+<br># security reasons) to disable debugging, set this parameter to 0.
+<br># Possible values: 0 or 1
+<br># Default: 1
+<br>#
+<br>DebugMessages=1
 
 <br><br><hr>
 
