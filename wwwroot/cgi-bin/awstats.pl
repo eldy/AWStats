@@ -1684,9 +1684,10 @@ sub Read_Plugins {
 	my @PossiblePluginsDir=("${DIR}plugins","./plugins","/usr/local/awstats/wwwroot/cgi-bin/plugins","/usr/share/awstats/plugins");
  	my %DirAddedInINC=();
  
+	foreach my $key (keys %NoLoadPlugin) { if ($NoLoadPlugin{$key} < 0) { push @PluginsToLoad, $key; } }
 	if ($Debug) { debug("Call to Read_Plugins with list: ".join(',',@PluginsToLoad)); }
 	foreach my $plugininfo (@PluginsToLoad) {
-		if ($NoLoadPlugin{$plugininfo}) {
+		if ($NoLoadPlugin{$plugininfo} && $NoLoadPlugin{$plugininfo} > 0) {
 			if ($Debug) { debug(" Plugin load for '$plugininfo' has been disabled from command line"); }
 			next;	
 		}
@@ -4945,7 +4946,7 @@ $tomorrowtime=int($tomorrowyear.$tomorrowmonth.$tomorrowday.$tomorrowhour.$tomor
 # Allowed option
 my @AllowedCLIArgs=('migrate','config',
 'logfile','output','runascli','update',
-'staticlinks','staticlinksext','noloadplugin',
+'staticlinks','staticlinksext','noloadplugin','forceloadplugin',
 'hostfilter','urlfilter','refererpagesfilter',
 'lang','month','year','framename','debug',
 'showsteps','showdropped','showcorrupted','showunknownorigin',
@@ -5053,6 +5054,7 @@ if ($QueryString =~ /(^|&)framename=([^&]+)/i)		{ $FrameName="$2"; }
 if ($QueryString =~ /(^|&)debug=(\d+)/i)			{ $Debug=$2; }
 if ($QueryString =~ /(^|&)updatefor=(\d+)/i)		{ $UpdateFor=$2; }
 if ($QueryString =~ /(^|&)noloadplugin=([^&]+)/i)	{ foreach my $plugin (split(/,/,$2)) { $NoLoadPlugin{"$plugin"}=1; } }
+if ($QueryString =~ /(^|&)forceloadplugin=([^&]+)/i)	{ foreach my $plugin (split(/,/,$2)) { $NoLoadPlugin{"$plugin"}=-1; } }
 if ($QueryString =~ /(^|&)limitflush=(\d+)/i)		{ $LIMITFLUSH=$2; }
 # Get/Define output
 if ($QueryString =~ /(^|&)output(=[^&]*|)(.*)&output(=[^&]*|)(&|$)/i) { error("Only 1 output option is allowed","","",1); }
@@ -8080,6 +8082,8 @@ if (scalar keys %HTMLOutput) {
 				my @valcolor=("$color_u","$color_v","$color_p","$color_h","$color_k");
 				my @valmax=($max_v,$max_v,$max_h,$max_h,$max_k);
 				my @valtotal=($total_u,$total_v,$total_p,$total_h,$total_k);
+				my @valaverage=();
+				#my @valaverage=($average_v,$average_p,$average_h,$average_k);
 				my @valdata=();
 				my $xx=0;
 				for (my $ix=1; $ix<=12; $ix++) {
@@ -8090,7 +8094,7 @@ if (scalar keys %HTMLOutput) {
 					$valdata[$xx++]=$MonthHits{$YearRequired.$monthix}||0;
 					$valdata[$xx++]=$MonthBytes{$YearRequired.$monthix}||0;
 				}
-				ShowGraph_graphapplet("$title","month",$ShowMonthStats,\@blocklabel,\@vallabel,\@valcolor,\@valmax,\@valtotal,\@valdata);
+				ShowGraph_graphapplet("$title","month",$ShowMonthStats,\@blocklabel,\@vallabel,\@valcolor,\@valmax,\@valtotal,\@valaverage,\@valdata);
 			}
 			else {			
 				print "<table>\n";
@@ -8264,6 +8268,7 @@ if (scalar keys %HTMLOutput) {
 				my @valcolor=("$color_v","$color_p","$color_h","$color_k");
 				my @valmax=($max_v,$max_h,$max_h,$max_k);
 				my @valtotal=($total_v,$total_p,$total_h,$total_k);
+				my @valaverage=($average_v,$average_p,$average_h,$average_k);
 				my @valdata=();
 				my $xx=0;
 				foreach my $daycursor ($firstdaytoshowtime..$lastdaytoshowtime) {
@@ -8275,7 +8280,7 @@ if (scalar keys %HTMLOutput) {
 					$valdata[$xx++]=$DayHits{$year.$month.$day}||0;
 					$valdata[$xx++]=$DayBytes{$year.$month.$day}||0;
 				}
-				ShowGraph_graphapplet("$title","daysofmonth",$ShowMonthStats,\@blocklabel,\@vallabel,\@valcolor,\@valmax,\@valtotal,\@valdata);
+				ShowGraph_graphapplet("$title","daysofmonth",$ShowDaysOfMonthStats,\@blocklabel,\@vallabel,\@valcolor,\@valmax,\@valtotal,\@valaverage,\@valdata);
 			}
 			else {			
 				print "<table>\n";
@@ -8382,7 +8387,8 @@ if (scalar keys %HTMLOutput) {
 		if ($ShowDaysOfWeekStats) {
 			if ($Debug) { debug("ShowDaysOfWeekStats",2); }
 			print "$Center<a name=\"daysofweek\">&nbsp;</a><br />\n";
-			&tab_head("$Message[91]",18,0,'daysofweek');
+			my $title="$Message[91]";
+			&tab_head("$title",18,0,'daysofweek');
 			print "<tr>";
 			print "<td align=\"center\">";
 			print "<center>\n";
@@ -8417,31 +8423,50 @@ if (scalar keys %HTMLOutput) {
 			}
 
 			# Show bars for days of week
-			print "<table>\n";
-			print "<tr valign=\"bottom\">\n";
-			for (@DOWIndex) {
-				my $bredde_p=0; my $bredde_h=0; my $bredde_k=0;
-				if ($max_h > 0) { $bredde_p=int($avg_dayofweek_p[$_]/$max_h*$BarHeight)+1; }
-				if ($max_h > 0) { $bredde_h=int($avg_dayofweek_h[$_]/$max_h*$BarHeight)+1; }
-				if ($max_k > 0) { $bredde_k=int($avg_dayofweek_k[$_]/$max_k*$BarHeight)+1; }
-				$avg_dayofweek_p[$_]=sprintf("%.2f",$avg_dayofweek_p[$_]);
-				$avg_dayofweek_h[$_]=sprintf("%.2f",$avg_dayofweek_h[$_]);
-				$avg_dayofweek_k[$_]=sprintf("%.2f",$avg_dayofweek_k[$_]);
-				# Remove decimal part if 0
-				if ($avg_dayofweek_p[$_] == int($avg_dayofweek_p[$_])) { $avg_dayofweek_p[$_]=int($avg_dayofweek_p[$_]); }
-				if ($avg_dayofweek_h[$_] == int($avg_dayofweek_h[$_])) { $avg_dayofweek_h[$_]=int($avg_dayofweek_h[$_]); }
-				print "<td valign=\"bottom\">";
-				if ($ShowDaysOfWeekStats =~ /P/i) { print "<img align=\"bottom\" src=\"$DirIcons\/other\/$BarPng{'vp'}\" height=\"$bredde_p\" width=\"6\"".AltTitle("$Message[56]: $avg_dayofweek_p[$_]")." />"; }
-				if ($ShowDaysOfWeekStats =~ /H/i) { print "<img align=\"bottom\" src=\"$DirIcons\/other\/$BarPng{'vh'}\" height=\"$bredde_h\" width=\"6\"".AltTitle("$Message[57]: $avg_dayofweek_h[$_]")." />"; }
-				if ($ShowDaysOfWeekStats =~ /B/i) { print "<img align=\"bottom\" src=\"$DirIcons\/other\/$BarPng{'vk'}\" height=\"$bredde_k\" width=\"6\"".AltTitle("$Message[75]: ".Format_Bytes($avg_dayofweek_k[$_]))." />"; }
-				print "</td>\n";
+			if ($PluginsLoaded{'ShowGraph'}{'graphapplet'}) {
+				my @blocklabel=();
+				for (@DOWIndex) { push @blocklabel,$Message[$_+84]; }
+				my @vallabel=("$Message[56]","$Message[57]","$Message[75]");
+				my @valcolor=("$color_p","$color_h","$color_k");
+				my @valmax=(int($max_h),int($max_h),int($max_k));
+				my @valtotal=($total_p,$total_h,$total_k);
+				my @valaverage=($average_p,$average_h,$average_k);
+				my @valdata=();
+				my $xx=0;
+				for (@DOWIndex) {
+					$valdata[$xx++]=$avg_dayofweek_p[$_]||0;
+					$valdata[$xx++]=$avg_dayofweek_h[$_]||0;
+					$valdata[$xx++]=$avg_dayofweek_k[$_]||0;
+				}
+				ShowGraph_graphapplet("$title","daysofweek",$ShowDaysOfWeekStats,\@blocklabel,\@vallabel,\@valcolor,\@valmax,\@valtotal,\@valaverage,\@valdata);
 			}
-			print "</tr>\n";
-			print "<tr".($TOOLTIPON?" onmouseover=\"ShowTip(17);\" onmouseout=\"HideTip(17);\"":"").">\n";
-			for (@DOWIndex) {
-				print "<td".($_=~/[06]/?" bgcolor=\"#$color_weekend\"":"").">".$Message[$_+84]."</td>";
+			else {			
+				print "<table>\n";
+				print "<tr valign=\"bottom\">\n";
+				for (@DOWIndex) {
+					my $bredde_p=0; my $bredde_h=0; my $bredde_k=0;
+					if ($max_h > 0) { $bredde_p=int($avg_dayofweek_p[$_]/$max_h*$BarHeight)+1; }
+					if ($max_h > 0) { $bredde_h=int($avg_dayofweek_h[$_]/$max_h*$BarHeight)+1; }
+					if ($max_k > 0) { $bredde_k=int($avg_dayofweek_k[$_]/$max_k*$BarHeight)+1; }
+					$avg_dayofweek_p[$_]=sprintf("%.2f",$avg_dayofweek_p[$_]);
+					$avg_dayofweek_h[$_]=sprintf("%.2f",$avg_dayofweek_h[$_]);
+					$avg_dayofweek_k[$_]=sprintf("%.2f",$avg_dayofweek_k[$_]);
+					# Remove decimal part if 0
+					if ($avg_dayofweek_p[$_] == int($avg_dayofweek_p[$_])) { $avg_dayofweek_p[$_]=int($avg_dayofweek_p[$_]); }
+					if ($avg_dayofweek_h[$_] == int($avg_dayofweek_h[$_])) { $avg_dayofweek_h[$_]=int($avg_dayofweek_h[$_]); }
+					print "<td valign=\"bottom\">";
+					if ($ShowDaysOfWeekStats =~ /P/i) { print "<img align=\"bottom\" src=\"$DirIcons\/other\/$BarPng{'vp'}\" height=\"$bredde_p\" width=\"6\"".AltTitle("$Message[56]: $avg_dayofweek_p[$_]")." />"; }
+					if ($ShowDaysOfWeekStats =~ /H/i) { print "<img align=\"bottom\" src=\"$DirIcons\/other\/$BarPng{'vh'}\" height=\"$bredde_h\" width=\"6\"".AltTitle("$Message[57]: $avg_dayofweek_h[$_]")." />"; }
+					if ($ShowDaysOfWeekStats =~ /B/i) { print "<img align=\"bottom\" src=\"$DirIcons\/other\/$BarPng{'vk'}\" height=\"$bredde_k\" width=\"6\"".AltTitle("$Message[75]: ".Format_Bytes($avg_dayofweek_k[$_]))." />"; }
+					print "</td>\n";
+				}
+				print "</tr>\n";
+				print "<tr".($TOOLTIPON?" onmouseover=\"ShowTip(17);\" onmouseout=\"HideTip(17);\"":"").">\n";
+				for (@DOWIndex) {
+					print "<td".($_=~/[06]/?" bgcolor=\"#$color_weekend\"":"").">".$Message[$_+84]."</td>";
+				}
+				print "</tr>\n</table>\n";
 			}
-			print "</tr>\n</table>\n";
 			print "<br />\n";
 			
 			# Show data array for days of week
@@ -8486,37 +8511,54 @@ if (scalar keys %HTMLOutput) {
 			}
 
 			# Show bars for hour
-			print "<table>\n";
-			print "<tr valign=\"bottom\">\n";
-			for (my $ix=0; $ix<=23; $ix++) {
-				my $bredde_p=0;my $bredde_h=0;my $bredde_k=0;
-				if ($max_h > 0) { $bredde_p=int($BarHeight*$_time_p[$ix]/$max_h)+1; }
-				if ($max_h > 0) { $bredde_h=int($BarHeight*$_time_h[$ix]/$max_h)+1; }
-				if ($max_k > 0) { $bredde_k=int($BarHeight*$_time_k[$ix]/$max_k)+1; }
-				print "<td>";
-				if ($ShowHoursStats =~ /P/i) { print "<img align=\"bottom\" src=\"$DirIcons\/other\/$BarPng{'vp'}\" height=\"$bredde_p\" width=\"6\"".AltTitle("$Message[56]: ".int($_time_p[$ix]))." />"; }
-				if ($ShowHoursStats =~ /H/i) { print "<img align=\"bottom\" src=\"$DirIcons\/other\/$BarPng{'vh'}\" height=\"$bredde_h\" width=\"6\"".AltTitle("$Message[57]: ".int($_time_h[$ix]))." />"; }
-				if ($ShowHoursStats =~ /B/i) { print "<img align=\"bottom\" src=\"$DirIcons\/other\/$BarPng{'vk'}\" height=\"$bredde_k\" width=\"6\"".AltTitle("$Message[75]: ".Format_Bytes($_time_k[$ix]))." />"; }
-				print "</td>\n";
+			if ($PluginsLoaded{'ShowGraph'}{'graphapplet'}) {
+				my @blocklabel=(0..23);
+				my @vallabel=("$Message[56]","$Message[57]","$Message[75]");
+				my @valcolor=("$color_p","$color_h","$color_k");
+				my @valmax=(int($max_h),int($max_h),int($max_k));
+				my @valtotal=($total_p,$total_h,$total_k);
+				my @valaverage=($average_p,$average_h,$average_k);
+				my @valdata=();
+				my $xx=0;
+				for (0..23) {
+					$valdata[$xx++]=$_time_p[$_]||0;
+					$valdata[$xx++]=$_time_h[$_]||0;
+					$valdata[$xx++]=$_time_k[$_]||0;
+				}
+				ShowGraph_graphapplet("$title","hours",$ShowHoursStats,\@blocklabel,\@vallabel,\@valcolor,\@valmax,\@valtotal,\@valaverage,\@valdata);
 			}
-			print "</tr>\n";
-			# Show hour lib
-			print "<tr".($TOOLTIPON?" onmouseover=\"ShowTip(17);\" onmouseout=\"HideTip(17);\"":"").">";
-			for (my $ix=0; $ix<=23; $ix++) {
-			  print "<th width=\"19\">$ix</th>\n";	# width=19 instead of 18 to avoid a MacOS browser bug.
+			else {			
+				print "<table>\n";
+				print "<tr valign=\"bottom\">\n";
+				for (my $ix=0; $ix<=23; $ix++) {
+					my $bredde_p=0;my $bredde_h=0;my $bredde_k=0;
+					if ($max_h > 0) { $bredde_p=int($BarHeight*$_time_p[$ix]/$max_h)+1; }
+					if ($max_h > 0) { $bredde_h=int($BarHeight*$_time_h[$ix]/$max_h)+1; }
+					if ($max_k > 0) { $bredde_k=int($BarHeight*$_time_k[$ix]/$max_k)+1; }
+					print "<td>";
+					if ($ShowHoursStats =~ /P/i) { print "<img align=\"bottom\" src=\"$DirIcons\/other\/$BarPng{'vp'}\" height=\"$bredde_p\" width=\"6\"".AltTitle("$Message[56]: ".int($_time_p[$ix]))." />"; }
+					if ($ShowHoursStats =~ /H/i) { print "<img align=\"bottom\" src=\"$DirIcons\/other\/$BarPng{'vh'}\" height=\"$bredde_h\" width=\"6\"".AltTitle("$Message[57]: ".int($_time_h[$ix]))." />"; }
+					if ($ShowHoursStats =~ /B/i) { print "<img align=\"bottom\" src=\"$DirIcons\/other\/$BarPng{'vk'}\" height=\"$bredde_k\" width=\"6\"".AltTitle("$Message[75]: ".Format_Bytes($_time_k[$ix]))." />"; }
+					print "</td>\n";
+				}
+				print "</tr>\n";
+				# Show hour lib
+				print "<tr".($TOOLTIPON?" onmouseover=\"ShowTip(17);\" onmouseout=\"HideTip(17);\"":"").">";
+				for (my $ix=0; $ix<=23; $ix++) {
+				  print "<th width=\"19\">$ix</th>\n";	# width=19 instead of 18 to avoid a MacOS browser bug.
+				}
+				print "</tr>\n";
+				# Show clock icon
+				print "<tr".($TOOLTIPON?" onmouseover=\"ShowTip(17);\" onmouseout=\"HideTip(17);\"":"").">\n";
+				for (my $ix=0; $ix<=23; $ix++) {
+					my $hrs=($ix>=12?$ix-12:$ix);
+					my $hre=($ix>=12?$ix-11:$ix+1);
+					my $apm=($ix>=12?"pm":"am");
+					print "<td><img src=\"$DirIcons\/clock\/hr$hre.png\" width=\"10\" alt=\"$hrs:00 - $hre:00 $apm\" /></td>\n";
+				}
+				print "</tr>\n";
+				print "</table>\n";
 			}
-			print "</tr>\n";
-			# Show clock icon
-			print "<tr".($TOOLTIPON?" onmouseover=\"ShowTip(17);\" onmouseout=\"HideTip(17);\"":"").">\n";
-			for (my $ix=0; $ix<=23; $ix++) {
-				my $hrs=($ix>=12?$ix-12:$ix);
-				my $hre=($ix>=12?$ix-11:$ix+1);
-				my $apm=($ix>=12?"pm":"am");
-				print "<td><img src=\"$DirIcons\/clock\/hr$hre.png\" width=\"10\" alt=\"$hrs:00 - $hre:00 $apm\" /></td>\n";
-			}
-			print "</tr>\n";
-			print "</table>\n";
-
 			print "<br />\n";
 			
 			# Show data array for hours

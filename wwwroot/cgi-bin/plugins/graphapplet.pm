@@ -61,6 +61,7 @@ sub ShowGraph_graphapplet() {
 	my $valcolor=shift;
 	my $valmax=shift;
 	my $valtotal=shift;
+	my $valaverage=shift;
 	my $valdata=shift;
 
 	my $graphwidth=780;
@@ -72,12 +73,12 @@ sub ShowGraph_graphapplet() {
 	my $blockfontsize=11;
 	if ($type eq 'month') 			{ $graphwidth=540; $graphheight=160; $blockspacing=8; $valspacing=0; $valwidth=6; $barsize=$BarHeight; $blockfontsize=11; }
 	elsif ($type eq 'daysofmonth')  { $graphwidth=640; $graphheight=160; $blockspacing=3; $valspacing=0; $valwidth=4; $barsize=$BarHeight; $blockfontsize=9; }
-	elsif ($type eq 'daysofweeks') 	{ $graphwidth=500; $graphheight=160; $blockspacing=5; $valspacing=0; $valwidth=6; $barsize=$BarHeight; $blockfontsize=11; }
-	elsif ($type eq 'hours') 		{ $graphwidth=500; $graphheight=160; $blockspacing=5; $valspacing=0; $valwidth=6; $barsize=$BarHeight; $blockfontsize=11; }
-	else { error("Unknown type"); }
+	elsif ($type eq 'daysofweek') 	{ $graphwidth=300; $graphheight=160; $blockspacing=10; $valspacing=0; $valwidth=6; $barsize=$BarHeight; $blockfontsize=10; }
+	elsif ($type eq 'hours') 		{ $graphwidth=600; $graphheight=160; $blockspacing=4; $valspacing=0; $valwidth=6; $barsize=$BarHeight; $blockfontsize=11; }
+	else { error("Unknown type parameter in ShowGraph_graphapplet function"); }
 
 #	print "<applet code=\"AWGraphApplet.class\" codebase=\"/classes\" width=\"$graphwidth\" height=\"$graphheight\">\n";
-	print "<applet code=\"AWGraphApplet.class\" archive=\"/classes/awgraphapplet.jar\" width=\"$graphwidth\" height=\"$graphheight\">\n";
+	print "<applet code=\"AWGraphApplet.class\" codebase=\"/classes\" archive=\"awgraphapplet.jar\" width=\"$graphwidth\" height=\"$graphheight\">\n";
 print <<EOF;
 <param name="title" value="$title" />
 <param name="awstats_type" value="$type" />
@@ -97,6 +98,7 @@ EOF
 		print "<param name=\"v${i}_color\" value=\"".@$valcolor[$i-1]."\" />\n";
 		print "<param name=\"v${i}_max\" value=\"".@$valmax[$i-1]."\" />\n";
 		print "<param name=\"v${i}_total\" value=\"".@$valtotal[$i-1]."\" />\n";
+		print "<param name=\"v${i}_average\" value=\"".@$valaverage[$i-1]."\" />\n";
 	}
 print <<EOF;
 <param name="blockSpacing" value="$blockspacing" />
