@@ -170,3 +170,5 @@ message165=Sikeresen elküldött levelek
 message166=Sikertelen/visszapattanó levelek
 message167=Érzékeny tartalom
 message168=Javascript kikapcsolva
+message169=Készítette az
+message170=beépülõ modulok
