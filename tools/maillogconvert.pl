@@ -20,7 +20,7 @@ use strict;no strict "refs";
 #-------------------------------------------------------
 use vars qw/ $REVISION $VERSION /;
 $REVISION='$Revision$'; $REVISION =~ /\s(.*)\s/; $REVISION=$1;
-$VERSION="1.1 (build $REVISION)";
+$VERSION="1.2 (build $REVISION)";
 
 use vars qw/
 $DIR $PROG $Extension
@@ -247,15 +247,17 @@ while (<>) {
 	elsif (/: reject/) {
 		$MailType||='postfix';
 		# Example: 
-		# postfix:  Jan 01 04:19:04 apollon postfix/smtpd[26553]: 1954F3B8A4: reject: RCPT from unknown[80.245.33.2]: 450 <partenaires@chiensderace.com>: User unknown in local recipient table; from=<httpd@fozzy2.dpi-europe.fr> to=<partenaires@chiensderace.com> proto=ESMTP helo=<fozzy2.dpi-europe.fr>
-		# postfix:  Jan 01 04:26:39 halley postfix/smtpd[9245]: reject: RCPT from unknown[203.156.32.33]: 554 <charitha99@yahoo.com>: Recipient address rejected: Relay access denied; from=<1126448365@aol.com> to=<charitha99@yahoo.com>
+		# postfix ?.? :  Jan 01 12:00:00 halley postfix/smtpd[9245]: reject: RCPT from unknown[203.156.32.33]: 554 <userx@yahoo.com>: Recipient address rejected: Relay access denied; from=<sender@aol.com> to=<userx@yahoo.com>
+        # postfix 2.1+:  Jan 01 12:00:00 localhost postfix/smtpd[11120]: NOQUEUE: reject: RCPT from unknown[62.205.124.145]: 450 Client host rejected: cannot find your hostname, [62.205.124.145]; from=<sender@msn.com> to=<usery@yahoo.com> proto=ESMTP helo=<xxx.com>
+		# postfix ?.? :  Jan 01 12:00:00 apollon postfix/smtpd[26553]: 1954F3B8A4: reject: RCPT from unknown[80.245.33.2]: 450 <usery@yahoo.com>: User unknown in local recipient table; from=<sender@msn.com> to=<usery@yahoo.com> proto=ESMTP helo=<xxx.com>
 		my ($mon,$day,$time,$id,$code,$from,$to)=m/(\w+)\s+(\d+)\s+(\d+:\d+:\d+)\s+[\w\-\.]+\s+(?:postfix\/(?:local|lmtp|smtpd|smtp|virtual|pipe))\[\d+\]:\s+(.*?):\s+(.*)\s+from=([^\s,]*)\s+to=([^\s,]*)/;
 		# postfix:	Jan 01 14:10:16 juni postfix/smtpd[2568]: C34ED1432B: reject: RCPT from relay2.tp2rc.edu.tw[163.28.32.177]: 450 <linda@trieger.org>: User unknown in local recipient table; from=<> proto=ESMTP helo=<rmail.nccu.edu.tw>
 		if (! $mon) { ($mon,$day,$time,$id,$code,$from)=m/(\w+)\s+(\d+)\s+(\d+:\d+:\d+)\s+[\w\-\.]+\s+(?:postfix\/(?:local|lmtp|smtpd|smtp|virtual|pipe))\[\d+\]:\s+(.*?):\s+(.*)\s+from=([^\s,]*)/; }
-		$mailid=($id eq 'reject'?'999':$id);	# id not provided in log, we take '999'
+		$mailid=($id eq 'reject' || $id eq 'NOQUEUE'?'999':$id);	# id not provided in log, we take '999'
 		if ($mailid) {
-			# $code='reject: RCPT from c66.191.66.89.dul.mn.charter.com[66.191.66.89]: 450 <partenaires@chiensderace.com>: User unknown in local recipient table;'
-			#    or 'reject: RCPT from unknown[203.156.32.33]: 554 <charitha99@yahoo.com>: Recipient address rejected: Relay access denied;'
+			# $code='reject: RCPT from unknown[203.156.32.33]: 554 <userx@yahoo.com>: Recipient address rejected: Relay access denied;'
+		    #    or 'reject: RCPT from unknown[62.205.124.145]: 450 Client host rejected: cannot find your hostname, [62.205.124.145]; from=<sender@msn.com> to=<usery@yahoo.com> proto=ESMTP helo=<xxx.com>'
+			#    or 'reject: RCPT from unknown[80.245.33.2]: 450 <usery@yahoo.com>: User unknown in local recipient table;'
 			if ($code =~ /\s+(\d\d\d)\s+/) { $mail{$mailid}{'code'}=$1; }
 			else { $mail{$mailid}{'code'}=999; }	# Unkown error
 			if (! $mail{$mailid}{'relay_s'} && $code =~ /from\s+([^\s]+)\s+/) {
