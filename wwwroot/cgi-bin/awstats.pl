@@ -6034,7 +6034,7 @@ EOF
 				}
 			else {
 				my $newos=$OSHashLib{$key}||$key;
-				my $nameicon=lc($newos); $nameicon =~ s/\s.*//;
+				my $nameicon=lc($key); $nameicon =~ s/[^\w]+//g;
 				print "<TR><TD width=100><IMG SRC=\"$DirIcons\/os\/$nameicon.png\"></TD><TD CLASS=AWL>$newos</TD><TD>$_os_h{$key}</TD>";
 				print "<TD>$p&nbsp;%</TD></TR>\n";
 			}
