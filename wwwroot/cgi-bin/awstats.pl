@@ -173,11 +173,11 @@ $AddDataArrayMonthStats, $AddDataArrayShowDaysOfMonthStats, $AddDataArrayShowDay
 use vars qw/
 $AllowFullYearView 
 $LevelForRobotsDetection $LevelForBrowsersDetection $LevelForOSDetection $LevelForRefererAnalyze
-$LevelForSearchEnginesDetection $LevelForKeywordsDetection
+$LevelForFileTypesDetection $LevelForSearchEnginesDetection $LevelForKeywordsDetection
 /;
 ($AllowFullYearView, $LevelForRobotsDetection, $LevelForBrowsersDetection, $LevelForOSDetection, $LevelForRefererAnalyze,
-$LevelForSearchEnginesDetection, $LevelForKeywordsDetection)=
-(2,2,2,2,2,2,2);
+$LevelForFileTypesDetection, $LevelForSearchEnginesDetection, $LevelForKeywordsDetection)=
+(2,2,2,2,2,2,2,2);
 use vars qw/
 $DirLock $DirCgi $DirConfig $DirData $DirIcons $DirLang $AWScript $ArchiveFileName
 $AllowAccessFromWebToFollowingIPAddresses $HTMLHeadSection $HTMLEndSection $LinksToWhoIs $LinksToIPWhoIs
@@ -316,121 +316,7 @@ use vars qw/
 #tie %TmpOS, 'Tie::Cache::LRU';
 
 # PROTOCOL CODES
-
-# HTTP codes
-use vars qw/ %httpcodelib /;
-%httpcodelib = (
-#[Miscellaneous successes]
-'2xx'=>'[Miscellaneous successes]',
-'200'=>'OK',								# HTTP request OK
-'201'=>'Created',
-'202'=>'Request recorded, will be executed later',
-'203'=>'Non-authoritative information',
-'204'=>'Request executed',
-'205'=>'Reset document',
-'206'=>'Partial Content',
-#[Miscellaneous redirections]
-'3xx'=>'[Miscellaneous redirections]',
-'300'=>'Multiple documents available',
-'301'=>'Moved permanently (redirect)',
-'302'=>'Moved temporarily (redirect)',
-'303'=>'See other document',
-'304'=>'Not Modified since last retrieval',	# HTTP request OK
-'305'=>'Use proxy',
-'306'=>'Switch proxy',
-'307'=>'Moved temporarily',
-#[Miscellaneous client/user errors]
-'4xx'=>'[Miscellaneous client/user errors]',
-'400'=>'Bad Request',
-'401'=>'Unauthorized',
-'402'=>'Payment required',
-'403'=>'Forbidden',
-'404'=>'Document Not Found',
-'405'=>'Method not allowed',
-'406'=>'Document not acceptable to client',
-'407'=>'Proxy authentication required',
-'408'=>'Request Timeout',
-'409'=>'Request conflicts with state of resource',
-'410'=>'Document gone permanently',
-'411'=>'Length required',
-'412'=>'Precondition failed',
-'413'=>'Request too long',
-'414'=>'Requested filename too long',
-'415'=>'Unsupported media type',
-'416'=>'Requested range not valid',
-'417'=>'Failed',
-#[Miscellaneous server errors]
-'5xx'=>'[Miscellaneous server errors]',
-'500'=>'Internal server Error',
-'501'=>'Not implemented',
-'502'=>'Received bad response from real server',
-'503'=>'Server busy',
-'504'=>'Gateway timeout',
-'505'=>'HTTP version not supported',
-'506'=>'Redirection failed',
-#[Unknown]
-'xxx'=>'[Unknown]'
-);
-
-# FTP codes
-use vars qw/ %ftpcodelib /;
-%ftpcodelib = (
-);
-
-# SMTP codes
-use vars qw/ %smtpcodelib /;
-%smtpcodelib = (
-#[Successfull code]
-'200'=>'Nonstandard success response',
-'211'=>'System status, or system help reply',
-'214'=>'Help message',
-'220'=>'<domain> Service ready',
-'221'=>'<domain> Service closing transmission channel',
-'250'=>'Requested mail action taken and completed',	# Your ISP mail server have successfully executes a command and the DNS is reporting a positive delivery.
-'251'=>'User not local: will forward to <forward-path>',	# Your message to a specified email address is not local to the mail server, but it will accept and forward the message to a different recipient email address.
-'252'=>'Recipient cannot be verified',	# but mail server accepts the message and attempts delivery.
-'354'=>'Start mail input and end with <CRLF>.<CRLF>',	# Indicates mail server is ready to accept the message or instruct your mail client to send the message body after the mail server have received the message headers.
-#[Temporary error code] Ask sender to try later to complete successfully
-'421'=>'<domain> Service not available, closing transmission channel',	# This may be a reply to any command if the service knows it must shut down.
-'450'=>'Requested mail action not taken: mailbox busy or access denied',	# Your ISP mail server indicates that an email address does not exist or the mailbox is busy. It could be the network connection went down while sending, or it could also happen if the remote mail server does not want to accept mail from you for some reason i.e. (IP address, From address, Recipient, etc.)
-'451'=>'Requested mail action aborted: error in processing',	# Your ISP mail server indicates that the mailing has been interrupted, usually due to overloading from too many messages or transient failure is one in which the message sent is valid, but some temporary event prevents the successful sending of the message. Sending in the future may be successful.
-'452'=>'Requested mail action not taken: insufficient system storage',	# Your ISP mail server indicates, probable overloading from too many messages and sending in the future may be successful.
-'453'=>'Too many messages',	# Some mail servers have the option to reduce the number of concurrent connection and also the number of messages sent per connection. If you have a lot of messages queued up it could go over the max number of messages per connection. To see if this is the case you can try submitting only a few messages to that domain at a time and then keep increasing the number until you find the maximum number accepted by the server.
-#[Permanent error code]
-'500'=>'Syntax error, command unrecognized or command line too long',
-'501'=>'Syntax error in parameters or arguments',
-'502'=>'Command not implemented',
-'503'=>'Server encountered bad sequence of commands',
-'504'=>'Command parameter not implemented',
-'521'=>'<domain> does not accept mail or closing transmission channel', # You must be pop-authenticated before you can use this SMTP server and you must use your mail address for the Sender/From field.
-'530'=>'Access denied', # a Sendmailism ?
-'550'=>'Requested mail action not taken (Relaying not allowed, Unknown recipient user, ...)',	# Sending an email to recipients outside of your domain are not allowed or your mail server does not know that you have access to use it for relaying messages and authentication is required. Or to prevent the sending of SPAM some mail servers will not allow (relay) send mail to any e-mail using another company’s network and computer resources.
-'551'=>'User not local: please try <forward-path> or Invalid Address: Relay request denied',
-'552'=>'Requested mail action aborted: exceeded storage allocation',	# ISP mail server indicates, probable overloading from too many messages.
-'553'=>'Requested mail action not taken: mailbox name not allowed',	# Some mail servers have the option to reduce the number of concurrent connection and also the number of messages sent per connection. If you have a lot of messages queued up (being sent) for a domain, it could go over the maximum number of messages per connection and/or some change to the message and/or destination must be made for successful delivery.
-'554'=>'Requested mail action rejected: access denied',
-'557'=>'Too many duplicate messages', # Resource temporarily unavailable Indicates (probable) that there is some kind of anti-spam system on the mail server.
-
-# Postfix code for access_map_reject_code (postfix default=554) with access_map_reject_code rule
-'570'=>'Access denied: access_map violation (on SMTP client or HELO hostname, sender or recipient email address)',
-# Postfix code for maps_rbl_reject_code (postfix default=554) with maps_rbl_code rule
-'571'=>'Access denied: SMTP client listed in RBL',
-# Postfix code for relay_domains_reject_code (postfix default=554) with relay_domains_reject rule
-'572'=>'Access denied: Relay not authorized or not local host not a gateway',
-# Postfix code for unknown_client_reject_code (postfix default=450) with reject_unknown_client rule
-'573'=>'Access denied: Unknown SMTP client hostname (without DNS A or MX record)',
-# Postfix code for invalid_hostname_reject_code (postfix default=501) with reject_invalid_hostname rule
-'574'=>'Access denied: Bad syntax for client HELO hostname (Not RFC compliant)',
-# Postfix code for reject_code (postfix default=554) with smtpd_client_restrictions
-'575'=>'Access denied: SMTP client hostname rejected',
-# Postfix code for unknown_address_reject_code (postfix default=450) with reject_unknown_sender_domain or reject_unknown_recipient_domain rule
-'576'=>'Access denied: Unknown domain for sender or recipient email address (without DNS A or MX record)',
-# Postfix code for unknown_hostname_reject_code (postfix default=501) with reject_unknown_hostname rule
-'577'=>'Access denied: Unknown client HELO hostname (without DNS A or MX record)',
-# Postfix code for non_fqdn_reject_code (Postfix default=504) with reject_non_fqdn_hostname, reject_non_fqdn_sender or reject_non_fqdn_recipient rule 
-'578'=>'Access denied: Invalid domain for client HELO hostname, sender or recipient email address (not FQDN)',
-
-);
+use vars qw/ %httpcodelib %ftpcodelib %smtpcodelib /;
 
 # DEFAULT MESSAGE
 use vars qw/ @Message /;
@@ -589,8 +475,9 @@ use vars qw/ @Message /;
 'First',
 'Last',
 'Exclude filter',
-'* Codes shown here gave hits or traffic "not viewed" by visitors, so are isolated in this chart.',
-'Cluster'
+'* Codes shown here gave hits or traffic "not viewed" by visitors, so they are not included in other charts.',
+'Cluster',
+'* Robots shown here gave hits or traffic "not viewed" by visitors, so they are not included in other charts.'
 );
 
 
@@ -1574,6 +1461,7 @@ sub Check_Config {
 	if ($LevelForBrowsersDetection !~ /^\d+/)     	{ $LevelForBrowsersDetection=2; }
 	if ($LevelForOSDetection !~ /^\d+/)    			{ $LevelForOSDetection=2; }
 	if ($LevelForRefererAnalyze !~ /^\d+/)			{ $LevelForRefererAnalyze=2; }
+	if ($LevelForFileTypesDetection !~ /^\d+/)		{ $LevelForFileTypesDetection=2; }
 	if ($LevelForSearchEnginesDetection !~ /^\d+/)	{ $LevelForSearchEnginesDetection=2; }
 	if ($LevelForKeywordsDetection !~ /^\d+/)  		{ $LevelForKeywordsDetection=2; }
 	# Optional extra setup section
@@ -5320,16 +5208,31 @@ if (! $FrameName) {
 	else { $FrameName='main'; }
 }
 
-# Load Message and Plugins
+# Load Message files, Reference data files and Plugins
 if ($FrameName ne 'index') {
 	&Read_Language_Data($Lang);
 	if ($FrameName ne 'mainleft') {
-		# Update only
-		if ($UpdateStats && ! scalar keys %HTMLOutput) { &Read_Ref_Data('browsers','domains','operating_systems','robots','search_engines','worms','referer_spam'); }
-		# Update and output
-		elsif ($UpdateStats && scalar keys %HTMLOutput) { &Read_Ref_Data('browsers','domains','operating_systems','robots','search_engines','worms','referer_spam','mime'); }
-		# Output only
-		elsif (scalar keys %HTMLOutput) { &Read_Ref_Data('browsers','domains','operating_systems','robots','search_engines','worms','mime'); }
+		my %datatoload=();
+		if ($UpdateStats) {				# If update
+			if ($LevelForFileTypesDetection<2)	{ $datatoload{'mime'}=1; }	# Only if need to filter on known extensions
+			if ($LevelForRobotsDetection) 		{ $datatoload{'robots'}=1; }	# ua
+			if ($LevelForBrowsersDetection)		{ $datatoload{'browsers'}=1; }	# ua
+			if ($LevelForOSDetection)			{ $datatoload{'operating_systems'}=1; }	# ua
+			if ($LevelForRefererAnalyze)		{ $datatoload{'search_engines'}=1; }	# referer
+			# $datatoload{'worms'}=1;
+			# $datatoload{'referer_spam'}=1;
+		}
+		if (scalar keys %HTMLOutput) {	# If output
+			if ($ShowDomainsStats) 				{ $datatoload{'domains'}=1; }
+			if ($ShowFileTypesStats) 			{ $datatoload{'mime'}=1; }
+			if ($ShowRobotsStats) 				{ $datatoload{'robots'}=1; }
+			if ($ShowBrowsersStats) 			{ $datatoload{'browsers'}=1; }
+			if ($ShowOSStats) 					{ $datatoload{'operating_systems'}=1; }
+			if ($ShowOriginStats) 				{ $datatoload{'search_engines'}=1; }
+			if ($ShowHTTPErrorsStats) 			{ $datatoload{'status_http'}=1; }
+			if ($ShowSMTPErrorsStats) 			{ $datatoload{'status_smtp'}=1; }
+		}
+		&Read_Ref_Data(keys %datatoload);
 		&Read_Plugins();
 	}
 }
@@ -5648,7 +5551,7 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 			debug(" Correct format line ".($lastlinenumber+$NbOfLinesParsed).": $string",4);
 		}
 
-		# Check virtual host name
+		# Drop wrong virtual host name
 		#----------------------------------------------------------------------
 		if ($pos_vh>=0 && $field[$pos_vh] !~ /^$SiteDomain$/i) {
 			my $skip=1;
@@ -5662,39 +5565,31 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 			}
 		}
 
-		# Check protocol (Note: Use of TmpProtocol does not increase speed)
-		#----------------------------------------------------------------------
-		my $protocol=0;
-		if ($field[$pos_method] eq 'GET' || $field[$pos_method] eq 'POST' || $field[$pos_method] eq 'HEAD' || $field[$pos_method] =~ /OK/i || $field[$pos_method] =~ /ERR\!/i) {
+		# Drop wrong method/protocol
+		#---------------------------
+		if ($LogType eq 'W' && ($field[$pos_method] eq 'GET' || $field[$pos_method] eq 'POST' || $field[$pos_method] eq 'HEAD' || $field[$pos_method] =~ /OK/i || $field[$pos_method] =~ /ERR\!/i)) {
 			# HTTP request.	Keep only GET, POST, HEAD, *OK* and ERR! for Webstar. Do not keep OPTIONS
-			$protocol=1;
 		}
-		elsif ($field[$pos_method] eq 'SMTP') {
-			# Mail request ('SMTP' for mail log with maillogconvert.pl preprocessor)
-			$protocol=3;
-		}
-		elsif ($field[$pos_method] eq 'RETR' || $field[$pos_method] eq 'o' || $field[$pos_method] =~ /get/i) {
-			# FTP GET request
-			$protocol=2;
-		}
-		elsif ($field[$pos_method] eq 'STOR' || $field[$pos_method] eq 'i' || $field[$pos_method] =~ /sent/i) {
-			# FTP SENT request
-			$protocol=2;
-		}
-		elsif ($field[$pos_method] eq 'mms' || $field[$pos_method] eq 'RTP') {
+		elsif (($LogType eq 'W' || $LogType eq 'S') && ($field[$pos_method] eq 'mms' || $field[$pos_method] eq 'RTP')) {
 			# Streaming request (windows media server or darwin streaming server)
-			$protocol=4;
 		}
-		elsif ($field[$pos_method] =~ /\d\d\d\d/) {
-			# Mail request (\d\d\d\d for Exchange log)
-			$protocol=5;
+		elsif ($LogType eq 'M' && $field[$pos_method] eq 'SMTP') {
+			# Mail request ('SMTP' for mail log with maillogconvert.pl preprocessor)
+		}
+		elsif ($LogType eq 'F' && ($field[$pos_method] eq 'RETR' || $field[$pos_method] eq 'o' || $field[$pos_method] =~ /get/i)) {
+			# FTP GET request
+			$field[$pos_url] =~ s/\s/%20/g;
+		}
+		elsif ($LogType eq 'F' && ($field[$pos_method] eq 'STOR' || $field[$pos_method] eq 'i' || $field[$pos_method] =~ /sent/i)) {
+			# FTP SENT request
+			$field[$pos_url] =~ s/\s/%20/g;
 		}
 		else {
 			$NbOfLinesDropped++;
-			if ($ShowDropped) { print "Dropped record (method/protocol '$field[$pos_method]' not qualified): $_\n"; }
+			if ($ShowDropped) { print "Dropped record (method/protocol '$field[$pos_method]' not qualified in a file with LogType=$LogType): $_\n"; }
 			next;
 		}
-
+		
 		# Split DD/Month/YYYY:HH:MM:SS or YYYY-MM-DD HH:MM:SS or MM/DD/YY\tHH:MM:SS
 		$field[$pos_date] =~ tr/,-\/ \t/:::::/;			# " \t" is used instead of "\s" not known with tr
 		my @dateparts=split(/:/,$field[$pos_date]);		# tr and split faster than @dateparts=split(/[\/\-:\s]/,$field[$pos_date])
@@ -5830,7 +5725,7 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 		
 		# Check return status code
 		#-------------------------
-		if ($protocol == 1 || $protocol == 4) {			# HTTP record or Stream record
+		if ($LogType eq 'W' || $LogType eq 'S') {		# HTTP record or Stream record
 			if ($ValidHTTPCodes{$field[$pos_code]}) {	# Code is valid
 				if ($field[$pos_code] == 304) { $field[$pos_size]=0; }
 			}
@@ -5861,14 +5756,14 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 				}
 			}
 		}
-		elsif ($protocol == 3 || $protocol == 5) {		# Mail record
+		elsif ($LogType eq 'M') {						# Mail record
 			if (! $ValidSMTPCodes{$field[$pos_code]}) {	# Code is not valid
 				$_errors_h{$field[$pos_code]}++;
-				#$_errors_k{$field[$pos_code]}+=int($field[$pos_size]);	# Useless as pos_size is often 0 or ? when error
+				#$_errors_k{$field[$pos_code]}+=int($field[$pos_size]);	# Useless since pos_size is often 0 or ? when error
 				next;	# Next log record
 			}
 		}
-		elsif ($protocol == 2) {						# FTP record
+		elsif ($LogType eq 'F') {						# FTP record
 		}
 
 		# Analyze: Robot
@@ -5909,7 +5804,6 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 		# to define urlwithnoquery, tokenquery and standalonequery and $field[$pos_url]
 		#-----------------------------------------------
 		if ($URLNotCaseSensitive) { $field[$pos_url] =~ tr/A-Z/a-z/; }
-		if ($protocol == 2) { $field[$pos_url] =~ s/\s/%20/g; }
 		# Possible URL syntax for $field[$pos_url]: /mydir/mypage.ext?param1=x&param2=y#aaa, /mydir/mypage.ext#aaa, /
 		my $urlwithnoquery; my $tokenquery; my $standalonequery; my $anchor='';
 		if ($field[$pos_url] =~ s/#(\w*)$//) { $anchor=$1; }	# Remove and save anchor
@@ -5950,29 +5844,31 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 		# Analyze: File type - Compression
 		#-----------------------------------
 		my $PageBool=1;
-		my $extension;
 		# Extension
+		my $extension;
 		if ($urlwithnoquery =~ /\.(\w{1,6})$/ || ($urlwithnoquery =~ /[\\\/]$/ && $DefaultFile[0] =~ /\.(\w{1,6})$/)) {
-			$extension=lc($1);
+			$extension=($LevelForFileTypesDetection>=2 || $MimeHashFamily{$1})?lc($1):'Unknown';
 			if ($NotPageList{$extension}) { $PageBool=0; }
 		}
 		else {
 			$extension='Unknown';
 		}
-		$_filetypes_h{$extension}++;
-		$_filetypes_k{$extension}+=int($field[$pos_size]);	# TODO can cause a warning
-		# Compression
-		if ($pos_compratio>=0 && ($field[$pos_compratio] =~ /(\d+)/)) { # Calculate in/out size from percentage (% is size after/before)
-			#$_filetypes_gz_in{$extension}+=int($field[$pos_size]*100/((100-$1)||1));
-			$_filetypes_gz_in{$extension}+=int($field[$pos_size]*100/($1||1));
-			$_filetypes_gz_out{$extension}+=int($field[$pos_size]);
-		}
-		elsif ($pos_gzipin>=0 && $field[$pos_gzipin]) {	# If in and out in log
-			my ($notused,$in)=split(/:/,$field[$pos_gzipin]);
-			my ($notused1,$out,$notused2)=split(/:/,$field[$pos_gzipout]);
-			if ($out) {
-				$_filetypes_gz_in{$extension}+=$in;
-				$_filetypes_gz_out{$extension}+=$out;
+		if ($LevelForFileTypesDetection) {
+			$_filetypes_h{$extension}++;
+			$_filetypes_k{$extension}+=int($field[$pos_size]);	# TODO can cause a warning
+			# Compression
+			if ($pos_compratio>=0 && ($field[$pos_compratio] =~ /(\d+)/)) { # Calculate in/out size from percentage (% is size after/before)
+				#$_filetypes_gz_in{$extension}+=int($field[$pos_size]*100/((100-$1)||1));
+				$_filetypes_gz_in{$extension}+=int($field[$pos_size]*100/($1||1));
+				$_filetypes_gz_out{$extension}+=int($field[$pos_size]);
+			}
+			elsif ($pos_gzipin>=0 && $field[$pos_gzipin]) {	# If in and out in log
+				my ($notused,$in)=split(/:/,$field[$pos_gzipin]);
+				my ($notused1,$out,$notused2)=split(/:/,$field[$pos_gzipout]);
+				if ($out) {
+					$_filetypes_gz_in{$extension}+=$in;
+					$_filetypes_gz_out{$extension}+=$out;
+				}
 			}
 		}
 
@@ -8747,7 +8643,7 @@ if (scalar keys %HTMLOutput) {
 			if ($Debug) { debug("ShowRobotStats",2); }
 			print "$Center<a name=\"ROBOTS\">&nbsp;</a><br />\n";
 			&tab_head("$Message[53] ($Message[77] $MaxNbOf{'RobotShown'}) &nbsp; - &nbsp; <a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?XMLEncode("$AWScript?${NewLinkParams}output=allrobots"):"$PROG$StaticLinks.allrobots.$StaticExt")."\"$NewLinkTarget>$Message[80]</a> &nbsp; - &nbsp; <a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?XMLEncode("$AWScript?${NewLinkParams}output=lastrobots"):"$PROG$StaticLinks.lastrobots.$StaticExt")."\"$NewLinkTarget>$Message[9]</a>",19);
-			print "<tr bgcolor=\"#$color_TableBGRowTitle\"".($TOOLTIPON?" onmouseover=\"ShowTip(16);\" onmouseout=\"HideTip(16);\"":"")."><th>".(scalar keys %_robot_h)." $Message[51]</th>";
+			print "<tr bgcolor=\"#$color_TableBGRowTitle\"".($TOOLTIPON?" onmouseover=\"ShowTip(16);\" onmouseout=\"HideTip(16);\"":"")."><th>".(scalar keys %_robot_h)." $Message[51]*</th>";
 			if ($ShowRobotsStats =~ /H/i) { print "<th bgcolor=\"#$color_h\" width=\"80\">$Message[57]</th>"; }
 			if ($ShowRobotsStats =~ /B/i) { print "<th bgcolor=\"#$color_k\" width=\"80\">$Message[75]</th>"; }
 			if ($ShowRobotsStats =~ /L/i) { print "<th width=\"120\">$Message[9]</th>"; }
@@ -8780,7 +8676,7 @@ if (scalar keys %HTMLOutput) {
 				if ($ShowRobotsStats =~ /L/i) { print "<td>&nbsp;</td>"; }
 				print "</tr>\n";
 			}
-			&tab_end;
+			&tab_end($Message[156]);
 		}
 	
 		print "\n<a name=\"HOW\">&nbsp;</a>\n\n";
@@ -9516,8 +9412,8 @@ else {
 #     lastlineoffset=lastlineoffsetnext; lastlineoffsetnext=file pointer position
 #     If line corrupted, skip --> next on loop
 #	  Drop wrong virtual host --> next on loop
-#     Drop wrong protocol --> next on loop
-#     Drop wrong date --> next on loop
+#     Drop wrong method/protocol --> next on loop
+#     Check date --> next on loop
 #     If line older than $LastLine, skip --> next on loop
 #     So it's new line
 #     $LastLine = time or record
@@ -9532,9 +9428,9 @@ else {
 #       &Read_History_With_TmpUpdate(lastprocessedyear,lastprocessedmonth,UPDATE,PURGE,"all",lastlinenumber,lastlineoffset,CheckSum($_));
 #     Check misc tracker --> next on loop
 #     Check add to favorites --> next on loop
-#     Check protocol and code and complete %_error_, %_sider404 and %_referrer404 --> next on loop
+#     Check status code and complete %_error_, %_sider404 and %_referrer404 --> next on loop
 #     Check robot and complete %_robot --> next on loop
-#     Clean Url and Query
+#     Clean Url and Query (to define urlwithnoquery, tokenquery and standalonequery and $field[$pos_url])
 #     Analyze: File types - Compression
 #     Analyze: Date - Hour - Pages - Hits - Kilo
 #     Analyze: Login
@@ -9544,7 +9440,7 @@ else {
 #     Analyze: Browser - OS
 #     Analyze: Referer
 #     Analyze: EMail
-#     Analyze: Extra
+#     Analyze: Extra (must be after 'Clean Url and Query')
 #     If too many records, we flush data arrays with
 #       &Read_History_With_TmpUpdate($lastprocessedyear,$lastprocessedmonth,UPDATE,PURGE,"all",lastlinenumber,lastlineoffset,CheckSum($_));
 #   End of loop
