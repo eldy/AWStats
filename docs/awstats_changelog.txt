@@ -27,6 +27,7 @@ Fixes:
 - Click on "Summary" now returns to top of page even with rawlog plugin.
 - Fix in log parsing that should reduce dropped records to only records
   that match a dropping criteria (SkipFiles, Skip..., Only...).
+- Click on "Summary" now returns to top of page even with rawlog plugin.
 
 New features/improvements:
 - Increased speed by 10 to 20%.
@@ -80,6 +81,8 @@ Note 1: When migrating to 6.x series, if you use the ExtraSections feature,
   you must check that the parameter(s) ExtraSectionConditionX use a full
   REGEX syntax (with 5.x series, this parameter could contain simple string
   values). If not, feature will be broken.
+
+Note 2: MaxLengthOfURL parameter has been renamed into MaxLengthOfShownURL
 
 
 5.9
