@@ -1,4 +1,4 @@
-# Ukrainian message file
+# Ukrainian message file (v1.1 - 03.08.2001 - roman@elsyst.km.ua)
 PageCode=windows-1251
 message0=Невiдомий
 message1=Невiдомий (не вдалось перетворити IP)
@@ -19,7 +19,7 @@ message15=Вiдсоток
 message16=Сумарний трафiк
 message17=Домени/країни
 message18=Вiдвiдувачi
-message19=Сторiнки/URL-и
+message19=Сторiнки-URLи
 message20=Розподiл по годинам доби
 message21=Програми перегляду
 message22=Помилки HTTP
@@ -39,7 +39,7 @@ message35=Останнє оновлення
 message36=Шляхи, якими вiдвiдувачi потрапляли на сайт
 message37=Походження
 message38=Прямий доступ / Закладки
-message39=Посилання з дискусiйних груп
+message39=
 message40=Посилання з пошукових машин
 message41=Посилання з зовнiшньої сторiнки (iншого сайту за винятком пошукових машин)
 message42=Посилання з внутрiшньої сторiнки (iншої сторiнки на цьому ж сайтi)
@@ -72,7 +72,10 @@ message68=Вер
 message69=Жов
 message70=Лис
 message71=Гру
-message72=
+message72=Навiгацiя
 message73=Щоденна статистика
 message74=Оновити
-message75=Bytes
+message75=Байтiв
+message76=
+message77=Найуживанiшi
+message78=dd mmm yyyy - HH:MM
