@@ -325,13 +325,13 @@ use vars qw/ %httpcodelib /;
 #[Miscellaneous redirections]
 '3xx'=>'[Miscellaneous redirections]',
 '300'=>'Multiple documents available',
-'301'=>'Moved Permanently',
-'302'=>'Found',
+'301'=>'Moved permanently (redirect)',
+'302'=>'Moved temporarily (redirect)',
 '303'=>'See other document',
 '304'=>'Not Modified since last retrieval',	# HTTP request OK
 '305'=>'Use proxy',
 '306'=>'Switch proxy',
-'307'=>'Document moved temporarily',
+'307'=>'Moved temporarily',
 #[Miscellaneous client/user errors]
 '4xx'=>'[Miscellaneous client/user errors]',
 '400'=>'Bad Request',
