@@ -91,3 +91,5 @@ message88=Jeu
 message89=Ven
 message90=Sam
 message91=Jours de la semaine
+message92=Qui
+message93=Quand

@@ -91,3 +91,5 @@ message88=Thu
 message89=Fri
 message90=Sat
 message91=Days of week
+message92=Who
+message93=When
