@@ -247,19 +247,20 @@ use vars qw/
 @SessionsRange=('0s-30s','30s-2mn','2mn-5mn','5mn-15mn','15mn-30mn','30mn-1h','1h+');
 %SessionsAverage=('0s-30s',15,'30s-2mn',75,'2mn-5mn',210,'5mn-15mn',600,'15mn-30mn',1350,'30mn-1h',2700,'1h+',3600);
 # HTTP-Accept or Lang parameter => AWStats code to use for lang
-# ISO 639-1 2 letter or other   => awstats-xx.txt
+# ISO-639-1 or 2 or other       => awstats-xx.txt where xx is ISO-639-1
 %LangBrowserToLangAwstats=(
 'sq'=>'al','ar'=>'ar','ba'=>'ba','bg'=>'bg','zh-tw'=>'tw','zh'=>'cn','cz'=>'cz',
 'de'=>'de','da'=>'dk',
 'en'=>'en','et'=>'et','fi'=>'fi','fr'=>'fr','gl'=>'gl',
-'es'=>'es','eu'=>'eu','ca'=>'cat',
+'es'=>'es','eu'=>'eu','ca'=>'ca',
 'el'=>'gr','hu'=>'hu','is'=>'is','in'=>'id','it'=>'it',
 'ja'=>'jp','ko'=>'kr','lv'=>'lv','nl'=>'nl','no'=>'nb','nb'=>'nb','nn'=>'nn',
 'pl'=>'pl','pt'=>'pt','pt-br'=>'br','ro'=>'ro','ru'=>'ru','sr'=>'sr','sk'=>'sk',
-'sv'=>'se','tr'=>'tr','uk'=>'ua','cy'=>'wlk','wlk'=>'wlk'
+'sv'=>'se','tr'=>'tr','uk'=>'ua','cy'=>'cy','wlk'=>'cy'
 );
-%LangAWStatsToFlagAwstats=(  # If flag (country ISO 3166 two letters) is not same than lang AWStats code
-'cat'=>'es_cat','et'=>'ee','eu','es_eu',
+%LangAWStatsToFlagAwstats=(  # If flag (country ISO-3166 two letters) is not same than AWStats Lang code
+'ca'=>'es_cat','et'=>'ee','eu','es_eu',
+'cy'=>'wlk',
 'gl'=>'glg',
 'he'=>'il',
 'ar'=>'sa',
