@@ -842,6 +842,7 @@ sub Check_Config {
 	if ($Message[102] eq "") { $Message[102]="Total"; }
 	if ($Message[103] eq "") { $Message[103]="different keyphrases"; }
 	if ($Message[104] eq "") { $Message[104]="Entry pages"; }
+	if ($Message[105] eq "") { $Message[105]="Code"; }
 }
 
 #--------------------------------------------------------------------
@@ -2970,7 +2971,7 @@ EOF
 		my @sortdomains_p=sort { $SortDir*$_domener_p{$a} <=> $SortDir*$_domener_p{$b} } keys (%_domener_p);
 		print "$CENTER<a name=\"DOMAINS\">&nbsp;</a><BR>";
 		&tab_head($Message[25],19);
-		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH colspan=2>$Message[17]</TH><TH>Code</TH><TH bgcolor=\"#$color_p\" width=80>$Message[56]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH bgcolor=\"#$color_k\" width=80>$Message[75]</TH><TH>&nbsp;</TH></TR>\n";
+		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH colspan=2>$Message[17]</TH><TH>$Message[105]</TH><TH bgcolor=\"#$color_p\" width=80>$Message[56]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH bgcolor=\"#$color_k\" width=80>$Message[75]</TH><TH>&nbsp;</TH></TR>\n";
 		$total_p=$total_h=$total_k=0;
 		$max_h=1; foreach my $key (values %_domener_h) { if ($key > $max_h) { $max_h = $key; } }
 		$max_k=1; foreach my $key (values %_domener_k) { if ($key > $max_k) { $max_k = $key; } }

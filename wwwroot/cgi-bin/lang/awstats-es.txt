@@ -104,3 +104,4 @@ message101=Despues de la compresión
 message102=Total
 message103=diferentes palabras clave
 message104=Pagina de entrada
+message105=Código
