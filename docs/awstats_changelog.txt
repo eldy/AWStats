@@ -11,6 +11,8 @@ Fixes:
 - Now all non ISO-8859-1 languages are shown correctly even with 
   Apache2, whatever is the value of the AddDefaultCharset directive.
 - Some plugins broke the xhtml output.
+- Fixed wrong results for compression ratios when using mod_gzip and
+  %gzip_ratio tag.
 - Fixed old bug showing string "SCALAR(0x8badae4)" inside html reports
   when using mod_perl.
 - maillogconvert.pl: Better management of error records with sendmail
