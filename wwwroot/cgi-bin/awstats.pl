@@ -19,7 +19,7 @@ use Time::Local;	# use Time::Local 'timelocal_nocheck' is faster but not support
 
 use vars qw/ $UseHiRes $UseCompress /;
 # Next 'use' can be uncommented to get miliseconds time in showsteps option
-#use Time::HiRes qw( gettimeofday ); $UseHiRes=1;
+use Time::HiRes qw( gettimeofday ); $UseHiRes=1;
 # Next 'use' can be uncommented to allow read/write of gz compressed log or history files (not working yet)
 #use Compress::Zlib; $UseCompress=1;
 
@@ -196,8 +196,8 @@ $SiteToAnalyze $SiteToAnalyzeWithoutwww $UserAgent
 /;
 ($HTMLOutput, $FileConfig, $FileSuffix, $Host, $DayRequired, $MonthRequired, $YearRequired,
 $QueryString, $SiteConfig, $StaticLinks, $URLFilter, $PageCode, $LogFormatString, $PerlParsingFormat,
-$SiteToAnalyze, $SiteToAnalyzeWithoutwww, $UserAgent)=
-("","","","","","","","","","","","","","","","","");
+$SiteToAnalyze, $SiteToAnalyzeWithoutwww, $UserAgent, $PreviousHost)=
+("","","","","","","","","","","","","","","","","","");
 use vars qw/
 $pos_vh $pos_rc $pos_logname $pos_date $pos_method $pos_url $pos_code $pos_size
 $pos_referer $pos_agent $pos_query $pos_gzipin $pos_gzipout $pos_gzipratio
@@ -3059,6 +3059,12 @@ if ($UpdateStats) {
 				$pos_logname = $i; $i++;
 				$PerlParsingFormat .= "([^\\s]*)";
 			}
+			elsif ($f =~ /%time1b$/) {
+				$found=1;
+				$pos_date = $i;
+				$i++;
+				$PerlParsingFormat .= "\\[([^\\s]*)\\]";
+			}
 			elsif ($f =~ /%time1$/) {
 				$found=1;
 				$pos_date = $i;
@@ -3224,8 +3230,8 @@ if ($UpdateStats) {
 		# Parse line record to get all required fields
 		if (! /^$PerlParsingFormat/) {	# !!!!!!!!!
 			$NbOfLinesCorrupted++;
-			if ($ShowCorrupted && ($_ =~ /^#/ || $_ =~ /^!/ || $_ =~ /^\s*$/)) { print "Corrupted record line $NbOfLinesRead (comment or blank line)\n"; next; }
-			if ($ShowCorrupted && $_ !~ /^\s*$/) { print "Corrupted record line $NbOfLinesRead (record format does not match LogFormat parameter): $_\n"; next; }
+			if ($ShowCorrupted && ($_ =~ /^#/ || $_ =~ /^!/ || $_ =~ /^\s*$/)) { print "Corrupted record line $NbOfLinesRead (comment or blank line)\n"; }
+			if ($ShowCorrupted && $_ !~ /^\s*$/) { print "Corrupted record line $NbOfLinesRead (record format does not match LogFormat parameter): $_\n"; }
 			if ($NbOfLinesRead >= $NbOfLinesForCorruptedLog && $NbOfLinesCorrupted == $NbOfLinesRead) { error("Format error",$_,$LogFile); }	# Exit with format error
 			next;
 		}
@@ -3263,10 +3269,10 @@ if ($UpdateStats) {
 
 		# Split DD/Month/YYYY:HH:MM:SS or YYYY-MM-DD HH:MM:SS or MM/DD/YY\tHH:MM:SS
 		#if ($LogFormat == 3) { $field[$pos_date] =~ tr/-\/ \t/::::/; }
-		$field[$pos_date] =~ tr/-\/ \t/::::/;	# " \t" is used instead of "\s" not known with tr
-		my @dateparts=split(/:/,$field[$pos_date]);
-		if ($field[$pos_date] =~ /^....:..:..:/) { my $tmp=$dateparts[0]; $dateparts[0]=$dateparts[2]; $dateparts[2]=$tmp; }
-		if ($field[$pos_date] =~ /^..:..:..:/) { $dateparts[2]+=2000; my $tmp=$dateparts[0]; $dateparts[0]=$dateparts[1]; $dateparts[1]=$tmp; }
+		$field[$pos_date] =~ tr/-\/ \t/::::/;			# " \t" is used instead of "\s" not known with tr
+		my @dateparts=split(/:/,$field[$pos_date]);		# tr and split faster than @dateparts=split(/[\/\-:\s]/,$field[$pos_date])
+		if ($dateparts[0] =~ /^....$/) { my $tmp=$dateparts[0]; $dateparts[0]=$dateparts[2]; $dateparts[2]=$tmp; }
+		elsif ($field[$pos_date] =~ /^..:..:..:/) { $dateparts[2]+=2000; my $tmp=$dateparts[0]; $dateparts[0]=$dateparts[1]; $dateparts[1]=$tmp; }
 		if ($monthnum{$dateparts[1]}) { $dateparts[1]=$monthnum{$dateparts[1]}; }	# Change lib month in num month if necessary
 
 		# Create $timerecord like YYYYMMDDHHMMSS
@@ -3275,8 +3281,10 @@ if ($UpdateStats) {
 #		my ($nsec,$nmin,$nhour,$nmday,$nmon,$nyear,$nwday) = localtime(Time::Local::timelocal($dateparts[5], $dateparts[4], $dateparts[3], $dateparts[0], $dateparts[1], $dateparts[2]) + (3600*$TZ));
 #		@dateparts = split(/:/, sprintf("%02u:%02u:%04u:%02u:%02u:%02u", $nmday, $nmon, $nyear+1900, $nhour, $nmin, $nsec)); 
 		#--- TZ END : Uncomment following three lines to made a timezone adjustement. Warning this reduce seriously AWStats speed.
-		my $yearmonthdayrecord="$dateparts[2]$dateparts[1]$dateparts[0]";
-		my $timerecord=int($yearmonthdayrecord.$dateparts[3].$dateparts[4].$dateparts[5]);	# !!!
+#		my $yearmonthdayrecord="$dateparts[2]$dateparts[1]$dateparts[0]";
+		my $yearmonthdayrecord=sprintf("$dateparts[2]%02i%02i",$dateparts[1],$dateparts[0]);
+#		my $timerecord=int($yearmonthdayrecord.$dateparts[3].$dateparts[4].$dateparts[5]);	# !!!
+		my $timerecord=((int("$yearmonthdayrecord")*100+$dateparts[3])*100+$dateparts[4])*100+$dateparts[5];	# !!!
 		my $yearrecord=int($dateparts[2]);
 		my $monthrecord=int($dateparts[1]);
 
@@ -3291,7 +3299,8 @@ if ($UpdateStats) {
 		if ($NewLinePhase) {
 			if ($timerecord < ($LastLine{$yearmonthtoprocess} - $VisitTolerance)) {
 					# Should not happen, kept in case of parasite/corrupted old line
-					$NbOfLinesCorrupted++; if ($ShowCorrupted) { print "Corrupted record (date $timerecord lower than $LastLine{$yearmonthtoprocess}-$VisitTolerance): $_\n"; } next;
+					$NbOfLinesCorrupted++;
+					if ($ShowCorrupted) { print "Corrupted record (date $timerecord lower than $LastLine{$yearmonthtoprocess}-$VisitTolerance): $_\n"; } next;
 			}
 		}
 		else {
@@ -3328,6 +3337,7 @@ if ($UpdateStats) {
 		# Record is approved
 		#-------------------
 		$NbOfNewLines++;
+
 
 		# Is it in a new month section ?
 		#-------------------------------
