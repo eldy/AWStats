@@ -10,7 +10,7 @@ more. It works with IIS 5.0+, Apache and other web/wap/proxy server log files.
 
 License: GNU GPL (GNU General Public License. See COPYING.TXT)
 Version : 3.2
-Release date: 15 October 2001
+Release date: 20 October 2001
 Platforms: All (Linux, NT, SCO, BSD, Solaris and other *NIX's, BeOS, OS/2...)
 Author: Laurent Destailleur <eldy@users.sourceforge.net>
 AWStats web site: http://awstats.sourceforge.net
@@ -34,29 +34,35 @@ I - FEATURES AND REQUIREMENTS
 I - 1) Features
 
     A full log analysis enables AWStats to show you the following information:
-    * Number of VISITS and UNIQUE VISITORS,
-    * Most often pages viewed,
+    * Number of VISITS and UNIQUE VISITORS, list of last visitors,
+    * Days of week and rush hours (pages, hits, kb for each day and hour),
     * Domains/countries of hosts visitors (pages, hits, kb),
-    * Rush hours (pages, hits, kb for each hour),
+    * Authenticated users,
+    * Most often pages viewed,
+	* File types,
+	* Web compression statistics (for mod_gzip),
     * Browsers used (pages, hits, kb for each browser),
     * OS used (pages, hits, kb for each OS),
     * VISITS OF ROBOTS,
-    * SEARCH ENGINES and KEYWORDS used to find your site,
+    * SEARCH ENGINES, KEYPHRASES or KEYWORDS used to find your site,
     * HTTP errors (Page not found, ...).
 
     It supports the following features as well:
+	* Can analyze all log formats.
     * Works from command line or as a CGI,
     * Update of statistics can be made on demand from the web interface and
       not only from your scheduler,
+	* Unlimited log file size, support splited log files,
+	* Reverse DNS lookup during analysis,
     * A lot of options/filters can be defined,
-    * Easy to install, easy to use (No compilation, no extern databases),
-    * Look and colors can match your site design,
     * Multi-named web sites supported (virtual servers),
-    * Information is since the start of your web site and month by month,
-    * Several languages: English, French, Dutch, Spanish, Italian, German,
-      Polish, Greek, Czech, Portuguese, Korean...
+	* Cross Site Scripting Attacks protection,
+    * Several languages. English, French, Dutch, Spanish, Italian, German,
+      Polish, Greek, Czech, Portuguese, Chinese, Korean...
+    * No need of extra perl libraries,
+	* Look and colors can match your site design,
     * Help on how AWStats work, tooltips on HTML reporting page,
-    * Colored graphics with no needs of any special libraries,
+    * Easy to install, easy to use (No compilation, no extern databases),
     * Free (GNU GPL) and distributed with sources (perl script).
 
 
@@ -265,10 +271,10 @@ II - 2) With IIS Server
 III - BENCHMARK
 -----------------------------------
 
-This is benchmark results with AWStats version 3.1:
+This is benchmark results with AWStats version 3.2:
 CONFIG: Athlon 1 GHz / Windows 2000 / ActivePerl 5.6 / LogFormat=1
-SPEED: 20000 lines in 15s with reverse DNS lookup disabled
-AVERAGE: 1300 lines by seconds
+SPEED: 20000 lines in 10s with reverse DNS lookup disabled
+AVERAGE: 2000 lines by seconds
 
 However, benchmarks of log analyzer are made without reverse DNS lookup
 because this depends on your system, networks and Internet and not on the
