@@ -27,7 +27,7 @@ $VERSION="6.1 (build $REVISION)";
 # ----- Constants -----
 use vars qw/
 $DEBUGFORCED $NBOFLINESFORBENCHMARK $FRAMEWIDTH $NBOFLASTUPDATELOOKUPTOSAVE
-$LIMITFLUSH $NEWDAYVISITTIMEOUT $VISITTIMEOUT $NOTSORTEDRECORDTOLERANCE $MAXDIFFEXTRA
+$LIMITFLUSH $NEWDAYVISITTIMEOUT $VISITTIMEOUT $NOTSORTEDRECORDTOLERANCE
 $WIDTHCOLICON $TOOLTIPON
 $lastyearbeforeupdate
 /;
@@ -37,9 +37,8 @@ $FRAMEWIDTH=240;					# Width of left frame when UseFramesWhenCGI is on
 $NBOFLASTUPDATELOOKUPTOSAVE=500;	# Nb of records to save in DNS last update cache file
 $LIMITFLUSH=5000;					# Nb of records in data arrays after how we need to flush data on disk
 $NEWDAYVISITTIMEOUT=764041;			# Delay between 01-23:59:59 and 02-00:00:00
-$VISITTIMEOUT=10000;				# Laps of time to consider a page load as a new visit. 10000 = 1 hour (Default = 10000)
-$NOTSORTEDRECORDTOLERANCE=10000;	# Laps of time to accept a record if not in correct order. 10000 = 1 hour (Default = 10000)
-$MAXDIFFEXTRA=500;
+$VISITTIMEOUT=10000;				# Lapse of time to consider a page load as a new visit. 10000 = 1 hour (Default = 10000)
+$NOTSORTEDRECORDTOLERANCE=10000;	# Lapse of time to accept a record if not in correct order. 10000 = 1 hour (Default = 10000)
 $WIDTHCOLICON=32;
 $TOOLTIPON=0;						# Tooltips plugin loaded
 # ----- Running variables -----
@@ -115,7 +114,8 @@ $MaxLengthOfStoredURL
 $MaxLengthOfStoredUA
 %BarPng
 $BuildReportFormat
-$BuildHistoryFormat 
+$BuildHistoryFormat
+$ExtraTrackedRowsLimit
 /;
 $StaticExt='html';
 $DNSStaticCacheFile='dnscache.txt';
@@ -130,6 +130,7 @@ $MaxLengthOfStoredUA=256;
 'he'=>'he.png','hx'=>'hx.png','vh'=>'vh.png','hh'=>'hh.png','vk'=>'vk.png','hk'=>'hk.png');
 $BuildReportFormat='html';
 $BuildHistoryFormat='text';
+$ExtraTrackedRowsLimit=500;
 use vars qw/
 $EnableLockForUpdate $DNSLookup $AllowAccessFromWebToAuthenticatedUsersOnly
 $BarHeight $BarWidth $CreateDirDataIfNotExists $KeepBackupOfHistoricFiles
@@ -1275,6 +1276,7 @@ sub Parse_Config {
 			@URLWithQueryWithout=split(/\s+/,$value);
 			next;
 			}
+
  		# Extra parameters
  		if ($param =~ /^ExtraSectionName(\d+)/)			{ $ExtraName[$1]=$value; next; }
  		if ($param =~ /^ExtraSectionCodeFilter(\d+)/)  	{ @{$ExtraCodeFilter[$1]}=split(/\s+/,$value); next; }
@@ -1289,7 +1291,7 @@ sub Parse_Config {
  		if ($param =~ /^MinHitExtra(\d+)/) 				{ $MinHitExtra[$1]=$value; next; }
 		# Special appearance parameters
 		if ($param =~ /^LoadPlugin/)          			{ push @PluginsToLoad, $value; next; }
-		# Other that we need to put after MaxNbOfExtra and MinHitExtra
+		# Other parameter checks we need to put after MaxNbOfExtra and MinHitExtra
  		if ($param =~ /^MaxNbOf(\w+)/) 	{ $MaxNbOf{$1}=$value; next; }
  		if ($param =~ /^MinHit(\w+)/) 	{ $MinHit{$1}=$value; next; }
 		# Check if this is a known parameter
@@ -1303,7 +1305,6 @@ sub Parse_Config {
 
 	if ($Debug) { debug("Config file read was \"$configFile\" (level $level)"); }
 }
-
 
 #------------------------------------------------------------------------------
 # Function:     Load the reference databases
@@ -6808,8 +6809,15 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
  				if (${'_section_' . $extranum . '_l'}{$rowkeyval}||0 < $timerecord) { ${'_section_' . $extranum . '_l'}{$rowkeyval}=$timerecord; }
  			}
 			# Check to avoid too large extra sections
-			if (scalar keys %{'_section_' . $extranum . '_h'} > $MAXDIFFEXTRA) {
-				error("Too many (more than MAXDIFFEXTRA=$MAXDIFFEXTRA) different values for row keys of extra section $extranum. Are you sure you want to track an array with so many values (may be your ExtraSection setup is wrong) ? If yes, increase the MAXDIFFEXTRA constant in awstats.pl");
+			if (scalar keys %{'_section_' . $extranum . '_h'} > $ExtraTrackedRowsLimit) {
+				error(<<END_ERROR_TEXT);
+The number of values found for extra section $extranum has grown too large.
+In order prevent awstats from using an excessive amount of memory, the number
+of values is currently limited to $ExtraTrackedRowsLimit. Perhaps you should consider
+revising extract parameters for extra section $extranum. If you are certain you
+want to track such a large data set, you can increase the limit by setting
+ExtraTrackedRowsLimit in your awstats configuration file.
+END_ERROR_TEXT
 			}
  		}
 
