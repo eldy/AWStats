@@ -126,7 +126,7 @@ $color_h, $color_k, $color_p, $color_s, $color_u, $color_v)=
 
 
 
-$VERSION="4.0 (build 25)";
+$VERSION="4.0 (build 27)";
 $Lang="en";
 
 # Default value
@@ -1280,7 +1280,7 @@ sub Read_History_File {
 			my $count=0;my $countloaded=0;
 			while ($field[0] ne "END_UNKNOWNREFERER") {
 				$count++;
-				if ($part && ($UpdateStats || $QueryString !~ /output=/i || $QueryString =~ /output=unknownreferer/i)) {
+				if ($part && ($UpdateStats || $QueryString !~ /output=/i || $QueryString =~ /output=unknownos/i)) {
 					$countloaded++;
 					if (! $_unknownreferer_l{$field[0]}) { $_unknownreferer_l{$field[0]}=int($field[1]); }
 				}
@@ -1301,7 +1301,7 @@ sub Read_History_File {
 			my $count=0;my $countloaded=0;
 			while ($field[0] ne "END_UNKNOWNREFERERBROWSER") {
 				$count++;
-				if ($part && ($UpdateStats || $QueryString !~ /output=/i || $QueryString =~ /output=unknownrefererbrowser/i)) {
+				if ($part && ($UpdateStats || $QueryString !~ /output=/i || $QueryString =~ /output=unknownbrowser/i)) {
 					$countloaded++;
 		        	if (! $_unknownrefererbrowser_l{$field[0]}) { $_unknownrefererbrowser_l{$field[0]}=int($field[1]); }
 				}
@@ -1813,6 +1813,18 @@ sub DecodeEncodedString {
 
 
 #--------------------------------------------------------------------
+# Function:     Clean a string of all HTML code to avoid 'Cross Site Scripting attacks'
+# Input:        stringtodecode
+# Return:		decodedstring
+#--------------------------------------------------------------------
+sub CleanFromCSSA {
+	my $stringtoclean=shift;
+	$stringtoclean =~ s/[<>].*$//;
+	return $stringtoclean;
+}
+
+
+#--------------------------------------------------------------------
 # Function:     Copy one file into another
 # Input:        sourcefilename targetfilename
 # Return:		0 if copy is ok, 1 else
@@ -2093,7 +2105,7 @@ if ($ENV{"GATEWAY_INTERFACE"}) {	# Run from a browser
 	if ($ENV{"QUERY_STRING"}) {
 		$QueryString = $ENV{"QUERY_STRING"};
 	}
-	$QueryString =~ s/<script.*$//i;						# This is to avoid 'Cross Site Scripting attacks'
+	$QueryString = CleanFromCSSA($QueryString);
 	if ($QueryString =~ /site=/i)   { $SiteConfig=$QueryString; $SiteConfig =~ s/.*site=//i;   $SiteConfig =~ s/&.*//; $SiteConfig =~ s/ .*//; }	# For backward compatibility
 	if ($QueryString =~ /config=/i) { $SiteConfig=$QueryString; $SiteConfig =~ s/.*config=//i; $SiteConfig =~ s/&.*//; $SiteConfig =~ s/ .*//; }
 	$UpdateStats=0; $HTMLOutput=1;							# No update but report by default when run from a browser
@@ -2106,7 +2118,7 @@ else {								# Run from command line
 		my $NewLinkParams=$ARGV[$_]; $NewLinkParams =~ s/^-+//;
 		$QueryString .= "$NewLinkParams";
 	}
-	$QueryString =~ s/<script.*$//i;                             # This is to avoid 'Cross Site Scripting attacks'
+	$QueryString = CleanFromCSSA($QueryString);
 	if ($QueryString =~ /site=/i)     { $SiteConfig=$QueryString; $SiteConfig =~ s/.*site=//i;   $SiteConfig =~ s/&.*//; $SiteConfig =~ s/ .*//; }  # For backward compatibility
 	if ($QueryString =~ /config=/i)   { $SiteConfig=$QueryString; $SiteConfig =~ s/.*config=//i; $SiteConfig =~ s/&.*//; $SiteConfig =~ s/ .*//; }
 	$UpdateStats=1; $HTMLOutput=0;                               # Update with no report by default when run from command line
@@ -2161,8 +2173,8 @@ if ((! $ENV{"GATEWAY_INTERFACE"}) && (! $SiteConfig)) {
 	print "               unknownip        to build page of all unresolved IP\n";
 	print "               urldetail        to list most often viewed pages \n";
 	print "               urldetail:filter to list most often viewed pages matching filter\n";
-	print "               unknownreferer        to list 'User Agents' with unknown OS\n";
-	print "               unknownrefererbrowser to list 'User Agents' with unknown browser\n";
+	print "               unknownos        to list 'User Agents' with unknown OS\n";
+	print "               unknownbrowser   to list 'User Agents' with unknown browser\n";
 	print "               browserdetail    to build page with browsers detailed versions\n";
 	print "               allkeyphrases    to list all keyphrases used on search engines\n";
 	print "               errors404        to list 'Referers' for 404 errors\n";
@@ -3458,12 +3470,8 @@ EOF
 		my $count=0;
 		&BuildKeyList($MaxRowsInHTMLOutput,$MinHitHost,\%_hostmachine_h,\%_hostmachine_p);
 		foreach my $key (@keylist) {
-			$key =~ s/<script.*$//gi;				# This is to avoid 'Cross Site Scripting attacks'
-			if ($_robot_l{$key}) {
-				print "<tr><td CLASS=AWL><b>$key</b></td>";
-			} else {
-				print "<tr><td CLASS=AWL>$key</td>";
-			}
+			my $host=CleanFromCSSA($key);
+			print "<tr><td CLASS=AWL>".($_robot_l{$key}?"<b>":"")."$host".($_robot_l{$key}?"</b>":"")."</td>";
 			print "<TD>".($_hostmachine_p{$key}?$_hostmachine_p{$key}:"&nbsp;")."</TD><TD>$_hostmachine_h{$key}</TD><TD>".Format_Bytes($_hostmachine_k{$key})."</TD>";
 			if ($_hostmachine_l{$key}) { print "<td>".Format_Date($_hostmachine_l{$key},1)."</td>"; }
 			else { print "<td>-</td>"; }
@@ -3493,12 +3501,8 @@ EOF
 		my $count=0;
 		&BuildKeyList($MaxRowsInHTMLOutput,$MinHitHost,\%_hostmachine_h,\%_hostmachine_l);
 		foreach my $key (@keylist) {
-			$key =~ s/<script.*$//gi;				# This is to avoid 'Cross Site Scripting attacks'
-			if ($_robot_l{$key}) {
-				print "<tr><td CLASS=AWL><b>$key</b></td>";
-			} else {
-				print "<tr><td CLASS=AWL>$key</td>";
-			}
+			my $host=CleanFromCSSA($key);
+			print "<tr><td CLASS=AWL>".($_robot_l{$key}?"<b>":"")."$host".($_robot_l{$key}?"</b>":"")."</td>";
 			print "<TD>".($_hostmachine_p{$key}?$_hostmachine_p{$key}:"&nbsp;")."</TD><TD>$_hostmachine_h{$key}</TD><TD>".Format_Bytes($_hostmachine_k{$key})."</TD>";
 			if ($_hostmachine_l{$key}) { print "<td>".Format_Date($_hostmachine_l{$key},1)."</td>"; }
 			else { print "<td>-</td>"; }
@@ -3527,8 +3531,9 @@ EOF
 		$count=0;
 		&BuildKeyList($MaxRowsInHTMLOutput,$MinHitHost,\%_hostmachine_h,\%_hostmachine_p);
 		foreach my $key (@keylist) {
-			$key =~ s/<script.*$//gi;				# This is to avoid 'Cross Site Scripting attacks'
-			print "<tr><td CLASS=AWL>$key</td><TD>".($_hostmachine_p{$key}||"&nbsp")."</TD><TD>$_hostmachine_h{$key}</TD><TD>".Format_Bytes($_hostmachine_k{$key})."</TD>";
+			my $host=CleanFromCSSA($key);
+			print "<tr><td CLASS=AWL>$host</td>";
+			print "<TD>".($_hostmachine_p{$key}||"&nbsp")."</TD><TD>$_hostmachine_h{$key}</TD><TD>".Format_Bytes($_hostmachine_k{$key})."</TD>";
 			if ($_hostmachine_l{$key}) { print "<td>".Format_Date($_hostmachine_l{$key},1)."</td>"; }
 			else { print "<td>-</td>"; }
 			print "</tr>\n";
@@ -3670,11 +3675,10 @@ EOF
 		my $count=0;
 		&BuildKeyList($MaxRowsInHTMLOutput,$MinHitKeyword,\%_keyphrases,\%_keyphrases);
 		foreach my $key (@keylist) {
-			$key =~ s/<script.*$//gi;				# This is to avoid 'Cross Site Scripting attacks'
+			my $mot = DecodeEncodedString(CleanFromCSSA($key));
 			my $p;
 			if ($TotalKeyphrases) { $p=int($_keyphrases{$key}/$TotalKeyphrases*1000)/10; }
-			my $mot = $key;
-			print "<TR><TD CLASS=AWL>".DecodeEncodedString($mot)."</TD><TD>$_keyphrases{$key}</TD><TD>$p&nbsp;%</TD></TR>\n";
+			print "<TR><TD CLASS=AWL>$mot</TD><TD>$_keyphrases{$key}</TD><TD>$p&nbsp;%</TD></TR>\n";
 			$total_s += $_keyphrases{$key};
 			$count++;
 		}
@@ -3690,15 +3694,30 @@ EOF
 		&html_end;
 		exit(0);
 	}
-	if ($QueryString =~ /output=unknownreferer/i) {
-		print "$CENTER<a name=\"UNKOWNREFERER\">&nbsp;</a><BR>";
+	if ($QueryString =~ /output=unknownbrowser/i) {
+		print "$CENTER<a name=\"UNKOWNBROWSER\">&nbsp;</a><BR>";
+		&tab_head($Message[50],19);
+		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>Referer (".(scalar keys %_unknownrefererbrowser_l).")</TH><TH>$Message[9]</TH></TR>\n";
+		my $count=0;
+		foreach my $key (sort { $_unknownrefererbrowser_l{$b} <=> $_unknownrefererbrowser_l{$a} } keys (%_unknownrefererbrowser_l)) {
+			if ($count>=$MaxRowsInHTMLOutput) { next; }
+			my $useragent=CleanFromCSSA($key);
+			print "<tr><td CLASS=AWL>$useragent</td><td>".Format_Date($_unknownrefererbrowser_l{$key},1)."</td></tr>\n";
+			$count++;
+		}
+		&tab_end;
+		&html_end;
+		exit(0);
+	}
+	if ($QueryString =~ /output=unknownos/i) {
+		print "$CENTER<a name=\"UNKOWNOS\">&nbsp;</a><BR>";
 		&tab_head($Message[46],19);
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>Referer (".(scalar keys %_unknownreferer_l).")</TH><TH>$Message[9]</TH></TR>\n";
 		my $count=0;
 		foreach my $key (sort { $_unknownreferer_l{$b} <=> $_unknownreferer_l{$a} } keys (%_unknownreferer_l)) {
 			if ($count>=$MaxRowsInHTMLOutput) { next; }
-			$key =~ s/<script.*$//gi;				# This is to avoid 'Cross Site Scripting attacks'
-			print "<tr><td CLASS=AWL>$key</td><td>".Format_Date($_unknownreferer_l{$key},1)."</td></tr>\n";
+			my $useragent=CleanFromCSSA($key);
+			print "<tr><td CLASS=AWL>$useragent</td><td>".Format_Date($_unknownreferer_l{$key},1)."</td></tr>\n";
 			$count++;
 		}
 		&tab_end;
@@ -3712,10 +3731,9 @@ EOF
 		my $count=0;
 		foreach my $key (sort { $_sider404_h{$b} <=> $_sider404_h{$a} } keys (%_sider404_h)) {
 			if ($count>=$MaxRowsInHTMLOutput) { next; }
-			$key =~ s/<script.*$//gi; 				# This is to avoid 'Cross Site Scripting attacks'
-			my $nompage=$key;
+			my $nompage=CleanFromCSSA($key);
 			#if (length($nompage)>$MaxLengthOfURL) { $nompage=substr($nompage,0,$MaxLengthOfURL)."..."; }
-			my $referer=$_referer404_h{$key}; $referer =~ s/<script.*$//gi;	# This is to avoid 'Cross Site Scripting attacks'
+			my $referer=CleanFromCSSA($_referer404_h{$key});
 			print "<tr><td CLASS=AWL>$nompage</td><td>$_sider404_h{$key}</td><td>$referer&nbsp;</td></tr>\n";
 			$count++;
 		}
@@ -4284,7 +4302,7 @@ EOF
 		foreach my $key (sort { $_browser_h{$b} <=> $_browser_h{$a} } keys (%_browser_h)) {
 			my $p=int($_browser_h{$key}/$Total*1000)/10;
 			if ($key eq "Unknown") {
-				print "<TR><TD CLASS=AWL><a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$DirCgi$PROG.$Extension?${NewLinkParams}output=unknownrefererbrowser":"$PROG$FileSuffix.unknownrefererbrowser.html")."\">$Message[0]</a></TD><TD>$_browser_h{$key}</TD><TD>$p&nbsp;%</TD></TR>\n";
+				print "<TR><TD CLASS=AWL><a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$DirCgi$PROG.$Extension?${NewLinkParams}output=unknownbrowser":"$PROG$FileSuffix.unknownbrowser.html")."\">$Message[0]</a></TD><TD>$_browser_h{$key}</TD><TD>$p&nbsp;%</TD></TR>\n";
 			}
 			else {
 				my $newbrowser=$BrowsersHashIDLib{$key}||$key;
@@ -4307,7 +4325,7 @@ EOF
 		foreach my $key (sort { $_os_h{$b} <=> $_os_h{$a} } keys (%_os_h)) {
 			my $p=int($_os_h{$key}/$Total*1000)/10;
 			if ($key eq "Unknown") {
-				print "<TR><TD><IMG SRC=\"$DirIcons\/os\/unknown.png\"></TD><TD CLASS=AWL><a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$DirCgi$PROG.$Extension?${NewLinkParams}output=unknownreferer":"$PROG$FileSuffix.unknownreferer.html")."\">$Message[0]</a></TD><TD>$_os_h{$key}</TD>";
+				print "<TR><TD><IMG SRC=\"$DirIcons\/os\/unknown.png\"></TD><TD CLASS=AWL><a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$DirCgi$PROG.$Extension?${NewLinkParams}output=unknownos":"$PROG$FileSuffix.unknownos.html")."\">$Message[0]</a></TD><TD>$_os_h{$key}</TD>";
 				print "<TD>$p&nbsp;%</TD></TR>\n";
 				}
 			else {
@@ -4403,11 +4421,10 @@ EOF
 		my $count=0;
 		&BuildKeyList($MaxNbOfKeywordsShown,$MinHitKeyword,\%_keyphrases,\%_keyphrases);
 		foreach my $key (@keylist) {
-			$key =~ s/<script.*$//gi;				# This is to avoid 'Cross Site Scripting attacks'
+			my $mot = DecodeEncodedString(CleanFromCSSA($key));
 			my $p;
 			if ($TotalKeyphrases) { $p=int($_keyphrases{$key}/$TotalKeyphrases*1000)/10; }
-			my $mot = $key;
-			print "<TR><TD CLASS=AWL>".DecodeEncodedString($mot)."</TD><TD>$_keyphrases{$key}</TD><TD>$p&nbsp;%</TD></TR>\n";
+			print "<TR><TD CLASS=AWL>$mot</TD><TD>$_keyphrases{$key}</TD><TD>$p&nbsp;%</TD></TR>\n";
 			$total_s += $_keyphrases{$key};
 			$count++;
 		}
