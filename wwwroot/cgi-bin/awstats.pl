@@ -1509,7 +1509,7 @@ sub Read_History_With_Update {
 		$SectionsToLoad{"time"}=2;
 		if ($UpdateStats || $HTMLOutput eq "main" || $HTMLOutput eq "allhosts" || $HTMLOutput eq "lasthosts" || $HTMLOutput eq "unknownip") { $SectionsToLoad{"visitor"}=3; }	# before day, sider and session section
 		if ($UpdateStats || $HTMLOutput eq "main" || $HTMLOutput eq "days")   { $SectionsToLoad{"day"}=4; }
-		if ($UpdateStats || $HTMLOutput eq "main" || $HTMLOutput eq "logins") { $SectionsToLoad{"login"}=5; }
+		if ($UpdateStats || $HTMLOutput eq "main" || $HTMLOutput eq "alllogins" || $HTMLOutput eq "lastlogins") { $SectionsToLoad{"login"}=5; }
 		if ($UpdateStats || $HTMLOutput eq "main" || $HTMLOutput eq "domains") { $SectionsToLoad{"domain"}=6; }
 		if ($UpdateStats || $HTMLOutput eq "main" || $HTMLOutput eq "sessions") { $SectionsToLoad{"session"}=7; }
 		if ($UpdateStats || $HTMLOutput eq "main" || $HTMLOutput eq "browserdetail") { $SectionsToLoad{"browser"}=8; }
@@ -3510,8 +3510,10 @@ if ((! $ENV{"GATEWAY_INTERFACE"}) && (! $SiteConfig)) {
 	print "  -output      to output main HTML report (no update made except with -update)\n";
 	print "  -output=x    to output other report pages where x is:\n";
 	print "               allhosts         to build page of all hosts\n";
-	print "               lasthosts        to build page of last connections\n";
+	print "               lasthosts        to build page of last connections for hosts\n";
 	print "               unknownip        to build page of all unresolved IP\n";
+	print "               alllogins        to build page of all logins used\n";
+	print "               lastlogins       to build page of last connections for logins\n";
 	print "               urldetail        to list most often viewed pages \n";
 	print "               urldetail:filter to list most often viewed pages matching filter\n";
 	print "               urlentry         to list entry pages\n";
@@ -4047,7 +4049,6 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {	# Updat
 		}
 
 
-
 		# Split DD/Month/YYYY:HH:MM:SS or YYYY-MM-DD HH:MM:SS or MM/DD/YY\tHH:MM:SS
 		$field[$pos_date] =~ tr/-\/ \t/::::/;			# " \t" is used instead of "\s" not known with tr
 		my @dateparts=split(/:/,$field[$pos_date]);		# tr and split faster than @dateparts=split(/[\/\-:\s]/,$field[$pos_date])
@@ -4060,9 +4061,7 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {	# Updat
 			my ($nsec,$nmin,$nhour,$nmday,$nmon,$nyear,$nwday) = localtime(Time::Local::timelocal($dateparts[5], $dateparts[4], $dateparts[3], $dateparts[0], $dateparts[1]-1, $dateparts[2]-1900) + $Plugin_timezoneSeconds);
 			@dateparts = split(/:/, sprintf("%02u:%02u:%04u:%02u:%02u:%02u", $nmday, $nmon+1, $nyear+1900, $nhour, $nmin, $nsec));
 		}
-#		my $yearmonthdayrecord="$dateparts[2]$dateparts[1]$dateparts[0]";
 		my $yearmonthdayrecord=sprintf("$dateparts[2]%02i%02i",$dateparts[1],$dateparts[0]);
-#		my $timerecord=int($yearmonthdayrecord.$dateparts[3].$dateparts[4].$dateparts[5]);
 		my $timerecord=((int("$yearmonthdayrecord")*100+$dateparts[3])*100+$dateparts[4])*100+$dateparts[5];
 		my $yearrecord=int($dateparts[2]);
 		my $monthrecord=int($dateparts[1]);
@@ -4944,10 +4943,12 @@ EOF
 			print ($frame?"</tr>\n":"<td class=AWL>");
 			if ($ShowDomainsStats)		 { print ($frame?"<tr><td class=AWL>":""); print "<a href=\"$linkpage#DOMAINS\"$targetpage>$Message[17]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
 			if ($ShowHostsStats)		 { print ($frame?"<tr><td class=AWL>":""); print "<a href=\"$linkpage#VISITOR\"$targetpage>".ucfirst($Message[81])."</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
-			if ($ShowHostsStats)		 { print ($frame?"<tr><td class=AWL> &nbsp; <img height=8 width=9 src=\"$DirIcons/other/page.png\"> ":""); print "<a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=allhosts":"$PROG$StaticLinks.lasthosts.html")."\"$NewLinkTarget>$Message[80]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
+			if ($ShowHostsStats)		 { print ($frame?"<tr><td class=AWL> &nbsp; <img height=8 width=9 src=\"$DirIcons/other/page.png\"> ":""); print "<a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=allhosts":"$PROG$StaticLinks.allhosts.html")."\"$NewLinkTarget>$Message[80]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
 			if ($ShowHostsStats)		 { print ($frame?"<tr><td class=AWL> &nbsp; <img height=8 width=9 src=\"$DirIcons/other/page.png\"> ":""); print "<a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=lasthosts":"$PROG$StaticLinks.lasthosts.html")."\"$NewLinkTarget>$Message[9]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
 			if ($ShowHostsStats)		 { print ($frame?"<tr><td class=AWL> &nbsp; <img height=8 width=9 src=\"$DirIcons/other/page.png\"> ":""); print "<a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=unknownip":"$PROG$StaticLinks.unknownip.html")."\"$NewLinkTarget>$Message[45]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
 			if ($ShowAuthenticatedUsers) { print ($frame?"<tr><td class=AWL>":""); print "<a href=\"$linkpage#LOGIN\"$targetpage>$Message[94]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
+			if ($ShowAuthenticatedUsers) { print ($frame?"<tr><td class=AWL> &nbsp; <img height=8 width=9 src=\"$DirIcons/other/page.png\"> ":""); print "<a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=alllogins":"$PROG$StaticLinks.alllogins.html")."\"$NewLinkTarget>$Message[80]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
+			if ($ShowAuthenticatedUsers) { print ($frame?"<tr><td class=AWL> &nbsp; <img height=8 width=9 src=\"$DirIcons/other/page.png\"> ":""); print "<a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=lastlogins":"$PROG$StaticLinks.lastlogins.html")."\"$NewLinkTarget>$Message[9]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
 			if ($ShowRobotsStats)		 { print ($frame?"<tr><td class=AWL>":""); print "<a href=\"$linkpage#ROBOTS\"$targetpage>$Message[53]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
 			print ($frame?"":"</td></tr>\n");
 			# Navigation
@@ -5179,6 +5180,70 @@ EOF
 		if ($rest_p > 0 || $rest_h > 0 || $rest_k > 0) {	# All other visitors (known or not)
 			print "<TR><TD CLASS=AWL><font color=blue>$Message[82]</font></TD>";
 			if ($ShowLinksToWhoIs && $LinksToWhoIs) { ShowWhoIsCell(""); }
+			print "<TD>$rest_p</TD><TD>$rest_h</TD><TD>".Format_Bytes($rest_k)."</TD><TD>&nbsp;</TD></TR>\n";
+		}
+		&tab_end;
+		&html_end;
+		exit(0);
+	}
+	if ($HTMLOutput eq "alllogins") {
+		print "$Center<a name=\"LOGINSLIST\">&nbsp;</a><BR>\n";
+		&tab_head($Message[80],19);
+		if ($MonthRequired ne "year") { print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[81] : $TotalHostsKnown $Message[82], $TotalHostsUnknown $Message[1] - $TotalUnique $Message[11]</TH>"; }
+		else { print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[94] : ".(scalar keys %_login_h)."</TH>"; }
+		print "<TH bgcolor=\"#$color_p\" width=80>$Message[56]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH bgcolor=\"#$color_k\" width=80>$Message[75]</TH><TH width=120>$Message[9]</TH></TR>\n";
+		$total_p=$total_h=$total_k=0;
+		my $count=0;
+		&BuildKeyList($MaxRowsInHTMLOutput,$MinHitHost,\%_login_h,\%_login_p);
+		foreach my $key (@keylist) {
+			print "<TR><TD CLASS=AWL>$key</TD>";
+			print "<TD>$_login_p{$key}</TD><TD>$_login_h{$key}</TD><TD>".Format_Bytes($_login_k{$key})."</TD>";
+			if ($_login_l{$key}) { print "<td>".Format_Date($_login_l{$key},1)."</td>"; }
+			else { print "<td>-</td>"; }
+			print "</TR>\n";
+			$total_p += $_login_p{$key}||0;
+			$total_h += $_login_h{$key};
+			$total_k += $_login_k{$key}||0;
+			$count++;
+		}
+		if ($Debug) { debug("Total real / shown : $TotalPages / $total_p - $TotalHits / $total_h - $TotalBytes / $total_h",2); }
+		$rest_p=$TotalPages-$total_p;
+		$rest_h=$TotalHits-$total_h;
+		$rest_k=$TotalBytes-$total_k;
+		if ($rest_p > 0 || $rest_h > 0 || $rest_k > 0) {	# All other logins and/or anonymous
+			print "<TR><TD CLASS=AWL><font color=blue>$Message[125]</font></TD>";
+			print "<TD>$rest_p</TD><TD>$rest_h</TD><TD>".Format_Bytes($rest_k)."</TD><TD>&nbsp;</TD></TR>\n";
+		}
+		&tab_end;
+		&html_end;
+		exit(0);
+	}
+	if ($HTMLOutput eq "lastlogins") {
+		print "$Center<a name=\"LOGINSLIST\">&nbsp;</a><BR>\n";
+		&tab_head($Message[9],19);
+		if ($MonthRequired ne "year") { print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[81] : $TotalHostsKnown $Message[82], $TotalHostsUnknown $Message[1] - $TotalUnique $Message[11]</TH>"; }
+		else { print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[94] : ".(scalar keys %_login_h)."</TH>"; }
+		print "<TH bgcolor=\"#$color_p\" width=80>$Message[56]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH bgcolor=\"#$color_k\" width=80>$Message[75]</TH><TH width=120>$Message[9]</TH></TR>\n";
+		$total_p=$total_h=$total_k=0;
+		my $count=0;
+		&BuildKeyList($MaxRowsInHTMLOutput,$MinHitHost,\%_login_h,\%_login_l);
+		foreach my $key (@keylist) {
+			print "<TR><TD CLASS=AWL>$key</TD>";
+			print "<TD>$_login_p{$key}</TD><TD>$_login_h{$key}</TD><TD>".Format_Bytes($_login_k{$key})."</TD>";
+			if ($_login_l{$key}) { print "<td>".Format_Date($_login_l{$key},1)."</td>"; }
+			else { print "<td>-</td>"; }
+			print "</TR>\n";
+			$total_p += $_login_p{$key}||0;
+			$total_h += $_login_h{$key};
+			$total_k += $_login_k{$key}||0;
+			$count++;
+		}
+		if ($Debug) { debug("Total real / shown : $TotalPages / $total_p - $TotalHits / $total_h - $TotalBytes / $total_h",2); }
+		$rest_p=$TotalPages-$total_p;
+		$rest_h=$TotalHits-$total_h;
+		$rest_k=$TotalBytes-$total_k;
+		if ($rest_p > 0 || $rest_h > 0 || $rest_k > 0) {	# All other logins and/or anonymous
+			print "<TR><TD CLASS=AWL><font color=blue>$Message[125]</font></TD>";
 			print "<TD>$rest_p</TD><TD>$rest_h</TD><TD>".Format_Bytes($rest_k)."</TD><TD>&nbsp;</TD></TR>\n";
 		}
 		&tab_end;
@@ -5917,14 +5982,14 @@ EOF
 	if ($ShowAuthenticatedUsers) {
 		if ($Debug) { debug("ShowAuthenticatedUsers",2); }
 		print "$Center<a name=\"LOGIN\">&nbsp;</a><BR>\n";
-		&tab_head($Message[94],19);
-		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[94]</TH><TH bgcolor=\"#$color_p\" width=80>$Message[56]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH bgcolor=\"#$color_k\" width=80>$Message[75]</TH><TH width=120>$Message[9]</TH></TR>\n";
+		&tab_head("$Message[94] ($Message[77] $MaxNbOfLoginShown) &nbsp; - &nbsp; <a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=alllogins":"$PROG$StaticLinks.alllogins.html")."\"$NewLinkTarget>$Message[80]</a> &nbsp; - &nbsp; <a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=lastlogins":"$PROG$StaticLinks.lastlogins.html")."\"$NewLinkTarget>$Message[9]</a>",19);
+		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[94] : ".(scalar keys %_login_h)."</TH><TH bgcolor=\"#$color_p\" width=80>$Message[56]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH bgcolor=\"#$color_k\" width=80>$Message[75]</TH><TH width=120>$Message[9]</TH></TR>\n";
 		$total_p=$total_h=$total_k=0;
 		$max_h=1; foreach my $key (values %_login_h) { if ($key > $max_h) { $max_h = $key; } }
 		$max_k=1; foreach my $key (values %_login_k) { if ($key > $max_k) { $max_k = $key; } }
 		my $count=0;
-		foreach my $key (sort { $_login_h{$b} <=> $_login_h{$a} } keys %_login_h) {
-			if ($count >= $MaxNbOfLoginShown) { last; }
+		&BuildKeyList($MaxNbOfLoginShown,$MinHitLogin,\%_login_p,\%_login_h);
+		foreach my $key (@keylist) {
 			my $bredde_p=0;my $bredde_h=0;my $bredde_k=0;
 			if ($max_h > 0) { $bredde_p=int($BarWidth*$_login_p{$key}/$max_h)+1; }	# use max_h to enable to compare pages with hits
 			if ($max_h > 0) { $bredde_h=int($BarWidth*$_login_h{$key}/$max_h)+1; }
