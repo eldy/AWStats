@@ -16,12 +16,13 @@ AWStats Changelog
 - New feature: Added Plugins support and several working plugins:
   A GMT correcter, A hash file DNS cache saver/reader...
 - New feature: Use framed report (new UseFramesWhenCGI parameter).
-- "Never updated" is now in language files.
+- "Never updated" and "Exact value ..." are now in language files.
 - Reduce number of global vars in code.
 - New feature: DefaultFile parameter accepts several values.
 - New parameter: LogSeparator for log files with exotic separators.
 - New tag for logfile: %WY is replaced by week number in year.
-- Added slovak language files and updated a lot of language files.
+- Added slovak, spanish (catalan) language files and updated a lot of language
+  files.
 - Updated belarus flag.
 - Other minor changes and bug fixes.
 

@@ -1,0 +1,54 @@
+<!-- English tooltips message file (eldy@users.sourceforge.net) -->
+<!-- $Revision$ - $Date$ -->
+<DIV CLASS="CTooltip" ID="tt1">
+Es considera una nova visita per <b>cada nou visitant</b> que consulta una pàgina i que hagi accedit al lloc en els últims <b>#VisitTimeOut# mins.</b>.
+</DIV>
+<DIV CLASS="CTooltip" ID="tt2">
+Nombre de clients (<b>adreces IP</b>) que entren a un lloc (i que com a mínim visiten una <b>página</b>).<br>
+Aquesta xifra reflexa el nombre de <b>persones físiques diferents</b> que han accedit al lloc en un dia.
+</DIV>
+<DIV CLASS="CTooltip" ID="tt3">
+Nombre de vegades que una <b>pàgina</b> del lloc ha estat <b>visual.litzada</b> (La suma de tots els visitants inclouen visites múltiples).<br>
+Aquest contador es distingeix de "hits" perquè només conta les pàgines HTML, i no pas els gràfics o altres arxius o fitxers.
+</DIV>
+<DIV CLASS="CTooltip" ID="tt4">
+El nombre de vegades que una <b>pàgina, imatge, arxiu o fitxer</b> d'un lloc és <b>visual.litzat</b> o <b>descarregat</b> per visitant.<br>
+Aquest contador serveix de referència, però el contador de "pàgines" representa una dada mercadotécnica generalment més útil, i per tant, més recomanada.
+</DIV>
+<DIV CLASS="CTooltip" ID="tt5">
+El nombre de <b>kilo bytes</b> descagarregats pels visitants del lloc.<br>
+Es refereix al volum de dades descarregades per totes les <b>pàgines</b>, <b>imatges</b> i <b>arxius o fitxers</b> mesurats en kilo bytes.
+</DIV>
+<DIV CLASS="CTooltip" ID="tt13">
+El programa #PROG# és capaç de reconèixer una visita a un lloc després de cadascuna de les <b>cerques</b> desde qualsevol dels <b>#SearchEnginesArray# motors de cerca i directoris Internet</b> més populars (Yahoo, Altavista, Lycos, Google, Terra, etc...).
+</DIV>
+<DIV CLASS="CTooltip" ID="tt14">
+Llista de <b>pàgines de llocs externs</b> util.lizades para accedir o enllaçar-se amb el seu lloc (Només les <b>#MaxNbOfRefererShown#</b> pàgines més util.litzades es troben numerades).
+Els enllaços emprats pels motors de cerca o directoris son exclosos perquè ja han estat comptabil.litzats a l'anterior apartat.
+</DIV>
+<DIV CLASS="CTooltip" ID="tt15">
+Aquesta taula mostra la llista de les <b>paraules clau</b> més util.litzades en els motors de cerca i directoris Internet per trobar el seu lloc.
+(El programa #PROG# reconeix paraules claus util.litzades en els <b>#SearchEnginesArray#</b> motors de cerca més populars, com Yahoo, Altavista, Lycos, Google, Voila, Terra etc...).
+</DIV>
+<DIV CLASS="CTooltip" ID="tt16">
+Els Robots son <b>visitants automàtics</b> que escanejan o viatgen pel seu lloc per a indexar-lo, o jerarquitzar-lo, per tal de recollir estadístiques de llocs Web, o per verificar si el seu lloc es troba conectat a la Xarxa.<br>
+El programa #PROG# reconeix fins a <b>#RobotArray#</b> robots.
+</DIV>
+
+<DIV CLASS="CTooltip" ID="tt201"> Error sense descripció. </DIV>
+<DIV CLASS="CTooltip" ID="tt202"> La petició ha estat computada però el servidor la processarà més tard. </DIV>
+<DIV CLASS="CTooltip" ID="tt204"> El servidor ha processat la petició però no existeixen documents per enviar. </DIV>
+<DIV CLASS="CTooltip" ID="tt206"> Contingut parcial. </DIV>
+<DIV CLASS="CTooltip" ID="tt301"> El document sol.licitat ha estat reubicat i es troba en una URL proporcionada en la mateixa resposta. </DIV>
+<DIV CLASS="CTooltip" ID="tt302"> Error sense descripció. </DIV>
+<DIV CLASS="CTooltip" ID="tt400"> Error de sintaxis, el servidor no ha entès la seva petició. </DIV>
+<DIV CLASS="CTooltip" ID="tt401"> Nombre d'intents per accedir a una <b>URL que exigeix una combinació usuari/contrasenya que ha estat invàlida.</b>.<br>Un nombre d'intents molt elevat pot sugerir la posibilitat que un hacker (o pirata) ha intentat entrar a una zona restringida del lloc (p.e., intentant múltiples combinacions de usuari/contrasenya). </DIV>
+<DIV CLASS="CTooltip" ID="tt403"> Nombre d'intents per accedir a una <b>URL configurada per a no ser accessible ni amb una combinació usuari/contrasenya</b> (p.e., una URL prèviament definida com a "no navegable"). </DIV>
+<DIV CLASS="CTooltip" ID="tt404"> Nombre d'intents per accedir a una <b>URL inexistent</b>. Sovint, aquests es refereixen a un enllaç (link) no vàlid o a un error mecanogràfic quan el visitant tecleja una URL errònia. </DIV>
+<DIV CLASS="CTooltip" ID="tt408"> El servidor ha trigat <b>massa temps</b> a respondre a una petició. Sovint, és degut a un programa CGI molt lent, el qual ha estat abandonat pel servidor, o bé per un servidor molt saturat. </DIV>
+<DIV CLASS="CTooltip" ID="tt500"> Error intern. Aquest error generalment és provocat per una terminació anormal o prematura d'un programa CGI (p.e., un CGI corromput o malmès). </DIV>
+<DIV CLASS="CTooltip" ID="tt501"> Petició desconeguda pel servidor. </DIV>
+<DIV CLASS="CTooltip" ID="tt502"> Codi retornat per un servidor de protocol HTTP que funciona com a proxy o pont (gateway) quan el servidor objectiu no funciona o no interpreta correctament la petició del client (o visitant). </DIV>
+<DIV CLASS="CTooltip" ID="tt503"> Error intern del servidor. </DIV>
+<DIV CLASS="CTooltip" ID="tt504"> Pasarel.la fora de línia. </DIV>
+<DIV CLASS="CTooltip" ID="tt505"> Versió de protocol HTTP no soportada. </DIV>
