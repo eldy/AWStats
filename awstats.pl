@@ -593,8 +593,8 @@ $message[36][6]="¬ród³a po³±czeñ";
 $message[37][6]="Pochodzenie";
 $message[38][6]="Dostêp bezpo¶redni lub z Ulubionych/Bookmarków";
 $message[39][6]="Link z grupy dyskusyjnej";
-$message[40][6]="Link z wyszukiwarki internetowej";
-$message[41][6]="Link zewnêtrzny (inne strony z wy³±czeniem wyszukiwarek)";
+$message[40][6]="Link z zagranicznej wyszukiwarki internetowej";
+$message[41][6]="Link zewnêtrzny";
 $message[42][6]="Link wewnêtrzny (z serwera na którym jest strona)";
 $message[43][6]="S³owa kluczowe u¿yte w wyszukiwarkach internetowcyh";
 $message[44][6]="Kb";
@@ -608,23 +608,23 @@ $message[51][6]="Roboty sieciowe";
 $message[52][6]="wizyt/go¶ci";
 $message[53][6]="Roboty sieciowe";
 $message[54][6]="Darmowy analizator logów on-line";
-$message[55][6]="";
-$message[56][6]="Pages";
-$message[57][6]="Hits";
-$message[58][6]="Versions";
+$message[55][6]="z";
+$message[56][6]="Strony";
+$message[57][6]="¯±dania";
+$message[58][6]="Wersje";
 $message[59][6]="Systemy operacyjne";
-$message[60][6]="Jan";
-$message[61][6]="Fev";
-$message[62][6]="Luty";
-$message[63][6]="Kwiecien";
+$message[60][6]="Styczeñ";
+$message[61][6]="Luty";
+$message[62][6]="Marzec";
+$message[63][6]="Kwiecieñ";
 $message[64][6]="Maj";
-$message[65][6]="Jun";
-$message[66][6]="Jul";
-$message[67][6]="Ago";
-$message[68][6]="Sep";
-$message[69][6]="Oct";
-$message[70][6]="Nov";
-$message[71][6]="Dic";
+$message[65][6]="Czerwiec";
+$message[66][6]="Lipiec";
+$message[67][6]="Sierpieñ";
+$message[68][6]="Wrzesieñ";
+$message[69][6]="Pa¼dziernik";
+$message[70][6]="Listopad";
+$message[71][6]="Grudzieñ";
 
 # ---------- Browser lists ----------------
 # ("browser id in lower case", "browser text")
@@ -2548,11 +2548,10 @@ if ($Lang == 6) {
 	Jest to suma wszystkich ¶ci±gniêtych danych <B>(strony html, obrazki, d¼wiêki)</B>.
 	</DIV>
 	<DIV CLASS=\"classTooltip\" ID=\"tt13\">
-	$PROG rozró¿nia dostêp do stron <b>z wyszukiwarek</b> dziêki <b>".(@SearchEnginesArray)." najpopularniejszym przegl±darkom internetowym</b> (Yahoo, Altavista, Lycos, Google, Voila, etc...).
+	$PROG rozró¿nia dostêp do stron <b>z zagranicznych wyszukiwarek</b> dziêki <b>".(@SearchEnginesArray)." najpopularniejszym przegl±darkom internetowym</b> (Yahoo, Altavista, Lycos, Google, Voila, etc...).
 	</DIV>
 	<DIV CLASS=\"classTooltip\" ID=\"tt14\">
 	Lista wszystkich <b>stron spoza serwera</b> z których trafiono na ten serwer (wy¶wietlanych jest <b>$MaxNbOfRefererShown</b> stron z których najczê¶ciej siê odwo³ywano.\n
-	Odwo³ania z wyszukiwarek internetowych nie bêd± wy¶wietlone, poniewa¿ istnieje dla nich oddzielne zestawenie pokazane poni¿ej).
 	</DIV>
 	<DIV CLASS=\"classTooltip\" ID=\"tt15\">
 	Ta kolumna pokazuje listê najczê¶ciej u¿ywanych <b>s³ów kluczowych</b>, dziêki którym znaleziono t± stronê w wyszukiwarkach.
@@ -2574,7 +2573,7 @@ if ($Lang == 6) {
 	<DIV CLASS=\"classTooltip\" ID=\"tt303\"> W celu pobrania dokumentu konieczne jest sprawdzenie innego URL-a. </DIV>
 	<DIV CLASS=\"classTooltip\" ID=\"tt400\"> Zlecenie by³o b³êdne, lub niemo¿liwe do zrealizowania przez serwer.<BR>B³±d powstaje wtedy, kiedy serwer WWW otrzymuje do wykonania instrukcjê, której nie rozumie.</DIV>
 	<DIV CLASS=\"classTooltip\" ID=\"tt401\"> B³±d autoryzacji. Strona wymaga podania has³a i loginu - b³±d pokazuje siê wtedy, gdy które¶ z tych danych siê nie zgadza lub zosta³y podane niew³a¶ciwiwe.<BR>Je¶li liczba ta jest du¿a, jest to sygna³ dla webmastera, i¿ kto¶ próbuje z³amaæ has³o do strony nim zabezpieczonej.</DIV>
-	<DIV CLASS=\"classTooltip\" ID=\"tt403\"> Spróbuj reach an <b>URL not configured to be reachable, even with an identification</b> (dla przyk³±du, kiedy URL odnosi siê do katalogu który nie zosta³ zdefiniowany jako udostêpniony do przegl±dania - np. cgi-bin).</DIV>
+	<DIV CLASS=\"classTooltip\" ID=\"tt403\"> B³±d wystêpuje wtedy, gdy katalog/strona do którego siê odwo³ywano nie ma ustawionych w³a¶ciwych praw dostêpu, lub prawa te nie pozwalaj± na obejrzenie zawarto¶ci katalogu/strony.</DIV>
 	<DIV CLASS=\"classTooltip\" ID=\"tt404\"> Spróbuj wpisaæ <b>nie istniej±cy adres URL</b> (np. adres tej strony ze skasowan± jedn± literk±). Znaczy to, ¿e posiadasz gdzie¶ na swoich stronach b³êdny link, lub link odnosz±cy siê do nieistniej±cej strony.</DIV>
 	<DIV CLASS=\"classTooltip\" ID=\"tt405\"> Metoda wskazana w <B>nag³ówku ¿±dania</B> jest niedozwolona przy odnoszeniu siê do zasobu, na który wskazuje. </DIV>
 	<DIV CLASS=\"classTooltip\" ID=\"tt406\"> Zasób identyfikowany przez ¿±danie jest generuje odpowiedzi zawieraj±ce charakterystyczn± zawarto¶æ nie akceptowaln± wed³ug nag³ówka ¿±dania. </DIV>
@@ -2595,7 +2594,7 @@ if ($Lang == 6) {
 	<DIV CLASS=\"classTooltip\" ID=\"tt504\"> Serwer docelowy nie otrzyma³ odpowiedzi od serwera proxy, lub bramki.</DIV>
 	<DIV CLASS=\"classTooltip\" ID=\"tt505\"> Nie obs³ugiwana wesja protoko³u HTTP. </DIV>
 	";
-	}
+}
 
 
 print "
