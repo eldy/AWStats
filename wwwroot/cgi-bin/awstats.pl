@@ -5436,13 +5436,15 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 			# $Host is an IP address and is not resolved (failed or not asked) or resolution gives an IP address
 			$HostResolved = $Host;
 			# Resolve Domain
-			if ($PluginsLoaded{'GetCountryCodeByAddr'}{'geoip'}) { $Domain=GetCountryCodeByAddr_geoip($HostResolved); }
+			if ($PluginsLoaded{'GetCountryCodeByAddr'}{'geoipfree'}) { $Domain=GetCountryCodeByAddr_geoipfree($HostResolved); }
+			elsif ($PluginsLoaded{'GetCountryCodeByAddr'}{'geoip'}) { $Domain=GetCountryCodeByAddr_geoip($HostResolved); }
 		}
 		else {
 			# $Host has been resolved or was already a host name
 			$HostResolved = lc($HostResolved?$HostResolved:$Host);
 			# Resolve Domain
-			if ($PluginsLoaded{'GetCountryCodeByName'}{'geoip'}) { $Domain=GetCountryCodeByName_geoip($HostResolved); }
+			if ($PluginsLoaded{'GetCountryCodeByName'}{'geoipfree'}) { $Domain=GetCountryCodeByName_geoipfree($HostResolved); }
+			elsif ($PluginsLoaded{'GetCountryCodeByName'}{'geoip'}) { $Domain=GetCountryCodeByName_geoip($HostResolved); }
 			elsif ($HostResolved =~ /\.(\w+)$/) { $Domain=$1; }
 		}
 		# Store country
