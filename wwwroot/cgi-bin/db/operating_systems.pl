@@ -2,6 +2,9 @@
 #------------------------------------
 # Last update: 2001-11-10
 
+# If you want to add an OS to extend AWStats database detection capabilities,
+# you must add an entry in OSArrayID, in OSHashID and in OS Hash Lib.
+
 
 # OSArrayID
 # This list is used to know in which order to search Operating System IDs.
@@ -16,18 +19,18 @@
 "winnt","windows_nt","windows-nt","win32",
 "win98","windows_98","windows98",
 "win95","windows_95",
-"win16","windows_3","windows;i;16",			# This works for windows_31 and windows_3.1
+"win16","windows_3","windows;i;16",	# This works for windows_31 and windows_3.1
 "wince","windows_ce",
 # Macintosh OS family
-"mac_p",				# This works for mac_ppc and mac_powerpc
-"mac_68",				# This works for mac_6800 and mac_68k
+"mac_p",							# This works for mac_ppc and mac_powerpc
+"mac_68",							# This works for mac_6800 and mac_68k
 "macppc",
 "macweb",
 "macintosh",
 # Other famous OS
 "beos",
 "os/2",
-"amigaos",
+"amiga",
 # Unix like OS
 "linux",
 "aix",
@@ -49,8 +52,9 @@
 );
 
 # OSHashID
-# Different OS ID are same OS
-#-------------------------------------------------------
+# Each OS detect string is associated to an unique ID string
+# that is also the name of icon file for this OS
+#-----------------------------------------------------------
 %OSHashID	= (
 # Windows OS family
 "windows_xp","winxp","windows_nt_5\.1","winxp",
@@ -66,7 +70,7 @@
 # Other famous OS
 "beos","beos",
 "os/2","os/2",
-"amigaos","amigaos",
+"amiga","amigaos",
 # Unix like OS
 "linux","linux",
 "aix","aix",
@@ -87,8 +91,9 @@
 "webtv","webtv"
 );
 
-# OS name list ("os id in lower case","os clear text")
-#-------------------------------------------------------
+# OS name list ("os unique id in lower case","os clear text")
+# Each unique ID string is associated to a label
+#-----------------------------------------------------------
 %OSHashLib      = (
 # Windows family OS
 "winxp","Windows XP",
