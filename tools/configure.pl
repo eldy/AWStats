@@ -248,9 +248,9 @@ if ($nowsec < 10) { $nowsec = "0$nowsec"; }
 print "\n";
 print "----- AWStats $PROG $VERSION (c) Laurent Destailleur -----\n";
 print "This tool will help you to configure AWStats to analyze statistics for\n";
-print "one main web server. If you need to analyze several virtual servers,\n";
-print "load balanced servers, downloaded log files or mail or ftp log files,\n";
-print "you will have to complete the setup manually according to your needs.\n";
+print "one web server. If you need to analyze several virtual servers, load\n";
+print "balanced servers, downloaded log files or mail or ftp log files, you\n";
+print "will have to complete the config file manually according to your needs.\n";
 print "Read the AWStats documentation (docs/index.html).\n";
 print "\n";
 
@@ -302,8 +302,7 @@ if (! scalar keys %ApacheConfPath) {
 	my $bidon='';
 	while (! -d "$bidon") {
 		print "Web server path (CTRL+C to cancel): ";
-		$bidon=<STDIN>;
-		chomp $bidon;
+		$bidon=<STDIN>; chomp $bidon;
 		if (! -d "$bidon") { print " The directory '$bidon' does not exists.\n"; }
 	}
 	$ApachePath{"$bidon"}=1;
@@ -314,8 +313,7 @@ if (! scalar keys %ApacheConfPath) {
 	$bidon='';
 	while (! -f "$bidon") {
 		print "Config file path (CTRL+C to cancel): ";
-		$bidon=<STDIN>;
-		chomp $bidon;
+		$bidon=<STDIN>; chomp $bidon;
 		if (! -f "$bidon") { print " This file does not exists.\n"; }
 	}
 	$ApacheConfPath{"$bidon"}=1;
@@ -410,10 +408,12 @@ print "\n-----> Define config file name to create\n";
 print "What is the name of your web site or profile analysis ?\n";
 print "Example: www.mysite.com\n";
 print "Example: demo\n";
-print "You web site, virtual server or profile name: ";
 my $bidon='';
-while (! $bidon) { $bidon=<STDIN>; }
-chomp $bidon;
+while (! $bidon) {
+	print "You web site, virtual server or profile name: ";
+	$bidon=<STDIN>; chomp $bidon;
+
+}
 my $site=$bidon;
 
 # Define config file path
