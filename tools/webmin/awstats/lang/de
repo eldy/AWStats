@@ -29,7 +29,7 @@ index_advanced5=Direktiven für die OPTIONALEN EXTRA EINSTGELLUNGEN anzeigen
 index_hideadvanced=Optionale Direktiven verbergen
 index_nodirallowed=Der Benutzer $1 hat kein berechtigtes Verzeichniss zum lesen/speichern von AWStats Konfigurationen
 index_allowed=Ihr Benutzer-Konto $1 ist berechtigt, um Dateien anzusehen/bearbeiten in
-index_changeallowed=Berechtigungen für Verzeichnisse, die es Ihnen erlaube AWStats Konfigurationen zu  listen/berabeiten, kann Ihnen der Webmin Administrator über den Benutzer ACL Editor zuweisen ($1)
+index_changeallowed=Berechtigungen für Verzeichnisse, die es Ihnen erlaube AWStats Konfigurationen zu  listen/berabeiten, kann Ihnen der Webmin Administrator über den Benutzer ACL Editor zuweisen (Menu $1 then clic on $2)
 
 edit_title1=Konfiguration hinzufügen
 edit_title2=Konfiguration bearbeiten

@@ -2,6 +2,18 @@ AWStats-Webmin module Changelog
 -------------------------------
 $Revision$ - $Author$ - $Date$ 
 
+1.300
+
+Fixes:
+- Translation was in french for some texts, whatever was choosed language.
+
+New features/improvements:
+- Added a warning to explain to add '/private/etc' to webmin ACL for
+  MacOS users.
+- A first screen for the schedule update feature.
+- Better description for ACL page.
+
+
 
 1.210
 

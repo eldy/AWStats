@@ -28,10 +28,10 @@ elsif ($in{'delete'}) {
 
 	# Delete this config file from the configuration
 	local $cfile = $in{'file'};
-	&lock_file($cfile);
-	unlink($cfile);
-	&unlock_file($cfile);
-	&webmin_log("delete", "log", $in{'file'});
+	local $cfileold = $in{'file'}.".old";
+	&lock_file($cfile);	unlink($cfile);	&unlock_file($cfile);
+	&lock_file($cfileold);	unlink($cfileold);	&unlock_file($cfileold);
+	&webmin_log("delete", "log", $cfile);
 
 	# Create or delete the cron job
 #		&lock_file($job->{'file'});

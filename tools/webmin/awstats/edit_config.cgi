@@ -74,6 +74,11 @@ function neww(id) {
 </SCRIPT>
 EOF
 
+if (-d "/private/etc" && ! &can_edit_config("/private/etc")) { # For MacOS users
+	print "Warning: It seems that you are a MacOS user. With MacOS, the '/etc/awstats' directory is not a hard directory but a link to '/private/etc/awstats' which is not by default an allowed directory to store config files, so if you want to store config files in '/etc/awstats', you must first change the Webmin ACL for AWStats module to add '/private/etc' in the allowed directories list:<br>\n";
+	print &text('index_changeallowed',"<a href=\"/acl/\">Webmin - Webmin Users</a>", $text{'index_title'})."<br>\n";
+}
+
 
 print "<form name='editconfig' action='save_config.cgi'>\n";
 
@@ -93,8 +98,10 @@ print "<tr $cb> <td><table width=100%>\n";
 my $filenametosave="";
 if ($in{'new'}) {
 	print "<tr> <td><b>$text{'edit_add'}</b></td> <td>\n";
-#	print "<input type=text name=new size=50 value='$config{'awstats_conf'}/awstats.newconfig.conf'>";
-	print "<input type=text name=new size=50 value='/etc/awstats/awstats.newconfig.conf'>";
+
+	my $newfile="/etc/awstats/awstats.newconfig.conf";
+	print "<input type=text name=new size=50 value='$newfile'>";
+
 	print "</td> <td> </td> </tr>\n";
 	print "<tr> <td colspan=3><hr></td> </tr>\n";
 } else {

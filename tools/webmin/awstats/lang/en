@@ -29,7 +29,7 @@ index_advanced5=View directives for OPTIONAL EXTRA SETUP SECTION
 index_hideadvanced=Hide optional directives
 index_nodirallowed=Your user $1 has no allowed directory to read/store AWStats configuration files.
 index_allowed=Your account $1 is allowed to view/edit config files into (or that are links to)
-index_changeallowed=Permissions on directories into which you are allowed to scan/edit AWStats configuration files can be granted to you by a webmin administrator from the Webmin user ACL editor ($1)
+index_changeallowed=Permissions on directories into which you are allowed to scan/edit AWStats configuration files can be granted to you by a webmin administrator from the Webmin user ACL editor (Menu $1 then clic on $2)
 
 edit_title1=Add config File
 edit_title2=Edit config File
@@ -70,7 +70,7 @@ acl_update=Can update stats for existing config files?
 acl_user=Run AWStats as Unix user
 acl_this=Current webmin user
 acl_any=Any user
-acl_dir=Only allow viewing reports and editing config for config files under
+acl_dir=Only allow viewing reports and editing config for config files under (hard directory paths, no links)
 
 help_title=Help page
 help_subtitle=<b>Help for config file parameter $1</b>

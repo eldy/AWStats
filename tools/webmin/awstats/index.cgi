@@ -110,7 +110,7 @@ foreach my $dir (split(/\s/,$access{'dir'})) {
 	print "$dir<br>"; 
 }
 print "<br>\n";
-print &text('index_changeallowed',"Menu <a href=\"/acl/\">Webmin - Utilisateurs Webmin</a> puis clic sur $text{'index_title'}")."<br>\n";
+print &text('index_changeallowed',"<a href=\"/acl/\">Webmin - Webmin Users</a>", $text{'index_title'})."<br>\n";
 print "<br>";
 
 my $nbofallowedconffound=0;

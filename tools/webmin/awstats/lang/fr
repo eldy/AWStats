@@ -29,7 +29,7 @@ index_advanced5=Voir paramètres de la 'OPTIONAL EXTRA SETUP SECTION'
 index_hideadvanced=Cacher paramètres optionnels
 index_allowed=Votre login $1 est autorisé à voir/editer les fichiers de config dans (ou pointant vers)
 index_nodirallowed=Votre compte $1 n'a aucun répertoire autorisé en lecture/écriture de fichier de configuration AWStats.
-index_changeallowed=Les permissions des répertoires dans lesquels vous pouvez voir/éditer des fichiers de configuration AWStats peuvent vous être accordées par un administrateur Webmin via l'éditeur des ACL utilisateurs Webmin ($1)
+index_changeallowed=Les permissions des répertoires dans lesquels vous pouvez voir/éditer des fichiers de configuration AWStats peuvent vous être accordées par un administrateur Webmin via l'éditeur des ACL utilisateurs Webmin (Menu $1 puis clic sur $2)
 
 edit_title1=Ajout d'un fichier de config
 edit_title2=Edition d'un fichier de config
@@ -65,12 +65,12 @@ log_generate_log=Mise à jour statistiques AWStats pour $1
 
 acl_view=Peut voir les stats pour les fichiers config existant?
 acl_global=Peut editer les fichiers config AWStats?
-acl_add=Peut ajouter/supprimer les fichiers?
-acl_update=Peut mettre à jour les stats pour les fichiers config existant?
+acl_add=Peut ajouter/supprimer des fichiers config?
+acl_update=Peut mettre à jour les stats pour les fichiers config existants?
 acl_user=Lancer AWStats sour l'utilisateur Unix
 acl_this=Utilisateur webmin actuel
 acl_any=Tout utilisateur
-acl_dir=Autorise la vue de stats et l'édition de fichier de config pour les fichiers config dans
+acl_dir=Autorise la vue de stats et l'édition de fichier de config pour les fichiers config dans (chemin de répertoires en durs, pas de liens)
 
 help_title=Page d'aide
 help_subtitle=<b>Aide sur le paramètre de configuration $1</b>
