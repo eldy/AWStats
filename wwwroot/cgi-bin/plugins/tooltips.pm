@@ -1,11 +1,9 @@
 #!/usr/bin/perl
 #-----------------------------------------------------------------------------
-# UrlAlias AWStats plugin
-# This plugin allow you to report all URL links with a text title instead of
-# URL value.
-# You must create a file called urlalias.cnfigvalue.txt and store it in
-# plugin directory that contains 2 columns separated by a tab char.
-# First column is URL value and second column is text title to use instead of.
+# Tooltips AWStats plugin
+# This plugin allow you to add some toolpus in AWStats HTML report pages.
+# The tooltip are in same language than the report (they are stored in the
+# awstats-tt-codelanguage.txt files in lang directory).
 #-----------------------------------------------------------------------------
 # Perl Required Modules: None
 #-----------------------------------------------------------------------------
