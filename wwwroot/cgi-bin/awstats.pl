@@ -7414,7 +7414,7 @@ if (scalar keys %HTMLOutput) {
 				my $menuicon=0; # TODO a virer
 				# Menu HTML
 				print "<table".($frame?" cellspacing=\"0\" cellpadding=\"0\" border=\"0\"":"").">\n";
-				if ($FrameName eq 'mainleft' && $ShowMonthStats)		 { print ($frame?"<tr><td class=\"awsm\">":""); print "<a href=\"$linkanchor#TOP\"$targetpage>$Message[128]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
+				if ($FrameName eq 'mainleft' && $ShowMonthStats)		 { print ($frame?"<tr><td class=\"awsm\">":""); print "<a href=\"$linkanchor#top\"$targetpage>$Message[128]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
 				my %menu=(); my %menulink=(); my %menutext=();
 				# When
                 %menu=('month'=>$ShowMonthStats?1:0,'daysofmonth'=>$ShowDaysOfMonthStats?2:0,'daysofweek'=>$ShowDaysOfWeekStats?3:0,'hours'=>$ShowHoursStats?4:0);
