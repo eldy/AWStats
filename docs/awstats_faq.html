@@ -122,7 +122,7 @@ Sambar, Roxen, Resin, RealMedia server, Oracle9iAS, <b>Lotus Notes/Domino</b>, D
 <u>FTP servers</u><br>
 <b>ProFTP</b>, ...<br>
 <u>Mails servers</u><br>
-<b>Sendmail</b>, <b>Postfix</b>, QMail, <b>Mdaemon</b>, www4mail, ...<br>
+<b>Postfix</b>, <b>Sendmail</b>, QMail, <b>Mdaemon</b>, www4mail, ...<br>
 <u>Perl interpreters (all Perl >= 5.005):</u><br>
 <b>ActivePerl 5.6</b>, <b>ActivePerl 5.8</b>, <b>Perl 5.8</b>, <b>Perl 5.6</b>, <b>Perl 5.005</b>, <b>mod_perl</b> and mod_perl2 for Apache, ...<br>
 </td></tr></table>
@@ -307,10 +307,10 @@ This tip works with AWStats 5.5 or higher.<br>
 <br>
 You must setup AWStats to use a mail log file preprocessor (<i>maillogconvert.pl</i> is provided
 into AWStats <i>tools</i> directory, but you can use the one of your choice):<br>
-Copy config <i>"awstats.model.conf"</i> file to <i>"awstats.mail.conf"</i>.<br>
+For this, copy config <i>"awstats.model.conf"</i> file to <i>"awstats.mail.conf"</i>.<br>
 Modify this new config file:
 <table width="95%" border=1 cellpadding=0 cellspacing=0><tr class=CFAQ><td class=CFAQ>
-For standard Postfix, Sendmail and standard QMail logfiles, set<br>
+For standard Postfix, Sendmail, MDaemon and standard QMail logfiles, set<br>
 <i>
 LogFile="perl /path/to/maillogconvert.pl standard &lt; /pathtomaillog/maillog |"<br>
 </i>
@@ -318,11 +318,11 @@ If the logfiles are compressed, they can be processed this way<br>
 <i>
 LogFile="gzip -cd /var/log/maillog.0.gz | /path/to/maillogconvert.pl standard |"<br>
 </i>
-And for VAdmin QMail logfiles (multi-host/virtualhost mail servers running vadmin software)<br>
+And for VAdmin QMail logfiles (multi-host/virtualhost mail servers running vadmin software), set<br>
 <i>
 LogFile="perl /path/to/maillogconvert.pl vadmin &lt; /pathtomaillog/maillog |"<br>
 </i>
-Then change:
+Then, whatever is you mail server, you must also change:
 <i>
 <br>LogType=M
 <br>LogFormat="%time2 %email %email_r %host %host_r %method %url %code %bytesd"
@@ -359,6 +359,8 @@ Then change:
 <br>
 </i>
 </td></tr></table>
+Warning: For MDaemon mail server, you must use the new MDaemon log file that ends
+with "-Statistics.log".<br>
 <br>
 Now you can use AWStats as usual (run the update process and read statistics).<br>
 <br>
