@@ -1639,7 +1639,9 @@ sub Read_History_With_TmpUpdate {
 				# Show migrate warning for backward compatibility
 				if ($versionnum < 5000 && ! $MigrateStats && ! $BadFormatWarning{$year.$month}) {
 					$BadFormatWarning{$year.$month}=1;
-					warning("Warning: Data file '$filetoread' has an old history file format (version $versionnum). You should upgrade it with the command line: $PROG.$Extension -migrate=\"$filetoread\"");
+					my $message="Warning: Data file '$filetoread' has an old history file format (version $versionnum).\nYou should upgrade it from the command line: $PROG.$Extension -migrate=\"$filetoread\"";
+					if ($ENV{"GATEWAY_INTERFACE"} && $AllowToUpdateStatsFromBrowser) { $message.="\nor from your browser launch URL: http://".$ENV{"SERVER_NAME"}.$ENV{"SCRIPT_NAME"}."?migrate=$filetoread"; }
+					warning("$message");
 				}
 				if (! ($versionnum < 5000) && $MigrateStats && ! $BadFormatWarning{$year.$month}) {
 					$BadFormatWarning{$year.$month}=1;
@@ -1754,7 +1756,7 @@ sub Read_History_With_TmpUpdate {
 						if ($SectionsToLoad{"day"}) {
 							$countloaded++;
 							if ($field[1]) { $DayPages{$field[0]}+=int($field[1]); }
-							if ($field[2]) { $DayHits{$field[0]}+=int($field[2]); }
+							$DayHits{$field[0]}+=int($field[2]);						# DayHits always load (should be >0 and if not it's a day YYYYMM00 resulting of an old file migration)
 							if ($field[3]) { $DayBytes{$field[0]}+=int($field[3]); }
 							if ($field[4]) { $DayVisits{$field[0]}+=int($field[4]); }
 						}
@@ -3586,6 +3588,11 @@ if ($ENV{"GATEWAY_INTERFACE"}) {	# Run from a browser
 	if ($QueryString =~ /config=([^\s&]+)/i)	{ $SiteConfig=&DecodeEncodedString($1); }
 	$UpdateStats=0; $HTMLOutput="main";														# No update but report by default when run from a browser
 	if ($QueryString =~ /update=1/i)			{ $UpdateStats=1; }							# Update is required
+	if ($QueryString =~ /migrate=([^\s&]+)/i)	{ 
+		$MigrateStats=&DecodeEncodedString($1); 
+		$MigrateStats =~ /^(.*)$PROG(\d{0,2})(\d\d)(\d\d\d\d)(.*)\.txt$/;
+		$SiteConfig=$5?$5:"xxx"; $SiteConfig =~ s/^\.//;
+	}
 }
 else {								# Run from command line
 	if ($ARGV[0] && $ARGV[0] eq "-h")			{ $SiteConfig = $ARGV[1]; }					# For backward compatibility but useless
@@ -3854,7 +3861,7 @@ if ($AllowAccessFromWebToFollowingIPAddresses && $ENV{"GATEWAY_INTERFACE"}) {
 	}
 }
 if (($UpdateStats || $MigrateStats) && (! $AllowToUpdateStatsFromBrowser) && $ENV{"GATEWAY_INTERFACE"}) {
-	error("Error: Update of statistics is not allowed from a browser.");
+	error("Error: ".($UpdateStats?"Update":"Migrate")." of statistics is not allowed from a browser.");
 }
 
 #------------------------------------------
@@ -3869,7 +3876,7 @@ if ($MigrateStats) {
 	$MonthRequired=$3;
 	$YearRequired=$4;
 	$FileSuffix=$5;
-	print "Start migration for file '$MigrateStats'.\n";
+	print "Start migration for file '$MigrateStats'."; print $ENV{"GATEWAY_INTERFACE"}?"<br>\n":"\n";
 	if (! -s $MigrateStats) { error("Error: File to migrate '$MigrateStats' not found.","","",1); }
 	if ($EnableLockForUpdate) {	&Lock_Update(1); }
 	my $newhistory=&Read_History_With_TmpUpdate($YearRequired,$MonthRequired,1,0,"all");
@@ -3878,7 +3885,7 @@ if ($MigrateStats) {
 		error("Error: Failed to rename \"$newhistory\" into \"$MigrateStats\".\nWrite permissions on \"$MigrateStats\" might be wrong".($ENV{"GATEWAY_INTERFACE"}?" for a 'migration from web'":"")." or file might be opened.");
 	}
 	if ($EnableLockForUpdate) {	&Lock_Update(0); }
-	print "Migration for file '$MigrateStats' successful.\n";
+	print "Migration for file '$MigrateStats' successful."; print $ENV{"GATEWAY_INTERFACE"}?"<br>\n":"\n";
 	exit 0;
 }
 
