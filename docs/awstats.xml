@@ -102,7 +102,7 @@ Fonctionne avec les log de IIS 5.0+ et Apache. Gratuit (GNU General Public Licen
         <Application_Order_URL>http://awstats.sourceforge.net</Application_Order_URL>
         <Application_Screenshot_URL>http://awstats.sourceforge.net/docs/images/screen_shot_1.jpg</Application_Screenshot_URL>
         <Application_Icon_URL>http://awstats.sourceforge.net/docs/images/awstats_logo1.gif</Application_Icon_URL>
-        <Application_XML_File_URL>http://awstats.sourceforge.net/docs/awstats_pad.xml</Application_XML_File_URL>
+        <Application_XML_File_URL>http://awstats.sourceforge.net/docs/awstats.xml</Application_XML_File_URL>
     </Application_URLs>
 <Download_URLs>
         <Primary_Download_URL>http://awstats.sourceforge.net/files/awstats.zip</Primary_Download_URL>
