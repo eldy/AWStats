@@ -61,8 +61,9 @@ FAQ-COM250 <a href="#DIFFERENT_RESULTS">Different results than other log analyze
 FAQ-COM300 <a href="#DIFFERENCE_HOURS">Difference between local hour and AWStats reported hour.</a><br>
 FAQ-COM350 <a href="#OLDLOG">How can I process old log file ?</a><br>
 FAQ-COM400 <a href="#MULTILOG">How can I update my statistics when I use a load balancing system that splits my logs ?</a><br>
-FAQ-COM120 <a href="#RESET">How can I reset all my statistics ?</a><br>
-FAQ-COM130 <a href="#EDITHISTORY">Can I safely remove a line in AWStats history files (awstatsMMYYYY*.txt) ?</a><br>
+FAQ-COM500 <a href="#RESET">How can I reset all my statistics ?</a><br>
+FAQ-COM600 <a href="#DAILY">How can I compile and build statistics on a daily basis only ?</a><br>
+FAQ-COM700 <a href="#EDITHISTORY">Can I safely remove a line in AWStats history files (awstatsMMYYYY*.txt) ?</a><br>
 </ul>
 <br>
 
@@ -514,7 +515,7 @@ To use cronolog or rotatelog you must setup your web server log file name using 
 <br>
 
 <a name="CRONTAB"></a><br>
-<b><u>FAQ-SET550 : HOW TO RUN AWSTATS FREQUENTLY</u></b><br>
+<b><u>FAQ-SET130 : HOW TO RUN AWSTATS FREQUENTLY</u></b><br>
 <font class=CProblem>PROBLEM:</font><br>
 AWStats must be ran frequently to update statistics. How can I do this ?<br>
 <font class=CSolution>SOLUTION:</font><br>
@@ -666,14 +667,14 @@ the update (or use the -logfile option on command line to overwrite <a href="aws
 The update process can only accept files in chronological order for a particular month, so if you
 have already processed a recent file and forgot to run update
 on a log file that contains older data, you must before reset all
-your statistics (see <a href="#FAQ-COM120">FAQ-COM120</a>) and restart all the update processes
+your statistics (see <a href="#FAQ-COM500">FAQ-COM500</a>) and restart all the update processes
 for all past log files and in chronological order.<br>
 However, there is a "tip" that allow you to rebuild only the month were you missed data:<br>
 Imagine we are on 5th of July 2003, all your statistics are up to date except for the 10th of
 April 2003 (you forgot to run the update process for this day, so there is no visit for this
 day). You can :<br>
 - Reset the statistics for April only (this means remove the file <i>awstats042003.[config.]txt</i>
-as explained in <a href="#FAQ-COM120">FAQ-COM120</a>),
+as explained in <a href="#FAQ-COM500">FAQ-COM500</a>),
 - Move the statistics history files for month after April (file <i>awstats052003.[config.]txt</i>,
 <i>awstats062003.[config.]txt</i>,...) into a temp directory (so that it is no more in DirData
 directory as if they were deleted).<br>
@@ -697,7 +698,7 @@ the <i>-logfile</i> command line option to overwrite <a href="awstats_config.htm
 <br>
 
 <a name="RESET"></a><br>
-<b><u>FAQ-COM120 : HOW CAN I RESET ALL MY STATISTICS ?</u></b><br>
+<b><u>FAQ-COM500 : HOW CAN I RESET ALL MY STATISTICS ?</u></b><br>
 <font class=CProblem>PROBLEM:</font><br>
 I want to reset all my statistics to restart the update process from the beginning.<br>
 <font class=CSolution>SOLUTION:</font><br>
@@ -710,8 +711,29 @@ kept old log files somewhere. You will have to process all past log files (in ch
 to get your statistics back.<br>
 <br>
 
+<a name="DAILY"></a><br>
+<b><u>FAQ-COM600 : HOW CAN I COMPILE AND BUILD STATISTICS ON A DAILY BASIS ONLY ?</u></b><br>
+<font class=CProblem>PROBLEM:</font><br>
+How can I compile and build statistics on a daily basis. I mean i want to have a full report
+with all charts with data for a particular day only and want one report for each day of month.<br>
+<font class=CSolution>SOLUTION:</font><br>
+This is an non documented and not supported trick, as this is not the standard way of working:<br>
+First, run the update process at midnight (or on a log file that was rotated at midnight so that
+it contains only data for this particular day (you can choose another hour in night if you want
+to have days that "start" at an different hour).<br>
+Once the update process has been ran, MOVE (and not copy) the history file built by AWStats. For
+example on Unix like systems:<br>
+<i>mv &nbsp; mydirdata/awstatsMMYYYY.mydomain.txt &nbsp; mydirdate/awstatsDDMMYYYY.mydomain.txt</i><br>
+Note that the name has been changed by adding the day. Repeat this each day after the update process.<br>
+With this you will have one history file for each day. You can then see full stats for
+a particular day by adding the non documented parameter -day=DD on command line (with others
+like -month=MM and -year=YYYY). If ran from a browser you can also add &day=DD on URL.<br>
+However, if you have full day by day statistics, you don't have anymore statistics for full month,
+except if you create a second config file that whose history files would not be moved.<br>
+<br>
+
 <a name="EDITHISTORY"></a><br>
-<b><u>FAQ-COM130 : CAN I SAFELY REMOVE A LINE IN HISTORY FILES (awstatsMMYYYY*.txt) ?</u></b><br>
+<b><u>FAQ-COM700 : CAN I SAFELY REMOVE A LINE IN HISTORY FILES (awstatsMMYYYY*.txt) ?</u></b><br>
 <font class=CProblem>PROBLEM:</font><br>
 After processing a log file I want to change my statistics
 without running AWStats update process but changing directly data in AWStats historical database files.<br>
@@ -1160,3 +1182,16 @@ So, you should edit your config file to add in the <a href="awstats_config.html#
 
 </body>
 </html>
+
+
+
+
+This is an non documented trick.
+After the update MOVE (and not copy) the history file
+awstatsMMYYYY.yourdomain.txt
+into
+awstatsDDMMYYYY.yourdomain.txt
+
+With this you can have one full stats page for each day. You can see full stats for a particular day by adding non documented parameter -day=DD on command line (with others like -month=MM and -year=YYYY). If ran from a browser you can also add &day=DD on URL.
+
+However you have day by day stats but you don't have any more statistics for full month. Must choose.
