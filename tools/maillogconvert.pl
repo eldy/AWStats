@@ -55,13 +55,13 @@ sub debug {
 	0;
 }
 
-sub CleanVadminUser { $_=shift;
+sub CleanVadminUser { $_=shift||'';
 	s/[#<|>\[\]]//g;	# Remove unwanted characters first
 	s/^(.*?)-//gi;		# Strip off unixuser- at beginning
 	return $_;
 }
 
-sub CleanEmail { $_=shift;
+sub CleanEmail { $_=shift||'';
 	s/[#<|>\[\]]//g;	# Remove unwanted characters first
 	return $_;
 }
@@ -345,10 +345,10 @@ while (<>) {
 		my ($id,$size,$from)=m/\d+(?:\.\d+)? info msg (\d+): bytes (\d+) from <(.*)>/;
 		$mailid=$id;
 		delete $mail{$mailid};	# If 'info msg' found, we start a new mail. This is to protect from wrong file
-		if ($mail{$id}{'from'} ne '<>') { $mail{$id}{'from'}=$from; }	# TODO ???
+		if (! $mail{$id}{'from'} || $mail{$id}{'from'} ne '<>') { $mail{$id}{'from'}=$from; }	# TODO ???
 		$mail{$id}{'size'}=$size;
 		if (m/\s+relay=([^\,]+)[\s\,]/ || m/\s+relay=([^\s\,]+)$/) { $mail{$id}{'relay_s'}=$1; }
-		debug("For id=$id, found a qmail 'info msg' message: from=$mail{$id}{'from'} size=$mail{$id}{'size'} relay_s=$mail{$id}{'relay_s'}");
+		debug("For id=$id, found a qmail 'info msg' message: from=$mail{$id}{'from'} size=$mail{$id}{'size'}");
 	}
 
 	#
@@ -469,7 +469,7 @@ while (<>) {
 		$mail{$id}{'day'}=$day;
 		$mail{$id}{'time'}=$time;
 		$mail{$id}{'to'}{$delivery}=&trim($to);
-		debug("For id=$id, found a qmail 'start delivery' record: year=$mail{$id}{'year'} mon=$mail{$id}{'mon'} day=$mail{$id}{'day'} time=$mail{$id}{'time'} to=$mail{$id}{'to'}{$delivery} relay_r=$mail{$id}{'relay_r'} delivery=$delivery");
+		debug("For id=$id, found a qmail 'start delivery' record: year=".($mail{$id}{'year'}||'')." mon=$mail{$id}{'mon'} day=$mail{$id}{'day'} time=$mail{$id}{'time'} to=$mail{$id}{'to'}{$delivery} relay_r=".($mail{$id}{'relay_r'}||'')." delivery=$delivery");
 	}
 
 	#
@@ -501,7 +501,7 @@ while (<>) {
 	#
 	# Matched MDaemon log file record
 	#
-	elsif (/^\"(\d\d\d\d)-(\d\d)-(\d\d) (\d\d:\d\d:\d\d)\",\"[^\"]*\",(\w+),\d+,\"([^\"]*)\",\"([^\"]*)\",\"[^\"]*\",\"[^\"]*\",\"([^\"]*)\",\"([^\"]*)\",\"([^\"]*)\",([\.\d]+),(\d+),(\d+)/) {
+	elsif (/^\"(\d\d\d\d)-(\d\d)-(\d\d) (\d\d:\d\d:\d\d)\",\"[^\"]*\",(\w+),\d+,\"([^\"]*)\",\"([^\"]*)\",\"([^\"]*)\",\"[^\"]*\",\"([^\"]*)\",\"([^\"]*)\",\"([^\"]*)\",([\.\d]+),(\d+),(\d+)/) {
 		# Example: "2003-11-06 00:00:42","2003-11-06 00:00:45",SMTPI,9443,"dillon_fm@aaaaa.net","cpeltier@domain.com","","","10.0.0.16","","",0,4563,1
 		$MailType||='mdaemon';
 		my ($id)=($numrecord);
@@ -512,18 +512,18 @@ while (<>) {
 			$mail{$id}{'time'}=$4;
 			$mail{$id}{'direction'}=($5 eq 'SMTPI'?'in':'out');
 			$mail{$id}{'from'}=$6;
-			$mail{$id}{'to'}=$7;
+			$mail{$id}{'to'}=$7||$8;
 			if ($5 eq 'SMTPI') {
-				$mail{$id}{'relay_s'}=$8;
-				$mail{$id}{'relay_r'}='localhost';
+				$mail{$id}{'relay_s'}=$9;
+				$mail{$id}{'relay_r'}='-';
 			}
 			if ($5 eq 'SMTPO') {
-				$mail{$id}{'relay_s'}='localhost';
-				$mail{$id}{'relay_r'}=$8;
+				$mail{$id}{'relay_s'}=$9;
+				$mail{$id}{'relay_r'}='-';
 			}
 			$mail{$id}{'code'}=1;
-			$mail{$id}{'size'}=$12;
-			$mail{$id}{'extinfo'}="?virus=$9&rbl=$10&heuristicspam=$11&ssl=$13";
+			$mail{$id}{'size'}=$13;
+			$mail{$id}{'extinfo'}="?virus=$10&rbl=$11&heuristicspam=$12&ssl=$14";
 			$mail{$id}{'extinfo'}=~s/\s/_/g;
 			$mailid=$id;
 		}
@@ -542,7 +542,7 @@ while (<>) {
 
 		# Check if we can output a mail line
 		if ($MailType eq 'qmail') {
-			if (scalar %{$mail{$mailid}{'code'}}) {
+			if ($mail{$mailid}{'code'} && scalar %{$mail{$mailid}{'code'}}) {
 				# This is a hash variable
 				foreach my $key (keys %{$mail{$mailid}{'code'}}) {
 					$delivery=$key;
@@ -552,13 +552,18 @@ while (<>) {
 				$canoutput=1;
 			}
 		}
-		if ($MailType ne 'qmail') {
+		elsif ($MailType eq 'mdaemon') {
+			$code=$mail{$mailid}{'code'};
+			$to=$mail{$mailid}{'to'};
+			$canoutput=1;
+		}
+		else {
 			$code=$mail{$mailid}{'code'};
 			$to=$mail{$mailid}{'to'};
 			if ($mail{$mailid}{'from'} && $mail{$mailid}{'to'}) { $canoutput=1; }
 			if ($mail{$mailid}{'from'} && $mail{$mailid}{'code'} > 1) { $canoutput=1; }
 		}
-
+		
 		# If we can
 		if ($canoutput) {
 			&OutputRecord($mail{$mailid}{'year'}?$mail{$mailid}{'year'}:$year,$mail{$mailid}{'mon'},$mail{$mailid}{'day'},$mail{$mailid}{'time'},$mail{$mailid}{'from'},$to,$mail{$mailid}{'relay_s'},$mail{$mailid}{'relay_r'},$code,$mail{$mailid}{'size'},$mail{$mailid}{'forwardto'},$mail{$mailid}{'extinfo'});
