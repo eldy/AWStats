@@ -5686,10 +5686,10 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 		# Skip for some client host IP addresses, some URLs, other URLs
 		elsif (@SkipHosts && (&SkipHost($field[$pos_host]) || ($pos_hostr && &SkipHost($field[$pos_host]))))   { $qualifdrop="Dropped record (host $field[$pos_host] not qualified by SkipHosts)"; }
 		elsif (@SkipFiles && &SkipFile($field[$pos_url]))    { $qualifdrop="Dropped record (URL $field[$pos_url] not qualified by SkipFiles)"; }
+		elsif (@SkipUserAgents && $pos_agent >= 0 && &SkipUserAgent($field[$pos_agent]))	{ $qualifdrop="Dropped record (user agent '$field[$pos_agent]' not qualified by SkipUserAgents)"; }
 		elsif (@OnlyHosts && ! &OnlyHost($field[$pos_host]) && (! $pos_hostr || ! &OnlyHost($field[$pos_hostr]))) { $qualifdrop="Dropped record (host $field[$pos_host]".($pos_hostr?" and $field[$pos_hostr]":"")." not qualified by OnlyHosts)"; } 
 		elsif (@OnlyFiles && ! &OnlyFile($field[$pos_url]))  { $qualifdrop="Dropped record (URL $field[$pos_url] not qualified by OnlyFiles)"; }
 		elsif (@OnlyUserAgents && ! &OnlyUserAgent($field[$pos_agent]))  { $qualifdrop="Dropped record (user agent '$field[$pos_agent]' not qualified by OnlyUserAgents)"; }
-		elsif (@SkipUserAgents && $pos_agent >= 0 && &SkipUserAgent($field[$pos_agent]))	{ $qualifdrop="Dropped record (user agent '$field[$pos_agent]' not qualified by SkipUserAgents)"; }
 		if ($qualifdrop) {
 			$NbOfLinesDropped++;
 			if ($Debug) { debug("$qualifdrop: $_",4); }
@@ -9458,12 +9458,13 @@ else {
 #     If line older than $LastLine, skip --> next on loop
 #     So it's new line
 #     $LastLine = time or record
+#     Skip if url is /robots.txt --> next on loop
 #     Skip line for @SkipHosts --> next on loop
 #     Skip line for @SkipFiles --> next on loop
+#     Skip line for @SkipUserAgent --> next on loop
 #     Skip line for not @OnlyHosts --> next on loop
 #     Skip line for not @OnlyFiles --> next on loop
 #     Skip line for not @OnlyUserAgent --> next on loop
-#     Skip line for @SkipUserAgent --> next on loop
 #     So it's new line approved
 #     If other month/year, create/update tmp file and purge data arrays with
 #       &Read_History_With_TmpUpdate(lastprocessedyear,lastprocessedmonth,UPDATE,PURGE,"all",lastlinenumber,lastlineoffset,CheckSum($_));

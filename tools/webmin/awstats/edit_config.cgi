@@ -363,10 +363,10 @@ if ($in{'advanced'} == 3) {
 	print &hblink($text{'help_help'}, "help.cgi?param=UseHTTPSLinkForUrl")." </td> </tr>\n";
 	print "<tr> <td><b>MaxLengthOfURL</b></td> <td> <input size=10 name=MaxLengthOfURL type=text value='$lconf->{'MaxLengthOfURL'}'> </td> <td> ";
 	print &hblink($text{'help_help'}, "help.cgi?param=MaxLengthOfURL")." </td> </tr>\n";
-	print "<tr> <td><b>LinksToWhoIs</b></td> <td> <input size=40 name=LinksToWhoIs type=text value='$lconf->{'LinksToWhoIs'}'> </td> <td> ";
-	print &hblink($text{'help_help'}, "help.cgi?param=LinksToWhoIs")." </td> </tr>\n";
-	print "<tr> <td><b>LinksToIPWhoIs</b></td> <td> <input size=40 name=LinksToIPWhoIs type=text value='$lconf->{'LinksToIPWhoIs'}'> </td> <td> ";
-	print &hblink($text{'help_help'}, "help.cgi?param=LinksToIPWhoIs")." </td> </tr>\n";
+#	print "<tr> <td><b>LinksToWhoIs</b></td> <td> <input size=40 name=LinksToWhoIs type=text value='$lconf->{'LinksToWhoIs'}'> </td> <td> ";
+#	print &hblink($text{'help_help'}, "help.cgi?param=LinksToWhoIs")." </td> </tr>\n";
+#	print "<tr> <td><b>LinksToIPWhoIs</b></td> <td> <input size=40 name=LinksToIPWhoIs type=text value='$lconf->{'LinksToIPWhoIs'}'> </td> <td> ";
+#	print &hblink($text{'help_help'}, "help.cgi?param=LinksToIPWhoIs")." </td> </tr>\n";
 	print "<tr> <td><b>HTMLHeadSection</b></td> <td> <input size=30 name=HTMLHeadSection type=text value='$lconf->{'HTMLHeadSection'}'> </td> <td> ";
 	print &hblink($text{'help_help'}, "help.cgi?param=HTMLHeadSection")." </td> </tr>\n";
 	print "<tr> <td><b>HTMLEndSection</b></td> <td> <input size=40 name=HTMLEndSection type=text value='$lconf->{'HTMLEndSection'}'> </td> <td> ";
