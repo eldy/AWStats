@@ -21,7 +21,7 @@ I   - Features and requirements of AWStats
 	  I - 1) Features, what AWStats can show you
 	  I - 2) Requirements for using AWStats
 	  I - 3) Files
-II  - How to install and use AWStats
+II  - Install, Setup and Use AWStats
 III - Benchmark
 IV  - About the author, license and support
 
@@ -102,12 +102,12 @@ I - 3) Files
 
 
 
-II - HOW TO INSTALL AND USE AWSTATS
+II - INSTALL, SETUP AND USE AWSTATS
 -----------------------------------
 
 The documentation available as of the date of this release is included, in
 HTML format, in the docs/ directory.
-You can find a most up-to-date documentation on:
+You can find a most up-to-date documentation at:
 http://awstats.sourceforge.net
 
 
