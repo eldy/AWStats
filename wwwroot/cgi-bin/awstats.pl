@@ -48,8 +48,8 @@ $NotSortedRecordTolerance
 $DIR=$PROG=$Extension="";
 $Debug=$ShowSteps=0;
 $DebugResetDone=$DNSLookupAlreadyDone=0;
-$VisitTimeOut  = 10000;				# Laps of time to consider a page load as a new visit. 10000 = 1 hour (Default = 10000)
-$NotSortedRecordTolerance= 10000;	# Laps of time to accept a record if not in correct order. 10000 = 1 hour (Default = 10000)
+$VisitTimeOut=10000;				# Laps of time to consider a page load as a new visit. 10000 = 1 hour (Default = 10000)
+$NotSortedRecordTolerance=10000;	# Laps of time to accept a record if not in correct order. 10000 = 1 hour (Default = 10000)
 # Time vars
 use vars qw/
 $starttime
@@ -233,6 +233,7 @@ use vars qw/
 %SearchEnginesHashIDLib %SearchEnginesKnownUrl
 /;
 use vars qw/
+%BadFormatWarning
 %MonthLib %MonthNum
 %ValidHTTPCodes %TrapInfosForHTTPErrorCodes %NotPageList %DayBytes %DayHits %DayPages %DayVisits
 %FirstTime %LastTime
@@ -250,6 +251,7 @@ use vars qw/
 %TmpDNSLookup %TmpOS %TmpRefererServer %TmpRobot %TmpBrowser
 %MyDNSTable
 /;
+%BadFormatWarning = ();
 %MonthLib = %MonthNum = ();
 %ValidHTTPCodes=();
 %TrapInfosForHTTPErrorCodes=(); $TrapInfosForHTTPErrorCodes{404}=1;	# TODO Add this in config file
@@ -1502,7 +1504,9 @@ sub Read_History_With_TmpUpdate {
 					 "errors"=>22,"sider_404"=>23);
 
 	my $withread=0;
-	my $loadvisitorforbackward=0;
+
+	# Two variables used to read old format history files
+	my $readvisitorforbackward=0;
 	
 	# In standard use of AWStats, the DayRequired variable is always empty
 	if ($DayRequired) { if ($Debug) { debug("Call to Read_History_With_TmpUpdate [$year,$month,withupdate=$withupdate,withpurge=$withpurge,part=$part] ($DayRequired)"); } }
@@ -1585,13 +1589,6 @@ sub Read_History_With_TmpUpdate {
 			if (! $versionnum && $_ =~ /^AWSTATS DATA FILE (\d+).(\d+)/i) {
 				$versionnum=($1*1000)+$2;
 				if ($Debug) { debug(" Data file version is $versionnum",1); }
-				# Show migrate warning
-				if ($versionnum < 5000 && ! $MigrateStats) {
-					warning("Warning: Data file '$filetoread' is an old history file format. You should upgrade it with the command line: $PROG.$Extension -migrate=\"$filetoread\"");
-				}
-				if (! ($versionnum < 5000) && $MigrateStats) {
-					warning("Warning: You are migrating a file that is already a recent version (migrate not required for history file version $1.$2).","","",1);
-				}
 				next;
 			}
 
@@ -1616,14 +1613,39 @@ sub Read_History_With_TmpUpdate {
 				};
 				next;
 			}
-			if ($field[0] eq "TotalVisits" && ! $withupdate)       { $MonthVisits{$year.$month}+=int($field[1]); next; }
-			if ($field[0] eq "TotalUnique" && ! $withupdate)       { $MonthUnique{$year.$month}+=int($field[1]); next; }
-			if ($field[0] eq "MonthHostsKnown" && ! $withupdate)   { $MonthHostsKnown{$year.$month}+=int($field[1]); next; }
-			if ($field[0] eq "MonthHostsUnknown" && ! $withupdate) { $MonthHostsUnknown{$year.$month}+=int($field[1]); next; }
-				
+			if ($field[0] eq "TotalVisits")       {
+				if (! $withupdate) { $MonthVisits{$year.$month}+=int($field[1]); }
+				# Save in MonthVisits also if migrate from a file < 4.x for backward compatibility
+				if ($MigrateStats && $versionnum < 4000 && ! $MonthVisits{$year.$month}) {
+					debug("File is version < 4000. We save ".int($field[1])." visits in DayXxx arrays",1);
+					$DayHits{$year.$month."00"}+=0;
+					$DayVisits{$year.$month."00"}+=int($field[1]);
+				}
+				next;
+			}
+			if ($field[0] eq "TotalUnique")       { if (! $withupdate) { $MonthUnique{$year.$month}+=int($field[1]); } next; }
+			if ($field[0] eq "MonthHostsKnown")   { if (! $withupdate) { $MonthHostsKnown{$year.$month}+=int($field[1]); } next; }
+			if ($field[0] eq "MonthHostsUnknown") { if (! $withupdate) { $MonthHostsUnknown{$year.$month}+=int($field[1]); } next; }
+
 			if ($field[0] eq "END_GENERAL"	# END_GENERAL didn't exists for history files < 5.0
 			 || ($versionnum < 5000 && $SectionsToLoad{"general"} && $FirstTime{$year.$month} && $LastTime{$year.$month}) )		{
 				if ($Debug) { debug(" End of GENERAL section"); }
+
+				# Show migrate warning for backward compatibility
+				if ($versionnum < 5000 && ! $MigrateStats && ! $BadFormatWarning{$year.$month}) {
+					$BadFormatWarning{$year.$month}=1;
+					warning("Warning: Data file '$filetoread' has an old history file format (version $versionnum). You should upgrade it with the command line: $PROG.$Extension -migrate=\"$filetoread\"");
+				}
+				if (! ($versionnum < 5000) && $MigrateStats && ! $BadFormatWarning{$year.$month}) {
+					$BadFormatWarning{$year.$month}=1;
+					warning("Warning: You are migrating a file that is already a recent version (migrate not required for files version $versionnum).","","",1);
+				}
+				# If migrate and version < 4.x we need to include BEGIN_UNKNOWNIP into BEGIN_VISITOR for backward compatibility
+				if ($MigrateStats && $versionnum < 4000) {	
+					debug("File is version < 4000. We add UNKOWNIP in sections to load",1);
+					$SectionsToLoad{"unknownip"}=99;
+				}
+
 				delete $SectionsToLoad{"general"};
 				if ($SectionsToSave{"general"}) { Save_History("general",$year,$month); delete $SectionsToSave{"general"}; }
 
@@ -1631,7 +1653,7 @@ sub Read_History_With_TmpUpdate {
 				if ($versionnum < 5000 && ! $withupdate) {
 					# We must find another way to init MonthUnique MonthHostsKnown and MonthHostsUnknown
 					debug(" We ask to count MonthUnique, MonthHostsKnown and MonthHostsUnknown in visitor section because they are not stored in general section for this data file (version $versionnum).");
-					$loadvisitorforbackward=($SectionsToLoad{"visitor"}?1:2);
+					$readvisitorforbackward=($SectionsToLoad{"visitor"}?1:2);
 					$SectionsToLoad{"visitor"}=3;
 				}
 				else {
@@ -1760,7 +1782,7 @@ sub Read_History_With_TmpUpdate {
 						$count++;
 
 						# For backward compatibility
-						if ($loadvisitorforbackward) {
+						if ($readvisitorforbackward) {
 							if ($field[1]) { $MonthUnique{$year.$month}++; }
 							if ($MonthRequired ne "year") {
 								if ($field[0] !~ /^\d+\.\d+\.\d+\.\d+$/) { $MonthHostsKnown{$year.$month}++; }
@@ -1810,7 +1832,7 @@ sub Read_History_With_TmpUpdate {
 							delete $_waithost_u{$field[0]};
 						}
 
-						if ($loadvisitorforbackward!=2 && $SectionsToLoad{"visitor"}) { # if loadvisitorforbackward==2 we do not load
+						if ($readvisitorforbackward!=2 && $SectionsToLoad{"visitor"}) { # if readvisitorforbackward==2 we do not load
 							my $loadrecord=0;
 							if ($withupdate) {
 								$loadrecord=1;
@@ -1826,7 +1848,7 @@ sub Read_History_With_TmpUpdate {
 								if ($field[1]) { $_host_p{$field[0]}+=$field[1]; }
 								if ($field[2]) { $_host_h{$field[0]}+=$field[2]; }
 								if ($field[3]) { $_host_k{$field[0]}+=$field[3]; }
-								if ($field[4] && ! $_host_l{$field[0]}) {	# We save last connexion params if not already catched
+								if ($field[4] && ! $_host_l{$field[0]}) {	# We save last connexion params if not previously defined
 									$_host_l{$field[0]}=int($field[4]);
 									if ($withupdate) {		# field[5] field[6] are used only for update
 										if ($field[5] && ! $_host_s{$field[0]}) { $_host_s{$field[0]}=int($field[5]); }
@@ -1849,6 +1871,44 @@ sub Read_History_With_TmpUpdate {
 				#	Save_History("visitor",$year,$month); delete $SectionsToSave{"visitor"};
 				#	if ($withpurge) { %_host_p=(); %_host_h=(); %_host_k=(); %_host_l=(); %_host_s=(); %_host_u=(); }
 				#}
+				if (! scalar %SectionsToLoad) { debug(" Stop reading history file. Got all we need."); last; }
+				next;
+			}
+			# BEGIN_UNKOWNIP for backward compatibility
+			if ($field[0] eq "BEGIN_UNKNOWNIP")   {
+				if ($Debug) { debug(" Begin of UNKNOWNIP section"); }
+				$_=<HISTORY>;
+				chomp $_; s/\r//;
+				if (! $_) { error("Error: History file \"$filetoread\" is corrupted (in section UNKNOWNIP). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost).","","",1); }
+				my @field=split(/\s+/,$_); $countlines++;
+				my $count=0;my $countloaded=0;
+				my %iptomigrate=();
+				while ($field[0] ne "END_UNKNOWNIP") {
+					if ($field[0]) {
+						$count++;
+						if ($SectionsToLoad{"unknownip"}) {
+							$iptomigrate{$field[0]}=$field[1]||0;
+							$countloaded++;
+						}
+					}
+					$_=<HISTORY>;
+					chomp $_; s/\r//;
+					if (! $_) { error("Error: History file \"$filetoread\" is corrupted (in section UNKNOWNIP). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost).","","",1); }
+					@field=split(/\s+/,$_); $countlines++;
+				}
+				if ($Debug) { debug(" End of UNKNOWNIP section ($count entries, $countloaded loaded)"); }
+				delete $SectionsToLoad{"visitor"};
+				# THIS SECTION IS NEVER SAVED. ONLY READ FOR MIGRATE AND CONVERTED INTO VISITOR SECTION
+				foreach my $key (keys %iptomigrate) {				
+					$_host_p{$key}+=int($_host_p{"Unknown"}/$countloaded);
+					$_host_h{$key}+=int($_host_h{"Unknown"}/$countloaded);
+					$_host_k{$key}+=int($_host_k{"Unknown"}/$countloaded);
+					if ($iptomigrate{$key} > 0) { $_host_l{$key}=$iptomigrate{$key} };
+				}
+				delete $_host_p{"Unknown"};
+				delete $_host_h{"Unknown"};
+				delete $_host_k{"Unknown"};
+				delete $_host_l{"Unknown"};
 				if (! scalar %SectionsToLoad) { debug(" Stop reading history file. Got all we need."); last; }
 				next;
 			}
@@ -2560,7 +2620,7 @@ sub Save_History {
 		print HISTORYTMP "# MonthHostsKnown   = Number of hosts known\n";
 		print HISTORYTMP "# MonthHostsUnKnown = Number of hosts unknown\n";
 		print HISTORYTMP "BEGIN_GENERAL 8\n";
-		print HISTORYTMP "LastLine $LastLine\n";
+		print HISTORYTMP "LastLine ".($LastLine>0?$LastLine:$LastTime{$year.$month})."\n";
 		print HISTORYTMP "FirstTime $FirstTime{$year.$month}\n";
 		print HISTORYTMP "LastTime $LastTime{$year.$month}\n";
 		print HISTORYTMP "LastUpdate $LastUpdate $NbOfLinesRead $NbOfOldLines $NbOfNewLines $NbOfLinesCorrupted $NbOfLinesDropped\n";
