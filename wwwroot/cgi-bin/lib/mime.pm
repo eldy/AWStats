@@ -101,7 +101,6 @@
 # Audio
 'mp3','audio',
 'ogg','audio',
-'rm','audio',
 'wma','audio',
 'wav','audio',
 # Video
@@ -110,6 +109,7 @@
 'mp4','video',
 'mpeg','video',
 'mpg','video',
+'rm','video',
 'swf','video',
 # Web scripts
 'js','other',
@@ -188,7 +188,6 @@
 # Audio
 'mp3','audio',
 'ogg','audio',
-'rm','audio',
 'wav','audio',
 'wma','audio',
 # Video
@@ -197,6 +196,7 @@
 'mp4','video',
 'mpeg','video',
 'mpg','video',
+'rm','video',
 'swf','swf',
 # Web scripts
 'js','javascript',
