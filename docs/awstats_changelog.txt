@@ -76,6 +76,8 @@ New features/improvements:
   build a simple config file.
 - awstats_buildstaticpages.pl: The -date option has been replaced
   by the -buildate=%YY%MM%DD option so you can choose your own date format.
+- awstats_buildstaticpages.pl: Added the -configdir option.
+- awstats_exportlib.pl: Changes to be compatible with new AWStats databases.
 - logresolvemerge.pl: can use several threads for reverse DNS lookup
   with Perl 5.8.
 - maillogconvert.pl: Allow to process qmail log preprocessed by
@@ -92,6 +94,7 @@ Other/Documentation:
   Microsoft URL Control added in robot list.
 - Documentation seriously updated.
 - FAQ updated.
+
 
 Note 0: Perl 5.005_03 or higher is a requirement to use AWStats 6.0 or higher.
 

@@ -7,6 +7,7 @@
 # See AWStats documentation (in docs/ directory) for all setup instructions.
 #------------------------------------------------------------------------------
 # $Revision$ - $Author$ - $Date$
+require 5.005;
 
 #$|=1;
 #use warnings;		# Must be used in test mode only. This reduce a little process speed
