@@ -30,7 +30,7 @@ $LIMITFLUSH $NEWDAYVISITTIMEOUT $VISITTIMEOUT $NOTSORTEDRECORDTOLERANCE $MAXDIFF
 $WIDTHCOLICON
 /;
 $DEBUGFORCED=0;						# Force debug level to log lesser level into debug.log file (Keep this value to 0)
-$NBOFLINESFORBENCHMARK=5000;		# Benchmark info are printing every NBOFLINESFORBENCHMARK lines
+$NBOFLINESFORBENCHMARK=8192;		# Benchmark info are printing every NBOFLINESFORBENCHMARK lines (Must be a power of 2)
 $FRAMEWIDTH=260;					# Width of left frame when UseFramesWhenCGI is on
 $TOOLTIPWIDTH=380;					# Width of tooltips
 $NBOFLASTUPDATELOOKUPTOSAVE=200;	# Nb of records to save in DNS last update cache file
@@ -899,20 +899,18 @@ sub DayOfWeek {
 #------------------------------------------------------------------------------
 # Function:     Return 1 if a date exists
 # Parameters:	$day $month $year
-# Return:		1 if date exists
+# Return:		1 if date exists else 0
 #------------------------------------------------------------------------------
 sub DateIsValid {
 	my ($day, $month, $year) = @_;
 	if ($Debug) { debug("DateIsValid for $day $month $year",4); }
-	if ($day < 1) { return 0; }
-	if ($month==1 || $month==3 || $month==5 || $month==7 || $month==8 || $month==10 || $month==12) {
-		if ($day > 31) { return 0; }
-	}
+	if ($day < 1)  { return 0; }
+	if ($day > 31) { return 0; }
 	if ($month==4 || $month==6 || $month==9 || $month==11) {
 		if ($day > 30) { return 0; }
 	}
-	if ($month==2) {
-		my $leapyear=($year%4==0?1:0);		# A leap year every 4 years
+	elsif ($month==2) {
+		my $leapyear=($year%4==0?1:0);						# A leap year every 4 years
 		if ($year%100==0 && $year%400!=0) { $leapyear=0; }	# Except if year is 100x and not 400x
 		if ($day > (28+$leapyear)) { return 0; }
 	}
@@ -2979,7 +2977,7 @@ sub Save_History {
 	my %keysinkeylist=();
 
 	# Header
-	if ($sectiontosave eq "header") {
+	if ($sectiontosave eq 'header') {
 		print HISTORYTMP "AWSTATS DATA FILE $VERSION\n";
 		print HISTORYTMP "# If you remove this file, all statistics for date $year-$month will be lost/reset.\n";
 		print HISTORYTMP "\n";
@@ -3025,7 +3023,7 @@ sub Save_History {
 	}
 
 	# General
-	if ($sectiontosave eq "general") {
+	if ($sectiontosave eq 'general') {
 		if ($LastUpdate < int("$nowyear$nowmonth$nowday$nowhour$nowmin$nowsec")) { $LastUpdate=int("$nowyear$nowmonth$nowday$nowhour$nowmin$nowsec"); }
 		print HISTORYTMP "\n";
 		print HISTORYTMP "# LastLine    = Date of last record processed\n";
@@ -3050,7 +3048,7 @@ sub Save_History {
 	}
 
 	# When
-	if ($sectiontosave eq "time") {
+	if ($sectiontosave eq 'time') {
 		print HISTORYTMP "\n";
 		print HISTORYTMP "# Hour - Pages - Hits - Bandwidth\n";
 		$ValueInFile{$sectiontosave}=tell HISTORYTMP;
@@ -3058,7 +3056,7 @@ sub Save_History {
 		for (my $ix=0; $ix<=23; $ix++) { print HISTORYTMP "$ix ".int($_time_p[$ix])." ".int($_time_h[$ix])." ".int($_time_k[$ix])."\n"; }
 		print HISTORYTMP "END_TIME\n";
 	}
-	if ($sectiontosave eq "day") {	# This section must be saved after VISITOR section is read
+	if ($sectiontosave eq 'day') {	# This section must be saved after VISITOR section is read
 		print HISTORYTMP "\n";
 		print HISTORYTMP "# Date - Pages - Hits - Bandwidth - Visits\n";
 		$ValueInFile{$sectiontosave}=tell HISTORYTMP;
@@ -3079,7 +3077,7 @@ sub Save_History {
 	}
 
 	# Who
-	if ($sectiontosave eq "domain") {
+	if ($sectiontosave eq 'domain') {
 		print HISTORYTMP "\n";
 		print HISTORYTMP "# Domain - Pages - Hits - Bandwidth\n";
 		print HISTORYTMP "# The $MaxNbOfDomain first Pages must be first (order not required for others)\n";
@@ -3102,7 +3100,7 @@ sub Save_History {
 		}
 		print HISTORYTMP "END_DOMAIN\n";
 	}
-	if ($sectiontosave eq "visitor") {
+	if ($sectiontosave eq 'visitor') {
 		print HISTORYTMP "\n";
 		print HISTORYTMP "# Host - Pages - Hits - Bandwidth - Last visit date - [Start of last visit date] - [Last page of last visit]\n";
 		print HISTORYTMP "# [Start of last visit date] and [Last page of last visit] are saved only if session is not finished\n";
@@ -3172,7 +3170,7 @@ sub Save_History {
 		$MonthHostsUnknown{$year.$month}=(scalar keys %_host_h) - $monthhostsknown;
 		print HISTORYTMP "END_VISITOR\n";
 	}
-	if ($sectiontosave eq "login") {
+	if ($sectiontosave eq 'login') {
 		print HISTORYTMP "\n";
 		print HISTORYTMP "# Login - Pages - Hits - Bandwidth - Last visit\n";
 		print HISTORYTMP "# The $MaxNbOfLoginShown first Pages must be first (order not required for others)\n";
@@ -3191,7 +3189,7 @@ sub Save_History {
 		}
 		print HISTORYTMP "END_LOGIN\n";
 	}
-	if ($sectiontosave eq "robot") {
+	if ($sectiontosave eq 'robot') {
 		print HISTORYTMP "\n";
 		print HISTORYTMP "# Robot ID - Hits - Bandwidth - Last visit\n";
 		print HISTORYTMP "# The $MaxNbOfRobotShown first Hits must be first (order not required for others)\n";
@@ -3210,7 +3208,7 @@ sub Save_History {
 		}
 		print HISTORYTMP "END_ROBOT\n";
 	}
-	if ($sectiontosave eq "emailsender") {
+	if ($sectiontosave eq 'emailsender') {
 		print HISTORYTMP "\n";
 		print HISTORYTMP "# EMail - Hits - Bandwidth - Last visit\n";
 		print HISTORYTMP "# The $MaxNbOfEMailsShown first Hits must be first (order not required for others)\n";
@@ -3229,7 +3227,7 @@ sub Save_History {
 		}
 		print HISTORYTMP "END_EMAILSENDER\n";
 	}
-	if ($sectiontosave eq "emailreceiver") {
+	if ($sectiontosave eq 'emailreceiver') {
 		print HISTORYTMP "\n";
 		print HISTORYTMP "# EMail - Hits - Bandwidth - Last visit\n";
 		print HISTORYTMP "# The $MaxNbOfEMailsShown first hits must be first (order not required for others)\n";
@@ -3250,7 +3248,7 @@ sub Save_History {
 	}
 
 	# Navigation
-	if ($sectiontosave eq "session") {	# This section must be saved after VISITOR section is read
+	if ($sectiontosave eq 'session') {	# This section must be saved after VISITOR section is read
 		print HISTORYTMP "\n";
 		print HISTORYTMP "# Session range - Number of visits\n";
 		$ValueInFile{$sectiontosave}=tell HISTORYTMP;
@@ -3258,7 +3256,7 @@ sub Save_History {
 		foreach my $key (keys %_session) { print HISTORYTMP "$key ".int($_session{$key})."\n"; }
 		print HISTORYTMP "END_SESSION\n";
 	}
-	if ($sectiontosave eq "sider") {	# This section must be saved after VISITOR section is read
+	if ($sectiontosave eq 'sider') {	# This section must be saved after VISITOR section is read
 		print HISTORYTMP "\n";
 		print HISTORYTMP "# URL - Pages - Bandwidth - Entry - Exit\n";
 		print HISTORYTMP "# The $MaxNbOfPageShown first Pages must be first (order not required for others)\n";
@@ -3281,7 +3279,7 @@ sub Save_History {
 		}
 		print HISTORYTMP "END_SIDER\n";
 	}
-	if ($sectiontosave eq "filetypes") {
+	if ($sectiontosave eq 'filetypes') {
 		print HISTORYTMP "\n";
 		print HISTORYTMP "# Files type - Hits - Bandwidth - Bandwidth without compression - Bandwidth after compression\n";
 		$ValueInFile{$sectiontosave}=tell HISTORYTMP;
@@ -3295,7 +3293,7 @@ sub Save_History {
 		}
 		print HISTORYTMP "END_FILETYPES\n";
 	}
-	if ($sectiontosave eq "browser") {
+	if ($sectiontosave eq 'browser') {
 		print HISTORYTMP "\n";
 		print HISTORYTMP "# Browser ID - Hits\n";
 		$ValueInFile{$sectiontosave}=tell HISTORYTMP;
@@ -3303,7 +3301,7 @@ sub Save_History {
 		foreach my $key (keys %_browser_h) { print HISTORYTMP "$key $_browser_h{$key}\n"; }
 		print HISTORYTMP "END_BROWSER\n";
 	}
-	if ($sectiontosave eq "os") {
+	if ($sectiontosave eq 'os') {
 		print HISTORYTMP "\n";
 		print HISTORYTMP "# OS ID - Hits\n";
 		$ValueInFile{$sectiontosave}=tell HISTORYTMP;
@@ -3329,7 +3327,7 @@ sub Save_History {
 		foreach my $key (keys %_unknownrefererbrowser_l) { print HISTORYTMP "$key $_unknownrefererbrowser_l{$key}\n"; }
 		print HISTORYTMP "END_UNKNOWNREFERERBROWSER\n";
 	}
-	if ($sectiontosave eq "origin") {
+	if ($sectiontosave eq 'origin') {
 		print HISTORYTMP "\n";
 		print HISTORYTMP "# Origin - Pages - Hits \n";
 		$ValueInFile{$sectiontosave}=tell HISTORYTMP;
@@ -3342,7 +3340,7 @@ sub Save_History {
 		print HISTORYTMP "From5 ".int($_from_p[5])." ".int($_from_h[5])."\n";		# News
 		print HISTORYTMP "END_ORIGIN\n";
 	}
-	if ($sectiontosave eq "sereferrals") {
+	if ($sectiontosave eq 'sereferrals') {
 		print HISTORYTMP "\n";
 		print HISTORYTMP "# Search engine referers ID - Hits\n";
 		$ValueInFile{$sectiontosave}=tell HISTORYTMP;
@@ -3350,7 +3348,7 @@ sub Save_History {
 		foreach my $key (keys %_se_referrals_h) { print HISTORYTMP "$key $_se_referrals_h{$key}\n"; }
 		print HISTORYTMP "END_SEREFERRALS\n";
 	}
-	if ($sectiontosave eq "pagerefs") {
+	if ($sectiontosave eq 'pagerefs') {
 		print HISTORYTMP "\n";
 		print HISTORYTMP "# External page referers - Hits\n";
 		$ValueInFile{$sectiontosave}=tell HISTORYTMP;
@@ -3363,7 +3361,7 @@ sub Save_History {
 		}
 		print HISTORYTMP "END_PAGEREFS\n";
 	}
-	if ($sectiontosave eq "searchwords") {
+	if ($sectiontosave eq 'searchwords') {
 		print HISTORYTMP "\n";
 		print HISTORYTMP "# Search keyphrases - Number of search\n";
 		print HISTORYTMP "# The $MaxNbOfKeyphrasesShown first number of search must be first (order not required for others)\n";
@@ -3410,7 +3408,7 @@ sub Save_History {
 	}
 
 	# Other - Errors
-	if ($sectiontosave eq "errors") {
+	if ($sectiontosave eq 'errors') {
 		print HISTORYTMP "\n";
 		print HISTORYTMP "# Errors - Hits - Bandwidth\n";
 		$ValueInFile{$sectiontosave}=tell HISTORYTMP;
@@ -4351,7 +4349,7 @@ if ((! $ENV{'GATEWAY_INTERFACE'}) && (! $SiteConfig)) {
 	print "  current month/year.\n";
 	print "\n";
 	print "Other options:\n";
-	print "  -debug=X     to add debug informations lesser than level X\n";
+	print "  -debug=X     to add debug informations lesser than level X (speed reduced)\n";
 	print "\n";
 	print "Now supports/detects:\n";
 	print "  Reverse DNS lookup\n";
@@ -4443,6 +4441,7 @@ if ($FrameName ne 'index') {
 }
 
 # Init other parameters
+$NBOFLINESFORBENCHMARK--;
 if ($ENV{'GATEWAY_INTERFACE'}) { $DirCgi=''; }
 if ($DirCgi && !($DirCgi =~ /\/$/) && !($DirCgi =~ /\\$/)) { $DirCgi .= "/"; }
 if (! $DirData || $DirData eq ".") { $DirData=$DIR; }	# If not defined or chosen to "." value then DirData is current dir
@@ -4646,7 +4645,7 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 			@fieldlib=('host','logname','date','method','url','code','size','referer','ua');
 		}
 		elsif ($LogFormat eq '2') {	# Same than "date time c-ip cs-username cs-method cs-uri-stem sc-status sc-bytes cs-version cs(User-Agent) cs(Referer)"
-			$PerlParsingFormat="([^\\s]+ [^\\s]+) ([^\\s]+) ([^\\s]+) ([^\\s]+) ([^\\s]+) ([\\d|-]+) ([\\d|-]+) [^\\s]+ ([^\\s]+) ([^\\s]+)";
+			$PerlParsingFormat="(\\S+ \\S+) (\\S+) (\\S+) (\\S+) (\\S+) ([\\d|-]+) ([\\d|-]+) \\S+ (\\S+) (\\S+)";
 			$pos_date=0;$pos_host=1;$pos_logname=2;$pos_method=3;$pos_url=4;$pos_code=5;$pos_size=6;$pos_agent=7;$pos_referer=8;
 			@fieldlib=('date','host','logname','method','url','code','size','ua','referer');
 		}
@@ -4666,7 +4665,7 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 			@fieldlib=('host','logname','ua','date','referer','size','method','url','code');
 		}
 		elsif ($LogFormat eq '6') {	# Lotus notes (allows spaces in the logname without quoting them)
-			$PerlParsingFormat="([^\\s]+) [^\\s]+ (.+) \\[([^\\s]+) [^\\s]+\\] \\\"([^\\s]+) ([^\\s]+) [^\\\"]+\\\" ([\\d|-]+) ([\\d|-]+) \\\"(.*)\\\" \\\"([^\\\"]*)\\\"";	# referer and ua might be ""
+			$PerlParsingFormat="(\\S+) \\S+ (.+) \\[(\\S+) \\S+\\] \\\"(\\S+) (\\S+) [^\\\"]+\\\" ([\\d|-]+) ([\\d|-]+) \\\"(.*)\\\" \\\"([^\\\"]*)\\\"";	# referer and ua might be ""
 			$pos_host=0;$pos_logname=1;$pos_date=2;$pos_method=3;$pos_url=4;$pos_code=5;$pos_size=6;$pos_referer=7;$pos_agent=8;
 			@fieldlib=('host','logname','date','method','url','code','size','referer','agent');
 		}
@@ -4884,13 +4883,13 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 	my $counter=0;
 	# Reset counter for benchmark (first call to GetDelaySinceStart)
 	&GetDelaySinceStart(1);
-	if (! $HTMLOutput) { print "Phase 1 : First bypass old records...\n"; }
+	if (! $HTMLOutput) { print "Phase 1 : First bypass old records, searching new record...\n"; }
 	while (<LOG>) {
 		chomp $_; s/\r$//;
 		$NbOfLinesRead++;
 
 		if ($ShowSteps) {
-			if (++$NbOfLinesShowsteps % $NBOFLINESFORBENCHMARK == 0) {
+			if ((++$NbOfLinesShowsteps & $NBOFLINESFORBENCHMARK) == 0) {
 				my $delay=&GetDelaySinceStart(0);
 				print "$NbOfLinesRead lines processed (".($delay>0?$delay:1000)." ms, ".int(1000*$NbOfLinesShowsteps/($delay>0?$delay:1000))." lines/second)\n";
 			}
@@ -4993,7 +4992,7 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 			# We found a new line. This will replace comparison "<=" with "<" between timerecord and LastLine (we should have only new lines now)
 			$NewLinePhase=1;
 			if ($ShowSteps) {
-				if ($NbOfLinesShowsteps > 1 && ($NbOfLinesShowsteps % $NBOFLINESFORBENCHMARK != 0)) {
+				if ($NbOfLinesShowsteps > 1 && (($NbOfLinesShowsteps & $NBOFLINESFORBENCHMARK) != 0)) {
 					my $delay=&GetDelaySinceStart(0);
 					print "".($NbOfLinesRead-1)." lines processed (".($delay>0?$delay:1000)." ms, ".int(1000*($NbOfLinesShowsteps-1)/($delay>0?$delay:1000))." lines/second)\n";
 				}
@@ -5020,7 +5019,7 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 		elsif (@SkipFiles && &SkipFile($field[$pos_url]))    { $qualifdrop="Dropped record (URL $field[$pos_url] not qualified by SkipFiles)"; }
 		elsif (@OnlyHosts && ! &OnlyHost($field[$pos_host])) { $qualifdrop="Dropped record (host $field[$pos_host] not qualified by OnlyHosts)"; }
 		elsif (@OnlyFiles && ! &OnlyFile($field[$pos_url]))  { $qualifdrop="Dropped record (URL $field[$pos_url] not qualified by OnlyFiles)"; }
-		elsif ($pos_agent >= 0 && @SkipUserAgents && &SkipUserAgent($field[$pos_agent]))	{ $qualifdrop="Dropped record (user agent $field[$pos_agent] not qualified by SkipUserAgents)"; }
+		elsif (@SkipUserAgents && $pos_agent >= 0 && &SkipUserAgent($field[$pos_agent]))	{ $qualifdrop="Dropped record (user agent $field[$pos_agent] not qualified by SkipUserAgents)"; }
 		if ($qualifdrop) {
 			$NbOfLinesDropped++;
 			if ($Debug) { debug("$qualifdrop: $_",4); }
@@ -5126,8 +5125,8 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 		if ($URLWithQuery) {
 			$urlwithnoquery=$field[$pos_url];
 			my $foundparam=($urlwithnoquery =~ s/([$URLQuerySeparators])(.*)$//);
-			$tokenquery=$1?"$1":"";
-			$standalonequery=$2?"$2":"";
+			$tokenquery=$1||'';
+			$standalonequery=$2||'';
 			# For IIS setup, if pos_query is enabled we need to combine the URL to query strings
 			if (! $foundparam && $pos_query >=0 && $field[$pos_query] && $field[$pos_query] ne '-') {
 				$foundparam=1;
@@ -5149,8 +5148,8 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 			# Trunc CGI parameters in URL
 			$field[$pos_url] =~ s/([$URLQuerySeparators])(.*)$//;
 			$urlwithnoquery=$field[$pos_url];
-			$tokenquery=$1?"$1":"";
-			$standalonequery=$2?"$2":"";
+			$tokenquery=$1||'';
+			$standalonequery=$2||'';
 		}
 		# Here now urlwithnoquery is /mydir/mypage.ext, /mydir, /
 		# Here now tokenquery is '' or '?' or ';'
@@ -5739,6 +5738,7 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 					%TmpDomainLookup = ();
 					%TmpOS = %TmpRefererServer = %TmpRobot = %TmpBrowser = ();
 					# We flush if perl is not activestate
+					print "Flush history file on disk\n";
 					if ($Debug) {
 						debug("End of set of ".($counter-1)." records: Some hash arrays are too large. We flush and clean some.",2);
 						print " _host_p:".(scalar keys %_host_p)." _host_h:".(scalar keys %_host_h)." _host_k:".(scalar keys %_host_k)." _host_l:".(scalar keys %_host_l)." _host_s:".(scalar keys %_host_s)." _host_u:".(scalar keys %_host_u)."\n";
@@ -6769,7 +6769,7 @@ EOF
 		}
 		&tab_end;
 		print "<a name=\"NETSCAPE\">&nbsp;</a><BR>\n";
-		my $title="$Message[33]<br><img src=\"$DirIcons/browser/netscape_large.png\" alt=\"Netscape\">";
+		$title="$Message[33]<br><img src=\"$DirIcons/browser/netscape_large.png\" alt=\"Netscape\">";
 		&tab_head("$title",19);
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[58]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[15]</TH></TR>\n";
 		foreach my $key (reverse sort keys %_browser_h) {
