@@ -308,6 +308,7 @@
 "awbot",
 "bobby",
 "boris",
+"bumblebee",
 "cscrawler",
 "daviesbot",
 "ezresult",
@@ -607,6 +608,7 @@
 "awbot", "AWBot",
 "bobby", "Bobby", 
 "boris", "Boris",
+"bumblebee", "Bumblebee (relevare.com)",
 "cscrawler","CsCrawler",
 "daviesbot", "DaviesBot",
 "digout4u", "Digout4u",
@@ -635,6 +637,7 @@
 "webcompass", "webcompass",
 "wisenutbot","WISENutbot",
 "yandex", "Yandex bot",
+
 # Generic root ID
 "robot", "Unknown robot"
 );

@@ -64,6 +64,8 @@
 "nomade\.fr/","ctrouve\.","francite\.","\.lbb\.org","rechercher\.libertysurf\.fr",
 # Minor german search engines
 "fireball\.de","infoseek\.de","suche\.web\.de","meta\.ger",
+# Minor hungarian search engines
+"heureka\.hu","vizsla\.origo\.hu/katalogus?","vizsla\.origo\.hu","lapkereso\.hu","goliat\.hu","index\.hu","wahoo\.hu","freeweb\.hu","webmania\.hu","search\.internetto\.hu",
 # Minor italian search engines
 "virgilio\.it",
 # Minor norvegian search engines
@@ -130,6 +132,8 @@
 "nomade\.fr/","Nomade", "ctrouve\.","C'est trouvé", "francite\.","Francité", "\.lbb\.org", "LBB", "rechercher\.libertysurf\.fr", "Libertysurf",	
 # Minor german search engines
 "fireball\.de","Fireball", "infoseek\.de","Infoseek", "suche\.web\.de","Web.de", "meta\.ger","MetaGer",	
+# Minor hungarian search engines
+"heureka\.hu","Heureka", "vizsla\.origo\.hu/katalogus?","Origo-Vizsla-Katalógus", "vizsla\.origo\.hu","Origo-Vizsla", "lapkereso\.hu","Startlapkeresõ", "goliat\.hu","Góliát", "index\.hu","Index", "wahoo\.hu","Wahoo", "freeweb\.hu","FreeWeb", "webmania\.hu","webmania.hu", "search\.internetto\.hu","Internetto Keresõ",
 # Minor italian search engines
 "virgilio\.it","Virgilio",										
 # Minor norvegian search engines
@@ -186,6 +190,7 @@
 "haku\.www\.fi","w=",														# Minor finnish search engines
 "nomade\.fr/","s=", "francite\.","name=",									# Minor french search engines
 "fireball\.de","q=", "infoseek\.de","qt=", "suche\.web\.de","su=",			# Minor german search engines
+"heureka\.hu","heureka=", "vizsla\.origo\.hu/katalogus?","q=", "vizsla\.origo\.hu","search=", "lapkereso\.hu","keres.php", "goliat\.hu","KERESES=", "index\.hu","search.php3", "wahoo\.hu","q=", "freeweb\.hu","KERESES=", "search\.internetto\.hu","searchstr=",  #Minor hungarian search engines
 "sok\.start\.no", "q=",											# Minor norvegian search engines
 "evreka\.passagen\.se","q=",										# Minor swedish search engines
 "atlas\.cz","searchtext=", "seznam\.cz","w=", "ftxt\.quick\.cz","query=", "centrum\.cz","q=", "najdi\.to","dotaz=", "redbox.cz","srch="		# Minor czech search engines
