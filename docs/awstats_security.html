@@ -106,7 +106,8 @@ of AWStats that ignores value of parameter AllowAccessFromWebToAuthenticatedUser
 <font color=blue><b>How</b></font>:<br>
 awstats.pl file must be saved in a web protected <b>realm</b> to force a visitor to enter its username/password
 to access AWStats CGI program.<br>
-<u>Example of directives you can add into Apache to have awstats.pl in a web protected realm:</u><br><i>
+<u>Example of directives you can add into Apache to have awstats.pl in a web protected realm:</u><br>
+<i>
 &lt;Files "awstats.pl"&gt;<br>
 AuthUserFile /path/to/.passwd<br>
 AuthGroupFile /path/to/.group<br>
@@ -117,6 +118,12 @@ require valid-user<br>
 </i><br>
 Then edit each config/domain file you want to be protected to set <b>AllowAccessFromWebToAuthenticatedUsersOnly</b> to 1.<br>
 You can also edit list of authorized users in the <b>AllowAccessFromWebToFollowingAuthenticatedUsers</b> parameter.<br>
+<br>
+Other tip: If you define <b>AWSTATS_CONFIG</b> environment variable in your web server environment (Adding
+<i>SetEnv AWSTATS_CONFIG myconfigvalueformydomain</i> with other directives in your Apache VirtualHost config), AWStats
+will use the config file called <i>awstats.myconfigvalueformydomain.conf</i> to choose which statistics used,
+even if a visitor try to force the config/domain file with the URL '<i>http://mydomain.com/cgi-bin-awstats/awstats.pl?config=xxx</i>'.
+This can be usefull for thoose who edit their config/domain file with <i>AllowAccessFromWebToFollowingAuthenticatedUsers="__REMOTE_USER__"</i>.<br>
 <br><br>
 
 <br><a name="3"><H2 style="font: 22px Times; color: #606060"><u>3) NO SECURITY POLICY</u></H2></a><br>
