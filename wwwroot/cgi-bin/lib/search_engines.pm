@@ -52,8 +52,10 @@
 "infospace\.com",
 "mamma\.",
 "dejanews\.",
-"search\.dogpile\.com",
-"wisenut\.com",
+"dogpile\.com",
+"wisenut\.com", "ixquick.com",
+"search\.earthlink\.net", 
+"search\.sli\.sympatico\.ca", 
 # Minor brazilian search engines
 "engine\.exe", "miner\.bol\.com\.br",
 # Minor chinese search engines
@@ -65,11 +67,11 @@
 # Minor dutch search engines
 "ilse\.","vindex\.",
 # Minor english search engines
-"(^|\.)ask\.co\.uk","bbc\.co\.uk/cgi-bin/search","ifind\.freeserve","looksmart\.co\.uk","mirago\.","splut\.","spotjockey\.","ukdirectory\.","ukindex\.co\.uk","ukplus\.",
+"(^|\.)ask\.co\.uk","bbc\.co\.uk/cgi-bin/search","ifind\.freeserve","looksmart\.co\.uk","mirago\.","splut\.","spotjockey\.","ukdirectory\.","ukindex\.co\.uk","ukplus\.","searchy\.co\.uk",
 # Minor finnish search engines
 "haku\.www\.fi",
 # Minor french search engines
-"recherche\.aol\.fr","ctrouve\.","francite\.","\.lbb\.org","rechercher\.libertysurf\.fr",
+"recherche\.aol\.fr","ctrouve\.","francite\.","\.lbb\.org","rechercher\.libertysurf\.fr", "search1-[12]\.free\.fr", "recherche\.club-internet\.fr",
 # Minor german search engines
 "fireball\.de","infoseek\.de","suche\.web\.de","meta\.ger",
 "suchen\.abacho\.de","brisbane\.t-online\.de","allesklar\.de","meinestadt\.de",
@@ -79,10 +81,14 @@
 "virgilio\.it",
 # Minor norvegian search engines
 "sok\.start\.no",
+# Minor polish search engines
+"szukaj\.wp\.pl",
 # Minor russian search engines
 "yandex\.ru",
 # Minor swedish search engines
 "evreka\.passagen\.se",
+# Minor swiss search engines
+"search\.bluewin\.ch",
 # Other
 "search\..*com"
 );
@@ -132,12 +138,15 @@
 "nbci\.com/search","keyword=",
 "northernlight\.","qr=",
 "overture\.com","keywords=",
-"search\.dogpile\.com", "q=",
+"dogpile\.com", "qkw=", "search\.dogpile\.com", "q=",
 "spray\.","string=",
 "teoma\.","q=",
 "virgilio\.it","qs=",
 "webcrawler","searchText=",
-"wisenut\.com","query=",
+"wisenut\.com","query=", 
+"ixquick\.com", "query=",
+"search\.earthlink\.net", "q=",
+"search\.sli\.sympatico\.ca", "query=", 
 # Minor brazilian search engines
 "engine\.exe","p1=", "miner\.bol\.com\.br","q=",
 # Minor chinese search engines
@@ -149,13 +158,13 @@
 # Minor dutch search engines
 "ilse\.","search_for=", "vindex\.","in=",
 # Minor english search engines
-"(^|\.)ask\.co\.uk","ask=", "bbc\.co\.uk/cgi-bin/search","q=", "ifind\.freeserve","q=", "looksmart\.co\.uk","key=", "mirago\.","txtsearch=", "splut\.","pattern=", "spotjockey\.","Search_Keyword=", "ukindex\.co\.uk", "stext=", "ukdirectory\.","k=", "ukplus\.","search=", 
-# Minor english search engines
+"(^|\.)ask\.co\.uk","ask=", "bbc\.co\.uk/cgi-bin/search","q=", "ifind\.freeserve","q=", "looksmart\.co\.uk","key=",
+"mirago\.","txtsearch=", "splut\.","pattern=", "spotjockey\.","Search_Keyword=", "ukindex\.co\.uk", "stext=", "ukdirectory\.","k=", "ukplus\.","search=", "searchy\.co\.uk", "search_term=",
 "ukindex\.co\.uk", "stext=", "ukdirectory\.","k=",
 # Minor finnish search engines
 "haku\.www\.fi","w=",
 # Minor french search engines
-"nomade\.fr/","s=", "francite\.","name=",
+"nomade\.fr/","s=", "francite\.","name=", "recherche\.club-internet\.fr", "q=",
 # Minor german search engines
 "fireball\.de","q=", "infoseek\.de","qt=", "suche\.web\.de","su=",
 "suchen\.abacho\.de","q=", "brisbane\.t-online\.de","q=", 
@@ -163,10 +172,14 @@
 "heureka\.hu","heureka=", "vizsla\.origo\.hu/katalogus?","q=", "vizsla\.origo\.hu","search=", "lapkereso\.hu","keres.php", "goliat\.hu","KERESES=", "index\.hu","search.php3", "wahoo\.hu","q=", "freeweb\.hu","KERESES=", "search\.internetto\.hu","searchstr=",
 # Minor norvegian search engines
 "sok\.start\.no","q=",
+# Minor polish search engines
+"szukaj\.wp\.pl","szukaj=",
 # Minor russian search engines
 "yandex\.ru","text=",
 # Minor swedish search engines
-"evreka\.passagen\.se","q="
+"evreka\.passagen\.se","q=",
+# Minor swiss search engines
+"search\.bluewin\.ch","qry=",
 );
 
 # SearchEnginesKnownUrlNotFound
@@ -222,12 +235,15 @@
 "metacrawler\.","MetaCrawler (Metamoteur)",
 "nbci\.com/search","NBCI",
 "northernlight\.","NorthernLight",
-"overture\.com","Overture",					# Replace "goto\.com","Goto.com",
-"search\.dogpile\.com","Dogpile",
+"overture\.com","Overture",                 # Replace "goto\.com","Goto.com",
+"dogpile\.com","Dogpile",
 "spray\.","Spray",
 "teoma\.","Teoma",							# Replace "directhit\.com","DirectHit",
 "webcrawler\.","WebCrawler",
-"wisenut\.com","WISENut",
+"wisenut\.com","WISENut", 
+"ixquick\.com", "ix quick", 
+"search\.earthlink\.net", "Earth Link",
+"search\.sli\.sympatico\.ca", "Sympatico",
 # Minor brazilian search engines
 "engine\.exe","Cade", "miner\.bol\.com\.br","Meta Miner",
 # Minor chinese search engines
@@ -239,11 +255,12 @@
 # Minor dutch search engines
 "ilse\.","Ilse","vindex\.","Vindex\.nl",						
 # Minor english search engines
-"(^|\.)ask\.co\.uk","Ask Jeeves UK", "bbc\.co\.uk/cgi-bin/search","BBC", "ifind\.freeserve","Freeserve", "looksmart\.co\.uk","Looksmart UK", "mirago\.","Mirago", "splut\.","Splut", "spotjockey\.","Spotjockey", "ukdirectory\.","UK Directory", "ukindex\.co\.uk","UKIndex", "ukplus\.","UK Plus",
+"(^|\.)ask\.co\.uk","Ask Jeeves UK", "bbc\.co\.uk/cgi-bin/search","BBC", "ifind\.freeserve","Freeserve", "looksmart\.co\.uk","Looksmart UK",
+"mirago\.","Mirago", "splut\.","Splut", "spotjockey\.","Spotjockey", "ukdirectory\.","UK Directory", "ukindex\.co\.uk","UKIndex", "ukplus\.","UK Plus", "searchy\.co\.uk","searchy.co.uk",
 # Minor finnish search engines
 "haku\.www\.fi","Ihmemaa",										
 # Minor french search engines
-"recherche\.aol\.fr","AOL", "ctrouve\.","C'est trouvé", "francite\.","Francité", "\.lbb\.org", "LBB", "rechercher\.libertysurf\.fr", "Libertysurf",	
+"recherche\.aol\.fr","AOL", "ctrouve\.","C'est trouvé", "francite\.","Francité", "\.lbb\.org", "LBB", "rechercher\.libertysurf\.fr", "Libertysurf", "search1-2\.free\.fr", "free.fr", "recherche\.club-internet\.fr", "Club-internet",
 # Minor german search engines
 "fireball\.de","Fireball", "infoseek\.de","Infoseek", "suche\.web\.de","Web.de", "meta\.ger","MetaGer",	
 "suchen\.abacho\.de","Abacho", "brisbane\.t-online\.de","T-Online", 
@@ -254,10 +271,14 @@
 "virgilio\.it","Virgilio",										
 # Minor norvegian search engines
 "sok\.start\.no","start.no",								
+# Minor polish search engines
+"szukaj\.wp\.pl","Szukaj",
 # Minor russian search engines
 "yandex\.ru","Yandex",
 # Minor swedish search engines
-"evreka\.passagen\.se","Evreka",								
+"evreka\.passagen\.se","Evreka",
+# Minor Swiss search engines
+"search.bluewin.ch","Bluewin",
 # Other
 "search\..*com","Other search engines"
 );
