@@ -2,6 +2,15 @@ AWStats Changelog
 -----------------
 
 
+5.2
+
+- Added total and average row at bottom of day data array.
+- Removed "Bytes" text when values is 0.
+- Reduced main page size.
+
+
+
+
 5.1
 
 - Better support for ftp log files.
