@@ -24,7 +24,7 @@ $out = `$config{'awstats'} 2>&1`;
 if ($out !~ /^----- awstats (\S+)\.(\S+)\s(\S+\s\S+)/) {
 	&header($text{'index_title'}, "", undef, 1, 1, 0, undef);
 
-	if ($out =~ /^Content-type/) {
+	if ($out =~ /^content-type/i) {
 		# To old version. Does not support CLI launch from CGI_GATEWAY interface
 		print "<p>",&text('index_eversion', "<tt>$config{'awstats'}</tt>", "5.7 or older", "5.8"),"<p>\n";
 		print "<hr>\n";
