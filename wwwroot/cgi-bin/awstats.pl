@@ -82,7 +82,7 @@ $WarningMessages= 1;
 %MonthBytes = %MonthHits = %MonthHostsKnown = %MonthHostsUnknown = %MonthPages = %MonthUnique = %MonthVisits =
 %monthlib = %monthnum = ();
 
-$VERSION="3.2 (build 64)";
+$VERSION="3.2 (build 65)";
 $Lang="en";
 
 # Default value
@@ -2717,7 +2717,7 @@ EOF
 			print "<TD CLASS=AWL>";
 			print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_p\" WIDTH=$bredde_p HEIGHT=8><br>";
 			print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_e\" WIDTH=$bredde_e HEIGHT=8>";
-			print "</TD></TR>";
+			print "</TD></TR>\n";
 			$count++;
 		}
 		&tab_end;
