@@ -4603,9 +4603,9 @@ $QueryString=~s/(^|&)output(&|$)//i; $QueryString=~s/&+$//;
 if ($QueryString =~ /(^|&)month=(year)/i) { error("month=year is a deprecated option. Use month=all instead."); }
 if ($QueryString =~ /(^|&)year=(\d\d\d\d)/i) { $YearRequired="$2"; }
 else { $YearRequired="$nowyear"; }
-if ($QueryString =~ /(^|&)month=(\d\d)/i || $QueryString =~ /(^|&)month=(all)/i) { $MonthRequired="$2"; }
+if ($QueryString =~ /(^|&)month=(\d{1,2})/i || $QueryString =~ /(^|&)month=(all)/i) { $MonthRequired=sprintf("%02d",$2); }
 else { $MonthRequired="$nowmonth"; }
-if ($QueryString =~ /(^|&)day=(\d\d)/i) { $DayRequired="$2"; }	# day is a hidden option. Must not be used (Make results not understandable). Available for users that rename history files with day.
+if ($QueryString =~ /(^|&)day=(\d{1,2})/i) { $DayRequired=sprintf("%02d",$2); }	# day is a hidden option. Must not be used (Make results not understandable). Available for users that rename history files with day.
 else { $DayRequired=''; }
 
 # Print AWStats and Perl version 
