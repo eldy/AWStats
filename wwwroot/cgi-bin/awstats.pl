@@ -1630,7 +1630,7 @@ sub Check_Config {
 	 		$ExtraConditionTypeVal[$extranum][$part]=($URLNotCaseSensitive?lc($conditiontypeval):$conditiontypeval);
 			$part++;
 	 	}
-		my $part=0;
+		$part=0;
 		foreach my $rowkeycouple (split(/\s\|\s/, $ExtraFirstColumnValues[$extranum])) {
 	 		my ($rowkeytype, $rowkeytypeval)=split(/,/,$rowkeycouple,2);
 	 		$ExtraFirstColumnValuesType[$extranum][$part]=$rowkeytype;
@@ -4235,7 +4235,7 @@ if ($ENV{'GATEWAY_INTERFACE'}) {	# Run from a browser
 	# Expires must be GMT ANSI asctime and must be after Content-type to avoid pb with some servers (SAMBAR)
 	#my $ExpireDelayInHTTPHeader=0;
 	#print "Expires: ".(gmtime($starttime()+$ExpireDelayInHTTPHeader))."\n";
-	print "\n\n";
+	print "\n";
 	if ($ENV{'CONTENT_LENGTH'}) {
 		binmode STDIN;
 		read(STDIN, $QueryString, $ENV{'CONTENT_LENGTH'});
@@ -7168,13 +7168,13 @@ EOF
 		print "</TD>\n";
 		print "</TR>\n";
 		# Show lib for day
-		print "<TR>";
+		print "<TR valign=middle>";
 		foreach my $daycursor ($firstdaytoshowtime..$lastdaytoshowtime) {
 			$daycursor =~ /^(\d\d\d\d)(\d\d)(\d\d)/;
 			my $year=$1; my $month=$2; my $day=$3;
 			if (! DateIsValid($day,$month,$year)) { next; }			# If not an existing day, go to next
 			my $dayofweekcursor=DayOfWeek($day,$month,$year);
-			print "<TD valign=middle".($dayofweekcursor=~/[06]/?" bgcolor=\"#$color_weekend\"":"").">";
+			print "<TD".($dayofweekcursor=~/[06]/?" bgcolor=\"#$color_weekend\"":"").">";
 			print ($day==$nowday && $month==$nowmonth && $year==$nowyear?'<b>':'');
 			print "$day<br><font style=\"font-size: ".($FrameName ne 'mainright'?"10":"9")."px;\">".$MonthLib{$month}."</font>";
 			print ($day==$nowday && $month==$nowmonth && $year==$nowyear?'</b>':'');
@@ -7198,27 +7198,27 @@ EOF
 			my $year=$1; my $month=$2; my $day=$3;
 			if (! DateIsValid($day,$month,$year)) { next; }			# If not an existing day, go to next
 			my $dayofweekcursor=DayOfWeek($day,$month,$year);
-			print "<TR>";
-			print "<TD".($dayofweekcursor=~/[06]/?" bgcolor=\"#$color_weekend\"":"").">",Format_Date("$year$month$day"."000000",2),"</TD>";
-			if ($ShowMonthDayStats =~ /V/i) { print "<TD".($dayofweekcursor=~/[06]/?" bgcolor=\"#$color_weekend\"":"").">",$DayVisits{$year.$month.$day}?$DayVisits{$year.$month.$day}:"0","</TD>"; }
-			if ($ShowMonthDayStats =~ /P/i) { print "<TD".($dayofweekcursor=~/[06]/?" bgcolor=\"#$color_weekend\"":"").">",$DayPages{$year.$month.$day}?$DayPages{$year.$month.$day}:"0","</TD>"; }
-			if ($ShowMonthDayStats =~ /H/i) { print "<TD".($dayofweekcursor=~/[06]/?" bgcolor=\"#$color_weekend\"":"").">",$DayHits{$year.$month.$day}?$DayHits{$year.$month.$day}:"0","</TD>"; }
-			if ($ShowMonthDayStats =~ /B/i) { print "<TD".($dayofweekcursor=~/[06]/?" bgcolor=\"#$color_weekend\"":"").">",Format_Bytes(int($DayBytes{$year.$month.$day})),"</TD>"; }
+			print "<TR".($dayofweekcursor=~/[06]/?" bgcolor=\"#$color_weekend\"":"").">";
+			print "<TD>",Format_Date("$year$month$day"."000000",2),"</TD>";
+			if ($ShowMonthDayStats =~ /V/i) { print "<TD>",$DayVisits{$year.$month.$day}?$DayVisits{$year.$month.$day}:"0","</TD>"; }
+			if ($ShowMonthDayStats =~ /P/i) { print "<TD>",$DayPages{$year.$month.$day}?$DayPages{$year.$month.$day}:"0","</TD>"; }
+			if ($ShowMonthDayStats =~ /H/i) { print "<TD>",$DayHits{$year.$month.$day}?$DayHits{$year.$month.$day}:"0","</TD>"; }
+			if ($ShowMonthDayStats =~ /B/i) { print "<TD>",Format_Bytes(int($DayBytes{$year.$month.$day})),"</TD>"; }
 			print "</TR>\n";
 		}
 		# Average row
-		print "<TR><TD bgcolor=\"#$color_TableBGRowTitle\">$Message[96]</TD>";
-		if ($ShowMonthDayStats =~ /V/i) { print "<TD bgcolor=\"#$color_TableBGRowTitle\">$average_v</TD>"; }
-		if ($ShowMonthDayStats =~ /P/i) { print "<TD bgcolor=\"#$color_TableBGRowTitle\">$average_p</TD>"; }
-		if ($ShowMonthDayStats =~ /H/i) { print "<TD bgcolor=\"#$color_TableBGRowTitle\">$average_h</TD>"; }
-		if ($ShowMonthDayStats =~ /B/i) { print "<TD bgcolor=\"#$color_TableBGRowTitle\">$average_k</TD>"; }
+		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TD>$Message[96]</TD>";
+		if ($ShowMonthDayStats =~ /V/i) { print "<TD>$average_v</TD>"; }
+		if ($ShowMonthDayStats =~ /P/i) { print "<TD>$average_p</TD>"; }
+		if ($ShowMonthDayStats =~ /H/i) { print "<TD>$average_h</TD>"; }
+		if ($ShowMonthDayStats =~ /B/i) { print "<TD>$average_k</TD>"; }
 		print "</TR>\n";		
 		# Total row
-		print "<TR><TD bgcolor=\"#$color_TableBGRowTitle\">$Message[102]</TD>";
-		if ($ShowMonthDayStats =~ /V/i) { print "<TD bgcolor=\"#$color_TableBGRowTitle\">$total_v</TD>"; }
-		if ($ShowMonthDayStats =~ /P/i) { print "<TD bgcolor=\"#$color_TableBGRowTitle\">$total_p</TD>"; }
-		if ($ShowMonthDayStats =~ /H/i) { print "<TD bgcolor=\"#$color_TableBGRowTitle\">$total_h</TD>"; }
-		if ($ShowMonthDayStats =~ /B/i) { print "<TD bgcolor=\"#$color_TableBGRowTitle\">".Format_Bytes($total_k)."</TD>"; }
+		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TD>$Message[102]</TD>";
+		if ($ShowMonthDayStats =~ /V/i) { print "<TD>$total_v</TD>"; }
+		if ($ShowMonthDayStats =~ /P/i) { print "<TD>$total_p</TD>"; }
+		if ($ShowMonthDayStats =~ /H/i) { print "<TD>$total_h</TD>"; }
+		if ($ShowMonthDayStats =~ /B/i) { print "<TD>".Format_Bytes($total_k)."</TD>"; }
 		print "</TR>\n";		
 
 		print "</TABLE>\n<br>";
@@ -7309,11 +7309,11 @@ EOF
 		if ($ShowDaysOfWeekStats =~ /H/i) { print "<TD width=\"80\" bgcolor=\"#$color_h\" onmouseover=\"ShowTip(4);\" onmouseout=\"HideTip(4);\">$Message[57]</TD>"; }
 		if ($ShowDaysOfWeekStats =~ /B/i) { print "<TD width=\"80\" bgcolor=\"#$color_k\" onmouseover=\"ShowTip(5);\" onmouseout=\"HideTip(5);\">$Message[75]</TD></TR>"; }
 		for (@DOWIndex) {
-			print "<TR>";
-			print "<TD".($_=~/[06]/?" bgcolor=\"#$color_weekend\"":"").">".$Message[$_+84]."</TD>";
-			if ($ShowDaysOfWeekStats =~ /P/i) { print "<TD".($_=~/[06]/?" bgcolor=\"#$color_weekend\"":"").">",$avg_dayofweek_p[$_],"</TD>"; }
-			if ($ShowDaysOfWeekStats =~ /H/i) { print "<TD".($_=~/[06]/?" bgcolor=\"#$color_weekend\"":"").">",$avg_dayofweek_h[$_],"</TD>"; }
-			if ($ShowDaysOfWeekStats =~ /B/i) { print "<TD".($_=~/[06]/?" bgcolor=\"#$color_weekend\"":"").">",Format_Bytes($avg_dayofweek_k[$_]),"</TD>"; }
+			print "<TR".($_=~/[06]/?" bgcolor=\"#$color_weekend\"":"").">";
+			print "<TD>".$Message[$_+84]."</TD>";
+			if ($ShowDaysOfWeekStats =~ /P/i) { print "<TD>",$avg_dayofweek_p[$_],"</TD>"; }
+			if ($ShowDaysOfWeekStats =~ /H/i) { print "<TD>",$avg_dayofweek_h[$_],"</TD>"; }
+			if ($ShowDaysOfWeekStats =~ /B/i) { print "<TD>",Format_Bytes($avg_dayofweek_k[$_]),"</TD>"; }
 			print "</TR>\n";
 		}
 		print "</TABLE>\n<br>\n";
@@ -7348,9 +7348,9 @@ EOF
 			if ($ShowHoursStats =~ /P/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_p\" HEIGHT=$bredde_p WIDTH=6 ALT=\"$Message[56]: ".int($_time_p[$ix])."\" title=\"$Message[56]: ".int($_time_p[$ix])."\">"; }
 			if ($ShowHoursStats =~ /H/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_h\" HEIGHT=$bredde_h WIDTH=6 ALT=\"$Message[57]: ".int($_time_h[$ix])."\" title=\"$Message[57]: ".int($_time_h[$ix])."\">"; }
 			if ($ShowHoursStats =~ /B/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_k\" HEIGHT=$bredde_k WIDTH=6 ALT=\"$Message[75]: ".Format_Bytes($_time_k[$ix])."\" title=\"$Message[75]: ".Format_Bytes($_time_k[$ix])."\">"; }
-			print "</TD>";
+			print "</TD>\n";
 		}
-		print "</TR>";
+		print "</TR>\n";
 		# Show hour lib
 		print "<TR onmouseover=\"ShowTip(17);\" onmouseout=\"HideTip(17);\">";
 		for (my $ix=0; $ix<=23; $ix++) {
@@ -7837,16 +7837,16 @@ EOF
 				my $keywithoutcumul=$key; $keywithoutcumul =~ s/cumul$//i;
 				my $libbrowser=$BrowsersHashIDLib{$keywithoutcumul}||$keywithoutcumul;
 				my $nameicon=$BrowsersHashIcon{$keywithoutcumul}||"notavailable";
-				if ($libbrowser eq "netscape") { $libbrowser="Netscape <a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=browserdetail":"$PROG$StaticLinks.browserdetail.html")."\"$NewLinkTarget>($Message[58])</a>"; }
-				if ($libbrowser eq "msie")     { $libbrowser="MS Internet Explorer <a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=browserdetail":"$PROG$StaticLinks.browserdetail.html")."\"$NewLinkTarget>($Message[58])</a>"; }
-				print "<TR><TD width=$WIDTHCOLICON><IMG SRC=\"$DirIcons\/browser\/$nameicon.png\" alt=\"\"></TD><TD CLASS=AWL>$libbrowser</TD><TD width=80>".($BrowsersHereAreGrabbers{$key}?"<b>$Message[112]</b>":"$Message[113]")."</TD><TD>$new_browser_h{$key}</TD><TD>$p %</TD></TR>\n";
+				if ($libbrowser eq 'netscape') { $libbrowser="Netscape <a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=browserdetail":"$PROG$StaticLinks.browserdetail.html")."\"$NewLinkTarget>($Message[58])</a>"; }
+				if ($libbrowser eq 'msie')     { $libbrowser="MS Internet Explorer <a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=browserdetail":"$PROG$StaticLinks.browserdetail.html")."\"$NewLinkTarget>($Message[58])</a>"; }
+				print "<TR><TD width=$WIDTHCOLICON><IMG SRC=\"$DirIcons\/browser\/$nameicon.png\" alt=\"\"></TD><TD CLASS=AWL>$libbrowser</TD><TD>".($BrowsersHereAreGrabbers{$key}?"<b>$Message[112]</b>":"$Message[113]")."</TD><TD>$new_browser_h{$key}</TD><TD>$p %</TD></TR>\n";
 			}
 			$count++;
 		}
 		&tab_end;
 	}
 
-	print "\n<a name=\"REFERER\">&nbsp;</a>\n\n";
+	print "\n<a name=\"REFERING\">&nbsp;</a>\n\n";
 
 	# BY REFERENCE
 	#---------------------------
