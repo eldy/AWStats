@@ -58,7 +58,7 @@ $TotalHostsKnown, $TotalHostsUnKnown, $TotalKeywords, $TotalPages, $TotalUnique,
 $URLFilter, $UserAgent, $WarningMessages, $YearRequired, 
 $color_Background, $color_TableBG, $color_TableBGRowTitle,
 $color_TableBGTitle, $color_TableBorder, $color_TableRowTitle, $color_TableTitle,
-$color_h, $color_k, $color_link, $color_p, $color_s, $color_v, $color_w,
+$color_h, $color_k, $color_link, $color_p, $color_s, $color_v, $color_w, $color_weekend,
 $found, $internal_link, $monthtoprocess, $new,
 $tab_titre, $total_h, $total_k, $total_p, $yearmonth, $yeartoprocess) = ();
 # ---------- Init arrays --------
@@ -71,7 +71,7 @@ $tab_titre, $total_h, $total_k, $total_p, $yearmonth, $yeartoprocess) = ();
 %MonthBytes = %MonthHits = %MonthHostsKnown = %MonthHostsUnknown = %MonthPages = %MonthUnique = %MonthVisits =
 %listofyears = %monthlib = %monthnum = ();
 
-$VERSION="3.1 (build 7)";
+$VERSION="3.1 (build 8)";
 $Lang="en";
 $Sort="";
 
@@ -80,7 +80,7 @@ $SortDir       = -1;		# -1 = Sort order from most to less, 1 = reverse order (De
 $VisitTimeOut  = 10000;		# Laps of time to consider a page load as a new visit. 10000 = one hour (Default = 10000)
 $FullHostName  = 1;			# 1 = Use name.domain.zone to refer host clients, 0 = all hosts in same domain.zone are one host (Default = 1, 0 never tested)
 $MaxLengthOfURL= 70;		# Maximum length of URL shown on stats page. This affects only URL visible text, link still work (Default = 70)
-$MaxNbOfDays   = 32;
+$MaxNbOfDays   = 31;
 $NbOfLinesForBenchmark=4000;
 $CENTER        = "";
 $WIDTH         = "600";
@@ -947,6 +947,7 @@ sub Read_Config_File {
 		if ($param =~ /^color_hover/)           { $color_hover=$value; next; }
 		if ($param =~ /^color_text/)            { $color_text=$value; next; }
 		if ($param =~ /^color_titletext/)       { $color_titletext=$value; next; }
+		if ($param =~ /^color_weekend/)         { $color_weekend=$value; next; }
 		if ($param =~ /^color_v/)               { $color_v=$value; next; }
 		if ($param =~ /^color_w/)               { $color_w=$value; next; }
 		if ($param =~ /^color_p/)               { $color_p=$value; next; }
@@ -1073,6 +1074,7 @@ sub Check_Config {
 	$color_titletext =~ s/#//g; if ($color_titletext !~ /^[0-9|A-Z][0-9|A-Z]*$/i) { $color_titletext="000000"; }
 	$color_link =~ s/#//g; if ($color_link !~ /^[0-9|A-Z][0-9|A-Z]*$/i)           { $color_link="0011BB"; }
 	$color_hover =~ s/#//g; if ($color_hover !~ /^[0-9|A-Z][0-9|A-Z]*$/i)         { $color_hover="605040"; }
+	$color_weekend =~ s/#//g; if ($color_weekend !~ /^[0-9|A-Z][0-9|A-Z]*$/i)     { $color_weekend="EAEAEA"; }
 	$color_v =~ s/#//g; if ($color_v !~ /^[0-9|A-Z][0-9|A-Z]*$/i)                 { $color_v="F3F300"; }
 	$color_w =~ s/#//g; if ($color_w !~ /^[0-9|A-Z][0-9|A-Z]*$/i)                 { $color_w="FF9933"; }
 	$color_w =~ s/#//g; if ($color_p !~ /^[0-9|A-Z][0-9|A-Z]*$/i)                 { $color_p="4477DD"; }
@@ -2684,7 +2686,7 @@ if (! (($MonthRequired eq $nowmonth || $MonthRequired eq "year") && $YearRequire
 	}
 	else {
 		# About 30.43 days a month = 2626728 seconds a month
-		$lastdaytoshowtime=($YearRequired-1970)*31556736+$MonthRequired*2629728+43200;
+		$lastdaytoshowtime=($YearRequired-1970)*31556736+$MonthRequired*2629728;
 	}
 }
 for ($ix=$MaxNbOfDays-1; $ix>=0; $ix--) {
@@ -2706,9 +2708,9 @@ for ($ix=$MaxNbOfDays-1; $ix>=0; $ix--) {
 	if ($max_h > 0) { $bredde_h=$DayHits{$oldyear.$oldmonth.$oldday}/$max_h*$BarHeight/2; }
 	if ($max_k > 0) { $bredde_k=$DayBytes{$oldyear.$oldmonth.$oldday}/$max_k*$BarHeight/2; }
 	print "<TD>";
-	print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_p\" HEIGHT=$bredde_p WIDTH=8 ALT=\"$Message[56]: $DayPages{$oldyear.$oldmonth.$oldday}\" title=\"$Message[56]: $DayPages{$oldyear.$oldmonth.$oldday}\">";
-	print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_h\" HEIGHT=$bredde_h WIDTH=8 ALT=\"$Message[57]: $DayHits{$oldyear.$oldmonth.$oldday}\" title=\"$Message[57]: $DayHits{$oldyear.$oldmonth.$oldday}\">";
-	print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_k\" HEIGHT=$bredde_k WIDTH=8 ALT=\"$Message[75]: ".Format_Bytes($DayBytes{$oldyear.$oldmonth.$oldday})."\" title=\"$Message[75]: ".Format_Bytes($DayBytes{$oldyear.$oldmonth.$oldday})."\">";
+	print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_p\" HEIGHT=$bredde_p WIDTH=4 ALT=\"$Message[56]: $DayPages{$oldyear.$oldmonth.$oldday}\" title=\"$Message[56]: $DayPages{$oldyear.$oldmonth.$oldday}\">";
+	print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_h\" HEIGHT=$bredde_h WIDTH=4 ALT=\"$Message[57]: $DayHits{$oldyear.$oldmonth.$oldday}\" title=\"$Message[57]: $DayHits{$oldyear.$oldmonth.$oldday}\">";
+	print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_k\" HEIGHT=$bredde_k WIDTH=4 ALT=\"$Message[75]: ".Format_Bytes($DayBytes{$oldyear.$oldmonth.$oldday})."\" title=\"$Message[75]: ".Format_Bytes($DayBytes{$oldyear.$oldmonth.$oldday})."\">";
 	print "</TD>\n";
 }
 print "</TR><TR>";
@@ -2717,7 +2719,7 @@ for ($ix=$MaxNbOfDays-1; $ix>=0; $ix--) {
 	if ($oldyear < 100) { $oldyear+=2000; } else { $oldyear+=1900; }
 	if (++$oldmonth < 10) { $oldmonth="0$oldmonth"; }
 	if ($oldday < 10) { $oldday="0$oldday"; }
-	print "<TD valign=center".($oldwday==0||$oldwday==6?" bgcolor=#EAEAEA":"").">";
+	print "<TD valign=center".($oldwday==0||$oldwday==6?" bgcolor=#$color_weekend":"").">";
 	print ($oldday==$nowday && $oldmonth==$nowmonth?"<b>":"");
 	print "$oldday<br>".$monthlib{$oldmonth};
 	print ($oldday==$nowday && $oldmonth==$nowmonth?"</b></TD>":"</TD>");
