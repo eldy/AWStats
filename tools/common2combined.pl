@@ -22,11 +22,12 @@
 # ---------- Init hash arrays --------
 %monthnum = ();
 
-$VERSION="1.0 (build 1)";
+$VERSION="1.0 (build 2)";
 $NbOfLinesForBenchmark=5000;
 
-$NewReferer="http://www.tf1.fr/home.html";
-$NewAgent="Mozilla/4.0 (compatible; MSIE 5.5; Windows NT 5.0)";
+#$NewReferer="http://www.referersite.com/refererpage.html";
+$NewReferer="-";
+$NewUserAgent="Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0)";
 
 
 
@@ -67,14 +68,18 @@ for (0..@ARGV-1) {
 }
 if (scalar keys %ParamFile == 0) {
 	print "----- $PROG $VERSION (c) Laurent Destailleur -----\n";
-	print "$PROG allows you to convert a common log file into a combined.\n";
+	print "$PROG converts any Apache 'common' log file into a 'combined' file.\n";
 	print "$PROG comes with ABSOLUTELY NO WARRANTY. It's a free software\n";
 	print "distributed with a GNU General Public License (See COPYING.txt file).\n";
-	print "$PROG is part of AWStats but can be used alone as a log merger before\n";
-	print "using any other log analyzer.\n";
+	print "$PROG is part of AWStats but can be used alone for any need.\n";
+	print "\n";
+	print "Value used for the 2 new fields added in conversion are :\n";
+	print "New referer    : \"$NewReferer\"\n";
+	print "New user Agent : \"$NewUserAgent\"\n";
 	print "\n";
 	print "Usage:\n";
-	print "  $PROG.$Extension oldfile1 > newfile\n";
+	print "  $PROG.$Extension oldfile.log > newfile.log\n";
+	print "\n";
 	print "Options:\n";
 	print "  -showsteps  to add benchmark informations every $NbOfLinesForBenchmark lines processed\n";
 	print "\n";
@@ -263,7 +268,7 @@ while (1 == 1)
 	}
 
 	# Print record if ready
-	print "$linerecord{$logfilechosen} \"$NewReferer\" \"$NewAgent\"\n";
+	print "$linerecord{$logfilechosen} \"$NewReferer\" \"$NewUserAgent\"\n";
 
 	# End of processing all new records.
 }
