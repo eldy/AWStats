@@ -803,14 +803,27 @@ This is same than: <i>LogFormat="%host %other %logname %time1 %methodurl %code %
 You must use : <i>LogFormat="%virtualname %host %other %logname %time1 %methodurl %code %bytesd %refererquot %uaquot"</i><br>
 
 <table bgcolor=#F0F0F0 width="100%" class=CFAQ><tr class=CFAQ><td class=CFAQ>
-<u>If your log records are EXACTLY like this (<b>NCSA combined</b> with <b>Apache using mod_gzip</b> format 1):</u><br>
+<u>If your log records are EXACTLY like this (<b>NCSA combined and mod_gzip format 1</b> with <b>Apache 1.x</b>):</u><br>
 <i>62.161.78.73 - - [dd/mmm/yyyy:hh:mm:ss +0x00] "GET /page.html HTTP/1.1" 200 3904 "http://www.from.com/from.htm" "Mozilla/4.0 (compatible; MSIE 5.01; Windows NT 5.0)" mod_gzip: 66pct.</i><br>
 You must use : <i>LogFormat="%host %other %logname %time1 %methodurl %code %bytesd %refererquot %uaquot %other %gzipratio"</i><br>
 </td></tr></table>
 
-<u>If your log records are EXACTLY like this (<b>NCSA combined</b> with <b>Apache using mod_gzip</b> format 2):</u><br>
+<u>If your log records are EXACTLY like this (<b>NCSA combined and mod_gzip format 2</b> with <b>Apache 1.x</b>):</u><br>
 <i>62.161.78.73 - - [dd/mmm/yyyy:hh:mm:ss +0x00] "GET /page.html HTTP/1.1" 200 3904 "http://www.from.com/from.htm" "Mozilla/4.0 (compatible; MSIE 5.01; Windows NT 5.0)" mod_gzip: DECHUNK:OK In:11393 Out:3904:66pct.</i><br>
 You must use : <i>LogFormat="%host %other %logname %time1 %methodurl %code %bytesd %refererquot %uaquot %other %other %gzipin %gzipout"</i><br>
+
+<table bgcolor=#F0F0F0 width="100%" class=CFAQ><tr class=CFAQ><td class=CFAQ>
+<u>If your log records are EXACTLY like this (<b>NCSA combined and mod_deflate</b> with <b>Apache 2 </b>):</u><br>
+<i>62.161.78.73 - - [dd/mmm/yyyy:hh:mm:ss +0x00] "GET /page.html HTTP/1.1" 200 3904 "http://www.from.com/from.htm" "Mozilla/4.0 (compatible; MSIE 5.01; Windows NT 5.0)" (45)</i><br>
+You must use : <i>LogFormat="%host %other %logname %time1 %methodurl %code %bytesd %refererquot %uaquot %deflateratio"</i><br>
+</td></tr></table>
+
+<u>If your log records are EXACTLY like this (<b>NCSA combined with 2 spaces between some fields</b> with <b>Zope</b>):</u><br>
+<i>62.161.78.73 &nbsp;- - [dd/mmm/yyyy:hh:mm:ss +0x00] "GET /page.html HTTP/1.1" 200 3904 "http://www.from.com/from.htm" "Mozilla/4.0 (compatible; MSIE 5.01; Windows NT 5.0)" (45)</i><br>
+You must use : <i><br>
+LogFormat="%host %other %logname %time1 %methodurl %code %bytesd %refererquot %uaquot"<br>
+LogSeparator=" *"<br>
+</i>
 
 <table bgcolor=#F0F0F0 width="100%" class=CFAQ><tr class=CFAQ><td class=CFAQ>
 <u>If your log records are EXACTLY like this (<b>NCSA common CLF</b> log format):</u><br>
