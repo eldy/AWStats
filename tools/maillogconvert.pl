@@ -50,7 +50,7 @@ sub debug {
 	if ($Debug >= $level) { 
 		my $debugstring = $_[0];
 		if ($ENV{"GATEWAY_INTERFACE"}) { $debugstring =~ s/^ /&nbsp&nbsp /; $debugstring .= "<br>"; }
-		print "DEBUG $level - $. - ".time." : $debugstring\n";
+		print localtime(time)." - DEBUG $level - $. - : $debugstring\n";
 		}
 	0;
 }
@@ -363,6 +363,59 @@ while (<>) {
 		$mail{$id}{'size'}=$size;
 		if (m/\s+relay=([^\,]+)[\s\,]/ || m/\s+relay=([^\s\,]+)$/) { $mail{$id}{'relay_s'}=$1; }
 		debug("For id=$id, found a sendmail/postfix incoming message: from=$mail{$id}{'from'} size=$mail{$id}{'size'} relay_s=$mail{$id}{'relay_s'}");
+	}
+
+	#
+	# Matched exchange message
+	#
+	elsif (/^([^\t]+)\t([^\t]+)\t[^\t]+\t([^\t]+)\t([^\t]+)\t([^\t]+)\t[^\t]+\t([^\t]+)\t([^\t]+)\t([^\t]+)\t[^\t]+\t[^\t]+\t([^\t]+)\t[^\t]+\t[^\t]+\t[^\t]+\t[^\t]+\t[^\t]+\t[^\t]+\t([^\t]+)/ ne undef) {
+		#    date      hour GMT  ip_s    relay_s   partner   relay_r   ip_r    to        code      id                        size                                                      from
+		# Example: 2003-8-12	0:58:14 GMT	66.218.66.69	n14.grp.scd.yahoo.com	-	PACKRAT	192.168.1.2	christina@pirnie.org	1019	bh9e3f+5qvo@eGroups.com	0	0	4281	1	2003-8-12 0:58:14 GMT	0	Version: 6.0.3790.0	-	 [SRESafeHaven] Re: More Baby Stuff	jtluvs2cq@wmconnect.com	-
+		$MailType||='exchange';
+		my $date=$1;
+		my $time=$2;
+		my $relay_s=$3;
+		my $partner=$4;
+		my $relay_r=$5;
+		my $to=$6; $to =~ s/\s/%20/g;
+		my $code=$7;
+		my $id=$8;
+		my $size=$9;
+		my $from=$10; $from =~ s/\s/%20/g;
+		# Check if record is significant record
+		my $ok=0;
+		# Code 1031=end outbound transfer
+		if ($code == 1031) {	# This is outbound mail
+			$ok=1;
+			#my $savrelay_s=$relay_s;
+			#$relay_s=$relay_r; $relay_r=$savrelay_s;
+			$relay_s=$relay_r;
+			$relay_r=$partner;
+			$code=1;
+		}
+		# Code 1023=SMTP local delivery
+		if ($code == 1023) {	# This is inbound ???
+			$code=1;
+			$ok=1;
+		}
+		if ($ok) {		
+			$mailid=$id;
+			if ($date =~ /(\d+)-(\d+)-(\d+)/) {
+				$mail{$id}{'year'}=sprintf("%02s",$1);
+				$mail{$id}{'mon'}=sprintf("%02s",$2);
+				$mail{$id}{'day'}=sprintf("%02s",$3);
+			}
+			if ($time =~ /^(\d+):(\d+):(\d+)/) {
+				$mail{$id}{'time'}=sprintf("%02s:%02s:%02s",$1,$2,$3);
+			}
+			$mail{$id}{'from'}=$from;
+			$mail{$id}{'to'}=$to;
+			$mail{$id}{'code'}=$code;
+			$mail{$id}{'size'}=$size;
+			$mail{$id}{'relay_s'}=$relay_s;
+			$mail{$id}{'relay_r'}=$relay_r;
+			debug("For id=$id, found an exchange message: year=$mail{$id}{'year'} mon=$mail{$id}{'mon'} day=$mail{$id}{'day'} time=$mail{$id}{'time'} from=$mail{$id}{'from'} to=$mail{$id}{'to'} size=$mail{$id}{'size'} code=$mail{$id}{'code'} relay_s=$mail{$id}{'relay_s'} relay_r=$mail{$id}{'relay_r'}");
+		}
 	}
 
 	#
