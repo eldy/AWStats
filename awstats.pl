@@ -1597,16 +1597,16 @@ for ($ix=0; $ix<5; $ix++) {	$_from_h[$ix]=0; }
 if ($ENV{"GATEWAY_INTERFACE"} eq "") { &html_head; }
 print "<STYLE TYPE=text/css>
 <!--
-	BODY { font-align: font-family: arial, verdana, helvetica, sans-serif; font-size: 12px; background-color:$color_Background; }
-	TD,TH { font-family: arial, verdana, helvetica, sans-serif; font-size: 10px; text-align: center; }
-	TD.LEFT { font-family: arial, verdana, helvetica, sans-serif; font-size: 10px; text-align: left; }
-	A {	font-family: arial, verdana helvetica, sans-serif;	font-size: 10px; font-style: normal; color: $color_link; }
+	BODY { font-align: font-family: arial, verdana, helvetica, sans-serif; font-size:12px; background-color:$color_Background; }
+	TD,TH { font-family: arial, verdana, helvetica, sans-serif; font-size:10px; text-align: center; }
+	TD.LEFT { font-family: arial, verdana, helvetica, sans-serif; font-size:10px; text-align: left; }
+	A {	font-family: arial, verdana helvetica, sans-serif; font-size:10px; font-style: normal; color: $color_link; }
 	DIV { text-align: justify; }
 	.TABLEBORDER { background-color:$color_TableBorder; }
 	.TABLEFRAME { background-color:$color_TableBG; }
 	.TABLEDATA { background-color:$color_Background; }
-	.TABLETITLE { font-family: verdana, arial, helvetica, sans-serif; font-size: 14px; font-weight:bold; color: $color_TableTitle; background-color:$color_TableBGTitle; }
-	.classTooltip { position:absolute; top:0px; left:0px; z-index:2; width: 280; visibility:hidden; font: 8pt MS Comic Sans,arial,sans-serif; background-color:#FFFFE6; padding:10px 10px; border: 1px solid black; }
+	.TABLETITLE { font-family: verdana, arial, helvetica, sans-serif; font-size:14px; font-weight:bold; color: $color_TableTitle; background-color:$color_TableBGTitle; }
+	.classTooltip { position:absolute; top:0px; left:0px; z-index:2; width:280; visibility:hidden; font:8pt MS Comic Sans,arial,sans-serif; background-color:#FFFFE6; padding:10px 10px; border:1px solid black; }
 //-->
 </STYLE>\n
 ";
