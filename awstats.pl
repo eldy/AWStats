@@ -62,7 +62,7 @@ $word, $yearcon, $yearfile, $yearmonth, $yearmonthchoosed, $yeartoprocess) = ();
 @sortsearchwords = @sortsereferrals = @sortsider404 = @sortsiders = @sortunknownip =
 @sortunknownreferer = @sortunknownrefererbrowser = @wordlist = ();
 
-$VERSION="2.24 (build 25)";
+$VERSION="2.24 (build 26)";
 $Lang=0;
 
 # Default value
@@ -2283,10 +2283,10 @@ if (($YearRequired == $nowyear) && ($MonthRequired eq "year" || $MonthRequired =
 		if (!$found) {
 			if ($felter[10] =~ /^http/)     {
 				$internal_link=0;
-				if (($felter[10] =~ /^http:\/\/www.$LocalSiteWithoutwww/i) || ($felter[10] =~ /^http:\/\/$LocalSiteWithoutwww/i)) { $internal_link=1; }
+				if ($felter[10] =~ /^http(s|):\/\/(www.|)$LocalSiteWithoutwww/i) { $internal_link=1; }
 				else {
 					foreach $HostAlias (@HostAliases) {
-						if ($felter[10] =~ /^http:\/\/$HostAlias/) { $internal_link=1; last; }
+						if ($felter[10] =~ /^http(s|):\/\/$HostAlias/i) { $internal_link=1; last; }
 						}
 				}
 
@@ -3446,10 +3446,8 @@ foreach $from (@sortpagerefs) {
 	if ($_pagesrefs_h{$from}>=$MinHitRefer) {
 
 		# Show source
-		$lien=$from;
-		$lien =~ s/\"//g;
-		$lien=substr($lien,0,$MaxLengthOfURL);
-		if ($ShowLinksOnUrl && ($lien =~ /(ftp|http|https):\/\//)) {
+		$lien=$from; $lien=substr($lien,0,$MaxLengthOfURL);
+		if ($ShowLinksOnUrl && ($from =~ /^http(s|):\/\//)) {
 		    print "<TR><TD CLASS=LEFT>- <A HREF=$from>$lien</A></TD> <TD>$_pagesrefs_h{$from}</TD></TR>\n";
 		} else {
 			print "<TR><TD CLASS=LEFT>- $lien </TD><TD>$_pagesrefs_h{$from}</TD></TR>\n";
