@@ -599,7 +599,7 @@ sub html_end {
 	if (scalar keys %HTMLOutput) {
 		if ($FrameName ne 'index' && $FrameName ne 'mainleft') {
 			print "$Center<br /><br />\n";
-			print "<span style=\"font: 11px verdana, arial, helvetica; color: #$color_text;\">";
+			print "<span dir=\"ltr\" style=\"font: 11px verdana, arial, helvetica; color: #$color_text;\">";
 			print "<b>Advanced Web Statistics $VERSION</b> - <a href=\"http://awstats.sourceforge.net\" target=\"awstatshome\">Created by $PROG";
 			my $atleastoneplugin=0;
 			foreach my $pluginname (keys %{$PluginsLoaded{'init'}}) {
