@@ -792,15 +792,16 @@ when reading it), follow the example:<br>
 <br># Use SkipFiles to ignore access to URLs that match one of following entries.
 <br># You can enter a list of not important URLs (like framed menus, hidden pages,
 <br># etc...) to exclude them from statistics. You must enter here exact relative
-<br># URL as found in log file, or a matching REGEX value.
-<br># For example, to ignore /badpage.html, just add "/badpage.html". To ignore
-<br># all pages in a particular directory, add "REGEX[^\/directorytoexclude]".
+<br># URL as found in log file, or a matching REGEX value. Check apply on URL with
+<br># all its query paramaters.
+<br># For example, to ignore /badpage.php, just add "/badpage.php". To ignore all
+<br># pages in a particular directory, add "REGEX[^\/directorytoexclude]".
 <br># The opposite parameter of "SkipFiles" is "OnlyFiles".
 <br># Note: Use space between each value. This parameter is or not case sensitive
 <br># depending on URLNotCaseSensitive parameter.
 <br># Note: You can use regular expression values writing value with REGEX[value].
 <br># Change : Effective for new updates only
-<br># Example: "/badpage.html REGEX[^\/excludedirectory]"
+<br># Example: "/badpage.php /page.php?param=x REGEX[^\/excludedirectory]"
 <br># Default: ""
 <br>#
 <br>SkipFiles=""
