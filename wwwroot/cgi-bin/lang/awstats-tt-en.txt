@@ -25,7 +25,7 @@
 	Links used by the results of the search engines are excluded here because they have already been included on the previous line within this table.
 	</DIV>
 	<DIV CLASS="CTooltip" ID="tt15">
-	This table shows the list of the most frequently <b>keyphrase or keywords</b> used to find your site from Internet Search Engines and Directories.
+	This table shows the list of the most frequent <b>keyphrases or keywords</b> used to find your site from Internet Search Engines and Directories.
 	(Keywords from the <b>#SearchEnginesArray#</b> most popular Search Engines and Directories are recognized by #PROG#, such as Yahoo, Altavista, Lycos, Google, Voila, etc...).<br>
 	Note that total number of searches for keywords might be greater than total number of searches for keyphrases (real number of searches) because when 2 keywords were used on same search, search is counted twice for keywords (once for each word).
 	</DIV>
@@ -45,7 +45,7 @@
 	<DIV CLASS="CTooltip" ID="tt20">
 	Some <b>Visits durations</b> are 'unknown' because they can't always be calculated. This is the major reason for this:<br>
 	- Visit was not finished when 'update' occured.<br>
-	- Visit started the last hour (after 23:00) of the last day (A technical reason prevent #PROG# from calculating duration of such sessions)
+	- Visit started the last hour (after 23:00) of the last day of a month (A technical reason prevents #PROG# from calculating duration of such sessions)
 	</DIV>
 
 	<DIV CLASS="CTooltip" ID="tt201"> No description for this error. </DIV>

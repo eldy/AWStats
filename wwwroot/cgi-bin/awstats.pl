@@ -1016,12 +1016,13 @@ sub Read_Language_Tooltip {
 	}
 	if ($Debug) { debug("Call to Read_Language_Tooltip [FileLang=\"$FileLang\"]"); }
 	if ($FileLang) {
+		my $aws_PROG=ucfirst($PROG);
 		my $aws_VisitTimeout = $VisitTimeOut/10000*60;
 		my $aws_NbOfRobots = scalar keys %RobotsHashIDLib;
 		my $aws_NbOfSearchEngines = scalar keys %SearchEnginesHashIDLib;
 		while (<LANG>) {
 			# Search for replaceable parameters
-			s/#PROG#/$PROG/;
+			s/#PROG#/$aws_PROG/;
 			s/#MaxNbOfRefererShown#/$MaxNbOfRefererShown/;
 			s/#VisitTimeOut#/$aws_VisitTimeout/;
 			s/#RobotArray#/$aws_NbOfRobots/;
@@ -1308,6 +1309,8 @@ sub Check_Config {
 	if (! $Message[123]) { $Message[123]="different refering sites"; }
 	if (! $Message[124]) { $Message[124]="Other phrases"; }
 	if (! $Message[125]) { $Message[125]="Anonymous users"; }
+	if (! $Message[126]) { $Message[126]="Refering search engines"; }
+	if (! $Message[127]) { $Message[127]="Refering sites"; }
 
 	# Refuse LogFile if contains a pipe and PurgeLogFile || ArchiveLogRecords set on
 	if (($PurgeLogFile || $ArchiveLogRecords) && $LogFile =~ /\|\s*$/) {
@@ -1332,7 +1335,7 @@ sub Check_Config {
 sub Read_History_File {
 	my $year=sprintf("%04i",shift);
 	my $month=sprintf("%02i",shift);
-	my $part=shift;	# If part=0 wee need only TotalVisits, LastUpdate, BEGIN_TIME section and BEGIN_VISITOR
+	my $part=shift;	# If part=0 wee need only TotalVisits, LastUpdate, TIME section and VISITOR section
 
 	# In standard use of AWStats, the DayRequired variable is always empty
 	if ($DayRequired) { if ($Debug) { debug("Call to Read_History_File [$year,$month,$part] ($DayRequired)"); } }
@@ -1466,12 +1469,12 @@ sub Read_History_File {
 				if ($field[0]) {
 					$count++;
 					# We always read this to build the month graph (MonthUnique, MonthHostsKnown, MonthHostsUnknown)
-					if ($field[0] ne "Unknown") {	# If and else is kept for backward compatibility
+					if ($field[0] ne "Unknown") {
 						if (($field[1]||0) > 0) { $MonthUnique{$year.$month}++; }
 						if ($field[0] !~ /^\d+\.\d+\.\d+\.\d+$/) { $MonthHostsKnown{$year.$month}++; }
 						else { $MonthHostsUnknown{$year.$month}++; }
 					}
-					else {
+					else {		# "else" is kept for backward compatibility (should never be else)
 						$MonthUnique{$year.$month}++;
 						$MonthHostsUnknown{$year.$month}++;
 					}
@@ -3927,7 +3930,7 @@ if ($HTMLOutput) {
 			&Read_History_File($YearRequired,$monthix,1);	# Read full history file
 		}
 		else {
-			&Read_History_File($YearRequired,$monthix,0);	# Read first part of history file is enough (for the month graph)
+			&Read_History_File($YearRequired,$monthix,0);	# Read first part of history file is enough (for the month graph and LastUpdate)
 		}
 	}
 
@@ -4119,10 +4122,10 @@ EOF
 			print "<tr><th class=AWL>$Message[23] : </th>";
 			print "<td class=AWL>";
 			if ($ShowOriginStats)		 { print "<a href=\"#REFERER\">$Message[37]</a> &nbsp;\n"; }
-#			if ($ShowOriginStats)		 { print "<a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=refererse":"$PROG$StaticLinks.refererse.html")."\"".($DetailedReportsOnNewWindows?" target=\"awstatsbis\"":"").">$Message[34]</a> &nbsp;\n"; }
-#			if ($ShowOriginStats)		 { print "<a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=refererpages":"$PROG$StaticLinks.refererpages.html")."\"".($DetailedReportsOnNewWindows?" target=\"awstatsbis\"":"").">$Message[34]</a> &nbsp;\n"; }
-			if ($ShowKeyphrasesStats)	 { print "<a href=\"#KEYPHRASES\">$Message[120]</a> &nbsp;\n"; }
-			if ($ShowKeywordsStats)	 	 { print "<a href=\"#KEYWORDS\">$Message[121]</a> &nbsp;\n"; }
+			if ($ShowOriginStats)		 { print "<a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=refererse":"$PROG$StaticLinks.refererse.html")."\"".($DetailedReportsOnNewWindows?" target=\"awstatsbis\"":"").">$Message[126]</a> &nbsp;\n"; }
+			if ($ShowOriginStats)		 { print "<a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=refererpages":"$PROG$StaticLinks.refererpages.html")."\"".($DetailedReportsOnNewWindows?" target=\"awstatsbis\"":"").">$Message[127]</a> &nbsp;\n"; }
+			if ($ShowKeyphrasesStats)	 { print "<a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=keyphrases":"$PROG$StaticLinks.keyphrases.html")."\"".($DetailedReportsOnNewWindows?" target=\"awstatsbis\"":"").">$Message[120]</a> &nbsp;\n"; }
+			if ($ShowKeywordsStats)	 	 { print "<a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=keywords":"$PROG$StaticLinks.keywords.html")."\"".($DetailedReportsOnNewWindows?" target=\"awstatsbis\"":"").">$Message[121]</a> &nbsp;\n"; }
 			print "<br></td></tr>";
 			# Others
 			print "<tr><th class=AWL>$Message[2] : </th>";
@@ -5005,7 +5008,7 @@ EOF
 		if ($Debug) { debug("ShowSessionsStats",2); }
 		print "$CENTER<a name=\"SESSIONS\">&nbsp;</a><BR>";
 		&tab_head($Message[117],19);
-		print "<TR bgcolor=\"#$color_TableBGRowTitle\" onmouseover=\"ShowTooltip(16);\" onmouseout=\"HideTooltip(16);\"><TH>$Message[117]</TH><TH bgcolor=\"#$color_s\" width=80>$Message[10]</TH></TR>\n";
+		print "<TR bgcolor=\"#$color_TableBGRowTitle\" onmouseover=\"ShowTooltip(1);\" onmouseout=\"HideTooltip(1);\"><TH>$Message[117]</TH><TH bgcolor=\"#$color_s\" width=80>$Message[10]</TH></TR>\n";
 		$total_s=0;
 		my $count=0;
 		foreach my $key (@SessionsRange) {
