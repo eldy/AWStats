@@ -247,16 +247,18 @@ if (! $AWSTATS_PATH) {
 	$AWSTATS_PATH=~s/tools[\\\/]?$//;
 	$AWSTATS_PATH=~s/[\\\/]$//;
 }
+# On utilise le format de spearateur / partout (dans Apache et appels Perl)
+$AWSTATS_PATH =~ s/\\/\//g;
 
 # Show usage help
 if ($helpfound) {
 	print "----- AWStats $PROG $VERSION (c) Laurent Destailleur -----\n";
 	print "$PROG is a tool to setup AWStats. It works with Apache only.\n";
-	print " - Get Apache config file from registry (ask if not found)\n";
+	print " - Detect Apache config file (ask if not found)\n";
 	print " - Change common log to combined (ask to confirm)\n";
 	print " - Add AWStats directives\n";
 	print " - Restart web server\n";
-	print " - Create AWStats config file\n";
+	print " - Create one AWStats config file (if asked)\n";
 	print "\n";
 	print "Usage:  $PROG.$Extension\n";
 	print "\n";
@@ -366,7 +368,7 @@ elsif ($OS eq 'windows') {
 # Detect web server path
 # ----------------------
 print "\n-----> Check for web server install\n";
-my %ApachePath=();		# All Apache path found
+my %ApachePath=();		# All Apache path found (used on windows only)
 my %ApacheConfPath=();	# All Apache config found
 my $tips;
 if ($OS eq 'linux' || $OS eq 'macosx') {
@@ -397,34 +399,39 @@ if ($OS eq 'windows' && "$^O" !~ /cygwin/i) {
 if (! scalar keys %ApacheConfPath) {
 	my $bidon='';
 
-	# Ask web server path
-	print "$PROG did not find your Apache web server path.\n";
-	
-	print "\nPlease, enter full directory path of your Apache web server or\n";
-	print "'none' to skip this step if you don't have local web server or\n";
-	print "don't have permission to change its setup.\n";
-	print "Example: /usr/local/apache\n";
-	print "Example: d:\\Program files\\apache group\\apache\n";
-	while ($bidon ne 'none' && ! -d "$bidon") {
-		print "Apache Web server path ('none' to skip):\n> ";
-		$bidon=<STDIN>; chomp $bidon;
-		if ($bidon && ! -d "$bidon" && $bidon ne 'none') { print "  The directory '$bidon' does not exists.\n"; }
-	}
+    if ($OS eq 'windows') {
+    	# Ask web server path (need to restart on windows)
+    	print "$PROG did not find your Apache web main runtime.\n";
 
+    	print "\nPlease, enter full directory path of your Apache web server or\n";
+    	print "'none' to skip this step if you don't have local web server or\n";
+    	print "don't have permission to change its setup.\n";
+    	print "Example: c:\\Program files\\apache group\\apache\n";
+    	while ($bidon ne 'none' && ! -d "$bidon") {
+    		print "Apache Web server path ('none' to skip):\n> ";
+    		$bidon=<STDIN>; chomp $bidon;
+    		if ($bidon && ! -d "$bidon" && $bidon ne 'none') { print "- The directory '$bidon' does not exists.\n"; }
+    	}
+    }
+    
 	if ($bidon ne 'none') {
 		if ($bidon) { $ApachePath{"$bidon"}=1; }
 
-		print "\n".($bidon?"Now, enter":"Enter")." full config file path of you web server.\n";
-		print "Example: /etc/httpd/apache.conf\n";
-		print "Example: d:\\Program files\\apache group\\apache\\conf\\httpd.conf\n";
+		print "\n".($bidon?"Now, enter":"Enter")." full config file path of your Web server.\n";
+		print "Example: /etc/httpd/httpd.conf\n";
+		print "Example: /usr/local/apache2/conf/httpd.conf\n";
+		print "Example: c:\\Program files\\apache group\\apache\\conf\\httpd.conf\n";
 		$bidon='';
-		while (! -f "$bidon") {
-			print "Config file path (CTRL+C to cancel):\n> ";
+		while ($bidon ne 'none' && ! -f "$bidon") {
+			print "Config file path ('none' to skip web server setup):\n> ";
 			$bidon=<STDIN>; chomp $bidon;
-			if (! -f "$bidon") { print "  This file does not exists.\n"; }
+			if ($bidon && ! -f "$bidon" && $bidon ne 'none') { print "- This file does not exists.\n"; }
 		}
-		$ApacheConfPath{"$bidon"}=1;
+        if ($bidon ne 'none') {
+    	    $ApacheConfPath{"$bidon"}=1;
+    	}
 	}
+
 }
 
 if (! scalar keys %ApacheConfPath) {
@@ -638,12 +645,12 @@ if ($bidon =~ /^y/i) {
 # ----------------------------------
 if ($WebServerChanged) {
 	if ($OS eq 'linux') 	{
-		print "\n-----> Restart Apache with '/sbin/service httpd restart'\n";
+		print "\n-----> Restart Web server with '/sbin/service httpd restart'\n";
 	 	my $ret=`/sbin/service httpd restart`;
 	 	print "$ret";
 	}
 	elsif ($OS eq 'macosx')	{
-		print "\n-----> Restart Apache with '/usr/sbin/apachectl restart'\n";
+		print "\n-----> Restart Web server with '/usr/sbin/apachectl restart'\n";
 	 	my $ret=`/usr/sbin/apachectl restart`;
 	 	print "$ret";
 	}
