@@ -228,28 +228,29 @@ To see results of analyze, you have several solutions depending on your <a href=
 <br>
 
 * First solution is to build the main reports, in a static HTML page, from the command line, like this :<br>
-<b><i>perl awstats.pl -config=virtualhostname -output -staticlinks > awstats.virtualhostname.html</i></b><br>
+<b><i>perl awstats.pl -config=myvirtualhostname -output -staticlinks > awstats.myvirtualhostname.html</i></b><br>
 <br>
 You can also use all other output options (each of them give you another report).
 This is how to use all other possible output options(1) :<br>
-<i><b>perl awstats.pl -config=virtualhostname -output=allhosts -staticlinks > awstats.virtualhostname.allhosts.html</b></i><br>
-<i><b>perl awstats.pl -config=virtualhostname -output=lasthosts -staticlinks > awstats.virtualhostname.lasthosts.html</b></i><br>
-<i><b>perl awstats.pl -config=virtualhostname -output=unknownip -staticlinks > awstats.virtualhostname.unknownip.html</b></i><br>
-<i><b>perl awstats.pl -config=virtualhostname -output=alllogins -staticlinks > awstats.virtualhostname.alllogins.html</b></i><br>
-<i><b>perl awstats.pl -config=virtualhostname -output=lastlogins -staticlinks > awstats.virtualhostname.lastlogins.html</b></i><br>
-<i><b>perl awstats.pl -config=virtualhostname -output=allrobots -staticlinks > awstats.virtualhostname.allrobots.html</b></i><br>
-<i><b>perl awstats.pl -config=virtualhostname -output=lastrobots -staticlinks > awstats.virtualhostname.lastrobots.html</b></i><br>
-<i><b>perl awstats.pl -config=virtualhostname -output=urldetail -staticlinks > awstats.virtualhostname.urldetail.html</b></i><br>
-<i><b>perl awstats.pl -config=virtualhostname -output=urlentry -staticlinks > awstats.virtualhostname.urlentry.html</b></i><br>
-<i><b>perl awstats.pl -config=virtualhostname -output=urlexit -staticlinks > awstats.virtualhostname.urlexit.html</b></i><br>
-<i><b>perl awstats.pl -config=virtualhostname -output=browserdetail -staticlinks > awstats.virtualhostname.browserdetail.html</b></i><br>
-<i><b>perl awstats.pl -config=virtualhostname -output=unknownbrowsers -staticlinks > awstats.virtualhostname.unknownbrowsers.html</b></i><br>
-<i><b>perl awstats.pl -config=virtualhostname -output=unknownos -staticlinks > awstats.virtualhostname.unknownos.html</b></i><br>
-<i><b>perl awstats.pl -config=virtualhostname -output=refererse -staticlinks > awstats.virtualhostname.refererse.html</b></i><br>
-<i><b>perl awstats.pl -config=virtualhostname -output=refererpages -staticlinks > awstats.virtualhostname.refererpages.html</b></i><br>
-<i><b>perl awstats.pl -config=virtualhostname -output=keyphrases -staticlinks > awstats.virtualhostname.keyphrases.html</b></i><br>
-<i><b>perl awstats.pl -config=virtualhostname -output=keywords -staticlinks > awstats.virtualhostname.keywords.html</b></i><br>
-<i><b>perl awstats.pl -config=virtualhostname -output=errors404 -staticlinks > awstats.virtualhostname.errors404.html</b></i><br>
+<i><b>perl awstats.pl -config=myvirtualhostname -output=allhosts -staticlinks > awstats.myvirtualhostname.allhosts.html</b></i><br>
+<i><b>perl awstats.pl -config=myvirtualhostname -output=lasthosts -staticlinks > awstats.myvirtualhostname.lasthosts.html</b></i><br>
+<i><b>perl awstats.pl -config=myvirtualhostname -output=unknownip -staticlinks > awstats.myvirtualhostname.unknownip.html</b></i><br>
+<i><b>perl awstats.pl -config=myvirtualhostname -output=alllogins -staticlinks > awstats.myvirtualhostname.alllogins.html</b></i><br>
+<i><b>perl awstats.pl -config=myvirtualhostname -output=lastlogins -staticlinks > awstats.myvirtualhostname.lastlogins.html</b></i><br>
+<i><b>perl awstats.pl -config=myvirtualhostname -output=allrobots -staticlinks > awstats.myvirtualhostname.allrobots.html</b></i><br>
+<i><b>perl awstats.pl -config=myvirtualhostname -output=lastrobots -staticlinks > awstats.myvirtualhostname.lastrobots.html</b></i><br>
+<i><b>perl awstats.pl -config=myvirtualhostname -output=urldetail -staticlinks > awstats.myvirtualhostname.urldetail.html</b></i><br>
+<i><b>perl awstats.pl -config=myvirtualhostname -output=urlentry -staticlinks > awstats.myvirtualhostname.urlentry.html</b></i><br>
+<i><b>perl awstats.pl -config=myvirtualhostname -output=urlexit -staticlinks > awstats.myvirtualhostname.urlexit.html</b></i><br>
+<i><b>perl awstats.pl -config=myvirtualhostname -output=browserdetail -staticlinks > awstats.myvirtualhostname.browserdetail.html</b></i><br>
+<i><b>perl awstats.pl -config=myvirtualhostname -output=osdetail -staticlinks > awstats.myvirtualhostname.osdetail.html</b></i><br>
+<i><b>perl awstats.pl -config=myvirtualhostname -output=unknownbrowsers -staticlinks > awstats.myvirtualhostname.unknownbrowsers.html</b></i><br>
+<i><b>perl awstats.pl -config=myvirtualhostname -output=unknownos -staticlinks > awstats.myvirtualhostname.unknownos.html</b></i><br>
+<i><b>perl awstats.pl -config=myvirtualhostname -output=refererse -staticlinks > awstats.myvirtualhostname.refererse.html</b></i><br>
+<i><b>perl awstats.pl -config=myvirtualhostname -output=refererpages -staticlinks > awstats.myvirtualhostname.refererpages.html</b></i><br>
+<i><b>perl awstats.pl -config=myvirtualhostname -output=keyphrases -staticlinks > awstats.myvirtualhostname.keyphrases.html</b></i><br>
+<i><b>perl awstats.pl -config=myvirtualhostname -output=keywords -staticlinks > awstats.myvirtualhostname.keywords.html</b></i><br>
+<i><b>perl awstats.pl -config=myvirtualhostname -output=errors404 -staticlinks > awstats.myvirtualhostname.errors404.html</b></i><br>
 <br>
 Note (1): If you prefer, you can use <a href="awstats_tools.html#awstats_buildstaticpages">awstats_buildstaticpages</a> tool to
 build all those pages in one command.<br>
@@ -259,15 +260,15 @@ Note (2): You can also add a <i>filter</i> on the following output reports:<b>ur
 parameter separated by a ":".<br>
 For example, to output the urldetail report, with a filter on all pages that contains /news, you
 can use the following command line:<br>
-<i><b>perl awstats.pl -config=virtualhostname -output=urldetail:</b>/news<b> -staticlinks > awstats.virtualhostname.urldetailwithfilter.html</b></i><br>
+<i><b>perl awstats.pl -config=myvirtualhostname -output=urldetail:</b>/news<b> -staticlinks > awstats.myvirtualhostname.urldetailwithfilter.html</b></i><br>
 <br>
 Note (3): If you want to build a report for a particular month, add options <i><b>-month=MM -year=YYYY</b></i>.<br>
 To build a report for full year (warning: This may use a lot of memory and CPU), add options <i><b>-month=all -year=YYYY</b></i>.<br>
 
 <br><br>
 * Another solution is to view dynamically your statistics from a browser. For this use URL:<br>
-<b><i>http://www.myserver.mydomain/cgi-bin/awstats.pl?config=virtualhostname</i></b><br>
-where <i>virtualhostname</i> is used to know which config file to use (AWStats will use awstats.<i>virtualhostname</i>.conf file).<br>
+<b><i>http://www.myserver.mydomain/cgi-bin/awstats.pl?config=myvirtualhostname</i></b><br>
+where <i>myvirtualhostname</i> is used to know which config file to use (AWStats will use awstats.<i>myvirtualhostname</i>.conf file).<br>
 <br>
 Note (1): All output command line options (except -staticlinks) are still available when using AWStats as a browser.<br>
 Just use them as URL parameters like this example <b><i>http://www.myserver.mydomain/cgi-bin/awstats.pl?month=MM&year=YYYY&output=unknownos</i></b><br>
