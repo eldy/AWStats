@@ -3,8 +3,6 @@
 #!/usr/local/bin/perl
 # With Apache for Windows and ActiverPerl, first line may be
 #!c:/program files/activeperl/bin/perl
-# use diagnostics;
-# use strict;
 #-Description-------------------------------------------
 # Free realtime web server logfile analyzer (Perl script) to show advanced web
 # statistics. Works from command line or as a CGI.
@@ -34,6 +32,8 @@
 # End of loop
 # Show data arrays in HTML page
 #-------------------------------------------------------
+#use diagnostics;
+#use strict;
 
 
 #-------------------------------------------------------
@@ -62,8 +62,7 @@ $color_TableTitle, $color_h, $color_k, $color_link, $color_p, $color_s, $color_v
 $color_w, $count, $date, $daycon, $endmonth, $found, $foundrobot,
 $h, $hourcon, $hr, $internal_link, $ix, $keep, $key, $kilo, $lien, $line,
 $max, $max_h, $max_k, $max_p, $max_v, $mincon, $monthcon, $monthfile, $monthix,
-$monthtoprocess, $nameicon, $new, $nompage, $nowday, $nowmin, $nowmonth,
-$nowsec, $nowsmallyear, $nowyear, $p, $page, $param,
+$monthtoprocess, $nameicon, $new, $nompage, $p, $page, $param,
 $paramtoexclude, $rest, $rest_h, $rest_k, $rest_p,
 $tab_titre, $timeconnexion, $total_h, $total_k, $total_p,
 $word, $yearcon, $yearfile, $yearmonthfile, $yeartoprocess) = ();
@@ -87,7 +86,7 @@ $word, $yearcon, $yearfile, $yearmonthfile, $yeartoprocess) = ();
 @sortsearchwords = @sortsereferrals = @sortsider404 = @sortsiders = @sortunknownip =
 @sortunknownreferer = @sortunknownrefererbrowser = @wordlist = ();
 
-$VERSION="2.5 (build 23)";
+$VERSION="2.5 (build 24)";
 $Lang=0;
 
 # Default value
@@ -2093,6 +2092,15 @@ if (++$nowmonth < 10) { $nowmonth = "0$nowmonth"; }
 if ($nowday < 10) { $nowday = "0$nowday"; }
 if ($nowhour < 10) { $nowhour = "0$nowhour"; }
 if ($nowmin < 10) { $nowmin = "0$nowmin"; }
+# Get tomorrow time (will be used to discard some record with corrupted date (future date))
+($tomorrowsec,$tomorrowmin,$tomorrowhour,$tomorrowday,$tomorrowmonth,$tomorrowyear) = localtime(time+86400);
+if ($tomorrowyear < 100) { $tomorrowyear+=2000; } else { $tomorrowyear+=1900; }
+$tomorrowsmallyear=$tomorrowyear;$tomorrowsmallyear =~ s/^..//;
+if (++$tomorrowmonth < 10) { $tomorrowmonth = "0$tomorrowmonth"; }
+if ($tomorrowday < 10) { $tomorrowday = "0$tomorrowday"; }
+if ($tomorrowhour < 10) { $tomorrowhour = "0$tomorrowhour"; }
+if ($tomorrowmin < 10) { $tomorrowmin = "0$tomorrowmin"; }
+$timetomorrow=$tomorrowyear.$tomorrowmonth.$tomorrowday.$tomorrowhour.$tomorrowmin.$tomorrowsec;	
 
 # Read config file
 &Read_Config_File;
@@ -2222,7 +2230,6 @@ if ($UpdateStats) {
 		$lastrequiredfield=9;
 	}
 	if ($LogFormat == 3) {
-#		$PerlParsingFormat="([^\\t]*\\t[^\\t]*)\\t([^\\t]*)\\t([\\d]*)\\t([^\\t]*)\\t([^\\t]*)\\t([^\\t]*)\\t[^\\t]*\\t.*:([^\\t]*)\\t([\\d]*)";
 		$PerlParsingFormat="([^\\t]*\\t[^\\t]*)\\t([^\\t]*)\\t([\\d]*)\\t([^\\t]*)\\t([^\\t]*)\\t([^\\t]*)\\t[^\\t]*\\t.*:([^\\t]*)\\t([\\d]*)";
 		$pos_date=1;$pos_method=2;$pos_code=3;$pos_rc=4;$pos_agent=5;$pos_referer=6;$pos_url=7;$pos_size=8;
 		$lastrequiredfield=8;
@@ -2305,7 +2312,7 @@ if ($UpdateStats) {
 			}
 			if (! $found) { $found=1; $PerlParsingFormat .= "[^\\s]* "; }
 		}
-		($PerlParsingFormat) ? chop($PerlParsingFormat) : error("Error: no recognised format commands in Personalised log format"); 
+		($PerlParsingFormat) ? chop($PerlParsingFormat) : error("Error: no recognised format commands in personalised LogFormat string"); 
 		$lastrequiredfield=$i--;
 	}
 	if ($pos_rc eq "") { error("Error: Your personalised LogFormat does not include all fields required by AWStats (Add \%host in your LogFormat string)."); }
@@ -2372,7 +2379,7 @@ if ($UpdateStats) {
 		# Check filters
 		#----------------------------------------------------------------------
 		if ($field[$pos_method] ne 'GET' && $field[$pos_method] ne 'POST' && $field[$pos_method] !~ /OK/) { next; }	# Keep only GET, POST but not HEAD, OPTIONS
-		if ($field[$pos_url] =~ /^RC=/) { $_corrupted++; next; }						# A strange log record with IIS we need to forget
+		if ($field[$pos_url] =~ /^RC=/) { $corrupted++; next; }						# A strange log record with IIS we need to forget
 		# Split DD/Month/YYYY:HH:MM:SS or YYYY-MM-DD HH:MM:SS or MM/DD/YY\tHH:MM:SS
 		$field[$pos_date] =~ tr/-\/ \t/::::/;
 		@dateparts=split(/:/,$field[$pos_date]);
@@ -2381,17 +2388,18 @@ if ($UpdateStats) {
 		if ($monthnum{$dateparts[1]}) { $dateparts[1]=$monthnum{$dateparts[1]}; }	# Change lib month in num month if necessary
 		# Create $timeconnexion like YYYYMMDDHHMMSS
 		$timeconnexion=$dateparts[2].$dateparts[1].$dateparts[0].$dateparts[3].$dateparts[4].$dateparts[5];
-		if ($timeconnexion < 10000000000000) { $corrupted++; next; }
+		if ($timeconnexion < 10000000000000) { $corrupted++; next; }				# Should not happen, kept in case of parasite/corrupted line
+		if ($timeconnexion > $timetomorrow) { $corrupted++; next; }					# Should not happen, kept in case of parasite/corrupted line
 
 		# Skip if not a new line
 		#-----------------------
 		if ($NowNewLinePhase) {
-			if ($timeconnexion < $LastTime{$yeartoprocess.$monthtoprocess}) { next; }	# Should not happen, kept in case of parasite old lines
-			}
+			if ($timeconnexion < $LastTime{$yeartoprocess.$monthtoprocess}) { next; }	# Should not happen, kept in case of parasite/corrupted old line
+		}
 		else {
 			if ($timeconnexion <= $LastTime{$yeartoprocess.$monthtoprocess}) { next; }	# Already processed
 			$NowNewLinePhase=1;	# This will stop comparison "<=" between timeconnexion and LastTime (we should have only new lines now)
-			}
+		}
 
 		if (&SkipHost($field[$pos_rc])) { next; }		# Skip with some client host IP addresses
 		if (&SkipFile($field[$pos_url])) { next; }		# Skip with some URLs
@@ -2404,10 +2412,10 @@ if ($UpdateStats) {
 			if ($monthtoprocess > 0) {
 				&Save_History_File($yeartoprocess,$monthtoprocess);		# We save data of current processed month
  				&Init_HashArray($yeartoprocess,$monthtoprocess);		# Start init for next one
-				}
+			}
 			$monthtoprocess=$dateparts[1];$yeartoprocess=$dateparts[2];
 			&Read_History_File($yeartoprocess,$monthtoprocess,1);		# This should be useless (file must not exist)
-			}
+		}
 
 		# Check return code
 		#------------------
@@ -2416,10 +2424,10 @@ if ($UpdateStats) {
 				$_errors_h{$field[$pos_code]}++;
 				if ($field[$pos_code] == 404) { $_sider404_h{$field[$pos_url]}++; $_referer404_h{$field[$pos_url]}=$field[$pos_referer]; }
 				next;
-				}
+			}
 			else {														# Bad format record (should not happen but when using MSIndex server), next
-				$_corrupted++; next;
-				}
+				$corrupted++; next;
+			}
 		}
 
 		$field[$pos_agent] =~ tr/\+ /__/;		# Same Agent with different writing syntax have now same name
@@ -2550,7 +2558,7 @@ if ($UpdateStats) {
 
 		# Netscape ?
 		if (!$found) {
-			if ($UserAgent =~ /mozilla/ && $UserAgent !~ /compatible/) {
+			if (($UserAgent =~ /mozilla/) && ($UserAgent !~ /compatible/) && ($UserAgent !~ /opera/)) {
 		    	$_browser_h{"netscape"}++;
 		    	$UserAgent =~ /\/(\d)\./;  # $1 now contains major version no
 		    	$_nsver_h[$1]++;
