@@ -4,13 +4,21 @@ AWStats Changelog
 
 5.1
 
+- Better support for ftp log files.
+- Better support for mail log files.
+- Can analyze streaming log files (Windows Media Server).
+- Added choice of month and year in list boxes (when used as CGI).
+- The data values for month and days are reported in main page under the
+  graph, no need to change page.
 - New feature: ShowxxxStats parmaters accept codes to decide which columns to
   show in chart.
 - New parameter: Added SkipUserAgents parameter to exclude some user agent
   from statistics.
-- New parameter: Added URLCaseSensitive.
+- New parameter: Added URLNotCaseSensitive.
 - New parameter: Added URLWithQueryWithoutFollowingParameters to exclude some
   parameters from URL when URLWithQuery is on.
+- Fixed: Wrong window was opened when clicking on flag link when
+  UseFramesWhenCGI was on.
 - Fixed: Fixed pb in refreshing page when clicking on "Update Now" link (no
   need to force the refresh).
 - Fixed: Pb with SAMBAR server ('Expires' line appears at the top of pages).
@@ -25,6 +33,8 @@ AWStats Changelog
 - Can use the #include "configfile" directive in config files.
 - Added week-end color on week-end days in monthdayvalues report.
 - Added 'spider' and 'crawler' as generic robots.
+- Added awstats_updateall.pl tool.
+- Remove common2combined.pl tool (useless).
 - Updated graph colors.
 - Updated documentation.
 - Updated database.
