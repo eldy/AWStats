@@ -1,11 +1,12 @@
 #!/usr/bin/perl
 #-----------------------------------------------------------------------------
-# UrlAlias AWStats plugin
-# This plugin allow you to report all URL links with a text title instead of
-# URL value.
-# You must create a file called urlalias.cnfigvalue.txt and store it in
+# UserInfo AWStats plugin
+# This plugin allow you to add information on authenticated users chart from
+# a text file. Like full user name and lastname.
+# You must create a file called userinfo.configvalue.txt and store it in
 # plugin directory that contains 2 columns separated by a tab char.
-# First column is URL value and second column is text title to use instead of.
+# First column is authenticated user login and second column is text
+# you want add.
 #-----------------------------------------------------------------------------
 # Perl Required Modules: None
 #-----------------------------------------------------------------------------
@@ -26,14 +27,14 @@ use strict;no strict "refs";
 # ENTER HERE THE MINIMUM AWSTATS VERSION REQUIRED BY YOUR PLUGIN
 # AND THE NAME OF ALL FUNCTIONS THE PLUGIN MANAGE.
 my $PluginNeedAWStatsVersion="5.5";
-my $PluginHooksFunctions="ShowInfoURL";
+my $PluginHooksFunctions="ShowInfoUser";
 # ----->
 
 # <-----
 # IF YOUR PLUGIN NEED GLOBAL VARIABLES, THEY MUST BE DECLARED HERE.
 use vars qw/
-$urlinfoloaded
-%UrlInfo
+$userinfoloaded
+%UserInfo
 /;
 # ----->
 
@@ -42,15 +43,15 @@ $urlinfoloaded
 #-----------------------------------------------------------------------------
 # PLUGIN FUNCTION: Init_pluginname
 #-----------------------------------------------------------------------------
-sub Init_urlalias {
+sub Init_userinfo {
 	my $InitParams=shift;
 	my $checkversion=&Check_Plugin_Version($PluginNeedAWStatsVersion);
 
 	# <-----
 	# ENTER HERE CODE TO DO INIT PLUGIN ACTIONS
 	debug(" InitParams=$InitParams",1);
-	$urlinfoloaded=0;
-	%UrlInfo=();
+	$userinfoloaded=0;
+	%UserInfo=();
 	# ----->
 
 	return ($checkversion?$checkversion:"$PluginHooksFunctions");
@@ -59,28 +60,28 @@ sub Init_urlalias {
 
 
 #-----------------------------------------------------------------------------
-# PLUGIN FUNCTION: ReplaceURL_pluginname
+# PLUGIN FUNCTION: ShowInfoUser_pluginname
 # UNIQUE: NO (Several plugins using this function can be loaded)
-# Function called to add additionnal information for URLs in URLs' report.
+# Function called to add additionnal information for Users in users' report.
 # Parameters: URL
 #-----------------------------------------------------------------------------
-sub ShowInfoURL_urlalias {
+sub ShowInfoUser_userinfo {
 	# <-----
-	if (! $urlinfoloaded) {
-		# Load urlalias file
+	if (! $userinfoloaded) {
+		# Load userinfo file
 		my $filetoload='';
-		if ($SiteConfig && open(URLINFOFILE,"$PluginDir/urlalias.$SiteConfig.txt"))	{ $filetoload="$PluginDir/urlalias.$SiteConfig.txt"; }
-		elsif (open(URLINFOFILE,"$PluginDir/urlalias.txt"))  						{ $filetoload="$PluginDir/urlalias.txt"; }
-		else { error("Couldn't open UrlAlias file \"$PluginDir/urlalias.txt\": $!"); }
+		if ($SiteConfig && open(USERINFOFILE,"$PluginDir/userinfo.$SiteConfig.txt"))	{ $filetoload="$PluginDir/userinfo.$SiteConfig.txt"; }
+		elsif (open(USERINFOFILE,"$PluginDir/userinfo.txt"))  							{ $filetoload="$PluginDir/userinfo.txt"; }
+		else { error("Couldn't open UserInfo file \"$PluginDir/userinfo.txt\": $!"); }
 		# This is the fastest way to load with regexp that I know
-		%UrlInfo = map(/^([^\t]+)\t+([^\t]+)/o,<URLINFOFILE>);
-		close URLINFOFILE;
-		debug("UrlAlias file loaded: ".(scalar keys %UrlInfo)." entries found.");
-		$urlinfoloaded=1;
+		%UserInfo = map(/^([^\t]+)\t+([^\t]+)/o,<USERINFOFILE>);
+		close USERINFOFILE;
+		debug("UserInfo file loaded: ".(scalar keys %UserInfo)." entries found.");
+		$userinfoloaded=1;
 	}
-	my $urltoreplace="$_[0]";
-	if ($UrlInfo{$urltoreplace}) { print "<font style=\"color: #$color_link; font-weight: bold\">$UrlInfo{$urltoreplace}</font><br>"; }
-	else { print ""; }
+	my $userinfotoreplace="$_[0]";
+	if ($UserInfo{$userinfotoreplace}) { print "<TD>$UserInfo{$userinfotoreplace}</TD>"; }
+	else { print "<TD>&nbsp;</TD>"; }
 	return 1;
 	# ----->
 }

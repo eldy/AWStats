@@ -15,31 +15,33 @@ Fixes:
 New features/improvments:
 - Added a 'Screen Size' report.
 - Group OS by families. Added a detailed OS version chart.
-- Better 404 errors management. URLs are always cleaned from their
-  parameter to build '404 not found' URLs list (because parameters are not
-  interesting as they can't have effect as page is not found). Referrer
-  URLs list for '404 not found' URLs are kept with parameters only if
-  URLReferrerWithQuery is set to 1. This make this report more useful.
+- Better 404 errors management. URLs are always cleaned from their parameter
+  to build '404 not found' URLs list (because parameters are not interesting
+  as they can't have effect as page is not found). Referrer URLs list for '404
+  not found' URLs are kept with parameters only if URLReferrerWithQuery is set
+  to 1. This make this report more useful.
 - Added 'geoipfree' plugin (same than 'geoip' plugin but using the free
   Perl module Geo::IPfree).
-- 'geoip' plugin can works with Perl module Geo::IP but also with Perl
-  module Geo::IP::PurePerl).
+- 'geoip' plugin can works with Perl module Geo::IP but also with Perl module
+  Geo::IP::PurePerl).
+- Added 'userinfo' plugin to add information from a text file (like lastname,
+  office department,...) in authenticated user chart.
 - month parameter can accept format -month=D, not only -month=DD
 - Optimized code size.
 - Optimized HTML output report size.
 - Added plugin ipv6 to fully support IPv6 (included reverse DNS lookup).
-- Split month summary chart and days of month chart in two different
-  charts in main page. This also means that ShowDaysOfMonthStats and
+- Split month summary chart and days of month chart in two different charts in
+  main page. This also means that ShowDaysOfMonthStats and
   AddDataArrayShowDaysOfMonthStats parameters were added.
 - Added -staticlinksext to build static pages with another extension than
   default .html
 
 Other/Documentation:
 - Added Isle of Man, Monserat, and Palestinian flag icon.
-- Added "local network host" and "Satellite access host" in label of
-  possible countries and icons (They appears when using geoip plugins).
-- Better management of parsed lines counting. The last line number is
-  also stored in history file, for a future use.
+- Added "local network host" and "Satellite access host" in label of possible
+  countries and icons (They appears when using geoip plugins).
+- Better management of parsed lines counting. The last line number is also
+  stored in history file, for a future use.
 - Removed LogFormat=5 option for ISA log file because I am fed up of
   supporting bugged and non standard MS products. Sorry but this takes me too
   many times. To use AWStats with an ISA server, just use now a preprocessor

@@ -3523,8 +3523,7 @@ sub Save_History {
 # Output:       None
 # Return:       1 Ok, 0 at least one error (tmp files are removed)
 #--------------------------------------------------------------------
-sub Rename_All_Tmp_History()
-{
+sub Rename_All_Tmp_History {
 	my $pid=$$;
 	my $renameok=1;
 
@@ -3746,8 +3745,7 @@ sub ChangeWordSeparatorsIntoSpace {
 #------------------------------------------------------------------------------
 # Function:     Converts an UTF8 binary string
 #------------------------------------------------------------------------------
-sub Utf8_To_Ascii
-{
+sub Utf8_To_Ascii {
 	my $string = shift;
 	my $format = $ENV{"UCFORMAT"}||('%lx');
 	$string =~ s/([\xC0-\xDF])([\x80-\xBF])/sprintf ("%c", hex(sprintf($format,unpack("c",$1)<<6&0x07C0|unpack("c",$2)&0x003F)))/ge;
@@ -3759,8 +3757,7 @@ sub Utf8_To_Ascii
 #--------------------------------------------------------------------
 # Function:     Encode a binary string into a non binary string
 #--------------------------------------------------------------------
-sub EncodeString
-{
+sub EncodeString {
 	my $string = shift;
 #	use bytes;
 	$string =~ s/([\x2B\x80-\xFF])/sprintf ("%%%2x", ord($1))/eg;
@@ -3903,36 +3900,6 @@ sub Format_Date {
 	$dateformat =~ s/MM/$min/g;
 	$dateformat =~ s/SS/$sec/g;
 	return "$dateformat";
-}
-
-#--------------------------------------------------------------------
-# Function:     Write a HTML cell with a WhoIs link to parameter
-# Parameters:   Key to used as WhoIs target
-# Input:        $LinksToWhoIs $LinksToIPWhoIs
-# Output:       None
-# Return:       None
-#--------------------------------------------------------------------
-sub ShowWhoIsCell {
-	my $keyurl=shift;
-	my $keyforwhois;
-	my $linkforwhois;
-	if ($keyurl =~ /^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/) {	# IPv4 address
-		$keyforwhois=$keyurl;
-		$linkforwhois=2;
-	}
-	elsif ($keyurl =~ /^[0-9A-F]*:/i) {							# IPv6 address
-		$keyforwhois=$keyurl;
-		$linkforwhois=2;
-	}
-	else {	# Hostname
-		$keyurl =~ /([-\w]+\.[-\w]+\.(au|uk|jp|nz))$/ or $keyurl =~ /([-\w]+\.[-\w]+)$/;
-		$keyforwhois=$1;
-		$linkforwhois=1;
-	}
-	print "<td>";
-	if ($keyforwhois && $linkforwhois) { print "<a href=\"javascript:neww('$keyforwhois',$linkforwhois)\">?</a>"; }
-	else { print "&nbsp;" }
-	print "</td>";
 }
 
 #--------------------------------------------------------------------
@@ -4140,7 +4107,7 @@ sub SigHandler {
 # Output:       None
 # Return:       Int
 #--------------------------------------------------------------------
-sub Convert_IP_To_Decimal() {
+sub Convert_IP_To_Decimal {
 	my ($IPAddress) = @_;
 	my @ip_seg_arr = split(/\./,$IPAddress);
 	my $decimal_ip_address = 256 * 256 *256 * $ip_seg_arr[0] + 256 * 256 * $ip_seg_arr[1] + 256 * $ip_seg_arr[2] + $ip_seg_arr[3];
@@ -4154,7 +4121,7 @@ sub Convert_IP_To_Decimal() {
 # Output:       None
 # Return:       1 There is at least one not null value, 0 else
 #--------------------------------------------------------------------
-sub AtLeastOneNotNull() {
+sub AtLeastOneNotNull {
 	debug(" Call to AtLeastOneNotNull (".join('-',@_).")",3);
 	foreach my $val (@_) { if ($val) { return 1; } }
 	return 0;
@@ -4167,7 +4134,7 @@ sub AtLeastOneNotNull() {
 # Output:       HTML Form
 # Return:       None
 #--------------------------------------------------------------------
-sub ShowFormFilter() {
+sub ShowFormFilter {
 	my $fieldfiltername=shift;
 	my $fieldfiltervalue=shift;
 	if (! $StaticLinks) {
@@ -4196,19 +4163,51 @@ sub ShowFormFilter() {
 }
 
 #--------------------------------------------------------------------
-# Function:     Write URL with HTML link or not
+# Function:     Write Host info
+# Parameters:   Key to used as WhoIs target
+# Input:        $ShowLinksToWhoIs
+# Output:       None
+# Return:       None
+#--------------------------------------------------------------------
+sub ShowHostInfo {
+	if ($ShowLinksToWhoIs) {
+		my $keyurl=shift;
+		my $keyforwhois;
+		my $linkforwhois;
+		if ($keyurl =~ /^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/) {	# IPv4 address
+			$keyforwhois=$keyurl;
+			$linkforwhois=2;
+		}
+		elsif ($keyurl =~ /^[0-9A-F]*:/i) {							# IPv6 address
+			$keyforwhois=$keyurl;
+			$linkforwhois=2;
+		}
+		else {	# Hostname
+			$keyurl =~ /([-\w]+\.[-\w]+\.(au|uk|jp|nz))$/ or $keyurl =~ /([-\w]+\.[-\w]+)$/;
+			$keyforwhois=$1;
+			$linkforwhois=1;
+		}
+		print "<td>";
+		if ($keyforwhois && $linkforwhois) { print "<a href=\"javascript:neww('$keyforwhois',$linkforwhois)\">?</a>"; }
+		else { print "&nbsp;" }
+		print "</td>";
+	}
+}
+
+#--------------------------------------------------------------------
+# Function:     Write URL info (with plugins info)
 # Parameters:   $url
 # Input:        %Aliases $MaxLengthOfURL $ShowLinksOnUrl $SiteDomain $UseHTTPSLinkForUrl
 # Output:       URL link
 # Return:       None
 #--------------------------------------------------------------------
-sub ShowURL() {
+sub ShowURLInfo {
 	my $url=shift;
 	my $nompage=CleanFromCSSA($url);
 
-	# Call to plugins' function ReplaceURL
-	foreach my $pluginname (keys %{$PluginsLoaded{'ReplaceURL'}})  {
-		my $function="ReplaceURL_$pluginname('$url')";
+	# Call to plugins' function ShowInfoURL
+	foreach my $pluginname (keys %{$PluginsLoaded{'ShowInfoURL'}})  {
+		my $function="ShowInfoURL_$pluginname('$url')";
 		eval("$function");
 	}
 
@@ -4235,13 +4234,29 @@ sub ShowURL() {
 }
 
 #--------------------------------------------------------------------
+# Function:     Write other user info
+# Parameters:   $user
+# Input:        %Aliases $MaxLengthOfURL $ShowLinksOnUrl $SiteDomain $UseHTTPSLinkForUrl
+# Output:       URL link
+# Return:       None
+#--------------------------------------------------------------------
+sub ShowUserInfo {
+	my $user=shift;
+	# Call to plugins' function ShowInfoUser
+	foreach my $pluginname (keys %{$PluginsLoaded{'ShowInfoUser'}})  {
+		my $function="ShowInfoUser_$pluginname('$user')";
+		eval("$function");
+	}
+}
+
+#--------------------------------------------------------------------
 # Function:     Define value for PerlParsingFormat (used for regex log record parsing)
 # Parameters:   -
 # Input:        $LogFormat
 # Output:       @fieldlib
 # Return:       -
 #--------------------------------------------------------------------
-sub DefinePerlParsingFormat() {
+sub DefinePerlParsingFormat {
 	# Log records examples:
 	# Apache combined: 62.161.78.73 user - [dd/mmm/yyyy:hh:mm:ss +0000] "GET / HTTP/1.1" 200 1234 "http://www.from.com/from.htm" "Mozilla/4.0 (compatible; MSIE 5.01; Windows NT 5.0)"
 	# Apache combined (408 error): my.domain.com - user [09/Jan/2001:11:38:51 -0600] "OPTIONS /mime-tmp/xxx file.doc HTTP/1.1" 408 - "-" "-"
@@ -6687,7 +6702,7 @@ if (scalar keys %HTMLOutput) {
 		foreach my $key (@keylist) {
 			my $host=CleanFromCSSA($key);
 			print "<tr><td CLASS=AWL>".($_robot_l{$key}?'<b>':'')."$host".($_robot_l{$key}?'</b>':'')."</td>";
-			if ($ShowLinksToWhoIs && $LinksToWhoIs) { ShowWhoIsCell($key); }
+			ShowHostInfo($key);
 			if ($ShowHostsStats =~ /P/i) { print "<TD>".($_host_p{$key}?$_host_p{$key}:"&nbsp;")."</TD>"; }
 			if ($ShowHostsStats =~ /H/i) { print "<TD>$_host_h{$key}</TD>"; }
 			if ($ShowHostsStats =~ /B/i) { print "<TD>".Format_Bytes($_host_k{$key})."</TD>"; }
@@ -6703,7 +6718,7 @@ if (scalar keys %HTMLOutput) {
 		$rest_k=$TotalBytes-$total_k;
 		if ($rest_p > 0 || $rest_h > 0 || $rest_k > 0) {	# All other visitors (known or not)
 			print "<TR><TD CLASS=AWL><font color=\"#$color_other\">$Message[2]</font></TD>";
-			if ($ShowLinksToWhoIs && $LinksToWhoIs) { ShowWhoIsCell(''); }
+			ShowHostInfo('');
 			if ($ShowHostsStats =~ /P/i) { print "<TD>".($rest_p?$rest_p:"&nbsp;")."</TD>"; }
 			if ($ShowHostsStats =~ /H/i) { print "<TD>$rest_h</TD>"; }
 			if ($ShowHostsStats =~ /B/i) { print "<TD>".Format_Bytes($rest_k)."</TD>"; }
@@ -6729,7 +6744,7 @@ if (scalar keys %HTMLOutput) {
 		foreach my $key (@keylist) {
 			my $host=CleanFromCSSA($key);
 			print "<tr><td CLASS=AWL>$host</td>";
-			if ($ShowLinksToWhoIs && $LinksToWhoIs) { ShowWhoIsCell($key); }
+			ShowHostInfo($key);
 			if ($ShowHostsStats =~ /P/i) { print "<TD>".($_host_p{$key}?$_host_p{$key}:"&nbsp;")."</TD>"; }
 			if ($ShowHostsStats =~ /H/i) { print "<TD>$_host_h{$key}</TD>"; }
 			if ($ShowHostsStats =~ /B/i) { print "<TD>".Format_Bytes($_host_k{$key})."</TD>"; }
@@ -6746,7 +6761,7 @@ if (scalar keys %HTMLOutput) {
 		$rest_k=$TotalBytes-$total_k;
 		if ($rest_p > 0 || $rest_h > 0 || $rest_k > 0) {	# All other visitors (known or not)
 			print "<TR><TD CLASS=AWL><font color=\"#$color_other\">$Message[82]</font></TD>";
-			if ($ShowLinksToWhoIs && $LinksToWhoIs) { ShowWhoIsCell(''); }
+			ShowHostInfo('');
 			if ($ShowHostsStats =~ /P/i) { print "<TD>".($rest_p?$rest_p:"&nbsp;")."</TD>"; }
 			if ($ShowHostsStats =~ /H/i) { print "<TD>$rest_h</TD>"; }
 			if ($ShowHostsStats =~ /B/i) { print "<TD>".Format_Bytes($rest_k)."</TD>"; }
@@ -6859,6 +6874,7 @@ if (scalar keys %HTMLOutput) {
 		if ($HTMLOutput{'lastlogins'}) { $title.="$Message[9]"; }
 		&tab_head("$title",19);
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[94] : ".(scalar keys %_login_h)."</TH>";
+		ShowUserInfo('');
 		if ($ShowAuthenticatedUsers =~ /P/i) { print "<TH bgcolor=\"#$color_p\" width=80>$Message[56]</TH>"; }
 		if ($ShowAuthenticatedUsers =~ /H/i) { print "<TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH>"; }
 		if ($ShowAuthenticatedUsers =~ /B/i) { print "<TH bgcolor=\"#$color_k\" width=80>$Message[75]</TH>"; }
@@ -6870,6 +6886,7 @@ if (scalar keys %HTMLOutput) {
 		if ($HTMLOutput{'lastlogins'}) { &BuildKeyList($MaxRowsInHTMLOutput,$MinHit{'Host'},\%_login_h,\%_login_l); }
 		foreach my $key (@keylist) {
 			print "<TR><TD CLASS=AWL>$key</TD>";
+			ShowUserInfo($key);
 			if ($ShowAuthenticatedUsers =~ /P/i) { print "<TD>".($_login_p{$key}?$_login_p{$key}:"&nbsp;")."</TD>"; }
 			if ($ShowAuthenticatedUsers =~ /H/i) { print "<TD>$_login_h{$key}</TD>"; }
 			if ($ShowAuthenticatedUsers =~ /B/i) { print "<TD>".Format_Bytes($_login_k{$key})."</TD>"; }
@@ -6886,6 +6903,7 @@ if (scalar keys %HTMLOutput) {
 		$rest_k=$TotalBytes-$total_k;
 		if ($rest_p > 0 || $rest_h > 0 || $rest_k > 0) {	# All other logins and/or anonymous
 			print "<TR><TD CLASS=AWL><font color=\"#$color_other\">$Message[125]</font></TD>";
+			ShowUserInfo('');
 			if ($ShowAuthenticatedUsers =~ /P/i) { print "<TD>".($rest_p?$rest_p:"&nbsp;")."</TD>"; }
 			if ($ShowAuthenticatedUsers =~ /H/i) { print "<TD>$rest_h</TD>"; }
 			if ($ShowAuthenticatedUsers =~ /B/i) { print "<TD>".Format_Bytes($rest_k)."</TD>"; }
@@ -6985,7 +7003,7 @@ if (scalar keys %HTMLOutput) {
 		}
 		foreach my $key (@keylist) {
 			print "<TR><TD CLASS=AWL>";
-			&ShowURL($key);
+			&ShowURLInfo($key);
 			print "</TD>";
 			my $bredde_p=0; my $bredde_e=0; my $bredde_x=0; my $bredde_k=0;
 			if ($max_p > 0) { $bredde_p=int($BarWidth*($_url_p{$key}||0)/$max_p)+1; }
@@ -7308,7 +7326,7 @@ if (scalar keys %HTMLOutput) {
 			if ($TotalRefererPages) { $p_p=int($_pagesrefs_p{$key}/$TotalRefererPages*1000)/10; }
 			if ($TotalRefererHits) { $p_h=int($_pagesrefs_h{$key}/$TotalRefererHits*1000)/10; }
 			print "<TR><TD CLASS=AWL>";
-			&ShowURL($key);
+			&ShowURLInfo($key);
 			print "</TD>";
 			print "<TD>".($_pagesrefs_p{$key}?$_pagesrefs_p{$key}:'&nbsp;')."</TD><TD>".($_pagesrefs_p{$key}?"$p_p %":'&nbsp;')."</TD>";
 			print "<TD>".($_pagesrefs_h{$key}?$_pagesrefs_h{$key}:'&nbsp;')."</TD><TD>".($_pagesrefs_h{$key}?"$p_h %":'&nbsp;')."</TD>";
@@ -8000,7 +8018,7 @@ if (scalar keys %HTMLOutput) {
 			foreach my $key (@keylist) {
 				print "<TR>";
 				print "<TD CLASS=AWL>$key</TD>";
-				if ($ShowLinksToWhoIs && $LinksToWhoIs) { ShowWhoIsCell($key); }
+				ShowHostInfo($key);
 				if ($ShowHostsStats =~ /P/i) { print "<TD>".($_host_p{$key}||"&nbsp")."</TD>"; }
 				if ($ShowHostsStats =~ /H/i) { print "<TD>$_host_h{$key}</TD>"; }
 				if ($ShowHostsStats =~ /B/i) { print "<TD>".Format_Bytes($_host_k{$key})."</TD>"; }
@@ -8132,6 +8150,7 @@ if (scalar keys %HTMLOutput) {
 			if ($ShowAuthenticatedUsers =~ /L/i) { $title.=" &nbsp; - &nbsp; <a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=lastlogins":"$PROG$StaticLinks.lastlogins.$StaticExt")."\"$NewLinkTarget>$Message[9]</a>"; }
 			&tab_head("$title",19);
 			print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[94] : ".(scalar keys %_login_h)."</TH>";
+			ShowUserInfo('');
 			if ($ShowAuthenticatedUsers =~ /P/i) { print "<TH bgcolor=\"#$color_p\" width=80>$Message[56]</TH>"; }
 			if ($ShowAuthenticatedUsers =~ /H/i) { print "<TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH>"; }
 			if ($ShowAuthenticatedUsers =~ /B/i) { print "<TH bgcolor=\"#$color_k\" width=80>$Message[75]</TH>"; }
@@ -8148,6 +8167,7 @@ if (scalar keys %HTMLOutput) {
 				if ($max_h > 0) { $bredde_h=int($BarWidth*$_login_h{$key}/$max_h)+1; }
 				if ($max_k > 0) { $bredde_k=int($BarWidth*$_login_k{$key}/$max_k)+1; }
 				print "<TR><TD CLASS=AWL>$key</TD>";
+				ShowUserInfo($key);
 				if ($ShowAuthenticatedUsers =~ /P/i) { print "<TD>".($_login_p{$key}?$_login_p{$key}:"&nbsp;")."</TD>"; }
 				if ($ShowAuthenticatedUsers =~ /H/i) { print "<TD>$_login_h{$key}</TD>"; }
 				if ($ShowAuthenticatedUsers =~ /B/i) { print "<TD>".Format_Bytes($_login_k{$key})."</TD>"; }
@@ -8168,6 +8188,7 @@ if (scalar keys %HTMLOutput) {
 			$rest_k=$TotalBytes-$total_k;
 			if ($rest_p > 0 || $rest_h > 0 || $rest_k > 0) {	# All other logins
 				print "<TR><TD CLASS=AWL><font color=\"#$color_other\">$Message[125]</font></TD>";
+				ShowUserInfo('');
 				if ($ShowAuthenticatedUsers =~ /P/i) { print "<TD>".($rest_p?$rest_p:"&nbsp;")."</TD>"; }
 				if ($ShowAuthenticatedUsers =~ /H/i) { print "<TD>$rest_h</TD>"; }
 				if ($ShowAuthenticatedUsers =~ /B/i) { print "<TD>".Format_Bytes($rest_k)."</TD>"; }
@@ -8339,7 +8360,7 @@ if (scalar keys %HTMLOutput) {
 			}
 			foreach my $key (@keylist) {
 				print "<TR><TD CLASS=AWL>";
-				&ShowURL($key);
+				&ShowURLInfo($key);
 				print "</TD>";
 				my $bredde_p=0; my $bredde_e=0; my $bredde_x=0; my $bredde_k=0;
 				if ($max_p > 0) { $bredde_p=int($BarWidth*($_url_p{$key}||0)/$max_p)+1; }
@@ -8586,7 +8607,7 @@ if (scalar keys %HTMLOutput) {
 				&BuildKeyList($MaxNbOf{'RefererShown'},$MinHit{'Refer'},\%_pagesrefs_h,\%_pagesrefs_p);
 				foreach my $key (@keylist) {
 					print "<TR><TD CLASS=AWL>- ";
-					&ShowURL($key);
+					&ShowURLInfo($key);
 					print "</TD>";
 					print "<TD>".($_pagesrefs_p{$key}?$_pagesrefs_p{$key}:'0')."</TD>";
 					print "<TD>$_pagesrefs_h{$key}</TD>";
