@@ -72,6 +72,6 @@ message68=Záø
 message69=Øíj
 message70=Lis
 message71=Pro
-message72=Czech cz.png
+message72=Navigation
 message73=Daily statistics
 message74=Update now

@@ -42,7 +42,7 @@
 
 # ---------- Init variables --------
 ($ArchiveFileName, $ArchiveLogRecords, $BarHeight, $BarWidth,
-$DIR, $DNSLookup, $DefaultFile, $DirCgi, $DirConfig, $DirData,
+$DIR, $DNSLookup, $DefaultFile, $DirCgi, $DirData,
 $DirIcons, $Extension, $FileConfig, $FileSuffix, $FirstTime,
 $HTMLEndSection, $Host, $HostAlias, $LastTime, $LastUpdate, $SiteToAnalyze,
 $SiteToAnalyzeIsInHostAliases, $SiteToAnalyzeWithoutwww, $LogFile,
@@ -86,7 +86,7 @@ $word, $yearcon, $yearfile, $yearmonthfile, $yeartoprocess) = ();
 @sortsearchwords = @sortsereferrals = @sortsider404 = @sortsiders = @sortunknownip =
 @sortunknownreferer = @sortunknownrefererbrowser = @wordlist = ();
 
-$VERSION="2.5 (build 29)";
+$VERSION="2.5 (build 30)";
 $Lang=0;
 
 # Default value
@@ -673,858 +673,6 @@ $BarImageHorizontal_k = "barrehk.png";
 "zm","Zambia","zr","Zaire","zw","Zimbabwe"
 );
 
-# ---------- Translation tables --------
-# English
-$message[0][0]="Unknown";
-$message[1][0]="Unknown (unresolved ip)";
-$message[2][0]="Others";
-$message[3][0]="View details";
-$message[4][0]="Day";
-$message[5][0]="Month";
-$message[6][0]="Year";
-$message[7][0]="Statistics of";
-$message[8][0]="First visit";
-$message[9][0]="Last visit";
-$message[10][0]="Number of visits";
-$message[11][0]="Unique visitors";
-$message[12][0]="Visit";
-$message[13][0]="Keyword";
-$message[14][0]="Search";
-$message[15][0]="Percent";
-$message[16][0]="Traffic";
-$message[17][0]="Domains/Countries";
-$message[18][0]="Visitors";
-$message[19][0]="Pages/URL";
-$message[20][0]="Hours (Server time)";
-$message[21][0]="Browsers";
-$message[22][0]="HTTP Errors";
-$message[23][0]="Referers";
-$message[24][0]="Search&nbsp;Keywords";
-$message[25][0]="Visitors domains/countries";
-$message[26][0]="hosts";
-$message[27][0]="pages";
-$message[28][0]="different pages";
-$message[29][0]="Access";
-$message[30][0]="Other words";
-$message[31][0]="Pages not found";
-$message[32][0]="HTTP Error codes";
-$message[33][0]="Netscape versions";
-$message[34][0]="IE versions";
-$message[35][0]="Last Update";
-$message[36][0]="Connect to site from";
-$message[37][0]="Origin";
-$message[38][0]="Direct address / Bookmarks";
-$message[39][0]="Links from a Newsgroup";
-$message[40][0]="Links from an Internet Search Engine";
-$message[41][0]="Links from an external page (other web sites except search engines)";
-$message[42][0]="Links from an internal page (other page on same site)";
-$message[43][0]="keywords used on search engines";
-$message[44][0]="Kb";
-$message[45][0]="Unresolved IP Address";
-$message[46][0]="Unknown OS (Referer field)";
-$message[47][0]="Required but not found URLs (HTTP code 404)";
-$message[48][0]="IP Address";
-$message[49][0]="Error&nbsp;Hits";
-$message[50][0]="Unknown browsers (Referer field)";
-$message[51][0]="Visiting robots";
-$message[52][0]="visits/visitor";
-$message[53][0]="Robots/Spiders visitors";
-$message[54][0]="Free realtime logfile analyzer for advanced web statistics";
-$message[55][0]="of";
-$message[56][0]="Pages";
-$message[57][0]="Hits";
-$message[58][0]="Versions";
-$message[59][0]="Operating Systems";
-$message[60][0]="Jan";
-$message[61][0]="Feb";
-$message[62][0]="Mar";
-$message[63][0]="Apr";
-$message[64][0]="May";
-$message[65][0]="Jun";
-$message[66][0]="Jul";
-$message[67][0]="Aug";
-$message[68][0]="Sep";
-$message[69][0]="Oct";
-$message[70][0]="Nov";
-$message[71][0]="Dec";
-$message[72][0]="English us.png";
-$message[73][0]="Day statistics";
-$message[74][0]="Update now";
-
-# French
-$message[0][1]="Inconnus";
-$message[1][1]="Inconnu (IP non résolue)";
-$message[2][1]="Autres";
-$message[3][1]="Voir détails";
-$message[4][1]="Jour";
-$message[5][1]="Mois";
-$message[6][1]="Année";
-$message[7][1]="Statistiques du site";
-$message[8][1]="Première visite";
-$message[9][1]="Dernière visite";
-$message[10][1]="Visites";
-$message[11][1]="Visiteurs différents";
-$message[12][1]="Visite";
-$message[13][1]="Mot clé";
-$message[14][1]="Recherche";
-$message[15][1]="Pourcentage";
-$message[16][1]="Trafic";
-$message[17][1]="Domaines/Pays";
-$message[18][1]="Visiteurs";
-$message[19][1]="Pages/URL";
-$message[20][1]="Heures (Heures du serveur)";
-$message[21][1]="Navigateurs";
-$message[22][1]="Erreurs HTTP";
-$message[23][1]="Origine/Referrer";
-$message[24][1]="Mots&nbsp;clés&nbsp;de&nbsp;recherche";
-$message[25][1]="Domaines/pays visiteurs";
-$message[26][1]="des hôtes";
-$message[27][1]="des pages";
-$message[28][1]="pages différentes";
-$message[29][1]="Accès";
-$message[30][1]="Autres mots";
-$message[31][1]="Pages non trouvées";
-$message[32][1]="Codes Erreurs HTTP";
-$message[33][1]="Versions de Netscape";
-$message[34][1]="Versions de MS Internet Explorer";
-$message[35][1]="Dernière mise à jour";
-$message[36][1]="Connexions au site par";
-$message[37][1]="Origine de la connexion";
-$message[38][1]="Adresse directe / Bookmarks";
-$message[39][1]="Lien depuis un Newsgroup";
-$message[40][1]="Lien depuis un moteur de recherche Internet";
-$message[41][1]="Lien depuis une page externe (autres sites, hors moteurs de recherche)";
-$message[42][1]="Lien depuis une page interne (autre page du site)";
-$message[43][1]="des critères de recherches utilisés";
-$message[44][1]="Ko";
-$message[45][1]="Adresses IP des visiteurs non identifiables (IP non résolue)";
-$message[46][1]="OS non reconnus (champ referer brut)";
-$message[47][1]="URLs du site demandées non trouvées (Code HTTP 404)";
-$message[48][1]="Adresse IP";
-$message[49][1]="Hits&nbsp;en&nbsp;échec";
-$message[50][1]="Navigateurs non reconnus (champ referer brut)";
-$message[51][1]="Robots visiteurs";
-$message[52][1]="visite/visiteur";
-$message[53][1]="Visiteurs Robots/Spiders";
-$message[54][1]="Analyseur de log gratuit pour statistiques Web avancées";
-$message[55][1]="sur";
-$message[56][1]="Pages";
-$message[57][1]="Hits";
-$message[58][1]="Versions";
-$message[59][1]="Systèmes exploitation";
-$message[60][1]="Jan";
-$message[61][1]="Fév";
-$message[62][1]="Mar";
-$message[63][1]="Avr";
-$message[64][1]="Mai";
-$message[65][1]="Juin";
-$message[66][1]="Juil";
-$message[67][1]="Août";
-$message[68][1]="Sep";
-$message[69][1]="Oct";
-$message[70][1]="Nov";
-$message[71][1]="Déc";
-$message[72][1]="French fr.png";
-$message[73][1]="Statistiques par jour";
-$message[74][1]="Mise à jour immédiate";
-
-# Dutch
-$message[0][2]="Onbekend";
-$message[1][2]="Onbekend (Onbekend ip)";
-$message[2][2]="Andere";
-$message[3][2]="Bekijk details";
-$message[4][2]="Dag";
-$message[5][2]="Maand";
-$message[6][2]="Jaar";
-$message[7][2]="Statistieken van";
-$message[8][2]="Eerste bezoek";
-$message[9][2]="Laatste bezoek";
-$message[10][2]="Aantal bezoeken";
-$message[11][2]="Unieke bezoekers";
-$message[12][2]="Bezoek";
-$message[13][2]="Trefwoord";
-$message[14][2]="Zoek";
-$message[15][2]="Procent";
-$message[16][2]="Traffic";
-$message[17][2]="Domeinen/Landen";
-$message[18][2]="Bezoekers";
-$message[19][2]="Pagina's/URL";
-$message[20][2]="Uren";
-$message[21][2]="Browsers";
-$message[22][2]="HTTP Foutmeldingen";
-$message[23][2]="Verwijzing";
-$message[24][2]="Zoek&nbsp;trefwoorden";
-$message[25][2]="Bezoekers domeinen/landen";
-$message[26][2]="hosts";
-$message[27][2]="pagina's";
-$message[28][2]="verschillende pagina's";
-$message[29][2]="Toegang";
-$message[30][2]="Andere woorden";
-$message[31][2]="Pages not found";
-$message[32][2]="HTTP foutmelding codes";
-$message[33][2]="Netscape versies";
-$message[34][2]="MS Internet Explorer versies";
-$message[35][2]="Last Update";
-$message[36][2]="Verbinding naar site vanaf";
-$message[37][2]="Herkomst";
-$message[38][2]="Direkt adres / Bookmarks";
-$message[39][2]="Link vanuit een nieuwsgroep";
-$message[40][2]="Link vanuit een Internet Zoek Machine";
-$message[41][2]="Link vanuit een externe pagina (andere web sites behalve zoek machines)";
-$message[42][2]="Link vanuit een interne pagina (andere pagina van dezelfde site)";
-$message[43][2]="gebruikte trefwoorden bij zoek machines";
-$message[44][2]="Kb";
-$message[45][2]="niet vertaald  IP Adres";
-$message[46][2]="Onbekend OS (Referer veld)";
-$message[47][2]="Verplicht maar niet gvonden URLs (HTTP code 404)";
-$message[48][2]="IP Adres";
-$message[49][2]="Fout&nbsp;Hits";
-$message[50][2]="Onbekende browsers (Referer veld)";
-$message[51][2]="Bezoekende robots";
-$message[52][2]="bezoeken/bezoeker";
-$message[53][2]="Robots/Spiders bezoekers";
-$message[54][2]="Gratis realtime logbestand analyzer voor geavanceerde web statistieken";
-$message[55][2]="van";
-$message[56][2]="Pagina's";
-$message[57][2]="Hits";
-$message[58][2]="Versies";
-$message[59][2]="OS";
-$message[60][2]="Jan";
-$message[61][2]="Feb";
-$message[62][2]="Mar";
-$message[63][2]="Apr";
-$message[64][2]="May";
-$message[65][2]="Jun";
-$message[66][2]="Jul";
-$message[67][2]="Aug";
-$message[68][2]="Sep";
-$message[69][2]="Oct";
-$message[70][2]="Nov";
-$message[71][2]="Dec";
-$message[72][2]="Dutch nl.png";
-$message[73][2]="Dag statistieken";
-$message[74][2]="Update now";
-
-# Spanish
-$message[0][3]="Desconocido";
-$message[1][3]="Dirección IP desconocida";
-$message[2][3]="Otros";
-$message[3][3]="Vea detalles";
-$message[4][3]="Día";
-$message[5][3]="Mes";
-$message[6][3]="Año";
-$message[7][3]="Estadísticas del sitio";
-$message[8][3]="Primera visita";
-$message[9][3]="Última visita";
-$message[10][3]="Número de visitas";
-$message[11][3]="Visitantes distintos";
-$message[12][3]="Visita";
-$message[13][3]="Palabra clave (keyword)";
-$message[14][3]="Búsquedas";
-$message[15][3]="Porciento";
-$message[16][3]="Tráfico";
-$message[17][3]="Dominios/Países";
-$message[18][3]="Visitantes";
-$message[19][3]="Páginas/URLs";
-$message[20][3]="Horas";
-$message[21][3]="Navegadores";
-$message[22][3]="Errores";
-$message[23][3]="Enlaces (Links)";
-$message[24][3]="Palabra&nbsp;clave&nbsp;de&nbsp;búsqueda";
-$message[25][3]="Dominios/Países de visitantes";
-$message[26][3]="servidores";
-$message[27][3]="páginas";
-$message[28][3]="páginas diferentes";
-$message[29][3]="Acceso";
-$message[30][3]="Otras palabras";
-$message[31][3]="Pages not found";
-$message[32][3]="Códigos de Errores de Protocolo HTTP";
-$message[33][3]="Versiones de Netscape";
-$message[34][3]="Versiones de MS Internet Explorer";
-$message[35][3]="Last Update";
-$message[36][3]="Enlaces (links) al sitio";
-$message[37][3]="Origen de enlace";
-$message[38][3]="Dirección directa / Favoritos";
-$message[39][3]="Enlaces desde Newsgroups";
-$message[40][3]="Enlaces desde algún motor de búsqueda";
-$message[41][3]="Enlaces desde páginas externas (exeptuando motores de búsqueda)";
-$message[42][3]="Enlaces desde páginas internas (otras páginas del sitio)";
-$message[43][3]="Palabras clave utilizada por el motor de búsqueda";
-$message[44][3]="Kb";
-$message[45][3]="Dirección IP no identificada";
-$message[46][3]="Sistema Operativo desconocido (campo de referencia)";
-$message[47][3]="URLs necesarios pero no encontados (código 404 de protocolo HTTP)";
-$message[48][3]="Dirección IP";
-$message[49][3]="Hits&nbsp;erróneos";
-$message[50][3]="Navegadores desconocidos (campo de referencia)";
-$message[51][3]="Visitas de Robots";
-$message[52][3]="Visitas/Visitante";
-$message[53][3]="Visitas de Robots/Spiders (indexadores)";
-$message[54][3]="Analizador gratuito de 'log' para estadísticas Web avanzadas";
-$message[55][3]="de";
-$message[56][3]="Páginas";
-$message[57][3]="Hits";
-$message[58][3]="Versiones";
-$message[59][3]="Sistema Operativo";
-$message[60][3]="Ene";
-$message[61][3]="Feb";
-$message[62][3]="Mar";
-$message[63][3]="Abr";
-$message[64][3]="May";
-$message[65][3]="Jun";
-$message[66][3]="Jul";
-$message[67][3]="Ago";
-$message[68][3]="Sep";
-$message[69][3]="Oct";
-$message[70][3]="Nov";
-$message[71][3]="Dic";
-$message[72][3]="Spanish es.png";
-$message[73][3]="Dia estadísticas";
-$message[74][3]="Update now";
-
-# Italian
-$message[0][4]="Sconosciuto";
-$message[1][4]="Sconosciuto (ip non risolto)";
-$message[2][4]="Altri";
-$message[3][4]="Vedi dettagli";
-$message[4][4]="Giorno";
-$message[5][4]="Mese";
-$message[6][4]="Anno";
-$message[7][4]="Statistiche di";
-$message[8][4]="Prima visita";
-$message[9][4]="Ultima visita";
-$message[10][4]="Visite";
-$message[11][4]="Visitatori diverse";
-$message[12][4]="Visite";
-$message[13][4]="Parole chiave";
-$message[14][4]="Ricerche";
-$message[15][4]="Percentuali";
-$message[16][4]="Traffico";
-$message[17][4]="Domini/Nazioni";
-$message[18][4]="Visitatori";
-$message[19][4]="Pagine/URL";
-$message[20][4]="Ore";
-$message[21][4]="Browsers";
-$message[22][4]="Errori HTTP";
-$message[23][4]="Origine/Riferimenti";
-$message[24][4]="Ricerche&nbsp;Parole chiave";
-$message[25][4]="Visitatori per domini/nazioni";
-$message[26][4]="hosts";
-$message[27][4]="pagine";
-$message[28][4]="pagine diverse";
-$message[29][4]="Accessi";
-$message[30][4]="Altre parole";
-$message[31][4]="Pages not found";
-$message[32][4]="Codici di errori HTTP";
-$message[33][4]="Netscape versione";
-$message[34][4]="MS Internet Explorer versione";
-$message[35][4]="Last Update";
-$message[36][4]="Connesso al sito da";
-$message[37][4]="Origine";
-$message[38][4]="Indirizzo diretto / segnalibro";
-$message[39][4]="Link da un  Newsgroup";
-$message[40][4]="Link da un motore di ricerca";
-$message[41][4]="Link da una pagina esterna (altri siti eccetto i motori di ricerca)";
-$message[42][4]="Link da una pagina interna (altre pagine dello stesso sito)";
-$message[43][4]="Parole chiave usate dai motori di ricerca";
-$message[44][4]="Kb";
-$message[45][4]="Indirizzi IP non risolti";
-$message[46][4]="Sistemi operativi non conosciuti (Campo di riferimento)";
-$message[47][4]="Richiesto un URL ma non trovato (HTTP codice 404)";
-$message[48][4]="Indirizzo IP";
-$message[49][4]="Errori&nbsp;Punteggio";
-$message[50][4]="Browser sconosciuti (Campo di riferimento)";
-$message[51][4]="Visite di robots";
-$message[52][4]="visite/visitatori";
-$message[53][4]="Visite di Robots/Spiders";
-$message[54][4]="Analizzatore gratuito in tempo reale dei file di log per statistiche avanzate";
-$message[55][4]="it";
-$message[56][4]="Pagine";
-$message[57][4]="Hits";
-$message[58][4]="Versioni";
-$message[59][4]="Sistema Operativo";
-$message[60][4]="Genn";
-$message[61][4]="Febb";
-$message[62][4]="Mar";
-$message[63][4]="Apr";
-$message[64][4]="Magg";
-$message[65][4]="Giu";
-$message[66][4]="Lug";
-$message[67][4]="Ago";
-$message[68][4]="Sep";
-$message[69][4]="Oct";
-$message[70][4]="Nov";
-$message[71][4]="Dic";
-$message[72][4]="Italian it.png";
-$message[73][4]="Giorno statistiche";
-$message[74][4]="Update now";
-
-# German
-$message[0][5]="Unbekannt";
-$message[1][5]="IP konnte nicht aufgeloest werden";
-$message[2][5]="Sonstige";
-$message[3][5]="Details";
-$message[4][5]="Tag";
-$message[5][5]="Monat";
-$message[6][5]="Jahr";
-$message[7][5]="Statistik ueber";
-$message[8][5]="Erster Besuch";
-$message[9][5]="Letzter Besuch";
-$message[10][5]="Anzahl der Besucher";
-$message[11][5]="Verschiedene Besucher";
-$message[12][5]="Besuch";
-$message[13][5]="Suchbegriffe";
-$message[14][5]="Haeufigkeit";
-$message[15][5]="Prozent";
-$message[16][5]="Traffic";
-$message[17][5]="Laender";
-$message[18][5]="Besucher";
-$message[19][5]="Besuchte Seiten";
-$message[20][5]="Durchschn. Tagesverlauf";
-$message[21][5]="Browser";
-$message[22][5]="HTTP Status";
-$message[23][5]="Referrer";
-$message[24][5]="Suchbegriffe";
-$message[25][5]="Laender aus denen die Besucher kamen";
-$message[26][5]="Hosts";
-$message[27][5]="Seiten";
-$message[28][5]="Unterschiedliche Seiten";
-$message[29][5]="Zugriffe";
-$message[30][5]="Weitere Suchbegriffe";
-$message[31][5]="Pages not found";
-$message[32][5]="HTTP Status Meldungen";
-$message[33][5]="Netscape Versionen";
-$message[34][5]="MS Internet Explorer Versionen";
-$message[35][5]="Last Update";
-$message[36][5]="Woher die Besucher kamen";
-$message[37][5]="Ursprung";
-$message[38][5]="Direkter Zugriff / Bookmarks";
-$message[39][5]="Link von einer Newsgroup";
-$message[40][5]="Link von einer Suchmaschine";
-$message[41][5]="Link von einer ext. Seite (nicht Suchmaschine!)";
-$message[42][5]="Link von einer Seite innerhalb der Web Site";
-$message[43][5]="Suchbegriffen (Suchmaschinen)";
-$message[44][5]="Kb";
-$message[45][5]="Unaufgeloeste IP Adresse";
-$message[46][5]="Unbekanntes Betriebssystem [Referer]";
-$message[47][5]="Nicht auffindbare Seiten [Error 404]";
-$message[48][5]="IP Addresse";
-$message[49][5]="Fehler / Hits";
-$message[50][5]="Unbekannter Browser [Referer]";
-$message[51][5]="Besuche von Robots / Spider";
-$message[52][5]="Besuche / Besucher";
-$message[53][5]="Besuche von Robots / Spider";
-$message[54][5]="Programm zur erweiterten Echtzeitanalyse von Log-Dateien";
-$message[55][5]="von";
-$message[56][5]="Seiten";
-$message[57][5]="Hits";
-$message[58][5]="Ausführungen";
-$message[59][5]="Unbekanntes Betriebssystem";
-$message[60][5]="Jan";
-$message[61][5]="Feb";
-$message[62][5]="Mar";
-$message[63][5]="Abr";
-$message[64][5]="Mai";
-$message[65][5]="Jun";
-$message[66][5]="Juli";
-$message[67][5]="Aug";
-$message[68][5]="Sep";
-$message[69][5]="Oct";
-$message[70][5]="Nov";
-$message[71][5]="Dez";
-$message[72][5]="German de.png";
-$message[73][5]="Tag statistik";
-$message[74][5]="Update now";
-
-# Polish
-$PageCode[6]="<META HTTP-EQUIV=\"content-type\" CONTENT=\"text/html; charset=iso-8859-2\">";
-$message[0][6]="Nieznany";
-$message[1][6]="Nieznany (brak odwzorowania IP w DNS)";
-$message[2][6]="Inni";
-$message[3][6]="Szczegó³y...";
-$message[4][6]="Dzieñ";
-$message[5][6]="Miesi±c";
-$message[6][6]="Rok";
-$message[7][6]="Statystyki";
-$message[8][6]="Pierwsza wizyta";
-$message[9][6]="Ostatnia wizyta";
-$message[10][6]="Ilo¶æ wizyt";
-$message[11][6]="Unikalnych go¶ci";
-$message[12][6]="wizyt";
-$message[13][6]="S³owo kluczowe";
-$message[14][6]="Szukanych";
-$message[15][6]="Procent";
-$message[16][6]="Traffic";
-$message[17][6]="Domeny/Kraje";
-$message[18][6]="Go¶cie";
-$message[19][6]="Stron/URL-i";
-$message[20][6]="Rozk³ad godzinny";
-$message[21][6]="Przegl±darki";
-$message[22][6]="B³êdy HTTP";
-$message[23][6]="Referenci";
-$message[24][6]="Wyszukiwarki&nbsp;-&nbsp;s³owa&nbsp;kluczowe";
-$message[25][6]="Domeny/narodowo¶æ Internautów";
-$message[26][6]="hosty";
-$message[27][6]="strony";
-$message[28][6]="ró¿nych stron";
-$message[29][6]="Dostêp";
-$message[30][6]="Inne s³owa";
-$message[31][6]="Pages not found";
-$message[32][6]="Kody b³êdów HTTP";
-$message[33][6]="Wersje Netscape'a";
-$message[34][6]="Wersje MS IE";
-$message[35][6]="Last Update";
-$message[36][6]="¬ród³a po³±czeñ";
-$message[37][6]="Pochodzenie";
-$message[38][6]="Dostêp bezpo¶redni lub z Ulubionych/Bookmarków";
-$message[39][6]="Link z grupy dyskusyjnej";
-$message[40][6]="Link z zagranicznej wyszukiwarki internetowej";
-$message[41][6]="Link zewnêtrzny";
-$message[42][6]="Link wewnêtrzny (z serwera na którym jest strona)";
-$message[43][6]="S³owa kluczowe u¿yte w wyszukiwarkach internetowcyh";
-$message[44][6]="Kb";
-$message[45][6]="Nieznany (brak odwzorowania IP w DNS)";
-$message[46][6]="Nieznany system operacyjny";
-$message[47][6]="Nie znaleziony (B³±d HTTP 404)";
-$message[48][6]="Adres IP";
-$message[49][6]="Ilo¶æ&nbsp;b³êdów";
-$message[50][6]="Nieznane przegl±darki";
-$message[51][6]="Roboty sieciowe";
-$message[52][6]="wizyt/go¶ci";
-$message[53][6]="Roboty sieciowe";
-$message[54][6]="Darmowy analizator logów on-line";
-$message[55][6]="z";
-$message[56][6]="Strony";
-$message[57][6]="¯±dania";
-$message[58][6]="Wersje";
-$message[59][6]="Systemy operacyjne";
-$message[60][6]="Styczeñ";
-$message[61][6]="Luty";
-$message[62][6]="Marzec";
-$message[63][6]="Kwiecieñ";
-$message[64][6]="Maj";
-$message[65][6]="Czerwiec";
-$message[66][6]="Lipiec";
-$message[67][6]="Sierpieñ";
-$message[68][6]="Wrzesieñ";
-$message[69][6]="Pa¼dziernik";
-$message[70][6]="Listopad";
-$message[71][6]="Grudzieñ";
-$message[72][6]="Polish pl.png";
-$message[73][6]="Dzieñ Statystyki";
-$message[74][6]="Update now";
-
-# Greek (simos@hellug.gr)
-$PageCode[7]="<META HTTP-EQUIV=\"content-type\" CONTENT=\"text/html; charset=iso-8859-7\">";
-$message[0][7]="¶ãíùóôï";
-$message[1][7]="¶ãíùóôï (ìç áíáãíùñéóìİíç ip)";
-$message[2][7]="¶ëëïé";
-$message[3][7]="ÅìöÜíéóç ëåğôïìåñéşí";
-$message[4][7]="Çìİñá";
-$message[5][7]="ÌŞíáò";
-$message[6][7]="¸ôïò";
-$message[7][7]="ÓôáôéóôéêÜ ôïõ";
-$message[8][7]="Ğñşôç åğßóêåøç";
-$message[9][7]="Ôåëåõôáßá åğßóêåøç";
-$message[10][7]="Áñéèìüò åğéóêİøåùí";
-$message[11][7]="Ìïíáäéêïß åğéóêİğôåò";
-$message[12][7]="Åğßóêåøç";
-$message[13][7]="Ëİîç-êëåéäß";
-$message[14][7]="ÁíáæŞôçóç";
-$message[15][7]="Ğïóïóôü";
-$message[16][7]="Traffic";
-$message[17][7]="Åğéèİìáôá/×şñåò";
-$message[18][7]="Åğéóêİğôåò";
-$message[19][7]="Óåëßäåò/URL";
-$message[20][7]="¿ñåò";
-$message[21][7]="Öõëëïìåôñçôİò";
-$message[22][7]="ÓöÜëìáôá HTTP";
-$message[23][7]="Ğáñáğİìğôåò";
-$message[24][7]="ËåêôéêÜ&nbsp;ÁíáæŞôçóçò";
-$message[25][7]="Åğéèİìáôá/÷şñåò åğéóêåğôşí";
-$message[26][7]="óõóôŞìáôá";
-$message[27][7]="óåëßäåò";
-$message[28][7]="äéáöïñåôéêİò óåëßäåò";
-$message[29][7]="Ğñüóâáóç";
-$message[30][7]="¶ëëá ëåêôéêÜ";
-$message[31][7]="Pages not found";
-$message[32][7]="Êùäéêïß óöáëìÜôùí HTTP";
-$message[33][7]="Åêäüóåéò Netscape";
-$message[34][7]="Åêäüóåéò MS Internet Explorer";
-$message[35][7]="Last Update";
-$message[36][7]="Óıíäåóç óôï ôüğï áğü";
-$message[37][7]="Ğñïİëåõóç";
-$message[38][7]="Åõèıò óıíäåóìïò / Áãáğçìİíá";
-$message[39][7]="Óıíäåóìïò áğü ÏìÜäá ÓõæçôŞóåùí";
-$message[40][7]="Óıíäåóìïò áğü Ìç÷áíŞ ÁíáæŞôçóçò ôïõ Internet";
-$message[41][7]="Óıíäåóìïò áğü åîùôåñéêŞ óåëßäá (Üëëïé äéêôõáêïß ôüğïé åêôüò ìç÷áíşí áíáæŞôçóçò)";
-$message[42][7]="Óıíäåóìïò áğü åóùôåñéêŞ óåëßäá (Üëëç óåëßäá óôïí ßäéï äéêôõáêü ôüğï)";
-$message[43][7]="ëåêôéêÜ ğïõ ÷ñçóéìïğïéŞèçêáí óå ìç÷áíİò áíáæŞôçóçò";
-$message[44][7]="Kb";
-$message[45][7]="Äéåõèıíóåéò IP ğïõ äåí áíáãíùñßóôçêáí";
-$message[46][7]="¶ãíùóôï ëåéôïõñãéêü óıóôçìá (Ğåäßï ğáñÜğåìøçò)";
-$message[47][7]="Áğáéôïıìåíá áëëÜ ÷ùñßò íá âñåèïıí URL (Êşäéêáò HTTP 404)";
-$message[48][7]="Äéåıèõíóç IP";
-$message[49][7]="ÓõìâÜíôá&nbsp;ÓöáëìÜôùí";
-$message[50][7]="¶ãíùóôïé öõëëïìåôñçôİò (Ğåäßï ğáñÜğåìøçò)";
-$message[51][7]="Ñïìğüô åğéóêİğôåò";
-$message[52][7]="åğéóêİøåéò/åğéóêİğôç";
-$message[53][7]="Åğéóêİğôåò Ñïìğüô/ÁñÜ÷íåò";
-$message[54][7]="Åëåıèåñïò áíáëõôŞò êáôáãñáöşí ğñáãìáôéêïı ÷ñüíïõ ãéá ğñïçãìİíá óôáôéóôéêÜ êßíçóçò WWW";
-$message[55][7]="áğü";
-$message[56][7]="Óåëßäåò";
-$message[57][7]="Åğéôõ÷ßåò";
-$message[58][7]="Åêäüóåéò";
-$message[59][7]="Ë/Ó";
-$message[60][7]="Éáí";
-$message[61][7]="Öåâ";
-$message[62][7]="ÌÜñ";
-$message[63][7]="Áğñ";
-$message[64][7]="ÌÜú";
-$message[65][7]="Éïıí";
-$message[66][7]="Éïıë";
-$message[67][7]="Áıã";
-$message[68][7]="Óåğ";
-$message[69][7]="Ïêô";
-$message[70][7]="Íïİ";
-$message[71][7]="Äåê";
-$message[72][7]="Greek gr.png";
-$message[73][7]="Daily statistics";
-$message[74][7]="Update now";
-
-# Czech (js@fsid.cvut.cz)
-$PageCode[8]="<META HTTP-EQUIV=\"content-type\" CONTENT=\"text/html; charset=iso-8859-2\">";
-$message[0][8]="Neznámı";
-$message[1][8]="Neznámı (nepøelo¾ená IP)";
-$message[2][8]="Ostatní";
-$message[3][8]="Prohlédnout detaily";
-$message[4][8]="Den";
-$message[5][8]="Mìsíc";
-$message[6][8]="Rok";
-$message[7][8]="Statistika pro";
-$message[8][8]="První náv¹tìva";
-$message[9][8]="Poslední náv¹tìva";
-$message[10][8]="Poèet náv¹tìv";
-$message[11][8]="Unikátní náv¹tìvy";
-$message[12][8]="Náv¹tìva";
-$message[13][8]="Vırazy";
-$message[14][8]="Hledání";
-$message[15][8]="Procenta";
-$message[16][8]="Traffic";
-$message[17][8]="Domény / zemì";
-$message[18][8]="Náv¹tìvy";
-$message[19][8]="Stránky/URL";
-$message[20][8]="Hodiny";
-$message[21][8]="Browsery (prohlí¾eèe)";
-$message[22][8]="HTTP Chyby";
-$message[23][8]="Reference";
-$message[24][8]="Hledané vırazy";
-$message[25][8]="Náv¹tìvy domény/zemì";
-$message[26][8]="hosts";
-$message[27][8]="stránek";
-$message[28][8]="rùzné stránky";
-$message[29][8]="Pøistup";
-$message[30][8]="Jiná slova";
-$message[31][8]="Pages not found";
-$message[32][8]="Chybové kódy HTTP ";
-$message[33][8]="Verze Netscape";
-$message[34][8]="Verze MS Internet Explorer";
-$message[35][8]="Last Update";
-$message[36][8]="Konekce z";
-$message[37][8]="Pùvod";
-$message[38][8]="Pøímá adresa / Oblíbené (Bookmark)";
-$message[39][8]="Odkaz z Newsgroup";
-$message[40][8]="Odkaz z Internetového vyhledávaèe";
-$message[41][8]="Odkaz z jiné stránky (jiné stránky ne¾ vyhledávaèe)";
-$message[42][8]="Odkaz z vlastní stránky (jiná stránka na serveru)";
-$message[43][8]="vırazy pou¾ité ve vyhledávaèi";
-$message[44][8]="Kb";
-$message[45][8]="Nepøelo¾ená IP adresa";
-$message[46][8]="Neznámy OS (polo¾ka Referer)";
-$message[47][8]="Po¾adované, ale nenalezené URL (HTTP 404)";
-$message[48][8]="IP Addresa";
-$message[49][8]="Chyba&nbsp;Dotazù";
-$message[50][8]="neznámı browser (prohlí¾eè) (polo¾ka Referer)";
-$message[51][8]="Náv¹tìvnost robotù";
-$message[52][8]="náv¹tìv/náv¹tìvníka";
-$message[53][8]="Roboti";
-$message[54][8]="Volnì ¹iøitelnı nástroj pro analızu web statistik";
-$message[55][8]="z";
-$message[56][8]="Stránek";
-$message[57][8]="Hity";
-$message[58][8]="Verze";
-$message[59][8]="OS";
-$message[60][8]="Led";
-$message[61][8]="Úno";
-$message[62][8]="Bøe";
-$message[63][8]="Dub";
-$message[64][8]="Kvì";
-$message[65][8]="Èer";
-$message[66][8]="Èvc";
-$message[67][8]="Srp";
-$message[68][8]="Záø";
-$message[69][8]="Øíj";
-$message[70][8]="Lis";
-$message[71][8]="Pro";
-$message[72][8]="Czech cz.png";
-$message[73][8]="Daily statistics";
-$message[74][8]="Update now";
-
-# Portuguese
-$message[0][9]="Desconhecido";
-$message[1][9]="Desconhecido (ip não resolvido)";
-$message[2][9]="Outros visitantes";
-$message[3][9]="Ver detalhes";
-$message[4][9]="Dia";
-$message[5][9]="Mês";
-$message[6][9]="Ano";
-$message[7][9]="Estatísticas de";
-$message[8][9]="Primeira visita";
-$message[9][9]="Última visita";
-$message[10][9]="Numero de visitas";
-$message[11][9]="Visitantes únicos";
-$message[12][9]="Visita";
-$message[13][9]="Palavra chave";
-$message[14][9]="Pesquisa";
-$message[15][9]="Por cento";
-$message[16][9]="Tráfego";
-$message[17][9]="Domínios/Países";
-$message[18][9]="Visitantes";
-$message[19][9]="Páginas/URL";
-$message[20][9]="Horas";
-$message[21][9]="Browsers";
-$message[22][9]="Erros HTTP";
-$message[23][9]="Referencias";
-$message[24][9]="Busca&nbsp;Palavras";
-$message[25][9]="Visitas domínios/países";
-$message[26][9]="hosts";
-$message[27][9]="páginas";
-$message[28][9]="paginas diferentes";
-$message[29][9]="Acesso";
-$message[30][9]="Outras palavras";
-$message[31][9]="Pages not found";
-$message[32][9]="Erros HTTP";
-$message[33][9]="Versões Netscape";
-$message[34][9]="Versões MS Internet Explorer";
-$message[35][9]="Last Update";
-$message[36][9]="Connectado a partir de";
-$message[37][9]="Origem";
-$message[38][9]="Endereço directo / Favoritos";
-$message[39][9]="Link de um  Newsgroup";
-$message[40][9]="Link de um Motor de Busca";
-$message[41][9]="Link de uma página externa (outros sites que não motores de busca)";
-$message[42][9]="Link de uma página interna (outras páginas no mesmo site)";
-$message[43][9]="palavras usadas em motores de busca";
-$message[44][9]="Kb";
-$message[45][9]="Endereço IP não resolvido";
-$message[46][9]="SO Desconhecido (Campo Referer)";
-$message[47][9]="URLs solicitadas e não encontradas (HTTP code 404)";
-$message[48][9]="Endereço IP";
-$message[49][9]="Erro&nbsp;Hits";
-$message[50][9]="Browsers Desconhecidos(Campo Referer)";
-$message[51][9]="Motores Visitantes";
-$message[52][9]="visitas/visitante";
-$message[53][9]="Motores/Spiders visitantes";
-$message[54][9]="Ferramenta de Análise de ficheiros de log em realtime para estatísticas avançadas";
-$message[55][9]="de";
-$message[56][9]="Páginas";
-$message[57][9]="Hits";
-$message[58][9]="Versões";
-$message[59][9]="SO";
-$message[60][9]="Jan";
-$message[61][9]="Fev";
-$message[62][9]="Mar";
-$message[63][9]="Abr";
-$message[64][9]="Mai";
-$message[65][9]="Jun";
-$message[66][9]="Jul";
-$message[67][9]="Ago";
-$message[68][9]="Set";
-$message[69][9]="Out";
-$message[70][9]="Nov";
-$message[71][9]="Dez";
-$message[72][9]="Portuguese pt.png";
-$message[73][9]="Daily statistics";
-$message[74][9]="Update now";
-
-# Korean
-$PageCode[10]="<META HTTP-EQUIV=\"content-type\" CONTENT=\"text/html; charset=euc-kr\">";
-$message[0][10]="¾Ë¼ö¾øÀ½";
-$message[1][10]="¾Ë¼ö¾øÀ½(¾Ë¼ö¾ø´Â ip)";
-$message[2][10]="±âÅ¸";
-$message[3][10]="ÀÚ¼¼È÷ º¸±â";
-$message[4][10]="ÀÏ";
-$message[5][10]="&nbsp;";
-$message[6][10]="³â";
-$message[7][10]="Åë°è";
-$message[8][10]="Ã³À½ Á¢¼Ó";
-$message[9][10]="¸¶Áö¸· Á¢¼Ó";
-$message[10][10]="Á¢¼Ó È¸¼ö";
-$message[11][10]="Á¢¼ÓÀÚº°";
-$message[12][10]="Á¢¼Ó";
-$message[13][10]="Å°¿öµå";
-$message[14][10]="Ã£±â";
-$message[15][10]="ÆÛ¼¾Æ®";
-$message[16][10]="Traffic";
-$message[17][10]="µµ¸ŞÀÎ/±¹°¡";
-$message[18][10]="¹æ¹®ÀÚ";
-$message[19][10]="ÆäÀÌÁö/URL";
-$message[20][10]="½Ã°£";
-$message[21][10]="ºê¶ó¿ìÀú";
-$message[22][10]="HTTP ¿¡·¯";
-$message[23][10]="·¹ÆÛ·¯";
-$message[24][10]="Ã£±â&nbsp;Å°¿öµå";
-$message[25][10]="¹æ¹®ÀÚ µµ¸ŞÀÎ/±¹°¡";
-$message[26][10]="È£½ºÆ®";
-$message[27][10]="ÆäÀÌÁö";
-$message[28][10]="´Ù¸¥ ÆäÀÌÁö";
-$message[29][10]="ÀĞ±â È¸¼ö";
-$message[30][10]="´Ù¸¥ ´Ü¾î";
-$message[31][10]="»ç¿ëÇÑ ºê¶ó¿ìÀú";
-$message[32][10]="HTTP ¿¡·¯ ÄÚµå";
-$message[33][10]="³İ½ºÄÉÀÌÇÁ ¹öÀü";
-$message[34][10]="MS ÀÎÅÍ³İ ÀÍ½ºÇÃ·Î·¯ ¹öÀü";
-$message[35][10]="Last Update";
-$message[36][10]="Á¢¼Ó »çÀÌÆ®º° Åë°è";
-$message[37][10]="ÁÖ¼Ò";
-$message[38][10]="Á÷Á¢ ÁÖ¼Ò / ºÏ¸¶Å©";
-$message[39][10]="´º½ºÅ©·ì¿¡¼­ ¿¬°á";
-$message[40][10]="³»ºÎ °Ë»ö ¿£Áø¿¡¼­ ¿¬°á";
-$message[41][10]="¿ÜºÎÆäÀÌÁö¿¡¼­ ¿¬°á (°Ë»ö¿£ÁøÀ» Á¦¿ÜÇÑ ´Ù¸¥ À¥»çÀÌÆ®)";
-$message[42][10]="³»ºÎÆäÀÌÁö¿¡¼­ ¸µÅ©(°°Àº »çÀÌÆ®ÀÇ ´Ù¸¥ ÆäÀÌÁö)";
-$message[43][10]="°Ë»ö¿£Áø¿¡¼­ »ç¿ëµÈ Å°¿öµå";
-$message[44][10]="»ç¿ë·®(Kb)";
-$message[45][10]="¾Ë¼ö¾ø´Â IP ÁÖ¼Ò";
-$message[46][10]="¾Ë¼ö¾ø´Â OS (Æä·¯ÆÛ ÇÊµå)";
-$message[47][10]="Á¸ÀçÇÏÁö ¾Ê´Â URL Á¢¼Ó½Ãµµ (HTTP ÄÚµå 404)";
-$message[48][10]="IP ÁÖ¼Ò";
-$message[49][10]="Á¢¼Ó¿À·ù È¸¼ö";
-$message[50][10]="¾Ë¼ö¾ø´Â ºê¶ó¿ìÀú (·¹ÆÛ·¯ ÇÊµå)";
-$message[51][10]="¹æ¹®ÁßÀÎ ·Î¹öÆ®";
-$message[52][10]="Á¢¼Ó/¹æ¹®ÀÚ";
-$message[53][10]="·Î¹öÆ®/½ºÆÄÀÌ´õ ¹æ¹®ÀÚ";
-$message[54][10]="Áøº¸ÀûÀÎ À¥ Åë°è¸¦ À§ÇÑ ÀÚÀ¯·Î¿î ½Ç½Ã°£ ·Î±×ÆÄÀÏ";
-$message[55][10]="-";
-$message[56][10]="ÀĞÀº ÆäÀÌÁö";
-$message[57][10]="Á¶È¸¼ö";
-$message[58][10]="¹öÀü";
-$message[59][10]="OS";
-$message[60][10]="1¿ù";
-$message[61][10]="2¿ù";
-$message[62][10]="3¿ù";
-$message[63][10]="4¿ù";
-$message[64][10]="5¿ù";
-$message[65][10]="6¿ù";
-$message[66][10]="7¿ù";
-$message[67][10]="8¿ù";
-$message[68][10]="9¿ù";
-$message[69][10]="10¿ù";
-$message[70][10]="11¿ù";
-$message[71][10]="12¿ù";
-$message[72][10]="Korean kr.png";
-$message[73][10]="ÀÏÀÏ Åë°è";
-$message[74][10]="Update now";
-
 
 #-------------------------------------------------------
 # Functions
@@ -1534,11 +682,11 @@ sub html_head {
   	print "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">\n\n";
     print "<html>\n";
 	print "<head>\n";
-	if ($PageCode[$Lang] ne "") { print "$PageCode[$Lang]\n"; }		# If not defined, iso-8859-1 is used in major countries
+	if ($PageCode ne "") { print "<META HTTP-EQUIV=\"content-type\" CONTENT=\"text/html; charset=$PageCode\"\n"; }		# If not defined, iso-8859-1 is used in major countries
 	print "<meta http-equiv=\"description\" content=\"$PROG - Advanced Web Statistics for $SiteToAnalyze\">\n";
 	print "<meta http-equiv=\"keywords\" content=\"$SiteToAnalyze, free, advanced, realtime, web, server, logfile, log, analyzer, analysis, statistics, stats, perl, analyse, performance, hits, visits\">\n";
 	print "<meta name=\"robots\" content=\"index,follow\">\n";
-	print "<title>$message[7][$Lang] $SiteToAnalyze</title>\n";
+	print "<title>$message[7] $SiteToAnalyze</title>\n";
 	print "<STYLE TYPE=text/css>
 <!--
 BODY { font: 12px arial, verdana, helvetica, sans-serif; background-color: #$color_Background; }
@@ -1635,10 +783,16 @@ sub OnlyFile {
 	0; # Not inside @OnlyFiles
 }
 
+#------------------------------------------------------------------------------
+# Function:     read config file
+# Input:		$DIR $PROG $SiteToAnalyze
+# Output:		Global variables
+#------------------------------------------------------------------------------
 sub Read_Config_File {
-	$FileConfig="";$DirConfig=$DIR;if (($DirConfig ne "") && (!($DirConfig =~ /\/$/)) && (!($DirConfig =~ /\\$/)) ) { $DirConfig .= "/"; }
-	if (open(CONFIG,"$DirConfig$PROG.$SiteToAnalyze.conf")) { $FileConfig="$DirConfig$PROG.$SiteToAnalyze.conf"; $FileSuffix=".$SiteToAnalyze"; }
-	if ($FileConfig eq "") { if (open(CONFIG,"$DirConfig$PROG.conf"))  { $FileConfig="$DirConfig$PROG.conf"; $FileSuffix=""; } }
+	$FileConfig="";
+	my $Dir=$DIR; if (($Dir ne "") && (!($Dir =~ /\/$/)) && (!($Dir =~ /\\$/)) ) { $Dir .= "/"; }
+	if (open(CONFIG,"$Dir$PROG.$SiteToAnalyze.conf")) { $FileConfig="$Dir$PROG.$SiteToAnalyze.conf"; $FileSuffix=".$SiteToAnalyze"; }
+	if ($FileConfig eq "") { if (open(CONFIG,"$Dir$PROG.conf"))  { $FileConfig="$Dir$PROG.conf"; $FileSuffix=""; } }
 	if ($FileConfig eq "") { error("Error: Couldn't open config file \"$PROG.$SiteToAnalyze.conf\" nor \"$PROG.conf\" : $!"); }
 	&debug("Call to Read_Config_File [FileConfig=\"$FileConfig\"]");
 	while (<CONFIG>) {
@@ -1663,22 +817,22 @@ sub Read_Config_File {
 		if ($param =~ /^LogFormat/)            { $LogFormat=$value; next; }
 		if ($param =~ /^AllowToUpdateStatsFromBrowser/)	{ $AllowToUpdateStatsFromBrowser=$value; next; }
 		if ($param =~ /^HostAliases/) {
-			@felter=split(/ /,$value);
+			@felter=split(/\s+/,$value);
 			$i=0; foreach $elem (@felter)      { $HostAliases[$i]=$elem; $i++; }
 			next;
 			}
 		if ($param =~ /^SkipHosts/) {
-			@felter=split(/ /,$value);
+			@felter=split(/\s+/,$value);
 			$i=0; foreach $elem (@felter)      { $SkipHosts[$i]=$elem; $i++; }
 			next;
 			}
 		if ($param =~ /^SkipFiles/) {
-			@felter=split(/ /,$value);
+			@felter=split(/\s+/,$value);
 			$i=0; foreach $elem (@felter)      { $SkipFiles[$i]=$elem; $i++; }
 			next;
 			}
 		if ($param =~ /^OnlyFiles/) {
-			@felter=split(/ /,$value);
+			@felter=split(/\s+/,$value);
 			$i=0; foreach $elem (@felter)      { $OnlyFiles[$i]=$elem; $i++; }
 			next;
 			}
@@ -1731,6 +885,81 @@ sub Read_Config_File {
 	close CONFIG;
 }
 
+
+#------------------------------------------------------------------------------
+# Function:     Get the messages for a specified language
+# Parameter:	Language id
+# Input:		None
+# Output:		$message table
+#------------------------------------------------------------------------------
+sub Read_Language_Data {
+	my $FileLang="";
+	my $Dir=$DIR; if (($Dir ne "") && (!($Dir =~ /\/$/)) && (!($Dir =~ /\\$/)) ) { $Dir .= "/"; }
+	if (open(LANG,"${Dir}lang/awstats-$_[0].txt")) { $FileLang="${Dir}lang/awstats-$_[0].txt"; }
+	else { if (open(LANG,"${Dir}lang/awstats-en.txt")) { $FileLang="${Dir}lang/awstats-en.txt"; } }		# If file not found, we try english
+	&debug("Call to Read_Language_Data [FileLang=\"$FileLang\"]");
+	if ($FileLang ne "") {
+		$i = 0;
+		while (<LANG>) {
+			chomp $_; s/\r//;
+			if ($_ =~ /^PageCode/i) {
+				$_ =~ s/^PageCode=//i;
+				$_ =~ s/#.*//;								# Remove comments
+				$_ =~ tr/\t /  /s;							# Change all blanks into " "
+				$_ =~ s/^ *//; $_ =~ s/ *$//;
+				$_ =~ s/^\"//; $_ =~ s/\"$//;
+				$PageCode = $_;
+			}
+			if ($_ =~ /^message/i) {
+				$_ =~ s/^message\d+=//i;
+				$_ =~ s/#.*//;								# Remove comments
+				$_ =~ tr/\t /  /s;							# Change all blanks into " "
+				$_ =~ s/^ *//; $_ =~ s/ *$//;
+				$_ =~ s/^\"//; $_ =~ s/\"$//;
+				$message[$i] = $_;
+				$i++;
+			}
+		}
+	}
+	close(LANG);
+}
+
+
+#------------------------------------------------------------------------------
+# Function:     Get the tooltip texts for a specified language
+# Parameter:	Language id
+# Input:		None
+# Output:		$message table
+#------------------------------------------------------------------------------
+sub Read_Language_Tooltip {
+	my $FileLang="";
+	my $Dir=$DIR; if (($Dir ne "") && (!($Dir =~ /\/$/)) && (!($Dir =~ /\\$/)) ) { $Dir .= "/"; }
+	if (open(LANG,"${Dir}lang/awstats-tt-$_[0].txt")) { $FileLang="${Dir}lang/awstats-tt-$_[0].txt"; }
+	else { if (open(LANG,"${Dir}lang/awstats-tt-en.txt")) { $FileLang="${Dir}lang/awstats-tt-en.txt"; } }		# If file not found, we try english
+	&debug("Call to Read_Language_Tooltip [FileLang=\"$FileLang\"]");
+	if ($FileLang ne "") {
+		$aws_timeout = $VisitTimeOut/10000*60;
+		$aws_SearchEnginesArray = @SearchEnginesArray;
+		$aws_MaxNbOfRefererShown = $MaxNbOfRefererShown;
+		$aws_RobotArray = @RobotArray;
+		while (<LANG>) {
+			# Search for replaceable parameters
+			s/#PROG#/$PROG/;
+			s/#VisitTimeOut#/$aws_timeout/;
+			s/#SearchEnginesArray#/$aws_SearchEnginesArray/;
+			s/#MaxNbOfRefererShown#/$aws_MaxNbOfRefererShown/;
+			s/#RobotArray#/$aws_RobotArray/;
+			print "$_";
+		}
+	}
+	close(LANG);
+}
+
+
+#--------------------------------------------------------------------
+# Input: All lobal variables
+# Ouput: Change on some global variables
+#--------------------------------------------------------------------
 sub Check_Config {
 	&debug("Call to Check_Config");
 	# Main section
@@ -1740,7 +969,6 @@ sub Check_Config {
 	if ($AllowToUpdateStatsFromBrowser !~ /[0-1]/) { $AllowToUpdateStatsFromBrowser=1; }	# For compatibility, is 1 if not defined
 	if ($PurgeLogFile !~ /[0-1]/)                { $PurgeLogFile=0; }
 	if ($ArchiveLogRecords !~ /[0-1]/)           { $ArchiveLogRecords=1; }
-	if ($Lang !~ /[0-9]/)                        { $Lang=0; }
 	if ($DefaultFile eq "")                      { $DefaultFile="index.html"; }
 	if ($WarningMessages !~ /[0-1]/)             { $WarningMessages=1; }
 	if ($ShowLinksOnURL !~ /[0-1]/)              { $ShowLinksOnURL=1; }
@@ -1777,12 +1005,89 @@ sub Check_Config {
 	$color_h =~ s/#//g; if ($color_h !~ /^[0-9|A-Z][0-9|A-Z]*$/i)                 { $color_h="66F0FF"; }
 	$color_k =~ s/#//g; if ($color_k !~ /^[0-9|A-Z][0-9|A-Z]*$/i)                 { $color_k="339944"; }
 	$color_s =~ s/#//g; if ($color_s !~ /^[0-9|A-Z][0-9|A-Z]*$/i)                 { $color_s="8888DD"; }
+	# Default value	for messages
+	if ($message[0] eq "") { $message[0]="Unknown"; }
+	if ($message[1] eq "") { $message[1]="Unknown (unresolved ip)"; }
+	if ($message[2] eq "") { $message[2]="Others"; }
+	if ($message[3] eq "") { $message[3]="View details"; }
+	if ($message[4] eq "") { $message[4]="Day"; }
+	if ($message[5] eq "") { $message[5]="Month"; }
+	if ($message[6] eq "") { $message[6]="Year"; }
+	if ($message[7] eq "") { $message[7]="Statistics of"; }
+	if ($message[8] eq "") { $message[8]="First visit"; }
+	if ($message[9] eq "") { $message[9]="Last visit"; }
+	if ($message[10] eq "") { $message[10]="Number of visits"; }
+	if ($message[11] eq "") { $message[11]="Unique visitors"; }
+	if ($message[12] eq "") { $message[12]="Visit"; }
+	if ($message[13] eq "") { $message[13]="Keyword"; }
+	if ($message[14] eq "") { $message[14]="Search"; }
+	if ($message[15] eq "") { $message[15]="Percent"; }
+	if ($message[16] eq "") { $message[16]="Traffic"; }
+	if ($message[17] eq "") { $message[17]="Domains/Countries"; }
+	if ($message[18] eq "") { $message[18]="Visitors"; }
+	if ($message[19] eq "") { $message[19]="Pages/URL"; }
+	if ($message[20] eq "") { $message[20]="Hours (Server time)"; }
+	if ($message[21] eq "") { $message[21]="Browsers"; }
+	if ($message[22] eq "") { $message[22]="HTTP Errors"; }
+	if ($message[23] eq "") { $message[23]="Referers"; }
+	if ($message[24] eq "") { $message[24]="Search&nbsp;Keywords"; }
+	if ($message[25] eq "") { $message[25]="Visitors domains/countries"; }
+	if ($message[26] eq "") { $message[26]="hosts"; }
+	if ($message[27] eq "") { $message[27]="pages"; }
+	if ($message[28] eq "") { $message[28]="different pages"; }
+	if ($message[29] eq "") { $message[29]="Access"; }
+	if ($message[30] eq "") { $message[30]="Other words"; }
+	if ($message[31] eq "") { $message[31]="Pages not found"; }
+	if ($message[32] eq "") { $message[32]="HTTP Error codes"; }
+	if ($message[33] eq "") { $message[33]="Netscape versions"; }
+	if ($message[34] eq "") { $message[34]="IE versions"; }
+	if ($message[35] eq "") { $message[35]="Last Update"; }
+	if ($message[36] eq "") { $message[36]="Connect to site from"; }
+	if ($message[37] eq "") { $message[37]="Origin"; }
+	if ($message[38] eq "") { $message[38]="Direct address / Bookmarks"; }
+	if ($message[39] eq "") { $message[39]="Links from a Newsgroup"; }
+	if ($message[40] eq "") { $message[40]="Links from an Internet Search Engine"; }
+	if ($message[41] eq "") { $message[41]="Links from an external page (other web sites except search engines)"; }
+	if ($message[42] eq "") { $message[42]="Links from an internal page (other page on same site)"; }
+	if ($message[43] eq "") { $message[43]="keywords used on search engines"; }
+	if ($message[44] eq "") { $message[44]="Kb"; }
+	if ($message[45] eq "") { $message[45]="Unresolved IP Address"; }
+	if ($message[46] eq "") { $message[46]="Unknown OS (Referer field)"; }
+	if ($message[47] eq "") { $message[47]="Required but not found URLs (HTTP code 404)"; }
+	if ($message[48] eq "") { $message[48]="IP Address"; }
+	if ($message[49] eq "") { $message[49]="Error&nbsp;Hits"; }
+	if ($message[50] eq "") { $message[50]="Unknown browsers (Referer field)"; }
+	if ($message[51] eq "") { $message[51]="Visiting robots"; }
+	if ($message[52] eq "") { $message[52]="visits/visitor"; }
+	if ($message[53] eq "") { $message[53]="Robots/Spiders visitors"; }
+	if ($message[54] eq "") { $message[54]="Free realtime logfile analyzer for advanced web statistics"; }
+	if ($message[55] eq "") { $message[55]="of"; }
+	if ($message[56] eq "") { $message[56]="Pages"; }
+	if ($message[57] eq "") { $message[57]="Hits"; }
+	if ($message[58] eq "") { $message[58]="Versions"; }
+	if ($message[59] eq "") { $message[59]="Operating Systems"; }
+	if ($message[60] eq "") { $message[60]="Jan"; }
+	if ($message[61] eq "") { $message[61]="Feb"; }
+	if ($message[62] eq "") { $message[62]="Mar"; }
+	if ($message[63] eq "") { $message[63]="Apr"; }
+	if ($message[64] eq "") { $message[64]="May"; }
+	if ($message[65] eq "") { $message[65]="Jun"; }
+	if ($message[66] eq "") { $message[66]="Jul"; }
+	if ($message[67] eq "") { $message[67]="Aug"; }
+	if ($message[68] eq "") { $message[68]="Sep"; }
+	if ($message[69] eq "") { $message[69]="Oct"; }
+	if ($message[70] eq "") { $message[70]="Nov"; }
+	if ($message[71] eq "") { $message[71]="Dec"; }
+	if ($message[72] eq "") { $message[72]="Navigation"; }
+	if ($message[73] eq "") { $message[73]="Day statistics"; }
+	if ($message[74] eq "") { $message[74]="Update now"; }
+	if ($message[75] eq "") { $message[75]="Last update"; }
 }
 
-sub Read_History_File {
 #--------------------------------------------------------------------
 # Input: year,month,0|1|2	(0=read only 1st part, 1=read all file, 2=read only LastUpdate)
 #--------------------------------------------------------------------
+sub Read_History_File {
 	&debug("Call to Read_History_File [$_[0],$_[1],$_[2]]");
 	if ($HistoryFileAlreadyRead{"$_[0]$_[1]"}) { return 0; }			# Protect code to invoke function only once for each month/year
 	$HistoryFileAlreadyRead{"$_[0]$_[1]"}=1;							# Protect code to invoke function only once for each month/year
@@ -1908,6 +1213,9 @@ sub Read_History_File {
 	}
 }
 
+#--------------------------------------------------------------------
+# Input: year,month
+#--------------------------------------------------------------------
 sub Save_History_File {
 	&debug("Call to Save_History_File [$_[0],$_[1]]");
 	open(HISTORYTMP,">$DirData/$PROG$_[1]$_[0]$FileSuffix.tmp.$$") || error("Error: Couldn't open file \"$DirData/$PROG$_[1]$_[0]$FileSuffix.tmp.$$\" : $!");	# Month before Year kept for backward compatibility
@@ -2009,6 +1317,9 @@ sub Save_History_File {
 	close(HISTORYTMP);
 }
 
+#--------------------------------------------------------------------
+# Input: Global variables
+#--------------------------------------------------------------------
 sub Init_HashArray {
 	# We purge data read for year $_[0] and month $_[1] so it's like we never read it
 	$HistoryFileAlreadyRead{"$_[0]$_[1]"}=0;
@@ -2019,6 +1330,28 @@ sub Init_HashArray {
 	%_sider404_h = %_sider_h = %_sider_k = %_sider_p = %_unknownip_l = %_unknownreferer_l =
 	%_unknownrefererbrowser_l = ();
 	reset _;
+}
+
+#------------------------------------------------------------------------------
+# Function:      Show flags for 5 major languages
+# Input:         Languade id (en, fr, ...)
+#------------------------------------------------------------------------------
+sub Show_Flag_Links {
+	my $Lang = $_[0];
+	my @lngcode = ();
+	if ($ShowFlagLinks == 1) { 
+		$lngcode[0]="English en";
+		$lngcode[1]="French fr";
+		$lngcode[2]="Dutch nl";
+		$lngcode[3]="Spanish es";
+		$lngcode[4]="Italian it";
+		$lngcode[5]="German de";
+		print "<br>\n";
+		for (0..5) {		# Only flags for 5 major languages
+			my ($lng, $code) = split(/\s+/, $lngcode[$_]);
+			if ($Lang ne $code) { print "<a href=\"$DirCgi$PROG.$Extension?site=$SiteToAnalyze&year=$YearRequired&month=$MonthRequired&lang=$code\"><img src=\"$DirIcons\/flags\/$code.png\" height=14 border=0 alt=\"$lng\" title=\"$lng\"></a>&nbsp;\n"; }
+		}
+	}
 }
 
 
@@ -2061,7 +1394,7 @@ if (($ENV{"GATEWAY_INTERFACE"} eq "") && ($SiteToAnalyze eq "")) {
 	print "\n";
 	print "Advanced options:\n";
 	print "  update=0            to only show a report, no update of statistics\n";
-	print "  lang=X              to show a report page in language number X\n";
+	print "  lang=LL             to show a report page in language LL (en, fr, es, ...)\n";
 	print "  month=MM year=YYYY  to show a report for an old month=MM, year=YYYY\n";
 	print "  Warning : Those 'date' options doesn't allow you to process old log file.\n";
 	print "  It only allows you to see a report for a choosed month/year period instead\n";
@@ -2108,11 +1441,28 @@ $timetomorrow=$tomorrowyear.$tomorrowmonth.$tomorrowday.$tomorrowhour.$tomorrowm
 
 # Read config file
 &Read_Config_File;
-if ($QueryString =~ /lang=/i) { $Lang=$QueryString; $Lang =~ s/.*lang=//; $Lang =~ s/&.*//;  $Lang =~ s/ .*//; }
+if ($QueryString =~ /lang=/i) { $Lang=$QueryString; $Lang =~ s/.*lang=//i; $Lang =~ s/&.*//; $Lang =~ s/\s+//; }
+if ($Lang eq "") { $Lang="en"; }
+
+# Change old values of Lang into new for compatibility
+if ($Lang eq "0") { $Lang="en"; }
+if ($Lang eq "1") { $Lang="fr"; }
+if ($Lang eq "2") { $Lang="nl"; }
+if ($Lang eq "3") { $Lang="es"; }
+if ($Lang eq "4") { $Lang="it"; }
+if ($Lang eq "5") { $Lang="de"; }
+if ($Lang eq "6") { $Lang="pl"; }
+if ($Lang eq "7") { $Lang="gr"; }
+if ($Lang eq "8") { $Lang="cz"; }
+if ($Lang eq "9") { $Lang="pt"; }
+if ($Lang eq "10") { $Lang="kr"; }
+
+# Get the output strings
+&Read_Language_Data($Lang);
 
 # Check and correct bad parameters
 &Check_Config;
-	
+
 # Print html header
 &html_head;
 
@@ -2124,7 +1474,7 @@ if ($DirData eq "")  { $DirData="."; }						# If current dir not defined then we
 $DirData =~ s/\/$//;
 if ($DNSLookup) { use Socket; }
 $NewDNSLookup=$DNSLookup;
-%monthlib =  ( "01","$message[60][$Lang]","02","$message[61][$Lang]","03","$message[62][$Lang]","04","$message[63][$Lang]","05","$message[64][$Lang]","06","$message[65][$Lang]","07","$message[66][$Lang]","08","$message[67][$Lang]","09","$message[68][$Lang]","10","$message[69][$Lang]","11","$message[70][$Lang]","12","$message[71][$Lang]" );
+%monthlib =  ( "01","$message[60]","02","$message[61]","03","$message[62]","04","$message[63]","05","$message[64]","06","$message[65]","07","$message[66]","08","$message[67]","09","$message[68]","10","$message[69]","11","$message[70]","12","$message[71]" );
 # monthnum must be in english because it's used to translate log date in log files which are always in english
 %monthnum =  ( "Jan","01","Feb","02","Mar","03","Apr","04","May","05","Jun","06","Jul","07","Aug","08","Sep","09","Oct","10","Nov","11","Dec","12" );
 
@@ -2134,8 +1484,8 @@ if ($YearRequired !~ /^[\d][\d][\d][\d]$/) { $YearRequired=$nowyear; }
 if ($QueryString =~ /month=/i)	{ $MonthRequired=$QueryString; $MonthRequired =~ s/.*month=//; $MonthRequired =~ s/&.*//; $MonthRequired =~ s/ .*//; }
 if ($MonthRequired ne "year" && $MonthRequired !~ /^[\d][\d]$/) { $MonthRequired=$nowmonth; }
 
-$BrowsersHash{"netscape"}="<font color=blue>Netscape</font> <a href=\"$DirCgi$PROG.$Extension?action=browserdetail&site=$SiteToAnalyze&year=$YearRequired&month=$MonthRequired&lang=$Lang\">($message[58][$Lang])</a>";
-$BrowsersHash{"msie"}="<font color=blue>MS Internet Explorer</font> <a href=\"$DirCgi$PROG.$Extension?action=browserdetail&site=$SiteToAnalyze&year=$YearRequired&month=$MonthRequired&lang=$Lang\">($message[58][$Lang])</a>";
+$BrowsersHash{"netscape"}="<font color=blue>Netscape</font> <a href=\"$DirCgi$PROG.$Extension?action=browserdetail&site=$SiteToAnalyze&year=$YearRequired&month=$MonthRequired&lang=$Lang\">($message[58])</a>";
+$BrowsersHash{"msie"}="<font color=blue>MS Internet Explorer</font> <a href=\"$DirCgi$PROG.$Extension?action=browserdetail&site=$SiteToAnalyze&year=$YearRequired&month=$MonthRequired&lang=$Lang\">($message[58])</a>";
 
 if (@HostAliases == 0) {
 	warning("Warning: HostAliases parameter is not defined, $PROG will choose \"$SiteToAnalyze localhost 127.0.0.1\".");
@@ -2158,21 +1508,12 @@ for ($ix=0; $ix<5; $ix++) {	$_from_h[$ix]=0; }
 print "<table WIDTH=$WIDTH>\n";
 print "<tr valign=center><td class=LEFT width=150 style=\"font: 18px arial,verdana,helvetica; font-weight: bold\">AWStats\n";
 # Show flags
-if ($ShowFlagLinks == 1) {
-	print "<br>\n";
-	my $sp = '';
-	for (0..5) {		# Only flags for 5 major languages
-		if ($Lang != $_) {
-			my ($lng, $flg) = split(/\s+/, $message[72][$_]);
-			print "$sp<a href=\"$DirCgi$PROG.$Extension?site=$SiteToAnalyze&year=$YearRequired&month=$MonthRequired&lang=$_\"><img src=\"$DirIcons\/flags\/$flg\" height=14 border=0 alt=\"$lng\" title=\"$lng\"></a>\n";
-			$sp = '&nbsp;';
-		}
-	}
-}
+Show_Flag_Links($Lang);
+
 print "</td>\n";
 print "<td class=LEFT width=450><a href=\"http://awstats.sourceforge.net\" target=_newawstats><img src=$DirIcons/other/$Logo border=0 alt=\"$PROG Official Web Site\" title=\"$PROG Official Web Site\"></a></td></tr>\n";
 #print "<b><font face=\"verdana\" size=1><a href=\"$HomeURL\">HomePage</a> &#149\; <a href=\"javascript:history.back()\">Back</a></font></b><br>\n";
-print "<tr><td class=LEFT colspan=2>$message[54][$Lang]</td></tr>\n";
+print "<tr><td class=LEFT colspan=2>$message[54]</td></tr>\n";
 print "</table>\n";
 
 print "<hr>\n";
@@ -2799,9 +2140,9 @@ for ($ix=12; $ix>=1; $ix--) {
 #---------------------------------------------------------------------
 if ($QueryString =~ /action=unknownip/i) {
 	print "$CENTER<a name=\"UNKOWNIP\"></a><BR>";
-	$tab_titre=$message[45][$Lang];
+	$tab_titre=$message[45];
 	&tab_head;
-	print "<TR bgcolor=#$color_TableBGRowTitle><TH>$message[48][$Lang]</TH><TH>$message[9][$Lang]</TH>\n";
+	print "<TR bgcolor=#$color_TableBGRowTitle><TH>$message[48]</TH><TH>$message[9]</TH>\n";
 	@sortunknownip=sort { $SortDir*$_unknownip_l{$a} <=> $SortDir*$_unknownip_l{$b} } keys (%_unknownip_l);
 	foreach $key (@sortunknownip) {
 		$yearcon=substr($_unknownip_l{$key},0,4);
@@ -2818,9 +2159,9 @@ if ($QueryString =~ /action=unknownip/i) {
 	}
 if ($QueryString =~ /action=unknownrefererbrowser/i) {
 	print "$CENTER<a name=\"UNKOWNREFERERBROWSER\"></a><BR>";
-	$tab_titre=$message[50][$Lang];
+	$tab_titre=$message[50];
 	&tab_head;
-	print "<TR bgcolor=#$color_TableBGRowTitle><TH>Referer</TH><TH>$message[9][$Lang]</TH></TR>\n";
+	print "<TR bgcolor=#$color_TableBGRowTitle><TH>Referer</TH><TH>$message[9]</TH></TR>\n";
 	@sortunknownrefererbrowser=sort { $SortDir*$_unknownrefererbrowser_l{$a} <=> $SortDir*$_unknownrefererbrowser_l{$b} } keys (%_unknownrefererbrowser_l);
 	foreach $key (@sortunknownrefererbrowser) {
 		$yearcon=substr($_unknownrefererbrowser_l{$key},0,4);
@@ -2838,9 +2179,9 @@ if ($QueryString =~ /action=unknownrefererbrowser/i) {
 	}
 if ($QueryString =~ /action=unknownreferer/i) {
 	print "$CENTER<a name=\"UNKOWNREFERER\"></a><BR>";
-	$tab_titre=$message[46][$Lang];
+	$tab_titre=$message[46];
 	&tab_head;
-	print "<TR bgcolor=#$color_TableBGRowTitle><TH>Referer</TH><TH>$message[9][$Lang]</TH></TR>\n";
+	print "<TR bgcolor=#$color_TableBGRowTitle><TH>Referer</TH><TH>$message[9]</TH></TR>\n";
 	@sortunknownreferer=sort { $SortDir*$_unknownreferer_l{$a} <=> $SortDir*$_unknownreferer_l{$b} } keys (%_unknownreferer_l);
 	foreach $key (@sortunknownreferer) {
 		$yearcon=substr($_unknownreferer_l{$key},0,4);
@@ -2858,9 +2199,9 @@ if ($QueryString =~ /action=unknownreferer/i) {
 	}
 if ($QueryString =~ /action=notfounderror/i) {
 	print "$CENTER<a name=\"NOTFOUNDERROR\"></a><BR>";
-	$tab_titre=$message[47][$Lang];
+	$tab_titre=$message[47];
 	&tab_head;
-	print "<TR bgcolor=#$color_TableBGRowTitle><TH>URL</TH><TH bgcolor=#$color_h>$message[49][$Lang]</TH><TH>$message[23][$Lang]</TH></TR>\n";
+	print "<TR bgcolor=#$color_TableBGRowTitle><TH>URL</TH><TH bgcolor=#$color_h>$message[49]</TH><TH>$message[23]</TH></TR>\n";
 	@sortsider404=sort { $SortDir*$_sider404_h{$a} <=> $SortDir*$_sider404_h{$b} } keys (%_sider404_h);
 	foreach $key (@sortsider404) {
 		$url=$key; $url =~ s/<script.*$//gi; 							# This is to avoid 'Cross Site Scripting attacks'
@@ -2873,9 +2214,9 @@ if ($QueryString =~ /action=notfounderror/i) {
 	}
 if ($QueryString =~ /action=browserdetail/i) {
 	print "$CENTER<a name=\"NETSCAPE\"></a><BR>";
-	$tab_titre=$message[33][$Lang]."<br><img src=\"$DirIcons/browser/netscape.png\">";
+	$tab_titre=$message[33]."<br><img src=\"$DirIcons/browser/netscape.png\">";
 	&tab_head;
-	print "<TR bgcolor=#$color_TableBGRowTitle><TH>$message[58][$Lang]</TH><TH bgcolor=#$color_h width=40>$message[57][$Lang]</TH><TH bgcolor=#$color_h width=40>$message[15][$Lang]</TH></TR>\n";
+	print "<TR bgcolor=#$color_TableBGRowTitle><TH>$message[58]</TH><TH bgcolor=#$color_h width=40>$message[57]</TH><TH bgcolor=#$color_h width=40>$message[15]</TH></TR>\n";
 	for ($i=1; $i<=$#_nsver_h; $i++) {
 		if ($_nsver_h[$i] gt 0) {
 			$h=$_nsver_h[$i]; $p=int($_nsver_h[$i]/$_browser_h{"netscape"}*1000)/10; $p="$p&nbsp;%";
@@ -2887,9 +2228,9 @@ if ($QueryString =~ /action=browserdetail/i) {
 	}
 	&tab_end;
 	print "<a name=\"MSIE\"></a><BR>";
-	$tab_titre=$message[34][$Lang]."<br><img src=\"$DirIcons/browser/msie.png\">";
+	$tab_titre=$message[34]."<br><img src=\"$DirIcons/browser/msie.png\">";
 	&tab_head;
-	print "<TR bgcolor=#$color_TableBGRowTitle><TH>$message[58][$Lang]</TH><TH bgcolor=#$color_h width=40>$message[57][$Lang]</TH><TH bgcolor=#$color_h width=40>$message[15][$Lang]</TH></TR>\n";
+	print "<TR bgcolor=#$color_TableBGRowTitle><TH>$message[58]</TH><TH bgcolor=#$color_h width=40>$message[57]</TH><TH bgcolor=#$color_h width=40>$message[15]</TH></TR>\n";
 	for ($i=1; $i<=$#_msiever_h; $i++) {
 		if ($_msiever_h[$i] gt 0) {
 			$h=$_msiever_h[$i]; $p=int($_msiever_h[$i]/$_browser_h{"msie"}*1000)/10; $p="$p&nbsp;%";
@@ -2927,427 +2268,8 @@ if ($QueryString =~ /action=info/i) {
 @sorterrors=sort { $SortDir*$_errors_h{$a} <=> $SortDir*$_errors_h{$b} } keys (%_errors_h);
 &debug("End of sorting hash arrays");
 
-# English tooltips
-if (($Lang != 1) && ($Lang != 2) && ($Lang != 3) && ($Lang != 4) && ($Lang != 6) && ($Lang != 10)) {
-	print "
-	<DIV CLASS=\"CTooltip\" ID=\"tt1\">
-	A new visits is defined as each new <b>incoming visitor</b> (viewing or browsing a page) who was not connected to your site during last <b>".($VisitTimeOut/10000*60)." mn</b>.
-	</DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt2\">
-	Number of client hosts (<b>IP address</b>) who came to visit the site (and who viewed at least one <b>page</b>).<br>
-	This data refers to the number of <b>different physical persons</b> who had reached the site in any one day.
-	</DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt3\">
-	Number of times a <b>page</b> of the site is <b>viewed</b> (Sum for all visitors for all visits).<br>
-	This piece of data differs from \"hits\" in that it counts only HTML pages as oppose to images and other files.
-	</DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt4\">
-	Number of times a <b>page, image, file</b> of the site is <b>viewed</b> or <b>downloaded</b> by someone.<br>
-	This piece of data is provided as a reference only, since the number of \"pages\" viewed is often prefered for marketing purposes.
-	</DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt5\">
-	This piece of information refers to the amount of data downloaded by all <b>pages</b>, <b>images</b> and <b>files</b> within your site measured in KBs.
-	</DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt13\">
-	$PROG recognizes each access to your site after a <b>search</b> from the <b>".(@SearchEnginesArray)." most popular Internet Search Engines and Directories</b> (such as Yahoo, Altavista, Lycos, Google, Voila, etc...).
-	</DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt14\">
-	List of all <b>external pages</b> which were used to link (or enter) to your site (Only the <b>$MaxNbOfRefererShown</b> most often used external pages are shown.\n
-	Links used by the results of the search engines are excluded here because they have already been included on the previous line within this table.
-	</DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt15\">
-	This table shows the list of the most frequently <b>keywords</b> utilized to find your site from Internet Search Engines and Directories.
-	(Keywords from the <b>".(@SearchEnginesArray)."</b> most popular Search Engines and Directories are recognized by $PROG, such as Yahoo, Altavista, Lycos, Google, Voila, etc...).
-	</DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt16\">
-	Robots (sometimes refer to Spiders) are <b>automatic computer visitors</b> used by many search engines that scan your web site to (1) index it and rank it, (2) collect statistics on Internet Web sites and/or (3) see if your site is still online.<br>
-	$PROG is able to recognize up to <b>".(@RobotArray)."</b> robots.
-	</DIV>";
-
-	print "
-	<DIV CLASS=\"CTooltip\" ID=\"tt201\"> No description for this error. </DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt202\"> Request was understood by server but will be processed later. </DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt204\"> Server has processed the request but there is no document to send. </DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt206\"> Partial content. </DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt301\"> Requested document was moved and is now at another address given in awnswer. </DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt302\"> No description for this error. </DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt400\"> Syntax error, server didn\'t understand request. </DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt401\"> Tried to reach an <b>URL where a login/password pair was required</b>.<br>A high number within this item could mean that someone (such as a hacker) is attempting to crack, or enter into your site (hoping to enter a secured area by trying different login/password pairs, for instance). </DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt403\"> Tried to reach an <b>URL not configured to be reachable, even with an login/password pair</b> (for example, an URL within a directory not defined as \"browsable\".). </DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt404\"> Tried to reach a <b>non existing URL</b>. This error often means that there is an invalid link somewhere in your site or that a visitor mistyped a certain URL. </DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt408\"> Server has taken <b>too much time</b> to respond to a request. This error frequently involves either a slow CGI script which the server was required to kill or an extremely congested web server. </DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt500\"> Internal error. This error is often caused by a CGI program that had finished abnormally (coredump for example). </DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt501\"> Unknown requested action. </DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt502\"> Code returned by a HTTP server that works as a proxy or gateway when a real, targeted server doesn\'t answer successfully to the client\'s request. </DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt503\"> Internal server error. </DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt504\"> Gateway Time-out. </DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt505\"> HTTP Version Not Supported. </DIV>
-	";
-}
-
-# French tooltips
-if ($Lang == 1) {
-	print "
-	<DIV CLASS=\"CTooltip\" ID=\"tt1\">
-	On considère une nouvelle visite pour <b>chaque arrivée</b> d un visiteur consultant une page et ne s étant pas connecté dans les dernières <b>".($VisitTimeOut/10000*60)." mn</b>.
-	</DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt2\">
-	Nombre de hotes (<b>adresse IP</b>) utilisés pour accéder au site (et voir au moins une <b>page</b>).<br>
-	Ce chiffre reflète le nombre de <b>personnes physiques</b> différentes ayant un jour accédées au site.
-	</DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt3\">
-	Nombre de fois qu une <b>page</b> du site est <b>vue</b> (Cumul de tout visiteur, toute visite).<br>
-	Ce compteur différe des \"hits\" car il ne comptabilise que les pages HTML et non les images ou autres fichiers.
-	</DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt4\">
-	Nombre de fois qu une <b>page, image, fichier</b> du site est <b>vu</b> ou <b>téléchargé</b> par un visiteur.<br>
-	Ce compteur est donné à titre indicatif, le compteur \"pages\" etant préféré.
-	</DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt5\">
-	Nombre de <b>kilo octets</b> téléchargé lors des visites du site.<br>
-	Il s agit aussi bien du volume de données du au chargement des <b>pages</b> et <b>images</b> que des <b>fichiers</b> téléchargés.
-	</DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt13\">
-	$PROG est capable de reconnaitre l acces au site issu d une <b>recherche</b> depuis les <b>".(@SearchEnginesArray)." moteurs de recherche Internet</b> les plus connus (Yahoo, Altavista, Lycos, Google, Voila, etc...).
-	</DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt14\">
-	Liste des <b>pages de sites externes</b> contenant un lien suivi pour accéder à ce site (Seules les <b>$MaxNbOfRefererShown</b> pages externes les plus utilisées sont affichées).\n
-	Les liens issus du résultat d un moteur de recherche connu n apparaissent pas ici, car comptabilisés à part sur la ligne juste au-dessus.
-	</DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt15\">
-	Ce tableau offre la liste des <b>mots</b> les plus souvent utilisés pour retrouver et accéder au site depuis
-	un moteur de recherche Internet (Les recherches depuis <b>".(@SearchEnginesArray)."</b> moteurs de recherche parmi les pluspopulaires sont reconnues, comme Yahoo, Altavista, Lycos, Google, Voila, etc...).
-	</DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt16\">
-	Les robots sont des <b>automates visiteurs</b> scannant le site dans le but de l indexer, d obtenir des statistiques sur les sites Web Internet ou de vérifier sa disponibilié.<br>
-	$PROG reconnait <b>".(@RobotArray)."</b> robots.
-	</DIV>";
-
-	print "
-	<DIV CLASS=\"CTooltip\" ID=\"tt201\"> Contenu partiel renvoyé. </DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt202\"> La requête a été enregistrée par le serveur mais sera exécutée plus tard. </DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt204\"> Le serveur a traité la demande mais il n existe aucun document à renvoyer. </DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt206\"> Contenu partiel renvoyé. </DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt301\"> Le document réclamé a été déplacé et se trouve maintenant à une autre adresse mentionnée dans la réponse. </DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt302\"> Aucun descriptif pour cette erreur. </DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt400\"> Erreur de syntaxe, le serveur n a pas compris la requête. </DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt401\"> Tentatives d accès à une <b>URL nécessitant identification avec un login/mot de passe invalide</b>.<br>Un nombre trop élévé peut mettre en évidence une tentative de crackage brute du site (par accès répété de différents logins/mots de passe). </DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt403\"> Tentatives d accès à une <b>URL non configurée pour etre accessible, même avec une identification</b> (par exemple, une URL d un répertoire non défini comme étant \"listable\"). </DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt404\"> Tentatives d accès à une <b>URL inexistante</b>. Il s agit donc d un lien invalide sur le site ou d une faute de frappe d un visiteur qui a saisie une mauvaise URL directement. </DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt408\"> Le serveur mis un <b>temps trop important</b> pour répondre à la requête. Il peut s agir d un script CGI trop lent sur le serveur forcé d abandonner le traitement ou d une saturation du site. </DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt500\"> Erreur interne au serveur. Cette erreur est le plus souvant renvoyé lors de l arrêt anormal d un script CGI (par exemple suite à un coredump du CGI). </DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt501\"> Le serveur ne prend pas en charge l action demandée. </DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt502\"> Code renvoyé par un serveur HTTP qui fonctionne comme proxy ou gateway lorsque le serveur réel consulté ne réagit pas avec succès à la demande du client. </DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt503\"> Erreur interne au serveur. </DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt504\"> Gateway Time-out. </DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt505\"> Version HTTP non supporté. </DIV>
-	";
-}
-
-# Dutch tooltips
-if ($Lang == 2) {
-	print "
-	<DIV CLASS=\"CTooltip\" ID=\"tt1\">
-	Een nieuw bezoek is elke <b>binnenkomende bezoeker</b> (die een pagina bekijkt) die de laatste <b>".($VisitTimeOut/10000*60)." mn</b> niet met uw site verbonden was.
-	</DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt2\">
-	Number of client hosts (<b>IP address</b>) who came to visit the site (and who viewed at least one <b>page</b>).<br>
-	This data refers to the number of <b>different physical persons</b> who had reached the site in any one day.
-	Aantal client hosts (<b>IP adres</b>) die de site bezochten (en minimaal een <b>pagina</b> bekeken).<br>
-	Dit geeft aan hoeveel <b>verschillende fysieke personen</b> de site op een bepaalde dag bezocht hebben.
-	</DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt3\">
-	Aantal malen dat een <b>pagina</b> van de site <b>bekeken</b> is (Som voor alle bezoekers voor alle bezoeken).<br>
-	Dit onderdeel verschilt van \"hits\" in het feit dat het alleen HTML pagina\'s telt, in tegenstelling tot plaatjes en andere bestanden.
-	</DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt4\">
-	Aantal malen dat een <b>pagina</b>, <b>plaatje</b> of <b>bestand</b> op de site door iemand is <b>bekeken</b> of <b>gedownload</b>.<br>
-	Dit onderdeel is alleen als referentie gegeven, omdat het aantal bekeken \"pagina\'s\" voor marketingdoeleinden de voorkeur heeft.
-	</DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt5\">
-	Aantal door uw bezoekers gedownloade <b>kilobytes</b>.<br>
-	Dit onderdeel geeft de hoeveelheid gedownloade gegevens in alle <b>pagina\'s</b>, <b>plaatjes</b> en <b>bestanden</b> van uw site, gemeten in KBs.
-	</DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt13\">
-	Dit programma, $PROG, herkent elke benadering van uw site na een <b>zoekopdracht</b> van de <b>".(@SearchEnginesArray)." meest populaire Internet zoekmachines</b> (zoals Yahoo, Altavista, Lycos, Google, Voila, etc...).
-	</DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt14\">
-	Lijst van alle <b>externe pagina\'s</b> die zijn gebruikt om naar uw site te linken (of deze te benaderen) (Alleen de <b>$MaxNbOfRefererShown</b> meest gebruikte externe pagina\'s zijn getoond.\n
-	Links gebruikt door de resultaten van zoekmachines worden hiet niet getoond omdat deze al zijn opgenomen in de vorige regel van deze tabel.
-	</DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt15\">
-	Deze tabel toont de lijst van <b>keywords</b> die het meest zijn gebruikt om uw site te vindein in Internet zoekmachines.
-	(Keywords van de <b>".(@SearchEnginesArray)."</b> meest populaire zoekmachines worden door $PROG herkend, zoals Yahoo, Altavista, Lycos, Google, Voila, etc...).
-	</DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt16\">
-	Robots (soms Spiders genoemd) zijn <b>automatische bezoekcomputers</b> die door veel zoekmachines worden gebruikt om uw site te scannen om (1) deze te indexeren, (2) statistieken over Internet sites te verzamelen en/of (3) te kijken of site nog steeds on-line is.<br>
-	Dit programma, $PROG, is in staat maximaal <b>".(@RobotArray)."</b> robots te herkennen</b>.
-	</DIV>";
-
-	print "
-	<DIV CLASS=\"CTooltip\" ID=\"tt201\"> Geen beschrijving voor deze foutmelding. </DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt202\"> De server heeft het verzoek begrepen, maar zal deze later behandelen. </DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt204\"> De server heeft het verzoek verwerkt, maar er is geen document om te verzenden. </DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt206\"> Gedeeltelijke inhoud. </DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt301\"> Het aangevraagde document is verplaatst en is nu op een andere locatie die in het antwoord gegeven is. </DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt302\"> Geen beschrijving voor deze foutmelding. </DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt400\"> \"Taalfout\", de server begreep het verzoek niet. </DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt401\"> Er is gepoogd een <b>URL waarvoor een usernaam/wachtwoord noodzakelijk is</b> te benaderen.<br>Een hoog aantal van deze meldingen kan betekenen dat iemand (zoals een hacker) probeert uw site te kraken, of uw site binnen te komen (pogend een beveiligd onderdeel van uw site te benaderen door verschillende usernamen/wachtwoorden te proberen, bijvoorbeeld). </DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt403\"> Er is gepoogd een <b>URL die is ingesteld om niet benaderbaar te zijn, zelfs met usernaam/wachtwoord</b> te benaderen (bijvoorbeeld, een URL in een directory die niet \"doorbladerbaar\" is). </DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt404\"> Er is gepoogd een <b>niet bestaande URL</b> te benaderen. Deze fout betekent vaak dat er een ongeldige link in uw site zit of dat een bezoeker een URL foutief heeft ingevoerd. </DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt408\"> De server heeft er <b>te lang</b> over gedaan om een antwoord op een aanvraag te geven. Het kan een CGI script zijn dat zo traag is dat de server hem heeft moeten afbreken of een overbelaste web server. </DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt500\"> Interne fout. Deze error wordt vaak veroorzaakt door een CGI programma dat abnormaal is beeindigd (een core dump, bijvoorbeeld). </DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt501\"> Onbekende actie aangevraagd. </DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt502\"> Melding die door een proxy of gateway HTTP server wordt gegeven als een echte doelserver niet succesvol op de aanvraag van een client antwoordt. </DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt503\"> Interne server fout. </DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt504\"> Gateway time-out. </DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt505\"> HTTP versie niet ondersteund. </DIV>
-	";
-}
-
-# Spanish tooltips
-if ($Lang == 3) {
-	print "
-	<DIV CLASS=\"CTooltip\" ID=\"tt1\">
-	Se considera un nueva vista por <b>cada nuevo visitante</b> que consulte una página y que no haya accesado el sitio en los últimos <b>".($VisitTimeOut/10000*60)." mins.</b>.
-	</DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt2\">
-	Número de Servidores (<b>direcciones IP</b>) que entran a un sitio (y que por lo menos visitan una <b>página</b>).<br>
-	Esta cifra refleja el número de <b>personas físicas diferentes</b> que hayan accesado al sitio en un día.
-	</DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt3\">
-	Número de ocasiones que una <b>página</b> del sitio ha sido <b>vista</b> (La suma de todos los visitantes incluyendo múltiples visitas).<br>
-	Este contador se distingue de \"hits\" porque cuenta sólo las páginas HTML y no los gráficos u otros archivos o ficheros.
-	</DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt4\">
-	El número de ocasiones que una <b>página, imagen, archivo o fichero</b> de un sitio es <b>visto</b> o <b>descargado</b> por un visitante.<br>
-	Este contador sirve de referencia, pero el contador de \"páginas\" representa un dato mercadotécnico generalmente más útil y por lo tanto se recomienda.
-	</DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt5\">
-	El número de <b>kilo bytes</b> descargados por los visitantes del sitio.<br>
-	Se refiere al volumen de datos descargados por todas las <b>páginas</b>, <b>imágenes</b> y <b>archivos o ficheros</b> medidos en kilo bytes.
-	</DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt13\">
-	El programa $PROG es capaz de reconocer una visita a su sitio luego de cada <b>búsqueda</b> desde cualquiera de los <b>".(@SearchEnginesArray)." motores de búsqueda y directorios Internet</b> más populares (Yahoo, Altavista, Lycos, Google, Terra, etc...).
-	</DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt14\">
-	Lista de <b>páginas de sitios externos</b> utilizadas para acceder o enlazarse con su sitio (Sólo las <b>$MaxNbOfRefererShown</b> páginas más utilizadas se encuentras enumeradas).\n
-	Los enlaces utilizados por los motores de búsqueda o directorios son excluidos porque ya han sido contabilizados en el rubro anterior.
-	</DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt15\">
-	Esta tabla muestra la lista de las <b>palabras clave</b> más utilizadas en los motores de búsqueda y directorios Internet para encontrar su sitio.
-	(El programa $PROG reconoce palabras clave usadas en los <b>".(@SearchEnginesArray)."</b> motores de búsqueda más populares, tales como Yahoo, Altavista, Lycos, Google, Voila, Terra etc...).
-	</DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt16\">
-	Los Robots son <b>visitantes automáticos</b> que escanean o viajan por su sitio para indexarlo, o jerarquizarlo, para recopilar estadísticas de sitios Web, o para verificar si su sitio se encuentra conectado a la Red.<br>
-	El programa $PROG reconoce hasta <b>".(@RobotArray)."</b> robots.
-	</DIV>";
-
-	print "
-	<DIV CLASS=\"CTooltip\" ID=\"tt201\"> Error sin descripción. </DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt202\"> La solicitud ha sido computada pero el servidor la procesará más tarde. </DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt204\"> El servidor ha procesado la solicitud pero no existen documentos para enviar. </DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt206\"> Contenido parcial. </DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt301\"> El documento solicitado ha sido reubicado y se encuentra en un URL proporcionado en la misma respuesta. </DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt302\"> Error sin descripción. </DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt400\"> Error de sintaxis, el servidor no ha comprendido su solicitud. </DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt401\"> Número de intentos por acceder un <b>URL que exige una combinación usuario/contraseña que ha sido invalida.</b>.<br>Un número de intentos muy elevado pudiera sugerir la posibilidad de que un hacker (o pirata) ha intentado entrar a una zona restringida del sitio (p.e., intentando múltiples combinaciones de usuario/contraseña). </DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt403\"> Número de intentos por acceder un <b>URL configurado para no ser accesible, aún con una combinación usuario/contraseña</b> (p.e., un URL previamente definido como \"no navegable\"). </DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt404\"> Número de intentos por acceder un <b>URL inexistente</b>. Frecuentemente, éstos se refieren ya sea a un enlace (link) inválido o a un error mecanográfico cuando el visitante tecleó el URL equivocado. </DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt408\"> El servidor ha tomado <b>demasiado tiempo</b> para responder a una solicitud. Frecuentemente se debe ya sea a un programa CGI muy lento, el cual tuvo que ser abandonado por el servidor, o bien por un servidor sobre-saturado. </DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt500\"> Error interno. Este error generalmente es causado por una terminación anormal o prematura de un programa CGI (p.e., un CGI corrompido o dañado). </DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt501\"> Solicitud desconocida por el servidor. </DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt502\"> Código retornado por un servidor de protocolo HTTP el cual funge como proxy o puente (gateway) cuando el servidor objetivo no funciona o no interpreta adecuadamente la solicitud del cliente (o visitante). </DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt503\"> Error interno del servidor. </DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt504\"> Gateway time-out. </DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt505\"> Versión de protocolo HTTP no soportada. </DIV>
-	";
-}
-
-# Italian tooltips
-if ($Lang == 4) {
-	print "
-	<DIV CLASS=\"CTooltip\" ID=\"tt1\">
-	Si considera una nuova visita per <b>ogni arrivo</b> di un visitatore che visualizza o consulta una pagina e non si è connesso negli ultimi <b>".($VisitTimeOut/10000*60)." minuti</b>.
-	</DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt2\">
-	Numero di client hosts (<b>indirizzi IP</b>) utilizzati per accedere al sito (e visualizzare almeno una <b>pagina</b>).<br>
-	Questa cifra riflette il numero di <b>persone fisiche</b> differenti che un giorno hanno visitato il sito.
-	</DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt3\">
-	Numero di volte che una <b>pagina</b> del sito è stata <b>vista</b> (somma di tutti i visitatori, per tutte le visite).<br>
-	Questo valore è diverso dagli \"hits\" perchè considera solamente le pagine HTML e non le immagini o gli altri elementi.
-	</DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt4\">
-	Numero di volte che una <b>pagina, immagine o elemento</b> del sito è <b>visto</b> o <b>scaricato</b> da un visitatore.<br>
-	Questo valore è indicativo, in quanto il contatore \"pagine\" a volte é più significativo ai fini commerciali.
-	</DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt5\">
-	Numero totale di <b>kilobytes</b> scaricati dal sito durante le visite.<br>
-	Indica il volume di traffico dovute alle richieste di caricamento delle <b>pagine</b>, delle <b>immagini</b> e degli altri <b>elementi</b> scaricati.
-	</DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt13\">
-	$PROG è capace di riconoscere gli accessi al sito provenienti dalle <b>ricerche</b> dei <b>".(@SearchEnginesArray)." motori di ricerca Internet</b> più conosciuti (Yahoo, Altavista, Lycos, Google, Voila, ecc...).
-	</DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt14\">
-	Elenco delle <b>pagine di siti esterni</b> contenenti un link che è stato seguito per accedere a questo sito (solo le <b>$MaxNbOfRefererShown</b> pagine esterne più utilizzate sono visualizzate).\n
-	I link risultanti da una ricerca di un motore conosciuto non appaiono qui, dato che sono conteggiati a parte sulla linea subito sopra.
-	</DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt15\">
-	Questa tabella offre la lista delle <b>parole</b> più frequentemente utilizzate per rintracciare e accedere al sito a partire da
-	un motore di ricerca Internet (sono riconosciute le ricerche dei <b>".(@SearchEnginesArray)."</b> motori di ricerca più popolari, come Yahoo, Altavista, Lycos, Google, Voila, ecc...).
-	</DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt16\">
-	I robots sono dei <b>visitatori automatici</b> che perlustrano il sito al fine di indicizzarlo, di ottenere delle statistiche sui siti Web Internet o di verificarne l'accessibilità.<br>
-	$PROG riconosce <b>".(@RobotArray)."</b> robots.
-	</DIV>";
-
-	print "
-	<DIV CLASS=\"CTooltip\" ID=\"tt201\"> Contenuto parziale ritornato. </DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt202\"> La richiesta è stata registrata del server ma sarà eseguita più tardi. </DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt204\"> Il server ha processato la richiesta ma non esiste alcun documento da ritornare. </DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt206\"> Contenuto parziale ritornato. </DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt301\"> Il documento richiesto è stato spostato e si trova al momento a un altro indirizzo, indicato nella risposta. </DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt302\"> Nessuna descrizione per questo errore. </DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt400\"> Errore di sintassi, il server non ha compreso la richiesta. </DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt401\"> Tentativo di accesso non autorizzato a un <b>URL che richiede un'autenticazione con un login o una parola di accesso</b>.<br>Un numero troppo elevato può evidenziare un tentativo di accesso mediante forza bruta al sito (a seguito di accesso ripetuto con differenti nomi di login o parole di accesso).</DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt403\"> Tentativo di accesso a un <b>URL non configurato per essere accessibile, anche se corretto</b> (ad esempio, un URL di una directory indicata come non \"listabile\"). </DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt404\"> Tentativo di accesso a una risorsa o <b>URL inesistente</b>. SI tratta dunque di un link non valido sul sito o di un errore di battitura del visitatore che ha indicato un URL non corretto. </DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt408\"> Il server ha impiegato un <b>tempo troppo lungo</b> per rispondere alla richiesta. Può trattarsi di uno script CGI troppo lento obbligato ad abbandonare la richiesta, o di un timeout dato dalla saturazione del sito. </DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt500\"> Errore interno del server. Questo errore è quello ritornato più di frequente durante la terminazione anormale di uno script CGI (per esempio in seguito a un coredump del CGI). </DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt501\"> Il server non prende in carico l'azione richiesta. </DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt502\"> Codice ritornato da un server HTTP che funziona da proxy o gateway quando il server reale chiamato non risponde alla richiesta del client. </DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt503\"> Errore interno del server. </DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt504\"> Time-out del gateway. </DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt505\"> Versione HTTP non supportata. </DIV>
-	";
-}
-
-# Polish tooltips
-if ($Lang == 6) {
-	print "
-	<DIV CLASS=\"CTooltip\" ID=\"tt1\">
-	Wizyty ka¿dego <b>nowego go¶cia</b>, który ogl±da³ stronê i nie ³±czy³ siê z ni± przez ostatnie <b>".($VisitTimeOut/10000*60)." mn</b>.
-	</DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt2\">
-	Adres numeryczny hosta klienta (<b>tzw. adres IP</b>) odwiedzaj±cego tê stronê.<br>
-	Ten numer mo¿e byæ identyczny dla <B>kilku ró¿nych Internautów</B> którzy odwiedzili stronê tego samego dnia.
-	</DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt3\">
-	¦rednia liczba obejrzanych <B>stron</B> przypadaj±ca na jednego Internautê. (Suma go¶ci, wszystkich wizyt).<br>
-	Ten licznik ró¿ni siê od kolumny z prawej, gdy¿ zlicza on tylko strony html (bez obrazków i innych plików).
-	</DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt4\">
-	Liczba wszystkich <b>stron, obrazków, d¼wiêków, plików</b>, które zosta³y <b>obejrzane</b> lub <b>¶ci±gniête</b> przez kogo¶.<br>
-	Warto¶æ jest jedynie orientacyjna, zaleca siê spogl±daæ na licznik \"strony\".
-	</DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt5\">
-	Liczba <b>kilobajtów</b> ¶ci±gniêtych przez Internautów.<br>
-	Jest to suma wszystkich ¶ci±gniêtych danych <B>(strony html, obrazki, d¼wiêki)</B>.
-	</DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt13\">
-	$PROG rozró¿nia dostêp do stron <b>z zagranicznych wyszukiwarek</b> dziêki <b>".(@SearchEnginesArray)." najpopularniejszym przegl±darkom internetowym</b> (Yahoo, Altavista, Lycos, Google, Voila, etc...).
-	</DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt14\">
-	Lista wszystkich <b>stron spoza serwera</b> z których trafiono na ten serwer (wy¶wietlanych jest <b>$MaxNbOfRefererShown</b> stron z których najczê¶ciej siê odwo³ywano.\n
-	</DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt15\">
-	Ta kolumna pokazuje listê najczê¶ciej u¿ywanych <b>s³ów kluczowych</b>, dziêki którym znaleziono t± stronê w wyszukiwarkach.
-	($PROG rozró¿nia zapytania s³ów kluczowych z <b>".(@SearchEnginesArray)."</b> najpopularniejszych wyszukiwarek, takich jak Yahoo, Altavista, Lycos, Google, Voila, etc...).
-	</DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt16\">
-	Roboty s± <b>programami sieciowymi</b> skanuj±cymi strony w celu zebrania/aktualizacji danych (np. s³owa kluczowe do wyszukiwarek), lub sprawdzaj±cymi czy strona nadal istnieje w sieci.<br>
-	$PROG rozró¿nia obecnie <b>".(@RobotArray)."</b> robów.
-	</DIV>";
-
-	print "
-	<DIV CLASS=\"CTooltip\" ID=\"tt201\"> Zlecenie POST zosta³o zrealizowane pomy¶lnie. </DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt202\"> ¯±danie zosta³o odebrane poprawnie, lecz jeszcze siê nie zakoñczy³o. </DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt204\"> Serwer przetworzy³ ¿±danie, lecz nie posiada ¿adnych danych do wys³ania. </DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt206\"> Czê¶ciowa zawarto¶æ.</DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt301\"> Dokument zosta³ przeniesiony pod inny adres.</DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt302\"> Dokument zosta³ czasowo przeniesiony pod iiny adres.</DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt400\"> Zlecenie by³o b³êdne, lub niemo¿liwe do zrealizowania przez serwer.<BR>B³±d powstaje wtedy, kiedy serwer WWW otrzymuje do wykonania instrukcjê, której nie rozumie.</DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt401\"> B³±d autoryzacji. Strona wymaga podania has³a i loginu - b³±d pokazuje siê wtedy, gdy które¶ z tych danych siê nie zgadza lub zosta³y podane niew³a¶ciwiwe.<BR>Je¶li liczba ta jest du¿a, jest to sygna³ dla webmastera, i¿ kto¶ próbuje z³amaæ has³o do strony nim zabezpieczonej.</DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt403\"> B³±d wystêpuje wtedy, gdy katalog/strona do którego siê odwo³ywano nie ma ustawionych w³a¶ciwych praw dostêpu, lub prawa te nie pozwalaj± na obejrzenie zawarto¶ci katalogu/strony.</DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt404\"> Spróbuj wpisaæ <b>nie istniej±cy adres URL</b> (np. adres tej strony ze skasowan± jedn± literk±). Znaczy to, ¿e posiadasz gdzie¶ na swoich stronach b³êdny link, lub link odnosz±cy siê do nieistniej±cej strony.</DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt408\"> Przegl±darka nie wys³a³a ¿±dañ do serwera w czasie jego oczekiwania. Mo¿esz powtórzyæ ¿±danie bez jego modyfikacji w czasie pó¼niejszym. </DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt500\"> B³±d wewnêtrzny. Ten b³±d czêsto pojawia siê, gdy aplikacja CGI nie zakoñczy³a siê normalnie (podobno ka¿dy program zawiera przynajmniej jeden b³±d...:-). </DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt501\"> Serwer nie umo¿liwia obs³ugi mechanizmu. </DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt502\"> Serwer jest chwilowo przeci±¿ony i nie mo¿e obs³u¿yæ zlecenia.</DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt503\"> Serwer zdecydowa³ siê przerwaæ oczekiwanie na inny zasób lub us³ugê, i z tego powodu nie móg³ obs³u¿yæ zlecenia.</DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt504\"> Serwer docelowy nie otrzyma³ odpowiedzi od serwera proxy, lub bramki.</DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt505\"> Nie obs³ugiwana wesja protoko³u HTTP. </DIV>
-	";
-}
-
-# Korean tooltips
-if ($Lang == 10) {
-	print "
-	<DIV CLASS=\"CTooltip\" ID=\"tt1\">
-	»õ·Î¿î ¹æ¹®Àº ÀÌÀü¿¡(<b>\".($VisitTimeOut/10000*60).\" ºĞÀÌ³»</b>)
-	´ç½ÅÀÇ »çÀÌÆ®¿¡ Á¢¼ÓÇÏÁö ¾ÊÀº(º¸°Å³ª ºê¶ó¿ìÂ¡ ÇÏÁö ¾ÊÀº) »õ·Î¿î
-	<b>¹æ¹®ÀÚ</b>¸¦ ³ªÅ¸³À´Ï´Ù.
-	</DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt2\">
-	Å¬¶óÀÌ¾ğÆ® È£½ºÆ® ¼ö(<b>IP ÁÖ¼Ò</b>)´Â ¹æ¹®ÇÑ »çÀÌÆ® ¼ö¸¦ ³ªÅ¸³À´Ï´Ù.(ÃÖ¼ÒÇÑ <b>ÇÑ ÆäÀÌÁö</b>¶óµµ º» »çÀÌÆ®)<br>
-	ÀÌ ÀÚ·á´Â ÀÏº° <b>¹°¸®ÀûÀ¸·Î ´Ù¸¥ »ç¿ëÀÚ</b>¼ö¸¦ ³ªÅ¸³À´Ï´Ù.
-	</DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt3\">
-	»çÀÌÆ®¿¡¼­ <b>º»(view) ÆäÀÌÁö</b> È¸¼ö¸¦ ³ªÅ¸³À´Ï´Ù.
-	(¸ğµç ¹æ¹®ÀÚÀÇ ÇÔ)<br>
-        ÀÌ ÀÚ·á´Â ÀÌ¹ÌÁö, ÆÄÀÏ°ú ´Ş¸® HTML ÆäÀÌÁö¿¡¼­ÀÇ \"Á¶È¸¼ö(hit)\"¿Í´Â ´Ù¸¨´Ï´Ù.
-	</DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt4\">
-	<b>ÆäÀÌÁö, ÀÌ¹ÌÁö, ÆÄÀÏ</b>À» <b>º¸°Å³ª ´Ù¿î·Îµå</b>ÇÑ È¸¼ö¸¦ ³ªÅ¸³À´Ï´Ù.<br>
-	ÀÌ ÀÚ·á´Â ÂüÁ¶¿ëÀ¸·Î¸¸ Á¦°øµË´Ï´Ù. ¿Ö³ÄÇÏ¸é º» \"ÆäÀÌÁö\"´Â Á¾Á¾ ½ÃÀåÁ¶»ç ¸ñÀûÀ¸·Î »ç¿ëµÉ ¼ö ÀÖ±â ¶§¹®ÀÔ´Ï´Ù.
-	</DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt5\">
-	ÀÌ Á¤º¸µéÀº ´Ù¿î·ÎµåÇÑ ¸ğµç <b>ÆäÀÌÁö</b>, <b>ÀÌ¹ÌÁö</b>, <b>ÆÄÀÏ</b> µéÀ» Kb´ÜÀ§·Î ³ªÅ¸³À´Ï´Ù.
-	</DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt13\">
-	$PROG ´Â <b>".(@SearchEnginesArray)."</b>ÀÇ <b>°Ë»ö</b>À¸·Î ´ç½ÅÀÇ »çÀÌÆ®¿¡ ´ëÇÑ Á¢±ÙÀ» ½Äº°ÇÒ ¼ö ÀÖ½À´Ï´Ù.
-	</DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt14\">
-	´ç½ÅÀÇ »çÀÌÆ®¿¡ ¸µÅ©µÈ ¸ğµç <b>¿ÜºÎ ÆäÀÌÁö</b><br>
-	(<b>$MaxNbOfRefereShown</b>´Â °¡Àå ÀÚÁÖ »ç¿ëµÇ´Â ¿ÜºÎ ÆäÀÌÁö¸¦ ³ªÅ¸³À´Ï´Ù.)
-        °Ë»ö ¿£Áø¿¡ ÀÇÇÑ °á°úÆäÀÌÁö¿¡ »ç¿ëµÈ ¸µÅ©´Â ¿©±â¿¡¼­ Á¦¿ÜµË´Ï´Ù.
-        (ÀÌ Å×ÀÌºíÀÇ ÀÌÀü¿¡ ÀÌ¹Ì ³ª¿Í ÀÖ½À´Ï´Ù.)
-	</DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt15\">
-	ÀÌ Å×ÀÌºíÀº ´ç½ÅÀÇ »çÀÌÆ®¿¡¼­ °¡Àå ¸¹ÀÌ »ç¿ëµÇ´Â <b>Å°¿öµå</b> ¸ñ·ÏÀ» º¸¿©Áİ´Ï´Ù.
-        (°¡Àå ¾ÖÈ£ÇÏ´Â °Ë»ö¿£Áø Yahoo, Altavista, Lycos, Google, Voilaµî°ú °°Àº
-	<b>".(@SearchEnginesArray)."</b>ÀÇ Å°¿öµå¸¦ $PROG´Â ½Äº°ÇÒ ¼ö ÀÖ½À´Ï´Ù.
-	</DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt16\">
-	·Îº¸Æ® (¶§·Î´Â ½ºÆÄÀÌ´õ¸¦ ¶æÇÔ)´Â ¸¹Àº °Ë»ö ¿£Áø¿¡¼­ »ç¿ëµÇ´Â
-	<b>ÀÚµ¿È­µÈ À¥Á¢¼Ó µµ±¸</b>ÀÔ´Ï´Ù. ÀÌ ¿£ÁøÀº (1) À¥»çÀÌÆ®¸¦ ¸ñ·ÏÈ­ÇÏ°í
-	¼ø¼­¸¦ ºÎ¿©ÇÏ°í (2) ÀÎÅÍ³İ À¥ »çÀÌÆ®ÀÇ Åë°è¸¦ ¼öÁıÇÏ°í (3) ´ç½ÅÀÇ
-	»çÀÌÆ®°¡ ¿©ÀüÈ÷ »ç¿ë°¡´ÉÇÑÁö Á¶»çÇÕ´Ï´Ù.<br>
-	$PROG´Â <b>".(@RobotArra)."</b> ·Îº¸Æ®¸¦ ½Äº°ÇÒ ¼ö ÀÖ½À´Ï´Ù.
-	</DIV>";
-
-	print "
-	<DIV CLASS=\"CTooltip\" ID=\"tt201\"> ÀÌ ¿À·ù¿¡ ´ëÇÑ ¼³¸íÀÌ ¾ø½À´Ï´Ù. </DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt202\"> ¿äÃ»ÀÌ ¼­¹ö¿¡ ÀÇÇØ ´õÀÌ»ó ÁøÇàµÉ ¼ö ¾ø½À´Ï´Ù. </DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt204\"> ¼­¹ö°¡ ¿äÃ»À» Ã³¸®ÇßÁö¸¸ Àü¼ÛÇÒ ¹®¼­°¡ ¾ø½À´Ï´Ù. </DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt206\"> ÀÏºÎ ³»¿ë. </DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt301\"> ¿äÃ»µÈ ¹®¼­´Â ¿Å°ÜÁ®¼­ ´Ù¸¥ ÁÖ¼Ò¸¦ »ç¿ëÇÕ´Ï´Ù. </DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt302\"> ÀÌ ¿À·ù¿¡ ´ëÇÑ ¼³¸íÀÌ ¾ø½À´Ï´Ù. </DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt400\"> ±¸¹® ¿À·ù, ¼­¹ö°¡ ÀÌ ¿äÃ»À» ¾Ë ¼ö ¾ø½À´Ï´Ù. </DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt401\"> <b>URL¿¡ Á¢¼ÓÀ» À§ÇØ¼­´Â ·Î±×ÀÎ/ÆĞ½º¿öµå °¡ ÇÊ¿äÇÕ´Ï´Ù.</b><br>ÀÌ Ç×¸ñÀÇ ÃÖ°í°ªÀº ´©±º°¡ Å©·¢À» ½ÃµµÇÏ°Å³ª ´ç½ÅÀÇ »çÀÌÆ®¿¡ Á¢¼ÓÀ» ½ÃµµÇÏ°í ÀÖ´Â °Í(´Ù¸¥ ·Î±×ÀÎ/ÆĞ½º¿öµå¸¦ »ç¿ëÇÏ¿© ½ÃµµÇÏ´Â°Í) À» ÀÇ¹ÌÇÕ´Ï´Ù. </DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt403\"> <b>»ç¿ë°¡´ÉÇÏ°Ô ¼³Á¤µÇ¾î ÀÖÁö ¾Ê´Â URL</b>¿¡ ´ëÇÑ Á¢¼Ó½Ãµµ ¿À·ù ÀÔ´Ï´Ù. (¿¹¸¦ µé¾î, µğ·ºÅä¸®¿¡¤Ô´ëÇÑ \"ºê¶ó¿ìÂ¡\"ÀÌ Á¤ÀÇµÇÁö ¾ÊÀº °æ¿ìÀÔ´Ï´Ù.) </DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt404\"> <b>Á¸ÀçÇÏÁö ¾Ê´Â URL</b>¿¡ ´ëÇÑ Á¢¼Ó ½Ãµµ ¿À·ùÀÔ´Ï´Ù. ÀÌ ¿À·ù´Â Á¾Á¾ ´ç½ÅÀÇ »çÀÌÆ® ¾îµò°¡¿¡¼­ Àß¸øµÈ ¸µÅ©°¡ ÀÖ¾î ¹æ¹®ÀÚµéÀÌ Àß¸øµÈ URL·Î Á¢¼ÓÇÏ´Â °æ¿ì¿¡ ¹ß»ıÇÕ´Ï´Ù. </DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt408\"> ¼­¹ö¿¡°Ô ¿äÃ»µÈ °ÍÀÌ <b>³Ê¹« ¸¹Àº ÀÀ´ä ½Ã°£</b>À» ¿ä±¸ÇÕ´Ï´Ù.	ÀÌ ¿À·ù´Â Á¾Á¾ ´À¸° CGI ½ºÅ©¸³Æ® ¹®Á¦ÀÌ°Å³ª À¥¼­¹ö »ç¿ë·®ÀÌ ¸¹Àº °æ¿ì¿¡ ¹ß»ıÇÕ´Ï´Ù. </DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt500\"> ³»ºÎ ¿À·ù. ÀÌ ¿À·ù´Â Á¾Á¾ CGIÇÁ·Î±×·¥ÀÌ ºñÁ¤»óÀûÀ¸·Î Á¾·áµÇ¾úÀ» ¶§ ¹ß»ıÇÕ´Ï´Ù. </DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt501\"> ¿äÃ»µÈ µ¿ÀÛÀ» ¾Ë¼ö ¾ø½À´Ï´Ù. </DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt502\"> HTTP ¼­¹ö¿¡ ÀÇÇØ ¹İ¼ÛµÈ ÄÚµå°¡ ÇÁ¶ô½Ã³ª °ÔÀÌÆ®¿şÀÌ·Î µ¿ÀÛÇÕ´Ï´Ù.  ´ë»ó ¼­¹ö°¡ Å¬¶óÀÌ¾ğÆ®ÀÇ ¿äÃ»¿¡ Á¤È®ÇÏ°Ô ÀÀ´äÀ» ÇÏÁö ¸øÇÕ´Ï´Ù. </DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt503\"> ³»ºÎ ¼­¹ö ¿À·ù. </DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt504\"> °ÔÀÌÆ®¿şÀÌ ½Ã°£ÃÊ°ú. </DIV>
-	<DIV CLASS=\"CTooltip\" ID=\"tt505\"> HTTP ¹öÀüÀÌ Áö¿øÇÏÁö ¾Ê½À´Ï´Ù. </DIV>
-	";
-}
-
+# Get the tooltips texts
+&Read_Language_Tooltip($Lang);
 
 # Position .style.pixelLeft/.pixelHeight/.pixelWidth/.pixelTop	IE OK	Opera OK
 #          .style.left/.height/.width/.top											Netscape OK
@@ -3358,28 +2280,32 @@ if ($Lang == 10) {
 # event.clientXY												IE OK	Opera OK	Netscape KO		Return position of mouse
 print <<EOF;
 <script type="text/javascript" language="javascript">
-  function ShowTooltip(fArg)
-  {
-    var tooltipOBJ = (document.getElementById) ? document.getElementById('tt' + fArg) : eval("document.all['tt" + fArg + "']");
-    var tooltipLft = (document.body.offsetWidth?document.body.offsetWidth:document.body.style.pixelWidth) - (tooltipOBJ.offsetWidth?tooltipOBJ.offsetWidth:(tooltipOBJ.style.pixelWidth?tooltipOBJ.style.pixelWidth:300)) - 30;
-    if (navigator.appName != 'Netscape') {
-		var tooltipTop = (document.body.scrollTop>=0?document.body.scrollTop+10:event.clientY+10);
-		if ((event.clientX > tooltipLft) && (event.clientY < (tooltipOBJ.scrollHeight?tooltipOBJ.scrollHeight:tooltipOBJ.style.pixelHeight) + 10)) {
-			tooltipTop = (document.body.scrollTop?document.body.scrollTop:document.body.offsetTop) + event.clientY + 20;
+	function ShowTooltip(fArg)
+	{
+		var tooltipOBJ = (document.getElementById) ? document.getElementById('tt' + fArg) : eval("document.all['tt" + fArg + "']");
+		if (tooltipOBJ != null) {
+		    var tooltipLft = (document.body.offsetWidth?document.body.offsetWidth:document.body.style.pixelWidth) - (tooltipOBJ.offsetWidth?tooltipOBJ.offsetWidth:(tooltipOBJ.style.pixelWidth?tooltipOBJ.style.pixelWidth:300)) - 30;
+		    if (navigator.appName != 'Netscape') {
+				var tooltipTop = (document.body.scrollTop>=0?document.body.scrollTop+10:event.clientY+10);
+				if ((event.clientX > tooltipLft) && (event.clientY < (tooltipOBJ.scrollHeight?tooltipOBJ.scrollHeight:tooltipOBJ.style.pixelHeight) + 10)) {
+					tooltipTop = (document.body.scrollTop?document.body.scrollTop:document.body.offsetTop) + event.clientY + 20;
+				}
+				tooltipOBJ.style.pixelLeft = tooltipLft; tooltipOBJ.style.pixelTop = tooltipTop; 
+			}
+			else {
+				var tooltipTop = 10;
+				tooltipOBJ.style.left = tooltipLft; tooltipOBJ.style.top = tooltipTop; 
+			}
+		    tooltipOBJ.style.visibility = "visible";
 		}
-		tooltipOBJ.style.pixelLeft = tooltipLft; tooltipOBJ.style.pixelTop = tooltipTop; 
 	}
-	else {
-		var tooltipTop = 10;
-		tooltipOBJ.style.left = tooltipLft; tooltipOBJ.style.top = tooltipTop; 
+	function HideTooltip(fArg)
+	{
+		var tooltipOBJ = (document.getElementById) ? document.getElementById('tt' + fArg) : eval("document.all['tt" + fArg + "']");
+		if (tooltipOBJ != null) {
+		    tooltipOBJ.style.visibility = "hidden";
+		}
 	}
-    tooltipOBJ.style.visibility = "visible";
-  }
-  function HideTooltip(fArg)
-  {
-    var tooltipOBJ = (document.getElementById) ? document.getElementById('tt' + fArg) : eval("document.all['tt" + fArg + "']");
-    tooltipOBJ.style.visibility = "hidden";
-  }
 </script>
 
 EOF
@@ -3390,24 +2316,24 @@ EOF
 print "$CENTER<a name=\"MENU\"></a><BR>";
 
 print "<table>";
-print "<tr><td class=LEFT><font style=\"font: 14px arial,verdana,helvetica; font-weight: bold\">$message[7][$Lang]: </td><td class=LEFT><font style=\"font: 14px arial,verdana,helvetica; font-weight: normal\">$SiteToAnalyze</td></tr>";
-print "<tr><td class=LEFT><font style=\"font: 14px arial,verdana,helvetica; font-weight: bold\">Last update: </td><td class=LEFT><font style=\"font: 14px arial,verdana,helvetica; font-weight: normal\">";
+print "<tr><td class=LEFT><font style=\"font: 14px arial,verdana,helvetica; font-weight: bold\">$message[7]: </td><td class=LEFT><font style=\"font: 14px arial,verdana,helvetica; font-weight: normal\">$SiteToAnalyze</td></tr>";
+print "<tr><td class=LEFT><font style=\"font: 14px arial,verdana,helvetica; font-weight: bold\">$message[75]: </td><td class=LEFT><font style=\"font: 14px arial,verdana,helvetica; font-weight: normal\">";
 foreach $key (keys %LastUpdate) { if ($LastUpdate < $LastUpdate{$key}) { $LastUpdate = $LastUpdate{$key}; } }
 $yearcon=substr($LastUpdate,0,4);$monthcon=substr($LastUpdate,4,2);$daycon=substr($LastUpdate,6,2);$hourcon=substr($LastUpdate,8,2);$mincon=substr($LastUpdate,10,2);
 if ($LastUpdate != 0) { print "$daycon&nbsp;$monthlib{$monthcon}&nbsp;$yearcon&nbsp;-&nbsp;$hourcon:$mincon"; }
 else { print "<font color=#880000>Never updated</font>"; }
 print "</font>&nbsp; &nbsp; &nbsp; &nbsp;";
-if ($AllowToUpdateStatsFromBrowser) { print "<a href=\"$DirCgi$PROG.$Extension?update=1&site=$SiteToAnalyze&year=$YearRequired&month=$MonthRequired&lang=$Lang\">$message[74][$Lang]</a>"; }
+if ($AllowToUpdateStatsFromBrowser) { print "<a href=\"$DirCgi$PROG.$Extension?update=1&site=$SiteToAnalyze&year=$YearRequired&month=$MonthRequired&lang=$Lang\">$message[74]</a>"; }
 print "</td></tr>\n";
 print "<tr><td>&nbsp;</td></tr>\n";
-print "<tr><td class=LEFT><font style=\"font: 14px arial,verdana,helvetica; font-weight: bold\">$message[16][$Lang]:</td>";
-print "<td class=LEFT><a href=\"#DOMAINS\">$message[17][$Lang]</a> &nbsp; <a href=\"#VISITOR\">".ucfirst($message[26][$Lang])."</a> &nbsp; <a href=\"#ROBOTS\">$message[53][$Lang]</a> &nbsp; <a href=\"#HOUR\">$message[20][$Lang]</a> &nbsp; <a href=\"$DirCgi$PROG.$Extension?action=unknownip&site=$SiteToAnalyze&year=$YearRequired&month=$MonthRequired&lang=$Lang\">$message[45][$Lang]</a><br></td></tr>\n";
-print "<tr><td class=LEFT><font style=\"font: 14px arial,verdana,helvetica; font-weight: bold\">Navigation:</td>";
-print "<td class=LEFT><a href=\"#PAGE\">$message[19][$Lang]</a> &nbsp; <a href=\"#BROWSER\">$message[21][$Lang]</a> &nbsp; <a href=\"#OS\">$message[59][$Lang]</a> &nbsp; <a href=\"$DirCgi$PROG.$Extension?action=browserdetail&site=$SiteToAnalyze&year=$YearRequired&month=$MonthRequired&lang=$Lang\">$message[33][$Lang]</a> &nbsp; <a href=\"$DirCgi$PROG.$Extension?action=browserdetail&site=$SiteToAnalyze&year=$YearRequired&month=$MonthRequired&lang=$Lang\">$message[34][$Lang]</a><br></td></tr>\n";
-print "<tr><td class=LEFT><font style=\"font: 14px arial,verdana,helvetica; font-weight: bold\">$message[23][$Lang]:</td>";
-print "<td class=LEFT><a href=\"#REFERER\">$message[37][$Lang]</a> &nbsp; <a href=\"#SEARCHWORDS\">$message[24][$Lang]</a><br></td></tr>\n";
-print "<tr><td class=LEFT><font style=\"font: 14px arial,verdana,helvetica; font-weight: bold\">$message[2][$Lang]:</td>";
-print "<td class=LEFT> <a href=\"#ERRORS\">$message[22][$Lang]</a> &nbsp; <a href=\"$DirCgi$PROG.$Extension?action=notfounderror&site=$SiteToAnalyze&year=$YearRequired&month=$MonthRequired&lang=$Lang\">$message[31][$Lang]</a><br></td></tr>\n";
+print "<tr><td class=LEFT><font style=\"font: 14px arial,verdana,helvetica; font-weight: bold\">$message[16]:</td>";
+print "<td class=LEFT><a href=\"#DOMAINS\">$message[17]</a> &nbsp; <a href=\"#VISITOR\">".ucfirst($message[26])."</a> &nbsp; <a href=\"#ROBOTS\">$message[53]</a> &nbsp; <a href=\"#HOUR\">$message[20]</a> &nbsp; <a href=\"$DirCgi$PROG.$Extension?action=unknownip&site=$SiteToAnalyze&year=$YearRequired&month=$MonthRequired&lang=$Lang\">$message[45]</a><br></td></tr>\n";
+print "<tr><td class=LEFT><font style=\"font: 14px arial,verdana,helvetica; font-weight: bold\">$message[72]:</td>";
+print "<td class=LEFT><a href=\"#PAGE\">$message[19]</a> &nbsp; <a href=\"#BROWSER\">$message[21]</a> &nbsp; <a href=\"#OS\">$message[59]</a> &nbsp; <a href=\"$DirCgi$PROG.$Extension?action=browserdetail&site=$SiteToAnalyze&year=$YearRequired&month=$MonthRequired&lang=$Lang\">$message[33]</a> &nbsp; <a href=\"$DirCgi$PROG.$Extension?action=browserdetail&site=$SiteToAnalyze&year=$YearRequired&month=$MonthRequired&lang=$Lang\">$message[34]</a><br></td></tr>\n";
+print "<tr><td class=LEFT><font style=\"font: 14px arial,verdana,helvetica; font-weight: bold\">$message[23]:</td>";
+print "<td class=LEFT><a href=\"#REFERER\">$message[37]</a> &nbsp; <a href=\"#SEARCHWORDS\">$message[24]</a><br></td></tr>\n";
+print "<tr><td class=LEFT><font style=\"font: 14px arial,verdana,helvetica; font-weight: bold\">$message[2]:</td>";
+print "<td class=LEFT> <a href=\"#ERRORS\">$message[22]</a> &nbsp; <a href=\"$DirCgi$PROG.$Extension?action=notfounderror&site=$SiteToAnalyze&year=$YearRequired&month=$MonthRequired&lang=$Lang\">$message[31]</a><br></td></tr>\n";
 print "</table>\n";
 print "<br>\n\n";
 
@@ -3415,7 +2341,7 @@ print "<br>\n\n";
 # SUMMARY
 #---------------------------------------------------------------------
 print "$CENTER<a name=\"SUMMARY\"></a><BR>";
-$tab_titre="$message[7][$Lang] $SiteToAnalyze";
+$tab_titre="$message[7] $SiteToAnalyze";
 &tab_head;
 
 # FirstTime LastTime TotalVisits
@@ -3446,15 +2372,15 @@ if ($TotalVisits > 0) { $RatioPages=int($TotalPages/$TotalVisits*100)/100; }
 if ($TotalVisits > 0) { $RatioHits=int($TotalHits/$TotalVisits*100)/100; }
 if ($TotalVisits > 0) { $RatioBytes=int(($TotalBytes/1024)*100/$TotalVisits)/100; }
 
-print "<TR bgcolor=#$color_TableBGRowTitle><TD><b>$message[8][$Lang]</b></TD>";
-if ($MonthRequired eq "year") { print "<TD colspan=3 rowspan=2><font style=\"font: 18px arial,verdana,helvetica; font-weight: normal\">$message[6][$Lang] $YearRequired</font><br>"; }
-else { print "<TD colspan=3 rowspan=2><font style=\"font: 18px arial,verdana,helvetica; font-weight: normal\">$message[5][$Lang] $monthlib{$MonthRequired} $YearRequired</font><br>"; }
+print "<TR bgcolor=#$color_TableBGRowTitle><TD><b>$message[8]</b></TD>";
+if ($MonthRequired eq "year") { print "<TD colspan=3 rowspan=2><font style=\"font: 18px arial,verdana,helvetica; font-weight: normal\">$message[6] $YearRequired</font><br>"; }
+else { print "<TD colspan=3 rowspan=2><font style=\"font: 18px arial,verdana,helvetica; font-weight: normal\">$message[5] $monthlib{$MonthRequired} $YearRequired</font><br>"; }
 # Show links for possible years
 foreach $key (keys %listofyears) {
-	print "<a href=\"$DirCgi$PROG.$Extension?site=$SiteToAnalyze&year=$key&month=year&lang=$Lang\">$message[6][$Lang] $key</a> &nbsp; ";
+	print "<a href=\"$DirCgi$PROG.$Extension?site=$SiteToAnalyze&year=$key&month=year&lang=$Lang\">$message[6] $key</a> &nbsp; ";
 }
 print "</TD>";
-print "<TD><b>$message[9][$Lang]</b></TD></TR>";
+print "<TD><b>$message[9]</b></TD></TR>";
 
 $yearcon=substr($FirstTime,0,4);$monthcon=substr($FirstTime,4,2);$daycon=substr($FirstTime,6,2);$hourcon=substr($FirstTime,8,2);$mincon=substr($FirstTime,10,2);
 if ($FirstTime != 0) { print "<TR bgcolor=#$color_TableBGRowTitle><TD>$daycon&nbsp;$monthlib{$monthcon}&nbsp;$yearcon&nbsp;-&nbsp;$hourcon:$mincon</TD>"; }
@@ -3463,14 +2389,14 @@ $yearcon=substr($LastTime,0,4);$monthcon=substr($LastTime,4,2);$daycon=substr($L
 if ($LastTime != 0) { print "<TD>$daycon&nbsp;$monthlib{$monthcon}&nbsp;$yearcon&nbsp;-&nbsp;$hourcon:$mincon</TD></TR>"; }
 else { print "<TD>NA</TD></TR>\n"; }
 print "<TR>";
-print "<TD width=20% bgcolor=#$color_v onmouseover=\"ShowTooltip(1);\" onmouseout=\"HideTooltip(1);\">$message[10][$Lang]</TD>";
-print "<TD width=20% bgcolor=#$color_w onmouseover=\"ShowTooltip(2);\" onmouseout=\"HideTooltip(2);\">$message[11][$Lang]</TD>";
-print "<TD width=20% bgcolor=#$color_p onmouseover=\"ShowTooltip(3);\" onmouseout=\"HideTooltip(3);\">$message[56][$Lang]</TD>";
-print "<TD width=20% bgcolor=#$color_h onmouseover=\"ShowTooltip(4);\" onmouseout=\"HideTooltip(4);\">$message[57][$Lang]</TD>";
-print "<TD width=20% bgcolor=#$color_k onmouseover=\"ShowTooltip(5);\" onmouseout=\"HideTooltip(5);\">$message[44][$Lang]</TD></TR>";
+print "<TD width=20% bgcolor=#$color_v onmouseover=\"ShowTooltip(1);\" onmouseout=\"HideTooltip(1);\">$message[10]</TD>";
+print "<TD width=20% bgcolor=#$color_w onmouseover=\"ShowTooltip(2);\" onmouseout=\"HideTooltip(2);\">$message[11]</TD>";
+print "<TD width=20% bgcolor=#$color_p onmouseover=\"ShowTooltip(3);\" onmouseout=\"HideTooltip(3);\">$message[56]</TD>";
+print "<TD width=20% bgcolor=#$color_h onmouseover=\"ShowTooltip(4);\" onmouseout=\"HideTooltip(4);\">$message[57]</TD>";
+print "<TD width=20% bgcolor=#$color_k onmouseover=\"ShowTooltip(5);\" onmouseout=\"HideTooltip(5);\">$message[44]</TD></TR>";
 $kilo=int($TotalBytes/1024*100)/100;
-print "<TR><TD><b>$TotalVisits</b><br>&nbsp;</TD><TD><b>$TotalUnique</b><br>($RatioHosts&nbsp;$message[52][$Lang])</TD><TD><b>$TotalPages</b><br>($RatioPages&nbsp;".lc $message[56][$Lang]."/".lc $message[12][$Lang].")</TD>";
-print "<TD><b>$TotalHits</b><br>($RatioHits&nbsp;".lc $message[57][$Lang]."/".lc $message[12][$Lang].")</TD><TD><b>$kilo $message[44][$Lang]</b><br>($RatioBytes&nbsp;$message[44][$Lang]/".lc $message[12][$Lang].")</TD></TR>\n";
+print "<TR><TD><b>$TotalVisits</b><br>&nbsp;</TD><TD><b>$TotalUnique</b><br>($RatioHosts&nbsp;$message[52])</TD><TD><b>$TotalPages</b><br>($RatioPages&nbsp;".lc $message[56]."/".lc $message[12].")</TD>";
+print "<TD><b>$TotalHits</b><br>($RatioHits&nbsp;".lc $message[57]."/".lc $message[12].")</TD><TD><b>$kilo $message[44]</b><br>($RatioBytes&nbsp;$message[44]/".lc $message[12].")</TD></TR>\n";
 print "<TR valign=bottom><TD colspan=5 align=center>";
 print "<TABLE>";
 print "<TR valign=bottom>";
@@ -3493,12 +2419,12 @@ for ($ix=1; $ix<=12; $ix++) {
 	if ($max_k > 0) { $bredde_k=$MonthBytes{$YearRequired.$monthix}/$max_k*$BarHeight/2; }
 	$kilo=int(($MonthBytes{$YearRequired.$monthix}/1024)*100)/100;
 	print "<TD>";
-	print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_v\" HEIGHT=$bredde_v WIDTH=8 ALT=\"$message[10][$Lang]: $MonthVisits{$YearRequired.$monthix}\" title=\"$message[10][$Lang]: $MonthVisits{$YearRequired.$monthix}\">";
-	print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_u\" HEIGHT=$bredde_u WIDTH=8 ALT=\"$message[11][$Lang]: $MonthUnique{$YearRequired.$monthix}\" title=\"$message[11][$Lang]: $MonthUnique{$YearRequired.$monthix}\">";
+	print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_v\" HEIGHT=$bredde_v WIDTH=8 ALT=\"$message[10]: $MonthVisits{$YearRequired.$monthix}\" title=\"$message[10]: $MonthVisits{$YearRequired.$monthix}\">";
+	print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_u\" HEIGHT=$bredde_u WIDTH=8 ALT=\"$message[11]: $MonthUnique{$YearRequired.$monthix}\" title=\"$message[11]: $MonthUnique{$YearRequired.$monthix}\">";
 	print "&nbsp;";
-	print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_p\" HEIGHT=$bredde_p WIDTH=8 ALT=\"$message[56][$Lang]: $MonthPage{$YearRequired.$monthix}\" title=\"$message[56][$Lang]: $MonthPage{$YearRequired.$monthix}\">";
-	print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_h\" HEIGHT=$bredde_h WIDTH=8 ALT=\"$message[57][$Lang]: $MonthHits{$YearRequired.$monthix}\" title=\"$message[57][$Lang]: $MonthHits{$YearRequired.$monthix}\">";
-	print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_k\" HEIGHT=$bredde_k WIDTH=8 ALT=\"$message[44][$Lang]: $kilo\" title=\"$message[44][$Lang]: $kilo\">";
+	print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_p\" HEIGHT=$bredde_p WIDTH=8 ALT=\"$message[56]: $MonthPage{$YearRequired.$monthix}\" title=\"$message[56]: $MonthPage{$YearRequired.$monthix}\">";
+	print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_h\" HEIGHT=$bredde_h WIDTH=8 ALT=\"$message[57]: $MonthHits{$YearRequired.$monthix}\" title=\"$message[57]: $MonthHits{$YearRequired.$monthix}\">";
+	print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_k\" HEIGHT=$bredde_k WIDTH=8 ALT=\"$message[44]: $kilo\" title=\"$message[44]: $kilo\">";
 	print "</TD>\n";
 }
 print "</TR><TR>";
@@ -3516,9 +2442,9 @@ print "<br><hr>\n";
 # BY COUNTRY/DOMAIN
 #---------------------------
 print "$CENTER<a name=\"DOMAINS\"></a><BR>";
-$tab_titre="$message[25][$Lang]";
+$tab_titre="$message[25]";
 &tab_head;
-print "<TR bgcolor=#$color_TableBGRowTitle><TH colspan=2>$message[17][$Lang]</TH><TH>Code</TH><TH bgcolor=#$color_p>$message[56][$Lang]</TH><TH bgcolor=#$color_h>$message[57][$Lang]</TH><TH bgcolor=#$color_k>$message[44][$Lang]</TH><TH>&nbsp;</TH></TR>\n";
+print "<TR bgcolor=#$color_TableBGRowTitle><TH colspan=2>$message[17]</TH><TH>Code</TH><TH bgcolor=#$color_p>$message[56]</TH><TH bgcolor=#$color_h>$message[57]</TH><TH bgcolor=#$color_k>$message[44]</TH><TH>&nbsp;</TH></TR>\n";
 if ($SortDir<0) { $max_h=$_domener_h{$sortdomains_h[0]}; }
 else            { $max_h=$_domener_h{$sortdomains_h[$#sortdomains_h]}; }
 if ($SortDir<0) { $max_k=$_domener_k{$sortdomains_k[0]}; }
@@ -3531,16 +2457,16 @@ foreach $key (@sortdomains_p) {
 	if ($max_k > 0) { $bredde_k=$BarWidth*$_domener_k{$key}/$max_k+1; }
 	$kilo=int(($_domener_k{$key}/1024)*100)/100;
 	if ($key eq "ip") {
-		print "<TR><TD><IMG SRC=\"$DirIcons\/flags\/$key.png\" height=14></TD><TD CLASS=LEFT>$message[0][$Lang]</TD><TD>$key</TD>";
+		print "<TR><TD><IMG SRC=\"$DirIcons\/flags\/$key.png\" height=14></TD><TD CLASS=LEFT>$message[0]</TD><TD>$key</TD>";
 	}
 	else {
 		print "<TR><TD><IMG SRC=\"$DirIcons\/flags\/$key.png\" height=14></TD><TD CLASS=LEFT>$DomainsHash{$key}</TD><TD>$key</TD>";
 	}
 	print "<TD>$_domener_p{$key}</TD><TD>$_domener_h{$key}</TD><TD>$kilo</TD>";
 	print "<TD CLASS=LEFT>";
-	print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_p\" WIDTH=$bredde_p HEIGHT=6 ALT=\"$message[56][$Lang]: $_domener_p{$key}\" title=\"$message[56][$Lang]: $_domener_p{$key}\"><br>\n";
-	print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_h\" WIDTH=$bredde_h HEIGHT=6 ALT=\"$message[57][$Lang]: $_domener_h{$key}\" title=\"$message[57][$Lang]: $_domener_h{$key}\"><br>\n";
-	print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_k\" WIDTH=$bredde_k HEIGHT=6 ALT=\"$message[44][$Lang]: $kilo\" title=\"$message[44][$Lang]: $kilo\">";
+	print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_p\" WIDTH=$bredde_p HEIGHT=6 ALT=\"$message[56]: $_domener_p{$key}\" title=\"$message[56]: $_domener_p{$key}\"><br>\n";
+	print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_h\" WIDTH=$bredde_h HEIGHT=6 ALT=\"$message[57]: $_domener_h{$key}\" title=\"$message[57]: $_domener_h{$key}\"><br>\n";
+	print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_k\" WIDTH=$bredde_k HEIGHT=6 ALT=\"$message[44]: $kilo\" title=\"$message[44]: $kilo\">";
 	print "</TD></TR>\n";
 	$total_p += $_domener_p{$key};
 	$total_h += $_domener_h{$key};
@@ -3557,11 +2483,11 @@ if ($rest_p > 0) { 	# All other domains (known or not)
 	if ($max_h > 0) { $bredde_h=$BarWidth*$rest_h/$max_h+1; }
 	if ($max_k > 0) { $bredde_k=$BarWidth*$rest_k/$max_k+1; }
 	$kilo=int(($rest_k/1024)*100)/100;
-	print "<TR><TD colspan=3 CLASS=LEFT><font color=blue>$message[2][$Lang]</font></TD><TD>$rest_p</TD><TD>$rest_h</TD><TD>$kilo</TD>\n";
+	print "<TR><TD colspan=3 CLASS=LEFT><font color=blue>$message[2]</font></TD><TD>$rest_p</TD><TD>$rest_h</TD><TD>$kilo</TD>\n";
 	print "<TD CLASS=LEFT>";
-	print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_p\" WIDTH=$bredde_p HEIGHT=6 ALT=\"$message[56][$Lang]: $rest_p\" title=\"$message[56][$Lang]: $rest_p\"><br>\n";
-	print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_h\" WIDTH=$bredde_h HEIGHT=6 ALT=\"$message[57][$Lang]: $rest_h\" title=\"$message[57][$Lang]: $rest_h\"><br>\n";
-	print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_k\" WIDTH=$bredde_k HEIGHT=6 ALT=\"$message[44][$Lang]: $kilo\" title=\"$message[44][$Lang]: $kilo\">";
+	print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_p\" WIDTH=$bredde_p HEIGHT=6 ALT=\"$message[56]: $rest_p\" title=\"$message[56]: $rest_p\"><br>\n";
+	print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_h\" WIDTH=$bredde_h HEIGHT=6 ALT=\"$message[57]: $rest_h\" title=\"$message[57]: $rest_h\"><br>\n";
+	print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_k\" WIDTH=$bredde_k HEIGHT=6 ALT=\"$message[44]: $kilo\" title=\"$message[44]: $kilo\">";
 	print "</TD></TR>\n";
 }
 &tab_end;
@@ -3570,15 +2496,15 @@ if ($rest_p > 0) { 	# All other domains (known or not)
 # BY HOST/VISITOR
 #--------------------------
 print "$CENTER<a name=\"VISITOR\"></a><BR>";
-$tab_titre="TOP $MaxNbOfHostsShown $message[55][$Lang] $TotalHosts $message[26][$Lang] ($TotalUnique $message[11][$Lang])";
+$tab_titre="TOP $MaxNbOfHostsShown $message[55] $TotalHosts $message[26] ($TotalUnique $message[11])";
 &tab_head;
-print "<TR bgcolor=#$color_TableBGRowTitle><TH>$message[18][$Lang]</TH><TH bgcolor=#$color_p>$message[56][$Lang]</TH><TH bgcolor=#$color_h>$message[57][$Lang]</TH><TH bgcolor=#$color_k>$message[44][$Lang]</TH><TH>$message[9][$Lang]</TH></TR>\n";
+print "<TR bgcolor=#$color_TableBGRowTitle><TH>$message[18]</TH><TH bgcolor=#$color_p>$message[56]</TH><TH bgcolor=#$color_h>$message[57]</TH><TH bgcolor=#$color_k>$message[44]</TH><TH>$message[9]</TH></TR>\n";
 $count=0;$total_p=0;$total_h=0;$total_k=0;
 foreach $key (@sorthosts_p) {
 	if ($_hostmachine_h{$key}>=$MinHitHost) {
 		$kilo=int(($_hostmachine_k{$key}/1024)*100)/100;
 		if ($key eq "Unknown") {
-			print "<TR><TD CLASS=LEFT><a href=\"$DirCgi$PROG.$Extension?action=unknownip&site=$SiteToAnalyze&year=$YearRequired&month=$MonthRequired&lang=$Lang\">$message[1][$Lang]</a></TD><TD>$_hostmachine_p{$key}</TD><TD>$_hostmachine_h{$key}</TD><TD>$kilo</TD><TD><a href=\"$DirCgi$PROG.$Extension?action=unknownip&site=$SiteToAnalyze&year=$YearRequired&month=$MonthRequired&lang=$Lang\">$message[3][$Lang]</a></TD></TR>\n";
+			print "<TR><TD CLASS=LEFT><a href=\"$DirCgi$PROG.$Extension?action=unknownip&site=$SiteToAnalyze&year=$YearRequired&month=$MonthRequired&lang=$Lang\">$message[1]</a></TD><TD>$_hostmachine_p{$key}</TD><TD>$_hostmachine_h{$key}</TD><TD>$kilo</TD><TD><a href=\"$DirCgi$PROG.$Extension?action=unknownip&site=$SiteToAnalyze&year=$YearRequired&month=$MonthRequired&lang=$Lang\">$message[3]</a></TD></TR>\n";
 			}
 		else {
 			$yearcon=substr($_hostmachine_l{$key},0,4);
@@ -3607,7 +2533,7 @@ $rest_h=$TotalHits-$total_h;
 $rest_k=$TotalBytes-$total_k;
 if ($rest_p > 0) {	# All other visitors (known or not)
 	$kilo=int(($rest_k/1024)*100)/100;
-	print "<TR><TD CLASS=LEFT><font color=blue>$message[2][$Lang]</font></TD><TD>$rest_p</TD><TD>$rest_h</TD><TD>$kilo</TD><TD>&nbsp;</TD></TR>\n";
+	print "<TR><TD CLASS=LEFT><font color=blue>$message[2]</font></TD><TD>$rest_p</TD><TD>$rest_h</TD><TD>$kilo</TD><TD>&nbsp;</TD></TR>\n";
 }
 &tab_end;
 
@@ -3615,9 +2541,9 @@ if ($rest_p > 0) {	# All other visitors (known or not)
 # BY ROBOTS
 #----------------------------
 print "$CENTER<a name=\"ROBOTS\"></a><BR>";
-$tab_titre=$message[53][$Lang];
+$tab_titre=$message[53];
 &tab_head;
-print "<TR bgcolor=#$color_TableBGRowTitle onmouseover=\"ShowTooltip(16);\" onmouseout=\"HideTooltip(16);\"><TH>Robot</TH><TH bgcolor=#$color_h width=80>$message[57][$Lang]</TH><TH>$message[9][$Lang]</TH></TR>\n";
+print "<TR bgcolor=#$color_TableBGRowTitle onmouseover=\"ShowTooltip(16);\" onmouseout=\"HideTooltip(16);\"><TH>Robot</TH><TH bgcolor=#$color_h width=80>$message[57]</TH><TH>$message[9]</TH></TR>\n";
 @sortrobot=sort { $SortDir*$_robot_h{$a} <=> $SortDir*$_robot_h{$b} } keys (%_robot_h);
 foreach $key (@sortrobot) {
 	$yearcon=substr($_robot_l{$key},0,4);
@@ -3634,7 +2560,7 @@ foreach $key (@sortrobot) {
 # BY HOUR
 #----------------------------
 print "$CENTER<a name=\"HOUR\"></a><BR>";
-$tab_titre="$message[20][$Lang]";
+$tab_titre="$message[20]";
 &tab_head;
 print "<TR><TD align=center><TABLE><TR>\n";
 $max_p=0;$max_h=0;$max_k=0;
@@ -3659,9 +2585,9 @@ for ($ix=0; $ix<=23; $ix++) {
 	if ($max_k > 0) { $bredde_k=($BarHeight*$_time_k[$ix]/$max_k)+1; }
 	$kilo=int(($_time_k[$ix]/1024)*100)/100;
 	print "<TD>";
-	print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_p\" HEIGHT=$bredde_p WIDTH=6 ALT=\"$message[56][$Lang]: $_time_p[$ix]\" title=\"$message[56][$Lang]: $_time_p[$ix]\">";
-	print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_h\" HEIGHT=$bredde_h WIDTH=6 ALT=\"$message[57][$Lang]: $_time_h[$ix]\" title=\"$message[57][$Lang]: $_time_h[$ix]\">";
-	print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_k\" HEIGHT=$bredde_k WIDTH=6 ALT=\"$message[44][$Lang]: $kilo\" title=\"$message[44][$Lang]: $kilo\">";
+	print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_p\" HEIGHT=$bredde_p WIDTH=6 ALT=\"$message[56]: $_time_p[$ix]\" title=\"$message[56]: $_time_p[$ix]\">";
+	print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_h\" HEIGHT=$bredde_h WIDTH=6 ALT=\"$message[57]: $_time_h[$ix]\" title=\"$message[57]: $_time_h[$ix]\">";
+	print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_k\" HEIGHT=$bredde_k WIDTH=6 ALT=\"$message[44]: $kilo\" title=\"$message[44]: $kilo\">";
 	print "</TD>\n";
 }
 print "</TR></TABLE></TD></TR>\n";
@@ -3671,9 +2597,9 @@ print "</TR></TABLE></TD></TR>\n";
 # BY PAGE
 #-------------------------
 print "$CENTER<a name=\"PAGE\"></a><BR>";
-$tab_titre="TOP $MaxNbOfPageShown $message[55][$Lang] $TotalDifferentPages $message[27][$Lang]";
+$tab_titre="TOP $MaxNbOfPageShown $message[55] $TotalDifferentPages $message[27]";
 &tab_head;
-print "<TR bgcolor=#$color_TableBGRowTitle><TH>Page-URL</TH><TH bgcolor=#$color_p>&nbsp;$message[29][$Lang]&nbsp;</TH><TH>&nbsp;</TH></TR>\n";
+print "<TR bgcolor=#$color_TableBGRowTitle><TH>Page-URL</TH><TH bgcolor=#$color_p>&nbsp;$message[29]&nbsp;</TH><TH>&nbsp;</TH></TR>\n";
 if ($SortDir<0) { $max=$_sider_p{$sortsiders[0]}; }
 else            { $max=$_sider_p{$sortsiders[$#sortsiders]}; }
 $count=0;
@@ -3686,7 +2612,7 @@ foreach $key (@sortsiders) {
 	    if ($ShowLinksOnUrl) { print "<A HREF=\"http://$SiteToAnalyze$key\">$nompage</A>"; }
 	    else              	 { print "$nompage"; }
 	    $bredde=$BarWidth*$_sider_p{$key}/$max+1;
-		print "</TD><TD>$_sider_p{$key}</TD><TD CLASS=LEFT><IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_p\" WIDTH=$bredde HEIGHT=8 ALT=\"$message[56][$Lang]: $_sider_p{$key}\" title=\"$message[56][$Lang]: $_sider_p{$key}\"></TD></TR>\n";
+		print "</TD><TD>$_sider_p{$key}</TD><TD CLASS=LEFT><IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_p\" WIDTH=$bredde HEIGHT=8 ALT=\"$message[56]: $_sider_p{$key}\" title=\"$message[56]: $_sider_p{$key}\"></TD></TR>\n";
   	}
   	$count++;
 }
@@ -3696,13 +2622,13 @@ foreach $key (@sortsiders) {
 # BY BROWSER
 #----------------------------
 print "$CENTER<a name=\"BROWSER\"></a><BR>";
-$tab_titre="$message[21][$Lang]";
+$tab_titre="$message[21]";
 &tab_head;
-print "<TR bgcolor=#$color_TableBGRowTitle><TH>Browser</TH><TH bgcolor=#$color_h width=40>$message[57][$Lang]</TH><TH bgcolor=#$color_h width=40>$message[15][$Lang]</TH></TR>\n";
+print "<TR bgcolor=#$color_TableBGRowTitle><TH>Browser</TH><TH bgcolor=#$color_h width=40>$message[57]</TH><TH bgcolor=#$color_h width=40>$message[15]</TH></TR>\n";
 foreach $key (@sortbrowsers) {
 	$p=int($_browser_h{$key}/$TotalHits*1000)/10;
 	if ($key eq "Unknown") {
-		print "<TR><TD CLASS=LEFT><a href=\"$DirCgi$PROG.$Extension?action=unknownrefererbrowser&site=$SiteToAnalyze&year=$YearRequired&month=$MonthRequired&lang=$Lang\">$message[0][$Lang]</a></TD><TD>$_browser_h{$key}</TD><TD>$p&nbsp;%</TD></TR>\n";
+		print "<TR><TD CLASS=LEFT><a href=\"$DirCgi$PROG.$Extension?action=unknownrefererbrowser&site=$SiteToAnalyze&year=$YearRequired&month=$MonthRequired&lang=$Lang\">$message[0]</a></TD><TD>$_browser_h{$key}</TD><TD>$p&nbsp;%</TD></TR>\n";
 	}
 	else {
 		print "<TR><TD CLASS=LEFT>$BrowsersHash{$key}</TD><TD>$_browser_h{$key}</TD><TD>$p&nbsp;%</TD></TR>\n";
@@ -3714,13 +2640,13 @@ foreach $key (@sortbrowsers) {
 # BY OS
 #----------------------------
 print "$CENTER<a name=\"OS\"></a><BR>";
-$tab_titre=$message[59][$Lang];
+$tab_titre=$message[59];
 &tab_head;
-print "<TR bgcolor=#$color_TableBGRowTitle><TH colspan=2>OS</TH><TH bgcolor=#$color_h width=40>$message[57][$Lang]</TH><TH bgcolor=#$color_h width=40>$message[15][$Lang]</TH></TR>\n";
+print "<TR bgcolor=#$color_TableBGRowTitle><TH colspan=2>OS</TH><TH bgcolor=#$color_h width=40>$message[57]</TH><TH bgcolor=#$color_h width=40>$message[15]</TH></TR>\n";
 foreach $key (@sortos) {
 	$p=int($_os_h{$key}/$TotalHits*1000)/10;
 	if ($key eq "Unknown") {
-		print "<TR><TD><IMG SRC=\"$DirIcons\/os\/unknown.png\"></TD><TD CLASS=LEFT><a href=\"$DirCgi$PROG.$Extension?action=unknownreferer&site=$SiteToAnalyze&year=$YearRequired&month=$MonthRequired&lang=$Lang\">$message[0][$Lang]</a></TD><TD>$_os_h{$key}&nbsp;</TD>";
+		print "<TR><TD><IMG SRC=\"$DirIcons\/os\/unknown.png\"></TD><TD CLASS=LEFT><a href=\"$DirCgi$PROG.$Extension?action=unknownreferer&site=$SiteToAnalyze&year=$YearRequired&month=$MonthRequired&lang=$Lang\">$message[0]</a></TD><TD>$_os_h{$key}&nbsp;</TD>";
 		print "<TD>$p&nbsp;%</TD></TR>\n";
 		}
 	else {
@@ -3735,16 +2661,16 @@ foreach $key (@sortos) {
 # BY REFERENCE
 #---------------------------
 print "$CENTER<a name=\"REFERER\"></a><BR>";
-$tab_titre="$message[36][$Lang]";
+$tab_titre="$message[36]";
 &tab_head;
-print "<TR bgcolor=#$color_TableBGRowTitle><TH>$message[37][$Lang]</TH><TH bgcolor=#$color_h width=40>$message[57][$Lang]</TH><TH bgcolor=#$color_h width=40>$message[15][$Lang]</TH></TR>\n";
+print "<TR bgcolor=#$color_TableBGRowTitle><TH>$message[37]</TH><TH bgcolor=#$color_h width=40>$message[57]</TH><TH bgcolor=#$color_h width=40>$message[15]</TH></TR>\n";
 if ($TotalHits > 0) { $_=int($_from_h[0]/$TotalHits*1000)/10; }
-print "<TR><TD CLASS=LEFT><b>$message[38][$Lang]:</b></TD><TD>$_from_h[0]&nbsp;</TD><TD>$_&nbsp;%</TD></TR>\n";
+print "<TR><TD CLASS=LEFT><b>$message[38]:</b></TD><TD>$_from_h[0]&nbsp;</TD><TD>$_&nbsp;%</TD></TR>\n";
 if ($TotalHits > 0) { $_=int($_from_h[1]/$TotalHits*1000)/10; }
-print "<TR><TD CLASS=LEFT><b>$message[39][$Lang]:</b></TD><TD>$_from_h[1]&nbsp;</TD><TD>$_&nbsp;%</TD></TR>\n";
+print "<TR><TD CLASS=LEFT><b>$message[39]:</b></TD><TD>$_from_h[1]&nbsp;</TD><TD>$_&nbsp;%</TD></TR>\n";
 #------- Referrals by search engine
 if ($TotalHits > 0) { $_=int($_from_h[2]/$TotalHits*1000)/10; }
-print "<TR onmouseover=\"ShowTooltip(13);\" onmouseout=\"HideTooltip(13);\"><TD CLASS=LEFT><b>$message[40][$Lang] :</b><br>\n";
+print "<TR onmouseover=\"ShowTooltip(13);\" onmouseout=\"HideTooltip(13);\"><TD CLASS=LEFT><b>$message[40] :</b><br>\n";
 print "<TABLE>\n";
 foreach $se (@sortsereferrals) {
 	print "<TR><TD CLASS=LEFT>- $SearchEnginesHash{$se} </TD><TD align=right>$_se_referrals_h{\"$se\"}</TD></TR>\n";
@@ -3753,7 +2679,7 @@ print "</TABLE></TD>\n";
 print "<TD valign=top>$_from_h[2]&nbsp;</TD><TD valign=top>$_&nbsp;%</TD>\n</TR>\n";
 #------- Referrals by external HTML link
 if ($TotalHits > 0) { $_=(int($_from_h[3]/$TotalHits*1000)/10); }
-print "<TR onmouseover=\"ShowTooltip(14);\" onmouseout=\"HideTooltip(14);\"><TD CLASS=LEFT><b>$message[41][$Lang] :</b><br>\n";
+print "<TR onmouseover=\"ShowTooltip(14);\" onmouseout=\"HideTooltip(14);\"><TD CLASS=LEFT><b>$message[41] :</b><br>\n";
 print "<TABLE>\n";
 $count=0;
 foreach $from (@sortpagerefs) {
@@ -3775,16 +2701,16 @@ print "</TABLE></TD>\n";
 print "<TD valign=top>$_from_h[3]&nbsp;</TD><TD valign=top>$_&nbsp;%</TD>\n</TR>\n";
 
 if ($TotalHits > 0) { $_=(int($_from_h[4]/$TotalHits*1000)/10); }
-print "<TR><TD CLASS=LEFT><b>$message[42][$Lang] :</b></TD><TD>$_from_h[4]&nbsp;</TD><TD>$_&nbsp;%</TD></TR>\n";
+print "<TR><TD CLASS=LEFT><b>$message[42] :</b></TD><TD>$_from_h[4]&nbsp;</TD><TD>$_&nbsp;%</TD></TR>\n";
 &tab_end;
 
 
 # BY SEARCHWORDS
 #----------------------------
 print "$CENTER<a name=\"SEARCHWORDS\"></a><BR>";
-$tab_titre="TOP $MaxNbOfKeywordsShown $message[55][$Lang] $TotalDifferentKeywords $message[43][$Lang]";
+$tab_titre="TOP $MaxNbOfKeywordsShown $message[55] $TotalDifferentKeywords $message[43]";
 &tab_head;
-print "<TR bgcolor=#$color_TableBGRowTitle onmouseover=\"ShowTooltip(15);\" onmouseout=\"HideTooltip(15);\"><TH>$message[13][$Lang]</TH><TH bgcolor=#$color_s width=40>$message[14][$Lang]</TH><TH bgcolor=#$color_s width=40>$message[15][$Lang]</TH></TR>\n";
+print "<TR bgcolor=#$color_TableBGRowTitle onmouseover=\"ShowTooltip(15);\" onmouseout=\"HideTooltip(15);\"><TH>$message[13]</TH><TH bgcolor=#$color_s width=40>$message[14]</TH><TH bgcolor=#$color_s width=40>$message[15]</TH></TR>\n";
 $count=0;
 foreach $key (@sortsearchwords) {
 	if ( $count>=$MaxNbOfKeywordsShown ) { last; }
@@ -3800,7 +2726,7 @@ foreach $key (@sortsearchwords) {
 }
 if ($rest >0) {
 	if ($TotalKeywords > 0) { $p=int($rest/$TotalKeywords*1000)/10; }
-	print "<TR><TD CLASS=LEFT><font color=blue>$message[30][$Lang]</TD><TD>$rest</TD>";
+	print "<TR><TD CLASS=LEFT><font color=blue>$message[30]</TD><TD>$rest</TD>";
 	print "<TD>$p&nbsp;%</TD></TR>\n";
 	}
 &tab_end;
@@ -3809,9 +2735,9 @@ if ($rest >0) {
 # BY ERRORS
 #----------------------------
 print "$CENTER<a name=\"ERRORS\"></a><BR>";
-$tab_titre=$message[32][$Lang];
+$tab_titre=$message[32];
 &tab_head;
-print "<TR bgcolor=#$color_TableBGRowTitle><TH colspan=2>$message[32][$Lang]</TH><TH bgcolor=#$color_h width=40>$message[57][$Lang]</TH><TH bgcolor=#$color_h width=40>$message[15][$Lang]</TH></TR>\n";
+print "<TR bgcolor=#$color_TableBGRowTitle><TH colspan=2>$message[32]</TH><TH bgcolor=#$color_h width=40>$message[57]</TH><TH bgcolor=#$color_h width=40>$message[15]</TH></TR>\n";
 foreach $key (@sorterrors) {
 	$p=int($_errors_h{$key}/$TotalErrors*1000)/10;
 	if ($httpcode{$key}) { print "<TR onmouseover=\"ShowTooltip($key);\" onmouseout=\"HideTooltip($key);\">"; }
