@@ -341,13 +341,15 @@ $BarImageHorizontal_k = "barrehk.png";
 );
 
 # Robots list
-# List can be found at http://info.webcrawler.com/mak/projects/robots/active.html and the next command show how to generate tab list from this file:
-# cat robotslist.txt | sed 's/:/ /' | awk ' /robot-id/ { name=tolower($2); } /robot-name/ { print "\""name"\", \""$0"\"," } ' | sed 's/robot-name *//g' > file
+%RobotHash   = (
+# Some robots that must be declared first to avoid to be confused with another one
+"tiscalifreenet", "TiscaliFreeNet",
+# Main list of robots (found at http://info.webcrawler.com/mak/projects/robots/active.html)
+# This command show how to generate tab list from this file: cat robotslist.txt | sed 's/:/ /' | awk ' /robot-id/ { name=tolower($2); } /robot-name/ { print "\""name"\", \""$0"\"," } ' | sed 's/robot-name *//g' > file
 # Rem: To avoid bad detection, some robots id were removed from this list:
 #      - Robots with ID of 2 letters only
 #      - Robot called "webs"
 # Rem: directhit is changed in direct_hit (its real id)
-%RobotHash   = (
 "acme.spider", "Acme.Spider",
 "ahoythehomepagefinder", "Ahoy! The Homepage Finder",
 "alkaline", "Alkaline",
@@ -592,7 +594,6 @@ $BarImageHorizontal_k = "barrehk.png";
 "jennybot", "JennyBot (Not referenced robot)",
 "justview", "JustView (Not referenced robot)",
 "mercator", "Mercator (Not referenced robot)",
-#"msiecrawler", "MSIECrawler (Not referenced robot)",	MSIECrawler seems to be a grabber not a robot
 "perman surfer", "Perman surfer (Not referenced robot)",
 "redalert", "Red Alert (Not referenced robot)",
 "shoutcast","Shoutcast Directory Service (Not referenced robot)",
