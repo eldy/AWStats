@@ -21,7 +21,7 @@ use vars qw(%DomainsHashIDLib @RobotsSearchIDOrder_list1 @RobotsSearchIDOrder_li
 #-------------------------------------------------------
 # Defines
 #-------------------------------------------------------
-my $VERSION="4.0 (build 40)";
+my $VERSION="4.0 (build 41)";
 
 # ---------- Init variables -------
 my $Debug=0;
@@ -222,6 +222,7 @@ TH { font: 12px arial, verdana, helvetica, sans-serif; text-align:center; color:
 TH.AWL { font-size: 14px; font-weight: bold; }
 TD { font: 12px arial, verdana, helvetica, sans-serif; text-align:center; color: #$color_text; }
 .AWL { font: 12px arial, verdana, helvetica, sans-serif; text-align:left; color: #$color_text; }
+B { font-weight: bold; }
 A { font: 12px arial, verdana, helvetica, sans-serif; }
 A:link    { color: #$color_link; text-decoration: none; }
 A:visited { color: #$color_link; text-decoration: none; }
@@ -4306,12 +4307,12 @@ EOF
 		foreach my $key (sort { $_browser_h{$b} <=> $_browser_h{$a} } keys (%_browser_h)) {
 			my $p=int($_browser_h{$key}/$Total*1000)/10;
 			if ($key eq "Unknown") {
-				print "<TR><TD width=80><IMG SRC=\"$DirIcons\/browser\/unknown.png\"></TD><TD CLASS=AWL><a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$DirCgi$PROG.$Extension?${NewLinkParams}output=unknownbrowser":"$PROG$FileSuffix.unknownbrowser.html")."\">$Message[0]</a></TD><TD width=80>?</TD><TD>$_browser_h{$key}</TD><TD>$p&nbsp;%</TD></TR>\n";
+				print "<TR><TD width=100><IMG SRC=\"$DirIcons\/browser\/unknown.png\"></TD><TD CLASS=AWL><a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$DirCgi$PROG.$Extension?${NewLinkParams}output=unknownbrowser":"$PROG$FileSuffix.unknownbrowser.html")."\">$Message[0]</a></TD><TD width=80>?</TD><TD>$_browser_h{$key}</TD><TD>$p&nbsp;%</TD></TR>\n";
 			}
 			else {
 				my $nameicon=$BrowsersHashIcon{$key}||"notavailable"; $nameicon =~ s/\s.*//; $nameicon =~ tr/A-Z/a-z/;
 				my $newbrowser=$BrowsersHashIDLib{$key}||$key;
-				print "<TR><TD width=80><IMG SRC=\"$DirIcons\/browser\/$nameicon.png\"></TD><TD CLASS=AWL>$newbrowser</TD><TD width=80>".($BrowsersHereAreGrabbers{$key}?"<b>$Message[112]</b>":"$Message[113]")."</TD><TD>$_browser_h{$key}</TD><TD>$p&nbsp;%</TD></TR>\n";
+				print "<TR><TD width=100><IMG SRC=\"$DirIcons\/browser\/$nameicon.png\"></TD><TD CLASS=AWL>$newbrowser</TD><TD width=80>".($BrowsersHereAreGrabbers{$key}?"<b>$Message[112]</b>":"$Message[113]")."</TD><TD>$_browser_h{$key}</TD><TD>$p&nbsp;%</TD></TR>\n";
 			}
 			$count++;
 		}
@@ -4330,13 +4331,13 @@ EOF
 		foreach my $key (sort { $_os_h{$b} <=> $_os_h{$a} } keys (%_os_h)) {
 			my $p=int($_os_h{$key}/$Total*1000)/10;
 			if ($key eq "Unknown") {
-				print "<TR><TD width=80><IMG SRC=\"$DirIcons\/os\/unknown.png\"></TD><TD CLASS=AWL><a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$DirCgi$PROG.$Extension?${NewLinkParams}output=unknownos":"$PROG$FileSuffix.unknownos.html")."\">$Message[0]</a></TD><TD>$_os_h{$key}</TD>";
+				print "<TR><TD width=100><IMG SRC=\"$DirIcons\/os\/unknown.png\"></TD><TD CLASS=AWL><a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$DirCgi$PROG.$Extension?${NewLinkParams}output=unknownos":"$PROG$FileSuffix.unknownos.html")."\">$Message[0]</a></TD><TD>$_os_h{$key}</TD>";
 				print "<TD>$p&nbsp;%</TD></TR>\n";
 				}
 			else {
 				my $newos=$OSHashLib{$key}||$key;
 				my $nameicon=$newos; $nameicon =~ s/\s.*//; $nameicon =~ tr/A-Z/a-z/;
-				print "<TR><TD width=80><IMG SRC=\"$DirIcons\/os\/$nameicon.png\"></TD><TD CLASS=AWL>$newos</TD><TD>$_os_h{$key}</TD>";
+				print "<TR><TD width=100><IMG SRC=\"$DirIcons\/os\/$nameicon.png\"></TD><TD CLASS=AWL>$newos</TD><TD>$_os_h{$key}</TD>";
 				print "<TD>$p&nbsp;%</TD></TR>\n";
 			}
 			$count++;
