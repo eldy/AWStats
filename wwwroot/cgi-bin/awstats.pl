@@ -5422,13 +5422,13 @@ if ($AllowAccessFromWebToAuthenticatedUsersOnly && $ENV{'GATEWAY_INTERFACE'}) {
 	}
 	if (@AllowAccessFromWebToFollowingAuthenticatedUsers) {
 		my $userisinlist=0;
-		my $currentuser=$ENV{"REMOTE_USER"};
+		my $currentuser=qr/^$ENV{"REMOTE_USER"}$/i;
 		$currentuser =~ s/\s/%20/g;	# Allow authenticated user with space in name to be compared to allowed user list
-		foreach my $key (@AllowAccessFromWebToFollowingAuthenticatedUsers) {
-			if ($currentuser eq $key) { $userisinlist=1; last; }
+		foreach (@AllowAccessFromWebToFollowingAuthenticatedUsers) {
+			if (/$currentuser/o) { $userisinlist=1; last; }
 		}
 		if (! $userisinlist) {
-			error("User '$currentuser' is not allowed to access statistics of this domain/config.");
+			error("User '".$ENV{"REMOTE_USER"}."' is not allowed to access statistics of this domain/config.");
 		}
 	}
 }
@@ -7754,7 +7754,7 @@ if (scalar keys %HTMLOutput) {
 			if ($ShowRobotsStats =~ /L/i) { print "<td>&nbsp;</td>"; }
 			print "</tr>\n";
 		}
-		&tab_end("* $Message[157]");
+		&tab_end("* $Message[156]".($TotalRRobots?" $Message[157]":""));
 		&html_end(1);
 	}
 	if ($HTMLOutput{'urldetail'} || $HTMLOutput{'urlentry'} || $HTMLOutput{'urlexit'}) {
@@ -8350,8 +8350,8 @@ if (scalar keys %HTMLOutput) {
 			print "<tr>";
 			if ($LogType eq 'M') { 
 				print "<td class=\"aws\">$Message[165]</td>";
-				print "<td>&nbsp;<br>&nbsp;</td>\n";
-				print "<td>&nbsp;<br>&nbsp;</td>\n";
+				print "<td>&nbsp;<br />&nbsp;</td>\n";
+				print "<td>&nbsp;<br />&nbsp;</td>\n";
 				if ($ShowMonthStats =~ /H/i) { print "<td><b>$TotalHits</b>".($LogType eq 'M'?"":"<br />($RatioHits&nbsp;".lc($Message[57]."/".$Message[12]).")</td>"); } else { print "<td>&nbsp;</td>"; }
 				if ($ShowMonthStats =~ /B/i) { print "<td><b>".Format_Bytes(int($TotalBytes))."</b><br />($RatioBytes&nbsp;$Message[108]/".lc($Message[($LogType eq 'M'?149:12)]).")</td>"; } else { print "<td>&nbsp;</td>"; }
 			}
@@ -8367,8 +8367,8 @@ if (scalar keys %HTMLOutput) {
 			print "<tr>";
 			if ($LogType eq 'M') { 
 				print "<td class=\"aws\">$Message[166]</td>";
-				print "<td>&nbsp;<br>&nbsp;</td>\n";
-				print "<td>&nbsp;<br>&nbsp;</td>\n";
+				print "<td>&nbsp;<br />&nbsp;</td>\n";
+				print "<td>&nbsp;<br />&nbsp;</td>\n";
 				if ($ShowMonthStats =~ /H/i) { print "<td><b>$TotalNotViewedHits</b></td>"; } else { print "<td>&nbsp;</td>"; }
 				if ($ShowMonthStats =~ /B/i) { print "<td><b>".Format_Bytes(int($TotalNotViewedBytes))."</b></td>"; } else { print "<td>&nbsp;</td>"; }
 			}
