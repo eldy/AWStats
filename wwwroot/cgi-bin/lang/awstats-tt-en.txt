@@ -15,7 +15,7 @@
 	</DIV>
 	<DIV CLASS="CTooltip" ID="tt5">
 	This piece of information refers to the amount of data downloaded by all <b>pages</b>, <b>images</b> and <b>files</b> within your site.<br>
-	Units are in Kb, Mb or Gb (KiloBytes, MegaBytes or GigaBytes)
+	Units are in KB, MB or GB (KiloBytes, MegaBytes or GigaBytes)
 	</DIV>
 	<DIV CLASS="CTooltip" ID="tt13">
 	#PROG# recognizes each access to your site after a <b>search</b> from the <b>#SearchEnginesArray# most popular Internet Search Engines and Directories</b> (such as Yahoo, Altavista, Lycos, Google, Voila, etc...).
