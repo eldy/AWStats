@@ -99,11 +99,11 @@ if ($OutputDir) { if ($OutputDir !~ /[\\\/]$/) { $OutputDir.="/"; } }
 
 if (! $Config) {
 	print "----- $PROG $VERSION (c) Laurent Destailleur -----\n";
-	print "$PROG allows you to launch AWStats with -staticlinks option to\n";
-	print "build all possible pages allowed by AWStats -output option.\n";
+	print "$PROG allows you to launch AWStats with -staticlinks option\n";
+	print "to build all possible pages allowed by AWStats -output option.\n";
 	print "\n";
 	print "Usage:\n";
-	print "  $PROG.$Extension (awstats_options) [awstatsbuildstaticpages_options]\n";
+	print "$PROG.$Extension (awstats_options) [awstatsbuildstaticpages_options]\n";
 	print "\n";
 	print "  where awstats_options are any option known by AWStats\n";
 	print "   -config=configvalue is value for -config parameter (REQUIRED)\n";
