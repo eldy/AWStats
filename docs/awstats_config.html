@@ -66,6 +66,7 @@ when reading it), follow the example:<br>
 <li><a href="#SkipDNSLookupFor">SkipDNSLookupFor</a>
 <li><a href="#AllowAccessFromWebToAuthenticatedUsersOnly">AllowAccessFromWebToAuthenticatedUsersOnly</a>
 <li><a href="#AllowAccessFromWebToFollowingAuthenticatedUsers">AllowAccessFromWebToFollowingAuthenticatedUsers</a>
+<li><a href="#AllowAccessFromWebToFollowingIPAddresses">AllowAccessFromWebToFollowingIPAddresses</a>
 <li><a href="#CreateDirDataIfNotExists">CreateDirDataIfNotExists</a>
 <li><a href="#SaveDatabaseFilesWithPermissionsForEveryone">SaveDatabaseFilesWithPermissionsForEveryone</a>
 <li><a href="#PurgeLogFile">PurgeLogFile</a>
@@ -455,6 +456,18 @@ when reading it), follow the example:<br>
 <br># Default: ""
 <br>#
 <br>AllowAccessFromWebToFollowingAuthenticatedUsers=""
+
+<br><br><hr>
+
+<a name="AllowAccessFromWebToFollowingIPAddresses"><b>AllowAccessFromWebToFollowingIPAddresses</b></a><br>
+<b>Version : </b>5.0 +<br>
+<br># When this parameter is define to something, the IP address of the user that
+<br># read its statistics from a browser (when AWStats is used as a CGI) is
+<br># checked and must match the IP address range defined by this parameter.
+<br># Example: "123.123.123.10-123.123.123.255"
+<br># Default: ""
+<br>#
+<br>AllowAccessFromWebToFollowingIPAddresses=""
 
 <br><br><hr>
 
