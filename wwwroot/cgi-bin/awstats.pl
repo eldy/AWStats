@@ -1819,7 +1819,7 @@ sub Read_Plugins {
 		my $pluginname=$1;
 		if ($pluginname) {
 			if (! $PluginsLoaded{'init'}{"$pluginname"}) {		# Plugin not already loaded
-				my %pluginisfor=('ipv6'=>'u','hashfiles'=>'u','geoip'=>'u','geoipfree'=>'u','geoip_region_maxmind'=>'u','timehires'=>'u','timezone'=>'ou',
+				my %pluginisfor=('timehires'=>'u','ipv6'=>'u','hashfiles'=>'u','geoip'=>'u','geoipfree'=>'u','geoip_region_maxmind'=>'ou','timezone'=>'ou',
 								 'decodeutfkeys'=>'o','hostinfo'=>'o','userinfo'=>'o','urlalias'=>'o','tooltips'=>'o');
 				if ($pluginisfor{$pluginname}) {    # If it's a known plugin, may be we don't need to load it
 					# Do not load "update plugins" if output only
@@ -5042,6 +5042,31 @@ sub DefinePerlParsingFormat {
 }
 
 
+sub ShowMenuCateg {
+    my ($categ,$categtext,$categicon,$frame,$targetpage,$linkanchor,$NewLinkParams,$NewLinkTarget)=(shift,shift,shift,shift,shift,shift,shift,shift);
+    $categicon='';  # Comment this to enabme category icons
+    my ($menu,$menulink,$menutext)=(shift,shift,shift);
+    my $linetitle=0;
+	# Call to plugins' function AddHTMLMenuLink
+	foreach my $pluginname (keys %{$PluginsLoaded{'AddHTMLMenuLink'}})  {
+		my $function="AddHTMLMenuLink_$pluginname('$categ',\$menu,\$menulink,\$menutext)";
+		eval("$function");
+	}
+    foreach my $key (%$menu) { if ($menu->{$key}>0) { $linetitle++; last; } }
+	if (! $linetitle) { return; }
+    # At least one entry in menu for this category, we can show categpry and entries
+	my $WIDTHMENU1=($FrameName eq 'mainleft'?$FRAMEWIDTH:150);
+	print "<tr><td class=\"awsm\" width=\"$WIDTHMENU1\"".($frame?"":" valign=\"top\"").">".($categicon?"<img src=\"$DirIcons/other/$categicon\" />&nbsp;":"")."<b>$categtext:</b></td>\n";
+	print ($frame?"</tr>\n":"<td class=\"awsm\">");
+    foreach my $key (sort { $menu->{$a} <=> $menu->{$b} } keys %$menu) {
+        if ($menu->{$key}==0) { next; }
+        if ($menulink->{$key}==1) { print ($frame?"<tr><td class=\"awsm\">":""); print "<a href=\"$linkanchor#$key\"$targetpage>$menutext->{$key}</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
+		if ($menulink->{$key}==2) { print ($frame?"<tr><td class=\"awsm\"> &nbsp; <img height=\"8\" width=\"9\" src=\"$DirIcons/other/page.png\" alt=\"...\" /> ":""); print "<a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?XMLEncode("$AWScript?${NewLinkParams}output=$key"):"$PROG$StaticLinks.$key.$StaticExt")."\"$NewLinkTarget>$menutext->{$key}</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
+    }
+	print ($frame?"":"</td></tr>\n");
+}
+
+
 sub ShowEmailSendersChart {
 	my $NewLinkParams=shift;
 	my $NewLinkTarget=shift;
@@ -5388,7 +5413,7 @@ if ($ENV{'AWSTATS_FORCE_CONFIG'}) {
 
 if ((! $ENV{'GATEWAY_INTERFACE'}) && (! $SiteConfig)) {
 	&Read_Ref_Data('browsers','domains','operating_systems','robots','search_engines','worms');
-	print "----- $PROG $VERSION (c) Laurent Destailleur -----\n";
+	print "----- $PROG $VERSION (c) 2000-2004 Laurent Destailleur -----\n";
 	print "$PROG is a free web server logfile analyzer to show you advanced web\n";
 	print "statistics.\n";
 	print "$PROG comes with ABSOLUTELY NO WARRANTY. It's a free software distributed\n";
@@ -5397,12 +5422,13 @@ if ((! $ENV{'GATEWAY_INTERFACE'}) && (! $SiteConfig)) {
 	print "Syntax: $PROG.$Extension -config=virtualhostname [options]\n";
 	print "\n";
 	print "  This runs $PROG in command line to update statistics of a web site, from\n";
-	print "  the log file defined in config file, and/or returns a HTML report.\n";
+	print "   the log file defined in AWStats config file (with -update option), or build\n";
+	print "   a HTML report (with -output option).\n";
 	print "  First, $PROG tries to read $PROG.virtualhostname.conf as the config file.\n";
 	print "  If not found, $PROG tries to read $PROG.conf\n";
 	print "  Note 1: Config files ($PROG.virtualhostname.conf or $PROG.conf) must be\n";
 	print "   in /etc/awstats, /usr/local/etc/awstats, /etc or same directory than\n";
-	print "   awstats.pl file.\n";
+	print "   awstats.pl script file.\n";
 	print "  Note 2: If AWSTATS_FORCE_CONFIG environment variable is defined, AWStats will\n";
 	print "   use it as the \"config\" value, whatever is the value on command line or URL.\n";
 	print "   See AWStats documentation for all setup instrutions.\n";
@@ -5482,7 +5508,8 @@ if ((! $ENV{'GATEWAY_INTERFACE'}) && (! $SiteConfig)) {
 	print "  ".(scalar keys %SearchEnginesHashLib)." search engines (and keyphrases/keywords used from them)\n";
 	print "  All HTTP errors with last referrer\n";
 	print "  Report by day/month/year\n";
-	print "  Dynamic or static HTML reports, static PDF reports\n";
+	print "  Dynamic or static HTML or XHTML reports, static PDF reports\n";
+	print "  Indexed text or XML monthly database\n";
 	print "  And a lot of other advanced features and options...\n";
 	print "New versions and FAQ at http://awstats.sourceforge.net\n";
 	exit 2;
@@ -7133,15 +7160,15 @@ if (scalar keys %HTMLOutput) {
 		eval("$function");
 	}
 
+    my $WIDTHMENU1=($FrameName eq 'mainleft'?$FRAMEWIDTH:150);
+
 	# TOP BAN
 	#---------------------------------------------------------------------
 	if ($ShowMenu || $FrameName eq 'mainleft') {
 		my $frame=($FrameName eq 'mainleft');
-		my $WIDTHMENU1=($FrameName eq 'mainleft'?$FRAMEWIDTH:150);
 
 		if ($Debug) { debug("ShowTopBan",2); }
 		print "$Center<a name=\"menu\">&nbsp;</a>\n";
-
 		
 		if ($FrameName ne 'mainleft') {
 			my $NewLinkParams=${QueryString};
@@ -7276,7 +7303,6 @@ if (scalar keys %HTMLOutput) {
 	#---------------------------------------------------------------------
 	if ($ShowMenu || $FrameName eq 'mainleft') {
 		my $frame=($FrameName eq 'mainleft');
-		my $WIDTHMENU1=($FrameName eq 'mainleft'?$FRAMEWIDTH:150);
 
 		if ($Debug) { debug("ShowMenu",2); }
 
@@ -7289,48 +7315,23 @@ if (scalar keys %HTMLOutput) {
 			# Define target
 			my $targetpage=($FrameName eq 'mainleft'?" target=\"mainright\"":"");
 			# Print Menu
-			my $linetitle;
+			my $linetitle;  # TODO a virer
 			if (! $PluginsLoaded{'ShowMenu'}{'menuapplet'}) {
-				my $menuicon=0;
+				my $menuicon=0; # TODO a virer
 				# Menu HTML
 				print "<table".($frame?" cellspacing=\"0\" cellpadding=\"0\" border=\"0\"":"").">\n";
 				if ($FrameName eq 'mainleft' && $ShowMonthStats)		 { print ($frame?"<tr><td class=\"awsm\">":""); print "<a href=\"$linkanchor#TOP\"$targetpage>$Message[128]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
+				my %menu=(); my %menulink=(); my %menutext=();
 				# When
-				$linetitle=&AtLeastOneNotNull($ShowMonthStats,$ShowDaysOfMonthStats,$ShowDaysOfWeekStats,$ShowHoursStats);
-				if ($linetitle) { print "<tr><td class=\"awsm\" width=\"$WIDTHMENU1\"".($frame?"":" valign=\"top\"").">".($menuicon?"<img src=\"$DirIcons/other/menu4.png\" />&nbsp;":"")."<b>$Message[93]:</b></td>\n"; }
-				if ($linetitle) { print ($frame?"</tr>\n":"<td class=\"awsm\">"); }
-				if ($ShowMonthStats)		 { print ($frame?"<tr><td class=\"awsm\">":""); print "<a href=\"$linkanchor#month\"$targetpage>$Message[162]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
-				#if ($ShowMonthDayStats)	 { print ($frame?"<tr><td class=\"awsm\"> &nbsp; <img height=\"8\" width=\"9\" src=\"$DirIcons/other/page.png\" alt=\"...\" /> ":""); print "<a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?XMLEncode("$AWScript?${NewLinkParams}output=alldays"):"$PROG$StaticLinks.alldays.$StaticExt")."\"$NewLinkTarget>$Message[130]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
-				if ($ShowDaysOfMonthStats)	 { print ($frame?"<tr><td class=\"awsm\">":""); print "<a href=\"$linkanchor#daysofmonth\"$targetpage>$Message[138]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
-				if ($ShowDaysOfWeekStats)	 { print ($frame?"<tr><td class=\"awsm\">":""); print "<a href=\"$linkanchor#daysofweek\"$targetpage>$Message[91]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
-				if ($ShowHoursStats)		 { print ($frame?"<tr><td class=\"awsm\">":""); print "<a href=\"$linkanchor#hours\"$targetpage>$Message[20]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
-				if ($linetitle) { print ($frame?"":"</td></tr>\n"); }
+                %menu=('month'=>$ShowMonthStats?1:0,'daysofmonth'=>$ShowDaysOfMonthStats?2:0,'daysofweek'=>$ShowDaysOfWeekStats?3:0,'hours'=>$ShowHoursStats?4:0);
+                %menulink=('month'=>1,'daysofmonth'=>1,'daysofweek'=>1,'hours'=>1);
+                %menutext=('month'=>$Message[162],'daysofmonth'=>$Message[138],'daysofweek'=>$Message[91],'hours'=>$Message[20]);
+                ShowMenuCateg('when',$Message[93],'menu4.png',$frame,$targetpage,$linkanchor,$NewLinkParams,$NewLinkTarget,\%menu,\%menulink,\%menutext);
 				# Who
-				$linetitle=&AtLeastOneNotNull($ShowDomainsStats,$ShowHostsStats,$ShowAuthenticatedUsers,$ShowEMailSenders,$ShowEMailReceivers,$ShowRobotsStats,$ShowWormsStats);
-				if ($linetitle) { print "<tr><td class=\"awsm\"".($frame?"":" valign=\"top\"").">".($menuicon?"<img src=\"$DirIcons/other/menu5.png\" />&nbsp;":"")."<b>$Message[92]:</b></td>\n"; }
-				if ($linetitle) { print ($frame?"</tr>\n":"<td class=\"awsm\">"); }
-				if ($ShowDomainsStats)		 { print ($frame?"<tr><td class=\"awsm\">":""); print "<a href=\"$linkanchor#countries\"$targetpage>$Message[148]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
-				if ($ShowDomainsStats)		 { print ($frame?"<tr><td class=\"awsm\"> &nbsp; <img height=\"8\" width=\"9\" src=\"$DirIcons/other/page.png\" alt=\"...\" /> ":""); print "<a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?XMLEncode("$AWScript?${NewLinkParams}output=alldomains"):"$PROG$StaticLinks.alldomains.$StaticExt")."\"$NewLinkTarget>$Message[80]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
-				if ($ShowHostsStats)		 { print ($frame?"<tr><td class=\"awsm\">":""); print "<a href=\"$linkanchor#visitors\"$targetpage>".ucfirst($Message[81])."</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
-				if ($ShowHostsStats)		 { print ($frame?"<tr><td class=\"awsm\"> &nbsp; <img height=\"8\" width=\"9\" src=\"$DirIcons/other/page.png\" alt=\"...\" /> ":""); print "<a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?XMLEncode("$AWScript?${NewLinkParams}output=allhosts"):"$PROG$StaticLinks.allhosts.$StaticExt")."\"$NewLinkTarget>$Message[80]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
-				if ($ShowHostsStats =~ /L/i) { print ($frame?"<tr><td class=\"awsm\"> &nbsp; <img height=\"8\" width=\"9\" src=\"$DirIcons/other/page.png\" alt=\"...\" /> ":""); print "<a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?XMLEncode("$AWScript?${NewLinkParams}output=lasthosts"):"$PROG$StaticLinks.lasthosts.$StaticExt")."\"$NewLinkTarget>$Message[9]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
-				if ($ShowHostsStats)		 { print ($frame?"<tr><td class=\"awsm\"> &nbsp; <img height=\"8\" width=\"9\" src=\"$DirIcons/other/page.png\" alt=\"...\" /> ":""); print "<a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?XMLEncode("$AWScript?${NewLinkParams}output=unknownip"):"$PROG$StaticLinks.unknownip.$StaticExt")."\"$NewLinkTarget>$Message[45]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
-				if ($ShowAuthenticatedUsers) { print ($frame?"<tr><td class=\"awsm\">":""); print "<a href=\"$linkanchor#logins\"$targetpage>$Message[94]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
-				if ($ShowAuthenticatedUsers) { print ($frame?"<tr><td class=\"awsm\"> &nbsp; <img height=\"8\" width=\"9\" src=\"$DirIcons/other/page.png\" alt=\"...\" /> ":""); print "<a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?XMLEncode("$AWScript?${NewLinkParams}output=alllogins"):"$PROG$StaticLinks.alllogins.$StaticExt")."\"$NewLinkTarget>$Message[80]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
-				if ($ShowAuthenticatedUsers =~ /L/i)	{ print ($frame?"<tr><td class=\"awsm\"> &nbsp; <img height=\"8\" width=\"9\" src=\"$DirIcons/other/page.png\" alt=\"...\" /> ":""); print "<a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?XMLEncode("$AWScript?${NewLinkParams}output=lastlogins"):"$PROG$StaticLinks.lastlogins.$StaticExt")."\"$NewLinkTarget>$Message[9]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
-				if ($ShowEMailSenders)		 { print ($frame?"<tr><td class=\"awsm\">":""); print "<a href=\"$linkanchor#emailsenders\"$targetpage>$Message[131]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
-				if ($ShowEMailSenders)		 { print ($frame?"<tr><td class=\"awsm\"> &nbsp; <img height=\"8\" width=\"9\" src=\"$DirIcons/other/page.png\" alt=\"...\" /> ":""); print "<a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?XMLEncode("$AWScript?${NewLinkParams}output=allemails"):"$PROG$StaticLinks.allemails.$StaticExt")."\"$NewLinkTarget>$Message[80]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
-				if ($ShowEMailSenders =~ /L/i)	{ print ($frame?"<tr><td class=\"awsm\"> &nbsp; <img height=\"8\" width=\"9\" src=\"$DirIcons/other/page.png\" alt=\"...\" /> ":""); print "<a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?XMLEncode("$AWScript?${NewLinkParams}output=lastemails"):"$PROG$StaticLinks.lastemails.$StaticExt")."\"$NewLinkTarget>$Message[9]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
-				if ($ShowEMailReceivers)	 { print ($frame?"<tr><td class=\"awsm\">":""); print "<a href=\"$linkanchor#emailreceivers\"$targetpage>$Message[132]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
-				if ($ShowEMailReceivers)	 { print ($frame?"<tr><td class=\"awsm\"> &nbsp; <img height=\"8\" width=\"9\" src=\"$DirIcons/other/page.png\" alt=\"...\" /> ":""); print "<a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?XMLEncode("$AWScript?${NewLinkParams}output=allemailr"):"$PROG$StaticLinks.allemailr.$StaticExt")."\"$NewLinkTarget>$Message[80]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
-				if ($ShowEMailReceivers =~ /L/i)	{ print ($frame?"<tr><td class=\"awsm\"> &nbsp; <img height=\"8\" width=\"9\" src=\"$DirIcons/other/page.png\" alt=\"...\" /> ":""); print "<a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?XMLEncode("$AWScript?${NewLinkParams}output=lastemailr"):"$PROG$StaticLinks.lastemailr.$StaticExt")."\"$NewLinkTarget>$Message[9]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
-				if ($ShowRobotsStats)		 { print ($frame?"<tr><td class=\"awsm\">":""); print "<a href=\"$linkanchor#robots\"$targetpage>$Message[53]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
-				if ($ShowRobotsStats) 		 { print ($frame?"<tr><td class=\"awsm\"> &nbsp; <img height=\"8\" width=\"9\" src=\"$DirIcons/other/page.png\" alt=\"...\" /> ":""); print "<a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?XMLEncode("$AWScript?${NewLinkParams}output=allrobots"):"$PROG$StaticLinks.allrobots.$StaticExt")."\"$NewLinkTarget>$Message[80]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
-				if ($ShowRobotsStats =~ /L/i)	{ print ($frame?"<tr><td class=\"awsm\"> &nbsp; <img height=\"8\" width=\"9\" src=\"$DirIcons/other/page.png\" alt=\"...\" /> ":""); print "<a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?XMLEncode("$AWScript?${NewLinkParams}output=lastrobots"):"$PROG$StaticLinks.lastrobots.$StaticExt")."\"$NewLinkTarget>$Message[9]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
-				if ($ShowWormsStats)		 { print ($frame?"<tr><td class=\"awsm\">":""); print "<a href=\"$linkanchor#worms\"$targetpage>$Message[136]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
-				#if ($ShowWormsStats) 		 { print ($frame?"<tr><td class=\"awsm\"> &nbsp; <img height=\"8\" width=\"9\" src=\"$DirIcons/other/page.png\" alt=\"...\" /> ":""); print "<a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?XMLEncode("$AWScript?${NewLinkParams}output=allworms"):"$PROG$StaticLinks.allworms.$StaticExt")."\"$NewLinkTarget>$Message[80]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
-				#if ($ShowWormsStats =~ /L/i)	{ print ($frame?"<tr><td class=\"awsm\"> &nbsp; <img height=\"8\" width=\"9\" src=\"$DirIcons/other/page.png\" alt=\"...\" /> ":""); print "<a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?XMLEncode("$AWScript?${NewLinkParams}output=lastworms"):"$PROG$StaticLinks.lastworms.$StaticExt")."\"$NewLinkTarget>$Message[9]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
-				if ($linetitle) { print ($frame?"":"</td></tr>\n"); }
+				%menu=('countries'=>$ShowDomainsStats?1:0,'alldomains'=>$ShowDomainsStats?2:0,'visitors'=>$ShowHostsStats?3:0,'allhosts'=>$ShowHostsStats?4:0,'lasthosts'=>($ShowHostsStats =~ /L/i)?5:0,'unknownip'=>$ShowHostsStats?6:0,'logins'=>$ShowAuthenticatedUsers?7:0,'alllogins'=>$ShowAuthenticatedUsers?8:0,'lastlogins'=>($ShowAuthenticatedUsers =~ /L/i)?9:0,'emailsenders'=>$ShowEMailSenders?10:0,'allemails'=>$ShowEMailSenders?11:0,'lastemails'=>($ShowEMailSenders =~ /L/i)?12:0,'emailreceivers'=>$ShowEMailReceivers?13:0,'allemailr'=>$ShowEMailReceivers?14:0,'lastemailr'=>($ShowEMailReceivers =~ /L/i)?15:0,'robots'=>$ShowRobotsStats?16:0,'allrobots'=>$ShowRobotsStats?17:0,'lastrobots'=>($ShowRobotsStats =~ /L/i)?18:0,'worms'=>$ShowWormsStats?19:0);
+                %menulink=('countries'=>1,'alldomains'=>2,'visitors'=>1,'allhosts'=>2,'lasthosts'=>2,'unknownip'=>2,'logins'=>1,'alllogins'=>2,'lastlogins'=>2,'emailsenders'=>1,'allemails'=>2,'lastemails'=>2,'emailreceivers'=>1,'allemailr'=>2,'lastemailr'=>2,'robots'=>1,'allrobots'=>2,'lastrobots'=>2,'worms'=>1);
+                %menutext=('countries'=>$Message[148],'alldomains'=>$Message[80],'visitors'=>$Message[81],'allhosts'=>$Message[80],'lasthosts'=>$Message[9],'unknownip'=>$Message[45],'logins'=>$Message[94],'alllogins'=>$Message[80],'lastlogins'=>$Message[9],'emailsenders'=>$Message[131],'allemails'=>$Message[80],'lastemails'=>$Message[9],'emailreceivers'=>$Message[132],'allemailr'=>$Message[80],'lastemailr'=>$Message[9],'robots'=>$Message[53],'allrobots'=>$Message[80],'lastrobots'=>$Message[9],'worms'=>$Message[136]);
+                ShowMenuCateg('who',$Message[92],'menu5.png',$frame,$targetpage,$linkanchor,$NewLinkParams,$NewLinkTarget,\%menu,\%menulink,\%menutext);
 				# Navigation
 				$linetitle=&AtLeastOneNotNull($ShowSessionsStats,$ShowPagesStats,$ShowFileTypesStats,$ShowFileSizesStats,$ShowOSStats,$ShowBrowsersStats,$ShowScreenSizeStats);
 				if ($linetitle) { print "<tr><td class=\"awsm\"".($frame?"":" valign=\"top\"").">".($menuicon?"<img src=\"$DirIcons/other/menu2.png\" />&nbsp;":"")."<b>$Message[72]:</b></td>\n"; }
@@ -7350,37 +7351,30 @@ if (scalar keys %HTMLOutput) {
 				if ($ShowScreenSizeStats)	 { print ($frame?"<tr><td class=\"awsm\">":""); print "<a href=\"$linkanchor#screensizes\"$targetpage>$Message[135]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
 				if ($linetitle) { print ($frame?"":"</td></tr>\n"); }
 				# Referers
-				$linetitle=&AtLeastOneNotNull($ShowOriginStats,$ShowKeyphrasesStats,$ShowKeywordsStats);
-				if ($linetitle) { print "<tr><td class=\"awsm\"".($frame?"":" valign=\"top\"").">".($menuicon?"<img src=\"$DirIcons/other/menu7.png\" />&nbsp;":"")."<b>$Message[23]:</b></td>\n"; }
-				if ($linetitle) { print ($frame?"</tr>\n":"<td class=\"awsm\">"); }
-				if ($ShowOriginStats)		 { print ($frame?"<tr><td class=\"awsm\">":""); print "<a href=\"$linkanchor#referer\"$targetpage>$Message[37]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
-				if ($ShowOriginStats)		 { print ($frame?"<tr><td class=\"awsm\"> &nbsp; <img height=\"8\" width=\"9\" src=\"$DirIcons/other/page.png\" alt=\"...\" /> ":""); print "<a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?XMLEncode("$AWScript?${NewLinkParams}output=refererse"):"$PROG$StaticLinks.refererse.$StaticExt")."\"$NewLinkTarget>$Message[126]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
-				if ($ShowOriginStats)		 { print ($frame?"<tr><td class=\"awsm\"> &nbsp; <img height=\"8\" width=\"9\" src=\"$DirIcons/other/page.png\" alt=\"...\" /> ":""); print "<a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?XMLEncode("$AWScript?${NewLinkParams}output=refererpages"):"$PROG$StaticLinks.refererpages.$StaticExt")."\"$NewLinkTarget>$Message[127]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
-				if ($ShowKeyphrasesStats || $ShowKeywordsStats)	 { print ($frame?"<tr><td class=\"awsm\">":""); print "<a href=\"$linkanchor#keys\"$targetpage>$Message[14]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
-				if ($ShowKeyphrasesStats)	 { print ($frame?"<tr><td class=\"awsm\"> &nbsp; <img height=\"8\" width=\"9\" src=\"$DirIcons/other/page.png\" alt=\"...\" /> ":""); print "<a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?XMLEncode("$AWScript?${NewLinkParams}output=keyphrases"):"$PROG$StaticLinks.keyphrases.$StaticExt")."\"$NewLinkTarget>$Message[120]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
-				if ($ShowKeywordsStats)	 	 { print ($frame?"<tr><td class=\"awsm\"> &nbsp; <img height=\"8\" width=\"9\" src=\"$DirIcons/other/page.png\" alt=\"...\" /> ":""); print "<a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?XMLEncode("$AWScript?${NewLinkParams}output=keywords"):"$PROG$StaticLinks.keywords.$StaticExt")."\"$NewLinkTarget>$Message[121]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
-				if ($linetitle) { print ($frame?"":"</td></tr>\n"); }
+				%menu=('referer'=>$ShowOriginStats?1:0,'refererse'=>$ShowOriginStats?2:0,'refererpages'=>$ShowOriginStats?3:0,'keys'=>($ShowKeyphrasesStats || $ShowKeywordsStats)?4:0,'keyphrases'=>$ShowKeyphrasesStats?5:0,'keywords'=>$ShowKeywordsStats?6:0);
+                %menulink=('referer'=>1,'refererse'=>2,'refererpages'=>2,'keys'=>1,'keyphrases'=>2,'keywords'=>2);
+                %menutext=('referer'=>$Message[37],'refererse'=>$Message[126],'refererpages'=>$Message[127],'keys'=>$Message[14],'keyphrases'=>$Message[120],'keywords'=>$Message[121]);
+                ShowMenuCateg('referers',$Message[23],'menu7.png',$frame,$targetpage,$linkanchor,$NewLinkParams,$NewLinkTarget,\%menu,\%menulink,\%menutext);
 				# Others
-				$linetitle=&AtLeastOneNotNull($ShowFileTypesStats=~/C/i,$ShowMiscStats,$ShowHTTPErrorsStats,$ShowSMTPErrorsStats,$ShowClusterStats);
-				if ($linetitle) { print "<tr><td class=\"awsm\"".($frame?"":" valign=\"top\"").">".($menuicon?"<img src=\"$DirIcons/other/menu8.png\" />&nbsp;":"")."<b>$Message[2]:</b></td>\n"; }
-				if ($linetitle) { print ($frame?"</tr>\n":"<td class=\"awsm\">"); }
-				if ($ShowFileTypesStats =~ /C/i)	 { print ($frame?"<tr><td class=\"awsm\">":""); print "<a href=\"$linkanchor#filetypes\"$targetpage>$Message[98]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
-				if ($ShowMiscStats)	 		 { print ($frame?"<tr><td class=\"awsm\">":""); print "<a href=\"$linkanchor#misc\"$targetpage>$Message[139]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
-				if ($ShowHTTPErrorsStats)	 { print ($frame?"<tr><td class=\"awsm\">":""); print "<a href=\"$linkanchor#errors\"$targetpage>$Message[32]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
+				%menu=('filetypes'=>($ShowFileTypesStats =~ /C/i)?1:0,'misc'=>$ShowMiscStats?2:0,'errors'=>($ShowHTTPErrorsStats||$ShowSMTPErrorsStats)?3:0,'clusters'=>$ShowClusterStats?5:0);
+                %menulink=('filetypes'=>1,'misc'=>1,'errors'=>1,'clusters'=>1);
+                %menutext=('filetypes'=>$Message[98],'misc'=>$Message[139],'errors'=>($ShowSMTPErrorsStats?$Message[147]:$Message[32]),'clusters'=>$Message[155]);
 				foreach (keys %TrapInfosForHTTPErrorCodes) {
-					if ($ShowHTTPErrorsStats)	 { print ($frame?"<tr><td class=\"awsm\"> &nbsp; <img height=\"8\" width=\"9\" src=\"$DirIcons/other/page.png\" alt=\"...\" /> ":""); print "<a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?XMLEncode("$AWScript?${NewLinkParams}output=errors$_"):"$PROG$StaticLinks.errors$_.$StaticExt")."\"$NewLinkTarget>$Message[31]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
+					$menu{"errors$_"}=$ShowHTTPErrorsStats?4:0;
+					$menulink{"errors$_"}=2;
+					$menutext{"errors$_"}=$Message[31];
 				}
-				if ($ShowSMTPErrorsStats)	 { print ($frame?"<tr><td class=\"awsm\">":""); print "<a href=\"$linkanchor#errors\"$targetpage>$Message[147]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
-				if ($ShowClusterStats)	 	 { print ($frame?"<tr><td class=\"awsm\">":""); print "<a href=\"$linkanchor#clusters\"$targetpage>$Message[155]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
-				if ($linetitle) { print ($frame?"":"</td></tr>\n"); }
+                ShowMenuCateg('others',$Message[2],'menu8.png',$frame,$targetpage,$linkanchor,$NewLinkParams,$NewLinkTarget,\%menu,\%menulink,\%menutext);
 				# Extra/Marketing
-			 	$linetitle=&AtLeastOneNotNull(@ExtraStatTypes);
-				if ($linetitle) { print "<tr><td class=\"awsm\"".($frame?"":" valign=\"top\"")."><b>$Message[134]:</b></td>\n"; }
-				if ($linetitle) { print ($frame?"</tr>\n":"<td class=\"awsm\">"); }
+				%menu=();
+                %menulink=();
+                %menutext=();
 				foreach (1..@ExtraName-1) {
-					print ($frame?"<tr><td class=\"awsm\">":""); print "<a href=\"$linkanchor#extra$_\"$targetpage>$ExtraName[$_]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; ");
+					$menu{"extra$_"}=1;
+					$menulink{"extra$_"}=1;
+					$menutext{"extra$_"}=$ExtraName[$_];
 				}
-				if ($linetitle) { print ($frame?"":"</td></tr>\n"); }
+                ShowMenuCateg('extra',$Message[134],'',$frame,$targetpage,$linkanchor,$NewLinkParams,$NewLinkTarget,\%menu,\%menulink,\%menutext);
 				print "</table>\n";
 			}
 			else {
@@ -8538,7 +8532,8 @@ if (scalar keys %HTMLOutput) {
 		# SUMMARY
 		#---------------------------------------------------------------------
 		if ($ShowMonthStats) {
-			if ($Debug) { debug("ShowMonthStats",2); }
+			if ($Debug) { debug("ShowSummary",2); }
+			#print "$Center<a name=\"summary\">&nbsp;</a><br />\n";
 			my $title="$Message[128]";
 			&tab_head("$title",0,0,'month');
 
@@ -8625,10 +8620,11 @@ if (scalar keys %HTMLOutput) {
     			print "</tr>\n";
             }
 			&tab_end($LogType eq 'W' || $LogType eq 'S'?"* $Message[159]":"");
-
-			# BY MONTH
-			#---------------------------------------------------------------------
-			if ($ShowMonthStats) {
+        }
+        
+		# BY MONTH
+		#---------------------------------------------------------------------
+		if ($ShowMonthStats) {
 
 			if ($Debug) { debug("ShowMonthStats",2); }
 			print "$Center<a name=\"month\">&nbsp;</a><br />\n";
@@ -8771,7 +8767,6 @@ if (scalar keys %HTMLOutput) {
 			print "</center>\n";
 			print "</td></tr>\n";
 			&tab_end();
-		}
 		}
 
 		print "\n<a name=\"when\">&nbsp;</a>\n\n";
