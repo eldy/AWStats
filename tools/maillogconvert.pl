@@ -32,7 +32,7 @@ $NBOFENTRYFOFLUSH
 $MailType
 /;
 $Debug=0;
-$NBOFENTRYFOFLUSH=8192;		# Nb or records for flush of %entry (Must be a power of 2)
+$NBOFENTRYFOFLUSH=65536;	# Nb or records for flush of %entry (Must be a power of 2)
 $MailType='';				# Mail server family (postfix, sendmail, qmail)
 
 
@@ -381,8 +381,8 @@ while (<>) {
 	#
 	# Matched exchange message
 	#
-	elsif (/^([^\t]+)\t([^\t]+)\t[^\t]+\t([^\t]+)\t([^\t]+)\t([^\t]+)\t[^\t]+\t([^\t]+)\t([^\t]+)\t([^\t]+)\t[^\t]+\t[^\t]+\t([^\t]+)\t[^\t]+\t[^\t]+\t[^\t]+\t[^\t]+\t[^\t]+\t[^\t]+\t([^\t]+)/) {
-		#    date      hour GMT  ip_s    relay_s   partner   relay_r   ip_r    to        code      id                        size                                                      from
+	elsif (/^([^\t]+)\t([^\t]+)\t[^\t]+\t([^\t]+)\t([^\t]+)\t([^\t]+)\t[^\t]+\t([^\t]+)\t([^\t]+)\t([^\t]+)\t[^\t]+\t[^\t]+\t([^\t]+)\t[^\t]+\t[^\t]+\t[^\t]+\t[^\t]+\t[^\t]+\t([^\t]+)\t([^\t]+)/) {
+		#    date      hour GMT  ip_s    relay_s   partner   relay_r   ip_r    to        code      id                        size                                              subject   from
 		# Example: 2003-8-12	0:58:14 GMT	66.218.66.69	n14.grp.scd.yahoo.com	-	PACKRAT	192.168.1.2	christina@pirnie.org	1019	bh9e3f+5qvo@eGroups.com	0	0	4281	1	2003-8-12 0:58:14 GMT	0	Version: 6.0.3790.0	-	 [SRESafeHaven] Re: More Baby Stuff	jtluvs2cq@wmconnect.com	-
 		$MailType||='exchange';
 		my $date=$1;
@@ -394,24 +394,33 @@ while (<>) {
 		my $code=$7;
 		my $id=$8;
 		my $size=$9;
-		my $from=$10; $from =~ s/\s/%20/g;
+		my $subject=&trim($10);
+		my $from=$11; $from =~ s/\s/%20/g;
+		$id=sprintf("%s_%s_%s",$id,$from,$to);
 		# Check if record is significant record
 		my $ok=0;
-		# Code 1031=end outbound transfer
-		if ($code == 1031) {	# This is outbound mail
+
+		# Code 1031=SMTP End Outbound Transfer
+		if ($code == 1031) {	# This is for external bound mails
 			$ok=1;
-			#my $savrelay_s=$relay_s;
-			#$relay_s=$relay_r; $relay_r=$savrelay_s;
-			$relay_s=$relay_r;
-			$relay_r=$partner;
+			my $savrelay_s=$relay_s;
+			$relay_s=$relay_r; $relay_r=$savrelay_s;
+			#$relay_s=$relay_r;
+			#$relay_r=$partner;
 			$code=1;
 		}
-		# Code 1023=SMTP local delivery
-		if ($code == 1023) {	# This is inbound ???
+		# Code 1028=SMTP Store Driver: Message Delivered Locally to Store
+		if ($code == 1028) {	# This is for local bound mails
 			$code=1;
 			$ok=1;
 		}
-		if ($ok) {		
+		# Code 1030=SMTP: Non-Delivered Report (NDR) Generated
+		if ($code == 1030) {	# This is for errors. 
+			$code=999;
+			$ok=1;
+		}
+
+		if ($ok && !$mail{$id}{'code'} ) {		
 			$mailid=$id;
 			if ($date =~ /(\d+)-(\d+)-(\d+)/) {
 				$mail{$id}{'year'}=sprintf("%02s",$1);
@@ -420,6 +429,9 @@ while (<>) {
 			}
 			if ($time =~ /^(\d+):(\d+):(\d+)/) {
 				$mail{$id}{'time'}=sprintf("%02s:%02s:%02s",$1,$2,$3);
+			}
+			if ( $from eq '<>' && $subject =~ /^Delivery\s+Status/) {
+				$from='postmaster@localhost';
 			}
 			$mail{$id}{'from'}=$from;
 			$mail{$id}{'to'}=$to;
