@@ -33,9 +33,12 @@ New features/improvements:
 - Selection of virtualhost records in a log is no more case sensitive on
   SiteDomain nor HostAliases.
 - Added awredir.pl tool.
+- Added a Cluster Report for load balancing systems. Added %cluster tag in
+  LogFormat.
 
 Other/Documentation:
 - Deprecated %time1b tag (%time1 can be used).
+- Minor look change.
 - Updated documentation.
 
 
