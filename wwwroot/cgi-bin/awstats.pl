@@ -110,7 +110,7 @@ $NbOfLinesShowsteps $NewLinePhase $NbOfLinesForCorruptedLog $PurgeLogFile
 $ShowAuthenticatedUsers $ShowFileSizesStats
 $ShowDropped $ShowCorrupted $ShowUnknownOrigin $ShowLinksToWhoIs
 $ShowEMailSenders $ShowEMailReceivers
-$Expires $UpdateStats $MigrateStats $URLCaseSensitive $URLWithQuery $UseFramesWhenCGI $DecodeUA
+$Expires $UpdateStats $MigrateStats $URLNotCaseSensitive $URLWithQuery $UseFramesWhenCGI $DecodeUA
 /;
 ($EnableLockForUpdate, $DNSLookup, $AllowAccessFromWebToAuthenticatedUsersOnly,
 $BarHeight, $BarWidth, $CreateDirDataIfNotExists, $KeepBackupOfHistoricFiles, $MaxLengthOfURL,
@@ -123,7 +123,7 @@ $NbOfLinesShowsteps, $NewLinePhase, $NbOfLinesForCorruptedLog, $PurgeLogFile,
 $ShowAuthenticatedUsers, $ShowFileSizesStats,
 $ShowDropped, $ShowCorrupted, $ShowUnknownOrigin, $ShowLinksToWhoIs,
 $ShowEMailSenders, $ShowEMailReceivers,
-$Expires, $UpdateStats, $MigrateStats, $URLCaseSensitive, $URLWithQuery, $UseFramesWhenCGI, $DecodeUA)=
+$Expires, $UpdateStats, $MigrateStats, $URLNotCaseSensitive, $URLWithQuery, $UseFramesWhenCGI, $DecodeUA)=
 (0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
 use vars qw/
 $AllowToUpdateStatsFromBrowser $ArchiveLogRecords $DetailedReportsOnNewWindows
@@ -209,25 +209,31 @@ $TotalSearchEngines = $TotalRefererPages = $TotalDifferentSearchEngines = $Total
 use vars qw/
 @RobotsSearchIDOrder_list1 @RobotsSearchIDOrder_list2 @RobotsSearchIDOrder_list3
 @BrowsersSearchIDOrder @OSSearchIDOrder @SearchEnginesSearchIDOrder @WordsToExtractSearchUrl @WordsToCleanSearchUrl
+@DOWIndex @RobotsSearchIDOrder
+@_from_p @_from_h
+@_time_p @_time_h @_time_k
+@keylist
 /;
+@DOWIndex = @RobotsSearchIDOrder = ();
+@_from_p = @_from_h = ();
+@_time_p = @_time_h = @_time_k = ();
+@keylist=();
 use vars qw/
 @SessionsRange @HostAliases @AllowAccessFromWebToFollowingAuthenticatedUsers
 @DefaultFile @OnlyFiles @SkipDNSLookupFor @SkipFiles @SkipHosts @SkipUserAgents
 @URLWithQueryWithoutFollowingParameters
-@PluginsToLoad @DOWIndex @RobotsSearchIDOrder
-@_from_p @_from_h
-@_time_p @_time_h @_time_k
-@keylist
+@ExtraSectionName @ExtraSectionConditional @ExtraSectionStatTypes @MaxNbOfExtra @MinHitExtra
+@ExtraSectionFirstColumnTitle @ExtraSectionFirstColumnValues
+@PluginsToLoad 
 /;
 @SessionsRange=("0s-30s","30s-2mn","2mn-5mn","5mn-15mn","15mn-30mn","30mn-1h","1h+");
 @HostAliases=();
 @AllowAccessFromWebToFollowingAuthenticatedUsers=();
 @DefaultFile = @OnlyFiles = @SkipDNSLookupFor = @SkipFiles = @SkipHosts = @SkipUserAgents = ();
 @URLWithQueryWithoutFollowingParameters = ();
-@PluginsToLoad = @DOWIndex = @RobotsSearchIDOrder = ();
-@_from_p = @_from_h = ();
-@_time_p = @_time_h = @_time_k = ();
-@keylist=();
+@ExtraSectionName = @ExtraSectionConditional = @ExtraSectionStatTypes = @MaxNbOfExtra = @MinHitExtra = ();
+@ExtraSectionFirstColumnTitle = @ExtraSectionFirstColumnValues = ();
+@PluginsToLoad = ();
 # ---------- Init hash arrays --------
 use vars qw/
 %DomainsHashIDLib %BrowsersHereAreGrabbers %BrowsersHashIcon %BrowsersHashIDLib
@@ -1101,7 +1107,7 @@ sub Parse_Config {
 			$FoundValidHTTPCodes=1;
 			next;
 			}
-		if ($param =~ /^URLCaseSensitive$/)		{ $URLCaseSensitive=$value; next; }
+		if ($param =~ /^URLNotCaseSensitive$/)		{ $URLNotCaseSensitive=$value; next; }
 		if ($param =~ /^URLWithQuery$/)			{ $URLWithQuery=$value; next; }
 		if ($param =~ /^URLWithQueryWithoutFollowingParameters$/)	{
 			foreach my $elem (split(/\s+/,$value))	{ push @URLWithQueryWithoutFollowingParameters,$elem; }
@@ -1119,8 +1125,16 @@ sub Parse_Config {
 		if ($param =~ /^LevelForRefererAnalyze/)			{ $LevelForRefererAnalyze=$value; next; }
 		if ($param =~ /^LevelForSearchEnginesDetection/)	{ $LevelForSearchEnginesDetection=$value; next; }
 		if ($param =~ /^LevelForKeywordsDetection/)			{ $LevelForKeywordsDetection=$value; next; }
+ 		# Read extra stats setup section
+ 		if ($param =~ /^ExtraSectionName(\d+)/)			{ $ExtraSectionName[$1]=$value; next; }
+ 		if ($param =~ /^ExtraSectionConditional(\d+)/)  { $ExtraSectionConditional[$1]=$value; next; }
+ 		if ($param =~ /^ExtraSectionStatTypes(\d+)/)    { $ExtraSectionStatTypes[$1]=$value; next; }
+ 		if ($param =~ /^ExtraSectionFirstColumnTitle(\d+)/) 	{ $ExtraSectionFirstColumnTitle[$1]=$value; next; }
+ 		if ($param =~ /^ExtraSectionFirstColumnValues(\d+)/) 	{ $ExtraSectionFirstColumnValues[$1]=$value; next; }
+ 		if ($param =~ /^MaxNbOfExtra(\d+)/) 		{ $MaxNbOfExtra[$1]=$value; next; }
+ 		if ($param =~ /^MinHitExtra(\d+)/) 			{ $MinHitExtra[$1]=$value; next; }
 		# Read optional appearance setup section
-		if ($param =~ /^Lang/)                  { $Lang=$value; next; }
+		if ($param =~ /^Lang/)                 	{ $Lang=$value; next; }
 		if ($param =~ /^DirLang/)               { $DirLang=$value; next; }
 		if ($param =~ /^ShowHeader/)             { $ShowHeader=$value; next; }
 		if ($param =~ /^ShowMenu/)               { $ShowMenu=$value; next; }
@@ -1457,7 +1471,7 @@ sub Check_Config {
 	if ($ArchiveLogRecords !~ /[0-1]/)            	{ $ArchiveLogRecords=1; }
 	if ($KeepBackupOfHistoricFiles !~ /[0-1]/)     	{ $KeepBackupOfHistoricFiles=0; }
 	if (! $DefaultFile[0])                          { $DefaultFile[0]="index.html"; }
-	if ($URLCaseSensitive !~ /[0-1]/)              	{ $URLCaseSensitive=0; }
+	if ($URLNotCaseSensitive !~ /[0-1]/)           	{ $URLNotCaseSensitive=0; }
 	if ($URLWithQuery !~ /[0-1]/)                 	{ $URLWithQuery=0; }
 	if ($WarningMessages !~ /[0-1]/)              	{ $WarningMessages=1; }
 	if ($NbOfLinesForCorruptedLog !~ /^\d+/ || $NbOfLinesForCorruptedLog<1)	{ $NbOfLinesForCorruptedLog=50; }
@@ -1470,6 +1484,13 @@ sub Check_Config {
 	if ($LevelForRefererAnalyze !~ /^\d+/)			{ $LevelForRefererAnalyze=1; }
 	if ($LevelForSearchEnginesDetection !~ /^\d+/)	{ $LevelForSearchEnginesDetection=1; }
 	if ($LevelForKeywordsDetection !~ /^\d+/)  		{ $LevelForKeywordsDetection=1; }
+	# Read extra stats setup section
+	foreach my $extracpt (1..@ExtraSectionName-1) {
+		if ($ExtraSectionStatTypes[$extracpt] !~ /[PHBL]/)  { $ExtraSectionStatTypes[$extracpt]="PHBL"; }
+		if ($MaxNbOfExtra[$extracpt] !~ /^\d+$/ || $MaxNbOfExtra[$extracpt]<1) { $MaxNbOfExtra[$extracpt]=20; }
+		if ($MinHitExtra[$extracpt] !~ /^\d+$/ || $MinHitExtra[$extracpt]<1) { $MinHitExtra[$extracpt]=1; }
+		if (! $ExtraSectionFirstColumnValues[$extracpt]) { error("Error: An extra section number $extracpt is defined without ExtraSectionFirstColumnValues$extracpt parameter"); }
+	}
 	# Optional appearance setup section
 	if ($MaxRowsInHTMLOutput !~ /^\d+/ || $MaxRowsInHTMLOutput<1)     { $MaxRowsInHTMLOutput=1000; }
 	if ($ShowHeader !~ /[0-1]/)                   	{ $ShowHeader=1; }
@@ -1683,6 +1704,7 @@ sub Read_History_With_TmpUpdate {
 					 "errors"=>22);
 	my $order=23;
 	foreach my $code (keys %TrapInfosForHTTPErrorCodes) { $allsections{"sider_$code"}=$order++; }
+	foreach my $extranum (1..@ExtraSectionName-1) { $allsections{"extra_$extranum"}=$order++; }
 
 	my $withread=0;
 
@@ -1726,6 +1748,9 @@ sub Read_History_With_TmpUpdate {
 		if ($UpdateStats || $MigrateStats || ($HTMLOutput eq 'main' && $ShowHTTPErrorsStats) || $HTMLOutput eq 'errors') { $SectionsToLoad{'errors'}=$order++; }
 		foreach my $code (keys %TrapInfosForHTTPErrorCodes) {
 			if ($UpdateStats || $MigrateStats || $HTMLOutput eq "errors$code") { $SectionsToLoad{"sider_$code"}=$order++; }
+		}
+		foreach my $extranum (1..@ExtraSectionName-1) {
+			if ($UpdateStats || $MigrateStats || ($HTMLOutput eq 'main' && $ExtraSectionStatTypes[$extranum]) || $HTMLOutput eq "extra$extranum") { $SectionsToLoad{"extra_$extranum"}=$order++; }
 		}
 	}
 	else {					# Load only required sections
@@ -2760,6 +2785,35 @@ sub Read_History_With_TmpUpdate {
 					next;
 				}
 			}
+			# BEGIN_EXTRA_xxx
+			foreach my $extranum (1..@ExtraSectionName-1) {
+				if ($field[0] eq "BEGIN_EXTRA_$extranum")   {
+					if ($Debug) { debug(" Begin of EXTRA_$extranum"); }
+					$_=<HISTORY>;
+					chomp $_; s/\r//;
+					if (! $_) { error("Error: History file \"$DirData/$PROG$month$year$FileSuffix.txt\" is corrupted (in section EXTRA_$extranum). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
+					my @field=split(/\s+/,$_); $countlines++;
+					my $count=0;my $countloaded=0;
+					while ($field[0] ne "END_EXTRA_$extranum") {
+						# if ($field[0]) {
+							$count++;
+							if ($SectionsToLoad{"extra_$extranum"}) {
+								if ($ExtraSectionStatTypes[$extranum] =~ m/P/i && $field[1]) { ${'_section_' . $extranum . '_p'}{$field[0]}+=$field[1]; }
+								if ($ExtraSectionStatTypes[$extranum] =~ m/H/i && $field[2]) { ${'_section_' . $extranum . '_h'}{$field[0]}+=$field[2]; }
+								if ($ExtraSectionStatTypes[$extranum] =~ m/B/i && $field[3]) { ${'_section_' . $extranum . '_k'}{$field[0]}+=$field[3]; }
+								if ($ExtraSectionStatTypes[$extranum] =~ m/L/i && ! ${'_section_' . $extranum . '_l'}{$field[0]} && $field[4]) { ${'_section_' . $extranum . '_l'}{$field[0]}=int($field[4]); }
+								$countloaded++;
+							}
+						# }
+						$_=<HISTORY>;
+						chomp $_; s/\r//;
+						if (! $_) { error("Error: History file \"$DirData/$PROG$month$year$FileSuffix.txt\" is corrupted (in section EXTRA_$extranum). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
+						@field=split(/\s+/,$_); $countlines++;
+					}
+					if ($Debug) { debug(" End of EXTRA_$extranum ($count entries, $countloaded loaded)"); }
+					next;
+				}
+			}
 		}
 	}
 
@@ -3221,7 +3275,7 @@ sub Save_History {
 		print HISTORYTMP "END_KEYWORDS\n";
 	}
 
-	# Other
+	# Other - Errors
 	if ($sectiontosave eq "errors") {
 		print HISTORYTMP "\n";
 		print HISTORYTMP "# Errors - Hits - Bandwidth\n";
@@ -3230,6 +3284,7 @@ sub Save_History {
 		foreach my $key (keys %_errors_h) { print HISTORYTMP "$key $_errors_h{$key} $_errors_k{$key}\n"; }
 		print HISTORYTMP "END_ERRORS\n";
 	}
+ 	# Other - Trapped errors
 	foreach my $code (keys %TrapInfosForHTTPErrorCodes) {
 		if ($sectiontosave eq "sider_$code") {
 			print HISTORYTMP "\n";
@@ -3245,6 +3300,34 @@ sub Save_History {
 			print HISTORYTMP "END_SIDER_$code\n";
 		}
 	}
+ 	# Other - Extra stats sections
+ 	foreach my $extranum (1..@ExtraSectionName-1) {
+		if ($sectiontosave eq "extra_$extranum") {
+			print HISTORYTMP "\n";
+			print HISTORYTMP "# Extra sections...\n";
+	 		print HISTORYTMP "BEGIN_EXTRA_$extranum\n";
+	 		foreach my $key (keys %{'_section_' . $extranum . '_h'} ) { 
+	 			print "$key xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx";
+	 		}
+	 		&BuildKeyList($MaxNbOfExtra[$extranum],$MinHitExtra[$extranum],\%{'_section_' . $extranum . '_h'},\%{'_section_' . $extranum . '_p'});
+	 		%keysinkeylist=();
+	 		foreach my $key (@keylist) {
+	 			$keysinkeylist{$key}=1;
+	 			my $page=${'_section_' . $extranum . '_p'}{$key}||0;
+	 			my $bytes=${'_section_' . $extranum . '_k'}{$key}||0;
+	 			my $lastaccess=${'_section_' . $extranum . '_l'}{$key}||"";
+	 			print HISTORYTMP "$key $page ", ${'_section_' . $extranum . '_h'}{$key}, " $bytes $lastaccess\n"; next;
+	 		}
+	 		foreach my $key (keys %{'_section_' . $extranum . '_h'}) {
+	 			if ($keysinkeylist{$key}) { next; }
+	 			my $page=${'_section_' . $extranum . '_p'}{$key}||0;
+	 			my $bytes=${'_section_' . $extranum . '_k'}{$key}||0;
+	 			my $lastaccess=${'_section_' . $extranum . '_l'}{$key}||"";
+	 			print HISTORYTMP "$key $page ", ${'_section_' . $extranum . '_h'}{$key}, " $bytes $lastaccess\n"; next;
+	 		}
+	 		print HISTORYTMP "END_EXTRA_$extranum\n";
+		}
+ 	}
 	
 	%keysinkeylist=();
 }
@@ -3455,6 +3538,10 @@ sub Init_HashArray {
 	%_login_h = %_login_p = %_login_k = %_login_l = ();
 	%_se_referrals_h = %_sider404_h = %_referer404_h = %_url_p = %_url_k = %_url_e = %_url_x = ();
 	%_unknownreferer_l = %_unknownrefererbrowser_l = ();
+ 	for (my $ix=1; $ix < @ExtraSectionName; $ix++) {
+ 		%{'_section_' . $ix . '_h'} = %{'_section_' . $ix . '_o'} = %{'_section_' . $ix . '_k'}	=
+ 		%{'_section_' . $ix . '_l'} = %{'_section_' . $ix . '_p'} = ();
+ 	}
 }
 
 #------------------------------------------------------------------------------
@@ -3875,7 +3962,7 @@ my @AllowedArgs=('-site','-config','-showsteps','-showdropped','-showcorrupted',
 
 if ($ENV{"GATEWAY_INTERFACE"}) {	# Run from a browser
 	print "Content-type: text/html\n";
-	# Expires is GMT ANSI asctime and must be after Content-type to avoid pb with some servers (SAMBAR)
+	# Expires must be GMT ANSI asctime and must be after Content-type to avoid pb with some servers (SAMBAR)
 	#my $ExpireDelayInHTTPHeader=0;
 	#print "Expires: ".(gmtime($starttime()+$ExpireDelayInHTTPHeader))."\n";
 	print "\n\n";
@@ -4334,11 +4421,11 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {	# Updat
 		$LogFormatString =~ s/date\stime/%time2/g;
 		$LogFormatString =~ s/c-ip/%host/g;
 		$LogFormatString =~ s/cs-username/%logname/g;
-		$LogFormatString =~ s/cs-method/%method/g;
+		$LogFormatString =~ s/cs-method/%method/g;		# GET, POST, SMTP, RETR STOR
 		$LogFormatString =~ s/cs-uri-stem/%url/g; $LogFormatString =~ s/cs-uri/%url/g;
 		$LogFormatString =~ s/sc-status/%code/g;
 		$LogFormatString =~ s/sc-bytes/%bytesd/g;
-		$LogFormatString =~ s/cs-version/%other/g;	# Protocol
+		$LogFormatString =~ s/cs-version/%other/g;		# Protocol
 		$LogFormatString =~ s/cs\(User-Agent\)/%ua/g; $LogFormatString =~ s/c-agent/%ua/g;
 		$LogFormatString =~ s/cs\(Referer\)/%referer/g; $LogFormatString =~ s/cs-referred/%referer/g;
 		$LogFormatString =~ s/cs-uri-query/%host/g;
@@ -4356,6 +4443,9 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {	# Updat
 		$LogFormatString =~ s/cs-mime-type/%other/g;
 		$LogFormatString =~ s/s-object-source/%other/g;
 		$LogFormatString =~ s/s-cache-info/%other/g;
+		# Added for MMS
+		$LogFormatString =~ s/protocol/%protocolmms/g;
+		$LogFormatString =~ s/c-status/%codemms/g;
 		if ($Debug) { debug("LogFormatString=$LogFormatString"); }
 		# Scan $LogFormatString to found all required fields and generate PerlParsingFormat
 		my @fields = split(/\s+/,$LogFormatString); # make array of entries
@@ -4405,6 +4495,12 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {	# Updat
 				$pos_method = $i; $i++;
 				$PerlParsingFormat .= "([^$LogSeparator]+)";
 			}
+			elsif ($f =~ /%protocolmms$/) {	# protocolmms is used for method if method not already found (for MMS)
+				if ($pos_method < 0) {
+					$pos_method = $i; $i++;
+					$PerlParsingFormat .= "([^$LogSeparator]+)";
+				}
+			}
 			elsif ($f =~ /%url$/) {
 				$pos_url = $i; $i++;
 				$PerlParsingFormat .= "([^$LogSeparator]+)";
@@ -4416,6 +4512,12 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {	# Updat
 			elsif ($f =~ /%code$/) {
 				$pos_code = $i; $i++;
 				$PerlParsingFormat .= "([\\d|-]+)";
+			}
+			elsif ($f =~ /%codemms$/) {		# codemms is used for code if method not already found (for MMS)
+				if ($pos_code < 0) {
+					$pos_code = $i; $i++;
+					$PerlParsingFormat .= "([\\d|-]+)";
+				}
 			}
 			elsif ($f =~ /%bytesd$/) {
 				$pos_size = $i; $i++;
@@ -4524,15 +4626,9 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {	# Updat
 		if (! (@field=map(/^$PerlParsingFormat/,$_))) {
 			$NbOfLinesCorrupted++;
 			if ($ShowCorrupted) {
-				if ($_ =~ /^#/ || $_ =~ /^!/) {
-					print "Corrupted record (comment line) : $_\n";
-				}
-				elsif ($_ =~ /^\s*$/) {
-					print "Corrupted record (blank line)\n";
-				}
-				else {
-					print "Corrupted record line $NbOfLinesRead (record format does not match LogFormat parameter): $_\n";
-				}
+				if ($_ =~ /^#/ || $_ =~ /^!/) { print "Corrupted record (comment line) : $_\n"; }
+				elsif ($_ =~ /^\s*$/) { print "Corrupted record (blank line)\n"; }
+				else { print "Corrupted record line $NbOfLinesRead (record format does not match LogFormat parameter): $_\n"; }
 			}
 			if ($NbOfLinesRead >= $NbOfLinesForCorruptedLog && $NbOfLinesCorrupted == $NbOfLinesRead) { error("Format error",$_,$LogFile); }	# Exit with format error
 			if ($_ =~ /^__end_of_file__/) { last; }	# For test purpose only
@@ -4569,6 +4665,10 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {	# Updat
 		elsif ($field[$pos_method] eq 'STOR' || $field[$pos_method] =~ /sent/i) {
 			# FTP SENT request
 			$protocol=2;
+		}
+		elsif ($field[$pos_method] eq 'mms') {
+			# Streaming request
+			$protocol=4;
 		}
 		else {
 			$NbOfLinesDropped++;
@@ -4662,7 +4762,7 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {	# Updat
 
 		# Check return status code
 		#-------------------------
-		if ($protocol == 1) {		# HTTP record
+		if ($protocol == 1 || $protocol == 4) {		# HTTP record or Stream record
 			if ($ValidHTTPCodes{$field[$pos_code]}) {	# Code is valid
 				if ($field[$pos_code] == 304) { $field[$pos_size]=0; }
 			}
@@ -4682,7 +4782,7 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {	# Updat
 				}
 			}
 		}
-		elsif ($protocol == 3) {	# SMTP record
+		elsif ($protocol == 3) {					# SMTP record
 			if ($field[$pos_code] != 1) {				# Code is not valid
 				$field[$pos_size]=0;
 				$_errors_h{$field[$pos_code]}++;
@@ -4730,18 +4830,21 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {	# Updat
 		#-----------------------------------------------
 		# Possible URL syntax for $field[$pos_url]: /mydir/mypage.ext?param1=x&param2=y#aaa, /mydir/mypage.ext#aaa, /
 		my $urlwithnoquery;
+		my $standalonequery;
 		if ($URLWithQuery) {
-			if ($URLCaseSensitive) { $field[$pos_url] =~ tr/A-Z/a-z/; }
+			if ($URLNotCaseSensitive) { $field[$pos_url] =~ tr/A-Z/a-z/; }
 			$urlwithnoquery=$field[$pos_url];
-			my $foundparam=($urlwithnoquery =~ s/\?.*//);
-			# We combine the URL and query strings (for some IIS setup).
+			my $foundparam=($urlwithnoquery =~ s/\?(.*)$//);
+			$standalonequery="$1";
+			# For IIS setup, if pos_query is enabled we need to combine the URL to query strings
 			if (! $foundparam && $pos_query >=0 && $field[$pos_query] && $field[$pos_query] ne "-") {
 				$foundparam=1;
 				$field[$pos_url] .= "?" . $field[$pos_query];
+				$standalonequery=$field[$pos_query];
 			}
  			# Remove params that are marked to be ignored in URLWithQueryWithoutFollowingParameters
 			if ($foundparam && @URLWithQueryWithoutFollowingParameters) {
-				if ($URLCaseSensitive) { map {$field[$pos_url] =~ s/$_=[^&]*//i;} @URLWithQueryWithoutFollowingParameters; }
+				if ($URLNotCaseSensitive) { map {$field[$pos_url] =~ s/$_=[^&]*//i;} @URLWithQueryWithoutFollowingParameters; }
 				else { map {$field[$pos_url] =~ s/$_=[^&]*//;} @URLWithQueryWithoutFollowingParameters; }
  				# Cut starting or trailing ? or &
  				$field[$pos_url] =~ tr/&/&/s;
@@ -4751,9 +4854,10 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {	# Updat
 		}
 		else {
 			# Trunc CGI parameters in URL
-			$field[$pos_url] =~ s/\?.*//;
-			if ($URLCaseSensitive) { $field[$pos_url] =~ tr/A-Z/a-z/; }
+			if ($URLNotCaseSensitive) { $field[$pos_url] =~ tr/A-Z/a-z/; }
+			$field[$pos_url] =~ s/\?(.*)$//;
 			$urlwithnoquery=$field[$pos_url];
+			$standalonequery="$1";
 		}
 		# Here now urlwithnoquery is /mydir/mypage.ext, /mydir, /
 
@@ -5189,6 +5293,102 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {	# Updat
 			if ($PageBool) { $_from_p[1]++; }
 			$_from_h[1]++;
 		}
+
+		# Analyze: Extra
+		#---------------
+ 		foreach my $extranum (1..@ExtraSectionName-1) {
+			if ($Debug) { debug("Process extra analyze",4); }
+ 			# Check conditional (assume that it is a valid configuration)
+ 			# ExtraSectionConditional0="QUERY_STRING,'sn=';REFERER,'sn='"
+ 			my $condition_fsa = 0;
+ 			foreach my $conditional_full (split(/\s*?\|\s*?/, $ExtraSectionConditional[$extranum])) {
+ 				my ($conditional_type, $conditional_opt);
+ 				if ($conditional_full =~ m/(.+?)\s*?,\s*?'(.+?)'/) {
+ 					$conditional_type = $1;
+ 					$conditional_opt  = $2;
+ 				} else {
+ 					last;
+ 				}
+ 				
+ 				# Check if does not pass condition, move to next condition if exists.
+ 				if ($conditional_type eq 'QUERY_STRING') {
+					if ($Debug) { debug("Check condition '$conditional_type' must contain '$conditional_opt' on $standalonequery.",5); }
+ 					if ($standalonequery =~ m/$conditional_opt/) {
+ 						$condition_fsa = 1;
+ 						last;
+ 					}
+ 				} elsif ($conditional_type eq 'REFERER') {
+					if ($Debug) { debug("Check condition '$conditional_type' must contain '$conditional_opt' on $field[$pos_referer]",5); }
+ 					if ($field[$pos_referer] =~ m/$conditional_opt/) {
+ 						$condition_fsa = 1;
+ 						last;
+ 					}
+ 				# Other imlementations of different conditionals would go here.
+ 				} else {
+ 					# All other conditional types that are not
+ 					# implemented get ignored.
+ 					next;
+ 				}
+ 			}
+ 			next unless $condition_fsa;
+
+			if ($Debug) { debug(" All conditions are OK. Now we extract value for first column of extra chart.",5); }
+
+ 			# Determine actual column value to use.
+ 			#ExtraSectionFirstColumnValues0="QUERY_STRING,'sn=([^&]+)'"
+ 			my $col_value = '';
+ 			my $col_method = '';
+ 			
+ 			my $conditional_value_passed = 0;
+ 			foreach my $conditional_full (split(/\s*?\|\s*?/, $ExtraSectionFirstColumnValues[$extranum])) {
+ 				my ($col_cond_type, $col_cond_opt);
+ 
+ 				if ($conditional_full =~ m/(.+?)\s*?,\s*?'(.+?)'/) {
+ 					$col_cond_type = $1;
+ 					$col_cond_opt = $2;
+ 				} else {
+ 					# Invalid configuration we skip section completely even if other
+ 					# conditionals may be valid, so people have incentive to keep confs valid.
+ 					last;
+ 				}
+ 			
+ 				# Check if record passes condition to be able to retrieve a column name, if not
+ 				# move to the next condition.
+ 				if ($col_cond_type eq 'QUERY_STRING') {
+ 					if ($standalonequery =~ m/$col_cond_opt/) {
+ 						$col_value = $1;
+ 						$col_value =~ s/%20/+/g;
+ 						$conditional_value_passed = 1;
+ 						last;
+ 					} else {
+ 						next;
+ 					}
+ 				} elsif ($col_cond_type eq 'REFERER') {
+ 					if ($field[$pos_referer] =~ m/$col_cond_opt/) {
+ 						$col_value = $1;
+ 						$col_value =~ s/%20/+/g;
+ 						$conditional_value_passed = 1;
+ 						last;
+ 					}
+ 					# Other imlementations of different conditionals would go here.
+ 				} else {
+ 					# Invalid configuration we skip section completely even if other
+ 					# conditionals may be valid, so people have incentive to keep confs valid.
+ 					last;
+ 				}
+ 						
+ 			}
+ 			next unless $conditional_value_passed;
+ 			
+ 			# If interpreter reaches this point means we got all values to increase counters
+ 			# Needs to be tested because this is most likely a huge resource hog (cpu).
+ 			if ($ExtraSectionStatTypes[$extranum] =~ m/P/i && $PageBool) { ${'_section_' . $extranum . '_p'}{$col_value}++; }
+ 			if ($ExtraSectionStatTypes[$extranum] =~ m/H/i) { ${'_section_' . $extranum . '_h'}{$col_value}++; }
+ 			if ($ExtraSectionStatTypes[$extranum] =~ m/B/i) { ${'_section_' . $extranum . '_k'}{$col_value}+=$field[$pos_size]; }
+ 			if ($ExtraSectionStatTypes[$extranum] =~ m/L/i) {
+ 				if (${'_section_' . $extranum . '_l'}{$col_value} < $timerecord) { ${'_section_' . $extranum . '_l'}{$col_value}=$timerecord; }
+ 			}
+ 		}
 
 		# Every 20,000 approved lines we test to clean too large hash arrays to flush data in tmp file
 		if ($counter++ >= 20000) {
@@ -7329,7 +7529,8 @@ EOF
 	if ($ShowHTTPErrorsStats) {
 		if ($Debug) { debug("ShowHTTPErrorsStats",2); }
 		print "$Center<a name=\"ERRORS\">&nbsp;</a><BR>\n";
-		&tab_head($Message[32],19);
+		my $title="$Message[32]";
+		&tab_head("$title",19);
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH colspan=2>$Message[32]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[15]</TH><TH bgcolor=\"#$color_k\" width=80>$Message[75]</TH></TR>\n";
 		$total_h=0;
 		my $count=0;
@@ -7346,6 +7547,37 @@ EOF
 		}
 		&tab_end;
 	}
+
+ 	# BY EXTRA SECTIONS
+ 	#----------------------------
+ 	foreach my $extranum (1..@ExtraSectionName-1) {
+ 		if ($Debug) { debug("ExtraSectionName$extranum",2); }
+ 		print "$Center<a name=\"EXTRA$extranum\">&nbsp;</a><BR>";
+		my $title=$ExtraSectionName[$extranum];
+ 		&tab_head("$title",19);
+ 		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>".$ExtraSectionFirstColumnTitle[$extranum]."</TH>";
+ 		if ($ExtraSectionStatTypes[$extranum] =~ m/P/i) { print "<TH bgcolor=\"#$color_p\" width=80>$Message[56]</TH>"; }
+ 		if ($ExtraSectionStatTypes[$extranum] =~ m/H/i) { print "<TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH>"; }
+ 		if ($ExtraSectionStatTypes[$extranum] =~ m/B/i) { print "<TH bgcolor=\"#$color_k\" width=80>$Message[75]</TH>"; }
+ 		if ($ExtraSectionStatTypes[$extranum] =~ m/L/i) { print "<TH width=120>$Message[9]</TH>"; }
+ 		print "</TR>\n";
+ 		$total_p=$total_h=$total_k=0;
+ 		#$max_h=1; foreach my $key (values %_login_h) { if ($key > $max_h) { $max_h = $key; } }
+ 		#$max_k=1; foreach my $key (values %_login_k) { if ($key > $max_k) { $max_k = $key; } }
+ 		my $count=0;
+ 		&BuildKeyList($MaxNbOfExtra[$extranum],$MinHitExtra[$extranum],\%{'_section_' . $extranum . '_h'},\%{'_section_' . $extranum . '_p'});
+		foreach my $key (@keylist) {
+ 			my $firstcol = DecodeEncodedString(CleanFromCSSA($key));
+ 			print "<TR><TD CLASS=AWL>$firstcol</TD>";
+ 			if ($ExtraSectionStatTypes[$extranum] =~ m/P/i) { print "<TD>" . ${'_section_' . $extranum . '_p'}{$key} . "</TD>"; }
+ 			if ($ExtraSectionStatTypes[$extranum] =~ m/H/i) { print "<TD>" . ${'_section_' . $extranum . '_h'}{$key} . "</TD>"; }
+ 			if ($ExtraSectionStatTypes[$extranum] =~ m/B/i) { print "<TD>" . Format_Bytes(${'_section_' . $extranum . '_k'}{$key}) . "</TD>"; }
+ 			if ($ExtraSectionStatTypes[$extranum] =~ m/L/i) { print "<TD>" . (${'_section_' . $extranum . '_l'}{$key}?Format_Date(${'_section_' . $extranum . '_l'}{$key},1):"-") . "</TD>"; }
+ 			print "</TR>\n";
+ 			$count++;
+		}
+ 		&tab_end;
+ 	}
 
 	&html_end;
 
