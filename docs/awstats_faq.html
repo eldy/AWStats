@@ -544,20 +544,49 @@ postrotate<br>
 endscript<br>
 }<br>
 </i>
-The advantage of this solution is that it is easy to setup and the data loss should not be
-significant. You will still forget some of hits that occured after the end of the 
-awstats reading log and the apache change of its log target. This times depends on
-time of writing updated awstats database but also time for apache threads to finish and this
-is not same for all apache threads (threads busy or not). So as a conclusion, you will
-loose some hits, but loss should not be significant in most cases.
-What's really wrong is that the HUP signal kill the Apache thread if, after waiting 
-few milliseconds, it's still busy. This means that a transaction process might be killed
-and visitor session disconnected.<br>
-Note also that if you have x logrotate config files with each of them a postrotate with a
-kill -HUP, you send a kill x times your server process.<br>
+<br>
+If using a such solution, this is sequential step that happens:<br>
+<table border=1 cellpadding=1 cellspacing=0 bgcolor=#F4F4F4 width="100%" class=CFAQ><tr class=CFAQ><td class=CFAQ>
+<tr><td<b>Step</b></td><td><b>Description</b></td><td><b>Step name</b></td><td><b>Date/Time example</b></td></tr>
+<tr valign=top><td>A</td><td>logrotate is started (by cron)</td><td>Start of logrotate</td><td>04:02:00</td></tr>
+<tr valign=top><td>B</td><td><ul>awstats -update is launched by logrotate</td><td>Start of awstats</td><td>04:02:01</td><tr>
+<tr valign=top><td>C</td><td><ul><ul>awstats read the log file </td><td>&nbsp;</td><td>04:02:02</td><tr>
+<tr valign=top><td>D</td><td><ul>awstats has reached the end of log file. It start to save its database on disk.</td><td>&nbsp;</td><td>04:05:00</td><tr>
+<tr valign=top><td>E</td><td><ul>awstats has finished to save its new database, so it stops</td><td>End of awstats</td><td>04:06:00</td><tr>
+<tr valign=top><td>F</td><td>logrotate move old log file <i>file.log</i> to a new name <i>file.log.sav</i>. Apache now logs in <i>file.log.new</i> since log file handle has not been changed (only log file name).</td><td>Log move</td><td>04:06:01</td><tr>
+<tr valign=top><td>G</td><td>logrotate send the -HUP or -USR1 signal to Apache.<br>With -HUP, Apache immediatly kills all its child process/thread, close log file <i>file.log.sav</i>, and reopen file <i>file.log</i>. So now, ALL hits are written to new file.<br>With -USR1, Apache only ask its child process/thread to stop only when HTTP request will be completely served, but it closes immediatly log file <i>file.log.sav</i>, and reopen file <i>file.log</i>. So only NEW hits are written to new log file. Still running HTTP requests will write in old one.</td><td>Apache restart</td><td>04:06:02</td><tr>
+<tr valign=top><td>H</td><td>logrotate start compress the old log file <i>file.log.sav</i> into <i>file.log.gz</i></td><td>Start compress</td><td>04:06:03</td><tr>
+<tr valign=top><td>I</td><td><ul>If some apache threads are still running (because the kill sent was -USR1, so child process are waiting end of request before to stop), then those process are still writing to <i>file.log.sav</i>.<br>If kill -HUP was used, no problem, all process are already restarted.</td><td>&nbsp;</td><td>&nbsp;</td><tr>
+<tr valign=top><td>J</td><td>logrotate has finished to compress log file. File <i>file.log.sav</i> is deleted.</td><td>End&nbsp;of&nbsp;compress<br>End&nbsp;of&nbsp;logrotate</td><td>04:07:03</td><tr>
+<tr valign=top><td>K</td><td><ul>If signal was -USR1, some old childs can still run (when serving a very long request for example). So the log writing, still done in same file handle are going to a file that has been removed. So log writing are lost nowhere.</td><td>&nbsp;</td><td>&nbsp;</td><tr>
+</table>
+<br>
+The advantage of this solution is that it is a very common way of working, used by a lot of
+products, and easy to setup. You will notice that you can "loose" some hits:<br>
+If you use the -HUP signal, you will only loose all hits that were written during D and E.
+Note that you will also break all requests still running at G. In the example, it's a 
+1 minute lost (for small or medium web sites, it will be less than few seconds), so this
+give you an error less than 0.07% (less for small web sites). This is not significant,
+above all for a "statistics" progam.<br>
+If you use the -USR1 signal, you will not kill any request. But you will loose all hits that
+were wrote during D and E (like with -HUP) but also all hits that are still running after H
+(all very long request that requires several minutes to be served). If hit ends during I, it is
+wrote in a log file already analyzed, if hit ends at K, it is wrote nowhere. In the example,
+it's a also a 0.07% error plus error for other not visible hits that were finished during I or K,
+but number of such hits should not very low since only hits that started before G and not
+finished after H are concerned. In most cases a hits needs only few milliseconds to be served
+so error could be ignored.<br>
+<br>
+Note also that if you have x logrotate config files, with each of them a postrotate with a
+kill -HUP, you send a kill x times your server process. So try to include several log files
+in same logrotate config file. You can have several awstats update command in the same
+prerotate section and you will send the -HUP only once, after that all updates are finished.
+However, doing this, you will have a lap time between D and E for all those log files that will
+be egal to the maximum of all lap for each file.<br>
 <br>
 
-<li> You can also choose to run the AWStats update process on the last archived log files.<br>
+<li> You can also choose to run the AWStats update process only once the log file has been
+archived.<br>
 This is required for example if you use the <a href="http://cronolog.org" target=awstatsbis>cronolog</a>
 or rotatelog tools to rotate your log files. For example, Apache users can setup their Apache
 httpd config file to write log file through a pipe to cronolog or rotatelog using
@@ -567,7 +596,8 @@ If you use a such feature, you can't trigger AWStats update process to be ran ju
 rotate is done, so you must run it AFTER the rotate process, so on the archived log file.<br>
 To setup awstats to always point to last archive log file, you can use the 'tags' available for
 <a href="awstats_config.html#LogFile">LogFile</a>.<br>
-The problem with that is that your data are refreshed only after a rotate has done.<br>
+The problem with that is that your data are refreshed only after a rotate has done. However,
+you will miss absolutely nothing.<br>
 <br>
 <li> So, if you really want to not loose absolutely no hit and want to have updates more
 frequently than the rotate frequency, the best way is still an hybrid solution (i am not sure
@@ -579,7 +609,7 @@ you run another update process on the archived log file using the -logfile optio
 update on the archived log file and not the log file that is currently defined in awstats
 config file and used by cron update. This will allow you to update the half hour missing,
 until the log rotate (AWStats will find the new lines). However don't forget that this
-particular update must finished before the next croned update.<br>
+particular update MUST be finished before the next croned update.<br>
 <br>
 
 <a name="CRONTAB"></a><br>
