@@ -138,6 +138,7 @@ when reading it), follow the example:<br>
 <li><a href="#Show">ShowKeywordsStats</a>
 <li><a href="#Show">ShowMiscStats</a>
 <li><a href="#Show">ShowHTTPErrorsStats</a>
+<li><a href="#Show">ShowSMTPErrorsStats</a>
 <li><a href="#AddDataArray">AddDataArrayMonthStats</a>
 <li><a href="#AddDataArray">AddDataArrayShowDaysOfMonthStats</a>
 <li><a href="#AddDataArray">AddDataArrayShowDaysOfWeekStats</a>
@@ -1156,7 +1157,7 @@ ShowOSStats,ShowOriginStats,ShowKeyphrasesStats,ShowKeywordsStats,ShowHTTPErrors
 4.1+ for ShowSessionsStats, ShowKeywordsStats<br>
 5.1+ for all letters codes<br>
 5.5+ for ShowDaysOfMonthStats<br>
-5.6+ for ShowMiscStats<br>
+5.6+ for ShowMiscStats,ShowSTMPErrorsStats<br>
 <br># You choose here which reports you want to see in the main page and what you
 <br># want to see in those reports.
 <br># Possible values:
@@ -1227,7 +1228,7 @@ ShowOSStats,ShowOriginStats,ShowKeyphrasesStats,ShowKeywordsStats,ShowHTTPErrors
 <br># Default: 1, Possible codes: None
 <br>ShowBrowsersStats=1
 <br># Show screen size chart
-<br># Default: 0 (See LogScreenSizeUrl if set to 1), Possible codes: None
+<br># Default: 0 (See also MiscTrackerUrl if set to 1), Possible codes: None
 <br>ShowScreenSizeStats=0
 <br># Show origin chart
 <br># Default: PH, Possible codes: HB
@@ -1244,6 +1245,9 @@ ShowOSStats,ShowOriginStats,ShowKeyphrasesStats,ShowKeywordsStats,ShowHTTPErrors
 <br># Show http errors chart
 <br># Default: 1, Possible codes: None
 <br>ShowHTTPErrorsStats=1
+<br># Show smtp errors chart (For use when analyzing mail log files)
+<br># Default: 0, Possible codes: None
+<br>ShowSMTPErrorsStats=0
 
 <br><br><hr>
 
