@@ -71,7 +71,7 @@ $found, $internal_link, $new) = ();
 %MonthBytes = %MonthHits = %MonthHostsKnown = %MonthHostsUnknown = %MonthPages = %MonthUnique = %MonthVisits =
 %monthlib = %monthnum = ();
 
-$VERSION="3.1 (build 35)";
+$VERSION="3.1 (build 37)";
 $Lang="en";
 
 # Default value
@@ -857,9 +857,9 @@ EOF
 sub html_end {
 	if ($HTMLOutput) {
 		print "$CENTER<br><br><br>\n";
-		print "<b>Advanced Web Statistics $VERSION</b> - <a href=\"http://awstats.sourceforge.net\" target=\"_newawstats\">Created by $PROG</a><br>\n";
+		print "<FONT COLOR=\"#$color_text\"><b>Advanced Web Statistics $VERSION</b> - <a href=\"http://awstats.sourceforge.net\" target=\"_newawstats\">Created by $PROG</a><br>\n";
 		print "<br>\n";
-		print "$HTMLEndSection\n";
+		print "$HTMLEndSection</font>\n";
 		print "</body>\n";
 		print "</html>\n";
 	}
