@@ -27,10 +27,12 @@ New features/improvements:
 - Added maillogconvert.p for analyzing mail log files (support better
   sendmail, postfix and qmail log files).
 - Added -addfilenum option in logresolvemerge.pl
+- Added -updatefor option to limit number of lines parsed in one update
+  session.
 - Better management of plugin load failure.
-- Added hostinfo plugin to handle the "Popup WhoIs link" code.
 
 Other/Documentation:
+- The "Popup WhoIs link" code is now handled by new 'hostinfo' plugin.
 - Added mp4 mime type.
 - Updated documentation.
 

@@ -4780,7 +4780,8 @@ if ((! $ENV{'GATEWAY_INTERFACE'}) && (! $SiteConfig)) {
 	print "  -showsteps     to add benchmark information every $NBOFLINESFORBENCHMARK lines processed\n";
 	print "  -showcorrupted to add output for each corrupted lines found, with reason\n";
 	print "  -showdropped   to add output for each dropped lines found, with reason\n";
-	print "  -logfile=x     to force log to analyze whatever is 'LogFile' in config file\n";
+	print "  -logfile=x     to change log to analyze whatever is 'LogFile' in config file\n";
+	print "  -updatefor=n   to stop the update process after parsing n lines\n";
 	print "  Be care to process log files in chronological order when updating statistics.\n";
 	print "\n";
 	print "Options to show statistics:\n";
@@ -4817,8 +4818,8 @@ if ((! $ENV{'GATEWAY_INTERFACE'}) && (! $SiteConfig)) {
 	print "  -staticlinks to have static links in HTML report page\n";
 	print "  -staticlinksext=xxx to have static links with .xxx extension instead of .html\n";
 	print "  -lang=LL     to output a HTML report in language LL (en,de,es,fr,it,nl,...)\n";
-	print "  -month=MM    to output a HTML report for an old month=MM\n";
-	print "  -year=YYYY   to output a HTML report for an old year=YYYY\n";
+	print "  -month=MM    to output a HTML report for an old month MM\n";
+	print "  -year=YYYY   to output a HTML report for an old year YYYY\n";
 	print "  Those 'date' options doesn't allow you to process old log file. They only\n";
 	print "  allow you to see a past report for a chosen month/year period instead of\n";
 	print "  current month/year.\n";
@@ -4828,7 +4829,7 @@ if ((! $ENV{'GATEWAY_INTERFACE'}) && (! $SiteConfig)) {
 	print "\n";
 	print "Now supports/detects:\n";
 	print "  Web/Ftp/Mail log analyze\n";
-	print "  Reverse DNS lookup and/or GeoIP lookup\n";
+	print "  Reverse DNS lookup (IPv4 and IPv6) and GeoIP lookup\n";
 	print "  Number of visits, number of unique visitors\n";
 	print "  Visits duration and list of last visits\n";
 	print "  Authenticated users\n";
@@ -4836,11 +4837,11 @@ if ((! $ENV{'GATEWAY_INTERFACE'}) && (! $SiteConfig)) {
 	print "  Hosts list and unresolved IP addresses list\n";
 	print "  Most viewed, entry and exit pages\n";
 	print "  Files type and Web compression\n";
-	print "  Personalized reports\n";
 	print "  Screen size\n";
 	print "  Number of times site is 'added to favourites bookmarks'\n";
 	print "  Ratio of Browsers with support of: Java, Flash, RealG2 reader,\n";
 	print "                        Quicktime reader, WMA reader, PDF reader\n";
+	print "  Personalized reports\n";
 	print "  ".(scalar keys %DomainsHashIDLib)." domains/countries\n";
 	print "  ".(scalar keys %RobotsHashIDLib)." robots\n";
 	print "  ".(scalar keys %OSHashLib)." operating systems\n";
@@ -4848,6 +4849,7 @@ if ((! $ENV{'GATEWAY_INTERFACE'}) && (! $SiteConfig)) {
 	print "  ".(scalar keys %SearchEnginesHashIDLib)." search engines (and keyphrases/keywords used from them)\n";
 	print "  All HTTP errors with last referrer\n";
 	print "  Report by day/month/year\n";
+	print "  Dynamic or static HTML reports, static PDF reports\n";
 	print "  And a lot of other advanced options...\n";
 	print "New versions and FAQ at http://awstats.sourceforge.net\n";
 	exit 2;
@@ -4939,7 +4941,7 @@ if ($AllowAccessFromWebToFollowingIPAddresses && $ENV{'GATEWAY_INTERFACE'}) {
 	}
 }
 if (($UpdateStats || $MigrateStats) && (! $AllowToUpdateStatsFromBrowser) && $ENV{'GATEWAY_INTERFACE'}) {
-	error("".($UpdateStats?"Update":"Migrate")." of statistics is not allowed from a browser.");
+	error("".($UpdateStats?"Update":"Migrate")." of statistics has not been allowed from a browser (AllowToUpdateStatsFromBrowser should be set to 1).");
 }
 
 #------------------------------------------
