@@ -10,14 +10,18 @@
 # See AWStats documenation (in docs/ directory) for all setup instructions.
 #-------------------------------------------------------
 # $Revision$ - $Author$ - $Date$
+
+# Next 'use' are commented to make AWStats working with old perl.
 use strict;no strict "refs";
 use vars qw(%DomainsHashIDLib @RobotsSearchIDOrder_list1 @RobotsSearchIDOrder_list2 @RobotsSearchIDOrder_list3 @BrowsersSearchIDOrder @OSSearchIDOrder @WordsToCleanSearchUrl %BrowsersHereAreGrabbers %BrowsersHashIcon %BrowsersHashIDLib %OSHashID %OSHashLib %RobotsHashIDLib %SearchEnginesHashIDLib %SearchEnginesKnownUrl %DomainsHashIDLib);
 #use warnings;		# Must be used in test mode only. This reduce a little process speed
 #use diagnostics;	# Must be used in test mode only. This reduce a lot of process speed
-
-# Uncomment following line and a line into GetDelaySinceStart function to get
-# miliseconds time in showsteps option
+use Socket;
+use Time::Local;	# use Time::Local 'timelocal_nocheck' is not supported by all Time::Local modules
+# Next 'use' can be commented (with its coupled line into GetDelaySinceStart function) to
+# get miliseconds time in showsteps option
 #use Time::HiRes qw( gettimeofday );
+
 
 
 #-------------------------------------------------------
@@ -63,10 +67,9 @@ my $BarImageHorizontal_h = "barrehh.png";
 my $BarImageVertical_k   = "barrevk.png";
 my $BarImageHorizontal_k = "barrehk.png";
 my $starttime;
-my $nowtim = my $nowweekofmonth = my $nowdaymod = my $nowsmallyear = 0;
-my $nowsec = my $nowmin = my $nowhour = my $nowday = my $nowmonth = my $nowyear = my $nowwday = 0;
-my $nowtime = my $tomorrowtime = my $tomorrowsmallyear = 0;
-my $tomorrowsec = my $tomorrowmin = my $tomorrowhour = my $tomorrowday = my $tomorrowmonth = my $tomorrowyear = my $tomorrowwday = 0;
+my $nowtime = my $tomorrowtime = 0;
+my $nowweekofmonth = my $nowdaymod = my $nowsmallyear = 0;
+my $nowsec = my $nowmin = my $nowhour = my $nowday = my $nowmonth = my $nowyear = my $nowwday = my $nowns = 0;
 my ($AllowAccessFromWebToAuthenticatedUsersOnly,$BarHeight,$BarWidth,$DebugResetDone,$Expires,
 $CreateDirDataIfNotExists, $KeepBackupOfHistoricFiles, $MaxLengthOfURL,
 $MaxNbOfDomain, $MaxNbOfHostsShown, $MaxNbOfKeywordsShown, $MaxNbOfLoginShown,
@@ -469,16 +472,25 @@ sub DateIsValid {
 }
 
 #------------------------------------------------------------------------------
-# Function:     return string of session length
+# Function:     return string of visit duration
 # Input:		$starttime $endtime
-# Output:		A string that identify the session length range
+# Output:		A string that identify the visit duration range
 #------------------------------------------------------------------------------
 sub SessionLastToSessionRange {
-	my $starttime=shift;
-	my $endtime=shift;
-	# TODO
-	
-	return "0-30s";
+	my @range=("0s-30s","30s-2mn","2mn-5mn","5mn-15mn","15mn-30mn","30mn-1h","1h+");
+	my $starttime = my $endtime;
+	if (shift =~ /(\d\d\d\d)(\d\d)(\d\d)(\d\d)(\d\d)(\d\d)/) { $endtime = Time::Local::timelocal($6,$5,$4,$3,$2,$1); }
+	if (shift =~ /(\d\d\d\d)(\d\d)(\d\d)(\d\d)(\d\d)(\d\d)/) { $starttime = Time::Local::timelocal($6,$5,$4,$3,$2,$1); }
+	my $delay=$endtime-$starttime;
+	debug("SessionLastToSessionRange $endtime - $starttime = $delay",4);
+	if ($delay <= 30) { return $range[0]; }
+	if ($delay > 30 && $delay <= 120) { return $range[1]; }
+	if ($delay > 120 && $delay <= 300) { return $range[2]; }
+	if ($delay > 300 && $delay <= 900) { return $range[3]; }
+	if ($delay > 900 && $delay <= 1800) { return $range[4]; }
+	if ($delay > 1800 && $delay <= 3600) { return $range[5]; }
+	if ($delay > 3600) { return $range[6]; }
+	return "error";
 }
 
 #------------------------------------------------------------------------------
@@ -813,7 +825,7 @@ sub Read_Language_Tooltip {
 sub Check_Config {
 	if ($Debug) { debug("Call to Check_Config"); }
 	# Main section
-	if ($LogFile =~ /%([ymdhwYMDHW]+)-(\d*)/) {
+	if ($LogFile =~ /%([ymdhwYMDHWNS]+)-(\d*)/) {
 		my $timephase=$2;
 		if ($Debug) { debug(" Found a time phase of $timephase hour in log file name",1); }
 		# Get older time
@@ -824,6 +836,7 @@ sub Check_Config {
 		if ($olderdaymod <= $olderwday) { if (($olderwday != 7) || ($olderdaymod != 0)) { $olderweekofmonth=$olderweekofmonth+1; } }
 		if ($olderdaymod >  $olderwday) { $olderweekofmonth=$olderweekofmonth+2; }
 		$olderweekofmonth = "0$olderweekofmonth";
+		my $olderns=Time::Local::timelocal(0,0,0,$olderday,$oldermonth,$olderyear);
 		if ($olderyear < 100) { $olderyear+=2000; } else { $olderyear+=1900; }
 		my $oldersmallyear=$olderyear;$oldersmallyear =~ s/^..//;
 		if (++$oldermonth < 10) { $oldermonth = "0$oldermonth"; }
@@ -838,6 +851,7 @@ sub Check_Config {
 		$LogFile =~ s/%HH-$timephase/$olderhour/ig;
 		$LogFile =~ s/%WM-$timephase/$olderweekofmonth/ig;
 		$LogFile =~ s/%DW-$timephase/$olderwday/ig;
+		$LogFile =~ s/%NS-$timephase/$olderns/ig;
 	}
 	# Replace %YYYY %YY %MM %DD %HH with current value. Kept for backward compatibility.
 	$LogFile =~ s/%YYYY/$nowyear/ig;
@@ -847,6 +861,7 @@ sub Check_Config {
 	$LogFile =~ s/%HH/$nowhour/ig;
 	$LogFile =~ s/%WM/$nowweekofmonth/ig;
 	$LogFile =~ s/%DW/$nowwday/ig;
+	$LogFile =~ s/%NS/$nowns/ig;
 	$LogFormat =~ s/\\//g;
 	if ($Debug) {
 		debug(" LogFile=$LogFile",1);
@@ -1058,7 +1073,7 @@ sub Check_Config {
 	if (! $Message[114]) { $Message[114]="WhoIs info"; }
 	if (! $Message[115]) { $Message[115]="OK"; }
 	if (! $Message[116]) { $Message[116]="Exit Pages"; }
-	if (! $Message[117]) { $Message[117]="Visit length"; }
+	if (! $Message[117]) { $Message[117]="Visits duration"; }
 	# Check if DirData is OK
 	if (! -d $DirData) {
 		if ($CreateDirDataIfNotExists) {
@@ -2459,6 +2474,7 @@ $starttime=time;
 $nowweekofmonth=int($nowday/7);
 $nowdaymod=$nowday%7;
 $nowwday++;
+$nowns=Time::Local::timelocal(0,0,0,$nowday,$nowmonth,$nowyear); 
 if ($nowdaymod <= $nowwday) { if (($nowwday != 7) || ($nowdaymod != 0)) { $nowweekofmonth=$nowweekofmonth+1; } }
 if ($nowdaymod >  $nowwday) { $nowweekofmonth=$nowweekofmonth+2; }
 $nowweekofmonth = "0$nowweekofmonth";
@@ -2471,9 +2487,8 @@ if ($nowmin < 10) { $nowmin = "0$nowmin"; }
 if ($nowsec < 10) { $nowsec = "0$nowsec"; }
 $nowtime=int($nowyear.$nowmonth.$nowday.$nowhour.$nowmin.$nowsec);
 # Get tomorrow time (will be used to discard some record with corrupted date (future date))
-($tomorrowsec,$tomorrowmin,$tomorrowhour,$tomorrowday,$tomorrowmonth,$tomorrowyear) = localtime($starttime+86400);
+my ($tomorrowsec,$tomorrowmin,$tomorrowhour,$tomorrowday,$tomorrowmonth,$tomorrowyear) = localtime($starttime+86400);
 if ($tomorrowyear < 100) { $tomorrowyear+=2000; } else { $tomorrowyear+=1900; }
-$tomorrowsmallyear=$tomorrowyear;$tomorrowsmallyear =~ s/^..//;
 if (++$tomorrowmonth < 10) { $tomorrowmonth = "0$tomorrowmonth"; }
 if ($tomorrowday < 10) { $tomorrowday = "0$tomorrowday"; }
 if ($tomorrowhour < 10) { $tomorrowhour = "0$tomorrowhour"; }
@@ -2573,7 +2588,7 @@ if ($Debug) { debug("UpdateStats is $UpdateStats",2); }
 if ($UpdateStats) {
 
 	if ($DNSLookup) {
-	#	eval { use Sockets; };
+	#	eval { use Socket; };
 	#	if ($@){
 	#		error("Error: The perl 'Socket' module is not installed. Install it from CPAN or use a more 'standard' perl interpreter.\n");
 	#	}
@@ -2908,6 +2923,8 @@ if ($UpdateStats) {
 		if ($monthnum{$dateparts[1]}) { $dateparts[1]=$monthnum{$dateparts[1]}; }	# Change lib month in num month if necessary
 
 		# Create $timerecord like YYYYMMDDHHMMSS
+#		my ($nsec,$nmin,$nhour,$nmday,$nmon,$nyear,$nwday) = localtime(Time::Local::timelocal($dateparts[5], $dateparts[4], $dateparts[3], $dateparts[0], $dateparts[1], $dateparts[2]) + 3600);
+#		@dateparts = split(/:/, sprintf("%02u:%02u:%04u:%02u:%02u:%02u", $nmday, $nmon, $nyear+1900, $nhour, $nmin, $nsec)); 
 		my $timerecord=int($dateparts[2].$dateparts[1].$dateparts[0].$dateparts[3].$dateparts[4].$dateparts[5]);	# !!!
 		my $yearrecord=int($dateparts[2]);
 		my $monthrecord=int($dateparts[1]);
@@ -3077,8 +3094,8 @@ if ($UpdateStats) {
 			$LastTime{$yearmonth} = $timerecord;
 			$DayPages{$yearmonthdayrecord}++;
 			$MonthPages{$yearmonth}++;
-			$_time_p[$hourrecord]++;												#Count accesses for hour (page)
-			$_url_p{$field[$pos_url]}++; 												#Count accesses for page (page)
+			$_time_p[$hourrecord]++;											#Count accesses for hour (page)
+			$_url_p{$field[$pos_url]}++; 										#Count accesses for page (page)
 			$_url_k{$field[$pos_url]}+=$field[$pos_size];
 		}
 		$_time_h[$hourrecord]++; $MonthHits{$yearmonth}++; $DayHits{$yearmonthdayrecord}++;	#Count accesses for hour (hit)
@@ -3089,10 +3106,10 @@ if ($UpdateStats) {
 		if ($field[$pos_logname] && $field[$pos_logname] ne "-") {
 			# We found an authenticated user
 			if ($PageBool) {
-				$_login_p{$field[$pos_logname]}++;										#Count accesses for page (page)
+				$_login_p{$field[$pos_logname]}++;								#Count accesses for page (page)
 			}
-			$_login_h{$field[$pos_logname]}++;											#Count accesses for page (hit)
-			$_login_k{$field[$pos_logname]}+=$field[$pos_size];							#Count accesses for page (kb)
+			$_login_h{$field[$pos_logname]}++;									#Count accesses for page (hit)
+			$_login_k{$field[$pos_logname]}+=$field[$pos_size];					#Count accesses for page (kb)
 			$_login_l{$field[$pos_logname]}=$timerecord;
 		}
 
