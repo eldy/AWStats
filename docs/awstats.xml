@@ -35,7 +35,7 @@
         <Program_Name>AWStats</Program_Name>
         <Program_Version>5.4</Program_Version>
         <Program_Release_Month>02</Program_Release_Month>
-        <Program_Release_Day>10</Program_Release_Day>
+        <Program_Release_Day>23</Program_Release_Day>
         <Program_Release_Year>2003</Program_Release_Year>
         <Program_Cost_Dollars>0</Program_Cost_Dollars>
         <Program_Cost_Other_Code />
@@ -50,7 +50,7 @@
         <Filename_Previous>awstats.zip</Filename_Previous>
         <Filename_Generic>awstats.zip</Filename_Generic>
         <Filename_Long>awstats.zip</Filename_Long>
-        <File_Size_Bytes>719976</File_Size_Bytes>
+        <File_Size_Bytes>719988</File_Size_Bytes>
         <File_Size_K>703</File_Size_K>
         <File_Size_MB>0.70</File_Size_MB>
     </File_Info>
