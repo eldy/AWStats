@@ -48,8 +48,8 @@
 $DIR, $DNSLookup, $DayRequired, $Debug, $DefaultFile,
 $DirCgi, $DirData, $DirIcons, $DirLang,
 $DetailedReportsOnNewWindows, $Expires, $Extension, $FileConfig, $FileSuffix, $FirstDayOfWeek,
-$FirstTime, $HTMLHeadSection, $HTMLEndSection, $Host, $LastTime, $LastUpdate,
-$LogFile, $LogFormat, $LogFormatString, $Logo, $LogoLink,
+$FirstTime, $HTMLHeadSection, $HTMLEndSection, $Host, $KeepBackupOfHistoricFiles,
+$LastTime, $LastUpdate, $LogFile, $LogFormat, $LogFormatString, $Logo, $LogoLink,
 $MaxNbOfDays, $MaxNbOfHostsShown, $MaxNbOfKeywordsShown, $MaxNbOfLoginShown,
 $MaxNbOfPageShown, $MaxNbOfRefererShown, $MaxNbOfRobotShown,
 $MinHitFile, $MinHitHost, $MinHitKeyword, $MinHitLogin, $MinHitRefer, $MinHitRobot,
@@ -82,7 +82,7 @@ $WarningMessages= 1;
 %MonthBytes = %MonthHits = %MonthHostsKnown = %MonthHostsUnknown = %MonthPages = %MonthUnique = %MonthVisits =
 %monthlib = %monthnum = ();
 
-$VERSION="3.2 (build 41)";
+$VERSION="3.2 (build 43)";
 $Lang="en";
 
 # Default value
@@ -430,21 +430,22 @@ sub Read_Config_File {
 			$LogFile =~ s/%HH/$nowhour/g;
 			next;
 			}
-		if ($param =~ /^LogFormat/)            { $LogFormat=$value; next; }
-		if ($param =~ /^AllowToUpdateStatsFromBrowser/)	{ $AllowToUpdateStatsFromBrowser=$value; next; }
-		if ($param =~ /^HostAliases/) {
-			my @felter=split(/\s+/,$value);
-			$i=0; foreach $elem (@felter)      { $HostAliases[$i]=$elem; $i++; }
-			next;
-			}
+		if ($param =~ /^LogFormat/)            	{ $LogFormat=$value; next; }
+		if ($param =~ /^DNSLookup/)             { $DNSLookup=$value; next; }
 		if ($param =~ /^DirData/)               { $DirData=$value; next; }
 		if ($param =~ /^DirCgi/)                { $DirCgi=$value; next; }
 		if ($param =~ /^DirIcons/)              { $DirIcons=$value; next; }
-		if ($param =~ /^DNSLookup/)             { $DNSLookup=$value; next; }
+		if ($param =~ /^AllowToUpdateStatsFromBrowser/)	{ $AllowToUpdateStatsFromBrowser=$value; next; }
+		if ($param =~ /^SiteDomain/)			{ $SiteDomain=$value; next; }
+		if ($param =~ /^HostAliases/) {
+			my @felter=split(/\s+/,$value);
+			$i=0; foreach $elem (@felter)		{ $HostAliases[$i]=$elem; $i++; }
+			next;
+			}
 		# Read optional section
 		if ($param =~ /^PurgeLogFile/)          { $PurgeLogFile=$value; next; }
 		if ($param =~ /^ArchiveLogRecords/)     { $ArchiveLogRecords=$value; next; }
-		if ($param =~ /^SiteDomain/)			{ $SiteDomain=$value; next; }
+		if ($param =~ /^KeepBackupOfHistoricFiles/)     { $KeepBackupOfHistoricFiles=$value; next; }
 		if ($param =~ /^Lang/)                  { $Lang=$value; next; }
 		if ($param =~ /^DirLang/)               { $DirLang=$value; next; }
 		if ($param =~ /^DefaultFile/)           { $DefaultFile=$value; next; }
@@ -669,9 +670,10 @@ sub Check_Config {
 	if ($LogFormat =~ /^[\d]$/ && $LogFormat !~ /[1-5]/)  { error("Error: LogFormat parameter is wrong. Value is '$LogFormat' (should be 1,2,3,4,5 or a 'personalised AWtats log format string')"); }
 	if ($DNSLookup !~ /[0-1]/)                            { error("Error: DNSLookup parameter is wrong. Value is '$DNSLookup' (should be 0 or 1)"); }
 	if ($AllowToUpdateStatsFromBrowser !~ /[0-1]/) 	{ $AllowToUpdateStatsFromBrowser=1; }	# For compatibility, is 1 if not defined
+	# Optional section
 	if ($PurgeLogFile !~ /[0-1]/)                 	{ $PurgeLogFile=0; }
 	if ($ArchiveLogRecords !~ /[0-1]/)            	{ $ArchiveLogRecords=1; }
-	# Optional section
+	if ($KeepBackupOfHistoricFiles !~ /[0-1]/)     	{ $KeepBackupOfHistoricFiles=0; }
 	if ($DefaultFile eq "")                       	{ $DefaultFile="index.html"; }
 	if ($URLWithQuery !~ /[0-1]/)                 	{ $URLWithQuery=0; }
 	if ($WarningMessages !~ /[0-1]/)              	{ $WarningMessages=1; }
@@ -1245,7 +1247,7 @@ sub Save_History_File {
 	print HISTORYTMP "END_ROBOT\n";
 
 	# Navigation
-	# Save page list in score sorted order to allow to show reports faster and saving memory.
+	# We save page list in score sorted order to allow to show reports faster and save memory.
 	print HISTORYTMP "BEGIN_SIDER\n";
 	foreach my $key (sort {$SortDir*$_url_p{$a} <=> $SortDir*$_url_p{$b}} keys %_url_p) {
 		$newkey=$key;
@@ -1289,9 +1291,9 @@ sub Save_History_File {
 	print HISTORYTMP "END_PAGEREFS\n";
 	print HISTORYTMP "BEGIN_SEARCHWORDS\n";
 	foreach my $key (keys %_keyphrases) { 
-		if ($_keyphrases{$key} =~ /^[\w\+\-\/\\\.\s]+$/) {	# We do not save keyphrase if contains non ascii chars to avoid file corruption
-			print HISTORYTMP "$key $_keyphrases{$key}\n";
-		}
+		my $newkey=$key;
+		if (! &IsAscii($newkey)) { $newkey="NonAsciiKeyphrase"; }
+		print HISTORYTMP "$newkey $_keyphrases{$key}\n";
 		next;
 	}
 	print HISTORYTMP "END_SEARCHWORDS\n";
@@ -1301,10 +1303,30 @@ sub Save_History_File {
 	foreach my $key (keys %_errors_h) { print HISTORYTMP "$key $_errors_h{$key}\n"; next; }
 	print HISTORYTMP "END_ERRORS\n";
 	print HISTORYTMP "BEGIN_SIDER_404\n";
-	foreach my $key (keys %_sider404_h) { print HISTORYTMP "$key $_sider404_h{$key} $_referer404_h{$key}\n"; next; }
+	foreach my $key (keys %_sider404_h) { 
+		my $newkey=$key;
+		my $newreferer=$_referer404_h{$key};
+		if (! &IsAscii($newkey)) { $newkey="NonAsciiURL"; }
+		if (! &IsAscii($newreferer)) { $newreferer="NonAsciiReferer"; }
+		print HISTORYTMP "$newkey $_sider404_h{$key} $newreferer\n";
+		next;
+	}
 	print HISTORYTMP "END_SIDER_404\n";
 
 	close(HISTORYTMP);
+}
+
+#--------------------------------------------------------------------
+# Function:     Return time elapsed since last call in miliseconds
+# Input:        None
+# Return:       Number of miliseconds elapsed since last call
+#--------------------------------------------------------------------
+sub GetDelaySinceStart {
+	my ($newseconds, $newmicroseconds) = gettimeofday;			# Try to use Time::HiRes function (provide milliseconds)
+	if ($newseconds eq "gettimeofday") { $newseconds=time(); }	# If not available use standard time function
+	if (! $startseconds) { $startseconds=$newseconds; $startmicroseconds=$newmicroseconds; }
+	my $nbms=$newseconds*1000+int($newmicroseconds/1000)-$startseconds*1000-int($startmicroseconds/1000);
+	return ($nbms);
 }
 
 #--------------------------------------------------------------------
@@ -1327,7 +1349,25 @@ sub Init_HashArray {
 	%_keyphrases = %_os_h = %_pagesrefs_h = %_robot_h = %_robot_l = 
 	%_login_h = %_login_p = %_login_k = %_login_l =
 	%_se_referrals_h = %_sider404_h = %_url_p = %_url_e =
-	%_unknownip_l = %_unknownreferer_l =	%_unknownrefererbrowser_l = ();
+	%_unknownip_l = %_unknownreferer_l = %_unknownrefererbrowser_l = ();
+}
+
+#--------------------------------------------------------------------
+# Function:     Copy one file into another
+# Input:        sourcefilename targetfilename
+# Return:		0 if copy is ok, 1 else
+#--------------------------------------------------------------------
+sub FileCopy {
+	my $filesource = shift;
+	my $filetarget = shift;
+	debug("FileCopy($filesource,$filetarget)",1);
+	open(FILESOURCE,"$filesource") || return 1;
+	open(FILETARGET,">$filetarget") || return 1;
+	# ...
+	close(FILETARGET);
+	close(FILESOURCE);
+	debug(" File copied",1);
+	return 0;
 }
 
 #--------------------------------------------------------------------
@@ -1367,10 +1407,10 @@ sub Show_Flag_Links {
 	}
 }
 
-#------------------------------------------------------------------------------
+#--------------------------------------------------------------------
 # Function:      Format value in bytes in a string (Bytes, Kb, Mb, Gb)
 # Input:         bytes
-#------------------------------------------------------------------------------
+#--------------------------------------------------------------------
 sub Format_Bytes {
 	my $bytes = shift;
 	my $fudge = 1;
@@ -1403,18 +1443,22 @@ sub Format_Date {
 	return "$dateformat";
 }
 
-#------------------------------------------------------------------------------
-# Function:     Return time elapsed since last call in miliseconds
-# Input:        None
-# Return:       Number of miliseconds elapsed since last call
-#------------------------------------------------------------------------------
-sub GetDelaySinceStart {
-	my ($newseconds, $newmicroseconds) = gettimeofday;			# Try to use Time::HiRes function
-	if ($newseconds eq "gettimeofday") { $newseconds=time(); }	# If not available use standard time function
-	if (! $startseconds) { $startseconds=$newseconds; $startmicroseconds=$newmicroseconds; }
-	my $nbms=$newseconds*1000+int($newmicroseconds/1000)-$startseconds*1000-int($startmicroseconds/1000);
-	return ($nbms);
+#--------------------------------------------------------------------
+# Function:     Return 1 if string contains only ascii chars
+# Input:        String
+# Return:       0 or 1
+#--------------------------------------------------------------------
+sub IsAscii {
+	my $string=shift;
+	debug("IsAscii($string)",4);
+	if ($string =~ /^[\w\+\-\/\\\.%,;:=\"\'&?!\s]+$/) {
+		debug(" Yes",4);
+		return 1;		# Only alphanum chars (and _) or + - / \ . % , ; : = " ' & ? space \t
+	}
+	debug(" No",4);
+	return 0;
 }
+
 
 #--------------------------------------------------------------------
 # MAIN
@@ -2315,8 +2359,22 @@ if ($UpdateStats) {
 	@filearray = sort readdir DIR;
 	close DIR;
 	foreach $i (0..$#filearray) {
-		if ("$filearray[$i]" =~ /^$PROG([\d][\d][\d][\d][\d][\d])$FileSuffix\.tmp\..*$/) {
-			if (-s "$DirData/$PROG$1$FileSuffix.tmp.$$") {	# Rename files of this session with size > 0
+		if ("$filearray[$i]" =~ /^$PROG(\d\d\d\d\d\d)$FileSuffix\.tmp\..*$/) {
+			debug("Rename new tmp historic $PROG$1$FileSuffix.tmp.$$ into $PROG$1$FileSuffix.txt",1);
+			if (-s "$DirData/$PROG$1$FileSuffix.tmp.$$") {		# Rename files of this session with size > 0
+				if ($KeepBackupOfHistoricFiles) {
+					if (-s "$DirData/$PROG$1$FileSuffix.txt") {	# Historic file already exists. We backup it
+						debug(" Make a backup of old historic file into $PROG$1$FileSuffix.bak before",1);
+						#if (FileCopy("$DirData/$PROG$1$FileSuffix.txt","$DirData/$PROG$1$FileSuffix.bak")) {
+						if (rename("$DirData/$PROG$1$FileSuffix.txt", "$DirData/$PROG$1$FileSuffix.bak")==0) {
+							warning("Warning: Failed to make a backup of \"$DirData/$PROG$1$FileSuffix.txt\" into \"$DirData/$PROG$1$FileSuffix.bak\".\n");
+						}
+						chmod 0666,"$DirData/$PROG$1$FileSuffix.bak";
+					}
+					else {
+						debug(" No need to backup old historic file",1);
+					}
+				}
 				if (rename("$DirData/$PROG$1$FileSuffix.tmp.$$", "$DirData/$PROG$1$FileSuffix.txt")==0) {
 					$allok=0;	# At least one error in renaming working files
 					# Remove file
