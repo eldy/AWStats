@@ -96,7 +96,12 @@ if (&foreign_check("apache") && $auto{'apache'}) {
 
 # Build list of config files from allowed directories
 foreach my $dir (split(/\s+/, $access{'dir'})) {
-	push(@config, map { $_->{'custom'} = 1; $_ } &scan_config_dir($dir));
+	my @conflist=();
+	push(@conflist, map { $_->{'custom'} = 1; $_ } &scan_config_dir($dir));
+	foreach my $file (@conflist) {	
+		next if (!&can_edit_config($file));
+		push @config, $file;
+	}
 }
 
 # Write message for allowed directories
@@ -138,13 +143,6 @@ if (@config) {
 		print "<tr $cb>\n";
 
 		local ($size, $latest);
-#		foreach $f (@files) {
-#			local @st = stat($f);
-#			$size += $st[7];
-#			$latest = $st[9] if ($st[9] > $latest);
-#			}
-#		$latest = $latest ? localtime($latest) : "<br>";
-
 		print "<td>";
 		print "$l";
 		if ($access{'global'}) {	# Edit config

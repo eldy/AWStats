@@ -93,8 +93,8 @@ print "<tr $cb> <td><table width=100%>\n";
 my $filenametosave="";
 if ($in{'new'}) {
 	print "<tr> <td><b>$text{'edit_add'}</b></td> <td>\n";
-#	print "<input type=text name=new size=40 value='$config{'awstats_conf'}/awstats.newconfig.conf'>";
-	print "<input type=text name=new size=40 value='/etc/awstats/awstats.newconfig.conf'>";
+#	print "<input type=text name=new size=50 value='$config{'awstats_conf'}/awstats.newconfig.conf'>";
+	print "<input type=text name=new size=50 value='/etc/awstats/awstats.newconfig.conf'>";
 	print "</td> <td> </td> </tr>\n";
 	print "<tr> <td colspan=3><hr></td> </tr>\n";
 } else {
@@ -104,7 +104,7 @@ print "<input type=hidden name=oldfile value='$in{'file'}'>\n";
 
 print "<tr> <td colspan=3>MAIN SETUP SECTION (Required to make AWStats work)<br><hr></td> </tr>\n";
 
-print "<tr> <td><b>LogFile</b></td> <td> <input type=text name=LogFile size=40 value='$lconf->{'LogFile'}'> ".&file_chooser_button("LogFile",0,0)." </td> <td> ";
+print "<tr> <td><b>LogFile</b></td> <td> <input type=text name=LogFile size=50 value='$lconf->{'LogFile'}'> ".&file_chooser_button("LogFile",0,0)." </td> <td> ";
 print &hblink($text{'help_help'}, "help.cgi?param=LogFile")." </td> </tr>\n";
 print "<tr> <td><b>LogType</b></td> <td> ";
 print "<select name=LogType><option value='W'".($lconf->{'LogType'} eq 'W'?" selected":"").">W (Web server log file)</option>\n";
@@ -119,7 +119,7 @@ print "<tr> <td><b>LogSeparator</b></td> <td> <input size=10 name=LogSeparator t
 print &hblink($text{'help_help'}, "help.cgi?param=LogSeparator")." </td> </tr>\n";
 print "<tr> <td><b>SiteDomain</b></td> <td> <input name=SiteDomain type=text value='$lconf->{'SiteDomain'}'> </td> <td> ";
 print &hblink($text{'help_help'}, "help.cgi?param=SiteDomain")." </td> </tr>\n";
-print "<tr> <td><b>HostAliases</b></td> <td> <input size=40 name=HostAliases type=text value='$lconf->{'HostAliases'}'> </td> <td> ";
+print "<tr> <td><b>HostAliases</b></td> <td> <input size=50 name=HostAliases type=text value='$lconf->{'HostAliases'}'> </td> <td> ";
 print &hblink($text{'help_help'}, "help.cgi?param=HostAliases")." </td> </tr>\n";
 print "<tr> <td><b>DNSLookup</b></td> <td> <input size=10 name=DNSLookup type=text value='$lconf->{'DNSLookup'}'> </td> <td> ";
 print &hblink($text{'help_help'}, "help.cgi?param=DNSLookup")." </td> </tr>\n";

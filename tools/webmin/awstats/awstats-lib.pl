@@ -271,7 +271,7 @@ print "</table>\n";
 sub scan_config_dir
 {
 my $dir=shift;
-opendir(DIR, $dir) || die "Can't scan directory $dir";
+opendir(DIR, $dir) || return;
 local @rv = grep { /^awstats\.(.*)conf$/ } sort readdir(DIR);
 closedir(DIR);
 foreach my $file (0..@rv-1) {
