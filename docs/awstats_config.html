@@ -269,6 +269,8 @@ when reading it), follow the example:<br>
 <br># Example: "C:/WINNT/system32/LogFiles/W3SVC1/ex%YY-24%MM-24%DD-24.log"
 <br># You can also use a pipe if log file come from a pipe.
 <br># Example: "gzip -d &lt;/var/log/apache/access.log.gz |"
+<br># If there is several log files from load balancing servers :
+<br># Example: "/pathtotools/logresolvemerge.pl *.log |"
 <br>#
 <br>LogFile="/var/log/httpd/mylog.log"
 
