@@ -25,6 +25,9 @@ New features/improvements:
 Other/Documentation:
 - Prepare code for decodeUTFkeys plugin.
 - Added debian icon.
+- Added Microsoft URL Control in robot list.
+- Litlle support for right to left languages.
+- Added asmx and aspx in mime.pm file.
 
 
 5.9
