@@ -10,9 +10,8 @@
 #use warnings;		# Must be used in test mode only. This reduce a little process speed
 #use diagnostics;	# Must be used in test mode only. This reduce a lot of process speed
 use strict;no strict "refs";
-use Socket;
 use Time::Local;	# use Time::Local 'timelocal_nocheck' is faster but not supported by all Time::Local modules
-
+use Socket;
 
 
 #-----------------------------------------------------------------------------
@@ -1376,7 +1375,7 @@ sub Read_Plugins {
 	foreach my $plugininfo (@PluginsToLoad) {
 		my @loadplugin=split(/\s+/,$plugininfo,2);
 		my $pluginfile=$loadplugin[0]; $pluginfile =~ s/\.pm$//i;
-		my $pluginparam=$loadplugin[1];
+		my $pluginparam=$loadplugin[1]||"";
 		$pluginfile =~ /([^\/\\]*)$/;
 		my $pluginname=$1;
 		if ($pluginname) {
@@ -3836,7 +3835,11 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {	# Updat
 	#------------------------------------------
 	if ($DNSLookup) {
 		&Read_DNS_Cache_File(\%MyDNSTable,"$DNSStaticCacheFile","",1);					# Load with save into a second plugin file if plugin enabled and second file not up to date. No use of FileSuffix
-		&Read_DNS_Cache_File(\%TmpDNSLookup,"$DNSLastUpdateCacheFile","$FileSuffix",0);	# Load with no save into a second plugin file. Use FileSuffix
+		if ($DNSLookup == 1) {		# System DNS lookup required
+			#if (! eval("use Socket;")) { &error("Failed to load perl module Socket."); }
+			#use Socket;
+			&Read_DNS_Cache_File(\%TmpDNSLookup,"$DNSLastUpdateCacheFile","$FileSuffix",0);	# Load with no save into a second plugin file. Use FileSuffix
+		}
 	}
 
 	# Processing log
