@@ -521,7 +521,7 @@ process.<br>
 <li> If your config file is setup with a <a href="awstats_config.html#LogFile">LogFile</a> parameter
 that point to your current running log file (required if you want to use the
 <a href="awstats_config.html#AllowToUpdateStatsFromBrowser">AllowToUpdateStatsFromBrowser</a>
-option to have "real-time" statistics), if you don't want to loose any records during the rotate
+option to have "real-time" statistics), to avoid loosing too much records during the rotate
 process, you must run the AWStats update JUST BEFORE the rotate process is done.<br>
 The best way to do that on Linux like OS is to use the linux built-in logrotate feature. You must
 edit the logrotate config file used for you web server log file (usually stored in /etc/logrotate.d
@@ -544,9 +544,20 @@ postrotate<br>
 endscript<br>
 }<br>
 </i>
+The advantage of this solution is that it is easy to setup and the data loss should not be
+significant. You will still forget some of hits that occured after the end of the 
+awstats reading log and the apache change of its log target. This times depends on
+time of writing updated awstats database but also time for apache threads to finish and this
+is not same for all apache threads (threads busy or not). So as a conclusion, you will
+loose some hits, but loss should not be significant in most cases.
+What's really wrong is that the HUP signal kill the Apache thread if, after waiting 
+few milliseconds, it's still busy. This means that a transaction process might be killed
+and visitor session disconnected.<br>
+Note also that if you have x logrotate config files with each of them a postrotate with a
+kill -HUP, you send a kill x times your server process.<br>
 <br>
 
-<li> If you choose to run the AWStats update process on the last archived log files, why not.<br>
+<li> You can also choose to run the AWStats update process on the last archived log files.<br>
 This is required for example if you use the <a href="http://cronolog.org" target=awstatsbis>cronolog</a>
 or rotatelog tools to rotate your log files. For example, Apache users can setup their Apache
 httpd config file to write log file through a pipe to cronolog or rotatelog using
@@ -556,6 +567,19 @@ If you use a such feature, you can't trigger AWStats update process to be ran ju
 rotate is done, so you must run it AFTER the rotate process, so on the archived log file.<br>
 To setup awstats to always point to last archive log file, you can use the 'tags' available for
 <a href="awstats_config.html#LogFile">LogFile</a>.<br>
+The problem with that is that your data are refreshed only after a rotate has done.<br>
+<br>
+<li> So, if you really want to not loose absolutely no hit and want to have updates more
+frequently than the rotate frequency, the best way is still an hybrid solution (i am not sure
+that it worth the pain, and remember that statistics are only statistics):<br>
+You run the awstats update process from you crontab every hour for example and half and hour
+before the rotate has done.
+Then, once the rotate has been done, and before the next scheduled awstats update process start,
+you run another update process on the archived log file using the -logfile option to force
+update on the archived log file and not the log file that is currently defined in awstats
+config file and used by cron update. This will allow you to update the half hour missing,
+until the log rotate (AWStats will find the new lines). However don't forget that this
+particular update must finished before the next croned update.<br>
 <br>
 
 <a name="CRONTAB"></a><br>
