@@ -10,6 +10,7 @@ New features/improvements:
 - Add a page for a summary of all config files on same pages.
 - Added a row number on each row of index page.
 - Translation more complete.
+- Report GeoIP country, regions, city, isp and organizations versions.
 
 
 1.300
