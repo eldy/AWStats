@@ -40,8 +40,9 @@ $NOTSORTEDRECORDTOLERANCE=10000;	# Laps of time to accept a record if not in cor
 $MAXDIFFEXTRA=500;
 $WIDTHCOLICON=32;
 # Plugins variable
-use vars qw/ %PluginsLoaded /;
+use vars qw/ %PluginsLoaded $PluginDir /;
 %PluginsLoaded=();
+$PluginDir='';
 # Running variables
 use vars qw/
 $DIR $PROG $Extension
@@ -300,17 +301,6 @@ use vars qw/
 #use Tie::Cache::LRU;
 #tie %_host_p, 'Tie::StdHash';
 #tie %TmpOS, 'Tie::Cache::LRU';
-
-# Those addresses are shown with those lib (First column is full exact relative URL, second column is text to show instead of URL)
-use vars qw/ %Aliases /;
-%Aliases = (
-			'/',                            '<b>HOME PAGE</b>',
-			'/cgi-bin/awstats.pl',			'<b>AWStats stats page</b>',
-			'/cgi-bin/awstats/awstats.pl',	'<b>AWStats stats page</b>',
-			# Following the same example, you can put here HTML text you want to see in links instead of URL text.
-#			'/YourRelativeUrl',				'<b>Your HTML text</b>'
-			);
-
 
 # PROTOCOL CODES
 
@@ -1516,6 +1506,7 @@ sub Check_Config {
 	if ($EnableLockForUpdate !~ /[0-1]/)           	{ $EnableLockForUpdate=0; }
 	if (! $DNSStaticCacheFile)                     	{ $DNSStaticCacheFile="dnscache.txt"; }
 	if (! $DNSLastUpdateCacheFile)                 	{ $DNSLastUpdateCacheFile="dnscachelastupdate.txt"; }
+	if ($DNSStaticCacheFile eq $DNSLastUpdateCacheFile)	{ error("Error: DNSStaticCacheFile and DNSLastUpdateCacheFile must have different values."); }
 	if ($AllowAccessFromWebToAuthenticatedUsersOnly !~ /[0-1]/)     { $AllowAccessFromWebToAuthenticatedUsersOnly=0; }
 	if ($CreateDirDataIfNotExists !~ /[0-1]/)      	{ $CreateDirDataIfNotExists=0; }
 	if ($SaveDatabaseFilesWithPermissionsForEveryone !~ /[0-1]/)	{ $SaveDatabaseFilesWithPermissionsForEveryone=1; }
@@ -1700,6 +1691,7 @@ sub Read_Plugins {
 					if ($searchdir && (!($searchdir =~ /\/$/)) && (!($searchdir =~ /\\$/)) ) { $searchdir .= "/"; }
 					my $pluginpath="${searchdir}${pluginfile}.pm";
 					if (-s "$pluginpath") {
+						$PluginDir="${searchdir}";	# Set plugin dir
 						if ($Debug) { debug(" Try to init plugin '$pluginname' ($pluginpath) with param '$pluginparam'",1); }
 						my $loadret=require "$pluginpath";
 						if (! $loadret || $loadret =~ /^error/i) {
@@ -4160,7 +4152,14 @@ sub ShowFormFilter() {
 #--------------------------------------------------------------------
 sub ShowURL() {
 	my $url=shift;
-	my $nompage=$Aliases{$url}?$Aliases{$url}:CleanFromCSSA($url);
+	my $nompage=CleanFromCSSA($url);
+
+	# Call to plugin function ReplaceURL
+	foreach my $pluginname (keys %{$PluginsLoaded{'ReplaceURL'}})  {
+		my $function="ReplaceURL_$pluginname('$url')";
+		eval("$function");
+	}
+
 	if (length($nompage)>$MaxLengthOfURL) { $nompage=substr($nompage,0,$MaxLengthOfURL)."..."; }
 	if ($ShowLinksOnUrl) {
 		my $newkey=CleanFromCSSA($url);

@@ -4,6 +4,7 @@ AWStats Changelog
 
 5.2
 
+- Added urlalias plugin to replace URL values in URL reports by a text.
 - Added geoip plugin to track countries from IP location instead of domain
   value.
 - Support for postfix mail log.
