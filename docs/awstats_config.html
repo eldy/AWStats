@@ -308,17 +308,18 @@ when reading it), follow the example:<br>
 
 <a name="DNSLookup"><b>DNSLookup</b></a><br>
 <b>Version : </b>1.0 + (5.0 + for value 2) <br>
-<br># If you want to have information on domains/countries visitors, you must ask
-<br># AWStats to make reverse DNS lookup (if not already done in your log file).
+<br># If you want to have hosts reported by name instead of ip address, AWStats
+<br># need to make reverse DNS lookups (if not already done in your log file).
 <br># With DNSLookup to 0, all hosts will be reported by their IP addresses and
-<br># not by the full hostname of visitors. Domain/Country chart will also report
-<br># all visitors from a domain/country "Unknown".
-<br># If you need to set DNSLookup to 1, don't forget that this will reduce
+<br># not by the full hostname of visitors.
+<br># If you want to set DNSLookup to 1, don't forget that this will reduce
 <br># dramatically AWStats update process speed. Do not use on large web sites.
+<br># Note: Country detection can works without reverse DNS lookup if plugin
+<br># 'geoip' is enabled (faster and more accurate than reverse DNS lookup).
 <br># Possible values:
-<br>#  0 No DNS Lookup
-<br>#  1 DNS Lookup is fully enabled
-<br>#  2 DNS Lookup is made only from DNS cache files
+<br># 0 - No DNS Lookup
+<br># 1 - DNS Lookup is fully enabled
+<br># 2 - DNS Lookup is made only from DNS cache files (if exist)
 <br># Default: 2
 <br># 
 <br>DNSLookup=2
@@ -812,11 +813,11 @@ when reading it), follow the example:<br>
 
 <a name="URLQuerySeparators"><b>URLQuerySeparators</b></a><br>
 <b>Version : </b>5.2 +<br>
-<br># In URL links, "?" char is used to add parameters list in URLs. Syntax is:
+<br># In URL links, "?" char is used to add parameter's list in URLs. Syntax is:
 <br># /mypage.html?param1=value1
 <br># However, some servers/sites have also others chars to isolate dynamic part of
-<br># their URLs. You can complete this list with this parameter.
-<br># Example: "?"
+<br># their URLs. You can complete this list with all such characters.
+<br># Example: "?;,"
 <br># Default: "?;"
 <br>#
 <br>URLQuerySeparators="?;"
@@ -854,7 +855,7 @@ when reading it), follow the example:<br>
 <br># /mypage.cgi?p=abc&id=Yo4UomP9d and /mypage.cgi?p=abc&id=Mu8fdxl3r
 <br># will be reported as 2 hits on /mypage.cgi?p=abc
 <br># This parameter is not used when URLWithQuery is 0.
-<br># Example: "PHPSESSID"
+<br># Example: "PHPSESSID jsessionid"
 <br># Default: ""
 <br># 
 <br>URLWithQueryWithoutFollowingParameters=""
