@@ -32,6 +32,7 @@ New features/improvements:
   session.
 - Better management of plugin load failure.
 - Added LogType parameter.
+- Added option -dnscache= in logresolvemerge.pl to use dns static file.
 
 Other/Documentation:
 - The "Popup WhoIs link" code is now handled by new 'hostinfo' plugin.

@@ -41,8 +41,9 @@ my $DIR;
 my $PROG;
 my $Extension;
 my $DNSLookup=0;
-my $DirCgi="";
-my $DirData="";
+my $DNSCache='';
+my $DirCgi='';
+my $DirData='';
 my $DNSLookupAlreadyDone=0;
 my $NbOfLinesShowsteps=0;
 
@@ -56,10 +57,7 @@ my %corrupted=();
 my %TmpDNSLookup =();
 my %QueueHostsToResolve=();
 my %QueueRecords=();
-
-# These table is used to make fast reverse DNS lookup for particular IP adresses.
-# You can add your own IP adresses resolutions.
-my %MyDNSTable = ();
+my %MyDNSTable=();
 
 
 
@@ -127,18 +125,22 @@ sub MakeDNSLookup {
 #-----------------------------------------------------------------------------
 # MAIN
 #-----------------------------------------------------------------------------
-my $QueryString=''; for (0..@ARGV-1) { $QueryString .= "$ARGV[$_] "; }
-if ($QueryString =~ /debug=(\d)/i) { $Debug=$1; }
-if ($QueryString =~ /dnslookup/i)  { $DNSLookup=1; }
-if ($QueryString =~ /showsteps/i)  { $ShowSteps=1; }
-if ($QueryString =~ /addfilenum/i) { $AddFileNum=1; }
 ($DIR=$0) =~ s/([^\/\\]*)$//; ($PROG=$1) =~ s/\.([^\.]*)$//; $Extension=$1;
 
 my $cpt=1;
 for (0..@ARGV-1) {
-	if ($ARGV[$_] =~ /^-/) { next; }
-	$ParamFile{$cpt}=$ARGV[$_];
-	$cpt++;
+	if ($ARGV[$_] =~ /^-/) {
+		if ($ARGV[$_] =~ /debug=(\d)/i) { $Debug=$1; }
+		elsif ($ARGV[$_] =~ /dnscache=/i) { $DNSLookup||=2; $DNSCache=$ARGV[$_]; $DNSCache =~ s/-dnscache=//; }
+		elsif ($ARGV[$_] =~ /dnslookup/i) { $DNSLookup=1; }
+		elsif ($ARGV[$_] =~ /showsteps/i) { $ShowSteps=1; }
+		elsif ($ARGV[$_] =~ /addfilenum/i) { $AddFileNum=1; }
+		else { print "Unknown argument $ARGV[$_] ignored\n"; }
+	}
+	else {
+		$ParamFile{$cpt}=$ARGV[$_];
+		$cpt++;
+	}
 }
 if (scalar keys %ParamFile == 0) {
 	print "----- $PROG $VERSION (c) Laurent Destailleur -----\n";
@@ -155,11 +157,12 @@ if (scalar keys %ParamFile == 0) {
 	print "  $PROG.$Extension [options] file1 ... filen\n";
 	print "  $PROG.$Extension [options] *.*\n";
 	print "Options:\n";
-	print "  -dnslookup    make a reverse DNS lookup on IP adresses (not done by default)\n";
-#	print "  -dnslookup:n  same with a n parallel threads instead of $QueuePoolSize by default\n";
-	print "  -showsteps    print on stderr benchmark information every $NBOFLINESFORBENCHMARK lines\n";
-	print "  -addfilenum   if used with several files, file number can be added in first\n";
-	print "                field of output file.\n";
+	print "  -dnslookup     make a reverse DNS lookup on IP adresses\n";
+#	print "  -dnslookup:n   same with a n parallel threads instead of $QueuePoolSize by default\n";
+	print "  -dnscache=file make DNS lookup from cache file first before network lookup\n";
+	print "  -showsteps     print on stderr benchmark information every $NBOFLINESFORBENCHMARK lines\n";
+	print "  -addfilenum    if used with several files, file number can be added in first\n";
+	print "                 field of output file.\n";
 	print "\n";
 	print "This runs $PROG in command line to open one or several web\n";
 	print "server log files to merge them (sorted on date) and/or to make a reverse\n";
@@ -217,6 +220,20 @@ if ($DNSLookup) { use Socket; }
 #my %monthlib =  ( "01","$Message[60]","02","$Message[61]","03","$Message[62]","04","$Message[63]","05","$Message[64]","06","$Message[65]","07","$Message[66]","08","$Message[67]","09","$Message[68]","10","$Message[69]","11","$Message[70]","12","$Message[71]" );
 # monthnum must be in english because it's used to translate log date in apache log files which are always in english
 my %monthnum =  ( "Jan","01","jan","01","Feb","02","feb","02","Mar","03","mar","03","Apr","04","apr","04","May","05","may","05","Jun","06","jun","06","Jul","07","jul","07","Aug","08","aug","08","Sep","09","sep","09","Oct","10","oct","10","Nov","11","nov","11","Dec","12","dec","12" );
+
+&debug("DNSLookup=$DNSLookup");
+&debug("DNSCache=$DNSCache");
+
+if ($DNSCache) {
+	&debug("Load DNS Cache file $DNSCache",2);
+	open(CACHE, "<$DNSCache") or error("Can't open cache file $DNSCache");
+	while (<CACHE>) {
+		my ($time, $ip, $name) = split;
+		$name='ip' if $name eq '*';
+		$MyDNSTable{$ip}=$name;
+	}
+	close CACHE;
+}
 
 #-----------------------------------------------------------------------------
 # PROCESSING CURRENT LOG(s)
@@ -356,7 +373,7 @@ while (1 == 1)
 		}
 	}
 
-	# Analyze: IP-address
+	# Do DNS lookup
 	#--------------------
 	my $Host='';
 	my $HostResolved='';
@@ -368,7 +385,7 @@ while (1 == 1)
 			# Check in static DNS cache file
 			$HostResolved=$MyDNSTable{$Host};
 			if ($HostResolved) {
-				if ($Debug) { debug("  DNS lookup asked for $Host and found in DNS cache file: $HostResolved",4); }
+				if ($Debug) { debug("  DNS lookup asked for $Host and found in static DNS cache file: $HostResolved",4); }
 			}
 			elsif ($DNSLookup==1) {
 				# Check in session cache (dynamic DNS cache file + session DNS cache)
@@ -406,7 +423,7 @@ while (1 == 1)
 			}
 			else {
 				$HostResolved='*';
-				if ($Debug) { debug("  DNS lookup by file asked for $Host but not found in DNS cache file.",4); }
+				if ($Debug) { debug("  DNS lookup by static DNS cache file asked for $Host but not found.",4); }
 			}
 		}
 		else {
@@ -415,8 +432,8 @@ while (1 == 1)
 		}
 	}
 	else {
-		if ($Host =~ /^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/) { $HostResolved='*'; $ip=4; }	# IPv4
-		elsif ($Host =~ /^[0-9A-F]*:/i) { $HostResolved='*'; $ip=6; }						# IPv6
+		if ($linerecord{$logfilechosen} =~ /(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})/) { $HostResolved='*'; $ip=4; $Host=$1; }	# IPv4
+		elsif ($linerecord{$logfilechosen} =~ /([0-9A-F]*:)/i) { $HostResolved='*'; $ip=6; $Host=$1; }						# IPv6
 		if ($Debug) { debug("  No DNS lookup asked.",4); }
 	}
 
@@ -424,19 +441,38 @@ while (1 == 1)
 	debug("Add record $NbOfLinesParsed in queue (with host value ".($Host?$Host:'*').")",4);
 	$QueueRecords{$NbOfLinesParsed}=$linerecord{$logfilechosen};
 	# If there is a host to resolve, we add line to queue with value of HostResolved
-	$QueueHostsToResolve{$NbOfLinesParsed}=$Host?$Host:'*';
+	# $Host is '' (no ip found) or is ip
+	if ($DNSLookup==0) {
+		$QueueHostsToResolve{$NbOfLinesParsed}='*';
+	}
+	if ($DNSLookup==1) { 
+		$QueueHostsToResolve{$NbOfLinesParsed}=$Host?$Host:'*';
+	}
+	if ($DNSLookup==2) { 
+		# If ($HostResolved ne '*' and $Host) then MyDNSTable is defined for $Host
+		$QueueHostsToResolve{$NbOfLinesParsed}=($Host && $HostResolved ne '*')?$Host:'*';
+	}
 
 	# Print all records in head of queue that are ready
 	debug("Check head of queue to write records ready to flush (QueueCursor=$QueueCursor, QueueSize=".(scalar keys %QueueRecords).")",4);
-	while ( $QueueHostsToResolve{$QueueCursor} && ( ($QueueHostsToResolve{$QueueCursor} eq '*') || ($TmpDNSLookup{$QueueHostsToResolve{$QueueCursor}}) ) ) {
+	while ( $QueueHostsToResolve{$QueueCursor} && ( ($QueueHostsToResolve{$QueueCursor} eq '*') || ($MyDNSTable{$QueueHostsToResolve{$QueueCursor}}) || ($TmpDNSLookup{$QueueHostsToResolve{$QueueCursor}}) ) ) {
+		# $QueueCursor point to a ready record
 		if ($QueueHostsToResolve{$QueueCursor} eq '*') {
-			debug(" First elem in queue has a lookup result ending with 'no result'. We pull it.",4);
+			debug(" First elem in queue is ready. No change on it. We pull it.",4);
 		}
 		else {
-			if ($TmpDNSLookup {$QueueHostsToResolve{$QueueCursor}} ne '*') {
-				$QueueRecords{$QueueCursor}=~s/$QueueHostsToResolve{$QueueCursor}/$TmpDNSLookup{$QueueHostsToResolve{$QueueCursor}}/;
+			if ($MyDNSTable{$QueueHostsToResolve{$QueueCursor}}) {
+				if ($MyDNSTable{$QueueHostsToResolve{$QueueCursor}} ne '*') {
+					$QueueRecords{$QueueCursor}=~s/$QueueHostsToResolve{$QueueCursor}/$MyDNSTable{$QueueHostsToResolve{$QueueCursor}}/;
+					debug(" First elem in queue has been resolved ($MyDNSTable{$QueueHostsToResolve{$QueueCursor}}). We pull it.",4);
+				}
 			}
-			debug(" First elem in queue has been resolved ($TmpDNSLookup{$QueueHostsToResolve{$QueueCursor}}). We pull it.",4);
+			elsif ($TmpDNSLookup{$QueueHostsToResolve{$QueueCursor}}) {
+				if ($TmpDNSLookup{$QueueHostsToResolve{$QueueCursor}} ne '*') {
+					$QueueRecords{$QueueCursor}=~s/$QueueHostsToResolve{$QueueCursor}/$TmpDNSLookup{$QueueHostsToResolve{$QueueCursor}}/;
+					debug(" First elem in queue has been resolved ($TmpDNSLookup{$QueueHostsToResolve{$QueueCursor}}). We pull it.",4);
+				}
+			}
 		}
 		# Record is ready, we output it.
 		if ($AddFileNum) { print "$logfilechosen $QueueRecords{$QueueCursor}\n"; }
@@ -462,6 +498,17 @@ foreach my $logfilenb (keys %LogFileToDo) {
 
 
 # DNSLookup warning
-if ($DNSLookup && $DNSLookupAlreadyDone) { warning("Warning: $PROG has detected that some host names were already resolved in your logfile $DNSLookupAlreadyDone.\nIf DNS lookup was already made by the logger (web server) in ALL your log files, you should not use -dnslookup option to increase $PROG speed."); }
+if ($DNSLookup==1 && $DNSLookupAlreadyDone) {
+	warning("Warning: $PROG has detected that some host names were already resolved in your logfile $DNSLookupAlreadyDone.\nIf DNS lookup was already made by the logger (web server) in ALL your log files, you should not use -dnslookup option to increase $PROG speed.");
+}
+
+#if ($DNSCache) {
+#	open(CACHE, ">$DNSCache") or die;
+#	foreach (keys %TmpDNSLookup) {
+#		$TmpDNSLookup{$_}="*" if $TmpDNSLookup{$_} eq "ip";
+#		print CACHE "0\t$_\t$TmpDNSLookup{$_}\n";
+#	}
+#	close CACHE;
+#}
 
 0;	# Do not remove this line
