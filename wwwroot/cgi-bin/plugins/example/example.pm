@@ -100,24 +100,24 @@ sub ShowPagesAddField_example {
 }
 
 #-----------------------------------------------------------------------------
-# PLUGIN FUNCTION: ShowURLInfo_pluginname
+# PLUGIN FUNCTION: ShowInfoURL_pluginname
 # UNIQUE: NO (Several plugins using this function can be loaded)
 # Function called to add additionnal information for URLs in URLs' report.
 # Parameters: URL
 #-----------------------------------------------------------------------------
-sub ShowURLInfo_example {
+sub ShowInfoURL_example {
 	# <-----
 	# PERL CODE HERE
 	# ----->
 }
 
 #-----------------------------------------------------------------------------
-# PLUGIN FUNCTION: ShowUserInfo_pluginname
+# PLUGIN FUNCTION: ShowInfoUser_pluginname
 # UNIQUE: NO (Several plugins using this function can be loaded)
 # Function called to add additionnal information for Users in users' report.
 # Parameters: User
 #-----------------------------------------------------------------------------
-sub ShowUserInfo_example {
+sub ShowInfoUser_example {
 	# <-----
 	# PERL CODE HERE
 	# ----->
