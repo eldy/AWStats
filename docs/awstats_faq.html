@@ -282,76 +282,20 @@ Now you can use AWStats as usual (run the update process and read statistics).<b
 What do I have to do to use AWStats to analyze my mail log files.<br>
 <font class=CSolution>SOLUTION:</font><br>
 <br>
-<u>For PostFix or Sendmail log files</u><br>
+This tip works with AWStats 5.5 or higher.<br>
 <br>
-1- First, install a mail log convertor like <a href="http://www.klake.org/sma/">SMA</a> to use it
-as a pre-processor for AWStats update process (to convert your mail log into a readable format):<br>
-For this, you can download and copy sma (or sma.exe) file and sma.conf into same directory
+<u>For Postfix, Sendmail or QMail log files</u><br>
+<br>
+1- First, install a mail log convertor like <a href="http://www.ke.nu/software/">maillogconv.pl</a> to use it
+as a pre-processor for AWStats update process (to convert your Postfix, Sendmail or Qmail log into a readable format):<br>
+For this, you can download and copy maillogconv.pl file into same directory
 than awstats.pl file.<br>
-Edit sma.conf to change the ClogFormat and ClogSentOnly parameter to :
-<table width="95%" border=1 cellpadding=0 cellspacing=0><tr class=CFAQ><td class=CFAQ>
-<i>ClogFormat "%y-%m-%d %h:%n:%s %f %t %F %T SMTP - %S %z"
-<br>ClogSentOnly no
-</i>
-</td></tr></table>
 <br>
-<!--To have the change effective, stop your mail daemon, remove old log file and restart mail daemon.<br>
-Send a mail and check in your mail that your log file looks like this:<br>-->
-To check that your sma config is correct, run the following command:<br>
-<b>sma -O clog -f /pathtosmaconf/sma.conf /pathtomaillog/maillog > convertedmaillog</b><br>
-The resulting convertedmaillog file must have records that match the following format:<br>
-<i>2001-01-01 05:38:08 sender@mailsender.com receiver@mailreceiver.com hostrelaysender hostrelayreceiver SMTP - 1 31357</i><br>
-Warning: some sma versions (1.3) have been reported to not convert month correctly, giving
-for example a date like this 2001-#01-01 or 2001-00-01 instead of 2001-01-01. This makes AWStats
-analyze fails so check your sma output and change version if error.<br>
-<br>
-2- Then setup AWStats to analyze SMA processed mail log:<br>
+2- Then setup AWStats to analyze maillogconv processed log:<br>
 Copy config awstats.model.conf file to "awstats.mail.conf".<br>
 Modify this new config file:
 <table width="95%" border=1 cellpadding=0 cellspacing=0><tr class=CFAQ><td class=CFAQ>
-<i>
-LogFile="/pathtosma/sma -O clog -f /pathtosmaconf/sma.conf /pathtomaillog/maillog |"
-<br>LogFormat="%time2 %email %email_r %host %host_r %method %url %code %bytesd"
-<br>ValidSMTPCodes="1"
-<br>ShowMenu=1
-<br>ShowMonthStats=HB
-<br>ShowDaysOfMonthStats=HB
-<br>ShowDaysOfWeekStats=HB
-<br>ShowHoursStats=HB
-<br>ShowDomainsStats=0
-<br>ShowHostsStats=HBL
-<br>ShowAuthenticatedUsers=0
-<br>ShowRobotsStats=0
-<br>ShowEMailSenders=HBL
-<br>ShowEMailReceivers=HBL
-<br>ShowSessionsStats=0
-<br>ShowPagesStats=0
-<br>ShowFileTypesStats=0
-<br>ShowFileSizesStats=0
-<br>ShowBrowsersStats=0
-<br>ShowOSStats=0
-<br>ShowOriginStats=0
-<br>ShowKeyphrasesStats=0
-<br>ShowKeywordsStats=0
-<br>ShowHTTPErrorsStats=0
-</i>
-</td></tr></table>
-<br>
-Now you can use AWStats as usual (run the update process and read statistics).<br>
-<br>
-
-<u>For QMail or Sendmail log files</u><br>
-<br>
-1- First, install a Qmail log convertor like <a href="http://www.ke.nu/software/">Maillogconv</a> to use it
-as a pre-processor for AWStats update process (to convert your Qmail log into a readable format):<br>
-For this, you can download and copy maillogconv file into same directory
-than awstats.pl file.<br>
-<br>
-2- Then setup AWStats to analyze Maillogconv processed mail log:<br>
-Copy config awstats.model.conf file to "awstats.mail.conf".<br>
-Modify this new config file:
-<table width="95%" border=1 cellpadding=0 cellspacing=0><tr class=CFAQ><td class=CFAQ>
-For standard QMail and SendMail logfiles, set<br>
+For standard Postfix, Sendmail and standard QMail logfiles, set<br>
 <i>
 LogFile="/path/to/maillogconv standard /pathtomaillog/maillog |"<br>
 </i>
@@ -366,7 +310,6 @@ LogFile="gzip -cd /var/log/maillog.0.gz | /path/to/maillogconv vadmin /var/log/m
 Then change:
 <i>
 <br>LogFormat="%time2 %email %email_r %host %host_r %method %url %code %bytesd"
-<br>ValidSMTPCodes="1"
 <br>ShowMenu=1
 <br>ShowMonthStats=HB
 <br>ShowDaysOfMonthStats=HB
@@ -388,6 +331,7 @@ Then change:
 <br>ShowKeyphrasesStats=0
 <br>ShowKeywordsStats=0
 <br>ShowHTTPErrorsStats=0
+<br>
 </i>
 </td></tr></table>
 <br>
@@ -395,8 +339,9 @@ Now you can use AWStats as usual (run the update process and read statistics).<b
 <br>
 
 <u>For Exchange log files</u><br>
+<br>
 If someone can understand the Exchange log format, he can explain it to me at eldy@users.sourceforge.net.<br>
-Until this server won't log in a clever way, just forget using AWStats or use a more serious
+Until this server will log messy data, just forget using AWStats or use a more serious
 mail server (sendmail, postfix, ...). Sorry.<br>
 <!--
 Your Exchange mail log file might looks like this:<br>

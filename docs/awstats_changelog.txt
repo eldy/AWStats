@@ -35,7 +35,8 @@ New features/improvments:
   AddDataArrayShowDaysOfMonthStats parameters were added.
 - Added -staticlinksext to build static pages with another extension than
   default .html
-- Added QMail support.
+- Added QMail support and better working support for Postfix and Sendmail (SMA
+  preprocessor was replaced by maillogconv.pl).
 
 Other/Documentation:
 - Added Isle of Man, Monserat, and Palestinian flag icon.
