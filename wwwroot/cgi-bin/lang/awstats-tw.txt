@@ -1,4 +1,4 @@
-# Chines message file
+# Chinese message file
 PageCode=big5
 message0=無法得知
 message1=無法得知(不能反解網域名稱)
