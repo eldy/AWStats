@@ -14,7 +14,7 @@
 #-------------------------------------------------------
 # Defines
 #-------------------------------------------------------
-$VERSION="2.24 (build 8)";
+$VERSION="2.24 (build 9)";
 $Lang=0;
 
 # Default value
@@ -1220,14 +1220,15 @@ sub Read_Config_File {
 		if ($line =~ /^BarHeight/)             { $BarHeight=$param; next; }
 		if ($line =~ /^MaxNbOfHostsShown/)     { $MaxNbOfHostsShown=$param; next; }
 		if ($line =~ /^MinHitHost/)            { $MinHitHost=$param; next; }
+		if ($line =~ /^MaxNbOfRobotShown/)     { $MaxNbOfRobotShown=$param; next; }
+		if ($line =~ /^MinHitRobot/)           { $MinHitRobot=$param; next; }
 		if ($line =~ /^MaxNbOfPageShown/)      { $MaxNbOfPageShown=$param; next; }
 		if ($line =~ /^MinHitFile/)            { $MinHitFile=$param; next; }
 		if ($line =~ /^MaxNbOfRefererShown/)   { $MaxNbOfRefererShown=$param; next; }
 		if ($line =~ /^MinHitRefer/)           { $MinHitRefer=$param; next; }
 		if ($line =~ /^MaxNbOfKeywordsShown/)  { $MaxNbOfKeywordsShown=$param; next; }
 		if ($line =~ /^MinHitKeyword/)         { $MinHitKeyword=$param; next; }
-		if ($line =~ /^MaxNbOfRobotShown/)     { $MaxNbOfRobotShown=$param; next; }
-		if ($line =~ /^MinHitRobot/)           { $MinHitRobot=$param; next; }
+		if ($line =~ /^SplitSearchString/)     { $SplitSearchString=$param; next; }
 		if ($line =~ /^Logo/)                  { $Logo=$param; next; }
 		if ($line =~ /^color_Background/)      { $color_Background=$param; next; }
 		if ($line =~ /^color_TableTitle/)      { $color_TableTitle=$param; next; }
@@ -1266,14 +1267,15 @@ sub Check_Config {
 	if (! ($BarHeight =~ /[\d]/))             { $BarHeight=220; }
 	if (! ($MaxNbOfHostsShown =~ /[\d]/))     { $MaxNbOfHostsShown=25; }
 	if (! ($MinHitHost =~ /[\d]/))            { $MinHitHost=1; }
+	if (! ($MaxNbOfRobotShown =~ /[\d]/))     { $MaxNbOfRobotShown=25; }
+	if (! ($MinHitRobot =~ /[\d]/))           { $MinHitRobot=1; }
 	if (! ($MaxNbOfPageShown =~ /[\d]/))      { $MaxNbOfPageShown=25; }
 	if (! ($MinHitFile =~ /[\d]/))            { $MinHitFile=1; }
 	if (! ($MaxNbOfRefererShown =~ /[\d]/))   { $MaxNbOfRefererShown=25; }
 	if (! ($MinHitRefer =~ /[\d]/))           { $MinHitRefer=1; }
 	if (! ($MaxNbOfKeywordsShown =~ /[\d]/))  { $MaxNbOfKeywordsShown=25; }
 	if (! ($MinHitKeyword =~ /[\d]/))         { $MinHitKeyword=1; }
-	if (! ($MaxNbOfRobotShown =~ /[\d]/))     { $MaxNbOfRobotShown=25; }
-	if (! ($MinHitRobot =~ /[\d]/))           { $MinHitRobot=1; }
+	if (! ($SplitSearchString =~ /[\d]/))     { $SplitSearchString=0; }
 	if ($Logo eq "")                          { $Logo="awstats_logo1.png"; }
 	if (! ($color_Background =~ /[\d]/))      { $color_Background="#FFFFFF";	}
 	if (! ($color_TableBorder =~ /[\d]/))     { $color_TableBorder="#000000"; }
@@ -2010,7 +2012,7 @@ if (($YearRequired == $nowyear) && ($MonthRequired eq "year" || $MonthRequired =
 									if ($param =~ /^$SearchEngineKnownUrl{$key}/) { # We found good parameter
 										# Ok. xxx=aaa bbb ccc ddd eee fff is a search parameter line
 										$param =~ s/.*=//g;					# Cut "yyy=" out of line
-										if ($CutKeyWords) {
+										if ($SplitSearchString) {
 											@wordlist=split(/ /,$param);	# Split aaa bbb ccc ddd eee fff into a wordlist array
 											foreach $word (@wordlist) {
 												if ((length $word) > 0) { $_keywords{$word}++; }
@@ -2032,9 +2034,14 @@ if (($YearRequired == $nowyear) && ($MonthRequired eq "year" || $MonthRequired =
 									if ($keep == 0) { next; }			# Do not keep this URL parameter because is in exclude list
 									# Ok. xxx=aaa bbb ccc ddd eee fff is a search parameter line
 									$param =~ s/.*=//g;					# Cut chars xxx=
-									@wordlist=split(/ /,$param);		# Split aaa bbb ccc ddd eee fff into a wordlist array
-									foreach $word (@wordlist) {
-										if ((length $word) > 2) { $_keywords{$word}++; }	# Keep word only if word length is 3 or more
+									if ($SplitSearchString) {
+										@wordlist=split(/ /,$param);		# Split aaa bbb ccc ddd eee fff into a wordlist array
+										foreach $word (@wordlist) {
+											if ((length $word) > 2) { $_keywords{$word}++; }	# Keep word only if word length is 3 or more
+										}
+									}
+									else {
+										if ((length $param) > 2) { $_keywords{$param}++; }
 									}
 								}
 							}
