@@ -76,3 +76,5 @@ message73=Statistiques par jour
 message74=Mise à jour immédiate
 message75=Octets
 message76=
+message77=Top
+message78=dd mmm yyyy - HH:MM
