@@ -26,8 +26,8 @@ print "<br>\n";
 &foreign_require("logrotate", "logrotate-lib.pl");
 
 # For global update
-print "<u>Update processes scheduled by a <b>cron</b> task :</u><br><br>";
-print "<table border width=100% cellpadding=4 cellspacing=2>\n";
+print "<u>List of update processes scheduled by a <b>cron</b> task :</u><br><br>";
+print "<table border width=100%>\n";
 print "<tr $tb><td align=left>User</td>";
 print "<td>Task</td><td align=center>Active</td><td>Note on task</td><td>Action</td></tr>\n";
 
@@ -74,22 +74,25 @@ print "<br>\n";
 
 
 # For logrotate scheduling
-print "<u>Update processes scheduled by a <b>logrotate</b> task :</u><br><br>";
+print "<u>List of update processes scheduled by a <b>logrotate</b> task :</u><br><br>";
 print "<table border width=100%>\n";
 print "<tr $tb><td>Logrotate file</td>";
 print "<td>Task</td><td>Note on task</td><td>Action</td></tr>\n";
 
 if ( foreign_installed('logrotate', 0) ) {
-
-
+    print "<tr><td colspan=4>This feature is not yet available</td></tr>";
 }
 else {
     print "<tr><td colspan=4>Webmin logrotate module is not installed. It is required to setup logrotate scheduled tasks</td></tr>";
 }
 print "</table>";
 
-print "<br>\n";
+print "<br><br>\n";
 
+
+# Back to config list
+print "<hr>\n";
+&footer("", $text{'index_return'});
 
 0;
 

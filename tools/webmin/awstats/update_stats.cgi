@@ -1,6 +1,7 @@
 #!/usr/bin/perl
 # update_stats.cgi
-# run AWStats update process
+# Run AWStats update process
+# $Revision$ - $Author$ - $Date$
 
 require './awstats-lib.pl';
 &ReadParse();
@@ -17,9 +18,9 @@ if ($in{'file'} =~ /^(.*)[\\\/][^\\\/]+$/) { $dir=$1; }
 print "<hr>\n";
 
 my $command=$config{'awstats'}." -update -config=$conf -configdir=$dir";
-print "Run update process with command:\n<br>\n";
+print $text{'update_run'}.":\n<br>\n";
 print "$command<br>\n";
-print "\Please wait...<br>\n";
+print $text{'update_wait'}."...<br>\n";
 print "<br>\n";
 
 &foreign_require("proc", "proc-lib.pl");
@@ -30,9 +31,11 @@ proc::safe_process_exec_logged($command,$config{'user'},undef, STDOUT,undef, 1, 
 #print "$retour\n";
 
 print "<hr>\n";
-print "Update process finished<br>\n";
+print $text{'update_finished'}.".<br>\n";
 print "<br>\n";
 
-&footer( "/", $text{ 'index' } );
+
+# Back to config list
+&footer("", $text{'index_return'});
 
 0;

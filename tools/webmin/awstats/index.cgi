@@ -1,6 +1,7 @@
 #!/usr/bin/perl
 # index.cgi
 # Display available config files
+# $Revision$ - $Author$ - $Date$
 
 require './awstats-lib.pl';
 
@@ -121,10 +122,12 @@ if (@config) {
 		next if (!&can_edit_config($l));
 		$nbofallowedconffound++;
 
+		# Head of config file's table list
 		if ($nbofallowedconffound == 1) {
 			print "<a href='edit_config.cgi?new=1'>$text{'index_add'}</a>\n" if ($access{'add'});
 			print "<table border width=100%>\n";
-			print "<tr $tb> <td rowspan=2><b>$text{'index_path'}</b></td> ";
+			print "<tr $tb>";
+			print "<td rowspan=2 colspan=2><b>$text{'index_path'}</b></td> ";
 			print "<td rowspan=2 align=center><b>$text{'index_create'}</b></td> ";
 			#print "<td rowspan=2 align=center><b>$text{'index_databasesize'}</b></td> ";
 		 	print "<td colspan=2 align=center><b>$text{'index_update'}</b></td> ";
@@ -132,6 +135,7 @@ if (@config) {
 			print "<tr $tb><td align=center>$text{'index_scheduled'}</td><td align=center>$text{'index_now'}</td></tr>\n";
 		}
 
+		# Config file line
 		local @files = &all_config_files($l);
 		next if (!@files);
 		local $lconf = &get_config($l);
@@ -141,6 +145,8 @@ if (@config) {
 
 		print "<tr $cb>\n";
 
+		print "<td width=\"40\" align=\"center\">$nbofallowedconffound</td>";
+		
 		local ($size, $latest);
 		print "<td>";
 		print "$l";

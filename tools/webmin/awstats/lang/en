@@ -59,6 +59,9 @@ save_dirnotexists=Directory does not exists
 
 update_title=Update statistics
 update_ecannot=You are not allowed to update statistics
+update_run=Run update process with command
+update_finished=Update process finished
+update_wait=Please wait
 
 scheduled_title=Schedule statistic's update
 scheduled_ecannot=You are not allowed to update or schedule update process

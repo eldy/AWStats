@@ -58,6 +58,9 @@ save_dirnotexists=Répertoire inexistant
 
 update_title=Mise à jour des statistiques
 update_ecannot=Vous n'êtes pas autorisé à mettre à jour les statistiques
+update_run=Lancement de la mise à jour par la commande
+update_finished=Mise a jour terminée
+update_wait=Merci de patienter
 
 scheduled_title=Programmation de mise à jour
 scheduled_ecannot=Vous n'êtes pas autorisé à mettre à jour ou programmer une mise à jour des statistiques
