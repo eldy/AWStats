@@ -13,7 +13,8 @@
 	Talet på gongar ei <b>side</b>, eit <b>bilde</b> eller ei <b>fil</b> på nettstaden har blitt <b>vist</b> eller <b>lasta ned</b>.
 	</div>
 	<div class="CTooltip" id="tt5">
-	Denne informasjonen viser kor mykje data som har blitt lasta ned totalt (<b>sider</b>, <b>bilder</b> eller andre <b>filer</b>) målt i KiB (kibibyte).
+	Denne informasjonen viser kor mykje data som har blitt lasta ned totalt (<b>sider</b>, <b>bilder</b> eller andre <b>filer</b>).<br>
+	Einingane er KB, MB eller GB (kilobyte, megabyte eller gigabyte)
 	</div>
 	<div class="CTooltip" id="tt13">
 	#PROG# kan sjå når eit besøk på nettstaden din kjem frå eit <b>søk</b> på dei <b>#SearchEnginesArray# mest populære søkemotorane og emnekatalogane</b> (f.eks.&nbsp;Yahoo, Altavista, Lycos, Google og Kvasir).
@@ -29,6 +30,9 @@
 	<div class="CTooltip" id="tt16">
 	Robotar blir brukt av mange søkemotorar som besøker nettstaden din for å 1) indeksera han, 2) samla statistikk om nettstadar , og/eller 3) sjå om nettstaden framleis eksisterer.<br>
 	#PROG# kjenner til <b>#RobotArray#</b> robotar.
+	</div>
+	<div class="CTooltip" ID="tt17">
+ 	All tidsrelatert statistikk er basert på tenartid.<br>
 	</div>
 
 	<div class="CTooltip" id="tt201"> Inga beskriving av denne feilen. </div>
