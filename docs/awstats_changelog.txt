@@ -25,6 +25,7 @@ a personalized report with the ExtraSection feature. Just use a personalized
 log format and use the tag %extraX (where X is a number) to name field you
 want to use, then, in ExtraSection parmaters, you can use extraX to tell
 wich info to use to extract data for building the chart.
+- Support method "put" when analyzing ftp log files.
 
 Fixes:
 - Fix not recognized %time3 tag in LogFormat. This tag allows to process
