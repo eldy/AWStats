@@ -155,3 +155,4 @@ message151=Premier
 message152=Dernier
 message153=Filtre exclusion
 message154=* Les codes présentées ici sont à l'origine de hits ou de traffic "non vus" par les visiteurs, aussi sont ils isolés dans ce rapport.
+message155=Cluster
