@@ -35,7 +35,7 @@
         <Program_Name>AWStats</Program_Name>
         <Program_Version>5.9</Program_Version>
         <Program_Release_Month>09</Program_Release_Month>
-        <Program_Release_Day>22</Program_Release_Day>
+        <Program_Release_Day>15</Program_Release_Day>
         <Program_Release_Year>2003</Program_Release_Year>
         <Program_Cost_Dollars>0</Program_Cost_Dollars>
         <Program_Cost_Other_Code />
@@ -50,9 +50,9 @@
         <Filename_Previous>awstats.zip</Filename_Previous>
         <Filename_Generic>awstats.zip</Filename_Generic>
         <Filename_Long>awstats.zip</Filename_Long>
-        <File_Size_Bytes>845750</File_Size_Bytes>
-        <File_Size_K>826</File_Size_K>
-        <File_Size_MB>0.83</File_Size_MB>
+        <File_Size_Bytes>824209</File_Size_Bytes>
+        <File_Size_K>805</File_Size_K>
+        <File_Size_MB>0.80</File_Size_MB>
     </File_Info>
 <Expire_Info>
         <Has_Expire_Info>N</Has_Expire_Info>
@@ -93,11 +93,11 @@ Distributed under GNU General Public License.</Char_Desc_2000>
         <Application_Order_URL>http://awstats.sourceforge.net</Application_Order_URL>
         <Application_Screenshot_URL>http://awstats.sourceforge.net/docs/images/screen_shot_1.jpg</Application_Screenshot_URL>
         <Application_Icon_URL>http://awstats.sourceforge.net/docs/images/awstats_logo1.gif</Application_Icon_URL>
-        <Application_XML_File_URL>http://awstats.sourceforge.net/docs/awstats.xml</Application_XML_File_URL>
+        <Application_XML_File_URL>http://awstats.sourceforge.net/docs/pad_awstats.xml</Application_XML_File_URL>
     </Application_URLs>
 <Download_URLs>
         <Primary_Download_URL>http://awstats.sourceforge.net/files/awstats.zip</Primary_Download_URL>
-        <Secondary_Download_URL>http://prdownloads.sourceforge.net/awstats/awstats-58.zip</Secondary_Download_URL>
+        <Secondary_Download_URL>http://prdownloads.sourceforge.net/awstats/awstats-59.zip</Secondary_Download_URL>
         <Additional_Download_URL_1 />
         <Additional_Download_URL_2 />
     </Download_URLs>
