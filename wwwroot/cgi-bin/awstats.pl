@@ -496,7 +496,7 @@ use vars qw/ @Message /;
 "different refering search engines",
 "different refering sites",
 "Other phrases",
-"Anonymous users",
+"Other logins (and/or anonymous users)",
 "Refering search engines",
 "Refering sites",
 "Summary",
@@ -504,7 +504,7 @@ use vars qw/ @Message /;
 "Data value arrays",
 "Sender EMail",
 "Receiver EMail",
-"Report period"
+"Reported period"
 );
 
 
