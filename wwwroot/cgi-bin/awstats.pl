@@ -25,12 +25,13 @@ my $VERSION="5.1 (build $REVISION)";
 # ---------- Init variables -------
 # Constants
 use vars qw/
-$DEBUGFORCED $NBOFLINESFORBENCHMARK $FRAMEWIDTH $NBOFLASTUPDATELOOKUPTOSAVE
+$DEBUGFORCED $NBOFLINESFORBENCHMARK $FRAMEWIDTH $TOOLTIPWIDTH $NBOFLASTUPDATELOOKUPTOSAVE
 $LIMITFLUSH $VISITTIMEOUT $NOTSORTEDRECORDTOLERANCE
 /;
 $DEBUGFORCED=0;						# Force debug level to log lesser level into debug.log file (Keep this value to 0)
 $NBOFLINESFORBENCHMARK=5000;		# Benchmark info are printing every NBOFLINESFORBENCHMARK lines
 $FRAMEWIDTH=260;					# Width of left frame when UseFramesWhenCGI is on
+$TOOLTIPWIDTH=380;					# Width of tooltips
 $NBOFLASTUPDATELOOKUPTOSAVE=200;	# Nb of records to save in DNS last update cache file
 $LIMITFLUSH=4000;					# Nb of records in data arrays after how we need to flush data on disk
 $VISITTIMEOUT=10000;				# Laps of time to consider a page load as a new visit. 10000 = 1 hour (Default = 10000)
@@ -545,7 +546,7 @@ DIV { font: 12px arial,verdana,helvetica; text-align:justify; }
 .TABLETITLEFULL  { font: 14px verdana, arial, helvetica, sans-serif; font-weight: bold; background-color: #$color_TableBGTitle; text-align: center; margin-bottom: 0; padding: 2px; }
 .TABLETITLEBLANK { font: 14px verdana, arial, helvetica, sans-serif; background-color: #$color_Background; }
 .CFormFields { font: 14px verdana, arial, helvetica; }
-.CTooltip { position:absolute; top:0px; left:0px; z-index:2; width:280; visibility:hidden; font: 8pt MS Comic Sans,arial,sans-serif; background-color: #FFFFE6; padding: 8px; border: 1px solid black; }
+.CTooltip { position:absolute; top:0px; left:0px; z-index:2; width:$TOOLTIPWIDTH; visibility:hidden; font: 8pt MS Comic Sans,arial,sans-serif; background-color: #FFFFE6; padding: 8px; border: 1px solid black; }
 .tablecontainer  { width: 100% }
 \@media projection {
 .tablecontainer { page-break-before: always; }
@@ -5341,7 +5342,7 @@ function ShowTip(fArg)
 {
 	var tooltipOBJ = (document.getElementById) ? document.getElementById('tt' + fArg) : eval("document.all['tt" + fArg + "']");
 	if (tooltipOBJ != null) {
-		var tooltipLft = (document.body.offsetWidth?document.body.offsetWidth:document.body.style.pixelWidth) - (tooltipOBJ.offsetWidth?tooltipOBJ.offsetWidth:(tooltipOBJ.style.pixelWidth?tooltipOBJ.style.pixelWidth:300)) - 30;
+		var tooltipLft = (document.body.offsetWidth?document.body.offsetWidth:document.body.style.pixelWidth) - (tooltipOBJ.offsetWidth?tooltipOBJ.offsetWidth:(tooltipOBJ.style.pixelWidth?tooltipOBJ.style.pixelWidth:$TOOLTIPWIDTH)) - 30;
 		if (navigator.appName != 'Netscape') {
 			var tooltipTop = (document.body.scrollTop>=0?document.body.scrollTop+10:event.clientY+10);
 			if ((event.clientX > tooltipLft) && (event.clientY < (tooltipOBJ.scrollHeight?tooltipOBJ.scrollHeight:tooltipOBJ.style.pixelHeight) + 10)) {
@@ -7085,7 +7086,7 @@ EOF
 		foreach my $key (@keylist) {
 			my $p=int($_filetypes_h{$key}/$Totalh*1000)/10;
 			if ($key eq "Unknown") {
-				print "<TR><TD CLASS=AWL>$Message[0]</TD>";
+				print "<TR><TD CLASS=AWL><font color=\"#$color_other\">$Message[0]</font></TD>";
 			}
 			else {
 				print "<TR><TD CLASS=AWL>$key</TD>";
