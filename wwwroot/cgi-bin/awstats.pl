@@ -1569,7 +1569,7 @@ sub Read_History_With_Update {
 				$versionnum=($1*1000)+$2;
 				if ($Debug) { debug(" Data file version is $versionnum",1); }
 				if ($versionnum < 5000 && ! $MigrateStats) {
-					warning("Data file '$historyfilename' is an old format history file. You should upgrade it running awstats.pl -migrate=\"$historyfilename\"");
+					warning("Warning: Data file '$historyfilename' is an old format history file. You should upgrade it running awstats.pl -migrate=\"$historyfilename\" from command line.");
 				}
 				if (! ($versionnum < 5000) && $MigrateStats) {
 					close(HISTORYTMP); close(HISTORY);
@@ -3513,12 +3513,13 @@ if ($Debug) {
 #------------------------------------------
 if ($MigrateStats) {
 	if ($Debug) { debug("MigrateStats is $MigrateStats",2); }
-	$MigrateStats=~s/^(-|)migrate=//;
-	$MigrateStats=~/(.*)$PROG(\d{0,2})(\d\d)(\d\d\d\d)\./;
+	$MigrateStats =~ s/^(-|)migrate=//;
+	$MigrateStats =~ /^(.*)$PROG(\d{0,2})(\d\d)(\d\d\d\d)(.*)\.txt$/;
 	$DirData=$1;
 	$DayRequired=$2;
 	$MonthRequired=$3;
 	$YearRequired=$4;
+	$FileSuffix=$5;
 	print "Start migration for file '$MigrateStats'.\n";
 	if (! -s $MigrateStats) { error("Error: File to migrate '$MigrateStats' not found.","","",1); }
 	my $historytmpfilename=&Read_History_With_Update($YearRequired,$MonthRequired,1,0,"all");
