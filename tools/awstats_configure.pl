@@ -652,15 +652,21 @@ if ($bidon =~ /^y/i) {
 # ----------------------------------
 if ($WebServerChanged) {
 	if ($OS eq 'linux') 	{
-	 	my $command="/sbin/service";
-	 	if (-x $command) {
-    		print "\n-----> Restart Web server with '/sbin/service httpd restart'\n";
-	 	    my $ret=`/sbin/service httpd restart`;
+        if (-f "/etc/debian_version") {
+            # We are on debian
+       	 	my $command="/etc/init.d/apache restart";
+    		print "\n-----> Restart Web server with '$command'\n";
+	 	    my $ret=`$command`;
 	 	    print "$ret";
-	 	}
-	 	else {
-    		print "\n-----> Don't forget to restart manually your web server\n";
-	 	}
+        } elsif (-x "/sbin/service") {
+            # We are not on debian
+       	 	my $command="/sbin/service httpd restart";
+    		print "\n-----> Restart Web server with '$command'\n";
+	 	    my $ret=`$command`;
+	 	    print "$ret";
+   	 	} else {
+       		print "\n-----> Don't forget to restart manually your web server\n";
+        }
 	}
 	elsif ($OS eq 'macosx')	{
 		print "\n-----> Restart Web server with '/usr/sbin/apachectl restart'\n";
