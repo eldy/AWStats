@@ -235,6 +235,8 @@ print "<tr> <td colspan=3><br>OPTIONAL APPEARANCE SETUP SECTION (Not required bu
 if ($in{'advanced'} == 3) {
 	print "<tr> <td><b>UseFramesWhenCGI</b></td> <td> <input size=10 name=UseFramesWhenCGI type=text value='$lconf->{'UseFramesWhenCGI'}'> </td> <td> ";
 	print &hblink($text{'help_help'}, "help.cgi?param=UseFramesWhenCGI")." </td> </tr>\n";
+	print "<tr> <td><b>UseXMLForOutput</b></td> <td> <input size=10 name=UseXMLForOutput type=text value='$lconf->{'UseXMLForOutput'}'> </td> <td> ";
+	print &hblink($text{'help_help'}, "help.cgi?param=UseXMLForOutput")." </td> </tr>\n";
 	print "<tr> <td><b>DetailedReportsOnNewWindows</b></td> <td> <input size=10 name=DetailedReportsOnNewWindows type=text value='$lconf->{'DetailedReportsOnNewWindows'}'> </td> <td> ";
 	print &hblink($text{'help_help'}, "help.cgi?param=DetailedReportsOnNewWindows")." </td> </tr>\n";
 	print "<tr> <td><b>Expires</b></td> <td> <input size=10 name=Expires type=text value='$lconf->{'Expires'}'> </td> <td> ";
