@@ -4703,8 +4703,9 @@ sub DefinePerlParsingFormat {
 				$pos_date = $i;	$i++; push @fieldlib, 'date';
 				$PerlParsingFormat .= "([^$LogSeparatorWithoutStar]+\\s[^$LogSeparatorWithoutStar]+)";	# Need \s for Exchange log files
 			}
-			elsif ($f =~ /%syslog$/) {	# TODO Add a tag time3 for date 'Mon 2 10:20:05'
-				$PerlParsingFormat .= "\\w\\w\\w \\s??\\d+ \\d\\d:\\d\\d:\\d\\d [^$LogSeparatorWithoutStar]+";
+			elsif ($f =~ /%time3$/) {	# mon d hh:mm:ss
+				$pos_date = $i;	$i++; push @fieldlib, 'date';
+				$PerlParsingFormat .= "(\\w\\w\\w \\s??\\d+ \\d\\d:\\d\\d:\\d\\d)";
 			}
 			# Special for methodurl and methodurlnoprot
 			elsif ($f =~ /%methodurl$/) {
