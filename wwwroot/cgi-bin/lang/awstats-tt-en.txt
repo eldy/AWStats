@@ -25,8 +25,9 @@
 	Links used by the results of the search engines are excluded here because they have already been included on the previous line within this table.
 	</DIV>
 	<DIV CLASS="CTooltip" ID="tt15">
-	This table shows the list of the most frequently <b>keywords</b> utilized to find your site from Internet Search Engines and Directories.
-	(Keywords from the <b>#SearchEnginesArray#</b> most popular Search Engines and Directories are recognized by #PROG#, such as Yahoo, Altavista, Lycos, Google, Voila, etc...).
+	This table shows the list of the most frequently <b>keyphrase or keywords</b> used to find your site from Internet Search Engines and Directories.
+	(Keywords from the <b>#SearchEnginesArray#</b> most popular Search Engines and Directories are recognized by #PROG#, such as Yahoo, Altavista, Lycos, Google, Voila, etc...).<br>
+	Note that total number of searches for keywords might be greater than total number of searches for keyphrases (real number of searches) because when 2 keywords were used on same search, search is counted twice for keywords (once for each word).
 	</DIV>
 	<DIV CLASS="CTooltip" ID="tt16">
 	Robots (sometimes refer to Spiders) are <b>automatic computer visitors</b> used by many search engines that scan your web site to index it and rank it, collect statistics on Internet Web sites and/or see if your site is still online.<br>

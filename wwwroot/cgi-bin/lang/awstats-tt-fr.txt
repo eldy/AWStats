@@ -25,8 +25,9 @@
 	Les liens issus du résultat d un moteur de recherche connu n apparaissent pas ici, car comptabilisés à part sur la ligne juste au-dessus.
 	</DIV>
 	<DIV CLASS="CTooltip" ID="tt15">
-	Ce tableau offre la liste des <b>mots</b> les plus souvent utilisés pour retrouver et accéder au site depuis
-	un moteur de recherche Internet (Les recherches depuis <b>#SearchEnginesArray#</b> moteurs de recherche parmi les pluspopulaires sont reconnues, comme Yahoo, Altavista, Lycos, Google, Voila, etc...).
+	Ce tableau offre la liste des <b>phrases ou mots</b> clés les plus souvent utilisés pour retrouver et accéder au site depuis
+	un moteur de recherche Internet (Les recherches depuis <b>#SearchEnginesArray#</b> moteurs de recherche parmi les plus populaires sont reconnues, comme Yahoo, Altavista, Lycos, Google, Voila, etc...).<br>
+	Notez que le nombre total de recherche de mots clés peut être supérieur au nombre total de recherche de phrases clés (nombre réel de recherche) dans la mesure où une recherche est comptée 2 fois (1 pour chaque mot) si 2 mots furent utilisés comme critères.
 	</DIV>
 	<DIV CLASS="CTooltip" ID="tt16">
 	Les robots sont des <b>automates visiteurs</b> scannant le site dans le but de l indexer, d obtenir des statistiques sur les sites Web Internet ou de vérifier sa disponibilié.<br>

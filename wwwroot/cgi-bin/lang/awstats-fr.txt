@@ -122,3 +122,6 @@ message118=Fermer
 message119=Octets
 message120=Mots&nbsp;clés&nbsp;de&nbsp;recherche
 message121=Phrases&nbsp;clés&nbsp;de&nbsp;recherche
+message122=moteurs de recherche différents
+message123=sites différents
+message124=Autres phrases
