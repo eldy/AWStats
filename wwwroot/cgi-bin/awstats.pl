@@ -44,7 +44,7 @@
 #-------------------------------------------------------
 
 # ---------- Init variables (Variable $TmpHashxxx are not initialized) --------
-($AddOn, $ArchiveFileName, $ArchiveLogRecords, $BarHeight, $BarWidth,
+($AddOn, $ArchiveFileName, $ArchiveLogRecords, $KeepBackupOfHistoricFiles, $BarHeight, $BarWidth,
 $DIR, $DNSLookup, $DayRequired, $Debug, $DefaultFile,
 $DirCgi, $DirData, $DirIcons, $DirLang,
 $DetailedReportsOnNewWindows, $Expires, $Extension, $FileConfig, $FileSuffix, $FirstDayOfWeek,
@@ -82,7 +82,7 @@ $WarningMessages= 1;
 %MonthBytes = %MonthHits = %MonthHostsKnown = %MonthHostsUnknown = %MonthPages = %MonthUnique = %MonthVisits =
 %monthlib = %monthnum = ();
 
-$VERSION="3.2 (build 31)";
+$VERSION="3.2 (build 32)";
 $Lang="en";
 
 # Default value
@@ -428,9 +428,9 @@ sub Read_Config_File {
 		if ($param =~ /^DirCgi/)                { $DirCgi=$value; next; }
 		if ($param =~ /^DirIcons/)              { $DirIcons=$value; next; }
 		if ($param =~ /^DNSLookup/)             { $DNSLookup=$value; next; }
+		# Read optional section
 		if ($param =~ /^PurgeLogFile/)          { $PurgeLogFile=$value; next; }
 		if ($param =~ /^ArchiveLogRecords/)     { $ArchiveLogRecords=$value; next; }
-		# Read optional section
 		if ($param =~ /^SiteDomain/)			{ $SiteDomain=$value; next; }
 		if ($param =~ /^Lang/)                  { $Lang=$value; next; }
 		if ($param =~ /^DirLang/)               { $DirLang=$value; next; }
@@ -653,7 +653,7 @@ sub Read_Language_Tooltip {
 sub Check_Config {
 	&debug("Call to Check_Config");
 	# Main section
-	if ($LogFormat =~ /^[\d]$/ && $LogFormat !~ /[1-4]/)  { error("Error: LogFormat parameter is wrong. Value is '$LogFormat' (should be 1,2,3,4 or a 'personalised AWtats log format string')"); }
+	if ($LogFormat =~ /^[\d]$/ && $LogFormat !~ /[1-5]/)  { error("Error: LogFormat parameter is wrong. Value is '$LogFormat' (should be 1,2,3,4,5 or a 'personalised AWtats log format string')"); }
 	if ($DNSLookup !~ /[0-1]/)                            { error("Error: DNSLookup parameter is wrong. Value is '$DNSLookup' (should be 0 or 1)"); }
 	if ($AllowToUpdateStatsFromBrowser !~ /[0-1]/) { $AllowToUpdateStatsFromBrowser=1; }	# For compatibility, is 1 if not defined
 	if ($PurgeLogFile !~ /[0-1]/)                 { $PurgeLogFile=0; }
@@ -1204,7 +1204,11 @@ sub Save_History_File {
 	# Navigation
 	# Save page list in score sorted order to allow to show reports faster and saving memory.
 	print HISTORYTMP "BEGIN_SIDER\n";
-	foreach my $key (sort {$SortDir*$_url_p{$a} <=> $SortDir*$_url_p{$b}} keys %_url_p) { print HISTORYTMP "$key $_url_p{$key} $_url_e{$key}\n"; next; }
+	foreach my $key (sort {$SortDir*$_url_p{$a} <=> $SortDir*$_url_p{$b}} keys %_url_p) {
+		$newkey=$key;
+		$newkey =~ s/([^:])\/\//$1\//g;		# Because some targeted url were taped with 2 / (Ex: //rep//file.htm). We must keep http://rep/file.htm
+		print HISTORYTMP "$newkey $_url_p{$key} $_url_e{$key}\n"; next;
+	}
 	print HISTORYTMP "END_SIDER\n";
 	print HISTORYTMP "BEGIN_FILETYPES\n";
 	foreach my $key (keys %_filetypes_h) { print HISTORYTMP "$key $_filetypes_h{$key} $_filetypes_k{$key} $_filetypes_gz_in{$key} $_filetypes_gz_out{$key}\n"; next; }
@@ -1577,6 +1581,7 @@ if ($UpdateStats) {
 	if ($LogFormat == 1) { $LogFormatString="%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\""; }
 	if ($LogFormat == 2) { $LogFormatString="date time c-ip cs-username cs-method cs-uri-stem sc-status sc-bytes cs-version cs(User-Agent) cs(Referer)"; }
 	if ($LogFormat == 4) { $LogFormatString="%h %l %u %t \"%r\" %>s %b"; }
+	if ($LogFormat == 5) { $LogFormatString="c-ip cs-username c-agent sc-authenticated date time s-svcname s-computername cs-referred r-host r-ip r-port time-taken cs-bytes sc-bytes cs-protocol cs-transport s-operation cs-uri cs-mime-type s-object-source sc-status s-cache-info"; }
 	&debug("Generate PerlParsingFormat from LogFormatString=$LogFormatString");
 	$PerlParsingFormat="";
 	if ($LogFormat == 1) {
@@ -1599,7 +1604,12 @@ if ($UpdateStats) {
 		$pos_rc=1;$pos_logname=2;$pos_date=3;$pos_method=4;$pos_url=5;$pos_code=6;$pos_size=7;
 		$lastrequiredfield=7;
 	}
-	if ($LogFormat != 1 && $LogFormat != 2 && $LogFormat != 3 && $LogFormat != 4) {
+	if ($LogFormat == 5) {
+		$PerlParsingFormat="([^\\t]*)\\t([^\\t]*)\\t([^\\t]*)\\t[^\\t]*\\t([^\\t]*\\t[^\\t]*)\\t[^\\t]*\\t[^\\t]*\\t([^\\t]*)\\t[^\\t]*\\t[^\\t]*\\t[^\\t]*\\t[^\\t]*\\t[^\\t]*\\t([^\\t]*)\\t[^\\t]*\\t[^\\t]*\\t([^\\t]*)\\t([^\\t]*)\\t[^\\t]*\\t[^\\t]*\\t([^\\t]*)\\t[^\\t]*";
+		$pos_rc=1;$pos_logname=2;$pos_agent=3;$pos_date=4;$pos_referer=5;$pos_size=6;$pos_method=7;$pos_url=8;$pos_code=9;
+		$lastrequiredfield=9;
+	}
+	if ($LogFormat < 1 || $LogFormat > 5) {
 		# Scan $LogFormat to found all required fields and generate PerlParsing
 		my @fields = split(/ +/, $LogFormatString); # make array of entries
 		$i = 1;
@@ -1679,7 +1689,7 @@ if ($UpdateStats) {
 				$pos_referer = $i; $i++;
 				$PerlParsingFormat .= "\\\"([^\\\"]*)\\\" ";
 			}
-			if ($f =~ /%referer$/ || $f =~ /cs\(Referer\)/) {
+			if ($f =~ /%referer$/ || $f =~ /cs\(Referer\)/ || $f =~ /cs-referred/) {
 				$found=1;
 				$pos_referer = $i; $i++;
 				$PerlParsingFormat .= "([^\\s]*) ";
@@ -1689,7 +1699,7 @@ if ($UpdateStats) {
 				$pos_agent = $i; $i++;
 				$PerlParsingFormat .= "\\\"([^\\\"]*)\\\" ";
 			}
-			if ($f =~ /%ua$/ || $f =~ /cs\(User-Agent\)/) {
+			if ($f =~ /%ua$/ || $f =~ /cs\(User-Agent\)/ || $f =~ /c-agent$/) {
 				$found=1; 
 				$pos_agent = $i; $i++;
 				$PerlParsingFormat .= "([^\\s]*) ";
@@ -1770,7 +1780,7 @@ if ($UpdateStats) {
 		/^$PerlParsingFormat/;
 		my @field=();
 		foreach $i (1..$lastrequiredfield) { $field[$i]=$$i; }
- 		&debug(" Record $NbOfLinesRead is ($lastrequiredfield fields read) : $field[$pos_rc] ; $field[$pos_logname] ; - ; $field[$pos_date] ; TZ; $field[$pos_method] ; $field[$pos_url] ; $field[$pos_code] ; $field[$pos_size] ; $field[$pos_referer] ; $field[$pos_agent]",3);
+ 		&debug(" Record $NbOfLinesRead is ($lastrequiredfield fields read) : host=\"$field[$pos_rc]\", logname=\"$field[$pos_logname]\", date=\"$field[$pos_date]\", method=\"$field[$pos_method]\", url=\"$field[$pos_url]\", code=\"$field[$pos_code]\", size=\"$field[$pos_size]\", referer=\"$field[$pos_referer]\", agent=\"$field[$pos_agent]\"",3);
 
 		# Check parsed parameters
 		#----------------------------------------------------------------------
@@ -1887,7 +1897,6 @@ if ($UpdateStats) {
 			$urlwithnoquery=$field[$pos_url];
 		}
 		$field[$pos_url] =~ s/\/$DefaultFile$/\//;	# Replace default page name with / only
-		$field[$pos_url] =~ s/\/\//\//g;			# Because some targeted url were taped with 2 / (Ex: //rep//file.htm)
 
 		# Analyze file type and compression
 		#----------------------------------
@@ -2635,6 +2644,7 @@ EOF
 		else { print "<TD colspan=3 rowspan=2><font style=\"font: 18px arial,verdana,helvetica; font-weight: normal\">$Message[5] $monthlib{$MonthRequired} $YearRequired</font><br>"; }
 		# Show links for possible years
 		my $NewLinkParams=${QueryString};
+		$NewLinkParams =~ s/update=[^ &]*//;
 		$NewLinkParams =~ s/year=[^ &]*//;
 		$NewLinkParams =~ s/month=[^ &]*//;
 		$NewLinkParams =~ tr/&/&/s; $NewLinkParams =~ s/&$//;
@@ -3064,8 +3074,19 @@ EOF
 			my $nompage=$Aliases{$key};
 			if ($nompage eq "") { $nompage=$key; }
 			if (length($nompage)>$MaxLengthOfURL) { $nompage=substr($nompage,0,$MaxLengthOfURL)."..."; }
-			if ($ShowLinksOnUrl) { print "<A HREF=\"http://$SiteToAnalyze$key\">$nompage</A>"; }
-			else              	 { print "$nompage"; }
+			if ($ShowLinksOnUrl) { 
+				if ($key =~ /^http(s|):/i) {
+					# URL is url extracted from a proxy log file
+					print "<A HREF=\"$key\">$nompage</A>";
+				}
+				else {
+					# URL is url extracted from a web/wap server log file
+					print "<A HREF=\"http://$SiteToAnalyze$key\">$nompage</A>";
+				}
+			}
+			else {
+				print "$nompage";
+			}
 			my $bredde_p=0; my $bredde_s=0;
 			if ($max_p > 0) { $bredde_p=int($BarWidth*$_url_p{$key}/$max_p)+1; }
 			if ($_url_p{$key} && ($bredde_p==1)) { $bredde_p=2; }
