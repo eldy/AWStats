@@ -154,5 +154,5 @@ message150=Tamaño
 message151=Primeiro
 message152=Último
 message153=Excluír Filtro
-message154=* Os códigos amosados aquí contan accesos ou tráfico "non visto" por visitantes, logo están aillados nesta táboa.
+message154=Os códigos amosados aquí contan accesos ou tráfico "non visto" por visitantes, logo están aillados nesta táboa.
 message155=Grupo
