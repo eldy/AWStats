@@ -135,3 +135,4 @@ message130=Verditabellar
 message131=E-post (avsendar)
 message132=E-post (mottakar)
 message133=Rapportperiode
+message133=Ekstra
