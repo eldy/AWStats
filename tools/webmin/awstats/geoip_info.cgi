@@ -38,7 +38,10 @@ seek(GEOIPFILE,$seekpos,0);
 my $nbread=0;
 while (($nbread < 100) && ($line=<GEOIPFILE>)) {
     $nbread++;
-    if ($line =~ /(Geo-.*)Copyright/i) { $version=$1; }
+    if ($line =~ /(Geo-.*)Copyright/i) { 
+        $version=$1;
+        last;
+    }
 }
 close (GEOIPFILE);
 

@@ -262,8 +262,8 @@ if (scalar @config) {
             $error="Failed to open $filedata for read";
         }
 
-		local ($size, $latest);
-		local @st=stat($l);
+		my @st=stat($l);
+		my $size = $st[7];
 		my ($sec,$min,$hour,$day,$month,$year,$wday,$yday) = localtime($st[9]);
 		$year+=1900; $month++;
 
@@ -271,7 +271,10 @@ if (scalar @config) {
         printf("Configuration file: <b>%s</b><br>\n",$l);
 		printf("Created/Changed: <b>%04s-%02s-%02s %02s:%02s:%02s</b><br>\n",$year,$month,$day,$hour,$min,$sec);
         print "<br>\n";
+
+		my @st2=stat($filedata);
         printf("Data file for period: <b>%s</b><br>\n",$filedata);
+        printf("Data file size for period: <b>%s</b> bytes<br>\n",$st2[7]);
         printf("Data file version: <b>%s</b>",($version?" $version":"unknown")."<br>");
         printf("Last update: <b>%s</b>","not yet available");
         print '</div>';
