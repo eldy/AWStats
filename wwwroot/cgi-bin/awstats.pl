@@ -81,7 +81,7 @@ $word, $yearcon, $yearfile, $yearmonthfile, $yeartoprocess) = ();
 %MonthBytes = %MonthHits = %MonthPages = %MonthUnique = %MonthVisits =
 %listofyears = %monthlib = %monthnum = ();
 
-$VERSION="3.0 (build 2)";
+$VERSION="3.0 (build 3)";
 $Lang="en";
 
 # Default value
@@ -162,11 +162,12 @@ $BarImageHorizontal_k = "barrehk.png";
 "mamma\.","Mamma",
 "dejanews\.","DejaNews",
 "search\.dogpile\.com","Dogpile",
-"engine\.exe","Cade", "miner\.bol\.com\.br","Meta Miner",	# Minor brazilian search engine
-"ilse\.","Ilse","vindex\.","Vindex\.nl",	# Minor dutch search engines
+"engine\.exe","Cade", "miner\.bol\.com\.br","Meta Miner",		# Minor brazilian search engine
+"ilse\.","Ilse","vindex\.","Vindex\.nl",						# Minor dutch search engines
 "nomade\.fr/","Nomade", "ctrouve\.","C'est trouvé", "francite\.","Francité", "\.lbb\.org", "LBB", "rechercher\.libertysurf\.fr", "Libertysurf",	# Minor french search engines
 "fireball\.de","Fireball", "infoseek\.de","Infoseek", "suche\.web\.de","Web.de", "meta\.ger","MetaGer",	# Minor german search engines
-"kvasir\.sol\.no","Kvasir",		# Minor norvegian search engine
+"kvasir\.sol\.no","Kvasir", "sok\.start\.no","start.no",		# Minor norvegian search engine
+"evreka\.passagen\.se","Evreka",								# Minor swedish search engine
 "search\..*com","Other search engines"
 );
 
@@ -201,10 +202,11 @@ $BarImageHorizontal_k = "barrehk.png";
 "ilse\.","search_for=", "vindex\.","in=",
 "nomade\.fr/","s=", "francite\.","name=",
 "fireball\.de","q=", "infoseek\.de","qt=", "suche\.web\.de","su=",
-"kvasir\.sol\.no", "q="
+"kvasir\.sol\.no", "q=", "sok\.start\.no", "q=",
+"evreka\.passagen\.se","q="
 );
 # If no rules are known, this will be used to clean URL of not keyword parameters.
-@WordsToCleanSearchUrl= ("act=","annuaire=","btng=","categoria=","cfg=","cou=","dd=","domain=","dt=","dw=","exec=","geo=","hc=","height=","hl=","hs=","kl=","lang=","loc=","lr=","matchmode=","medor=","message=","meta=","mode=","order=","page=","par=","pays=","pg=","pos=","prg=","qc=","refer=","sa=","safe=","sc=","sort=","src=","start=","stype=","tag=","temp=","theme=","url=","user=","width=","what=","\\.x=","\\.y=");
+@WordsToCleanSearchUrl= ("act=","annuaire=","btng=","categoria=","cfg=","cou=","dd=","domain=","dt=","dw=","exec=","geo=","hc=","height=","hl=","hq=","hs=","kl=","lang=","loc=","lr=","matchmode=","medor=","message=","meta=","mode=","order=","page=","par=","pays=","pg=","pos=","prg=","qc=","refer=","sa=","safe=","sc=","sort=","src=","start=","stype=","tag=","temp=","theme=","url=","user=","width=","what=","\\.x=","\\.y=","y=","look=");
 # Never put the following exclusion ("ask=","claus=","general=","kw=","keyword=","MT","p=","q=","qr=","qt=","query=","s=","search=","searchText=","string=","su=") because they are strings that contain keywords we're looking for.
 
 # HTTP codes with tooltip
@@ -251,7 +253,6 @@ $BarImageHorizontal_k = "barrehk.png";
 "ncsa_mosaic","NCSA Mosaic",
 "netpositive","NetPositive",
 "nutscrape", "Nutscrape",
-"mspie","MS Pocket Internet Explorer",
 "msfrontpageexpress","MS FrontPage Express",
 "omniweb","OmniWeb",
 "teleport","TelePort Pro (Site grabber)",
@@ -259,7 +260,6 @@ $BarImageHorizontal_k = "barrehk.png";
 "viking","Viking",
 "webcapture","Acrobat (Site grabber)",
 "webfetcher","WebFetcher",
-"webtv","WebTV browser",
 "webexplorer","IBM-WebExplorer",
 "webmirror","WebMirror",
 "webvcr","WebVCR",
@@ -280,11 +280,16 @@ $BarImageHorizontal_k = "barrehk.png";
 "xmms","XMMS",
 "xaudio","Some XAudio Engine based MPEG player",
 # Other kind of browsers
-"webzip","WebZIP"
+"webzip","WebZIP",
+# Other engine OS (PDA, phonecells, TV)
+"mmef","Microsoft Mobile Explorer",
+"mspie","MS Pocket Internet Explorer",
+"webtv","WebTV browser"
 );
 
 # OS lists ("os detector in lower case","os text")
 %OSHash      = (
+# Windows family OS
 "winme","Windows Me",
 "win2000","Windows 2000",
 "winnt","Windows NT",
@@ -292,21 +297,24 @@ $BarImageHorizontal_k = "barrehk.png";
 "win95","Windows 95",
 "win16","Windows 3.xx",
 "wince","Windows CE",
+# Other famous OS
 "beos","BeOS",
 "macintosh","Mac OS",
-"unix","Unknown Unix system",
-"linux","Linux",
 "os/2","Warp OS/2",
 "amigaos","AmigaOS",
+# Unix like OS
+"unix","Unknown Unix system",
+"linux","Linux",
+"aix","Aix",
 "sunos","Sun Solaris",
 "irix","Irix",
 "osf","OSF Unix",
 "hp-ux","HP Unix",
-"aix","Aix",
 "netbsd","NetBSD",
 "bsdi","BSDi",
 "freebsd","FreeBSD",
 "openbsd","OpenBSD",
+# Miscellanous OS
 "webtv","WebTV",
 "cp/m","CPM",
 "crayos","CrayOS",
