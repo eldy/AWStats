@@ -672,7 +672,9 @@ it with its value when reading it), follow the example:<br>
 <br><br><hr>
 
 <a name="SplitSearchString"><b>SplitSearchString</b></a><br>
-<b>Version : </b>2.24 +<br>
+<b>Version : </b>2.24 - 4.0 (deprecated since 4.1)<br>
+AWStats 4.1+ supports both keywords AND keyphrases by default with no need of any parameter.<br>
+<font color="#808080">
 <br># Search engines keywords reported are full search string or separate keywords
 <br># Possible values:
 <br># 0 - Search keywords reported are full search string (ie: "town maps")
@@ -680,6 +682,7 @@ it with its value when reading it), follow the example:<br>
 <br># Default: 0
 <br>#
 <br>SplitSearchString=0
+</font>
 
 <br><br><hr>
 
@@ -764,7 +767,7 @@ it with its value when reading it), follow the example:<br>
 ShowDomainsStats,ShowHostsStats,ShowAuthenticatedUsers,ShowRobotsStats,
 ShowPagesStats,ShowCompressionStats,ShowFileTypesStats,ShowFileSizesStats,ShowBrowsersStats,
 ShowOSStats,ShowOriginStats,ShowKeyphrasesStats,ShowKeywordsStats,ShowHTTPErrorsStats<br>
-4.1 for ShowSessionsStats<br>
+4.1 for ShowSessionsStats, ShowKeywordsStats<br>
 <br># You choose here which summary report you want to see in the main page.
 <br># Whatever is your setup here, all detailed reports are still available.
 <br># So if you setup to 1 only ShowHeader, ShowMenu and ShowMonthDayStats, all
@@ -789,7 +792,7 @@ ShowOSStats,ShowOriginStats,ShowKeyphrasesStats,ShowKeywordsStats,ShowHTTPErrors
 <br>ShowOSStats=1
 <br>ShowOriginStats=1
 <br>ShowKeyphrasesStats=1
-<br>ShowKeywordsStats=1			# Not yet available
+<br>ShowKeywordsStats=1
 <br>ShowHTTPErrorsStats=1
 
 <br><br><hr>
