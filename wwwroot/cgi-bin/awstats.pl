@@ -109,7 +109,7 @@ $BarImageHorizontal_k = 'hk.png';
 use vars qw/
 $EnableLockForUpdate $DNSLookup $AllowAccessFromWebToAuthenticatedUsersOnly
 $BarHeight $BarWidth $CreateDirDataIfNotExists $KeepBackupOfHistoricFiles $MaxLengthOfURL
-$NbOfLinesRead $NbOfLinesDropped $NbOfLinesCorrupted $NbOfOldLines $NbOfNewLines
+$NbOfLinesParsed $NbOfLinesDropped $NbOfLinesCorrupted $NbOfOldLines $NbOfNewLines
 $NbOfLinesShowsteps $NewLinePhase $NbOfLinesForCorruptedLog $PurgeLogFile
 $ShowAuthenticatedUsers $ShowFileSizesStats $ShowScreenSizeStats 
 $ShowDropped $ShowCorrupted $ShowUnknownOrigin $ShowLinksToWhoIs
@@ -120,7 +120,7 @@ $UseFramesWhenCGI $DecodeUA
 /;
 ($EnableLockForUpdate, $DNSLookup, $AllowAccessFromWebToAuthenticatedUsersOnly,
 $BarHeight, $BarWidth, $CreateDirDataIfNotExists, $KeepBackupOfHistoricFiles, $MaxLengthOfURL,
-$NbOfLinesRead, $NbOfLinesDropped, $NbOfLinesCorrupted, $NbOfOldLines, $NbOfNewLines,
+$NbOfLinesParsed, $NbOfLinesDropped, $NbOfLinesCorrupted, $NbOfOldLines, $NbOfNewLines,
 $NbOfLinesShowsteps, $NewLinePhase, $NbOfLinesForCorruptedLog, $PurgeLogFile,
 $ShowAuthenticatedUsers, $ShowFileSizesStats, $ShowScreenSizeStats,
 $ShowDropped, $ShowCorrupted, $ShowUnknownOrigin, $ShowLinksToWhoIs,
@@ -203,14 +203,16 @@ $pos_referer = $pos_agent = $pos_query = $pos_gzipin = $pos_gzipout = $pos_gzipr
 $pos_emails = $pos_emailr = $pos_hostr = -1;
 use vars qw/
 $lowerval
-$LastLine $LastLineOffset $LastLineChecksum $LastUpdate
+$LastLine $LastLineNumber $LastLineOffset $LastLineChecksum
+$LastUpdate
 $TotalUnique $TotalVisits $TotalHostsKnown $TotalHostsUnknown
 $TotalPages $TotalHits $TotalBytes $TotalEntries $TotalExits $TotalBytesPages $TotalDifferentPages
 $TotalKeyphrases $TotalKeywords $TotalDifferentKeyphrases $TotalDifferentKeywords
 $TotalSearchEnginesPages $TotalSearchEnginesHits $TotalRefererPages $TotalRefererHits $TotalDifferentSearchEngines $TotalDifferentReferer
 /;
 $lowerval = 0;
-$LastLine = $LastLineOffset = $LastLineChecksum = $LastUpdate = 0;
+$LastLine = $LastLineNumber = $LastLineOffset = $LastLineChecksum = 0;
+$LastUpdate = 0;
 $TotalUnique = $TotalVisits = $TotalHostsKnown = $TotalHostsUnknown = 0;
 $TotalPages = $TotalHits = $TotalBytes = $TotalEntries = $TotalExits = $TotalBytesPages = $TotalDifferentPages = 0;
 $TotalKeyphrases = $TotalKeywords = $TotalDifferentKeyphrases = $TotalDifferentKeywords = 0;
@@ -1681,7 +1683,7 @@ sub Read_Plugins {
 
 #--------------------------------------------------------------------
 # Function:		Read history file and create/update tmp history file
-# Parameters:	year,month,withupdate,withpurge,part_to_load[,lastlineoffset,lastlinechecksum]
+# Parameters:	year,month,withupdate,withpurge,part_to_load[,lastlinenumber,lastlineoffset,lastlinechecksum]
 # Input:		$DirData $PROG $FileSuffix $LastLine
 # Output:		None
 # Return:		Tmp history file name or '' if withupdate is 0
@@ -1694,6 +1696,7 @@ sub Read_History_With_TmpUpdate {
 	my $withpurge=shift||0;
 	my $part=shift||'';
 
+	my $lastlinenumber=shift||0;
 	my $lastlineoffset=shift||0;
 	my $lastlinechecksum=shift||0;
 
@@ -1714,8 +1717,8 @@ sub Read_History_With_TmpUpdate {
 	my $readvisitorforbackward=0;
 
 	# In standard use of AWStats, the DayRequired variable is always empty
-	if ($DayRequired) { if ($Debug) { debug("Call to Read_History_With_TmpUpdate [$year,$month,withupdate=$withupdate,withpurge=$withpurge,part=$part,lastlineoffset=$lastlineoffset,lastlinechecksum=$lastlinechecksum] ($DayRequired)"); } }
-	else { if ($Debug) { debug("Call to Read_History_With_TmpUpdate [$year,$month,withupdate=$withupdate,withpurge=$withpurge,part=$part,lastlineoffset=$lastlineoffset,lastlinechecksum=$lastlinechecksum]"); } }
+	if ($DayRequired) { if ($Debug) { debug("Call to Read_History_With_TmpUpdate [$year,$month,withupdate=$withupdate,withpurge=$withpurge,part=$part,lastlinenumber=$lastlinenumber,lastlineoffset=$lastlineoffset,lastlinechecksum=$lastlinechecksum] ($DayRequired)"); } }
+	else { if ($Debug) { debug("Call to Read_History_With_TmpUpdate [$year,$month,withupdate=$withupdate,withpurge=$withpurge,part=$part,lastlinenumber=$lastlinenumber,lastlineoffset=$lastlineoffset,lastlinechecksum=$lastlinechecksum]"); } }
 
 	# Define SectionsToLoad (which sections to load)
 	my %SectionsToLoad = ();
@@ -1825,8 +1828,9 @@ sub Read_History_With_TmpUpdate {
 			}
 			if ($field[0] eq 'LastLine')        {
 				if (! $LastLine || $LastLine < int($field[1])) { $LastLine=int($field[1]); };
-				if ($field[2]) { $LastLineOffset=int($field[2]); }
-				if ($field[3]) { $LastLineChecksum=int($field[3]); }
+				if ($field[2]) { $LastLineNumber=int($field[2]); }
+				if ($field[3]) { $LastLineOffset=int($field[3]); }
+				if ($field[4]) { $LastLineChecksum=int($field[4]); }
 				next;
 			}
 			if ($field[0] eq 'FirstTime')       { if (! $FirstTime{$year.$month} || $FirstTime{$year.$month} > int($field[1])) { $FirstTime{$year.$month}=int($field[1]); }; next; }
@@ -1878,7 +1882,7 @@ sub Read_History_With_TmpUpdate {
 				}
 
 				delete $SectionsToLoad{'general'};
-				if ($SectionsToSave{'general'}) { Save_History('general',$year,$month,$lastlineoffset,$lastlinechecksum); delete $SectionsToSave{'general'}; }
+				if ($SectionsToSave{'general'}) { Save_History('general',$year,$month,$lastlinenumber,$lastlineoffset,$lastlinechecksum); delete $SectionsToSave{'general'}; }
 
 				# Test for backward compatibility
 				if ($versionnum < 5000 && ! $withupdate) {
@@ -2900,7 +2904,7 @@ sub Read_History_With_TmpUpdate {
 
 	# Write all unwrote sections in section order ('general','time', 'day','sider','session' and other...)
 	foreach my $key (sort { $SectionsToSave{$a} <=> $SectionsToSave{$b} } keys %SectionsToSave) {
-		Save_History("$key",$year,$month,$lastlineoffset,$lastlinechecksum);
+		Save_History("$key",$year,$month,$lastlinenumber,$lastlineoffset,$lastlinechecksum);
 	}
 	%SectionsToSave=();
 
@@ -2952,8 +2956,8 @@ sub Read_History_With_TmpUpdate {
 
 #--------------------------------------------------------------------
 # Function:		Save a part of history file
-# Parameters:	part_to_save,year,month[,lastlineoffset,lastlinechecksum]
-# Input:		$VERSION HISTORYTMP $nowyear $nowmonth $nowday $nowhour $nowmin $nowsec $LastLineOffset $LastLineChecksum
+# Parameters:	part_to_save,year,month[,lastlinenumber,lastlineoffset,lastlinechecksum]
+# Input:		$VERSION HISTORYTMP $nowyear $nowmonth $nowday $nowhour $nowmin $nowsec $LastLineNumber $LastLineOffset $LastLineChecksum
 # Output:		None
 # Return:		None
 #--------------------------------------------------------------------
@@ -2962,10 +2966,16 @@ sub Save_History {
 	my $year=shift||'';
 	my $month=shift||'';
 
-	my $lastlineoffset=shift||$LastLineOffset;
-	my $lastlinechecksum=shift||$LastLineChecksum;
-
-	if ($Debug) { debug(" Save_History [sectiontosave=$sectiontosave,year=$year,month=$month,lastlineoffset=$lastlineoffset]",3); }
+	my $lastlinenumber=shift||0;
+	my $lastlineoffset=shift||0;
+	my $lastlinechecksum=shift||0;
+	if (! $lastlinenumber) {	# Should be needed for migrate only
+		$lastlinenumber=$LastLineNumber;
+		$lastlineoffset=$LastLineOffset;
+		$lastlinechecksum=$LastLineChecksum;
+	}
+	
+	if ($Debug) { debug(" Save_History [sectiontosave=$sectiontosave,year=$year,month=$month,lastlinenumber=$lastlinenumber,lastlineoffset=$lastlineoffset,lastlinechecksum=$lastlinechecksum]",3); }
 	my $spacebar="                    ";
 	my %keysinkeylist=();
 
@@ -3021,20 +3031,20 @@ sub Save_History {
 	if ($sectiontosave eq 'general') {
 		if ($LastUpdate < int("$nowyear$nowmonth$nowday$nowhour$nowmin$nowsec")) { $LastUpdate=int("$nowyear$nowmonth$nowday$nowhour$nowmin$nowsec"); }
 		print HISTORYTMP "\n";
-		print HISTORYTMP "# LastLine    = Date of last record processed - Last record offset in last log - Last record signature value\n";
+		print HISTORYTMP "# LastLine    = Date of last record processed - Last record line number in last log - Last record offset in last log - Last record signature value\n";
 		print HISTORYTMP "# FirstTime   = Date of first visit for history file\n";
 		print HISTORYTMP "# LastTime    = Date of last visit for history file\n";
-		print HISTORYTMP "# LastUpdate  = Date of last update - Nb of lines read - Nb of old records - Nb of new records - Nb of corrupted - Nb of dropped\n";
+		print HISTORYTMP "# LastUpdate  = Date of last update - Nb of parsed records - Nb of old records - Nb of new records - Nb of corrupted - Nb of dropped\n";
 		print HISTORYTMP "# TotalVisits = Number of visits\n";
 		print HISTORYTMP "# TotalUnique = Number of unique visitors\n";
 		print HISTORYTMP "# MonthHostsKnown   = Number of hosts known\n";
 		print HISTORYTMP "# MonthHostsUnKnown = Number of hosts unknown\n";
 		$ValueInFile{$sectiontosave}=tell HISTORYTMP;
 		print HISTORYTMP "BEGIN_GENERAL 8\n";
-		print HISTORYTMP "LastLine ".($LastLine>0?$LastLine:$LastTime{$year.$month})." $lastlineoffset $lastlinechecksum\n";
+		print HISTORYTMP "LastLine ".($LastLine>0?$LastLine:$LastTime{$year.$month})." $lastlinenumber $lastlineoffset $lastlinechecksum\n";
 		print HISTORYTMP "FirstTime $FirstTime{$year.$month}\n";
 		print HISTORYTMP "LastTime $LastTime{$year.$month}\n";
-		print HISTORYTMP "LastUpdate $LastUpdate $NbOfLinesRead $NbOfOldLines $NbOfNewLines $NbOfLinesCorrupted $NbOfLinesDropped\n";
+		print HISTORYTMP "LastUpdate $LastUpdate $NbOfLinesParsed $NbOfOldLines $NbOfNewLines $NbOfLinesCorrupted $NbOfLinesDropped\n";
 		print HISTORYTMP "TotalVisits ";$PosInFile{"TotalVisits"}=tell HISTORYTMP;print HISTORYTMP "$spacebar\n";
 		print HISTORYTMP "TotalUnique ";$PosInFile{"TotalUnique"}=tell HISTORYTMP;print HISTORYTMP "$spacebar\n";
 		print HISTORYTMP "MonthHostsKnown ";$PosInFile{"MonthHostsKnown"}=tell HISTORYTMP;print HISTORYTMP "$spacebar\n";
@@ -3666,7 +3676,7 @@ sub Save_DNS_Cache_File {
 # Return:		Number of miliseconds elapsed since last call
 #------------------------------------------------------------------------------
 sub GetDelaySinceStart {
-	if (shift) { $StartSeconds=0; }	# Reset counter
+	if (shift) { $StartSeconds=0; }	# Reset chrono
 	my ($newseconds, $newmicroseconds)=(time(),0);
 	# Plugin call : Return seconds and milliseconds
 	if ($PluginsLoaded{'GetTime'}{'timehires'}) { GetTime_timehires($newseconds, $newmicroseconds); }
@@ -4485,7 +4495,7 @@ $tomorrowtime=int($tomorrowyear.$tomorrowmonth.$tomorrowday.$tomorrowhour.$tomor
 my @AllowedArgs=('-site','-config','-showsteps','-showdropped','-showcorrupted',
 '-showunknownorigin','-logfile','-output','-staticlinks','-lang',
 '-hostfilter','-urlfilter','-refererpagesfilter',
-'-month','-year','-framename','-debug');
+'-month','-year','-framename','-debug','-limitflush');
 
 $QueryString='';
 if ($ENV{'GATEWAY_INTERFACE'}) {	# Run from a browser
@@ -4566,6 +4576,7 @@ if ($QueryString =~ /(^|&)staticlinks/i) 			{ $StaticLinks=".$SiteConfig"; }
 if ($QueryString =~ /(^|&)staticlinks=([^&]+)/i) 	{ $StaticLinks=".$2"; }		# When ran from awstatsbuildstaticpages.pl
 if ($QueryString =~ /(^|&)framename=([^&]+)/i)		{ $FrameName="$2"; }
 if ($QueryString =~ /(^|&)debug=(\d+)/i)			{ $Debug=$2; }
+if ($QueryString =~ /(^|&)limitflush=(\d+)/i)		{ $LIMITFLUSH=$2; }
 # Get/Define output
 if ($QueryString =~ /(^|&)output(=[^&]*|)(.*)&output(=[^&]*|)(&|$)/i) { error("Only 1 output option is allowed","","",1); }
 if ($QueryString =~ /(^|&)output(=[^&]*|)(&|$)/i) {
@@ -4867,6 +4878,7 @@ if ($lastyearbeforeupdate) {
 if ($Debug) {
 	debug("Last year=$lastyearbeforeupdate - Last month=$ListOfYears{$lastyearbeforeupdate}");
 	debug("LastLine=$LastLine");
+	debug("LastLineNumber=$LastLineNumber");
 	debug("LastLineOffset=$LastLineOffset");
 	debug("LastLineChecksum=$LastLineChecksum");
 }
@@ -4944,7 +4956,6 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 	}
 
 	if ($Debug) { debug("Start Update process (lastprocessedmonth=$lastprocessedmonth, lastprocessedyear=$lastprocessedyear)"); }
-	$NbOfLinesRead=$NbOfLinesDropped=$NbOfLinesCorrupted=$NbOfOldLines=$NbOfNewLines=$NbOfLinesShowsteps=0;
 
 	# Open log file
 	if ($Debug) { debug("Open log file \"$LogFile\""); }
@@ -4952,29 +4963,66 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 	binmode LOG;	# Avoid premature EOF due to log files corrupted with \cZ or bin chars
 
 	my @field=();
-	my $counter=0; my $lastlineoffsetsav=0; my $lastlineoffset=0;
-	# Reset counter for benchmark (first call to GetDelaySinceStart)
+	my $lastlinenumber=0; my $lastlineoffset=0; my $lastlineoffsetnext=0;
+	my $counterforflushtest=0;
+	# Reset chrono for benchmark (first call to GetDelaySinceStart)
 	&GetDelaySinceStart(1);
 	if (! scalar keys %HTMLOutput) { print "Phase 1 : First bypass old records, searching new record...\n"; }
 
-	# Try a direct seek access to save time
-	if ($LastLine && $LastLineOffset && $LastLineChecksum) {
-		if (1 == 2) {
-			if (! scalar keys %HTMLOutput) { print "Direct access to new records was successfull\n"; }
-		}
+	# Can we try a direct seek access in log ?
+	if ($LastLine && $LastLineNumber && $LastLineOffset && $LastLineChecksum) {
+		# Try a direct seek access to save time
+#		if ($Debug) { debug("Try a direct access to LastLine=$LastLine, LastLineNumber=$LastLineNumber, LastLineOffset=$LastLineOffset, LastLineChecksum=$LastLineChecksum"); }
+#		seek(LOG,$LastLineOffset,0);
+#		if ($_=<LOG>) {
+#			chomp $_; s/\r$//;
+#			@field=map(/^$PerlParsingFormat/,$_);
+#			if ($Debug) {
+#				my $string='';
+#				foreach my $key (0..@field-1) {	$string.="$fieldlib[$key]=$field[$key] "; }
+#				debug(" Read line after direct access: $string",1);
+#			}
+#			my $checksum=&CheckSum(join("\t",@field));
+#			debug(" LastLineChecksum=$LastLineChecksum, Read line checksum=$checksum",1);
+#			if ($checksum == $LastLineChecksum ) {
+#				if (! scalar keys %HTMLOutput) { print "Direct access to new records was successfull (We should be line $LastLineRead)\n"; }
+#				$lastlinenumber=$LastLineNumber;
+#				$lastlineoffset=$LastLineOffset;
+#				$lastlineoffsetnext=$LastLineOffset;
+#				seek(LOG,$LastLineOffset,0);	# Direct access succesful, we keep it.
+#			}
+#			else {
+#				if (! scalar keys %HTMLOutput) { print "Direct access to last remembered record falled on another record.\nSo searching it from beginning of log file...\n"; }
+#				$lastlinenumber=0;
+#				$lastlineoffset=0;
+#				$lastlineoffsetnext=0;
+#				seek(LOG,0,0);
+#			}
+#		}
+#		else {
+#			if (! scalar keys %HTMLOutput) { print "Direct access to last remembered record is out of file.\nSo searching if from beginning of log file...\n"; }
+#			$lastlinenumber=0;
+#			$lastlineoffset=0;
+#			$lastlineoffsetnext=0;
+#			seek(LOG,0,0);
+#		}
 	}
-
+	else {
+		# No try of direct seek access
+		$lastlinenumber=0;
+		$lastlineoffset=0;
+		$lastlineoffsetnext=0;
+	}
+	
 	while (<LOG>) {
- 		chomp $_; s/\r$//;
-		$NbOfLinesRead++;
-
- 		$lastlineoffset=$lastlineoffsetsav;
- 		$lastlineoffsetsav=tell LOG;
+		chomp $_; s/\r$//;
+		$NbOfLinesParsed++;
+ 		$lastlineoffset=$lastlineoffsetnext; $lastlineoffsetnext=tell LOG;
 
 		if ($ShowSteps) {
 			if ((++$NbOfLinesShowsteps & $NBOFLINESFORBENCHMARK) == 0) {
 				my $delay=&GetDelaySinceStart(0);
-				print "$NbOfLinesRead lines processed (".($delay>0?$delay:1000)." ms, ".int(1000*$NbOfLinesShowsteps/($delay>0?$delay:1000))." lines/second)\n";
+				print "$NbOfLinesParsed lines processed (".($delay>0?$delay:1000)." ms, ".int(1000*$NbOfLinesShowsteps/($delay>0?$delay:1000))." lines/second)\n";
 			}
 		}
 
@@ -4982,11 +5030,11 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 		if (! (@field=map(/^$PerlParsingFormat/,$_))) {
 			$NbOfLinesCorrupted++;
 			if ($ShowCorrupted) {
-				if ($_ =~ /^#/ || $_ =~ /^!/) { print "Corrupted record line $NbOfLinesRead (comment line): $_\n"; }
-				elsif ($_ =~ /^\s*$/) { print "Corrupted record line $NbOfLinesRead (blank line)\n"; }
-				else { print "Corrupted record line $NbOfLinesRead (record format does not match LogFormat parameter): $_\n"; }
+				if ($_ =~ /^#/ || $_ =~ /^!/) { print "Corrupted record line ".($lastlinenumber+$NbOfLinesParsed)." (comment line): $_\n"; }
+				elsif ($_ =~ /^\s*$/) { print "Corrupted record line ".($lastlinenumber+$NbOfLinesParsed)." (blank line)\n"; }
+				else { print "Corrupted record line ".($lastlinenumber+$NbOfLinesParsed)." (record format does not match LogFormat parameter): $_\n"; }
 			}
-			if ($NbOfLinesRead >= $NbOfLinesForCorruptedLog && $NbOfLinesCorrupted == $NbOfLinesRead) { error("Format error",$_,$LogFile); }	# Exit with format error
+			if ($NbOfLinesParsed >= $NbOfLinesForCorruptedLog && $NbOfLinesParsed == $NbOfLinesCorrupted) { error("Format error",$_,$LogFile); }	# Exit with format error
 			if ($_ =~ /^__end_of_file__/) { last; }	# For test purpose only
 			next;
 		}
@@ -4994,7 +5042,7 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 		if ($Debug) {
 			my $string='';
 			foreach my $key (0..@field-1) {	$string.="$fieldlib[$key]=$field[$key] "; }
-			debug(" Correct format line $NbOfLinesRead: $string",4);
+			debug(" Correct format line ".($lastlinenumber+$NbOfLinesParsed).": $string",4);
 		}
 
 		# Check virtual host name
@@ -5077,7 +5125,7 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 			if ($ShowSteps) {
 				if ($NbOfLinesShowsteps > 1 && (($NbOfLinesShowsteps & $NBOFLINESFORBENCHMARK) != 0)) {
 					my $delay=&GetDelaySinceStart(0);
-					print "".($NbOfLinesRead-1)." lines processed (".($delay>0?$delay:1000)." ms, ".int(1000*($NbOfLinesShowsteps-1)/($delay>0?$delay:1000))." lines/second)\n";
+					print "".($NbOfLinesParsed-1)." lines processed (".($delay>0?$delay:1000)." ms, ".int(1000*($NbOfLinesShowsteps-1)/($delay>0?$delay:1000))." lines/second)\n";
 				}
 				&GetDelaySinceStart(1);	$NbOfLinesShowsteps=1;
 			}
@@ -5122,7 +5170,8 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 			# A new month to process
 			if ($lastprocessedmonth) {
 				# We save data of processed month
-				&Read_History_With_TmpUpdate($lastprocessedyear,$lastprocessedmonth,1,1,"all",$lastlineoffset,&CheckSum(join("\t",@field)));
+				&Read_History_With_TmpUpdate($lastprocessedyear,$lastprocessedmonth,1,1,"all",($lastlinenumber+$NbOfLinesParsed),$lastlineoffset,&CheckSum($_));
+				$counterforflushtest=0;	# We reset counterforflushtest
 			}
 			$lastprocessedmonth=$monthrecord;$lastprocessedyear=$yearrecord;
 			$lastprocessedyearmonth=sprintf("%04i%02i",$lastprocessedyear,$lastprocessedmonth);
@@ -5174,10 +5223,9 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 		}
 		elsif ($protocol == 3 || $protocol == 5) {		# Mail record
 			if (! $ValidSMTPCodes{$field[$pos_code]}) {	# Code is not valid
-				$field[$pos_size]=0;
 				$_errors_h{$field[$pos_code]}++;
-				$_errors_k{$field[$pos_code]}+=int($field[$pos_size]);
-				next;
+				#$_errors_k{$field[$pos_code]}+=int($field[$pos_size]);	# Useless as pos_size should be 0
+				next;	# Next log record
 			}
 		}
 
@@ -5804,8 +5852,9 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 			}
  		}
 
-		# Every 20,000 approved lines we test to clean too large hash arrays to flush data in tmp file
-		if ($counter++ >= 20000) {
+		# Every 20,000 approved lines after a flush, we test to clean too large hash arrays to flush data in tmp file
+		if (++$counterforflushtest >= 20000) {
+		#if (++$counterforflushtest >= 1) {
 			if ((scalar keys %_host_u) > ($LIMITFLUSH<<2) || (scalar keys %_url_p) > $LIMITFLUSH) {
 				# warning("Warning: Try to run AWStats update process more frequently to analyze smaler log files.");
 				if ($^X =~ /activestate/i || $^X =~ /activeperl/i) {
@@ -5821,22 +5870,19 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 					if ((scalar keys %_url_p) > $LIMITFLUSH) { print " (unique url reach flush limit of ".($LIMITFLUSH).")"; }
 					print "\n";
 					if ($Debug) {
-						debug("End of set of ".($counter-1)." records: Some hash arrays are too large. We flush and clean some.",2);
+						debug("End of set of $counterforflushtest records: Some hash arrays are too large. We flush and clean some.",2);
 						print " _host_p:".(scalar keys %_host_p)." _host_h:".(scalar keys %_host_h)." _host_k:".(scalar keys %_host_k)." _host_l:".(scalar keys %_host_l)." _host_s:".(scalar keys %_host_s)." _host_u:".(scalar keys %_host_u)."\n";
 						print " _url_p:".(scalar keys %_url_p)." _url_k:".(scalar keys %_url_k)." _url_e:".(scalar keys %_url_e)." _url_x:".(scalar keys %_url_x)."\n";
 						print " _waithost_e:".(scalar keys %_waithost_e)." _waithost_l:".(scalar keys %_waithost_l)." _waithost_s:".(scalar keys %_waithost_s)." _waithost_u:".(scalar keys %_waithost_u)."\n";
 					}
-					&Read_History_With_TmpUpdate($lastprocessedyear,$lastprocessedmonth,1,1,"all",$lastlineoffset,&CheckSum(join("\t",@field)));
+					&Read_History_With_TmpUpdate($lastprocessedyear,$lastprocessedmonth,1,1,"all",($lastlinenumber+$NbOfLinesParsed),$lastlineoffset,&CheckSum($_));
 					&GetDelaySinceStart(1);	$NbOfLinesShowsteps=1;
 				}
 			}
-			$counter=0;
+			$counterforflushtest=0;
 		}
 
 	}	# End of loop for processing new record.
-
-	if ($Debug) { debug("Close log file \"$LogFile\""); }
-	close LOG || error("Command for pipe '$LogFile' failed");
 
 	if ($Debug) {
 		debug(" _host_p:".(scalar keys %_host_p)." _host_h:".(scalar keys %_host_h)." _host_k:".(scalar keys %_host_k)." _host_l:".(scalar keys %_host_l)." _host_s:".(scalar keys %_host_s)." _host_u:".(scalar keys %_host_u)."\n",1);
@@ -5846,10 +5892,17 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 	}
 
 	# Save current processed month $lastprocessedmonth
-	# If lastprocessedmonth > 0 means there is at least on approved new record in log or at least one existing history file
-	if ($lastprocessedmonth) {
-		&Read_History_With_TmpUpdate($lastprocessedyear,$lastprocessedmonth,1,1,"all",$lastlineoffset,&CheckSum(join("\t",@field)));
+	# If lastprocessedmonth > 0 means there is at least one approved new record in log or at least one existing history file
+	if ($lastprocessedmonth) {	# TODO: Do not save if we are sure a flush was just already done
+		# Get last line
+		seek(LOG,$lastlineoffset,0);
+		$_=<LOG>;
+ 		chomp $_; s/\r$//;
+		&Read_History_With_TmpUpdate($lastprocessedyear,$lastprocessedmonth,1,1,"all",($lastlinenumber+$NbOfLinesParsed),$lastlineoffset,&CheckSum($_));
 	}
+
+	if ($Debug) { debug("Close log file \"$LogFile\""); }
+	close LOG || error("Command for pipe '$LogFile' failed");
 
 	# Process the Rename - Archive - Purge phase
 	my $renameok=1; my $archiveok=1;
@@ -8646,7 +8699,8 @@ if (scalar keys %HTMLOutput) {
 	}
 }
 else {
-	print "Lines in file: $NbOfLinesRead\n";
+	# if ($LastLineRead < $NbOfLinesRead) { Print "Jumped lines in file: $LastLineRead\n"; }
+	print "Parsed lines in file: $NbOfLinesParsed\n";
 	print "Found $NbOfLinesDropped dropped records,\n";
 	print "Found $NbOfLinesCorrupted corrupted records,\n";
 	print "Found $NbOfOldLines old records,\n";
@@ -8672,14 +8726,14 @@ else {
 # End of 'migrate'
 #
 # Get last history file name
-# Get value for $LastLine $LastLineOffset $LastLineChecksum with
+# Get value for $LastLine $LastLineNumber $LastLineOffset $LastLineChecksum with
 #	&Read_History_With_TmpUpdate(lastyear,lastmonth,NOUPDATE,NOPURGE,"general");
 #
 # &Init_HashArray()
 #
 # If 'update'
 #   Loop on each new line in log file
-#     lasttimeoffsetnew=file pointer position
+#     lastlineoffset=lastlineoffsetnext; lastlineoffsetnext=file pointer position
 #     If line corrupted, skip --> next on loop
 #	  Drop wrong virtual host --> next on loop
 #     Drop wrong protocol --> next on loop
@@ -8694,15 +8748,16 @@ else {
 #     Skip line for @SkipUserAgent --> next on loop
 #     So it's new line approved
 #     If other month/year, create/update tmp file and purge data arrays with
-#       &Read_History_With_TmpUpdate(lastprocessedyear,lastprocessedmonth,UPDATE,PURGE,"all",lastlineoffset,checksum);
+#       &Read_History_With_TmpUpdate(lastprocessedyear,lastprocessedmonth,UPDATE,PURGE,"all",lastlinenumber,lastlineoffset,checksum($_));
 #     Check protocol and complete %_error_, %_sider404 and %_referrer404
 #     Check robot and complete %_robot
 #     ...
 #     If too many records, we flush data arrays with
-#       &Read_History_With_TmpUpdate($lastprocessedyear,$lastprocessedmonth,UPDATE,PURGE,"all",lastlineoffset,checksum);
+#       &Read_History_With_TmpUpdate($lastprocessedyear,$lastprocessedmonth,UPDATE,PURGE,"all",lastlinenumber,lastlineoffset,checksum($_));
 #   End of loop
 #   Create/update tmp file
-#	  &Read_History_With_TmpUpdate($lastprocessedyear,$lastprocessedmonth,UPDATE,PURGE,"all",lastlineoffset,checksum)
+#	  Seek to lastlineoffset to read and get last line into $_ 
+#	  &Read_History_With_TmpUpdate($lastprocessedyear,$lastprocessedmonth,UPDATE,PURGE,"all",lastlinenumber,lastlineoffset,checksum($_))
 #   Rename all tmp files
 # End of 'update'
 #
