@@ -20,7 +20,7 @@
 <td bgcolor=#9999cc align=center><a href="/"><img src="images/awstats_logo4.png" border=0></a></td>
 <td bgcolor=#9999cc align=center>
 <br>
-<font style="font: 16pt arial,helvetica,sanserif" color=#EEEEFF><b>AWStats logfile analyzer 5.5 Documentation</b></font><br>
+<font style="font: 16pt arial,helvetica,sanserif" color=#EEEEFF><b>AWStats logfile analyzer 5.6 Documentation</b></font><br>
 <br>
 </td>
 <td bgcolor=#9999cc align=center>
@@ -219,7 +219,7 @@ when reading it), follow the example:<br>
 <br><br><hr>
 
 <a name="LogFile"><b>LogFile</b></a><br>
-<b>Version : </b>1.0 +<br>
+<b>Version : </b>1.0+<br>
 3.1+ for tags %YYYY-n,%YY-n,%MM-n,%DD-n,%HH-n<br>
 3.2+ for tag %WM-n<br>
 4.0+ for tag %DW-n<br>
@@ -258,7 +258,7 @@ when reading it), follow the example:<br>
 <br><br><hr>
 
 <a name="LogFormat"><b>LogFormat</b></a><br>
-<b>Version : </b>2.1 +<br>
+<b>Version : </b>2.1+<br>
 3.1+ for tags %host,%logname,%time1,%time2,%methodurl,%methodurlnoprot,%method,%url,
 %query,%code,%bytesd,%refererquot,%referer,%uaquot,%ua,%other<br>
 3.2+ for tags %gzipin,%gzipout<br>
@@ -318,7 +318,7 @@ when reading it), follow the example:<br>
 <br><br><hr>
 
 <a name="LogSeparator"><b>LogSeparator</b></a><br>
-<b>Version : </b>5.0 +<br>
+<b>Version : </b>5.0+<br>
 <br># If your log field's separator is not a space, you can change this parameter.
 <br># This parameter is not used if LogFormat is a predefined value (1,2,3,4,5,6)
 <br># Example: " "
@@ -330,7 +330,7 @@ when reading it), follow the example:<br>
 <br><br><hr>
 
 <a name="DNSLookup"><b>DNSLookup</b></a><br>
-<b>Version : </b>1.0 + (5.0 + for value 2) <br>
+<b>Version : </b>1.0+ (5.0+ for value 2) <br>
 <br># If you want to have hosts reported by name instead of ip address, AWStats
 <br># need to make reverse DNS lookups (if not already done in your log file).
 <br># With DNSLookup to 0, all hosts will be reported by their IP addresses and
@@ -350,7 +350,7 @@ when reading it), follow the example:<br>
 <br><br><hr>
 
 <a name="DirData"><b>DirData</b></a><br>
-<b>Version : </b>1.0 +<br>
+<b>Version : </b>1.0+<br>
 <br># When AWStats updates its statistics, it stores results of its analysis in 
 <br># files (AWStats database). All those files are written in the directory
 <br># defined by the "DirData" parameter. Set this value to the directory where
@@ -368,7 +368,7 @@ when reading it), follow the example:<br>
 <br><br><hr>
 
 <a name="DirCgi"><b>DirCgi</b></a><br>
-<b>Version : </b>1.0 +<br>
+<b>Version : </b>1.0+<br>
 <br># Relative or absolute web URL of your awstats.pl directory.
 <br># This parameter is used only when AWStats is ran from command line
 <br># with -output option (to generate links in HTML reported page).
@@ -379,7 +379,7 @@ when reading it), follow the example:<br>
 <br><br><hr>
 
 <a name="DirIcons"><b>DirIcons</b></a><br>
-<b>Version : </b>1.0 +<br>
+<b>Version : </b>1.0+<br>
 <br># If AWStats used as a CGI, enter relative or absolute web URL of all icons
 <br># subdirectories.
 <br># If you build static reports ("... -output > outputpath/output.html"), enter
@@ -393,7 +393,7 @@ when reading it), follow the example:<br>
 <br><br><hr>
 
 <a name="SiteDomain"><b>SiteDomain</b></a><br>
-<b>Version : </b>3.2 +<br>
+<b>Version : </b>3.2+<br>
 <br># "SiteDomain" must contain the main domain name or the main intranet web
 <br># server name used to reach the web site.
 <br># If you share the same log file for several virtual web servers, this
@@ -415,23 +415,24 @@ when reading it), follow the example:<br>
 <br><br><hr>
 
 <a name="HostAliases"><b>HostAliases</b></a><br>
-<b>Version : </b>1.0 +<br>
+<b>Version : </b>1.0+ (5.6+ for REGEX syntax)<br>
 <br># Enter here all other possible domain names, addresses or virtual host
 <br># aliases someone can use to access your site. Try to keep only the minimum
-<br># number of possible names/adresses to have the best performances.
+<br># number of possible names/addresses to have the best performances.
 <br># You can repeat the "SiteDomain" value in this list.
-<br># Use space between each value and put a backslash before each dot.
 <br># This parameter is used to analyze referer field in log file and to help
 <br># AWStats to know if a referer URL is a local URL of same site or an URL of
 <br># another site.
-<br># Example: "www.myserver.com x.y.z.w localhost 127.0.0.1"
+<br># Note: Use space between each value.
+<br># Note: You can use regular expression values writing value with REGEX[value].
+<br># Example: "www.myserver.com localhost 127.0.0.1 REGEX[\.mydomain\.(net|org)$]"
 <br>#
-<br>HostAliases="www.myserver.com x.y.z.w localhost 127.0.0.1"
+<br>HostAliases="localhost 127.0.0.1 REGEX[^.*\.myserver\.com$]"
 
 <br><br><hr>
 
 <a name="AllowToUpdateStatsFromBrowser"><b>AllowToUpdateStatsFromBrowser</b></a><br>
-<b>Version : </b>3.0 +<br>
+<b>Version : </b>3.0+<br>
 <br># When this parameter is set to 1, AWStats add a button on report page to
 <br># allow to "update" statistics from a web browser. Warning, when "update" is
 <br># made from a browser, AWStats is ran as a CGI by the web server user
@@ -451,7 +452,7 @@ when reading it), follow the example:<br>
 <br><br><hr>
 
 <a name="EnableLockForUpdate"><b>EnableLockForUpdate</b></a><br>
-<b>Version : </b>5.0 +<br>
+<b>Version : </b>5.0+<br>
 <br># When the update process run, AWStats can set a lock file in TEMP or TMP
 <br># directory. This lock is to avoid to have 2 update processes running at the
 <br># same time to prevent unknown conflicts problems and avoid DoS attacks when
@@ -468,7 +469,7 @@ when reading it), follow the example:<br>
 <br><br><hr>
 
 <a name="DNSStaticCacheFile"><b>DNSStaticCacheFile</b></a><br>
-<b>Version : </b>5.0 +<br>
+<b>Version : </b>5.0+<br>
 <br># AWStats can do reverse DNS lookups through a static DNS cache file that was
 <br># previously created manually. If no path is given in static DNS cache file
 <br># name, AWStats will search DirData directory. This file is never changed.
@@ -483,7 +484,7 @@ when reading it), follow the example:<br>
 <br><br><hr>
 
 <a name="DNSLastUpdateCacheFile"><b>DNSLastUpdateCacheFile</b></a><br>
-<b>Version : </b>5.0 +<br>
+<b>Version : </b>5.0+<br>
 <br># AWStats can do reverse DNS lookups through a DNS cache file that was created
 <br># by a previous run of AWStats. This file is erased and recreated after each
 <br># statistics update process. You don't need to create and/or edit it.
@@ -499,13 +500,13 @@ when reading it), follow the example:<br>
 <br><br><hr>
 
 <a name="SkipDNSLookupFor"><b>SkipDNSLookupFor</b></a><br>
-<b>Version : </b>3.0 +<br>
-<br># You can specify specific IP addresses that should NOT be looked up in
-<br>#  the DNS. You may specify partial addresses (ie 163.85. for everything
-<br>#  behind the usual firewall setup, etc)...
+<b>Version : </b>3.0+ (5.6+ for REGEX syntax)<br>
+<br># You can specify specific IP addresses that should NOT be looked up in DNS.
 <br># This option is used only if DNSLookup=1.
 <br># Note: Use space between each value.
-<br># Example: "163.85. 201.101.51.2"
+<br># Note: You can use regular expression values writing value with REGEX[value].
+<br># Change : Effective for new updates only
+<br># Example: "123.123.123.123 REGEX[^192\.168\.]"
 <br># Default: ""
 <br>#
 <br>SkipDNSLookupFor=""
@@ -513,7 +514,7 @@ when reading it), follow the example:<br>
 <br><br><hr>
 
 <a name="AllowAccessFromWebToAuthenticatedUsersOnly"><b>AllowAccessFromWebToAuthenticatedUsersOnly</b></a><br>
-<b>Version : </b>4.0 +<br>
+<b>Version : </b>4.0+<br>
 <br># The following two parameters allow you to protect a config file to be used
 <br># by your AWStats program called from a browser only if web user has been
 <br># authenticated. Your AWStats program must be in a web protected "realm" (With
@@ -527,7 +528,7 @@ when reading it), follow the example:<br>
 <br><br><hr>
 
 <a name="AllowAccessFromWebToFollowingAuthenticatedUsers"><b>AllowAccessFromWebToFollowingAuthenticatedUsers</b></a><br>
-<b>Version : </b>4.0 +<br>
+<b>Version : </b>4.0+<br>
 <br># This parameter gives the list of all authorized authenticated users to view
 <br># statistics for this domain/config file. This parameter is used only if
 <br># AllowAccessToAuthenticatedUsersOnly is set to 1.
@@ -539,7 +540,7 @@ when reading it), follow the example:<br>
 <br><br><hr>
 
 <a name="AllowAccessFromWebToFollowingIPAddresses"><b>AllowAccessFromWebToFollowingIPAddresses</b></a><br>
-<b>Version : </b>5.0 +<br>
+<b>Version : </b>5.0+<br>
 <br># When this parameter is define to something, the IP address of the user that
 <br># read its statistics from a browser (when AWStats is used as a CGI) is
 <br># checked and must match the IP address range defined by this parameter.
@@ -551,7 +552,7 @@ when reading it), follow the example:<br>
 <br><br><hr>
 
 <a name="CreateDirDataIfNotExists"><b>CreateDirDataIfNotExists</b></a><br>
-<b>Version : </b>4.0 +<br>
+<b>Version : </b>4.0+<br>
 <br># If the "DirData" directory (see above) does not exists, AWStats return an
 <br># error. However, you can ask AWStats to create it. This option can be used by
 <br># some Web Hosting Providers that has defined a dynamic value for DirData (for
@@ -564,7 +565,7 @@ when reading it), follow the example:<br>
 <br><br><hr>
 
 <a name="SaveDatabaseFilesWithPermissionsForEveryone"><b>SaveDatabaseFilesWithPermissionsForEveryone</b></a><br>
-<b>Version : </b>4.0 +<br>
+<b>Version : </b>4.0+<br>
 <br># In most case, AWStats is used as a cgi program. So AWStats process is ran
 <br># by default web server user (nobody for Unix, IUSR_xxx for IIS/Windows,...).
 <br># To make use easier and avoid permission problems between update process 
@@ -581,7 +582,7 @@ when reading it), follow the example:<br>
 <br><br><hr>
 
 <a name="PurgeLogFile"><b>PurgeLogFile</b></a><br>
-<b>Version : </b>2.23 +<br>
+<b>Version : </b>2.23+<br>
 <br># AWStats can purge log after processing it. By this way, the next time you
 <br># launch AWStats, log file will be smaller and processing time will be better.
 <br># IMPORTANT !!!
@@ -600,7 +601,7 @@ when reading it), follow the example:<br>
 <br><br><hr>
 
 <a name="ArchiveLogRecords"><b>ArchiveLogRecords</b></a><br>
-<b>Version : </b>2.1 +<br>
+<b>Version : </b>2.1+<br>
 <br># When PurgeLogFile is setup to 1, AWStats will clean your log file after
 <br># processing it. You can however keep an archive file (saved in "DirData") of
 <br># all processed log records by setting this to 1 (For example if you want to
@@ -614,7 +615,7 @@ when reading it), follow the example:<br>
 <br><br><hr>
 
 <a name="KeepBackupOfHistoricFiles"><b>KeepBackupOfHistoricFiles</b></a><br>
-<b>Version : </b>3.2 +<br>
+<b>Version : </b>3.2+<br>
 <br># Each time you run the update process, AWStats overwrite the 'historic file'
 <br># for the month (awstatsMMYYYY[.*].txt) with the updated one.
 <br># When write errors occurs (IO, disk full,...), this historic file can be
@@ -630,7 +631,7 @@ when reading it), follow the example:<br>
 <br><br><hr>
 
 <a name="DefaultFile"><b>DefaultFile</b></a><br>
-<b>Version : </b>1.0 + (5.0 + can accept several values)<br>
+<b>Version : </b>1.0+ (5.0+ can accept several values)<br>
 <br># Default index page name for your web server.
 <br># Example: "default.htm default.html"
 <br># Default: "index.html"
@@ -640,7 +641,7 @@ when reading it), follow the example:<br>
 <br><br><hr>
 
 <a name="SkipHosts"><b>SkipHosts</b></a><br>
-<b>Version : </b>1.0 +<br>
+<b>Version : </b>1.0+ (5.6+ for REGEX syntax)<br>
 <br># Do not include access from clients that match following criteria.
 <br># If your log file contains IP adresses in host field, you must enter here
 <br># matching IP adresses criteria.
@@ -648,10 +649,10 @@ when reading it), follow the example:<br>
 <br># criteria, else enter ip address criteria.
 <br># The opposite parameter of "SkipHosts" is "OnlyHosts".
 <br># Note: Use space between each value.
-<br># Note: ^xxx means hosts starting with xxx
-<br># Note: xxx$ means hosts ending with xxx
-<br># Example: "^127.0.0.1$ ^192.168. ^10.0."
-<br># Example: "localhost abcxyz"
+<br># Note: You can use regular expression values writing value with REGEX[value].
+<br># Change : Effective for new updates only
+<br># Example: "127.0.0.1 REGEX[^192\.168\.] REGEX[^10\.0\.]"
+<br># Example: "localhost REGEX[^.*\.localdomain$]"
 <br># Default: ""
 <br>#
 <br>SkipHosts=""
@@ -659,12 +660,14 @@ when reading it), follow the example:<br>
 <br><br><hr>
 
 <a name="SkipUserAgents"><b>SkipUserAgents</b></a><br>
-<b>Version : </b>5.1 +<br>
+<b>Version : </b>5.1+ (5.6+ for REGEX syntax)<br>
 <br># Do not include access from clients with a user agent that match following
 <br># criteria. If you want to exclude a robot, you should update the robots.pm
 <br># file instead of this parameter.
 <br># Note: Use space between each value. This parameter is not case sensitive.
-<br># Example: "konqueror"
+<br># Note: You can use regular expression values writing value with REGEX[value].
+<br># Change : Effective for new updates only
+<br># Example: "konqueror REGEX[ua_test_v\d\.\d]"
 <br># Default: ""
 <br>#
 <br>SkipUserAgents=""
@@ -672,38 +675,38 @@ when reading it), follow the example:<br>
 <br><br><hr>
 
 <a name="SkipFiles"><b>SkipFiles</b></a><br>
-<b>Version : </b>1.0 +<br>
+<b>Version : </b>1.0+ (5.6+ for REGEX syntax)<br>
 <br># Use SkipFiles to ignore access to URLs that match one of following entries.
 <br># You can, with this option, add a list of not important frame pages (like 
 <br># menus, etc...) to exclude them from statistics.
 <br># For example, to ignore a whole directory tree, just add "directorytoignore",
-<br># to ignore "users" pages in your stats, you can add "/~".
+<br># to ignore "users" web site pages in your stats, you can add "/~".
 <br># The opposite parameter of "SkipFiles" is "OnlyFiles".
 <br># Note: This parameter is not case sensitive.
 <br># Note: Use space between each value and do not remove default values.
-<br># Note: ^xxx means url starting with xxx.
-<br># Note: xxx$ means url ending with xxx.
-<br># Example: "robots.txt$ favicon.ico$ badpage.html /~"
-<br># Default: "robots.txt$ favicon.ico$"
+<br># Note: You can use regular expression values writing value with REGEX[value].
+<br># Change : Effective for new updates only
+<br># Example: "REGEX[robots\.txt$] REGEX[favicon\.ico$] /badpage.html /~"
+<br># Default: "REGEX[robots\.txt$] REGEX[favicon\.ico$]"
 <br>#
-<br>SkipFiles="robots.txt$ favicon.ico$"
+<br>SkipFiles="REGEX[robots\.txt$] REGEX[favicon\.ico$]"
 
 <br><br><hr>
 
 <a name="OnlyHosts"><b>OnlyHosts</b></a><br>
-<b>Version : </b>5.2 +<br>
+<b>Version : </b>5.2+ (5.6+ for REGEX syntax)<br>
 <br># Include in stats, only accesses from hosts that match one of following
 <br># entries. For example, if you want AWStats to filter access to keep only
-<br># stats for visits from particular hosts, you can add thoose hosts names
-<br># in this parameter.
+<br># stats for visits from particular hosts, you can add those hosts names in
+<br># this parameter.
 <br># If DNS lookup is already done in your log file, you must enter here hostname
 <br># criteria, else enter ip address criteria.
 <br># The opposite parameter of "OnlyHosts" is "SkipHosts".
 <br># Note: This parameter is not case sensitive.
 <br># Note: Use space between each value.
-<br># Note: ^xxx means hosts starting with xxx.
-<br># Note: xxx$ means hosts ending with xxx.
-<br># Example: "^123.123.123.123$ ^10.0."
+<br># Note: You can use regular expression values writing value with REGEX[value].
+<br># Change : Effective for new updates only
+<br># Example: "127.0.0.1 REGEX[^192\.168\.] REGEX[^10\.0\.]"
 <br># Default: ""
 <br>#
 <br>OnlyHosts=""
@@ -711,7 +714,7 @@ when reading it), follow the example:<br>
 <br><br><hr>
 
 <a name="OnlyFiles"><b>OnlyFiles</b></a><br>
-<b>Version : </b>3.0 +<br>
+<b>Version : </b>3.0+ (5.6+ for REGEX syntax)<br>
 <br># Include in stats, only accesses to URLs that match one of following entries.
 <br># For example, if you want AWStats to filter access to keep only stats that
 <br># match a particular string, like a particular directory, you can add this
@@ -719,9 +722,9 @@ when reading it), follow the example:<br>
 <br># The opposite parameter of "OnlyFiles" is "SkipFiles".
 <br># Note: This parameter is not case sensitive.
 <br># Note: Use space between each value and do not remove default values
-<br># Note: ^xxx means url starting with xxx.
-<br># Note: xxx$ means url ending with xxx.
-<br># Example: "marketing_directory"
+<br># Note: You can use regular expression values writing value with REGEX[value].
+<br># Change : Effective for new updates only
+<br># Example: "marketing_directory REGEX[office\/.*\.(csv|sxw)$]"
 <br># Default: ""
 <br>#
 <br>OnlyFiles=""
@@ -729,7 +732,7 @@ when reading it), follow the example:<br>
 <br><br><hr>
 
 <a name="NotPageList"><b>NotPageList</b></a><br>
-<b>Version : </b>3.2 +<br>
+<b>Version : </b>3.2+<br>
 <br># Add here a list of kind of url (file extension) that must be counted as
 <br># "Hit only" and not as a "Hit" and "Page/Download". You can set here all
 <br># images extensions as they are hit downloaded that must be counted but they
@@ -746,7 +749,7 @@ when reading it), follow the example:<br>
 <br><br><hr>
 
 <a name="ValidHTTPCodes"><b>ValidHTTPCodes</b></a><br>
-<b>Version : </b>4.0 +<br>
+<b>Version : </b>4.0+<br>
 <br># By default, AWStats considers that records found in log file are successful
 <br># hits if HTTP code returned by server is a valid HTTP code (200 and 304).
 <br># Any other code are reported in HTTP error chart.
@@ -814,7 +817,7 @@ when reading it), follow the example:<br>
 <br><br><hr>
 
 <a name="ValidSMTPCodes"><b>ValidSMTPCodes</b></a><br>
-<b>Version : </b>5.0 +<br>
+<b>Version : </b>5.0+<br>
 <br># By default, AWStats considers that records found in mail log file are
 <br># successful mail transfers if field that represent return code in analyzed
 <br># log file match values defined by this parameter.
@@ -828,7 +831,7 @@ when reading it), follow the example:<br>
 <br><br><hr>
 
 <a name="AuthenticatedUsersNotCaseSensitive"><b>AuthenticatedUsersNotCaseSensitive</b></a><br>
-<b>Version : </b>5.3 +<br>
+<b>Version : </b>5.3+<br>
 <br># Some web servers on some Operating systems (IIS-Windows) considers that a
 <br># login with same value but different case are the same login. To tell AWStats
 <br># to also considers them as one, set this parameter to 1.
@@ -840,7 +843,7 @@ when reading it), follow the example:<br>
 <br><br><hr>
 
 <a name="URLNotCaseSensitive"><b>URLNotCaseSensitive</b></a><br>
-<b>Version : </b>5.1 +<br>
+<b>Version : </b>5.1+<br>
 <br># Some web servers on some Operating systems (IIS-Windows) considers that two
 <br># URLs with same value but different case are the same URL. To tell AWStats to
 <br># also considers them as one, set this parameter to 1.
@@ -852,7 +855,7 @@ when reading it), follow the example:<br>
 <br><br><hr>
 
 <a name="URLWithAnchor"><b>URLWithAnchor</b></a><br>
-<b>Version : </b>5.4 +<br>
+<b>Version : </b>5.4+<br>
 <br># Keep or remove the anchor string you can find in some URLs.
 <br># Possible values: 0 or 1
 <br># Default: 0
@@ -862,7 +865,7 @@ when reading it), follow the example:<br>
 <br><br><hr>
 
 <a name="URLQuerySeparators"><b>URLQuerySeparators</b></a><br>
-<b>Version : </b>5.2 +<br>
+<b>Version : </b>5.2+<br>
 <br># In URL links, "?" char is used to add parameter's list in URLs. Syntax is:
 <br># /mypage.html?param1=value1
 <br># However, some servers/sites have also others chars to isolate dynamic part of
@@ -875,7 +878,7 @@ when reading it), follow the example:<br>
 <br><br><hr>
 
 <a name="URLWithQuery"><b>URLWithQuery</b></a><br>
-<b>Version : </b>3.2 +<br>
+<b>Version : </b>3.2+<br>
 <br># Keep or remove the query string to the URL in the statistics for individual
 <br># pages. This is primarily used to differentiate between the URLs of dynamic
 <br># pages. If set to 1, mypage.html?id=x and mypage.html?id=y are counted as two
@@ -894,7 +897,7 @@ when reading it), follow the example:<br>
 <br><br><hr>
 
 <a name="URLWithQueryWithoutFollowingParameters"><b>URLWithQueryWithoutFollowingParameters</b></a><br>
-<b>Version : </b>5.1 +<br>
+<b>Version : </b>5.1+<br>
 <br># When URLWithQuery is on, you will get the full URL with all parameters in
 <br># URL reports. But among thoose parameters, sometimes you don't need a
 <br># particular parameter because it does not identify the page or because it's
@@ -913,7 +916,7 @@ when reading it), follow the example:<br>
 <br><br><hr>
 
 <a name="URLReferrerWithQuery"><b>URLReferrerWithQuery</b></a><br>
-<b>Version : </b>5.1 +<br>
+<b>Version : </b>5.1+<br>
 <br># Keep or remove the query string to the referrer URL in the statistics for
 <br># external referrer pages. This is used to differentiate between the URLs of
 <br># dynamic referrer pages. If set to 1, mypage.html?id=x and mypage.html?id=y
@@ -928,7 +931,7 @@ when reading it), follow the example:<br>
 <br><br><hr>
 
 <a name="WarningMessages"><b>WarningMessages</b></a><br>
-<b>Version : </b>1.0 +<br>
+<b>Version : </b>1.0+<br>
 <br># AWStats can detect setup problems or show you important informations to have
 <br># a better use. Keep this to 1, except if AWStats says you can change it.
 <br># Possible values: 0 or 1
@@ -939,7 +942,7 @@ when reading it), follow the example:<br>
 <br><br><hr>
 
 <a name="ErrorMessages"><b>ErrorMessages</b></a><br>
-<b>Version : </b>5.2 +<br>
+<b>Version : </b>5.2+<br>
 <br># When an error occurs, AWStats output a message related to errors. If you
 <br># want (in most cases for security reasons) to have no error messages, you
 <br># can set this parameter to your personalized generic message.
@@ -951,7 +954,7 @@ when reading it), follow the example:<br>
 <br><br><hr>
 
 <a name="DebugMessages"><b>DebugMessages</b></a><br>
-<b>Version : </b>5.2 +<br>
+<b>Version : </b>5.2+<br>
 <br># AWStat can be run with debug=x parameter to ouput various informations
 <br># to help in debugging or solving troubles. If you wand (in most cases for 
 <br># security reasons) to disable debugging, set this parameter to 0.
@@ -963,7 +966,7 @@ when reading it), follow the example:<br>
 <br><br><hr>
 
 <a name="NbOfLinesForCorruptedLog"><b>NbOfLinesForCorruptedLog</b></a><br>
-<b>Version : </b>3.2 +<br>
+<b>Version : </b>3.2+<br>
 <br># To help you to detect if your log format is good, AWStats report an error
 <br># if all the first NbOfLinesForCorruptedLog lines have a format that does not
 <br># match the LogFormat parameter.
@@ -993,7 +996,7 @@ AWStats 4.1+ supports both keywords AND keyphrases by default with no need of an
 <br><br><hr>
 
 <a name="WrapperScript"><b>WrapperScript</b></a><br>
-<b>Version : </b>4.0 +<br>
+<b>Version : </b>4.0+<br>
 <br># For some particular integration needs, you may want to have CGI links to
 <br># point to another script than awstats.pl.
 <br># Use the name of this script in WrapperScript parameter.
@@ -1005,7 +1008,7 @@ AWStats 4.1+ supports both keywords AND keyphrases by default with no need of an
 <br><br><hr>
 
 <a name="DecodeUA"><b>DecodeUA</b></a><br>
-<b>Version : </b>5.0 +<br>
+<b>Version : </b>5.0+<br>
 <br># DecodeUA must be set to 1 if you use Roxen web server. This server converts
 <br># all spaces in user agent field into %20. This make the AWStats robots, os
 <br># and browsers detection fail in some cases. Just change it to 1 if and only
@@ -1018,7 +1021,7 @@ AWStats 4.1+ supports both keywords AND keyphrases by default with no need of an
 <br><br><hr>
 
 <a name="LogScreenSizeUrl"><b>LogScreenSizeUrl</b></a><br>
-<b>Version : </b>5.5 +<br>
+<b>Version : </b>5.5+<br>
 <br># LogScreenSizeUrl can be used to make screen size report working.
 <br># You must define a string value for LogScreenSizeUrl parameter. Then add
 <br># the following HTML code at the end of your index page (before &lt;/BODY&gt;)
@@ -1040,7 +1043,7 @@ AWStats 4.1+ supports both keywords AND keyphrases by default with no need of an
 <br><br><hr>
 
 <a name="LevelFor"><b>LevelFor</b></a><br>
-<b>Version : </b>4.0 +<br>
+<b>Version : </b>4.0+<br>
 <br># Following values allows you to define accuracy of AWStats entities (robots,
 <br># browsers, os, referers) detection.
 <br># Large web sites or overloaded ISP with a lot of hosts should set this
@@ -1060,7 +1063,7 @@ AWStats 4.1+ supports both keywords AND keyphrases by default with no need of an
 <br><br><hr>
 
 <a name="UseFramesWhenCGI"><b>UseFramesWhenCGI</b></a><br>
-<b>Version : </b>5.0 +<br>
+<b>Version : </b>5.0+<br>
 <br># When you use AWStats as a CGI, you can have the reports shown in HTML views.
 <br># Frames are only available for report viewed dynamically. When you build
 <br># pages from command line, this option is not used and no frames are built.
@@ -1072,7 +1075,7 @@ AWStats 4.1+ supports both keywords AND keyphrases by default with no need of an
 <br><br><hr>
 
 <a name="DetailedReportsOnNewWindows"><b>DetailedReportsOnNewWindows</b></a><br>
-<b>Version : </b>4.1 + (5.0 + for value 2)<br>
+<b>Version : </b>4.1+ (5.0+ for value 2)<br>
 <br># This parameter ask your browser to open detailed reports into a different
 <br># window than the main page.
 <br># Possible values:
@@ -1086,7 +1089,7 @@ AWStats 4.1+ supports both keywords AND keyphrases by default with no need of an
 <br><br><hr>
 
 <a name="Expires"><b>Expires</b></a><br>
-<b>Version : </b>3.1 +<br>
+<b>Version : </b>3.1+<br>
 <br># You can add in the HTML report page a delay to force browsers to not use cache
 <br># if page is loaded a second time after this delay (in seconds).
 <br># This parameter is not used when report are built with -staticlinks option.
@@ -1098,7 +1101,7 @@ AWStats 4.1+ supports both keywords AND keyphrases by default with no need of an
 <br><br><hr>
 
 <a name="MaxRowsInHTMLOutput"><b>MaxRowsInHTMLOutput</b></a><br>
-<b>Version : </b>4.0 +<br>
+<b>Version : </b>4.0+<br>
 <br># To avoid too large web pages, you can ask AWStats to limit number of rows of
 <br># all reported charts to this number when no other limit apply.
 <br># Default: 1000
@@ -1108,7 +1111,7 @@ AWStats 4.1+ supports both keywords AND keyphrases by default with no need of an
 <br><br><hr>
 
 <a name="Lang"><b>Lang</b></a><br>
-<b>Version : </b>2.1 +<br>
+<b>Version : </b>2.1+<br>
 <br># Set your primary language.
 <br># Possible value:
 <br>#  Albanian=al, Bosnian=ba, Bulgarian=bg,
@@ -1127,7 +1130,7 @@ AWStats 4.1+ supports both keywords AND keyphrases by default with no need of an
 <br><br><hr>
 
 <a name="DirLang"><b>DirLang</b></a><br>
-<b>Version : </b>2.1 +<br>
+<b>Version : </b>2.1+<br>
 <br># Set the location of language files.
 <br># Example: "/usr/share/awstats/lang"
 <br># Default: "./lang" (means lang directory is in same location than awstats.pl)
@@ -1139,14 +1142,14 @@ AWStats 4.1+ supports both keywords AND keyphrases by default with no need of an
 <a name="Show"><b>Show...</b></a><br>
 <b>Version : </b><br>
 <font color="#808080">3.2 - 5.3 for ShowHeader (deprecated since 5.4)</font><br>
-3.2 + for ShowMenu,ShowMonthStats,ShowDaysOfWeekStats,ShowHoursStats,
+3.2+ for ShowMenu,ShowMonthStats,ShowDaysOfWeekStats,ShowHoursStats,
 ShowDomainsStats,ShowHostsStats,ShowAuthenticatedUsers,ShowRobotsStats,
 ShowPagesStats,ShowFileTypesStats,ShowFileSizesStats,ShowBrowsersStats,
 ShowOSStats,ShowOriginStats,ShowKeyphrasesStats,ShowKeywordsStats,ShowHTTPErrorsStats<br>
 <font color="#808080">3.2 - 5.0 for ShowCompressionStats (deprecated since 5.1, use code C with ShowFileTypesStats instead)</font><br>
-4.1 + for ShowSessionsStats, ShowKeywordsStats<br>
-5.1 + for all letters codes<br>
-5.5 + for ShowDaysOfMonthStats<br>
+4.1+ for ShowSessionsStats, ShowKeywordsStats<br>
+5.1+ for all letters codes<br>
+5.5+ for ShowDaysOfMonthStats<br>
 <br># You choose here which reports you want to see in the main page and what you
 <br># want to see in those reports.
 <br># Possible values:
@@ -1236,8 +1239,8 @@ ShowOSStats,ShowOriginStats,ShowKeyphrasesStats,ShowKeywordsStats,ShowHTTPErrors
 
 <a name="AddDataArray"><b>AddDataArray...</b></a><br>
 <b>Version : </b><br>
-5.4 + for AddDataArrayMonthStats,AddDataArrayShowDaysOfWeekStats,AddDataArrayShowHoursStats<br>
-5.5 + for AddDataArrayShowDaysOfMonthStats<br>
+5.4+ for AddDataArrayMonthStats,AddDataArrayShowDaysOfWeekStats,AddDataArrayShowHoursStats<br>
+5.5+ for AddDataArrayShowDaysOfMonthStats<br>
 <br># Some graphical reports are followed by the data array of values.
 <br># If you don't want this array (to reduce report size for example), you can
 <br># set thoose options to 0.
@@ -1256,7 +1259,7 @@ ShowOSStats,ShowOriginStats,ShowKeyphrasesStats,ShowKeywordsStats,ShowHTTPErrors
 <br><br><hr>
 
 <a name="Max"><b>Max...</b></a><br>
-<b>Version : </b>1.0 +<br>
+<b>Version : </b>1.0+<br>
 <br># This value can be used to choose maximum number of lines shown for each 
 <br># particular reporting.
 <br>#
@@ -1291,7 +1294,7 @@ ShowOSStats,ShowOriginStats,ShowKeyphrasesStats,ShowKeywordsStats,ShowHTTPErrors
 <br><br><hr>
 
 <a name="FirstDayOfWeek"><b>FirstDayOfWeek</b></a><br>
-<b>Version : </b>3.2 +<br>
+<b>Version : </b>3.2+<br>
 <br># Choose if you want week to start on sunday or monday
 <br># Possible values:
 <br># 0 - Week start on sunday
@@ -1303,7 +1306,7 @@ ShowOSStats,ShowOriginStats,ShowKeyphrasesStats,ShowKeywordsStats,ShowHTTPErrors
 <br><br><hr>
 
 <a name="ShowFlagLinks"><b>ShowFlagLinks</b></a><br>
-<b>Version : </b>3.2 +<br>
+<b>Version : </b>3.2+<br>
 <br># List of visible flags with link to other language translations.
 <br># See Lang parameter for list of allowed flag/language codes.
 <br># If you don't want any flag link, set ShowFlagLinks to "".
@@ -1316,7 +1319,7 @@ ShowOSStats,ShowOriginStats,ShowKeyphrasesStats,ShowKeywordsStats,ShowHTTPErrors
 <br><br><hr>
 
 <a name="ShowLinksOnUrl"><b>ShowLinksOnUrl</b></a><br>
-<b>Version : </b>3.1 +<br>
+<b>Version : </b>3.1+<br>
 <br># Each URL shown in stats report views are links you can click.
 <br># Possible values: 0 or 1
 <br># Default: 1
@@ -1326,7 +1329,7 @@ ShowOSStats,ShowOriginStats,ShowKeyphrasesStats,ShowKeywordsStats,ShowHTTPErrors
 <br><br><hr>
 
 <a name="MaxLengthOfURL"><b>MaxLengthOfURL</b></a><br>
-<b>Version : </b>1.0 +<br>
+<b>Version : </b>1.0+<br>
 <br># Maximum length of URL shown on stats page (number of characters). This
 <br># affects only URL visible text, larger links still work.
 <br># Default: 72
@@ -1336,7 +1339,7 @@ ShowOSStats,ShowOriginStats,ShowKeyphrasesStats,ShowKeywordsStats,ShowHTTPErrors
 <br><br><hr>
 
 <a name="ShowLinksToWhoIs"><b>ShowLinksToWhoIs</b></a><br>
-<b>Version : </b>4.0 +<br>
+<b>Version : </b>4.0+<br>
 <br># AWStats can include a link to WhoIs database on all hostnames/ip. For this, you
 <br># must set ShowLinksToWhoIs to 1. Warning, a such feature depends on two next
 <br># parameter (LinksToWhoIs and LinksToIPWhoIs) and on WhoIs server
@@ -1350,7 +1353,7 @@ ShowOSStats,ShowOriginStats,ShowKeyphrasesStats,ShowKeywordsStats,ShowHTTPErrors
 <br><br><hr>
 
 <a name="LinksToWhoIs"><b>LinksToWhoIs</b></a><br>
-<b>Version : </b>4.0 +<br>
+<b>Version : </b>4.0+<br>
 <br># Set here the link used to point to Internet WhoIs database for hostnames.
 <br># This parameter is not used if ShowLinksToWhoIs is 0.
 <br># Default: "http://www.whois.net/search.cgi2?str="
@@ -1363,7 +1366,7 @@ ShowOSStats,ShowOriginStats,ShowKeyphrasesStats,ShowKeywordsStats,ShowHTTPErrors
 <br><br><hr>
 
 <a name="LinksToIPWhoIs"><b>LinksToIPWhoIs</b></a><br>
-<b>Version : </b>5.0 +<br>
+<b>Version : </b>5.0+<br>
 <br># Set here the link used to point to Internet WhoIs database for ip addresses.
 <br># This parameter is not used if ShowLinksToWhoIs is 0.
 <br># Default: "http://ws.arin.net/cgi-bin/whois.pl?queryinput="
@@ -1374,7 +1377,7 @@ ShowOSStats,ShowOriginStats,ShowKeyphrasesStats,ShowKeywordsStats,ShowHTTPErrors
 <br><br><hr>
 
 <a name="HTMLHeadSection"><b>HTMLHeadSection</b></a><br>
-<b>Version : </b>3.2 +<br>
+<b>Version : </b>3.2+<br>
 <br># You can enter HTML code that will be added at the top of AWStats reports.
 <br># Default: ""
 <br>#
@@ -1383,7 +1386,7 @@ ShowOSStats,ShowOriginStats,ShowKeyphrasesStats,ShowKeywordsStats,ShowHTTPErrors
 <br><br><hr>
 
 <a name="HTMLEndSection"><b>HTMLEndSection</b></a><br>
-<b>Version : </b>3.2 +<br>
+<b>Version : </b>3.2+<br>
 <br># You can enter HTML code that will be added at the end of AWStats reports.
 <br># Great to add advert ban.
 <br># Default: ""
@@ -1393,7 +1396,7 @@ ShowOSStats,ShowOriginStats,ShowKeyphrasesStats,ShowKeywordsStats,ShowHTTPErrors
 <br><br><hr>
 
 <a name="Bar"><b>Bar...</b></a><br>
-<b>Version : </b>1.0 +<br>
+<b>Version : </b>1.0+<br>
 <br># Value of maximum bar width/heigth for horizontal/vertical graphics bar
 <br># Default: 260/90
 <br>#
@@ -1403,7 +1406,7 @@ ShowOSStats,ShowOriginStats,ShowKeyphrasesStats,ShowKeywordsStats,ShowHTTPErrors
 <br><br><hr>
 
 <a name="Logo"><b>Logo...</b></a><br>
-<b>Version : </b>3.1 +<br>
+<b>Version : </b>3.1+<br>
 <br># You can set Logo and LogoLink to use your own logo.
 <br># Logo must be the name of image file (must be in $DirIcons/other directory).
 <br># LogoLink is the expected URL when clicking on Logo.
@@ -1415,7 +1418,7 @@ ShowOSStats,ShowOriginStats,ShowKeyphrasesStats,ShowKeywordsStats,ShowHTTPErrors
 <br><br><hr>
 
 <a name="StyleSheet"><b>StyleSheet</b></a><br>
-<b>Version : </b>4.0 +<br>
+<b>Version : </b>4.0+<br>
 <br># You can ask AWStats to use a particular CSS (Cascading Style Sheet) to
 <br># change its look.
 <br># Example: "/css/awstats.css"
@@ -1463,7 +1466,7 @@ color_u,color_v,color_p,color_h,color_k,color_s<br>
 <br><br><hr>
 
 <a name="LoadPlugin"><b>LoadPlugin</b></a><br>
-<b>Version : </b>5.0 +<br>
+<b>Version : </b>5.0+<br>
 <br># Add here all plugins file you want to load.
 <br># Plugin files must be .pm files stored in 'plugins' directory.
 <br># Uncomment LoadPlugin lines to enable a plugin after checking that plugin
@@ -1478,7 +1481,7 @@ color_u,color_v,color_p,color_h,color_k,color_s<br>
 <br><br><hr>
 
 <a name="Extra"><b>Extra...</b></a><br>
-<b>Version : </b>5.2 +<br>
+<b>Version : </b>5.2+<br>
 <br># You can define your own charts, you choose here what are rows and columns
 <br># keys. This feature is particularly usefull for marketing purpose, tracking
 <br># products orders for example.
@@ -1517,7 +1520,7 @@ color_u,color_v,color_p,color_h,color_k,color_s<br>
 <br><br><hr>
 
 <a name="Include"><b>Include</b></a><br>
-<b>Version : </b>5.4 +<br>
+<b>Version : </b>5.4+<br>
 <br># You can include other config files using the directive with the name of the
 <br># config file.
 <br># This is particularly usefull for users who have a lot of virtual servers, so

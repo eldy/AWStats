@@ -7,13 +7,18 @@ $Revision$ - $Author$ - $Date$
 
 Fixes:
 - Domain with no pages hits were always reported as other in domain chart.
+- percent for other in full list of "links for internet search engines"
+  has been fixed.
 
 New features/improvments:
 - Report compression ratios with mod_deflate feature (Apache 2).
 - A better browser detection.
+- Can add regex values for a lot of list parameters (HostAliases,
+  SkipDNSLookupFor, ...)
 
 Other/Documentation:
 - Updated documentation.
+- Update wap/imode browser list.
 
 
 5.5
