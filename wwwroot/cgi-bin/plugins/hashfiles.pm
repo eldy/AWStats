@@ -10,6 +10,7 @@
 
 
 use Storable;
+use strict;no strict "refs";
 $Plugin_hashfiles=1;
 
 
@@ -74,7 +75,7 @@ sub SaveHash_hashfiles {
 	my ($filetosave,$hashtosave,$testifuptodate,$nbmaxofelemtosave,$nbofelemsaved)=@_;
 	if (! $testifuptodate || ! $hashfileuptodate) {
 		$filetosave =~ s/(\.\w+)$//; $filetosave.=".hash";
-		debug(" Save data ".($nbofelemtosave?"($nbofelemtosave records max)":"(all records)")." into hash file $filetosave");
+		debug(" Save data ".($nbmaxofelemtosave?"($nbmaxofelemtosave records max)":"(all records)")." into hash file $filetosave");
 		if (! $nbmaxofelemtosave || (scalar keys %$hashtosave <= $nbmaxofelemtosave)) {
 			# Save all hash array
 			eval('store(\%$hashtosave, "$filetosave");');
