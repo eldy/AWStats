@@ -163,8 +163,8 @@ if ($file =~ /Developpements[\\\/]awstats/i) {
 	return;
 }	# To avoid script working in my dev area
 
-open(FILE, $file) || error("Failed to open $file for update");
-open(FILETMP, ">$fileto") || error("Failed to open $fileto for writing");
+open(FILE, $file) || error("Failed to open '$file' for read");
+open(FILETMP, ">$fileto") || error("Failed to open '$fileto' for writing");
 
 # $%conf contains param and values
 my %confchanged=();
@@ -524,7 +524,8 @@ if ($OS eq 'linux') 		{
 		$modelfile="$AWSTATS_PATH/wwwroot/cgi-bin/awstats.model.conf";
 	}
 	else {
-		$modelfile="$AWSTATS_MODEL_CONFIG";	
+		$modelfile="$AWSTATS_MODEL_CONFIG";
+		if (! -s $modelfile || ! -w $modelfile) { $modelfile="$AWSTATS_PATH/wwwroot/cgi-bin/awstats.model.conf"; }
 	}
 }
 elsif ($OS eq "macosx") 		{ 
@@ -535,17 +536,19 @@ else						{ $modelfile="$AWSTATS_PATH\\wwwroot\\cgi-bin\\awstats.model.conf"; }
 
 # Update model config file
 # ------------------------
-print "\n-----> Update model config file '$modelfile'\n";
-%ConfToChange=();
-if ($OS eq 'linux' || $OS eq "macosx") 	 { $ConfToChange{'DirData'}="$AWSTATS_DIRDATA_PATH"; }
-elsif ($OS eq 'windows') { $ConfToChange{'DirData'}='.'; }
-else					 { $ConfToChange{'DirData'}='.'; }
-if ($UseAlias) {
-	$ConfToChange{'DirCgi'}='/awstats';
-	$ConfToChange{'DirIcons'}='/awstatsicons';
+if (-s $modelfile && -w $modelfile) {
+	print "\n-----> Update model config file '$modelfile'\n";
+	%ConfToChange=();
+	if ($OS eq 'linux' || $OS eq "macosx") 	 { $ConfToChange{'DirData'}="$AWSTATS_DIRDATA_PATH"; }
+	elsif ($OS eq 'windows') { $ConfToChange{'DirData'}='.'; }
+	else					 { $ConfToChange{'DirData'}='.'; }
+	if ($UseAlias) {
+		$ConfToChange{'DirCgi'}='/awstats';
+		$ConfToChange{'DirIcons'}='/awstatsicons';
+	}
+	update_awstats_config("$modelfile");
+	print "  File awstats.model.conf updated.\n";
 }
-update_awstats_config("$modelfile");
-print "  File awstats.model.conf updated.\n";
 
 # Ask if we need to create a config file
 #---------------------------------------
@@ -562,6 +565,7 @@ if ($bidon =~ /^y/i) {
 	#----------------------------
 	print "\n-----> Define config file name to create\n";
 	print "What is the name of your web site or profile analysis ?\n";
+	# TODO Add example that use value found in ServerName ?
 	print "Example: www.mysite.com\n";
 	print "Example: demo\n";
 	ASKCONFIG:
@@ -575,7 +579,15 @@ if ($bidon =~ /^y/i) {
 
 	# Define config file path
 	# -----------------------
-	if ($OS eq 'linux') 		{ $configfile="/etc/awstats/awstats.$site.conf"; }
+	if ($OS eq 'linux') 		{
+		my $configdir="/etc/awstats";
+		if (! -d $configdir) {
+			# Create the directory for config files
+			my $mkdirok=mkdir "$configdir", 0755;
+			if (! $mkdirok) { error("Failed to create directory '$configdir', required to store config files."); }
+		}
+		$configfile="/etc/awstats/awstats.$site.conf";
+	}
 	elsif ($OS eq "macosx") 	{ $configfile="$AWSTATS_PATH/wwwroot/cgi-bin/awstats.$site.conf"; }
 	elsif ($OS eq 'windows') 	{ $configfile="$AWSTATS_PATH\\wwwroot\\cgi-bin\\awstats.$site.conf"; }
 	else 						{ $configfile="$AWSTATS_PATH\\wwwroot\\cgi-bin\\awstats.$site.conf"; }
