@@ -33,7 +33,7 @@
 # Common robots (In robot file)
 'appie',
 'architext',
-'askjeeves',
+'jeeves',
 'bjaaland',
 'ferret',
 'googlebot',
@@ -383,7 +383,7 @@
 # Common robots (In robot file)
 'appie','Walhello appie',
 'architext','ArchitextSpider',
-'askjeeves','AskJeeves',
+'jeeves','AskJeeves',
 'bjaaland','Bjaaland',
 'ferret','Wild Ferret Web Hopper #1, #2, #3',
 'googlebot','Googlebot',
