@@ -274,7 +274,7 @@ use vars qw/
 %OSHashID %OSHashLib
 %RobotsHashIDLib
 %SearchEnginesHashID %SearchEnginesHashLib %SearchEnginesKnownUrl %NotSearchEnginesKeys
-%WormsHashID %WormsHashLib
+%WormsHashID %WormsHashLib %WormsHashTarget
 /;
 use vars qw/
 %HTMLOutput %NoLoadPlugin %FilterIn %FilterEx
@@ -498,7 +498,8 @@ use vars qw/ @Message /;
 'Worms',
 'different worms',
 'Mails successully sent',
-'Mails failed/refused'
+'Mails failed/refused',
+'Sensitive targets'
 );
 
 
@@ -4903,8 +4904,8 @@ sub ShowEmailSendersChart {
 	}
 	&tab_head("$title",19,0,'emailsenders');
 	print "<tr bgcolor=\"#$color_TableBGRowTitle\"><th colspan=\"3\">$Message[131] : ".(scalar keys %_emails_h)."</th>";
-	if ($ShowEMailSenders =~ /H/i) { print "<th rowspan=\"2\" bgcolor=\"#$color_h\" width=\"80\">$Message[57]</th>"; }
-	if ($ShowEMailSenders =~ /B/i) { print "<th rowspan=\"2\" bgcolor=\"#$color_k\" width=\"80\">$Message[75]</th>"; }
+	if ($ShowEMailSenders =~ /H/i) { print "<th rowspan=\"2\" bgcolor=\"#$color_h\" width=\"80\"".($TOOLTIPON?" onmouseover=\"ShowTip(4);\" onmouseout=\"HideTip(4);\"":"").">$Message[57]</th>"; }
+	if ($ShowEMailSenders =~ /B/i) { print "<th rowspan=\"2\" bgcolor=\"#$color_k\" width=\"80\"".($TOOLTIPON?" onmouseover=\"ShowTip(5);\" onmouseout=\"HideTip(5);\"":"").">$Message[75]</th>"; }
 	if ($ShowEMailSenders =~ /M/i) { print "<th rowspan=\"2\" bgcolor=\"#$color_k\" width=\"80\">$Message[106]</th>"; }
 	if ($ShowEMailSenders =~ /L/i) { print "<th rowspan=\"2\" width=\"120\">$Message[9]</th>"; }
 	print "</tr>\n";
@@ -8992,9 +8993,9 @@ if (scalar keys %HTMLOutput) {
 			my $title="$Message[25] ($Message[77] $MaxNbOf{'Domain'}) &nbsp; - &nbsp; <a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?XMLEncode("$AWScript?${NewLinkParams}output=alldomains"):"$PROG$StaticLinks.alldomains.$StaticExt")."\"$NewLinkTarget>$Message[80]</a>";
 			&tab_head("$title",19,0,'countries');
 			print "<tr bgcolor=\"#$color_TableBGRowTitle\"><th width=\"$WIDTHCOLICON\">&nbsp;</th><th colspan=\"2\">$Message[17]</th>";
-			if ($ShowDomainsStats =~ /P/i) { print "<th bgcolor=\"#$color_p\" width=\"80\">$Message[56]</th>"; }
-			if ($ShowDomainsStats =~ /H/i) { print "<th bgcolor=\"#$color_h\" width=\"80\">$Message[57]</th>"; }
-			if ($ShowDomainsStats =~ /B/i) { print "<th bgcolor=\"#$color_k\" width=\"80\">$Message[75]</th>"; }
+			if ($ShowDomainsStats =~ /P/i) { print "<th bgcolor=\"#$color_p\" width=\"80\"".($TOOLTIPON?" onmouseover=\"ShowTip(3);\" onmouseout=\"HideTip(3);\"":"").">$Message[56]</th>"; }
+			if ($ShowDomainsStats =~ /H/i) { print "<th bgcolor=\"#$color_h\" width=\"80\"".($TOOLTIPON?" onmouseover=\"ShowTip(4);\" onmouseout=\"HideTip(4);\"":"").">$Message[57]</th>"; }
+			if ($ShowDomainsStats =~ /B/i) { print "<th bgcolor=\"#$color_k\" width=\"80\"".($TOOLTIPON?" onmouseover=\"ShowTip(5);\" onmouseout=\"HideTip(5);\"":"").">$Message[75]</th>"; }
 			print "<th>&nbsp;</th>";
 			print "</tr>\n";
 			$total_p=$total_h=$total_k=0;
@@ -9057,9 +9058,9 @@ if (scalar keys %HTMLOutput) {
 			if ($MonthRequired ne 'all') { print "$Message[81] : $TotalHostsKnown $Message[82], $TotalHostsUnknown $Message[1] - $TotalUnique $Message[11]</th>"; }
 			else { print "$Message[81] : ".(scalar keys %_host_h)."</th>"; }
 			&ShowHostInfo('__title__');
-			if ($ShowHostsStats =~ /P/i) { print "<th bgcolor=\"#$color_p\" width=\"80\">$Message[56]</th>"; }
-			if ($ShowHostsStats =~ /H/i) { print "<th bgcolor=\"#$color_h\" width=\"80\">$Message[57]</th>"; }
-			if ($ShowHostsStats =~ /B/i) { print "<th bgcolor=\"#$color_k\" width=\"80\">$Message[75]</th>"; }
+			if ($ShowHostsStats =~ /P/i) { print "<th bgcolor=\"#$color_p\" width=\"80\"".($TOOLTIPON?" onmouseover=\"ShowTip(3);\" onmouseout=\"HideTip(3);\"":"").">$Message[56]</th>"; }
+			if ($ShowHostsStats =~ /H/i) { print "<th bgcolor=\"#$color_h\" width=\"80\"".($TOOLTIPON?" onmouseover=\"ShowTip(4);\" onmouseout=\"HideTip(4);\"":"").">$Message[57]</th>"; }
+			if ($ShowHostsStats =~ /B/i) { print "<th bgcolor=\"#$color_k\" width=\"80\"".($TOOLTIPON?" onmouseover=\"ShowTip(5);\" onmouseout=\"HideTip(5);\"":"").">$Message[75]</th>"; }
 			if ($ShowHostsStats =~ /L/i) { print "<th width=\"120\">$Message[9]</th>"; }
 			print "</tr>\n";
 			$total_p=$total_h=$total_k=0;
@@ -9117,9 +9118,9 @@ if (scalar keys %HTMLOutput) {
 			&tab_head("$title",19,0,'logins');
 			print "<tr bgcolor=\"#$color_TableBGRowTitle\"><th>$Message[94] : ".(scalar keys %_login_h)."</th>";
 			&ShowUserInfo('__title__');
-			if ($ShowAuthenticatedUsers =~ /P/i) { print "<th bgcolor=\"#$color_p\" width=\"80\">$Message[56]</th>"; }
-			if ($ShowAuthenticatedUsers =~ /H/i) { print "<th bgcolor=\"#$color_h\" width=\"80\">$Message[57]</th>"; }
-			if ($ShowAuthenticatedUsers =~ /B/i) { print "<th bgcolor=\"#$color_k\" width=\"80\">$Message[75]</th>"; }
+			if ($ShowAuthenticatedUsers =~ /P/i) { print "<th bgcolor=\"#$color_p\" width=\"80\"".($TOOLTIPON?" onmouseover=\"ShowTip(3);\" onmouseout=\"HideTip(3);\"":"").">$Message[56]</th>"; }
+			if ($ShowAuthenticatedUsers =~ /H/i) { print "<th bgcolor=\"#$color_h\" width=\"80\"".($TOOLTIPON?" onmouseover=\"ShowTip(4);\" onmouseout=\"HideTip(4);\"":"").">$Message[57]</th>"; }
+			if ($ShowAuthenticatedUsers =~ /B/i) { print "<th bgcolor=\"#$color_k\" width=\"80\"".($TOOLTIPON?" onmouseover=\"ShowTip(5);\" onmouseout=\"HideTip(5);\"":"").">$Message[75]</th>"; }
 			if ($ShowAuthenticatedUsers =~ /L/i) { print "<th width=\"120\">$Message[9]</th>"; }
 			print "</tr>\n";
 			$total_p=$total_h=$total_k=0;
@@ -9210,7 +9211,9 @@ if (scalar keys %HTMLOutput) {
 			if ($Debug) { debug("ShowWormsStats",2); }
 			print "$Center<a name=\"worms\">&nbsp;</a><br />\n";
 			&tab_head("$Message[163] ($Message[77] $MaxNbOf{'WormsShown'})",19,0,'worms');
-			print "<tr bgcolor=\"#$color_TableBGRowTitle\"".($TOOLTIPON?" onmouseover=\"ShowTip(16);\" onmouseout=\"HideTip(16);\"":"")."><th>".(scalar keys %_worm_h)." $Message[164]*</th>";
+			print "<tr bgcolor=\"#$color_TableBGRowTitle\"".($TOOLTIPON?" onmouseover=\"ShowTip(21);\" onmouseout=\"HideTip(21);\"":"").">";
+			print "<th>".(scalar keys %_worm_h)." $Message[164]*</th>";
+			print "<th>$Message[167]</th>";
 			if ($ShowWormsStats =~ /H/i) { print "<th bgcolor=\"#$color_h\" width=\"80\">$Message[57]</th>"; }
 			if ($ShowWormsStats =~ /B/i) { print "<th bgcolor=\"#$color_k\" width=\"80\">$Message[75]</th>"; }
 			if ($ShowWormsStats =~ /L/i) { print "<th width=\"120\">$Message[9]</th>"; }
@@ -9219,7 +9222,9 @@ if (scalar keys %HTMLOutput) {
 			my $count=0;
 			&BuildKeyList($MaxNbOf{'WormsShown'},$MinHit{'Worm'},\%_worm_h,\%_worm_h);
 			foreach my $key (@keylist) {
-				print "<tr><td class=\"aws\">".($PageDir eq 'rtl'?"<span dir=\"ltr\">":"").($WormsHashLib{$key}?$WormsHashLib{$key}:$key).($PageDir eq 'rtl'?"</span>":"")."</td>";
+				print "<tr>";
+				print "<td class=\"aws\">".($PageDir eq 'rtl'?"<span dir=\"ltr\">":"").($WormsHashLib{$key}?$WormsHashLib{$key}:$key).($PageDir eq 'rtl'?"</span>":"")."</td>";
+				print "<td class=\"aws\">".($PageDir eq 'rtl'?"<span dir=\"ltr\">":"").($WormsHashTarget{$key}?$WormsHashTarget{$key}:$key).($PageDir eq 'rtl'?"</span>":"")."</td>";
 				if ($ShowWormsStats =~ /H/i) { print "<td>".$_worm_h{$key}."</td>"; }
 				if ($ShowWormsStats =~ /B/i) { print "<td>".Format_Bytes($_worm_k{$key})."</td>"; }
 				if ($ShowWormsStats =~ /L/i) { print "<td>".($_worm_l{$key}?Format_Date($_worm_l{$key},1):'-')."</td>"; }
@@ -9237,7 +9242,9 @@ if (scalar keys %HTMLOutput) {
 			$rest_h=$TotalHitsWorms-$total_h;
 			$rest_k=$TotalBytesWorms-$total_k;
 			if ($rest_p > 0 || $rest_h > 0 || $rest_k > 0) {	# All other worms
-				print "<tr><td class=\"aws\"><span style=\"color: #$color_other\">$Message[2]</span></td>";
+				print "<tr>";
+				print "<td class=\"aws\"><span style=\"color: #$color_other\">$Message[2]</span></td>";
+				print "<td class=\"aws\">-</td>";
 				if ($ShowWormsStats =~ /H/i) { print "<td>".($rest_h)."</td>"; }
 				if ($ShowWormsStats =~ /B/i) { print "<td>".(Format_Bytes($rest_k))."</td>"; }
 				if ($ShowWormsStats =~ /L/i) { print "<td>&nbsp;</td>"; }
@@ -9295,8 +9302,8 @@ if (scalar keys %HTMLOutput) {
 			if ($ShowFileTypesStats =~ /C/i) { $title.=" - $Message[98]"; }
 			&tab_head("$title",19,0,'filetypes');
 			print "<tr bgcolor=\"#$color_TableBGRowTitle\"><th colspan=\"3\">$Message[73]</th>";
-			if ($ShowFileTypesStats =~ /H/i) { print "<th bgcolor=\"#$color_h\" width=\"80\">$Message[57]</th><th bgcolor=\"#$color_h\" width=\"80\">$Message[15]</th>"; }
-			if ($ShowFileTypesStats =~ /B/i) { print "<th bgcolor=\"#$color_k\" width=\"80\">$Message[75]</th><th bgcolor=\"#$color_k\" width=\"80\">$Message[15]</th>"; }
+			if ($ShowFileTypesStats =~ /H/i) { print "<th bgcolor=\"#$color_h\" width=\"80\"".($TOOLTIPON?" onmouseover=\"ShowTip(4);\" onmouseout=\"HideTip(4);\"":"").">$Message[57]</th><th bgcolor=\"#$color_h\" width=\"80\">$Message[15]</th>"; }
+			if ($ShowFileTypesStats =~ /B/i) { print "<th bgcolor=\"#$color_k\" width=\"80\"".($TOOLTIPON?" onmouseover=\"ShowTip(5);\" onmouseout=\"HideTip(5);\"":"").">$Message[75]</th><th bgcolor=\"#$color_k\" width=\"80\">$Message[15]</th>"; }
 			if ($ShowFileTypesStats =~ /C/i) { print "<th bgcolor=\"#$color_k\" width=\"120\">$Message[100]</th><th bgcolor=\"#$color_k\" width=\"120\">$Message[101]</th><th bgcolor=\"#$color_k\" width=\"120\">$Message[99]</th>"; }
 			print "</tr>\n";
 			my $total_con=0; my $total_cre=0;

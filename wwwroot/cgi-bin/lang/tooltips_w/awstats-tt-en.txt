@@ -49,6 +49,13 @@ Some <b>Visits durations</b> are 'unknown' because they can't always be calculat
 - Visit was not finished when 'update' occured.<br />
 - Visit started the last hour (after 23:00) of the last day of a month (A technical reason prevents #PROG# from calculating duration of such sessions)
 </div>
+<div class="CTooltip" id="tt21">
+Worms are <b>automatic computer visitors</b> that are in fact external servers, infected by a virus, that try
+to make particular hits on your server to infect it. In most cases, such worms exploit some bugs of not up to date
+or commercial servers. If your system is not the <b>sensitive target</b> of the worm, you can simply ignore those hits.<br />
+There is very few 'server worms' in the world but they are very active at some times.
+#PROG# is able to recognize <b>#WormsArray#</b> known worm's signatures (nimda,code red,...).
+</div>
 
 <div class="CTooltip" id="tt201">No description for this error.</div>
 <div class="CTooltip" id="tt202">Request was understood by server but will be processed later.</div>

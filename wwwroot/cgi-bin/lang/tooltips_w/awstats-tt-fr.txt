@@ -49,6 +49,14 @@ Certaines <b>Durée de visites</b> sont 'inconnues' car elles ne peuvent pas touj
 - La visite n'étaient pas terminée lorsque la mise à jour eut lieu (Sera comptée à la prochaine mise à jour).<br />
 - La visite a commencé la derniere heure (après 23:00) du dernier jour du mois (Un raison technique empêche #PROG# de calculer la durée des visites de telles sessions).
 </div>
+<div class="CTooltip" id="tt21">
+Les Vers (Worms) sont des <b>visiteurs automatiques</b> qui sont en fait des serveurs externes infectés par un virus,
+réalisant des hits particuliers sur votre serveur afin de l'infecter à son tour. Dans la plupart des cas, de telles
+attacks exploitent des bugs des serveurs commerciaux et non à jour.
+Si votre system n'est pas celui indiqué comme <b>cible sensible</b> du vers, vous pouvez ignorer de tel hits.<br />
+Il existe très peu de 'vers serveur' mais il sont très actifs à certaines période.
+#PROG# reconnait <b>#WormsArray#</b> signatures de vers connus (nimda,code red,...).
+</div>
 
 <div class="CTooltip" id="tt201">Contenu partiel renvoyé.</div>
 <div class="CTooltip" id="tt202">La requête a été enregistrée par le serveur mais sera exécutée plus tard.</div>
