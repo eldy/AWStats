@@ -84,13 +84,23 @@ sub AddHTMLBodyHeader_tooltips {
 
 		# WRITE TOOLTIPS JAVASCRIPT CODE
 		#---------------------------------------------------------------------
-		# Position .style.pixelLeft/.pixelHeight/.pixelWidth/.pixelTop	IE OK	Opera OK
-		#          .style.left/.height/.width/.top											Netscape OK
-		# document.getElementById										IE OK	Opera OK	Netscape OK
-		# document.body.offsetWidth|document.body.style.pixelWidth		IE OK	Opera OK	Netscape OK		Visible width of container
-		# document.body.scrollTop                                       IE OK	Opera OK	Netscape OK		Visible width of container
-		# tooltip.offsetWidth|tooltipOBJ.style.pixelWidth				IE OK	Opera OK	Netscape OK		Width of an object
-		# event.clientXY												IE OK	Opera OK	Netscape KO		Return position of mouse
+		# Position .style.pixelLeft/.pixelHeight/.pixelWidth/.pixelTop	IE OK		Opera OK
+		#          .style.left/.height/.width/.top						IE456 OK				Netscape67 OK	XHTML OK
+		# document.getElementById										IE456 OK	Opera OK	Netscape67 OK	XHTML OK
+		# document.body.offsetWidth|document.body.style.pixelWidth		IE OK		Opera OK	Netscape OK		XHTML KO	Visible width of container
+		# document.body.scrollTop                                       IE OK		Opera OK	Netscape OK		XHTML KO	Visible width of container
+		# document.documentElement.offsetWidth																	XHTML OK	Visible width of container
+		# document.body.scrollTop                                       IE OK		Opera OK	Netscape OK		XHTML KO	Visible width of container
+		# tooltipOBJ.offsetWidth|tooltipOBJ.style.pixelWidth			IE OK		Opera OK	Netscape OK					Width of an object
+		# event.clientXY												IE OK		Opera OK	Netscape KO		XHTML KO	Return position of mouse
+
+		my $docwidth="document.body.offsetWidth";
+		my $doctop="document.body.scrollTop";
+		if ($BuildReportFormat eq 'xhtml' || $BuildReportFormat eq 'xml') {
+			$docwidth="document.documentElement.offsetWidth";
+			$doctop="document.documentElement.scrollTop";
+		}
+
 		print <<EOF;
 
 <script language="javascript" type="text/javascript">
@@ -98,18 +108,28 @@ function ShowTip(fArg)
 {
 	var tooltipOBJ = (document.getElementById) ? document.getElementById('tt' + fArg) : eval("document.all['tt" + fArg + "']");
 	if (tooltipOBJ != null) {
-		var tooltipLft = (document.body.offsetWidth?document.body.offsetWidth:document.body.style.pixelWidth) - (tooltipOBJ.offsetWidth?tooltipOBJ.offsetWidth:(tooltipOBJ.style.pixelWidth?tooltipOBJ.style.pixelWidth:$TOOLTIPWIDTH)) - 30;
+		var tooltipLft = ($docwidth?$docwidth:document.body.style.pixelWidth) - (tooltipOBJ.offsetWidth?tooltipOBJ.offsetWidth:(tooltipOBJ.style.pixelWidth?tooltipOBJ.style.pixelWidth:$TOOLTIPWIDTH)) - 30;
 		var tooltipTop = 10;
 		if (navigator.appName == 'Netscape') {
-			if (parseFloat(navigator.appVersion) >= 5) { tooltipTop = (document.body.scrollTop>=0?document.body.scrollTop+10:event.clientY+10); }
-			tooltipOBJ.style.left = tooltipLft; tooltipOBJ.style.top = tooltipTop;
+			tooltipTop = ($doctop>=0?$doctop+10:event.clientY+10);
+ 			tooltipOBJ.style.top = tooltipTop+"px";
+			tooltipOBJ.style.left = tooltipLft+"px";
 		}
 		else {
+			tooltipTop = ($doctop>=0?$doctop+10:event.clientY+10);
 			tooltipTop = (document.body.scrollTop>=0?document.body.scrollTop+10:event.clientY+10);
+EOF
+		# Seul IE en HTML a besoin de code supplémentaire. IE en xhtml est OK
+		if ($BuildReportFormat ne 'xhtml' && $BuildReportFormat ne 'xml') {
+print <<EOF;
 			if ((event.clientX > tooltipLft) && (event.clientY < (tooltipOBJ.scrollHeight?tooltipOBJ.scrollHeight:tooltipOBJ.style.pixelHeight) + 10)) {
-				tooltipTop = (document.body.scrollTop?document.body.scrollTop:document.body.offsetTop) + event.clientY + 20;
+				tooltipTop = ($doctop?$doctop:document.body.offsetTop) + event.clientY + 20;
 			}
-			tooltipOBJ.style.pixelLeft = tooltipLft; tooltipOBJ.style.pixelTop = tooltipTop;
+EOF
+		}
+print <<EOF;
+			tooltipOBJ.style.left = tooltipLft;
+			tooltipOBJ.style.top = tooltipTop;
 		}
 		tooltipOBJ.style.visibility = "visible";
 	}
