@@ -110,7 +110,7 @@ print "<br>";
 $starttime=time();
 ($nowsec,$nowmin,$nowhour,$nowday,$nowmonth,$nowyear,$nowwday,$nowyday) = localtime($starttime);
 if ($nowyear < 100) { $nowyear+=2000; } else { $nowyear+=1900; }
-$nowmonth++;
+$nowmonth=sprintf("%02d",$nowmonth+1);
 
 my $YearRequired=$in{'year'}||$nowyear;
 my $MonthRequired=$in{'month'}||$nowmonth;
@@ -123,6 +123,8 @@ my %view_k=();
 my %notview_p=();
 my %notview_h=();
 my %notview_k=();
+my %version=();
+my %lastupdate=();
 my $max_u=0;
 my $max_v=0;
 my $max_p=0;
@@ -131,7 +133,7 @@ my $max_k=0;
 my $nomax_p=0;
 my $nomax_h=0;
 my $nomax_k=0;
-my %ListOfYears=("2004"=>1);
+my %ListOfYears=($nowyear=>1);
 # If required year not in list, we add it
 $ListOfYears{$YearRequired}||=$MonthRequired;
 
@@ -177,7 +179,6 @@ if (scalar @config) {
         my $filedata=$dirdata."/awstats${MonthRequired}${YearRequired}${conf}.txt";
 
         my $linenb=0;
-        my $version=0;
         my $posgeneral=0;
         if (! -f "$filedata") {
             $error{$l}="No data for this month";
@@ -204,7 +205,7 @@ if (scalar @config) {
                     if ($cleanparam =~ s/^#//) { $wascleaned=1; }
 
                     if ($cleanparam =~ /^AWSTATS DATA FILE (.*)$/) {
-                        $version=$1;
+                        $version{$l}=$1;
                         next;
                     }
                     if ($cleanparam =~ /^POS_GENERAL\s+(\d+)/) {
@@ -227,7 +228,7 @@ if (scalar @config) {
                 # Map section was completely read, we can jump to data GENERAL
                 if ($posgeneral) {
             		$linenb=0;
-                    my ($foundu,$foundv)=(0,0);
+                    my ($foundu,$foundv,$foundl)=(0,0,0);
                     seek(FILE,$posgeneral,0);
                     while (<FILE>) {
                         if ($linenb++ > 50) { last; }  # To protect against full file scan
@@ -237,8 +238,9 @@ if (scalar @config) {
                         
                         if ($line =~ /TotalUnique\s+(\d+)/) { $view_u{$l}=$1; if ($1 > $max_u) { $max_u=$1; } $foundu++; }
                         elsif ($line =~ /TotalVisits\s+(\d+)/) { $view_v{$l}=$1; if ($1 > $max_v) { $max_v=$1; }  $foundv++; }
+                        elsif ($line =~ /LastUpdate\s+(\d+)/) { $lastupdate{$l}=$1; $foundl++; }
                         
-                        if ($foundu && $foundv) { last; }
+                        if ($foundu && $foundv && $foundl) { last; }
                     }
                 } else {
                     $error{$l}.="Mapping for section GENERAL was wrong.";
@@ -346,9 +348,9 @@ if (scalar @config) {
 
 		my @st2=stat($filedata);
         printf("Data file for period: <b>%s</b><br>\n",$filedata);
-        printf("Data file size for period: <b>%s</b> bytes<br>\n",$st2[7]);
-        printf("Data file version: <b>%s</b>",($version?" $version":"unknown")."<br>");
-        printf("Last update: <b>%s</b>","not yet available");
+        printf("Data file size for period: <b>%s</b>".($st2[7]?" bytes":"")."<br>\n",($st2[7]?$st2[7]:"unknown"));
+        printf("Data file version: <b>%s</b>",($version{$l}?" $version{$l}":"unknown")."<br>");
+        printf("Last update: <b>%s</b>",($lastupdate{$l}?" $lastupdate{$l}":"unknown"));
         print '</div>';
 
 		print "<tr $cb>\n";
@@ -369,7 +371,7 @@ if (scalar @config) {
 		}
 		elsif (! $foundendmap{$l}) {
 		    print "<td colspan=\"6\">";
-		    print "Unable to read summary info in data file. File may have been built by a too old AWStats version. File was built by version: $version.";
+		    print "Unable to read summary info in data file. File may have been built by a too old AWStats version. File was built by version: $version{$l}.";
 		    print "</td>";
 		}
         else {
