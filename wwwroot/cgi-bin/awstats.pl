@@ -4021,7 +4021,7 @@ sub Init_HashArray {
 # Return:		decodedstring
 #------------------------------------------------------------------------------
 sub ChangeWordSeparatorsIntoSpace {
-	$_[0] =~ s/%1[03]/ /g;				# LF,CR
+	$_[0] =~ s/%0[ad]/ /ig;				# LF,CR
 	$_[0] =~ s/%2[02789abc]/ /ig;		# 
 	$_[0] =~ s/%3a/ /ig;				# :
 	$_[0] =~ tr/\+\'\(\)\"\*,:/        /s;		# "&" and "=" must not be in this list
@@ -5618,7 +5618,7 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 	my $regnotnetscape=qr/gecko|compatible|opera|galeon|safari/i;
 	my $regreferer=qr/^(\w+):\/\/([^\/:]+)(:\d+|)/;
 	my $regreferernoquery=qr/^([^$URLQuerySeparators]+)/;
-	
+
 	# Define value of $PerlParsingFormat and @fieldlib
 	&DefinePerlParsingFormat();
 
