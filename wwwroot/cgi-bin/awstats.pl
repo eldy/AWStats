@@ -5984,7 +5984,10 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 		# If rename and archive ok
 		if ($renameok && $archiveok) {
 			if ($Debug) { debug("Purge log file"); }
-			truncate(LOG,0) || warning("Warning: <b>$PROG</b> couldn't purge logfile \"<b>$LogFile</b>\".\nChange your logfile permissions to allow write for your web server CGI process or change PurgeLogFile=1 into PurgeLogFile=0 in configure file and think to purge sometines manually your logfile (just after running an update process to not loose any not already processed records your log file contains).");
+			my $bold=($ENV{'GATEWAY_INTERFACE'}?'<b>':'');
+			my $unbold=($ENV{'GATEWAY_INTERFACE'}?'</b>':'');
+			my $br=($ENV{'GATEWAY_INTERFACE'}?'<br>':'');
+			truncate(LOG,0) || warning("Warning: $bold$PROG$unbold couldn't purge logfile \"$bold$LogFile$unbold\".$br\nChange your logfile permissions to allow write for your web server CGI process or change PurgeLogFile=1 into PurgeLogFile=0 in configure file and think to purge sometines manually your logfile (just after running an update process to not loose any not already processed records your log file contains).");
 		}
 		close(LOG);
 	}
