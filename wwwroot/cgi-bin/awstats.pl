@@ -82,7 +82,7 @@ $WarningMessages= 1;
 %MonthBytes = %MonthHits = %MonthHostsKnown = %MonthHostsUnknown = %MonthPages = %MonthUnique = %MonthVisits =
 %monthlib = %monthnum = ();
 
-$VERSION="3.2 (build 51)";
+$VERSION="3.2 (build 52)";
 $Lang="en";
 
 # Default value
@@ -1370,7 +1370,11 @@ sub Init_HashArray {
 #--------------------------------------------------------------------
 sub ChangeWordSeparatorsIntoSpace {
 	$_[0] =~ s/%20/ /g;
+	$_[0] =~ s/%22/ /g;
 	$_[0] =~ s/%27/ /g;
+	$_[0] =~ s/%28/ /g;
+	$_[0] =~ s/%29/ /g;
+	$_[0] =~ s/%2c/ /g;
 	$_[0] =~ tr/\+\'\(\)\",/      /s;								# "&" and "=" must not be in this list
 }
 
