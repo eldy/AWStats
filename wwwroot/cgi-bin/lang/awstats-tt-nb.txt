@@ -1,3 +1,4 @@
+<!-- Norwegian Bokmål tooltips message file (by Axel Wulff Sæther <axel@bigfoot.com>) -->
 <!-- $Revision$ - $Date$ -->
 <div class="CTooltip" id="tt1">
 Ett nytt besøk er en ny <b>gjest</b> som ikke har vært tilkoplet nettstedet siste <b>#VisitTimeOut# min</b>.
