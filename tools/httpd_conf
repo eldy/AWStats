@@ -6,3 +6,12 @@ Alias /awstatsclasses "/usr/local/awstats/wwwroot/classes/"
 Alias /awstatscss "/usr/local/awstats/wwwroot/css/"
 Alias /awstatsicons "/usr/local/awstats/wwwroot/icon/"
 ScriptAlias /awstats/ "/usr/local/awstats/wwwroot/cgi-bin/"
+
+# You can also add the directory directive, if your web server return error
+# "You don't have permission to access /awstats/awstats.pl on this server."
+#<Directory "/usr/local/awstats/wwwroot/cgi-bin">
+#    Options None
+#    AllowOverride None
+#    Order allow,deny
+#    Allow from all
+#</Directory>
