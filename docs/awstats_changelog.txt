@@ -21,6 +21,8 @@ Fixes:
 - Geoip lookup is always done (as it should) on ip when ip is known, even if
   DNSLookup is enabled and successfull. This increase seriously AWStats speed
   when DNSLookup and Geoip are both enabled.
+- Chars < and > inside reported values are no more removed but coded with &lt;
+  and &gt; in html built page.
 
 New features/improvements:
 - Added 'rawlog' plugin to add a form to show raw log content with filter
