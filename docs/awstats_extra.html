@@ -84,7 +84,14 @@ See examples for syntax use.<br>
 
 <br><br>
 <u><b>You will find here examples of ExtraSection setup you can follow to build your own reports.
-Try to follow them to build your own reporting tools:</b></u>
+Try to follow them to build your own reporting tools:</b></u><br>
+<br>
+<li><a href="#productorders">Tracking Product orders</a><br>
+<li><a href="#bugzilla">Tracking Bugzilla most frequently viewed bugs</a><br>
+<li><a href="#awredir">Tracking Exit clicks</a><br>
+<li><a href="#level2dir">List of top level 2 path under a directory /mydir</a><br>
+
+
 <br>
 
 <br>
@@ -164,6 +171,20 @@ This is for this how you must setup your ExtraSection:<br>
 <br>MaxNbOfExtra1=500
 <br>MinHitExtra1=1
 <br>ExtraSectionAddSumRow1=1
+</i>
+<br><br>
+
+
+<br><a name="level2dir"><H2 style="font: 22px arial,helvetica,sanserif color: #606060"><u>List of top level 2 path under a directory /mydir</u></H2></a>
+So this is how you need to setup your ExtraSection to add a chart for a such tracking:<br>
+<i>
+<br>ExtraSectionName1="List of top level 2 path under /mydir"
+<br>ExtraSectionCondition1="URL,^\/mydir\/.*"
+<br>ExtraSectionFirstColumnTitle1="Directory name"
+<br>ExtraSectionFirstColumnValues1="URL,^\/mydir\/([\w]+)\/"
+<br>ExtraSectionStatTypes1=PHK
+<br>MaxNbOfExtra1=50
+<br>MinHitExtra1=1
 </i>
 <br><br>
 
