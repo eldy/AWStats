@@ -62,8 +62,8 @@ function awstats_getCookie(TRKNameOfCookie){
 	return null; 
 }
 
-if (window.location.search == "") {
-
+if (window.location.search == "" || window.location.search == "?") {
+    // If no query string
 	TRKnow = new Date();
 	TRKscreen=screen.width+"x"+screen.height;
 	if (navigator.appName != "Netscape") {TRKcdi=screen.colorDepth}
