@@ -224,7 +224,7 @@ use vars qw/
 @DefaultFile @SkipDNSLookupFor
 @SkipHosts @SkipUserAgents @SkipFiles
 @OnlyHosts @OnlyUserAgents @OnlyFiles 
-@URLWithQueryWithoutFollowingParameters
+@URLWithQueryWithOnly @URLWithQueryWithout
 @ExtraName @ExtraCondition @ExtraStatTypes @MaxNbOfExtra @MinHitExtra
 @ExtraFirstColumnTitle @ExtraFirstColumnValues @ExtraFirstColumnFormat
 @ExtraConditionType @ExtraConditionTypeVal
@@ -249,7 +249,7 @@ use vars qw/
 @DefaultFile = @SkipDNSLookupFor = ();
 @SkipHosts = @SkipUserAgents = @SkipFiles = ();
 @OnlyHosts = @OnlyUserAgents = @OnlyFiles = ();
-@URLWithQueryWithoutFollowingParameters = ();
+@URLWithQueryWithOnly = @URLWithQueryWithout = ();
 @ExtraName = @ExtraCondition = @ExtraStatTypes = @MaxNbOfExtra = @MinHitExtra = ();
 @ExtraFirstColumnTitle = @ExtraFirstColumnValues = @ExtraFirstColumnFormat = ();
 @ExtraConditionType = @ExtraConditionTypeVal = ();
@@ -1200,8 +1200,12 @@ sub Parse_Config {
 			$FoundValidSMTPCodes=1;
 			next;
 			}
+		if ($param =~ /^URLWithQueryWithOnlyFollowingParameters$/)	{
+			@URLWithQueryWithOnly=split(/\s+/,$value);
+			next;
+			}
 		if ($param =~ /^URLWithQueryWithoutFollowingParameters$/)	{
-			foreach my $elem (split(/\s+/,$value))	{ push @URLWithQueryWithoutFollowingParameters,$elem; }
+			@URLWithQueryWithout=split(/\s+/,$value);
 			next;
 			}
  		# Extra parameters
@@ -1371,6 +1375,8 @@ sub Check_Config {
 		debug(" UseFramesWhenCGI=$UseFramesWhenCGI",2);
 		debug(" BuildReportFormat=$BuildReportFormat",2);
 		debug(" BuildHistoryFormat=$BuildHistoryFormat",2);
+		debug(" URLWithQueryWithOnlyFollowingParameters=".(join(',',@URLWithQueryWithOnly)),2);
+		debug(" URLWithQueryWithoutFollowingParameters=".(join(',',@URLWithQueryWithout)),2);
 	}
 
 	# Main section
@@ -1448,6 +1454,8 @@ sub Check_Config {
 	if ($DNSStaticCacheFile eq $DNSLastUpdateCacheFile)	{ error("DNSStaticCacheFile and DNSLastUpdateCacheFile must have different values."); }
 	if ($AllowAccessFromWebToAuthenticatedUsersOnly !~ /[0-1]/)     { $AllowAccessFromWebToAuthenticatedUsersOnly=0; }
 	if ($CreateDirDataIfNotExists !~ /[0-1]/)      	{ $CreateDirDataIfNotExists=0; }
+	if ($BuildReportFormat !~ /html|xml/i) 			{ $BuildReportFormat='html'; }
+	if ($BuildHistoryFormat !~ /text/)  			{ $BuildHistoryFormat='text'; }
 	if ($SaveDatabaseFilesWithPermissionsForEveryone !~ /[0-1]/)	{ $SaveDatabaseFilesWithPermissionsForEveryone=1; }
 	if ($PurgeLogFile !~ /[0-1]/)                 	{ $PurgeLogFile=0; }
 	if ($ArchiveLogRecords !~ /[0-1]/)            	{ $ArchiveLogRecords=1; }
@@ -1526,8 +1534,6 @@ sub Check_Config {
 	}
 	if ($FirstDayOfWeek !~ /[01]/)               	{ $FirstDayOfWeek=1; }
 	if ($UseFramesWhenCGI !~ /[01]/)  				{ $UseFramesWhenCGI=1; }
-	if ($BuildReportFormat !~ /html|xml/i) 			{ $BuildReportFormat='html'; }
-	if ($BuildHistoryFormat !~ /text/)  			{ $BuildHistoryFormat='text'; }
 	if ($DetailedReportsOnNewWindows !~ /[012]/)  	{ $DetailedReportsOnNewWindows=1; }
 	if ($ShowLinksOnUrl !~ /[01]/)               	{ $ShowLinksOnUrl=1; }
 	if ($MaxLengthOfURL !~ /^\d+/ || $MaxLengthOfURL<1) { $MaxLengthOfURL=72; }
@@ -1615,6 +1621,10 @@ sub Check_Config {
 		debug(" ExtraFirstColumnValuesTypeVal[$extranum] is array ".join(',',@{$ExtraFirstColumnValuesTypeVal[$extranum]}),2);
 	}
 
+	# Deny URLWithQueryWithOnlyFollowingParameters and URLWithQueryWithoutFollowingParameters both set
+	if (@URLWithQueryWithOnly && @URLWithQueryWithout) {
+		error("URLWithQueryWithOnlyFollowingParameters and URLWithQueryWithoutFollowingParameters can't be both set at the same time");
+	}
 	# Deny $ShowHTTPErrorsStats and $ShowSMTPErrorsStats both set
 	if ($ShowHTTPErrorsStats && $ShowSMTPErrorsStats) {
 		error("ShowHTTPErrorsStats and ShowSMTPErrorsStats can't be both set at the same time");
@@ -5916,19 +5926,43 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 			# For IIS setup, if pos_query is enabled we need to combine the URL to query strings
 			if (! $foundparam && $pos_query >=0 && $field[$pos_query] && $field[$pos_query] ne '-') {
 				$foundparam=1;
-				$field[$pos_url] .= '?'.$field[$pos_query];
 				$tokenquery='?';
 				$standalonequery=$field[$pos_query];
+				# Define query
+				$field[$pos_url] .= '?'.$field[$pos_query];
 			}
- 			# Remove params that are marked to be ignored in URLWithQueryWithoutFollowingParameters
-			if ($foundparam && @URLWithQueryWithoutFollowingParameters) {
-				if ($URLNotCaseSensitive) { map {$field[$pos_url] =~ s/([$tokenquery&])$_=[^&]*/$1/gi;} @URLWithQueryWithoutFollowingParameters; }
-				else { map {$field[$pos_url] =~ s/([$tokenquery&])$_=[^&]*/$1/g;} @URLWithQueryWithoutFollowingParameters; }
- 				# Cut starting or trailing ? or &
- 				$field[$pos_url] =~ tr/&/&/s;
- 				$field[$pos_url] =~ s/[$tokenquery]&/$tokenquery/;
- 				$field[$pos_url] =~ s/[$tokenquery&]$//;
- 			}
+ 			if ($foundparam) {
+				# Keep only params that are defined in URLWithQueryWithOnlyFollowingParameters
+				if (@URLWithQueryWithOnly) {
+					my $newstandalonequery='';
+					foreach (@URLWithQueryWithOnly) {
+						foreach my $p (split(/&/,$standalonequery)) {
+							if ($URLNotCaseSensitive) { if ($p =~ /^$_=/i) { $newstandalonequery.="$p&"; last; } }
+							else { if ($p =~ /^$_=/) { $newstandalonequery.="$p&"; last; } }
+						}
+					}
+	 				$standalonequery=$newstandalonequery;
+	 				chop $standalonequery;
+		 		}
+	 			# Remove params that are marked to be ignored in URLWithQueryWithoutFollowingParameters
+				elsif (@URLWithQueryWithout) {
+					my $newstandalonequery='';
+					foreach my $p (split(/&/,$standalonequery)) {
+						my $found=0;
+						foreach (@URLWithQueryWithout) {
+							debug("  Recherche de '$_=' dans param '$p'");
+							if ($URLNotCaseSensitive) { if ($p =~ /^$_=/i) { $found=1; last; } }
+							else { if ($p =~ /^$_=/) { $found=1; last; } }
+						}
+						if (! $found) { $newstandalonequery.="$p&"; }
+					}
+	 				$standalonequery=$newstandalonequery;
+	 				chop $standalonequery;
+				}
+				# Define query
+				$field[$pos_url]=$urlwithnoquery;
+				if ($standalonequery) { $field[$pos_url].="$tokenquery$standalonequery"; }
+			}
 		}
 		else {
 			# Trunc parameters of URL

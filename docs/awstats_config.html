@@ -92,6 +92,7 @@ when reading it), follow the example:<br>
 <li><a href="#URLWithAnchor">URLWithAnchor</a>
 <li><a href="#URLQuerySeparators">URLQuerySeparators</a>
 <li><a href="#URLWithQuery">URLWithQuery</a>
+<li><a href="#URLWithQueryWithOnlyFollowingParameters">URLWithQueryWithOnlyFollowingParameters</a>
 <li><a href="#URLWithQueryWithoutFollowingParameters">URLWithQueryWithoutFollowingParameters</a>
 <li><a href="#URLReferrerWithQuery">URLReferrerWithQuery</a>
 <li><a href="#WarningMessages">WarningMessages</a>
@@ -998,6 +999,27 @@ when reading it), follow the example:<br>
 
 <br><br><hr>
 
+<a name="URLWithQueryWithOnlyFollowingParameters"><b>URLWithQueryWithOnlyFollowingParameters</b></a><br>
+<b>Version : </b>6.0+<br>
+<br># When URLWithQuery is on, you will get the full URL with all parameters in
+<br># URL reports. But among thoose parameters, sometimes you don't need a
+<br># particular parameter because it does not identify the page or because it's
+<br># a random ID changing for each access even if URL points to same page. In
+<br># such cases, it is higly recommanded to ask AWStats to keep only parameters
+<br># you need (if you know them) before counting, manipulating and storing it.
+<br># Enter here list of wanted parameters. For example, with "param", one hit on
+<br># /mypage.cgi?param=abc&id=Yo4UomP9d and /mypage.cgi?param=abc&id=Mu8fdxl3r
+<br># will be reported as 2 hits on /mypage.cgi?param=abc
+<br># This parameter is not used when URLWithQuery is 0 and can't be used with
+<br># URLWithQueryWithoutFollowingParameters.
+<br># Change : Effective for new updates only
+<br># Example: "param"
+<br># Default: ""
+<br># 
+<br>URLWithQueryWithOnlyFollowingParameters=""
+
+<br><br><hr>
+
 <a name="URLWithQueryWithoutFollowingParameters"><b>URLWithQueryWithoutFollowingParameters</b></a><br>
 <b>Version : </b>5.1+<br>
 <br># When URLWithQuery is on, you will get the full URL with all parameters in
@@ -1009,7 +1031,9 @@ when reading it), follow the example:<br>
 <br># of all non wanted parameters. For example if you enter "id", one hit on
 <br># /mypage.cgi?p=abc&id=Yo4UomP9d and /mypage.cgi?p=abc&id=Mu8fdxl3r
 <br># will be reported as 2 hits on /mypage.cgi?p=abc
-<br># This parameter is not used when URLWithQuery is 0.
+<br># This parameter is not used when URLWithQuery is 0 and can't be used with
+<br># URLWithQueryWithOnlyFollowingParameters.
+<br># Change : Effective for new updates only
 <br># Example: "PHPSESSID jsessionid"
 <br># Default: ""
 <br># 

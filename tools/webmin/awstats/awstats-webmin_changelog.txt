@@ -7,10 +7,14 @@ $Revision$ - $Author$ - $Date$
 
 Fixes:
 - Better error messages
+- Fixed ACL management on directory that contains config files.
 
 New features/improvements:
-- Added BuildHistoryFormat and BuildReportFormat parameter in edit config area.
-- Added LevelForFileTypesDetection parameter in edit config area.
+- Added following parameters parameter in edit config area:
+  BuildHistoryFormat
+  BuildReportFormat
+  LevelForFileTypesDetection
+  URLWithQueryWithOnlyFollowingParameters
 - Module setup parameter awstats_conf has been removed since now
   directories into wich you can scan/edit AWStats configuration files
   are defined in ACL users. Defined to /etc/awstats by default.

@@ -195,6 +195,8 @@ if ($in{'advanced'} == 1) {
 	print &hblink($text{'help_help'}, "help.cgi?param=URLQuerySeparators")." </td> </tr>\n";
 	print "<tr> <td><b>URLWithQuery</b></td> <td> <input size=10 name=URLWithQuery type=text value='$lconf->{'URLWithQuery'}'> </td> <td> ";
 	print &hblink($text{'help_help'}, "help.cgi?param=URLWithQuery")." </td> </tr>\n";
+	print "<tr> <td><b>URLWithQueryWithOnlyFollowingParameters</b></td> <td> <input size=30 name=URLWithQueryWithOnlyFollowingParameters type=text value='$lconf->{'URLWithQueryWithOnlyFollowingParameters'}'> </td> <td> ";
+	print &hblink($text{'help_help'}, "help.cgi?param=URLWithQueryWithOnlyFollowingParameters")." </td> </tr>\n";
 	print "<tr> <td><b>URLWithQueryWithoutFollowingParameters</b></td> <td> <input size=30 name=URLWithQueryWithoutFollowingParameters type=text value='$lconf->{'URLWithQueryWithoutFollowingParameters'}'> </td> <td> ";
 	print &hblink($text{'help_help'}, "help.cgi?param=URLWithQueryWithoutFollowingParameters")." </td> </tr>\n";
 	print "<tr> <td><b>URLReferrerWithQuery</b></td> <td> <input size=10 name=URLReferrerWithQuery type=text value='$lconf->{'URLReferrerWithQuery'}'> </td> <td> ";
