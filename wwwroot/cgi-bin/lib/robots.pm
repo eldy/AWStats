@@ -344,6 +344,7 @@
 'ultraseek',
 'webclipping\.com',
 'webcompass',
+'yahoo\-verticalcrawler',
 'yandex',
 'zealbot',
 'zyborg'
@@ -674,6 +675,7 @@
 'webcompass', 'webcompass',
 'webclipping\.com', 'WebClipping.com',
 'wisenutbot','WISENutbot (Looksmart)',
+'yahoo\-verticalcrawler', 'Yahoo Vertical Crawler',
 'yandex', 'Yandex bot',
 'zealbot','ZealBot',
 'zyborg','Zyborg (Looksmart)',
