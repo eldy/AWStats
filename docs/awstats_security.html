@@ -101,12 +101,13 @@ This is one of the most popular way of working.<br>
 <font color=blue><b>Advantage</b></font>:<br>
 Statistics are dynamic. High level of manageability.<br>
 <font color=blue><b>Disadvantage</b></font>:<br>
-AWStats database files must still be readable by anonymous web server user, so if an experimented user can have an access to
+AWStats database files must still be readable by anonymous web server user, so if an experienced user can have an access to
 the server (telnet) where AWStats database files are stored, he can succeed in installing and running a "hacked" version
 of AWStats that ignores value of parameter AllowAccessFromWebToAuthenticatedUsersOnly.<br>
 <font color=blue><b>How</b></font>:<br>
 awstats.pl file must be saved in a web protected <b>realm</b> to force a visitor to enter its username/password
 to access AWStats CGI program.<br>
+<br>
 <u>Example of directives you can add into Apache to have awstats.pl in a web protected realm:</u><br>
 <i>
 &lt;Files "awstats.pl"&gt;<br>
@@ -117,6 +118,11 @@ AuthType Basic<br>
 require valid-user<br>
 &lt;/Files&gt;
 </i><br>
+If you add such directives into a .htaccess file, you must also check that the <i>AllowOverride</i> directive is set
+to <i>All</i> in Apache config file to allow the use of .htaccess files.<br>
+<br>
+To known how to create a protected realm for servers other than Apache, see your web server manual.<br>
+<br>
 Then edit each config/domain file you want to be protected to set <a href="awstats_config.html#AllowAccessFromWebToAuthenticatedUsersOnly">AllowAccessFromWebToAuthenticatedUsersOnly</a> to 1.<br>
 You can also edit list of authorized users in the <a href="awstats_config.html#AllowAccessFromWebToFollowingAuthenticatedUsers">AllowAccessFromWebToFollowingAuthenticatedUsers</a> parameter.<br>
 You can also specify a range of allowed browsers IP Addresses with the <a href="awstats_config.html#AllowAccessFromWebToFollowingIPAddresses">AllowAccessFromWebToFollowingIPAddresses</a> parameter.<br>
@@ -124,8 +130,9 @@ You can also specify a range of allowed browsers IP Addresses with the <a href="
 Other tip: If you define <b>AWSTATS_CONFIG</b> environment variable in your web server environment (Adding
 <i>SetEnv AWSTATS_CONFIG myconfigvalueformydomain</i> with other directives in your Apache VirtualHost config), AWStats
 will use the config file called <i>awstats.myconfigvalueformydomain.conf</i> to choose which statistics used,
-even if a visitor try to force the config/domain file with the URL '<i>http://mydomain.com/cgi-bin-awstats/awstats.pl?config=xxx</i>'.
-This can be usefull for thoose who edit their config/domain file with <a href="awstats_config.html#AllowAccessFromWebToFollowingAuthenticatedUsers">AllowAccessFromWebToFollowingAuthenticatedUsers</a>="__REMOTE_USER__"</i>.<br>
+even if a visitor try to force the config/domain file with the URL '<i>http://mydomain/cgi-bin/awstats.pl?config=otherdomain</i>'.
+This might be usefull for thoose who edit their config/domain file with <a href="awstats_config.html#AllowAccessFromWebToFollowingAuthenticatedUsers">AllowAccessFromWebToFollowingAuthenticatedUsers</a>="__REMOTE_USER__"</i>
+to avoid managing account lists in AWStats config files.<br>
 <br><br>
 
 <br><a name="3"><H2 style="font: 22px arial,helvetica,sanserif color: #606060"><u>3) NO SECURITY POLICY</u></H2></a><br>
@@ -138,12 +145,13 @@ Setup is very easy (No need of particular setup). Statistics are dynamic.<br>
 No way to prevent stats for config/domain to be seen by a user that known the
 config/domain name and the url syntax to see stats of a particular config/domain.<br>
 <font color=blue><b>How</b></font>:<br>
-No particular things to do (You can however use <a href="awstats_config.html#AllowAccessFromWebToFollowingIPAddresses">AllowAccessFromWebToFollowingIPAddresses</a> parameter).<br>
+No particular things to do (You can however easily use <a href="awstats_config.html#AllowAccessFromWebToFollowingIPAddresses">AllowAccessFromWebToFollowingIPAddresses</a> parameter
+to have a minimum of security).<br>
 <br>
 <br>
 <br>
 
-There is a lot of possible use for AWStats combining all its options/parameter with all web servers options/parameters.
+There is a lot of possible use for AWStats combining all its options/parameters with all web servers options/parameters.
 Just use the one you need...<br>
 <br>
 
