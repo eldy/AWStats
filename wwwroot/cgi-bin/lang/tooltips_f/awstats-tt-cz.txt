@@ -1,0 +1,34 @@
+<!-- Czech tooltips message file (js@cvut.cz) -->
+<!-- REVISON 1.0 -->
+<div class="CTooltip" id="tt1">
+</div>
+<div class="CTooltip" id="tt2">
+Poèet rùyných hostù (<b>IP addresa</b>), kteøí se pøipojili.
+</div>
+<div class="CTooltip" id="tt3">
+</div>
+<div class="CTooltip" id="tt4">
+</div>
+<div class="CTooltip" id="tt5">
+Celkový souèet dat pøenesených po ftp.<br />
+Jednotky jsou v KB, MB or GB (KiloBytes, MegaBytes or GigaBytes)
+</div>
+<div class="CTooltip" id="tt13">
+</div>
+<div class="CTooltip" id="tt14">
+</div>
+<div class="CTooltip" id="tt15">
+</div>
+<div class="CTooltip" id="tt16">
+</div>
+<div class="CTooltip" id="tt17">
+V¹echny èasové statistiky vycházejí z èasu na serveru.<br />
+</div>
+<div class="CTooltip" id="tt18">
+Tato data jsou: <b>prùmìrné hodnoty</b> (vychází z dat mezi prvním a posledním emailem).
+</div>
+<div class="CTooltip" id="tt19">
+Tato data jsou: <b>souèty</b> (vychází z dat mezi prvním a posledním emailem)
+</div>
+<div class="CTooltip" id="tt20">
+</div>
