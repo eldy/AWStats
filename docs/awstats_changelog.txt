@@ -2,6 +2,25 @@ AWStats Changelog
 -----------------
 $Revision$ - $Author$ - $Date$
 
+5.91
+
+Fixes:
+- Fixed value for ValueSMTPCodes if not defined in config file.
+
+New features/improvements:
+- logresolvemerge.pl: can use several threads for reverse DNS lookup
+  with Perl 5.8.
+- maillogconvert.pl: Allow to process qmail log preprocessed by
+  tai64nlocal tool.
+- wget is known as a "grabber" browser, no more as a robots.
+- Added netcaptor in browser database.
+- Add percent column for file types.
+
+Other/Documentation:
+- Some changes to make AWStats to be XML compliant ready (need to change the
+  UseXml=0 to UseXml=1 inside awstats.pl code). First step for future features.
+- Prepare code for decodeUTFkeys plugin.
+
 
 5.9
 
