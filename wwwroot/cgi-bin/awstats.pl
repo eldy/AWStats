@@ -21,7 +21,7 @@ use vars qw(%DomainsHashIDLib @RobotsSearchIDOrder_list1 @RobotsSearchIDOrder_li
 #-------------------------------------------------------
 # Defines
 #-------------------------------------------------------
-my $VERSION="4.0 (build 58)";
+my $VERSION="4.0 (build 59)";
 
 # ---------- Init variables -------
 my $Debug=0;
@@ -184,13 +184,13 @@ my %Aliases = (
 			"/cgi-bin/awstats.pl",			"<b>AWStats stats page</b>",
 			"/cgi-bin/awstats/awstats.pl",	"<b>AWStats stats page</b>",
 			# Following the same example, you can put here HTML text you want to see in links instead of URL text.
-			"/YourRelativeUrl",				"<b>Your HTML text</b>"
+#			"/YourRelativeUrl",				"<b>Your HTML text</b>"
 			);
 
 # These table is used to make fast reverse DNS lookup for particular IP adresses. You can add your own IP addresses resolutions.
 my %MyDNSTable = (
-"256.256.256.1", "myworkstation1",
-"256.256.256.2", "myworkstation2"
+#"256.256.256.1", "myworkstation1",
+#"256.256.256.2", "myworkstation2"
 );
 
 # HTTP codes with tooltip
