@@ -302,7 +302,7 @@ public class AWGraphApplet extends Applet
 		int allbarwidth=(((nbvalues*(valWidth+valSpacing))+blockSpacing)*nbblocks);
 		int allbarheight=barsize;
 		int axepointx=(getSize().width-allbarwidth)/2 - 2*shift;
-        int axepointy = getSize().height - (2*fontmetrics.getHeight()) - textVertSpacing;
+        int axepointy = getSize().height - (2*fontmetrics.getHeight()) - 2 - textVertSpacing;
 
 		int cx=axepointx;
 		int cy=axepointy;
@@ -343,8 +343,9 @@ public class AWGraphApplet extends Applet
 
             // Draw the block label
 //			Log("Write block j="+j+" with cx="+cx);
-            cy = getSize().height - fontmetrics.getHeight() - textVertSpacing;
+            cy = getSize().height - fontmetrics.getHeight() - 3 - textVertSpacing;
             g.setColor(Color.black);
+
 			// Check if bold or highlight
 			int bold=0; int highlight=0; String label=blabels[j];
 			if (blabels[j].indexOf(":")>0) { bold=1; label=remove(blabels[j],":"); }
@@ -352,23 +353,25 @@ public class AWGraphApplet extends Applet
 
 			if (bold==1) { g.setFont(fontb); }
 			String as[] = split(label, "\247", 0);
+			// Write background for block legend
 			if (highlight==1) {
 				g.setColor(special_color);
-				g.fillRect(cx-Math.max(-1+blockSpacing>>1,0),cy-fontmetrics.getHeight(),(nbvalues*(valWidth+valSpacing))+Math.max(blockSpacing-2,0)+1,((fontmetrics.getHeight()+textVertSpacing)*as.length)+2);
+				g.fillRect(cx-Math.max(-1+blockSpacing>>1,0),cy-fontmetrics.getHeight()+2,(nbvalues*(valWidth+valSpacing))+Math.max(blockSpacing-2,0)+1,((fontmetrics.getHeight()+textVertSpacing)*as.length)+2);
 				g.setColor(Color.black);
 			}
+			// Write text for block legend
             for (int i=0; i<as.length; i++) {
 				int cxoffset=((nbvalues*(valWidth+valSpacing))-fontmetrics.stringWidth(as[i]))>>1;
 	            if (cxoffset<0) { cxoffset=0; }
 				g.drawString(as[i], cx+cxoffset, cy);
-				cy+=fontmetrics.getHeight()+textVertSpacing;
+				cy+=fontmetrics.getHeight()+textVertSpacing-1;
 			}
 			if (bold==1) { g.setFont(font); }
 
 			// Loop on each value
 	        for (int i = 0; i < nbvalues; i++) {
 	
-	            cy = getSize().height - fontmetrics.getHeight() - textVertSpacing - 4;
+	            cy = getSize().height - fontmetrics.getHeight() - 6 - textVertSpacing;
 	            cy -= fontmetrics.getHeight() - 4;
 	
 	            // draw the shadow and bar
