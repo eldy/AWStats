@@ -1084,7 +1084,10 @@ sub Parse_Config {
 			$value =~ s/^\s+//; $value =~ s/\s+$//;
 			$value =~ s/^\"//; $value =~ s/\";?$//;
 			# Replace __MONENV__ with value of environnement variable MONENV
-			$value =~ s/__(\w+)__/$ENV{$1}/g;
+			while ($value =~ /__(\w+)__/) {
+				my $var=$1;
+				$value =~ s/__${var}__/$ENV{$var}/g;
+			}
 		}
 		# Read main section
 		if ($param =~ /^LogFile/ && $QueryString !~ /logfile=([^\s&]+)/i)	{ $LogFile=$value; next; }
@@ -4608,10 +4611,11 @@ else { $MonthRequired="$nowmonth"; }
 if ($QueryString =~ /(^|&)day=(\d\d)/i) { $DayRequired="$2"; }	# day is a hidden option. Must not be used (Make results not understandable). Available for users that rename history files with day.
 else { $DayRequired=''; }
 
-# Force SiteConfig if AWSTATS_CONFIG is defined
-if ($ENV{'AWSTATS_CONFIG'}) {
-	if ($Debug) { debug("AWSTATS_CONFIG parameter is defined to '".$ENV{'AWSTATS_CONFIG'}."'. $PROG will use this as config value."); }
-	$SiteConfig=$ENV{'AWSTATS_CONFIG'};
+# Force SiteConfig if AWSTATS_FORCE_CONFIG is defined
+if ($ENV{'AWSTATS_CONFIG'}) { $ENV{'AWSTATS_FORCE_CONFIG'}=$ENV{'AWSTATS_CONFIG'}; } # For backward compatibility
+if ($ENV{'AWSTATS_FORCE_CONFIG'}) {
+	if ($Debug) { debug("AWSTATS_FORCE_CONFIG parameter is defined to '".$ENV{'AWSTATS_FORCE_CONFIG'}."'. $PROG will use this as config value."); }
+	$SiteConfig=$ENV{'AWSTATS_FORCE_CONFIG'};
 }
 
 if ((! $ENV{'GATEWAY_INTERFACE'}) && (! $SiteConfig)) {
@@ -4630,8 +4634,8 @@ if ((! $ENV{'GATEWAY_INTERFACE'}) && (! $SiteConfig)) {
 	print "  Note 1: Config files ($PROG.virtualhostname.conf or $PROG.conf) must be\n";
 	print "  in /etc/opt/awstats, /etc/awstats, /etc or same directory than awstats.pl\n";
 	print "  file.\n";
-	print "  Note 2: If AWSTATS_CONFIG environment variable is defined, AWStats will use\n";
-	print "  it as the \"config\" value, whatever is the value on command line.\n";
+	print "  Note 2: If AWSTATS_FORCE_CONFIG environment variable is defined, AWStats will\n";
+	print "  use it as the \"config\" value, whatever is the value on command line or URL.\n";
 	print "  See AWStats documentation for all setup instrutions.\n";
 	print "\n";
 	print "Options to update statistics:\n";
@@ -4707,6 +4711,7 @@ if ((! $ENV{'GATEWAY_INTERFACE'}) && (! $SiteConfig)) {
 }
 if (! $SiteConfig) { $SiteConfig=$ENV{'SERVER_NAME'}; }
 #if (! $ENV{'SERVER_NAME'}) { $ENV{'SERVER_NAME'} = $SiteConfig; }	# For thoose who use __SERVER_NAME__ in conf file and use CLI.
+$ENV{'AWSTATS_CURRENT_CONFIG'}=$SiteConfig;
 
 # Read config file (here SiteConfig is defined)
 &Read_Config;
