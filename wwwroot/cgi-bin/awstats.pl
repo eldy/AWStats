@@ -1838,7 +1838,7 @@ if ($UpdateStats) {
 		# Record is approved. We found a new line
 		#----------------------------------------
 		$NbOfNewLinesProcessed++;
-		if (($QueryString =~ /showstep=1/i) && ($NbOfNewLinesProcessed % 1000 == 0)) { print "$NbOfNewLinesProcessed lines processed\n"; }
+		#if (($QueryString =~ /showstep=1/i) && ($NbOfNewLinesProcessed % 1000 == 0)) { print "$NbOfNewLinesProcessed lines processed\n"; }
 
 		if (&SkipHost($field[$pos_rc])) { next; }		# Skip with some client host IP addresses
 		if (&SkipFile($field[$pos_url])) { next; }		# Skip with some URLs
