@@ -4401,7 +4401,7 @@ sub DefinePerlParsingFormat {
 			@fieldlib=('date','host','logname','method','url','code','size','ua','referer');
 		}
 		elsif ($LogFormat eq '3') {
-			$PerlParsingFormat="([^\\t]*\\t[^\\t]*)\\t([^\\t]*)\\t([\\d|-]*)\\t([^\\t]*)\\t([^\\t]*)\\t([^\\t]*)\\t[^\\t]*\\t.*:([^\\t]*)\\t([\\d]*)";
+			$PerlParsingFormat="([^\\t]*\\t[^\\t]*)\\t([^\\t]*)\\t([\\d|-]*)\\t([^\\t]*)\\t([^\\t]*)\\t([^\\t]*)\\t[^\\t]*\\t([^\\t]*)\\t([\\d]*)";
 			$pos_date=0;$pos_method=1;$pos_code=2;$pos_host=3;$pos_agent=4;$pos_referer=5;$pos_url=6;$pos_size=7;
 			@fieldlib=('date','method','code','host','ua','referer','url','size');
 		}
@@ -5344,6 +5344,12 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 				print "Phase 2 : Now process new records (Flush history on disk after ".($LIMITFLUSH<<2)." hosts)...\n";
 				#print "Phase 2 : Now process new records (Flush history on disk after ".($LIMITFLUSH<<2)." hosts or ".($LIMITFLUSH)." URLs)...\n";
 			}
+		}
+
+		# Convert URL for Webstar to common URL
+		if ($LogFormat eq '3') {
+			$field[$pos_url]=~s/:/\//g;
+			if ($field[$pos_code] eq '-') { $field[$pos_code]='200'; }
 		}
 
 		# Here, field array, timerecord and yearmonthdayrecord are initialized for log record
