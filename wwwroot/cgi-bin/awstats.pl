@@ -1692,6 +1692,8 @@ sub Check_Config {
 			error("AWStats database directory defined in config file by 'DirData' parameter ($DirData) does not exist or is not writable.");
 		}
 	}
+
+	if ($LogType eq 'S') { $NOTSORTEDRECORDTOLERANCE=1000000; }
 }
 
 
@@ -5759,7 +5761,7 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 		if ($LogType eq 'W' && ($field[$pos_method] eq 'GET' || $field[$pos_method] eq 'POST' || $field[$pos_method] eq 'HEAD' || $field[$pos_method] =~ /OK/i || $field[$pos_method] =~ /ERR\!/i)) {
 			# HTTP request.	Keep only GET, POST, HEAD, *OK* and ERR! for Webstar. Do not keep OPTIONS
 		}
-		elsif (($LogType eq 'W' || $LogType eq 'S') && ($field[$pos_method] eq 'mms' || $field[$pos_method] eq 'RTP')) {
+		elsif (($LogType eq 'W' || $LogType eq 'S') && ($field[$pos_method] eq 'mms'|| $field[$pos_method] eq 'rtsp' || $field[$pos_method] eq 'http' || $field[$pos_method] eq 'RTP')) {
 			# Streaming request (windows media server or darwin streaming server)
 		}
 		elsif ($LogType eq 'M' && $field[$pos_method] eq 'SMTP') {
@@ -5776,7 +5778,7 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 			if ($ShowDropped) { print "Dropped record (method/protocol '$field[$pos_method]' not qualified when LogType=$LogType): $line\n"; }
 			next;
 		}
-		
+
 		# Split DD/Month/YYYY:HH:MM:SS or YYYY-MM-DD HH:MM:SS or MM/DD/YY\tHH:MM:SS
 		$field[$pos_date] =~ tr/,-\/ \t/:::::/;			# " \t" is used instead of "\s" not known with tr
 		my @dateparts=split(/:/,$field[$pos_date]);		# tr and split faster than @dateparts=split(/[\/\-:\s]/,$field[$pos_date])
