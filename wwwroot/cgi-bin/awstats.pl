@@ -6504,40 +6504,43 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 							$_from_h[2]++;
 							$_se_referrals_h{$TmpRefererServer{$refererserver}}++;
 							$found=1;
-							my @refurl=split(/\?/,$field[$pos_referer],2);	# TODO Use \? or [$URLQuerySeparators] ?
-							if ($refurl[1]) {
-								# Extract params of referer query string (q=cache:mmm:www/zzz+aaa+bbb q=aaa+bbb/ccc key=ddd%20eee lang_en ie=UTF-8 ...)
-								my @paramlist=split(/&/,$KeyWordsNotSensitive?lc($refurl[1]):$refurl[1]);
-								if ($SearchEnginesKnownUrl{$TmpRefererServer{$refererserver}}) {	# Search engine with known URL syntax
-									foreach my $param (@paramlist) {
-										if ($param =~ s/^$SearchEnginesKnownUrl{$TmpRefererServer{$refererserver}}//) {
+							if ($LevelForKeywordsDetection) {
+								my @refurl=split(/\?/,$field[$pos_referer],2);	# TODO Use \? or [$URLQuerySeparators] ?
+								if ($refurl[1]) {
+									# Extract params of referer query string (q=cache:mmm:www/zzz+aaa+bbb q=aaa+bbb/ccc key=ddd%20eee lang_en ie=UTF-8 ...)
+									if ($SearchEnginesKnownUrl{$TmpRefererServer{$refererserver}}) {	# Search engine with known URL syntax
+										my @paramlist=split(/&/,$KeyWordsNotSensitive?lc($refurl[1]):$refurl[1]);
+										foreach my $param (@paramlist) {
+											if ($param =~ s/^$SearchEnginesKnownUrl{$TmpRefererServer{$refererserver}}//) {
+												# We found good parameter
+												# Now param is keyphrase: "cache:mmm:www/zzz+aaa+bbb/ccc+ddd%20eee'fff,ggg"
+												$param =~ s/^(cache|related):[^\+]+//;
+												&ChangeWordSeparatorsIntoSpace($param);		# Change [ aaa+bbb/ccc+ddd%20eee'fff,ggg ] into [ aaa bbb/ccc ddd eee fff ggg]
+												$param =~ s/^ +//; $param =~ s/ +$//; $param =~ tr/ /\+/s;
+												if ((length $param) > 0) { $_keyphrases{$param}++; }
+												last;
+											}
+										}
+									}
+									elsif ($LevelForKeywordsDetection >= 2) {							# Search engine with unknown URL syntax
+										my @paramlist=split(/&/,$KeyWordsNotSensitive?lc($refurl[1]):$refurl[1]);
+										foreach my $param (@paramlist) {
+											my $foundexcludeparam=0;
+											foreach my $paramtoexclude (@WordsToCleanSearchUrl) {
+												if ($param =~ /$paramtoexclude/i) { $foundexcludeparam=1; last; } # Not the param with search criteria
+											}
+											if ($foundexcludeparam) { next; }
 											# We found good parameter
-											# Now param is keyphrase: "cache:mmm:www/zzz+aaa+bbb/ccc+ddd%20eee'fff,ggg"
+											$param =~ s/.*=//;
+											# Now param is keyphrase: "aaa+bbb/ccc+ddd%20eee'fff,ggg"
 											$param =~ s/^(cache|related):[^\+]+//;
-											&ChangeWordSeparatorsIntoSpace($param);		# Change [ aaa+bbb/ccc+ddd%20eee'fff,ggg ] into [ aaa bbb/ccc ddd eee fff ggg]
+											&ChangeWordSeparatorsIntoSpace($param);			# Change [ aaa+bbb/ccc+ddd%20eee'fff,ggg ] into [ aaa bbb/ccc ddd eee fff ggg ]
 											$param =~ s/^ +//; $param =~ s/ +$//; $param =~ tr/ /\+/s;
-											if ((length $param) > 0) { $_keyphrases{$param}++; }
-											last;
+											if ((length $param) > 2) { $_keyphrases{$param}++; last; }
 										}
 									}
-								}
-								else {																# Search engine with unknown URL syntax
-									foreach my $param (@paramlist) {
-										my $foundexcludeparam=0;
-										foreach my $paramtoexclude (@WordsToCleanSearchUrl) {
-											if ($param =~ /$paramtoexclude/i) { $foundexcludeparam=1; last; } # Not the param with search criteria
-										}
-										if ($foundexcludeparam) { next; }
-										# We found good parameter
-										$param =~ s/.*=//;
-										# Now param is keyphrase: "aaa+bbb/ccc+ddd%20eee'fff,ggg"
-										$param =~ s/^(cache|related):[^\+]+//;
-										&ChangeWordSeparatorsIntoSpace($param);			# Change [ aaa+bbb/ccc+ddd%20eee'fff,ggg ] into [ aaa bbb/ccc ddd eee fff ggg ]
-										$param =~ s/^ +//; $param =~ s/ +$//; $param =~ tr/ /\+/s;
-										if ((length $param) > 2) { $_keyphrases{$param}++; last; }
-									}
-								}
-							}	# End of if refurl[1]
+								}	# End of if refurl[1]
+							}
 						}
 					}	# End of if ($TmpRefererServer)
 					else {

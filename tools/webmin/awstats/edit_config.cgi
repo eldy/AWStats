@@ -226,14 +226,18 @@ print "<tr> <td colspan=3><br></td> </tr>\n";
 
 print "<tr> <td colspan=3><br>OPTIONAL ACCURACY SETUP SECTION (Not required but increase AWStats features)<br><hr></td> </tr>\n";
 if ($in{'advanced'} == 2) {
-	print "<tr> <td><b>LevelForRobotsDetection</b></td> <td> <input size=10 type=text name=LevelForRobotsDetection value='$lconf->{'LevelForRobotsDetection'}'> </td> <td> ";
-	print &hblink($text{'help_help'}, "help.cgi?param=LevelForRobotsDetection")." </td> </tr>\n";
 	print "<tr> <td><b>LevelForBrowsersDetection</b></td> <td> <input size=10 type=text name=LevelForBrowsersDetection value='$lconf->{'LevelForBrowsersDetection'}'> </td> <td> ";
 	print &hblink($text{'help_help'}, "help.cgi?param=LevelForBrowsersDetection")." </td> </tr>\n";
 	print "<tr> <td><b>LevelForOSDetection</b></td> <td> <input size=10 type=text name=LevelForOSDetection value='$lconf->{'LevelForOSDetection'}'> </td> <td> ";
 	print &hblink($text{'help_help'}, "help.cgi?param=LevelForOSDetection")." </td> </tr>\n";
 	print "<tr> <td><b>LevelForRefererAnalyze</b></td> <td> <input size=10 type=text name=LevelForRefererAnalyze value='$lconf->{'LevelForRefererAnalyze'}'> </td> <td> ";
 	print &hblink($text{'help_help'}, "help.cgi?param=LevelForRefererAnalyze")." </td> </tr>\n";
+	print "<tr> <td><b>LevelForRobotsDetection</b></td> <td> <input size=10 type=text name=LevelForRobotsDetection value='$lconf->{'LevelForRobotsDetection'}'> </td> <td> ";
+	print &hblink($text{'help_help'}, "help.cgi?param=LevelForRobotsDetection")." </td> </tr>\n";
+	print "<tr> <td><b>LevelForSearchEnginesDetection</b></td> <td> <input size=10 type=text name=LevelForSearchEnginesDetection value='$lconf->{'LevelForSearchEnginesDetection'}'> </td> <td> ";
+	print &hblink($text{'help_help'}, "help.cgi?param=LevelForSearchEnginesDetection")." </td> </tr>\n";
+	print "<tr> <td><b>LevelForKeywordsDetection</b></td> <td> <input size=10 type=text name=LevelForKeywordsDetection value='$lconf->{'LevelForKeywordsDetection'}'> </td> <td> ";
+	print &hblink($text{'help_help'}, "help.cgi?param=LevelForKeywordsDetection")." </td> </tr>\n";
 	print "<tr> <td><b>LevelForFileTypesDetection</b></td> <td> <input size=10 type=text name=LevelForFileTypesDetection value='$lconf->{'LevelForFileTypesDetection'}'> </td> <td> ";
 	print &hblink($text{'help_help'}, "help.cgi?param=LevelForFileTypesDetection")." </td> </tr>\n";
 	print "<tr> <td><b>LevelForWormsDetection</b></td> <td> <input size=10 type=text name=LevelForWormsDetection value='$lconf->{'LevelForWormsDetection'}'> </td> <td> ";
