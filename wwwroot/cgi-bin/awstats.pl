@@ -4437,7 +4437,10 @@ if ($Debug) {
 if ($Debug) { debug("UpdateStats is $UpdateStats",2); }
 if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {	# Update only on index page or when not framed to avoid update twice
 
-	print "Update for config '$FileConfig'\nWith data in log file '$LogFile'...\n";
+	if (! $HTMLOutput) {
+		print "Update for config '$FileConfig'\n";
+		print "With data in log file '$LogFile'...\n";
+	}
 
 	my $lastprocessedyear=$lastyearbeforeupdate;
 	my $lastprocessedmonth=$ListOfYears{$lastyearbeforeupdate}||0;
