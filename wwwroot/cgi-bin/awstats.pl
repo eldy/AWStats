@@ -126,7 +126,7 @@ $color_h, $color_k, $color_p, $color_s, $color_u, $color_v)=
 
 
 
-$VERSION="4.0 (build 22)";
+$VERSION="4.0 (build 23)";
 $Lang="en";
 
 # Default value
@@ -2668,6 +2668,8 @@ if ($UpdateStats) {
 
 		$LastLine{$yearmonth} = $timeconnexion;
 
+		# TODO. Add as a robot if URL is robots.txt
+		
 		if (&SkipHost($field[$pos_rc])) { next; }		# Skip with some client host IP addresses
 		if (&SkipFile($field[$pos_url])) { next; }		# Skip with some URLs
 		if (! &OnlyFile($field[$pos_url])) { next; }	# Skip with other URLs
@@ -2708,22 +2710,34 @@ if ($UpdateStats) {
 		}
 	
 		$field[$pos_agent] =~ tr/\+ /__/;		# Same Agent with different writing syntax have now same name
+		$field[$pos_agent] =~ s/%20/_/g;		# This is to support Roxen webserver that writes user agent with %20 in it
 		$UserAgent = $field[$pos_agent];
 		$UserAgent =~ tr/A-Z/a-z/;
 
-		# Robot ? If yes, we stop here 
+		# Robot ?
 		#-------------------------------------------------------------------------
-		if (!$TmpHashNotRobot{$UserAgent}) {	# TmpHashNotRobot is a temporary hash table to increase speed
+		if (!$TmpHashRobot{$UserAgent}) {	# TmpHashRobot is a temporary hash table to increase speed
 			# If made on each record -> -1300 rows/seconds
-			
-			# study $UserAgent
-
 			my $foundrobot=0;
-			foreach my $bot (@RobotArrayID) { if ($UserAgent =~ /$bot/) { $_robot_h{$bot}++; $_robot_l{$bot}=$timeconnexion; $foundrobot=1; last; } }
-			if ($foundrobot) { next; }
-			$TmpHashNotRobot{$UserAgent}=1;		# Last time, we won't search if robot or not. We know it's not.
+			# study $UserAgent
+			foreach my $bot (@RobotArrayID) {
+				if ($UserAgent =~ /$bot/) {
+					$foundrobot=1;
+					$TmpHashRobot{$UserAgent}="$bot";	# Last time, we won't search if robot or not. We know it's is.
+					last;
+				}
+			}
+			if (! $foundrobot) {						# Last time, we won't search if robot or not. We know it's not.	
+				$TmpHashRobot{$UserAgent}="-";
+			}
 		}
-
+		# If robot, we stop here 
+		if ($TmpHashRobot{$UserAgent} ne "-") {
+			debug("UserAgent $UserAgent contains robot ID '$TmpHashRobot{$UserAgent}'",2);
+			$_robot_h{$TmpHashRobot{$UserAgent}}++; $_robot_l{$TmpHashRobot{$UserAgent}}=$timeconnexion; 
+			next;
+		}
+		
 		# Canonize and clean target URL and referrer URL. Possible URL syntax for $field[$pos_url]:
 		# /mypage.ext?param=x#aaa
 		# /mypage.ext#aaa
