@@ -57,6 +57,7 @@ Other/Documentation:
 - asmx and aspx added in mime.pm file.
 - Microsoft URL Control added in robot list.
 - Debian icon added.
+- Added Hebrew and Galician language.
 
 
 5.9
