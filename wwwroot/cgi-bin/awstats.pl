@@ -5408,7 +5408,7 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 						}
 						else {
 							if ($ip == 4) {
-								my $lookupresult=gethostbyaddr(pack("C4",split(/\./,$Host)),AF_INET);	# This is very slow, may took 20 seconds
+								my $lookupresult=gethostbyaddr(pack("C4",split(/\./,$Host)),AF_INET);	# This is very slow, may spend 20 seconds
 								if (! $lookupresult || $lookupresult =~ /^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/ || ! IsAscii($lookupresult)) {
 									$TmpDNSLookup{$Host}=$HostResolved='*';
 								}
@@ -5418,8 +5418,18 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 								if ($Debug) { debug("  Reverse DNS lookup for $Host done: $HostResolved",4); }
 							}
 							elsif ($ip == 6) {
-								$TmpDNSLookup{$Host}=$HostResolved='*';
-								if ($Debug) { debug("  Reverse DNS lookup for $Host not available for IPv6",4); }
+								if ($PluginsLoaded{'GetResolveIP'}{'ipv6'}) {
+									my $lookupresult=GetResolvedIP_ipv6($Host);
+									if (! $lookupresult || ! IsAscii($lookupresult)) {
+										$TmpDNSLookup{$Host}=$HostResolved='*';
+									}
+									else {
+										$TmpDNSLookup{$Host}=$HostResolved=$lookupresult;
+									}
+								} else {
+									$TmpDNSLookup{$Host}=$HostResolved='*';
+									warning("Reverse DNS lookup for $Host not available without ipv6 plugin enabled.");
+								}
 							}
 							else { error("Bad value vor ip"); }
 						}
