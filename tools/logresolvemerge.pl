@@ -33,6 +33,11 @@ my $bzcat = 'bzcat';
 my $bzcat_file = '\.bz2$';
 
 # ---------- Init variables --------
+use vars qw/ $QUEUEPOOLSIZE $NBOFLINESFORBENCHMARK $USETHREADS /;
+$QUEUEPOOLSIZE=10;
+$NBOFLINESFORBENCHMARK=8192;
+$USETHREADS=0;
+
 my $Debug=0;
 my $ShowSteps=0;
 my $DIR;
@@ -42,8 +47,8 @@ my $DNSLookup=0;
 my $DirCgi="";
 my $DirData="";
 my $DNSLookupAlreadyDone=0;
-my $QueuePoolSize=10;
-my $NbOfLinesForBenchmark=5000;
+my $NbOfLinesShowsteps=0;
+
 # ---------- Init arrays --------
 my @SkipDNSLookupFor=();
 # ---------- Init hash arrays --------
@@ -51,15 +56,13 @@ my %ParamFile=();
 my %linerecord=();
 my %timerecord=();
 my %corrupted=();
-my %TmpHashDNSLookup=();
-my %QueueHosts=();
-my %QueueRecord=();
+my %TmpDNSLookup =();
+my %QueueHostsToResolve=();
+my %QueueRecords=();
 
-# These table is used to make fast reverse DNS lookup for particular IP adresses. You can add your own IP adresses resolutions.
-my %MyDNSTable = (
-"256.256.256.1", "myworkstation1",
-"256.256.256.2", "myworkstation2"
-);
+# These table is used to make fast reverse DNS lookup for particular IP adresses.
+# You can add your own IP adresses resolutions.
+my %MyDNSTable = ();
 
 
 
@@ -102,13 +105,13 @@ sub warning {
 # Return:       0 or 1
 #--------------------------------------------------------------------
 sub IsAscii {
-	my $string=shift||"";
-	debug("IsAscii($string)",4);
+	my $string=shift;
+	if ($Debug) { debug("IsAscii($string)",5); }
 	if ($string =~ /^[\w\+\-\/\\\.%,;:=\"\'&?!\s]+$/) {
-		debug(" Yes",4);
+		if ($Debug) { debug(" Yes",5); }
 		return 1;		# Only alphanum chars (and _) or + - / \ . % , ; : = " ' & ? space \t
 	}
-	debug(" No",4);
+	if ($Debug) { debug(" No",5); }
 	return 0;
 }
 
@@ -157,7 +160,7 @@ if (scalar keys %ParamFile == 0) {
 	print "Options:\n";
 	print "  -dnslookup    make a reverse DNS lookup on IP adresses (not done by default)\n";
 #	print "  -dnslookup:n  same with a n parallel threads instead of $QueuePoolSize by default\n";
-	print "  -showsteps    print on stderr benchmark information every $NbOfLinesForBenchmark lines\n";
+	print "  -showsteps    print on stderr benchmark information every $NBOFLINESFORBENCHMARK lines\n";
 	print "\n";
 	print "This runs $PROG in command line to open one or several web\n";
 	print "server log files to merge them (sorted on date) and/or to make a reverse\n";
@@ -205,6 +208,7 @@ if ($tomorrowsec < 10) { $tomorrowsec = "0$tomorrowsec"; }
 my $timetomorrow=$tomorrowyear.$tomorrowmonth.$tomorrowday.$tomorrowhour.$tomorrowmin.$tomorrowsec;	
 
 # Init other parameters
+$NBOFLINESFORBENCHMARK--;
 if ($ENV{"GATEWAY_INTERFACE"}) { $DirCgi=""; }
 if ($DirCgi && !($DirCgi =~ /\/$/) && !($DirCgi =~ /\\$/)) { $DirCgi .= "/"; }
 if (! $DirData || $DirData eq ".") { $DirData=$DIR; }	# If not defined or choosed to "." value then DirData is current dir
@@ -220,7 +224,7 @@ my %monthnum =  ( "Jan","01","jan","01","Feb","02","feb","02","Mar","03","mar","
 #------------------------------------------
 my %LogFileToDo=();
 my $NbOfLinesRead=0;
-my $NbOfNewLinesProcessed=0;
+my $NbOfLinesParsed=0;
 my $logfilechosen=0;
 my $starttime=time();
 
@@ -343,78 +347,106 @@ while (1 == 1)
 	&debug(" We choosed to qualify record of file number $logfilechosen",3);
 	&debug(" Record is $linerecord{$logfilechosen}",3);
 			
-	# Record is approved. We found a new line to process in file number $logfilechosen
-	#----------------------------------------------------------------------------------
-	$NbOfNewLinesProcessed++;
-	if ($ShowSteps && ($NbOfLinesRead % $NbOfLinesForBenchmark == 0)) {
-		my $delay=(time()-$starttime)||1;
-		print STDERR "$NbOfLinesRead lines processed (".(1000*$delay)." ms, ".int($NbOfLinesRead/$delay)." lines/seconds)\n";
+	# Record is approved. We found a new line to parse in file number $logfilechosen
+	#-------------------------------------------------------------------------------
+	$NbOfLinesParsed++;
+	if ($ShowSteps) {
+		if ((++$NbOfLinesShowsteps & $NBOFLINESFORBENCHMARK) == 0) {
+			my $delay=(time()-$starttime)||1;
+			print STDERR "$NbOfLinesParsed lines processed (".(1000*$delay)." ms, ".int($NbOfLinesShowsteps/$delay)." lines/seconds)\n";
+		}
 	}
 
 	# Analyze: IP-address
 	#--------------------
-	my $Host;
-	if ($DNSLookup) {
-		if ($linerecord{$logfilechosen} =~ /(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})/) {
-			$Host=$1;
-			if (! $TmpHashDNSLookup{$Host}) {		# if $Host has not been resolved yet
-				if ($MyDNSTable{$Host}) {
-					$TmpHashDNSLookup{$Host}=$MyDNSTable{$Host};
-					&debug(" No need of reverse DNS lookup for $Host, found resolution in local MyDNSTable: $MyDNSTable{$Host}",4);
-				}
-				else {
-					if (&SkipDNSLookup($Host)) {
-						$TmpHashDNSLookup{$Host}="ip";
-						&debug(" No need of reverse DNS lookup for $Host, skipped at user request.",4);
+	my $Host='';
+	my $HostResolved='';
+	my $ip=0;
+	if ($DNSLookup) {			# DNS lookup is 1 or 2
+		if ($linerecord{$logfilechosen} =~ /(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})/) { $ip=4; $Host=$1; }	# IPv4
+		elsif ($linerecord{$logfilechosen} =~ /([0-9A-F]*:)/i) { $ip=6; $Host=$1; }						# IPv6
+		if ($ip) {
+			# Check in static DNS cache file
+			$HostResolved=$MyDNSTable{$Host};
+			if ($HostResolved) {
+				if ($Debug) { debug("  DNS lookup asked for $Host and found in DNS cache file: $HostResolved",4); }
+			}
+			elsif ($DNSLookup==1) {
+				# Check in session cache (dynamic DNS cache file + session DNS cache)
+				$HostResolved=$TmpDNSLookup{$Host};
+				if (! $HostResolved) {
+					if (@SkipDNSLookupFor && &SkipDNSLookup($Host)) {
+						$HostResolved=$TmpDNSLookup{$Host}='*';
+						if ($Debug) { debug("  No need of reverse DNS lookup for $Host, skipped at user request.",4); }
 					}
 					else {
-						# Create a new thread						
-#						my $t = new Thread \&MakeDNSLookup, $Host;
-						my $lookupresult=gethostbyaddr(pack("C4",split(/\./,$Host)),AF_INET);	# This is very slow, may took 20 seconds
-
-#						&debug(" Reverse DNS lookup for $Host queued",4);
-						$TmpHashDNSLookup{$Host}=(IsAscii($lookupresult)?$lookupresult:"ip");
-						&debug(" Reverse DNS lookup for $Host done: $TmpHashDNSLookup{$Host}",4);
-
+						if ($ip == 4) {
+							# Create or not a new thread						
+							if (! $USETHREADS) {
+								my $lookupresult=gethostbyaddr(pack("C4",split(/\./,$Host)),AF_INET);	# This is very slow, may took 20 seconds
+								if (! $lookupresult || $lookupresult =~ /^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/ || ! IsAscii($lookupresult)) {
+									$TmpDNSLookup{$Host}=$HostResolved='*';
+								}
+								else {
+									$TmpDNSLookup{$Host}=$HostResolved=$lookupresult;
+								}
+								if ($Debug) { debug("  Reverse DNS lookup for $Host done: $HostResolved",4); }
+							} else {
+#								my $t = new Thread \&MakeDNSLookup, $Host;
+								if ($Debug) { &debug(" Reverse DNS lookup for $Host queued",4); }
+								# Here, this is the only way, $HostResolved and $TmpDNSLookup{$Host} is not defined
+							}				
+						}
+						elsif ($ip == 6) {
+							$TmpDNSLookup{$Host}=$HostResolved='*';
+							if ($Debug) { debug("  Reverse DNS lookup for $Host not available for IPv6",4); }
+						}
+						else { error("Bad value vor ip"); }
 					}
 				}
 			}
-	    }
+			else {
+				$HostResolved='*';
+				if ($Debug) { debug("  DNS lookup by file asked for $Host but not found in DNS cache file.",4); }
+			}
+		}
 		else {
-			$Host="NO_LOOKUP_REQUIRED";
-			&debug(" DNS lookup asked but no IP addresses found in record.",3);
+			if ($Debug) { debug("  DNS lookup asked for $Host but this is not an IP address.",4); }
 			$DNSLookupAlreadyDone=$LogFileToDo{$logfilechosen};
 		}
 	}
 	else {
-		$Host="NO_LOOKUP_REQUIRED";
-		&debug(" No DNS lookup asked.",3);
+		if ($Host =~ /^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/) { $HostResolved='*'; $ip=4; }	# IPv4
+		elsif ($Host =~ /^[0-9A-F]*:/i) { $HostResolved='*'; $ip=6; }						# IPv6
+		if ($Debug) { debug("  No DNS lookup asked.",4); }
 	}
 
 	# Put record in queue
-	debug("Add record $NbOfNewLinesProcessed in queue ($Host).",4);
-	$QueueRecord{$NbOfNewLinesProcessed}=$linerecord{$logfilechosen};
-	$QueueHosts{$NbOfNewLinesProcessed}=$Host;
+	debug("Add record $NbOfLinesParsed in queue (with host value ".($Host?$Host:'*').")",4);
+	$QueueRecords{$NbOfLinesParsed}=$linerecord{$logfilechosen};
+	# If there is a host to resolve, we add line to queue with value of HostResolved
+	$QueueHostsToResolve{$NbOfLinesParsed}=$Host?$Host:'*';
 
-	# Print all records in queue that are ready
-	debug("Check queue to write records ready to flush (QueueCursor=$QueueCursor, QueueSize=".(scalar keys %QueueRecord).")",4);
-	while ( $QueueHosts{$QueueCursor} && ( ($QueueHosts{$QueueCursor} eq "NO_LOOKUP_REQUIRED") || ($TmpHashDNSLookup{$QueueHosts{$QueueCursor}}) ) ) {
-		if ($QueueHosts{$QueueCursor} eq "NO_LOOKUP_REQUIRED") {
-			debug(" First elem in queue does not need reverse lookup. We pull it.",4);
+	# Print all records in head of queue that are ready
+	debug("Check head of queue to write records ready to flush (QueueCursor=$QueueCursor, QueueSize=".(scalar keys %QueueRecords).")",4);
+	while ( $QueueHostsToResolve{$QueueCursor} && ( ($QueueHostsToResolve{$QueueCursor} eq '*') || ($TmpDNSLookup{$QueueHostsToResolve{$QueueCursor}}) ) ) {
+		if ($QueueHostsToResolve{$QueueCursor} eq '*') {
+			debug(" First elem in queue has a lookup result ending with 'no result'. We pull it.",4);
 		}
 		else {
-			if ($TmpHashDNSLookup{$QueueHosts{$QueueCursor}} ne "ip") {
-				$QueueRecord{$QueueCursor}=~s/$QueueHosts{$QueueCursor}/$TmpHashDNSLookup{$QueueHosts{$QueueCursor}}/;
+			if ($TmpDNSLookup {$QueueHostsToResolve{$QueueCursor}} ne '*') {
+				$QueueRecords{$QueueCursor}=~s/$QueueHostsToResolve{$QueueCursor}/$TmpDNSLookup{$QueueHostsToResolve{$QueueCursor}}/;
 			}
-			debug(" First elem in queue has been resolved ($TmpHashDNSLookup{$QueueHosts{$QueueCursor}}). We pull it.",4);
+			debug(" First elem in queue has been resolved ($TmpDNSLookup{$QueueHostsToResolve{$QueueCursor}}). We pull it.",4);
 		}
-		print "$QueueRecord{$QueueCursor}\n";
-		delete $QueueRecord{$QueueCursor};
-		delete $QueueHosts{$QueueCursor};
+		# Record is ready, we output it.
+		print "$QueueRecords{$QueueCursor}\n";
+		delete $QueueRecords{$QueueCursor};
+		delete $QueueHostsToResolve{$QueueCursor};
 		$QueueCursor++;
 	}
 
-	# End of processing new record.
+	# End of processing new record. Loop on next one.
 }
 &debug("End of processing log file(s)");
 
