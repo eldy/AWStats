@@ -790,9 +790,6 @@ sub error {
 				print "111.22.33.44 - - [10/Jan/2001:02:14:14 +0200] \"GET / HTTP/1.1\" 200 1234\n";
 				print (scalar keys %HTMLOutput?"</i>$tagunfont${tagbr}${tagbr}\n":"");
 			}
-			if ($LogFormat == 5) {
-				print "${tagbold}\"ISA native log format\"${tagunbold}${tagbr}\n";
-			}
 			if ($LogFormat == 6) {
 				print "${tagbold}\"Lotus Notes/Lotus Domino\"${tagunbold}${tagbr}\n";
 				print (scalar keys %HTMLOutput?"$tagfontgrey<i>":"");
@@ -4876,16 +4873,19 @@ sub ShowURLInfo {
 
 #------------------------------------------------------------------------------
 # Function:     Define value for PerlParsingFormat (used for regex log record parsing)
-# Parameters:   -
-# Input:        $LogFormat
-# Output:       @fieldlib
+# Parameters:   $LogFormat
+# Input:        -
+# Output:       $pos_xxx, @pos_extra, @fieldlib, $PerlParsingFormat
 # Return:       -
 #------------------------------------------------------------------------------
 sub DefinePerlParsingFormat {
+    my $LogFormat=shift;
     $pos_vh = $pos_host = $pos_logname = $pos_date = $pos_tz = $pos_method = $pos_url = $pos_code = $pos_size = -1;
     $pos_referer = $pos_agent = $pos_query = $pos_gzipin = $pos_gzipout = $pos_compratio = -1;
     $pos_cluster = $pos_emails = $pos_emailr = $pos_hostr = -1;
     @pos_extra=();
+	@fieldlib=();
+    $PerlParsingFormat='';
 	# Log records examples:
 	# Apache combined: 62.161.78.73 user - [dd/mmm/yyyy:hh:mm:ss +0000] "GET / HTTP/1.1" 200 1234 "http://www.from.com/from.htm" "Mozilla/4.0 (compatible; MSIE 5.01; Windows NT 5.0)"
 	# Apache combined (408 error): my.domain.com - user [09/Jan/2001:11:38:51 -0600] "OPTIONS /mime-tmp/xxx file.doc HTTP/1.1" 408 - "-" "-"
@@ -4897,7 +4897,6 @@ sub DefinePerlParsingFormat {
 	# WebStar: 05/21/00	00:17:31	OK  	200	212.242.30.6	Mozilla/4.0 (compatible; MSIE 5.0; Windows 98; DigExt)	http://www.cover.dk/	"www.cover.dk"	:Documentation:graphics:starninelogo.white.gif	1133
 	# Squid extended: 12.229.91.170 - - [27/Jun/2002:03:30:50 -0700] "GET http://www.callistocms.com/images/printable.gif HTTP/1.1" 304 354 "-" "Mozilla/5.0 Galeon/1.0.3 (X11; Linux i686; U;) Gecko/0" TCP_REFRESH_HIT:DIRECT
 	if ($Debug) { debug("Call To DefinePerlParsingFormat (LogType='$LogType', LogFormat='$LogFormat')"); }
-	@fieldlib=();
 	if ($LogFormat =~ /^[1-6]$/) {	# Pre-defined log format
 		if ($LogFormat eq '1' || $LogFormat eq '6') {	# Same than "%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\"".
 			# %u (user) is "([^\\[]+)" instead of "[^ ]+" because can contain space (Lotus Notes). referer and ua might be "".
@@ -5956,8 +5955,8 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 	my $regsent=qr/sent/i;
 	my $regput=qr/put/i;
     
-	# Define value of $PerlParsingFormat and @fieldlib
-	&DefinePerlParsingFormat();
+	# Define value of $pos_xxx, @fieldlib, $PerlParsingFormat
+	&DefinePerlParsingFormat($LogFormat);
 
 	# Load DNS Cache Files
 	#------------------------------------------
@@ -6063,9 +6062,7 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
             my @fixField=map(/^#Fields: (.*)/, $line);
             if ($fixField[0] !~ /s-kernel-time/) {
                 debug("Found new log format: '". $fixField[0] ."'",1);
-                $PerlParsingFormat = '';
-                $LogFormat = $fixField[0];
-                &DefinePerlParsingFormat();
+                &DefinePerlParsingFormat($fixField[0]);
             }
         }
 
