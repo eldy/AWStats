@@ -37,6 +37,7 @@ Other/Documentation:
   supporting bugged and non standard MS products. Sorry but this takes me too
   many times. To use AWStats with an ISA server, just use now a preprocessor
   tool to convert into a W3C log file.
+- Added estonian and serban language.
 - Updated documentation.
 
 
