@@ -1,7 +1,7 @@
-# Ukrainian message file (v1.5 - 05.11.2001 - roman@elsyst.km.ua)
+# Ukrainian message file (v1.6 - 13.02.2002 - roman@elsyst.km.ua)
 PageCode=windows-1251
 message0=Невiдомий
-message1=Невiдомий (не вдалось перетворити IP)
+message1=Невiдомих (не вдалось перетворити IP)
 message2=Iншi
 message3=Детальнiше...
 message4=День
@@ -41,8 +41,8 @@ message37=Походження
 message38=Прямий доступ / Закладки
 message39=Джерело посилань не встановлено
 message40=Посилання з пошукових машин
-message41=Посилання з зовнiшньої сторiнки (iншого сайту за винятком пошукових машин)
-message42=Посилання з внутрiшньої сторiнки (iншої сторiнки на цьому ж сайтi)
+message41=Посилання з зовнiшнiх сторiнок (з iнших сайтiв за винятком пошукових машин)
+message42=Посилання з внутрiшнiх сторiнок (iнших сторiнок на цьому ж сайтi)
 message43=Ключовi слова, за якими здiйснювався пошук на пошуковiй машинi
 message44=кБ
 message45=IP-адреси, якi не вдалось перетворити в iмена
@@ -82,7 +82,7 @@ message78=dd mmm yyyy - HH:MM
 message79=Фiльтр
 message80=Весь список
 message81=Хости
-message82=Вiдомi
+message82=Вiдомих
 message83=Роботи
 message84=Нд
 message85=Пн
@@ -106,3 +106,5 @@ message102=Загалом
 message103=рiзних фраз
 message104=Точки входження
 message105=Код
+message106=Середнiй розмiр
+message107=Посилання з груп новин
