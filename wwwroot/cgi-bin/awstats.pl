@@ -24,10 +24,9 @@ my $VERSION="5.0 (build $REVISION)";
 # ---------- Init variables -------
 # Constants
 use vars qw/
-$DEBUGFORCED $SAVECOUNT $NBOFLINESFORBENCHMARK $FRAMEWIDTH $NBOFLASTUPDATELOOKUPTOSAVE
+$DEBUGFORCED $NBOFLINESFORBENCHMARK $FRAMEWIDTH $NBOFLASTUPDATELOOKUPTOSAVE
 /;
 $DEBUGFORCED=0;						# Force debug level to log lesser level into debug.log file (Keep this value to 0)
-$SAVECOUNT=0;						# Set to 1 to get number of records for each section in history file
 $NBOFLINESFORBENCHMARK=5000;		# Benchmark info are printing every NBOFLINESFORBENCHMARK lines
 $FRAMEWIDTH=260;					# Width of left frame when UseFramesWhenCGI is on
 $NBOFLASTUPDATELOOKUPTOSAVE=200;	# Nb of records to save in DNS last update cache file
@@ -1533,10 +1532,12 @@ sub Read_History_With_Update {
 				};
 				next;
 			}
-			if ($versionnum < 5000) {	# MonthVisits for < 5.0
-				if ($field[0] eq "TotalVisits")     { $MonthVisits{$year.$month}+=int($field[1]); next; }
+			if ($field[0] eq "TotalVisits")     { 
+				if ($versionnum < 4000) { $MonthVisits{$year.$month}+=int($field[1]); }		# MonthVisits for < 4.0
+				next;
 			}
-			if ($field[0] eq "END_GENERAL")		{
+			if ($field[0] eq "END_GENERAL"	# END_GENERAL didn't exists for < 5.0
+			 || ($versionnum < 5000 && $SectionsToLoad{"general"} && $FirstTime{$year.$month} && $LastTime{$year.$month}) )		{
 				if ($Debug) { debug(" End of GENERAL section"); }
 				delete $SectionsToLoad{"general"};
 				if ($SectionsToSave{"general"}) { Save_History("general",$year,$month); delete $SectionsToSave{"general"}; }
@@ -1623,7 +1624,7 @@ sub Read_History_With_Update {
 					if ($field[0]) {
 						$count++;
 						# We always read this to build the month graph (MonthVisits)
-						if ($versionnum >= 5000 && ($field[4]||0) > 0) { $MonthVisits{$year.$month}+=$field[4]; }	# MonthVisits for >= 5.0
+						if ($versionnum >= 4000 && ($field[4]||0) > 0) { $MonthVisits{$year.$month}+=$field[4]; }	# MonthVisits for >= 4.0
 						if ($SectionsToLoad{"day"}) {
 							$countloaded++;
 							if ($field[1]) { $DayPages{$field[0]}+=int($field[1]); }
@@ -1685,7 +1686,7 @@ sub Read_History_With_Update {
 								if ($Debug) { debug(" Visit in 'wait' arrays is following of last in history",3); }
 								if ($_waithost_s{$field[0]}) {
 									# First session found in log was followed by another one so it's finished
-									$_session{GetSessionRange(Minimum($timehosts,$newtimehosts),$timehostl>$newtimehostl?$timehostl:$newtimehostl)}++;
+									$_session{GetSessionRange(MinimumButNoZero($timehosts,$newtimehosts),$timehostl>$newtimehostl?$timehostl:$newtimehostl)}++;
 									# Here $_host_l $_host_s and $_host_u are correctly defined
 								}
 								else {
@@ -2103,7 +2104,7 @@ sub Read_History_With_Update {
 									}
 								}
 								# Posssibilite de mettre if ($URLFilter && $field[0] =~ /$URLFilter/) mais il faut gerer TotalPages de la meme maniere
-								if ($versionnum < 4000) {	# For old history files
+								if ($versionnum < 4000) {	# For history files < 4.0
 									$TotalEntries+=($field[2]||0);
 								}
 								else {
@@ -2114,7 +2115,7 @@ sub Read_History_With_Update {
 							}
 							if ($loadrecord) {
 								if ($field[1]) { $_url_p{$field[0]}+=$field[1]; }
-								if ($versionnum < 4000) {	# For old history files
+								if ($versionnum < 4000) {	# For history files < 4.0
 									if ($field[2]) { $_url_e{$field[0]}+=$field[2]; }
 									$_url_k{$field[0]}=0;
 								}
@@ -2408,26 +2409,18 @@ sub Read_History_With_Update {
 
 	if ($withupdate) {
 
-		# Process rest of data saved in 'wait' arrays (data for hosts not in history file or no history file found)
+		# Process rest of data saved in 'wait' arrays (data for hosts that are not in history file or no history file found)
 		if ($Debug) { debug(" Processing data in 'wait' arrays",3); }
 		foreach my $key (keys %_waithost_e) {
-	
-			$MonthUnique{$year.$month}++; 
-			$MonthVisits{$year.$month}++;
-
+			if ($Debug) { debug("  Visit in 'wait' arrays is a new visit",3); }
 			my $newtimehosts=($_waithost_s{$key}?$_waithost_s{$key}:$_host_s{$key});
 			my $newtimehostl=($_waithost_l{$key}?$_waithost_l{$key}:$_host_l{$key});
-	
-			if ($Debug) { debug("  Visit in 'wait' arrays is a new visit",3); }
 			$_url_e{$_waithost_e{$key}}++;
 			$newtimehosts =~ /^(\d\d\d\d\d\d\d\d)/; $DayVisits{$1}++;
 			if ($_waithost_s{$key}) {
 				# There was also a second session processed log
 				$_session{GetSessionRange($newtimehosts,$newtimehostl)}++;
 			}
-	
-			if ($key !~ /^\d+\.\d+\.\d+\.\d+$/) { $MonthHostsKnown{$year.$month}++; }
-			else { $MonthHostsUnknown{$year.$month}++; }
 		}
 
 	}
@@ -2473,21 +2466,20 @@ sub Save_History {
 		print HISTORYTMP "# FirstTime   = Date of first visit for history file\n";
 		print HISTORYTMP "# LastTime    = Date of last visit for history file\n";
 		print HISTORYTMP "# LastUpdate  = Date of last update - Nb of lines read - Nb of old records - Nb of new records - Nb of corrupted - Nb of dropped\n";
-		print HISTORYTMP "BEGIN_GENERAL\n";
+		print HISTORYTMP "BEGIN_GENERAL 4\n";
 		print HISTORYTMP "LastLine $LastLine\n";
 		print HISTORYTMP "FirstTime $FirstTime{$year.$month}\n";
 		print HISTORYTMP "LastTime $LastTime{$year.$month}\n";
 		if ($LastUpdate < int("$nowyear$nowmonth$nowday$nowhour$nowmin$nowsec")) { $LastUpdate=int("$nowyear$nowmonth$nowday$nowhour$nowmin$nowsec"); }
 		print HISTORYTMP "LastUpdate $LastUpdate $NbOfLinesRead $NbOfOldLines $NbOfNewLines $NbOfLinesCorrupted $NbOfLinesDropped\n";
 		print HISTORYTMP "END_GENERAL\n";
-		if ($SAVECOUNT) { print HISTORYTMP "4\n"; }
 	}
 	
 	# When
 	if ($sectiontosave eq "day") {
 		print HISTORYTMP "\n";
 		print HISTORYTMP "# Date - Pages - Hits - Bandwith - Visits\n";
-		print HISTORYTMP "BEGIN_DAY\n";
+		print HISTORYTMP "BEGIN_DAY ".(scalar keys %DayHits)."\n";
 		foreach my $key (sort keys %DayHits) {
 			if ($key =~ /^$year$month/i) {	# Found a day entry of the good month
 				my $page=$DayPages{$key}||0;
@@ -2498,36 +2490,33 @@ sub Save_History {
 			}
 		}
 		print HISTORYTMP "END_DAY\n";
-		if ($SAVECOUNT) { print HISTORYTMP (scalar keys %DayHits)."\n"; }
 	}
 	if ($sectiontosave eq "time") {
 		print HISTORYTMP "\n";
 		print HISTORYTMP "# Hour - Pages - Hits - Bandwith\n";
-		print HISTORYTMP "BEGIN_TIME\n";
+		print HISTORYTMP "BEGIN_TIME 24\n";
 		for (my $ix=0; $ix<=23; $ix++) { print HISTORYTMP "$ix ".int($_time_p[$ix])." ".int($_time_h[$ix])." ".int($_time_k[$ix])."\n"; }
 		print HISTORYTMP "END_TIME\n";
-		if ($SAVECOUNT) { print HISTORYTMP "24\n"; }
 	}
 	
 	# Who
 	if ($sectiontosave eq "domain") {
 		print HISTORYTMP "\n";
 		print HISTORYTMP "# Domain - Pages - Hits - Bandwith\n";
-		print HISTORYTMP "BEGIN_DOMAIN\n";
+		print HISTORYTMP "BEGIN_DOMAIN ".(scalar keys %_domener_h)."\n";
 		foreach my $key (keys %_domener_h) {
 			my $page=$_domener_p{$key}||0;
 			my $bytes=$_domener_k{$key}||0;		# ||0 could be commented to reduce history file size
 			print HISTORYTMP "$key $page $_domener_h{$key} $bytes\n";
 		}
 		print HISTORYTMP "END_DOMAIN\n";
-		if ($SAVECOUNT) { print HISTORYTMP (scalar keys %_domener_h)."\n"; }
 	}
 	if ($sectiontosave eq "visitor") {
 		print HISTORYTMP "\n";
 		print HISTORYTMP "# Host - Pages - Hits - Bandwith - Last visit date - [Start of last visit date] - [Last page of last visit]\n";
 		print HISTORYTMP "# [Start of last visit date] and [Last page of last visit] are saved only if session is not finished\n";
 		print HISTORYTMP "# The $MaxNbOfHostsShown first Hits must be first (order not required for others)\n";
-		print HISTORYTMP "BEGIN_VISITOR\n";
+		print HISTORYTMP "BEGIN_VISITOR ".(scalar keys %_host_h)."\n";
 		&BuildKeyList($MaxNbOfHostsShown,$MinHitHost,\%_host_h,\%_host_p);
 		my %keysinkeylist=();
 		foreach my $key (@keylist) {
@@ -2583,31 +2572,27 @@ sub Save_History {
 			}
 		}
 		print HISTORYTMP "END_VISITOR\n";
-		if ($SAVECOUNT) { print HISTORYTMP (scalar keys %_host_h)."\n"; }
 	}
 	if ($sectiontosave eq "session") {
 		print HISTORYTMP "\n";
 		print HISTORYTMP "# Session range - Number of visits\n";
-		print HISTORYTMP "BEGIN_SESSION\n";
+		print HISTORYTMP "BEGIN_SESSION ".(scalar keys %_session)."\n";
 		foreach my $key (keys %_session) { print HISTORYTMP "$key ".int($_session{$key})."\n"; }
 		print HISTORYTMP "END_SESSION\n";
-		if ($SAVECOUNT) { print HISTORYTMP (scalar keys %_session)."\n"; }
 	}
 	if ($sectiontosave eq "login") {
 		print HISTORYTMP "\n";
 		print HISTORYTMP "# Login - Pages - Hits - Bandwith\n";
-		print HISTORYTMP "BEGIN_LOGIN\n";
+		print HISTORYTMP "BEGIN_LOGIN ".(scalar keys %_login_h)."\n";
 		foreach my $key (keys %_login_h) { print HISTORYTMP "$key ".int($_login_p{$key})." ".int($_login_h{$key})." ".int($_login_k{$key})." $_login_l{$key}\n"; }
 		print HISTORYTMP "END_LOGIN\n";
-		if ($SAVECOUNT) { print HISTORYTMP (scalar keys %_login_h)."\n"; }
 	}
 	if ($sectiontosave eq "robot") {
 		print HISTORYTMP "\n";
 		print HISTORYTMP "# Robot ID - Hits - Last visit\n";
-		print HISTORYTMP "BEGIN_ROBOT\n";
+		print HISTORYTMP "BEGIN_ROBOT ".(scalar keys %_robot_h)."\n";
 		foreach my $key (keys %_robot_h) { print HISTORYTMP "$key ".int($_robot_h{$key})." $_robot_l{$key}\n"; }
 		print HISTORYTMP "END_ROBOT\n";
-		if ($SAVECOUNT) { print HISTORYTMP (scalar keys %_robot_h)."\n"; }
 	}
 	
 	# Navigation
@@ -2617,7 +2602,7 @@ sub Save_History {
 		print HISTORYTMP "\n";
 		print HISTORYTMP "# URL - Pages - Bandwith - Entry - Exit\n";
 		print HISTORYTMP "# The $MaxNbOfPageShown first Pages must be first (order not required for others)\n";
-		print HISTORYTMP "BEGIN_SIDER\n";
+		print HISTORYTMP "BEGIN_SIDER ".(scalar keys %_url_p)."\n";
 		&BuildKeyList($MaxNbOfPageShown,$MinHitFile,\%_url_p,\%_url_p);
 		%keysinkeylist=();
 		foreach my $key (@keylist) {
@@ -2633,12 +2618,11 @@ sub Save_History {
 			print HISTORYTMP "$newkey ".int($_url_p{$key}||0)." ".int($_url_k{$key}||0)." ".int($_url_e{$key}||0)." ".int($_url_x{$key}||0)."\n";
 		}
 		print HISTORYTMP "END_SIDER\n";
-		if ($SAVECOUNT) { print HISTORYTMP (scalar keys %_url_p)."\n"; }
 	}
 	if ($sectiontosave eq "filetypes") {
 		print HISTORYTMP "\n";
 		print HISTORYTMP "# Files type - Hits - Bandwith - Bandwith without compression - Bandwith after compression\n";
-		print HISTORYTMP "BEGIN_FILETYPES\n";
+		print HISTORYTMP "BEGIN_FILETYPES ".(scalar keys %_filetypes_h)."\n";
 		foreach my $key (keys %_filetypes_h) {
 			my $hits=$_filetypes_h{$key}||0;
 			my $bytes=$_filetypes_k{$key}||0;
@@ -2647,68 +2631,61 @@ sub Save_History {
 			print HISTORYTMP "$key $hits $bytes $bytesbefore $bytesafter\n";
 		}
 		print HISTORYTMP "END_FILETYPES\n";
-		if ($SAVECOUNT) { print HISTORYTMP (scalar keys %_filetypes_h)."\n"; }
 	}
 	if ($sectiontosave eq "browser") {
 		print HISTORYTMP "\n";
 		print HISTORYTMP "# Browser ID - Hits\n";
-		print HISTORYTMP "BEGIN_BROWSER\n";
+		print HISTORYTMP "BEGIN_BROWSER ".(scalar keys %_browser_h)."\n";
 		foreach my $key (keys %_browser_h) { print HISTORYTMP "$key $_browser_h{$key}\n"; }
 		print HISTORYTMP "END_BROWSER\n";
-		if ($SAVECOUNT) { print HISTORYTMP (scalar keys %_browser_h)."\n"; }
 	}
 	if ($sectiontosave eq "nsver") {
 		print HISTORYTMP "\n";
 		print HISTORYTMP "# IE Version - Hits\n";
-		print HISTORYTMP "BEGIN_NSVER\n";
+		print HISTORYTMP "BEGIN_NSVER ".($#_nsver_h)."\n";
 		for (my $i=1; $i<=$#_nsver_h; $i++) {
 			my $nb_h=$_nsver_h[$i]||"";
 			print HISTORYTMP "$i $nb_h\n";
 		}
 		print HISTORYTMP "END_NSVER\n";
-		if ($SAVECOUNT) { print HISTORYTMP ($#_nsver_h)."\n"; }
 	}
 	if ($sectiontosave eq "msiever") {
 		print HISTORYTMP "\n";
 		print HISTORYTMP "# Netscape Version - Hits\n";
-		print HISTORYTMP "BEGIN_MSIEVER\n";
+		print HISTORYTMP "BEGIN_MSIEVER ".($#_msiever_h)."\n";
 		for (my $i=1; $i<=$#_msiever_h; $i++) {
 			my $nb_h=$_msiever_h[$i]||"";
 			print HISTORYTMP "$i $nb_h\n";
 		}
 		print HISTORYTMP "END_MSIEVER\n";
-		if ($SAVECOUNT) { print HISTORYTMP ($#_msiever_h)."\n"; }
 	}
 	if ($sectiontosave eq "os") {
 		print HISTORYTMP "\n";
 		print HISTORYTMP "# OS ID - Hits\n";
-		print HISTORYTMP "BEGIN_OS\n";
+		print HISTORYTMP "BEGIN_OS ".(scalar keys %_os_h)."\n";
 		foreach my $key (keys %_os_h) { print HISTORYTMP "$key $_os_h{$key}\n"; }
 		print HISTORYTMP "END_OS\n";
-		if ($SAVECOUNT) { print HISTORYTMP (scalar keys %_os_h)."\n"; }
 	}
 	
 	# Referer
 	if ($sectiontosave eq "unknownreferer") {
 		print HISTORYTMP "\n";
 		print HISTORYTMP "# Unknown referer OS - Last visit date\n";
-		print HISTORYTMP "BEGIN_UNKNOWNREFERER\n";
+		print HISTORYTMP "BEGIN_UNKNOWNREFERER ".(scalar keys %_unknownreferer_l)."\n";
 		foreach my $key (keys %_unknownreferer_l) { print HISTORYTMP "$key $_unknownreferer_l{$key}\n"; }
 		print HISTORYTMP "END_UNKNOWNREFERER\n";
-		if ($SAVECOUNT) { print HISTORYTMP (scalar keys %_unknownreferer_l)."\n"; }
 	}
 	if ($sectiontosave eq "unknownrefererbrowser") {
 		print HISTORYTMP "\n";
 		print HISTORYTMP "# Unknown referer Browser - Last visit date\n";
-		print HISTORYTMP "BEGIN_UNKNOWNREFERERBROWSER\n";
+		print HISTORYTMP "BEGIN_UNKNOWNREFERERBROWSER ".(scalar keys %_unknownrefererbrowser_l)."\n";
 		foreach my $key (keys %_unknownrefererbrowser_l) { print HISTORYTMP "$key $_unknownrefererbrowser_l{$key}\n"; }
 		print HISTORYTMP "END_UNKNOWNREFERERBROWSER\n";
-		if ($SAVECOUNT) { print HISTORYTMP (scalar keys %_unknownrefererbrowser_l)."\n"; }
 	}
 	if ($sectiontosave eq "origin") {
 		print HISTORYTMP "\n";
 		print HISTORYTMP "# Origin - Pages - Hits \n";
-		print HISTORYTMP "BEGIN_ORIGIN\n";
+		print HISTORYTMP "BEGIN_ORIGIN 6\n";
 		print HISTORYTMP "From0 ".int($_from_p[0])." ".int($_from_h[0])."\n";
 		print HISTORYTMP "From1 ".int($_from_p[1])." ".int($_from_h[1])."\n";
 		print HISTORYTMP "From2 ".int($_from_p[2])." ".int($_from_h[2])."\n";
@@ -2716,20 +2693,18 @@ sub Save_History {
 		print HISTORYTMP "From4 ".int($_from_p[4])." ".int($_from_h[4])."\n";		# Same site
 		print HISTORYTMP "From5 ".int($_from_p[5])." ".int($_from_h[5])."\n";		# News
 		print HISTORYTMP "END_ORIGIN\n";
-		if ($SAVECOUNT) { print HISTORYTMP "6\n"; }
 	}
 	if ($sectiontosave eq "sereferrals") {
 		print HISTORYTMP "\n";
 		print HISTORYTMP "# Search engine referers ID - Hits\n";
-		print HISTORYTMP "BEGIN_SEREFERRALS\n";
+		print HISTORYTMP "BEGIN_SEREFERRALS ".(scalar keys %_se_referrals_h)."\n";
 		foreach my $key (keys %_se_referrals_h) { print HISTORYTMP "$key $_se_referrals_h{$key}\n"; }
 		print HISTORYTMP "END_SEREFERRALS\n";
-		if ($SAVECOUNT) { print HISTORYTMP (scalar keys %_se_referrals_h)."\n"; }
 	}
 	if ($sectiontosave eq "pagerefs") {
 		print HISTORYTMP "\n";
 		print HISTORYTMP "# External page referers - Hits\n";
-		print HISTORYTMP "BEGIN_PAGEREFS\n";
+		print HISTORYTMP "BEGIN_PAGEREFS ".(scalar keys %_pagesrefs_h)."\n";
 		foreach my $key (keys %_pagesrefs_h) {
 			my $newkey=$key;
 			$newkey =~ s/^http(s|):\/\/([^\/]+)\/$/http$1:\/\/$2/i;	# Remove / at end of http://.../ but not at end of http://.../dir/
@@ -2737,13 +2712,12 @@ sub Save_History {
 			print HISTORYTMP "$newkey $_pagesrefs_h{$key}\n";
 		}
 		print HISTORYTMP "END_PAGEREFS\n";
-		if ($SAVECOUNT) { print HISTORYTMP (scalar keys %_pagesrefs_h)."\n"; }
 	}
 	if ($sectiontosave eq "searchwords") {
 		print HISTORYTMP "\n";
 		print HISTORYTMP "# Search keyphrases - Number of search\n";
 		print HISTORYTMP "# The $MaxNbOfKeyphrasesShown first number of search must be first (order not required for others)\n";
-		print HISTORYTMP "BEGIN_SEARCHWORDS\n";
+		print HISTORYTMP "BEGIN_SEARCHWORDS ".(scalar keys %_keyphrases)."\n";
 		&BuildKeyList($MaxNbOfKeywordsShown,$MinHitKeyword,\%_keyphrases,\%_keyphrases);
 		%keysinkeylist=();
 		# We also build _keywords
@@ -2761,13 +2735,12 @@ sub Save_History {
 			foreach my $word (split(/\+/,$key)) { $_keywords{$word}+=$_keyphrases{$key}; }	# To init %_keywords
 		}
 		print HISTORYTMP "END_SEARCHWORDS\n";
-		if ($SAVECOUNT) { print HISTORYTMP (scalar keys %_keyphrases)."\n"; }
 	}
 	if ($sectiontosave eq "keywords") {
 		print HISTORYTMP "\n";
 		print HISTORYTMP "# Search keywords - Number of search\n";
 		print HISTORYTMP "# The $MaxNbOfKeywordsShown first number of search must be first (order not required for others)\n";
-		print HISTORYTMP "BEGIN_KEYWORDS\n";
+		print HISTORYTMP "BEGIN_KEYWORDS ".(scalar keys %_keywords)."\n";
 		&BuildKeyList($MaxNbOfKeywordsShown,$MinHitKeyword,\%_keywords,\%_keywords);
 		%keysinkeylist=();
 		foreach my $key (@keylist) {
@@ -2781,22 +2754,20 @@ sub Save_History {
 			print HISTORYTMP "$keyword $_keywords{$key}\n";
 		}
 		print HISTORYTMP "END_KEYWORDS\n";
-		if ($SAVECOUNT) { print HISTORYTMP (scalar keys %_keywords)."\n"; }
 	}
 	
 	# Other
 	if ($sectiontosave eq "errors") {
 		print HISTORYTMP "\n";
 		print HISTORYTMP "# Errors - Hits\n";
-		print HISTORYTMP "BEGIN_ERRORS\n";
+		print HISTORYTMP "BEGIN_ERRORS ".(scalar keys %_errors_h)."\n";
 		foreach my $key (keys %_errors_h) { print HISTORYTMP "$key $_errors_h{$key}\n"; }
 		print HISTORYTMP "END_ERRORS\n";
-		if ($SAVECOUNT) { print HISTORYTMP (scalar keys %_errors_h)."\n"; }
 	}
 	if ($sectiontosave eq "sider_404") {
 		print HISTORYTMP "\n";
 		print HISTORYTMP "# URL with 404 errors - Hits - Last URL referer\n";
-		print HISTORYTMP "BEGIN_SIDER_404\n";
+		print HISTORYTMP "BEGIN_SIDER_404 ".(scalar keys %_sider404_h)."\n";
 		foreach my $key (keys %_sider404_h) {
 			my $newkey=$key;
 			my $newreferer=$_referer404_h{$key}||"";
@@ -2804,7 +2775,6 @@ sub Save_History {
 			print HISTORYTMP "$newkey ".int($_sider404_h{$key})." $newreferer\n";
 		}
 		print HISTORYTMP "END_SIDER_404\n";
-		if ($SAVECOUNT) { print HISTORYTMP (scalar keys %_sider404_h)."\n"; }
 	}
 	
 	%keysinkeylist=();
@@ -3222,7 +3192,7 @@ sub Removelowerval {
 # Output:       None
 # Return:       min(Val1,Val2)
 #--------------------------------------------------------------------
-sub Minimum {
+sub MinimumButNoZero {
 	my ($val1,$val2)=@_;
 	return ($val1&&($val1<$val2||!$val2)?$val1:$val2);
 }
@@ -3633,7 +3603,9 @@ if ($Debug) {
 for (my $ix=1; $ix<=12; $ix++) {
 	my $monthix=sprintf("%02s",$ix);
 	$FirstTime{$YearRequired.$monthix}=0;$LastTime{$YearRequired.$monthix}=0;
-	$MonthVisits{$YearRequired.$monthix}=0;$MonthUnique{$YearRequired.$monthix}=0;$MonthPages{$YearRequired.$monthix}=0;$MonthHits{$YearRequired.$monthix}=0;$MonthBytes{$YearRequired.$monthix}=0;$MonthHostsKnown{$YearRequired.$monthix}=0;$MonthHostsUnknown{$YearRequired.$monthix}=0;
+	$MonthVisits{$YearRequired.$monthix}=0;$MonthUnique{$YearRequired.$monthix}=0;
+	$MonthPages{$YearRequired.$monthix}=0;$MonthHits{$YearRequired.$monthix}=0;$MonthBytes{$YearRequired.$monthix}=0;
+	$MonthHostsKnown{$YearRequired.$monthix}=0;$MonthHostsUnknown{$YearRequired.$monthix}=0;
 }
 
 
@@ -4554,7 +4526,7 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {	# Updat
 		}
 
 
-		# Every 100000 we test to clean too large hash arrays to free memory when possible
+		# Every 100,000 approved lines we test to clean too large hash arrays to free memory when possible
 		if ($counter++ > 100000) {
 			$counter=0;
 			if ($Debug) { debug("We clean some hash arrays",2); }
@@ -4755,7 +4727,9 @@ EOF
 		for (my $ix=1; $ix<=12; $ix++) {
 			my $monthix=sprintf("%02s",$ix);
 			$FirstTime{$YearRequired.$monthix}=0;$LastTime{$YearRequired.$monthix}=0;
-			$MonthVisits{$YearRequired.$monthix}=0;$MonthUnique{$YearRequired.$monthix}=0;$MonthPages{$YearRequired.$monthix}=0;$MonthHits{$YearRequired.$monthix}=0;$MonthBytes{$YearRequired.$monthix}=0;$MonthHostsKnown{$YearRequired.$monthix}=0;$MonthHostsUnknown{$YearRequired.$monthix}=0;
+			$MonthVisits{$YearRequired.$monthix}=0;$MonthUnique{$YearRequired.$monthix}=0;
+			$MonthPages{$YearRequired.$monthix}=0;$MonthHits{$YearRequired.$monthix}=0;$MonthBytes{$YearRequired.$monthix}=0;
+			$MonthHostsKnown{$YearRequired.$monthix}=0;$MonthHostsUnknown{$YearRequired.$monthix}=0;
 		}
 		for (my $ix=12; $ix>=1; $ix--) {
 			my $monthix=sprintf("%02s",$ix);
@@ -5760,19 +5734,9 @@ EOF
 		$rest_h=$TotalHits-$total_h;
 		$rest_k=$TotalBytes-$total_k;
 		if ($rest_p > 0 || $rest_h > 0 || $rest_k > 0) { 	# All other domains (known or not)
-			my $bredde_p=0;my $bredde_h=0;my $bredde_k=0;
-			if ($max_h > 0) { $bredde_p=int($BarWidth*$rest_p/$max_h)+1; }	# use max_h to enable to compare pages with hits
-			if ($rest_p && $bredde_p==1) { $bredde_p=2; }
-			if ($max_h > 0) { $bredde_h=int($BarWidth*$rest_h/$max_h)+1; }
-			if ($rest_h && $bredde_h==1) { $bredde_h=2; }
-			if ($max_k > 0) { $bredde_k=int($BarWidth*$rest_k/$max_k)+1; }
-			if ($rest_k && $bredde_k==1) { $bredde_k=2; }
 			print "<TR><TD colspan=3 CLASS=AWL><font color=blue>$Message[2]</font></TD><TD>$rest_p</TD><TD>$rest_h</TD><TD>".Format_Bytes($rest_k)."</TD>\n";
-			print "<TD CLASS=AWL>";
-			print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_p\" WIDTH=$bredde_p HEIGHT=6 ALT=\"$Message[56]: ".int($rest_p)."\" title=\"$Message[56]: ".int($rest_p)."\"><br>\n";
-			print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_h\" WIDTH=$bredde_h HEIGHT=6 ALT=\"$Message[57]: ".int($rest_h)."\" title=\"$Message[57]: ".int($rest_h)."\"><br>\n";
-			print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_k\" WIDTH=$bredde_k HEIGHT=6 ALT=\"$Message[75]: ".Format_Bytes($rest_k)."\" title=\"$Message[75]: ".Format_Bytes($rest_k)."\">";
-			print "</TD></TR>\n";
+			print "<TD CLASS=AWL>&nbsp;</TD>";
+			print "</TR>\n";
 		}
 		&tab_end;
 	}
