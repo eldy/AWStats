@@ -517,7 +517,7 @@ sub html_head {
 		if ($BuildReportFormat eq 'xml') { print ($ENV{'HTTP_USER_AGENT'}=~/MSIE|Googlebot/i?"<meta http-equiv=\"content-type\" content=\"text/html; charset=".($PageCode?$PageCode:"iso-8859-1")."\" />\n":"<meta http-equiv=\"content-type\" content=\"text/xml; charset=".($PageCode?$PageCode:"iso-8859-1")."\" />\n"); }
 		else { print "<meta http-equiv=\"content-type\" content=\"text/html; charset=".($PageCode?$PageCode:"iso-8859-1")."\" />\n"; }
 
-		if ($Expires)  { print "<meta http-equiv=\"expires\" content=\"".(gmtime(time()+$Expires))."\" />\n"; }
+		if ($Expires)  { print "<meta http-equiv=\"expires\" content=\"".(gmtime($starttime+$Expires))."\" />\n"; }
 		print "<meta http-equiv=\"description\" content=\"".ucfirst($PROG)." - Advanced Web Statistics for $SiteDomain\" />\n";
 		if ($AllowIndex && $FrameName ne 'mainleft') { print "<meta http-equiv=\"keywords\" content=\"$SiteDomain, free, advanced, realtime, web, server, logfile, log, analyzer, analysis, statistics, stats, perl, analyse, performance, hits, visits\" />\n"; }
 		print "<title>$Message[7] $SiteDomain</title>\n";
@@ -4929,7 +4929,7 @@ sub ShowEmailReceiversChart {
 #------------------------------------------------------------------------------
 ($DIR=$0) =~ s/([^\/\\]*)$//; ($PROG=$1) =~ s/\.([^\.]*)$//; $Extension=$1;
 
-$starttime=time;
+$starttime=time();
 
 # Get current time (time when AWStats was started)
 ($nowsec,$nowmin,$nowhour,$nowday,$nowmonth,$nowyear,$nowwday,$nowyday) = localtime($starttime);
@@ -4978,11 +4978,14 @@ $QueryString='';
 if ($ENV{'AWSTATS_DEL_GATEWAY_INTERFACE'}) { $ENV{'GATEWAY_INTERFACE'}=''; }
 if ($ENV{'GATEWAY_INTERFACE'}) {	# Run from a browser as CGI
 	if ($BuildReportFormat eq 'xml') { print ($ENV{'HTTP_USER_AGENT'}=~/MSIE|Googlebot/i?"Content-type: text/html\n":"Content-type: text/xml\n"); }
-	else { print "content-type: text/html\n"; }
-    
+	else { print "Content-type: text/html\n"; }
+
 	# Expires must be GMT ANSI asctime and must be after Content-type to avoid pb with some servers (SAMBAR)
-	#my $ExpireDelayInHTTPHeader=0;
-	#print "Expires: ".(gmtime($starttime()+$ExpireDelayInHTTPHeader))."\n";
+	if ($Expires) {
+	    print "Cache-Control: public\n";
+	    print "Last-Modified: ".gmtime($starttime)."\n";
+	    print "Expires: ".(gmtime($starttime+$Expires))."\n";
+	}
 	print "\n";
 
 	# Prepare QueryString
