@@ -59,6 +59,7 @@ I - 1) Features
 	* Unlimited log file size, support split log files (load balancing system),
 	* Support 'nearly sorted' log files even for entry and exit pages,
 	* Reverse DNS lookup before or during analysis, support DNS cache files,
+	* Country detection from IP localization (geoip) or domain name.
 	* WhoIS Links,
 	* A lot of options/filters and plugins can be used,
 	* Multi-named web sites supported (virtual servers),
