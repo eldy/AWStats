@@ -26,6 +26,7 @@
 "win(.*)16","windows[_+ ]3",					# This works for windows_31 and windows_3.1
 "win(.*)ce",
 # Macintosh OS family
+"mac os x",
 "mac[_+ ]?p",									# This works for macppc and mac_ppc and mac_powerpc
 "mac[_+ ]68",									# This works for mac_6800 and mac_68k
 "macweb",
@@ -73,6 +74,7 @@
 "win(.*)16","win16","windows[_+ ]3","win16",
 "win(.*)ce","wince",
 # Macintosh OS family
+"mac os x","macosx",
 "mac[_+ ]?p","macintosh","mac[_+ ]68","macintosh","macweb","macintosh","macintosh","macintosh",
 # Unix like OS
 "linux","linux",
@@ -115,6 +117,7 @@
 "win16","Windows 3.xx",
 "wince","Windows CE",
 # Macintosh OS
+"macosx","Mac OS X",
 "macintosh","Mac OS",
 # Unix like OS
 "linux","Linux",
