@@ -33,9 +33,9 @@
 </Company_Info>
 <Program_Info>
         <Program_Name>AWStats</Program_Name>
-        <Program_Version>4.0</Program_Version>
-        <Program_Release_Month>04</Program_Release_Month>
-        <Program_Release_Day>13</Program_Release_Day>
+        <Program_Version>4.1</Program_Version>
+        <Program_Release_Month>06</Program_Release_Month>
+        <Program_Release_Day>07</Program_Release_Day>
         <Program_Release_Year>2002</Program_Release_Year>
         <Program_Cost_Dollars>0</Program_Cost_Dollars>
         <Program_Cost_Other_Code />
@@ -50,9 +50,9 @@
         <Filename_Previous>awstats.zip</Filename_Previous>
         <Filename_Generic>awstats.zip</Filename_Generic>
         <Filename_Long>awstats.zip</Filename_Long>
-        <File_Size_Bytes>617672</File_Size_Bytes>
-        <File_Size_K>603</File_Size_K>
-        <File_Size_MB>0.60</File_Size_MB>
+        <File_Size_Bytes>650411</File_Size_Bytes>
+        <File_Size_K>635</File_Size_K>
+        <File_Size_MB>0.64</File_Size_MB>
     </File_Info>
 <Expire_Info>
         <Has_Expire_Info>N</Has_Expire_Info>
@@ -76,15 +76,13 @@
         <Keywords>awstats, awstat, log, file, analyzer, analysis, web, logfile, free, advanced, real-time, tool, perl, cgi, software, statistics, stats, analyze, apache, IIS, reports, counter, graphical, analyse, statistiques, freeware, gnu, gpl, project, linux, beos</Keywords>
         <Char_Desc_45>AWStats - Free log file analyzer (GNU GPL)</Char_Desc_45>
         <Char_Desc_80>AWStats - Free web server log file analyzer for advanced web statistics (GPL)</Char_Desc_80>
-        <Char_Desc_250>Advanced Web Statistics (AWStats) is a free powerfull web server logfile analyzer (CGI Perl script) that shows you all your Web statistics including visitors, pages, hits, hours, search engines, keywords used to find you, robots, broken links...</Char_Desc_250>
-        <Char_Desc_450>AWStats is a tool that analyzes your web server log files (IIS 5.0+, Apache or other web/proxy/wap server) to show you in HTML pages advanced web statistics including visitors, pages, hits, hours, search engines, keywords used to find your site, broken links, robots visits and more.
-You can run awstats from command line or from your browser as a CGI.
-Distributed under GNU General Public License.
-Supports multiple languages.</Char_Desc_450>
-        <Char_Desc_2000>AWStats is a tool that analyzes your web server log files (IIS 5.0+, Apache or other web/proxy/wap server) to show you in HTML pages advanced web statistics including visitors, pages, hits, hours, search engines, keywords used to find your site, broken links, robots visits and more.
-You can run awstats from command line or from your browser as a CGI.
-Distributed under GNU General Public License.
-Supports multiple languages (English, French, Dutch, Spanish, Italian, German, Greek, Portuguese, Czech, ...).</Char_Desc_2000>
+        <Char_Desc_250>Advanced Web Statistics (AWStats) is a free powerful web server logfile analyzer that shows you all your Web statistics including visits, unique visitors, pages, hits, rush hours, os, browser's versions, search engines, keywords, robots, errors...</Char_Desc_250>
+        <Char_Desc_450>Advanced Web Statistics (AWStats) is a free powerful and featureful web server logfile analyzer (Perl script) that shows you all your Web statistics including visits, unique visitors, pages, hits, rush hours, os, browser's versions, search engines, keywords, robots visits, broken links and more...
+Works with all major web servers (IIS 5.0+, Apache, ...) as a CGI and/or from command line.
+Distributed under GNU General Public License.</Char_Desc_450>
+        <Char_Desc_2000>Advanced Web Statistics (AWStats) is a free powerful and featureful web server logfile analyzer (Perl script) that shows you all your Web statistics including visits, unique visitors, pages, hits, rush hours, os, browser's versions, search engines, keywords, robots visits, broken links and more...
+Works with all major web servers (IIS 5.0+, Apache, ...) as a CGI and/or from command line.
+Distributed under GNU General Public License.</Char_Desc_2000>
 </English>
 <French>
         <Keywords>awstats, awstat, log, file, analyzer, analysis, web, logfile, free, advanced, real-time, tool, perl, cgi, software, statistics, stats, analyze, apache, IIS, reports, counter, graphical, analyse, statistiques, freeware, gnu, gpl, project, linux, beos</Keywords>
@@ -116,6 +114,15 @@ Fonctionne avec les log de IIS 5.0+ et Apache. Gratuit (GNU General Public Licen
         <Distribution_Permissions>GNU GPL</Distribution_Permissions>
         <EULA>GNU GPL</EULA>
 </Permissions>
+<ASP>
+    <ASP_FORM>Y</ASP_FORM>
+    <ASP_Member>N</ASP_Member>
+    <ASP_Member_Number />
+</ASP>
+<MSN>
+    <MSN_FORM>Y</MSN_FORM>
+    <MSN_IS_32bit>Y</MSN_IS_32bit>
+</MSN>
 <Simtel>
     <Simtel_Email>eldy@users.sourceforge.net</Simtel_Email>
     <Simtel_FORM>Y</Simtel_FORM>
