@@ -21,6 +21,8 @@ Fixes:
 - Replaced Kb/visits to Kb/mails for mail log analysis.
 - Remove some warnings that appears when running perl -W 
 - Other minor bugs (814970,823064,823323,831438,836315 ).
+- Fixed bug in counting hits for miscellanous and clusters chart when
+  a temporary flush was done on disk during a long update.
 
 New features/improvements:
 - Increased speed by 10 to 20%.
