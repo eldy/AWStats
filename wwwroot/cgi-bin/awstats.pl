@@ -21,7 +21,7 @@ use vars qw(%DomainsHashIDLib @RobotsSearchIDOrder_list1 @RobotsSearchIDOrder_li
 #-------------------------------------------------------
 # Defines
 #-------------------------------------------------------
-my $VERSION="4.0 (build 60)";
+my $VERSION="4.0 (build 61)";
 
 # ---------- Init variables -------
 my $Debug=0;
@@ -2301,6 +2301,7 @@ if ((! $ENV{"GATEWAY_INTERFACE"}) && (! $SiteConfig)) {
 	print "  -update        to update statistics (default)\n";
 	print "  -showsteps     to add benchmark information every $NbOfLinesForBenchmark lines processed\n";
 	print "  -showcorrupted to add output for each corrupted lines found, with reason\n";
+	print "  -showdropped   to add output for each dropped lines found, with reason\n";
 	print "  -logfile=x     to force log to analyze whatever is 'LogFile' in config file\n";
 	print "  Be care to process log files in chronological order when updating statistics.\n";
 	print "\n";

@@ -40,7 +40,7 @@ statistics of user yyy (having a site www.yyy.com).<br>
 This is example of possible way of working:<br>
 <br><br>
 
-<u>1) VERY HIGHLY SECURED</u><br>
+<br><a name="1"><H2 style="font: 22px Times; color: #606060"><u>1) VERY HIGHLY SECURED POLICY</u></H2></a><br>
 <font color=blue><b>Policy</b></font>:<br>
 You have several different config/domains owned by different users and you want to build statistics for each
 of them. You don't need that your customer have "real-time" statistics.<br>
@@ -61,7 +61,7 @@ If AWStats database files for config/domain1 are read protected, only allowed us
 If AWStats database files for config/domain1 are write protected, only allowed users can update statistics for config/domain1.<br>
 <br><br>
 
-<u>2) HIGHLY SECURED</u><br>
+<br><a name="2"><H2 style="font: 22px Times; color: #606060"><u>2) HIGHLY SECURED POLICY</u></H2></a><br>
 <font color=blue><b>Policy</b></font>:<br>
 You have several different domains owned by different users and you want each owner of a domain
 to be able to see only his/her domain and to be able to update his/her statistics dynamically.<br>
@@ -87,18 +87,19 @@ for each domain to say which config file to use for a particular domain.<br>
 </i>
 When using AWStats as a CGI with the following URL '<i>http://mydomain.com/cgi-bin-awstats/awstats.pl</i>', AWStats
 will use the config file called <i>awstats.myconfigvalueformydomain.conf</i> to choose which statistics used,
-even if a visitor try to force the config file with the URL '<i>http://mydomain.com/cgi-bin-awstats/awstats.pl?config=xxx</i>'.<br>
+even if a visitor try to force the config/domain file with the URL '<i>http://mydomain.com/cgi-bin-awstats/awstats.pl?config=xxx</i>'.<br>
 <br><br>
 
-<u>3) MEDIUM SECURED</u><br>
+<br><a name="3"><H2 style="font: 22px Times; color: #606060"><u>3) MEDIUM SECURED POLICY</u></H2></a><br>
 <font color=blue><b>Policy</b></font>:<br>
 You have several config/domain and several users. You want to specify which user can see or update dynamically
 statistics for each config/domain.<br>
+This is one of the most popular way of working.<br>
 <font color=blue><b>Advantage</b></font>:<br>
 Statistics are dynamic. High level of manageability.<br>
 <font color=blue><b>Disadvantage</b></font>:<br>
-AWStats database files must be readable by anonymous web server user, so if an experimented user can have an access to
-the server where AWStats database files are stored, he can succeed in installing and running a "hacked" version
+AWStats database files must still be readable by anonymous web server user, so if an experimented user can have an access to
+the server (telnet) where AWStats database files are stored, he can succeed in installing and running a "hacked" version
 of AWStats that ignores value of parameter AllowAccessFromWebToAuthenticatedUsersOnly.<br>
 <font color=blue><b>How</b></font>:<br>
 awstats.pl file must be saved in a web protected <b>realm</b> to force a visitor to enter its username/password
@@ -116,11 +117,10 @@ Then edit each config/domain file you want to be protected to set <b>AllowAccess
 You can also edit list of authorized users in the <b>AllowAccessFromWebToFollowingAuthenticatedUsers</b> parameter.<br>
 <br><br>
 
-<u>4) LOW SECURED</u><br>
+<br><a name="4"><H2 style="font: 22px Times; color: #606060"><u>4) NO SECURITY POLICY</u></H2></a><br>
 <font color=blue><b>Policy</b></font>:<br>
 You have only one hosts or several hosts or users but you don't need to manage particular permissions
 for your different config/domain statistics.<br>
-This is the most popular way of working as this requires no particular setup.<br>
 <font color=blue><b>Advantage</b></font>:<br>
 Setup is very easy (No need of particular setup). Statistics are dynamic.<br>
 <font color=blue><b>Disadvantage</b></font>:<br>
