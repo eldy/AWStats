@@ -83,6 +83,7 @@ FAQ-SET280 <a href="#NOTSAMENUMBER">Error "Not same number of records of...".</a
 FAQ-SET300 <a href="#COULDNOTOPEN">Error "Couldn't open file ..."</a><br>
 FAQ-SET320 <a href="#MALFORMEDUTF8">Error "Malformed UTF-8 character (unexpected..."</a><br>
 FAQ-SET350 <a href="#EMPTY_STATS">Empty or null statistics reported.</a><br>
+FAQ-SET360 <a href="#PARTIAL_STATS">Statistics reported except for os, browsers, robots and keywords/keyphrases.</a><br>
 FAQ-SET400 <a href="#REDIRECT">Pipe redirection to a file give me an empty file.</a><br>
 FAQ-SET450 <a href="#NO_ICON">No pictures/graphics shown.</a><br>
 FAQ-SET700 <a href="#MIGRATEDOUBLED">My visits are doubled for old month I migrated from 3.2 to 5.x</a><br>
@@ -1293,7 +1294,6 @@ This problem appeared with RedHat 8 and Perl 5.8.<br>
 I don't know if RedHat provides a fix for this, but some users had reported that you can
 remove thoose warmless messages by changing your LANG environment variable, removing
 the ".UTF-8" at the end. For example, set <i>LANG="en_US"</i> instead of <i>LANG="en_US.UTF8"</i><br>
-
 <br>
 
 <a name="EMPTY_STATS"></a><br>
@@ -1329,6 +1329,24 @@ Use an URL like http://myserver/cgi-bin/awstats.pl?config=xxx&year=YYYY&month=MM
 used for the update process. Scan your disk for files that match <i>awstats.*conf</i> and remove
 all files that are not the config file(s) you need (awstats.conf files, if found, can be deleted.
 It is better to use a config file called awstats.mydomain.conf).<br>
+<br>
+
+<a name="PARTIAL_STATS"></a><br>
+<b><u>FAQ-SET360 : STATISTICS REPORTED EXCEPT FOR OS, BROWSERS, ROBOTS AND KEYWORDS/KEYPHRASES</u></b><br>
+<font class=CProblem>PROBLEM:</font><br>
+AWStats seems to report my statistics however some charts, like robots, os', browsers, search engines,
+or keywords/keyphrases are empty.<br>
+<font class=CSolution>SOLUTION:</font><br>
+If only robots, search engines or keywords/keyphrases are empty, this simply means your web site was not
+yet visited by any robots and noone found your site using a search engines (this happens particularly
+for Intranet which are not referenced on search engines).
+If all of them are empty or with only unknown values, even after several updates, this probably means
+that your logfile does not contains all informations, this happens with Apache when using the
+standard <i>"common"</i> log format instead of the standard <i>"combined"</i> log format.<br>
+You may also use LogFormat=4 into your AWStats config files instead of 1.<br>
+Read AWStats setup documentation to known how to setup your Apache Web server to report logs in
+a "combined" log format then set <a href="awstats_config.html#LogFormat">LogFormat</a>=1 into your
+AWStats config file.<br>
 <br>
 
 <a name="REDIRECT"></a><br>
