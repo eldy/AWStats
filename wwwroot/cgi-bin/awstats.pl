@@ -71,7 +71,7 @@ $found, $internal_link, $new) = ();
 %MonthBytes = %MonthHits = %MonthHostsKnown = %MonthHostsUnknown = %MonthPages = %MonthUnique = %MonthVisits =
 %monthlib = %monthnum = ();
 
-$VERSION="3.1 (build 39)";
+$VERSION="3.1 (build 40)";
 $Lang="en";
 
 # Default value
@@ -2010,6 +2010,14 @@ if ($UpdateStats) {
 				$i++;
 				$PerlParsingFormat .= "\\\"([^\\s]*) ([^\\s]*) [^\\\"]*\\\" ";
 			}
+			if ($f =~ /%methodurlnoprot$/) {
+				$found=1; 
+				$pos_method = $i;
+				$i++;
+				$pos_url = $i;
+				$i++;
+				$PerlParsingFormat .= "\\\"([^\\s]*) ([^\\s]*)\\\" ";
+			}
 			if ($f =~ /%method$/ || $f =~ /cs-method$/) {
 				$found=1; 
 				$pos_method = $i;
@@ -2064,10 +2072,6 @@ if ($UpdateStats) {
 	if ($pos_url eq "") { error("Error: Your personalised LogFormat does not include all fields required by AWStats (Add \%methodurl or \%url in your LogFormat string)."); }
 	if ($pos_code eq "") { error("Error: Your personalised LogFormat does not include all fields required by AWStats (Add \%code in your LogFormat string)."); }
 	if ($pos_size eq "") { error("Error: Your personalised LogFormat does not include all fields required by AWStats (Add \%bytesd in your LogFormat string)."); }
-	if ($LogFormat != 4) {	# If not common format, referer and agent are required
-		if ($pos_referer eq "") { error("Error: Your personalised LogFormat does not include all fields required by AWStats (Add \%referer or \%refererquot in your LogFormat string)."); }
-		if ($pos_agent eq "") { error("Error: Your personalised LogFormat does not include all fields required by AWStats (Add \%ua or \%uaquot in your LogFormat string)."); }
-	}
 	&debug("PerlParsingFormat is $PerlParsingFormat");
 
 
