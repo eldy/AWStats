@@ -82,7 +82,7 @@ $WarningMessages= 1;
 %MonthBytes = %MonthHits = %MonthHostsKnown = %MonthHostsUnknown = %MonthPages = %MonthUnique = %MonthVisits =
 %monthlib = %monthnum = ();
 
-$VERSION="3.2 (build 34)";
+$VERSION="3.2 (build 36)";
 $Lang="en";
 
 # Default value
@@ -1530,7 +1530,7 @@ if ($QueryString =~ /day=/i)	{ $DayRequired=$QueryString; $DayRequired =~ s/.*da
 &html_head;
 
 if ($DNSLookup) {
-#	eval 'use Socket';
+#	eval { use Sockets; }; 
 #	if ($@){
 #		error("Error: The perl 'Socket' module is not installed. Install it from CPAN or use a more 'standard' perl interpreter.\n");
 #	}
@@ -2984,7 +2984,7 @@ EOF
 		$total_p=$total_h=$total_k=0;
 		$count=0;
 		foreach my $key (sort { $SortDir*$_hostmachine_p{$a} <=> $SortDir*$_hostmachine_p{$b} } keys (%_hostmachine_p)) {
-			if ($count>=$MaxNbOfPageShown) { last; }
+			if ($count>=MaxNbOfHostsShown) { last; }
 			if ($_hostmachine_h{$key}<$MinHitHost) { last; }
 			if ($key eq "Unknown") {
 				print "<TR><TD CLASS=AWL><a href=\"$DirCgi$PROG.$Extension?${LinkParamB}output=unknownip\">$Message[1]</a></TD><TD>$_hostmachine_p{$key}</TD><TD>$_hostmachine_h{$key}</TD><TD>".Format_Bytes($_hostmachine_k{$key})."</TD><TD><a href=\"$DirCgi$PROG.$Extension?${LinkParamB}output=unknownip\">$Message[3]</a></TD></TR>\n";
