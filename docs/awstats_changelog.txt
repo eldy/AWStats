@@ -14,6 +14,7 @@ Fixes:
 - Better parsing of parameters (Solved bug 635962).
 - Users did not appear in Authenticated users list if hits on pages were 0.
 - Value of title "Top x" for domains chart was not always correct.
+- Fixed bug 620040 that prevented to use "#" char in HTMLHeadSection.
 
 New features/improvments:
 - Added urlaliasbuilder.pl tool.

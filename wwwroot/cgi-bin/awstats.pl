@@ -1051,8 +1051,7 @@ sub Parse_Config {
 
 		# Remove comments
 		if ($_ =~ /^#/) { next; }
-		$_ =~ s/^([^\"]*)#.*/$1/;
-		$_ =~ s/^([^\"]*\"[^\"]*\"[^\"]*)#.*/$1/;
+		$_ =~ s/\s#.*$/$1/;
 		# Extract param and value
 		#if ($Debug) { debug("$_",2); }
 		my @felter=split(/=/,$_,2);
