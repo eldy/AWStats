@@ -1065,6 +1065,10 @@ sub Parse_Config {
 			    # Correct relative include files
 				if ($FileConfig =~ /^(.*[\\\/])[^\\\/]*$/) { $includeFile = "$1$includeFile"; }
 			}
+			if ($level > 1) {
+				warning("Warning: Perl versions before 5.6 cannot handle nested includes");
+				next;
+			}
 		    if ( open( CONFIG_INCLUDE, $includeFile ) ) {
 				&Parse_Config( *CONFIG_INCLUDE , $level+1, $includeFile);
 				close( CONFIG_INCLUDE );
@@ -1302,11 +1306,11 @@ sub Read_Language_Data {
 				$i++;
 			}
 		}
+		close(LANG);
 	}
 	else {
 		warning("Warning: Can't find language files for \"$_[0]\". English will be used.");
 	}
-	close(LANG);
 }
 
 
@@ -6809,7 +6813,7 @@ if (scalar keys %HTMLOutput) {
 		foreach my $key (@keylist) {
 			my $host=CleanFromCSSA($key);
 			print "<tr><td CLASS=AWS>".($_robot_l{$key}?'<b>':'')."$host".($_robot_l{$key}?'</b>':'')."</td>";
-			ShowHostInfo($key);
+			&ShowHostInfo($key);
 			if ($ShowHostsStats =~ /P/i) { print "<TD>".($_host_p{$key}?$_host_p{$key}:"&nbsp;")."</TD>"; }
 			if ($ShowHostsStats =~ /H/i) { print "<TD>$_host_h{$key}</TD>"; }
 			if ($ShowHostsStats =~ /B/i) { print "<TD>".Format_Bytes($_host_k{$key})."</TD>"; }
@@ -6825,7 +6829,7 @@ if (scalar keys %HTMLOutput) {
 		$rest_k=$TotalBytes-$total_k;
 		if ($rest_p > 0 || $rest_h > 0 || $rest_k > 0) {	# All other visitors (known or not)
 			print "<TR><TD CLASS=AWS><font color=\"#$color_other\">$Message[2]</font></TD>";
-			ShowHostInfo('');
+			&ShowHostInfo('');
 			if ($ShowHostsStats =~ /P/i) { print "<TD>".($rest_p?$rest_p:"&nbsp;")."</TD>"; }
 			if ($ShowHostsStats =~ /H/i) { print "<TD>$rest_h</TD>"; }
 			if ($ShowHostsStats =~ /B/i) { print "<TD>".Format_Bytes($rest_k)."</TD>"; }
@@ -6851,7 +6855,7 @@ if (scalar keys %HTMLOutput) {
 		foreach my $key (@keylist) {
 			my $host=CleanFromCSSA($key);
 			print "<tr><td CLASS=AWS>$host</td>";
-			ShowHostInfo($key);
+			&ShowHostInfo($key);
 			if ($ShowHostsStats =~ /P/i) { print "<TD>".($_host_p{$key}?$_host_p{$key}:"&nbsp;")."</TD>"; }
 			if ($ShowHostsStats =~ /H/i) { print "<TD>$_host_h{$key}</TD>"; }
 			if ($ShowHostsStats =~ /B/i) { print "<TD>".Format_Bytes($_host_k{$key})."</TD>"; }
@@ -6868,7 +6872,7 @@ if (scalar keys %HTMLOutput) {
 		$rest_k=$TotalBytes-$total_k;
 		if ($rest_p > 0 || $rest_h > 0 || $rest_k > 0) {	# All other visitors (known or not)
 			print "<TR><TD CLASS=AWS><font color=\"#$color_other\">$Message[82]</font></TD>";
-			ShowHostInfo('');
+			&ShowHostInfo('');
 			if ($ShowHostsStats =~ /P/i) { print "<TD>".($rest_p?$rest_p:"&nbsp;")."</TD>"; }
 			if ($ShowHostsStats =~ /H/i) { print "<TD>$rest_h</TD>"; }
 			if ($ShowHostsStats =~ /B/i) { print "<TD>".Format_Bytes($rest_k)."</TD>"; }
@@ -6981,7 +6985,7 @@ if (scalar keys %HTMLOutput) {
 		if ($HTMLOutput{'lastlogins'}) { $title.="$Message[9]"; }
 		&tab_head("$title",19);
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[94] : ".(scalar keys %_login_h)."</TH>";
-		ShowUserInfo('');
+		&ShowUserInfo('');
 		if ($ShowAuthenticatedUsers =~ /P/i) { print "<TH bgcolor=\"#$color_p\" width=80>$Message[56]</TH>"; }
 		if ($ShowAuthenticatedUsers =~ /H/i) { print "<TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH>"; }
 		if ($ShowAuthenticatedUsers =~ /B/i) { print "<TH bgcolor=\"#$color_k\" width=80>$Message[75]</TH>"; }
@@ -6993,7 +6997,7 @@ if (scalar keys %HTMLOutput) {
 		if ($HTMLOutput{'lastlogins'}) { &BuildKeyList($MaxRowsInHTMLOutput,$MinHit{'Host'},\%_login_h,\%_login_l); }
 		foreach my $key (@keylist) {
 			print "<TR><TD CLASS=AWS>$key</TD>";
-			ShowUserInfo($key);
+			&ShowUserInfo($key);
 			if ($ShowAuthenticatedUsers =~ /P/i) { print "<TD>".($_login_p{$key}?$_login_p{$key}:"&nbsp;")."</TD>"; }
 			if ($ShowAuthenticatedUsers =~ /H/i) { print "<TD>$_login_h{$key}</TD>"; }
 			if ($ShowAuthenticatedUsers =~ /B/i) { print "<TD>".Format_Bytes($_login_k{$key})."</TD>"; }
@@ -7010,7 +7014,7 @@ if (scalar keys %HTMLOutput) {
 		$rest_k=$TotalBytes-$total_k;
 		if ($rest_p > 0 || $rest_h > 0 || $rest_k > 0) {	# All other logins and/or anonymous
 			print "<TR><TD CLASS=AWS><font color=\"#$color_other\">$Message[125]</font></TD>";
-			ShowUserInfo('');
+			&ShowUserInfo('');
 			if ($ShowAuthenticatedUsers =~ /P/i) { print "<TD>".($rest_p?$rest_p:"&nbsp;")."</TD>"; }
 			if ($ShowAuthenticatedUsers =~ /H/i) { print "<TD>$rest_h</TD>"; }
 			if ($ShowAuthenticatedUsers =~ /B/i) { print "<TD>".Format_Bytes($rest_k)."</TD>"; }
@@ -8143,7 +8147,6 @@ if (scalar keys %HTMLOutput) {
 			my $title="$Message[81] ($Message[77] $MaxNbOf{'HostsShown'}) &nbsp; - &nbsp; <a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=allhosts":"$PROG$StaticLinks.allhosts.$StaticExt")."\"$NewLinkTarget>$Message[80]</a> &nbsp; - &nbsp; <a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=lasthosts":"$PROG$StaticLinks.lasthosts.$StaticExt")."\"$NewLinkTarget>$Message[9]</a> &nbsp; - &nbsp; <a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=unknownip":"$PROG$StaticLinks.unknownip.$StaticExt")."\"$NewLinkTarget>$Message[45]</a>";
 			&tab_head("$title",19);
 			print "<TR bgcolor=\"#$color_TableBGRowTitle\">";
-	#		print "<TH".($PluginsLoaded{'GetCountryCodeByAddr'}{'geoip'}?" colspan=2":"").">";
 			print "<TH>";
 			if ($MonthRequired ne 'all') { print "$Message[81] : $TotalHostsKnown $Message[82], $TotalHostsUnknown $Message[1] - $TotalUnique $Message[11]</TH>"; }
 			else { print "$Message[81] : ".(scalar keys %_host_h)."</TH>"; }
@@ -8159,7 +8162,7 @@ if (scalar keys %HTMLOutput) {
 			foreach my $key (@keylist) {
 				print "<TR>";
 				print "<TD CLASS=AWS>$key</TD>";
-				ShowHostInfo($key);
+				&ShowHostInfo($key);
 				if ($ShowHostsStats =~ /P/i) { print "<TD>".($_host_p{$key}||"&nbsp")."</TD>"; }
 				if ($ShowHostsStats =~ /H/i) { print "<TD>$_host_h{$key}</TD>"; }
 				if ($ShowHostsStats =~ /B/i) { print "<TD>".Format_Bytes($_host_k{$key})."</TD>"; }
@@ -8291,7 +8294,7 @@ if (scalar keys %HTMLOutput) {
 			if ($ShowAuthenticatedUsers =~ /L/i) { $title.=" &nbsp; - &nbsp; <a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=lastlogins":"$PROG$StaticLinks.lastlogins.$StaticExt")."\"$NewLinkTarget>$Message[9]</a>"; }
 			&tab_head("$title",19);
 			print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[94] : ".(scalar keys %_login_h)."</TH>";
-			ShowUserInfo('');
+			&ShowUserInfo('');
 			if ($ShowAuthenticatedUsers =~ /P/i) { print "<TH bgcolor=\"#$color_p\" width=80>$Message[56]</TH>"; }
 			if ($ShowAuthenticatedUsers =~ /H/i) { print "<TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH>"; }
 			if ($ShowAuthenticatedUsers =~ /B/i) { print "<TH bgcolor=\"#$color_k\" width=80>$Message[75]</TH>"; }
@@ -8308,7 +8311,7 @@ if (scalar keys %HTMLOutput) {
 				if ($max_h > 0) { $bredde_h=int($BarWidth*$_login_h{$key}/$max_h)+1; }
 				if ($max_k > 0) { $bredde_k=int($BarWidth*$_login_k{$key}/$max_k)+1; }
 				print "<TR><TD CLASS=AWS>$key</TD>";
-				ShowUserInfo($key);
+				&ShowUserInfo($key);
 				if ($ShowAuthenticatedUsers =~ /P/i) { print "<TD>".($_login_p{$key}?$_login_p{$key}:"&nbsp;")."</TD>"; }
 				if ($ShowAuthenticatedUsers =~ /H/i) { print "<TD>$_login_h{$key}</TD>"; }
 				if ($ShowAuthenticatedUsers =~ /B/i) { print "<TD>".Format_Bytes($_login_k{$key})."</TD>"; }
@@ -8329,7 +8332,7 @@ if (scalar keys %HTMLOutput) {
 			$rest_k=$TotalBytes-$total_k;
 			if ($rest_p > 0 || $rest_h > 0 || $rest_k > 0) {	# All other logins
 				print "<TR><TD CLASS=AWS><font color=\"#$color_other\">$Message[125]</font></TD>";
-				ShowUserInfo('');
+				&ShowUserInfo('');
 				if ($ShowAuthenticatedUsers =~ /P/i) { print "<TD>".($rest_p?$rest_p:"&nbsp;")."</TD>"; }
 				if ($ShowAuthenticatedUsers =~ /H/i) { print "<TD>$rest_h</TD>"; }
 				if ($ShowAuthenticatedUsers =~ /B/i) { print "<TD>".Format_Bytes($rest_k)."</TD>"; }
