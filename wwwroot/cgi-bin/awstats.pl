@@ -1427,7 +1427,8 @@ sub Read_Language_Data {
 			if ($_ =~ /$cregcode/o) { $PageCode = $1; }
 			if ($_ =~ /$cregdir/o)  { $PageDir = $1; }
 			if ($_ =~ s/$cregmessage//o) {
-				$_ =~ s/#.*//;								# Remove comments
+				$_ =~ s/^#.*//;								# Remove comments
+				$_ =~ s/\s+#.*//;							# Remove comments
 				$_ =~ tr/\t /  /s;							# Change all blanks into " "
 				$_ =~ s/^\s+//; $_ =~ s/\s+$//;
 				$_ =~ s/^\"//; $_ =~ s/\"$//;
