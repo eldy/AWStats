@@ -268,7 +268,7 @@ it with its value when reading it), follow the example:<br>
 <a name="DirCgi"><b>DirCgi</b></a><br>
 <b>Version : </b>1.0 +<br>
 <br># Relative or absolute web URL of your awstats.pl directory.
-<br># This parameter is used only when AWStats is runned from command line
+<br># This parameter is used only when AWStats is ran from command line
 <br># with -output option (to generate links in HTML reported page).
 <br># Default: "/cgi-bin"   (means awstats.pl is in "/mywwwroot/cgi-bin")
 <br>#
@@ -320,19 +320,45 @@ it with its value when reading it), follow the example:<br>
 <b>Version : </b>3.0 +<br>
 <br># When this parameter is set to 1, AWStats add a button on report page to
 <br># allow to "update" statistics from a web browser. Warning, when "update" is
-<br># made from a browser, AWStats is runned as a CGI by the web server user
+<br># made from a browser, AWStats is ran as a CGI by the web server user
 <br># defined in your web server (user "nobody" by default with Apache, "IUSR_XXX"
 <br># with IIS), so the "DirData" directory and all already existing history files
 <br># (awstatsMMYYYY[.xxx].txt) must be writable by this user. Change permissions
 <br># if required.
 <br># Warning: Update process can be long so you might experience "time out"
 <br># browser errors if you don't launch AWStats enough frequently.
-<br># When set to 0, update is only made when AWStats is runned from the command
+<br># When set to 0, update is only made when AWStats is ran from the command
 <br># line interface (or a task scheduler).
 <br># Possible values: 1 or 0
 <br># Default: 0
 <br>#
 <br>AllowToUpdateStatsFromBrowser=0
+
+<br><br><hr>
+
+<a name="AllowAccessFromWebToAuthenticatedUsersOnly"><b>AllowAccessFromWebToAuthenticatedUsersOnly</b></a><br>
+<b>Version : </b>4.0 +<br>
+<br># The following two parameters allow you to protect a config file to be used
+<br># by your AWStats program called from a browser only if web user has been
+<br># authenticated. Your AWStats program must be in a web protected "realm" (With
+<br># Apache, you can use .htaccess files to do so. With other web servers, see
+<br># your server setup manual).
+<br># Possible values: 1 or 0
+<br># Default: 0
+<br>#
+<br>AllowAccessFromWebToAuthenticatedUsersOnly=0
+
+<br><br><hr>
+
+<a name="AllowAccessFromWebToFollowingAuthenticatedUsers"><b>AllowAccessFromWebToFollowingAuthenticatedUsers</b></a><br>
+<b>Version : </b>4.0 +<br>
+<br># This parameter gives the list of all authorized authenticated users to view
+<br># statistics for this domain/config file. This parameter is used only if
+<br># AllowAccessToAuthenticatedUsersOnly is set to 1.
+<br># Example: "user1 user2"
+<br># Default: ""
+<br>#
+<br>AllowAccessFromWebToFollowingAuthenticatedUsers=""
 
 <br><br><hr>
 
@@ -351,12 +377,14 @@ it with its value when reading it), follow the example:<br>
 
 <a name="SaveDatabaseFilesWithPermissionsForEveryone"><b>SaveDatabaseFilesWithPermissionsForEveryone</b></a><br>
 <b>Version : </b>4.0 +<br>
-<br># In most case, AWStats is used as a cgi program. So AWStats process is runned
+<br># In most case, AWStats is used as a cgi program. So AWStats process is ran
 <br># by default web server user (nobody for Unix, IUSR_xxx for IIS/Windows,...).
-<br># To avoid permission problems between update process often runned by an admin
-<br># user (root for Unix, Administrator for Windows,...), AWStats save its
-<br># database files by default with read and write for everyone. You can set this
-<br># parameter to 0, if you want AWStats to keep user process default permission.
+<br># To make use easier and avoid permission problems between update process 
+<br># (run by an admin user) and CGI process (ran by a low level user), AWStats
+<br># save its database files with read and write for everyone.
+<br># If you have experience on managing security policies (Web Hosting Provider),
+<br># you should set this parameter to 0. AWStats will keep default process user
+<br># permissions on its files.
 <br># Possible values: 1 or 0
 <br># Default: 1
 <br>#
@@ -373,7 +401,7 @@ it with its value when reading it), follow the example:<br>
 <br># you can launch AWStats as soon as you want, even with this parameter to 0.
 <br># With 0, no purge is made, so you must use a scheduled task or a web server
 <br># that make this purge frequently.
-<br># With 1, the purge of the log file is made each time AWStats is runned.
+<br># With 1, the purge of the log file is made each time AWStats is ran.
 <br># This parameter doesn't work with IIS (This web server doesn't let its log
 <br># file to be purged).
 <br># Possible values: 1 or 0
