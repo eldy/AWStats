@@ -671,18 +671,20 @@ when reading it), follow the example:<br>
 
 <a name="SaveDatabaseFilesWithPermissionsForEveryone"><b>SaveDatabaseFilesWithPermissionsForEveryone</b></a><br>
 <b>Version : </b>4.0+<br>
-<br># In most case, AWStats is used as a cgi program. So AWStats process is ran
-<br># by default web server user (nobody for Unix, IUSR_xxx for IIS/Windows,...).
-<br># To make use easier and avoid permission problems between update process 
-<br># (run by an admin user) and CGI process (ran by a low level user), AWStats
-<br># save its database files with read and write for everyone.
-<br># If you have experience on managing security policies (Web Hosting Provider),
-<br># you should set this parameter to 0. AWStats will keep default process user
-<br># permissions on its files.
+<br># AWStats databases can be updated from command line of from a browser (when
+<br># used as a cgi program). So AWStats database files need write permission
+<br># for both command line user and default web server user (nobody for Unix,
+<br># IUSR_xxx for IIS/Windows,...).
+<br># To avoid permission's problems between update process (run by an admin user)
+<br># and CGI process (ran by a low level user), AWStats can save its database 
+<br># files with read and write permissions for everyone.
+<br># By default, AWStats keep default user permissions on updated files. If you 
+<br># set AllowToUpdateStatsFromBrowser to 1, you can change this parameter to 1.
+<br># Change : Effective for new updates only
 <br># Possible values: 0 or 1
-<br># Default: 1
+<br># Default: 0
 <br>#
-<br>SaveDatabaseFilesWithPermissionsForEveryone=1
+<br>SaveDatabaseFilesWithPermissionsForEveryone=0
 
 <br><br><hr>
 
