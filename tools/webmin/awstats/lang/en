@@ -32,6 +32,7 @@ index_hideadvanced=Hide optional directives
 index_nodirallowed=Your user $1 has no allowed directory to read/store AWStats configuration files.
 index_allowed=Your account $1 is allowed to view/edit config files into (or that are links to)
 index_changeallowed=Permissions on directories into which you are allowed to scan/edit AWStats configuration files can be granted to you by a webmin administrator from the Webmin user ACL editor (Menu $1 then clic on $2)
+index_viewall=Show a summary of all available configurations
 
 edit_title1=Add config File
 edit_title2=Edit config File
@@ -63,8 +64,8 @@ update_run=Run update process with command
 update_finished=Update process finished
 update_wait=Please wait
 
-scheduled_title=Schedule statistic's update
-scheduled_ecannot=You are not allowed to update or schedule update process
+schedule_title=Schedule statistic's update
+schedule_ecannot=You are not allowed to update or schedule update process
 
 log_create_log=Created AWStats config file $1
 log_modify_log=Modified AWStats config file $1
@@ -85,3 +86,27 @@ help_subtitle=<b>Help for config file parameter $1</b>
 help_subtitleplugin=<b>Help for plugin $1</b>
 help_notfound=Parameter not found in your sample file $1.<br>May be your AWStats version does not support it, so no help is available.
 help_help=Help
+help_starrequired=required parameters with no default value. They can't be empty.
+
+viewall_title=Summary for all configurations files
+viewall_notallowed=You don't have rights to see statisitics
+viewall_allowed=This page presents a summary of all configurations files found in directories allowed to user $1
+viewall_period=Period
+viewall_u=Unique visitors
+viewall_v=Visits
+viewall_p=Pages
+viewall_h=Hits
+viewall_k=Bandwith
+
+month01=January
+month02=February
+month03=Mars
+month04=April
+month05=May
+month06=June
+month07=July
+month08=August
+month09=September
+month10=October
+month11=November
+month12=December

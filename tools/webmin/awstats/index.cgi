@@ -61,7 +61,7 @@ my @configdirtoscan=split(/\s+/, $access{'dir'});
 	
 if (! @configdirtoscan) {
 	print &text('index_nodirallowed',"<b>$remote_user</b>")."<br>\n";
-	print &text('index_changeallowed',"Menu <a href=\"/acl/\">Webmin - Utilisateurs Webmin</a> puis clic sur $text{'index_title'}")."<br>\n";
+	print &text('index_changeallowed',"<a href=\"/acl/\">Webmin - Utilisateurs Webmin</a>", $text{'index_title'})."<br>\n";
 	print "<br>\n";
 #	print "<p>",&text('index_econfdir', "<tt>$config{'awstats_conf'}</tt>",
 #		  "$gconfig{'webprefix'}/config.cgi?$module_name"),"<p>\n";
@@ -115,29 +115,36 @@ print &text('index_changeallowed',"<a href=\"/acl/\">Webmin - Webmin Users</a>",
 print "<br>";
 
 my $nbofallowedconffound=0;
-if (@config) {
+if (scalar @config) {
 
 	# Loop on each config file
 	foreach my $l (@config) {
 		next if (!&can_edit_config($l));
 		$nbofallowedconffound++;
 
+
 		# Head of config file's table list
 		if ($nbofallowedconffound == 1) {
-			print "<a href='edit_config.cgi?new=1'>$text{'index_add'}</a>\n" if ($access{'add'});
-			print "<table border width=100%>\n";
+
+        	print "<a href='edit_config.cgi?new=1'>$text{'index_add'}</a><br><br>\n" if ($access{'add'});
+
+            if (scalar @config >= 2 && $access{'view'}) {
+        	    print "<a href='view_all.cgi?new=1'>$text{'index_viewall'}</a><br><br>\n";
+            }
+            
+			print "<table border width=\"100%\">\n";
 			print "<tr $tb>";
-			print "<td rowspan=2 colspan=2><b>$text{'index_path'}</b></td> ";
-			print "<td rowspan=2 align=center><b>$text{'index_create'}</b></td> ";
-			#print "<td rowspan=2 align=center><b>$text{'index_databasesize'}</b></td> ";
-		 	print "<td colspan=2 align=center><b>$text{'index_update'}</b></td> ";
-			print "<td rowspan=2 align=center><b>$text{'index_view'}</b></td> </tr>\n";
+			print "<td rowspan=2 colspan=2><b>$text{'index_path'}</b></td>";
+			print "<td rowspan=2 align=center><b>$text{'index_create'}</b></td>";
+		 	print "<td colspan=2 align=center><b>$text{'index_update'}</b></td>";
+			print "<td rowspan=2 align=center><b>$text{'index_view'}</b></td>";
+			print "</tr>\n";
 			print "<tr $tb><td align=center>$text{'index_scheduled'}</td><td align=center>$text{'index_now'}</td></tr>\n";
 		}
 
 		# Config file line
-		local @files = &all_config_files($l);
-		next if (!@files);
+		#local @files = &all_config_files($l);
+		#next if (!@files);
 		local $lconf = &get_config($l);
 		my $conf=""; my $dir="";
 		if ($l =~ /awstats\.(.*)\.conf$/) { $conf=$1; }
@@ -194,14 +201,12 @@ if (@config) {
 		print "</tr>\n";
 	}
 	
-	if ($nbofallowedconffound > 0) { print "</table>\n"; }
+	if ($nbofallowedconffound > 0) { print "</table><br>\n"; }
 }
 
 if (! $nbofallowedconffound) {
-	print "<br><p><b>$text{'index_noconfig'}</b><p><br>\n";
+	print "<br><p><b>$text{'index_noconfig'}</b></p><br>\n";
 }
-
-print "<a href='edit_config.cgi?new=1'>$text{'index_add'}</a><br>\n" if ($access{'add'});
 
 
 print "<hr>\n";

@@ -5,8 +5,11 @@ $Revision$ - $Author$ - $Date$
 1.400
 
 New features/improvements:
-- Some change to add scheduler management for update process
+- Some change to add scheduler management for update process.
 - Creating new config files can be done by copying an old one.
+- Add a page for a summary of all config files on same pages.
+- Added a row number on each row of index page.
+- Translation more complete.
 
 
 1.300

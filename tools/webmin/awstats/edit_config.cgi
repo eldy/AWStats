@@ -190,7 +190,7 @@ print "<tr> <td><b>AllowToUpdateStatsFromBrowser</b></td> <td> <input size=10 na
 print &hblink($text{'help_help'}, "help.cgi?param=AllowToUpdateStatsFromBrowser")." </td> </tr>\n";
 print "<tr> <td><b>AllowFullYearView</b></td> <td> <input size=10 name=AllowFullYearView type=text value='$lconf->{'AllowFullYearView'}'> </td> <td> ";
 print &hblink($text{'help_help'}, "help.cgi?param=AllowFullYearView")." </td> </tr>\n";
-print "<tr> <td colspan=2><b>*</b> are required parameters with no default value. They can't be empty.</td> <td> ";
+print "<tr> <td colspan=2><b>*</b> ".$text{'help_starrequired'}."</td> <td> ";
 
 
 print "<tr> <td colspan=3><br>OPTIONAL SETUP SECTION (Not required but increase AWStats features)<br><hr></td> </tr>\n";

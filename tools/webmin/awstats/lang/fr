@@ -31,6 +31,7 @@ index_hideadvanced=Cacher paramètres optionnels
 index_allowed=Votre login $1 est autorisé à voir/editer les fichiers de config dans (ou pointant vers)
 index_nodirallowed=Votre compte $1 n'a aucun répertoire autorisé en lecture/écriture de fichier de configuration AWStats.
 index_changeallowed=Les permissions des répertoires dans lesquels vous pouvez voir/éditer des fichiers de configuration AWStats peuvent vous être accordées par un administrateur Webmin via l'éditeur des ACL utilisateurs Webmin (Menu $1 puis clic sur $2)
+index_viewall=Voir un résumé pour toutes les configurations disponibles
 
 edit_title1=Ajout d'un fichier de config
 edit_title2=Edition d'un fichier de config
@@ -62,8 +63,8 @@ update_run=Lancement de la mise à jour par la commande
 update_finished=Mise a jour terminée
 update_wait=Merci de patienter
 
-scheduled_title=Programmation de mise à jour
-scheduled_ecannot=Vous n'êtes pas autorisé à mettre à jour ou programmer une mise à jour des statistiques
+schedule_title=Programmation de mise à jour
+schedule_ecannot=Vous n'êtes pas autorisé à mettre à jour ou programmer une mise à jour des statistiques
 
 log_create_log=Fichier de config AWStats $1 créé
 log_modify_log=Fichier de config AWStats $1 modifié
@@ -84,3 +85,27 @@ help_subtitle=<b>Aide sur le paramètre de configuration $1</b>
 help_subtitleplugin=<b>Aide sur le plugin $1</b>
 help_notfound=Paramètre non trouvé dans votre fichier de configuration modèle $1.<br>Peut-être votre version d'AWStats ne le supporte pas, aussi aucune aide n'est disponible.
 help_help=Aide
+help_starrequired=paramètres obligatoires sans valeurs par défaut. Ils ne peuvent etre vide.
+
+viewall_title=Résumé pour tout fichier de configuration
+viewall_notallowed=Vous n'avez pas les droits pour voir les stats
+viewall_allowed=Cette page présente un résumé de toutes les configurations trouvés dans les répertoires autorisés à l'utilisateur $1
+viewall_period=Période
+viewall_u=Visiteurs uniques
+viewall_v=Visites
+viewall_p=Pages
+viewall_h=Hits
+viewall_k=Bande passante
+
+month01=Janvier
+month02=Février
+month03=Mars
+month04=Avril
+month05=Mai
+month06=Juin
+month07=Juillet
+month08=Aout
+month09=Septembre
+month10=Octobre
+month11=Novembre
+month12=Décembre
