@@ -57,9 +57,20 @@ else {
 	if ($conf{'LogSeparator'} eq '') { $conf{'LogSeparator'}=' '; }
 
 	# Check data
-	if (! -r $conf{'LogFile'}) { &error(&text(save_errLogFile,$conf{'LogFile'})); }
-	if (! $conf{'SiteDomain'}) { &error(&text(save_errSiteDomain,$conf{'SiteDomain'})); }
-	if (! -d $conf{'DirData'}) { &error(&text(save_errDirData,$conf{'DirData'})); }
+	my $logfile='';
+	if ($conf{'LogFile'} !~ /|\s*$/) {	# LogFile is not a piped valued
+		$logfile=$conf{'LogFile'};
+	}
+	else {								# LogFile is piped
+		# It can be
+		# '/xxx/maillogconvert.pl standard /aaa/mail.log |'
+		# '/xxx/logresolvermerge.pl *'
+
+		# TODO test something here ?
+	}
+	if ($logfile && ! -r $logfile)	{ &error(&text(save_errLogFile,$logfile)); }
+	if (! $conf{'SiteDomain'}) 		{ &error(&text(save_errSiteDomain,$conf{'SiteDomain'})); }
+	if (! -d $conf{'DirData'}) 		{ &error(&text(save_errDirData,$conf{'DirData'})); }
 
 	if ($in{'new'}) {
 		# Add a new config file to the configuration
