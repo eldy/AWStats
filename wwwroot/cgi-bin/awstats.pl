@@ -71,7 +71,7 @@ $found, $internal_link, $new) = ();
 %MonthBytes = %MonthHits = %MonthHostsKnown = %MonthHostsUnknown = %MonthPages = %MonthUnique = %MonthVisits =
 %listofyears = %monthlib = %monthnum = ();
 
-$VERSION="3.1 (build 32)";
+$VERSION="3.1 (build 33)";
 $Lang="en";
 
 # Default value
@@ -231,8 +231,8 @@ $AddOn=0;
 "200", "OK", "304", "Not Modified"	# 200 and 304 are not errors
 );
 
-# Browser lists ("browser id in lower case", "browser text")
-%BrowsersHash = (
+# Browser name list ("browser id in lower case", "browser text")
+%BrowsersHashIDLib = (
 "msie","defined_later",
 "netscape","defined_later",
 # Most frequent browsers should be first in this list
@@ -307,8 +307,8 @@ $AddOn=0;
 "webtv","WebTV browser"
 );
 
-# OS lists ("os detector in lower case","os text")
-%OSHash      = (
+# OS name list ("os id","os clear text")
+%OSHashLib      = (
 # Windows family OS
 "winme","Windows Me",
 "win2000","Windows 2000",
@@ -317,13 +317,13 @@ $AddOn=0;
 "win95","Windows 95",
 "win16","Windows 3.xx",
 "wince","Windows CE",
+# Macintosh OS
+"macintosh","Mac OS",
 # Other famous OS
 "beos","BeOS",
-"macintosh","Mac OS",
 "os/2","Warp OS/2",
 "amigaos","AmigaOS",
 # Unix like OS
-"unix","Unknown Unix system",
 "linux","Linux",
 "aix","Aix",
 "sunos","Sun Solaris",
@@ -334,37 +334,119 @@ $AddOn=0;
 "bsdi","BSDi",
 "freebsd","FreeBSD",
 "openbsd","OpenBSD",
+"unix","Unknown Unix system",
 # Miscellanous OS
-"webtv","WebTV",
 "cp/m","CPM",
 "crayos","CrayOS",
 "dreamcast","Dreamcast",
-"riscos","Acorn RISC OS"
+"riscos","Acorn RISC OS",
+"webtv","WebTV"
 );
 
-# OS AliasHash ("text that match in log after changing ' ' or '+' into '_' ","osid")
-%OSAliasHash	= (
-"windows_me","winme",
+# OSHashID ("text that match in log after changing ' ' or '+' into '_' ", "osid")
+%OSHashID	= (
+# Windows OS family
+"win_9x_4\.9","winme",			# Must be before windows_98
 "windows2000","win2000",
 "windows_2000","win2000",
 "windows_nt_5","win2000",
+"winnt","winnt",
 "windows_nt","winnt",
 "windows-nt","winnt",
 "win32","winnt",
+"win98","win98",
 "windows_98","win98",
 "windows98","win98",
+"win95","win95",
 "windows_95","win95",
+"win16","win16",
 "windows_3","win16",			# This works for windows_31 and windows_3.1
 "windows;i;16","win16",
+"wince","wince",
 "windows_ce","wince",
+# Macintosh OS family
 "mac_p","macintosh",			# This works for mac_ppc and mac_powerpc
 "mac_68","macintosh",			# This works for mac_6800 and mac_68k
 "macppc","macintosh",
-"macweb","macintosh"
+"macweb","macintosh",
+"macintosh","macintosh",
+# Other famous OS
+"beos","beos",
+"os/2","os/2",
+"amigaos","amigaos",
+# Unix like OS
+"linux","linux",
+"aix","aix",
+"sunos","sunos",
+"irix","irix",
+"osf","osf",
+"hp-ux","hp-ux",
+"netbsd","netbsd",
+"bsdi","bsdi",
+"freebsd","freebsd",
+"openbsd","openbsd",
+"unix","unix",
+# Miscellanous OS
+"cp/m","cp/m",
+"crayos","crayos",
+"dreamcast","dreamcast",
+"riscos","riscos",
+"webtv","webtv"
 );
 
-# Robots list
-%RobotHash   = (
+@OSArrayID	= (
+# Windows OS family
+"win_9x_4\.9",			# Must be before windows_98
+"windows2000",
+"windows_2000",
+"windows_nt_5",
+"winnt",
+"windows_nt",
+"windows-nt",
+"win32",
+"win98",
+"windows_98",
+"windows98",
+"win95",
+"windows_95",
+"win16",
+"windows_3",			# This works for windows_31 and windows_3.1
+"windows;i;16",
+"wince",
+"windows_ce",
+# Macintosh OS family
+"mac_p",				# This works for mac_ppc and mac_powerpc
+"mac_68",				# This works for mac_6800 and mac_68k
+"macppc",
+"macweb",
+"macintosh",
+# Other famous OS
+"beos",
+"os/2",
+"amigaos",
+# Unix like OS
+"linux",
+"aix",
+"sunos",
+"irix",
+"osf",
+"hp-ux",
+"netbsd",
+"bsdi",
+"freebsd",
+"openbsd",
+"unix",
+# Miscellanous OS
+"cp/m",
+"crayos",
+"dreamcast",
+"riscos",
+"webtv"
+);
+
+
+# Robot name list ("os id","os clear text")
+%RobotHashIDLib   = (
 # Main list of robots (found at http://info.webcrawler.com/mak/projects/robots/active.html)
 # This command show how to generate tab list from this file: cat robotslist.txt | sed 's/:/ /' | awk ' /robot-id/ { name=tolower($2); } /robot-name/ { print "\""name"\", \""$0"\"," } ' | sed 's/robot-name *//g' > file
 # Rem: To avoid bad detection, some robots id were removed from this list:
@@ -636,7 +718,7 @@ $AddOn=0;
 "robot", "Unknown robot (Not referenced robot)"
 );
 
-# Domains list
+# Domains name list ("domain id", "Domain name")
 %DomainsHash = (
 "localhost","localhost",
 
@@ -1077,7 +1159,7 @@ sub Read_Language_Tooltip {
 	&debug("Call to Read_Language_Tooltip [FileLang=\"$FileLang\"]");
 	if ($FileLang ne "") {
 		my $aws_VisitTimeout = $VisitTimeOut/10000*60;
-		my $aws_NbOfRobots = scalar keys %RobotHash;
+		my $aws_NbOfRobots = scalar keys %RobotHashIDLib;
 		my $aws_NbOfSearchEngines = scalar keys %SearchEnginesHash;
 		while (<LANG>) {
 			# Search for replaceable parameters
@@ -1721,6 +1803,8 @@ if ($QueryString =~ /output=urldetail:/i) 	{
 	# A filter can be defined with output=urldetail to reduce number of lines read and showed
 	$URLFilter=$QueryString; $URLFilter =~ s/.*output=urldetail://; $URLFilter =~ s/&.*//; $URLFilter =~ s/ .*//;
 }
+# Check if OSHashID and OSArrayID are correct
+if (scalar keys %OSHashID != @OSArrayID) { error("Error: Not same number of records of OSHashID (".(scalar keys %OSHashID).") and/or OSArrayID (".(@OSArrayID).") in source file."); }
 
 ($DIR=$0) =~ s/([^\/\\]*)$//; ($PROG=$1) =~ s/\.([^\.]*)$//; $Extension=$1;
 	
@@ -1760,9 +1844,9 @@ if (($ENV{"GATEWAY_INTERFACE"} eq "") && ($SiteConfig eq "")) {
 	print "  Rush hours\n";
 	print "  Most often viewed pages\n";
 	print "  ".(scalar keys %DomainsHash)." domains/countries\n";
-	print "  ".(scalar keys %BrowsersHash)." browsers\n";
-	print "  ".(scalar keys %OSHash)." operating systems\n";
-	print "  ".(scalar keys %RobotHash)." robots\n";
+	print "  ".(scalar keys %BrowsersHashIDLib)." browsers\n";
+	print "  ".(scalar keys %OSHashLib)." operating systems\n";
+	print "  ".(scalar keys %RobotHashIDLib)." robots\n";
 	print "  ".(scalar keys %SearchEnginesHash)." search engines (and keywords or keyphrases used from them)\n";
 	print "  All HTTP errors\n";
 	print "  Statistics by day/month/year\n";
@@ -1841,8 +1925,8 @@ if ($YearRequired !~ /^[\d][\d][\d][\d]$/) { $YearRequired=$nowyear; }
 if ($QueryString =~ /month=/i)	{ $MonthRequired=$QueryString; $MonthRequired =~ s/.*month=//; $MonthRequired =~ s/&.*//; $MonthRequired =~ s/ .*//; }
 if ($MonthRequired ne "year" && $MonthRequired !~ /^[\d][\d]$/) { $MonthRequired=$nowmonth; }
 
-$BrowsersHash{"netscape"}="<font color=blue>Netscape</font> <a href=\"$DirCgi$PROG.$Extension?output=browserdetail&".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang\">($Message[58])</a>";
-$BrowsersHash{"msie"}="<font color=blue>MS Internet Explorer</font> <a href=\"$DirCgi$PROG.$Extension?output=browserdetail&".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang\">($Message[58])</a>";
+$BrowsersHashIDLib{"netscape"}="<font color=blue>Netscape</font> <a href=\"$DirCgi$PROG.$Extension?output=browserdetail&".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang\">($Message[58])</a>";
+$BrowsersHashIDLib{"msie"}="<font color=blue>MS Internet Explorer</font> <a href=\"$DirCgi$PROG.$Extension?output=browserdetail&".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang\">($Message[58])</a>";
 
 # Init all global variables
 if (! @HostAliases) {
@@ -2128,7 +2212,7 @@ if ($UpdateStats) {
 		#-----------------------------
 		if (!$TmpHashNotRobot{$UserAgent}) {	# TmpHashNotRobot is a temporary hash table to increase speed
 			my $foundrobot=0;
-			foreach $bot (keys %RobotHash) { if ($UserAgent =~ /$bot/) { $_robot_h{$bot}++; $_robot_l{$bot}=$timeconnexion; $foundrobot=1; last; }	}
+			foreach $bot (keys %RobotHashIDLib) { if ($UserAgent =~ /$bot/) { $_robot_h{$bot}++; $_robot_l{$bot}=$timeconnexion; $foundrobot=1; last; }	}
 			if ($foundrobot == 1) { next; }
 			$TmpHashNotRobot{$UserAgent}=1;		# Last time, we won't search if robot or not. We know it's not.
 		}
@@ -2273,7 +2357,7 @@ if ($UpdateStats) {
 		
 				# Other ?
 				if (!$found) {
-					foreach my $key (keys %BrowsersHash) {
+					foreach my $key (keys %BrowsersHashIDLib) {
 				    	if ($UserAgent =~ /$key/) { $_browser_h{$key}++; $found=1; $TmpHashBrowser{$UserAgent}=$key; last; }
 					}
 				}
@@ -2295,18 +2379,11 @@ if ($UpdateStats) {
 		# Analyze: OS
 		#------------
 		if ($UserAgent) {
-			my $found=0;
-
 			if (!$TmpHashOS{$UserAgent}) {
-				# OSHash list ?
-				foreach my $key (keys %OSHash) {
-					if ($UserAgent =~ /$key/) { $_os_h{$key}++; $found=1; $TmpHashOS{$UserAgent}=$key; last; }
-				}
-				# OSAliasHash list ?
-				if (!$found) {
-					foreach my $key (keys %OSAliasHash) {
-						if ($UserAgent =~ /$key/) { $_os_h{$OSAliasHash{$key}}++; $found=1; $TmpHashOS{$UserAgent}=$OSAliasHash{$key}; last; }
-					}
+				my $found=0;
+				# in OSHashID list ?
+				foreach my $key (@OSArrayID) {	# Searchin ID in order of OSArrayID
+					if ($UserAgent =~ /$key/) { $_os_h{$OSHashID{$key}}++; $TmpHashOS{$UserAgent}=$OSHashID{$key}; $found=1; last; }
 				}
 				# Unknown OS ?
 				if (!$found) { $_os_h{"Unknown"}++; $_unknownreferer_l{$field[$pos_agent]}=$timeconnexion; }
@@ -2991,7 +3068,7 @@ EOF
 	print "<TR bgcolor=\"#$color_TableBGRowTitle\" onmouseover=\"ShowTooltip(16);\" onmouseout=\"HideTooltip(16);\"><TH>$Message[83]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH>$Message[9]</TH></TR>\n";
 	my $count=0;
 	foreach my $key (sort { $SortDir*$_robot_h{$a} <=> $SortDir*$_robot_h{$b} } keys (%_robot_h)) {
-		print "<tr><td CLASS=AWL>$RobotHash{$key}</td><td>$_robot_h{$key}</td><td>".Format_Date($_robot_l{$key})."</td></tr>";
+		print "<tr><td CLASS=AWL>$RobotHashIDLib{$key}</td><td>$_robot_h{$key}</td><td>".Format_Date($_robot_l{$key})."</td></tr>";
 		$count++;
 		}
 	&tab_end;
@@ -3068,7 +3145,7 @@ EOF
 			print "<TR><TD CLASS=AWL><a href=\"$DirCgi$PROG.$Extension?output=unknownrefererbrowser&".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang\">$Message[0]</a></TD><TD>$_browser_h{$key}</TD><TD>$p&nbsp;%</TD></TR>\n";
 		}
 		else {
-			print "<TR><TD CLASS=AWL>$BrowsersHash{$key}</TD><TD>$_browser_h{$key}</TD><TD>$p&nbsp;%</TD></TR>\n";
+			print "<TR><TD CLASS=AWL>$BrowsersHashIDLib{$key}</TD><TD>$_browser_h{$key}</TD><TD>$p&nbsp;%</TD></TR>\n";
 		}
 		$count++;
 	}
@@ -3088,8 +3165,8 @@ EOF
 			print "<TD>$p&nbsp;%</TD></TR>\n";
 			}
 		else {
-			my $nameicon = $OSHash{$key}; $nameicon =~ s/\s.*//; $nameicon =~ tr/A-Z/a-z/;
-			print "<TR><TD><IMG SRC=\"$DirIcons\/os\/$nameicon.png\"></TD><TD CLASS=AWL>$OSHash{$key}</TD><TD>$_os_h{$key}</TD>";
+			my $nameicon = $OSHashLib{$key}; $nameicon =~ s/\s.*//; $nameicon =~ tr/A-Z/a-z/;
+			print "<TR><TD><IMG SRC=\"$DirIcons\/os\/$nameicon.png\"></TD><TD CLASS=AWL>$OSHashLib{$key}</TD><TD>$_os_h{$key}</TD>";
 			print "<TD>$p&nbsp;%</TD></TR>\n";
 		}
 		$count++;
@@ -3207,3 +3284,16 @@ else {
 }
 
 0;	# Do not remove this line
+
+
+
+
+# Informations from microsoft for detecting windows version
+#  Windows 95 retail, OEM     4.00.950                     7/11/95
+#  Windows 95 retail SP1      4.00.950A                    7/11/95-12/31/95
+#  OEM Service Release 2      4.00.1111* (4.00.950B)       8/24/96
+#  OEM Service Release 2.1    4.03.1212-1214* (4.00.950B)  8/24/96-8/27/97  
+#  OEM Service Release 2.5    4.03.1214* (4.00.950C)       8/24/96-11/18/97
+#  Windows 98 retail, OEM     4.10.1998                    5/11/98
+#  Windows 98 Second Edition  4.10.2222A                   4/23/99
+#  Windows Me                 4.90.3000 
