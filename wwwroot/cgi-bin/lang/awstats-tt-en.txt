@@ -29,7 +29,7 @@
 	(Keywords from the <b>#SearchEnginesArray#</b> most popular Search Engines and Directories are recognized by #PROG#, such as Yahoo, Altavista, Lycos, Google, Voila, etc...).
 	</DIV>
 	<DIV CLASS="CTooltip" ID="tt16">
-	Robots (sometimes refer to Spiders) are <b>automatic computer visitors</b> used by many search engines that scan your web site to (1) index it and rank it, (2) collect statistics on Internet Web sites and/or (3) see if your site is still online.<br>
+	Robots (sometimes refer to Spiders) are <b>automatic computer visitors</b> used by many search engines that scan your web site to index it and rank it, collect statistics on Internet Web sites and/or see if your site is still online.<br>
 	#PROG# is able to recognize up to <b>#RobotArray#</b> robots.
 	</DIV>
 	<DIV CLASS="CTooltip" ID="tt17">
