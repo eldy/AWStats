@@ -14,7 +14,7 @@
 #-------------------------------------------------------
 # Defines
 #-------------------------------------------------------
-$VERSION="2.24 (build 9)";
+$VERSION="2.24 (build 10)";
 $Lang=0;
 
 # Default value
@@ -1134,10 +1134,12 @@ sub UnescapeURLParam {
 	$_[0] =~ s/%2d/-/gi;	#-
 	$_[0] =~ s/%2e/\./gi;	#.
 	$_[0] =~ s/%2f/ /gi;	#/
+	$_[0] =~ s/%3a/:/gi;	#:
 	$_[0] =~ s/%3c/ /gi;	#<
 	$_[0] =~ s/%3d/ /gi;	#=
 	$_[0] =~ s/%3e/ /gi;	#>
 	$_[0] =~ s/%c9/é/gi;	#é maj
+	$_[0] =~ s/%e0/à/gi;	#à
 	$_[0] =~ s/%e8/è/gi;	#è
 	$_[0] =~ s/%e9/é/gi;	#é
 	$_[0] =~ s/%ea/ê/gi;	#ê
@@ -1275,7 +1277,7 @@ sub Check_Config {
 	if (! ($MinHitRefer =~ /[\d]/))           { $MinHitRefer=1; }
 	if (! ($MaxNbOfKeywordsShown =~ /[\d]/))  { $MaxNbOfKeywordsShown=25; }
 	if (! ($MinHitKeyword =~ /[\d]/))         { $MinHitKeyword=1; }
-	if (! ($SplitSearchString =~ /[\d]/))     { $SplitSearchString=0; }
+	if (! ($SplitSearchString =~ /[0-1]/))    { $SplitSearchString=0; }
 	if ($Logo eq "")                          { $Logo="awstats_logo1.png"; }
 	if (! ($color_Background =~ /[\d]/))      { $color_Background="#FFFFFF";	}
 	if (! ($color_TableBorder =~ /[\d]/))     { $color_TableBorder="#000000"; }
@@ -1398,7 +1400,7 @@ if (open(HISTORY,"$DirData/$PROG$_[0]$_[1]$FileSuffix.txt")) {
 	        if ($readse) { $_se_referrals_h{$field[0]}+=$field[1]; next; }
 	        if ($readsearchwords) { $_keywords{$field[0]}+=$field[1]; next; }
 	        if ($readerrors) { $_errors_h{$field[0]}+=$field[1]; next; }
-	        if ($readerrors404) { $_sider404_h{$field[0]}+=$field[1]; next; }
+	        if ($readerrors404) { $_sider404_h{$field[0]}+=$field[1]; $_referer404_h{$field[0]}=$field[2]; next; }
 
 			}
 		}
@@ -1482,7 +1484,7 @@ sub Save_History_File {
 	print HISTORYTMP "END_PAGEREFS\n";
 	
 	print HISTORYTMP "BEGIN_SEARCHWORDS\n";
-	foreach $key (keys %_keywords) { print HISTORYTMP "$key $_keywords{$key}\n"; next; }
+	foreach $key (keys %_keywords) { if ($_keywords{$key}) { print HISTORYTMP "$key $_keywords{$key}\n"; } next; }
 	print HISTORYTMP "END_SEARCHWORDS\n";
 	
 	print HISTORYTMP "BEGIN_ERRORS\n";
@@ -1490,7 +1492,7 @@ sub Save_History_File {
 	print HISTORYTMP "END_ERRORS\n";
 	
 	print HISTORYTMP "BEGIN_SIDER_404\n";
-	foreach $key (keys %_sider404_h) { print HISTORYTMP "$key $_sider404_h{$key}\n"; next; }
+	foreach $key (keys %_sider404_h) { print HISTORYTMP "$key $_sider404_h{$key} $_referer404_h{$key}\n"; next; }
 	print HISTORYTMP "END_SIDER_404\n";
 	
 	close(HISTORYTMP);
@@ -1796,7 +1798,7 @@ if (($YearRequired == $nowyear) && ($MonthRequired eq "year" || $MonthRequired =
 		if (($felter[8] != 200) && ($felter[8] != 304)) {		# Stop if HTTP server return code != 200 and 304
 			if ($felter[8] =~ /^[\d][\d][\d]$/) { 				# Keep error code and next
 				$_errors_h{$felter[8]}++;						
-				if ($felter[8] == 404) { $_sider404_h{$felter[6]}++; }
+				if ($felter[8] == 404) { $_sider404_h{$felter[6]}++; $_referer404_h{$felter[6]}=$felter[10]; }
 				next;											
 				}
 			else {												# Bad format record (should not happen but when using MSIndex server), next
@@ -1883,7 +1885,7 @@ if (($YearRequired == $nowyear) && ($MonthRequired eq "year" || $MonthRequired =
 				  $found=1;
 		      }
 	    }
-		else { $NewDNSLookup=0; }	# Hosts seems to be already resolved
+		else { if ($Host =~ /[a-z]/) { $NewDNSLookup=0; } }	# Hosts seems to be already resolved
 
 		# Here, $Host = hostname or xxx.xxx.xxx.xxx
 		if (!$found) {				# If not processed yet ($Host = hostname)
@@ -1973,7 +1975,7 @@ if (($YearRequired == $nowyear) && ($MonthRequired eq "year" || $MonthRequired =
 		# Analyze: Referrer
 		#------------------
 		$found=0;
-	
+
 		# Direct ?
 		if ($felter[10] eq "-") { $_from_h[0]++; $found=1; }
 	
@@ -2019,7 +2021,7 @@ if (($YearRequired == $nowyear) && ($MonthRequired eq "year" || $MonthRequired =
 											}
 										}
 										else {
-											if ((length $param) > 0) { $_keywords{$param}++; }
+											if ((length $param) > 0) { $param =~ s/ /+/g; $_keywords{$param}++; }
 										}
 										last;
 									}
@@ -2041,7 +2043,7 @@ if (($YearRequired == $nowyear) && ($MonthRequired eq "year" || $MonthRequired =
 										}
 									}
 									else {
-										if ((length $param) > 2) { $_keywords{$param}++; }
+										if ((length $param) > 2) { $param =~ s/ /+/g; $_keywords{$param}++; }
 									}
 								}
 							}
@@ -2219,10 +2221,10 @@ if ($QueryString =~ /notfounderror/) {
 	print "<CENTER><a name=\"NOTFOUNDERROR\"></a>";
 	$tab_titre=$message[47][$Lang];
 	&tab_head;
-	print "<TR bgcolor=$color_TableBGRowTitle><TH>URL</TH><TH bgcolor=$color_h>$message[49][$Lang]</TH></TR>\n";
+	print "<TR bgcolor=$color_TableBGRowTitle><TH>URL</TH><TH bgcolor=$color_h>$message[49][$Lang]</TH><TH>$message[23][$Lang]</TH></TR>\n";
 	@sortsider404=sort { $SortDir*$_sider404_h{$a} <=> $SortDir*$_sider404_h{$b} } keys (%_sider404_h);
 	foreach $key (@sortsider404) {
-		print "<tr><td CLASS=LEFT>$key</td><td>$_sider404_h{$key}</td></tr>";
+		print "<tr><td CLASS=LEFT>$key</td><td>$_sider404_h{$key}</td><td>$_referer404_h{$key}&nbsp;</td></tr>";
 	}
 	&tab_end;
 	&html_end;
