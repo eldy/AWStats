@@ -1,8 +1,16 @@
 // awstats_misc_tracker.js
 //-------------------------------------------------------------------
-// You can add this file onto some of your web pages (main home page
-// can be enough) by adding the following HTML code:
+// You can add this file onto some of your web pages (main home page can
+// be enough) by adding the following HTML code to your page body:
 // <script language=javascript src="/js/awstats_misc_tracker.js"></script>
+//
+// * This must be added after the <body> tag, not placed within the
+//   <head> tags, or the resulting tracking <img> tag will not be handled
+//   correctly by all browsers.  Internet explorer will also not report
+//   screen height and width attributes until it begins to render the
+//   body.
+//
+
 // This allows AWStats to be enhanced with some miscellanous features:
 // - Screen size detection (TRKscreen)
 // - Screen color depth detection (TRKcdi)
@@ -73,6 +81,14 @@ if (window.location.search == "") {
 	var TRKns  = (navigator.appName.indexOf("Netscape") != -1);
 	var TRKwin = ((TRKagt.indexOf("win")!=-1) || (TRKagt.indexOf("32bit")!=-1));
 	var TRKmac = (TRKagt.indexOf("mac")!=-1);
+
+    // Detect the window internal width and height
+    if (document.documentElement && document.documentElement.clientWidth)
+        TRKwinsize = document.documentElement.clientWidth + 'x' + document.documentElement.clientHeight;
+    else if (document.body)
+        TRKwinsize = document.body.clientWidth + 'x' + document.body.clientHeight;
+    else
+        TRKwinsize = window.innerWidth + 'x' + window.innerHeight;
 	
 	if (TRKie && TRKwin) {
 		var TRKshk = awstats_detectIE("SWCtl.SWCtl.1")
@@ -94,6 +110,6 @@ if (window.location.search == "") {
 		var TRKwma = awstats_detectNS("application/x-mplayer2")
 		var TRKpdf = awstats_detectNS("application/pdf");
 	}
-	document.write('<img src="'+awstatsmisctrackerurl+'?screen='+TRKscreen+'&cdi='+TRKcdi+'&java='+TRKjava+'&shk='+TRKshk+'&fla='+TRKfla+'&rp='+TRKrp+'&mov='+TRKmov+'&wma='+TRKwma+'&pdf='+TRKpdf+'&uid='+TRKuserid+'&sid='+TRKsessionid+'" height=0 width=0 border=0>')
+	document.write('<img src="'+awstatsmisctrackerurl+'?screen='+TRKscreen+'&win='+TRKwinsize+'&cdi='+TRKcdi+'&java='+TRKjava+'&shk='+TRKshk+'&fla='+TRKfla+'&rp='+TRKrp+'&mov='+TRKmov+'&wma='+TRKwma+'&pdf='+TRKpdf+'&uid='+TRKuserid+'&sid='+TRKsessionid+'" height=0 width=0 border=0>')
 
 }
