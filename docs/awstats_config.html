@@ -407,10 +407,11 @@ when reading it), follow the example:<br>
 
 <a name="DirCgi"><b>DirCgi</b></a><br>
 <b>Version : </b>1.0+<br>
-<br># Relative or absolute web URL of your awstats.pl directory.
+<br># Relative or absolute web URL of your awstats cgi-bin directory.
 <br># This parameter is used only when AWStats is ran from command line
 <br># with -output option (to generate links in HTML reported page).
-<br># Default: "/cgi-bin"   (means awstats.pl is in "/mywwwroot/cgi-bin")
+<br># Example: "/awstats"
+<br># Default: "/cgi-bin"   (means awstats.pl is in "/yourwwwroot/cgi-bin")
 <br>#
 <br>DirCgi="/cgi-bin"
 
@@ -418,11 +419,10 @@ when reading it), follow the example:<br>
 
 <a name="DirIcons"><b>DirIcons</b></a><br>
 <b>Version : </b>1.0+<br>
-<br># If AWStats used as a CGI, enter relative or absolute web URL of all icons
-<br># subdirectories.
+<br># Relative or absolute web URL of your awstats icon directory.
 <br># If you build static reports ("... -output > outputpath/output.html"), enter
-<br># path of icon directory relative to the directory outputpath.
-<br># Example: "/icon"
+<br># path of icon directory relative to the output directory 'outputpath'.
+<br># Example: "/awstatsicons"
 <br># Example: "../icon"
 <br># Default: "/icon" (means you must copy icon directories in "/mywwwroot/icon")
 <br>#
@@ -518,9 +518,9 @@ when reading it), follow the example:<br>
 <br># same time to prevent unknown conflicts problems and avoid DoS attacks when
 <br># AllowToUpdateStatsFromBrowser is set to 1.
 <br># Because, when you use lock file, you can experience sometimes problems in
-<br># lock file not correctly removed (when process is killed for example, this
-<br># requires that you remove the file manualy), this option is not enabled by
-<br># default (Do not enable this option with no consol server access).
+<br># lock file not correctly removed (killed process for example requires that
+<br># you remove the file manualy), this option is not enabled by default (Do
+<br># not enable this option with no console server access).
 <br># Possible values: 0 or 1
 <br># Default: 0
 <br>#
@@ -1540,6 +1540,7 @@ parameter.
 <br># You can ask AWStats to use a particular CSS (Cascading Style Sheet) to
 <br># change its look. To create a style sheet, you can use samples provided with
 <br># AWStats in wwwroot/css directory.
+<br># Example: "/awstatscss/awstats_bw.css"
 <br># Example: "/css/awstats_bw.css"
 <br># Default: ""
 <br>#

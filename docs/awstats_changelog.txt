@@ -2,7 +2,7 @@ AWStats Changelog
 -----------------
 $Revision$ - $Author$ - $Date$
 
-5.91
+6.0
 
 Fixes:
 - Fixed bug 816267: onedigit dayofmonth breaks syslog regex
