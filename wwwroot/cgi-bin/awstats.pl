@@ -4829,7 +4829,7 @@ sub ShowURLInfo {
 				# Define urlprot
 				my $urlprot='http';
 				if ($UseHTTPSLinkForUrl && $newkey =~ /^$UseHTTPSLinkForUrl/) { $urlprot='https'; }
-				print "<a href=\"".XMLEncode("$urlprot://$SiteDomain$newkey\"")." target=\"url\">".XMLEncode($nompage)."</a>";
+				print "<a href=\"".XMLEncode("$urlprot://$SiteDomain$newkey")."\" target=\"url\">".XMLEncode($nompage)."</a>";
 			}
 			else {
 				print XMLEncode($nompage);
@@ -8103,7 +8103,7 @@ if (scalar keys %HTMLOutput) {
     			if (! $familyheadershown) {
     				my $p='&nbsp;';
     				if ($total_h) { $p=int(($total_h-$TotalFamily)/$total_h*1000)/10; $p="$p %"; }
-    				print "<tr bgcolor=\"#F6F6F6\"><td class=\"aws\" colspan=\"2\"><b>".uc($Message[2])."</b></td>";
+    				print "<tr bgcolor=\"#F6F6F6\"><td class=\"aws\" colspan=\"2\"><b>$Message[2]</b></td>";
     				print "<td><b>".($total_h-$TotalFamily)."</b></td><td><b>$p</b></td><td>&nbsp;</td>";
     				print "</tr>\n";
     				$familyheadershown=1;
@@ -8196,7 +8196,7 @@ if (scalar keys %HTMLOutput) {
     			if (! $familyheadershown) {
     				my $p='&nbsp;';
     				if ($total_h) { $p=int(($total_h-$TotalFamily)/$total_h*1000)/10; $p="$p %"; }
-    				print "<tr bgcolor=\"#F6F6F6\"><td class=\"aws\" colspan=\"2\"><b>".uc($Message[2])."</b></td>";
+    				print "<tr bgcolor=\"#F6F6F6\"><td class=\"aws\" colspan=\"2\"><b>$Message[2]</b></td>";
     				print "<td>&nbsp;</td><td><b>".($total_h-$TotalFamily)."</b></td><td><b>$p</b></td><td>&nbsp;</td>";
     				print "</tr>\n";
     				$familyheadershown=1;
@@ -9551,7 +9551,7 @@ if (scalar keys %HTMLOutput) {
 				if ($_url_k{$key}/($_url_p{$key}||1) > $max_k) { $max_k = $_url_k{$key}/($_url_p{$key}||1); }
 			}
 			foreach my $key (@keylist) {
-				print "<tr><td class=\"aws\">";
+				print "<tr><td class=\"aws\">xx $key";
 				&ShowURLInfo($key);
 				print "</td>";
 				my $bredde_p=0; my $bredde_e=0; my $bredde_x=0; my $bredde_k=0;
