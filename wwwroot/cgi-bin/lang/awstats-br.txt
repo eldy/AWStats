@@ -1,5 +1,6 @@
 # Portuguese (Brazilian) message file
 # $Revision$ - $Date$
+# by Osmany Washington (osmany@xtms.net)
 message0=Desconhecido
 message1=Desconhecido (ip não resolvido)
 message2=Outros visitantes
@@ -134,3 +135,8 @@ message130=Disposições do valor dos dados
 message131=EMail Originário
 message132=EMail Destinatário
 message133=Período reportado
+message134=Extra/Marketing
+message135=Tamanhos de tela
+message136=Ataques de Worm/Virus
+message137=Adicionar em favoritos
+message138=Dias do Mês
