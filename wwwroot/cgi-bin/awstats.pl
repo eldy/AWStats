@@ -5852,8 +5852,9 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 		$_filetypes_h{$extension}++;
 		$_filetypes_k{$extension}+=int($field[$pos_size]);	# TODO can cause a warning
 		# Compression
-		if ($pos_compratio>=0 && ($field[$pos_compratio] =~ /(\d+)/)) { # Calculate in/out size from percentage
-			$_filetypes_gz_in{$extension}+=int($field[$pos_size]*100/((100-$1)||1));
+		if ($pos_compratio>=0 && ($field[$pos_compratio] =~ /(\d+)/)) { # Calculate in/out size from percentage (% is size after/before)
+			#$_filetypes_gz_in{$extension}+=int($field[$pos_size]*100/((100-$1)||1));
+			$_filetypes_gz_in{$extension}+=int($field[$pos_size]*100/($1||1));
 			$_filetypes_gz_out{$extension}+=int($field[$pos_size]);
 		}
 		elsif ($pos_gzipin>=0 && $field[$pos_gzipin]) {	# If in and out in log
