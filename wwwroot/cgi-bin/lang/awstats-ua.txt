@@ -1,4 +1,4 @@
-# Ukrainian message file (v1.3 - 17.09.2001 - roman@elsyst.km.ua)
+# Ukrainian message file (v1.4 - 22.10.2001 - roman@elsyst.km.ua)
 PageCode=windows-1251
 message0=Невiдомий
 message1=Невiдомий (не вдалось перетворити IP)
@@ -44,7 +44,7 @@ message40=Посилання з пошукових машин
 message41=Посилання з зовнiшньої сторiнки (iншого сайту за винятком пошукових машин)
 message42=Посилання з внутрiшньої сторiнки (iншої сторiнки на цьому ж сайтi)
 message43=ключових слiв, за якими здiйснювався пошук на пошуковiй машинi
-message44=Кб
+message44=кБ
 message45=IP-адреси, якi не вдалось перетворити в iмена
 message46=Невiдома ОС
 message47=Запитанi, але незнайденi URL-и (HTTP код 404)
@@ -73,7 +73,7 @@ message69=Жов
 message70=Лис
 message71=Гру
 message72=Навiгацiя
-message73=Щоденна статистика
+message73=Типи файлiв
 message74=Оновити
 message75=Байтiв
 message76=Назад до головної сторiнки
@@ -94,3 +94,12 @@ message90=Сб
 message91=Днi тижня
 message92=Хто
 message93=Коли
+message94=Авторизованi користувачi
+message95=Мiн.
+message96=В середньому
+message97=Макс.
+message98=Стиснення
+message99=Зекономлено
+message100=До стиснення
+message101=Пiсля стиснення
+message102=Загалом
