@@ -126,3 +126,5 @@ message122=moteurs de recherche différents
 message123=sites différents
 message124=Autres phrases
 message125=Utilisateurs anonymes
+message126=Moteurs de recherche
+message127=Sites référenceurs
