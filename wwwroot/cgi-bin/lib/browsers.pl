@@ -3,7 +3,7 @@
 # If you want to add a Browser to extend AWStats database detection capabilities,
 # you must add an entry in BrowsersSearchIDOrder and in BrowsersHashIDLib.
 #-------------------------------------------------------
-# Last change $Revision$ - $Author$ - $Date$
+# $Revision$ - $Author$ - $Date$
 
 
 
@@ -96,6 +96,92 @@
 "libwww"				# Must be at end because some browser have both "browser id" and "libwww"
 );
 
+# BrowsersHashIDLib
+# List of browser's name ("browser id in lower case", "browser text")
+#---------------------------------------------------------------
+%BrowsersHashIDLib = (
+# Common web browsers text (IE and Netscape must not be in this list)
+"icab","iCab",
+"go!zilla","Go!Zilla",
+"konqueror","Konqueror",
+"links","Links",
+"lynx","Lynx",
+"omniweb","OmniWeb",
+"opera","Opera",
+"wget","Wget",
+"22acidownload","22AciDownload",
+"aol\\-iweng","AOL-Iweng",
+"amaya","Amaya",
+"amigavoyager","AmigaVoyager",
+"antfresco","ANT Fresco",
+"bpftp","BPFTP",
+"cyberdog","Cyberdog",
+"dreamcast","Dreamcast",
+"downloadagent","DownloadAgent",
+"ecatch", "eCatch",
+"emailsiphon","EmailSiphon",
+"encompass","Encompass",
+"friendlyspider","FriendlySpider",
+"getright","GetRight",
+"headdump","HeadDump",
+"hotjava","Sun HotJava",
+"ibrowse","IBrowse",
+"intergo","InterGO",
+"linemodebrowser","W3C Line Mode Browser",
+"lotus-notes","Lotus Notes web client",
+"macweb","MacWeb",
+"ncsa_mosaic","NCSA Mosaic",
+"netpositive","NetPositive",
+"nutscrape", "Nutscrape",
+"msfrontpageexpress","MS FrontPage Express",
+"tzgeturl","TZGETURL",
+"viking","Viking",
+"webfetcher","WebFetcher",
+"webexplorer","IBM-WebExplorer",
+"webmirror","WebMirror",
+"webvcr","WebVCR",
+# Site grabbers
+"teleport","TelePort Pro (site grabber)",
+"webcapture","Acrobat (site grabber)",
+"webcopier", "WebCopier (site grabber)",
+# Music only browsers
+"real","RealAudio or compatible (media player)",
+"winamp","WinAmp (media player)",				# Works for winampmpeg and winamp3httprdr
+"windows-media-player","Windows Media Player (media player)",
+"audion","Audion (media player)",
+"freeamp","FreeAmp (media player)",
+"itunes","Apple iTunes (media player)",
+"jetaudio","JetAudio (media player)",
+"mint_audio","Mint Audio (media player)",
+"mpg123","mpg123 (media player)",
+"nsplayer","NetShow Player (media player)",
+"sonique","Sonique (media player)",
+"uplayer","Ultra Player (media player)",
+"xmms","XMMS (media player)",
+"xaudio","Some XAudio Engine based MPEG player (media player)",
+# PDA/Phonecell browsers
+"mmef","Microsoft Mobile Explorer (PDA/Phone browser)",
+"mspie","MS Pocket Internet Explorer (PDA/Phone browser)",
+"up\.","UP.Browser (PDA/Phone browser)",					# Works for UP.Browser and UP.Link
+"wapalizer","WAPalizer (PDA/Phone browser)",
+"wapsilon","WAPsilon (PDA/Phone browser)",
+"webcollage","WebCollage (PDA/Phone browser)",
+"alcatel","Alcatel Browser (PDA/Phone browser)",
+"nokia","Nokia Browser (PDA/Phone browser)",
+# Others (TV)
+"webtv","WebTV browser",
+# Other kind of browsers
+"csscheck","WDG CSS Validator",
+"w3m","w3m",
+"w3c_css_validator","W3C CSS Validator",
+"w3c_validator","W3C HTML Validator",
+"wdg_validator","WDG HTML Validator",
+"webzip","WebZIP",
+"staroffice","StarOffice",
+"libwww","LibWWW"
+);
+
+
 # BrowsersHashAreGrabber
 # Put here an entry for each browser in BrowsersSearchIDOrder that are grabber
 # browsers.
@@ -105,6 +191,7 @@
 "webcapture","1",
 "webcopier","1",,
 );
+
 
 # BrowsersHashIcon
 # Each Browsers Search ID is associated to a string that is the name of icon
@@ -194,89 +281,5 @@
 "libwww","notavailable"
 );
 
-
-# Browser name list ("browser id in lower case", "browser text")
-#---------------------------------------------------------------
-%BrowsersHashIDLib = (
-# Common web browsers text (IE and Netscape must not be in this list)
-"icab","iCab",
-"go!zilla","Go!Zilla",
-"konqueror","Konqueror",
-"links","Links",
-"lynx","Lynx",
-"omniweb","OmniWeb",
-"opera","Opera",
-"wget","Wget",
-"22acidownload","22AciDownload",
-"aol\\-iweng","AOL-Iweng",
-"amaya","Amaya",
-"amigavoyager","AmigaVoyager",
-"antfresco","ANT Fresco",
-"bpftp","BPFTP",
-"cyberdog","Cyberdog",
-"dreamcast","Dreamcast",
-"downloadagent","DownloadAgent",
-"ecatch", "eCatch",
-"emailsiphon","EmailSiphon",
-"encompass","Encompass",
-"friendlyspider","FriendlySpider",
-"getright","GetRight",
-"headdump","HeadDump",
-"hotjava","Sun HotJava",
-"ibrowse","IBrowse",
-"intergo","InterGO",
-"linemodebrowser","W3C Line Mode Browser",
-"lotus-notes","Lotus Notes web client",
-"macweb","MacWeb",
-"ncsa_mosaic","NCSA Mosaic",
-"netpositive","NetPositive",
-"nutscrape", "Nutscrape",
-"msfrontpageexpress","MS FrontPage Express",
-"tzgeturl","TZGETURL",
-"viking","Viking",
-"webfetcher","WebFetcher",
-"webexplorer","IBM-WebExplorer",
-"webmirror","WebMirror",
-"webvcr","WebVCR",
-# Site grabbers
-"teleport","TelePort Pro (site grabber)",
-"webcapture","Acrobat (site grabber)",
-"webcopier", "WebCopier (site grabber)",
-# Music only browsers
-"real","RealAudio or compatible (media player)",
-"winamp","WinAmp (media player)",				# Works for winampmpeg and winamp3httprdr
-"windows-media-player","Windows Media Player (media player)",
-"audion","Audion (media player)",
-"freeamp","FreeAmp (media player)",
-"itunes","Apple iTunes (media player)",
-"jetaudio","JetAudio (media player)",
-"mint_audio","Mint Audio (media player)",
-"mpg123","mpg123 (media player)",
-"nsplayer","NetShow Player (media player)",
-"sonique","Sonique (media player)",
-"uplayer","Ultra Player (media player)",
-"xmms","XMMS (media player)",
-"xaudio","Some XAudio Engine based MPEG player (media player)",
-# PDA/Phonecell browsers
-"mmef","Microsoft Mobile Explorer (PDA/Phone browser)",
-"mspie","MS Pocket Internet Explorer (PDA/Phone browser)",
-"up\.","UP.Browser (PDA/Phone browser)",					# Works for UP.Browser and UP.Link
-"wapalizer","WAPalizer (PDA/Phone browser)",
-"wapsilon","WAPsilon (PDA/Phone browser)",
-"webcollage","WebCollage (PDA/Phone browser)",
-"alcatel","Alcatel Browser (PDA/Phone browser)",
-"nokia","Nokia Browser (PDA/Phone browser)",
-# Others (TV)
-"webtv","WebTV browser",
-# Other kind of browsers
-"csscheck","WDG CSS Validator",
-"w3m","w3m",
-"w3c_css_validator","W3C CSS Validator",
-"w3c_validator","W3C HTML Validator",
-"wdg_validator","WDG HTML Validator",
-"webzip","WebZIP",
-"staroffice","StarOffice",
-"libwww","LibWWW"
-);
 
 1;

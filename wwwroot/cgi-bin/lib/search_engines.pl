@@ -1,35 +1,106 @@
 # AWSTATS SEARCH ENGINES DATABASE
-#--------------------------------
-# Last change $Revision$ - $Author$ - $Date$
+#-------------------------------------------------------
+# If you want to add a Search Engine to extend AWStats database detection capabilities,
+# you must add an entry in SearchEnginesSearchIDOrder and in SearchEnginesHashIDLib.
+# An entry if known in SearchEnginesKnownUrl is also welcome.
+#-------------------------------------------------------
+# $Revision$ - $Author$ - $Date$
 
 
-# Search engines names database
-# To add a search engine, add a new line:
+# SearchEnginesSearchIDOrder
+# This list is used to know in which order to search Search Engines IDs (Most
+# frequent one are first in this list to increase detect speed).
+# Note: Browsers IDs are in lower case and ' ' and '+' are changed into '_'
+#-----------------------------------------------------------------
+@SearchEnginesSearchIDOrder=(
+# Major internationnal search engines
+"google\.",
+"msn\.",
+"voila\.",
+"yahoo\.",
+"lycos\.",
+"altavista\.",
+"search\.terra\.",
+"alltheweb\.com",
+"netscape\.",
+"dmoz\.org",
+"search\.aol\.co",
+"www\.search\.com",
+"overture\.com",		# Replace "goto\.com","Goto.com",
+# Minor internationnal search engines
+"northernlight\.",
+"hotbot\.",
+"kvasir\.",
+"webcrawler\.",
+"metacrawler\.",
+"go2net\.com",
+"go\.com",
+"euroseek\.",
+"excite\.",
+"lokace\.",
+"spray\.",
+"netfind\.aol\.com",
+"recherche\.aol\.fr",
+"nbci\.com/search",
+"askjeeves\.",
+"mamma\.",
+"dejanews\.",
+"search\.dogpile\.com",
+"wisenut\.com",
+# Minor brazilian search engines
+"engine\.exe", "miner\.bol\.com\.br",
+# Minor danish search-engines 
+"opasia\.dk", "danielsen\.com",
+# Minor dutch search engines
+"ilse\.","vindex\.",
+# Minor english search engines
+"splut\.","ukplus\.","mirago\.","ukindex\.co\.uk","ukdirectory\.",
+# Minor finnish search engines
+"haku\.www\.fi",
+# Minor french search engines
+"nomade\.fr/","ctrouve\.","francite\.","\.lbb\.org","rechercher\.libertysurf\.fr",
+# Minor german search engines
+"fireball\.de","infoseek\.de","suche\.web\.de","meta\.ger",
+# Minor italian search engines
+"virgilio\.it",
+# Minor norvegian search engines
+"sok\.start\.no",
+# Minor swedish search engines
+"evreka\.passagen\.se",
+# Minor czech search engines
+"atlas\.cz","seznam\.cz","quick\.cz","centrum\.cz","najdi\.to","redbox\.cz",
+# Other
+"search\..*com"
+);
+
+
+# SearchEnginesHashIDLib
+# List of search engines names
 # "match_string_in_url_that_identify_engine", "search_engine_name",
 #-----------------------------------------------------------------
 %SearchEnginesHashIDLib=(
-# Most common search engines
-"yahoo\.","Yahoo",
-"altavista\.","AltaVista",
+# Major internationnal search engines
+"google\.","Google",
 "msn\.","MSN",
 "voila\.", "Voila",
+"yahoo\.","Yahoo",
 "lycos\.","Lycos",
+"altavista\.","AltaVista",
 "search\.terra\.","Terra",
-"google\.","Google",
 "alltheweb\.com","AllTheWeb",
 "netscape\.","Netscape",
-"northernlight\.","NorthernLight",
 "dmoz\.org","DMOZ",
 "search\.aol\.co","AOL",
 "www\.search\.com","Search.com",
-"kvasir\.","Kvasir",
-# Others
+"overture\.com","Overture",		# Replace "goto\.com","Goto.com",
+# Minor internationnal search engines
+"northernlight\.","NorthernLight",
 "hotbot\.","Hotbot",
+"kvasir\.","Kvasir",
 "webcrawler\.","WebCrawler",
 "metacrawler\.","MetaCrawler (Metamoteur)",
 "go2net\.com","Go2Net (Metamoteur)",
 "go\.com","Go.com",
-"overture\.com","Overture",		# Replace "goto\.com","Goto.com",
 "euroseek\.","Euroseek",
 "excite\.","Excite",
 "lokace\.", "Lokace",
@@ -42,21 +113,35 @@
 "dejanews\.","DejaNews",
 "search\.dogpile\.com","Dogpile",
 "wisenut\.com","WISENut",
-"engine\.exe","Cade", "miner\.bol\.com\.br","Meta Miner",		# Minor brazilian search engines
-"opasia\.dk","Opasia", "danielsen\.com","Thor (danielsen.com)",	# Minor danish search-engines 
-"ilse\.","Ilse","vindex\.","Vindex\.nl",						# Minor dutch search engines
-"splut\.","Splut", "ukplus\.", "UKPlus", "mirago\.", "Mirago", "ukindex\.co\.uk", "UKIndex", "ukdirectory\.","UK Directory", # Minor english search engines
-"haku\.www\.fi","Ihmemaa",										# Minor finnish search engines
-"nomade\.fr/","Nomade", "ctrouve\.","C'est trouvé", "francite\.","Francité", "\.lbb\.org", "LBB", "rechercher\.libertysurf\.fr", "Libertysurf",	# Minor french search engines
-"fireball\.de","Fireball", "infoseek\.de","Infoseek", "suche\.web\.de","Web.de", "meta\.ger","MetaGer",	# Minor german search engines
-"virgilio\.it","Virgilio",										# Minor italian search engines
-"sok\.start\.no","start.no",									# Minor norvegian search engines
-"evreka\.passagen\.se","Evreka",								# Minor swedish search engines
-"atlas\.cz","Atlas.cz",	"seznam\.cz","Seznam.cz", "quick\.cz","Quick.cz", "centrum\.cz","Centrum.cz",	#Minor czech search engines
+# Minor brazilian search engines
+"engine\.exe","Cade", "miner\.bol\.com\.br","Meta Miner",
+# Minor danish search-engines 
+"opasia\.dk","Opasia", "danielsen\.com","Thor (danielsen.com)",	
+# Minor dutch search engines
+"ilse\.","Ilse","vindex\.","Vindex\.nl",						
+# Minor english search engines
+"splut\.","Splut", "ukplus\.", "UKPlus", "mirago\.", "Mirago", "ukindex\.co\.uk", "UKIndex", "ukdirectory\.","UK Directory",
+# Minor finnish search engines
+"haku\.www\.fi","Ihmemaa",										
+# Minor french search engines
+"nomade\.fr/","Nomade", "ctrouve\.","C'est trouvé", "francite\.","Francité", "\.lbb\.org", "LBB", "rechercher\.libertysurf\.fr", "Libertysurf",	
+# Minor german search engines
+"fireball\.de","Fireball", "infoseek\.de","Infoseek", "suche\.web\.de","Web.de", "meta\.ger","MetaGer",	
+# Minor italian search engines
+"virgilio\.it","Virgilio",										
+# Minor norvegian search engines
+"sok\.start\.no","start.no",									
+# Minor swedish search engines
+"evreka\.passagen\.se","Evreka",								
+# Minor czech search engines
+"atlas\.cz","Atlas.cz",	"seznam\.cz","Seznam.cz", "quick\.cz","Quick.cz", "centrum\.cz","Centrum.cz","najdi\.to","Najdi.to","redbox\.cz","RedBox.cz",
+# Other
 "search\..*com","Other search engines"
 );
 
-# Search engines known URLs rules to find keywords
+
+# SearchEnginesKnownUrl
+# Search engines known rules to extract keywords from a referrer URL
 #-------------------------------------------------
 %SearchEnginesKnownUrl=(
 # Most common search engines
@@ -100,8 +185,9 @@
 "fireball\.de","q=", "infoseek\.de","qt=", "suche\.web\.de","su=",			# Minor german search engines
 "sok\.start\.no", "q=",											# Minor norvegian search engines
 "evreka\.passagen\.se","q=",										# Minor swedish search engines
-"atlas\.cz","searchtext=", "seznam\.cz","w=", "ftxt\.quick\.cz","query=", "centrum\.cz","q="		# Minor czech search engines
+"atlas\.cz","searchtext=", "seznam\.cz","w=", "ftxt\.quick\.cz","query=", "centrum\.cz","q=", "najdi\.to","dotaz=", "redbox.cz","srch="		# Minor czech search engines
 );
+
 # If no rules are known, this will be used to clean URL of not keyword parameters.
 @WordsToCleanSearchUrl= ("act=","annuaire=","btng=","categoria=","cfg=","cof=","cou=","cp=","dd=","domain=","dt=","dw=","exec=","geo=","hc=","height=","hl=","hq=","hs=","id=","kl=","lang=","loc=","lr=","matchmode=","medor=","message=","meta=","mode=","order=","page=","par=","pays=","pg=","pos=","prg=","qc=","refer=","sa=","safe=","sc=","sort=","src=","start=","style=","stype=","sum=","tag=","temp=","theme=","url=","user=","width=","what=","\\.x=","\\.y=","y=","look=");
 # Never put the following exclusion ("ask=","claus=","general=","kw=","keyword=","keywords=","MT","p=","q=","qr=","qt=","query=","s=","search=","searchText=","string=","su=","w=") because they are strings that contain keywords we're looking for.

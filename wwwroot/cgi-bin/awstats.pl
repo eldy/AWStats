@@ -13,7 +13,7 @@
 
 # use strict and use vars are commented to make AWStats working with old perl.
 use strict;no strict "refs";
-use vars qw(%DomainsHashIDLib @RobotsSearchIDOrder_list1 @RobotsSearchIDOrder_list2 @RobotsSearchIDOrder_list3 @BrowsersSearchIDOrder @OSSearchIDOrder @WordsToCleanSearchUrl %BrowsersHereAreGrabbers %BrowsersHashIcon %BrowsersHashIDLib %OSHashID %OSHashLib %RobotsHashIDLib %SearchEnginesHashIDLib %SearchEnginesKnownUrl %DomainsHashIDLib);
+use vars qw(%DomainsHashIDLib @RobotsSearchIDOrder_list1 @RobotsSearchIDOrder_list2 @RobotsSearchIDOrder_list3 @BrowsersSearchIDOrder @OSSearchIDOrder @WordsToCleanSearchUrl %BrowsersHereAreGrabbers %BrowsersHashIcon %BrowsersHashIDLib %OSHashID %OSHashLib %RobotsHashIDLib @SearchEnginesSearchIDOrder %SearchEnginesHashIDLib %SearchEnginesKnownUrl %DomainsHashIDLib);
 #use warnings;		# Must be used in test mode only. This reduce a little process speed
 #use diagnostics;	# Must be used in test mode only. This reduce a lot of process speed
 use Socket;
@@ -123,7 +123,7 @@ my @OnlyFiles = my @SkipDNSLookupFor = my @SkipFiles = my @SkipHosts = ();
 my @DOWIndex=();
 my @RobotArrayList = my @RobotsSearchIDOrder = ();
 #my @RobotsSearchIDOrder_list1=(); my @RobotsSearchIDOrder_list2=();  my @RobotsSearchIDOrder_list3=();
-#my @BrowsersSearchIDOrder = my @OSSearchIDOrder = ();
+#my @BrowsersSearchIDOrder = my @OSSearchIDOrder = my @SearchEnginesSearchIDOrder();
 #my @WordsToCleanSearchUrl=();
 my @_msiever_h = my @_nsver_h = ();
 my @_from_p = my @_from_h = ();
@@ -787,6 +787,7 @@ sub Read_Ref_Data {
 	# Sanity check.
 	if (@OSSearchIDOrder != scalar keys %OSHashID) { error("Error: Not same number of records of OSSearchIDOrder (".(@OSSearchIDOrder)." entries) and OSHashID (".(scalar keys %OSHashID)." entries) in OS database. Check your file ".$FilePath{"operating_systems.pl"}); }
 	if (@BrowsersSearchIDOrder != scalar keys %BrowsersHashIDLib) { error("Error: Not same number of records of BrowsersSearchIDOrder (".(@BrowsersSearchIDOrder)." entries) and BrowsersHashIDLib (".(scalar keys %BrowsersHashIDLib)." entries) in Browsers database. Check your file ".$FilePath{"browsers.pl"}); }
+	if (@SearchEnginesSearchIDOrder != scalar keys %SearchEnginesHashIDLib) { error("Error: Not same number of records of SearchEnginesSearchIDOrder (".(@SearchEnginesSearchIDOrder)." entries) and SearchEnginesHashIDLib (".(scalar keys %SearchEnginesHashIDLib)." entries) in Search Engines database. Check your file ".$FilePath{"search_engines.pl"}); }
 	if ((@RobotsSearchIDOrder_list1+@RobotsSearchIDOrder_list2+@RobotsSearchIDOrder_list3) != scalar keys %RobotsHashIDLib) { error("Error: Not same number of records of RobotsSearchIDOrder_listx (total is ".(@RobotsSearchIDOrder_list1+@RobotsSearchIDOrder_list2+@RobotsSearchIDOrder_list3)." entries) and RobotsHashIDLib (".(scalar keys %RobotsHashIDLib)." entries) in Robots database. Check your file ".$FilePath{"robots.pl"}); }
 }
 
@@ -3245,7 +3246,7 @@ if ($UpdateStats) {
 
 				# Other ?
 				if (!$found) {
-					foreach my $key (@BrowsersSearchIDOrder) {
+					foreach my $key (@BrowsersSearchIDOrder) {	# Search ID in order of BrowsersSearchIDOrder
 						if ($UserAgent =~ /$key/) {
 							$_browser_h{$key}++;
 							$found=1;
@@ -3277,7 +3278,7 @@ if ($UpdateStats) {
 			if (! $TmpHashOS{$UserAgent}) {
 				my $found=0;
 				# in OSHashID list ?
-				foreach my $key (@OSSearchIDOrder) {	# Searchin ID in order of OSSearchIDOrder
+				foreach my $key (@OSSearchIDOrder) {	# Search ID in order of OSSearchIDOrder
 					if ($UserAgent =~ /$key/) {
 						$_os_h{$OSHashID{$key}}++;
 						$found=1;
@@ -3310,7 +3311,7 @@ if ($UpdateStats) {
 		if ($LevelForRefererAnalyze && $field[$pos_referer]) {
 
 			# Direct ?
-			if ($field[$pos_referer] eq "-" || $field[$pos_referer] eq "bookmarks") {	# "bookmarks" is sent by Netscape
+			if ($field[$pos_referer] eq "-" || $field[$pos_referer] eq "bookmarks") {	# "bookmarks" is sent by Netscape, "-" by all others browsers
 				if ($PageBool) { $_from_p[0]++; }
 				$_from_h[0]++;
 				$found=1;
@@ -3347,19 +3348,17 @@ if ($UpdateStats) {
 
 							if ($LevelForSearchEnginesDetection) {
 								
-							# If made on each record -> -1700 rows/seconds (should be made on 10% of records only)
-							foreach my $key (keys %SearchEnginesHashIDLib) {
-								# This hit came from the search engine $key
-								if ($refererserver =~ /$key/i) {
-									if ($Debug) { debug("Server $refererserver is added to TmpHashRefererServer with value '$key'",2); }
-									$TmpHashRefererServer{$refererserver}="$key";
-									$found=1;
-									last;
+								# If made on each record -> -1700 rows/seconds (should be made on 10% of records only)
+								foreach my $key (@SearchEnginesSearchIDOrder) {		# Search ID in order of SearchEnginesSearchIDOrder
+									if ($refererserver =~ /$key/i) {
+										# This hit came from the search engine $key
+										if ($Debug) { debug("Server $refererserver is added to TmpHashRefererServer with value '$key'",2); }
+										$TmpHashRefererServer{$refererserver}="$key";
+										$found=1;
+										last;
+									}
 								}
 							}
-
-							}
-							
 						}
 					}
 
