@@ -149,27 +149,25 @@ $UseFramesWhenCGI, $DecodeUA)=
 use vars qw/
 $AllowToUpdateStatsFromBrowser $ArchiveLogRecords $DetailedReportsOnNewWindows
 $FirstDayOfWeek $KeyWordsNotSensitive $SaveDatabaseFilesWithPermissionsForEveryone
-$WarningMessages $DebugMessages
+$WarningMessages $DebugMessages $ShowLinksOnUrl
 $ShowMenu $ShowMonthStats $ShowDaysOfMonthStats $ShowDaysOfWeekStats
 $ShowHoursStats $ShowDomainsStats $ShowHostsStats
 $ShowRobotsStats $ShowWormsStats $ShowSessionsStats $ShowPagesStats $ShowFileTypesStats
 $ShowOSStats $ShowBrowsersStats $ShowOriginStats
 $ShowKeyphrasesStats $ShowKeywordsStats $ShowMiscStats $ShowHTTPErrorsStats
-$ShowFlagLinks $ShowLinksOnUrl
 $AddDataArrayMonthStats $AddDataArrayShowDaysOfMonthStats $AddDataArrayShowDaysOfWeekStats $AddDataArrayShowHoursStats
 /;
 ($AllowToUpdateStatsFromBrowser, $ArchiveLogRecords, $DetailedReportsOnNewWindows,
 $FirstDayOfWeek, $KeyWordsNotSensitive, $SaveDatabaseFilesWithPermissionsForEveryone,
-$WarningMessages, $DebugMessages,
+$WarningMessages, $DebugMessages, $ShowLinksOnUrl,
 $ShowMenu, $ShowMonthStats, $ShowDaysOfMonthStats, $ShowDaysOfWeekStats,
 $ShowHoursStats, $ShowDomainsStats, $ShowHostsStats,
 $ShowRobotsStats, $ShowWormsStats, $ShowSessionsStats, $ShowPagesStats, $ShowFileTypesStats,
 $ShowOSStats, $ShowBrowsersStats, $ShowOriginStats,
 $ShowKeyphrasesStats, $ShowKeywordsStats, $ShowMiscStats, $ShowHTTPErrorsStats,
-$ShowFlagLinks, $ShowLinksOnUrl,
 $AddDataArrayMonthStats, $AddDataArrayShowDaysOfMonthStats, $AddDataArrayShowDaysOfWeekStats, $AddDataArrayShowHoursStats
 )=
-(1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1);
+(1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1);
 use vars qw/
 $LevelForRobotsDetection $LevelForBrowsersDetection $LevelForOSDetection $LevelForRefererAnalyze
 $LevelForSearchEnginesDetection $LevelForKeywordsDetection
@@ -181,13 +179,13 @@ use vars qw/
 $DirLock $DirCgi $DirData $DirIcons $DirLang $AWScript $ArchiveFileName
 $AllowAccessFromWebToFollowingIPAddresses $HTMLHeadSection $HTMLEndSection $LinksToWhoIs $LinksToIPWhoIs
 $LogFile $LogFormat $LogSeparator $Logo $LogoLink $StyleSheet $WrapperScript $SiteDomain
-$UseHTTPSLinkForUrl $URLQuerySeparators $URLWithAnchor $ErrorMessages
+$UseHTTPSLinkForUrl $URLQuerySeparators $URLWithAnchor $ErrorMessages $ShowFlagLinks
 /;
 ($DirLock, $DirCgi, $DirData, $DirIcons, $DirLang, $AWScript, $ArchiveFileName,
 $AllowAccessFromWebToFollowingIPAddresses, $HTMLHeadSection, $HTMLEndSection, $LinksToWhoIs, $LinksToIPWhoIs,
 $LogFile, $LogFormat, $LogSeparator, $Logo, $LogoLink, $StyleSheet, $WrapperScript, $SiteDomain,
-$UseHTTPSLinkForUrl, $URLQuerySeparators, $URLWithAnchor, $ErrorMessages)=
-('','','','','','','','','','','','','','','','','','','','','','','','');
+$UseHTTPSLinkForUrl, $URLQuerySeparators, $URLWithAnchor, $ErrorMessages, $ShowFlagLinks)=
+('','','','','','','','','','','','','','','','','','','','','','','','','');
 use vars qw/
 $color_Background $color_TableBG $color_TableBGRowTitle
 $color_TableBGTitle $color_TableBorder $color_TableRowTitle $color_TableTitle
