@@ -304,16 +304,16 @@ Check in your disk that you have only ONE of those files (They should be in 'db'
 <font style="color: #4444cc">SOLUTION:</font> This error means that the web server 
 didn't succeed in writing the working temporary file (file ended by .tmp.9999 
 where 9999 is a number) because of permissions problems.<br>
-First check that the directory <i>/workingpath</i> has write permission for<br>
-user <u>nobody</u> (default used user by apache on linux systems)<br>
+First check that the directory <i>/workingpath</i> has "Write" permission for<br>
+user <u>nobody</u> (default user used by apache on Linux systems)<br>
 or user <u>IUSR_<i>SERVERNAME</i></u> (default used user by IIS on NT).<br>
 With Unix, try with a path with no links.<br>
-With NT, you must check NTFS permissions if your directory is on a NTFS partition.<br>
-With IIS, there is also a write permission attribute, defined in directory properties 
+With NT, you must check NTFS permissions ("Read/Write/Modify"), if your directory is on a NTFS partition.<br>
+With IIS, there is also a "Write" permission attribute, defined in directory properties 
 in your IIS setup, that you must check.<br>
 With IIS, if a default cgi-bin directory was created during IIS install, try to 
-put AWStats directly this directory.<br>
-If this still doesn't work, you can change the DirData parameter to say AWStats 
+put AWStats directly into this directory.<br>
+If this still fails, you can change the DirData parameter to say AWStats 
 that you want to use another directory (A directory you are sure that the default 
 user, used by web server process, can write into).<br>
 <br>

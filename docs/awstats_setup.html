@@ -150,14 +150,14 @@ Use <b>"LogFormat"</b> to value "3" if you have WebStar native log format.<br>
 <br><a name="BUILD_UPDATE"><H2 style="font: 22px Times; color: #606060"><u>Build/Update Statistics</u></H2></a>
 
 <br>
-Even if AWStats allows "real-time" statistics with its "update feature" from your web browser (See next
+Even if AWStats allows "real-time" statistics with its "update from browser feature" (See next
 section <a href="#READ">Read Statistics</a>), you must run the update process from a scheduler frequently.<br>
 The first update of statistics can be made the first time manually from the command line (the first time,
 process may be long :<br>
 <b><i>awstats.pl -config=virtualhostname -update</i></b><br>
 <br>
-AWStats will read the config file (awstats.virtualhostname.conf, or, if
-not found, awstats.conf) and create/update its database with all summary information issued from analyzed log file.<br>
+AWStats will read the config file (awstats.virtualhostname.conf, or, if not found, awstats.conf)
+and create/update its database with all summary information issued from analyzed log file.<br>
 AWStats database files are saved in directory defined by <i>DirData</i> parameter in config file.<br>
 When update is finished, you should get a result like this:<br>
 <i>Lines in file: 225730<br>
