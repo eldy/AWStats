@@ -78,7 +78,7 @@ $found, $internal_link) = ();
 %MonthBytes = %MonthHits = %MonthHostsKnown = %MonthHostsUnknown = %MonthPages = %MonthUnique = %MonthVisits =
 %monthlib = %monthnum = ();
 
-$VERSION="3.2 (build 10)";
+$VERSION="3.2 (build 11)";
 $Lang="en";
 
 # Default value
@@ -1271,7 +1271,6 @@ sub Check_Config {
 	if ($ShowKeywordsStats !~ /[0-1]/)            { $ShowKeywordsStats=1; }
 	if ($ShowHTTPErrorsStats !~ /[0-1]/)          { $ShowHTTPErrorsStats=1; }
 	if ($ShowAuthenticatedUsers !~ /[0-1]/)       { $ShowAuthenticatedUsers=1; }
-	if ($ShowFlagLinks !~ /[0-1]/)                { $ShowFlagLinks=1; }
 	if ($ShowLinksOnURL !~ /[0-1]/)               { $ShowLinksOnURL=1; }
 	if ($DetailedReportsOnNewWindows !~ /[0-1]/)  { $DetailedReportsOnNewWindows=1; }
 	if ($BarWidth !~ /^[\d][\d]*/)                { $BarWidth=260; }
@@ -1848,23 +1847,25 @@ sub Init_HashArray {
 }
 
 #--------------------------------------------------------------------
-# Function:      Show flags for 5 major languages
-# Input:         Languade id (en, fr, ...)
+# Function:      Show flags for other language translations
+# Input:         Current languade id (en, fr, ...)
 #--------------------------------------------------------------------
 sub Show_Flag_Links {
-	my $Lang = shift;
-	my @lngcode = ();
-	if ($ShowFlagLinks == 1) { 
-		$lngcode[0]="English en";
-		$lngcode[1]="French fr";
-		$lngcode[2]="Dutch nl";
-		$lngcode[3]="Spanish es";
-		$lngcode[4]="Italian it";
-		$lngcode[5]="German de";
-		print "<br>\n";
-		for (0..5) {		# Only flags for 5 major languages
-			my ($lng, $code) = split(/\s+/, $lngcode[$_]);
-			if ($Lang ne $code) { print "<a href=\"$DirCgi$PROG.$Extension?".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$code\"><img src=\"$DirIcons\/flags\/$code.png\" height=14 border=0 alt=\"$lng\" title=\"$lng\"></a>&nbsp;\n"; }
+	my $CurrentLang = shift;
+	if ($ShowFlagLinks eq "0") { $ShowFlagLinks = ""; }						# For backward compatibility
+	if ($ShowFlagLinks eq "1") { $ShowFlagLinks = "en fr de it nl es"; }	# For backward compatibility
+	my @flaglist=split(/\s+/,$ShowFlagLinks);
+	print "<br>\n";
+	foreach my $flag (@flaglist) {
+		if ($flag ne $CurrentLang) {
+			my $lng=$flag;
+			if ($flag eq "en") { $lng="English"; }
+			if ($flag eq "fr") { $lng="French"; }
+			if ($flag eq "de") { $lng="German"; }
+			if ($flag eq "it") { $lng="Italian"; }
+			if ($flag eq "nl") { $lng="Dutch"; }
+			if ($flag eq "es") { $lng="Spanish"; }
+			print "<a href=\"$DirCgi$PROG.$Extension?".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$flag\"><img src=\"$DirIcons\/flags\/$flag.png\" height=14 border=0 alt=\"$lng\" title=\"$lng\"></a>&nbsp;\n";
 		}
 	}
 }
