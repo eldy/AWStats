@@ -397,7 +397,8 @@ use vars qw/ %smtpcodelib /;
 sub html_head {
 	if ($HTMLOutput) {
 		# Write head section
-		print "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">\n\n";
+		if ($FrameName ne "index") { print "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">\n\n";  }
+		else { print "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Frameset//EN\">\n\n"; }
 		print "<html>\n";
 		print "<head>\n";
 		if ($PageCode) { print "<META HTTP-EQUIV=\"content-type\" CONTENT=\"text/html; charset=$PageCode\"\n"; }		# If not defined, iso-8859-1 is used in major countries
@@ -511,7 +512,7 @@ sub error {
 	my $secondmessage=shift||"";
 	my $thirdmessage=shift||"";
 	if ($Debug) { debug("$message $secondmessage $thirdmessage",1); }
-	if ($message =~ /^Format error$/) {
+	if ($message =~ /^Format error$/i) {
 		my $tagbold=""; my $tagunbold=""; my $tagbr=""; my $tagfontred=""; my $tagunfont="";
 		# Files seems to have bad format
 		if ($HTMLOutput) {
@@ -978,10 +979,10 @@ sub Read_Ref_Data {
 		}
 	}
 	# Sanity check.
-	if (@OSSearchIDOrder != scalar keys %OSHashID) { error("Error: Not same number of records of OSSearchIDOrder (".(@OSSearchIDOrder)." entries) and OSHashID (".(scalar keys %OSHashID)." entries) in OS database. Check your file ".$FilePath{"operating_systems.pl"}); }
-	if (@BrowsersSearchIDOrder != scalar keys %BrowsersHashIDLib) { error("Error: Not same number of records of BrowsersSearchIDOrder (".(@BrowsersSearchIDOrder)." entries) and BrowsersHashIDLib (".(scalar keys %BrowsersHashIDLib)." entries) in Browsers database. Check your file ".$FilePath{"browsers.pl"}); }
-	if (@SearchEnginesSearchIDOrder != scalar keys %SearchEnginesHashIDLib) { error("Error: Not same number of records of SearchEnginesSearchIDOrder (".(@SearchEnginesSearchIDOrder)." entries) and SearchEnginesHashIDLib (".(scalar keys %SearchEnginesHashIDLib)." entries) in Search Engines database. Check your file ".$FilePath{"search_engines.pl"}); }
-	if ((@RobotsSearchIDOrder_list1+@RobotsSearchIDOrder_list2+@RobotsSearchIDOrder_list3) != scalar keys %RobotsHashIDLib) { error("Error: Not same number of records of RobotsSearchIDOrder_listx (total is ".(@RobotsSearchIDOrder_list1+@RobotsSearchIDOrder_list2+@RobotsSearchIDOrder_list3)." entries) and RobotsHashIDLib (".(scalar keys %RobotsHashIDLib)." entries) in Robots database. Check your file ".$FilePath{"robots.pl"}); }
+	if (@OSSearchIDOrder != scalar keys %OSHashID) { error("Error: Not same number of records of OSSearchIDOrder (".(@OSSearchIDOrder)." entries) and OSHashID (".(scalar keys %OSHashID)." entries) in OS database. Check your file ".$FilePath{"operating_systems.pm"}); }
+	if (@BrowsersSearchIDOrder != scalar keys %BrowsersHashIDLib) { error("Error: Not same number of records of BrowsersSearchIDOrder (".(@BrowsersSearchIDOrder)." entries) and BrowsersHashIDLib (".(scalar keys %BrowsersHashIDLib)." entries) in Browsers database. Check your file ".$FilePath{"browsers.pm"}); }
+	if (@SearchEnginesSearchIDOrder != scalar keys %SearchEnginesHashIDLib) { error("Error: Not same number of records of SearchEnginesSearchIDOrder (".(@SearchEnginesSearchIDOrder)." entries) and SearchEnginesHashIDLib (".(scalar keys %SearchEnginesHashIDLib)." entries) in Search Engines database. Check your file ".$FilePath{"search_engines.pm"}); }
+	if ((@RobotsSearchIDOrder_list1+@RobotsSearchIDOrder_list2+@RobotsSearchIDOrder_list3) != scalar keys %RobotsHashIDLib) { error("Error: Not same number of records of RobotsSearchIDOrder_listx (total is ".(@RobotsSearchIDOrder_list1+@RobotsSearchIDOrder_list2+@RobotsSearchIDOrder_list3)." entries) and RobotsHashIDLib (".(scalar keys %RobotsHashIDLib)." entries) in Robots database. Check your file ".$FilePath{"robots.pm"}); }
 }
 
 #------------------------------------------------------------------------------
@@ -1531,7 +1532,7 @@ sub Read_History_File_With_Update {
 			chomp $_; s/\r//; $countlines++;
 	
 			# Analyze config line
-			if ($_ =~ /^AWSTATS DATA FILE (\d+).(\d+)/) {
+			if ($_ =~ /^AWSTATS DATA FILE (\d+).(\d+)/i) {
 				$versionnum=($1*1000)+$2;
 				if ($Debug) { debug(" Data file version is $versionnum",1); }
 				next;
@@ -1692,18 +1693,16 @@ sub Read_History_File_With_Update {
 
 						# Process data saved in 'wait' arrays
 						if ($_waithost_e{$field[0]}){
-							my $timehostl;
-							my $timehosts;
-							my $hostu;
-							if ($versionnum >= 5000) { $timehostl=int($field[5]); $timehosts=int($field[6]); $hostu=$field[7]; }
-							else { $timehostl=int($field[4]); $timehosts=int($field[5]); $hostu=$field[6]; }
+							my $timehostl=int($field[4]);
+							my $timehosts=int($field[5]);
+							my $hostu=$field[6];
 							my $newtimehosts=($_waithost_s{$field[0]}?$_waithost_s{$field[0]}:$_host_s{$field[0]});
 							my $newtimehostl=($_waithost_l{$field[0]}?$_waithost_l{$field[0]}:$_host_l{$field[0]});
 							if ($newtimehosts > $timehostl + $VisitTimeOut ) {
 								if ($Debug) { debug(" Visit in 'wait' arrays is a new visit different than last in history",3); }
 								$_url_x{$hostu}++;
 								$_url_e{$_waithost_e{$field[0]}}++;
-								$newtimehosts =~ /^(\d\d\d\d\d\d)/; $DayVisits{$1}++;
+								$newtimehosts =~ /^(\d\d\d\d\d\d\d\d)/; $DayVisits{$1}++;
 								if ($timehosts && $timehostl) { $_session{GetSessionRange($timehosts,$timehostl)}++; }
 								if ($_waithost_s{$field[0]}) {
 									# There was also a second session processed log
@@ -1714,7 +1713,7 @@ sub Read_History_File_With_Update {
 							else {
 								if ($Debug) { debug(" Visit in 'wait' arrays is following of last in history",3); }
 								if ($_waithost_s{$field[0]}) {
-									# There was also a second session processed log
+									# There was also a second session in processed log
 									$_session{GetSessionRange(Minimum($timehosts,$newtimehosts),$timehostl>$newtimehostl?$timehostl:$newtimehostl)}++;
 									# Here $_host_l $_host_s and $_host_u are correctly defined
 								}
@@ -1722,7 +1721,7 @@ sub Read_History_File_With_Update {
 									# We correct $_host_l $_host_s and $_host_u
 									if ($timehostl > $newtimehostl) {
 										$_host_l{$field[0]}=$timehostl;
-										$_host_u{$field[0]}=($versionnum>5000?$field[7]:$field[6]);
+										$_host_u{$field[0]}=$field[6];
 									}
 									if ($timehosts > $newtimehosts) {
 										$_host_s{$field[0]}=$newtimehosts;
@@ -2443,9 +2442,7 @@ sub Read_History_File_With_Update {
 		foreach my $key (keys %_waithost_e) {
 	
 			$MonthUnique{$year.$month}++; 
-#			if ($versionnum >= 5000) {
-				$MonthVisits{$year.$month}++;
-#			}
+			$MonthVisits{$year.$month}++;
 
 			my $newtimehosts=($_waithost_s{$key}?$_waithost_s{$key}:$_host_s{$key});
 			my $newtimehostl=($_waithost_l{$key}?$_waithost_l{$key}:$_host_l{$key});
@@ -2520,7 +2517,7 @@ sub Save_History {
 		print HISTORYTMP "# Date - Pages - Hits - Bandwith - Visits\n";
 		print HISTORYTMP "BEGIN_DAY\n";
 		foreach my $key (keys %DayHits) {
-			if ($key =~ /^$year$month/) {	# Found a day entry of the good month
+			if ($key =~ /^$year$month/i) {	# Found a day entry of the good month
 				my $page=$DayPages{$key}||0;
 				my $hits=$DayHits{$key}||0;
 				my $bytes=$DayBytes{$key}||0;
@@ -2746,7 +2743,7 @@ sub Save_History {
 		print HISTORYTMP "BEGIN_PAGEREFS\n";
 		foreach my $key (keys %_pagesrefs_h) {
 			my $newkey=$key;
-			$newkey =~ s/^http(s|):\/\/([^\/]+)\/$/http$1:\/\/$2/;	# Remove / at end of http://.../ but not at end of http://.../dir/
+			$newkey =~ s/^http(s|):\/\/([^\/]+)\/$/http$1:\/\/$2/i;	# Remove / at end of http://.../ but not at end of http://.../dir/
 			$newkey =~ s/\s/%20/g;
 			print HISTORYTMP "$newkey $_pagesrefs_h{$key}\n";
 		}
@@ -3322,13 +3319,13 @@ else {								# Run from command line
 	if ($QueryString =~ /config=([^\s&]+)/i)	{ $SiteConfig=&DecodeEncodedString($1); }
 	$UpdateStats=1; $HTMLOutput="";                           								# Update with no report by default when run from command line
 	if ($QueryString =~ /showsteps/i) 			{ $ShowSteps=1; }
-	$QueryString=~s/showsteps[^&]*//;
+	$QueryString=~s/showsteps[^&]*//i;
 	if ($QueryString =~ /showcorrupted/i) 		{ $ShowCorrupted=1; }
-	$QueryString=~s/showcorrupted[^&]*//;
+	$QueryString=~s/showcorrupted[^&]*//i;
 	if ($QueryString =~ /showdropped/i)			{ $ShowDropped=1; }
-	$QueryString=~s/showdropped[^&]*//;
+	$QueryString=~s/showdropped[^&]*//i;
 	if ($QueryString =~ /showunknownorigin/i)	{ $ShowUnknownOrigin=1; }
-	$QueryString=~s/showunknownorigin[^&]*//;
+	$QueryString=~s/showunknownorigin[^&]*//i;
 }
 if ($QueryString =~ /logfile=([^\s&]+)/i )      { $LogFile=&DecodeEncodedString($1); }
 if ($QueryString =~ /staticlinks/i) 			{ $StaticLinks=".$SiteConfig"; }
@@ -3340,9 +3337,9 @@ if ($QueryString =~ /output=.*output=/i) { error("Only 1 output option is allowe
 if ($QueryString =~ /output/i) {
 	$HTMLOutput="main";
 	if (! $ENV{"GATEWAY_INTERFACE"} && $QueryString !~ /update/i) { $UpdateStats=0; }	# If output only, on command line, no update
-	if ($QueryString =~ /output=([^\s&:]+)/i) { $HTMLOutput=$1; $HTMLOutput =~ tr/A-Z/a-z/; }
+	if ($QueryString =~ /output=([^\s&:]+)/i) { $HTMLOutput=lc($1); }
 }
-$QueryString=~s/&{0,1}output&//; $QueryString=~s/&{0,1}output$//;	# -output with no = is same than nothing
+$QueryString=~s/&{0,1}output&//i; $QueryString=~s/&{0,1}output$//i;	# -output with no = is same than nothing
 # A filter on URL list can be defined with output=urldetail:filter to reduce number of lines read and showed
 if ($QueryString =~ /output=urldetail:([^\s&]+)/i)	{ $URLFilter=&DecodeEncodedString($1); }
 # A filter on URL list can also be defined with urlfilter=filter
@@ -3513,8 +3510,7 @@ if (! $DirData || $DirData eq ".") { $DirData=$DIR; }	# If not defined or chosen
 if (! $DirData)  { $DirData="."; }						# If current dir not defined then we put it to "."
 $DirData =~ s/\/$//; $DirData =~ s/\\$//;
 # Define SiteToAnalyze and SiteToAnalyzeWithoutwww for regex operations
-$SiteToAnalyze=$SiteDomain;
-$SiteToAnalyze =~ tr/A-Z/a-z/; $SiteToAnalyze =~ s/\./\\\./g;
+$SiteToAnalyze=lc($SiteDomain); $SiteToAnalyze =~ s/\./\\\./g;
 $SiteToAnalyzeWithoutwww = $SiteToAnalyze; $SiteToAnalyzeWithoutwww =~ s/www\.//;
 if ($FirstDayOfWeek == 1) { @DOWIndex = (1,2,3,4,5,6,0); }
 else { @DOWIndex = (0,1,2,3,4,5,6); }
@@ -3911,11 +3907,11 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {	# Updat
 		#----------------------------------------------------------------------
 		# TODO Use a TmpProtocol
 		my $protocol=0;
-		if ($field[$pos_method] eq 'GET' || $field[$pos_method] eq 'POST' || $field[$pos_method] eq 'HEAD' || $field[$pos_method] =~ /OK/) {
+		if ($field[$pos_method] eq 'GET' || $field[$pos_method] eq 'POST' || $field[$pos_method] eq 'HEAD' || $field[$pos_method] =~ /OK/i) {
 			# HTTP request.	Keep only GET, POST, HEAD, *OK* with Webstar but not OPTIONS
 			$protocol=1;
 		}
-		elsif ($field[$pos_method] =~ /sent/ || $field[$pos_method] =~ /get/) {
+		elsif ($field[$pos_method] =~ /sent/i || $field[$pos_method] =~ /get/i) {
 			# FTP request.
 			$protocol=2;
 		}
@@ -3941,7 +3937,7 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {	# Updat
 #		my $yearmonthdayrecord="$dateparts[2]$dateparts[1]$dateparts[0]";
 		my $yearmonthdayrecord=sprintf("$dateparts[2]%02i%02i",$dateparts[1],$dateparts[0]);
 #		my $timerecord=int($yearmonthdayrecord.$dateparts[3].$dateparts[4].$dateparts[5]);
-		my $timerecord=((int("$yearmonthdayrecord")*100+$dateparts[3])*100+$dateparts[4])*100+$dateparts[5];	# !!!
+		my $timerecord=((int("$yearmonthdayrecord")*100+$dateparts[3])*100+$dateparts[4])*100+$dateparts[5];
 		my $yearrecord=int($dateparts[2]);
 		my $monthrecord=int($dateparts[1]);
 
@@ -3980,7 +3976,7 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {	# Updat
 
 		# TODO. Add robot in a list if URL is robots.txt (Note: robot referer value can be same than a normal browser)
 
-		# Skip for some client host IP addresses, some URLs, other URLs		# !!!
+		# Skip for some client host IP addresses, some URLs, other URLs
 		my $qualifdrop="";
 		if (@SkipHosts && &SkipHost($field[$pos_rc]))       { $qualifdrop="Dropped record (host $field[$pos_rc] not qualified by SkipHosts)"; }
 		elsif (@SkipFiles && &SkipFile($field[$pos_url]))   { $qualifdrop="Dropped record (URL $field[$pos_url] not qualified by SkipFiles)"; }
@@ -4029,8 +4025,7 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {	# Updat
 
 		$field[$pos_agent] =~ tr/\+ /__/;		# Same Agent with different writing syntax have now same name
 		$field[$pos_agent] =~ s/%20/_/g;		# This is to support servers (like Roxen) that writes user agent with %20 in it
-		$UserAgent = $field[$pos_agent];
-		$UserAgent =~ tr/A-Z/a-z/;
+		$UserAgent = lc($field[$pos_agent]);
 
 		# Analyze: Robot
 		#---------------
@@ -4040,9 +4035,9 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {	# Updat
 			if (! $uarobot) {
 				# If made on each record -> -1300 rows/seconds
 				my $foundrobot=0;
-				# study $UserAgent
+				#study $UserAgent;		Does not increase speed
 				foreach my $bot (@RobotsSearchIDOrder) {
-					if ($UserAgent =~ /$bot/) {
+					if ($UserAgent =~ /$bot/i) {
 						$foundrobot=1;
 						$TmpRobot{$UserAgent}=$uarobot="$bot";	# Last time, we won't search if robot or not. We know it's is.
 						last;
@@ -4085,7 +4080,7 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {	# Updat
 		my $extension;
 		# Extension
 		if ($urlwithnoquery =~ /\.(\w{1,6})$/ || ($urlwithnoquery =~ /[\\\/]$/ && $DefaultFile[0] =~ /\.(\w{1,6})$/)) {
-			$extension=$1; $extension =~ tr/A-Z/a-z/;
+			$extension=lc($1);
 			if ($NotPageList{$extension}) { $PageBool=0; }
 		}
 		else {
@@ -4194,8 +4189,7 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {	# Updat
 		}
 		else {
 			# $Host has been resolved or was already a host name
-			$_ = ($HostResolved?$HostResolved:$Host);
-			tr/A-Z/a-z/;
+			$_ = lc($HostResolved?$HostResolved:$Host);
 			if (/\.(\w+)$/) { $Domain=$1; }
 		}
 		if ($PageBool) { $_domener_p{$Domain}++; }
@@ -4297,8 +4291,8 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {	# Updat
 						$_browser_h{"msie"}++;
 						if ($UserAgent =~ /msie_(\d)\./) {  # $1 now contains IE major version no
 							$_msiever_h[$1]++;
-							$found=1;
 							$TmpBrowser{$UserAgent}="msie_$1";
+							$found=1;
 						}
 					}
 
@@ -4308,8 +4302,8 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {	# Updat
 							$_browser_h{"netscape"}++;
 							if ($UserAgent =~ /\/(\d)\./) {		# $1 now contains Netscape major version no
 								$_nsver_h[$1]++;
-								$found=1;
 								$TmpBrowser{$UserAgent}="netscape_$1";
+								$found=1;
 							}
 						}
 					}
@@ -4317,10 +4311,10 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {	# Updat
 					# Other ?
 					if (!$found) {
 						foreach my $key (@BrowsersSearchIDOrder) {	# Search ID in order of BrowsersSearchIDOrder
-							if ($UserAgent =~ /$key/) {
+							if ($UserAgent =~ /$key/i) {
 								$_browser_h{$key}++;
-								$found=1;
 								$TmpBrowser{$UserAgent}=$key;
+								$found=1;
 								last;
 							}
 						}
@@ -4354,17 +4348,18 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {	# Updat
 					my $found=0;
 					# in OSHashID list ?
 					foreach my $key (@OSSearchIDOrder) {	# Search ID in order of OSSearchIDOrder
-						if ($UserAgent =~ /$key/) {
-							$_os_h{$OSHashID{$key}}++;
+						if ($UserAgent =~ /$key/i) {
+							my $osid=$OSHashID{$key};
+							$_os_h{$osid}++;
+							$TmpOS{$UserAgent}=$osid;
 							$found=1;
-							$TmpOS{$UserAgent}=$OSHashID{$key};
 							last;
 						}
 					}
 					# Unknown OS ?
 					if (!$found) {
-						$_os_h{"Unknown"}++;
 						$_unknownreferer_l{$field[$pos_agent]}=$timerecord;
+						$_os_h{"Unknown"}++;
 						$TmpOS{$UserAgent}="Unknown";
 					}
 				}
@@ -4454,8 +4449,7 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {	# Updat
 							my @refurl=split(/\?/,$field[$pos_referer],2);
 							if ($refurl[1]) {
 								# Extract keywords
-								if ($KeyWordsNotSensitive) { $refurl[1] =~ tr/A-Z/a-z/; }			# Full param string in lowcase
-								my @paramlist=split(/&/,$refurl[1]);
+								my @paramlist=split(/&/,$KeyWordsNotSensitive?lc($refurl[1]):$refurl[1]);
 								if ($SearchEnginesKnownUrl{$TmpRefererServer{$refererserver}}) {	# Search engine with known URL syntax
 									foreach my $param (@paramlist) {
 										#if ($param =~ /^$SearchEnginesKnownUrl{$key}/) { 	# We found good parameter
@@ -4724,7 +4718,7 @@ EOF
 				&Read_History_File_With_Update($YearRequired,$monthix,0,0,"all");										# Read full history file
 			}
 			else {
-				&Read_History_File_With_Update($YearRequired,$monthix,0,0,"general time_partialy visitor_partialy");	# Read general and partialy visitor
+				&Read_History_File_With_Update($YearRequired,$monthix,0,0,"general time_partialy day_partialy visitor_partialy");	# Read general and partialy visitor
 			}
 		}
 	}
@@ -5997,7 +5991,7 @@ EOF
 				}
 			else {
 				my $newos=$OSHashLib{$key}||$key;
-				my $nameicon=$newos; $nameicon =~ s/\s.*//; $nameicon =~ tr/A-Z/a-z/;
+				my $nameicon=lc($newos); $nameicon =~ s/\s.*//;
 				print "<TR><TD width=100><IMG SRC=\"$DirIcons\/os\/$nameicon.png\"></TD><TD CLASS=AWL>$newos</TD><TD>$_os_h{$key}</TD>";
 				print "<TD>$p&nbsp;%</TD></TR>\n";
 			}
@@ -6021,7 +6015,7 @@ EOF
 				print "<TR><TD width=100><IMG SRC=\"$DirIcons\/browser\/unknown.png\"></TD><TD CLASS=AWL><a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=unknownbrowser":"$PROG$StaticLinks.unknownbrowser.html")."\"$NewLinkTarget>$Message[0]</a></TD><TD width=80>?</TD><TD>$_browser_h{$key}</TD><TD>$p&nbsp;%</TD></TR>\n";
 			}
 			else {
-				my $nameicon=$BrowsersHashIcon{$key}||"notavailable"; $nameicon =~ s/\s.*//; $nameicon =~ tr/A-Z/a-z/;
+				my $nameicon=lc($BrowsersHashIcon{$key}||"notavailable"); $nameicon =~ s/\s.*//;
 				my $newbrowser=$BrowsersHashIDLib{$key}||$key;
 				if ($newbrowser eq "netscape") { $newbrowser="<font color=blue>Netscape</font> <a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=browserdetail":"$PROG$StaticLinks.browserdetail.html")."\"$NewLinkTarget>($Message[58])</a>"; }
 				if ($newbrowser eq "msie") { $newbrowser="<font color=blue>MS Internet Explorer</font> <a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=browserdetail":"$PROG$StaticLinks.browserdetail.html")."\"$NewLinkTarget>($Message[58])</a>"; }
