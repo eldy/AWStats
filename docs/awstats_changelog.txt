@@ -10,6 +10,7 @@ Fixes:
   server analysis.
 - Problem in %Wy tag for ten first weeks of year (coded one 1 char instead
   of 2: First week should be "00" instead of "0").
+- Tooltips now works correctly with Netscape (>= 5.0).
 
 New features/improvments:
 - Added urlbuildalias.pl tool.
