@@ -64,21 +64,21 @@ $ShowFlagLinks, $ShowLinksOnURL, $ShowLinksOnUrl, $ShowSteps,
 $SiteConfig, $SiteDomain, $SiteToAnalyze, $SiteToAnalyzeWithoutwww,
 $TotalBytes, $TotalDifferentPages, $TotalErrors, $TotalHits,
 $TotalHostsKnown, $TotalHostsUnKnown, $TotalPages, $TotalUnique, $TotalVisits,
-$URLFilter, $URLWithQuery, $UserAgent, $WarningMessages, $YearRequired, 
+$URLFilter, $URLWithQuery, $UserAgent, $YearRequired, 
 $color_Background, $color_TableBG, $color_TableBGRowTitle,
 $color_TableBGTitle, $color_TableBorder, $color_TableRowTitle, $color_TableTitle,
 $color_h, $color_k, $color_link, $color_p, $color_s, $color_v, $color_w, $color_weekend,
 $found, $internal_link) = ();
+$WarningMessages= 1;
 # ---------- Init arrays --------
 @HostAliases = @Message = @OnlyFiles = @SkipDNSLookupFor = @SkipFiles = @SkipHosts = @DOWIndex = ();
-@_dayofweek_p = @_dayofweek_h = @_dayofweek_k = (0, 0, 0, 0, 0, 0, 0);
 # ---------- Init hash arrays --------
 %DayBytes = %DayHits = %DayPages = %DayUnique = %DayVisits =
 %FirstTime = %HistoryFileAlreadyRead = %LastTime = %LastUpdate =
 %MonthBytes = %MonthHits = %MonthHostsKnown = %MonthHostsUnknown = %MonthPages = %MonthUnique = %MonthVisits =
 %monthlib = %monthnum = ();
 
-$VERSION="3.2 (build 13)";
+$VERSION="3.2 (build 15)";
 $Lang="en";
 
 # Default value
@@ -130,643 +130,6 @@ $AddOn=0;
 %MyDNSTable = (
 "256.256.256.1", "myworkstation1",
 "256.256.256.2", "myworkstation2"
-);
-
-# Search engines names database (update the 10th january 2001)
-# To add a search engine, add a new line:
-# "match_string_in_url_that_identify_engine", "search_engine_name",
-#-------------------------------------------------------
-%SearchEnginesHash=(
-# Most common search engines
-"yahoo\.","Yahoo",
-"altavista\.","AltaVista",
-"msn\.","MSN",
-"voila\.", "Voila",
-"lycos\.","Lycos",
-"search\.terra\.","Terra",
-"google\.","Google",
-"alltheweb\.com","AllTheWeb",
-"netscape\.","Netscape",
-"northernlight\.","NorthernLight",
-"dmoz\.org","DMOZ",
-"search\.aol\.co","AOL",
-"www\.search\.com","Search.com",
-"kvasir\.","Kvasir",
-# Others
-"hotbot\.","Hotbot",
-"webcrawler\.","WebCrawler",
-"metacrawler\.","MetaCrawler (Metamoteur)",
-"go2net\.com","Go2Net (Metamoteur)",
-"go\.com","Go.com",
-"goto\.com","Goto.com",
-"euroseek\.","Euroseek",
-"excite\.","Excite",
-"lokace\.", "Lokace",
-"spray\.","Spray",
-"netfind\.aol\.com","AOL",
-"recherche\.aol\.fr","AOL",
-"nbci\.com/search","NBCI",
-"askjeeves\.","Ask Jeeves",
-"mamma\.","Mamma",
-"dejanews\.","DejaNews",
-"search\.dogpile\.com","Dogpile",
-"wisenut\.com","WISENut",
-"engine\.exe","Cade", "miner\.bol\.com\.br","Meta Miner",		# Minor brazilian search engines
-"opasia\.dk","Opasia", "danielsen\.com","Thor (danielsen.com)",	# Minor danish search-engines 
-"ilse\.","Ilse","vindex\.","Vindex\.nl",						# Minor dutch search engines
-"splut\.","Splut", "ukplus\.", "UKPlus", "mirago\.", "Mirago", "ukindex\.co\.uk", "UKIndex", "ukdirectory\.","UK Directory", # Minor english search engines
-"nomade\.fr/","Nomade", "ctrouve\.","C'est trouvé", "francite\.","Francité", "\.lbb\.org", "LBB", "rechercher\.libertysurf\.fr", "Libertysurf",	# Minor french search engines
-"fireball\.de","Fireball", "infoseek\.de","Infoseek", "suche\.web\.de","Web.de", "meta\.ger","MetaGer",	# Minor german search engines
-"virgilio\.it","Virgilio",										# Minor italian search engines
-"sok\.start\.no","start.no",									# Minor norvegian search engines
-"evreka\.passagen\.se","Evreka",								# Minor swedish search engines
-"search\..*com","Other search engines"
-);
-
-# Search engines known URLs rules to find keywords (update the 10th january 2001)
-#-------------------------------------------------------
-%SearchEnginesKnownUrl=(
-# Most common search engines
-"yahoo\.","p=",
-"altavista\.","q=",
-"msn\.","q=",
-"voila\.","kw=",
-"lycos\.","query=",
-"google\.","q=",
-"alltheweb\.","query=",
-"netscape\.","search=",
-"northernlight\.","qr=",
-"dmoz\.org","search=",
-"search\.aol\.co","query=",
-"www\.search\.com","q=",
-"kvasir\.", "q=",
-# Others
-"askjeeves\.","ask=",
-"hotbot\.","mt=",
-"metacrawler\.","general=",
-"go2net\.com","general=",
-"go\.com","qt=",
-"euroseek\.","query=",
-"excite\.","search=",
-"spray\.","string=",
-"nbci\.com/search","keyword=",
-"mamma\.","query=",
-"search\.dogpile\.com", "q=",
-"wisenut\.com","query=",
-"virgilio\.it","qs=",
-"webcrawler","searchText=",
-"engine\.exe","p1=", "miner\.bol\.com\.br","q=",				# Minor brazilian search engines
-"opasia\.dk","q=", "danielsen\.com","q=", 						# Minor danish search engines
-"ilse\.","search_for=", "vindex\.","in=",						# Minor dutch search engines
-"splut\.","pattern=", "ukplus\.", "search=", "mirago\.", "txtSearch=",		# Minor english search engines
-"ukindex\.co\.uk", "stext=", "ukdirectory\.","k=", 							# Minor english search engines
-"nomade\.fr/","s=", "francite\.","name=",									# Minor french search engines
-"fireball\.de","q=", "infoseek\.de","qt=", "suche\.web\.de","su=",			# Minor german search engines
-"sok\.start\.no", "q=",											# Minor norvegian search engines
-"evreka\.passagen\.se","q="										# Minor swedish search engines
-);
-# If no rules are known, this will be used to clean URL of not keyword parameters.
-@WordsToCleanSearchUrl= ("act=","annuaire=","btng=","categoria=","cfg=","cou=","cp=","dd=","domain=","dt=","dw=","exec=","geo=","hc=","height=","hl=","hq=","hs=","id=","kl=","lang=","loc=","lr=","matchmode=","medor=","message=","meta=","mode=","order=","page=","par=","pays=","pg=","pos=","prg=","qc=","refer=","sa=","safe=","sc=","sort=","src=","start=","stype=","sum=","tag=","temp=","theme=","url=","user=","width=","what=","\\.x=","\\.y=","y=","look=");
-# Never put the following exclusion ("ask=","claus=","general=","kw=","keyword=","MT","p=","q=","qr=","qt=","query=","s=","search=","searchText=","string=","su=") because they are strings that contain keywords we're looking for.
-
-# Browser name list ("browser id in lower case", "browser text")
-#-------------------------------------------------------
-%BrowsersHashIDLib = (
-"msie","defined_later",
-"netscape","defined_later",
-# Most frequent browsers should be first in this list
-"lynx","Lynx",
-"opera","Opera",
-"wget","Wget",
-"22acidownload","22AciDownload",
-"aol\\-iweng","AOL-Iweng",
-"amaya","Amaya",
-"amigavoyager","AmigaVoyager",
-"antfresco","ANT Fresco",
-"bpftp","BPFTP",
-"cyberdog","Cyberdog",
-"dreamcast","Dreamcast",
-"downloadagent","DownloadAgent",
-"ecatch", "eCatch",
-"emailsiphon","EmailSiphon",
-"friendlyspider","FriendlySpider",
-"getright","GetRight",
-"go!zilla","Go!Zilla",
-"headdump","HeadDump",
-"hotjava","Sun HotJava",
-"ibrowse","IBrowse",
-"icab","iCab",
-"intergo","InterGO",
-"konqueror","Konqueror",
-"linemodebrowser","W3C Line Mode Browser",
-"links","Links",
-"lotus-notes","Lotus Notes web client",
-"macweb","MacWeb",
-"ncsa_mosaic","NCSA Mosaic",
-"netpositive","NetPositive",
-"nutscrape", "Nutscrape",
-"msfrontpageexpress","MS FrontPage Express",
-"omniweb","OmniWeb",
-"teleport","TelePort Pro (Site grabber)",
-"tzgeturl","TZGETURL",
-"viking","Viking",
-"webcapture","Acrobat (Site grabber)",
-"webfetcher","WebFetcher",
-"webexplorer","IBM-WebExplorer",
-"webmirror","WebMirror",
-"webvcr","WebVCR",
-"libwww","LibWWW",				# Must be at end because some browser have both "browser id" and "libwww"
-# Music only browsers
-"real","RealAudio or compatible (media player)",
-"winamp","WinAmp (media player)",				# Works for winampmpeg and winamp3httprdr
-"windows-media-player","Windows Media Player (media player)",
-"audion","Audion (media player)",
-"freeamp","FreeAmp (media player)",
-"itunes","Apple iTunes (media player)",
-"jetaudio","JetAudio (media player)",
-"mint_audio","Mint Audio (media player)",
-"mpg123","mpg123 (media player)",
-"nsplayer","NetShow Player (media player)",
-"sonique","Sonique (media player)",
-"uplayer","Ultra Player (media player)",
-"xmms","XMMS (media player)",
-"xaudio","Some XAudio Engine based MPEG player (media player)",
-# Other kind of browsers
-"webzip","WebZIP",
-# PDA/Phonecell browsers
-"mmef","Microsoft Mobile Explorer (PDA/Phone browser)",
-"mspie","MS Pocket Internet Explorer (PDA/Phone browser)",
-"up\.","UP.Browser (PDA/Phone browser)",					# Works for UP.Browser and UP.Link
-"wapalizer","WAPalizer (PDA/Phone browser)",
-"wapsilon","WAPsilon (PDA/Phone browser)",
-"webcollage","WebCollage (PDA/Phone browser)",
-"alcatel","Alcatel Browser (PDA/Phone browser)",
-"nokia","Nokia Browser (PDA/Phone browser)",
-# Others (TV)
-"webtv","WebTV browser"
-);
-
-# OS name list ("os id","os clear text")
-#-------------------------------------------------------
-%OSHashLib      = (
-# Windows family OS
-"winxp","Windows XP",
-"winme","Windows Me",
-"win2000","Windows 2000",
-"winnt","Windows NT",
-"win98","Windows 98",
-"win95","Windows 95",
-"win16","Windows 3.xx",
-"wince","Windows CE",
-# Macintosh OS
-"macintosh","Mac OS",
-# Other famous OS
-"beos","BeOS",
-"os/2","Warp OS/2",
-"amigaos","AmigaOS",
-# Unix like OS
-"linux","Linux",
-"aix","Aix",
-"sunos","Sun Solaris",
-"irix","Irix",
-"osf","OSF Unix",
-"hp-ux","HP Unix",
-"netbsd","NetBSD",
-"bsdi","BSDi",
-"freebsd","FreeBSD",
-"openbsd","OpenBSD",
-"unix","Unknown Unix system",
-# Miscellanous OS
-"cp/m","CPM",
-"crayos","CrayOS",
-"dreamcast","Dreamcast",
-"riscos","Acorn RISC OS",
-"webtv","WebTV"
-);
-
-# OSHashID ("text that match in log after changing ' ' or '+' into '_' ", "osid")
-#-------------------------------------------------------
-%OSHashID	= (
-# Windows OS family
-"windows_nt_5\.1","winxp",
-"win_9x_4\.9","winme",
-"windows2000","win2000","windows_2000","win2000","windows_nt_5","win2000",
-"winnt","winnt","windows_nt","winnt","windows-nt","winnt","win32","winnt",
-"win98","win98","windows_98","win98","windows98","win98",
-"win95","win95","windows_95","win95",
-"win16","win16","windows_3","win16","windows;i;16","win16",
-"wince","wince","windows_ce","wince",
-# Macintosh OS family
-"mac_p","macintosh","mac_68","macintosh","macppc","macintosh","macweb","macintosh","macintosh","macintosh",
-# Other famous OS
-"beos","beos",
-"os/2","os/2",
-"amigaos","amigaos",
-# Unix like OS
-"linux","linux",
-"aix","aix",
-"sunos","sunos",
-"irix","irix",
-"osf","osf",
-"hp-ux","hp-ux",
-"netbsd","netbsd",
-"bsdi","bsdi",
-"freebsd","freebsd",
-"openbsd","openbsd",
-"unix","unix",
-# Miscellanous OS
-"cp/m","cp/m",
-"crayos","crayos",
-"dreamcast","dreamcast",
-"riscos","riscos",
-"webtv","webtv"
-);
-
-# OSArrayID
-#-------------------------------------------------------
-@OSArrayID	= (
-# Windows OS family
-"windows_nt_5\.1",
-"win_9x_4\.9",			# Must be before windows_98
-"windows2000","windows_2000","windows_nt_5",
-"winnt","windows_nt","windows-nt","win32",
-"win98","windows_98","windows98",
-"win95","windows_95",
-"win16","windows_3","windows;i;16",			# This works for windows_31 and windows_3.1
-"wince","windows_ce",
-# Macintosh OS family
-"mac_p",				# This works for mac_ppc and mac_powerpc
-"mac_68",				# This works for mac_6800 and mac_68k
-"macppc",
-"macweb",
-"macintosh",
-# Other famous OS
-"beos",
-"os/2",
-"amigaos",
-# Unix like OS
-"linux",
-"aix",
-"sunos",
-"irix",
-"osf",
-"hp-ux",
-"netbsd",
-"bsdi",
-"freebsd",
-"openbsd",
-"unix",
-# Miscellanous OS
-"cp/m",
-"crayos",
-"dreamcast",
-"riscos",
-"webtv"
-);
-
-
-# Robot name list ("os id","os clear text")
-#-------------------------------------------------------
-# Main list of robots (found at http://info.webcrawler.com/mak/projects/robots/active.html)
-# This command show how to generate tab list from this file: cat robotslist.txt | sed 's/:/ /' | awk ' /robot-id/ { name=tolower($2); } /robot-name/ { print "\""name"\", \""$0"\"," } ' | sed 's/robot-name *//g' > file
-# Rem: To avoid bad detection, some robots id were removed from this list:
-#      - Robots with ID of 2 letters only
-#      - Robot called "webs"
-# Rem: directhit is changed into direct_hit (its real id)
-# Rem: calif is changed into calif[^r] to avoid confusion between tiscalifreenet browser
-%RobotHashIDLib   = (
-"acme.spider", "Acme.Spider",
-"ahoythehomepagefinder", "Ahoy! The Homepage Finder",
-"alkaline", "Alkaline",
-"appie", "Walhello appie",
-"arachnophilia", "Arachnophilia",
-"architext", "ArchitextSpider",
-"aretha", "Aretha",
-"ariadne", "ARIADNE",
-"aspider", "ASpider (Associative Spider)",
-"atn.txt", "ATN Worldwide",
-"atomz", "Atomz.com Search Robot",
-"auresys", "AURESYS",
-"backrub", "BackRub",
-"bigbrother", "Big Brother",
-"bjaaland", "Bjaaland",
-"blackwidow", "BlackWidow",
-"blindekuh", "Die Blinde Kuh",
-"bloodhound", "Bloodhound",
-"brightnet", "bright.net caching robot",
-"bspider", "BSpider",
-"cactvschemistryspider", "CACTVS Chemistry Spider",
-"calif[^r]", "Calif",
-"cassandra", "Cassandra",
-"cgireader", "Digimarc Marcspider/CGI",
-"checkbot", "Checkbot",
-"churl", "churl",
-"cmc", "CMC/0.01",
-"collective", "Collective",
-"combine", "Combine System",
-"conceptbot", "Conceptbot",
-"core", "Web Core / Roots",
-"cshkust", "CS-HKUST WISE: WWW Index and Search Engine",
-"cusco", "Cusco",
-"cyberspyder", "CyberSpyder Link Test",
-"deweb", "DeWeb(c) Katalog/Index",
-"dienstspider", "DienstSpider",
-"diibot", "Digital Integrity Robot",
-"direct_hit", "Direct Hit Grabber",
-"dnabot", "DNAbot",
-"download_express", "DownLoad Express",
-"dragonbot", "DragonBot",
-"dwcp", "DWCP (Dridus' Web Cataloging Project)",
-"ebiness", "EbiNess",
-"eit", "EIT Link Verifier Robot",
-"emacs", "Emacs-w3 Search Engine",
-"emcspider", "ananzi",
-"esther", "Esther",
-"evliyacelebi", "Evliya Celebi",
-"fdse", "Fluid Dynamics Search Engine robot",
-"felix", "	Felix IDE",
-"ferret", "Wild Ferret Web Hopper #1, #2, #3",
-"fetchrover", "FetchRover",
-"fido", "fido",
-"finnish", "Hämähäkki",
-"fireball", "KIT-Fireball",
-"fish", "Fish search",
-"fouineur", "Fouineur",
-"francoroute", "Robot Francoroute",
-"freecrawl", "Freecrawl",
-"funnelweb", "FunnelWeb",
-"gazz", "gazz",
-"gcreep", "GCreep",
-"getbot", "GetBot",
-"geturl", "GetURL",
-"golem", "Golem",
-"googlebot", "Googlebot",
-"grapnel", "Grapnel/0.01 Experiment",
-"griffon", "Griffon",
-"gromit", "Gromit",
-"gulliver", "Northern Light Gulliver",
-"hambot", "HamBot",
-"harvest", "Harvest",
-"havindex", "havIndex",
-"hometown", "Hometown Spider Pro",
-"wired-digital", "Wired Digital",
-"htdig", "ht://Dig",
-"htmlgobble", "HTMLgobble",
-"hyperdecontextualizer", "Hyper-Decontextualizer",
-"ibm", "IBM_Planetwide",
-"iconoclast", "Popular Iconoclast",
-"ilse", "Ingrid",
-"imagelock", "Imagelock ",
-"incywincy", "IncyWincy",
-"informant", "Informant",
-"infoseek", "InfoSeek Robot 1.0",
-"infoseeksidewinder", "Infoseek Sidewinder",
-"infospider", "InfoSpiders",
-"inspectorwww", "Inspector Web",
-"intelliagent", "IntelliAgent",
-"iron33", "Iron33",
-"israelisearch", "Israeli-search",
-"javabee", "JavaBee",
-"jcrawler", "JCrawler",
-"jeeves", "Jeeves",
-"jobot", "Jobot",
-"joebot", "JoeBot",
-"jubii", "The Jubii Indexing Robot",
-"jumpstation", "JumpStation",
-"katipo", "Katipo",
-"kdd", "KDD-Explorer",
-"kilroy", "Kilroy",
-"ko_yappo_robot", "KO_Yappo_Robot",
-"labelgrabber.txt", "LabelGrabber",
-"larbin", "larbin",
-"legs", "legs",
-"linkscan", "LinkScan",
-"linkwalker", "LinkWalker",
-"lockon", "Lockon",
-"logo_gif", "logo.gif Crawler",
-"lycos", "Lycos",
-"macworm", "Mac WWWWorm",
-"magpie", "Magpie",
-"mediafox", "MediaFox",
-"merzscope", "MerzScope",
-"meshexplorer", "NEC-MeshExplorer",
-"mindcrawler", "MindCrawler",
-"moget", "moget",
-"momspider", "MOMspider",
-"monster", "Monster",
-"motor", "Motor",
-"muscatferret", "Muscat Ferret",
-"mwdsearch", "Mwd.Search",
-"myweb", "Internet Shinchakubin",
-"netcarta", "NetCarta WebMap Engine",
-"netmechanic", "NetMechanic",
-"netscoop", "NetScoop",
-"newscan-online", "newscan-online",
-"nhse", "NHSE Web Forager",
-"nomad", "Nomad",
-"northstar", "The NorthStar Robot",
-"nzexplorer", "nzexplorer",
-"occam", "Occam",
-"octopus", "HKU WWW Octopus",
-"orb_search", "Orb Search",
-"packrat", "Pack Rat",
-"pageboy", "PageBoy",
-"parasite", "ParaSite",
-"patric", "Patric",
-"perignator", "The Peregrinator",
-"perlcrawler", "PerlCrawler 1.0",
-"phantom", "Phantom",
-"piltdownman", "PiltdownMan",
-"pioneer", "Pioneer",
-"pitkow", "html_analyzer",
-"pjspider", "Portal Juice Spider",
-"pka", "PGP Key Agent",
-"plumtreewebaccessor", "PlumtreeWebAccessor",
-"poppi", "Poppi",
-"portalb", "PortalB Spider",
-"puu", "GetterroboPlus Puu",
-"python", "The Python Robot",
-"raven", "Raven Search",
-"rbse", "RBSE Spider",
-"resumerobot", "Resume Robot",
-"rhcs", "RoadHouse Crawling System",
-"roadrunner", "Road Runner: The ImageScape Robot",
-"robbie", "Robbie the Robot",
-"robi", "ComputingSite Robi/1.0",
-"roverbot", "Roverbot",
-"safetynetrobot", "SafetyNet Robot",
-"scooter", "Scooter",
-"search_au", "Search.Aus-AU.COM",
-"searchprocess", "SearchProcess",
-"senrigan", "Senrigan",
-"sgscout", "SG-Scout",
-"shaggy", "ShagSeeker",
-"shaihulud", "Shai'Hulud",
-"sift", "Sift",
-"simbot", "Simmany Robot Ver1.0",
-"site-valet", "Site Valet",
-"sitegrabber", "Open Text Index Robot",
-"sitetech", "SiteTech-Rover",
-"slurp", "Inktomi Slurp",
-"smartspider", "Smart Spider",
-"snooper", "Snooper",
-"solbot", "Solbot",
-"spanner", "Spanner",
-"speedy", "Speedy Spider",
-"spider_monkey", "spider_monkey",
-"spiderbot", "SpiderBot",
-"spiderman", "SpiderMan",
-"spry", "Spry Wizard Robot",
-"ssearcher", "Site Searcher",
-"suke", "Suke",
-"sven", "Sven",
-"tach_bw", "TACH Black Widow",
-"tarantula", "Tarantula",
-"tarspider", "tarspider",
-"tcl", "Tcl W3 Robot",
-"techbot", "TechBOT",
-"templeton", "Templeton",
-"titin", "TitIn",
-"titan", "TITAN",
-"tkwww", "The TkWWW Robot",
-"tlspider", "TLSpider",
-"ucsd", "UCSD Crawl",
-"udmsearch", "UdmSearch",
-"urlck", "URL Check",
-"valkyrie", "Valkyrie",
-"victoria", "Victoria",
-"visionsearch", "vision-search",
-"voyager", "Voyager",
-"vwbot", "VWbot",
-"w3index", "The NWI Robot",
-"w3m2", "W3M2",
-"wanderer", "the World Wide Web Wanderer",
-"webbandit", "WebBandit Web Spider",
-"webcatcher", "WebCatcher",
-"webcopy", "WebCopy",
-"webfetcher", "webfetcher",
-"webfoot", "The Webfoot Robot",
-"weblayers", "Weblayers",
-"weblinker", "WebLinker",
-"webmirror", "WebMirror",
-"webmoose", "The Web Moose",
-"webquest", "WebQuest",
-"webreader", "Digimarc MarcSpider",
-"webreaper", "WebReaper",
-"websnarf", "Websnarf",
-"webspider", "WebSpider",
-"webvac", "WebVac",
-"webwalk", "webwalk",
-"webwalker", "WebWalker",
-"webwatch", "WebWatch",
-"wget", "Wget",
-"whowhere", "WhoWhere Robot",
-"wmir", "w3mir",
-"wolp", "WebStolperer",
-"wombat", "The Web Wombat ",
-"worm", "The World Wide Web Worm",
-"wwwc", "WWWC Ver 0.2.5",
-"wz101", "WebZinger",
-"xget", "XGET",
-"nederland.zoek", "Nederland.zoek",
-
-# Not declared robots
-"antibot", "Antibot (Not referenced robot)",
-"cscrawler","CsCrawler (Not referenced robot)",
-"daviesbot", "DaviesBot (Not referenced robot)",
-"ezresult",	"Ezresult (Not referenced robot)",
-"fast-webcrawler", "Fast-Webcrawler (Not referenced robot)",
-"gnodspider","GNOD Spider (Not referenced robot)",
-"jennybot", "JennyBot (Not referenced robot)",
-"justview", "JustView (Not referenced robot)",
-"mercator", "Mercator (Not referenced robot)",
-"perman surfer", "Perman surfer (Not referenced robot)",
-"redalert", "Red Alert (Not referenced robot)",
-"shoutcast","Shoutcast Directory Service (Not referenced robot)",
-"unlost_web_crawler", "Unlost_Web_Crawler (Not referenced robot)",
-"webbase", "WebBase (Not referenced robot)",
-"wisenutbot","WISENutbot (Not referenced robot)",
-"yandex", "Yandex bot (Not referenced robot)",
-# Supposed to be robots
-"boris", "Boris (Not referenced robot)",
-"digout4u", "digout4u (Not referenced robot)",
-"echo", "EchO! (Not referenced robot)",
-"ia_archiver", "ia_archiver (Not referenced robot)",
-"ultraseek", "Ultraseek (Not referenced robot)",
-"voila", "Voila (Not referenced robot)",
-"webcompass", "webcompass (Not referenced robot)",
-# Generic ID
-"robot", "Unknown robot (Not referenced robot)"
-);
-
-# Domains name list ("domain id", "Domain name")
-#-------------------------------------------------------
-%DomainsHash = (
-"localhost","localhost",
-
-"ad","Andorra","ae","United Arab Emirates","aero","Aero/Travel domains","af","Afghanistan",
-"ag","Antigua and Barbuda","ai","Anguilla","al","Albania",
-"am","Armenia","an","Netherlands Antilles","ao","Angola",
-"aq","Antarctica","ar","Argentina","arpa","Old style Arpanet",
-"as","American Samoa","at","Austria","au","Australia","aw","Aruba",
-"az","Azerbaidjan","ba","Bosnia-Herzegovina","bb","Barbados","bd",
-"Bangladesh","be","Belgium","bf","Burkina Faso","bg","Bulgaria",
-"bh","Bahrain","bi","Burundi","biz","Biz domains","bj","Benin","bm","Bermuda","bn",
-"Brunei Darussalam","bo","Bolivia","br","Brazil","bs","Bahamas",
-"bt","Bhutan","bv","Bouvet Island","bw","Botswana","by","Belarus",
-"bz","Belize","ca","Canada","cc","Cocos (Keeling) Islands","cf",
-"Central African Republic","cg","Congo","ch","Switzerland","ci",
-"Ivory Coast (Cote D'Ivoire)","ck","Cook Islands","cl","Chile","cm","Cameroon",
-"cn","China","co","Colombia","com","Commercial","coop","Coop domains","cr","Costa Rica",
-"cs","Former Czechoslovakia","cu","Cuba","cv","Cape Verde","cx",
-"Christmas Island","cy","Cyprus","cz","Czech Republic","de","Germany",
-"dj","Djibouti","dk","Denmark","dm","Dominica","do","Dominican Republic",
-"dz","Algeria","ec","Ecuador","edu","USA Educational","ee","Estonia",
-"eg","Egypt","eh","Western Sahara","es","Spain","et","Ethiopia","fi","Finland","fj","Fiji","fk",
-"Falkland Islands","fm","Micronesia","fo","Faroe Islands",
-"fr","France","fx","France (European Territory)","ga","Gabon","gb",
-"Great Britain","gd","Grenada","ge","Georgia","gf","French Guyana","gh","Ghana","gi","Gibraltar",
-"gl","Greenland","gm","Gambia","gn","Guinea","gov","USA Government","gp","Guadeloupe (French)","gq",
-"Equatorial Guinea","gr","Greece","gs","S. Georgia &amp; S. Sandwich Isls.",
-"gt","Guatemala","gu","Guam (USA)","gw","Guinea Bissau","gy","Guyana",
-"hk","Hong Kong","hm","Heard and McDonald Islands","hn","Honduras","hr",
-"Croatia","ht","Haiti","hu","Hungary","id","Indonesia","ie","Ireland","il","Israel",
-"in","India","info","Info domains","int","International","io","British Indian Ocean Territory",
-"iq","Iraq","ir","Iran","is","Iceland","it","Italy","jm",
-"Jamaica","jo","Jordan","jp","Japan","ke","Kenya","kg","Kyrgyzstan",
-"kh","Cambodia","ki","Kiribati","km","Comoros","kn","Saint Kitts &amp; Nevis Anguilla",
-"kp","North Korea","kr","South Korea","kw","Kuwait","ky",
-"Cayman Islands","kz","Kazakhstan","la","Laos","lb","Lebanon","lc","Saint Lucia",
-"li","Liechtenstein","lk","Sri Lanka","lr","Liberia","ls","Lesotho","lt","Lithuania",
-"lu","Luxembourg","lv","Latvia","ly","Libya","ma","Morocco","mc","Monaco",
-"md","Moldavia","mg","Madagascar","mh","Marshall Islands","mil","USA Military","mk",
-"Macedonia","ml","Mali","mm","Myanmar","mn","Mongolia","mo","Macau",
-"mp","Northern Mariana Islands","mq","Martinique (French)","mr","Mauritania",
-"ms","Montserrat","mt","Malta","mu","Mauritius","musuem","Museum domains","mv","Maldives","mw",
-"Malawi","mx","Mexico","my","Malaysia","mz","Mozambique","na","Namibia","name","Name domains","nato","NATO",
-"nc","New Caledonia (French)","ne","Niger","net","Network","nf","Norfolk Island",
-"ng","Nigeria","ni","Nicaragua","nl","Netherlands","no","Norway",
-"np","Nepal","nr","Nauru","nt","Neutral Zone","nu","Niue","nz","New Zealand","om","Oman","org",
-"Non-Profit Organizations","pa","Panama","pe","Peru","pf","Polynesia (French)",
-"pg","Papua New Guinea","ph","Philippines","pk","Pakistan","pl","Poland",
-"pm","Saint Pierre and Miquelon","pn","Pitcairn Island","pr","Puerto Rico","pro","Professional domains",
-"pt","Portugal","pw","Palau","py","Paraguay","qa","Qatar",
-"re","Reunion (French)","ro","Romania","ru","Russian Federation","rw","Rwanda",
-"sa","Saudi Arabia","sb","Solomon Islands","sc","Seychelles","sd",
-"Sudan","se","Sweden","sg","Singapore","sh","Saint Helena","si","Slovenia",
-"sj","Svalbard and Jan Mayen Islands","sk","Slovak Republic","sl","Sierra Leone",
-"sm","San Marino","sn","Senegal","so","Somalia","sr","Suriname","st",
-"Saint Tome and Principe","su","Former USSR","sv","El Salvador","sy","Syria","sz","Swaziland","tc",
-"Turks and Caicos Islands","td","Chad","tf","French Southern Territories","tg","Togo",
-"th","Thailand","tj","Tadjikistan","tk","Tokelau","tm","Turkmenistan","tn","Tunisia",
-"to","Tonga","tp","East Timor","tr","Turkey","tt","Trinidad and Tobago","tv","Tuvalu",
-"tw","Taiwan","tz","Tanzania","ua","Ukraine","ug","Uganda","uk",
-"United Kingdom","um","USA Minor Outlying Islands","us","United States",
-"uy","Uruguay","uz","Uzbekistan","va","Vatican City State","vc",
-"Saint Vincent &amp; Grenadines","ve","Venezuela","vg","Virgin Islands (British)",
-"vi","Virgin Islands (USA)","vn","Vietnam","vu","Vanuatu","wf","Wallis and Futuna Islands",
-"ws","Samoa","ye","Yemen","yt","Mayotte","yu","Yugoslavia","za","South Africa",
-"zm","Zambia","zr","Zaire","zw","Zimbabwe"
 );
 
 # HTTP codes with tooltip
@@ -865,13 +228,17 @@ sub html_end {
 
 sub tab_head {
 	my $title=shift;
-	print "
-	<div class=\"tablecontainer\">
-	<TABLE CLASS=\"TABLEFRAME\" BORDER=0 CELLPADDING=2 CELLSPACING=0 WIDTH=\"100%\">
-	<TR><TD class=\"TABLETITLEFULL\">$title </TD><TD class=\"TABLETITLEBLANK\"> &nbsp; </TD></TR>
-	<TR><TD colspan=2>
-	<TABLE CLASS=\"TABLEDATA\" BORDER=1 BORDERCOLOR=\"#$color_TableBorder\" CELLPADDING=2 CELLSPACING=0 WIDTH=\"100%\">
-	";
+	my $tooltip=shift;
+	print "<div class=\"tablecontainer\">\n";
+	print "<TABLE CLASS=\"TABLEFRAME\" BORDER=0 CELLPADDING=2 CELLSPACING=0 WIDTH=\"100%\">\n";
+	if ($tooltip) {
+		print "<TR><TD class=\"TABLETITLEFULL\" onmouseover=\"ShowTooltip($tooltip);\" onmouseout=\"HideTooltip($tooltip);\">$title </TD>";
+	}
+	else {
+		print "<TR><TD class=\"TABLETITLEFULL\">$title </TD>";
+	}
+	print "<TD class=\"TABLETITLEBLANK\"> &nbsp; </TD></TR>\n";
+	print "<TR><TD colspan=2><TABLE CLASS=\"TABLEDATA\" BORDER=1 BORDERCOLOR=\"#$color_TableBorder\" CELLPADDING=2 CELLSPACING=0 WIDTH=\"100%\">";
 }
 
 sub tab_end {
@@ -977,7 +344,7 @@ sub SkipDNSLookup {
 	0; # Not in @SkipDNSLookupFor
 }
 
-sub DayOfWeek { 
+sub DayOfWeek {
 	my ($day, $month, $year) = @_;
 	if ($month < 3) {  $month += 10;  $year--; } 
 	else { $month -= 2; }
@@ -988,6 +355,21 @@ sub DayOfWeek {
 	&debug("day of week for $day $month $year= $dw",3);
 	return $dw;
 }
+
+sub DateIsValid {
+	my ($day, $month, $year) = @_;
+	if ($month==1 || $month==3 || $month==5 || $month==7 || $month==8 || $month==10 || $month==12) {
+		if ($day > 31) { return 0; }		
+	}
+	if ($month==4 || $month==6 || $month==9 || $month==11) {
+		if ($day > 30) { return 0; }
+	}
+	if ($month==2) {
+		if ($day > 28) { return 0; }		
+	}
+	return 1;
+}
+
 
 
 #------------------------------------------------------------------------------
@@ -1135,10 +517,39 @@ sub Read_Config_File {
 
 
 #------------------------------------------------------------------------------
+# Function:     Get the reference databases
+# Parameter:	None
+# Input:		$DIR
+# Output:		Arrays and Hash tables are defined in memory
+#------------------------------------------------------------------------------
+sub Read_Ref_Data {
+	foreach my $file ("browsers.pl","domains.pl","operating_systems.pl","robots.pl","search_engines.pl") {
+		my $FileRef="";
+		foreach my $dir ("${DIR}db","./db") {
+			my $searchdir=$dir;
+			if (($searchdir ne "") && (!($searchdir =~ /\/$/)) && (!($searchdir =~ /\\$/)) ) { $searchdir .= "/"; }
+			if ($FileRef eq "") {
+				if (-s "${searchdir}${file}") {
+					$FileRef="${searchdir}${file}";
+					&debug("Call to Read_Ref_Data [FileRef=\"$FileRef\"]");
+					require "$FileRef";
+				}
+			}
+		}
+		if ($FileRef eq "") {
+			my $filetext=$file; $filetext =~ s/\.pl$//; $filetext =~ s/_/ /g;
+			&warning("Warning: Can't read file \"$file\" ($filetext detection will not work correctly).\nCheck if file is in ${DIR}db directory and is readable.");
+		}
+	}
+	# Check if OSHashID and OSArrayID are correct
+	if (scalar keys %OSHashID != @OSArrayID) { error("Error: Not same number of records of OSHashID (".(scalar keys %OSHashID).") and/or OSArrayID (".(@OSArrayID).") in source file."); }
+}
+
+#------------------------------------------------------------------------------
 # Function:     Get the messages for a specified language
 # Parameter:	Language id
-# Input:		None
-# Output:		$Message table
+# Input:		$DIR
+# Output:		$Message table is defined in memory
 #------------------------------------------------------------------------------
 sub Read_Language_Data {
 	my $FileLang="";
@@ -1177,6 +588,9 @@ sub Read_Language_Data {
 			}
 		}
 	}
+	else {
+		&warning("Warning: Can't find language files for \"$_[0]\". English will be used.");
+	}
 	close(LANG);
 }
 
@@ -1204,7 +618,7 @@ sub Read_Language_Tooltip {
 	if ($FileLang ne "") {
 		my $aws_VisitTimeout = $VisitTimeOut/10000*60;
 		my $aws_NbOfRobots = scalar keys %RobotHashIDLib;
-		my $aws_NbOfSearchEngines = scalar keys %SearchEnginesHash;
+		my $aws_NbOfSearchEngines = scalar keys %SearchEnginesHashIDLib;
 		while (<LANG>) {
 			# Search for replaceable parameters
 			s/#PROG#/$PROG/;
@@ -1522,28 +936,6 @@ sub Read_History_File {
 			&debug(" End of TIME section");
 			next;
 	    }
-	    if ($field[0] eq "BEGIN_DAYOFWEEK")   {
-			&debug(" Begin of DAYOFWEEK section");
-			$_=<HISTORY>;
-			chomp $_; s/\r//;
-			if ($_ eq "") { error("Error: History file \"$DirData/$PROG$month$year$FileSuffix.txt\" is corrupted. Restore a recent backup of this file, or remove it (data for this month will be lost)."); }
-			my @field=split(/\s+/,$_);
-			my $count=0;
-			while ($field[0] ne "END_DAYOFWEEK") {
-            	if ($part) {
-                    $_dayofweek_p[$count] += $field[0];
-                    $_dayofweek_h[$count] += $field[1];
-                    $_dayofweek_k[$count] += $field[2];
-                	}
-				$_=<HISTORY>;
-				chomp $_; s/\r//;
-				if ($_ eq "") { error("Error: History file \"$DirData/$PROG$month$year$FileSuffix.txt\" is corrupted. Restore a recent backup of this file, or remove it (data for this month will be lost)."); }
-				$count++;
-				@field=split(/\s+/,$_);
-			}
-			&debug(" End of DAYOFWEEK section ($count entries)");
-			next;
-		}
 	    if ($field[0] eq "BEGIN_DAY")      {
 			&debug(" Begin of DAY section");
 			$_=<HISTORY>;
@@ -1758,10 +1150,6 @@ sub Save_History_File {
 	for (my $ix=0; $ix<=23; $ix++) { print HISTORYTMP "$ix $_time_p[$ix] $_time_h[$ix] $_time_k[$ix]\n"; next; }
 	print HISTORYTMP "END_TIME\n";
 
-    print HISTORYTMP "BEGIN_DAYOFWEEK\n";
-    for (0..6) { print HISTORYTMP "$_dayofweek_p[$_] $_dayofweek_h[$_] $_dayofweek_k[$_]\n"; }
-    print HISTORYTMP "END_DAYOFWEEK\n";
-
 	print HISTORYTMP "BEGIN_DAY\n";
     foreach my $key (keys %DayHits) {
     	 if ($key =~ /^$year$month/) {	# Found a day entry of the good month
@@ -1833,7 +1221,6 @@ sub Init_HashArray {
 	# We purge data read for $year and $month so it's like we never read it
 	$HistoryFileAlreadyRead{"$year$month"}=0;
 	# Delete/Reinit all arrays with name beginning by _
-	@_dayofweek_p = @_dayofweek_h = @_dayofweek_k = (0, 0, 0, 0, 0, 0, 0);
 	@_msiever_h = @_nsver_h = ();
 	for (my $ix=0; $ix<5; $ix++) {	$_from_p[$ix]=0; $_from_h[$ix]=0; }
 	for (my $ix=0; $ix<=23; $ix++) { $_time_h[$ix]=0; $_time_k[$ix]=0; $_time_p[$ix]=0; }
@@ -1942,11 +1329,12 @@ if ($QueryString =~ /output=urldetail:/i) 	{
 	# A filter can be defined with output=urldetail to reduce number of lines read and showed
 	$URLFilter=$QueryString; $URLFilter =~ s/.*output=urldetail://; $URLFilter =~ s/&.*//; $URLFilter =~ s/ .*//;
 }
-# Check if OSHashID and OSArrayID are correct
-if (scalar keys %OSHashID != @OSArrayID) { error("Error: Not same number of records of OSHashID (".(scalar keys %OSHashID).") and/or OSArrayID (".(@OSArrayID).") in source file."); }
 
 ($DIR=$0) =~ s/([^\/\\]*)$//; ($PROG=$1) =~ s/\.([^\.]*)$//; $Extension=$1;
-	
+
+# Read reference databases
+&Read_Ref_Data();
+
 if (($ENV{"GATEWAY_INTERFACE"} eq "") && ($SiteConfig eq "")) {
 	print "----- $PROG $VERSION (c) Laurent Destailleur -----\n";
 	print "$PROG is a free web server logfile analyzer to show you advanced web\n";
@@ -1983,11 +1371,11 @@ if (($ENV{"GATEWAY_INTERFACE"} eq "") && ($SiteConfig eq "")) {
 	print "  Rush hours and days of week\n";
 	print "  Last visitors and list of unresolved IP addresses\n";
 	print "  Most often viewed pages\n";
-	print "  ".(scalar keys %DomainsHash)." domains/countries\n";
+	print "  ".(scalar keys %DomainsHashIDLib)." domains/countries\n";
 	print "  ".(scalar keys %BrowsersHashIDLib)." browsers\n";
 	print "  ".(scalar keys %OSHashLib)." operating systems\n";
 	print "  ".(scalar keys %RobotHashIDLib)." robots\n";
-	print "  ".(scalar keys %SearchEnginesHash)." search engines (and keywords or keyphrases used from them)\n";
+	print "  ".(scalar keys %SearchEnginesHashIDLib)." search engines (and keywords or keyphrases used from them)\n";
 	print "  All HTTP errors\n";
 	print "  Statistics by day/month/year\n";
 	print "New versions and FAQ at http://awstats.sourceforge.net\n";
@@ -2396,10 +1784,6 @@ if ($UpdateStats) {
 
 		# Analyze: Date - Hour - Pages - Hits - Kilo
 		#-------------------------------------------
-		if ($TmpDOW[0] ne $dayconnexion) {		# TmpDOW is a memory array to increase speed
-			$TmpDOW[0] = $dayconnexion;
-			$TmpDOW[1] = &DayOfWeek($dateparts[0],$dateparts[1],$dateparts[2]);
-		}
 		if ($PageBool) {
 			# FirstTime and LastTime were moved into PageBool if (a visitor is a human visitor if access to page)
 			if (! $FirstTime{$yearmonth}) { $FirstTime{$yearmonth}=$timeconnexion; }
@@ -2409,14 +1793,11 @@ if ($UpdateStats) {
 			$MonthPages{$yearmonth}++;
 			$_time_p[int($dateparts[3])]++;												#Count accesses for hour (page)
 			$_sider_p{$field[$pos_url]}++; 												#Count accesses for page (page)
-			$_dayofweek_p[$TmpDOW[1]]++;
 			}
 		$_time_h[int($dateparts[3])]++; $MonthHits{$yearmonth}++; $DayHits{$dayconnexion}++;	#Count accesses for hour (hit)
 		$_time_k[int($dateparts[3])]+=$field[$pos_size]; $MonthBytes{$yearmonth}+=$field[$pos_size]; $DayBytes{$dayconnexion}+=$field[$pos_size];	#Count accesses for hour (kb)
 		$_sider_h{$field[$pos_url]}++;													#Count accesses for page (hit)
 		$_sider_k{$field[$pos_url]}+=$field[$pos_size];									#Count accesses for page (kb)
-		$_dayofweek_h[$TmpDOW[1]]++; 
-		$_dayofweek_k[$TmpDOW[1]]+=$field[$pos_size]; 
 
 		# Analize login
 		#--------------
@@ -2503,7 +1884,7 @@ if ($UpdateStats) {
 
 			# Count top-level domain
 			if (/\.([\w]+)$/) { $_=$1; }
-			if ($DomainsHash{$_}) {
+			if ($DomainsHashIDLib{$_}) {
 				 if ($PageBool) { $_domener_p{$_}++; }
 				 $_domener_h{$_}++;
 				 $_domener_k{$_}+=$field[$pos_size];
@@ -2613,7 +1994,7 @@ if ($UpdateStats) {
 					    # Extern (This hit came from an external web site)
 						my @refurl=split(/\?/,$field[$pos_referer]);
 						$refurl[0] =~ tr/A-Z/a-z/;
-					    foreach my $key (keys %SearchEnginesHash) {
+					    foreach my $key (keys %SearchEnginesHashIDLib) {
 							if ($refurl[0] =~ /$key/) {
 								# This hit came from the search engine $key
 								if ($PageBool) { $_from_p[2]++; }
@@ -2893,7 +2274,7 @@ EOF
 	
 	if ($QueryString =~ /output=lasthosts/i) {
 		print "$CENTER<a name=\"HOSTSLIST\">&nbsp;</a><BR>";
-		&tab_head("$Message[9]");
+		&tab_head("$Message[9]",19);
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[81] + $Message[83]</TH><TH>$Message[9]</TH></TR>\n";
 		my $count=0; my $rest=0;
 		# Create %lasthost = %_unknownip_l + %_hostmachine_l + %_robot_l
@@ -2916,7 +2297,7 @@ EOF
 	if ($QueryString =~ /output=urldetail/i) {
 		if ($AddOn) { AddOn_Filter(); }
 		print "$CENTER<a name=\"URLDETAIL\">&nbsp;</a><BR>";
-		&tab_head($Message[19]);
+		&tab_head($Message[19],19);
 		if ($URLFilter) { print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[79]: <b>$URLFilter</b> - ".(scalar keys %_sider_p)." $Message[28]</TH>"; }
 		else { print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>".(scalar keys %_sider_p)."&nbsp; $Message[28]</TH>"; }
 		print "<TH bgcolor=\"#$color_p\">&nbsp;$Message[29]&nbsp;</TH>";
@@ -2945,7 +2326,7 @@ EOF
 	}
 	if ($QueryString =~ /output=unknownip/i) {
 		print "$CENTER<a name=\"UNKOWNIP\">&nbsp;</a><BR>";
-		&tab_head($Message[45]);
+		&tab_head($Message[45],19);
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[48] (".(scalar keys %_unknownip_l).")</TH><TH>$Message[9]</TH>\n";
 		my $count=0; my $rest=0;
 		foreach my $key (sort { $SortDir*$_unknownip_l{$a} <=> $SortDir*$_unknownip_l{$b} } keys (%_unknownip_l)) {
@@ -2960,7 +2341,7 @@ EOF
 	}
 	if ($QueryString =~ /output=browserdetail/i) {
 		print "$CENTER<a name=\"NETSCAPE\">&nbsp;</a><BR>";
-		&tab_head("$Message[33]<br><img src=\"$DirIcons/browser/netscape.png\">");
+		&tab_head("$Message[33]<br><img src=\"$DirIcons/browser/netscape.png\">",19);
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[58]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[15]</TH></TR>\n";
 		for (my $i=1; $i<=$#_nsver_h; $i++) {
 			my $h="&nbsp;"; my $p="&nbsp;";
@@ -2971,7 +2352,7 @@ EOF
 		}
 		&tab_end;
 		print "<a name=\"MSIE\">&nbsp;</a><BR>";
-		&tab_head("$Message[34]<br><img src=\"$DirIcons/browser/msie.png\">");
+		&tab_head("$Message[34]<br><img src=\"$DirIcons/browser/msie.png\">",19);
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[58]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[15]</TH></TR>\n";
 		for ($i=1; $i<=$#_msiever_h; $i++) {
 			my $h="&nbsp;"; my $p="&nbsp;";
@@ -2986,7 +2367,7 @@ EOF
 	}
 	if ($QueryString =~ /output=unknownrefererbrowser/i) {
 		print "$CENTER<a name=\"UNKOWNREFERERBROWSER\">&nbsp;</a><BR>";
-		&tab_head($Message[50]);
+		&tab_head($Message[50],19);
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>Referer (".(scalar keys %_unknownrefererbrowser_l).")</TH><TH>$Message[9]</TH></TR>\n";
 		my $count=0; my $rest=0;
 		foreach my $key (sort { $SortDir*$_unknownrefererbrowser_l{$a} <=> $SortDir*$_unknownrefererbrowser_l{$b} } keys (%_unknownrefererbrowser_l)) {
@@ -3001,7 +2382,7 @@ EOF
 	}
 	if ($QueryString =~ /output=unknownreferer/i) {
 		print "$CENTER<a name=\"UNKOWNREFERER\">&nbsp;</a><BR>";
-		&tab_head($Message[46]);
+		&tab_head($Message[46],19);
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>Referer (".(scalar keys %_unknownreferer_l).")</TH><TH>$Message[9]</TH></TR>\n";
 		my $count=0; my $rest=0;
 		foreach my $key (sort { $SortDir*$_unknownreferer_l{$a} <=> $SortDir*$_unknownreferer_l{$b} } keys (%_unknownreferer_l)) {
@@ -3016,7 +2397,7 @@ EOF
 	}
 	if ($QueryString =~ /output=notfounderror/i) {
 		print "$CENTER<a name=\"NOTFOUNDERROR\">&nbsp;</a><BR>";
-		&tab_head($Message[47]);
+		&tab_head($Message[47],19);
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>URL (".(scalar keys %_sider404_h).")</TH><TH bgcolor=\"#$color_h\">$Message[49]</TH><TH>$Message[23]</TH></TR>\n";
 		my $count=0; my $rest=0;
 		foreach my $key (sort { $SortDir*$_sider404_h{$a} <=> $SortDir*$_sider404_h{$b} } keys (%_sider404_h)) {
@@ -3067,7 +2448,7 @@ EOF
 	#---------------------------------------------------------------------
 	if ($ShowMonthDayStats) {
 		print "$CENTER<a name=\"SUMMARY\">&nbsp;</a><BR>";
-		&tab_head("$Message[7] $SiteToAnalyze");
+		&tab_head("$Message[7] $SiteToAnalyze",0);
 
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TD><b>$Message[8]</b></TD>";
 		if ($MonthRequired eq "year") { print "<TD colspan=3 rowspan=2><font style=\"font: 18px arial,verdana,helvetica; font-weight: normal\">$Message[6] $YearRequired</font><br>"; }
@@ -3182,12 +2563,68 @@ EOF
 		print "</center></TD></TR>";
 		&tab_end;
 	}	
+
+	# BY DAY OF WEEK
+	#-------------------------
+	if ($ShowDaysOfWeekStats) {
+		print "$CENTER<a name=\"DAYOFWEEK\">&nbsp;</a><BR>";
+		&tab_head($Message[91],18);
+		print "<TR>";
+		print "<TD align=center><center><TABLE>";
+		print "<TR valign=bottom>\n";
+		$max_p=$max_h=$max_k=$max_v=1;
+		# Get average value for day of week
+		my $FirstTimeDay=$FirstTime;
+		my $LastTimeDay=$LastTime;
+		$FirstTimeDay =~ /^(\d\d\d\d\d\d\d\d).*/; $FirstTimeDay=$1;
+		$LastTimeDay =~ /^(\d\d\d\d\d\d\d\d).*/; $LastTimeDay=$1;
+		foreach my $daycursor ($FirstTimeDay..$LastTimeDay) {
+			$daycursor =~ /^(\d\d\d\d)/; my $year=$1;
+			$daycursor =~ /^\d\d\d\d(\d\d)/; my $month=$1;
+			$daycursor =~ /^\d\d\d\d\d\d(\d\d)/; my $day=$1;
+			if (! DateIsValid($day,$month,$year)) { next; }			# If not an existing day, go to next
+			my $dayofweek=DayOfWeek($day,$month,$year);
+			$avg_dayofweek[$dayofweek]++;							# Increase number of day used to count for this day of week
+			$avg_dayofweek_p[$dayofweek]+=$DayPages{$daycursor};
+			$avg_dayofweek_h[$dayofweek]+=$DayHits{$daycursor};
+			$avg_dayofweek_k[$dayofweek]+=$DayBytes{$daycursor};
+		}
+		for (0..6) {
+			if ($avg_dayofweek[$_]) { 
+				$avg_dayofweek_p[$_]/=$avg_dayofweek[$_];
+				$avg_dayofweek_h[$_]/=$avg_dayofweek[$_];
+				$avg_dayofweek_k[$_]/=$avg_dayofweek[$_];
+			}
+			$max_p = $avg_dayofweek_p[$_]  if ($avg_dayofweek_p[$_] > $max_p);
+			$max_h = $avg_dayofweek_h[$_]  if ($avg_dayofweek_h[$_] > $max_h);
+			$max_k = $avg_dayofweek_k[$_]  if ($avg_dayofweek_k[$_] > $max_k);
+        }
+        for (@DOWIndex) {
+			if ($max_h > 0) { $bredde_p=int($avg_dayofweek_p[$_]/$max_h*$BarHeight/2)+1; }
+			if ($max_h > 0) { $bredde_h=int($avg_dayofweek_h[$_]/$max_h*$BarHeight/2)+1; }
+			if ($max_k > 0) { $bredde_k=int($avg_dayofweek_k[$_]/$max_k*$BarHeight/2)+1; }
+			print "<TD valign=bottom>\n";
+			print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_p\" HEIGHT=$bredde_p WIDTH=6 ALT=\"$Message[56]: $avg_dayofweek_p[$_]\" title=\"$Message[56]: $avg_dayofweek_p[$_]\">";
+			print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_h\" HEIGHT=$bredde_h WIDTH=6 ALT=\"$Message[57]: $avg_dayofweek_h[$_]\" title=\"$Message[57]: $avg_dayofweek_h[$_]\">";
+			print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_k\" HEIGHT=$bredde_k WIDTH=6 ALT=\"$Message[75]: ".Format_Bytes($avg_dayofweek_k[$_])."\" title=\"$Message[75]: ".Format_Bytes($avg_dayofweek_k[$_])."\">";
+			print "</TD>\n";
+        }
+        print "</TR>\n<TR onmouseover=\"ShowTooltip(17);\" onmouseout=\"HideTooltip(17);\">\n";
+        for (@DOWIndex) {
+			print "<TD";
+			if ($_ =~ /[06]/) { print " bgcolor=\"#$color_weekend\""; }
+			print ">".$Message[$_+84]."</TD>";
+        }
+		print "</TR></TABLE></center></TD>";
+		print "</TR>\n";
+		&tab_end;
+	}
 	
 	# BY HOUR
 	#----------------------------
 	if ($ShowHoursStats) {
 		print "$CENTER<a name=\"HOUR\">&nbsp;</a><BR>";
-		&tab_head($Message[20]);
+		&tab_head($Message[20],19);
 		print "<TR><TD align=center><center><TABLE><TR>\n";
 		$max_p=$max_h=$max_k=1;
 		for (my $ix=0; $ix<=23; $ix++) {
@@ -3219,44 +2656,12 @@ EOF
 		&tab_end;
 	}
 
-	# BY DAY OF WEEK
-	#-------------------------
-	if ($ShowDaysOfWeekStats) {
-		print "$CENTER<a name=\"DAYOFWEEK\">&nbsp;</a><BR>";
-		&tab_head($Message[91]);
-		print "<TR><TD align=center><center><TABLE><TR valign=bottom>\n";
-		$max_p=$max_h=$max_k=$max_v=1;
-		for (0..6) {
-			$max_p = $_dayofweek_p[$_]  if ($_dayofweek_p[$_] > $max_p);
-			$max_h = $_dayofweek_h[$_]  if ($_dayofweek_h[$_] > $max_h);
-			$max_k = $_dayofweek_k[$_]  if ($_dayofweek_k[$_] > $max_k);
-        }
-        for (@DOWIndex) {
-			if ($max_h > 0) { $bredde_p=int($_dayofweek_p[$_]/$max_h*$BarHeight/2)+1; }
-			if ($max_h > 0) { $bredde_h=int($_dayofweek_h[$_]/$max_h*$BarHeight/2)+1; }
-			if ($max_k > 0) { $bredde_k=int($_dayofweek_k[$_]/$max_k*$BarHeight/2)+1; }
-			print "<TD valign=bottom>\n";
-			print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_p\" HEIGHT=$bredde_p WIDTH=6 ALT=\"$Message[56]: $_dayofweek_p[$_]\" title=\"$Message[56]: $_dayofweek_p[$_]\">";
-			print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_h\" HEIGHT=$bredde_h WIDTH=6 ALT=\"$Message[57]: $_dayofweek_h[$_]\" title=\"$Message[57]: $_dayofweek_h[$_]\">";
-			print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_k\" HEIGHT=$bredde_k WIDTH=6 ALT=\"$Message[75]: ".Format_Bytes($_dayofweek_k[$_])."\" title=\"$Message[75]: ".Format_Bytes($_dayofweek_k[$_])."\">";
-			print "</TD>\n";
-        }
-        print "</TR>\n<TR onmouseover=\"ShowTooltip(17);\" onmouseout=\"HideTooltip(17);\">\n";
-        for (@DOWIndex) {
-			print "<TD";
-			if ($_ =~ /[06]/) { print " bgcolor=\"#$color_weekend\""; }
-			print ">".$Message[$_+84]."</TD>";
-        }
-		print "</TR></TABLE></center></TD></TR>\n";
-		&tab_end;
-	}
-		
 	# BY COUNTRY/DOMAIN
 	#---------------------------
 	if ($ShowDomainsStats) {
 		my @sortdomains_p=sort { $SortDir*$_domener_p{$a} <=> $SortDir*$_domener_p{$b} } keys (%_domener_p);
 		print "$CENTER<a name=\"DOMAINS\">&nbsp;</a><BR>";
-		&tab_head($Message[25]);
+		&tab_head($Message[25],19);
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH colspan=2>$Message[17]</TH><TH>Code</TH><TH bgcolor=\"#$color_p\" width=80>$Message[56]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH bgcolor=\"#$color_k\" width=80>$Message[75]</TH><TH>&nbsp;</TH></TR>\n";
 		$total_p=$total_h=$total_k=0;
 		$max_h=1; foreach my $key (values %_domener_h) { if ($key > $max_h) { $max_h = $key; } }
@@ -3272,7 +2677,7 @@ EOF
 				print "<TR><TD><IMG SRC=\"$DirIcons\/flags\/$key.png\" height=14></TD><TD CLASS=AWL>$Message[0]</TD><TD>$key</TD>";
 			}
 			else {
-				print "<TR><TD><IMG SRC=\"$DirIcons\/flags\/$key.png\" height=14></TD><TD CLASS=AWL>$DomainsHash{$key}</TD><TD>$key</TD>";
+				print "<TR><TD><IMG SRC=\"$DirIcons\/flags\/$key.png\" height=14></TD><TD CLASS=AWL>$DomainsHashIDLib{$key}</TD><TD>$key</TD>";
 			}
 			print "<TD>$_domener_p{$key}</TD><TD>$_domener_h{$key}</TD><TD>".Format_Bytes($_domener_k{$key})."</TD>";
 			print "<TD CLASS=AWL>";
@@ -3308,7 +2713,7 @@ EOF
 	if ($ShowHostsStats) {
 		print "$CENTER<a name=\"VISITOR\">&nbsp;</a><BR>";
 		$MaxNbOfHostsShown = $TotalHostsKnown+($_hostmachine_h{"Unknown"}?1:0) if $MaxNbOfHostsShown > $TotalHostsKnown;
-		&tab_head("$Message[77] $MaxNbOfHostsShown $Message[55] ".($TotalHostsKnown+$TotalHostsUnknown)." $Message[26] ($TotalUnique $Message[11]) &nbsp; - &nbsp; <a href=\"$DirCgi$PROG.$Extension?output=lasthosts&".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang\">$Message[9]</a>");
+		&tab_head("$Message[77] $MaxNbOfHostsShown $Message[55] ".($TotalHostsKnown+$TotalHostsUnknown)." $Message[26] ($TotalUnique $Message[11]) &nbsp; - &nbsp; <a href=\"$DirCgi$PROG.$Extension?output=lasthosts&".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang\">$Message[9]</a>",19);
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[81] : $TotalHostsKnown $Message[82], $TotalHostsUnknown $Message[1]</TH><TH bgcolor=\"#$color_p\" width=80>$Message[56]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH bgcolor=\"#$color_k\" width=80>$Message[75]</TH><TH width=120>$Message[9]</TH></TR>\n";
 		$total_p=$total_h=$total_k=0;
 		$count=0;
@@ -3343,7 +2748,7 @@ EOF
 	if ($ShowAuthenticatedUsers) {
 		my @sortlogin_h=sort { $SortDir*$_login_h{$a} <=> $SortDir*$_login_h{$b} } keys (%_login_h);
 		print "$CENTER<a name=\"LOGIN\">&nbsp;</a><BR>";
-		&tab_head($Message[94]);
+		&tab_head($Message[94],19);
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[94]</TH><TH bgcolor=\"#$color_p\" width=80>$Message[56]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH bgcolor=\"#$color_k\" width=80>$Message[75]</TH><TH width=120>$Message[9]</TH></TR>\n";
 		$total_p=$total_h=$total_k=0;
 		$max_h=1; foreach my $key (values %_login_h) { if ($key > $max_h) { $max_h = $key; } }
@@ -3377,7 +2782,7 @@ EOF
 	#----------------------------
 	if ($ShowRobotsStats) {
 		print "$CENTER<a name=\"ROBOTS\">&nbsp;</a><BR>";
-		&tab_head($Message[53]);
+		&tab_head($Message[53],19);
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\" onmouseover=\"ShowTooltip(16);\" onmouseout=\"HideTooltip(16);\"><TH>$Message[83]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH width=120>$Message[9]</TH></TR>\n";
 		my $count=0;
 		foreach my $key (sort { $SortDir*$_robot_h{$a} <=> $SortDir*$_robot_h{$b} } keys (%_robot_h)) {
@@ -3392,7 +2797,7 @@ EOF
 	if ($ShowPagesStats) {
 		print "$CENTER<a name=\"PAGE\">&nbsp;</a><BR>";
 		$MaxNbOfPageShown = $TotalDifferentPages if $MaxNbOfPageShown > $TotalDifferentPages;
-		&tab_head("$Message[77] $MaxNbOfPageShown $Message[55] $TotalDifferentPages $Message[27] &nbsp; - &nbsp; <a href=\"$DirCgi$PROG.$Extension?output=urldetail&".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang\">$Message[80]</a>");
+		&tab_head("$Message[77] $MaxNbOfPageShown $Message[55] $TotalDifferentPages $Message[27] &nbsp; - &nbsp; <a href=\"$DirCgi$PROG.$Extension?output=urldetail&".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang\">$Message[80]</a>",19);
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[19]</TH><TH bgcolor=\"#$color_p\" width=80>&nbsp;$Message[29]&nbsp;</TH><TH>&nbsp;</TH></TR>\n";
 		$max_p=1; foreach my $key (values %_sider_p) { if ($key > $max_p) { $max_p = $key; } }
 		$count=0; $rest_p=0;
@@ -3430,7 +2835,7 @@ EOF
 	#----------------------------
 	if ($ShowBrowsersStats) {
 		print "$CENTER<a name=\"BROWSER\">&nbsp;</a><BR>";
-		&tab_head($Message[21]);
+		&tab_head($Message[21],19);
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>Browser</TH><TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[15]</TH></TR>\n";
 		$count=0; 
 		foreach my $key (sort { $SortDir*$_browser_h{$a} <=> $SortDir*$_browser_h{$b} } keys (%_browser_h)) {
@@ -3450,7 +2855,7 @@ EOF
 	#----------------------------
 	if ($ShowOSStats) {
 		print "$CENTER<a name=\"OS\">&nbsp;</a><BR>";
-		&tab_head($Message[59]);
+		&tab_head($Message[59],19);
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH colspan=2>OS</TH><TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[15]</TH></TR>\n";
 		$count=0; 
 		foreach my $key (sort { $SortDir*$_os_h{$a} <=> $SortDir*$_os_h{$b} } keys (%_os_h)) {
@@ -3473,7 +2878,7 @@ EOF
 	#---------------------------
 	if ($ShowOriginStats) {
 		print "$CENTER<a name=\"REFERER\">&nbsp;</a><BR>";
-		&tab_head($Message[36]);
+		&tab_head($Message[36],19);
 		my @p_p=();
 		if ($TotalPages > 0) {
 			$p_p[0]=int($_from_p[0]/$TotalPages*1000)/10;
@@ -3497,7 +2902,7 @@ EOF
 		print "<TABLE>\n";
 		$count=0; 
 		foreach my $key (sort { $SortDir*$_se_referrals_h{$a} <=> $SortDir*$_se_referrals_h{$b} } keys (%_se_referrals_h)) {
-			print "<TR><TD CLASS=AWL>- $SearchEnginesHash{$key} </TD><TD align=right>$_se_referrals_h{\"$key\"}</TD></TR>\n";
+			print "<TR><TD CLASS=AWL>- $SearchEnginesHashIDLib{$key} </TD><TD align=right>$_se_referrals_h{\"$key\"}</TD></TR>\n";
 			$count++;
 		}
 		print "</TABLE></TD>\n";
@@ -3536,7 +2941,7 @@ EOF
 		my $TotalKeyphrases=0; foreach my $key (keys %_keyphrases) { $TotalKeyphrases+=$_keyphrases{$key}; }
 		print "$CENTER<a name=\"SEARCHWORDS\">&nbsp;</a><BR>";
 		$MaxNbOfKeywordsShown = $TotalDifferentKeyphrases if $MaxNbOfKeywordsShown > $TotalDifferentKeyphrases;
-		&tab_head("$Message[77] $MaxNbOfKeywordsShown $Message[55] $TotalDifferentKeyphrases $Message[43]");
+		&tab_head("$Message[77] $MaxNbOfKeywordsShown $Message[55] $TotalDifferentKeyphrases $Message[43]",19);
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\" onmouseover=\"ShowTooltip(15);\" onmouseout=\"HideTooltip(15);\"><TH>$Message[13]</TH><TH bgcolor=\"#$color_s\" width=80>$Message[14]</TH><TH bgcolor=\"#$color_s\" width=80>$Message[15]</TH></TR>\n";
 		$count=0; $rest=0;
 		foreach my $key (sort { $SortDir*$_keyphrases{$a} <=> $SortDir*$_keyphrases{$b} } keys (%_keyphrases)) {
@@ -3559,7 +2964,7 @@ EOF
 	#----------------------------
 	if ($ShowHTTPErrorsStats) {
 		print "$CENTER<a name=\"ERRORS\">&nbsp;</a><BR>";
-		&tab_head($Message[32]);
+		&tab_head($Message[32],19);
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH colspan=2>$Message[32]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[15]</TH></TR>\n";
 		$count=0;
 		foreach my $key (sort { $SortDir*$_errors_h{$a} <=> $SortDir*$_errors_h{$b} } keys (%_errors_h)) {
