@@ -1463,7 +1463,7 @@ sub Check_Config {
 	if ($ShowOriginStats !~ /[01PH]/)              	{ $ShowOriginStats='PH'; }
 	if ($ShowKeyphrasesStats !~ /[01]/)          	{ $ShowKeyphrasesStats=1; }
 	if ($ShowKeywordsStats !~ /[01]/)            	{ $ShowKeywordsStats=1; }
-	if ($ShowMiscStats !~ /[01ajdfrqwp]/)     	    { $ShowMiscStats='ajdfrqwp'; }
+	if ($ShowMiscStats !~ /[01ajdfrqwp]/)     	    { $ShowMiscStats='a'; }
 	if ($ShowHTTPErrorsStats !~ /[01]/)          	{ $ShowHTTPErrorsStats=1; }
 	if ($ShowSMTPErrorsStats !~ /[01]/)          	{ $ShowSMTPErrorsStats=0; }
 	if ($AddDataArrayMonthStats !~ /[01]/)        	{ $AddDataArrayMonthStats=1; }
