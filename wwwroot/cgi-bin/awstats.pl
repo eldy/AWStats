@@ -58,8 +58,8 @@ $VisitTolerance= 10000;			# Laps of time to accept a record if not in correct or
 use vars qw/
 $starttime
 $nowtime $tomorrowtime
-$nowweekofmonth $nowdaymod $nowsmallyear
-$nowsec $nowmin $nowhour $nowday $nowmonth $nowyear $nowwday $nowns
+$nowweekofmonth $nowweekofyear $nowdaymod $nowsmallyear
+$nowsec $nowmin $nowhour $nowday $nowmonth $nowyear $nowwday $nowyday $nowns
 $StartSeconds $StartMicroseconds
 /;
 $StartSeconds=$StartMicroseconds=0;
@@ -1071,14 +1071,17 @@ sub Check_Config {
 		my $timephase=$2;
 		if ($Debug) { debug(" Found a time phase of $timephase hour in log file name",1); }
 		# Get older time
-		my ($oldersec,$oldermin,$olderhour,$olderday,$oldermonth,$olderyear,$olderwday) = localtime($starttime-($timephase*3600));
+		my ($oldersec,$oldermin,$olderhour,$olderday,$oldermonth,$olderyear,$olderwday,$olderyday) = localtime($starttime-($timephase*3600));
 		my $olderweekofmonth=int($olderday/7);
+		my $olderweekofyear=int(($olderyday-1+6-($olderwday==0?6:$olderwday-1))/7)+1; if ($olderweekofyear > 52) { $olderweekofyear = 1; }
 		my $olderdaymod=$olderday%7;
 		$olderwday++;
+		my $olderns=Time::Local::timelocal(0,0,0,$olderday,$oldermonth,$olderyear);
 		if ($olderdaymod <= $olderwday) { if (($olderwday != 7) || ($olderdaymod != 0)) { $olderweekofmonth=$olderweekofmonth+1; } }
 		if ($olderdaymod >  $olderwday) { $olderweekofmonth=$olderweekofmonth+2; }
+		# Change format of time variables
 		$olderweekofmonth = "0$olderweekofmonth";
-		my $olderns=Time::Local::timelocal(0,0,0,$olderday,$oldermonth,$olderyear);
+		if ($olderweekofyear < 10) { $olderweekofyear = "0$olderweekofyear"; }
 		if ($olderyear < 100) { $olderyear+=2000; } else { $olderyear+=1900; }
 		my $oldersmallyear=$olderyear;$oldersmallyear =~ s/^..//;
 		if (++$oldermonth < 10) { $oldermonth = "0$oldermonth"; }
@@ -1092,6 +1095,7 @@ sub Check_Config {
 		$LogFile =~ s/%DD-$timephase/$olderday/ig;
 		$LogFile =~ s/%HH-$timephase/$olderhour/ig;
 		$LogFile =~ s/%WM-$timephase/$olderweekofmonth/ig;
+		$LogFile =~ s/%WY-$timephase/$olderweekofyear/ig;
 		$LogFile =~ s/%DW-$timephase/$olderwday/ig;
 		$LogFile =~ s/%NS-$timephase/$olderns/ig;
 	}
@@ -1102,6 +1106,7 @@ sub Check_Config {
 	$LogFile =~ s/%DD/$nowday/ig;
 	$LogFile =~ s/%HH/$nowhour/ig;
 	$LogFile =~ s/%WM/$nowweekofmonth/ig;
+	$LogFile =~ s/%WY/$nowweekofyear/ig;
 	$LogFile =~ s/%DW/$nowwday/ig;
 	$LogFile =~ s/%NS/$nowns/ig;
 	$LogFormat =~ s/\\//g;
@@ -2845,15 +2850,18 @@ if ((! $ENV{"GATEWAY_INTERFACE"}) && (! $SiteConfig)) {
 }
 if (! $SiteConfig) { $SiteConfig=$ENV{"SERVER_NAME"}; }
 
-# Get current time (time when AWStats is started)
-($nowsec,$nowmin,$nowhour,$nowday,$nowmonth,$nowyear,$nowwday) = localtime($starttime);
+# Get current time (time when AWStats was started)
+($nowsec,$nowmin,$nowhour,$nowday,$nowmonth,$nowyear,$nowwday,$nowyday) = localtime($starttime);
 $nowweekofmonth=int($nowday/7);
+$nowweekofyear=int(($nowyday-1+6-($nowwday==0?6:$nowwday-1))/7)+1; if ($nowweekofyear > 52) { $nowweekofyear = 1; }
 $nowdaymod=$nowday%7;
 $nowwday++;
 $nowns=Time::Local::timelocal(0,0,0,$nowday,$nowmonth,$nowyear);
 if ($nowdaymod <= $nowwday) { if (($nowwday != 7) || ($nowdaymod != 0)) { $nowweekofmonth=$nowweekofmonth+1; } }
 if ($nowdaymod >  $nowwday) { $nowweekofmonth=$nowweekofmonth+2; }
-$nowweekofmonth = "0$nowweekofmonth";
+# Change format of time variables
+$nowweekofmonth="0$nowweekofmonth";
+if ($nowweekofyear < 10) { $nowweekofyear = "0$nowweekofyear"; }
 if ($nowyear < 100) { $nowyear+=2000; } else { $nowyear+=1900; }
 $nowsmallyear=$nowyear;$nowsmallyear =~ s/^..//;
 if (++$nowmonth < 10) { $nowmonth = "0$nowmonth"; }

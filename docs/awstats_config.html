@@ -178,23 +178,24 @@ it with its value when reading it), follow the example:<br>
 <br># You can use a full path or relative path from awstats.pl directory.
 <br># Example: "/var/log/apache/access.log"
 <br># Example: "../logs/mycombinedlog.log"
-<br>#
 <br># You can also use tags in this filename if you need a dynamic file name
 <br># depending on date or time (Replacement is made by AWStats at the beginning
 <br># of its execution). This is available tags :
-<br>#  %YYYY-n  is replaced with 4 digits year we were n hours ago
-<br>#  %YY-n    is replaced with 2 digits year we were n hours ago
-<br>#  %MM-n    is replaced with month we were n hours ago
-<br>#  %DD-n    is replaced with day we were n hours ago
-<br>#  %HH-n    is replaced with hour we were n hours ago
-<br>#  %NS-n    is replaced with number of seconds at 00:00 since 1970
-<br>#  %WM-n    is replaced with the week number in month (1-5)
-<br>#  %DW-n    is replaced with the day number in week (1-7, 1=sunday)
+<br>#   %YYYY-n  is replaced with 4 digits year we were n hours ago
+<br>#   %YY-n    is replaced with 2 digits year we were n hours ago
+<br>#   %MM-n    is replaced with month we were n hours ago
+<br>#   %DD-n    is replaced with day we were n hours ago
+<br>#   %HH-n    is replaced with hour we were n hours ago
+<br>#   %NS-n    is replaced with number of seconds at 00:00 since 1970
+<br>#   %WM-n    is replaced with the week number in month (1-5)
+<br>#   %WY-n    is replaced with the week number in year (1-52)
+<br>#   %DW-n    is replaced with the day number in week (1-7, 1=sunday)
 <br>#                              use n=24 if you need (1-7, 1=monday)
-<br>#  You can use 0 for n if you need current year, month, day, hour...
+<br>#   Use 0 for n if you need current year, month, day, hour...
 <br># Example: "/var/log/access_log.%YYYY-0%MM-0%DD-0.log"
 <br># Example: "C:/WINNT/system32/LogFiles/W3SVC1/ex%YY-24%MM-24%DD-24.log"
-<!-- <br># Example: "/var/mylog.%WN.%DW-24" -->
+<br># You can also use a pipe if log file come from a pipe.
+<br># Example: "gzip -d </var/log/apache/access.log.gz |"
 <br>#
 <br>LogFile="/var/log/httpd/mylog.log"
 
