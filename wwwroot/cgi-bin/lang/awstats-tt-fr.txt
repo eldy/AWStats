@@ -32,6 +32,9 @@
 	Les robots sont des <b>automates visiteurs</b> scannant le site dans le but de l indexer, d obtenir des statistiques sur les sites Web Internet ou de vérifier sa disponibilié.<br>
 	#PROG# reconnait <b>#RobotArray#</b> robots.
 	</DIV>
+	<DIV CLASS="CTooltip" ID="tt17">
+	Toutes les statistiques en rapport avec le temps sont basées sur les heures du serveur.<br>
+	</DIV>
 
 	<DIV CLASS="CTooltip" ID="tt201"> Contenu partiel renvoyé. </DIV>
 	<DIV CLASS="CTooltip" ID="tt202"> La requête a été enregistrée par le serveur mais sera exécutée plus tard. </DIV>

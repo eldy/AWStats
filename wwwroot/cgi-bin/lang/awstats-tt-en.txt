@@ -32,6 +32,9 @@
 	Robots (sometimes refer to Spiders) are <b>automatic computer visitors</b> used by many search engines that scan your web site to (1) index it and rank it, (2) collect statistics on Internet Web sites and/or (3) see if your site is still online.<br>
 	#PROG# is able to recognize up to <b>#RobotArray#</b> robots.
 	</DIV>
+	<DIV CLASS="CTooltip" ID="tt17">
+	All time related statistics are base on server time.<br>
+	</DIV>
 
 	<DIV CLASS="CTooltip" ID="tt201"> No description for this error. </DIV>
 	<DIV CLASS="CTooltip" ID="tt202"> Request was understood by server but will be processed later. </DIV>
