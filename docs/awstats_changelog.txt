@@ -48,6 +48,8 @@ New features/improvements:
 - Added failed mails number in the summary.
 - AllowAccessFromWebToFollowingAuthenticatedUsers is no more case
   sensitive.
+- Added new functions for plugins: AddHTMLMenuHeader, AddHTMLMenuFooter,
+  AddHTMLContentHeader, AddHTMLContentFooter
 
 Other/Documentation:
 - BuildReportOutput=xml renamed into BuildReportOutput=xhtml
