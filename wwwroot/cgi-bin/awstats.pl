@@ -251,15 +251,16 @@ use vars qw/
 %LangBrowserToLangAwstats=(
 'sq'=>'al','ar'=>'ar','ba'=>'ba','bg'=>'bg','zh-tw'=>'tw','zh'=>'cn','cz'=>'cz',
 'de'=>'de','da'=>'dk',
-'en'=>'en','et'=>'et','fi'=>'fi','fr'=>'fr','gl'=>'es_gl',
-'es'=>'es','eu'=>'es_eu','ca'=>'es_cat',
+'en'=>'en','et'=>'et','fi'=>'fi','fr'=>'fr','gl'=>'gl',
+'es'=>'es','eu'=>'eu','ca'=>'cat',
 'el'=>'gr','hu'=>'hu','is'=>'is','in'=>'id','it'=>'it',
 'ja'=>'jp','ko'=>'kr','lv'=>'lv','nl'=>'nl','no'=>'nb','nb'=>'nb','nn'=>'nn',
 'pl'=>'pl','pt'=>'pt','pt-br'=>'br','ro'=>'ro','ru'=>'ru','sr'=>'sr','sk'=>'sk',
 'sv'=>'se','tr'=>'tr','uk'=>'ua','cy'=>'wlk','wlk'=>'wlk'
 );
 %LangAWStatsToFlagAwstats=(  # If flag (country ISO 3166 two letters) is not same than lang AWStats code
-'et'=>'ee',
+'cat'=>'es_cat','et'=>'ee','eu','es_eu',
+'gl'=>'glg',
 'he'=>'il',
 'ar'=>'sa',
 'sr'=>'cs'
