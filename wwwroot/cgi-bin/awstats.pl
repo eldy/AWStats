@@ -21,7 +21,7 @@ use vars qw(%DomainsHashIDLib @RobotsSearchIDOrder_list1 @RobotsSearchIDOrder_li
 #-------------------------------------------------------
 # Defines
 #-------------------------------------------------------
-my $VERSION="4.0 (build 42)";
+my $VERSION="4.0 (build 43)";
 
 # ---------- Init variables -------
 my $Debug=0;
@@ -74,13 +74,14 @@ $ShowCorrupted, $SplitSearchString, $StartSeconds, $StartMicroseconds,
 $StaticLinks, $UpdateStats, $URLWithQuery)=
 (0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
 my ($AllowToUpdateStatsFromBrowser, $ArchiveLogRecords, $DetailedReportsOnNewWindows,
-$FirstDayOfWeek, $ShowHeader, $ShowMenu, $ShowMonthDayStats, $ShowDaysOfWeekStats,
+$FirstDayOfWeek, $SaveDatabaseFilesWithPermissionsForEveryone,
+$ShowHeader, $ShowMenu, $ShowMonthDayStats, $ShowDaysOfWeekStats,
 $ShowHoursStats, $ShowDomainsStats, $ShowHostsStats,
 $ShowRobotsStats, $ShowPagesStats, $ShowFileTypesStats,
 $ShowBrowsersStats, $ShowOSStats, $ShowOriginStats, $ShowKeyphrasesStats,
 $ShowKeywordsStats,  $ShowHTTPErrorsStats,
 $ShowFlagLinks, $ShowLinksOnUrl, $WarningMessages)=
-(1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1);
+(1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1);
 my ($ArchiveFileName, $DayRequired, $DefaultFile, $FileConfig, $FileSuffix,
 $HTMLHeadSection, $HTMLEndSection, $HTMLOutput, $Host,
 $LastUpdate, $LogFile, $LogFormat, $LogFormatString, $Logo, $LogoLink,
@@ -3220,7 +3221,9 @@ if ($UpdateStats) {
 		open(ARCHIVELOG,">>$ArchiveFileName") || error("Error: Couldn't open file \"$ArchiveFileName\" to archive current log: $!");
 		while (<LOG>) {	print ARCHIVELOG $_; }
 		close(ARCHIVELOG);
-		chmod 0666,"$ArchiveFileName";
+		if ($SaveDatabaseFilesWithPermissionsForEveryone) {
+			chmod 0666,"$ArchiveFileName";
+		}
 		&debug("End of archiving log file");
 	}
 	else {
@@ -3244,7 +3247,9 @@ if ($UpdateStats) {
 						if (rename("$DirData/$PROG$1$FileSuffix.txt", "$DirData/$PROG$1$FileSuffix.bak")==0) {
 							warning("Warning: Failed to make a backup of \"$DirData/$PROG$1$FileSuffix.txt\" into \"$DirData/$PROG$1$FileSuffix.bak\".\n");
 						}
-						chmod 0666,"$DirData/$PROG$1$FileSuffix.bak";
+						if ($SaveDatabaseFilesWithPermissionsForEveryone) {
+							chmod 0666,"$DirData/$PROG$1$FileSuffix.bak";
+						}
 					}
 					else {
 						debug(" No need to backup old historic file",1);
@@ -3257,7 +3262,9 @@ if ($UpdateStats) {
 					warning("Warning: Failed to rename \"$DirData/$PROG$1$FileSuffix.tmp.$$\" into \"$DirData/$PROG$1$FileSuffix.txt\".\nWrite permissions on \"$PROG$1$FileSuffix.txt\" might be wrong".($ENV{"GATEWAY_INTERFACE"}?" for an 'update from web'":"")." or file might be opened.");
 					last;
 				}
-				chmod 0666,"$DirData/$PROG$1$FileSuffix.txt";
+				if ($SaveDatabaseFilesWithPermissionsForEveryone) {
+					chmod 0666,"$DirData/$PROG$1$FileSuffix.txt";
+				}
 			}
 		}
 	}
