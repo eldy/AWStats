@@ -31,7 +31,7 @@ $WIDTHCOLICON $WIDTHINFO $HEIGHTINFO $TOOLTIPON
 /;
 $DEBUGFORCED=0;						# Force debug level to log lesser level into debug.log file (Keep this value to 0)
 $NBOFLINESFORBENCHMARK=8192;		# Benchmark info are printing every NBOFLINESFORBENCHMARK lines (Must be a power of 2)
-$FRAMEWIDTH=260;					# Width of left frame when UseFramesWhenCGI is on
+$FRAMEWIDTH=230;					# Width of left frame when UseFramesWhenCGI is on
 $NBOFLASTUPDATELOOKUPTOSAVE=200;	# Nb of records to save in DNS last update cache file
 $LIMITFLUSH=5000;					# Nb of records in data arrays after how we need to flush data on disk
 $NEWDAYVISITTIMEOUT=764041;			# Delay between 01-23:59:59 and 02-00:00:00
@@ -6189,7 +6189,7 @@ if (scalar keys %HTMLOutput) {
 
 		if ($FrameName ne 'mainright') {
 			# Print Statistics Of
-			if ($FrameName eq 'mainleft') { print "<tr><th class=AWS>$Message[7]:</th></tr><tr><td class=AWS><font style=\"font-size: 14px;\">$SiteDomain</font></td>"; }
+			if ($FrameName eq 'mainleft') { print "<tr><th class=AWS>$Message[7]:</th></tr><tr><td class=AWS><font style=\"font-size: 12px;\">$SiteDomain</font></td>"; }
 			else { print "<tr><th class=AWS valign=middle>$Message[7]:&nbsp;</th><td class=AWS><font style=\"font-size: 14px;\">$SiteDomain</font></td>"; }
 
 			# Logo and flags
