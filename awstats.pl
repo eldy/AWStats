@@ -13,7 +13,7 @@
 #-------------------------------------------------------
 # Defines
 #-------------------------------------------------------
-$VERSION="2.23m";
+$VERSION="2.23n";
 $Lang=0;
 
 # Default value
@@ -21,7 +21,7 @@ $SortDir       = -1;		# -1 = Sort order from most to less, 1 = reverse order (De
 $VisitTimeOut  = 10000;		# Laps of time to consider a page load as a new visit. 10000 = one hour (Default = 10000)
 $FullHostName  = 1;			# 1 = Use name.domain.zone to refer host clients, 0 = all hosts in same domain.zone are one host (Default = 1, 0 never tested)
 $MaxLengthOfURL= 70;		# Maximum length of URL shown on stats page. This affects only URL visible text, link still work (Default = 70)
-$BenchMark     = 0;			# Set this to 1 to get some benchmark informations (Default = 0)
+$BenchMark     = 0;			# Set this to 1 to get some benchmark informations as a second's counter since 1970 (Default = 0)
 # Images for graphics
 $BarImageVertical_v   = "barrevv.png";
 $BarImageHorizontal_v = "barrehv.png";
@@ -1044,7 +1044,7 @@ sub error {
 sub warning {
 	if ($WarningMessages == 1) {
     	print "$_[0]<br>\n";
-	    print "You can now remove this warning by changing <b>\$WarningMessages=1</b> parameter into <b>\$WarningMessages=0</b> in $PROG config file (<b>$FileConfig</b>).<br><br>\n";
+#		print "You can now remove this warning by changing <b>\$WarningMessages=1</b> parameter into <b>\$WarningMessages=0</b> in $PROG config file (<b>$FileConfig</b>).<br><br>\n"; }
 	}
 }
 
@@ -1090,6 +1090,7 @@ sub Read_Config_File {
 		if ($line =~ /^DirCgi/)                { $DirCgi=$param; next; }
 		if ($line =~ /^DirIcons/)              { $DirIcons=$param; next; }
 		if ($line =~ /^DNSLookup/)             { $DNSLookup=$param; next; }
+		if ($line =~ /^PurgeLogFile/)          { $PurgeLogFile=$param; next; }
 		if ($line =~ /^ArchiveLogRecords/)     { $ArchiveLogRecords=$param; next; }
 		# Read optional section
 		if ($line =~ /^Lang/)                  { $Lang=$param; next; }
@@ -1134,6 +1135,7 @@ sub Check_Config {
 	if (! ($LogFormat =~ /[1-2]/))            { error("Error: LogFormat parameter is wrong. Value is $LogFormat (should be 1 or 2)"); }
 	if (! ($DNSLookup =~ /[0-1]/))            { error("Error: DNSLookup parameter is wrong. Value is $DNSLookup (should be 0 or 1)"); }
 	# Optional section
+	if (! ($PurgeLogFile =~ /[0-1]/))         { $PurgeLogFile=1; }
 	if (! ($ArchiveLogRecords =~ /[0-1]/))    { $ArchiveLogRecords=1; }
 	if (! ($Lang =~ /[0-6]/))                 { $Lang=0; }
 	if ($DefaultFile eq "")                   { $DefaultFile="index.html"; }
@@ -1539,10 +1541,7 @@ if ($MonthOnly eq "year" || $MonthOnly == $month) {
 	#------------------------------------------
 	# PROCESSING CURRENT LOG
 	#------------------------------------------
-	if ($BenchMark == 1) {
-		($secbench,$minbench,$hourbench,$daybench,$monthbench,$yearbench,$wdaybench,$ydaybench,$isdstbench) = localtime(time);
-		print "Start of processing log file: $hourbench:$minbench:$secbench<br>";
-		}
+	if ($BenchMark) { print "Start of processing log file: ".time."<br>\n"; }
 	# Try with $LogFile
 	# If not found try $LogFile$smallyear$month.log
 	# If still not found, try $LogFile$smallyear$month$day.log
@@ -1692,7 +1691,9 @@ if ($MonthOnly eq "year" || $MonthOnly == $month) {
 		    if ($NewDNSLookup) {
 				$new=$TmpHashDNSLookup{$Host};	# TmpHashDNSLookup is a temporary hash table to increase speed
 				if (!$new) {		# if $new undefined, $Host not yet resolved
+					if ($BenchMark) { print "Start of sorting hash arrays: ".time."<br>\n"; }
 					$new=gethostbyaddr(pack("C4",split(/\./,$Host)),AF_INET);	# This is very slow may took 20 seconds
+					if ($BenchMark) { print "End of sorting hash arrays: ".time."<br>\n"; }
 					if ($new eq "") {	$new="ip"; }
 					$TmpHashDNSLookup{$Host}=$new;
 				}
@@ -1874,13 +1875,10 @@ if ($MonthOnly eq "year" || $MonthOnly == $month) {
 	
 	}
 	close LOG;
-	if ($BenchMark == 1) {
-		($secbench,$minbench,$hourbench,$daybench,$monthbench,$yearbench,$wdaybench,$ydaybench,$isdstbench) = localtime(time);
-		print "End of processing log file: $hourbench:$minbench:$secbench<br>";
-		}
+	if ($BenchMark) { print "End of processing log file: ".time."<br>\n"; }
 	
 	# DNSLookup warning
-	if ($DNSLookup && !$NewDNSLookup) { warning("Warning: <b>$PROG</b> has detected that hosts names are already resolved in your logfile <b>$LogFile</b>.<br>\nIf this is true, you should change your setup \$DNSLookup=1 into \$DNSLookup=0 to increase $PROG speed."); }
+	if ($DNSLookup && !$NewDNSLookup) { warning("Warning: <b>$PROG</b> has detected that hosts names are already resolved in your logfile <b>$LogFile</b>.<br>\nIf this is true, you should change your setup DNSLookup=1 into DNSLookup=0 to increase $PROG speed."); }
 
 	# Save for month $monthtoprocess
 	if ($monthtoprocess) {	# If monthtoprocess is 0, it means there was no history files and we found no valid lines in log file
@@ -1888,21 +1886,21 @@ if ($MonthOnly eq "year" || $MonthOnly == $month) {
 	}
 	
 	# Archive LOG file into ARCHIVELOG
-	if ($ArchiveLogRecords == 1) {
-		if ($BenchMark == 1) { print "Start of archiving log records: ";print localtime(); print "<br>"; }
+	if (($PurgeLogFile == 1) && ($ArchiveLogRecords == 1)) {
+		if ($BenchMark) { print "Start of archiving log file: ".time."<br>\n"; }
 		$ArchiveFileName="$DirData/${PROG}_archive$FileSuffix.log";
 		open(LOG,"+<$LogFile") || error("Error: Enable to archive log records of $LogFile into $ArchiveFileName because source can't be opened for read and write: $!<br>\n");
 		open(ARCHIVELOG,">>$ArchiveFileName") || error("Error: Couldn't open file $ArchiveFileName to archive current log: $!");
 		while (<LOG>) {	print ARCHIVELOG $_; }
 		close(ARCHIVELOG);
 		chmod 438,"$ArchiveFileName";
-		if ($BenchMark == 1) { print "End of archiving log records: ";print localtime(); print "<br>"; }
-		}
+		if ($BenchMark) { print "End of archiving log file: ".time."<br>\n"; }
+	}
 	else {
 		open(LOG,"+<$LogFile");
 	}
 
-	# Rename all HISTORYTMP files into HISTORYTXT and purge LOG if all are ok
+	# Rename all HISTORYTMP files into HISTORYTXT
 	$allok=1;
 	for ($ix=1; $ix<=$monthtoprocess; $ix++) {
 		$monthix=$ix+0; if ($monthix < 10) { $monthix  = "0$monthix"; }	# Good trick to change $monthix into "MM" format
@@ -1914,8 +1912,9 @@ if ($MonthOnly eq "year" || $MonthOnly == $month) {
 			chmod 438,"$DirData/$PROG$monthix$year$FileSuffix.txt"; 
 		}
 	}
-	if ($allok > 0) {
-		truncate(LOG,0) || warning("Warning: <b>$PROG</b> couldn't purge logfile <b>$LogFile</b>.<br>\nBe aware of purging this file sometimes to keep good performances. Think to launch <b>$PROG</b> just before this to save in $PROG history text files all informations logfile contains.");
+	# Purge Log file if all renaming are ok and option is on
+	if (($allok > 0) && ($PurgeLogFile == 1)) {
+		truncate(LOG,0) || warning("Warning: <b>$PROG</b> couldn't purge logfile <b>$LogFile</b>.<br>\nChange your logfile permissions to allow write for your web server<br>\nor change PurgeLofFile=1 into PurgeLogFile=0 in configure file<br>\n(and think to purge sometines yourself your logile. Launch $PROG just before this to save in $PROG history text files all informations logfile contains).");
 	}
 	close(LOG);
 	
@@ -2055,7 +2054,7 @@ if ($QueryString =~ /info/) {
 	exit(0);
 	}
 
-if ($BenchMark == 1) { print "Start of sorting: ";print localtime();print "<br>"; }
+if ($BenchMark) { print "Start of sorting hash arrays: ".time."<br>\n"; }
 @RobotArray=keys %RobotHash;
 @SearchEnginesArray=keys %SearchEnginesHash;
 @sortdomains_p=sort { $SortDir*$_domener_p{$a} <=> $SortDir*$_domener_p{$b} } keys (%_domener_p);
@@ -2069,7 +2068,7 @@ if ($BenchMark == 1) { print "Start of sorting: ";print localtime();print "<br>"
 @sortpagerefs=sort { $SortDir*$_pagesrefs_h{$a} <=> $SortDir*$_pagesrefs_h{$b} } keys (%_pagesrefs_h);
 @sortsearchwords=sort { $SortDir*$_keywords{$a} <=> $SortDir*$_keywords{$b} } keys (%_keywords);
 @sorterrors=sort { $SortDir*$_errors_h{$a} <=> $SortDir*$_errors_h{$b} } keys (%_errors_h);
-if ($BenchMark == 1) { print "End of sorting: ";print localtime(); print "<br>"; }
+if ($BenchMark) { print "End of sorting hash arrays: ".time."<br>\n"; }
 
 # English tooltips
 if (($Lang != 1) && ($Lang != 3) && ($Lang != 6)) {
