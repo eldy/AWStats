@@ -29,6 +29,7 @@ Fixes:
   that match a dropping criteria (SkipFiles, Skip..., Only...).
 - Click on "Summary" now returns to top of page even with rawlog plugin.
 - Fixed AmigaVoyager detection.
+- Fixed bug in SkipHosts filter for mail log files.
 
 New features/improvements:
 - Increased speed by 10 to 20%.
