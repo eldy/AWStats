@@ -85,17 +85,22 @@
 "xmms",
 "xaudio",
 # PDA/Phonecell browsers
-"alcatel",
-"docomo",
+"alcatel",				# Alcatel
+"mot-",					# Motorola
+"nokia",				# Nokia
+"panasonic",			# Panasonic
+"philips",				# Philips
+"sonyericsson",			# SonyEricsson
+"ericsson",				# Ericsson (must be after sonyericsson
 "mmef",
-"mot-a",
 "mspie",
-"nokia",
-"sonyericsson",
-"up\.",					# Works for UP.Browser and UP.Link
 "wapalizer",
 "wapsilon",
 "webcollage",
+"up\.",					# Works for UP.Browser and UP.Link
+# PDA/Phonecell I-Mode browsers
+"docomo",
+"portalmmm",
 # Others (TV)
 "webtv",
 # Other kind of browsers
@@ -182,16 +187,21 @@
 "xaudio","Some XAudio Engine based MPEG player (media player)",
 # PDA/Phonecell browsers
 "alcatel","Alcatel Browser (PDA/Phone browser)",
-"docomo","IMode phone (PDA/Phone browser)",
-"mmef","Microsoft Mobile Explorer (PDA/Phone browser)",
-"mot-a","Motorola Browser (PDA/Phone browser)",
-"mspie","MS Pocket Internet Explorer (PDA/Phone browser)",
+"ericsson","Ericsson Browser (PDA/Phone browser)",
+"mot-","Motorola Browser (PDA/Phone browser)",
 "nokia","Nokia Browser (PDA/Phone browser)",
+"panasonic","Panasonic Browser (PDA/Phone browser)",
+"philips","Philips Browser (PDA/Phone browser)",
 "sonyericsson","Sony/Ericsson Browser (PDA/Phone browser)",
-"up\.","UP.Browser (PDA/Phone browser)",					# Works for UP.Browser and UP.Link
+"mmef","Microsoft Mobile Explorer (PDA/Phone browser)",
+"mspie","MS Pocket Internet Explorer (PDA/Phone browser)",
 "wapalizer","WAPalizer (PDA/Phone browser)",
 "wapsilon","WAPsilon (PDA/Phone browser)",
 "webcollage","WebCollage (PDA/Phone browser)",
+"up\.","UP.Browser (PDA/Phone browser)",					# Works for UP.Browser and UP.Link
+# PDA/Phonecell I-Mode browsers
+"docomo","I-Mode phone (PDA/Phone browser)",
+"portalmmm","I-Mode phone (PDA/Phone browser)",
 # Others (TV)
 "webtv","WebTV browser",
 # Other kind of browsers
@@ -294,17 +304,22 @@
 "xmms","mediaplayer",
 "xaudio","mediaplayer",
 # PDA/Phonecell browsers
-"alcatel","pdaphone",
-"docomo","pdaphone",
+"alcatel","pdaphone",				# Alcatel
+"ericsson","pdaphone",				# Ericsson
+"mot-","pdaphone",					# Motorola
+"nokia","pdaphone",					# Nokia
+"panasonic","pdaphone",				# Panasonic
+"philips","pdaphone",				# Philips
+"sonyericsson","pdaphone",			# Sony/Ericsson
 "mmef","pdaphone",
-"mot-a","pdaphone",
 "mspie","pdaphone",
-"nokia","pdaphone",
-"sonyericsson","pdaphone",
-"up\.","pdaphone",					# Works for UP.Browser and UP.Link
 "wapalizer","pdaphone",
 "wapsilon","pdaphone",
 "webcollage","pdaphone",
+"up\.","pdaphone",					# Works for UP.Browser and UP.Link
+# PDA/Phonecell I-Mode browsers
+"docomo","pdaphone",
+"portalmmm","pdaphone",
 # Others (TV)
 "webtv","webtv",
 # Other kind of browsers
