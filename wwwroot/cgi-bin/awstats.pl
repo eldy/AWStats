@@ -1084,18 +1084,18 @@ sub Check_Config {
 	if (! $DefaultFile)                       		{ $DefaultFile="index.html"; }
 	if ($URLWithQuery !~ /[0-1]/)                 	{ $URLWithQuery=0; }
 	if ($WarningMessages !~ /[0-1]/)              	{ $WarningMessages=1; }
-	if ($NbOfLinesForCorruptedLog !~ /[\d]+/ || $NbOfLinesForCorruptedLog<1)	{ $NbOfLinesForCorruptedLog=50; }
+	if ($NbOfLinesForCorruptedLog !~ /^\d+/ || $NbOfLinesForCorruptedLog<1)	{ $NbOfLinesForCorruptedLog=50; }
 	if ($SplitSearchString !~ /[0-1]/)          	{ $SplitSearchString=0; }
-	if ($Expires !~ /^[\d]+/)                 		{ $Expires=0; }
+	if ($Expires !~ /^\d+/)                 		{ $Expires=0; }
 	# Optional accuracy setup section
-	if ($LevelForRobotsDetection !~ /^[\d]+/)       	{ $LevelForRobotsDetection=2; }
-	if ($LevelForBrowsersDetection !~ /^[\d]+/)     	{ $LevelForBrowsersDetection=1; }
-	if ($LevelForOSDetection !~ /^[\d]+/)      			{ $LevelForOSDetection=1; }
-	if ($LevelForRefererAnalyze !~ /^[\d]+/)			{ $LevelForRefererAnalyze=1; }
-	if ($LevelForSearchEnginesDetection !~ /^[\d]+/)	{ $LevelForSearchEnginesDetection=1; }
-	if ($LevelForKeywordsDetection !~ /^[\d]+/)    		{ $LevelForKeywordsDetection=1; }
+	if ($LevelForRobotsDetection !~ /^\d+/)       	{ $LevelForRobotsDetection=2; }
+	if ($LevelForBrowsersDetection !~ /^\d+/)     	{ $LevelForBrowsersDetection=1; }
+	if ($LevelForOSDetection !~ /^\d+/)    			{ $LevelForOSDetection=1; }
+	if ($LevelForRefererAnalyze !~ /^\d+/)			{ $LevelForRefererAnalyze=1; }
+	if ($LevelForSearchEnginesDetection !~ /^\d+/)	{ $LevelForSearchEnginesDetection=1; }
+	if ($LevelForKeywordsDetection !~ /^\d+/)  		{ $LevelForKeywordsDetection=1; }
 	# Optional appearance setup section
-	if ($MaxRowsInHTMLOutput !~ /^[\d]+/ || $MaxRowsInHTMLOutput<1)     { $MaxRowsInHTMLOutput=1000; }
+	if ($MaxRowsInHTMLOutput !~ /^\d+/ || $MaxRowsInHTMLOutput<1)     { $MaxRowsInHTMLOutput=1000; }
 	if ($ShowHeader !~ /[0-1]/)                   	{ $ShowHeader=1; }
 	if ($ShowMenu !~ /[0-1]/)                     	{ $ShowMenu=1; }
 	if ($ShowMonthDayStats !~ /[0-1]/)            	{ $ShowMonthDayStats=1; }
@@ -1116,28 +1116,28 @@ sub Check_Config {
 	if ($ShowKeywordsStats !~ /[0-1]/)            	{ $ShowKeywordsStats=1; }
 	if ($ShowCompressionStats !~ /[0-1]/)         	{ $ShowCompressionStats=1; }
 	if ($ShowHTTPErrorsStats !~ /[0-1]/)          	{ $ShowHTTPErrorsStats=1; }
-	if ($MaxNbOfDomain !~ /^[\d]+/ || $MaxNbOfDomain<1)           		{ $MaxNbOfDomain=25; }
-	if ($MaxNbOfHostsShown !~ /^[\d]+/ || $MaxNbOfHostsShown<1)       	{ $MaxNbOfHostsShown=25; }
-	if ($MinHitHost !~ /^[\d]+/ || $MinHitHost<1)              			{ $MinHitHost=1; }
-	if ($MaxNbOfLoginShown !~ /^[\d]+/ || $MaxNbOfLoginShown<1)       	{ $MaxNbOfLoginShown=10; }
-	if ($MinHitLogin !~ /^[\d]+/ || $MinHitLogin<1)             		{ $MinHitLogin=1; }
-	if ($MaxNbOfRobotShown !~ /^[\d]+/ || $MaxNbOfRobotShown<1)       	{ $MaxNbOfRobotShown=25; }
-	if ($MinHitRobot !~ /^[\d]+/ || $MinHitRobot<1)             		{ $MinHitRobot=1; }
-	if ($MaxNbOfPageShown !~ /^[\d]+/ || $MaxNbOfPageShown<1)        	{ $MaxNbOfPageShown=25; }
-	if ($MinHitFile !~ /^[\d]+/ || $MinHitFile<1)              			{ $MinHitFile=1; }
-	if ($MaxNbOfRefererShown !~ /^[\d]+/ || $MaxNbOfRefererShown<1)     { $MaxNbOfRefererShown=25; }
-	if ($MinHitRefer !~ /^[\d]+/ || $MinHitRefer<1)             		{ $MinHitRefer=1; }
-	if ($MaxNbOfKeywordsShown !~ /^[\d]+/ || $MaxNbOfKeywordsShown<1)	{ $MaxNbOfKeywordsShown=25; }
-	if ($MinHitKeyword !~ /^[\d]+/ || $MinHitKeyword<1)           		{ $MinHitKeyword=1; }
+	if ($MaxNbOfDomain !~ /^\d+/ || $MaxNbOfDomain<1)           		{ $MaxNbOfDomain=25; }
+	if ($MaxNbOfHostsShown !~ /^\d+/ || $MaxNbOfHostsShown<1)       	{ $MaxNbOfHostsShown=25; }
+	if ($MinHitHost !~ /^\d+/ || $MinHitHost<1)              			{ $MinHitHost=1; }
+	if ($MaxNbOfLoginShown !~ /^\d+/ || $MaxNbOfLoginShown<1)       	{ $MaxNbOfLoginShown=10; }
+	if ($MinHitLogin !~ /^\d+/ || $MinHitLogin<1)  		           		{ $MinHitLogin=1; }
+	if ($MaxNbOfRobotShown !~ /^\d+/ || $MaxNbOfRobotShown<1)       	{ $MaxNbOfRobotShown=25; }
+	if ($MinHitRobot !~ /^\d+/ || $MinHitRobot<1)           	  		{ $MinHitRobot=1; }
+	if ($MaxNbOfPageShown !~ /^\d+/ || $MaxNbOfPageShown<1)	        	{ $MaxNbOfPageShown=25; }
+	if ($MinHitFile !~ /^\d+/ || $MinHitFile<1)              			{ $MinHitFile=1; }
+	if ($MaxNbOfRefererShown !~ /^\d+/ || $MaxNbOfRefererShown<1)    	{ $MaxNbOfRefererShown=25; }
+	if ($MinHitRefer !~ /^\d+/ || $MinHitRefer<1)             			{ $MinHitRefer=1; }
+	if ($MaxNbOfKeywordsShown !~ /^\d+/ || $MaxNbOfKeywordsShown<1)		{ $MaxNbOfKeywordsShown=25; }
+	if ($MinHitKeyword !~ /^\d+/ || $MinHitKeyword<1)           		{ $MinHitKeyword=1; }
 	if ($FirstDayOfWeek !~ /[0-1]/)               	{ $FirstDayOfWeek=1; }
 	if ($DetailedReportsOnNewWindows !~ /[0-1]/)  	{ $DetailedReportsOnNewWindows=1; }
 	if ($ShowLinksOnUrl !~ /[0-1]/)               	{ $ShowLinksOnUrl=1; }
-	if ($MaxLengthOfURL !~ /^[\d+]/ || $MaxLengthOfURL<1) { $MaxLengthOfURL=72; }
+	if ($MaxLengthOfURL !~ /^\d+/ || $MaxLengthOfURL<1) { $MaxLengthOfURL=72; }
 	if ($ShowLinksToWhoIs !~ /[0-1]/)              	{ $ShowLinksToWhoIs=0; }
 	if (! $Logo)    	                          	{ $Logo="awstats_logo1.png"; }
 	if (! $LogoLink)  	                        	{ $LogoLink="http://awstats.sourceforge.net"; }
-	if ($BarWidth !~ /^[\d]+/ || $BarWidth<1) 		{ $BarWidth=260; }
-	if ($BarHeight !~ /^[\d]+/ || $BarHeight<1)		{ $BarHeight=180; }
+	if ($BarWidth !~ /^\d+/ || $BarWidth<1) 		{ $BarWidth=260; }
+	if ($BarHeight !~ /^\d+/ || $BarHeight<1)		{ $BarHeight=180; }
 	$color_Background =~ s/#//g; if ($color_Background !~ /^[0-9|A-Z]+$/i)           { $color_Background="FFFFFF";	}
 	$color_TableBGTitle =~ s/#//g; if ($color_TableBGTitle !~ /^[0-9|A-Z]+$/i)       { $color_TableBGTitle="CCCCDD"; }
 	$color_TableTitle =~ s/#//g; if ($color_TableTitle !~ /^[0-9|A-Z]+$/i)           { $color_TableTitle="000000"; }
@@ -1160,106 +1160,106 @@ sub Check_Config {
 	$color_e =~ s/#//g; if ($color_e !~ /^[0-9|A-Z]+$/i)                 			 { $color_e="CEC2E8"; }
 	$color_x =~ s/#//g; if ($color_x !~ /^[0-9|A-Z]+$/i)                 			 { $color_x="C1B2E2"; }
 	# Default value	for Messages
-	if (! $Message[0]) { $Message[0]="Unknown"; }
-	if (! $Message[1]) { $Message[1]="Unknown (unresolved ip)"; }
-	if (! $Message[2]) { $Message[2]="Others"; }
-	if (! $Message[3]) { $Message[3]="View details"; }
-	if (! $Message[4]) { $Message[4]="Day"; }
-	if (! $Message[5]) { $Message[5]="Month"; }
-	if (! $Message[6]) { $Message[6]="Year"; }
-	if (! $Message[7]) { $Message[7]="Statistics of"; }
-	if (! $Message[8]) { $Message[8]="First visit"; }
-	if (! $Message[9]) { $Message[9]="Last visit"; }
-	if (! $Message[10]) { $Message[10]="Number of visits"; }
-	if (! $Message[11]) { $Message[11]="Unique visitors"; }
-	if (! $Message[12]) { $Message[12]="Visit"; }
-	if (! $Message[13]) { $Message[13]="different keywords"; }
-	if (! $Message[14]) { $Message[14]="Search"; }
-	if (! $Message[15]) { $Message[15]="Percent"; }
-	if (! $Message[16]) { $Message[16]="Traffic"; }
-	if (! $Message[17]) { $Message[17]="Domains/Countries"; }
-	if (! $Message[18]) { $Message[18]="Visitors"; }
-	if (! $Message[19]) { $Message[19]="Pages-URL"; }
-	if (! $Message[20]) { $Message[20]="Hours"; }
-	if (! $Message[21]) { $Message[21]="Browsers"; }
-	if (! $Message[22]) { $Message[22]="HTTP Errors"; }
-	if (! $Message[23]) { $Message[23]="Referers"; }
-	if (! $Message[24]) { $Message[24]="Search&nbsp;Keywords"; }
-	if (! $Message[25]) { $Message[25]="Visitors domains/countries"; }
-	if (! $Message[26]) { $Message[26]="hosts"; }
-	if (! $Message[27]) { $Message[27]="pages"; }
-	if (! $Message[28]) { $Message[28]="different pages"; }
-	if (! $Message[29]) { $Message[29]="Viewed pages"; }
-	if (! $Message[30]) { $Message[30]="Other words"; }
-	if (! $Message[31]) { $Message[31]="Pages not found"; }
-	if (! $Message[32]) { $Message[32]="HTTP Error codes"; }
-	if (! $Message[33]) { $Message[33]="Netscape versions"; }
-	if (! $Message[34]) { $Message[34]="IE versions"; }
-	if (! $Message[35]) { $Message[35]="Last Update"; }
-	if (! $Message[36]) { $Message[36]="Connect to site from"; }
-	if (! $Message[37]) { $Message[37]="Origin"; }
-	if (! $Message[38]) { $Message[38]="Direct address / Bookmarks"; }
-	if (! $Message[39]) { $Message[39]="Origin unknown"; }
-	if (! $Message[40]) { $Message[40]="Links from an Internet Search Engine"; }
-	if (! $Message[41]) { $Message[41]="Links from an external page (other web sites except search engines)"; }
-	if (! $Message[42]) { $Message[42]="Links from an internal page (other page on same site)"; }
-	if (! $Message[43]) { $Message[43]="Keywords used on search engines"; }
-	if (! $Message[44]) { $Message[44]=""; }
-	if (! $Message[45]) { $Message[45]="Unresolved IP Address"; }
-	if (! $Message[46]) { $Message[46]="Unknown OS (Referer field)"; }
-	if (! $Message[47]) { $Message[47]="Required but not found URLs (HTTP code 404)"; }
-	if (! $Message[48]) { $Message[48]="IP Address"; }
-	if (! $Message[49]) { $Message[49]="Error&nbsp;Hits"; }
-	if (! $Message[50]) { $Message[50]="Unknown browsers (Referer field)"; }
-	if (! $Message[51]) { $Message[51]="Visiting robots"; }
-	if (! $Message[52]) { $Message[52]="visits/visitor"; }
-	if (! $Message[53]) { $Message[53]="Robots/Spiders visitors"; }
-	if (! $Message[54]) { $Message[54]="Free realtime logfile analyzer for advanced web statistics"; }
-	if (! $Message[55]) { $Message[55]="of"; }
-	if (! $Message[56]) { $Message[56]="Pages"; }
-	if (! $Message[57]) { $Message[57]="Hits"; }
-	if (! $Message[58]) { $Message[58]="Versions"; }
-	if (! $Message[59]) { $Message[59]="Operating Systems"; }
-	if (! $Message[60]) { $Message[60]="Jan"; }
-	if (! $Message[61]) { $Message[61]="Feb"; }
-	if (! $Message[62]) { $Message[62]="Mar"; }
-	if (! $Message[63]) { $Message[63]="Apr"; }
-	if (! $Message[64]) { $Message[64]="May"; }
-	if (! $Message[65]) { $Message[65]="Jun"; }
-	if (! $Message[66]) { $Message[66]="Jul"; }
-	if (! $Message[67]) { $Message[67]="Aug"; }
-	if (! $Message[68]) { $Message[68]="Sep"; }
-	if (! $Message[69]) { $Message[69]="Oct"; }
-	if (! $Message[70]) { $Message[70]="Nov"; }
-	if (! $Message[71]) { $Message[71]="Dec"; }
-	if (! $Message[72]) { $Message[72]="Navigation"; }
-	if (! $Message[73]) { $Message[73]="Files type"; }
-	if (! $Message[74]) { $Message[74]="Update now"; }
-	if (! $Message[75]) { $Message[75]="Bandwith"; }
-	if (! $Message[76]) { $Message[76]="Back to main page"; }
-	if (! $Message[77]) { $Message[77]="Top"; }
-	if (! $Message[78]) { $Message[78]="dd mmm yyyy - HH:MM"; }
-	if (! $Message[79]) { $Message[79]="Filter"; }
-	if (! $Message[80]) { $Message[80]="Full list"; }
-	if (! $Message[81]) { $Message[81]="Hosts"; }
-	if (! $Message[82]) { $Message[82]="Known"; }
-	if (! $Message[83]) { $Message[83]="Robots"; }
-	if (! $Message[84]) { $Message[84]="Sun"; }
-	if (! $Message[85]) { $Message[85]="Mon"; }
-	if (! $Message[86]) { $Message[86]="Tue"; }
-	if (! $Message[87]) { $Message[87]="Wed"; }
-	if (! $Message[88]) { $Message[88]="Thu"; }
-	if (! $Message[89]) { $Message[89]="Fri"; }
-	if (! $Message[90]) { $Message[90]="Sat"; }
-	if (! $Message[91]) { $Message[91]="Days of week"; }
-	if (! $Message[92]) { $Message[92]="Who"; }
-	if (! $Message[93]) { $Message[93]="When"; }
-	if (! $Message[94]) { $Message[94]="Authenticated users"; }
-	if (! $Message[95]) { $Message[95]="Min"; }
-	if (! $Message[96]) { $Message[96]="Average"; }
-	if (! $Message[97]) { $Message[97]="Max"; }
-	if (! $Message[98]) { $Message[98]="Web compression"; }
-	if (! $Message[99]) { $Message[99]="Bandwith saved"; }
+	if (! $Message[0])   { $Message[0]="Unknown"; }
+	if (! $Message[1])   { $Message[1]="Unknown (unresolved ip)"; }
+	if (! $Message[2])   { $Message[2]="Others"; }
+	if (! $Message[3])   { $Message[3]="View details"; }
+	if (! $Message[4])   { $Message[4]="Day"; }
+	if (! $Message[5])   { $Message[5]="Month"; }
+	if (! $Message[6])   { $Message[6]="Year"; }
+	if (! $Message[7])   { $Message[7]="Statistics of"; }
+	if (! $Message[8])   { $Message[8]="First visit"; }
+	if (! $Message[9])   { $Message[9]="Last visit"; }
+	if (! $Message[10])  { $Message[10]="Number of visits"; }
+	if (! $Message[11])  { $Message[11]="Unique visitors"; }
+	if (! $Message[12])  { $Message[12]="Visit"; }
+	if (! $Message[13])  { $Message[13]="different keywords"; }
+	if (! $Message[14])  { $Message[14]="Search"; }
+	if (! $Message[15])  { $Message[15]="Percent"; }
+	if (! $Message[16])  { $Message[16]="Traffic"; }
+	if (! $Message[17])  { $Message[17]="Domains/Countries"; }
+	if (! $Message[18])  { $Message[18]="Visitors"; }
+	if (! $Message[19])  { $Message[19]="Pages-URL"; }
+	if (! $Message[20])  { $Message[20]="Hours"; }
+	if (! $Message[21])  { $Message[21]="Browsers"; }
+	if (! $Message[22])  { $Message[22]="HTTP Errors"; }
+	if (! $Message[23])  { $Message[23]="Referers"; }
+	if (! $Message[24])  { $Message[24]="Search&nbsp;Keywords"; }
+	if (! $Message[25])  { $Message[25]="Visitors domains/countries"; }
+	if (! $Message[26])  { $Message[26]="hosts"; }
+	if (! $Message[27])  { $Message[27]="pages"; }
+	if (! $Message[28])  { $Message[28]="different pages"; }
+	if (! $Message[29])  { $Message[29]="Viewed pages"; }
+	if (! $Message[30])  { $Message[30]="Other words"; }
+	if (! $Message[31])  { $Message[31]="Pages not found"; }
+	if (! $Message[32])  { $Message[32]="HTTP Error codes"; }
+	if (! $Message[33])  { $Message[33]="Netscape versions"; }
+	if (! $Message[34])  { $Message[34]="IE versions"; }
+	if (! $Message[35])  { $Message[35]="Last Update"; }
+	if (! $Message[36])  { $Message[36]="Connect to site from"; }
+	if (! $Message[37])  { $Message[37]="Origin"; }
+	if (! $Message[38])  { $Message[38]="Direct address / Bookmarks"; }
+	if (! $Message[39])  { $Message[39]="Origin unknown"; }
+	if (! $Message[40])  { $Message[40]="Links from an Internet Search Engine"; }
+	if (! $Message[41])  { $Message[41]="Links from an external page (other web sites except search engines)"; }
+	if (! $Message[42])  { $Message[42]="Links from an internal page (other page on same site)"; }
+	if (! $Message[43])  { $Message[43]="Keywords used on search engines"; }
+	if (! $Message[44])  { $Message[44]=""; }
+	if (! $Message[45])  { $Message[45]="Unresolved IP Address"; }
+	if (! $Message[46])  { $Message[46]="Unknown OS (Referer field)"; }
+	if (! $Message[47])  { $Message[47]="Required but not found URLs (HTTP code 404)"; }
+	if (! $Message[48])  { $Message[48]="IP Address"; }
+	if (! $Message[49])  { $Message[49]="Error&nbsp;Hits"; }
+	if (! $Message[50])  { $Message[50]="Unknown browsers (Referer field)"; }
+	if (! $Message[51])  { $Message[51]="Visiting robots"; }
+	if (! $Message[52])  { $Message[52]="visits/visitor"; }
+	if (! $Message[53])  { $Message[53]="Robots/Spiders visitors"; }
+	if (! $Message[54])  { $Message[54]="Free realtime logfile analyzer for advanced web statistics"; }
+	if (! $Message[55])  { $Message[55]="of"; }
+	if (! $Message[56])  { $Message[56]="Pages"; }
+	if (! $Message[57])  { $Message[57]="Hits"; }
+	if (! $Message[58])  { $Message[58]="Versions"; }
+	if (! $Message[59])  { $Message[59]="Operating Systems"; }
+	if (! $Message[60])  { $Message[60]="Jan"; }
+	if (! $Message[61])  { $Message[61]="Feb"; }
+	if (! $Message[62])  { $Message[62]="Mar"; }
+	if (! $Message[63])  { $Message[63]="Apr"; }
+	if (! $Message[64])  { $Message[64]="May"; }
+	if (! $Message[65])  { $Message[65]="Jun"; }
+	if (! $Message[66])  { $Message[66]="Jul"; }
+	if (! $Message[67])  { $Message[67]="Aug"; }
+	if (! $Message[68])  { $Message[68]="Sep"; }
+	if (! $Message[69])  { $Message[69]="Oct"; }
+	if (! $Message[70])  { $Message[70]="Nov"; }
+	if (! $Message[71])  { $Message[71]="Dec"; }
+	if (! $Message[72])  { $Message[72]="Navigation"; }
+	if (! $Message[73])  { $Message[73]="Files type"; }
+	if (! $Message[74])  { $Message[74]="Update now"; }
+	if (! $Message[75])  { $Message[75]="Bandwith"; }
+	if (! $Message[76])  { $Message[76]="Back to main page"; }
+	if (! $Message[77])  { $Message[77]="Top"; }
+	if (! $Message[78])  { $Message[78]="dd mmm yyyy - HH:MM"; }
+	if (! $Message[79])  { $Message[79]="Filter"; }
+	if (! $Message[80])  { $Message[80]="Full list"; }
+	if (! $Message[81])  { $Message[81]="Hosts"; }
+	if (! $Message[82])  { $Message[82]="Known"; }
+	if (! $Message[83])  { $Message[83]="Robots"; }
+	if (! $Message[84])  { $Message[84]="Sun"; }
+	if (! $Message[85])  { $Message[85]="Mon"; }
+	if (! $Message[86])  { $Message[86]="Tue"; }
+	if (! $Message[87])  { $Message[87]="Wed"; }
+	if (! $Message[88])  { $Message[88]="Thu"; }
+	if (! $Message[89])  { $Message[89]="Fri"; }
+	if (! $Message[90])  { $Message[90]="Sat"; }
+	if (! $Message[91])  { $Message[91]="Days of week"; }
+	if (! $Message[92])  { $Message[92]="Who"; }
+	if (! $Message[93])  { $Message[93]="When"; }
+	if (! $Message[94])  { $Message[94]="Authenticated users"; }
+	if (! $Message[95])  { $Message[95]="Min"; }
+	if (! $Message[96])  { $Message[96]="Average"; }
+	if (! $Message[97])  { $Message[97]="Max"; }
+	if (! $Message[98])  { $Message[98]="Web compression"; }
+	if (! $Message[99])  { $Message[99]="Bandwith saved"; }
 	if (! $Message[100]) { $Message[100]="Compression on"; }
 	if (! $Message[101]) { $Message[101]="Compression result"; }
 	if (! $Message[102]) { $Message[102]="Total"; }
@@ -1429,7 +1429,7 @@ sub Read_History_File {
 					# We always read this to build the month graph (MonthUnique, MonthHostsKnown, MonthHostsUnknown)
 					if ($field[0] ne "Unknown") {	# If and else is kept for backward compatibility
 						if (($field[1]||0) > 0) { $MonthUnique{$year.$month}++; }
-						if ($field[0] !~ /^[\d]+\.[\d]+\.[\d]+\.[\d]+$/) { $MonthHostsKnown{$year.$month}++; }
+						if ($field[0] !~ /^\d+\.\d+\.\d+\.\d+$/) { $MonthHostsKnown{$year.$month}++; }
 						else { $MonthHostsUnknown{$year.$month}++; }
 					}
 					else {
@@ -1453,7 +1453,7 @@ sub Read_History_File {
 						else {
 							if ($QueryString =~ /output=allhosts/i || $QueryString =~ /output=lasthosts/i) { $loadrecord=1;	}
 							if ($MonthRequired eq "year" || $field[2] >= $MinHitHost) {
-								if ($QueryString =~ /output=unknownip/i && ($field[0] =~ /^[\d]+\.[\d]+\.[\d]+\.[\d]+$/)) { $loadrecord=1; }
+								if ($QueryString =~ /output=unknownip/i && ($field[0] =~ /^\d+\.\d+\.\d+\.\d+$/)) { $loadrecord=1; }
 								if ($QueryString !~ /output=/i && ($MonthRequired eq "year" || $countloaded < $MaxNbOfHostsShown)) { $loadrecord=1; }
 							}
 						}
@@ -2509,30 +2509,28 @@ if ($ENV{"GATEWAY_INTERFACE"}) {	# Run from a browser
 		binmode STDIN;
 		read(STDIN, $QueryString, $ENV{'CONTENT_LENGTH'});
 	}
-	if ($ENV{"QUERY_STRING"}) {
-		$QueryString = $ENV{"QUERY_STRING"};
-	}
+	if ($ENV{"QUERY_STRING"}) { $QueryString = $ENV{"QUERY_STRING"}; }
 	$QueryString = CleanFromCSSA($QueryString);
-	if ($QueryString =~ /site=/i)		{ $SiteConfig=$QueryString; $SiteConfig =~ s/.*site=//i;   $SiteConfig =~ s/&.*//; $SiteConfig =~ s/ .*//; }	# For backward compatibility
-	if ($QueryString =~ /config=/i)		{ $SiteConfig=$QueryString; $SiteConfig =~ s/.*config=//i; $SiteConfig =~ s/&.*//; $SiteConfig =~ s/ .*//; }
-	$UpdateStats=0; $HTMLOutput=1;							# No update but report by default when run from a browser
-	if ($QueryString =~ /update=1/i)	{ $UpdateStats=1; }	# Update is required
+	if ($QueryString =~ /site=([^\s&]+)/i) 		{ $SiteConfig=&DecodeEncodedString($1); }	# For backward compatibility
+	if ($QueryString =~ /config=([^\s&]+)/i)	{ $SiteConfig=&DecodeEncodedString($1); }
+	$UpdateStats=0; $HTMLOutput=1;															# No update but report by default when run from a browser
+	if ($QueryString =~ /update=1/i)			{ $UpdateStats=1; }							# Update is required
 }
 else {								# Run from command line
-	if ($ARGV[0] && $ARGV[0] eq "-h")	{ $SiteConfig = $ARGV[1]; }          # Kept for backward compatibility but useless
+	if ($ARGV[0] && $ARGV[0] eq "-h")			{ $SiteConfig = $ARGV[1]; }					# For backward compatibility but useless
 	$QueryString=""; for (0..@ARGV-1) {
 		if ($_ > 0) { $QueryString .= "&"; }
-		my $NewLinkParams=$ARGV[$_]; $NewLinkParams =~ s/^-+//;
+		my $NewLinkParams=$ARGV[$_]; $NewLinkParams =~ s/^-+//; $NewLinkParams =~ s/\s/%20/g;
 		$QueryString .= "$NewLinkParams";
 	}
 	$QueryString = CleanFromCSSA($QueryString);
-	if ($QueryString =~ /site=/i)  		{ $SiteConfig=$QueryString; $SiteConfig =~ s/.*site=//i;   $SiteConfig =~ s/&.*//; $SiteConfig =~ s/ .*//; }  # For backward compatibility
-	if ($QueryString =~ /config=/i)		{ $SiteConfig=$QueryString; $SiteConfig =~ s/.*config=//i; $SiteConfig =~ s/&.*//; $SiteConfig =~ s/ .*//; }
-	$UpdateStats=1; $HTMLOutput=0;                               # Update with no report by default when run from command line
-	if ($QueryString =~ /output/i)    	{ $UpdateStats=0; $HTMLOutput=1; }   # Report and no update if an output is required
-	if ($QueryString =~ /update/i)    	{ $UpdateStats=1; }                  # Except if -update specified
+	if ($QueryString =~ /site=([^\s&]+)/i) 		{ $SiteConfig=&DecodeEncodedString($1); }	# For backward compatibility
+	if ($QueryString =~ /config=([^\s&]+)/i)	{ $SiteConfig=&DecodeEncodedString($1); }
+	$UpdateStats=1; $HTMLOutput=0;                            								# Update with no report by default when run from command line
+	if ($QueryString =~ /output/i)		    	{ $UpdateStats=0; $HTMLOutput=1; }			# Report and no update if an output is required
+	if ($QueryString =~ /update/i)    			{ $UpdateStats=1; }							# Except if -update specified
 	$QueryString=~s/output&//; $QueryString=~s/output$//;
-	if ($QueryString =~ /showsteps/i) 	{ $ShowSteps=1; }
+	if ($QueryString =~ /showsteps/i) 			{ $ShowSteps=1; }
 	$QueryString=~s/showsteps[^&]*//;
 	if ($QueryString =~ /showcorrupted/i) 		{ $ShowCorrupted=1; }
 	$QueryString=~s/showcorrupted[^&]*//;
@@ -2541,19 +2539,14 @@ else {								# Run from command line
 	if ($QueryString =~ /showunknownorigin/i)	{ $ShowUnknownOrigin=1; }
 	$QueryString=~s/showunknownorigin[^&]*//;
 }
-if ($QueryString =~ /logfile=([^\s&]+)$/i) 		{ $LogFile=$1; }
+if ($QueryString =~ /logfile=([^\s&]+)/i )      { $LogFile=&DecodeEncodedString($1); }
 if ($QueryString =~ /staticlinks/i) 			{ $StaticLinks=".$SiteConfig"; }
 if ($QueryString =~ /staticlinks=([^\s&]+)/i) 	{ $StaticLinks=".$1"; }
 if ($QueryString =~ /debug=(\d+)/i)				{ $Debug=$1; }
-if ($QueryString =~ /output=urldetail:/i) 		{
-	# A filter on URL list can be defined with output=urldetail:filter to reduce number of lines read and showed
-	$URLFilter=$QueryString; $URLFilter =~ s/.*output=urldetail://i; $URLFilter =~ s/&.*//; $URLFilter =~ s/ .*//;
-}
-if ($QueryString =~ /urlfilter=/i) 	{
-	# A filter on URL list can also be defined with urlfilter=filter
-	$URLFilter=$QueryString; $URLFilter =~ s/.*urlfilter=//i; $URLFilter =~ s/&.*//; $URLFilter =~ s/ .*//;
-}
-$URLFilter=DecodeEncodedString($URLFilter);
+# A filter on URL list can be defined with output=urldetail:filter to reduce number of lines read and showed
+if ($QueryString =~ /output=urldetail:([^\s&]+)/i)	{ $URLFilter=&DecodeEncodedString($1); }
+# A filter on URL list can also be defined with urlfilter=filter
+if ($QueryString =~ /urlfilter=([^\s&]+)/i) 		{ $URLFilter=&DecodeEncodedString($1); }
 ($DIR=$0) =~ s/([^\/\\]*)$//; ($PROG=$1) =~ s/\.([^\.]*)$//; $Extension=$1;
 if ($Debug) { debug("QUERY_STRING=$QueryString",2); }
 
@@ -2667,10 +2660,10 @@ $tomorrowtime=int($tomorrowyear.$tomorrowmonth.$tomorrowday.$tomorrowhour.$tomor
 
 # Read config file
 &Read_Config_File;
-if ($QueryString =~ /lang=/i) { $Lang=$QueryString; $Lang =~ s/.*lang=//i; $Lang =~ s/&.*//; $Lang =~ s/ .*//; }
+if ($QueryString =~ /lang=([^\s&]+)/i)	{ $Lang=$1; }
 if (! $Lang) { $Lang="en"; }
 
-# Change old values of Lang into new for compatibility
+# For backward compatibility
 if ($Lang eq "0") { $Lang="en"; }
 if ($Lang eq "1") { $Lang="fr"; }
 if ($Lang eq "2") { $Lang="nl"; }
@@ -3164,12 +3157,12 @@ if ($UpdateStats) {
 				if ($field[$pos_code] == 304) { $field[$pos_size]=0; }
 			}
 			else {				# Code is not valid
-				if ($field[$pos_code] =~ /^[\d][\d][\d]$/) { 				# Keep error code and next
+				if ($field[$pos_code] =~ /^\d\d\d$/) { 					# Keep error code and next
 					$_errors_h{$field[$pos_code]}++;
 					if ($field[$pos_code] == 404) { $_sider404_h{$field[$pos_url]}++; $_referer404_h{$field[$pos_url]}=$field[$pos_referer]; }
 					next;
 				}
-				else {														# Bad format record (should not happen but when using MSIndex server), next
+				else {													# Bad format record (should not happen but when using MSIndex server), next
 					$NbOfLinesCorrupted++;
 					if ($ShowCorrupted) { print "Corrupted record (HTTP code not on 3 digits): $_\n"; }
 					next;
@@ -3723,7 +3716,7 @@ if ($HTMLOutput) {
 	close DIR;
 	#my $yearmin=0;
 	foreach my $i (0..$#filearray) {
-		if ("$filearray[$i]" =~ /^$PROG([\d][\d])([\d][\d][\d][\d])$FileSuffix\.txt$/) {
+		if ("$filearray[$i]" =~ /^$PROG(\d\d)(\d\d\d\d)$FileSuffix\.txt$/) {
 			$listofyears{$2}=1;
 			#if (int("$2") < $yearmin || $yearmin == 0) { $yearmin=int("$2"); }
 		}
