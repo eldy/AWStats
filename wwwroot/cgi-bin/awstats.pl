@@ -1256,10 +1256,10 @@ sub Parse_Config {
 
 #------------------------------------------------------------------------------
 # Function:     Load the reference databases
-# Parameters:	None
+# Parameters:	-
 # Input:		$DIR
 # Output:		Arrays and Hash tables are defined
-# Return:       None
+# Return:       -
 #------------------------------------------------------------------------------
 sub Read_Ref_Data {
 	# Check lib files in common possible directories :
