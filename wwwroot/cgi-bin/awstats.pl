@@ -5921,7 +5921,7 @@ EOF
 
 	# LOGO AND FLAGS
 	#---------------------------------------------------------------------
-	if (($ShowHeader && $FrameName ne 'mainright') || $FrameName eq 'mainleft') {
+	if ($ShowHeader && ($FrameName ne 'mainright' || $FrameName eq 'mainleft')) {
 		print "<table>\n";
 		print "<tr><td width=120 class=AWL style=\"font-size: 18px arial,verdana,helvetica; font-weight: bold\">AWStats\n";
 		if (! $StaticLinks) { Show_Flag_Links($Lang); }
