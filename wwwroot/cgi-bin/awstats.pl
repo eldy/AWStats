@@ -501,7 +501,8 @@ use vars qw/ @Message /;
 "Exact value not available in 'Year' view",
 "Data value arrays",
 "Sender EMail",
-"Receiver EMail"
+"Receiver EMail",
+"Analyzed period"
 );
 
 

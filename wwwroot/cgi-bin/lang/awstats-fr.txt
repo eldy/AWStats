@@ -133,3 +133,4 @@ message129=Valeur exacte indisponible en vue 'annuelle'
 message130=Tableaux des valeurs
 message131=EMail Emetteur
 message132=EMail Destinataire
+message133=Période d'analyse

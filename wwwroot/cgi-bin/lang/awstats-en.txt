@@ -133,3 +133,4 @@ message129=Exact value not available in 'Year' view
 message130=Data value arrays
 message131=Sender EMail
 message132=Receiver EMail
+message133=Analyzed period
