@@ -397,6 +397,7 @@ Modify this new config file:
 <br>ShowKeywordsStats=0
 <br>ShowMiscStats=0
 <br>ShowHTTPErrorsStats=1
+<br>ShowSMTPErrorsStats=0
 </i>
 </td></tr></table>
 <br>
@@ -489,6 +490,7 @@ LogFile="/pathtomediaserver/mediaserverlog"
 <br>ShowKeywordsStats=0
 <br>ShowMiscStats=0
 <br>ShowHTTPErrorsStats=1
+<br>ShowSMTPErrorsStats=0
 </i>
 </td></tr></table>
 <br>
@@ -498,22 +500,48 @@ Now you can use AWStats as usual (run the update process and read statistics).<b
 <a name="ROTATE"></a><br>
 <b><u>FAQ-COM120 : HOW TO ROTATE MY LOGS WITHOUT LOOSING DATA</u></b><br>
 <font class=CProblem>PROBLEM:</font><br>
-I want to archive/rotate my logs using my web server system options or a third software (rotatelog,
-cronolog) but don't want to loose any visits information during the rotate process.<br>
+I want to archive/rotate my logs using my server system (for example logrotate) options or a third
+software (rotatelog, cronolog) but I don't want to loose any visits information during the rotate
+process.<br>
 <font class=CSolution>SOLUTION:</font><br>
-If you use a rotate system (internal web server feature or third software), this means you probably not use
-AWStats <a href="awstats_config.html#PurgeLogFile">PurgeLogFile</a> nor <a href="awstats_config.html#ArchiveLogRecords">ArchiveLogRecords</a> parameter.<br>
-<li> If your config file is setup to process current log file (because you want to use the <a href="awstats_config.html#AllowToUpdateStatsFromBrowser">AllowToUpdateStatsFromBrowser</a>
-option), if you don't want to loose any records during the rotate process, you can just run the AWStats update process 
-on the archived log file just after the update process using the -logfile option (This will avoid you to change the config file).<br>
-<li> If you choose (for security reason, to avoid CPU abuse on large web site or other) to make updates by your scheduler only on archive files, this means
-you don't use the <a href="awstats_config.html#AllowToUpdateStatsFromBrowser">AllowToUpdateStatsFromBrowser</a> "real-time" feature of AWStats.
-In this case all you have to do is to run the update process just after the rotate was done using a config/domain file configured to
-process the archived log files (using date tags of <a href="awstats_config.html#LogFile">LogFile</a> for examples).<br>
-Note: For Apache users, use of <a href="http://cronolog.org" target=awstatsbis>cronolog</a> seems to be a better choice
-than rotatelog (cronolog is available for Unix/Linux and Windows and is more flexible).<br>
-To use cronolog or rotatelog you must setup your web server log file name using a pipe like this example:<br>
+<li> If your config file is setup with a <a href="awstats_config.html#LogFile">LogFile</a> parameter
+that point to your current running log file (required if you want to use the
+<a href="awstats_config.html#AllowToUpdateStatsFromBrowser">AllowToUpdateStatsFromBrowser</a>
+option to have "real-time" statistics), if you don't want to loose any records during the rotate
+process, you must run the AWStats update JUST BEFORE the rotate process is done.<br>
+The best way to do that on Linux like OS is to use the linux built-in logrotate feature. You must
+edit the logrotate config file used for you web server log file (usually stored in /etc/logrotate.d
+directory) by adding the AWStats update process as a preprocessor command, like this example (bold
+lines are lines to add for having a prerotate process):<br><i>
+/usr/local/apache/logs/*log<br>
+{<br>
+notifempty<br>
+daily<br>
+rotate 7<br>
+compress<br>
+<b>
+sharedscripts<br>
+prerotate<br>
+/usr/local/awstats/wwwroot/cgi-bin/awstats.pl -update -config=mydomainconfig<br>
+endscript<br>
+</b>
+postrotate<br>
+/usr/bin/killall -HUP httpd<br>
+endscript<br>
+}<br>
+</i>
+<br>
+
+<li> If you choose to run the AWStats update process on the last archived log files, why not.<br>
+This is required for example if you use the <a href="http://cronolog.org" target=awstatsbis>cronolog</a>
+or rotatelog tools to rotate your log files. For example, Apache users can setup their Apache
+httpd config file to write log file through a pipe to cronolog or rotatelog using
+Apache <i>CustomLog</i> directive:<br>
 <i>CustomLog "|/usr/sbin/cronolog [cronolog_options] /var/logs/access.%Y%m%d.log" combined</i><br>
+If you use a such feature, you can't trigger AWStats update process to be ran just BEFORE the
+rotate is done, so you must run it AFTER the rotate process, so on the archived log file.<br>
+To setup awstats to always point to last archive log file, you can use the 'tags' available for
+<a href="awstats_config.html#LogFile">LogFile</a>.<br>
 <br>
 
 <a name="CRONTAB"></a><br>
