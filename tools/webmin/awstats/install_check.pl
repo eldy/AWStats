@@ -11,7 +11,7 @@ sub is_installed
 if (! -r $config{'awstats'}) { return 0; }
 
 if ($_[0]) { 
-	if (-d $config{'awstats_conf'} && -r $config{'alt_conf'}) { return 2; }
+	if (-r $config{'alt_conf'}) { return 2; }
 }
 
 return 1;

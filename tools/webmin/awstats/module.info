@@ -1,6 +1,8 @@
 category=system
-longdesc=Generate and analyze statistics from web, proxy, wap, ftp or mail server log files
-desc=AWStats Logfile Analysis
+desc=AWStats Logfile Analyzer
+longdesc=Generate and analyze graphicaly statistics from web, proxy, wap, ftp or mail server log files
 name=AWStats
-version=1.100
+version=1.210
 depends=cron 1.000
+desc_fr=Analyseur de Logs AWStats
+long_desc_fr=Génèration et analyse graphique de statistiques à partir des logs de server web, ftp ou mail

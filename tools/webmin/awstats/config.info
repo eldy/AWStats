@@ -1,4 +1,3 @@
 awstats=Absolute filesystem path to AWStats (CLI),0
 awstats_cgi=Absolute or relative URL path to AWStats (CGI),0
-#awstats_conf=Path to AWStats configuration files' directory,3,/etc/awstats
 alt_conf=Sample AWStats configuration file,3,/etc/awstats/awstats.model.conf

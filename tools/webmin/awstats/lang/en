@@ -1,4 +1,4 @@
-index_title=AWStats Logfile Analysis
+index_title=AWStats Logfile Analyzer
 index_version=AWStats version $1
 index_eawstats=The logfile analysis command $1 was not found on your system. Maybe AWStats is not installed, or your <a href='$2'>module configuration</a> is incorrect.
 index_econfdir=The AWStats configuration directory $1 was not found on your system. Maybe AWStats is not installed, or your <a href='$2'>module configuration</a> is incorrect.
@@ -27,7 +27,9 @@ index_advanced3=View directives for OPTIONAL APPEARANCE SETUP SECTION
 index_advanced4=View directives for OPTIONAL PLUGINS SETUP SECTION
 index_advanced5=View directives for OPTIONAL EXTRA SETUP SECTION
 index_hideadvanced=Hide optional directives
-index_allowed=Your user is allowed to view/edit config files into (or that are links that point to) $1
+index_nodirallowed=Your user $1 has no allowed directory to read/store AWStats configuration files.
+index_allowed=Your account $1 is allowed to view/edit config files into (or that are links to)
+index_changeallowed=Permissions on directories into which you are allowed to scan/edit AWStats configuration files can be granted to you by a webmin administrator from the Webmin user ACL editor ($1)
 
 edit_title1=Add config File
 edit_title2=Edit config File
@@ -37,17 +39,18 @@ edit_file=File content
 edit_add=Config file name to create
 edit_user=Run AWStats as user
 edit_ecannot=You are not allowed to edit this config file
-edit_efilecannot=The config file is not in an allowed directory
+edit_efilecannot=The config file '$1' is not in an allowed directory
 
 save_err=Error in config file build
 save_efile=Config file name was not entered
 save_fileexists=Config file already exists
-save_edir=Config directory was not entered or does not exist
+save_edir=Directory '$1' choosed to write your config file into is not allowed by Webmin permissions.
 save_ecannot=You are only allowed to view or generate reports for config under $1
 save_errLogFile=Error in LogFile parameter. Log file $1 does not exists or is not readable
 save_errLogFormat=Error in LogFormat parameter. Parameter is nto defined
 save_errSiteDomain=Error in SiteDomain parameter. Parameter is not defined
 save_errDirData=Error in DirData parameter. Parameter is not defined or directory does not exists
+save_dirnotexists=Directory does not exists
 
 update_title=Update statistics
 update_ecannot=You are not allowed to update statistics

@@ -12,14 +12,20 @@ if (! $in{'file'}) { $in{'file'}=$in{'new'}; }
 if ($in{'new'} && ! $access{'add'}) { &error($text{'edit_ecannot'}); }
 if (! $in{'new'} && $access{'edit'}) { &error($text{'edit_ecannot'}); }
 
-&can_edit_config($in{'file'}) || &error($text{'edit_efilecannot'}." ".$in{'file'});
-
 
 if ($in{'view'}) {
+	my $dir=$in{'file'}; $dir =~ s/[\\\/][^\\\/]+$//;
+	if (! $dir) { $dir="/etc/awstats"; }
+	&can_edit_config($in{'file'}) || &error($text{'edit_efilecannot'}." ".$in{'file'});
+
 	# Re-direct to the view page
 	&redirect("view_config.cgi/".&urlize(&urlize($in{'file'}))."/index.html");
 	}
 elsif ($in{'delete'}) {
+	my $dir=$in{'file'}; $dir =~ s/[\\\/][^\\\/]+$//;
+	if (! $dir) { $dir="/etc/awstats"; }
+	&can_edit_config($in{'file'}) || &error($text{'edit_efilecannot'}." ".$in{'file'});
+
 	# Delete this config file from the configuration
 	local $cfile = $in{'file'};
 	&lock_file($cfile);
@@ -36,11 +42,16 @@ elsif ($in{'delete'}) {
 else {
 	# Validate and store inputs
 	if (!$in{'new'} && !$in{'file'}) { &error($text{'save_efile'}); }
-	if ($in{'new'} && -r $in{'$file'}) { &error($text{'save_fileexists'}); }
-	my $dir=$in{'file'}; $dir =~ s/[\\\/][^\\\/]+$//;
-	if (! $dir) { $dir=$config{'awstats_conf'}; }
 
-	if (! -d $dir) { &error($text{'save_edir'}); }
+	my $dir=$in{'file'}; $dir =~ s/[\\\/][^\\\/]+$//;
+	if (! $dir) { $dir="/etc/awstats"; }
+	if (! &can_edit_config($dir)) {
+		local $smart_user = $ENV{'REMOTE_USER'};
+		&error(&text('save_edir',"$dir")."<br>\n".&text('index_changeallowed',"Menu <a href=\"/acl/\">Webmin - Utilisateurs Webmin</a> puis clic sur $text{'index_title'}")."<br>\n");
+	}
+
+	if ($in{'new'} && -r $in{'$file'}) { &error($text{'save_fileexists'}); }
+	if (! -d $dir) { &error($text{'save_dirnotexists'}); }
 
 	%conf=();
 	foreach my $key (keys %in) {

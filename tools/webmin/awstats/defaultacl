@@ -1,7 +1,7 @@
 noconfig=0
 view=1
 update=1
-dir=/etc/awstats
+dir=/etc/awstats ~/awstats
 user=*
 global=1
 add=1

@@ -56,13 +56,19 @@ if (!-r $config{'alt_conf'}) {
         &footer("/", $text{'index'});
         exit;
 	}
-if (!-r $config{'awstats_conf'}) {
-	print "<p>",&text('index_econfdir', "<tt>$config{'awstats_conf'}</tt>",
-		  "$gconfig{'webprefix'}/config.cgi?$module_name"),"<p>\n";
+my @configdirtoscan=split(/\s+/, $access{'dir'});
+	
+if (! @configdirtoscan) {
+	local $smart_user = $ENV{'REMOTE_USER'};
+	print &text('index_nodirallowed',"<b>$smart_user</b>")."<br>\n";
+	print &text('index_changeallowed',"Menu <a href=\"/acl/\">Webmin - Utilisateurs Webmin</a> puis clic sur $text{'index_title'}")."<br>\n";
+	print "<br>\n";
+#	print "<p>",&text('index_econfdir', "<tt>$config{'awstats_conf'}</tt>",
+#		  "$gconfig{'webprefix'}/config.cgi?$module_name"),"<p>\n";
 	print "<hr>\n";
 	&footer("/", $text{'index'});
 	exit;
-	}
+}
 
 # Query apache and squid for their logfiles
 %auto = map { $_, 1 } split(/,/, $config{'auto'});
@@ -88,23 +94,40 @@ if (&foreign_check("apache") && $auto{'apache'}) {
 		}
 	}
 
-# Add custom configfiles
-push(@config, map { $_->{'custom'} = 1; $_ } &scan_config_dir());
+# Build list of config files from allowed directories
+foreach my $dir (split(/\s+/, $access{'dir'})) {
+	push(@config, map { $_->{'custom'} = 1; $_ } &scan_config_dir($dir));
+}
 
-print "Your user is allowed to view/edit config files into (or that are links to) ".$access{'dir'}.".<br><br>";  
+# Write message for allowed directories
+local $smart_user = $ENV{'REMOTE_USER'};
+print &text('index_allowed',"<b>$smart_user</b>");
+print ":<br>\n";
+foreach my $dir (split(/\s/,$access{'dir'})) {
+	print "$dir<br>"; 
+}
+print "<br>\n";
+print &text('index_changeallowed',"Menu <a href=\"/acl/\">Webmin - Utilisateurs Webmin</a> puis clic sur $text{'index_title'}")."<br>\n";
+print "<br>";
+
+my $nbofallowedconffound=0;
 if (@config) {
-	print "<a href='edit_config.cgi?new=1'>$text{'index_add'}</a>\n"
-		if ($access{'add'});
-	print "<table border width=100%>\n";
-	print "<tr $tb> <td rowspan=2><b>$text{'index_path'}</b></td> ",
-	      "<td rowspan=2 align=center><b>$text{'index_create'}</b></td> ",
- 	      "<td colspan=2 align=center><b>$text{'index_update'}</b></td> ",
-	      "<td rowspan=2 align=center><b>$text{'index_view'}</b></td> </tr>\n";
-	print "<tr $tb><td align=center>$text{'index_scheduled'}</td><td align=center>$text{'index_now'}</td></tr>\n";
 
 	# Loop on each config file
 	foreach my $l (@config) {
 		next if (!&can_edit_config($l));
+		$nbofallowedconffound++;
+
+		if ($nbofallowedconffound == 1) {
+			print "<a href='edit_config.cgi?new=1'>$text{'index_add'}</a>\n" if ($access{'add'});
+			print "<table border width=100%>\n";
+			print "<tr $tb> <td rowspan=2><b>$text{'index_path'}</b></td> ",
+			      "<td rowspan=2 align=center><b>$text{'index_create'}</b></td> ",
+		 	      "<td colspan=2 align=center><b>$text{'index_update'}</b></td> ",
+			      "<td rowspan=2 align=center><b>$text{'index_view'}</b></td> </tr>\n";
+			print "<tr $tb><td align=center>$text{'index_scheduled'}</td><td align=center>$text{'index_now'}</td></tr>\n";
+		}
+
 		local @files = &all_config_files($l);
 		next if (!@files);
 		local $lconf = &get_config($l);
@@ -164,11 +187,13 @@ if (@config) {
 	        print "<td align=center>NA</td>";
 		}
 		print "</tr>\n";
-		}
-	print "</table>\n";
+	}
+	
+	if ($nbofallowedconffound > 0) { print "</table>\n"; }
 }
-else {
-	print "<p><b>$text{'index_noconfig'}</b><p>\n";
+
+if (! $nbofallowedconffound) {
+	print "<br><p><b>$text{'index_noconfig'}</b><p><br>\n";
 }
 
 print "<a href='edit_config.cgi?new=1'>$text{'index_add'}</a><br>\n" if ($access{'add'});

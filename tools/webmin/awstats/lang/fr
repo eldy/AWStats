@@ -1,4 +1,4 @@
-index_title=Analyseur de log AWStats
+index_title=Analyseur de Logs AWStats
 index_version=AWStats version $1
 index_eawstats=La commande du log analyseur $1 n'a pas été trouvée sur le système. Peut-etre AWStats n'est-il pas installé, ou la <a href='$2'>configuration du module</a> est incorrecte.
 index_econfdir=Le répertoire des fichiers de configuration AWStats $1 n'a pas été trouvé sur le système. Peut-etre AWStats n'est-il pas installé, ou la <a href='$2'>configuration du module</a> est incorrecte.
@@ -9,7 +9,7 @@ index_path=Fichier configuration
 index_type=Type
 index_size=Taille
 index_create=Créé/Modifié
-index_noconfig=Aucun fichier de configuration n'a été trouvé ou ajouté pour analyse.
+index_noconfig=Aucun fichier de configuration n'a été trouvé ou ajouté pour analyse, dans le ou les répertoires autorisés.
 index_edit=Edition/Suppression
 index_del=Suppression config
 index_scheduled=Programmée
@@ -27,7 +27,9 @@ index_advanced3=Voir paramètres de la 'OPTIONAL APPEARANCE SETUP SECTION'
 index_advanced4=Voir paramètres de la 'OPTIONAL PLUGINS SETUP SECTION'
 index_advanced5=Voir paramètres de la 'OPTIONAL EXTRA SETUP SECTION'
 index_hideadvanced=Cacher paramètres optionnels
-index_allowed=Votre login est autorisé à voir/editer les fichiers de config dans (ou pointant vers) $1
+index_allowed=Votre login $1 est autorisé à voir/editer les fichiers de config dans (ou pointant vers)
+index_nodirallowed=Votre compte $1 n'a aucun répertoire autorisé en lecture/écriture de fichier de configuration AWStats.
+index_changeallowed=Les permissions des répertoires dans lesquels vous pouvez voir/éditer des fichiers de configuration AWStats peuvent vous être accordées par un administrateur Webmin via l'éditeur des ACL utilisateurs Webmin ($1)
 
 edit_title1=Ajout d'un fichier de config
 edit_title2=Edition d'un fichier de config
@@ -37,17 +39,18 @@ edit_file=Contenu du fichier
 edit_add=Nom du fichier de config à créer
 edit_user=Lancer AWStats sous l'utilisateur
 edit_ecannot=Vous n'êtes pas autorisés à éditer ce fichier de configuration
-edit_efilecannot=Le fichier de configuration n'est pas dans un répertoire autorisé
+edit_efilecannot=Le fichier de configuration '$1' n'est pas dans un répertoire autorisé
 
 save_err=Erreur dans la construction du fichier de configuration
 save_efile=Le nom du fichier de configuration n'a pas été entré
 save_fileexists=Fichier de configuration déjà existant
-save_edir=Répertoire des fichiers de configuration non renseigné ou inexistant
+save_edir=Le répertoire '$1', choisi pour le fichier de configuration n'est pas autorisé par les permissions Webmin.
 save_ecannot=Vous n'êtes autorisés à voir ou générer des rapports que pour des fichiers de config dans $1
 save_errLogFile=Erreur sur le paramètre LogFile. Le fichier de log $1 n'existe pas ou n'est pas lisible
 save_errLogFormat=Erreur sur le paramètre LogFormat. Paramètre non défini
 save_errSiteDomain=Erreur sur le paramètre SiteDomain. Paramètre non défini
 save_errDirData=Erreur sur le paramètre DirData. Paramètre non défini ou répertoire inexistant
+save_dirnotexists=Répertoire inexistant
 
 update_title=Mise à jour des statistiques
 update_ecannot=Vous n'êtes pas autorisé à mettre à jour les statistiques
@@ -62,7 +65,7 @@ log_generate_log=Mise à jour statistiques AWStats pour $1
 
 acl_view=Peut voir les stats pour les fichiers config existant?
 acl_global=Peut editer les fichiers config AWStats?
-acl_add=Peut ajouter/supprimer les fichiersCan add and delete config files?
+acl_add=Peut ajouter/supprimer les fichiers?
 acl_update=Peut mettre à jour les stats pour les fichiers config existant?
 acl_user=Lancer AWStats sour l'utilisateur Unix
 acl_this=Utilisateur webmin actuel

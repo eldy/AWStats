@@ -93,7 +93,8 @@ print "<tr $cb> <td><table width=100%>\n";
 my $filenametosave="";
 if ($in{'new'}) {
 	print "<tr> <td><b>$text{'edit_add'}</b></td> <td>\n";
-	print "<input type=text name=new size=40 value='$config{'awstats_conf'}/awstats.newconfig.conf'>";
+#	print "<input type=text name=new size=40 value='$config{'awstats_conf'}/awstats.newconfig.conf'>";
+	print "<input type=text name=new size=40 value='/etc/awstats/awstats.newconfig.conf'>";
 	print "</td> <td> </td> </tr>\n";
 	print "<tr> <td colspan=3><hr></td> </tr>\n";
 } else {
