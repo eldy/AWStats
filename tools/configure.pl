@@ -84,7 +84,13 @@ print "This script is not ready yet.\n";
 
 
 # Search web server
+my $ApachePath="";
 
+
+
+
+
+if (! $ApachePath) { exit 1; }
 
 
 

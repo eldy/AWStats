@@ -38,7 +38,6 @@ my $OutputDir="";
 my $OutputSuffix;
 my $OutputFile;
 my @OutputList=(
-"monthdayvalues",
 "allhosts","lasthosts","unknownip",
 "alllogins","lastlogins",
 "allrobots","lastrobots",
