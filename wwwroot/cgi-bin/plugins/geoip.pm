@@ -5,14 +5,19 @@
 # from a Geographical database (GeoIP internal database) instead of domain
 # hostname suffix.
 #-----------------------------------------------------------------------------
-# Perl Required Modules: Geo::IP
+# Perl Required Modules: Geo::IP or Geo::IP::PurePerl
 #-----------------------------------------------------------------------------
 # $Revision$ - $Author$ - $Date$
 
 
 # <-----
 # ENTER HERE THE USE COMMAND FOR ALL REQUIRED PERL MODULES
-if (!eval ('require "Geo/IP.pm";')) 	{ return "Error: Need Perl module Geo::IP"; }
+use vars qw/ $type /;
+$type='geoip';
+if (!eval ('require "Geo/IP.pm";')) 	{
+	$type='geoippureperl';
+	if (!eval ('require "Geo/IP/PurePerl.pm";')) 	{ return "Error: Need Perl module Geo::IP or Geo::IP::PurePerl"; }
+}
 # ----->
 use strict;no strict "refs";
 
@@ -48,11 +53,20 @@ sub Init_geoip {
 	# ENTER HERE CODE TO DO INIT PLUGIN ACTIONS
 	debug(" InitParams=$InitParams",1);
 	my $mode=$InitParams;
-	if ($mode eq '' || $mode eq 'GEOIP_MEMORY_CACHE')  { $mode=Geo::IP::GEOIP_MEMORY_CACHE(); }
-	else { $mode=Geo::IP::GEOIP_STANDARD(); }
+	if ($type eq 'geoippureperl') {
+		if ($mode eq '' || $mode eq 'GEOIP_MEMORY_CACHE')  { $mode=Geo::IP::PurePerl::GEOIP_MEMORY_CACHE(); }
+		else { $mode=Geo::IP::PurePerl::GEOIP_STANDARD(); }
+	} else {
+		if ($mode eq '' || $mode eq 'GEOIP_MEMORY_CACHE')  { $mode=Geo::IP::GEOIP_MEMORY_CACHE(); }
+		else { $mode=Geo::IP::GEOIP_STANDARD(); }
+	}
 	%TmpDomainLookup=();
 	debug(" GeoIP working in mode $mode",1);
-	$gi = Geo::IP->new($mode);
+	if ($type eq 'geoippureperl') {
+		$gi = Geo::IP::PurePerl->new($mode);
+	} else {
+		$gi = Geo::IP->new($mode);
+	}
 	# ----->
 
 	return ($checkversion?$checkversion:"$PluginHooksFunctions");
