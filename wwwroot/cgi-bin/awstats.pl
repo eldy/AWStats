@@ -82,7 +82,7 @@ $WarningMessages= 1;
 %MonthBytes = %MonthHits = %MonthHostsKnown = %MonthHostsUnknown = %MonthPages = %MonthUnique = %MonthVisits =
 %monthlib = %monthnum = ();
 
-$VERSION="3.2 (build 36)";
+$VERSION="3.2 (build 37)";
 $Lang="en";
 
 # Default value
@@ -252,64 +252,77 @@ sub tab_end {
 }
 
 sub UnescapeURLParam {
-	$_[0] =~ tr/\+/ /s;
+	$_[0] =~ tr/\+\'\(\)\",/     /s;								# "&" and "=" must not be in this list
 	$_[0] =~ s/%([a-fA-F0-9][a-fA-F0-9])/pack("C", hex($1))/eg;		# Decode encoded URL
-	$_[0] =~ tr/\'\(\)\"/    /s;									# "&" and "=" must not be in this list
 }
 
 sub error {
-	if ($_[0] eq "Format error") {
+	my $message=shift;
+	my $secondmessage=shift;
+	my $thirdmessage=shift;
+
+	if ($message =~ /^Format error$/) {
 		# Files seems to have bad format
+		if ($HTMLOutput) { print "<br><br>\n"; }
 		print "AWStats did not found any valid log lines that match your <b>LogFormat</b> parameter, in the ${NbOfLinesForCorruptedLog}th first non commented lines read of your log.<br>\n";
-		print "<font color=#880000>Your log file <b>$_[2]</b> must have a bad format or <b>LogFormat</b> parameter setup does not match this format.</font><br><br>\n";
+		print "<font color=#880000>Your log file <b>$thirdmessage</b> must have a bad format or <b>LogFormat</b> parameter setup does not match this format.</font><br><br>\n";
 		print "Your <b>LogFormat</b> parameter is <b>$LogFormat</b>, this means each line in your log file need to have ";
 		if ($LogFormat == 1) {
 			print "<b>\"combined log format\"</b> like this:<br>\n";
-			print "<font color=#888888><i>111.22.33.44 - - [10/Jan/2001:02:14:14 +0200] \"GET / HTTP/1.1\" 200 1234 \"http://www.fromserver.com/from.htm\" \"Mozilla/4.0 (compatible; MSIE 5.01; Windows NT 5.0)\"</i></font><br>\n";
+			print ($HTMLOutput?"<font color=#888888><i>":"");
+			print "111.22.33.44 - - [10/Jan/2001:02:14:14 +0200] \"GET / HTTP/1.1\" 200 1234 \"http://www.fromserver.com/from.htm\" \"Mozilla/4.0 (compatible; MSIE 5.01; Windows NT 5.0)\"\n";
+			print ($HTMLOutput?"</i></font><br><br>":"");
 		}
 		if ($LogFormat == 2) {
 			print "<b>\"MSIE Extended W3C log format\"</b> like this:<br>\n";
-			print "<font color=#888888><i>date time c-ip c-username cs-method cs-uri-sterm sc-status sc-bytes cs-version cs(User-Agent) cs(Referer)</i></font><br>\n";
+			print ($HTMLOutput?"<font color=#888888><i>":"");
+			print "date time c-ip c-username cs-method cs-uri-sterm sc-status sc-bytes cs-version cs(User-Agent) cs(Referer)\n";
+			print ($HTMLOutput?"</i></font><br><br>":"");
 		}
 		if ($LogFormat == 3) {
 			print "<b>\"WebStar native log format\"</b><br>\n";
 		}
 		if ($LogFormat == 4) {
 			print "<b>\"common log format\"</b> like this:<br>\n";
-			print "<font color=#888888><i>111.22.33.44 - - [10/Jan/2001:02:14:14 +0200] \"GET / HTTP/1.1\" 200 1234</i></font><br>\n";
+			print ($HTMLOutput?"<font color=#888888><i>":"");
+			print "111.22.33.44 - - [10/Jan/2001:02:14:14 +0200] \"GET / HTTP/1.1\" 200 1234\n";
+			print ($HTMLOutput?"</i></font><br><br>":"");
 		}
 		if ($LogFormat != 1 && $LogFormat != 2 && $LogFormat != 3 && $LogFormat != 4) {
 			print "the following personalised log format:<br>\n";
-			print "<font color=#888888><i>$LogFormat</i></font><br>\n";
+			print ($HTMLOutput?"<font color=#888888><i>":"");
+			print "$LogFormat\n";
+			print ($HTMLOutput?"</i></font><br><br>":"");
 		}
-		print "<br>";
-		print "And this is a sample of what AWStats found in your log (the record number $NbOfLinesForCorruptedLog in your log):<br>\n";
-		print ($ENV{"GATEWAY_INTERFACE"} ne ""?"<font color=#888888><i>":"");
-		print "$_[1]";
-		print ($ENV{"GATEWAY_INTERFACE"} ne ""?"</i></font><br><br>":"");
+		print "And this is a sample of what AWStats found in your log (the record number $NbOfLinesForCorruptedLog in your log):\n";
+		print ($HTMLOutput?"<br><font color=#888888><i>":"");
+		print "$secondmessage";
+		print ($HTMLOutput?"</i></font><br><br>":"");
 		print "\n";
-		print "Note: If your $NbOfLinesForCorruptedLog first lines in your log files are wrong because they are ";
-		print "result of a worm virus attack, you can increase the NbOfLinesForCorruptedLog parameter in config file.\n";
-		print "\n";
+		#print "Note: If your $NbOfLinesForCorruptedLog first lines in your log files are wrong because they are ";
+		#print "result of a worm virus attack, you can increase the NbOfLinesForCorruptedLog parameter in config file.\n";
+		#print "\n";
 	}			
-   	if ($_[0] ne "Format error" && $_[0] ne "") {
-   		print ($ENV{"GATEWAY_INTERFACE"} ne ""?"<br><font color=#880000>":"");
-   		print "$_[0]";
-   		print ($ENV{"GATEWAY_INTERFACE"} ne ""?"</font><br>":"");
+	else {
+   		print ($HTMLOutput?"<br><font color=#880000>":"");
+   		print "$message";
+   		print ($HTMLOutput?"</font><br>":"");
    		print "\n";
    	}
-   	if ($ENV{"GATEWAY_INTERFACE"} ne "") { print "<br><b>\n"; }
-	if ($_[0] ne "") { print "Setup ($FileConfig file, web server or logfile permissions) may be wrong.\n"; }
-	if ($ENV{"GATEWAY_INTERFACE"} ne "") { print "</b><br>\n"; }
-	print "See README.TXT for informations on how to setup $PROG.\n";
-   	if ($ENV{"GATEWAY_INTERFACE"} ne "") { print "</BODY>\n</HTML>\n"; }
-    die;
+   	if ($message ne "" && $message !~ /History file.*is corrupted/) { 
+		if ($HTMLOutput) { print "<br><b>\n"; }
+		print "Setup ($FileConfig file, web server or logfile permissions) may be wrong.\n";
+		if ($HTMLOutput) { print "</b><br>\n"; }
+		print "See README.TXT for informations on how to setup $PROG.\n";
+	}
+	if ($HTMLOutput) { print "</BODY>\n</HTML>\n"; }
+    exit 1;
 }
 
 sub warning {
 	if ($WarningMessages == 1) {
 		my $messagestring=$_[0];
-    	if ($ENV{"GATEWAY_INTERFACE"} ne "") {
+    	if ($HTMLOutput) {
     		$messagestring =~ s/\n/\<br\>/g;
     		print "$messagestring<br>\n";
     	}
@@ -323,7 +336,7 @@ sub debug {
 	my $level = $_[1] || 1;
 	if ($Debug >= $level) { 
 		my $debugstring = $_[0];
-		if ($ENV{"GATEWAY_INTERFACE"} ne "") { $debugstring =~ s/^ /&nbsp&nbsp /; $debugstring .= "<br>"; }
+		if ($HTMLOutput) { $debugstring =~ s/^ /&nbsp&nbsp /; $debugstring .= "<br>"; }
 		print "DEBUG $level - ".time." : $debugstring\n";
 	}
 }
@@ -404,7 +417,7 @@ sub Read_Config_File {
 		my @felter=split(/§/,$_);						
 		my $param=$felter[0];
 		my $value=$felter[1];
-		$value =~ s/^ *//; $value =~ s/ *$//;
+		$value =~ s/^\s+//; $value =~ s/\s+$//;
 		$value =~ s/^\"//; $value =~ s/\"$//;
 		# Read main section
 		if ($param =~ /^LogFile/) {
@@ -586,7 +599,7 @@ sub Read_Language_Data {
 				$_ =~ s/^PageCode=//i;
 				$_ =~ s/#.*//;								# Remove comments
 				$_ =~ tr/\t /  /s;							# Change all blanks into " "
-				$_ =~ s/^ *//; $_ =~ s/ *$//;
+				$_ =~ s/^\s+//; $_ =~ s/\s+$//;
 				$_ =~ s/^\"//; $_ =~ s/\"$//;
 				$PageCode = $_;
 			}
@@ -594,7 +607,7 @@ sub Read_Language_Data {
 				$_ =~ s/^Message\d+=//i;
 				$_ =~ s/#.*//;								# Remove comments
 				$_ =~ tr/\t /  /s;							# Change all blanks into " "
-				$_ =~ s/^ *//; $_ =~ s/ *$//;
+				$_ =~ s/^\s+//; $_ =~ s/\s+$//;
 				$_ =~ s/^\"//; $_ =~ s/\"$//;
 				$Message[$i] = $_;
 				$i++;
@@ -655,74 +668,74 @@ sub Check_Config {
 	# Main section
 	if ($LogFormat =~ /^[\d]$/ && $LogFormat !~ /[1-5]/)  { error("Error: LogFormat parameter is wrong. Value is '$LogFormat' (should be 1,2,3,4,5 or a 'personalised AWtats log format string')"); }
 	if ($DNSLookup !~ /[0-1]/)                            { error("Error: DNSLookup parameter is wrong. Value is '$DNSLookup' (should be 0 or 1)"); }
-	if ($AllowToUpdateStatsFromBrowser !~ /[0-1]/) { $AllowToUpdateStatsFromBrowser=1; }	# For compatibility, is 1 if not defined
-	if ($PurgeLogFile !~ /[0-1]/)                 { $PurgeLogFile=0; }
-	if ($ArchiveLogRecords !~ /[0-1]/)            { $ArchiveLogRecords=1; }
+	if ($AllowToUpdateStatsFromBrowser !~ /[0-1]/) 	{ $AllowToUpdateStatsFromBrowser=1; }	# For compatibility, is 1 if not defined
+	if ($PurgeLogFile !~ /[0-1]/)                 	{ $PurgeLogFile=0; }
+	if ($ArchiveLogRecords !~ /[0-1]/)            	{ $ArchiveLogRecords=1; }
 	# Optional section
-	if ($DefaultFile eq "")                       { $DefaultFile="index.html"; }
-	if ($URLWithQuery !~ /[0-1]/)                 { $URLWithQuery=0; }
-	if ($WarningMessages !~ /[0-1]/)              { $WarningMessages=1; }
-	if ($NbOfLinesForCorruptedLog !~ /[\d][\d]*/) { $NbOfLinesForCorruptedLog=50; }
-	if ($FirstDayOfWeek !~ /[0-1]/)               { $FirstDayOfWeek=1; }
-	if ($MaxNbOfDomain !~ /^[\d][\d]*/)           { $MaxNbOfDomain=25; }
-	if ($MaxNbOfHostsShown !~ /^[\d][\d]*/)       { $MaxNbOfHostsShown=25; }
-	if ($MinHitHost !~ /^[\d][\d]*/)              { $MinHitHost=1; }
-	if ($MaxNbOfLoginShown !~ /^[\d][\d]*/)       { $MaxNbOfLoginShown=10; }
-	if ($MinHitLogin !~ /^[\d][\d]*/)             { $MinHitLogin=1; }
-	if ($MaxNbOfRobotShown !~ /^[\d][\d]*/)       { $MaxNbOfRobotShown=25; }
-	if ($MinHitRobot !~ /^[\d][\d]*/)             { $MinHitRobot=1; }
-	if ($MaxNbOfPageShown !~ /^[\d][\d]*/)        { $MaxNbOfPageShown=25; }
-	if ($MinHitFile !~ /^[\d][\d]*/)              { $MinHitFile=1; }
-	if ($MaxNbOfRefererShown !~ /^[\d][\d]*/)     { $MaxNbOfRefererShown=25; }
-	if ($MinHitRefer !~ /^[\d][\d]*/)             { $MinHitRefer=1; }
-	if ($MaxNbOfKeywordsShown !~ /^[\d][\d]*/)    { $MaxNbOfKeywordsShown=25; }
-	if ($MinHitKeyword !~ /^[\d][\d]*/)           { $MinHitKeyword=1; }
-	if ($MaxNbOfLastHosts !~ /^[\d][\d]*/)        { $MaxNbOfLastHosts=1000; }
-	if ($SplitSearchString !~ /[0-1]/)            { $SplitSearchString=0; }
-	if ($Expires !~ /^[\d][\d]*/)                 { $Expires=0; }
-	if ($ShowHeader !~ /[0-1]/)                   { $ShowHeader=1; }
-	if ($ShowMenu !~ /[0-1]/)                     { $ShowMenu=1; }
-	if ($ShowMonthDayStats !~ /[0-1]/)            { $ShowMonthDayStats=1; }
-	if ($ShowDaysOfWeekStats !~ /[0-1]/)          { $ShowDaysOfWeekStats=1; }
-	if ($ShowHoursStats !~ /[0-1]/)               { $ShowHoursStats=1; }
-	if ($ShowDomainsStats !~ /[0-1]/)             { $ShowDomainsStats=1; }
-	if ($ShowHostsStats !~ /[0-1]/)               { $ShowHostsStats=1; }
-	if ($ShowAuthenticatedUsers !~ /[0-1]/)       { $ShowAuthenticatedUsers=1; }
-	if ($ShowRobotsStats !~ /[0-1]/)              { $ShowRobotsStats=1; }
-	if ($ShowPagesStats !~ /[0-1]/)               { $ShowPagesStats=1; }
-	if ($ShowFileTypesStats !~ /[0-1]/)           { $ShowFileTypesStats=1; }
-	if ($ShowFileSizesStats !~ /[0-1]/)           { $ShowFileSizesStats=1; }
-	if ($ShowBrowsersStats !~ /[0-1]/)            { $ShowBrowsersStats=1; }
-	if ($ShowOSStats !~ /[0-1]/)                  { $ShowOSStats=1; }
-	if ($ShowOriginStats !~ /[0-1]/)              { $ShowOriginStats=1; }
-	if ($ShowKeyphrasesStats !~ /[0-1]/)          { $ShowKeyphrasesStats=1; }
-	if ($ShowKeywordsStats !~ /[0-1]/)            { $ShowKeywordsStats=1; }
-	if ($ShowCompressionStats !~ /[0-1]/)         { $ShowCompressionStats=1; }
-	if ($ShowHTTPErrorsStats !~ /[0-1]/)          { $ShowHTTPErrorsStats=1; }
-	if ($ShowLinksOnURL !~ /[0-1]/)               { $ShowLinksOnURL=1; }
-	if ($DetailedReportsOnNewWindows !~ /[0-1]/)  { $DetailedReportsOnNewWindows=1; }
-	if ($BarWidth !~ /^[\d][\d]*/)                { $BarWidth=260; }
-	if ($BarHeight !~ /^[\d][\d]*/)               { $BarHeight=180; }
-	if ($Logo eq "")                              { $Logo="awstats_logo1.png"; }
-	if ($LogoLink eq "")                          { $LogoLink="http://awstats.sourceforge.net"; }
-	$color_Background =~ s/#//g; if ($color_Background !~ /^[0-9|A-Z][0-9|A-Z]*$/i)           { $color_Background="FFFFFF";	}
-	$color_TableBGTitle =~ s/#//g; if ($color_TableBGTitle !~ /^[0-9|A-Z][0-9|A-Z]*$/i)       { $color_TableBGTitle="CCCCDD"; }
-	$color_TableTitle =~ s/#//g; if ($color_TableTitle !~ /^[0-9|A-Z][0-9|A-Z]*$/i)           { $color_TableTitle="000000"; }
-	$color_TableBG =~ s/#//g; if ($color_TableBG !~ /^[0-9|A-Z][0-9|A-Z]*$/i)                 { $color_TableBG="CCCCDD"; }
-	$color_TableRowTitle =~ s/#//g; if ($color_TableRowTitle !~ /^[0-9|A-Z][0-9|A-Z]*$/i)     { $color_TableRowTitle="FFFFFF"; }
-	$color_TableBGRowTitle =~ s/#//g; if ($color_TableBGRowTitle !~ /^[0-9|A-Z][0-9|A-Z]*$/i) { $color_TableBGRowTitle="ECECEC"; }
-	$color_TableBorder =~ s/#//g; if ($color_TableBorder !~ /^[0-9|A-Z][0-9|A-Z]*$/i)         { $color_TableBorder="ECECEC"; }
-	$color_text =~ s/#//g; if ($color_text !~ /^[0-9|A-Z][0-9|A-Z]*$/i)           { $color_text="000000"; }
-	$color_titletext =~ s/#//g; if ($color_titletext !~ /^[0-9|A-Z][0-9|A-Z]*$/i) { $color_titletext="000000"; }
-	$color_link =~ s/#//g; if ($color_link !~ /^[0-9|A-Z][0-9|A-Z]*$/i)           { $color_link="0011BB"; }
-	$color_hover =~ s/#//g; if ($color_hover !~ /^[0-9|A-Z][0-9|A-Z]*$/i)         { $color_hover="605040"; }
-	$color_weekend =~ s/#//g; if ($color_weekend !~ /^[0-9|A-Z][0-9|A-Z]*$/i)     { $color_weekend="EAEAEA"; }
-	$color_u =~ s/#//g; if ($color_u !~ /^[0-9|A-Z][0-9|A-Z]*$/i)                 { $color_u="FF9933"; }
-	$color_v =~ s/#//g; if ($color_v !~ /^[0-9|A-Z][0-9|A-Z]*$/i)                 { $color_v="F3F300"; }
-	$color_p =~ s/#//g; if ($color_p !~ /^[0-9|A-Z][0-9|A-Z]*$/i)                 { $color_p="4477DD"; }
-	$color_h =~ s/#//g; if ($color_h !~ /^[0-9|A-Z][0-9|A-Z]*$/i)                 { $color_h="66F0FF"; }
-	$color_k =~ s/#//g; if ($color_k !~ /^[0-9|A-Z][0-9|A-Z]*$/i)                 { $color_k="339944"; }
-	$color_s =~ s/#//g; if ($color_s !~ /^[0-9|A-Z][0-9|A-Z]*$/i)                 { $color_s="8888DD"; }
+	if ($DefaultFile eq "")                       	{ $DefaultFile="index.html"; }
+	if ($URLWithQuery !~ /[0-1]/)                 	{ $URLWithQuery=0; }
+	if ($WarningMessages !~ /[0-1]/)              	{ $WarningMessages=1; }
+	if ($NbOfLinesForCorruptedLog !~ /[\d]+/) 	  	{ $NbOfLinesForCorruptedLog=50; }
+	if ($FirstDayOfWeek !~ /[0-1]/)               	{ $FirstDayOfWeek=1; }
+	if ($MaxNbOfDomain !~ /^[\d]+/)           		{ $MaxNbOfDomain=25; }
+	if ($MaxNbOfHostsShown !~ /^[\d]+/)       		{ $MaxNbOfHostsShown=25; }
+	if ($MinHitHost !~ /^[\d]+/)              		{ $MinHitHost=1; }
+	if ($MaxNbOfLoginShown !~ /^[\d]+/)       		{ $MaxNbOfLoginShown=10; }
+	if ($MinHitLogin !~ /^[\d]+/)             		{ $MinHitLogin=1; }
+	if ($MaxNbOfRobotShown !~ /^[\d]+/)       		{ $MaxNbOfRobotShown=25; }
+	if ($MinHitRobot !~ /^[\d]+/)             		{ $MinHitRobot=1; }
+	if ($MaxNbOfPageShown !~ /^[\d]+/)        		{ $MaxNbOfPageShown=25; }
+	if ($MinHitFile !~ /^[\d]+/)              		{ $MinHitFile=1; }
+	if ($MaxNbOfRefererShown !~ /^[\d]+/)     		{ $MaxNbOfRefererShown=25; }
+	if ($MinHitRefer !~ /^[\d]+/)             		{ $MinHitRefer=1; }
+	if ($MaxNbOfKeywordsShown !~ /^[\d]+/)    		{ $MaxNbOfKeywordsShown=25; }
+	if ($MinHitKeyword !~ /^[\d]+/)           		{ $MinHitKeyword=1; }
+	if ($MaxNbOfLastHosts !~ /^[\d]+/)        		{ $MaxNbOfLastHosts=1000; }
+	if ($SplitSearchString !~ /[0-1]/)          	{ $SplitSearchString=0; }
+	if ($Expires !~ /^[\d]+/)                 		{ $Expires=0; }
+	if ($ShowHeader !~ /[0-1]/)                   	{ $ShowHeader=1; }
+	if ($ShowMenu !~ /[0-1]/)                     	{ $ShowMenu=1; }
+	if ($ShowMonthDayStats !~ /[0-1]/)            	{ $ShowMonthDayStats=1; }
+	if ($ShowDaysOfWeekStats !~ /[0-1]/)          	{ $ShowDaysOfWeekStats=1; }
+	if ($ShowHoursStats !~ /[0-1]/)               	{ $ShowHoursStats=1; }
+	if ($ShowDomainsStats !~ /[0-1]/)             	{ $ShowDomainsStats=1; }
+	if ($ShowHostsStats !~ /[0-1]/)               	{ $ShowHostsStats=1; }
+	if ($ShowAuthenticatedUsers !~ /[0-1]/)       	{ $ShowAuthenticatedUsers=1; }
+	if ($ShowRobotsStats !~ /[0-1]/)              	{ $ShowRobotsStats=1; }
+	if ($ShowPagesStats !~ /[0-1]/)               	{ $ShowPagesStats=1; }
+	if ($ShowFileTypesStats !~ /[0-1]/)           	{ $ShowFileTypesStats=1; }
+	if ($ShowFileSizesStats !~ /[0-1]/)           	{ $ShowFileSizesStats=1; }
+	if ($ShowBrowsersStats !~ /[0-1]/)            	{ $ShowBrowsersStats=1; }
+	if ($ShowOSStats !~ /[0-1]/)                  	{ $ShowOSStats=1; }
+	if ($ShowOriginStats !~ /[0-1]/)              	{ $ShowOriginStats=1; }
+	if ($ShowKeyphrasesStats !~ /[0-1]/)          	{ $ShowKeyphrasesStats=1; }
+	if ($ShowKeywordsStats !~ /[0-1]/)            	{ $ShowKeywordsStats=1; }
+	if ($ShowCompressionStats !~ /[0-1]/)         	{ $ShowCompressionStats=1; }
+	if ($ShowHTTPErrorsStats !~ /[0-1]/)          	{ $ShowHTTPErrorsStats=1; }
+	if ($ShowLinksOnURL !~ /[0-1]/)               	{ $ShowLinksOnURL=1; }
+	if ($DetailedReportsOnNewWindows !~ /[0-1]/)  	{ $DetailedReportsOnNewWindows=1; }
+	if ($BarWidth !~ /^[\d]+/)                		{ $BarWidth=260; }
+	if ($BarHeight !~ /^[\d]+/)               		{ $BarHeight=180; }
+	if ($Logo eq "")                              	{ $Logo="awstats_logo1.png"; }
+	if ($LogoLink eq "")                          	{ $LogoLink="http://awstats.sourceforge.net"; }
+	$color_Background =~ s/#//g; if ($color_Background !~ /^[0-9|A-Z]+$/i)           { $color_Background="FFFFFF";	}
+	$color_TableBGTitle =~ s/#//g; if ($color_TableBGTitle !~ /^[0-9|A-Z]+$/i)       { $color_TableBGTitle="CCCCDD"; }
+	$color_TableTitle =~ s/#//g; if ($color_TableTitle !~ /^[0-9|A-Z]+$/i)           { $color_TableTitle="000000"; }
+	$color_TableBG =~ s/#//g; if ($color_TableBG !~ /^[0-9|A-Z]+$/i)                 { $color_TableBG="CCCCDD"; }
+	$color_TableRowTitle =~ s/#//g; if ($color_TableRowTitle !~ /^[0-9|A-Z]+$/i)     { $color_TableRowTitle="FFFFFF"; }
+	$color_TableBGRowTitle =~ s/#//g; if ($color_TableBGRowTitle !~ /^[0-9|A-Z]+$/i) { $color_TableBGRowTitle="ECECEC"; }
+	$color_TableBorder =~ s/#//g; if ($color_TableBorder !~ /^[0-9|A-Z]+$/i)         { $color_TableBorder="ECECEC"; }
+	$color_text =~ s/#//g; if ($color_text !~ /^[0-9|A-Z]+$/i)           			 { $color_text="000000"; }
+	$color_titletext =~ s/#//g; if ($color_titletext !~ /^[0-9|A-Z]+$/i) 			 { $color_titletext="000000"; }
+	$color_link =~ s/#//g; if ($color_link !~ /^[0-9|A-Z]+$/i)           			 { $color_link="0011BB"; }
+	$color_hover =~ s/#//g; if ($color_hover !~ /^[0-9|A-Z]+$/i)         			 { $color_hover="605040"; }
+	$color_weekend =~ s/#//g; if ($color_weekend !~ /^[0-9|A-Z]+$/i)     			 { $color_weekend="EAEAEA"; }
+	$color_u =~ s/#//g; if ($color_u !~ /^[0-9|A-Z]+$/i)                 			 { $color_u="FF9933"; }
+	$color_v =~ s/#//g; if ($color_v !~ /^[0-9|A-Z]+$/i)                 			 { $color_v="F3F300"; }
+	$color_p =~ s/#//g; if ($color_p !~ /^[0-9|A-Z]+$/i)                 			 { $color_p="4477DD"; }
+	$color_h =~ s/#//g; if ($color_h !~ /^[0-9|A-Z]+$/i)                 			 { $color_h="66F0FF"; }
+	$color_k =~ s/#//g; if ($color_k !~ /^[0-9|A-Z]+$/i)                 			 { $color_k="339944"; }
+	$color_s =~ s/#//g; if ($color_s !~ /^[0-9|A-Z]+$/i)                 			 { $color_s="8888DD"; }
 	# Default value	for Messages
 	if ($Message[0] eq "") { $Message[0]="Unknown"; }
 	if ($Message[1] eq "") { $Message[1]="Unknown (unresolved ip)"; }
@@ -853,10 +866,11 @@ sub Read_History_File {
 	$MonthUnique{$year.$month}=0; $MonthPages{$year.$month}=0; $MonthHits{$year.$month}=0; $MonthBytes{$year.$month}=0; $MonthHostsKnown{$year.$month}=0; $MonthHostsUnKnown{$year.$month}=0;
 	my $readdomain=0;my $readbrowser=0;my $readnsver=0;my $readmsiever=0;
 	my $reados=0;my $readrobot=0;my $readunknownreferer=0;my $readunknownrefererbrowser=0;
-	my $readse=0;my $readsearchwords=0;my $readerrors=0;
+	my $readse=0;my $readerrors=0;
 
+	my $countlines=0;
 	while (<HISTORY>) {
-		chomp $_; s/\r//;
+		chomp $_; s/\r//; $countlines++;
 		my @field=split(/\s+/,$_);
 		# Analyze config line
 	    if ($field[0] eq "LastLine")        { if ($LastLine{$year.$month} < int($field[1])) { $LastLine{$year.$month}=int($field[1]); }; next; }
@@ -876,8 +890,8 @@ sub Read_History_File {
 			&debug(" Begin of VISITOR section");
 			$_=<HISTORY>;
 			chomp $_; s/\r//;
-			if ($_ eq "") { error("Error: History file \"$DirData/$PROG$month$year$FileSuffix.txt\" is corrupted. Restore a recent backup of this file, or remove it (data for this month will be lost)."); }
-			my @field=split(/\s+/,$_);
+			if ($_ eq "") { error("Error: History file \"$DirData/$PROG$month$year$FileSuffix.txt\" is corrupted (in section VISITOR). Last line read is number $countlines.\nRestore a recent backup of this file, or remove it (data for this month will be lost)."); }
+			my @field=split(/\s+/,$_); $countlines++;
 			while ($field[0] ne "END_VISITOR") {
 		    	if ($field[0] ne "Unknown") { if ($field[1] > 0) { $MonthUnique{$year.$month}++; } $MonthHostsKnown{$year.$month}++; }
 				if ($part && ($QueryString !~ /output=/i || $QueryString =~ /output=lasthosts/i)) {
@@ -888,8 +902,8 @@ sub Read_History_File {
 				}
 				$_=<HISTORY>;
 				chomp $_; s/\r//;
-				if ($_ eq "") { error("Error: History file \"$DirData/$PROG$month$year$FileSuffix.txt\" is corrupted. Restore a recent backup of this file, or remove it (data for this month will be lost)."); }
-				@field=split(/\s+/,$_);
+				if ($_ eq "") { error("Error: History file \"$DirData/$PROG$month$year$FileSuffix.txt\" is corrupted (in section VISITOR). Last line read is number $countlines.\nRestore a recent backup of this file, or remove it (data for this month will be lost)."); }
+				@field=split(/\s+/,$_); $countlines++;
 			}
 			&debug(" End of VISITOR section");
 			next;
@@ -898,8 +912,8 @@ sub Read_History_File {
 			&debug(" Begin of UNKNOWNIP section");
 			$_=<HISTORY>;
 			chomp $_; s/\r//;
-			if ($_ eq "") { error("Error: History file \"$DirData/$PROG$month$year$FileSuffix.txt\" is corrupted. Restore a recent backup of this file, or remove it (data for this month will be lost)."); }
-			my @field=split(/\s+/,$_);
+			if ($_ eq "") { error("Error: History file \"$DirData/$PROG$month$year$FileSuffix.txt\" is corrupted (in section UNKNOWNIP). Last line read is number $countlines.\nRestore a recent backup of this file, or remove it (data for this month will be lost)."); }
+			my @field=split(/\s+/,$_); $countlines++;
 			my $count=0;
 			while ($field[0] ne "END_UNKNOWNIP") {
 				$count++;
@@ -909,8 +923,8 @@ sub Read_History_File {
 				}
 				$_=<HISTORY>;
 				chomp $_; s/\r//;
-				if ($_ eq "") { error("Error: History file \"$DirData/$PROG$month$year$FileSuffix.txt\" is corrupted. Restore a recent backup of this file, or remove it (data for this month will be lost)."); }
-				@field=split(/\s+/,$_);
+				if ($_ eq "") { error("Error: History file \"$DirData/$PROG$month$year$FileSuffix.txt\" is corrupted (in section UNKNOWNIP). Last line read is number $countlines.\nRestore a recent backup of this file, or remove it (data for this month will be lost)."); }
+				@field=split(/\s+/,$_); $countlines++;
 			}
 			&debug(" End of UNKNOWN_IP section ($count entries)");
 			next;
@@ -919,8 +933,8 @@ sub Read_History_File {
 			&debug(" Begin of LOGIN section");
 			$_=<HISTORY>;
 			chomp $_; s/\r//;
-			if ($_ eq "") { error("Error: History file \"$DirData/$PROG$month$year$FileSuffix.txt\" is corrupted. Restore a recent backup of this file, or remove it (data for this month will be lost)."); }
-			my @field=split(/\s+/,$_);
+			if ($_ eq "") { error("Error: History file \"$DirData/$PROG$month$year$FileSuffix.txt\" is corrupted (in section LOGIN). Last line read is number $countlines.\nRestore a recent backup of this file, or remove it (data for this month will be lost)."); }
+			my @field=split(/\s+/,$_); $countlines++;
 			my $count=0;
 			while ($field[0] ne "END_LOGIN") {
 				$count++;
@@ -932,8 +946,8 @@ sub Read_History_File {
 				}
 				$_=<HISTORY>;
 				chomp $_; s/\r//;
-				if ($_ eq "") { error("Error: History file \"$DirData/$PROG$month$year$FileSuffix.txt\" is corrupted. Restore a recent backup of this file, or remove it (data for this month will be lost)."); }
-				@field=split(/\s+/,$_);
+				if ($_ eq "") { error("Error: History file \"$DirData/$PROG$month$year$FileSuffix.txt\" is corrupted (in section LOGIN). Last line read is number $countlines.\nRestore a recent backup of this file, or remove it (data for this month will be lost)."); }
+				@field=split(/\s+/,$_); $countlines++;
 			}
 			&debug(" End of LOGIN section ($count entries)");
 			next;
@@ -942,8 +956,8 @@ sub Read_History_File {
 			&debug(" Begin of TIME section");
 			$_=<HISTORY>;
 			chomp $_; s/\r//;
-			if ($_ eq "") { error("Error: History file \"$DirData/$PROG$month$year$FileSuffix.txt\" is corrupted. Restore a recent backup of this file, or remove it (data for this month will be lost)."); }
-			my @field=split(/\s+/,$_);
+			if ($_ eq "") { error("Error: History file \"$DirData/$PROG$month$year$FileSuffix.txt\" is corrupted (in section TIME). Last line read is number $countlines.\nRestore a recent backup of this file, or remove it (data for this month will be lost)."); }
+			my @field=split(/\s+/,$_); $countlines++;
 			while ($field[0] ne "END_TIME") {
 		    	$MonthPages{$year.$month}+=$field[1]; $MonthHits{$year.$month}+=$field[2]; $MonthBytes{$year.$month}+=$field[3];
 				if ($part) {
@@ -953,8 +967,8 @@ sub Read_History_File {
 				}
 				$_=<HISTORY>;
 				chomp $_; s/\r//;
-				if ($_ eq "") { error("Error: History file \"$DirData/$PROG$month$year$FileSuffix.txt\" is corrupted. Restore a recent backup of this file, or remove it (data for this month will be lost)."); }
-				@field=split(/\s+/,$_);
+				if ($_ eq "") { error("Error: History file \"$DirData/$PROG$month$year$FileSuffix.txt\" is corrupted (in section TIME). Last line read is number $countlines.\nRestore a recent backup of this file, or remove it (data for this month will be lost)."); }
+				@field=split(/\s+/,$_); $countlines++;
 			}
 			&debug(" End of TIME section");
 			next;
@@ -963,16 +977,16 @@ sub Read_History_File {
 			&debug(" Begin of DAY section");
 			$_=<HISTORY>;
 			chomp $_; s/\r//;
-			if ($_ eq "") { error("Error: History file \"$DirData/$PROG$month$year$FileSuffix.txt\" is corrupted. Restore a recent backup of this file, or remove it (data for this month will be lost)."); }
-			my @field=split(/\s+/,$_);
+			if ($_ eq "") { error("Error: History file \"$DirData/$PROG$month$year$FileSuffix.txt\" is corrupted (in section DAY). Last line read is number $countlines.\nRestore a recent backup of this file, or remove it (data for this month will be lost)."); }
+			my @field=split(/\s+/,$_); $countlines++;
 			while ($field[0] ne "END_DAY" ) {
 				if ($QueryString !~ /output=/i) {
 					$DayPages{$field[0]}=int($field[1]); $DayHits{$field[0]}=int($field[2]); $DayBytes{$field[0]}=int($field[3]); $DayVisits{$field[0]}=int($field[4]); $DayUnique{$field[0]}=int($field[5]);
 				}
 				$_=<HISTORY>;
 				chomp $_; s/\r//;
-				if ($_ eq "") { error("Error: History file \"$DirData/$PROG$month$year$FileSuffix.txt\" is corrupted. Restore a recent backup of this file, or remove it (data for this month will be lost)."); }
-				@field=split(/\s+/,$_);
+				if ($_ eq "") { error("Error: History file \"$DirData/$PROG$month$year$FileSuffix.txt\" is corrupted (in section DAY). Last line read is number $countlines.\nRestore a recent backup of this file, or remove it (data for this month will be lost)."); }
+				@field=split(/\s+/,$_); $countlines++;
 			}
 			&debug(" End of DAY section");
 			next;
@@ -981,8 +995,8 @@ sub Read_History_File {
 			&debug(" Begin of SIDER section");
 			$_=<HISTORY>;
 			chomp $_; s/\r//;
-			if ($_ eq "") { error("Error: History file \"$DirData/$PROG$month$year$FileSuffix.txt\" is corrupted. Restore a recent backup of this file, or remove it (data for this month will be lost)."); }
-			my @field=split(/\s+/,$_);
+			if ($_ eq "") { error("Error: History file \"$DirData/$PROG$month$year$FileSuffix.txt\" is corrupted (in section SIDER). Last line read is number $countlines.\nRestore a recent backup of this file, or remove it (data for this month will be lost)."); }
+			my @field=split(/\s+/,$_); $countlines++;
 			my $count=0;my $countadd=0;
 			while ($field[0] ne "END_SIDER") {
 				$count++;
@@ -1003,8 +1017,8 @@ sub Read_History_File {
 				}
 				$_=<HISTORY>;
 				chomp $_; s/\r//;
-				if ($_ eq "") { error("Error: History file \"$DirData/$PROG$month$year$FileSuffix.txt\" is corrupted. Restore a recent backup of this file, or remove it (data for this month will be lost)."); }
-				@field=split(/\s+/,$_);
+				if ($_ eq "") { error("Error: History file \"$DirData/$PROG$month$year$FileSuffix.txt\" is corrupted (in section SIDER). Last line read is number $countlines.\nRestore a recent backup of this file, or remove it (data for this month will be lost)."); }
+				@field=split(/\s+/,$_); $countlines++;
 			}
 			&debug(" End of SIDER section ($count entries loaded)");
 			next;
@@ -1013,8 +1027,8 @@ sub Read_History_File {
 			&debug(" Begin of PAGEREFS section");
 			$_=<HISTORY>;
 			chomp $_; s/\r//;
-			if ($_ eq "") { error("Error: History file \"$DirData/$PROG$month$year$FileSuffix.txt\" is corrupted. Restore a recent backup of this file, or remove it (data for this month will be lost)."); }
-			my @field=split(/\s+/,$_);
+			if ($_ eq "") { error("Error: History file \"$DirData/$PROG$month$year$FileSuffix.txt\" is corrupted (in section PAGEREFS). Last line read is number $countlines.\nRestore a recent backup of this file, or remove it (data for this month will be lost)."); }
+			my @field=split(/\s+/,$_); $countlines++;
 			my $count=0;
 			while ($field[0] ne "END_PAGEREFS") {
 				$count++;
@@ -1023,8 +1037,8 @@ sub Read_History_File {
 				}
 				$_=<HISTORY>;
 				chomp $_; s/\r//;
-				if ($_ eq "") { error("Error: History file \"$DirData/$PROG$month$year$FileSuffix.txt\" is corrupted. Restore a recent backup of this file, or remove it (data for this month will be lost)."); }
-				@field=split(/\s+/,$_);
+				if ($_ eq "") { error("Error: History file \"$DirData/$PROG$month$year$FileSuffix.txt\" is corrupted (in section PAGEREFS). Last line read is number $countlines.\nRestore a recent backup of this file, or remove it (data for this month will be lost)."); }
+				@field=split(/\s+/,$_); $countlines++;
 			}
 			&debug(" End of PAGEREFS section ($count entries)");
 			next;
@@ -1033,8 +1047,8 @@ sub Read_History_File {
 			&debug(" Begin of FILETYPES section");
 			$_=<HISTORY>;
 			chomp $_; s/\r//;
-			if ($_ eq "") { error("Error: History file \"$DirData/$PROG$month$year$FileSuffix.txt\" is corrupted. Restore a recent backup of this file, or remove it (data for this month will be lost)."); }
-			my @field=split(/\s+/,$_);
+			if ($_ eq "") { error("Error: History file \"$DirData/$PROG$month$year$FileSuffix.txt\" is corrupted (in section FILETYPES). Last line read is number $countlines.\nRestore a recent backup of this file, or remove it (data for this month will be lost)."); }
+			my @field=split(/\s+/,$_); $countlines++;
 			my $count=0;
 			while ($field[0] ne "END_FILETYPES") {
 				$count++;
@@ -1046,18 +1060,38 @@ sub Read_History_File {
 				}
 				$_=<HISTORY>;
 				chomp $_; s/\r//;
-				if ($_ eq "") { error("Error: History file \"$DirData/$PROG$month$year$FileSuffix.txt\" is corrupted. Restore a recent backup of this file, or remove it (data for this month will be lost)."); }
-				@field=split(/\s+/,$_);
+				if ($_ eq "") { error("Error: History file \"$DirData/$PROG$month$year$FileSuffix.txt\" is corrupted (in section FILETYPES). Last line read is number $countlines.\nRestore a recent backup of this file, or remove it (data for this month will be lost)."); }
+				@field=split(/\s+/,$_); $countlines++;
 			}
 			&debug(" End of FILETYPES section ($count entries)");
+			next;
+    	}
+	    if ($field[0] eq "BEGIN_SEARCHWORDS")   {
+			&debug(" Begin of SEARCHWORDS section");
+			$_=<HISTORY>;
+			chomp $_; s/\r//;
+			if ($_ eq "") { error("Error: History file \"$DirData/$PROG$month$year$FileSuffix.txt\" is corrupted (in section SEARCHWORDS). Last line read is number $countlines.\nRestore a recent backup of this file, or remove it (data for this month will be lost)."); }
+			my @field=split(/\s+/,$_); $countlines++;
+			my $count=0;
+			while ($field[0] ne "END_SEARCHWORDS") {
+				$count++;
+				if ($part) {
+					$_keyphrases{$field[0]}+=$field[1];
+				}
+				$_=<HISTORY>;
+				chomp $_; s/\r//;
+				if ($_ eq "") { error("Error: History file \"$DirData/$PROG$month$year$FileSuffix.txt\" is corrupted (in section SEARCHWORDS). Last line read is number $countlines.\nRestore a recent backup of this file, or remove it (data for this month will be lost)."); }
+				@field=split(/\s+/,$_); $countlines++;
+			}
+			&debug(" End of SEARCHWORDS section ($count entries)");
 			next;
     	}
 	    if ($field[0] eq "BEGIN_SIDER_404")   {
 			&debug(" Begin of SIDER_404 section");
 			$_=<HISTORY>;
 			chomp $_; s/\r//;
-			if ($_ eq "") { error("Error: History file \"$DirData/$PROG$month$year$FileSuffix.txt\" is corrupted. Restore a recent backup of this file, or remove it (data for this month will be lost)."); }
-			my @field=split(/\s+/,$_);
+			if ($_ eq "") { error("Error: History file \"$DirData/$PROG$month$year$FileSuffix.txt\" is corrupted (in section SIDER_404). Last line read is number $countlines.\nRestore a recent backup of this file, or remove it (data for this month will be lost)."); }
+			my @field=split(/\s+/,$_); $countlines++;
 			my $count=0;
 			while ($field[0] ne "END_SIDER_404") {
 				$count++;
@@ -1069,8 +1103,8 @@ sub Read_History_File {
 				}
 				$_=<HISTORY>;
 				chomp $_; s/\r//;
-				if ($_ eq "") { error("Error: History file \"$DirData/$PROG$month$year$FileSuffix.txt\" is corrupted. Restore a recent backup of this file, or remove it (data for this month will be lost)."); }
-				@field=split(/\s+/,$_);
+				if ($_ eq "") { error("Error: History file \"$DirData/$PROG$month$year$FileSuffix.txt\" is corrupted (in section SIDER_404). Last line read is number $countlines.\nRestore a recent backup of this file, or remove it (data for this month will be lost)."); }
+				@field=split(/\s+/,$_); $countlines++;
 			}
 			&debug(" End of SIDER_404 section ($count entries)");
 			next;
@@ -1096,8 +1130,6 @@ sub Read_History_File {
 	        if ($field[0] eq "END_UNKNOWNREFERERBROWSER")   { $readunknownrefererbrowser=0; next; }
 	        if ($field[0] eq "BEGIN_SEREFERRALS") { $readse=1; next; }
 	        if ($field[0] eq "END_SEREFERRALS") { $readse=0; next; }
-	        if ($field[0] eq "BEGIN_SEARCHWORDS") { $readsearchwords=1; next; }
-	        if ($field[0] eq "END_SEARCHWORDS") { $readsearchwords=0; next; }
 	        if ($field[0] eq "BEGIN_ERRORS") { $readerrors=1; next; }
 	        if ($field[0] eq "END_ERRORS") { $readerrors=0; next; }
 	        if ($readunknownreferer) {
@@ -1135,15 +1167,14 @@ sub Read_History_File {
 	        if ($field[0] eq "HitFrom3") { $_from_p[3]+=0; $_from_h[3]+=$field[1]; next; }
 	        if ($field[0] eq "HitFrom4") { $_from_p[4]+=0; $_from_h[4]+=$field[1]; next; }
 	        if ($readse) { $_se_referrals_h{$field[0]}+=$field[1]; next; }
-	        if ($readsearchwords) { $_keyphrases{$field[0]}+=$field[1]; next; }
 	        if ($readerrors) { $_errors_h{$field[0]}+=$field[1]; next; }
 		}
 	}
 	close HISTORY;
 	if (! $LastLine{$year.$month}) { $LastLine{$year.$month}=$LastTime{$year.$month}; }		# For backward compatibility, if LastLine does not exist
-	if ($readdomain || $readbrowser || $readnsver || $readmsiever || $reados || $readrobot || $readunknownreferer || $readunknownrefererbrowser || $readse || $readsearchwords || $readerrors) {
+	if ($readdomain || $readbrowser || $readnsver || $readmsiever || $reados || $readrobot || $readunknownreferer || $readunknownrefererbrowser || $readse || $readerrors) {
 		# History file is corrupted
-		error("Error: History file \"$DirData/$PROG$month$year$FileSuffix.txt\" is corrupted. Restore a recent backup of this file, or remove it (data for this month will be lost).");
+		error("Error: History file \"$DirData/$PROG$month$year$FileSuffix.txt\" is corrupted. Last line read is number $countlines.\nRestore a recent backup of this file, or remove it (data for this month will be lost).");
 	}
 }
 
@@ -1245,7 +1276,12 @@ sub Save_History_File {
 	foreach my $key (keys %_pagesrefs_h) { print HISTORYTMP "$key $_pagesrefs_h{$key}\n"; next; }
 	print HISTORYTMP "END_PAGEREFS\n";
 	print HISTORYTMP "BEGIN_SEARCHWORDS\n";
-	foreach my $key (keys %_keyphrases) { if ($_keyphrases{$key}) { print HISTORYTMP "$key $_keyphrases{$key}\n"; } next; }
+	foreach my $key (keys %_keyphrases) { 
+		if ($_keyphrases{$key} =~ /^[\w\+\-\/\\\.\s]+$/) {	# We do not save keyphrase if contains non ascii chars to avoid file corruption
+			print HISTORYTMP "$key $_keyphrases{$key}\n";
+		}
+		next;
+	}
 	print HISTORYTMP "END_SEARCHWORDS\n";
 
 	# Other
@@ -2148,7 +2184,7 @@ if ($UpdateStats) {
 					    # Extern (This hit came from an external web site). 
 						my @refurl=split(/\?/,$refererwithouthttp);
 						$refurl[0] =~ tr/A-Z/a-z/;
-						
+
 					    foreach my $key (keys %SearchEnginesHashIDLib) {
 							if ($refurl[0] =~ /$key/) {
 								# This hit came from the search engine $key
@@ -2161,12 +2197,13 @@ if ($UpdateStats) {
 								my @paramlist=split(/&/,$refurl[1]);
 								if ($SearchEnginesKnownUrl{$key}) {		# Search engine with known URL syntax
 									foreach my $param (@paramlist) {
-										if ($param =~ /^$SearchEnginesKnownUrl{$key}/) { # We found good parameter
-											&UnescapeURLParam($param);			# Change [ xxx=cache:www/zzz+aaa+bbb/ccc+ddd%20eee'fff ] into [ xxx=cache:www/zzz aaa bbb/ccc ddd eee fff ]
-											# Ok, "xxx=cache:www/zzz aaa bbb/ccc ddd eee fff" is a search parameter line
-											$param =~ s/.*=//;					# Cut "xxx="
-											$param =~ s/^cache:[^ ]* //;
-											$param =~ s/^related:[^ ]* //;
+#										if ($param =~ /^$SearchEnginesKnownUrl{$key}/) { 	# We found good parameter
+#											$param =~ s/^$SearchEnginesKnownUrl{$key}//;	# Cut "xxx="
+										if ($param =~ s/^$SearchEnginesKnownUrl{$key}//) { 	# We found good parameter
+											# Ok, "cache:www/zzz+aaa+bbb/ccc+ddd%20eee'fff,ggg" is a search parameter line
+											&UnescapeURLParam($param);			# Change [ cache:www/zzz+aaa+bbb/ccc+ddd%20eee'fff,ggg ] into [ cache:www/zzz aaa bbb/ccc ddd eee fff ggg]
+											$param =~ s/^cache:[^ ]*//;
+											$param =~ s/^related:[^ ]*//;
 											if ($SplitSearchString) {
 												my @wordlist=split(/ /,$param);	# Split aaa bbb ccc ddd eee fff into a wordlist array
 												foreach $word (@wordlist) {
@@ -2174,8 +2211,8 @@ if ($UpdateStats) {
 												}
 											}
 											else {
-												$param =~ s/^ *//; $param =~ s/ *$//; $param =~ tr/ / /s;
-												if ((length $param) > 0) { $param =~ tr/ /+/; $_keyphrases{$param}++; }
+												$param =~ s/^ +//; $param =~ s/ +$//; $param =~ tr/\s/+/s;
+												if ((length $param) > 0) { $_keyphrases{$param}++; }
 											}
 											last;
 										}
@@ -2183,16 +2220,16 @@ if ($UpdateStats) {
 								}
 								else {									# Search engine with unknown URL syntax
 									foreach my $param (@paramlist) {
-										&UnescapeURLParam($param);				# Change [ xxx=cache:www/zzz+aaa+bbb/ccc+ddd%20eee'fff ] into [ xxx=cache:www/zzz aaa bbb/ccc ddd eee fff ]
+										&UnescapeURLParam($param);				# Change [ xxx=cache:www/zzz+aaa+bbb/ccc+ddd%20eee'fff,ggg ] into [ xxx=cache:www/zzz aaa bbb/ccc ddd eee fff ggg ]
 										my $foundparam=1;
 										foreach $paramtoexclude (@WordsToCleanSearchUrl) {
 											if ($param =~ /.*$paramtoexclude.*/) { $foundparam=0; last; } # Not the param with search criteria
 										}
 										if ($foundparam == 0) { next; }			# Do not keep this URL parameter because is in exclude list
-										# Ok, "xxx=cache:www/zzz aaa bbb/ccc ddd eee fff" is a search parameter line
+										# Ok, "xxx=cache:www/zzz aaa bbb/ccc ddd eee fff ggg" is a search parameter line
 										$param =~ s/.*=//;						# Cut "xxx="
-										$param =~ s/^cache:[^ ]* //;
-										$param =~ s/^related:[^ ]* //;
+										$param =~ s/^cache:[^ ]*//;
+										$param =~ s/^related:[^ ]*//;
 										if ($SplitSearchString) {
 											my @wordlist=split(/ /,$param);		# Split aaa bbb ccc ddd eee fff into a wordlist array
 											foreach $word (@wordlist) {
@@ -2200,8 +2237,8 @@ if ($UpdateStats) {
 											}
 										}
 										else {
-											$param =~ s/^ *//; $param =~ s/ *$//; $param =~ tr/ / /s;
-											if ((length $param) > 2) { $param =~ tr/ /+/; $_keyphrases{$param}++; }
+											$param =~ s/^ +//; $param =~ s/ +$//; $param =~ tr/\s/+/s;
+											if ((length $param) > 2) { $_keyphrases{$param}++; }
 										}
 									}
 								}
@@ -3257,7 +3294,7 @@ EOF
 		print "<TR><TD CLASS=AWL><b>$Message[39]</b></TD><TD>$_from_p[1]&nbsp;</TD><TD>$p_p[1]&nbsp;%</TD><TD>$_from_h[1]&nbsp;</TD><TD>$p_h[1]&nbsp;%</TD></TR>\n";
 		&tab_end;
 	}	
-	
+
 	# BY SEARCH PHRASES
 	#----------------------------
 	if ($ShowKeyphrasesStats) {
@@ -3272,12 +3309,13 @@ EOF
 			if ($count>=$MaxNbOfKeywordsShown) { $rest+=$_keyphrases{$key}; next; }
 			if ($_keyphrases{$key}<$MinHitKeyword) { $rest+=$_keyphrases{$key}; next; }
 			my $p=int($_keyphrases{$key}/$TotalKeyphrases*1000)/10;
-			my $mot = $key; $mot =~ s/\+/ /g;	# Showing $key without +
+			my $mot = $key; $mot =~ tr/\+/ /s;	# Showing $key without +
 			print "<TR><TD CLASS=AWL>$mot</TD><TD>$_keyphrases{$key}</TD><TD>$p&nbsp;%</TD></TR>\n";
 			$count++;
 		}
 		if ($rest > 0) {
-			if ($TotalKeyphrases > 0) { $p=int($rest/$TotalKeyphrases*1000)/10; }
+			my $p;
+			if ($TotalKeyphrases) { $p=int($rest/$TotalKeyphrases*1000)/10; }
 			print "<TR><TD CLASS=AWL><font color=blue>$Message[30]</TD><TD>$rest</TD>";
 			print "<TD>$p&nbsp;%</TD></TR>\n";
 		}
