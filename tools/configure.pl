@@ -65,11 +65,13 @@ use vars qw/
 use vars qw/
 $WebServerChanged $UseAlias $Step
 %LogFormat %ConfToChange
+%OSLib
 /;
 $WebServerChanged=0;
 $UseAlias=0;
 %LogFormat=();
 %ConfToChange=();
+%OSLib=('linux'=>'Linux or Unix','macosx'=>'Mac OS','windows'=>'Windows');
 $Step=0;
 
 
@@ -284,7 +286,7 @@ if (-d "/etc" && -d "/home") { $OS='linux'; $CR=''; }
 elsif (-d "/etc" && -d "/Users") { $OS='macosx'; $CR=''; }
 else { $OS='windows'; $CR="\r"; }
 #print "Running OS detected: $OS (Perl $^[)\n";
-print "\n-----> Running OS detected: $OS\n";
+print "\n-----> Running OS detected: $OSLib{$OS}\n";
 
 if ($OS eq 'linux') {
 	$AWSTATS_PATH=`pwd`; $AWSTATS_PATH =~ s/[\r\n]//;
