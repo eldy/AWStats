@@ -162,10 +162,12 @@ $BarImageHorizontal_k = "barrehk.png";
 "search\.dogpile\.com","Dogpile",
 "ilse\.","Ilse","vindex\.","Vindex\.nl",	# Minor dutch search engines
 "nomade\.fr/","Nomade", "ctrouve\.","C'est trouvé", "francite\.","Francité", "\.lbb\.org", "LBB", "rechercher\.libertysurf\.fr", "Libertysurf",	# Minor french search engines
-"fireball\.de","Fireball", "suche\.web\.de","Web.de", "meta\.ger","MetaGer",	# Minor german search engines
+"fireball\.de","Fireball", "infoseek\.de","Infoseek", "suche\.web\.de","Web.de", "meta\.ger","MetaGer",	# Minor german search engines
 "engine\.exe","Cade", "miner\.bol\.com\.br","Meta Miner",	# Minor brazilian search engine
 "search\..*com","Other search engines"
 );
+
+
 
 # Search engines known URLs database (update the 10th january 2001)
 # To add a search engine, add a new line:
@@ -198,7 +200,7 @@ $BarImageHorizontal_k = "barrehk.png";
 "search\.dogpile\.com", "q=",
 "ilse\.","search_for=", "vindex\.","in=",
 "nomade\.fr/","s=", "francite\.","name=",
-"fireball\.de","q=", "suche\.web\.de","su=",
+"fireball\.de","q=", "infoseek\.de","qt=", "suche\.web\.de","su=",
 "engine\.exe","p1=", "miner\.bol\.com\.br","q="
 );
 @WordsToCleanSearchUrl= ("act=","annuaire=","btng=","categoria=","cfg=","cou=","dd=","domain=","dt=","dw=","exec=","geo=","hc=","height=","hl=","hs=","kl=","lang=","loc=","lr=","matchmode=","medor=","message=","meta=","mode=","order=","page=","par=","pays=","pg=","pos=","prg=","qc=","refer=","sa=","safe=","sc=","sort=","src=","start=","stype=","tag=","temp=","theme=","url=","user=","width=","what=","\\.x=","\\.y=");
@@ -1562,36 +1564,9 @@ sub tab_end {
 }
 
 sub UnescapeURLParam {
-	$_[0] =~ s/\+/ /gi;
-	$_[0] =~ s/%20/ /gi;	#
-	$_[0] =~ s/%22//gi;		#"
-	$_[0] =~ s/%26/ /gi;	#&
-	$_[0] =~ s/%27/ /gi;	#'
-	$_[0] =~ s/%28//gi;		#(
-	$_[0] =~ s/%29//gi;		#)
-	$_[0] =~ s/%2b/ /gi;	#+
-	$_[0] =~ s/%2c/ /gi;	#,
-	$_[0] =~ s/%2d/-/gi;	#-
-	$_[0] =~ s/%2e/\./gi;	#.
-	$_[0] =~ s/%2f/ /gi;	#/
-	$_[0] =~ s/%3a/:/gi;	#:
-	$_[0] =~ s/%3b/;/gi;	#;
-	$_[0] =~ s/%3c/ /gi;	#<
-	$_[0] =~ s/%3d/ /gi;	#=
-	$_[0] =~ s/%3e/ /gi;	#>
-	$_[0] =~ s/%3f/?/gi;	#?
-	$_[0] =~ s/%c9/é/gi;	#é maj
-	$_[0] =~ s/%e0/à/gi;	#à
-	$_[0] =~ s/%e7/ç/gi;	#ç
-	$_[0] =~ s/%e8/è/gi;	#è
-	$_[0] =~ s/%e9/é/gi;	#é
-	$_[0] =~ s/%ea/ê/gi;	#ê
-	$_[0] =~ s/%eb/ë/gi;	#ë
-	$_[0] =~ s/%ee/î/gi;	#î
-	$_[0] =~ s/%f1/ñ/gi;	#ñ
-	$_[0] =~ s/%f2/ò/gi;	#ò
-	$_[0] =~ s/%f3/ó/gi;	#ó
-	$_[0] =~ s/\"//gi;
+	$_[0] =~ tr/\+/ /s;
+	$_[0] =~ s/%([a-fA-F0-9][a-fA-F0-9])/pack("C", hex($1))/eg;		# Decode encoded URL
+	$_[0] =~ tr/\'\/=\(\)\"/      /s;
 }
 
 sub error {
@@ -2100,7 +2075,7 @@ if ($QueryString =~ /lang=/i) { $Lang=$QueryString; $Lang =~ s/.*lang=//; $Lang 
 
 # Check and correct bad parameters
 &Check_Config;
-
+	
 # Print html header
 &html_head;
 
@@ -2249,7 +2224,7 @@ if ($UpdateStats) {
 	#------------------------------------------
 	# PROCESSING CURRENT LOG
 	#------------------------------------------
-	&debug("Start of processing log file (monthtoprocess=$monthtoprocess, yeartoprocess=$yeartoprocess)");
+	&debug("Start of processing log file $LogFile (monthtoprocess=$monthtoprocess, yeartoprocess=$yeartoprocess)");
 	$OpenFileError=1; if (open(LOG,"$LogFile")) { $OpenFileError=0; }
 	if ($OpenFileError) { error("Error: Couldn't open server log file \"$LogFile\" : $!"); }
 	$NbOfLinesProcessed=0; $NowNewLinePhase=0;
