@@ -14,6 +14,7 @@ Fixes:
   space in names are reported correctly.
 - Removed an unknown security hole.
 - Removed an other unknown security hole (found by iDEFENSE).
+- Restart of apache works correctly on debian.
 
 Other/Documentation:
 - Updated documentation
