@@ -3645,8 +3645,8 @@ my @AllowedArgs=('-site','-config','-showsteps','-showdropped','-showcorrupted',
 '-month','-year','-framename','-debug');
 
 if ($ENV{"GATEWAY_INTERFACE"}) {	# Run from a browser
-	my $ExpireDelayInHTTPHeader=0;
-	print "Expires: ".(localtime($starttime+$ExpireDelayInHTTPHeader))."\n";
+	#my $ExpireDelayInHTTPHeader=0;
+	#print "Expires: ".(localtime($starttime+$ExpireDelayInHTTPHeader))."\n";
 	print "Content-type: text/html\n";
 	print "\n\n";
 	if ($ENV{"CONTENT_LENGTH"}) {
@@ -3661,7 +3661,7 @@ if ($ENV{"GATEWAY_INTERFACE"}) {	# Run from a browser
 	if ($QueryString =~ /migrate=([^\s&]+)/i)	{ 
 		$MigrateStats=&DecodeEncodedString("$1"); 
 		$MigrateStats =~ /^(.*)$PROG(\d{0,2})(\d\d)(\d\d\d\d)(.*)\.txt$/;
-		$SiteConfig=$5?$5:"xxx"; $SiteConfig =~ s/^\.//;
+		$SiteConfig=$5?$5:"xxx"; $SiteConfig =~ s/^\.//;		# SiteConfig is not required for migrate
 	}
 	if ($QueryString =~ /logfile=([^\s&]+)/i )	{ $LogFile=&DecodeEncodedString("$1"); }
 	if ($QueryString =~ /output=urldetail:([^\s&]+)/i)	{ $URLFilter=&DecodeEncodedString("$1"); }	# Filter on URL list can be defined with output=urldetail:filter to reduce number of lines read and showed
@@ -3674,7 +3674,7 @@ else {								# Run from command line
 		if ($ARGV[$_] =~ /^(-|)migrate=/) {
 			$MigrateStats=$ARGV[$_];
 			$MigrateStats =~ /^(.*)$PROG(\d{0,2})(\d\d)(\d\d\d\d)(.*)\.txt$/;
-			$SiteConfig=$5?$5:"xxx"; $SiteConfig =~ s/^\.//;
+			$SiteConfig=$5?$5:"xxx"; $SiteConfig =~ s/^\.//;	# SiteConfig is not required for migrate
 			last;
 		}
 		# TODO Check if ARGV is an AllowedArg
@@ -4411,6 +4411,7 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {	# Updat
 		elsif ($pos_agent >= 0 && @SkipUserAgents && &SkipUserAgent($field[$pos_agent]))	{ $qualifdrop="Dropped record (user agent $field[$pos_agent] not qualified by SkipUserAgents)"; }
 		if ($qualifdrop) {
 			$NbOfLinesDropped++;
+			if ($Debug) { debug("$qualifdrop: $_",4); }
 			if ($ShowDropped) { print "$qualifdrop: $_\n"; }
 			next;
 		}
@@ -4982,7 +4983,7 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {	# Updat
 
 
 	# Save current processed month $lastprocessedmonth
-	# If lastprocessedmonth is still 0, it means we found no valid lines in log file
+	# If lastprocessedmonth > 0 means there is at least on approved new record in log or at least one existing history file
 	if ($lastprocessedmonth) {
 		&Read_History_With_TmpUpdate($lastprocessedyear,$lastprocessedmonth,1,1,"all");
 	}
@@ -5178,7 +5179,12 @@ EOF
 			print "<tr><th class=AWL valign=top>$Message[35] :</th>";
 			print "<td class=AWL><font style=\"font-size: 14px;\">";
 			if ($LastUpdate) { print Format_Date($LastUpdate,0); }
-			else { print " <font color=#880000>$Message[24]</font>"; }
+			else {
+				# Here NbOfOldLines = 0 (because LastUpdate is defined)
+				if (! $UpdateStats) { print " <font color=#880000>$Message[24]</font>"; }
+				else { print " <font color=#880000>No qualified records found in log ($NbOfLinesCorrupted corrupted, $NbOfLinesDropped dropped)</font>"; }
+				
+			}
 			print "</font>";
 			# Print selected period of analysis
 			# ...
@@ -5933,8 +5939,8 @@ EOF
 		&tab_head($Message[46],19);
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>User agent (".(scalar keys %_unknownreferer_l).")</TH><TH>$Message[9]</TH></TR>\n";
 		my $count=0;
-		foreach my $key (sort { $_unknownreferer_l{$b} <=> $_unknownreferer_l{$a} } keys (%_unknownreferer_l)) {
-			if ($count>=$MaxRowsInHTMLOutput) { next; }
+		&BuildKeyList($MaxRowsInHTMLOutput,1,\%_unknownreferer_l,\%_unknownreferer_l);
+		foreach my $key (@keylist) {
 			my $useragent=CleanFromCSSA($key);
 			print "<tr><td CLASS=AWL>$useragent</td><td>".Format_Date($_unknownreferer_l{$key},1)."</td></tr>\n";
 			$count++;
@@ -5948,8 +5954,8 @@ EOF
 		&tab_head($Message[50],19);
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>User agent (".(scalar keys %_unknownrefererbrowser_l).")</TH><TH>$Message[9]</TH></TR>\n";
 		my $count=0;
-		foreach my $key (sort { $_unknownrefererbrowser_l{$b} <=> $_unknownrefererbrowser_l{$a} } keys (%_unknownrefererbrowser_l)) {
-			if ($count>=$MaxRowsInHTMLOutput) { next; }
+		&BuildKeyList($MaxRowsInHTMLOutput,1,\%_unknownrefererbrowser_l,\%_unknownrefererbrowser_l);
+		foreach my $key (@keylist) {
 			my $useragent=CleanFromCSSA($key);
 			print "<tr><td CLASS=AWL>$useragent</td><td>".Format_Date($_unknownrefererbrowser_l{$key},1)."</td></tr>\n";
 			$count++;
@@ -6114,8 +6120,8 @@ EOF
 		&tab_head($Message[47],19);
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>URL (".(scalar keys %_sider404_h).")</TH><TH bgcolor=\"#$color_h\">$Message[49]</TH><TH>$Message[23]</TH></TR>\n";
 		my $count=0;
-		foreach my $key (sort { $_sider404_h{$b} <=> $_sider404_h{$a} } keys (%_sider404_h)) {
-			if ($count>=$MaxRowsInHTMLOutput) { next; }
+		&BuildKeyList($MaxRowsInHTMLOutput,1,\%_sider404_h,\%_sider404_h);
+		foreach my $key (@keylist) {
 			my $nompage=CleanFromCSSA($key);
 			#if (length($nompage)>$MaxLengthOfURL) { $nompage=substr($nompage,0,$MaxLengthOfURL)."..."; }
 			my $referer=CleanFromCSSA($_referer404_h{$key});
@@ -6525,8 +6531,8 @@ EOF
 		$max_h=1; foreach my $key (values %_domener_h) { if ($key > $max_h) { $max_h = $key; } }
 		$max_k=1; foreach my $key (values %_domener_k) { if ($key > $max_k) { $max_k = $key; } }
 		my $count=0;
-		foreach my $key (sort { $_domener_p{$b} <=> $_domener_p{$a} } keys %_domener_p) {
-			if ($count >= $MaxNbOfDomain) { last; }
+		&BuildKeyList($MaxNbOfDomain,1,\%_domener_p,\%_domener_p);
+		foreach my $key (@keylist) {
 			my $bredde_p=0;my $bredde_h=0;my $bredde_k=0;
 			if ($max_h > 0) { $bredde_p=int($BarWidth*$_domener_p{$key}/$max_h)+1; }	# use max_h to enable to compare pages with hits
 			if ($_domener_p{$key} && $bredde_p==1) { $bredde_p=2; }
@@ -6812,7 +6818,8 @@ EOF
 		if ($ShowFileTypesStats =~ /C/i) { print "<TH bgcolor=\"#$color_k\" width=120>$Message[100]</TH><TH bgcolor=\"#$color_k\" width=120>$Message[101]</TH><TH bgcolor=\"#$color_k\" width=120>$Message[99]</TH>"; }
 		print "</TR>\n";
 		my $count=0;
-		foreach my $key (sort { $_filetypes_h{$b} <=> $_filetypes_h{$a} } keys (%_filetypes_h)) {
+		&BuildKeyList($MaxRowsInHTMLOutput,1,\%_filetypes_h,\%_filetypes_h);
+		foreach my $key (@keylist) {
 			my $p=int($_filetypes_h{$key}/$Totalh*1000)/10;
 			if ($key eq "Unknown") {
 				print "<TR><TD CLASS=AWL>$Message[0]</TD>";
@@ -6940,15 +6947,17 @@ EOF
 		#------- Referrals by search engine
 		print "<TR onmouseover=\"ShowTip(13);\" onmouseout=\"HideTip(13);\"><TD CLASS=AWL><b>$Message[40]</b> - <a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=refererse":"$PROG$StaticLinks.refererse.html")."\"$NewLinkTarget>$Message[80]</a><br>\n";
 		print "<TABLE>\n";
+		$total_h=0;
 		my $count=0;
-		$rest_h=0;
-		foreach my $key (sort { $_se_referrals_h{$b} <=> $_se_referrals_h{$a} } keys (%_se_referrals_h)) {
-			if ($count>=$MaxNbOfRefererShown) { $rest_h+=$_se_referrals_h{$key}; next; }
-			if ($_se_referrals_h{$key}<$MinHitRefer) { $rest_h+=$_se_referrals_h{$key}; next; }
+		&BuildKeyList($MaxNbOfRefererShown,$MinHitRefer,\%_se_referrals_h,\%_se_referrals_h);
+		foreach my $key (@keylist) {
 			my $newreferer=CleanFromCSSA($SearchEnginesHashIDLib{$key}||$key);
 			print "<TR><TD CLASS=AWL>- $newreferer</TD><TD align=right> $_se_referrals_h{$key} </TD></TR>\n";
+			$total_h += $_se_referrals_h{$key};
 			$count++;
 		}
+		if ($Debug) { debug("Total real / shown : $TotalDifferentSearchEngines / $total_h",2); }
+		$rest_h=$TotalSearchEngines-$total_h;
 		if ($rest_h > 0) {
 			print "<TR><TD CLASS=AWL><font color=\"#$color_other\">- $Message[2]</font></TD><TD>$rest_h</TD>";
 		}
@@ -6957,11 +6966,10 @@ EOF
 		#------- Referrals by external HTML link
 		print "<TR onmouseover=\"ShowTip(14);\" onmouseout=\"HideTip(14);\"><TD CLASS=AWL><b>$Message[41]</b> - <a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=refererpages":"$PROG$StaticLinks.refererpages.html")."\"$NewLinkTarget>$Message[80]</a><br>\n";
 		print "<TABLE>\n";
+		$total_h=0;
 		$count=0;
-		$rest_h=0;
-		foreach my $key (sort { $_pagesrefs_h{$b} <=> $_pagesrefs_h{$a} } keys (%_pagesrefs_h)) {
-			if ($count>=$MaxNbOfRefererShown) { $rest_h+=$_pagesrefs_h{$key}; next; }
-			if ($_pagesrefs_h{$key}<$MinHitRefer) { $rest_h+=$_pagesrefs_h{$key}; next; }
+		&BuildKeyList($MaxNbOfRefererShown,$MinHitRefer,\%_pagesrefs_h,\%_pagesrefs_h);
+		foreach my $key (@keylist) {
 			my $nompage=CleanFromCSSA($key);
 			if (length($nompage)>$MaxLengthOfURL) { $nompage=substr($nompage,0,$MaxLengthOfURL)."..."; }
 			if ($ShowLinksOnUrl && ($key =~ /^http(s|):/i)) {
@@ -6970,8 +6978,11 @@ EOF
 			} else {
 				print "<TR><TD CLASS=AWL>- $nompage</TD><TD>$_pagesrefs_h{$key}</TD></TR>\n";
 			}
+			$total_h += $_pagesrefs_h{$key};
 			$count++;
 		}
+		if ($Debug) { debug("Total real / shown : $TotalRefererPages / $total_h",2); }
+		$rest_h=$TotalRefererPages-$total_h;
 		if ($rest_h > 0) {
 			print "<TR><TD CLASS=AWL><font color=\"#$color_other\">- $Message[2]</font></TD><TD>$rest_h</TD>";
 		}
@@ -7056,14 +7067,17 @@ EOF
 		print "$Center<a name=\"ERRORS\">&nbsp;</a><BR>\n";
 		&tab_head($Message[32],19);
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH colspan=2>$Message[32]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[15]</TH><TH bgcolor=\"#$color_k\" width=80>$Message[75]</TH></TR>\n";
+		$total_h=0;
 		my $count=0;
-		foreach my $key (sort { $_errors_h{$b} <=> $_errors_h{$a} } keys (%_errors_h)) {
+		&BuildKeyList($MaxRowsInHTMLOutput,1,\%_errors_h,\%_errors_h);
+		foreach my $key (@keylist) {
 			my $p=int($_errors_h{$key}/$TotalHitsErrors*1000)/10;
 			print "<TR onmouseover=\"ShowTip($key);\" onmouseout=\"HideTip($key);\">";
 			if ($TrapInfosForHTTPErrorCodes{$key}) { print "<TD><a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=errors$key":"$PROG$StaticLinks.errors$key.html")."\"$NewLinkTarget>$key</a></TD>"; }
 			else { print "<TD>$key</TD>"; }
 			print "<TD CLASS=AWL>".($httpcodelib{$key}?$httpcodelib{$key}:"Unknown error")."</TD><TD>$_errors_h{$key}</TD><TD>$p %</TD><TD>".Format_Bytes($_errors_k{$key})."</TD>";
 			print "</TR>\n";
+			$total_h+=$_errors_h{$key};
 			$count++;
 		}
 		&tab_end;
