@@ -963,9 +963,9 @@ when reading it), follow the example:<br>
 <br><br><hr>
 
 <a name="SplitSearchString"><b>SplitSearchString</b></a><br>
+<font color="#808080">
 <b>Version : </b>2.24 - 4.0 (deprecated since 4.1)<br>
 AWStats 4.1+ supports both keywords AND keyphrases by default with no need of any parameter.<br>
-<font color="#808080">
 <br># Search engines keywords reported are full search string or separate keywords
 <br># Possible values:
 <br># 0 - Search keywords reported are full search string (ie: "town maps")
@@ -1093,13 +1093,14 @@ AWStats 4.1+ supports both keywords AND keyphrases by default with no need of an
 
 <a name="Show"><b>Show...</b></a><br>
 <b>Version : </b><br>
-3.2 for ShowHeader,ShowMenu,ShowMonthDayStats,ShowDaysOfWeekStats,ShowHoursStats,
+<font color="#808080">3.2 - 5.3 for ShowHeader (deprecated since 5.4)</font><br>
+3.2 + for ShowMenu,ShowMonthDayStats,ShowDaysOfWeekStats,ShowHoursStats,
 ShowDomainsStats,ShowHostsStats,ShowAuthenticatedUsers,ShowRobotsStats,
 ShowPagesStats,ShowFileTypesStats,ShowFileSizesStats,ShowBrowsersStats,
 ShowOSStats,ShowOriginStats,ShowKeyphrasesStats,ShowKeywordsStats,ShowHTTPErrorsStats<br>
-3.2 - 5.0 for ShowCompressionStats (deprecated since 5.1, use code C with ShowFileTypesStats instead)<br>
-4.1 for ShowSessionsStats, ShowKeywordsStats<br>
-5.1 for all letters codes<br>
+<font color="#808080">3.2 - 5.0 for ShowCompressionStats (deprecated since 5.1, use code C with ShowFileTypesStats instead)</font><br>
+4.1 + for ShowSessionsStats, ShowKeywordsStats<br>
+5.1 + for all letters codes<br>
 <br># You choose here which reports you want to see in the main page and what you
 <br># want to see in those reports.
 <br># Possible values:
@@ -1118,9 +1119,6 @@ ShowOSStats,ShowOriginStats,ShowKeyphrasesStats,ShowKeywordsStats,ShowHTTPErrors
 <br>#        C = Web compression (mod_gzip)
 <br>#        M = Average mail size (mail logs)
 <br>#
-<br># Show AWStats head title and icon
-<br># Default: 1, Possible codes: None
-<br>ShowHeader=1				
 <br># Show menu header with links on detailed reports
 <br># Default: 1, Possible codes: None
 <br>ShowMenu=1					
