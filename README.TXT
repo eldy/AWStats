@@ -45,6 +45,7 @@ I - 1) Features
 	* Browsers used (pages, hits, kb for each browser),
 	* OS used (pages, hits, KB for each OS),
 	* Visits of robots,
+	* Worms attacks,
 	* Search engines, keyphrases and keywords used to find your site,
 	* HTTP errors (Page not found with last referer, ...),
 	* Other personalized reports,
