@@ -11,8 +11,8 @@ It works with IIS 5.0+, Apache and all major web, wap, proxy, streaming
 server log files (and even ftp servers or mail logs) on all Operating Systems.
 
 License: GNU GPL (GNU General Public License. See LICENSE file)
-Version : 5.8
-Release date: September 2003
+Version : 5.9
+Release date: October 2003
 Platforms: All (Linux, NT, SCO, BSD, Solaris and other *NIX's, BeOS, OS/2...)
 Author: Laurent Destailleur <eldy@users.sourceforge.net>
 AWStats official web site and latest version: http://awstats.sourceforge.net
@@ -75,6 +75,7 @@ I - 1) Features
 	* Help and tooltips on HTML reported pages,
 	* Easy to use (Just one configuration file to edit),
 	* Free (GNU GPL), with sources (perl scripts),
+	* A Webmin module also provided,
 	* Available on all platforms.
 
 
@@ -96,8 +97,7 @@ I - 3) Files
 	README.TXT                          This file
 	docs/LICENSE                        GNU General Public Licence
 	docs/*                              AWStats documentation (setup/usage...)
-	tools/*                             Ohter provided tools
-	wwwroot/cgi-bin/awstats.pl          The main CLI/CGI program
+	wwwroot/cgi-bin/awstats.pl          THE MAIN AWSTATS PROGRAM (CLI/CGI)
 	wwwroot/cgi-bin/awredir.pl          A tool to track click that exit site
 	wwwroot/cgi-bin/awstats.model.conf  An example of AWStats configure file
 	wwwroot/cgi-bin/lang                Directory with languages files
@@ -111,6 +111,8 @@ I - 3) Files
 	wwwroot/icon/other                  Directory with all others icons
 	wwwroot/css                         Samples of CSS files
 	wwwroot/js                          Javascript sources for "Misc" feature
+	tools/*                             Other provided tools
+	tools/webmin/awstats-x.x.wbm        A webmin module for AWStats
 
 
 
