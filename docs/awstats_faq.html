@@ -273,6 +273,7 @@ LogFile="/var/log/xferlog"
 <br>ShowKeywordsStats=0
 <br>ShowMiscStats=0
 <br>ShowHTTPErrorsStats=0
+<br>ShowSMTPErrorsStats=0
 </i></td></tr></table>
 <br>
 Now you can use AWStats as usual (run the update process and read statistics).<br>
@@ -288,26 +289,22 @@ This tip works with AWStats 5.5 or higher.<br>
 <br>
 <u>For Postfix, Sendmail or QMail log files</u><br>
 <br>
-1- First, install a mail log convertor like <a href="http://www.ke.nu/software/">maillogconv.pl</a> to use it
-as a pre-processor for AWStats update process (to convert your Postfix, Sendmail or Qmail log into a readable format):<br>
-For this, you can download and copy maillogconv.pl file into same directory
-than awstats.pl file.<br>
-<br>
-2- Then setup AWStats to analyze maillogconv processed log:<br>
-Copy config awstats.model.conf file to "awstats.mail.conf".<br>
+You must setup AWStats to use a mail log file preprocessor (<i>maillogconvert.pl</i> is provided
+into AWStats <i>tools</i> directory, but you can use the one of your choice):<br>
+Copy config <i>"awstats.model.conf"</i> file to <i>"awstats.mail.conf"</i>.<br>
 Modify this new config file:
 <table width="95%" border=1 cellpadding=0 cellspacing=0><tr class=CFAQ><td class=CFAQ>
 For standard Postfix, Sendmail and standard QMail logfiles, set<br>
 <i>
-LogFile="/path/to/maillogconv standard &lt; /pathtomaillog/maillog |"<br>
+LogFile="perl /path/to/maillogconvert.pl standard &lt; /pathtomaillog/maillog |"<br>
 </i>
 And for VAdmin QMail logfiles (multi-host/virtualhost mail servers running vadmin software)<br>
 <i>
-LogFile="/path/to/maillogconv vadmin &lt; /pathtomaillog/maillog |"<br>
+LogFile="perl /path/to/maillogconvert.pl vadmin &lt; /pathtomaillog/maillog |"<br>
 </i>
 If the logfiles are compressed, they can be processed this way<br>
 <i>
-LogFile="gzip -cd /var/log/maillog.0.gz | /path/to/maillogconv vadmin |"<br>
+LogFile="gzip -cd /var/log/maillog.0.gz | /path/to/maillogconvert.pl vadmin |"<br>
 </i>
 Then change:
 <i>
@@ -334,6 +331,7 @@ Then change:
 <br>ShowKeywordsStats=0
 <br>ShowMiscStats=0
 <br>ShowHTTPErrorsStats=0
+<br>ShowSMTPErrorsStats=1
 <br>
 </i>
 </td></tr></table>
