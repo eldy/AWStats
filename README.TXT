@@ -3,7 +3,7 @@
 	 Advanced Web Statistics
 ------------------------------------
 
-Advanced Web Statistics (AWStats) is a powerfull and featurefull web server
+AWStats (Advanced Web Statistics) is a powerfull and featurefull web server
 logfile analyzer that shows you all your Web statistics including visitors,
 pages, hits, hours, search engines, keywords used to find your site, broken
 links, robots and more...
@@ -11,8 +11,8 @@ It works with IIS 5.0+, Apache and all major web, wap, proxy, streaming
 server log files (and even ftp servers or mail logs) on all Operating Systems.
 
 License: GNU GPL (GNU General Public License. See LICENSE file)
-Version : 5.91
-Release date: October 2003
+Version : 6.0
+Release date: November 2003
 Platforms: All (Linux, NT, SCO, BSD, Solaris and other *NIX's, BeOS, OS/2...)
 Author: Laurent Destailleur <eldy@users.sourceforge.net>
 AWStats official web site and latest version: http://awstats.sourceforge.net
@@ -70,9 +70,11 @@ I - 1) Features
 	* Cross Site Scripting Attacks protection,
 	* Several languages,
 	* No need of rare perl libraries,
-	* Graphical one page or framed reports,
+	* Dynamic reports as CGI output.<br>
+	* Static reports in one or framed HTML/XML pages, experimental PDF export,
 	* Look and colors can match your site design, can use CSS,
 	* Help and tooltips on HTML reported pages,
+	* Experimental PDF export,
 	* Easy to use (Just one configuration file to edit),
 	* Free (GNU GPL), with sources (perl scripts),
 	* A Webmin module also provided,
