@@ -83,6 +83,7 @@
 'rar','archive',
 'tar','archive',
 'tgz','archive',
+'z','archive',
 'zip','archive',
 # Audio
 'mp3','audio',
@@ -158,6 +159,7 @@
 'rar','archive',
 'tar','archive',
 'tgz','archive',
+'z','archive',
 'zip','archive',
 # Audio
 'mp3','audio',
