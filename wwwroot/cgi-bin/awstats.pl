@@ -81,7 +81,7 @@ $word, $yearcon, $yearfile, $yearmonthfile, $yeartoprocess) = ();
 %MonthBytes = %MonthHits = %MonthPages = %MonthUnique = %MonthVisits =
 %listofyears = %monthlib = %monthnum = ();
 
-$VERSION="3.0 (build 4)";
+$VERSION="3.1 (build 1)";
 $Lang="en";
 
 # Default value
@@ -346,14 +346,13 @@ $BarImageHorizontal_k = "barrehk.png";
 
 # Robots list
 %RobotHash   = (
-# Some robots that must be declared first to avoid to be confused with another one
-"tiscalifreenet", "TiscaliFreeNet",
 # Main list of robots (found at http://info.webcrawler.com/mak/projects/robots/active.html)
 # This command show how to generate tab list from this file: cat robotslist.txt | sed 's/:/ /' | awk ' /robot-id/ { name=tolower($2); } /robot-name/ { print "\""name"\", \""$0"\"," } ' | sed 's/robot-name *//g' > file
 # Rem: To avoid bad detection, some robots id were removed from this list:
 #      - Robots with ID of 2 letters only
 #      - Robot called "webs"
-# Rem: directhit is changed in direct_hit (its real id)
+# Rem: directhit is changed into direct_hit (its real id)
+# Rem: calif is changed into calif[^r] to avoid confusion between tiscalifreenet browser and calif robot
 "acme.spider", "Acme.Spider",
 "ahoythehomepagefinder", "Ahoy! The Homepage Finder",
 "alkaline", "Alkaline",
@@ -375,7 +374,7 @@ $BarImageHorizontal_k = "barrehk.png";
 "brightnet", "bright.net caching robot",
 "bspider", "BSpider",
 "cactvschemistryspider", "CACTVS Chemistry Spider",
-"calif", "Calif",
+"calif[^r]", "Calif",
 "cassandra", "Cassandra",
 "cgireader", "Digimarc Marcspider/CGI",
 "checkbot", "Checkbot",
@@ -1108,6 +1107,8 @@ sub Check_Config {
 	if ($message[74] eq "") { $message[74]="Update now"; }
 	if ($message[75] eq "") { $message[75]="Bytes"; }
 	if ($message[76] eq "") { $message[76]="Last update"; }
+	if ($message[77] eq "") { $message[77]="Top"; }
+	if ($message[78] eq "") { $message[78]="dd mmm yyyy - HH:MM"; }
 }
 
 #--------------------------------------------------------------------
@@ -1408,6 +1409,27 @@ sub Format_Bytes {
 	if ($bytes >= $fudge * exp(2*log(1024))) { return sprintf("%.2f", $bytes/exp(2*log(1024)))." Mb"; }
 	if ($bytes >= $fudge * exp(1*log(1024))) { return sprintf("%.2f", $bytes/exp(1*log(1024)))." $message[44]"; }
 	return "$bytes $message[75]";
+}
+
+#------------------------------------------------------------------------------
+# Function:      Format a date according to message[78] (country date format)
+# Input:         day month year hour min
+#------------------------------------------------------------------------------
+sub Format_Date {
+	my $day=shift;
+	my $month=shift;
+	my $year=shift;
+	my $hour=shift;
+	my $min=shift;
+	my $dateformat=$message[78];
+	$dateformat =~ s/dd/$day/g;
+	$dateformat =~ s/mmm/$monthlib{$month}/g;
+	$dateformat =~ s/mm/$month/g;
+	$dateformat =~ s/yyyy/$year/g;
+	$dateformat =~ s/yy/$year/g;
+	$dateformat =~ s/HH/$hour/g;
+	$dateformat =~ s/MM/$min/g;
+	return "$dateformat";
 }
 
 
@@ -2231,8 +2253,7 @@ if ($QueryString =~ /action=unknownip/i) {
 		$daycon=substr($_unknownip_l{$key},6,2);
 		$hourcon=substr($_unknownip_l{$key},8,2);
 		$mincon=substr($_unknownip_l{$key},10,2);
-		if ($Lang == 1) { print "<tr><td>$key</td><td>$daycon/$monthcon/$yearcon - $hourcon:$mincon</td></tr>"; }
-		else { print "<tr><td>$key</td><td>$daycon $monthlib{$monthcon} $yearcon - $hourcon:$mincon</td></tr>"; }
+		print "<tr><td>$key</td><td>$daycon/$monthcon/$yearcon - $hourcon:$mincon</td></tr>";
 	}
 	&tab_end;
 	&html_end;
@@ -2251,8 +2272,7 @@ if ($QueryString =~ /action=unknownrefererbrowser/i) {
 		$hourcon=substr($_unknownrefererbrowser_l{$key},8,2);
 		$mincon=substr($_unknownrefererbrowser_l{$key},10,2);
 		$key =~ s/<script.*$//gi;				# This is to avoid 'Cross Site Scripting attacks'
-		if ($Lang == 1) { print "<tr><td CLASS=LEFT>$key</td><td>$daycon/$monthcon/$yearcon - $hourcon:$mincon</td></tr>"; }
-		else { print "<tr><td CLASS=LEFT>$key</td><td>$daycon $monthlib{$monthcon} $yearcon - $hourcon:$mincon</td></tr>"; }
+		print "<tr><td CLASS=LEFT>$key</td><td>$daycon $monthlib{$monthcon} $yearcon - $hourcon:$mincon</td></tr>";
 	}
 	&tab_end;
 	&html_end;
@@ -2271,8 +2291,7 @@ if ($QueryString =~ /action=unknownreferer/i) {
 		$hourcon=substr($_unknownreferer_l{$key},8,2);
 		$mincon=substr($_unknownreferer_l{$key},10,2);
 		$key =~ s/<script.*$//gi;				# This is to avoid 'Cross Site Scripting attacks'
-		if ($Lang == 1) { print "<tr><td CLASS=LEFT>$key</td><td>$daycon/$monthcon/$yearcon - $hourcon:$mincon</td></tr>"; }
-		else { print "<tr><td CLASS=LEFT>$key</td><td>$daycon $monthlib{$monthcon} $yearcon - $hourcon:$mincon</td></tr>"; }
+		print "<tr><td CLASS=LEFT>$key</td><td>$daycon $monthlib{$monthcon} $yearcon - $hourcon:$mincon</td></tr>";
 	}
 	&tab_end;
 	&html_end;
@@ -2636,7 +2655,7 @@ if ($rest_p > 0) { 	# All other domains (known or not)
 #--------------------------
 print "$CENTER<a name=\"VISITOR\"></a><BR>";
 $MaxNbOfHostsShown = $TotalHosts if $MaxNbOfHostsShown > $TotalHosts;
-$tab_titre="TOP $MaxNbOfHostsShown $message[55] $TotalHosts $message[26] ($TotalUnique $message[11])";
+$tab_titre="$Message[77] $MaxNbOfHostsShown $message[55] $TotalHosts $message[26] ($TotalUnique $message[11])";
 &tab_head;
 print "<TR bgcolor=#$color_TableBGRowTitle><TH>$message[18]</TH><TH bgcolor=#$color_p>$message[56]</TH><TH bgcolor=#$color_h>$message[57]</TH><TH bgcolor=#$color_k>$message[75]</TH><TH>$message[9]</TH></TR>\n";
 $count=0;$total_p=0;$total_h=0;$total_k=0;
@@ -2653,8 +2672,7 @@ foreach $key (@sorthosts_p) {
 			$mincon=substr($_hostmachine_l{$key},10,2);
 			print "<tr><td CLASS=LEFT>$key</td><TD>$_hostmachine_p{$key}</TD><TD>$_hostmachine_h{$key}</TD><TD>".Format_Bytes($_hostmachine_k{$key})."</TD>";
 			if ($daycon ne "") {
-				if ($Lang != 0) { print "<td>$daycon/$monthcon/$yearcon - $hourcon:$mincon</td></tr>"; }
-				else { print "<td>$daycon $monthlib{$monthcon} $yearcon - $hourcon:$mincon</td></tr>"; }
+				print "<td>$daycon $monthlib{$monthcon} $yearcon - $hourcon:$mincon</td></tr>";
 			}
 			else {
 				print "<td>-</td>";
@@ -2689,8 +2707,7 @@ foreach $key (@sortrobot) {
 	$daycon=substr($_robot_l{$key},6,2);
 	$hourcon=substr($_robot_l{$key},8,2);
 	$mincon=substr($_robot_l{$key},10,2);
-	if ($Lang != 0) { print "<tr><td CLASS=LEFT>$RobotHash{$key}</td><td>$_robot_h{$key}</td><td>$daycon/$monthcon/$yearcon - $hourcon:$mincon</td></tr>"; }
-	else { print "<tr><td CLASS=LEFT>$RobotHash{$key}</td><td>$_robot_h{$key}</td><td>$daycon $monthlib{$monthcon} $yearcon - $hourcon:$mincon</td></tr>"; }
+	print "<tr><td CLASS=LEFT>$RobotHash{$key}</td><td>$_robot_h{$key}</td><td>$daycon $monthlib{$monthcon} $yearcon - $hourcon:$mincon</td></tr>";
 }
 &tab_end;
 
