@@ -671,16 +671,19 @@ AWStats use only time reported in logs by your server
 and all time are related to server hour. The problem is that IIS in some foreign 
 versions puts GMT time in its log file (and not local time). So, you have also 
 GMT time in your statistics.<br>
-You can do nothing, for the moment, but waiting that Microsoft change this in next
-IIS versions. However, Microsoft sheet Q271196 "IIS Log File Entries 
-Have the Incorrect Date and Time Stamp" says: <br>
+You can wait that Microsoft change this in next IIS versions.
+However, Microsoft sheet Q271196 "IIS Log File Entries Have the Incorrect Date and Time Stamp" says: <br>
 <i>The selected log file format is the W3C Extended Log File 
 Format. The extended log file format is defined in the W3C 
 Working Draft WD-logfile-960323 specification by Phillip 
 M. Hallam-Baker and Brian Behlendorf. This document defines 
 the Date and Time files to always be in GMT. This behavior 
 is by design.</i><br>
-So this means this way of working might never be changed.<br>
+So this means this way of working might never be changed, so another chance is to use the AWStats plugin 'timezone'.
+Warning, this plugin need the perl module Time::Local and it reduces seriously AWStats speed.<br>
+To enable the plugin, uncomment the following line in your config file.<br>
+<i>LoadPlugin="timezone TZ"</i><br>
+where TZ is value of your signed timezone (+2 for Paris, -8 for ...)<br>
 <br>
 
 <a name="OLDLOG"></a><br>
