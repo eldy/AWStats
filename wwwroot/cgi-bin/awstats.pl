@@ -82,7 +82,7 @@ $WarningMessages= 1;
 %MonthBytes = %MonthHits = %MonthHostsKnown = %MonthHostsUnknown = %MonthPages = %MonthUnique = %MonthVisits =
 %monthlib = %monthnum = ();
 
-$VERSION="3.2 (build 65)";
+$VERSION="3.2 (build 66)";
 $Lang="en";
 
 # Default value
@@ -424,13 +424,38 @@ sub Read_Config_File {
 		# Read main section
 		if ($param =~ /^LogFile/) {
 			$LogFile=$value;
-			# Replace %YYYY %YY %MM %DD %HH with current value
+			if ($LogFile =~ /%([YMDH]+)-(\d*)/) {
+				my $timephase=$2;
+				debug(" Found a time phase of $timephase hour in log file name",1);
+				# Get older time
+				($oldersec,$oldermin,$olderhour,$olderday,$oldermonth,$olderyear,$olderwday) = localtime($nowtime-($timephase*3600));
+				$olderweekofmonth=int($olderday/7);
+				$olderdaymod=$olderday%7;
+				$olderwday++;
+				if ($olderdaymod <= $olderwday) { if (($olderwday != 7) || ($olderdaymod != 0)) { $olderweekofmonth=$olderweekofmonth+1; } }
+				if ($olderdaymod >  $olderwday) { $olderweekofmonth=$olderweekofmonth+2; }
+				if ($olderyear < 100) { $olderyear+=2000; } else { $olderyear+=1900; }
+				$oldersmallyear=$olderyear;$oldersmallyear =~ s/^..//;
+				if (++$oldermonth < 10) { $oldermonth = "0$oldermonth"; }
+				if ($olderday < 10) { $olderday = "0$olderday"; }
+				if ($olderhour < 10) { $olderhour = "0$olderhour"; }
+				if ($oldermin < 10) { $oldermin = "0$oldermin"; }
+				if ($oldersec < 10) { $oldersec = "0$oldersec"; }
+				$LogFile =~ s/%YYYY-$timephase/$olderyear/g;
+				$LogFile =~ s/%YY-$timephase/$oldersmallyear/g;
+				$LogFile =~ s/%MM-$timephase/$oldermonth/g;
+				$LogFile =~ s/%DD-$timephase/$olderday/g;
+				$LogFile =~ s/%HH-$timephase/$olderhour/g;
+				$LogFile =~ s/%WM-$timephase/$olderweekofmonth/g;
+			}
+			# Replace %YYYY %YY %MM %DD %HH with current value. Kept for backward compatibility.
 			$LogFile =~ s/%YYYY/$nowyear/g;
 			$LogFile =~ s/%YY/$nowsmallyear/g;
 			$LogFile =~ s/%MM/$nowmonth/g;
 			$LogFile =~ s/%DD/$nowday/g;
 			$LogFile =~ s/%HH/$nowhour/g;
 			$LogFile =~ s/%WM/$nowweekofmonth/g;
+			debug(" LogFile=$LogFile",1);
 			next;
 			}
 		if ($param =~ /^LogFormat/)            	{ $LogFormat=$value; next; }
