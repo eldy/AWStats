@@ -2,32 +2,39 @@
 # With some other Unix Os, first line may be
 #!/usr/local/bin/perl
 # With Apache for Windows and ActiverPerl, first line may be
-#!c:/program files/activeperl/bin/perl
+#!C:/Program Files/ActiveState/bin/perl
 #-Description-------------------------------------------
-# Convert a common log file into a combined
+# Convert a common log file into a combined.
 # This tool is part of AWStats log analyzer but can be use
 # alone for any other log analyzer.
 # See COPYING.TXT file about AWStats GNU General Public License.
 #-------------------------------------------------------
-#use diagnostics;
-#use strict;
+use strict; no strict "refs";
+use diagnostics;
 
 
 #-------------------------------------------------------
 # Defines
 #-------------------------------------------------------
+my $VERSION="1.1 (build 1)";
 
-# ---------- Init variables (Variable $TmpHashxxx are not initialized) --------
-($ParamFile)=();
+# ---------- Init variables --------
+my $Debug=0;
+my $ShowSteps=0;
+my $DIR;
+my $PROG;
+my $Extension;
+my $DNSLookup=0;
+my $DirCgi="";
+my $DirData="";
+my $NbOfLinesForBenchmark=5000;
+my $NewReferer="-";		#$NewReferer="http://www.referersite.com/refererpage.html";
+my $NewUserAgent="Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0)";
 # ---------- Init hash arrays --------
-%monthnum = ();
-
-$VERSION="1.0 (build 2)";
-$NbOfLinesForBenchmark=5000;
-
-#$NewReferer="http://www.referersite.com/refererpage.html";
-$NewReferer="-";
-$NewUserAgent="Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0)";
+my %ParamFile=();
+my %linerecord=();
+my %timeconnexion=();
+my %corrupted=();
 
 
 
@@ -43,7 +50,7 @@ sub debug {
 	my $level = $_[1] || 1;
 	if ($Debug >= $level) { 
 		my $debugstring = $_[0];
-		if ($ENV{"GATEWAY_INTERFACE"} ne "") { $debugstring =~ s/^ /&nbsp&nbsp /; $debugstring .= "<br>"; }
+		if ($ENV{"GATEWAY_INTERFACE"}) { $debugstring =~ s/^ /&nbsp&nbsp /; $debugstring .= "<br>"; }
 		print "DEBUG $level - ".time." : $debugstring\n";
 		}
 	0;
@@ -54,7 +61,7 @@ sub debug {
 #-------------------------------------------------------
 # MAIN
 #-------------------------------------------------------
-$QueryString=""; for (0..@ARGV-1) { $QueryString .= "$ARGV[$_] "; }
+my $QueryString=""; for (0..@ARGV-1) { $QueryString .= "$ARGV[$_] "; }
 if ($QueryString =~ /debug=/i) { $Debug=$QueryString; $Debug =~ s/.*debug=//; $Debug =~ s/&.*//; $Debug =~ s/ .*//; }
 if ($QueryString =~ /dnslookup/i) { $DNSLookup=1; }
 if ($QueryString =~ /showsteps/i) { $ShowSteps=1; }
@@ -88,49 +95,49 @@ if (scalar keys %ParamFile == 0) {
 }
 
 # Get current time
-$nowtime=time;
-($nowsec,$nowmin,$nowhour,$nowday,$nowmonth,$nowyear) = localtime($nowtime);
+my $nowtime=time;
+my ($nowsec,$nowmin,$nowhour,$nowday,$nowmonth,$nowyear) = localtime($nowtime);
 if ($nowyear < 100) { $nowyear+=2000; } else { $nowyear+=1900; }
-$nowsmallyear=$nowyear;$nowsmallyear =~ s/^..//;
+my $nowsmallyear=$nowyear;$nowsmallyear =~ s/^..//;
 if (++$nowmonth < 10) { $nowmonth = "0$nowmonth"; }
 if ($nowday < 10) { $nowday = "0$nowday"; }
 if ($nowhour < 10) { $nowhour = "0$nowhour"; }
 if ($nowmin < 10) { $nowmin = "0$nowmin"; }
 if ($nowsec < 10) { $nowsec = "0$nowsec"; }
 # Get tomorrow time (will be used to discard some record with corrupted date (future date))
-($tomorrowsec,$tomorrowmin,$tomorrowhour,$tomorrowday,$tomorrowmonth,$tomorrowyear) = localtime($nowtime+86400);
+my ($tomorrowsec,$tomorrowmin,$tomorrowhour,$tomorrowday,$tomorrowmonth,$tomorrowyear) = localtime($nowtime+86400);
 if ($tomorrowyear < 100) { $tomorrowyear+=2000; } else { $tomorrowyear+=1900; }
-$tomorrowsmallyear=$tomorrowyear;$tomorrowsmallyear =~ s/^..//;
+my $tomorrowsmallyear=$tomorrowyear;$tomorrowsmallyear =~ s/^..//;
 if (++$tomorrowmonth < 10) { $tomorrowmonth = "0$tomorrowmonth"; }
 if ($tomorrowday < 10) { $tomorrowday = "0$tomorrowday"; }
 if ($tomorrowhour < 10) { $tomorrowhour = "0$tomorrowhour"; }
 if ($tomorrowmin < 10) { $tomorrowmin = "0$tomorrowmin"; }
 if ($tomorrowsec < 10) { $tomorrowsec = "0$tomorrowsec"; }
-$timetomorrow=$tomorrowyear.$tomorrowmonth.$tomorrowday.$tomorrowhour.$tomorrowmin.$tomorrowsec;	
+my $timetomorrow=$tomorrowyear.$tomorrowmonth.$tomorrowday.$tomorrowhour.$tomorrowmin.$tomorrowsec;	
 
 # Init other parameters
-if ($ENV{"GATEWAY_INTERFACE"} ne "") { $DirCgi=""; }
-if (($DirCgi ne "") && !($DirCgi =~ /\/$/) && !($DirCgi =~ /\\$/)) { $DirCgi .= "/"; }
-if ($DirData eq "" || $DirData eq ".") { $DirData=$DIR; }	# If not defined or choosed to "." value then DirData is current dir
-if ($DirData eq "")  { $DirData="."; }						# If current dir not defined then we put it to "."
+if ($ENV{"GATEWAY_INTERFACE"}) { $DirCgi=""; }
+if ($DirCgi && !($DirCgi =~ /\/$/) && !($DirCgi =~ /\\$/)) { $DirCgi .= "/"; }
+if (! $DirData || $DirData eq ".") { $DirData=$DIR; }	# If not defined or choosed to "." value then DirData is current dir
+if (! $DirData)  { $DirData="."; }						# If current dir not defined then we put it to "."
 $DirData =~ s/\/$//;
 if ($DNSLookup) { use Socket; }
-$NewDNSLookup=$DNSLookup;
-%monthlib =  ( "01","$message[60]","02","$message[61]","03","$message[62]","04","$message[63]","05","$message[64]","06","$message[65]","07","$message[66]","08","$message[67]","09","$message[68]","10","$message[69]","11","$message[70]","12","$message[71]" );
+#my %monthlib =  ( "01","$message[60]","02","$message[61]","03","$message[62]","04","$message[63]","05","$message[64]","06","$message[65]","07","$message[66]","08","$message[67]","09","$message[68]","10","$message[69]","11","$message[70]","12","$message[71]" );
 # monthnum must be in english because it's used to translate log date in apache log files which are always in english
-%monthnum =  ( "Jan","01","jan","01","Feb","02","feb","02","Mar","03","mar","03","Apr","04","apr","04","May","05","may","05","Jun","06","jun","06","Jul","07","jul","07","Aug","08","aug","08","Sep","09","sep","09","Oct","10","oct","10","Nov","11","nov","11","Dec","12","dec","12" );
+my %monthnum =  ( "Jan","01","jan","01","Feb","02","feb","02","Mar","03","mar","03","Apr","04","apr","04","May","05","may","05","Jun","06","jun","06","Jul","07","jul","07","Aug","08","aug","08","Sep","09","sep","09","Oct","10","oct","10","Nov","11","nov","11","Dec","12","dec","12" );
 
 #------------------------------------------
 # PROCESSING CURRENT LOG(s)
 #------------------------------------------
-%LogFileToDo=(); %NowNewLinePhase=(); %NbOfLinesRead=(); %NbOfLinesCorrupted=();
-$NbOfNewLinesProcessed=0; $NbOfNewLinesCorrupted=0;
-$logfilechosen=0;
-$starttime=time();
+my %LogFileToDo=(); my %NowNewLinePhase=(); my %NbOfLinesRead=(); my %NbOfLinesCorrupted=();
+my $NbOfNewLinesProcessed=0;
+my $NbOfNewLinesCorrupted=0;
+my $logfilechosen=0;
+my $starttime=time();
 
 # Define the LogFileToDo list
-my $cpt=1;
-foreach $key (keys %ParamFile) {
+$cpt=1;
+foreach my $key (keys %ParamFile) {
 	if ($ParamFile{$key} !~ /\*/ && $ParamFile{$key} !~ /\?/) {
 		&debug("Log file $ParamFile{$key} is added to LogFileToDo.");
 		$LogFileToDo{$cpt}=$ParamFile{$key};
@@ -145,9 +152,9 @@ foreach $key (keys %ParamFile) {
 		$ParamFile{$key} =~ s/\?/\./g;
 		&debug("Search for file \"$ParamFile{$key}\" into \"$DirFile\"");
 		opendir(DIR,"$DirFile");
-		@filearray = sort readdir DIR;
+		my @filearray = sort readdir DIR;
 		close DIR;
-		foreach $i (0..$#filearray) {
+		foreach my $i (0..$#filearray) {
 			if ("$filearray[$i]" =~ /^$ParamFile{$key}$/ && "$filearray[$i]" ne "." && "$filearray[$i]" ne "..") {
 				&debug("Log file $filearray[$i] is added to LogFileToDo.");
 				$LogFileToDo{$cpt}="$DirFile/$filearray[$i]";
@@ -164,7 +171,7 @@ if (scalar keys %LogFileToDo == 0) {
 
 # Open all log files
 &debug("Start of processing ".(scalar keys %LogFileToDo)." log file(s)");
-foreach $logfilenb (keys %LogFileToDo) {
+foreach my $logfilenb (keys %LogFileToDo) {
 	&debug("Open log file number $logfilenb: \"$LogFileToDo{$logfilenb}\"");
 	open("LOG$logfilenb","$LogFileToDo{$logfilenb}") || error("Couldn't open log file \"$LogFileToDo{$logfilenb}\" : $!");
 }
@@ -173,7 +180,7 @@ while (1 == 1)
 {
 	# BEGIN Read new record (for each log file or only for log file with record just processed)
 	#------------------------------------------------------------------------------------------
-	foreach $logfilenb (keys %LogFileToDo) {
+	foreach my $logfilenb (keys %LogFileToDo) {
 		if (($logfilechosen == 0) || ($logfilechosen == $logfilenb)) {
 			&debug("Search next record in file number $logfilenb",3);
 			# Read chosen log file until we found a record with good date or reaching end of file
@@ -234,39 +241,6 @@ while (1 == 1)
 	$NbOfNewLinesProcessed++;
 	if (($ShowSteps) && ($NbOfNewLinesProcessed % $NbOfLinesForBenchmark == 0)) { print STDERR "$NbOfNewLinesProcessed lines processed (".(time()-$starttime)." seconds, ".($NbOfNewLinesProcessed/(time()-$starttime))." lines/seconds)\n"; }
 
-	# Analyze: IP-address
-	#--------------------
-	if ($NewDNSLookup) {
-		$_ =~ /(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})/;
-		$Host=$1;
-		if ($Host ne "") {
-			$new=$TmpHashDNSLookup{$Host};	# TmpHashDNSLookup is a temporary hash table to increase speed
-			if (!$new) {					# if $new undefined, $Host not yet resolved
-				&debug(" Start of reverse DNS lookup for $Host",4);
-				if ($MyDNSTable{$Host}) {
-					&debug(" End of reverse DNS lookup, found resolution of $Host in local MyDNSTable",4);
-					$new = $MyDNSTable{$Host};
-				}
-				else {
-					if (&SkipDNSLookup($Host)) {
-						&debug(" (Skipping this DNS lookup at user request.)",4);
-					}
-					else {
-						$new=gethostbyaddr(pack("C4",split(/\./,$Host)),AF_INET);	# This is very slow, may took 20 seconds
-					}
-					&debug(" End of reverse DNS lookup for $Host",4);
-				}
-				if ($new eq "") { $new="ip"; }
-				$TmpHashDNSLookup{$Host}=$new;
-			}
-			# Here $Host is still xxx.xxx.xxx.xxx and $new is name or "ip" if reverse failed)
-			if ($new ne "ip") { $_ =~ s/$Host/$new/; }
-	    }
-		else {
-			&debug(" No IP adresses found in this record.",3);
-		}
-	}
-
 	# Print record if ready
 	print "$linerecord{$logfilechosen} \"$NewReferer\" \"$NewUserAgent\"\n";
 
@@ -276,7 +250,7 @@ while (1 == 1)
 
 
 # Close all log files
-foreach $logfilenb (keys %LogFileToDo) {
+foreach my $logfilenb (keys %LogFileToDo) {
 	&debug("Close log file number $logfilenb");
 	close("LOG$logfilenb");
 }

@@ -2,7 +2,7 @@
 # With some other Unix Os, first line may be
 #!/usr/local/bin/perl
 # With Apache for Windows and ActiverPerl, first line may be
-#!c:/program files/activeperl/bin/perl
+#!C:/Program Files/ActiveState/bin/perl
 #-Description-------------------------------------------
 # Merge several log files into one and replace all IP addresses
 # with resolved DNS host name.
@@ -10,29 +10,41 @@
 # alone for any other log analyzer.
 # See COPYING.TXT file about AWStats GNU General Public License.
 #-------------------------------------------------------
-#use diagnostics;
-#use strict;
-
+use strict; no strict "refs";
+use diagnostics;
 #use Thread;
 
 
 #-------------------------------------------------------
 # Defines
 #-------------------------------------------------------
+my $VERSION="1.1 (build 1)";
 
-# ---------- Init variables (Variable $TmpHashxxx are not initialized) --------
-($ParamFile)=();
+# ---------- Init variables --------
+my $Debug=0;
+my $ShowSteps=0;
+my $DIR;
+my $PROG;
+my $Extension;
+my $DNSLookup=0;
+my $DirCgi="";
+my $DirData="";
+my $QueuePoolSize=10;
+my $NbOfLinesForBenchmark=5000;
+my $DNSLookupAlreadyDone=0;
 # ---------- Init arrays --------
-@wordlist = ();
+my @SkipDNSLookupFor=();
 # ---------- Init hash arrays --------
-%monthnum = ();
-
-$VERSION="1.0 (build 2)";
-$QueuePoolSize=10;
-$NbOfLinesForBenchmark=5000;
+my %ParamFile=();
+my %linerecord=();
+my %timeconnexion=();
+my %corrupted=();
+my %TmpHashDNSLookup=();
+my %QueueHosts=();
+my %QueueRecord=();
 
 # These table is used to make fast reverse DNS lookup for particular IP adresses. You can add your own IP adresses resolutions.
-%MyDNSTable = (
+my %MyDNSTable = (
 "256.256.256.1", "myworkstation1",
 "256.256.256.2", "myworkstation2"
 );
@@ -52,7 +64,7 @@ sub debug {
 	my $level = $_[1] || 1;
 	if ($Debug >= $level) { 
 		my $debugstring = $_[0];
-		if ($ENV{"GATEWAY_INTERFACE"} ne "") { $debugstring =~ s/^ /&nbsp&nbsp /; $debugstring .= "<br>"; }
+		if ($ENV{"GATEWAY_INTERFACE"}) { $debugstring =~ s/^ /&nbsp&nbsp /; $debugstring .= "<br>"; }
 		print "DEBUG $level - ".time." : $debugstring\n";
 		}
 	0;
@@ -78,7 +90,7 @@ sub warning {
 # Return:       0 or 1
 #--------------------------------------------------------------------
 sub IsAscii {
-	my $string=shift;
+	my $string=shift||"";
 	debug("IsAscii($string)",4);
 	if ($string =~ /^[\w\+\-\/\\\.%,;:=\"\'&?!\s]+$/) {
 		debug(" Yes",4);
@@ -104,7 +116,7 @@ sub MakeDNSLookup {
 #-------------------------------------------------------
 # MAIN
 #-------------------------------------------------------
-$QueryString=""; for (0..@ARGV-1) { $QueryString .= "$ARGV[$_] "; }
+my $QueryString=""; for (0..@ARGV-1) { $QueryString .= "$ARGV[$_] "; }
 if ($QueryString =~ /debug=/i) { $Debug=$QueryString; $Debug =~ s/.*debug=//; $Debug =~ s/&.*//; $Debug =~ s/ .*//; }
 if ($QueryString =~ /dnslookup/i) { $DNSLookup=1; }
 if ($QueryString =~ /showsteps/i) { $ShowSteps=1; }
@@ -147,48 +159,48 @@ if (scalar keys %ParamFile == 0) {
 }
 
 # Get current time
-$nowtime=time;
-($nowsec,$nowmin,$nowhour,$nowday,$nowmonth,$nowyear) = localtime($nowtime);
+my $nowtime=time;
+my ($nowsec,$nowmin,$nowhour,$nowday,$nowmonth,$nowyear) = localtime($nowtime);
 if ($nowyear < 100) { $nowyear+=2000; } else { $nowyear+=1900; }
-$nowsmallyear=$nowyear;$nowsmallyear =~ s/^..//;
+my $nowsmallyear=$nowyear;$nowsmallyear =~ s/^..//;
 if (++$nowmonth < 10) { $nowmonth = "0$nowmonth"; }
 if ($nowday < 10) { $nowday = "0$nowday"; }
 if ($nowhour < 10) { $nowhour = "0$nowhour"; }
 if ($nowmin < 10) { $nowmin = "0$nowmin"; }
 if ($nowsec < 10) { $nowsec = "0$nowsec"; }
 # Get tomorrow time (will be used to discard some record with corrupted date (future date))
-($tomorrowsec,$tomorrowmin,$tomorrowhour,$tomorrowday,$tomorrowmonth,$tomorrowyear) = localtime($nowtime+86400);
+my ($tomorrowsec,$tomorrowmin,$tomorrowhour,$tomorrowday,$tomorrowmonth,$tomorrowyear) = localtime($nowtime+86400);
 if ($tomorrowyear < 100) { $tomorrowyear+=2000; } else { $tomorrowyear+=1900; }
-$tomorrowsmallyear=$tomorrowyear;$tomorrowsmallyear =~ s/^..//;
+my $tomorrowsmallyear=$tomorrowyear;$tomorrowsmallyear =~ s/^..//;
 if (++$tomorrowmonth < 10) { $tomorrowmonth = "0$tomorrowmonth"; }
 if ($tomorrowday < 10) { $tomorrowday = "0$tomorrowday"; }
 if ($tomorrowhour < 10) { $tomorrowhour = "0$tomorrowhour"; }
 if ($tomorrowmin < 10) { $tomorrowmin = "0$tomorrowmin"; }
 if ($tomorrowsec < 10) { $tomorrowsec = "0$tomorrowsec"; }
-$timetomorrow=$tomorrowyear.$tomorrowmonth.$tomorrowday.$tomorrowhour.$tomorrowmin.$tomorrowsec;	
+my $timetomorrow=$tomorrowyear.$tomorrowmonth.$tomorrowday.$tomorrowhour.$tomorrowmin.$tomorrowsec;	
 
 # Init other parameters
-if ($ENV{"GATEWAY_INTERFACE"} ne "") { $DirCgi=""; }
-if (($DirCgi ne "") && !($DirCgi =~ /\/$/) && !($DirCgi =~ /\\$/)) { $DirCgi .= "/"; }
-if ($DirData eq "" || $DirData eq ".") { $DirData=$DIR; }	# If not defined or choosed to "." value then DirData is current dir
-if ($DirData eq "")  { $DirData="."; }						# If current dir not defined then we put it to "."
+if ($ENV{"GATEWAY_INTERFACE"}) { $DirCgi=""; }
+if ($DirCgi && !($DirCgi =~ /\/$/) && !($DirCgi =~ /\\$/)) { $DirCgi .= "/"; }
+if (! $DirData || $DirData eq ".") { $DirData=$DIR; }	# If not defined or choosed to "." value then DirData is current dir
+if (! $DirData)  { $DirData="."; }						# If current dir not defined then we put it to "."
 $DirData =~ s/\/$//;
 if ($DNSLookup) { use Socket; }
-%monthlib =  ( "01","$message[60]","02","$message[61]","03","$message[62]","04","$message[63]","05","$message[64]","06","$message[65]","07","$message[66]","08","$message[67]","09","$message[68]","10","$message[69]","11","$message[70]","12","$message[71]" );
+#my %monthlib =  ( "01","$Message[60]","02","$Message[61]","03","$Message[62]","04","$Message[63]","05","$Message[64]","06","$Message[65]","07","$Message[66]","08","$Message[67]","09","$Message[68]","10","$Message[69]","11","$Message[70]","12","$Message[71]" );
 # monthnum must be in english because it's used to translate log date in apache log files which are always in english
-%monthnum =  ( "Jan","01","jan","01","Feb","02","feb","02","Mar","03","mar","03","Apr","04","apr","04","May","05","may","05","Jun","06","jun","06","Jul","07","jul","07","Aug","08","aug","08","Sep","09","sep","09","Oct","10","oct","10","Nov","11","nov","11","Dec","12","dec","12" );
+my %monthnum =  ( "Jan","01","jan","01","Feb","02","feb","02","Mar","03","mar","03","Apr","04","apr","04","May","05","may","05","Jun","06","jun","06","Jul","07","jul","07","Aug","08","aug","08","Sep","09","sep","09","Oct","10","oct","10","Nov","11","nov","11","Dec","12","dec","12" );
 
 #------------------------------------------
 # PROCESSING CURRENT LOG(s)
 #------------------------------------------
-%LogFileToDo=(); %NbOfLinesRead=();
-$NbOfNewLinesProcessed=0;
-$logfilechosen=0;
-$starttime=time();
+my %LogFileToDo=(); my %NbOfLinesRead=();
+my $NbOfNewLinesProcessed=0;
+my $logfilechosen=0;
+my $starttime=time();
 
 # Define the LogFileToDo list
 $cpt=1;
-foreach $key (keys %ParamFile) {
+foreach my $key (keys %ParamFile) {
 	if ($ParamFile{$key} !~ /\*/ && $ParamFile{$key} !~ /\?/) {
 		&debug("Log file $ParamFile{$key} is added to LogFileToDo.");
 		$LogFileToDo{$cpt}=$ParamFile{$key};
@@ -203,9 +215,9 @@ foreach $key (keys %ParamFile) {
 		$ParamFile{$key} =~ s/\?/\./g;
 		&debug("Search for file \"$ParamFile{$key}\" into \"$DirFile\"");
 		opendir(DIR,"$DirFile");
-		@filearray = sort readdir DIR;
+		my @filearray = sort readdir DIR;
 		close DIR;
-		foreach $i (0..$#filearray) {
+		foreach my $i (0..$#filearray) {
 			if ("$filearray[$i]" =~ /^$ParamFile{$key}$/ && "$filearray[$i]" ne "." && "$filearray[$i]" ne "..") {
 				&debug("Log file $filearray[$i] is added to LogFileToDo.");
 				$LogFileToDo{$cpt}="$DirFile/$filearray[$i]";
@@ -222,17 +234,17 @@ if (scalar keys %LogFileToDo == 0) {
 
 # Open all log files
 &debug("Start of processing ".(scalar keys %LogFileToDo)." log file(s)");
-foreach $logfilenb (keys %LogFileToDo) {
+foreach my $logfilenb (keys %LogFileToDo) {
 	&debug("Open log file number $logfilenb: \"$LogFileToDo{$logfilenb}\"");
 	open("LOG$logfilenb","$LogFileToDo{$logfilenb}") || error("Couldn't open log file \"$LogFileToDo{$logfilenb}\" : $!");
 }
 
-$QueueCursor=1;
+my $QueueCursor=1;
 while (1 == 1)
 {
 	# BEGIN Read new record (for each log file or only for log file with record just processed)
 	#------------------------------------------------------------------------------------------
-	foreach $logfilenb (keys %LogFileToDo) {
+	foreach my $logfilenb (keys %LogFileToDo) {
 		if (($logfilechosen == 0) || ($logfilechosen == $logfilenb)) {
 			&debug("Search next record in file number $logfilenb",3);
 			# Read chosen log file until we found a record with good date or reaching end of file
@@ -295,6 +307,7 @@ while (1 == 1)
 
 	# Analyze: IP-address
 	#--------------------
+	my $Host;
 	if ($DNSLookup) {
 		if ($_ =~ /(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})/) {
 			$Host=$1;
@@ -333,12 +346,13 @@ while (1 == 1)
 	}
 
 	# Put record in queue
+	debug("Add record $NbOfNewLinesProcessed in queue ($Host).",4);
 	$QueueRecord{$NbOfNewLinesProcessed}=$_;
 	$QueueHosts{$NbOfNewLinesProcessed}=$Host;
 
 	# Print all records in queue that are ready
 	debug("Check queue to write records ready to flush (QueueCursor=$QueueCursor, QueueSize=".(scalar keys %QueueRecord).")",4);
-	while ( ($QueueHosts{$QueueCursor} eq "NO_LOOKUP_REQUIRED") || ($TmpHashDNSLookup{$QueueHosts{$QueueCursor}}) ) {
+	while ( $QueueHosts{$QueueCursor} && ( ($QueueHosts{$QueueCursor} eq "NO_LOOKUP_REQUIRED") || ($TmpHashDNSLookup{$QueueHosts{$QueueCursor}}) ) ) {
 		if ($QueueHosts{$QueueCursor} eq "NO_LOOKUP_REQUIRED") {
 			debug(" First elem in queue does not need reverse lookup. We pull it.",4);
 		}
@@ -357,7 +371,7 @@ while (1 == 1)
 &debug("End of processing log file(s)");
 
 # Close all log files
-foreach $logfilenb (keys %LogFileToDo) {
+foreach my $logfilenb (keys %LogFileToDo) {
 	&debug("Close log file number $logfilenb");
 	close("LOG$logfilenb");
 }
@@ -368,6 +382,6 @@ foreach $logfilenb (keys %LogFileToDo) {
 
 
 # DNSLookup warning
-if ($DNSLookup && $DNSLookupAlreadyDone) { warning("Warning: $PROG has detected that some host names were already resolved in your logfile $DNSLookupAlreadyDone.\nIf DNS lookup was already made by the logger (web server) in all your log files, you should change your setup DNSLookup=1 into DNSLookup=0 to increase $PROG speed."); }
+if ($DNSLookup && $DNSLookupAlreadyDone) { warning("Warning: $PROG has detected that some host names were already resolved in your logfile $DNSLookupAlreadyDone.\nIf DNS lookup was already made by the logger (web server) in ALL your log files, you should not use -dnslookup option to increase $PROG speed."); }
 
 0;	# Do not remove this line
