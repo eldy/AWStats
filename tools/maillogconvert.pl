@@ -171,17 +171,20 @@ $year||=($nowyear+1900);
 if ($help) {
 	print "----- $PROG $VERSION -----\n";
 	print <<HELPTEXT;
-Usage:
+$PROG is mail log preprocessor that convert a mail log file (from
+postfix, sendmail or qmail servers) into a human readable format.
+The output format is also ready to be used by a log analyzer, like AWStats.
 
-perl maillogconvert.pl [standard|vadmin] [year] < logfile > output
+Usage:
+  perl maillogconvert.pl [standard|vadmin] [year] < logfile > output
 
 The first parameter specifies what format the mail logfile is :
-  standard - logfile is standard sendmail,postfix or qmail log format
-  vadmin - logfile is qmail with vadmin multi-host support
+  standard - logfile is standard postfix,sendmail or qmail log format
+  vadmin   - logfile is qmail log format with vadmin multi-host support
 
-The second parameter specifies what year to timestamp logfile with,
- if current year is not the correct one. (ie. 2002). Always use 4 digits.
- If not specified, current year is used.
+The second parameter specifies what year to timestamp logfile with, if current
+year is not the correct one (ie. 2002). Always use 4 digits. If not specified,
+current year is used.
 
 If no output is specified, it goes to the console (stdout).
 
@@ -304,83 +307,75 @@ while (<>) {
  	}
 
 	#
-	# See if we received sendmail, postfix or qmail email
+	# Matched incoming qmail message
 	#
-	elsif ((/info msg .* from/ ne undef) || (/: from=/ ne undef)) {
-		if (/info msg .* from/ ne undef) {
-			#
-			# Matched incoming qmail message
-			#
-			my ($id,$size,$from)=m/info msg (\d+): bytes (\d+) from <(.*)>/;
-			$rowid=$id;
-			if (! $entry{$id}{'code'}) { $entry{$id}{'code'}=1; }	# If not already defined, we define it
-			if ($entry{$id}{'from'} ne '<>') { $entry{$id}{'from'}=$from; }
-			$entry{$id}{'size'}=$size;
-			if (m/\s+relay=([^\,]+)[\s\,]/ || m/\s+relay=([^\s\,]+)$/) { $entry{$id}{'relay_s'}=$1; }
-			debug("For id=$id, found a qmail incoming message: from=$entry{$id}{'from'} size=$entry{$id}{'size'} relay_s=$entry{$id}{'relay_s'}");
+	elsif (/info msg .* from/ ne undef) {
+		my ($id,$size,$from)=m/(\d+)(?:\.\d+)? info msg \d+: bytes (\d+) from <(.*)>/;
+		$rowid=$id;
+		if (! $entry{$id}{'code'}) { $entry{$id}{'code'}=1; }	# If not already defined, we define it
+		if ($entry{$id}{'from'} ne '<>') { $entry{$id}{'from'}=$from; }
+		$entry{$id}{'size'}=$size;
+		if (m/\s+relay=([^\,]+)[\s\,]/ || m/\s+relay=([^\s\,]+)$/) { $entry{$id}{'relay_s'}=$1; }
+		debug("For id=$id, found a qmail incoming message: from=$entry{$id}{'from'} size=$entry{$id}{'size'} relay_s=$entry{$id}{'relay_s'}");
+	}
+
+	#
+	# Matched incoming sendmail or postfix message
+	#
+	elsif (/: from=/ ne undef) {
+		# sm-mta:  Jul 28 06:55:13 androneda sm-mta[28877]: h6SDtCtg028877: from=<4cmkh79eob@webtv.net>, size=2556, class=0, nrcpts=1, msgid=<w1$kqj-9-o2m45@0h2i38.4.m0.5u>, proto=ESMTP, daemon=MTA, relay=smtp.easydns.com [205.210.42.50]
+		# postfix: Jul  3 15:32:26 apollon postfix/qmgr[13860]: 08FB63B8A4: from=<nobody@ns3744.ovh.net>, size=3302, nrcpt=1 (queue active)
+		my ($id,$from,$size)=m/\w+\s+\d+\s+\d+:\d+:\d+\s+\w+\s+(?:sm-mta|sendmail(?:-in|)|postfix\/qmgr|postfix\/nqmgr)\[\d+\]:\s+(.*?):\s+from=(.*?),\s+size=(.*?),/;
+		$rowid=$id;
+		if (! $entry{$id}{'code'}) { $entry{$id}{'code'}=1; }	# If not already defined, we define it
+		if ($entry{$id}{'from'} ne '<>') { $entry{$id}{'from'}=$from; }
+		$entry{$id}{'size'}=$size;
+		if (m/\s+relay=([^\,]+)[\s\,]/ || m/\s+relay=([^\s\,]+)$/) { $entry{$id}{'relay_s'}=$1; }
+		debug("For id=$id, found a sendmail/postfix incoming message: from=$entry{$id}{'from'} size=$entry{$id}{'size'} relay_s=$entry{$id}{'relay_s'}");
+	}
+
+	#
+	# Matched sendmail/postfix "to" message
+	#
+	elsif (/: to=.*stat(us)?=sent/i ne undef) {
+		my ($mon,$day,$time,$id,$to)=m/(\w+)\s+(\d+)\s+(\d+:\d+:\d+)\s+[\w\-]+\s+(?:sm-mta|sendmail(?:-out|)|postfix\/(?:local|smtpd|smtp))\[.*?\]:\s+(.*?):\s+to=(.*?),/;
+		$rowid=$id;
+		if (m/\s+relay=([^\s,]*)[\s,]/) { $entry{$id}{'relay_r'}=$1; }
+		elsif (m/\s+mailer=local/) { $entry{$id}{'relay_r'}='localhost'; }
+		if (m/forwarded as/) {
+			# If 'forwarded as idnewmail' is found, we discard this mail to avoid counting it twice
+			debug("For id=$id, mail was forwarded to other id, we discard it");
+			undef $entry{$id};
 		}
-		elsif (/: from=/ ne undef) {
-			#
-			# Matched incoming sendmail or postfix message
-			#
-			# sm-mta:  Jul 28 06:55:13 androneda sm-mta[28877]: h6SDtCtg028877: from=<4cmkh79eob@webtv.net>, size=2556, class=0, nrcpts=1, msgid=<w1$kqj-9-o2m45@0h2i38.4.m0.5u>, proto=ESMTP, daemon=MTA, relay=smtp.easydns.com [205.210.42.50]
-			# postfix: Jul  3 15:32:26 apollon postfix/qmgr[13860]: 08FB63B8A4: from=<nobody@ns3744.ovh.net>, size=3302, nrcpt=1 (queue active)
-			my ($id,$from,$size)=m/\w+\s+\d+\s+\d+:\d+:\d+\s+\w+\s+(?:sm-mta|sendmail(?:-in|)|postfix\/qmgr|postfix\/nqmgr)\[\d+\]:\s+(.*?):\s+from=(.*?),\s+size=(.*?),/;
-			$rowid=$id;
-			if (! $entry{$id}{'code'}) { $entry{$id}{'code'}=1; }	# If not already defined, we define it
-			if ($entry{$id}{'from'} ne '<>') { $entry{$id}{'from'}=$from; }
-			$entry{$id}{'size'}=$size;
-			if (m/\s+relay=([^\,]+)[\s\,]/ || m/\s+relay=([^\s\,]+)$/) { $entry{$id}{'relay_s'}=$1; }
-			debug("For id=$id, found a sendmail/postfix incoming message: from=$entry{$id}{'from'} size=$entry{$id}{'size'} relay_s=$entry{$id}{'relay_s'}");
+		else {
+			if (m/\s+orig_to=([^\s,]*)[\s,]/) {
+				# If we have a orig_to, we used it as receiver
+				$entry{$id}{'to'}=&trim($1);
+				$entry{$id}{'forwardedto'}=&trim($to);
+			}
+			else {
+				$entry{$id}{'to'}=&trim($to);
+			}
+			$entry{$id}{'mon'}=$mon;
+			$entry{$id}{'day'}=$day;
+			$entry{$id}{'time'}=$time;
+			debug("For id=$id, found a sendmail/postfix record: mon=$entry{$id}{'mon'} day=$entry{$id}{'day'} time=$entry{$id}{'time'} to=$entry{$id}{'to'} relay_r=$entry{$id}{'relay_r'}");
 		}
 	}
 
 	#
-	# Analyzed the to
+	# Matched qmail "to" message
 	#
-	elsif ((/: to=.*stat(us)?=sent/i ne undef) || (/starting delivery/ ne undef)) {
-		if (/: to=.*stat(us)?=sent/i ne undef) {
-			#
-			# Matched arrival sendmail/postfix message
-			#
-			my ($mon,$day,$time,$id,$to)=m/(\w+)\s+(\d+)\s+(\d+:\d+:\d+)\s+[\w\-]+\s+(?:sm-mta|sendmail(?:-out|)|postfix\/(?:local|smtpd|smtp))\[.*?\]:\s+(.*?):\s+to=(.*?),/;
-			$rowid=$id;
-			if (m/\s+relay=([^\s,]*)[\s,]/) { $entry{$id}{'relay_r'}=$1; }
-			elsif (m/\s+mailer=local/) { $entry{$id}{'relay_r'}='localhost'; }
-			if (m/forwarded as/) {
-				# If 'forwarded as idnewmail' is found, we discard this mail to avoid counting it twice
-				debug("For id=$id, mail was forwarded to other id, we discard it");
-				undef $entry{$id};
-			}
-			else {
-				if (m/\s+orig_to=([^\s,]*)[\s,]/) {
-					# If we have a orig_to, we used it as receiver
-					$entry{$id}{'to'}=&trim($1);
-					$entry{$id}{'forwardedto'}=&trim($to);
-				}
-				else {
-					$entry{$id}{'to'}=&trim($to);
-				}
-				$entry{$id}{'mon'}=$mon;
-				$entry{$id}{'day'}=$day;
-				$entry{$id}{'time'}=$time;
-				debug("For id=$id, found a sendmail/postfix record: mon=$entry{$id}{'mon'} day=$entry{$id}{'day'} time=$entry{$id}{'time'} to=$entry{$id}{'to'} relay_r=$entry{$id}{'relay_r'}");
-			}
-		}
-		elsif (/starting delivery/ ne undef) {
-			#
-			# Matched outgoing qmail message
-			#
-			my ($mon,$day,$time,$id,$to)=m/^(\w+)\s+(\d+)\s+(\d+:\d+:\d+)\s+.*\s+msg\s+(\d+)\s+to\s+.*?\s+(.*)$/;
-			$rowid=$id;
-			if (m/\s+relay=([^\s,]*)[\s,]/) { $entry{$id}{'relay_r'}=$1; }
-			elsif (m/\s+mailer=local/) { $entry{$id}{'relay_r'}='localhost'; }
-			$entry{$id}{'mon'}=$mon;
-			$entry{$id}{'day'}=$day;
-			$entry{$id}{'time'}=$time;
-			$entry{$id}{'to'}=&trim($to);
-			debug("For id=$id, found a qmail record: mon=$entry{$id}{'mon'} day=$entry{$id}{'day'} time=$entry{$id}{'time'} to=$entry{$id}{'to'} relay_r=$entry{$id}{'relay_r'}");
-		}
+	elsif (/starting delivery/ ne undef) {
+		my ($mon,$day,$time,$id,$to)=m/^(\w+)\s+(\d+)\s+(\d+:\d+:\d+)\s+.*\s+(\d+)(?:\.\d+)?\s+starting delivery \d+:\s+msg\s+\d+\s+to\s+.*?\s+(.*)$/;
+		$rowid=$id;
+		if (m/\s+relay=([^\s,]*)[\s,]/) { $entry{$id}{'relay_r'}=$1; }
+		elsif (m/\s+mailer=local/) { $entry{$id}{'relay_r'}='localhost'; }
+		$entry{$id}{'mon'}=$mon;
+		$entry{$id}{'day'}=$day;
+		$entry{$id}{'time'}=$time;
+		$entry{$id}{'to'}=&trim($to);
+		debug("For id=$id, found a qmail record: mon=$entry{$id}{'mon'} day=$entry{$id}{'day'} time=$entry{$id}{'time'} to=$entry{$id}{'to'} relay_r=$entry{$id}{'relay_r'}");
 	}
 
 	#
