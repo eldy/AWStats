@@ -256,7 +256,7 @@
 'netscape','netscape',
 
 'firebird','phoenix',
-'firefox','phoenix',
+'firefox','firefox',
 'go!zilla','gozilla',
 'icab','icab',
 'konqueror','konqueror',
