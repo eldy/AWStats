@@ -2905,11 +2905,11 @@ sub Save_DNS_Cache_File {
 			return 1;
 		}
 		foreach my $key (keys %$hashtosave) {
-#			if ($hashtosave->{$key} ne "ip") {
+			#if ($hashtosave->{$key} ne "ip") {
 				#print DNSFILE "0\t$key\t$hashtosave->{$key}\n";
 				print DNSFILE "$key\t$hashtosave->{$key}\n";
 				if (++$nbofelemsaved >= $NBOFLASTUPDATELOOKUPTOSAVE) { last; }
-#			}
+			#}
 		}
 		close DNSFILE;
 	}
@@ -3159,8 +3159,6 @@ sub AddInTree {
 	my $keytoadd=shift;
 	my $keyval=shift;
 	my $firstadd=shift||0;
-#	$countaddintree++;
-#	if ($countaddintree % 100 == 1) { if ($Debug) { debug(" AddInTree Start of 100 (lowerval=$lowerval)",3); } }
 	if ($firstadd==1) {			# Val is the first one
 		if ($Debug) { debug("  firstadd",4); }
 		$val{$keyval}=$keytoadd;
@@ -3193,7 +3191,6 @@ sub AddInTree {
 	}
 	$nextval{$valcursor}=$keyval;
 	if ($Debug) { debug("  lowerval=$lowerval, nb elem val=".(scalar keys %val).", nb elem egal=".(scalar keys %egal).".",4); }
-#	if ($countaddintree % 100 == 0) { if ($Debug) { debug(" AddInTree End of 100",3); } }
 }
 
 #--------------------------------------------------------------------
@@ -3212,9 +3209,7 @@ sub Removelowerval {
 	}
 	else {
 		delete $val{$lowerval};
-		#my $templowerval=$nextval{$lowerval};
 		$lowerval=$nextval{$lowerval};	# Set new lowerval
-		#delete $nextval{$templowerval};
 	}
 	if ($Debug) { debug("   new lower value=$lowerval, val size=".(scalar keys %val).", egal size=".(scalar keys %egal),4); }
 }
@@ -3435,7 +3430,7 @@ if ((! $ENV{"GATEWAY_INTERFACE"}) && (! $SiteConfig)) {
 	print "               unknownos        to list 'User Agents' with unknown OS\n";
 	print "               refererse        to build page of all refering search engines\n";
 	print "               refererpages     to build page of all refering pages\n";
-#	print "               referersites     to build page of all refering sites\n";
+	#print "               referersites     to build page of all refering sites\n";
 	print "               keyphrases       to list all keyphrases used on search engines\n";
 	print "               keywords         to list all keywords used on search engines\n";
 	print "               errors404        to list 'Referers' for 404 errors\n";
@@ -3590,14 +3585,13 @@ if ($UpdateStats && (! $AllowToUpdateStatsFromBrowser) && $ENV{"GATEWAY_INTERFAC
 
 # Output main frame page and exit. This must be after the security check.
 if ($FrameName eq "index") {
-	#$AWScript="ee";
 	# Define the NewLinkParams for main chart
 	my $NewLinkParams=${QueryString};
 	$NewLinkParams =~ s/framename[=]*[^\s&]*//i;
 	if ($NewLinkParams) { $NewLinkParams="${NewLinkParams}&"; }
 	# Exit if main frame
 	print "<frameset cols=\"$FRAMEWIDTH,*\" border=0 framespacing=2 frameborder=0>\n";
-	print "<frame name=\"mainleft\"  src=\"$AWScript?${NewLinkParams}framename=mainleft\" noresize scrolling=\"NO\" noborder>\n";
+	print "<frame name=\"mainleft\"  src=\"$AWScript?${NewLinkParams}framename=mainleft\" noresize noborder>\n";
 	print "<frame name=\"mainright\" src=\"$AWScript?${NewLinkParams}framename=mainright\" noresize scrolling=\"YES\" noborder>\n";
 	print "<noframes><body>Your browser does not support frames. Change AWStats UseFramesWhenCGI parameter to see your reports</body></noframes>\n";
 	print "</frameset>\n";
