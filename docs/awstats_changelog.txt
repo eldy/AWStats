@@ -30,10 +30,16 @@ New features/improvments:
   reached (This was the only way of working on older version). So now update
   process is very much faster for thoose who don't purge/rotate their log
   file between two update process (direct access is faster than full scan).
+- Better look for report pages on Netscape/Mozilla browsers.
 
 Other/Documentation:
 - Updated documentation.
 - Update wap/imode browser list.
+
+Note 1:
+  You should remove the "robots.txt" and "favicon.ico" entries in the SkipFiles
+  parameter in your config files after updgrading to 5.6.
+  
 
 
 5.5
