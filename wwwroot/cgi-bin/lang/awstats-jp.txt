@@ -1,4 +1,4 @@
-﻿# Japanese message file (info@kchosting.jp)
+# Japanese message file (info@kchosting.jp)
 # $Revision$ - $Date$
 PageCode=UTF-8
 message0=不明
@@ -155,3 +155,14 @@ message150=サイズ
 message151=最初
 message152=最後
 message153=除外フィルター
+message154=このチャートのコードは訪問者によるアクセスではありませんので他のチャートに含まれていません。
+message155=クラスター
+message156=ロボットによるアクセスは訪問者の閲覧とは違いますので他のチャートに含まれていません。
+message157=＋の後の数字は「robots.txt」の表示が成功した回数です。
+message158=ワームによるアクセスは訪問者の閲覧とは違いますので他のチャートに含まれていません。
+message159=閲覧に含まれないアクセスはロボット、ワームなどによるものです。
+message160=閲覧アクセス
+message161=閲覧に含まれないアクセス
+message162=月
+message163=ワーム
+message164=その他のワーム
