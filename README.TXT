@@ -246,11 +246,15 @@ log analyzer you use. For this reason, DNS lookup is disabled in all log
 analyzer benchmarks, but you must keep in mind that it's the most time
 consuming part of the process.
 To increase speed:
-- Use last AWStats version
-- Launch AWStats more often (from crontab or a scheduler)
 - You can disable DNSLookup in AWStats (set DNSLookup=0) but this requires
 that hosts adresses in your log file are already resolved (need to setup your
-web server to do so). Speed can be increased up by 2 to 10 times !
+web server to do so). Speed can be increased up by 2 to 100 times !
+- If you use Apache, set PurgeLogFile to 1 (By default, to avoid bad surpise,
+PurgeLogFile is 0 in configure file, but you can set it to 1 to ask AWStats
+to purge log file after processing it, this increase speed for next run).
+- Launch AWStats more often (from crontab or a scheduler). The more often you
+launch AWStats, the less AWStats has new lines in log to process.
+- Use last AWStats version
 
 
 IV - TROUBLESHOUTING / FAQ
