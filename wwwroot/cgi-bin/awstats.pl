@@ -15,9 +15,9 @@
 # Init variables
 # If 'update'
 #   Get last history file name
-#   Read this last history file (LastTime, data arrays, ...)
+#   Read this last history file (LastLine, data arrays, ...)
 #   Loop on each new line in log file
-#     If line older than Lastime, skip
+#     If line older than LastLine, skip
 #     If new line
 #        If other month/year, save data arrays, reset them
 #        Analyse record and complete data arrays
@@ -65,14 +65,14 @@ $color_h, $color_k, $color_link, $color_p, $color_s, $color_v, $color_w, $color_
 $found, $internal_link, $new,
 $total_h, $total_k, $total_p) = ();
 # ---------- Init arrays --------
-@HostAliases = @Message = @OnlyFiles = @SkipDNSLookupFor = @SkipFiles = @SkipHosts = @field = ();
+@HostAliases = @Message = @OnlyFiles = @SkipDNSLookupFor = @SkipFiles = @SkipHosts = ();
 # ---------- Init hash arrays --------
 %DayBytes = %DayHits = %DayPages = %DayUnique = %DayVisits =
 %FirstTime = %HistoryFileAlreadyRead = %LastTime = %LastUpdate =
 %MonthBytes = %MonthHits = %MonthHostsKnown = %MonthHostsUnknown = %MonthPages = %MonthUnique = %MonthVisits =
 %listofyears = %monthlib = %monthnum = ();
 
-$VERSION="3.1 (build 22)";
+$VERSION="3.1 (build 23)";
 $Lang="en";
 
 # Default value
@@ -781,7 +781,6 @@ sub tab_head {
 	my $title=shift;
 	print "
 	<div class=\"tablecontainer\">
-	<TR><TD>
 	<TABLE CLASS=\"TABLEFRAME\" BORDER=0 CELLPADDING=2 CELLSPACING=0 WIDTH=\"100%\">
 	<TR><TD class=\"TABLETITLEFULL\">$title </TD><TD class=\"TABLETITLEBLANK\"> &nbsp; </TD></TR>
 	<TR><TD colspan=2>
@@ -791,7 +790,6 @@ sub tab_head {
 
 sub tab_end {
 	print "\n</TABLE></TD></TR></TABLE>";
-	print "</TD></TR></TABLE>";
 	print "</div>\n\n";
 }
 
@@ -1248,6 +1246,7 @@ sub Read_History_File {
 		chomp $_; s/\r//;
 		my @field=split(/\s+/,$_);
 		# Analyze config line
+	    if ($field[0] eq "LastLine")        { if ($LastLine{$year.$month} < int($field[1])) { $LastLine{$year.$month}=int($field[1]); }; next; }
 		if ($field[0] eq "FirstTime")       { $FirstTime{$year.$month}=int($field[1]); next; }
 	    if ($field[0] eq "LastTime")        { if ($LastTime{$year.$month} < int($field[1])) { $LastTime{$year.$month}=int($field[1]); }; next; }
 		if ($field[0] eq "TotalVisits")     { $MonthVisits{$year.$month}=int($field[1]); next; }
@@ -1479,6 +1478,7 @@ sub Read_History_File {
 		}
 	}
 	close HISTORY;
+	if (! $LastLine{$year.$month}) { $LastLine{$year.$month}=$LastTime{$year.$month}; }		# For backward compatibility, if LastLine does not exist
 	if ($readdomain || $readunknownip || $readbrowser || $readnsver || $readmsiever || $reados || $readrobot || $readunknownreferer || $readunknownrefererbrowser || $readpagerefs || $readse || $readsearchwords || $readerrors) {
 		# History file is corrupted
 		error("Error: History file \"$DirData/$PROG$_[1]$_[0]$FileSuffix.txt\" is corrupted. Restore a backup of this file, or remove it (data for this month will be lost).");
@@ -1495,6 +1495,7 @@ sub Save_History_File {
 	&debug("Call to Save_History_File [$year,$month]");
 	open(HISTORYTMP,">$DirData/$PROG$month$year$FileSuffix.tmp.$$") || error("Error: Couldn't open file \"$DirData/$PROG$month$year$FileSuffix.tmp.$$\" : $!");	# Month before Year kept for backward compatibility
 
+	print HISTORYTMP "LastLine $LastLine{$year.$month}\n";
 	print HISTORYTMP "FirstTime $FirstTime{$year.$month}\n";
 	print HISTORYTMP "LastTime $LastTime{$year.$month}\n";
 	if ($LastUpdate{$year.$month} < int("$nowyear$nowmonth$nowday$nowhour$nowmin$nowsec")) { $LastUpdate{$year.$month}=int("$nowyear$nowmonth$nowday$nowhour$nowmin$nowsec"); }
@@ -1844,10 +1845,10 @@ my $SiteToAnalyzeIsInHostAliases=0;
 foreach my $elem (@HostAliases) { if ($elem eq $SiteToAnalyze) { $SiteToAnalyzeIsInHostAliases=1; last; } }
 if ($SiteToAnalyzeIsInHostAliases == 0) { $HostAliases[@HostAliases]=$SiteToAnalyze; }
 if (! @SkipFiles) { $SkipFiles[0]="\.css\$";$SkipFiles[1]="\.js\$";$SkipFiles[2]="\.class\$";$SkipFiles[3]="robots\.txt\$"; }
-$FirstTime=0;$LastTime=0;$LastUpdate=0;$TotalVisits=0;$TotalHostsKnown=0;$TotalHostsUnKnown=0;$TotalUnique=0;$TotalDifferentPages=0;
+$LastLine=0;$FirstTime=0;$LastTime=0;$LastUpdate=0;$TotalVisits=0;$TotalHostsKnown=0;$TotalHostsUnKnown=0;$TotalUnique=0;$TotalDifferentPages=0;
 for (my $ix=1; $ix<=12; $ix++) {
 	my $monthix=$ix;if ($monthix < 10) { $monthix  = "0$monthix"; }
-	$FirstTime{$YearRequired.$monthix}=0;$LastTime{$YearRequired.$monthix}=0;$LastUpdate{$YearRequired.$monthix}=0;
+	$LastLine{$YearRequired.$monthix}=0;$FirstTime{$YearRequired.$monthix}=0;$LastTime{$YearRequired.$monthix}=0;$LastUpdate{$YearRequired.$monthix}=0;
 	$MonthVisits{$YearRequired.$monthix}=0;$MonthUnique{$YearRequired.$monthix}=0;$MonthPages{$YearRequired.$monthix}=0;$MonthHits{$YearRequired.$monthix}=0;$MonthBytes{$YearRequired.$monthix}=0;$MonthHostsKnown{$YearRequired.$monthix}=0;$MonthHostsUnKnown{$YearRequired.$monthix}=0;
 }
 &Init_HashArray;	# Should be useless in perl (except with mod_perl that keep variables in memory).
@@ -2029,6 +2030,7 @@ if ($UpdateStats) {
 
 		# Parse line record to get all required fields
 		/^$PerlParsingFormat/;
+		my @field=();
 		foreach $i (1..$lastrequiredfield) { $field[$i]=$$i; }
  		&debug(" Record $NbOfLinesRead is: $field[$pos_rc] ; $field[$logname] ; - ; $field[$pos_date] ; TZ; $field[$pos_method] ; $field[$pos_url] ; $field[$pos_code] ; $field[$pos_size] ; $field[$pos_referer] ; $field[$pos_agent]",3);
 
@@ -2059,14 +2061,15 @@ if ($UpdateStats) {
 		# Skip if not a new line
 		#-----------------------
 		if ($NowNewLinePhase) {
-			if ($timeconnexion < $LastTime{$yearmonth}) { next; }					# Should not happen, kept in case of parasite/corrupted old line
+			if ($timeconnexion < $LastLine{$yearmonth}) { $NbOfLinesCorrupted++; next; }	# Should not happen, kept in case of parasite/corrupted old line
 		}
 		else {
-			if ($timeconnexion <= $LastTime{$yearmonth}) {
+			if ($timeconnexion <= $LastLine{$yearmonth}) {
 				if ($ShowSteps && ($NbOfLinesRead % $NbOfLinesForBenchmark == 0)) { print "$NbOfLinesRead lines read already processed (".(time()-$starttime)." seconds, ".($NbOfLinesRead/(time()-$starttime+1))." lines/seconds)\n"; }
 				next;
 			}	# Already processed
-			$NowNewLinePhase=1;	# This will stop comparison "<=" between timeconnexion and LastTime (we should have only new lines now)
+			# We found a new line. This will stop comparison "<=" between timeconnexion and LastLine (we should have only new lines now)
+			$NowNewLinePhase=1;	
 		}
 
 		# Here, field array, datepart array, timeconnexion and dayconnexion are init for log record
@@ -2076,6 +2079,8 @@ if ($UpdateStats) {
 		#----------------------------------------
 		$NbOfNewLinesProcessed++;
 		if ($ShowSteps && ($NbOfNewLinesProcessed % $NbOfLinesForBenchmark == 0)) { print "$NbOfNewLinesProcessed lines processed (".(time()-$starttime)." seconds, ".($NbOfNewLinesProcessed/(time()-$starttime+1))." lines/seconds)\n"; }
+
+		$LastLine{$yearmonth} = $timeconnexion;
 
 		if (&SkipHost($field[$pos_rc])) { next; }		# Skip with some client host IP addresses
 		if (&SkipFile($field[$pos_url])) { next; }		# Skip with some URLs
@@ -2134,7 +2139,7 @@ if ($UpdateStats) {
 		if (! $FirstTime{$yearmonth}) { $FirstTime{$yearmonth}=$timeconnexion; }
 		$LastTime{$yearmonth} = $timeconnexion;
 		if ($PageBool) {
-			$_time_p[int($dateparts[3])]++;													#Count accesses per hour (page)
+			$_time_p[int($dateparts[3])]++;												#Count accesses per hour (page)
 			$DayPages{$dayconnexion}++;
 			$MonthPages{$yearmonth}++;
 			$_sider_p{$field[$pos_url]}++; 												#Count accesses per page (page)
@@ -3153,14 +3158,12 @@ EOF
 		$count++;
 	}
 	&tab_end;
-	
-	#print "XXXXX Record $NbOfLinesRead{1}, file 1 is: $field[$pos_rc]{1} ; - ; - ; $field[$pos_date]{1} ; TZ; $field[$pos_method]{1} ; $field[$pos_url]{1} ; $field[$pos_code]{1} ; $field[$pos_size]{1} ; $field[$pos_referer]{1} ; $field[$pos_agent]{1}";
-	
+
 	&html_end;
 
 }
 else {
-	print "Lines in file: $NbOfLinesRead, found $NbOfNewLinesProcessed new records, $NbOfLinesCorrupted corrupted records\n";
+	print "Lines in file: $NbOfLinesRead, found $NbOfNewLinesProcessed new records, $NbOfLinesCorrupted corrupted records.\n";
 }
 
 0;	# Do not remove this line
