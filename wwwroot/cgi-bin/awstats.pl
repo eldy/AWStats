@@ -125,7 +125,7 @@ $NbOfLinesRead $NbOfLinesDropped $NbOfLinesCorrupted $NbOfOldLines $NbOfNewLines
 $NewLinePhase $NbOfLinesForCorruptedLog $PurgeLogFile
 $ShowAuthenticatedUsers $ShowCompressionStats $ShowFileSizesStats
 $ShowDropped $ShowCorrupted $ShowUnknownOrigin $ShowLinksToWhoIs
-$SplitSearchString $StartSeconds $StartMicroseconds
+$StartSeconds $StartMicroseconds
 $HTMLOutput $UpdateStats $URLWithQuery
 /;
 ($AllowAccessFromWebToAuthenticatedUsersOnly, $BarHeight, $BarWidth, $DebugResetDone,
@@ -138,9 +138,9 @@ $NbOfLinesRead, $NbOfLinesDropped, $NbOfLinesCorrupted, $NbOfOldLines, $NbOfNewL
 $NewLinePhase, $NbOfLinesForCorruptedLog, $PurgeLogFile,
 $ShowAuthenticatedUsers, $ShowCompressionStats, $ShowFileSizesStats,
 $ShowDropped, $ShowCorrupted, $ShowUnknownOrigin, $ShowLinksToWhoIs,
-$SplitSearchString, $StartSeconds, $StartMicroseconds,
+$StartSeconds, $StartMicroseconds,
 $HTMLOutput, $UpdateStats, $URLWithQuery)=
-(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
+(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
 use vars qw/
 $AllowToUpdateStatsFromBrowser $ArchiveLogRecords $DetailedReportsOnNewWindows
 $FirstDayOfWeek $SaveDatabaseFilesWithPermissionsForEveryone
@@ -792,7 +792,6 @@ sub Read_Config_File {
 		if ($param =~ /^URLWithQuery/)			{ $URLWithQuery=$value; next; }
 		if ($param =~ /^WarningMessages/)       { $WarningMessages=$value; next; }
 		if ($param =~ /^NbOfLinesForCorruptedLog/) { $NbOfLinesForCorruptedLog=$value; next; }
-		if ($param =~ /^SplitSearchString/)     { $SplitSearchString=$value; next; }
 		if ($param =~ /^Expires/)               { $Expires=$value; next; }
 		if ($param =~ /^WrapperScript/)         { $WrapperScript=$value; next; }
 		# Read optional accuracy setup section
@@ -1094,7 +1093,6 @@ sub Check_Config {
 	if ($URLWithQuery !~ /[0-1]/)                 	{ $URLWithQuery=0; }
 	if ($WarningMessages !~ /[0-1]/)              	{ $WarningMessages=1; }
 	if ($NbOfLinesForCorruptedLog !~ /^\d+/ || $NbOfLinesForCorruptedLog<1)	{ $NbOfLinesForCorruptedLog=50; }
-	if ($SplitSearchString !~ /[0-1]/)          	{ $SplitSearchString=0; }
 	if ($Expires !~ /^\d+/)                 		{ $Expires=0; }
 	# Optional accuracy setup section
 	if ($LevelForRobotsDetection !~ /^\d+/)       	{ $LevelForRobotsDetection=2; }
@@ -3701,16 +3699,8 @@ if ($UpdateStats) {
 											$param =~ s/^cache:[^\+]*//;
 											$param =~ s/^related:[^\+]*//;
 											&ChangeWordSeparatorsIntoSpace($param);			# Change [ aaa+bbb/ccc+ddd%20eee'fff,ggg ] into [ aaa bbb/ccc ddd eee fff ggg]
-											if ($SplitSearchString) {
-												my @wordlist=split(/ /,$param);	# Split aaa bbb ccc ddd eee fff into a wordlist array
-												foreach my $word (@wordlist) {
-													if ((length $word) > 0) { $_keyphrases{$word}++; }
-												}
-											}
-											else {
-												$param =~ s/^ +//; $param =~ s/ +$//; $param =~ tr/ /\+/s;
-												if ((length $param) > 0) { $_keyphrases{$param}++; }
-											}
+											$param =~ s/^ +//; $param =~ s/ +$//; $param =~ tr/ /\+/s;
+											if ((length $param) > 0) { $_keyphrases{$param}++; }
 											last;
 										}
 									}
@@ -3727,16 +3717,8 @@ if ($UpdateStats) {
 										$param =~ s/.*=//;						# Cut "xxx="
 										$param =~ s/^cache:[^ ]*//;
 										$param =~ s/^related:[^ ]*//;
-										if ($SplitSearchString) {
-											my @wordlist=split(/ /,$param);		# Split aaa bbb ccc ddd eee fff into a wordlist array
-											foreach my $word (@wordlist) {
-												if ((length $word) > 2) { $_keyphrases{$word}++; }	# Keep word only if word length is 3 or more
-											}
-										}
-										else {
-											$param =~ s/^ +//; $param =~ s/ +$//; $param =~ tr/ /\+/s;
-											if ((length $param) > 2) { $_keyphrases{$param}++; }
-										}
+										$param =~ s/^ +//; $param =~ s/ +$//; $param =~ tr/ /\+/s;
+										if ((length $param) > 2) { $_keyphrases{$param}++; }
 									}
 								}
 							}	# End of if refurl[1]
