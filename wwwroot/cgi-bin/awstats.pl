@@ -23,8 +23,7 @@ use vars qw/ $REVISION $VERSION /;
 $REVISION='$Revision$'; $REVISION =~ /\s(.*)\s/; $REVISION=$1;
 $VERSION="5.6 (build $REVISION)";
 
-# ---------- Init variables -------
-# Constants
+# ----- Constants -----
 use vars qw/
 $DEBUGFORCED $NBOFLINESFORBENCHMARK $FRAMEWIDTH $NBOFLASTUPDATELOOKUPTOSAVE
 $LIMITFLUSH $NEWDAYVISITTIMEOUT $VISITTIMEOUT $NOTSORTEDRECORDTOLERANCE $MAXDIFFEXTRA
@@ -43,20 +42,50 @@ $WIDTHCOLICON=32;
 $WIDTHINFO=640;
 $HEIGHTINFO=480;
 $TOOLTIPON=0;						# Tooltips plugin loaded
-# Plugins variable
-use vars qw/ %PluginsLoaded $PluginDir /;
-%PluginsLoaded=();
-$PluginDir='';
-# Running variables
+# ----- Running variables -----
 use vars qw/
 $DIR $PROG $Extension
 $Debug $ShowSteps
 $DebugResetDone $DNSLookupAlreadyDone
+$RunAsCli $lowerval
+$LastLine $LastLineNumber $LastLineOffset $LastLineChecksum
+$LastUpdate
+$TotalUnique $TotalVisits $TotalHostsKnown $TotalHostsUnknown
+$TotalPages $TotalHits $TotalBytes $TotalEntries $TotalExits $TotalBytesPages $TotalDifferentPages
+$TotalKeyphrases $TotalKeywords $TotalDifferentKeyphrases $TotalDifferentKeywords
+$TotalSearchEnginesPages $TotalSearchEnginesHits $TotalRefererPages $TotalRefererHits $TotalDifferentSearchEngines $TotalDifferentReferer
+$FrameName $Center $FileConfig $FileSuffix $Host $DayRequired $MonthRequired $YearRequired
+$QueryString $SiteConfig $StaticLinks $PageCode $PerlParsingFormat
+$HostFilter $URLFilter $RefererPagesFilter
+$SiteToAnalyze $SiteToAnalyzeWithoutwww $UserAgent
+$pos_vh $pos_host $pos_logname $pos_date $pos_method $pos_url $pos_code $pos_size
+$pos_referer $pos_agent $pos_query $pos_gzipin $pos_gzipout $pos_compratio
+$pos_emails $pos_emailr $pos_hostr
 /;
 $DIR=$PROG=$Extension='';
 $Debug=$ShowSteps=0;
 $DebugResetDone=$DNSLookupAlreadyDone=0;
-# Time vars
+$RunAsCli = 0;
+$lowerval = 0;
+$LastLine = $LastLineNumber = $LastLineOffset = $LastLineChecksum = 0;
+$LastUpdate = 0;
+$TotalUnique = $TotalVisits = $TotalHostsKnown = $TotalHostsUnknown = 0;
+$TotalPages = $TotalHits = $TotalBytes = $TotalEntries = $TotalExits = $TotalBytesPages = $TotalDifferentPages = 0;
+$TotalKeyphrases = $TotalKeywords = $TotalDifferentKeyphrases = $TotalDifferentKeywords = 0;
+$TotalSearchEnginesPages = $TotalSearchEnginesHits = $TotalRefererPages = $TotalRefererHits = $TotalDifferentSearchEngines = $TotalDifferentReferer = 0;
+($FrameName, $Center, $FileConfig, $FileSuffix, $Host, $DayRequired, $MonthRequired, $YearRequired,
+$QueryString, $SiteConfig, $StaticLinks, $PageCode, $PerlParsingFormat,
+$HostFilter, $URLFilter, $RefererPagesFilter,
+$SiteToAnalyze, $SiteToAnalyzeWithoutwww, $UserAgent)=
+('','','','','','','','','','','','','','','','','','','');
+$pos_vh = $pos_host = $pos_logname = $pos_date = $pos_method = $pos_url = $pos_code = $pos_size = -1;
+$pos_referer = $pos_agent = $pos_query = $pos_gzipin = $pos_gzipout = $pos_compratio = -1;
+$pos_emails = $pos_emailr = $pos_hostr = -1;
+# ----- Plugins variable -----
+use vars qw/ %PluginsLoaded $PluginDir /;
+%PluginsLoaded=();
+$PluginDir='';
+# ----- Time vars -----
 use vars qw/
 $starttime
 $nowtime $tomorrowtime
@@ -65,12 +94,12 @@ $nowsec $nowmin $nowhour $nowday $nowmonth $nowyear $nowwday $nowyday $nowns
 $StartSeconds $StartMicroseconds
 /;
 $StartSeconds=$StartMicroseconds=0;
-# Vars for config file reading
+# ----- Variables for config file reading -----
 use vars qw/
 $FoundNotPageList $FoundValidHTTPCodes $FoundValidSMTPCodes
 /;
 $FoundNotPageList=$FoundValidHTTPCodes=$FoundValidSMTPCodes=0;
-# Config vars
+# ----- Config file variables -----
 use vars qw/
 $StaticExt
 $DNSStaticCacheFile
@@ -81,38 +110,18 @@ $MaxRowsInHTMLOutput
 $MaxLengthOfURL
 $MaxLengthOfStoredURL
 $MaxLengthOfStoredUA
-$BarImageVertical_v
-$BarImageVertical_u
-$BarImageVertical_p
-$BarImageHorizontal_p
-$BarImageHorizontal_e
-$BarImageHorizontal_x
-$BarImageVertical_h
-$BarImageHorizontal_h
-$BarImageVertical_k
-$BarImageHorizontal_k
+%BarPng
 /;
 $StaticExt='html';
 $DNSStaticCacheFile='dnscache.txt';
 $DNSLastUpdateCacheFile='dnscachelastupdate.txt';
 $LogScreenSizeUrl='logscreensizeurl';
 $Lang='auto';
-$MaxRowsInHTMLOutput = 1000;
+$MaxRowsInHTMLOutput=1000;
 $MaxLengthOfStoredURL=256;			# Note: Apache LimitRequestLine is default to 8190
 $MaxLengthOfStoredUA=256;
-$BarImageVertical_v   = 'vv.png';
-#$BarImageHorizontal_v = 'hv.png';
-$BarImageVertical_u   = 'vu.png';
-#$BarImageHorizontal_u = 'hu.png';
-$BarImageVertical_p   = 'vp.png';
-$BarImageHorizontal_p = 'hp.png';
-#$BarImageVertical_e = 've.png';
-$BarImageHorizontal_e = 'he.png';
-$BarImageHorizontal_x = 'hx.png';
-$BarImageVertical_h   = 'vh.png';
-$BarImageHorizontal_h = 'hh.png';
-$BarImageVertical_k   = 'vk.png';
-$BarImageHorizontal_k = 'hk.png';
+%BarPng=('vv'=>'vv.png','vu'=>'vu.png','hu'=>'hu.png','vp'=>'vp.png','hp'=>'hp.png',
+'he'=>'he.png','hx'=>'hx.png','vh'=>'vh.png','hh'=>'hh.png','vk'=>'vk.png','hk'=>'hk.png');
 use vars qw/
 $EnableLockForUpdate $DNSLookup $AllowAccessFromWebToAuthenticatedUsersOnly
 $BarHeight $BarWidth $CreateDirDataIfNotExists $KeepBackupOfHistoricFiles
@@ -144,7 +153,7 @@ $ShowMenu $ShowMonthStats $ShowDaysOfMonthStats $ShowDaysOfWeekStats
 $ShowHoursStats $ShowDomainsStats $ShowHostsStats
 $ShowRobotsStats $ShowWormsStats $ShowSessionsStats $ShowPagesStats $ShowFileTypesStats
 $ShowOSStats $ShowBrowsersStats $ShowOriginStats
-$ShowKeyphrasesStats $ShowKeywordsStats $ShowHTTPErrorsStats
+$ShowKeyphrasesStats $ShowKeywordsStats $ShowMiscStats $ShowHTTPErrorsStats
 $ShowFlagLinks $ShowLinksOnUrl
 $AddDataArrayMonthStats $AddDataArrayShowDaysOfMonthStats $AddDataArrayShowDaysOfWeekStats $AddDataArrayShowHoursStats
 /;
@@ -155,11 +164,11 @@ $ShowMenu, $ShowMonthStats, $ShowDaysOfMonthStats, $ShowDaysOfWeekStats,
 $ShowHoursStats, $ShowDomainsStats, $ShowHostsStats,
 $ShowRobotsStats, $ShowWormsStats, $ShowSessionsStats, $ShowPagesStats, $ShowFileTypesStats,
 $ShowOSStats, $ShowBrowsersStats, $ShowOriginStats,
-$ShowKeyphrasesStats, $ShowKeywordsStats, $ShowHTTPErrorsStats,
+$ShowKeyphrasesStats, $ShowKeywordsStats, $ShowMiscStats, $ShowHTTPErrorsStats,
 $ShowFlagLinks, $ShowLinksOnUrl,
 $AddDataArrayMonthStats, $AddDataArrayShowDaysOfMonthStats, $AddDataArrayShowDaysOfWeekStats, $AddDataArrayShowHoursStats
 )=
-(1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1);
+(1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1);
 use vars qw/
 $LevelForRobotsDetection $LevelForBrowsersDetection $LevelForOSDetection $LevelForRefererAnalyze
 $LevelForSearchEnginesDetection $LevelForKeywordsDetection
@@ -189,55 +198,17 @@ $color_TableBGTitle, $color_TableBorder, $color_TableRowTitle, $color_TableTitle
 $color_text, $color_textpercent, $color_titletext, $color_weekend, $color_link, $color_hover, $color_other,
 $color_h, $color_k, $color_p, $color_e, $color_x, $color_s, $color_u, $color_v)=
 ('','','','','','','','','','','','','','','','','','','','','','');
-use vars qw/
-$FrameName $Center $FileConfig $FileSuffix $Host $DayRequired $MonthRequired $YearRequired
-$QueryString $SiteConfig $StaticLinks $PageCode $PerlParsingFormat
-$HostFilter $URLFilter $RefererPagesFilter
-$SiteToAnalyze $SiteToAnalyzeWithoutwww $UserAgent
-/;
-($FrameName, $Center, $FileConfig, $FileSuffix, $Host, $DayRequired, $MonthRequired, $YearRequired,
-$QueryString, $SiteConfig, $StaticLinks, $PageCode, $PerlParsingFormat,
-$HostFilter, $URLFilter, $RefererPagesFilter,
-$SiteToAnalyze, $SiteToAnalyzeWithoutwww, $UserAgent)=
-('','','','','','','','','','','','','','','','','','','');
-use vars qw/
-$pos_vh $pos_host $pos_logname $pos_date $pos_method $pos_url $pos_code $pos_size
-$pos_referer $pos_agent $pos_query $pos_gzipin $pos_gzipout $pos_compratio
-$pos_emails $pos_emailr $pos_hostr
-/;
-$pos_vh = $pos_host = $pos_logname = $pos_date = $pos_method = $pos_url = $pos_code = $pos_size = -1;
-$pos_referer = $pos_agent = $pos_query = $pos_gzipin = $pos_gzipout = $pos_compratio = -1;
-$pos_emails = $pos_emailr = $pos_hostr = -1;
-use vars qw/
-$RunAsCli $lowerval
-$LastLine $LastLineNumber $LastLineOffset $LastLineChecksum
-$LastUpdate
-$TotalUnique $TotalVisits $TotalHostsKnown $TotalHostsUnknown
-$TotalPages $TotalHits $TotalBytes $TotalEntries $TotalExits $TotalBytesPages $TotalDifferentPages
-$TotalKeyphrases $TotalKeywords $TotalDifferentKeyphrases $TotalDifferentKeywords
-$TotalSearchEnginesPages $TotalSearchEnginesHits $TotalRefererPages $TotalRefererHits $TotalDifferentSearchEngines $TotalDifferentReferer
-/;
-$RunAsCli = 0;
-$lowerval = 0;
-$LastLine = $LastLineNumber = $LastLineOffset = $LastLineChecksum = 0;
-$LastUpdate = 0;
-$TotalUnique = $TotalVisits = $TotalHostsKnown = $TotalHostsUnknown = 0;
-$TotalPages = $TotalHits = $TotalBytes = $TotalEntries = $TotalExits = $TotalBytesPages = $TotalDifferentPages = 0;
-$TotalKeyphrases = $TotalKeywords = $TotalDifferentKeyphrases = $TotalDifferentKeywords = 0;
-$TotalSearchEnginesPages = $TotalSearchEnginesHits = $TotalRefererPages = $TotalRefererHits = $TotalDifferentSearchEngines = $TotalDifferentReferer = 0;
 # ---------- Init arrays --------
 use vars qw/
 @RobotsSearchIDOrder_list1 @RobotsSearchIDOrder_list2 @RobotsSearchIDOrder_list3
 @BrowsersSearchIDOrder @OSSearchIDOrder @SearchEnginesSearchIDOrder @WordsToExtractSearchUrl @WordsToCleanSearchUrl
 @WormsSearchIDOrder
 @DOWIndex @RobotsSearchIDOrder
-@_from_p @_from_h
-@_time_p @_time_h @_time_k
+@_from_p @_from_h @_time_p @_time_h @_time_k
 @fieldlib @keylist
 /;
 @DOWIndex = @RobotsSearchIDOrder = ();
-@_from_p = @_from_h = ();
-@_time_p = @_time_h = @_time_k = ();
+@_from_p = @_from_h = @_time_p = @_time_h = @_time_k = ();
 @fieldlib = @keylist = ();
 use vars qw/
 @OSFamily @BrowsersFamily @SessionsRange %SessionsAverage %LangBrowserToAwstats
@@ -257,19 +228,20 @@ use vars qw/
 @SessionsRange=('0s-30s','30s-2mn','2mn-5mn','5mn-15mn','15mn-30mn','30mn-1h','1h+');
 %SessionsAverage=('0s-30s',15,'30s-2mn',75,'2mn-5mn',210,'5mn-15mn',600,'15mn-30mn',1350,'30mn-1h',2700,'1h+',3600);
 # Values reported by HTTP-Accept with AWStats code to use
-%LangBrowserToAwstats=('sq','al','ba','ba','bg','bg','zh-tw','tw','zh','cn','cz','cz',
-'da','dk','nl','nl','en','en','et','et','fi','fi','fr','fr',
-'de','de','el','gr','hu','hu','is','is','in','id','it','it',
-'ja','jp','ko','kr','lv','lv','no','nb','nb','nb','nn','nn','pl','pl','pt','pt','pt-br','br',
-'ro','ro','ru','ru','sr','sr','sk','sk','es','es','ca','es_cat','sv','se','tr','tr','uk','ua','wlk','wlk');
-@HostAliases=();
-@AllowAccessFromWebToFollowingAuthenticatedUsers=();
+%LangBrowserToAwstats=('sq'=>'al','ba'=>'ba','bg'=>'bg','zh-tw'=>'tw','zh'=>'cn','cz'=>'cz',
+'da'=>'dk','nl'=>'nl','en'=>'en','et'=>'et','fi'=>'fi','fr'=>'fr',
+'de'=>'de','el'=>'gr','hu'=>'hu','is'=>'is','in'=>'id','it'=>'it',
+'ja'=>'jp','ko'=>'kr','lv'=>'lv','no'=>'nb','nb'=>'nb','nn'=>'nn','pl'=>'pl','pt'=>'pt','pt-br'=>'br',
+'ro'=>'ro','ru'=>'ru','sr'=>'sr','sk'=>'sk','es'=>'es','eu'=>'es_eu','ca'=>'es_cat','sv'=>'se','tr'=>'tr','uk'=>'ua','wlk'=>'wlk');
+@HostAliases = @AllowAccessFromWebToFollowingAuthenticatedUsers=();
 @DefaultFile = @SkipDNSLookupFor = ();
 @SkipHosts = @SkipUserAgents = @SkipFiles = ();
 @OnlyHosts = @OnlyFiles = ();
 @URLWithQueryWithoutFollowingParameters = ();
 @ExtraName = @ExtraCondition = @ExtraStatTypes = @MaxNbOfExtra = @MinHitExtra = ();
 @ExtraFirstColumnTitle = @ExtraFirstColumnValues = ();
+@ExtraConditionType = @ExtraConditionTypeVal = ();
+@ExtraFirstColumnValuesType = @ExtraFirstColumnValuesTypeVal = ();
 @PluginsToLoad = ();
 # ---------- Init hash arrays --------
 use vars qw/
@@ -297,12 +269,12 @@ use vars qw/
 %_waithost_e %_waithost_l %_waithost_s %_waithost_u
 %_keyphrases %_keywords %_os_h %_pagesrefs_p %_pagesrefs_h %_robot_h %_robot_k %_robot_l
 %_worm_h %_worm_l %_login_h %_login_p %_login_k %_login_l %_screensize_h
+%_misc_p %_misc_h %_misc_k
 %_se_referrals_p %_se_referrals_h %_sider404_h %_referer404_h %_url_p %_url_k %_url_e %_url_x
 %_unknownreferer_l %_unknownrefererbrowser_l
 %_emails_h %_emails_k %_emails_l %_emailr_h %_emailr_k %_emailr_l
 %val %nextval %egal
-%TmpDNSLookup %TmpOS %TmpRefererServer %TmpRobot %TmpBrowser
-%MyDNSTable
+%TmpDNSLookup %TmpOS %TmpRefererServer %TmpRobot %TmpBrowser %MyDNSTable
 /;
 %HTMLOutput = ();
 %BadFormatWarning = ();
@@ -321,11 +293,12 @@ use vars qw/
 %_waithost_e = %_waithost_l = %_waithost_s = %_waithost_u = ();
 %_keyphrases = %_keywords = %_os_h = %_pagesrefs_p = %_pagesrefs_h = %_robot_h = %_robot_k = %_robot_l = ();
 %_worm_h = %_worm_l = %_login_h = %_login_p = %_login_k = %_login_l = %_screensize_h = ();
+%_misc_p = %_misc_h = %_misc_k = ();
 %_se_referrals_p = %_se_referrals_h = %_sider404_h = %_referer404_h = %_url_p = %_url_k = %_url_e = %_url_x = ();
 %_unknownreferer_l = %_unknownrefererbrowser_l = ();
 %_emails_h = %_emails_k = %_emails_l = %_emailr_h = %_emailr_k = %_emailr_l = ();
 %val = %nextval = %egal = ();
-%TmpDNSLookup = %TmpOS = %TmpRefererServer = %TmpRobot = %TmpBrowser = ();
+%TmpDNSLookup = %TmpOS = %TmpRefererServer = %TmpRobot = %TmpBrowser = %MyDNSTable = ();
 # ---------- Init Tie::hash arrays --------
 # Didn't find a tie that increase speed
 #use Tie::StdHash;
@@ -339,55 +312,55 @@ use vars qw/
 use vars qw/ %httpcodelib /;
 %httpcodelib = (
 #[Miscellaneous successes]
-'2xx', '[Miscellaneous successes]',
-'200', 'OK',								# HTTP request OK
-'201', 'Created',
-'202', 'Request recorded, will be executed later',
-'203', 'Non-authoritative information',
-'204', 'Request executed',
-'205', 'Reset document',
-'206', 'Partial Content',
+'2xx'=>'[Miscellaneous successes]',
+'200'=>'OK',								# HTTP request OK
+'201'=>'Created',
+'202'=>'Request recorded, will be executed later',
+'203'=>'Non-authoritative information',
+'204'=>'Request executed',
+'205'=>'Reset document',
+'206'=>'Partial Content',
 #[Miscellaneous redirections]
-'3xx', '[Miscellaneous redirections]',
-'300', 'Multiple documents available',
-'301', 'Moved Permanently',
-'302', 'Found',
-'303', 'See other document',
-'304', 'Not Modified since last retrieval',	# HTTP request OK
-'305', 'Use proxy',
-'306', 'Switch proxy',
-'307', 'Document moved temporarily',
+'3xx'=>'[Miscellaneous redirections]',
+'300'=>'Multiple documents available',
+'301'=>'Moved Permanently',
+'302'=>'Found',
+'303'=>'See other document',
+'304'=>'Not Modified since last retrieval',	# HTTP request OK
+'305'=>'Use proxy',
+'306'=>'Switch proxy',
+'307'=>'Document moved temporarily',
 #[Miscellaneous client/user errors]
-'4xx', '[Miscellaneous client/user errors]',
-'400', 'Bad Request',
-'401', 'Unauthorized',
-'402', 'Payment required',
-'403', 'Forbidden',
-'404', 'Document Not Found',
-'405', 'Method not allowed',
-'406', 'Document not acceptable to client',
-'407', 'Proxy authentication required',
-'408', 'Request Timeout',
-'409', 'Request conflicts with state of resource',
-'410', 'Document gone permanently',
-'411', 'Length required',
-'412', 'Precondition failed',
-'413', 'Request too long',
-'414', 'Requested filename too long',
-'415', 'Unsupported media type',
-'416', 'Requested range not valid',
-'417', 'Failed',
+'4xx'=>'[Miscellaneous client/user errors]',
+'400'=>'Bad Request',
+'401'=>'Unauthorized',
+'402'=>'Payment required',
+'403'=>'Forbidden',
+'404'=>'Document Not Found',
+'405'=>'Method not allowed',
+'406'=>'Document not acceptable to client',
+'407'=>'Proxy authentication required',
+'408'=>'Request Timeout',
+'409'=>'Request conflicts with state of resource',
+'410'=>'Document gone permanently',
+'411'=>'Length required',
+'412'=>'Precondition failed',
+'413'=>'Request too long',
+'414'=>'Requested filename too long',
+'415'=>'Unsupported media type',
+'416'=>'Requested range not valid',
+'417'=>'Failed',
 #[Miscellaneous server errors]
-'5xx', '[Miscellaneous server errors]',
-'500', 'Internal server Error',
-'501', 'Not implemented',
-'502', 'Received bad response from real server',
-'503', 'Server busy',
-'504', 'Gateway timeout',
-'505', 'HTTP version not supported',
-'506', 'Redirection failed',
+'5xx'=>'[Miscellaneous server errors]',
+'500'=>'Internal server Error',
+'501'=>'Not implemented',
+'502'=>'Received bad response from real server',
+'503'=>'Server busy',
+'504'=>'Gateway timeout',
+'505'=>'HTTP version not supported',
+'506'=>'Redirection failed',
 #[Unknown]
-'xxx' ,'[Unknown]'
+'xxx'=>'[Unknown]'
 );
 
 # FTP codes
@@ -1472,6 +1445,7 @@ sub Check_Config {
 	if ($ShowOriginStats !~ /[01PH]/)              	{ $ShowOriginStats='PH'; }
 	if ($ShowKeyphrasesStats !~ /[0-1]/)          	{ $ShowKeyphrasesStats=1; }
 	if ($ShowKeywordsStats !~ /[0-1]/)            	{ $ShowKeywordsStats=1; }
+	if ($ShowMiscStats !~ /[0-1]/)             	    { $ShowMiscStats=1; }
 	if ($ShowHTTPErrorsStats !~ /[0-1]/)          	{ $ShowHTTPErrorsStats=1; }
 	if ($AddDataArrayMonthStats !~ /[0-1]/)        	{ $AddDataArrayMonthStats=1; }
 	if ($AddDataArrayShowDaysOfMonthStats !~ /[0-1]/)       { $AddDataArrayShowDaysOfMonthStats=1; }
@@ -1564,12 +1538,8 @@ sub Check_Config {
 		debug(" DirCgi='$DirCgi'",2);
 		debug(" DirIcons='$DirIcons'",2);
 		debug(" SiteDomain=$SiteDomain",2);
-		foreach my $key (keys %MaxNbOf) {
-			debug(" MaxNbOf{$key}=$MaxNbOf{$key}",2);
-		}
-		foreach my $key (keys %MinHit) {
-			debug(" MinHit{$key}=$MinHit{$key}",2);
-		}
+		foreach my $key (keys %MaxNbOf) { debug(" MaxNbOf{$key}=$MaxNbOf{$key}",2); }
+		foreach my $key (keys %MinHit)  { debug(" MinHit{$key}=$MinHit{$key}",2); 	}
 	}
 	foreach my $extranum (1..@ExtraName-1) {
 		debug(" ExtraConditionType[$extranum] is array ".join(',',@{$ExtraConditionType[$extranum]}),2);
@@ -1735,14 +1705,14 @@ sub Read_History_With_TmpUpdate {
 	my $lastlineoffset=shift||0;
 	my $lastlinechecksum=shift||0;
 
-	my %allsections=('general'=>1,'time'=>2,'visitor'=>3,'day'=>4,
-					 'domain'=>5,'login'=>6,'robot'=>7,'worms'=>8,'emailsender'=>9,'emailreceiver'=>10,
-					 'session'=>11,'sider'=>12,'filetypes'=>13,
-					 'os'=>14,'browser'=>15,'screensize'=>16,'unknownreferer'=>17,'unknownrefererbrowser'=>18,
-					 'origin'=>19,'sereferrals'=>20,'pagerefs'=>21,
-					 'searchwords'=>22,'keywords'=>23,
-					 'errors'=>24);
-	my $order=25;
+	my %allsections=('general'=>1,'misc'=>2,'time'=>3,'visitor'=>4,'day'=>5,
+					 'domain'=>6,'login'=>7,'robot'=>8,'worms'=>9,'emailsender'=>10,'emailreceiver'=>11,
+					 'session'=>12,'sider'=>13,'filetypes'=>14,
+					 'os'=>15,'browser'=>16,'screensize'=>17,'unknownreferer'=>18,'unknownrefererbrowser'=>19,
+					 'origin'=>20,'sereferrals'=>21,'pagerefs'=>22,
+					 'searchwords'=>23,'keywords'=>24,
+					 'errors'=>25);
+	my $order=26;
 	foreach my $code (keys %TrapInfosForHTTPErrorCodes) { $allsections{"sider_$code"}=$order++; }
 	foreach my $extranum (1..@ExtraName-1) { $allsections{"extra_$extranum"}=$order++; }
 
@@ -1787,6 +1757,7 @@ sub Read_History_With_TmpUpdate {
 		if ($UpdateStats || $MigrateStats || ($HTMLOutput{'main'} && $ShowKeyphrasesStats) || $HTMLOutput{'keyphrases'} || $HTMLOutput{'keywords'}) { $SectionsToLoad{'searchwords'}=$order++; }
 		if (! $withupdate && $HTMLOutput{'main'} && $ShowKeywordsStats) { $SectionsToLoad{'keywords'}=$order++; }	# If we update, dont need to load
 		# Others
+		if ($UpdateStats || $MigrateStats || ($HTMLOutput{'main'} && $ShowMiscStats)) { $SectionsToLoad{'misc'}=$order++; }
 		if ($UpdateStats || $MigrateStats || ($HTMLOutput{'main'} && $ShowHTTPErrorsStats) || $HTMLOutput{'errors'}) { $SectionsToLoad{'errors'}=$order++; }
 		foreach my $code (keys %TrapInfosForHTTPErrorCodes) {
 			if ($UpdateStats || $MigrateStats || $HTMLOutput{"errors$code"}) { $SectionsToLoad{"sider_$code"}=$order++; }
@@ -1933,6 +1904,40 @@ sub Read_History_With_TmpUpdate {
 				}
 				if ($versionnum >= 5000) { next; }	# We can forget 'END_GENERAL' line and read next one
 			}
+
+			# BEGIN_MISC
+			if ($field[0] eq 'BEGIN_MISC')      {
+				if ($Debug) { debug(" Begin of MISC section"); }
+				$_=<HISTORY>;
+				chomp $_; s/\r//;
+				if (! $_) { error("History file \"$filetoread\" is corrupted (in section MISC). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost).","","",1); }
+				my @field=split(/\s+/,$_); $countlines++;
+				my $count=0;my $countloaded=0;
+				while ($field[0] ne 'END_MISC') {
+					if ($field[0]) {
+						$count++;
+						if ($SectionsToLoad{'misc'}) {
+							$countloaded++;
+							if ($field[1]) { $_misc_p{$field[0]}+=int($field[1]); }
+							if ($field[2]) { $_misc_h{$field[0]}+=int($field[2]); }
+							if ($field[3]) { $_misc_k{$field[0]}+=int($field[3]); }
+						}
+					}
+					$_=<HISTORY>;
+					chomp $_; s/\r//;
+					if (! $_) { error("History file \"$filetoread\" is corrupted (in section MISC). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost).","","",1); }
+					@field=split(/\s+/,$_); $countlines++;
+				}
+				if ($Debug) { debug(" End of MISC section ($count entries, $countloaded loaded)"); }
+				delete $SectionsToLoad{'time'};
+				if ($SectionsToSave{'time'}) {
+					Save_History('time',$year,$month); delete $SectionsToSave{'time'};
+					if ($withpurge) { %_misc_p=(); %_misc_h=(); %_misc_k=(); }
+				}
+				if (! scalar %SectionsToLoad) { debug(" Stop reading history file. Got all we need."); last; }
+				next;
+			}
+
 			# BEGIN_TIME
 			if ($field[0] eq 'BEGIN_TIME')      {
 				if ($Debug) { debug(" Begin of TIME section"); }
@@ -6313,10 +6318,11 @@ if (scalar keys %HTMLOutput) {
 			if ($ShowKeywordsStats)	 	 { print ($frame?"<tr><td class=AWL> &nbsp; <img height=8 width=9 src=\"$DirIcons/other/page.png\" alt=\"...\"> ":""); print "<a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=keywords":"$PROG$StaticLinks.keywords.$StaticExt")."\"$NewLinkTarget>$Message[121]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
 			if ($linetitle) { print ($frame?"":"</td></tr>\n"); }
 			# Others
-			$linetitle=&AtLeastOneNotNull($ShowFileTypesStats=~/C/i,$ShowHTTPErrorsStats);
+			$linetitle=&AtLeastOneNotNull($ShowFileTypesStats=~/C/i,$ShowMiscStats,$ShowHTTPErrorsStats);
 			if ($linetitle) { print "<tr><th class=AWL>$Message[2]: </th>\n"; }
 			if ($linetitle) { print ($frame?"</tr>\n":"<td class=AWL>"); }
 			if ($ShowFileTypesStats =~ /C/i)	 { print ($frame?"<tr><td class=AWL>":""); print "<a href=\"$linkanchor#FILETYPES\"$targetpage>$Message[98]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
+			if ($ShowMiscStats)	 		 { print ($frame?"<tr><td class=AWL>":""); print "<a href=\"$linkanchor#MISC\"$targetpage>$Message[139]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
 			if ($ShowHTTPErrorsStats)	 { print ($frame?"<tr><td class=AWL>":""); print "<a href=\"$linkanchor#ERRORS\"$targetpage>$Message[22]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
 			foreach my $code (keys %TrapInfosForHTTPErrorCodes) {
 				if ($ShowHTTPErrorsStats)	 { print ($frame?"<tr><td class=AWL> &nbsp; <img height=8 width=9 src=\"$DirIcons/other/page.png\" alt=\"...\"> ":""); print "<a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=errors$code":"$PROG$StaticLinks.errors$code.$StaticExt")."\"$NewLinkTarget>$Message[31]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
@@ -6477,12 +6483,12 @@ if (scalar keys %HTMLOutput) {
 #			if ($max_h > 0) { $bredde_h=int($MonthHits{$YearRequired.$monthix}/$max_h*$BarHeight)+1; }
 #			if ($max_k > 0) { $bredde_k=int($MonthBytes{$YearRequired.$monthix}/$max_k*$BarHeight)+1; }
 #			print "<TD>";
-#			if ($ShowMonthDayStats =~ /U/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_u\" HEIGHT=$bredde_u WIDTH=8 ALT=\"$Message[11]: $MonthUnique{$YearRequired.$monthix}\" title=\"$Message[11]: $MonthUnique{$YearRequired.$monthix}\">"; }
-#			if ($ShowMonthDayStats =~ /V/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_v\" HEIGHT=$bredde_v WIDTH=8 ALT=\"$Message[10]: $MonthVisits{$YearRequired.$monthix}\" title=\"$Message[10]: $MonthVisits{$YearRequired.$monthix}\">"; }
+#			if ($ShowMonthDayStats =~ /U/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarPng{'vu'}\" HEIGHT=$bredde_u WIDTH=8 ALT=\"$Message[11]: $MonthUnique{$YearRequired.$monthix}\" title=\"$Message[11]: $MonthUnique{$YearRequired.$monthix}\">"; }
+#			if ($ShowMonthDayStats =~ /V/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarPng{'vv'}\" HEIGHT=$bredde_v WIDTH=8 ALT=\"$Message[10]: $MonthVisits{$YearRequired.$monthix}\" title=\"$Message[10]: $MonthVisits{$YearRequired.$monthix}\">"; }
 #			print "&nbsp;";
-#			if ($ShowMonthDayStats =~ /P/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_p\" HEIGHT=$bredde_p WIDTH=8 ALT=\"$Message[56]: $MonthPages{$YearRequired.$monthix}\" title=\"$Message[56]: $MonthPages{$YearRequired.$monthix}\">"; }
-#			if ($ShowMonthDayStats =~ /H/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_h\" HEIGHT=$bredde_h WIDTH=8 ALT=\"$Message[57]: $MonthHits{$YearRequired.$monthix}\" title=\"$Message[57]: $MonthHits{$YearRequired.$monthix}\">"; }
-#			if ($ShowMonthDayStats =~ /B/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_k\" HEIGHT=$bredde_k WIDTH=8 ALT=\"$Message[75]: ".Format_Bytes($MonthBytes{$YearRequired.$monthix})."\" title=\"$Message[75]: ".Format_Bytes($MonthBytes{$YearRequired.$monthix})."\">"; }
+#			if ($ShowMonthDayStats =~ /P/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarPng{'vp'}\" HEIGHT=$bredde_p WIDTH=8 ALT=\"$Message[56]: $MonthPages{$YearRequired.$monthix}\" title=\"$Message[56]: $MonthPages{$YearRequired.$monthix}\">"; }
+#			if ($ShowMonthDayStats =~ /H/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarPng{'vh'}\" HEIGHT=$bredde_h WIDTH=8 ALT=\"$Message[57]: $MonthHits{$YearRequired.$monthix}\" title=\"$Message[57]: $MonthHits{$YearRequired.$monthix}\">"; }
+#			if ($ShowMonthDayStats =~ /B/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarPng{'vk'}\" HEIGHT=$bredde_k WIDTH=8 ALT=\"$Message[75]: ".Format_Bytes($MonthBytes{$YearRequired.$monthix})."\" title=\"$Message[75]: ".Format_Bytes($MonthBytes{$YearRequired.$monthix})."\">"; }
 #			print "</TD>\n";
 #		}
 #		print "</TR>\n";
@@ -6582,10 +6588,10 @@ if (scalar keys %HTMLOutput) {
 #			if ($max_h > 0) { $bredde_h=int(($DayHits{$year.$month.$day}||0)/$max_h*$BarHeight)+1; }
 #			if ($max_k > 0) { $bredde_k=int(($DayBytes{$year.$month.$day}||0)/$max_k*$BarHeight)+1; }
 #			print "<TD>";
-#			if ($ShowMonthDayStats =~ /V/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_v\" HEIGHT=$bredde_v WIDTH=4 ALT=\"$Message[10]: ".int($DayVisits{$year.$month.$day}||0)."\" title=\"$Message[10]: ".int($DayVisits{$year.$month.$day}||0)."\">"; }
-#			if ($ShowMonthDayStats =~ /P/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_p\" HEIGHT=$bredde_p WIDTH=4 ALT=\"$Message[56]: ".int($DayPages{$year.$month.$day}||0)."\" title=\"$Message[56]: ".int($DayPages{$year.$month.$day}||0)."\">"; }
-#			if ($ShowMonthDayStats =~ /H/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_h\" HEIGHT=$bredde_h WIDTH=4 ALT=\"$Message[57]: ".int($DayHits{$year.$month.$day}||0)."\" title=\"$Message[57]: ".int($DayHits{$year.$month.$day}||0)."\">"; }
-#			if ($ShowMonthDayStats =~ /B/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_k\" HEIGHT=$bredde_k WIDTH=4 ALT=\"$Message[75]: ".Format_Bytes($DayBytes{$year.$month.$day})."\" title=\"$Message[75]: ".Format_Bytes($DayBytes{$year.$month.$day})."\">"; }
+#			if ($ShowMonthDayStats =~ /V/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarPng{'vv'}\" HEIGHT=$bredde_v WIDTH=4 ALT=\"$Message[10]: ".int($DayVisits{$year.$month.$day}||0)."\" title=\"$Message[10]: ".int($DayVisits{$year.$month.$day}||0)."\">"; }
+#			if ($ShowMonthDayStats =~ /P/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarPng{'vp'}\" HEIGHT=$bredde_p WIDTH=4 ALT=\"$Message[56]: ".int($DayPages{$year.$month.$day}||0)."\" title=\"$Message[56]: ".int($DayPages{$year.$month.$day}||0)."\">"; }
+#			if ($ShowMonthDayStats =~ /H/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarPng{'vh'}\" HEIGHT=$bredde_h WIDTH=4 ALT=\"$Message[57]: ".int($DayHits{$year.$month.$day}||0)."\" title=\"$Message[57]: ".int($DayHits{$year.$month.$day}||0)."\">"; }
+#			if ($ShowMonthDayStats =~ /B/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarPng{'vk'}\" HEIGHT=$bredde_k WIDTH=4 ALT=\"$Message[75]: ".Format_Bytes($DayBytes{$year.$month.$day})."\" title=\"$Message[75]: ".Format_Bytes($DayBytes{$year.$month.$day})."\">"; }
 #			print "</TD>\n";
 #		}
 #		print "<TD>&nbsp;</TD>";
@@ -6599,10 +6605,10 @@ if (scalar keys %HTMLOutput) {
 #		$average_p=sprintf("%.2f",$average_p);
 #		$average_h=sprintf("%.2f",$average_h);
 #		$average_k=sprintf("%.2f",$average_k);
-#		if ($ShowMonthDayStats =~ /V/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_v\" HEIGHT=$bredde_v WIDTH=4 ALT=\"$Message[10]: $average_v\" title=\"$Message[10]: $average_v\">"; }
-#		if ($ShowMonthDayStats =~ /P/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_p\" HEIGHT=$bredde_p WIDTH=4 ALT=\"$Message[56]: $average_p\" title=\"$Message[56]: $average_p\">"; }
-#		if ($ShowMonthDayStats =~ /H/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_h\" HEIGHT=$bredde_h WIDTH=4 ALT=\"$Message[57]: $average_h\" title=\"$Message[57]: $average_h\">"; }
-#		if ($ShowMonthDayStats =~ /B/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_k\" HEIGHT=$bredde_k WIDTH=4 ALT=\"$Message[75]: ".Format_Bytes($average_k)."\" title=\"$Message[75]: ".Format_Bytes($average_k)."\">"; }
+#		if ($ShowMonthDayStats =~ /V/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarPng{'vv'}\" HEIGHT=$bredde_v WIDTH=4 ALT=\"$Message[10]: $average_v\" title=\"$Message[10]: $average_v\">"; }
+#		if ($ShowMonthDayStats =~ /P/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarPng{'vp'}\" HEIGHT=$bredde_p WIDTH=4 ALT=\"$Message[56]: $average_p\" title=\"$Message[56]: $average_p\">"; }
+#		if ($ShowMonthDayStats =~ /H/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarPng{'vh'}\" HEIGHT=$bredde_h WIDTH=4 ALT=\"$Message[57]: $average_h\" title=\"$Message[57]: $average_h\">"; }
+#		if ($ShowMonthDayStats =~ /B/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarPng{'vk'}\" HEIGHT=$bredde_k WIDTH=4 ALT=\"$Message[75]: ".Format_Bytes($average_k)."\" title=\"$Message[75]: ".Format_Bytes($average_k)."\">"; }
 #		print "</TD>";
 #		print "<TD></TD>\n";
 #		print "</TR>\n";
@@ -6690,9 +6696,9 @@ if (scalar keys %HTMLOutput) {
 			if ($ShowDomainsStats =~ /H/i) { print "<TD>$_domener_h{$key}</TD>"; }
 			if ($ShowDomainsStats =~ /B/i) { print "<TD>".Format_Bytes($_domener_k{$key})."</TD>"; }
 			print "<TD CLASS=AWL>";
-			if ($ShowDomainsStats =~ /P/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_p\" WIDTH=$bredde_p HEIGHT=6 ALT=\"$Message[56]: ".int($_domener_p{$key})."\" title=\"$Message[56]: ".int($_domener_p{$key})."\"><br>\n"; }
-			if ($ShowDomainsStats =~ /H/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_h\" WIDTH=$bredde_h HEIGHT=6 ALT=\"$Message[57]: ".int($_domener_h{$key})."\" title=\"$Message[57]: ".int($_domener_h{$key})."\"><br>\n"; }
-			if ($ShowDomainsStats =~ /B/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_k\" WIDTH=$bredde_k HEIGHT=6 ALT=\"$Message[75]: ".Format_Bytes($_domener_k{$key})."\" title=\"$Message[75]: ".Format_Bytes($_domener_k{$key})."\">"; }
+			if ($ShowDomainsStats =~ /P/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarPng{'hp'}\" WIDTH=$bredde_p HEIGHT=6 ALT=\"$Message[56]: ".int($_domener_p{$key})."\" title=\"$Message[56]: ".int($_domener_p{$key})."\"><br>\n"; }
+			if ($ShowDomainsStats =~ /H/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarPng{'hh'}\" WIDTH=$bredde_h HEIGHT=6 ALT=\"$Message[57]: ".int($_domener_h{$key})."\" title=\"$Message[57]: ".int($_domener_h{$key})."\"><br>\n"; }
+			if ($ShowDomainsStats =~ /B/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarPng{'hk'}\" WIDTH=$bredde_k HEIGHT=6 ALT=\"$Message[75]: ".Format_Bytes($_domener_k{$key})."\" title=\"$Message[75]: ".Format_Bytes($_domener_k{$key})."\">"; }
 			print "</TD>";
 			print "</TR>\n";
 			$total_p += $_domener_p{$key};
@@ -7071,14 +7077,14 @@ if (scalar keys %HTMLOutput) {
 			}
 			print "<TD CLASS=AWL>";
 			# alt and title are not provided to reduce page size
-			if ($ShowPagesStats =~ /P/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_p\" WIDTH=$bredde_p HEIGHT=6><br>"; }
-			if ($ShowPagesStats =~ /B/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_k\" WIDTH=$bredde_k HEIGHT=6><br>"; }
-			if ($ShowPagesStats =~ /E/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_e\" WIDTH=$bredde_e HEIGHT=6><br>"; }
-			if ($ShowPagesStats =~ /X/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_x\" WIDTH=$bredde_x HEIGHT=6>"; }
-			#if ($ShowPagesStats =~ /P/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_p\" WIDTH=$bredde_p HEIGHT=6 ALT=\"$Message[29]: $_url_p{$key}\" TITLE=\"$Message[29]: $_url_p{$key}\" ><br>"; }
-			#if ($ShowPagesStats =~ /B/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_k\" WIDTH=$bredde_k HEIGHT=6 ALT=\"$Message[106]: ".Format_Bytes($_url_k{$key}/($_url_p{$key}||1))."\" TITLE=\"$Message[106]: ".Format_Bytes($_url_k{$key}/($_url_p{$key}||1))."\"><br>"; }
-			#if ($ShowPagesStats =~ /E/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_e\" WIDTH=$bredde_e HEIGHT=6 ALT=\"$Message[104]: $_url_e{$key}\" TITLE=\"$Message[104]: $_url_e{$key}\"><br>"; }
-			#if ($ShowPagesStats =~ /X/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_x\" WIDTH=$bredde_x HEIGHT=6 ALT=\"$Message[116]: $_url_x{$key}\" TITLE=\"$Message[116]: $_url_x{$key}\">"; }
+			if ($ShowPagesStats =~ /P/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarPng{'hp'}\" WIDTH=$bredde_p HEIGHT=6><br>"; }
+			if ($ShowPagesStats =~ /B/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarPng{'hk'}\" WIDTH=$bredde_k HEIGHT=6><br>"; }
+			if ($ShowPagesStats =~ /E/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarPng{'he'}\" WIDTH=$bredde_e HEIGHT=6><br>"; }
+			if ($ShowPagesStats =~ /X/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarPng{'hx'}\" WIDTH=$bredde_x HEIGHT=6>"; }
+			#if ($ShowPagesStats =~ /P/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarPng{'hp'}\" WIDTH=$bredde_p HEIGHT=6 ALT=\"$Message[29]: $_url_p{$key}\" TITLE=\"$Message[29]: $_url_p{$key}\" ><br>"; }
+			#if ($ShowPagesStats =~ /B/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarPng{'hk'}\" WIDTH=$bredde_k HEIGHT=6 ALT=\"$Message[106]: ".Format_Bytes($_url_k{$key}/($_url_p{$key}||1))."\" TITLE=\"$Message[106]: ".Format_Bytes($_url_k{$key}/($_url_p{$key}||1))."\"><br>"; }
+			#if ($ShowPagesStats =~ /E/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarPng{'he'}\" WIDTH=$bredde_e HEIGHT=6 ALT=\"$Message[104]: $_url_e{$key}\" TITLE=\"$Message[104]: $_url_e{$key}\"><br>"; }
+			#if ($ShowPagesStats =~ /X/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarPng{'hx'}\" WIDTH=$bredde_x HEIGHT=6 ALT=\"$Message[116]: $_url_x{$key}\" TITLE=\"$Message[116]: $_url_x{$key}\">"; }
 			print "</TD></TR>\n";
 			$total_p += $_url_p{$key};
 			$total_e += $_url_e{$key};
@@ -7198,7 +7204,7 @@ if (scalar keys %HTMLOutput) {
 					print "<TD>$_os_h{$key}</TD><TD>$p</TD>";
 					print "<TD CLASS=AWL>";
 					# alt and title are not provided to reduce page size
-					if ($ShowOSStats) { print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_h\" WIDTH=$bredde_h HEIGHT=6><br>"; }
+					if ($ShowOSStats) { print "<IMG SRC=\"$DirIcons\/other\/$BarPng{'hh'}\" WIDTH=$bredde_h HEIGHT=6><br>"; }
 					print "</TD>";
 					print "</TR>\n";
 					$count++;
@@ -7229,7 +7235,7 @@ if (scalar keys %HTMLOutput) {
 			print "<TD>$_os_h{$key}</TD><TD>$p</TD>";
 			print "<TD CLASS=AWL>";
 			# alt and title are not provided to reduce page size
-			if ($ShowOSStats) { print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_h\" WIDTH=$bredde_h HEIGHT=6><br>"; }
+			if ($ShowOSStats) { print "<IMG SRC=\"$DirIcons\/other\/$BarPng{'hh'}\" WIDTH=$bredde_h HEIGHT=6><br>"; }
 			print "</TD>";
 			print "</TR>\n";
 		}
@@ -7280,7 +7286,7 @@ if (scalar keys %HTMLOutput) {
 					print "<TD>$_browser_h{$key}</TD><TD>$p</TD>";
 					print "<TD CLASS=AWL>";
 					# alt and title are not provided to reduce page size
-					if ($ShowBrowsersStats) { print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_h\" WIDTH=$bredde_h HEIGHT=6><br>"; }
+					if ($ShowBrowsersStats) { print "<IMG SRC=\"$DirIcons\/other\/$BarPng{'hh'}\" WIDTH=$bredde_h HEIGHT=6><br>"; }
 					print "</TD>";
 					print "</TR>\n";
 					$count++;
@@ -7311,7 +7317,7 @@ if (scalar keys %HTMLOutput) {
 			print "<TD>$_browser_h{$key}</TD><TD>$p</TD>";
 			print "<TD CLASS=AWL>";
 			# alt and title are not provided to reduce page size
-			if ($ShowBrowsersStats) { print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_h\" WIDTH=$bredde_h HEIGHT=6><br>"; }
+			if ($ShowBrowsersStats) { print "<IMG SRC=\"$DirIcons\/other\/$BarPng{'hh'}\" WIDTH=$bredde_h HEIGHT=6><br>"; }
 			print "</TD>";
 			print "</TR>\n";
 		}
@@ -7597,12 +7603,12 @@ if (scalar keys %HTMLOutput) {
 				if ($max_h > 0) { $bredde_h=int($MonthHits{$YearRequired.$monthix}/$max_h*$BarHeight)+1; }
 				if ($max_k > 0) { $bredde_k=int($MonthBytes{$YearRequired.$monthix}/$max_k*$BarHeight)+1; }
 				print "<TD>";
-				if ($ShowMonthStats =~ /U/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_u\" HEIGHT=$bredde_u WIDTH=6 ALT=\"$Message[11]: $MonthUnique{$YearRequired.$monthix}\" title=\"$Message[11]: $MonthUnique{$YearRequired.$monthix}\">"; }
-				if ($ShowMonthStats =~ /V/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_v\" HEIGHT=$bredde_v WIDTH=6 ALT=\"$Message[10]: $MonthVisits{$YearRequired.$monthix}\" title=\"$Message[10]: $MonthVisits{$YearRequired.$monthix}\">"; }
+				if ($ShowMonthStats =~ /U/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarPng{'vu'}\" HEIGHT=$bredde_u WIDTH=6 ALT=\"$Message[11]: $MonthUnique{$YearRequired.$monthix}\" title=\"$Message[11]: $MonthUnique{$YearRequired.$monthix}\">"; }
+				if ($ShowMonthStats =~ /V/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarPng{'vv'}\" HEIGHT=$bredde_v WIDTH=6 ALT=\"$Message[10]: $MonthVisits{$YearRequired.$monthix}\" title=\"$Message[10]: $MonthVisits{$YearRequired.$monthix}\">"; }
 				print "&nbsp;";
-				if ($ShowMonthStats =~ /P/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_p\" HEIGHT=$bredde_p WIDTH=6 ALT=\"$Message[56]: $MonthPages{$YearRequired.$monthix}\" title=\"$Message[56]: $MonthPages{$YearRequired.$monthix}\">"; }
-				if ($ShowMonthStats =~ /H/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_h\" HEIGHT=$bredde_h WIDTH=6 ALT=\"$Message[57]: $MonthHits{$YearRequired.$monthix}\" title=\"$Message[57]: $MonthHits{$YearRequired.$monthix}\">"; }
-				if ($ShowMonthStats =~ /B/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_k\" HEIGHT=$bredde_k WIDTH=6 ALT=\"$Message[75]: ".Format_Bytes($MonthBytes{$YearRequired.$monthix})."\" title=\"$Message[75]: ".Format_Bytes($MonthBytes{$YearRequired.$monthix})."\">"; }
+				if ($ShowMonthStats =~ /P/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarPng{'vp'}\" HEIGHT=$bredde_p WIDTH=6 ALT=\"$Message[56]: $MonthPages{$YearRequired.$monthix}\" title=\"$Message[56]: $MonthPages{$YearRequired.$monthix}\">"; }
+				if ($ShowMonthStats =~ /H/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarPng{'vh'}\" HEIGHT=$bredde_h WIDTH=6 ALT=\"$Message[57]: $MonthHits{$YearRequired.$monthix}\" title=\"$Message[57]: $MonthHits{$YearRequired.$monthix}\">"; }
+				if ($ShowMonthStats =~ /B/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarPng{'vk'}\" HEIGHT=$bredde_k WIDTH=6 ALT=\"$Message[75]: ".Format_Bytes($MonthBytes{$YearRequired.$monthix})."\" title=\"$Message[75]: ".Format_Bytes($MonthBytes{$YearRequired.$monthix})."\">"; }
 				print "</TD>\n";
 			}
 			print "<TD>&nbsp;</TD>";
@@ -7751,10 +7757,10 @@ if (scalar keys %HTMLOutput) {
 				if ($max_h > 0) { $bredde_h=int(($DayHits{$year.$month.$day}||0)/$max_h*$BarHeight)+1; }
 				if ($max_k > 0) { $bredde_k=int(($DayBytes{$year.$month.$day}||0)/$max_k*$BarHeight)+1; }
 				print "<TD>";
-				if ($ShowDaysOfMonthStats =~ /V/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_v\" HEIGHT=$bredde_v WIDTH=4 ALT=\"$Message[10]: ".int($DayVisits{$year.$month.$day}||0)."\" title=\"$Message[10]: ".int($DayVisits{$year.$month.$day}||0)."\">"; }
-				if ($ShowDaysOfMonthStats =~ /P/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_p\" HEIGHT=$bredde_p WIDTH=4 ALT=\"$Message[56]: ".int($DayPages{$year.$month.$day}||0)."\" title=\"$Message[56]: ".int($DayPages{$year.$month.$day}||0)."\">"; }
-				if ($ShowDaysOfMonthStats =~ /H/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_h\" HEIGHT=$bredde_h WIDTH=4 ALT=\"$Message[57]: ".int($DayHits{$year.$month.$day}||0)."\" title=\"$Message[57]: ".int($DayHits{$year.$month.$day}||0)."\">"; }
-				if ($ShowDaysOfMonthStats =~ /B/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_k\" HEIGHT=$bredde_k WIDTH=4 ALT=\"$Message[75]: ".Format_Bytes($DayBytes{$year.$month.$day})."\" title=\"$Message[75]: ".Format_Bytes($DayBytes{$year.$month.$day})."\">"; }
+				if ($ShowDaysOfMonthStats =~ /V/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarPng{'vv'}\" HEIGHT=$bredde_v WIDTH=4 ALT=\"$Message[10]: ".int($DayVisits{$year.$month.$day}||0)."\" title=\"$Message[10]: ".int($DayVisits{$year.$month.$day}||0)."\">"; }
+				if ($ShowDaysOfMonthStats =~ /P/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarPng{'vp'}\" HEIGHT=$bredde_p WIDTH=4 ALT=\"$Message[56]: ".int($DayPages{$year.$month.$day}||0)."\" title=\"$Message[56]: ".int($DayPages{$year.$month.$day}||0)."\">"; }
+				if ($ShowDaysOfMonthStats =~ /H/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarPng{'vh'}\" HEIGHT=$bredde_h WIDTH=4 ALT=\"$Message[57]: ".int($DayHits{$year.$month.$day}||0)."\" title=\"$Message[57]: ".int($DayHits{$year.$month.$day}||0)."\">"; }
+				if ($ShowDaysOfMonthStats =~ /B/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarPng{'vk'}\" HEIGHT=$bredde_k WIDTH=4 ALT=\"$Message[75]: ".Format_Bytes($DayBytes{$year.$month.$day})."\" title=\"$Message[75]: ".Format_Bytes($DayBytes{$year.$month.$day})."\">"; }
 				print "</TD>\n";
 			}
 			print "<TD>&nbsp;</TD>";
@@ -7769,10 +7775,10 @@ if (scalar keys %HTMLOutput) {
 			$average_p=sprintf("%.2f",$average_p);
 			$average_h=sprintf("%.2f",$average_h);
 			$average_k=(int($average_k)?Format_Bytes(sprintf("%.2f",$average_k)):"0.00");
-			if ($ShowDaysOfMonthStats =~ /V/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_v\" HEIGHT=$bredde_v WIDTH=4 ALT=\"$Message[10]: $average_v\" title=\"$Message[10]: $average_v\">"; }
-			if ($ShowDaysOfMonthStats =~ /P/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_p\" HEIGHT=$bredde_p WIDTH=4 ALT=\"$Message[56]: $average_p\" title=\"$Message[56]: $average_p\">"; }
-			if ($ShowDaysOfMonthStats =~ /H/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_h\" HEIGHT=$bredde_h WIDTH=4 ALT=\"$Message[57]: $average_h\" title=\"$Message[57]: $average_h\">"; }
-			if ($ShowDaysOfMonthStats =~ /B/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_k\" HEIGHT=$bredde_k WIDTH=4 ALT=\"$Message[75]: $average_k\" title=\"$Message[75]: $average_k\">"; }
+			if ($ShowDaysOfMonthStats =~ /V/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarPng{'vv'}\" HEIGHT=$bredde_v WIDTH=4 ALT=\"$Message[10]: $average_v\" title=\"$Message[10]: $average_v\">"; }
+			if ($ShowDaysOfMonthStats =~ /P/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarPng{'vp'}\" HEIGHT=$bredde_p WIDTH=4 ALT=\"$Message[56]: $average_p\" title=\"$Message[56]: $average_p\">"; }
+			if ($ShowDaysOfMonthStats =~ /H/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarPng{'vh'}\" HEIGHT=$bredde_h WIDTH=4 ALT=\"$Message[57]: $average_h\" title=\"$Message[57]: $average_h\">"; }
+			if ($ShowDaysOfMonthStats =~ /B/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarPng{'vk'}\" HEIGHT=$bredde_k WIDTH=4 ALT=\"$Message[75]: $average_k\" title=\"$Message[75]: $average_k\">"; }
 			print "</TD>\n";
 			print "</TR>\n";
 			# Show lib for day
@@ -7886,9 +7892,9 @@ if (scalar keys %HTMLOutput) {
 				if ($avg_dayofweek_p[$_] == int($avg_dayofweek_p[$_])) { $avg_dayofweek_p[$_]=int($avg_dayofweek_p[$_]); }
 				if ($avg_dayofweek_h[$_] == int($avg_dayofweek_h[$_])) { $avg_dayofweek_h[$_]=int($avg_dayofweek_h[$_]); }
 				print "<TD valign=bottom>";
-				if ($ShowDaysOfWeekStats =~ /P/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_p\" HEIGHT=$bredde_p WIDTH=6 ALT=\"$Message[56]: $avg_dayofweek_p[$_]\" title=\"$Message[56]: $avg_dayofweek_p[$_]\">"; }
-				if ($ShowDaysOfWeekStats =~ /H/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_h\" HEIGHT=$bredde_h WIDTH=6 ALT=\"$Message[57]: $avg_dayofweek_h[$_]\" title=\"$Message[57]: $avg_dayofweek_h[$_]\">"; }
-				if ($ShowDaysOfWeekStats =~ /B/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_k\" HEIGHT=$bredde_k WIDTH=6 ALT=\"$Message[75]: ".Format_Bytes($avg_dayofweek_k[$_])."\" title=\"$Message[75]: ".Format_Bytes($avg_dayofweek_k[$_])."\">"; }
+				if ($ShowDaysOfWeekStats =~ /P/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarPng{'vp'}\" HEIGHT=$bredde_p WIDTH=6 ALT=\"$Message[56]: $avg_dayofweek_p[$_]\" title=\"$Message[56]: $avg_dayofweek_p[$_]\">"; }
+				if ($ShowDaysOfWeekStats =~ /H/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarPng{'vh'}\" HEIGHT=$bredde_h WIDTH=6 ALT=\"$Message[57]: $avg_dayofweek_h[$_]\" title=\"$Message[57]: $avg_dayofweek_h[$_]\">"; }
+				if ($ShowDaysOfWeekStats =~ /B/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarPng{'vk'}\" HEIGHT=$bredde_k WIDTH=6 ALT=\"$Message[75]: ".Format_Bytes($avg_dayofweek_k[$_])."\" title=\"$Message[75]: ".Format_Bytes($avg_dayofweek_k[$_])."\">"; }
 				print "</TD>\n";
 			}
 			print "</TR>\n";
@@ -7944,9 +7950,9 @@ if (scalar keys %HTMLOutput) {
 				if ($max_h > 0) { $bredde_h=int($BarHeight*$_time_h[$ix]/$max_h)+1; }
 				if ($max_k > 0) { $bredde_k=int($BarHeight*$_time_k[$ix]/$max_k)+1; }
 				print "<TD>";
-				if ($ShowHoursStats =~ /P/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_p\" HEIGHT=$bredde_p WIDTH=6 ALT=\"$Message[56]: ".int($_time_p[$ix])."\" title=\"$Message[56]: ".int($_time_p[$ix])."\">"; }
-				if ($ShowHoursStats =~ /H/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_h\" HEIGHT=$bredde_h WIDTH=6 ALT=\"$Message[57]: ".int($_time_h[$ix])."\" title=\"$Message[57]: ".int($_time_h[$ix])."\">"; }
-				if ($ShowHoursStats =~ /B/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_k\" HEIGHT=$bredde_k WIDTH=6 ALT=\"$Message[75]: ".Format_Bytes($_time_k[$ix])."\" title=\"$Message[75]: ".Format_Bytes($_time_k[$ix])."\">"; }
+				if ($ShowHoursStats =~ /P/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarPng{'vp'}\" HEIGHT=$bredde_p WIDTH=6 ALT=\"$Message[56]: ".int($_time_p[$ix])."\" title=\"$Message[56]: ".int($_time_p[$ix])."\">"; }
+				if ($ShowHoursStats =~ /H/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarPng{'vh'}\" HEIGHT=$bredde_h WIDTH=6 ALT=\"$Message[57]: ".int($_time_h[$ix])."\" title=\"$Message[57]: ".int($_time_h[$ix])."\">"; }
+				if ($ShowHoursStats =~ /B/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarPng{'vk'}\" HEIGHT=$bredde_k WIDTH=6 ALT=\"$Message[75]: ".Format_Bytes($_time_k[$ix])."\" title=\"$Message[75]: ".Format_Bytes($_time_k[$ix])."\">"; }
 				print "</TD>\n";
 			}
 			print "</TR>\n";
@@ -8050,9 +8056,9 @@ if (scalar keys %HTMLOutput) {
 				if ($ShowDomainsStats =~ /H/i) { print "<TD>$_domener_h{$key}</TD>"; }
 				if ($ShowDomainsStats =~ /B/i) { print "<TD>".Format_Bytes($_domener_k{$key})."</TD>"; }
 				print "<TD CLASS=AWL>";
-				if ($ShowDomainsStats =~ /P/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_p\" WIDTH=$bredde_p HEIGHT=6 alt=\"\" title=\"\"><br>\n"; }
-				if ($ShowDomainsStats =~ /H/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_h\" WIDTH=$bredde_h HEIGHT=6 alt=\"\" title=\"\"><br>\n"; }
-				if ($ShowDomainsStats =~ /B/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_k\" WIDTH=$bredde_k HEIGHT=6 alt=\"\" title=\"\">"; }
+				if ($ShowDomainsStats =~ /P/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarPng{'hp'}\" WIDTH=$bredde_p HEIGHT=6 alt=\"\" title=\"\"><br>\n"; }
+				if ($ShowDomainsStats =~ /H/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarPng{'hh'}\" WIDTH=$bredde_h HEIGHT=6 alt=\"\" title=\"\"><br>\n"; }
+				if ($ShowDomainsStats =~ /B/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarPng{'hk'}\" WIDTH=$bredde_k HEIGHT=6 alt=\"\" title=\"\">"; }
 				print "</TD>";
 				print "</TR>\n";
 				$total_p += $_domener_p{$key};
@@ -8253,9 +8259,9 @@ if (scalar keys %HTMLOutput) {
 				if ($ShowAuthenticatedUsers =~ /B/i) { print "<TD>".Format_Bytes($_login_k{$key})."</TD>"; }
 				if ($ShowAuthenticatedUsers =~ /L/i) { print "<TD>".($_login_l{$key}?Format_Date($_login_l{$key},1):'-')."</TD>"; }
 				#print "<TD CLASS=AWL>";
-				#print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_p\" WIDTH=$bredde_p HEIGHT=6 ALT=\"$Message[56]: $_login_p{$key}\" title=\"$Message[56]: $_login_p{$key}\"><br>\n";
-				#print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_h\" WIDTH=$bredde_h HEIGHT=6 ALT=\"$Message[57]: $_login_h{$key}\" title=\"$Message[57]: $_login_h{$key}\"><br>\n";
-				#print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_k\" WIDTH=$bredde_k HEIGHT=6 ALT=\"$Message[75]: ".Format_Bytes($_login_k{$key})."\" title=\"$Message[75]: ".Format_Bytes($_login_k{$key})."\">";
+				#print "<IMG SRC=\"$DirIcons\/other\/$BarPng{'hp'}\" WIDTH=$bredde_p HEIGHT=6 ALT=\"$Message[56]: $_login_p{$key}\" title=\"$Message[56]: $_login_p{$key}\"><br>\n";
+				#print "<IMG SRC=\"$DirIcons\/other\/$BarPng{'hh'}\" WIDTH=$bredde_h HEIGHT=6 ALT=\"$Message[57]: $_login_h{$key}\" title=\"$Message[57]: $_login_h{$key}\"><br>\n";
+				#print "<IMG SRC=\"$DirIcons\/other\/$BarPng{'hk'}\" WIDTH=$bredde_k HEIGHT=6 ALT=\"$Message[75]: ".Format_Bytes($_login_k{$key})."\" title=\"$Message[75]: ".Format_Bytes($_login_k{$key})."\">";
 				#print "</TD>";
 				print "</TR>\n";
 				$total_p += $_login_p{$key};
@@ -8461,10 +8467,10 @@ if (scalar keys %HTMLOutput) {
 					eval("$function");
 				}
 				print "<TD CLASS=AWL>";
-				if ($ShowPagesStats =~ /P/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_p\" WIDTH=$bredde_p HEIGHT=6 alt=\"\" title=\"\"><br>"; }
-				if ($ShowPagesStats =~ /B/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_k\" WIDTH=$bredde_k HEIGHT=6 alt=\"\" title=\"\"><br>"; }
-				if ($ShowPagesStats =~ /E/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_e\" WIDTH=$bredde_e HEIGHT=6 alt=\"\" title=\"\"><br>"; }
-				if ($ShowPagesStats =~ /X/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_x\" WIDTH=$bredde_x HEIGHT=6 alt=\"\" title=\"\">"; }
+				if ($ShowPagesStats =~ /P/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarPng{'hp'}\" WIDTH=$bredde_p HEIGHT=6 alt=\"\" title=\"\"><br>"; }
+				if ($ShowPagesStats =~ /B/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarPng{'hk'}\" WIDTH=$bredde_k HEIGHT=6 alt=\"\" title=\"\"><br>"; }
+				if ($ShowPagesStats =~ /E/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarPng{'he'}\" WIDTH=$bredde_e HEIGHT=6 alt=\"\" title=\"\"><br>"; }
+				if ($ShowPagesStats =~ /X/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarPng{'hx'}\" WIDTH=$bredde_x HEIGHT=6 alt=\"\" title=\"\">"; }
 				print "</TD></TR>\n";
 				$total_p += $_url_p{$key};
 				$total_e += $_url_e{$key};
