@@ -300,7 +300,7 @@ sub ShowInfoHost_geoip_region_maxmind {
         	my ($res1,$res2,$countryregion)=();
         	($res1,$res2)=$geoip_region_maxmind->region_by_name($param) if $geoip_region_maxmind;
         	if ($Debug) { debug("  Plugin geoip_region_maxmind: GetRegionByIp for $param: [${res1}_${res2}]",5); }
-            if ($res1 =~ /\w\w/) { print $countrylib{lc($res1)}||uc($res1); }
+            if ($res1 =~ /\w\w/) { print $DomainsHashIDLib{lc($res1)}||uc($res1); }
             else { print "<span style=\"color: #$color_other\">$Message[0]</span>"; }
             if ($res1 =~ /\w\w/ && $res2 =~ /\w\w/) {
                 print "&nbsp;(";
@@ -315,7 +315,7 @@ sub ShowInfoHost_geoip_region_maxmind {
         	my ($res1,$res2,$countryregion)=();
         	($res1,$res2)=$geoip_region_maxmind->region_by_name($param) if $geoip_region_maxmind;
         	if ($Debug) { debug("  Plugin geoip_region_maxmind: GetRegionByName for $param: [${res1}_${res2}]",5); }
-            if ($res1 =~ /\w\w/) { print $countrylib{lc($res1)}||uc($res1); }
+            if ($res1 =~ /\w\w/) { print $DomainsHashIDLib{lc($res1)}||uc($res1); }
             else { print "<span style=\"color: #$color_other\">$Message[0]</span>"; }
             if ($res1 =~ /\w\w/ && $res2 =~ /\w\w/) {
                 print "&nbsp;(";
