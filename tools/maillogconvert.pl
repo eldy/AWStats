@@ -337,7 +337,7 @@ while (<>) {
 		#
 		# Matched outgoing sendmail/postfix message
 		#
-		my ($mon,$day,$time,$id,$to,$from)=m/(\w+)\s+(\d+)\s+(\d+:\d+:\d+)\s+[\w\-\.]+\s+(?:sm-mta|sendmail(?:-out|)|postfix\/(?:local|lmtp|smtpd|smtp|virtual|pipe))\[.*?\]:\s+([^:]*):\s+to=(.*?)[,\s]+ctladdr=([^\,\s]*)/;
+		my ($mon,$day,$time,$id,$to,$fromorto)=m/(\w+)\s+(\d+)\s+(\d+:\d+:\d+)\s+[\w\-\.]+\s+(?:sm-mta|sendmail(?:-out|)|postfix\/(?:local|lmtp|smtpd|smtp|virtual|pipe))\[.*?\]:\s+([^:]*):\s+to=(.*?)[,\s]+ctladdr=([^\,\s]*)/;
 		$mailid=$id;
 		if (m/\s+relay=([^\s,]*)[\s,]/) { $mail{$id}{'relay_r'}=$1; }
 		elsif (m/\s+mailer=local/) { $mail{$id}{'relay_r'}='localhost'; }
@@ -349,8 +349,14 @@ while (<>) {
 		$mail{$id}{'mon'}=$mon;
 		$mail{$id}{'day'}=$day;
 		$mail{$id}{'time'}=$time;
-		$mail{$id}{'to'}=&trim($to);
-		$mail{$id}{'from'}=&trim($from);
+		if (&trim($to)=~/^|/) {
+			# In particular case of mails are sent to a pipe, the ctladdr contains the to
+			$mail{$id}{'to'}=&trim($fromorto);
+		} else {
+			# In most cases
+			$mail{$id}{'to'}=&trim($to);
+			$mail{$id}{'from'}=&trim($fromorto);
+		}
 		if (! defined($mail{$id}{'size'})) { $mail{$id}{'size'}='?'; }
 		debug("For id=$id, found a sendmail outgoing message: to=$mail{$id}{'to'} from=$mail{$id}{'from'} size=$mail{$id}{'size'} relay_r=".($mail{$id}{'relay_r'}||''));
  	}
@@ -453,7 +459,7 @@ while (<>) {
 	}
 
 	#
-	# Matched sendmail/postfix "to" message
+	# Matched sendmail or postfix "to" message
 	#
 	elsif (/: to=.*stat(us)?=sent/i) {
 		# Example:
