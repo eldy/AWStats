@@ -1688,10 +1688,10 @@ if (($YearRequired == $nowyear) && ($MonthRequired eq "year" || $MonthRequired =
 		$line=$_;
 		$_ =~ s/\n//;	# Needed because IIS log file end with CRLF and perl read lines until LF
 		$_ =~ s/\" / /g; $_ =~ s/ \"/ /g; $_ =~ s/\"$//;	# Suppress "
+		if (/^$/) { next; }								# ISS sometimes write blank lines, also possible with Apache log when editing log file.
 		if ($LogFormat == 2) {
 			if (/^#/) { next; }							# ISS writes such comments, we forget line
 			@felter=split(/ /,$_);
-			if ($felter[1] eq "")    { next; }			# ISS sometimes write blank lines
 			$savetime=$felter[1];
 			@datep=split(/-/,$felter[0]);				# YYYY-MM-DD
 			# Change order of ISS parameters to be like Apache
