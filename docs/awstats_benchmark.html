@@ -41,12 +41,12 @@ AWStats speed depends on AWStats version and options/setup you use in configurat
 
 <br>
 <br>
-<b><u>This is benchmark results with AWStats version 4.1 and a common configuration:</u></b><br>
+<b><u>This is benchmark results with AWStats version 5.0 and a common configuration:</u></b><br>
 <br>
 HARDWARE: Athlon 1 GHz / 128Mb<br>
-SOFTWARE: Windows 2000 / ActivePerl 5.6<br>
+SOFTWARE: Windows 2000 / Perl 5.8<br>
 CONFIG OPTIONS: <a href="awstats_config.html#LogFormat">LogFormat</a>=1, <a href="awstats_config.html#DNSLookup">DNSLookup</a>=0<br>
-AVERAGE SPEED: <b>4100</b> lines by seconds<br>
+AVERAGE SPEED: <b>4500</b> lines by seconds<br>
 Other times for different kind of web sites are shown lower in this page...<br>
 
 <br>
@@ -97,17 +97,28 @@ So, have a look at the following chart to:<br>
 
 <br>
 <br>
-<b><u>This is a summary of main ways to speed up AWStats:</u></b><br>
+<b><u>SOME IMPORTANT ADVICES FOR A GOOD USE OF AWSTATS:</u></b><br>
 <br>
-- You can disable <a href="awstats_config.html#DNSLookup">DNSLookup</a> in AWStats (set DNSLookup=0) but this requires
-that hosts addresses in your log file are already resolved (need to setup your
-web server to do so). Log analyze speed can be increased by 2 to 50 times but your web server will be slowed.<br>
-- If you use Apache, set <a href="awstats_config.html#PurgeLogFile">PurgeLogFile</a> to 1 (By default, to avoid bad surprise,
-<a href="awstats_config.html#PurgeLogFile">PurgeLogFile</a> is 0 in configure file, but you can set it to 1 to ask AWStats
-to purge log file after processing it, this increase speed for next run).<br>
-- Launch AWStats more often (from crontab or a scheduler). The more often you
-launch AWStats, the less AWStats has new lines in log to process.<br>
+<img src="images/star.png"><img src="images/star.png"><img src="images/star.png"><img src="images/star.png"><img src="images/star.png">
+- You can disable <a href="awstats_config.html#DNSLookup">DNSLookup</a> in AWStats (set DNSLookup=0 or use only a DNS file resolver with DNSLookup=2).
+Note that with DNSLookup disabled if you still want to have the 'country/domain' report, this requires that hosts addresses
+in your log file are already resolved (need to setup your web server to do so, your web server will be slowed).
+Without DNSLookup, log analyze speed can be increased by 10 to 100 times.<br>
+<img src="images/star.png"><img src="images/star.png"><img src="images/star.png"><img src="images/star.png">
+- Rotate your log (See <a href="awstats_faq.html#ROTATE">FAQ-SET500</a>) and launch AWStats more often (from crontab or a scheduler, See <a href="awstats_faq.html#CRONTAB">FAQ-SET550</a>).
+ The more often you
+launch AWStats, the less AWStats has new lines in log to process. This solve also the ActiveState memory problem (see next advice).<br>
+<img src="images/star.png"><img src="images/star.png"><img src="images/star.png">
+- Use standard Perl distribution instead of ActiveState (It seems that ActiveState Perl 5.006 and may be other version)
+have an important memory problem making speed of analysis slower and slower when analysing more and more lines.<br>
+<img src="images/star.png"><img src="images/star.png">
 - Use last AWStats version.<br>
+<img src="images/star.png"><img src="images/star.png">
+- Use last Perl version. For example Perl 5.8 is 15% faster than Perl 5.6<br>
+<img src="images/star.png">
+- If you use Apache and don't rotate your logs (not the best way of working), set <a href="awstats_config.html#PurgeLogFile">PurgeLogFile</a> to 1 (By default, to avoid bad surprise,
+<a href="awstats_config.html#PurgeLogFile">PurgeLogFile</a> is 0 in configure file, but you can set it to 1 to ask AWStats
+to purge the log file after processing it, this increase speed for next run).<br>
 <br>
 
 <hr>
