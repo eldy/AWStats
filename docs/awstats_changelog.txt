@@ -28,7 +28,8 @@ AWStats Changelog
 - New parameter: StyleSheet
 - New option: -staticlinks to build static links in report page (to use
   AWStats with no web servers).
-- New tool: A log format converter common2combined.pl
+- New tool: common2combined.pl (A log format converter)
+- New tool: awstats_buildstaticpages.pl
 - Fixed: wrong size of bar in "average" report when average value was < 1.
 - Fixed: pb of "Error: Not same number of records" when using some version
   of mod_perl.
