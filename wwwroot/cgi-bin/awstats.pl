@@ -5504,23 +5504,23 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 	@OSSearchIDOrder=map{qr/$_/i} @OSSearchIDOrder;
 	@SearchEnginesSearchIDOrder=map{qr/$_/i} @SearchEnginesSearchIDOrder;
 	my $defquoted=quotemeta("/$DefaultFile[0]");
-	my ($regrobot,$regtruncanchor,$regtruncurl,$regext,$regdefault,$regipv4,$regipv6)=();
-	my ($regvermsie,$regvernetscape,$regvermozilla,$regother1,$regother2,$regreferer,$regreferernoquery)=();
-	$regrobot=qr/^\/robots\.txt$/i;
-	$regtruncanchor=qr/#(\w*)$/;
-	$regtruncurl=qr/([$URLQuerySeparators])(.*)$/;
-	$regext=qr/\.(\w{1,6})$/;
+	# Define precompiled regex
+	my $regrobot=qr/^\/robots\.txt$/i;
+	my $regtruncanchor=qr/#(\w*)$/;
+	my $regtruncurl=qr/([$URLQuerySeparators])(.*)$/;
+	my $regext=qr/\.(\w{1,6})$/;
+	my $regdefault;
 	if ($URLNotCaseSensitive) { $regdefault=qr/$defquoted$/i; }
 	else { $regdefault=qr/$defquoted$/; }
-	$regipv4=qr/^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/;
-	$regipv6=qr/^[0-9A-F]*:/i;
-	$regvermsie=qr/msie([+_ ]|)([\d\.]*)/i;
-	$regvernetscape=qr/netscape.?\/([\d\.]*)/i;
-	$regvermozilla=qr/mozilla(\/|)([\d\.]*)/i;
-	$regother1=qr/webtv|omniweb|opera/i;
-	$regother2=qr/gecko|compatible|opera|galeon|safari/i;
-	$regreferer=qr/^(\w+):\/\/([^\/:]+)(:\d+|)/;
-	$regreferernoquery=qr/^([^$URLQuerySeparators]+)/;
+	my $regipv4=qr/^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/;
+	my $regipv6=qr/^[0-9A-F]*:/i;
+	my $regvermsie=qr/msie([+_ ]|)([\d\.]*)/i;
+	my $regvernetscape=qr/netscape.?\/([\d\.]*)/i;
+	my $regvermozilla=qr/mozilla(\/|)([\d\.]*)/i;
+	my $regnotie=qr/webtv|omniweb|opera/i;
+	my $regnotnetscape=qr/gecko|compatible|opera|galeon|safari/i;
+	my $regreferer=qr/^(\w+):\/\/([^\/:]+)(:\d+|)/;
+	my $regreferernoquery=qr/^([^$URLQuerySeparators]+)/;
 	
 	# Define value of $PerlParsingFormat and @fieldlib
 	&DefinePerlParsingFormat();
@@ -6229,22 +6229,22 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 				my $uabrowser=$TmpBrowser{$UserAgent};
 				if (! $uabrowser) {
 					my $found=1;
-					# IE
-					if ($UserAgent =~ /$regvermsie/o && $UserAgent !~ /$regother1/o) {
+					# IE ?
+					if ($UserAgent =~ /$regvermsie/o && $UserAgent !~ /$regnotie/o) {
 						$_browser_h{"msie$2"}++;
 						$TmpBrowser{$UserAgent}="msie$2";
 					}
-					# Netscape 6.x, 7.x ...
+					# Netscape 6.x, 7.x ... ?
 					elsif ($UserAgent =~ /$regvernetscape/o) {
 						$_browser_h{"netscape$1"}++;
 						$TmpBrowser{$UserAgent}="netscape$1";
 					}
-					# Netscape 3.x, 4.x ...
-					elsif ($UserAgent =~ /$regvermozilla/o && $UserAgent !~ /$regother2/o) {
+					# Netscape 3.x, 4.x ... ?
+					if ($UserAgent =~ /$regvermozilla/o && $UserAgent !~ /$regnotnetscape/o) {
 						$_browser_h{"netscape$2"}++;
 						$TmpBrowser{$UserAgent}="netscape$2";
 					}
-					# Other
+					# Other known browsers ?
 					else {
 						$found=0;
 						foreach (@BrowsersSearchIDOrder) {	# Search ID in order of BrowsersSearchIDOrder
