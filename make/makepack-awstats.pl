@@ -294,7 +294,7 @@ rename("$BUILDROOT/$PROJECT","$BUILDROOT/$FILENAMETGZ");
             open (SPECFROM,"<$SOURCE/make/rpm/${BUILDFIC}") || die "Error";
             open (SPECTO,">$BUILDROOT/$BUILDFIC") || die "Error";
         while (<SPECFROM>) {
-            $_ =~ s/__VERSION__/$MAJOR.$MINOR.$BUILD/;
+            $_ =~ s/__VERSION__/$MAJOR.$MINOR/;
             print SPECTO $_;
         }
         close SPECFROM;
