@@ -10,9 +10,9 @@ links, robots and more. It works with IIS 5.0+ or Apache webserver log files.
 
 License: GNU GPL (GNU General Public License. See COPYING.TXT)
 Version : 2.23
-Release date: 07 November 2000
+Release date: 16 November 2000
 Platforms: All (Linux, NT, SCO, BSD, Solaris and other *NIX's, BeOS, OS/2...)
-Author: Laurent Destailleur <laurent.destailleur@wanadoo.fr>
+Author: Laurent Destailleur <eldy@users.sourceforge.net>
 AWStats web site: http://awstats.sourceforge.net
 
 I   - Features and requirements of AWStats
@@ -152,10 +152,10 @@ II - 1) With Apache Server
 	> awstats.pl -h www.myserver.mydomain
 	  where www.myserver.mydomain is the URL used to access your web site.
 	  For sites with:
-	  - 1000 visits a month		Launch AWStats once a day (23h55 for example)
-	  - 10000 visits a month	Launch AWStats every 4 hours or more often
-	  - 100000 visits a month	Launch AWStats every hour
-	  - 200000 visits a month	Launch AWStats every 30mn
+	  - 1,000 visits a month     Launch AWStats once a day (23h55 for example)
+	  - 10,000 visits a month    Launch AWStats every 4 hours or more often
+	  - 50,000 visits a month    Launch AWStats every hour
+	  - 200,000 visits a month   Launch AWStats every 15mn
 	  This is necessary to keep good performances.
 	
 	
@@ -210,10 +210,10 @@ II - 2) With IIS Server
 	> awstats.pl -h www.myserver.mydomain
 	  where www.myserver.mydomain is the URL used to access your web site.
 	  For sites with:
-	  - 1000 visits a month		Launch AWStats once a day (23h55 for example)
-	  - 10000 visits a month	Launch AWStats every 4 hours or more often
-	  - 100000 visits a month	Launch AWStats every hour
-	  - 200000 visits a month	Launch AWStats every 30mn
+	  - 1,000 visits a month     Launch AWStats once a day (23h55 for example)
+	  - 10,000 visits a month    Launch AWStats every 4 hours or more often
+	  - 50,000 visits a month    Launch AWStats every hour
+	  - 200,000 visits a month   Launch AWStats every 30mn
 	  This is necessary to keep good performances.
 	
 	  !!! Warning, with IIS, Windows doesn't let AWStats to purge log file
@@ -281,4 +281,4 @@ You can download latest version at the following URL:
 http://awstats.sourceforge.net
 
 You can send or ask help to:
-laurent.destailleur@wanadoo.fr
+eldy@users.sourceforge.net
