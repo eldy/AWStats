@@ -84,7 +84,7 @@
 'csv','other',
 'xsl','html',
 # Package
-'rpm','archive',
+'rpm',($LogType eq 'S'?'audio':'archive'),
 'deb','archive',
 'msi','archive',
 # Archive
@@ -171,7 +171,7 @@
 'csv','csv',
 'xsl','xsl',
 # Package
-'rpm','package',
+'rpm',($LogType eq 'S'?'audio':'package'),
 'deb','package',
 'msi','package',
 # Archive
