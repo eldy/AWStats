@@ -345,6 +345,7 @@
 'linkbot',
 'metager\-linkchecker',	# Must be before linkchecker
 'linkchecker',
+'mediapartners\-google',
 'microsoft_url_control',
 'msiecrawler',
 'nagios',
@@ -692,6 +693,7 @@
 'justview', 'JustView',
 'linkbot','LinkBot',
 'linkchecker','LinkChecker',
+'mediapartners\-google','Google AdSense',
 'metager\-linkchecker','MetaGer LinkChecker',
 'microsoft_url_control','Microsoft URL Control',
 'nagios','Nagios',
