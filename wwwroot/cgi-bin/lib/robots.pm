@@ -314,6 +314,7 @@
 "ezresult",
 "gigabot",
 "gnodspider",
+"internetseer",
 "justview",
 "linkbot",
 "linkchecker",
@@ -330,7 +331,8 @@
 );
 @RobotsSearchIDOrder_list3 = (
 # Generic robot
-"robot"
+"robot",
+"crawl"
 );
 
 
@@ -618,6 +620,7 @@
 "gigabot","GigaBot",
 "gnodspider","GNOD Spider",
 "ia_archiver", "IA Archiver",
+"internetseer", "InternetSeer",
 "jennybot", "JennyBot",
 "justview", "JustView",
 "linkbot","LinkBot",
@@ -639,7 +642,8 @@
 "yandex", "Yandex bot",
 
 # Generic root ID
-"robot", "Unknown robot"
+"robot", "Unknown robot (identified by 'robot')",
+"crawl", "Unknown robot (identified by 'crawl')"
 );
 
 
