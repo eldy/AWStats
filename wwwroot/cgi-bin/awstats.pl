@@ -102,9 +102,9 @@ use vars qw/
 $EnableLockForUpdate $DNSLookup $AllowAccessFromWebToAuthenticatedUsersOnly
 $BarHeight $BarWidth $CreateDirDataIfNotExists $KeepBackupOfHistoricFiles $MaxLengthOfURL
 $MaxNbOfDomain $MaxNbOfHostsShown $MaxNbOfKeyphrasesShown $MaxNbOfKeywordsShown
-$MaxNbOfLoginShown $MaxNbOfPageShown $MaxNbOfRefererShown $MaxNbOfRobotShown
+$MaxNbOfLoginShown $MaxNbOfPageShown $MaxNbOfRefererShown $MaxNbOfRobotShown $MaxNbOfEMailsShown
 $MinHitFile $MinHitHost $MinHitKeyphrase $MinHitKeyword
-$MinHitLogin $MinHitRefer $MinHitRobot
+$MinHitLogin $MinHitRefer $MinHitRobot $MinHitEMail
 $NbOfLinesRead $NbOfLinesDropped $NbOfLinesCorrupted $NbOfOldLines $NbOfNewLines
 $NbOfLinesShowsteps $NewLinePhase $NbOfLinesForCorruptedLog $PurgeLogFile
 $ShowAuthenticatedUsers $ShowFileSizesStats
@@ -115,16 +115,16 @@ $Expires $UpdateStats $MigrateStats $URLNotCaseSensitive $URLWithQuery $UseFrame
 ($EnableLockForUpdate, $DNSLookup, $AllowAccessFromWebToAuthenticatedUsersOnly,
 $BarHeight, $BarWidth, $CreateDirDataIfNotExists, $KeepBackupOfHistoricFiles, $MaxLengthOfURL,
 $MaxNbOfDomain, $MaxNbOfHostsShown, $MaxNbOfKeyphrasesShown, $MaxNbOfKeywordsShown,
-$MaxNbOfLoginShown, $MaxNbOfPageShown, $MaxNbOfRefererShown, $MaxNbOfRobotShown,
+$MaxNbOfLoginShown, $MaxNbOfPageShown, $MaxNbOfRefererShown, $MaxNbOfRobotShown, $MaxNbOfEMailsShown,
 $MinHitFile, $MinHitHost, $MinHitKeyphrase, $MinHitKeyword,
-$MinHitLogin, $MinHitRefer, $MinHitRobot,
+$MinHitLogin, $MinHitRefer, $MinHitRobot, $MinHitEMail,
 $NbOfLinesRead, $NbOfLinesDropped, $NbOfLinesCorrupted, $NbOfOldLines, $NbOfNewLines,
 $NbOfLinesShowsteps, $NewLinePhase, $NbOfLinesForCorruptedLog, $PurgeLogFile,
 $ShowAuthenticatedUsers, $ShowFileSizesStats,
 $ShowDropped, $ShowCorrupted, $ShowUnknownOrigin, $ShowLinksToWhoIs,
 $ShowEMailSenders, $ShowEMailReceivers,
 $Expires, $UpdateStats, $MigrateStats, $URLNotCaseSensitive, $URLWithQuery, $UseFramesWhenCGI, $DecodeUA)=
-(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
+(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
 use vars qw/
 $AllowToUpdateStatsFromBrowser $ArchiveLogRecords $DetailedReportsOnNewWindows
 $FirstDayOfWeek $KeyWordsNotSensitive $SaveDatabaseFilesWithPermissionsForEveryone
@@ -1174,6 +1174,8 @@ sub Parse_Config {
 		if ($param =~ /^MinHitKeyphrase/)        { $MinHitKeyphrase=$value; next; }
 		if ($param =~ /^MaxNbOfKeywordsShown/)  { $MaxNbOfKeywordsShown=$value; next; }
 		if ($param =~ /^MinHitKeyword/)         { $MinHitKeyword=$value; next; }
+		if ($param =~ /^MaxNbOfEMailsShown/)    { $MaxNbOfEMailsShown=$value; next; }
+		if ($param =~ /^MinHitEMail/)           { $MinHitEMail=$value; next; }
 		if ($param =~ /^FirstDayOfWeek/)       	{ $FirstDayOfWeek=$value; next; }
 		if ($param =~ /^UseFramesWhenCGI/)      { $UseFramesWhenCGI=$value; next; }
 		if ($param =~ /^DetailedReportsOnNewWindows/) { $DetailedReportsOnNewWindows=$value; next; }
@@ -1505,6 +1507,8 @@ sub Check_Config {
 	if ($ShowHostsStats !~ /[01PHBL]/)             	{ $ShowHostsStats="PHBL"; }
 	if ($ShowAuthenticatedUsers !~ /[01PHBL]/)     	{ $ShowAuthenticatedUsers=0; }
 	if ($ShowRobotsStats !~ /[0-1]/)              	{ $ShowRobotsStats=1; }
+	if ($ShowEMailSenders !~ /[01HBML]/)       		{ $ShowEMailSenders=0; }
+	if ($ShowEMailReceivers !~ /[01HBML]/)         	{ $ShowEMailReceivers=0; }
 	if ($ShowSessionsStats !~ /[0-1]/)             	{ $ShowSessionsStats=1; }
 	if ($ShowPagesStats !~ /[01PBEX]/i)           	{ $ShowPagesStats="PBEX"; }
 	if ($ShowFileTypesStats !~ /[01HBC]/)         	{ $ShowFileTypesStats="HB"; }
@@ -1515,8 +1519,6 @@ sub Check_Config {
 	if ($ShowKeyphrasesStats !~ /[0-1]/)          	{ $ShowKeyphrasesStats=1; }
 	if ($ShowKeywordsStats !~ /[0-1]/)            	{ $ShowKeywordsStats=1; }
 	if ($ShowHTTPErrorsStats !~ /[0-1]/)          	{ $ShowHTTPErrorsStats=1; }
-	if ($ShowEMailSenders !~ /[0-1]/)          		{ $ShowEMailSenders=0; }
-	if ($ShowEMailReceivers !~ /[0-1]/)          	{ $ShowEMailReceivers=0; }
 	if ($MaxNbOfDomain !~ /^\d+$/ || $MaxNbOfDomain<1)           		 { $MaxNbOfDomain=20; }
 	if ($MaxNbOfHostsShown !~ /^\d+$/ || $MaxNbOfHostsShown<1)       	 { $MaxNbOfHostsShown=20; }
 	if ($MinHitHost !~ /^\d+$/ || $MinHitHost<1)              			 { $MinHitHost=1; }
@@ -1532,6 +1534,8 @@ sub Check_Config {
 	if ($MinHitKeyphrase !~ /^\d+$/ || $MinHitKeyphrase<1)           	 { $MinHitKeyphrase=1; }
 	if ($MaxNbOfKeywordsShown !~ /^\d+$/ || $MaxNbOfKeywordsShown<1)	 { $MaxNbOfKeywordsShown=20; }
 	if ($MinHitKeyword !~ /^\d+$/ || $MinHitKeyword<1)           		 { $MinHitKeyword=1; }
+	if ($MaxNbOfEMailsShown !~ /^\d+$/ || $MaxNbOfEMailsShown<1)       	 { $MaxNbOfEMailsShown=20; }
+	if ($MinHitEMail !~ /^\d+$/ || $MinHitEMail<1)  		           	 { $MinHitEMail=1; }
 	if ($FirstDayOfWeek !~ /[0-1]/)               	{ $FirstDayOfWeek=1; }
 	if ($UseFramesWhenCGI !~ /[0-1]/)  				{ $UseFramesWhenCGI=0; }
 	if ($DetailedReportsOnNewWindows !~ /[0-2]/)  	{ $DetailedReportsOnNewWindows=1; }
@@ -1565,12 +1569,14 @@ sub Check_Config {
 	$color_e =~ s/#//g; if ($color_e !~ /^[0-9|A-Z]+$/i)                 			 { $color_e="CEC2E8"; }
 	$color_x =~ s/#//g; if ($color_x !~ /^[0-9|A-Z]+$/i)                 			 { $color_x="C1B2E2"; }
 
-	# Correct param for backward compatibility
+	# Correct param if default value is asked
 	if ($ShowMonthDayStats eq "1")      { $ShowMonthDayStats = "UVPHB"; }
 	if ($ShowDaysOfWeekStats eq "1")    { $ShowDaysOfWeekStats = "PHBL"; }
 	if ($ShowHoursStats eq "1")         { $ShowHoursStats = "PHBL"; }
 	if ($ShowDomainsStats eq "1")       { $ShowDomainsStats = "PHB"; }
 	if ($ShowHostsStats eq "1")         { $ShowHostsStats = "PHBL"; }
+	if ($ShowEMailSenders eq "1")       { $ShowDomainsStats = "HBML"; }
+	if ($ShowEMailReceivers eq "1")     { $ShowDomainsStats = "HBML"; }
 	if ($ShowAuthenticatedUsers eq "1") { $ShowAuthenticatedUsers = "PHBL"; }
 	if ($ShowPagesStats eq "1") 		{ $ShowPagesStats = "PBEX"; }
 	if ($ShowFileTypesStats eq "1") 	{ $ShowFileTypesStats = "HB"; }
@@ -3012,9 +3018,20 @@ sub Save_History {
 	if ($sectiontosave eq "domain") {
 		print HISTORYTMP "\n";
 		print HISTORYTMP "# Domain - Pages - Hits - Bandwidth\n";
+		print HISTORYTMP "# The $MaxNbOfDomain first Pages must be first (order not required for others)\n";
 		$ValueInFile{$sectiontosave}=tell HISTORYTMP;
 		print HISTORYTMP "BEGIN_DOMAIN ".(scalar keys %_domener_h)."\n";
+		# We save page list in score sorted order to get a -output faster and with less use of memory.
+		&BuildKeyList($MaxNbOfDomain,1,\%_domener_h,\%_domener_p);
+		my %keysinkeylist=();
+		foreach my $key (@keylist) {
+			$keysinkeylist{$key}=1;
+			my $page=$_domener_p{$key}||0;
+			my $bytes=$_domener_k{$key}||0;		# ||0 could be commented to reduce history file size
+			print HISTORYTMP "$key $page $_domener_h{$key} $bytes\n";
+		}
 		foreach my $key (keys %_domener_h) {
+			if ($keysinkeylist{$key}) { next; }
 			my $page=$_domener_p{$key}||0;
 			my $bytes=$_domener_k{$key}||0;		# ||0 could be commented to reduce history file size
 			print HISTORYTMP "$key $page $_domener_h{$key} $bytes\n";
@@ -3093,34 +3110,78 @@ sub Save_History {
 	}
 	if ($sectiontosave eq "login") {
 		print HISTORYTMP "\n";
-		print HISTORYTMP "# Login - Pages - Hits - Bandwidth\n";
+		print HISTORYTMP "# Login - Pages - Hits - Bandwidth - Last visit\n";
+		print HISTORYTMP "# The $MaxNbOfLoginShown first Pages must be first (order not required for others)\n";
 		$ValueInFile{$sectiontosave}=tell HISTORYTMP;
 		print HISTORYTMP "BEGIN_LOGIN ".(scalar keys %_login_h)."\n";
-		foreach my $key (keys %_login_h) { print HISTORYTMP "$key ".int($_login_p{$key})." ".int($_login_h{$key})." ".int($_login_k{$key})." $_login_l{$key}\n"; }
+		# We save login list in score sorted order to get a -output faster and with less use of memory.
+		&BuildKeyList($MaxNbOfLoginShown,$MinHitLogin,\%_login_h,\%_login_p);
+		my %keysinkeylist=();
+		foreach my $key (@keylist) {
+			$keysinkeylist{$key}=1;
+			print HISTORYTMP "$key ".int($_login_p{$key})." ".int($_login_h{$key})." ".int($_login_k{$key})." $_login_l{$key}\n";
+		}
+		foreach my $key (keys %_login_h) {
+			if ($keysinkeylist{$key}) { next; }
+			print HISTORYTMP "$key ".int($_login_p{$key})." ".int($_login_h{$key})." ".int($_login_k{$key})." $_login_l{$key}\n";
+		}
 		print HISTORYTMP "END_LOGIN\n";
 	}
 	if ($sectiontosave eq "robot") {
 		print HISTORYTMP "\n";
 		print HISTORYTMP "# Robot ID - Hits - Bandwidth - Last visit\n";
+		print HISTORYTMP "# The $MaxNbOfRobotShown first Hits must be first (order not required for others)\n";
 		$ValueInFile{$sectiontosave}=tell HISTORYTMP;
 		print HISTORYTMP "BEGIN_ROBOT ".(scalar keys %_robot_h)."\n";
-		foreach my $key (keys %_robot_h) { print HISTORYTMP "$key ".int($_robot_h{$key})." ".int($_robot_k{$key})." $_robot_l{$key}\n"; }
+		# We save robot list in score sorted order to get a -output faster and with less use of memory.
+		&BuildKeyList($MaxNbOfLoginShown,$MinHitLogin,\%_robot_h,\%_robot_h);
+		my %keysinkeylist=();
+		foreach my $key (@keylist) {
+			$keysinkeylist{$key}=1;
+			print HISTORYTMP "$key ".int($_robot_h{$key})." ".int($_robot_k{$key})." $_robot_l{$key}\n";
+		}
+		foreach my $key (keys %_robot_h) {
+			if ($keysinkeylist{$key}) { next; }
+			print HISTORYTMP "$key ".int($_robot_h{$key})." ".int($_robot_k{$key})." $_robot_l{$key}\n";
+		}
 		print HISTORYTMP "END_ROBOT\n";
 	}
 	if ($sectiontosave eq "emailsender") {
 		print HISTORYTMP "\n";
 		print HISTORYTMP "# EMail - Hits - Bandwidth - Last visit\n";
+		print HISTORYTMP "# The $MaxNbOfEMailsShown first Hits must be first (order not required for others)\n";
 		$ValueInFile{$sectiontosave}=tell HISTORYTMP;
 		print HISTORYTMP "BEGIN_EMAILSENDER ".(scalar keys %_emails_h)."\n";
-		foreach my $key (keys %_emails_h) { print HISTORYTMP "$key ".int($_emails_h{$key})." ".int($_emails_k{$key})." $_emails_l{$key}\n"; }
+		# We save sender email list in score sorted order to get a -output faster and with less use of memory.
+		&BuildKeyList($MaxNbOfEMailsShown,$MinHitEMail,\%_emails_h,\%_emails_h);
+		my %keysinkeylist=();
+		foreach my $key (@keylist) {
+			$keysinkeylist{$key}=1;
+			print HISTORYTMP "$key ".int($_emails_h{$key})." ".int($_emails_k{$key})." $_emails_l{$key}\n";
+		}
+		foreach my $key (keys %_emails_h) {
+			if ($keysinkeylist{$key}) { next; }
+			print HISTORYTMP "$key ".int($_emails_h{$key})." ".int($_emails_k{$key})." $_emails_l{$key}\n";
+		}
 		print HISTORYTMP "END_EMAILSENDER\n";
 	}
 	if ($sectiontosave eq "emailreceiver") {
 		print HISTORYTMP "\n";
 		print HISTORYTMP "# EMail - Hits - Bandwidth - Last visit\n";
+		print HISTORYTMP "# The $MaxNbOfEMailsShown first hits must be first (order not required for others)\n";
 		$ValueInFile{$sectiontosave}=tell HISTORYTMP;
 		print HISTORYTMP "BEGIN_EMAILRECEIVER ".(scalar keys %_emailr_h)."\n";
-		foreach my $key (keys %_emailr_h) { print HISTORYTMP "$key ".int($_emailr_h{$key})." ".int($_emailr_k{$key})." $_emailr_l{$key}\n"; }
+		# We save receiver email list in score sorted order to get a -output faster and with less use of memory.
+		&BuildKeyList($MaxNbOfEMailsShown,$MinHitEMail,\%_emailr_h,\%_emailr_h);
+		my %keysinkeylist=();
+		foreach my $key (@keylist) {
+			$keysinkeylist{$key}=1;
+			print HISTORYTMP "$key ".int($_emailr_h{$key})." ".int($_emailr_k{$key})." $_emailr_l{$key}\n";
+		}
+		foreach my $key (keys %_emailr_h) {
+			if ($keysinkeylist{$key}) { next; }
+			print HISTORYTMP "$key ".int($_emailr_h{$key})." ".int($_emailr_k{$key})." $_emailr_l{$key}\n";
+		}
 		print HISTORYTMP "END_EMAILRECEIVER\n";
 	}
 
@@ -3542,9 +3603,10 @@ sub Init_HashArray {
 	%_host_p = %_host_h = %_host_k = %_host_l = %_host_s = %_host_u = ();
 	%_waithost_e = %_waithost_l = %_waithost_s = %_waithost_u = ();
 	%_keyphrases = %_keywords = %_os_h = %_pagesrefs_h = %_robot_h = %_robot_k = %_robot_l = ();
-	%_login_h = %_login_p = %_login_k = %_login_l = ();
+	%_login_p = %_login_h = %_login_k = %_login_l = ();
 	%_se_referrals_h = %_sider404_h = %_referer404_h = %_url_p = %_url_k = %_url_e = %_url_x = ();
 	%_unknownreferer_l = %_unknownrefererbrowser_l = ();
+	%_emails_h = %_emails_k = %_emails_l = %_emailr_h = %_emailr_k = %_emailr_l = ();
  	for (my $ix=1; $ix < @ExtraSectionName; $ix++) {
  		%{'_section_' . $ix . '_h'} = %{'_section_' . $ix . '_o'} = %{'_section_' . $ix . '_k'}	=
  		%{'_section_' . $ix . '_l'} = %{'_section_' . $ix . '_p'} = ();
@@ -5305,6 +5367,21 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {	# Updat
 			$_from_h[1]++;
 		}
 
+		# Analyze: EMail
+		#---------------
+		if ($pos_emails>=0 && $field[$pos_emails]) {
+			if ($field[$pos_emails] !~ /\@/) { $field[$pos_emails].="\@$SiteDomain"; }
+			$_emails_h{lc($field[$pos_emails])}++;									#Count accesses for sender email (hit)
+			$_emails_k{lc($field[$pos_emails])}+=$field[$pos_size];					#Count accesses for sender email (kb)
+			$_emails_l{lc($field[$pos_emails])}=$timerecord;
+		}
+		if ($pos_emailr>=0 && $field[$pos_emailr]) {
+			if ($field[$pos_emailr] !~ /\@/) { $field[$pos_emailr].="\@$SiteDomain"; }
+			$_emailr_h{lc($field[$pos_emailr])}++;									#Count accesses for receiver email (hit)
+			$_emailr_k{lc($field[$pos_emailr])}+=$field[$pos_size];					#Count accesses for receiver email (kb)
+			$_emailr_l{lc($field[$pos_emailr])}=$timerecord;
+		}
+
 		# Analyze: Extra
 		#---------------
  		foreach my $extranum (1..@ExtraSectionName-1) {
@@ -5732,8 +5809,8 @@ EOF
 			if ($ShowAuthenticatedUsers) { print ($frame?"<tr><td class=AWL>":""); print "<a href=\"$linkpage#LOGIN\"$targetpage>$Message[94]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
 			if ($ShowAuthenticatedUsers) { print ($frame?"<tr><td class=AWL> &nbsp; <img height=8 width=9 src=\"$DirIcons/other/page.png\" alt=\"...\"> ":""); print "<a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=alllogins":"$PROG$StaticLinks.alllogins.html")."\"$NewLinkTarget>$Message[80]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
 			if ($ShowAuthenticatedUsers =~ /L/i)	{ print ($frame?"<tr><td class=AWL> &nbsp; <img height=8 width=9 src=\"$DirIcons/other/page.png\" alt=\"...\"> ":""); print "<a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=lastlogins":"$PROG$StaticLinks.lastlogins.html")."\"$NewLinkTarget>$Message[9]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
-			if ($ShowEMailSenders)		 { print ($frame?"<tr><td class=AWL>":""); print "<a href=\"$linkpage#EMAILSENDERS\"$targetpage>$Message[0]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
-			if ($ShowEMailReceivers)	 { print ($frame?"<tr><td class=AWL>":""); print "<a href=\"$linkpage#EMAILRECEIVERS\"$targetpage>$Message[0]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
+			if ($ShowEMailSenders)		 { print ($frame?"<tr><td class=AWL>":""); print "<a href=\"$linkpage#EMAILSENDERS\"$targetpage>$Message[131]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
+			if ($ShowEMailReceivers)	 { print ($frame?"<tr><td class=AWL>":""); print "<a href=\"$linkpage#EMAILRECEIVERS\"$targetpage>$Message[132]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
 			if ($ShowRobotsStats)		 { print ($frame?"<tr><td class=AWL>":""); print "<a href=\"$linkpage#ROBOTS\"$targetpage>$Message[53]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
 			if ($ShowRobotsStats) 		 { print ($frame?"<tr><td class=AWL> &nbsp; <img height=8 width=9 src=\"$DirIcons/other/page.png\" alt=\"...\"> ":""); print "<a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=allrobots":"$PROG$StaticLinks.allrobots.html")."\"$NewLinkTarget>$Message[80]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
 			if ($ShowRobotsStats) 		 { print ($frame?"<tr><td class=AWL> &nbsp; <img height=8 width=9 src=\"$DirIcons/other/page.png\" alt=\"...\"> ":""); print "<a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=lastrobots":"$PROG$StaticLinks.lastrobots.html")."\"$NewLinkTarget>$Message[9]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
@@ -7671,6 +7748,102 @@ EOF
 			print "</TR>\n";
 			$total_h+=$_errors_h{$key};
 			$count++;
+		}
+		&tab_end;
+	}
+
+	# BY SENDER EMAIL
+	#----------------------------
+	if ($ShowEMailSenders) {
+		if ($Debug) { debug("ShowEMailSenders",2); }
+		print "$Center<a name=\"EMAILSENDERS\">&nbsp;</a><BR>\n";
+		my $title="$Message[131] ($Message[77] $MaxNbOfEMailsShown) &nbsp; - &nbsp; <a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=allemails":"$PROG$StaticLinks.allemails.html")."\"$NewLinkTarget>$Message[80]</a>";
+		if ($ShowEMailSenders =~ /L/i) { $title.=" &nbsp; - &nbsp; <a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=lastemails":"$PROG$StaticLinks.lastemails.html")."\"$NewLinkTarget>$Message[9]</a>"; }
+		&tab_head("$title",19);
+		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[131] : ".(scalar keys %_emails_h)."</TH>";
+		if ($ShowEMailSenders =~ /H/i) { print "<TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH>"; }
+		if ($ShowEMailSenders =~ /B/i) { print "<TH bgcolor=\"#$color_k\" width=80>$Message[75]</TH>"; }
+		if ($ShowEMailSenders =~ /M/i) { print "<TH bgcolor=\"#$color_k\" width=80>$Message[106]</TH>"; }
+		if ($ShowEMailSenders =~ /L/i) { print "<TH width=120>$Message[9]</TH>"; }
+		print "</TR>\n";
+		$total_p=$total_h=$total_k=0;
+		$max_h=1; foreach my $key (values %_emails_h) { if ($key > $max_h) { $max_h = $key; } }
+		$max_k=1; foreach my $key (values %_emails_k) { if ($key > $max_k) { $max_k = $key; } }
+		my $count=0;
+		&BuildKeyList($MaxNbOfEMailsShown,$MinHitEMail,\%_emails_h,\%_emails_h);
+		foreach my $key (@keylist) {
+			my $bredde_h=0;my $bredde_k=0;
+			if ($max_h > 0) { $bredde_h=int($BarWidth*$_emails_h{$key}/$max_h)+1; }
+			if ($max_k > 0) { $bredde_k=int($BarWidth*$_emails_k{$key}/$max_k)+1; }
+			print "<TR><TD CLASS=AWL>$key</TD>";
+			if ($ShowEMailSenders =~ /H/i) { print "<TD>$_emails_h{$key}</TD>"; }
+			if ($ShowEMailSenders =~ /B/i) { print "<TD>".Format_Bytes($_emails_k{$key})."</TD>"; }
+			if ($ShowEMailSenders =~ /M/i) { print "<TD>".Format_Bytes($_emails_k{$key}/($_emails_h{$key}||1))."</TD>"; }
+			if ($ShowEMailSenders =~ /L/i) { print "<TD>".($_emails_l{$key}?Format_Date($_emails_l{$key},1):"-")."</TD>"; }
+			print "</TR>\n";
+			#$total_p += $_emails_p{$key};
+			$total_h += $_emails_h{$key};
+			$total_k += $_emails_k{$key};
+			$count++;
+		}
+		$rest_p=0;	# $rest_p=$TotalPages-$total_p;
+		$rest_h=$TotalHits-$total_h;
+		$rest_k=$TotalBytes-$total_k;
+		if ($rest_p > 0 || $rest_h > 0 || $rest_k > 0) {	# All other sender emails
+			print "<TR><TD CLASS=AWL><font color=\"#$color_other\">$Message[2]</font></TD>";
+			if ($ShowEMailSenders =~ /H/i) { print "<TD>$rest_h</TD>"; }
+			if ($ShowEMailSenders =~ /B/i) { print "<TD>".Format_Bytes($rest_k)."</TD>"; }
+			if ($ShowEMailSenders =~ /M/i) { print "<TD>".Format_Bytes($rest_k/($rest_h||1))."</TD>"; }
+			if ($ShowEMailSenders =~ /L/i) { print "<TD>&nbsp;</TD>"; }
+			print "</TR>\n";
+		}
+		&tab_end;
+	}
+
+	# BY RECEIVER EMAIL
+	#----------------------------
+	if ($ShowEMailReceivers) {
+		if ($Debug) { debug("ShowEMailReceivers",2); }
+		print "$Center<a name=\"EMAILRECEIVERS\">&nbsp;</a><BR>\n";
+		my $title="$Message[132] ($Message[77] $MaxNbOfEMailsShown) &nbsp; - &nbsp; <a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=allemailr":"$PROG$StaticLinks.allemailr.html")."\"$NewLinkTarget>$Message[80]</a>";
+		if ($ShowEMailReceivers =~ /L/i) { $title.=" &nbsp; - &nbsp; <a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=lastemailr":"$PROG$StaticLinks.lastemailr.html")."\"$NewLinkTarget>$Message[9]</a>"; }
+		&tab_head("$title",19);
+		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[132] : ".(scalar keys %_emailr_h)."</TH>";
+		if ($ShowEMailReceivers =~ /H/i) { print "<TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH>"; }
+		if ($ShowEMailReceivers =~ /B/i) { print "<TH bgcolor=\"#$color_k\" width=80>$Message[75]</TH>"; }
+		if ($ShowEMailReceivers =~ /M/i) { print "<TH bgcolor=\"#$color_k\" width=80>$Message[106]</TH>"; }
+		if ($ShowEMailReceivers =~ /L/i) { print "<TH width=120>$Message[9]</TH>"; }
+		print "</TR>\n";
+		$total_p=$total_h=$total_k=0;
+		$max_h=1; foreach my $key (values %_emailr_h) { if ($key > $max_h) { $max_h = $key; } }
+		$max_k=1; foreach my $key (values %_emailr_k) { if ($key > $max_k) { $max_k = $key; } }
+		my $count=0;
+		&BuildKeyList($MaxNbOfEMailsShown,$MinHitEMail,\%_emailr_h,\%_emailr_h);
+		foreach my $key (@keylist) {
+			my $bredde_h=0;my $bredde_k=0;
+			if ($max_h > 0) { $bredde_h=int($BarWidth*$_emailr_h{$key}/$max_h)+1; }
+			if ($max_k > 0) { $bredde_k=int($BarWidth*$_emailr_k{$key}/$max_k)+1; }
+			print "<TR><TD CLASS=AWL>$key</TD>";
+			if ($ShowEMailReceivers =~ /H/i) { print "<TD>$_emailr_h{$key}</TD>"; }
+			if ($ShowEMailReceivers =~ /B/i) { print "<TD>".Format_Bytes($_emailr_k{$key})."</TD>"; }
+			if ($ShowEMailReceivers =~ /M/i) { print "<TD>".Format_Bytes($_emailr_k{$key}/($_emailr_h{$key}||1))."</TD>"; }
+			if ($ShowEMailReceivers =~ /L/i) { print "<TD>".($_emailr_l{$key}?Format_Date($_emailr_l{$key},1):"-")."</TD>"; }
+			print "</TR>\n";
+			#$total_p += $_emailr_p{$key};
+			$total_h += $_emailr_h{$key};
+			$total_k += $_emailr_k{$key};
+			$count++;
+		}
+		$rest_p=0;	# $rest_p=$TotalPages-$total_p;
+		$rest_h=$TotalHits-$total_h;
+		$rest_k=$TotalBytes-$total_k;
+		if ($rest_p > 0 || $rest_h > 0 || $rest_k > 0) {	# All other receiver emails
+			print "<TR><TD CLASS=AWL><font color=\"#$color_other\">$Message[2]</font></TD>";
+			if ($ShowEMailReceivers =~ /H/i) { print "<TD>$rest_h</TD>"; }
+			if ($ShowEMailReceivers =~ /B/i) { print "<TD>".Format_Bytes($rest_k)."</TD>"; }
+			if ($ShowEMailReceivers =~ /M/i) { print "<TD>".Format_Bytes($rest_k/($rest_h||1))."</TD>"; }
+			if ($ShowEMailReceivers =~ /L/i) { print "<TD>&nbsp;</TD>"; }
+			print "</TR>\n";
 		}
 		&tab_end;
 	}

@@ -976,6 +976,7 @@ ShowOSStats,ShowOriginStats,ShowKeyphrasesStats,ShowKeywordsStats,ShowHTTPErrors
 <br>#        E = Entry pages
 <br>#        X = Exit pages
 <br>#        C = Web compression (mod_gzip)
+<br>#        M = Average mail size (mail logs)
 <br>#
 <br># Show AWStats head title and icon
 <br># Default: 1, Possible codes: None
@@ -1004,12 +1005,12 @@ ShowOSStats,ShowOriginStats,ShowKeyphrasesStats,ShowKeywordsStats,ShowHTTPErrors
 <br># Show robots chart
 <br># Default: 1, Possible codes: None
 <br>ShowRobotsStats=1
-<br># Show EMail senders chart (For use when analyzing mail log files. Not yet available)
-<br># Default: HBL, Possible codes: HBL
-<br>ShowEMailSenders=HBL
-<br># Show EMail receiver chart (For use when analyzing mail log files. Not yet available)
-<br># Default: HBL, Possible codes: HBL
-<br>ShowEMailReceivers=HBL
+<br># Show EMail senders chart (For use when analyzing mail log files)
+<br># Default: HBML, Possible codes: HBML
+<br>ShowEMailSenders=HBML
+<br># Show EMail receiver chart (For use when analyzing mail log files)
+<br># Default: HBML, Possible codes: HBML
+<br>ShowEMailReceivers=HBML
 <br># Show session chart
 <br># Default: 1, Possible codes: None
 <br>ShowSessionsStats=1
@@ -1029,8 +1030,8 @@ ShowOSStats,ShowOriginStats,ShowKeyphrasesStats,ShowKeywordsStats,ShowHTTPErrors
 <br># Default: 1, Possible codes: None
 <br>ShowOSStats=1
 <br># Show Origin chart
-<br># Default: 1, Possible codes: None
-<br>ShowOriginStats=1
+<br># Default: PH, Possible codes: HB
+<br>ShowOriginStats=PH
 <br># Show keyphrases chart
 <br># Default: 1, Possible codes: None
 <br>ShowKeyphrasesStats=1
