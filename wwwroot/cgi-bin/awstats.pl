@@ -4254,7 +4254,7 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {	# Updat
 					if (! $_waithost_s{$_}) {
 						# This is a second visit or more
 						# We count 'visit','exit','entry','DayVisits'
-#						if ($Debug) { debug("  This is a second visit for $_.",4); }
+						#if ($Debug) { debug("  This is a second visit for $_.",4); }
 						my $timehosts=$_host_s{$_};
 						my $page=$_host_u{$_};
 						if ($page) { $_url_x{$page}++; }
@@ -4269,7 +4269,7 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {	# Updat
 					else {
 						# This is third visit or more
 						# We count 'session','visit','exit','entry','DayVisits'
-#						if ($Debug) { debug("  This is a third visit or more for $_.",4); }
+						#if ($Debug) { debug("  This is a third visit or more for $_.",4); }
 						my $timehosts=$_host_s{$_};
 						my $page=$_host_u{$_};
 						if ($page) { $_url_x{$page}++; }
@@ -4284,19 +4284,18 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {	# Updat
 				}
 				elsif ($timerecord > $timehostl) {
 					# This is a same visit we can count
-#					if ($Debug) { debug("  This is same visit still running for $_. host_l/host_u changed to $timerecord/$field[$pos_url]",4); }
+					#if ($Debug) { debug("  This is same visit still running for $_. host_l/host_u changed to $timerecord/$field[$pos_url]",4); }
 					$_host_l{$_}=$timerecord;
 					$_host_u{$_}=$field[$pos_url];
 				}
 				elsif ($timerecord == $timehostl) {
 					# This is a same visit we can count
-#					if ($Debug) { debug("  This is same visit still running for $_. host_l/host_u changed to $timerecord/$field[$pos_url]",4); }
-					#$_host_l{$_}=$timerecord;
+					#if ($Debug) { debug("  This is same visit still running for $_. host_l/host_u changed to $timerecord/$field[$pos_url]",4); }
 					$_host_u{$_}=$field[$pos_url];
 				}
 				elsif ($timerecord < $_host_s{$_}) {
 					# Should happens with not correctly sorted log files
-#					if ($Debug) { debug("  This is same visit still running for $_ with start not in order. host_s changed to $timerecord",4); }
+					#if ($Debug) { debug("  This is same visit still running for $_ with start not in order. host_s changed to $timerecord",4); }
 					if (! $_waithost_s{$_}) {
 						# We can change entry page not yet counted as the save entry page was waithost_e if $_waithost_s{$_} is not defined
 						$_waithost_e{$_}=$field[$pos_url];
@@ -4307,12 +4306,12 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {	# Updat
 					$_host_s{$_}=$timerecord;
 				}
 				else {
-#					if ($Debug) { debug("  This is same visit still running for $_ with hit between start and last hits. No change",4); }
+					#if ($Debug) { debug("  This is same visit still running for $_ with hit between start and last hits. No change",4); }
 				}
 			}
 			else {
 				# This is a new visit (may be). First new visits found for this host
-#				if ($Debug) { debug("  New session (may be) for $_. Save in wait array to see later",3); }
+				#if ($Debug) { debug("  New session (may be) for $_. Save in wait array to see later",3); }
 				# We save in wait array the entry page to count later
 				$_waithost_e{$_}=$field[$pos_url];
 				# Save new session properties
@@ -4770,7 +4769,7 @@ EOF
 			if ($MonthRequired eq "year" || $monthix eq $MonthRequired) {
 				&Read_History_With_Update($YearRequired,$monthix,0,0,"all");			# Read full history file
 			}
-			else {
+			elsif ($HTMLOutput eq "main" && $ShowMonthDayStats) {
 				&Read_History_With_Update($YearRequired,$monthix,0,0,"general time");	# Read general and time sections
 			}
 		}
