@@ -481,6 +481,7 @@ print CONF <<EOF;
     Order allow,deny
     Allow from all
 </Directory>
+
 EOF
 		}
 	close CONF;
@@ -581,6 +582,7 @@ if ($WebServerChanged) {
 	if ($OS eq 'linux') 	{
 		print "\n-----> Restart Apache with '/sbin/service httpd restart'\n";
 	 	my $ret=`/sbin/service httpd restart`;
+	 	print "$ret";
 	}
 	elsif ($OS eq 'windows')	{
 		foreach my $key (keys %ApachePath) {
