@@ -56,7 +56,7 @@
 'slurp',
 'unlost_web_crawler',
 'voila',
-'voyager\/',		# Add / to avoid to exclude voyager browser
+'^voyager\/',		# Add ^ and \/ to avoid to exclude voyager and amigavoyager browser
 'webbase',
 'weblayers',
 'wisenutbot'
@@ -585,7 +585,7 @@
 'verticrawl','Verticrawl',
 'victoria','Victoria',
 'visionsearch','vision-search',
-'voyager\/','Voyager',
+'^voyager\/','Voyager',
 'vwbot','VWbot',
 'w3index','The NWI Robot',
 'w3m2','W3M2',

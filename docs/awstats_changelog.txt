@@ -28,6 +28,7 @@ Fixes:
 - Fix in log parsing that should reduce dropped records to only records
   that match a dropping criteria (SkipFiles, Skip..., Only...).
 - Click on "Summary" now returns to top of page even with rawlog plugin.
+- Fixed AmigaVoyager detection.
 
 New features/improvements:
 - Increased speed by 10 to 20%.
@@ -74,7 +75,7 @@ Other/Documentation:
   Microsoft URL Control added in robot list.
 - Documentation seriously updated.
 - FAQ updated.
-- Debian icon and some missing country flags added.
+- Debian, Amigavoyager and some missing country flags icons added.
 - Prepare code for decodeUTFkeys plugin.
 - Added Hebrew and Galician language.
 

@@ -262,6 +262,7 @@
 'opera','opera',
 # Other standard web browsers
 'amaya','amaya',
+'amigavoyager','amigavoyager',
 'aweb','aweb',
 'chimera','chimera',
 'dreamcast','dreamcast',
