@@ -278,7 +278,7 @@ You must use : <i>LogFormat=4</i><br>
 Note: Browsers, OS's, Keywords and Referers features are not available with a such format.<br>
 </td></tr></table>
 
-<u>If your log records are EXACTLY like this (With some <b>Squid</b> versions):</u><br>
+<u>If your log records are EXACTLY like this (With some <b>Squid</b> versions, after setting <i>emulate_http_log</i> to on):</u><br>
 <i>200.135.30.181 - - [dd/mmm/yyyy:hh:mm:ss +0x00] "GET http://www.mysite.com/page.html HTTP/1.0" 200 456 TCP_CLIENT_REFRESH_MISS:DIRECT</i><br>
 You must use : <i>LogFormat="%host %other %logname %time1 %methodurl %code %bytesd %other"</i><br>
 
