@@ -1,5 +1,5 @@
 # Serbian message file (Tomislav Loncar, tomo@inecco.net; Bojan Suzic, bojans@teol.net; Mihailo Stefanović, mst@mikis.org)
-# $Version: 1.55 $ - $Date$
+# $Version: 1.2 $ - $Date$
 PageCode=utf-8
 message0=Непознато
 message1=непознатих (IP адреса није разрешена)
