@@ -132,7 +132,7 @@ $BuildReportFormat='html';
 $BuildHistoryFormat='text';
 $ExtraTrackedRowsLimit=500;
 use vars qw/
-$AllowToUpdateStatsFromBrowser $EnableLockForUpdate $DNSLookup $AllowAccessFromWebToAuthenticatedUsersOnly
+$DebugMessages $AllowToUpdateStatsFromBrowser $EnableLockForUpdate $DNSLookup $AllowAccessFromWebToAuthenticatedUsersOnly
 $BarHeight $BarWidth $CreateDirDataIfNotExists $KeepBackupOfHistoricFiles
 $NbOfLinesParsed $NbOfLinesDropped $NbOfLinesCorrupted $NbOfOldLines $NbOfNewLines
 $NbOfLinesShowsteps $NewLinePhase $NbOfLinesForCorruptedLog $PurgeLogFile $ArchiveLogRecords
@@ -144,7 +144,7 @@ $AuthenticatedUsersNotCaseSensitive
 $Expires $UpdateStats $MigrateStats $URLNotCaseSensitive $URLWithQuery $URLReferrerWithQuery
 $DecodeUA
 /;
-($AllowToUpdateStatsFromBrowser, $EnableLockForUpdate, $DNSLookup, $AllowAccessFromWebToAuthenticatedUsersOnly,
+($DebugMessages, $AllowToUpdateStatsFromBrowser, $EnableLockForUpdate, $DNSLookup, $AllowAccessFromWebToAuthenticatedUsersOnly,
 $BarHeight, $BarWidth, $CreateDirDataIfNotExists, $KeepBackupOfHistoricFiles,
 $NbOfLinesParsed, $NbOfLinesDropped, $NbOfLinesCorrupted, $NbOfOldLines, $NbOfNewLines,
 $NbOfLinesShowsteps, $NewLinePhase, $NbOfLinesForCorruptedLog, $PurgeLogFile, $ArchiveLogRecords,
@@ -155,11 +155,11 @@ $IncludeInternalLinksInOriginSection,
 $AuthenticatedUsersNotCaseSensitive,
 $Expires, $UpdateStats, $MigrateStats, $URLNotCaseSensitive, $URLWithQuery, $URLReferrerWithQuery,
 $DecodeUA)=
-(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
+(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
 use vars qw/
 $DetailedReportsOnNewWindows
 $FirstDayOfWeek $KeyWordsNotSensitive $SaveDatabaseFilesWithPermissionsForEveryone
-$WarningMessages $DebugMessages $ShowLinksOnUrl $UseFramesWhenCGI
+$WarningMessages $ShowLinksOnUrl $UseFramesWhenCGI
 $ShowMenu $ShowSummary $ShowMonthStats $ShowDaysOfMonthStats $ShowDaysOfWeekStats
 $ShowHoursStats $ShowDomainsStats $ShowHostsStats
 $ShowRobotsStats $ShowSessionsStats $ShowPagesStats $ShowFileTypesStats
@@ -169,7 +169,7 @@ $AddDataArrayMonthStats $AddDataArrayShowDaysOfMonthStats $AddDataArrayShowDaysO
 /;
 ($DetailedReportsOnNewWindows,
 $FirstDayOfWeek, $KeyWordsNotSensitive, $SaveDatabaseFilesWithPermissionsForEveryone,
-$WarningMessages, $DebugMessages, $ShowLinksOnUrl, $UseFramesWhenCGI,
+$WarningMessages, $ShowLinksOnUrl, $UseFramesWhenCGI,
 $ShowMenu, $ShowSummary, $ShowMonthStats, $ShowDaysOfMonthStats, $ShowDaysOfWeekStats,
 $ShowHoursStats, $ShowDomainsStats, $ShowHostsStats,
 $ShowRobotsStats, $ShowSessionsStats, $ShowPagesStats, $ShowFileTypesStats,
@@ -177,7 +177,7 @@ $ShowOSStats, $ShowBrowsersStats, $ShowOriginStats,
 $ShowKeyphrasesStats, $ShowKeywordsStats, $ShowMiscStats, $ShowHTTPErrorsStats,
 $AddDataArrayMonthStats, $AddDataArrayShowDaysOfMonthStats, $AddDataArrayShowDaysOfWeekStats, $AddDataArrayShowHoursStats
 )=
-(1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1);
+(1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1);
 use vars qw/
 $AllowFullYearView 
 $LevelForRobotsDetection $LevelForWormsDetection $LevelForBrowsersDetection $LevelForOSDetection $LevelForRefererAnalyze
@@ -1577,7 +1577,7 @@ sub Check_Config {
 	if ($URLWithQuery !~ /[0-1]/)                 	{ $URLWithQuery=0; }
 	if ($URLReferrerWithQuery !~ /[0-1]/)          	{ $URLReferrerWithQuery=0; }
 	if ($WarningMessages !~ /[0-1]/)              	{ $WarningMessages=1; }
-	if ($DebugMessages !~ /[0-1]/)              	{ $DebugMessages=1; }
+	if ($DebugMessages !~ /[0-1]/)              	{ $DebugMessages=0; }
 	if ($NbOfLinesForCorruptedLog !~ /^\d+/ || $NbOfLinesForCorruptedLog<1)	{ $NbOfLinesForCorruptedLog=50; }
 	if ($Expires !~ /^\d+/)                 		{ $Expires=0; }
 	if ($DecodeUA !~ /[0-1]/)						{ $DecodeUA=0; }
@@ -1826,7 +1826,8 @@ sub Read_Plugins {
 	my @PossiblePluginsDir=("$DIR/plugins","/usr/local/awstats/wwwroot/cgi-bin/plugins","/usr/share/awstats/plugins");
  	my %DirAddedInINC=();
 
-	foreach my $key (keys %NoLoadPlugin) { if ($NoLoadPlugin{$key} < 0) { push @PluginsToLoad, $key; } }
+	#Removed for security reason
+	#foreach my $key (keys %NoLoadPlugin) { if ($NoLoadPlugin{$key} < 0) { push @PluginsToLoad, $key; } }
 	if ($Debug) { debug("Call to Read_Plugins with list: ".join(',',@PluginsToLoad)); }
 	foreach my $plugininfo (@PluginsToLoad) {
 		my ($pluginfile,$pluginparam)=split(/\s+/,$plugininfo,2);
@@ -4290,7 +4291,12 @@ sub UnCompileRegex {
 #------------------------------------------------------------------------------
 sub Sanitize {
 	my $stringtoclean=shift;
-	$stringtoclean =~ s/[^\w_\-\\\/\.:\s]//g;
+	my $full=shift||0;
+	if ($full) {
+	    $stringtoclean =~ s/[^\w]//g;
+    } else {
+	    $stringtoclean =~ s/[^\w\-\\\/\.:\s]//g;
+	}
 	return $stringtoclean;
 }
 
@@ -5355,6 +5361,7 @@ $QueryString='';
 # be set to force AWStats to be ran as CLI even from a web page.
 if ($ENV{'AWSTATS_DEL_GATEWAY_INTERFACE'}) { $ENV{'GATEWAY_INTERFACE'}=''; }
 if ($ENV{'GATEWAY_INTERFACE'}) {	# Run from a browser as CGI
+    $DebugMessages=0;
 	# Prepare QueryString
 	if ($ENV{'CONTENT_LENGTH'}) {
 		binmode STDIN;
@@ -5372,7 +5379,7 @@ if ($ENV{'GATEWAY_INTERFACE'}) {	# Run from a browser as CGI
 
 	if ($QueryString =~ /config=([^&]+)/i)				{ $SiteConfig=&DecodeEncodedString("$1"); }
 	if ($QueryString =~ /diricons=([^&]+)/i)			{ $DirIcons=&DecodeEncodedString("$1"); }
-	if ($QueryString =~ /pluginmode=([^&]+)/i)			{ $PluginMode=&Sanitize(&DecodeEncodedString("$1")); }
+	if ($QueryString =~ /pluginmode=([^&]+)/i)			{ $PluginMode=&Sanitize(&DecodeEncodedString("$1"),1); }
 	if ($QueryString =~ /configdir=([^&]+)/i)			{ $DirConfig=&Sanitize(&DecodeEncodedString("$1")); }
 	# All filters
 	if ($QueryString =~ /hostfilter=([^&]+)/i)			{ $FilterIn{'host'}=&DecodeEncodedString("$1"); }			# Filter on host list can also be defined with hostfilter=filter
@@ -5395,6 +5402,7 @@ if ($ENV{'GATEWAY_INTERFACE'}) {	# Run from a browser as CGI
 	}
 }
 else {								# Run from command line
+    $DebugMessages=1;
 	# Prepare QueryString
 	for (0..@ARGV-1) {
 		# If migrate
@@ -5420,7 +5428,7 @@ else {								# Run from command line
 
 	if ($QueryString =~ /config=([^&]+)/i)				{ $SiteConfig="$1"; }
 	if ($QueryString =~ /diricons=([^&]+)/i)			{ $DirIcons="$1"; }
-	if ($QueryString =~ /pluginmode=([^&]+)/i)			{ $PluginMode=&Sanitize("$1"); }
+	if ($QueryString =~ /pluginmode=([^&]+)/i)			{ $PluginMode=&Sanitize("$1",1); }
 	if ($QueryString =~ /configdir=([^&]+)/i)			{ $DirConfig=&Sanitize("$1"); }
 	# All filters
 	if ($QueryString =~ /hostfilter=([^&]+)/i)			{ $FilterIn{'host'}="$1"; }			# Filter on host list can also be defined with hostfilter=filter
@@ -5442,6 +5450,7 @@ else {								# Run from command line
 	if ($QueryString =~ /showcorrupted/i) 				{ $ShowCorrupted=1; $QueryString=~s/showcorrupted[^&]*//i; }
 	if ($QueryString =~ /showdropped/i)					{ $ShowDropped=1; $QueryString=~s/showdropped[^&]*//i; }
 	if ($QueryString =~ /showunknownorigin/i)			{ $ShowUnknownOrigin=1; $QueryString=~s/showunknownorigin[^&]*//i; }
+
 }
 if ($QueryString =~ /(^|&)staticlinks/i) 			{ $StaticLinks=".$SiteConfig"; }
 if ($QueryString =~ /(^|&)staticlinks=([^&]+)/i) 	{ $StaticLinks=".$2"; }		# When ran from awstatsbuildstaticpages.pl
@@ -5449,8 +5458,9 @@ if ($QueryString =~ /(^|&)staticlinksext=([^&]+)/i) { $StaticExt="$2"; }
 if ($QueryString =~ /(^|&)framename=([^&]+)/i)		{ $FrameName="$2"; }
 if ($QueryString =~ /(^|&)debug=(\d+)/i)			{ $Debug=$2; }
 if ($QueryString =~ /(^|&)updatefor=(\d+)/i)		{ $UpdateFor=$2; }
-if ($QueryString =~ /(^|&)noloadplugin=([^&]+)/i)	{ foreach (split(/,/,$2)) { $NoLoadPlugin{&Sanitize("$_")}=1; } }
-if ($QueryString =~ /(^|&)loadplugin=([^&]+)/i)		{ foreach (split(/,/,$2)) { $NoLoadPlugin{&Sanitize("$_")}=-1; } }
+if ($QueryString =~ /(^|&)noloadplugin=([^&]+)/i)	{ foreach (split(/,/,$2)) { $NoLoadPlugin{&Sanitize("$_",1)}=1; } }
+#Removed for security reasons
+#if ($QueryString =~ /(^|&)loadplugin=([^&]+)/i)		{ foreach (split(/,/,$2)) { $NoLoadPlugin{&Sanitize("$_",1)}=-1; } }
 if ($QueryString =~ /(^|&)limitflush=(\d+)/i)		{ $LIMITFLUSH=$2; }
 # Get/Define output
 if ($QueryString =~ /(^|&)output(=[^&]*|)(.*)&output(=[^&]*|)(&|$)/i) { error("Only 1 output option is allowed","","",1); }
@@ -5490,7 +5500,7 @@ else { $DayRequired=''; }
 # Print AWStats and Perl version 
 if ($Debug) {
 	debug(ucfirst($PROG)." - $VERSION - Perl $^X $]",1);
-	debug("DIR=$DIR PROG=$PROG",2);
+	debug("DIR=$DIR PROG=$PROG Extension=$Extension",2);
 	debug("QUERY_STRING=$QueryString",2);
 	debug("HTMLOutput=".join(',',keys %HTMLOutput),1);
 	debug("YearRequired=$YearRequired, MonthRequired=$MonthRequired",2);
@@ -5635,6 +5645,10 @@ if (! $Lang || $Lang eq 'auto') {
 # Check and correct bad parameters
 &Check_Config();
 # Now SiteDomain is defined
+
+if ($Debug && ! $DebugMessages) {
+    error("Debug has not been allowed. Change DebugMessages parameter in config file to allow debug.");   
+}
 
 # Define frame name and correct variable for frames
 if (! $FrameName) {
