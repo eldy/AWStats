@@ -40,6 +40,7 @@
 "ecatch",
 "emailsiphon",
 "encompass",
+"firebird",
 "friendlyspider",
 "fresco",
 "galeon",
@@ -142,6 +143,7 @@
 "ecatch", "eCatch",
 "emailsiphon","EmailSiphon",
 "encompass","Encompass",
+"firebird","Firebird",
 "friendlyspider","FriendlySpider",
 "fresco","ANT Fresco",
 "galeon","Galeon",
@@ -260,6 +262,7 @@
 "ecatch","notavailable",
 "emailsiphon","notavailable",
 "encompass","notavailable",
+"firebird","phoenix",
 "friendlyspider","notavailable",
 "fresco","notavailable",
 "galeon","galeon",
@@ -358,6 +361,8 @@
 # Netscape	7.02	Mozilla/5.0 (Platform; Security; OS-or-CPU; Localization; rv:1.0.2) Gecko/20030208 Netscape/7.02 
 #
 # Mozilla	1.3		Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.3) Gecko/20030312
+#
+# Firebird	0.6		Mozilla/5.0 (Windows; U; Windows NT 5.0; en-US; rv:1.5a) Gecko/20030728 Mozilla Firebird/0.6.1
 #
 # Opera		6.03	Mozilla/3.0 (Windows 98; U) Opera 6.03  [en]
 # Opera		5.12    Mozilla/3.0 (Windows 98; U) Opera 5.12  [en]

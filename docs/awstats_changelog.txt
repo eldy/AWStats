@@ -24,6 +24,7 @@ Fixes:
 
 New features/improvements:
 - Added support for Darwin streaming server.
+- Added Firebird browser detection.
 - awstats_buildstaticpages.pl can also build one PDF file (need htmldoc).
 - Added maillogconvert.p for analyzing mail log files (support better
   sendmail, postfix and qmail log files).
