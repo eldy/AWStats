@@ -23,7 +23,7 @@ II  - How to install and use AWStats
       II - 1) With Apache server
       II - 2) With IIS 5.0+
 III - Benchmark
-IV  - Troubleshouting / FAQ
+IV  - Troubleshooting / FAQ
 V   - About the author, license and support
 
 
@@ -36,10 +36,10 @@ I - 1) Features
     A full log analysis enables AWStats to show you the following information:
     * Number of VISITS and UNIQUE VISITORS,
     * Most often pages viewed,
-    * Domains/countries of hosts visitors (pages,hits,kb),
-    * Rush hours (pages,hits,kb for each hour),
-    * Browsers used (pages,hits,kb for each browser),
-    * OS used (pages,hits,kb for each OS),
+    * Domains/countries of hosts visitors (pages, hits, kb),
+    * Rush hours (pages, hits, kb for each hour),
+    * Browsers used (pages, hits, kb for each browser),
+    * OS used (pages, hits, kb for each OS),
     * VISITS OF ROBOTS,
     * SEARCH ENGINES and KEYWORDS used to find your site,
     * HTTP errors (Page not found, ...).
@@ -52,7 +52,7 @@ I - 1) Features
     * Easy to install, easy to use (No compilation, no extern databases),
     * Look and colors can match your site design,
     * Multi-named web sites supported (virtual servers),
-    * Informations are since the start of your web site and month by month,
+    * Information is since the start of your web site and month by month,
     * Several languages: English, French, Dutch, Spanish, Italian, German,
       Polish, Greek, Czech, Portuguese, Korean...
     * Help on how AWStats work, tooltips on HTML reporting page,
@@ -103,13 +103,13 @@ II - 1) With Apache Server (on Unix/Linux or Windows)
       CustomLog /yourlogpath/yourlogfile common
         into
       CustomLog /yourlogpath/yourlogfile combined
-      See your apache manual for more informations. Don't forget to restart
+      See your apache manual for more information. Don't forget to restart
       apache to activate changes.
       This is an example of what you should get then in your log file:
       62.161.78.73 - - [dd/mmm/yyyy:hh:mm:ss +0000] "GET / HTTP/1.1" 200 1234 "http://www.from.com/from.htm" "Mozilla/4.0 (compatible; MSIE 5.01; Windows NT 5.0)"
 
     * Put awstats.pl file in your cgi-bin directory (or other cgi directory).
-      Check that this file has right permissions to be runned.
+      Check that this file has right permissions to be ran.
 
     * If necessary, in awstats.pl file, edit the first line
       #!/usr/bin/perl
@@ -136,7 +136,7 @@ II - 1) With Apache Server (on Unix/Linux or Windows)
         combined/ELF/XLF log format").
       - Change the "DirIcons" parameter to reflect URL of icons directory.
       - Edit "SiteDomain" parameter with the main domain name or the intranet
-        web server name used to reach the web site to analyse.
+        web server name used to reach the web site to analyze.
       - You can change other parameters if you want.
 
     * To update statistics, launch awstats.pl from the command line interface
@@ -144,7 +144,7 @@ II - 1) With Apache Server (on Unix/Linux or Windows)
         awstats.pl -config=virtualhostname -update
       AWStats will read the config file (awstats.virtualhostname.conf, or, if
       not found, awstats.conf) and create/update database where AWStats store
-      all summary informations issued from analyzed log files.
+      all summary information issued from analyzed log files.
       A log analysis process is slow (one second for each 1300 lines of your
       logfile with Athlon 1Ghz, plus DNS resolution time for each different IP
       address in your logfile if DNSLookup=1).
@@ -157,9 +157,9 @@ II - 1) With Apache Server (on Unix/Linux or Windows)
       - 250,000 visitors a month    Launch AWStats every hour
       - 1,000,000 visitors a month  Launch AWStats every hour
       This is ABSOLUTELY necessary to keep good performances. See AWStats FAQ
-      page (benchmark question) for more accurate informations.
+      page (benchmark question) for more accurate information.
 
-    * To see results of analyse, you can build a HTML report from the command
+    * To see results of analyze, you can build a HTML report from the command
       line, like this :
         awstats.pl -config=virtualhostname -output > result.html
       Or, you can view dynamically your statistics from a browser. For this,
@@ -196,7 +196,7 @@ II - 2) With IIS Server
       - Change "LogFormat" to value "2" (it means "IIS W3C log format").
       - Change the "DirIcons" parameter to reflect URL of icons directory.
       - Edit "SiteDomain" parameter with the main domain name or the intranet
-        web server name used to reach the web site to analyse.
+        web server name used to reach the web site to analyze.
       - You can change other parameters if you want.
 
     * To update statistics, launch awstats.pl from the command line interface
@@ -204,7 +204,7 @@ II - 2) With IIS Server
         awstats.pl -config=virtualhostname -update
       AWStats will read the config file (awstats.virtualhostname.conf, or, if
       not found, awstats.conf) and create/update database where AWStats store
-      all summary informations issued from analyzed log files.
+      all summary information issued from analyzed log files.
       A log analysis process is slow (one second for each 1300 lines of your
       logfile with Athlon 1Ghz, plus DNS resolution time for each different IP
       address in your logfile if DNSLookup=1).
@@ -217,15 +217,15 @@ II - 2) With IIS Server
       - 250,000 visitors a month    Launch AWStats every hour
       - 1,000,000 visitors a month  Launch AWStats every hour
       This is ABSOLUTELY necessary to keep good performances. See AWStats FAQ
-      page (benchmark question) for more accurate informations.
+      page (benchmark question) for more accurate information.
 
       !!! Warning, with IIS, Windows doesn't let AWStats to purge log file
       after processing it, so it's very important you purge/rotate your log
       file yourself (or setup IIS to do it).
       The more often you clean your log file, the more faster AWStats will be.
-      See AWStats FAQ (benchmark question) for more accurate informations.
+      See AWStats FAQ (benchmark question) for more accurate information.
 
-    * To see results of analyse, you can build a HTML report from the command
+    * To see results of analyze, you can build a HTML report from the command
       line, like this :
         awstats.pl -config=virtualhostname -output > result.html
       Or, you can view dynamically your statistics from a browser. For this,
@@ -243,22 +243,22 @@ III - BENCHMARK
 
 This is benchmark results with AWStats version 3.1:
 CONFIG: Athlon 1 GHz / Windows 2000 / ActivePerl 5.6 / LogFormat=1
-SPEED: 20000 lines in 15s with reverse dns lookup disabled
+SPEED: 20000 lines in 15s with reverse DNS lookup disabled
 AVERAGE: 1300 lines by seconds
 
-However, benchmarks of log analyzer are made without reverse dns lookup
+However, benchmarks of log analyzer are made without reverse DNS lookup
 because this depends on your system, networks and Internet and not on the
-log analyzer you use. But, the reverse dns lookup can take 95% of the time
+log analyzer you use. But, the reverse DNS lookup can take 95% of the time
 of a log analysis.
 So, let's have a look on AWStats FAQs (benchmark question) to:
 - Get more real ideas on benchmarks results
-- Get more informations and advices on a good setup for your site.
+- Get more information and advice on a good setup for your site.
 
 This is a summary of main ways to speed up AWStats:
 * You can disable DNSLookup in AWStats (set DNSLookup=0) but this requires
-that hosts adresses in your log file are already resolved (need to setup your
+that hosts addresses in your log file are already resolved (need to setup your
 web server to do so). Speed can be increased up by 2 to 50 times !
-* If you use Apache, set PurgeLogFile to 1 (By default, to avoid bad surpise,
+* If you use Apache, set PurgeLogFile to 1 (By default, to avoid bad surprise,
 PurgeLogFile is 0 in configure file, but you can set it to 1 to ask AWStats
 to purge log file after processing it, this increase speed for next run).
 * Launch AWStats more often (from crontab or a scheduler). The more often you
@@ -266,9 +266,9 @@ launch AWStats, the less AWStats has new lines in log to process.
 * Use last AWStats version
 
 
-IV - TROUBLESHOUTING / FAQ
+IV - TROUBLESHOOTING / FAQ
 -----------------------------------
-All AWStats FAQ are availabe on AWStats Official web site:
+All AWStats FAQ are available on AWStats Official web site:
 http://awstats.sourceforge.net
 
 
