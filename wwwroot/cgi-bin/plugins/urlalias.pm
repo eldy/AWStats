@@ -13,7 +13,8 @@
 
 
 # <-----
-# ENTER HERE THE USE COMMAND FOR ALL REQUIRED PERL MODULES.
+# ENTER HERE THE USE COMMAND FOR ALL REQUIRED PERL MODULES
+#if (!eval ('require "TheModule.pm";')) { return $@?"Error: $@":"Error: Need Perl module TheModule"; }
 # ----->
 use strict;no strict "refs";
 
@@ -69,12 +70,12 @@ sub Init_urlalias {
 # Parameters: URL
 #-----------------------------------------------------------------------------
 sub ShowInfoURL_urlalias {
+	my $param="$_[0]";
 	# <-----
-	my $urltoshow="$_[0]";
 	my $found = 0;			# flag for testing for whether a match occurs.  unused at present 
 	my $filetoload='';
 	my $filetoload2='';
-	if ($urltoshow && ! $urlinfoloaded) {
+	if ($param && ! $urlinfoloaded) {
 		# Load urlalias and match files
 		if ($SiteConfig && open(URLALIASFILE,"$DirData/urlalias.$SiteConfig.txt"))	{ $filetoload2="$DirData/urlalias.$SiteConfig.txt"; }
 		elsif (open(URLALIASFILE,"$DirData/urlalias.txt"))  						{ $filetoload2="$DirData/urlalias.txt"; }
@@ -97,18 +98,18 @@ sub ShowInfoURL_urlalias {
 		debug("UrlMatch file loaded: ".(scalar @UrlMatch)." entries found.");
 		$urlinfoloaded=1;
 	}
-	if ($urltoshow) {
-		if ($UrlAlias{$urltoshow}) {
- 			print "<font style=\"color: $color_link; font-weight: bold\">$UrlAlias{$urltoshow}</font><br />"; 
+	if ($param) {
+		if ($UrlAlias{$param}) {
+ 			print "<font style=\"color: $color_link; font-weight: bold\">$UrlAlias{$param}</font><br />"; 
 			$found=1;
 		}
 		else {
 			foreach my $iter (0..@UrlMatch-1) {
 				my $key = $UrlMatch[$iter][0];
-				if ( $urltoshow =~ /$key/ ) {
+				if ( $param =~ /$key/ ) {
  					print "<font style=\"color: #$color_link; font-weight: bold\">$UrlMatch[$iter][1]</font><br />"; 
 					$found = 1;
-#					$UrlAlias{$urltoshow} = $UrlMatch[$iter][1];
+#					$UrlAlias{$param} = $UrlMatch[$iter][1];
 #					if ($SiteConfig && open(URLALIASFILE,">> $DirData/urlalias.$SiteConfig.txt")) { 
 #						$filetoload="$DirData/urlalias.$SiteConfig.txt"; 
 #					}
@@ -118,7 +119,7 @@ sub ShowInfoURL_urlalias {
 #					else { 
 #						error("Couldn't open UrlAlias file \"$DirData/urlalias.txt\": $!"); 
 #					}
-#					print URLALIASFILE "$urltoshow\t$UrlAlias{$urltoshow}";
+#					print URLALIASFILE "$param\t$UrlAlias{$param}";
 #					close URLALIASFILE;
 					last;
 				}

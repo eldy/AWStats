@@ -9,8 +9,8 @@
 
 
 # <-----
-push @INC, "${DIR}/plugins";
 # ENTER HERE THE USE COMMAND FOR ALL REQUIRED PERL MODULES
+push @INC, "${DIR}/plugins";
 if (!eval ('require "Net/XWhois.pm";')) { return $@?"Error: $@":"Error: Need Perl module Net::XWhois"; }
 # ----->
 use strict;no strict "refs";
@@ -56,6 +56,7 @@ sub Init_hostinfo {
 # PLUGIN FUNCTION: AddHTMLBodyHeader_pluginname
 # UNIQUE: NO (Several plugins using this function can be loaded)
 # Function called to Add HTML code at beginning of BODY section.
+# Parameters: None
 #-----------------------------------------------------------------------------
 sub AddHTMLBodyHeader_hostinfo {
 	# <-----
@@ -90,28 +91,28 @@ EOF
 # Function called to add additionnal columns to the Hosts report.
 # This function is called when building rows of the report (One call for each
 # row). So it allows you to add a column in report, for example with code :
-#   print "<TD>This is a new cell</TD>";
+#   print "<TD>This is a new cell for $param</TD>";
 # Parameters: Host name or ip
 #-----------------------------------------------------------------------------
 sub ShowInfoHost_hostinfo {
+    my $param="$_[0]";
 	# <-----
-	my $hostinfotoshow="$_[0]";
-	if ($hostinfotoshow eq '__title__') {
+	if ($param eq '__title__') {
 		print "<th width=\"80\">$Message[114]</th>";	
 	}
-	elsif ($hostinfotoshow) {
+	elsif ($param) {
 		my $keyforwhois;
 		my $linkforwhois;
-		if ($hostinfotoshow =~ /^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/) {	# IPv4 address
-			$keyforwhois=$hostinfotoshow;
+		if ($param =~ /^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/) {	# IPv4 address
+			$keyforwhois=$param;
 			$linkforwhois=2;
 		}
-		elsif ($hostinfotoshow =~ /^[0-9A-F]*:/i) {							# IPv6 address
-			$keyforwhois=$hostinfotoshow;
+		elsif ($param =~ /^[0-9A-F]*:/i) {							# IPv6 address
+			$keyforwhois=$param;
 			$linkforwhois=2;
 		}
 		else {	# Hostname
-			$hostinfotoshow =~ /([-\w]+\.[-\w]+\.(au|uk|jp|nz))$/ or $hostinfotoshow =~ /([-\w]+\.[-\w]+)$/;
+			$param =~ /([-\w]+\.[-\w]+\.(au|uk|jp|nz))$/ or $param =~ /([-\w]+\.[-\w]+)$/;
 			$keyforwhois=$1;
 			$linkforwhois=1;
 		}

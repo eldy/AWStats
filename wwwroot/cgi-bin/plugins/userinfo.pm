@@ -14,7 +14,8 @@
 
 
 # <-----
-# ENTER HERE THE USE COMMAND FOR ALL REQUIRED PERL MODULES.
+# ENTER HERE THE USE COMMAND FOR ALL REQUIRED PERL MODULES
+#if (!eval ('require "TheModule.pm";')) { return $@?"Error: $@":"Error: Need Perl module TheModule"; }
 # ----->
 use strict;no strict "refs";
 
@@ -62,14 +63,17 @@ sub Init_userinfo {
 #-----------------------------------------------------------------------------
 # PLUGIN FUNCTION: ShowInfoUser_pluginname
 # UNIQUE: NO (Several plugins using this function can be loaded)
-# Function called to add additionnal information for Users in users' report.
-# Parameters: URL
+# Function called to add additionnal columns to Authenticated users report.
+# This function is called when building rows of the report (One call for each
+# row). So it allows you to add a column in report, for example with code :
+#   print "<TD>This is a new cell</TD>";
+# Parameters: User
 #-----------------------------------------------------------------------------
 sub ShowInfoUser_userinfo {
+	my $param="$_[0]";
 	# <-----
-	my $userinfotoshow="$_[0]";
 	my $filetoload='';
-	if ($userinfotoshow && $userinfotoshow ne '__title__' && ! $userinfoloaded) {
+	if ($param && $param ne '__title__' && ! $userinfoloaded) {
 		# Load userinfo file
 		if ($SiteConfig && open(USERINFOFILE,"$DirData/userinfo.$SiteConfig.txt"))	{ $filetoload="$DirData/userinfo.$SiteConfig.txt"; }
 		elsif (open(USERINFOFILE,"$DirData/userinfo.txt"))  						{ $filetoload="$DirData/userinfo.txt"; }
@@ -80,12 +84,12 @@ sub ShowInfoUser_userinfo {
 		debug("UserInfo file loaded: ".(scalar keys %UserInfo)." entries found.");
 		$userinfoloaded=1;
 	}
-	if ($userinfotoshow eq '__title__') {
+	if ($param eq '__title__') {
 		print "<th width=\"80\">$Message[114]</th>";	
 	}
-	elsif ($userinfotoshow) {
+	elsif ($param) {
 		print "<td>";
-		if ($UserInfo{$userinfotoshow}) { print "$UserInfo{$userinfotoshow}"; }
+		if ($UserInfo{$param}) { print "$UserInfo{$param}"; }
 		else { print "&nbsp;"; }	# Undefined user info
 		print "</td>";
 	}

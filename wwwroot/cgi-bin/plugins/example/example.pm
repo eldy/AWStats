@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 #-----------------------------------------------------------------------------
-# AWStats axample plugin
+# Example AWStats plugin
 # <-----
 # THIS IS A SAMPLE OF AN EMPTY PLUGIN FILE WITH INSTRUCTIONS TO HELP YOU TO
 # WRITE YOUR OWN WORKING PLUGIN. REPLACE THIS SENTENCE WITH THE PLUGIN GOAL.
@@ -49,7 +49,7 @@ sub Init_example {
 
 	# <-----
 	# ENTER HERE CODE TO DO INIT PLUGIN ACTIONS
-	debug("InitParams=$InitParams",1);
+	debug(" InitParams=$InitParams",1);
 	$PluginVariable1="";
 	# ----->
 
@@ -67,6 +67,7 @@ sub Init_example {
 # PLUGIN FUNCTION: AddHTMLStyles_pluginname
 # UNIQUE: NO (Several plugins using this function can be loaded)
 # Function called to Add HTML styles at beginning of BODY section.
+# Parameters: None
 #-----------------------------------------------------------------------------
 sub AddHTMLStyles_example {
 	# <-----
@@ -78,6 +79,7 @@ sub AddHTMLStyles_example {
 # PLUGIN FUNCTION: AddHTMLBodyHeader_pluginname
 # UNIQUE: NO (Several plugins using this function can be loaded)
 # Function called to Add HTML code at beginning of BODY section.
+# Parameters: None
 #-----------------------------------------------------------------------------
 sub AddHTMLBodyHeader_example {
 	# <-----
@@ -91,10 +93,11 @@ sub AddHTMLBodyHeader_example {
 # Function called to add additionnal columns to the Hosts report.
 # This function is called when building rows of the report (One call for each
 # row). So it allows you to add a column in report, for example with code :
-#   print "<TD>This is a new cell</TD>";
+#   print "<TD>This is a new cell for $param</TD>";
 # Parameters: Host name or ip
 #-----------------------------------------------------------------------------
-sub ShowInfoHost_hostinfo {
+sub ShowInfoHost_example {
+    my $param="$_[0]";
 	# <-----
 	# PERL CODE HERE
 	# ----->
@@ -106,9 +109,11 @@ sub ShowInfoHost_hostinfo {
 # Function used to add additionnal columns to the Top Pages-URL report.
 # This function is called when building rows of the report (One call for each
 # row). So it allows you to add a column in report, for example with code :
-#   print "<TD>This is a new cell</TD>";
+#   print "<TD>This is a new cell for $param</TD>";
+# Parameters: URL
 #-----------------------------------------------------------------------------
 sub ShowPagesAddField_example {
+    my $param="$_[0]";
 	# <-----
 	# PERL CODE HERE
 	# ----->
@@ -123,6 +128,7 @@ sub ShowPagesAddField_example {
 # Parameters: URL
 #-----------------------------------------------------------------------------
 sub ShowInfoURL_example {
+    my $param="$_[0]";
 	# <-----
 	# PERL CODE HERE
 	# ----->
@@ -134,10 +140,11 @@ sub ShowInfoURL_example {
 # Function called to add additionnal columns to Authenticated users report.
 # This function is called when building rows of the report (One call for each
 # row). So it allows you to add a column in report, for example with code :
-#   print "<TD>This is a new cell</TD>";
+#   print "<TD>This is a new cell for $param</TD>";
 # Parameters: User
 #-----------------------------------------------------------------------------
 sub ShowInfoUser_example {
+    my $param="$_[0]";
 	# <-----
 	# PERL CODE HERE
 	# ----->
