@@ -1347,6 +1347,7 @@ sub Check_Config {
 	if (! $Message[126]) { $Message[126]="Refering search engines"; }
 	if (! $Message[127]) { $Message[127]="Refering sites"; }
 	if (! $Message[128]) { $Message[128]="Summary"; }
+	if (! $Message[129]) { $Message[129]="Exact value not available in 'Year' view"; }
 
 	# Correct ShowFlagLinks
 	if ($ShowFlagLinks eq "0") { $ShowFlagLinks = ""; }					# For backward compatibility
@@ -5446,7 +5447,7 @@ EOF
 		print "<TD width=\"20%\" bgcolor=\"#$color_k\" onmouseover=\"ShowTooltip(5);\" onmouseout=\"HideTooltip(5);\">$Message[75]</TD>";
 		print "</TR>\n";
 		print "<TR>";
-		print "<TD>".($MonthRequired eq "year"?"<b><= $TotalUnique</b><br>Exact value not available in 'Year' view":"<b>$TotalUnique</b><br>&nbsp;")."</TD>";
+		print "<TD>".($MonthRequired eq "year"?"<b><= $TotalUnique</b><br>$Message[129]":"<b>$TotalUnique</b><br>&nbsp;")."</TD>";
 		print "<TD><b>$TotalVisits</b><br>($RatioVisits&nbsp;$Message[52])</TD>";
 		print "<TD><b>$TotalPages</b><br>($RatioPages&nbsp;".lc($Message[56]."/".$Message[12]).")</TD>";
 		print "<TD><b>$TotalHits</b><br>($RatioHits&nbsp;".lc($Message[57]."/".$Message[12]).")</TD>";
