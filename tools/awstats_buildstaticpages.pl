@@ -38,7 +38,8 @@ my $OutputDir="";
 my $OutputSuffix;
 my $OutputFile;
 my @OutputList=(
-"allhosts","lasthosts","unknownip","urldetail","urlentry","urlexit",
+"allhosts","lasthosts","unknownip","alllogins","lastlogins",
+"urldetail","urlentry","urlexit",
 "unknownos","unknownbrowser","browserdetail",
 "refererse","refererpages",
 #"referersites",
