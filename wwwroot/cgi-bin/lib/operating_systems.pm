@@ -41,6 +41,7 @@
 "bsdi",
 "freebsd",
 "openbsd",
+"gnu",
 "unix",
 # Other famous OS
 "beos",
@@ -83,6 +84,7 @@
 "bsdi","bsdi",
 "freebsd","freebsd",
 "openbsd","openbsd",
+"gnu","gnu",
 "unix","unix",
 # Other famous OS
 "beos","beos",
@@ -123,6 +125,7 @@
 "bsdi","BSDi",
 "freebsd","FreeBSD",
 "openbsd","OpenBSD",
+"gnu","GNU/Linux",
 "unix","Unknown Unix system",
 # Other famous OS
 "beos","BeOS",
