@@ -1,4 +1,4 @@
-# Galician message file by Ignacio Agulló (ignacio@agullo.tk)
+# Galician message file by Ignacio Agulló (agullo@ati.es)
 # $Revision$ - $Date$
 message0=Descoñecido
 message1=Descoñecido (IP non resolto)
@@ -53,7 +53,7 @@ message49=Accesos&nbsp;erróneos
 message50=Navegadores descoñecidos (campo do axente do usuario)
 message51=robots diferentes
 message52=visitas/visitante
-message53=visitantes Robots/Arañas
+message53=Visitantes Robots/Arañas
 message54=Analizador gratuíto de rexistros para estadísticas Web avanzadas
 message55=de
 message56=Páxinas
@@ -153,6 +153,15 @@ message149=Correos
 message150=Tamaño
 message151=Primeiro
 message152=Último
-message153=Excluír Filtro
+message153=Excluir Filtro
 message154=Os códigos amosados aquí contan accesos ou tráfico "non visto" por visitantes, logo están aillados nesta táboa.
 message155=Grupo
+message156=Os robots amosados aquí fixeron accesos ou tráfico "non visto" polos visitantes, polo tanto non se inclúen en outras táboas.
+message157=Os números despois do + son accesos hachados en arquivos "robots.txt".
+message158=Os gusanos amosados aquí fixeron accesos ou tráfico "non visto" polos visitantes, polo tanto non se inclúen en outras táboas.
+message159=O tráfico non visto é tráfico xerado por robots, gusanos ou respostas con códigos especiais de estado de HTTP.
+message160=Tráfico visto
+message161=Tráfico non visto
+message162=Historial mensual
+message163=Gusanos
+message164=gusanos distintos
