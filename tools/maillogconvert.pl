@@ -232,7 +232,7 @@ while (<>) {
 	#
 	elsif (/: client=/ ne undef) {
 		$MailType||='postfix';
-		my ($id,$relay_s)=m/\w+\s+\d+\s+\d+:\d+:\d+\s+[\w\-]+\s+(?:sendmail|postfix\/(?:local|smtpd|smtp|lmtp))\[\d+\]:\s+(.*?):\s+client=(.*)/;
+		my ($id,$relay_s)=m/\w+\s+\d+\s+\d+:\d+:\d+\s+[\w\-]+\s+(?:sendmail|postfix\/(?:local|lmtp|smtpd|smtp|virtual))\[\d+\]:\s+(.*?):\s+client=(.*)/;
 		$mailid=$id;
 		$mail{$id}{'relay_s'}=$relay_s;
 		debug("For id=$id, found host sender on a 'client' line: $mail{$id}{'relay_s'}");
@@ -246,7 +246,7 @@ while (<>) {
 		# Example: 
 		# postfix:  Jan 01 04:19:04 apollon postfix/smtpd[26553]: 1954F3B8A4: reject: RCPT from unknown[80.245.33.2]: 450 <partenaires@chiensderace.com>: User unknown in local recipient table; from=<httpd@fozzy2.dpi-europe.fr> to=<partenaires@chiensderace.com> proto=ESMTP helo=<fozzy2.dpi-europe.fr>
 		# postfix:  Jan 01 04:26:39 halley postfix/smtpd[9245]: reject: RCPT from unknown[203.156.32.33]: 554 <charitha99@yahoo.com>: Recipient address rejected: Relay access denied; from=<1126448365@aol.com> to=<charitha99@yahoo.com>
-		my ($mon,$day,$time,$id,$code,$from,$to)=m/(\w+)\s+(\d+)\s+(\d+:\d+:\d+)\s+[\w\-]+\s+(?:postfix\/(?:local|smtpd|smtp|lmtp))\[\d+\]:\s+(.*?):\s+(.*)\s+from=([^\s,]*)\s+to=([^\s,]*)/;
+		my ($mon,$day,$time,$id,$code,$from,$to)=m/(\w+)\s+(\d+)\s+(\d+:\d+:\d+)\s+[\w\-]+\s+(?:postfix\/(?:local|lmtp|smtpd|smtp|virtual))\[\d+\]:\s+(.*?):\s+(.*)\s+from=([^\s,]*)\s+to=([^\s,]*)/;
 		$mailid=($id eq 'reject'?999:$id);	# id not provided in log, we take 999
 		# $code='reject: RCPT from c66.191.66.89.dul.mn.charter.com[66.191.66.89]: 450 <partenaires@chiensderace.com>: User unknown in local recipient table;'
 		#    or 'reject: RCPT from unknown[203.156.32.33]: 554 <charitha99@yahoo.com>: Recipient address rejected: Relay access denied;'
@@ -295,7 +295,7 @@ while (<>) {
 		$MailType||='postfix';
 		# Example: 
 		# postfix:  Sep  9 18:24:23 halley postfix/local[22003]: 12C6413EC9: to=<etavidian@partenor.com>, relay=local, delay=0, status=bounced (unknown user: "etavidian")
-		my ($mon,$day,$time,$id,$to,$relay_r)=m/(\w+)\s+(\d+)\s+(\d+:\d+:\d+)\s+[\w\-]+\s+(?:postfix\/(?:local|smtpd|smtp|lmtp))\[\d+\]:\s+(.*?):\s+to=([^\s,]*)[\s,]+relay=([^\s,]*)/;
+		my ($mon,$day,$time,$id,$to,$relay_r)=m/(\w+)\s+(\d+)\s+(\d+:\d+:\d+)\s+[\w\-]+\s+(?:postfix\/(?:local|lmtp|smtpd|smtp|virtual))\[\d+\]:\s+(.*?):\s+to=([^\s,]*)[\s,]+relay=([^\s,]*)/;
 		$mailid=($id eq 'reject'?999:$id);	# id not provided in log, we take 999
 		if ($mailid) {
 			$mail{$mailid}{'code'}="999";	# Unkown error (bounced)
@@ -316,7 +316,7 @@ while (<>) {
 		#
 		# Matched outgoing sendmail/postfix message
 		#
-		my ($mon,$day,$time,$id,$to,$from)=m/(\w+)\s+(\d+)\s+(\d+:\d+:\d+)\s+[\w\-]+\s+(?:sm-mta|sendmail(?:-out|)|postfix\/(?:local|smtpd|smtp|lmtp))\[.*?\]:\s+([^:]*):\s+to=(.*?)[,\s]+ctladdr=([^\,\s]*)/;
+		my ($mon,$day,$time,$id,$to,$from)=m/(\w+)\s+(\d+)\s+(\d+:\d+:\d+)\s+[\w\-]+\s+(?:sm-mta|sendmail(?:-out|)|postfix\/(?:local|lmtp|smtpd|smtp|virtual))\[.*?\]:\s+([^:]*):\s+to=(.*?)[,\s]+ctladdr=([^\,\s]*)/;
 		$mailid=$id;
 		if (m/\s+relay=([^\s,]*)[\s,]/) { $mail{$id}{'relay_r'}=$1; }
 		elsif (m/\s+mailer=local/) { $mail{$id}{'relay_r'}='localhost'; }
@@ -422,7 +422,7 @@ while (<>) {
 	# Matched sendmail/postfix "to" message
 	#
 	elsif (/: to=.*stat(us)?=sent/i ne undef) {
-		my ($mon,$day,$time,$id,$to)=m/(\w+)\s+(\d+)\s+(\d+:\d+:\d+)\s+[\w\-]+\s+(?:sm-mta|sendmail(?:-out|)|postfix\/(?:local|smtpd|smtp|lmtp))\[.*?\]:\s+(.*?):\s+to=(.*?),/;
+		my ($mon,$day,$time,$id,$to)=m/(\w+)\s+(\d+)\s+(\d+:\d+:\d+)\s+[\w\-]+\s+(?:sm-mta|sendmail(?:-out|)|postfix\/(?:local|lmtp|smtpd|smtp|virtual))\[.*?\]:\s+(.*?):\s+to=(.*?),/;
 		$mailid=$id;
 		$mail{$id}{'code'}='1';
 		if (m/\s+relay=([^\s,]*)[\s,]/) { $mail{$id}{'relay_r'}=$1; }
