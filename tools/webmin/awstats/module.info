@@ -4,5 +4,6 @@ longdesc=Generate and analyze graphicaly statistics from web, proxy, wap, ftp or
 name=AWStats
 version=1.210
 depends=cron 1.000
+depends=webmin 1.030
 desc_fr=Analyseur de Logs AWStats
 long_desc_fr=Génèration et analyse graphique de statistiques à partir des logs de server web, ftp ou mail
