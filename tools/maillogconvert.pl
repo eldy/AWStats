@@ -7,6 +7,10 @@
 # Note 1: QMail must log in syslog format for timestamps to work.
 # Note 2: QMail logging is not 100% accurate. Some messages might
 # not be logged correctly or completely.
+#
+# A mail received to 2 different receivers, report 2 records instead of one.
+# A mail received to a forwarded account is reported as to the original receiver, not the "forwarded to".
+# A mail locally sent to a local alias is reported as n mails to all addresses of alias.
 #-------------------------------------------------------
 use strict;no strict "refs";
 
