@@ -8908,7 +8908,7 @@ if (scalar keys %HTMLOutput) {
 
 			$max_h=$max_k=0;	# Start from 0 because can be lower than 1
 			# Get average value for day of week
-			my @avg_dayofweek_nb = my @avg_dayofweek_p = my @avg_dayofweek_h = my @avg_dayofweek_k = ();
+			my @avg_dayofweek_nb=(); my @avg_dayofweek_p=(); my @avg_dayofweek_h=(); my @avg_dayofweek_k=();
 			foreach my $daycursor ($firstdaytocountaverage..$lastdaytocountaverage) {
 				$daycursor =~ /^(\d\d\d\d)(\d\d)(\d\d)/;
 				my $year=$1; my $month=$2; my $day=$3;
