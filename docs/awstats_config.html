@@ -196,6 +196,7 @@ when reading it), follow the example:<br>
 4.0+ for tag %DW-n<br>
 4.1+ for tag %NS-n<br>
 5.0+ for tag %WY-n<br>
+5.1+ for tag %Dw-n<br>
 <br># "LogFile" contains the web server logfile to analyze.
 <br># You can use a full path or relative path from awstats.pl directory.
 <br># Example: "/var/log/apache/access.log"
@@ -213,6 +214,8 @@ when reading it), follow the example:<br>
 <br>#   %WY-n    is replaced with the week number in year (1-52)
 <br>#   %DW-n    is replaced with the day number in week (1-7, 1=sunday)
 <br>#                              use n=24 if you need (1-7, 1=monday)
+<br>#   %Dw-n    is replaced with the day number in week (0-6, 0=sunday)
+<br>#                              use n=24 if you need (0-6, 0=monday)
 <br>#   Use 0 for n if you need current year, month, day, hour...
 <br># Example: "/var/log/access_log.%YYYY-0%MM-0%DD-0.log"
 <br># Example: "C:/WINNT/system32/LogFiles/W3SVC1/ex%YY-24%MM-24%DD-24.log"
