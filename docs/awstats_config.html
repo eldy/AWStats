@@ -340,15 +340,18 @@ when reading it), follow the example:<br>
 <br># If you want to have hosts reported by name instead of ip address, AWStats
 <br># need to make reverse DNS lookups (if not already done in your log file).
 <br># With DNSLookup to 0, all hosts will be reported by their IP addresses and
-<br># not by the full hostname of visitors.
-<br># If you want to set DNSLookup to 1, don't forget that this will reduce
+<br># not by the full hostname of visitors (except if names are already available
+<br># in log file).
+<br># If you want/need to set DNSLookup to 1, don't forget that this will reduce
 <br># dramatically AWStats update process speed. Do not use on large web sites.
-<br># Note: Country detection can works without reverse DNS lookup if plugin
-<br># 'geoip' is enabled (faster and more accurate than reverse DNS lookup).
+<br># Note: Reverse DNS lookup is done on IPv4 only (Enable ipv6 plugin for IPv6).
+<br># Note: Result of DNS Lookup can be used to build the Country report. However
+<br># it is highly recommanded to enable the plugin 'geoipfree' or 'geoip' to
+<br># have an accurate Country report with no need of DNS Lookup.
 <br># Possible values:
 <br># 0 - No DNS Lookup
 <br># 1 - DNS Lookup is fully enabled
-<br># 2 - DNS Lookup is made only from DNS cache files (if exist)
+<br># 2 - DNS Lookup is made only from static DNS cache file (if it exists)
 <br># Default: 2
 <br># 
 <br>DNSLookup=2
