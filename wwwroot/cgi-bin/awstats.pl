@@ -2020,7 +2020,7 @@ sub Read_History_With_TmpUpdate {
 				if (! $withupdate) { $MonthVisits{$year.$month}+=int($field[1]); }
 				# Save in MonthVisits also if migrate from a file < 4.x for backward compatibility
 				if ($MigrateStats && $versionnum < 4000 && ! $MonthVisits{$year.$month}) {
-					debug("File is version < 4000. We save ".int($field[1])." visits in DayXxx arrays",1);
+					if ($Debug) { debug("File is version < 4000. We save ".int($field[1])." visits in DayXxx arrays",1); }
 					$DayHits{$year.$month."00"}+=0;
 					$DayVisits{$year.$month."00"}+=int($field[1]);
 				}
@@ -3181,19 +3181,19 @@ sub Read_History_With_TmpUpdate {
 	if ($withupdate) {
 		# Update offset of sections in the MAP section
 		foreach (sort { $PosInFile{$a} <=> $PosInFile{$b} } keys %ValueInFile) {
-			debug(" Update offset of section $_=$ValueInFile{$_} in file at offset $PosInFile{$_}");
+			if ($Debug) { debug(" Update offset of section $_=$ValueInFile{$_} in file at offset $PosInFile{$_}"); }
 			if ($PosInFile{"$_"}) {
 				seek(HISTORYTMP,$PosInFile{"$_"},0); print HISTORYTMP $ValueInFile{"$_"};
 			}
 		}
 		# Save last data in general sections
-		debug(" Update MonthVisits=$MonthVisits{$year.$month} in file at offset $PosInFile{TotalVisits}");
+		if ($Debug) { debug(" Update MonthVisits=$MonthVisits{$year.$month} in file at offset $PosInFile{TotalVisits}"); }
 		seek(HISTORYTMP,$PosInFile{"TotalVisits"},0); print HISTORYTMP $MonthVisits{$year.$month};
-		debug(" Update MonthUnique=$MonthUnique{$year.$month} in file at offset $PosInFile{TotalUnique}");
+		if ($Debug) { debug(" Update MonthUnique=$MonthUnique{$year.$month} in file at offset $PosInFile{TotalUnique}"); }
 		seek(HISTORYTMP,$PosInFile{"TotalUnique"},0); print HISTORYTMP $MonthUnique{$year.$month};
-		debug(" Update MonthHostsKnown=$MonthHostsKnown{$year.$month} in file at offset $PosInFile{MonthHostsKnown}");
+		if ($Debug) { debug(" Update MonthHostsKnown=$MonthHostsKnown{$year.$month} in file at offset $PosInFile{MonthHostsKnown}"); }
 		seek(HISTORYTMP,$PosInFile{"MonthHostsKnown"},0); print HISTORYTMP $MonthHostsKnown{$year.$month};
-		debug(" Update MonthHostsUnknown=$MonthHostsUnknown{$year.$month} in file at offset $PosInFile{MonthHostsUnknown}");
+		if ($Debug) { debug(" Update MonthHostsUnknown=$MonthHostsUnknown{$year.$month} in file at offset $PosInFile{MonthHostsUnknown}"); }
 		seek(HISTORYTMP,$PosInFile{"MonthHostsUnknown"},0); print HISTORYTMP $MonthHostsUnknown{$year.$month};
 		close(HISTORYTMP) || error("Failed to write temporary history file");
 	}
@@ -3931,7 +3931,7 @@ sub Save_DNS_Cache_File {
 	if ($PluginsLoaded{'SaveHash'}{'hashfiles'}) { SaveHash_hashfiles($filetosave,$hashtosave,0,$nbofelemtosave,$nbofelemsaved); }
 	if (! $nbofelemsaved) {
 		$filetosave="$dnscachefile$filesuffix$dnscacheext";
-		debug(" Save data ".($nbofelemtosave?"($nbofelemtosave records max)":"(all records)")." into file $filetosave");
+		if ($Debug) { debug(" Save data ".($nbofelemtosave?"($nbofelemtosave records max)":"(all records)")." into file $filetosave"); }
 		if (! open(DNSFILE,">$filetosave")) {
 			warning("Warning: Failed to open for writing last update DNS Cache file \"$filetosave\": $!");
 			return 1;
@@ -4451,7 +4451,7 @@ sub Convert_IP_To_Decimal {
 # Return:       1 There is at least one not null value, 0 else
 #------------------------------------------------------------------------------
 sub AtLeastOneNotNull {
-	debug(" Call to AtLeastOneNotNull (".join('-',@_).")",3);
+	if ($Debug) { debug(" Call to AtLeastOneNotNull (".join('-',@_).")",3); }
 	foreach my $val (@_) { if ($val) { return 1; } }
 	return 0;
 }
@@ -5316,12 +5316,15 @@ if (! $Lang || $Lang eq 'auto') {	# If lang not defined or forced to auto
 	my $langlist=$ENV{'HTTP_ACCEPT_LANGUAGE'}||''; $langlist =~ s/;[^,]*//g;
 	if ($Debug) { debug("Search an available language among HTTP_ACCEPT_LANGUAGE=$langlist",1); }
 	foreach my $code (split(/,/,$langlist)) {	# Search for a valid lang in priority
-		if ($LangBrowserToLangAwstats{$code}) { $Lang=$LangBrowserToLangAwstats{$code}; debug(" Will try to use Lang=$Lang",1); last; }
+		if ($LangBrowserToLangAwstats{$code}) { $Lang=$LangBrowserToLangAwstats{$code}; if ($Debug) { debug(" Will try to use Lang=$Lang",1); } last; }
 		$code =~ s/-.*$//;
-		if ($LangBrowserToLangAwstats{$code}) { $Lang=$LangBrowserToLangAwstats{$code}; debug(" Will try to use Lang=$Lang",1); last; }
+		if ($LangBrowserToLangAwstats{$code}) { $Lang=$LangBrowserToLangAwstats{$code}; if ($Debug) { debug(" Will try to use Lang=$Lang",1); } last; }
 	}
 }
-if (! $Lang || $Lang eq 'auto') { debug(" No language defined or available. Will use Lang=en",1); $Lang='en'; }
+if (! $Lang || $Lang eq 'auto') {
+	if ($Debug) { debug(" No language defined or available. Will use Lang=en",1); }
+	$Lang='en';
+}
 
 # Check and correct bad parameters
 &Check_Config();
@@ -5668,10 +5671,10 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 			if ($Debug) {
 				my $string='';
 				foreach (0..@field-1) {	$string.="$fieldlib[$_]=$field[$_] "; }
-				debug(" Read line after direct access: $string",1);
+				if ($Debug) { debug(" Read line after direct access: $string",1); }
 			}
 			my $checksum=&CheckSum($line);
-			debug(" LastLineChecksum=$LastLineChecksum, Read line checksum=$checksum",1);
+			if ($Debug) { debug(" LastLineChecksum=$LastLineChecksum, Read line checksum=$checksum",1); }
 			if ($checksum == $LastLineChecksum ) {
 				if (! scalar keys %HTMLOutput) { print "Direct access after last updated record successfull (after line $LastLineNumber)\n"; }
 				$lastlinenumber=$LastLineNumber;
@@ -5733,7 +5736,7 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 		if ($Debug) {
 			my $string='';
 			foreach (0..@field-1) {	$string.="$fieldlib[$_]=$field[$_] "; }
-			debug(" Correct format line ".($lastlinenumber+$NbOfLinesParsed).": $string",4);
+			if ($Debug) { debug(" Correct format line ".($lastlinenumber+$NbOfLinesParsed).": $string",4); }
 		}
 
 		# Drop wrong virtual host name
@@ -5912,7 +5915,7 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 					foreach my $p (split(/&/,$standalonequery)) {
 						my $found=0;
 						foreach (@URLWithQueryWithout) {
-							#debug("  Check if '$_=' is param '$p' to remove it from query",5);
+							#if ($Debug) { debug("  Check if '$_=' is param '$p' to remove it from query",5); }
 							if ($URLNotCaseSensitive) { if ($p =~ /^$_=/i) { $found=1; last; } }
 							else { if ($p =~ /^$_=/) { $found=1; last; } }
 						}

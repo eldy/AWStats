@@ -165,7 +165,7 @@ sub MakeDNSLookup {
 	use Socket; $AFINET=AF_INET;
 	my $tid=0;
 	$tid=$MaxNbOfThread?eval("threads->self->tid()"):0;
-	debug("  ***** Thread id $tid: MakeDNSlookup started (for $ipaddress)",4);
+	if ($Debug) { debug("  ***** Thread id $tid: MakeDNSlookup started (for $ipaddress)",4); }
 	my $lookupresult=gethostbyaddr(pack("C4",split(/\./,$ipaddress)),$AFINET);	# This is very slow, may took 20 seconds
 	if (! $lookupresult || $lookupresult =~ /^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/ || ! IsAscii($lookupresult)) {
 		$TmpDNSLookup{$ipaddress}='*';
@@ -173,7 +173,7 @@ sub MakeDNSLookup {
 	else {
 		$TmpDNSLookup{$ipaddress}=$lookupresult;
 	}
-	debug("  ***** Thread id $tid: MakeDNSlookup done ($ipaddress resolved into $TmpDNSLookup{$ipaddress})",4);
+	if ($Debug) { debug("  ***** Thread id $tid: MakeDNSlookup done ($ipaddress resolved into $TmpDNSLookup{$ipaddress})",4); }
 	delete $threadarray{$ipaddress};
 	return;
 }
@@ -257,10 +257,10 @@ for (0..@ARGV-1) {
 if ($Debug) { $|=1; }
 
 if ($Debug) {
-	&debug(ucfirst($PROG)." - $VERSION - Perl $^X $]",1);
-	&debug("DNSLookup=$DNSLookup");
-	&debug("DNSCache=$DNSCache");
-	&debug("MaxNbOfThread=$MaxNbOfThread");
+	debug(ucfirst($PROG)." - $VERSION - Perl $^X $]",1);
+	debug("DNSLookup=$DNSLookup");
+	debug("DNSCache=$DNSCache");
+	debug("MaxNbOfThread=$MaxNbOfThread");
 }
 
 # Disallow MaxNbOfThread and Perl < 5.8
@@ -375,7 +375,7 @@ $DirData =~ s/\/$//;
 my %monthnum =  ( "Jan","01","jan","01","Feb","02","feb","02","Mar","03","mar","03","Apr","04","apr","04","May","05","may","05","Jun","06","jun","06","Jul","07","jul","07","Aug","08","aug","08","Sep","09","sep","09","Oct","10","oct","10","Nov","11","nov","11","Dec","12","dec","12" );
 
 if ($DNSCache) {
-	&debug("Load DNS Cache file $DNSCache",2);
+	if ($Debug) { debug("Load DNS Cache file $DNSCache",2); }
 	open(CACHE, "<$DNSCache") or error("Can't open cache file $DNSCache");
 	while (<CACHE>) {
 		my ($time, $ip, $name) = split;
@@ -398,16 +398,16 @@ my $starttime=time();
 $cpt=1;
 foreach my $key (0..(@ParamFile-1)) {
 	if ($ParamFile[$key] !~ /\*/ && $ParamFile[$key] !~ /\?/) {
-		&debug("Log file $ParamFile[$key] is added to LogFileToDo with number $cpt.");
+		if ($Debug) { debug("Log file $ParamFile[$key] is added to LogFileToDo with number $cpt."); }
 
 		# Check for supported compression 
 		if ($ParamFile[$key] =~ /$zcat_file/) {
-			&debug("GZIP compression detected for Log file $ParamFile[$key].");
+			if ($Debug) { debug("GZIP compression detected for Log file $ParamFile[$key]."); }
 			# Modify the name to include the zcat command
 			$ParamFile[$key] = $zcat . ' ' . $ParamFile[$key] . ' |';
 		}
 		elsif ($ParamFile[$key] =~ /$bzcat_file/) {
-			&debug("BZ2 compression detected for Log file $ParamFile[$key].");
+			if ($Debug) { debug("BZ2 compression detected for Log file $ParamFile[$key]."); }
 			# Modify the name to include the bzcat command
 			$ParamFile[$key] = $bzcat . ' ' . $ParamFile[$key] . ' |';
 		}
@@ -422,13 +422,13 @@ foreach my $key (0..(@ParamFile-1)) {
 		$ParamFile[$key] =~ s/\./\\\./g;
 		$ParamFile[$key] =~ s/\*/\.\*/g;
 		$ParamFile[$key] =~ s/\?/\./g;
-		&debug("Search for file \"$ParamFile[$key]\" into \"$DirFile\"");
+		if ($Debug) { debug("Search for file \"$ParamFile[$key]\" into \"$DirFile\""); }
 		opendir(DIR,"$DirFile");
 		my @filearray = sort readdir DIR;
 		close DIR;
 		foreach my $i (0..$#filearray) {
 			if ("$filearray[$i]" =~ /^$ParamFile[$key]$/ && "$filearray[$i]" ne "." && "$filearray[$i]" ne "..") {
-				&debug("Log file $filearray[$i] is added to LogFileToDo with number $cpt.");
+				if ($Debug) { debug("Log file $filearray[$i] is added to LogFileToDo with number $cpt."); }
 				$LogFileToDo{$cpt}="$DirFile/$filearray[$i]";
 				$cpt++;
 			}
@@ -442,9 +442,9 @@ if (scalar keys %LogFileToDo == 0) {
 }
 
 # Open all log files
-&debug("Start of processing ".(scalar keys %LogFileToDo)." log file(s), $MaxNbOfThread threads max");
+if ($Debug) { debug("Start of processing ".(scalar keys %LogFileToDo)." log file(s), $MaxNbOfThread threads max"); }
 foreach my $logfilenb (keys %LogFileToDo) {
-	&debug("Open log file number $logfilenb: \"$LogFileToDo{$logfilenb}\"");
+	if ($Debug) { debug("Open log file number $logfilenb: \"$LogFileToDo{$logfilenb}\""); }
 	open("LOG$logfilenb","$LogFileToDo{$logfilenb}") || error("Couldn't open log file \"$LogFileToDo{$logfilenb}\" : $!");
 	binmode "LOG$logfilenb";	# To avoid pb of corrupted text log files with binary chars.
 }
@@ -456,13 +456,13 @@ while (1 == 1)
 	#------------------------------------------------------------------------------------------
 	foreach my $logfilenb (keys %LogFileToDo) {
 		if (($logfilechosen == 0) || ($logfilechosen == $logfilenb)) {
-			&debug("Search next record in file number $logfilenb",3);
+			if ($Debug) { debug("Search next record in file number $logfilenb",3); }
 			# Read chosen log file until we found a record with good date or reaching end of file
 			while (1 == 1) {
 				my $LOG="LOG$logfilenb";
 				$_=<$LOG>;	# Read new line
 				if (! $_) {							# No more records in log file number $logfilenb
-					&debug(" No more records in file number $logfilenb",2);
+					if ($Debug) { debug(" No more records in file number $logfilenb",2); }
 					delete $LogFileToDo{$logfilenb};
 					last;
 				}
@@ -482,19 +482,19 @@ while (1 == 1)
 				# Split DD/Month/YYYY:HH:MM:SS or YYYY-MM-DD HH:MM:SS or MM/DD/YY\tHH:MM:SS
 				my $year=0; my $month=0; my $day=0; my $hour=0; my $minute=0; my $second=0;
 				if ($_ =~ /(\d\d\d\d)-(\d\d)-(\d\d) (\d\d):(\d\d):(\d\d)/) { $year=$1; $month=$2; $day=$3; $hour=$4; $minute=$5; $second=$6; }
-				if ($_ =~ /\[(\d\d)[\/:\s](\w+)[\/:\s](\d\d\d\d)[\/:\s](\d\d)[\/:\s](\d\d)[\/:\s](\d\d) /) { $year=$3; $month=$2; $day=$1; $hour=$4; $minute=$5; $second=$6; }
-				if ($_ =~ /\[\w+ (\w+) (\d\d) (\d\d)[\/:\s](\d\d)[\/:\s](\d\d) (\d\d\d\d)\]/) { $year=$6; $month=$1; $day=$2; $hour=$3; $minute=$4; $second=$5; }
+				elsif ($_ =~ /\[(\d\d)[\/:\s](\w+)[\/:\s](\d\d\d\d)[\/:\s](\d\d)[\/:\s](\d\d)[\/:\s](\d\d) /) { $year=$3; $month=$2; $day=$1; $hour=$4; $minute=$5; $second=$6; }
+				elsif ($_ =~ /\[\w+ (\w+) (\d\d) (\d\d)[\/:\s](\d\d)[\/:\s](\d\d) (\d\d\d\d)\]/) { $year=$6; $month=$1; $day=$2; $hour=$3; $minute=$4; $second=$5; }
 
 				if ($monthnum{$month}) { $month=$monthnum{$month}; }	# Change lib month in num month if necessary
 
 				# Create $timerecord like YYYYMMDDHHMMSS
 		 		$timerecord{$logfilenb}=int("$year$month$day$hour$minute$second");
 				if ($timerecord{$logfilenb}<10000000000000) {
-					&debug(" This record is corrupted (no date found)",3);
+					if ($Debug) { debug(" This record is corrupted (no date found)",3); }
 					$corrupted{$logfilenb}++;
 					next;
 				}
-				&debug(" This is next record for file $logfilenb : timerecord=$timerecord{$logfilenb}",3);
+				if ($Debug) { debug(" This is next record for file $logfilenb : timerecord=$timerecord{$logfilenb}",3); }
 				last;
 			}
 		}
@@ -503,17 +503,17 @@ while (1 == 1)
 	# $timerecord{$logfilenb}
 
 	# We choose wich record of wich log file to process
-	&debug("Choose of wich record of which log file to process",3);
+	if ($Debug) { debug("Choose of wich record of which log file to process",3); }
 	$logfilechosen=-1;
 	my $timeref="99999999999999";
 	foreach my $logfilenb (keys %LogFileToDo) {
-		&debug(" timerecord for file $logfilenb is $timerecord{$logfilenb}",4);
+		if ($Debug) { debug(" timerecord for file $logfilenb is $timerecord{$logfilenb}",4); }
 		if ($timerecord{$logfilenb} < $timeref) { $logfilechosen=$logfilenb; $timeref=$timerecord{$logfilenb} }
 	}
 	if ($logfilechosen <= 0) { last; }								# No more record to process
 	# Record is chosen
-	&debug(" We choosed to qualify record of file number $logfilechosen",3);
-	&debug("  Record is $linerecord{$logfilechosen}",3);
+	if ($Debug) { debug(" We choosed to qualify record of file number $logfilechosen",3); }
+	if ($Debug) { debug("  Record is $linerecord{$logfilechosen}",3); }
 			
 	# Record is approved. We found a new line to parse in file number $logfilechosen
 	#-------------------------------------------------------------------------------
@@ -550,18 +550,18 @@ while (1 == 1)
 							if ($MaxNbOfThread) {
 								if (! $threadarray{$Host}) {	# No thread already launched for $Host
 									while ((scalar keys %threadarray) >= $MaxNbOfThread) {
-										if ($Debug) { &debug(" $MaxNbOfThread thread running reached, so we wait",4); }
+										if ($Debug) { debug(" $MaxNbOfThread thread running reached, so we wait",4); }
 										sleep 1;
 									}
 									$threadarray{$Host}=1;		# Semaphore to tell thread for $Host is active
 #									my $t = new Thread \&MakeDNSLookup, $Host;
 									my $t = threads->create(sub { MakeDNSLookup($Host) });
 									if (! $t) { error("Failed to create new thread"); }
-									if ($Debug) { &debug(" Reverse DNS lookup for $Host queued in thread ".$t->tid,4); }
+									if ($Debug) { debug(" Reverse DNS lookup for $Host queued in thread ".$t->tid,4); }
 									$t->detach();	# We don't need to keep return code
 								}
 								else {
-									if ($Debug) { &debug(" Reverse DNS lookup for $Host already queued in a thread"); }
+									if ($Debug) { debug(" Reverse DNS lookup for $Host already queued in a thread"); }
 								}
 								# Here, this is the only way, $TmpDNSLookup{$Host} can be not defined
 							} else {
@@ -615,11 +615,11 @@ while (1 == 1)
 	
 }	# End of processing new record. Loop on next one.
 
-if ($Debug) { &debug("End of processing log file(s)"); }
+if ($Debug) { debug("End of processing log file(s)"); }
 
 # Close all log files
 foreach my $logfilenb (keys %LogFileToDo) {
-	if ($Debug) { &debug("Close log file number $logfilenb"); }
+	if ($Debug) { debug("Close log file number $logfilenb"); }
 	close("LOG$logfilenb") || error("Command for pipe '$LogFileToDo{$logfilenb}' failed");
 }
 
@@ -632,7 +632,7 @@ while ( $QueueHostsToResolve{$QueueCursor} && $QueueHostsToResolve{$QueueCursor}
 # Waiting queue is empty
 if ($MaxNbOfThread) {
 	foreach my $t (threads->list()) {
-		if ($Debug) { &debug("Join thread $t"); }
+		if ($Debug) { debug("Join thread $t"); }
 		$t->join();
 	}
 }
