@@ -15,11 +15,15 @@ use strict;no strict "refs";
 #use warnings;		# Must be used in test mode only. This reduce a little process speed
 #use diagnostics;	# Must be used in test mode only. This reduce a lot of process speed
 use Socket;
-use Time::Local;	# use Time::Local 'timelocal_nocheck' is not supported by all Time::Local modules
-# Next 'use' can be uncommented (with its coupled line into GetDelaySinceStart function) to
-# get miliseconds time in showsteps option
-#use Time::HiRes qw( gettimeofday );
+use Time::Local;	# use Time::Local 'timelocal_nocheck' is faster but not supported by all Time::Local modules
 
+use vars qw/ $UseHiRes $UseCompress /;
+# Next 'use' can be uncommented to get miliseconds time in showsteps option
+#use Time::HiRes qw( gettimeofday ); $UseHiRes=1;
+# Next 'use' can be uncommented to allow read/write of gz compressed log or history files (not working yet)
+#use Compress::Zlib; $UseCompress=1;
+
+# TODO If PurgeLogFile is on, only one update process must be allowed
 
 
 #-------------------------------------------------------
@@ -52,8 +56,8 @@ $NbOfLinesForBenchmark
 $ShowBackLink
 $WIDTH
 $CENTER
-$OldForhh
 /;
+# TODO $OldForhh Check if this enhance speed
 $Debug=0;
 $ShowSteps=0;
 $AWScript="";
@@ -251,7 +255,7 @@ use vars qw/
 %_se_referrals_h %_sider404_h %_referer404_h %_url_p %_url_k %_url_e %_url_x
 %_unknownreferer_l %_unknownrefererbrowser_l
 %val %nextval %egal
-%TmpHashDNSLookup %TmpHashOS %TmpHashRefererServer %TmpHashRobot %TmpHashBrowser
+%TmpDNSLookup %TmpOS %TmpRefererServer %TmpRobot %TmpBrowser
 /;
 %ValidHTTPCodes=();
 %TrapInfosForHTTPCodes=(); $TrapInfosForHTTPCodes{404}=1;	# TODO Add this in config file
@@ -269,7 +273,7 @@ use vars qw/
 %_se_referrals_h = %_sider404_h = %_referer404_h = %_url_p = %_url_k = %_url_e = %_url_x = ();
 %_unknownreferer_l = %_unknownrefererbrowser_l = ();
 %val = %nextval = %egal = ();
-%TmpHashDNSLookup = %TmpHashOS = %TmpHashRefererServer = %TmpHashRobot = %TmpHashBrowser = ();
+%TmpDNSLookup = %TmpOS = %TmpRefererServer = %TmpRobot = %TmpBrowser = ();
 # ---------- Init Tie::hash arrays --------
 #use Tie::Hash;
 #tie %_hostmachine_p, 'Tie::StdHash';
@@ -1280,6 +1284,10 @@ sub Check_Config {
 	if (! $Message[117]) { $Message[117]="Visits duration"; }
 	if (! $Message[118]) { $Message[118]="Close window"; }
 	if (! $Message[119]) { $Message[119]="Bytes"; }
+	# Refuse LogFile if contains a pipe and PurgeLogFile || ArchiveLogRecords set on
+	if (($PurgeLogFile || $ArchiveLogRecords) && $LogFile =~ /\|\s*$/) {
+		error("Error: A pipe in log file name is not allowed if PurgeLogFile and ArchiveLogRecords are not set to 0");
+	}
 	# Check if DirData is OK
 	if (! -d $DirData) {
 		if ($CreateDirDataIfNotExists) {
@@ -1308,16 +1316,21 @@ sub Read_History_File {
 		return 0;
 		}
 	$HistoryFileAlreadyRead{"$year$month$DayRequired"}=1;					# Protect code to invoke function only once for each month/year
-	if (! -s "$DirData/$PROG$DayRequired$month$year$FileSuffix.txt") {
+
+	my $historyfilename="$DirData/$PROG$DayRequired$month$year$FileSuffix.txt";
+	if ($UseCompress) { $historyfilename.="\.gz"; }
+	if (! -s $historyfilename) {
 		# If file not exists, return
-		if ($Debug) { debug(" No history file"); }
+		if ($Debug) { debug(" No history file $historyfilename"); }
 		$LastLine{$year.$month}=0;	# To avoid warning of undefinded value later with use warning
 		return 0;
 	}
+	if ($UseCompress) {	$historyfilename="gzip -d <\"$historyfilename\" |"; }
+	if ($Debug) { debug(" History file is '$historyfilename'",2); }
 
 	# TODO If session for read (no update), file can be open with share. So POSSIBLE CHANGE HERE
 	# TODO Whith particular option file reading can be stopped if section all read
-	open(HISTORY,"$DirData/$PROG$DayRequired$month$year$FileSuffix.txt") || error("Error: Couldn't open for read file \"$DirData/$PROG$DayRequired$month$year$FileSuffix.txt\" : $!");	# Month before Year kept for backward compatibility
+	open(HISTORY,$historyfilename) || error("Error: Couldn't open file \"$historyfilename\" for read: $!");	# Month before Year kept for backward compatibility
 	$MonthUnique{$year.$month}=0; $MonthPages{$year.$month}=0; $MonthHits{$year.$month}=0; $MonthBytes{$year.$month}=0; $MonthHostsKnown{$year.$month}=0; $MonthHostsUnknown{$year.$month}=0;
 
 	my $versionmaj = my $versionmin = 0;
@@ -1957,7 +1970,7 @@ sub Read_History_File {
 			next;
 		}
 	}
-	close HISTORY;
+	close HISTORY || error("Command for pipe '$historyfilename' failed");
 	if (! $LastLine{$year.$month}) { $LastLine{$year.$month}=$LastTime{$year.$month}; }		# For backward compatibility, if LastLine does not exist
 }
 
@@ -2178,9 +2191,8 @@ sub GetDelaySinceStart {
 	my $option=shift;
 	if ($option) { $StartSeconds=0;	}	# Reset counter
 	my ($newseconds, $newmicroseconds)=(0,0);
-	my $usedTimeHires=0;
-#	($newseconds, $newmicroseconds) = gettimeofday; $usedTimeHires=1;	# Uncomment to use Time::HiRes function (provide milliseconds)
-	if ((! $usedTimeHires) || ($newseconds eq "gettimeofday")) { $newseconds=time(); }
+	if ($UseHiRes) { ($newseconds, $newmicroseconds) = &gettimeofday; }
+	else { $newseconds=time(); }
 	if (! $StartSeconds) { $StartSeconds=$newseconds; $StartMicroseconds=$newmicroseconds; }
 	my $nbms=$newseconds*1000+int($newmicroseconds/1000)-$StartSeconds*1000-int($StartMicroseconds/1000);
 	return ($nbms);
@@ -2999,7 +3011,7 @@ if ($UpdateStats) {
 	my @filearray = sort readdir DIR;
 	close DIR;
 	foreach my $i (0..$#filearray) {
-		if ("$filearray[$i]" =~ /^$PROG(\d\d)(\d\d\d\d)$FileSuffix\.txt$/) {
+		if ("$filearray[$i]" =~ /^$PROG(\d\d)(\d\d\d\d)$FileSuffix\.txt$/ || "$filearray[$i]" =~ /^$PROG(\d\d)(\d\d\d\d)$FileSuffix\.txt\.gz$/) {
 			if (int("$2$1") > $yearmonthmax) { $yearmonthmax=int("$2$1"); }
 		}
 	}
@@ -3178,25 +3190,25 @@ if ($UpdateStats) {
 		# Robot ?
 		#-------------------------------------------------------------------------
 		if ($LevelForRobotsDetection) {
-			if (!$TmpHashRobot{$UserAgent}) {	# TmpHashRobot is a temporary hash table to increase speed
+			if (!$TmpRobot{$UserAgent}) {	# TmpRobot is a temporary hash table to increase speed
 				# If made on each record -> -1300 rows/seconds
 				my $foundrobot=0;
 				# study $UserAgent
 				foreach my $bot (@RobotsSearchIDOrder) {
 					if ($UserAgent =~ /$bot/) {
 						$foundrobot=1;
-						$TmpHashRobot{$UserAgent}="$bot";	# Last time, we won't search if robot or not. We know it's is.
+						$TmpRobot{$UserAgent}="$bot";	# Last time, we won't search if robot or not. We know it's is.
 						last;
 					}
 				}
 				if (! $foundrobot) {						# Last time, we won't search if robot or not. We know it's not.
-					$TmpHashRobot{$UserAgent}="-";
+					$TmpRobot{$UserAgent}="-";
 				}
 			}
 			# If robot, we stop here
-			if ($TmpHashRobot{$UserAgent} ne "-") {
-				if ($Debug) { debug("UserAgent $UserAgent contains robot ID '$TmpHashRobot{$UserAgent}'",2); }
-				$_robot_h{$TmpHashRobot{$UserAgent}}++; $_robot_l{$TmpHashRobot{$UserAgent}}=$timerecord;
+			if ($TmpRobot{$UserAgent} ne "-") {
+				if ($Debug) { debug("UserAgent $UserAgent contains robot ID '$TmpRobot{$UserAgent}'",2); }
+				$_robot_h{$TmpRobot{$UserAgent}}++; $_robot_l{$TmpRobot{$UserAgent}}=$timerecord;
 				next;
 			}
 		}
@@ -3283,20 +3295,20 @@ if ($UpdateStats) {
 		if ($DNSLookup) {			# Doing DNS lookup
 			if ($Host =~ /^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/) {
 				$HostIsIp=1;
-				if (! $TmpHashDNSLookup{$Host}) {		# if $Host has not been resolved yet
+				if (! $TmpDNSLookup{$Host}) {		# if $Host has not been resolved yet
 					if ($MyDNSTable{$Host}) {
-						$TmpHashDNSLookup{$Host}=$MyDNSTable{$Host};
+						$TmpDNSLookup{$Host}=$MyDNSTable{$Host};
 						if ($Debug) { debug(" No need of reverse DNS lookup for $Host, found resolution in local MyDNSTable: $MyDNSTable{$Host}",4); }
 					}
 					else {
 						if (&SkipDNSLookup($Host)) {
-							$TmpHashDNSLookup{$Host}="ip";
+							$TmpDNSLookup{$Host}="ip";
 							if ($Debug) { debug(" No need of reverse DNS lookup for $Host, skipped at user request.",4); }
 						}
 						else {
 							my $lookupresult=gethostbyaddr(pack("C4",split(/\./,$Host)),AF_INET);	# This is very slow, may took 20 seconds
-							$TmpHashDNSLookup{$Host}=($lookupresult && IsAscii($lookupresult)?$lookupresult:"ip");
-							if ($Debug) { debug(" Reverse DNS lookup for $Host done: $TmpHashDNSLookup{$Host}",4); }
+							$TmpDNSLookup{$Host}=($lookupresult && IsAscii($lookupresult)?$lookupresult:"ip");
+							if ($Debug) { debug(" Reverse DNS lookup for $Host done: $TmpDNSLookup{$Host}",4); }
 						}
 					}
 				}
@@ -3312,13 +3324,13 @@ if ($UpdateStats) {
 		}
 
 		my $Domain="ip";
-		if ($HostIsIp && ((! $TmpHashDNSLookup{$Host}) || ($TmpHashDNSLookup{$Host} eq "ip"))) {
+		if ($HostIsIp && ((! $TmpDNSLookup{$Host}) || ($TmpDNSLookup{$Host} eq "ip"))) {
 			# Here $Host = IP address not resolved
 			$_ = $Host;
 		}
 		else {
-			# Here $TmpHashDNSLookup{$Host} is $Host resolved or undefined if $Host was already a host name
-			$_ = ($TmpHashDNSLookup{$Host}?$TmpHashDNSLookup{$Host}:$Host);
+			# Here $TmpDNSLookup{$Host} is $Host resolved or undefined if $Host was already a host name
+			$_ = ($TmpDNSLookup{$Host}?$TmpDNSLookup{$Host}:$Host);
 			tr/A-Z/a-z/;
 			if (/\.(\w+)$/) { $Domain=$1; }
 		}
@@ -3374,14 +3386,14 @@ if ($UpdateStats) {
 			# Analyze: Browser
 			#-----------------
 			my $found=0;
-			if (! $TmpHashBrowser{$UserAgent}) {
+			if (! $TmpBrowser{$UserAgent}) {
 				# IE ? (For higher speed, we start whith IE, the most often used. This avoid other tests if found)
 				if (($UserAgent =~ /msie/) && ($UserAgent !~ /webtv/) && ($UserAgent !~ /omniweb/) && ($UserAgent !~ /opera/)) {
 					$_browser_h{"msie"}++;
 					if ($UserAgent =~ /msie_(\d)\./) {  # $1 now contains major version no
 						$_msiever_h[$1]++;
 						$found=1;
-						$TmpHashBrowser{$UserAgent}="msie_$1";
+						$TmpBrowser{$UserAgent}="msie_$1";
 					}
 				}
 
@@ -3392,7 +3404,7 @@ if ($UpdateStats) {
 						if ($UserAgent =~ /\/(\d)\./) {		# $1 now contains major version no
 							$_nsver_h[$1]++;
 							$found=1;
-							$TmpHashBrowser{$UserAgent}="netscape_$1";
+							$TmpBrowser{$UserAgent}="netscape_$1";
 						}
 					}
 				}
@@ -3403,7 +3415,7 @@ if ($UpdateStats) {
 						if ($UserAgent =~ /$key/) {
 							$_browser_h{$key}++;
 							$found=1;
-							$TmpHashBrowser{$UserAgent}=$key;
+							$TmpBrowser{$UserAgent}=$key;
 							last;
 						}
 					}
@@ -3413,13 +3425,13 @@ if ($UpdateStats) {
 				if (!$found) {
 					$_browser_h{"Unknown"}++;
 					$_unknownrefererbrowser_l{$field[$pos_agent]}=$timerecord;
-					$TmpHashBrowser{$UserAgent}="Unknown";
+					$TmpBrowser{$UserAgent}="Unknown";
 				}
 			}
 			else {
-				if ($TmpHashBrowser{$UserAgent} =~ /^msie_(\d)/) { $_browser_h{"msie"}++; $_msiever_h[$1]++; $found=1; }
-				if (!$found && $TmpHashBrowser{$UserAgent} =~ /^netscape_(\d)/) { $_browser_h{"netscape"}++; $_nsver_h[$1]++; $found=1; }
-				if (!$found) { $_browser_h{$TmpHashBrowser{$UserAgent}}++; }
+				if ($TmpBrowser{$UserAgent} =~ /^msie_(\d)/) { $_browser_h{"msie"}++; $_msiever_h[$1]++; $found=1; }
+				if (!$found && $TmpBrowser{$UserAgent} =~ /^netscape_(\d)/) { $_browser_h{"netscape"}++; $_nsver_h[$1]++; $found=1; }
+				if (!$found) { $_browser_h{$TmpBrowser{$UserAgent}}++; }
 			}
 
 			}
@@ -3428,14 +3440,14 @@ if ($UpdateStats) {
 		
 			# Analyze: OS
 			#------------
-			if (! $TmpHashOS{$UserAgent}) {
+			if (! $TmpOS{$UserAgent}) {
 				my $found=0;
 				# in OSHashID list ?
 				foreach my $key (@OSSearchIDOrder) {	# Search ID in order of OSSearchIDOrder
 					if ($UserAgent =~ /$key/) {
 						$_os_h{$OSHashID{$key}}++;
 						$found=1;
-						$TmpHashOS{$UserAgent}=$OSHashID{$key};
+						$TmpOS{$UserAgent}=$OSHashID{$key};
 						last;
 					}
 				}
@@ -3443,11 +3455,11 @@ if ($UpdateStats) {
 				if (!$found) {
 					$_os_h{"Unknown"}++;
 					$_unknownreferer_l{$field[$pos_agent]}=$timerecord;
-					$TmpHashOS{$UserAgent}="Unknown";
+					$TmpOS{$UserAgent}="Unknown";
 				}
 			}
 			else {
-				$_os_h{$TmpHashOS{$UserAgent}}++;
+				$_os_h{$TmpOS{$UserAgent}}++;
 			}
 	
 			}
@@ -3478,19 +3490,19 @@ if ($UpdateStats) {
 				if ($refererprot =~ /^http/i) {
 
 					# Kind of origin
-					if (!$TmpHashRefererServer{$refererserver}) {
+					if (!$TmpRefererServer{$refererserver}) {
 						if ($refererserver =~ /^(www\.|)$SiteToAnalyzeWithoutwww/i) {
 							# Intern (This hit came from another page of the site)
-							if ($Debug) { debug("Server $refererserver is added to TmpHashRefererServer with value '='",2); }
-							$TmpHashRefererServer{$refererserver}="=";
+							if ($Debug) { debug("Server $refererserver is added to TmpRefererServer with value '='",2); }
+							$TmpRefererServer{$refererserver}="=";
 							$found=1;
 						}
 						if (! $found) {
 							foreach my $key (@HostAliases) {
 								if ($refererserver =~ /^$key/i) {
 									# Intern (This hit came from another page of the site)
-									if ($Debug) { debug("Server $refererserver is added to TmpHashRefererServer with value '='",2); }
-									$TmpHashRefererServer{$refererserver}="=";
+									if ($Debug) { debug("Server $refererserver is added to TmpRefererServer with value '='",2); }
+									$TmpRefererServer{$refererserver}="=";
 									$found=1;
 									last;
 								}
@@ -3505,8 +3517,8 @@ if ($UpdateStats) {
 								foreach my $key (@SearchEnginesSearchIDOrder) {		# Search ID in order of SearchEnginesSearchIDOrder
 									if ($refererserver =~ /$key/i) {
 										# This hit came from the search engine $key
-										if ($Debug) { debug("Server $refererserver is added to TmpHashRefererServer with value '$key'",2); }
-										$TmpHashRefererServer{$refererserver}="$key";
+										if ($Debug) { debug("Server $refererserver is added to TmpRefererServer with value '$key'",2); }
+										$TmpRefererServer{$refererserver}="$key";
 										$found=1;
 										last;
 									}
@@ -3515,8 +3527,8 @@ if ($UpdateStats) {
 						}
 					}
 
-					if ($TmpHashRefererServer{$refererserver}) {
-						if ($TmpHashRefererServer{$refererserver} eq "=") {
+					if ($TmpRefererServer{$refererserver}) {
+						if ($TmpRefererServer{$refererserver} eq "=") {
 							# Intern (This hit came from another page of the site)
 							if ($PageBool) { $_from_p[4]++; }
 							$_from_h[4]++;
@@ -3526,18 +3538,18 @@ if ($UpdateStats) {
 							# This hit came from the search engine
 							if ($PageBool) { $_from_p[2]++; }
 							$_from_h[2]++;
-							$_se_referrals_h{$TmpHashRefererServer{$refererserver}}++;
+							$_se_referrals_h{$TmpRefererServer{$refererserver}}++;
 							$found=1;
 							my @refurl=split(/\?/,$field[$pos_referer],2);
 							if ($refurl[1]) {
 								# Extract keywords
 								$refurl[1] =~ tr/A-Z/a-z/;				# Full param string in lowcase
 								my @paramlist=split(/&/,$refurl[1]);
-								if ($SearchEnginesKnownUrl{$TmpHashRefererServer{$refererserver}}) {	# Search engine with known URL syntax
+								if ($SearchEnginesKnownUrl{$TmpRefererServer{$refererserver}}) {	# Search engine with known URL syntax
 									foreach my $param (@paramlist) {
 										#if ($param =~ /^$SearchEnginesKnownUrl{$key}/) { 	# We found good parameter
 										#	$param =~ s/^$SearchEnginesKnownUrl{$key}//;	# Cut "xxx="
-										if ($param =~ s/^$SearchEnginesKnownUrl{$TmpHashRefererServer{$refererserver}}//) { 	# We found good parameter
+										if ($param =~ s/^$SearchEnginesKnownUrl{$TmpRefererServer{$refererserver}}//) { 	# We found good parameter
 											# Ok, "cache:mmm:www/zzz+aaa+bbb/ccc+ddd%20eee'fff,ggg" is a search parameter line
 											$param =~ s/^cache:[^\+]*//;
 											$param =~ s/^related:[^\+]*//;
@@ -3582,7 +3594,7 @@ if ($UpdateStats) {
 								}
 							}	# End of if refurl[1]
 						}
-					}	# End of if ($TmpHashRefererServer)
+					}	# End of if ($TmpRefererServer)
 					else {
 						# This hit came from a site other than a search engine
 						if ($PageBool) { $_from_p[3]++; }
@@ -3612,12 +3624,11 @@ if ($UpdateStats) {
 
 		# End of processing new record.
 	}
-	if ($Debug) { debug("End of processing log file(s)"); }
 
-	if ($Debug) { debug("Close log file"); }
-	close LOG;
+	if ($Debug) { debug("Close log file \"$LogFile\""); }
+	close LOG || error("Command for pipe '$LogFile' failed");
 
-	if ($Debug) { debug("Size of AWStats memory cache : TmpHashDNSLookup=".(scalar keys %TmpHashDNSLookup)." TmpHashBrowser=".(scalar keys %TmpHashBrowser)." TmpHashOS=".(scalar keys %TmpHashOS)." TmpHashRefererServer=".(scalar keys %TmpHashRefererServer)." TmpHashRobot=".(scalar keys %TmpHashRobot),1); }
+	if ($Debug) { debug("End of processing log file (AWStats memory cache is TmpDNSLookup=".(scalar keys %TmpDNSLookup)." TmpBrowser=".(scalar keys %TmpBrowser)." TmpOS=".(scalar keys %TmpOS)." TmpRefererServer=".(scalar keys %TmpRefererServer)." TmpRobot=".(scalar keys %TmpRobot).")",1); }
 
 	# DNSLookup warning
 	if ($DNSLookup && $DNSLookupAlreadyDone) { warning("Warning: <b>$PROG</b> has detected that some hosts names were already resolved in your logfile <b>$DNSLookupAlreadyDone</b>.<br>\nIf DNS lookup was already made by the logger (web server), you should change your setup DNSLookup=1 into DNSLookup=0 to increase $PROG speed."); }
@@ -3629,25 +3640,21 @@ if ($UpdateStats) {
 		if (($MonthRequired eq "year") && ($yeartoprocess != $YearRequired)) { &Init_HashArray($yeartoprocess,$monthtoprocess); }	# Not a desired month (wrong year), so we clean data arrays
 	}
 
-	# Archive LOG file into ARCHIVELOG
-	if (($PurgeLogFile == 1) && ($ArchiveLogRecords == 1)) {
-		if ($Debug) { debug("Start of archiving log file"); }
-		$ArchiveFileName="$DirData/${PROG}_archive$FileSuffix.log";
-		open(LOG,"+<$LogFile") || error("Error: Enable to archive log records of \"$LogFile\" into \"$ArchiveFileName\" because source can't be opened for read and write: $!<br>\n");
-		open(ARCHIVELOG,">>$ArchiveFileName") || error("Error: Couldn't open file \"$ArchiveFileName\" to archive current log: $!");
-		while (<LOG>) {	print ARCHIVELOG $_; }
-		close(ARCHIVELOG);
-		if ($SaveDatabaseFilesWithPermissionsForEveryone) {
-			chmod 0666,"$ArchiveFileName";
+	# Process the Rename - Archive - Purge phase
+	my $renameok=1; my $archiveok=1;
+
+	# Open Log file for writing if PurgeLogFile is on
+	if ($PurgeLogFile == 1) {
+		if ($ArchiveLogRecords == 1) {
+			$ArchiveFileName="$DirData/${PROG}_archive$FileSuffix.log";
+			open(LOG,"+<$LogFile") || error("Error: Enable to archive log records of \"$LogFile\" into \"$ArchiveFileName\" because source can't be opened for read and write: $!<br>\n");
 		}
-		if ($Debug) { debug("End of archiving log file"); }
-	}
-	else {
-		open(LOG,"+<$LogFile");
+		else {
+			open(LOG,"+<$LogFile");
+		}
 	}
 
 	# Rename all HISTORYTMP files into HISTORYTXT
-	my $allok=1;
 	opendir(DIR,"$DirData");
 	@filearray = sort readdir DIR;
 	close DIR;
@@ -3672,7 +3679,7 @@ if ($UpdateStats) {
 					}
 				}
 				if (rename("$DirData/$PROG$1$FileSuffix.tmp.$$", "$DirData/$PROG$1$FileSuffix.txt")==0) {
-					$allok=0;	# At least one error in renaming working files
+					$renameok=0;	# At least one error in renaming working files
 					# Remove file
 					unlink "$DirData/$PROG$1$FileSuffix.tmp.$$";
 					warning("Warning: Failed to rename \"$DirData/$PROG$1$FileSuffix.tmp.$$\" into \"$DirData/$PROG$1$FileSuffix.txt\".\nWrite permissions on \"$PROG$1$FileSuffix.txt\" might be wrong".($ENV{"GATEWAY_INTERFACE"}?" for an 'update from web'":"")." or file might be opened.");
@@ -3685,12 +3692,28 @@ if ($UpdateStats) {
 		}
 	}
 
-	# Purge Log file if all renaming are ok and option is on
-	if (($allok > 0) && ($PurgeLogFile == 1)) {
-		truncate(LOG,0) || warning("Warning: <b>$PROG</b> couldn't purge logfile \"<b>$LogFile</b>\".\nChange your logfile permissions to allow write for your web server CGI process or change PurgeLogFile=1 into PurgeLogFile=0 in configure file and think to purge sometines manually your logfile (just after running an update process to not loose any not already processed records your log file contains).");
+	# Purge Log file if option is on and all renaming are ok
+	if ($PurgeLogFile == 1) {
+		# Archive LOG file into ARCHIVELOG
+		if ($ArchiveLogRecords == 1) {
+			if ($Debug) { debug("Start of archiving log file"); }
+			open(ARCHIVELOG,">>$ArchiveFileName") || error("Error: Couldn't open file \"$ArchiveFileName\" to archive log: $!");
+			while (<LOG>) {
+				# TODO Change archiveok to 0 if pb during writing
+#				if (! print ARCHIVELOG $_) { $archiveok=0; last; }
+				print ARCHIVELOG $_;
+			}
+			close(ARCHIVELOG) || error("Error: Archiving failed during closing archive: $!");
+			if ($SaveDatabaseFilesWithPermissionsForEveryone) {	chmod 0666,"$ArchiveFileName"; }
+			if ($Debug) { debug("End of archiving log file"); }
+		}
+		# If rename and archive ok
+		if ($renameok && $archiveok) {
+			if ($Debug) { debug("Purge log file"); }
+			truncate(LOG,0) || warning("Warning: <b>$PROG</b> couldn't purge logfile \"<b>$LogFile</b>\".\nChange your logfile permissions to allow write for your web server CGI process or change PurgeLogFile=1 into PurgeLogFile=0 in configure file and think to purge sometines manually your logfile (just after running an update process to not loose any not already processed records your log file contains).");
+		}
+		close(LOG);
 	}
-	close(LOG);
-
 }
 # End of log processing
 
