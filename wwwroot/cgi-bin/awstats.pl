@@ -1476,7 +1476,7 @@ sub Check_Config {
 	if (! $LogFormat) { error("LogFormat parameter is not defined in config/domain file"); }
 	if ($LogFormat =~ /^\d$/ && $LogFormat !~ /[1-6]/)  { error("LogFormat parameter is wrong in config/domain file. Value is '$LogFormat' (should be 1,2,3,4,5 or a 'personalized AWStats log format string')"); }
 	$LogSeparator||="\\s";
-	$DirData||=$DirData='.';
+	$DirData||='.';
 	$DirCgi||='/cgi-bin';
 	$DirIcons||='/icon';
 	if ($DNSLookup !~ /[0-2]/)                      { error("DNSLookup parameter is wrong in config/domain file. Value is '$DNSLookup' (should be 0 or 1)"); }
@@ -5365,7 +5365,7 @@ if (! $DirData || $DirData =~ /^\./) {
      elsif ($DIR && $DIR ne '.') { $DirData="$DIR/$DirData"; }
 }
 $DirData||='.';		# If current dir not defined then we put it to '.'
-$DirData =~ s/\/$//; $DirData =~ s/\\$//;
+$DirData =~ s/[\\\/]+$//;
 # Define SiteToAnalyze and SiteToAnalyzeWithoutwww for regex operations
 $SiteToAnalyze=lc($SiteDomain); $SiteToAnalyze =~ s/\./\\\./g;
 $SiteToAnalyzeWithoutwww = $SiteToAnalyze; $SiteToAnalyzeWithoutwww =~ s/www\.//;
@@ -5448,9 +5448,12 @@ if ($MigrateStats) {
 	$YearRequired="$4";
 	$FileSuffix="$5";
 	# Correct DirData
-	if (! $DirData || $DirData eq '.') { $DirData="$DIR"; }	# If not defined or chosen to '.' value then DirData is current dir
-	$DirData||=$DirData='.';	# If current dir not defined then we put it to '.'
-	$DirData =~ s/\/$//; $DirData =~ s/\\$//;
+	if (! $DirData || $DirData =~ /^\./) {
+	     if (! $DirData || $DirData eq '.') { $DirData="$DIR"; }      # If not defined or chosen to '.' value then DirData is current dir
+	     elsif ($DIR && $DIR ne '.') { $DirData="$DIR/$DirData"; }
+	}
+	$DirData||='.';		# If current dir not defined then we put it to '.'
+	$DirData =~ s/[\\\/]+$//;
 	print "Start migration for file '$MigrateStats'."; print $ENV{'GATEWAY_INTERFACE'}?"<br />\n":"\n";
 	if ($EnableLockForUpdate) {	&Lock_Update(1); }
 	my $newhistory=&Read_History_With_TmpUpdate($YearRequired,$MonthRequired,1,0,'all');
