@@ -487,9 +487,10 @@ use vars qw/ @Message /;
 'First',
 'Last',
 'Exclude filter',
-'* Codes shown here gave hits or traffic "not viewed" by visitors, so they are not included in other charts.',
+'Codes shown here gave hits or traffic "not viewed" by visitors, so they are not included in other charts.',
 'Cluster',
-'* Robots shown here gave hits or traffic "not viewed" by visitors, so they are not included in other charts.'
+'Robots shown here gave hits or traffic "not viewed" by visitors, so they are not included in other charts.',
+'Numbers after + are successful hits on "robots.txt" files'
 );
 
 
@@ -7544,37 +7545,40 @@ if (scalar keys %HTMLOutput) {
 		if ($ShowRobotsStats =~ /B/i) { print "<th bgcolor=\"#$color_k\" width=\"80\">$Message[75]</th>"; }
 		if ($ShowRobotsStats =~ /L/i) { print "<th width=\"120\">$Message[9]</th>"; }
 		print "</tr>\n";
-		$total_p=$total_h=$total_k=0;
+		$total_p=$total_h=$total_k=$total_r=0;
 		my $count=0;
 		if ($HTMLOutput{'allrobots'})  { &BuildKeyList($MaxRowsInHTMLOutput,$MinHit{'Robot'},\%_robot_h,\%_robot_h); }
 		if ($HTMLOutput{'lastrobots'}) { &BuildKeyList($MaxRowsInHTMLOutput,$MinHit{'Robot'},\%_robot_h,\%_robot_l); }
 		foreach my $key (@keylist) {
 			print "<tr><td class=\"aws\">".($RobotsHashIDLib{$key}?$RobotsHashIDLib{$key}:$key)."</td>";
-			if ($ShowRobotsStats =~ /H/i) { print "<td>$_robot_h{$key}</td>"; }
+			if ($ShowRobotsStats =~ /H/i) { print "<td>".($_robot_h{$key}-$_robot_r{$key}).($_robot_r{$key}?"+$_robot_r{$key}":"")."</td>"; }
 			if ($ShowRobotsStats =~ /B/i) { print "<td>".Format_Bytes($_robot_k{$key})."</td>"; }
 			if ($ShowRobotsStats =~ /L/i) { print "<td>".($_robot_l{$key}?Format_Date($_robot_l{$key},1):'-')."</td>"; }
 			print "</tr>\n";
 			#$total_p += $_robot_p{$key}||0;
 			$total_h += $_robot_h{$key};
 			$total_k += $_robot_k{$key}||0;
+			$total_r += $_robot_r{$key}||0;
 			$count++;
 		}
 		# For bots we need to count Totals
-		my $TotalPagesRobots = 0; #foreach my $val (values %_robot_p) { $TotalPagesRobots+=$val; }
-		my $TotalHitsRobots = 0; foreach my $val (values %_robot_h) { $TotalHitsRobots+=$val; }
-		my $TotalBytesRobots = 0; foreach my $val (values %_robot_k) { $TotalBytesRobots+=$val; }
+		my $TotalPagesRobots = 0; #foreach (values %_robot_p) { $TotalPagesRobots+=$_; }
+		my $TotalHitsRobots = 0; foreach (values %_robot_h) { $TotalHitsRobots+=$_; }
+		my $TotalBytesRobots = 0; foreach (values %_robot_k) { $TotalBytesRobots+=$_; }
+		my $TotalRRobots = 0; foreach (values %_robot_r) { $TotalRRobots+=$_; }
 		$rest_p=0;	#$rest_p=$TotalPagesRobots-$total_p;
 		$rest_h=$TotalHitsRobots-$total_h;
 		$rest_k=$TotalBytesRobots-$total_k;
+		$rest_r=$TotalRRobots-$total_r;
 		if ($Debug) { debug("Total real / shown : $TotalPagesRobots / $total_p - $TotalHitsRobots / $total_h - $TotalBytesRobots / $total_k",2); }
-		if ($rest_p > 0 || $rest_h > 0 || $rest_k > 0) {	# All other login
+		if ($rest_p > 0 || $rest_h > 0 || $rest_k > 0 || $rest_r > 0) {	# All other robots
 			print "<tr><td class=\"aws\"><span style=\"color: #$color_other\">$Message[2]</span></td>";
 			if ($ShowRobotsStats =~ /H/i) { print "<td>$rest_h</td>"; }
 			if ($ShowRobotsStats =~ /B/i) { print "<td>".(Format_Bytes($rest_k))."</td>"; }
 			if ($ShowRobotsStats =~ /L/i) { print "<td>&nbsp;</td>"; }
 			print "</tr>\n";
 		}
-		&tab_end;
+		&tab_end("* $Message[157]");
 		&html_end;
 	}
 	if ($HTMLOutput{'urldetail'} || $HTMLOutput{'urlentry'} || $HTMLOutput{'urlexit'}) {
@@ -8902,23 +8906,23 @@ if (scalar keys %HTMLOutput) {
 			if ($ShowRobotsStats =~ /B/i) { print "<th bgcolor=\"#$color_k\" width=\"80\">$Message[75]</th>"; }
 			if ($ShowRobotsStats =~ /L/i) { print "<th width=\"120\">$Message[9]</th>"; }
 			print "</tr>\n";
-			$total_p=$total_h=$total_k=0;
+			$total_p=$total_h=$total_k=$total_r=0;
 			my $count=0;
 			&BuildKeyList($MaxNbOf{'RobotShown'},$MinHit{'Robot'},\%_robot_h,\%_robot_h);
 			foreach my $key (@keylist) {
 				print "<tr><td class=\"aws\">".($RobotsHashIDLib{$key}?$RobotsHashIDLib{$key}:$key)."</td>";
-				if ($ShowRobotsStats =~ /H/i) { print "<td>".($_robot_h{$key}-$_robot_r{$key})."</td>"; }
+				if ($ShowRobotsStats =~ /H/i) { print "<td>".($_robot_h{$key}-$_robot_r{$key}).($_robot_r{$key}?"+$_robot_r{$key}":"")."</td>"; }
 				if ($ShowRobotsStats =~ /B/i) { print "<td>".Format_Bytes($_robot_k{$key})."</td>"; }
 				if ($ShowRobotsStats =~ /L/i) { print "<td>".($_robot_l{$key}?Format_Date($_robot_l{$key},1):'-')."</td>"; }
 				print "</tr>\n";
 				#$total_p += $_robot_p{$key};
 				$total_h += $_robot_h{$key};
-				$total_k += $_robot_k{$key};
-				$total_r += $_robot_r{$key};
+				$total_k += $_robot_k{$key}||0;
+				$total_r += $_robot_r{$key}||0;
 				$count++;
 				}
 			# For bots we need to count Totals
-			my $TotalPagesRobots = 0; #foreach my $val (values %_robot_p) { $TotalPagesRobots+=$val; }
+			my $TotalPagesRobots = 0; #foreach (values %_robot_p) { $TotalPagesRobots+=$_; }
 			my $TotalHitsRobots = 0; foreach (values %_robot_h) { $TotalHitsRobots+=$_; }
 			my $TotalBytesRobots = 0; foreach (values %_robot_k) { $TotalBytesRobots+=$_; }
 			my $TotalRRobots = 0; foreach (values %_robot_r) { $TotalRRobots+=$_; }
@@ -8928,12 +8932,12 @@ if (scalar keys %HTMLOutput) {
 			$rest_r=$TotalRRobots-$total_r;
 			if ($rest_p > 0 || $rest_h > 0 || $rest_k > 0 || $rest_r > 0) {	# All other robots
 				print "<tr><td class=\"aws\"><span style=\"color: #$color_other\">$Message[2]</span></td>";
-				if ($ShowRobotsStats =~ /H/i) { print "<td>".($rest_h-$rest_r)."</td>"; }
+				if ($ShowRobotsStats =~ /H/i) { print "<td>".($rest_h-$rest_r).($rest_r?"+$rest_r":"")."</td>"; }
 				if ($ShowRobotsStats =~ /B/i) { print "<td>".(Format_Bytes($rest_k))."</td>"; }
 				if ($ShowRobotsStats =~ /L/i) { print "<td>&nbsp;</td>"; }
 				print "</tr>\n";
 			}
-			&tab_end($Message[156]);
+			&tab_end("* $Message[156]".($TotalRRobots?" $Message[157]":""));
 		}
 	
 		print "\n<a name=\"HOW\">&nbsp;</a>\n\n";
@@ -9499,7 +9503,7 @@ if (scalar keys %HTMLOutput) {
 				$total_h+=$_errors_h{$key};
 				$count++;
 			}
-			&tab_end($Message[154]);
+			&tab_end("* $Message[154]");
 		}
 
 		# BY SMTP ERRORS
