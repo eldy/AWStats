@@ -78,6 +78,7 @@ FAQ-SET220 <a href="#CRASH">Crash while running awstats.pl or page content only 
 FAQ-SET250 <a href="#PERSONALIZEDLOG">Log format setup or errors.</a><br>
 FAQ-SET280 <a href="#NOTSAMENUMBER">Error "Not same number of records of...".</a><br>
 FAQ-SET300 <a href="#COULDNOTOPEN">Error "Couldn't open file ..."</a><br>
+FAQ-SET320 <a href="#MALFORMEDUTF8">Error "Malformed UTF-8 character (unexpected..."</a><br>
 FAQ-SET350 <a href="#EMPTY_STATS">Empty or null statistics reported.</a><br>
 FAQ-SET400 <a href="#REDIRECT">Pipe redirection to a file give me an empty file.</a><br>
 FAQ-SET450 <a href="#NO_ICON">No pictures/graphics shown.</a><br>
@@ -879,6 +880,21 @@ put AWStats directly into this directory.<br>
 If this still fails, you can change the DirData parameter to say AWStats 
 that you want to use another directory (A directory you are sure that the default 
 user, used by web server process, can write into).<br>
+<br>
+
+<a name="MALFORMEDUTF8"></a><br>
+<b><u>FAQ-SET320 : ERROR "MALFORMED UTF-8 CHARACTER (UNEXPECTED ..."</u></b><br>
+<font class=CProblem>PROBLEM:</font><br>
+When running AWStats from command line, I get one or several lines like this
+on my output:<br>
+<i>Malformed UTF-8 character (unexpected non-continuation byte 0x6d, immediately after start byte 0xe4) at /www/cgi-bin/lib/xxx.pm line 999.</i>
+<br>
+<font class=CSolution>SOLUTION:</font><br>
+This problem appeared with RedHat 8 and Perl 5.8.<br>
+I don't know if RedHat provides a fix for this, but some users had reported that you can
+remove thoose warmless messages by changing your LANG environment variable, removing
+the ".UTF-8" at the end. For example, set <i>LANG="en_US"</i> instead of <i>LANG="en_US.UTF8"</i><br>
+
 <br>
 
 <a name="EMPTY_STATS"></a><br>
