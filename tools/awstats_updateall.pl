@@ -62,8 +62,12 @@ if (@files) {
 		if ($_ =~ /^awstats\.(.*)conf$/) {
 			my $domain = $1||"default"; $domain =~ s/\.$//;
 			if ($domain eq 'model') { next; }
-			print "Running $AWSTATSSCRIPT to update config $domain\n";
-			my $output = `"$AWSTATSSCRIPT" -config=$domain -update 2>&1`;
+			# Define command line
+			my $command="\"$AWSTATSSCRIPT\" -update -config=$domain";
+			$command.=" -configdir=\"$DIRCONFIG\"";
+			# Run command line
+			print "Running '$command' to update config $domain\n";
+			my $output = `$command 2>&1`;
 			print "$output\n";
 		}
 	}
