@@ -5850,10 +5850,10 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 		#---------------------------
 		if ($LogType ne 'M') { $field[$pos_url] =~ s/\s/%20/g; }
 		if ($LogType eq 'W' && ($field[$pos_method] eq 'GET' || $field[$pos_method] eq 'POST' || $field[$pos_method] eq 'HEAD' || $field[$pos_method] =~ /OK/i || $field[$pos_method] =~ /ERR\!/i)) {
-			# HTTP request.	Keep only GET, POST, HEAD, *OK* and ERR! for Webstar. Do not keep OPTIONS
+			# HTTP request.	Keep only GET, POST, HEAD, *OK* and ERR! for Webstar. Do not keep OPTIONS, TRACE
 		}
-		elsif (($LogType eq 'W' || $LogType eq 'S') && ($field[$pos_method] eq 'mms'|| $field[$pos_method] eq 'rtsp' || $field[$pos_method] eq 'http' || $field[$pos_method] eq 'RTP')) {
-			# Streaming request (windows media server or darwin streaming server)
+		elsif (($LogType eq 'W' || $LogType eq 'S') && ($field[$pos_method] eq 'GET' || $field[$pos_method] eq 'mms' || $field[$pos_method] eq 'rtsp' || $field[$pos_method] eq 'http' || $field[$pos_method] eq 'RTP')) {
+			# Streaming request (windows media server, realmedia or darwin streaming server)
 		}
 		elsif ($LogType eq 'M' && $field[$pos_method] eq 'SMTP') {
 			# Mail request ('SMTP' for mail log with maillogconvert.pl preprocessor)

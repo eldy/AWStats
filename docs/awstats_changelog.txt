@@ -15,6 +15,7 @@ Fixes:
   %gzip_ratio tag.
 - Fixed old bug showing string "SCALAR(0x8badae4)" inside html reports
   when using mod_perl.
+- Fixed the not allowed GET method when LogType=S.
 - maillogconvert.pl: Better management of error records with sendmail
   and postfix (some "reject" records were discarded).
 - maillogconvert.pl: Fixed important bug where records were discarded
