@@ -1,0 +1,132 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<meta name="description" content="AWStats Documentation - Other tools">
+<meta name="keywords" content="awstats, awstat, tools, utilities, awstats_buildstaticpages, logresolvemerge, common2combined">
+<meta name="robots" content="index,follow">
+<meta name="title" content="AWStats Documentation - Other tools">
+<title>AWStats Documentation - Security page</title>
+<link rel="stylesheet" href="styles.css" type="text/css">
+<!-- $Revision$ - $Author$ - $Date$ -->
+</head>
+
+<body topmargin=10 leftmargin=5>
+
+
+<table style="font: 10pt arial,helvetica,verdana" cellpadding=0 cellspacing=0 border=0 bgcolor=#FFFFFF width=100%>
+
+<!-- Large -->
+<tr style="font: 10pt arial,helvetica,verdana">
+<td bgcolor=#9999cc align=center><a href="/"><img src="images/awstats_logo4.png" border=0></a></td>
+<td bgcolor=#9999cc align=center>
+<br>
+<font style="font: 16pt Times;" color=#EEEEFF><b>AWStats logfile analyzer 4.0 Documentation</b></font><br>
+<br>
+</td>
+<td bgcolor=#9999cc align=center>
+&nbsp;
+</td>
+</tr>
+
+</table>
+
+
+<br><br><H1 style="font: 26px Times;">Other tools</H1>
+
+<br>
+This is a list of other tools provided with AWStats.<br>
+<br><br>
+
+<br><a name="awstats_buildstaticpages"><H2 style="font: 22px Times; color: #606060"><u>awstats_buildstaticpages</u></H2></a>
+<br>awstats_buildstaticpages allows you to launch AWStats with -staticlinks option to
+<br>build all possible pages allowed by option -output.
+<br>
+<br>Usage:
+<br>  awstats_buildstaticpages.pl -config=configvalue -awstatsprog=pathtoawstatspl [-dir=outputdir] [-date] [-update]
+<br>
+<br>  where configvalue is value for config option of AWStats software.
+<br>        pathtoawstatspl is name of AWStats software with path (awstats.pl).
+<br>        outputdir is name of output directory for generated pages.
+<br>        -date option is used to add build date in built files name.
+<br>        -update option is used to update statistics before generate pages.
+<br>
+<br>New versions and FAQ at http://awstats.sourceforge.net
+<br>
+<br>
+
+<br><a name="logresolvemerge"><H2 style="font: 22px Times; color: #606060"><u>logresolvemerge</u></H2></a>
+<br>logresolvemerge allows you to merge several log files into one output,
+<br>sorted on date. It also makes a fast reverse DNS lookup to replace
+<br>all IP addresses into host names in resulting log file.
+<br>logresolvemerge comes with ABSOLUTELY NO WARRANTY. It's a free software
+<br>distributed with a GNU General Public License (See COPYING.txt file).
+<br>logresolvemerge is part of AWStats but can be used alone as a log merger
+<br>or resolver before using any other log analyzer.
+<br>
+<br>Usage:
+<br>  logresolvemerge.pl [options] file
+<br>  logresolvemerge.pl [options] file1 ... filen
+<br>  logresolvemerge.pl [options] *.*
+<br>Options:
+<br>  -dnslookup    make a reverse DNS lookup on IP adresses (not done by default)
+<br>  -showsteps    to add benchmark informations every 5000 lines processed
+<br>
+<br>This runs logresolvemerge in command line to open one or several web
+<br>server log files to merge them (sorted on date) and/or to make a reverse
+<br>DNS lookup. The result log file is sent on standard output.
+<br>Note: logresolvemerge is not a 'sort' tool to sort one file. It's a
+<br>software able to output sorted log records (with a reverse DNS lookup
+<br>made if wanted) even if log records are shaked in several files.
+<br>However each of thoose files must be already independently sorted itself
+<br>(but that is the case in all web server log files).
+<br>logresolvemerge is particularly usefull when you want to merge large log
+<br>files in a fast process and with a low use of memory getting records in a
+<br>chronological order from a pipe (for use by a log analyzer).
+<br>
+<br>Now supports/detects:
+<br>  Automatic detection of log format
+<br>  No need of extra Perl library
+<br>New versions and FAQ at http://awstats.sourceforge.net
+<br>
+<br>
+
+<br><a name="1"><H2 style="font: 22px Times; color: #606060"><u>common2combined</u></H2></a>
+<br>common2combined converts any Apache 'common' log file into a 'combined' file.
+<br>common2combined comes with ABSOLUTELY NO WARRANTY. It's a free software
+<br>distributed with a GNU General Public License (See COPYING.txt file).
+<br>common2combined is part of AWStats but can be used alone for any need.
+<br>
+<br>Value used for the 2 new fields added in conversion are :
+<br>New referer    : "-"
+<br>New user Agent : "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0)"
+<br>
+<br>Usage:
+<br>  common2combined.pl oldfile.log > newfile.log
+<br>
+<br>Options:
+<br>  -showsteps  to add benchmark informations every 5000 lines processed
+<br>
+<br>New versions and FAQ at http://awstats.sourceforge.net
+<br>
+<br>
+
+
+<br>
+<hr>
+
+<script language=javascript>
+	var lastmod = new Date(document.lastModified);
+	if (lastmod.getDate() > 0) {
+		if (lastmod.getDate()<10) zerod="0"
+		else zerod="";
+		if (lastmod.getMonth()<9) zerom="0"
+		else zerom=""
+		year2kok=lastmod.getYear();
+		if (year2kok<100) year2kok+=2000;
+		if ((year2kok>=100) && (year2kok < 1970)) year2kok+=1900;
+		document.writeln("Last revision: "+year2kok+"-"+zerom+(lastmod.getMonth()+1)+"-"+zerod+lastmod.getDate());
+	}
+</script>
+
+</body>
+</html>
