@@ -81,7 +81,7 @@ $word, $yearcon, $yearfile, $yearmonthfile, $yeartoprocess) = ();
 %MonthBytes = %MonthHits = %MonthPages = %MonthUnique = %MonthVisits =
 %listofyears = %monthlib = %monthnum = ();
 
-$VERSION="2.5 (build 35)";
+$VERSION="2.5 (build 36)";
 $Lang=0;
 
 # Default value
@@ -1378,7 +1378,7 @@ sub Format_Bytes {
 	if ($bytes >= $fudge * exp(3*log(1024))) { return sprintf("%.2f", $bytes/exp(3*log(1024)))." Gb"; }
 	if ($bytes >= $fudge * exp(2*log(1024))) { return sprintf("%.2f", $bytes/exp(2*log(1024)))." Mb"; }
 	if ($bytes >= $fudge * exp(1*log(1024))) { return sprintf("%.2f", $bytes/exp(1*log(1024)))." $message[44]"; }
-	return "$bytes Bytes";
+	return "$bytes $message[75]";
 }
 
 
@@ -2602,6 +2602,7 @@ if ($rest_p > 0) { 	# All other domains (known or not)
 # BY HOST/VISITOR
 #--------------------------
 print "$CENTER<a name=\"VISITOR\"></a><BR>";
+$MaxNbOfHostsShown = $TotalHosts if $MaxNbOfHostsShown > $TotalHosts;
 $tab_titre="TOP $MaxNbOfHostsShown $message[55] $TotalHosts $message[26] ($TotalUnique $message[11])";
 &tab_head;
 print "<TR bgcolor=#$color_TableBGRowTitle><TH>$message[18]</TH><TH bgcolor=#$color_p>$message[56]</TH><TH bgcolor=#$color_h>$message[57]</TH><TH bgcolor=#$color_k>$message[75]</TH><TH>$message[9]</TH></TR>\n";
@@ -2700,6 +2701,7 @@ print "</TR></TABLE></center></TD></TR>\n";
 # BY PAGE
 #-------------------------
 print "$CENTER<a name=\"PAGE\"></a><BR>";
+$MaxNbOfPageShown = $TotalDifferentPages if $MaxNbOfPageShown > $TotalDifferentPages;
 $tab_titre="TOP $MaxNbOfPageShown $message[55] $TotalDifferentPages $message[27]";
 &tab_head;
 print "<TR bgcolor=#$color_TableBGRowTitle><TH>Page-URL</TH><TH bgcolor=#$color_p>&nbsp;$message[29]&nbsp;</TH><TH>&nbsp;</TH></TR>\n";
@@ -2821,6 +2823,7 @@ print "<TR><TD CLASS=LEFT><b>$message[42] :</b></TD><TD>$_from_p[4]&nbsp;</TD><T
 # BY SEARCHWORDS
 #----------------------------
 print "$CENTER<a name=\"SEARCHWORDS\"></a><BR>";
+$MaxNbOfKeywordsShown = $TotalDifferentKeywords if $MaxNbOfKeywordsShown > $TotalDifferentKeywords;
 $tab_titre="TOP $MaxNbOfKeywordsShown $message[55] $TotalDifferentKeywords $message[43]";
 &tab_head;
 print "<TR bgcolor=#$color_TableBGRowTitle onmouseover=\"ShowTooltip(15);\" onmouseout=\"HideTooltip(15);\"><TH>$message[13]</TH><TH bgcolor=#$color_s width=40>$message[14]</TH><TH bgcolor=#$color_s width=40>$message[15]</TH></TR>\n";
