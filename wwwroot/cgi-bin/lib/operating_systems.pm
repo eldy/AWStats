@@ -57,6 +57,7 @@
 "crayos",
 "dreamcast",
 "risc[_+ ]?os",
+"symbian",
 "webtv"
 );
 
@@ -104,6 +105,7 @@
 "crayos","crayos",
 "dreamcast","dreamcast",
 "risc[_+ ]?os","riscos",
+"symbian","symbian",
 "webtv","webtv"
 );
 
@@ -149,6 +151,7 @@
 "crayos","CrayOS",
 "dreamcast","Dreamcast",
 "riscos","RISC OS",
+"symbian","Symbian OS",
 "webtv","WebTV"
 );
 
