@@ -72,6 +72,7 @@ $FoundNotPageList $FoundValidHTTPCodes $FoundValidSMTPCodes
 $FoundNotPageList=$FoundValidHTTPCodes=$FoundValidSMTPCodes=0;
 # Config vars
 use vars qw/
+$StaticExt
 $DNSStaticCacheFile
 $DNSLastUpdateCacheFile
 $LogScreenSizeUrl
@@ -88,6 +89,7 @@ $BarImageHorizontal_h
 $BarImageVertical_k
 $BarImageHorizontal_k
 /;
+$StaticExt='html';
 $DNSStaticCacheFile='dnscache.txt';
 $DNSLastUpdateCacheFile='dnscachelastupdate.txt';
 $LogScreenSizeUrl='logscreensizeurl';
@@ -188,10 +190,10 @@ $QueryString $SiteConfig $StaticLinks $PageCode $PerlParsingFormat
 $HostFilter $URLFilter $RefererPagesFilter
 $SiteToAnalyze $SiteToAnalyzeWithoutwww $UserAgent
 /;
-($FrameName, $Center, $FileConfig, $FileSuffix, $Host, $DayRequired, $MonthRequired,
-$YearRequired, $QueryString, $SiteConfig, $StaticLinks, $PageCode,
+($FrameName, $Center, $FileConfig, $FileSuffix, $Host, $DayRequired, $MonthRequired, $YearRequired,
+$QueryString, $SiteConfig, $StaticLinks, $PageCode, $PerlParsingFormat,
 $HostFilter, $URLFilter, $RefererPagesFilter,
-$PerlParsingFormat, $SiteToAnalyze, $SiteToAnalyzeWithoutwww, $UserAgent)=
+$SiteToAnalyze, $SiteToAnalyzeWithoutwww, $UserAgent)=
 ('','','','','','','','','','','','','','','','','','','');
 use vars qw/
 $pos_vh $pos_host $pos_logname $pos_date $pos_method $pos_url $pos_code $pos_size
@@ -4583,6 +4585,7 @@ else {								# Run from command line
 }
 if ($QueryString =~ /(^|&)staticlinks/i) 			{ $StaticLinks=".$SiteConfig"; }
 if ($QueryString =~ /(^|&)staticlinks=([^&]+)/i) 	{ $StaticLinks=".$2"; }		# When ran from awstatsbuildstaticpages.pl
+if ($QueryString =~ /(^|&)staticlinksext=([^&]+)/i) { $StaticExt="$2"; }
 if ($QueryString =~ /(^|&)framename=([^&]+)/i)		{ $FrameName="$2"; }
 if ($QueryString =~ /(^|&)debug=(\d+)/i)			{ $Debug=$2; }
 if ($QueryString =~ /(^|&)limitflush=(\d+)/i)		{ $LIMITFLUSH=$2; }
@@ -4693,6 +4696,7 @@ if ((! $ENV{'GATEWAY_INTERFACE'}) && (! $SiteConfig)) {
 	print "               keywords         to list all keywords used on search engines\n";
 	print "               errors404        to list 'Referers' for 404 errors\n";
 	print "  -staticlinks to have static links in HTML report page\n";
+	print "  -staticlinksext=xxx to have static links with .xxx extension instead of .html\n";
 	print "  -lang=LL     to output a HTML report in language LL (en,de,es,fr,it,nl,...)\n";
 	print "  -month=MM    to output a HTML report for an old month=MM\n";
 	print "  -year=YYYY   to output a HTML report for an old year=YYYY\n";
@@ -6187,7 +6191,7 @@ if (scalar keys %HTMLOutput) {
 			if ($linetitle) { print "<tr><th class=AWL width=$WIDTHMENU1>$Message[93]: </th>\n"; }
 			if ($linetitle) { print ($frame?"</tr>\n":"<td class=AWL>"); }
 			if ($ShowMonthStats)		 { print ($frame?"<tr><td class=AWL>":""); print "<a href=\"$linkanchor#TOP\"$targetpage>$Message[128]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
-			#if ($ShowMonthDayStats)	 { print ($frame?"<tr><td class=AWL> &nbsp; <img height=8 width=9 src=\"$DirIcons/other/page.png\" alt=\"...\"> ":""); print "<a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=alldays":"$PROG$StaticLinks.alldays.html")."\"$NewLinkTarget>$Message[130]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
+			#if ($ShowMonthDayStats)	 { print ($frame?"<tr><td class=AWL> &nbsp; <img height=8 width=9 src=\"$DirIcons/other/page.png\" alt=\"...\"> ":""); print "<a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=alldays":"$PROG$StaticLinks.alldays.$StaticExt")."\"$NewLinkTarget>$Message[130]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
 			if ($ShowDaysOfMonthStats)	 { print ($frame?"<tr><td class=AWL>":""); print "<a href=\"$linkanchor#DAYOFMONTH\"$targetpage>$Message[138]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
 			if ($ShowDaysOfWeekStats)	 { print ($frame?"<tr><td class=AWL>":""); print "<a href=\"$linkanchor#DAYOFWEEK\"$targetpage>$Message[91]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
 			if ($ShowHoursStats)		 { print ($frame?"<tr><td class=AWL>":""); print "<a href=\"$linkanchor#HOUR\"$targetpage>$Message[20]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
@@ -6197,26 +6201,26 @@ if (scalar keys %HTMLOutput) {
 			if ($linetitle) { print "<tr><th class=AWL>$Message[92]: </th>\n"; }
 			if ($linetitle) { print ($frame?"</tr>\n":"<td class=AWL>"); }
 			if ($ShowDomainsStats)		 { print ($frame?"<tr><td class=AWL>":""); print "<a href=\"$linkanchor#DOMAINS\"$targetpage>$Message[17]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
-			if ($ShowDomainsStats)		 { print ($frame?"<tr><td class=AWL> &nbsp; <img height=8 width=9 src=\"$DirIcons/other/page.png\" alt=\"...\"> ":""); print "<a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=alldomains":"$PROG$StaticLinks.alldomains.html")."\"$NewLinkTarget>$Message[80]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
+			if ($ShowDomainsStats)		 { print ($frame?"<tr><td class=AWL> &nbsp; <img height=8 width=9 src=\"$DirIcons/other/page.png\" alt=\"...\"> ":""); print "<a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=alldomains":"$PROG$StaticLinks.alldomains.$StaticExt")."\"$NewLinkTarget>$Message[80]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
 			if ($ShowHostsStats)		 { print ($frame?"<tr><td class=AWL>":""); print "<a href=\"$linkanchor#VISITOR\"$targetpage>".ucfirst($Message[81])."</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
-			if ($ShowHostsStats)		 { print ($frame?"<tr><td class=AWL> &nbsp; <img height=8 width=9 src=\"$DirIcons/other/page.png\" alt=\"...\"> ":""); print "<a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=allhosts":"$PROG$StaticLinks.allhosts.html")."\"$NewLinkTarget>$Message[80]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
-			if ($ShowHostsStats =~ /L/i) { print ($frame?"<tr><td class=AWL> &nbsp; <img height=8 width=9 src=\"$DirIcons/other/page.png\" alt=\"...\"> ":""); print "<a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=lasthosts":"$PROG$StaticLinks.lasthosts.html")."\"$NewLinkTarget>$Message[9]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
-			if ($ShowHostsStats)		 { print ($frame?"<tr><td class=AWL> &nbsp; <img height=8 width=9 src=\"$DirIcons/other/page.png\" alt=\"...\"> ":""); print "<a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=unknownip":"$PROG$StaticLinks.unknownip.html")."\"$NewLinkTarget>$Message[45]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
+			if ($ShowHostsStats)		 { print ($frame?"<tr><td class=AWL> &nbsp; <img height=8 width=9 src=\"$DirIcons/other/page.png\" alt=\"...\"> ":""); print "<a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=allhosts":"$PROG$StaticLinks.allhosts.$StaticExt")."\"$NewLinkTarget>$Message[80]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
+			if ($ShowHostsStats =~ /L/i) { print ($frame?"<tr><td class=AWL> &nbsp; <img height=8 width=9 src=\"$DirIcons/other/page.png\" alt=\"...\"> ":""); print "<a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=lasthosts":"$PROG$StaticLinks.lasthosts.$StaticExt")."\"$NewLinkTarget>$Message[9]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
+			if ($ShowHostsStats)		 { print ($frame?"<tr><td class=AWL> &nbsp; <img height=8 width=9 src=\"$DirIcons/other/page.png\" alt=\"...\"> ":""); print "<a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=unknownip":"$PROG$StaticLinks.unknownip.$StaticExt")."\"$NewLinkTarget>$Message[45]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
 			if ($ShowAuthenticatedUsers) { print ($frame?"<tr><td class=AWL>":""); print "<a href=\"$linkanchor#LOGIN\"$targetpage>$Message[94]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
-			if ($ShowAuthenticatedUsers) { print ($frame?"<tr><td class=AWL> &nbsp; <img height=8 width=9 src=\"$DirIcons/other/page.png\" alt=\"...\"> ":""); print "<a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=alllogins":"$PROG$StaticLinks.alllogins.html")."\"$NewLinkTarget>$Message[80]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
-			if ($ShowAuthenticatedUsers =~ /L/i)	{ print ($frame?"<tr><td class=AWL> &nbsp; <img height=8 width=9 src=\"$DirIcons/other/page.png\" alt=\"...\"> ":""); print "<a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=lastlogins":"$PROG$StaticLinks.lastlogins.html")."\"$NewLinkTarget>$Message[9]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
+			if ($ShowAuthenticatedUsers) { print ($frame?"<tr><td class=AWL> &nbsp; <img height=8 width=9 src=\"$DirIcons/other/page.png\" alt=\"...\"> ":""); print "<a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=alllogins":"$PROG$StaticLinks.alllogins.$StaticExt")."\"$NewLinkTarget>$Message[80]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
+			if ($ShowAuthenticatedUsers =~ /L/i)	{ print ($frame?"<tr><td class=AWL> &nbsp; <img height=8 width=9 src=\"$DirIcons/other/page.png\" alt=\"...\"> ":""); print "<a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=lastlogins":"$PROG$StaticLinks.lastlogins.$StaticExt")."\"$NewLinkTarget>$Message[9]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
 			if ($ShowEMailSenders)		 { print ($frame?"<tr><td class=AWL>":""); print "<a href=\"$linkanchor#EMAILSENDERS\"$targetpage>$Message[131]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
-			if ($ShowEMailSenders)		 { print ($frame?"<tr><td class=AWL> &nbsp; <img height=8 width=9 src=\"$DirIcons/other/page.png\" alt=\"...\"> ":""); print "<a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=allemails":"$PROG$StaticLinks.allemails.html")."\"$NewLinkTarget>$Message[80]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
-			if ($ShowEMailSenders =~ /L/i)	{ print ($frame?"<tr><td class=AWL> &nbsp; <img height=8 width=9 src=\"$DirIcons/other/page.png\" alt=\"...\"> ":""); print "<a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=lastemails":"$PROG$StaticLinks.lastemails.html")."\"$NewLinkTarget>$Message[9]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
+			if ($ShowEMailSenders)		 { print ($frame?"<tr><td class=AWL> &nbsp; <img height=8 width=9 src=\"$DirIcons/other/page.png\" alt=\"...\"> ":""); print "<a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=allemails":"$PROG$StaticLinks.allemails.$StaticExt")."\"$NewLinkTarget>$Message[80]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
+			if ($ShowEMailSenders =~ /L/i)	{ print ($frame?"<tr><td class=AWL> &nbsp; <img height=8 width=9 src=\"$DirIcons/other/page.png\" alt=\"...\"> ":""); print "<a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=lastemails":"$PROG$StaticLinks.lastemails.$StaticExt")."\"$NewLinkTarget>$Message[9]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
 			if ($ShowEMailReceivers)	 { print ($frame?"<tr><td class=AWL>":""); print "<a href=\"$linkanchor#EMAILRECEIVERS\"$targetpage>$Message[132]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
-			if ($ShowEMailReceivers)	 { print ($frame?"<tr><td class=AWL> &nbsp; <img height=8 width=9 src=\"$DirIcons/other/page.png\" alt=\"...\"> ":""); print "<a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=allemailr":"$PROG$StaticLinks.allemailr.html")."\"$NewLinkTarget>$Message[80]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
-			if ($ShowEMailReceivers =~ /L/i)	{ print ($frame?"<tr><td class=AWL> &nbsp; <img height=8 width=9 src=\"$DirIcons/other/page.png\" alt=\"...\"> ":""); print "<a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=lastemailr":"$PROG$StaticLinks.lastemailr.html")."\"$NewLinkTarget>$Message[9]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
+			if ($ShowEMailReceivers)	 { print ($frame?"<tr><td class=AWL> &nbsp; <img height=8 width=9 src=\"$DirIcons/other/page.png\" alt=\"...\"> ":""); print "<a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=allemailr":"$PROG$StaticLinks.allemailr.$StaticExt")."\"$NewLinkTarget>$Message[80]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
+			if ($ShowEMailReceivers =~ /L/i)	{ print ($frame?"<tr><td class=AWL> &nbsp; <img height=8 width=9 src=\"$DirIcons/other/page.png\" alt=\"...\"> ":""); print "<a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=lastemailr":"$PROG$StaticLinks.lastemailr.$StaticExt")."\"$NewLinkTarget>$Message[9]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
 			if ($ShowRobotsStats)		 { print ($frame?"<tr><td class=AWL>":""); print "<a href=\"$linkanchor#ROBOTS\"$targetpage>$Message[53]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
-			if ($ShowRobotsStats) 		 { print ($frame?"<tr><td class=AWL> &nbsp; <img height=8 width=9 src=\"$DirIcons/other/page.png\" alt=\"...\"> ":""); print "<a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=allrobots":"$PROG$StaticLinks.allrobots.html")."\"$NewLinkTarget>$Message[80]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
-			if ($ShowRobotsStats =~ /L/i)	{ print ($frame?"<tr><td class=AWL> &nbsp; <img height=8 width=9 src=\"$DirIcons/other/page.png\" alt=\"...\"> ":""); print "<a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=lastrobots":"$PROG$StaticLinks.lastrobots.html")."\"$NewLinkTarget>$Message[9]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
+			if ($ShowRobotsStats) 		 { print ($frame?"<tr><td class=AWL> &nbsp; <img height=8 width=9 src=\"$DirIcons/other/page.png\" alt=\"...\"> ":""); print "<a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=allrobots":"$PROG$StaticLinks.allrobots.$StaticExt")."\"$NewLinkTarget>$Message[80]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
+			if ($ShowRobotsStats =~ /L/i)	{ print ($frame?"<tr><td class=AWL> &nbsp; <img height=8 width=9 src=\"$DirIcons/other/page.png\" alt=\"...\"> ":""); print "<a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=lastrobots":"$PROG$StaticLinks.lastrobots.$StaticExt")."\"$NewLinkTarget>$Message[9]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
 #			if ($ShowWormsStats)		 { print ($frame?"<tr><td class=AWL>":""); print "<a href=\"$linkanchor#WORMS\"$targetpage>$Message[136]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
-#			if ($ShowWormsStats) 		 { print ($frame?"<tr><td class=AWL> &nbsp; <img height=8 width=9 src=\"$DirIcons/other/page.png\" alt=\"...\"> ":""); print "<a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=allworms":"$PROG$StaticLinks.allworms.html")."\"$NewLinkTarget>$Message[80]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
-#			if ($ShowWormsStats =~ /L/i)	{ print ($frame?"<tr><td class=AWL> &nbsp; <img height=8 width=9 src=\"$DirIcons/other/page.png\" alt=\"...\"> ":""); print "<a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=lastworms":"$PROG$StaticLinks.lastworms.html")."\"$NewLinkTarget>$Message[9]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
+#			if ($ShowWormsStats) 		 { print ($frame?"<tr><td class=AWL> &nbsp; <img height=8 width=9 src=\"$DirIcons/other/page.png\" alt=\"...\"> ":""); print "<a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=allworms":"$PROG$StaticLinks.allworms.$StaticExt")."\"$NewLinkTarget>$Message[80]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
+#			if ($ShowWormsStats =~ /L/i)	{ print ($frame?"<tr><td class=AWL> &nbsp; <img height=8 width=9 src=\"$DirIcons/other/page.png\" alt=\"...\"> ":""); print "<a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=lastworms":"$PROG$StaticLinks.lastworms.$StaticExt")."\"$NewLinkTarget>$Message[9]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
 			if ($linetitle) { print ($frame?"":"</td></tr>\n"); }
 			# Navigation
 			$linetitle=&AtLeastOneNotNull($ShowSessionsStats,$ShowPagesStats,$ShowFileTypesStats,$ShowFileSizesStats,$ShowOSStats,$ShowBrowsersStats,$ShowScreenSizeStats);
@@ -6225,15 +6229,15 @@ if (scalar keys %HTMLOutput) {
 			if ($ShowSessionsStats)		 { print ($frame?"<tr><td class=AWL>":""); print "<a href=\"$linkanchor#SESSIONS\"$targetpage>$Message[117]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
 			if ($ShowFileTypesStats)	 { print ($frame?"<tr><td class=AWL>":""); print "<a href=\"$linkanchor#FILETYPES\"$targetpage>$Message[73]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
 			if ($ShowPagesStats)		 { print ($frame?"<tr><td class=AWL>":""); print "<a href=\"$linkanchor#PAGE\"$targetpage>$Message[29]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
-			if ($ShowPagesStats)		 { print ($frame?"<tr><td class=AWL> &nbsp; <img height=8 width=9 src=\"$DirIcons/other/page.png\" alt=\"...\"> ":""); print "<a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=urldetail":"$PROG$StaticLinks.urldetail.html")."\"$NewLinkTarget>$Message[80]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
-			if ($ShowPagesStats =~ /E/i)	{ print ($frame?"<tr><td class=AWL> &nbsp; <img height=8 width=9 src=\"$DirIcons/other/page.png\" alt=\"...\"> ":""); print "<a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=urlentry":"$PROG$StaticLinks.urlentry.html")."\"$NewLinkTarget>$Message[104]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
-			if ($ShowPagesStats =~ /X/i)	{ print ($frame?"<tr><td class=AWL> &nbsp; <img height=8 width=9 src=\"$DirIcons/other/page.png\" alt=\"...\"> ":""); print "<a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=urlexit":"$PROG$StaticLinks.urlexit.html")."\"$NewLinkTarget>$Message[116]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
+			if ($ShowPagesStats)		 { print ($frame?"<tr><td class=AWL> &nbsp; <img height=8 width=9 src=\"$DirIcons/other/page.png\" alt=\"...\"> ":""); print "<a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=urldetail":"$PROG$StaticLinks.urldetail.$StaticExt")."\"$NewLinkTarget>$Message[80]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
+			if ($ShowPagesStats =~ /E/i)	{ print ($frame?"<tr><td class=AWL> &nbsp; <img height=8 width=9 src=\"$DirIcons/other/page.png\" alt=\"...\"> ":""); print "<a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=urlentry":"$PROG$StaticLinks.urlentry.$StaticExt")."\"$NewLinkTarget>$Message[104]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
+			if ($ShowPagesStats =~ /X/i)	{ print ($frame?"<tr><td class=AWL> &nbsp; <img height=8 width=9 src=\"$DirIcons/other/page.png\" alt=\"...\"> ":""); print "<a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=urlexit":"$PROG$StaticLinks.urlexit.$StaticExt")."\"$NewLinkTarget>$Message[116]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
 			if ($ShowOSStats)			 { print ($frame?"<tr><td class=AWL>":""); print "<a href=\"$linkanchor#OS\"$targetpage>$Message[59]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
-			if ($ShowOSStats)		 	 { print ($frame?"<tr><td class=AWL> &nbsp; <img height=8 width=9 src=\"$DirIcons/other/page.png\" alt=\"...\"> ":""); print "<a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=osdetail":"$PROG$StaticLinks.osdetail.html")."\"$NewLinkTarget>$Message[58]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
-			if ($ShowOSStats)			 { print ($frame?"<tr><td class=AWL> &nbsp; <img height=8 width=9 src=\"$DirIcons/other/page.png\" alt=\"...\"> ":""); print "<a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=unknownos":"$PROG$StaticLinks.unknownos.html")."\"$NewLinkTarget>$Message[0]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
+			if ($ShowOSStats)		 	 { print ($frame?"<tr><td class=AWL> &nbsp; <img height=8 width=9 src=\"$DirIcons/other/page.png\" alt=\"...\"> ":""); print "<a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=osdetail":"$PROG$StaticLinks.osdetail.$StaticExt")."\"$NewLinkTarget>$Message[58]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
+			if ($ShowOSStats)			 { print ($frame?"<tr><td class=AWL> &nbsp; <img height=8 width=9 src=\"$DirIcons/other/page.png\" alt=\"...\"> ":""); print "<a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=unknownos":"$PROG$StaticLinks.unknownos.$StaticExt")."\"$NewLinkTarget>$Message[0]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
 			if ($ShowBrowsersStats)		 { print ($frame?"<tr><td class=AWL>":""); print "<a href=\"$linkanchor#BROWSER\"$targetpage>$Message[21]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
-			if ($ShowBrowsersStats)		 { print ($frame?"<tr><td class=AWL> &nbsp; <img height=8 width=9 src=\"$DirIcons/other/page.png\" alt=\"...\"> ":""); print "<a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=browserdetail":"$PROG$StaticLinks.browserdetail.html")."\"$NewLinkTarget>$Message[58]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
-			if ($ShowBrowsersStats)		 { print ($frame?"<tr><td class=AWL> &nbsp; <img height=8 width=9 src=\"$DirIcons/other/page.png\" alt=\"...\"> ":""); print "<a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=unknownbrowser":"$PROG$StaticLinks.unknownbrowser.html")."\"$NewLinkTarget>$Message[0]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
+			if ($ShowBrowsersStats)		 { print ($frame?"<tr><td class=AWL> &nbsp; <img height=8 width=9 src=\"$DirIcons/other/page.png\" alt=\"...\"> ":""); print "<a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=browserdetail":"$PROG$StaticLinks.browserdetail.$StaticExt")."\"$NewLinkTarget>$Message[58]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
+			if ($ShowBrowsersStats)		 { print ($frame?"<tr><td class=AWL> &nbsp; <img height=8 width=9 src=\"$DirIcons/other/page.png\" alt=\"...\"> ":""); print "<a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=unknownbrowser":"$PROG$StaticLinks.unknownbrowser.$StaticExt")."\"$NewLinkTarget>$Message[0]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
 			if ($ShowScreenSizeStats)	 { print ($frame?"<tr><td class=AWL>":""); print "<a href=\"$linkanchor#SCREENSIZE\"$targetpage>$Message[135]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
 			if ($linetitle) { print ($frame?"":"</td></tr>\n"); }
 			# Referers
@@ -6241,11 +6245,11 @@ if (scalar keys %HTMLOutput) {
 			if ($linetitle) { print "<tr><th class=AWL>$Message[23]: </th>\n"; }
 			if ($linetitle) { print ($frame?"</tr>\n":"<td class=AWL>"); }
 			if ($ShowOriginStats)		 { print ($frame?"<tr><td class=AWL>":""); print "<a href=\"$linkanchor#REFERER\"$targetpage>$Message[37]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
-			if ($ShowOriginStats)		 { print ($frame?"<tr><td class=AWL> &nbsp; <img height=8 width=9 src=\"$DirIcons/other/page.png\" alt=\"...\"> ":""); print "<a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=refererse":"$PROG$StaticLinks.refererse.html")."\"$NewLinkTarget>$Message[126]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
-			if ($ShowOriginStats)		 { print ($frame?"<tr><td class=AWL> &nbsp; <img height=8 width=9 src=\"$DirIcons/other/page.png\" alt=\"...\"> ":""); print "<a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=refererpages":"$PROG$StaticLinks.refererpages.html")."\"$NewLinkTarget>$Message[127]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
+			if ($ShowOriginStats)		 { print ($frame?"<tr><td class=AWL> &nbsp; <img height=8 width=9 src=\"$DirIcons/other/page.png\" alt=\"...\"> ":""); print "<a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=refererse":"$PROG$StaticLinks.refererse.$StaticExt")."\"$NewLinkTarget>$Message[126]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
+			if ($ShowOriginStats)		 { print ($frame?"<tr><td class=AWL> &nbsp; <img height=8 width=9 src=\"$DirIcons/other/page.png\" alt=\"...\"> ":""); print "<a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=refererpages":"$PROG$StaticLinks.refererpages.$StaticExt")."\"$NewLinkTarget>$Message[127]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
 			if ($ShowKeyphrasesStats || $ShowKeywordsStats)	 { print ($frame?"<tr><td class=AWL>":""); print "<a href=\"$linkanchor#KEYS\"$targetpage>$Message[14]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
-			if ($ShowKeyphrasesStats)	 { print ($frame?"<tr><td class=AWL> &nbsp; <img height=8 width=9 src=\"$DirIcons/other/page.png\" alt=\"...\"> ":""); print "<a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=keyphrases":"$PROG$StaticLinks.keyphrases.html")."\"$NewLinkTarget>$Message[120]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
-			if ($ShowKeywordsStats)	 	 { print ($frame?"<tr><td class=AWL> &nbsp; <img height=8 width=9 src=\"$DirIcons/other/page.png\" alt=\"...\"> ":""); print "<a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=keywords":"$PROG$StaticLinks.keywords.html")."\"$NewLinkTarget>$Message[121]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
+			if ($ShowKeyphrasesStats)	 { print ($frame?"<tr><td class=AWL> &nbsp; <img height=8 width=9 src=\"$DirIcons/other/page.png\" alt=\"...\"> ":""); print "<a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=keyphrases":"$PROG$StaticLinks.keyphrases.$StaticExt")."\"$NewLinkTarget>$Message[120]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
+			if ($ShowKeywordsStats)	 	 { print ($frame?"<tr><td class=AWL> &nbsp; <img height=8 width=9 src=\"$DirIcons/other/page.png\" alt=\"...\"> ":""); print "<a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=keywords":"$PROG$StaticLinks.keywords.$StaticExt")."\"$NewLinkTarget>$Message[121]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
 			if ($linetitle) { print ($frame?"":"</td></tr>\n"); }
 			# Others
 			$linetitle=&AtLeastOneNotNull($ShowFileTypesStats=~/C/i,$ShowHTTPErrorsStats);
@@ -6254,7 +6258,7 @@ if (scalar keys %HTMLOutput) {
 			if ($ShowFileTypesStats =~ /C/i)	 { print ($frame?"<tr><td class=AWL>":""); print "<a href=\"$linkanchor#FILETYPES\"$targetpage>$Message[98]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
 			if ($ShowHTTPErrorsStats)	 { print ($frame?"<tr><td class=AWL>":""); print "<a href=\"$linkanchor#ERRORS\"$targetpage>$Message[22]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
 			foreach my $code (keys %TrapInfosForHTTPErrorCodes) {
-				if ($ShowHTTPErrorsStats)	 { print ($frame?"<tr><td class=AWL> &nbsp; <img height=8 width=9 src=\"$DirIcons/other/page.png\" alt=\"...\"> ":""); print "<a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=errors$code":"$PROG$StaticLinks.errors$code.html")."\"$NewLinkTarget>$Message[31]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
+				if ($ShowHTTPErrorsStats)	 { print ($frame?"<tr><td class=AWL> &nbsp; <img height=8 width=9 src=\"$DirIcons/other/page.png\" alt=\"...\"> ":""); print "<a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=errors$code":"$PROG$StaticLinks.errors$code.$StaticExt")."\"$NewLinkTarget>$Message[31]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
 			}
 			if ($linetitle) { print ($frame?"":"</td></tr>\n"); }
 			# Extra/Marketing
@@ -6277,7 +6281,7 @@ if (scalar keys %HTMLOutput) {
 			$NewLinkParams =~ s/(^|&)refererpagesfilter=[^&]*//i;
 			$NewLinkParams =~ tr/&/&/s; $NewLinkParams =~ s/&$//;
 			if (! $DetailedReportsOnNewWindows || $FrameName eq 'mainright') {
-				print "<tr><td class=AWL><a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript".(${NewLinkParams}?"?${NewLinkParams}":""):"$PROG$StaticLinks.html")."\">$Message[76]</a></td></tr>\n";
+				print "<tr><td class=AWL><a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript".(${NewLinkParams}?"?${NewLinkParams}":""):"$PROG$StaticLinks.$StaticExt")."\">$Message[76]</a></td></tr>\n";
 			}
 			else {
 				print "<tr><td class=AWL><a href=\"javascript:parent.window.close();\">$Message[118]</a></td></tr>\n";
@@ -7916,7 +7920,7 @@ if (scalar keys %HTMLOutput) {
 		if ($ShowDomainsStats) {
 			if ($Debug) { debug("ShowDomainsStats",2); }
 			print "$Center<a name=\"DOMAINS\">&nbsp;</a><BR>\n";
-			my $title="$Message[25] ($Message[77] $MaxNbOf{'Domain'}) &nbsp; - &nbsp; <a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=alldomains":"$PROG$StaticLinks.alldomains.html")."\"$NewLinkTarget>$Message[80]</a>";
+			my $title="$Message[25] ($Message[77] $MaxNbOf{'Domain'}) &nbsp; - &nbsp; <a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=alldomains":"$PROG$StaticLinks.alldomains.$StaticExt")."\"$NewLinkTarget>$Message[80]</a>";
 			&tab_head("$title",19);
 			print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH width=$WIDTHCOLICON>&nbsp;</TH><TH colspan=2>$Message[17]</TH>";
 			if ($ShowDomainsStats =~ /P/i) { print "<TH bgcolor=\"#$color_p\" width=80>$Message[56]</TH>"; }
@@ -7977,7 +7981,7 @@ if (scalar keys %HTMLOutput) {
 		if ($ShowHostsStats) {
 			if ($Debug) { debug("ShowHostsStats",2); }
 			print "$Center<a name=\"VISITOR\">&nbsp;</a><BR>\n";
-			my $title="$Message[81] ($Message[77] $MaxNbOf{'HostsShown'}) &nbsp; - &nbsp; <a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=allhosts":"$PROG$StaticLinks.allhosts.html")."\"$NewLinkTarget>$Message[80]</a> &nbsp; - &nbsp; <a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=lasthosts":"$PROG$StaticLinks.lasthosts.html")."\"$NewLinkTarget>$Message[9]</a> &nbsp; - &nbsp; <a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=unknownip":"$PROG$StaticLinks.unknownip.html")."\"$NewLinkTarget>$Message[45]</a>";
+			my $title="$Message[81] ($Message[77] $MaxNbOf{'HostsShown'}) &nbsp; - &nbsp; <a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=allhosts":"$PROG$StaticLinks.allhosts.$StaticExt")."\"$NewLinkTarget>$Message[80]</a> &nbsp; - &nbsp; <a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=lasthosts":"$PROG$StaticLinks.lasthosts.$StaticExt")."\"$NewLinkTarget>$Message[9]</a> &nbsp; - &nbsp; <a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=unknownip":"$PROG$StaticLinks.unknownip.$StaticExt")."\"$NewLinkTarget>$Message[45]</a>";
 			&tab_head("$title",19);
 			print "<TR bgcolor=\"#$color_TableBGRowTitle\">";
 	#		print "<TH".($PluginsLoaded{'GetCountryCodeByAddr'}{'geoip'}?" colspan=2":"").">";
@@ -8028,8 +8032,8 @@ if (scalar keys %HTMLOutput) {
 		if ($ShowEMailSenders) {
 			if ($Debug) { debug("ShowEMailSenders",2); }
 			print "$Center<a name=\"EMAILSENDERS\">&nbsp;</a><BR>\n";
-			my $title="$Message[131] ($Message[77] $MaxNbOf{'EMailsShown'}) &nbsp; - &nbsp; <a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=allemails":"$PROG$StaticLinks.allemails.html")."\"$NewLinkTarget>$Message[80]</a>";
-			if ($ShowEMailSenders =~ /L/i) { $title.=" &nbsp; - &nbsp; <a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=lastemails":"$PROG$StaticLinks.lastemails.html")."\"$NewLinkTarget>$Message[9]</a>"; }
+			my $title="$Message[131] ($Message[77] $MaxNbOf{'EMailsShown'}) &nbsp; - &nbsp; <a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=allemails":"$PROG$StaticLinks.allemails.$StaticExt")."\"$NewLinkTarget>$Message[80]</a>";
+			if ($ShowEMailSenders =~ /L/i) { $title.=" &nbsp; - &nbsp; <a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=lastemails":"$PROG$StaticLinks.lastemails.$StaticExt")."\"$NewLinkTarget>$Message[9]</a>"; }
 			&tab_head("$title",19);
 			print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[131] : ".(scalar keys %_emails_h)."</TH>";
 			if ($ShowEMailSenders =~ /H/i) { print "<TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH>"; }
@@ -8076,8 +8080,8 @@ if (scalar keys %HTMLOutput) {
 		if ($ShowEMailReceivers) {
 			if ($Debug) { debug("ShowEMailReceivers",2); }
 			print "$Center<a name=\"EMAILRECEIVERS\">&nbsp;</a><BR>\n";
-			my $title="$Message[132] ($Message[77] $MaxNbOf{'EMailsShown'}) &nbsp; - &nbsp; <a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=allemailr":"$PROG$StaticLinks.allemailr.html")."\"$NewLinkTarget>$Message[80]</a>";
-			if ($ShowEMailReceivers =~ /L/i) { $title.=" &nbsp; - &nbsp; <a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=lastemailr":"$PROG$StaticLinks.lastemailr.html")."\"$NewLinkTarget>$Message[9]</a>"; }
+			my $title="$Message[132] ($Message[77] $MaxNbOf{'EMailsShown'}) &nbsp; - &nbsp; <a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=allemailr":"$PROG$StaticLinks.allemailr.$StaticExt")."\"$NewLinkTarget>$Message[80]</a>";
+			if ($ShowEMailReceivers =~ /L/i) { $title.=" &nbsp; - &nbsp; <a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=lastemailr":"$PROG$StaticLinks.lastemailr.$StaticExt")."\"$NewLinkTarget>$Message[9]</a>"; }
 			&tab_head("$title",19);
 			print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[132] : ".(scalar keys %_emailr_h)."</TH>";
 			if ($ShowEMailReceivers =~ /H/i) { print "<TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH>"; }
@@ -8124,8 +8128,8 @@ if (scalar keys %HTMLOutput) {
 		if ($ShowAuthenticatedUsers) {
 			if ($Debug) { debug("ShowAuthenticatedUsers",2); }
 			print "$Center<a name=\"LOGIN\">&nbsp;</a><BR>\n";
-			my $title="$Message[94] ($Message[77] $MaxNbOf{'LoginShown'}) &nbsp; - &nbsp; <a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=alllogins":"$PROG$StaticLinks.alllogins.html")."\"$NewLinkTarget>$Message[80]</a>";
-			if ($ShowAuthenticatedUsers =~ /L/i) { $title.=" &nbsp; - &nbsp; <a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=lastlogins":"$PROG$StaticLinks.lastlogins.html")."\"$NewLinkTarget>$Message[9]</a>"; }
+			my $title="$Message[94] ($Message[77] $MaxNbOf{'LoginShown'}) &nbsp; - &nbsp; <a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=alllogins":"$PROG$StaticLinks.alllogins.$StaticExt")."\"$NewLinkTarget>$Message[80]</a>";
+			if ($ShowAuthenticatedUsers =~ /L/i) { $title.=" &nbsp; - &nbsp; <a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=lastlogins":"$PROG$StaticLinks.lastlogins.$StaticExt")."\"$NewLinkTarget>$Message[9]</a>"; }
 			&tab_head("$title",19);
 			print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[94] : ".(scalar keys %_login_h)."</TH>";
 			if ($ShowAuthenticatedUsers =~ /P/i) { print "<TH bgcolor=\"#$color_p\" width=80>$Message[56]</TH>"; }
@@ -8178,7 +8182,7 @@ if (scalar keys %HTMLOutput) {
 		if ($ShowRobotsStats) {
 			if ($Debug) { debug("ShowRobotStats",2); }
 			print "$Center<a name=\"ROBOTS\">&nbsp;</a><BR>\n";
-			&tab_head("$Message[53] ($Message[77] $MaxNbOf{'RobotShown'}) &nbsp; - &nbsp; <a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=allrobots":"$PROG$StaticLinks.allrobots.html")."\"$NewLinkTarget>$Message[80]</a> &nbsp; - &nbsp; <a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=lastrobots":"$PROG$StaticLinks.lastrobots.html")."\"$NewLinkTarget>$Message[9]</a>",19);
+			&tab_head("$Message[53] ($Message[77] $MaxNbOf{'RobotShown'}) &nbsp; - &nbsp; <a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=allrobots":"$PROG$StaticLinks.allrobots.$StaticExt")."\"$NewLinkTarget>$Message[80]</a> &nbsp; - &nbsp; <a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=lastrobots":"$PROG$StaticLinks.lastrobots.$StaticExt")."\"$NewLinkTarget>$Message[9]</a>",19);
 			print "<TR bgcolor=\"#$color_TableBGRowTitle\"".($TOOLTIPON?" onmouseover=\"ShowTip(16);\" onmouseout=\"HideTip(16);\"":"")."><TH>".(scalar keys %_robot_h)." $Message[51]</TH>";
 			if ($ShowRobotsStats =~ /H/i) { print "<TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH>"; }
 			if ($ShowRobotsStats =~ /B/i) { print "<TH bgcolor=\"#$color_k\" width=80>$Message[75]</TH>"; }
@@ -8310,9 +8314,9 @@ if (scalar keys %HTMLOutput) {
 		if ($ShowPagesStats) {
 			if ($Debug) { debug("ShowPagesStats (MaxNbOf{'PageShown'}=$MaxNbOf{'PageShown'} TotalDifferentPages=$TotalDifferentPages)",2); }
 			print "$Center<a name=\"PAGE\">&nbsp;</a><a name=\"ENTRY\">&nbsp;</a><a name=\"EXIT\">&nbsp;</a><BR>\n";
-			my $title="$Message[19] ($Message[77] $MaxNbOf{'PageShown'}) &nbsp; - &nbsp; <a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=urldetail":"$PROG$StaticLinks.urldetail.html")."\"$NewLinkTarget>$Message[80]</a>";
-			if ($ShowPagesStats =~ /E/i) { $title.=" &nbsp; - &nbsp; <a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=urlentry":"$PROG$StaticLinks.urlentry.html")."\"$NewLinkTarget>$Message[104]</a>"; }
-			if ($ShowPagesStats =~ /X/i) { $title.=" &nbsp; - &nbsp; <a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=urlexit":"$PROG$StaticLinks.urlexit.html")."\"$NewLinkTarget>$Message[116]</a>"; }
+			my $title="$Message[19] ($Message[77] $MaxNbOf{'PageShown'}) &nbsp; - &nbsp; <a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=urldetail":"$PROG$StaticLinks.urldetail.$StaticExt")."\"$NewLinkTarget>$Message[80]</a>";
+			if ($ShowPagesStats =~ /E/i) { $title.=" &nbsp; - &nbsp; <a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=urlentry":"$PROG$StaticLinks.urlentry.$StaticExt")."\"$NewLinkTarget>$Message[104]</a>"; }
+			if ($ShowPagesStats =~ /X/i) { $title.=" &nbsp; - &nbsp; <a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=urlexit":"$PROG$StaticLinks.urlexit.$StaticExt")."\"$NewLinkTarget>$Message[116]</a>"; }
 			&tab_head("$title",19);
 			print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$TotalDifferentPages $Message[28]</TH>";
 			if ($ShowPagesStats =~ /P/i) { print "<TH bgcolor=\"#$color_p\" width=80>$Message[29]</TH>"; }
@@ -8398,7 +8402,7 @@ if (scalar keys %HTMLOutput) {
 				foreach my $family (@OSFamily) { if ($key =~ /^$family/i) { $new_os_h{"${family}cumul"}+=$_os_h{$key}; next OSLOOP; } }
 				$new_os_h{$key}+=$_os_h{$key};
 			}
-			my $title="$Message[59] &nbsp; - &nbsp; <a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=osdetail":"$PROG$StaticLinks.osdetail.html")."\"$NewLinkTarget>$Message[58]</a> &nbsp; - &nbsp; <a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=unknownos":"$PROG$StaticLinks.unknownos.html")."\"$NewLinkTarget>$Message[0]</a>";
+			my $title="$Message[59] &nbsp; - &nbsp; <a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=osdetail":"$PROG$StaticLinks.osdetail.$StaticExt")."\"$NewLinkTarget>$Message[58]</a> &nbsp; - &nbsp; <a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=unknownos":"$PROG$StaticLinks.unknownos.$StaticExt")."\"$NewLinkTarget>$Message[0]</a>";
 			&tab_head("$title",19);
 			print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH width=$WIDTHCOLICON>&nbsp;</TH><TH>$Message[59]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[15]</TH></TR>\n";
 			my $count=0;
@@ -8434,7 +8438,7 @@ if (scalar keys %HTMLOutput) {
 				foreach my $family (@BrowsersFamily) { if ($key =~ /^$family/i) { $new_browser_h{"${family}cumul"}+=$_browser_h{$key}; next BROWSERLOOP; } }
 				$new_browser_h{$key}+=$_browser_h{$key};
 			}
-			my $title="$Message[21] &nbsp; - &nbsp; <a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=browserdetail":"$PROG$StaticLinks.browserdetail.html")."\"$NewLinkTarget>$Message[58]</a> &nbsp; - &nbsp; <a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=unknownbrowser":"$PROG$StaticLinks.unknownbrowser.html")."\"$NewLinkTarget>$Message[0]</a>";
+			my $title="$Message[21] &nbsp; - &nbsp; <a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=browserdetail":"$PROG$StaticLinks.browserdetail.$StaticExt")."\"$NewLinkTarget>$Message[58]</a> &nbsp; - &nbsp; <a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=unknownbrowser":"$PROG$StaticLinks.unknownbrowser.$StaticExt")."\"$NewLinkTarget>$Message[0]</a>";
 			&tab_head("$title",19);
 			print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH width=$WIDTHCOLICON>&nbsp;</TH><TH>$Message[21]</TH><TH width=80>$Message[111]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[15]</TH></TR>\n";
 			my $count=0;
@@ -8542,7 +8546,7 @@ if (scalar keys %HTMLOutput) {
 			if ($ShowOriginStats =~ /H/i) { print "<TD>".($_from_h[5]?$_from_h[5]:"&nbsp;")."</TD><TD>".($_from_h[5]?"$p_h[5] %":"&nbsp;")."</TD>"; }
 			print "</TR>\n";
 			#------- Referrals by search engine
-			print "<TR".($TOOLTIPON?" onmouseover=\"ShowTip(13);\" onmouseout=\"HideTip(13);\"":"")."><TD CLASS=AWL><b>$Message[40]</b> - <a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=refererse":"$PROG$StaticLinks.refererse.html")."\"$NewLinkTarget>$Message[80]</a><br>\n";
+			print "<TR".($TOOLTIPON?" onmouseover=\"ShowTip(13);\" onmouseout=\"HideTip(13);\"":"")."><TD CLASS=AWL><b>$Message[40]</b> - <a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=refererse":"$PROG$StaticLinks.refererse.$StaticExt")."\"$NewLinkTarget>$Message[80]</a><br>\n";
 			if (scalar keys %_se_referrals_h) {
 				print "<TABLE>\n";
 				$total_p=0; $total_h=0;
@@ -8574,7 +8578,7 @@ if (scalar keys %HTMLOutput) {
 			if ($ShowOriginStats =~ /H/i) { print "<TD valign=top>".($_from_h[2]?$_from_h[2]:"&nbsp;")."</TD><TD valign=top>".($_from_h[2]?"$p_h[2] %":"&nbsp;")."</TD>"; }
 			print "</TR>\n";
 			#------- Referrals by external HTML link
-			print "<TR".($TOOLTIPON?" onmouseover=\"ShowTip(14);\" onmouseout=\"HideTip(14);\"":"")."><TD CLASS=AWL><b>$Message[41]</b> - <a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=refererpages":"$PROG$StaticLinks.refererpages.html")."\"$NewLinkTarget>$Message[80]</a><br>\n";
+			print "<TR".($TOOLTIPON?" onmouseover=\"ShowTip(14);\" onmouseout=\"HideTip(14);\"":"")."><TD CLASS=AWL><b>$Message[41]</b> - <a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=refererpages":"$PROG$StaticLinks.refererpages.$StaticExt")."\"$NewLinkTarget>$Message[80]</a><br>\n";
 			if (scalar keys %_pagesrefs_h) {
 				print "<TABLE>\n";
 				$total_p=0; $total_h=0;
@@ -8631,7 +8635,7 @@ if (scalar keys %HTMLOutput) {
 			# By Keyphrases
 			if ($ShowKeyphrasesStats && $ShowKeywordsStats) { print "<td width=\"50%\" valign=top>\n";	}
 			if ($Debug) { debug("ShowKeyphrasesStats",2); }
-			&tab_head("$Message[120] ($Message[77] $MaxNbOf{'KeyphrasesShown'})<br><a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=keyphrases":"$PROG$StaticLinks.keyphrases.html")."\"$NewLinkTarget>$Message[80]</a>",19,($ShowKeyphrasesStats && $ShowKeywordsStats)?95:70);
+			&tab_head("$Message[120] ($Message[77] $MaxNbOf{'KeyphrasesShown'})<br><a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=keyphrases":"$PROG$StaticLinks.keyphrases.$StaticExt")."\"$NewLinkTarget>$Message[80]</a>",19,($ShowKeyphrasesStats && $ShowKeywordsStats)?95:70);
 			print "<TR bgcolor=\"#$color_TableBGRowTitle\"".($TOOLTIPON?" onmouseover=\"ShowTip(15);\" onmouseout=\"HideTip(15);\"":"")."><TH>$TotalDifferentKeyphrases $Message[103]</TH><TH bgcolor=\"#$color_s\" width=80>$Message[14]</TH><TH bgcolor=\"#$color_s\" width=80>$Message[15]</TH></TR>\n";
 			$total_s=0;
 			my $count=0;
@@ -8659,7 +8663,7 @@ if (scalar keys %HTMLOutput) {
 			# By Keywords
 			if ($ShowKeyphrasesStats && $ShowKeywordsStats) { print "<td width=\"50%\" valign=top>\n";	}
 			if ($Debug) { debug("ShowKeywordsStats",2); }
-			&tab_head("$Message[121] ($Message[77] $MaxNbOf{'KeywordsShown'})<br><a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=keywords":"$PROG$StaticLinks.keywords.html")."\"$NewLinkTarget>$Message[80]</a>",19,($ShowKeyphrasesStats && $ShowKeywordsStats)?95:70);
+			&tab_head("$Message[121] ($Message[77] $MaxNbOf{'KeywordsShown'})<br><a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=keywords":"$PROG$StaticLinks.keywords.$StaticExt")."\"$NewLinkTarget>$Message[80]</a>",19,($ShowKeyphrasesStats && $ShowKeywordsStats)?95:70);
 			print "<TR bgcolor=\"#$color_TableBGRowTitle\"".($TOOLTIPON?" onmouseover=\"ShowTip(15);\" onmouseout=\"HideTip(15);\"":"")."><TH>$TotalDifferentKeywords $Message[13]</TH><TH bgcolor=\"#$color_s\" width=80>$Message[14]</TH><TH bgcolor=\"#$color_s\" width=80>$Message[15]</TH></TR>\n";
 			$total_s=0;
 			my $count=0;
@@ -8701,7 +8705,7 @@ if (scalar keys %HTMLOutput) {
 			foreach my $key (@keylist) {
 				my $p=int($_errors_h{$key}/$TotalHitsErrors*1000)/10;
 				print "<TR".($TOOLTIPON?" onmouseover=\"ShowTip($key);\" onmouseout=\"HideTip($key);\"":"").">";
-				if ($TrapInfosForHTTPErrorCodes{$key}) { print "<TD><a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=errors$key":"$PROG$StaticLinks.errors$key.html")."\"$NewLinkTarget>$key</a></TD>"; }
+				if ($TrapInfosForHTTPErrorCodes{$key}) { print "<TD><a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=errors$key":"$PROG$StaticLinks.errors$key.$StaticExt")."\"$NewLinkTarget>$key</a></TD>"; }
 				else { print "<TD>$key</TD>"; }
 				print "<TD CLASS=AWL>".($httpcodelib{$key}?$httpcodelib{$key}:'Unknown error')."</TD><TD>$_errors_h{$key}</TD><TD>$p %</TD><TD>".Format_Bytes($_errors_k{$key})."</TD>";
 				print "</TR>\n";

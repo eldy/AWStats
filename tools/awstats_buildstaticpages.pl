@@ -33,8 +33,9 @@ my $Date=0;
 my $Lang;
 my $YearRequired;
 my $MonthRequired;
-my $Awstats="awstats.pl";
-my $OutputDir="";
+my $Awstats='awstats.pl';
+my $StaticExt='html';
+my $OutputDir='';
 my $OutputSuffix;
 my $OutputFile;
 my @OutputList=(
@@ -98,6 +99,7 @@ if ($QueryString =~ /(^|-|&)month=(year)/i) { error("month=year is a deprecated 
 if ($QueryString =~ /(^|-|&)debug=(\d+)/i)			{ $Debug=$2; }
 if ($QueryString =~ /(^|-|&)config=([^&]+)/i)		{ $Config="$2"; }
 if ($QueryString =~ /(^|-|&)awstatsprog=([^&]+)/i)	{ $Awstats="$2"; }
+if ($QueryString =~ /(^|-|&)staticlinksext=([^&]+)/i)	{ $StaticExt="$2"; }
 if ($QueryString =~ /(^|-|&)dir=([^&]+)/i)			{ $OutputDir="$2"; }
 if ($QueryString =~ /(^|-|&)update/i)				{ $Update=1; }
 if ($QueryString =~ /(^|-|&)date/i)					{ $Date=1; }
@@ -126,6 +128,7 @@ if (! $Config) {
 	print "   -awstatsprog=pathtoawstatspl gives AWStats software (awstats.pl) path\n";
 	print "   -dir=outputdir               to set output directory for generated pages\n";
 	print "   -date                        used to add build date in built pages file name\n";
+	print "   -staticlinksext=xxx          for pages with .xxx extension instead of .html\n";
 	print "\n";
 	print "New versions and FAQ at http://awstats.sourceforge.net\n";
 	exit 0;
@@ -161,6 +164,7 @@ if ($Date) {
 
 my $cpt=0;
 my $smallcommand="\"$Awstats\" -config=$Config -staticlinks".($OutputSuffix ne $Config?"=$OutputSuffix":"");
+if ($StaticExt && $StaticExt ne 'html')     { $smallcommand.=" -staticlinksext=$StaticExt"; }
 if ($Lang)          { $smallcommand.=" -lang=$Lang"; }
 if ($MonthRequired) { $smallcommand.=" -month=$MonthRequired"; }
 if ($YearRequired)  { $smallcommand.=" -year=$YearRequired"; }
@@ -169,7 +173,7 @@ if ($YearRequired)  { $smallcommand.=" -year=$YearRequired"; }
 my $command="$smallcommand -output";
 print "Build main page: $command\n";
 $retour=`$command  2>&1`;
-$OutputFile=($OutputDir?$OutputDir:"")."awstats.$OutputSuffix.html";
+$OutputFile=($OutputDir?$OutputDir:"")."awstats.$OutputSuffix.$StaticExt";
 open("OUTPUT",">$OutputFile") || error("Couldn't open log file \"$OutputFile\" for writing : $!");
 print OUTPUT $retour;
 close("OUTPUT");
@@ -180,13 +184,13 @@ for my $output (@OutputList) {
 	my $command="$smallcommand -output=$output";
 	print "Build $output page: $command\n";
 	$retour=`$command  2>&1`;
-	$OutputFile=($OutputDir?$OutputDir:"")."awstats.$OutputSuffix.$output.html";
+	$OutputFile=($OutputDir?$OutputDir:"")."awstats.$OutputSuffix.$output.$StaticExt";
 	open("OUTPUT",">$OutputFile") || error("Couldn't open log file \"$OutputFile\" for writing : $!");
 	print OUTPUT $retour;
 	close("OUTPUT");
 	$cpt++;
 }
 
-print "$cpt files built. Main page is 'awstats.$OutputSuffix.html'\n";
+print "$cpt files built. Main page is 'awstats.$OutputSuffix.$StaticExt'\n";
 
 0;	# Do not remove this line
