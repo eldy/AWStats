@@ -14,22 +14,18 @@ New features/improvements:
 
 1.300
 
-Fixes:
-- Translation was in french for some texts, whatever was choosed language.
-
 New features/improvements:
 - Added a warning to explain to add '/private/etc' to webmin ACL for
   MacOS users.
 - A first screen for the schedule update feature.
 - Better description for ACL page.
 
+Fixes:
+- Translation was in french for some texts, whatever was choosed language.
+
 
 
 1.210
-
-Fixes:
-- Better error messages
-- Fixed ACL management on directory that contains config files.
 
 New features/improvements:
 - Added following parameters parameter in edit config area:
@@ -46,12 +42,23 @@ New features/improvements:
   Also added a link the the ACL page to edit this directory listing.
 - Added a streaming server log file type.
 
+Fixes:
+- Better error messages
+- Fixed ACL management on directory that contains config files.
+
 Other/Documentation:
 - Added german translation.
 
 
 
 1.100
+
+New features/improvements:
+- All AWStats config parameters can be edited.
+- Added management of plugins
+- Added a file/dir selector for parameters that are files or directories.
+- Added javascript test in edit config pages.
+- Added a check that LogFile used with maillogconvert.pl has a 'Mail' type.
 
 Fixes:
 - Modify of old config files add the new parameters if not found.
@@ -60,13 +67,6 @@ Fixes:
 - Fix help page for parameters not found in model config file.
 - Fixed check of logfile for piped values.
 - Minor bug fixes.
-
-New features/improvements:
-- All AWStats config parameters can be edited.
-- Added management of plugins
-- Added a file/dir selector for parameters that are files or directories.
-- Added javascript test in edit config pages.
-- Added a check that LogFile used with maillogconvert.pl has a 'Mail' type.
 
 Other/Documentation:
 - Added French translation.
