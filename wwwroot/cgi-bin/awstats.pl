@@ -4494,7 +4494,7 @@ sub DefinePerlParsingFormat {
 		$LogFormatString =~ s/s-cache-info/%other/g;
 		# Added for MMS
 		$LogFormatString =~ s/protocol/%protocolmms/g;	# cs-method might not be available
-		$LogFormatString =~ s/c-status/%codemms/g;		# sc-status not available
+		$LogFormatString =~ s/c-status/%codemms/g;		# c-status used when sc-status not available
 		if ($Debug) { debug(" LogFormatString=$LogFormatString"); }
 		# Scan $LogFormatString to found all required fields and generate PerlParsingFormat
 		my $i = 0;
@@ -4522,13 +4522,16 @@ sub DefinePerlParsingFormat {
 				$pos_date = $i; $i++; push @fieldlib, 'date';
 				$PerlParsingFormat .= "\\[([^$LogSeparatorWithoutStar]+)\\]";
 			}
-			elsif ($f =~ /%time1$/) {
+			elsif ($f =~ /%time1$/) {	# [dd/mmm/yyyy:hh:mm:ss +0000]
 				$pos_date = $i;	$i++; push @fieldlib, 'date';
 				$PerlParsingFormat .= "\\[([^$LogSeparatorWithoutStar]+) [^$LogSeparatorWithoutStar]+\\]";
 			}
-			elsif ($f =~ /%time2$/) {
+			elsif ($f =~ /%time2$/) {	# yyyy-mm-dd hh:mm:ss
 				$pos_date = $i;	$i++; push @fieldlib, 'date';
 				$PerlParsingFormat .= "([^$LogSeparatorWithoutStar]+\\s[^$LogSeparatorWithoutStar]+)";	# Need \s for Exchange log files
+			}
+			elsif ($f =~ /%syslog$/) {	# TODO Add a tag time3 for date 'Mon 2 10:20:05'
+				$PerlParsingFormat .= "\\w\\w\\w \\d+ \\d\\d:\\d\\d:\\d\\d [^$LogSeparatorWithoutStar]+";
 			}
 			elsif ($f =~ /%methodurl$/) {
 				$pos_method = $i; $i++; push @fieldlib, 'method';
@@ -4562,7 +4565,7 @@ sub DefinePerlParsingFormat {
 				$pos_code = $i; $i++; push @fieldlib, 'code';
 				$PerlParsingFormat .= "([\\d|-]+)";
 			}
-			elsif ($f =~ /%codemms$/) {		# codemms is used for code if code not already found (for MMS)
+			elsif ($f =~ /%codemms$/) {		# codemms is used for code only if code not already found (for MMS)
 				if ($pos_code < 0) {
 					$pos_code = $i; $i++; push @fieldlib, 'code';
 					$PerlParsingFormat .= "([\\d|-]+)";
@@ -4574,7 +4577,7 @@ sub DefinePerlParsingFormat {
 			}
 			elsif ($f =~ /%refererquot$/) {
 				$pos_referer = $i; $i++; push @fieldlib, 'referer';
-				$PerlParsingFormat .= "\\\"(.*)\\\""; 		# referer might be ""
+				$PerlParsingFormat .= "\\\"([^\\\"]*)\\\""; 		# referer might be ""
 			}
 			elsif ($f =~ /%referer$/) {
 				$pos_referer = $i; $i++; push @fieldlib, 'referer';
@@ -4586,7 +4589,7 @@ sub DefinePerlParsingFormat {
 			}
 			elsif ($f =~ /%uabracket$/) {
 				$pos_agent = $i; $i++; push @fieldlib, 'ua';
-				$PerlParsingFormat .= "\\\[(.*)\\\]"; 		# ua might be []
+				$PerlParsingFormat .= "\\\[([^\\\]]*)\\\]"; 		# ua might be []
 			}
 			elsif ($f =~ /%ua$/) {
 				$pos_agent = $i; $i++; push @fieldlib, 'ua';
@@ -4608,9 +4611,6 @@ sub DefinePerlParsingFormat {
 				$pos_compratio=$i;$i++; push @fieldlib, 'deflateratio';
 				$PerlParsingFormat .= "([^$LogSeparatorWithoutStar]+)";
 			}
-			elsif ($f =~ /%syslog$/) {		# Added for syslog time and host stamp, fields are skipped and not analyzed
-				$PerlParsingFormat .= "\\w\\w\\w \\d+ \\d\\d:\\d\\d:\\d\\d [^$LogSeparatorWithoutStar]+";
-			}
 			elsif ($f =~ /%email_r$/) {
 				$pos_emailr = $i; $i++; push @fieldlib, 'email_r';
 				$PerlParsingFormat .= "([^$LogSeparatorWithoutStar]+)";
@@ -4619,6 +4619,14 @@ sub DefinePerlParsingFormat {
 				$pos_emails = $i; $i++; push @fieldlib, 'email';
 				$PerlParsingFormat .= "([^$LogSeparatorWithoutStar]+)";
 			}
+			# Other tag
+			elsif ($f =~ /%other$/) {
+				$PerlParsingFormat .= "[^$LogSeparatorWithoutStar]+";
+			}
+			elsif ($f =~ /%otherquot$/) {
+				$PerlParsingFormat .= "\\\"[^\\\"]*\\\"";
+			}
+			# Unknown tag
 			else {
 				$PerlParsingFormat .= "[^$LogSeparatorWithoutStar]+";
 			}
