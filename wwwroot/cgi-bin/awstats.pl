@@ -4381,7 +4381,7 @@ sub DefinePerlParsingFormat() {
 				$pos_code = $i; $i++; push @fieldlib, 'code';
 				$PerlParsingFormat .= "([\\d|-]+)";
 			}
-			elsif ($f =~ /%codemms$/) {		# codemms is used for code if method not already found (for MMS)
+			elsif ($f =~ /%codemms$/) {		# codemms is used for code if code not already found (for MMS)
 				if ($pos_code < 0) {
 					$pos_code = $i; $i++; push @fieldlib, 'code';
 					$PerlParsingFormat .= "([\\d|-]+)";
