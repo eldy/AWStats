@@ -82,7 +82,7 @@ $WarningMessages= 1;
 %MonthBytes = %MonthHits = %MonthHostsKnown = %MonthHostsUnknown = %MonthPages = %MonthUnique = %MonthVisits =
 %monthlib = %monthnum = ();
 
-$VERSION="3.2 (build 63)";
+$VERSION="3.2 (build 64)";
 $Lang="en";
 
 # Default value
@@ -1310,7 +1310,11 @@ sub Save_History_File {
 	foreach my $key (keys %_se_referrals_h) { print HISTORYTMP "$key $_se_referrals_h{$key}\n"; next; }
 	print HISTORYTMP "END_SEREFERRALS\n";
 	print HISTORYTMP "BEGIN_PAGEREFS\n";
-	foreach my $key (keys %_pagesrefs_h) { print HISTORYTMP "$key $_pagesrefs_h{$key}\n"; next; }
+	foreach my $key (keys %_pagesrefs_h) {
+		$newkey=$key;
+		$newkey =~ s/^http(s|):\/\/([^\/]+)\/$/http$1:\/\/$2/;	# Remove / at end of http://.../ but not at end of http://.../dir/
+		print HISTORYTMP "$newkey $_pagesrefs_h{$key}\n"; next;
+	}
 	print HISTORYTMP "END_PAGEREFS\n";
 	print HISTORYTMP "BEGIN_SEARCHWORDS\n";
 	foreach my $key (keys %_keyphrases) { 
@@ -1731,15 +1735,52 @@ if ($UpdateStats) {
 	if ($LogFormat == 2) { $LogFormatString="date time c-ip cs-username cs-method cs-uri-stem sc-status sc-bytes cs-version cs(User-Agent) cs(Referer)"; }
 	if ($LogFormat == 4) { $LogFormatString="%h %l %u %t \"%r\" %>s %b"; }
 	if ($LogFormat == 5) { $LogFormatString="c-ip cs-username c-agent sc-authenticated date time s-svcname s-computername cs-referred r-host r-ip r-port time-taken cs-bytes sc-bytes cs-protocol cs-transport s-operation cs-uri cs-mime-type s-object-source sc-status s-cache-info"; }
+	# Replacement for Apache format string
+	$LogFormatString =~ s/%h([\s])/%host$1/g; $LogFormatString =~ s/%h$/%host/g;
+	$LogFormatString =~ s/%l([\s])/%other$1/g; $LogFormatString =~ s/%l$/%other/g;
+	$LogFormatString =~ s/%u([\s])/%logname$1/g; $LogFormatString =~ s/%u$/%logname/g;
+	$LogFormatString =~ s/%t([\s])/%time1$1/g; $LogFormatString =~ s/%t$/%time1/g;
+	$LogFormatString =~ s/\"%r\"/%methodurl/g;
+	$LogFormatString =~ s/%>s/%code/g; 			
+ 	$LogFormatString =~ s/%b([\s])/%bytesd$1/g;	$LogFormatString =~ s/%b$/%bytesd/g;
+	$LogFormatString =~ s/\"%\(Referer\)i\"/%refererquot/g;
+	$LogFormatString =~ s/\"%\(User-Agent\)i\"/%uaquot/g;
+	# Replacement for a IIS and ISA format string
+	$LogFormatString =~ s/date\stime/%time2/g;
+	$LogFormatString =~ s/c-ip/%host/g;
+	$LogFormatString =~ s/cs-username/%logname/g;
+	$LogFormatString =~ s/cs-method/%method/g;
+	$LogFormatString =~ s/cs-uri-stem/%url/g; $LogFormatString =~ s/cs-uri/%url/g;
+	$LogFormatString =~ s/sc-status/%code/g;
+	$LogFormatString =~ s/sc-bytes/%bytesd/g;
+	$LogFormatString =~ s/cs-version/%other/g;	# Protocol
+	$LogFormatString =~ s/cs\(User-Agent\)/%ua/g; $LogFormatString =~ s/c-agent/%ua/g;
+	$LogFormatString =~ s/cs\(Referer\)/%referer/g; $LogFormatString =~ s/cs-referred/%referer/g;
+	$LogFormatString =~ s/cs-uri-query/%host/g;
+	$LogFormatString =~ s/sc-authenticated/%other/g;
+	$LogFormatString =~ s/s-svcname/%other/g;
+	$LogFormatString =~ s/s-computername/%other/g;
+	$LogFormatString =~ s/r-host/%other/g;
+	$LogFormatString =~ s/r-ip/%other/g;
+	$LogFormatString =~ s/r-port/%other/g;
+	$LogFormatString =~ s/time-taken/%other/g;
+	$LogFormatString =~ s/cs-bytes/%other/g;
+	$LogFormatString =~ s/cs-protocol/%other/g;
+	$LogFormatString =~ s/cs-transport/%other/g;
+	$LogFormatString =~ s/s-operation/%other/g;
+	$LogFormatString =~ s/cs-mime-type/%other/g;
+	$LogFormatString =~ s/s-object-source/%other/g;
+	$LogFormatString =~ s/s-cache-info/%other/g;
+	# Generate PerlParsingFormat
 	&debug("Generate PerlParsingFormat from LogFormatString=$LogFormatString");
 	$PerlParsingFormat="";
 	if ($LogFormat == 1) {
-		$PerlParsingFormat="([^\\s]*) [^\\s]* ([^\\s]*) \\[([^\\s]*) [^\\s]*\\] \\\"([^\\s]*) ([^\\s]*) [^\\\"]*\\\" ([\\d|-]*) ([\\d|-]*) \\\"([^\\\"]*)\\\" \\\"([^\\\"]*)\\\"";
+		$PerlParsingFormat="([^\\s]+) [^\\s]+ ([^\\s]+) \\[([^\\s]+) [^\\s]+\\] \\\"([^\\s]+) ([^\\s]+) [^\\\"]+\\\" ([\\d|-]+) ([\\d|-]+) \\\"([^\\\"]+)\\\" \\\"([^\\\"]+)\\\"";
 		$pos_rc=1;$pos_logname=2;$pos_date=3;$pos_method=4;$pos_url=5;$pos_code=6;$pos_size=7;$pos_referer=8;$pos_agent=9;
 		$lastrequiredfield=9;
 	}
 	if ($LogFormat == 2) {
-		$PerlParsingFormat="([^\\s]* [^\\s]*) ([^\\s]*) ([^\\s]*) ([^\\s]*) ([^\\s]*) ([\\d|-]*) ([\\d|-]*) [^\\s]* ([^\\s]*) ([^\\s]*)";
+		$PerlParsingFormat="([^\\s]+ [^\\s]+) ([^\\s]+) ([^\\s]+) ([^\\s]+) ([^\\s]+) ([\\d|-]+) ([\\d|-]+) [^\\s]+ ([^\\s]+) ([^\\s]+)";
 		$pos_date=1;$pos_rc=2;$pos_logname=3;$pos_method=4;$pos_url=5;$pos_code=6;$pos_size=7;$pos_agent=8;$pos_referer=9;
 		$lastrequiredfield=9;
 	}
@@ -1764,17 +1805,17 @@ if ($UpdateStats) {
 		$i = 1;
 		foreach $f (@fields) {
 			$found=0;
-			if ($f =~ /%host$/ || $f =~ /%h$/ || $f =~ /c-ip$/) {
+			if ($f =~ /%host$/) {
 				$found=1; 
 				$pos_rc = $i; $i++;
 				$PerlParsingFormat .= "([^\\s]*) ";
 			}
-			if ($f =~ /%logname$/ || $f =~ /%u$/ || $f =~ /cs-username$/) {
+			if ($f =~ /%logname$/) {
 				$found=1; 
 				$pos_logname = $i; $i++;
 				$PerlParsingFormat .= "([^\\s]*) ";
 			}
-			if ($f =~ /%time1$/ || $f =~ /%t$/) {
+			if ($f =~ /%time1$/) {
 				$found=1; 
 				$pos_date = $i;
 				$i++;
@@ -1788,7 +1829,7 @@ if ($UpdateStats) {
 				$i++;
 				$PerlParsingFormat .= "([^\\s]* [^\\s]*) ";
 			}
-			if ($f =~ /%methodurl$/ || $f =~ /\\"%r\\"/) {
+			if ($f =~ /%methodurl$/) {
 				$found=1; 
 				$pos_method = $i;
 				$i++;
@@ -1804,51 +1845,51 @@ if ($UpdateStats) {
 				$i++;
 				$PerlParsingFormat .= "\\\"([^\\s]*) ([^\\s]*)\\\" ";
 			}
-			if ($f =~ /%method$/ || $f =~ /cs-method$/) {
+			if ($f =~ /%method$/) {
 				$found=1; 
 				$pos_method = $i;
 				$i++;
 				$PerlParsingFormat .= "([^\\s]*) ";
 			}
-			if ($f =~ /%url$/ || $f =~ /cs-uri-stem$/) {
+			if ($f =~ /%url$/) {
 				$found=1; 
 				$pos_url = $i;
 				$i++;
 				$PerlParsingFormat .= "([^\\s]*) ";
 			}
-			if ($f =~ /%query$/ || $f =~ /cs-uri-query$/) {
+			if ($f =~ /%query$/) {
 				$found=1; 
 				$pos_query = $i;
 				$i++;
 				$PerlParsingFormat .= "([^\\s]*) ";
 			}
-			if ($f =~ /%code$/ || $f =~ /%.*>s$/ || $f =~ /sc-status$/) {
+			if ($f =~ /%code$/) {
 				$found=1; 
 				$pos_code = $i;
 				$i++;
 				$PerlParsingFormat .= "([\\d|-]*) ";
 			}
-			if ($f =~ /%bytesd$/ || $f =~ /%b$/ || $f =~ /sc-bytes$/) {
+			if ($f =~ /%bytesd$/) {
 				$found=1; 
 				$pos_size = $i; $i++;
 				$PerlParsingFormat .= "([\\d|-]*) ";
 			}
-			if ($f =~ /%refererquot$/ || $f =~ /\\"%{Referer}i\\"/) {
+			if ($f =~ /%refererquot$/) {
 				$found=1;
 				$pos_referer = $i; $i++;
 				$PerlParsingFormat .= "\\\"([^\\\"]*)\\\" ";
 			}
-			if ($f =~ /%referer$/ || $f =~ /cs\(Referer\)/ || $f =~ /cs-referred/) {
+			if ($f =~ /%referer$/) {
 				$found=1;
 				$pos_referer = $i; $i++;
 				$PerlParsingFormat .= "([^\\s]*) ";
 			}
-			if ($f =~ /%uaquot$/ || $f =~ /\\"%{User-Agent}i\\"/) {
+			if ($f =~ /%uaquot$/) {
 				$found=1; 
 				$pos_agent = $i; $i++;
 				$PerlParsingFormat .= "\\\"([^\\\"]*)\\\" ";
 			}
-			if ($f =~ /%ua$/ || $f =~ /cs\(User-Agent\)/ || $f =~ /c-agent$/) {
+			if ($f =~ /%ua$/) {
 				$found=1; 
 				$pos_agent = $i; $i++;
 				$PerlParsingFormat .= "([^\\s]*) ";
@@ -1870,7 +1911,7 @@ if ($UpdateStats) {
 			}
 			if (! $found) { $found=1; $PerlParsingFormat .= "[^\\s]* "; }
 		}
-		($PerlParsingFormat) ? chop($PerlParsingFormat) : error("Error: no recognised format commands in personalised LogFormat string"); 
+		($PerlParsingFormat) ? chop($PerlParsingFormat) : error("Error: No recognised format commands in personalised LogFormat string"); 
 		$lastrequiredfield=$i--;
 	}
 	if ($pos_rc eq "") { error("Error: Your personalised LogFormat does not include all fields required by AWStats (Add \%host in your LogFormat string)."); }
@@ -2359,7 +2400,8 @@ if ($UpdateStats) {
 							# This hit came from a site other than a search engine
 							if ($PageBool) { $_from_p[3]++; }
 							$_from_h[3]++;
-							if ($refurl[0] =~ /\/$/) { $field[$pos_referer] =~ s/\/$//; }	# To make http://www.mysite.com/ as same referer then http://www.mysite.com
+							# http://www.mysite.com/ must be same referer than http://www.mysite.com but .../mypage/ differs of .../mypage
+							#if ($refurl[0] =~ /^[^\/]+\/$/) { $field[$pos_referer] =~ s/\/$//; }	# Code moved in save
 							$_pagesrefs_h{$field[$pos_referer]}++;
 							$found=1;
 						}
