@@ -53,7 +53,7 @@ I - 1) Features
     * Informations are since the start of your web site and month by month,
     * 9 languages: English, French, Dutch (Christtian Langeveld), Spanish
       (Rodrigo Villarreal), Italian (Vittore Zen), German (Ulf Moench), Polish
-      (Tomasz Ciemnoczulowski), Greek (Simos Xenitellis), Portuguese,
+      (Tomasz Ciemnoczulowski), Greek (Simos Xenitellis), Czech, Portuguese,
     * Colored graphics,
     * Free and distributed with sources (perl script).
 
@@ -126,36 +126,29 @@ II - 1) With Apache Server (on Unix/Linux or Windows)
       look for awstats.conf). Whatever the name you choose, this new file must
       be stored in same directory than awstats.pl (so cgi-bin directory) and
       edit it with your own setup :
-      - Change "LogFile" value with full path of your web server log file. You
-        can use a relative path from your awstats.pl directory.
+      - Change "LogFile" value with full path of your web server log file or
+        with relative path from your awstats.pl directory.
       - Check if "LogFormat" has the value "1" (it means "apache combined log
         format").
       - Change the "DirIcons" parameter to reflect URL of icons directory.
       - You can change other parameters if you want.
 
-    * Before using AWStats from your browser, launch awstats.pl from the
-      command line (the first time, process may be long), like this:
-    > awstats.pl site=www.myserver.mydomain
+    * To update statistics and generate the HTML report page, launch 
+      awstats.pl from the command line interface (the first time, process may
+      be long), like this:
+      awstats.pl site=www.myserver.mydomain > result.html
       where www.myserver.mydomain is the URL you use to access your web site.
       AWStats will use awstats.www.myserver.mydomain.conf config file, and, if
       not found, will use awstats.conf.
-
-      This command help you see if AWStats setup is good and because, the
-      first time, the AWStats process is slow (one second for each 570 lines
-      of your logfile with Pentium 300, plus DNS resolution time for each
-      different IP address in your logfile).
-      The result, an HTML code page on your screen, means you can now run
-      AWStats from your browser. For example with this URL :
-       htpp://www.myserver.mydomain/cgi-bin/awstats.pl
-      You can also use this URL to choose parameters of a particular site :
-       htpp://www.myserver.mydomain/cgi-bin/awstats.pl?site=virtualhost
-      where virtualhost is a name of another web server (AWStats will use
-      awstats.virtualhost.conf file).
+      This command create/update database where AWStats store all summary
+      informations issued from analysed log files and create an HTML result
+      page that show all this informations.
+      A log analysis process is slow (one second for each 570 lines of your
+      logfile with Pentium 300, plus DNS resolution time for each different IP
+      address in your logfile).
 
     * Add instructions in your crontab (Unix/Linux) or your scheduler (for
-      Windows), to launch frequently the awstats process command :
-    > awstats.pl site=www.myserver.mydomain
-      where www.myserver.mydomain is the URL used to access your web site.
+      Windows), to launch frequently this Awstats update process.
       For sites with:
       - 1,000 visits a month     Launch AWStats once a day (23h55 for example)
       - 10,000 visits a month    Launch AWStats every 4 hours or more often
@@ -163,10 +156,21 @@ II - 1) With Apache Server (on Unix/Linux or Windows)
       - 200,000 visits a month   Launch AWStats every 15mn
       This is ABSOLUTELY necessary to keep good performances.
 
-      !!! Warning: if your logfile name is different each month or day, think
-      to launch awstats just before the log switch (end of month or day). If
-      you forget it, you will also forget statistics for this month or day.
+      !!! Warning: if your logfile rotates or is different each month or day,
+      think to launch Awstats just before the switch (end of month or day).
+      If you forget it, you will also forget statistics for this month or day.
       You can launch AWStats as much as necessary.
+
+    * You can then view your statistics from a browser :
+      - Just open the result.html file (created earlier).
+      - But this result.html file is not required because AWStats is able to
+      generate the report page dynamically when runned from a browser.
+      For this, if you called your config file awstats.conf, just use URL:
+       htpp://www.myserver.mydomain/cgi-bin/awstats.pl
+      If you called your config file awstats.virtualhost.conf, use URL:
+       htpp://www.myserver.mydomain/cgi-bin/awstats.pl?site=virtualhost
+      where virtualhost is used to know which config file to use (AWStats will
+      use awstats.virtualhost.conf file).
 
 
 II - 2) With IIS Server
@@ -192,35 +196,28 @@ II - 2) With IIS Server
       look for awstats.conf). Whatever the name you choose, this new file must
       be stored in same directory than awstats.pl (so cgi-bin directory) and
       edit it with your own setup :
-      - Change "LogFile" value with full path of your web server log file. You
-        can use a relative path from your awstats.pl directory.
+      - Change "LogFile" value with full path of your web server log file or
+        with relative path from your awstats.pl directory.
       - Change "LogFormat" to value "2" (it means "IIS log format").
       - Change "DirIcons" parameter to reflect URL of icons directory.
       - You can change other parameters if you want.
 
-    * Before using AWStats from you're browser, launch awstats.pl from the
-      command line:
-    > awstats.pl site=www.myserver.mydomain
+    * To update statistics and generate the HTML report page, launch 
+      awstats.pl from the command line interface (the first time, process may
+      be long), like this:
+      awstats.pl site=www.myserver.mydomain > result.html
       where www.myserver.mydomain is the URL you use to access your web site.
       AWStats will use awstats.www.myserver.mydomain.conf config file, and, if
       not found, will use awstats.conf.
+      This command create/update database where AWStats store all summary
+      informations issued from analysed log files and create an HTML result
+      page that show all this informations.
+      A log analysis process is slow (one second for each 570 lines of your
+      logfile with Pentium 300, plus DNS resolution time for each different IP
+      address in your logfile).
 
-      This command help you see if AWStats setup is good and because, the
-      first time, the AWStats process is slow (one second for each 570 lines
-      of your logfile with Pentium 300, plus DNS resolution time for each
-      different IP address in your logfile).
-      The result, an HTML code page on your screen, means you can now run
-      AWStats from your browser. For example with this URL :
-       htpp://www.myserver.mydomain/cgi-bin/awstats.pl
-      You can also use this URL to choose parameters of a particular site :
-       htpp://www.myserver.mydomain/cgi-bin/awstats.pl?site=virtualhost
-      where virtualhost is a name of another web server (AWStats will use
-      awstats.virtualhost.conf file).
-
-    * Add instructions in your task scheduler to launch frequently the awstats
-      process command :
-    > awstats.pl site=www.myserver.mydomain
-      where www.myserver.mydomain is the URL used to access your web site.
+    * Add instructions in a task scheduler to launch frequently this Awstats
+      update process.
       For sites with:
       - 1,000 visits a month     Launch AWStats once a day (23h55 for example)
       - 10,000 visits a month    Launch AWStats every 4 hours or more often
@@ -231,15 +228,26 @@ II - 2) With IIS Server
       !!! Warning, with IIS, Windows doesn't let AWStats to purge log file
       after processing it, so performance won't be as good as with Apache
       server.
-      It's very important you purge your log file yourself (or let IIS doing
-      it), if you don't want to have very bad performances.
+      It's very important you purge/rotate your log file yourself (or let IIS
+      doing it), if you don't want to have very bad performances.
       The more often you clean your log file, the more faster AWStats will be
       (See benchmark chapter to known what you can hope).
 
-      !!! Warning: if your logfile name is different each month or day, think
-      to launch awstats just before the log switch (end of month or day). If
-      you forget it, you will also forget statistics for this month or day.
+      !!! Warning: if your logfile rotates or is different each month or day,
+      think to launch Awstats just before the switch (end of month or day).
+      If you forget it, you will also forget statistics for this month or day.
       You can launch AWStats as much as necessary.
+
+    * You can then view your statistics from a browser :
+      - Just open the result.html file (created earlier).
+      - But this result.html file is not required because AWStats is able to
+      generate the report page dynamically when runned from a browser.
+      For this, if you called your config file awstats.conf, just use URL:
+       htpp://www.myserver.mydomain/cgi-bin/awstats.pl
+      If you called your config file awstats.virtualhost.conf, use URL:
+       htpp://www.myserver.mydomain/cgi-bin/awstats.pl?site=virtualhost
+      where virtualhost is used to know which config file to use (AWStats will
+      use awstats.virtualhost.conf file).
 
 
 III - BENCHMARK

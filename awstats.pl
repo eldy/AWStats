@@ -65,7 +65,7 @@ $word, $yearcon, $yearfile, $yearmonthfile, $yeartoprocess) = ();
 @sortsearchwords = @sortsereferrals = @sortsider404 = @sortsiders = @sortunknownip =
 @sortunknownreferer = @sortunknownrefererbrowser = @wordlist = ();
 
-$VERSION="2.24 (build 32)";
+$VERSION="2.5 (build 1)";
 $Lang=0;
 
 # Default value
@@ -1526,7 +1526,7 @@ sub Read_Config_File {
 		$value =~ s/^ *//; $value =~ s/ *$//;
 		$value =~ s/^\"//; $value =~ s/\"$//;
 		# Read main section
-		if ($param =~ /^LogFile/)               {
+		if ($param =~ /^LogFile/) {
 			$LogFile=$value;
 			# Replace %YYYY %YY %MM %DD %HH with current value
 			$LogFile =~ s/%YYYY/$nowyear/g;
@@ -1536,7 +1536,8 @@ sub Read_Config_File {
 			$LogFile =~ s/%HH/$nowhour/g;
 			next;
 			}
-		if ($param =~ /^LogFormat/)             { $LogFormat=$value; next; }
+		if ($param =~ /^LogFormat/)            { $LogFormat=$value; next; }
+		if ($param =~ /^AllowToUpdateStatsFromBrowser/	{ $AllowToUpdateStatsFromBrowser=$value; next; }
 		if ($param =~ /^HostAliases/) {
 			@felter=split(/ /,$value);
 			$i=0; foreach $elem (@felter)      { $HostAliases[$i]=$elem; $i++; }
@@ -1607,6 +1608,7 @@ sub Check_Config {
 	if (! ($LogFormat =~ /[1-2]/))            { error("Error: LogFormat parameter is wrong. Value is '$LogFormat' (should be 1 or 2)"); }
 	if (! ($DNSLookup =~ /[0-1]/))            { error("Error: DNSLookup parameter is wrong. Value is '$DNSLookup' (should be 0 or 1)"); }
 	# Optional section
+	if (! ($AllowToUpdateStatsFromBrowser) =~ /[0-1]/)) { $AllowToUpdateStatsFromBrowser=1; }
 	if (! ($PurgeLogFile =~ /[0-1]/))         { $PurgeLogFile=0; }
 	if (! ($ArchiveLogRecords =~ /[0-1]/))    { $ArchiveLogRecords=1; }
 	if (! ($Lang =~ /[0-9]/))                 { $Lang=0; }
