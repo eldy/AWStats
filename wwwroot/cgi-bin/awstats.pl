@@ -66,7 +66,6 @@ $StartSeconds=$StartMicroseconds=0;
 # Config vars
 use vars qw/
 $Lang
-$LogSeparator
 $MaxRowsInHTMLOutput
 $BarImageVertical_v
 $BarImageVertical_u
@@ -80,7 +79,6 @@ $BarImageVertical_k
 $BarImageHorizontal_k
 /;
 $Lang="en";
-$LogSeparator="\\s";
 $MaxRowsInHTMLOutput = 1000;
 $BarImageVertical_v   = "barrevv.png";
 #$BarImageHorizontal_v = "barrehv.png";
@@ -150,14 +148,14 @@ $LevelForSearchEnginesDetection $LevelForKeywordsDetection
 $LevelForSearchEnginesDetection, $LevelForKeywordsDetection)=
 (2,1,1,1,1,1);
 use vars qw/
-$DirCgi $DirData $DirIcons $DirLang $AWScript
-$ArchiveFileName @DefaultFile $HTMLHeadSection $HTMLEndSection $LinksToWhoIs
-$LogFile $LogFormat $Logo $LogoLink $StyleSheet $WrapperScript $SiteDomain
+$DirCgi $DirData $DirIcons $DirLang $AWScript $ArchiveFileName
+@DefaultFile $HTMLHeadSection $HTMLEndSection $LinksToWhoIs
+$LogFile $LogFormat $LogSeparator $Logo $LogoLink $StyleSheet $WrapperScript $SiteDomain
 /;
-($DirCgi, $DirData, $DirIcons, $DirLang, $AWScript,
-$ArchiveFileName, @DefaultFile, $HTMLHeadSection, $HTMLEndSection, $LinksToWhoIs,
-$LogFile, $LogFormat, $Logo, $LogoLink, $StyleSheet, $WrapperScript, $SiteDomain)=
-("","","","","","","","","","","","","","","","","");
+($DirCgi, $DirData, $DirIcons, $DirLang, $AWScript, $ArchiveFileName,
+@DefaultFile, $HTMLHeadSection, $HTMLEndSection, $LinksToWhoIs,
+$LogFile, $LogFormat, $LogSeparator, $Logo, $LogoLink, $StyleSheet, $WrapperScript, $SiteDomain)=
+("","","","","","","","","","","","","","","","","","");
 use vars qw/
 $color_Background $color_TableBG $color_TableBGRowTitle
 $color_TableBGTitle $color_TableBorder $color_TableRowTitle $color_TableTitle
@@ -767,6 +765,7 @@ sub Read_Config_File {
 		# Read main section
 		if ($param =~ /^LogFile/ && !$LogFile ) { $LogFile=$value; next; }
 		if ($param =~ /^LogFormat/)            	{ $LogFormat=$value; next; }
+		if ($param =~ /^LogSeparator/)         	{ $LogSeparator=$value; next; }
 		if ($param =~ /^DirData/) 				{ $DirData=$value; next; }
 		if ($param =~ /^DirCgi/)                { $DirCgi=$value; next; }
 		if ($param =~ /^DirIcons/)              { $DirIcons=$value; next; }
@@ -943,6 +942,8 @@ sub Read_Ref_Data {
 	push @FileListToLoad, "operating_systems.pm";
 	push @FileListToLoad, "robots.pm";
 	push @FileListToLoad, "search_engines.pm";
+	push @FileListToLoad, "worms.pm";
+	#push @FileListToLoad, "xxx.pm";
 	foreach my $file (@FileListToLoad) {
 		foreach my $dir ("${DIR}lib","./lib") {
 			my $searchdir=$dir;
@@ -957,7 +958,7 @@ sub Read_Ref_Data {
 			}
 		}
 		if (! $FilePath{$file}) {
-			my $filetext=$file; $filetext =~ s/\.pl$//; $filetext =~ s/_/ /g;
+			my $filetext=$file; $filetext =~ s/\.pm$//; $filetext =~ s/_/ /g;
 			&warning("Warning: Can't read file \"$file\" ($filetext detection will not work correctly).\nCheck if file is in ${DIR}lib directory and is readable.");
 		}
 	}
@@ -1105,16 +1106,18 @@ sub Check_Config {
 	$LogFile =~ s/%NS/$nowns/ig;
 	$LogFormat =~ s/\\//g;
 	if ($Debug) {
-		debug(" LogFile=$LogFile",2);
-		debug(" LogFormat=$LogFormat",2);
-		debug(" DirData=$DirData",2);
-		debug(" DirCgi=$DirCgi",2);
-		debug(" DirIcons=$DirIcons",2);
-		debug(" DNSLookup=$DNSLookup",2);
+		debug(" LogFile='$LogFile'",2);
+		debug(" LogFormat='$LogFormat'",2);
+		debug(" LogSeparator='$LogSeparator'",2);
+		debug(" DirData='$DirData'",2);
+		debug(" DirCgi='$DirCgi'",2);
+		debug(" DirIcons='$DirIcons'",2);
+		debug(" DNSLookup='$DNSLookup'",2);
 	}
 	if (! $LogFile)   { error("Error: LogFile parameter is not defined in config/domain file"); }
 	if (! $LogFormat) { error("Error: LogFormat parameter is not defined in config/domain file"); }
 	if ($LogFormat =~ /^\d$/ && $LogFormat !~ /[1-5]/)  { error("Error: LogFormat parameter is wrong in config/domain file. Value is '$LogFormat' (should be 1,2,3,4,5 or a 'personalized AWStats log format string')"); }
+	if (! $LogSeparator) { $LogSeparator="\\s"; }
 	if (! $DirData)   { $DirData="."; }
 	if (! $DirCgi)    { $DirCgi="/cgi-bin"; }
 	if (! $DirIcons)  { $DirIcons="/icon"; }
@@ -2751,7 +2754,10 @@ if ($QueryString =~ /output=urldetail:([^\s&]+)/i)	{ $URLFilter=&DecodeEncodedSt
 # A filter on URL list can also be defined with urlfilter=filter
 if ($QueryString =~ /urlfilter=([^\s&]+)/i) 		{ $URLFilter=&DecodeEncodedString($1); }
 ($DIR=$0) =~ s/([^\/\\]*)$//; ($PROG=$1) =~ s/\.([^\.]*)$//; $Extension=$1;
-if ($Debug) { debug("QUERY_STRING=$QueryString",2); }
+if ($Debug) {
+	debug("$PROG - $VERSION - Perl $^X $]",1);
+	debug("QUERY_STRING=$QueryString",2);
+}
 
 # Force SiteConfig if AWSTATS_CONFIG is defined
 if ($ENV{"AWSTATS_CONFIG"}) {
