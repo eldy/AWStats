@@ -358,6 +358,7 @@ sub DayOfWeek {
 
 sub DateIsValid {
 	my ($day, $month, $year) = @_;
+	if ($day < 1) { return 0; }
 	if ($month==1 || $month==3 || $month==5 || $month==7 || $month==8 || $month==10 || $month==12) {
 		if ($day > 31) { return 0; }		
 	}
@@ -805,6 +806,9 @@ sub Check_Config {
 	if ($Message[92] eq "") { $Message[92]="Who"; }
 	if ($Message[93] eq "") { $Message[93]="When"; }
 	if ($Message[94] eq "") { $Message[94]="Authenticated users"; }
+	if ($Message[95] eq "") { $Message[95]="Min"; }
+	if ($Message[96] eq "") { $Message[96]="Average"; }
+	if ($Message[97] eq "") { $Message[97]="Max"; }
 }
 
 #--------------------------------------------------------------------
@@ -2512,52 +2516,94 @@ EOF
 		print "<TABLE>";
 		print "<TR valign=bottom>";
 		$max_p=$max_h=$max_k=$max_v=1;
-		my $lastdaytoshowtime=$nowtime;		# Set day cursor to today
-		if (! (($MonthRequired eq $nowmonth || $MonthRequired eq "year") && $YearRequired eq $nowyear)) { 
+		my $lastdaytoshowtime=$nowyear.$nowmonth.$nowday;				# Set day cursor to today
+		if (($MonthRequired ne $nowmonth && $MonthRequired ne "year") || $YearRequired ne $nowyear) { 
 			if ($MonthRequired eq "year") {
-				# About 365.24 days a year = 31556736 seconds a year
-				$lastdaytoshowtime=($YearRequired-1970+1)*31556736-43200;	# Set day cursor to last day of the year
+				$lastdaytoshowtime=$YearRequired."3112";				# Set day cursor to last day of the required year
 			}
 			else {
-				# About 30.43 days a month = 2626728 seconds a month
-				$lastdaytoshowtime=($YearRequired-1970)*31556736+$MonthRequired*2629728;
+				$lastdaytoshowtime=$YearRequired.$MonthRequired."31";	# Set ay cursor to last day of the required month
 			}
 		}
-		for (my $ix=$MaxNbOfDays-1; $ix>=0; $ix--) {
-			my ($oldsec,$oldmin,$oldhour,$oldday,$oldmonth,$oldyear) = localtime($lastdaytoshowtime-($ix*86400));
-			if ($oldyear < 100) { $oldyear+=2000; } else { $oldyear+=1900; }
-			if (++$oldmonth < 10) { $oldmonth="0$oldmonth"; }
-			if ($oldday < 10) { $oldday="0$oldday"; }
-			if ($DayPages{$oldyear.$oldmonth.$oldday} > $max_p)  { $max_p=$DayPages{$oldyear.$oldmonth.$oldday}; }
-			if ($DayHits{$oldyear.$oldmonth.$oldday} > $max_h)   { $max_h=$DayHits{$oldyear.$oldmonth.$oldday}; }
-			if ($DayBytes{$oldyear.$oldmonth.$oldday} > $max_k)  { $max_k=$DayBytes{$oldyear.$oldmonth.$oldday}; }
+		my $firstdaytoshowtime=$lastdaytoshowtime;
+		# Get max_p, max_h and max_k values
+		my $nbofdaysshown=0;
+		for (my $daycursor=$lastdaytoshowtime; $nbofdaysshown<$MaxNbOfDays; $daycursor--) {
+			$daycursor =~ /^(\d\d\d\d)/; my $year=$1;
+			$daycursor =~ /^\d\d\d\d(\d\d)/; my $month=$1;
+			$daycursor =~ /^\d\d\d\d\d\d(\d\d)/; my $day=$1;
+			if (! DateIsValid($day,$month,$year)) { next; }			# If not an existing day, go to next
+			$nbofdaysshown++;
+			$firstdaytoshowtime=$year.$month.$day;
+			if ($DayPages{$year.$month.$day} > $max_p)  { $max_p=$DayPages{$year.$month.$day}; }
+			if ($DayHits{$year.$month.$day} > $max_h)   { $max_h=$DayHits{$year.$month.$day}; }
+			if ($DayBytes{$year.$month.$day} > $max_k)  { $max_k=$DayBytes{$year.$month.$day}; }
 		}
-		for (my $ix=$MaxNbOfDays-1; $ix>=0; $ix--) {
-			my ($oldsec,$oldmin,$oldhour,$oldday,$oldmonth,$oldyear) = localtime($lastdaytoshowtime-($ix*86400));
-			if ($oldyear < 100) { $oldyear+=2000; } else { $oldyear+=1900; }
-			if (++$oldmonth < 10) { $oldmonth="0$oldmonth"; }
-			if ($oldday < 10) { $oldday="0$oldday"; }
+		$nbofdaysshown=0;
+		for (my $daycursor=$firstdaytoshowtime; $nbofdaysshown<$MaxNbOfDays; $daycursor++) {
+			$daycursor =~ /^(\d\d\d\d)/; my $year=$1;
+			$daycursor =~ /^\d\d\d\d(\d\d)/; my $month=$1;
+			$daycursor =~ /^\d\d\d\d\d\d(\d\d)/; my $day=$1;
+			if (! DateIsValid($day,$month,$year)) { next; }			# If not an existing day, go to next
+			$nbofdaysshown++;
 			my $bredde_p=0;my $bredde_h=0;my $bredde_k=0;
-			if ($max_h > 0) { $bredde_p=int($DayPages{$oldyear.$oldmonth.$oldday}/$max_h*$BarHeight/2)+1; }
-			if ($max_h > 0) { $bredde_h=int($DayHits{$oldyear.$oldmonth.$oldday}/$max_h*$BarHeight/2)+1; }
-			if ($max_k > 0) { $bredde_k=int($DayBytes{$oldyear.$oldmonth.$oldday}/$max_k*$BarHeight/2)+1; }
+			if ($max_h > 0) { $bredde_p=int($DayPages{$year.$month.$day}/$max_h*$BarHeight/2)+1; }
+			if ($max_h > 0) { $bredde_h=int($DayHits{$year.$month.$day}/$max_h*$BarHeight/2)+1; }
+			if ($max_k > 0) { $bredde_k=int($DayBytes{$year.$month.$day}/$max_k*$BarHeight/2)+1; }
 			print "<TD>";
-			print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_p\" HEIGHT=$bredde_p WIDTH=4 ALT=\"$Message[56]: $DayPages{$oldyear.$oldmonth.$oldday}\" title=\"$Message[56]: $DayPages{$oldyear.$oldmonth.$oldday}\">";
-			print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_h\" HEIGHT=$bredde_h WIDTH=4 ALT=\"$Message[57]: $DayHits{$oldyear.$oldmonth.$oldday}\" title=\"$Message[57]: $DayHits{$oldyear.$oldmonth.$oldday}\">";
-			print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_k\" HEIGHT=$bredde_k WIDTH=4 ALT=\"$Message[75]: ".Format_Bytes($DayBytes{$oldyear.$oldmonth.$oldday})."\" title=\"$Message[75]: ".Format_Bytes($DayBytes{$oldyear.$oldmonth.$oldday})."\">";
+			print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_p\" HEIGHT=$bredde_p WIDTH=4 ALT=\"$Message[56]: $DayPages{$year.$month.$day}\" title=\"$Message[56]: $DayPages{$year.$month.$day}\">";
+			print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_h\" HEIGHT=$bredde_h WIDTH=4 ALT=\"$Message[57]: $DayHits{$year.$month.$day}\" title=\"$Message[57]: $DayHits{$year.$month.$day}\">";
+			print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_k\" HEIGHT=$bredde_k WIDTH=4 ALT=\"$Message[75]: ".Format_Bytes($DayBytes{$year.$month.$day})."\" title=\"$Message[75]: ".Format_Bytes($DayBytes{$year.$month.$day})."\">";
 			print "</TD>\n";
 		}
-		print "</TR><TR>";
-		for (my $ix=$MaxNbOfDays-1; $ix>=0; $ix--) {
-			my ($oldsec,$oldmin,$oldhour,$oldday,$oldmonth,$oldyear,$oldwday) = localtime($lastdaytoshowtime-($ix*86400));
-			if ($oldyear < 100) { $oldyear+=2000; } else { $oldyear+=1900; }
-			if (++$oldmonth < 10) { $oldmonth="0$oldmonth"; }
-			if ($oldday < 10) { $oldday="0$oldday"; }
-			print "<TD valign=middle".($oldwday==0||$oldwday==6?" bgcolor=\"#$color_weekend\"":"").">";
-			print ($oldday==$nowday && $oldmonth==$nowmonth?"<b>":"");
-			print "$oldday<br><font style=\"font: 10px;\">".$monthlib{$oldmonth}."</font>";
-			print ($oldday==$nowday && $oldmonth==$nowmonth?"</b></TD>":"</TD>");
+		print "<TD> &nbsp; </TD>";
+		# Calculate average values
+		my $avg_day_nb=0; my $avg_day_p=0; my $avg_day_h=0; my $avg_day_k=0;
+		my $FirstTimeDay=$FirstTime;
+		my $LastTimeDay=$LastTime;
+		$FirstTimeDay =~ /^(\d\d\d\d\d\d\d\d).*/; $FirstTimeDay=$1;
+		$LastTimeDay =~ /^(\d\d\d\d\d\d\d\d).*/; $LastTimeDay=$1;
+		foreach my $daycursor ($FirstTimeDay..$LastTimeDay) {
+			$daycursor =~ /^(\d\d\d\d)/; my $year=$1;
+			$daycursor =~ /^\d\d\d\d(\d\d)/; my $month=$1;
+			$daycursor =~ /^\d\d\d\d\d\d(\d\d)/; my $day=$1;
+			if (! DateIsValid($day,$month,$year)) { next; }			# If not an existing day, go to next
+			$avg_day_nb++;											# Increase number of day used to count
+			$avg_day_p+=$DayPages{$daycursor};
+			$avg_day_h+=$DayHits{$daycursor};
+			$avg_day_k+=$DayBytes{$daycursor};
 		}
+		if ($avg_day_nb) {
+			$avg_day_p=sprintf("%.2f",$avg_day_p/$avg_day_nb);
+			$avg_day_h=sprintf("%.2f",$avg_day_h/$avg_day_nb);
+			$avg_day_k=sprintf("%.2f",$avg_day_k/$avg_day_nb);
+		}
+		# Show average values
+		print "<TD>";
+		my $bredde_p=0;my $bredde_h=0;my $bredde_k=0;
+		if ($max_h > 0) { $bredde_p=int($avg_day_p/$max_h*$BarHeight/2)+1; }
+		if ($max_h > 0) { $bredde_h=int($avg_day_h/$max_h*$BarHeight/2)+1; }
+		if ($max_k > 0) { $bredde_k=int($avg_day_k/$max_k*$BarHeight/2)+1; }
+		print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_p\" HEIGHT=$bredde_p WIDTH=4 ALT=\"$Message[56]: $avg_day_p\" title=\"$Message[56]: $avg_day_p\">";
+		print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_h\" HEIGHT=$bredde_h WIDTH=4 ALT=\"$Message[57]: $avg_day_h\" title=\"$Message[57]: $avg_day_h\">";
+		print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_k\" HEIGHT=$bredde_k WIDTH=4 ALT=\"$Message[75]: ".Format_Bytes($avg_day_k)."\" title=\"$Message[75]: ".Format_Bytes($avg_day_k)."\">";
+		print "</TD>\n";
+
+		print "</TR><TR>";
+		$nbofdaysshown=0;
+		for (my $daycursor=$firstdaytoshowtime; $nbofdaysshown<$MaxNbOfDays; $daycursor++) {
+			$daycursor =~ /^(\d\d\d\d)/; my $year=$1;
+			$daycursor =~ /^\d\d\d\d(\d\d)/; my $month=$1;
+			$daycursor =~ /^\d\d\d\d\d\d(\d\d)/; my $day=$1;
+			if (! DateIsValid($day,$month,$year)) { next; }			# If not an existing day, go to next
+			$nbofdaysshown++;
+			print "<TD valign=middle".(DayOfWeek($day,$month,$year)==0||DayOfWeek($day,$month,$year)==6?" bgcolor=\"#$color_weekend\"":"").">";
+			print ($day==$nowday && $month==$nowmonth?"<b>":"");
+			print "$day<br><font style=\"font: 10px;\">".$monthlib{$month}."</font>";
+			print ($day==$nowday && $month==$nowmonth?"</b></TD>":"</TD>");
+		}
+		print "<TD> &nbsp; </TD>";
+		print "<TD valign=middle onmouseover=\"ShowTooltip(18);\" onmouseout=\"HideTooltip(18);\">$Message[96]</TD>";
 		print "</TR></TABLE><br>";
 		
 		print "</center></TD></TR>";
@@ -2591,9 +2637,9 @@ EOF
 		}
 		for (0..6) {
 			if ($avg_dayofweek[$_]) { 
-				$avg_dayofweek_p[$_]/=$avg_dayofweek[$_];
-				$avg_dayofweek_h[$_]/=$avg_dayofweek[$_];
-				$avg_dayofweek_k[$_]/=$avg_dayofweek[$_];
+				$avg_dayofweek_p[$_]=sprintf("%.2f",$avg_dayofweek_p[$_]/$avg_dayofweek[$_]);
+				$avg_dayofweek_h[$_]=sprintf("%.2f",$avg_dayofweek_h[$_]/$avg_dayofweek[$_]);
+				$avg_dayofweek_k[$_]=sprintf("%.2f",$avg_dayofweek_k[$_]/$avg_dayofweek[$_]);
 			}
 			$max_p = $avg_dayofweek_p[$_]  if ($avg_dayofweek_p[$_] > $max_p);
 			$max_h = $avg_dayofweek_h[$_]  if ($avg_dayofweek_h[$_] > $max_h);
