@@ -269,7 +269,7 @@ use vars qw/
 %DomainsHashIDLib
 %MimeHashLib %MimeHashIcon %MimeHashFamily
 %OSHashID %OSHashLib
-%RobotsHashIDLib
+%RobotsHashIDLib %RobotsAffiliateLib
 %SearchEnginesHashID %SearchEnginesHashLib %SearchEnginesKnownUrl %NotSearchEnginesKeys
 %WormsHashID %WormsHashLib %WormsHashTarget
 /;
