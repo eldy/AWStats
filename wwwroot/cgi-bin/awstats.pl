@@ -69,7 +69,7 @@ $word, $yearcon, $yearfile, $yearmonthfile, $yeartoprocess) = ();
 # ---------- Init arrays --------
 @BrowserArray = @DomainsArray = @HostAliases =
 @OnlyFiles = @OSArray = @RobotArray =
-@SearchEnginesArray = @SkipFiles = @SkipHosts =
+@SearchEnginesArray = @SkipDNSLookupFor = @SkipFiles = @SkipHosts =
 @dateparts = @felter = @field = @filearray = @message =
 @paramlist = @refurl = @sortbrowsers = @sortdomains_h = @sortdomains_k =
 @sortdomains_p = @sorterrors = @sorthosts_p = @sortos = @sortpagerefs = @sortrobot =
@@ -81,8 +81,8 @@ $word, $yearcon, $yearfile, $yearmonthfile, $yeartoprocess) = ();
 %MonthBytes = %MonthHits = %MonthPages = %MonthUnique = %MonthVisits =
 %listofyears = %monthlib = %monthnum = ();
 
-$VERSION="2.5 (build 37)";
-$Lang=0;
+$VERSION="2.5 (build 39)";
+$Lang="en";
 
 # Default value
 $SortDir       = -1;		# -1 = Sort order from most to less, 1 = reverse order (Default = -1)
@@ -773,14 +773,20 @@ sub SkipHost {
 
 sub SkipFile {
 	foreach $match (@SkipFiles) { if ($_[0] =~ /$match/i) { return 1; } }
-	0; # Not inside @SkipFiles
+	0; # Not in @SkipFiles
 }
 
 sub OnlyFile {
 	if ($OnlyFiles[0] eq "") { return 1; }
 	foreach $match (@OnlyFiles) { if ($_[0] =~ /$match/i) { return 1; } }
-	0; # Not inside @OnlyFiles
+	0; # Not in @OnlyFiles
 }
+
+sub SkipDNSLookup {
+	foreach $match (@SkipDNSLookupFor) { if ($_[0] =~ /$match/i) { return 1; } }
+	0; # Not in @SkipDNSLookupFor
+}
+
 
 #------------------------------------------------------------------------------
 # Function:     read config file
@@ -833,6 +839,11 @@ sub Read_Config_File {
 		if ($param =~ /^OnlyFiles/) {
 			@felter=split(/\s+/,$value);
 			$i=0; foreach $elem (@felter)      { $OnlyFiles[$i]=$elem; $i++; }
+			next;
+			}
+		if ($param =~ /^SkipDNSLookupFor/) {
+			@felter=split(/\s+/,$value);
+			$i=0; foreach $elem (@felter)      { $SkipDNSLookupFor[$i]=$elem; $i++; }
 			next;
 			}
 		if ($param =~ /^DirData/)               { $DirData=$value; next; }
@@ -1868,7 +1879,12 @@ if ($UpdateStats) {
 	  					$new = $MyDNSTable{$Host};
 					}
 					else {
-						$new=gethostbyaddr(pack("C4",split(/\./,$Host)),AF_INET);	# This is very slow may took 20 seconds
+						if (&SkipDNSLookupFor($Host)) {
+							&debug("(Skipping this DNS lookup at user request.)",4);
+						}
+						else {
+							$new=gethostbyaddr(pack("C4",split(/\./,$Host)),AF_INET);	# This is very slow, may took 20 seconds
+						}
 						&debug("End of reverse DNS lookup for $Host",4);
 					}
 					if ($new eq "") { $new="ip"; }
