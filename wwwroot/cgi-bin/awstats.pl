@@ -4697,9 +4697,9 @@ if ((! $ENV{'GATEWAY_INTERFACE'}) && (! $SiteConfig)) {
 	print "  Files type and Web compression\n";
 	print "  Personalized reports\n";
 	print "  ".(scalar keys %DomainsHashIDLib)." domains/countries\n";
-	print "  ".(scalar keys %BrowsersHashIDLib)." browsers\n";
-	print "  ".(scalar keys %OSHashLib)." operating systems\n";
 	print "  ".(scalar keys %RobotsHashIDLib)." robots\n";
+	print "  ".(scalar keys %OSHashLib)." operating systems\n";
+	print "  ".(scalar keys %BrowsersHashIDLib)." browsers\n";
 	print "  ".(scalar keys %SearchEnginesHashIDLib)." search engines (and keyphrases/keywords used from them)\n";
 	print "  All HTTP errors with last referrer\n";
 	print "  Report by day/month/year\n";
@@ -6133,9 +6133,9 @@ if (scalar keys %HTMLOutput) {
 			if ($ShowRobotsStats)		 { print ($frame?"<tr><td class=AWL>":""); print "<a href=\"$linkanchor#ROBOTS\"$targetpage>$Message[53]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
 			if ($ShowRobotsStats) 		 { print ($frame?"<tr><td class=AWL> &nbsp; <img height=8 width=9 src=\"$DirIcons/other/page.png\" alt=\"...\"> ":""); print "<a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=allrobots":"$PROG$StaticLinks.allrobots.html")."\"$NewLinkTarget>$Message[80]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
 			if ($ShowRobotsStats =~ /L/i)	{ print ($frame?"<tr><td class=AWL> &nbsp; <img height=8 width=9 src=\"$DirIcons/other/page.png\" alt=\"...\"> ":""); print "<a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=lastrobots":"$PROG$StaticLinks.lastrobots.html")."\"$NewLinkTarget>$Message[9]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
-			if ($ShowWormsStats)		 { print ($frame?"<tr><td class=AWL>":""); print "<a href=\"$linkanchor#WORMS\"$targetpage>$Message[136]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
-			if ($ShowWormsStats) 		 { print ($frame?"<tr><td class=AWL> &nbsp; <img height=8 width=9 src=\"$DirIcons/other/page.png\" alt=\"...\"> ":""); print "<a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=allworms":"$PROG$StaticLinks.allworms.html")."\"$NewLinkTarget>$Message[80]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
-			if ($ShowWormsStats =~ /L/i)	{ print ($frame?"<tr><td class=AWL> &nbsp; <img height=8 width=9 src=\"$DirIcons/other/page.png\" alt=\"...\"> ":""); print "<a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=lastworms":"$PROG$StaticLinks.lastworms.html")."\"$NewLinkTarget>$Message[9]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
+#			if ($ShowWormsStats)		 { print ($frame?"<tr><td class=AWL>":""); print "<a href=\"$linkanchor#WORMS\"$targetpage>$Message[136]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
+#			if ($ShowWormsStats) 		 { print ($frame?"<tr><td class=AWL> &nbsp; <img height=8 width=9 src=\"$DirIcons/other/page.png\" alt=\"...\"> ":""); print "<a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=allworms":"$PROG$StaticLinks.allworms.html")."\"$NewLinkTarget>$Message[80]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
+#			if ($ShowWormsStats =~ /L/i)	{ print ($frame?"<tr><td class=AWL> &nbsp; <img height=8 width=9 src=\"$DirIcons/other/page.png\" alt=\"...\"> ":""); print "<a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=lastworms":"$PROG$StaticLinks.lastworms.html")."\"$NewLinkTarget>$Message[9]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
 			if ($linetitle) { print ($frame?"":"</td></tr>\n"); }
 			# Navigation
 			$linetitle=&AtLeastOneNotNull($ShowSessionsStats,$ShowPagesStats,$ShowFileTypesStats,$ShowFileSizesStats,$ShowOSStats,$ShowBrowsersStats,$ShowScreenSizeStats);
@@ -7546,7 +7546,7 @@ if (scalar keys %HTMLOutput) {
 		}
 	
 		print "\n<a name=\"WHEN\">&nbsp;</a>\n\n";
-	
+
 		# BY DAY OF WEEK
 		#-------------------------
 		if ($ShowDaysOfWeekStats) {
@@ -7760,9 +7760,9 @@ if (scalar keys %HTMLOutput) {
 				if ($ShowDomainsStats =~ /H/i) { print "<TD>$_domener_h{$key}</TD>"; }
 				if ($ShowDomainsStats =~ /B/i) { print "<TD>".Format_Bytes($_domener_k{$key})."</TD>"; }
 				print "<TD CLASS=AWL>";
-				if ($ShowDomainsStats =~ /P/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_p\" WIDTH=$bredde_p HEIGHT=6 ALT=\"$Message[56]: ".int($_domener_p{$key})."\" title=\"$Message[56]: ".int($_domener_p{$key})."\"><br>\n"; }
-				if ($ShowDomainsStats =~ /H/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_h\" WIDTH=$bredde_h HEIGHT=6 ALT=\"$Message[57]: ".int($_domener_h{$key})."\" title=\"$Message[57]: ".int($_domener_h{$key})."\"><br>\n"; }
-				if ($ShowDomainsStats =~ /B/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_k\" WIDTH=$bredde_k HEIGHT=6 ALT=\"$Message[75]: ".Format_Bytes($_domener_k{$key})."\" title=\"$Message[75]: ".Format_Bytes($_domener_k{$key})."\">"; }
+				if ($ShowDomainsStats =~ /P/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_p\" WIDTH=$bredde_p HEIGHT=6 alt=\"\" title=\"\"><br>\n"; }
+				if ($ShowDomainsStats =~ /H/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_h\" WIDTH=$bredde_h HEIGHT=6 alt=\"\" title=\"\"><br>\n"; }
+				if ($ShowDomainsStats =~ /B/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_k\" WIDTH=$bredde_k HEIGHT=6 alt=\"\" title=\"\">"; }
 				print "</TD>";
 				print "</TR>\n";
 				$total_p += $_domener_p{$key};
@@ -8168,10 +8168,10 @@ if (scalar keys %HTMLOutput) {
 					eval("$function");
 				}
 				print "<TD CLASS=AWL>";
-				if ($ShowPagesStats =~ /P/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_p\" WIDTH=$bredde_p HEIGHT=6 ALT=\"$Message[56]: ".int($_url_p{$key}||0)."\" title=\"$Message[56]: ".int($_url_p{$key}||0)."\"><br>"; }
-				if ($ShowPagesStats =~ /B/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_k\" WIDTH=$bredde_k HEIGHT=6 ALT=\"$Message[106]: ".($_url_k{$key}?Format_Bytes($_url_k{$key}/($_url_p{$key}||1)):"&nbsp;")."\" title=\"$Message[106]: ".($_url_k{$key}?Format_Bytes($_url_k{$key}/($_url_p{$key}||1)):"&nbsp;")."\"><br>"; }
-				if ($ShowPagesStats =~ /E/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_e\" WIDTH=$bredde_e HEIGHT=6 ALT=\"$Message[104]: ".int($_url_e{$key}||0)."\" title=\"$Message[104]: ".int($_url_e{$key}||0)."\"><br>"; }
-				if ($ShowPagesStats =~ /X/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_x\" WIDTH=$bredde_x HEIGHT=6 ALT=\"$Message[116]: ".int($_url_x{$key}||0)."\" title=\"$Message[116]: ".int($_url_x{$key}||0)."\">"; }
+				if ($ShowPagesStats =~ /P/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_p\" WIDTH=$bredde_p HEIGHT=6 alt=\"\" title=\"\"><br>"; }
+				if ($ShowPagesStats =~ /B/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_k\" WIDTH=$bredde_k HEIGHT=6 alt=\"\" title=\"\"><br>"; }
+				if ($ShowPagesStats =~ /E/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_e\" WIDTH=$bredde_e HEIGHT=6 alt=\"\" title=\"\"><br>"; }
+				if ($ShowPagesStats =~ /X/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_x\" WIDTH=$bredde_x HEIGHT=6 alt=\"\" title=\"\">"; }
 				print "</TD></TR>\n";
 				$total_p += $_url_p{$key};
 				$total_e += $_url_e{$key};
