@@ -1,7 +1,7 @@
 # Norwegian Nynorsk message file, by Karl Ove Hufthammer <huftis@bigfoot.com>
 PageCode=iso-8859-1
 message0=Ukjent
-message1=Ukjent (fann ikkje vertsnamn)
+message1=ukjente (fann ikkje vertsnamn)
 message2=Andre
 message3=Vis detaljar
 message4=Dag
@@ -82,7 +82,7 @@ message78=yyyy-mm-dd - HH:MM
 message79=Filter
 message80=Full liste
 message81=Vertar
-message82=Kjente
+message82=kjente
 message83=Robotar
 message84=Sø.
 message85=Må.
@@ -104,4 +104,4 @@ message100=Ikkje&nbsp;komprimert
 message101=Komprimert<br>(før/etter)
 message102=Komprimeringsrate
 message103=forskjellige søkeuttrykk
-message104=Inngangssider
+message104=Kode

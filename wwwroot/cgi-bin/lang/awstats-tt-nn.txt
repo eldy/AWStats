@@ -28,7 +28,7 @@
 	(Søkeord frå dei <b>#SearchEnginesArray#</b> mest populære søkemotorane og emnekatalogane kan lesast av #PROG#, f.eks.&nbsp;Yahoo, Altavista, Lycos, Google, og Kvasir).
 	</div>
 	<div class="CTooltip" id="tt16">
-	Robotar blir brukt av mange søkemotorar som besøker nettstaden din for å indeksera og rangera han, samla statistikk om nettstadar, og/eller sjå om nettstaden framleis er tilgjengeleg.<br>
+	Robotar blir brukt av mange søkemotorar som besøker nettstaden din for å indeksera og rangera han, samla statistikk om nettstader, og/eller sjå om nettstaden framleis er tilgjengeleg.<br>
 	#PROG# kjenner til <b>#RobotArray#</b> robotar.
 	</div>
 	<div class="CTooltip" ID="tt17">
