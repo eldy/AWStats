@@ -10,7 +10,7 @@ links, robots and more. It works with IIS 5.0+ or Apache webserver log files.
 
 License: GNU GPL (GNU General Public License. See COPYING.TXT)
 Version : 2.5
-Release date: 20 May 2001
+Release date: 05 June 2001
 Platforms: All (Linux, NT, SCO, BSD, Solaris and other *NIX's, BeOS, OS/2...)
 Author: Laurent Destailleur <eldy@users.sourceforge.net>
 AWStats web site: http://awstats.sourceforge.net
@@ -34,28 +34,31 @@ I - FEATURES AND REQUIREMENTS
 I - 1) Features
 
     A full log analysis enables AWStats to show you the following information:
-    * number of VISITS and UNIQUE VISITORS,
-    * most often pages viewed,
-    * domains/countries of hosts visitors (pages,hits,kb),
-    * rush hours (pages,hits,kb for each hour),
-    * browsers used (pages,hits,kb for each browsed),
+    * Number of VISITS and UNIQUE VISITORS,
+    * Most often pages viewed,
+    * Domains/countries of hosts visitors (pages,hits,kb),
+    * Rush hours (pages,hits,kb for each hour),
+    * Browsers used (pages,hits,kb for each browser),
     * OS used (pages,hits,kb for each OS),
     * VISITS OF ROBOTS,
     * SEARCH ENGINES and KEYWORDS used to find your site,
-    * HTTP errors.
+    * HTTP errors (Page not found, ...).
 
     It supports the following features as well:
-    * Command line scheduled analysis or real-time analysis
-    * Easy to install, easy to use (No compilation, no extern databases, only
-      one .pl file),
-    * Tooltips and explanations for each informations pointed by mouse,
-    * Multi-named web sites supported,
+    * Works from command line or as a CGI,
+    * Update of statistics can be made on demand from the web interface and
+      not only from your scheduler,
+    * A lot of options/filters can be defined,
+    * Easy to install, easy to use (No compilation, no extern databases),
+    * Look and colors can match your site design,
+    * Multi-named web sites supported (virtual servers),
     * Informations are since the start of your web site and month by month,
-    * 9 languages: English, French, Dutch (Christtian Langeveld), Spanish
-      (Rodrigo Villarreal), Italian (Vittore Zen), German (Ulf Moench), Polish
-      (Tomasz Ciemnoczulowski), Greek (Simos Xenitellis), Czech, Portuguese,
-    * Colored graphics,
-    * Free and distributed with sources (perl script).
+    * Several languages: English, French, Dutch, Spanish, Italian, German,
+      Polish, Greek, Czech, Portuguese, Korean...
+    * Help on how AWStats work, tooltips on HTML reporting page,
+    * Colored graphics with no needs of any special libraries,
+    * Free (GNU GPL) and distributed with sources (perl script).
+
 
 I - 2) Requirements
 
@@ -247,21 +250,27 @@ II - 2) With IIS Server
 III - BENCHMARK
 -----------------------------------
 
-With version 2.23, AWStats processes 570 lines by seconds (Pentium 300Mhz).
-If we consider 10 hits by page and 5 pages for one visits, it means that
-AWStats is able to analyze 11 visits in one second.
+This is benchmark results with AWStats version 2.5:
+CONFIG: Athlon 1 GHz / Windows 2000 / ActivePerl 5.6
+SPEED: 20000 lines in 15s with reverse dns lookup disabled
+AVERAGE: 1333 lines by seconds 
+
+However, benchmarks of log analyzer are made without reverse dns lookup
+because this depends on your system, networks and Internet and not on the
+log analyzer you use. But, the reverse dns lookup is 99% of the time
+to make a log analysis. So this is results in reality (with reverse dns
+lookup enabled, made on true log samples):
+AVERAGE: 100 lines by seconds
+If we consider 5 hits by page and 5 pages for one visit, it means that
+AWStats is able to analyze 4 visits in one second.
 If your site has 70 visits each hour (50,000 visits a month), you should
 launch AWStats each hour to be sure to get a processing time less than
-70/11 = 6.4 seconds (with Pentium 300Mhz). In fact, process time might be
-higher because of DNS reverse lookup that is time consuming.
-DNS lookup speed depends on your system, network and Internet but not on the
-log analyzer you use. For this reason, DNS lookup is disabled in all log
-analyzer benchmarks, but you must keep in mind that it's the most time
-consuming part of the process.
+70/4 = 18 seconds (with Athlon 1 Ghz).
+
 To increase speed:
 - You can disable DNSLookup in AWStats (set DNSLookup=0) but this requires
 that hosts adresses in your log file are already resolved (need to setup your
-web server to do so). Speed can be increased up by 2 to 100 times !
+web server to do so). Speed can be increased up by 2 to 50 times !
 - If you use Apache, set PurgeLogFile to 1 (By default, to avoid bad surpise,
 PurgeLogFile is 0 in configure file, but you can set it to 1 to ask AWStats
 to purge log file after processing it, this increase speed for next run).
