@@ -1,48 +1,49 @@
+<!-- Chinese (simplified) message file -->
 <!-- $Revision$ - $Date$ -->
 <DIV CLASS="CTooltip" ID="tt1">
-逆把芠呼羆Ω计眖ㄓ聅セ呼丁丁筳斗ぶ#VisitTimeOut#だ牧穦癘魁Ω
+此字段为参观网站的总次数，从相同地址来浏灠本网站，时间间隔须至少#VisitTimeOut#分钟才会再记录一次。
 </DIV>
 <DIV CLASS="CTooltip" ID="tt2">
-逆把芠呼计眖ぃ筿福聅凝セ呼计ㄓ璸衡呼计
+此字段为参观网站的人数。以从不同的计算机浏览本网站的个数来计算网站的人数。
 </DIV>
 <DIV CLASS="CTooltip" ID="tt3">
-逆呼弄羆Ω计癘魁呼(.html)计
+此字段为网页读取的总次数。只记录网页(.html)的个数。
 </DIV>
 <DIV CLASS="CTooltip" ID="tt4">
-逆呼ず甧弄羆Ω计呼郎瓜郎紇钩郎单
+此字段为网页内容读取的总次数，包含网页文件，图片文件，影像文件等。
 </DIV>
 <DIV CLASS="CTooltip" ID="tt5">
-逆呼ず甧弄羆甧秖呼郎瓜郎紇钩郎单
+此字段为网页内容读取的总容量大小，包含网页文件，图片文件，影像文件等。
 </DIV>
 <DIV CLASS="CTooltip" ID="tt13">
-逆癘魁ㄏノ眖êㄇ穓碝呼秈呼╰参穦笆だ猂程盽ㄏノ#SearchEnginesArray#穓碝呼
+此字段为记录使用者从那些搜寻网站进入此网站。系统会自动分析最常使用的#SearchEnginesArray#的搜寻网站。
 </DIV>
 <DIV CLASS="CTooltip" ID="tt14">
-陪ボㄤウ呼呼Τㄤず甧硈挡セ呼
-╰参穦耕盽硈挡玡#MaxNbOfRefererShown#呼呼
+显示其它网站的网页有其内容连结至本站的网页列表。
+系统会列出较常连结的前#MaxNbOfRefererShown#个网页网址。
 </DIV>
 <DIV CLASS="CTooltip" ID="tt15">
-硂陪ボㄏノ穓碝呼い耕盽ㄏノ闽龄ㄓ祅呼╰参穦癘魁程盽ㄏノ#SearchEnginesArray#穓碝呼闽龄
+这个表格显示使用者在搜寻网站中较常使用的关键词来登入网站。系统会记录最常使用的#SearchEnginesArray#个搜寻网站关键词。
 </DIV>
 <DIV CLASS="CTooltip" ID="tt16">
-穓碝呼憨笴竟(Robots)穦笆т碝呼ず┮Τず甧<BR>
-逆癘魁耕盽ㄏノ#RobotArray#憨村竟т碝呼癘魁
+搜寻网站的漫游器(Robots)会自动的找寻网站内的所有内容。<BR>
+此字段记录较常使用的#RobotArray#个漫游器找寻网站的记录。
 </DIV>
 
-<DIV CLASS="CTooltip" ID="tt201"> ⊿Τ闽硂兜岿粇絏磞瓃</DIV>
-<DIV CLASS="CTooltip" ID="tt202"> 呼狝竟ぃ秆ㄏノ惠―</DIV>
-<DIV CLASS="CTooltip" ID="tt204"> 呼狝竟矪瞶Чㄏノ惠―琌玱⊿Τゅン肚癳</DIV>
-<DIV CLASS="CTooltip" ID="tt206"> 呼ず甧弄ぃЧ </DIV>
-<DIV CLASS="CTooltip" ID="tt301"> т碝呼竒簿ㄤウよτ竒т碝</DIV>
-<DIV CLASS="CTooltip" ID="tt302"> 呼тぃ瞷竒よт</DIV>
-<DIV CLASS="CTooltip" ID="tt400"> 粂猭岿粇呼狝竟ぃ秆ㄏノ惠―</DIV>
-<DIV CLASS="CTooltip" ID="tt401"> 沽刚硈挡惠块盞絏呼呼τ祇ネ岿粇</DIV>
-<DIV CLASS="CTooltip" ID="tt403"> 沽刚硈挡ゼ秨聅凝呼呼τ祇ネ岿粇</DIV>
-<DIV CLASS="CTooltip" ID="tt404"> 沽刚硈挡ぃ呼呼τ祇ネ岿粇</DIV>
-<DIV CLASS="CTooltip" ID="tt408"> 呼狝竟禣び丁矪瞶硂惠―</DIV>
-<DIV CLASS="CTooltip" ID="tt500"> ず场狝竟祇ネ岿粇琌 CGI 祘Α祇ネ拜肈</DIV>
-<DIV CLASS="CTooltip" ID="tt501"> ぃ秆惠―</DIV>
-<DIV CLASS="CTooltip" ID="tt502"> 呼狝竟 proxy τゼ莱痷タㄏノ惠―</DIV>
-<DIV CLASS="CTooltip" ID="tt503"> ず场狝竟祇ネ岿粇 </DIV>
-<DIV CLASS="CTooltip" ID="tt504"> 硄癟筯筄 </DIV>
-<DIV CLASS="CTooltip" ID="tt505"> 硂 HTTP セ⊿Τや穿 </DIV>
+<DIV CLASS="CTooltip" ID="tt201"> 没有关于这项错误码的描述</DIV>
+<DIV CLASS="CTooltip" ID="tt202"> 网页服务器不了解使用者的需求</DIV>
+<DIV CLASS="CTooltip" ID="tt204"> 网页服务器四处理完使用者的需求，但是却没有文件传送出</DIV>
+<DIV CLASS="CTooltip" ID="tt206"> 网页内容读取不完全 </DIV>
+<DIV CLASS="CTooltip" ID="tt301"> 找寻的网页已经移到其它地方，而且以已经找寻到了</DIV>
+<DIV CLASS="CTooltip" ID="tt302"> 网页原先找不到，现在已经在别的地方找到了</DIV>
+<DIV CLASS="CTooltip" ID="tt400"> 语法错误，网页服务器不了解使用者的需求</DIV>
+<DIV CLASS="CTooltip" ID="tt401"> 尝试连结至需输入密码的网页网址而发生错误</DIV>
+<DIV CLASS="CTooltip" ID="tt403"> 尝试连结至未开放浏览的网页网址而发生错误</DIV>
+<DIV CLASS="CTooltip" ID="tt404"> 尝试连结至不存在的网页网址而发生错误</DIV>
+<DIV CLASS="CTooltip" ID="tt408"> 网页服务器花费太多时间处理这个需求</DIV>
+<DIV CLASS="CTooltip" ID="tt500"> 内部服务器发生错误，一般是 CGI 程序发生问题</DIV>
+<DIV CLASS="CTooltip" ID="tt501"> 不了解需求</DIV>
+<DIV CLASS="CTooltip" ID="tt502"> 网页服务器因 proxy 而未能响应真正使用者的需求</DIV>
+<DIV CLASS="CTooltip" ID="tt503"> 内部服务器发生错误 </DIV>
+<DIV CLASS="CTooltip" ID="tt504"> 通讯闸逾时 </DIV>
+<DIV CLASS="CTooltip" ID="tt505"> 这个 HTTP 的版本没有支持 </DIV>
