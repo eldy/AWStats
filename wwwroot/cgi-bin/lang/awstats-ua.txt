@@ -1,4 +1,4 @@
-# Ukrainian message file (v1.6 - 13.02.2002 - roman@elsyst.km.ua)
+# Ukrainian message file (v1.7 - 25.02.2002 - roman@elsyst.km.ua)
 PageCode=windows-1251
 message0=Невiдомий
 message1=Невiдомих (не вдалось перетворити IP)
@@ -109,5 +109,8 @@ message105=Код
 message106=Середнiй розмiр
 message107=Посилання з груп новин
 message108=кБ
-message109=MB
-message110=GB
+message109=МБ
+message110=ГБ
+message111=Хапуга
+message112=Так
+message113=Нi
