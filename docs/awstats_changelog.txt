@@ -35,6 +35,8 @@ New features/improvements:
   with Perl 5.8.
 - maillogconvert.pl: Allow to process qmail log preprocessed by
   tai64nlocal tool.
+- maillogconvert.pl: Added support for MDaemon mail server log files.
+  
 
 Other/Documentation:
 - Prepare code for decodeUTFkeys plugin.

@@ -242,7 +242,7 @@ when reading it), follow the example:<br>
 4.1+ for tag %NS-n<br>
 5.0+ for tag %WY-n<br>
 5.1+ for tag %Wm-n, %Wy-n, %Dw-n<br>
-<br># "LogFile" contains the web server logfile to analyze.
+<br># "LogFile" contains the web, ftp or mail server logfile to analyze.
 <br># You can use a full path or relative path from awstats.pl directory.
 <br># Example: "/var/log/apache/access.log"
 <br># Example: "../logs/mycombinedlog.log"
@@ -307,8 +307,9 @@ when reading it), follow the example:<br>
 <br># 3 - Webstar native log format
 <br># 4 - Apache or Squid native common log format (NCSA common/CLF log format)
 <br>#     With LogFormat=4, some features (browsers, os, keywords...) can't work.
-<br># "your_own_personalized_log_format" = If your log is a personalized format,
-<br>#   you must use the following syntax keys to define the log format string:
+<br># "your_own_personalized_log_format" = If your log is ftp, mail or other format,
+<br>#     you must use following keys to define the log format string (See FAQ
+<br>#     for ftp, mail or exotic web log format examples):
 <br>#   %host             Host client name or IP address
 <br>#   %lognamequot      Authenticated login/user with format: "alex"
 <br>#   %logname          Authenticated login/user with format: alex

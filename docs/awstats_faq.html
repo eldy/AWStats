@@ -50,7 +50,7 @@ Here, you can find the most common questions and answers about AWStats setup/usa
 FAQ-COM025 <a href="#NOLOG">How to use AWStats with no server log</a><br>
 FAQ-COM050 <a href="#LIMITLOG">What is the log size limit AWStats can analyze ?</a><br>
 FAQ-COM090 <a href="#FTP">Setup for FTP server log files.</a><br>
-FAQ-COM100 <a href="#MAIL">Setup for MAIL log files (Sendmail, Postfix, QMail, Exchange).</a><br>
+FAQ-COM100 <a href="#MAIL">Setup for MAIL log files (Sendmail, Postfix, QMail, MDaemon, Exchange).</a><br>
 FAQ-COM110 <a href="#MEDIASERVER">Setup for MEDIA SERVER log files (Realmedia, Windows media, Darwin streaming server).</a><br>
 FAQ-COM120 <a href="#ROTATE">How to rotate my logs without loosing data.</a><br>
 FAQ-COM130 <a href="#CRONTAB">How to run AWStats frequently ?</a><br>
@@ -115,10 +115,14 @@ Because AWStats is in Perl, it can works on all Operating Systems.<br>
 Examples of used platforms (bold means 'tested by author', others were reported by AWStats users to work correctly) :<br>
 <table bgcolor=#F4F4F4 width="100%" class=CFAQ><tr class=CFAQ><td class=CFAQ>
 <u>OS:</u><br>
-<b>Windows 2000</b>, <b>Windows NT 4.0</b>, Windows Me, <b>Linux</b>, Macintosh, <b>Solaris</b>, <b>Aix</b>, BeOS, ...<br>
-<u>Web/Wap/Proxy/FTP/Mails/Streaming servers</u><br>
-<b>Apache 1.3.x and 2</b>, <b>IIS 5.0</b>, WebStar, WebLogic, WebSite, <b>Windows Media Server</b>, Tomcat, <b>Squid</b>, <b>Sendmail</b>, <b>Postfix</b>, QMail,
-Roxen, Resin, <b>ProFTP</b>, Lotus Notes/Domino, Darwin, IPlanet, IceCast, ZeroBrand, Zeus, Zope, Abyss, www4mail, ...<br>
+<b>Windows 2000</b>, <b>Windows NT 4.0</b>, Windows Me, <b>Linux (RedHat, Mandrake, Debian, Suse...)</b>, Macintosh, <b>Solaris</b>, <b>Aix</b>, BeOS, ...<br>
+<u>Web/Wap/Proxy/Streaming servers</u><br>
+<b>Apache 1.3.x and 2</b>, <b>IIS 5.0</b>, WebStar, WebLogic, WebSite, <b>Windows Media Server</b>, Tomcat, <b>Squid</b>,
+Roxen, Resin, Lotus Notes/Domino, Darwin, IPlanet, IceCast, ZeroBrand, Zeus, Zope, Abyss...<br>
+<u>FTP servers</u><br>
+<b>ProFTP</b>, ...<br>
+<u>Mails servers</u><br>
+<b>Sendmail</b>, <b>Postfix</b>, QMail, <b>Mdaemon</b>, www4mail, ...<br>
 <u>Perl interpreters:</u><br>
 <b>ActivePerl 5.6</b>, <b>Perl 5.8</b>, <b>Perl 5.6</b>, <b>Perl 5.0</b>, <b>mod_perl for Apache</b>, ...<br>
 </td></tr></table>
@@ -284,14 +288,14 @@ Now you can use AWStats as usual (run the update process and read statistics).<b
 <br>
 
 <a name="MAIL"></a><br>
-<b><u>FAQ-COM100 : SETUP FOR MAIL LOG FILES (SENDMAIL, POSTFIX, QMAIL, EXCHANGE...)</u></b><br>
+<b><u>FAQ-COM100 : SETUP FOR MAIL LOG FILES (SENDMAIL, POSTFIX, QMAIL, MDAEMON, EXCHANGE...)</u></b><br>
 <font class=CProblem>PROBLEM:</font><br>
 What do I have to do to use AWStats to analyze my mail log files.<br>
 <font class=CSolution>SOLUTION:</font><br>
 <br>
 This tip works with AWStats 5.5 or higher.<br>
 <br>
-<u>For Postfix, Sendmail or QMail log files</u><br>
+<u>For Postfix, Sendmail, QMail or MDaemon log files</u><br>
 <br>
 You must setup AWStats to use a mail log file preprocessor (<i>maillogconvert.pl</i> is provided
 into AWStats <i>tools</i> directory, but you can use the one of your choice):<br>
@@ -302,13 +306,13 @@ For standard Postfix, Sendmail and standard QMail logfiles, set<br>
 <i>
 LogFile="perl /path/to/maillogconvert.pl standard &lt; /pathtomaillog/maillog |"<br>
 </i>
+If the logfiles are compressed, they can be processed this way<br>
+<i>
+LogFile="gzip -cd /var/log/maillog.0.gz | /path/to/maillogconvert.pl standard |"<br>
+</i>
 And for VAdmin QMail logfiles (multi-host/virtualhost mail servers running vadmin software)<br>
 <i>
 LogFile="perl /path/to/maillogconvert.pl vadmin &lt; /pathtomaillog/maillog |"<br>
-</i>
-If the logfiles are compressed, they can be processed this way<br>
-<i>
-LogFile="gzip -cd /var/log/maillog.0.gz | /path/to/maillogconvert.pl vadmin |"<br>
 </i>
 Then change:
 <i>
@@ -346,9 +350,12 @@ Now you can use AWStats as usual (run the update process and read statistics).<b
 
 <u>For Exchange log files</u><br>
 <br>
-If someone can understand the Exchange log format, he can explain it to me at eldy@users.sourceforge.net.<br>
-Until this server will log messy data, just forget using AWStats or use a more serious
-mail server (sendmail, postfix, ...). Sorry.<br>
+Despite the high number of possible log format provided with Exchange,
+none of them is built enough seriously to offer an interseting analyze (missing informations,
+messy data, no id to join multiple records for same mail, etc...).
+For this reason, an "interesting" log analysis is a joke with Exchange log files (No data is
+better than false data). So forget using AWStats or use a more serious mail server (sendmail,
+postfix, qmail, mdaemon, ...). Sorry.<br>
 <!--
 Your Exchange mail log file might looks like this:<br>
 <i>2002-9-29	0:3:2 GMT	-	-	-	S_EXCHANG01	-	/O=INVESTMENT SCORECARD INC/OU=MAIL/CN=RECIPIENTS/CN=KJOHNSON	1027	1640EF7202084243942C5EC620117D376B68AA@s_exchang01.investmentscorecard.com	0	0	1943	2	2002-9-29 0:3:2 GMT	0	-	c=US;a= ;p=Investment Score;l=S_EXCHANG01-020929000302Z-2583	Dev Request Late Notification: KS_CM00004271	EX:/O=INVESTMENT SCORECARD INC/OU=MAIL/CN=RECIPIENTS/CN=CLEARQUEST(KS_CM)	-</i><br>
