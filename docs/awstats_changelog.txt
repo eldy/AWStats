@@ -8,9 +8,12 @@ AWStats Changelog
   old unresolved ip processed with AWStats 3.2 will not be counted when
   viewed with 4.0.
 
+- Increased speed and reduce memory used for very large web sites.
 - Unresolved ip are now processed like resolved one.
-- New data loading adn sort algorithm to increase speed for large web sites.
-- Provided with the log format converter common2combined.pl
+- New data loading and sort algorithm to increase speed for large web sites.
+- New tool: A log format converter common2combined.pl
+- New option: -staticlinks to build static links in report page (to use
+  AWStats with no web servers).
 
 
 3.2
