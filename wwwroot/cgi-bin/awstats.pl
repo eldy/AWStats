@@ -2053,7 +2053,7 @@ sub Read_History_With_TmpUpdate {
 	}
 
 	# Loop on read file
-	my $xmlold=0;
+	my $readxml=0;
 	if ($withread) {
 		my $countlines=0;
 		my $versionnum=0;
@@ -2063,8 +2063,8 @@ sub Read_History_With_TmpUpdate {
 			$countlines++;
 			
 			# Test if it's xml
-			if (! $xmlold && $_ =~ /^<xml/) {
-				$xmlold=1;
+			if (! $readxml && $_ =~ /^<xml/) {
+				$readxml=1;
 				if ($Debug) { debug(" Data file format is 'xml'",1); }
 				next;
 			}
@@ -2077,7 +2077,7 @@ sub Read_History_With_TmpUpdate {
 			}
 
 			# Analyze fields
-			@field=split(/\s+/,($xmlold?CleanFromTags($_):$_));
+			@field=split(/\s+/,($readxml?CleanFromTags($_):$_));
 			if (! $field[0]) { next; }
 
 			# Here version MUST be defined, or file will be processed as an old data file
@@ -2177,7 +2177,7 @@ sub Read_History_With_TmpUpdate {
 					}
 					$_=<HISTORY>;
 					chomp $_; s/\r//;
-					@field=split(/\s+/,($xmlold?CleanFromTags($_):$_)); $countlines++;
+					@field=split(/\s+/,($readxml?CleanFromTags($_):$_)); $countlines++;
 				}
 				until ($field[0] eq 'END_MISC' || $field[0] eq "${xmleb}END_MISC" || ! $_);
 				if ($field[0] ne 'END_MISC' && $field[0] ne "${xmleb}END_MISC") { error("History file \"$filetoread\" is corrupted (End of section MISC not found).\nRestore a recent backup of this file (data for this month will be restored to backup date), remove it (data for month will be lost), or remove the corrupted section in file (data for at least this section will be lost).","","",1); }
@@ -2208,7 +2208,7 @@ sub Read_History_With_TmpUpdate {
 					}
 					$_=<HISTORY>;
 					chomp $_; s/\r//;
-					@field=split(/\s+/,($xmlold?CleanFromTags($_):$_)); $countlines++;
+					@field=split(/\s+/,($readxml?CleanFromTags($_):$_)); $countlines++;
 				}
 				until ($field[0] eq 'END_CLUSTER' || $field[0] eq "${xmleb}END_CLUSTER" || ! $_);
 				if ($field[0] ne 'END_CLUSTER' && $field[0] ne "${xmleb}END_CLUSTER") { error("History file \"$filetoread\" is corrupted (End of section CLUSTER not found).\nRestore a recent backup of this file (data for this month will be restored to backup date), remove it (data for month will be lost), or remove the corrupted section in file (data for at least this section will be lost).","","",1); }
@@ -2252,7 +2252,7 @@ sub Read_History_With_TmpUpdate {
 					}
 					$_=<HISTORY>;
 					chomp $_; s/\r//;
-					@field=split(/\s+/,($xmlold?CleanFromTags($_):$_)); $countlines++;
+					@field=split(/\s+/,($readxml?CleanFromTags($_):$_)); $countlines++;
 				}
 				until ($field[0] eq 'END_TIME' || $field[0] eq "${xmleb}END_TIME" || ! $_);
 				if ($field[0] ne 'END_TIME' && $field[0] ne "${xmleb}END_TIME") { error("History file \"$filetoread\" is corrupted (End of section TIME not found).\nRestore a recent backup of this file (data for this month will be restored to backup date), remove it (data for month will be lost), or remove the corrupted section in file (data for at least this section will be lost).","","",1); }
@@ -2291,7 +2291,7 @@ sub Read_History_With_TmpUpdate {
 					}
 					$_=<HISTORY>;
 					chomp $_; s/\r//;
-					@field=split(/\s+/,($xmlold?CleanFromTags($_):$_)); $countlines++;
+					@field=split(/\s+/,($readxml?CleanFromTags($_):$_)); $countlines++;
 				}
 				until ($field[0] eq 'END_ORIGIN' || $field[0] eq "${xmleb}END_ORIGIN" || ! $_);
 				if ($field[0] ne 'END_ORIGIN' && $field[0] ne "${xmleb}END_ORIGIN") { error("History file \"$filetoread\" is corrupted (End of section ORIGIN not found).\nRestore a recent backup of this file (data for this month will be restored to backup date), remove it (data for month will be lost), or remove the corrupted section in file (data for at least this section will be lost).","","",1); }
@@ -2322,7 +2322,7 @@ sub Read_History_With_TmpUpdate {
 					}
 					$_=<HISTORY>;
 					chomp $_; s/\r//;
-					@field=split(/\s+/,($xmlold?CleanFromTags($_):$_)); $countlines++;
+					@field=split(/\s+/,($readxml?CleanFromTags($_):$_)); $countlines++;
 				}
 				until ($field[0] eq 'END_DAY' || $field[0] eq "${xmleb}END_DAY" || ! $_);
 				if ($field[0] ne 'END_DAY' && $field[0] ne "${xmleb}END_DAY") { error("History file \"$filetoread\" is corrupted (End of section DAY not found).\nRestore a recent backup of this file (data for this month will be restored to backup date), remove it (data for month will be lost), or remove the corrupted section in file (data for at least this section will be lost).","","",1); }
@@ -2429,7 +2429,7 @@ sub Read_History_With_TmpUpdate {
 					}
 					$_=<HISTORY>;
 					chomp $_; s/\r//;
-					@field=split(/\s+/,($xmlold?CleanFromTags($_):$_)); $countlines++;
+					@field=split(/\s+/,($readxml?CleanFromTags($_):$_)); $countlines++;
 				}
 				until ($field[0] eq 'END_VISITOR' || $field[0] eq "${xmleb}END_VISITOR" || ! $_);
 				if ($field[0] ne 'END_VISITOR' && $field[0] ne "${xmleb}END_VISITOR") { error("History file \"$filetoread\" is corrupted (End of section VISITOR not found).\nRestore a recent backup of this file (data for this month will be restored to backup date), remove it (data for month will be lost), or remove the corrupted section in file (data for at least this section will be lost).","","",1); }
@@ -2459,7 +2459,7 @@ sub Read_History_With_TmpUpdate {
 					}
 					$_=<HISTORY>;
 					chomp $_; s/\r//;
-					@field=split(/\s+/,($xmlold?CleanFromTags($_):$_)); $countlines++;
+					@field=split(/\s+/,($readxml?CleanFromTags($_):$_)); $countlines++;
 				}
 				until ($field[0] eq 'END_UNKNOWNIP' || $field[0] eq "${xmleb}END_UNKNOWNIP" || ! $_);
 				if ($field[0] ne 'END_UNKNOWNIP' && $field[0] ne "${xmleb}END_UNKNOWNIP") { error("History file \"$filetoread\" is corrupted (End of section UNKOWNIP not found).\nRestore a recent backup of this file (data for this month will be restored to backup date), remove it (data for month will be lost), or remove the corrupted section in file (data for at least this section will be lost).","","",1); }
@@ -2497,7 +2497,7 @@ sub Read_History_With_TmpUpdate {
 					}
 					$_=<HISTORY>;
 					chomp $_; s/\r//;
-					@field=split(/\s+/,($xmlold?CleanFromTags($_):$_)); $countlines++;
+					@field=split(/\s+/,($readxml?CleanFromTags($_):$_)); $countlines++;
 				}
 				until ($field[0] eq 'END_LOGIN' || $field[0] eq "${xmleb}END_LOGIN" || ! $_);
 				if ($field[0] ne 'END_LOGIN' && $field[0] ne "${xmleb}END_LOGIN") { error("History file \"$filetoread\" is corrupted (End of section LOGIN not found).\nRestore a recent backup of this file (data for this month will be restored to backup date), remove it (data for month will be lost), or remove the corrupted section in file (data for at least this section will be lost).","","",1); }
@@ -2527,7 +2527,7 @@ sub Read_History_With_TmpUpdate {
 					}
 					$_=<HISTORY>;
 					chomp $_; s/\r//;
-					@field=split(/\s+/,($xmlold?CleanFromTags($_):$_)); $countlines++;
+					@field=split(/\s+/,($readxml?CleanFromTags($_):$_)); $countlines++;
 				}
 				until ($field[0] eq 'END_DOMAIN' || $field[0] eq "${xmleb}END_DOMAIN" || ! $_);
 				if ($field[0] ne 'END_DOMAIN' && $field[0] ne "${xmleb}END_DOMAIN") { error("History file \"$filetoread\" is corrupted (End of section DOMAIN not found).\nRestore a recent backup of this file (data for this month will be restored to backup date), remove it (data for month will be lost), or remove the corrupted section in file (data for at least this section will be lost).","","",1); }
@@ -2555,7 +2555,7 @@ sub Read_History_With_TmpUpdate {
 					}
 					$_=<HISTORY>;
 					chomp $_; s/\r//;
-					@field=split(/\s+/,($xmlold?CleanFromTags($_):$_)); $countlines++;
+					@field=split(/\s+/,($readxml?CleanFromTags($_):$_)); $countlines++;
 				}
 				until ($field[0] eq 'END_SESSION' || $field[0] eq "${xmleb}END_SESSION" || ! $_);
 				if ($field[0] ne 'END_SESSION' && $field[0] ne "${xmleb}END_SESSION") { error("History file \"$filetoread\" is corrupted (End of section SESSION not found).\nRestore a recent backup of this file (data for this month will be restored to backup date), remove it (data for month will be lost), or remove the corrupted section in file (data for at least this section will be lost).","","",1); }
@@ -2584,7 +2584,7 @@ sub Read_History_With_TmpUpdate {
 					}
 					$_=<HISTORY>;
 					chomp $_; s/\r//;
-					@field=split(/\s+/,($xmlold?CleanFromTags($_):$_)); $countlines++;
+					@field=split(/\s+/,($readxml?CleanFromTags($_):$_)); $countlines++;
 				}
 				until ($field[0] eq 'END_OS' || $field[0] eq "${xmleb}END_OS" || ! $_);
 				if ($field[0] ne 'END_OS' && $field[0] ne "${xmleb}END_OS") { error("History file \"$filetoread\" is corrupted (End of section OS not found).\nRestore a recent backup of this file (data for this month will be restored to backup date), remove it (data for month will be lost), or remove the corrupted section in file (data for at least this section will be lost).","","",1); }
@@ -2612,7 +2612,7 @@ sub Read_History_With_TmpUpdate {
 					}
 					$_=<HISTORY>;
 					chomp $_; s/\r//;
-					@field=split(/\s+/,($xmlold?CleanFromTags($_):$_)); $countlines++;
+					@field=split(/\s+/,($readxml?CleanFromTags($_):$_)); $countlines++;
 				}
 				until ($field[0] eq 'END_BROWSER' || $field[0] eq "${xmleb}END_BROWSER" || ! $_);
 				if ($field[0] ne 'END_BROWSER' && $field[0] ne "${xmleb}END_BROWSER") { error("History file \"$filetoread\" is corrupted (End of section BROWSER not found).\nRestore a recent backup of this file (data for this month will be restored to backup date), remove it (data for month will be lost), or remove the corrupted section in file (data for at least this section will be lost).","","",1); }
@@ -2640,7 +2640,7 @@ sub Read_History_With_TmpUpdate {
 					}
 					$_=<HISTORY>;
 					chomp $_; s/\r//;
-					@field=split(/\s+/,($xmlold?CleanFromTags($_):$_)); $countlines++;
+					@field=split(/\s+/,($readxml?CleanFromTags($_):$_)); $countlines++;
 				}
 				until ($field[0] eq 'END_UNKNOWNREFERER' || $field[0] eq "${xmleb}END_UNKNOWNREFERER" || ! $_);
 				if ($field[0] ne 'END_UNKNOWNREFERER' && $field[0] ne "${xmleb}END_UNKNOWNREFERER") { error("History file \"$filetoread\" is corrupted (End of section UNKNOWNREFERER not found).\nRestore a recent backup of this file (data for this month will be restored to backup date), remove it (data for month will be lost), or remove the corrupted section in file (data for at least this section will be lost).","","",1); }
@@ -2668,7 +2668,7 @@ sub Read_History_With_TmpUpdate {
 					}
 					$_=<HISTORY>;
 					chomp $_; s/\r//;
-					@field=split(/\s+/,($xmlold?CleanFromTags($_):$_)); $countlines++;
+					@field=split(/\s+/,($readxml?CleanFromTags($_):$_)); $countlines++;
 				}
 				until ($field[0] eq 'END_UNKNOWNREFERERBROWSER' || $field[0] eq "${xmleb}END_UNKNOWNREFERERBROWSER" || ! $_);
 				if ($field[0] ne 'END_UNKNOWNREFERERBROWSER' && $field[0] ne "${xmleb}END_UNKNOWNREFERERBROWSER") { error("History file \"$filetoread\" is corrupted (End of section UNKNOWNREFERERBROWSER not found).\nRestore a recent backup of this file (data for this month will be restored to backup date), remove it (data for month will be lost), or remove the corrupted section in file (data for at least this section will be lost).","","",1); }
@@ -2696,7 +2696,7 @@ sub Read_History_With_TmpUpdate {
 					}
 					$_=<HISTORY>;
 					chomp $_; s/\r//;
-					@field=split(/\s+/,($xmlold?CleanFromTags($_):$_)); $countlines++;
+					@field=split(/\s+/,($readxml?CleanFromTags($_):$_)); $countlines++;
 				}
 				until ($field[0] eq 'END_SCREENSIZE' || $field[0] eq "${xmleb}END_SCREENSIZE" || ! $_);
 				if ($field[0] ne 'END_SCREENSIZE' && $field[0] ne "${xmleb}END_SCREENSIZE") { error("History file \"$filetoread\" is corrupted (End of section SCREENSIZE not found).\nRestore a recent backup of this file (data for this month will be restored to backup date), remove it (data for month will be lost), or remove the corrupted section in file (data for at least this section will be lost).","","",1); }
@@ -2732,7 +2732,7 @@ sub Read_History_With_TmpUpdate {
 					}
 					$_=<HISTORY>;
 					chomp $_; s/\r//;
-					@field=split(/\s+/,($xmlold?CleanFromTags($_):$_)); $countlines++;
+					@field=split(/\s+/,($readxml?CleanFromTags($_):$_)); $countlines++;
 				}
 				until ($field[0] eq 'END_ROBOT' || $field[0] eq "${xmleb}END_ROBOT" || ! $_);
 				if ($field[0] ne 'END_ROBOT' && $field[0] ne "${xmleb}END_ROBOT") { error("History file \"$filetoread\" is corrupted (End of section ROBOT not found).\nRestore a recent backup of this file (data for this month will be restored to backup date), remove it (data for month will be lost), or remove the corrupted section in file (data for at least this section will be lost).","","",1); }
@@ -2762,7 +2762,7 @@ sub Read_History_With_TmpUpdate {
 					}
 					$_=<HISTORY>;
 					chomp $_; s/\r//;
-					@field=split(/\s+/,($xmlold?CleanFromTags($_):$_)); $countlines++;
+					@field=split(/\s+/,($readxml?CleanFromTags($_):$_)); $countlines++;
 				}
 				until ($field[0] eq 'END_WORMS' || $field[0] eq "${xmleb}END_WORMS" || ! $_);
 				if ($field[0] ne 'END_WORMS' && $field[0] ne "${xmleb}END_WORMS") { error("History file \"$filetoread\" is corrupted (End of section WORMS not found).\nRestore a recent backup of this file (data for this month will be restored to backup date), remove it (data for month will be lost), or remove the corrupted section in file (data for at least this section will be lost).","","",1); }
@@ -2792,7 +2792,7 @@ sub Read_History_With_TmpUpdate {
 					}
 					$_=<HISTORY>;
 					chomp $_; s/\r//;
-					@field=split(/\s+/,($xmlold?CleanFromTags($_):$_)); $countlines++;
+					@field=split(/\s+/,($readxml?CleanFromTags($_):$_)); $countlines++;
 				}
 				until ($field[0] eq 'END_EMAILSENDER' || $field[0] eq "${xmleb}END_EMAILSENDER" || ! $_);
 				if ($field[0] ne 'END_EMAILSENDER' && $field[0] ne "${xmleb}END_EMAILSENDER") { error("History file \"$filetoread\" is corrupted (End of section EMAILSENDER not found).\nRestore a recent backup of this file (data for this month will be restored to backup date), remove it (data for month will be lost), or remove the corrupted section in file (data for at least this section will be lost).","","",1); }
@@ -2822,7 +2822,7 @@ sub Read_History_With_TmpUpdate {
 					}
 					$_=<HISTORY>;
 					chomp $_; s/\r//;
-					@field=split(/\s+/,($xmlold?CleanFromTags($_):$_)); $countlines++;
+					@field=split(/\s+/,($readxml?CleanFromTags($_):$_)); $countlines++;
 				}
 				until ($field[0] eq 'END_EMAILRECEIVER' || $field[0] eq "${xmleb}END_EMAILRECEIVER" || ! $_);
 				if ($field[0] ne 'END_EMAILRECEIVER' && $field[0] ne "${xmleb}END_EMAILRECEIVER") { error("History file \"$filetoread\" is corrupted (End of section EMAILRECEIVER not found).\nRestore a recent backup of this file (data for this month will be restored to backup date), remove it (data for month will be lost), or remove the corrupted section in file (data for at least this section will be lost).","","",1); }
@@ -2895,7 +2895,7 @@ sub Read_History_With_TmpUpdate {
 					}
 					$_=<HISTORY>;
 					chomp $_; s/\r//;
-					@field=split(/\s+/,($xmlold?CleanFromTags($_):$_)); $countlines++;
+					@field=split(/\s+/,($readxml?CleanFromTags($_):$_)); $countlines++;
 				}
 				until ($field[0] eq 'END_SIDER' || $field[0] eq "${xmleb}END_SIDER" || ! $_);
 				if ($field[0] ne 'END_SIDER' && $field[0] ne "${xmleb}END_SIDER") { error("History file \"$filetoread\" is corrupted (End of section SIDER not found).\nRestore a recent backup of this file (data for this month will be restored to backup date), remove it (data for month will be lost), or remove the corrupted section in file (data for at least this section will be lost).","","",1); }
@@ -2927,7 +2927,7 @@ sub Read_History_With_TmpUpdate {
 					}
 					$_=<HISTORY>;
 					chomp $_; s/\r//;
-					@field=split(/\s+/,($xmlold?CleanFromTags($_):$_)); $countlines++;
+					@field=split(/\s+/,($readxml?CleanFromTags($_):$_)); $countlines++;
 				}
 				until ($field[0] eq 'END_FILETYPES' || $field[0] eq "${xmleb}END_FILETYPES" || ! $_);
 				if ($field[0] ne 'END_FILETYPES' && $field[0] ne "${xmleb}END_FILETYPES") { error("History file \"$filetoread\" is corrupted (End of section FILETYPES not found).\nRestore a recent backup of this file (data for this month will be restored to backup date), remove it (data for month will be lost), or remove the corrupted section in file (data for at least this section will be lost).","","",1); }
@@ -2977,7 +2977,7 @@ sub Read_History_With_TmpUpdate {
 					}
 					$_=<HISTORY>;
 					chomp $_; s/\r//;
-					@field=split(/\s+/,($xmlold?CleanFromTags($_):$_)); $countlines++;
+					@field=split(/\s+/,($readxml?CleanFromTags($_):$_)); $countlines++;
 				}
 				until ($field[0] eq 'END_SEREFERRALS' || $field[0] eq "${xmleb}END_SEREFERRALS" || ! $_);
 				if ($field[0] ne 'END_SEREFERRALS' && $field[0] ne "${xmleb}END_SEREFERRALS") { error("History file \"$filetoread\" is corrupted (End of section SEREFERRALS not found).\nRestore a recent backup of this file (data for this month will be restored to backup date), remove it (data for month will be lost), or remove the corrupted section in file (data for at least this section will be lost).","","",1); }
@@ -3020,7 +3020,7 @@ sub Read_History_With_TmpUpdate {
 					}
 					$_=<HISTORY>;
 					chomp $_; s/\r//;
-					@field=split(/\s+/,($xmlold?CleanFromTags($_):$_)); $countlines++;
+					@field=split(/\s+/,($readxml?CleanFromTags($_):$_)); $countlines++;
 				}
 				until ($field[0] eq 'END_PAGEREFS' || $field[0] eq "${xmleb}END_PAGEREFS" || ! $_);
 				if ($field[0] ne 'END_PAGEREFS' && $field[0] ne "${xmleb}END_PAGEREFS") { error("History file \"$filetoread\" is corrupted (End of section PAGEREFS not found).\nRestore a recent backup of this file (data for this month will be restored to backup date), remove it (data for month will be lost), or remove the corrupted section in file (data for at least this section will be lost).","","",1); }
@@ -3084,7 +3084,7 @@ sub Read_History_With_TmpUpdate {
 					}
 					$_=<HISTORY>;
 					chomp $_; s/\r//;
-					@field=split(/\s+/,($xmlold?CleanFromTags($_):$_)); $countlines++;
+					@field=split(/\s+/,($readxml?CleanFromTags($_):$_)); $countlines++;
 				}
 				until ($field[0] eq 'END_SEARCHWORDS' || $field[0] eq "${xmleb}END_SEARCHWORDS" || ! $_);
 				if ($field[0] ne 'END_SEARCHWORDS' && $field[0] ne "${xmleb}END_SEARCHWORDS") { error("History file \"$filetoread\" is corrupted (End of section SEARCHWORDS not found).\nRestore a recent backup of this file (data for this month will be restored to backup date), remove it (data for month will be lost), or remove the corrupted section in file (data for at least this section will be lost).","","",1); }
@@ -3121,7 +3121,7 @@ sub Read_History_With_TmpUpdate {
 					}
 					$_=<HISTORY>;
 					chomp $_; s/\r//;
-					@field=split(/\s+/,($xmlold?CleanFromTags($_):$_)); $countlines++;
+					@field=split(/\s+/,($readxml?CleanFromTags($_):$_)); $countlines++;
 				}
 				until ($field[0] eq 'END_KEYWORDS' || $field[0] eq "${xmleb}END_KEYWORDS" || ! $_);
 				if ($field[0] ne 'END_KEYWORDS' && $field[0] ne "${xmleb}END_KEYWORDS") { error("History file \"$filetoread\" is corrupted (End of section KEYWORDS not found).\nRestore a recent backup of this file (data for this month will be restored to backup date), remove it (data for month will be lost), or remove the corrupted section in file (data for at least this section will be lost).","","",1); }
@@ -3150,7 +3150,7 @@ sub Read_History_With_TmpUpdate {
 					}
 					$_=<HISTORY>;
 					chomp $_; s/\r//;
-					@field=split(/\s+/,($xmlold?CleanFromTags($_):$_)); $countlines++;
+					@field=split(/\s+/,($readxml?CleanFromTags($_):$_)); $countlines++;
 				}
 				until ($field[0] eq 'END_ERRORS' || $field[0] eq "${xmleb}END_ERRORS" || ! $_);
 				if ($field[0] ne 'END_ERRORS' && $field[0] ne "${xmleb}END_ERRORS") { error("History file \"$filetoread\" is corrupted (End of section ERRORS not found).\nRestore a recent backup of this file (data for this month will be restored to backup date), remove it (data for month will be lost), or remove the corrupted section in file (data for at least this section will be lost).","","",1); }
@@ -3182,7 +3182,7 @@ sub Read_History_With_TmpUpdate {
 						}
 						$_=<HISTORY>;
 						chomp $_; s/\r//;
-						@field=split(/\s+/,($xmlold?CleanFromTags($_):$_)); $countlines++;
+						@field=split(/\s+/,($readxml?CleanFromTags($_):$_)); $countlines++;
 					}
 					until ($field[0] eq "END_SIDER_$code" || $field[0] eq "${xmleb}END_SIDER_$code" || ! $_);
 					if ($field[0] ne "END_SIDER_$code" && $field[0] ne "${xmleb}END_SIDER_$code") { error("History file \"$filetoread\" is corrupted (End of section SIDER_$code not found).\nRestore a recent backup of this file (data for this month will be restored to backup date), remove it (data for month will be lost), or remove the corrupted section in file (data for at least this section will be lost).","","",1); }
@@ -3215,7 +3215,7 @@ sub Read_History_With_TmpUpdate {
 						}
 						$_=<HISTORY>;
 						chomp $_; s/\r//;
-						@field=split(/\s+/,($xmlold?CleanFromTags($_):$_)); $countlines++;
+						@field=split(/\s+/,($readxml?CleanFromTags($_):$_)); $countlines++;
 					}
 					until ($field[0] eq "END_EXTRA_$extranum" || $field[0] eq "${xmleb}END_EXTRA_$extranum" || ! $_);
 					if ($field[0] ne "END_EXTRA_$extranum" && $field[0] ne "${xmleb}END_EXTRA_$extranum") { error("History file \"$filetoread\" is corrupted (End of section EXTRA_$extranum not found).\nRestore a recent backup of this file (data for this month will be restored to backup date), remove it (data for month will be lost), or remove the corrupted section in file (data for at least this section will be lost).","","",1); }
@@ -3239,7 +3239,7 @@ sub Read_History_With_TmpUpdate {
                         # The plugin for this section was loaded
                		    $found=1;
                	        my $issectiontoload=$SectionsToLoad{"plugin_$pluginname"};
-               		    my $function="SectionReadHistory_$pluginname(\$issectiontoload,\$xmlold,\$xmleb,\$countlines)";
+               		    my $function="SectionReadHistory_$pluginname(\$issectiontoload,\$readxml,\$xmleb,\$countlines)";
                		    eval("$function");
         				delete $SectionsToLoad{"plugin_$pluginname"};
         				if ($SectionsToSave{"plugin_$pluginname"}) {
@@ -3259,7 +3259,7 @@ sub Read_History_With_TmpUpdate {
 					do {
 						$_=<HISTORY>;
 						chomp $_; s/\r//;
-						@field=split(/\s+/,($xmlold?CleanFromTags($_):$_)); $countlines++;
+						@field=split(/\s+/,($readxml?CleanFromTags($_):$_)); $countlines++;
 					}
 					until ($field[0] eq "END_PLUGIN_$pluginname" || $field[0] eq "${xmleb}END_PLUGIN_$pluginname" || ! $_);
    				}
@@ -3776,7 +3776,7 @@ sub Save_History {
 		print HISTORYTMP "# Unknown referer OS - Last visit date\n";
 		$ValueInFile{$sectiontosave}=tell HISTORYTMP;
 		print HISTORYTMP "${xmlbb}BEGIN_UNKNOWNREFERER${xmlbs}".(scalar keys %_unknownreferer_l)."${xmlbe}\n";
-		foreach (keys %_unknownreferer_l) { print HISTORYTMP "${xmlrb}$_${xmlrs}$_unknownreferer_l{$_}${xmlre}\n"; }
+		foreach (keys %_unknownreferer_l) { print HISTORYTMP "${xmlrb}".XMLEncodeForHisto($_)."${xmlrs}$_unknownreferer_l{$_}${xmlre}\n"; }
 		print HISTORYTMP "${xmleb}END_UNKNOWNREFERER${xmlee}\n";
 	}
 	if ($sectiontosave eq 'unknownrefererbrowser') {
@@ -3785,7 +3785,7 @@ sub Save_History {
 		print HISTORYTMP "# Unknown referer Browser - Last visit date\n";
 		$ValueInFile{$sectiontosave}=tell HISTORYTMP;
 		print HISTORYTMP "${xmlbb}BEGIN_UNKNOWNREFERERBROWSER${xmlbs}".(scalar keys %_unknownrefererbrowser_l)."${xmlbe}\n";
-		foreach (keys %_unknownrefererbrowser_l) { print HISTORYTMP "${xmlrb}$_${xmlrs}$_unknownrefererbrowser_l{$_}${xmlre}\n"; }
+		foreach (keys %_unknownrefererbrowser_l) { print HISTORYTMP "${xmlrb}".XMLEncodeForHisto($_)."${xmlrs}$_unknownrefererbrowser_l{$_}${xmlre}\n"; }
 		print HISTORYTMP "${xmleb}END_UNKNOWNREFERERBROWSER${xmlee}\n";
 	}
 	if ($sectiontosave eq 'origin') {
