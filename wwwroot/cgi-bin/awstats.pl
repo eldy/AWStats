@@ -73,7 +73,7 @@ $MonthRequired,
 $HTMLOutput, $PROG, $PageCode,
 $PurgeLogFile, $QueryString,
 $SiteConfig, $SiteDomain, $SiteToAnalyze, $SiteToAnalyzeWithoutwww, $Sort,
-$TotalDifferentPages, $URLFilter, $UserAgent, $YearRequired)=
+$TotalEntries, $TotalBytesPages, $TotalDifferentPages, $URLFilter, $UserAgent, $YearRequired)=
 ();
 ($color_Background, $color_TableBG, $color_TableBGRowTitle,
 $color_TableBGTitle, $color_TableBorder, $color_TableRowTitle, $color_TableTitle,
@@ -126,7 +126,7 @@ $color_h, $color_k, $color_p, $color_s, $color_u, $color_v)=
 
 
 
-$VERSION="4.0 (build 6)";
+$VERSION="4.0 (build 8)";
 $Lang="en";
 
 # Default value
@@ -1083,7 +1083,6 @@ sub Read_History_File {
 					#  lastconnect for month need to load all
 					#  unknownip for year	 need to load all ip
 					#  unknownip for month	 need to load ip with >= MinHitHost
-					#  misc page			 need nothing
 					my $loadrecord=0;
 					if ($UpdateStats) {
 						$loadrecord=1;
@@ -1323,7 +1322,6 @@ sub Read_History_File {
 					#  main page for month	need to load MaxNbOfPageShown pages and >= MinHitFile - TotalDiffetentPages can be counted and is
 					#  urldetail for year	need to load all pages with filter ok - TotalDiffetentPages could be counted if no filter but is not
 					#  urldetail for month	need to load all pages with filter ok and >= MinHitFile - TotalDiffetentPages can be counted and is
-					#  misc page			need nothing - TotalDiffetentPages not needed
 					my $loadrecord=0;
 					if ($UpdateStats) {
 						$loadrecord=1;
@@ -1344,6 +1342,14 @@ sub Read_History_File {
 								if ((!$URLFilter || $field[0] =~ /$URLFilter/) && $field[1] >= $MinHitFile) { $loadrecord=1; }
 								$TotalDifferentPages++;
 							}
+						}
+						# Posssibilite de mettre if ($URLFilter && $field[0] =~ /$URLFilter/) mais il faut gerer TotalPages de la meme maniere
+						if ($versionmaj < 4) {
+							$TotalEntries+=($field[2]||0);
+						}
+						else {
+							$TotalBytesPages+=($field[2]||0);
+							$TotalEntries+=($field[3]||0);
 						}
 					}
 					if ($loadrecord) {					
@@ -2179,7 +2185,8 @@ if ($UpdateStats && ($AllowToUpdateStatsFromBrowser==0) && ($ENV{"GATEWAY_INTERF
 # Init global variables required for output and update process
 %monthlib = ("01","$Message[60]","02","$Message[61]","03","$Message[62]","04","$Message[63]","05","$Message[64]","06","$Message[65]","07","$Message[66]","08","$Message[67]","09","$Message[68]","10","$Message[69]","11","$Message[70]","12","$Message[71]");
 %monthnum = ("Jan","01","jan","01","Feb","02","feb","02","Mar","03","mar","03","Apr","04","apr","04","May","05","may","05","Jun","06","jun","06","Jul","07","jul","07","Aug","08","aug","08","Sep","09","sep","09","Oct","10","oct","10","Nov","11","nov","11","Dec","12","dec","12");	# monthnum must be in english because used to translate log date in apache log files
-$LastLine=0;$LastUpdate=0;$TotalDifferentPages=0;
+$LastLine=0;$LastUpdate=0;
+$TotalEntries=0; $TotalBytesPages=0; $TotalDifferentPages=0;
 for (my $ix=1; $ix<=12; $ix++) {
 	my $monthix=$ix;if ($monthix < 10) { $monthix  = "0$monthix"; }
 	$LastLine{$YearRequired.$monthix}=0;$FirstTime{$YearRequired.$monthix}=0;$LastTime{$YearRequired.$monthix}=0;$LastUpdate{$YearRequired.$monthix}=0;
@@ -3108,7 +3115,7 @@ if ($HTMLOutput) {
 	my %listofyears;
 	my $max_p; my $max_h; my $max_k; my $max_v;
 	my $rest_p; my $rest_h; my $rest_k; my $rest_e; my $rest_s;
-	my $total_p; my $total_h;my $total_k;
+	my $total_p; my $total_h; my $total_k; my $total_e;
 
 	$SiteToAnalyze =~ s/\\\./\./g;
 
@@ -3211,15 +3218,17 @@ EOF
 	}
 	# TotalPages TotalHits TotalBytes
 	my $TotalPages=$TotalHits=$TotalBytes=0;
-	for (my $ix=0; $ix<=23; $ix++) { $TotalPages+=$_time_p[$ix]; $TotalHits+=$_time_h[$ix]; $TotalBytes+=$_time_k[$ix]; }
+	for (my $ix=0; $ix<=23; $ix++) {
+		$TotalPages+=$_time_p[$ix];
+		$TotalHits+=$_time_h[$ix];
+		$TotalBytes+=$_time_k[$ix];
+	}
 	# TotalErrors
 	my $TotalErrors=0;
 	foreach my $key (keys %_errors_h) { $TotalErrors+=$_errors_h{$key}; }
 	# TotalEntries (if not already specifically counted, we init it from _url_e hash table)
-	my $TotalEntries=0;	# TODO Mettre init TotalEntries si tout tableau non chargé
 	if (!$TotalEntries) { foreach my $key (keys %_url_e) { $TotalEntries+=$_url_e{$key}; } }
 	# TotalBytesPages (if not already specifically counted, we init it from _url_k hash table)
-	my $TotalBytesPages=0;	# TODO Mettre init TotalBytesPages si tout tableau non chargé
 	if (!$TotalBytesPages) { foreach my $key (keys %_url_k) { $TotalBytesPages+=$_url_k{$key}; } }
 	# TotalDifferentPages (if not already specifically counted, we init it from _url_p hash table)
 	if (!$TotalDifferentPages) { $TotalDifferentPages=scalar keys %_url_p; }
@@ -3369,12 +3378,12 @@ EOF
 			$total_k += $_url_k{$key};
 			$count++;
 		}
-		debug("$TotalPages / $total_p - $TotalEntries / $total_e",2);
+		debug("Total real / shown : $TotalPages / $total_p - $TotalEntries / $total_e - $TotalBytesPages / $total_k",2);
 		$rest_p=$TotalPages-$total_p;
 		$rest_e=$TotalEntries-$total_e;
 		$rest_k=$TotalBytesPages-$total_k;
 		if ($rest_p > 0 || $rest_e > 0 || $rest_k) {
-			print "<TR><TD CLASS=AWL><font color=blue>$Message[2]</font></TD><TD>$rest_p</TD><TD>$rest_e</TD><TD>".($rest_k?Format_Bytes($rest_k):"&nbsp;")."<TD>&nbsp;</TD></TR>\n";
+			print "<TR><TD CLASS=AWL><font color=blue>$Message[2]</font></TD><TD>$rest_p</TD><TD>$rest_e</TD><TD>".($rest_k?Format_Bytes($rest_k/$rest_p||1):"&nbsp;")."<TD>&nbsp;</TD></TR>\n";
 		}
 		&tab_end;
 		&html_end;
@@ -3403,7 +3412,7 @@ EOF
 			$total_k += $_hostmachine_k{$key}||0;
 			$count++;
 		}
-		debug("$TotalPages / $total_p - $TotalHits / $total_h - $TotalBytes / $total_h",2);
+		debug("Total real / shown : $TotalPages / $total_p - $TotalHits / $total_h - $TotalBytes / $total_h",2);
 		$rest_p=$TotalPages-$total_p;
 		$rest_h=$TotalHits-$total_h;
 		$rest_k=$TotalBytes-$total_k;
@@ -3432,7 +3441,7 @@ EOF
 			$total_k += $_hostmachine_k{$key}||0;
 			$count++;
 		}
-		debug("$TotalPages / $total_p - $TotalHits / $total_h - $TotalBytes / $total_h",2);
+		debug("Total real / shown : $TotalPages / $total_p - $TotalHits / $total_h - $TotalBytes / $total_h",2);
 		$rest_p=$TotalPages-$total_p;
 		$rest_h=$TotalHits-$total_h;
 		$rest_k=$TotalBytes-$total_k;
@@ -3860,8 +3869,8 @@ EOF
 		print "$CENTER<a name=\"VISITOR\">&nbsp;</a><BR>";
 		$MaxNbOfHostsShown = (scalar keys %_hostmachine_h) if $MaxNbOfHostsShown > (scalar keys %_hostmachine_h);
 		&tab_head("$Message[81] ($Message[77] $MaxNbOfHostsShown) &nbsp; - &nbsp; <a href=\"$DirCgi$PROG.$Extension?${LinkParamB}output=lasthosts\">$Message[9]</a> &nbsp; - &nbsp; <a href=\"$DirCgi$PROG.$Extension?${LinkParamB}output=unknownip\">$Message[45]</a>",19);
-		# TODO following lines is wrong in year view
-		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[81] : $TotalHostsKnown $Message[82], $TotalHostsUnknown $Message[1] - $TotalUnique $Message[11]</TH><TH bgcolor=\"#$color_p\" width=80>$Message[56]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH bgcolor=\"#$color_k\" width=80>$Message[75]</TH><TH width=120>$Message[9]</TH></TR>\n";
+		if ($MonthRequired ne "year") { print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[81] : $TotalHostsKnown $Message[82], $TotalHostsUnknown $Message[1] - $TotalUnique $Message[11]</TH><TH bgcolor=\"#$color_p\" width=80>$Message[56]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH bgcolor=\"#$color_k\" width=80>$Message[75]</TH><TH width=120>$Message[9]</TH></TR>\n"; }
+		else { print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[81] : ".(scalar keys %_hostmachine_h)."</TH><TH bgcolor=\"#$color_p\" width=80>$Message[56]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH bgcolor=\"#$color_k\" width=80>$Message[75]</TH><TH width=120>$Message[9]</TH></TR>\n"; }
 		$total_p=$total_h=$total_k=0;
 		$count=0;
 		&BuildKeyList($MaxNbOfHostsShown,$MinHitHost,\%_hostmachine_h,\%_hostmachine_p);
@@ -4235,4 +4244,3 @@ else {
 }
 
 0;	# Do not remove this line
-
