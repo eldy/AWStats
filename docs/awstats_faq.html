@@ -483,7 +483,7 @@ Modify this new config file:
 What do I have to do to use AWStats to analyze my Windows Media Server log files.<br>
 <font class=CSolution>SOLUTION:</font><br>
 <br>
-<u>Setup your Windows Media Server log format to write the following fields:</u>
+<u>If your Windows Media Server version allows it, setup your log format to write the following fields:</u>
 <i>
 <br>c-ip
 <br>date
@@ -551,6 +551,22 @@ Modify this new config file:
 </i>
 <br><br>
 Now you can use AWStats as usual (run the update process and read statistics).<br>
+<br>
+<u>If your Windows Media Server version does not allow to define your log format</u>, just try to use
+same setup for AWStats than previously described but use the log format string found in first
+lines of your log files as value for AWStats LogFormat parameter, for example:<br>
+<i>
+LogFormat="c-ip date time c-dns cs-uri-stem c-starttime x-duration c-rate
+c-status c-playerid c-playerversion c-playerlanguage cs(User-Agent)
+cs(Referer) c-hostexe c-hostexever c-os c-osversion c-cpu filelength
+filesize avgbandwidth protocol transport audiocodec videocodec channelURL
+sc-bytes c-bytes s-pkts-sent c-pkts-received c-pkts-lost-client
+c-pkts-lost-net c-pkts-lost-cont-net c-resendreqs c-pkts-recovered-ECC
+c-pkts-recovered-resent c-buffercount c-totalbuffertime c-quality s-ip s-dns
+s-totalclients s-cpu-util"
+</i>
+<br>This means you don't use the AWStats tags but AWStats can often also understand the IIS and/or
+Windows Media Server tags.<br>
 <br>
 
 <a name="NOTSAMENUMBER"></a><br>
