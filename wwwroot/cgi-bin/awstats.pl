@@ -58,7 +58,7 @@ $ShowFlagLinks, $ShowLinksOnURL, $ShowLinksOnUrl, $ShowSteps,
 $SiteConfig, $SiteDomain, $SiteToAnalyze, $SiteToAnalyzeWithoutwww,
 $TotalBytes, $TotalDifferentPages, $TotalErrors, $TotalHits,
 $TotalHostsKnown, $TotalHostsUnKnown, $TotalPages, $TotalUnique, $TotalVisits,
-$URLFilter, $UserAgent, $WarningMessages, $YearRequired, 
+$URLFilter, $URLWithQuery, $UserAgent, $WarningMessages, $YearRequired, 
 $color_Background, $color_TableBG, $color_TableBGRowTitle,
 $color_TableBGTitle, $color_TableBorder, $color_TableRowTitle, $color_TableTitle,
 $color_h, $color_k, $color_link, $color_p, $color_s, $color_v, $color_w, $color_weekend,
@@ -71,7 +71,7 @@ $found, $internal_link, $new) = ();
 %MonthBytes = %MonthHits = %MonthHostsKnown = %MonthHostsUnknown = %MonthPages = %MonthUnique = %MonthVisits =
 %monthlib = %monthnum = ();
 
-$VERSION="3.1 (build 41)";
+$VERSION="3.2 (build 1)";
 $Lang="en";
 
 # Default value
@@ -1000,6 +1000,7 @@ sub Read_Config_File {
 			next;
 			}
 		if ($param =~ /^LogFormat/)            { $LogFormat=$value; next; }
+		if ($param =~ /^URLWithQuery/)         { $URLWithQuery=$value; next; }
 		if ($param =~ /^AllowToUpdateStatsFromBrowser/)	{ $AllowToUpdateStatsFromBrowser=$value; next; }
 		if ($param =~ /^HostAliases/) {
 			my @felter=split(/\s+/,$value);
@@ -1176,6 +1177,7 @@ sub Check_Config {
 	if ($LogFormat =~ /^[\d]$/ && $LogFormat !~ /[1-4]/)  { error("Error: LogFormat parameter is wrong. Value is '$LogFormat' (should be 1 or 2 or a 'personalised AWtats log format string')"); }
 	if ($DNSLookup !~ /[0-1]/)                            { error("Error: DNSLookup parameter is wrong. Value is '$DNSLookup' (should be 0 or 1)"); }
 	# Optional section
+	if ($URLWithQuery !~ /[0-1]/)                { $URLWithQuery=0; }
 	if ($AllowToUpdateStatsFromBrowser !~ /[0-1]/) { $AllowToUpdateStatsFromBrowser=1; }	# For compatibility, is 1 if not defined
 	if ($PurgeLogFile !~ /[0-1]/)                { $PurgeLogFile=0; }
 	if ($ArchiveLogRecords !~ /[0-1]/)           { $ArchiveLogRecords=1; }
@@ -2031,6 +2033,12 @@ if ($UpdateStats) {
 				$i++;
 				$PerlParsingFormat .= "([^\\s]*) ";
 			}
+			if ($f =~ /%query$/ || $f =~ /cs-uri-query$/) {
+				$found=1; 
+				$pos_query = $i;
+				$i++;
+				$PerlParsingFormat .= "([^\\s]*) ";
+			}
 			if ($f =~ /%code$/ || $f =~ /%.*>s$/ || $f =~ /sc-status$/) {
 				$found=1; 
 				$pos_code = $i;
@@ -2215,8 +2223,15 @@ if ($UpdateStats) {
 		}
 
 		# Canonize and clean target URL and referrer URL
+		if ($URLWithQuery) { 				
+			# We combine the URL and query strings.
+			if ($field[$pos_query] && ($field[$pos_query] ne "-")) { $field[$pos_url] .= "?" . $field[$pos_query]; }
+		}
+		else {
+			# Trunc CGI parameters in URL
+			$field[$pos_url] =~ s/\?.*//;
+		}
 		$field[$pos_url] =~ s/\/$DefaultFile$/\//;	# Replace default page name with / only
-		$field[$pos_url] =~ s/\?.*//;				# Trunc CGI parameters in URL get
 		$field[$pos_url] =~ s/\/\//\//g;			# Because some targeted url were taped with 2 / (Ex: //rep//file.htm)
 
 		# Check if page or not
