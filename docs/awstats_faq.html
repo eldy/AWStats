@@ -683,8 +683,8 @@ where YYYY and MM are year and month of config file and 999 are numerical values
 <br>
 <u>So if your OS is Unix/Linux</u><br>
 <i>
-grep -vE '^[0-9]{6}00' $oldhistoryfile > $newhistoryfile<br>
-mv $newhistoryfile $oldhistoryfile<br>
+grep -vE '^[0-9]{6}00' oldhistoryfile > newhistoryfile<br>
+mv newhistoryfile oldhistoryfile<br>
 </i>
 And then run the migrate process again on the file.<br>
 <br>
@@ -694,9 +694,9 @@ you must do this from a cygwin 'sh' shell and not from the DOS
 prompt (because the ^ is not understanded by DOS).<br>
 And then run the migrate process again on the file.<br>
 <br>
-<u>If your OS is windows and got cygwin or other OS</u><br>
-You must remove manually the line <i>YYYYMM00 999 999 999 999</i> (must find one)
-and then run the migrate process again on the file.<br>
+<u>In any other case (in fact works for every OS)</u><br>
+You must remove manually the line <i>YYYYMM00 999 999 999 999</i> (must find one and only
+one such line) and then run the migrate process again on the file.<br>
 <br>
 
 <hr><br>
