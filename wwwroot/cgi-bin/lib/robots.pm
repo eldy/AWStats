@@ -305,6 +305,7 @@
 "wz101",
 "xget",
 # Other robots reported by users
+"awbot",
 "boris",
 "cscrawler",
 "daviesbot",
@@ -600,6 +601,7 @@
 "nederland.zoek","Nederland.zoek",
 # Other robots reported by users
 "antibot", "Antibot",
+"awbot", "AWBot",
 "boris", "Boris",
 "cscrawler","CsCrawler",
 "daviesbot", "DaviesBot",
