@@ -1574,8 +1574,8 @@ $LogFileWithoutLog=$LogFile;$LogFileWithoutLog =~ s/\.log$//;
 ($nowsec,$nowmin,$nowmin,$nowday,$nowmonth,$nowyear,$nowwday,$nowyday,$nowisdst) = localtime(time);
 if ($nowyear < 100) { $nowyear+=2000; } else { $nowyear+=1900; }
 $nowsmallyear=$nowyear;$nowsmallyear =~ s/^..//;
-$nowmonth++;if ($nowmonth < 10) { $nowmonth  = "0$nowmonth"; }
-if ($nowday < 10) { $nowday  = "0$nowday"; }
+if ($nowmonth++ < 10) { $nowmonth = "0$nowmonth"; }
+if ($nowday < 10) { $nowday = "0$nowday"; }
 
 if ($QueryString =~ /year=[\d][\d][\d][\d]/) { $YearRequired=$QueryString; $YearRequired =~ s/.*year=//; $YearRequired =~ s/&.*//; }
 if ($YearRequired eq "")  { $YearRequired=$nowyear; }
@@ -1695,17 +1695,15 @@ if (($YearRequired == $nowyear) && ($MonthRequired eq "year" || $MonthRequired =
 			$savetime=$felter[1];
 			@datep=split(/-/,$felter[0]);				# YYYY-MM-DD
 			# Change order of ISS parameters to be like Apache
-			if ($#felter == 10) {						# Log with no resolved host in it (11 fields)
-				$felter[0]=$felter[2];
+			if ($#felter == 10) {						# Log with no virtual_host_name in it (11 fields)
 				$felter[11]=$felter[9];
 			}
-			else {										# Log with host already resolved (12 fields)
-				if ($felter[9] ne "-") { $felter[0]=$felter[9]; }
-				else { $felter[0]=$felter[2]; }
+			else {										# Log with virtual_host_name in it (12 fields)
 				$savetmp=$felter[10];
 				$felter[10]=$felter[11];
 				$felter[11]=$savetmp;
 			}
+			$felter[0]=$felter[2];
 			$felter[1]="-";
 			$felter[2]=$felter[3];
 			$felter[3]="[$datep[2]/$datep[1]/$datep[0]:$savetime";
