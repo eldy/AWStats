@@ -13,7 +13,7 @@
 #-------------------------------------------------------
 # Defines
 #-------------------------------------------------------
-$VERSION="2.23i";
+$VERSION="2.23k";
 $Lang=0;
 
 # Default value
@@ -34,12 +34,12 @@ $BarImageHorizontal_h = "barrehh.png";
 $BarImageVertical_k   = "barrevk.png";
 $BarImageHorizontal_k = "barrehk.png";
 
-# URL with such end signature are not pages with text contents
+# URL with such end signature are king of URL we only need hits
 @NotPageList= (
 			"\\.gif","\\.jpg","\\.png","\\.bmp",
-			"\\.zip","\\.arj","\\.gz","\\.z",
-#			"\\.pdf","\\.doc","\\.ppt","\\.rtf","\\.txt",	# This kind of files are not HTML pages but are treated as if because they have text contents.
-			"\\.mp3","\\.wma"
+#			"\\.zip","\\.arj","\\.gz","\\.z",
+#			"\\.pdf","\\.doc","\\.ppt","\\.rtf","\\.txt",
+#			"\\.mp3","\\.wma"
 			);
 
 # Those addresses are shown with those lib (First column is full relative URL, Second column is text to show instead of URL)
@@ -628,8 +628,8 @@ $message[57][6]="Hits";
 # cat robotslist.txt | sed 's/:/ /' | awk ' /robot-id/ { name=tolower($2); } /robot-name/ { print "\""name"\", \""$0"\"," } ' | sed 's/robot-name *//g' > file
 # Rem: To avoid bad detection, some robots id were removed from this list:
 #      - Robots with ID of 2 letters only
-#      - Robot called webs
-# Rem: directhit is renamed in direct_hit
+#      - Robot called "webs"
+# Rem: directhit is changed in direct_hit (it's real id)
 %RobotHash   = (
 "acme.spider", "Acme.Spider",
 "ahoythehomepagefinder", "Ahoy! The Homepage Finder",
@@ -1444,8 +1444,8 @@ if ($ENV{"GATEWAY_INTERFACE"} ne "") {
 	if ($QueryString =~ /lang=/) { $Lang=$QueryString; $Lang =~ s/.*lang=//; $Lang =~ s/&.*//; }
 	}
 if (($DirCgi ne "") && !($DirCgi =~ /\/$/) && !($DirCgi =~ /\\$/)) { $DirCgi .= "/"; }
-if ($DirData eq ".") { $DirData=$DIR; }
-if ($DirData eq "")  { $DirData="."; }
+if ($DirData eq "" || $DirData eq ".") { $DirData=$DIR; }	# If not defined or choosed to "." value then DirData is current dir
+if ($DirData eq "")  { $DirData="."; }						# If current dir not defined them we put it to "."
 $DirData =~ s/\/$//;
 
 # Check if parameters are OK
@@ -1880,7 +1880,7 @@ if ($MonthOnly eq "year" || $MonthOnly == $month) {
 	# Archive LOG file into ARCHIVELOG
 	if ($ArchiveLogRecords == 1) {
 		if ($BenchMark == 1) { print "Start of archiving log records: ";print localtime(); print "<br>"; }
-		$ArchiveFileName="$DirData/$PROG_archive$FileSuffix.log";
+		$ArchiveFileName="$DirData/${PROG}_archive$FileSuffix.log";
 		open(LOG,"+<$LogFile") || error("Error: Enable to archive log records of $LogFile into $ArchiveFileName because source can't be opened for read and write: $!<br>\n");
 		open(ARCHIVELOG,">>$ArchiveFileName") || error("Error: Couldn't open file $ArchiveFileName to archive current log: $!");
 		while (<LOG>) {	print ARCHIVELOG $_; }
