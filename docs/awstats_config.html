@@ -1123,8 +1123,8 @@ ShowOSStats,ShowOriginStats,ShowKeyphrasesStats,ShowKeywordsStats,ShowHTTPErrors
 <br># Default: PHB, Possible codes: PHB
 <br>ShowHoursStats=PHB
 <br># Show domains/country chart
-<br># Default: 1, Possible codes: None
-<br>ShowDomainsStats=1
+<br># Default: PHB, Possible codes: PHB
+<br>ShowDomainsStats=PHB
 <br># Show hosts chart
 <br># Default: PHBL, Possible codes: PHBL
 <br>ShowHostsStats=PHBL
@@ -1132,20 +1132,20 @@ ShowOSStats,ShowOriginStats,ShowKeyphrasesStats,ShowKeywordsStats,ShowHTTPErrors
 <br># Default: 0, Possible codes: PHBL
 <br>ShowAuthenticatedUsers=0
 <br># Show robots chart
-<br># Default: 1, Possible codes: None
-<br>ShowRobotsStats=1
+<br># Default: HBL, Possible codes: HBL
+<br>ShowRobotsStats=HBL
 <br># Show EMail senders chart (For use when analyzing mail log files)
-<br># Default: HBML, Possible codes: HBML
-<br>ShowEMailSenders=HBML
+<br># Default: 0, Possible codes: HBML
+<br>ShowEMailSenders=0
 <br># Show EMail receiver chart (For use when analyzing mail log files)
-<br># Default: HBML, Possible codes: HBML
-<br>ShowEMailReceivers=HBML
+<br># Default: 0, Possible codes: HBML
+<br>ShowEMailReceivers=0
 <br># Show session chart
 <br># Default: 1, Possible codes: None
 <br>ShowSessionsStats=1
 <br># Show pages-url chart.
-<br># Default: HBEX, Possible codes: HBEX
-<br>ShowPagesStats=HBEX	
+<br># Default: PBEX, Possible codes: PBEX
+<br>ShowPagesStats=PBEX
 <br># Show file types chart.
 <br># Default: HB, Possible codes: HBC
 <br>ShowFileTypesStats=HB
@@ -1179,25 +1179,28 @@ ShowOSStats,ShowOriginStats,ShowKeyphrasesStats,ShowKeywordsStats,ShowHTTPErrors
 <br># particular reporting.
 <br>#
 <br># Stats by domains
-<br>MaxNbOfDomain = 25
+<br>MaxNbOfDomain = 10
 <br># Stats by hosts
-<br>MaxNbOfHostsShown = 25
+<br>MaxNbOfHostsShown = 10
 <br>MinHitHost    = 1
 <br># Stats by authenticated users
 <br>MaxNbOfLoginShown = 10
 <br>MinHitLogin   = 1
 <br># Stats by robots
-<br>MaxNbOfRobotShown = 25
+<br>MaxNbOfRobotShown = 10
 <br>MinHitRobot   = 1
 <br># Stats by pages
-<br>MaxNbOfPageShown = 25
+<br>MaxNbOfPageShown = 10
 <br>MinHitFile    = 1
 <br># Stats by referers
-<br>MaxNbOfRefererShown = 25
+<br>MaxNbOfRefererShown = 10
 <br>MinHitRefer   = 1
 <br># Stats for keywords
-<br>MaxNbOfKeywordsShown = 25
+<br>MaxNbOfKeywordsShown = 10
 <br>MinHitKeyword  = 1
+<br># Stats for emails
+<br>MaxNbOfEMailsShown = 20
+<br>MinHitEMail = 1
 
 <br><br><hr>
 
@@ -1239,7 +1242,7 @@ ShowOSStats,ShowOriginStats,ShowKeyphrasesStats,ShowKeywordsStats,ShowHTTPErrors
 <a name="MaxLengthOfURL"><b>MaxLengthOfURL</b></a><br>
 <b>Version : </b>1.0 +<br>
 <br># Maximum length of URL shown on stats page (number of characters). This
-<br># affects only URL visible text, link still work.
+<br># affects only URL visible text, larger links still work.
 <br># Default: 72
 <br>#
 <br>MaxLengthOfURL=72
@@ -1420,7 +1423,7 @@ color_u,color_v,color_p,color_h,color_k,color_s<br>
 <br>ExtraSectionName1="Product orders"
 <br>ExtraSectionCondition1="URL,/cgi-bin/order.cgi"
 <br>ExtraSectionFirstColumnTitle1="Product ID"
-<br>ExtraSectionFirstColumnValues1="QUERY_STRING,productid=([^&]+)"
+<br>ExtraSectionFirstColumnValues1="QUERY_STRING,productid=([^&amp;]+)"
 <br>ExtraSectionStatTypes1=PL
 <br>MaxNbOfExtra1=20
 <br>MinHitExtra1=1
