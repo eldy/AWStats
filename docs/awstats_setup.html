@@ -177,22 +177,22 @@ Found 0 old records,<br>
 Found 225601 new records.<br>
 </i><br>
 <b>Dropped records</b> are records discarded because they were not user HTTP request or requests were not qualified
-by AWStats filters (See <a href="awstats_config.html#SkipHosts">SkipHosts</a>, <a href="awstats_config.html#SkipFiles">SkipFiles</a>,
-and <a href="awstats_config.html#OnlyFiles">OnlyFiles</a> parameters).
+by AWStats filters (See <a href="awstats_config.html#SkipHosts">SkipHosts</a>, <a href="awstats_config.html#SkipUserAgents">SkipUserAgents</a>,
+<a href="awstats_config.html#SkipFiles">SkipFiles</a>, and <a href="awstats_config.html#OnlyFiles">OnlyFiles</a> parameters).
 If you want to see which lines were dropped, you can add the <b>-showdropped</b> option on command line.<br>
 <b>Corrupted records</b> are records that does not match log format defined by "LogFormat" parameter in AWStats config/domain file.
 With all webservers you can experience a little bit corrupted records (<5%) even when everythings work correctly.
 This can be the result of several reasons: Web server internal bugs, bad requests made by buggy browsers, web server brutal stop...<br>
 If all your lines are corrupted and <a href="awstats_config.html#LogFormat">LogFormat</a> parameter in AWStats config/domain file is
 correct, it may be the log format setup in your web server that is wrong. Don't forget that
-you <a href="awstats_config.html#OnlyFiles">LogFormat</a> parameter in AWStats config/domain file MUST match
+your <a href="awstats_config.html#OnlyFiles">LogFormat</a> parameter in AWStats config/domain file MUST match
 the log file format you analyze.<br>
 If you want to see which lines are corrupted, you can add the <b>-showcorrupted</b> option on command line.<br>
 <b>Old records</b> are simply records that were already processed by a previous update process. So it's not necessary to
-purge your log file after each update process even if it's HIGHLY recommended to do it as often as possible.<br>
+purge your log file after each update process even if it's highly recommended to do it as often as possible.<br>
 <b>New records</b> are records in your log file that were successfully used to build/update statistics.<br>
 <br>
-Note : A log analysis process is slow (one second for each 4100 lines of your
+Note : A log analysis process is slow (one second for each 4500 lines of your
 logfile with Athlon 1Ghz, plus DNS resolution time for each different IP
 address in your logfile if <a href="awstats_config.html#DNSLookup">DNSLookup</a> is set to 1 and not already done in your log file).<br>
 See <a href="awstats_benchmark.html">Benchmark page</a> for more accurate information.<br>
@@ -200,8 +200,8 @@ See <a href="awstats_benchmark.html">Benchmark page</a> for more accurate inform
 
 * Step 2-2<br>
 Even if AWStats allows "real-time" statistics with its "update from browser feature" (See next
-section <a href="#READ">Read Statistics</a>), you should run an update process (command is same than
-first process) from a scheduler frequently.<br>
+section <a href="#READ">Read Statistics</a>), you should run an update process from a scheduler (command is same than
+first process) frequently.<br>
 <br>
 You can add instructions in your <b>crontab</b> (Unix/Linux) or your <b>task scheduler</b> (for
 Windows), to launch frequently this Awstats update process.<br>
@@ -264,12 +264,9 @@ Note (3): If you want to build a report for a particular month, add options <i><
 To build a report for full year (warning: This may use a lot of memory and CPU), add options <i><b>-month=year -year=YYYY</b></i>.<br>
 
 <br><br>
-* Another solution is to view dynamically your statistics from a browser.<br>
-If you named your config file awstats.<i>virtualhostname</i>.conf, use URL:<br>
+* Another solution is to view dynamically your statistics from a browser. For this use URL:<br>
 <b><i>http://www.myserver.mydomain/cgi-bin/awstats.pl?config=virtualhostname</i></b><br>
 where <i>virtualhostname</i> is used to know which config file to use (AWStats will use awstats.<i>virtualhostname</i>.conf file).<br>
-If you named your config file awstats.conf, just use URL:<br>
-<b><i>http://www.myserver.mydomain/cgi-bin/awstats.pl</i></b><br>
 <br>
 Note (1): All output command line options (except -staticlinks) are still available when using AWStats as a browser.<br>
 Just use them as URL parameters like this example <b><i>http://www.myserver.mydomain/cgi-bin/awstats.pl?month=MM&year=YYYY&output=unknownos</i></b><br>
