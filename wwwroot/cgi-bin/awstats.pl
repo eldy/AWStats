@@ -70,7 +70,7 @@ $TotalHostsKnown, $TotalHostsUnKnown, $TotalPages, $TotalUnique, $TotalVisits,
 $URLFilter, $URLWithQuery, $UserAgent, $YearRequired, 
 $color_Background, $color_TableBG, $color_TableBGRowTitle,
 $color_TableBGTitle, $color_TableBorder, $color_TableRowTitle, $color_TableTitle,
-$color_h, $color_k, $color_link, $color_p, $color_s, $color_v, $color_w, $color_weekend,
+$color_h, $color_k, $color_link, $color_p, $color_s, $color_u, $color_v, $color_weekend,
 $found) = ();
 $startseconds=$startmicroseconds=0;
 $WarningMessages= 1;
@@ -82,7 +82,7 @@ $WarningMessages= 1;
 %MonthBytes = %MonthHits = %MonthHostsKnown = %MonthHostsUnknown = %MonthPages = %MonthUnique = %MonthVisits =
 %monthlib = %monthnum = ();
 
-$VERSION="3.2 (build 27)";
+$VERSION="3.2 (build 30)";
 $Lang="en";
 
 # Default value
@@ -247,7 +247,7 @@ sub tab_head {
 }
 
 sub tab_end {
-	print "\n</TABLE></TD></TR></TABLE>";
+	print "</TABLE></TD></TR></TABLE>";
 	print "</div>\n\n";
 }
 
@@ -351,18 +351,20 @@ sub SkipDNSLookup {
 
 sub DayOfWeek {
 	my ($day, $month, $year) = @_;
+	&debug("DayOfWeek for $day $month $year",4);
 	if ($month < 3) {  $month += 10;  $year--; } 
 	else { $month -= 2; }
 	my $cent = sprintf("%1i",($year/100));
 	my $y = ($year % 100);
 	my $dw = (sprintf("%1i",(2.6*$month)-0.2) + $day + $y + sprintf("%1i",($y/4)) + sprintf("%1i",($cent/4)) - (2*$cent)) % 7;
 	$dw += 7 if ($dw<0);
-	&debug("day of week for $day $month $year= $dw",3);
+	&debug(" is $dw",4);
 	return $dw;
 }
 
 sub DateIsValid {
 	my ($day, $month, $year) = @_;
+	&debug("DateIsValid for $day $month $year",4);
 	if ($day < 1) { return 0; }
 	if ($month==1 || $month==3 || $month==5 || $month==7 || $month==8 || $month==10 || $month==12) {
 		if ($day > 31) { return 0; }		
@@ -512,8 +514,8 @@ sub Read_Config_File {
 		if ($param =~ /^color_text/)            { $color_text=$value; next; }
 		if ($param =~ /^color_titletext/)       { $color_titletext=$value; next; }
 		if ($param =~ /^color_weekend/)         { $color_weekend=$value; next; }
+		if ($param =~ /^color_u/)               { $color_u=$value; next; }
 		if ($param =~ /^color_v/)               { $color_v=$value; next; }
-		if ($param =~ /^color_w/)               { $color_w=$value; next; }
 		if ($param =~ /^color_p/)               { $color_p=$value; next; }
 		if ($param =~ /^color_h/)               { $color_h=$value; next; }
 		if ($param =~ /^color_k/)               { $color_k=$value; next; }
@@ -715,8 +717,8 @@ sub Check_Config {
 	$color_link =~ s/#//g; if ($color_link !~ /^[0-9|A-Z][0-9|A-Z]*$/i)           { $color_link="0011BB"; }
 	$color_hover =~ s/#//g; if ($color_hover !~ /^[0-9|A-Z][0-9|A-Z]*$/i)         { $color_hover="605040"; }
 	$color_weekend =~ s/#//g; if ($color_weekend !~ /^[0-9|A-Z][0-9|A-Z]*$/i)     { $color_weekend="EAEAEA"; }
+	$color_u =~ s/#//g; if ($color_u !~ /^[0-9|A-Z][0-9|A-Z]*$/i)                 { $color_u="FF9933"; }
 	$color_v =~ s/#//g; if ($color_v !~ /^[0-9|A-Z][0-9|A-Z]*$/i)                 { $color_v="F3F300"; }
-	$color_w =~ s/#//g; if ($color_w !~ /^[0-9|A-Z][0-9|A-Z]*$/i)                 { $color_w="FF9933"; }
 	$color_p =~ s/#//g; if ($color_p !~ /^[0-9|A-Z][0-9|A-Z]*$/i)                 { $color_p="4477DD"; }
 	$color_h =~ s/#//g; if ($color_h !~ /^[0-9|A-Z][0-9|A-Z]*$/i)                 { $color_h="66F0FF"; }
 	$color_k =~ s/#//g; if ($color_k !~ /^[0-9|A-Z][0-9|A-Z]*$/i)                 { $color_k="339944"; }
@@ -1323,6 +1325,7 @@ sub Format_Bytes {
 	if ($bytes >= $fudge * exp(3*log(1024))) { return sprintf("%.2f", $bytes/exp(3*log(1024)))." Gb"; }
 	if ($bytes >= $fudge * exp(2*log(1024))) { return sprintf("%.2f", $bytes/exp(2*log(1024)))." Mb"; }
 	if ($bytes >= $fudge * exp(1*log(1024))) { return sprintf("%.2f", $bytes/exp(1*log(1024)))." $Message[44]"; }
+	if ($bytes eq "") { $bytes="?"; }
 	return "$bytes $Message[75]";
 }
 
@@ -1978,6 +1981,7 @@ if ($UpdateStats) {
 				  if ($PageBool) {
 				  		if ($timeconnexion > ($_unknownip_l{$Host}+$VisitTimeOut)) {
 				  			$MonthVisits{$yearmonth}++;
+				  			$DayVisits{$dayconnexion}++;
 							if (! $_unknownip_l{$Host}) { $MonthUnique{$yearmonth}++; $MonthHostsUnknown{$yearmonth}++; }
 							$_url_e{$field[$pos_url]}++; 	# Increase 'entry' page
 				  		}
@@ -2011,6 +2015,7 @@ if ($UpdateStats) {
 				if ($timeconnexion > ($_hostmachine_l{$_}+$VisitTimeOut)) {
 					# This is a new visit
 					$MonthVisits{$yearmonth}++;
+					$DayVisits{$dayconnexion}++;
 					if (! $_hostmachine_l{$_}) { $MonthUnique{$yearmonth}++; }
 					$_url_e{$field[$pos_url]}++; 	# Increase 'entry' page
 				}
@@ -2327,6 +2332,7 @@ if ($HTMLOutput) {
 	# tooltip.offsetWidth|tooltipOBJ.style.pixelWidth				IE OK	Opera OK	Netscape OK		Width of an object
 	# event.clientXY												IE OK	Opera OK	Netscape KO		Return position of mouse
 	print <<EOF;
+	
 	<script language="javascript">
 		function ShowTooltip(fArg)
 		{
@@ -2355,6 +2361,7 @@ if ($HTMLOutput) {
 			}
 		}
 	</script>
+	
 EOF
 
 	# Define the LinkParamA and LinkParamB for main chart
@@ -2441,7 +2448,8 @@ EOF
 			if ($ShowBackLink) { print "<tr><td class=AWL><a href=\"$DirCgi$PROG.$Extension${LinkParamA}\">$Message[76]</a></td></tr>\n"; }
 		}
 		print "</table>\n";
-		print "<br>\n<hr>\n";
+		print "<br>\n";
+		print "<hr>\n\n";
 	}
 	
 	if ($QueryString =~ /output=lasthosts/i) {
@@ -2635,60 +2643,68 @@ EOF
 			print "<a href=\"$DirCgi$PROG.$Extension?${NewLinkParams}year=$key&month=year\">$Message[6] $key</a> &nbsp; ";
 		}
 		print "</TD>";
-		print "<TD><b>$Message[9]</b></TD></TR>";
+		print "<TD><b>$Message[9]</b></TD></TR>\n";
 		
 		if ($FirstTime) { print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TD>".Format_Date($FirstTime)."</TD>"; }
 		else { print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TD>NA</TD>"; }
-		if ($LastTime) { print "<TD>".Format_Date($LastTime)."</TD></TR>"; }
+		if ($LastTime) { print "<TD>".Format_Date($LastTime)."</TD></TR>\n"; }
 		else { print "<TD>NA</TD></TR>\n"; }
 		print "<TR>";
+		print "<TD width=\"20%\" bgcolor=\"#$color_u\" onmouseover=\"ShowTooltip(2);\" onmouseout=\"HideTooltip(2);\">$Message[11]</TD>";
 		print "<TD width=\"20%\" bgcolor=\"#$color_v\" onmouseover=\"ShowTooltip(1);\" onmouseout=\"HideTooltip(1);\">$Message[10]</TD>";
-		print "<TD width=\"20%\" bgcolor=\"#$color_w\" onmouseover=\"ShowTooltip(2);\" onmouseout=\"HideTooltip(2);\">$Message[11]</TD>";
 		print "<TD width=\"20%\" bgcolor=\"#$color_p\" onmouseover=\"ShowTooltip(3);\" onmouseout=\"HideTooltip(3);\">$Message[56]</TD>";
 		print "<TD width=\"20%\" bgcolor=\"#$color_h\" onmouseover=\"ShowTooltip(4);\" onmouseout=\"HideTooltip(4);\">$Message[57]</TD>";
-		print "<TD width=\"20%\" bgcolor=\"#$color_k\" onmouseover=\"ShowTooltip(5);\" onmouseout=\"HideTooltip(5);\">$Message[75]</TD></TR>";
-		print "<TR><TD><b>$TotalVisits</b><br>&nbsp;</TD><TD>".($MonthRequired eq "year"?"<b>< $TotalUnique</b><br>Exact value not available in 'Year' view":"<b>$TotalUnique</b><br>($RatioHosts&nbsp;$Message[52])")."</TD><TD><b>$TotalPages</b><br>($RatioPages&nbsp;".lc($Message[56]."/".$Message[12]).")</TD>";
-		print "<TD><b>$TotalHits</b><br>($RatioHits&nbsp;".lc($Message[57]."/".$Message[12]).")</TD><TD><b>".Format_Bytes($TotalBytes)."</b><br>($RatioBytes&nbsp;$Message[44]/".lc($Message[12]).")</TD></TR>\n";
+		print "<TD width=\"20%\" bgcolor=\"#$color_k\" onmouseover=\"ShowTooltip(5);\" onmouseout=\"HideTooltip(5);\">$Message[75]</TD>";
+		print "</TR>\n";
+		print "<TR>";
+		print "<TD><b>$TotalVisits</b><br>&nbsp;</TD>";
+		print "<TD>".($MonthRequired eq "year"?"<b>< $TotalUnique</b><br>Exact value not available in 'Year' view":"<b>$TotalUnique</b><br>(".int($RatioHosts)."&nbsp;$Message[52])")."</TD>";
+		print "<TD><b>$TotalPages</b><br>(".int($RatioPages)."&nbsp;".lc($Message[56]."/".$Message[12]).")</TD>";
+		print "<TD><b>$TotalHits</b><br>(".int($RatioHits)."&nbsp;".lc($Message[57]."/".$Message[12]).")</TD>";
+		print "<TD><b>".Format_Bytes(int($TotalBytes))."</b><br>(".int($RatioBytes)."&nbsp;$Message[44]/".lc($Message[12]).")</TD>";
+		print "</TR>\n";
 		print "<TR valign=bottom><TD colspan=5 align=center><center>";
 		# Show monthly stats
 		print "<TABLE>";
 		print "<TR valign=bottom>";
-		$max_p=$max_h=$max_k=$max_v=1;
+		$max_v=$max_p=$max_h=$max_k=1;
 		for (my $ix=1; $ix<=12; $ix++) {
 			my $monthix=$ix; if ($monthix < 10) { $monthix="0$monthix"; }
+			#if ($MonthUnique{$YearRequired.$monthix} > $max_v) { $max_v=$MonthUnique{$YearRequired.$monthix}; }
 			if ($MonthVisits{$YearRequired.$monthix} > $max_v) { $max_v=$MonthVisits{$YearRequired.$monthix}; }
-			if ($MonthUnique{$YearRequired.$monthix} > $max_v) { $max_v=$MonthUnique{$YearRequired.$monthix}; }
-			if ($MonthPages{$YearRequired.$monthix} > $max_p)  { $max_p=$MonthPages{$YearRequired.$monthix}; }
+			#if ($MonthPages{$YearRequired.$monthix} > $max_p)  { $max_p=$MonthPages{$YearRequired.$monthix}; }
 			if ($MonthHits{$YearRequired.$monthix} > $max_h)   { $max_h=$MonthHits{$YearRequired.$monthix}; }
 			if ($MonthBytes{$YearRequired.$monthix} > $max_k)  { $max_k=$MonthBytes{$YearRequired.$monthix}; }
 		}
 		for (my $ix=1; $ix<=12; $ix++) {
 			my $monthix=$ix; if ($monthix < 10) { $monthix="0$monthix"; }
 			my $bredde_u=0; my $bredde_v=0;my $bredde_p=0;my $bredde_h=0;my $bredde_k=0;
-			if ($max_v > 0) { $bredde_v=int($MonthVisits{$YearRequired.$monthix}/$max_v*$BarHeight/2)+1; }
 			if ($max_v > 0) { $bredde_u=int($MonthUnique{$YearRequired.$monthix}/$max_v*$BarHeight/2)+1; }
+			if ($max_v > 0) { $bredde_v=int($MonthVisits{$YearRequired.$monthix}/$max_v*$BarHeight/2)+1; }
 			if ($max_h > 0) { $bredde_p=int($MonthPages{$YearRequired.$monthix}/$max_h*$BarHeight/2)+1; }
 			if ($max_h > 0) { $bredde_h=int($MonthHits{$YearRequired.$monthix}/$max_h*$BarHeight/2)+1; }
 			if ($max_k > 0) { $bredde_k=int($MonthBytes{$YearRequired.$monthix}/$max_k*$BarHeight/2)+1; }
 			print "<TD>";
-			print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_v\" HEIGHT=$bredde_v WIDTH=8 ALT=\"$Message[10]: $MonthVisits{$YearRequired.$monthix}\" title=\"$Message[10]: $MonthVisits{$YearRequired.$monthix}\">";
 			print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_u\" HEIGHT=$bredde_u WIDTH=8 ALT=\"$Message[11]: $MonthUnique{$YearRequired.$monthix}\" title=\"$Message[11]: $MonthUnique{$YearRequired.$monthix}\">";
+			print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_v\" HEIGHT=$bredde_v WIDTH=8 ALT=\"$Message[10]: $MonthVisits{$YearRequired.$monthix}\" title=\"$Message[10]: $MonthVisits{$YearRequired.$monthix}\">";
 			print "&nbsp;";
 			print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_p\" HEIGHT=$bredde_p WIDTH=8 ALT=\"$Message[56]: $MonthPages{$YearRequired.$monthix}\" title=\"$Message[56]: $MonthPages{$YearRequired.$monthix}\">";
 			print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_h\" HEIGHT=$bredde_h WIDTH=8 ALT=\"$Message[57]: $MonthHits{$YearRequired.$monthix}\" title=\"$Message[57]: $MonthHits{$YearRequired.$monthix}\">";
 			print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_k\" HEIGHT=$bredde_k WIDTH=8 ALT=\"$Message[75]: ".Format_Bytes($MonthBytes{$YearRequired.$monthix})."\" title=\"$Message[75]: ".Format_Bytes($MonthBytes{$YearRequired.$monthix})."\">";
 			print "</TD>\n";
 		}
-		print "</TR><TR>";
+		print "</TR>\n";
+		print "<TR>";
 		for (my $ix=1; $ix<=12; $ix++) {
 			my $monthix=$ix; if ($monthix < 10) { $monthix="0$monthix"; }
-			print "<TD valign=middle><a href=\"$DirCgi$PROG.$Extension?${NewLinkParams}year=$YearRequired&month=$monthix\">$monthlib{$monthix}</a></TD>";
+			print "<TD valign=middle><a href=\"$DirCgi$PROG.$Extension?${NewLinkParams}year=$YearRequired&month=$monthix\">$monthlib{$monthix}</a></TD>\n";
 		}
-		print "</TR></TABLE><br>";
+		print "</TR>\n";
+		print "</TABLE>\n<br>\n";
 		# Show daily stats
 		print "<TABLE>";
 		print "<TR valign=bottom>";
-		$max_p=$max_h=$max_k=$max_v=1;
+		$max_v=$max_h=$max_k=1;
 		my $lastdaytoshowtime=$nowyear.$nowmonth.$nowday;				# Set day cursor to today
 		if (($MonthRequired ne $nowmonth && $MonthRequired ne "year") || $YearRequired ne $nowyear) { 
 			if ($MonthRequired eq "year") {
@@ -2699,87 +2715,98 @@ EOF
 			}
 		}
 		my $firstdaytoshowtime=$lastdaytoshowtime;
-		# Get max_p, max_h and max_k values
+		# Get max_v, max_h and max_k values
 		my $nbofdaysshown=0;
 		for (my $daycursor=$lastdaytoshowtime; $nbofdaysshown<$MaxNbOfDays; $daycursor--) {
-			$daycursor =~ /^(\d\d\d\d)/; my $year=$1;
-			$daycursor =~ /^\d\d\d\d(\d\d)/; my $month=$1;
-			$daycursor =~ /^\d\d\d\d\d\d(\d\d)/; my $day=$1;
+			$daycursor =~ /^(\d\d\d\d)(\d\d)(\d\d)/;
+			my $year=$1; my $month=$2; my $day=$3;
 			if (! DateIsValid($day,$month,$year)) { next; }			# If not an existing day, go to next
 			$nbofdaysshown++;
 			$firstdaytoshowtime=$year.$month.$day;
-			if ($DayPages{$year.$month.$day} > $max_p)  { $max_p=$DayPages{$year.$month.$day}; }
+			if ($DayVisits{$year.$month.$day} > $max_v)  { $max_v=$DayVisits{$year.$month.$day}; }
+			#if ($DayPages{$year.$month.$day} > $max_p)  { $max_p=$DayPages{$year.$month.$day}; }
 			if ($DayHits{$year.$month.$day} > $max_h)   { $max_h=$DayHits{$year.$month.$day}; }
 			if ($DayBytes{$year.$month.$day} > $max_k)  { $max_k=$DayBytes{$year.$month.$day}; }
 		}
 		$nbofdaysshown=0;
 		for (my $daycursor=$firstdaytoshowtime; $nbofdaysshown<$MaxNbOfDays; $daycursor++) {
-			$daycursor =~ /^(\d\d\d\d)/; my $year=$1;
-			$daycursor =~ /^\d\d\d\d(\d\d)/; my $month=$1;
-			$daycursor =~ /^\d\d\d\d\d\d(\d\d)/; my $day=$1;
+			$daycursor =~ /^(\d\d\d\d)(\d\d)(\d\d)/;
+			my $year=$1; my $month=$2; my $day=$3;
 			if (! DateIsValid($day,$month,$year)) { next; }			# If not an existing day, go to next
 			$nbofdaysshown++;
-			my $bredde_p=0;my $bredde_h=0;my $bredde_k=0;
+			my $bredde_v=0; my $bredde_p=0; my $bredde_h=0; my $bredde_k=0;
+			if ($max_v > 0) { $bredde_v=int($DayVisits{$year.$month.$day}/$max_v*$BarHeight/2)+1; }
 			if ($max_h > 0) { $bredde_p=int($DayPages{$year.$month.$day}/$max_h*$BarHeight/2)+1; }
 			if ($max_h > 0) { $bredde_h=int($DayHits{$year.$month.$day}/$max_h*$BarHeight/2)+1; }
 			if ($max_k > 0) { $bredde_k=int($DayBytes{$year.$month.$day}/$max_k*$BarHeight/2)+1; }
 			print "<TD>";
-			print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_p\" HEIGHT=$bredde_p WIDTH=4 ALT=\"$Message[56]: $DayPages{$year.$month.$day}\" title=\"$Message[56]: $DayPages{$year.$month.$day}\">";
-			print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_h\" HEIGHT=$bredde_h WIDTH=4 ALT=\"$Message[57]: $DayHits{$year.$month.$day}\" title=\"$Message[57]: $DayHits{$year.$month.$day}\">";
+			print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_v\" HEIGHT=$bredde_v WIDTH=4 ALT=\"$Message[10]: ".int($DayVisits{$year.$month.$day})."\" title=\"$Message[10]: ".int($DayVisits{$year.$month.$day})."\">";
+			print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_p\" HEIGHT=$bredde_p WIDTH=4 ALT=\"$Message[56]: ".int($DayPages{$year.$month.$day})."\" title=\"$Message[56]: ".int($DayPages{$year.$month.$day})."\">";
+			print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_h\" HEIGHT=$bredde_h WIDTH=4 ALT=\"$Message[57]: ".int($DayHits{$year.$month.$day})."\" title=\"$Message[57]: ".int($DayHits{$year.$month.$day})."\">";
 			print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_k\" HEIGHT=$bredde_k WIDTH=4 ALT=\"$Message[75]: ".Format_Bytes($DayBytes{$year.$month.$day})."\" title=\"$Message[75]: ".Format_Bytes($DayBytes{$year.$month.$day})."\">";
 			print "</TD>\n";
 		}
 		print "<TD> &nbsp; </TD>";
 		# Calculate average values
-		my $avg_day_nb=0; my $avg_day_p=0; my $avg_day_h=0; my $avg_day_k=0;
+		my $avg_day_nb=0; my $avg_day_v=0; my $avg_day_p=0; my $avg_day_h=0; my $avg_day_k=0;
 		my $FirstTimeDay=$FirstTime;
 		my $LastTimeDay=$LastTime;
 		$FirstTimeDay =~ /^(\d\d\d\d\d\d\d\d).*/; $FirstTimeDay=$1;
 		$LastTimeDay =~ /^(\d\d\d\d\d\d\d\d).*/; $LastTimeDay=$1;
 		foreach my $daycursor ($FirstTimeDay..$LastTimeDay) {
-			$daycursor =~ /^(\d\d\d\d)/; my $year=$1;
-			$daycursor =~ /^\d\d\d\d(\d\d)/; my $month=$1;
-			$daycursor =~ /^\d\d\d\d\d\d(\d\d)/; my $day=$1;
+			$daycursor =~ /^(\d\d\d\d)(\d\d)(\d\d)/;
+			my $year=$1; my $month=$2; my $day=$3;
 			if (! DateIsValid($day,$month,$year)) { next; }			# If not an existing day, go to next
 			$avg_day_nb++;											# Increase number of day used to count
+			$avg_day_v+=$DayVisits{$daycursor};
 			$avg_day_p+=$DayPages{$daycursor};
 			$avg_day_h+=$DayHits{$daycursor};
 			$avg_day_k+=$DayBytes{$daycursor};
 		}
 		if ($avg_day_nb) {
+			$avg_day_v=sprintf("%.2f",$avg_day_v/$avg_day_nb);
 			$avg_day_p=sprintf("%.2f",$avg_day_p/$avg_day_nb);
 			$avg_day_h=sprintf("%.2f",$avg_day_h/$avg_day_nb);
 			$avg_day_k=sprintf("%.2f",$avg_day_k/$avg_day_nb);
 		}
+		else {
+			$avg_day_v="?";
+			$avg_day_p="?";
+			$avg_day_h="?";
+			$avg_day_k="?";
+		}
 		# Show average values
 		print "<TD>";
-		my $bredde_p=0;my $bredde_h=0;my $bredde_k=0;
+		my $bredde_v=0; my $bredde_p=0; my $bredde_h=0; my $bredde_k=0;
+		if ($max_v > 0) { $bredde_v=int($avg_day_v/$max_v*$BarHeight/2)+1; }
 		if ($max_h > 0) { $bredde_p=int($avg_day_p/$max_h*$BarHeight/2)+1; }
 		if ($max_h > 0) { $bredde_h=int($avg_day_h/$max_h*$BarHeight/2)+1; }
 		if ($max_k > 0) { $bredde_k=int($avg_day_k/$max_k*$BarHeight/2)+1; }
+		print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_v\" HEIGHT=$bredde_v WIDTH=4 ALT=\"$Message[10]: $avg_day_v\" title=\"$Message[10]: $avg_day_v\">";
 		print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_p\" HEIGHT=$bredde_p WIDTH=4 ALT=\"$Message[56]: $avg_day_p\" title=\"$Message[56]: $avg_day_p\">";
 		print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_h\" HEIGHT=$bredde_h WIDTH=4 ALT=\"$Message[57]: $avg_day_h\" title=\"$Message[57]: $avg_day_h\">";
 		print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_k\" HEIGHT=$bredde_k WIDTH=4 ALT=\"$Message[75]: ".Format_Bytes($avg_day_k)."\" title=\"$Message[75]: ".Format_Bytes($avg_day_k)."\">";
 		print "</TD>\n";
-
-		print "</TR><TR>";
+		print "</TR>\n";
+		print "<TR>";
 		$nbofdaysshown=0;
 		for (my $daycursor=$firstdaytoshowtime; $nbofdaysshown<$MaxNbOfDays; $daycursor++) {
-			$daycursor =~ /^(\d\d\d\d)/; my $year=$1;
-			$daycursor =~ /^\d\d\d\d(\d\d)/; my $month=$1;
-			$daycursor =~ /^\d\d\d\d\d\d(\d\d)/; my $day=$1;
+			$daycursor =~ /^(\d\d\d\d)(\d\d)(\d\d)/;
+			my $year=$1; my $month=$2; my $day=$3;
 			if (! DateIsValid($day,$month,$year)) { next; }			# If not an existing day, go to next
 			$nbofdaysshown++;
-			print "<TD valign=middle".(DayOfWeek($day,$month,$year)==0||DayOfWeek($day,$month,$year)==6?" bgcolor=\"#$color_weekend\"":"").">";
+			my $dayofweekcursor=DayOfWeek($day,$month,$year);
+			print "<TD valign=middle".($dayofweekcursor==0||$dayofweekcursor==6?" bgcolor=\"#$color_weekend\"":"").">";
 			print ($day==$nowday && $month==$nowmonth?"<b>":"");
 			print "$day<br><font style=\"font: 10px;\">".$monthlib{$month}."</font>";
-			print ($day==$nowday && $month==$nowmonth?"</b></TD>":"</TD>");
+			print ($day==$nowday && $month==$nowmonth?"</b></TD>":"</TD>\n");
 		}
 		print "<TD> &nbsp; </TD>";
-		print "<TD valign=middle onmouseover=\"ShowTooltip(18);\" onmouseout=\"HideTooltip(18);\">$Message[96]</TD>";
-		print "</TR></TABLE><br>";
+		print "<TD valign=middle onmouseover=\"ShowTooltip(18);\" onmouseout=\"HideTooltip(18);\">$Message[96]</TD>\n";
+		print "</TR>\n";
+		print "</TABLE>\n<br>\n";
 		
-		print "</center></TD></TR>";
+		print "</center></TD></TR>\n";
 		&tab_end;
 	}	
 
@@ -2791,32 +2818,36 @@ EOF
 		print "<TR>";
 		print "<TD align=center><center><TABLE>";
 		print "<TR valign=bottom>\n";
-		$max_p=$max_h=$max_k=$max_v=1;
+		$max_h=$max_k=$max_v=1;
 		# Get average value for day of week
 		my $FirstTimeDay=$FirstTime;
 		my $LastTimeDay=$LastTime;
 		$FirstTimeDay =~ /^(\d\d\d\d\d\d\d\d).*/; $FirstTimeDay=$1;
 		$LastTimeDay =~ /^(\d\d\d\d\d\d\d\d).*/; $LastTimeDay=$1;
 		foreach my $daycursor ($FirstTimeDay..$LastTimeDay) {
-			$daycursor =~ /^(\d\d\d\d)/; my $year=$1;
-			$daycursor =~ /^\d\d\d\d(\d\d)/; my $month=$1;
-			$daycursor =~ /^\d\d\d\d\d\d(\d\d)/; my $day=$1;
+			$daycursor =~ /^(\d\d\d\d)(\d\d)(\d\d)/;
+			my $year=$1; my $month=$2; my $day=$3;
 			if (! DateIsValid($day,$month,$year)) { next; }			# If not an existing day, go to next
-			my $dayofweek=DayOfWeek($day,$month,$year);
-			$avg_dayofweek[$dayofweek]++;							# Increase number of day used to count for this day of week
-			$avg_dayofweek_p[$dayofweek]+=$DayPages{$daycursor};
-			$avg_dayofweek_h[$dayofweek]+=$DayHits{$daycursor};
-			$avg_dayofweek_k[$dayofweek]+=$DayBytes{$daycursor};
+			my $dayofweekcursor=DayOfWeek($day,$month,$year);
+			$avg_dayofweek[$dayofweekcursor]++;							# Increase number of day used to count for this day of week
+			$avg_dayofweek_p[$dayofweekcursor]+=$DayPages{$daycursor};
+			$avg_dayofweek_h[$dayofweekcursor]+=$DayHits{$daycursor};
+			$avg_dayofweek_k[$dayofweekcursor]+=$DayBytes{$daycursor};
 		}
 		for (0..6) {
 			if ($avg_dayofweek[$_]) { 
 				$avg_dayofweek_p[$_]=sprintf("%.2f",$avg_dayofweek_p[$_]/$avg_dayofweek[$_]);
 				$avg_dayofweek_h[$_]=sprintf("%.2f",$avg_dayofweek_h[$_]/$avg_dayofweek[$_]);
 				$avg_dayofweek_k[$_]=sprintf("%.2f",$avg_dayofweek_k[$_]/$avg_dayofweek[$_]);
+				#if ($avg_dayofweek_p[$_] > $max_p) { $max_p = $avg_dayofweek_p[$_]; }
+				if ($avg_dayofweek_h[$_] > $max_h) { $max_h = $avg_dayofweek_h[$_]; }
+				if ($avg_dayofweek_k[$_] > $max_k) { $max_k = $avg_dayofweek_k[$_]; }
 			}
-			$max_p = $avg_dayofweek_p[$_]  if ($avg_dayofweek_p[$_] > $max_p);
-			$max_h = $avg_dayofweek_h[$_]  if ($avg_dayofweek_h[$_] > $max_h);
-			$max_k = $avg_dayofweek_k[$_]  if ($avg_dayofweek_k[$_] > $max_k);
+			else {
+				$avg_dayofweek_p[$_]="?";
+				$avg_dayofweek_h[$_]="?";
+				$avg_dayofweek_k[$_]="?";
+			}
         }
         for (@DOWIndex) {
 			if ($max_h > 0) { $bredde_p=int($avg_dayofweek_p[$_]/$max_h*$BarHeight/2)+1; }
@@ -2845,10 +2876,10 @@ EOF
 		print "$CENTER<a name=\"HOUR\">&nbsp;</a><BR>";
 		&tab_head($Message[20],19);
 		print "<TR><TD align=center><center><TABLE><TR>\n";
-		$max_p=$max_h=$max_k=1;
+		$max_h=$max_k=1;
 		for (my $ix=0; $ix<=23; $ix++) {
-		  print "<TH width=16 onmouseover=\"ShowTooltip(17);\" onmouseout=\"HideTooltip(17);\">$ix</TH>";
-		  if ($_time_p[$ix]>$max_p) { $max_p=$_time_p[$ix]; }
+		  print "<TH width=16 onmouseover=\"ShowTooltip(17);\" onmouseout=\"HideTooltip(17);\">$ix</TH>\n";
+		  #if ($_time_p[$ix]>$max_p) { $max_p=$_time_p[$ix]; }
 		  if ($_time_h[$ix]>$max_h) { $max_h=$_time_h[$ix]; }
 		  if ($_time_k[$ix]>$max_k) { $max_k=$_time_k[$ix]; }
 		}
@@ -2856,7 +2887,7 @@ EOF
 		print "<TR>\n";
 		for (my $ix=1; $ix<=24; $ix++) {
 			my $hr=$ix; if ($hr>12) { $hr=$hr-12; }
-			print "<TH onmouseover=\"ShowTooltip(17);\" onmouseout=\"HideTooltip(17);\"><IMG SRC=\"$DirIcons\/clock\/hr$hr.png\" width=10></TH>";
+			print "<TH onmouseover=\"ShowTooltip(17);\" onmouseout=\"HideTooltip(17);\"><IMG SRC=\"$DirIcons\/clock\/hr$hr.png\" width=10></TH>\n";
 		}
 		print "</TR>\n";
 		print "\n<TR VALIGN=BOTTOM>\n";
@@ -2866,8 +2897,8 @@ EOF
 			if ($max_h > 0) { $bredde_h=int($BarHeight*$_time_h[$ix]/$max_h)+1; }
 			if ($max_k > 0) { $bredde_k=int($BarHeight*$_time_k[$ix]/$max_k)+1; }
 			print "<TD>";
-			print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_p\" HEIGHT=$bredde_p WIDTH=6 ALT=\"$Message[56]: $_time_p[$ix]\" title=\"$Message[56]: $_time_p[$ix]\">";
-			print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_h\" HEIGHT=$bredde_h WIDTH=6 ALT=\"$Message[57]: $_time_h[$ix]\" title=\"$Message[57]: $_time_h[$ix]\">";
+			print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_p\" HEIGHT=$bredde_p WIDTH=6 ALT=\"$Message[56]: ".int($_time_p[$ix])."\" title=\"$Message[56]: ".int($_time_p[$ix])."\">";
+			print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_h\" HEIGHT=$bredde_h WIDTH=6 ALT=\"$Message[57]: ".int($_time_h[$ix])."\" title=\"$Message[57]: ".int($_time_h[$ix])."\">";
 			print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_k\" HEIGHT=$bredde_k WIDTH=6 ALT=\"$Message[75]: ".Format_Bytes($_time_k[$ix])."\" title=\"$Message[75]: ".Format_Bytes($_time_k[$ix])."\">";
 			print "</TD>\n";
 		}
@@ -2952,7 +2983,7 @@ EOF
 				print "<tr><td CLASS=AWL>$key</td><TD>$_hostmachine_p{$key}</TD><TD>$_hostmachine_h{$key}</TD><TD>".Format_Bytes($_hostmachine_k{$key})."</TD>";
 				if ($_hostmachine_l{$key}) { print "<td>".Format_Date($_hostmachine_l{$key})."</td>"; }
 				else { print "<td>-</td>"; }
-				print "</tr>";
+				print "</tr>\n";
 			}
 			$total_p += $_hostmachine_p{$key};
 			$total_h += $_hostmachine_h{$key};
@@ -3011,7 +3042,7 @@ EOF
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\" onmouseover=\"ShowTooltip(16);\" onmouseout=\"HideTooltip(16);\"><TH>$Message[83]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH width=120>$Message[9]</TH></TR>\n";
 		my $count=0;
 		foreach my $key (sort { $SortDir*$_robot_h{$a} <=> $SortDir*$_robot_h{$b} } keys (%_robot_h)) {
-			print "<tr><td CLASS=AWL>$RobotHashIDLib{$key}</td><td>$_robot_h{$key}</td><td>".Format_Date($_robot_l{$key})."</td></tr>";
+			print "<tr><td CLASS=AWL>$RobotHashIDLib{$key}</td><td>$_robot_h{$key}</td><td>".Format_Date($_robot_l{$key})."</td></tr>\n";
 			$count++;
 			}
 		&tab_end;
