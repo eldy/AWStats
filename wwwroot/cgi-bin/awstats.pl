@@ -82,7 +82,7 @@ $WarningMessages= 1;
 %MonthBytes = %MonthHits = %MonthHostsKnown = %MonthHostsUnknown = %MonthPages = %MonthUnique = %MonthVisits =
 %monthlib = %monthnum = ();
 
-$VERSION="3.2 (build 43)";
+$VERSION="3.2 (build 44)";
 $Lang="en";
 
 # Default value
@@ -2775,10 +2775,10 @@ EOF
 		print "</TR>\n";
 		print "<TR>";
 		print "<TD>".($MonthRequired eq "year"?"<b>< $TotalUnique</b><br>Exact value not available in 'Year' view":"<b>$TotalUnique</b><br>&nbsp;")."</TD>";
-		print "<TD><b>$TotalVisits</b><br>(".int($RatioHosts)."&nbsp;$Message[52])</TD>";
-		print "<TD><b>$TotalPages</b><br>(".int($RatioPages)."&nbsp;".lc($Message[56]."/".$Message[12]).")</TD>";
-		print "<TD><b>$TotalHits</b><br>(".int($RatioHits)."&nbsp;".lc($Message[57]."/".$Message[12]).")</TD>";
-		print "<TD><b>".Format_Bytes(int($TotalBytes))."</b><br>(".int($RatioBytes)."&nbsp;$Message[44]/".lc($Message[12]).")</TD>";
+		print "<TD><b>$TotalVisits</b><br>($RatioHosts&nbsp;$Message[52])</TD>";
+		print "<TD><b>$TotalPages</b><br>($RatioPages&nbsp;".lc($Message[56]."/".$Message[12]).")</TD>";
+		print "<TD><b>$TotalHits</b><br>($RatioHits&nbsp;".lc($Message[57]."/".$Message[12]).")</TD>";
+		print "<TD><b>".Format_Bytes(int($TotalBytes))."</b><br>($RatioBytes&nbsp;$Message[44]/".lc($Message[12]).")</TD>";
 		print "</TR>\n";
 		print "<TR valign=bottom><TD colspan=5 align=center><center>";
 		# Show monthly stats
