@@ -2,6 +2,11 @@ AWStats Changelog
 -----------------
 $Revision$ - $Author$ - $Date$
 
+6.2
+
+Other/Documentation:
+- Minor change on documentation.
+
 
 6.1
 

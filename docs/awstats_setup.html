@@ -51,34 +51,39 @@ If not, you can install a recent Perl interpreter from <a href="http://www.activ
 <a name="INSTALLAPACHE"><b>A) With Apache or compatible server (on Unix/Linux, Windows, MacOS...)</b></a><br>
 <br>
 <font style="color: #111155"><b>* Step 1-1</b>:</font><br>
-(if you use a package provided with a Linux distribution or Windows installer, this might be
-already done, however it is recommanded to do it)<br>
+(if you use a package provided with a Linux distribution or Windows installer, action done in step 1-1
+might have already be done, if you don't know you, do it again)<br>
 <br>
-After downloading and running the AWStats package, you must run the configure.pl script.
-You will find it in the <b>tools</b> directory (If using the windows installer, the script is
+After downloading and extracting the AWStats package, you should run the configure.pl script to do
+several setup actions.
+You will find it in the AWStats <b>tools</b> directory (If using the windows installer, the script is
 automatically launched):<br>
 <b><i>perl configure.pl</i></b><br>
-<br>
-<u>This is what the script do for you (you can do all of this manually if you prefer):</u><br>
+
+<ul>
+
+<u>This is what the script do/ask (you can do all those steps manually instead of running configure.pl if you prefer):</u><br>
 <br>
 
-A) configure.pl check your apache web server log format configuration.
-If you use a <b>common</b> log, configure will
+A) configure.pl try to find your Apache web server config file (ask path if not found) and check
+inside your server log format configuration.
+If you use a <b>common</b> log, configure.pl will
 suggest to change it to have <b>NCSA combined/XLF/ELF</b> log format (you can use your own log
 format but this predefined logformat is often the best choice and make setup easier).<br>
-If you answer yes, configure will modify your <b>httpd.conf</b> to change all the
-following directives (See your apache manual for more information):<br>
+If you answer yes, configure.pl will modify your <b>httpd.conf</b> to change all the
+following directives:<br>
 <i>CustomLog /yourlogpath/yourlogfile common</i><br>
 into<br>
 <i>CustomLog /yourlogpath/yourlogfile combined</i><br>
 <br>
+See your Apache manual for more information on this directive.<br>
 To be sure the log format change is effective, later you can stop Apache, remove all old
 log files, restart Apache and go to your homepage. This is an example of records you
 should get then in your new log file:<br>
 <i>62.161.78.75 - - [dd/mmm/yyyy:hh:mm:ss +0000] "GET / HTTP/1.1" 200 1234 "http://www.from.com/from.html" "Mozilla/4.0 (compatible; MSIE 5.01; Windows NT 5.0)"</i><br>
 <br>
 
-B) configure.pl will add, if not already done, the following directives to your Apache config file
+B) Then, configure.pl will add, if not already present, the following directives to your Apache config file
 (note that the "/usr/local/awstats/wwwroot" path might differ according to your distribution or OS:<br>
 <i>
 <br>#
@@ -102,26 +107,25 @@ B) configure.pl will add, if not already done, the following directives to your 
 <br>
 
 <br>
-C) configure.pl restart Apache to apply the changes made in A and B.<br>
+C) configure.pl restart Apache to apply the changes made in A and B (if changes were made).<br>
 <br>
 
-D) configure.pl will ask you a name for a config profile. Enter here the name of your
+D) configure.pl will ask you a name for a config profile file. Enter here the name of your
 web server or any analysis profile name, for example <b>myvirtualhostname</b>.<br>
 So configure.pl will copy the file <b>awstats.model.conf</b> file into a new file
 named <b>awstats.myvirtualhostname.conf</b>.
-You can use the value of your choice instead of "myvirtualhostname". This new file must
-be stored in<br>
-- For Unix/Linux users: /etc/awstats.<br>
+You can use the value of your choice instead of "myvirtualhostname". This new file is stored into:<br>
+- For Linux/BSD/Unix users: /etc/awstats.<br>
 - For Mac OS X, Windows and other OS: Same directory than awstats.pl (so cgi-bin).<br>
 <br>
 
 E) configure.pl ends.<br>
 <br>
-
+</ul>
 
 <font style="color: #111155"><b>* Step 1-2</b>:</font><br>
-Once a config file has been automatically created (by configure.pl or you package
-installer), it's important to edit it manually and change the "MAIN PARAMETERS"
+Once a config file has been automatically created (by configure.pl, by you package
+installer or just by a manual copy of awstats.model.conf), it's important to edit it manually and change the "MAIN PARAMETERS"
 to match all your needs:<br>
 <br>
 This is for example the parameters you should check seriously :<br>
@@ -131,21 +135,10 @@ can also use a relative path from your awstats.pl directory).<br>
 web server log files, "S" for a streaming server log file, "M" for mail log files, "F" for ftp log files.<br>
 - Check if <a href="awstats_config.html#LogFormat">LogFormat</a> has the value "1" (it means "NCSA apache combined/ELF/XLF log format")
 or use a personalized log format if you don't use combined log format.<br>
-- Check/Change <a href="awstats_config.html#DirIcons">DirIcons</a> parameter to reflect relative URL of awstats icon directory.<br>
 - Edit <a href="awstats_config.html#SiteDomain">SiteDomain</a> parameter with the main domain name or the intranet 
 web server name used to reach the web site to analyze (Example: www.mydomain.com). If you have several
 possible name for same site, add list in <a href="awstats_config.html#HostAlias">HostAlias</a> parameter.<br>
-- You can change other parameters if you want.<br>
-<br>
-
-<font style="color: #111155"><b>* Step 1-3</b>:</font><br>
-(if Perl interpreter is correctly setup, this step is not required)<br><br>
-If necessary, edit the first (top-most) line of awstats.pl file that is<br>
-<i>#!/usr/bin/perl</i><br>
-to reflect the path were your Perl interpreter is installed. Default value works for most of Unix OS, but it also might be<br>
-<i>#!/usr/local/bin/perl</i><br>
-With Apache for Windows and ActivePerl interpreter, it might be<br>
-<i>#!c:/program files/activeperl/bin/perl</i><br>
+- You can also change other parameters if you want.<br>
 <br>
 
 Step 1 (Install and Setup) is finished. You can jump to the <a href="#BUILD_UPDATE">Build/Update Statistics</a> section.<br>
