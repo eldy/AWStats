@@ -135,8 +135,8 @@ if (! $Config) {
 	print "   -date                        Used to add build date in built pages file name\n";
 	print "   -staticlinksext=xxx          For pages with .xxx extension instead of .html\n";
 	print "   -buildpdf[=pathtohtmldoc]    Build a PDF file after building HTML pages.\n";
-	print "                                 Output directory must contains icons directory\n";
-	print "                                 when this option is used.\n";
+	print "                                 Output directory must contains icon directory\n";
+	print "                                 when this option is used (need 'htmldoc').\n";
 	print "\n";
 	print "New versions and FAQ at http://awstats.sourceforge.net\n";
 	exit 0;
