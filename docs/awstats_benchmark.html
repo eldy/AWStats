@@ -75,23 +75,23 @@ Take a look at the following chart to:<br>
 <table border=1 cellspacing=0 cellpadding=2 style="font: 12px; arial,verdana">
 <tr bgcolor=#EEEEEE><td rowspan=2>Your Web site traffic</td><td colspan=3>Recommended values for parameters</td><td rowspan=2>Recommended update frequency<br>(Rotate log delay)</td><td rowspan=2>Memory required**</td><td rowspan=2>Duration***</td></tr>
 <tr bgcolor=#EEEEEE><td>DNSLookup*</td><td>URLWithQuery</td><td>URLReferrerWithQuery</td></tr>
-<tr><td rowspan=2>     0 -     1,000 visits/month</td><td>1</td><td>0 or 1</td><td>0 or 1</td><td>Once a day<br>Log files are 0-1 MB<br>2000 lines to process</td><td>4 MB</td><td>2mn</td></tr>
-<tr>                                                <td>0 (or 2)</td><td>0 or 1</td><td>0 or 1</td><td>Once a day<br>Log files are 0-1 MB<br>2000 lines to process</td><td>4 MB</td><td>1s</td></tr>
-<tr><td rowspan=2> 1,000 -    10,000 visits/month</td><td>1</td><td>0 or 1</td><td>0 or 1</td><td>Once a day<br>Log files are 1-10 MB<br>2000-20000 lines</td><td>4-8 MB</td><td>2-10mn</td></tr>
-<tr>                                                <td>0 (or 2)</td><td>0 or 1</td><td>0 or 1</td><td>Once a day<br>Log files are 1-10 MB<br>2000-20000 lines</td><td>4-8 MB</td><td>1-10s</td></tr>
-<tr><td rowspan=2>10,000 -    100,000 visits/month</td><td>1</td><td>0 or 1</td><td>0 or 1</td><td>Every 12 hours<br>Log files are 5-50 MB<br>10000-100000 lines</td><td>8-16 MB</td><td>5-50mn</td></tr>
-<tr>                                                <td>0 (or 2)</td><td>0 or 1</td><td>0 or 1</td><td>Every 12 hours<br>Log Files are 5-50 MB<br>10000-100000 lines</td><td>8-16 MB</td><td>5-50s</td></tr>
-<tr><td rowspan=2>100,000 -   500,000 visits/month</td><td>1</td><td>0</td><td>0 or 1</td><td>Every hour<br>Log Files are 4-16 MB<br>10000-50000 lines</td><td>16-64 MB</td><td>5-25mn</td></tr>
-<tr>                                                <td>0 (or 2)</td><td>0</td><td>0 or 1</td><td>Every hour<br>Log Files are 4-16 MB<br>10000-50000 lines</td><td>16-64 MB</td><td>5-25s</td></tr>
-<tr><td>         500,000 - 2,000,000 visits/month</td><td>0 (or 2)</td><td>0</td><td>0</td><td>Every hour<br>Log Files are 16-64 MB<br>50000-200000 lines</td><td>64-256 MB</td><td>25-120s</td></tr>
-<tr><td>       2,000,000 - 4,000,000 visits/month</td><td>0 (or 2)</td><td>0</td><td>0</td><td>Every hour<br>Log Files are 64-128 MB<br>200000-400000 lines</td><td>256-512 MB</td><td>120-240s</td></tr>
+<tr><td rowspan=2>     0 -     1,000 visits/month</td><td>1</td><td>0 or 1</td><td>0 or 1</td><td>Once a day<br>Log files are 0-1 MB<br>2000 lines to process</td><td>4 MB free</td><td>2mn</td></tr>
+<tr>                                                <td>0 (or 2)</td><td>0 or 1</td><td>0 or 1</td><td>Once a day<br>Log files are 0-1 MB<br>2000 lines to process</td><td>4 MB free</td><td>1s</td></tr>
+<tr><td rowspan=2> 1,000 -    10,000 visits/month</td><td>1</td><td>0 or 1</td><td>0 or 1</td><td>Once a day<br>Log files are 1-10 MB<br>2000-20000 lines</td><td>4-8 MB free</td><td>2-10mn</td></tr>
+<tr>                                                <td>0 (or 2)</td><td>0 or 1</td><td>0 or 1</td><td>Once a day<br>Log files are 1-10 MB<br>2000-20000 lines</td><td>4-8 MB free</td><td>1-10s</td></tr>
+<tr><td rowspan=2>10,000 -    100,000 visits/month</td><td>1</td><td>0 or 1</td><td>0 or 1</td><td>Every 12 hours<br>Log files are 5-50 MB<br>10000-100000 lines</td><td>8-16 MB free</td><td>5-50mn</td></tr>
+<tr>                                                <td>0 (or 2)</td><td>0 or 1</td><td>0 or 1</td><td>Every 12 hours<br>Log Files are 5-50 MB<br>10000-100000 lines</td><td>8-16 MB free</td><td>5-50s</td></tr>
+<tr><td rowspan=2>100,000 -   500,000 visits/month</td><td>1</td><td>0</td><td>0 or 1</td><td>Every hour<br>Log Files are 4-16 MB<br>10000-50000 lines</td><td>16-64 MB free</td><td>5-25mn</td></tr>
+<tr>                                                <td>0 (or 2)</td><td>0</td><td>0 or 1</td><td>Every hour<br>Log Files are 4-16 MB<br>10000-50000 lines</td><td>16-64 MB free</td><td>5-25s</td></tr>
+<tr><td>         500,000 - 2,000,000 visits/month</td><td>0 (or 2)</td><td>0</td><td>0</td><td>Every hour<br>Log Files are 16-64 MB<br>50000-200000 lines</td><td>64-256 MB free</td><td>25-120s</td></tr>
+<tr><td>       2,000,000 - 4,000,000 visits/month</td><td>0 (or 2)</td><td>0</td><td>0</td><td>Every hour<br>Log Files are 64-128 MB<br>200000-400000 lines</td><td>256-512 MB free</td><td>120-240s</td></tr>
 <tr><td>      +4,000,000 visits/month</td><td colspan=6>AWStats is not a good choice for such web sites. Try a tool with less features but faster like "row counter log analyzers" like <a href="http://www.analog.cx">Analog</a> (Can try also <a href="http://www.mrunix.net/webalizer/">Webalizer</a>)</td></tr>
 </table>
 * You should set <a href="awstats_config.html#DNSLookup">DNSLookup</a> parameter to 0 (or 2) if<br>
 &nbsp;&nbsp; &nbsp;&nbsp; - reverse DNS lookup is already done in your log file,<br>
 &nbsp;&nbsp; &nbsp;&nbsp; - or if your web site has more than 250,000 visits a month.<br>
 Note: Country report can works without reverse DNS lookup if plugin 'geoip' is enabled (faster and more accurate than reverse DNS lookup).<br>
-** Free memory required for update process (in MB), not hardware memory installed.<br>
+** This is free memory required for update process (in MB), this is not hardware memory installed !<br>
 Warning: If you use the <a href="awstats_config.html#URLWithQuery">URLWithQuery</a> or <a href="awstats_config.html#URLReferrerWithQuery">URLReferrerWithQuery</a> option, or forget
 to complete correctly <a href="awstats_config.html#URLQuerySeparators">URLQuerySeparators</a> for some sites, this value can be dramatically increased.<br>
 *** Duration is with Athlon 1GHz/128Mb, Standard Perl 5.8 and LogFormat=1.<br>
