@@ -115,3 +115,5 @@ message112=Yes
 message113=No
 message114=WhoIs info
 message115=OK
+message116=Exit pages
+message117=Visits length

@@ -12,7 +12,8 @@
 # $Revision$ - $Author$ - $Date$
 use strict;no strict "refs";
 use vars qw(%DomainsHashIDLib @RobotsSearchIDOrder_list1 @RobotsSearchIDOrder_list2 @RobotsSearchIDOrder_list3 @BrowsersSearchIDOrder @OSSearchIDOrder @WordsToCleanSearchUrl %BrowsersHereAreGrabbers %BrowsersHashIcon %BrowsersHashIDLib %OSHashID %OSHashLib %RobotsHashIDLib %SearchEnginesHashIDLib %SearchEnginesKnownUrl %DomainsHashIDLib);
-#use diagnostics;
+#use warnings;		# Must be used in test mode only. This reduce a little process speed
+#use diagnostics;	# Must be used in test mode only. This reduce a lot of process speed
 
 # Uncomment following line and a line into GetDelaySinceStart function to get
 # miliseconds time in showsteps option
@@ -56,13 +57,15 @@ my $BarImageVertical_p   = "barrevp.png";
 my $BarImageHorizontal_p = "barrehp.png";
 #$BarImageVertical_e = "barreve.png";
 my $BarImageHorizontal_e = "barrehe.png";
+my $BarImageHorizontal_x = "barrehx.png";
 my $BarImageVertical_h   = "barrevh.png";
 my $BarImageHorizontal_h = "barrehh.png";
 my $BarImageVertical_k   = "barrevk.png";
 my $BarImageHorizontal_k = "barrehk.png";
-my $nowtime = my $nowweekofmonth = my $nowdaymod = my $nowsmallyear = 0;
+my $starttime;
+my $nowtim = my $nowweekofmonth = my $nowdaymod = my $nowsmallyear = 0;
 my $nowsec = my $nowmin = my $nowhour = my $nowday = my $nowmonth = my $nowyear = my $nowwday = 0;
-my $tomorrowtime = my $tomorrowsmallyear = 0;
+my $nowtime = my $tomorrowtime = my $tomorrowsmallyear = 0;
 my $tomorrowsec = my $tomorrowmin = my $tomorrowhour = my $tomorrowday = my $tomorrowmonth = my $tomorrowyear = my $tomorrowwday = 0;
 my ($AllowAccessFromWebToAuthenticatedUsersOnly,$BarHeight,$BarWidth,$DebugResetDone,$Expires,
 $CreateDirDataIfNotExists, $KeepBackupOfHistoricFiles, $MaxLengthOfURL,
@@ -89,26 +92,25 @@ $ShowKeywordsStats,  $ShowHTTPErrorsStats,
 $ShowFlagLinks, $ShowLinksOnUrl,
 $WarningMessages)=
 (1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1);
-my ($ArchiveFileName, $DayRequired, $DefaultFile, $FileConfig, $FileSuffix,
-$HTMLHeadSection, $HTMLEndSection, $HTMLOutput, $Host,
-$LastUpdate, $LinksToWhoIs,
-$LogFile, $LogFormat, $LogFormatString, $Logo, $LogoLink,
-$MonthRequired, $PageCode, $PerlParsingFormat, $QueryString,
-$SiteConfig, $SiteDomain, $SiteToAnalyze, $SiteToAnalyzeWithoutwww,
-$StyleSheet, $WrapperScript,
-$TotalEntries, $TotalBytesPages, $TotalKeyphrases, $TotalDifferentPages, $TotalDifferentKeyphrases,
-$URLFilter, $UserAgent, $YearRequired)=
-();
+my ($ArchiveFileName, $DefaultFile, $HTMLHeadSection, $HTMLEndSection, $LinksToWhoIs,
+$LogFile, $LogFormat, $Logo, $LogoLink, $StyleSheet, $WrapperScript, $SiteDomain)=
+("","","","","","","","","","","","");
 my ($color_Background, $color_TableBG, $color_TableBGRowTitle,
 $color_TableBGTitle, $color_TableBorder, $color_TableRowTitle, $color_TableTitle,
 $color_text, $color_textpercent, $color_titletext, $color_weekend, $color_link, $color_hover,
-$color_h, $color_k, $color_p, $color_s, $color_u, $color_v)=
-("","","","","","","","","","","","","","","","","","","");
+$color_h, $color_k, $color_p, $color_e, $color_x, $color_s, $color_u, $color_v)=
+("","","","","","","","","","","","","","","","","","","","","");
+my ($FileConfig, $FileSuffix, $Host, $HTMLOutput, $LastUpdate, $DayRequired, $MonthRequired, $YearRequired,
+$QueryString, $SiteConfig, $URLFilter, $PageCode, $LogFormatString, $PerlParsingFormat,
+$SiteToAnalyze, $SiteToAnalyzeWithoutwww, $UserAgent)=
+("","","","","","","","","","","","","","","","","");
 my $pos_rc = my $pos_logname = my $pos_date = my $pos_method = my $pos_url = my $pos_code = my $pos_size = 0;
 my $pos_referer = my $pos_agent = my $pos_query = my $pos_gzipin = my $pos_gzipout = my $pos_gzipratio = 0;
 my $lastrequiredfield = my $lowerval = 0;
-my $FirstTime = my $LastTime = my $TotalUnique = my $TotalVisits = my $TotalHostsKnown = my $TotalHostsUnknown = 0;
-my $TotalPages = my $TotalHits = my $TotalBytes = 0;
+my $FirstTime = my $LastTime = 0;
+my $TotalUnique = my $TotalVisits = my $TotalHostsKnown = my $TotalHostsUnknown = 0;
+my $TotalPages = my $TotalHits = my $TotalBytes = my $TotalEntries = my $TotalExits = my $TotalBytesPages = 0;
+my $TotalKeyphrases = my $TotalDifferentPages = my $TotalDifferentKeyphrases = 0;
 # ---------- Init arrays --------
 my @Message=();
 my @HostAliases=();
@@ -136,12 +138,12 @@ my %HistoryFileAlreadyRead=();
 #my %RobotsHashIDLib = ();
 #my %SearchEnginesHashIDLib = my %SearchEnginesKnownUrl = ();
 #my %DomainsHashIDLib = ();
-my %_browser_h = my %_domener_h = my %_domener_k = my %_domener_p = my %_errors_h = ();
+my %_session = my %_browser_h = my %_domener_h = my %_domener_k = my %_domener_p = my %_errors_h = ();
 my %_filetypes_h = my %_filetypes_k = my %_filetypes_gz_in = my %_filetypes_gz_out = ();
-my %_hostmachine_h = my %_hostmachine_k = my %_hostmachine_l = my %_hostmachine_p = ();
+my %_hostmachine_h = my %_hostmachine_k = my %_hostmachine_l = my %_hostmachine_p = my %_hostmachine_s = my %_hostmachine_u = ();
 my %_keyphrases = my %_os_h = my %_pagesrefs_h = my %_robot_h = my %_robot_l = ();
 my %_login_h = my %_login_p = my %_login_k = my %_login_l = ();
-my %_se_referrals_h = my %_sider404_h = my %_referer404_h = my %_url_p = my %_url_k = my %_url_e = ();
+my %_se_referrals_h = my %_sider404_h = my %_referer404_h = my %_url_p = my %_url_k = my %_url_e = my %_url_x = ();
 my %_unknownreferer_l = my %_unknownrefererbrowser_l = ();
 my %val = my %nextval = my %egal = ();
 my %TmpHashDNSLookup = my %TmpHashOS = my %TmpHashRefererServer = my %TmpHashRobot = my %TmpHashBrowser = ();
@@ -151,9 +153,12 @@ my %TmpHashDNSLookup = my %TmpHashOS = my %TmpHashRefererServer = my %TmpHashRob
 #tie %_hostmachine_h, 'Tie::StdHash';
 #tie %_hostmachine_k, 'Tie::StdHash';
 #tie %_hostmachine_l, 'Tie::StdHash';
+#tie %_hostmachine_s, 'Tie::StdHash';
+#tie %_hostmachine_u, 'Tie::StdHash';
 #tie %_url_p, 'Tie::StdHash';
 #tie %_url_k, 'Tie::StdHash';
 #tie %_url_e, 'Tie::StdHash';
+#tie %_url_x, 'Tie::StdHash';
 #
 #tie %_browser_h, 'Tie::StdHash';
 #tie %_domener_p, 'Tie::StdHash';
@@ -442,6 +447,11 @@ sub DayOfWeek {
 	return $dw;
 }
 
+#------------------------------------------------------------------------------
+# Function:     Return 1 if a date exists
+# Input:		$day $month $year
+# Output:		1 if date exists
+#------------------------------------------------------------------------------
 sub DateIsValid {
 	my ($day, $month, $year) = @_;
 	if ($Debug) { debug("DateIsValid for $day $month $year",4); }
@@ -458,7 +468,18 @@ sub DateIsValid {
 	return 1;
 }
 
-
+#------------------------------------------------------------------------------
+# Function:     return string of session length
+# Input:		$starttime $endtime
+# Output:		A string that identify the session length range
+#------------------------------------------------------------------------------
+sub SessionLastToSessionRange {
+	my $starttime=shift;
+	my $endtime=shift;
+	# TODO
+	
+	return "0-30s";
+}
 
 #------------------------------------------------------------------------------
 # Function:     read config file
@@ -490,10 +511,12 @@ sub Read_Config_File {
 		my $param=$felter[0]||next;					# If not a param=value, try with next line
 		my $value=$felter[1];
 		$param =~ s/^\s+//; $param =~ s/\s+$//;
-		$value =~ s/^\s+//; $value =~ s/\s+$//;
-		$value =~ s/^\"//; $value =~ s/\"$//;
-		# Replace __MONENV__ with value of environnement variable MONENV
-		$value =~ s/__(\w+)__/$ENV{$1}/g;
+		if ($value) {
+			$value =~ s/^\s+//; $value =~ s/\s+$//;
+			$value =~ s/^\"//; $value =~ s/\"$//;
+			# Replace __MONENV__ with value of environnement variable MONENV
+			$value =~ s/__(\w+)__/$ENV{$1}/g;
+		}
 		# Read main section
 		if ($param =~ /^LogFile/ && !$LogFile ) { $LogFile=$value; next; }
 		if ($param =~ /^LogFormat/)            	{ $LogFormat=$value; next; }
@@ -643,6 +666,8 @@ sub Read_Config_File {
 		if ($param =~ /^color_h/)               { $color_h=$value; next; }
 		if ($param =~ /^color_k/)               { $color_k=$value; next; }
 		if ($param =~ /^color_s/)               { $color_s=$value; next; }
+		if ($param =~ /^color_e/)               { $color_e=$value; next; }
+		if ($param =~ /^color_x/)               { $color_x=$value; next; }
 	}
 	close CONFIG;
 	# If parameter NotPageList not found, init for backward compatibility
@@ -791,7 +816,7 @@ sub Check_Config {
 		my $timephase=$2;
 		if ($Debug) { debug(" Found a time phase of $timephase hour in log file name",1); }
 		# Get older time
-		my ($oldersec,$oldermin,$olderhour,$olderday,$oldermonth,$olderyear,$olderwday) = localtime($nowtime-($timephase*3600));
+		my ($oldersec,$oldermin,$olderhour,$olderday,$oldermonth,$olderyear,$olderwday) = localtime($starttime-($timephase*3600));
 		my $olderweekofmonth=int($olderday/7);
 		my $olderdaymod=$olderday%7;
 		$olderwday++;
@@ -905,12 +930,14 @@ sub Check_Config {
 	$color_weekend =~ s/#//g; if ($color_weekend !~ /^[0-9|A-Z]+$/i)     			 { $color_weekend="EAEAEA"; }
 	$color_link =~ s/#//g; if ($color_link !~ /^[0-9|A-Z]+$/i)           			 { $color_link="0011BB"; }
 	$color_hover =~ s/#//g; if ($color_hover !~ /^[0-9|A-Z]+$/i)         			 { $color_hover="605040"; }
-	$color_u =~ s/#//g; if ($color_u !~ /^[0-9|A-Z]+$/i)                 			 { $color_u="FF9933"; }
-	$color_v =~ s/#//g; if ($color_v !~ /^[0-9|A-Z]+$/i)                 			 { $color_v="F3F300"; }
+	$color_u =~ s/#//g; if ($color_u !~ /^[0-9|A-Z]+$/i)                 			 { $color_u="FFB055"; }
+	$color_v =~ s/#//g; if ($color_v !~ /^[0-9|A-Z]+$/i)                 			 { $color_v="F8E880"; }
 	$color_p =~ s/#//g; if ($color_p !~ /^[0-9|A-Z]+$/i)                 			 { $color_p="4477DD"; }
 	$color_h =~ s/#//g; if ($color_h !~ /^[0-9|A-Z]+$/i)                 			 { $color_h="66F0FF"; }
-	$color_k =~ s/#//g; if ($color_k !~ /^[0-9|A-Z]+$/i)                 			 { $color_k="339944"; }
+	$color_k =~ s/#//g; if ($color_k !~ /^[0-9|A-Z]+$/i)                 			 { $color_k="2EA495"; }
 	$color_s =~ s/#//g; if ($color_s !~ /^[0-9|A-Z]+$/i)                 			 { $color_s="8888DD"; }
+	$color_e =~ s/#//g; if ($color_e !~ /^[0-9|A-Z]+$/i)                 			 { $color_e="CEC2E8"; }
+	$color_x =~ s/#//g; if ($color_x !~ /^[0-9|A-Z]+$/i)                 			 { $color_x="C1B2E2"; }
 	# Default value	for Messages
 	if (! $Message[0]) { $Message[0]="Unknown"; }
 	if (! $Message[1]) { $Message[1]="Unknown (unresolved ip)"; }
@@ -1028,6 +1055,8 @@ sub Check_Config {
 	if (! $Message[113]) { $Message[113]="No"; }
 	if (! $Message[114]) { $Message[114]="WhoIs info"; }
 	if (! $Message[115]) { $Message[115]="OK"; }
+	if (! $Message[116]) { $Message[116]="Exit Pages"; }
+	if (! $Message[117]) { $Message[117]="Visit length"; }
 	# Check if DirData is OK
 	if (! -d $DirData) {
 		if ($CreateDirDataIfNotExists) {
@@ -1059,6 +1088,7 @@ sub Read_History_File {
 	if (! -s "$DirData/$PROG$DayRequired$month$year$FileSuffix.txt") {
 		# If file not exists, return
 		if ($Debug) { debug(" No history file"); }
+		$LastLine{$year.$month}=0;	# To avoid warning of undefinded value later with use warning
 		return 0;
 	}
 
@@ -1207,7 +1237,11 @@ sub Read_History_File {
 							if ($field[1]) { $_hostmachine_p{$field[0]}+=$field[1]; }
 							if ($field[2]) { $_hostmachine_h{$field[0]}+=$field[2]; }
 							if ($field[3]) { $_hostmachine_k{$field[0]}+=$field[3]; }
-							if (! $_hostmachine_l{$field[0]} && $field[4]) { $_hostmachine_l{$field[0]}=int($field[4]); }
+							if (! $_hostmachine_l{$field[0]} && $field[4]) {	# We save last connexion params if not already catched
+								$_hostmachine_l{$field[0]}=int($field[4]);
+								if ($field[5]) { $_hostmachine_s{$field[0]}=int($field[5]); }
+								if ($field[6]) { $_hostmachine_u{$field[0]}=$field[6]; }
+							}
 							$countloaded++;
 						}
 					}
@@ -1473,23 +1507,25 @@ sub Read_History_File {
 								}
 							}
 							# Posssibilite de mettre if ($URLFilter && $field[0] =~ /$URLFilter/) mais il faut gerer TotalPages de la meme maniere
-							if ($versionmaj < 4) {
+							if ($versionmaj < 4) {	# For old history files
 								$TotalEntries+=($field[2]||0);
 							}
 							else {
 								$TotalBytesPages+=($field[2]||0);
 								$TotalEntries+=($field[3]||0);
+								$TotalExits+=($field[4]||0);
 							}
 						}
 						if ($loadrecord) {
 							if ($field[1]) { $_url_p{$field[0]}+=$field[1]; }
-							if ($versionmaj < 4) {
+							if ($versionmaj < 4) {	# For old history files
 								if ($field[2]) { $_url_e{$field[0]}+=$field[2]; }
 								$_url_k{$field[0]}=0;
 							}
 							else {
 								if ($field[2]) { $_url_k{$field[0]}+=$field[2]; }
 								if ($field[3]) { $_url_e{$field[0]}+=$field[3]; }
+								if ($field[4]) { $_url_x{$field[0]}+=$field[4]; }
 							}
 							$countloaded++;
 						}
@@ -1679,13 +1715,15 @@ sub Read_History_File {
 }
 
 #--------------------------------------------------------------------
-# Function:    Show flags for 5 major languages
-# Input:       Year, Month
+# Function:    Save History file for year month
+# Input:       Year, Month, [dateoflastlineknown]
 #--------------------------------------------------------------------
 sub Save_History_File {
 	my $year=sprintf("%04i",shift);
 	my $month=sprintf("%02i",shift);
-	if ($Debug) { debug("Call to Save_History_File [$year,$month]"); }
+	my $dateoflastlineknown=shift||$LastLine{$year.$month};
+	
+	if ($Debug) { debug("Call to Save_History_File [$year,$month,$dateoflastlineknown]"); }
 	open(HISTORYTMP,">$DirData/$PROG$month$year$FileSuffix.tmp.$$") || error("Error: Couldn't open file \"$DirData/$PROG$month$year$FileSuffix.tmp.$$\" : $!");	# Month before Year kept for backward compatibility
 
 	print HISTORYTMP "AWSTATS DATA FILE $VERSION\n";
@@ -1708,12 +1746,11 @@ sub Save_History_File {
 			my $visits=$DayVisits{$key}||0;
 			my $unique=$DayUnique{$key}||"";
 			print HISTORYTMP "$key $page $hits $bytes $visits $unique\n";
-			next;
 		}
 	}
 	print HISTORYTMP "END_DAY\n";
 	print HISTORYTMP "BEGIN_TIME\n";
-	for (my $ix=0; $ix<=23; $ix++) { print HISTORYTMP "$ix ".int($_time_p[$ix])." ".int($_time_h[$ix])." ".int($_time_k[$ix])."\n"; next; }
+	for (my $ix=0; $ix<=23; $ix++) { print HISTORYTMP "$ix ".int($_time_p[$ix])." ".int($_time_h[$ix])." ".int($_time_k[$ix])."\n"; }
 	print HISTORYTMP "END_TIME\n";
 
 	# Who
@@ -1721,7 +1758,7 @@ sub Save_History_File {
 	foreach my $key (keys %_domener_h) {
 		my $page=$_domener_p{$key}||0;
 		my $bytes=$_domener_k{$key}||0;		# ||0 could be commented to reduce history file size
-		print HISTORYTMP "$key $page $_domener_h{$key} $bytes\n"; next;
+		print HISTORYTMP "$key $page $_domener_h{$key} $bytes\n";
 	}
 	print HISTORYTMP "END_DOMAIN\n";
 	print HISTORYTMP "BEGIN_VISITOR\n";
@@ -1731,26 +1768,60 @@ sub Save_History_File {
 		$keysinkeylist{$key}=1;
 		my $page=$_hostmachine_p{$key}||0;
 		my $bytes=$_hostmachine_k{$key}||0;
-		my $lastaccess=$_hostmachine_l{$key}||"";
-		print HISTORYTMP "$key $page $_hostmachine_h{$key} $bytes $lastaccess\n"; next;
+		if ($_hostmachine_l{$key} && $_hostmachine_s{$key} && $_hostmachine_u{$key}) {
+			if (($_hostmachine_l{$key}+$VisitTimeOut) < $dateoflastlineknown) {
+				# Session for this user is expired
+				$_url_x{$_hostmachine_u{$key}}++;
+				$_session{SessionLastToSessionRange($_hostmachine_l{$key},$_hostmachine_s{$key})}++;
+				delete $_hostmachine_s{$key};
+				delete $_hostmachine_u{$key};
+				print HISTORYTMP "$key $page $_hostmachine_h{$key} $bytes $_hostmachine_l{$key}\n";
+			}
+			else {
+				# If this user has started a new session that is not expired
+				print HISTORYTMP "$key $page $_hostmachine_h{$key} $bytes $_hostmachine_l{$key} $_hostmachine_s{$key} $_hostmachine_u{$key}\n";
+			}
+		}
+		else {
+			print HISTORYTMP "$key $page $_hostmachine_h{$key} $bytes\n";
+		}
 	}
 	foreach my $key (keys %_hostmachine_h) {
 		if ($keysinkeylist{$key}) { next; }
 		my $page=$_hostmachine_p{$key}||0;
 		my $bytes=$_hostmachine_k{$key}||0;
-		my $lastaccess=$_hostmachine_l{$key}||"";
-		print HISTORYTMP "$key $page $_hostmachine_h{$key} $bytes $lastaccess\n"; next;
+		if ($_hostmachine_l{$key} && $_hostmachine_s{$key} && $_hostmachine_u{$key}) {
+			if (($_hostmachine_l{$key}+$VisitTimeOut) < $dateoflastlineknown) {
+				# Session for this user is expired
+				$_url_x{$_hostmachine_u{$key}}++;
+				$_session{SessionLastToSessionRange($_hostmachine_l{$key},$_hostmachine_s{$key})}++;
+				delete $_hostmachine_s{$key};
+				delete $_hostmachine_u{$key};
+				print HISTORYTMP "$key $page $_hostmachine_h{$key} $bytes $_hostmachine_l{$key}\n";
+			}
+			else {
+				# If this user has started a new session that is not expired
+				print HISTORYTMP "$key $page $_hostmachine_h{$key} $bytes $_hostmachine_l{$key} $_hostmachine_s{$key} $_hostmachine_u{$key}\n";
+			}
+		}
+		else {
+			print HISTORYTMP "$key $page $_hostmachine_h{$key} $bytes\n";
+		}
 	}
 	print HISTORYTMP "END_VISITOR\n";
+	print HISTORYTMP "BEGIN_SESSION\n";
+	foreach my $key (keys %_session) { print HISTORYTMP "$key ".int($_session{$key})."\n"; }
+	print HISTORYTMP "END_SESSION\n";
 	print HISTORYTMP "BEGIN_LOGIN\n";
-	foreach my $key (keys %_login_h) { print HISTORYTMP "$key ".int($_login_p{$key})." ".int($_login_h{$key})." ".int($_login_k{$key})." $_login_l{$key}\n"; next; }
+	foreach my $key (keys %_login_h) { print HISTORYTMP "$key ".int($_login_p{$key})." ".int($_login_h{$key})." ".int($_login_k{$key})." $_login_l{$key}\n"; }
 	print HISTORYTMP "END_LOGIN\n";
 	print HISTORYTMP "BEGIN_ROBOT\n";
-	foreach my $key (keys %_robot_h) { print HISTORYTMP "$key ".int($_robot_h{$key})." $_robot_l{$key}\n"; next; }
+	foreach my $key (keys %_robot_h) { print HISTORYTMP "$key ".int($_robot_h{$key})." $_robot_l{$key}\n"; }
 	print HISTORYTMP "END_ROBOT\n";
 
 	# Navigation
 	# We save page list in score sorted order to get a -output faster and with less use of memory.
+	# This section must be saved after VISITOR section
 	print HISTORYTMP "BEGIN_SIDER\n";
 	&BuildKeyList($MaxNbOfPageShown,$MinHitFile,\%_url_p,\%_url_p);
 	%keysinkeylist=();
@@ -1758,15 +1829,13 @@ sub Save_History_File {
 		$keysinkeylist{$key}=1;
 		my $newkey=$key;
 		$newkey =~ s/([^:])\/\//$1\//g;		# Because some targeted url were taped with 2 / (Ex: //rep//file.htm). We must keep http://rep/file.htm
-		my $entry=$_url_e{$key}||"";
-		print HISTORYTMP "$newkey ".int($_url_p{$key}||0)." ".int($_url_k{$key}||0)." $entry\n"; next;
+		print HISTORYTMP "$newkey ".int($_url_p{$key}||0)." ".int($_url_k{$key}||0)." ".int($_url_e{$key}||0)." ".int($_url_x{$key}||0)."\n";
 	}
 	foreach my $key (keys %_url_p) {
 		if ($keysinkeylist{$key}) { next; }
 		my $newkey=$key;
 		$newkey =~ s/([^:])\/\//$1\//g;		# Because some targeted url were taped with 2 / (Ex: //rep//file.htm). We must keep http://rep/file.htm
-		my $entry=$_url_e{$key}||"";
-		print HISTORYTMP "$newkey ".int($_url_p{$key}||0)." ".int($_url_k{$key}||0)." $entry\n"; next;
+		print HISTORYTMP "$newkey ".int($_url_p{$key}||0)." ".int($_url_k{$key}||0)." ".int($_url_e{$key}||0)." ".int($_url_x{$key}||0)."\n";
 	}
 	print HISTORYTMP "END_SIDER\n";
 	print HISTORYTMP "BEGIN_FILETYPES\n";
@@ -1776,36 +1845,33 @@ sub Save_History_File {
 		my $bytesbefore=$_filetypes_gz_in{$key}||0;
 		my $bytesafter=$_filetypes_gz_out{$key}||0;
 		print HISTORYTMP "$key $hits $bytes $bytesbefore $bytesafter\n";
-		next;
 	}
 	print HISTORYTMP "END_FILETYPES\n";
 	print HISTORYTMP "BEGIN_BROWSER\n";
-	foreach my $key (keys %_browser_h) { print HISTORYTMP "$key $_browser_h{$key}\n"; next; }
+	foreach my $key (keys %_browser_h) { print HISTORYTMP "$key $_browser_h{$key}\n"; }
 	print HISTORYTMP "END_BROWSER\n";
 	print HISTORYTMP "BEGIN_NSVER\n";
 	for (my $i=1; $i<=$#_nsver_h; $i++) {
 		my $nb_h=$_nsver_h[$i]||"";
 		print HISTORYTMP "$i $nb_h\n";
-		next;
 	}
 	print HISTORYTMP "END_NSVER\n";
 	print HISTORYTMP "BEGIN_MSIEVER\n";
 	for (my $i=1; $i<=$#_msiever_h; $i++) {
 		my $nb_h=$_msiever_h[$i]||"";
 		print HISTORYTMP "$i $nb_h\n";
-		next;
 	}
 	print HISTORYTMP "END_MSIEVER\n";
 	print HISTORYTMP "BEGIN_OS\n";
-	foreach my $key (keys %_os_h) { print HISTORYTMP "$key $_os_h{$key}\n"; next; }
+	foreach my $key (keys %_os_h) { print HISTORYTMP "$key $_os_h{$key}\n"; }
 	print HISTORYTMP "END_OS\n";
 
 	# Referer
 	print HISTORYTMP "BEGIN_UNKNOWNREFERER\n";
-	foreach my $key (keys %_unknownreferer_l) { print HISTORYTMP "$key $_unknownreferer_l{$key}\n"; next; }
+	foreach my $key (keys %_unknownreferer_l) { print HISTORYTMP "$key $_unknownreferer_l{$key}\n"; }
 	print HISTORYTMP "END_UNKNOWNREFERER\n";
 	print HISTORYTMP "BEGIN_UNKNOWNREFERERBROWSER\n";
-	foreach my $key (keys %_unknownrefererbrowser_l) { print HISTORYTMP "$key $_unknownrefererbrowser_l{$key}\n"; next; }
+	foreach my $key (keys %_unknownrefererbrowser_l) { print HISTORYTMP "$key $_unknownrefererbrowser_l{$key}\n"; }
 	print HISTORYTMP "END_UNKNOWNREFERERBROWSER\n";
 	print HISTORYTMP "From0 ".int($_from_p[0])." ".int($_from_h[0])."\n";
 	print HISTORYTMP "From1 ".int($_from_p[1])." ".int($_from_h[1])."\n";
@@ -1814,14 +1880,14 @@ sub Save_History_File {
 	print HISTORYTMP "From4 ".int($_from_p[4])." ".int($_from_h[4])."\n";		# Same site
 	print HISTORYTMP "From5 ".int($_from_p[5])." ".int($_from_h[5])."\n";		# News
 	print HISTORYTMP "BEGIN_SEREFERRALS\n";
-	foreach my $key (keys %_se_referrals_h) { print HISTORYTMP "$key $_se_referrals_h{$key}\n"; next; }
+	foreach my $key (keys %_se_referrals_h) { print HISTORYTMP "$key $_se_referrals_h{$key}\n"; }
 	print HISTORYTMP "END_SEREFERRALS\n";
 	print HISTORYTMP "BEGIN_PAGEREFS\n";
 	foreach my $key (keys %_pagesrefs_h) {
 		my $newkey=$key;
 		$newkey =~ s/^http(s|):\/\/([^\/]+)\/$/http$1:\/\/$2/;	# Remove / at end of http://.../ but not at end of http://.../dir/
 		$newkey =~ s/\s/%20/g;
-		print HISTORYTMP "$newkey $_pagesrefs_h{$key}\n"; next;
+		print HISTORYTMP "$newkey $_pagesrefs_h{$key}\n";
 	}
 	print HISTORYTMP "END_PAGEREFS\n";
 	print HISTORYTMP "BEGIN_SEARCHWORDS\n";
@@ -1830,18 +1896,18 @@ sub Save_History_File {
 	foreach my $key (@keylist) {
 		$keysinkeylist{$key}=1;
 		my $keyphrase=$key;
-		print HISTORYTMP "$keyphrase $_keyphrases{$key}\n"; next;
+		print HISTORYTMP "$keyphrase $_keyphrases{$key}\n";
 	}
 	foreach my $key (keys %_keyphrases) {
 		if ($keysinkeylist{$key}) { next; }
 		my $keyphrase=$key;
-		print HISTORYTMP "$keyphrase $_keyphrases{$key}\n"; next;
+		print HISTORYTMP "$keyphrase $_keyphrases{$key}\n";
 	}
 	print HISTORYTMP "END_SEARCHWORDS\n";
 
 	# Other
 	print HISTORYTMP "BEGIN_ERRORS\n";
-	foreach my $key (keys %_errors_h) { print HISTORYTMP "$key $_errors_h{$key}\n"; next; }
+	foreach my $key (keys %_errors_h) { print HISTORYTMP "$key $_errors_h{$key}\n"; }
 	print HISTORYTMP "END_ERRORS\n";
 	print HISTORYTMP "BEGIN_SIDER_404\n";
 	foreach my $key (keys %_sider404_h) {
@@ -1849,7 +1915,6 @@ sub Save_History_File {
 		my $newreferer=$_referer404_h{$key}||"";
 		$newreferer =~ s/\s/%20/g;
 		print HISTORYTMP "$newkey ".int($_sider404_h{$key})." $newreferer\n";
-		next;
 	}
 	print HISTORYTMP "END_SIDER_404\n";
 
@@ -1887,12 +1952,12 @@ sub Init_HashArray {
 	for (my $ix=0; $ix<6; $ix++)  { $_from_p[$ix]=0; $_from_h[$ix]=0; }
 	for (my $ix=0; $ix<24; $ix++) { $_time_h[$ix]=0; $_time_k[$ix]=0; $_time_p[$ix]=0; }
 	# Delete/Reinit all hash arrays with name beginning by _
-	%_browser_h = %_domener_h = %_domener_k = %_domener_p = %_errors_h =
+	%_session = %_browser_h = %_domener_h = %_domener_k = %_domener_p = %_errors_h =
 	%_filetypes_h = %_filetypes_k = %_filetypes_gz_in = %_filetypes_gz_out =
-	%_hostmachine_h = %_hostmachine_k = %_hostmachine_l = %_hostmachine_p =
+	%_hostmachine_h = %_hostmachine_k = %_hostmachine_p = %_hostmachine_l = %_hostmachine_s = %_hostmachine_u = 
 	%_keyphrases = %_os_h = %_pagesrefs_h = %_robot_h = %_robot_l =
 	%_login_h = %_login_p = %_login_k = %_login_l =
-	%_se_referrals_h = %_sider404_h = %_referer404_h = %_url_p = %_url_k = %_url_e =
+	%_se_referrals_h = %_sider404_h = %_referer404_h = %_url_p = %_url_k = %_url_e = %_url_x =
 	%_unknownreferer_l = %_unknownrefererbrowser_l = ();
 }
 
@@ -2362,9 +2427,9 @@ if ((! $ENV{"GATEWAY_INTERFACE"}) && (! $SiteConfig)) {
 	exit 2;
 }
 
-# Get current time
-$nowtime=time;
-($nowsec,$nowmin,$nowhour,$nowday,$nowmonth,$nowyear,$nowwday) = localtime($nowtime);
+# Get current time (time when AWStats is started)
+$starttime=time;
+($nowsec,$nowmin,$nowhour,$nowday,$nowmonth,$nowyear,$nowwday) = localtime($starttime);
 $nowweekofmonth=int($nowday/7);
 $nowdaymod=$nowday%7;
 $nowwday++;
@@ -2378,8 +2443,9 @@ if ($nowday < 10) { $nowday = "0$nowday"; }
 if ($nowhour < 10) { $nowhour = "0$nowhour"; }
 if ($nowmin < 10) { $nowmin = "0$nowmin"; }
 if ($nowsec < 10) { $nowsec = "0$nowsec"; }
+$nowtime=int($nowyear.$nowmonth.$nowday.$nowhour.$nowmin.$nowsec);
 # Get tomorrow time (will be used to discard some record with corrupted date (future date))
-($tomorrowsec,$tomorrowmin,$tomorrowhour,$tomorrowday,$tomorrowmonth,$tomorrowyear) = localtime($nowtime+86400);
+($tomorrowsec,$tomorrowmin,$tomorrowhour,$tomorrowday,$tomorrowmonth,$tomorrowyear) = localtime($starttime+86400);
 if ($tomorrowyear < 100) { $tomorrowyear+=2000; } else { $tomorrowyear+=1900; }
 $tomorrowsmallyear=$tomorrowyear;$tomorrowsmallyear =~ s/^..//;
 if (++$tomorrowmonth < 10) { $tomorrowmonth = "0$tomorrowmonth"; }
@@ -2465,7 +2531,7 @@ if ($UpdateStats && (! $AllowToUpdateStatsFromBrowser) && $ENV{"GATEWAY_INTERFAC
 %monthlib = ("01","$Message[60]","02","$Message[61]","03","$Message[62]","04","$Message[63]","05","$Message[64]","06","$Message[65]","07","$Message[66]","08","$Message[67]","09","$Message[68]","10","$Message[69]","11","$Message[70]","12","$Message[71]");
 %monthnum = ("Jan","01","jan","01","Feb","02","feb","02","Mar","03","mar","03","Apr","04","apr","04","May","05","may","05","Jun","06","jun","06","Jul","07","jul","07","Aug","08","aug","08","Sep","09","sep","09","Oct","10","oct","10","Nov","11","nov","11","Dec","12","dec","12");	# monthnum must be in english because used to translate log date in apache log files
 $LastUpdate=0;
-$TotalEntries=0; $TotalBytesPages=0; $TotalKeyphrases=0; $TotalDifferentPages=0; $TotalDifferentKeyphrases=0;
+$TotalEntries=0; $TotalExits=0; $TotalBytesPages=0; $TotalKeyphrases=0; $TotalDifferentPages=0; $TotalDifferentKeyphrases=0;
 for (my $ix=1; $ix<=12; $ix++) {
 	my $monthix=$ix;if ($monthix < 10) { $monthix  = "0$monthix"; }
 	$LastLine{$YearRequired.$monthix}=0;$FirstTime{$YearRequired.$monthix}=0;$LastTime{$YearRequired.$monthix}=0;$LastUpdate{$YearRequired.$monthix}=0;
@@ -2830,7 +2896,8 @@ if ($UpdateStats) {
 		# Skip if not a new line
 		#-----------------------
 		if ($NowNewLinePhase) {
-			if ($timerecord < $LastLine{$yearmonth}) { $NbOfLinesCorrupted++; if ($ShowCorrupted) { print "Corrupted record (not sorted record): $_\n"; } next; }	# Should not happen, kept in case of parasite/corrupted old line
+			if ($timerecord < $LastLine{$yearmonth}) {
+				$NbOfLinesCorrupted++; if ($ShowCorrupted) { print "Corrupted record (not sorted record): $_\n"; } next; }	# Should not happen, kept in case of parasite/corrupted old line
 		}
 		else {
 			if ($timerecord <= $LastLine{$yearmonth}) {
@@ -2850,7 +2917,7 @@ if ($UpdateStats) {
 		#----------------------------------------
 		$LastLine{$yearmonth} = $timerecord;	# !!
 
-		# TODO. Add as a robot if URL is robots.txt
+		# TODO. Add robot if a list if URL is robots.txt (Note: robot referer value can be same than a normal browser)
 
 		# Skip for some client host IP addresses, some URLs, other URLs
 		if ( &SkipFile($field[$pos_url]) || &SkipHost($field[$pos_rc]) || ! &OnlyFile($field[$pos_url]) ) {	# !!!!
@@ -2868,7 +2935,7 @@ if ($UpdateStats) {
 		if ((($monthrecord > $monthtoprocess) && ($yearrecord >= $yeartoprocess)) || ($yearrecord > $yeartoprocess)) {
 			# Yes, a new month to process
 			if ($monthtoprocess) {
-				&Save_History_File($yeartoprocess,$monthtoprocess);		# We save data of current processed month
+				&Save_History_File($yeartoprocess,$monthtoprocess,$timerecord);		# We save data of current processed month
 				&Init_HashArray($yeartoprocess,$monthtoprocess);		# Start init for next one
 			}
 			$monthtoprocess=$monthrecord;$yeartoprocess=$yearrecord;
@@ -3040,57 +3107,53 @@ if ($UpdateStats) {
 			if ($Debug) { debug(" No DNS lookup asked.",3); }
 		}
 
+		my $Domain;
 		if ($HostIsIp && ((! $TmpHashDNSLookup{$Host}) || ($TmpHashDNSLookup{$Host} eq "ip"))) {
 			# Here $Host = IP address not resolved
-			if ($PageBool) {
-				if ($timerecord > (($_hostmachine_l{$Host}||0)+$VisitTimeOut)) {
-					$MonthVisits{$yearmonth}++;
-					$DayVisits{$yearmonthdayrecord}++;
-					if (! $_hostmachine_l{$Host}) { $MonthUnique{$yearmonth}++; }
-					$_url_e{$field[$pos_url]}++; 	# Increase 'entry' page
-				}
-				$_hostmachine_p{$Host}++;
-				$_hostmachine_l{$Host}=$timerecord;
-				$_domener_p{"ip"}++;
-			}
-			if (! $_hostmachine_h{$Host}) {	$MonthHostsUnknown{$yearmonth}++; }
-			$_hostmachine_h{$Host}++;
-			$_hostmachine_k{$Host}+=$field[$pos_size];
-			$_domener_h{"ip"}++;
-			$_domener_k{"ip"}+=$field[$pos_size];
+			$_ = $Host;
 		}
 		else {
 			# Here $TmpHashDNSLookup{$Host} is $Host resolved or undefined if $Host was already a host name
 			$_ = ($TmpHashDNSLookup{$Host}?$TmpHashDNSLookup{$Host}:$Host);
 			tr/A-Z/a-z/;
-			#if (!$FullHostName) { s/^[\w\-]+\.//; };
-			if ($PageBool) {
-				if ($timerecord > (($_hostmachine_l{$_}||0)+$VisitTimeOut)) {
-					# This is a new visit
-					$MonthVisits{$yearmonth}++;
-					$DayVisits{$yearmonthdayrecord}++;
-					if (! $_hostmachine_l{$_}) { $MonthUnique{$yearmonth}++; }
-					$_url_e{$field[$pos_url]}++; 	# Increase 'entry' page
+			if (/\.(\w+)$/) { $Domain=$1; }
+		}
+			
+		if ($PageBool) {
+			if ($timerecord > (($_hostmachine_l{$_}||0)+$VisitTimeOut)) {
+				# This is a new visit
+				if ($_hostmachine_l{$_} && $_hostmachine_s{$_} && $_hostmachine_u{$_}) {	# If there was a preceding session running
+					# Session for $_ is expired so we close and count it
+					$_url_x{$_hostmachine_u{$_}}++;
+					$_session{SessionLastToSessionRange($_hostmachine_l{$_},$_hostmachine_s{$_})}++;
+#					delete $_hostmachine_s{$_};
+#					delete $_hostmachine_u{$_};
 				}
-				$_hostmachine_p{$_}++;
-				$_hostmachine_l{$_}=$timerecord;
-				}
-			if (! $_hostmachine_h{$_}) { $MonthHostsKnown{$yearmonth}++; }
-			$_hostmachine_h{$_}++;
-			$_hostmachine_k{$_}+=$field[$pos_size];
 
-			# Count top-level domain
-			if (/\.(\w+)$/) { $_=$1; }
-			if ($DomainsHashIDLib{$_}) {
-				 if ($PageBool) { $_domener_p{$_}++; }
-				 $_domener_h{$_}++;
-				 $_domener_k{$_}+=$field[$pos_size];
-				 }
-			else {
-				 if ($PageBool) { $_domener_p{"ip"}++; }
-				 $_domener_h{"ip"}++;
-				 $_domener_k{"ip"}+=$field[$pos_size];
+				$MonthVisits{$yearmonth}++;
+				$DayVisits{$yearmonthdayrecord}++;
+				if (! $_hostmachine_l{$_}) { $MonthUnique{$yearmonth}++; }
+				$_url_e{$field[$pos_url]}++; 		# Increase 'entry' page
+				$_hostmachine_s{$_}=$timerecord;	# Save start of first visit
 			}
+			$_hostmachine_p{$_}++;
+			$_hostmachine_l{$_}=$timerecord;
+			$_hostmachine_u{$_}=$field[$pos_url];
+		}
+		if (! $_hostmachine_h{$_}) { $MonthHostsUnknown{$yearmonth}++; }
+		$_hostmachine_h{$_}++;
+		$_hostmachine_k{$_}+=$field[$pos_size];
+
+		# Count top-level domain
+		if ($DomainsHashIDLib{$Domain}) {
+			 if ($PageBool) { $_domener_p{$Domain}++; }
+			 $_domener_h{$Domain}++;
+			 $_domener_k{$Domain}+=$field[$pos_size];
+			 }
+		else {
+			 if ($PageBool) { $_domener_p{"ip"}++; }
+			 $_domener_h{"ip"}++;
+			 $_domener_k{"ip"}+=$field[$pos_size];
 		}
 
 		if ($UserAgent) {	 # Made on each record -> -100 rows/seconds
@@ -3431,8 +3494,8 @@ if ($HTMLOutput) {
 	my @filearray;
 	my %listofyears;
 	my $max_p; my $max_h; my $max_k; my $max_v;
-	my $rest_p; my $rest_h; my $rest_k; my $rest_e; my $rest_s;
-	my $total_p; my $total_h; my $total_k; my $total_e; my $total_s;
+	my $rest_p; my $rest_h; my $rest_k; my $rest_e; my $rest_x; my $rest_s;
+	my $total_p; my $total_h; my $total_k; my $total_e; my $total_x; my $total_s;
 
 	$SiteToAnalyze =~ s/\\\./\./g;
 
@@ -3542,6 +3605,8 @@ EOF
 	foreach my $key (keys %_errors_h) { $TotalErrors+=$_errors_h{$key}; }
 	# TotalEntries (if not already specifically counted, we init it from _url_e hash table)
 	if (!$TotalEntries) { foreach my $key (keys %_url_e) { $TotalEntries+=$_url_e{$key}; } }
+	# TotalExits (if not already specifically counted, we init it from _url_x hash table)
+	if (!$TotalExits) { foreach my $key (keys %_url_x) { $TotalExits+=$_url_x{$key}; } }
 	# TotalBytesPages (if not already specifically counted, we init it from _url_k hash table)
 	if (!$TotalBytesPages) { foreach my $key (keys %_url_k) { $TotalBytesPages+=$_url_k{$key}; } }
 	# TotalKeyphrases (if not already specifically counted, we init it from _keyphrases hash table)
@@ -3793,11 +3858,12 @@ EOF
 		else { print "$Message[102]: ".(scalar keys %_url_p)." $Message[28]"; }
 		print "</TH>";
 		print "<TH bgcolor=\"#$color_p\">&nbsp;$Message[29]&nbsp;</TH>";
-		print "<TH bgcolor=\"#$color_s\">&nbsp;$Message[104]&nbsp;</TH>";
 		print "<TH bgcolor=\"#$color_k\">&nbsp;$Message[106]&nbsp;</TH>";
+		print "<TH bgcolor=\"#$color_e\">&nbsp;$Message[104]&nbsp;</TH>";
+		print "<TH bgcolor=\"#$color_x\">&nbsp;$Message[116]&nbsp;</TH>";
 		if ($AddOn) { AddOn_ShowFields(""); }
 		print "<TH>&nbsp;</TH></TR>\n";
-		$total_p=$total_k=$total_e=0;
+		$total_p=$total_k=$total_e=$total_x=0;
 		my $count=0;
 		&BuildKeyList($MaxRowsInHTMLOutput,$MinHitFile,\%_url_p,\%_url_p);
 		$max_p=1; $max_k=1;
@@ -3812,31 +3878,36 @@ EOF
 			if ($ShowLinksOnUrl) { print "<A HREF=\"http://$SiteToAnalyze$key\">$nompage</A>"; }
 			else              	 { print "$nompage"; }
 
-			my $bredde_p=0; my $bredde_e=0; my $bredde_k=0;
+			my $bredde_p=0; my $bredde_e=0; my $bredde_x=0; my $bredde_k=0;
 			if ($max_p > 0) { $bredde_p=int($BarWidth*($_url_p{$key}||0)/$max_p)+1; }
 			if (($bredde_p==1) && $_url_p{$key}) { $bredde_p=2; }
 			if ($max_p > 0) { $bredde_e=int($BarWidth*($_url_e{$key}||0)/$max_p)+1; }
 			if (($bredde_e==1) && $_url_e{$key}) { $bredde_e=2; }
+			if ($max_p > 0) { $bredde_x=int($BarWidth*($_url_x{$key}||0)/$max_p)+1; }
+			if (($bredde_x==1) && $_url_x{$key}) { $bredde_x=2; }
 			if ($max_k > 0) { $bredde_k=int($BarWidth*(($_url_k{$key}||0)/($_url_p{$key}||1))/$max_k)+1; }
 			if (($bredde_k==1) && $_url_k{$key}) { $bredde_k=2; }
-			print "</TD><TD>$_url_p{$key}</TD><TD>".($_url_e{$key}?$_url_e{$key}:"&nbsp;")."</TD><TD>".($_url_k{$key}?Format_Bytes($_url_k{$key}/($_url_p{$key}||1)):"&nbsp;")."</TD>";
+			print "</TD><TD>$_url_p{$key}</TD><TD>".($_url_k{$key}?Format_Bytes($_url_k{$key}/($_url_p{$key}||1)):"&nbsp;")."</TD><TD>".($_url_e{$key}?$_url_e{$key}:"&nbsp;")."</TD><TD>".($_url_x{$key}?$_url_x{$key}:"&nbsp;")."</TD>";
 			if ($AddOn) { AddOn_ShowFields($key); }
 			print "<TD CLASS=AWL>";
 			print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_p\" WIDTH=$bredde_p HEIGHT=6><br>";
+			print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_k\" WIDTH=$bredde_k HEIGHT=6><br>";
 			print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_e\" WIDTH=$bredde_e HEIGHT=6><br>";
-			print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_k\" WIDTH=$bredde_k HEIGHT=6>";
+			print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_x\" WIDTH=$bredde_x HEIGHT=6>";
 			print "</TD></TR>\n";
 			$total_p += $_url_p{$key};
 			$total_e += $_url_e{$key};
+			$total_x += $_url_x{$key};
 			$total_k += $_url_k{$key};
 			$count++;
 		}
-		if ($Debug) { debug("Total real / shown : $TotalPages / $total_p - $TotalEntries / $total_e - $TotalBytesPages / $total_k",2); }
+		if ($Debug) { debug("Total real / shown : $TotalPages / $total_p - $TotalEntries / $total_e - $TotalExits / $total_x - $TotalBytesPages / $total_k",2); }
 		$rest_p=$TotalPages-$total_p;
 		$rest_e=$TotalEntries-$total_e;
+		$rest_x=$TotalExits-$total_x;
 		$rest_k=$TotalBytesPages-$total_k;
 		if ($rest_p > 0 || $rest_e > 0 || $rest_k) {
-			print "<TR><TD CLASS=AWL><font color=blue>$Message[2]</font></TD><TD>$rest_p</TD><TD>".($rest_e?$rest_e:"&nbsp;")."</TD><TD>".($rest_k?Format_Bytes($rest_k/$rest_p||1):"&nbsp;")."<TD>&nbsp;</TD></TR>\n";
+			print "<TR><TD CLASS=AWL><font color=blue>$Message[2]</font></TD><TD>$rest_p</TD><TD>".($rest_k?Format_Bytes($rest_k/$rest_p||1):"&nbsp;")."<TD>".($rest_e?$rest_e:"&nbsp;")."</TD><TD>".($rest_x?$rest_x:"&nbsp;")."</TD><TD>&nbsp;</TD></TR>\n";
 		}
 		&tab_end;
 		&html_end;
@@ -4396,10 +4467,11 @@ EOF
 		&tab_head("$Message[19] ($Message[77] $MaxNbOfPageShown) &nbsp; - &nbsp; <a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=urldetail":"$PROG$FileSuffix.urldetail.html")."\">$Message[80]</a>",19);
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$TotalDifferentPages $Message[28]</TH>";
 		print "<TH bgcolor=\"#$color_p\" width=80>$Message[29]</TH>";
-		print "<TH bgcolor=\"#$color_s\" width=80>$Message[104]</TH>";
 		print "<TH bgcolor=\"#$color_k\" width=80>$Message[106]</TH>";
+		print "<TH bgcolor=\"#$color_e\" width=80>$Message[104]</TH>";
+		print "<TH bgcolor=\"#$color_x\" width=80>$Message[116]</TH>";
 		print "<TH>&nbsp;</TH></TR>\n";
-		$total_p=$total_e=$total_k=0;
+		$total_p=$total_e=$total_x=$total_k=0;
 		$max_p=1; $max_k=1;
 		my $count=0;
 		&BuildKeyList($MaxNbOfPageShown,$MinHitFile,\%_url_p,\%_url_p);
@@ -4425,29 +4497,34 @@ EOF
 			else {
 				print "$nompage";
 			}
-			my $bredde_p=0; my $bredde_e=0; my $bredde_k=0;
+			my $bredde_p=0; my $bredde_e=0; my $bredde_x=0; my $bredde_k=0;
 			if ($max_p > 0) { $bredde_p=int($BarWidth*($_url_p{$key}||0)/$max_p)+1; }
 			if (($bredde_p==1) && $_url_p{$key}) { $bredde_p=2; }
 			if ($max_p > 0) { $bredde_e=int($BarWidth*($_url_e{$key}||0)/$max_p)+1; }
 			if (($bredde_e==1) && $_url_e{$key}) { $bredde_e=2; }
+			if ($max_p > 0) { $bredde_x=int($BarWidth*($_url_x{$key}||0)/$max_p)+1; }
+			if (($bredde_x==1) && $_url_x{$key}) { $bredde_x=2; }
 			if ($max_k > 0) { $bredde_k=int($BarWidth*(($_url_k{$key}||0)/($_url_p{$key}||1))/$max_k)+1; }
 			if (($bredde_k==1) && $_url_k{$key}) { $bredde_k=2; }
-			print "</TD><TD>$_url_p{$key}</TD><TD>".($_url_e{$key}?$_url_e{$key}:"&nbsp;")."</TD><TD>".($_url_k{$key}?Format_Bytes($_url_k{$key}/($_url_p{$key}||1)):"&nbsp;")."</TD>";
+			print "</TD><TD>$_url_p{$key}</TD><TD>".($_url_k{$key}?Format_Bytes($_url_k{$key}/($_url_p{$key}||1)):"&nbsp;")."</TD><TD>".($_url_e{$key}?$_url_e{$key}:"&nbsp;")."</TD><TD>".($_url_x{$key}?$_url_x{$key}:"&nbsp;")."</TD>";
 			print "<TD CLASS=AWL>";
 			print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_p\" WIDTH=$bredde_p HEIGHT=6 ALT=\"$Message[56]: ".int($_url_p{$key}||0)."\" title=\"$Message[56]: ".int($_url_p{$key}||0)."\"><br>";
+			print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_k\" WIDTH=$bredde_k HEIGHT=6 ALT=\"$Message[106]: ".($_url_k{$key}?Format_Bytes($_url_k{$key}/($_url_p{$key}||1)):"&nbsp;")."\" title=\"$Message[106]: ".($_url_k{$key}?Format_Bytes($_url_k{$key}/($_url_p{$key}||1)):"&nbsp;")."\"><br>";
 			print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_e\" WIDTH=$bredde_e HEIGHT=6 ALT=\"$Message[104]: ".int($_url_e{$key}||0)."\" title=\"$Message[104]: ".int($_url_e{$key}||0)."\"><br>";
-			print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_k\" WIDTH=$bredde_k HEIGHT=6 ALT=\"$Message[106]: ".($_url_k{$key}?Format_Bytes($_url_k{$key}/($_url_p{$key}||1)):"&nbsp;")."\" title=\"$Message[106]: ".($_url_k{$key}?Format_Bytes($_url_k{$key}/($_url_p{$key}||1)):"&nbsp;")."\">";
+			print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_x\" WIDTH=$bredde_x HEIGHT=6 ALT=\"$Message[116]: ".int($_url_x{$key}||0)."\" title=\"$Message[116]: ".int($_url_x{$key}||0)."\">";
 			print "</TD></TR>\n";
 			$total_p += $_url_p{$key};
 			$total_e += $_url_e{$key};
+			$total_x += $_url_x{$key};
 			$total_k += $_url_k{$key};
 			$count++;
 		}
 		$rest_p=$TotalPages-$total_p;
 		$rest_e=$TotalEntries-$total_e;
+		$rest_x=$TotalExits-$total_x;
 		$rest_k=$TotalBytesPages-$total_k;
-		if ($rest_p > 0 || $rest_e > 0 || $rest_k > 0) {	# All other urls
-			print "<TR><TD CLASS=AWL><font color=blue>$Message[2]</font></TD><TD>$rest_p</TD><TD>".($rest_e?$rest_e:"&nbsp;")."</TD><TD>".($rest_k?Format_Bytes($rest_k/($rest_p||1)):"&nbsp;")."</TD><TD>&nbsp;</TD></TR>\n";
+		if ($rest_p > 0 || $rest_k > 0 || $rest_e > 0 || $rest_x > 0) {	# All other urls
+			print "<TR><TD CLASS=AWL><font color=blue>$Message[2]</font></TD><TD>$rest_p</TD><TD>".($rest_k?Format_Bytes($rest_k/($rest_p||1)):"&nbsp;")."</TD><TD>".($rest_e?$rest_e:"&nbsp;")."</TD><TD>".($rest_x?$rest_x:"&nbsp;")."</TD><TD>&nbsp;</TD></TR>\n";
 		}
 		&tab_end;
 	}
