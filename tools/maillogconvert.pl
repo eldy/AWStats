@@ -369,8 +369,8 @@ while (<>) {
 	elsif (/info msg .* from/) {
 		# Example: Sep 14 09:58:09 gandalf qmail: 1063526289.292776 info msg 270182: bytes 10712 from <john@john.do> qp 54945 uid 82
 		$MailType||='qmail';
-		#my ($id,$size,$from)=m/(\d+)(?:\.\d+)? info msg \d+: bytes (\d+) from <(.*)>/;
-		my ($id,$size,$from)=m/\d+(?:\.\d+)? info msg (\d+): bytes (\d+) from <(.*)>/;
+		#my ($id,$size,$from)=m/info msg \d+: bytes (\d+) from <(.*)>/;
+		my ($id,$size,$from)=m/info msg (\d+): bytes (\d+) from <(.*)>/;
 		$mailid=$id;
 		delete $mail{$mailid};	# If 'info msg' found, we start a new mail. This is to protect from wrong file
 		if (! $mail{$id}{'from'} || $mail{$id}{'from'} ne '<>') { $mail{$id}{'from'}=$from; }	# TODO ???
