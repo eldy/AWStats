@@ -39,10 +39,10 @@ Robots (sometimes refer to Spiders) are <b>automatic computer visitors</b> used 
 All time related statistics are based on server time.<br>
 </DIV>
 <DIV CLASS="CTooltip" ID="tt18">
-Here, reported data are: <b>average values</b> (calculated from all data between the first and last visit)
+Here, reported data are: <b>average values</b> (calculated from all data between the first and last visit in analyzed range)
 </DIV>
 <DIV CLASS="CTooltip" ID="tt19">
-Here, reported data are: <b>cumulative sums</b> (calculated from all data between the first and last visit)
+Here, reported data are: <b>cumulative sums</b> (calculated from all data between the first and last visit in analyzed range)
 </DIV>
 <DIV CLASS="CTooltip" ID="tt20">
 Some <b>Visits durations</b> are 'unknown' because they can't always be calculated. This is the major reason for this:<br>
