@@ -8774,7 +8774,7 @@ if (scalar keys %HTMLOutput) {
 		if ($ShowKeyphrasesStats) { print "$Center<a name=\"KEYPHRASES\">&nbsp;</a>"; }
 		if ($ShowKeywordsStats)   {	print "$Center<a name=\"KEYWORDS\">&nbsp;</a>"; }
 		if ($ShowKeyphrasesStats || $ShowKeywordsStats) { print "<BR>\n"; }
-		if ($ShowKeyphrasesStats && $ShowKeywordsStats) { print "<table width=\"100%\"><tr>"; }
+		if ($ShowKeyphrasesStats && $ShowKeywordsStats) { print "<table width=\"100%\" cellpadding=0 cellspacing=0><tr>"; }
 		if ($ShowKeyphrasesStats) {
 			# By Keyphrases
 			if ($ShowKeyphrasesStats && $ShowKeywordsStats) { print "<td width=\"50%\" valign=top>\n";	}
@@ -8803,6 +8803,7 @@ if (scalar keys %HTMLOutput) {
 			&tab_end;
 			if ($ShowKeyphrasesStats && $ShowKeywordsStats) { print "</td>\n";	}
 		}
+		if ($ShowKeyphrasesStats && $ShowKeywordsStats) { print "<td> &nbsp; </td>"; }
 		if ($ShowKeywordsStats) {
 			# By Keywords
 			if ($ShowKeyphrasesStats && $ShowKeywordsStats) { print "<td width=\"50%\" valign=top>\n";	}
