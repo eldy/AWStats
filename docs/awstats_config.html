@@ -140,6 +140,7 @@ when reading it), follow the example:<br>
 <li><a href="#MaxLengthOfURL">MaxLengthOfURL</a>
 <li><a href="#ShowLinksToWhoIs">ShowLinksToWhoIs</a>
 <li><a href="#LinksToWhoIs">LinksToWhoIs</a>
+<li><a href="#LinksToIPWhoIs">LinksToIPWhoIs</a>
 <li><a href="#HTMLHeadSection">HTMLHeadSection</a>
 <li><a href="#HTMLEndSection">HTMLEndSection</a>
 <li><a href="#Bar">BarWidth</a>
@@ -969,9 +970,10 @@ ShowOSStats,ShowOriginStats,ShowKeyphrasesStats,ShowKeywordsStats,ShowHTTPErrors
 
 <a name="ShowLinksToWhoIs"><b>ShowLinksToWhoIs</b></a><br>
 <b>Version : </b>4.0 +<br>
-<br># AWStats can include a link to WhoIs database on all hostnames. For this, you
-<br># must set ShowLinksToWhoIs to 1. Warning, a such feature depends on next
-<br># parameter (LinksForWhoIs) and on WhoIs server exhaustivity and availability.
+<br># AWStats can include a link to WhoIs database on all hostnames/ip. For this, you
+<br># must set ShowLinksToWhoIs to 1. Warning, a such feature depends on two next
+<br># parameter (LinksToWhoIs and LinksToIPWhoIs) and on WhoIs server
+<br># exhaustivity and availability.
 <br># For this reason, this feature can't be a reliable feature.
 <br># Possible values: 1 or 0
 <br># Default: 0
@@ -982,7 +984,7 @@ ShowOSStats,ShowOriginStats,ShowKeyphrasesStats,ShowKeywordsStats,ShowHTTPErrors
 
 <a name="LinksToWhoIs"><b>LinksToWhoIs</b></a><br>
 <b>Version : </b>4.0 +<br>
-<br># Set here the link used to point to Internet WhoIs database.
+<br># Set here the link used to point to Internet WhoIs database for hostnames.
 <br># This parameter is not used if ShowLinksToWhoIs is 0.
 <br># Default: "http://www.whois.net/search.cgi2?str="
 <br># Example: "http://www.netsol.com/cgi-bin/whois/whois?SearchType=all&STRING="
@@ -990,6 +992,17 @@ ShowOSStats,ShowOriginStats,ShowKeyphrasesStats,ShowKeywordsStats,ShowHTTPErrors
 <br># Example: "http://www.arin.net/cgi-bin/whois.pl?queryinput="
 <br>#
 <br>LinksToWhoIs="http://www.whois.net/search.cgi2?str="
+
+<br><br><hr>
+
+<a name="LinksToIPWhoIs"><b>LinksToIPWhoIs</b></a><br>
+<b>Version : </b>5.0 +<br>
+<br># Set here the link used to point to Internet WhoIs database for ip addresses.
+<br># This parameter is not used if ShowLinksToWhoIs is 0.
+<br># Default: "http://ws.arin.net/cgi-bin/whois.pl?queryinput="
+<br># Example: "http://ws.arin.net/cgi-bin/whois.pl?queryinput="
+<br>#
+<br>LinksToIPWhoIs="http://ws.arin.net/cgi-bin/whois.pl?queryinput="
 
 <br><br><hr>
 
