@@ -73,7 +73,7 @@
 'teleport',
 'webcapture',
 'webcopier',
-# Music only browsers
+# Media only browsers
 'real',
 'winamp',				# Works for winampmpeg and winamp3httprdr
 'windows\-media\-player',
@@ -186,8 +186,8 @@
 'teleport','TelePort Pro',
 'webcapture','Acrobat',
 'webcopier', 'WebCopier',
-# Music only browsers
-'real','RealAudio or compatible (media player)',
+# Media only browsers
+'real','Real player or compatible (media player)',
 'winamp','WinAmp (media player)',				# Works for winampmpeg and winamp3httprdr
 'windows\-media\-player','Windows Media Player (media player)',
 'audion','Audion (media player)',
@@ -298,7 +298,7 @@
 'teleport','teleport',
 'webcapture','adobe',
 'webcopier','webcopier',
-# Music only browsers
+# Media only browsers
 'real','mediaplayer',
 'winamp','mediaplayer',				# Works for winampmpeg and winamp3httprdr
 'windows\-media\-player','mediaplayer',
