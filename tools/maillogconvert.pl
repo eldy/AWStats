@@ -235,7 +235,7 @@ while (<>) {
 		$MailType||='postfix';
 		# Example:
 		# postfix:  Jan 01 07:27:32 apollon.com postfix/smtpd[1684]: 2BC793B8A4: client=remt30.cluster1.abcde.net[209.225.8.40]
-		my ($id,$relay_s)=m/\w+\s+\d+\s+\d+:\d+:\d+\s+[\w\-\.]+\s+(?:sendmail|postfix\/(?:local|lmtp|smtpd|smtp|virtual|pipe))\[\d+\]:\s+(.*?):\s+client=(.*)/;
+		my ($id,$relay_s)=m/\w+\s+\d+\s+\d+:\d+:\d+\s+[\w\-\.\@]+\s+(?:sendmail|postfix\/(?:local|lmtp|smtpd|smtp|virtual|pipe))\[\d+\]:\s+(.*?):\s+client=(.*)/;
 		$mailid=$id;
 		$mail{$id}{'relay_s'}=$relay_s;
 		debug("For id=$id, found host sender on a 'client' line: $mail{$id}{'relay_s'}");
@@ -250,9 +250,9 @@ while (<>) {
 		# postfix ?.? :  Jan 01 12:00:00 halley postfix/smtpd[9245]: reject: RCPT from unknown[203.156.32.33]: 554 <userx@yahoo.com>: Recipient address rejected: Relay access denied; from=<sender@aol.com> to=<userx@yahoo.com>
         # postfix 2.1+:  Jan 01 12:00:00 localhost postfix/smtpd[11120]: NOQUEUE: reject: RCPT from unknown[62.205.124.145]: 450 Client host rejected: cannot find your hostname, [62.205.124.145]; from=<sender@msn.com> to=<usery@yahoo.com> proto=ESMTP helo=<xxx.com>
 		# postfix ?.? :  Jan 01 12:00:00 apollon postfix/smtpd[26553]: 1954F3B8A4: reject: RCPT from unknown[80.245.33.2]: 450 <usery@yahoo.com>: User unknown in local recipient table; from=<sender@msn.com> to=<usery@yahoo.com> proto=ESMTP helo=<xxx.com>
-		my ($mon,$day,$time,$id,$code,$from,$to)=m/(\w+)\s+(\d+)\s+(\d+:\d+:\d+)\s+[\w\-\.]+\s+(?:postfix\/(?:local|lmtp|smtpd|smtp|virtual|pipe))\[\d+\]:\s+(.*?):\s+(.*)\s+from=([^\s,]*)\s+to=([^\s,]*)/;
+		my ($mon,$day,$time,$id,$code,$from,$to)=m/(\w+)\s+(\d+)\s+(\d+:\d+:\d+)\s+[\w\-\.\@]+\s+(?:postfix\/(?:local|lmtp|smtpd|smtp|virtual|pipe))\[\d+\]:\s+(.*?):\s+(.*)\s+from=([^\s,]*)\s+to=([^\s,]*)/;
 		# postfix:	Jan 01 14:10:16 juni postfix/smtpd[2568]: C34ED1432B: reject: RCPT from relay2.tp2rc.edu.tw[163.28.32.177]: 450 <linda@trieger.org>: User unknown in local recipient table; from=<> proto=ESMTP helo=<rmail.nccu.edu.tw>
-		if (! $mon) { ($mon,$day,$time,$id,$code,$from)=m/(\w+)\s+(\d+)\s+(\d+:\d+:\d+)\s+[\w\-\.]+\s+(?:postfix\/(?:local|lmtp|smtpd|smtp|virtual|pipe))\[\d+\]:\s+(.*?):\s+(.*)\s+from=([^\s,]*)/; }
+		if (! $mon) { ($mon,$day,$time,$id,$code,$from)=m/(\w+)\s+(\d+)\s+(\d+:\d+:\d+)\s+[\w\-\.\@]+\s+(?:postfix\/(?:local|lmtp|smtpd|smtp|virtual|pipe))\[\d+\]:\s+(.*?):\s+(.*)\s+from=([^\s,]*)/; }
 		$mailid=($id eq 'reject' || $id eq 'NOQUEUE'?'999':$id);	# id not provided in log, we take '999'
 		if ($mailid) {
 			# $code='reject: RCPT from unknown[203.156.32.33]: 554 <userx@yahoo.com>: Recipient address rejected: Relay access denied;'
@@ -284,7 +284,7 @@ while (<>) {
 		$MailType||='postfix';
 		# Example: 
 		# postfix:  Sep  9 18:24:23 halley postfix/local[22003]: 12C6413EC9: to=<etavidian@partenor.com>, relay=local, delay=0, status=bounced (unknown user: "etavidian")
-		my ($mon,$day,$time,$id,$to,$relay_r)=m/(\w+)\s+(\d+)\s+(\d+:\d+:\d+)\s+[\w\-\.]+\s+(?:postfix\/(?:local|lmtp|smtpd|smtp|virtual|pipe))\[\d+\]:\s+(.*?):\s+to=([^\s,]*)[\s,]+relay=([^\s,]*)/;
+		my ($mon,$day,$time,$id,$to,$relay_r)=m/(\w+)\s+(\d+)\s+(\d+:\d+:\d+)\s+[\w\-\.\@]+\s+(?:postfix\/(?:local|lmtp|smtpd|smtp|virtual|pipe))\[\d+\]:\s+(.*?):\s+to=([^\s,]*)[\s,]+relay=([^\s,]*)/;
 		$mailid=($id eq 'reject'?'999':$id);	# id not provided in log, we take '999'
 		if ($mailid) {
 			$mail{$mailid}{'code'}=999;	# Unkown error (bounced)
@@ -310,9 +310,9 @@ while (<>) {
 		# sendmail:	Jan 10 07:37:48 smtp sendmail[32440]: ruleset=check_relay, arg1=[211.228.26.114], arg2=211.228.26.114, relay=[211.228.26.114], reject=554 5.7.1 Rejected 211.228.26.114 found in dnsbl.sorbs.net
 		# sendmail: Jan 10 07:37:08 smtp sendmail[32439]: ruleset=check_relay, arg1=235.Red-213-97-175.pooles.rima-tde.net, arg2=213.97.175.235, relay=235.Red-213-97-175.pooles.rima-tde.net [213.97.175.235], reject=550 5.7.1 Mail from 213.97.175.235 refused. Rejected for bad WHOIS info on IP of your SMTP server - see http://www.rfc-ignorant.org/
 		# sendmail: Jan 10 17:15:42 smtp sendmail[12770]: ruleset=check_relay, arg1=[63.218.84.21], arg2=63.218.84.21, relay=[63.218.84.21], reject=553 5.3.0 Rejected - see http://spamhaus.org/
-		my ($mon,$day,$time,$id,$ruleset,$arg,$relay_s,$code)=m/(\w+)\s+(\d+)\s+(\d+:\d+:\d+)\s+[\w\-\.]+\s+(?:sendmail|sm-mta)\[\d+\][:\s]*(.*?):\sruleset=(\w+),\s+arg1=(.*),\s+relay=(.*),\s+(reject=.*)/;
+		my ($mon,$day,$time,$id,$ruleset,$arg,$relay_s,$code)=m/(\w+)\s+(\d+)\s+(\d+:\d+:\d+)\s+[\w\-\.\@]+\s+(?:sendmail|sm-mta)\[\d+\][:\s]*(.*?):\sruleset=(\w+),\s+arg1=(.*),\s+relay=(.*),\s+(reject=.*)/;
 		# sendmail: Jan 10 18:00:34 smtp sendmail[5759]: i04Axx2c005759: Milter: data, reject=511 Virus found in email!
-		if (! $mon) { ($mon,$day,$time,$id,$ruleset,$code)=m/(\w+)\s+(\d+)\s+(\d+:\d+:\d+)\s+[\w\-\.]+\s+(?:sendmail|sm-mta)\[\d+\]:\s+(.*?):\s\w+:\s(\w+),\s+(reject=.*)/; }
+		if (! $mon) { ($mon,$day,$time,$id,$ruleset,$code)=m/(\w+)\s+(\d+)\s+(\d+:\d+:\d+)\s+[\w\-\.\@]+\s+(?:sendmail|sm-mta)\[\d+\]:\s+(.*?):\s\w+:\s(\w+),\s+(reject=.*)/; }
 		$mailid=(! $id && $mon?'999':$id);	# id not provided in log, we take '999'
 		if ($mailid) {
 			if ($ruleset eq 'check_mail') { $mail{$mailid}{'from'}=$arg; }
@@ -339,7 +339,7 @@ while (<>) {
 		#
 		# Matched outgoing sendmail/postfix message
 		#
-		my ($mon,$day,$time,$id,$to,$fromorto)=m/(\w+)\s+(\d+)\s+(\d+:\d+:\d+)\s+[\w\-\.]+\s+(?:sm-mta|sendmail(?:-out|)|postfix\/(?:local|lmtp|smtpd|smtp|virtual|pipe))\[.*?\]:\s+([^:]*):\s+to=(.*?)[,\s]+ctladdr=([^\,\s]*)/;
+		my ($mon,$day,$time,$id,$to,$fromorto)=m/(\w+)\s+(\d+)\s+(\d+:\d+:\d+)\s+[\w\-\.\@]+\s+(?:sm-mta|sendmail(?:-out|)|postfix\/(?:local|lmtp|smtpd|smtp|virtual|pipe))\[.*?\]:\s+([^:]*):\s+to=(.*?)[,\s]+ctladdr=([^\,\s]*)/;
 		$mailid=$id;
 		if (m/\s+relay=([^\s,]*)[\s,]/) { $mail{$id}{'relay_r'}=$1; }
 		elsif (m/\s+mailer=local/) { $mail{$id}{'relay_r'}='localhost'; }
@@ -386,7 +386,7 @@ while (<>) {
 		# sm-mta:  Jul 28 06:55:13 androneda sm-mta[28877]: h6SDtCtg028877: from=<xxx@mysite.net>, size=2556, class=0, nrcpts=1, msgid=<w1$kqj-9-o2m45@0h2i38.4.m0.5u>, proto=ESMTP, daemon=MTA, relay=smtp.easydns.com [205.210.42.50]
 		# postfix: Jul  3 15:32:26 apollon postfix/qmgr[13860]: 08FB63B8A4: from=<nobody@ns3744.ovh.net>, size=3302, nrcpt=1 (queue active)
 		# postfix: Sep 24 14:45:15 wideboy postfix/qmgr[22331]: 7E0E6196: from=<xxx@hotmail.com>, size=1141 (queue active)
-		my ($id,$from,$size)=m/\w+\s+\d+\s+\d+:\d+:\d+\s+[\w\-\.]+\s+(?:sm-mta|sendmail(?:-in|)|postfix\/qmgr|postfix\/nqmgr)\[\d+\]:\s+(.*?):\s+from=(.*?),\s+size=(\d+)/;
+		my ($id,$from,$size)=m/\w+\s+\d+\s+\d+:\d+:\d+\s+[\w\-\.\@]+\s+(?:sm-mta|sendmail(?:-in|)|postfix\/qmgr|postfix\/nqmgr)\[\d+\]:\s+(.*?):\s+from=(.*?),\s+size=(\d+)/;
 		$mailid=$id;
 		if (! $mail{$id}{'code'}) { $mail{$id}{'code'}=1; }	# If not already defined, we define it
 		if (! $mail{$id}{'from'} || $mail{$id}{'from'} ne '<>') { $mail{$id}{'from'}=$from; }
@@ -466,7 +466,7 @@ while (<>) {
 	elsif (/: to=.*stat(us)?=sent/i) {
 		# Example:
 		# postfix:  Jan 01 07:27:38 apollon postfix/local[1689]: 2BC793B8A4: to=<jo@jo.com>, orig_to=<webmaster@toto.com>, relay=local, delay=6, status=sent ("|/usr/bin/procmail")
-		my ($mon,$day,$time,$id,$to)=m/(\w+)\s+(\d+)\s+(\d+:\d+:\d+)\s+[\w\-\.]+\s+(?:sm-mta|sendmail(?:-out|)|postfix\/(?:local|lmtp|smtpd|smtp|virtual|pipe))\[.*?\]:\s+(.*?):\s+to=(.*?),/;
+		my ($mon,$day,$time,$id,$to)=m/(\w+)\s+(\d+)\s+(\d+:\d+:\d+)\s+[\w\-\.\@]+\s+(?:sm-mta|sendmail(?:-out|)|postfix\/(?:local|lmtp|smtpd|smtp|virtual|pipe))\[.*?\]:\s+(.*?):\s+to=(.*?),/;
 		$mailid=$id;
 		$mail{$id}{'code'}='1';
 		if (m/\s+relay=([^\s,]*)[\s,]/) { $mail{$id}{'relay_r'}=$1; }
