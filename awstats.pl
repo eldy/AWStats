@@ -14,7 +14,7 @@
 #-------------------------------------------------------
 # Defines
 #-------------------------------------------------------
-$VERSION="2.24 (build 10)";
+$VERSION="2.24 (build 11)";
 $Lang=0;
 
 # Default value
@@ -646,6 +646,82 @@ $message[69][6]="PaΌdziernik";
 $message[70][6]="Listopad";
 $message[71][6]="Grudzieρ";
 
+# Greek (simos@hellug.gr)
+$PageCode[7]="<META HTTP-EQUIV=\"content-type\" CONTENT=\"text/html; charset=windows-1253\">";
+$message[0][7]="¶γνωστο";
+$message[1][7]="¶γνωστο (μη αναγνωρισμένη ip)";
+$message[2][7]="¶λλοι επισκέπτες";
+$message[3][7]="Εμφάνιση λεπτομεριών";
+$message[4][7]="Ημέρα";
+$message[5][7]="Μήνας";
+$message[6][7]="Έτος";
+$message[7][7]="Στατιστικά του";
+$message[8][7]="Πρώτη επίσκεψη";
+$message[9][7]="Τελευταία επίσκεψη";
+$message[10][7]="Αριθμός επισκέψεων";
+$message[11][7]="Μοναδικοί επισκέπτες";
+$message[12][7]="Επίσκεψη";
+$message[13][7]="Λέξη-κλειδί";
+$message[14][7]="Αναζήτηση";
+$message[15][7]="Ποσοστό";
+$message[16][7]="Περίληψη Κυκλοφορίας";
+$message[17][7]="Επιθέματα/Χώρες";
+$message[18][7]="Επισκέπτες";
+$message[19][7]="Σελίδες/URL";
+$message[20][7]="Ώρες";
+$message[21][7]="Φυλλομετρητές";
+$message[22][7]="Σφάλματα HTTP";
+$message[23][7]="Παραπέμπτες";
+$message[24][7]="Λεκτικά&nbsp;Αναζήτησης";
+$message[25][7]="Επιθέματα/χώρες επισκεπτών";
+$message[26][7]="συστήματα";
+$message[27][7]="σελίδες";
+$message[28][7]="διαφορετικές σελίδες";
+$message[29][7]="Πρόσβαση";
+$message[30][7]="¶λλα λεκτικά";
+$message[31][7]="Φυλλομετρητές σε χρήση";
+$message[32][7]="Κωδικοί σφαλμάτων HTTP";
+$message[33][7]="Εκδόσεις Netscape";
+$message[34][7]="Εκδόσεις MS Internet Explorer";
+$message[35][7]="Λειτουργικά σε χρήση";
+$message[36][7]="Σύνδεση στο τόπο από";
+$message[37][7]="Προέλευση";
+$message[38][7]="Ευθύς σύνδεσμος / Αγαπημένα";
+$message[39][7]="Σύνδεσμος από Ομάδα Συζητήσεων";
+$message[40][7]="Σύνδεσμος από Μηχανή Αναζήτησης του Internet";
+$message[41][7]="Σύνδεσμος από εξωτερική σελίδα (άλλοι δικτυακοί τόποι εκτός μηχανών αναζήτησης)";
+$message[42][7]="Σύνδεσμος από εσωτερική σελίδα (άλλη σελίδα στον ίδιο δικτυακό τόπο)";
+$message[43][7]="λεκτικά που χρησιμοποιήθηκαν σε μηχανές αναζήτησης";
+$message[44][7]="Kb";
+$message[45][7]="Διευθύνσεις IP που δεν αναγνωρίστηκαν";
+$message[46][7]="¶γνωστο λειτουργικό σύστημα (Πεδίο παράπεμψης)";
+$message[47][7]="Απαιτούμενα αλλά χωρίς να βρεθούν URL (Κώδικας HTTP 404)";
+$message[48][7]="Διεύθυνση IP";
+$message[49][7]="Συμβάντα&nbsp;Σφαλμάτων";
+$message[50][7]="¶γνωστοι φυλλομετρητές (Πεδίο παράπεμψης)";
+$message[51][7]="Ρομπότ επισκέπτες";
+$message[52][7]="επισκέψεις/επισκέπτη";
+$message[53][7]="Επισκέπτες Ρομπότ/Αράχνες";
+$message[54][7]="Ελεύθερος αναλυτής καταγραφών πραγματικού χρόνου για προηγμένα στατιστικά κίνησης WWW";
+$message[55][7]="από";
+$message[56][7]="Σελίδες";
+$message[57][7]="Επιτυχίες";
+$message[58][7]="Εκδόσεις";
+$message[59][7]="Λ/Σ";
+$message[60][7]="Ιαν";
+$message[61][7]="Φεβ";
+$message[62][7]="Μάρ";
+$message[63][7]="Απρ";
+$message[64][7]="Μάϊ";
+$message[65][7]="Ιούν";
+$message[66][7]="Ιούλ";
+$message[67][7]="Αύγ";
+$message[68][7]="Σεπ";
+$message[69][7]="Οκτ";
+$message[70][7]="Νοέ";
+$message[71][7]="Δεκ";
+
+
 # ---------- Browser lists ----------------
 # ("browser id in lower case", "browser text")
 %BrowsersHash = (
@@ -1089,6 +1165,23 @@ sub html_head {
 	print "<meta http-equiv=\"keywords\" content=\"$LocalSite, free, advanced, realtime, web, server, logfile, log, analyzer, analysis, statistics, stats, perl, analyse, performance, hits, visits\">\n";
 	print "<meta name=\"robots\" content=\"index,follow\">\n";
 	print "<title>$message[7][$Lang] $LocalSite</title>\n";
+	print "<STYLE TYPE=text/css>
+<!--
+	BODY { font-family: arial, verdana, helvetica, sans-serif; font-size:12px; background-color:$color_Background; }
+	TH { font-family: arial, verdana, helvetica, sans-serif; font-size:10px; text-align:center; color:$color_titletext}
+	TD { font-family: arial, verdana, helvetica, sans-serif; font-size:10px; text-align:center; color:$color_text}
+	TD.LEFT { font-family: arial, verdana, helvetica, sans-serif; font-size:10px; text-align:left; color:$color_text }
+	A {	font-family: arial, verdana helvetica, sans-serif; font-size:10px; font-style:normal; color:$color_link; }
+	A:hover { color:$color_hover; }
+	DIV { text-align:justify; }
+	.TABLEBORDER { background-color:$color_TableBorder; }
+	.TABLEFRAME { background-color:$color_TableBG; }
+	.TABLEDATA { background-color:$color_Background; }
+	.TABLETITLE { font-family: verdana, arial, helvetica, sans-serif; font-size:14px; font-weight:bold; color:$color_TableTitle; background-color:$color_TableBGTitle; }
+	.classTooltip { position:absolute; top:0px; left:0px; z-index:2; width:280; visibility:hidden; font:8pt MS Comic Sans,arial,sans-serif; background-color:#FFFFE6; padding:10px 10px; border:1px solid black; }
+//-->
+</STYLE>\n
+";
 	print "</head>\n";
 	print "\n";
 	print "<body>\n";
@@ -1260,7 +1353,7 @@ sub Check_Config {
 	# Optional section
 	if (! ($PurgeLogFile =~ /[0-1]/))         { $PurgeLogFile=0; }
 	if (! ($ArchiveLogRecords =~ /[0-1]/))    { $ArchiveLogRecords=1; }
-	if (! ($Lang =~ /[0-6]/))                 { $Lang=0; }
+	if (! ($Lang =~ /[0-7]/))                 { $Lang=0; }
 	if ($DefaultFile eq "")                   { $DefaultFile="index.html"; }
 	if (! ($WarningMessages =~ /[0-1]/))      { $WarningMesages=1; }
 	if (! ($ShowLinksOnURL =~ /[0-1]/))       { $ShowLinksOnURL=1; }
@@ -1560,16 +1653,18 @@ if (($ENV{"GATEWAY_INTERFACE"} eq "") && ($ARGV[0] eq "" || $ARGV[0] ne "-h" || 
 # Print html header and correct some parameters
 if ($ENV{"GATEWAY_INTERFACE"} ne "") {
 	if ($QueryString =~ /lang=/) { $Lang=$QueryString; $Lang =~ s/.*lang=//; $Lang =~ s/&.*//; }
+	&Check_Config;	# Check if parameters are OK
 	&html_head;
 	$DirCgi="";
+	}
+else {
+	&Check_Config;	# Check if parameters are OK
+	&html_head;
 	}
 if (($DirCgi ne "") && !($DirCgi =~ /\/$/) && !($DirCgi =~ /\\$/)) { $DirCgi .= "/"; }
 if ($DirData eq "" || $DirData eq ".") { $DirData=$DIR; }	# If not defined or choosed to "." value then DirData is current dir
 if ($DirData eq "")  { $DirData="."; }						# If current dir not defined them we put it to "."
 $DirData =~ s/\/$//;
-
-# Check if parameters are OK
-&Check_Config;
 
 # Init other parameters
 if ($DNSLookup) { use Socket; }
@@ -1612,27 +1707,6 @@ for ($ix=1; $ix<=12; $ix++) {
 	}
 for ($ix=0; $ix<5; $ix++) {	$_from_h[$ix]=0; }
 
-# Print html header
-if ($ENV{"GATEWAY_INTERFACE"} eq "") {
-	&html_head;
-	}
-print "<STYLE TYPE=text/css>
-<!--
-	BODY { font-family: arial, verdana, helvetica, sans-serif; font-size:12px; background-color:$color_Background; }
-	TH { font-family: arial, verdana, helvetica, sans-serif; font-size:10px; text-align:center; color:$color_titletext}
-	TD { font-family: arial, verdana, helvetica, sans-serif; font-size:10px; text-align:center; color:$color_text}
-	TD.LEFT { font-family: arial, verdana, helvetica, sans-serif; font-size:10px; text-align:left; color:$color_text }
-	A {	font-family: arial, verdana helvetica, sans-serif; font-size:10px; font-style:normal; color:$color_link; }
-	A:hover { color:$color_hover; }
-	DIV { text-align:justify; }
-	.TABLEBORDER { background-color:$color_TableBorder; }
-	.TABLEFRAME { background-color:$color_TableBG; }
-	.TABLEDATA { background-color:$color_Background; }
-	.TABLETITLE { font-family: verdana, arial, helvetica, sans-serif; font-size:14px; font-weight:bold; color:$color_TableTitle; background-color:$color_TableBGTitle; }
-	.classTooltip { position:absolute; top:0px; left:0px; z-index:2; width:280; visibility:hidden; font:8pt MS Comic Sans,arial,sans-serif; background-color:#FFFFE6; padding:10px 10px; border:1px solid black; }
-//-->
-</STYLE>\n
-";
 print "<a href=\"http://awstats.sourceforge.net\" target=_newawstats><img src=$DirIcons/other/$Logo border=0 alt=\"$PROG Official Web Site\" title=\"$PROG Official Web Site\"></a><br>\n";
 if ($ShowFlagLinks == 1) { 
 	if ($Lang != 0) { print "<a href=\"$DirCgi$PROG.$Extension?site=$LocalSite&year=$YearRequired&month=$MonthRequired&lang=0\"><img src=\"$DirIcons\/flags\/us.png\" height=14 border=0 alt=\"English\" title=\"English\"></a>\n"; }
