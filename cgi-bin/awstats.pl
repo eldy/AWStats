@@ -87,7 +87,7 @@ $word, $yearcon, $yearfile, $yearmonthfile, $yeartoprocess) = ();
 @sortsearchwords = @sortsereferrals = @sortsider404 = @sortsiders = @sortunknownip =
 @sortunknownreferer = @sortunknownrefererbrowser = @wordlist = ();
 
-$VERSION="2.5 (build 18)";
+$VERSION="2.5 (build 19)";
 $Lang=0;
 
 # Default value
@@ -218,10 +218,10 @@ $BarImageHorizontal_k = "barrehk.png";
 
 # Browser lists ("browser id in lower case", "browser text")
 %BrowsersHash = (
-"netscape","defined_later",
 "msie","defined_later",
-
-"lynx","Lynx",						# Most frequent browser should be first in this list
+"netscape","defined_later",
+# Most frequent browsers should be first in this list
+"lynx","Lynx",						
 "opera","Opera",
 "wget","Wget",
 "22acidownload","22AciDownload",
@@ -252,7 +252,6 @@ $BarImageHorizontal_k = "barrehk.png";
 "mspie","MS Pocket Internet Explorer",
 "msfrontpageexpress","MS FrontPage Express",
 "omniweb","OmniWeb",
-"real","RealAudio or compatible player",
 "teleport","TelePort Pro (Site grabber)",
 "tzgeturl","TZGETURL",
 "viking","Viking",
@@ -262,8 +261,23 @@ $BarImageHorizontal_k = "barrehk.png";
 "webexplorer","IBM-WebExplorer",
 "webmirror","WebMirror",
 "webvcr","WebVCR",
-"webzip","WebZIP",
-"libwww","LibWWW"				# Must be at end because some browser have both "browser id" and "libwww"
+"libwww","LibWWW",				# Must be at end because some browser have both "browser id" and "libwww"
+# Music only browsers
+"real","RealAudio or compatible player",
+"winamp","WinAmp",				# Works for winampmpeg and winamp3httprdr
+"xmms","XMMS",
+"audion","Audion",
+"freeamp","FreeAmp",
+"windows-media-player","Windows Media Player",
+"jetaudio","JetAudio",
+"uplayer","Ultra Player",
+"itunes","Apple iTunes",
+"xaudio","Some XAudio Engine based MPEG player",
+"nsplayer","NetShow Player",
+"mint_audio","Mint Audio",
+"mpg123","mpg123",
+# Other kind of browsers
+"webzip","WebZIP"
 );
 
 # OS lists ("os detector in lower case","os text")
@@ -568,6 +582,7 @@ $BarImageHorizontal_k = "barrehk.png";
 "mercator", "Mercator (Not referenced robot)",
 #"msiecrawler", "MSIECrawler (Not referenced robot)",	MSIECrawler seems to be a grabber not a robot
 "perman surfer", "Perman surfer (Not referenced robot)",
+"shoutcast","Shoutcast Directory Service (Not referenced robot)",
 "unlost_web_crawler", "Unlost_Web_Crawler (Not referenced robot)",
 "webbase", "WebBase (Not referenced robot)",
 "yandex", "Yandex bot (Not referenced robot)",
@@ -1709,49 +1724,49 @@ sub Read_Config_File {
 sub Check_Config {
 	&debug("Call to Check_Config");
 	# Main section
-	if (! ($LogFormat =~ /[1-2]/))            { error("Error: LogFormat parameter is wrong. Value is '$LogFormat' (should be 1 or 2)"); }
-	if (! ($DNSLookup =~ /[0-1]/))            { error("Error: DNSLookup parameter is wrong. Value is '$DNSLookup' (should be 0 or 1)"); }
+	if ($LogFormat =~ /^[\d]$/ && $LogFormat !~ /[1-2]/)  { error("Error: LogFormat parameter is wrong. Value is '$LogFormat' (should be 1 or 2 or a 'like-apache log format' string)"); }
+	if ($DNSLookup !~ /[0-1]/)             { error("Error: DNSLookup parameter is wrong. Value is '$DNSLookup' (should be 0 or 1)"); }
 	# Optional section
-	if (! ($AllowToUpdateStatsFromBrowser =~ /[0-1]/)) { $AllowToUpdateStatsFromBrowser=1; }	# For compatibility, is 1 if not defined
-	if (! ($PurgeLogFile =~ /[0-1]/))         { $PurgeLogFile=0; }
-	if (! ($ArchiveLogRecords =~ /[0-1]/))    { $ArchiveLogRecords=1; }
-	if (! ($Lang =~ /[0-9]/))                 { $Lang=0; }
-	if ($DefaultFile eq "")                   { $DefaultFile="index.html"; }
-	if (! ($WarningMessages =~ /[0-1]/))      { $WarningMessages=1; }
-	if (! ($ShowLinksOnURL =~ /[0-1]/))       { $ShowLinksOnURL=1; }
-	if (! ($ShowFlagLinks =~ /[0-1]/))        { $ShowFlagLinks=1; }
-	if (! ($BarWidth =~ /[\d]/))              { $BarWidth=260; }
-	if (! ($BarHeight =~ /[\d]/))             { $BarHeight=220; }
-	if (! ($MaxNbOfDomain =~ /[\d]/))         { $MaxNbOfDomain=25; }
-	if (! ($MaxNbOfHostsShown =~ /[\d]/))     { $MaxNbOfHostsShown=25; }
-	if (! ($MinHitHost =~ /[\d]/))            { $MinHitHost=1; }
-	if (! ($MaxNbOfRobotShown =~ /[\d]/))     { $MaxNbOfRobotShown=25; }
-	if (! ($MinHitRobot =~ /[\d]/))           { $MinHitRobot=1; }
-	if (! ($MaxNbOfPageShown =~ /[\d]/))      { $MaxNbOfPageShown=25; }
-	if (! ($MinHitFile =~ /[\d]/))            { $MinHitFile=1; }
-	if (! ($MaxNbOfRefererShown =~ /[\d]/))   { $MaxNbOfRefererShown=25; }
-	if (! ($MinHitRefer =~ /[\d]/))           { $MinHitRefer=1; }
-	if (! ($MaxNbOfKeywordsShown =~ /[\d]/))  { $MaxNbOfKeywordsShown=25; }
-	if (! ($MinHitKeyword =~ /[\d]/))         { $MinHitKeyword=1; }
-	if (! ($SplitSearchString =~ /[0-1]/))    { $SplitSearchString=0; }
-	if ($Logo eq "")                          { $Logo="awstats_logo1.png"; }
-	$color_Background =~ s/#//g; if (! ($color_Background =~ /[\d]/))           { $color_Background="FFFFFF";	}
-	$color_TableBorder =~ s/#//g; if (! ($color_TableBorder =~ /[\d]/))         { $color_TableBorder="000000"; }
-	$color_TableBG =~ s/#//g; if (! ($color_TableBG =~ /[\d]/))                 { $color_TableBG="DDDDBB"; }
-	$color_TableTitle =~ s/#//g; if (! ($color_TableTitle =~ /[\d]/))           { $color_TableTitle="FFFFFF"; }
-	$color_TableBGTitle =~ s/#//g; if (! ($color_TableBGTitle =~ /[\d]/))       { $color_TableBGTitle="666666"; }
-	$color_TableRowTitle =~ s/#//g; if (! ($color_TableRowTitle =~ /[\d]/))     { $color_TableRowTitle="FFFFFF"; }
-	$color_TableBGRowTitle =~ s/#//g; if (! ($color_TableBGRowTitle =~ /[\d]/)) { $color_TableBGRowTitle="BBBBBB"; }
-	$color_link =~ s/#//g; if (! ($color_link =~ /[\d]/))           { $color_link="4000FF"; }
-	$color_hover =~ s/#//g; if (! ($color_hover =~ /[\d]/))         { $color_hover="4000FF"; }
-	$color_text =~ s/#//g; if (! ($color_text =~ /[\d]/))           { $color_text="000000"; }
-	$color_titletext =~ s/#//g; if (! ($color_titletext =~ /[\d]/)) { $color_titletext="000000"; }
-	$color_v =~ s/#//g; if (! ($color_v =~ /[\d]/))               { $color_v="F3F300"; }
-	$color_w =~ s/#//g; if (! ($color_w =~ /[\d]/))               { $color_w="FF9933"; }
-	$color_w =~ s/#//g; if (! ($color_p =~ /[\d]/))               { $color_p="4477DD"; }
-	$color_h =~ s/#//g; if (! ($color_h =~ /[\d]/))               { $color_h="66F0FF"; }
-	$color_k =~ s/#//g; if (! ($color_k =~ /[\d]/))               { $color_k="339944"; }
-	$color_s =~ s/#//g; if (! ($color_s =~ /[\d]/))               { $color_s="8888DD"; }
+	if ($AllowToUpdateStatsFromBrowser !~ /[0-1]/) { $AllowToUpdateStatsFromBrowser=1; }	# For compatibility, is 1 if not defined
+	if ($PurgeLogFile !~ /[0-1]/)          { $PurgeLogFile=0; }
+	if ($ArchiveLogRecords !~ /[0-1]/)     { $ArchiveLogRecords=1; }
+	if ($Lang !~ /[0-9]/)                  { $Lang=0; }
+	if ($DefaultFile eq "")                { $DefaultFile="index.html"; }
+	if ($WarningMessages !~ /[0-1]/)       { $WarningMessages=1; }
+	if ($ShowLinksOnURL !~ /[0-1]/)        { $ShowLinksOnURL=1; }
+	if ($ShowFlagLinks !~ /[0-1]/)         { $ShowFlagLinks=1; }
+	if ($BarWidth !~ /[\d]/)               { $BarWidth=260; }
+	if ($BarHeight !~ /[\d]/)              { $BarHeight=220; }
+	if ($MaxNbOfDomain !~ /[\d]/)          { $MaxNbOfDomain=25; }
+	if ($MaxNbOfHostsShown !~ /[\d]/)      { $MaxNbOfHostsShown=25; }
+	if ($MinHitHost !~ /[\d]/)             { $MinHitHost=1; }
+	if ($MaxNbOfRobotShown !~ /[\d]/)      { $MaxNbOfRobotShown=25; }
+	if ($MinHitRobot !~ /[\d]/)            { $MinHitRobot=1; }
+	if ($MaxNbOfPageShown !~ /[\d]/)       { $MaxNbOfPageShown=25; }
+	if ($MinHitFile !~ /[\d]/)             { $MinHitFile=1; }
+	if ($MaxNbOfRefererShown !~ /[\d]/)    { $MaxNbOfRefererShown=25; }
+	if ($MinHitRefer !~ /[\d]/)            { $MinHitRefer=1; }
+	if ($MaxNbOfKeywordsShown !~ /[\d]/)   { $MaxNbOfKeywordsShown=25; }
+	if ($MinHitKeyword !~ /[\d]/)          { $MinHitKeyword=1; }
+	if ($SplitSearchString !~ /[0-1]/)     { $SplitSearchString=0; }
+	if ($Logo eq "")                       { $Logo="awstats_logo1.png"; }
+	$color_Background =~ s/#//g; if ($color_Background !~ /[\d]/)           { $color_Background="FFFFFF";	}
+	$color_TableBorder =~ s/#//g; if ($color_TableBorder !~ /[\d]/)         { $color_TableBorder="000000"; }
+	$color_TableBG =~ s/#//g; if ($color_TableBG !~ /[\d]/)                 { $color_TableBG="DDDDBB"; }
+	$color_TableTitle =~ s/#//g; if ($color_TableTitle !~ /[\d]/)           { $color_TableTitle="FFFFFF"; }
+	$color_TableBGTitle =~ s/#//g; if ($color_TableBGTitle !~ /[\d]/)       { $color_TableBGTitle="666666"; }
+	$color_TableRowTitle =~ s/#//g; if ($color_TableRowTitle !~ /[\d]/)     { $color_TableRowTitle="FFFFFF"; }
+	$color_TableBGRowTitle =~ s/#//g; if ($color_TableBGRowTitle !~ /[\d]/) { $color_TableBGRowTitle="BBBBBB"; }
+	$color_link =~ s/#//g; if ($color_link !~ /[\d]/)         { $color_link="4000FF"; }
+	$color_hover =~ s/#//g; if ($color_hover !~ /[\d]/)       { $color_hover="4000FF"; }
+	$color_text =~ s/#//g; if ($color_text !~ /[\d]/)         { $color_text="000000"; }
+	$color_titletext =~ s/#//g; if ($color_titletext !~ /[\d]/) { $color_titletext="000000"; }
+	$color_v =~ s/#//g; if ($color_v !~ /[\d]/)               { $color_v="F3F300"; }
+	$color_w =~ s/#//g; if ($color_w !~ /[\d]/)               { $color_w="FF9933"; }
+	$color_w =~ s/#//g; if ($color_p !~ /[\d]/)               { $color_p="4477DD"; }
+	$color_h =~ s/#//g; if ($color_h !~ /[\d]/)               { $color_h="66F0FF"; }
+	$color_k =~ s/#//g; if ($color_k !~ /[\d]/)               { $color_k="339944"; }
+	$color_s =~ s/#//g; if ($color_s !~ /[\d]/)               { $color_s="8888DD"; }
 }
 
 sub Read_History_File {
@@ -2187,9 +2202,7 @@ if ($UpdateStats) {
 	if ($LogFormat == 1) { $LogFormatString="%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\""; }
 	if ($LogFormat == 2) { $LogFormatString="date time c-ip cs-username cs-method cs-uri-stem sc-status cs-bytes cs-version cs(User-Agent) cs(Referer)"; }
 	&debug("Generate PerlParsingFormat from LogFormatString=$LogFormatString");
-	# Scan $LogFormat to found all required fields and generate PerlParsing
 	$PerlParsingFormat="";
-
 	if ($LogFormat == 1) {
 		$PerlParsingFormat="([^\\s]*) ([^\\s]*) ([^\\s]*) \\[([^\\s]*) ([^\\s]*)\\] \\\"([^\\s]*) ([^\\s]*) [^\\\"]*\\\" ([\\d|-]*) ([\\d|-]*) \\\"([^\\\"]*)\\\" \\\"([^\\\"]*)\\\"";
 		$pos_rc=1;
@@ -2203,6 +2216,7 @@ if ($UpdateStats) {
 		$pos_size=9;
 		$pos_referer=10;
 		$pos_agent=11;
+		$lastrequiredfield=11;
 	}
 	if ($LogFormat == 2) {
 		$PerlParsingFormat="([^\\s]* [^\\s]*) ([^\\s]*) ([^\\s]*) ([^\\s]*) ([^\\s]*) ([\\d|-]*) ([\\d|-]*) [^\\s]* ([^\\s]*) ([^\\s]*)";
@@ -2215,10 +2229,92 @@ if ($UpdateStats) {
 		$pos_size=7;
 		$pos_agent=8;
 		$pos_referer=9;
+		$lastrequiredfield=9;
 	}
-
+	if ($LogFormat != 1 && $LogFormat != 2) {
+		# Scan $LogFormat to found all required fields and generate PerlParsing
+		@fields = split(/ +/, $LogFormatString); # make array of entries
+		$i = 1;
+		foreach $f (@fields) {
+			$found=0;
+			if ($f =~ /%.*a$/) { $found=1; $PerlParsingFormat .= "[^\\s]* "; }
+			if ($f =~ /%.*A$/) { $found=1; $PerlParsingFormat .= "[^\\s]* "; }
+			if ($f =~ /%.*B$/) { $found=1; $PerlParsingFormat .= "[^\\s]* "; }
+			if ($f =~ /%.*b$/) {
+				$found=1; 
+				$pos_size = $i; $i++;
+				$PerlParsingFormat .= "([\\d|-]*) ";
+			}
+			if ($f =~ /%.*c$/) { $found=1; $PerlParsingFormat .= "[^\\s]* "; }
+			if ($f =~ /%.*e$/) { $found=1; $PerlParsingFormat .= "[^\\s]* "; }
+			if ($f =~ /%.*h$/) {
+				$found=1; 
+				$pos_rc = $i; $i++;
+				$PerlParsingFormat .= "([^\\s]*) ";
+			}
+			if ($f =~ /%.*H$/) { $found=1; $PerlParsingFormat .= "[^\\s]* "; }
+			if ($f =~ /\\"%{Referer}i\\"/) {
+				$found=1;
+				$pos_referer = $i; $i++;
+				$PerlParsingFormat .= "\\\"([^\\\"]*)\\\" ";
+			}
+			if ($f =~ /\\"%{User-Agent}i\\"/) {
+				$found=1; 
+				$pos_agent = $i; $i++;
+				$PerlParsingFormat .= "\\\"([^\\\"]*)\\\" ";
+			}
+			if ($f =~ /%.*l$/) {
+				$found=1; 
+				$pos_logname = $i; $i++;
+				$PerlParsingFormat .= "([^\\s]*) ";
+			}
+			if ($f =~ /%.*m$/) { $found=1; $PerlParsingFormat .= "[^\\s]* "; }
+			if ($f =~ /%.*n$/) { $found=1; $PerlParsingFormat .= "[^\\s]* "; }
+			if ($f =~ /%.*o$/) { $found=1; $PerlParsingFormat .= "[^\\s]* "; }
+			if ($f =~ /%.*p$/) { $found=1; $PerlParsingFormat .= "[^\\s]* "; }
+			if ($f =~ /%.*P$/) { $found=1; $PerlParsingFormat .= "[^\\s]* "; }
+			if ($f =~ /%.*q$/) { $found=1; $PerlParsingFormat .= "[^\\s]* "; }
+			if ($f =~ /\\"%r\\"/) {
+				$found=1; 
+				$pos_method = $i;
+				$i++;
+				$pos_url = $i;
+				$i++;
+				$PerlParsingFormat .= "\\\"([^\\s]*) ([^\\s]*) [^\\\"]*\\\" ";
+			}
+			if ($f =~ /%.*>s$/) {
+				$found=1; 
+				$pos_code = $i;
+				$i++;
+				$PerlParsingFormat .= "([\\d|-]*) ";
+			}
+			if ($f =~ /%.*t$/) {
+				$found=1; 
+				# need extra stuff for parsing time if a format is specified
+				$pos_date = $i;
+				$i++;
+				$pos_zone = $i;
+				$i++;
+				$PerlParsingFormat .= "\\[([^\\s]*) ([^\\s]*)\\] ";
+			}
+			if ($f =~ /%.*T$/) { $found=1; $PerlParsingFormat .= "[^\\s]* "; }
+			if ($f =~ /%.*u$/) {
+				$found=1;
+				$pos_user = $i;
+				$i++;
+				$PerlParsingFormat .= "([^\\s]*) ";
+			}
+			if ($f =~ /%.*U$/) { $found=1; $PerlParsingFormat .= "[^\\s]* "; }
+			if ($f =~ /%.*v$/) { $found=1; $PerlParsingFormat .= "[^\\s]* "; }
+			if ($f =~ /%.*V$/) { $found=1; $PerlParsingFormat .= "[^\\s]* "; }
+			if ($f =~ /%nu$/i) { $found=1; $PerlParsingFormat .= "[^\\s]* "; }
+			if (! $found) { error("Error: Personalised LogFormat parameter contains unrecognized command: $f"); }
+		}
+		($PerlParsingFormat) ? chop($PerlParsingFormat) : error("Error: no recognised format commands in Personalised log format"); 
+		$lastrequiredfield=$i--;
+	}
 	if ($pos_rc eq "" || $pos_date eq "" || $pos_method eq "" || $pos_url eq "" || $pos_code eq "" || $pos_size eq "" || $pos_referer eq "" || $pos_agent eq "") {
-		error("Error: Your personalized LogFormat does not include all fields required by AWStats");
+		error("Error: Your personalised LogFormat does not include all fields required by AWStats");
 		}
 	&debug("PerlParsingFormat is $PerlParsingFormat");
 
@@ -2241,10 +2337,8 @@ if ($UpdateStats) {
 
 		# Parse line record to get all required fields
 		$_ =~ /^$PerlParsingFormat/;
-		&debug("$1 ; $2 ; $3 ; $4 ; $5 ; $6 ; $7 ; $8 ; $9 ; $10 ; $11",3);
-		$lastrequiredfield=11;
 		foreach $i (1..$lastrequiredfield) { $field[$i]=$$i; }
-		&debug("$field[$pos_rc] ; $field[$pos_logname] ; $field[$pos_date] ; $field[$pos_method] ; $field[$pos_url] ; $field[$pos_code] ; $field[$pos_size] ; $field[$pos_referer] ; $field[$pos_agent]",3);
+		&debug("$field[$pos_rc] ; $field[$pos_logname] ; $field[$pos_user] ; $field[$pos_date] ; $field[$pos_zone]; $field[$pos_method] ; $field[$pos_url] ; $field[$pos_code] ; $field[$pos_size] ; $field[$pos_referer] ; $field[$pos_agent]",3);
 
 		# Check parsed parameters
 		#----------------------------------------------------------------------
