@@ -164,10 +164,13 @@ if (scalar keys %ParamFile == 0) {
 	print "files in a fast process and with a low use of memory getting records in a\n";
 	print "chronological order from a pipe (for use by a log analyzer).\n";
 	print "\n";
+	print "WARNING: If log files are old MAC text files (lines ended with CR char), you\n";
+	print "can't run this tool on Win or Unix platforms.\n";
+	print "\n";
 	print "Now supports/detects:\n";
 	print "  Automatic detection of log format\n";
 #	print "  Multithreaded reverse DNS lookup (several parallel requests)\n";
-	print "  No need of extra Perl library\n";
+#	print "  No need of extra Perl library\n";
 	print "New versions and FAQ at http://awstats.sourceforge.net\n";
 	exit 0;
 }
@@ -252,6 +255,7 @@ if (scalar keys %LogFileToDo == 0) {
 foreach my $logfilenb (keys %LogFileToDo) {
 	&debug("Open log file number $logfilenb: \"$LogFileToDo{$logfilenb}\"");
 	open("LOG$logfilenb","$LogFileToDo{$logfilenb}") || error("Couldn't open log file \"$LogFileToDo{$logfilenb}\" : $!");
+	binmode "LOG$logfilenb";	# To avoid pb of corrupted text log files with binary chars.
 }
 
 my $QueueCursor=1;
@@ -264,7 +268,8 @@ while (1 == 1)
 			&debug("Search next record in file number $logfilenb",3);
 			# Read chosen log file until we found a record with good date or reaching end of file
 			while (1 == 1) {
-				my $LOG="LOG$logfilenb"; $_=<$LOG>;	# Read new line
+				my $LOG="LOG$logfilenb";
+				$_=<$LOG>;	# Read new line
 				if (! $_) {							# No more records in log file number $logfilenb
 					&debug(" No more records in file number $logfilenb",2);
 					delete $LogFileToDo{$logfilenb};
@@ -314,7 +319,7 @@ while (1 == 1)
 	}
 	if ($logfilechosen <= 0) { last; }								# No more record to process
 	# Record is chosen
-	&debug(" We choosed to analyze record of file number $logfilechosen",3);
+	&debug(" We choosed to qualify record of file number $logfilechosen",3);
 	&debug(" Record is $linerecord{$logfilechosen}",3);
 			
 	# Record is approved. We found a new line to process in file number $logfilechosen
