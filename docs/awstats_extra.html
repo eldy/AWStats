@@ -58,16 +58,15 @@ user or agent, etc...<br>
 <br># In most cases, you don't need this feature.
 <br>#
 <br># ExtraSectionNameX is title of your personalized chart.
-<br># ExtraSectionConditionalX are conditions you can use to count or not the hit,
-<br>#   Use one of the field condition (URL, QUERY_STRING, REFERER, UA, HOST),
-<br>#   and a regex to match after a coma. Use "|" for "OR". If you use several
-<br>#   conditions, they will be combined as "AND".
+<br># ExtraSectionConditionX are conditions you can use to count or not the hit,
+<br>#   Use one of the field condition (URL,QUERY_STRING,REFERER,UA,HOST,CODE),
+<br>#   and a regex to match, after a coma. Use "|" for "OR".
 <br># ExtraSectionFirstColumnTitleX is the first column title of the chart.
 <br># ExtraSectionFirstColumnValuesX is a Regex string to tell AWStats in which 
-<br>#   field to extract value from (URL, QUERY_STRING, REFERER, UA, HOST) and how
-<br>#   to extract the value (using regex syntax). Each different value found will
-<br>#   appear in first column of report on a different row. Be sure that list of
-<br>#   different values is "limited" to avoid "not enough memory" problems !
+<br>#   field to extract value from (URL, QUERY_STRING, REFERER, UA, HOST, CODE)
+<br>#   and how to extract the value (using regex syntax). Each different value
+<br>#   found will appear in first column of report on a different row. Be sure
+<br>#   that list of different possible values will not grow indefinitely.
 <br># ExtraSectionFirstColumnFormatX is the string used to write value.
 <br># ExtraSectionStatTypesX are things you want to count. You can use standard
 <br>#   code letters (P for pages,H for hits,B for bandwidth,L for last access).
@@ -77,7 +76,7 @@ user or agent, etc...<br>
 <br># MinHitExtraX is minimum number of hits required to be shown in chart.
 
 <br><br>
-Warning: the ExtraSectionConditionalX MUST use regex values since AWStats 6.0.<br>
+Warning: the ExtraSectionConditionX MUST use regex values since AWStats 6.0.<br>
 ExtraSectionFirstColumnValuesX also need REGEX value for all AWStats versions.<br>
 See examples for syntax use.<br>
 <br>
