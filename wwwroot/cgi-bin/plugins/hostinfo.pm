@@ -62,14 +62,14 @@ sub AddHTMLBodyHeader_hostinfo {
 	my $HEIGHTINFO=480;
 
 	print <<EOF;
-			
-<SCRIPT language="JavaScript">
+
+<script language="javascript" type="text/javascript">
 function neww(a,b) {
 	var wfeatures="directories=0,menubar=1,status=0,resizable=1,scrollbars=1,toolbar=0,width=$WIDTHINFO,height=$HEIGHTINFO,left=" + eval("(screen.width - $WIDTHINFO)/2") + ",top=" + eval("(screen.height - $HEIGHTINFO)/2");
 	if (b==1) { fen=window.open('$LinksToWhoIs'+a,'whois',wfeatures); }
 	if (b==2) { fen=window.open('$LinksToIPWhoIs'+a,'whois',wfeatures); }
 }
-</SCRIPT>
+</script>
 
 EOF
 
@@ -91,7 +91,7 @@ sub ShowInfoHost_hostinfo {
 	# <-----
 	my $hostinfotoshow="$_[0]";
 	if ($hostinfotoshow eq '__title__') {
-		print "<td width=80>$Message[114]</td>";	
+		print "<td width=\"80\">$Message[114]</td>";	
 	}
 	elsif ($hostinfotoshow) {
 		my $keyforwhois;

@@ -81,7 +81,7 @@ sub BuildFullHTMLOutput_rawlog {
 	# Show form
 	&_ShowForm($Filter);
 
-	print "<hr>\n";
+	print "<hr />\n";
 	
 	# Show raws
 	open(LOG,"$LogFile") || error("Couldn't open server log file \"$LogFile\" : $!");
@@ -104,7 +104,7 @@ sub BuildFullHTMLOutput_rawlog {
 
 sub _ShowForm {
 	my $Filter=shift||'';
-	print "<br>\n";
+	print "<br />\n";
 	print "<form action=\"$AWScript\" style=\"padding: 0px 0px 0px 0px; margin-top: 0\">\n";
 	print "<table class=\"aws_border\" border=\"0\" cellpadding=\"2\" cellspacing=\"0\" width=\"100%\">\n";
 	print "<tr><td>";
