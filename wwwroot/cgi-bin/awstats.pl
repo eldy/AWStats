@@ -345,7 +345,7 @@ use vars qw/ @Message /;
 'Browsers',
 '',
 'Referers',
-'Never updated',
+'Never updated (See \'Build/Update\' on awstats_setup.html page)',
 'Visitors domains/countries',
 'hosts',
 'pages',
