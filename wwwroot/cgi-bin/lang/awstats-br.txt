@@ -1,4 +1,5 @@
 # Portuguese (Brazilian) message file
+# $Revision$ - $Date$
 message0=Desconhecido
 message1=Desconhecido (ip não resolvido)
 message2=Outros visitantes
