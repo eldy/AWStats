@@ -9,8 +9,8 @@ pages, hits, hours, search engines, keywords used to find your site, broken
 links, robots and more. It works with IIS 5.0+ or Apache webserver log files.
 
 License: GNU GPL (GNU General Public License. See COPYING.TXT)
-Version : 2.24
-Release date: 01 May 2001
+Version : 2.5
+Release date: 20 May 2001
 Platforms: All (Linux, NT, SCO, BSD, Solaris and other *NIX's, BeOS, OS/2...)
 Author: Laurent Destailleur <eldy@users.sourceforge.net>
 AWStats web site: http://awstats.sourceforge.net
@@ -176,12 +176,8 @@ II - 2) With IIS Server
 
     * Configure IIS to have "Extended W3C log format" with following fields:
       date time c-ip cs-username cs-method cs-uri-stem sc-status cs-bytes cs-version cs(User-Agent) cs(Referer)
-        or
-      date time c-ip cs-username cs-method cs-uri-stem sc-status cs-bytes cs-version cs-host cs(User-Agent) cs(Referer)
       This is an example of what you should get:
       2000-07-19 14:14:14 62.161.78.73 - GET / 200 1234 HTTP/1.1 Mozilla/4.0+(compatible;+MSIE+5.01;+Windows+NT+5.0) http://www.from.com/from.htm
-        or
-      2000-07-19 14:14:14 62.161.78.73 - GET / 200 1234 HTTP/1.1 hostserver Mozilla/4.0+(compatible;+MSIE+5.01;+Windows+NT+5.0) http://www.from.com/from.htm
 
     * Put awstats.pl file in your cgi-bin directory (or other cgi directory).
 
@@ -282,7 +278,7 @@ http://awstats.sourceforge.net
 
 V - ABOUT THE AUTHOR, LICENSE AND SUPPORT
 -----------------------------------------
-Copyright (C) 2000 - Laurent Destailleur - eldy@users.sourceforge.net
+Copyright (C) 2000-2001 - Laurent Destailleur - eldy@users.sourceforge.net
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License

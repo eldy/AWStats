@@ -26,7 +26,7 @@ $DIR, $DNSLookup, $DefaultFile, $DirCgi, $DirConfig, $DirData,
 $DirIcons, $Extension, $FileConfig, $FileSuffix, $FirstTime,
 $HTMLEndSection, $Host, $HostAlias, $LastTime, $LastUpdate, $SiteToAnalyze,
 $SiteToAnalyzeIsInHostAliases, $SiteToAnalyzeWithoutwww, $LogFile,
-$LogFormat, $Logo, $MaxNbOfHostsShown, $MaxNbOfKeywordsShown,
+$LogFormat, $LogFormatString, $Logo, $MaxNbOfHostsShown, $MaxNbOfKeywordsShown,
 $MaxNbOfPageShown, $MaxNbOfRefererShown, $MaxNbOfRobotShown, $MinHitFile,
 $MinHitHost, $MinHitKeyword, $MinHitRefer, $MinHitRobot, $MonthRequired,
 $NewDNSLookup, $NowNewLinePhase, $OpenFileError, $PROG, $PageBool, $PurgeLogFile,
@@ -66,7 +66,7 @@ $word, $yearcon, $yearfile, $yearmonthfile, $yeartoprocess) = ();
 @sortsearchwords = @sortsereferrals = @sortsider404 = @sortsiders = @sortunknownip =
 @sortunknownreferer = @sortunknownrefererbrowser = @wordlist = ();
 
-$VERSION="2.5 (build 6)";
+$VERSION="2.5 (build 7)";
 $Lang=0;
 
 # Default value
@@ -74,7 +74,6 @@ $SortDir       = -1;		# -1 = Sort order from most to less, 1 = reverse order (De
 $VisitTimeOut  = 10000;		# Laps of time to consider a page load as a new visit. 10000 = one hour (Default = 10000)
 $FullHostName  = 1;			# 1 = Use name.domain.zone to refer host clients, 0 = all hosts in same domain.zone are one host (Default = 1, 0 never tested)
 $MaxLengthOfURL= 70;		# Maximum length of URL shown on stats page. This affects only URL visible text, link still work (Default = 70)
-$BenchMark     = 0;			# Set this to 1 to get some benchmark informations: a second counter since 1970 (Default = 0)
 $CENTER        = "";
 $WIDTH         = "600";
 # Images for graphics
@@ -147,6 +146,8 @@ $BarImageHorizontal_k = "barrehk.png";
 );
 
 # Search engines known URLs database (update the 10th january 2001)
+# To add a search engine, add a new line:
+# "match_string_in_url_that_identify_engine", "search_engine_name",
 %SearchEngineKnownUrl=(
 # Most common search engines
 "yahoo\.","p=",
@@ -646,7 +647,7 @@ $message[19][0]="Pages/URL";
 $message[20][0]="Hours (Server time)";
 $message[21][0]="Browsers";
 $message[22][0]="HTTP Errors";
-$message[23][0]="Referrers";
+$message[23][0]="Referers";
 $message[24][0]="Search&nbsp;Keywords";
 $message[25][0]="Visitors domains/countries";
 $message[26][0]="hosts";
@@ -654,18 +655,17 @@ $message[27][0]="pages";
 $message[28][0]="different pages";
 $message[29][0]="Access";
 $message[30][0]="Other words";
-$message[31][0]="Used browsers";
+$message[31][0]="Pages not found";
 $message[32][0]="HTTP Error codes";
 $message[33][0]="Netscape versions";
-$message[34][0]="MS Internet Explorer versions";
-$message[35][0]="Used OS";
+$message[34][0]="IE versions";
 $message[36][0]="Connect to site from";
 $message[37][0]="Origin";
 $message[38][0]="Direct address / Bookmarks";
-$message[39][0]="Link from a Newsgroup";
-$message[40][0]="Link from an Internet Search Engine";
-$message[41][0]="Link from an external page (other web sites except search engines)";
-$message[42][0]="Link from an internal page (other page on same site)";
+$message[39][0]="Links from a Newsgroup";
+$message[40][0]="Links from an Internet Search Engine";
+$message[41][0]="Links from an external page (other web sites except search engines)";
+$message[42][0]="Links from an internal page (other page on same site)";
 $message[43][0]="keywords used on search engines";
 $message[44][0]="Kb";
 $message[45][0]="Unresolved IP Address";
@@ -682,7 +682,7 @@ $message[55][0]="of";
 $message[56][0]="Pages";
 $message[57][0]="Hits";
 $message[58][0]="Versions";
-$message[59][0]="OS";
+$message[59][0]="Operating Systems";
 $message[60][0]="Jan";
 $message[61][0]="Feb";
 $message[62][0]="Mar";
@@ -730,11 +730,10 @@ $message[27][1]="des pages";
 $message[28][1]="pages différentes";
 $message[29][1]="Accès";
 $message[30][1]="Autres mots";
-$message[31][1]="Navigateurs utilisés";
+$message[31][1]="Pages non trouvées";
 $message[32][1]="Codes Erreurs HTTP";
 $message[33][1]="Versions de Netscape";
 $message[34][1]="Versions de MS Internet Explorer";
-$message[35][1]="Systèmes d'exploitation utilisés";
 $message[36][1]="Connexions au site par";
 $message[37][1]="Origine de la connexion";
 $message[38][1]="Adresse directe / Bookmarks";
@@ -758,7 +757,7 @@ $message[55][1]="sur";
 $message[56][1]="Pages";
 $message[57][1]="Hits";
 $message[58][1]="Versions";
-$message[59][1]="OS";
+$message[59][1]="Systèmes exploitation";
 $message[60][1]="Jan";
 $message[61][1]="Fév";
 $message[62][1]="Mar";
@@ -785,7 +784,7 @@ $message[6][2]="Jaar";
 $message[7][2]="Statistieken van";
 $message[8][2]="Eerste bezoek";
 $message[9][2]="Laatste bezoek";
-$message[10][2]="Aantal boezoeken";
+$message[10][2]="Aantal bezoeken";
 $message[11][2]="Unieke bezoekers";
 $message[12][2]="Bezoek";
 $message[13][2]="Trefwoord";
@@ -806,11 +805,10 @@ $message[27][2]="pagina's";
 $message[28][2]="verschillende pagina's";
 $message[29][2]="Toegang";
 $message[30][2]="Andere woorden";
-$message[31][2]="Gebruikte browsers";
+$message[31][2]="Pages not found";
 $message[32][2]="HTTP foutmelding codes";
 $message[33][2]="Netscape versies";
 $message[34][2]="MS Internet Explorer versies";
-$message[35][2]="Gebruikt OS";
 $message[36][2]="Verbinding naar site vanaf";
 $message[37][2]="Herkomst";
 $message[38][2]="Direkt adres / Bookmarks";
@@ -882,11 +880,10 @@ $message[27][3]="páginas";
 $message[28][3]="páginas diferentes";
 $message[29][3]="Acceso";
 $message[30][3]="Otras palabras";
-$message[31][3]="Navegadores utilizados";
+$message[31][3]="Pages not found";
 $message[32][3]="Códigos de Errores de Protocolo HTTP";
 $message[33][3]="Versiones de Netscape";
 $message[34][3]="Versiones de MS Internet Explorer";
-$message[35][3]="Sistemas Operativos utilizados";
 $message[36][3]="Enlaces (links) al sitio";
 $message[37][3]="Origen de enlace";
 $message[38][3]="Dirección directa / Favoritos";
@@ -958,11 +955,10 @@ $message[27][4]="pagine";
 $message[28][4]="pagine diverse";
 $message[29][4]="Accessi";
 $message[30][4]="Altre parole";
-$message[31][4]="Browser usati";
+$message[31][4]="Pages not found";
 $message[32][4]="Codici di errori HTTP";
 $message[33][4]="Netscape versione";
 $message[34][4]="MS Internet Explorer versione";
-$message[35][4]="Sistemi operativi usati";
 $message[36][4]="Connesso al sito da";
 $message[37][4]="Origine";
 $message[38][4]="Indirizzo diretto / segnalibro";
@@ -1034,11 +1030,10 @@ $message[27][5]="Seiten";
 $message[28][5]="Unterschiedliche Seiten";
 $message[29][5]="Zugriffe";
 $message[30][5]="Weitere Suchbegriffe";
-$message[31][5]="Verwendete Browser";
+$message[31][5]="Pages not found";
 $message[32][5]="HTTP Status Meldungen";
 $message[33][5]="Netscape Versionen";
 $message[34][5]="MS Internet Explorer Versionen";
-$message[35][5]="Betriebssysteme";
 $message[36][5]="Woher die Besucher kamen";
 $message[37][5]="Ursprung";
 $message[38][5]="Direkter Zugriff / Bookmarks";
@@ -1111,11 +1106,10 @@ $message[27][6]="strony";
 $message[28][6]="ró¿nych stron";
 $message[29][6]="Dostêp";
 $message[30][6]="Inne s³owa";
-$message[31][6]="Przegl±darki";
+$message[31][6]="Pages not found";
 $message[32][6]="Kody b³êdów HTTP";
 $message[33][6]="Wersje Netscape'a";
 $message[34][6]="Wersje MS IE";
-$message[35][6]="Systemy operacyjne";
 $message[36][6]="¬ród³a po³±czeñ";
 $message[37][6]="Pochodzenie";
 $message[38][6]="Dostêp bezpo¶redni lub z Ulubionych/Bookmarków";
@@ -1188,11 +1182,10 @@ $message[27][7]="óåëßäåò";
 $message[28][7]="äéáöïñåôéêÝò óåëßäåò";
 $message[29][7]="Ðñüóâáóç";
 $message[30][7]="¶ëëá ëåêôéêÜ";
-$message[31][7]="ÖõëëïìåôñçôÝò óå ÷ñÞóç";
+$message[31][7]="Pages not found";
 $message[32][7]="Êùäéêïß óöáëìÜôùí HTTP";
 $message[33][7]="Åêäüóåéò Netscape";
 $message[34][7]="Åêäüóåéò MS Internet Explorer";
-$message[35][7]="ËåéôïõñãéêÜ óå ÷ñÞóç";
 $message[36][7]="Óýíäåóç óôï ôüðï áðü";
 $message[37][7]="ÐñïÝëåõóç";
 $message[38][7]="Åõèýò óýíäåóìïò / ÁãáðçìÝíá";
@@ -1265,11 +1258,10 @@ $message[27][8]="stránek";
 $message[28][8]="rùzné stránky";
 $message[29][8]="Pøistup";
 $message[30][8]="Jiná slova";
-$message[31][8]="Pou¾ité browsery (prohlí¾eèe)";
+$message[31][8]="Pages not found";
 $message[32][8]="Chybové kódy HTTP ";
 $message[33][8]="Verze Netscape";
 $message[34][8]="Verze MS Internet Explorer";
-$message[35][8]="Pou¾itý OS";
 $message[36][8]="Konekce z";
 $message[37][8]="Pùvod";
 $message[38][8]="Pøímá adresa / Oblíbené (Bookmark)";
@@ -1341,11 +1333,10 @@ $message[27][9]="páginas";
 $message[28][9]="paginas diferentes";
 $message[29][9]="Acesso";
 $message[30][9]="Outras palavras";
-$message[31][9]="Browsers usados";
+$message[31][9]="Pages not found";
 $message[32][9]="Erros HTTP";
 $message[33][9]="Versões Netscape";
 $message[34][9]="Versões MS Internet Explorer";
-$message[35][9]="SO Usados";
 $message[36][9]="Connectado a partir de";
 $message[37][9]="Origem";
 $message[38][9]="Endereço directo / Favoritos";
@@ -1479,9 +1470,9 @@ sub UnescapeURLParam {
 }
 
 sub error {
-   	print "<font color=#880000>$_[0].</font><br>\n";
+   	if ($_[0] ne "") { print "<font color=#880000>$_[0].</font><br>\n"; }
    	if ($ENV{"GATEWAY_INTERFACE"} ne "") { print "<br><b>\n"; }
-	print "Setup ($FileConfig file, web server or logfile permissions) may be wrong.\n";
+	if ($_[0] ne "") { print "Setup ($FileConfig file, web server or logfile permissions) may be wrong.\n"; }
 	if ($ENV{"GATEWAY_INTERFACE"} ne "") { print "</b><br>\n"; }
 	print "See README.TXT for informations on how to setup $PROG.\n";
    	if ($ENV{"GATEWAY_INTERFACE"} ne "") { print "</BODY>\n</HTML>\n"; }
@@ -1496,7 +1487,8 @@ sub warning {
 }
 
 sub debug {
-	if ($Debug) { print "DEBUG: $_[0]<br>\n"; }
+	my $level = $_[1] || 1;
+	if ($Debug >= $level) { print "DEBUG $level - ".time." : $_[0]<br>\n"; }
 	0;
 }
 
@@ -1871,7 +1863,13 @@ sub Save_History_File {
 }
 
 sub Init_HashArray {
-	reset _;		# Delete all hash arrays with name beginning by _
+	# Delete all hash arrays with name beginning by _
+	%_browser_h = %_domener_h = %_domener_k = %_domener_p =
+	%_errors_h = %_hostmachine_h = %_hostmachine_k = %_hostmachine_l = %_hostmachine_p =
+	%_keywords = %_os_h = %_pagesrefs_h = %_robot_h = %_robot_l = %_se_referrals_h =
+	%_sider404_h = %_sider_h = %_sider_k = %_sider_p = %_unknownip_l = %_unknownreferer_l =
+	%_unknownrefererbrowser_l 
+	reset _;		
 }
 
 
@@ -1911,7 +1909,7 @@ if (($ENV{"GATEWAY_INTERFACE"} eq "") && ($SiteToAnalyze eq "")) {
 	print "  See README.TXT file to know how to create the config file.\n";
 	print "\n";
 	print "Advanced options:\n";
-	print "  update=0            to show a report with no update of statistics\n";
+	print "  update=0            to only show a report, no update of statistics\n";
 	print "  lang=X              to show a report page in language number X\n";
 	print "  month=MM year=YYYY  to show a report for an old month=MM, year=YYYY\n";
 	print "  Warning : Those 'date' options doesn't allow you to process old log file.\n";
@@ -2054,89 +2052,118 @@ if ($UpdateStats) {
 	}
 
 	#------------------------------------------
+	# GENERATING PerlParsingFormat
+	#------------------------------------------
+	# Log example records
+	# 62.161.78.73 user - [dd/mmm/yyyy:hh:mm:ss +0000] "GET / HTTP/1.1" 200 1234 "http://www.from.com/from.htm" "Mozilla/4.0 (compatible; MSIE 5.01; Windows NT 5.0)"
+	# my.domain.com - user [09/Jan/2001:11:38:51 -0600] "OPTIONS /mime-tmp/xxx file.doc HTTP/1.1" 408 - "-" "-"
+    # 2000-07-19 14:14:14 62.161.78.73 - GET / 200 1234 HTTP/1.1 Mozilla/4.0+(compatible;+MSIE+5.01;+Windows+NT+5.0) http://www.from.com/from.htm
+	# 05/21/00	00:17:31	OK  	200	212.242.30.6	Mozilla/4.0 (compatible; MSIE 5.0; Windows 98; DigExt)	http://www.cover.dk/	"www.cover.dk"	:Documentation:graphics:starninelogo.white.gif	1133	
+	$LogFormatString=$LogFormat;
+	if ($LogFormat == 1) { $LogFormatString="%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\""; }
+	if ($LogFormat == 2) { $LogFormatString="date time c-ip cs-username cs-method cs-uri-stem sc-status cs-bytes cs-version cs(User-Agent) cs(Referer)"; }
+	&debug("Generate PerlParsingFormat from LogFormatString=$LogFormatString");
+	# Scan $LogFormat to found all required fields and generate PerlParsing
+	$PerlParsingFormat="";
+
+	if ($LogFormat == 1) {
+		$PerlParsingFormat="([^\\s]*) ([^\\s]*) ([^\\s]*) \\[([^\\s]*) ([^\\s]*)\\] \\\"([^\\s]*) ([^\\s]*) [^\\\"]*\\\" ([\\d|-]*) ([\\d|-]*) \\\"([^\\\"]*)\\\" \\\"([^\\\"]*)\\\"";
+		$pos_rc=1;
+		$pos_logname=2;
+		$pos_user=3;
+		$pos_date=4;
+		$pos_zone=5;
+		$pos_method=6;
+		$pos_url=7;
+		$pos_code=8;
+		$pos_size=9;
+		$pos_referer=10;
+		$pos_agent=11;
+	}
+	if ($LogFormat == 2) {
+		$PerlParsingFormat="([^\\s]* [^\\s]*) ([^\\s]*) ([^\\s]*) ([^\\s]*) ([^\\s]*) ([\\d|-]*) ([\\d|-]*) [^\\s]* ([^\\s]*) ([^\\s]*)";
+		$pos_date=1;
+		$pos_rc=2;
+		$pos_logname=3;
+		$pos_method=4;
+		$pos_url=5;
+		$pos_code=6;
+		$pos_size=7;
+		$pos_agent=8;
+		$pos_referer=9;
+	}
+
+	if ($pos_rc eq "" || $pos_date eq "" || $pos_method eq "" || $pos_url eq "" || $pos_code eq "" || $pos_size eq "" || $pos_referer eq "" || $pos_agent eq "") {
+		error("Error: Your personalized LogFormat does not include all fields required by AWStats");
+		}
+	&debug("PerlParsingFormat is $PerlParsingFormat");
+	
+
+	#------------------------------------------
 	# PROCESSING CURRENT LOG
 	#------------------------------------------
-	if ($BenchMark) { print "Start of processing log file: ".time."<br>\n"; }
+	&debug("Start of processing log file (monthtoprocess=$monthtoprocess, yeartoprocess=$yeartoprocess)");
 	$OpenFileError=1; if (open(LOG,"$LogFile")) { $OpenFileError=0; }
 	if ($OpenFileError) { error("Error: Couldn't open server log file \"$LogFile\" : $!"); }
-	$CheckFormatNotDone=1;$NowNewLinePhase=0;
+	$NbOfLinesProcessed=0; $NowNewLinePhase=0;
 	while (<LOG>)
 	{
 		$savedline=$_;
 		chomp $_; s/\r//;
-		$_ =~ s/\" / /g; $_ =~ s/ \"/ /g; $_ =~ s/\"$//;	# Suppress "
-		if (/^$/) { next; }									# Ignore blank line (With ISS: happens sometimes, with Apache: possible when editing log file)
-		if ($LogFormat == 2) {
-			if (/^#/) { next; }								# ISS writes such comments, we forget line
-			@felter=split(/ /,$_);
-			$savetime=$felter[1];
-			@datep=split(/-/,$felter[0]);					# YYYY-MM-DD
-			# Change order of ISS parameters to be like Apache
-			if ($#felter == 10) {							# Log with no virtual_host_name in it (11 fields)
-				$felter[11]=$felter[9];
-			}
-			else {											# Log with virtual_host_name in it (12 fields)
-				$savetmp=$felter[10];
-				$felter[10]=$felter[11];
-				$felter[11]=$savetmp;
-			}
-			$felter[0]=$felter[2];
-			$felter[1]="-";
-			$felter[2]=$felter[3];
-			$felter[3]="[$datep[2]/$datep[1]/$datep[0]:$savetime";
-			$felter[9]=$felter[7];
-			$felter[7]=$felter[8];
-			$felter[8]=$felter[6];
-			$felter[6]=$felter[5];
-			$felter[5]=$felter[4];
-			$felter[4]="+0000]";
-			#print "$#felter: $felter[0] $felter[1] $felter[2] $felter[3] $felter[4] $felter[5] $felter[6] $felter[7] $felter[8] $felter[9] $felter[10] $felter[11]<br>";
-		}
-		else {
-			#$_ =~ s/ GET .* .* HTTP\// GET BAD_URL HTTP\//;
-			if ($_ =~ / GET .* .* HTTP\//) { $_corrupted++; next; }
-			@felter=split(/ /,$_);
-		}
-#		$felter[1]=$felter[0]; shift @felter;				# This is for test when log format is "hostname ip_adress ...	"
+		if (/^$/) { next; }									# Ignore blank lines (With ISS: happens sometimes, with Apache: possible when editing log file)
+		if (/^#/) { next; }									# Ignore comment lines (ISS writes such comments)
+		if (/^!!/) { next; }								# Ignore comment lines (Webstar writes such comments)
+		$NbOfLinesProcessed++;
 
-		# Check filters (here, log is in apache combined format, even with IIS)
+		# Parse line record to get all required fields
+		$_ =~ /^$PerlParsingFormat/;
+		&debug("$1 ; $2 ; $3 ; $4 ; $5 ; $6 ; $7 ; $8 ; $9 ; $10 ; $11",3);
+		$lastrequiredfield=11;
+		foreach $i (1..$lastrequiredfield) { $field[$i]=$$i; }
+		&debug("$field[$pos_rc] ; $field[$pos_logname] ; $field[$pos_date] ; $field[$pos_method] ; $field[$pos_url] ; $field[$pos_code] ; $field[$pos_size] ; $field[$pos_referer] ; $field[$pos_agent]",3);
+
+		# Check parsed parameters
 		#----------------------------------------------------------------------
-		if ($felter[5] ne 'GET' && $felter[5] ne 'POST') {
-			if ($felter[5] ne 'HEAD' && $felter[5] ne 'OPTIONS') { $_corrupted++; }
-			next; }											# Keep only GET, POST but not HEAD, OPTIONS
-		if ($felter[6] =~ /^RC=/) { $_corrupted++; next; }	# A strange log record we need to forget
-
-		$felter[3] =~ s/^\[//;
-		$felter[3] =~ tr/\//:/;
-		@dateparts=split(/:/,$felter[3]);				# Split DD:Month:YYYY:HH:MM:SS
-		if ( $monthnum{$dateparts[1]} ) { $dateparts[1]=$monthnum{$dateparts[1]}; }	# Change lib month in num month if necessary
-		$timeconnexion=$dateparts[2].$dateparts[1].$dateparts[0].$dateparts[3].$dateparts[4].$dateparts[5];	# YYYYMMDDHHMMSS
-
-		# Check format of record if not already done
-		#-------------------------------------------
-		if ($CheckFormatNotDone) {
-			$GoodFormat=1;
-			if (($felter[8] !~ /^[\d][\d][\d]$/) && ($felter[8] !~ /^[\d]$/)) { $GoodFormat=0; }	# Bad format (Second test avoid error when using MS IndexServer that returns non standard HTTP code)
-			if ($felter[10] eq "")    { $GoodFormat=0; }											# Bad format (Not enough fields)
-			# Insert here other tests
-			# ...
-			if ($GoodFormat == 0) {
-				print "Log file <b>$LogFile</b> doesn't seem to have good format. Suspect line is<br>";
-				print "<font color=#888888><i>$savedline</i></font><br>";
-				print "<br><b>LogFormat</b> parameter is <b>$LogFormat</b>, this means each line in your log file need to have ";
-				if ($LogFormat == 2) {
-						print "<b>\"MSIE Extended W3C log format\"</b> like this:<br>";
-						print "<font color=#888888><i>date time c-ip c-username cs-method cs-uri-sterm sc-status cs-bytes cs-version cs(User-Agent) cs(Referer)</i></font><br>";
-					}
-				else {
-						print "<b>\"combined log format\"</b> like this:<br>";
-						print "<font color=#888888><i>111.22.33.44 - - [10/Jan/2001:02:14:14 +0200] \"GET / HTTP/1.1\" 200 1234 \"http://www.fromserver.com/from.htm\" \"Mozilla/4.0 (compatible; MSIE 5.01; Windows NT 5.0)\"</i></font><br>";
+		if ($field[$lastrequiredfield] eq "") {
+			$corrupted++;
+			if ($NbOfLinesProcessed >= 10 && $corrupted == $NbOfLinesProcessed) {
+				# Files seems to have bad format
+				print "AWStats did not found any valid log lines, that match your <b>LogFormat</b> parameter, in the 10th first non commented lines of your log.<br>\n";
+				print "<font color=#880000>Your log file <b>$LogFile</b> must have a bad format or <b>LogFormat</b> parameter is wrong.</font><br><br>\n";
+				print "Your <b>LogFormat</b> parameter is <b>$LogFormat</b>, this means each line in your log file need to have ";
+				if ($LogFormat == 1) {
+					print "<b>\"combined log format\"</b> like this:<br>\n";
+					print "<font color=#888888><i>111.22.33.44 - - [10/Jan/2001:02:14:14 +0200] \"GET / HTTP/1.1\" 200 1234 \"http://www.fromserver.com/from.htm\" \"Mozilla/4.0 (compatible; MSIE 5.01; Windows NT 5.0)\"</i></font><br>\n";
 				}
-				error("<br>");	# Exit with format error
-			}
-			$CheckFormatNotDone=0;	# No more format test
-		}
+				if ($LogFormat == 2) {
+					print "<b>\"MSIE Extended W3C log format\"</b> like this:<br>\n";
+					print "<font color=#888888><i>date time c-ip c-username cs-method cs-uri-sterm sc-status cs-bytes cs-version cs(User-Agent) cs(Referer)</i></font><br>\n";
+				}
+				if ($LogFormat != 1 && $LogFormat != 2) {
+					print "the following personalized log format:<br>\n";
+					print "<font color=#888888><i>$LogFormat</i></font><br>\n";
+				}
+				print "<br>";
+				print "This is a sample of what AWStats found (10th non commented line):<br>\n";
+				print "<font color=#888888><i>$_</i></font><br>\n";
 
+				error("");	# Exit with format error
+			}
+		}
+		
+		# Check filters
+		#----------------------------------------------------------------------
+		if ($field[$pos_method] ne 'GET' && $field[$pos_method] ne 'POST') { next; }	# Keep only GET, POST but not HEAD, OPTIONS
+		if ($field[$pos_url] =~ /^RC=/) { $_corrupted++; next; }	# A strange log record we need to forget
+
+		# Split DD/Month/YYYY:HH:MM:SS or YYYY-MM-DD HH:MM:SS
+		$field[$pos_date] =~ tr/-\/ /:::/;
+		@dateparts=split(/:/,$field[$pos_date]);
+		if ($dateparts[0] gt 1000) { $tmp=$dateparts[0]; $dateparts[0]=$dateparts[2]; $dateparts[2]=$tmp; }
+		if ( $monthnum{$dateparts[1]} ) { $dateparts[1]=$monthnum{$dateparts[1]}; }	# Change lib month in num month if necessary
+		# Create $timeconnexion like YYYYMMDDHHMMSS
+		$timeconnexion=$dateparts[2].$dateparts[1].$dateparts[0].$dateparts[3].$dateparts[4].$dateparts[5];
+		
 		# Skip if not a new line
 		#-----------------------
 		if ($NowNewLinePhase) {
@@ -2147,8 +2174,8 @@ if ($UpdateStats) {
 			$NowNewLinePhase=1;	# This will stop comparison "<=" between timeconnexion and LastTime (we should have only new lines now)
 			}
 
-		if (&SkipFile($felter[6])) { next; }			# Skip with some URL
-		if (&SkipHost($felter[0])) { next; }			# Skip with some client host IP address
+		if (&SkipFile($field[$pos_url])) { next; }		# Skip with some URL
+		if (&SkipHost($field[$pos_rc])) { next; }		# Skip with some client host IP address
 
 		# Record is approved. We found a new line. Is it in a new month section ?
 		#------------------------------------------------------------------------
@@ -2164,28 +2191,19 @@ if ($UpdateStats) {
 
 		# Check return code
 		#------------------
-		if (($felter[8] != 200) && ($felter[8] != 304)) {		# Stop if HTTP server return code != 200 and 304
-			if ($felter[8] =~ /^[\d][\d][\d]$/) { 				# Keep error code and next
-				$_errors_h{$felter[8]}++;
-				if ($felter[8] == 404) { $_sider404_h{$felter[6]}++; $_referer404_h{$felter[6]}=$felter[10]; }
+		if (($field[$pos_code] != 200) && ($field[$pos_code] != 304)) {	# Stop if HTTP server return code != 200 and 304
+			if ($field[$pos_code] =~ /^[\d][\d][\d]$/) { 				# Keep error code and next
+				$_errors_h{$field[$pos_code]}++;
+				if ($field[$pos_code] == 404) { $_sider404_h{$field[$pos_url]}++; $_referer404_h{$field[$pos_url]}=$field[$pos_referer]; }
 				next;
 				}
-			else {												# Bad format record (should not happen but when using MSIndex server), next
+			else {														# Bad format record (should not happen but when using MSIndex server), next
 				$_corrupted++; next;
 				}
 		}
 
-		if ($LogFormat == 1) {
-			# To correct bad format of some old apache log (field 10 is twice in line)
-			# if ($felter[10] =~ /^$felter[11],/) { for ($ix=12; $ix<=$#felter; $ix++) { $felter[$ix-1] = $felter[$ix]; } }
-			# Define $UserAgent in one string (no ' ') like "Mozilla/4.0_(compatible;_MSIE_4.01;_Windows_98)"
-			for ($ix=12; $ix<=$#felter; $ix++) {
-				$felter[11] .= "_"; $felter[11] .= $felter[$ix];
-			}
-		}
-
-		$felter[11] =~ tr/\+/_/;
-		$UserAgent = $felter[11];
+		$field[$pos_agent] =~ tr/\+ /__/;		# Same Agent with different writing syntax have now same name
+		$UserAgent = $field[$pos_agent];
 		$UserAgent =~ tr/A-Z/a-z/;
 
 		# Robot ? If yes, we stop here
@@ -2198,13 +2216,13 @@ if ($UpdateStats) {
 		}
 
 		# Canonize and clean target URL and referrer URL
-		$felter[6] =~ s/\/$DefaultFile$/\//;	# Replace default page name with / only
-		$felter[6] =~ s/\?.*//;					# Trunc CGI parameters in URL get
-		$felter[6] =~ s/\/\//\//g;				# Because some targeted url were taped with 2 / (Ex: //rep//file.htm)
+		$field[$pos_url] =~ s/\/$DefaultFile$/\//;	# Replace default page name with / only
+		$field[$pos_url] =~ s/\?.*//;					# Trunc CGI parameters in URL get
+		$field[$pos_url] =~ s/\/\//\//g;				# Because some targeted url were taped with 2 / (Ex: //rep//file.htm)
 
 		# Check if page or not
 		$PageBool=1;
-		foreach $cursor (@NotPageList) { if ($felter[6] =~ /$cursor$/i) { $PageBool=0; last; } }
+		foreach $cursor (@NotPageList) { if ($field[$pos_url] =~ /$cursor$/i) { $PageBool=0; last; } }
 
 		# Analyze: Date - Hour - Pages - Hits - Kilo
 		#-------------------------------------------
@@ -2212,25 +2230,25 @@ if ($UpdateStats) {
 		$LastTime{$yeartoprocess.$monthtoprocess} = $timeconnexion;
 		if ($PageBool) {
 			$_time_p[$dateparts[3]]++; $MonthPage{$yeartoprocess.$monthtoprocess}++;	#Count accesses per hour (page)
-			$_sider_p{$felter[6]}++; 									#Count accesses per page (page)
+			$_sider_p{$field[$pos_url]}++; 									#Count accesses per page (page)
 			}
 		$_time_h[$dateparts[3]]++; $MonthHits{$yeartoprocess.$monthtoprocess}++;		#Count accesses per hour (hit)
-		$_time_k[$dateparts[3]]+=$felter[9]; $MonthBytes{$yeartoprocess.$monthtoprocess}+=$felter[9];	#Count accesses per hour (kb)
-		$_sider_h{$felter[6]}++;										#Count accesses per page (hit)
-		$_sider_k{$felter[6]}+=$felter[9];								#Count accesses per page (kb)
+		$_time_k[$dateparts[3]]+=$field[$pos_size]; $MonthBytes{$yeartoprocess.$monthtoprocess}+=$field[$pos_size];	#Count accesses per hour (kb)
+		$_sider_h{$field[$pos_url]}++;										#Count accesses per page (hit)
+		$_sider_k{$field[$pos_url]}+=$field[$pos_size];								#Count accesses per page (kb)
 
 		# Analyze: IP-address
 		#--------------------
 		$found=0;
-		$Host=$felter[0];
+		$Host=$field[$pos_rc];
 		if ($Host =~ /^[\d]+\.[\d]+\.[\d]+\.[\d]+$/) {
 			# Doing DNS lookup
 		    if ($NewDNSLookup) {
 				$new=$TmpHashDNSLookup{$Host};	# TmpHashDNSLookup is a temporary hash table to increase speed
 				if (!$new) {		# if $new undefined, $Host not yet resolved
-					if ($BenchMark) { print "Start of reverse DNS lookup for $Host: ".time."<br>\n"; }
+					&debug("Start of reverse DNS lookup for $Host",4);
 					$new=gethostbyaddr(pack("C4",split(/\./,$Host)),AF_INET);	# This is very slow may took 20 seconds
-					if ($BenchMark) { print "End of reverse DNS lookup for $Host: ".time."<br>\n"; }
+					&debug("End of reverse DNS lookup for $Host",4);
 					if ($new eq "") {	$new="ip"; }
 					$TmpHashDNSLookup{$Host}=$new;
 				}
@@ -2249,8 +2267,8 @@ if ($UpdateStats) {
 				  }
 				  $_hostmachine_h{"Unknown"}++;
 				  $_domener_h{"ip"}++;
-				  $_hostmachine_k{"Unknown"}+=$felter[9];
-				  $_domener_k{"ip"}+=$felter[9];
+				  $_hostmachine_k{"Unknown"}+=$field[$pos_size];
+				  $_domener_k{"ip"}+=$field[$pos_size];
 				  $found=1;
 		      }
 	    }
@@ -2270,19 +2288,19 @@ if ($UpdateStats) {
 				$_hostmachine_l{$_}=$timeconnexion;
 				}
 			$_hostmachine_h{$_}++;
-			$_hostmachine_k{$_}+=$felter[9];
+			$_hostmachine_k{$_}+=$field[$pos_size];
 
 			# Count top-level domain
 			if (/\./) { /\.([\w]+)$/; $_=$1; };
 			if ($DomainsHash{$_}) {
 				 if ($PageBool) { $_domener_p{$_}++; }
 				 $_domener_h{$_}++;
-				 $_domener_k{$_}+=$felter[9];
+				 $_domener_k{$_}+=$field[$pos_size];
 				 }
 			else {
 				 if ($PageBool) { $_domener_p{"ip"}++; }
 				 $_domener_h{"ip"}++;
-				 $_domener_k{"ip"}+=$felter[9];
+				 $_domener_k{"ip"}+=$field[$pos_size];
 			}
 		}
 
@@ -2318,7 +2336,7 @@ if ($UpdateStats) {
 		}
 
 		# Unknown browser ?
-		if (!$found) { $_browser_h{"Unknown"}++; $_unknownrefererbrowser_l{$felter[11]}=$timeconnexion; }
+		if (!$found) { $_browser_h{"Unknown"}++; $_unknownrefererbrowser_l{$field[$pos_agent]}=$timeconnexion; }
 
 		# Analyze: OS
 		#------------
@@ -2335,7 +2353,7 @@ if ($UpdateStats) {
 				}
 			}
 			# Unknown OS ?
-			if (!$found) { $_os_h{"Unknown"}++; $_unknownreferer_l{$felter[11]}=$timeconnexion; }
+			if (!$found) { $_os_h{"Unknown"}++; $_unknownreferer_l{$field[$pos_agent]}=$timeconnexion; }
 		}
 		else {
 			$_os_h{$TmpHashOS{$UserAgent}}++;
@@ -2346,16 +2364,16 @@ if ($UpdateStats) {
 		$found=0;
 
 		# Direct ?
-		if ($felter[10] eq "-") { $_from_h[0]++; $found=1; }
+		if ($field[$pos_referer] eq "-") { $_from_h[0]++; $found=1; }
 
 		# HTML link ?
 		if (!$found) {
-			if ($felter[10] =~ /^http/)     {
+			if ($field[$pos_referer] =~ /^http/i) {
 				$internal_link=0;
-				if ($felter[10] =~ /^http(s|):\/\/(www.|)$SiteToAnalyzeWithoutwww/i) { $internal_link=1; }
+				if ($field[$pos_referer] =~ /^http(s|):\/\/(www.|)$SiteToAnalyzeWithoutwww/i) { $internal_link=1; }
 				else {
 					foreach $HostAlias (@HostAliases) {
-						if ($felter[10] =~ /^http(s|):\/\/$HostAlias/i) { $internal_link=1; last; }
+						if ($field[$pos_referer] =~ /^http(s|):\/\/$HostAlias/i) { $internal_link=1; last; }
 						}
 				}
 
@@ -2366,7 +2384,7 @@ if ($UpdateStats) {
 				}
 				else {
 				    # Extern (This hit came from an external web site)
-					@refurl=split(/\?/,$felter[10]);
+					@refurl=split(/\?/,$field[$pos_referer]);
 					$refurl[0] =~ tr/A-Z/a-z/;
 				    foreach $key (keys %SearchEnginesHash) {
 						if ($refurl[0] =~ /$key/) {
@@ -2429,8 +2447,8 @@ if ($UpdateStats) {
 					if (!$found) {
 						# This hit came from a site other than a search engine
 						$_from_h[3]++;
-						if ($felter[10] =~ /http:\/\/[^\/]*\/$/) { $felter[10] =~ s/\/$//; }	# To make htpp://www.mysite.com and http://www.mysite.com/ as same referer
-						$_pagesrefs_h{$felter[10]}++;
+						if ($field[$pos_referer] =~ /http:\/\/[^\/]*\/$/i) { $field[$pos_referer] =~ s/\/$//; }	# To make htpp://www.mysite.com and http://www.mysite.com/ as same referer
+						$_pagesrefs_h{$field[$pos_referer]}++;
 						$found=1;
 					}
 				}
@@ -2439,7 +2457,7 @@ if ($UpdateStats) {
 
 		# News link ?
 		if (!$found) {
-			if ($felter[10] =~ /^news/) {
+			if ($field[$pos_referer] =~ /^news/i) {
 				$_from_h[1]++;
 				$found=1;
 			}
@@ -2447,27 +2465,27 @@ if ($UpdateStats) {
 
 	}
 	close LOG;
-	if ($BenchMark) { print "End of processing log file: ".time."<br>\n"; }
+	&debug("End of processing log file");
 
 	# DNSLookup warning
 	if ($DNSLookup && !$NewDNSLookup) { warning("Warning: <b>$PROG</b> has detected that hosts names are already resolved in your logfile <b>$LogFile</b>.<br>\nIf this is true, you should change your setup DNSLookup=1 into DNSLookup=0 to increase $PROG speed."); }
 
 	# Save for month $monthtoprocess
-	if ($monthtoprocess) {	# If monthtoprocess is still 0, it means there was no history files and we found no valid lines in log file
-		&Save_History_File($yeartoprocess,$monthtoprocess);		# We save data for this month
+	if ($UpdateStats && $monthtoprocess) {	# If monthtoprocess is still 0, it means there was no history files and we found no valid lines in log file
+		&Save_History_File($yeartoprocess,$monthtoprocess);		# We save data for this month,year
 		if (($MonthRequired ne "year") && ($monthtoprocess != $MonthRequired)) { &Init_HashArray; }	# Not a desired month, so we clean data
 	}
 
 	# Archive LOG file into ARCHIVELOG
 	if (($PurgeLogFile == 1) && ($ArchiveLogRecords == 1)) {
-		if ($BenchMark) { print "Start of archiving log file: ".time."<br>\n"; }
+		&debug("Start of archiving log file");
 		$ArchiveFileName="$DirData/${PROG}_archive$FileSuffix.log";
 		open(LOG,"+<$LogFile") || error("Error: Enable to archive log records of \"$LogFile\" into \"$ArchiveFileName\" because source can't be opened for read and write: $!<br>\n");
 		open(ARCHIVELOG,">>$ArchiveFileName") || error("Error: Couldn't open file \"$ArchiveFileName\" to archive current log: $!");
 		while (<LOG>) {	print ARCHIVELOG $_; }
 		close(ARCHIVELOG);
 		chmod 438,"$ArchiveFileName";
-		if ($BenchMark) { print "End of archiving log file: ".time."<br>\n"; }
+		&debug("End of archiving log file");
 	}
 	else {
 		open(LOG,"+<$LogFile");
@@ -2651,7 +2669,7 @@ if ($QueryString =~ /action=info/i) {
 	exit(0);
 	}
 
-if ($BenchMark) { print "Start of sorting hash arrays: ".time."<br>\n"; }
+&debug("Start of sorting hash arrays");
 @RobotArray=keys %RobotHash;
 @SearchEnginesArray=keys %SearchEnginesHash;
 @sortdomains_p=sort { $SortDir*$_domener_p{$a} <=> $SortDir*$_domener_p{$b} } keys (%_domener_p);
@@ -2665,7 +2683,7 @@ if ($BenchMark) { print "Start of sorting hash arrays: ".time."<br>\n"; }
 @sortpagerefs=sort { $SortDir*$_pagesrefs_h{$a} <=> $SortDir*$_pagesrefs_h{$b} } keys (%_pagesrefs_h);
 @sortsearchwords=sort { $SortDir*$_keywords{$a} <=> $SortDir*$_keywords{$b} } keys (%_keywords);
 @sorterrors=sort { $SortDir*$_errors_h{$a} <=> $SortDir*$_errors_h{$b} } keys (%_errors_h);
-if ($BenchMark) { print "End of sorting hash arrays: ".time."<br>\n"; }
+&debug("End of sorting hash arrays");
 
 # English tooltips
 if (($Lang != 1) && ($Lang != 2) && ($Lang != 3) && ($Lang != 6)) {
@@ -3167,18 +3185,16 @@ print "</font></td><td valign=center><font size=1>&nbsp;";
 if ($AllowToUpdateStatsFromBrowser) { print "<a href=\"$DirCgi$PROG.$Extension?update=1&site=$SiteToAnalyze&year=$YearRequired&month=$MonthRequired&lang=$Lang\">Update</a>"; }
 print "</td></tr></table>";
 print "<br>\n";
-print "<table><tr><td class=LEFT>";
-print " <a href=\"#DOMAINS\"><font size=1>[$message[17][$Lang]]</font></a> &nbsp;";
-print " <a href=\"#VISITOR\"><font size=1>[$message[18][$Lang]]</font></a> &nbsp;";
-print " <a href=\"#ROBOTS\"><font size=1>[$message[53][$Lang]]</font></a> &nbsp;";
-print " <a href=\"#PAGE\"><font size=1>[$message[19][$Lang]]</font></a> &nbsp;";
-print " <a href=\"#HOUR\"><font size=1>[$message[20][$Lang]]</font></a> &nbsp;";
-print " <a href=\"#BROWSER\"><font size=1>[$message[21][$Lang]]</font></a> &nbsp;";
-print " <a href=\"#REFERER\"><font size=1>[$message[23][$Lang]]</font></a> &nbsp;";
-print " <a href=\"#SEARCHWORDS\"><font size=1>[$message[24][$Lang]]</font></a> &nbsp;";
-print " <a href=\"#ERRORS\"><font size=1>[$message[22][$Lang]]</font></a> &nbsp;";
-print "</td></tr></table>\n";
-
+print "<table>\n";
+print "<tr><td class=LEFT><font style=\"font: 14px arial,verdana,helvetica; font-weight: bold\">Traffic:</td>";
+print "<td class=LEFT><a href=\"#DOMAINS\">$message[17][$Lang]</a> <a href=\"#VISITOR\">".ucfirst($message[26][$Lang])."</a> <a href=\"#ROBOTS\">$message[53][$Lang]</a> <a href=\"#HOUR\">$message[20][$Lang]</a> <a href=\"$DirCgi$PROG.$Extension?action=unknownip&site=$SiteToAnalyze&year=$YearRequired&month=$MonthRequired&lang=$Lang\">$message[45][$Lang]</a><br></td></tr>\n";
+print "<tr><td class=LEFT><font style=\"font: 14px arial,verdana,helvetica; font-weight: bold\">Navigation:</td>";
+print "<td class=LEFT><a href=\"#PAGE\">$message[19][$Lang]</a> <a href=\"#BROWSER\">$message[21][$Lang]</a> <a href=\"#OS\">$message[59][$Lang]</a> <a href=\"$DirCgi$PROG.$Extension?action=browserdetail&site=$SiteToAnalyze&year=$YearRequired&month=$MonthRequired&lang=$Lang\">$message[33][$Lang]</a> <a href=\"$DirCgi$PROG.$Extension?action=browserdetail&site=$SiteToAnalyze&year=$YearRequired&month=$MonthRequired&lang=$Lang\">$message[34][$Lang]</a><br></td></tr>\n";
+print "<tr><td class=LEFT><font style=\"font: 14px arial,verdana,helvetica; font-weight: bold\">$message[23][$Lang]</td>";
+print "<td class=LEFT><a href=\"#REFERER\">$message[37][$Lang]</a> <a href=\"#SEARCHWORDS\">$message[24][$Lang]</a><br></td></tr>\n";
+print "<tr><td class=LEFT><font style=\"font: 14px arial,verdana,helvetica; font-weight: bold\">$message[2][$Lang]:</td>";
+print "<td class=LEFT> <a href=\"#ERRORS\">$message[22][$Lang]</a> <a href=\"$DirCgi$PROG.$Extension?action=notfounderror&site=$SiteToAnalyze&year=$YearRequired&month=$MonthRequired&lang=$Lang\">$message[31][$Lang]</a><br></td></tr>\n";
+print "</table>\n";
 print "<br>\n\n";
 
 
@@ -3394,6 +3410,43 @@ foreach $key (@sortrobot) {
 &tab_end;
 
 
+# BY HOUR
+#----------------------------
+print "$CENTER<a name=\"HOUR\"></a><BR>";
+$tab_titre="$message[20][$Lang]";
+&tab_head;
+print "<TR><TD><TABLE><TR>\n";
+$max_p=0;$max_h=0;$max_k=0;
+for ($ix=0; $ix<=23; $ix++) {
+  print "<TH width=16>$ix</TH>";
+  if ($_time_p[$ix]>$max_p) { $max_p=$_time_p[$ix]; }
+  if ($_time_h[$ix]>$max_h) { $max_h=$_time_h[$ix]; }
+  if ($_time_k[$ix]>$max_k) { $max_k=$_time_k[$ix]; }
+}
+print "</TR>\n";
+print "<TR>\n";
+for ($ix=1; $ix<=24; $ix++) {
+	$hr=$ix; if ($hr>12) { $hr=$hr-12; }
+	print "<TH><IMG SRC=\"$DirIcons\/clock\/hr$hr.png\" width=10></TH>";
+}
+print "</TR>\n";
+print "\n<TR VALIGN=BOTTOM>\n";
+for ($ix=0; $ix<=23; $ix++) {
+	$bredde_p=0;$bredde_h=0;$bredde_k=0;
+	if ($max_h > 0) { $bredde_p=($BarHeight*$_time_p[$ix]/$max_h)+1; }
+	if ($max_h > 0) { $bredde_h=($BarHeight*$_time_h[$ix]/$max_h)+1; }
+	if ($max_k > 0) { $bredde_k=($BarHeight*$_time_k[$ix]/$max_k)+1; }
+	$kilo=int(($_time_k[$ix]/1024)*100)/100;
+	print "<TD>";
+	print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_p\" HEIGHT=$bredde_p WIDTH=6 ALT=\"$message[56][$Lang]: $_time_p[$ix]\" title=\"$message[56][$Lang]: $_time_p[$ix]\">";
+	print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_h\" HEIGHT=$bredde_h WIDTH=6 ALT=\"$message[57][$Lang]: $_time_h[$ix]\" title=\"$message[57][$Lang]: $_time_h[$ix]\">";
+	print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_k\" HEIGHT=$bredde_k WIDTH=6 ALT=\"$message[44][$Lang]: $kilo\" title=\"$message[44][$Lang]: $kilo\">";
+	print "</TD>\n";
+}
+print "</TR></TABLE></TD></TR>\n";
+&tab_end;
+
+
 # BY PAGE
 #-------------------------
 print "$CENTER<a name=\"PAGE\"></a><BR>";
@@ -3419,51 +3472,10 @@ foreach $key (@sortsiders) {
 &tab_end;
 
 
-# BY HOUR
-#----------------------------
-print "$CENTER<a name=\"HOUR\"></a><BR>";
-$tab_titre="$message[20][$Lang]";
-&tab_head;
-
-print "<TR><TD><TABLE><TR>\n";
-$max_p=0;$max_h=0;$max_k=0;
-for ($ix=0; $ix<=23; $ix++) {
-  print "<TH width=16>$ix</TH>";
-  if ($_time_p[$ix]>$max_p) { $max_p=$_time_p[$ix]; }
-  if ($_time_h[$ix]>$max_h) { $max_h=$_time_h[$ix]; }
-  if ($_time_k[$ix]>$max_k) { $max_k=$_time_k[$ix]; }
-}
-print "</TR>\n";
-
-print "<TR>\n";
-for ($ix=1; $ix<=24; $ix++) {
-	$hr=$ix; if ($hr>12) { $hr=$hr-12; }
-	print "<TH><IMG SRC=\"$DirIcons\/clock\/hr$hr.png\" width=10></TH>";
-}
-print "</TR>\n";
-
-print "\n<TR VALIGN=BOTTOM>\n";
-for ($ix=0; $ix<=23; $ix++) {
-	$bredde_p=0;$bredde_h=0;$bredde_k=0;
-	if ($max_h > 0) { $bredde_p=($BarHeight*$_time_p[$ix]/$max_h)+1; }
-	if ($max_h > 0) { $bredde_h=($BarHeight*$_time_h[$ix]/$max_h)+1; }
-	if ($max_k > 0) { $bredde_k=($BarHeight*$_time_k[$ix]/$max_k)+1; }
-	$kilo=int(($_time_k[$ix]/1024)*100)/100;
-	print "<TD>";
-	print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_p\" HEIGHT=$bredde_p WIDTH=6 ALT=\"$message[56][$Lang]: $_time_p[$ix]\" title=\"$message[56][$Lang]: $_time_p[$ix]\">";
-	print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_h\" HEIGHT=$bredde_h WIDTH=6 ALT=\"$message[57][$Lang]: $_time_h[$ix]\" title=\"$message[57][$Lang]: $_time_h[$ix]\">";
-	print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_k\" HEIGHT=$bredde_k WIDTH=6 ALT=\"$message[44][$Lang]: $kilo\" title=\"$message[44][$Lang]: $kilo\">";
-	print "</TD>\n";
-}
-print "</TR></TABLE></TD></TR>\n";
-
-&tab_end;
-
-
 # BY BROWSER
 #----------------------------
 print "$CENTER<a name=\"BROWSER\"></a><BR>";
-$tab_titre="$message[31][$Lang]";
+$tab_titre="$message[21][$Lang]";
 &tab_head;
 print "<TR BGCOLOR=$color_TableBGRowTitle><TH>Browser</TH><TH bgcolor=$color_h width=40>Hits</TH><TH bgcolor=$color_h width=40>$message[15][$Lang]</TH></TR>\n";
 foreach $key (@sortbrowsers) {
@@ -3481,7 +3493,7 @@ foreach $key (@sortbrowsers) {
 # BY OS
 #----------------------------
 print "$CENTER<a name=\"OS\"></a><BR>";
-$tab_titre=$message[35][$Lang];
+$tab_titre=$message[59][$Lang];
 &tab_head;
 print "<TR BGCOLOR=$color_TableBGRowTitle><TH colspan=2>OS</TH><TH bgcolor=$color_h width=40>Hits</TH><TH bgcolor=$color_h width=40>$message[15][$Lang]</TH></TR>\n";
 foreach $key (@sortos) {
