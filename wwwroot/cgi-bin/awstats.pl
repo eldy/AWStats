@@ -32,7 +32,7 @@ $UseXml
 /;
 $DEBUGFORCED=0;						# Force debug level to log lesser level into debug.log file (Keep this value to 0)
 $NBOFLINESFORBENCHMARK=8192;		# Benchmark info are printing every NBOFLINESFORBENCHMARK lines (Must be a power of 2)
-$FRAMEWIDTH=230;					# Width of left frame when UseFramesWhenCGI is on
+$FRAMEWIDTH=240;					# Width of left frame when UseFramesWhenCGI is on
 $NBOFLASTUPDATELOOKUPTOSAVE=500;	# Nb of records to save in DNS last update cache file
 $LIMITFLUSH=5000;					# Nb of records in data arrays after how we need to flush data on disk
 $NEWDAYVISITTIMEOUT=764041;			# Delay between 01-23:59:59 and 02-00:00:00
@@ -611,12 +611,8 @@ sub html_head {
 		my $AllowIndex=0;
 		# Write head section
 		if ($UseXml) {
-			if ($PageCode) {
-				print "<?xml version=\"1.0\" encoding=\"$PageCode\"?>\n";
-			}
-			else {
-				print "<?xml version=\"1.0\" encoding=\"iso-8859-1\"?>\n";
-			};
+			if ($PageCode) { print "<?xml version=\"1.0\" encoding=\"$PageCode\"?>\n"; }
+			else { print "<?xml version=\"1.0\" encoding=\"iso-8859-1\"?>\n"; };
             if ($FrameName ne 'index') { print "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">\n";  }
 			else { print "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Frameset//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd\">\n"; }
 			print "<html xmlns=\"http://www.w3.org/1999/xhtml\" xml:lang=\"$Lang\">\n";
@@ -628,9 +624,13 @@ sub html_head {
 		print "<head>\n";
 		if ($AllowIndex) { print "<meta name=\"robots\" content=\"".($FrameName eq 'mainleft'?'no':'')."index,nofollow\" />\n"; }
 		else { print "<meta name=\"robots\" content=\"noindex,nofollow\" />\n"; }
-		if ($PageCode) { print "<meta http-equiv=\"content-type\" content=\"text/html; charset=$PageCode\" />\n"; }		# If not defined, iso-8859-1 is used in major countries
+
+		# Affiche tag meta content-type
+		if ($PageCode) { print ($ENV{'HTTP_USER_AGENT'}=~/MSIE|Googlebot/i?"<meta http-equiv=\"content-type\" content=\"text/html; charset=$PageCode\" />\n":"<meta http-equiv=\"content-type\" content=\"text/xml; charset=$PageCode\" />\n"); }
+		else { print ($ENV{'HTTP_USER_AGENT'}=~/MSIE|Googlebot/i?"<meta http-equiv=\"content-type\" content=\"text/html; charset=iso-8859-1\" />\n":"<meta http-equiv=\"content-type\" content=\"text/xml; charset=iso-8859-1\" />\n"); };
 		#else { print "<meta http-equiv=\"content-type\" content=\"text/html; charset=iso-8859-1\" />\n"; }
 		#else { print "<meta http-equiv=\"content-type\" content=\"text/html; charset=UTF-8\" />\n"; }
+
 		if ($Expires)  { print "<meta http-equiv=\"expires\" content=\"".(gmtime(time()+$Expires))."\" />\n"; }
 		print "<meta http-equiv=\"description\" content=\"".ucfirst($PROG)." - Advanced Web Statistics for $SiteDomain\" />\n";
 		if ($AllowIndex && $FrameName ne 'mainleft') { print "<meta http-equiv=\"keywords\" content=\"$SiteDomain, free, advanced, realtime, web, server, logfile, log, analyzer, analysis, statistics, stats, perl, analyse, performance, hits, visits\" />\n"; }
@@ -640,12 +640,10 @@ sub html_head {
 			# A STYLE section must be in head section. Do not use " for number in a style section
 			print "<style type=\"text/css\">\n";
 			print !$UseXml?"<!--\n":"<![CDATA[\n";
-print <<EOF;
-body { font: 11px verdana, arial, helvetica, sans-serif; background-color: #$color_Background; margin-top: 0 }
-.aws_bodyl  { background-image: url($DirIcons/other/backleft.png); background-repeat: repeat-y; }
-.aws_border { background-color: #$color_TableBG; padding: 1px 1px 1px 1px; margin-top: 0 }
-.aws_title  { font: 13px verdana, arial, helvetica, sans-serif; font-weight: bold; background-color: #$color_TableBGTitle; text-align: center; margin-bottom: 0; padding: 1px 1px 1px 1px; }
-EOF
+print "body { font: 11px verdana, arial, helvetica, sans-serif; background-color: #$color_Background; margin-top: 0; }\n";
+print ".aws_bodyl  { ".(! $UseXml?"background-image: url($DirIcons/other/backleft.png);":"")."background-repeat: repeat-y; }\n";
+print ".aws_border { background-color: #$color_TableBG; padding: 1px 1px 1px 1px; margin-top: 0 }\n";
+print ".aws_title  { font: 13px verdana, arial, helvetica, sans-serif; font-weight: bold; background-color: #$color_TableBGTitle; text-align: center; margin-bottom: 0; padding: 1px 1px 1px 1px; }\n";
 print ".aws_blank { font: 13px verdana, arial, helvetica, sans-serif; background-color: #".($ENV{'HTTP_USER_AGENT'}=~/MSIE/i?$color_Background:$color_TableBG)."; text-align: center; margin-bottom: 0; padding: 1px 1px 1px 1px; }\n";
 print <<EOF;
 .aws_data { background-color: #$color_Background; }
@@ -681,7 +679,7 @@ EOF
 		}
 		print "</head>\n\n";
 		if ($FrameName ne 'index') {
-			print "<body";
+			print "<body style=\"margin-top: 0px\"";
 		 	if ($FrameName eq 'mainleft') { print " class=\"aws_bodyl\""; }
 		 	print ">\n";
 		}
@@ -699,7 +697,7 @@ sub html_end {
 	if (scalar keys %HTMLOutput) {
 		if ($FrameName ne 'index' && $FrameName ne 'mainleft') {
 			print "$Center<br /><br />\n";
-			print "<span style=\"color: #$color_text\">";
+			print "<span style=\"font: 11px verdana, arial, helvetica; color: #$color_text\">";
 			print "<b>Advanced Web Statistics $VERSION</b> - <a href=\"http://awstats.sourceforge.net\" target=\"awstatshome\">Created by $PROG";
 			my $atleastoneplugin=0;
 			foreach my $pluginname (keys %{$PluginsLoaded{'init'}}) {
@@ -754,7 +752,7 @@ sub tab_head {
 sub tab_end {
 	my $string=shift;
 	print "</table></td></tr></table>";
-	if ($string) { print "$string<br />\n"; }
+	if ($string) { print "<span style=\"font: 11px verdana, arial, helvetica;\">$string</span><br />\n"; }
 	print "<br />\n\n";
 }
 
@@ -4183,6 +4181,8 @@ sub Format_Bytes {
 sub AltTitle {
 	my $string = shift||'';
 	return " alt='$string' title='$string'";
+#	return " alt=\"$string\" title=\"$string\"";
+#	return ($UseXml?"":" alt=\"$string\"")." title=\"$string\"";
 }
 
 #------------------------------------------------------------------------------
@@ -5042,9 +5042,9 @@ $QueryString='';
 # be set to force AWStats to be ran as CLI even from a web page
 if ($ENV{'AWSTATS_DEL_GATEWAY_INTERFACE'}) { $ENV{'GATEWAY_INTERFACE'}=''; }
 if ($ENV{'GATEWAY_INTERFACE'}) {	# Run from a browser as CGI
-	if ($UseXml) { print "content-type: text/xml\n"; }
+	if ($UseXml) { print ($ENV{'HTTP_USER_AGENT'}=~/MSIE|Googlebot/i?"Content-type: text/html\n":"Content-type: text/xml\n"); }
 	else { print "content-type: text/html\n"; }
-
+    
 	# Expires must be GMT ANSI asctime and must be after Content-type to avoid pb with some servers (SAMBAR)
 	#my $ExpireDelayInHTTPHeader=0;
 	#print "Expires: ".(gmtime($starttime()+$ExpireDelayInHTTPHeader))."\n";
@@ -5437,8 +5437,8 @@ if ($FrameName eq 'index') {
 	if ($NewLinkParams) { $NewLinkParams="${NewLinkParams}&"; }
 	# Exit if main frame
 	print "<frameset cols=\"$FRAMEWIDTH,*\" border=\"0\" framespacing=\"2\" frameborder=\"0\">\n";
-	print "<frame name=\"mainleft\" src=\"$AWScript?${NewLinkParams}framename=mainleft\" noresize=\"0\" frameborder=\"0\" />\n";
-	print "<frame name=\"mainright\" src=\"$AWScript?${NewLinkParams}framename=mainright\" noresize=\"0\" scrolling=\"YES\" frameborder=\"0\" />\n";
+	print "<frame name=\"mainleft\" src=\"".XMLEncode("$AWScript?${NewLinkParams}framename=mainleft")."\" noresize=\"0\" frameborder=\"0\" />\n";
+	print "<frame name=\"mainright\" src=\"".XMLEncode("$AWScript?${NewLinkParams}framename=mainright")."\" noresize=\"0\" scrolling=\"YES\" frameborder=\"0\" />\n";
 	print "<noframes><body>";
 	print "Your browser does not support frames.<br />\n";
 	print "You must set AWStats UseFramesWhenCGI parameter to 0\n";
@@ -6716,7 +6716,7 @@ if (scalar keys %HTMLOutput) {
 		my $frame=($FrameName eq 'mainleft');
 		print "$Center<a name=\"MENU\">&nbsp;</a>\n";
 
-		my $WIDTHMENU1=150;
+		my $WIDTHMENU1=($FrameName eq 'mainleft'?$FRAMEWIDTH:150);
 		
 		if ($FrameName ne 'mainleft') {
 			my $NewLinkParams=${QueryString};
@@ -6728,7 +6728,7 @@ if (scalar keys %HTMLOutput) {
 			$NewLinkParams =~ tr/&/&/s; $NewLinkParams =~ s/^&//; $NewLinkParams =~ s/&$//;
 			my $NewLinkTarget='';
 			if ($FrameName eq 'mainright') { $NewLinkTarget=" target=\"_parent\""; }
-			print "<form name=\"FormDateFilter\" action=\"$AWScript?${NewLinkParams}\" style=\"padding: 0px 0px 0px 0px; margin-top: 0\"$NewLinkTarget>\n";
+			print "<form name=\"FormDateFilter\" action=\"".XMLEncode("$AWScript?${NewLinkParams}")."\" style=\"padding: 0px 0px 0px 0px; margin-top: 0\"$NewLinkTarget>\n";
 		}
 
 		if ($QueryString !~ /buildpdf/i) {
@@ -6760,7 +6760,7 @@ if (scalar keys %HTMLOutput) {
 		}
 		if ($FrameName ne 'mainleft') {
 			# Print Last Update
-			print "<tr><td class=\"aws\" valign=\"middle\" width=\"$WIDTHMENU1\"><b>$Message[35]:</b>&nbsp;</td>";
+			print "<tr valign=\"middle\"><td class=\"aws\" valign=\"middle\" width=\"$WIDTHMENU1\"><b>$Message[35]:</b>&nbsp;</td>";
 			print "<td class=\"aws\" valign=\"middle\"><span style=\"font-size: 12px;\">";
 			if ($LastUpdate) { print Format_Date($LastUpdate,0); }
 			else {
@@ -6845,10 +6845,11 @@ if (scalar keys %HTMLOutput) {
 			# Define link anchor			
 			my $linkanchor=($FrameName eq 'mainleft'?"$AWScript?${NewLinkParams}":"");
 			if ($linkanchor && ($linkanchor !~ /framename=mainright/)) { $linkanchor.="framename=mainright"; }
-			$linkanchor =~ s/&$//;
+			$linkanchor =~ s/&$//; $linkanchor=XMLEncode("$linkanchor");
+			# Define target
 			my $targetpage=($FrameName eq 'mainleft'?" target=\"mainright\"":"");
-			my $linetitle;
 			# Print Menu
+			my $linetitle;
 			if (! $PluginsLoaded{'ShowMenu'}{'menuapplet'}) {
 				my $menuicon=0;
 				# Menu HTML
@@ -7097,12 +7098,12 @@ if (scalar keys %HTMLOutput) {
 #			if ($max_h > 0) { $bredde_h=int($MonthHits{$YearRequired.$monthix}/$max_h*$BarHeight)+1; }
 #			if ($max_k > 0) { $bredde_k=int($MonthBytes{$YearRequired.$monthix}/$max_k*$BarHeight)+1; }
 #			print "<td>";
-#			if ($ShowMonthDayStats =~ /U/i) { print "<img align=\"bottom\" SRC=\"$DirIcons\/other\/$BarPng{'vu'}\" height=\"$bredde_u\" width=\"8\"".AltTitle("$Message[11]: $MonthUnique{$YearRequired.$monthix}")." />"; }
-#			if ($ShowMonthDayStats =~ /V/i) { print "<img align=\"bottom\" SRC=\"$DirIcons\/other\/$BarPng{'vv'}\" height=\"$bredde_v\" width=\"8\"".AltTitle("$Message[10]: $MonthVisits{$YearRequired.$monthix}")." />"; }
+#			if ($ShowMonthDayStats =~ /U/i) { print "<img align=\"bottom\" src=\"$DirIcons\/other\/$BarPng{'vu'}\" height=\"$bredde_u\" width=\"8\"".AltTitle("$Message[11]: $MonthUnique{$YearRequired.$monthix}")." />"; }
+#			if ($ShowMonthDayStats =~ /V/i) { print "<img align=\"bottom\" src=\"$DirIcons\/other\/$BarPng{'vv'}\" height=\"$bredde_v\" width=\"8\"".AltTitle("$Message[10]: $MonthVisits{$YearRequired.$monthix}")." />"; }
 #			print "&nbsp;";
-#			if ($ShowMonthDayStats =~ /P/i) { print "<img align=\"bottom\" SRC=\"$DirIcons\/other\/$BarPng{'vp'}\" height=\"$bredde_p\" width=\"8\"".AltTitle("$Message[56]: $MonthPages{$YearRequired.$monthix}")." />"; }
-#			if ($ShowMonthDayStats =~ /H/i) { print "<img align=\"bottom\" SRC=\"$DirIcons\/other\/$BarPng{'vh'}\" height=\"$bredde_h\" width=\"8\"".AltTitle("$Message[57]: $MonthHits{$YearRequired.$monthix}")." />"; }
-#			if ($ShowMonthDayStats =~ /B/i) { print "<img align=\"bottom\" SRC=\"$DirIcons\/other\/$BarPng{'vk'}\" height=\"$bredde_k\" width=\"8\"".AltTitle("$Message[75]: ".Format_Bytes($MonthBytes{$YearRequired.$monthix}))." />"; }
+#			if ($ShowMonthDayStats =~ /P/i) { print "<img align=\"bottom\" src=\"$DirIcons\/other\/$BarPng{'vp'}\" height=\"$bredde_p\" width=\"8\"".AltTitle("$Message[56]: $MonthPages{$YearRequired.$monthix}")." />"; }
+#			if ($ShowMonthDayStats =~ /H/i) { print "<img align=\"bottom\" src=\"$DirIcons\/other\/$BarPng{'vh'}\" height=\"$bredde_h\" width=\"8\"".AltTitle("$Message[57]: $MonthHits{$YearRequired.$monthix}")." />"; }
+#			if ($ShowMonthDayStats =~ /B/i) { print "<img align=\"bottom\" src=\"$DirIcons\/other\/$BarPng{'vk'}\" height=\"$bredde_k\" width=\"8\"".AltTitle("$Message[75]: ".Format_Bytes($MonthBytes{$YearRequired.$monthix}))." />"; }
 #			print "</td>\n";
 #		}
 #		print "</tr>\n";
@@ -7202,10 +7203,10 @@ if (scalar keys %HTMLOutput) {
 #			if ($max_h > 0) { $bredde_h=int(($DayHits{$year.$month.$day}||0)/$max_h*$BarHeight)+1; }
 #			if ($max_k > 0) { $bredde_k=int(($DayBytes{$year.$month.$day}||0)/$max_k*$BarHeight)+1; }
 #			print "<td>";
-#			if ($ShowMonthDayStats =~ /V/i) { print "<img align=\"bottom\" SRC=\"$DirIcons\/other\/$BarPng{'vv'}\" height=\"$bredde_v\" width=\"4\"".AltTitle("$Message[10]: ".int($DayVisits{$year.$month.$day}||0))." />"; }
-#			if ($ShowMonthDayStats =~ /P/i) { print "<img align=\"bottom\" SRC=\"$DirIcons\/other\/$BarPng{'vp'}\" height=\"$bredde_p\" width=\"4\"".AltTitle("$Message[56]: ".int($DayPages{$year.$month.$day}||0))." />"; }
-#			if ($ShowMonthDayStats =~ /H/i) { print "<img align=\"bottom\" SRC=\"$DirIcons\/other\/$BarPng{'vh'}\" height=\"$bredde_h\" width=\"4\"".AltTitle("$Message[57]: ".int($DayHits{$year.$month.$day}||0))." />"; }
-#			if ($ShowMonthDayStats =~ /B/i) { print "<img align=\"bottom\" SRC=\"$DirIcons\/other\/$BarPng{'vk'}\" height=\"$bredde_k\" width=\"4\"".AltTitle("$Message[75]: ".Format_Bytes($DayBytes{$year.$month.$day}))." />"; }
+#			if ($ShowMonthDayStats =~ /V/i) { print "<img align=\"bottom\" src=\"$DirIcons\/other\/$BarPng{'vv'}\" height=\"$bredde_v\" width=\"4\"".AltTitle("$Message[10]: ".int($DayVisits{$year.$month.$day}||0))." />"; }
+#			if ($ShowMonthDayStats =~ /P/i) { print "<img align=\"bottom\" src=\"$DirIcons\/other\/$BarPng{'vp'}\" height=\"$bredde_p\" width=\"4\"".AltTitle("$Message[56]: ".int($DayPages{$year.$month.$day}||0))." />"; }
+#			if ($ShowMonthDayStats =~ /H/i) { print "<img align=\"bottom\" src=\"$DirIcons\/other\/$BarPng{'vh'}\" height=\"$bredde_h\" width=\"4\"".AltTitle("$Message[57]: ".int($DayHits{$year.$month.$day}||0))." />"; }
+#			if ($ShowMonthDayStats =~ /B/i) { print "<img align=\"bottom\" src=\"$DirIcons\/other\/$BarPng{'vk'}\" height=\"$bredde_k\" width=\"4\"".AltTitle("$Message[75]: ".Format_Bytes($DayBytes{$year.$month.$day}))." />"; }
 #			print "</td>\n";
 #		}
 #		print "<td>&nbsp;</td>";
@@ -7219,10 +7220,10 @@ if (scalar keys %HTMLOutput) {
 #		$average_p=sprintf("%.2f",$average_p);
 #		$average_h=sprintf("%.2f",$average_h);
 #		$average_k=sprintf("%.2f",$average_k);
-#		if ($ShowMonthDayStats =~ /V/i) { print "<img align=\"bottom\" SRC=\"$DirIcons\/other\/$BarPng{'vv'}\" height=\"$bredde_v\" width=\"4\"".AltTitle("$Message[10]: $average_v")." />"; }
-#		if ($ShowMonthDayStats =~ /P/i) { print "<img align=\"bottom\" SRC=\"$DirIcons\/other\/$BarPng{'vp'}\" height=\"$bredde_p\" width=\"4\"".AltTitle("$Message[56]: $average_p")." />"; }
-#		if ($ShowMonthDayStats =~ /H/i) { print "<img align=\"bottom\" SRC=\"$DirIcons\/other\/$BarPng{'vh'}\" height=\"$bredde_h\" width=\"4\"".AltTitle("$Message[57]: $average_h")." />"; }
-#		if ($ShowMonthDayStats =~ /B/i) { print "<img align=\"bottom\" SRC=\"$DirIcons\/other\/$BarPng{'vk'}\" height=\"$bredde_k\" width=\"4\"".AltTitle("$Message[75]: ".Format_Bytes($average_k))." />"; }
+#		if ($ShowMonthDayStats =~ /V/i) { print "<img align=\"bottom\" src=\"$DirIcons\/other\/$BarPng{'vv'}\" height=\"$bredde_v\" width=\"4\"".AltTitle("$Message[10]: $average_v")." />"; }
+#		if ($ShowMonthDayStats =~ /P/i) { print "<img align=\"bottom\" src=\"$DirIcons\/other\/$BarPng{'vp'}\" height=\"$bredde_p\" width=\"4\"".AltTitle("$Message[56]: $average_p")." />"; }
+#		if ($ShowMonthDayStats =~ /H/i) { print "<img align=\"bottom\" src=\"$DirIcons\/other\/$BarPng{'vh'}\" height=\"$bredde_h\" width=\"4\"".AltTitle("$Message[57]: $average_h")." />"; }
+#		if ($ShowMonthDayStats =~ /B/i) { print "<img align=\"bottom\" src=\"$DirIcons\/other\/$BarPng{'vk'}\" height=\"$bredde_k\" width=\"4\"".AltTitle("$Message[75]: ".Format_Bytes($average_k))." />"; }
 #		print "</td>";
 #		print "<td></td>\n";
 #		print "</tr>\n";
@@ -7290,7 +7291,7 @@ if (scalar keys %HTMLOutput) {
 		$max_h=1; foreach my $key (values %_domener_h) { if ($key > $max_h) { $max_h = $key; } }
 		$max_k=1; foreach my $key (values %_domener_k) { if ($key > $max_k) { $max_k = $key; } }
 		my $count=0;
-		&BuildKeyList($MaxRowsInHTMLOutput,1,\%_domener_p,\%_domener_p);
+		&BuildKeyList($MaxRowsInHTMLOutput,1,\%_domener_h,\%_domener_p);
 		foreach my $key (@keylist) {
 			my $bredde_p=0;my $bredde_h=0;my $bredde_k=0;
 			if ($max_h > 0) { $bredde_p=int($BarWidth*$_domener_p{$key}/$max_h)+1; }	# use max_h to enable to compare pages with hits
@@ -7310,8 +7311,8 @@ if (scalar keys %HTMLOutput) {
 			if ($ShowDomainsStats =~ /H/i) { print "<td>$_domener_h{$key}</td>"; }
 			if ($ShowDomainsStats =~ /B/i) { print "<td>".Format_Bytes($_domener_k{$key})."</td>"; }
 			print "<td class=\"aws\">";
-			if ($ShowDomainsStats =~ /P/i) { print "<img src=\"$DirIcons\/other\/$BarPng{'hp'}\" width=\"$bredde_p\" height=\"5\"".AltTitle("$Message[56]: ".int($_domener_p{$key}))."><br />\n"; }
-			if ($ShowDomainsStats =~ /H/i) { print "<img src=\"$DirIcons\/other\/$BarPng{'hh'}\" width=\"$bredde_h\" height=\"5\"".AltTitle("$Message[57]: ".int($_domener_h{$key}))."><br />\n"; }
+			if ($ShowDomainsStats =~ /P/i) { print "<img src=\"$DirIcons\/other\/$BarPng{'hp'}\" width=\"$bredde_p\" height=\"5\"".AltTitle("$Message[56]: ".int($_domener_p{$key}))." /><br />\n"; }
+			if ($ShowDomainsStats =~ /H/i) { print "<img src=\"$DirIcons\/other\/$BarPng{'hh'}\" width=\"$bredde_h\" height=\"5\"".AltTitle("$Message[57]: ".int($_domener_h{$key}))." /><br />\n"; }
 			if ($ShowDomainsStats =~ /B/i) { print "<img src=\"$DirIcons\/other\/$BarPng{'hk'}\" width=\"$bredde_k\" height=\"5\"".AltTitle("$Message[75]: ".Format_Bytes($_domener_k{$key}))." />"; }
 			print "</td>";
 			print "</tr>\n";
@@ -8138,12 +8139,12 @@ if (scalar keys %HTMLOutput) {
 				if ($max_h > 0) { $bredde_h=int($MonthHits{$YearRequired.$monthix}/$max_h*$BarHeight)+1; }
 				if ($max_k > 0) { $bredde_k=int($MonthBytes{$YearRequired.$monthix}/$max_k*$BarHeight)+1; }
 				print "<td>";
-				if ($ShowMonthStats =~ /U/i) { print "<img align=\"bottom\" SRC=\"$DirIcons\/other\/$BarPng{'vu'}\" height=\"$bredde_u\" width=\"6\"".AltTitle("$Message[11]: $MonthUnique{$YearRequired.$monthix}")." />"; }
-				if ($ShowMonthStats =~ /V/i) { print "<img align=\"bottom\" SRC=\"$DirIcons\/other\/$BarPng{'vv'}\" height=\"$bredde_v\" width=\"6\"".AltTitle("$Message[10]: $MonthVisits{$YearRequired.$monthix}")." />"; }
+				if ($ShowMonthStats =~ /U/i) { print "<img align=\"bottom\" src=\"$DirIcons\/other\/$BarPng{'vu'}\" height=\"$bredde_u\" width=\"6\"".AltTitle("$Message[11]: $MonthUnique{$YearRequired.$monthix}")." />"; }
+				if ($ShowMonthStats =~ /V/i) { print "<img align=\"bottom\" src=\"$DirIcons\/other\/$BarPng{'vv'}\" height=\"$bredde_v\" width=\"6\"".AltTitle("$Message[10]: $MonthVisits{$YearRequired.$monthix}")." />"; }
 				if ($QueryString !~ /buildpdf/i) { print "&nbsp;"; }
-				if ($ShowMonthStats =~ /P/i) { print "<img align=\"bottom\" SRC=\"$DirIcons\/other\/$BarPng{'vp'}\" height=\"$bredde_p\" width=\"6\"".AltTitle("$Message[56]: $MonthPages{$YearRequired.$monthix}")." />"; }
-				if ($ShowMonthStats =~ /H/i) { print "<img align=\"bottom\" SRC=\"$DirIcons\/other\/$BarPng{'vh'}\" height=\"$bredde_h\" width=\"6\"".AltTitle("$Message[57]: $MonthHits{$YearRequired.$monthix}")." />"; }
-				if ($ShowMonthStats =~ /B/i) { print "<img align=\"bottom\" SRC=\"$DirIcons\/other\/$BarPng{'vk'}\" height=\"$bredde_k\" width=\"6\"".AltTitle("$Message[75]: ".Format_Bytes($MonthBytes{$YearRequired.$monthix}))." />"; }
+				if ($ShowMonthStats =~ /P/i) { print "<img align=\"bottom\" src=\"$DirIcons\/other\/$BarPng{'vp'}\" height=\"$bredde_p\" width=\"6\"".AltTitle("$Message[56]: $MonthPages{$YearRequired.$monthix}")." />"; }
+				if ($ShowMonthStats =~ /H/i) { print "<img align=\"bottom\" src=\"$DirIcons\/other\/$BarPng{'vh'}\" height=\"$bredde_h\" width=\"6\"".AltTitle("$Message[57]: $MonthHits{$YearRequired.$monthix}")." />"; }
+				if ($ShowMonthStats =~ /B/i) { print "<img align=\"bottom\" src=\"$DirIcons\/other\/$BarPng{'vk'}\" height=\"$bredde_k\" width=\"6\"".AltTitle("$Message[75]: ".Format_Bytes($MonthBytes{$YearRequired.$monthix}))." />"; }
 				print "</td>\n";
 			}
 			print "<td>&nbsp;</td>";
@@ -8292,10 +8293,10 @@ if (scalar keys %HTMLOutput) {
 				if ($max_h > 0) { $bredde_h=int(($DayHits{$year.$month.$day}||0)/$max_h*$BarHeight)+1; }
 				if ($max_k > 0) { $bredde_k=int(($DayBytes{$year.$month.$day}||0)/$max_k*$BarHeight)+1; }
 				print "<td>";
-				if ($ShowDaysOfMonthStats =~ /V/i) { print "<img align=\"bottom\" SRC=\"$DirIcons\/other\/$BarPng{'vv'}\" height=\"$bredde_v\" width=\"4\"".AltTitle("$Message[10]: ".int($DayVisits{$year.$month.$day}||0))." />"; }
-				if ($ShowDaysOfMonthStats =~ /P/i) { print "<img align=\"bottom\" SRC=\"$DirIcons\/other\/$BarPng{'vp'}\" height=\"$bredde_p\" width=\"4\"".AltTitle("$Message[56]: ".int($DayPages{$year.$month.$day}||0))." />"; }
-				if ($ShowDaysOfMonthStats =~ /H/i) { print "<img align=\"bottom\" SRC=\"$DirIcons\/other\/$BarPng{'vh'}\" height=\"$bredde_h\" width=\"4\"".AltTitle("$Message[57]: ".int($DayHits{$year.$month.$day}||0))." />"; }
-				if ($ShowDaysOfMonthStats =~ /B/i) { print "<img align=\"bottom\" SRC=\"$DirIcons\/other\/$BarPng{'vk'}\" height=\"$bredde_k\" width=\"4\"".AltTitle("$Message[75]: ".Format_Bytes($DayBytes{$year.$month.$day}))." />"; }
+				if ($ShowDaysOfMonthStats =~ /V/i) { print "<img align=\"bottom\" src=\"$DirIcons\/other\/$BarPng{'vv'}\" height=\"$bredde_v\" width=\"4\"".AltTitle("$Message[10]: ".int($DayVisits{$year.$month.$day}||0))." />"; }
+				if ($ShowDaysOfMonthStats =~ /P/i) { print "<img align=\"bottom\" src=\"$DirIcons\/other\/$BarPng{'vp'}\" height=\"$bredde_p\" width=\"4\"".AltTitle("$Message[56]: ".int($DayPages{$year.$month.$day}||0))." />"; }
+				if ($ShowDaysOfMonthStats =~ /H/i) { print "<img align=\"bottom\" src=\"$DirIcons\/other\/$BarPng{'vh'}\" height=\"$bredde_h\" width=\"4\"".AltTitle("$Message[57]: ".int($DayHits{$year.$month.$day}||0))." />"; }
+				if ($ShowDaysOfMonthStats =~ /B/i) { print "<img align=\"bottom\" src=\"$DirIcons\/other\/$BarPng{'vk'}\" height=\"$bredde_k\" width=\"4\"".AltTitle("$Message[75]: ".Format_Bytes($DayBytes{$year.$month.$day}))." />"; }
 				print "</td>\n";
 			}
 			print "<td>&nbsp;</td>";
@@ -8310,10 +8311,10 @@ if (scalar keys %HTMLOutput) {
 			$average_p=sprintf("%.2f",$average_p);
 			$average_h=sprintf("%.2f",$average_h);
 			$average_k=(int($average_k)?Format_Bytes(sprintf("%.2f",$average_k)):"0.00");
-			if ($ShowDaysOfMonthStats =~ /V/i) { print "<img align=\"bottom\" SRC=\"$DirIcons\/other\/$BarPng{'vv'}\" height=\"$bredde_v\" width=\"4\"".AltTitle("$Message[10]: $average_v")." />"; }
-			if ($ShowDaysOfMonthStats =~ /P/i) { print "<img align=\"bottom\" SRC=\"$DirIcons\/other\/$BarPng{'vp'}\" height=\"$bredde_p\" width=\"4\"".AltTitle("$Message[56]: $average_p")." />"; }
-			if ($ShowDaysOfMonthStats =~ /H/i) { print "<img align=\"bottom\" SRC=\"$DirIcons\/other\/$BarPng{'vh'}\" height=\"$bredde_h\" width=\"4\"".AltTitle("$Message[57]: $average_h")." />"; }
-			if ($ShowDaysOfMonthStats =~ /B/i) { print "<img align=\"bottom\" SRC=\"$DirIcons\/other\/$BarPng{'vk'}\" height=\"$bredde_k\" width=\"4\"".AltTitle("$Message[75]: $average_k")." />"; }
+			if ($ShowDaysOfMonthStats =~ /V/i) { print "<img align=\"bottom\" src=\"$DirIcons\/other\/$BarPng{'vv'}\" height=\"$bredde_v\" width=\"4\"".AltTitle("$Message[10]: $average_v")." />"; }
+			if ($ShowDaysOfMonthStats =~ /P/i) { print "<img align=\"bottom\" src=\"$DirIcons\/other\/$BarPng{'vp'}\" height=\"$bredde_p\" width=\"4\"".AltTitle("$Message[56]: $average_p")." />"; }
+			if ($ShowDaysOfMonthStats =~ /H/i) { print "<img align=\"bottom\" src=\"$DirIcons\/other\/$BarPng{'vh'}\" height=\"$bredde_h\" width=\"4\"".AltTitle("$Message[57]: $average_h")." />"; }
+			if ($ShowDaysOfMonthStats =~ /B/i) { print "<img align=\"bottom\" src=\"$DirIcons\/other\/$BarPng{'vk'}\" height=\"$bredde_k\" width=\"4\"".AltTitle("$Message[75]: $average_k")." />"; }
 			print "</td>\n";
 			print "</tr>\n";
 			# Show lib for day
@@ -8427,9 +8428,9 @@ if (scalar keys %HTMLOutput) {
 				if ($avg_dayofweek_p[$_] == int($avg_dayofweek_p[$_])) { $avg_dayofweek_p[$_]=int($avg_dayofweek_p[$_]); }
 				if ($avg_dayofweek_h[$_] == int($avg_dayofweek_h[$_])) { $avg_dayofweek_h[$_]=int($avg_dayofweek_h[$_]); }
 				print "<td valign=\"bottom\">";
-				if ($ShowDaysOfWeekStats =~ /P/i) { print "<img align=\"bottom\" SRC=\"$DirIcons\/other\/$BarPng{'vp'}\" height=\"$bredde_p\" width=\"6\"".AltTitle("$Message[56]: $avg_dayofweek_p[$_]")." />"; }
-				if ($ShowDaysOfWeekStats =~ /H/i) { print "<img align=\"bottom\" SRC=\"$DirIcons\/other\/$BarPng{'vh'}\" height=\"$bredde_h\" width=\"6\"".AltTitle("$Message[57]: $avg_dayofweek_h[$_]")." />"; }
-				if ($ShowDaysOfWeekStats =~ /B/i) { print "<img align=\"bottom\" SRC=\"$DirIcons\/other\/$BarPng{'vk'}\" height=\"$bredde_k\" width=\"6\"".AltTitle("$Message[75]: ".Format_Bytes($avg_dayofweek_k[$_]))." />"; }
+				if ($ShowDaysOfWeekStats =~ /P/i) { print "<img align=\"bottom\" src=\"$DirIcons\/other\/$BarPng{'vp'}\" height=\"$bredde_p\" width=\"6\"".AltTitle("$Message[56]: $avg_dayofweek_p[$_]")." />"; }
+				if ($ShowDaysOfWeekStats =~ /H/i) { print "<img align=\"bottom\" src=\"$DirIcons\/other\/$BarPng{'vh'}\" height=\"$bredde_h\" width=\"6\"".AltTitle("$Message[57]: $avg_dayofweek_h[$_]")." />"; }
+				if ($ShowDaysOfWeekStats =~ /B/i) { print "<img align=\"bottom\" src=\"$DirIcons\/other\/$BarPng{'vk'}\" height=\"$bredde_k\" width=\"6\"".AltTitle("$Message[75]: ".Format_Bytes($avg_dayofweek_k[$_]))." />"; }
 				print "</td>\n";
 			}
 			print "</tr>\n";
@@ -8485,9 +8486,9 @@ if (scalar keys %HTMLOutput) {
 				if ($max_h > 0) { $bredde_h=int($BarHeight*$_time_h[$ix]/$max_h)+1; }
 				if ($max_k > 0) { $bredde_k=int($BarHeight*$_time_k[$ix]/$max_k)+1; }
 				print "<td>";
-				if ($ShowHoursStats =~ /P/i) { print "<img align=\"bottom\" SRC=\"$DirIcons\/other\/$BarPng{'vp'}\" height=\"$bredde_p\" width=\"6\"".AltTitle("$Message[56]: ".int($_time_p[$ix]))." />"; }
-				if ($ShowHoursStats =~ /H/i) { print "<img align=\"bottom\" SRC=\"$DirIcons\/other\/$BarPng{'vh'}\" height=\"$bredde_h\" width=\"6\"".AltTitle("$Message[57]: ".int($_time_h[$ix]))." />"; }
-				if ($ShowHoursStats =~ /B/i) { print "<img align=\"bottom\" SRC=\"$DirIcons\/other\/$BarPng{'vk'}\" height=\"$bredde_k\" width=\"6\"".AltTitle("$Message[75]: ".Format_Bytes($_time_k[$ix]))." />"; }
+				if ($ShowHoursStats =~ /P/i) { print "<img align=\"bottom\" src=\"$DirIcons\/other\/$BarPng{'vp'}\" height=\"$bredde_p\" width=\"6\"".AltTitle("$Message[56]: ".int($_time_p[$ix]))." />"; }
+				if ($ShowHoursStats =~ /H/i) { print "<img align=\"bottom\" src=\"$DirIcons\/other\/$BarPng{'vh'}\" height=\"$bredde_h\" width=\"6\"".AltTitle("$Message[57]: ".int($_time_h[$ix]))." />"; }
+				if ($ShowHoursStats =~ /B/i) { print "<img align=\"bottom\" src=\"$DirIcons\/other\/$BarPng{'vk'}\" height=\"$bredde_k\" width=\"6\"".AltTitle("$Message[75]: ".Format_Bytes($_time_k[$ix]))." />"; }
 				print "</td>\n";
 			}
 			print "</tr>\n";
