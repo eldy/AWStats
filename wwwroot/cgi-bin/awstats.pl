@@ -104,7 +104,7 @@ $NewLinePhase $NbOfLinesForCorruptedLog $PurgeLogFile
 $ShowAuthenticatedUsers $ShowCompressionStats $ShowFileSizesStats
 $ShowDropped $ShowCorrupted $ShowUnknownOrigin $ShowLinksToWhoIs
 $ShowEMailSenders $ShowEMailReceivers
-$Expires $UpdateStats $MigrateStats $URLWithQuery $UseFramesWhenCGI
+$Expires $UpdateStats $MigrateStats $URLWithQuery $UseFramesWhenCGI $Spec
 /;
 ($DNSLookup, $AllowAccessFromWebToAuthenticatedUsersOnly, $BarHeight, $BarWidth,
 $CreateDirDataIfNotExists, $KeepBackupOfHistoricFiles, $MaxLengthOfURL,
@@ -117,8 +117,8 @@ $NewLinePhase, $NbOfLinesForCorruptedLog, $PurgeLogFile,
 $ShowAuthenticatedUsers, $ShowCompressionStats, $ShowFileSizesStats,
 $ShowDropped, $ShowCorrupted, $ShowUnknownOrigin, $ShowLinksToWhoIs,
 $ShowEMailSenders, $ShowEMailReceivers,
-$Expires, $UpdateStats, $MigrateStats, $URLWithQuery, $UseFramesWhenCGI)=
-(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
+$Expires, $UpdateStats, $MigrateStats, $URLWithQuery, $UseFramesWhenCGI, $Spec)=
+(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
 use vars qw/
 $PosTotalVisits $PosTotalUnique $PosMonthHostsKnown $PosMonthHostsUnknown
 /;
@@ -212,7 +212,7 @@ use vars qw/
 @SessionsRange @Message @HostAliases @AllowAccessFromWebToFollowingAuthenticatedUsers
 @DefaultFile @OnlyFiles @SkipDNSLookupFor @SkipFiles @SkipHosts @PluginsToLoad
 @DOWIndex @RobotsSearchIDOrder
-@_msiever_h @_nsver_h @_from_p @_from_h @_time_p @_time_h @_time_k
+@_from_p @_from_h @_time_p @_time_h @_time_k
 @keylist
 /;
 @SessionsRange=("0s-30s","30s-2mn","2mn-5mn","5mn-15mn","15mn-30mn","30mn-1h","1h+");
@@ -221,7 +221,6 @@ use vars qw/
 @AllowAccessFromWebToFollowingAuthenticatedUsers=();
 @DefaultFile = @OnlyFiles = @SkipDNSLookupFor = @SkipFiles = @SkipHosts = @PluginsToLoad = ();
 @DOWIndex = @RobotsSearchIDOrder = ();
-@_msiever_h = @_nsver_h = ();
 @_from_p = @_from_h = ();
 @_time_p = @_time_h = @_time_k = ();
 @keylist=();
@@ -1489,7 +1488,7 @@ sub Read_History_With_Update {
 	my $withpurge=shift||0;
 	my $part=shift||"";
 	my %allsections=("general"=>1,"time"=>2,"visitor"=>3,"day"=>4,"login"=>5,"domain"=>6,"session"=>7,"browser"=>8,
-					 "msiever"=>9,"nsver"=>10,"os"=>11,"unknownreferer"=>12,"unknownrefererbrowser"=>13,"robot"=>14,"sider"=>15,
+					 "os"=>11,"unknownreferer"=>12,"unknownrefererbrowser"=>13,"robot"=>14,"sider"=>15,
 					 "filetypes"=>16,"origin"=>17,"sereferrals"=>18,"pagerefs"=>19,"searchwords"=>20,"keywords"=>21,
 					 "errors"=>22,"sider_404"=>23);
 
@@ -1516,8 +1515,6 @@ sub Read_History_With_Update {
 		if ($UpdateStats || $MigrateStats || $HTMLOutput eq "main" || $HTMLOutput eq "domains") { $SectionsToLoad{"domain"}=6; }
 		if ($UpdateStats || $MigrateStats || $HTMLOutput eq "main" || $HTMLOutput eq "sessions") { $SectionsToLoad{"session"}=7; }
 		if ($UpdateStats || $MigrateStats || $HTMLOutput eq "main" || $HTMLOutput eq "browserdetail") { $SectionsToLoad{"browser"}=8; }
-		if ($UpdateStats || $MigrateStats || $HTMLOutput eq "main" || $HTMLOutput eq "browserdetail") { $SectionsToLoad{"msiever"}=9; }
-		if ($UpdateStats || $MigrateStats || $HTMLOutput eq "main" || $HTMLOutput eq "browserdetail") { $SectionsToLoad{"nsver"}=10; }
 		if ($UpdateStats || $MigrateStats || $HTMLOutput eq "main" || $HTMLOutput eq "os") { $SectionsToLoad{"os"}=11; }
 		if ($UpdateStats || $MigrateStats || $HTMLOutput eq "main" || $HTMLOutput eq "unknownos")      { $SectionsToLoad{"unknownreferer"}=12; }
 		if ($UpdateStats || $MigrateStats || $HTMLOutput eq "main" || $HTMLOutput eq "unknownbrowser") { $SectionsToLoad{"unknownrefererbrowser"}=13; }
@@ -1958,66 +1955,6 @@ sub Read_History_With_Update {
 				if ($SectionsToSave{"browser"}) {
 					Save_History("browser",$year,$month); delete $SectionsToSave{"browser"};
 					if ($withpurge) { %_browser_h=(); }
-				}
-				if (! scalar %SectionsToLoad) { debug(" Stop reading history file. Got all we need."); last; }
-				next;
-			}
-			# BEGIN_MSIEVER
-			if ($field[0] eq "BEGIN_MSIEVER")   {
-				if ($Debug) { debug(" Begin of MSIEVER section"); }
-				$_=<HISTORY>;
-				chomp $_; s/\r//;
-				if (! $_) { error("Error: History file \"$historyfilename\" is corrupted (in section MSIEVER). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost).","","",1); }
-				my @field=split(/\s+/,$_); $countlines++;
-				my $count=0;my $countloaded=0;
-				while ($field[0] ne "END_MSIEVER") {
-					if ($field[0]) {
-						$count++;
-						if ($SectionsToLoad{"msiever"}) {
-							$countloaded++;
-							if ($field[1]) { $_msiever_h[$field[0]]+=$field[1]; }
-						}
-					}
-					$_=<HISTORY>;
-					chomp $_; s/\r//;
-					if (! $_) { error("Error: History file \"$historyfilename\" is corrupted (in section MSIEVER). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost).","","",1); }
-					@field=split(/\s+/,$_); $countlines++;
-				}
-				if ($Debug) { debug(" End of MSIEVER section ($count entries, $countloaded loaded)"); }
-				delete $SectionsToLoad{"msiever"};
-				if ($SectionsToSave{"msiever"}) {
-					Save_History("msiever",$year,$month); delete $SectionsToSave{"msiever"};
-					if ($withpurge) { @_msiever_h=(); }
-				}
-				if (! scalar %SectionsToLoad) { debug(" Stop reading history file. Got all we need."); last; }
-				next;
-			}
-			# BEGIN_NSVER
-			if ($field[0] eq "BEGIN_NSVER")   {
-				if ($Debug) { debug(" Begin of NSVER section"); }
-				$_=<HISTORY>;
-				chomp $_; s/\r//;
-				if (! $_) { error("Error: History file \"$historyfilename\" is corrupted (in section NSVER). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost).","","",1); }
-				my @field=split(/\s+/,$_); $countlines++;
-				my $count=0;my $countloaded=0;
-				while ($field[0] ne "END_NSVER") {
-					if ($field[0]) {
-						$count++;
-						if ($SectionsToLoad{"nsver"}) {
-							$countloaded++;
-							if ($field[1]) { $_nsver_h[$field[0]]+=$field[1]; }
-						}
-					}
-					$_=<HISTORY>;
-					chomp $_; s/\r//;
-					if (! $_) { error("Error: History file \"$historyfilename\" is corrupted (in section NSVER). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost).","","",1); }
-					@field=split(/\s+/,$_); $countlines++;
-				}
-				if ($Debug) { debug(" End of NSVER section ($count entries, $countloaded loaded)"); }
-				delete $SectionsToLoad{"nsver"};
-				if ($SectionsToSave{"nsver"}) {
-					Save_History("nsver",$year,$month); delete $SectionsToSave{"nsver"};
-					if ($withpurge) { @_nsver_h=(); }
 				}
 				if (! scalar %SectionsToLoad) { debug(" Stop reading history file. Got all we need."); last; }
 				next;
@@ -2552,7 +2489,7 @@ sub Save_History {
 		print HISTORYTMP "# If you remove this file, all statistics for date $year-$month will be lost/reset.\n";
 		print HISTORYTMP "\n";
 		print HISTORYTMP "# This section is not used yet\n";
-		print HISTORYTMP "BEGIN_MAP 24\n";
+		print HISTORYTMP "BEGIN_MAP 23\n";
 		print HISTORYTMP "POS_GENERAL                                \n";
 		print HISTORYTMP "POS_TIME                                   \n";
 		print HISTORYTMP "POS_VISITOR                                \n";
@@ -2560,8 +2497,7 @@ sub Save_History {
 		print HISTORYTMP "POS_LOGIN                                  \n";
 		print HISTORYTMP "POS_DOMAIN                                 \n";
 		print HISTORYTMP "POS_SESSION                                \n";
-		print HISTORYTMP "POS_MSIEVER                                \n";
-		print HISTORYTMP "POS_NSVER                                  \n";
+		print HISTORYTMP "POS_BROWSER                                \n";
 		print HISTORYTMP "POS_OS                                     \n";
 		print HISTORYTMP "POS_UNKNOWNREFERER                         \n";
 		print HISTORYTMP "POS_UNKNOWNREFERERBROWSER                  \n";
@@ -2776,26 +2712,6 @@ sub Save_History {
 		print HISTORYTMP "BEGIN_BROWSER ".(scalar keys %_browser_h)."\n";
 		foreach my $key (keys %_browser_h) { print HISTORYTMP "$key $_browser_h{$key}\n"; }
 		print HISTORYTMP "END_BROWSER\n";
-	}
-	if ($sectiontosave eq "nsver") {
-		print HISTORYTMP "\n";
-		print HISTORYTMP "# IE Version - Hits\n";
-		print HISTORYTMP "BEGIN_NSVER ".(@_nsver_h)."\n";
-		for (my $i=1; $i <= @_nsver_h; $i++) {
-			my $nb_h=$_nsver_h[$i]||"";
-			print HISTORYTMP "$i $nb_h\n";
-		}
-		print HISTORYTMP "END_NSVER\n";
-	}
-	if ($sectiontosave eq "msiever") {
-		print HISTORYTMP "\n";
-		print HISTORYTMP "# Netscape Version - Hits\n";
-		print HISTORYTMP "BEGIN_MSIEVER ".(@_msiever_h)."\n";
-		for (my $i=1; $i <= @_msiever_h; $i++) {
-			my $nb_h=$_msiever_h[$i]||"";
-			print HISTORYTMP "$i $nb_h\n";
-		}
-		print HISTORYTMP "END_MSIEVER\n";
 	}
 	if ($sectiontosave eq "os") {
 		print HISTORYTMP "\n";
@@ -3050,7 +2966,6 @@ sub Init_HashArray {
 	my $month=sprintf("%02i",shift||0);
 	if ($Debug) { debug("Call to Init_HashArray [$year,$month]"); }
 	# Reset all arrays with name beginning by _
-	@_msiever_h = @_nsver_h = ();
 	for (my $ix=0; $ix<6; $ix++)  { $_from_p[$ix]=0; $_from_h[$ix]=0; }
 	for (my $ix=0; $ix<24; $ix++) { $_time_h[$ix]=0; $_time_k[$ix]=0; $_time_p[$ix]=0; }
 	# Reset all hash arrays with name beginning by _
@@ -4250,21 +4165,19 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {	# Updat
 		# Analyze: Robot
 		#---------------
 		if ($pos_agent >= 0) {
-			$field[$pos_agent] =~ tr/\+ /__/;		# Same Agent with different writing syntax have now same name
-			$field[$pos_agent] =~ s/%20/_/g;		# This is to support servers (like Roxen) that writes user agent with %20 in it
-			$UserAgent=lc($field[$pos_agent]);
+			if ($Spec == 1) { $field[$pos_agent] =~ s/%20/_/g; }	# This is to support servers (like Roxen) that writes user agent with %20 in it
+			$UserAgent=$field[$pos_agent];
 
 			if ($LevelForRobotsDetection) {
 	
 				my $uarobot=$TmpRobot{$UserAgent};
 				if (! $uarobot) {
-					# If made on each record -> -1300 rows/seconds
 					my $foundrobot=0;
 					#study $UserAgent;		Does not increase speed
 					foreach my $bot (@RobotsSearchIDOrder) {
 						if ($UserAgent =~ /$bot/i) {
 							$foundrobot=1;
-							$TmpRobot{$UserAgent}=$uarobot="$bot";	# Last time, we won't search if robot or not. We know it's is.
+							$TmpRobot{$UserAgent}=$uarobot="$bot";	# Last time, we won't search if robot or not. We know it is.
 							last;
 						}
 					}
@@ -4274,7 +4187,7 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {	# Updat
 				}
 				# If robot, we stop here
 				if ($uarobot ne "-") {
-					if ($Debug) { debug("UserAgent $UserAgent contains robot ID '$uarobot'",2); }
+					if ($Debug) { debug("UserAgent '$UserAgent' contains robot ID '$uarobot'",2); }
 					$_robot_h{$uarobot}++; $_robot_l{$uarobot}=$timerecord;
 					next;
 				}
@@ -4504,7 +4417,9 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {	# Updat
 		$_host_k{$_}+=$field[$pos_size];
 
 
-		if ($pos_agent >= 0 && $UserAgent) {	 # Made on each record -> -100 rows/seconds
+		# Analyze: Browser and OS
+		#------------------------
+		if ($pos_agent >= 0 && $UserAgent) {
 
 			if ($LevelForBrowsersDetection) {
 
@@ -4512,55 +4427,46 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {	# Updat
 				#-----------------
 				my $uabrowser=$TmpBrowser{$UserAgent};
 				if (! $uabrowser) {
-					my $found=0;
-					# IE ? (For higher speed, we start with IE, the most often used. This avoid other tests if found)
-					if (($UserAgent =~ /msie/) && ($UserAgent !~ /webtv/) && ($UserAgent !~ /omniweb/) && ($UserAgent !~ /opera/)) {
-						$_browser_h{"msie"}++;
-						if ($UserAgent =~ /msie_(\d)\./) {  # $1 now contains IE major version no
-							$_msiever_h[$1]++;
-							$TmpBrowser{$UserAgent}="msie_$1";
-							$found=1;
-						}
+					my $found=1;
+					# IE ?
+					if (($UserAgent =~ /msie([+_ ]|)([\d\.]*)/i) && ($UserAgent !~ /webtv/i) && ($UserAgent !~ /omniweb/i) && ($UserAgent !~ /opera/i)) {
+						$_browser_h{"msie$2"}++;
+						$TmpBrowser{$UserAgent}="msie$2";
 					}
-
 					# Netscape ?
-					if (!$found) {
-						if (($UserAgent =~ /mozilla/) && ($UserAgent !~ /compatible/) && ($UserAgent !~ /opera/) && ($UserAgent !~ /galeon/)) {
-							$_browser_h{"netscape"}++;
-							if ($UserAgent =~ /\/(\d)\./) {		# $1 now contains Netscape major version no
-								$_nsver_h[$1]++;
-								$TmpBrowser{$UserAgent}="netscape_$1";
-								$found=1;
-							}
-						}
+					elsif ($UserAgent =~ /netscape.?\/([\d\.]*)/i) {
+						$_browser_h{"netscape$1"}++;
+						$TmpBrowser{$UserAgent}="netscape$1";
 					}
-
+					elsif (($UserAgent =~ /mozilla(\/|)([\d\.]*)/i) && ($UserAgent !~ /compatible/i) && ($UserAgent !~ /opera/i) && ($UserAgent !~ /galeon/i)) {
+						$_browser_h{"netscape$2"}++;
+						$TmpBrowser{$UserAgent}="netscape$2";
+					}
 					# Other ?
-					if (!$found) {
+					else {
+						$found=0;
 						foreach my $key (@BrowsersSearchIDOrder) {	# Search ID in order of BrowsersSearchIDOrder
 							if ($UserAgent =~ /$key/i) {
-								$_browser_h{$key}++;
-								$TmpBrowser{$UserAgent}=$key;
+								$_browser_h{"$key"}++;
+								$TmpBrowser{$UserAgent}="$key";
 								$found=1;
 								last;
 							}
 						}
 					}
-
 					# Unknown browser ?
 					if (!$found) {
 						$_browser_h{"Unknown"}++;
-						$_unknownrefererbrowser_l{$field[$pos_agent]}=$timerecord;
 						$TmpBrowser{$UserAgent}="Unknown";
+						my $newua=$UserAgent; $newua =~ tr/\+ /__/;
+						$_unknownrefererbrowser_l{$newua}=$timerecord;
 					}
 				}
 				else {
-					# TODO Do not parse version (do it in output only). This will increase features and reduce speed.
-					if ($uabrowser =~ /^msie_(\d)/) { $_browser_h{"msie"}++; $_msiever_h[$1]++; }
-					elsif ($uabrowser =~ /^netscape_(\d)/) { $_browser_h{"netscape"}++; $_nsver_h[$1]++; }
-					else {
-						$_browser_h{$uabrowser}++;
-						if ($uabrowser eq "Unknown") { $_unknownrefererbrowser_l{$field[$pos_agent]}=$timerecord; }
+					$_browser_h{$uabrowser}++;
+					if ($uabrowser eq "Unknown") {
+						my $newua=$UserAgent; $newua =~ tr/\+ /__/;
+						$_unknownrefererbrowser_l{$newua}=$timerecord;
 					}
 				}
 
@@ -4577,22 +4483,26 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {	# Updat
 					foreach my $key (@OSSearchIDOrder) {	# Search ID in order of OSSearchIDOrder
 						if ($UserAgent =~ /$key/i) {
 							my $osid=$OSHashID{$key};
-							$_os_h{$osid}++;
-							$TmpOS{$UserAgent}=$osid;
+							$_os_h{"$osid"}++;
+							$TmpOS{$UserAgent}="$osid";
 							$found=1;
 							last;
 						}
 					}
 					# Unknown OS ?
 					if (!$found) {
-						$_unknownreferer_l{$field[$pos_agent]}=$timerecord;
 						$_os_h{"Unknown"}++;
 						$TmpOS{$UserAgent}="Unknown";
+						my $newua=$UserAgent; $newua =~ tr/\+ /__/;
+						$_unknownreferer_l{$newua}=$timerecord;
 					}
 				}
 				else {
 					$_os_h{$uaos}++;
-					if ($uaos eq "Unknown") { $_unknownreferer_l{$field[$pos_agent]}=$timerecord; }
+					if ($uaos eq "Unknown") {
+						my $newua=$UserAgent; $newua =~ tr/\+ /__/;
+						$_unknownreferer_l{$newua}=$timerecord;
+					}
 				}
 
 			}
@@ -4646,7 +4556,6 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {	# Updat
 
 							if ($LevelForSearchEnginesDetection) {
 
-								# If made on each record -> -1700 rows/seconds (should be made on 10% of records only)
 								foreach my $key (@SearchEnginesSearchIDOrder) {		# Search ID in order of SearchEnginesSearchIDOrder
 									if ($refererserver =~ /$key/i) {
 										# This hit came from the search engine $key
@@ -5811,26 +5720,33 @@ EOF
 		exit(0);
 	}
 	if ($HTMLOutput eq "browserdetail") {
-		print "$Center<a name=\"NETSCAPE\">&nbsp;</a><BR>\n";
-		&tab_head("$Message[33]<br><img src=\"$DirIcons/browser/netscape_large.png\">",19);
-		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[58]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[15]</TH></TR>\n";
-		for (my $i=1; $i <= @_nsver_h; $i++) {
-			my $h="&nbsp;"; my $p="&nbsp;";
-			if ($_nsver_h[$i] > 0 && $_browser_h{"netscape"} > 0) {
-				$h=$_nsver_h[$i]; $p=int($_nsver_h[$i]/$_browser_h{"netscape"}*1000)/10; $p="$p&nbsp;%";
-			}
-			print "<TR><TD CLASS=AWL>Mozilla/$i.xx</TD><TD>$h</TD><TD>$p</TD></TR>\n";
+		# Count total of msie and netscape
+		my %total=();
+		foreach my $key (keys %_browser_h) {
+			if ($key =~ /^msie/i)     { $total{"msie"}+=$_browser_h{$key}; next; }
+			if ($key =~ /^netscape/i) { $total{"netscape"}+=$_browser_h{$key}; next; }
 		}
-		&tab_end;
-		print "<a name=\"MSIE\">&nbsp;</a><BR>";
+		# Show msie and netscape arrays
+		print "$Center<a name=\"MSIE\">&nbsp;</a><BR>";
 		&tab_head("$Message[34]<br><img src=\"$DirIcons/browser/msie_large.png\">",19);
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[58]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[15]</TH></TR>\n";
-		for (my $i=1; $i <= @_msiever_h; $i++) {
-			my $h="&nbsp;"; my $p="&nbsp;";
-			if ($_msiever_h[$i] > 0 && $_browser_h{"msie"} > 0) {
-				$h=$_msiever_h[$i]; $p=int($_msiever_h[$i]/$_browser_h{"msie"}*1000)/10; $p="$p&nbsp;%";
+		foreach my $key (reverse sort keys %_browser_h) {
+			if ($key =~ /^msie(.*)/i) {
+				my $ver=$1;
+				my $p=int($_browser_h{$key}/$total{"msie"}*1000)/10; $p="$p";
+				print "<TR><TD CLASS=AWL>MSIE ".($ver?"$ver":"?")."</TD><TD>$_browser_h{$key}</TD><TD>$p%</TD></TR>\n";
 			}
-			print "<TR><TD CLASS=AWL>MSIE/$i.xx</TD><TD>$h</TD><TD>$p</TD></TR>\n";
+		}
+		&tab_end;
+		print "<a name=\"NETSCAPE\">&nbsp;</a><BR>\n";
+		&tab_head("$Message[33]<br><img src=\"$DirIcons/browser/netscape_large.png\">",19);
+		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[58]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[15]</TH></TR>\n";
+		foreach my $key (reverse sort keys %_browser_h) {
+			if ($key =~ /^netscape(.*)/i) {
+				my $ver=$1;
+				my $p=int($_browser_h{$key}/$total{"netscape"}*1000)/10; $p="$p";
+				print "<TR><TD CLASS=AWL>Netscape ".($ver?"$ver":"?")."</TD><TD>$_browser_h{$key}</TD><TD>$p%</TD></TR>\n";
+			}
 		}
 		&tab_end;
 		&html_end;
@@ -6619,10 +6535,11 @@ EOF
 		if ($Debug) { debug("ShowOSStats",2); }
 		print "$Center<a name=\"OS\">&nbsp;</a><BR>\n";
 		my $Total=0; foreach my $key (keys %_os_h) { $Total+=$_os_h{$key}; }
-		&tab_head($Message[59],19);
+		&tab_head("$Message[59]",19);
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH colspan=2>OS</TH><TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[15]</TH></TR>\n";
 		my $count=0;
-		foreach my $key (sort { $_os_h{$b} <=> $_os_h{$a} } keys (%_os_h)) {
+		&BuildKeyList($MaxRowsInHTMLOutput,1,\%_os_h,\%_os_h);
+		foreach my $key (@keylist) {
 			my $p=int($_os_h{$key}/$Total*1000)/10;
 			if ($key eq "Unknown") {
 				print "<TR><TD width=100><IMG SRC=\"$DirIcons\/os\/unknown.png\"></TD><TD CLASS=AWL><a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=unknownos":"$PROG$StaticLinks.unknownos.html")."\"$NewLinkTarget>$Message[0]</a></TD><TD>$_os_h{$key}</TD>";
@@ -6644,21 +6561,29 @@ EOF
 	if ($ShowBrowsersStats) {
 		if ($Debug) { debug("ShowBrowsersStats",2); }
 		print "$Center<a name=\"BROWSER\">&nbsp;</a><BR>\n";
-		my $Total=0; foreach my $key (keys %_browser_h) { $Total+=$_browser_h{$key}; }
-		&tab_head($Message[21],19);
+		my $Total=0; my %new_browser_h=();
+		foreach my $key (keys %_browser_h) {
+			$Total+=$_browser_h{$key};
+			if ($key =~ /^msie/i)     { $new_browser_h{"msiecumul"}+=$_browser_h{$key}; next; }
+			if ($key =~ /^netscape/i) { $new_browser_h{"netscapecumul"}+=$_browser_h{$key}; next; }
+			$new_browser_h{$key}+=$_browser_h{$key};
+		}
+		&tab_head("$Message[21]",19);
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH colspan=2>Browser</TH><TH width=80>$Message[111]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[15]</TH></TR>\n";
 		my $count=0;
-		foreach my $key (sort { $_browser_h{$b} <=> $_browser_h{$a} } keys (%_browser_h)) {
-			my $p=int($_browser_h{$key}/$Total*1000)/10;
+		&BuildKeyList($MaxRowsInHTMLOutput,1,\%new_browser_h,\%new_browser_h);
+		foreach my $key (@keylist) {
+			my $p=int($new_browser_h{$key}/$Total*1000)/10;
 			if ($key eq "Unknown") {
-				print "<TR><TD width=100><IMG SRC=\"$DirIcons\/browser\/unknown.png\"></TD><TD CLASS=AWL><a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=unknownbrowser":"$PROG$StaticLinks.unknownbrowser.html")."\"$NewLinkTarget>$Message[0]</a></TD><TD width=80>?</TD><TD>$_browser_h{$key}</TD><TD>$p&nbsp;%</TD></TR>\n";
+				print "<TR><TD width=100><IMG SRC=\"$DirIcons\/browser\/unknown.png\"></TD><TD CLASS=AWL><a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=unknownbrowser":"$PROG$StaticLinks.unknownbrowser.html")."\"$NewLinkTarget>$Message[0]</a></TD><TD width=80>?</TD><TD>$_browser_h{$key}</TD><TD>$p%</TD></TR>\n";
 			}
 			else {
-				my $nameicon=lc($BrowsersHashIcon{$key}||"notavailable"); $nameicon =~ s/\s.*//;
-				my $newbrowser=$BrowsersHashIDLib{$key}||$key;
-				if ($newbrowser eq "netscape") { $newbrowser="<font color=blue>Netscape</font> <a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=browserdetail":"$PROG$StaticLinks.browserdetail.html")."\"$NewLinkTarget>($Message[58])</a>"; }
-				if ($newbrowser eq "msie") { $newbrowser="<font color=blue>MS Internet Explorer</font> <a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=browserdetail":"$PROG$StaticLinks.browserdetail.html")."\"$NewLinkTarget>($Message[58])</a>"; }
-				print "<TR><TD width=100><IMG SRC=\"$DirIcons\/browser\/$nameicon.png\"></TD><TD CLASS=AWL>$newbrowser</TD><TD width=80>".($BrowsersHereAreGrabbers{$key}?"<b>$Message[112]</b>":"$Message[113]")."</TD><TD>$_browser_h{$key}</TD><TD>$p&nbsp;%</TD></TR>\n";
+				my $keywithoutcumul=$key; $keywithoutcumul =~ s/cumul$//i;
+				my $libbrowser=$BrowsersHashIDLib{$keywithoutcumul}||$keywithoutcumul;
+				my $nameicon=$BrowsersHashIcon{$keywithoutcumul}||"notavailable";
+				if ($libbrowser eq "netscape") { $libbrowser="Netscape <a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=browserdetail":"$PROG$StaticLinks.browserdetail.html")."\"$NewLinkTarget>($Message[58])</a>"; }
+				if ($libbrowser eq "msie")     { $libbrowser="MS Internet Explorer <a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=browserdetail":"$PROG$StaticLinks.browserdetail.html")."\"$NewLinkTarget>($Message[58])</a>"; }
+				print "<TR><TD width=100><IMG SRC=\"$DirIcons\/browser\/$nameicon.png\"></TD><TD CLASS=AWL>$libbrowser</TD><TD width=80>".($BrowsersHereAreGrabbers{$key}?"<b>$Message[112]</b>":"$Message[113]")."</TD><TD>$new_browser_h{$key}</TD><TD>$p%</TD></TR>\n";
 			}
 			$count++;
 		}

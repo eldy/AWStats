@@ -17,18 +17,17 @@
 #-------------------------------------------------------------------------
 @OSSearchIDOrder	= (
 # Windows OS family
-"windows_xp","windows_nt_5\.1",		# Must be before windows_nt_5
-"windows_me","win_9x_4\.9",			# Must be before windows_98
-"windows2000","windows_2000","windows_nt_5",
-"winnt","windows_nt","windows-nt","win32",
-"win98","windows_98","windows98",
-"win95","windows_95",
-"win16","windows_3","windows;i;16",	# This works for windows_31 and windows_3.1
-"wince","windows_ce",
+"windows[_+ ]xp","windows[_+ ]nt[_+ ]5\.1",		# Must be before windows_nt_5
+"windows[_+ ]me","win[_+ ]9x",					# Must be before windows_98
+"windows[_+ ]?2000","windows[_+ ]nt[_+ ]5",
+"winnt","windows[_+ \-]nt","win32",
+"win(.*)98",
+"win(.*)95",
+"win(.*)16","windows[_+ ]3",					# This works for windows_31 and windows_3.1
+"win(.*)ce",
 # Macintosh OS family
-"mac_p",							# This works for mac_ppc and mac_powerpc
-"mac_68",							# This works for mac_6800 and mac_68k
-"macppc",
+"mac[_+ ]?p",									# This works for macppc and mac_ppc and mac_powerpc
+"mac[_+ ]68",									# This works for mac_6800 and mac_68k
 "macweb",
 "macintosh",
 # Unix like OS
@@ -52,7 +51,7 @@
 "cp/m",
 "crayos",
 "dreamcast",
-"riscos","risc_os",
+"risc[_+ ]?os",
 "webtv"
 );
 
@@ -63,16 +62,16 @@
 #--------------------------------------------------------------------------
 %OSHashID	= (
 # Windows OS family
-"windows_xp","winxp","windows_nt_5\.1","winxp",
-"windows_me","winme","win_9x_4\.9","winme",
-"windows2000","win2000","windows_2000","win2000","windows_nt_5","win2000",
-"winnt","winnt","windows_nt","winnt","windows-nt","winnt","win32","winnt",
-"win98","win98","windows_98","win98","windows98","win98",
-"win95","win95","windows_95","win95",
-"win16","win16","windows_3","win16","windows;i;16","win16",
-"wince","wince","windows_ce","wince",
+"windows[_+ ]xp","winxp","windows[_+ ]nt[_+ ]5\.1","winxp",
+"windows[_+ ]me","winme","win[_+ ]9x","winme",
+"windows[_+ ]?2000","win2000","windows[_+ ]nt[_+ ]5","win2000",
+"winnt","winnt","windows[_+ \-]nt","winnt","win32","winnt",
+"win(.*)98","win98",
+"win(.*)95","win95",
+"win(.*)16","win16","windows[_+ ]3","win16",
+"win(.*)ce","wince",
 # Macintosh OS family
-"mac_p","macintosh","mac_68","macintosh","macppc","macintosh","macweb","macintosh","macintosh","macintosh",
+"mac[_+ ]?p","macintosh","mac[_+ ]68","macintosh","macweb","macintosh","macintosh","macintosh",
 # Unix like OS
 "linux","linux",
 "aix","aix",
@@ -94,7 +93,7 @@
 "cp/m","cp/m",
 "crayos","crayos",
 "dreamcast","dreamcast",
-"riscos","riscos","risc_os","riscos",
+"risc[_+ ]?os","riscos",
 "webtv","webtv"
 );
 
