@@ -671,11 +671,9 @@ when reading it), follow the example:<br>
 
 <a name="PurgeLogFile"><b>PurgeLogFile</b></a><br>
 <b>Version : </b>2.23+<br>
-<br># AWStats can purge log after processing it. By this way, the next time you
-<br># launch AWStats, log file will be smaller and processing time will be better.
-<br># IMPORTANT !!!
-<br># AWStats is able to detect new lines in log file, to process only them, so
-<br># you can launch AWStats as soon as you want, even with this parameter to 0.
+<br># AWStats can purge log file, after analyzing it. Note that AWStats is able
+<br># to detect new lines in a log file, to process only them, so you can launch
+<br># AWStats as often as you want, even with this parameter to 0.
 <br># With 0, no purge is made, so you must use a scheduled task or a web server
 <br># that make this purge frequently.
 <br># With 1, the purge of the log file is made each time AWStats is ran.
