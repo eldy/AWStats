@@ -67,7 +67,7 @@ $word, $yearcon, $yearfile, $yearmonthfile, $yeartoprocess) = ();
 @sortsearchwords = @sortsereferrals = @sortsider404 = @sortsiders = @sortunknownip =
 @sortunknownreferer = @sortunknownrefererbrowser = @wordlist = ();
 
-$VERSION="2.5 (build 9)";
+$VERSION="2.5 (build 10)";
 $Lang=0;
 
 # Default value
@@ -264,6 +264,7 @@ $BarImageHorizontal_k = "barrehk.png";
 "netbsd","NetBSD",
 "bsdi","BSDi",
 "freebsd","FreeBSD",
+"openbsd","OpenBSD",
 "webtv","WebTV",
 "cp/m","CPM",
 "crayos","CrayOS",
@@ -272,6 +273,7 @@ $BarImageHorizontal_k = "barrehk.png";
 
 # OS AliasHash ("text that match in log after changing ' ' or '+' into '_' ","osid")
 %OSAliasHash	= (
+"windows_2000","win2000",
 "windows_nt_5","win2000",
 "windows_nt","winnt",
 "windows-nt","winnt",
