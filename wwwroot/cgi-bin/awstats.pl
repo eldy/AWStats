@@ -82,7 +82,7 @@ $WarningMessages= 1;
 %MonthBytes = %MonthHits = %MonthHostsKnown = %MonthHostsUnknown = %MonthPages = %MonthUnique = %MonthVisits =
 %monthlib = %monthnum = ();
 
-$VERSION="3.2 (build 60)";
+$VERSION="3.2 (build 61)";
 $Lang="en";
 
 # Default value
@@ -1234,15 +1234,15 @@ sub Save_History_File {
 	# Who
 	print HISTORYTMP "BEGIN_DOMAIN\n";
 	foreach my $key (keys %_domener_h) {
-		my $page=$_domener_p{$key}; if ($page == "") {$page=0;}
-		my $bytes=$_domener_k{$key}; if ($bytes == "") {$bytes=0;}
+		my $page=$_domener_p{$key}; if ($page eq "") {$page=0;}
+		my $bytes=$_domener_k{$key}; if ($bytes eq "") {$bytes=0;}		# Could be commented to reduce history file size
 		print HISTORYTMP "$key $page $_domener_h{$key} $bytes\n"; next;
 	}
 	print HISTORYTMP "END_DOMAIN\n";
 	print HISTORYTMP "BEGIN_VISITOR\n";
 	foreach my $key (keys %_hostmachine_h) {
-		my $page=$_hostmachine_p{$key}; if ($page == "") {$page=0;}
-		my $bytes=$_hostmachine_k{$key}; if ($bytes == "") {$bytes=0;}
+		my $page=$_hostmachine_p{$key}; if ($page eq "") {$page=0;}
+		my $bytes=$_hostmachine_k{$key}; if ($bytes eq "") {$bytes=0;}
 		print HISTORYTMP "$key $page $_hostmachine_h{$key} $bytes $_hostmachine_l{$key}\n"; next;
 	}
 	print HISTORYTMP "END_VISITOR\n";
@@ -2098,7 +2098,7 @@ if ($UpdateStats) {
 				if (!$newip) {						# if $newip undefined, $Host not yet resolved
 					&debug("Start of reverse DNS lookup for $Host",4);
 					if ($MyDNSTable{$Host}) {
-	  					$newip = $MyDNSTable{$Host};
+					$newip = $MyDNSTable{$Host};
 						&debug("End of reverse DNS lookup for $Host. Found '$newip' in local MyDNSTable",4);
 					}
 					else {
@@ -2107,6 +2107,7 @@ if ($UpdateStats) {
 						}
 						else {
 							$newip=gethostbyaddr(pack("C4",split(/\./,$Host)),AF_INET);	# This is very slow, may took 20 seconds
+							if (! IsAscii($newip)) { $newip="ip"; }	# If DNSLookup corrupted answer, we treat it as Unknown
 						}
 						&debug("End of reverse DNS lookup for $Host. Found '$newip'",4);
 					}
