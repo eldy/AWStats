@@ -204,7 +204,7 @@ $pos_vh = $pos_host = $pos_logname = $pos_date = $pos_method = $pos_url = $pos_c
 $pos_referer = $pos_agent = $pos_query = $pos_gzipin = $pos_gzipout = $pos_compratio = -1;
 $pos_emails = $pos_emailr = $pos_hostr = -1;
 use vars qw/
-$lowerval
+$RunAsCli $lowerval
 $LastLine $LastLineNumber $LastLineOffset $LastLineChecksum
 $LastUpdate
 $TotalUnique $TotalVisits $TotalHostsKnown $TotalHostsUnknown
@@ -212,6 +212,7 @@ $TotalPages $TotalHits $TotalBytes $TotalEntries $TotalExits $TotalBytesPages $T
 $TotalKeyphrases $TotalKeywords $TotalDifferentKeyphrases $TotalDifferentKeywords
 $TotalSearchEnginesPages $TotalSearchEnginesHits $TotalRefererPages $TotalRefererHits $TotalDifferentSearchEngines $TotalDifferentReferer
 /;
+$RunAsCli = 0;
 $lowerval = 0;
 $LastLine = $LastLineNumber = $LastLineOffset = $LastLineChecksum = 0;
 $LastUpdate = 0;
@@ -250,10 +251,12 @@ use vars qw/
 @BrowsersFamily=('msie','netscape');
 @SessionsRange=('0s-30s','30s-2mn','2mn-5mn','5mn-15mn','15mn-30mn','30mn-1h','1h+');
 %SessionsAverage=('0s-30s',15,'30s-2mn',75,'2mn-5mn',210,'5mn-15mn',600,'15mn-30mn',1350,'30mn-1h',2700,'1h+',3600);
-%LangBrowserToAwstats=('sq','al','ba','ba','cz','cz','de','de','en','en','nl','nl','bg','bg',
-'ca','es_cat','zh','cn','zh-tw','tw','ko','kr','da','dk','es','es','fi','fi','fr','fr',
-'el','gr','hu','hu','in','id','it','it','ja','jp','lv','lv','lt','lt','no','nn','pl','pl',
-'pt','pt','pt-br','br','ro','ro','ru','ru','sk','sk','sv','se','tr','tr','uk','ua','wlk','wlk');
+# Values reported by HTTP-Accept with AWStats code to use
+%LangBrowserToAwstats=('sq','al','ba','ba','bg','bg','zh-tw','tw','zh','cn','cz','cz',
+'da','dk','nl','nl','en','en','et','et','fi','fi','fr','fr',
+'de','de','el','gr','hu','hu','is','is','in','id','it','it',
+'ja','jp','ko','kr','lv','lv','no','nb','nb','nb','nn','nn','pl','pl','pt','pt','pt-br','br',
+'ro','ro','ru','ru','sr','sr','sk','sk','es','es','ca','es_cat','sv','se','tr','tr','uk','ua','wlk','wlk');
 @HostAliases=();
 @AllowAccessFromWebToFollowingAuthenticatedUsers=();
 @DefaultFile = @SkipDNSLookupFor = ();
@@ -1104,14 +1107,18 @@ sub Parse_Config {
 			next;
 			}
 		if ($param =~ /^HostAliases/) {
-			$value =~ s/\\\./\./g; $value =~ s/([^\\])\./$1\\\./g; $value =~ s/^\./\\\./;	# Replace . into \.
-			foreach my $elem (split(/\s+/,$value))	{ push @HostAliases,$elem; }
+			foreach my $elem (split(/\s+/,$value))	{
+				if ($elem!~s/^REGEX://i) { $elem =~ s/\\\./\./g; $elem =~ s/([^\\])\./$1\\\./g; $elem =~ s/^\./\\\./; }	# Replace . into \.
+				if ($elem) { push @HostAliases,$elem; }
+			}
 			next;
 			}
 		# Special optional setup params
 		if ($param =~ /^SkipDNSLookupFor/) {
-			$value =~ s/\\\./\./g; $value =~ s/([^\\])\./$1\\\./g; $value =~ s/^\./\\\./;	# Replace . into \.
-			foreach my $elem (split(/\s+/,$value))	{ push @SkipDNSLookupFor,$elem; }
+			foreach my $elem (split(/\s+/,$value))	{
+				if ($elem!~s/^REGEX://i) { $elem =~ s/\\\./\./g; $elem =~ s/([^\\])\./$1\\\./g; $elem =~ s/^\./\\\./; }	# Replace . into \.
+				if ($elem) { push @SkipDNSLookupFor,$elem; }
+			}
 			next;
 			}
 		if ($param =~ /^AllowAccessFromWebToFollowingAuthenticatedUsers/) {
@@ -1119,33 +1126,45 @@ sub Parse_Config {
 			next;
 			}
 		if ($param =~ /^DefaultFile/)           {
-			$value =~ s/\\\./\./g; $value =~ s/([^\\])\./$1\\\./g; $value =~ s/^\./\\\./;   # Replace . into \.
-			foreach my $elem (split(/\s+/,$value))	{ push @DefaultFile,$elem; }
+			foreach my $elem (split(/\s+/,$value))	{
+				if ($elem!~s/^REGEX://i) { $elem =~ s/\\\./\./g; $elem =~ s/([^\\])\./$1\\\./g; $elem =~ s/^\./\\\./; }	# Replace . into \.
+				if ($elem) { push @DefaultFile,$elem; }
+			}
 			next;
 			}
 		if ($param =~ /^SkipHosts/) {
-			$value =~ s/\\\./\./g; $value =~ s/([^\\])\./$1\\\./g; $value =~ s/^\./\\\./;	# Replace . into \.
-			foreach my $elem (split(/\s+/,$value))	{ push @SkipHosts,$elem; }
+			foreach my $elem (split(/\s+/,$value))	{
+				if ($elem!~s/^REGEX://i) { $elem =~ s/\\\./\./g; $elem =~ s/([^\\])\./$1\\\./g; $elem =~ s/^\./\\\./; }	# Replace . into \.
+				if ($elem) { push @SkipHosts,$elem; }
+			}
 			next;
 			}
 		if ($param =~ /^SkipUserAgents/) {
-			$value =~ s/\\\./\./g; $value =~ s/([^\\])\./$1\\\./g; $value =~ s/^\./\\\./;	# Replace . into \.
-			foreach my $elem (split(/\s+/,$value))	{ push @SkipUserAgents,$elem; }
+			foreach my $elem (split(/\s+/,$value))	{
+				if ($elem!~s/^REGEX://i) { $elem =~ s/\\\./\./g; $elem =~ s/([^\\])\./$1\\\./g; $elem =~ s/^\./\\\./; }	# Replace . into \.
+				if ($elem) { push @SkipUserAgents,$elem; }
+			}
 			next;
 			}
 		if ($param =~ /^SkipFiles/) {
-			$value =~ s/\\\./\./g; $value =~ s/([^\\])\./$1\\\./g; $value =~ s/^\./\\\./;	# Replace . into \.
-			foreach my $elem (split(/\s+/,$value))	{ push @SkipFiles,$elem; }
+			foreach my $elem (split(/\s+/,$value))	{
+				if ($elem!~s/^REGEX://i) { $elem =~ s/\\\./\./g; $elem =~ s/([^\\])\./$1\\\./g; $elem =~ s/^\./\\\./; }	# Replace . into \.
+				if ($elem) { push @SkipFiles,$elem; }
+			}
 			next;
 			}
 		if ($param =~ /^OnlyHosts/) {
-			$value =~ s/\\\./\./g; $value =~ s/([^\\])\./$1\\\./g; $value =~ s/^\./\\\./;	# Replace . into \.
-			foreach my $elem (split(/\s+/,$value))	{ push @OnlyHosts,$elem; }
+			foreach my $elem (split(/\s+/,$value))	{
+				if ($elem!~s/^REGEX://i) { $elem =~ s/\\\./\./g; $elem =~ s/([^\\])\./$1\\\./g; $elem =~ s/^\./\\\./; }	# Replace . into \.
+				if ($elem) { push @OnlyHosts,$elem; }
+			}
 			next;
 			}
 		if ($param =~ /^OnlyFiles/) {
-			$value =~ s/\\\./\./g; $value =~ s/([^\\])\./$1\\\./g; $value =~ s/^\./\\\./;	# Replace . into \.
-			foreach my $elem (split(/\s+/,$value))	{ push @OnlyFiles,$elem; }
+			foreach my $elem (split(/\s+/,$value))	{
+				if ($elem!~s/^REGEX://i) { $elem =~ s/\\\./\./g; $elem =~ s/([^\\])\./$1\\\./g; $elem =~ s/^\./\\\./; }	# Replace . into \.
+				if ($elem) { push @OnlyFiles,$elem; }
+			}
 			next;
 			}
 		if ($param =~ /^NotPageList/) {
@@ -1529,7 +1548,7 @@ sub Check_Config {
 	 	}
 	}
 
-	# Show definitive values for major parameters
+	# Show definitive value for major parameters
 	if ($Debug) {
 		debug(" LogFile='$LogFile'",2);
 		debug(" LogFormat='$LogFormat'",2);
@@ -4524,13 +4543,14 @@ if ($tomorrowmin < 10) { $tomorrowmin = "0$tomorrowmin"; }
 if ($tomorrowsec < 10) { $tomorrowsec = "0$tomorrowsec"; }
 $tomorrowtime=int($tomorrowyear.$tomorrowmonth.$tomorrowday.$tomorrowhour.$tomorrowmin.$tomorrowsec);
 
-my @AllowedArgs=('-site','-config','-showsteps','-showdropped','-showcorrupted',
-'-showunknownorigin','-logfile','-output','-staticlinks','-staticlinksext','-lang',
-'-hostfilter','-urlfilter','-refererpagesfilter',
+my @AllowedArgs=('-migrate','-config',
+'-showsteps','-showdropped','-showcorrupted','-showunknownorigin',
+'-logfile','-output','-runascli','-staticlinks','-staticlinksext','-update',
+'-lang','-hostfilter','-urlfilter','-refererpagesfilter',
 '-month','-year','-framename','-debug','-limitflush');
 
 $QueryString='';
-if ($ENV{'GATEWAY_INTERFACE'}) {	# Run from a browser
+if ($ENV{'GATEWAY_INTERFACE'}) {	# Run from a browser as CGI
 	print "Content-type: text/html\n";
 	# Expires must be GMT ANSI asctime and must be after Content-type to avoid pb with some servers (SAMBAR)
 	#my $ExpireDelayInHTTPHeader=0;
@@ -5694,26 +5714,27 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 				$found=1;
 			}
 			else {
-				$field[$pos_referer] =~ /^(\w+):\/\/([^\/]+)/;
+				$field[$pos_referer] =~ /^(\w+):\/\/([^\/:]+)(:\d+|)/;
 				my $refererprot=$1;
-				my $refererserver=$2;
+				my $refererserver=$2.($3 eq ':80'?'':$3);	# refererserver is www.xxx.com or www.xxx.com:81 but not www.xxx.com:80
 
 				# HTML link ?
 				if ($refererprot =~ /^http/i) {
+					#if ($Debug) { debug("  Analyze referer refererprot=$refererprot refererserver=$refererserver",5); }
 
 					# Kind of origin
 					if (!$TmpRefererServer{$refererserver}) {
 						if ($refererserver =~ /^(www\.|)$SiteToAnalyzeWithoutwww/i) {
 							# Intern (This hit came from another page of the site)
-							if ($Debug) { debug(" Server '$refererserver' is added to TmpRefererServer with value '='",2); }
+							if ($Debug) { debug("  Server '$refererserver' is added to TmpRefererServer with value '='",2); }
 							$TmpRefererServer{$refererserver}='=';
 							$found=1;
 						}
 						else {
 							foreach my $key (@HostAliases) {
-								if ($refererserver =~ /^$key/i) {
+								if ($refererserver =~ /^$key$/i) {
 									# Intern (This hit came from another page of the site)
-									if ($Debug) { debug(" Server '$refererserver' is added to TmpRefererServer with value '='",2); }
+									if ($Debug) { debug("  Server '$refererserver' is added to TmpRefererServer with value '='",2); }
 									$TmpRefererServer{$refererserver}='=';
 									$found=1;
 									last;
@@ -5727,7 +5748,7 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 									foreach my $key (@SearchEnginesSearchIDOrder) {		# Search ID in order of SearchEnginesSearchIDOrder
 										if ($refererserver =~ /$key/i) {
 											# This hit came from the search engine $key
-											if ($Debug) { debug(" Server '$refererserver' is added to TmpRefererServer with value '$key'",2); }
+											if ($Debug) { debug("  Server '$refererserver' is added to TmpRefererServer with value '$key'",2); }
 											$TmpRefererServer{$refererserver}="$key";
 											$found=1;
 											last;
