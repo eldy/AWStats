@@ -11,7 +11,7 @@ AWStats Changelog
 - Increased speed and reduce memory use for very large web sites.
 - Unresolved ip are now processed like resolved one.
 - Added icons in browsers chart.
-- Personalised log format can also have tab separator (not only space).
+- Personalized log format can also have tab separator (not only space).
 - New feature: Added mark on "grabber browsers" in browsers chart.
 - New feature: Added average files size in Pages/URL report chart.
 - New feature: You can put dynamic environnement variables into config file.
@@ -48,11 +48,11 @@ AWStats Changelog
 - New feature: Added stats for web compression (mod_gzip).
 - New feature: Added stats for authenticated users/logins.
 - New feature: Added parameters to choose which report to see in main page.
-- New feature: Added URLWithQuery option to differenciate
+- New feature: Added URLWithQuery option to differentiate
   http://mysite/sameurl?param=x of http://mysite/sameurl?param=y
 - New feature: ShowFlagLinks can now accept list of all wanted flags for
   translation link.
-- New feature: Add logresolvemerge tool to merge splitted log files
+- New feature: Add logresolvemerge tool to merge split log files
   from a load balancing web server before running awstats.
 - New feature: Support standard ISA server log format.
 - New parameter: HTMLHeadSection allows you to add HTML code in header report.
@@ -104,10 +104,10 @@ AWStats Changelog
 - Robots database updated.
 - Support new domains (biz, museum, coop, info, aero...).
 - Added some missing flags icons.
-- Rewrite UnescapeURL function to works with all encoded URLs, cyrilic URL.
+- Rewrite UnescapeURL function to works with all encoded URLs, cyrillic URL.
 - Some minor changes.
 - Added translation for some "not translated" words.
-- Bytes reported are auto-scaled (Bytes, Kb, Mb, Gb).
+- Bytes reported are auto-scaled (Bytes, KB, MB, GB).
 - Fixed problem of colors (styles) not working with some browsers.
 - Added new languages (Korean, Danish, ...). Now 14 different languages.
 - Fixed bug of bad link in TOP pages links when viewed page is of another virtual host.
@@ -175,7 +175,7 @@ AWStats Changelog
 
 - Added last time connection for each hosts
 - Added list of URL for HTTP Error 404
-- Added pages, hits and kb for each statistics
+- Added pages, hits and KB for each statistics
 - Added colors and links
 - Works also with IIS
 - 3 languages: English, French and Dutch

@@ -185,16 +185,16 @@ it with its value when reading it), follow the example:<br>
 <br># Put here your log format (Must agree with your web server. See setup
 <br># instructions in README.txt to know how to configure your web server to have
 <br># the required log format).
-<br># Possible values: 1,2,3,4,5 or "your_own_personalised_log_format"
+<br># Possible values: 1,2,3,4,5 or "your_own_personalized_log_format"
 <br># 1 = Apache native combined log format (NCSA combined/XLF/ELF log format)
 <br># 2 = IIS log format (W3C log format)
 <br># 3 = Webstar native log format
 <br># 4 = Apache or Squid native common log format (NCSA common log format)
 <br>#     With LogFormat=4, some features (browsers, os, keywords...) can't work.
 <br># 5 = ISA server standard log format
-<br># "your_own_personalised_log_format" = If your log is a personalised format,
+<br># "your_own_personalized_log_format" = If your log is a personalized format,
 <br>#     you must use the following syntax keys to define the log format string:
-<br>#     %host             Host client name or IP adress
+<br>#     %host             Host client name or IP address
 <br>#     %logname          Authenticated login/user used on protected pages
 <br>#     %time1            Date and time with format: [dd/mmm/yyyy:hh:mm:ss +0000]
 <br>#     %time2            Date and time with format: yyyy-mm-dd hh-mm-ss
@@ -243,7 +243,7 @@ it with its value when reading it), follow the example:<br>
 
 <a name="DirData"><b>DirData</b></a><br>
 <br># When AWStats updates its statistics, it stores results of its analysis in 
-<br># files (AWStats database). All thoose files are written in the directory
+<br># files (AWStats database). All those files are written in the directory
 <br># defined by the "DirData" parameter. Set this value to the directory where
 <br># you want AWStats to save its database and working files into.
 <br># Warning: If you want to be able to use the "AllowToUpdateStatsFromBrowser"
@@ -409,11 +409,11 @@ it with its value when reading it), follow the example:<br>
 <br><br><hr>
 
 <a name="SkipHosts"><b>SkipHosts</b></a><br>
-<br># Do not include access from clients that match following criterias.
+<br># Do not include access from clients that match following criteria.
 <br># If your log file contains IP adresses in host field, you must put here
-<br># matching IP adresses criterias.
+<br># matching IP adresses criteria.
 <br># If DNS lookup is already done in your log file, you must put here hostname
-<br># criterias.
+<br># criteria.
 <br># Note: Use space between each value.
 <br># Example: "127.0.0.1 163.84. 201.101.51.1"
 <br># Example: "localhost abcxyz"
@@ -441,8 +441,8 @@ it with its value when reading it), follow the example:<br>
 <br># You can, with this option, add a list of not important frame pages (like 
 <br># menus, etc...) to exclude them from statistics.
 <br># For example, to ignore a whole directory tree, just add "directorytoignore",
-<br># to ignore "users" homepage in your stats, you can add "/~".
-<br># The oposite parameter of "SkipFiles" is "OnlyFiles".
+<br># to ignore "users" pages in your stats, you can add "/~".
+<br># The opposite parameter of "SkipFiles" is "OnlyFiles".
 <br># Note: This parameter is not case sensitive.
 <br># Note: Use space between each value and do not remove default values.
 <br># Note: xxx$ means URL ending with xxx.
@@ -458,7 +458,7 @@ it with its value when reading it), follow the example:<br>
 <br># For example, if you want AWStats to filter access to keep only stats that
 <br># match a particular string, like a particular directory, you can add this
 <br># directory name in this parameter.
-<br># The oposite parameter of "OnlyFiles" is "SkipFiles".
+<br># The opposite parameter of "OnlyFiles" is "SkipFiles".
 <br># Note: This parameter is not case sensitive.
 <br># Note: Use space between each value and do not remove default values
 <br># Note: \. means . and xxx$ means URL ending by xxx.
@@ -487,10 +487,10 @@ it with its value when reading it), follow the example:<br>
 
 <a name="ValidHTTPCodes"><b>ValidHTTPCodes</b></a><br>
 <b>Version : </b>4.0 +<br>
-<br># By default, AWStats considers that records found in log file are successfull
+<br># By default, AWStats considers that records found in log file are successful
 <br># hits if HTTP code returned by server is a valid HTTP code (200 and 304).
 <br># Any other code are reported in HTTP error chart.
-<br># However in some specific environnement, whith web server HTTP redirection,
+<br># However in some specific environnement, with web server HTTP redirection,
 <br># you can choose to also accept other codes.
 <br># Example: "200 304 302 305"
 <br># Default: "200 304"

@@ -42,7 +42,7 @@ HARDWARE: Athlon 1 GHz / 128Mb<br>
 SOFTWARE: Windows 2000 / ActivePerl 5.6<br>
 CONFIG OPTIONS: LogFormat=1, DNSLookup=0<br>
 AVERAGE SPEED: <b>4100</b> lines by seconds<br>
-Other times with other configs are shown in the lower in this page...<br>
+Other times for different kind of web sites are shown lower in this page...<br>
 <br>
 <b><u>This is other important information to know:</u></b><br>
 - A log file size is about <b>150</b> (NCSA common/CLF log files) to <b>300 times</b> (NCSA extended/XLF/ELF log files) its number of lines,<br>
@@ -59,17 +59,17 @@ So, have a look at the following chart to:<br>
 <br>
 <b><u>This is examples of frequency/parameters you should use to have a good use of AWStats:</u></b><br>
 <table border=1 cellspacing=0 cellpadding=2 style="font: 12px; arial,verdana">
-<tr bgcolor=#EEEEEE><td rowspan=2>Your Web site size</td><td>Recommanded values for parameters</td><td rowspan=2>Recommanded update frequency<br>(Rotate log delay)</td><td rowspan=2>Memory required**</td><td rowspan=2>Duration***</td></tr>
+<tr bgcolor=#EEEEEE><td rowspan=2>Your Web site size</td><td>Recommended values for parameters</td><td rowspan=2>Recommended update frequency<br>(Rotate log delay)</td><td rowspan=2>Memory required**</td><td rowspan=2>Duration***</td></tr>
 <tr bgcolor=#EEEEEE><td>DNSLookup*</td></tr>
-<tr><td rowspan=2>     0 -     1,000 visits/month</td><td>1</td><td>Once a week<br>Log files are 0-3 Mb<br>10000 lines to process</td><td><4 Mb</td><td><2mn</td></tr>
-<tr>                                                <td>0</td><td>Once a month<br>Log files are 0-12 Mb<br>40000 lines to process</td><td><4 Mb</td><td><20s.<br>(4100 lines/seconds)</td></tr>
-<tr><td rowspan=2> 1,000 -    10,000 visits/month</td><td>1</td><td>Every 12 hours<br>Log files are 1-2 Mb<br>660-6600 lines</td><td>4-8 Mb</td><td>1-2mn</td></tr>
-<tr>                                                <td>0</td><td>Once a week<br>Log files are 3-30 Mb<br>10000-100000 lines</td><td>4-8 Mb</td><td>5-50s<br>(4100 lines/seconds)</td></tr>
-<tr><td rowspan=2>10,000 -    50,000 visits/month</td><td>1</td><td>Every 4 hours<br>Log files are 1-4 Mb<br>2200-11000 lines</td><td>8-16 Mb</td><td>1-4mn</td></tr>
-<tr>                                                <td>0</td><td>Once a day<br>Log Files are 4-20 Mb<br>13000-65000 lines</td><td>8-16 Mb</td><td>10-40s<br>(4100 lines/seconds)</td></tr>
-<tr><td rowspan=2>50,000 -   250,000 visits/month</td><td>1</td><td>Every hour<br>Log Files are 1-4 Mb<br>2700-14000 lines</td><td>16-32 Mb</td><td>2-4mn</td></tr>
-<tr>                                                <td>0</td><td>Every 6 hours<br>Log Files are 5-25 Mb<br>17000-80000 lines</td><td>16-32 Mb</td><td>10-80s<br>(4100 lines/seconds)</td></tr>
-<tr><td>         250,000 - 1,000,000 visits/month</td><td>0</td><td>Every hour<br>Log Files are 4-16 Mb<br>14000-56000 lines</td><td>32-56 Mb</td><td>10-60s</td></tr>
+<tr><td rowspan=2>     0 -     1,000 visits/month</td><td>1</td><td>Once a week<br>Log files are 0-3 MB<br>10000 lines to process</td><td><4 MB</td><td><2mn</td></tr>
+<tr>                                                <td>0</td><td>Once a month<br>Log files are 0-12 MB<br>40000 lines to process</td><td><4 MB</td><td><20s.<br>(4100 lines/seconds)</td></tr>
+<tr><td rowspan=2> 1,000 -    10,000 visits/month</td><td>1</td><td>Every 12 hours<br>Log files are 1-2 MB<br>660-6600 lines</td><td>4-8 MB</td><td>1-2mn</td></tr>
+<tr>                                                <td>0</td><td>Once a week<br>Log files are 3-30 MB<br>10000-100000 lines</td><td>4-8 MB</td><td>5-50s<br>(4100 lines/seconds)</td></tr>
+<tr><td rowspan=2>10,000 -    50,000 visits/month</td><td>1</td><td>Every 4 hours<br>Log files are 1-4 MB<br>2200-11000 lines</td><td>8-16 MB</td><td>1-4mn</td></tr>
+<tr>                                                <td>0</td><td>Once a day<br>Log Files are 4-20 MB<br>13000-65000 lines</td><td>8-16 MB</td><td>10-40s<br>(4100 lines/seconds)</td></tr>
+<tr><td rowspan=2>50,000 -   250,000 visits/month</td><td>1</td><td>Every hour<br>Log Files are 1-4 MB<br>2700-14000 lines</td><td>16-32 MB</td><td>2-4mn</td></tr>
+<tr>                                                <td>0</td><td>Every 6 hours<br>Log Files are 5-25 MB<br>17000-80000 lines</td><td>16-32 MB</td><td>10-80s<br>(4100 lines/seconds)</td></tr>
+<tr><td>         250,000 - 1,000,000 visits/month</td><td>0</td><td>Every hour<br>Log Files are 4-16 MB<br>14000-56000 lines</td><td>32-56 MB</td><td>10-60s</td></tr>
 <tr><td>       1,000,000 - 5,000,000 visits/month</td><td>0</td><td colspan=3>AWStats is not a good choice for such web sites</td></tr>
 <tr><td>      +5,000,000 visits/month</td><td>0</td><td colspan=3>AWStats is not a good choice for such web sites</td></tr>
 </table>
@@ -77,7 +77,7 @@ So, have a look at the following chart to:<br>
 &nbsp;&nbsp; &nbsp;&nbsp; - reverse DNS lookup is already done in your log file<br>
 &nbsp;&nbsp; &nbsp;&nbsp; - or if you don't need the "domain/countries" report<br>
 &nbsp;&nbsp; &nbsp;&nbsp; - or if your web site has more than 250,000 visits a month.<br>
-** Free memory required for update process (in Mb).<br>
+** Free memory required for update process (in MB).<br>
 *** Duration is with Athlon 1GHz/128Mb and LogFormat=1.<br>
 
 
