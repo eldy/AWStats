@@ -1,0 +1,128 @@
+# AWSTATS OPERATING SYSTEMS DATABASE
+#------------------------------------
+# Last update: 2001-10-20
+
+
+# OSArrayID
+# Matching criteria to search in log after changing ' ' or '+' into '_' "
+# This searching ID are searched in declare order.
+#-------------------------------------------------------
+@OSArrayID	= (
+# Windows OS family
+"windows_nt_5\.1",
+"win_9x_4\.9",			# Must be before windows_98
+"windows2000","windows_2000","windows_nt_5",
+"winnt","windows_nt","windows-nt","win32",
+"win98","windows_98","windows98",
+"win95","windows_95",
+"win16","windows_3","windows;i;16",			# This works for windows_31 and windows_3.1
+"wince","windows_ce",
+# Macintosh OS family
+"mac_p",				# This works for mac_ppc and mac_powerpc
+"mac_68",				# This works for mac_6800 and mac_68k
+"macppc",
+"macweb",
+"macintosh",
+# Other famous OS
+"beos",
+"os/2",
+"amigaos",
+# Unix like OS
+"linux",
+"aix",
+"sunos",
+"irix",
+"osf",
+"hp-ux",
+"netbsd",
+"bsdi",
+"freebsd",
+"openbsd",
+"unix",
+# Miscellanous OS
+"cp/m",
+"crayos",
+"dreamcast",
+"riscos",
+"webtv"
+);
+
+# OSHashID
+# Different OS ID are same OS
+#-------------------------------------------------------
+%OSHashID	= (
+# Windows OS family
+"windows_nt_5\.1","winxp",
+"win_9x_4\.9","winme",
+"windows2000","win2000","windows_2000","win2000","windows_nt_5","win2000",
+"winnt","winnt","windows_nt","winnt","windows-nt","winnt","win32","winnt",
+"win98","win98","windows_98","win98","windows98","win98",
+"win95","win95","windows_95","win95",
+"win16","win16","windows_3","win16","windows;i;16","win16",
+"wince","wince","windows_ce","wince",
+# Macintosh OS family
+"mac_p","macintosh","mac_68","macintosh","macppc","macintosh","macweb","macintosh","macintosh","macintosh",
+# Other famous OS
+"beos","beos",
+"os/2","os/2",
+"amigaos","amigaos",
+# Unix like OS
+"linux","linux",
+"aix","aix",
+"sunos","sunos",
+"irix","irix",
+"osf","osf",
+"hp-ux","hp-ux",
+"netbsd","netbsd",
+"bsdi","bsdi",
+"freebsd","freebsd",
+"openbsd","openbsd",
+"unix","unix",
+# Miscellanous OS
+"cp/m","cp/m",
+"crayos","crayos",
+"dreamcast","dreamcast",
+"riscos","riscos",
+"webtv","webtv"
+);
+
+# OS name list ("os id in lower case","os clear text")
+#-------------------------------------------------------
+%OSHashLib      = (
+# Windows family OS
+"winxp","Windows XP",
+"winme","Windows Me",
+"win2000","Windows 2000",
+"winnt","Windows NT",
+"win98","Windows 98",
+"win95","Windows 95",
+"win16","Windows 3.xx",
+"wince","Windows CE",
+# Macintosh OS
+"macintosh","Mac OS",
+# Other famous OS
+"beos","BeOS",
+"os/2","Warp OS/2",
+"amigaos","AmigaOS",
+# Unix like OS
+"linux","Linux",
+"aix","Aix",
+"sunos","Sun Solaris",
+"irix","Irix",
+"osf","OSF Unix",
+"hp-ux","HP Unix",
+"netbsd","NetBSD",
+"bsdi","BSDi",
+"freebsd","FreeBSD",
+"openbsd","OpenBSD",
+"unix","Unknown Unix system",
+# Miscellanous OS
+"cp/m","CPM",
+"crayos","CrayOS",
+"dreamcast","Dreamcast",
+"riscos","Acorn RISC OS",
+"webtv","WebTV"
+);
+
+
+1;
