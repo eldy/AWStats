@@ -1541,22 +1541,22 @@ sub Check_Config {
 	if ($MaxRowsInHTMLOutput !~ /^\d+/ || $MaxRowsInHTMLOutput<1)     { $MaxRowsInHTMLOutput=1000; }
 	if ($ShowHeader !~ /[0-1]/)                   	{ $ShowHeader=1; }
 	if ($ShowMenu !~ /[0-1]/)                     	{ $ShowMenu=1; }
-	if ($ShowMonthDayStats !~ /[01UVPHB]/)         	{ $ShowMonthDayStats="UVPHB"; }
-	if ($ShowDaysOfWeekStats !~ /[01PHBL]/)        	{ $ShowDaysOfWeekStats="PHBL"; }
-	if ($ShowHoursStats !~ /[01PHBL]/)             	{ $ShowHoursStats="PHBL"; }
-	if ($ShowDomainsStats !~ /[01PHB]/)            	{ $ShowDomainsStats="PHB"; }
-	if ($ShowHostsStats !~ /[01PHBL]/)             	{ $ShowHostsStats="PHBL"; }
+	if ($ShowMonthDayStats !~ /[01UVPHB]/)         	{ $ShowMonthDayStats='UVPHB'; }
+	if ($ShowDaysOfWeekStats !~ /[01PHBL]/)        	{ $ShowDaysOfWeekStats='PHBL'; }
+	if ($ShowHoursStats !~ /[01PHBL]/)             	{ $ShowHoursStats='PHBL'; }
+	if ($ShowDomainsStats !~ /[01PHB]/)            	{ $ShowDomainsStats='PHB'; }
+	if ($ShowHostsStats !~ /[01PHBL]/)             	{ $ShowHostsStats='PHBL'; }
 	if ($ShowAuthenticatedUsers !~ /[01PHBL]/)     	{ $ShowAuthenticatedUsers=0; }
-	if ($ShowRobotsStats !~ /[01HBL]/)            	{ $ShowRobotsStats="HBL"; }
+	if ($ShowRobotsStats !~ /[01HBL]/)            	{ $ShowRobotsStats='HBL'; }
 	if ($ShowEMailSenders !~ /[01HBML]/)       		{ $ShowEMailSenders=0; }
 	if ($ShowEMailReceivers !~ /[01HBML]/)         	{ $ShowEMailReceivers=0; }
 	if ($ShowSessionsStats !~ /[0-1]/)             	{ $ShowSessionsStats=1; }
-	if ($ShowPagesStats !~ /[01PBEX]/i)           	{ $ShowPagesStats="PBEX"; }
-	if ($ShowFileTypesStats !~ /[01HBC]/)         	{ $ShowFileTypesStats="HB"; }
+	if ($ShowPagesStats !~ /[01PBEX]/i)           	{ $ShowPagesStats='PBEX'; }
+	if ($ShowFileTypesStats !~ /[01HBC]/)         	{ $ShowFileTypesStats='HB'; }
 	if ($ShowFileSizesStats !~ /[0-1]/)           	{ $ShowFileSizesStats=1; }
 	if ($ShowBrowsersStats !~ /[0-1]/)            	{ $ShowBrowsersStats=1; }
 	if ($ShowOSStats !~ /[0-1]/)                  	{ $ShowOSStats=1; }
-	if ($ShowOriginStats !~ /[01PH]/)              	{ $ShowOriginStats="PH"; }
+	if ($ShowOriginStats !~ /[01PH]/)              	{ $ShowOriginStats='PH'; }
 	if ($ShowKeyphrasesStats !~ /[0-1]/)          	{ $ShowKeyphrasesStats=1; }
 	if ($ShowKeywordsStats !~ /[0-1]/)            	{ $ShowKeywordsStats=1; }
 	if ($ShowHTTPErrorsStats !~ /[0-1]/)          	{ $ShowHTTPErrorsStats=1; }
@@ -1583,46 +1583,46 @@ sub Check_Config {
 	if ($ShowLinksOnUrl !~ /[0-1]/)               	{ $ShowLinksOnUrl=1; }
 	if ($MaxLengthOfURL !~ /^\d+/ || $MaxLengthOfURL<1) { $MaxLengthOfURL=72; }
 	if ($ShowLinksToWhoIs !~ /[0-1]/)              	{ $ShowLinksToWhoIs=0; }
-	if (! $Logo)    	                          	{ $Logo="awstats_logo1.png"; }
-	if (! $LogoLink)  	                        	{ $LogoLink="http://awstats.sourceforge.net"; }
+	if (! $Logo)    	                          	{ $Logo='awstats_logo1.png'; }
+	if (! $LogoLink)  	                        	{ $LogoLink='http://awstats.sourceforge.net'; }
 	if ($BarWidth !~ /^\d+/ || $BarWidth<1) 		{ $BarWidth=260; }
 	if ($BarHeight !~ /^\d+/ || $BarHeight<1)		{ $BarHeight=90; }
-	$color_Background =~ s/#//g; if ($color_Background !~ /^[0-9|A-Z]+$/i)           { $color_Background="FFFFFF";	}
-	$color_TableBGTitle =~ s/#//g; if ($color_TableBGTitle !~ /^[0-9|A-Z]+$/i)       { $color_TableBGTitle="CCCCDD"; }
-	$color_TableTitle =~ s/#//g; if ($color_TableTitle !~ /^[0-9|A-Z]+$/i)           { $color_TableTitle="000000"; }
-	$color_TableBG =~ s/#//g; if ($color_TableBG !~ /^[0-9|A-Z]+$/i)                 { $color_TableBG="CCCCDD"; }
-	$color_TableRowTitle =~ s/#//g; if ($color_TableRowTitle !~ /^[0-9|A-Z]+$/i)     { $color_TableRowTitle="FFFFFF"; }
-	$color_TableBGRowTitle =~ s/#//g; if ($color_TableBGRowTitle !~ /^[0-9|A-Z]+$/i) { $color_TableBGRowTitle="ECECEC"; }
-	$color_TableBorder =~ s/#//g; if ($color_TableBorder !~ /^[0-9|A-Z]+$/i)         { $color_TableBorder="ECECEC"; }
-	$color_text =~ s/#//g; if ($color_text !~ /^[0-9|A-Z]+$/i)           			 { $color_text="000000"; }
-	$color_textpercent =~ s/#//g; if ($color_textpercent !~ /^[0-9|A-Z]+$/i)  		 { $color_textpercent="606060"; }
-	$color_titletext =~ s/#//g; if ($color_titletext !~ /^[0-9|A-Z]+$/i) 			 { $color_titletext="000000"; }
-	$color_weekend =~ s/#//g; if ($color_weekend !~ /^[0-9|A-Z]+$/i)     			 { $color_weekend="EAEAEA"; }
-	$color_link =~ s/#//g; if ($color_link !~ /^[0-9|A-Z]+$/i)           			 { $color_link="0011BB"; }
-	$color_hover =~ s/#//g; if ($color_hover !~ /^[0-9|A-Z]+$/i)         			 { $color_hover="605040"; }
-	$color_other =~ s/#//g; if ($color_other !~ /^[0-9|A-Z]+$/i)         			 { $color_other="666688"; }
-	$color_u =~ s/#//g; if ($color_u !~ /^[0-9|A-Z]+$/i)                 			 { $color_u="FFB055"; }
-	$color_v =~ s/#//g; if ($color_v !~ /^[0-9|A-Z]+$/i)                 			 { $color_v="F8E880"; }
-	$color_p =~ s/#//g; if ($color_p !~ /^[0-9|A-Z]+$/i)                 			 { $color_p="4477DD"; }
-	$color_h =~ s/#//g; if ($color_h !~ /^[0-9|A-Z]+$/i)                 			 { $color_h="66F0FF"; }
-	$color_k =~ s/#//g; if ($color_k !~ /^[0-9|A-Z]+$/i)                 			 { $color_k="2EA495"; }
-	$color_s =~ s/#//g; if ($color_s !~ /^[0-9|A-Z]+$/i)                 			 { $color_s="8888DD"; }
-	$color_e =~ s/#//g; if ($color_e !~ /^[0-9|A-Z]+$/i)                 			 { $color_e="CEC2E8"; }
-	$color_x =~ s/#//g; if ($color_x !~ /^[0-9|A-Z]+$/i)                 			 { $color_x="C1B2E2"; }
+	$color_Background =~ s/#//g; if ($color_Background !~ /^[0-9|A-Z]+$/i)           { $color_Background='FFFFFF';	}
+	$color_TableBGTitle =~ s/#//g; if ($color_TableBGTitle !~ /^[0-9|A-Z]+$/i)       { $color_TableBGTitle='CCCCDD'; }
+	$color_TableTitle =~ s/#//g; if ($color_TableTitle !~ /^[0-9|A-Z]+$/i)           { $color_TableTitle='000000'; }
+	$color_TableBG =~ s/#//g; if ($color_TableBG !~ /^[0-9|A-Z]+$/i)                 { $color_TableBG='CCCCDD'; }
+	$color_TableRowTitle =~ s/#//g; if ($color_TableRowTitle !~ /^[0-9|A-Z]+$/i)     { $color_TableRowTitle='FFFFFF'; }
+	$color_TableBGRowTitle =~ s/#//g; if ($color_TableBGRowTitle !~ /^[0-9|A-Z]+$/i) { $color_TableBGRowTitle='ECECEC'; }
+	$color_TableBorder =~ s/#//g; if ($color_TableBorder !~ /^[0-9|A-Z]+$/i)         { $color_TableBorder='ECECEC'; }
+	$color_text =~ s/#//g; if ($color_text !~ /^[0-9|A-Z]+$/i)           			 { $color_text='000000'; }
+	$color_textpercent =~ s/#//g; if ($color_textpercent !~ /^[0-9|A-Z]+$/i)  		 { $color_textpercent='606060'; }
+	$color_titletext =~ s/#//g; if ($color_titletext !~ /^[0-9|A-Z]+$/i) 			 { $color_titletext='000000'; }
+	$color_weekend =~ s/#//g; if ($color_weekend !~ /^[0-9|A-Z]+$/i)     			 { $color_weekend='EAEAEA'; }
+	$color_link =~ s/#//g; if ($color_link !~ /^[0-9|A-Z]+$/i)           			 { $color_link='0011BB'; }
+	$color_hover =~ s/#//g; if ($color_hover !~ /^[0-9|A-Z]+$/i)         			 { $color_hover='605040'; }
+	$color_other =~ s/#//g; if ($color_other !~ /^[0-9|A-Z]+$/i)         			 { $color_other='666688'; }
+	$color_u =~ s/#//g; if ($color_u !~ /^[0-9|A-Z]+$/i)                 			 { $color_u='FFB055'; }
+	$color_v =~ s/#//g; if ($color_v !~ /^[0-9|A-Z]+$/i)                 			 { $color_v='F8E880'; }
+	$color_p =~ s/#//g; if ($color_p !~ /^[0-9|A-Z]+$/i)                 			 { $color_p='4477DD'; }
+	$color_h =~ s/#//g; if ($color_h !~ /^[0-9|A-Z]+$/i)                 			 { $color_h='66F0FF'; }
+	$color_k =~ s/#//g; if ($color_k !~ /^[0-9|A-Z]+$/i)                 			 { $color_k='2EA495'; }
+	$color_s =~ s/#//g; if ($color_s !~ /^[0-9|A-Z]+$/i)                 			 { $color_s='8888DD'; }
+	$color_e =~ s/#//g; if ($color_e !~ /^[0-9|A-Z]+$/i)                 			 { $color_e='CEC2E8'; }
+	$color_x =~ s/#//g; if ($color_x !~ /^[0-9|A-Z]+$/i)                 			 { $color_x='C1B2E2'; }
 
 	# Correct param if default value is asked
-	if ($ShowMonthDayStats eq '1')      { $ShowMonthDayStats = "UVPHB"; }
-	if ($ShowDaysOfWeekStats eq '1')    { $ShowDaysOfWeekStats = "PHBL"; }
-	if ($ShowHoursStats eq '1')         { $ShowHoursStats = "PHBL"; }
-	if ($ShowDomainsStats eq '1')       { $ShowDomainsStats = "PHB"; }
-	if ($ShowHostsStats eq '1')         { $ShowHostsStats = "PHBL"; }
-	if ($ShowEMailSenders eq '1')       { $ShowDomainsStats = "HBML"; }
-	if ($ShowEMailReceivers eq '1')     { $ShowDomainsStats = "HBML"; }
-	if ($ShowAuthenticatedUsers eq '1') { $ShowAuthenticatedUsers = "PHBL"; }
-	if ($ShowRobotsStats eq '1') 		{ $ShowRobotsStats = "HBL"; }
-	if ($ShowPagesStats eq '1') 		{ $ShowPagesStats = "PBEX"; }
-	if ($ShowFileTypesStats eq '1') 	{ $ShowFileTypesStats = "HB"; }
-	if ($ShowOriginStats eq '1') 		{ $ShowOriginStats = "PH"; }
+	if ($ShowMonthDayStats eq '1')      { $ShowMonthDayStats = 'UVPHB'; }
+	if ($ShowDaysOfWeekStats eq '1')    { $ShowDaysOfWeekStats = 'PHBL'; }
+	if ($ShowHoursStats eq '1')         { $ShowHoursStats = 'PHBL'; }
+	if ($ShowDomainsStats eq '1')       { $ShowDomainsStats = 'PHB'; }
+	if ($ShowHostsStats eq '1')         { $ShowHostsStats = 'PHBL'; }
+	if ($ShowEMailSenders eq '1')       { $ShowEMailSenders = 'HBML'; }
+	if ($ShowEMailReceivers eq '1')     { $ShowEMailReceivers = 'HBML'; }
+	if ($ShowAuthenticatedUsers eq '1') { $ShowAuthenticatedUsers = 'PHBL'; }
+	if ($ShowRobotsStats eq '1') 		{ $ShowRobotsStats = 'HBL'; }
+	if ($ShowPagesStats eq '1') 		{ $ShowPagesStats = 'PBEX'; }
+	if ($ShowFileTypesStats eq '1') 	{ $ShowFileTypesStats = 'HB'; }
+	if ($ShowOriginStats eq '1') 		{ $ShowOriginStats = 'PH'; }
 
 	# Refuse LogFile if contains a pipe and PurgeLogFile || ArchiveLogRecords set on
 	if (($PurgeLogFile || $ArchiveLogRecords) && $LogFile =~ /\|\s*$/) {
@@ -4985,7 +4985,8 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 					my $delay=&GetDelaySinceStart(0);
 					print "".($NbOfLinesRead-1)." lines processed (".($delay>0?$delay:1000)." ms, ".int(1000*($NbOfLinesShowsteps-1)/($delay>0?$delay:1000))." lines/second)\n";
 				}
-				print "Phase 2 : Now process new records (Flush history on disk every ".($LIMITFLUSH<<2)." uniques)\n";
+				print "Phase 2 : Now process new records (Flush history on disk after ".($LIMITFLUSH<<2)." uniques)\n";
+				#print "Phase 2 : Now process new records (Flush history on disk after ".($LIMITFLUSH<<2)." uniques or ".($LIMITFLUSH)." different URLs)\n";
 				&GetDelaySinceStart(1);	$NbOfLinesShowsteps=1;
 			}
 		}
@@ -7833,18 +7834,18 @@ EOF
 			$p_h[5]=int($_from_h[5]/$Totalh*1000)/10;
 		}
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[37]</TH>";
-		if ($ShowDomainsStats =~ /P/i) { print "<TH bgcolor=\"#$color_p\" width=80>$Message[56]</TH><TH bgcolor=\"#$color_p\" width=80>$Message[15]</TH>"; }
-		if ($ShowDomainsStats =~ /H/i) { print "<TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[15]</TH>"; }
+		if ($ShowOriginStats =~ /P/i) { print "<TH bgcolor=\"#$color_p\" width=80>$Message[56]</TH><TH bgcolor=\"#$color_p\" width=80>$Message[15]</TH>"; }
+		if ($ShowOriginStats =~ /H/i) { print "<TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[15]</TH>"; }
 		print "</TR>\n";
 		#------- Referrals by direct address/bookmarks
 		print "<TR><TD CLASS=AWL><b>$Message[38]</b></TD>";
-		if ($ShowDomainsStats =~ /P/i) { print "<TD>".($_from_p[0]?$_from_p[0]:"&nbsp;")."</TD><TD>".($_from_p[0]?"$p_p[0] %":"&nbsp;")."</TD>"; }
-		if ($ShowDomainsStats =~ /H/i) { print "<TD>".($_from_h[0]?$_from_h[0]:"&nbsp;")."</TD><TD>".($_from_h[0]?"$p_h[0] %":"&nbsp;")."</TD>"; }
+		if ($ShowOriginStats =~ /P/i) { print "<TD>".($_from_p[0]?$_from_p[0]:"&nbsp;")."</TD><TD>".($_from_p[0]?"$p_p[0] %":"&nbsp;")."</TD>"; }
+		if ($ShowOriginStats =~ /H/i) { print "<TD>".($_from_h[0]?$_from_h[0]:"&nbsp;")."</TD><TD>".($_from_h[0]?"$p_h[0] %":"&nbsp;")."</TD>"; }
 		print "</TR>\n";
 		#------- Referrals by news group
 		print "<TR><TD CLASS=AWL><b>$Message[107]</b></TD>";
-		if ($ShowDomainsStats =~ /P/i) { print "<TD>".($_from_p[5]?$_from_p[5]:"&nbsp;")."</TD><TD>".($_from_p[5]?"$p_p[5] %":"&nbsp;")."</TD>"; }
-		if ($ShowDomainsStats =~ /H/i) { print "<TD>".($_from_h[5]?$_from_h[5]:"&nbsp;")."</TD><TD>".($_from_h[5]?"$p_h[5] %":"&nbsp;")."</TD>"; }
+		if ($ShowOriginStats =~ /P/i) { print "<TD>".($_from_p[5]?$_from_p[5]:"&nbsp;")."</TD><TD>".($_from_p[5]?"$p_p[5] %":"&nbsp;")."</TD>"; }
+		if ($ShowOriginStats =~ /H/i) { print "<TD>".($_from_h[5]?$_from_h[5]:"&nbsp;")."</TD><TD>".($_from_h[5]?"$p_h[5] %":"&nbsp;")."</TD>"; }
 		print "</TR>\n";
 		#------- Referrals by search engine
 		print "<TR onmouseover=\"ShowTip(13);\" onmouseout=\"HideTip(13);\"><TD CLASS=AWL><b>$Message[40]</b> - <a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=refererse":"$PROG$StaticLinks.refererse.html")."\"$NewLinkTarget>$Message[80]</a><br>\n";
@@ -7864,8 +7865,8 @@ EOF
 			print "<TR><TD CLASS=AWL><font color=\"#$color_other\">- $Message[2]</font></TD><TD>$rest_h</TD>";
 		}
 		print "</TABLE></TD>\n";
-		if ($ShowDomainsStats =~ /P/i) { print "<TD valign=top>".($_from_p[2]?$_from_p[2]:"&nbsp;")."</TD><TD valign=top>".($_from_p[2]?"$p_p[2] %":"&nbsp;")."</TD>"; }
-		if ($ShowDomainsStats =~ /H/i) { print "<TD valign=top>".($_from_h[2]?$_from_h[2]:"&nbsp;")."</TD><TD valign=top>".($_from_h[2]?"$p_h[2] %":"&nbsp;")."</TD>"; }
+		if ($ShowOriginStats =~ /P/i) { print "<TD valign=top>".($_from_p[2]?$_from_p[2]:"&nbsp;")."</TD><TD valign=top>".($_from_p[2]?"$p_p[2] %":"&nbsp;")."</TD>"; }
+		if ($ShowOriginStats =~ /H/i) { print "<TD valign=top>".($_from_h[2]?$_from_h[2]:"&nbsp;")."</TD><TD valign=top>".($_from_h[2]?"$p_h[2] %":"&nbsp;")."</TD>"; }
 		print "</TR>\n";
 		#------- Referrals by external HTML link
 		print "<TR onmouseover=\"ShowTip(14);\" onmouseout=\"HideTip(14);\"><TD CLASS=AWL><b>$Message[41]</b> - <a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=refererpages":"$PROG$StaticLinks.refererpages.html")."\"$NewLinkTarget>$Message[80]</a><br>\n";
@@ -7888,18 +7889,18 @@ EOF
 			print "<TR><TD CLASS=AWL><font color=\"#$color_other\">- $Message[2]</font></TD><TD>$rest_h</TD>";
 		}
 		print "</TABLE></TD>\n";
-		if ($ShowDomainsStats =~ /P/i) { print "<TD valign=top>".($_from_p[3]?$_from_p[3]:"&nbsp;")."</TD><TD valign=top>".($_from_p[3]?"$p_p[3] %":"&nbsp;")."</TD>"; }
-		if ($ShowDomainsStats =~ /H/i) { print "<TD valign=top>".($_from_h[3]?$_from_h[3]:"&nbsp;")."</TD><TD valign=top>".($_from_h[3]?"$p_h[3] %":"&nbsp;")."</TD>"; }
+		if ($ShowOriginStats =~ /P/i) { print "<TD valign=top>".($_from_p[3]?$_from_p[3]:"&nbsp;")."</TD><TD valign=top>".($_from_p[3]?"$p_p[3] %":"&nbsp;")."</TD>"; }
+		if ($ShowOriginStats =~ /H/i) { print "<TD valign=top>".($_from_h[3]?$_from_h[3]:"&nbsp;")."</TD><TD valign=top>".($_from_h[3]?"$p_h[3] %":"&nbsp;")."</TD>"; }
 		print "</TR>\n";
 		#------- Referrals by internal HTML link
 		print "<TR><TD CLASS=AWL><b>$Message[42]</b></TD>";
-		if ($ShowDomainsStats =~ /P/i) { print "<TD>".($_from_p[4]?$_from_p[4]:"&nbsp;")."</TD><TD>".($_from_p[4]?"$p_p[4] %":"&nbsp;")."</TD>"; }
-		if ($ShowDomainsStats =~ /H/i) { print "<TD>".($_from_h[4]?$_from_h[4]:"&nbsp;")."</TD><TD>".($_from_h[4]?"$p_h[4] %":"&nbsp;")."</TD>"; }
+		if ($ShowOriginStats =~ /P/i) { print "<TD>".($_from_p[4]?$_from_p[4]:"&nbsp;")."</TD><TD>".($_from_p[4]?"$p_p[4] %":"&nbsp;")."</TD>"; }
+		if ($ShowOriginStats =~ /H/i) { print "<TD>".($_from_h[4]?$_from_h[4]:"&nbsp;")."</TD><TD>".($_from_h[4]?"$p_h[4] %":"&nbsp;")."</TD>"; }
 		print "</TR>\n";
 		#------- Unkown origin
 		print "<TR><TD CLASS=AWL><b>$Message[39]</b></TD>";
-		if ($ShowDomainsStats =~ /P/i) { print "<TD>".($_from_p[1]?$_from_p[1]:"&nbsp;")."</TD><TD>".($_from_p[1]?"$p_p[1] %":"&nbsp;")."</TD>"; }
-		if ($ShowDomainsStats =~ /H/i) { print "<TD>".($_from_h[1]?$_from_h[1]:"&nbsp;")."</TD><TD>".($_from_h[1]?"$p_h[1] %":"&nbsp;")."</TD>"; }
+		if ($ShowOriginStats =~ /P/i) { print "<TD>".($_from_p[1]?$_from_p[1]:"&nbsp;")."</TD><TD>".($_from_p[1]?"$p_p[1] %":"&nbsp;")."</TD>"; }
+		if ($ShowOriginStats =~ /H/i) { print "<TD>".($_from_h[1]?$_from_h[1]:"&nbsp;")."</TD><TD>".($_from_h[1]?"$p_h[1] %":"&nbsp;")."</TD>"; }
 		print "</TR>\n";
 		&tab_end;
 	}
