@@ -18,6 +18,7 @@
 @BrowsersSearchIDOrder = (
 # Most frequent standard web browsers are first in this list
 'firebird',
+'firefox',
 'go!zilla',
 'icab',
 'konqueror',
@@ -127,7 +128,8 @@
 # Common web browsers text
 'msie','MS Internet Explorer',
 'netscape','Netscape',
-'firebird','Firebird',
+'firebird','Firebird (Old FireFox)',
+'firefox','FireFox',
 'go!zilla','Go!Zilla',
 'icab','iCab',
 'konqueror','Konqueror',
@@ -254,6 +256,7 @@
 'netscape','netscape',
 
 'firebird','phoenix',
+'firefox','phoenix',
 'go!zilla','gozilla',
 'icab','icab',
 'konqueror','konqueror',
