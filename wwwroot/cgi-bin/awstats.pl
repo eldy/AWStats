@@ -859,18 +859,18 @@ sub OptimizeArray {
 			# Search if $i elem is already treated by another elem
 			foreach my $j (0..(scalar @arrayunreg)-1) {
 				if ($i == $j) { next; }
-				my $parami=$notcasesensitive?lc(@arrayunreg[$i]):@arrayunreg[$i];
-				my $paramj=$notcasesensitive?lc(@arrayunreg[$j]):@arrayunreg[$j];
+				my $parami=$notcasesensitive?lc($arrayunreg[$i]):$arrayunreg[$i];
+				my $paramj=$notcasesensitive?lc($arrayunreg[$j]):$arrayunreg[$j];
 				if ($Debug) { debug(" Compare $i ($parami) to $j ($paramj)",4); }
 				if (index($parami,$paramj)>-1) {
-					if ($Debug) { debug(" Elem $i (@arrayunreg[$i]) already treated with elem $j (@arrayunreg[$j])",4); }
+					if ($Debug) { debug(" Elem $i ($arrayunreg[$i]) already treated with elem $j ($arrayunreg[$j])",4); }
 					$elemtoremove=$i;
 					last OPTIMIZELOOP;
 				}
 			}
 		}
 		if ($elemtoremove > -1) {
-			if ($Debug) { debug(" Remove elem $elemtoremove - @arrayunreg[$elemtoremove]",4); }
+			if ($Debug) { debug(" Remove elem $elemtoremove - $arrayunreg[$elemtoremove]",4); }
 			splice @arrayunreg, $elemtoremove, 1;
 			$searchlist=$elemtoremove;
 		}
@@ -1113,7 +1113,7 @@ sub Parse_Config {
 		}
 
 		# Remove comments
-		if ($_ =~ /^#/) { next; }
+		if ($_ =~ /^\s*#/) { next; }
 		$_ =~ s/\s#.*$//;
 
 		# Extract param and value
@@ -6462,8 +6462,7 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 			else {
 				$field[$pos_referer] =~ /$regreferer/o;
 				my $refererprot=$1;
-				my $refererserver=$2.($3 eq ':80'?'':$3);	# refererserver is www.xxx.com or www.xxx.com:81 but not www.xxx.com:80
-
+				my $refererserver=($2||'').(! $3 || $3 eq ':80'?'':$3);	# refererserver is www.xxx.com or www.xxx.com:81 but not www.xxx.com:80
 				# HTML link ?
 				if ($refererprot =~ /^http/i) {
 					#if ($Debug) { debug("  Analyze referer refererprot=$refererprot refererserver=$refererserver",5); }
