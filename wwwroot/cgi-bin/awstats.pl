@@ -235,11 +235,11 @@ use vars qw/
 %FirstTime %LastTime
 %MonthUnique %MonthVisits %MonthPages %MonthHits %MonthBytes %MonthHostsKnown %MonthHostsUnknown
 %ListOfYears %HistoryAlreadyFlushed %PosInFile %ValueInFile
-%_session %_browser_h %_domener_h %_domener_k %_domener_p %_errors_h
+%_session %_browser_h %_domener_h %_domener_k %_domener_p %_errors_h %_errors_k
 %_filetypes_h %_filetypes_k %_filetypes_gz_in %_filetypes_gz_out
 %_host_p %_host_h %_host_k %_host_l %_host_s %_host_u
 %_waithost_e %_waithost_l %_waithost_s %_waithost_u
-%_keyphrases %_keywords %_os_h %_pagesrefs_h %_robot_h %_robot_l
+%_keyphrases %_keywords %_os_h %_pagesrefs_h %_robot_h %_robot_k %_robot_l
 %_login_h %_login_p %_login_k %_login_l
 %_se_referrals_h %_sider404_h %_referer404_h %_url_p %_url_k %_url_e %_url_x
 %_unknownreferer_l %_unknownrefererbrowser_l
@@ -256,11 +256,11 @@ use vars qw/
 %FirstTime = %LastTime = ();
 %MonthUnique = %MonthVisits = %MonthPages = %MonthHits = %MonthBytes = %MonthHostsKnown = %MonthHostsUnknown = ();
 %ListOfYears = %HistoryAlreadyFlushed = %PosInFile = %ValueInFile = ();
-%_session = %_browser_h = %_domener_h = %_domener_k = %_domener_p = %_errors_h = ();
+%_session = %_browser_h = %_domener_h = %_domener_k = %_domener_p = %_errors_h = %_errors_k = ();
 %_filetypes_h = %_filetypes_k = %_filetypes_gz_in = %_filetypes_gz_out = ();
 %_host_p = %_host_h = %_host_k = %_host_l = %_host_s = %_host_u = ();
 %_waithost_e = %_waithost_l = %_waithost_s = %_waithost_u = ();
-%_keyphrases = %_keywords = %_os_h = %_pagesrefs_h = %_robot_h = %_robot_l = ();
+%_keyphrases = %_keywords = %_os_h = %_pagesrefs_h = %_robot_h = %_robot_k = %_robot_l = ();
 %_login_h = %_login_p = %_login_k = %_login_l = ();
 %_se_referrals_h = %_sider404_h = %_referer404_h = %_url_p = %_url_k = %_url_e = %_url_x = ();
 %_unknownreferer_l = %_unknownrefererbrowser_l = ();
@@ -2150,7 +2150,13 @@ sub Read_History_With_TmpUpdate {
 						if ($SectionsToLoad{"robot"}) {
 							$countloaded++;
 							if ($field[1]) { $_robot_h{$field[0]}+=$field[1]; }
-							if (! $_robot_l{$field[0]}) { $_robot_l{$field[0]}=int($field[2]); }
+							if ($versionnum < 5000 || ! $field[3]) {		# For backward compatibility
+								if (! $_robot_l{$field[0]}) { $_robot_l{$field[0]}=int($field[2]); }
+							}
+							else {
+								$_robot_k{$field[0]}+=$field[2];
+								if (! $_robot_l{$field[0]}) { $_robot_l{$field[0]}=int($field[3]); }
+							}
 						}
 					}
 					$_=<HISTORY>;
@@ -2162,7 +2168,7 @@ sub Read_History_With_TmpUpdate {
 				delete $SectionsToLoad{"robot"};
 				if ($SectionsToSave{"robot"}) {
 					Save_History("robot",$year,$month); delete $SectionsToSave{"robot"};
-					if ($withpurge) { %_robot_h=(); %_robot_l=(); }
+					if ($withpurge) { %_robot_h=(); %_robot_k=(); %_robot_l=(); }
 				}
 				if (! scalar %SectionsToLoad) { debug(" Stop reading history file. Got all we need."); last; }
 				next;
@@ -2452,6 +2458,7 @@ sub Read_History_With_TmpUpdate {
 						if ($SectionsToLoad{"errors"}) {
 							$countloaded++;
 							if ($field[1]) { $_errors_h{$field[0]}+=$field[1]; }
+							if ($field[2]) { $_errors_k{$field[0]}+=$field[2]; }
 						}
 					}
 					$_=<HISTORY>;
@@ -2463,7 +2470,7 @@ sub Read_History_With_TmpUpdate {
 				delete $SectionsToLoad{"errors"};
 				if ($SectionsToSave{"errors"}) {
 					Save_History("errors",$year,$month); delete $SectionsToSave{"errors"};
-					if ($withpurge) { %_errors_h=(); }
+					if ($withpurge) { %_errors_h=(); %_errors_k=(); }
 				}
 				if (! scalar %SectionsToLoad) { debug(" Stop reading history file. Got all we need."); last; }
 				next;
@@ -2780,10 +2787,10 @@ sub Save_History {
 	}
 	if ($sectiontosave eq "robot") {
 		print HISTORYTMP "\n";
-		print HISTORYTMP "# Robot ID - Hits - Last visit\n";
+		print HISTORYTMP "# Robot ID - Hits - Bandwidth - Last visit\n";
 		$ValueInFile{$sectiontosave}=tell HISTORYTMP;
 		print HISTORYTMP "BEGIN_ROBOT ".(scalar keys %_robot_h)."\n";
-		foreach my $key (keys %_robot_h) { print HISTORYTMP "$key ".int($_robot_h{$key})." $_robot_l{$key}\n"; }
+		foreach my $key (keys %_robot_h) { print HISTORYTMP "$key ".int($_robot_h{$key})." ".int($_robot_k{$key})." $_robot_l{$key}\n"; }
 		print HISTORYTMP "END_ROBOT\n";
 	}
 
@@ -2941,10 +2948,10 @@ sub Save_History {
 	# Other
 	if ($sectiontosave eq "errors") {
 		print HISTORYTMP "\n";
-		print HISTORYTMP "# Errors - Hits\n";
+		print HISTORYTMP "# Errors - Hits - Bandwidth\n";
 		$ValueInFile{$sectiontosave}=tell HISTORYTMP;
 		print HISTORYTMP "BEGIN_ERRORS ".(scalar keys %_errors_h)."\n";
-		foreach my $key (keys %_errors_h) { print HISTORYTMP "$key $_errors_h{$key}\n"; }
+		foreach my $key (keys %_errors_h) { print HISTORYTMP "$key $_errors_h{$key} $_errors_k{$key}\n"; }
 		print HISTORYTMP "END_ERRORS\n";
 	}
 	if ($sectiontosave eq "sider_404") {
@@ -3158,11 +3165,11 @@ sub Init_HashArray {
 	for (my $ix=0; $ix<6; $ix++)  { $_from_p[$ix]=0; $_from_h[$ix]=0; }
 	for (my $ix=0; $ix<24; $ix++) { $_time_h[$ix]=0; $_time_k[$ix]=0; $_time_p[$ix]=0; }
 	# Reset all hash arrays with name beginning by _
-	%_session = %_browser_h = %_domener_h = %_domener_k = %_domener_p = %_errors_h = ();
+	%_session = %_browser_h = %_domener_h = %_domener_k = %_domener_p = %_errors_h = %_errors_k = ();
 	%_filetypes_h = %_filetypes_k = %_filetypes_gz_in = %_filetypes_gz_out = ();
 	%_host_p = %_host_h = %_host_k = %_host_l = %_host_s = %_host_u = ();
 	%_waithost_e = %_waithost_l = %_waithost_s = %_waithost_u = ();
-	%_keyphrases = %_keywords = %_os_h = %_pagesrefs_h = %_robot_h = %_robot_l = ();
+	%_keyphrases = %_keywords = %_os_h = %_pagesrefs_h = %_robot_h = %_robot_k = %_robot_l = ();
 	%_login_h = %_login_p = %_login_k = %_login_l = ();
 	%_se_referrals_h = %_sider404_h = %_referer404_h = %_url_p = %_url_k = %_url_e = %_url_x = ();
 	%_unknownreferer_l = %_unknownrefererbrowser_l = ();
@@ -4369,6 +4376,7 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {	# Updat
 			else {										# Code is not valid
 				if ($field[$pos_code] =~ /^\d\d\d$/) { 					# Keep error code and next
 					$_errors_h{$field[$pos_code]}++;
+					$_errors_k{$field[$pos_code]}+=$field[$pos_size];
 					if ($field[$pos_code] == 404) { $_sider404_h{$field[$pos_url]}++; $_referer404_h{$field[$pos_url]}=$field[$pos_referer]; }
 					next;
 				}
@@ -4383,6 +4391,7 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {	# Updat
 			if ($field[$pos_code] != 1) {				# Code is not valid
 				$field[$pos_size]=0;
 				$_errors_h{$field[$pos_code]}++;
+				$_errors_k{$field[$pos_code]}+=$field[$pos_size];
 				next;
 			}
 		}
@@ -4413,7 +4422,9 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {	# Updat
 				# If robot, we stop here
 				if ($uarobot ne "-") {
 					if ($Debug) { debug("UserAgent '$UserAgent' contains robot ID '$uarobot'",2); }
-					$_robot_h{$uarobot}++; $_robot_l{$uarobot}=$timerecord;
+					$_robot_h{$uarobot}++;
+					$_robot_k{$uarobot}+=$field[$pos_size];
+					$_robot_l{$uarobot}=$timerecord;
 					next;
 				}
 
@@ -5236,9 +5247,9 @@ EOF
 		$TotalHostsKnown+=$MonthHostsKnown{$YearRequired.$monthix}||0;		# Wrong in year view
 		$TotalHostsUnknown+=$MonthHostsUnknown{$YearRequired.$monthix}||0;	# Wrong in year view
 	}
-	# TotalErrors
-	my $TotalErrors=0;
-	foreach my $key (keys %_errors_h) { $TotalErrors+=$_errors_h{$key}; }
+	# TotalHitsErrors TotalBytesErrors
+	my $TotalHitsErrors=0; my $TotalBytesErrors=0;
+	foreach my $key (keys %_errors_h) { $TotalHitsErrors+=$_errors_h{$key}; $TotalBytesErrors+=$_errors_k{$key}; }
 	# TotalEntries (if not already specifically counted, we init it from _url_e hash table)
 	if (!$TotalEntries) { foreach my $key (keys %_url_e) { $TotalEntries+=$_url_e{$key}; } }
 	# TotalExits (if not already specifically counted, we init it from _url_x hash table)
@@ -5679,31 +5690,32 @@ EOF
 		print "$Center<a name=\"ROBOTSLIST\">&nbsp;</a><BR>\n";
 		&tab_head($Message[53],19);
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>".(scalar keys %_robot_h)." $Message[51]</TH>";
-		print "<TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH width=120>$Message[9]</TH></TR>\n";
+		print "<TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH bgcolor=\"#$color_k\" width=80>$Message[75]</TH><TH width=120>$Message[9]</TH></TR>\n";
 		$total_p=$total_h=$total_k=0;
 		my $count=0;
 		&BuildKeyList($MaxRowsInHTMLOutput,$MinHitRobot,\%_robot_h,\%_robot_h);
 		foreach my $key (@keylist) {
 			print "<TR><TD CLASS=AWL>".($RobotsHashIDLib{$key}?$RobotsHashIDLib{$key}:$key)."</TD>";
 			print "<TD>$_robot_h{$key}</TD>";
+			print "<TD>".Format_Bytes($_robot_k{$key})."</TD>";
 			if ($_robot_l{$key}) { print "<td>".Format_Date($_robot_l{$key},1)."</td>"; }
 			else { print "<td>-</td>"; }
 			print "</TR>\n";
 			#$total_p += $_robot_p{$key}||0;
 			$total_h += $_robot_h{$key};
-			#$total_k += $_robot_k{$key}||0;
+			$total_k += $_robot_k{$key}||0;
 			$count++;
 		}
 		# For bots we need to count Totals
 		my $TotalPagesRobots = 0; #foreach my $val (values %_robot_p) { $TotalPagesRobots+=$val; }
 		my $TotalHitsRobots = 0; foreach my $val (values %_robot_h) { $TotalHitsRobots+=$val; }
-		my $TotalBytesRobots = 0; #foreach my $val (values %_robot_k) { $TotalBytesRobots+=$val; }
-		#$rest_p=$TotalPagesRobots-$total_p;
+		my $TotalBytesRobots = 0; foreach my $val (values %_robot_k) { $TotalBytesRobots+=$val; }
+		$rest_p=0;	#$rest_p=$TotalPagesRobots-$total_p;
 		$rest_h=$TotalHitsRobots-$total_h;
-		#$rest_k=$TotalBytesrobots-$total_k;
-		if ($Debug) { debug("Total real / shown : $TotalPagesRobots / $total_p - $TotalHitsRobots / $total_h - $TotalBytesRobots / $total_h",2); }
+		$rest_k=$TotalBytesRobots-$total_k;
+		if ($Debug) { debug("Total real / shown : $TotalPagesRobots / $total_p - $TotalHitsRobots / $total_h - $TotalBytesRobots / $total_k",2); }
 		if ($rest_p > 0 || $rest_h > 0 || $rest_k > 0) {	# All other login
-			print "<TR><TD CLASS=AWL><font color=\"#$color_other\">$Message[2]</font></TD><TD>$rest_h</TD><TD>&nbsp;</TD></TR>\n";
+			print "<TR><TD CLASS=AWL><font color=\"#$color_other\">$Message[2]</font></TD><TD>$rest_h</TD><TD>".(Format_Bytes($rest_k))."</TD><TD>&nbsp;</TD></TR>\n";
 		}
 		&tab_end;
 		&html_end;
@@ -5713,31 +5725,32 @@ EOF
 		print "$Center<a name=\"ROBOTSLIST\">&nbsp;</a><BR>\n";
 		&tab_head($Message[9],19);
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>".(scalar keys %_robot_h)." $Message[51]</TH>";
-		print "<TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH width=120>$Message[9]</TH></TR>\n";
+		print "<TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH bgcolor=\"#$color_k\" width=80>$Message[75]</TH><TH width=120>$Message[9]</TH></TR>\n";
 		$total_p=$total_h=$total_k=0;
 		my $count=0;
-		&BuildKeyList($MaxRowsInHTMLOutput,$MinHitHost,\%_robot_h,\%_robot_l);
+		&BuildKeyList($MaxRowsInHTMLOutput,$MinHitRobot,\%_robot_h,\%_robot_l);
 		foreach my $key (@keylist) {
 			print "<TR><TD CLASS=AWL>".($RobotsHashIDLib{$key}?$RobotsHashIDLib{$key}:$key)."</TD>";
 			print "<TD>$_robot_h{$key}</TD>";
+			print "<TD>".Format_Bytes($_robot_k{$key})."</TD>";
 			if ($_robot_l{$key}) { print "<td>".Format_Date($_robot_l{$key},1)."</td>"; }
 			else { print "<td>-</td>"; }
 			print "</TR>\n";
 			#$total_p += $_robot_p{$key}||0;
 			$total_h += $_robot_h{$key};
-			#$total_k += $_robot_k{$key}||0;
+			$total_k += $_robot_k{$key}||0;
 			$count++;
 		}
 		# For bots we need to count Totals
 		my $TotalPagesRobots = 0; #foreach my $val (values %_robot_p) { $TotalPagesRobots+=$val; }
 		my $TotalHitsRobots = 0; foreach my $val (values %_robot_h) { $TotalHitsRobots+=$val; }
-		my $TotalBytesRobots = 0; #foreach my $val (values %_robot_k) { $TotalBytesRobots+=$val; }
-		#$rest_p=$TotalPagesRobots-$total_p;
+		my $TotalBytesRobots = 0; foreach my $val (values %_robot_k) { $TotalBytesRobots+=$val; }
+		$rest_p=0;	#$rest_p=$TotalPagesRobots-$total_p;
 		$rest_h=$TotalHitsRobots-$total_h;
-		#$rest_k=$TotalBytesrobots-$total_k;
-		if ($Debug) { debug("Total real / shown : $TotalPagesRobots / $total_p - $TotalHitsRobots / $total_h - $TotalBytesRobots / $total_h",2); }
+		$rest_k=$TotalBytesRobots-$total_k;
+		if ($Debug) { debug("Total real / shown : $TotalPagesRobots / $total_p - $TotalHitsRobots / $total_h - $TotalBytesRobots / $total_k",2); }
 		if ($rest_p > 0 || $rest_h > 0 || $rest_k > 0) {	# All other login
-			print "<TR><TD CLASS=AWL><font color=\"#$color_other\">$Message[2]</font></TD><TD>$rest_h</TD><TD>&nbsp;</TD></TR>\n";
+			print "<TR><TD CLASS=AWL><font color=\"#$color_other\">$Message[2]</font></TD><TD>$rest_h</TD><TD>".(Format_Bytes($rest_k))."</TD><TD>&nbsp;</TD></TR>\n";
 		}
 		&tab_end;
 		&html_end;
@@ -6515,26 +6528,31 @@ EOF
 		if ($Debug) { debug("ShowRobotStats",2); }
 		print "$Center<a name=\"ROBOTS\">&nbsp;</a><BR>\n";
 		&tab_head("$Message[53] ($Message[77] $MaxNbOfRobotShown) &nbsp; - &nbsp; <a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=allrobots":"$PROG$StaticLinks.allrobots.html")."\"$NewLinkTarget>$Message[80]</a> &nbsp; - &nbsp; <a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=lastrobots":"$PROG$StaticLinks.lastrobots.html")."\"$NewLinkTarget>$Message[9]</a>",19);
-		print "<TR bgcolor=\"#$color_TableBGRowTitle\" onmouseover=\"ShowTip(16);\" onmouseout=\"HideTip(16);\"><TH>".(scalar keys %_robot_h)." $Message[51]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH width=120>$Message[9]</TH></TR>\n";
+		print "<TR bgcolor=\"#$color_TableBGRowTitle\" onmouseover=\"ShowTip(16);\" onmouseout=\"HideTip(16);\"><TH>".(scalar keys %_robot_h)." $Message[51]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH bgcolor=\"#$color_k\" width=80>$Message[75]</TH><TH width=120>$Message[9]</TH></TR>\n";
 		$total_p=$total_h=$total_k=0;
 		my $count=0;
 		&BuildKeyList($MaxNbOfRobotShown,$MinHitRobot,\%_robot_h,\%_robot_h);
 		foreach my $key (@keylist) {
-			print "<tr><td CLASS=AWL>".($RobotsHashIDLib{$key}?$RobotsHashIDLib{$key}:$key)."</td><td>$_robot_h{$key}</td><td>".Format_Date($_robot_l{$key},1)."</td></tr>\n";
+			print "<TR><TD CLASS=AWL>".($RobotsHashIDLib{$key}?$RobotsHashIDLib{$key}:$key)."</TD>";
+			print "<TD>$_robot_h{$key}</TD>";
+			print "<TD>".Format_Bytes($_robot_k{$key})."</TD>";
+			if ($_robot_l{$key}) { print "<td>".Format_Date($_robot_l{$key},1)."</td>"; }
+			else { print "<td>-</td>"; }
+			print "</TR>\n";
 			#$total_p += $_robot_p{$key};
 			$total_h += $_robot_h{$key};
-			#$total_k += $_robot_k{$key};
+			$total_k += $_robot_k{$key};
 			$count++;
 			}
 		# For bots we need to count Totals
 		my $TotalPagesRobots = 0; #foreach my $val (values %_robot_p) { $TotalPagesRobots+=$val; }
 		my $TotalHitsRobots = 0; foreach my $val (values %_robot_h) { $TotalHitsRobots+=$val; }
-		my $TotalBytesRobots = 0; #foreach my $val (values %_robot_k) { $TotalBytesRobots+=$val; }
-		$rest_p=0; #$rest_p=$TotalPagesRobots-$total_p;
+		my $TotalBytesRobots = 0; foreach my $val (values %_robot_k) { $TotalBytesRobots+=$val; }
+		$rest_p=0;	#$rest_p=$TotalPagesRobots-$total_p;
 		$rest_h=$TotalHitsRobots-$total_h;
-		$rest_k=0; #$rest_k=$TotalBytesrobots-$total_k;
+		$rest_k=$TotalBytesRobots-$total_k;
 		if ($rest_p > 0 || $rest_h > 0 || $rest_k > 0) {	# All other login
-			print "<TR><TD CLASS=AWL><font color=\"#$color_other\">$Message[2]</font></TD><TD>$rest_h</TD><TD>&nbsp;</TD></TR>\n";
+			print "<TR><TD CLASS=AWL><font color=\"#$color_other\">$Message[2]</font></TD><TD>$rest_h</TD><TD>".(Format_Bytes($rest_k))."</TD><TD>&nbsp;</TD></TR>\n";
 		}
 		&tab_end;
 	}
@@ -6900,16 +6918,14 @@ EOF
 		if ($Debug) { debug("ShowHTTPErrorsStats",2); }
 		print "$Center<a name=\"ERRORS\">&nbsp;</a><BR>\n";
 		&tab_head($Message[32],19);
-		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH colspan=2>$Message[32]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[15]</TH></TR>\n";
+		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH colspan=2>$Message[32]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[15]</TH><TH bgcolor=\"#$color_k\" width=80>$Message[75]</TH></TR>\n";
 		my $count=0;
 		foreach my $key (sort { $_errors_h{$b} <=> $_errors_h{$a} } keys (%_errors_h)) {
-			my $p=int($_errors_h{$key}/$TotalErrors*1000)/10;
-			#if ($httpcodewithtooltips{$key}) { print "<TR onmouseover=\"ShowTip($key);\" onmouseout=\"HideTip($key);\">"; }
-			#else { print "<TR>"; }
+			my $p=int($_errors_h{$key}/$TotalHitsErrors*1000)/10;
 			print "<TR onmouseover=\"ShowTip($key);\" onmouseout=\"HideTip($key);\">";
 			if ($TrapInfosForHTTPErrorCodes{$key}) { print "<TD><a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=errors$key":"$PROG$StaticLinks.errors$key.html")."\"$NewLinkTarget>$key</a></TD>"; }
 			else { print "<TD>$key</TD>"; }
-			print "<TD CLASS=AWL>".($httpcodelib{$key}?$httpcodelib{$key}:"Unknown error")."</TD><TD>$_errors_h{$key}</TD><TD>$p %</TD>";
+			print "<TD CLASS=AWL>".($httpcodelib{$key}?$httpcodelib{$key}:"Unknown error")."</TD><TD>$_errors_h{$key}</TD><TD>$p %</TD><TD>".Format_Bytes($_errors_k{$key})."</TD>";
 			print "</TR>\n";
 			$count++;
 		}

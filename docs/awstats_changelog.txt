@@ -19,6 +19,7 @@ AWStats Changelog
 - Fixed: Create of directory with CreateDataDirIfNotExists is made with 0766
   instead of 0666.
 - New feature: Track detailed minor and major version for browsers.
+- New feature: Added bandwidth report for robots and errors.
 - New feature: Support DNS cache files for DNS lookup.
 - New feature: Added Plugins support and several working plugins:
   A GMT correcter, A hash file DNS cache saver/reader...
