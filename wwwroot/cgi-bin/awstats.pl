@@ -2710,7 +2710,7 @@ if ($UpdateStats) {
 		}
 	
 		$field[$pos_agent] =~ tr/\+ /__/;		# Same Agent with different writing syntax have now same name
-		$field[$pos_agent] =~ s/%20/_/g;		# This is to support Roxen webserver that writes user agent with %20 in it
+		$field[$pos_agent] =~ s/%20/_/g;		# This is to support servers (like Roxen) that writes user agent with %20 in it
 		$UserAgent = $field[$pos_agent];
 		$UserAgent =~ tr/A-Z/a-z/;
 
