@@ -1289,6 +1289,7 @@ sub Read_Ref_Data {
 	my %FilePath=(); my %DirAddedInINC=();
 	my @FileListToLoad=();
 	while (my $file=shift) { push @FileListToLoad, "$file.pm"; }
+	if ($Debug) { debug("Call to Read_Ref_Data with files to load: ".(join(',',@FileListToLoad))); }
 	foreach my $file (@FileListToLoad) {
 		foreach my $dir (@PossibleLibDir) {
 			my $searchdir=$dir;
@@ -1312,13 +1313,11 @@ sub Read_Ref_Data {
 			warning("Warning: Can't read file \"$file\" ($filetext detection will not work correctly).\nCheck if file is in \"".($PossibleLibDir[0])."\" directory and is readable.");
 		}
 	}
-	# Sanity check
-	if ($LogType eq 'W' || $LogType eq 'S') {
-		if (@OSSearchIDOrder != scalar keys %OSHashID) { error("Not same number of records of OSSearchIDOrder (".(@OSSearchIDOrder)." entries) and OSHashID (".(scalar keys %OSHashID)." entries) in OS database. Check your file ".$FilePath{"operating_systems.pm"}); }
-		if ((@SearchEnginesSearchIDOrder_list1+@SearchEnginesSearchIDOrder_list2+@SearchEnginesSearchIDOrder_listgen) != scalar keys %SearchEnginesHashID) { error("Not same number of records of SearchEnginesSearchIDOrder_listx (total is ".(@SearchEnginesSearchIDOrder_list1+@SearchEnginesSearchIDOrder_list2+@SearchEnginesSearchIDOrder_listgen)." entries) and SearchEnginesHashID (".(scalar keys %SearchEnginesHashID)." entries) in Search Engines database. Check your file ".$FilePath{"search_engines.pm"}); }
-		if (@BrowsersSearchIDOrder != (scalar keys %BrowsersHashIDLib) - 2) { error("Not same number of records of BrowsersSearchIDOrder (".(@BrowsersSearchIDOrder)." entries) and BrowsersHashIDLib (".((scalar keys %BrowsersHashIDLib) - 2)." entries without msie and netscape) in Browsers database. Check your file ".$FilePath{"browsers.pm"}); }
-		if ((@RobotsSearchIDOrder_list1+@RobotsSearchIDOrder_list2+@RobotsSearchIDOrder_listgen) != (scalar keys %RobotsHashIDLib) - 1) { error("Not same number of records of RobotsSearchIDOrder_listx (total is ".(@RobotsSearchIDOrder_list1+@RobotsSearchIDOrder_list2+@RobotsSearchIDOrder_listgen)." entries) and RobotsHashIDLib (".((scalar keys %RobotsHashIDLib) - 1)." entries without 'unknown') in Robots database. Check your file ".$FilePath{"robots.pm"}); }
-	}
+	# Sanity check (if loaded)
+	if ((scalar keys %OSHashID) && @OSSearchIDOrder != scalar keys %OSHashID) { error("Not same number of records of OSSearchIDOrder (".(@OSSearchIDOrder)." entries) and OSHashID (".(scalar keys %OSHashID)." entries) in OS database. Check your file ".$FilePath{"operating_systems.pm"}); }
+	if ((scalar keys %SearchEnginesHashID) && (@SearchEnginesSearchIDOrder_list1+@SearchEnginesSearchIDOrder_list2+@SearchEnginesSearchIDOrder_listgen) != scalar keys %SearchEnginesHashID) { error("Not same number of records of SearchEnginesSearchIDOrder_listx (total is ".(@SearchEnginesSearchIDOrder_list1+@SearchEnginesSearchIDOrder_list2+@SearchEnginesSearchIDOrder_listgen)." entries) and SearchEnginesHashID (".(scalar keys %SearchEnginesHashID)." entries) in Search Engines database. Check your file ".$FilePath{"search_engines.pm"}); }
+	if ((scalar keys %BrowsersHashIDLib) && @BrowsersSearchIDOrder != (scalar keys %BrowsersHashIDLib) - 2) { error("Not same number of records of BrowsersSearchIDOrder (".(@BrowsersSearchIDOrder)." entries) and BrowsersHashIDLib (".((scalar keys %BrowsersHashIDLib) - 2)." entries without msie and netscape) in Browsers database. Check your file ".$FilePath{"browsers.pm"}); }
+	if ((scalar keys %RobotsHashIDLib) && (@RobotsSearchIDOrder_list1+@RobotsSearchIDOrder_list2+@RobotsSearchIDOrder_listgen) != (scalar keys %RobotsHashIDLib) - 1) { error("Not same number of records of RobotsSearchIDOrder_listx (total is ".(@RobotsSearchIDOrder_list1+@RobotsSearchIDOrder_list2+@RobotsSearchIDOrder_listgen)." entries) and RobotsHashIDLib (".((scalar keys %RobotsHashIDLib) - 1)." entries without 'unknown') in Robots database. Check your file ".$FilePath{"robots.pm"}); }
 }
 
 
