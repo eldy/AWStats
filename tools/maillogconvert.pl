@@ -208,7 +208,7 @@ while (<>) {
 	# Get sender host for postfix
 	#
 	if (/: client=/ ne undef) {
-		my ($id,$relay_s)=m/\w+\s+\d+\s+\d+:\d+:\d+\s+\w+\s+(?:sendmail|postfix\/smtpd|postfix\/smtp)\[\d+\]:\s+(.*?):\s+client=(.*)/;
+		my ($id,$relay_s)=m/\w+\s+\d+\s+\d+:\d+:\d+\s+[\w\-]+\s+(?:sendmail|postfix\/smtpd|postfix\/smtp)\[\d+\]:\s+(.*?):\s+client=(.*)/;
 		$rowid=$id;
 		$entry{$id}{'relay_s'}=$relay_s;
 		debug("For id=$id, found host sender on a 'client' line: $entry{$id}{'relay_s'}");
@@ -288,7 +288,7 @@ while (<>) {
  			#
  			# Matched outgoing sendmail/postfix message
  			#
- 			my ($mon,$day,$time,$id,$to,$from)=m/(\w+)\s+(\d+)\s+(\d+:\d+:\d+)\s+\w+\s+(?:sm-mta|sendmail(?:-out|)|postfix\/(?:local|smtpd|smtp))\[.*?\]:\s+([^:]*):\s+to=(.*?)[,\s]+ctladdr=([^\,\s]*)/;
+ 			my ($mon,$day,$time,$id,$to,$from)=m/(\w+)\s+(\d+)\s+(\d+:\d+:\d+)\s+[\w\-]+\s+(?:sm-mta|sendmail(?:-out|)|postfix\/(?:local|smtpd|smtp))\[.*?\]:\s+([^:]*):\s+to=(.*?)[,\s]+ctladdr=([^\,\s]*)/;
  			$rowid=$id;
  			if (m/\s+relay=([^\s,]*)[\s,]/) { $entry{$id}{'relay_r'}=$1; }
  			elsif (m/\s+mailer=local/) { $entry{$id}{'relay_r'}='localhost'; }
@@ -325,7 +325,7 @@ while (<>) {
 	elsif (/: from=/ ne undef) {
 		# sm-mta:  Jul 28 06:55:13 androneda sm-mta[28877]: h6SDtCtg028877: from=<4cmkh79eob@webtv.net>, size=2556, class=0, nrcpts=1, msgid=<w1$kqj-9-o2m45@0h2i38.4.m0.5u>, proto=ESMTP, daemon=MTA, relay=smtp.easydns.com [205.210.42.50]
 		# postfix: Jul  3 15:32:26 apollon postfix/qmgr[13860]: 08FB63B8A4: from=<nobody@ns3744.ovh.net>, size=3302, nrcpt=1 (queue active)
-		my ($id,$from,$size)=m/\w+\s+\d+\s+\d+:\d+:\d+\s+\w+\s+(?:sm-mta|sendmail(?:-in|)|postfix\/qmgr|postfix\/nqmgr)\[\d+\]:\s+(.*?):\s+from=(.*?),\s+size=(.*?),/;
+		my ($id,$from,$size)=m/\w+\s+\d+\s+\d+:\d+:\d+\s+[\w\-]+\s+(?:sm-mta|sendmail(?:-in|)|postfix\/qmgr|postfix\/nqmgr)\[\d+\]:\s+(.*?):\s+from=(.*?),\s+size=(.*?),/;
 		$rowid=$id;
 		if (! $entry{$id}{'code'}) { $entry{$id}{'code'}=1; }	# If not already defined, we define it
 		if ($entry{$id}{'from'} ne '<>') { $entry{$id}{'from'}=$from; }
