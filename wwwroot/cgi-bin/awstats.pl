@@ -78,6 +78,9 @@ $DNSLastUpdateCacheFile
 $LogScreenSizeUrl
 $Lang
 $MaxRowsInHTMLOutput
+$MaxLengthOfURL
+$MaxLengthOfStoredURL
+$MaxLengthOfStoredUA
 $BarImageVertical_v
 $BarImageVertical_u
 $BarImageVertical_p
@@ -95,6 +98,8 @@ $DNSLastUpdateCacheFile='dnscachelastupdate.txt';
 $LogScreenSizeUrl='logscreensizeurl';
 $Lang='auto';
 $MaxRowsInHTMLOutput = 1000;
+$MaxLengthOfStoredURL=256;			# Note: Apache LimitRequestLine is default to 8190
+$MaxLengthOfStoredUA=256;
 $BarImageVertical_v   = 'vv.png';
 #$BarImageHorizontal_v = 'hv.png';
 $BarImageVertical_u   = 'vu.png';
@@ -110,7 +115,7 @@ $BarImageVertical_k   = 'vk.png';
 $BarImageHorizontal_k = 'hk.png';
 use vars qw/
 $EnableLockForUpdate $DNSLookup $AllowAccessFromWebToAuthenticatedUsersOnly
-$BarHeight $BarWidth $CreateDirDataIfNotExists $KeepBackupOfHistoricFiles $MaxLengthOfURL
+$BarHeight $BarWidth $CreateDirDataIfNotExists $KeepBackupOfHistoricFiles
 $NbOfLinesParsed $NbOfLinesDropped $NbOfLinesCorrupted $NbOfOldLines $NbOfNewLines
 $NbOfLinesShowsteps $NewLinePhase $NbOfLinesForCorruptedLog $PurgeLogFile
 $ShowAuthenticatedUsers $ShowFileSizesStats $ShowScreenSizeStats 
@@ -130,7 +135,7 @@ $ShowEMailSenders, $ShowEMailReceivers,
 $AuthenticatedUsersNotCaseSensitive,
 $Expires, $UpdateStats, $MigrateStats, $URLNotCaseSensitive, $URLWithQuery, $URLReferrerWithQuery,
 $UseFramesWhenCGI, $DecodeUA)=
-(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
+(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
 use vars qw/
 $AllowToUpdateStatsFromBrowser $ArchiveLogRecords $DetailedReportsOnNewWindows
 $FirstDayOfWeek $KeyWordsNotSensitive $SaveDatabaseFilesWithPermissionsForEveryone
@@ -4336,7 +4341,7 @@ sub DefinePerlParsingFormat {
 		$LogFormatString =~ s/%{mod_gzip_input_size}n/%gzipin/g;
 		$LogFormatString =~ s/%{mod_gzip_output_size}n/%gzipout/g;
 		$LogFormatString =~ s/%{mod_gzip_compression_ratio}n/%gzipratio/g;
-		$LogFormatString =~ s/\(%{ratio}n\)/%gzipratio/g;
+		$LogFormatString =~ s/\(%{ratio}n\)/%deflateratio/g;
 		# Replacement for a IIS and ISA format string
 		$LogFormatString =~ s/cs-uri-query/%query/g;	# Must be before cs-uri
 		$LogFormatString =~ s/date\stime/%time2/g;
@@ -5184,9 +5189,9 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 				next;
 			}
 			# We found a new line. This will replace comparison "<=" with "<" between timerecord and LastLine (we should have only new lines now)
-			$NewLinePhase=1;
+			$NewLinePhase=1;	# We will never enter here again
 			if ($ShowSteps) {
-				if ($NbOfLinesShowsteps > 1 && (($NbOfLinesShowsteps & $NBOFLINESFORBENCHMARK) != 0)) {
+				if ($NbOfLinesShowsteps > 1 && ($NbOfLinesShowsteps & $NBOFLINESFORBENCHMARK)) {
 					my $delay=&GetDelaySinceStart(0);
 					print "".($NbOfLinesParsed-1)." lines processed (".($delay>0?$delay:1000)." ms, ".int(1000*($NbOfLinesShowsteps-1)/($delay>0?$delay:1000))." lines/second)\n";
 				}
@@ -5206,10 +5211,6 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 		if ($timerecord > $LastLine) { $LastLine = $timerecord; }	# Test should always be true except with not sorted log files
 
 		# TODO. Add robot in a list if URL is robots.txt (Note: robot referer value can be same than a normal browser)
-
-
-
-
 
 
 
@@ -5268,7 +5269,7 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 					$_errors_k{$field[$pos_code]}+=int($field[$pos_size]);
 					foreach my $code (keys %TrapInfosForHTTPErrorCodes) {
 						if ($field[$pos_code] == $code) {
-							my $newurl=$field[$pos_url];
+							my $newurl=substr($field[$pos_url],0,$MaxLengthOfStoredURL);
 							$newurl =~ s/[$URLQuerySeparators].*$//;
 							$_sider404_h{$newurl}++;
 							my $newreferer=$field[$pos_referer];
@@ -7472,15 +7473,31 @@ if (scalar keys %HTMLOutput) {
 			print "$Center<a name=\"NOTFOUNDERROR\">&nbsp;</a><BR>\n";
 			&tab_head($Message[47],19);
 			print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>URL (".(scalar keys %_sider404_h).")</TH><TH bgcolor=\"#$color_h\">$Message[49]</TH><TH>$Message[23]</TH></TR>\n";
+			$total_h=0;
 			my $count=0;
 			&BuildKeyList($MaxRowsInHTMLOutput,1,\%_sider404_h,\%_sider404_h);
 			foreach my $key (@keylist) {
 				my $nompage=CleanFromCSSA($key);
 				#if (length($nompage)>$MaxLengthOfURL) { $nompage=substr($nompage,0,$MaxLengthOfURL)."..."; }
 				my $referer=CleanFromCSSA($_referer404_h{$key});
-				print "<tr><td CLASS=AWL>$nompage</td><td>$_sider404_h{$key}</td><td CLASS=AWL>".($referer?"$referer":"&nbsp;")."</td></tr>\n";
+				print "<tr><td CLASS=AWL>$nompage</td>";
+				print "<td>$_sider404_h{$key}</td>";
+				print "<td CLASS=AWL>".($referer?"$referer":"&nbsp;")."</td>";
+				print "</tr>\n";
+				$total_s += $_sider404_h{$key};
 				$count++;
 			}
+			# TODO Build TotalErrorHits
+#			if ($Debug) { debug("Total real / shown : $TotalErrorHits / $total_h",2); }
+#			$rest_h=$TotalErrorHits-$total_h;
+#			if ($rest_h > 0) {
+#				my $p;
+#				if ($TotalErrorHits) { $p=int($rest_h/$TotalErrorHits*1000)/10; }
+#				print "<TR><TD CLASS=AWL><font color=\"#$color_other\">$Message[30]</font></TD>";
+#				print "<TD>$rest_h</TD>";
+#				print "<TD>...</TD>";
+#				print "</TR>\n";
+#			}
 			&tab_end;
 			&html_end;
 		}
