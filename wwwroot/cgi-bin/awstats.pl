@@ -126,7 +126,7 @@ $color_h, $color_k, $color_p, $color_s, $color_u, $color_v)=
 
 
 
-$VERSION="4.0 (build 27)";
+$VERSION="4.0 (build 29)";
 $Lang="en";
 
 # Default value
@@ -1042,14 +1042,16 @@ sub Read_History_File {
 			my @field=split(/\s+/,$_); $countlines++;
 			my $count=0;my $countloaded=0;
 			while ($field[0] ne "END_TIME") {
-				$count++;
-				# We always read this to build the month graph (MonthPages, MonthHits, MonthBytes)
-		    	$MonthPages{$year.$month}+=int($field[1]); $MonthHits{$year.$month}+=int($field[2]); $MonthBytes{$year.$month}+=int($field[3]);
-				if ($part) {	# TODO ? used to build total
-					$countloaded++;
-		        	if ($field[1]) { $_time_p[$field[0]]+=int($field[1]); }
-		        	if ($field[2]) { $_time_h[$field[0]]+=int($field[2]); }
-		        	if ($field[3]) { $_time_k[$field[0]]+=int($field[3]); }
+				if ($field[0]) {
+					$count++;
+					# We always read this to build the month graph (MonthPages, MonthHits, MonthBytes)
+			    	$MonthPages{$year.$month}+=int($field[1]); $MonthHits{$year.$month}+=int($field[2]); $MonthBytes{$year.$month}+=int($field[3]);
+					if ($part) {	# TODO ? used to build total
+						$countloaded++;
+			        	if ($field[1]) { $_time_p[$field[0]]+=int($field[1]); }
+			        	if ($field[2]) { $_time_h[$field[0]]+=int($field[2]); }
+			        	if ($field[3]) { $_time_k[$field[0]]+=int($field[3]); }
+					}
 				}
 				$_=<HISTORY>;
 				chomp $_; s/\r//;
@@ -1067,14 +1069,16 @@ sub Read_History_File {
 			my @field=split(/\s+/,$_); $countlines++;
 			my $count=0;my $countloaded=0;
 			while ($field[0] ne "END_DAY" ) {
-				$count++;
-				if ($part && ($UpdateStats || $QueryString !~ /output=/i || $QueryString =~ /output=xxx/i)) {
-					$countloaded++;
-					if ($field[1]) { $DayPages{$field[0]}=int($field[1]); }
-					if ($field[2]) { $DayHits{$field[0]}=int($field[2]); }
-					if ($field[3]) { $DayBytes{$field[0]}=int($field[3]); }
-					if ($field[4]) { $DayVisits{$field[0]}=int($field[4]); }
-					if ($field[5]) { $DayUnique{$field[0]}=int($field[5]); }
+				if ($field[0]) {
+					$count++;
+					if ($part && ($UpdateStats || $QueryString !~ /output=/i || $QueryString =~ /output=xxx/i)) {
+						$countloaded++;
+						if ($field[1]) { $DayPages{$field[0]}=int($field[1]); }
+						if ($field[2]) { $DayHits{$field[0]}=int($field[2]); }
+						if ($field[3]) { $DayBytes{$field[0]}=int($field[3]); }
+						if ($field[4]) { $DayVisits{$field[0]}=int($field[4]); }
+						if ($field[5]) { $DayUnique{$field[0]}=int($field[5]); }
+					}
 				}
 				$_=<HISTORY>;
 				chomp $_; s/\r//;
@@ -1092,44 +1096,46 @@ sub Read_History_File {
 			my @field=split(/\s+/,$_); $countlines++;
 			my $count=0;my $countloaded=0;
 			while ($field[0] ne "END_VISITOR") {
-				$count++;
-				# We always read this to build the month graph (MonthUnique, MonthHostsKnown, MonthHostsUnknown)
-		    	if ($field[0] ne "Unknown") {	# If and else is kept for backward compatibility
-		    		if (($field[1]||0) > 0) { $MonthUnique{$year.$month}++; }
-					if ($field[0] !~ /^[\d]+\.[\d]+\.[\d]+\.[\d]+$/) { $MonthHostsKnown{$year.$month}++; }
-					else { $MonthHostsUnknown{$year.$month}++; }
-				}
-		    	else {
-		    		$MonthUnique{$year.$month}++;
-		    		$MonthHostsUnknown{$year.$month}++;
-		    	}
-				if ($part && ($UpdateStats || $QueryString !~ /output=/i || $QueryString =~ /output=allhosts/i || $QueryString =~ /output=lasthosts/i || $QueryString =~ /output=unknownip/i)) {
-					# Data required:
-					# update 				 need to load all
-					# noupdate+
-					#  main page for year	 need to load all
-					#  main page for month	 need to load MaxNbOfHostsShown pages and >= MinHitHost
-					#  lastconnect for year  need to load all
-					#  lastconnect for month need to load all
-					#  unknownip for year	 need to load all ip
-					#  unknownip for month	 need to load ip with >= MinHitHost
-					my $loadrecord=0;
-					if ($UpdateStats) {
-						$loadrecord=1;
+				if ($field[0]) {
+					$count++;
+					# We always read this to build the month graph (MonthUnique, MonthHostsKnown, MonthHostsUnknown)
+			    	if ($field[0] ne "Unknown") {	# If and else is kept for backward compatibility
+			    		if (($field[1]||0) > 0) { $MonthUnique{$year.$month}++; }
+						if ($field[0] !~ /^[\d]+\.[\d]+\.[\d]+\.[\d]+$/) { $MonthHostsKnown{$year.$month}++; }
+						else { $MonthHostsUnknown{$year.$month}++; }
 					}
-					else {
-						if ($QueryString =~ /output=allhosts/i || $QueryString =~ /output=lasthosts/i) { $loadrecord=1;	}
-						if ($MonthRequired eq "year" || $field[2] >= $MinHitHost) {
-							if ($QueryString =~ /output=unknownip/i && ($field[0] =~ /^[\d]+\.[\d]+\.[\d]+\.[\d]+$/)) { $loadrecord=1; }
-							if ($QueryString !~ /output=/i && ($MonthRequired eq "year" || $countloaded < $MaxNbOfHostsShown)) { $loadrecord=1; }
+			    	else {
+			    		$MonthUnique{$year.$month}++;
+			    		$MonthHostsUnknown{$year.$month}++;
+			    	}
+					if ($part && ($UpdateStats || $QueryString !~ /output=/i || $QueryString =~ /output=allhosts/i || $QueryString =~ /output=lasthosts/i || $QueryString =~ /output=unknownip/i)) {
+						# Data required:
+						# update 				 need to load all
+						# noupdate+
+						#  main page for year	 need to load all
+						#  main page for month	 need to load MaxNbOfHostsShown pages and >= MinHitHost
+						#  lastconnect for year  need to load all
+						#  lastconnect for month need to load all
+						#  unknownip for year	 need to load all ip
+						#  unknownip for month	 need to load ip with >= MinHitHost
+						my $loadrecord=0;
+						if ($UpdateStats) {
+							$loadrecord=1;
 						}
-					}
-					if ($loadrecord) {
-						if ($field[1]) { $_hostmachine_p{$field[0]}+=$field[1]; }
-		        		if ($field[2]) { $_hostmachine_h{$field[0]}+=$field[2]; }
-		        		if ($field[3]) { $_hostmachine_k{$field[0]}+=$field[3]; }
-		        		if (! $_hostmachine_l{$field[0]} && $field[4]) { $_hostmachine_l{$field[0]}=int($field[4]); }
-						$countloaded++;
+						else {
+							if ($QueryString =~ /output=allhosts/i || $QueryString =~ /output=lasthosts/i) { $loadrecord=1;	}
+							if ($MonthRequired eq "year" || $field[2] >= $MinHitHost) {
+								if ($QueryString =~ /output=unknownip/i && ($field[0] =~ /^[\d]+\.[\d]+\.[\d]+\.[\d]+$/)) { $loadrecord=1; }
+								if ($QueryString !~ /output=/i && ($MonthRequired eq "year" || $countloaded < $MaxNbOfHostsShown)) { $loadrecord=1; }
+							}
+						}
+						if ($loadrecord) {
+							if ($field[1]) { $_hostmachine_p{$field[0]}+=$field[1]; }
+			        		if ($field[2]) { $_hostmachine_h{$field[0]}+=$field[2]; }
+			        		if ($field[3]) { $_hostmachine_k{$field[0]}+=$field[3]; }
+			        		if (! $_hostmachine_l{$field[0]} && $field[4]) { $_hostmachine_l{$field[0]}=int($field[4]); }
+							$countloaded++;
+						}
 					}
 				}
 				$_=<HISTORY>;
@@ -1148,13 +1154,15 @@ sub Read_History_File {
 			my @field=split(/\s+/,$_); $countlines++;
 			my $count=0;my $countloaded=0;
 			while ($field[0] ne "END_LOGIN") {
-				$count++;
-				if ($part && ($UpdateStats || $QueryString !~ /output=/i || $QueryString =~ /output=xxx/i)) {
-					$countloaded++;
-					if ($field[1]) { $_login_p{$field[0]}+=$field[1]; }
-			    	if ($field[2]) { $_login_h{$field[0]}+=$field[2]; }
-			    	if ($field[3]) { $_login_k{$field[0]}+=$field[3]; }
-		        	if (! $_login_l{$field[0]} && $field[4]) { $_login_l{$field[0]}=int($field[4]); }
+				if ($field[0]) {
+					$count++;
+					if ($part && ($UpdateStats || $QueryString !~ /output=/i || $QueryString =~ /output=xxx/i)) {
+						$countloaded++;
+						if ($field[1]) { $_login_p{$field[0]}+=$field[1]; }
+				    	if ($field[2]) { $_login_h{$field[0]}+=$field[2]; }
+				    	if ($field[3]) { $_login_k{$field[0]}+=$field[3]; }
+			        	if (! $_login_l{$field[0]} && $field[4]) { $_login_l{$field[0]}=int($field[4]); }
+					}
 				}
 				$_=<HISTORY>;
 				chomp $_; s/\r//;
@@ -1172,12 +1180,14 @@ sub Read_History_File {
 			my @field=split(/\s+/,$_); $countlines++;
 			my $count=0;my $countloaded=0;
 			while ($field[0] ne "END_DOMAIN") {
-				$count++;
-				if ($part && ($UpdateStats || $QueryString !~ /output=/i || $QueryString =~ /output=xxx/i)) {
-					$countloaded++;
-					if ($field[1]) { $_domener_p{$field[0]}+=$field[1]; }
-					if ($field[2]) { $_domener_h{$field[0]}+=$field[2]; }
-					if ($field[3]) { $_domener_k{$field[0]}+=$field[3]; }
+				if ($field[0]) {
+					$count++;
+					if ($part && ($UpdateStats || $QueryString !~ /output=/i || $QueryString =~ /output=xxx/i)) {
+						$countloaded++;
+						if ($field[1]) { $_domener_p{$field[0]}+=$field[1]; }
+						if ($field[2]) { $_domener_h{$field[0]}+=$field[2]; }
+						if ($field[3]) { $_domener_k{$field[0]}+=$field[3]; }
+					}
 				}
 				$_=<HISTORY>;
 				chomp $_; s/\r//;
@@ -1195,10 +1205,12 @@ sub Read_History_File {
 			my @field=split(/\s+/,$_); $countlines++;
 			my $count=0;my $countloaded=0;
 			while ($field[0] ne "END_BROWSER") {
-				$count++;
-				if ($part && ($UpdateStats || $QueryString !~ /output=/i || $QueryString =~ /output=browserdetail/i)) {
-					$countloaded++;
-		        	if ($field[1]) { $_browser_h{$field[0]}+=$field[1]; }
+				if ($field[0]) {
+					$count++;
+					if ($part && ($UpdateStats || $QueryString !~ /output=/i || $QueryString =~ /output=browserdetail/i)) {
+						$countloaded++;
+			        	if ($field[1]) { $_browser_h{$field[0]}+=$field[1]; }
+					}
 				}
 				$_=<HISTORY>;
 				chomp $_; s/\r//;
@@ -1216,10 +1228,12 @@ sub Read_History_File {
 			my @field=split(/\s+/,$_); $countlines++;
 			my $count=0;my $countloaded=0;
 			while ($field[0] ne "END_MSIEVER") {
-				$count++;
-				if ($part && ($UpdateStats || $QueryString !~ /output=/i || $QueryString =~ /output=browserdetail/i)) {
-					$countloaded++;
-		        	if ($field[1]) { $_msiever_h[$field[0]]+=$field[1]; }
+				if ($field[0]) {
+					$count++;
+					if ($part && ($UpdateStats || $QueryString !~ /output=/i || $QueryString =~ /output=browserdetail/i)) {
+						$countloaded++;
+			        	if ($field[1]) { $_msiever_h[$field[0]]+=$field[1]; }
+					}
 				}
 				$_=<HISTORY>;
 				chomp $_; s/\r//;
@@ -1237,10 +1251,12 @@ sub Read_History_File {
 			my @field=split(/\s+/,$_); $countlines++;
 			my $count=0;my $countloaded=0;
 			while ($field[0] ne "END_NSVER") {
-				$count++;
-				if ($part && ($UpdateStats || $QueryString !~ /output=/i || $QueryString =~ /output=browserdetail/i)) {
-					$countloaded++;
-		        	if ($field[1]) { $_nsver_h[$field[0]]+=$field[1]; }
+				if ($field[0]) {
+					$count++;
+					if ($part && ($UpdateStats || $QueryString !~ /output=/i || $QueryString =~ /output=browserdetail/i)) {
+						$countloaded++;
+			        	if ($field[1]) { $_nsver_h[$field[0]]+=$field[1]; }
+					}
 				}
 				$_=<HISTORY>;
 				chomp $_; s/\r//;
@@ -1258,10 +1274,12 @@ sub Read_History_File {
 			my @field=split(/\s+/,$_); $countlines++;
 			my $count=0;my $countloaded=0;
 			while ($field[0] ne "END_OS") {
-				$count++;
-				if ($part && ($UpdateStats || $QueryString !~ /output=/i || $QueryString =~ /output=xxx/i)) {
-					$countloaded++;
-		        	if ($field[1]) { $_os_h{$field[0]}+=$field[1]; }
+				if ($field[0]) {
+					$count++;
+					if ($part && ($UpdateStats || $QueryString !~ /output=/i || $QueryString =~ /output=xxx/i)) {
+						$countloaded++;
+			        	if ($field[1]) { $_os_h{$field[0]}+=$field[1]; }
+					}
 				}
 				$_=<HISTORY>;
 				chomp $_; s/\r//;
@@ -1279,10 +1297,12 @@ sub Read_History_File {
 			my @field=split(/\s+/,$_); $countlines++;
 			my $count=0;my $countloaded=0;
 			while ($field[0] ne "END_UNKNOWNREFERER") {
-				$count++;
-				if ($part && ($UpdateStats || $QueryString !~ /output=/i || $QueryString =~ /output=unknownos/i)) {
-					$countloaded++;
-					if (! $_unknownreferer_l{$field[0]}) { $_unknownreferer_l{$field[0]}=int($field[1]); }
+				if ($field[0]) {
+					$count++;
+					if ($part && ($UpdateStats || $QueryString !~ /output=/i || $QueryString =~ /output=unknownos/i)) {
+						$countloaded++;
+						if (! $_unknownreferer_l{$field[0]}) { $_unknownreferer_l{$field[0]}=int($field[1]); }
+					}
 				}
 				$_=<HISTORY>;
 				chomp $_; s/\r//;
@@ -1300,10 +1320,12 @@ sub Read_History_File {
 			my @field=split(/\s+/,$_); $countlines++;
 			my $count=0;my $countloaded=0;
 			while ($field[0] ne "END_UNKNOWNREFERERBROWSER") {
-				$count++;
-				if ($part && ($UpdateStats || $QueryString !~ /output=/i || $QueryString =~ /output=unknownbrowser/i)) {
-					$countloaded++;
-		        	if (! $_unknownrefererbrowser_l{$field[0]}) { $_unknownrefererbrowser_l{$field[0]}=int($field[1]); }
+				if ($field[0]) {
+					$count++;
+					if ($part && ($UpdateStats || $QueryString !~ /output=/i || $QueryString =~ /output=unknownbrowser/i)) {
+						$countloaded++;
+			        	if (! $_unknownrefererbrowser_l{$field[0]}) { $_unknownrefererbrowser_l{$field[0]}=int($field[1]); }
+					}
 				}
 				$_=<HISTORY>;
 				chomp $_; s/\r//;
@@ -1321,11 +1343,13 @@ sub Read_History_File {
 			my @field=split(/\s+/,$_); $countlines++;
 			my $count=0;my $countloaded=0;
 			while ($field[0] ne "END_ROBOT") {
-				$count++;
-				if ($part && ($UpdateStats || $QueryString !~ /output=/i || $QueryString =~ /output=xxx/i)) {
-					$countloaded++;
-					if ($field[1]) { $_robot_h{$field[0]}+=$field[1]; }
-		        	if (! $_robot_l{$field[0]}) { $_robot_l{$field[0]}=int($field[2]); }
+				if ($field[0]) {
+					$count++;
+					if ($part && ($UpdateStats || $QueryString !~ /output=/i || $QueryString =~ /output=xxx/i)) {
+						$countloaded++;
+						if ($field[1]) { $_robot_h{$field[0]}+=$field[1]; }
+			        	if (! $_robot_l{$field[0]}) { $_robot_l{$field[0]}=int($field[2]); }
+					}
 				}
 				$_=<HISTORY>;
 				chomp $_; s/\r//;
@@ -1343,56 +1367,58 @@ sub Read_History_File {
 			my @field=split(/\s+/,$_); $countlines++;
 			my $count=0;my $countloaded=0;
 			while ($field[0] ne "END_SIDER") {
-				$count++;
-				if ($part && ($UpdateStats || $QueryString !~ /output=/i || $QueryString =~ /output=urldetail/i)) {
-					# Data required:
-					# update 				need to load all pages - TotalDiffetentPages could be counted but is not
-					# noupdate+
-					#  main page for year	need to load all pages - TotalDiffetentPages could be counted but is not
-					#  main page for month	need to load MaxNbOfPageShown pages and >= MinHitFile - TotalDiffetentPages can be counted and is
-					#  urldetail for year	need to load all pages with filter ok - TotalDiffetentPages could be counted if no filter but is not
-					#  urldetail for month	need to load all pages with filter ok and >= MinHitFile - TotalDiffetentPages can be counted and is
-					my $loadrecord=0;
-					if ($UpdateStats) {
-						$loadrecord=1;
-					}
-					else {
-						if ($QueryString !~ /output=/i) {
-							if ($MonthRequired eq "year") { $loadrecord=1; }
-							else { 
-								if ($countloaded < $MaxNbOfPageShown && $field[1] >= $MinHitFile) { $loadrecord=1; }
-								$TotalDifferentPages++;
-							}	
-						}
-						if ($QueryString =~ /output=urldetail/i) {
-							if ($MonthRequired eq "year" ) { 
-								if (!$URLFilter || $field[0] =~ /$URLFilter/) { $loadrecord=1; }
-							}
-							else { 
-								if ((!$URLFilter || $field[0] =~ /$URLFilter/) && $field[1] >= $MinHitFile) { $loadrecord=1; }
-								$TotalDifferentPages++;
-							}
-						}
-						# Posssibilite de mettre if ($URLFilter && $field[0] =~ /$URLFilter/) mais il faut gerer TotalPages de la meme maniere
-						if ($versionmaj < 4) {
-							$TotalEntries+=($field[2]||0);
+				if ($field[0]) {
+					$count++;
+					if ($part && ($UpdateStats || $QueryString !~ /output=/i || $QueryString =~ /output=urldetail/i)) {
+						# Data required:
+						# update 				need to load all pages - TotalDiffetentPages could be counted but is not
+						# noupdate+
+						#  main page for year	need to load all pages - TotalDiffetentPages could be counted but is not
+						#  main page for month	need to load MaxNbOfPageShown pages and >= MinHitFile - TotalDiffetentPages can be counted and is
+						#  urldetail for year	need to load all pages with filter ok - TotalDiffetentPages could be counted if no filter but is not
+						#  urldetail for month	need to load all pages with filter ok and >= MinHitFile - TotalDiffetentPages can be counted and is
+						my $loadrecord=0;
+						if ($UpdateStats) {
+							$loadrecord=1;
 						}
 						else {
-							$TotalBytesPages+=($field[2]||0);
-							$TotalEntries+=($field[3]||0);
+							if ($QueryString !~ /output=/i) {
+								if ($MonthRequired eq "year") { $loadrecord=1; }
+								else { 
+									if ($countloaded < $MaxNbOfPageShown && $field[1] >= $MinHitFile) { $loadrecord=1; }
+									$TotalDifferentPages++;
+								}	
+							}
+							if ($QueryString =~ /output=urldetail/i) {
+								if ($MonthRequired eq "year" ) { 
+									if (!$URLFilter || $field[0] =~ /$URLFilter/) { $loadrecord=1; }
+								}
+								else { 
+									if ((!$URLFilter || $field[0] =~ /$URLFilter/) && $field[1] >= $MinHitFile) { $loadrecord=1; }
+									$TotalDifferentPages++;
+								}
+							}
+							# Posssibilite de mettre if ($URLFilter && $field[0] =~ /$URLFilter/) mais il faut gerer TotalPages de la meme maniere
+							if ($versionmaj < 4) {
+								$TotalEntries+=($field[2]||0);
+							}
+							else {
+								$TotalBytesPages+=($field[2]||0);
+								$TotalEntries+=($field[3]||0);
+							}
 						}
-					}
-					if ($loadrecord) {					
-						if ($field[1]) { $_url_p{$field[0]}+=$field[1]; }
-						if ($versionmaj < 4) {
-							if ($field[2]) { $_url_e{$field[0]}+=$field[2]; }
-							$_url_k{$field[0]}=0;
+						if ($loadrecord) {					
+							if ($field[1]) { $_url_p{$field[0]}+=$field[1]; }
+							if ($versionmaj < 4) {
+								if ($field[2]) { $_url_e{$field[0]}+=$field[2]; }
+								$_url_k{$field[0]}=0;
+							}
+							else {
+								if ($field[2]) { $_url_k{$field[0]}+=$field[2]; } 
+								if ($field[3]) { $_url_e{$field[0]}+=$field[3]; } 
+							}
+							$countloaded++;
 						}
-						else {
-							if ($field[2]) { $_url_k{$field[0]}+=$field[2]; } 
-							if ($field[3]) { $_url_e{$field[0]}+=$field[3]; } 
-						}
-						$countloaded++;
 					}
 				}
 				$_=<HISTORY>;
@@ -1411,13 +1437,15 @@ sub Read_History_File {
 			my @field=split(/\s+/,$_); $countlines++;
 			my $count=0;my $countloaded=0;
 			while ($field[0] ne "END_FILETYPES") {
-				$count++;
-				if ($part && ($UpdateStats || $QueryString !~ /output=/i || $QueryString =~ /output=xxx/i)) {
-					$countloaded++;
-					if ($field[1]) { $_filetypes_h{$field[0]}+=$field[1]; }
-					if ($field[2]) { $_filetypes_k{$field[0]}+=$field[2]; }
-					if ($field[3]) { $_filetypes_gz_in{$field[0]}+=$field[3]; }
-					if ($field[4]) { $_filetypes_gz_out{$field[0]}+=$field[4]; }
+				if ($field[0]) {
+					$count++;
+					if ($part && ($UpdateStats || $QueryString !~ /output=/i || $QueryString =~ /output=xxx/i)) {
+						$countloaded++;
+						if ($field[1]) { $_filetypes_h{$field[0]}+=$field[1]; }
+						if ($field[2]) { $_filetypes_k{$field[0]}+=$field[2]; }
+						if ($field[3]) { $_filetypes_gz_in{$field[0]}+=$field[3]; }
+						if ($field[4]) { $_filetypes_gz_out{$field[0]}+=$field[4]; }
+					}
 				}
 				$_=<HISTORY>;
 				chomp $_; s/\r//;
@@ -1435,10 +1463,12 @@ sub Read_History_File {
 			my @field=split(/\s+/,$_); $countlines++;
 			my $count=0;my $countloaded=0;
 			while ($field[0] ne "END_PAGEREFS") {
-				$count++;
-				if ($part && ($UpdateStats || $QueryString !~ /output=/i || $QueryString =~ /output=externalreferers/i)) {
-					$countloaded++;
-					if ($field[1]) { $_pagesrefs_h{$field[0]}+=int($field[1]); }
+				if ($field[0]) {
+					$count++;
+					if ($part && ($UpdateStats || $QueryString !~ /output=/i || $QueryString =~ /output=externalreferers/i)) {
+						$countloaded++;
+						if ($field[1]) { $_pagesrefs_h{$field[0]}+=int($field[1]); }
+					}
 				}
 				$_=<HISTORY>;
 				chomp $_; s/\r//;
@@ -1456,10 +1486,12 @@ sub Read_History_File {
 			my @field=split(/\s+/,$_); $countlines++;
 			my $count=0;my $countloaded=0;
 			while ($field[0] ne "END_SEREFERRALS") {
-				$count++;
-				if ($part && ($UpdateStats || $QueryString !~ /output=/i || $QueryString =~ /output=xxx/i)) {
-					$countloaded++;
-		        	if ($field[1]) { $_se_referrals_h{$field[0]}+=$field[1]; }
+				if ($field[0]) {
+					$count++;
+					if ($part && ($UpdateStats || $QueryString !~ /output=/i || $QueryString =~ /output=xxx/i)) {
+						$countloaded++;
+			        	if ($field[1]) { $_se_referrals_h{$field[0]}+=$field[1]; }
+					}
 				}
 				$_=<HISTORY>;
 				chomp $_; s/\r//;
@@ -1477,35 +1509,37 @@ sub Read_History_File {
 			my @field=split(/\s+/,$_); $countlines++;
 			my $count=0;my $countloaded=0;
 			while ($field[0] ne "END_SEARCHWORDS") {
-				$count++;
-				if ($part && ($UpdateStats || $QueryString !~ /output=/i || $QueryString =~ /output=allkeyphrases/i)) {
-					my $loadrecord=0;
-					if ($UpdateStats) {
-						$loadrecord=1;
-					}
-					else {
-						if ($QueryString !~ /output=/i) {
-							if ($MonthRequired eq "year") { $loadrecord=1; }
-							else { 
-								if ($countloaded < $MaxNbOfKeywordsShown && $field[1] >= $MinHitKeyword) { $loadrecord=1; }
-								$TotalDifferentKeyphrases++;
-								$TotalKeyphrases+=($field[1]||0);
-							}	
+				if ($field[0]) {
+					$count++;
+					if ($part && ($UpdateStats || $QueryString !~ /output=/i || $QueryString =~ /output=allkeyphrases/i)) {
+						my $loadrecord=0;
+						if ($UpdateStats) {
+							$loadrecord=1;
 						}
-						if ($QueryString =~ /output=allkeyphrases/i) {
-							if ($MonthRequired eq "year" ) { 
-								$loadrecord=1;
+						else {
+							if ($QueryString !~ /output=/i) {
+								if ($MonthRequired eq "year") { $loadrecord=1; }
+								else { 
+									if ($countloaded < $MaxNbOfKeywordsShown && $field[1] >= $MinHitKeyword) { $loadrecord=1; }
+									$TotalDifferentKeyphrases++;
+									$TotalKeyphrases+=($field[1]||0);
+								}	
 							}
-							else { 
-								if ($field[1] >= $MinHitKeyword) { $loadrecord=1; }
-								$TotalDifferentKeyphrases++;
-								$TotalKeyphrases+=($field[1]||0);
+							if ($QueryString =~ /output=allkeyphrases/i) {
+								if ($MonthRequired eq "year" ) { 
+									$loadrecord=1;
+								}
+								else { 
+									if ($field[1] >= $MinHitKeyword) { $loadrecord=1; }
+									$TotalDifferentKeyphrases++;
+									$TotalKeyphrases+=($field[1]||0);
+								}
 							}
 						}
-					}
-					if ($loadrecord) {					
-						if ($field[1]) { $_keyphrases{$field[0]}+=$field[1]; }
-						$countloaded++;
+						if ($loadrecord) {					
+							if ($field[1]) { $_keyphrases{$field[0]}+=$field[1]; }
+							$countloaded++;
+						}
 					}
 				}
 				$_=<HISTORY>;
@@ -1524,10 +1558,12 @@ sub Read_History_File {
 			my @field=split(/\s+/,$_); $countlines++;
 			my $count=0;my $countloaded=0;
 			while ($field[0] ne "END_ERRORS") {
-				$count++;
-				if ($part && ($UpdateStats || $QueryString !~ /output=/i || $QueryString =~ /output=xxx/i)) {
-					$countloaded++;
-		        	if ($field[1]) { $_errors_h{$field[0]}+=$field[1]; }
+				if ($field[0]) {
+					$count++;
+					if ($part && ($UpdateStats || $QueryString !~ /output=/i || $QueryString =~ /output=xxx/i)) {
+						$countloaded++;
+			        	if ($field[1]) { $_errors_h{$field[0]}+=$field[1]; }
+					}
 				}
 				$_=<HISTORY>;
 				chomp $_; s/\r//;
@@ -1545,12 +1581,14 @@ sub Read_History_File {
 			my @field=split(/\s+/,$_); $countlines++;
 			my $count=0;my $countloaded=0;
 			while ($field[0] ne "END_SIDER_404") {
-				$count++;
-				if ($part && ($UpdateStats || $QueryString !~ /output=/i || $QueryString =~ /output=errors404/i)) {
-					$countloaded++;
-					if ($field[1]) { $_sider404_h{$field[0]}+=$field[1]; }
-					if ($UpdateStats || $QueryString =~ /output=errors404/i) {
-						if ($field[2]) { $_referer404_h{$field[0]}=$field[2]; }
+				if ($field[0]) {
+					$count++;
+					if ($part && ($UpdateStats || $QueryString !~ /output=/i || $QueryString =~ /output=errors404/i)) {
+						$countloaded++;
+						if ($field[1]) { $_sider404_h{$field[0]}+=$field[1]; }
+						if ($UpdateStats || $QueryString =~ /output=errors404/i) {
+							if ($field[2]) { $_referer404_h{$field[0]}=$field[2]; }
+						}
 					}
 				}
 				$_=<HISTORY>;
@@ -1979,7 +2017,7 @@ sub AddInTree {
 
 sub Removelowerval {
 	my $keytoremove=$val{$lowerval};	# This is lower key
-	debug("  remove for lowerval=$lowerval: key=$keytoremove",5);
+	debug("  remove for lowerval=$lowerval: key=$keytoremove",4);
 	if ($egal{$keytoremove}) {
 		$val{$lowerval}=$egal{$keytoremove};
 		delete $egal{$keytoremove};
@@ -1990,7 +2028,7 @@ sub Removelowerval {
 		$lowerval=$nextval{$lowerval};	# Set new lowerval
 		#delete $nextval{$templowerval};
 	}
-	debug("  new lower value=$lowerval, val size=".(scalar keys %val).", egal size=".(scalar keys %egal),5);
+	debug("  new lower value=$lowerval, val size=".(scalar keys %val).", egal size=".(scalar keys %egal),4);
 }
 #sub AddInTree {
 #	my $keytoadd=shift;
@@ -2057,6 +2095,7 @@ sub BuildKeyList {
 	my $hashforselect=shift;
 	my $hashfororder=shift;
 	debug("BuildKeyList($ArraySize,$MinValue,$hashforselect with size=".(scalar keys %$hashforselect).",$hashfororder with size=".(scalar keys %$hashfororder).")",2);
+	delete $hashforselect->{0};delete $hashforselect->{""};		# Those is to protect from infinite loop when hash array has incorrect keys
 	my $count=0;
 	$lowerval=0;	# Global because used in AddInTree and Removelowerval
 	%val=(); %nextval=(); %egal=();
