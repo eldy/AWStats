@@ -735,11 +735,16 @@ sub error {
 	if (! $ErrorMessages && ! $donotshowsetupinfo) {
 		if ($message =~ /Couldn.t open config file/i) {
 			my $dir=$DIR; $dir =~ s/[\\\/]?wwwroot[\/\\]cgi-bin[\\\/]?//;
-			print "${tagbr}${tagbold}Did you use the correct URL ?${tagunbold}${tagbr}\n";
-			print "Example: http://localhost/awstats/awstats.pl?config=mysite${tagbr}\n";
-			print "Example: http://127.0.0.1/cgi-bin/awstats.pl?config=mysite${tagbr}\n";
-			print "${tagbr}${tagbold}Did you create your config file ?${tagunbold}${tagbr}\n";
-			print "Try to run $dir/tools/configure.pl${tagbr}${tagbr}\n";
+			if ($ENV{'GATEWAY_INTERFACE'}) {
+				print "- ${tagbr}${tagbold}Did you use the correct URL ?${tagunbold}${tagbr}\n";
+				print "Example: http://localhost/awstats/awstats.pl?config=mysite${tagbr}\n";
+				print "Example: http://127.0.0.1/cgi-bin/awstats.pl?config=mysite${tagbr}\n";
+			} else {
+				print "- ${tagbr}${tagbold}Did you use correct config parameter ?${tagunbold}${tagbr}\n";
+				print "Example: If your config file is awstats.mysite.conf, you must use -config=mysite\n";
+			}
+			print "- ${tagbr}${tagbold}Did you create your config file 'awstats.$SiteConfig.conf' ?${tagunbold}${tagbr}\n";
+			print "If not, you can run \"$dir/tools/configure.pl${tagbr}${tagbr}\"\n";
 		}
 		else { print "${tagbr}${tagbold}Setup (".($FileConfig?"'".$FileConfig."'":"Config")." file, web server or permissions) may be wrong.${tagunbold}${tagbr}\n"; }
 		print "See AWStats documentation in 'docs' directory for informations on how to setup $PROG.\n";
@@ -4535,7 +4540,8 @@ sub DefinePerlParsingFormat {
 	if ($LogFormat =~ /^[1-6]$/) {	# Pre-defined log format
 		if ($LogFormat eq '1' || $LogFormat eq '6') {	# Same than "%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\"".
 			# %u (user) is "([^\\[]+)" instead of "[^ ]+" because can contain space (Lotus Notes). referer and ua might be "".
-			$PerlParsingFormat="([^ ]+) [^ ]+ ([^\\[]+) \\[([^ ]+) [^ ]+\\] \\\"([^ ]+) ([^ ]+) [^\\\"]+\\\" ([\\d|-]+) ([\\d|-]+) \\\"([^\\\"]*)\\\" \\\"([^\\\"]*)\\\"";
+			$PerlParsingFormat="([^ ]+) [^ ]+ ([^\\[]+) \\[([^ ]+) [^ ]+\\] \\\"([^ ]+) (.+) [^\\\"]+\\\" ([\\d|-]+) ([\\d|-]+) \\\"(.*?)\\\" \\\"([^\\\"]*)\\\"";
+#			$PerlParsingFormat="([^ ]+) [^ ]+ ([^\\[]+) \\[([^ ]+) [^ ]+\\] \\\"([^ ]+) ([^ ]+) [^\\\"]+\\\" ([\\d|-]+) ([\\d|-]+) \\\"(.*?)\\\" \\\"([^\\\"]*)\\\"";
 			$pos_host=0;$pos_logname=1;$pos_date=2;$pos_method=3;$pos_url=4;$pos_code=5;$pos_size=6;$pos_referer=7;$pos_agent=8;
 			@fieldlib=('host','logname','date','method','url','code','size','referer','ua');
 		}
@@ -5645,6 +5651,7 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 
 		# Drop wrong method/protocol
 		#---------------------------
+		if ($LogType ne 'M') { $field[$pos_url] =~ s/\s/%20/g; }
 		if ($LogType eq 'W' && ($field[$pos_method] eq 'GET' || $field[$pos_method] eq 'POST' || $field[$pos_method] eq 'HEAD' || $field[$pos_method] =~ /OK/i || $field[$pos_method] =~ /ERR\!/i)) {
 			# HTTP request.	Keep only GET, POST, HEAD, *OK* and ERR! for Webstar. Do not keep OPTIONS
 		}
@@ -5656,11 +5663,11 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 		}
 		elsif ($LogType eq 'F' && ($field[$pos_method] eq 'RETR' || $field[$pos_method] eq 'o' || $field[$pos_method] =~ /get/i)) {
 			# FTP GET request
-			$field[$pos_url] =~ s/\s/%20/g;
+#			$field[$pos_url] =~ s/\s/%20/g;
 		}
 		elsif ($LogType eq 'F' && ($field[$pos_method] eq 'STOR' || $field[$pos_method] eq 'i' || $field[$pos_method] =~ /sent/i)) {
 			# FTP SENT request
-			$field[$pos_url] =~ s/\s/%20/g;
+#			$field[$pos_url] =~ s/\s/%20/g;
 		}
 		else {
 			$NbOfLinesDropped++;
@@ -6478,7 +6485,7 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 		# Analyze: Extra
 		#---------------
  		foreach my $extranum (1..@ExtraName-1) {
-			if ($Debug) { debug(" Process extra analyze $extranum",4); }
+			if ($Debug) { debug("  Process extra analyze $extranum",4); }
 
  			# Check conditions
  			my $conditionok=0;
@@ -6486,30 +6493,30 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
  				my $conditiontype=$ExtraConditionType[$extranum][$condnum];
  				my $conditiontypeval=qr/$ExtraConditionTypeVal[$extranum][$condnum]/i;
  				if ($conditiontype eq 'URL') {
-					if ($Debug) { debug(" Check condition '$conditiontype' must contain '$conditiontypeval' in $urlwithnoquery.",5); }
+					if ($Debug) { debug("  Check condition '$conditiontype' must contain '$conditiontypeval' in $urlwithnoquery.",5); }
  					if ($urlwithnoquery =~ /$conditiontypeval/o) { $conditionok=1; last; }
  				}
  				elsif ($conditiontype eq 'QUERY_STRING') {
-					if ($Debug) { debug(" Check condition '$conditiontype' must contain '$conditiontypeval' in $standalonequery.",5); }
+					if ($Debug) { debug("  Check condition '$conditiontype' must contain '$conditiontypeval' in $standalonequery.",5); }
  					if ($standalonequery =~ /$conditiontypeval/o) {	$conditionok=1; last; }
  				}
  				elsif ($conditiontype eq 'REFERER') {
-					if ($Debug) { debug(" Check condition '$conditiontype' must contain '$conditiontypeval' in $field[$pos_referer]",5); }
+					if ($Debug) { debug("  Check condition '$conditiontype' must contain '$conditiontypeval' in $field[$pos_referer]",5); }
  					if ($field[$pos_referer] =~ /$conditiontypeval/o) { $conditionok=1; last; }
  				}
  				elsif ($conditiontype eq 'UA') {
-					if ($Debug) { debug(" Check condition '$conditiontype' must contain '$conditiontypeval' in $field[$pos_agent]",5); }
+					if ($Debug) { debug("  Check condition '$conditiontype' must contain '$conditiontypeval' in $field[$pos_agent]",5); }
  					if ($field[$pos_agent] =~ /$conditiontypeval/o) { $conditionok=1; last; }
  				}
  				elsif ($conditiontype eq 'HOST') {
-					if ($Debug) { debug(" Check condition '$conditiontype' must contain '$conditiontypeval' in $field[$pos_host]",5); }
+					if ($Debug) { debug("  Check condition '$conditiontype' must contain '$conditiontypeval' in $field[$pos_host]",5); }
  					if ($HostResolved =~ /$conditiontypeval/o) { $conditionok=1; last; }
  				}
  				else { error("Wrong value of parameter ExtraSectionCondition$extranum"); }
  			}
 			if (! $conditionok && @{$ExtraConditionType[$extranum]}) { next; }	# End for this section
 			
-			if ($Debug) { debug(" No condition or Condition is OK. Now we extract value for first column of extra chart.",5); }
+			if ($Debug) { debug("  No condition or Condition is OK. Now we extract value for first column of extra chart.",5); }
 			
  			# Determine actual column value to use.
  			my $rowkeyval;
@@ -6535,7 +6542,7 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
  				else { error("Wrong value of parameter ExtraSectionFirstColumnValues$extranum"); }
  			}
 			if (! $rowkeyok) { next; }	# End for this section
-			if ($Debug) { debug(" Key val was found: $rowkeyval",5); }
+			if ($Debug) { debug("  Key val was found: $rowkeyval",5); }
 
  			# Here we got all values to increase counters
  			if ($PageBool && $ExtraStatTypes[$extranum] =~ /P/i) { ${'_section_' . $extranum . '_p'}{$rowkeyval}++; }
