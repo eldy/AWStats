@@ -1479,7 +1479,7 @@ sub Read_Plugins {
 # Parameters:	year,month,withupdate,withpurge,part to load
 # Input:		$DirData $PROG $FileSuffix $LastLine
 # Output:		None
-# Return:		None
+# Return:		Temp file name or "" if withupdate is 0
 #--------------------------------------------------------------------
 sub Read_History_With_Update {
 	my $year=sprintf("%04i",shift||0);
@@ -1499,8 +1499,9 @@ sub Read_History_With_Update {
 	if ($DayRequired) { if ($Debug) { debug("Call to Read_History_With_Update [$year,$month,withupdate=$withupdate,withpurge=$withpurge,part=$part] ($DayRequired)"); } }
 	else { if ($Debug) { debug("Call to Read_History_With_Update [$year,$month,withupdate=$withupdate,withpurge=$withpurge,part=$part]"); } }
 
-	# Define value for historyfilename
+	# Define value for historyfilename and historytmpfilename
 	my $historyfilename="$DirData/$PROG$DayRequired$month$year$FileSuffix.txt";	# Month before Year kept for backward compatibility
+	my $historytmpfilename="$DirData/$PROG$month$year$FileSuffix.tmp.$$";
 	if ($Debug) { debug(" History file is '$historyfilename'",2); }
 
 	# Define SectionsToLoad (which sections to load)
@@ -1551,7 +1552,7 @@ sub Read_History_With_Update {
 		open(HISTORY,$historyfilename) || error("Error: Couldn't open file \"$historyfilename\" for read: $!");
 	}
 	if ($withupdate) {
-		open(HISTORYTMP,">$DirData/$PROG$month$year$FileSuffix.tmp.$$") || error("Error: Couldn't open file \"$DirData/$PROG$month$year$FileSuffix.tmp.$$\" for write: $!");
+		open(HISTORYTMP,">$historytmpfilename") || error("Error: Couldn't open file \"$historytmpfilename\" for write: $!");
 		Save_History("header",$year,$month);
 	}
 
@@ -1567,12 +1568,12 @@ sub Read_History_With_Update {
 			if (! $versionnum && $_ =~ /^AWSTATS DATA FILE (\d+).(\d+)/i) {
 				$versionnum=($1*1000)+$2;
 				if ($Debug) { debug(" Data file version is $versionnum",1); }
-				if ($versionnum < 5000) {
+				if ($versionnum < 5000 && ! $MigrateStats) {
 					warning("Data file '$historyfilename' is an old format history file. You should upgrade it running awstats.pl -migrate=\"$historyfilename\"");
 				}
-				elsif ($MigrateStats) {
+				if (! ($versionnum < 5000) && $MigrateStats) {
 					close(HISTORYTMP); close(HISTORY);
-					unlink("$DirData/$PROG$month$year$FileSuffix.tmp.$$");
+					unlink("$historytmpfilename");
 					error("Error: You try to migrate a file that is already a recent version.","","",1);
 				}
 				next;
@@ -1636,7 +1637,7 @@ sub Read_History_With_Update {
 					#if ($field[0]) {	# This test must not be here for TIME section (because field[0] is "0" for hour 0)
 						$count++;
 						if ($SectionsToLoad{"time"}) {
-							if ($MonthRequired eq "year" || $MonthRequired eq $month) {	# Still required
+							if ("$MonthRequired" eq "year" || "$MonthRequired" eq "$month") {	# Still required
 								$countloaded++;
 								if ($field[1]) { $_time_p[$field[0]]+=int($field[1]); }
 								if ($field[2]) { $_time_h[$field[0]]+=int($field[2]); }
@@ -2525,6 +2526,8 @@ sub Read_History_With_Update {
 
 	# For backward compatibility, if LastLine does not exist
 	if (! $LastLine) { $LastLine=$LastTime{$year.$month}; }
+
+	return ($withupdate?$historytmpfilename:"");
 }
 
 #--------------------------------------------------------------------
@@ -2774,8 +2777,8 @@ sub Save_History {
 	if ($sectiontosave eq "nsver") {
 		print HISTORYTMP "\n";
 		print HISTORYTMP "# IE Version - Hits\n";
-		print HISTORYTMP "BEGIN_NSVER ".($#_nsver_h)."\n";
-		for (my $i=1; $i<=$#_nsver_h; $i++) {
+		print HISTORYTMP "BEGIN_NSVER ".(@_nsver_h)."\n";
+		for (my $i=1; $i <= @_nsver_h; $i++) {
 			my $nb_h=$_nsver_h[$i]||"";
 			print HISTORYTMP "$i $nb_h\n";
 		}
@@ -2784,8 +2787,8 @@ sub Save_History {
 	if ($sectiontosave eq "msiever") {
 		print HISTORYTMP "\n";
 		print HISTORYTMP "# Netscape Version - Hits\n";
-		print HISTORYTMP "BEGIN_MSIEVER ".($#_msiever_h)."\n";
-		for (my $i=1; $i<=$#_msiever_h; $i++) {
+		print HISTORYTMP "BEGIN_MSIEVER ".(@_msiever_h)."\n";
+		for (my $i=1; $i <= @_msiever_h; $i++) {
 			my $nb_h=$_msiever_h[$i]||"";
 			print HISTORYTMP "$i $nb_h\n";
 		}
@@ -3514,10 +3517,15 @@ if ($MigrateStats) {
 	$MigrateStats=~/(.*)$PROG(\d{0,2})(\d\d)(\d\d\d\d)\./;
 	$DirData=$1;
 	$DayRequired=$2;
-	$YearRequired=$3;
-	$MonthRequired=$4;
+	$MonthRequired=$3;
+	$YearRequired=$4;
 	print "Start migration for file '$MigrateStats'.\n";
-	&Read_History_With_Update($MonthRequired,$YearRequired,1,1,"all");
+	if (! -s $MigrateStats) { error("Error: File to migrate '$MigrateStats' not found.","","",1); }
+	my $historytmpfilename=&Read_History_With_Update($YearRequired,$MonthRequired,1,0,"all");
+	if (rename($historytmpfilename,$MigrateStats)==0) {
+		unlink "$historytmpfilename";
+		error("Error: Failed to rename \"$historytmpfilename\" into \"$MigrateStats\".\nWrite permissions on \"$MigrateStats\" might be wrong".($ENV{"GATEWAY_INTERFACE"}?" for a 'migration from web'":"")." or file might be opened.");
+	}
 	print "Migration for file '$MigrateStats' done.\n";
 	exit 0;
 }
@@ -5768,7 +5776,7 @@ EOF
 		print "$Center<a name=\"NETSCAPE\">&nbsp;</a><BR>\n";
 		&tab_head("$Message[33]<br><img src=\"$DirIcons/browser/netscape_large.png\">",19);
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[58]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[15]</TH></TR>\n";
-		for (my $i=1; $i<=$#_nsver_h; $i++) {
+		for (my $i=1; $i <= @_nsver_h; $i++) {
 			my $h="&nbsp;"; my $p="&nbsp;";
 			if ($_nsver_h[$i] > 0 && $_browser_h{"netscape"} > 0) {
 				$h=$_nsver_h[$i]; $p=int($_nsver_h[$i]/$_browser_h{"netscape"}*1000)/10; $p="$p&nbsp;%";
@@ -5779,7 +5787,7 @@ EOF
 		print "<a name=\"MSIE\">&nbsp;</a><BR>";
 		&tab_head("$Message[34]<br><img src=\"$DirIcons/browser/msie_large.png\">",19);
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[58]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[15]</TH></TR>\n";
-		for (my $i=1; $i<=$#_msiever_h; $i++) {
+		for (my $i=1; $i <= @_msiever_h; $i++) {
 			my $h="&nbsp;"; my $p="&nbsp;";
 			if ($_msiever_h[$i] > 0 && $_browser_h{"msie"} > 0) {
 				$h=$_msiever_h[$i]; $p=int($_msiever_h[$i]/$_browser_h{"msie"}*1000)/10; $p="$p&nbsp;%";
