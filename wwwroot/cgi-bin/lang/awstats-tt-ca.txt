@@ -1,4 +1,4 @@
-<!-- Spanish (catalan) tooltips message file (eldy@users.sourceforge.net) -->
+<!-- Catalan tooltips message file (temujinnn@hotmail.com) -->
 <!-- $Revision$ - $Date$ -->
 <div class="CTooltip" id="tt1">
 Es considera una nova visita per <b>cada nou visitant</b> que consulta una pàgina i que hagi accedit al lloc en els últims <b>#VisitTimeOut# mins.</b>.
@@ -33,6 +33,20 @@ Aquesta taula mostra la llista de les <b>paraules clau</b> més utilitzades en el
 <div class="CTooltip" id="tt16">
 Els Robots son <b>visitants automàtics</b> que escanejan o viatgen pel seu lloc per a indexar-lo, o jerarquitzar-lo, per tal de recollir estadístiques de llocs Web, o per verificar si el seu lloc es troba connectat a la Xarxa.<br />
 El programa #PROG# reconeix fins a <b>#RobotArray#</b> robots.
+</div>
+<div class="CTooltip" id="tt17">
+Els temps relacionats amb les estadístiques estan basats en temps de servidor.<br />
+</div>
+<div class="CTooltip" id="tt18">
+Aquí, les dates reportades son: <b>valors medis</b> (calculat desde totes les dates entre les primeres y les ultimes visites en la franja analitzada)
+</div>
+<div class="CTooltip" id="tt19">
+Aquí, les dates reportades son: <b>sumes acumulatives</b> (calculat desde totes les dates entre les primeres y les ultimes visites en la franja analitzada)
+</div>
+<div class="CTooltip" id="tt20">
+Algunes <b>Duracions de les visites</b> son 'desconegudes' perquè no poden ser calculades sempre. La raó principal d'axó es:<br />
+- La visita no va acabà quan es va fer 'l'actualizació'.<br />
+- La visita va començar en la hora anterior (després de les 23:00) del passat dia de un mes (la raó tècnica de prevenir a #PROG# de la duració calculada de tales sessions)
 </div>
 
 <div class="CTooltip" id="tt201"> Error sense descripció. </div>

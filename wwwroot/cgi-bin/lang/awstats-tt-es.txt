@@ -1,3 +1,4 @@
+<!-- Spanish tooltips message file (temujinnn@hotmail.com) -->
 <!-- $Revision$ - $Date$ -->
 <div class="CTooltip" id="tt1">
 Se considera un nueva vista por <b>cada nuevo visitante</b> que consulta una página y que no haya accedido al sitio en los últimos <b>#VisitTimeOut# mins.</b>.
@@ -32,6 +33,20 @@ Esta tabla muestra la lista de las <b>palabras clave</b> más utilizadas en los m
 <div class="CTooltip" id="tt16">
 Los Robots son <b>visitantes automáticos</b> que escanean o viajan por su sitio para indexarlo, o jerarquizarlo, para recopilar estadísticas de sitios Web, o para verificar si su sitio se encuentra conectado a la Red.<br />
 El programa #PROG# reconoce hasta <b>#RobotArray#</b> robots.
+</div>
+<div class="CTooltip" id="tt17">
+Todos los tiempos relacionados con las estad&iacute;sticas est&aacute;n	basados en tiempos de servidor.<br />
+</div>
+<div class="CTooltip" id="tt18">
+Aquí, las fechas reportadas son: <b>valores medios</b> (calculado desde todos los datos entre las primeras y los ultimas visitas en el rango analizado)
+</div>
+<div class="CTooltip" id="tt19">
+Aquí, las fechas reportadas son: <b>sumas acumulativas</b> (calculado desde todos los datos entre las primeras y los ultimas visitas en el rango analizado)
+</div>
+<div class="CTooltip" id="tt20">
+Algunas <b>Duraciones de las visitas</b> son 'desconocidas' porque no pueden ser calculadas siempre. La razón principal de esto es:<br />
+- La visita no fue acabada cuando ocurrió la 'actualización'.<br />
+- La visita comenzó en la hora anterior (después de las 23:00) del pasado día de un mes (la razón técnica de previene a #PROG# de la duración calculada de tales sesiones)
 </div>
 
 <div class="CTooltip" id="tt201"> Error sin descripción. </div>
