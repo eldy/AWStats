@@ -78,7 +78,7 @@ $found, $internal_link) = ();
 %MonthBytes = %MonthHits = %MonthHostsKnown = %MonthHostsUnknown = %MonthPages = %MonthUnique = %MonthVisits =
 %monthlib = %monthnum = ();
 
-$VERSION="3.2 (build 12)";
+$VERSION="3.2 (build 13)";
 $Lang="en";
 
 # Default value
@@ -1439,7 +1439,7 @@ sub Read_History_File {
 			&debug(" Begin of VISITOR section");
 			$_=<HISTORY>;
 			chomp $_; s/\r//;
-			if ($_ eq "") { error("Error: History file \"$DirData/$PROG$_[1]$_[0]$FileSuffix.txt\" is corrupted. Restore a backup of this file, or remove it (data for this month will be lost)."); }
+			if ($_ eq "") { error("Error: History file \"$DirData/$PROG$month$year$FileSuffix.txt\" is corrupted. Restore a recent backup of this file, or remove it (data for this month will be lost)."); }
 			my @field=split(/\s+/,$_);
 			while ($field[0] ne "END_VISITOR") {
 		    	if ($field[0] ne "Unknown") { if ($field[1] > 0) { $MonthUnique{$year.$month}++; } $MonthHostsKnown{$year.$month}++; }
@@ -1451,7 +1451,7 @@ sub Read_History_File {
 				}
 				$_=<HISTORY>;
 				chomp $_; s/\r//;
-				if ($_ eq "") { error("Error: History file \"$DirData/$PROG$_[1]$_[0]$FileSuffix.txt\" is corrupted. Restore a backup of this file, or remove it (data for this month will be lost)."); }
+				if ($_ eq "") { error("Error: History file \"$DirData/$PROG$month$year$FileSuffix.txt\" is corrupted. Restore a recent backup of this file, or remove it (data for this month will be lost)."); }
 				@field=split(/\s+/,$_);
 			}
 			&debug(" End of VISITOR section");
@@ -1461,7 +1461,7 @@ sub Read_History_File {
 			&debug(" Begin of UNKNOWNIP section");
 			$_=<HISTORY>;
 			chomp $_; s/\r//;
-			if ($_ eq "") { error("Error: History file \"$DirData/$PROG$_[1]$_[0]$FileSuffix.txt\" is corrupted. Restore a backup of this file, or remove it (data for this month will be lost)."); }
+			if ($_ eq "") { error("Error: History file \"$DirData/$PROG$month$year$FileSuffix.txt\" is corrupted. Restore a recent backup of this file, or remove it (data for this month will be lost)."); }
 			my @field=split(/\s+/,$_);
 			my $count=0;
 			while ($field[0] ne "END_UNKNOWNIP") {
@@ -1472,7 +1472,7 @@ sub Read_History_File {
 				}
 				$_=<HISTORY>;
 				chomp $_; s/\r//;
-				if ($_ eq "") { error("Error: History file \"$DirData/$PROG$_[1]$_[0]$FileSuffix.txt\" is corrupted. Restore a backup of this file, or remove it (data for this month will be lost)."); }
+				if ($_ eq "") { error("Error: History file \"$DirData/$PROG$month$year$FileSuffix.txt\" is corrupted. Restore a recent backup of this file, or remove it (data for this month will be lost)."); }
 				@field=split(/\s+/,$_);
 			}
 			&debug(" End of UNKNOWN_IP section ($count entries)");
@@ -1482,7 +1482,7 @@ sub Read_History_File {
 			&debug(" Begin of LOGIN section");
 			$_=<HISTORY>;
 			chomp $_; s/\r//;
-			if ($_ eq "") { error("Error: History file \"$DirData/$PROG$_[1]$_[0]$FileSuffix.txt\" is corrupted. Restore a backup of this file, or remove it (data for this month will be lost)."); }
+			if ($_ eq "") { error("Error: History file \"$DirData/$PROG$month$year$FileSuffix.txt\" is corrupted. Restore a recent backup of this file, or remove it (data for this month will be lost)."); }
 			my @field=split(/\s+/,$_);
 			my $count=0;
 			while ($field[0] ne "END_LOGIN") {
@@ -1495,7 +1495,7 @@ sub Read_History_File {
 				}
 				$_=<HISTORY>;
 				chomp $_; s/\r//;
-				if ($_ eq "") { error("Error: History file \"$DirData/$PROG$_[1]$_[0]$FileSuffix.txt\" is corrupted. Restore a backup of this file, or remove it (data for this month will be lost)."); }
+				if ($_ eq "") { error("Error: History file \"$DirData/$PROG$month$year$FileSuffix.txt\" is corrupted. Restore a recent backup of this file, or remove it (data for this month will be lost)."); }
 				@field=split(/\s+/,$_);
 			}
 			&debug(" End of LOGIN section ($count entries)");
@@ -1505,7 +1505,7 @@ sub Read_History_File {
 			&debug(" Begin of TIME section");
 			$_=<HISTORY>;
 			chomp $_; s/\r//;
-			if ($_ eq "") { error("Error: History file \"$DirData/$PROG$_[1]$_[0]$FileSuffix.txt\" is corrupted. Restore a backup of this file, or remove it (data for this month will be lost)."); }
+			if ($_ eq "") { error("Error: History file \"$DirData/$PROG$month$year$FileSuffix.txt\" is corrupted. Restore a recent backup of this file, or remove it (data for this month will be lost)."); }
 			my @field=split(/\s+/,$_);
 			while ($field[0] ne "END_TIME") {
 		    	$MonthPages{$year.$month}+=$field[1]; $MonthHits{$year.$month}+=$field[2]; $MonthBytes{$year.$month}+=$field[3];
@@ -1516,7 +1516,7 @@ sub Read_History_File {
 				}
 				$_=<HISTORY>;
 				chomp $_; s/\r//;
-				if ($_ eq "") { error("Error: History file \"$DirData/$PROG$_[1]$_[0]$FileSuffix.txt\" is corrupted. Restore a backup of this file, or remove it (data for this month will be lost)."); }
+				if ($_ eq "") { error("Error: History file \"$DirData/$PROG$month$year$FileSuffix.txt\" is corrupted. Restore a recent backup of this file, or remove it (data for this month will be lost)."); }
 				@field=split(/\s+/,$_);
 			}
 			&debug(" End of TIME section");
@@ -1526,7 +1526,7 @@ sub Read_History_File {
 			&debug(" Begin of DAYOFWEEK section");
 			$_=<HISTORY>;
 			chomp $_; s/\r//;
-			if ($_ eq "") { error("Error: History file \"$DirData/$PROG$_[1]$_[0]$FileSuffix.txt\" is corrupted. Restore a backup of this file, or remove it (data for this month will be lost)."); }
+			if ($_ eq "") { error("Error: History file \"$DirData/$PROG$month$year$FileSuffix.txt\" is corrupted. Restore a recent backup of this file, or remove it (data for this month will be lost)."); }
 			my @field=split(/\s+/,$_);
 			my $count=0;
 			while ($field[0] ne "END_DAYOFWEEK") {
@@ -1537,7 +1537,7 @@ sub Read_History_File {
                 	}
 				$_=<HISTORY>;
 				chomp $_; s/\r//;
-				if ($_ eq "") { error("Error: History file \"$DirData/$PROG$_[1]$_[0]$FileSuffix.txt\" is corrupted. Restore a backup of this file, or remove it (data for this month will be lost)."); }
+				if ($_ eq "") { error("Error: History file \"$DirData/$PROG$month$year$FileSuffix.txt\" is corrupted. Restore a recent backup of this file, or remove it (data for this month will be lost)."); }
 				$count++;
 				@field=split(/\s+/,$_);
 			}
@@ -1548,7 +1548,7 @@ sub Read_History_File {
 			&debug(" Begin of DAY section");
 			$_=<HISTORY>;
 			chomp $_; s/\r//;
-			if ($_ eq "") { error("Error: History file \"$DirData/$PROG$_[1]$_[0]$FileSuffix.txt\" is corrupted. Restore a backup of this file, or remove it (data for this month will be lost)."); }
+			if ($_ eq "") { error("Error: History file \"$DirData/$PROG$month$year$FileSuffix.txt\" is corrupted. Restore a recent backup of this file, or remove it (data for this month will be lost)."); }
 			my @field=split(/\s+/,$_);
 			while ($field[0] ne "END_DAY" ) {
 				if ($QueryString !~ /output=/i) {
@@ -1556,7 +1556,7 @@ sub Read_History_File {
 				}
 				$_=<HISTORY>;
 				chomp $_; s/\r//;
-				if ($_ eq "") { error("Error: History file \"$DirData/$PROG$_[1]$_[0]$FileSuffix.txt\" is corrupted. Restore a backup of this file, or remove it (data for this month will be lost)."); }
+				if ($_ eq "") { error("Error: History file \"$DirData/$PROG$month$year$FileSuffix.txt\" is corrupted. Restore a recent backup of this file, or remove it (data for this month will be lost)."); }
 				@field=split(/\s+/,$_);
 			}
 			&debug(" End of DAY section");
@@ -1566,7 +1566,7 @@ sub Read_History_File {
 			&debug(" Begin of SIDER section");
 			$_=<HISTORY>;
 			chomp $_; s/\r//;
-			if ($_ eq "") { error("Error: History file \"$DirData/$PROG$_[1]$_[0]$FileSuffix.txt\" is corrupted. Restore a backup of this file, or remove it (data for this month will be lost)."); }
+			if ($_ eq "") { error("Error: History file \"$DirData/$PROG$month$year$FileSuffix.txt\" is corrupted. Restore a recent backup of this file, or remove it (data for this month will be lost)."); }
 			my @field=split(/\s+/,$_);
 			my $count=0;my $countadd=0;
 			while ($field[0] ne "END_SIDER") {
@@ -1587,7 +1587,7 @@ sub Read_History_File {
 				}
 				$_=<HISTORY>;
 				chomp $_; s/\r//;
-				if ($_ eq "") { error("Error: History file \"$DirData/$PROG$_[1]$_[0]$FileSuffix.txt\" is corrupted. Restore a backup of this file, or remove it (data for this month will be lost)."); }
+				if ($_ eq "") { error("Error: History file \"$DirData/$PROG$month$year$FileSuffix.txt\" is corrupted. Restore a recent backup of this file, or remove it (data for this month will be lost)."); }
 				@field=split(/\s+/,$_);
 			}
 			&debug(" End of SIDER section ($count entries loaded)");
@@ -1597,7 +1597,7 @@ sub Read_History_File {
 			&debug(" Begin of PAGEREFS section");
 			$_=<HISTORY>;
 			chomp $_; s/\r//;
-			if ($_ eq "") { error("Error: History file \"$DirData/$PROG$_[1]$_[0]$FileSuffix.txt\" is corrupted. Restore a backup of this file, or remove it (data for this month will be lost)."); }
+			if ($_ eq "") { error("Error: History file \"$DirData/$PROG$month$year$FileSuffix.txt\" is corrupted. Restore a recent backup of this file, or remove it (data for this month will be lost)."); }
 			my @field=split(/\s+/,$_);
 			my $count=0;
 			while ($field[0] ne "END_PAGEREFS") {
@@ -1607,7 +1607,7 @@ sub Read_History_File {
 				}
 				$_=<HISTORY>;
 				chomp $_; s/\r//;
-				if ($_ eq "") { error("Error: History file \"$DirData/$PROG$_[1]$_[0]$FileSuffix.txt\" is corrupted. Restore a backup of this file, or remove it (data for this month will be lost)."); }
+				if ($_ eq "") { error("Error: History file \"$DirData/$PROG$month$year$FileSuffix.txt\" is corrupted. Restore a recent backup of this file, or remove it (data for this month will be lost)."); }
 				@field=split(/\s+/,$_);
 			}
 			&debug(" End of PAGEREFS section ($count entries)");
@@ -1617,7 +1617,7 @@ sub Read_History_File {
 			&debug(" Begin of SIDER_404 section");
 			$_=<HISTORY>;
 			chomp $_; s/\r//;
-			if ($_ eq "") { error("Error: History file \"$DirData/$PROG$_[1]$_[0]$FileSuffix.txt\" is corrupted. Restore a backup of this file, or remove it (data for this month will be lost)."); }
+			if ($_ eq "") { error("Error: History file \"$DirData/$PROG$month$year$FileSuffix.txt\" is corrupted. Restore a recent backup of this file, or remove it (data for this month will be lost)."); }
 			my @field=split(/\s+/,$_);
 			my $count=0;
 			while ($field[0] ne "END_SIDER_404") {
@@ -1630,7 +1630,7 @@ sub Read_History_File {
 				}
 				$_=<HISTORY>;
 				chomp $_; s/\r//;
-				if ($_ eq "") { error("Error: History file \"$DirData/$PROG$_[1]$_[0]$FileSuffix.txt\" is corrupted. Restore a backup of this file, or remove it (data for this month will be lost)."); }
+				if ($_ eq "") { error("Error: History file \"$DirData/$PROG$month$year$FileSuffix.txt\" is corrupted. Restore a recent backup of this file, or remove it (data for this month will be lost)."); }
 				@field=split(/\s+/,$_);
 			}
 			&debug(" End of SIDER_404 section ($count entries)");
@@ -1704,7 +1704,7 @@ sub Read_History_File {
 	if (! $LastLine{$year.$month}) { $LastLine{$year.$month}=$LastTime{$year.$month}; }		# For backward compatibility, if LastLine does not exist
 	if ($readdomain || $readbrowser || $readnsver || $readmsiever || $reados || $readrobot || $readunknownreferer || $readunknownrefererbrowser || $readse || $readsearchwords || $readerrors) {
 		# History file is corrupted
-		error("Error: History file \"$DirData/$PROG$_[1]$_[0]$FileSuffix.txt\" is corrupted. Restore a backup of this file, or remove it (data for this month will be lost).");
+		error("Error: History file \"$DirData/$PROG$month$year$FileSuffix.txt\" is corrupted. Restore a recent backup of this file, or remove it (data for this month will be lost).");
 	}
 }
 
