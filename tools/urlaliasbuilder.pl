@@ -1,5 +1,5 @@
 #!/usr/bin/perl
-#-Description-------------------------------------------
+#-------------------------------------------------------
 # Small script to auto-generate URL Alias files for 5.2+ AWStats
 # Requires two Perl modules below.
 # From original title-grabber.pl file
@@ -38,7 +38,7 @@ my $throttleRequestsTime = 0;
 # awstats.conf file if you want to ignore hits from this code.
 my $userAgent = "urlaliasbuilder/$VERSION";
 # Put a sensible e-mail address here
-my $spiderOwner = "simon\@cis.net.au";
+my $spiderOwner = "spider\@mydomain.com";
 
 # Timeout (in seconds) for each HTTP request (increase on slow connections)
 my $getTimeOut = 2;
