@@ -13,7 +13,7 @@
 #-------------------------------------------------------
 # Defines
 #-------------------------------------------------------
-$VERSION="2.23p";
+$VERSION="2.23q";
 $Lang=0;
 
 # Default value
@@ -1476,8 +1476,8 @@ if ($YearRequired eq "")  { $YearRequired=$nowyear; }
 if ($QueryString =~ /month=/)                { $MonthRequired=$QueryString; $MonthRequired =~ s/.*month=//; $MonthRequired =~ s/&.*//; }
 if ($MonthRequired eq "") { $MonthRequired=$nowmonth; }
 
-$BrowsersHash{"netscape"}="<font color=blue>Netscape</font> <a href=\"$DirCgi$PROG.$Extension?action=browserdetail&month=$MonthRequired&lang=$Lang\">(Versions)</a>";
-$BrowsersHash{"msie"}="<font color=blue>MS Internet Explorer</font> <a href=\"$DirCgi$PROG.$Extension?action=browserdetail&month=$MonthRequired&lang=$Lang\">(Versions)</a>";
+$BrowsersHash{"netscape"}="<font color=blue>Netscape</font> <a href=\"$DirCgi$PROG.$Extension?site=$LocalSite&action=browserdetail&month=$MonthRequired&lang=$Lang\">(Versions)</a>";
+$BrowsersHash{"msie"}="<font color=blue>MS Internet Explorer</font> <a href=\"$DirCgi$PROG.$Extension?site=$LocalSite&action=browserdetail&month=$MonthRequired&lang=$Lang\">(Versions)</a>";
 
 if (@HostAliases == 0) {
 	warning("Warning: HostAliases parameter is not defined, $PROG will choose \"$LocalSite localhost 127.0.0.1\".");
@@ -1515,14 +1515,14 @@ print "<STYLE TYPE=text/css>
 //-->
 </STYLE>\n
 ";
-print "<a href=\"http://awstats.sourceforge.net\" target=_newawstats><img src=$DirIcons/other/$Logo border=0 alt=\"$PROG Official Web Site\"></a><br>\n";
+print "<a href=\"http://awstats.sourceforge.net\" target=_newawstats><img src=$DirIcons/other/$Logo border=0 alt=\"$PROG Official Web Site\" title=\"$PROG Official Web Site\"></a><br>\n";
 if ($ShowFlagLinks == 1) { 
-	if ($Lang != 0) { print "<a href=\"$DirCgi$PROG.$Extension?month=$MonthRequired&lang=0\"><img src=\"$DirIcons\/flags\/us.png\" height=14 border=0 alt=\"English\"></a>\n"; }
-	if ($Lang != 1) { print " &nbsp; <a href=\"$DirCgi$PROG.$Extension?month=$MonthRequired&lang=1\"><img src=\"$DirIcons\/flags\/fr.png\" height=14 border=0 alt=\"French\"></a>\n"; }
-	if ($Lang != 2) { print " &nbsp; <a href=\"$DirCgi$PROG.$Extension?month=$MonthRequired&lang=2\"><img src=\"$DirIcons\/flags\/nl.png\" height=14 border=0 alt=\"Dutch\"></a>\n"; }
-	if ($Lang != 3) { print " &nbsp; <a href=\"$DirCgi$PROG.$Extension?month=$MonthRequired&lang=3\"><img src=\"$DirIcons\/flags\/es.png\" height=14 border=0 alt=\"Spanish\"></a>\n"; }
-	if ($Lang != 4) { print " &nbsp; <a href=\"$DirCgi$PROG.$Extension?month=$MonthRequired&lang=4\"><img src=\"$DirIcons\/flags\/it.png\" height=14 border=0 alt=\"Italian\"></a>\n"; }
-	if ($Lang != 5) { print " &nbsp; <a href=\"$DirCgi$PROG.$Extension?month=$MonthRequired&lang=5\"><img src=\"$DirIcons\/flags\/de.png\" height=14 border=0 alt=\"German\"></a>\n"; }
+	if ($Lang != 0) { print "<a href=\"$DirCgi$PROG.$Extension?site=$LocalSite&month=$MonthRequired&lang=0\"><img src=\"$DirIcons\/flags\/us.png\" height=14 border=0 alt=\"English\" title=\"English\"></a>\n"; }
+	if ($Lang != 1) { print " &nbsp; <a href=\"$DirCgi$PROG.$Extension?site=$LocalSite&month=$MonthRequired&lang=1\"><img src=\"$DirIcons\/flags\/fr.png\" height=14 border=0 alt=\"French\" title=\"French\"></a>\n"; }
+	if ($Lang != 2) { print " &nbsp; <a href=\"$DirCgi$PROG.$Extension?site=$LocalSite&month=$MonthRequired&lang=2\"><img src=\"$DirIcons\/flags\/nl.png\" height=14 border=0 alt=\"Dutch\" title=\"Dutch\"></a>\n"; }
+	if ($Lang != 3) { print " &nbsp; <a href=\"$DirCgi$PROG.$Extension?site=$LocalSite&month=$MonthRequired&lang=3\"><img src=\"$DirIcons\/flags\/es.png\" height=14 border=0 alt=\"Spanish\" title=\"Spanish\"></a>\n"; }
+	if ($Lang != 4) { print " &nbsp; <a href=\"$DirCgi$PROG.$Extension?site=$LocalSite&month=$MonthRequired&lang=4\"><img src=\"$DirIcons\/flags\/it.png\" height=14 border=0 alt=\"Italian\" title=\"Italian\"></a>\n"; }
+	if ($Lang != 5) { print " &nbsp; <a href=\"$DirCgi$PROG.$Extension?site=$LocalSite&month=$MonthRequired&lang=5\"><img src=\"$DirIcons\/flags\/de.png\" height=14 border=0 alt=\"German\" title=\"German\"></a>\n"; }
 	print "<br>";
 	}
 print "<font size=1>$message[54][$Lang]</font><br>\n";
@@ -2554,7 +2554,7 @@ if ($MonthRequired eq "year") { print "<TD colspan=3 rowspan=2><font style=\"fon
 else { print "<TD colspan=3 rowspan=2><font style=\"font: 10pt arial,verdana,helvetica\"><b>$message[5][$Lang] $monthlib{$MonthRequired} $YearRequired</b></font><br>"; }
 # Show links for possible years
 foreach $key (keys %listofyears) {
-	print "<a href=\"$DirCgi$PROG.$Extension?year=$key&month=year&lang=$Lang\">$message[6][$Lang] $key</a> ";
+	print "<a href=\"$DirCgi$PROG.$Extension?site=$LocalSite&year=$key&month=year&lang=$Lang\">$message[6][$Lang] $key</a> ";
 }
 print "</TD>";
 print "<TD><b>$message[9][$Lang]</b></TD></TR>";
@@ -2595,19 +2595,19 @@ for ($ix=1; $ix<=12; $ix++) {
 	$bredde_k=$MonthBytes{$monthix.$YearRequired}/$max_k*$BarHeight/2;
 	$kilo=int(($MonthBytes{$monthix.$YearRequired}/1024)*100)/100;
 	print "<TD>";
-	print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_v\" HEIGHT=$bredde_v WIDTH=8 ALT=\"Visits: $MonthVisits{$monthix.$YearRequired}\">";
-	print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_u\" HEIGHT=$bredde_u WIDTH=8 ALT=\"$message[18][$Lang]: $MonthUnique{$monthix.$YearRequired}\">";
+	print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_v\" HEIGHT=$bredde_v WIDTH=8 ALT=\"Visits: $MonthVisits{$monthix.$YearRequired}\" title=\"Visits: $MonthVisits{$monthix.$YearRequired}\">";
+	print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_u\" HEIGHT=$bredde_u WIDTH=8 ALT=\"$message[18][$Lang]: $MonthUnique{$monthix.$YearRequired}\" title=\"$message[18][$Lang]: $MonthUnique{$monthix.$YearRequired}\">";
 	print "&nbsp;";
-	print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_p\" HEIGHT=$bredde_p WIDTH=8 ALT=\"$message[56][$Lang]: $MonthPage{$monthix.$YearRequired}\">";
-	print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_h\" HEIGHT=$bredde_h WIDTH=8 ALT=\"$message[57][$Lang]: $MonthHits{$monthix.$YearRequired}\">";
-	print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_k\" HEIGHT=$bredde_k WIDTH=8 ALT=\"$message[44][$Lang]: $kilo\">";
+	print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_p\" HEIGHT=$bredde_p WIDTH=8 ALT=\"$message[56][$Lang]: $MonthPage{$monthix.$YearRequired}\" title=\"$message[56][$Lang]: $MonthPage{$monthix.$YearRequired}\">";
+	print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_h\" HEIGHT=$bredde_h WIDTH=8 ALT=\"$message[57][$Lang]: $MonthHits{$monthix.$YearRequired}\" title=\"$message[57][$Lang]: $MonthHits{$monthix.$YearRequired}\">";
+	print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_k\" HEIGHT=$bredde_k WIDTH=8 ALT=\"$message[44][$Lang]: $kilo\" title=\"$message[44][$Lang]: $kilo\">";
 	print "</TD>\n";
 }
 
 print "</TR><TR>";
 for ($ix=1; $ix<=12; $ix++) {
 	$monthix=$ix; if ($monthix < 10) { $monthix="0$monthix"; }
-	print "<TD valign=center><a href=\"$DirCgi$PROG.$Extension?year=$YearRequired&month=$monthix&lang=$Lang\">$monthlib{$monthix}</a></TD>";
+	print "<TD valign=center><a href=\"$DirCgi$PROG.$Extension?site=$LocalSite&year=$YearRequired&month=$monthix&lang=$Lang\">$monthlib{$monthix}</a></TD>";
 }
 
 print "</TR></TABLE>";
@@ -2657,9 +2657,9 @@ foreach $key (@sortdomains_p) {
 	}
 	print "<TD>$_domener_p{$key}</TD><TD>$_domener_h{$key}</TD><TD>$kilo</TD>";
 	print "<TD CLASS=LEFT>";
-	print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_p\" WIDTH=$bredde_p HEIGHT=6 ALT=\"$message[56][$Lang]: $_domener_p{$key}\"><br>\n";
-	print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_h\" WIDTH=$bredde_h HEIGHT=6 ALT=\"$message[57][$Lang]: $_domener_h{$key}\"><br>\n";
-	print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_k\" WIDTH=$bredde_k HEIGHT=6 ALT=\"$message[44][$Lang]: $kilo\">";
+	print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_p\" WIDTH=$bredde_p HEIGHT=6 ALT=\"$message[56][$Lang]: $_domener_p{$key}\" title=\"$message[56][$Lang]: $_domener_p{$key}\"><br>\n";
+	print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_h\" WIDTH=$bredde_h HEIGHT=6 ALT=\"$message[57][$Lang]: $_domener_h{$key}\" title=\"$message[57][$Lang]: $_domener_h{$key}\"><br>\n";
+	print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_k\" WIDTH=$bredde_k HEIGHT=6 ALT=\"$message[44][$Lang]: $kilo\" title=\"$message[44][$Lang]: $kilo\">";
 	print "</TD></TR>\n";
 }
 &tab_end;
@@ -2677,7 +2677,7 @@ foreach $key (@sorthosts_p)
   if ($_hostmachine_h{$key}>=$MinHitHost) {
     $kilo=int(($_hostmachine_k{$key}/1024)*100)/100;
 	if ($key eq "Unknown") {
-		print "<TR><TD CLASS=LEFT><a href=\"$DirCgi$PROG.$Extension?action=unknownip&month=$MonthRequired&lang=$Lang\">$message[1][$Lang]</a></TD><TD>$_hostmachine_p{$key}</TD><TD>$_hostmachine_h{$key}</TD><TD>$kilo</TD><TD><a href=\"$DirCgi$PROG.$Extension?action=unknownip&month=$MonthRequired&lang=$Lang\">$message[3][$Lang]</a></TD></TR>\n";
+		print "<TR><TD CLASS=LEFT><a href=\"$DirCgi$PROG.$Extension?site=$LocalSite&action=unknownip&month=$MonthRequired&lang=$Lang\">$message[1][$Lang]</a></TD><TD>$_hostmachine_p{$key}</TD><TD>$_hostmachine_h{$key}</TD><TD>$kilo</TD><TD><a href=\"$DirCgi$PROG.$Extension?site=$LocalSite&action=unknownip&month=$MonthRequired&lang=$Lang\">$message[3][$Lang]</a></TD></TR>\n";
 		}
 	else {
 		$yearcon=substr($_hostmachine_l{$key},0,4);
@@ -2746,7 +2746,7 @@ foreach $key (@sortsiders) {
 	    if ($ShowLinksOnUrl) { print "<A HREF=\"$key\">$nompage</A>"; }
 	    else              	 { print "$nompage"; }
 	    $bredde=$BarWidth*$_sider_p{$key}/$max+1;
-		print "</TD><TD>$_sider_p{$key}</TD><TD CLASS=LEFT><IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_p\" WIDTH=$bredde HEIGHT=8 ALT=\"$message[56][$Lang]: $_sider_p{$key}\"></TD></TR>\n";
+		print "</TD><TD>$_sider_p{$key}</TD><TD CLASS=LEFT><IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_p\" WIDTH=$bredde HEIGHT=8 ALT=\"$message[56][$Lang]: $_sider_p{$key}\" title=\"$message[56][$Lang]: $_sider_p{$key}\"></TD></TR>\n";
   	}
   	$count++;
 }
@@ -2779,15 +2779,16 @@ print "</TR>\n";
 
 print "\n<TR VALIGN=BOTTOM>\n";
 for ($ix=0; $ix<=23; $ix++) {
-  if ($max_h > 0) { $bredde_p=$BarHeight*$_time_p[$ix]/$max_h+1; }
-  if ($max_h > 0) { $bredde_h=$BarHeight*$_time_h[$ix]/$max_h+1; }
-  if ($max_k > 0) { $bredde_k=$BarHeight*$_time_k[$ix]/$max_k+1; }
-  $kilo=int(($_time_k[$ix]/1024)*100)/100;
-  print "<TD>";
-  print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_p\" HEIGHT=$bredde_p WIDTH=6 ALT=\"$message[56][$Lang]: $_time_p[$ix]\">";
-  print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_h\" HEIGHT=$bredde_h WIDTH=6 ALT=\"$message[57][$Lang]: $_time_h[$ix]\">";
-  print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_k\" HEIGHT=$bredde_k WIDTH=6 ALT=\"$message[44][$Lang]: $kilo\">";
-  print "</TD>\n";
+	$bredde_p=0;$bredde_h=0;$bredde_k=0;
+	if ($max_h > 0) { $bredde_p=($BarHeight*$_time_p[$ix]/$max_h)+1; }
+	if ($max_h > 0) { $bredde_h=($BarHeight*$_time_h[$ix]/$max_h)+1; }
+	if ($max_k > 0) { $bredde_k=($BarHeight*$_time_k[$ix]/$max_k)+1; }
+	$kilo=int(($_time_k[$ix]/1024)*100)/100;
+	print "<TD>";
+	print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_p\" HEIGHT=$bredde_p WIDTH=6 ALT=\"$message[56][$Lang]: $_time_p[$ix]\" title=\"$message[56][$Lang]: $_time_p[$ix]\">";
+	print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_h\" HEIGHT=$bredde_h WIDTH=6 ALT=\"$message[57][$Lang]: $_time_h[$ix]\" title=\"$message[57][$Lang]: $_time_h[$ix]\">";
+	print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_k\" HEIGHT=$bredde_k WIDTH=6 ALT=\"$message[44][$Lang]: $kilo\" title=\"$message[44][$Lang]: $kilo\">";
+	print "</TD>\n";
 }
 print "</TR></TABLE></TD></TR>\n";
 
@@ -2803,7 +2804,7 @@ print "<TR BGCOLOR=$color_TableBGRowTitle><TH CLASS=LEFT>Browser</TH><TH bgcolor
 foreach $key (@sortbrowsers) {
 	$p=int($_browser_h{$key}/$TotalHits*1000)/10;
 	if ($key eq "Unknown") {
-		print "<TR><TD CLASS=LEFT><a href=\"$DirCgi$PROG.$Extension?action=unknownrefererbrowser&month=$MonthRequired&lang=$Lang\">$message[0][$Lang]</a></TD><TD>$_browser_h{$key}</TD><TD>$p&nbsp;%</TD></TR>\n";
+		print "<TR><TD CLASS=LEFT><a href=\"$DirCgi$PROG.$Extension?site=$LocalSite&action=unknownrefererbrowser&month=$MonthRequired&lang=$Lang\">$message[0][$Lang]</a></TD><TD>$_browser_h{$key}</TD><TD>$p&nbsp;%</TD></TR>\n";
 	}
 	else {
 		print "<TR><TD CLASS=LEFT>$BrowsersHash{$key}</TD><TD>$_browser_h{$key}</TD><TD>$p&nbsp;%</TD></TR>\n";
@@ -2821,7 +2822,7 @@ print "<TR BGCOLOR=$color_TableBGRowTitle><TH CLASS=LEFT colspan=2>OS</TH><TH bg
 foreach $key (@sortos) {
 	$p=int($_os_h{$key}/$TotalHits*1000)/10;
 	if ($key eq "Unknown") {
-		print "<TR><TD><IMG SRC=\"$DirIcons\/os\/unknown.png\"></TD><TD CLASS=LEFT><a href=\"$DirCgi$PROG.$Extension?action=unknownreferer&month=$MonthRequired&lang=$Lang\">$message[0][$Lang]</a></TD><TD>$_os_h{$key}&nbsp;</TD>";
+		print "<TR><TD><IMG SRC=\"$DirIcons\/os\/unknown.png\"></TD><TD CLASS=LEFT><a href=\"$DirCgi$PROG.$Extension?site=$LocalSite&action=unknownreferer&month=$MonthRequired&lang=$Lang\">$message[0][$Lang]</a></TD><TD>$_os_h{$key}&nbsp;</TD>";
 		print "<TD>$p&nbsp;%</TD></TR>\n";
 		}
 	else {
@@ -2919,7 +2920,7 @@ foreach $key (@sorterrors) {
 	$p=int($_errors_h{$key}/$TotalErrors*1000)/10;
 	if ($httpcode{$key}) { print "<TR onmouseover=\"ShowTooltip($key);\" onmouseout=\"HideTooltip($key);\">"; }
 	else { print "<TR>"; }
-	if ($key == 404) { print "<TD><a href=\"$DirCgi$PROG.$Extension?action=notfounderror&month=$MonthRequired&lang=$Lang\">$key</a></TD>"; }
+	if ($key == 404) { print "<TD><a href=\"$DirCgi$PROG.$Extension?site=$LocalSite&action=notfounderror&month=$MonthRequired&lang=$Lang\">$key</a></TD>"; }
 	else { print "<TD>$key</TD>"; }
 	if ($httpcode{$key}) { print "<TD CLASS=LEFT>$httpcode{$key}</TD><TD>$_errors_h{$key}</TD><TD>$p&nbsp;%</TD></TR>\n"; }
 	else { print "<TD CLASS=LEFT>Unknown error</TD><TD>$_errors_h{$key}</TD><TD>$p&nbsp;%</TD></TR>\n"; }
