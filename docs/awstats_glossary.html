@@ -101,8 +101,8 @@ of times a visitor has added your web site into its favourite bookmarks.<br>
 The technical rules for that is the following formula:<br>
 <i>Number of Add to Favourites = round((x+y) / r)</i><br>
 where<br>
-x = Number of hits made by IE browsers for "/anydir/favicon.ico" with no 404 error<br>
-y = Number of hits made by IE browsers for "/favicon.ico" (with or without 404 error)<br>
+x = Number of hits made by IE browsers for "/anydir/favicon.ico", with a referer field not defined, and with no 404 error code<br>
+y = Number of hits made by IE browsers for "/favicon.ico", with a referer field not defined, with or without 404 error code<br>
 r = Ratio of hits made by IE browsers compared to hits made by all browsers (r <= 1)<br>
 <br>
 As you can see in formula, only IE is used to count reliable "add", the "Add to favourites"
