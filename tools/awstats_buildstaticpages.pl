@@ -44,10 +44,13 @@ my $FileConfig;
 my $FileSuffix;
 my $SiteConfig;
 use vars qw/
-$ShowDomainsStats $ShowHostsStats $ShowAuthenticatedUsers $ShowRobotsStats
-$ShowEMailSenders $ShowEMailReceivers $ShowSessionsStats $ShowPagesStats $ShowFileTypesStats
-$ShowOSStats $ShowBrowsersStats $ShowScreenSizeStats $ShowOriginStats $ShowKeyphrasesStats
-$ShowKeywordsStats $ShowMiscStats $ShowHTTPErrorsStats $ShowSMTPErrorsStats
+$ShowAuthenticatedUsers $ShowFileSizesStats $ShowScreenSizeStats $ShowSMTPErrorsStats
+$ShowEMailSenders $ShowEMailReceivers $ShowWormsStats $ShowClusterStats
+$ShowMenu $ShowMonthStats $ShowDaysOfMonthStats $ShowDaysOfWeekStats
+$ShowHoursStats $ShowDomainsStats $ShowHostsStats
+$ShowRobotsStats $ShowSessionsStats $ShowPagesStats $ShowFileTypesStats
+$ShowOSStats $ShowBrowsersStats $ShowOriginStats
+$ShowKeyphrasesStats $ShowKeywordsStats $ShowMiscStats $ShowHTTPErrorsStats
 /;
 # ----- Time vars -----
 use vars qw/
