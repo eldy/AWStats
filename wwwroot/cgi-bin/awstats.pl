@@ -8284,6 +8284,10 @@ if (scalar keys %HTMLOutput) {
 				my @valcolor=("$color_v","$color_p","$color_h","$color_k");
 				my @valmax=($max_v,$max_h,$max_h,$max_k);
 				my @valtotal=($total_v,$total_p,$total_h,$total_k);
+				$average_v=sprintf("%.2f",$average_v);
+				$average_p=sprintf("%.2f",$average_p);
+				$average_h=sprintf("%.2f",$average_h);
+				$average_k=(int($average_k)?Format_Bytes(sprintf("%.2f",$average_k)):"0.00");
 				my @valaverage=($average_v,$average_p,$average_h,$average_k);
 				my @valdata=();
 				my $xx=0;
