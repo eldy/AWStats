@@ -1,0 +1,35 @@
+<!-- Brazilian Portuguese tooltips message file (urban@ite.net.br) -->
+<!-- $Revision$ - $Date$ -->
+<div class="CTooltip" id="tt1">
+</div>
+<div class="CTooltip" id="tt2">
+N&uacute;mero de hosts (<b>endere&ccedil;os IP</b>) clientes diferentes utilizados para conectar.
+</div>
+<div class="CTooltip" id="tt3">
+</div>
+<div class="CTooltip" id="tt4">
+</div>
+<div class="CTooltip" id="tt5">
+Esta &eacute; a quantidate total de dados transferidos por download de ftp.<br />
+Unidades est&atilde;o em KB, MB ou GB (KiloBytes, MegaBytes ou GigaBytes)
+</div>
+<div class="CTooltip" id="tt13">
+</div>
+<div class="CTooltip" id="tt14">
+</div>
+<div class="CTooltip" id="tt15">
+</div>
+<div class="CTooltip" id="tt16">
+</div>
+<div class="CTooltip" id="tt17">
+Todas estat&iacute;sticas relacionadas a tempo s&atilde;o baseadas no
+hor&aacute;rio do servidor.<br />
+</div>
+<div class="CTooltip" id="tt18">
+Aqui os dados reportados s&atilde;o: <b>valores m&eacute;dios</b> (calculados a partir de todos os dados na faixa analisada)
+</div>
+<div class="CTooltip" id="tt19">
+Aqui os dados reportados s&atilde;o: <b>somas cumulativas</b> (calculados a partir de todos os dados na faixa analisada)
+</div>
+<div class="CTooltip" id="tt20">
+</div>

@@ -1,0 +1,88 @@
+<!-- Brazilian Portuguese tooltips message file (urban@ite.net.br) -->
+<!-- $Revision$ - $Date$ -->
+<div class="CTooltip" id="tt1">
+</div>
+<div class="CTooltip" id="tt2">
+N&uacute;mero de hosts clientes diferentes (<b>endere&ccedil;os IP</b>) que
+enviaram mensagens.
+</div>
+<div class="CTooltip" id="tt3">
+</div>
+<div class="CTooltip" id="tt4">
+N&uacute;mero de vezes que um <b>email</b> foi transmitido com sucesso.<br />
+</div>
+<div class="CTooltip" id="tt5">
+Este &eacute; o volume total de dados transferidos por mensagens.<br />
+As unidades est&atilde;o em KB, MB ou GB (KiloBytes, MegaBytes ou GigaBytes)
+</div>
+<div class="CTooltip" id="tt13">
+</div>
+<div class="CTooltip" id="tt14">
+</div>
+<div class="CTooltip" id="tt15">
+</div>
+<div class="CTooltip" id="tt16">
+</div>
+<div class="CTooltip" id="tt17">
+Todas as estat&iacute;sticas reportadas s&atilde;o baseadas no hor&aacute;rio
+do servidor.<br />
+</div>
+<div class="CTooltip" id="tt18">
+Aqui os dados reportados s&atilde;o: <b>valores m&eacute;dios</b> (calculados
+a partir de todos os dados entre a primeira e a &uacute;ltima mensagem no
+per&iacute;odo analisado)
+</div>
+<div class="CTooltip" id="tt19">
+Aqui os dados reportados s&atilde;o: <b>somas acumulativas</b> (calculadas a
+partir de todos os dados entre a primeira e a &uacute;ltima mensagem no
+per&iacute;odo analisado)
+</div>
+<div class="CTooltip" id="tt20">
+</div>
+
+<div class="CTooltip" id="tt200"><b>Sucesso:</b> Resposta de sucesso
+n&atilde;o padronizada</div>
+<div class="CTooltip" id="tt211"><b>Sucesso:</b> Estado do sistema, ou Ajuda
+do sistema</div>
+<div class="CTooltip" id="tt214"><b>Sucesso:</b> Mensagem de Ajuda</div>
+<div class="CTooltip" id="tt220"><b>Sucesso:</b> <domain> Servi&ccedil;o
+pronto</div>
+<div class="CTooltip" id="tt221"><b>Sucesso:</b> <domain> Servi&ccedil;o
+fechando canal de transmiss&atilde;o</div>
+<div class="CTooltip" id="tt250"><b>Sucesso:</b> O servidor de e-mail de seu
+ISP executou um comando com sucesso e o DNS est&aacute; reportando uma entrega
+positiva</div>
+<div class="CTooltip" id="tt251"><b>Sucesso:</b> Sua mensagem para um
+endere&ccedil;o de e-mail especificado n&atilde;o &eacute; local ao servidor
+de e-mail, mas ele ir&aacute; aceitar e encaminhar a mensagem para um novo
+endere&ccedil;o de e-mail de destino</div>
+<div class="CTooltip" id="tt252"><b>Sucesso:</b> Destinat&aacute;rios
+n&atilde;o podem ser verificados mas o servidor aceita a mensagem e
+tentar&aacute; entreg&aacute;-la</div>
+
+<div class="CTooltip" id="tt354"><b>Sucesso:</b> Indica que o servidor de
+mensagens est&aacute; pronto para aceitar a mensagem ou instruir seu programa cliente
+de e-mail a enviar o corpo da mensagem ap&oacute;s o servidor ter recebido os
+cabe&ccedil;alhos da mensagem.</div>
+
+<div class="CTooltip" id="tt421"><b>Erro tempor&aacute;rio:</b> Este pode ser um reply a qualquer comando se o setvi&ccedil;o sabe que deve ser desligado.</div>
+<div class="CTooltip" id="tt450"><b>Erro tempor&aacute;rio:</b> O servidor de e-mail de seu provedor indicou que o endere&ccedil;o de e-mail n&atilde;o existe, a caixa-postal est&aacute; ocupada ou o e-mail foi temporariamente recusado. Isto pode ser devido a conex&otilde;es de rede terem ca&iacute;do enquanto enviando, ou pode tamb&eacute;m acontecer se o servidor de e-mail remoto n&atilde;o quiser aceitar mensagens suas por alguma raz&atilde;o p.e. (endere&ccedil;o IP, endere&ccedil;o From, Destinat&aacute;rio, etc.)</div>
+<div class="CTooltip" id="tt451"><b>Erro tempor&aacute;rio:</b> O servidor de e-mail do seu provedor indica que o envio foi interrompido, normalmente devido a sobrecarga de mensagens ou falha transiente em que a mensagem enviada &eacute; v&aacute;lida, mas algum evento tempor&aacute;rio n&aacute;o permitiu o envio com sucesso da mensagem. Enviar no futuro pode resultar em sucesso</div>
+<div class="CTooltip" id="tt452"><b>Erro tempor&aacute;rio:</b> O servidor de e-mail do seu provedor indica prov&aacute;vel sobrecarda de mensagens e enviar no futuro pode resultar em sucesso</div>
+<div class="CTooltip" id="tt453"><b>Erro tempor&aacute;rio:</b> Alguns servidores t&ecirc;m a op&ccedil;&atilde;o de reduzir o n&uacute;mero de conex&otilde;es simult&acirc;neas e tamb&eacute;m o n&uacute;mero de mensagens enviadas por conex&atilde;o. Se voc&ecirc; tem v&aacute;rias mensagens enfileiradas pode ser devido a exceder o n&uacute;mero m&aacute;ximo de mensagens por conex&atilde;o. Para verificar se este &eacute; o caso voc&ecirc; pode tentar enviar apenas algumas mensagens para aquele dom&iacute;nio de uma vez e aumentar o n&uacute;mero de mensagens at&eacute; encontrar o n&uacute;mero m&aacute;ximo de mensagens aceito pelo servidor</div>
+
+<div class="CTooltip" id="tt500"><b>Erro permanente:</b> Erro de sintaxe, comando n&atilde;o reconhecido ou linha de comando muito longa</div>
+<div class="CTooltip" id="tt501"><b>Erro permanente:</b> Erro de sintaxe em par&acirc;metros ou argumentos</div>
+<div class="CTooltip" id="tt502"><b>Erro permanente:</b> Comando n&atilde;o implementado</div>
+<div class="CTooltip" id="tt503"><b>Erro permanente:</b> Servidor encontrou uma seq&uuml;&ecirc;ncia de comandos incorretos</div>
+<div class="CTooltip" id="tt504"><b>Erro permanente:</b> Par&acirc;metro de comando n&atilde;o implementado</div>
+<div class="CTooltip" id="tt521"><b>Erro permanente:</b> Voc&ecirc; deve ser um usu&aacute;rio autenticado em pop antes de poder utilizar este servidor SMTP e voc&ecirc; deve utilizar seu endere&ccedil;o de e-mail no campo de remetente (Sender/From).</div>
+<div class="CTooltip" id="tt530"><b>Erro permanente:</b> Acesso negado. Um sendmailismo ?</div>
+<div class="CTooltip" id="tt550"><b>Erro permanente:</b> Enviar e-mails para remetentes de fora de seu dom&iacute;nio n&atilde;o &eacute; permitido ou seu servidor de e-mail n&atilde;o reconhece que voc&ecirc; tem acesso a utiliz&aacute;-lo para relay de mensagens e autentica&ccedil;&atilde;o &eacute; necess&aacute;ria. Ou para prevenir o envio de SPAM alguns servidores de e-mail n&atilde;o permitir&atilde;o enviar (relay) e-mail para qualquer e-mail utilizando a rede ou recursos computacionais de outra empresa.</div>
+<div class="CTooltip" id="tt551"><b>Erro permanente:</b> Usu&aacute;rio n&atilde;o local: favor tentar <forward-path> ou Endere&ccedil;o Inv&aacute;lido: Requisi&ccedil;&atilde;o de Relay recusada</div>
+<div class="CTooltip" id="tt552"><b>Erro permanente:</b> A&ccedil;&atilde;o requisitada de e-mail abortada: excede espa&ccedil;o dispon&iacute;vel. O servidor de e-mail do provedor indica uma prov&aacute;vel sobrecarga devido a muitas mensagens.</div>
+<div class="CTooltip" id="tt553"><b>Erro permanente:</b> A&ccedil;&atilde;o requisitada de e-mail n&atilde;o realizada: nome de caixa-postal n&atilde;o permitido. Alguns servidores de e-mail t&ecirc;m a op&ccedil;&atilde;o de reduzir o n&uacute;mero de conex&otilde;es simult&acirc;neas e tamb&aacute;m o n&uacute;mero de mensagens por conex&atilde;o. Se voc&ecirc; t&eacute;m v&aacute;rias mensagens enfileiradas (sendo enviadas) para um dom&iacute;nio, pode exceder o n&uacute;mero m&aacute;ximo de mensagens por conex&atilde;o e/ou alguma altera&ccedil;&atilde;o na mensagem e/ou destinat&aacute;rio deve ser feita para o envio ter sucesso.</div>
+<div class="CTooltip" id="tt554"><b>Erro permanente:</b> A&ccedil;&atilde;o requisitada de e-mail rejeitada: accesso recusado</div>
+<div class="CTooltip" id="tt557"><b>Erro permanente:</b> Muitas mensagens duplicadas. Recursos temporariamente indispon&iacute;veis. Indica (poss&iacute;vel) que exista algum tipo de sistema anti-spam no servidor de e-mail.</div>
+
+<div class="CTooltip" id="tt999">Este &eacute; um erro desconhecido. Erros deste tipo n&atilde;o s&atilde;o reportados pelo servidor de e-mail, mas pela ferramenta maillogconvert.pl quando ela detecta no log que o envio n&atilde;o teve sucesso e o arquivo de log n&atilde;o cont&eacute;m nenhuma explica&ccedil;&atilde;o do erro.</div>
