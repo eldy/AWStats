@@ -136,7 +136,7 @@ $NbOfLinesParsed $NbOfLinesDropped $NbOfLinesCorrupted $NbOfOldLines $NbOfNewLin
 $NbOfLinesShowsteps $NewLinePhase $NbOfLinesForCorruptedLog $PurgeLogFile
 $ShowAuthenticatedUsers $ShowFileSizesStats $ShowScreenSizeStats $ShowSMTPErrorsStats
 $ShowDropped $ShowCorrupted $ShowUnknownOrigin $ShowLinksToWhoIs
-$ShowEMailSenders $ShowEMailReceivers $ShowClusterStats
+$ShowEMailSenders $ShowEMailReceivers $ShowWormsStats $ShowClusterStats
 $AuthenticatedUsersNotCaseSensitive
 $Expires $UpdateStats $MigrateStats $URLNotCaseSensitive $URLWithQuery $URLReferrerWithQuery
 $DecodeUA
@@ -147,11 +147,11 @@ $NbOfLinesParsed, $NbOfLinesDropped, $NbOfLinesCorrupted, $NbOfOldLines, $NbOfNe
 $NbOfLinesShowsteps, $NewLinePhase, $NbOfLinesForCorruptedLog, $PurgeLogFile,
 $ShowAuthenticatedUsers, $ShowFileSizesStats, $ShowScreenSizeStats, $ShowSMTPErrorsStats,
 $ShowDropped, $ShowCorrupted, $ShowUnknownOrigin, $ShowLinksToWhoIs,
-$ShowEMailSenders, $ShowEMailReceivers, $ShowClusterStats,
+$ShowEMailSenders, $ShowEMailReceivers, $ShowWormsStats, $ShowClusterStats,
 $AuthenticatedUsersNotCaseSensitive,
 $Expires, $UpdateStats, $MigrateStats, $URLNotCaseSensitive, $URLWithQuery, $URLReferrerWithQuery,
 $DecodeUA)=
-(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
+(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
 use vars qw/
 $AllowToUpdateStatsFromBrowser
 $ArchiveLogRecords $DetailedReportsOnNewWindows
@@ -159,7 +159,7 @@ $FirstDayOfWeek $KeyWordsNotSensitive $SaveDatabaseFilesWithPermissionsForEveryo
 $WarningMessages $DebugMessages $ShowLinksOnUrl $UseFramesWhenCGI
 $ShowMenu $ShowMonthStats $ShowDaysOfMonthStats $ShowDaysOfWeekStats
 $ShowHoursStats $ShowDomainsStats $ShowHostsStats
-$ShowRobotsStats $ShowWormsStats $ShowSessionsStats $ShowPagesStats $ShowFileTypesStats
+$ShowRobotsStats $ShowSessionsStats $ShowPagesStats $ShowFileTypesStats
 $ShowOSStats $ShowBrowsersStats $ShowOriginStats
 $ShowKeyphrasesStats $ShowKeywordsStats $ShowMiscStats $ShowHTTPErrorsStats
 $AddDataArrayMonthStats $AddDataArrayShowDaysOfMonthStats $AddDataArrayShowDaysOfWeekStats $AddDataArrayShowHoursStats
@@ -170,12 +170,12 @@ $FirstDayOfWeek, $KeyWordsNotSensitive, $SaveDatabaseFilesWithPermissionsForEver
 $WarningMessages, $DebugMessages, $ShowLinksOnUrl, $UseFramesWhenCGI,
 $ShowMenu, $ShowMonthStats, $ShowDaysOfMonthStats, $ShowDaysOfWeekStats,
 $ShowHoursStats, $ShowDomainsStats, $ShowHostsStats,
-$ShowRobotsStats, $ShowWormsStats, $ShowSessionsStats, $ShowPagesStats, $ShowFileTypesStats,
+$ShowRobotsStats, $ShowSessionsStats, $ShowPagesStats, $ShowFileTypesStats,
 $ShowOSStats, $ShowBrowsersStats, $ShowOriginStats,
 $ShowKeyphrasesStats, $ShowKeywordsStats, $ShowMiscStats, $ShowHTTPErrorsStats,
 $AddDataArrayMonthStats, $AddDataArrayShowDaysOfMonthStats, $AddDataArrayShowDaysOfWeekStats, $AddDataArrayShowHoursStats
 )=
-(1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1);
+(1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1);
 use vars qw/
 $AllowFullYearView 
 $LevelForRobotsDetection $LevelForWormsDetection $LevelForBrowsersDetection $LevelForOSDetection $LevelForRefererAnalyze
