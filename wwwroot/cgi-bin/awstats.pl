@@ -1478,7 +1478,7 @@ sub Read_History_File {
 		if ($UpdateStats || $HTMLOutput eq "main" || $HTMLOutput eq "unknownos")      { $SectionsToLoad{"unknownreferer"}=1; }
 		if ($UpdateStats || $HTMLOutput eq "main" || $HTMLOutput eq "unknownbrowser") { $SectionsToLoad{"unknownrefererbrowser"}=1; }
 		if ($UpdateStats || $HTMLOutput eq "main" || $HTMLOutput eq "robots") { $SectionsToLoad{"robot"}=1; }
-		if ($UpdateStats || $HTMLOutput eq "main" || $HTMLOutput eq "pages") { $SectionsToLoad{"sider"}=1; }
+		if ($UpdateStats || $HTMLOutput eq "main" || $HTMLOutput eq "urldetail") { $SectionsToLoad{"sider"}=1; }
 		if ($UpdateStats || $HTMLOutput eq "main" || $HTMLOutput eq "filetypes") { $SectionsToLoad{"filetypes"}=1; }
 		if ($UpdateStats || $HTMLOutput eq "main" || $HTMLOutput eq "refererse") { $SectionsToLoad{"sereferrals"}=1; }
 		if ($UpdateStats || $HTMLOutput eq "main" || $HTMLOutput eq "refererpages") { $SectionsToLoad{"pagerefs"}=1; }
