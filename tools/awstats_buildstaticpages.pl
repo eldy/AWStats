@@ -20,7 +20,7 @@ use strict;no strict "refs";
 # Defines
 #-------------------------------------------------------
 my $REVISION='$Revision$'; $REVISION =~ /\s(.*)\s/; $REVISION=$1;
-my $VERSION="1.1 (build $REVISION)";
+my $VERSION="1.2 (build $REVISION)";
 
 # ---------- Init variables --------
 my $Debug=0;
@@ -38,12 +38,16 @@ my $OutputDir="";
 my $OutputSuffix;
 my $OutputFile;
 my @OutputList=(
-"allhosts","lasthosts","unknownip","alllogins","lastlogins","allrobots","lastrobots",
+"monthdayvalues",
+"allhosts","lasthosts","unknownip",
+"alllogins","lastlogins",
+"allrobots","lastrobots",
 "urldetail","urlentry","urlexit",
 "unknownos","unknownbrowser","browserdetail",
 "refererse","refererpages",
 #"referersites",
-"keyphrases","keywords","errors404"
+"keyphrases","keywords",
+"errors404"
 );
 
 
