@@ -36,6 +36,7 @@
 #-------------------------------------------------------
 #use diagnostics;
 #use strict;
+#use Time::HiRes qw( gettimeofday tv_interval );		# Uncomment this to get miliseconds time in showsteps option
 
 
 #-------------------------------------------------------
@@ -47,7 +48,7 @@
 $DIR, $DNSLookup, $DayRequired, $Debug, $DefaultFile,
 $DirCgi, $DirData, $DirIcons, $DirLang,
 $DetailedReportsOnNewWindows, $Expires, $Extension, $FileConfig, $FileSuffix, $FirstDayOfWeek,
-$FirstTime, $HTMLHeadSection, $HTMLEndSection, $Host, $HostAlias, $LastTime, $LastUpdate,
+$FirstTime, $HTMLHeadSection, $HTMLEndSection, $Host, $LastTime, $LastUpdate,
 $LogFile, $LogFormat, $LogFormatString, $Logo, $LogoLink,
 $MaxNbOfDays, $MaxNbOfHostsShown, $MaxNbOfKeywordsShown, $MaxNbOfLoginShown,
 $MaxNbOfPageShown, $MaxNbOfRefererShown, $MaxNbOfRobotShown,
@@ -70,7 +71,8 @@ $URLFilter, $URLWithQuery, $UserAgent, $YearRequired,
 $color_Background, $color_TableBG, $color_TableBGRowTitle,
 $color_TableBGTitle, $color_TableBorder, $color_TableRowTitle, $color_TableTitle,
 $color_h, $color_k, $color_link, $color_p, $color_s, $color_v, $color_w, $color_weekend,
-$found, $internal_link) = ();
+$found) = ();
+$startseconds=$startmicroseconds=0;
 $WarningMessages= 1;
 # ---------- Init arrays --------
 @HostAliases = @Message = @OnlyFiles = @SkipDNSLookupFor = @SkipFiles = @SkipHosts = @DOWIndex = ();
@@ -80,7 +82,7 @@ $WarningMessages= 1;
 %MonthBytes = %MonthHits = %MonthHostsKnown = %MonthHostsUnknown = %MonthPages = %MonthUnique = %MonthVisits =
 %monthlib = %monthnum = ();
 
-$VERSION="3.2 (build 24)";
+$VERSION="3.2 (build 26)";
 $Lang="en";
 
 # Default value
@@ -102,6 +104,8 @@ $BarImageVertical_u   = "barrevu.png";
 #$BarImageHorizontal_u = "barrehu.png";
 $BarImageVertical_p   = "barrevp.png";
 $BarImageHorizontal_p = "barrehp.png";
+#$BarImageVertical_e = "barreve.png";
+$BarImageHorizontal_e = "barrehe.png";
 $BarImageVertical_h   = "barrevh.png";
 $BarImageHorizontal_h = "barrehh.png";
 $BarImageVertical_k   = "barrevk.png";
@@ -125,10 +129,9 @@ $AddOn=0;
 			"/cgi-bin/awstats/awstats.pl",			"<b>AWStats stats page</b>",
 			# Following the same example, you can put here HTML text you want to see in links instead of URL text.
 			"/YourRelativeUrl",						"<b>Your HTML text</b>",
-			"/YourRelativeUrl",						"<b>Your HTML text</b>"
 			);
 
-# These table is used to make fast reverse DNS lookup for particular IP adresses. You can add your own IP adresses resolutions.
+# These table is used to make fast reverse DNS lookup for particular IP adresses. You can add your own IP addresses resolutions.
 %MyDNSTable = (
 "256.256.256.1", "myworkstation1",
 "256.256.256.2", "myworkstation2"
@@ -285,8 +288,8 @@ sub error {
 		print "$_[1]";
 		print ($ENV{"GATEWAY_INTERFACE"} ne ""?"</i></font><br><br>":"");
 		print "\n";
-		print "Note: If your $NbOfLinesForCorruptedLog first lines in your log files are wrong because they are result of a worm virus attack,\n";
-		print "you can increase the NbOfLinesForCorruptedLog parameter in config file.\n";
+		print "Note: If your $NbOfLinesForCorruptedLog first lines in your log files are wrong because they are ";
+		print "result of a worm virus attack, you can increase the NbOfLinesForCorruptedLog parameter in config file.\n";
 		print "\n";
 	}			
    	if ($_[0] ne "Format error" && $_[0] ne "") {
@@ -547,8 +550,8 @@ sub Read_Ref_Data {
 		}
 	}
 	# Sanity check.
-	if (scalar keys %OSHashID != @OSArrayID) { error("Error: Not same number of records of OSHashID (".(scalar keys %OSHashID).") and/or OSArrayID (".(@OSArrayID).") in source file."); }
-	if (scalar keys %BrowsersHashID != @BrowsersHashIDLib) { error("Error: Not same number of records of BrowsersHashID (".(scalar keys %BrowsersHashID).") and/or BrowsersHashIDLib (".(@BrowsersHashIDLib).") in source file."); }
+	if (@OSArrayID != scalar keys %OSHashID) { error("Error: Not same number of records of OSArray (".(@OSArrayID).") and/or OSHashID (".(scalar keys %OSHashID).") in source file."); }
+	if (@BrowsersArrayID != scalar keys %BrowsersHashIDLib) { error("Error: Not same number of records of BrowsersArrayID (".(@BrowsersArrayID).") and/or BrowsersHashIDLib (".(scalar keys %BrowsersHashIDLib).") in source file."); }
 }
 
 
@@ -686,7 +689,7 @@ sub Check_Config {
 	if ($ShowRobotsStats !~ /[0-1]/)              { $ShowRobotsStats=1; }
 	if ($ShowPagesStats !~ /[0-1]/)               { $ShowPagesStats=1; }
 	if ($ShowFileTypesStats !~ /[0-1]/)           { $ShowFileTypesStats=1; }
-	if ($ShowFileSizesStats !~ /[0-1]/)           { $ShowFileSizeStats=1; }
+	if ($ShowFileSizesStats !~ /[0-1]/)           { $ShowFileSizesStats=1; }
 	if ($ShowBrowsersStats !~ /[0-1]/)            { $ShowBrowsersStats=1; }
 	if ($ShowOSStats !~ /[0-1]/)                  { $ShowOSStats=1; }
 	if ($ShowOriginStats !~ /[0-1]/)              { $ShowOriginStats=1; }
@@ -748,7 +751,7 @@ sub Check_Config {
 	if ($Message[26] eq "") { $Message[26]="hosts"; }
 	if ($Message[27] eq "") { $Message[27]="pages"; }
 	if ($Message[28] eq "") { $Message[28]="different pages"; }
-	if ($Message[29] eq "") { $Message[29]="Access"; }
+	if ($Message[29] eq "") { $Message[29]="Viewed pages"; }
 	if ($Message[30] eq "") { $Message[30]="Other words"; }
 	if ($Message[31] eq "") { $Message[31]="Pages not found"; }
 	if ($Message[32] eq "") { $Message[32]="HTTP Error codes"; }
@@ -823,6 +826,7 @@ sub Check_Config {
 	if ($Message[101] eq "") { $Message[101]="After compression"; }
 	if ($Message[102] eq "") { $Message[102]="Total"; }
 	if ($Message[103] eq "") { $Message[103]="different keyphrases"; }
+	if ($Message[104] eq "") { $Message[104]="Entry pages"; }
 }
 
 #--------------------------------------------------------------------
@@ -984,14 +988,15 @@ sub Read_History_File {
 					my $addsider=0;
 					if ($UpdateStats) { $addsider=1; }
 					if (!$UpdateStats) {
-						# In this case we count TotalDifferentPages because we don't fill _sider_p completely
+						# In this case we count TotalDifferentPages because we won't fill _url_p completely
 						$TotalDifferentPages++;
 						if ($HTMLOutput && $QueryString =~ /output=urldetail/i && (!$URLFilter || $field[0] =~ /$URLFilter/)) { $addsider=1; }
 						if ($HTMLOutput && $QueryString !~ /output=/i && $countadd < $MaxNbOfPageShown) { $addsider=1; }
 					}
 					if ($addsider) {					
 						$countadd++;
-						$_sider_p{$field[0]}+=$field[1];
+						if ($field[1] > 0) { $_url_p{$field[0]}+=$field[1]; }
+						if ($field[2] > 0) { $_url_e{$field[0]}+=$field[2]; }
 					}
 				}
 				$_=<HISTORY>;
@@ -1197,7 +1202,7 @@ sub Save_History_File {
 	# Navigation
 	# Save page list in score sorted order to allow to show reports faster and saving memory.
 	print HISTORYTMP "BEGIN_SIDER\n";
-	foreach my $key (sort {$SortDir*$_sider_p{$a} <=> $SortDir*$_sider_p{$b}} keys %_sider_p) { print HISTORYTMP "$key $_sider_p{$key}\n"; next; }
+	foreach my $key (sort {$SortDir*$_url_p{$a} <=> $SortDir*$_url_p{$b}} keys %_url_p) { print HISTORYTMP "$key $_url_p{$key} $_url_e{$key}\n"; next; }
 	print HISTORYTMP "END_SIDER\n";
 	print HISTORYTMP "BEGIN_FILETYPES\n";
 	foreach my $key (keys %_filetypes_h) { print HISTORYTMP "$key $_filetypes_h{$key} $_filetypes_k{$key} $_filetypes_gz_in{$key} $_filetypes_gz_out{$key}\n"; next; }
@@ -1267,7 +1272,7 @@ sub Init_HashArray {
 	%_hostmachine_h = %_hostmachine_k = %_hostmachine_l = %_hostmachine_p =
 	%_keyphrases = %_os_h = %_pagesrefs_h = %_robot_h = %_robot_l = 
 	%_login_h = %_login_p = %_login_k = %_login_l =
-	%_se_referrals_h = %_sider404_h = %_sider_h = %_sider_k = %_sider_p =
+	%_se_referrals_h = %_sider404_h = %_url_p = %_url_e =
 	%_unknownip_l = %_unknownreferer_l =	%_unknownrefererbrowser_l = ();
 }
 
@@ -1280,6 +1285,19 @@ sub Show_Flag_Links {
 	if ($ShowFlagLinks eq "0") { $ShowFlagLinks = ""; }						# For backward compatibility
 	if ($ShowFlagLinks eq "1") { $ShowFlagLinks = "en fr de it nl es"; }	# For backward compatibility
 	my @flaglist=split(/\s+/,$ShowFlagLinks);
+
+	# Build flags link
+	my $NewLinkParams=$QueryString;
+	if ($ENV{"GATEWAY_INTERFACE"}) {
+		$NewLinkParams =~ s/update=[^ &]*//;
+		$NewLinkParams =~ s/lang=[^ &]*//;
+		$NewLinkParams =~ tr/&/&/s; $NewLinkParams =~ s/&$//;
+		if ($NewLinkParams) { $NewLinkParams="${NewLinkParams}&"; }
+	}
+	else {
+		$NewLinkParams=($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&";
+	}
+
 	print "<br>\n";
 	foreach my $flag (@flaglist) {
 		if ($flag ne $CurrentLang) {
@@ -1290,7 +1308,7 @@ sub Show_Flag_Links {
 			if ($flag eq "it") { $lng="Italian"; }
 			if ($flag eq "nl") { $lng="Dutch"; }
 			if ($flag eq "es") { $lng="Spanish"; }
-			print "<a href=\"$DirCgi$PROG.$Extension?".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$flag\"><img src=\"$DirIcons\/flags\/$flag.png\" height=14 border=0 alt=\"$lng\" title=\"$lng\"></a>&nbsp;\n";
+			print "<a href=\"$DirCgi$PROG.$Extension?${NewLinkParams}lang=$flag\"><img src=\"$DirIcons\/flags\/$flag.png\" height=14 border=0 alt=\"$lng\" title=\"$lng\"></a>&nbsp;\n";
 		}
 	}
 }
@@ -1330,7 +1348,18 @@ sub Format_Date {
 	return "$dateformat";
 }
 
-
+#------------------------------------------------------------------------------
+# Function:     Return time elapsed since last call in miliseconds
+# Input:        None
+# Return:       Number of miliseconds elapsed since last call
+#------------------------------------------------------------------------------
+sub GetDelaySinceStart {
+	my ($newseconds, $newmicroseconds) = gettimeofday;			# Try to use Time::HiRes function
+	if ($newseconds eq "gettimeofday") { $newseconds=time(); }	# If not available use standard time function
+	if (! $startseconds) { $startseconds=$newseconds; $startmicroseconds=$newmicroseconds; }
+	my $nbms=$newseconds*1000+int($newmicroseconds/1000)-$startseconds*1000-int($startmicroseconds/1000);
+	return ($nbms);
+}
 
 #--------------------------------------------------------------------
 # MAIN
@@ -1367,6 +1396,7 @@ if ($QueryString =~ /output=urldetail:/i) 	{
 	# A filter can be defined with output=urldetail to reduce number of lines read and showed
 	$URLFilter=$QueryString; $URLFilter =~ s/.*output=urldetail://; $URLFilter =~ s/&.*//; $URLFilter =~ s/ .*//;
 }
+&debug("QUERY_STRING=$QueryString",2);
 
 ($DIR=$0) =~ s/([^\/\\]*)$//; ($PROG=$1) =~ s/\.([^\.]*)$//; $Extension=$1;
 
@@ -1410,12 +1440,12 @@ if (($ENV{"GATEWAY_INTERFACE"} eq "") && ($SiteConfig eq "")) {
 	print "  Hosts list and unresolved IP addresses list\n";
 	print "  Days of week and rush hours\n";
 	print "  Authenticated users\n";
-	print "  Most often viewed pages\n";
+	print "  Viewed and entry pages\n";
 	print "  ".(scalar keys %DomainsHashIDLib)." domains/countries\n";
 	print "  ".(scalar keys %BrowsersHashIDLib)." browsers\n";
 	print "  ".(scalar keys %OSHashLib)." operating systems\n";
 	print "  ".(scalar keys %RobotHashIDLib)." robots\n";
-	print "  ".(scalar keys %SearchEnginesHashIDLib)." search engines (and keywords/keyphrases used from them)\n";
+	print "  ".(scalar keys %SearchEnginesHashIDLib)." search engines (and keyphrases/keywords used from them)\n";
 	print "  All HTTP errors\n";
 	print "  Report by day/month/year\n";
 	print "  And a lot of other advanced options...\n";
@@ -1481,15 +1511,6 @@ $SiteToAnalyzeWithoutwww = $SiteToAnalyze; $SiteToAnalyzeWithoutwww =~ s/www\.//
 if ($FirstDayOfWeek == 1) { @DOWIndex = (1,2,3,4,5,6,0); }
 else { @DOWIndex = (0,1,2,3,4,5,6); }
 
-# Print html header
-&html_head;
-
-if ($DNSLookup) { use Socket; }
-$NewDNSLookup=$DNSLookup;
-%monthlib =  ( "01","$Message[60]","02","$Message[61]","03","$Message[62]","04","$Message[63]","05","$Message[64]","06","$Message[65]","07","$Message[66]","08","$Message[67]","09","$Message[68]","10","$Message[69]","11","$Message[70]","12","$Message[71]" );
-# monthnum must be in english because it's used to translate log date in apache log files which are always in english
-%monthnum =  ( "Jan","01","jan","01","Feb","02","feb","02","Mar","03","mar","03","Apr","04","apr","04","May","05","may","05","Jun","06","jun","06","Jul","07","jul","07","Aug","08","aug","08","Sep","09","sep","09","Oct","10","oct","10","Nov","11","nov","11","Dec","12","dec","12" );
-
 # Check year and month parameters
 if ($QueryString =~ /year=/i) 	{ $YearRequired=$QueryString; $YearRequired =~ s/.*year=//; $YearRequired =~ s/&.*//;  $YearRequired =~ s/ .*//; }
 if ($YearRequired !~ /^[\d][\d][\d][\d]$/) { $YearRequired=$nowyear; }
@@ -1498,8 +1519,23 @@ if ($MonthRequired ne "year" && $MonthRequired !~ /^[\d][\d]$/) { $MonthRequired
 # day is a hidden option. Must not be used (Make results not understandable). Available for users that rename historic files with day.
 if ($QueryString =~ /day=/i)	{ $DayRequired=$QueryString; $DayRequired =~ s/.*day=//; $DayRequired =~ s/&.*//; $DayRequired =~ s/ .*//; }
 
-$BrowsersHashIDLib{"netscape"}="<font color=blue>Netscape</font> <a href=\"$DirCgi$PROG.$Extension?output=browserdetail&".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang\">($Message[58])</a>";
-$BrowsersHashIDLib{"msie"}="<font color=blue>MS Internet Explorer</font> <a href=\"$DirCgi$PROG.$Extension?output=browserdetail&".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang\">($Message[58])</a>";
+# Print html header
+&html_head;
+
+if ($DNSLookup) {
+	eval 'use Socket';
+	if ($@){
+		error("Error: The perl 'Socket' module is not installed. Install it from CPAN or use a more 'standard' perl interpreter.\n");
+	}
+}
+
+$NewDNSLookup=$DNSLookup;
+%monthlib =  ( "01","$Message[60]","02","$Message[61]","03","$Message[62]","04","$Message[63]","05","$Message[64]","06","$Message[65]","07","$Message[66]","08","$Message[67]","09","$Message[68]","10","$Message[69]","11","$Message[70]","12","$Message[71]" );
+# monthnum must be in english because it's used to translate log date in apache log files which are always in english
+%monthnum =  ( "Jan","01","jan","01","Feb","02","feb","02","Mar","03","mar","03","Apr","04","apr","04","May","05","may","05","Jun","06","jun","06","Jul","07","jul","07","Aug","08","aug","08","Sep","09","sep","09","Oct","10","oct","10","Nov","11","nov","11","Dec","12","dec","12" );
+
+$BrowsersHashIDLib{"netscape"}="<font color=blue>Netscape</font> <a href=\"$DirCgi$PROG.$Extension?${LinkParamB}output=browserdetail\">($Message[58])</a>";
+$BrowsersHashIDLib{"msie"}="<font color=blue>MS Internet Explorer</font> <a href=\"$DirCgi$PROG.$Extension?${LinkParamB}output=browserdetail\">($Message[58])</a>";
 
 # Init all global variables
 if (! @HostAliases) {
@@ -1714,7 +1750,9 @@ if ($UpdateStats) {
 	&debug("Open log file \"$LogFile\"");
 	open(LOG,"$LogFile") || error("Error: Couldn't open server log file \"$LogFile\" : $!");
 
-	$starttime=time();
+	# Reste counter for benchmark (first call to GetDelaySinceStart
+	GetDelaySinceStart();
+
 	while (<LOG>)
 	{
 		if (/^#/) { next; }									# Ignore comment lines (ISS writes such comments)
@@ -1761,7 +1799,10 @@ if ($UpdateStats) {
 		}
 		else {
 			if ($timeconnexion <= $LastLine{$yearmonth}) {
-				if ($ShowSteps && ($NbOfLinesRead % $NbOfLinesForBenchmark == 0)) { print "$NbOfLinesRead lines read already processed (".(time()-$starttime)." seconds, ".($NbOfLinesRead/(time()-$starttime+1))." lines/seconds)\n"; }
+				if ($ShowSteps && ($NbOfLinesRead % $NbOfLinesForBenchmark == 0)) {
+					my $delay=GetDelaySinceStart();
+					print "$NbOfLinesRead lines read already processed ($delay ms, ".int(1000*$NbOfLinesRead/($delay>0?$delay:1))." lines/seconds)\n";
+				}
 				next;
 			}	# Already processed
 			# We found a new line. This will stop comparison "<=" between timeconnexion and LastLine (we should have only new lines now)
@@ -1774,7 +1815,10 @@ if ($UpdateStats) {
 		# Record is approved. We found a new line
 		#----------------------------------------
 		$NbOfNewLinesProcessed++;
-		if ($ShowSteps && ($NbOfNewLinesProcessed % $NbOfLinesForBenchmark == 0)) { print "$NbOfNewLinesProcessed lines processed (".(time()-$starttime)." seconds, ".($NbOfNewLinesProcessed/(time()-$starttime+1))." lines/seconds)\n"; }
+		if ($ShowSteps && ($NbOfNewLinesProcessed % $NbOfLinesForBenchmark == 0)) {
+			my $delay=GetDelaySinceStart();
+			print "$NbOfNewLinesProcessed lines processed ($delay ms, ".int(1000*$NbOfNewLinesProcessed/($delay>0?$delay:1))." lines/seconds)\n";
+		}
 
 		$LastLine{$yearmonth} = $timeconnexion;
 
@@ -1812,10 +1856,11 @@ if ($UpdateStats) {
 		$UserAgent = $field[$pos_agent];
 		$UserAgent =~ tr/A-Z/a-z/;
 
-		# Robot ? If yes, we stop here
-		#-----------------------------
+		# Robot ? If yes, we stop here 
+		#-------------------------------------------------------------------------
 		if (!$TmpHashNotRobot{$UserAgent}) {	# TmpHashNotRobot is a temporary hash table to increase speed
-
+			# If made on each record -> -1300 rows/seconds
+			
 			# study $UserAgent
 
 			my $foundrobot=0;
@@ -1854,7 +1899,7 @@ if ($UpdateStats) {
 		if ($found) {
 			$extension=$1; $extension =~ tr/A-Z/a-z/;
 			# Check if not a page
-			foreach $cursor (@NotPageList) { if ($extension =~ /$cursor/) { $PageBool=0; last; } }
+			foreach $cursor (@NotPageList) { if ($extension eq $cursor) { $PageBool=0; last; } }
 		} else {
 			$extension="Unknown";
 		}
@@ -1880,12 +1925,10 @@ if ($UpdateStats) {
 			$DayPages{$dayconnexion}++;
 			$MonthPages{$yearmonth}++;
 			$_time_p[int($dateparts[3])]++;												#Count accesses for hour (page)
-			$_sider_p{$field[$pos_url]}++; 												#Count accesses for page (page)
+			$_url_p{$field[$pos_url]}++; 												#Count accesses for page (page)
 			}
 		$_time_h[int($dateparts[3])]++; $MonthHits{$yearmonth}++; $DayHits{$dayconnexion}++;	#Count accesses for hour (hit)
 		$_time_k[int($dateparts[3])]+=$field[$pos_size]; $MonthBytes{$yearmonth}+=$field[$pos_size]; $DayBytes{$dayconnexion}+=$field[$pos_size];	#Count accesses for hour (kb)
-		$_sider_h{$field[$pos_url]}++;													#Count accesses for page (hit)
-		$_sider_k{$field[$pos_url]}+=$field[$pos_size];									#Count accesses for page (kb)
 
 		# Analize login
 		#--------------
@@ -1932,8 +1975,11 @@ if ($UpdateStats) {
 		    # If we don't do lookup or if it failed, we still have an IP address in $Host
 		    if (!$NewDNSLookup || $newip eq "ip") {
 				  if ($PageBool) {
-				  		if ($timeconnexion > ($_unknownip_l{$Host}+$VisitTimeOut)) { $MonthVisits{$yearmonth}++; }
-						if (! $_unknownip_l{$Host}) { $MonthUnique{$yearmonth}++; $MonthHostsUnknown{$yearmonth}++; }
+				  		if ($timeconnexion > ($_unknownip_l{$Host}+$VisitTimeOut)) {
+				  			$MonthVisits{$yearmonth}++;
+							if (! $_unknownip_l{$Host}) { $MonthUnique{$yearmonth}++; $MonthHostsUnknown{$yearmonth}++; }
+							$_url_e{$field[$pos_url]}++; 	# Increase 'entry' page
+				  		}
 						$_unknownip_l{$Host}=$timeconnexion;		# Table of (all IP if !NewDNSLookup) or (all unknown IP) else
 						$_hostmachine_p{"Unknown"}++;
 						$_domener_p{"ip"}++;
@@ -1961,8 +2007,12 @@ if ($UpdateStats) {
 			# Count hostmachine
 			if (!$FullHostName) { s/^[\w\-]+\.//; };
 			if ($PageBool) {
-				if ($timeconnexion > ($_hostmachine_l{$_}+$VisitTimeOut)) { $MonthVisits{$yearmonth}++; }
-				if (! $_hostmachine_l{$_}) { $MonthUnique{$yearmonth}++; }
+				if ($timeconnexion > ($_hostmachine_l{$_}+$VisitTimeOut)) {
+					# This is a new visit
+					$MonthVisits{$yearmonth}++;
+					if (! $_hostmachine_l{$_}) { $MonthUnique{$yearmonth}++; }
+					$_url_e{$field[$pos_url]}++; 	# Increase 'entry' page
+				}
 				$_hostmachine_p{$_}++;
 				$_hostmachine_l{$_}=$timeconnexion;
 				}
@@ -1984,7 +2034,7 @@ if ($UpdateStats) {
 			}
 		}
 
-		if ($UserAgent) {
+		if ($UserAgent) {	 # Made on each record -> -100 rows/seconds
 
 			# Analyze: Browser
 			#-----------------
@@ -2063,25 +2113,27 @@ if ($UpdateStats) {
 			}
 			else {	
 				# HTML link ?
-				if ($field[$pos_referer] =~ /^http/i) {
-					$internal_link=0;
-					if ($field[$pos_referer] =~ /^http(s|):\/\/(www\.|)$SiteToAnalyzeWithoutwww/i) { $internal_link=1; }
+				if ($field[$pos_referer] =~ /^http(s|):\/\/(.*)/i) {
+					my $refererwithouthttp=$2;
+					my $internal_link=0;
+					if ($refererwithouthttp =~ /^(www\.|)$SiteToAnalyzeWithoutwww/i) { $internal_link=1; }
 					else {
-						foreach $HostAlias (@HostAliases) {
-							if ($field[$pos_referer] =~ /^http(s|):\/\/$HostAlias/i) { $internal_link=1; last; }
+						foreach my $key (@HostAliases) {
+							if ($refererwithouthttp =~ /^$key/i) { $internal_link=1; last; }
 							}
 					}
-	
+
 					if ($internal_link) {
 					    # Intern (This hit came from another page of the site)
 						if ($PageBool) { $_from_p[4]++; }
 					    $_from_h[4]++;
 						$found=1;
 					}
-					else {
-					    # Extern (This hit came from an external web site)
-						my @refurl=split(/\?/,$field[$pos_referer]);
+					else {	# If made on each record -> -1700 rows/seconds
+					    # Extern (This hit came from an external web site). 
+						my @refurl=split(/\?/,$refererwithouthttp);
 						$refurl[0] =~ tr/A-Z/a-z/;
+						
 					    foreach my $key (keys %SearchEnginesHashIDLib) {
 							if ($refurl[0] =~ /$key/) {
 								# This hit came from the search engine $key
@@ -2141,11 +2193,12 @@ if ($UpdateStats) {
 								last;
 							}
 						}
+						
 						if (!$found) {
 							# This hit came from a site other than a search engine
 							if ($PageBool) { $_from_p[3]++; }
 							$_from_h[3]++;
-							if ($field[$pos_referer] =~ /http:\/\/[^\/]*\/$/i) { $field[$pos_referer] =~ s/\/$//; }	# To make htpp://www.mysite.com and http://www.mysite.com/ as same referer
+							if ($refurl[0] =~ /\/$/) { $field[$pos_referer] =~ s/\/$//; }	# To make http://www.mysite.com/ as same referer then http://www.mysite.com
 							$_pagesrefs_h{$field[$pos_referer]}++;
 							$found=1;
 						}
@@ -2303,6 +2356,24 @@ if ($HTMLOutput) {
 	</script>
 EOF
 
+	# Define the LinkParamA and LinkParamB for main chart
+	my $LinkParamA=""; my $LinkParamB="";
+	my $NewLinkParams=${QueryString};
+	$NewLinkParams =~ s/update=[^ &]*//;
+	$NewLinkParams =~ s/output=[^ &]*//;
+	$NewLinkParams =~ tr/&/&/s; $NewLinkParams =~ s/&$//;
+	if ($ENV{"GATEWAY_INTERFACE"} ne "") {
+		# If runned from a browser, we keep same parameters string
+		if ($NewLinkParams) {
+			$LinkParamA="?$NewLinkParams";
+			$LinkParamB="$NewLinkParams&";
+		}
+	}
+	else {
+		# If runned from commandline, we need to build parameters string
+		$LinkParamA="?".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang";
+		$LinkParamB=($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang&";
+	}
 
 	# MENU
 	#---------------------------------------------------------------------
@@ -2316,50 +2387,57 @@ EOF
 		if ($LastUpdate) { print Format_Date($LastUpdate); }
 		else { print "<font color=#880000>Never updated</font>"; }
 		print "</font>&nbsp; &nbsp; &nbsp; &nbsp;";
-		if ($AllowToUpdateStatsFromBrowser) { print "<a href=\"$DirCgi$PROG.$Extension?update=1&".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang\">$Message[74]</a>"; }
+		if ($AllowToUpdateStatsFromBrowser) {
+			my $NewLinkParams=${QueryString};
+			$NewLinkParams =~ s/update=[^ &]*//;
+			$NewLinkParams =~ tr/&/&/s; $NewLinkParams =~ s/&$//;
+			if ($NewLinkParams) { $NewLinkParams="${NewLinkParams}&"; }
+			print "<a href=\"$DirCgi$PROG.$Extension?${NewLinkParams}update=1\">$Message[74]</a>";
+		}
 		print "</td></tr>\n";
 		if ($QueryString !~ /output=/i) {	# If main page asked
 			print "<tr><td>&nbsp;</td></tr>\n";
 			# When
 			print "<tr><th class=AWL>$Message[93] : </th>";
 			print "<td class=AWL>";
-			if ($ShowMonthDayStats) { print "<a href=\"$DirCgi$PROG.$Extension?".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang#SUMMARY\">$Message[5]/$Message[4]</a> &nbsp; "; }
-			if ($ShowDaysOfWeekStats) { print "<a href=\"$DirCgi$PROG.$Extension?".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang#DAYOFWEEK\">$Message[91]</a> &nbsp; "; }
-			if ($ShowHoursStats) { print "<a href=\"$DirCgi$PROG.$Extension?".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang#HOUR\">$Message[20]</a> &nbsp; "; }
+			if ($ShowMonthDayStats)		 { print "<a href=\"$DirCgi$PROG.$Extension${LinkParamA}#SUMMARY\">$Message[5]/$Message[4]</a> &nbsp; "; }
+			if ($ShowDaysOfWeekStats)	 { print "<a href=\"$DirCgi$PROG.$Extension${LinkParamA}#DAYOFWEEK\">$Message[91]</a> &nbsp; "; }
+			if ($ShowHoursStats)		 { print "<a href=\"$DirCgi$PROG.$Extension${LinkParamA}#HOUR\">$Message[20]</a> &nbsp; "; }
 			# Who
 			print "<tr><th class=AWL>$Message[92] : </th>";
 			print "<td class=AWL>";
-			if ($ShowDomainsStats) { print "<a href=\"$DirCgi$PROG.$Extension?".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang#DOMAINS\">$Message[17]</a> &nbsp; "; }
-			if ($ShowHostsStats) { print "<a href=\"$DirCgi$PROG.$Extension?".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang#VISITOR\">".ucfirst($Message[81])."</a> &nbsp; "; }
-			if ($ShowHostsStats) { print "<a href=\"$DirCgi$PROG.$Extension?output=lasthosts&".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang\">$Message[9]</a> &nbsp;\n"; }
-			if ($ShowHostsStats) { print "<a href=\"$DirCgi$PROG.$Extension?output=unknownip&".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang\">$Message[45]</a> &nbsp;\n"; }
-			if ($ShowAuthenticatedUsers) { print "<a href=\"$DirCgi$PROG.$Extension?".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang#LOGIN\">$Message[94]</a> &nbsp; "; }
-			if ($ShowRobotsStats) { print "<a href=\"$DirCgi$PROG.$Extension?".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang#ROBOTS\">$Message[53]</a> &nbsp; "; }
+			if ($ShowDomainsStats)		 { print "<a href=\"$DirCgi$PROG.$Extension${LinkParamA}#DOMAINS\">$Message[17]</a> &nbsp; "; }
+			if ($ShowHostsStats)		 { print "<a href=\"$DirCgi$PROG.$Extension${LinkParamA}#VISITOR\">".ucfirst($Message[81])."</a> &nbsp; "; }
+			if ($ShowHostsStats)		 { print "<a href=\"$DirCgi$PROG.$Extension?${LinkParamB}output=lasthosts\">$Message[9]</a> &nbsp;\n"; }
+			if ($ShowHostsStats)		 { print "<a href=\"$DirCgi$PROG.$Extension?${LinkParamB}output=unknownip\">$Message[45]</a> &nbsp;\n"; }
+			if ($ShowAuthenticatedUsers) { print "<a href=\"$DirCgi$PROG.$Extension${LinkParamA}#LOGIN\">$Message[94]</a> &nbsp; "; }
+			if ($ShowRobotsStats)		 { print "<a href=\"$DirCgi$PROG.$Extension${LinkParamA}#ROBOTS\">$Message[53]</a> &nbsp; "; }
 			print "<br></td></tr>";
 			# Navigation
 			print "<tr><th class=AWL>$Message[72] : </th>";
 			print "<td class=AWL>";
-			if ($ShowPagesStats) { print "<a href=\"$DirCgi$PROG.$Extension?output=urldetail&".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang\">$Message[19]</a> &nbsp; "; }
-			if ($ShowFileTypesStats) { print "<a href=\"$DirCgi$PROG.$Extension?".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang#FILETYPES\">$Message[73]</a> &nbsp; "; }
-			if ($ShowFileSizesStats) {  }
-			if ($ShowOSStats) { print "<a href=\"$DirCgi$PROG.$Extension?".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang#OS\">$Message[59]</a> &nbsp; "; }
-			if ($ShowBrowsersStats) { print "<a href=\"$DirCgi$PROG.$Extension?".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang#BROWSER\">$Message[21]</a> &nbsp; "; }
-			if ($ShowBrowsersStats) { print "<a href=\"$DirCgi$PROG.$Extension?output=browserdetail&".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang\">$Message[33]</a> &nbsp; "; }
-			if ($ShowBrowsersStats) { print "<a href=\"$DirCgi$PROG.$Extension?output=browserdetail&".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang\">$Message[34]</a><br></td></tr>\n"; }
+			if ($ShowPagesStats)		 { print "<a href=\"$DirCgi$PROG.$Extension?${LinkParamB}output=urldetail\">$Message[29]</a> &nbsp; "; }
+			if ($ShowPagesStats)		 { print "<a href=\"$DirCgi$PROG.$Extension${LinkParamA}#ENTRY\">$Message[104]</a> &nbsp; "; }
+			if ($ShowFileTypesStats)	 { print "<a href=\"$DirCgi$PROG.$Extension${LinkParamA}#FILETYPES\">$Message[73]</a> &nbsp; "; }
+			if ($ShowFileSizesStats)	 {  }
+			if ($ShowOSStats)			 { print "<a href=\"$DirCgi$PROG.$Extension${LinkParamA}#OS\">$Message[59]</a> &nbsp; "; }
+			if ($ShowBrowsersStats)		 { print "<a href=\"$DirCgi$PROG.$Extension${LinkParamA}#BROWSER\">$Message[21]</a> &nbsp; "; }
+			if ($ShowBrowsersStats)		 { print "<a href=\"$DirCgi$PROG.$Extension?${LinkParamB}output=browserdetail\">$Message[33]</a> &nbsp; "; }
+			if ($ShowBrowsersStats)		 { print "<a href=\"$DirCgi$PROG.$Extension?${LinkParamB}output=browserdetail\">$Message[34]</a><br></td></tr>\n"; }
 			# Referers
 			print "<tr><th class=AWL>$Message[23] : </th>";
 			print "<td class=AWL>";
-			if ($ShowOriginStats) { print "<a href=\"$DirCgi$PROG.$Extension?".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang#REFERER\">$Message[37]</a> &nbsp; "; }
-			if ($ShowKeyphrasesStats) { print "<a href=\"$DirCgi$PROG.$Extension?".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang#SEARCHWORDS\">$Message[24]</a><br></td></tr>\n"; }
+			if ($ShowOriginStats)		 { print "<a href=\"$DirCgi$PROG.$Extension${LinkParamA}#REFERER\">$Message[37]</a> &nbsp; "; }
+			if ($ShowKeyphrasesStats)	 { print "<a href=\"$DirCgi$PROG.$Extension${LinkParamA}#SEARCHKEYS\">$Message[24]</a><br></td></tr>\n"; }
 			# Others
 			print "<tr><th class=AWL>$Message[2] : </th>";
 			print "<td class=AWL>";
-			if ($ShowCompressionStats) { print "<a href=\"$DirCgi$PROG.$Extension?".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang#FILETYPES\">$Message[98]</a> &nbsp; "; }
-			if ($ShowHTTPErrorsStats) { print "<a href=\"$DirCgi$PROG.$Extension?".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang#ERRORS\">$Message[22]</a> &nbsp; "; }
-			if ($ShowHTTPErrorsStats) { print "<a href=\"$DirCgi$PROG.$Extension?output=notfounderror&".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang\">$Message[31]</a><br></td></tr>\n"; }
+			if ($ShowCompressionStats)	 { print "<a href=\"$DirCgi$PROG.$Extension${LinkParamA}#FILETYPES\">$Message[98]</a> &nbsp; "; }
+			if ($ShowHTTPErrorsStats)	 { print "<a href=\"$DirCgi$PROG.$Extension${LinkParamA}#ERRORS\">$Message[22]</a> &nbsp; "; }
+			if ($ShowHTTPErrorsStats)	 { print "<a href=\"$DirCgi$PROG.$Extension?${LinkParamB}output=notfounderror\">$Message[31]</a><br></td></tr>\n"; }
 		}
 		else {
-			if ($ShowBackLink) { print "<tr><td class=AWL><a href=\"$DirCgi$PROG.$Extension?".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang\">$Message[76]</a></td></tr>\n"; }
+			if ($ShowBackLink) { print "<tr><td class=AWL><a href=\"$DirCgi$PROG.$Extension${LinkParamA}\">$Message[76]</a></td></tr>\n"; }
 		}
 		print "</table>\n";
 		print "<br>\n<hr>\n";
@@ -2391,24 +2469,24 @@ EOF
 		if ($AddOn) { AddOn_Filter(); }
 		print "$CENTER<a name=\"URLDETAIL\">&nbsp;</a><BR>";
 		&tab_head($Message[19],19);
-		if ($URLFilter) { print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[79]: <b>$URLFilter</b> - ".(scalar keys %_sider_p)." $Message[28]</TH>"; }
-		else { print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>".(scalar keys %_sider_p)."&nbsp; $Message[28]</TH>"; }
+		if ($URLFilter) { print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[79]: <b>$URLFilter</b> - ".(scalar keys %_url_p)." $Message[28]</TH>"; }
+		else { print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>".(scalar keys %_url_p)."&nbsp; $Message[28]</TH>"; }
 		print "<TH bgcolor=\"#$color_p\">&nbsp;$Message[29]&nbsp;</TH>";
 		if ($AddOn) { AddOn_ShowFields(""); }
 		print "<TH>&nbsp;</TH></TR>\n";
-		$max_p=1; foreach my $key (values %_sider_p) { if ($key > $max_p) { $max_p = $key; } }
+		$max_p=1; foreach my $key (values %_url_p) { if ($key > $max_p) { $max_p = $key; } }
 		my $count=0; my $rest=0;
-		foreach my $key (sort { $SortDir*$_sider_p{$a} <=> $SortDir*$_sider_p{$b} } keys (%_sider_p)) {
-			if ($count>=$MAXROWS) { $rest+=$_sider_p{$key}; next; }
-			if ($_sider_p{$key}<$MinHitFile) { $rest+=$_sider_p{$key}; next; }
+		foreach my $key (sort { $SortDir*$_url_p{$a} <=> $SortDir*$_url_p{$b} } keys (%_url_p)) {
+			if ($count>=$MAXROWS) { $rest+=$_url_p{$key}; next; }
+			if ($_url_p{$key}<$MinHitFile) { $rest+=$_url_p{$key}; next; }
 	    	print "<TR><TD CLASS=AWL>";
 			my $nompage=$Aliases{$key};
 			if ($nompage eq "") { $nompage=$key; }
 			if (length($nompage)>$MaxLengthOfURL) { $nompage=substr($nompage,0,$MaxLengthOfURL)."..."; }
 		    if ($ShowLinksOnUrl) { print "<A HREF=\"http://$SiteToAnalyze$key\">$nompage</A>"; }
 		    else              	 { print "$nompage"; }
-		    my $bredde=int($BarWidth*$_sider_p{$key}/$max_p)+1;
-			print "</TD><TD>$_sider_p{$key}</TD>";
+		    my $bredde=int($BarWidth*$_url_p{$key}/$max_p)+1;
+			print "</TD><TD>$_url_p{$key}</TD>";
 			if ($AddOn) { AddOn_ShowFields($key); }
 			print "<TD CLASS=AWL><IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_p\" WIDTH=$bredde HEIGHT=8></TD></TR>\n";
 			$count++;
@@ -2525,8 +2603,8 @@ EOF
 		$TotalHostsKnown+=$MonthHostsKnown{$YearRequired.$monthix};
 		$TotalHostsUnknown+=$MonthHostsUnknown{$YearRequired.$monthix};
 	}
-	# TotalDifferentPages (if not already specifically counted, we init it from _sider_p hash table)
-	if (!$TotalDifferentPages) { $TotalDifferentPages=scalar keys %_sider_p; }
+	# TotalDifferentPages (if not already specifically counted, we init it from _url_p hash table)
+	if (!$TotalDifferentPages) { $TotalDifferentPages=scalar keys %_url_p; }
 	# TotalPages TotalHits TotalBytes
 	for (my $ix=0; $ix<=23; $ix++) { $TotalPages+=$_time_p[$ix]; $TotalHits+=$_time_h[$ix]; $TotalBytes+=$_time_k[$ix]; }
 	# TotalErrors
@@ -2547,8 +2625,13 @@ EOF
 		if ($MonthRequired eq "year") { print "<TD colspan=3 rowspan=2><font style=\"font: 18px arial,verdana,helvetica; font-weight: normal\">$Message[6] $YearRequired</font><br>"; }
 		else { print "<TD colspan=3 rowspan=2><font style=\"font: 18px arial,verdana,helvetica; font-weight: normal\">$Message[5] $monthlib{$MonthRequired} $YearRequired</font><br>"; }
 		# Show links for possible years
+		my $NewLinkParams=${QueryString};
+		$NewLinkParams =~ s/year=[^ &]*//;
+		$NewLinkParams =~ s/month=[^ &]*//;
+		$NewLinkParams =~ tr/&/&/s; $NewLinkParams =~ s/&$//;
+		if ($NewLinkParams) { $NewLinkParams="${NewLinkParams}&"; }
 		foreach my $key (keys %listofyears) {
-			print "<a href=\"$DirCgi$PROG.$Extension?".($SiteConfig?"config=$SiteConfig&":"")."year=$key&month=year&lang=$Lang\">$Message[6] $key</a> &nbsp; ";
+			print "<a href=\"$DirCgi$PROG.$Extension?${NewLinkParams}year=$key&month=year\">$Message[6] $key</a> &nbsp; ";
 		}
 		print "</TD>";
 		print "<TD><b>$Message[9]</b></TD></TR>";
@@ -2598,7 +2681,7 @@ EOF
 		print "</TR><TR>";
 		for (my $ix=1; $ix<=12; $ix++) {
 			my $monthix=$ix; if ($monthix < 10) { $monthix="0$monthix"; }
-			print "<TD valign=middle><a href=\"$DirCgi$PROG.$Extension?".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$monthix&lang=$Lang\">$monthlib{$monthix}</a></TD>";
+			print "<TD valign=middle><a href=\"$DirCgi$PROG.$Extension?${NewLinkParams}year=$YearRequired&month=$monthix\">$monthlib{$monthix}</a></TD>";
 		}
 		print "</TR></TABLE><br>";
 		# Show daily stats
@@ -2806,8 +2889,11 @@ EOF
 			if ($count >= $MaxNbOfDomain) { last; }
 			my $bredde_p=0;my $bredde_h=0;my $bredde_k=0;
 			if ($max_h > 0) { $bredde_p=int($BarWidth*$_domener_p{$key}/$max_h)+1; }	# use max_h to enable to compare pages with hits
+			if ($_domener_p{$key} && $bredde_p==1) { $bredde_p=2; }
 			if ($max_h > 0) { $bredde_h=int($BarWidth*$_domener_h{$key}/$max_h)+1; }
+			if ($_domener_h{$key} && $bredde_h==1) { $bredde_h=2; }
 			if ($max_k > 0) { $bredde_k=int($BarWidth*$_domener_k{$key}/$max_k)+1; }
+			if ($_domener_k{$key} && $bredde_k==1) { $bredde_k=2; }
 			if ($key eq "ip") {
 				print "<TR><TD><IMG SRC=\"$DirIcons\/flags\/$key.png\" height=14></TD><TD CLASS=AWL>$Message[0]</TD><TD>$key</TD>";
 			}
@@ -2816,8 +2902,8 @@ EOF
 			}
 			print "<TD>$_domener_p{$key}</TD><TD>$_domener_h{$key}</TD><TD>".Format_Bytes($_domener_k{$key})."</TD>";
 			print "<TD CLASS=AWL>";
-			print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_p\" WIDTH=$bredde_p HEIGHT=6 ALT=\"$Message[56]: $_domener_p{$key}\" title=\"$Message[56]: $_domener_p{$key}\"><br>\n";
-			print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_h\" WIDTH=$bredde_h HEIGHT=6 ALT=\"$Message[57]: $_domener_h{$key}\" title=\"$Message[57]: $_domener_h{$key}\"><br>\n";
+			print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_p\" WIDTH=$bredde_p HEIGHT=6 ALT=\"$Message[56]: ".int($_domener_p{$key})."\" title=\"$Message[56]: ".int($_domener_p{$key})."\"><br>\n";
+			print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_h\" WIDTH=$bredde_h HEIGHT=6 ALT=\"$Message[57]: ".int($_domener_h{$key})."\" title=\"$Message[57]: ".int($_domener_h{$key})."\"><br>\n";
 			print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_k\" WIDTH=$bredde_k HEIGHT=6 ALT=\"$Message[75]: ".Format_Bytes($_domener_k{$key})."\" title=\"$Message[75]: ".Format_Bytes($_domener_k{$key})."\">";
 			print "</TD></TR>\n";
 			$total_p += $_domener_p{$key};
@@ -2831,12 +2917,15 @@ EOF
 		if ($rest_p > 0) { 	# All other domains (known or not)
 			my $bredde_p=0;my $bredde_h=0;my $bredde_k=0;
 			if ($max_h > 0) { $bredde_p=int($BarWidth*$rest_p/$max_h)+1; }	# use max_h to enable to compare pages with hits
+			if ($rest_p{$key} && $bredde_p==1) { $bredde_p=2; }
 			if ($max_h > 0) { $bredde_h=int($BarWidth*$rest_h/$max_h)+1; }
+			if ($rest_h{$key} && $bredde_h==1) { $bredde_h=2; }
 			if ($max_k > 0) { $bredde_k=int($BarWidth*$rest_k/$max_k)+1; }
+			if ($rest_k{$key} && $bredde_k==1) { $bredde_k=2; }
 			print "<TR><TD colspan=3 CLASS=AWL><font color=blue>$Message[2]</font></TD><TD>$rest_p</TD><TD>$rest_h</TD><TD>".Format_Bytes($rest_k)."</TD>\n";
 			print "<TD CLASS=AWL>";
-			print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_p\" WIDTH=$bredde_p HEIGHT=6 ALT=\"$Message[56]: $rest_p\" title=\"$Message[56]: $rest_p\"><br>\n";
-			print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_h\" WIDTH=$bredde_h HEIGHT=6 ALT=\"$Message[57]: $rest_h\" title=\"$Message[57]: $rest_h\"><br>\n";
+			print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_p\" WIDTH=$bredde_p HEIGHT=6 ALT=\"$Message[56]: ".int($rest_p)."\" title=\"$Message[56]: ".int($rest_p)."\"><br>\n";
+			print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_h\" WIDTH=$bredde_h HEIGHT=6 ALT=\"$Message[57]: ".int($rest_h)."\" title=\"$Message[57]: ".int($rest_h)."\"><br>\n";
 			print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_k\" WIDTH=$bredde_k HEIGHT=6 ALT=\"$Message[75]: ".Format_Bytes($rest_k)."\" title=\"$Message[75]: ".Format_Bytes($rest_k)."\">";
 			print "</TD></TR>\n";
 		}
@@ -2848,7 +2937,7 @@ EOF
 	if ($ShowHostsStats) {
 		print "$CENTER<a name=\"VISITOR\">&nbsp;</a><BR>";
 		$MaxNbOfHostsShown = $TotalHostsKnown+($_hostmachine_h{"Unknown"}?1:0) if $MaxNbOfHostsShown > $TotalHostsKnown;
-		&tab_head("$Message[81] ($Message[77] $MaxNbOfHostsShown) &nbsp; - &nbsp; <a href=\"$DirCgi$PROG.$Extension?output=lasthosts&".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang\">$Message[9]</a>",19);
+		&tab_head("$Message[81] ($Message[77] $MaxNbOfHostsShown) &nbsp; - &nbsp; <a href=\"$DirCgi$PROG.$Extension?${LinkParamB}output=lasthosts\">$Message[9]</a>",19);
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[81] : $TotalHostsKnown $Message[82], $TotalHostsUnknown $Message[1] - $TotalUnique $Message[11]</TH><TH bgcolor=\"#$color_p\" width=80>$Message[56]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH bgcolor=\"#$color_k\" width=80>$Message[75]</TH><TH width=120>$Message[9]</TH></TR>\n";
 		$total_p=$total_h=$total_k=0;
 		$count=0;
@@ -2856,7 +2945,7 @@ EOF
 			if ($count>=$MaxNbOfPageShown) { last; }
 			if ($_hostmachine_h{$key}<$MinHitHost) { last; }
 			if ($key eq "Unknown") {
-				print "<TR><TD CLASS=AWL><a href=\"$DirCgi$PROG.$Extension?output=unknownip&".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang\">$Message[1]</a></TD><TD>$_hostmachine_p{$key}</TD><TD>$_hostmachine_h{$key}</TD><TD>".Format_Bytes($_hostmachine_k{$key})."</TD><TD><a href=\"$DirCgi$PROG.$Extension?output=unknownip&".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang\">$Message[3]</a></TD></TR>\n";
+				print "<TR><TD CLASS=AWL><a href=\"$DirCgi$PROG.$Extension?${LinkParamB}output=unknownip\">$Message[1]</a></TD><TD>$_hostmachine_p{$key}</TD><TD>$_hostmachine_h{$key}</TD><TD>".Format_Bytes($_hostmachine_k{$key})."</TD><TD><a href=\"$DirCgi$PROG.$Extension?${LinkParamB}output=unknownip\">$Message[3]</a></TD></TR>\n";
 				}
 			else {
 				print "<tr><td CLASS=AWL>$key</td><TD>$_hostmachine_p{$key}</TD><TD>$_hostmachine_h{$key}</TD><TD>".Format_Bytes($_hostmachine_k{$key})."</TD>";
@@ -2930,23 +3019,30 @@ EOF
 	# BY PAGE
 	#-------------------------
 	if ($ShowPagesStats) {
-		print "$CENTER<a name=\"PAGE\">&nbsp;</a><BR>";
+		print "$CENTER<a name=\"PAGE\">&nbsp;</a><a name=\"ENTRY\">&nbsp;</a><BR>";
 		$MaxNbOfPageShown = $TotalDifferentPages if $MaxNbOfPageShown > $TotalDifferentPages;
-		&tab_head("$Message[19] ($Message[77] $MaxNbOfPageShown) &nbsp; - &nbsp; <a href=\"$DirCgi$PROG.$Extension?output=urldetail&".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang\">$Message[80]</a>",19);
-		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$TotalDifferentPages $Message[28]</TH>";
-		$max_p=1; foreach my $key (values %_sider_p) { if ($key > $max_p) { $max_p = $key; } }
+		&tab_head("$Message[19] ($Message[77] $MaxNbOfPageShown) &nbsp; - &nbsp; <a href=\"$DirCgi$PROG.$Extension?${LinkParamB}output=urldetail\">$Message[80]</a>",19);
+		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$TotalDifferentPages $Message[28]</TH><TH bgcolor=\"#$color_p\" width=80>$Message[29]</TH><TH bgcolor=\"#$color_s\" width=80>$Message[104]</TH><TH>&nbsp;</TH></TR>\n";
+		$max_p=1; foreach my $key (values %_url_p) { if ($key > $max_p) { $max_p = $key; } }
 		$count=0; $rest_p=0;
-		foreach my $key (sort { $SortDir*$_sider_p{$a} <=> $SortDir*$_sider_p{$b} } keys (%_sider_p)) {
-			if ($count>=$MaxNbOfPageShown) { $rest_p+=$_sider_p{$key}; next; }
-			if ($_sider_p{$key}<$MinHitFile) { $rest_p+=$_sider_p{$key}; next; }
+		foreach my $key (sort { $SortDir*$_url_p{$a} <=> $SortDir*$_url_p{$b} } keys (%_url_p)) {
+			if ($count>=$MaxNbOfPageShown) { $rest_p+=$_url_p{$key}; next; }
+			if ($_url_p{$key}<$MinHitFile) { $rest_p+=$_url_p{$key}; next; }
 		    print "<TR><TD CLASS=AWL>";
 			my $nompage=$Aliases{$key};
 			if ($nompage eq "") { $nompage=$key; }
 			if (length($nompage)>$MaxLengthOfURL) { $nompage=substr($nompage,0,$MaxLengthOfURL)."..."; }
 			if ($ShowLinksOnUrl) { print "<A HREF=\"http://$SiteToAnalyze$key\">$nompage</A>"; }
 			else              	 { print "$nompage"; }
-			my $bredde=int($BarWidth*$_sider_p{$key}/$max_p)+1;
-			print "</TD><TD>$_sider_p{$key}</TD><TD CLASS=AWL><IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_p\" WIDTH=$bredde HEIGHT=8 ALT=\"$Message[56]: $_sider_p{$key}\" title=\"$Message[56]: $_sider_p{$key}\"></TD></TR>\n";
+			my $bredde_p=0; my $bredde_s=0;
+			if ($max_p > 0) { $bredde_p=int($BarWidth*$_url_p{$key}/$max_p)+1; }
+			if ($_url_p{$key} && ($bredde_p==1)) { $bredde_p=2; }
+			if ($max_p > 0) { $bredde_e=int($BarWidth*$_url_e{$key}/$max_p)+1; }
+			if ($_url_e{$key} && ($bredde_e==1)) { $bredde_e=2; }
+			print "</TD><TD>$_url_p{$key}</TD><TD>".($_url_e{$key}?$_url_e{$key}:"&nbsp;")."</TD><TD CLASS=AWL>";
+			print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_p\" WIDTH=$bredde_p HEIGHT=8 ALT=\"$Message[56]: ".int($_url_p{$key})."\" title=\"$Message[56]: ".int($_url_p{$key})."\"><br>";
+			print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_e\" WIDTH=$bredde_e HEIGHT=8 ALT=\"$Message[104]: ".int($_url_e{$key})."\" title=\"$Message[104]: ".int($_url_e{$key})."\">";
+			print "</TD></TR>\n";
 			$count++;
 		}
 		&tab_end;
@@ -3014,7 +3110,7 @@ EOF
 		foreach my $key (sort { $SortDir*$_browser_h{$a} <=> $SortDir*$_browser_h{$b} } keys (%_browser_h)) {
 			my $p=int($_browser_h{$key}/$Total*1000)/10;
 			if ($key eq "Unknown") {
-				print "<TR><TD CLASS=AWL><a href=\"$DirCgi$PROG.$Extension?output=unknownrefererbrowser&".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang\">$Message[0]</a></TD><TD>$_browser_h{$key}</TD><TD>$p&nbsp;%</TD></TR>\n";
+				print "<TR><TD CLASS=AWL><a href=\"$DirCgi$PROG.$Extension?${LinkParamB}output=unknownrefererbrowser\">$Message[0]</a></TD><TD>$_browser_h{$key}</TD><TD>$p&nbsp;%</TD></TR>\n";
 			}
 			else {
 				print "<TR><TD CLASS=AWL>$BrowsersHashIDLib{$key}</TD><TD>$_browser_h{$key}</TD><TD>$p&nbsp;%</TD></TR>\n";
@@ -3035,7 +3131,7 @@ EOF
 		foreach my $key (sort { $SortDir*$_os_h{$a} <=> $SortDir*$_os_h{$b} } keys (%_os_h)) {
 			my $p=int($_os_h{$key}/$Total*1000)/10;
 			if ($key eq "Unknown") {
-				print "<TR><TD><IMG SRC=\"$DirIcons\/os\/unknown.png\"></TD><TD CLASS=AWL><a href=\"$DirCgi$PROG.$Extension?output=unknownreferer&".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang\">$Message[0]</a></TD><TD>$_os_h{$key}&nbsp;</TD>";
+				print "<TR><TD><IMG SRC=\"$DirIcons\/os\/unknown.png\"></TD><TD CLASS=AWL><a href=\"$DirCgi$PROG.$Extension?${LinkParamB}output=unknownreferer\">$Message[0]</a></TD><TD>$_os_h{$key}&nbsp;</TD>";
 				print "<TD>$p&nbsp;%</TD></TR>\n";
 				}
 			else {
@@ -3113,7 +3209,7 @@ EOF
 	if ($ShowKeyphrasesStats) {
 		my $TotalDifferentKeyphrases=scalar keys %_keyphrases;
 		my $TotalKeyphrases=0; foreach my $key (keys %_keyphrases) { $TotalKeyphrases+=$_keyphrases{$key}; }
-		print "$CENTER<a name=\"SEARCHWORDS\">&nbsp;</a><BR>";
+		print "$CENTER<a name=\"SEARCHKEYS\">&nbsp;</a><BR>";
 		$MaxNbOfKeywordsShown = $TotalDifferentKeyphrases if $MaxNbOfKeywordsShown > $TotalDifferentKeyphrases;
 		&tab_head("$Message[43] ($Message[77] $MaxNbOfKeywordsShown)",19);
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\" onmouseover=\"ShowTooltip(15);\" onmouseout=\"HideTooltip(15);\"><TH>$TotalDifferentKeyphrases $Message[103]</TH><TH bgcolor=\"#$color_s\" width=80>$Message[14]</TH><TH bgcolor=\"#$color_s\" width=80>$Message[15]</TH></TR>\n";
@@ -3145,7 +3241,7 @@ EOF
 			my $p=int($_errors_h{$key}/$TotalErrors*1000)/10;
 			if ($httpcode{$key}) { print "<TR onmouseover=\"ShowTooltip($key);\" onmouseout=\"HideTooltip($key);\">"; }
 			else { print "<TR>"; }
-			if ($key == 404) { print "<TD><a href=\"$DirCgi$PROG.$Extension?output=notfounderror&".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang\">$key</a></TD>"; }
+			if ($key == 404) { print "<TD><a href=\"$DirCgi$PROG.$Extension?${LinkParamB}output=notfounderror\">$key</a></TD>"; }
 			else { print "<TD>$key</TD>"; }
 			if ($httpcode{$key}) { print "<TD CLASS=AWL>$httpcode{$key}</TD><TD>$_errors_h{$key}</TD><TD>$p&nbsp;%</TD></TR>\n"; }
 			else { print "<TD CLASS=AWL>Unknown error</TD><TD>$_errors_h{$key}</TD><TD>$p&nbsp;%</TD></TR>\n"; }
