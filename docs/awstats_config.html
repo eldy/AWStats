@@ -633,9 +633,11 @@ it with its value when reading it), follow the example:<br>
 <b>Version : </b>3.2 +<br>
 <br># Keep or attach the query string to the URL in the statistics for individual
 <br># pages. This is primarily used to differentiate between the URLs of dynamic
-<br># pages. If set to 1, mypage.html?id=x and mypage.html?id=y are counted as
-<br># two different pages. Warning, when set to 1, memory required to run AWStats
-<br># is doubled. Try to avoid using this parameter on very large web sites.
+<br># pages. If set to 1, mypage.html?id=x and mypage.html?id=y are counted as two
+<br># different pages.
+<br># Warning, when set to 1, memory required to run AWStats is dramatically
+<br># increased if you have a lot of changing URLs (for example URLs with a random
+<br># id inside). Such web sites should not set this option to 1.
 <br># Possible values:
 <br># 0 - URLs are cleaned from the query string (ie: "/mypage.html")
 <br># 1 - Full URL with query string is used     (ie: "/mypage.html?x=y")
