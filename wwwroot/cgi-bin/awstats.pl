@@ -4362,8 +4362,8 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {	# Updat
 		if ($URLWithQuery) {
 			$urlwithnoquery=$field[$pos_url];
 			$urlwithnoquery =~ s/\?.*//;
-			# We combine the URL and query strings.
-			if ($field[$pos_query] && ($field[$pos_query] ne "-")) { $field[$pos_url] .= "?" . $field[$pos_query]; }
+			# We combine the URL and query strings (for some IIS setup).
+			if ($pos_query >=0 && $field[$pos_query] && $field[$pos_query] ne "-") { $field[$pos_url] .= "?" . $field[$pos_query]; }
 		}
 		else {
 			# Trunc CGI parameters in URL
