@@ -1368,7 +1368,7 @@ sub Check_Config {
 	while ($LogFile =~ /%([ymdhwYMDHWNSO]+)-(\d+)/) {
 		my $timetag=$1;
 		my $timephase=$2;
-		if ($Debug) { debug(" Found a time phase of $timephase hour in log file name",1); }
+		if ($Debug) { debug(" Found a time tag '$timetag' with a phase of '$timephase' hour in log file name",1); }
 		# Get older time
 		my ($oldersec,$oldermin,$olderhour,$olderday,$oldermonth,$olderyear,$olderwday,$olderyday) = localtime($starttime-($timephase*3600));
 		my $olderweekofmonth=int($olderday/7);
@@ -1389,19 +1389,19 @@ sub Check_Config {
 		if ($oldermin < 10) { $oldermin = "0$oldermin"; }
 		if ($oldersec < 10) { $oldersec = "0$oldersec"; }
 		# Replace tag with new value
-		if ($timetag =~ /YYYY/i) { $LogFile =~ s/%YYYY-$timephase/$olderyear/ig; next; }
-		if ($timetag =~ /YY/i)   { $LogFile =~ s/%YY-$timephase/$oldersmallyear/ig; next; }
-		if ($timetag =~ /MM/i)   { $LogFile =~ s/%MM-$timephase/$oldermonth/ig; next; }
-		if ($timetag =~ /MO/i)   { $LogFile =~ s/%MO-$timephase/$MonthNumLibEn{$oldermonth}/ig; next; }
-		if ($timetag =~ /DD/i)   { $LogFile =~ s/%DD-$timephase/$olderday/ig; next; }
-		if ($timetag =~ /HH/i)   { $LogFile =~ s/%HH-$timephase/$olderhour/ig; next; }
-		if ($timetag =~ /NS/i)   { $LogFile =~ s/%NS-$timephase/$olderns/ig; next; }
-		if ($timetag =~ /WM/)    { $LogFile =~ s/%WM-$timephase/$olderweekofmonth/g; next; }
-		if ($timetag =~ /Wm/)    { my $olderweekofmonth0=$olderweekofmonth-1; $LogFile =~ s/%Wm-$timephase/$olderweekofmonth0/g; next; }
-		if ($timetag =~ /WY/)    { $LogFile =~ s/%WY-$timephase/$olderweekofyear/g; next; }
-		if ($timetag =~ /Wy/)    { my $olderweekofyear0=sprintf("%02d",$olderweekofyear-1); $LogFile =~ s/%Wy-$timephase/$olderweekofyear0/g; next; }
-		if ($timetag =~ /DW/)    { $LogFile =~ s/%DW-$timephase/$olderwday/g; next; }
-		if ($timetag =~ /Dw/)    { my $olderwday0=$olderwday-1; $LogFile =~ s/%Dw-$timephase/$olderwday0/g; next; }
+		if ($timetag eq 'YYYY') { $LogFile =~ s/%YYYY-$timephase/$olderyear/ig; next; }
+		if ($timetag eq 'YY')   { $LogFile =~ s/%YY-$timephase/$oldersmallyear/ig; next; }
+		if ($timetag eq 'MM')   { $LogFile =~ s/%MM-$timephase/$oldermonth/ig; next; }
+		if ($timetag eq 'MO')   { $LogFile =~ s/%MO-$timephase/$MonthNumLibEn{$oldermonth}/ig; next; }
+		if ($timetag eq 'DD')   { $LogFile =~ s/%DD-$timephase/$olderday/ig; next; }
+		if ($timetag eq 'HH')   { $LogFile =~ s/%HH-$timephase/$olderhour/ig; next; }
+		if ($timetag eq 'NS')   { $LogFile =~ s/%NS-$timephase/$olderns/ig; next; }
+		if ($timetag eq 'WM')   { $LogFile =~ s/%WM-$timephase/$olderweekofmonth/g; next; }
+		if ($timetag eq 'Wm')   { my $olderweekofmonth0=$olderweekofmonth-1; $LogFile =~ s/%Wm-$timephase/$olderweekofmonth0/g; next; }
+		if ($timetag eq 'WY')   { $LogFile =~ s/%WY-$timephase/$olderweekofyear/g; next; }
+		if ($timetag eq 'Wy')   { my $olderweekofyear0=sprintf("%02d",$olderweekofyear-1); $LogFile =~ s/%Wy-$timephase/$olderweekofyear0/g; next; }
+		if ($timetag eq 'DW')   { $LogFile =~ s/%DW-$timephase/$olderwday/g; next; }
+		if ($timetag eq 'Dw')   { my $olderwday0=$olderwday-1; $LogFile =~ s/%Dw-$timephase/$olderwday0/g; next; }
 		# If unknown tag
 		error("Unknown tag '\%$timetag' in LogFile parameter.");
 	}
