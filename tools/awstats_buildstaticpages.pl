@@ -315,8 +315,8 @@ if ($ShowSessionsStats) { push @OutputList,'session'; }
 if ($ShowPagesStats) { push @OutputList,'urldetail'; push @OutputList,'urlentry'; push @OutputList,'urlexit'; }
 if ($ShowFileTypesStats) { push @OutputList,'filetypes'; }
 #if ($ShowFileSizesStats) { push @OutputList,'filesize'; }
-if ($ShowOSStats) { push @OutputList,'osdetail'; push @OutputList,'unkownos'; }
-if ($ShowBrowsersStats) { push @OutputList,'browserdetail'; push @OutputList,'unkownbrowser'; }
+if ($ShowOSStats) { push @OutputList,'osdetail'; push @OutputList,'unknownos'; }
+if ($ShowBrowsersStats) { push @OutputList,'browserdetail'; push @OutputList,'unknownbrowser'; }
 if ($ShowScreenSizeStats) { push @OutputList,'screensize'; }
 if ($ShowOriginStats) { push @OutputList,'refererse'; push @OutputList,'refererpages'; }
 if ($ShowKeyphrasesStats) { push @OutputList,'keyphrases'; }
