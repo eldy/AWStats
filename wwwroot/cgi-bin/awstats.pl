@@ -638,6 +638,13 @@ EOF
 sub html_end {
 	my $listplugins=shift||0;
 	if (scalar keys %HTMLOutput) {
+
+    	# Call to plugins' function AddHTMLBodyFooter
+    	foreach my $pluginname (keys %{$PluginsLoaded{'AddHTMLBodyFooter'}})  {
+    		my $function="AddHTMLBodyFooter_$pluginname()";
+    		eval("$function");
+    	}
+
 		if ($FrameName ne 'index' && $FrameName ne 'mainleft') {
 			print "$Center<br /><br />\n";
 			print "<span dir=\"ltr\" style=\"font: 11px verdana, arial, helvetica; color: #$color_text;\">";
@@ -1841,6 +1848,7 @@ sub Read_Plugins {
 						my $ret;	# To get init return
 						my $initfunction="\$ret=Init_$pluginname('$pluginparam')";
 						my $initret=eval("$initfunction");
+						if ($initret eq 'xxx') { $initret='Error: The PluginHooksFunctions variable defined in plugin file does not contain list of hooked functions'; }
 						if (! $initret || $initret =~ /^error/i) {
 							# Init function failed, we stop here
 							error("Plugin init for plugin '$pluginname' failed with return code: ".($initret?"$initret":"$@ (A module required by plugin might be missing)."));
@@ -6758,7 +6766,7 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 			if ($Debug) { debug("  No check on code or code is OK. Now we check other conditions.",5); }
 
  			# Check conditions
- 			my $conditionok=0;
+ 			$conditionok=0;
  			foreach my $condnum (0..@{$ExtraConditionType[$extranum]}-1) {
  				my $conditiontype=$ExtraConditionType[$extranum][$condnum];
  				my $conditiontypeval=$ExtraConditionTypeVal[$extranum][$condnum];
@@ -7018,14 +7026,15 @@ if (scalar keys %HTMLOutput) {
 		eval("$function");
 	}
 
-	# MENU
+	# TOP BAN
 	#---------------------------------------------------------------------
 	if ($ShowMenu || $FrameName eq 'mainleft') {
-		if ($Debug) { debug("ShowMenu",2); }
 		my $frame=($FrameName eq 'mainleft');
+		my $WIDTHMENU1=($FrameName eq 'mainleft'?$FRAMEWIDTH:150);
+
+		if ($Debug) { debug("ShowTopBan",2); }
 		print "$Center<a name=\"menu\">&nbsp;</a>\n";
 
-		my $WIDTHMENU1=($FrameName eq 'mainleft'?$FRAMEWIDTH:150);
 		
 		if ($FrameName ne 'mainleft') {
 			my $NewLinkParams=${QueryString};
@@ -7148,6 +7157,21 @@ if (scalar keys %HTMLOutput) {
 		if ($FrameName ne 'mainleft') {	print "</form>\n"; }
 		else { print "<br />\n"; }
 		print "\n";
+    }
+    
+	# Call to plugins' function AddHTMLMenuHeader
+	foreach my $pluginname (keys %{$PluginsLoaded{'AddHTMLMenuHeader'}})  {
+		my $function="AddHTMLMenuHeader_$pluginname()";
+		eval("$function");
+	}
+
+	# MENU
+	#---------------------------------------------------------------------
+	if ($ShowMenu || $FrameName eq 'mainleft') {
+		my $frame=($FrameName eq 'mainleft');
+		my $WIDTHMENU1=($FrameName eq 'mainleft'?$FRAMEWIDTH:150);
+
+		if ($Debug) { debug("ShowMenu",2); }
 
 		# Print menu links
 		if (($HTMLOutput{'main'} && $FrameName ne 'mainright') || $FrameName eq 'mainleft') {	# If main page asked
@@ -7370,6 +7394,12 @@ if (scalar keys %HTMLOutput) {
 	if ($Debug) {
 		debug("firstdaytocountaverage=$firstdaytocountaverage, lastdaytocountaverage=$lastdaytocountaverage",1);
 		debug("firstdaytoshowtime=$firstdaytoshowtime, lastdaytoshowtime=$lastdaytoshowtime",1);
+	}
+
+	# Call to plugins' function AddHTMLContentHeader
+	foreach my $pluginname (keys %{$PluginsLoaded{'AddHTMLContentHeader'}})  {
+		my $function="AddHTMLContentHeader_$pluginname()";
+		eval("$function");
 	}
 
 	# Output particular part

@@ -11,8 +11,8 @@
 
 
 # <-----
-push @INC, "${DIR}/plugins";
 # ENTER HERE THE USE COMMAND FOR ALL REQUIRED PERL MODULES
+push @INC, "${DIR}/plugins";
 if (!eval ('require "Geo/IPfree.pm";')) { return $@?"Error: $@":"Error: Need Perl module Geo::IPfree"; }
 # ----->
 use strict;no strict "refs";
@@ -64,18 +64,19 @@ sub Init_geoipfree {
 # GetCountryCodeByName is called to translate a host name into a country name.
 #-----------------------------------------------------------------------------
 sub GetCountryCodeByName_geoipfree {
+    my $param="$_[0]";
 	# <-----
-	my $res=$TmpDomainLookup{$_[0]}||'';
+	my $res=$TmpDomainLookup{$param}||'';
 	if (! $res) {
-		($res,undef)=$gi->LookUp($_[0]);
+		($res,undef)=$gi->LookUp($param);
 		if ($res !~ /\w\w/) { $res='ip'; }
 		else { $res=lc($res); }
-		$TmpDomainLookup{$_[0]}=$res;
-		if ($Debug) { debug("  GetCountryCodeByName for $_[0]: $res",5); }
+		$TmpDomainLookup{$param}=$res;
+		if ($Debug) { debug("  GetCountryCodeByName for $param: $res",5); }
 	}
-	elsif ($Debug) { debug("  GetCountryCodeByName for $_[0]: Already resolved to $res",5); }
-	return $res;
+	elsif ($Debug) { debug("  GetCountryCodeByName for $param: Already resolved to $res",5); }
 	# ----->
+	return $res;
 }
 
 #-----------------------------------------------------------------------------
@@ -84,18 +85,19 @@ sub GetCountryCodeByName_geoipfree {
 # GetCountryCodeByAddr is called to translate an ip into a country name.
 #-----------------------------------------------------------------------------
 sub GetCountryCodeByAddr_geoipfree {
+    my $param="$_[0]";
 	# <-----
-	my $res=$TmpDomainLookup{$_[0]}||'';
+	my $res=$TmpDomainLookup{$param}||'';
 	if (! $res) {
-		($res,undef)=$gi->LookUp($_[0]);
+		($res,undef)=$gi->LookUp($param);
 		if ($res !~ /\w\w/) { $res='ip'; }
 		else { $res=lc($res); }
-		$TmpDomainLookup{$_[0]}=$res;
-		if ($Debug) { debug("  GetCountryCodeByAddr for $_[0]: $res",5); }
+		$TmpDomainLookup{$param}=$res;
+		if ($Debug) { debug("  GetCountryCodeByAddr for $param: $res",5); }
 	}
-	elsif ($Debug) { debug("  GetCountryCodeByAddr for $_[0]: Already resolved to $res",5); }
-	return $res;
+	elsif ($Debug) { debug("  GetCountryCodeByAddr for $param: Already resolved to $res",5); }
 	# ----->
+	return $res;
 }
 
 1;	# Do not remove this line
