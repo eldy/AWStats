@@ -51,7 +51,7 @@ sub Init_geoip {
 
 	# <-----
 	# ENTER HERE CODE TO DO INIT PLUGIN ACTIONS
-	debug(" InitParams=$InitParams",1);
+	debug(" Plugin geoip: InitParams=$InitParams",1);
 	my $mode=$InitParams;
 	if ($type eq 'geoippureperl') {
 		if ($mode eq '' || $mode eq 'GEOIP_MEMORY_CACHE')  { $mode=Geo::IP::PurePerl::GEOIP_MEMORY_CACHE(); }
@@ -61,7 +61,7 @@ sub Init_geoip {
 		else { $mode=Geo::IP::GEOIP_STANDARD(); }
 	}
 	%TmpDomainLookup=();
-	debug(" GeoIP working in mode $type $mode",1);
+	debug(" Plugin geoip: GeoIP initialized in mode $type $mode",1);
 	if ($type eq 'geoippureperl') {
 		$gi = Geo::IP::PurePerl->new($mode);
 	} else {
@@ -85,9 +85,9 @@ sub GetCountryCodeByName_geoip {
 	if (! $res) {
 		$res=lc($gi->country_code_by_name($param));
 		$TmpDomainLookup{$param}=$res;
-		if ($Debug) { debug("  GetCountryCodeByName for $param: [$res]",5); }
+		if ($Debug) { debug("  Plugin geoip: GetCountryCodeByName for $param: [$res]",5); }
 	}
-	elsif ($Debug) { debug("  GetCountryCodeByName for $param: Already resolved to $res",5); }
+	elsif ($Debug) { debug("  Plugin geoip: GetCountryCodeByName for $param: Already resolved to $res",5); }
 	# ----->
 	return $res;
 }
@@ -104,9 +104,9 @@ sub GetCountryCodeByAddr_geoip {
 	if (! $res) {
 		$res=lc($gi->country_code_by_addr($param));
 		$TmpDomainLookup{$param}=$res;
-		if ($Debug) { debug("  GetCountryCodeByAddr for $param: $res",5); }
+		if ($Debug) { debug("  Plugin geoip: GetCountryCodeByAddr for $param: $res",5); }
 	}
-	elsif ($Debug) { debug("  GetCountryCodeByAddr for $param: Already resolved to $res",5); }
+	elsif ($Debug) { debug("  Plugin geoip: GetCountryCodeByAddr for $param: Already resolved to $res",5); }
 	# ----->
 	return $res;
 }

@@ -48,7 +48,7 @@ sub Init_geoipfree {
 
 	# <-----
 	# ENTER HERE CODE TO DO INIT PLUGIN ACTIONS
-	debug(" InitParams=$InitParams",1);
+	debug(" Plugin geoipfree: InitParams=$InitParams",1);
 	%TmpDomainLookup=();
 	$gi = Geo::IPfree::new();
 #	$gi->Faster; 	# Do not enable Faster as the Memoize module is rarely available
@@ -72,9 +72,9 @@ sub GetCountryCodeByName_geoipfree {
 		if ($res !~ /\w\w/) { $res='ip'; }
 		else { $res=lc($res); }
 		$TmpDomainLookup{$param}=$res;
-		if ($Debug) { debug("  GetCountryCodeByName for $param: $res",5); }
+		if ($Debug) { debug("  Plugin geoipfree: GetCountryCodeByName for $param: $res",5); }
 	}
-	elsif ($Debug) { debug("  GetCountryCodeByName for $param: Already resolved to $res",5); }
+	elsif ($Debug) { debug("  Plugin geoipfree: GetCountryCodeByName for $param: Already resolved to $res",5); }
 	# ----->
 	return $res;
 }
@@ -93,9 +93,9 @@ sub GetCountryCodeByAddr_geoipfree {
 		if ($res !~ /\w\w/) { $res='ip'; }
 		else { $res=lc($res); }
 		$TmpDomainLookup{$param}=$res;
-		if ($Debug) { debug("  GetCountryCodeByAddr for $param: $res",5); }
+		if ($Debug) { debug("  Plugin geoipfree: GetCountryCodeByAddr for $param: $res",5); }
 	}
-	elsif ($Debug) { debug("  GetCountryCodeByAddr for $param: Already resolved to $res",5); }
+	elsif ($Debug) { debug("  Plugin geoipfree: GetCountryCodeByAddr for $param: Already resolved to $res",5); }
 	# ----->
 	return $res;
 }

@@ -44,7 +44,7 @@ sub Init_rawlog {
 
 	# <-----
 	# ENTER HERE CODE TO DO INIT PLUGIN ACTIONS
-	debug(" InitParams=$InitParams",1);
+	debug(" Plugin rawlog: InitParams=$InitParams",1);
 
 	if ($QueryString =~ /rawlog_maxlines=(\d+)/i) { $MAXLINE=&DecodeEncodedString("$1"); }
 	else { $MAXLINE=5000; }

@@ -16,7 +16,7 @@ use strict;no strict "refs";
 #-----------------------------------------------------------------------------
 # PLUGIN VARIABLES
 #-----------------------------------------------------------------------------
-my $PluginNeedAWStatsVersion="5.6";
+my $PluginNeedAWStatsVersion="6.2";
 my $PluginHooksFunctions="ScanForRefererSpam";
 
 # <-----
@@ -51,7 +51,7 @@ sub Init_detectrefererspam {
 #--------------------------------------------------------------------
 sub ScanForRefererSpam_detectrefererspam
 {
-	debug("Call to ScanForRefererSpam",5);
+	debug(" Plugin detectrefererspam: Call to ScanForRefererSpam",5);
 
 }
 

@@ -64,7 +64,7 @@ sub SearchFile_hashfiles {
 		my ($tmp1b,$tmp2b,$tmp3b,$tmp4b,$tmp5b,$tmp6b,$tmp7b,$tmp8b,$tmp9b,$datehash,$tmp10b,$tmp11b,$tmp12b) = stat("${searchdir}$dnscachefile$filesuffix.hash");
 		if ($datesource && $datehash < $datesource) {
 			$PluginHashfilesUpToDate=0;
-			debug(" Hash file not up to date. Will use source file $filetoload instead.");
+			debug(" Plugin hashfiles: Hash file not up to date. Will use source file $filetoload instead.");
 		}
 		else {
 			# There is no source file or there is and hash file is up to date. We can just load hash file
@@ -73,7 +73,7 @@ sub SearchFile_hashfiles {
 	}
 	elsif ($filetoload) {
 		$PluginHashfilesUpToDate=0;
-		debug(" Hash file not found. Will use source file $filetoload instead.");
+		debug(" Plugin hashfiles: Hash file not found. Will use source file $filetoload instead.");
 	}
 	# Change calling params
 	$_[4]=$filetoload;
@@ -101,14 +101,14 @@ sub SaveHash_hashfiles {
 	my ($filetosave,$hashtosave,$testifuptodate,$nbmaxofelemtosave,$nbofelemsaved)=@_;
 	if (! $testifuptodate || ! $PluginHashfilesUpToDate) {
 		$filetosave =~ s/(\.\w+)$//; $filetosave.=".hash";
-		debug(" Save data ".($nbmaxofelemtosave?"($nbmaxofelemtosave records max)":"(all records)")." into hash file $filetosave");
+		debug(" Plugin hashfiles: Save data ".($nbmaxofelemtosave?"($nbmaxofelemtosave records max)":"(all records)")." into hash file $filetosave");
 		if (! $nbmaxofelemtosave || (scalar keys %$hashtosave <= $nbmaxofelemtosave)) {
 			# Save all hash array
 			eval('store(\%$hashtosave, "$filetosave");');
 			$_[4]=scalar keys %$hashtosave;
 		}
 		else {
-			debug(" We need to resize hash to save from ".(scalar keys %$hashtosave)." to $nbmaxofelemtosave");
+			debug(" Plugin hashfiles: We need to resize hash to save from ".(scalar keys %$hashtosave)." to $nbmaxofelemtosave");
 			# Save part of hash array
 			my $counter=0;
 			my %newhashtosave=();

@@ -44,7 +44,7 @@ sub Init_ipv6 {
 
 	# <-----
 	# ENTER HERE CODE TO DO INIT PLUGIN ACTIONS
-	debug(" InitParams=$InitParams",1);
+	debug(" Plugin ipv6: InitParams=$InitParams",1);
 	$resolver = Net::DNS::Resolver->new;
 	# ----->
 

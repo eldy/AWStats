@@ -50,7 +50,7 @@ sub Init_urlalias {
 
 	# <-----
 	# ENTER HERE CODE TO DO INIT PLUGIN ACTIONS
-	debug(" InitParams=$InitParams",1);
+	debug(" Plugin urlalias: InitParams=$InitParams",1);
 	$urlinfoloaded=0;
 	%UrlAlias=();
 	@UrlMatch=();
@@ -94,8 +94,8 @@ sub ShowInfoURL_urlalias {
 		}
 		close URLALIASFILE;
 		close URLMATCHFILE;
-		debug("UrlAlias file loaded: ".(scalar keys %UrlAlias)." entries found.");
-		debug("UrlMatch file loaded: ".(scalar @UrlMatch)." entries found.");
+		debug(" Plugin urlalias: UrlAlias file loaded: ".(scalar keys %UrlAlias)." entries found.");
+		debug(" Plugin urlalias: UrlMatch file loaded: ".(scalar @UrlMatch)." entries found.");
 		$urlinfoloaded=1;
 	}
 	if ($param) {
