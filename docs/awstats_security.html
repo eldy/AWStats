@@ -58,40 +58,9 @@ If users have a command line access (telnet) on statistics server, you must set 
 database files. Set all AWStats database files (built by the update process) for config/domain1 to have read/write
 for <i>user1</i> (or an admin user) and NO read and NO write permissions for any other users.<br>
 Then, check that the <a href="awstats_config.html#SaveDatabaseFilesWithPermissionsForEveryone">SaveDatabaseFilesWithPermissionsForEveryone</a> parameter is set 0 in your config/domain files.<br>
-If AWStats database files for config/domain1 are read protected, only allowed users can see statistics for config/domain1.<br>
-If AWStats database files for config/domain1 are write protected, only allowed users can update statistics for config/domain1.<br>
+If AWStats database files/directory for config/domain1 are read protected, only allowed users can see statistics for config/domain1.<br>
+If AWStats database files/directory for config/domain1 are write protected, only allowed users can update statistics for config/domain1.<br>
 <br><br>
-
-<!--
-<br><a name="2"><H2 style="font: 22px arial,helvetica,sanserif color: #606060"><u>2) HIGHLY SECURED POLICY</u></H2></a><br>
-<font color=blue><b>Policy</b></font>:<br>
-You have several different domains owned by different users and you want each owner of a domain
-to be able to see only his/her domain and to be able to update his/her statistics dynamically.<br>
-This might be a good choice for web hosting providers with several small private or public customers.<br>
-<font color=blue><b>Advantage</b></font>:<br>
-Statistics view is dynamic. A site owner can view its statistics dynamically. Update can also
-be made (if allowed) on-line.<br>
-<font color=blue><b>Disadvantage</b></font>:<br>
-No way to have 2 configurations files for 1 particular domain.<br>
-<font color=blue><b>How</b></font>:<br>
-First, AWStats must be placed in its own cgi-bin-awstats directory with no way for users to
-put in it a hacked version of AWStats (an unwritable directory).<br>
-Then, you must add an environment variable called <b>AWSTATS_FORCE_CONFIG</b> in the web server environment
-for each domain to say which config file to use for a particular domain.<br>
-<u>With Apache web server, you must use the '<i>SetEnv</i>' directive. This is an example:</u><br><i>
-&lt;VirtualHost www.xxx.yyy.zzz&gt;<br>
-&nbsp; ServerAdmin  webmaster@mydomain.com<br>
-&nbsp; ServerName   mydomain.com<br>
-&nbsp; ScriptAlias  /cgi-bin-awstats/<br>
-&nbsp; DocumentRoot /usr/local/apache/html<br>
-&nbsp; SetEnv AWSTATS_FORCE_CONFIG myconfigvalueformydomain<br>
-&lt;/VirtualHost&gt;<br>
-</i>
-When using AWStats as a CGI with the following URL '<i>http://mydomain.com/cgi-bin-awstats/awstats.pl</i>', AWStats
-will use the config file called <i>awstats.myconfigvalueformydomain.conf</i> to choose which statistics used,
-even if a visitor try to force the config/domain file with the URL '<i>http://mydomain.com/cgi-bin-awstats/awstats.pl?config=xxx</i>'.<br>
-<br><br>
--->
 
 <br><a name="2"><H2 style="font: 22px arial,helvetica,sanserif color: #606060"><u>2) MEDIUM SECURED POLICY</u></H2></a><br>
 <font color=blue><b>Policy</b></font>:<br>
@@ -126,19 +95,27 @@ To known how to create a protected realm for servers other than Apache, see your
 Then edit each config/domain file you want to be protected to set <a href="awstats_config.html#AllowAccessFromWebToAuthenticatedUsersOnly">AllowAccessFromWebToAuthenticatedUsersOnly</a> to 1.<br>
 You can also edit list of authorized users in the <a href="awstats_config.html#AllowAccessFromWebToFollowingAuthenticatedUsers">AllowAccessFromWebToFollowingAuthenticatedUsers</a> parameter.<br>
 You can also specify a range of allowed browsers IP Addresses with the <a href="awstats_config.html#AllowAccessFromWebToFollowingIPAddresses">AllowAccessFromWebToFollowingIPAddresses</a> parameter.<br>
+
+You can also set <a href="awstats_config.html#SaveDatabaseFilesWithPermissionsForEveryone">SaveDatabaseFilesWithPermissionsForEveryone</a> parameter to 0 in all config/domain files,
+except if you want to allow update from web with option <a href="awstats_config.html#AllowToUpdateStatsFromBrowser">AllowToUpdateStatsFromBrowser</a>=1. But this is
+not recommanded as you need to give read/write permission for Web server user on all history
+files (Except if you setuid AWStats script for each authorized user, but this make setup much harder).<br>
 The following parameters <a href="awstats_config.html#ErrorMessages">ErrorMessages</a> and <a href="awstats_config.html#DebugMessages">DebugMessages</a> are
-also related to security parameters.<br>
+also parameters related to security.<br>
+<br>
 <br>
 Other tip: If the <b>AWSTATS_FORCE_CONFIG</b> environment variable is defined, AWStats will always use
 the config file <i>awstats.VALUE_OF_AWSTATS_FORCE_CONFIG.conf</i> as the config/domain file.
 So if you add this environment variable into your web server environment, for example by adding the line<br>
 <i>SetEnv AWSTATS_FORCE_CONFIG configvalueforthisdomain</i><br>
-with other directives in your Apache <i>&lt;VirtualHost&gt;</i> directive group in httpd.conf), AWStats will use the config file
+in your Apache <i>&lt;VirtualHost&gt;</i> directive group in httpd.conf (with other directives), AWStats will use the config file
 called <i>awstats.configvalueforthisdomain.conf</i> to choose which statistics used,
 even if a visitor try to force the config/domain file with the URL '<i>http://mydomain/cgi-bin/awstats.pl?config=otherdomain</i>'.
 This might be usefull for thoose who edit their config/domain file with <a href="awstats_config.html#AllowAccessFromWebToFollowingAuthenticatedUsers">AllowAccessFromWebToFollowingAuthenticatedUsers</a>="__REMOTE_USER__"</i>
-instead of maintaning the list of authorized users into each AWStats config file.<br>
-<br><br>
+instead of maintaining the list of authorized users into each AWStats config file.<br>
+<br>
+<br>
+
 
 <br><a name="3"><H2 style="font: 22px arial,helvetica,sanserif color: #606060"><u>3) NO SECURITY POLICY</u></H2></a><br>
 <font color=blue><b>Policy</b></font>:<br>
@@ -156,8 +133,8 @@ to have a minimum of security).<br>
 <br>
 <br>
 
-There is a lot of possible use for AWStats combining all its options/parameters with all web servers options/parameters.
-Just use the one you need...<br>
+There is a lot of possible use for AWStats combining all its options/parameters with all web servers options/parameters and operating
+systems security features. Just use the one you need...<br>
 <br>
 
 
