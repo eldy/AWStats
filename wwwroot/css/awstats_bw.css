@@ -1,0 +1,17 @@
+BODY { font: 11px verdana, arial, helvetica, sans-serif; background-color: #FFFFFF; margin-top: 0 }
+.AWS_BORDER { background-color: #BBBBBB; padding: 1px 1px 1px 1px; margin-top: 0 }
+.AWS_TITLE  { font: 13px verdana, arial, helvetica, sans-serif; font-weight: bold; background-color: #BBBBBB; text-align: center; margin-bottom: 0; padding: 1px 1px 1px 1px; }
+.AWS_BLANK { font: 13px verdana, arial, helvetica, sans-serif; background-color: #FFFFFF; text-align: center; margin-bottom: 0; padding: 1px 1px 1px 1px; }
+.AWS_DATA { background-color: #FFFFFF; }
+.AWS_FORMFIELD { font: 13px verdana, arial, helvetica; }
+TH { font: 11px verdana, arial, helvetica, sans-serif; text-align:center; color: #000000; }
+TH.AWS { font-size: 13px; font-weight: bold; }
+TD { font: 11px verdana, arial, helvetica, sans-serif; text-align:center; color: #000000; }
+.AWS { font: 11px verdana, arial, helvetica, sans-serif; text-align:left; color: #000000; }
+B { font-weight: bold; }
+A { font: 11px verdana, arial, helvetica, sans-serif; }
+A:link    { color: #001133; text-decoration: none; }
+A:visited { color: #001133; text-decoration: none; }
+A:hover   { color: #444444; text-decoration: underline; }
+DIV { font: 12px arial,verdana,helvetica; text-align:justify; }
+.CTooltip { position:absolute; top:0px; left:0px; z-index:2; width:380; visibility:hidden; font: 8pt MS Comic Sans,arial,sans-serif; background-color: #EEEEEE; padding: 8px; border: 1px solid black; }
