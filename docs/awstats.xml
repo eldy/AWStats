@@ -105,7 +105,7 @@ Fonctionne avec les log de IIS 5.0+ et Apache. Gratuit (GNU General Public Licen
     </Application_URLs>
 <Download_URLs>
         <Primary_Download_URL>http://awstats.sourceforge.net/files/awstats.zip</Primary_Download_URL>
-        <Secondary_Download_URL>http://prdownloads.sourceforge.net/awstats/awstats40.zip</Secondary_Download_URL>
+        <Secondary_Download_URL>http://prdownloads.sourceforge.net/awstats/awstats41.zip</Secondary_Download_URL>
         <Additional_Download_URL_1 />
         <Additional_Download_URL_2 />
     </Download_URLs>
@@ -127,8 +127,8 @@ Fonctionne avec les log de IIS 5.0+ et Apache. Gratuit (GNU General Public Licen
     <Simtel_Email>eldy@users.sourceforge.net</Simtel_Email>
     <Simtel_FORM>Y</Simtel_FORM>
     <Simtel_DOS_Category />
-    <Simtel_Win31_Category />
-    <Simtel_Platform />
+    <Simtel_Win31_Category>Major Applications - ssheet Spreadsheet Utilities</Simtel_Win31_Category>
+    <Simtel_Platform>winnt - Windows NT / Windows 2000</Simtel_Platform>
     <Simtel_Category>Internet - inet Programs for Using the Internet</Simtel_Category>
     <SIMTEL_FORM_VER>1.1 12/07/2001</SIMTEL_FORM_VER>
 </Simtel>
