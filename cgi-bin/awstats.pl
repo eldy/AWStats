@@ -659,6 +659,7 @@ $message[31][0]="Pages not found";
 $message[32][0]="HTTP Error codes";
 $message[33][0]="Netscape versions";
 $message[34][0]="IE versions";
+$message[35][0]="Last Update";
 $message[36][0]="Connect to site from";
 $message[37][0]="Origin";
 $message[38][0]="Direct address / Bookmarks";
@@ -734,6 +735,7 @@ $message[31][1]="Pages non trouvées";
 $message[32][1]="Codes Erreurs HTTP";
 $message[33][1]="Versions de Netscape";
 $message[34][1]="Versions de MS Internet Explorer";
+$message[35][1]="Dernière mise à jour";
 $message[36][1]="Connexions au site par";
 $message[37][1]="Origine de la connexion";
 $message[38][1]="Adresse directe / Bookmarks";
@@ -809,6 +811,7 @@ $message[31][2]="Pages not found";
 $message[32][2]="HTTP foutmelding codes";
 $message[33][2]="Netscape versies";
 $message[34][2]="MS Internet Explorer versies";
+$message[35][2]="Last Update";
 $message[36][2]="Verbinding naar site vanaf";
 $message[37][2]="Herkomst";
 $message[38][2]="Direkt adres / Bookmarks";
@@ -884,6 +887,7 @@ $message[31][3]="Pages not found";
 $message[32][3]="Códigos de Errores de Protocolo HTTP";
 $message[33][3]="Versiones de Netscape";
 $message[34][3]="Versiones de MS Internet Explorer";
+$message[35][3]="Last Update";
 $message[36][3]="Enlaces (links) al sitio";
 $message[37][3]="Origen de enlace";
 $message[38][3]="Dirección directa / Favoritos";
@@ -959,6 +963,7 @@ $message[31][4]="Pages not found";
 $message[32][4]="Codici di errori HTTP";
 $message[33][4]="Netscape versione";
 $message[34][4]="MS Internet Explorer versione";
+$message[35][4]="Last Update";
 $message[36][4]="Connesso al sito da";
 $message[37][4]="Origine";
 $message[38][4]="Indirizzo diretto / segnalibro";
@@ -1034,6 +1039,7 @@ $message[31][5]="Pages not found";
 $message[32][5]="HTTP Status Meldungen";
 $message[33][5]="Netscape Versionen";
 $message[34][5]="MS Internet Explorer Versionen";
+$message[35][5]="Last Update";
 $message[36][5]="Woher die Besucher kamen";
 $message[37][5]="Ursprung";
 $message[38][5]="Direkter Zugriff / Bookmarks";
@@ -1110,6 +1116,7 @@ $message[31][6]="Pages not found";
 $message[32][6]="Kody b³êdów HTTP";
 $message[33][6]="Wersje Netscape'a";
 $message[34][6]="Wersje MS IE";
+$message[35][6]="Last Update";
 $message[36][6]="¬ród³a po³±czeñ";
 $message[37][6]="Pochodzenie";
 $message[38][6]="Dostêp bezpo¶redni lub z Ulubionych/Bookmarków";
@@ -1186,6 +1193,7 @@ $message[31][7]="Pages not found";
 $message[32][7]="Êùäéêïß óöáëìÜôùí HTTP";
 $message[33][7]="Åêäüóåéò Netscape";
 $message[34][7]="Åêäüóåéò MS Internet Explorer";
+$message[35][7]="Last Update";
 $message[36][7]="Óıíäåóç óôï ôüğï áğü";
 $message[37][7]="Ğñïİëåõóç";
 $message[38][7]="Åõèıò óıíäåóìïò / Áãáğçìİíá";
@@ -1262,6 +1270,7 @@ $message[31][8]="Pages not found";
 $message[32][8]="Chybové kódy HTTP ";
 $message[33][8]="Verze Netscape";
 $message[34][8]="Verze MS Internet Explorer";
+$message[35][8]="Last Update";
 $message[36][8]="Konekce z";
 $message[37][8]="Pùvod";
 $message[38][8]="Pøímá adresa / Oblíbené (Bookmark)";
@@ -1337,6 +1346,7 @@ $message[31][9]="Pages not found";
 $message[32][9]="Erros HTTP";
 $message[33][9]="Versões Netscape";
 $message[34][9]="Versões MS Internet Explorer";
+$message[35][9]="Last Update";
 $message[36][9]="Connectado a partir de";
 $message[37][9]="Origem";
 $message[38][9]="Endereço directo / Favoritos";
@@ -1868,7 +1878,7 @@ sub Init_HashArray {
 	%_errors_h = %_hostmachine_h = %_hostmachine_k = %_hostmachine_l = %_hostmachine_p =
 	%_keywords = %_os_h = %_pagesrefs_h = %_robot_h = %_robot_l = %_se_referrals_h =
 	%_sider404_h = %_sider_h = %_sider_k = %_sider_p = %_unknownip_l = %_unknownreferer_l =
-	%_unknownrefererbrowser_l 
+	%_unknownrefererbrowser_l = ();
 	reset _;		
 }
 
@@ -2789,7 +2799,7 @@ if ($Lang == 1) {
 	</DIV>
 	<DIV CLASS=\"CTooltip\" ID=\"tt2\">
 	Nombre de hotes (<b>adresse IP</b>) utilisés pour accéder au site (et voir au moins une <b>page</b>).<br>
-	Ce chiffre reflète le nombre de <b>personnes physiques</b> différentes ayant un jour accédé au site.
+	Ce chiffre reflète le nombre de <b>personnes physiques</b> différentes ayant un jour accédées au site.
 	</DIV>
 	<DIV CLASS=\"CTooltip\" ID=\"tt3\">
 	Nombre de fois qu une <b>page</b> du site est <b>vue</b> (Cumul de tout visiteur, toute visite).<br>
