@@ -82,7 +82,7 @@ $WarningMessages= 1;
 %MonthBytes = %MonthHits = %MonthHostsKnown = %MonthHostsUnknown = %MonthPages = %MonthUnique = %MonthVisits =
 %monthlib = %monthnum = ();
 
-$VERSION="3.2 (build 40)";
+$VERSION="3.2 (build 41)";
 $Lang="en";
 
 # Default value
@@ -252,7 +252,7 @@ sub tab_end {
 }
 
 sub UnescapeURLParam {
-	$_[0] =~ tr/\+\'\(\)\",/     /s;								# "&" and "=" must not be in this list
+	$_[0] =~ tr/\+\'\(\)\",/      /s;								# "&" and "=" must not be in this list
 	$_[0] =~ s/%([a-fA-F0-9][a-fA-F0-9])/pack("C", hex($1))/eg;		# Decode encoded URL
 }
 
@@ -2208,8 +2208,8 @@ if ($UpdateStats) {
 								my @paramlist=split(/&/,$refurl[1]);
 								if ($SearchEnginesKnownUrl{$key}) {		# Search engine with known URL syntax
 									foreach my $param (@paramlist) {
-#										if ($param =~ /^$SearchEnginesKnownUrl{$key}/) { 	# We found good parameter
-#											$param =~ s/^$SearchEnginesKnownUrl{$key}//;	# Cut "xxx="
+										#if ($param =~ /^$SearchEnginesKnownUrl{$key}/) { 	# We found good parameter
+										#	$param =~ s/^$SearchEnginesKnownUrl{$key}//;	# Cut "xxx="
 										if ($param =~ s/^$SearchEnginesKnownUrl{$key}//) { 	# We found good parameter
 											# Ok, "cache:www/zzz+aaa+bbb/ccc+ddd%20eee'fff,ggg" is a search parameter line
 											&UnescapeURLParam($param);			# Change [ cache:www/zzz+aaa+bbb/ccc+ddd%20eee'fff,ggg ] into [ cache:www/zzz aaa bbb/ccc ddd eee fff ggg]
@@ -2222,7 +2222,7 @@ if ($UpdateStats) {
 												}
 											}
 											else {
-												$param =~ s/^ +//; $param =~ s/ +$//; $param =~ tr/\s/+/s;
+												$param =~ s/^ +//; $param =~ s/ +$//; $param =~ tr/ /\+/s;
 												if ((length $param) > 0) { $_keyphrases{$param}++; }
 											}
 											last;
@@ -2248,7 +2248,7 @@ if ($UpdateStats) {
 											}
 										}
 										else {
-											$param =~ s/^ +//; $param =~ s/ +$//; $param =~ tr/\s/+/s;
+											$param =~ s/^ +//; $param =~ s/ +$//; $param =~ tr/ /\+/s;
 											if ((length $param) > 2) { $_keyphrases{$param}++; }
 										}
 									}
