@@ -2397,7 +2397,7 @@ print "<TD width=20% bgcolor=#$color_k onmouseover=\"ShowTooltip(5);\" onmouseou
 $kilo=int($TotalBytes/1024*100)/100;
 print "<TR><TD><b>$TotalVisits</b><br>&nbsp;</TD><TD><b>$TotalUnique</b><br>($RatioHosts&nbsp;$message[52])</TD><TD><b>$TotalPages</b><br>($RatioPages&nbsp;".lc $message[56]."/".lc $message[12].")</TD>";
 print "<TD><b>$TotalHits</b><br>($RatioHits&nbsp;".lc $message[57]."/".lc $message[12].")</TD><TD><b>$kilo $message[44]</b><br>($RatioBytes&nbsp;$message[44]/".lc $message[12].")</TD></TR>\n";
-print "<TR valign=bottom><TD colspan=5 align=center>";
+print "<TR valign=bottom><TD colspan=5 align=center><center>";
 print "<TABLE>";
 print "<TR valign=bottom>";
 $max_v=1;$max_p=1;$max_h=1;$max_k=1;
@@ -2433,7 +2433,7 @@ for ($ix=1; $ix<=12; $ix++) {
 	print "<TD valign=center><a href=\"$DirCgi$PROG.$Extension?site=$SiteToAnalyze&year=$YearRequired&month=$monthix&lang=$Lang\">$monthlib{$monthix}</a></TD>";
 }
 
-print "</TR></TABLE>";
+print "</TR></TABLE></center>";
 print "</TD></TR>";
 &tab_end;
 
@@ -2562,7 +2562,7 @@ foreach $key (@sortrobot) {
 print "$CENTER<a name=\"HOUR\"></a><BR>";
 $tab_titre="$message[20]";
 &tab_head;
-print "<TR><TD align=center><TABLE><TR>\n";
+print "<TR><TD align=center><center><TABLE><TR>\n";
 $max_p=0;$max_h=0;$max_k=0;
 for ($ix=0; $ix<=23; $ix++) {
   print "<TH width=16>$ix</TH>";
@@ -2590,7 +2590,7 @@ for ($ix=0; $ix<=23; $ix++) {
 	print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_k\" HEIGHT=$bredde_k WIDTH=6 ALT=\"$message[44]: $kilo\" title=\"$message[44]: $kilo\">";
 	print "</TD>\n";
 }
-print "</TR></TABLE></TD></TR>\n";
+print "</TR></TABLE></center></TD></TR>\n";
 &tab_end;
 
 
