@@ -1,4 +1,4 @@
-# Chinese message file
+# Chinese message file 
 PageCode=big5
 message0=礚猭眔
 message1=礚猭眔(ぃは秆呼办嘿)
@@ -10,8 +10,8 @@ message6=:
 message7=参璸呼
 message8=程把芠ら戳
 message9=程把芠ら戳
-message10=把芠计
-message11=虫把芠
+message10=把芠Ω计
+message11=把芠
 message12=把芠Ω计
 message13=闽龄
 message14=穓碝
@@ -57,7 +57,7 @@ message53=穓碝ま篮呼憨笴竟
 message54=呼魁だ猂╰参
 message55=
 message56=呼计
-message57=Ω计
+message57=郎计
 message58=セ
 message59=穨╰参
 message60=る
