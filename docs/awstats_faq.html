@@ -105,11 +105,11 @@ Because AWStats is in Perl, it can works on all Operating Systems.<br>
 Examples of used platforms (bold means 'tested by author', others were reported by AWStats users to work correctly) :<br>
 <table bgcolor=#F0F0F0 width="100%" class=CFAQ><tr class=CFAQ><td class=CFAQ>
 <u>OS:</u><br>
-<b>Windows NT 4.0</b>, <b>Windows 2000</b>, Windows Me, <b>Linux</b>, Macintosh, <b>Solaris</b>, <b>Aix</b>, BeOS, ...<br>
+<b>Windows 2000</b>, <b>Windows NT 4.0</b>, Windows Me, <b>Linux</b>, Macintosh, <b>Solaris</b>, <b>Aix</b>, BeOS, ...<br>
 <u>Web/Wap/Proxy/FTP/Mails servers</u><br>
-<b>Apache</b>, <b>IIS 5.0</b>, WebStar, WebLogic, WebSite, Tomcat, Squid, Sendmail, Roxen, Resin, ProFTP, IPlanet, IceCast, Zope, www4mail, ...<br>
+<b>Apache</b>, <b>IIS 5.0</b>, WebStar, WebLogic, WebSite, Tomcat, Squid, Sendmail, Roxen, Resin, ProFTP, Lotus Notes/Domino, IPlanet, IceCast, Zope, www4mail, ...<br>
 <u>Perl interpreters:</u><br>
-<b>ActivePerl 5.6</b>, <b>Perl for unix 5.0</b>, mod_perl for Apache, ...<br>
+<b>ActivePerl 5.6</b>, <b>Perl 5.8</b>, <b>Perl 5.6</b>, <b>Perl 5.0</b>, mod_perl for Apache, ...<br>
 </td></tr></table>
 <br>
 
@@ -280,11 +280,6 @@ You must use : <i>LogFormat="%host %other %logname %time1 %methodurl %code %byte
 You must use : <i>LogFormat=2</i><br>
 </td></tr></table>
 
-<u>If your log records are EXACTLY like this (With some providers):</u><br>
-<i>62.161.78.73 - - [dd/Month/yyyy:hh:mm:ss +0x00] "GET /page.html HTTP/1.1" "-" 200 1234</i><br>
-You must use : <i>LogFormat="%host %other %logname %time1 %methodurl %other %code %bytesd"</i><br>
-Note: Browsers, OS's, Keywords and Referers features are not available with a such format.<br>
-
 <table bgcolor=#F0F0F0 width="100%" class=CFAQ><tr class=CFAQ><td class=CFAQ>
 <u>If your log records are EXACTLY like this (With some <b>WebSite</b> versions):</u><br>
 <i>yyyy-mm-dd hh:mm:ss 62.161.78.73 - 192.168.1.1 80 GET /page.html - 200 11205 0 0 HTTP/1.1 mydomain.com Mozilla/4.0+(compatible;+MSIE+5.5;+Windows+98) - http://www.from.com/from.html</i><br>
@@ -296,9 +291,23 @@ You must use : <i>LogFormat="%time2 %host %logname %other %other %method %url %o
 You must use : <i>LogFormat=3</i><br>
 
 <table bgcolor=#F0F0F0 width="100%" class=CFAQ><tr class=CFAQ><td class=CFAQ>
-<u>If you use <b>ProFTP</b> server:</u><br>
-See Next FAQ.<br>
+<u>If your log records are EXACTLY like this (<b>Lotus Notes/Domino</b> log format):</u><br>
+<i>62.161.78.73 - Name Surname Service [dd/mmm/yyyy:hh:mm:ss +0x00] "GET /page.html HTTP/1.1" 200 1234 "http://www.from.com/from.htm" "Mozilla/4.0 (compatible; MSIE 5.01; Windows NT 5.0)"</i><br>
+You must use : <i>LogFormat=6</i><br>
 </td></tr></table>
+
+<u>If you use a FTP server like <b>ProFTP</b>:</u><br>
+See <a href="#FTP">FAQ-SET260</a>.<br>
+
+<table bgcolor=#F0F0F0 width="100%" class=CFAQ><tr class=CFAQ><td class=CFAQ>
+<u>If you want to analyze a <b>Sendmail</b> logfile:</u><br>
+See <a href="#SENDMAIL">FAQ-SET270</a>.<br>
+</td></tr></table>
+
+<u>If your log records are EXACTLY like this (With some providers):</u><br>
+<i>62.161.78.73 - - [dd/Month/yyyy:hh:mm:ss +0x00] "GET /page.html HTTP/1.1" "-" 200 1234</i><br>
+You must use : <i>LogFormat="%host %other %logname %time1 %methodurl %other %code %bytesd"</i><br>
+Note: Browsers, OS's, Keywords and Referers features are not available with a such format.<br>
 
 <table bgcolor=#F0F0F0 width="100%" class=CFAQ><tr class=CFAQ><td class=CFAQ>
 <u>There is a lot of other possible log formats.</u><br>
@@ -418,13 +427,14 @@ When I run AWStats from command line (or as a cgi from a browser), I get
 a message "Not same number of records of ...".<br>
 <font class=CSolution>SOLUTION:</font><br>
 This means your AWStats reference database files (operating systems, browsers, robots...) are not correct.
-First try to update to 4.0. Then check in your disk that you have only ONE of those files. They should be
+First try to update to last version. Then check in your disk that you have only ONE of those files. They should be
 in '<b>lib</b>' directory ('db' with 4.0) where awstats.pl is installed:<br>
-<i>browsers.pl</i><br>
-<i>operating_systems.pl</i><br>
-<i>robots.pl</i><br>
-<i>domains.pl</i><br>
-<i>search_engines.pl</i><br>
+<i>browsers.pm</i><br>
+<i>operating_systems.pm</i><br>
+<i>robots.pm</i><br>
+<i>domains.pm</i><br>
+<i>search_engines.pm</i><br>
+<i>worms.pm</i><br>
 <br>
 
 <a name="COULDNOTOPEN"></a><br>
@@ -568,35 +578,21 @@ log file).<br>
 <a name="SPEED"></a><br>
 <b><u>FAQ-COM100 : AWSTATS SPEED/TIMEOUT PROBLEMS ?</u></b><br>
 <font class=CProblem>PROBLEM:</font><br>
-When I analyze large log files, processing times are very important (Update process from a browser
+When I analyze large log files, processing times are very important (Example: update process from a browser
 returns a timeout/internal error after a long wait).
 Is there a setup or things to do to avoid this and increase speed ?<br>
 <font class=CSolution>SOLUTION:</font><br>
 You really need to understand how a log analyzer works to have good speed.
 There is also major setup changes you can do to decrease your processing time.<br>
-- Launch AWStats more often (from crontab or a scheduler). More often you launch 
-AWStats, more faster is AWStats (because the less is the number of NEW lines in 
-log, since last run, to process). See the <a href="awstats_benchmark.html">Benchmark page</a> to
-get examples of launching frequency according to your web traffic<br>
-- You can disable <a href="awstats_config.html#DNSLookup">DNSLookup</a> in configure file (set <i>DNSLookup=0</i>) 
-but this requires that hosts addresses in your log file are already resolved (need to setup your web server to do so) or that 
-you don't need the domain/country report.
-Log analyze speed can be increased by 2 to 50 times but your web server will be slowed.<br>
-If you don't understand what is an "already resolved reverse DNS lookup", keep 
-this parameter to 1.<br>
-- If you use Apache, set <a href="awstats_config.html#PurgeLogFile">PurgeLogFile</a> to 1 (By default, to avoid bad surprise, 
-<i>PurgeLogFile</i> is 0 in configure file, but you can set it to 1 to ask AWStats 
-to purge the log file after processing it. This increase speed for next run).<br>
-- Use last AWStats version.<br>
+See <a href="awstats_benchmark.html#ADVICES">important advices</a> in benchmark page.<br>
 <br>
 
 <a name="BENCHMARK"></a><br>
 <b><u>FAQ-COM150 : BENCHMARK / FREQUENCY TO LAUNCH AWSTATS TO UPDATE STATISTICS</u></b><br>
 <font class=CProblem>PROBLEM:</font><br>
 What is AWStats speed ?<br>
-<font class=CProblem>PROBLEM:</font><br>
 What is the frequency to launch AWStats process to update my statistics ?<br>
-<font class=CSolution>SOLUTION:</font>
+<font class=CSolution>SOLUTION:</font><br>
 All benchmarks information and advice on frequency for update process are related into
 the <a href="awstats_benchmark.html">Benchmark page</a>.<br>
 <br>
