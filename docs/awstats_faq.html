@@ -737,8 +737,13 @@ another one download another frame, but this make the over-reporting of unique v
 <li> Another important reason to have difference is that an error log files is not always completely sorted
 but only "nearly" sorted because of cache and writing log engines used by server. Nearly all log
 analyzers (commercial and not) assumes that log file is "exactly" sorted by hit date to calculate
-visits, entry and exit pages. AWstats has an advanced parsing algorithm that is able to count visits,
-entry and exit pages even if log file is only "nearly" sorted.<br>
+visits, entry and exit pages. But there is nothing that guaranties this and some log files
+are only "nearly" sorted, above all log files on highly loaded servers.
+AWStats has an advanced parsing algorithm that is able to count 
+correctly visits, entry and exit pages even if log file is only "nearly" sorted.<br>
+<li> Then, there is internal bugs in log analyzers that make reports wrong.
+For example, a lot of users have reported that Webalizer "doubles" the number of visits or visitors
+in some circumstances.<br>
 <b>There is also other reasons, however those points explains only small differences:</b><br>
 <li> To differenciate new visits of a same visitor, log analyers uses a visit time-out. If value differs,
 then results differ (on visit count and entry and exit pages).
@@ -758,6 +763,88 @@ an algorithm to detect keywords of unknown search engines with unknown url synta
 AWStats does not count twice (by default) redirects made by rewrite rules that makes two hits into
 log files but that are only one page "viewed".<br>
 Etc...<br>
+<br>
+If you want to check how serious is your log analyzer, try to parse the following log file:<br>
+<table width="95%" border=1 cellpadding=0 cellspacing=0><tr class=CFAQ><td class=CFAQ>
+<i><font style="font: 8px verdana,arial,helvetica">
+<br># This is a sample of log file that contains a lot of various data we can find
+<br># in a log file. Great sample to test reliability and accuracy of any log
+<br># analyzer.
+<br># ----------------------------------------------------------------------------
+<br># This sample log file contains 10 differents IPs that are :
+<br># 6 human visits done, by 5 different true visitors
+<br># 1 proxy visit done, by one of the 5 true visitors
+<br># 1 try of a 6th human visit failed because of wrong url
+<br># 1 bot visit
+<br># 1 worm attack
+<br># 1 add to favourites (two hits but first is non root hit with error)
+<br># ----------------------------------------------------------------------------
+<br># 80.8.55.1     2 visits (start at 00:00:00 and at 12:00:00 with both entry page on /)
+<br># 80.8.55.2     this is not a visit, only an image included into a page of an other site
+<br># 80.8.55.3     1 visit (and add home page to favourites)
+<br># 80.8.55.4     same visitor than 80.8.55.3 using aol proxy
+<br># 80.8.55.5     not a visit (but a bot indexing)
+<br># 80.8.55.6     1 visit (authenticated visitor)
+<br># 80.8.55.7     1 visit (authenticated visitor with space in name)
+<br># 80.8.55.8     not a visit (try but failed twice with 404 and 405 error)
+<br># 80.8.55.9     not a visit (but a worm attack)
+<br># 80.8.55.10    1 visit that come from web page not search engines
+<br># TOTAL:
+<br>
+<br>80.8.55.1 - - [01/Jan/2001:00:00:10 +0100] "GET /page1.html HTTP/1.0" 200 7009 "-" "Mozilla/4.0 (compatible; MSIE 5.5; Windows NT 5.0)"
+<br>80.8.55.1 - - [01/Jan/2001:00:00:00 +0100] "GET / HTTP/1.0" 200 7009 "http://www.sitereferer/cgi-bin/search.pl?q=a" "Mozilla/4.0 (compatible; MSIE 5.5; Windows NT 5.0)"
+<br>80.8.55.1 - - [01/Jan/2001:00:00:20 +0100] "GET /page2.cgi HTTP/1.0" 200 7009 "http://localhost/page1.html" "Mozilla/4.0 (compatible; MSIE 5.5; Windows NT 5.0)"
+<br>80.8.55.1 - - [01/Jan/2001:00:00:25 +0100] "GET /page3 HTTP/1.0" 200 7009 "-" "Mozilla/4.0 (compatible; MSIE 5.5; Windows NT 5.0)"
+<br>80.8.55.1 - - [01/Jan/2001:00:00:30 +0100] "GET /image.gif HTTP/1.0" 200 7009 "-" "Mozilla/4.0 (compatible; MSIE 5.5; Windows NT 5.0)"
+<br>80.8.55.1 - - [01/Jan/2001:00:00:35 +0100] "GET /image2.png HTTP/1.0" 200 7009 "-" "Mozilla/4.0 (compatible; MSIE 5.5; Windows NT 5.0)"
+<br>80.8.55.1 - - [01/Jan/2001:00:00:40 +0100] "GET /dir/favicon.ico HTTP/1.0" 404 299 "-" "Mozilla/4.0 (compatible; MSIE 5.5; Windows NT 5.0)"
+<br>80.8.55.1 - - [01/Jan/2001:00:00:40 +0100] "GET /favicon.ico HTTP/1.0" 200 299 "-" "Mozilla/4.0 (compatible; MSIE 5.5; Windows NT 5.0)"
+<br>
+<br>80.8.55.1 - - [01/Jan/2001:12:00:00 +0100] "GET / HTTP/1.0" 200 7009 "http://WWW.SiteRefereR:80/cgi-bin/azerty.pl?q=a" "Mozilla/4.7 [fr] (Win95; I)"
+<br>80.8.55.1 - - [01/Jan/2001:12:00:10 +0100] "GET /page1.html HTTP/1.0" 200 7009 "-" "Mozilla/4.7 [fr] (Win95; I)"
+<br>80.8.55.1 - - [01/Jan/2001:12:00:20 +0100] "GET /page2.cgi HTTP/1.0" 200 7009 "-" "Mozilla/4.7 [fr] (Win95; I)"
+<br>80.8.55.1 - - [01/Jan/2001:12:00:25 +0100] "GET /page3 HTTP/1.0" 200 7009 "-" "Mozilla/4.7 [fr] (Win95; I)"
+<br>80.8.55.1 - - [01/Jan/2001:12:00:30 +0100] "GET /image.gif HTTP/1.0" 200 7009 "-" "Mozilla/4.7 [fr] (Win95; I)"
+<br>80.8.55.1 - - [01/Jan/2001:12:00:35 +0100] "GET /image2.png HTTP/1.0" 200 7009 "-" "Mozilla/4.7 [fr] (Win95; I)"
+<br>80.8.55.1 - - [01/Jan/2001:12:00:40 +0100] "GET /js/awstats_misc_tracker.js HTTP/1.1" 200 4998 "-" "Mozilla/4.7 [fr] (Win95; I)"
+<br>80.8.55.1 - - [01/Jan/2001:12:00:45 +0100] "GET /js/awstats_misc_tracker.js?SCREEN=1024x768&CDI=32&JAVA=true&UC=UserCode1056710428488r6832&SC=SessionCode1056710428488r6832&SHK=N&FLA=Y&RP=N&MOV=N&WMA=Y&PDF=Y HTTP/1.1" 200 4998 "-" "Mozilla/4.7 [fr] (Win95; I)"
+<br>
+<br>80.8.55.2 - - [01/Jan/2001:12:01:00 +0100] "GET /hitfromothersitetoimage.gif HTTP/1.0" 200 7009 "-" "Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.3) Gecko/20030312"
+<br>
+<br>80.8.55.3 - - [01/Jan/2001:12:01:10 +0100] "GET / HTTP/1.0" 200 7009 "http://www.sitereferer:81/cgi-bin/azerty.pl" "Mozilla/5.0 (Windows; U; Windows NT 5.0; en-US; rv:1.5a) Gecko/20030728 Mozilla Firebird/0.6.1"
+<br>80.8.55.3 - - [01/Jan/2001:12:01:15 +0100] "GET /page1.html HTTP/1.0" 200 7009 "-" "Mozilla/5.0 (Windows; U; Windows NT 5.0; en-US; rv:1.5a) Gecko/20030728 Mozilla Firebird/0.6.1"
+<br>80.8.55.3 - - [01/Jan/2001:12:01:20 +0100] "GET /page2.cgi?x=a&family=a&y=b&familx=x HTTP/1.0" 200 7009 "-" "Mozilla/5.0 (Windows; U; Windows NT 5.0; en-US; rv:1.5a) Gecko/20030728 Mozilla Firebird/0.6.1"
+<br>80.8.55.3 - - [01/Jan/2001:12:01:25 +0100] "GET /page3 HTTP/1.0" 200 7009 "-" "Mozilla/5.0 (Windows; U; Windows NT 5.0; en-US; rv:1.5a) Gecko/20030728 Mozilla Firebird/0.6.1"
+<br>80.8.55.3 - - [01/Jan/2001:12:01:30 +0100] "GET /image.gif HTTP/1.0" 200 7009 "-" "Mozilla/5.0 (Windows; U; Windows NT 5.0; en-US; rv:1.5a) Gecko/20030728 Mozilla Firebird/0.6.1"
+<br>80.8.55.3 - - [01/Jan/2001:12:01:35 +0100] "GET /image2.png HTTP/1.0" 200 7009 "-" "Mozilla/5.0 (Windows; U; Windows NT 5.0; en-US; rv:1.5a) Gecko/20030728 Mozilla Firebird/0.6.1"
+<br>
+<br>80.8.55.4 - - [01/Jan/2001:12:01:45 +0100] "GET /samevisitorthan80.8.55.3usingaolproxy.gif HTTP/1.0" 200 7009 "-" "Mozilla/3.0 (Windows 98; U) Opera 6.03"
+<br>
+<br>80.8.55.5 - - [01/Jan/2001:12:02:00 +0200] "GET /robots.txt HTTP/1.0" 200 299 "-" "GoogleBot"
+<br>80.8.55.5 - - [01/Jan/2001:12:02:05 +0200] "GET / HTTP/1.0" 200 7009 "-" "GoogleBot"
+<br>
+<br>80.8.55.6 - john [01/Jan/2001:13:00:00 +0100] "GET /cgi-bin/order.cgi?x=a&family=a&productId=998&titi=i&y=b&y=b HTTP/1.0" 200 7009 "http://www.google.com/search?sourceid=navclient&ie=utf-8&oe=utf-8&q=ma%C3%AEtre" "SAGEM-myX-5m/1.0_UP.Browser/6.1.0.6.1.103_(GUI)_MMP/1.0_(Google_WAP_Proxy/1.0)"
+<br>80.8.55.6 - john [01/Jan/2001:13:00:00 +0100] "GET /cgi-bin/order.cgi?x=a&family=a&productId=998&titi=i&y=b&y=b HTTP/1.0" 200 7009 "http://www.google.com/search?sourceid=navclient&ie=utf-8&oe=utf-8&q=élève" "SAGEM-myX-5m/1.0_UP.Browser/6.1.0.6.1.103_(GUI)_MMP/1.0_(Google_WAP_Proxy/1.0)"
+<br>
+<br>80.8.55.7 - John Begood [01/Jan/2001:13:01:00 +0100] "GET /cgi-bin/order.cgi;family=f&type=t&productId=999&titi=i#BIS HTTP/1.0" 200 7009 "-" "Mozilla/3.01 (compatible;)"
+<br>
+<br>80.8.55.8 - - [01/Jan/2001:14:01:20 +0100] "GET /404notfoundpage.html?paramnotpagefound=valparamnotpagefound HTTP/1.0" 404 0 "http://refererto404nofoundpage/pageswithbadlink.html?paramrefnotpagefound=valparamrefnotpagefound" "Mozilla/4.0 (compatible; MSIE 5.5; Windows NT 5.0)"
+<br>80.8.55.8 - - [01/Jan/2001:14:01:20 +0100] "GET /405error.html HTTP/1.0" 405 0 "http://refererto405error/pagesfrom405.html" "Mozilla/4.0 (compatible; MSIE 5.5; Windows NT 5.0)"
+<br>
+<br>80.8.55.9 - - [01/Jan/2001:15:00:00 +0200] "GET /default.ida?XXXXXXXXXXXXXXXXXX%u6858%ucbd3%u7801%u9090%u9090%u8190%u00c3%u0003%u8b00%u531b%u53ff%u0078%u0000%u00=a  HTTP/1.0" 404 299 "-" "-"
+<br>
+<br>80.8.55.10 - - [01/Jan/2001:16:00:00 -0300] "GET / HTTP/1.1" 200 70476 "http://us.f109.mail.yahoo.com/ym/ShowLetter?box=Inbox&MoreYahooParams..." "Mozilla/4.0 (compatible; MSIE 5.5; Windows 98; Win 9x 4.90; Hotbar 4.2.8.0)"
+<br>80.8.55.10 - - [01/Jan/2001:17:00:00 -0300] "GET /page1.html HTTP/1.1" 200 70476 "http://www.freeweb.hu/icecat/filmek/film04.html" "Mozilla/4.0 (compatible; MSIE 5.5; Windows 98; Win 9x 4.90; Hotbar 4.2.8.0)"
+<br>80.8.55.10 - - [01/Jan/2001:18:00:00 -0300] "GET /cgi-bin/awredir.pl?url=http://xxx.com/aa.html HTTP/1.1" 302 70476 "http://us.f109.mail.yahoo.com/ym/ShowLetter?box=Inbox&MoreYahooParams..." "Mozilla/4.0 (compatible; MSIE 5.5; Windows 98; Win 9x 4.90; Hotbar 4.2.8.0)"
+</i>
+</td></tr></table><br>
+<u>This is what you should find:</u><br>
+6 true human visits<br>
+5 different true visitors<br>
+1 bot visit<br>
+1 worm attack<br>
+The entry pages for true visits should be "/" (even for 80.8.55.1) or "/cgi-bin/order.cgi" but nothing else.<br>
+
 <br>
 
 <a name="DIFFERENCE_HOURS"></a><br>
