@@ -20,7 +20,8 @@ body { font: 11px verdana, arial, helvetica, sans-serif; background-color: #FFFF
 th 		{ border-color: #ECECEC; border-left-width: 0px; border-right-width: 1px; border-top-width: 0px; border-bottom-width: 0px; padding: 2px 2px 2px 2px; font: 11px verdana, arial, helvetica, sans-serif; text-align:center; color: #000000; }
 th.aws 	{ border-color: #ECECEC; border-left-width: 0px; border-right-width: 1px; border-top-width: 0px; border-bottom-width: 0px; padding: 2px 2px 2px 2px; font-size: 13px; font-weight: bold; }
 td 		{ border-color: #ECECEC; border-left-width: 0px; border-right-width: 1px; border-top-width: 0px; border-bottom-width: 0px; padding: 2px 2px 2px 2px; font: 11px verdana, arial, helvetica, sans-serif; text-align:center; color: #000000; }
-.aws 	{ border-color: #ECECEC; border-left-width: 0px; border-right-width: 1px; border-top-width: 0px; border-bottom-width: 0px; padding: 2px 2px 2px 2px; font: 11px verdana, arial, helvetica, sans-serif; text-align:left; color: #000000; }
+td.aws 	{ border-color: #ECECEC; border-left-width: 0px; border-right-width: 1px; border-top-width: 0px; border-bottom-width: 0px; padding: 2px 2px 2px 2px; font: 11px verdana, arial, helvetica, sans-serif; text-align:left; color: #000000; }
+td.awsm	{ border-left-width: 0px; border-right-width: 0px; border-top-width: 0px; border-bottom-width: 0px; padding: 0px 0px 0px 0px; font: 11px verdana, arial, helvetica, sans-serif; color: #000000; }
 b { font-weight: bold; }
 a { font: 11px verdana, arial, helvetica, sans-serif; }
 a:link    { color: #001133; text-decoration: none; }
