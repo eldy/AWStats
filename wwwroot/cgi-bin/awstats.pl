@@ -21,7 +21,7 @@ use vars qw(%DomainsHashIDLib @RobotsSearchIDOrder_list1 @RobotsSearchIDOrder_li
 #-------------------------------------------------------
 # Defines
 #-------------------------------------------------------
-my $VERSION="4.0 (build 52)";
+my $VERSION="4.0 (build 53)";
 
 # ---------- Init variables -------
 my $Debug=0;
@@ -3946,10 +3946,10 @@ EOF
 			$avg_day_k+=($DayBytes{$daycursor}||0);
 		}
 		if ($avg_day_nb) {
-			$avg_day_v=sprintf("%.2f",$avg_day_v/$avg_day_nb);
-			$avg_day_p=sprintf("%.2f",$avg_day_p/$avg_day_nb);
-			$avg_day_h=sprintf("%.2f",$avg_day_h/$avg_day_nb);
-			$avg_day_k=sprintf("%.2f",$avg_day_k/$avg_day_nb);
+			$avg_day_v=$avg_day_v/$avg_day_nb;
+			$avg_day_p=$avg_day_p/$avg_day_nb;
+			$avg_day_h=$avg_day_h/$avg_day_nb;
+			$avg_day_k=$avg_day_k/$avg_day_nb;
 			if ($avg_day_v > $max_v) { $max_v=$avg_day_v; }
 			#if ($avg_day_p > $max_p) { $max_p=$avg_day_p; }
 			if ($avg_day_h > $max_h) { $max_h=$avg_day_h; }
@@ -3985,6 +3985,10 @@ EOF
 		if ($max_h > 0) { $bredde_p=int($avg_day_p/$max_h*$BarHeight/2)+1; }
 		if ($max_h > 0) { $bredde_h=int($avg_day_h/$max_h*$BarHeight/2)+1; }
 		if ($max_k > 0) { $bredde_k=int($avg_day_k/$max_k*$BarHeight/2)+1; }
+		$avg_day_v=sprintf("%.2f",$avg_day_v);
+		$avg_day_p=sprintf("%.2f",$avg_day_p);
+		$avg_day_h=sprintf("%.2f",$avg_day_h);
+		$avg_day_k=sprintf("%.2f",$avg_day_k);
 		print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_v\" HEIGHT=$bredde_v WIDTH=4 ALT=\"$Message[10]: $avg_day_v\" title=\"$Message[10]: $avg_day_v\">";
 		print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_p\" HEIGHT=$bredde_p WIDTH=4 ALT=\"$Message[56]: $avg_day_p\" title=\"$Message[56]: $avg_day_p\">";
 		print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_h\" HEIGHT=$bredde_h WIDTH=4 ALT=\"$Message[57]: $avg_day_h\" title=\"$Message[57]: $avg_day_h\">";
@@ -4035,9 +4039,9 @@ EOF
 		}
 		for (@DOWIndex) {
 			if ($avg_dayofweek_nb[$_]) {
-				$avg_dayofweek_p[$_]=sprintf("%.2f",$avg_dayofweek_p[$_]/$avg_dayofweek_nb[$_]);
-				$avg_dayofweek_h[$_]=sprintf("%.2f",$avg_dayofweek_h[$_]/$avg_dayofweek_nb[$_]);
-				$avg_dayofweek_k[$_]=sprintf("%.2f",$avg_dayofweek_k[$_]/$avg_dayofweek_nb[$_]);
+				$avg_dayofweek_p[$_]=$avg_dayofweek_p[$_]/$avg_dayofweek_nb[$_];
+				$avg_dayofweek_h[$_]=$avg_dayofweek_h[$_]/$avg_dayofweek_nb[$_];
+				$avg_dayofweek_k[$_]=$avg_dayofweek_k[$_]/$avg_dayofweek_nb[$_];
 				#if ($avg_dayofweek_p[$_] > $max_p) { $max_p = $avg_dayofweek_p[$_]; }
 				if ($avg_dayofweek_h[$_] > $max_h) { $max_h = $avg_dayofweek_h[$_]; }
 				if ($avg_dayofweek_k[$_] > $max_k) { $max_k = $avg_dayofweek_k[$_]; }
@@ -4053,6 +4057,9 @@ EOF
 			if ($max_h > 0) { $bredde_p=int($avg_dayofweek_p[$_]/$max_h*$BarHeight/2)+1; }
 			if ($max_h > 0) { $bredde_h=int($avg_dayofweek_h[$_]/$max_h*$BarHeight/2)+1; }
 			if ($max_k > 0) { $bredde_k=int($avg_dayofweek_k[$_]/$max_k*$BarHeight/2)+1; }
+			$avg_dayofweek_p[$_]=sprintf("%.2f",$avg_dayofweek_p[$_]);
+			$avg_dayofweek_h[$_]=sprintf("%.2f",$avg_dayofweek_h[$_]);
+			$avg_dayofweek_k[$_]=sprintf("%.2f",$avg_dayofweek_k[$_]);
 			print "<TD valign=bottom>";
 			print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_p\" HEIGHT=$bredde_p WIDTH=6 ALT=\"$Message[56]: $avg_dayofweek_p[$_]\" title=\"$Message[56]: $avg_dayofweek_p[$_]\">";
 			print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_h\" HEIGHT=$bredde_h WIDTH=6 ALT=\"$Message[57]: $avg_dayofweek_h[$_]\" title=\"$Message[57]: $avg_dayofweek_h[$_]\">";
