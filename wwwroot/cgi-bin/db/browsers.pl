@@ -1,18 +1,19 @@
 # AWSTATS BROWSERS DATABASE
 #--------------------------
-# Last update: 2002-02-09
+# Last update: 2002-02-25
 
 # If you want to add a Browser to extend AWStats database detection capabilities,
-# you must add an entry in BrowsersArrayID and in BrowsersOSHashIDLib.
+# you must add an entry in BrowsersSearchIDOrder and in BrowsersHashIDLib.
 
 
-
-# BrowsersArrayID
-# Matching criteria to search in log after changing ' ' or '+' into '_' "
-# This searching ID are searched in declare order.
+# BrowsersSearchIDOrder
+# This list is used to know in which order to search Browsers IDs (Most
+# frequent one are first in this list to increase detect speed).
+# It contains all matching criteria to search for in log fields.
+# Note: Browsers IDs are in lower case and ' ' and '+' are changed into '_'
 #-------------------------------------------------------
-@BrowsersArrayID = (
-# Most frequent browsers should be first in this list
+@BrowsersSearchIDOrder = (
+# Most frequent standard web browsers are first in this list
 "icab",
 "go!zilla",
 "konqueror",
@@ -21,7 +22,7 @@
 "omniweb",
 "opera",
 "wget",
-
+# Other standard web browsers
 "22acidownload",
 "aol\\-iweng",
 "amaya",
@@ -91,6 +92,93 @@
 "webzip",
 "libwww",				# Must be at end because some browser have both "browser id" and "libwww"
 "staroffice"
+);
+
+# BrowsersHashIcon
+# Each Browsers Search ID is associated to a string that is the name of icon
+# file for this OS.
+#---------------------------------------------------------------------------
+%BrowsersHashIcon = (
+# Standard web browsers
+"msie","msie",
+"netscape","netscape",
+"icab","notavailable",
+"go!zilla","notavailable",
+"konqueror","konqueror",
+"links","notavailable",
+"lynx","lynx",
+"omniweb","omniweb",
+"opera","opera",
+"wget","notavailable",
+"22acidownload","notavailable",
+"aol\\-iweng","notavailable",
+"amaya","notavailable",
+"amigavoyager","notavailable",
+"antfresco","notavailable",
+"bpftp","notavailable",
+"cyberdog","notavailable",
+"dreamcast","dreamcast",
+"downloadagent","notavailable",
+"ecatch","notavailable",
+"emailsiphon","notavailable",
+"friendlyspider","notavailable",
+"getright","notavailable",
+"headdump","notavailable",
+"hotjava","notavailable",
+"ibrowse","notavailable",
+"intergo","notavailable",
+"linemodebrowser","notavailable",
+"lotus-notes","notavailable",
+"macweb","notavailable",
+"ncsa_mosaic","notavailable",
+"netpositive","notavailable",
+"nutscrape","notavailable",
+"msfrontpageexpress","notavailable",
+"tzgeturl","notavailable",
+"viking","notavailable",
+"webfetcher","notavailable",
+"webexplorer","notavailable",
+"webmirror","notavailable",
+"webvcr","notavailable",
+# Site grabbers
+"teleport","notavailable",
+"webcapture","notavailable",
+"webcopier","notavailable",
+# Music only browsers
+"real","mediaplayer",
+"winamp","mediaplayer",				# Works for winampmpeg and winamp3httprdr
+"windows-media-player","mediaplayer",
+"audion","mediaplayer",
+"freeamp","mediaplayer",
+"itunes","mediaplayer",
+"jetaudio","mediaplayer",
+"mint_audio","mediaplayer",
+"mpg123","mediaplayer",
+"nsplayer","mediaplayer",
+"sonique","mediaplayer",
+"uplayer","mediaplayer",
+"xmms","mediaplayer",
+"xaudio","mediaplayer",
+# PDA/Phonecell browsers
+"mmef","pdaphone",
+"mspie","pdaphone",
+"up\.","pdaphone",					# Works for UP.Browser and UP.Link
+"wapalizer","pdaphone",
+"wapsilon","pdaphone",
+"webcollage","pdaphone",
+"alcatel","pdaphone",
+"nokia","pdaphone",
+# Others (TV)
+"webtv","webtv",
+# Other kind of browsers
+"csscheck","notavailable",
+"w3m","notavailable",
+"w3c_css_validator","notavailable",
+"w3c_validator","notavailable",
+"wdg_validator","notavailable",
+"webzip","notavailable",
+"libwww","notavailable",			# Must be at end because some browser have both "browser id" and "libwww"
+"staroffice","notavailable"
 );
 
 

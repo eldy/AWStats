@@ -1,18 +1,18 @@
 # AWSTATS OPERATING SYSTEMS DATABASE
 #------------------------------------
-# Last update: 2001-11-10
+# Last update: 2002-02-25
 
 # If you want to add an OS to extend AWStats database detection capabilities,
-# you must add an entry in OSArrayID, in OSHashID and in OSHashLib.
+# you must add an entry in OSSearchIDOrder, in OSHashID and in OSHashLib.
 
 
-
-# OSArrayID
-# This list is used to know in which order to search Operating System IDs.
+# OSSearchIDOrder
+# This list is used to know in which order to search Operating System IDs
+# (Most frequent one are first in this list to increase detect speed).
 # It contains all matching criteria to search for in log fields.
 # Note: OS IDs are in lower case and ' ' and '+' are changed into '_'
 #-------------------------------------------------------------------------
-@OSArrayID	= (
+@OSSearchIDOrder	= (
 # Windows OS family
 "windows_xp","windows_nt_5\.1",		# Must be before windows_nt_5
 "windows_me","win_9x_4\.9",			# Must be before windows_98
@@ -53,9 +53,9 @@
 );
 
 # OSHashID
-# Each OS detect string is associated to an unique ID string
-# that is also the name of icon file for this OS
-#-----------------------------------------------------------
+# Each OS Search ID is associated to a string that is also the name of icon
+# file for this OS.
+#--------------------------------------------------------------------------
 %OSHashID	= (
 # Windows OS family
 "windows_xp","winxp","windows_nt_5\.1","winxp",
