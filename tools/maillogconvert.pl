@@ -32,7 +32,7 @@ $NBOFENTRYFOFLUSH
 $MailType
 /;
 $Debug=0;
-$NBOFENTRYFOFLUSH=65536;	# Nb or records for flush of %entry (Must be a power of 2)
+$NBOFENTRYFOFLUSH=16384;	# Nb or records for flush of %entry (Must be a power of 2)
 $MailType='';				# Mail server family (postfix, sendmail, qmail)
 
 
