@@ -230,7 +230,7 @@
 "getright","getright",
 "headdump","notavailable",
 "hotjava","notavailable",
-"ibrowse","notavailable",
+"ibrowse","ibrowse",
 "intergo","notavailable",
 "linemodebrowser","notavailable",
 "lotus-notes","notavailable",
