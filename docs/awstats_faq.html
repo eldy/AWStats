@@ -88,6 +88,7 @@ FAQ-SET360 <a href="#PARTIAL_STATS">Statistics reported except for os, browsers,
 FAQ-SET400 <a href="#REDIRECT">Pipe redirection to a file give me an empty file.</a><br>
 FAQ-SET450 <a href="#NO_ICON">No pictures/graphics shown.</a><br>
 FAQ-SET700 <a href="#MIGRATEDOUBLED">My visits are doubled for old month I migrated from 3.2 to 5.x</a><br>
+FAQ-SET750 <a href="#OUTOFMEMORYCYGWIN">AWStats run out of memory during update process with cygwin Perl.</a><br>
 FAQ-SET800 <a href="#SPEED">AWStats speed/timeout problems.</a><br>
 </ul>
 <br>
@@ -1495,6 +1496,17 @@ And then run the migrate process again on the file.<br>
 <u>In any other case (in fact works for every OS)</u><br>
 You must remove manually the line <i>YYYYMM00 999 999 999 999</i> (must find one and only
 one such line) and then run the migrate process again on the file.<br>
+<br>
+
+<a name="OUTOFMEMORYCYGWIN"></a><br>
+<b><u>FAQ-SET750 : AWSTATS RUN OUT OF MEMORY DURING UPDATE PROCESS WITH CYGWIN PERL</u></b><br>
+<font class=CProblem>PROBLEM:</font><br>
+When I run the update process on a large log file with cygwin Perl, AWStats run out of memory
+but I am sure that I have enough memory to run AWStats according to the 'memory' column in
+benchmark chart available in AWStats documentation (<a href="awstats_benchmark.html">benchmark page</a>).<br>
+<font class=CSolution>SOLUTION:</font><br>
+It might be a limit inside Cygwin Perl.
+Try to increase the Cygwin parameter <i>heap_chunk_in_mb</i>.<br>
 <br>
 
 <a name="SPEED"></a><br>
