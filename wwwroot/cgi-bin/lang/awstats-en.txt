@@ -165,5 +165,6 @@ message161=Not viewed traffic
 message162=Monthly history
 message163=Worms
 message164=different worms
-message165=Mails successully sent
+message165=Mails successfully sent
 message166=Mails failed/refused
+message167=Sensitive targets
