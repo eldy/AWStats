@@ -673,21 +673,21 @@ sub html_end {
 
 #------------------------------------------------------------------------------
 # Function:		Print on stdout tab header of a chart
-# Parameters:	$title $tooltip_number [$width percentage of chart title]
+# Parameters:	$title $tooltipnb [$width percentage of chart title]
 # Input:		None
 # Output:		None
 # Return:		None
 #------------------------------------------------------------------------------
 sub tab_head {
 	my $title=shift;
-	my $tooltip=shift;
+	my $tooltipnb=shift;
 	my $width=shift||70;
 	my $class=shift;
 	if ($width == 70 && $QueryString =~ /buildpdf/i) { print "<table class=\"aws_border\" border=\"0\" cellpadding=\"2\" cellspacing=\"0\" width=\"800\">\n"; }
 	else { print "<table class=\"aws_border\" border=\"0\" cellpadding=\"2\" cellspacing=\"0\" width=\"100%\">\n"; }
 
-	if ($tooltip) {
-		print "<tr><td class=\"aws_title\" width=\"$width%\"".($TOOLTIPON?" onmouseover=\"ShowTip($tooltip);\" onmouseout=\"HideTip($tooltip);\"":"").">$title </td>";
+	if ($tooltipnb) {
+		print "<tr><td class=\"aws_title\" width=\"$width%\"".Tooltip($tooltipnb,$tooltipnb).">$title </td>";
 	}
 	else {
 		print "<tr><td class=\"aws_title\" width=\"$width%\">$title </td>";
@@ -4569,6 +4569,18 @@ sub AtLeastOneNotNull {
 }
 
 #------------------------------------------------------------------------------
+# Function:     Return the string to add in html tag to include popup javascript code
+# Parameters:   tooltip number
+# Input:        None
+# Output:       None
+# Return:       string with javascript code
+#------------------------------------------------------------------------------
+sub Tooltip {
+    my $ttnb=shift;
+    return ($TOOLTIPON?" onmouseover=\"ShowTip($ttnb);\" onmouseout=\"HideTip($ttnb);\"":"");
+}
+
+#------------------------------------------------------------------------------
 # Function:     Insert a form filter
 # Parameters:   Name of filter field, default for filter field, default for exclude filter field
 # Input:        $StaticLinks, $QueryString, $SiteConfig, $DirConfig
@@ -4982,8 +4994,8 @@ sub ShowEmailSendersChart {
 	}
 	&tab_head("$title",19,0,'emailsenders');
 	print "<tr bgcolor=\"#$color_TableBGRowTitle\"><th colspan=\"3\">$Message[131] : ".(scalar keys %_emails_h)."</th>";
-	if ($ShowEMailSenders =~ /H/i) { print "<th rowspan=\"2\" bgcolor=\"#$color_h\" width=\"80\"".($TOOLTIPON?" onmouseover=\"ShowTip(4);\" onmouseout=\"HideTip(4);\"":"").">$Message[57]</th>"; }
-	if ($ShowEMailSenders =~ /B/i) { print "<th rowspan=\"2\" bgcolor=\"#$color_k\" width=\"80\"".($TOOLTIPON?" onmouseover=\"ShowTip(5);\" onmouseout=\"HideTip(5);\"":"").">$Message[75]</th>"; }
+	if ($ShowEMailSenders =~ /H/i) { print "<th rowspan=\"2\" bgcolor=\"#$color_h\" width=\"80\"".Tooltip(4).">$Message[57]</th>"; }
+	if ($ShowEMailSenders =~ /B/i) { print "<th rowspan=\"2\" bgcolor=\"#$color_k\" width=\"80\"".Tooltip(5).">$Message[75]</th>"; }
 	if ($ShowEMailSenders =~ /M/i) { print "<th rowspan=\"2\" bgcolor=\"#$color_k\" width=\"80\">$Message[106]</th>"; }
 	if ($ShowEMailSenders =~ /L/i) { print "<th rowspan=\"2\" width=\"120\">$Message[9]</th>"; }
 	print "</tr>\n";
@@ -5055,8 +5067,8 @@ sub ShowEmailReceiversChart {
 	}
 	&tab_head("$title",19,0,'emailreceivers');
 	print "<tr bgcolor=\"#$color_TableBGRowTitle\"><th colspan=\"3\">$Message[132] : ".(scalar keys %_emailr_h)."</th>";
-	if ($ShowEMailReceivers =~ /H/i) { print "<th rowspan=\"2\" bgcolor=\"#$color_h\" width=\"80\"".($TOOLTIPON?" onmouseover=\"ShowTip(4);\" onmouseout=\"HideTip(4);\"":"").">$Message[57]</th>"; }
-	if ($ShowEMailReceivers =~ /B/i) { print "<th rowspan=\"2\" bgcolor=\"#$color_k\" width=\"80\"".($TOOLTIPON?" onmouseover=\"ShowTip(5);\" onmouseout=\"HideTip(5);\"":"").">$Message[75]</th>"; }
+	if ($ShowEMailReceivers =~ /H/i) { print "<th rowspan=\"2\" bgcolor=\"#$color_h\" width=\"80\"".Tooltip(4).">$Message[57]</th>"; }
+	if ($ShowEMailReceivers =~ /B/i) { print "<th rowspan=\"2\" bgcolor=\"#$color_k\" width=\"80\"".Tooltip(5).">$Message[75]</th>"; }
 	if ($ShowEMailReceivers =~ /M/i) { print "<th rowspan=\"2\" bgcolor=\"#$color_k\" width=\"80\">$Message[106]</th>"; }
 	if ($ShowEMailReceivers =~ /L/i) { print "<th rowspan=\"2\" width=\"120\">$Message[9]</th>"; }
 	print "</tr>\n";
@@ -7469,11 +7481,11 @@ if (scalar keys %HTMLOutput) {
 #		# Show data array for month
 #		print "<table>\n";
 #		print "<tr><td width=\"15%\" bgcolor=\"#$color_TableBGRowTitle\">$Message[5]</td>";
-#		if ($ShowMonthDayStats =~ /U/i) { print "<td width=\"17%\" bgcolor=\"#$color_u\" onmouseover=\"ShowTip(2);\" onmouseout=\"HideTip(2);\">$Message[11]</td>"; }
-#		if ($ShowMonthDayStats =~ /V/i) { print "<td width=\"17%\" bgcolor=\"#$color_v\" onmouseover=\"ShowTip(1);\" onmouseout=\"HideTip(1);\">$Message[10]</td>"; }
-#		if ($ShowMonthDayStats =~ /P/i) { print "<td width=\"17%\" bgcolor=\"#$color_p\" onmouseover=\"ShowTip(3);\" onmouseout=\"HideTip(3);\">$Message[56]</td>"; }
-#		if ($ShowMonthDayStats =~ /H/i) { print "<td width=\"17%\" bgcolor=\"#$color_h\" onmouseover=\"ShowTip(4);\" onmouseout=\"HideTip(4);\">$Message[57]</td>"; }
-#		if ($ShowMonthDayStats =~ /B/i) { print "<td width=\"17%\" bgcolor=\"#$color_k\" onmouseover=\"ShowTip(5);\" onmouseout=\"HideTip(5);\">$Message[75]</td>"; }
+#		if ($ShowMonthDayStats =~ /U/i) { print "<td width=\"17%\" bgcolor=\"#$color_u\" onmouseover=\"ShowTip(2,2);\">$Message[11]</td>"; }
+#		if ($ShowMonthDayStats =~ /V/i) { print "<td width=\"17%\" bgcolor=\"#$color_v\" onmouseover=\"ShowTip(1,1);\">$Message[10]</td>"; }
+#		if ($ShowMonthDayStats =~ /P/i) { print "<td width=\"17%\" bgcolor=\"#$color_p\" onmouseover=\"ShowTip(3,3);\">$Message[56]</td>"; }
+#		if ($ShowMonthDayStats =~ /H/i) { print "<td width=\"17%\" bgcolor=\"#$color_h\" onmouseover=\"ShowTip(4,4);\">$Message[57]</td>"; }
+#		if ($ShowMonthDayStats =~ /B/i) { print "<td width=\"17%\" bgcolor=\"#$color_k\" onmouseover=\"ShowTip(5,5);\">$Message[75]</td>"; }
 #		print "</tr>\n";
 #		for (my $ix=1; $ix<=12; $ix++) {
 #			my $monthix=($ix<10?"0$ix":"$ix");
@@ -7587,7 +7599,7 @@ if (scalar keys %HTMLOutput) {
 #			print "</td>\n";
 #		}
 #		print "<td>&nbsp;</td>";
-#		print "<td valign=\"middle\"".($TOOLTIPON?" onmouseover=\"ShowTip(18);\" onmouseout=\"HideTip(18);\"":"").">$Message[96]</td>\n";
+#		print "<td valign=\"middle\"".Tooltip(18).">$Message[96]</td>\n";
 #		print "<td></td>\n";
 #		print "</tr>\n";
 #		print "</table>\n<br />\n";
@@ -7595,10 +7607,10 @@ if (scalar keys %HTMLOutput) {
 #		# Show data array for days
 #		print "<table>\n";
 #		print "<tr><td width=\"20%\" bgcolor=\"#$color_TableBGRowTitle\">$Message[4]</td>";
-#		if ($ShowMonthDayStats =~ /V/i) { print "<td width=\"20%\" bgcolor=\"#$color_v\"".($TOOLTIPON?" onmouseover=\"ShowTip(1);\" onmouseout=\"HideTip(1);\"":"").">$Message[10]</td>"; }
-#		if ($ShowMonthDayStats =~ /P/i) { print "<td width=\"20%\" bgcolor=\"#$color_p\"".($TOOLTIPON?" onmouseover=\"ShowTip(3);\" onmouseout=\"HideTip(3);\"":"").">$Message[56]</td>"; }
-#		if ($ShowMonthDayStats =~ /H/i) { print "<td width=\"20%\" bgcolor=\"#$color_h\"".($TOOLTIPON?" onmouseover=\"ShowTip(4);\" onmouseout=\"HideTip(4);\"":"").">$Message[57]</td>"; }
-#		if ($ShowMonthDayStats =~ /B/i) { print "<td width=\"20%\" bgcolor=\"#$color_k\"".($TOOLTIPON?" onmouseover=\"ShowTip(5);\" onmouseout=\"HideTip(5);\"":"").">$Message[75]</td>"; }
+#		if ($ShowMonthDayStats =~ /V/i) { print "<td width=\"20%\" bgcolor=\"#$color_v\"".Tooltip(1).">$Message[10]</td>"; }
+#		if ($ShowMonthDayStats =~ /P/i) { print "<td width=\"20%\" bgcolor=\"#$color_p\"".Tooltip(3).">$Message[56]</td>"; }
+#		if ($ShowMonthDayStats =~ /H/i) { print "<td width=\"20%\" bgcolor=\"#$color_h\"".Tooltip(4).">$Message[57]</td>"; }
+#		if ($ShowMonthDayStats =~ /B/i) { print "<td width=\"20%\" bgcolor=\"#$color_k\"".Tooltip(5).">$Message[75]</td>"; }
 #		print "</tr>\n";
 #		foreach my $daycursor ($firstdaytoshowtime..$lastdaytoshowtime) {
 #			$daycursor =~ /^(\d\d\d\d)(\d\d)(\d\d)/;
@@ -8332,7 +8344,7 @@ if (scalar keys %HTMLOutput) {
 	if ($HTMLOutput{'keyphrases'}) {
 		print "$Center<a name=\"keyphrases\">&nbsp;</a><br />\n";
 		&tab_head($Message[43],19,0,'keyphrases');
-		print "<tr bgcolor=\"#$color_TableBGRowTitle\"".($TOOLTIPON?" onmouseover=\"ShowTip(15);\" onmouseout=\"HideTip(15);\"":"")."><th>$TotalDifferentKeyphrases $Message[103]</th><th bgcolor=\"#$color_s\" width=\"80\">$Message[14]</th><th bgcolor=\"#$color_s\" width=\"80\">$Message[15]</th></tr>\n";
+		print "<tr bgcolor=\"#$color_TableBGRowTitle\"".Tooltip(15)."><th>$TotalDifferentKeyphrases $Message[103]</th><th bgcolor=\"#$color_s\" width=\"80\">$Message[14]</th><th bgcolor=\"#$color_s\" width=\"80\">$Message[15]</th></tr>\n";
 		$total_s=0;
 		my $count=0;
 		&BuildKeyList($MaxRowsInHTMLOutput,$MinHit{'Keyphrase'},\%_keyphrases,\%_keyphrases);
@@ -8361,7 +8373,7 @@ if (scalar keys %HTMLOutput) {
 	if ($HTMLOutput{'keywords'}) {
 		print "$Center<a name=\"keywords\">&nbsp;</a><br />\n";
 		&tab_head($Message[44],19,0,'keywords');
-		print "<tr bgcolor=\"#$color_TableBGRowTitle\"".($TOOLTIPON?" onmouseover=\"ShowTip(15);\" onmouseout=\"HideTip(15);\"":"")."><th>$TotalDifferentKeywords $Message[13]</th><th bgcolor=\"#$color_s\" width=\"80\">$Message[14]</th><th bgcolor=\"#$color_s\" width=\"80\">$Message[15]</th></tr>\n";
+		print "<tr bgcolor=\"#$color_TableBGRowTitle\"".Tooltip(15)."><th>$TotalDifferentKeywords $Message[13]</th><th bgcolor=\"#$color_s\" width=\"80\">$Message[14]</th><th bgcolor=\"#$color_s\" width=\"80\">$Message[15]</th></tr>\n";
 		$total_s=0;
 		my $count=0;
 		&BuildKeyList($MaxRowsInHTMLOutput,$MinHit{'Keyword'},\%_keywords,\%_keywords);
@@ -8474,11 +8486,11 @@ if (scalar keys %HTMLOutput) {
 			# Show main indicators title row
 			print "<tr>";
 			if ($LogType eq 'W' || $LogType eq 'S') { print "<td bgcolor=\"#$color_TableBGTitle\">&nbsp;</td>"; }
-			if ($ShowMonthStats =~ /U/i) { print "<td width=\"$w%\" bgcolor=\"#$color_u\"".($TOOLTIPON?" onmouseover=\"ShowTip(2);\" onmouseout=\"HideTip(2);\"":"").">$Message[11]</td>"; } else { print "<td bgcolor=\"#$color_TableBGTitle\" width=\"20%\">&nbsp;</td>"; }
-			if ($ShowMonthStats =~ /V/i) { print "<td width=\"$w%\" bgcolor=\"#$color_v\"".($TOOLTIPON?" onmouseover=\"ShowTip(1);\" onmouseout=\"HideTip(1);\"":"").">$Message[10]</td>"; } else { print "<td bgcolor=\"#$color_TableBGTitle\" width=\"20%\">&nbsp;</td>"; }
-			if ($ShowMonthStats =~ /P/i) { print "<td width=\"$w%\" bgcolor=\"#$color_p\"".($TOOLTIPON?" onmouseover=\"ShowTip(3);\" onmouseout=\"HideTip(3);\"":"").">$Message[56]</td>"; } else { print "<td bgcolor=\"#$color_TableBGTitle\" width=\"20%\">&nbsp;</td>"; }
-			if ($ShowMonthStats =~ /H/i) { print "<td width=\"$w%\" bgcolor=\"#$color_h\"".($TOOLTIPON?" onmouseover=\"ShowTip(4);\" onmouseout=\"HideTip(4);\"":"").">$Message[57]</td>"; } else { print "<td bgcolor=\"#$color_TableBGTitle\" width=\"20%\">&nbsp;</td>"; }
-			if ($ShowMonthStats =~ /B/i) { print "<td width=\"$w%\" bgcolor=\"#$color_k\"".($TOOLTIPON?" onmouseover=\"ShowTip(5);\" onmouseout=\"HideTip(5);\"":"").">$Message[75]</td>"; } else { print "<td bgcolor=\"#$color_TableBGTitle\" width=\"20%\">&nbsp;</td>"; }
+			if ($ShowMonthStats =~ /U/i) { print "<td width=\"$w%\" bgcolor=\"#$color_u\"".Tooltip(2).">$Message[11]</td>"; } else { print "<td bgcolor=\"#$color_TableBGTitle\" width=\"20%\">&nbsp;</td>"; }
+			if ($ShowMonthStats =~ /V/i) { print "<td width=\"$w%\" bgcolor=\"#$color_v\"".Tooltip(1).">$Message[10]</td>"; } else { print "<td bgcolor=\"#$color_TableBGTitle\" width=\"20%\">&nbsp;</td>"; }
+			if ($ShowMonthStats =~ /P/i) { print "<td width=\"$w%\" bgcolor=\"#$color_p\"".Tooltip(3).">$Message[56]</td>"; } else { print "<td bgcolor=\"#$color_TableBGTitle\" width=\"20%\">&nbsp;</td>"; }
+			if ($ShowMonthStats =~ /H/i) { print "<td width=\"$w%\" bgcolor=\"#$color_h\"".Tooltip(4).">$Message[57]</td>"; } else { print "<td bgcolor=\"#$color_TableBGTitle\" width=\"20%\">&nbsp;</td>"; }
+			if ($ShowMonthStats =~ /B/i) { print "<td width=\"$w%\" bgcolor=\"#$color_k\"".Tooltip(5).">$Message[75]</td>"; } else { print "<td bgcolor=\"#$color_TableBGTitle\" width=\"20%\">&nbsp;</td>"; }
 			print "</tr>\n";
 			# Show main indicators values for viewed traffic
 			print "<tr>";
@@ -8631,11 +8643,11 @@ if (scalar keys %HTMLOutput) {
 			if ($AddDataArrayMonthStats) {
 				print "<table>\n";
 				print "<tr><td width=\"80\" bgcolor=\"#$color_TableBGRowTitle\">$Message[5]</td>";
-				if ($ShowMonthStats =~ /U/i) { print "<td width=\"80\" bgcolor=\"#$color_u\"".($TOOLTIPON?" onmouseover=\"ShowTip(2);\" onmouseout=\"HideTip(2);\"":"").">$Message[11]</td>"; }
-				if ($ShowMonthStats =~ /V/i) { print "<td width=\"80\" bgcolor=\"#$color_v\"".($TOOLTIPON?" onmouseover=\"ShowTip(1);\" onmouseout=\"HideTip(1);\"":"").">$Message[10]</td>"; }
-				if ($ShowMonthStats =~ /P/i) { print "<td width=\"80\" bgcolor=\"#$color_p\"".($TOOLTIPON?" onmouseover=\"ShowTip(3);\" onmouseout=\"HideTip(3);\"":"").">$Message[56]</td>"; }
-				if ($ShowMonthStats =~ /H/i) { print "<td width=\"80\" bgcolor=\"#$color_h\"".($TOOLTIPON?" onmouseover=\"ShowTip(4);\" onmouseout=\"HideTip(4);\"":"").">$Message[57]</td>"; }
-				if ($ShowMonthStats =~ /B/i) { print "<td width=\"80\" bgcolor=\"#$color_k\"".($TOOLTIPON?" onmouseover=\"ShowTip(5);\" onmouseout=\"HideTip(5);\"":"").">$Message[75]</td>"; }
+				if ($ShowMonthStats =~ /U/i) { print "<td width=\"80\" bgcolor=\"#$color_u\"".Tooltip(2).">$Message[11]</td>"; }
+				if ($ShowMonthStats =~ /V/i) { print "<td width=\"80\" bgcolor=\"#$color_v\"".Tooltip(1).">$Message[10]</td>"; }
+				if ($ShowMonthStats =~ /P/i) { print "<td width=\"80\" bgcolor=\"#$color_p\"".Tooltip(3).">$Message[56]</td>"; }
+				if ($ShowMonthStats =~ /H/i) { print "<td width=\"80\" bgcolor=\"#$color_h\"".Tooltip(4).">$Message[57]</td>"; }
+				if ($ShowMonthStats =~ /B/i) { print "<td width=\"80\" bgcolor=\"#$color_k\"".Tooltip(5).">$Message[75]</td>"; }
 				print "</tr>\n";
 				for (my $ix=1; $ix<=12; $ix++) {
 					my $monthix=sprintf("%02s",$ix);
@@ -8820,7 +8832,7 @@ if (scalar keys %HTMLOutput) {
 					print "</td>\n";
 				}
 				print "<td>&nbsp;</td>";
-				print "<td valign=\"middle\"".($TOOLTIPON?" onmouseover=\"ShowTip(18);\" onmouseout=\"HideTip(18);\"":"").">$Message[96]</td>\n";
+				print "<td valign=\"middle\"".Tooltip(18).">$Message[96]</td>\n";
 				print "</tr>\n";
 				print "</table>\n";
 			}
@@ -8830,10 +8842,10 @@ if (scalar keys %HTMLOutput) {
 			if ($AddDataArrayShowDaysOfMonthStats) {
 				print "<table>\n";
 				print "<tr><td width=\"80\" bgcolor=\"#$color_TableBGRowTitle\">$Message[4]</td>";
-				if ($ShowDaysOfMonthStats =~ /V/i) { print "<td width=\"80\" bgcolor=\"#$color_v\"".($TOOLTIPON?" onmouseover=\"ShowTip(1);\" onmouseout=\"HideTip(1);\"":"").">$Message[10]</td>"; }
-				if ($ShowDaysOfMonthStats =~ /P/i) { print "<td width=\"80\" bgcolor=\"#$color_p\"".($TOOLTIPON?" onmouseover=\"ShowTip(3);\" onmouseout=\"HideTip(3);\"":"").">$Message[56]</td>"; }
-				if ($ShowDaysOfMonthStats =~ /H/i) { print "<td width=\"80\" bgcolor=\"#$color_h\"".($TOOLTIPON?" onmouseover=\"ShowTip(4);\" onmouseout=\"HideTip(4);\"":"").">$Message[57]</td>"; }
-				if ($ShowDaysOfMonthStats =~ /B/i) { print "<td width=\"80\" bgcolor=\"#$color_k\"".($TOOLTIPON?" onmouseover=\"ShowTip(5);\" onmouseout=\"HideTip(5);\"":"").">$Message[75]</td>"; }
+				if ($ShowDaysOfMonthStats =~ /V/i) { print "<td width=\"80\" bgcolor=\"#$color_v\"".Tooltip(1).">$Message[10]</td>"; }
+				if ($ShowDaysOfMonthStats =~ /P/i) { print "<td width=\"80\" bgcolor=\"#$color_p\"".Tooltip(3).">$Message[56]</td>"; }
+				if ($ShowDaysOfMonthStats =~ /H/i) { print "<td width=\"80\" bgcolor=\"#$color_h\"".Tooltip(4).">$Message[57]</td>"; }
+				if ($ShowDaysOfMonthStats =~ /B/i) { print "<td width=\"80\" bgcolor=\"#$color_k\"".Tooltip(5).">$Message[75]</td>"; }
 				print "</tr>";
 				foreach my $daycursor ($firstdaytoshowtime..$lastdaytoshowtime) {
 					$daycursor =~ /^(\d\d\d\d)(\d\d)(\d\d)/;
@@ -8959,7 +8971,7 @@ if (scalar keys %HTMLOutput) {
 					print "</td>\n";
 				}
 				print "</tr>\n";
-				print "<tr".($TOOLTIPON?" onmouseover=\"ShowTip(17);\" onmouseout=\"HideTip(17);\"":"").">\n";
+				print "<tr".Tooltip(17).">\n";
 				for (@DOWIndex) {
 					print "<td".($_=~/[06]/?" bgcolor=\"#$color_weekend\"":"").">".$Message[$_+84]."</td>";
 				}
@@ -8971,9 +8983,9 @@ if (scalar keys %HTMLOutput) {
 			if ($AddDataArrayShowDaysOfWeekStats) {
 				print "<table>\n";
 				print "<tr><td width=\"80\" bgcolor=\"#$color_TableBGRowTitle\">$Message[4]</td>";
-				if ($ShowDaysOfWeekStats =~ /P/i) { print "<td width=\"80\" bgcolor=\"#$color_p\"".($TOOLTIPON?" onmouseover=\"ShowTip(3);\" onmouseout=\"HideTip(3);\"":"").">$Message[56]</td>"; }
-				if ($ShowDaysOfWeekStats =~ /H/i) { print "<td width=\"80\" bgcolor=\"#$color_h\"".($TOOLTIPON?" onmouseover=\"ShowTip(4);\" onmouseout=\"HideTip(4);\"":"").">$Message[57]</td>"; }
-				if ($ShowDaysOfWeekStats =~ /B/i) { print "<td width=\"80\" bgcolor=\"#$color_k\"".($TOOLTIPON?" onmouseover=\"ShowTip(5);\" onmouseout=\"HideTip(5);\"":"").">$Message[75]</td></tr>"; }
+				if ($ShowDaysOfWeekStats =~ /P/i) { print "<td width=\"80\" bgcolor=\"#$color_p\"".Tooltip(3).">$Message[56]</td>"; }
+				if ($ShowDaysOfWeekStats =~ /H/i) { print "<td width=\"80\" bgcolor=\"#$color_h\"".Tooltip(4).">$Message[57]</td>"; }
+				if ($ShowDaysOfWeekStats =~ /B/i) { print "<td width=\"80\" bgcolor=\"#$color_k\"".Tooltip(5).">$Message[75]</td></tr>"; }
 				for (@DOWIndex) {
 					print "<tr".($_=~/[06]/?" bgcolor=\"#$color_weekend\"":"").">";
 					print "<td>".$Message[$_+84]."</td>";
@@ -9041,13 +9053,13 @@ if (scalar keys %HTMLOutput) {
 				}
 				print "</tr>\n";
 				# Show hour lib
-				print "<tr".($TOOLTIPON?" onmouseover=\"ShowTip(17);\" onmouseout=\"HideTip(17);\"":"").">";
+				print "<tr".Tooltip(17).">";
 				for (my $ix=0; $ix<=23; $ix++) {
 				  print "<th width=\"19\">$ix</th>\n";	# width=19 instead of 18 to avoid a MacOS browser bug.
 				}
 				print "</tr>\n";
 				# Show clock icon
-				print "<tr".($TOOLTIPON?" onmouseover=\"ShowTip(17);\" onmouseout=\"HideTip(17);\"":"").">\n";
+				print "<tr".Tooltip(17).">\n";
 				for (my $ix=0; $ix<=23; $ix++) {
 					my $hrs=($ix>=12?$ix-12:$ix);
 					my $hre=($ix>=12?$ix-11:$ix+1);
@@ -9066,9 +9078,9 @@ if (scalar keys %HTMLOutput) {
 
 				print "<table>\n";
 				print "<tr><td width=\"80\" bgcolor=\"#$color_TableBGRowTitle\">$Message[20]</td>";
-				if ($ShowHoursStats =~ /P/i) { print "<td width=\"80\" bgcolor=\"#$color_p\"".($TOOLTIPON?" onmouseover=\"ShowTip(3);\" onmouseout=\"HideTip(3);\"":"").">$Message[56]</td>"; }
-				if ($ShowHoursStats =~ /H/i) { print "<td width=\"80\" bgcolor=\"#$color_h\"".($TOOLTIPON?" onmouseover=\"ShowTip(4);\" onmouseout=\"HideTip(4);\"":"").">$Message[57]</td>"; }
-				if ($ShowHoursStats =~ /B/i) { print "<td width=\"80\" bgcolor=\"#$color_k\"".($TOOLTIPON?" onmouseover=\"ShowTip(5);\" onmouseout=\"HideTip(5);\"":"").">$Message[75]</td>"; }
+				if ($ShowHoursStats =~ /P/i) { print "<td width=\"80\" bgcolor=\"#$color_p\"".Tooltip(3).">$Message[56]</td>"; }
+				if ($ShowHoursStats =~ /H/i) { print "<td width=\"80\" bgcolor=\"#$color_h\"".Tooltip(4).">$Message[57]</td>"; }
+				if ($ShowHoursStats =~ /B/i) { print "<td width=\"80\" bgcolor=\"#$color_k\"".Tooltip(5).">$Message[75]</td>"; }
 				print "</tr>";
 				for (my $ix=0; $ix<=11; $ix++) {
 					my $monthix=($ix<10?"0$ix":"$ix");
@@ -9087,9 +9099,9 @@ if (scalar keys %HTMLOutput) {
 
 				print "<table>\n";
 				print "<tr><td width=\"80\" bgcolor=\"#$color_TableBGRowTitle\">$Message[20]</td>";
-				if ($ShowHoursStats =~ /P/i) { print "<td width=\"80\" bgcolor=\"#$color_p\"".($TOOLTIPON?" onmouseover=\"ShowTip(3);\" onmouseout=\"HideTip(3);\"":"").">$Message[56]</td>"; }
-				if ($ShowHoursStats =~ /H/i) { print "<td width=\"80\" bgcolor=\"#$color_h\"".($TOOLTIPON?" onmouseover=\"ShowTip(4);\" onmouseout=\"HideTip(4);\"":"").">$Message[57]</td>"; }
-				if ($ShowHoursStats =~ /B/i) { print "<td width=\"80\" bgcolor=\"#$color_k\"".($TOOLTIPON?" onmouseover=\"ShowTip(5);\" onmouseout=\"HideTip(5);\"":"").">$Message[75]</td>"; }
+				if ($ShowHoursStats =~ /P/i) { print "<td width=\"80\" bgcolor=\"#$color_p\"".Tooltip(3).">$Message[56]</td>"; }
+				if ($ShowHoursStats =~ /H/i) { print "<td width=\"80\" bgcolor=\"#$color_h\"".Tooltip(4).">$Message[57]</td>"; }
+				if ($ShowHoursStats =~ /B/i) { print "<td width=\"80\" bgcolor=\"#$color_k\"".Tooltip(5).">$Message[75]</td>"; }
 				print "</tr>\n";
 				for (my $ix=12; $ix<=23; $ix++) {
 					my $monthix=($ix<10?"0$ix":"$ix");
@@ -9120,9 +9132,9 @@ if (scalar keys %HTMLOutput) {
 			my $title="$Message[25] ($Message[77] $MaxNbOf{'Domain'}) &nbsp; - &nbsp; <a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?XMLEncode("$AWScript?${NewLinkParams}output=alldomains"):"$PROG$StaticLinks.alldomains.$StaticExt")."\"$NewLinkTarget>$Message[80]</a>";
 			&tab_head("$title",19,0,'countries');
 			print "<tr bgcolor=\"#$color_TableBGRowTitle\"><th width=\"$WIDTHCOLICON\">&nbsp;</th><th colspan=\"2\">$Message[17]</th>";
-			if ($ShowDomainsStats =~ /P/i) { print "<th bgcolor=\"#$color_p\" width=\"80\"".($TOOLTIPON?" onmouseover=\"ShowTip(3);\" onmouseout=\"HideTip(3);\"":"").">$Message[56]</th>"; }
-			if ($ShowDomainsStats =~ /H/i) { print "<th bgcolor=\"#$color_h\" width=\"80\"".($TOOLTIPON?" onmouseover=\"ShowTip(4);\" onmouseout=\"HideTip(4);\"":"").">$Message[57]</th>"; }
-			if ($ShowDomainsStats =~ /B/i) { print "<th bgcolor=\"#$color_k\" width=\"80\"".($TOOLTIPON?" onmouseover=\"ShowTip(5);\" onmouseout=\"HideTip(5);\"":"").">$Message[75]</th>"; }
+			if ($ShowDomainsStats =~ /P/i) { print "<th bgcolor=\"#$color_p\" width=\"80\"".Tooltip(3).">$Message[56]</th>"; }
+			if ($ShowDomainsStats =~ /H/i) { print "<th bgcolor=\"#$color_h\" width=\"80\"".Tooltip(4).">$Message[57]</th>"; }
+			if ($ShowDomainsStats =~ /B/i) { print "<th bgcolor=\"#$color_k\" width=\"80\"".Tooltip(5).">$Message[75]</th>"; }
 			print "<th>&nbsp;</th>";
 			print "</tr>\n";
 			$total_p=$total_h=$total_k=0;
@@ -9185,9 +9197,9 @@ if (scalar keys %HTMLOutput) {
 			if ($MonthRequired ne 'all') { print "$Message[81] : $TotalHostsKnown $Message[82], $TotalHostsUnknown $Message[1] - $TotalUnique $Message[11]</th>"; }
 			else { print "$Message[81] : ".(scalar keys %_host_h)."</th>"; }
 			&ShowHostInfo('__title__');
-			if ($ShowHostsStats =~ /P/i) { print "<th bgcolor=\"#$color_p\" width=\"80\"".($TOOLTIPON?" onmouseover=\"ShowTip(3);\" onmouseout=\"HideTip(3);\"":"").">$Message[56]</th>"; }
-			if ($ShowHostsStats =~ /H/i) { print "<th bgcolor=\"#$color_h\" width=\"80\"".($TOOLTIPON?" onmouseover=\"ShowTip(4);\" onmouseout=\"HideTip(4);\"":"").">$Message[57]</th>"; }
-			if ($ShowHostsStats =~ /B/i) { print "<th bgcolor=\"#$color_k\" width=\"80\"".($TOOLTIPON?" onmouseover=\"ShowTip(5);\" onmouseout=\"HideTip(5);\"":"").">$Message[75]</th>"; }
+			if ($ShowHostsStats =~ /P/i) { print "<th bgcolor=\"#$color_p\" width=\"80\"".Tooltip(3).">$Message[56]</th>"; }
+			if ($ShowHostsStats =~ /H/i) { print "<th bgcolor=\"#$color_h\" width=\"80\"".Tooltip(4).">$Message[57]</th>"; }
+			if ($ShowHostsStats =~ /B/i) { print "<th bgcolor=\"#$color_k\" width=\"80\"".Tooltip(5).">$Message[75]</th>"; }
 			if ($ShowHostsStats =~ /L/i) { print "<th width=\"120\">$Message[9]</th>"; }
 			print "</tr>\n";
 			$total_p=$total_h=$total_k=0;
@@ -9245,9 +9257,9 @@ if (scalar keys %HTMLOutput) {
 			&tab_head("$title",19,0,'logins');
 			print "<tr bgcolor=\"#$color_TableBGRowTitle\"><th>$Message[94] : ".(scalar keys %_login_h)."</th>";
 			&ShowUserInfo('__title__');
-			if ($ShowAuthenticatedUsers =~ /P/i) { print "<th bgcolor=\"#$color_p\" width=\"80\"".($TOOLTIPON?" onmouseover=\"ShowTip(3);\" onmouseout=\"HideTip(3);\"":"").">$Message[56]</th>"; }
-			if ($ShowAuthenticatedUsers =~ /H/i) { print "<th bgcolor=\"#$color_h\" width=\"80\"".($TOOLTIPON?" onmouseover=\"ShowTip(4);\" onmouseout=\"HideTip(4);\"":"").">$Message[57]</th>"; }
-			if ($ShowAuthenticatedUsers =~ /B/i) { print "<th bgcolor=\"#$color_k\" width=\"80\"".($TOOLTIPON?" onmouseover=\"ShowTip(5);\" onmouseout=\"HideTip(5);\"":"").">$Message[75]</th>"; }
+			if ($ShowAuthenticatedUsers =~ /P/i) { print "<th bgcolor=\"#$color_p\" width=\"80\"".Tooltip(3).">$Message[56]</th>"; }
+			if ($ShowAuthenticatedUsers =~ /H/i) { print "<th bgcolor=\"#$color_h\" width=\"80\"".Tooltip(4).">$Message[57]</th>"; }
+			if ($ShowAuthenticatedUsers =~ /B/i) { print "<th bgcolor=\"#$color_k\" width=\"80\"".Tooltip(5).">$Message[75]</th>"; }
 			if ($ShowAuthenticatedUsers =~ /L/i) { print "<th width=\"120\">$Message[9]</th>"; }
 			print "</tr>\n";
 			$total_p=$total_h=$total_k=0;
@@ -9293,7 +9305,7 @@ if (scalar keys %HTMLOutput) {
 			if ($Debug) { debug("ShowRobotStats",2); }
 			print "$Center<a name=\"robots\">&nbsp;</a><br />\n";
 			&tab_head("$Message[53] ($Message[77] $MaxNbOf{'RobotShown'}) &nbsp; - &nbsp; <a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?XMLEncode("$AWScript?${NewLinkParams}output=allrobots"):"$PROG$StaticLinks.allrobots.$StaticExt")."\"$NewLinkTarget>$Message[80]</a> &nbsp; - &nbsp; <a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?XMLEncode("$AWScript?${NewLinkParams}output=lastrobots"):"$PROG$StaticLinks.lastrobots.$StaticExt")."\"$NewLinkTarget>$Message[9]</a>",19,0,'robots');
-			print "<tr bgcolor=\"#$color_TableBGRowTitle\"".($TOOLTIPON?" onmouseover=\"ShowTip(16);\" onmouseout=\"HideTip(16);\"":"")."><th>".(scalar keys %_robot_h)." $Message[51]*</th>";
+			print "<tr bgcolor=\"#$color_TableBGRowTitle\"".Tooltip(16)."><th>".(scalar keys %_robot_h)." $Message[51]*</th>";
 			if ($ShowRobotsStats =~ /H/i) { print "<th bgcolor=\"#$color_h\" width=\"80\">$Message[57]</th>"; }
 			if ($ShowRobotsStats =~ /B/i) { print "<th bgcolor=\"#$color_k\" width=\"80\">$Message[75]</th>"; }
 			if ($ShowRobotsStats =~ /L/i) { print "<th width=\"120\">$Message[9]</th>"; }
@@ -9338,7 +9350,7 @@ if (scalar keys %HTMLOutput) {
 			if ($Debug) { debug("ShowWormsStats",2); }
 			print "$Center<a name=\"worms\">&nbsp;</a><br />\n";
 			&tab_head("$Message[163] ($Message[77] $MaxNbOf{'WormsShown'})",19,0,'worms');
-			print "<tr bgcolor=\"#$color_TableBGRowTitle\"".($TOOLTIPON?" onmouseover=\"ShowTip(21);\" onmouseout=\"HideTip(21);\"":"").">";
+			print "<tr bgcolor=\"#$color_TableBGRowTitle\"".Tooltip(21).">";
 			print "<th>".(scalar keys %_worm_h)." $Message[164]*</th>";
 			print "<th>$Message[167]</th>";
 			if ($ShowWormsStats =~ /H/i) { print "<th bgcolor=\"#$color_h\" width=\"80\">$Message[57]</th>"; }
@@ -9392,7 +9404,7 @@ if (scalar keys %HTMLOutput) {
 			my $Totals=0; foreach (@SessionsRange) { $average_s+=($_session{$_}||0)*$SessionsAverage{$_}; $Totals+=$_session{$_}||0; }
 			if ($Totals) { $average_s=int($average_s/$Totals); }
 			else { $average_s='?'; }
-			print "<tr bgcolor=\"#$color_TableBGRowTitle\"".($TOOLTIPON?" onmouseover=\"ShowTip(1);\" onmouseout=\"HideTip(1);\"":"")."><th>$Message[10]: $TotalVisits - $Message[96]: $average_s s</th><th bgcolor=\"#$color_s\" width=\"80\">$Message[10]</th><th bgcolor=\"#$color_s\" width=\"80\">$Message[15]</th></tr>\n";
+			print "<tr bgcolor=\"#$color_TableBGRowTitle\"".Tooltip(1)."><th>$Message[10]: $TotalVisits - $Message[96]: $average_s s</th><th bgcolor=\"#$color_s\" width=\"80\">$Message[10]</th><th bgcolor=\"#$color_s\" width=\"80\">$Message[15]</th></tr>\n";
 			$average_s=0;
 			$total_s=0;
 			my $count=0;
@@ -9410,7 +9422,7 @@ if (scalar keys %HTMLOutput) {
 			if ($rest_s > 0) {	# All others sessions
 				my $p=0;
 				if ($TotalVisits) { $p=int($rest_s/$TotalVisits*1000)/10; }
-				print "<tr".($TOOLTIPON?" onmouseover=\"ShowTip(20);\" onmouseout=\"HideTip(20);\"":"")."><td class=\"aws\"><span style=\"color: #$color_other\">$Message[0]</span></td>";
+				print "<tr".Tooltip(20)."><td class=\"aws\"><span style=\"color: #$color_other\">$Message[0]</span></td>";
 				print "<td>$rest_s</td>";
 				print "<td>".($rest_s?"$p %":"&nbsp;")."</td>";
 				print "</tr>\n";
@@ -9429,8 +9441,8 @@ if (scalar keys %HTMLOutput) {
 			if ($ShowFileTypesStats =~ /C/i) { $title.=" - $Message[98]"; }
 			&tab_head("$title",19,0,'filetypes');
 			print "<tr bgcolor=\"#$color_TableBGRowTitle\"><th colspan=\"3\">$Message[73]</th>";
-			if ($ShowFileTypesStats =~ /H/i) { print "<th bgcolor=\"#$color_h\" width=\"80\"".($TOOLTIPON?" onmouseover=\"ShowTip(4);\" onmouseout=\"HideTip(4);\"":"").">$Message[57]</th><th bgcolor=\"#$color_h\" width=\"80\">$Message[15]</th>"; }
-			if ($ShowFileTypesStats =~ /B/i) { print "<th bgcolor=\"#$color_k\" width=\"80\"".($TOOLTIPON?" onmouseover=\"ShowTip(5);\" onmouseout=\"HideTip(5);\"":"").">$Message[75]</th><th bgcolor=\"#$color_k\" width=\"80\">$Message[15]</th>"; }
+			if ($ShowFileTypesStats =~ /H/i) { print "<th bgcolor=\"#$color_h\" width=\"80\"".Tooltip(4).">$Message[57]</th><th bgcolor=\"#$color_h\" width=\"80\">$Message[15]</th>"; }
+			if ($ShowFileTypesStats =~ /B/i) { print "<th bgcolor=\"#$color_k\" width=\"80\"".Tooltip(5).">$Message[75]</th><th bgcolor=\"#$color_k\" width=\"80\">$Message[15]</th>"; }
 			if ($ShowFileTypesStats =~ /C/i) { print "<th bgcolor=\"#$color_k\" width=\"120\">$Message[100]</th><th bgcolor=\"#$color_k\" width=\"120\">$Message[101]</th><th bgcolor=\"#$color_k\" width=\"120\">$Message[99]</th>"; }
 			print "</tr>\n";
 			my $total_con=0; my $total_cre=0;
@@ -9751,7 +9763,7 @@ if (scalar keys %HTMLOutput) {
 			if ($ShowOriginStats =~ /H/i) { print "<td>".($_from_h[5]?$_from_h[5]:"&nbsp;")."</td><td>".($_from_h[5]?"$p_h[5] %":"&nbsp;")."</td>"; }
 			print "</tr>\n";
 			#------- Referrals by search engines
-			print "<tr".($TOOLTIPON?" onmouseover=\"ShowTip(13);\" onmouseout=\"HideTip(13);\"":"")."><td class=\"aws\"><b>$Message[40]</b> - <a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?XMLEncode("$AWScript?${NewLinkParams}output=refererse"):"$PROG$StaticLinks.refererse.$StaticExt")."\"$NewLinkTarget>$Message[80]</a><br />\n";
+			print "<tr".Tooltip(13)."><td class=\"aws\"><b>$Message[40]</b> - <a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?XMLEncode("$AWScript?${NewLinkParams}output=refererse"):"$PROG$StaticLinks.refererse.$StaticExt")."\"$NewLinkTarget>$Message[80]</a><br />\n";
 			if (scalar keys %_se_referrals_h) {
 				print "<table>\n";
 				$total_p=0; $total_h=0;
@@ -9783,7 +9795,7 @@ if (scalar keys %HTMLOutput) {
 			if ($ShowOriginStats =~ /H/i) { print "<td valign=\"top\">".($_from_h[2]?$_from_h[2]:"&nbsp;")."</td><td valign=\"top\">".($_from_h[2]?"$p_h[2] %":"&nbsp;")."</td>"; }
 			print "</tr>\n";
 			#------- Referrals by external HTML link
-			print "<tr".($TOOLTIPON?" onmouseover=\"ShowTip(14);\" onmouseout=\"HideTip(14);\"":"")."><td class=\"aws\"><b>$Message[41]</b> - <a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?XMLEncode("$AWScript?${NewLinkParams}output=refererpages"):"$PROG$StaticLinks.refererpages.$StaticExt")."\"$NewLinkTarget>$Message[80]</a><br />\n";
+			print "<tr".Tooltip(14)."><td class=\"aws\"><b>$Message[41]</b> - <a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?XMLEncode("$AWScript?${NewLinkParams}output=refererpages"):"$PROG$StaticLinks.refererpages.$StaticExt")."\"$NewLinkTarget>$Message[80]</a><br />\n";
 			if (scalar keys %_pagesrefs_h) {
 				print "<table>\n";
 				$total_p=0; $total_h=0;
@@ -9843,7 +9855,7 @@ if (scalar keys %HTMLOutput) {
 			if ($ShowKeyphrasesStats && $ShowKeywordsStats) { print "<td width=\"50%\" valign=\"top\">\n";	}
 			if ($Debug) { debug("ShowKeyphrasesStats",2); }
 			&tab_head("$Message[120] ($Message[77] $MaxNbOf{'KeyphrasesShown'})<br /><a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?XMLEncode("$AWScript?${NewLinkParams}output=keyphrases"):"$PROG$StaticLinks.keyphrases.$StaticExt")."\"$NewLinkTarget>$Message[80]</a>",19,($ShowKeyphrasesStats && $ShowKeywordsStats)?95:70,'keyphrases');
-			print "<tr bgcolor=\"#$color_TableBGRowTitle\"".($TOOLTIPON?" onmouseover=\"ShowTip(15);\" onmouseout=\"HideTip(15);\"":"")."><th>$TotalDifferentKeyphrases $Message[103]</th><th bgcolor=\"#$color_s\" width=\"80\">$Message[14]</th><th bgcolor=\"#$color_s\" width=\"80\">$Message[15]</th></tr>\n";
+			print "<tr bgcolor=\"#$color_TableBGRowTitle\"".Tooltip(15)."><th>$TotalDifferentKeyphrases $Message[103]</th><th bgcolor=\"#$color_s\" width=\"80\">$Message[14]</th><th bgcolor=\"#$color_s\" width=\"80\">$Message[15]</th></tr>\n";
 			$total_s=0;
 			my $count=0;
 			&BuildKeyList($MaxNbOf{'KeyphrasesShown'},$MinHit{'Keyphrase'},\%_keyphrases,\%_keyphrases);
@@ -9875,7 +9887,7 @@ if (scalar keys %HTMLOutput) {
 			if ($ShowKeyphrasesStats && $ShowKeywordsStats) { print "<td width=\"50%\" valign=\"top\">\n";	}
 			if ($Debug) { debug("ShowKeywordsStats",2); }
 			&tab_head("$Message[121] ($Message[77] $MaxNbOf{'KeywordsShown'})<br /><a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?XMLEncode("$AWScript?${NewLinkParams}output=keywords"):"$PROG$StaticLinks.keywords.$StaticExt")."\"$NewLinkTarget>$Message[80]</a>",19,($ShowKeyphrasesStats && $ShowKeywordsStats)?95:70,'keywords');
-			print "<tr bgcolor=\"#$color_TableBGRowTitle\"".($TOOLTIPON?" onmouseover=\"ShowTip(15);\" onmouseout=\"HideTip(15);\"":"")."><th>$TotalDifferentKeywords $Message[13]</th><th bgcolor=\"#$color_s\" width=\"80\">$Message[14]</th><th bgcolor=\"#$color_s\" width=\"80\">$Message[15]</th></tr>\n";
+			print "<tr bgcolor=\"#$color_TableBGRowTitle\"".Tooltip(15)."><th>$TotalDifferentKeywords $Message[13]</th><th bgcolor=\"#$color_s\" width=\"80\">$Message[14]</th><th bgcolor=\"#$color_s\" width=\"80\">$Message[15]</th></tr>\n";
 			$total_s=0;
 			my $count=0;
 			&BuildKeyList($MaxNbOf{'KeywordsShown'},$MinHit{'Keyword'},\%_keywords,\%_keywords);
@@ -9960,7 +9972,7 @@ if (scalar keys %HTMLOutput) {
 			&BuildKeyList($MaxRowsInHTMLOutput,1,\%_errors_h,\%_errors_h);
 			foreach my $key (@keylist) {
 				my $p=int($_errors_h{$key}/$TotalHitsErrors*1000)/10;
-				print "<tr".($TOOLTIPON?" onmouseover=\"ShowTip($key);\" onmouseout=\"HideTip($key);\"":"").">";
+				print "<tr".Tooltip($key,$key).">";
 				if ($TrapInfosForHTTPErrorCodes{$key}) { print "<td><a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?XMLEncode("$AWScript?${NewLinkParams}output=errors$key"):"$PROG$StaticLinks.errors$key.$StaticExt")."\"$NewLinkTarget>$key</a></td>"; }
 				else { print "<td valign=\"top\">$key</td>"; }
 				print "<td class=\"aws\">".($httpcodelib{$key}?$httpcodelib{$key}:'Unknown error')."</td><td>$_errors_h{$key}</td><td>$p %</td><td>".Format_Bytes($_errors_k{$key})."</td>";
@@ -9984,7 +9996,7 @@ if (scalar keys %HTMLOutput) {
 			&BuildKeyList($MaxRowsInHTMLOutput,1,\%_errors_h,\%_errors_h);
 			foreach my $key (@keylist) {
 				my $p=int($_errors_h{$key}/$TotalHitsErrors*1000)/10;
-				print "<tr".($TOOLTIPON?" onmouseover=\"ShowTip($key);\" onmouseout=\"HideTip($key);\"":"").">";
+				print "<tr".Tooltip($key,$key).">";
 				print "<td valign=\"top\">$key</td>";
 				print "<td class=\"aws\">".($smtpcodelib{$key}?$smtpcodelib{$key}:'Unknown error')."</td><td>$_errors_h{$key}</td><td>$p %</td><td>".Format_Bytes($_errors_k{$key})."</td>";
 				print "</tr>\n";
