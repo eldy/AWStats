@@ -10,7 +10,7 @@
 
 # <-----
 # ENTER HERE THE USE COMMAND FOR ALL REQUIRED PERL MODULES
-if (!eval ('require "Time/HiRes.pm"')) 	{ return "Error: Need Perl module Time::HiRes"; }
+if (!eval ('require "Time/HiRes.pm"')) { return $@?"Error: $@":"Error: Need Perl module Time::HiRes"; }
 # ----->
 use strict;no strict "refs";
 

@@ -11,7 +11,7 @@
 
 # <-----
 # ENTER HERE THE USE COMMAND FOR ALL REQUIRED PERL MODULES
-if (!eval ('require "Storable.pm";')) 	{ return "Error: Need Perl module Storable"; }
+if (!eval ('require "Storable.pm";')) { return $@?"Error: $@":"Error: Need Perl module Storable"; }
 # ----->
 use strict;no strict "refs";
 

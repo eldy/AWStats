@@ -27,6 +27,7 @@ New features/improvements:
 - Added maillogconvert.p for analyzing mail log files (support better
   sendmail, postfix and qmail log files).
 - Added -addfilenum option in logresolvemerge.pl
+- Better management of plugin load failure.
 
 Other/Documentation:
 - Added mp4 mime type.

@@ -10,8 +10,8 @@
 
 # <-----
 # ENTER HERE THE USE COMMAND FOR ALL REQUIRED PERL MODULES
-if (!eval ('require "Net/IP.pm";')) 	{ return "Error: Need Perl module Net::IP"; }
-if (!eval ('require "Net/DNS.pm";')) 	{ return "Error: Need Perl module Net::DNS"; }
+if (!eval ('require "Net/IP.pm";'))		{ return $@?"Error: $@":"Error: Need Perl module Net::IP"; }
+if (!eval ('require "Net/DNS.pm";')) 	{ return $@?"Error: $@":"Error: Need Perl module Net::DNS"; }
 # ----->
 use strict;no strict "refs";
 

@@ -16,7 +16,7 @@ use vars qw/ $type /;
 $type='geoip';
 if (!eval ('require "Geo/IP.pm";')) 	{
 	$type='geoippureperl';
-	if (!eval ('require "Geo/IP/PurePerl.pm";')) 	{ return "Error: Need Perl module Geo::IP or Geo::IP::PurePerl"; }
+	if (!eval ('require "Geo/IP/PurePerl.pm";')) { return $@?"Error: $@":"Error: Need Perl module Geo::IP or Geo::IP::PurePerl"; }
 }
 # ----->
 use strict;no strict "refs";

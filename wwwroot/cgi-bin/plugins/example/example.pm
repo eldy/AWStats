@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 #-----------------------------------------------------------------------------
-# Example AWStats plugin
+# AWStats axample plugin
 # <-----
 # THIS IS A SAMPLE OF AN EMPTY PLUGIN FILE WITH INSTRUCTIONS TO HELP YOU TO
 # WRITE YOUR OWN WORKING PLUGIN. REPLACE THIS SENTENCE WITH THE PLUGIN GOAL.
@@ -14,7 +14,7 @@
 
 # <-----
 # ENTER HERE THE USE COMMAND FOR ALL REQUIRED PERL MODULES
-#if (!eval ('require "Time/HiRes.pm"')) 	{ return "Error: Need Perl module Time::HiRes"; }
+#if (!eval ('require "TheModule.pm";')) { return $@?"Error: $@":"Error: Need Perl module TheModule"; }
 # ----->
 use strict;no strict "refs";
 
@@ -27,7 +27,7 @@ use strict;no strict "refs";
 # ENTER HERE THE MINIMUM AWSTATS VERSION REQUIRED BY YOUR PLUGIN
 # AND THE NAME OF ALL FUNCTIONS THE PLUGIN MANAGE.
 # EACH POSSIBLE FUNCTION AND GOAL ARE DESCRIBE LATER.
-my $PluginNeedAWStatsVersion="5.4";
+my $PluginNeedAWStatsVersion="5.6";
 my $PluginHooksFunctions="xxx";
 # ----->
 

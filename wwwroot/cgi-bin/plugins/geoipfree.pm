@@ -13,7 +13,7 @@
 # <-----
 push @INC, "${DIR}/plugins";
 # ENTER HERE THE USE COMMAND FOR ALL REQUIRED PERL MODULES
-if (!eval ('require "Geo/IPfree.pm";')) { return "Error: Need Perl module Geo::IPfree"; }
+if (!eval ('require "Geo/IPfree.pm";')) { return $@?"Error: $@":"Error: Need Perl module Geo::IPfree"; }
 # ----->
 use strict;no strict "refs";
 
