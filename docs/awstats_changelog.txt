@@ -21,6 +21,7 @@ Fixes:
 - Fixed not working file type detection for default pages.
 
 New features/improvements:
+- Added a Webmin module.
 - Enhance the 'Extra' feature with parameters ExtraSectionFirstColumnFormatX,
   ExtraSectionAddAverageRowX, ExtraSectionAddSumRowX.
   Also add a dedicated page in documentation.
