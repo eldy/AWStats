@@ -250,10 +250,9 @@ Modify this new config file:
 <table width="95%" border=1 cellpadding=0 cellspacing=0><tr class=CFAQ><td class=CFAQ>
 <i>
 LogFile="/var/log/xferlog"
+<br>LogType=F
 <br>LogFormat="%time1 %host %logname %method %url %code %bytesd"
 <br>LogSeparator="\t"
-<br>DNSLookup=0
-<br>SkipFiles=""
 <br>NotPageList=""
 <br>ShowLinksOnUrl=0
 <br>ShowMenu=1
@@ -313,6 +312,7 @@ LogFile="gzip -cd /var/log/maillog.0.gz | /path/to/maillogconvert.pl vadmin |"<b
 </i>
 Then change:
 <i>
+<br>LogType=M
 <br>LogFormat="%time2 %email %email_r %host %host_r %method %url %code %bytesd"
 <br>ShowMenu=1
 <br>ShowMonthStats=HB
