@@ -17,10 +17,13 @@ AWStats Changelog
 - New parameter: Added URLNotCaseSensitive.
 - New parameter: Added URLWithQueryWithoutFollowingParameters to exclude some
   parameters from URL when URLWithQuery is on.
+- Fixed: -debug option is allowed in migrate.
 - Fixed: Wrong window was opened when clicking on flag link when
   UseFramesWhenCGI was on.
 - Fixed: Fixed pb in refreshing page when clicking on "Update Now" link (no
   need to force the refresh).
+- Fixed: a bug which makes the keywords report loaded twice when page viewed
+  as a cgi after an update now click.
 - Fixed: Pb with SAMBAR server ('Expires' line appears at the top of pages).
 - Fixed: Now last update DNS cache file is saved with same permissions than
   history files so it depends on SaveDatabaseFilesWithPermissionsForEveryone.
