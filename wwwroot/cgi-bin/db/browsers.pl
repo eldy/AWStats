@@ -86,16 +86,14 @@
 "wdg_validator",
 "webzip",
 "libwww",				# Must be at end because some browser have both "browser id" and "libwww"
-"staroffice","StarOffice"
+"staroffice"
 );
 
 
 # Browser name list ("browser id in lower case", "browser text")
 #---------------------------------------------------------------
 %BrowsersHashIDLib = (
-"msie","defined_later",
-"netscape","defined_later",
-# Most frequent browsers should be first in this list
+# Common web browsers (IE and Netscape must not be in this list)
 "icab","iCab",
 "go!zilla","Go!Zilla",
 "konqueror","Konqueror",
@@ -104,7 +102,6 @@
 "omniweb","OmniWeb",
 "opera","Opera",
 "wget","Wget",
-
 "22acidownload","22AciDownload",
 "aol\\-iweng","AOL-Iweng",
 "amaya","Amaya",
