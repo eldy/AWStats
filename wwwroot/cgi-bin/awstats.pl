@@ -1221,7 +1221,7 @@ sub Check_Config {
 }
 
 #--------------------------------------------------------------------
-# Input: year,month,0|1|2	(0=read only 1st part, 1=read all file, 2=read only LastUpdate)
+# Input: year,month,0|1		(0=read only 1st part, 1=read all file)
 #--------------------------------------------------------------------
 sub Read_History_File {
 	my $year=sprintf("%04i",shift);
@@ -1231,8 +1231,10 @@ sub Read_History_File {
 	if ($HistoryFileAlreadyRead{"$year$month"}) { return 0; }			# Protect code to invoke function only once for each month/year
 	$HistoryFileAlreadyRead{"$year$month"}=1;							# Protect code to invoke function only once for each month/year
 	if (! -s "$DirData/$PROG$month$year$FileSuffix.txt") {
+		# If file not exists, return
 		&debug(" No history file");
-		return 0; }	# If file not exists, return
+		return 0;
+	}	
 
 	# If session for read (no update), file can be open with share
 	# POSSIBLE CHANGE HERE	
@@ -1369,6 +1371,49 @@ sub Read_History_File {
 			&debug(" End of SIDER section ($count entries loaded)");
 			next;
 		}
+	    if ($field[0] eq "BEGIN_PAGEREFS")   {
+			&debug(" Begin of PAGEREFS section");
+			$_=<HISTORY>;
+			chomp $_; s/\r//;
+			if ($_ eq "") { error("Error: History file \"$DirData/$PROG$_[1]$_[0]$FileSuffix.txt\" is corrupted. Restore a backup of this file, or remove it (data for this month will be lost)."); }
+			my @field=split(/\s+/,$_);
+			my $count=0;
+			while ($field[0] ne "END_PAGEREFS") {
+				$count++;
+				if ($part) {
+					$_pagesrefs_h{$field[0]}+=$field[1];
+				}
+				$_=<HISTORY>;
+				chomp $_; s/\r//;
+				if ($_ eq "") { error("Error: History file \"$DirData/$PROG$_[1]$_[0]$FileSuffix.txt\" is corrupted. Restore a backup of this file, or remove it (data for this month will be lost)."); }
+				@field=split(/\s+/,$_);
+			}
+			&debug(" End of PAGEREFS section ($count entries)");
+			next;
+    	}
+	    if ($field[0] eq "BEGIN_SIDER_404")   {
+			&debug(" Begin of SIDER_404 section");
+			$_=<HISTORY>;
+			chomp $_; s/\r//;
+			if ($_ eq "") { error("Error: History file \"$DirData/$PROG$_[1]$_[0]$FileSuffix.txt\" is corrupted. Restore a backup of this file, or remove it (data for this month will be lost)."); }
+			my @field=split(/\s+/,$_);
+			my $count=0;
+			while ($field[0] ne "END_SIDER_404") {
+				$count++;
+				if ($part) {
+					$_sider404_h{$field[0]}+=$field[1];
+					if ($UpdateStats || $QueryString =~ /output=notfounderror/i) {
+						$_referer404_h{$field[0]}=$field[2];
+					}
+				}
+				$_=<HISTORY>;
+				chomp $_; s/\r//;
+				if ($_ eq "") { error("Error: History file \"$DirData/$PROG$_[1]$_[0]$FileSuffix.txt\" is corrupted. Restore a backup of this file, or remove it (data for this month will be lost)."); }
+				@field=split(/\s+/,$_);
+			}
+			&debug(" End of SIDER_404 section ($count entries)");
+			next;
+		}
 
 		# SECOND PART: If $part == 0, it means we don't need this part of data.
 		if ($part) {
@@ -1388,48 +1433,12 @@ sub Read_History_File {
 	        if ($field[0] eq "END_UNKNOWNREFERER")   { $readunknownreferer=0; next; }
 	        if ($field[0] eq "BEGIN_UNKNOWNREFERERBROWSER") { $readunknownrefererbrowser=1; next; }
 	        if ($field[0] eq "END_UNKNOWNREFERERBROWSER")   { $readunknownrefererbrowser=0; next; }
-		    if ($field[0] eq "BEGIN_PAGEREFS")   {
-				&debug(" Begin of PAGEREFS section");
-				$_=<HISTORY>;
-				chomp $_; s/\r//;
-				if ($_ eq "") { error("Error: History file \"$DirData/$PROG$_[1]$_[0]$FileSuffix.txt\" is corrupted. Restore a backup of this file, or remove it (data for this month will be lost)."); }
-				my @field=split(/\s+/,$_);
-				my $count=0;
-				while ($field[0] ne "END_PAGEREFS") {
-					$count++;
-					$_pagesrefs_h{$field[0]}+=$field[1];
-					$_=<HISTORY>;
-					chomp $_; s/\r//;
-					if ($_ eq "") { error("Error: History file \"$DirData/$PROG$_[1]$_[0]$FileSuffix.txt\" is corrupted. Restore a backup of this file, or remove it (data for this month will be lost)."); }
-					@field=split(/\s+/,$_);
-				}
-				&debug(" End of PAGEREFS section ($count entries)");
-				next;
-	    	}
 	        if ($field[0] eq "BEGIN_SEREFERRALS") { $readse=1; next; }
 	        if ($field[0] eq "END_SEREFERRALS") { $readse=0; next; }
 	        if ($field[0] eq "BEGIN_SEARCHWORDS") { $readsearchwords=1; next; }
 	        if ($field[0] eq "END_SEARCHWORDS") { $readsearchwords=0; next; }
 	        if ($field[0] eq "BEGIN_ERRORS") { $readerrors=1; next; }
 	        if ($field[0] eq "END_ERRORS") { $readerrors=0; next; }
-		    if ($field[0] eq "BEGIN_SIDER_404")   {
-				&debug(" Begin of SIDER_404 section");
-				$_=<HISTORY>;
-				chomp $_; s/\r//;
-				if ($_ eq "") { error("Error: History file \"$DirData/$PROG$_[1]$_[0]$FileSuffix.txt\" is corrupted. Restore a backup of this file, or remove it (data for this month will be lost)."); }
-				my @field=split(/\s+/,$_);
-				my $count=0;
-				while ($field[0] ne "END_SIDER_404") {
-					$count++;
-					$_sider404_h{$field[0]}+=$field[1]; $_referer404_h{$field[0]}=$field[2]; 
-					$_=<HISTORY>;
-					chomp $_; s/\r//;
-					if ($_ eq "") { error("Error: History file \"$DirData/$PROG$_[1]$_[0]$FileSuffix.txt\" is corrupted. Restore a backup of this file, or remove it (data for this month will be lost)."); }
-					@field=split(/\s+/,$_);
-				}
-				&debug(" End of SIDER_404 section ($count entries)");
-				next;
-			}
 	        if ($readunknownreferer) {
 	        	if (! $_unknownreferer_l{$field[0]}) { $_unknownreferer_l{$field[0]}=int($field[1]); }
 	        	next;
@@ -1561,27 +1570,22 @@ sub Save_History_File {
 
 	print HISTORYTMP "BEGIN_SEREFERRALS\n";
 	foreach my $key (keys %_se_referrals_h) { print HISTORYTMP "$key $_se_referrals_h{$key}\n"; next; }
-#	foreach my $key (sort keys %_se_referrals_h) { print HISTORYTMP "$key $_se_referrals_h{$key}\n"; next; }
 	print HISTORYTMP "END_SEREFERRALS\n";
 
 	print HISTORYTMP "BEGIN_PAGEREFS\n";
 	foreach my $key (keys %_pagesrefs_h) { print HISTORYTMP "$key $_pagesrefs_h{$key}\n"; next; }
-#	foreach my $key (sort keys %_pagesrefs_h) { print HISTORYTMP "$key $_pagesrefs_h{$key}\n"; next; }
 	print HISTORYTMP "END_PAGEREFS\n";
 
 	print HISTORYTMP "BEGIN_SEARCHWORDS\n";
 	foreach my $key (keys %_keywords) { if ($_keywords{$key}) { print HISTORYTMP "$key $_keywords{$key}\n"; } next; }
-#	foreach my $key (sort keys %_keywords) { if ($_keywords{$key}) { print HISTORYTMP "$key $_keywords{$key}\n"; } next; }
 	print HISTORYTMP "END_SEARCHWORDS\n";
 
 	print HISTORYTMP "BEGIN_ERRORS\n";
 	foreach my $key (keys %_errors_h) { print HISTORYTMP "$key $_errors_h{$key}\n"; next; }
-#	foreach my $key (keys %_errors_h) { print HISTORYTMP "$key $_errors_h{$key}\n"; next; }
 	print HISTORYTMP "END_ERRORS\n";
 
 	print HISTORYTMP "BEGIN_SIDER_404\n";
 	foreach my $key (keys %_sider404_h) { print HISTORYTMP "$key $_sider404_h{$key} $_referer404_h{$key}\n"; next; }
-#	foreach my $key (sort keys %_sider404_h) { print HISTORYTMP "$key $_sider404_h{$key} $_referer404_h{$key}\n"; next; }
 	print HISTORYTMP "END_SIDER_404\n";
 
 	close(HISTORYTMP);
@@ -2627,8 +2631,10 @@ EOF
 		foreach my $key (sort { $SortDir*$_sider404_h{$a} <=> $SortDir*$_sider404_h{$b} } keys (%_sider404_h)) {
 			if ($count>=$MAXROWS) { $rest+=$_sider404_h{$key}; next; }
 			$key =~ s/<script.*$//gi; 				# This is to avoid 'Cross Site Scripting attacks'
-			$referer=$_referer404_h{$key}; $referer =~ s/<script.*$//gi;	# This is to avoid 'Cross Site Scripting attacks'
-			print "<tr><td CLASS=AWL>$key</td><td>$_sider404_h{$key}</td><td>$referer&nbsp;</td></tr>";
+			my $nompage=$key;
+			#if (length($nompage)>$MaxLengthOfURL) { $nompage=substr($nompage,0,$MaxLengthOfURL)."..."; }
+			my $referer=$_referer404_h{$key}; $referer =~ s/<script.*$//gi;	# This is to avoid 'Cross Site Scripting attacks'
+			print "<tr><td CLASS=AWL>$nompage</td><td>$_sider404_h{$key}</td><td>$referer&nbsp;</td></tr>";
 			$count++;
 		}
 		&tab_end;
@@ -2975,7 +2981,7 @@ EOF
 	#-------------------------
 	print "$CENTER<a name=\"PAGE\">&nbsp;</a><BR>";
 	$MaxNbOfPageShown = $TotalDifferentPages if $MaxNbOfPageShown > $TotalDifferentPages;
-	&tab_head("$Message[77] $MaxNbOfPageShown $Message[55] $TotalDifferentPages $Message[27] &nbsp; - &nbsp; <a href=\"$DirCgi$PROG.$Extension?output=urldetail&".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang\">Full list</a>");
+	&tab_head("$Message[77] $MaxNbOfPageShown $Message[55] $TotalDifferentPages $Message[27] &nbsp; - &nbsp; <a href=\"$DirCgi$PROG.$Extension?output=urldetail&".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang\">$Message[80]</a>");
 	print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[19]</TH><TH bgcolor=\"#$color_p\">&nbsp;$Message[29]&nbsp;</TH><TH>&nbsp;</TH></TR>\n";
 	my $max_p=1; foreach my $key (values %_sider_p) { if ($key > $max_p) { $max_p = $key; } }
 	my $count=0; my $rest_p=0;
