@@ -14,7 +14,7 @@
 #-------------------------------------------------------
 # Defines
 #-------------------------------------------------------
-$VERSION="2.24 (build 16)";
+$VERSION="2.24 (build 17)";
 $Lang=0;
 
 # Default value
@@ -133,7 +133,7 @@ $BarImageHorizontal_k = "barrehk.png";
 # English
 $message[0][0]="Unknown";
 $message[1][0]="Unknown (unresolved ip)";
-$message[2][0]="Other visitors";
+$message[2][0]="Others";
 $message[3][0]="View details";
 $message[4][0]="Day";
 $message[5][0]="Month";
