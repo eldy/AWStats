@@ -4728,7 +4728,7 @@ sub ShowFormFilter {
 sub ShowUserInfo {
 	my $user=shift;
 	# Call to plugins' function ShowInfoUser
-	foreach my $pluginname (keys %{$PluginsLoaded{'ShowInfoUser'}})  {
+	foreach my $pluginname (sort keys %{$PluginsLoaded{'ShowInfoUser'}})  {
 		my $function="ShowInfoUser_$pluginname('$user')";
 		eval("$function");
 	}
@@ -4744,7 +4744,7 @@ sub ShowUserInfo {
 sub ShowClusterInfo {
 	my $user=shift;
 	# Call to plugins' function ShowInfoCluster
-	foreach my $pluginname (keys %{$PluginsLoaded{'ShowInfoCluster'}})  {
+	foreach my $pluginname (sort keys %{$PluginsLoaded{'ShowInfoCluster'}})  {
 		my $function="ShowInfoCluster_$pluginname('$user')";
 		eval("$function");
 	}
@@ -4760,7 +4760,7 @@ sub ShowClusterInfo {
 sub ShowHostInfo {
 	my $host=shift;
 	# Call to plugins' function ShowInfoHost
-	foreach my $pluginname (keys %{$PluginsLoaded{'ShowInfoHost'}})  {
+	foreach my $pluginname (sort keys %{$PluginsLoaded{'ShowInfoHost'}})  {
 		my $function="ShowInfoHost_$pluginname('$host')";
 		eval("$function");
 	}
