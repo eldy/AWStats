@@ -41,6 +41,51 @@ if ($out !~ /^----- awstats (\S+)\.(\S+)\s(\S+\s\S+)/) {
 }
 
 &header($text{'index_title'}, "", undef, 1, 1, 0, undef, undef, undef, &text('index_version', "$1.$2 $3"));
+
+
+print <<EOF;
+<style type="text/css">
+<!--
+div { font: 12px 'Arial','Verdana','Helvetica', sans-serif; text-align: justify; }
+.CTooltip { position:absolute; top: 0px; left: 0px; z-index: 2; width: 540px; visibility:hidden; font: 8pt 'MS Comic Sans','Arial',sans-serif; background-color: #FFFFE6; padding: 8px; border: 1px solid black; }
+//-->
+</style>
+
+<script language="javascript" type="text/javascript">
+function ShowTip(fArg)
+{
+	var tooltipOBJ = (document.getElementById) ? document.getElementById('tt' + fArg) : eval("document.all['tt" + fArg + "']");
+	if (tooltipOBJ != null) {
+		var tooltipLft = (document.body.offsetWidth?document.body.offsetWidth:document.body.style.pixelWidth) - (tooltipOBJ.offsetWidth?tooltipOBJ.offsetWidth:(tooltipOBJ.style.pixelWidth?tooltipOBJ.style.pixelWidth:540)) - 30;
+		var tooltipTop = 10;
+		if (navigator.appName == 'Netscape') {
+			tooltipTop = (document.body.scrollTop>=0?document.body.scrollTop+10:event.clientY+10);
+ 			tooltipOBJ.style.top = tooltipTop+"px";
+			tooltipOBJ.style.left = tooltipLft+"px";
+		}
+		else {
+			tooltipTop = (document.body.scrollTop>=0?document.body.scrollTop+10:event.clientY+10);
+			tooltipTop = (document.body.scrollTop>=0?document.body.scrollTop+10:event.clientY+10);
+			if ((event.clientX > tooltipLft) && (event.clientY < (tooltipOBJ.scrollHeight?tooltipOBJ.scrollHeight:tooltipOBJ.style.pixelHeight) + 10)) {
+				tooltipTop = (document.body.scrollTop?document.body.scrollTop:document.body.offsetTop) + event.clientY + 20;
+			}
+			tooltipOBJ.style.left = tooltipLft;
+			tooltipOBJ.style.top = tooltipTop;
+		}
+		tooltipOBJ.style.visibility = "visible";
+	}
+}
+function HideTip(fArg)
+{
+	var tooltipOBJ = (document.getElementById) ? document.getElementById('tt' + fArg) : eval("document.all['tt" + fArg + "']");
+	if (tooltipOBJ != null) {
+		tooltipOBJ.style.visibility = "hidden";
+	}
+}
+</script>
+EOF
+
+
 print "<hr>\n";
 if ($1 < 5 || ($1 == 5 && $2 < 8)) {
 	print "<p>",&text('index_eversion', "<tt>$config{'awstats'}</tt>", "$1.$2", "5.8"),"<p>\n";
@@ -134,7 +179,7 @@ if (scalar @config) {
             
 			print "<table border width=\"100%\">\n";
 			print "<tr $tb>";
-			print "<td rowspan=2 colspan=2><b>$text{'index_path'}</b></td>";
+			print "<td rowspan=2 colspan=3><b>$text{'index_path'}</b></td>";
 			print "<td rowspan=2 align=center><b>$text{'index_create'}</b></td>";
 		 	print "<td colspan=2 align=center><b>$text{'index_update'}</b></td>";
 			print "<td rowspan=2 align=center><b>$text{'index_view'}</b></td>";
@@ -150,11 +195,20 @@ if (scalar @config) {
 		if ($l =~ /awstats\.(.*)\.conf$/) { $conf=$1; }
 		if ($l =~ /^(.*)[\\\/][^\\\/]+$/) { $dir=$1; }
 
+		local ($size, $latest);
+		local @st=stat($l);
+		my ($sec,$min,$hour,$day,$month,$year,$wday,$yday) = localtime($st[9]);
+		$year+=1900; $month++;
+
+        print '<div class="CTooltip" id="tt'.$nbofallowedconffound.'">';
+        printf("Configuration file: <b>%s</b><br>\n",$l);
+		printf("Created/Changed: <b>%04s-%02s-%02s %02s:%02s:%02s</b><br>\n",$year,$month,$day,$hour,$min,$sec);
+        print '</div>';
+
 		print "<tr $cb>\n";
 
-		print "<td width=\"40\" align=\"center\">$nbofallowedconffound</td>";
-		
-		local ($size, $latest);
+    	print "<td width=\"40\" align=\"center\">$nbofallowedconffound</td>";
+        print "<td align=\"center\" width=\"20\" onmouseover=\"ShowTip($nbofallowedconffound);\" onmouseout=\"HideTip($nbofallowedconffound);\"><img src=\"images/info.png\"></td>";
 		print "<td>";
 		print "$l";
 		if ($access{'global'}) {	# Edit config
@@ -162,9 +216,6 @@ if (scalar @config) {
 		}
 		print "</td>";
 
-		local @st=stat($l);
-		my ($sec,$min,$hour,$day,$month,$year,$wday,$yday) = localtime($st[9]);
-		$year+=1900; $month++;
 		printf("<td align=center>%04s-%02s-%02s %02s:%02s:%02s</td>",$year,$month,$day,$hour,$min,$sec);
 	
 		# Database size
