@@ -112,7 +112,7 @@
 # Standard web browsers
 "msie","msie",
 "netscape","netscape",
-"icab","notavailable",
+"icab","icab",
 "go!zilla","notavailable",
 "konqueror","konqueror",
 "links","notavailable",
