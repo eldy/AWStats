@@ -2035,10 +2035,10 @@ if (($YearRequired == $nowyear) && ($MonthRequired eq "year" || $MonthRequired =
 	close DIR;
 	foreach $i (0..$#filearray) {
 		if ("$filearray[$i]" =~ /^$PROG[\d][\d][\d][\d][\d][\d]$FileSuffix\.tmp\..*$/) {
-			$yearmonth=$filearray[$i]; $yearmonth =~ s/^.*$PROG//; $yearmonth =~ s/\..*//;
+			$yearmonth=$filearray[$i]; $yearmonth =~ s/^$PROG//; $yearmonth =~ s/\..*//;
 			if (-R "$DirData/$PROG$yearmonth$FileSuffix.tmp.$$") {
 				if (rename("$DirData/$PROG$yearmonth$FileSuffix.tmp.$$", "$DirData/$PROG$yearmonth$FileSuffix.txt")==0) {
-					$allok=0;
+					$allok=0;	# At least on error in renaming working files
 					last;
 				}
 				chmod 438,"$DirData/$PROG$yearmonth$FileSuffix.txt";
