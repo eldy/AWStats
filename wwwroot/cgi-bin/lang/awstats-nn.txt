@@ -1,4 +1,4 @@
-# Norwegian Nynorsk message file (by Karl Ove Hufthammer <huftis@bigfoot.com>)
+# Norwegian Nynorsk message file (by Karl Ove Hufthammer <karl@huftis.org>)
 # $Revision$ - $Date$
 PageCode=iso-8859-1
 message0=Ukjent
@@ -25,7 +25,7 @@ message20=Timar
 message21=Nettlesarar
 message22=HTTP-feil
 message23=Referentar
-message24=
+message24=Aldri oppdatert
 message25=Domene/land
 message26=vertar
 message27=sider
@@ -52,7 +52,7 @@ message47=Manglande sider (HTTP-feilkode 404)
 message48=IP-adresse
 message49=Feiltreff
 message50=Ukjente nettlesarar
-message51=Besøkande robotar
+message51=forskjellige robotar
 message52=besøk/gjest
 message53=Robotbesøk
 message54=Gratis logganalysator for avansert vevstatistikk
@@ -126,3 +126,9 @@ message121=Søkeord
 message122=forskjellige søkemotorar
 message123=forskjellige nettstadar
 message124=Andre uttrykk
+message125=Andre pålogginar (og/eller anonyme brukarar)
+message126=Søkemotorar
+message127=Nettstadar
+message128=Samandrag
+message129=Nøyaktige tal finst ikkje for årsoversikta
+message130=Dataverditabellar
