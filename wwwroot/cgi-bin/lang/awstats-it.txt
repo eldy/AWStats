@@ -1,7 +1,7 @@
 # Italian message file
-# Based on Francesco Potort“'s work.
-# Translated 1/10/2002 by iDave <idave@idave.it> and Salvo <salvo@scicli.com>
-# 
+# $Revision$ - $Date$
+# Based on Francesco Potorti's work.
+# Translated 01/10/2002 by iDave <idave@idave.it> and Salvo <salvo@scicli.com>
 # Francesco Potorti' - pot@gnu.org
 # iDave - idave@idave.it
 # Salvo - salvo@scicli.com
@@ -22,19 +22,19 @@ message13=Parole chiave
 message14=Ricerche
 message15=Peso relativo
 message16=Traffico
-message17=Domini o paesi
+message17=Domini/Paesi
 message18=Visitatori
 message19=Pagine e indirizzi
 message20=Ore (fuso orario del server)
 message21=Navigatori (browser)
 message22=Errori HTTP
-message23=Provenienza
+message23=Provenienza (Referers)
 message24=Ricerche per parole chiave
 message25=Domini o paesi dei visitatori
 message26=origini
 message27=pagine accedute
 message28=pagine diverse
-message29=Accessi
+message29=Pagine visitate
 message30=Altre parole
 message31=Pagine non trovate
 message32=Codici di errore HTTP
@@ -78,9 +78,9 @@ message69=Ott
 message70=Nov
 message71=Dic
 message72=Navigazione
-message73=Statistiche giornaliere
+message73=Tipi di file
 message74=Aggiorna
-message75=Byte
+message75=Banda
 message76=Pagina principale
 message77=Prime
 message78=dd mmm yyyy / HH:MM
@@ -109,10 +109,27 @@ message100=Prima della compressione
 message101=Dopo la compressione
 message102=Totale
 message103=parole chiave diverse
-message104=Pagine iniziali
+message104=Pagine di entrata
 message105=Codice
-message106=Average size
-message107=Links from a NewsGroup
+message106=Dimensione media
+message107=Link da NewsGroup
 message108=KB
 message109=MB
 message110=GB
+message111=Grabber
+message112=Si
+message113=No
+message114=WhoIs info
+message115=OK
+message116=Pagine di uscita
+message117=Durata visite
+message118=Chiudi
+message119=Bytes
+message120=Ricerche Frasi chiave
+message121=Ricerche Parole chiavi
+message122=Motori di ricerca diversi
+message123=Siti diversi
+message124=Altre frasi
+message125=Utenti anonimi
+message126=Motori di ricerca 
+message127=Siti
