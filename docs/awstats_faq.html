@@ -313,13 +313,13 @@ support other various log formats.<br>
 What do I have to do to use AWStats to analyze some FTP server log files.<br>
 <font class=CSolution>SOLUTION:</font><br>
 AWStats was built to analyze web,wap or proxy server's log files. However it can be used with some FTP server log files.<br>
-<u>This is example for ProFTP:</u><br>
-Modify the proftpd.conf file. At the very top add two new defines :
+<u>Setup your ProFTP logformat:</u><br>
+Modify the proftpd.conf file to add the following two lines :
 <i>
-<br>LogFormat awstats "%t %h %u get %f 200 %b"
+<br>LogFormat awstats "%t %h %u %m %f %s %b"
 <br>ExtendedLog /var/log/xferlog read,write awstats
 </i>
-<br>Turn off Transfer log (optional):
+<br>Then turn off old format Transfer log:
 <i>
 <br>TransferLog none
 </i>
@@ -330,7 +330,9 @@ Modify this new config file:
 <i>
 <br>LogFile="/var/log/xferlog"
 <br>LogFormat="%time1 %host %logname %method %url %code %bytesd"
-<br>DNSLookup=2
+<br>DNSLookup=0
+<br>SkipFiles=""
+<br>NotPageList=""
 <br>ShowLinksOnUrl=0
 <br>ShowHeader=1
 <br>ShowMenu=1
@@ -372,7 +374,7 @@ Copy sma (or sma.exe) file and sma.conf into same directory than awstats.pl file
 Edit sma.conf to change the CLogFormat parameter to :
 <i>
 <br>CLogFormat "%y-%m-%d %h:%n:%s %f %t %F %T SMTP - %z %S"
-<br>ClogSentOnly	no
+<br>ClogSentOnly no
 </i>
 <br>
 <u>Setup AWStats to analyze SMA processed mail log:</u><br>

@@ -4124,11 +4124,15 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {	# Updat
 			$protocol=1;
 		}
 		elsif ($field[$pos_method] eq 'SMTP') {
-			# Mail request.
+			# Mail request
 			$protocol=3;
 		}
-		elsif ($field[$pos_method] =~ /sent/i || $field[$pos_method] =~ /get/i) {
-			# FTP request.
+		elsif ($field[$pos_method] eq 'RETR' || $field[$pos_method] =~ /get/i) {
+			# FTP GET request
+			$protocol=2;
+		}
+		elsif ($field[$pos_method] eq 'STOR' || $field[$pos_method] =~ /sent/i) {
+			# FTP SENT request
 			$protocol=2;
 		}
 		else {
