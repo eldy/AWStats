@@ -154,5 +154,6 @@ message150=Size
 message151=First
 message152=Last
 message153=Exclude filter
-message154=* Codes shown here gave hits or traffic "not viewed" by visitors, so are isolated in this chart.
+message154=* Codes shown here gave hits or traffic "not viewed" by visitors, so thay are not included in other charts.
 message155=Cluster
+message156=* Robots shown here gave hits or traffic "not viewed" by visitors, so thay are not included in other charts.
