@@ -63,7 +63,7 @@ sub Init_timezone {
 #-----------------------------------------------------------------------------
 sub ChangeTime_timezone {
 	my $dateparts=shift;
-	my ($nsec,$nmin,$nhour,$nmday,$nmon,$nyear,$nwday) = localtime(Time::Local::timelocal(@$dateparts[5], @$dateparts[4], @$dateparts[3], @$dateparts[0], @$dateparts[1]-1, @$dateparts[2]-1900) + $PluginTimeZoneSeconds);
+	my ($nsec,$nmin,$nhour,$nmday,$nmon,$nyear,$nwday) = localtime(Time::Local::timelocal(int(@$dateparts[5]), int(@$dateparts[4]), int(@$dateparts[3]), int(@$dateparts[0]), int(@$dateparts[1])-1, int(@$dateparts[2])-1900) + $PluginTimeZoneSeconds);
 	return ($nmday, $nmon+1, $nyear+1900, $nhour, $nmin, $nsec);
 }
 
