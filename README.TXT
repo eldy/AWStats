@@ -15,7 +15,7 @@ License: GNU GPL (GNU General Public License. See LICENSE file),
          OSI Certified Open Source Software license.
 Version: 6.1
 Release date: February 2004
-Platforms: All (Linux, NT, SCO, BSD, Solaris and other *NIX's, BeOS, OS/2...)
+Platforms: All (Linux, NT, BSD, Solaris and other *NIX's, BeOS, OS/2...)
 Author: Laurent Destailleur <eldy@users.sourceforge.net>
 AWStats official web site and latest version: http://awstats.sourceforge.net
 
