@@ -3771,9 +3771,8 @@ EOF
 			if ($_url_k{$key}/($_url_p{$key}||1) > $max_k) { $max_k = $_url_k{$key}/($_url_p{$key}||1); }
 		}
 		foreach my $key (@keylist) {
+			my $nompage=CleanFromCSSA($Aliases{$key}?$Aliases{$key}:$key);
 			print "<TR><TD CLASS=AWL>";
-			my $nompage=$Aliases{$key};
-			if ($nompage eq "") { $nompage=$key; }
 			if (length($nompage)>$MaxLengthOfURL) { $nompage=substr($nompage,0,$MaxLengthOfURL)."..."; }
 			if ($ShowLinksOnUrl) { print "<A HREF=\"http://$SiteToAnalyze$key\">$nompage</A>"; }
 			else              	 { print "$nompage"; }
@@ -4374,17 +4373,18 @@ EOF
 			if ($_url_k{$key}/($_url_p{$key}||1) > $max_k) { $max_k = $_url_k{$key}/($_url_p{$key}||1); }
 		}
 		foreach my $key (@keylist) {
+			my $nompage=CleanFromCSSA($Aliases{$key}?$Aliases{$key}:$key);
 			print "<TR><TD CLASS=AWL>";
-			my $nompage=$Aliases{$key}||$key;
 			if (length($nompage)>$MaxLengthOfURL) { $nompage=substr($nompage,0,$MaxLengthOfURL)."..."; }
 			if ($ShowLinksOnUrl) {
-				if ($key =~ /^http(s|):/i) {
+				my $newkey=CleanFromCSSA($key);
+				if ($newkey =~ /^http(s|):/i) {
 					# URL is url extracted from a proxy log file
-					print "<A HREF=\"$key\">$nompage</A>";
+					print "<A HREF=\"$newkey\">$nompage</A>";
 				}
 				else {
 					# URL is url extracted from a web/wap server log file
-					print "<A HREF=\"http://$SiteToAnalyze$key\">$nompage</A>";
+					print "<A HREF=\"http://$SiteToAnalyze$newkey\">$nompage</A>";
 				}
 			}
 			else {
@@ -4557,7 +4557,7 @@ EOF
 		print "<TABLE>\n";
 		my $count=0;
 		foreach my $key (sort { $_se_referrals_h{$b} <=> $_se_referrals_h{$a} } keys (%_se_referrals_h)) {
-			my $newreferer=$SearchEnginesHashIDLib{$key}||$key;
+			my $newreferer=CleanFromCSSA($SearchEnginesHashIDLib{$key}||$key);
 			print "<TR><TD CLASS=AWL>- $newreferer</TD><TD align=right> $_se_referrals_h{$key} </TD></TR>\n";
 			$count++;
 		}
@@ -4571,10 +4571,11 @@ EOF
 		foreach my $key (sort { $_pagesrefs_h{$b} <=> $_pagesrefs_h{$a} } keys (%_pagesrefs_h)) {
 			if ($count>=$MaxNbOfRefererShown) { $rest_h+=$_pagesrefs_h{$key}; next; }
 			if ($_pagesrefs_h{$key}<$MinHitRefer) { $rest_h+=$_pagesrefs_h{$key}; next; }
-			my $nompage=$key;
+			my $nompage=CleanFromCSSA($key);
 			if (length($nompage)>$MaxLengthOfURL) { $nompage=substr($nompage,0,$MaxLengthOfURL)."..."; }
-			if ($ShowLinksOnUrl && ($key =~ /^http(s|):\/\//i)) {
-				print "<TR><TD CLASS=AWL>- <A HREF=\"$key\">$nompage</A></TD><TD>$_pagesrefs_h{$key}</TD></TR>\n";
+			if ($ShowLinksOnUrl && ($key =~ /^http(s|):/i)) {
+				my $newkey=CleanFromCSSA($key);
+				print "<TR><TD CLASS=AWL>- <A HREF=\"$newkey\">$nompage</A></TD><TD>$_pagesrefs_h{$key}</TD></TR>\n";
 			} else {
 				print "<TR><TD CLASS=AWL>- $nompage</TD><TD>$_pagesrefs_h{$key}</TD></TR>\n";
 			}

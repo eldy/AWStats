@@ -33,6 +33,7 @@ AWStats Changelog
 - Fixed: pb of "Error: Not same number of records" when using some version
   of mod_perl.
 - Fixed: pb in logresolvemerge.pl
+- Fixed: Security against CSSA.
 - No more need to use \. to say . in config file.
 - Documentation seriously updated.
 
