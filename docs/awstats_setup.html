@@ -82,10 +82,10 @@ This new file must be stored in<br>
 <br>
 * Step 1-6<br>
 Edit this new config file with your own setup :<br>
-- Change <a href="awstats_config.html#LogType">LogType</a> value with "W" for analyzing
-web server log files, "M" for mail log files, "F" for ftp log files, "O" otherwise.<br>
 - Change <a href="awstats_config.html#LogFile">LogFile</a> value with full path of your web server log file (You
 can also use a relative path from your awstats.pl directory).<br>
+- Change <a href="awstats_config.html#LogType">LogType</a> value with "W" for analyzing
+web server log files, "M" for mail log files, "F" for ftp log files, "O" otherwise.<br>
 - Check if <a href="awstats_config.html#LogFormat">LogFormat</a> has the value "1" (it means "NCSA apache combined/ELF/XLF log format").<br>
 - Change <a href="awstats_config.html#DirIcons">DirIcons</a> parameter to reflect relative path of icon directory.<br>
 - Edit <a href="awstats_config.html#SiteDomain">SiteDomain</a> parameter with the main domain name or the intranet 
@@ -138,10 +138,10 @@ This new file must be stored in<br>
 <br>
 * Step 1-5<br>
 Edit this new config file with your own setup :<br>
-- Change <a href="awstats_config.html#LogType">LogType</a> value with "W" for analyzing
-web server log files, "M" for mail log files, "F" for ftp log files, "O" otherwise.<br>
 - Change <a href="awstats_config.html#LogFile">LogFile</a> value with full path of your web server log file (You
 can also use a relative path from your awstats.pl directory).<br>
+- Change <a href="awstats_config.html#LogType">LogType</a> value with "W" for analyzing
+web server log files, "M" for mail log files, "F" for ftp log files, "O" otherwise.<br>
 - Change <a href="awstats_config.html#LogFormat">LogFormat</a> to value "2" (it means "IIS Extended W3C log format").<br>
 - Change <a href="awstats_config.html#DirIcons">DirIcons</a> parameter to reflect relative path of icon directory.<br>
 - Edit <a href="awstats_config.html#SiteDomain">SiteDomain</a> parameter with the main domain name or the intranet
@@ -207,21 +207,11 @@ Even if AWStats allows "real-time" statistics with its "update from browser feat
 section <a href="#READ">Read Statistics</a>), you should run an update process from a scheduler (command is same than
 first process) frequently.<br>
 <br>
-You can add instructions in your <b>crontab</b> (Unix/Linux) or your <b>task scheduler</b> (for
-Windows), to launch frequently this Awstats update process.<br>
-For sites with:<br>
-- 10,000 visitors a month     Launch AWStats once a day<br>
-- 50,000 visitors a month     Launch AWStats once every 4 hours<br>
-- 250,000 visitors a month    Launch AWStats once an hour<br>
-- 1,000,000 visitors a month  Launch AWStats once an hour<br>
-This is ABSOLUTELY necessary to keep good performances.<br>
-See AWStats <a href="awstats_benchmark.html">Benchmark page</a> for more accurate information.<br>
-<br>
-!!! Warning, if you don't use (or can't use with IIS) the <a href="awstats_config.html#PurgeLogFile">PurgeLogFile</a> parameter,
-it's very important that you don't forget to purge/rotate your log file yourself (or setup your web server to do it)
-frequently (You can find help for this on <a href="awstats_faq.html#CRONTAB">FAQ-SET550</a>).
-Even if AWStats never analyzes twice the same log record, the more often you clean your log file, the
-faster AWStats will be.<br>
+You have two choice:<br>
+- Include the update in your <b>logrotate</b> process. See <a href="awstats_faq.html#ROTATE">FAQ-COM120</a> for this.<br>
+- Or add instructions in your <b>crontab</b> (Unix/Linux) or your <b>task scheduler</b> (for
+Windows), to launch frequently this Awstats update process. See <a href="awstats_faq.html#CRONTAB">FAQ-COM130</a> for this.<br><br>
+See AWStats <a href="awstats_benchmark.html">Benchmark page</a> for recommanded update/logrotate frequency.<br>
 <br>
 
 <br>
