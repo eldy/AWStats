@@ -21,7 +21,7 @@ use Socket;
 #-----------------------------------------------------------------------------
 use vars qw/ $REVISION $VERSION /;
 $REVISION='$Revision$'; $REVISION =~ /\s(.*)\s/; $REVISION=$1;
-$VERSION="5.7 (build $REVISION)";
+$VERSION="5.8 (build $REVISION)";
 
 # ----- Constants -----
 use vars qw/
@@ -4946,7 +4946,11 @@ if (! $FrameName) {
 if ($FrameName ne 'index') {
 	&Read_Language_Data($Lang);
 	if ($FrameName ne 'mainleft') {
-		if ($UpdateStats) { &Read_Ref_Data('browsers','domains','operating_systems','robots','search_engines','worms'); }
+		# Update only
+		if ($UpdateStats && ! scalar keys %HTMLOutput) { &Read_Ref_Data('browsers','domains','operating_systems','robots','search_engines','worms','referer_spam'); }
+		# Update and output
+		elsif ($UpdateStats && scalar keys %HTMLOutput) { &Read_Ref_Data('browsers','domains','operating_systems','robots','search_engines','worms','referer_spam','mime'); }
+		# Output only
 		elsif (scalar keys %HTMLOutput) { &Read_Ref_Data('browsers','domains','operating_systems','robots','search_engines','worms','mime'); }
 		&Read_Plugins();
 	}
