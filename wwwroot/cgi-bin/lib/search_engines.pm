@@ -88,7 +88,7 @@
 '212\.227\.33\.241',
 '(161\.58\.227\.204|161\.58\.247\.101|212\.40\.165\.90|213\.133\.108\.202|217\.160\.108\.151|217\.160\.111\.99|217\.160\.131\.108|217\.160\.142\.227|217\.160\.176\.42)',
 # Minor hungarian search engines
-'heureka\.hu','vizsla\.origo\.hu','lapkereso\.hu','goliat\.hu','index\.hu','wahoo\.hu','freeweb\.hu','webmania\.hu','search\.internetto\.hu',
+'heureka\.hu','vizsla\.origo\.hu','lapkereso\.hu','goliat\.hu','index\.hu','wahoo\.hu','webmania\.hu','search\.internetto\.hu',
 # Minor italian search engines
 'virgilio\.it',
 # Minor norvegian search engines
@@ -235,7 +235,6 @@
 'goliat\.hu','goliat',
 'index\.hu','indexhu',
 'wahoo\.hu','wahoo',
-'freeweb\.hu','freeweb',
 'webmania\.hu','webmania',
 'search\.internetto\.hu','internetto',
 # Minor italian search engines
@@ -330,7 +329,7 @@
 'metaspinner','qry=',
 'metacrawler_de','qry=',
 # Minor hungarian search engines
-'heureka','heureka=', 'origo','(q|search)=', 'goliat','KERESES=', 'wahoo','q=', 'freeweb','KERESES=', 'internetto','searchstr=',
+'heureka','heureka=', 'origo','(q|search)=', 'goliat','KERESES=', 'wahoo','q=', 'internetto','searchstr=',
 # Minor norvegian search engines
 'start','q=',
 # Minor polish search engines
@@ -440,7 +439,7 @@
 'metaspinner','metaspinner',
 'metacrawler_de','metacrawler.de',
 # Minor hungarian search engines
-'heureka','Heureka', 'origo','Origo-Vizsla', 'lapkereso','Startlapkeresõ', 'goliat','Góliát', 'indexhu','Index', 'wahoo','Wahoo', 'freeweb','FreeWeb', 'webmania','webmania.hu', 'internetto','Internetto Keresõ',
+'heureka','Heureka', 'origo','Origo-Vizsla', 'lapkereso','Startlapkeresõ', 'goliat','Góliát', 'indexhu','Index', 'wahoo','Wahoo', 'webmania','webmania.hu', 'internetto','Internetto Keresõ',
 # Minor italian search engines
 'virgilio','Virgilio',										
 # Minor norvegian search engines
