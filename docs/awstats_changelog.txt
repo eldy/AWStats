@@ -9,11 +9,10 @@ New features/improvements:
 - Allow plugins to add entry in menu.
 - Allow plugins to add charts with its own way to compile data inside
 the update process.
+- Added the geoip_region_maxmind and geoip_city_maxmind plugins.
 - maillogconvert.pl: Support postfix 2.1 that change its log
 format using NOQUEUE string instead of a number for mails that are
 rejected before being queued.
-- Added support for plugin geoip_region_maxmind (plugin not included
-in default distrib. You can download it from AWStats web site).
 - Little speed improvments.
 - Counts javascript disabled browsers (A new MiscTracker feature).
 - When a direct access to last line is successfull, awstats is directly
@@ -26,6 +25,7 @@ log format and use the tag %extraX (where X is a number) to name field you
 want to use, then, in ExtraSection parmaters, you can use extraX to tell
 wich info to use to extract data for building the chart.
 - Support method "put" when analyzing ftp log files.
+- Added a bold style around current day/month in label of charts.
 
 Fixes:
 - Fix not recognized %time3 tag in LogFormat. This tag allows to process
@@ -33,19 +33,21 @@ all FTP xferlog file format.
 - Fix bad html generated with buildpdf option.
 - maillogconvert.pl: Added patch to work correctly with sendmail
 when recipient is redirected through a pipe.
+- Fix Bug 985977: Failed to rename temp history file if contains special
+char like "+".
+- Patch 984087 for new year jump
+- Fix Bug 983994: Tooltips aren't shown.
+- Fix Bug 982803: Bad display in Netscape 4.75 with Awstats version 6.1
+- Fix Bug 975059: Timezone Plugin Runtime Error
 - Fix Bug 971129: Bug in regexp handling for | in ExtraSections
 Now for OR in ExtraSectionCondition you must use double pipe.
-- Fix Bug 985977: Failed to rename temp history file if contains special
-char like +
-- Fix Bug 975059: Timezone Plugin Runtime Error
-- Fix Bug 982803: Bad display in Netscape 4.75 with Awstats version 6.1
-- Fix Bug 983994: Tooltips aren't shown.
 - Some fix to have correct flag for lang with code lang different of
 country flag.
 
 Other/Documentation:
-- Better log messages in plugins.
 - Updated documentation.
+- Updated robot, browsers, os recognition databases.
+- Better log messages in plugins.
 - Renamed configure.pl into awstats_configure.pl.
 - Reduce code size.
 - The NOTSORTEDRECORDTOLERANCE has been increased to 2 hours to be sure to
