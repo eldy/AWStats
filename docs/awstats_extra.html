@@ -31,15 +31,250 @@
 </table>
 
 
-<br><br><H1 style="font: 26px arial,helvetica,sanserif">Using the Extra Sections features</H1>
+<br><br><H1 style="font: 26px arial,helvetica,sanserif">Adding extra reports using the ExtraSection feature</H1>
 
 <br>
-The AWStats Extra Sections features are powerfull setup options to allow you to add your own
+The AWStats ExtraSection features are powerfull setup options to allow you to add your own
 report not provided by default with AWStats. You can use it to build special reports, like
 number of sales for a particular product, marketing reports, counting for a particular
 user or agent, etc...<br>
 <br>
 
+<br><br>
+<u><b>Explanation on how to add/edit an Extra report in your config file</b></u><br>
+Take a look inside the AWStats config file to find the following part:<br>
+<i>
+#-----------------------------------------------------------------------------<br>
+# EXTRA SECTIONS<br>
+#-----------------------------------------------------------------------------<br>
+<br>
+</i>
+Read all explanation in config file after this point, they will explain you
+how to add an Extra report by adding an ExtraSection configuration in your config file,<br>
+or just click <a href="#extraconfig">here</a> to jump to a copy of this explanation.<br>
+Note that following examples is often a precious tutorial, so see next paragraph for this...<br>
+
+<br><br>
+<u><b>Some examples of ExtraSection setup you can follow to build your own personalized reports:</b></u><br>
+<br>
+<li><a href="#productorders">Example 1: Tracking Product orders</a><br>
+<li><a href="#bugzilla">Example 2: Tracking Bugzilla most frequently viewed bugs</a><br>
+<li><a href="#awredir">Example 3: Tracking Exit clicks</a><br>
+<li><a href="#aborted">Example 4: Tracking aborted download</a><br>
+<li><a href="#domainaliases">Example 5: Tracking most requested domain aliases</a><br>
+<li><a href="#level2dir">Example 6: List of top level 2 path under a directory /mydir</a><br>
+<br>
+<br>
+
+<br>
+<br><a name="productorders"><H2 style="font: 18px arial,helvetica,sanserif color: #606060"><u>Example 1: Tracking Product orders</u></H2></a>
+Image your web site is an e-store that sells 80 different products. Each of them has an id.
+Imagine each time, someone make an order for product 49, the order.cgi script or order2.cgi script
+is called with, in URL query parameter, the id of the product, meanings that you get in your log
+file a hit that looks like this:<br>
+<i>GET /cgi-bin/order.cgi?productid=49&session=A0B1C2</i>
+<br>
+So this is how you need to setup your ExtraSection to track your product orders:<br>
+<i>
+<br>ExtraSectionName1="Product orders"
+<br>ExtraSectionCodeFilter1="200 304"
+<br>ExtraSectionCondition1="URL,\/cgi\-bin\/order\.cgi|URL,\/cgi\-bin\/order2\.cgi"
+<br>ExtraSectionFirstColumnTitle1="Product ID"
+<br>ExtraSectionFirstColumnValues1="QUERY_STRING,productid=([^&]+)"
+<br>ExtraSectionFirstColumnFormat1="%s"
+<br>ExtraSectionStatTypes1=PL
+<br>ExtraSectionAddAverageRow1=0
+<br>ExtraSectionAddSumRow1=1
+<br>MaxNbOfExtra1=100
+<br>MinHitExtra1=1
+</i>
+<br>
+
+
+<br>
+<br><a name="bugzilla"><H2 style="font: 18px arial,helvetica,sanserif color: #606060"><u>Example 2: Tracking Bugzilla most frequently viewed bugs</u></H2></a>
+This is an example on how to setup your ExtraSection:<br>
+<i>
+<br>ExtraSectionName1="Bugzilla: Most frequently viewed bugs"
+<br>ExtraSectionCodeFilter1="200 304"
+<br>ExtraSectionCondition1="URL,\/bugzilla\/show_bug\.cgi"
+<br>ExtraSectionFirstColumnTitle1="Bug ID"
+<br>ExtraSectionFirstColumnValues1="QUERY_STRING,id=([^&]+)"
+<br>ExtraSectionFirstColumnFormat1="&lt;a href='/bugzilla/show_bug.cgi?id=%s' target=new&gt;%s&lt;/a&gt;"
+<br>ExtraSectionStatTypes1=PL
+<br>ExtraSectionAddAverageRow1=0
+<br>ExtraSectionAddSumRow1=1
+<br>MaxNbOfExtra1=500
+<br>MinHitExtra1=1
+</i>
+<br>
+
+
+<br>
+<br><a name="awredir"><H2 style="font: 18px arial,helvetica,sanserif color: #606060"><u>Example 3: Tracking Exit clicks</u></H2></a>
+AWStats shows you naturally the exit pages. However, you don't know where you visitor go
+after exiting your site since clicking on a link that point to an external link will log
+the viewed page on the external server and not on yours.
+If you want to track this, you can, using the ExtraSection and the <b>awredir.pl</b> tool
+(provided with AWStats).<br>
+This tools must be used as a CGI wrapper. When called on 'A HREF' link, it returns to
+browser a redirector to tell it to show the required page.
+So, to use this script, you must replace HTML href tags that points to external web sites
+onto your HTML pages from<br>
+<i>&lt;a href="http://externalsite/pagelinked"&gt;Link&lt;/a&gt;<br></i>
+to<br>
+<i>&lt;a href="http://yoursite/cgi-bin/awredir.pl?url=http://externalsite/pagelinked">Link&lt;/a&gt;<br></i>
+<br>
+For your web visitor, there is no difference. However this allow you to track
+clicks done on links onto your web pages that point to external web sites,
+because an entry will be seen in your own server log like this record:<br>
+<i>
+80.1.2.3 - - [01/Jan/2001:16:00:00 -0300] "GET /cgi-bin/awredir.pl?url=http://externalsite/pagelinked HTTP/1.1" 302 70476 "http://yoursite/pagewithlink.html" "FireBird/0.7"<br>
+</i>
+<br>
+Then, you can add in AWStats a chart to track all call to <i>awredir.pl</i> with
+keys values taken from the "url=" parameter. You will get in an independant chart, counting
+all external pages viewed by your visitor after exiting your site.<br>
+This is for this how you must setup your ExtraSection:<br>
+<i>
+<br>ExtraSectionName1="Redirected Hit"
+<br>ExtraSectionCodeFilter1="302"
+<br>ExtraSectionCondition1="URL,\/cgi\-bin\/awredir\.pl"
+<br>ExtraSectionFirstColumnTitle1="Url"
+<br>ExtraSectionFirstColumnValues1="QUERY_STRING,url=([^&]+)"
+<br>ExtraSectionStatTypes1=HL
+<br>MaxNbOfExtra1=500
+<br>MinHitExtra1=1
+<br>ExtraSectionAddSumRow1=1
+</i>
+<br><br>
+
+
+<br><a name="aborted"><H2 style="font: 18px arial,helvetica,sanserif color: #606060"><u>Example 4: Tracking aborted download</u></H2></a>
+Aborted downloads are reported in a log file by a 206 error, so this is how you need to setup your ExtraSection to add a chart for a such tracking:<br>
+<i>
+<br>ExtraSectionName1="List of aborted download"
+<br>ExtraSectionCodeFilter1="206"
+<br>ExtraSectionCondition1=""
+<br>ExtraSectionFirstColumnTitle1="URL"
+<br>ExtraSectionFirstColumnValues1="URL,(.*)"
+<br>ExtraSectionStatTypes1=PHK
+<br>MaxNbOfExtra1=100
+<br>MinHitExtra1=1
+</i>
+<br><br>
+
+
+<br><a name="domainaliases"><H2 style="font: 18px arial,helvetica,sanserif color: #606060"><u>Example 5: Tracking most requested domain aliases</u></H2></a>
+You have one website, but this web site has several domains named (for example the same site domain.com can be
+reached with urls domain.com,www.domain.com,www.otherdomainname.com,www.againadomainname.org,...).
+You want to know which domain alias is the most used.<br>
+<br>
+The first thing to do is to be sure the domain alias is recorded inside your log file.
+If you use Apache, you must use a personalized Apache log file that contains the <i>%V</i> tag.
+For example you can add in your Apache httpd.conf file a new Apache log format (This is
+the Apache directive, not AWStats, to define an Apache log format that contains
+the virtual domain):<br>
+<i>LogFormat "%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\" %V" combinedv</i><br>
+Then check that your Apache CustomLog directives are defined like this:<br>
+<i>CustomLog pathtoyourlog/yourlog.log combinedv</i><br>
+<br>
+After restarting Apache, your log format should look like this<br>
+66.130.77.181 - - [09/Aug/2004:03:01:05 +0200] "GET /index.php HTTP/1.1" 200 1473 "-" "Firefox 1.0" www.otherdomainname.com<br>
+<br>
+
+When your web server log file contains the domain alias, you can now setup AWStats
+to use it. For this use a personalised AWStats log format and use the <i>%extra1</i> tag at
+the same place that the domain alias is. For example, for your combinedv Apache log format,
+we will use:<br>
+<i>LogFormat="%host %other %logname %time1 %methodurl %code %bytesd %refererquot %uaquot %extra1"</i><br>
+<br>
+Every tag defined by name <i>extraZ</i> (Z is a number, you can use as many tags as you need)
+can be used in any ExtraSection to extract the parameter. You can use the name <i>extraZ</i> as
+a criteria in the <i>ExtraSectionFirstColumnValuesX</i> parameter (X is number of the extra report, you can
+add as many report as you need) to tell AWStats to use value in log file at the place of
+the tag, as the key for your report. For example:<br>
+<i>
+<br>ExtraSectionName1="Domains aliases"
+<br>ExtraSectionCodeFilter1="200 304" 
+<br>ExtraSectionCondition1=""
+<br>ExtraSectionFirstColumnTitle1="Domain alias"
+<br>ExtraSectionFirstColumnValues1="extra1,([^&]+)"
+<br>ExtraSectionFirstColumnFormat1="%s"
+<br>ExtraSectionStatTypes1=HL
+<br>ExtraSectionAddAverageRow1=0
+<br>ExtraSectionAddSumRow1=1
+<br>MaxNbOfExtra1=20
+<br>MinHitExtra1=1
+</i>
+<br><br>
+And result will be:
+<style type="text/css">
+<!--
+.aws_bodyl  { }
+.aws_border { background-color: #CCCCDD; padding: 1px 1px 1px 1px; margin-top: 0; margin-bottom: 0; }
+.aws_title  { font: 13px verdana, arial, helvetica, sans-serif; font-weight: bold; background-color: #CCCCDD; text-align: center; margin-top: 0; margin-bottom: 0; padding: 1px 1px 1px 1px; color: #000000; }
+.aws_blank  { font: 13px verdana, arial, helvetica, sans-serif; background-color: #CCCCDD; text-align: center; margin-bottom: 0; padding: 1px 1px 1px 1px; }
+.aws_data {
+	background-color: #FFFFFF;
+	border-top-width: 1px;   
+	border-left-width: 0px;  
+	border-right-width: 0px; 
+	border-bottom-width: 0px;
+}
+.aws_formfield { font: 13px verdana, arial, helvetica; }
+.aws_button {
+	font-family: arial,verdana,helvetica, sans-serif;
+	font-size: 12px;
+	border: 1px solid #ccd7e0;
+	background-image : url(/awstatsicons/other/button.gif);
+}
+th		{ border-color: #ECECEC; border-left-width: 0px; border-right-width: 1px; border-top-width: 0px; border-bottom-width: 1px; padding: 1px 2px 1px 1px; font: 11px verdana, arial, helvetica, sans-serif; text-align:center; color: #000000; }
+th.aws	{ border-color: #ECECEC; border-left-width: 0px; border-right-width: 1px; border-top-width: 0px; border-bottom-width: 1px; padding: 1px 2px 1px 1px; font-size: 13px; font-weight: bold; }
+td.aws	{ border-color: #ECECEC; border-left-width: 0px; border-right-width: 1px; border-top-width: 0px; border-bottom-width: 1px; font: 11px verdana, arial, helvetica, sans-serif; text-align:left; color: #000000; padding: 0px;}
+td.awsm	{ border-left-width: 0px; border-right-width: 0px; border-top-width: 0px; border-bottom-width: 0px; font: 11px verdana, arial, helvetica, sans-serif; text-align:left; color: #000000; padding: 0px; }
+//-->
+</style>
+<a name="extra6">&nbsp;</a><br /><table class="aws_border" border="0" cellpadding="2" cellspacing="0" width="100%">
+<tr><td class="aws_title" width="70%">Domains aliases</td><td class="aws_blank">&nbsp;</td></tr>
+<tr><td colspan="2">
+<table class="aws_data" border="1" bordercolor="#ECECEC" cellpadding="2" cellspacing="0" width="100%">
+<tr bgcolor="#ECECEC"><th>Domain alias</th><th align="center" bgcolor="#66F0FF" width="80">Hits</th><th width="120" align="center">Last visit</th></tr>
+<tr><td class="aws">www.domain.com</td><td align="center">1757131</td><td align="center">08 August 2004 - 13:01</td></tr>
+<tr><td class="aws">www.otherdomainname.com</td><td align="center">98518</td><td align="center">08 August 2004 - 12:54</td></tr>
+<tr><td class="aws">domain.com</td><td align="center">19107</td><td align="center">08 August 2004 - 12:42</td></tr>
+<tr><td class="aws">www.againadomainname.org</td><td align="center">7609</td><td align="center">08 August 2004 - 11:56</td></tr>
+<tr><td class="aws"><b>Total</b></td><td align="center">1883986</td><td>&nbsp;</td></tr>
+</table></td></tr></table><br />
+
+
+
+
+<br><a name="level2dir"><H2 style="font: 18px arial,helvetica,sanserif color: #606060"><u>Example 6: List of top level 2 path under a directory /mydir</u></H2></a>
+So this is how you need to setup your ExtraSection to add a chart for a such tracking:<br>
+<i>
+<br>ExtraSectionName1="List of top level 2 path under /mydir"
+<br>ExtraSectionCodeFilter1="200 304"
+<br>ExtraSectionCondition1="URL,^\/mydir\/.*"
+<br>ExtraSectionFirstColumnTitle1="Directory name"
+<br>ExtraSectionFirstColumnValues1="URL,^\/mydir\/([\w]+)\/"
+<br>ExtraSectionStatTypes1=PHK
+<br>MaxNbOfExtra1=50
+<br>MinHitExtra1=1
+</i>
+<br><br>
+
+
+<br><br>
+There is a lot of other possible use for Extra Sections ...<br>
+<br>
+
+<br>
+<br>
+<br>
+
+
+<a name="extraconfig"></a>
 <br>
 <u><b>The following explanation is same than the one found in AWStats config file:</b></u><br>
 <br>#-----------------------------------------------------------------------------
@@ -83,136 +318,7 @@ ExtraSectionFirstColumnValuesX also need REGEX value for all AWStats versions.<b
 See examples for syntax use.<br>
 <br>
 
-<br><br>
-<u><b>You will find here examples of ExtraSection setup you can follow to build your own reports.
-Try to follow them to build your own reporting tools:</b></u><br>
-<br>
-<li><a href="#productorders">Tracking Product orders</a><br>
-<li><a href="#bugzilla">Tracking Bugzilla most frequently viewed bugs</a><br>
-<li><a href="#awredir">Tracking Exit clicks</a><br>
-<li><a href="#level2dir">List of top level 2 path under a directory /mydir</a><br>
-<li><a href="#aborted">Tracking aborted download</a><br>
 
-
-<br>
-
-<br>
-<br><a name="productorders"><H2 style="font: 22px arial,helvetica,sanserif color: #606060"><u>Tracking Product orders</u></H2></a>
-Image your web site is an e-store that sells 80 different products. Each of them has an id.
-Imagine each time, someone make an order for product 49, the order.cgi script or order2.cgi script
-is called with, in URL query parameter, the id of the product, meanings that you get in your log
-file a hit that looks like this:<br>
-<i>GET /cgi-bin/order.cgi?productid=49&session=A0B1C2</i>
-<br>
-So this is how you need to setup your ExtraSection to track your product orders:<br>
-<i>
-<br>ExtraSectionName1="Product orders"
-<br>ExtraSectionCodeFilter1="200 304"
-<br>ExtraSectionCondition1="URL,\/cgi\-bin\/order\.cgi|URL,\/cgi\-bin\/order2\.cgi"
-<br>ExtraSectionFirstColumnTitle1="Product ID"
-<br>ExtraSectionFirstColumnValues1="QUERY_STRING,productid=([^&]+)"
-<br>ExtraSectionFirstColumnFormat1="%s"
-<br>ExtraSectionStatTypes1=PL
-<br>ExtraSectionAddAverageRow1=0
-<br>ExtraSectionAddSumRow1=1
-<br>MaxNbOfExtra1=100
-<br>MinHitExtra1=1
-</i>
-<br>
-
-
-<br>
-<br><a name="bugzilla"><H2 style="font: 22px arial,helvetica,sanserif color: #606060"><u>Tracking Bugzilla most frequently viewed bugs</u></H2></a>
-This is an example on how to setup your ExtraSection:<br>
-<i>
-<br>ExtraSectionName1="Bugzilla: Most frequently viewed bugs"
-<br>ExtraSectionCodeFilter1="200 304"
-<br>ExtraSectionCondition1="URL,\/bugzilla\/show_bug\.cgi"
-<br>ExtraSectionFirstColumnTitle1="Bug ID"
-<br>ExtraSectionFirstColumnValues1="QUERY_STRING,id=([^&]+)"
-<br>ExtraSectionFirstColumnFormat1="&lt;a href='/bugzilla/show_bug.cgi?id=%s' target=new&gt;%s&lt;/a&gt;"
-<br>ExtraSectionStatTypes1=PL
-<br>ExtraSectionAddAverageRow1=0
-<br>ExtraSectionAddSumRow1=1
-<br>MaxNbOfExtra1=500
-<br>MinHitExtra1=1
-</i>
-<br>
-
-
-<br>
-<br><a name="awredir"><H2 style="font: 22px arial,helvetica,sanserif color: #606060"><u>Tracking Exit clicks</u></H2></a>
-AWStats shows you naturally the exit pages. However, you don't know where you visitor go
-after exiting your site since clicking on a link that point to an external link will log
-the viewed page on the external server and not on yours.
-If you want to track this, you can, using the ExtraSection and the <b>awredir.pl</b> tool
-(provided with AWStats).<br>
-This tools must be used as a CGI wrapper. When called on 'A HREF' link, it returns to
-browser a redirector to tell it to show the required page.
-So, to use this script, you must replace HTML href tags that points to external web sites
-onto your HTML pages from<br>
-<i>&lt;a href="http://externalsite/pagelinked"&gt;Link&lt;/a&gt;<br></i>
-to<br>
-<i>&lt;a href="http://yoursite/cgi-bin/awredir.pl?url=http://externalsite/pagelinked">Link&lt;/a&gt;<br></i>
-<br>
-For your web visitor, there is no difference. However this allow you to track
-clicks done on links onto your web pages that point to external web sites,
-because an entry will be seen in your own server log like this record:<br>
-<i>
-80.1.2.3 - - [01/Jan/2001:16:00:00 -0300] "GET /cgi-bin/awredir.pl?url=http://externalsite/pagelinked HTTP/1.1" 302 70476 "http://yoursite/pagewithlink.html" "FireBird/0.7"<br>
-</i>
-<br>
-Then, you can add in AWStats a chart to track all call to <i>awredir.pl</i> with
-keys values taken from the "url=" parameter. You will get in an independant chart, counting
-all external pages viewed by your visitor after exiting your site.<br>
-This is for this how you must setup your ExtraSection:<br>
-<i>
-<br>ExtraSectionName1="Redirected Hit"
-<br>ExtraSectionCodeFilter1="302"
-<br>ExtraSectionCondition1="URL,\/cgi\-bin\/awredir\.pl"
-<br>ExtraSectionFirstColumnTitle1="Url"
-<br>ExtraSectionFirstColumnValues1="QUERY_STRING,url=([^&]+)"
-<br>ExtraSectionStatTypes1=HL
-<br>MaxNbOfExtra1=500
-<br>MinHitExtra1=1
-<br>ExtraSectionAddSumRow1=1
-</i>
-<br><br>
-
-
-<br><a name="level2dir"><H2 style="font: 22px arial,helvetica,sanserif color: #606060"><u>List of top level 2 path under a directory /mydir</u></H2></a>
-So this is how you need to setup your ExtraSection to add a chart for a such tracking:<br>
-<i>
-<br>ExtraSectionName1="List of top level 2 path under /mydir"
-<br>ExtraSectionCodeFilter1="200 304"
-<br>ExtraSectionCondition1="URL,^\/mydir\/.*"
-<br>ExtraSectionFirstColumnTitle1="Directory name"
-<br>ExtraSectionFirstColumnValues1="URL,^\/mydir\/([\w]+)\/"
-<br>ExtraSectionStatTypes1=PHK
-<br>MaxNbOfExtra1=50
-<br>MinHitExtra1=1
-</i>
-<br><br>
-
-
-<br><a name="aborted"><H2 style="font: 22px arial,helvetica,sanserif color: #606060"><u>Tracking aborted download</u></H2></a>
-Aborted downloads are reported in a log file by a 206 error, so this is how you need to setup your ExtraSection to add a chart for a such tracking:<br>
-<i>
-<br>ExtraSectionName1="List of aborted download"
-<br>ExtraSectionCodeFilter1="206"
-<br>ExtraSectionCondition1=""
-<br>ExtraSectionFirstColumnTitle1="URL"
-<br>ExtraSectionFirstColumnValues1="URL,(.*)"
-<br>ExtraSectionStatTypes1=PHK
-<br>MaxNbOfExtra1=100
-<br>MinHitExtra1=1
-</i>
-<br><br>
-
-
-<br><br>
-There is a lot of other possible use for Extra Sections ...<br>
-<br>
 
 
 <br>
