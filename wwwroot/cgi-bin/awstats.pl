@@ -107,7 +107,7 @@ $BarImageHorizontal_k = "barrehk.png";
 
 # URL with such end signature are kind of URL we only need to count as hits
 @NotPageList= (
-			"\\.gif","\\.jpg","\\.png","\\.bmp",
+			"\\.gif","\\.jpg","\\.jpeg","\\.png","\\.bmp",
 #			"\\.zip","\\.arj","\\.gz","\\.z",
 #			"\\.pdf","\\.doc","\\.ppt","\\.rtf","\\.txt",
 #			"\\.mp3","\\.wma"
