@@ -5683,15 +5683,16 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 		# Analyze: EMail
 		#---------------
 		if ($pos_emails>=0 && $field[$pos_emails]) {
-			if ($field[$pos_emails] !~ /\@/) { $field[$pos_emails].="\@$SiteDomain"; }
+			if ($field[$pos_emails] eq '<>') { $field[$pos_emails]='Unknown'; }
+			elsif ($field[$pos_emails] !~ /\@/) { $field[$pos_emails].="\@$SiteDomain"; }
 			$_emails_h{lc($field[$pos_emails])}++;									#Count accesses for sender email (hit)
-			$_emails_k{lc($field[$pos_emails])}+=int($field[$pos_size]);					#Count accesses for sender email (kb)
+			$_emails_k{lc($field[$pos_emails])}+=int($field[$pos_size]);			#Count accesses for sender email (kb)
 			$_emails_l{lc($field[$pos_emails])}=$timerecord;
 		}
 		if ($pos_emailr>=0 && $field[$pos_emailr]) {
 			if ($field[$pos_emailr] !~ /\@/) { $field[$pos_emailr].="\@$SiteDomain"; }
 			$_emailr_h{lc($field[$pos_emailr])}++;									#Count accesses for receiver email (hit)
-			$_emailr_k{lc($field[$pos_emailr])}+=int($field[$pos_size]);					#Count accesses for receiver email (kb)
+			$_emailr_k{lc($field[$pos_emailr])}+=int($field[$pos_size]);			#Count accesses for receiver email (kb)
 			$_emailr_l{lc($field[$pos_emailr])}=$timerecord;
 		}
 
