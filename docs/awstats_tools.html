@@ -38,6 +38,7 @@ This is a list of other tools provided with AWStats.<br>
 All those tools are available in <b>tools</b> directory of AWStats distribution.<br>
 <br><br>
 
+<!--
 <br>
 <br><a name="configure"><H2 style="font: 22px arial,helvetica,sanserif color: #606060"><u>configure.pl</u></H2></a>
 <br>This script creates one config file for each web servers provided by Apache.
@@ -47,7 +48,7 @@ All those tools are available in <b>tools</b> directory of AWStats distribution.
 
 <br>
 <br>
-
+-->
 
 <br>
 <br><a name="awstats_updateall"><H2 style="font: 22px arial,helvetica,sanserif color: #606060"><u>awstats_updateall.pl</u></H2></a>
@@ -153,6 +154,9 @@ All those tools are available in <b>tools</b> directory of AWStats distribution.
 <br>logresolvemerge is particularly usefull when you want to merge large log
 <br>files in a fast process and with a low use of memory getting records in a
 <br>chronological order through a pipe (for use by third tool, like log analyzer).
+<br>
+<br>WARNING: If log files are old MAC text files (lines ended with CR char), you
+<br>can't run this tool on Win or Unix platforms.
 <br>
 <br>Now supports/detects:
 <br>  Automatic detection of log format
