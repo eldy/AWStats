@@ -7,11 +7,14 @@ AWStats Changelog
 - Complete rewrite of update process and code to read/save history files.
   AWStats 5.0 is still compatible with history files processed with 4.x.
   However if you use awstats 5.0 runtime to read statistics for old month
-  build with 4.x, speed will be a little bit reduce but will works correctly.
-  If you want to benefit the speed improvement of 5.0 (2 to 10 times faster
+  build with 3.x or 4.x, speed will be a little bit reduce but data will
+  be reported correctly.
+
+  To benefit the speed/memory improvement of 5.0 (2 to 8 times faster
   when reading stats, less memory use) you can migrate your history files
   with the command :
-    awstats.pl -migrate="/fullpath/awstatsMMYYYY.myconfigid.conf"
+    awstats.pl -migrate="/fullpath/awstatsMMYYYY.myconfigval.conf"
+
 - Fixed: pb when using several tags with different offset in LogFile name.
 - Fixed: Create of directory with CreateDataDirIfNotExists is made with 0766
   instead of 0666.
@@ -36,6 +39,8 @@ AWStats Changelog
 - Made changes to prepare sendmail log analysis.
 - Updated belarus flag.
 - Updated os, browsers, robots, search engines database.
+- Added a map of history files at beginning of files to allow other tools
+  to read AWStats history files or part of them very quickly.
 - Other minor changes and bug fixes.
 
 
