@@ -3498,15 +3498,16 @@ sub Lock_Update {
 
 #--------------------------------------------------------------------
 # Function:     Signal handler to call Lock_Update to remove lock file
-# Parameters:   None
+# Parameters:   Signal name
 # Input:        None
 # Output:       None
 # Return:       None
 #--------------------------------------------------------------------
 sub SigHandler {
-	#my $signame = shift;
+	my $signame = shift;
+	print ucfirst($PROG)." process (ID $$) interrupted by signal $signame.\n";
 	&Lock_Update(0);
-	sleep 10;
+	exit 1;
 }
 
 #--------------------------------------------------------------------
@@ -6661,7 +6662,7 @@ EOF
 			$new_browser_h{$key}+=$_browser_h{$key};
 		}
 		&tab_head("$Message[21]",19);
-		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH colspan=2>Browser</TH><TH width=80>$Message[111]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[15]</TH></TR>\n";
+		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH colspan=2>$Message[21]</TH><TH width=80>$Message[111]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[15]</TH></TR>\n";
 		my $count=0;
 		&BuildKeyList($MaxRowsInHTMLOutput,1,\%new_browser_h,\%new_browser_h);
 		foreach my $key (@keylist) {
