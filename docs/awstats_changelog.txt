@@ -65,6 +65,8 @@ New features/improvements:
 - Added decodeUTFkeys plugin to AWStats to show correctly (in language
   charset) keywords/keyphrases strings even if they were UTF8 coded by
   the referer search engine.
+- Added/updated a lot of os, browser and country icons.
+- Added Hebrew and Galician language.
 - configure.pl: A new script to configure AWStats and Apache and
   build a simple config file.
 - awstats_buildstaticpages.pl: The -date option has been replaced
@@ -85,8 +87,6 @@ Other/Documentation:
   Microsoft URL Control added in robot list.
 - Documentation seriously updated.
 - FAQ updated.
-- Debian, Amigavoyager and some missing country flags icons added.
-- Added Hebrew and Galician language.
 
 Note 1: When migrating to 6.x series, if you use the ExtraSections feature,
   you must check that the parameter(s) ExtraSectionConditionX use a full
