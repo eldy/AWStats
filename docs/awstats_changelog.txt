@@ -6,8 +6,10 @@ $Revision$ - $Author$ - $Date$
 5.4
 
 Fixes:
-- File name with space inside were not correctly reported when doing
-  FTP log server analysis.
+- File name with space inside were not correctly reported when doing FTP log
+  server analysis.
+- Problem in %Wy tag for ten first weeks of year (coded one 1 char instead
+  of 2: First week should be "00" instead of "0").
 
 New features/improvments:
 - Added urlbuildalias.pl tool.
