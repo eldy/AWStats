@@ -1304,19 +1304,24 @@ sub Read_Ref_Data {
 	# Debian package :                    		"/usr/share/awstats/lib"
 	# Other possible directories :        		"./lib"
 	my @PossibleLibDir=("${DIR}lib","/usr/share/awstats/lib","./lib");
-	my %FilePath=();
+	my %FilePath=(); my %DirAddedInINC=();
 	my @FileListToLoad=();
 	while (my $file=shift) { push @FileListToLoad, "$file.pm"; }
 	foreach my $file (@FileListToLoad) {
 		foreach my $dir (@PossibleLibDir) {
 			my $searchdir=$dir;
 			if ($searchdir && (!($searchdir =~ /\/$/)) && (!($searchdir =~ /\\$/)) ) { $searchdir .= "/"; }
-			if (! $FilePath{$file}) {
+			if (! $FilePath{$file}) {	# To not load twice same plugin in different path
 				if (-s "${searchdir}${file}") {
 					$FilePath{$file}="${searchdir}${file}";
 					if ($Debug) { debug("Call to Read_Ref_Data [FilePath{$file}=\"$FilePath{$file}\"]"); }
-					# push @INC, "${searchdir}"; require "${file}";
-					require "$FilePath{$file}";
+					# Note: cygwin perl 5.8 need a push + require file
+#					require "$FilePath{$file}";
+					if (! $DirAddedInINC{"$searchdir"}) { 
+						push @INC, "${searchdir}";
+						$DirAddedInINC{"$searchdir"}=1;
+					}
+					require "${file}";
 				}
 			}
 		}
@@ -5721,7 +5726,7 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 		elsif ($protocol == 3 || $protocol == 5) {		# Mail record
 			if (! $ValidSMTPCodes{$field[$pos_code]}) {	# Code is not valid
 				$_errors_h{$field[$pos_code]}++;
-				#$_errors_k{$field[$pos_code]}+=int($field[$pos_size]);	# Useless as pos_size should be 0
+				#$_errors_k{$field[$pos_code]}+=int($field[$pos_size]);	# Useless as pos_size is often 0 or ? when error
 				next;	# Next log record
 			}
 		}
