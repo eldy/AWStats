@@ -2958,7 +2958,7 @@ sub Read_DNS_Cache {
 	if (! scalar keys %$hashtoload) {
 		open(DNSFILE,"$filetoload") or error("Error: Couldn't open DNS Cache file \"$filetoload\": $!");
 		# This is the fastest way to load with regexp that I know
-	   	%$hashtoload = map(/^(\d+\.\d+\.\d+\.\d+)\s+([^\s]+)$/o, <DNSFILE>);
+	   	%$hashtoload = map(/^\d{0,10}\s*(\d+\.\d+\.\d+\.\d+)\s+([^\s]+)$/o,<DNSFILE>);
 	   	close DNSFILE;
 		if ($savetohash) {
 			# Plugin call : Save hash file (all records) with test if up to date to save
@@ -3005,10 +3005,11 @@ sub Save_DNS_Cache_File {
 			warning("Warning: Failed to open for writing last update DNS Cache file \"$filetosave\": $!");
 			return 1;
 		}
+		my $starttimemin=int($starttime/60);
 		foreach my $key (keys %$hashtosave) {
-			#if ($hashtosave->{$key} ne "ip") {
-				#print DNSFILE "0\t$key\t$hashtosave->{$key}\n";
-				print DNSFILE "$key\t$hashtosave->{$key}\n";
+			#if ($hashtosave->{$key} ne '*') {
+				my $ipsolved=$hashtosave->{$key};
+				print DNSFILE "$starttimemin\t$key\t".($ipsolved eq 'ip'?'*':$ipsolved)."\n";	# Change 'ip' to '*' for backward compatibility
 				if (++$nbofelemsaved >= $NBOFLASTUPDATELOOKUPTOSAVE) { last; }
 			#}
 		}
@@ -3237,12 +3238,12 @@ sub ShowWhoIsCell {
 #--------------------------------------------------------------------
 sub IsAscii {
 	my $string=shift;
-	if ($Debug) { debug("IsAscii($string)",4); }
+	if ($Debug) { debug("IsAscii($string)",5); }
 	if ($string =~ /^[\w\+\-\/\\\.%,;:=\"\'&?!\s]+$/) {
-		if ($Debug) { debug(" Yes",4); }
+		if ($Debug) { debug(" Yes",5); }
 		return 1;		# Only alphanum chars (and _) or + - / \ . % , ; : = " ' & ? space \t
 	}
-	if ($Debug) { debug(" No",4); }
+	if ($Debug) { debug(" No",5); }
 	return 0;
 }
 
@@ -3335,10 +3336,10 @@ sub MinimumButNoZero {
 # Return:       @keylist response array
 #--------------------------------------------------------------------
 sub BuildKeyList {
-#	my $ArraySize=shift||error("Error: System error. Call to BuildKeyList function with incorrect value for first param","","",1);
-#	my $MinValue=shift||error("Error: System error. Call to BuildKeyList function with incorrect value for second param","","",1);
-	my $ArraySize=shift;
-	my $MinValue=shift;
+	my $ArraySize=shift||error("Error: System error. Call to BuildKeyList function with incorrect value for first param","","",1);
+	my $MinValue=shift||error("Error: System error. Call to BuildKeyList function with incorrect value for second param","","",1);
+#	my $ArraySize=shift;
+#	my $MinValue=shift;
 	my $hashforselect=shift;
 	my $hashfororder=shift;
 	if ($Debug) { debug(" BuildKeyList($ArraySize,$MinValue,$hashforselect with size=".(scalar keys %$hashforselect).",$hashfororder with size=".(scalar keys %$hashfororder).")",2); }
@@ -3835,11 +3836,12 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {	# Updat
 	}
 	unshift @HostAliases,"$SiteToAnalyze";	# Add SiteToAnalyze
 
-	# Optimize HostAliases, SkipHosts, SkipFiles, OnlyFiles array
+	# Optimize HostAliases, SkipHosts, SkipFiles, OnlyFiles, SkipDNSLookupFor array
 	&OptimizeArray(\@HostAliases,1,1); if ($Debug) { debug("HostAliases is now @HostAliases",1); }
 	&OptimizeArray(\@SkipHosts,1,0); if ($Debug) { debug("SkipHosts is now @SkipHosts",1); }
 	&OptimizeArray(\@SkipFiles,0,0); if ($Debug) { debug("SkipFiles is now @SkipFiles",1); }
 	&OptimizeArray(\@OnlyFiles,0,0); if ($Debug) { debug("OnlyFiles is now @OnlyFiles",1); }
+	&OptimizeArray(\@SkipDNSLookupFor,1,0); if ($Debug) { debug("SkipDNSLookupFor is now @SkipDNSLookupFor",1); }
 
 	# GENERATING PerlParsingFormat
 	#------------------------------------------
@@ -4336,7 +4338,7 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {	# Updat
 		# Do DNS lookup
 		#--------------
 		my $Host=$field[$pos_rc];
-		my $HostResolved="";
+		my $HostResolved='';
 		if ($DNSLookup) {			# DNS lookup is 1 or 2
 			if ($Host =~ /^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/) {
 				# Check in DNS cache file
@@ -4348,14 +4350,14 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {	# Updat
 					# Check in DNS session cache
 					$HostResolved=$TmpDNSLookup{$Host};
 					if (! $HostResolved) {
-						if (&SkipDNSLookup($Host)) {
-							$HostResolved=$TmpDNSLookup{$Host}="ip";
+						if (@SkipDNSLookupFor && &SkipDNSLookup($Host)) {
+							$HostResolved=$TmpDNSLookup{$Host}='*';
 							if ($Debug) { debug(" No need of reverse DNS lookup for $Host, skipped at user request.",4); }
 						}
 						else {
 							my $lookupresult=gethostbyaddr(pack("C4",split(/\./,$Host)),AF_INET);	# This is very slow, may took 20 seconds
 							if (! $lookupresult || $lookupresult =~ /^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/ || ! IsAscii($lookupresult)) {
-								$TmpDNSLookup{$Host}=$HostResolved="ip";
+								$TmpDNSLookup{$Host}=$HostResolved='*';
 							}
 							else {
 								$TmpDNSLookup{$Host}=$HostResolved=$lookupresult;
@@ -4365,7 +4367,7 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {	# Updat
 					}
 				}
 				else {
-					$HostResolved="ip";					
+					$HostResolved='*';					
 					if ($Debug) { debug(" DNS lookup asked for $Host but not found in DNS cache file.",4); }
 				}
 			}
@@ -4375,14 +4377,14 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {	# Updat
 			}
 		}
 		else {
-			if ($Host =~ /^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/) { $HostResolved="ip"; }
+			if ($Host =~ /^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/) { $HostResolved='*'; }
 			if ($Debug) { debug(" No DNS lookup asked.",4); }
 		}
 
 		# Analyze: Top-level domain
 		#--------------------------
-		my $Domain="ip";
-		if ($HostResolved eq "ip") {
+		my $Domain='ip';
+		if ($HostResolved eq '*') {
 			# $Host is an IP address and is not resolved or resolution gives an IP address
 			$_ = $Host;
 		}
@@ -6293,7 +6295,7 @@ EOF
 			if ($_domener_h{$key} && $bredde_h==1) { $bredde_h=2; }
 			if ($max_k > 0) { $bredde_k=int($BarWidth*($_domener_k{$key}||0)/$max_k)+1; }
 			if ($_domener_k{$key} && $bredde_k==1) { $bredde_k=2; }
-			if ($key eq "ip" || ! $DomainsHashIDLib{$key}) {
+			if ($key eq 'ip' || ! $DomainsHashIDLib{$key}) {
 				print "<TR><TD><IMG SRC=\"$DirIcons\/flags\/ip.png\" height=14></TD><TD CLASS=AWL>$Message[0]</TD><TD>$key</TD>";
 			}
 			else {
@@ -6836,4 +6838,10 @@ else {
 #   End of loop
 #   Show data arrays in HTML page
 # End of 'output'
+#-------------------------------------------------------
+
+#-------------------------------------------------------
+# DNS CACHE FILE FORMATS
+# /etc/hosts    x.y.z.w hostname
+# Analog		UT/60 x.y.z.w hostname
 #-------------------------------------------------------
