@@ -64,8 +64,12 @@ sub CleanHost { $_=shift;
 	return $_;
 }
 
+# Return domain
+# Input:	host.domain.com, <user@domain.com>, <>
+#
 sub CleanDomain { $_=shift;
-	s/^.*@//; s/>$//;
+	s/>.*$//; s/[<>]//g;
+	s/^.*@//; 
 	if (! $_) { $_ = 'localhost'; }
 	return $_;
 }
@@ -231,6 +235,7 @@ while (<>) {
 			$entry{$id}{'day'}=$day;
 			$entry{$id}{'time'}=$time;
 			$entry{$id}{'to'}=$to;
+#			print "Found a record: id=$id mon=$entry{$id}{'mon'} day=$entry{$id}{'day'} time=$entry{$id}{'time'} to=$entry{$id}{'to'} relay_r=$entry{$id}{'relay_r'}\n";
 		}
 		elsif (/starting delivery/ ne undef) {
 			#
