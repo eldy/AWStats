@@ -204,7 +204,7 @@
 'francite\.','francite',
 '\.lbb\.org','lbb',
 'rechercher\.libertysurf\.fr','libertysurf',
-'search\\w+\.free\.fr','free',
+'search\w+\.free\.fr','free',
 'recherche\.club-internet\.fr','clubinternet',
 # Minor german search engines
 'fireball\.de','fireball',
