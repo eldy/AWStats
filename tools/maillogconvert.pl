@@ -260,6 +260,50 @@ while (<>) {
 		}
 	}
 	#
+	# See if we received postfix email bounced error
+	#
+	elsif (/stat(us)?=bounced/ ne undef) {
+		# Example: 
+		# postfix:  Sep  9 18:24:23 halley postfix/local[22003]: 12C6413EC9: to=<etavidian@partenor.com>, relay=local, delay=0, status=bounced (unknown user: "etavidian")
+		my ($mon,$day,$time,$id,$to,$relay_r)=m/(\w+)\s+(\d+)\s+(\d+:\d+:\d+)\s+[\w\-]+\s+(?:postfix\/(?:local|smtpd|smtp))\[\d+\]:\s+(.*?):\s+to=([^\s,]*)[\s,]+relay=([^\s,]*)/;
+		$rowid=($id eq 'reject'?999:$id);	# id not provided in log, we take 999
+		if ($rowid) {
+			$entry{$rowid}{'code'}="999";	# Unkown error (bounced)
+			$entry{$rowid}{'to'}=&trim($to);
+			$entry{$rowid}{'relay_r'}=&trim($relay_r);
+			$entry{$rowid}{'mon'}=$mon;
+			$entry{$rowid}{'day'}=$day;
+			$entry{$rowid}{'time'}=$time;
+			debug("For id=$rowid, found a postfix bounced incoming message: code=$entry{$rowid}{'code'} to=$entry{$rowid}{'to'} relay_r=$entry{$rowid}{'relay_r'}");
+		}
+	}
+
+	#
+ 	# See if we send a sendmail (with ctladdr tag) email
+ 	#
+ 	elsif(/, ctladdr=/ ne undef) {
+ 			#
+ 			# Matched outgoing sendmail/postfix message
+ 			#
+ 			my ($mon,$day,$time,$id,$to,$from)=m/(\w+)\s+(\d+)\s+(\d+:\d+:\d+)\s+\w+\s+(?:sm-mta|sendmail(?:-out|)|postfix\/(?:local|smtpd|smtp))\[.*?\]:\s+([^:]*):\s+to=(.*?)[,\s]+ctladdr=([^\,\s]*)/;
+ 			$rowid=$id;
+ 			if (m/\s+relay=([^\s,]*)[\s,]/) { $entry{$id}{'relay_r'}=$1; }
+ 			elsif (m/\s+mailer=local/) { $entry{$id}{'relay_r'}='localhost'; }
+ 			if (/, stat\=Sent/) { $entry{$id}{'code'}=1; }
+ 			elsif (/, stat\=User\s+unknown/) { $entry{$id}{'code'}=550; }
+ 			elsif (/, stat\=Local\s+configuration/) { $entry{$id}{'code'}=451; }
+ 			elsif (/, stat\=Deferred:\s+(\d*)/) { $entry{$id}{'code'}=$1; }
+ 			else { $entry{$id}{'code'}=999; }
+ 			$entry{$id}{'mon'}=$mon;
+ 			$entry{$id}{'day'}=$day;
+ 			$entry{$id}{'time'}=$time;
+ 			$entry{$id}{'to'}=&trim($to);
+ 			$entry{$id}{'from'}=&trim($from);
+ 			$entry{$id}{'size'}='?';
+ 			debug("For id=$id, found a sendmail outgoing message: to=$entry{$id}{'to'} from=$entry{$id}{'from'} size=$entry{$id}{'size'} relay_s=$entry{$id}{'relay_s'}");
+ 	}
+
+	#
 	# See if we received sendmail, postfix or qmail email
 	#
 	elsif ((/info msg .* from/ ne undef) || (/: from=/ ne undef)) {
@@ -281,7 +325,7 @@ while (<>) {
 			#
 			# sm-mta:  Jul 28 06:55:13 androneda sm-mta[28877]: h6SDtCtg028877: from=<4cmkh79eob@webtv.net>, size=2556, class=0, nrcpts=1, msgid=<w1$kqj-9-o2m45@0h2i38.4.m0.5u>, proto=ESMTP, daemon=MTA, relay=smtp.easydns.com [205.210.42.50]
 			# postfix: Jul  3 15:32:26 apollon postfix/qmgr[13860]: 08FB63B8A4: from=<nobody@ns3744.ovh.net>, size=3302, nrcpt=1 (queue active)
-			my ($id,$from,$size)=m/\w+\s+\d+\s+\d+:\d+:\d+\s+\w+\s+(?:sm-mta|sendmail|postfix\/qmgr|postfix\/nqmgr)\[\d+\]:\s+(.*?):\s+from=(.*?),\s+size=(.*?),/;
+			my ($id,$from,$size)=m/\w+\s+\d+\s+\d+:\d+:\d+\s+\w+\s+(?:sm-mta|sendmail(?:-in|)|postfix\/qmgr|postfix\/nqmgr)\[\d+\]:\s+(.*?):\s+from=(.*?),\s+size=(.*?),/;
 			$rowid=$id;
 			if (! $entry{$id}{'code'}) { $entry{$id}{'code'}=1; }	# If not already defined, we define it
 			if ($entry{$id}{'from'} ne '<>') { $entry{$id}{'from'}=$from; }
@@ -299,7 +343,7 @@ while (<>) {
 			#
 			# Matched arrival sendmail/postfix message
 			#
-			my ($mon,$day,$time,$id,$to)=m/(\w+)\s+(\d+)\s+(\d+:\d+:\d+)\s+[\w\-]+\s+(?:sm-mta|sendmail|postfix\/(?:local|smtpd|smtp))\[.*?\]:\s+(.*?):\s+to=(.*?),/;
+			my ($mon,$day,$time,$id,$to)=m/(\w+)\s+(\d+)\s+(\d+:\d+:\d+)\s+[\w\-]+\s+(?:sm-mta|sendmail(?:-out|)|postfix\/(?:local|smtpd|smtp))\[.*?\]:\s+(.*?):\s+to=(.*?),/;
 			$rowid=$id;
 			if (m/\s+relay=([^\s,]*)[\s,]/) { $entry{$id}{'relay_r'}=$1; }
 			elsif (m/\s+mailer=local/) { $entry{$id}{'relay_r'}='localhost'; }
