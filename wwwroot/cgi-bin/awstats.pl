@@ -45,7 +45,7 @@
 
 # ---------- Init variables (Variable $TmpHashxxx are not initialized) --------
 ($AddOn, $ArchiveFileName, $ArchiveLogRecords, $KeepBackupOfHistoricFiles, $BarHeight, $BarWidth,
-$DIR, $DNSLookup, $DayRequired, $Debug, $DefaultFile,
+$DEBUGRESET, $DIR, $DNSLookup, $DayRequired, $Debug, $DefaultFile,
 $DirCgi, $DirData, $DirIcons, $DirLang,
 $DetailedReportsOnNewWindows, $Expires, $Extension, $FileConfig, $FileSuffix, $FirstDayOfWeek,
 $FirstTime, $HTMLHeadSection, $HTMLEndSection, $Host, $KeepBackupOfHistoricFiles,
@@ -82,10 +82,11 @@ $WarningMessages= 1;
 %MonthBytes = %MonthHits = %MonthHostsKnown = %MonthHostsUnknown = %MonthPages = %MonthUnique = %MonthVisits =
 %monthlib = %monthnum = ();
 
-$VERSION="3.2 (build 49)";
+$VERSION="3.2 (build 51)";
 $Lang="en";
 
 # Default value
+$DEBUGFORCED   = 0;			# Force debug level to log lesser level into debug.log file (Keep this value to 0)
 $MAXROWS       = 200000;	# Max number of rows for not limited HTML arrays
 $SortDir       = -1;		# -1 = Sort order from most to less, 1 = reverse order (Default = -1)
 $VisitTimeOut  = 10000;		# Laps of time to consider a page load as a new visit. 10000 = one hour (Default = 10000)
@@ -255,7 +256,7 @@ sub error {
 	my $message=shift;
 	my $secondmessage=shift;
 	my $thirdmessage=shift;
-
+	debug("$message $secondmessage $thirdmessage",1);
 	if ($message =~ /^Format error$/) {
 		# Files seems to have bad format
 		if ($HTMLOutput) { print "<br><br>\n"; }
@@ -315,8 +316,9 @@ sub error {
 }
 
 sub warning {
+	my $messagestring=shift;
+	debug("$messagestring",1);
 	if ($WarningMessages == 1) {
-		my $messagestring=$_[0];
     	if ($HTMLOutput) {
     		$messagestring =~ s/\n/\<br\>/g;
     		print "$messagestring<br>\n";
@@ -327,12 +329,23 @@ sub warning {
 	}
 }
 
+# Parameters : $string $level   
+# Input      : $Debug = required level   $DEBUGFORCED = required level forced
 sub debug {
 	my $level = $_[1] || 1;
+	if ($DEBUGFORCED >= $level) { 
+		my $debugstring = $_[0];
+		if ($DEBUGFORCED >= $level) {
+			if ($DEBUGRESET == 0) {	open(DEBUGFORCEDFILE,"debug.log"); close DEBUGFORCEDFILE; chmod 0666,"debug.log"; $DEBUGRESET=1; }
+			open(DEBUGFORCEDFILE,">>debug.log");
+			print DEBUGFORCEDFILE localtime(time)." - $$ - $DEBUG $level - $debugstring\n";
+			close DEBUGFORCEDFILE;
+		}
+	}
 	if ($Debug >= $level) { 
 		my $debugstring = $_[0];
 		if ($HTMLOutput) { $debugstring =~ s/^ /&nbsp&nbsp /; $debugstring .= "<br>"; }
-		print "DEBUG $level - ".time." : $debugstring\n";
+		print localtime(time)." - DEBUG $level - $debugstring\n";
 	}
 }
 
@@ -849,7 +862,9 @@ sub Read_History_File {
 	my $year=sprintf("%04i",shift);
 	my $month=sprintf("%02i",shift);
 	my $part=shift;
-	&debug("Call to Read_History_File [$year,$month,$part] ($DayRequired)");	# In standard use of AWStats, the DayRequired variable is always empty
+	# In standard use of AWStats, the DayRequired variable is always empty
+	if ($DayRequired) { &debug("Call to Read_History_File [$year,$month,$part] ($DayRequired)"); }
+	else { &debug("Call to Read_History_File [$year,$month,$part]"); }
 	if ($HistoryFileAlreadyRead{"$year$month$DayRequired"}) {				# Protect code to invoke function only once for each month/year
 		&debug(" Already loaded");
 		return 0;
@@ -1658,9 +1673,6 @@ $NewDNSLookup=$DNSLookup;
 %monthlib =  ( "01","$Message[60]","02","$Message[61]","03","$Message[62]","04","$Message[63]","05","$Message[64]","06","$Message[65]","07","$Message[66]","08","$Message[67]","09","$Message[68]","10","$Message[69]","11","$Message[70]","12","$Message[71]" );
 # monthnum must be in english because it's used to translate log date in apache log files which are always in english
 %monthnum =  ( "Jan","01","jan","01","Feb","02","feb","02","Mar","03","mar","03","Apr","04","apr","04","May","05","may","05","Jun","06","jun","06","Jul","07","jul","07","Aug","08","aug","08","Sep","09","sep","09","Oct","10","oct","10","Nov","11","nov","11","Dec","12","dec","12" );
-
-$BrowsersHashIDLib{"netscape"}="<font color=blue>Netscape</font> <a href=\"$DirCgi$PROG.$Extension?${LinkParamB}output=browserdetail\">($Message[58])</a>";
-$BrowsersHashIDLib{"msie"}="<font color=blue>MS Internet Explorer</font> <a href=\"$DirCgi$PROG.$Extension?${LinkParamB}output=browserdetail\">($Message[58])</a>";
 
 # Init all global variables
 if (! @HostAliases) {
@@ -3282,6 +3294,8 @@ EOF
 	# BY BROWSER
 	#----------------------------
 	if ($ShowBrowsersStats) {
+		$BrowsersHashIDLib{"netscape"}="<font color=blue>Netscape</font> <a href=\"$DirCgi$PROG.$Extension?${LinkParamB}output=browserdetail\">($Message[58])</a>";
+		$BrowsersHashIDLib{"msie"}="<font color=blue>MS Internet Explorer</font> <a href=\"$DirCgi$PROG.$Extension?${LinkParamB}output=browserdetail\">($Message[58])</a>";
 		my $Total=0; foreach my $key (keys %_browser_h) { $Total+=$_browser_h{$key}; }
 		print "$CENTER<a name=\"BROWSER\">&nbsp;</a><BR>";
 		&tab_head($Message[21],19);
