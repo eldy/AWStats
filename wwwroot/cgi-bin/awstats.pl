@@ -768,7 +768,7 @@ sub Read_Config_File {
 sub Read_Ref_Data {
 	my %FilePath=();
 	foreach my $file ("browsers.pl","domains.pl","operating_systems.pl","robots.pl","search_engines.pl") {
-		foreach my $dir ("${DIR}db","./db") {
+		foreach my $dir ("${DIR}lib","./lib") {
 			my $searchdir=$dir;
 			if ($searchdir && (!($searchdir =~ /\/$/)) && (!($searchdir =~ /\\$/)) ) { $searchdir .= "/"; }
 			if (! $FilePath{$file}) {
@@ -781,7 +781,7 @@ sub Read_Ref_Data {
 		}
 		if (! $FilePath{$file}) {
 			my $filetext=$file; $filetext =~ s/\.pl$//; $filetext =~ s/_/ /g;
-			&warning("Warning: Can't read file \"$file\" ($filetext detection will not work correctly).\nCheck if file is in ${DIR}db directory and is readable.");
+			&warning("Warning: Can't read file \"$file\" ($filetext detection will not work correctly).\nCheck if file is in ${DIR}lib directory and is readable.");
 		}
 	}
 	# Sanity check.
