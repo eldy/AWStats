@@ -1012,9 +1012,9 @@ when reading it), follow the example:<br>
 <br># particular parameter because it does not identify the page or because it's
 <br># a random ID changing for each access even if URL points to same page. In
 <br># such cases, it is higly recommanded to ask AWStats to keep only parameters
-<br># you need (if you know them) before counting, manipulating and storing it.
+<br># you need (if you know them) before counting, manipulating and storing URL.
 <br># Enter here list of wanted parameters. For example, with "param", one hit on
-<br># /mypage.cgi?param=abc&id=Yo4UomP9d and /mypage.cgi?param=abc&id=Mu8fdxl3r
+<br># /mypage.cgi?param=abc&id=Yo4UomP9d  and  /mypage.cgi?param=abc&id=Mu8fdxl3r
 <br># will be reported as 2 hits on /mypage.cgi?param=abc
 <br># This parameter is not used when URLWithQuery is 0 and can't be used with
 <br># URLWithQueryWithoutFollowingParameters.
@@ -1033,10 +1033,10 @@ when reading it), follow the example:<br>
 <br># particular parameter because it does not identify the page or because it's
 <br># a random ID changing for each access even if URL points to same page. In
 <br># such cases, it is higly recommanded to ask AWStats to remove such parameters
-<br># from the URL before counting, manipulating and storing it. Enter here list
-<br># of all non wanted parameters. For example if you enter "id", one hit on
-<br># /mypage.cgi?p=abc&id=Yo4UomP9d and /mypage.cgi?p=abc&id=Mu8fdxl3r
-<br># will be reported as 2 hits on /mypage.cgi?p=abc
+<br># from the URL before counting, manipulating and storing URL. Enter here list
+<br># of all non wanted parameters. For example, if you enter "id", one hit on
+<br># /mypage.cgi?param=abc&id=Yo4UomP9d  and  /mypage.cgi?param=abc&id=Mu8fdxl3r
+<br># will be reported as 2 hits on /mypage.cgi?param=abc
 <br># This parameter is not used when URLWithQuery is 0 and can't be used with
 <br># URLWithQueryWithOnlyFollowingParameters.
 <br># Change : Effective for new updates only
@@ -1088,7 +1088,7 @@ when reading it), follow the example:<br>
 <a name="DebugMessages"><b>DebugMessages</b></a><br>
 <b>Version : </b>5.2+<br>
 <br># AWStat can be run with debug=x parameter to ouput various informations
-<br># to help in debugging or solving troubles. If you wand (in most cases for 
+<br># to help in debugging or solving troubles. If you want (in most cases for 
 <br># security reasons) to disable debugging, set this parameter to 0.
 <br># Possible values: 0 or 1
 <br># Default: 1
