@@ -21,7 +21,7 @@ use Socket;
 #-----------------------------------------------------------------------------
 use vars qw/ $REVISION $VERSION /;
 $REVISION='$Revision$'; $REVISION =~ /\s(.*)\s/; $REVISION=$1;
-$VERSION="5.5 (build $REVISION)";
+$VERSION="5.6 (build $REVISION)";
 
 # ---------- Init variables -------
 # Constants
@@ -197,11 +197,11 @@ $SiteToAnalyze, $SiteToAnalyzeWithoutwww, $UserAgent)=
 ('','','','','','','','','','','','','','','','','','','');
 use vars qw/
 $pos_vh $pos_host $pos_logname $pos_date $pos_method $pos_url $pos_code $pos_size
-$pos_referer $pos_agent $pos_query $pos_gzipin $pos_gzipout $pos_gzipratio
+$pos_referer $pos_agent $pos_query $pos_gzipin $pos_gzipout $pos_compratio
 $pos_emails $pos_emailr $pos_hostr
 /;
 $pos_vh = $pos_host = $pos_logname = $pos_date = $pos_method = $pos_url = $pos_code = $pos_size = -1;
-$pos_referer = $pos_agent = $pos_query = $pos_gzipin = $pos_gzipout = $pos_gzipratio = -1;
+$pos_referer = $pos_agent = $pos_query = $pos_gzipin = $pos_gzipout = $pos_compratio = -1;
 $pos_emails = $pos_emailr = $pos_hostr = -1;
 use vars qw/
 $lowerval
@@ -4263,6 +4263,7 @@ sub DefinePerlParsingFormat {
 	# Apache combined (408 error): 62.161.78.73 user - [dd/mmm/yyyy:hh:mm:ss +0000] "-" 408 - "-" "-"
 	# Apache common_with_mod_gzip_info1: %h %l %u %t \"%r\" %>s %b mod_gzip: %{mod_gzip_compression_ratio}npct.
 	# Apache common_with_mod_gzip_info2: %h %l %u %t \"%r\" %>s %b mod_gzip: %{mod_gzip_result}n In:%{mod_gzip_input_size}n Out:%{mod_gzip_output_size}n:%{mod_gzip_compression_ratio}npct.
+	# Apache deflate: %h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\" (%{ratio}n)
 	# IIS: 2000-07-19 14:14:14 62.161.78.73 - GET / 200 1234 HTTP/1.1 Mozilla/4.0+(compatible;+MSIE+5.01;+Windows+NT+5.0) http://www.from.com/from.htm
 	# WebStar: 05/21/00	00:17:31	OK  	200	212.242.30.6	Mozilla/4.0 (compatible; MSIE 5.0; Windows 98; DigExt)	http://www.cover.dk/	"www.cover.dk"	:Documentation:graphics:starninelogo.white.gif	1133
 	# Squid extended: 12.229.91.170 - - [27/Jun/2002:03:30:50 -0700] "GET http://www.callistocms.com/images/printable.gif HTTP/1.1" 304 354 "-" "Mozilla/5.0 Galeon/1.0.3 (X11; Linux i686; U;) Gecko/0" TCP_REFRESH_HIT:DIRECT
@@ -4315,6 +4316,7 @@ sub DefinePerlParsingFormat {
 		$LogFormatString =~ s/%{mod_gzip_input_size}n/%gzipin/g;
 		$LogFormatString =~ s/%{mod_gzip_output_size}n/%gzipout/g;
 		$LogFormatString =~ s/%{mod_gzip_compression_ratio}n/%gzipratio/g;
+		$LogFormatString =~ s/\(%{ratio}n\)/%gzipratio/g;
 		# Replacement for a IIS and ISA format string
 		$LogFormatString =~ s/cs-uri-query/%query/g;	# Must be before cs-uri
 		$LogFormatString =~ s/date\stime/%time2/g;
@@ -4450,7 +4452,11 @@ sub DefinePerlParsingFormat {
 				$PerlParsingFormat .= "([^$LogSeparatorWithoutStar]+)";
 			}
 			elsif ($f =~ /%gzipratio/ ) {	# Compare $f to /%gzipratio/ and not to /%gzipratio$/ like other fields
-				$pos_gzipratio=$i;$i++; push @fieldlib, 'gzipratio';
+				$pos_compratio=$i;$i++; push @fieldlib, 'gzipratio';
+				$PerlParsingFormat .= "([^$LogSeparatorWithoutStar]+)";
+			}
+			elsif ($f =~ /%deflateratio/ ) {	# Compare $f to /%deflateratio/ and not to /%deflateratio$/ like other fields
+				$pos_compratio=$i;$i++; push @fieldlib, 'deflateratio';
 				$PerlParsingFormat .= "([^$LogSeparatorWithoutStar]+)";
 			}
 			elsif ($f =~ /%syslog$/) {		# Added for syslog time and host stamp, fields are skipped and not analyzed
@@ -5365,7 +5371,7 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 				$_filetypes_gz_out{$extension}+=$out;
 			}
 		}
-		elsif ($pos_gzipratio>=0 && ($field[$pos_gzipratio] =~ /(\d+)pct./)) {
+		elsif ($pos_compratio>=0 && ($field[$pos_compratio] =~ /(\d+)/)) {
 			$_filetypes_gz_in{$extension}+=int($field[$pos_size]*100/((100-$1)||1));
 			$_filetypes_gz_out{$extension}+=int($field[$pos_size]);	# out size calculated from pct.
 		}
@@ -7558,7 +7564,7 @@ if (scalar keys %HTMLOutput) {
 #			}
 			print "</TR>\n";
 			print "</TABLE>\n<br>\n";
-	
+
 			# Show data array for month
 			if ($AddDataArrayMonthStats) {
 				print "<TABLE>\n";
@@ -7597,7 +7603,7 @@ if (scalar keys %HTMLOutput) {
 			print "</TD></TR>\n";
 			&tab_end;
 		}
-	
+
 		print "\n<a name=\"WHEN\">&nbsp;</a>\n\n";
 
 		# BY DAY OF MONTH
@@ -7956,7 +7962,7 @@ if (scalar keys %HTMLOutput) {
 			$max_h=1; foreach my $key (values %_domener_h) { if ($key > $max_h) { $max_h = $key; } }
 			$max_k=1; foreach my $key (values %_domener_k) { if ($key > $max_k) { $max_k = $key; } }
 			my $count=0;
-			&BuildKeyList($MaxNbOf{'Domain'},$MinHit{'Domain'},\%_domener_p,\%_domener_p);
+			&BuildKeyList($MaxNbOf{'Domain'},$MinHit{'Domain'},\%_domener_h,\%_domener_p);
 			foreach my $key (@keylist) {
 				my $bredde_p=0;my $bredde_h=0;my $bredde_k=0;
 				if ($max_h > 0) { $bredde_p=int($BarWidth*$_domener_p{$key}/$max_h)+1; }	# use max_h to enable to compare pages with hits
@@ -7972,7 +7978,7 @@ if (scalar keys %HTMLOutput) {
 				else {
 					print "<TR><TD width=$WIDTHCOLICON><IMG SRC=\"$DirIcons\/flags\/$newkey.png\" height=14 alt=\"$newkey\"></TD><TD CLASS=AWL>$DomainsHashIDLib{$newkey}</TD><TD>$newkey</TD>";
 				}
-				if ($ShowDomainsStats =~ /P/i) { print "<TD>$_domener_p{$key}</TD>"; }
+				if ($ShowDomainsStats =~ /P/i) { print "<TD>".($_domener_p{$key}?$_domener_p{$key}:'&nbsp;')."</TD>"; }
 				if ($ShowDomainsStats =~ /H/i) { print "<TD>$_domener_h{$key}</TD>"; }
 				if ($ShowDomainsStats =~ /B/i) { print "<TD>".Format_Bytes($_domener_k{$key})."</TD>"; }
 				print "<TD CLASS=AWL>";

@@ -264,6 +264,7 @@ when reading it), follow the example:<br>
 3.2+ for tags %gzipin,%gzipout<br>
 4.0+ for tags %gzipratio,%syslog<br>
 4.1+ for tag  %virtualname<br>
+5.6+ for tag  %deflateratio<br>
 <br># Enter here your log format (Must agree with your web server. See setup
 <br># instructions in README.txt to know how to configure your web server to have
 <br># the required log format).
@@ -292,8 +293,9 @@ when reading it), follow the example:<br>
 <br>#   %uaquot           User agent with format: "Mozilla/4.0 (compatible, ...)"
 <br>#   %ua               User agent with format: Mozilla/4.0_(compatible...)
 <br>#   %gzipin           mod_gzip compression input bytes: In:XXX
-<br>#   %gzipout          mod_gzip compression output bytes & ratio: Out:YYY:ZZZpct.
-<br>#   %gzipratio        mod_gzip or mod_deflate compression ratio: ZZZpct.
+<br>#   %gzipout          mod_gzip compression output bytes & ratio: Out:YYY:ZZpct.
+<br>#   %gzipratio        mod_gzip compression ratio: ZZpct.
+<br>#   %deflateratio     mod_deflate compression ratio with format: (ZZ)
 <br>#   %email            EMail sender (for mail log)
 <br>#   %email_r          EMail receiver (for mail log)
 <br>#   %syslog           Syslog-specific time and host stamp with format: Mon dd hh:mm:ss hostname

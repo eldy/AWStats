@@ -3,6 +3,18 @@ AWStats Changelog
 $Revision$ - $Author$ - $Date$ 
 
 
+5.6
+
+Fixes:
+- Domain with no pages hits were always reported as other in domain chart.
+
+New features/improvments:
+- Report compression ratios with mod_deflate feature (Apache 2).
+
+Other/Documentation:
+- Updated documentation.
+
+
 5.5
 
 Fixes:
