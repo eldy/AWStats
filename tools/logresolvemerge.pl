@@ -18,7 +18,8 @@ use strict; no strict "refs";
 #-------------------------------------------------------
 # Defines
 #-------------------------------------------------------
-my $VERSION="1.1 (build 4)";
+# Last change made by $Author$ on $Date$
+my $VERSION="1.1 (build $Revision$)";
 
 # ---------- Init variables --------
 my $Debug=0;
