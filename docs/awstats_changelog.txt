@@ -6,6 +6,9 @@ AWStats Changelog
 
 - "Never updated" is now in language files.
 - Reduce number of global vars in code.
+- DefaultFile parameter accepts several values.
+- New parameter: LogSeparator
+- Added slovak language files.
 
 
 4.1

@@ -48,6 +48,7 @@ it with its value when reading it), follow the example:<br>
 <ul>
 <li><a href="#LogFile">LogFile</a>
 <li><a href="#LogFormat">LogFormat</a>
+<li><a href="#LogSeparator">LogSeparator</a>
 <li><a href="#DNSLookup">DNSLookup</a>
 <li><a href="#DirData">DirData</a>
 <li><a href="#DirCgi">DirCgi</a>
@@ -251,6 +252,17 @@ it with its value when reading it), follow the example:<br>
 <br># LogFormat = "%time2 %host %logname %method %url %code %bytesd %other %ua %referer"
 <br>#
 <br>LogFormat=1
+
+<br><br><hr>
+
+<a name="LogSeparator"><b>LogSeparator</b></a><br>
+<b>Version : </b>4.2 +<br>
+<br># If your log field's separator is not a space, you can change this parameter.
+<br># Example: " "
+<br># Example: "\t"
+<br># Example: "|"
+<br># Default: " "
+<br>#
 
 <br><br><hr>
 
@@ -470,9 +482,9 @@ it with its value when reading it), follow the example:<br>
 <br><br><hr>
 
 <a name="DefaultFile"><b>DefaultFile</b></a><br>
-<b>Version : </b>1.0 +<br>
-<br># Index page name for your web server.
-<br># Example: "default.htm"
+<b>Version : </b>1.0 + (4.2 + can accept several values)<br>
+<br># Default index page name for your web server.
+<br># Example: "default.htm default.html"
 <br># Default: "index.html"
 <br>#
 <br>DefaultFile="index.html"
@@ -742,12 +754,12 @@ AWStats 4.1+ supports both keywords AND keyphrases by default with no need of an
 <br># Set your primary language.
 <br># Possible value:
 <br>#  Bosnian=ba, Chinese (Taiwan)=tw, Chinese (Traditional)=cn, Czech=cz,
-<br>#  Danish=dk, Dutch=nl, English=en, French=fr, German=de, Greek=gr,
-<br>#  Hungarian=hu, Indonesian=id, Italian=it, Japanese=jp, Korean=kr,
-<br>#  Norwegian (Nynorsk)=nn, Norwegian (Bokmal)=nb, Polish=pl, Portuguese=pt,
-<br>#  Portuguese (Brazilian)=br, Romanian=ro, Russian=ru, Spanish=es, Swedish=se,
-<br>#  Turkish=tr, Ukrainian=ua
-<br># Default: en
+<br>#  Danish=dk, Dutch=nl, English=en, Finnish=fi, French=fr, German=de,
+<br>#  Greek=gr, Hungarian=hu, Indonesian=id, Italian=it, Japanese=jp, Korean=kr,
+<br>#  Latvian=lv, Norwegian (Nynorsk)=nn, Norwegian (Bokmal)=nb, Polish=pl,
+<br>#  Portuguese=pt, Portuguese (Brazilian)=br, Romanian=ro, Russian=ru,
+<br>#  Slovak=sk, Spanish=es, Swedish=se, Turkish=tr, Ukrainian=ua
+<br># Default: "en"
 <br>#
 <br>Lang="en"
 
