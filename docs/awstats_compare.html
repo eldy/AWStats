@@ -101,7 +101,7 @@
 <tr align=center bgcolor=#DDDDDD><td align=left>Daily statistics </td><td><font color=#4444cc>Yes</font></td><td><font color=#4444cc>Yes</font></td><td><font color=#4444cc>Yes</font></td><td><font color=#4444cc>Yes</font></td></tr>
 <tr align=center><td align=left>Monthly statistics </td><td><font color=#4444cc>Yes</font></td><td><font color=#4444cc>Yes</font></td><td><font color=#4444cc>Yes</font></td><td><font color=#4444cc>Yes</font></td></tr>
 <tr align=center bgcolor=#DDDDDD><td align=left>Yearly statistics </td><td><font color=#4444cc>Yes</font></td><td><font color=#4444cc>Yes</font></td><td><font color=#4444cc>Yes</font></td><td><font color=#4444cc>Yes</font></td></tr>
-<tr align=center><td align=left>Benchmark with no DNS lookup in lines/seconds<br>(full features enabled, with XLF format, standard Perl 5.8, Athlon 1Ghz)</td><td><font color=#660000>4500****</font></td><td><font color=#4444cc>?****</font></td><td><font color=#4444cc>12000****</font></td><td>NA<br>No program to run</td></tr>
+<tr align=center><td align=left>Benchmark with no DNS lookup in lines/seconds<br>(full features enabled, with XLF format, standard Perl 5.8, Athlon 1Ghz)</td><td><font color=#660000>4500****</font></td><td><font color=#4444cc>29000****</font></td><td><font color=#4444cc>12000****</font></td><td>NA<br>No program to run</td></tr>
 <tr align=center bgcolor=#DDDDDD><td align=left>Benchmark with DNS lookup in lines/seconds<br>(full features enabled, with XLF format, standard Perl 5.8, Athlon 1Ghz)</td><td><font color=#4444cc>80****</font></td><td><font color=#4444cc>80****</font></td><td><font color=#4444cc>80****</font></td><td>NA<br>No program to run</td></tr>
 <tr align=center><td align=left>Graphical statistics in one page / several / or frames</td><td><font color=#4444cc>Yes/Yes/Yes</font></td><td><font color=#4444cc>Yes</font>/<font color=#660000>No/No</font></td><td><font color=#4444cc>Yes/Yes</font>/<font color=#660000>No</font></td><td><font color=#660000>No</font>/<font color=#4444cc>Yes/Yes</font></td></tr>
 
@@ -120,12 +120,15 @@ So, if you have only 2000 visits a month, products with no robot detection capab
 Those rules are updated with AWStats updates.
 But AWStats has also an algorithm to detect keywords of unknown search engines with unknown url syntax rules. <br>
 <br>
-**** As you can see, some log analyzers have, by default, very poor (or not at all) robots, search engines, os or
-browsers detection capabilities. So to have a benchmark comparison that means something, some log analyzers features
-were 'enhanced' with AWStats databases, when it was possible (For example, Webalizer config file was completed with
-this <a href="http://awstats.sourceforge.net/files/webalizeradd.txt">file</a>. Like that, Webalizer features are a little bit closer than thoose of AWStats.
-Without this add (using default conf file), Webalizer results are 3 times faster but with less features).<br>
-Benchmarks was made on a combined (XLF/CLF) log record on an Athlon 1GHz.<br>
+**** Other log analyzers have poor (or not at all) robots, search engines, os or
+browsers detection capabilities and few features (no or poor visits count, bad filter rules, etc...).<br>
+It is not possible to add all AWStats features to other log analyzers, so don't forget that benchmarks
+results are for 'different features' (for this benchmark, I did just complete Webalizer and Analog robots
+or search engines databases with part of AWStats database. So Webalizer config file was
+completed with this <a href="http://awstats.sourceforge.net/files/webalizeradd.txt">file</a>, Analog config file was
+completed with this <a href="http://awstats.sourceforge.net/files/analogadd.txt">file</a>.
+Note that without this very light add (using default conf file), Webalizer speed is 3 times faster, Analog is 15% faster).<br>
+Benchmark was made on a combined (XLF/CLF) log record on an Athlon 1GHz.<br>
 You must keep in mind that all this times are without reverse DNS lookup. DNS lookup speed depends on your system, network and
 Internet but not on the log analyzer you use. For this reason, DNS lookup is disabled in all log analyzer benchmarks.
 Don't forget that DNS lookup is 95% (even with a lookup cache) of the time used by a log analyzer, so if your host is not
