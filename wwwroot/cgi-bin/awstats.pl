@@ -624,6 +624,7 @@ sub html_head {
 <STYLE TYPE="text/css">
 <!--
 BODY { font: 11px verdana, arial, helvetica, sans-serif; background-color: #$color_Background; margin-top: 0 }
+.AWS_BODYL  { background-image: url($DirIcons/other/backleft.png); background-repeat: repeat-y; }
 .AWS_BORDER { background-color: #$color_TableBG; padding: 1px 1px 1px 1px; margin-top: 0 }
 .AWS_TITLE  { font: 13px verdana, arial, helvetica, sans-serif; font-weight: bold; background-color: #$color_TableBGTitle; text-align: center; margin-bottom: 0; padding: 1px 1px 1px 1px; }
 EOF
@@ -661,7 +662,11 @@ EOF
 			}
 		}
 		print "</head>\n\n";
-		if ($FrameName ne 'index') { print "<body>\n"; }
+		if ($FrameName ne 'index') {
+			print "<body";
+		 	if ($FrameName eq 'mainleft') { print " class=AWS_BODYL"; }
+		 	print ">\n";
+		}
 	}
 }
 
@@ -6687,8 +6692,8 @@ if (scalar keys %HTMLOutput) {
 
 		if ($FrameName ne 'mainright') {
 			# Print Statistics Of
-			if ($FrameName eq 'mainleft') { print "<tr><th class=AWS>$Message[7]:</th></tr><tr><td class=AWS><font style=\"font-size: 12px;\">$SiteDomain</font></td>"; }
-			else { print "<tr><th class=AWS valign=middle>$Message[7]:&nbsp;</th><td class=AWS><font style=\"font-size: 14px;\">$SiteDomain</font></td>"; }
+			if ($FrameName eq 'mainleft') { print "<tr><td class=AWS><b>$Message[7]:</b></td></tr><tr><td class=AWS><font style=\"font-size: 12px;\">$SiteDomain</font></td>"; }
+			else { print "<tr><td class=AWS valign=middle><b>$Message[7]:</b>&nbsp;</td><td class=AWS><font style=\"font-size: 14px;\">$SiteDomain</font></td>"; }
 
 			# Logo and flags
 			if ($FrameName ne 'mainleft') {
@@ -6706,8 +6711,8 @@ if (scalar keys %HTMLOutput) {
 		if ($FrameName ne 'mainleft') {
 
 			# Print Last Update
-			print "<tr><th class=AWS valign=middle width=$WIDTHMENU1>$Message[35]:&nbsp;</th>";
-			print "<td class=AWS valign=middle><font style=\"font-size: 14px;\">";
+			print "<tr><td class=AWS valign=middle width=$WIDTHMENU1><b>$Message[35]:</b>&nbsp;</td>";
+			print "<td class=AWS valign=middle><font style=\"font-size: 12px;\">";
 			if ($LastUpdate) { print Format_Date($LastUpdate,0); }
 			else {
 				# Here NbOfOldLines = 0 (because LastUpdate is not defined)
@@ -6744,7 +6749,7 @@ if (scalar keys %HTMLOutput) {
 
 			print "</tr>\n";
 			# Print selected period of analysis (month and year required)
-			print "<tr><th class=AWS valign=middle>$Message[133]:</th>";
+			print "<tr><td class=AWS valign=middle><b>$Message[133]:</b></td>";
 			print "<td class=AWS valign=middle>";
 			if ($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks) {
 				print "<select class=AWS_FORMFIELD name=\"month\">\n";
@@ -6795,7 +6800,7 @@ if (scalar keys %HTMLOutput) {
 				print "<table".($frame?" cellspacing=0 cellpadding=0 border=0":"").">\n";
 				# When
 				$linetitle=&AtLeastOneNotNull($ShowMonthStats,$ShowDaysOfMonthStats,$ShowDaysOfWeekStats,$ShowHoursStats);
-				if ($linetitle) { print "<tr><th class=AWS width=$WIDTHMENU1".($frame?"":" valign=top").">".($menuicon?"<img src=\"$DirIcons/other/menu4.png\">&nbsp;":"")."$Message[93]: </th>\n"; }
+				if ($linetitle) { print "<tr><td class=AWS width=$WIDTHMENU1".($frame?"":" valign=top").">".($menuicon?"<img src=\"$DirIcons/other/menu4.png\">&nbsp;":"")."<b>$Message[93]:</b></td>\n"; }
 				if ($linetitle) { print ($frame?"</tr>\n":"<td class=AWS>"); }
 				if ($ShowMonthStats)		 { print ($frame?"<tr><td class=AWS>":""); print "<a href=\"$linkanchor#TOP\"$targetpage>$Message[128]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
 				#if ($ShowMonthDayStats)	 { print ($frame?"<tr><td class=AWS> &nbsp; <img height=8 width=9 src=\"$DirIcons/other/page.png\" alt=\"...\"> ":""); print "<a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=alldays":"$PROG$StaticLinks.alldays.$StaticExt")."\"$NewLinkTarget>$Message[130]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
@@ -6805,7 +6810,7 @@ if (scalar keys %HTMLOutput) {
 				if ($linetitle) { print ($frame?"":"</td></tr>\n"); }
 				# Who
 				$linetitle=&AtLeastOneNotNull($ShowDomainsStats,$ShowHostsStats,$ShowAuthenticatedUsers,$ShowEMailSenders,$ShowEMailReceivers,$ShowRobotsStats,$ShowWormsStats);
-				if ($linetitle) { print "<tr><th class=AWS".($frame?"":" valign=top").">".($menuicon?"<img src=\"$DirIcons/other/menu5.png\">&nbsp;":"")."$Message[92]: </th>\n"; }
+				if ($linetitle) { print "<tr><td class=AWS".($frame?"":" valign=top").">".($menuicon?"<img src=\"$DirIcons/other/menu5.png\">&nbsp;":"")."<b>$Message[92]:</b></td>\n"; }
 				if ($linetitle) { print ($frame?"</tr>\n":"<td class=AWS>"); }
 				if ($ShowDomainsStats)		 { print ($frame?"<tr><td class=AWS>":""); print "<a href=\"$linkanchor#COUNTRIES\"$targetpage>$Message[148]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
 				if ($ShowDomainsStats)		 { print ($frame?"<tr><td class=AWS> &nbsp; <img height=8 width=9 src=\"$DirIcons/other/page.png\" alt=\"...\"> ":""); print "<a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=alldomains":"$PROG$StaticLinks.alldomains.$StaticExt")."\"$NewLinkTarget>$Message[80]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
@@ -6831,7 +6836,7 @@ if (scalar keys %HTMLOutput) {
 				if ($linetitle) { print ($frame?"":"</td></tr>\n"); }
 				# Navigation
 				$linetitle=&AtLeastOneNotNull($ShowSessionsStats,$ShowPagesStats,$ShowFileTypesStats,$ShowFileSizesStats,$ShowOSStats,$ShowBrowsersStats,$ShowScreenSizeStats);
-				if ($linetitle) { print "<tr><th class=AWS".($frame?"":" valign=top").">".($menuicon?"<img src=\"$DirIcons/other/menu2.png\">&nbsp;":"")."$Message[72]: </th>\n"; }
+				if ($linetitle) { print "<tr><td class=AWS".($frame?"":" valign=top").">".($menuicon?"<img src=\"$DirIcons/other/menu2.png\">&nbsp;":"")."<b>$Message[72]:</b></td>\n"; }
 				if ($linetitle) { print ($frame?"</tr>\n":"<td class=AWS>"); }
 				if ($ShowSessionsStats)		 { print ($frame?"<tr><td class=AWS>":""); print "<a href=\"$linkanchor#SESSIONS\"$targetpage>$Message[117]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
 				if ($ShowFileTypesStats)	 { print ($frame?"<tr><td class=AWS>":""); print "<a href=\"$linkanchor#FILETYPES\"$targetpage>$Message[73]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
@@ -6849,7 +6854,7 @@ if (scalar keys %HTMLOutput) {
 				if ($linetitle) { print ($frame?"":"</td></tr>\n"); }
 				# Referers
 				$linetitle=&AtLeastOneNotNull($ShowOriginStats,$ShowKeyphrasesStats,$ShowKeywordsStats);
-				if ($linetitle) { print "<tr><th class=AWS".($frame?"":" valign=top").">".($menuicon?"<img src=\"$DirIcons/other/menu7.png\">&nbsp;":"")."$Message[23]: </th>\n"; }
+				if ($linetitle) { print "<tr><td class=AWS".($frame?"":" valign=top").">".($menuicon?"<img src=\"$DirIcons/other/menu7.png\">&nbsp;":"")."<b>$Message[23]:</b></td>\n"; }
 				if ($linetitle) { print ($frame?"</tr>\n":"<td class=AWS>"); }
 				if ($ShowOriginStats)		 { print ($frame?"<tr><td class=AWS>":""); print "<a href=\"$linkanchor#REFERER\"$targetpage>$Message[37]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
 				if ($ShowOriginStats)		 { print ($frame?"<tr><td class=AWS> &nbsp; <img height=8 width=9 src=\"$DirIcons/other/page.png\" alt=\"...\"> ":""); print "<a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=refererse":"$PROG$StaticLinks.refererse.$StaticExt")."\"$NewLinkTarget>$Message[126]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
@@ -6860,7 +6865,7 @@ if (scalar keys %HTMLOutput) {
 				if ($linetitle) { print ($frame?"":"</td></tr>\n"); }
 				# Others
 				$linetitle=&AtLeastOneNotNull($ShowFileTypesStats=~/C/i,$ShowMiscStats,$ShowHTTPErrorsStats,$ShowSMTPErrorsStats,$ShowClusterStats);
-				if ($linetitle) { print "<tr><th class=AWS".($frame?"":" valign=top").">".($menuicon?"<img src=\"$DirIcons/other/menu8.png\">&nbsp;":"")."$Message[2]: </th>\n"; }
+				if ($linetitle) { print "<tr><td class=AWS".($frame?"":" valign=top").">".($menuicon?"<img src=\"$DirIcons/other/menu8.png\">&nbsp;":"")."<b>$Message[2]:</b></td>\n"; }
 				if ($linetitle) { print ($frame?"</tr>\n":"<td class=AWS>"); }
 				if ($ShowFileTypesStats =~ /C/i)	 { print ($frame?"<tr><td class=AWS>":""); print "<a href=\"$linkanchor#FILETYPES\"$targetpage>$Message[98]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
 				if ($ShowMiscStats)	 		 { print ($frame?"<tr><td class=AWS>":""); print "<a href=\"$linkanchor#MISC\"$targetpage>$Message[139]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
@@ -6873,7 +6878,7 @@ if (scalar keys %HTMLOutput) {
 				if ($linetitle) { print ($frame?"":"</td></tr>\n"); }
 				# Extra/Marketing
 			 	$linetitle=&AtLeastOneNotNull(@ExtraStatTypes);
-				if ($linetitle) { print "<tr><th class=AWS".($frame?"":" valign=top").">$Message[134]: </th>\n"; }
+				if ($linetitle) { print "<tr><td class=AWS".($frame?"":" valign=top")."><b>$Message[134]:</b></td>\n"; }
 				if ($linetitle) { print ($frame?"</tr>\n":"<td class=AWS>"); }
 				foreach my $extranum (1..@ExtraName-1) {
 					print ($frame?"<tr><td class=AWS>":""); print "<a href=\"$linkanchor#EXTRA$extranum\"$targetpage>$ExtraName[$extranum]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; ");
