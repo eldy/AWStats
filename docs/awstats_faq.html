@@ -338,8 +338,10 @@ How can I do this ?<br>
 <u>With Windows</u>, you can use the internal task scheduler.
 The use of this tool is not an AWStats related problem, so please take a look at your Windows manual.
 Warning, if you use <i>"awstats.pl -config=mysite -update"</i> in your scheduled task, you might
-experience problem of not updating data. Try this instead<br>
-<i>"C:\WINNT\system32\CMD.EXE /C [awstat-path]\awstats.pl -config=mysite -update"</i><br>
+experience problem of failing task. Try this instead<br>
+<i>"C:\WINNT\system32\CMD.EXE /C C:\[awstat_path]\awstats.pl -config=mysite -update"</i><br>
+or<br>
+<i>"C:\[perl_path]\perl.exe C:\[awstats_path]\awstats.pl -config=mysite -update"</i><br>
 A lot of other scheduler (sharewares/freewares) are very good.<br>
 <u>With unix-like operating systems</u>, you can use the "crontab".<br>
 This is examples of lines you can add in the cron file (see your unix reference manual for cron) :<br>
