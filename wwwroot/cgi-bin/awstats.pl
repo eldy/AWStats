@@ -21,7 +21,7 @@ use vars qw(%DomainsHashIDLib @RobotsSearchIDOrder_list1 @RobotsSearchIDOrder_li
 #-------------------------------------------------------
 # Defines
 #-------------------------------------------------------
-my $VERSION="4.0 (build 50)";
+my $VERSION="4.0 (build 51)";
 
 # ---------- Init variables -------
 my $Debug=0;
@@ -2691,20 +2691,17 @@ if ($UpdateStats) {
 
 		chomp $_; s/\r$//;
 
-		# Parse line record to get all required fields
-		/^$PerlParsingFormat/;	# !!!!!!!!!
-		foreach my $i (1..$lastrequiredfield) { $field[$i]=$$i; }	# !!!!!
 		if ($Debug) { debug(" Record $NbOfLinesRead is ($lastrequiredfield fields read) : host=\"$field[$pos_rc]\", logname=\"$field[$pos_logname]\", date=\"$field[$pos_date]\", method=\"$field[$pos_method]\", url=\"$field[$pos_url]\", code=\"$field[$pos_code]\", size=\"$field[$pos_size]\", referer=\"$field[$pos_referer]\", agent=\"$field[$pos_agent]\"",3); }
 
-		# Check parsed parameters
-		#----------------------------------------------------------------------
-		if (! $field[$pos_code]) {
+		# Parse line record to get all required fields
+		if (! /^$PerlParsingFormat/) {	# !!!!!!!!!
 			$NbOfLinesCorrupted++;
 			if ($ShowCorrupted && ($_ =~ /^#/ || $_ =~ /^!/ || $_ =~ /^\s*$/)) { print "Corrupted record line $NbOfLinesRead (comment or blank line)\n"; }
-			if ($ShowCorrupted && $_ !~ /^\s*$/) { print "Corrupted record line $NbOfLinesRead (corrupted HTTP code): $_\n"; }
+			if ($ShowCorrupted && $_ !~ /^\s*$/) { print "Corrupted record line $NbOfLinesRead (record format does not match LogFormat parameter): $_\n"; }
 			if ($NbOfLinesRead >= $NbOfLinesForCorruptedLog && $NbOfLinesCorrupted == $NbOfLinesRead) { error("Format error",$_,$LogFile); }	# Exit with format error
 			next;
 		}
+		foreach my $i (1..$lastrequiredfield) { $field[$i]=$$i; }	# !!!!!
 
 		# Check filters
 		#----------------------------------------------------------------------
@@ -2725,12 +2722,12 @@ if ($UpdateStats) {
 
 		# Split DD/Month/YYYY:HH:MM:SS or YYYY-MM-DD HH:MM:SS or MM/DD/YY\tHH:MM:SS
 		#if ($LogFormat == 3) { $field[$pos_date] =~ tr/-\/ \t/::::/; }
-		$field[$pos_date] =~ tr/-\/\s/:::/;
+		$field[$pos_date] =~ tr/-\/ \t/::::/;	# " \t" is used instead of "\s" not known with tr
 		my @dateparts=split(/:/,$field[$pos_date]);
 		if ($field[$pos_date] =~ /^....:..:..:/) { my $tmp=$dateparts[0]; $dateparts[0]=$dateparts[2]; $dateparts[2]=$tmp; }
 		if ($field[$pos_date] =~ /^..:..:..:/) { $dateparts[2]+=2000; my $tmp=$dateparts[0]; $dateparts[0]=$dateparts[1]; $dateparts[1]=$tmp; }
 		if ($monthnum{$dateparts[1]}) { $dateparts[1]=$monthnum{$dateparts[1]}; }	# Change lib month in num month if necessary
-				
+
 		# Create $timerecord like YYYYMMDDHHMMSS
 		my $timerecord=int($dateparts[2].$dateparts[1].$dateparts[0].$dateparts[3].$dateparts[4].$dateparts[5]);	# !!!
 		my $yearrecord=int($dateparts[2]);
@@ -2739,7 +2736,7 @@ if ($UpdateStats) {
 
 		if ($timerecord < 10000000000000 || $timerecord > $tomorrowtime) {
 			$NbOfLinesCorrupted++;
-			if ($ShowCorrupted) { print "Corrupted record (invalid date): $_\n"; }
+			if ($ShowCorrupted) { print "Corrupted record (invalid date, timerecord=$timerecord): $_\n"; }
 			next;		# Should not happen, kept in case of parasite/corrupted line
 		}
 
