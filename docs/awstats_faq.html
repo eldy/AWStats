@@ -52,7 +52,7 @@ FAQ-SET100 <a href="#CGISOURCE">I see Perl script's source instead of its execut
 FAQ-SET150 <a href="#SPAWNERROR">Error "...couldn't create/spawn child process..." with Apache for windows.</a><br>
 FAQ-SET200 <a href="#INTERNAL">"Internal Error" or "Error 500" in a browser connecting to Apache.</a><br>
 FAQ-SET210 <a href="#SPEED">"Internal Error" after a long time in my browser (See FAQ-COM100 "AWStats speed/timeout problems").</a><br>
-FAQ-SET220 <a href="#IE6CRASH">IE6 crash while running awstats.pl</a><br>
+FAQ-SET220 <a href="#CRASH">Crash while running awstats.pl or page content only partialy loaded</a><br>
 FAQ-SET250 <a href="#PERSONALIZEDLOG">Log format setup or errors.</a><br>
 FAQ-SET260 <a href="#FTP">Setup for FTP server log files.</a><br>
 FAQ-SET280 <a href="#NOTSAMENUMBER">Error "Not same number of records of...".</a><br>
@@ -212,14 +212,20 @@ you must change the first line of awstats.pl file with:<br>
 <i>#!c:/program files/activestate/activeperl/bin/perl</i><br>
 <br>
 
-<a name="IE6CRASH"></a><a name="IE6CRASH"></a><br>
-<b><u>FAQ-SET220 : IE6 CRASH WHILE RUNNING AWSTATS.PL</u></b><br>
+<a name="CRASH"></a><a name="CRASH"></a><br>
+<b><u>FAQ-SET220 : CRASH WHILE RUNNING AWSTATS.PL OR PAGE CONTENT ONLY PARTIALY LOADED ON WINDOWS XP</u></b><br>
 <font class=CProblem>PROBLEM:</font><br>
-Sometimes IE6 crash while running awstats.pl with some AWStats configuration. Other versions or browsers works fine.<br>
+Sometimes my browser (Most often IE6) crash while running awstats.pl with some AWStats configuration.
+With some other versions or browsers, page content is partialy loaded.<br>
 <font class=CSolution>SOLUTION:</font><br>
-A lot of users had experienced problems with IE6. It seems that this browser is not able to load a 60k text
-served by perl script which would read the 60k text file and then display the html page.
-The only solution is to wait of fix from MS or use another version (5.0, 5.5...) or browser (Netscape, Opera...).<br>
+Problem was with WinXP and WinXPpro as documented at MS site Q317949;<br>
+"Socket Sharing Creates Data Loss When Listen and Accept Occur on Different Processes"<br>
+Result was that MSIE would crash or display nothing. Netscaep and Opera handled the socket better but displayed the pages partially.<br>
+The efffect of the bug was more prononced as the page contents increased(above 30k).<br>
+http://support.microsoft.com/default.aspx?scid=kb;EN-US;q317949<br>
+And also at Apache.org<br>
+http://www.apache.org/dist/httpd/binaries/win32/<br>
+MS produced a Hotfix which is now included in SP1.<br>
 <br>
 
 <a name="PERSONALIZEDLOG"></a><br>
