@@ -221,7 +221,7 @@ sub WriteRecordsReadyInQueue {
 # Return:       -
 #-----------------------------------------------------------------------------
 sub Check_Thread_Use {
-	if ($] >= 5.008) {	for (0..@ARGV-1) { if ($ARGV[$_] =~ /^-dnslookup=(\d{1,2})/i) {
+	if ($] >= 5.008) {	for (0..@ARGV-1) { if ($ARGV[$_] =~ /^-dnslookup[:=](\d{1,2})/i) {
 		if ($UseThread) {
 			if (!eval ('require "threads.pm";')) { &error("Failed to load perl module 'threads' required for multi-threaded DNS lookup".($@?": $@":"")); }
 			if (!eval ('require "threads/shared.pm";')) { &error("Failed to load perl module 'threads::shared' required for multi-threaded DNS lookup".($@?": $@":"")); }
@@ -243,7 +243,7 @@ for (0..@ARGV-1) {
 	if ($ARGV[$_] =~ /^-/) {
 		if ($ARGV[$_] =~ /debug=(\d)/i) { $Debug=$1; }
 		elsif ($ARGV[$_] =~ /dnscache=/i) { $DNSLookup||=2; $DNSCache=$ARGV[$_]; $DNSCache =~ s/-dnscache=//; }
-		elsif ($ARGV[$_] =~ /dnslookup=(\d{1,2})/i) { $DNSLookup||=1; $MaxNbOfThread=$1; }
+		elsif ($ARGV[$_] =~ /dnslookup[:=](\d{1,2})/i) { $DNSLookup||=1; $MaxNbOfThread=$1; }
 		elsif ($ARGV[$_] =~ /dnslookup/i) { $DNSLookup||=1; }
 		elsif ($ARGV[$_] =~ /showsteps/i) { $ShowSteps=1; }
 		elsif ($ARGV[$_] =~ /addfilenum/i) { $AddFileNum=1; }
@@ -294,7 +294,7 @@ if (scalar @ParamFile == 0) {
 	print "  perl $PROG.$Extension [options] *.* > newfile\n";
 	print "Options:\n";
 	print "  -dnslookup     make a reverse DNS lookup on IP adresses\n";
-	print "  -dnslookup:n   same with a n parallel threads instead of serial requests\n";
+	print "  -dnslookup=n   same with a n parallel threads instead of serial requests\n";
 	print "  -dnscache=file make DNS lookup from cache file first before network lookup\n";
 	print "  -showsteps     print on stderr benchmark information every $NBOFLINESFORBENCHMARK lines\n";
 	print "  -addfilenum    if used with several files, file number can be added in first\n";
