@@ -134,7 +134,11 @@ when reading it), follow the example:<br>
 <li><a href="#Show">ShowKeyphrasesStats</a>
 <li><a href="#Show">ShowKeywordsStats</a>
 <li><a href="#Show">ShowHTTPErrorsStats</a>
+<li><a href="#AddDataArray">AddDataArrayMonthDayStats</a>
+<li><a href="#AddDataArray">AddDataArrayShowDaysOfWeekStats</a>
+<li><a href="#AddDataArray">AddDataArrayShowHoursStats</a>
 <li><a href="#Max">MaxNbOfDomain</a>
+<li><a href="#Max">MinHitDomain</a>
 <li><a href="#Max">MaxNbOfHostsShown</a>
 <li><a href="#Max">MinHitHost</a>
 <li><a href="#Max">MaxNbOfLoginShown</a>
@@ -1182,6 +1186,23 @@ ShowOSStats,ShowOriginStats,ShowKeyphrasesStats,ShowKeywordsStats,ShowHTTPErrors
 
 <br><br><hr>
 
+<a name="AddDataArray"><b>AddDataArray...</b></a><br>
+<b>Version : </b>5.4 +<br>
+<br># Some graphical reports are followed by the data array of values.
+<br># If you don't want this array (to reduce report size for example), you can
+<br># set thoose options to 0.
+<br># Possible values: 0 or 1
+<br># Default: 1
+<br>#
+<br># Data array values for the ShowMonthDaysStats report
+<br>AddDataArrayMonthDayStats=1
+<br># Data array values for the ShowDaysOfWeekStats report
+<br>AddDataArrayShowDaysOfWeekStats=1
+<br># Data array values for the ShowHoursStats report
+<br>AddDataArrayShowHoursStats=1
+
+<br><br><hr>
+
 <a name="Max"><b>Max...</b></a><br>
 <b>Version : </b>1.0 +<br>
 <br># This value can be used to choose maximum number of lines shown for each 
@@ -1189,6 +1210,7 @@ ShowOSStats,ShowOriginStats,ShowKeyphrasesStats,ShowKeywordsStats,ShowHTTPErrors
 <br>#
 <br># Stats by domains
 <br>MaxNbOfDomain = 10
+<br>MinHitDomain  = 1
 <br># Stats by hosts
 <br>MaxNbOfHostsShown = 10
 <br>MinHitHost    = 1
@@ -1440,15 +1462,15 @@ color_u,color_v,color_p,color_h,color_k,color_s<br>
 <br><br><hr>
 
 <a name="include"><b>#include</b></a><br>
-<b>Version : </b>5.1 +<br>
+<b>Version : </b>5.4 +<br>
 <br># You can include other config files using the directive with the name of the
-<br># config file (like Apache, so you must keep the '#' before 'include').
+<br># config file.
 <br># This is particularly usefull for users who have a lot of virtual servers, so
 <br># a lot of config files and want to maintain common values in only one file.
 <br># Note that when a variable is defined both in a config file and in an
 <br># included file, AWStats will use the last value read.
 <br>#
-<br>#include ""
+<br>#Include ""
 
 
 <!-- -------------------------------------------------------------------------------------- -->
