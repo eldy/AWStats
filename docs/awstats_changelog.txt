@@ -8,6 +8,7 @@ $Revision$ - $Author$ - $Date$
 Fixes:
 - Summary robots list was limited to MaxNbOfLoginShown instead of
   being limited to MaxNbOfRobotShown value.
+- Fixed a bug when using HBL codes in ShowRobotsStats parameter.
 
 New features/improvments:
 - Added a 'Screen Size' report.

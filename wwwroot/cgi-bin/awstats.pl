@@ -6845,8 +6845,8 @@ if (scalar keys %HTMLOutput) {
 			print "<TR><TD CLASS=AWL>$key</TD>";
 			if ($ShowAuthenticatedUsers =~ /P/i) { print "<TD>".($_login_p{$key}?$_login_p{$key}:"&nbsp;")."</TD>"; }
 			if ($ShowAuthenticatedUsers =~ /H/i) { print "<TD>$_login_h{$key}</TD>"; }
-			if ($ShowAuthenticatedUsers =~ /B/i) { print  "<TD>".Format_Bytes($_login_k{$key})."</TD>"; }
-			if ($ShowAuthenticatedUsers =~ /L/i) { print "<td>".($_login_l{$key}?Format_Date($_login_l{$key},1):'-')."</td>"; }
+			if ($ShowAuthenticatedUsers =~ /B/i) { print "<TD>".Format_Bytes($_login_k{$key})."</TD>"; }
+			if ($ShowAuthenticatedUsers =~ /L/i) { print "<TD>".($_login_l{$key}?Format_Date($_login_l{$key},1):'-')."</TD>"; }
 			print "</TR>\n";
 			$total_p += $_login_p{$key}||0;
 			$total_h += $_login_h{$key};
@@ -6875,7 +6875,10 @@ if (scalar keys %HTMLOutput) {
 		if ($HTMLOutput{'lastrobots'}) { $title.="$Message[9]"; }
 		&tab_head("$title",19);
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>".(scalar keys %_robot_h)." $Message[51]</TH>";
-		print "<TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH bgcolor=\"#$color_k\" width=80>$Message[75]</TH><TH width=120>$Message[9]</TH></TR>\n";
+		if ($ShowRobotsStats =~ /H/i) { print "<TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH>"; }
+		if ($ShowRobotsStats =~ /B/i) { print "<TH bgcolor=\"#$color_k\" width=80>$Message[75]</TH>"; }
+		if ($ShowRobotsStats =~ /L/i) { print "<TH width=120>$Message[9]</TH>"; }
+		print "</TR>\n";
 		$total_p=$total_h=$total_k=0;
 		my $count=0;
 		if ($HTMLOutput{'allrobots'})  { &BuildKeyList($MaxRowsInHTMLOutput,$MinHit{'Robot'},\%_robot_h,\%_robot_h); }
