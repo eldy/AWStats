@@ -6,6 +6,7 @@ $Revision$ - $Author$ - $Date$
 5.8
 
 Fixes:
+- mod_deflate compression reported bandwith saved instead of bandwidth used.
 - Fixed wrong number of column for "other" row in host chart.
 - Fixed problem of parsing with uabracket and refererquot.
 - Fixed wrong use of config file in rawlog plugin.
