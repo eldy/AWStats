@@ -6,6 +6,8 @@ AWStats Changelog
 
 - Support for postfix mail log.
 - Added total and average row at bottom of day data array.
+- Added dynamic filter in Host and Referer pages when used as CGI like
+  in Url report.
 - Removed "Bytes" text when values is 0.
 - Reduced main page size.
 - New parameter: Added OnlyHosts parameter.
