@@ -286,7 +286,7 @@ while (<>) {
 			$entry{$id}{'day'}=$day;
 			$entry{$id}{'time'}=$time;
 			$entry{$id}{'to'}=&trim($to);
-			debug("For id=$id, found a record: id=$id mon=$entry{$id}{'mon'} day=$entry{$id}{'day'} time=$entry{$id}{'time'} to=$entry{$id}{'to'} relay_r=$entry{$id}{'relay_r'}");
+			debug("For id=$id, found a sendmail/postfix record: id=$id mon=$entry{$id}{'mon'} day=$entry{$id}{'day'} time=$entry{$id}{'time'} to=$entry{$id}{'to'} relay_r=$entry{$id}{'relay_r'}");
 		}
 		elsif (/starting delivery/ ne undef) {
 			#
@@ -307,7 +307,7 @@ while (<>) {
 	#
 	# Write record if full
 	#
-	debug("ROWID:$rowid FROM:$entry{$rowid}{'from'} TO:$entry{$rowid}{'to'} CODE:$entry{$rowid}{'code'}");
+	debug("ID:$rowid FROM:$entry{$rowid}{'from'} TO:$entry{$rowid}{'to'} CODE:$entry{$rowid}{'code'}");
 	if ($rowid && (
 		   ($entry{$rowid}{'from'} && $entry{$rowid}{'to'})
 		|| ($entry{$rowid}{'from'} && $entry{$rowid}{'code'} > 1)
