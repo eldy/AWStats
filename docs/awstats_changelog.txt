@@ -22,6 +22,8 @@ AWStats Changelog
 - Can use "char+" instead of "char" for LogSeparator.
 - Records with bad http code for Microsoft Index Servers (on 1 digit instead
   of 3) are no more reported as corrupted records.
+- Little support for IPv6.
+- Static string changed from "string" to 'string'.
 - Fixed: Fix a bug when using IIS and %query or cs-query-string tag in
   LogFormat and URLWithQuery=1.
 - Fixed: #include now works correctly.
