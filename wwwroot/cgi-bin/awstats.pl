@@ -126,7 +126,7 @@ $color_h, $color_k, $color_p, $color_s, $color_u, $color_v)=
 
 
 
-$VERSION="4.0 (build 21)";
+$VERSION="4.0 (build 22)";
 $Lang="en";
 
 # Default value
@@ -2962,7 +2962,7 @@ if ($UpdateStats) {
 				if (!$found) {
 					$_os_h{"Unknown"}++;
 					$_unknownreferer_l{$field[$pos_agent]}=$timeconnexion;
-#					$TmpHashOS{$UserAgent}="Unknwon";
+#					$TmpHashOS{$UserAgent}="Unknown";
 				}
 			}
 			else {
@@ -3392,7 +3392,7 @@ EOF
 			if ($ShowDomainsStats)		 { print "<a href=\"#DOMAINS\">$Message[17]</a> &nbsp; "; }
 			if ($ShowHostsStats)		 { print "<a href=\"#VISITOR\">".ucfirst($Message[81])."</a> &nbsp; "; }
 			if ($ShowHostsStats)		 { print "<a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$DirCgi$PROG.$Extension?${NewLinkParams}output=lasthosts":"$PROG$FileSuffix.lasthosts.html")."\">$Message[9]</a> &nbsp;\n"; }
-			if ($ShowHostsStats)		 { print "<a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$DirCgi$PROG.$Extension?${NewLinkParams}output=unknwonip":"$PROG$FileSuffix.unknownip.html")."\">$Message[45]</a> &nbsp;\n"; }
+			if ($ShowHostsStats)		 { print "<a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$DirCgi$PROG.$Extension?${NewLinkParams}output=unknownip":"$PROG$FileSuffix.unknownip.html")."\">$Message[45]</a> &nbsp;\n"; }
 			if ($ShowAuthenticatedUsers) { print "<a href=\"#LOGIN\">$Message[94]</a> &nbsp; "; }
 			if ($ShowRobotsStats)		 { print "<a href=\"#ROBOTS\">$Message[53]</a> &nbsp; "; }
 			print "<br></td></tr>";
