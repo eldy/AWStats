@@ -11,6 +11,9 @@ Fixes:
 - Fixed a bug when using HBL codes in ShowRobotsStats parameter.
 - AllowAccessFromWebToFollowingAuthenticatedUsers now works for users with
   space in name.
+- Bug 730996. When URLWithQueryWithoutFollowingParameters was used with a
+  value and another parameter was ended with this value, the wrong parameter
+  was truncated from URL.
 
 New features/improvments:
 - Added a 'Screen Size' report.
