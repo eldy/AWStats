@@ -1,0 +1,100 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<meta name="description" content="AWStats Documentation - Using AWStats Webmin module">
+<meta name="keywords" content="awstats, awstat, webmin, module, wbm">
+<meta name="robots" content="index,follow">
+<meta name="title" content="AWStats Documentation - AWStats Webmin module">
+<title>AWStats Documentation - AWStats Webmin module</title>
+<link rel="stylesheet" href="styles.css" type="text/css">
+<!-- $Revision$ - $Author$ - $Date$ -->
+</head>
+
+<body topmargin=10 leftmargin=5>
+
+
+<table style="font: 10pt arial,helvetica,verdana" cellpadding=0 cellspacing=0 border=0 bgcolor=#FFFFFF width=100%>
+
+<!-- Large -->
+<tr style="font: 10pt arial,helvetica,verdana">
+<td bgcolor=#9999cc align=center><a href="/"><img src="images/awstats_logo4.png" border=0></a></td>
+<td bgcolor=#9999cc align=center>
+<br>
+<font style="font: 16pt arial,helvetica,sanserif" color=#EEEEFF><b>AWStats logfile analyzer 5.9 Documentation</b></font><br>
+<br>
+</td>
+<td bgcolor=#9999cc align=center>
+&nbsp;
+</td>
+</tr>
+
+</table>
+
+
+<br><br><H1 style="font: 26px arial,helvetica,sanserif">AWStats Webmin module</H1>
+
+This page is designed to help users of the 'Webmin' administration
+tool (<a href="http://www.webmin.com">www.webmin.com</a>) to manage their AWStats config/tools.
+If you don't use it, you don't need to read what is described here.<br>
+<ul>
+<li>Adding the AWStats Webmin module to Webmin interface<br>
+<li>Setup of the AWStats Webmin module<br>
+<li>Using the AWStats Webmin module<br>
+</ul>
+<br>
+
+<br><a name="ADDMODULE"><H2 style="font: 22px arial,helvetica,sanserif color: #606060"><u>Adding the AWStats Webmin module to Webmin interface</u></H2></a>
+<li> Run Wemin, go to the "AWStats LogFile Analysis" menu.<br>
+<li> Go to "Webmin Configuration".<br>
+<li> Click on "Webmin Modules".<br>
+<li> Enter in the "Install module", the path of the awstats-x.x.wbm file (this file is provided
+with AWStats in <i>tools/webmin</i> directory or can be downloaded separately from AWStats
+web site) and click "Install module".<br>
+After that a new entry "AWStats LogFile Analysis" should appear in your Webmin menu.<br>
+<br>
+
+
+<br><a name="SETUPMODULE"><H2 style="font: 22px arial,helvetica,sanserif color: #606060"><u>Setup of the AWStats Webmin module</u></H2></a>
+<li> Run Wemin, go to the "AWStats LogFile Analysis" menu.<br>
+<li> Click on the "Module configuration".<br>
+<li> You must now enter here values for:<br>
+- Absolute filesystem path to AWStats (CLI)<br>   
+It's the full path of the <i>awstats.pl</i> script. Path depends on package you use.<br>
+It could be <i>/usr/local/awstats/wwwroot/cgi-bin/awstats.pl</i><br>
+- Absolute or relative URL path to AWStats (CGI)<br>
+It's absolute or relative URL you must enter to run AWStats as a CGI. This depends on the way
+you setup your web server and cgi directories.<br>
+It could be <i>/cgi-bin/awstats.pl</i> or <i>http://127.0.0.1/awstats/awstats.pl</i>.<br>
+- Path to AWStats directory for configuration files:<br>
+It's the path where your AWStats config files are stored.<br>
+In most cases it must be <i>/etc/awstats</i> directory.<br>
+- Sample AWStats configuration file<br>
+This is the sample file used to create a new config file.<br>
+In most cases it must be <i>/etc/awstats/awstats.model.conf</i>.<br>
+<br>
+
+
+<br><a name="USEMODULE"><H2 style="font: 22px arial,helvetica,sanserif color: #606060"><u>Using the AWStats Webmin module</u></H2></a>
+<li> Just run Wemin, go to the "AWStats LogFile Analysis" menu.<br>
+<li> You can now, add, edit or delete config files.<br>
+<li> You can also update or view statistics for a particular config file.<br>
+<br>
+
+<hr>
+
+<script language=javascript>
+	var lastmod = new Date(document.lastModified);
+	if (lastmod.getDate() > 0) {
+		if (lastmod.getDate()<10) zerod="0"
+		else zerod="";
+		if (lastmod.getMonth()<9) zerom="0"
+		else zerom=""
+		year2kok=lastmod.getYear();
+		if (year2kok<100) year2kok+=2000;
+		if ((year2kok>=100) && (year2kok < 1970)) year2kok+=1900;
+		document.writeln("Last revision: "+year2kok+"-"+zerom+(lastmod.getMonth()+1)+"-"+zerod+lastmod.getDate());
+	}
+</script>
+
+</body>
+</html>
