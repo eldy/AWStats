@@ -17,19 +17,19 @@ use strict;
 # Following path are the one 
 #-------------------------------------------------------
 use vars qw/
+$AWSTATS_PATH
 $AWSTATS_ICON_PATH
 $AWSTATS_CSS_PATH
 $AWSTATS_CLASSES_PATH
 $AWSTATS_CGI_PATH
-$AWSTATS_TOOLS_PATH
 $AWSTATS_MODEL_CONFIG
 $AWSTATS_DIRDATA_PATH
 /;
+$AWSTATS_PATH='';
 $AWSTATS_ICON_PATH='/usr/local/awstats/wwwroot/icon';
 $AWSTATS_CSS_PATH='/usr/local/awstats/wwwroot/css';
 $AWSTATS_CLASSES_PATH='/usr/local/awstats/wwwroot/classes';
 $AWSTATS_CGI_PATH='/usr/local/awstats/wwwroot/cgi-bin';
-$AWSTATS_TOOLS_PATH='/usr/local/awstats/wwwroot/tools';			# Used only when configure ran on linux
 $AWSTATS_MODEL_CONFIG='/etc/awstats/awstats.model.conf';		# Used only when configure ran on linux
 $AWSTATS_DIRDATA_PATH='/var/lib/awstats';						# Used only when configure ran on linux
 
@@ -223,7 +223,8 @@ return 0;
 #-------------------------------------------------------
 # MAIN
 #-------------------------------------------------------
-($DIR=$0) =~ s/([^\/\\]*)$//; ($PROG=$1) =~ s/\.([^\.]*)$//; $Extension=$1;
+($DIR=$0) =~ s/([^\/\\]+)$//; ($PROG=$1) =~ s/\.([^\.]*)$//; $Extension=$1;
+$DIR||='.'; $DIR =~ s/([^\/\\])[\\\/]+$/$1/;
 
 my $QueryString=""; for (0..@ARGV-1) { $QueryString .= "$ARGV[$_] "; }
 if ($QueryString =~ /debug=/i) { $Debug=$QueryString; $Debug =~ s/.*debug=//; $Debug =~ s/&.*//; $Debug =~ s/ .*//; }
@@ -231,13 +232,13 @@ if ($QueryString =~ /debug=/i) { $Debug=$QueryString; $Debug =~ s/.*debug=//; $D
 my $helpfound=0;
 my $OS='';
 my $CR='';
-my $AWSTATS_PATH='';	# Used only when configure ran on windows
 for (0..@ARGV-1) {
 	if ($ARGV[$_] =~ /^-*h/i)   					{ $helpfound=1; last; }
 	if ($ARGV[$_] =~ /^-*awstatspath=([^\s\"]+)/i)  { $AWSTATS_PATH=$1; last; }
 }
+# If AWSTATS_PATH was not forced on command line				
 if (! $AWSTATS_PATH) {
-	$AWSTATS_PATH=$DIR||'..';
+	$AWSTATS_PATH=($DIR eq '.'?'..':$DIR);
 	$AWSTATS_PATH=~s/tools[\\\/]?$//;
 	$AWSTATS_PATH=~s/[\\\/]$//;
 }
@@ -277,14 +278,39 @@ print "to manage rotated logs, you will have to complete the config file manuall
 print "according to your needs.\n";
 print "Read the AWStats documentation (docs/index.html).\n";
 
-# Detect web server path
-# ----------------------
+# Detect OS type
+# --------------
 if (-d "/etc" && -d "/home") { $OS='linux'; $CR=''; }
 else { $OS='windows'; $CR="\r"; }
 #print "Running OS detected: $OS (Perl $^[)\n";
 print "\n-----> Running OS detected: $OS\n";
 
-if ($OS eq 'windows') {
+if ($OS eq 'linux') {
+	$AWSTATS_PATH=`pwd`; $AWSTATS_PATH =~ s/[\r\n]//;
+	$AWSTATS_PATH=~s/tools[\\\/]?$//;
+	$AWSTATS_PATH=~s/[\\\/]$//;
+	if ($AWSTATS_PATH ne '/usr/local/awstats') {
+		print "Warning: AWStats standard directory on Linux OS is '/usr/local/awstats'.\n";
+		print "If you want to use standard directory, you should first move all content\n";
+		print "of AWStats distribution from current directory:\n";
+		print "$AWSTATS_PATH\n";
+		print "to standard directory:\n";
+		print "/usr/local/awstats\n";
+		print "And then, run configure.pl from this location.\n";
+		print "Do you want to continue setup from this NON standard directory [yN] ? ";
+		my $bidon='';
+		while ($bidon !~ /^[yN]/i) { $bidon=<STDIN>; }
+		if ($bidon !~ /^y/i) {
+			print "configure.pl aborted.\n";
+			exit 1;
+		}
+		$AWSTATS_ICON_PATH="$AWSTATS_PATH/wwwroot/icon";
+		$AWSTATS_CSS_PATH="$AWSTATS_PATH/wwwroot/css";
+		$AWSTATS_CLASSES_PATH="$AWSTATS_PATH/wwwroot/classes";
+		$AWSTATS_CGI_PATH="$AWSTATS_PATH/wwwroot/cgi-bin";
+	}
+}
+elsif ($OS eq 'windows') {
 	# We do not use default values for awstats directives
 	# but thoose defined from AWSTATS_PATH
 	$AWSTATS_ICON_PATH="$AWSTATS_PATH/wwwroot/icon";
@@ -292,6 +318,8 @@ if ($OS eq 'windows') {
 	$AWSTATS_CLASSES_PATH="$AWSTATS_PATH/wwwroot/classes";
 	$AWSTATS_CGI_PATH="$AWSTATS_PATH/wwwroot/cgi-bin";
 }
+
+
 
 # Detect web server path
 # ----------------------
@@ -386,7 +414,7 @@ foreach my $key (keys %ApacheConfPath) {
 		if ($_ =~ /^CustomLog\s(.*)\scommon$/i)	{
 			print "Warning: You Apache config file contains directives to write 'common' log files\n";
 			print "This means that some features can't work (os, browsers and keywords detection).\n";
-			print "Do you want me to setup Apache to write 'combined' log files [y/N] ?\n";
+			print "Do you want me to setup Apache to write 'combined' log files [y/N] ? ";
 			my $bidon='';
 			while ($bidon !~ /^[yN]/i) { $bidon=<STDIN>; }
 			if ($bidon =~ /^y/i) {
@@ -398,10 +426,10 @@ foreach my $key (keys %ApacheConfPath) {
 			}
 		}
 		if ($_ =~ /^CustomLog\s(.*)\scombined$/i)	{ $LogFormat{$key}=1; }
-		if ($_ =~ /Alias \/awstatsclasses/) 	{ $awstatsclassesfound=1; }
-		if ($_ =~ /Alias \/awstatscss/) 		{ $awstatscssfound=1; }
-		if ($_ =~ /Alias \/awstatsicons/) 		{ $awstatsiconsfound=1; }
-		if ($_ =~ /ScriptAlias \/awstats\//)	{ $awstatscgifound=1; }
+		if ($_ =~ /Alias \/awstatsclasses/) 		{ $awstatsclassesfound=1; }
+		if ($_ =~ /Alias \/awstatscss/) 			{ $awstatscssfound=1; }
+		if ($_ =~ /Alias \/awstatsicons/) 			{ $awstatsiconsfound=1; }
+		if ($_ =~ /ScriptAlias \/awstats\//)		{ $awstatscgifound=1; }
 	}	
 	close CONF;
 
@@ -444,13 +472,20 @@ foreach my $key (keys %ApacheConfPath) {
 # Define model config file path
 # -----------------------------
 my $modelfile='';
-if ($OS eq 'linux') 		{ $modelfile="$AWSTATS_MODEL_CONFIG"; }
+if ($OS eq 'linux') 		{ 
+	if (-f "$AWSTATS_PATH/wwwroot/cgi-bin/awstats.model.conf") {
+		$modelfile="$AWSTATS_PATH/wwwroot/cgi-bin/awstats.model.conf";
+	}
+	else {
+		$modelfile="$AWSTATS_MODEL_CONFIG";	
+	}
+}
 elsif ($OS eq 'windows')	{ $modelfile="$AWSTATS_PATH\\wwwroot\\cgi-bin\\awstats.model.conf"; }
 else						{ $modelfile="$AWSTATS_PATH\\wwwroot\\cgi-bin\\awstats.model.conf"; }
 
 # Update model config file
 # ------------------------
-print "\n-----> Update model config file\n";
+print "\n-----> Update model config file '$modelfile'\n";
 %ConfToChange=();
 if ($OS eq 'linux') 	 { $ConfToChange{'DirData'}="$AWSTATS_DIRDATA_PATH"; }
 elsif ($OS eq 'windows') { $ConfToChange{'DirData'}='.'; }
@@ -460,6 +495,7 @@ if ($UseAlias) {
 	$ConfToChange{'DirIcons'}='/awstatsicons';
 }
 update_awstats_config("$modelfile");
+print "  File awstats.model.conf updated.\n";
 
 # Ask if we need to create a config file
 #---------------------------------------
@@ -558,11 +594,11 @@ if ($WebServerChanged) {
 # -------------------------------
 print "\n-----> Add update process inside a scheduler\n";
 if ($OS eq 'linux') {
-	print "Sorry, configure does not support automatic add to cron yet.\n";
+	print "Sorry, configure.pl does not support automatic add to cron yet.\n";
 	print "You can do it manually by adding the following command to your cron:\n";
 	print "$AWSTATS_CGI_PATH/awstats -update -config=".($site?$site:"myvirtualserver")."\n";
 	print "Or if you have several config files and prefer having only one command:\n";
-	print "$AWSTATS_TOOLS_PATH/awstats_updateall.pl now\n";
+	print "$AWSTATS_PATH/tools/awstats_updateall.pl now\n";
 	print "Press ENTER to continue... ";
 	$bidon=<STDIN>;
 }
