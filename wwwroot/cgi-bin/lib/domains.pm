@@ -16,6 +16,8 @@
 #-------------------------------------------------------
 %DomainsHashIDLib = (
 "localhost","localhost",
+"i0","Local network host",
+"a2","Satellite access host",
 
 "ac","Ascension Island","ad","Andorra","ae","United Arab Emirates",
 "aero","Aero/Travel domains","af","Afghanistan",
