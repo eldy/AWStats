@@ -4610,12 +4610,13 @@ if ($tomorrowmin < 10) { $tomorrowmin = "0$tomorrowmin"; }
 if ($tomorrowsec < 10) { $tomorrowsec = "0$tomorrowsec"; }
 $tomorrowtime=int($tomorrowyear.$tomorrowmonth.$tomorrowday.$tomorrowhour.$tomorrowmin.$tomorrowsec);
 
-my @AllowedArgs=('-migrate','-config',
-'-showsteps','-showdropped','-showcorrupted','-showunknownorigin',
-'-logfile','-output','-runascli','-update',
-'-staticlinks','-staticlinksext','noloadplugin',
-'-lang','-hostfilter','-urlfilter','-refererpagesfilter',
-'-month','-year','-framename','-debug','-limitflush','-from','-updatefor');
+my @AllowedArgs=('migrate','config',
+'logfile','output','runascli','update',
+'staticlinks','staticlinksext','noloadplugin',
+'hostfilter','urlfilter','refererpagesfilter',
+'lang','month','year','framename','debug',
+'showsteps','showdropped','showcorrupted','showunknownorigin',
+'limitflush','confdir','updatefor');
 
 $QueryString='';
 if ($ENV{'GATEWAY_INTERFACE'}) {	# Run from a browser as CGI
@@ -5602,7 +5603,7 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 		# Analyze: Country (Top-level domain)
 		#------------------------------------
 		my $Domain='ip';
-		# Set $HostResolved to host and resolve Domain from it
+		# Set $HostResolved to host and resolve domain
 		if ($HostResolved eq '*') {
 			# $Host is an IP address and is not resolved (failed or not asked) or resolution gives an IP address
 			$HostResolved = $Host;
@@ -5611,12 +5612,18 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 			elsif ($PluginsLoaded{'GetCountryCodeByAddr'}{'geoip'}) { $Domain=GetCountryCodeByAddr_geoip($HostResolved); }
 		}
 		else {
-			# $Host has been resolved or was already a host name
+			# $Host was already a host name ($HostResolved='', $ip=0) or has been resolved ($HostResolved defined, $ip>0)
 			$HostResolved = lc($HostResolved?$HostResolved:$Host);
 			# Resolve Domain
-			if ($PluginsLoaded{'GetCountryCodeByName'}{'geoipfree'}) { $Domain=GetCountryCodeByName_geoipfree($HostResolved); }
-			elsif ($PluginsLoaded{'GetCountryCodeByName'}{'geoip'}) { $Domain=GetCountryCodeByName_geoip($HostResolved); }
-			elsif ($HostResolved =~ /\.(\w+)$/) { $Domain=$1; }
+			if ($ip) {
+				if ($PluginsLoaded{'GetCountryCodeByAddr'}{'geoipfree'}) { $Domain=GetCountryCodeByAddr_geoipfree($Host); }
+				elsif ($PluginsLoaded{'GetCountryCodeByAddr'}{'geoip'}) { $Domain=GetCountryCodeByAddr_geoip($Host); }
+			}
+			else {
+				if ($PluginsLoaded{'GetCountryCodeByName'}{'geoipfree'}) { $Domain=GetCountryCodeByName_geoipfree($HostResolved); }
+				elsif ($PluginsLoaded{'GetCountryCodeByName'}{'geoip'}) { $Domain=GetCountryCodeByName_geoip($HostResolved); }
+				elsif ($HostResolved =~ /\.(\w+)$/) { $Domain=$1; }
+			}
 		}
 		# Store country
 		if ($PageBool) { $_domener_p{$Domain}++; }
