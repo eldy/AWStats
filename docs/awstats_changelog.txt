@@ -29,6 +29,8 @@ New features/improvements:
 - Added percent column for file types.
 - Added experimental graphapplet plugin (graph are built by applet).
 - Webmin module updated to 1.2
+- Better setup error messages for newbie
+- configure.pl: A new script to configure AWStats and Apache.
 - logresolvemerge.pl: can use several threads for reverse DNS lookup
   with Perl 5.8.
 - maillogconvert.pl: Allow to process qmail log preprocessed by

@@ -35,9 +35,9 @@
 
 AWStats common use is made in 3 steps:<br>
 <ul>
-<li>Step 1 : The install and setup<br>
-<li>Step 2 : The build/update of statistics<br>
-<li>Step 3 : The reading of results<br>
+<li>Step 1 : <a href="#INSTALL">The install and setup</a><br>
+<li>Step 2 : <a href="#BUILD_UPDATE">The build/update of statistics</a><br>
+<li>Step 3 : <a href="#READ">The reading of results</a><br>
 </ul>
 <br>
 
@@ -261,15 +261,19 @@ See <a href="awstats_benchmark.html">Benchmark page</a> for more accurate inform
 
 <font style="color: #111155"><b>* Step 2-2</b>:</font><br>
 <br>
-AWStats statistics can be updated web, to provide real-time statistics, by clicking
-the "Update now" link on web page (See next section <a href="#READ">Read Statistics</a> dynamically).<br>
-However, it is HIGHLY recommanded to run an update process from a scheduler frequently (command
-is same than update of first process).<br>
+AWStats statistics can be updated from a browser, to provide real-time statistics, by clicking
+the "Update now" link that appears when AWStats is used as a CGI (Next section '<a href="#READ">Read Statistics</a>
+dynamically' gives you URL to use for that).<br>
+Warning !!<br>
+To enable this link, your parameter <a href="awstats_config.html#AllowToUpdateStatsFromBrowser">AllowToUpdateStatsFromBrowser</a>
+must be set to 1 in your config file (Link is not enabled by default).<br>
 <br>
-You have two choice:<br>
+Then, using on-line update does not prevent you from running the update process from a scheduler
+frequently (command is same than update of first process).<br>
+For this, you have two choices:<br>
 - Include the update command in your <b>logrotate</b> process. See <a href="awstats_faq.html#ROTATE">FAQ-COM120</a> for this.<br>
 - Or add instructions in your <b>crontab</b> (Unix/Linux) or your <b>task scheduler</b> (for
-Windows), to launch frequently this Awstats update process. See <a href="awstats_faq.html#CRONTAB">FAQ-COM130</a> for this.<br><br>
+Windows), to launch frequently the Awstats update process. See <a href="awstats_faq.html#CRONTAB">FAQ-COM130</a> for this.<br><br>
 See AWStats <a href="awstats_benchmark.html">Benchmark page</a> for recommanded update/logrotate frequency.<br>
 <br>
 
@@ -284,7 +288,7 @@ To see results of analyze, you have several solutions depending on your <a href=
 like this (jump to second solution if you have ONLY CGI access):<br>
 <b><i>perl awstats.pl -config=myvirtualhostname -output -staticlinks > awstats.myvirtualhostname.html</i></b><br>
 <br>
-You can also use all other output options (each of them give you another report).
+You can use all other output options (each of them give you another report).
 This is how to use all other possible output options(1) :<br>
 <i><b>perl awstats.pl -config=myvirtualhostname -output=allhosts -staticlinks > awstats.myvirtualhostname.allhosts.html</b></i><br>
 <i><b>perl awstats.pl -config=myvirtualhostname -output=lasthosts -staticlinks > awstats.myvirtualhostname.lasthosts.html</b></i><br>
@@ -320,7 +324,7 @@ Note (3): If you want to build a report for a particular month, add options <i><
 To build a report for full year (warning: This may use a lot of memory and CPU), add options <i><b>-month=all -year=YYYY</b></i>.<br>
 
 <br><br>
-* Another solution is to view dynamically your statistics from a browser. For this, use URL:<br>
+* Second solution is to view dynamically your statistics from a browser. For this, use URL:<br>
 <b><i>http://www.myserver.mydomain/cgi-bin/awstats.pl?config=myvirtualhostname</i></b><br>
 where <i>myvirtualhostname</i> is used to know which config file to use (AWStats will use awstats.<i>myvirtualhostname</i>.conf file).<br>
 <br>
