@@ -20,7 +20,7 @@
 $DIR, $DNSLookup, $DefaultFile, $DirCgi, $DirConfig, $DirData,
 $DirIcons, $Extension, $FileConfig, $FileSuffix, $FirstTime,
 $HTMLEndSection, $Host, $HostAlias, $LastTime, $LocalSite,
-$LocalSiteIsInHostAliases, $LocalSiteWithoutwww, $LogFile, $LogFileWithoutLog,
+$LocalSiteIsInHostAliases, $LocalSiteWithoutwww, $LogFile,
 $LogFormat, $Logo, $MaxNbOfHostsShown, $MaxNbOfKeywordsShown,
 $MaxNbOfPageShown, $MaxNbOfRefererShown, $MaxNbOfRobotShown, $MinHitFile,
 $MinHitHost, $MinHitKeyword, $MinHitRefer, $MinHitRobot, $MonthRequired,
@@ -46,7 +46,7 @@ $word, $yearcon, $yearfile, $yearmonthfile, $yeartoprocess) = ();
 %DayBytes = %DayHits = %DayPage = %DayUnique = %DayVisits =
 %FirstTime = %HistoryFileAlreadyRead = %LastTime =
 %MonthBytes = %MonthHits = %MonthPage = %MonthUnique = %MonthVisits =
-%TmpHashDNSLookup = %TmpHashNotRobot = %TmpHashOS = %_browser_h = %_domener_h = %_domener_k = %_domener_p =
+%_browser_h = %_domener_h = %_domener_k = %_domener_p =
 %_errors_h = %_hostmachine_h = %_hostmachine_k = %_hostmachine_l = %_hostmachine_p =
 %_keywords = %_os_h = %_pagesrefs_h = %_robot_h = %_robot_l = %_se_referrals_h =
 %_sider404_h = %_sider_h = %_sider_k = %_sider_p = %_unknownip_l = %_unknownreferer_l =
@@ -61,7 +61,7 @@ $word, $yearcon, $yearfile, $yearmonthfile, $yeartoprocess) = ();
 @sortsearchwords = @sortsereferrals = @sortsider404 = @sortsiders = @sortunknownip =
 @sortunknownreferer = @sortunknownrefererbrowser = @wordlist = ();
 
-$VERSION="2.24 (build 27)";
+$VERSION="2.24 (build 28)";
 $Lang=0;
 
 # Default value
@@ -69,7 +69,7 @@ $SortDir       = -1;		# -1 = Sort order from most to less, 1 = reverse order (De
 $VisitTimeOut  = 10000;		# Laps of time to consider a page load as a new visit. 10000 = one hour (Default = 10000)
 $FullHostName  = 1;			# 1 = Use name.domain.zone to refer host clients, 0 = all hosts in same domain.zone are one host (Default = 1, 0 never tested)
 $MaxLengthOfURL= 70;		# Maximum length of URL shown on stats page. This affects only URL visible text, link still work (Default = 70)
-$BenchMark     = 0;			# Set this to 1 to get some benchmark informations as a second's counter since 1970 (Default = 0)
+$BenchMark     = 0;			# Set this to 1 to get some benchmark informations: a second counter since 1970 (Default = 0)
 # Images for graphics
 $BarImageVertical_v   = "barrevv.png";
 $BarImageHorizontal_v = "barrehv.png";
@@ -1516,7 +1516,16 @@ sub Read_Config_File {
 		$value =~ s/^ *//; $value =~ s/ *$//;
 		$value =~ s/^\"//; $value =~ s/\"$//;
 		# Read main section
-		if ($param =~ /^LogFile/)               { $LogFile=$value; next; }
+		if ($param =~ /^LogFile/)               {
+			$LogFile=$value;
+			# Replace %YYYY %YY %MM %DD %HH with current value
+			$LogFile =~ s/%YYYY/$nowyear/g;
+			$LogFile =~ s/%YY/$nowsmallyear/g;
+			$LogFile =~ s/%MM/$nowmonth/g;
+			$LogFile =~ s/%DD/$nowday/g;
+			$LogFile =~ s/%HH/$nowhour/g;
+			next;
+			}
 		if ($param =~ /^LogFormat/)             { $LogFormat=$value; next; }
 		if ($param =~ /^HostAliases/) {
 			@felter=split(/ /,$value);
@@ -1864,6 +1873,7 @@ else {
 	$QueryString=""; for (0..@ARGV-1) { $QueryString .= "$ARGV[$_] "; }
 	if ($QueryString =~ /site=/) { $LocalSite=$QueryString; $LocalSite =~ s/.*site=//; $LocalSite =~ s/&.*//; $LocalSite =~ s/ .*//; }
 }
+if ($QueryString =~ /debug=/) { $Debug=$QueryString; $Debug =~ s/.*debug=//; $Debug =~ s/&.*//; $Debug =~ s/ .*//; }
 ($DIR=$0) =~ s/([^\/\\]*)$//; ($PROG=$1) =~ s/\.([^\.]*)$//; $Extension=$1;
 $LocalSite =~ tr/A-Z/a-z/;
 $LocalSite =~ s/<//g; $LocalSite =~ s/%//g;		# This is to avoid 'Cross Site Scripting attacks'
@@ -1874,13 +1884,19 @@ if (($ENV{"GATEWAY_INTERFACE"} eq "") && ($LocalSite eq "")) {
 	print "web statistics. Distributed under GNU General Public Licence.\n";
 	print "\n";
 	print "Syntax: $PROG.$Extension site=www.host.com\n";
-	print "  Runs $PROG from command line to have statistics of www.host.com web site.\n";
-	print "  First, $PROG tries to read $PROG.www.host.com.conf as the config file, if\n";
-	print "  not found, $PROG will read $PROG.conf.\n";
-	print "  See README.TXT file to know how to configure this file.\n";
+	print "  This runs $PROG in command line to update statistics of www.host.com web\n";
+	print "  site, from the log file defined in config file, and create an HTML report.\n";
+	print "  First, $PROG tries to read $PROG.www.host.com.conf as the config file,\n";
+	print "  if not found, it will read $PROG.conf\n";
+	print "  See README.TXT file to know how to create the config file.\n";
 	print "\n";
-	print "Advanced options: month=MM year=YYYY lang=X to generate a page of statistics\n";
-	print "  for month=MM, year=YYYY, in language number X\n";
+	print "Advanced options:\n";
+	print "  lang=X              to generate a report page in language number X\n";
+	print "  month=MM year=YYYY  to show a report for an old month=MM, year=YYYY\n";
+	print "  Warning : Those 'date' options doesn't allow you to process old log file.\n";
+	print "  It only allows you to see a report of old already processed data for an old\n";
+	print "  month/year instead of current month/year. To update stats from a log file,\n";
+	print "  use standard syntax. Be care to process log files in chronological order.\n";
 	print "\n";
 	print "Now supports/detects:\n";
 	print "  Number of visits and unique visitors\n";
@@ -1901,40 +1917,36 @@ if (($ENV{"GATEWAY_INTERFACE"} eq "") && ($LocalSite eq "")) {
 	exit 0;
 	}
 
-# Read config file
-&Read_Config_File;
-
-# Print html header and correct some parameters
-if ($ENV{"GATEWAY_INTERFACE"} ne "") {
-	if ($QueryString =~ /lang=/) { $Lang=$QueryString; $Lang =~ s/.*lang=//; $Lang =~ s/&.*//;  $Lang =~ s/ .*//; }
-	&Check_Config;	# Check if parameters are OK
-	&html_head;
-	$DirCgi="";
-	}
-else {
-	&Check_Config;	# Check if parameters are OK
-	&html_head;
-	}
-if (($DirCgi ne "") && !($DirCgi =~ /\/$/) && !($DirCgi =~ /\\$/)) { $DirCgi .= "/"; }
-if ($DirData eq "" || $DirData eq ".") { $DirData=$DIR; }	# If not defined or choosed to "." value then DirData is current dir
-if ($DirData eq "")  { $DirData="."; }						# If current dir not defined then we put it to "."
-$DirData =~ s/\/$//;
-
-# Init other parameters
-if ($DNSLookup) { use Socket; }
-$NewDNSLookup=$DNSLookup;
-$LogFileWithoutLog=$LogFile;$LogFileWithoutLog =~ s/\.log$//;
-%monthlib =  ( "01","$message[60][$Lang]","02","$message[61][$Lang]","03","$message[62][$Lang]","04","$message[63][$Lang]","05","$message[64][$Lang]","06","$message[65][$Lang]","07","$message[66][$Lang]","08","$message[67][$Lang]","09","$message[68][$Lang]","10","$message[69][$Lang]","11","$message[70][$Lang]","12","$message[71][$Lang]" );
-# monthnum must be in english because it's used to translate log date in log files which are always in english
-%monthnum =  ( "Jan","01","Feb","02","Mar","03","Apr","04","May","05","Jun","06","Jul","07","Aug","08","Sep","09","Oct","10","Nov","11","Dec","12" );
-
+# Get current time
 ($nowsec,$nowmin,$nowhour,$nowday,$nowmonth,$nowyear,$nowwday,$nowyday,$nowisdst) = localtime(time);
 if ($nowyear < 100) { $nowyear+=2000; } else { $nowyear+=1900; }
 $nowsmallyear=$nowyear;$nowsmallyear =~ s/^..//;
 if (++$nowmonth < 10) { $nowmonth = "0$nowmonth"; }
 if ($nowday < 10) { $nowday = "0$nowday"; }
 
-# Check year and month parameters (check is very restrictive to avoid 'cross site scripting attacks')
+# Read config file
+&Read_Config_File;
+if ($QueryString =~ /lang=/) { $Lang=$QueryString; $Lang =~ s/.*lang=//; $Lang =~ s/&.*//;  $Lang =~ s/ .*//; }
+
+# Check and correct bad parameters
+&Check_Config;	
+
+# Print html header
+&html_head;
+
+# Init other parameters
+if ($ENV{"GATEWAY_INTERFACE"} ne "") { $DirCgi=""; }
+if (($DirCgi ne "") && !($DirCgi =~ /\/$/) && !($DirCgi =~ /\\$/)) { $DirCgi .= "/"; }
+if ($DirData eq "" || $DirData eq ".") { $DirData=$DIR; }	# If not defined or choosed to "." value then DirData is current dir
+if ($DirData eq "")  { $DirData="."; }						# If current dir not defined then we put it to "."
+$DirData =~ s/\/$//;
+if ($DNSLookup) { use Socket; }
+$NewDNSLookup=$DNSLookup;
+%monthlib =  ( "01","$message[60][$Lang]","02","$message[61][$Lang]","03","$message[62][$Lang]","04","$message[63][$Lang]","05","$message[64][$Lang]","06","$message[65][$Lang]","07","$message[66][$Lang]","08","$message[67][$Lang]","09","$message[68][$Lang]","10","$message[69][$Lang]","11","$message[70][$Lang]","12","$message[71][$Lang]" );
+# monthnum must be in english because it's used to translate log date in log files which are always in english
+%monthnum =  ( "Jan","01","Feb","02","Mar","03","Apr","04","May","05","Jun","06","Jul","07","Aug","08","Sep","09","Oct","10","Nov","11","Dec","12" );
+
+# Check year and month parameters (check is very restrictive to avoid 'Cross Site Scripting attacks')
 if ($QueryString =~ /year=/) 	{ $YearRequired=$QueryString; $YearRequired =~ s/.*year=//; $YearRequired =~ s/&.*//;  $YearRequired =~ s/ .*//; }
 if ($YearRequired !~ /^[\d][\d][\d][\d]$/) { $YearRequired=$nowyear; }
 if ($QueryString =~ /month=/)	{ $MonthRequired=$QueryString; $MonthRequired =~ s/.*month=//; $MonthRequired =~ s/&.*//; $MonthRequired =~ s/ .*//; }
