@@ -1551,8 +1551,8 @@ sub Check_Config {
 	$DirData||='.';
 	$DirCgi||='/cgi-bin';
 	$DirIcons||='/icon';
-	if ($DNSLookup !~ /[0-2]/)                      { error("DNSLookup parameter is wrong in config/domain file. Value is '$DNSLookup' (should be 0 or 1)"); }
-	if (! $SiteDomain)                              { error("SiteDomain parameter not defined in your config/domain file. You must add it for using this version of AWStats."); }
+	if ($DNSLookup !~ /[0-2]/)                      { error("DNSLookup parameter is wrong in config/domain file. Value is '$DNSLookup' (should be 0,1 or 2)"); }
+	if (! $SiteDomain)                              { error("SiteDomain parameter not defined in your config/domain file. You must edit it for using this version of AWStats."); }
 	if ($AllowToUpdateStatsFromBrowser !~ /[0-1]/) 	{ $AllowToUpdateStatsFromBrowser=0; }
 	if ($AllowFullYearView !~ /[0-3]/) 				{ $AllowFullYearView=2; }
 	# Optional setup section
@@ -6370,10 +6370,12 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 						my $newurl=substr($field[$pos_url],0,$MaxLengthOfStoredURL);
 						$newurl =~ s/[$URLQuerySeparators].*$//;
 						$_sider404_h{$newurl}++;
-						my $newreferer=$field[$pos_referer];
-						if (! $URLReferrerWithQuery) { $newreferer =~ s/[$URLQuerySeparators].*$//; }
-						$_referer404_h{$newurl}=$newreferer;
-						last;
+						if ($pos_referer >= 0) {
+    						my $newreferer=$field[$pos_referer];
+    						if (! $URLReferrerWithQuery) { $newreferer =~ s/[$URLQuerySeparators].*$//; }
+    						$_referer404_h{$newurl}=$newreferer;
+    						last;
+    					}
 					}
 				}
 				if ($Debug) { debug(" Record stored in the status code chart (status code=$field[$pos_code])",2); }
