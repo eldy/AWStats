@@ -2,5 +2,5 @@ category=system
 longdesc=Generate and analyze statistics from web, proxy, wap, ftp or mail server log files
 desc=AWStats Logfile Analysis
 name=AWStats
+version=1.100
 depends=cron 1.000
-version=1.000
