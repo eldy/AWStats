@@ -712,8 +712,8 @@ sub tab_head {
 	}
 	print "<td class=\"aws_blank\">&nbsp;</td></tr>\n";
 	print "<tr><td colspan=\"2\">\n";
-	if ($width == 70 && $QueryString =~ /buildpdf/i) { print "<table class=\"aws_data\" border=\"2\" bordercolor=\"#$color_TableBorder\" cellpadding=\"2\" cellspacing=\"0\" width=\"796\">\n"; }
-	else { print "<table class=\"aws_data\" border=\"2\" bordercolor=\"#$color_TableBorder\" cellpadding=\"2\" cellspacing=\"0\" width=\"100%\">\n"; }
+	if ($width == 70 && $QueryString =~ /buildpdf/i) { print "<table class=\"aws_data\" border=\"1\" bordercolor=\"#$color_TableBorder\" cellpadding=\"2\" cellspacing=\"0\" width=\"796\">\n"; }
+	else { print "<table class=\"aws_data\" border=\"1\" bordercolor=\"#$color_TableBorder\" cellpadding=\"2\" cellspacing=\"0\" width=\"100%\">\n"; }
 }
 
 #------------------------------------------------------------------------------
@@ -8493,7 +8493,7 @@ if (scalar keys %HTMLOutput) {
 				my @blocklabel=();
 				for (my $ix=1; $ix<=12; $ix++) {
 					my $monthix=sprintf("%02s",$ix);
-					push @blocklabel,"$MonthNumLib{$monthix}§$YearRequired";
+					push @blocklabel,"$MonthNumLib{$monthix}\§$YearRequired";
 				}
 				my @vallabel=("$Message[11]","$Message[10]","$Message[56]","$Message[57]","$Message[75]");
 				my @valcolor=("$color_u","$color_v","$color_p","$color_h","$color_k");
