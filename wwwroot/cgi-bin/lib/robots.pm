@@ -60,7 +60,6 @@
 "webbase",
 "weblayers",
 #"webs",
-"wget",
 "wisenutbot"
 );
 @RobotsSearchIDOrder_list2 = (
@@ -612,7 +611,6 @@
 "webwalk","webwalk",
 "webwalker","WebWalker",
 "webwatch","WebWatch",
-"wget","Wget",
 "whatuseek","whatUseek Winona",
 "whowhere","WhoWhere Robot",
 "wired-digital","Wired Digital",

@@ -24,7 +24,6 @@
 "lynx",
 "omniweb",
 "opera",
-"wget",
 # Other standard web browsers
 "22acidownload",
 "aol\\-iweng",
@@ -106,6 +105,8 @@
 # Others (TV)
 "webtv",
 # Other kind of browsers
+"apt",
+"wget",
 "csscheck",
 "w3m",
 "w3c_css_validator",
@@ -129,7 +130,6 @@
 "lynx","Lynx",
 "omniweb","OmniWeb",
 "opera","Opera",
-"wget","Wget",
 "22acidownload","22AciDownload",
 "aol\\-iweng","AOL-Iweng",
 "amaya","Amaya",
@@ -210,6 +210,8 @@
 # Others (TV)
 "webtv","WebTV browser",
 # Other kind of browsers
+"apt","Debian APT",
+"wget","Wget",
 "csscheck","WDG CSS Validator",
 "w3m","w3m",
 "w3c_css_validator","W3C CSS Validator",
@@ -229,7 +231,8 @@
 %BrowsersHereAreGrabbers = (
 "teleport","1",
 "webcapture","1",
-"webcopier","1",,
+"webcopier","1",
+"wget","1"
 );
 
 
@@ -300,6 +303,7 @@
 # Others (TV)
 "webtv","webtv",
 # Other kind of browsers
+"apt","apt",
 "webzip","webzip",
 "staroffice","staroffice",
 "mozilla","mozilla"
