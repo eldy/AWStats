@@ -6,6 +6,7 @@ $Revision$ - $Author$ - $Date$
 5.7
 
 Fixes:
+- The -configdir parameter in awstats_updateall.pl is now working coorectly.
 - Fix failing call to ipv6 plugin.
 - Pb with some regex value used in the new REGEX fields added in 5.6.
 - Count for add to favourites is done on hits to favicon.ico for IE only. This
