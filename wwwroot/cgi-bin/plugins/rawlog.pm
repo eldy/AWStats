@@ -81,6 +81,12 @@ sub BuildFullHTMLOutput_rawlog {
 	my $Filter='';
 	if ($QueryString =~ /filterrawlog=([^&]+)/i) { $Filter=&DecodeEncodedString("$1"); }
 
+    # A security check
+	if ($QueryString =~ /logfile=/i) { 
+	    print "<br>Option logfile is not allowed while building rawlog output.<br>";
+        return 0;
+	}
+
 	# Show form
 	&_ShowForm($Filter);
 
