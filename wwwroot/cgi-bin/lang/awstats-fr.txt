@@ -82,3 +82,4 @@ message79=Filtre
 message80=Liste complète
 message81=Hôtes
 message82=Connus
+message83=Robots
