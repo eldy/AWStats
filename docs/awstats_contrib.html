@@ -52,7 +52,12 @@ it works (See <a href="awstats_config.html#LoadPlugin">LoadPlugin</a> parameter)
 <a href="#plugin_standards">Standard plugins</a> : <b>tooltips, decodeutfkeys, ipv6, hashfiles,
 geoip, geoipfree, userinfo, hostinfo, clusterinfo, urlalias, timehires, timezone, rawlog,
 graphapplet</b><br>
-<a href="#plugin_others">Other plugins</a> (require other licensed product to work) : <b>geoip_region_maxmind</b>, <b>geoip_city_maxmind</b><br>
+<a href="#plugin_others">Other plugins</a> (require other licensed product to work) :
+<b>geoip_region_maxmind</b>,
+<b>geoip_city_maxmind</b>,
+<b>geoip_isp_maxmind</b>,
+<b>geoip_org_maxmind</b>,
+<br>
 <br>
 
 <br><a name="plugin_standards"><b>List of standard plugins</b></a> (Provided with AWStats) :
@@ -286,9 +291,58 @@ the moment this link works only when AWStats reports are build as CGI (static bu
 supported).
 <br>
 
+<a name="geoipisp">&nbsp;</a>
+<br># Plugin: GeoIP_ISP_Maxmind
+<br># Perl modules required: Geo::IP (from Maxmind)
+<br># This plugin add a chart of hits by ISP.
+<br># Note: This plugin need Maxmind GeoIP Perl module AND the ISP database.
+<br># Note: I get some problem with Maxmind Geo::IP Perl module with ActiveState
+<br># on Windows but it works great on Linux with default Perl.
+<br># You need to purchase a license from Maxmind to get/use the ISP database.
+<br># This plugin reduces AWStats speed.
+<br>#
+<br>#LoadPlugin="geoip_isp_maxmind GEOIP_STANDARD /pathto/GeoIPISP.dat"
+
+<br><u>Install:</u>
+<br>This plugin need AWStats 6.3 or higher and need Geo::IP Perl Module AND the ISP database.
+<br>You can purchase the ISP licensed database and updates
+from <a href="http://www.maxmind.com/app/perl?rId=awstats" target=_new>Maxmind</a>.
+<br>This plugin is provided with AWStats 6.3 standard distribution. If requirements
+are ok, just add the following line to your AWStats configuration file:<br>
+<i>LoadPlugin="geoip_isp_maxmind GEOIP_STANDARD /pathto/GeoIPISP.dat"</i><br>
+Where <i>/pathto/GeoIPISP.dat</i> is the full path where you stored your ISP Database file.
+By enabled this plugin, you will see a new link called 'ISP' on reports menu. For
+the moment this link works only when AWStats reports are build as CGI (static built not yet
+supported).
+<br>
+
+<a name="geoiporg">&nbsp;</a>
+<br># Plugin: GeoIP_Org_Maxmind
+<br># Perl modules required: Geo::IP (from Maxmind)
+<br># This plugin add a chart of hits by Organization names.
+<br># Note: This plugin need Maxmind GeoIP Perl module AND the Org database.
+<br># Note: I get some problem with Maxmind Geo::IP Perl module with ActiveState
+<br># on Windows but it works great on Linux with default Perl.
+<br># You need to purchase a license from Maxmind to get/use the Org database.
+<br># This plugin reduces AWStats speed.
+<br>#
+<br>#LoadPlugin="geoip_org_maxmind GEOIP_STANDARD /pathto/GeoIPOrg.dat"
+
+<br><u>Install:</u>
+<br>This plugin need AWStats 6.3 or higher and need Geo::IP Perl Module AND the Org database.
+<br>You can purchase the Org licensed database and updates
+from <a href="http://www.maxmind.com/app/perl?rId=awstats" target=_new>Maxmind</a>.
+<br>This plugin is provided with AWStats 6.3 standard distribution. If requirements
+are ok, just add the following line to your AWStats configuration file:<br>
+<i>LoadPlugin="geoip_org_maxmind GEOIP_STANDARD /pathto/GeoIPOrg.dat"</i><br>
+Where <i>/pathto/GeoIPOrg.dat</i> is the full path where you stored your Org Database file.
+By enabled this plugin, you will see a new link called 'Organizations' on reports menu. For
+the moment this link works only when AWStats reports are build as CGI (static built not yet
+supported).
+<br>
 
 
-<br><a name="CONTRIB"></a><br>
+<br><br><a name="CONTRIB"></a><br>
 <font size=3 color=#665544><b>Other AWStats contribs/tools/package</b></font><br>
 <hr>
 
