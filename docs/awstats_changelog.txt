@@ -8,6 +8,7 @@ AWStats Changelog
   show in chart.
 - New parameter: Added SkipUserAgents parameter to exclude some user agent
   from statistics.
+- New parameter: Added URLCaseSensitive.
 - New parameter: Added URLWithQueryWithoutFollowingParameters to exclude some
   parameters from URL when URLWithQuery is on.
 - Fixed: Fixed pb in refreshing page when clicking on "Update Now" link (no
