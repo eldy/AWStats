@@ -19,7 +19,7 @@ use Time::Local;	# use Time::Local 'timelocal_nocheck' is faster but not support
 
 use vars qw/ $UseHiRes $UseCompress /;
 # Next 'use' can be uncommented to get miliseconds time in showsteps option
-#use Time::HiRes qw( gettimeofday ); $UseHiRes=1;
+use Time::HiRes qw( gettimeofday ); $UseHiRes=1;
 # Next 'use' can be uncommented to allow read/write of gz compressed log or history files (not working yet)
 #use Compress::Zlib; $UseCompress=1;
 
@@ -151,11 +151,11 @@ $LevelForSearchEnginesDetection, $LevelForKeywordsDetection)=
 (2,1,1,1,1,1);
 use vars qw/
 $DirCgi $DirData $DirIcons $DirLang $AWScript
-$ArchiveFileName $DefaultFile $HTMLHeadSection $HTMLEndSection $LinksToWhoIs
+$ArchiveFileName @DefaultFile $HTMLHeadSection $HTMLEndSection $LinksToWhoIs
 $LogFile $LogFormat $Logo $LogoLink $StyleSheet $WrapperScript $SiteDomain
 /;
 ($DirCgi, $DirData, $DirIcons, $DirLang, $AWScript,
-$ArchiveFileName, $DefaultFile, $HTMLHeadSection, $HTMLEndSection, $LinksToWhoIs,
+$ArchiveFileName, @DefaultFile, $HTMLHeadSection, $HTMLEndSection, $LinksToWhoIs,
 $LogFile, $LogFormat, $Logo, $LogoLink, $StyleSheet, $WrapperScript, $SiteDomain)=
 ("","","","","","","","","","","","","","","","","");
 use vars qw/
@@ -233,7 +233,7 @@ use vars qw/
 %HistoryFileAlreadyRead
 %_session %_browser_h %_domener_h %_domener_k %_domener_p %_errors_h
 %_filetypes_h %_filetypes_k %_filetypes_gz_in %_filetypes_gz_out
-%_hostmachine_h %_hostmachine_k %_hostmachine_l %_hostmachine_p %_hostmachine_s %_hostmachine_u
+%_host_h %_host_k %_host_l %_host_p %_host_s %_host_u
 %_keyphrases %_keywords %_os_h %_pagesrefs_h %_robot_h %_robot_l
 %_login_h %_login_p %_login_k %_login_l
 %_se_referrals_h %_sider404_h %_referer404_h %_url_p %_url_k %_url_e %_url_x
@@ -251,7 +251,7 @@ use vars qw/
 %HistoryFileAlreadyRead=();
 %_session = %_browser_h = %_domener_h = %_domener_k = %_domener_p = %_errors_h = ();
 %_filetypes_h = %_filetypes_k = %_filetypes_gz_in = %_filetypes_gz_out = ();
-%_hostmachine_h = %_hostmachine_k = %_hostmachine_l = %_hostmachine_p = %_hostmachine_s = %_hostmachine_u = ();
+%_host_h = %_host_k = %_host_l = %_host_p = %_host_s = %_host_u = ();
 %_keyphrases = %_keywords = %_os_h = %_pagesrefs_h = %_robot_h = %_robot_l = ();
 %_login_h = %_login_p = %_login_k = %_login_l = ();
 %_se_referrals_h = %_sider404_h = %_referer404_h = %_url_p = %_url_k = %_url_e = %_url_x = ();
@@ -260,12 +260,12 @@ use vars qw/
 %TmpDNSLookup = %TmpOS = %TmpRefererServer = %TmpRobot = %TmpBrowser = ();
 # ---------- Init Tie::hash arrays --------
 #use Tie::Hash;
-#tie %_hostmachine_p, 'Tie::StdHash';
-#tie %_hostmachine_h, 'Tie::StdHash';
-#tie %_hostmachine_k, 'Tie::StdHash';
-#tie %_hostmachine_l, 'Tie::StdHash';
-#tie %_hostmachine_s, 'Tie::StdHash';
-#tie %_hostmachine_u, 'Tie::StdHash';
+#tie %_host_p, 'Tie::StdHash';
+#tie %_host_h, 'Tie::StdHash';
+#tie %_host_k, 'Tie::StdHash';
+#tie %_host_l, 'Tie::StdHash';
+#tie %_host_s, 'Tie::StdHash';
+#tie %_host_u, 'Tie::StdHash';
 #tie %_url_p, 'Tie::StdHash';
 #tie %_url_k, 'Tie::StdHash';
 #tie %_url_e, 'Tie::StdHash';
@@ -792,7 +792,11 @@ sub Read_Config_File {
 		if ($param =~ /^PurgeLogFile/)          { $PurgeLogFile=$value; next; }
 		if ($param =~ /^ArchiveLogRecords/)     { $ArchiveLogRecords=$value; next; }
 		if ($param =~ /^KeepBackupOfHistoricFiles/)     { $KeepBackupOfHistoricFiles=$value; next; }
-		if ($param =~ /^DefaultFile/)           { $DefaultFile=$value; next; }
+        if ($param =~ /^DefaultFile/)           {
+			$value =~ s/\\\./\./g; $value =~ s/([^\\])\./$1\\\./g; $value =~ s/^\./\\\./;   # Replace . into \.
+			foreach my $elem (split(/\s+/,$value))    { push @DefaultFile,$elem; }
+			next;
+			}
 		if ($param =~ /^SkipHosts/) {
 			$value =~ s/\\\./\./g; $value =~ s/([^\\])\./$1\\\./g; $value =~ s/^\./\\\./;	# Replace . into \.
 			foreach my $elem (split(/\s+/,$value))    { push @SkipHosts,$elem; }
@@ -1124,7 +1128,7 @@ sub Check_Config {
 	if ($PurgeLogFile !~ /[0-1]/)                 	{ $PurgeLogFile=0; }
 	if ($ArchiveLogRecords !~ /[0-1]/)            	{ $ArchiveLogRecords=1; }
 	if ($KeepBackupOfHistoricFiles !~ /[0-1]/)     	{ $KeepBackupOfHistoricFiles=0; }
-	if (! $DefaultFile)                       		{ $DefaultFile="index.html"; }
+    if (! $DefaultFile[0])                          { $DefaultFile[0]="index.html"; }
 	if ($URLWithQuery !~ /[0-1]/)                 	{ $URLWithQuery=0; }
 	if ($WarningMessages !~ /[0-1]/)              	{ $WarningMessages=1; }
 	if ($NbOfLinesForCorruptedLog !~ /^\d+/ || $NbOfLinesForCorruptedLog<1)	{ $NbOfLinesForCorruptedLog=50; }
@@ -1521,13 +1525,13 @@ sub Read_History_File {
 							}
 						}
 						if ($loadrecord) {
-							if ($field[1]) { $_hostmachine_p{$field[0]}+=$field[1]; }
-							if ($field[2]) { $_hostmachine_h{$field[0]}+=$field[2]; }
-							if ($field[3]) { $_hostmachine_k{$field[0]}+=$field[3]; }
-							if (! $_hostmachine_l{$field[0]} && $field[4]) {	# We save last connexion params if not already catched
-								$_hostmachine_l{$field[0]}=int($field[4]);
-								if ($field[5]) { $_hostmachine_s{$field[0]}=int($field[5]); }
-								if ($field[6]) { $_hostmachine_u{$field[0]}=$field[6]; }
+							if ($field[1]) { $_host_p{$field[0]}+=$field[1]; }
+							if ($field[2]) { $_host_h{$field[0]}+=$field[2]; }
+							if ($field[3]) { $_host_k{$field[0]}+=$field[3]; }
+							if (! $_host_l{$field[0]} && $field[4]) {	# We save last connexion params if not already catched
+								$_host_l{$field[0]}=int($field[4]);
+								if ($field[5]) { $_host_s{$field[0]}=int($field[5]); }
+								if ($field[6]) { $_host_u{$field[0]}=$field[6]; }
 							}
 							$countloaded++;
 						}
@@ -2137,51 +2141,51 @@ sub Save_History_File {
 	print HISTORYTMP "# [Start of last visit date] and [Last page of last visit] are saved only if session is not finished\n";
 	print HISTORYTMP "# The $MaxNbOfHostsShown first Hits must be first (order not required for others)\n";
 	print HISTORYTMP "BEGIN_VISITOR\n";
-	&BuildKeyList($MaxNbOfHostsShown,$MinHitHost,\%_hostmachine_h,\%_hostmachine_p);
+	&BuildKeyList($MaxNbOfHostsShown,$MinHitHost,\%_host_h,\%_host_p);
 	my %keysinkeylist=();
 	foreach my $key (@keylist) {
 		$keysinkeylist{$key}=1;
-		my $page=$_hostmachine_p{$key}||0;
-		my $bytes=$_hostmachine_k{$key}||0;
-		if ($_hostmachine_l{$key} && $_hostmachine_s{$key} && $_hostmachine_u{$key}) {
-			if (($_hostmachine_l{$key}+$VisitTimeOut) < $dateoflastlineknown) {
+		my $page=$_host_p{$key}||0;
+		my $bytes=$_host_k{$key}||0;
+		if ($_host_l{$key} && $_host_s{$key} && $_host_u{$key}) {
+			if (($_host_l{$key}+$VisitTimeOut) < $dateoflastlineknown) {
 				# Session for this user is expired
-				$_url_x{$_hostmachine_u{$key}}++;
-				$_session{SessionLastToSessionRange($_hostmachine_l{$key},$_hostmachine_s{$key})}++;
-				delete $_hostmachine_s{$key};
-				delete $_hostmachine_u{$key};
-				print HISTORYTMP "$key $page $_hostmachine_h{$key} $bytes $_hostmachine_l{$key}\n";
+				$_url_x{$_host_u{$key}}++;
+				$_session{SessionLastToSessionRange($_host_l{$key},$_host_s{$key})}++;
+				delete $_host_s{$key};
+				delete $_host_u{$key};
+				print HISTORYTMP "$key $page $_host_h{$key} $bytes $_host_l{$key}\n";
 			}
 			else {
 				# If this user has started a new session that is not expired
-				print HISTORYTMP "$key $page $_hostmachine_h{$key} $bytes $_hostmachine_l{$key} $_hostmachine_s{$key} $_hostmachine_u{$key}\n";
+				print HISTORYTMP "$key $page $_host_h{$key} $bytes $_host_l{$key} $_host_s{$key} $_host_u{$key}\n";
 			}
 		}
 		else {
-			print HISTORYTMP "$key $page $_hostmachine_h{$key} $bytes $_hostmachine_l{$key}\n";
+			print HISTORYTMP "$key $page $_host_h{$key} $bytes $_host_l{$key}\n";
 		}
 	}
-	foreach my $key (keys %_hostmachine_h) {
+	foreach my $key (keys %_host_h) {
 		if ($keysinkeylist{$key}) { next; }
-		my $page=$_hostmachine_p{$key}||0;
-		my $bytes=$_hostmachine_k{$key}||0;
-		if ($_hostmachine_l{$key} && $_hostmachine_s{$key} && $_hostmachine_u{$key}) {
-			if (($_hostmachine_l{$key}+$VisitTimeOut) < $dateoflastlineknown) {
+		my $page=$_host_p{$key}||0;
+		my $bytes=$_host_k{$key}||0;
+		if ($_host_l{$key} && $_host_s{$key} && $_host_u{$key}) {
+			if (($_host_l{$key}+$VisitTimeOut) < $dateoflastlineknown) {
 				# Session for this user is expired
-				$_url_x{$_hostmachine_u{$key}}++;
-				$_session{SessionLastToSessionRange($_hostmachine_l{$key},$_hostmachine_s{$key})}++;
-				delete $_hostmachine_s{$key};
-				delete $_hostmachine_u{$key};
-				print HISTORYTMP "$key $page $_hostmachine_h{$key} $bytes $_hostmachine_l{$key}\n";
+				$_url_x{$_host_u{$key}}++;
+				$_session{SessionLastToSessionRange($_host_l{$key},$_host_s{$key})}++;
+				delete $_host_s{$key};
+				delete $_host_u{$key};
+				print HISTORYTMP "$key $page $_host_h{$key} $bytes $_host_l{$key}\n";
 			}
 			else {
 				# If this user has started a new session that is not expired
-				print HISTORYTMP "$key $page $_hostmachine_h{$key} $bytes $_hostmachine_l{$key} $_hostmachine_s{$key} $_hostmachine_u{$key}\n";
+				print HISTORYTMP "$key $page $_host_h{$key} $bytes $_host_l{$key} $_host_s{$key} $_host_u{$key}\n";
 			}
 		}
 		else {
-			my $hostl=$_hostmachine_l{$key}||"";
-			print HISTORYTMP "$key $page $_hostmachine_h{$key} $bytes $hostl\n";
+			my $hostl=$_host_l{$key}||"";
+			print HISTORYTMP "$key $page $_host_h{$key} $bytes $hostl\n";
 		}
 	}
 	print HISTORYTMP "END_VISITOR\n";
@@ -2387,7 +2391,7 @@ sub Init_HashArray {
 	# Reset all hash arrays with name beginning by _
 	%_session = %_browser_h = %_domener_h = %_domener_k = %_domener_p = %_errors_h =
 	%_filetypes_h = %_filetypes_k = %_filetypes_gz_in = %_filetypes_gz_out =
-	%_hostmachine_h = %_hostmachine_k = %_hostmachine_p = %_hostmachine_l = %_hostmachine_s = %_hostmachine_u =
+	%_host_h = %_host_k = %_host_p = %_host_l = %_host_s = %_host_u =
 	%_keyphrases = %_keywords = %_os_h = %_pagesrefs_h = %_robot_h = %_robot_l =
 	%_login_h = %_login_p = %_login_k = %_login_l =
 	%_se_referrals_h = %_sider404_h = %_referer404_h = %_url_p = %_url_k = %_url_e = %_url_x =
@@ -3293,7 +3297,7 @@ if ($UpdateStats) {
 		#--- TZ END : Uncomment following three lines to made a timezone adjustement. Warning this reduce seriously AWStats speed.
 #		my $yearmonthdayrecord="$dateparts[2]$dateparts[1]$dateparts[0]";
 		my $yearmonthdayrecord=sprintf("$dateparts[2]%02i%02i",$dateparts[1],$dateparts[0]);
-#		my $timerecord=int($yearmonthdayrecord.$dateparts[3].$dateparts[4].$dateparts[5]);	# !!!
+#		my $timerecord=int($yearmonthdayrecord.$dateparts[3].$dateparts[4].$dateparts[5]);
 		my $timerecord=((int("$yearmonthdayrecord")*100+$dateparts[3])*100+$dateparts[4])*100+$dateparts[5];	# !!!
 		my $yearrecord=int($dateparts[2]);
 		my $monthrecord=int($dateparts[1]);
@@ -3470,7 +3474,8 @@ if ($UpdateStats) {
 		#-------------------------------------------
 		my $hourrecord=int($dateparts[3]);
 		if ($PageBool) {
-			$field[$pos_url] =~ s/\/$DefaultFile$/\//;	# Replace default page name with / only
+			# Replace default page name with / only
+			foreach my $elem (@DefaultFile) { if ($field[$pos_url] =~ s/\/$elem$/\//) { last; } }
 
 			# FirstTime and LastTime are First and Last human visits (so changed if access to a page)
 			if (! $FirstTime{$yearmonthtoprocess}) { $FirstTime{$yearmonthtoprocess}=$timerecord; }
@@ -3544,44 +3549,44 @@ if ($UpdateStats) {
 		}
 
 		if ($PageBool) {
-			my $timehostl=$_hostmachine_l{$_}||0;
+			my $timehostl=$_host_l{$_}||0;
 			if ($timerecord > ($timehostl+$VisitTimeOut)) {
 				# This is a new visit
-				if ($_hostmachine_l{$_} && $_hostmachine_s{$_}) {	# If there was a preceding session running
+				if ($_host_l{$_} && $_host_s{$_}) {	# If there was a preceding session running
 					# Session for $_ is expired so we close and count it
-					$_url_x{$_hostmachine_u{$_}}++;	# Increase exit page
-					$_session{&SessionLastToSessionRange($_hostmachine_l{$_},$_hostmachine_s{$_})}++;
-					#delete $_hostmachine_s{$_};	# delete useless because set later
-					#delete $_hostmachine_u{$_};	# delete useless because set later
+					$_url_x{$_host_u{$_}}++;	# Increase exit page
+					$_session{&SessionLastToSessionRange($_host_l{$_},$_host_s{$_})}++;
+					#delete $_host_s{$_};	# delete useless because set later
+					#delete $_host_u{$_};	# delete useless because set later
 				}
 
 				$MonthVisits{$yearmonthtoprocess}++;
 				$DayVisits{$yearmonthdayrecord}++;
-				if (! $_hostmachine_l{$_}) { $MonthUnique{$yearmonthtoprocess}++; }
+				if (! $_host_l{$_}) { $MonthUnique{$yearmonthtoprocess}++; }
 				$_url_e{$field[$pos_url]}++; 		# Increase 'entry' page
-				$_hostmachine_s{$_}=$timerecord;	# Save start of first visit
+				$_host_s{$_}=$timerecord;	# Save start of first visit
 			}
 			if ($timerecord < $timehostl) {
 				# Record is before last record of visit
 				# This occurs when log file is not correctly sorted but just 'nearly' sorted
-				$_hostmachine_p{$_}++;
-				if ($timerecord < $_hostmachine_s{$_}) {	# This should not happens because first page of visits rarely logged after another page of same visit
+				$_host_p{$_}++;
+				if ($timerecord < $_host_s{$_}) {	# This should not happens because first page of visits rarely logged after another page of same visit
 					# Record is before record used for start of visit
-					$_hostmachine_s{$_}=$timerecord;
+					$_host_s{$_}=$timerecord;
 					# TODO Change entry page _url_e counter (not possible yet)
 				}
 			}
 			else {
 				# This is a new visit or record is after last record of visit
-				$_hostmachine_p{$_}++;
-				$_hostmachine_l{$_}=$timerecord;
-				$_hostmachine_u{$_}=$field[$pos_url];
+				$_host_p{$_}++;
+				$_host_l{$_}=$timerecord;
+				$_host_u{$_}=$field[$pos_url];
 			}
 		}
-		if ($_ ne ${PreviousHost} && ! $_hostmachine_h{$_}) { $MonthHostsUnknown{$yearmonthtoprocess}++; }
-#		if (! $_hostmachine_h{$_}) { $MonthHostsUnknown{$yearmonthtoprocess}++; }
-		$_hostmachine_h{$_}++;
-		$_hostmachine_k{$_}+=$field[$pos_size];
+		if ($_ ne ${PreviousHost} && ! $_host_h{$_}) { $MonthHostsUnknown{$yearmonthtoprocess}++; }
+#		if (! $_host_h{$_}) { $MonthHostsUnknown{$yearmonthtoprocess}++; }
+		$_host_h{$_}++;
+		$_host_k{$_}+=$field[$pos_size];
 		$PreviousHost=$_;
 
 		# Count top-level domain
@@ -4172,23 +4177,23 @@ EOF
 		print "$Center<a name=\"HOSTSLIST\">&nbsp;</a><BR>";
 		&tab_head($Message[81],19);
 		if ($MonthRequired ne "year") { print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[81] : $TotalHostsKnown $Message[82], $TotalHostsUnknown $Message[1] - $TotalUnique $Message[11]</TH>"; }
-		else { print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[81] : ".(scalar keys %_hostmachine_h)."</TH>"; }
+		else { print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[81] : ".(scalar keys %_host_h)."</TH>"; }
 		if ($ShowLinksToWhoIs && $LinksToWhoIs) { print "<TH width=80>$Message[114]</TH>"; }
 		print "<TH bgcolor=\"#$color_p\" width=80>$Message[56]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH bgcolor=\"#$color_k\" width=80>$Message[75]</TH><TH width=120>$Message[9]</TH></TR>\n";
 		$total_p=$total_h=$total_k=0;
 		my $count=0;
-		&BuildKeyList($MaxRowsInHTMLOutput,$MinHitHost,\%_hostmachine_h,\%_hostmachine_p);
+		&BuildKeyList($MaxRowsInHTMLOutput,$MinHitHost,\%_host_h,\%_host_p);
 		foreach my $key (@keylist) {
 			my $host=CleanFromCSSA($key);
 			print "<tr><td CLASS=AWL>".($_robot_l{$key}?"<b>":"")."$host".($_robot_l{$key}?"</b>":"")."</td>";
 			if ($ShowLinksToWhoIs && $LinksToWhoIs) { ShowWhoIsCell($key); }
-			print "<TD>".($_hostmachine_p{$key}?$_hostmachine_p{$key}:"&nbsp;")."</TD><TD>$_hostmachine_h{$key}</TD><TD>".Format_Bytes($_hostmachine_k{$key})."</TD>";
-			if ($_hostmachine_l{$key}) { print "<td>".Format_Date($_hostmachine_l{$key},1)."</td>"; }
+			print "<TD>".($_host_p{$key}?$_host_p{$key}:"&nbsp;")."</TD><TD>$_host_h{$key}</TD><TD>".Format_Bytes($_host_k{$key})."</TD>";
+			if ($_host_l{$key}) { print "<td>".Format_Date($_host_l{$key},1)."</td>"; }
 			else { print "<td>-</td>"; }
 			print "</tr>\n";
-			$total_p += $_hostmachine_p{$key};
-			$total_h += $_hostmachine_h{$key};
-			$total_k += $_hostmachine_k{$key}||0;
+			$total_p += $_host_p{$key};
+			$total_h += $_host_h{$key};
+			$total_k += $_host_k{$key}||0;
 			$count++;
 		}
 		if ($Debug) { debug("Total real / shown : $TotalPages / $total_p - $TotalHits / $total_h - $TotalBytes / $total_h",2); }
@@ -4208,23 +4213,23 @@ EOF
 		print "$Center<a name=\"HOSTSLIST\">&nbsp;</a><BR>";
 		&tab_head($Message[9],19);
 		if ($MonthRequired ne "year") { print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[81] : $TotalHostsKnown $Message[82], $TotalHostsUnknown $Message[1] - $TotalUnique $Message[11]</TH>"; }
-		else { print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[81] : ".(scalar keys %_hostmachine_h)."</TH>"; }
+		else { print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[81] : ".(scalar keys %_host_h)."</TH>"; }
 		if ($ShowLinksToWhoIs && $LinksToWhoIs) { print "<TH width=80>$Message[114]</TH>"; }
 		print "<TH bgcolor=\"#$color_p\" width=80>$Message[56]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH bgcolor=\"#$color_k\" width=80>$Message[75]</TH><TH width=120>$Message[9]</TH></TR>\n";
 		$total_p=$total_h=$total_k=0;
 		my $count=0;
-		&BuildKeyList($MaxRowsInHTMLOutput,$MinHitHost,\%_hostmachine_h,\%_hostmachine_l);
+		&BuildKeyList($MaxRowsInHTMLOutput,$MinHitHost,\%_host_h,\%_host_l);
 		foreach my $key (@keylist) {
 			my $host=CleanFromCSSA($key);
 			print "<tr><td CLASS=AWL>".($_robot_l{$key}?"<b>":"")."$host".($_robot_l{$key}?"</b>":"")."</td>";
 			if ($ShowLinksToWhoIs && $LinksToWhoIs) { ShowWhoIsCell($key); }
-			print "<TD>".($_hostmachine_p{$key}?$_hostmachine_p{$key}:"&nbsp;")."</TD><TD>$_hostmachine_h{$key}</TD><TD>".Format_Bytes($_hostmachine_k{$key})."</TD>";
-			if ($_hostmachine_l{$key}) { print "<td>".Format_Date($_hostmachine_l{$key},1)."</td>"; }
+			print "<TD>".($_host_p{$key}?$_host_p{$key}:"&nbsp;")."</TD><TD>$_host_h{$key}</TD><TD>".Format_Bytes($_host_k{$key})."</TD>";
+			if ($_host_l{$key}) { print "<td>".Format_Date($_host_l{$key},1)."</td>"; }
 			else { print "<td>-</td>"; }
 			print "</tr>\n";
-			$total_p += $_hostmachine_p{$key};
-			$total_h += $_hostmachine_h{$key};
-			$total_k += $_hostmachine_k{$key}||0;
+			$total_p += $_host_p{$key};
+			$total_h += $_host_h{$key};
+			$total_k += $_host_k{$key}||0;
 			$count++;
 		}
 		if ($Debug) { debug("Total real / shown : $TotalPages / $total_p - $TotalHits / $total_h - $TotalBytes / $total_h",2); }
@@ -4243,23 +4248,23 @@ EOF
 	if ($HTMLOutput eq "unknownip") {
 		print "$Center<a name=\"UNKOWNIP\">&nbsp;</a><BR>";
 		&tab_head($Message[45],19);
-		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>".(scalar keys %_hostmachine_h)." $Message[1]</TH>";
+		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>".(scalar keys %_host_h)." $Message[1]</TH>";
 		if ($ShowLinksToWhoIs && $LinksToWhoIs) { print "<TH width=80>$Message[114]</TH>"; }
 		print "<TH bgcolor=\"#$color_p\" width=80>$Message[56]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH bgcolor=\"#$color_k\" width=80>$Message[75]</TH><TH width=120>$Message[9]</TH></TR>\n";
 		$total_p=$total_h=$total_k=0;
 		my $count=0;
-		&BuildKeyList($MaxRowsInHTMLOutput,$MinHitHost,\%_hostmachine_h,\%_hostmachine_p);
+		&BuildKeyList($MaxRowsInHTMLOutput,$MinHitHost,\%_host_h,\%_host_p);
 		foreach my $key (@keylist) {
 			my $host=CleanFromCSSA($key);
 			print "<tr><td CLASS=AWL>$host</td>";
 			if ($ShowLinksToWhoIs && $LinksToWhoIs) { ShowWhoIsCell($key); }
-			print "<TD>".($_hostmachine_p{$key}||"&nbsp")."</TD><TD>$_hostmachine_h{$key}</TD><TD>".Format_Bytes($_hostmachine_k{$key})."</TD>";
-			if ($_hostmachine_l{$key}) { print "<td>".Format_Date($_hostmachine_l{$key},1)."</td>"; }
+			print "<TD>".($_host_p{$key}||"&nbsp")."</TD><TD>$_host_h{$key}</TD><TD>".Format_Bytes($_host_k{$key})."</TD>";
+			if ($_host_l{$key}) { print "<td>".Format_Date($_host_l{$key},1)."</td>"; }
 			else { print "<td>-</td>"; }
 			print "</tr>\n";
-			$total_p += $_hostmachine_p{$key};
-			$total_h += $_hostmachine_h{$key};
-			$total_k += $_hostmachine_k{$key}||0;
+			$total_p += $_host_p{$key};
+			$total_h += $_host_h{$key};
+			$total_k += $_host_k{$key}||0;
 			$count++;
 		}
 		if ($Debug) { debug("Total real / shown : $TotalPages / $total_p - $TotalHits / $total_h - $TotalBytes / $total_h",2); }
@@ -4950,26 +4955,26 @@ EOF
 	if ($ShowHostsStats) {
 		if ($Debug) { debug("ShowHostsStats",2); }
 		print "$Center<a name=\"VISITOR\">&nbsp;</a><BR>";
-		$MaxNbOfHostsShown = (scalar keys %_hostmachine_h) if $MaxNbOfHostsShown > (scalar keys %_hostmachine_h);
+		$MaxNbOfHostsShown = (scalar keys %_host_h) if $MaxNbOfHostsShown > (scalar keys %_host_h);
 		&tab_head("$Message[81] ($Message[77] $MaxNbOfHostsShown) &nbsp; - &nbsp; <a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=allhosts":"$PROG$StaticLinks.allhosts.html")."\"".($DetailedReportsOnNewWindows?" target=\"awstatsbis\"":"").">$Message[80]</a> &nbsp; - &nbsp; <a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=lasthosts":"$PROG$StaticLinks.lasthosts.html")."\"".($DetailedReportsOnNewWindows?" target=\"awstatsbis\"":"").">$Message[9]</a> &nbsp; - &nbsp; <a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=unknownip":"$PROG$StaticLinks.unknownip.html")."\"".($DetailedReportsOnNewWindows?" target=\"awstatsbis\"":"").">$Message[45]</a>",19);
 		if ($MonthRequired ne "year") { print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[81] : $TotalHostsKnown $Message[82], $TotalHostsUnknown $Message[1] - $TotalUnique $Message[11]</TH>"; }
-		else { print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[81] : ".(scalar keys %_hostmachine_h)."</TH>"; }
+		else { print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[81] : ".(scalar keys %_host_h)."</TH>"; }
 		if ($ShowLinksToWhoIs && $LinksToWhoIs) { print "<TH width=80>$Message[114]</TH>"; }
 		print "<TH bgcolor=\"#$color_p\" width=80>$Message[56]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH bgcolor=\"#$color_k\" width=80>$Message[75]</TH><TH width=120>$Message[9]</TH></TR>\n";
 		$total_p=$total_h=$total_k=0;
 		my $count=0;
-		&BuildKeyList($MaxNbOfHostsShown,$MinHitHost,\%_hostmachine_h,\%_hostmachine_p);
+		&BuildKeyList($MaxNbOfHostsShown,$MinHitHost,\%_host_h,\%_host_p);
 		foreach my $key (@keylist) {
 			print "<tr>";
 			print "<td CLASS=AWL>$key</td>";
 			if ($ShowLinksToWhoIs && $LinksToWhoIs) { ShowWhoIsCell($key); }
-			print "<TD>".($_hostmachine_p{$key}||"&nbsp")."</TD><TD>$_hostmachine_h{$key}</TD><TD>".Format_Bytes($_hostmachine_k{$key})."</TD>";
-			if ($_hostmachine_l{$key}) { print "<td>".Format_Date($_hostmachine_l{$key},1)."</td>"; }
+			print "<TD>".($_host_p{$key}||"&nbsp")."</TD><TD>$_host_h{$key}</TD><TD>".Format_Bytes($_host_k{$key})."</TD>";
+			if ($_host_l{$key}) { print "<td>".Format_Date($_host_l{$key},1)."</td>"; }
 			else { print "<td>-</td>"; }
 			print "</tr>\n";
-			$total_p += $_hostmachine_p{$key};
-			$total_h += $_hostmachine_h{$key};
-			$total_k += $_hostmachine_k{$key}||0;
+			$total_p += $_host_p{$key};
+			$total_h += $_host_h{$key};
+			$total_k += $_host_k{$key}||0;
 			$count++;
 		}
 		$rest_p=$TotalPages-$total_p;
