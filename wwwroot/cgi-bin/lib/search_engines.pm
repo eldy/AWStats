@@ -56,6 +56,8 @@
 "wisenut\.com",
 # Minor brazilian search engines
 "engine\.exe", "miner\.bol\.com\.br",
+# Minor chinese search engines
+"baidu\.com","sina\.com","sohu\.com",
 # Minor czech search engines
 "atlas\.cz","seznam\.cz","quick\.cz","centrum\.cz","najdi\.to","redbox\.cz",
 # Minor danish search-engines 
@@ -138,6 +140,8 @@
 "wisenut\.com","query=",
 # Minor brazilian search engines
 "engine\.exe","p1=", "miner\.bol\.com\.br","q=",
+# Minor chinese search engines
+"baidu\.com","word=", "sina\.com", "word=", "sohu\.com","word=",
 # Minor czech search engines
 "atlas\.cz","searchtext=", "seznam\.cz","w=", "ftxt\.quick\.cz","query=", "centrum\.cz","q=", "najdi\.to","dotaz=", "redbox.cz","srch=",
 # Minor danish search engines
@@ -226,6 +230,8 @@
 "wisenut\.com","WISENut",
 # Minor brazilian search engines
 "engine\.exe","Cade", "miner\.bol\.com\.br","Meta Miner",
+# Minor chinese search engines
+"baidu\.com","Baidu", "sina\.com","Sina", "sohu\.com","Sohu",
 # Minor czech search engines
 "atlas\.cz","Atlas.cz",	"seznam\.cz","Seznam.cz", "quick\.cz","Quick.cz", "centrum\.cz","Centrum.cz","najdi\.to","Najdi.to","redbox\.cz","RedBox.cz",
 # Minor danish search-engines
