@@ -126,7 +126,7 @@ $color_h, $color_k, $color_p, $color_s, $color_u, $color_v)=
 
 
 
-$VERSION="4.0 (build 29)";
+$VERSION="4.0 (build 30)";
 $Lang="en";
 
 # Default value
@@ -1042,7 +1042,7 @@ sub Read_History_File {
 			my @field=split(/\s+/,$_); $countlines++;
 			my $count=0;my $countloaded=0;
 			while ($field[0] ne "END_TIME") {
-				if ($field[0]) {
+				#if ($field[0]) {	# This test must not be here for TIME section
 					$count++;
 					# We always read this to build the month graph (MonthPages, MonthHits, MonthBytes)
 			    	$MonthPages{$year.$month}+=int($field[1]); $MonthHits{$year.$month}+=int($field[2]); $MonthBytes{$year.$month}+=int($field[3]);
@@ -1052,7 +1052,7 @@ sub Read_History_File {
 			        	if ($field[2]) { $_time_h[$field[0]]+=int($field[2]); }
 			        	if ($field[3]) { $_time_k[$field[0]]+=int($field[3]); }
 					}
-				}
+				#}
 				$_=<HISTORY>;
 				chomp $_; s/\r//;
 				if ($_ eq "") { error("Error: History file \"$DirData/$PROG$month$year$FileSuffix.txt\" is corrupted (in section TIME). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
@@ -2356,8 +2356,7 @@ if ($UpdateStats) {
 	#	}
 		use Socket;
 	}
-	$NewDNSLookup=$DNSLookup;
-
+	
 	# Init RobotArrayID required for update process
 	push @RobotArrayList,"major";
 	push @RobotArrayList,"other";
@@ -2871,70 +2870,64 @@ if ($UpdateStats) {
 
 		# Analyze: IP-address
 		#--------------------
-		my $found=0;
-		$Host=$field[$pos_rc];
-		if ($Host =~ /^[\d]+\.[\d]+\.[\d]+\.[\d]+$/) {
-			my $newip;
-			# Doing DNS lookup
-		    if ($NewDNSLookup) {
-				$newip=$TmpHashDNSLookup{$Host};	# TmpHashDNSLookup is a temporary hash table to increase speed
-				if (!$newip) {						# if $newip undefined, $Host not yet resolved
-					&debug("Start of reverse DNS lookup for $Host",4);
+		my $Host=$field[$pos_rc];
+		if ($DNSLookup) {			# Doing DNS lookup
+			if ($Host =~ /^(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})$/) {
+				$HostIsIp=1;
+				if (! $TmpHashDNSLookup{$Host}) {		# if $Host has not been resolved yet
 					if ($MyDNSTable{$Host}) {
-					$newip = $MyDNSTable{$Host};
-						&debug("End of reverse DNS lookup for $Host. Found '$newip' in local MyDNSTable",4);
+						$TmpHashDNSLookup{$Host}=$MyDNSTable{$Host};
+						&debug(" No need of reverse DNS lookup for $Host, found resolution in local MyDNSTable: $MyDNSTable{$Host}",4);
 					}
 					else {
 						if (&SkipDNSLookup($Host)) {
-							&debug("Skip this DNS lookup at user request",4);
+							$TmpHashDNSLookup{$Host}="ip";
+							&debug(" No need of reverse DNS lookup for $Host, skipped at user request.",4);
 						}
 						else {
-							$newip=gethostbyaddr(pack("C4",split(/\./,$Host)),AF_INET);	# This is very slow, may took 20 seconds
-							if (! IsAscii($newip)) { $newip="ip"; }	# If DNSLookup corrupted answer, we treat it as Unknown
+							my $lookupresult=gethostbyaddr(pack("C4",split(/\./,$Host)),AF_INET);	# This is very slow, may took 20 seconds
+							$TmpHashDNSLookup{$Host}=(IsAscii($lookupresult)?$lookupresult:"ip");
+							&debug(" Reverse DNS lookup for $Host done: $TmpHashDNSLookup{$Host}",4);
 						}
-						&debug("End of reverse DNS lookup for $Host. Found '$newip'",4);
 					}
-					if ($newip eq "") { $newip="ip"; }
-					$TmpHashDNSLookup{$Host}=$newip;
 				}
-				# Here $Host is still xxx.xxx.xxx.xxx and $newip is name or "ip" if reverse failed)
-				if ($newip ne "ip") { $Host=$newip; }
 			}
-		    # If we don't do lookup or if it failed, we still have an IP address in $Host
-		    if (!$NewDNSLookup || $newip eq "ip") {
-				if ($PageBool) {
-				  		if ($timeconnexion > (($_hostmachine_l{$Host}||0)+$VisitTimeOut)) {
-				  			$MonthVisits{$yearmonth}++;
-				  			$DayVisits{$dayconnexion}++;
-							if (! $_hostmachine_l{$Host}) { $MonthUnique{$yearmonth}++; }
-							$_url_e{$field[$pos_url]}++; 	# Increase 'entry' page
-				  		}
-						$_hostmachine_p{$Host}++;
-						$_hostmachine_l{$Host}=$timeconnexion;
-						$_domener_p{"ip"}++;
-				}
-				if (! $_hostmachine_h{$Host}) {	$MonthHostsUnknown{$yearmonth}++; }
-				$_hostmachine_h{$Host}++;
-				$_hostmachine_k{$Host}+=$field[$pos_size];
-				$_domener_h{"ip"}++;
-				$_domener_k{"ip"}+=$field[$pos_size];
-				$found=1;
+			else {
+				$HostIsIp=0;
+				&debug(" DNS lookup asked for $Host but this is not an IP address.",3);
+				$DNSLookupAlreadyDone=$LogFile;
 			}
 		}
 		else {
-			if ($Host =~ /[a-z]/) { 
-				&debug("The following hostname '$Host' seems to be already resolved.",3);
-				$NewDNSLookup=0;
+			if ($Host =~ /^(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})$/) { $HostIsIp=1; }
+			else { $HostIsIp=0; }
+			&debug(" No DNS lookup asked.",3);
+		}
+
+	    if ($HostIsIp && ((! $TmpHashDNSLookup{$Host}) || ($TmpHashDNSLookup{$Host} eq "ip"))) {
+		    # Here $Host = IP address not resolved
+			if ($PageBool) {
+			  		if ($timeconnexion > (($_hostmachine_l{$Host}||0)+$VisitTimeOut)) {
+			  			$MonthVisits{$yearmonth}++;
+			  			$DayVisits{$dayconnexion}++;
+						if (! $_hostmachine_l{$Host}) { $MonthUnique{$yearmonth}++; }
+						$_url_e{$field[$pos_url]}++; 	# Increase 'entry' page
+			  		}
+					$_hostmachine_p{$Host}++;
+					$_hostmachine_l{$Host}=$timeconnexion;
+					$_domener_p{"ip"}++;
 			}
-		}	# Hosts seems to be already resolved, make DNS lookup inactive
-
-		# Here, $Host = hostname or xxx.xxx.xxx.xxx
-		if (!$found) {	# If not processed yet
-			# Here $Host = hostname
-			$_ = $Host;
+			if (! $_hostmachine_h{$Host}) {	$MonthHostsUnknown{$yearmonth}++; }
+			$_hostmachine_h{$Host}++;
+			$_hostmachine_k{$Host}+=$field[$pos_size];
+			$_domener_h{"ip"}++;
+			$_domener_k{"ip"}+=$field[$pos_size];
+		}
+		else {
+			# Here $TmpHashDNSLookup{$Host} is $Host resolved or undefined if $Host already resolved
+			$_ = ($TmpHashDNSLookup{$Host}?$TmpHashDNSLookup{$Host}:$Host);
+#			print "xxxxxxxxxxxxx $Host $TmpHashDNSLookup{$Host} - $_\n";
 			tr/A-Z/a-z/;
-
-			# Count hostmachine
 			if (!$FullHostName) { s/^[\w\-]+\.//; };
 			if ($PageBool) {
 				if ($timeconnexion > (($_hostmachine_l{$_}||0)+$VisitTimeOut)) {
@@ -3047,12 +3040,9 @@ if ($UpdateStats) {
 			$_os_h{"Unknown"}++;
 		}		
 
-
-
-
 		# Analyze: Referer
 		#-----------------
-		$found=0;
+		my $found=0;
 		if ($field[$pos_referer]) {
 
 			# Direct ?
@@ -3195,8 +3185,7 @@ if ($UpdateStats) {
 			$_from_h[1]++;
 		}
 
-		# End of processing all new records.
-
+		# End of processing new record.
 	}
 	&debug("End of processing log file(s)");
 
@@ -3204,7 +3193,7 @@ if ($UpdateStats) {
 	close LOG;
 
 	# DNSLookup warning
-	if ($DNSLookup && !$NewDNSLookup) { warning("Warning: <b>$PROG</b> has detected that hosts names are already resolved in your logfile <b>$LogFile</b>.<br>\nIf this is always true, you should change your setup DNSLookup=1 into DNSLookup=0 to increase $PROG speed."); }
+	if ($DNSLookup && $DNSLookupAlreadyDone) { warning("Warning: <b>$PROG</b> has detected that some hosts names were already resolved in your logfile <b>$DNSLookupAlreadyDone</b>.<br>\nIf DNS lookup was already made by the logger (web server), you should change your setup DNSLookup=1 into DNSLookup=0 to increase $PROG speed."); }
 
 	# Save current processed month $monthtoprocess
 	if ($UpdateStats && $monthtoprocess) {	# If monthtoprocess is still 0, it means there was no history files and we found no valid lines in log file
