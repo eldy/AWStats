@@ -3293,7 +3293,7 @@ sub Lock_Update {
 #--------------------------------------------------------------------
 # MAIN
 #--------------------------------------------------------------------
-$starttime=time;
+ $starttime=time;
 
 if ($ENV{"GATEWAY_INTERFACE"}) {	# Run from a browser
 	my $ExpireDelayInHTTPHeader=0;
@@ -6129,7 +6129,7 @@ EOF
 		if ($ShowKeyphrasesStats && $ShowKeywordsStats) { print "<td width=50% valign=top>\n";	}
 		if ($Debug) { debug("ShowKeyphrasesStats",2); }
 		$MaxNbOfKeyphrasesShown = $TotalDifferentKeyphrases if $MaxNbOfKeyphrasesShown > $TotalDifferentKeyphrases;
-		&tab_head("$Message[43] ($Message[77] $MaxNbOfKeyphrasesShown)<br><a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=keyphrases":"$PROG$StaticLinks.keyphrases.html")."\"$NewLinkTarget>$Message[80]</a>",19,($ShowKeyphrasesStats && $ShowKeywordsStats)?95:70);
+		&tab_head("$Message[121] ($Message[77] $MaxNbOfKeyphrasesShown)<br><a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=keyphrases":"$PROG$StaticLinks.keyphrases.html")."\"$NewLinkTarget>$Message[80]</a>",19,($ShowKeyphrasesStats && $ShowKeywordsStats)?95:70);
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\" onmouseover=\"ShowTooltip(15);\" onmouseout=\"HideTooltip(15);\"><TH>$TotalDifferentKeyphrases $Message[103]</TH><TH bgcolor=\"#$color_s\" width=80>$Message[14]</TH><TH bgcolor=\"#$color_s\" width=80>$Message[15]</TH></TR>\n";
 		$total_s=0;
 		my $count=0;
@@ -6157,7 +6157,7 @@ EOF
 		if ($ShowKeyphrasesStats && $ShowKeywordsStats) { print "<td width=50% valign=top>\n";	}
 		if ($Debug) { debug("ShowKeywordsStats",2); }
 		$MaxNbOfKeywordsShown = $TotalDifferentKeywords if $MaxNbOfKeywordsShown > $TotalDifferentKeywords;
-		&tab_head("$Message[44] ($Message[77] $MaxNbOfKeywordsShown)<br><a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=keywords":"$PROG$StaticLinks.keywords.html")."\"$NewLinkTarget>$Message[80]</a>",19,($ShowKeyphrasesStats && $ShowKeywordsStats)?95:70);
+		&tab_head("$Message[120] ($Message[77] $MaxNbOfKeywordsShown)<br><a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=keywords":"$PROG$StaticLinks.keywords.html")."\"$NewLinkTarget>$Message[80]</a>",19,($ShowKeyphrasesStats && $ShowKeywordsStats)?95:70);
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\" onmouseover=\"ShowTooltip(15);\" onmouseout=\"HideTooltip(15);\"><TH>$TotalDifferentKeywords $Message[13]</TH><TH bgcolor=\"#$color_s\" width=80>$Message[14]</TH><TH bgcolor=\"#$color_s\" width=80>$Message[15]</TH></TR>\n";
 		$total_s=0;
 		my $count=0;
