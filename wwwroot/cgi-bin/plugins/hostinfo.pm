@@ -91,7 +91,7 @@ sub ShowInfoHost_hostinfo {
 	# <-----
 	my $hostinfotoshow="$_[0]";
 	if ($hostinfotoshow eq '__title__') {
-		print "<td width=\"80\">$Message[114]</td>";	
+		print "<th width=\"80\">$Message[114]</th>";	
 	}
 	elsif ($hostinfotoshow) {
 		my $keyforwhois;

@@ -68,7 +68,7 @@ sub Init_userinfo {
 sub ShowInfoUser_userinfo {
 	# <-----
 	my $userinfotoshow="$_[0]";
-	if ($userinfotoshow && ! $userinfoloaded) {
+	if ($userinfotoshow && $userinfotoshow ne '__title__' && ! $userinfoloaded) {
 		# Load userinfo file
 		my $filetoload='';
 		if ($SiteConfig && open(USERINFOFILE,"$PluginDir/userinfo.$SiteConfig.txt"))	{ $filetoload="$PluginDir/userinfo.$SiteConfig.txt"; }
@@ -80,11 +80,18 @@ sub ShowInfoUser_userinfo {
 		debug("UserInfo file loaded: ".(scalar keys %UserInfo)." entries found.");
 		$userinfoloaded=1;
 	}
-	if ($userinfotoshow) {
-		if ($UserInfo{$userinfotoshow}) { print "<td>$UserInfo{$userinfotoshow}</td>"; }
-		else { print "<td>&nbsp;</td>"; }	# Undefined user info
+	if ($userinfotoshow eq '__title__') {
+		print "<th width=\"80\">$Message[114]</th>";	
 	}
-	else { print "<td>&nbsp;</td>"; }	# User info title
+	elsif ($userinfotoshow) {
+		print "<td>";
+		if ($UserInfo{$userinfotoshow}) { print "$UserInfo{$userinfotoshow}"; }
+		else { print "&nbsp;"; }	# Undefined user info
+		print "</td>";
+	}
+	else {
+		print "<td>&nbsp;</td>";
+	}
 	return 1;
 	# ----->
 }

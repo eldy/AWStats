@@ -528,13 +528,18 @@ sub html_head {
 			if ($BuildReportFormat eq 'xml') { print ($ENV{'HTTP_USER_AGENT'}=~/Firebird/i?"<!--\n":"<![CDATA[\n"); }
 			else { print "<!--\n"; }
 print "body { font: 11px verdana, arial, helvetica, sans-serif; background-color: #$color_Background; margin-top: 0; }\n";
-#print ".aws_bodyl  { ".(! $BuildReportFormat?"background-image: url($DirIcons/other/backleft.png);":"")."background-repeat: repeat-y; }\n";
 print ".aws_bodyl  { }\n";
 print ".aws_border { background-color: #$color_TableBG; padding: 1px 1px 1px 1px; margin-top: 0 }\n";
 print ".aws_title  { font: 13px verdana, arial, helvetica, sans-serif; font-weight: bold; background-color: #$color_TableBGTitle; text-align: center; margin-bottom: 0; padding: 1px 1px 1px 1px; }\n";
-print ".aws_blank { font: 13px verdana, arial, helvetica, sans-serif; background-color: #".($ENV{'HTTP_USER_AGENT'} && $ENV{'HTTP_USER_AGENT'}=~/MSIE/i?$color_Background:$color_TableBG)."; text-align: center; margin-bottom: 0; padding: 1px 1px 1px 1px; }\n";
+print ".aws_blank  { font: 13px verdana, arial, helvetica, sans-serif; background-color: #".($ENV{'HTTP_USER_AGENT'} && $ENV{'HTTP_USER_AGENT'}=~/MSIE/i?$color_Background:$color_TableBG)."; text-align: center; margin-bottom: 0; padding: 1px 1px 1px 1px; }\n";
 print <<EOF;
-.aws_data { background-color: #$color_Background; }
+.aws_data {
+	background-color: #$color_Background;
+	border-top-width: 1px;   
+	border-left-width: 0px;  
+	border-right-width: 0px; 
+	border-bottom-width: 0px;
+}
 .aws_formfield { font: 13px verdana, arial, helvetica; }
 .aws_button {
 	font-family: arial,verdana,helvetica, sans-serif;
@@ -542,10 +547,10 @@ print <<EOF;
 	border: 1px solid #ccd7e0;
 	background-image : url($DirIcons/other/button.gif);
 }
-th { font: 11px verdana, arial, helvetica, sans-serif; text-align:center; color: #$color_titletext; }
-th.aws { font-size: 13px; font-weight: bold; }
-td { font: 11px verdana, arial, helvetica, sans-serif; text-align:center; color: #$color_text; }
-.aws { font: 11px verdana, arial, helvetica, sans-serif; text-align:$dir; color: #$color_text; }
+th     { border-color: #$color_TableBorder; border-left-width: 0px; border-right-width: 1px; border-top-width: 0px; border-bottom-width: 0px; padding: 2px 2px 2px 2px; font: 11px verdana, arial, helvetica, sans-serif; text-align:center; color: #$color_titletext; }
+th.aws { border-color: #$color_TableBorder; border-left-width: 0px; border-right-width: 1px; border-top-width: 0px; border-bottom-width: 0px; padding: 2px 2px 2px 2px; font-size: 13px; font-weight: bold; }
+td     { border-color: #$color_TableBorder; border-left-width: 0px; border-right-width: 1px; border-top-width: 0px; border-bottom-width: 1px; padding: 2px 2px 2px 2px; font: 11px verdana, arial, helvetica, sans-serif; text-align:center; color: #$color_text; }
+.aws   { border-color: #$color_TableBorder; border-left-width: 0px; border-right-width: 1px; border-top-width: 0px; border-bottom-width: 1px; padding: 2px 2px 2px 2px; font: 11px verdana, arial, helvetica, sans-serif; text-align:$dir; color: #$color_text; }
 b { font-weight: bold; }
 a { font: 11px verdana, arial, helvetica, sans-serif; }
 a:link    { color: #$color_link; text-decoration: none; }
@@ -1558,10 +1563,10 @@ sub Check_Config {
 	$color_link =~ s/#//g; if ($color_link !~ /^[0-9|A-H]+$/i)           			 { $color_link='0011BB'; }
 	$color_hover =~ s/#//g; if ($color_hover !~ /^[0-9|A-H]+$/i)         			 { $color_hover='605040'; }
 	$color_other =~ s/#//g; if ($color_other !~ /^[0-9|A-H]+$/i)         			 { $color_other='666688'; }
-	$color_u =~ s/#//g; if ($color_u !~ /^[0-9|A-H]+$/i)                 			 { $color_u='FFB055'; }
-	$color_v =~ s/#//g; if ($color_v !~ /^[0-9|A-H]+$/i)                 			 { $color_v='F8E880'; }
+	$color_u =~ s/#//g; if ($color_u !~ /^[0-9|A-H]+$/i)                 			 { $color_u='FFA060'; }
+	$color_v =~ s/#//g; if ($color_v !~ /^[0-9|A-H]+$/i)                 			 { $color_v='F4F090'; }
 	$color_p =~ s/#//g; if ($color_p !~ /^[0-9|A-H]+$/i)                 			 { $color_p='4477DD'; }
-	$color_h =~ s/#//g; if ($color_h !~ /^[0-9|A-H]+$/i)                 			 { $color_h='66F0FF'; }
+	$color_h =~ s/#//g; if ($color_h !~ /^[0-9|A-H]+$/i)                 			 { $color_h='66EEFF'; }
 	$color_k =~ s/#//g; if ($color_k !~ /^[0-9|A-H]+$/i)                 			 { $color_k='2EA495'; }
 	$color_s =~ s/#//g; if ($color_s !~ /^[0-9|A-H]+$/i)                 			 { $color_s='8888DD'; }
 	$color_e =~ s/#//g; if ($color_e !~ /^[0-9|A-H]+$/i)                 			 { $color_e='CEC2E8'; }
@@ -7491,7 +7496,7 @@ if (scalar keys %HTMLOutput) {
 		if ($HTMLOutput{'lastlogins'}) { $title.="$Message[9]"; }
 		&tab_head("$title",19,0,'logins');
 		print "<tr bgcolor=\"#$color_TableBGRowTitle\"><th>$Message[94] : ".(scalar keys %_login_h)."</th>";
-		&ShowUserInfo('');
+		&ShowUserInfo('__title__');
 		if ($ShowAuthenticatedUsers =~ /P/i) { print "<th bgcolor=\"#$color_p\" width=\"80\">$Message[56]</th>"; }
 		if ($ShowAuthenticatedUsers =~ /H/i) { print "<th bgcolor=\"#$color_h\" width=\"80\">$Message[57]</th>"; }
 		if ($ShowAuthenticatedUsers =~ /B/i) { print "<th bgcolor=\"#$color_k\" width=\"80\">$Message[75]</th>"; }
@@ -8848,7 +8853,7 @@ if (scalar keys %HTMLOutput) {
 			if ($ShowAuthenticatedUsers =~ /L/i) { $title.=" &nbsp; - &nbsp; <a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?XMLEncode("$AWScript?${NewLinkParams}output=lastlogins"):"$PROG$StaticLinks.lastlogins.$StaticExt")."\"$NewLinkTarget>$Message[9]</a>"; }
 			&tab_head("$title",19,0,'logins');
 			print "<tr bgcolor=\"#$color_TableBGRowTitle\"><th>$Message[94] : ".(scalar keys %_login_h)."</th>";
-			&ShowUserInfo('');
+			&ShowUserInfo('__title__');
 			if ($ShowAuthenticatedUsers =~ /P/i) { print "<th bgcolor=\"#$color_p\" width=\"80\">$Message[56]</th>"; }
 			if ($ShowAuthenticatedUsers =~ /H/i) { print "<th bgcolor=\"#$color_h\" width=\"80\">$Message[57]</th>"; }
 			if ($ShowAuthenticatedUsers =~ /B/i) { print "<th bgcolor=\"#$color_k\" width=\"80\">$Message[75]</th>"; }
