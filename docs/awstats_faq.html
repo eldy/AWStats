@@ -129,15 +129,20 @@ AWStats setup knows predefined log format you can use to make AWStats config eas
 you can define your own log format, that's the reason why AWStats can analyze nearly all web, wap
 and proxy server log files. Some FTP servers log files, Syslog or mail logs can also be analyzed.<br>
 The only requirement is "Your log file must contain required information".<br>
-This is example of possible log format:<br>
+This is very short examples of possible log format:<br>
+<br>
 <i>
-Apache combined log format (known as NCSA combined log format or XLF or ELF format)<br>
-IIS 5.0+ log format (known as W3C format)<br>
-Webstar native log format<br>
-Windows Media Server<br>
-ProFTP server<br>
+Apache common log format (see Note*),<br>
+Apache combined log format (known as NCSA combined log format or XLF or ELF format),<br>
+Any other personalized Apache log format,<br>
+Any IIS log format (known as W3C format),<br>
+Webstar native log format,<br>
+Windows Media Server,<br>
+ProFTP server,<br>
+Postfix, Sendmail, QMail,<br>
 A lot of web/wap/proxy/streaming servers log format<br>
-Apache common log format (AWStats can now analyze such log files but such log files does not
+<br>
+Note*: Apache common log format (AWStats can now analyze such log files but such log files does not
 contain all information AWStats is looking for. The problem is in the content, not in the
 format). I think analyzing common log files is not interesting because there is a lot of
 missing information: no way to filter robots, find search engines, keywords, os, browser.
