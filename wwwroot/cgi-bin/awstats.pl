@@ -3365,7 +3365,7 @@ sub Save_History {
 		print HISTORYTMP "${xmlrb}TotalUnique ";$PosInFile{"TotalUnique"}=tell HISTORYTMP;print HISTORYTMP "$spacebar${xmlre}\n";
 		print HISTORYTMP "${xmlrb}MonthHostsKnown ";$PosInFile{"MonthHostsKnown"}=tell HISTORYTMP;print HISTORYTMP "$spacebar${xmlre}\n";
 		print HISTORYTMP "${xmlrb}MonthHostsUnknown ";$PosInFile{"MonthHostsUnknown"}=tell HISTORYTMP;print HISTORYTMP "$spacebar${xmlre}\n";
-		print HISTORYTMP "${xmleb}\nEND_GENERAL${xmlee}\n";	# END_GENERAL on line following xml tag because END_ detection does not work like other sections
+		print HISTORYTMP "${xmleb}".(${xmleb}?"\n":"")."END_GENERAL${xmlee}\n";	# END_GENERAL on a new line following xml tag because END_ detection does not work like other sections
 	}
 
 	# When
@@ -3427,8 +3427,8 @@ sub Save_History {
 	if ($sectiontosave eq 'visitor') {
 		print HISTORYTMP "\n";
 		if ($xml) { print HISTORYTMP "<section id='$sectiontosave'><sortfor>$MaxNbOf{'HostsShown'}</sortfor><comment>\n"; }
-		print HISTORYTMP "# Host - Pages - Hits - Bandwidth - Last visit date - [Start of last visit date] - [Last page of last visit]\n";
-		print HISTORYTMP "# [Start of last visit date] and [Last page of last visit] are saved only if session is not finished\n";
+		print HISTORYTMP "# Host - Pages - Hits - Bandwidth - Last visit date - [Start date of last visit] - [Last page of last visit]\n";
+		print HISTORYTMP "# [Start date of last visit] and [Last page of last visit] are saved only if session is not finished\n";
 		print HISTORYTMP "# The $MaxNbOf{'HostsShown'} first Hits must be first (order not required for others)\n";
 		$ValueInFile{$sectiontosave}=tell HISTORYTMP;
 		print HISTORYTMP "${xmlbb}BEGIN_VISITOR ${xmlbs}".(scalar keys %_host_h)."${xmlbe}\n";
@@ -3840,7 +3840,7 @@ sub Save_History {
 		if ($sectiontosave eq "extra_$extranum") {
 			print HISTORYTMP "\n";
 			if ($xml) { print HISTORYTMP "<section id='$sectiontosave'><sortfor>$MaxNbOfExtra[$extranum]</sortfor><comment>\n"; }
-			print HISTORYTMP "# Extra key - Pages - Hits - Last access - Bandwidth\n";
+			print HISTORYTMP "# Extra key - Pages - Hits - Bandwidth - Last access\n";
 			print HISTORYTMP "# The $MaxNbOfExtra[$extranum] first number of hits are first\n";
 			$ValueInFile{$sectiontosave}=tell HISTORYTMP;
 	 		print HISTORYTMP "${xmlbb}BEGIN_EXTRA_$extranum ${xmlbs}".scalar (keys %{'_section_' . $extranum . '_h'})."${xmlbe}\n";
