@@ -14,7 +14,7 @@
 #-------------------------------------------------------
 # Defines
 #-------------------------------------------------------
-$VERSION="2.24 (build 14)";
+$VERSION="2.24 (build 16)";
 $Lang=0;
 
 # Default value
@@ -208,7 +208,7 @@ $message[72][0]="English us.png";
 # French
 $message[0][1]="Inconnus";
 $message[1][1]="Inconnu (IP non rιsolue)";
-$message[2][1]="Autres visiteurs";
+$message[2][1]="Autres";
 $message[3][1]="Voir dιtails";
 $message[4][1]="Jour";
 $message[5][1]="Mois";
@@ -283,7 +283,7 @@ $message[72][1]="French fr.png";
 # Dutch
 $message[0][2]="Onbekend";
 $message[1][2]="Onbekend (Onbekend ip)";
-$message[2][2]="Andere bezoekers";
+$message[2][2]="Andere";
 $message[3][2]="Bekijk details";
 $message[4][2]="Dag";
 $message[5][2]="Maand";
@@ -358,7 +358,7 @@ $message[72][2]="Dutch nl.png";
 # Spanish
 $message[0][3]="Desconocido";
 $message[1][3]="Direcciσn IP desconocida";
-$message[2][3]="Otros visitantes";
+$message[2][3]="Otros";
 $message[3][3]="Vea detalles";
 $message[4][3]="Dνa";
 $message[5][3]="Mes";
@@ -433,7 +433,7 @@ $message[72][3]="Spanish es.png";
 # Italian
 $message[0][4]="Sconosciuto";
 $message[1][4]="Sconosciuto (ip non risolto)";
-$message[2][4]="Altri visitatori";
+$message[2][4]="Altri";
 $message[3][4]="Vedi dettagli";
 $message[4][4]="Giorno";
 $message[5][4]="Mese";
@@ -508,7 +508,7 @@ $message[72][4]="Italian it.png";
 # German
 $message[0][5]="Unbekannt";
 $message[1][5]="IP konnte nicht aufgeloest werden";
-$message[2][5]="Sonstige Besucher";
+$message[2][5]="Sonstige";
 $message[3][5]="Details";
 $message[4][5]="Tag";
 $message[5][5]="Monat";
@@ -584,7 +584,7 @@ $message[72][5]="German de.png";
 $PageCode[6]="<META HTTP-EQUIV=\"content-type\" CONTENT=\"text/html; charset=iso-8859-2\">";
 $message[0][6]="Nieznany";
 $message[1][6]="Nieznany (brak odwzorowania IP w DNS)";
-$message[2][6]="Inni go¶cie";
+$message[2][6]="Inni";
 $message[3][6]="Szczegσ³y...";
 $message[4][6]="Dzieρ";
 $message[5][6]="Miesi±c"; 
@@ -660,7 +660,7 @@ $message[72][6]="Polish pl.png";
 $PageCode[7]="<META HTTP-EQUIV=\"content-type\" CONTENT=\"text/html; charset=iso-8859-7\">";
 $message[0][7]="¶γνωστο";
 $message[1][7]="¶γνωστο (μη αναγνωρισμένη ip)";
-$message[2][7]="¶λλοι επισκέπτες";
+$message[2][7]="¶λλοι";
 $message[3][7]="Εμφάνιση λεπτομεριών";
 $message[4][7]="Ημέρα";
 $message[5][7]="Μήνας";
@@ -1241,6 +1241,7 @@ sub UnescapeURLParam {
 	$_[0] =~ s/%2e/\./gi;	#.
 	$_[0] =~ s/%2f/ /gi;	#/
 	$_[0] =~ s/%3a/:/gi;	#:
+	$_[0] =~ s/%3b/;/gi;	#;
 	$_[0] =~ s/%3c/ /gi;	#<
 	$_[0] =~ s/%3d/ /gi;	#=
 	$_[0] =~ s/%3e/ /gi;	#>
@@ -1332,6 +1333,7 @@ sub Read_Config_File {
 		if ($param =~ /^HTMLEndSection/)        { $HTMLEndSection=$value; next; }
 		if ($param =~ /^BarWidth/)              { $BarWidth=$value; next; }
 		if ($param =~ /^BarHeight/)             { $BarHeight=$value; next; }
+		if ($param =~ /^MaxNbOfDomain/)         { $MaxNbOfDomain=$value; next; }
 		if ($param =~ /^MaxNbOfHostsShown/)     { $MaxNbOfHostsShown=$value; next; }
 		if ($param =~ /^MinHitHost/)            { $MinHitHost=$value; next; }
 		if ($param =~ /^MaxNbOfRobotShown/)     { $MaxNbOfRobotShown=$value; next; }
@@ -1379,6 +1381,7 @@ sub Check_Config {
 	if (! ($ShowFlagLinks =~ /[0-1]/))        { $ShowFlagLinks=1; }
 	if (! ($BarWidth =~ /[\d]/))              { $BarWidth=260; }
 	if (! ($BarHeight =~ /[\d]/))             { $BarHeight=220; }
+	if (! ($MaxNbOfDomain =~ /[\d]/))         { $MaxNbOfDomain=25; }
 	if (! ($MaxNbOfHostsShown =~ /[\d]/))     { $MaxNbOfHostsShown=25; }
 	if (! ($MinHitHost =~ /[\d]/))            { $MinHitHost=1; }
 	if (! ($MaxNbOfRobotShown =~ /[\d]/))     { $MaxNbOfRobotShown=25; }
@@ -1688,7 +1691,7 @@ $LogFileWithoutLog=$LogFile;$LogFileWithoutLog =~ s/\.log$//;
 # monthnum must be in english because it's used to translate log date in log files which are always in english
 %monthnum =  ( "Jan","01","Feb","02","Mar","03","Apr","04","May","05","Jun","06","Jul","07","Aug","08","Sep","09","Oct","10","Nov","11","Dec","12" );
 
-($nowsec,$nowmin,$nowmin,$nowday,$nowmonth,$nowyear,$nowwday,$nowyday,$nowisdst) = localtime(time);
+($nowsec,$nowmin,$nowhour,$nowday,$nowmonth,$nowyear,$nowwday,$nowyday,$nowisdst) = localtime(time);
 if ($nowyear < 100) { $nowyear+=2000; } else { $nowyear+=1900; }
 $nowsmallyear=$nowyear;$nowsmallyear =~ s/^..//;
 if (++$nowmonth < 10) { $nowmonth = "0$nowmonth"; }
@@ -2901,6 +2904,7 @@ if ($SortDir<0) { $max_h=$_domener_h{$sortdomains_h[0]}; }
 else            { $max_h=$_domener_h{$sortdomains_h[$#sortdomains_h]}; }
 if ($SortDir<0) { $max_k=$_domener_k{$sortdomains_k[0]}; }
 else            { $max_k=$_domener_k{$sortdomains_k[$#sortdomains_k]}; }
+$count=0;$total_p=0;$total_h=0;$total_k=0;
 foreach $key (@sortdomains_p) {
 	if ($max_h > 0) { $bredde_p=$BarWidth*$_domener_p{$key}/$max_h+1; }	# use max_h to enable to compare pages with hits
 	if ($max_h > 0) { $bredde_h=$BarWidth*$_domener_h{$key}/$max_h+1; }
@@ -2918,7 +2922,23 @@ foreach $key (@sortdomains_p) {
 	print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_h\" WIDTH=$bredde_h HEIGHT=6 ALT=\"$message[57][$Lang]: $_domener_h{$key}\" title=\"$message[57][$Lang]: $_domener_h{$key}\"><br>\n";
 	print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_k\" WIDTH=$bredde_k HEIGHT=6 ALT=\"$message[44][$Lang]: $kilo\" title=\"$message[44][$Lang]: $kilo\">";
 	print "</TD></TR>\n";
+	$total_p += $_domener_p{$key};
+	$total_h += $_domener_h{$key};
+	$total_k += $_domener_k{$key};
+	$count++;
+	if ($count >= $MaxNbOfDomain) { last; }
 }
+$rest_p=$TotalPages-$total_p;
+$rest_h=$TotalHits-$total_h;
+$rest_k=int((($TotalBytes-$total_k)/1024)*100)/100;
+if ($rest_p > 0) { 	# All other domains (known or not)
+	print "<TR><TD colspan=3 CLASS=LEFT><font color=blue>$message[2][$Lang]</font></TD><TD>$rest_p</TD><TD>$rest_h</TD><TD>$rest_k</TD>\n";
+	print "<TD CLASS=LEFT>";
+	print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_p\" WIDTH=$bredde_p HEIGHT=6 ALT=\"$message[56][$Lang]: $_rest_p\" title=\"$message[56][$Lang]: $_rest_p\"><br>\n";
+	print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_h\" WIDTH=$bredde_h HEIGHT=6 ALT=\"$message[57][$Lang]: $_rest_h\" title=\"$message[57][$Lang]: $_rest_h\"><br>\n";
+	print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_k\" WIDTH=$bredde_k HEIGHT=6 ALT=\"$message[44][$Lang]: $_rest_k\" title=\"$message[44][$Lang]: $_rest_k\">";
+	print "</TD></TR>\n";
+	}
 &tab_end;
 
 
@@ -2931,33 +2951,32 @@ print "<TR BGCOLOR=$color_TableBGRowTitle><TH>$message[18][$Lang]</TH><TH bgcolo
 $count=0;$total_p=0;$total_h=0;$total_k=0;
 foreach $key (@sorthosts_p)
 {
-  if ($_hostmachine_h{$key}>=$MinHitHost) {
-    $kilo=int(($_hostmachine_k{$key}/1024)*100)/100;
-	if ($key eq "Unknown") {
-		print "<TR><TD CLASS=LEFT><a href=\"$DirCgi$PROG.$Extension?action=unknownip&site=$LocalSite&year=$YearRequired&month=$MonthRequired&lang=$Lang\">$message[1][$Lang]</a></TD><TD>$_hostmachine_p{$key}</TD><TD>$_hostmachine_h{$key}</TD><TD>$kilo</TD><TD><a href=\"$DirCgi$PROG.$Extension?action=unknownip&site=$LocalSite&year=$YearRequired&month=$MonthRequired&lang=$Lang\">$message[3][$Lang]</a></TD></TR>\n";
-		}
-	else {
-		$yearcon=substr($_hostmachine_l{$key},0,4);
-		$monthcon=substr($_hostmachine_l{$key},4,2);
-		$daycon=substr($_hostmachine_l{$key},6,2);
-		$hourcon=substr($_hostmachine_l{$key},8,2);
-		$mincon=substr($_hostmachine_l{$key},10,2);
-		print "<tr><td CLASS=LEFT>$key</td><TD>$_hostmachine_p{$key}</TD><TD>$_hostmachine_h{$key}</TD><TD>$kilo</TD>";
-		if ($daycon ne "") {
-			if ($Lang != 0) { print "<td>$daycon/$monthcon/$yearcon - $hourcon:$mincon</td></tr>"; }
-			else { print "<td>$daycon $monthlib{$monthcon} $yearcon - $hourcon:$mincon</td></tr>"; }
-		}
+	if ($_hostmachine_h{$key}>=$MinHitHost) {
+		$kilo=int(($_hostmachine_k{$key}/1024)*100)/100;
+		if ($key eq "Unknown") {
+			print "<TR><TD CLASS=LEFT><a href=\"$DirCgi$PROG.$Extension?action=unknownip&site=$LocalSite&year=$YearRequired&month=$MonthRequired&lang=$Lang\">$message[1][$Lang]</a></TD><TD>$_hostmachine_p{$key}</TD><TD>$_hostmachine_h{$key}</TD><TD>$kilo</TD><TD><a href=\"$DirCgi$PROG.$Extension?action=unknownip&site=$LocalSite&year=$YearRequired&month=$MonthRequired&lang=$Lang\">$message[3][$Lang]</a></TD></TR>\n";
+			}
 		else {
-			print "<td>-</td>";
+			$yearcon=substr($_hostmachine_l{$key},0,4);
+			$monthcon=substr($_hostmachine_l{$key},4,2);
+			$daycon=substr($_hostmachine_l{$key},6,2);
+			$hourcon=substr($_hostmachine_l{$key},8,2);
+			$mincon=substr($_hostmachine_l{$key},10,2);
+			print "<tr><td CLASS=LEFT>$key</td><TD>$_hostmachine_p{$key}</TD><TD>$_hostmachine_h{$key}</TD><TD>$kilo</TD>";
+			if ($daycon ne "") {
+				if ($Lang != 0) { print "<td>$daycon/$monthcon/$yearcon - $hourcon:$mincon</td></tr>"; }
+				else { print "<td>$daycon $monthlib{$monthcon} $yearcon - $hourcon:$mincon</td></tr>"; }
+			}
+			else {
+				print "<td>-</td>";
+			}
 		}
+		$total_p += $_hostmachine_p{$key};
+		$total_h += $_hostmachine_h{$key};
+		$total_k += $_hostmachine_k{$key};
 	}
-
-    $total_p += $_hostmachine_p{$key};
-    $total_h += $_hostmachine_h{$key};
-    $total_k += $_hostmachine_k{$key};
-  }
-  $count++;
-  if (!(($SortDir<0 && $count<$MaxNbOfHostsShown) || ($SortDir>0 && $#sorthosts_p-$MaxNbOfHostsShown < $count))) { last; }
+	$count++;
+	if (!(($SortDir<0 && $count<$MaxNbOfHostsShown) || ($SortDir>0 && $#sorthosts_p-$MaxNbOfHostsShown < $count))) { last; }
 }
 $rest_p=$TotalPages-$total_p;
 $rest_h=$TotalHits-$total_h;
@@ -3188,4 +3207,3 @@ foreach $key (@sorterrors) {
 &html_end;
 
 0;	# Do not remove this line
-
