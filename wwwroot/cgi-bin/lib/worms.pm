@@ -16,10 +16,10 @@
 # to web server.
 #-------------------------------------------------------
 @WormsSearchIDOrder = (
-"/default.ida?",
-"exe?/c+dir",
-#"root.exe?/c",
-#"cmd.exe?/c",
+'/default.ida?',
+'exe?/c+dir',
+#'root.exe?/c',
+#'cmd.exe?/c',
 );
 
 
@@ -27,20 +27,20 @@
 # Each Worms search ID is associated to a string that is unique name of worm.
 #--------------------------------------------------------------------------
 %WormsHashID	= (
-"/default.ida?","code_red",
-"exe?/c+dir","nimba"
-#"root.exe?/c","nimba",
-#"cmd.exe?/c","nimba"
+'/default.ida?','code_red',
+'exe?/c+dir','nimba'
+#'root.exe?/c','nimba',
+#'cmd.exe?/c','nimba'
 );
 
 
 # WormsHashLib
-# Worms name list ("worm unique id in lower case","worm clear text")
+# Worms name list ('worm unique id in lower case','worm clear text')
 # Each unique ID string is associated to a label
 #-------------------------------------------------------
 %WormsHashLib   = (
-"code_red","Code Red family worm",
-"nimba","Nimba family worm"
+'code_red','Code Red family worm',
+'nimba','Nimba family worm'
 );
 
 
