@@ -166,16 +166,16 @@ $LevelForSearchEnginesDetection $LevelForKeywordsDetection
 $LevelForSearchEnginesDetection, $LevelForKeywordsDetection)=
 (2,1,1,1,1,1);
 use vars qw/
-$DirLock $DirCgi $DirData $DirIcons $DirLang $AWScript $ArchiveFileName
+$LastLineChecksum $DirLock $DirCgi $DirData $DirIcons $DirLang $AWScript $ArchiveFileName
 $AllowAccessFromWebToFollowingIPAddresses $HTMLHeadSection $HTMLEndSection $LinksToWhoIs $LinksToIPWhoIs
 $LogFile $LogFormat $LogSeparator $Logo $LogoLink $StyleSheet $WrapperScript $SiteDomain
 $UseHTTPSLinkForUrl $URLQuerySeparators $URLWithAnchor $ErrorMessages
 /;
-($DirLock, $DirCgi, $DirData, $DirIcons, $DirLang, $AWScript, $ArchiveFileName,
+($LastLineChecksum, $DirLock, $DirCgi, $DirData, $DirIcons, $DirLang, $AWScript, $ArchiveFileName,
 $AllowAccessFromWebToFollowingIPAddresses, $HTMLHeadSection, $HTMLEndSection, $LinksToWhoIs, $LinksToIPWhoIs,
 $LogFile, $LogFormat, $LogSeparator, $Logo, $LogoLink, $StyleSheet, $WrapperScript, $SiteDomain,
 $UseHTTPSLinkForUrl, $URLQuerySeparators, $ErrorMessages)=
-('','','','','','','','','','','','','','','','','','','','','','','');
+('','','','','','','','','','','','','','','','','','','','','','','','');
 use vars qw/
 $color_Background $color_TableBG $color_TableBGRowTitle
 $color_TableBGTitle $color_TableBorder $color_TableRowTitle $color_TableTitle
@@ -208,14 +208,14 @@ $pos_referer = $pos_agent = $pos_query = $pos_gzipin = $pos_gzipout = $pos_gzipr
 $pos_emails = $pos_emailr = $pos_hostr = -1;
 use vars qw/
 $lowerval
-$LastLine $LastUpdate
+$LastLine $LastLineOffset $LastUpdate
 $TotalUnique $TotalVisits $TotalHostsKnown $TotalHostsUnknown
 $TotalPages $TotalHits $TotalBytes $TotalEntries $TotalExits $TotalBytesPages $TotalDifferentPages
 $TotalKeyphrases $TotalKeywords $TotalDifferentKeyphrases $TotalDifferentKeywords
 $TotalSearchEnginesPages $TotalSearchEnginesHits $TotalRefererPages $TotalRefererHits $TotalDifferentSearchEngines $TotalDifferentReferer
 /;
 $lowerval = 0;
-$LastLine = $LastUpdate = 0;
+$LastLine = $LastLineOffset = $LastUpdate = 0;
 $TotalUnique = $TotalVisits = $TotalHostsKnown = $TotalHostsUnknown = 0;
 $TotalPages = $TotalHits = $TotalBytes = $TotalEntries = $TotalExits = $TotalBytesPages = $TotalDifferentPages = 0;
 $TotalKeyphrases = $TotalKeywords = $TotalDifferentKeyphrases = $TotalDifferentKeywords = 0;
@@ -1691,6 +1691,29 @@ sub Check_Plugin_Version {
 
 
 #------------------------------------------------------------------------------
+# Function:     Return a checksum for an array of string
+# Parameters:	Array of string
+# Input:		None
+# Output:		None
+# Return: 		Checksum
+#------------------------------------------------------------------------------
+sub CheckSum {
+	my $string=shift;
+	my $checksum=0;
+#	use MD5;
+# 	$checksum = MD5->hexhash($string);
+	my $i=0; my $j=0; 
+	while ($i < length($string)) { 
+		my $c=substr($string,$i,1);
+		$checksum+=(ord($c)<<(8*$j));
+		if ($j++ > 3) { $j=0; }
+		$i++;
+	}
+ 	return "$checksum";
+}
+
+
+#------------------------------------------------------------------------------
 # Function:     Load plugins files
 # Parameters:	None
 # Input:		$DIR @PluginsToLoad
@@ -1768,7 +1791,7 @@ sub Read_Plugins {
 
 #--------------------------------------------------------------------
 # Function:		Read history file and create/update tmp history file
-# Parameters:	year,month,withupdate,withpurge,part to load
+# Parameters:	year,month,withupdate,withpurge,part_to_load[,lastlineoffset,lastlinechecksum]
 # Input:		$DirData $PROG $FileSuffix $LastLine
 # Output:		None
 # Return:		Tmp history file name or '' if withupdate is 0
@@ -1780,6 +1803,10 @@ sub Read_History_With_TmpUpdate {
 	my $withupdate=shift||0;
 	my $withpurge=shift||0;
 	my $part=shift||'';
+
+	my $lastlineoffset=shift||0;
+	my $lastlinechecksum=shift||'';
+
 	my %allsections=('general'=>1,'time'=>2,'visitor'=>3,'day'=>4,
 					 'domain'=>5,'login'=>6,'robot'=>7,'emailsender'=>8,'emailreceiver'=>9,
 					 'session'=>10,'sider'=>11,'filetypes'=>12,
@@ -1797,8 +1824,8 @@ sub Read_History_With_TmpUpdate {
 	my $readvisitorforbackward=0;
 
 	# In standard use of AWStats, the DayRequired variable is always empty
-	if ($DayRequired) { if ($Debug) { debug("Call to Read_History_With_TmpUpdate [$year,$month,withupdate=$withupdate,withpurge=$withpurge,part=$part] ($DayRequired)"); } }
-	else { if ($Debug) { debug("Call to Read_History_With_TmpUpdate [$year,$month,withupdate=$withupdate,withpurge=$withpurge,part=$part]"); } }
+	if ($DayRequired) { if ($Debug) { debug("Call to Read_History_With_TmpUpdate [$year,$month,withupdate=$withupdate,withpurge=$withpurge,part=$part,lastlineoffset=$lastlineoffset,lastlinechecksum=$lastlinechecksum] ($DayRequired)"); } }
+	else { if ($Debug) { debug("Call to Read_History_With_TmpUpdate [$year,$month,withupdate=$withupdate,withpurge=$withpurge,part=$part,lastlineoffset=$lastlineoffset,lastlinechecksum=$lastlinechecksum]"); } }
 
 	# Define SectionsToLoad (which sections to load)
 	my %SectionsToLoad = ();
@@ -1904,7 +1931,12 @@ sub Read_History_With_TmpUpdate {
 				if ($Debug) { debug(" Begin of GENERAL section"); }
 				next;
 			}
-			if ($field[0] eq 'LastLine')        { if (! $LastLine || $LastLine < int($field[1])) { $LastLine=int($field[1]); }; next; }
+			if ($field[0] eq 'LastLine')        {
+				if (! $LastLine || $LastLine < int($field[1])) { $LastLine=int($field[1]); };
+				if ($field[2]) { $LastLineOffset=int($field[2]); }
+				if ($field[3]) { $LastLineChecksum=$field[3]; }
+				next;
+			}
 			if ($field[0] eq 'FirstTime')       { if (! $FirstTime{$year.$month} || $FirstTime{$year.$month} > int($field[1])) { $FirstTime{$year.$month}=int($field[1]); }; next; }
 			if ($field[0] eq 'LastTime')        { if (! $LastTime{$year.$month} || $LastTime{$year.$month} < int($field[1])) { $LastTime{$year.$month}=int($field[1]); }; next; }
 			if ($field[0] eq 'LastUpdate')      {
@@ -1954,7 +1986,7 @@ sub Read_History_With_TmpUpdate {
 				}
 
 				delete $SectionsToLoad{'general'};
-				if ($SectionsToSave{'general'}) { Save_History('general',$year,$month); delete $SectionsToSave{'general'}; }
+				if ($SectionsToSave{'general'}) { Save_History('general',$year,$month,$lastlineoffset,$lastlinechecksum); delete $SectionsToSave{'general'}; }
 
 				# Test for backward compatibility
 				if ($versionnum < 5000 && ! $withupdate) {
@@ -2946,19 +2978,20 @@ sub Read_History_With_TmpUpdate {
 
 	# Write all unwrote sections in section order ('general','time', 'day','sider','session' and other...)
 	foreach my $key (sort { $SectionsToSave{$a} <=> $SectionsToSave{$b} } keys %SectionsToSave) {
-		Save_History("$key",$year,$month);
+		Save_History("$key",$year,$month,$lastlineoffset,$lastlinechecksum);
 	}
 	%SectionsToSave=();
 
-	# Update last data in general section and close files
+	# Update offset in map section and last data in general section then close files
 	if ($withupdate) {
-		# Save last data in general sections
+		# Update offset of sections in the MAP section
 		foreach my $key (sort { $PosInFile{$a} <=> $PosInFile{$b} } keys %ValueInFile) {
 			debug(" Update offset of section $key=$ValueInFile{$key} in file at offset $PosInFile{$key}");
 			if ($PosInFile{"$key"}) {
 				seek(HISTORYTMP,$PosInFile{"$key"},0); print HISTORYTMP $ValueInFile{"$key"};
 			}
 		}
+		# Save last data in general sections
 		debug(" Update MonthVisits=$MonthVisits{$year.$month} in file at offset $PosInFile{TotalVisits}");
 		seek(HISTORYTMP,$PosInFile{"TotalVisits"},0); print HISTORYTMP $MonthVisits{$year.$month};
 		debug(" Update MonthUnique=$MonthUnique{$year.$month} in file at offset $PosInFile{TotalUnique}");
@@ -2997,8 +3030,8 @@ sub Read_History_With_TmpUpdate {
 
 #--------------------------------------------------------------------
 # Function:		Save a part of history file
-# Parameters:	part_to_save year month
-# Input:		$VERSION HISTORYTMP $nowyear $nowmonth $nowday $nowhour $nowmin $nowsec
+# Parameters:	part_to_save,year,month[,lastlineoffset,lastlinechecksum]
+# Input:		$VERSION HISTORYTMP $nowyear $nowmonth $nowday $nowhour $nowmin $nowsec $LastLineOffset $LastLineChecksum
 # Output:		None
 # Return:		None
 #--------------------------------------------------------------------
@@ -3007,7 +3040,10 @@ sub Save_History {
 	my $year=shift||'';
 	my $month=shift||'';
 
-	if ($Debug) { debug(" Save_History (sectiontosave=$sectiontosave year=$year month=$month)",3); }
+	my $lastlineoffset=shift||$LastLineOffset;
+	my $lastlinechecksum=shift||$LastLineChecksum;
+
+	if ($Debug) { debug(" Save_History [sectiontosave=$sectiontosave,year=$year,month=$month,lastlineoffset=$lastlineoffset]",3); }
 	my $spacebar="                    ";
 	my %keysinkeylist=();
 
@@ -3061,7 +3097,7 @@ sub Save_History {
 	if ($sectiontosave eq 'general') {
 		if ($LastUpdate < int("$nowyear$nowmonth$nowday$nowhour$nowmin$nowsec")) { $LastUpdate=int("$nowyear$nowmonth$nowday$nowhour$nowmin$nowsec"); }
 		print HISTORYTMP "\n";
-		print HISTORYTMP "# LastLine    = Date of last record processed\n";
+		print HISTORYTMP "# LastLine    = Date of last record processed - Last line offset in last log - Last line signature value\n";
 		print HISTORYTMP "# FirstTime   = Date of first visit for history file\n";
 		print HISTORYTMP "# LastTime    = Date of last visit for history file\n";
 		print HISTORYTMP "# LastUpdate  = Date of last update - Nb of lines read - Nb of old records - Nb of new records - Nb of corrupted - Nb of dropped\n";
@@ -3071,7 +3107,7 @@ sub Save_History {
 		print HISTORYTMP "# MonthHostsUnKnown = Number of hosts unknown\n";
 		$ValueInFile{$sectiontosave}=tell HISTORYTMP;
 		print HISTORYTMP "BEGIN_GENERAL 8\n";
-		print HISTORYTMP "LastLine ".($LastLine>0?$LastLine:$LastTime{$year.$month})."\n";
+		print HISTORYTMP "LastLine ".($LastLine>0?$LastLine:$LastTime{$year.$month})." $lastlineoffset $lastlinechecksum\n";
 		print HISTORYTMP "FirstTime $FirstTime{$year.$month}\n";
 		print HISTORYTMP "LastTime $LastTime{$year.$month}\n";
 		print HISTORYTMP "LastUpdate $LastUpdate $NbOfLinesRead $NbOfOldLines $NbOfNewLines $NbOfLinesCorrupted $NbOfLinesDropped\n";
@@ -4823,6 +4859,7 @@ if ($MigrateStats) {
 	}
 	if ($EnableLockForUpdate) {	&Lock_Update(0); }
 	print "Migration for file '$MigrateStats' successful."; print $ENV{'GATEWAY_INTERFACE'}?"<br>\n":"\n";
+	&html_end;
 	exit 0;
 }
 
@@ -4839,7 +4876,7 @@ if ($FrameName eq 'index') {
 	print "<frame name=\"mainright\" src=\"$AWScript?${NewLinkParams}framename=mainright\" noresize scrolling=\"YES\" noborder>\n";
 	print "<noframes><body>Your browser does not support frames. You must set AWStats UseFramesWhenCGI parameter to 0 to see your reports.</body></noframes>\n";
 	print "</frameset>\n";
-	&html_end();
+	&html_end;
 	exit 0;
 }
 
@@ -4867,6 +4904,8 @@ if ($lastyearbeforeupdate) {
 if ($Debug) {
 	debug("Last year=$lastyearbeforeupdate - Last month=$ListOfYears{$lastyearbeforeupdate}");
 	debug("LastLine=$LastLine");
+	debug("LastLineOffset=$LastLineOffset");
+	debug("LastLineChecksum=$LastLineChecksum");
 }
 
 # Init vars
@@ -4950,13 +4989,24 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 	binmode LOG;	# Avoid premature EOF due to log files corrupted with \cZ or bin chars
 
 	my @field=();
-	my $counter=0;
+	my $counter=0; my $lastlineoffsetsav=0; my $lastlineoffset=0;
 	# Reset counter for benchmark (first call to GetDelaySinceStart)
 	&GetDelaySinceStart(1);
 	if (! scalar keys %HTMLOutput) { print "Phase 1 : First bypass old records, searching new record...\n"; }
+
+	# Try a direct seek access to save time
+	if ($LastLine && $LastLineOffset && $LastLineChecksum) {
+		if (1 == 2) {
+			if (! scalar keys %HTMLOutput) { print "Direct access to new records was successfull\n"; }
+		}
+	}
+
 	while (<LOG>) {
-		chomp $_; s/\r$//;
+ 		chomp $_; s/\r$//;
 		$NbOfLinesRead++;
+
+ 		$lastlineoffset=$lastlineoffsetsav;
+ 		$lastlineoffsetsav=tell LOG;
 
 		if ($ShowSteps) {
 			if ((++$NbOfLinesShowsteps & $NBOFLINESFORBENCHMARK) == 0) {
@@ -5075,11 +5125,13 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 		}
 
 		# Here, field array, timerecord and yearmonthdayrecord are initialized for log record
-		if ($Debug) { debug(" This is a not already processed record ($timerecord)",4); }
+		if ($Debug) { debug("  This is a not already processed record ($timerecord)",4); }
 
 		# We found a new line
 		#----------------------------------------
-		if ($timerecord > $LastLine) { $LastLine = $timerecord; }	# Test should always be true except with not sorted log files.
+		if ($timerecord > $LastLine) {
+			$LastLine = $timerecord;
+		}	# Test should always be true except with not sorted log files.
 
 		# TODO. Add robot in a list if URL is robots.txt (Note: robot referer value can be same than a normal browser)
 
@@ -5107,7 +5159,7 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 			# A new month to process
 			if ($lastprocessedmonth) {
 				# We save data of processed month
-				&Read_History_With_TmpUpdate($lastprocessedyear,$lastprocessedmonth,1,1,"all");
+				&Read_History_With_TmpUpdate($lastprocessedyear,$lastprocessedmonth,1,1,"all",$lastlineoffset,&CheckSum(join("\t",@field)));
 			}
 			$lastprocessedmonth=$monthrecord;$lastprocessedyear=$yearrecord;
 			$lastprocessedyearmonth=sprintf("%04i%02i",$lastprocessedyear,$lastprocessedmonth);
@@ -5304,7 +5356,7 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 				# Check in static DNS cache file
 				$HostResolved=$MyDNSTable{$Host};
 				if ($HostResolved) {
-					if ($Debug) { debug(" DNS lookup asked for $Host and found in DNS cache file: $HostResolved",4); }
+					if ($Debug) { debug("  DNS lookup asked for $Host and found in DNS cache file: $HostResolved",4); }
 				}
 				elsif ($DNSLookup==1) {
 					# Check in session cache (dynamic DNS cache file + session DNS cache)
@@ -5312,7 +5364,7 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 					if (! $HostResolved) {
 						if (@SkipDNSLookupFor && &SkipDNSLookup($Host)) {
 							$HostResolved=$TmpDNSLookup{$Host}='*';
-							if ($Debug) { debug(" No need of reverse DNS lookup for $Host, skipped at user request.",4); }
+							if ($Debug) { debug("  No need of reverse DNS lookup for $Host, skipped at user request.",4); }
 						}
 						else {
 							if ($ip == 4) {
@@ -5323,46 +5375,47 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 								else {
 									$TmpDNSLookup{$Host}=$HostResolved=$lookupresult;
 								}
-								if ($Debug) { debug(" Reverse DNS lookup for $Host done: $HostResolved",4); }
+								if ($Debug) { debug("  Reverse DNS lookup for $Host done: $HostResolved",4); }
 							}
 							elsif ($ip == 6) {
 								$TmpDNSLookup{$Host}=$HostResolved='*';
-								if ($Debug) { debug(" Reverse DNS lookup for $Host not available for IPv6",4); }
+								if ($Debug) { debug("  Reverse DNS lookup for $Host not available for IPv6",4); }
 							}
+							else { error("Bad value vor ip"); }
 						}
 					}
 				}
 				else {
 					$HostResolved='*';
-					if ($Debug) { debug(" DNS lookup by file asked for $Host but not found in DNS cache file.",4); }
+					if ($Debug) { debug("  DNS lookup by file asked for $Host but not found in DNS cache file.",4); }
 				}
 			}
 			else {
-				if ($Debug) { debug(" DNS lookup asked for $Host but this is not an IP address.",4); }
+				if ($Debug) { debug("  DNS lookup asked for $Host but this is not an IP address.",4); }
 				$DNSLookupAlreadyDone=$LogFile;
 			}
 		}
 		else {
 			if ($Host =~ /^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/) { $HostResolved='*'; $ip=4; }	# IPv4
 			elsif ($Host =~ /^[0-9A-F]*:/i) { $HostResolved='*'; $ip=6; }						# IPv6
-			if ($Debug) { debug(" No DNS lookup asked.",4); }
+			if ($Debug) { debug("  No DNS lookup asked.",4); }
 		}
 
 		# Analyze: Country (Top-level domain)
 		#------------------------------------
 		my $Domain='ip';
-		# Set $_ to host and resolve Domain from it
+		# Set $HostResolved to host and resolve Domain from it
 		if ($HostResolved eq '*') {
 			# $Host is an IP address and is not resolved (failed or not asked) or resolution gives an IP address
-			$_ = $Host;
+			$HostResolved = $Host;
 			# Resolve Domain
-			if ($PluginsLoaded{'GetCountryCodeByAddr'}{'geoip'}) { $Domain=GetCountryCodeByAddr_geoip($_); }
+			if ($PluginsLoaded{'GetCountryCodeByAddr'}{'geoip'}) { $Domain=GetCountryCodeByAddr_geoip($HostResolved); }
 		}
 		else {
 			# $Host has been resolved or was already a host name
-			$_ = lc($HostResolved?$HostResolved:$Host);
+			$HostResolved = lc($HostResolved?$HostResolved:$Host);
 			# Resolve Domain
-			if ($PluginsLoaded{'GetCountryCodeByName'}{'geoip'}) { $Domain=GetCountryCodeByName_geoip($_); }
+			if ($PluginsLoaded{'GetCountryCodeByName'}{'geoip'}) { $Domain=GetCountryCodeByName_geoip($HostResolved); }
 			elsif (/\.(\w+)$/) { $Domain=$1; }
 		}
 		# Store country
@@ -5373,7 +5426,7 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 		# Analyze: Host, URL and Session
 		#-------------------------------
 		if ($PageBool) {
-			my $timehostl=$_host_l{$_};
+			my $timehostl=$_host_l{$HostResolved};
 			if ($timehostl) {
 				# A visit for this host was already detected
 # TODO everywhere there is $VISITTIMEOUT
@@ -5381,77 +5434,77 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 #				if ($timerecord > ($timehostl+$VISITTIMEOUT+($dateparts[3]>$daytimehostl?$NEWDAYVISITTIMEOUT:0))) {
 				if ($timerecord > ($timehostl+$VISITTIMEOUT)) {
 					# This is a second visit or more
-					if (! $_waithost_s{$_}) {
+					if (! $_waithost_s{$HostResolved}) {
 						# This is a second visit or more
 						# We count 'visit','exit','entry','DayVisits'
-						if ($Debug) { debug("  This is a second visit for $_.",4); }
-						my $timehosts=$_host_s{$_};
-						my $page=$_host_u{$_};
+						if ($Debug) { debug("  This is a second visit for $HostResolved.",4); }
+						my $timehosts=$_host_s{$HostResolved};
+						my $page=$_host_u{$HostResolved};
 						if ($page) { $_url_x{$page}++; }
 						$_url_e{$field[$pos_url]}++;
 						$DayVisits{$yearmonthdayrecord}++;
 						# We can't count session yet because we don't have the start so
 						# we save save params of first 'wait' session
-						$_waithost_l{$_}=$timehostl;
-						$_waithost_s{$_}=$timehosts;
-						$_waithost_u{$_}=$page;
+						$_waithost_l{$HostResolved}=$timehostl;
+						$_waithost_s{$HostResolved}=$timehosts;
+						$_waithost_u{$HostResolved}=$page;
 					}
 					else {
 						# This is third visit or more
 						# We count 'session','visit','exit','entry','DayVisits'
-						if ($Debug) { debug("  This is a third visit or more for $_.",4); }
-						my $timehosts=$_host_s{$_};
-						my $page=$_host_u{$_};
+						if ($Debug) { debug("  This is a third visit or more for $HostResolved.",4); }
+						my $timehosts=$_host_s{$HostResolved};
+						my $page=$_host_u{$HostResolved};
 						if ($page) { $_url_x{$page}++; }
 						$_url_e{$field[$pos_url]}++;
 						$DayVisits{$yearmonthdayrecord}++;
 						if ($timehosts) { $_session{GetSessionRange($timehosts,$timehostl)}++; }
 					}
 					# Save new session properties
-					$_host_s{$_}=$timerecord;
-					$_host_l{$_}=$timerecord;
-					$_host_u{$_}=$field[$pos_url];
+					$_host_s{$HostResolved}=$timerecord;
+					$_host_l{$HostResolved}=$timerecord;
+					$_host_u{$HostResolved}=$field[$pos_url];
 				}
 				elsif ($timerecord > $timehostl) {
 					# This is a same visit we can count
-					if ($Debug) { debug("  This is same visit still running for $_. host_l/host_u changed to $timerecord/$field[$pos_url]",4); }
-					$_host_l{$_}=$timerecord;
-					$_host_u{$_}=$field[$pos_url];
+					if ($Debug) { debug("  This is same visit still running for $HostResolved. host_l/host_u changed to $timerecord/$field[$pos_url]",4); }
+					$_host_l{$HostResolved}=$timerecord;
+					$_host_u{$HostResolved}=$field[$pos_url];
 				}
 				elsif ($timerecord == $timehostl) {
 					# This is a same visit we can count
-					if ($Debug) { debug("  This is same visit still running for $_. host_l/host_u changed to $timerecord/$field[$pos_url]",4); }
-					$_host_u{$_}=$field[$pos_url];
+					if ($Debug) { debug("  This is same visit still running for $HostResolved. host_l/host_u changed to $timerecord/$field[$pos_url]",4); }
+					$_host_u{$HostResolved}=$field[$pos_url];
 				}
-				elsif ($timerecord < $_host_s{$_}) {
+				elsif ($timerecord < $_host_s{$HostResolved}) {
 					# Should happens only with not correctly sorted log files
-					if ($Debug) { debug("  This is same visit still running for $_ with start not in order. host_s changed to $timerecord",4); }
-					if (! $_waithost_s{$_}) {
-						# We can change entry page not yet counted as the save entry page was waithost_e if $_waithost_s{$_} is not defined
-						$_waithost_e{$_}=$field[$pos_url];
+					if ($Debug) { debug("  This is same visit still running for $HostResolved with start not in order. host_s changed to $timerecord",4); }
+					if (! $_waithost_s{$HostResolved}) {
+						# We can change entry page not yet counted as the save entry page was waithost_e if $_waithost_s{$HostResolved} is not defined
+						$_waithost_e{$HostResolved}=$field[$pos_url];
 					}
 					else {
 						# We can't change entry counted as we dont't know what was the url counted as entry
 					}
-					$_host_s{$_}=$timerecord;
+					$_host_s{$HostResolved}=$timerecord;
 				}
 				else {
-					if ($Debug) { debug("  This is same visit still running for $_ with hit between start and last hits. No change",4); }
+					if ($Debug) { debug("  This is same visit still running for $HostResolved with hit between start and last hits. No change",4); }
 				}
 			}
 			else {
 				# This is a new visit (may be). First new visit found for this host. We save in wait array the entry page to count later
-				if ($Debug) { debug("  New session (may be) for $_. Save in wait array to see later",4); }
-				$_waithost_e{$_}=$field[$pos_url];
+				if ($Debug) { debug("  New session (may be) for $HostResolved. Save in wait array to see later",4); }
+				$_waithost_e{$HostResolved}=$field[$pos_url];
 				# Save new session properties
-				$_host_u{$_}=$field[$pos_url];
-				$_host_s{$_}=$timerecord;
-				$_host_l{$_}=$timerecord;
+				$_host_u{$HostResolved}=$field[$pos_url];
+				$_host_s{$HostResolved}=$timerecord;
+				$_host_l{$HostResolved}=$timerecord;
 			}
-			$_host_p{$_}++;
+			$_host_p{$HostResolved}++;
 		}
-		$_host_h{$_}++;
-		$_host_k{$_}+=int($field[$pos_size]);
+		$_host_h{$HostResolved}++;
+		$_host_k{$HostResolved}+=int($field[$pos_size]);
 
 		# Analyze: Browser and OS
 		#------------------------
@@ -5791,7 +5844,7 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 						print " _url_p:".(scalar keys %_url_p)." _url_k:".(scalar keys %_url_k)." _url_e:".(scalar keys %_url_e)." _url_x:".(scalar keys %_url_x)."\n";
 						print " _waithost_e:".(scalar keys %_waithost_e)." _waithost_l:".(scalar keys %_waithost_l)." _waithost_s:".(scalar keys %_waithost_s)." _waithost_u:".(scalar keys %_waithost_u)."\n";
 					}
-					&Read_History_With_TmpUpdate($lastprocessedyear,$lastprocessedmonth,1,1,"all");
+					&Read_History_With_TmpUpdate($lastprocessedyear,$lastprocessedmonth,1,1,"all",$lastlineoffset,&CheckSum(join("\t",@field)));
 					&GetDelaySinceStart(1);	$NbOfLinesShowsteps=1;
 				}
 			}
@@ -5810,11 +5863,10 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 		debug("End of processing log file (AWStats memory cache is TmpDNSLookup=".(scalar keys %TmpDNSLookup)." TmpBrowser=".(scalar keys %TmpBrowser)." TmpOS=".(scalar keys %TmpOS)." TmpRefererServer=".(scalar keys %TmpRefererServer)." TmpRobot=".(scalar keys %TmpRobot).")",1);
 	}
 
-
 	# Save current processed month $lastprocessedmonth
 	# If lastprocessedmonth > 0 means there is at least on approved new record in log or at least one existing history file
 	if ($lastprocessedmonth) {
-		&Read_History_With_TmpUpdate($lastprocessedyear,$lastprocessedmonth,1,1,"all");
+		&Read_History_With_TmpUpdate($lastprocessedyear,$lastprocessedmonth,1,1,"all",$lastlineoffset,&CheckSum(join("\t",@field)));
 	}
 
 	# Process the Rename - Archive - Purge phase
@@ -6164,7 +6216,7 @@ if (scalar keys %HTMLOutput) {
 
 	# Exit if left frame
 	if ($FrameName eq 'mainleft') {
-		&html_end();
+		&html_end;
 		exit 0;
 	}
 
@@ -8484,44 +8536,51 @@ else {
 
 #-------------------------------------------------------
 # ALGORITHM SUMMARY
+#
 # Read config file
-# Init variables
+# Check config and Init variables
+# html_head
 #
 # If 'migrate'
 #   We create/update tmp file with
 #     &Read_History_With_TmpUpdate(year,month,UPDATE,NOPURGE,"all");
 #   Rename the tmp file
+#   html_end
+#   Exit
 # End of 'migrate'
 #
 # Get last history file name
-# Get value for LastLine with
+# Get value for $LastLine $LastLineOffset $LastLineChecksum with
 #	&Read_History_With_TmpUpdate(lastyear,lastmonth,NOUPDATE,NOPURGE,"general");
 #
 # &Init_HashArray()
 #
 # If 'update'
 #   Loop on each new line in log file
-#	  Drop wrong virtual host
-#     Drop wrong protocol
-#     Drop wrong date
-#     If line older than LastLine, skip
-#     If new line
-#        Skip line for SkipHosts
-#        Skip line for SkipFiles
-#        Skip line for not OnlyHosts
-#        Skip line for not OnlyFiles
-#        Skip line for SkipUserAgent
-#        If other month/year, create/update tmp file and purge data arrays with
-#          &Read_History_With_TmpUpdate(lastprocessedyear,lastprocessedmonth,UPDATE,PURGE,"all");
-#        Check protocol and complete %_error_, %_sider404 and %_referrer404
-#        Check robot and complete %_robot
-#        ...
-#        If too many records, we flush data arrays with
-#          &Read_History_With_TmpUpdate($lastprocessedyear,$lastprocessedmonth,UPDATE,PURGE,"all");
-#     End of new line
+#     lasttimeoffsetnew=file pointer position
+#     If line corrupted, skip --> next on loop
+#	  Drop wrong virtual host --> next on loop
+#     Drop wrong protocol --> next on loop
+#     Drop wrong date --> next on loop
+#     If line older than $LastLine, skip --> next on loop
+#     So it's new line
+#     $LastLine = time or record
+#     Skip line for @SkipHosts --> next on loop
+#     Skip line for @SkipFiles --> next on loop
+#     Skip line for not @OnlyHosts --> next on loop
+#     Skip line for not @OnlyFiles --> next on loop
+#     Skip line for @SkipUserAgent --> next on loop
+#     So it's new line approved
+#     If other month/year, create/update tmp file and purge data arrays with
+#       &Read_History_With_TmpUpdate(lastprocessedyear,lastprocessedmonth,UPDATE,PURGE,"all",lastlineoffset,checksum);
+#     Check protocol and complete %_error_, %_sider404 and %_referrer404
+#     Check robot and complete %_robot
+#     ...
+#     If too many records, we flush data arrays with
+#       &Read_History_With_TmpUpdate($lastprocessedyear,$lastprocessedmonth,UPDATE,PURGE,"all",lastlineoffset,checksum);
 #   End of loop
 #   Create/update tmp file
-#	  &Read_History_With_TmpUpdate($lastprocessedyear,$lastprocessedmonth,UPDATE,PURGE,"all")
+#	  &Read_History_With_TmpUpdate($lastprocessedyear,$lastprocessedmonth,UPDATE,PURGE,"all",lastlineoffset,checksum)
 #   Rename all tmp files
 # End of 'update'
 #
@@ -8532,6 +8591,7 @@ else {
 #     &Read_History_With_TmpUpdate($YearRequired,monthloop,NOUPDATE,NOPURGE,"all" or "general time" if not required month)
 #   End of loop
 #   Show data arrays in HTML page
+#   html_end
 # End of 'output'
 #-------------------------------------------------------
 
