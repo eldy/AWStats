@@ -7,10 +7,10 @@
 <meta name="title" content="AWStats Documentation - Configuration directives and parameters">
 <title>AWStats Documentation - Configuration directives and parameters</title>
 <link rel="stylesheet" href="styles.css" type="text/css">
+<!-- $Revision$ - $Author$ - $Date$ -->
 </head>
 
 <body topmargin=10 leftmargin=5>
-<!-- $Revision$ - $Author$ - $Date$ -->
 
 
 <table style="font: 10pt arial,helvetica,verdana" cellpadding=0 cellspacing=0 border=0 bgcolor=#FFFFFF width=100%>
@@ -78,7 +78,6 @@ it with its value when reading it), follow the example:<br>
 <li><a href="#WarningMessages">WarningMessages</a>
 <li><a href="#NbOfLinesForCorruptedLog">NbOfLinesForCorruptedLog</a>
 <li><a href="#SplitSearchString">SplitSearchString</a>
-<li><a href="#Expires">Expires</a>
 <li><a href="#WrapperScript">WrapperScript</a>
 </ul>
 
@@ -92,6 +91,7 @@ it with its value when reading it), follow the example:<br>
 
 <br><b>OPTIONAL APPEARANCE SETUP SECTION (Not required but increase AWStats features)</b><br>
 <ul>
+<li><a href="#Expires">Expires</a>
 <li><a href="#MaxRowsInHTMLOutput">MaxRowsInHTMLOutput</a>
 <li><a href="#Lang">Lang</a>
 <li><a href="#DirLang">DirLang</a>
@@ -104,6 +104,7 @@ it with its value when reading it), follow the example:<br>
 <li><a href="#Show">ShowHostsStats</a>
 <li><a href="#Show">ShowAuthenticatedUsers</a>
 <li><a href="#Show">ShowRobotsStats</a>
+<li><a href="#Show">ShowSessionsStats</a>
 <li><a href="#Show">ShowPagesStats</a>
 <li><a href="#Show">ShowCompressionStats</a>
 <li><a href="#Show">ShowFileTypesStats</a>
@@ -159,6 +160,8 @@ it with its value when reading it), follow the example:<br>
 <li><a href="#color_">color_h</a>
 <li><a href="#color_">color_k</a>
 <li><a href="#color_">color_s</a>
+<li><a href="#color_">color_e</a>
+<li><a href="#color_">color_x</a>
 </ul>
 
 
@@ -166,6 +169,10 @@ it with its value when reading it), follow the example:<br>
 
 <a name="LogFile"><b>LogFile</b></a><br>
 <b>Version : </b>1.0 +<br>
+3.1 for tags %YYYY-n,%YY-n,%MM-n,%DD-n,%HH-n<br>
+3.2 for tag %WM-n<br>
+4.0 for tag %DW-n<br>
+4.1 for tag %NS-n<br>
 <br># "LogFile" contains the web server logfile to analyze.
 <br># You can use a full path or relative path from awstats.pl directory.
 <br># Example: "/var/log/apache/access.log"
@@ -179,13 +186,14 @@ it with its value when reading it), follow the example:<br>
 <br>#  %MM-n    is replaced with month we were n hours ago
 <br>#  %DD-n    is replaced with day we were n hours ago
 <br>#  %HH-n    is replaced with hour we were n hours ago
+<br>#  %NS-n    is replaced with number of seconds at 00:00 since 1970
 <br>#  %WM-n    is replaced with the week number in month (1-5)
 <br>#  %DW-n    is replaced with the day number in week (1-7, 1=sunday)
 <br>#                              use n=24 if you need (1-7, 1=monday)
 <br>#  You can use 0 for n if you need current year, month, day, hour...
 <br># Example: "/var/log/access_log.%YYYY-0%MM-0%DD-0.log"
 <br># Example: "C:/WINNT/system32/LogFiles/W3SVC1/ex%YY-24%MM-24%DD-24.log"
-<br # Example: "/var/mylog.%WN.%DW-24"
+<!-- <br># Example: "/var/mylog.%WN.%DW-24" -->
 <br>#
 <br>LogFile="/var/log/httpd/mylog.log"
 
@@ -193,6 +201,10 @@ it with its value when reading it), follow the example:<br>
 
 <a name="LogFormat"><b>LogFormat</b></a><br>
 <b>Version : </b>2.1 +<br>
+3.1 for tags %host,%logname,%time1,%time2,%methodurl,%methodurlnoprot,%method,%url,
+%query,%code,%bytesd,%refererquot,%referer,%uaquot,%ua,%other<br>
+3.2 for tags %gzipin,%gzipout<br>
+4.0 for tags %gzipratio,%syslog<br>
 <br># Put here your log format (Must agree with your web server. See setup
 <br># instructions in README.txt to know how to configure your web server to have
 <br># the required log format).
@@ -526,10 +538,10 @@ it with its value when reading it), follow the example:<br>
 <a name="NotPageList"><b>NotPageList</b></a><br>
 <b>Version : </b>3.2 +<br>
 <br># Add here a list of kind of url (file extension) that must be counted as
-<br># "Hit only" and not as a "Hit" and "Page viewed". You can set here all images
-<br># extensions as they are hit downloaded that must be counted but they are not
-<br># viewed pages. URL with such extensions are not included in the TOP Pages/URL
-<br># report.
+<br># "Hit only" and not as a "Hit" and "Page/Download". You can set here all
+<br># images extensions as they are hit downloaded that must be counted but they
+<br># are not viewed pages. URLs with such extensions are not included in the TOP
+<br># Pages/URL report.
 <br># Note: If you want to exclude your own URLs from stats (No Pages and no Hits
 <br># reported), you should use SkipFiles parameter instead.
 <br># Example: ""
@@ -649,17 +661,6 @@ it with its value when reading it), follow the example:<br>
 
 <br><br><hr>
 
-<a name="Expires"><b>Expires</b></a><br>
-<b>Version : </b>3.1 +<br>
-<br># You can add in the HTML report page a delay to force browsers to reload page
-<br># if page is loaded a second time after this delay (in seconds).
-<br># Example: 3600
-<br># Default: 0
-<br>#
-<br>Expires=0
-
-<br><br><hr>
-
 <a name="WrapperScript"><b>WrapperScript</b></a><br>
 <b>Version : </b>4.0 +<br>
 <br># For some particular integration needs, you may want to have CGI links to
@@ -683,6 +684,18 @@ it with its value when reading it), follow the example:<br>
 <br>LevelForBrowsersDetection=1	# 0 disables Browsers detection. No speed gain.
 <br>LevelForOSDetection=1		# 0 disables OS detection. No speed gain.
 <br>LevelForRefererAnalyze=1	# 0 will increase AWStats speed by 6%.
+
+<br><br><hr>
+
+<a name="Expires"><b>Expires</b></a><br>
+<b>Version : </b>3.1 +<br>
+<br># You can add in the HTML report page a delay to force browsers to not use cache
+<br># if page is loaded a second time after this delay (in seconds).
+<br># This parameter is not used when report are built with -staticlinks option.
+<br># Example: 3600
+<br># Default: 0
+<br>#
+<br>Expires=0
 
 <br><br><hr>
 
@@ -723,7 +736,12 @@ it with its value when reading it), follow the example:<br>
 <br><br><hr>
 
 <a name="Show"><b>Show...</b></a><br>
-<b>Version : </b>3.2 +<br>
+<b>Version : </b><br>
+3.2 for ShowHeader,ShowMenu,ShowMonthDayStats,ShowDaysOfWeekStats,ShowHoursStats,
+ShowDomainsStats,ShowHostsStats,ShowAuthenticatedUsers,ShowRobotsStats,
+ShowPagesStats,ShowCompressionStats,ShowFileTypesStats,ShowFileSizesStats,ShowBrowsersStats,
+ShowOSStats,ShowOriginStats,ShowKeyphrasesStats,ShowKeywordsStats,ShowHTTPErrorsStats<br>
+4.1 for ShowSessionsStats<br>
 <br># You choose here which summary report you want to see in the main page.
 <br># Whatever is your setup here, all detailed reports are still available.
 <br># So if you setup to 1 only ShowHeader, ShowMenu and ShowMonthDayStats, all
@@ -739,6 +757,7 @@ it with its value when reading it), follow the example:<br>
 <br>ShowHostsStats=1
 <br>ShowAuthenticatedUsers=0
 <br>ShowRobotsStats=1
+<br>ShowSessionsStats=1
 <br>ShowPagesStats=1
 <br>ShowCompressionStats=0		# Show report of compression stats when using mod_gzip
 <br>ShowFileTypesStats=1
@@ -914,7 +933,12 @@ it with its value when reading it), follow the example:<br>
 <br><br><hr>
 
 <a name="color_"><b>color_...</b></a><br>
-<b>Version : </b>Variable<br>
+<b>Version : </b><br>
+3.1 for color_Background,color_TableBGTitle,color_TableTitle,color_TableBG,
+color_TableRowTitle,color_TableBGRowTitle,color_TableBorder,color_text,
+color_textpercent,color_titletext,color_weekend,color_link,color_hover,
+color_u,color_v,color_p,color_h,color_k,color_s<br>
+4.1 for color_e,color_x<br>
 <br># Those colors parameters can be used (if StyleSheet parameter is not used)
 <br># to change AWStats look.
 <br># Example: color_name="RRGGBB"	# RRGGBB is Red Green Blue components in Hex
@@ -932,12 +956,14 @@ it with its value when reading it), follow the example:<br>
 <br>color_weekend="EAEAEA"			# Color for week-end days (Default = "EAEAEA")
 <br>color_link="0011BB"				# Color of HTML links (Default = "0011BB")
 <br>color_hover="605040"			# Color of HTML on-mouseover links (Default = "605040") 
-<br>color_u="FF9933"				# Background color for number of unique visitors (Default = "FF9933")
-<br>color_v="F3F300"				# Background color for number of visites (Default = "F3F300")
+<br>color_u="FFB055"				# Background color for number of unique visitors (Default = "FFB055")
+<br>color_v="F8E880"				# Background color for number of visites (Default = "F8E880")
 <br>color_p="4477DD"				# Background color for number of pages (Default = "4477DD")
 <br>color_h="66F0FF"				# Background color for number of hits (Default = "66F0FF")
-<br>color_k="339944"				# Background color for number of bytes (Default = "339944")
+<br>color_k="339944"				# Background color for number of bytes (Default = "2EA495")
 <br>color_s="8888DD"				# Background color for number of search (Default = "8888DD")
+<br>color_e="CEC2E8"				# Background color for number of entry pages (Default = "CEC2E8")
+<br>color_x="C1B2E2"				# Background color for number of exit pages (Default = "C1B2E2")
 <br>
 
 
