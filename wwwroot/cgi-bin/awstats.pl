@@ -9166,7 +9166,7 @@ if (scalar keys %HTMLOutput) {
 			&tab_head("$title",19,0,'visitors');
 			print "<tr bgcolor=\"#$color_TableBGRowTitle\">";
 			print "<th>";
-			if ($MonthRequired ne 'all') { print "$Message[81] : $TotalHostsKnown $Message[82], $TotalHostsUnknown $Message[1]<br>$TotalUnique $Message[11]</th>"; }
+			if ($MonthRequired ne 'all') { print "$Message[81] : $TotalHostsKnown $Message[82], $TotalHostsUnknown $Message[1]<br />$TotalUnique $Message[11]</th>"; }
 			else { print "$Message[81] : ".(scalar keys %_host_h)."</th>"; }
 			&ShowHostInfo('__title__');
 			if ($ShowHostsStats =~ /P/i) { print "<th bgcolor=\"#$color_p\" width=\"80\"".Tooltip(3).">$Message[56]</th>"; }
