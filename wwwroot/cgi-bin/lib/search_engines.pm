@@ -70,7 +70,7 @@
 # Minor chinese search engines
 'baidu\.com','search\.sina\.com','search\.sohu\.com',
 # Minor czech search engines
-'atlas\.cz','seznam\.cz','quick\.cz','centrum\.cz','najdi\.to','redbox\.cz',
+'atlas\.cz','seznam\.cz','quick\.cz','centrum\.cz','jyxo\.(cz|com)','najdi\.to','redbox\.cz',
 # Minor danish search-engines 
 'opasia\.dk', 'danielsen\.com', 'sol\.dk', 'jubii\.dk', 'find\.dk', 'edderkoppen\.dk', 'netstjernen\.dk', 'orbis\.dk', 'tyfon\.dk', '1klik\.dk', 'ofir\.dk',
 # Minor dutch search engines
@@ -177,6 +177,7 @@
 'seznam\.cz','seznam',
 'quick\.cz','quick',
 'centrum\.cz','centrum',
+'jyxo\.(cz|com)','jyxo',
 'najdi\.to','najdi',
 'redbox\.cz','redbox',
 # Minor danish search-engines 
@@ -310,7 +311,7 @@
 # Minor chinese search engines
 'baidu','word=', 'sina', 'word=', 'sohu','word=',
 # Minor czech search engines
-'atlas','searchtext=', 'seznam','w=', 'quick','query=', 'centrum','q=', 'najdi','dotaz=', 'redbox','srch=',
+'atlas','searchtext=', 'seznam','w=', 'quick','query=', 'centrum','q=', 'jyxo','s=', 'najdi','dotaz=', 'redbox','srch=',
 # Minor danish search engines
 'opasia','q=', 'danielsen','q=', 'sol','q=', 'jubii','soegeord=', 'finddk','words=', 'edderkoppen','query=', 'orbis','search_field=', '1klik','query=', 'ofir','querytext=',
 # Minor dutch search engines
@@ -419,7 +420,7 @@
 # Minor chinese search engines
 'baidu','Baidu', 'sina','Sina', 'sohu','Sohu',
 # Minor czech search engines
-'atlas','Atlas.cz',	'seznam','Seznam', 'quick','Quick.cz', 'centrum','Centrum.cz','najdi','Najdi.to','redbox','RedBox.cz',
+'atlas','Atlas.cz',	'seznam','Seznam', 'quick','Quick.cz', 'centrum','Centrum.cz', 'jyxo','Jyxo.cz', 'najdi','Najdi.to', 'redbox','RedBox.cz',
 # Minor danish search-engines
 'opasia','Opasia', 'danielsen','Thor (danielsen.com)', 'sol','SOL', 'jubii','Jubii', 'finddk','Find', 'edderkoppen','Edderkoppen', 'netstjernen','Netstjernen', 'orbis','Orbis', 'tyfon','Tyfon', '1klik','1Klik', 'ofir','Ofir',
 # Minor dutch search engines
