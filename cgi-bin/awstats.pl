@@ -87,7 +87,7 @@ $word, $yearcon, $yearfile, $yearmonthfile, $yeartoprocess) = ();
 @sortsearchwords = @sortsereferrals = @sortsider404 = @sortsiders = @sortunknownip =
 @sortunknownreferer = @sortunknownrefererbrowser = @wordlist = ();
 
-$VERSION="2.5 (build 17)";
+$VERSION="2.5 (build 18)";
 $Lang=0;
 
 # Default value
@@ -221,12 +221,12 @@ $BarImageHorizontal_k = "barrehk.png";
 "netscape","defined_later",
 "msie","defined_later",
 
-"libwww","LibWWW",
-"wget","Wget",
-"lynx","Lynx",
+"lynx","Lynx",						# Most frequent browser should be first in this list
 "opera","Opera",
+"wget","Wget",
 "22acidownload","22AciDownload",
 "aol\\-iweng","AOL-Iweng",
+"amaya","Amaya",
 "amigavoyager","AmigaVoyager",
 "antfresco","ANT Fresco",
 "bpftp","BPFTP",
@@ -262,7 +262,8 @@ $BarImageHorizontal_k = "barrehk.png";
 "webexplorer","IBM-WebExplorer",
 "webmirror","WebMirror",
 "webvcr","WebVCR",
-"webzip","WebZIP"
+"webzip","WebZIP",
+"libwww","LibWWW"				# Must be at end because some browser have both "browser id" and "libwww"
 );
 
 # OS lists ("os detector in lower case","os text")
@@ -569,6 +570,7 @@ $BarImageHorizontal_k = "barrehk.png";
 "perman surfer", "Perman surfer (Not referenced robot)",
 "unlost_web_crawler", "Unlost_Web_Crawler (Not referenced robot)",
 "webbase", "WebBase (Not referenced robot)",
+"yandex", "Yandex bot (Not referenced robot)",
 # Supposed to be robots
 "webcompass", "webcompass (Not referenced robot)",
 "digout4u", "digout4u (Not referenced robot)",
