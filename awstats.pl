@@ -14,7 +14,7 @@
 #-------------------------------------------------------
 # Defines
 #-------------------------------------------------------
-$VERSION="2.24 (build 1)";
+$VERSION="2.24 (build 2)";
 $Lang=0;
 
 # Default value
@@ -1678,6 +1678,7 @@ if (($YearRequired == $nowyear) && ($MonthRequired eq "year" || $MonthRequired =
 	if ($OpenFileError) { if (open(LOG,"$LogFileWithoutLog$nowsmallyear$nowmonth.log"))        { $LogFile="$LogFileWithoutLog$nowsmallyear$nowmonth.log"; $OpenFileError=0; } }
 	if ($OpenFileError) { if (open(LOG,"$LogFileWithoutLog$nowsmallyear$nowmonth$nowday.log")) { $LogFile="$LogFileWithoutLog$nowsmallyear$nowmonth$nowday.log"; $OpenFileError=0; } }
 	if ($OpenFileError) { error("Error: Couldn't open server log file $LogFile: $!"); }
+	$CheckFormatNotDone=1;$NowNewLinePhase=0;
 	while (<LOG>)
 	{
 		# Get log line
@@ -1686,8 +1687,9 @@ if (($YearRequired == $nowyear) && ($MonthRequired eq "year" || $MonthRequired =
 		$_ =~ s/\n//;	# Needed because IIS log file end with CRLF and perl read lines until LF
 		$_ =~ s/\" / /g; $_ =~ s/ \"/ /g; $_ =~ s/\"$//;	# Suppress "
 		if ($LogFormat == 2) {
-			if (/^#/) { next; }		# ISS writes such comments, we forget line
+			if (/^#/) { next; }							# ISS writes such comments, we forget line
 			@felter=split(/ /,$_);
+			if ($felter[1] eq "")    { next; }			# ISS sometimes write blank lines
 			$savetime=$felter[1];
 			@datep=split(/-/,$felter[0]);				# YYYY-MM-DD
 			# Change order of ISS parameters to be like Apache
@@ -1716,13 +1718,13 @@ if (($YearRequired == $nowyear) && ($MonthRequired eq "year" || $MonthRequired =
 		else {
 			$_ =~ s/ GET .* .* HTTP\// GET BAD_URL HTTP\//;		# Change ' GET x y z HTTP/' into ' GET x%20y%20z HTTP/'
 			@felter=split(/ /,$_);
+			if (($felter[11] eq "") && ($felter[10] ne ""))    { next; }	# Apache sometines forget field 11
 		}
-#		$felter[1]=$felter[0]; shift @felter;					# This is for test when log format is "hostname ip ...	"
-	
+#		$felter[1]=$felter[0]; shift @felter;					# This is for test when log format is "hostname ip_adress ...	"
+
 		# Check filters (here, log is in apache combined format, even with IIS)
 		#----------------------------------------------------------------------
 		if ($felter[5] eq 'HEAD') { next; }				# Keep only GET, POST, OPTIONS but not HEAD
-		if ($felter[11] eq "")    { next; }				# Apache sometines forget some fields, ISS sometimes write blank lines
 		if ($felter[6] =~ /^RC=/) { next; }				# A strange log record we need to forget
 
 		$felter[3] =~ s/\//:/g;
@@ -1730,54 +1732,70 @@ if (($YearRequired == $nowyear) && ($MonthRequired eq "year" || $MonthRequired =
 		@dateparts=split(/:/,$felter[3]);				# Split DD:Month:YYYY:HH:MM:SS
 		if ( $monthnum{$dateparts[1]} ) { $dateparts[1]=$monthnum{$dateparts[1]}; }	# Change lib month in num month if necessary
 		$timeconnexion=$dateparts[2].$dateparts[1].$dateparts[0].$dateparts[3].$dateparts[4].$dateparts[5];	# YYYYMMDDHHMMSS
+
+		# Check format of record if not already done
+		#-------------------------------------------
+		if ($CheckFormatNotDone) {
+			$GoodFormat=1;
+			if (($felter[8] !~ /^[\d][\d][\d]$/) && ($felter[8] !~ /^[\d]$/)) { $GoodFormat=0; }	# Bad format (Second test avoid error when using MS IndexServer that returns non standard HTTP code)
+			if ($felter[10] eq "")    { $GoodFormat=0; }											# Bad format (Not enough fields)
+			# Insert here other tests
+			# ...
+			if ($GoodFormat == 0) {
+				print "Log file <b>$LogFile</b> doesn't seem to have good format. Suspect line is<br>";
+				print "<font color=#888888><i>$line</i></font><br>";
+				print "<br><b>LogFormat</b> parameter is <b>$LogFormat</b>, this means each line in your log file need to have ";
+				if ($LogFormat == 2) {
+						print "<b>\"MSIE Extended W3C log format\"</b> like this:<br>";
+						print "<font color=#888888><i>date time c-ip c-username cs-method cs-uri-sterm sc-status cs-bytes cs-version cs(User-Agent) cs(Referer)</i></font><br>"
+					}
+				else {
+						print "<b>\"combined log format\"</b> like this:<br>";
+						print "<font color=#888888><i>62.161.78.73 - - [19/Jul/2000:02:14:14 +0200] \"GET / HTTP/1.1\" 200 1234 \"http://www.fromserver.com/from.htm\" \"Mozilla/4.0 (compatible; MSIE 5.01; Windows NT 5.0)\"</i></font><br>";
+				}
+				error("<br>");	# Exit with format error
+			}			
+			$CheckFormatNotDone=0;	# No more format test
+		}
+
 		# Skip if not a new line
+		#-----------------------
 		if ($NowNewLinePhase) {
 			if ($timeconnexion < $LastTime{$monthtoprocess.$yeartoprocess}) { next; }	# Should not happen, kept in case of parasite old lines
 			}
 		else {
 			if ($timeconnexion <= $LastTime{$monthtoprocess.$yeartoprocess}) { next; }	# Already processed
-			$NowNewLinePhase=1;	# This will stop comparison between timeconnexion and LastTime (we should have only new lines now)
+			$NowNewLinePhase=1;	# This will stop comparison "<=" between timeconnexion and LastTime (we should have only new lines now)
 			}
 
 		if (&SkipFile($felter[6])) { next; }			# Skip with some URL
 		if (&SkipHost($felter[0])) { next; }			# Skip with some client host IP address
 
-
-		# We found a new line. Is it in a new month section
-		#----------------------------------------------------------------------
-		if ((($dateparts[1] > $monthtoprocess) && ($dateparts[2] >= $yeartoprocess)) || ($dateparts[2] > $yeartoprocess)){
+		# Record is approved. We found a new line. Is it in a new month section ?
+		#------------------------------------------------------------------------
+		if ((($dateparts[1] > $monthtoprocess) && ($dateparts[2] >= $yeartoprocess)) || ($dateparts[2] > $yeartoprocess)) {
 			# Yes, a new month to process
 			if ($monthtoprocess > 0) {
-				&Save_History_File($monthtoprocess,$yeartoprocess);		# We save data of old processed month
+				&Save_History_File($monthtoprocess,$yeartoprocess);		# We save data of current processed month
  				&Init_HashArray;										# Start init for next one
 				}
 			$monthtoprocess=$dateparts[1];$yeartoprocess=$dateparts[2];
 			&Read_History_File($monthtoprocess,$yeartoprocess,1);
 			}
 
+		# Check return code
+		#------------------
 		if (($felter[8] != 200) && ($felter[8] != 304)) {		# Stop if HTTP server return code != 200 and 304
-			if ($felter[8] =~ /^[\d][\d][\d]$/) { 				# Keep error code
-				$_errors_h{$felter[8]}++;
+			if ($felter[8] =~ /^[\d][\d][\d]$/) { 				# Keep error code and next
+				$_errors_h{$felter[8]}++;						
 				if ($felter[8] == 404) { $_sider404_h{$felter[6]}++; }
+				next;											
+				}
+			else {												# Bad format record (should not happen but when using MSIndex server), next
 				next;
-				}
-			if ($felter[8] == 1) { next }						# This avoid error when using MS IndexServer that returns non standard HTTP code
-			print "Log file <b>$LogFile</b> doesn't seem to have good format. Suspect line is<br>";
-			print "<font color=#888888><i>$line</i></font><br>";
-			print "<br><b>LogFormat</b> parameter is <b>$LogFormat</b>, this means each line in your log file need to have ";
-			if ($LogFormat == 2) {
-					print "<b>\"MSIE Extended W3C log format\"</b> like this:<br>";
-					print "<font color=#888888><i>date time c-ip c-username cs-method cs-uri-sterm sc-status cs-bytes cs-version cs(User-Agent) cs(Referer)</i></font><br>"
-				}
-			else {
-					print "<b>\"combined log format\"</b> like this:<br>";
-					print "<font color=#888888><i>62.161.78.73 - - [19/Jul/2000:02:14:14 +0200] \"GET / HTTP/1.1\" 200 1234 \"http://www.fromserver.com/from.htm\" \"Mozilla/4.0 (compatible; MSIE 5.01; Windows NT 5.0)\"</i></font><br>";
-			}
-			error("<br>");
+				}										
 		}
-	
 
-		# Record is approved. Start of line process
 		if ($LogFormat == 1) {
 			# To correct bad format of some old apache log (field 10 is twice in line)
 			# if ($felter[10] =~ /^$felter[11],/) { for ($ix=12; $ix<=$#felter; $ix++) { $felter[$ix-1] = $felter[$ix]; } }
