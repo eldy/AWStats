@@ -197,7 +197,7 @@ $QueryString, $SiteConfig, $StaticLinks, $URLFilter, $PageCode, $LogFormatString
 $SiteToAnalyze, $SiteToAnalyzeWithoutwww, $UserAgent)=
 ("","","","","","","","","","","","","","","","","","");
 use vars qw/
-$pos_rc $pos_logname $pos_date $pos_method $pos_url $pos_code $pos_size
+$pos_vh $pos_rc $pos_logname $pos_date $pos_method $pos_url $pos_code $pos_size
 $pos_referer $pos_agent $pos_query $pos_gzipin $pos_gzipout $pos_gzipratio
 $lastrequiredfield $lowerval
 $FirstTime $LastTime
@@ -205,7 +205,7 @@ $TotalUnique $TotalVisits $TotalHostsKnown $TotalHostsUnknown
 $TotalPages $TotalHits $TotalBytes $TotalEntries $TotalExits $TotalBytesPages
 $TotalKeyphrases $TotalDifferentPages $TotalDifferentKeyphrases
 /;
-$pos_rc = $pos_logname = $pos_date = $pos_method = $pos_url = $pos_code = $pos_size = 0;
+$pos_vh = $pos_rc = $pos_logname = $pos_date = $pos_method = $pos_url = $pos_code = $pos_size = 0;
 $pos_referer = $pos_agent = $pos_query = $pos_gzipin = $pos_gzipout = $pos_gzipratio = 0;
 $lastrequiredfield = $lowerval = 0;
 $FirstTime = $LastTime = 0;
@@ -414,16 +414,15 @@ use vars qw/ %httpcodewithtooltips /;
 sub html_head {
 	if ($HTMLOutput) {
 		# Write head section
-		my $sitetoanalyze=$SiteToAnalyze; $sitetoanalyze =~ s/\\\./\./g;
 		print "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">\n\n";
 		print "<html>\n";
 		print "<head>\n";
 		if ($PageCode) { print "<META HTTP-EQUIV=\"content-type\" CONTENT=\"text/html; charset=$PageCode\"\n"; }		# If not defined, iso-8859-1 is used in major countries
 		if ($Expires)  { print "<META HTTP-EQUIV=\"expires\" CONTENT=\"".(localtime(time()+$Expires))."\">\n"; }
-		print "<meta http-equiv=\"description\" content=\"$PROG - Advanced Web Statistics for $sitetoanalyze\">\n";
-		print "<meta http-equiv=\"keywords\" content=\"$sitetoanalyze, free, advanced, realtime, web, server, logfile, log, analyzer, analysis, statistics, stats, perl, analyse, performance, hits, visits\">\n";
+		print "<meta http-equiv=\"description\" content=\"$PROG - Advanced Web Statistics for $SiteDomain\">\n";
+		print "<meta http-equiv=\"keywords\" content=\"$SiteDomain, free, advanced, realtime, web, server, logfile, log, analyzer, analysis, statistics, stats, perl, analyse, performance, hits, visits\">\n";
 		print "<meta name=\"robots\" content=\"index,follow\">\n";
-		print "<title>$Message[7] $sitetoanalyze</title>\n";
+		print "<title>$Message[7] $SiteDomain</title>\n";
 		# Do not use " for number in a style section
 		print <<EOF;
 <STYLE TYPE="text/css">
@@ -690,7 +689,6 @@ sub SessionLastToSessionRange {
 #------------------------------------------------------------------------------
 sub Read_Config_File {
 	$FileConfig=""; $FileSuffix="";
-	if (! $SiteConfig) { $SiteConfig=$ENV{"SERVER_NAME"}; }		# For backward compatibility
 	foreach my $dir ("$DIR","/etc/opt/awstats","/etc/awstats","/etc","/usr/local/etc/awstats") {
 		my $searchdir=$dir;
 		if ($searchdir && (!($searchdir =~ /\/$/)) && (!($searchdir =~ /\\$/)) ) { $searchdir .= "/"; }
@@ -727,7 +725,7 @@ sub Read_Config_File {
 		if ($param =~ /^DirIcons/)              { $DirIcons=$value; next; }
 		if ($param =~ /^DNSLookup/)             { $DNSLookup=$value; next; }
 		if ($param =~ /^SiteDomain/)			{
-			$value =~ s/\\\./\./g; $value =~ s/([^\\])\./$1\\\./g; $value =~ s/^\./\\\./;	# Replace . into \.
+			#$value =~ s/\\\./\./g; $value =~ s/([^\\])\./$1\\\./g; $value =~ s/^\./\\\./;	# SiteDomain is not used in regex. Must not replace . into \.
 			$SiteDomain=$value; next;
 			}
 		if ($param =~ /^HostAliases/) {
@@ -1076,7 +1074,7 @@ sub Check_Config {
 	if (! $DirCgi)    { $DirCgi="/cgi-bin"; }
 	if (! $DirIcons)  { $DirIcons="/icon"; }
 	if ($DNSLookup !~ /[0-1]/)                      { error("Error: DNSLookup parameter is wrong in config/domain file. Value is '$DNSLookup' (should be 0 or 1)"); }
-	if (! $SiteDomain)                              { warning("Warning: SiteDomain parameter is not defined in config/domain file. You should add it to avoid analysis errors."); }
+	if (! $SiteDomain)                              { error("Error: SiteDomain parameter not found in your config/domain file. You must add it for using this version."); }
 	if ($AllowToUpdateStatsFromBrowser !~ /[0-1]/) 	{ $AllowToUpdateStatsFromBrowser=0; }
 	# Optional setup section
 	if ($AllowAccessFromWebToAuthenticatedUsersOnly !~ /[0-1]/)     { $AllowAccessFromWebToAuthenticatedUsersOnly=0; }
@@ -1344,7 +1342,6 @@ sub Read_History_File {
 		}
 		my @field=split(/\s+/,$_);
 		if (! $field[0]) { next; }
-		if ($field[0] eq "FirstTime")       { $FirstTime{$year.$month}=int($field[1]); next; }
 		if ($field[0] eq "LastLine")        { if ($LastLine{$year.$month}||0 < int($field[1])) { $LastLine{$year.$month}=int($field[1]); }; next; }
 		if ($field[0] eq "FirstTime")       { $FirstTime{$year.$month}=int($field[1]); next; }
 		if ($field[0] eq "LastTime")        { if ($LastTime{$year.$month}||0 < int($field[1])) { $LastTime{$year.$month}=int($field[1]); }; next; }
@@ -1988,15 +1985,23 @@ sub Save_History_File {
 
 	print HISTORYTMP "AWSTATS DATA FILE $VERSION\n";
 	print HISTORYTMP "# If you remove this file, all statistics for date $year-$month will be lost/reset.\n";
+
 	print HISTORYTMP "\n";
+	print HISTORYTMP "# LastLine    = Date of last record processed\n";
+	print HISTORYTMP "# FirstTime   = Date of first visit for history file\n";
+	print HISTORYTMP "# LastTime    = Date of last visit for history file\n";
+	print HISTORYTMP "# LastUpdate  = Date of last update - Nb of ines read - Nb of old records - Nb Of new records - Nb of corrupted - Nb of dropped\n";
+	print HISTORYTMP "# TotalVisits = Number of visits\n";
 	print HISTORYTMP "LastLine $LastLine{$year.$month}\n";
 	print HISTORYTMP "FirstTime $FirstTime{$year.$month}\n";
 	print HISTORYTMP "LastTime $LastTime{$year.$month}\n";
 	if (! $LastUpdate{$year.$month} || $LastUpdate{$year.$month} < int("$nowyear$nowmonth$nowday$nowhour$nowmin$nowsec")) { $LastUpdate{$year.$month}=int("$nowyear$nowmonth$nowday$nowhour$nowmin$nowsec"); }
 	print HISTORYTMP "LastUpdate $LastUpdate{$year.$month} $NbOfLinesRead $NbOfOldLines $NbOfNewLines $NbOfLinesCorrupted $NbOfLinesDropped\n";
 	print HISTORYTMP "TotalVisits $MonthVisits{$year.$month}\n";
-
+	
 	# When
+	print HISTORYTMP "\n";
+	print HISTORYTMP "# Date - Pages - Hits - Bandwith - Visits\n";
 	print HISTORYTMP "BEGIN_DAY\n";
 	foreach my $key (keys %DayHits) {
 		if ($key =~ /^$year$month/) {	# Found a day entry of the good month
@@ -2009,11 +2014,15 @@ sub Save_History_File {
 		}
 	}
 	print HISTORYTMP "END_DAY\n";
+	print HISTORYTMP "\n";
+	print HISTORYTMP "# Hour - Pages - Hits - Bandwith\n";
 	print HISTORYTMP "BEGIN_TIME\n";
 	for (my $ix=0; $ix<=23; $ix++) { print HISTORYTMP "$ix ".int($_time_p[$ix])." ".int($_time_h[$ix])." ".int($_time_k[$ix])."\n"; }
 	print HISTORYTMP "END_TIME\n";
 
 	# Who
+	print HISTORYTMP "\n";
+	print HISTORYTMP "# Domain - Pages - Hits - Bandwith\n";
 	print HISTORYTMP "BEGIN_DOMAIN\n";
 	foreach my $key (keys %_domener_h) {
 		my $page=$_domener_p{$key}||0;
@@ -2021,6 +2030,10 @@ sub Save_History_File {
 		print HISTORYTMP "$key $page $_domener_h{$key} $bytes\n";
 	}
 	print HISTORYTMP "END_DOMAIN\n";
+	print HISTORYTMP "\n";
+	print HISTORYTMP "# Host - Pages - Hits - Bandwith - Last visit date - [Start of last visit date] - [Last page of last visit]\n";
+	print HISTORYTMP "# [Start of last visit date] and [Last page of last visit] are saved only if session is not finished\n";
+	print HISTORYTMP "# The $MaxNbOfHostsShown first Hits must be first (order not required for others)\n";
 	print HISTORYTMP "BEGIN_VISITOR\n";
 	&BuildKeyList($MaxNbOfHostsShown,$MinHitHost,\%_hostmachine_h,\%_hostmachine_p);
 	my %keysinkeylist=();
@@ -2070,12 +2083,18 @@ sub Save_History_File {
 		}
 	}
 	print HISTORYTMP "END_VISITOR\n";
+	print HISTORYTMP "\n";
+	print HISTORYTMP "# Session range - Number of visits\n";
 	print HISTORYTMP "BEGIN_SESSION\n";
 	foreach my $key (keys %_session) { print HISTORYTMP "$key ".int($_session{$key})."\n"; }
 	print HISTORYTMP "END_SESSION\n";
+	print HISTORYTMP "\n";
+	print HISTORYTMP "# Login - Pages - Hits - Bandwith\n";
 	print HISTORYTMP "BEGIN_LOGIN\n";
 	foreach my $key (keys %_login_h) { print HISTORYTMP "$key ".int($_login_p{$key})." ".int($_login_h{$key})." ".int($_login_k{$key})." $_login_l{$key}\n"; }
 	print HISTORYTMP "END_LOGIN\n";
+	print HISTORYTMP "\n";
+	print HISTORYTMP "# Robot ID - Hits - Last visit\n";
 	print HISTORYTMP "BEGIN_ROBOT\n";
 	foreach my $key (keys %_robot_h) { print HISTORYTMP "$key ".int($_robot_h{$key})." $_robot_l{$key}\n"; }
 	print HISTORYTMP "END_ROBOT\n";
@@ -2083,6 +2102,9 @@ sub Save_History_File {
 	# Navigation
 	# We save page list in score sorted order to get a -output faster and with less use of memory.
 	# This section must be saved after VISITOR section
+	print HISTORYTMP "\n";
+	print HISTORYTMP "# URL - Pages - Hits - Bandwith - Bandwith without compression - Bandwith after compression\n";
+	print HISTORYTMP "# The $MaxNbOfPageShown first Pages must be first (order not required for others)\n";
 	print HISTORYTMP "BEGIN_SIDER\n";
 	&BuildKeyList($MaxNbOfPageShown,$MinHitFile,\%_url_p,\%_url_p);
 	%keysinkeylist=();
@@ -2099,6 +2121,8 @@ sub Save_History_File {
 		print HISTORYTMP "$newkey ".int($_url_p{$key}||0)." ".int($_url_k{$key}||0)." ".int($_url_e{$key}||0)." ".int($_url_x{$key}||0)."\n";
 	}
 	print HISTORYTMP "END_SIDER\n";
+	print HISTORYTMP "\n";
+	print HISTORYTMP "# Files type - Hits - Bandwith - Bandwith without compression - Bandwith after compression\n";
 	print HISTORYTMP "BEGIN_FILETYPES\n";
 	foreach my $key (keys %_filetypes_h) {
 		my $hits=$_filetypes_h{$key}||0;
@@ -2108,41 +2132,59 @@ sub Save_History_File {
 		print HISTORYTMP "$key $hits $bytes $bytesbefore $bytesafter\n";
 	}
 	print HISTORYTMP "END_FILETYPES\n";
+	print HISTORYTMP "\n";
+	print HISTORYTMP "# Browser ID - Hits\n";
 	print HISTORYTMP "BEGIN_BROWSER\n";
 	foreach my $key (keys %_browser_h) { print HISTORYTMP "$key $_browser_h{$key}\n"; }
 	print HISTORYTMP "END_BROWSER\n";
+	print HISTORYTMP "\n";
+	print HISTORYTMP "# IE Version - Hits\n";
 	print HISTORYTMP "BEGIN_NSVER\n";
 	for (my $i=1; $i<=$#_nsver_h; $i++) {
 		my $nb_h=$_nsver_h[$i]||"";
 		print HISTORYTMP "$i $nb_h\n";
 	}
 	print HISTORYTMP "END_NSVER\n";
+	print HISTORYTMP "\n";
+	print HISTORYTMP "# Netscape Version - Hits\n";
 	print HISTORYTMP "BEGIN_MSIEVER\n";
 	for (my $i=1; $i<=$#_msiever_h; $i++) {
 		my $nb_h=$_msiever_h[$i]||"";
 		print HISTORYTMP "$i $nb_h\n";
 	}
 	print HISTORYTMP "END_MSIEVER\n";
+	print HISTORYTMP "\n";
+	print HISTORYTMP "# OS ID - Hits\n";
 	print HISTORYTMP "BEGIN_OS\n";
 	foreach my $key (keys %_os_h) { print HISTORYTMP "$key $_os_h{$key}\n"; }
 	print HISTORYTMP "END_OS\n";
 
 	# Referer
+	print HISTORYTMP "\n";
+	print HISTORYTMP "# Unknwon referer OS - Last visit date\n";
 	print HISTORYTMP "BEGIN_UNKNOWNREFERER\n";
 	foreach my $key (keys %_unknownreferer_l) { print HISTORYTMP "$key $_unknownreferer_l{$key}\n"; }
 	print HISTORYTMP "END_UNKNOWNREFERER\n";
+	print HISTORYTMP "\n";
+	print HISTORYTMP "# Unknwon referer Browser - Last visit date\n";
 	print HISTORYTMP "BEGIN_UNKNOWNREFERERBROWSER\n";
 	foreach my $key (keys %_unknownrefererbrowser_l) { print HISTORYTMP "$key $_unknownrefererbrowser_l{$key}\n"; }
 	print HISTORYTMP "END_UNKNOWNREFERERBROWSER\n";
+	print HISTORYTMP "\n";
+	print HISTORYTMP "# Origin - Pages - Hits \n";
 	print HISTORYTMP "From0 ".int($_from_p[0])." ".int($_from_h[0])."\n";
 	print HISTORYTMP "From1 ".int($_from_p[1])." ".int($_from_h[1])."\n";
 	print HISTORYTMP "From2 ".int($_from_p[2])." ".int($_from_h[2])."\n";
 	print HISTORYTMP "From3 ".int($_from_p[3])." ".int($_from_h[3])."\n";
 	print HISTORYTMP "From4 ".int($_from_p[4])." ".int($_from_h[4])."\n";		# Same site
 	print HISTORYTMP "From5 ".int($_from_p[5])." ".int($_from_h[5])."\n";		# News
+	print HISTORYTMP "\n";
+	print HISTORYTMP "# Search engine referers ID - Hits\n";
 	print HISTORYTMP "BEGIN_SEREFERRALS\n";
 	foreach my $key (keys %_se_referrals_h) { print HISTORYTMP "$key $_se_referrals_h{$key}\n"; }
 	print HISTORYTMP "END_SEREFERRALS\n";
+	print HISTORYTMP "\n";
+	print HISTORYTMP "# External page referers - Hits\n";
 	print HISTORYTMP "BEGIN_PAGEREFS\n";
 	foreach my $key (keys %_pagesrefs_h) {
 		my $newkey=$key;
@@ -2151,7 +2193,10 @@ sub Save_History_File {
 		print HISTORYTMP "$newkey $_pagesrefs_h{$key}\n";
 	}
 	print HISTORYTMP "END_PAGEREFS\n";
+	print HISTORYTMP "\n";
+	print HISTORYTMP "# Search phrases - Hits\n";
 	print HISTORYTMP "BEGIN_SEARCHWORDS\n";
+	print HISTORYTMP "# The $MaxNbOfKeywordsShown first Hits must be first (order not required for others)\n";
 	&BuildKeyList($MaxNbOfKeywordsShown,$MinHitKeyword,\%_keyphrases,\%_keyphrases);
 	%keysinkeylist=();
 	foreach my $key (@keylist) {
@@ -2167,9 +2212,13 @@ sub Save_History_File {
 	print HISTORYTMP "END_SEARCHWORDS\n";
 
 	# Other
+	print HISTORYTMP "\n";
+	print HISTORYTMP "# Errors - Hits\n";
 	print HISTORYTMP "BEGIN_ERRORS\n";
 	foreach my $key (keys %_errors_h) { print HISTORYTMP "$key $_errors_h{$key}\n"; }
 	print HISTORYTMP "END_ERRORS\n";
+	print HISTORYTMP "\n";
+	print HISTORYTMP "# URL with 404 errors - Hits - Last URL referer\n";
 	print HISTORYTMP "BEGIN_SIDER_404\n";
 	foreach my $key (keys %_sider404_h) {
 		my $newkey=$key;
@@ -2642,6 +2691,7 @@ if ((! $ENV{"GATEWAY_INTERFACE"}) && (! $SiteConfig)) {
 	print "New versions and FAQ at http://awstats.sourceforge.net\n";
 	exit 2;
 }
+if (! $SiteConfig) { $SiteConfig=$ENV{"SERVER_NAME"}; }
 
 # Get current time (time when AWStats is started)
 ($nowsec,$nowmin,$nowhour,$nowday,$nowmonth,$nowyear,$nowwday) = localtime($starttime);
@@ -2670,7 +2720,7 @@ if ($tomorrowmin < 10) { $tomorrowmin = "0$tomorrowmin"; }
 if ($tomorrowsec < 10) { $tomorrowsec = "0$tomorrowsec"; }
 $tomorrowtime=int($tomorrowyear.$tomorrowmonth.$tomorrowday.$tomorrowhour.$tomorrowmin.$tomorrowsec);
 
-# Read config file
+# Read config file (here SiteConfig is defined)
 &Read_Config_File;
 if ($QueryString =~ /lang=([^\s&]+)/i)	{ $Lang=$1; }
 if (! $Lang) { $Lang="en"; }
@@ -2694,15 +2744,18 @@ if ($Lang eq "10") { $Lang="kr"; }
 # Check and correct bad parameters
 &Check_Config;
 
+# Here SiteDomain is always defined
+if ($Debug) { &debug("Site domain to analyze: $SiteDomain"); }
+
 # Init other parameters
 if ($ENV{"GATEWAY_INTERFACE"}) { $DirCgi=""; }
 if ($DirCgi && !($DirCgi =~ /\/$/) && !($DirCgi =~ /\\$/)) { $DirCgi .= "/"; }
 if (! $DirData || $DirData eq ".") { $DirData=$DIR; }	# If not defined or chosen to "." value then DirData is current dir
 if (! $DirData)  { $DirData="."; }						# If current dir not defined then we put it to "."
 $DirData =~ s/\/$//; $DirData =~ s/\\$//;
+# Define SiteToAnalyze and SiteToAnalyzeWithoutwww for regex operations
 $SiteToAnalyze=$SiteDomain;
-if (! $SiteToAnalyze) { $SiteToAnalyze=$SiteConfig; }
-$SiteToAnalyze =~ tr/A-Z/a-z/;
+$SiteToAnalyze =~ tr/A-Z/a-z/; $SiteToAnalyze =~ s/\./\\\./;
 $SiteToAnalyzeWithoutwww = $SiteToAnalyze; $SiteToAnalyzeWithoutwww =~ s/www\.//;
 if ($FirstDayOfWeek == 1) { @DOWIndex = (1,2,3,4,5,6,0); }
 else { @DOWIndex = (0,1,2,3,4,5,6); }
@@ -2773,9 +2826,10 @@ if ($UpdateStats) {
 	if ($Debug) { debug("RobotsSearchIDOrder has now ".@RobotsSearchIDOrder." elements",1); }
 	# Init HostAliases array
 	if (! @HostAliases) {
-		warning("Warning: HostAliases parameter is not defined, $PROG choose \"$SiteToAnalyze localhost 127.0.0.1\".");
-		push @HostAliases,"$SiteToAnalyze"; push @HostAliases,"localhost"; push @HostAliases,"127.0.0.1";
+		warning("Warning: HostAliases parameter is not defined, $PROG choose \"$SiteDomain localhost 127.0.0.1\".");
+		push @HostAliases,"$SiteToAnalyze"; push @HostAliases,"localhost"; push @HostAliases,"127\.0\.0\.1";
 	}
+	# Add SiteToAnalyze in HostAliases if not inside
 	my $SiteToAnalyzeIsInHostAliases=0;
 	foreach my $elem (@HostAliases) { if ($elem eq $SiteToAnalyze) { $SiteToAnalyzeIsInHostAliases=1; last; } }
 	if (! $SiteToAnalyzeIsInHostAliases) {
@@ -2805,6 +2859,7 @@ if ($UpdateStats) {
 	if ($LogFormat eq "4") { $LogFormatString="%h %l %u %t \"%r\" %>s %b"; }
 	if ($LogFormat eq "5") { $LogFormatString="c-ip cs-username c-agent sc-authenticated date time s-svcname s-computername cs-referred r-host r-ip r-port time-taken cs-bytes sc-bytes cs-protocol cs-transport s-operation cs-uri cs-mime-type s-object-source sc-status s-cache-info"; }
 	# Replacement for Apache format string
+	$LogFormatString =~ s/%v(\s)/%virtualname$1/g; $LogFormatString =~ s/%v$/%virtualname/g;
 	$LogFormatString =~ s/%h(\s)/%host$1/g; $LogFormatString =~ s/%h$/%host/g;
 	$LogFormatString =~ s/%l(\s)/%other$1/g; $LogFormatString =~ s/%l$/%other/g;
 	$LogFormatString =~ s/%u(\s)/%logname$1/g; $LogFormatString =~ s/%u$/%logname/g;
@@ -2871,13 +2926,18 @@ if ($UpdateStats) {
 		$pos_rc=1;$pos_logname=2;$pos_agent=3;$pos_date=4;$pos_referer=5;$pos_size=6;$pos_method=7;$pos_url=8;$pos_code=9;
 		$lastrequiredfield=9;
 	}
-	if ($LogFormat lt "1" || $LogFormat gt "5") {
+	if ($LogFormat !~ /^[1-5]$/) {
 		# Scan $LogFormat to found all required fields and generate PerlParsing
 		my @fields = split(/\s+/, $LogFormatString); # make array of entries
 		my $i = 1;
 		foreach my $f (@fields) {
 			my $found=0;
-			if ($f =~ /%host$/) {
+			if ($f =~ /%virtualname$/) {
+				$found=1;
+				$pos_vh = $i; $i++;
+				$PerlParsingFormat .= "([^\\s]*)";
+			}
+			elsif ($f =~ /%host$/) {
 				$found=1;
 				$pos_rc = $i; $i++;
 				$PerlParsingFormat .= "([^\\s]*)";
@@ -3062,9 +3122,17 @@ if ($UpdateStats) {
 #		@field=Parse($_);
 
 		if ($Debug) { debug(" Correct format line $NbOfLinesRead : host=\"$field[$pos_rc]\", logname=\"$field[$pos_logname]\", date=\"$field[$pos_date]\", method=\"$field[$pos_method]\", url=\"$field[$pos_url]\", code=\"$field[$pos_code]\", size=\"$field[$pos_size]\", referer=\"$field[$pos_referer]\", agent=\"$field[$pos_agent]\"",3); }
-		#if ($Debug) { debug("$field[$pos_gzipin] - $field[$pos_gzipout] - $field[$pos_gzipratio]\n"); }
+		#if ($Debug) { debug("$field[$pos_vh] - $field[$pos_gzipin] - $field[$pos_gzipout] - $field[$pos_gzipratio]\n"); }
 		
-		# Check filters
+		# Check virtual host name
+		#----------------------------------------------------------------------
+		if ($pos_vh && $field[$pos_vh] ne $SiteDomain) {
+			$NbOfLinesDropped++;
+			if ($ShowDropped) { print "Dropped record (virtual hostname '$field[$pos_vh]' does not match SiteDomain='$SiteDomain' parameter): $_\n"; }
+			next;
+		}
+
+		# Check protocol
 		#----------------------------------------------------------------------
 		my $protocol=0;
 		if ($field[$pos_method] eq 'GET' || $field[$pos_method] eq 'POST' || $field[$pos_method] eq 'HEAD' || $field[$pos_method] =~ /OK/) {
@@ -3731,8 +3799,6 @@ if ($HTMLOutput) {
 	my $rest_p; my $rest_h; my $rest_k; my $rest_e; my $rest_x; my $rest_s;
 	my $total_p; my $total_h; my $total_k; my $total_e; my $total_x; my $total_s;
 
-	$SiteToAnalyze =~ s/\\\./\./g;
-
 	# Get list of all possible years
 	opendir(DIR,"$DirData");
 	@filearray = sort readdir DIR;
@@ -3882,7 +3948,7 @@ EOF
 		if ($Debug) { debug("ShowMenu",2); }
 		print "$CENTER<a name=\"MENU\">&nbsp;</a><BR>";
 		print "<table>";
-		print "<tr><th class=AWL>$Message[7] : </th><td class=AWL><font style=\"font-size: 14px;\">$SiteToAnalyze</font></th></tr>";
+		print "<tr><th class=AWL>$Message[7] : </th><td class=AWL><font style=\"font-size: 14px;\">$SiteDomain</font></th></tr>";
 		print "<tr><th class=AWL valign=top>$Message[35] : </th>";
 		print "<td class=AWL><font style=\"font-size: 14px;\">";
 		foreach my $key (sort keys %LastUpdate) { if ($LastUpdate < $LastUpdate{$key}) { $LastUpdate = $LastUpdate{$key}; } }
@@ -4116,7 +4182,7 @@ EOF
 			my $nompage=$Aliases{$key}?$Aliases{$key}:CleanFromCSSA($key);
 			print "<TR><TD CLASS=AWL>";
 			if (length($nompage)>$MaxLengthOfURL) { $nompage=substr($nompage,0,$MaxLengthOfURL)."..."; }
-			if ($ShowLinksOnUrl) { print "<A HREF=\"http://$SiteToAnalyze$key\">$nompage</A>"; }
+			if ($ShowLinksOnUrl) { print "<A HREF=\"http://$SiteDomain\">$nompage</A>"; }
 			else              	 { print "$nompage"; }
 
 			my $bredde_p=0; my $bredde_e=0; my $bredde_x=0; my $bredde_k=0;
@@ -4266,7 +4332,7 @@ EOF
 	if ($ShowMonthDayStats) {
 		if ($Debug) { debug("ShowMonthDayStats",2); }
 		print "$CENTER<a name=\"SUMMARY\">&nbsp;</a><BR>";
-		&tab_head("$Message[7] $SiteToAnalyze",0);
+		&tab_head("$Message[7] $SiteDomain",0);
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TD><b>$Message[8]</b></TD>";
 		if ($MonthRequired eq "year") { print "<TD colspan=3 rowspan=2><font style=\"font: 18px arial,verdana,helvetica; font-weight: normal\">$Message[6] $YearRequired</font><br>"; }
 		else { print "<TD colspan=3 rowspan=2><font style=\"font: 18px arial,verdana,helvetica; font-weight: normal\">$Message[5] $monthlib{$MonthRequired} $YearRequired</font><br>"; }
@@ -4771,7 +4837,7 @@ EOF
 				}
 				else {
 					# URL is url extracted from a web/wap server log file
-					print "<A HREF=\"http://$SiteToAnalyze$newkey\" target=\"awstatsbis\">$nompage</A>";
+					print "<A HREF=\"http://$SiteDomain$newkey\" target=\"awstatsbis\">$nompage</A>";
 				}
 			}
 			else {
