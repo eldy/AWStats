@@ -58,7 +58,7 @@ $QueryString $SiteConfig $StaticLinks $PageCode $PerlParsingFormat
 $SiteToAnalyze $SiteToAnalyzeWithoutwww $UserAgent
 $pos_vh $pos_host $pos_logname $pos_date $pos_tz $pos_method $pos_url $pos_code $pos_size
 $pos_referer $pos_agent $pos_query $pos_gzipin $pos_gzipout $pos_compratio
-$pos_emails $pos_emailr $pos_hostr
+$pos_cluster $pos_emails $pos_emailr $pos_hostr
 /;
 $DIR=$PROG=$Extension='';
 $Debug=$ShowSteps=0;
@@ -78,7 +78,7 @@ $SiteToAnalyze, $SiteToAnalyzeWithoutwww, $UserAgent)=
 ('','','','','','','','','','','','','','','','');
 $pos_vh = $pos_host = $pos_logname = $pos_date = $pos_tz = $pos_method = $pos_url = $pos_code = $pos_size = -1;
 $pos_referer = $pos_agent = $pos_query = $pos_gzipin = $pos_gzipout = $pos_compratio = -1;
-$pos_emails = $pos_emailr = $pos_hostr = -1;
+$pos_cluster = $pos_emails = $pos_emailr = $pos_hostr = -1;
 # ----- Plugins variable -----
 use vars qw/ %PluginsLoaded $PluginDir /;
 %PluginsLoaded=();
@@ -128,7 +128,7 @@ $NbOfLinesParsed $NbOfLinesDropped $NbOfLinesCorrupted $NbOfOldLines $NbOfNewLin
 $NbOfLinesShowsteps $NewLinePhase $NbOfLinesForCorruptedLog $PurgeLogFile
 $ShowAuthenticatedUsers $ShowFileSizesStats $ShowScreenSizeStats $ShowSMTPErrorsStats
 $ShowDropped $ShowCorrupted $ShowUnknownOrigin $ShowLinksToWhoIs
-$ShowEMailSenders $ShowEMailReceivers
+$ShowEMailSenders $ShowEMailReceivers $ShowClusterStats
 $AuthenticatedUsersNotCaseSensitive
 $Expires $UpdateStats $MigrateStats $URLNotCaseSensitive $URLWithQuery $URLReferrerWithQuery
 $UseFramesWhenCGI $DecodeUA
@@ -139,11 +139,11 @@ $NbOfLinesParsed, $NbOfLinesDropped, $NbOfLinesCorrupted, $NbOfOldLines, $NbOfNe
 $NbOfLinesShowsteps, $NewLinePhase, $NbOfLinesForCorruptedLog, $PurgeLogFile,
 $ShowAuthenticatedUsers, $ShowFileSizesStats, $ShowScreenSizeStats, $ShowSMTPErrorsStats,
 $ShowDropped, $ShowCorrupted, $ShowUnknownOrigin, $ShowLinksToWhoIs,
-$ShowEMailSenders, $ShowEMailReceivers,
+$ShowEMailSenders, $ShowEMailReceivers, $ShowClusterStats,
 $AuthenticatedUsersNotCaseSensitive,
 $Expires, $UpdateStats, $MigrateStats, $URLNotCaseSensitive, $URLWithQuery, $URLReferrerWithQuery,
 $UseFramesWhenCGI, $DecodeUA)=
-(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
+(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
 use vars qw/
 $AllowToUpdateStatsFromBrowser $ArchiveLogRecords $DetailedReportsOnNewWindows
 $FirstDayOfWeek $KeyWordsNotSensitive $SaveDatabaseFilesWithPermissionsForEveryone
@@ -165,7 +165,7 @@ $ShowOSStats, $ShowBrowsersStats, $ShowOriginStats,
 $ShowKeyphrasesStats, $ShowKeywordsStats, $ShowMiscStats, $ShowHTTPErrorsStats,
 $AddDataArrayMonthStats, $AddDataArrayShowDaysOfMonthStats, $AddDataArrayShowDaysOfWeekStats, $AddDataArrayShowHoursStats
 )=
-(1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1);
+(1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1);
 use vars qw/
 $LevelForRobotsDetection $LevelForBrowsersDetection $LevelForOSDetection $LevelForRefererAnalyze
 $LevelForSearchEnginesDetection $LevelForKeywordsDetection
@@ -272,6 +272,7 @@ use vars qw/
 %_keyphrases %_keywords %_os_h %_pagesrefs_p %_pagesrefs_h %_robot_h %_robot_k %_robot_l
 %_worm_h %_worm_l %_login_h %_login_p %_login_k %_login_l %_screensize_h
 %_misc_p %_misc_h %_misc_k
+%_cluster_p %_cluster_h %_cluster_k
 %_se_referrals_p %_se_referrals_h %_sider404_h %_referer404_h %_url_p %_url_k %_url_e %_url_x
 %_unknownreferer_l %_unknownrefererbrowser_l
 %_emails_h %_emails_k %_emails_l %_emailr_h %_emailr_k %_emailr_l
@@ -296,6 +297,7 @@ use vars qw/
 %_keyphrases = %_keywords = %_os_h = %_pagesrefs_p = %_pagesrefs_h = %_robot_h = %_robot_k = %_robot_l = ();
 %_worm_h = %_worm_l = %_login_h = %_login_p = %_login_k = %_login_l = %_screensize_h = ();
 %_misc_p = %_misc_h = %_misc_k = ();
+%_cluster_p = %_cluster_h = %_cluster_k = ();
 %_se_referrals_p = %_se_referrals_h = %_sider404_h = %_referer404_h = %_url_p = %_url_k = %_url_e = %_url_x = ();
 %_unknownreferer_l = %_unknownrefererbrowser_l = ();
 %_emails_h = %_emails_k = %_emails_l = %_emailr_h = %_emailr_k = %_emailr_l = ();
@@ -582,7 +584,8 @@ use vars qw/ @Message /;
 'First',
 'Last',
 'Exclude filter',
-'* Codes shown here gave hits or traffic "not viewed" by visitors, so are isolated in this chart.'
+'* Codes shown here gave hits or traffic "not viewed" by visitors, so are isolated in this chart.',
+'Cluster'
 );
 
 
@@ -1576,6 +1579,7 @@ sub Check_Config {
 	if ($ShowOriginStats !~ /[01PH]/)              	{ $ShowOriginStats='PH'; }
 	if ($ShowKeyphrasesStats !~ /[01]/)          	{ $ShowKeyphrasesStats=1; }
 	if ($ShowKeywordsStats !~ /[01]/)            	{ $ShowKeywordsStats=1; }
+	if ($ShowClusterStats !~ /[01]/)     	    	{ $ShowClusterStats=0; }
 	if ($ShowMiscStats !~ /[01ajdfrqwp]/)     	    { $ShowMiscStats='a'; }
 	if ($ShowHTTPErrorsStats !~ /[01]/)          	{ $ShowHTTPErrorsStats=1; }
 	if ($ShowSMTPErrorsStats !~ /[01]/)          	{ $ShowSMTPErrorsStats=0; }
@@ -1641,6 +1645,7 @@ sub Check_Config {
 	if ($ShowPagesStats eq '1') 		{ $ShowPagesStats = 'PBEX'; }
 	if ($ShowFileTypesStats eq '1') 	{ $ShowFileTypesStats = 'HB'; }
 	if ($ShowOriginStats eq '1') 		{ $ShowOriginStats = 'PH'; }
+	if ($ShowClusterStats eq '1') 		{ $ShowClusterStats = 'PHB'; }
 	if ($ShowMiscStats eq '1') 			{ $ShowMiscStats = 'ajdfrqwp'; }
 
 	# Convert extra sections data into @ExtraConditionType, @ExtraConditionTypeVal...
@@ -1875,13 +1880,13 @@ sub Read_History_With_TmpUpdate {
 	my $lastlinechecksum=shift||0;
 
 	my %allsections=('general'=>1,'misc'=>2,'time'=>3,'visitor'=>4,'day'=>5,
-					 'domain'=>6,'login'=>7,'robot'=>8,'worms'=>9,'emailsender'=>10,'emailreceiver'=>11,
-					 'session'=>12,'sider'=>13,'filetypes'=>14,
-					 'os'=>15,'browser'=>16,'screensize'=>17,'unknownreferer'=>18,'unknownrefererbrowser'=>19,
-					 'origin'=>20,'sereferrals'=>21,'pagerefs'=>22,
-					 'searchwords'=>23,'keywords'=>24,
-					 'errors'=>25);
-	my $order=26;
+					 'domain'=>6,'cluster'=>7,'login'=>8,'robot'=>9,'worms'=>10,'emailsender'=>11,'emailreceiver'=>12,
+					 'session'=>13,'sider'=>14,'filetypes'=>15,
+					 'os'=>16,'browser'=>17,'screensize'=>18,'unknownreferer'=>19,'unknownrefererbrowser'=>20,
+					 'origin'=>21,'sereferrals'=>22,'pagerefs'=>23,
+					 'searchwords'=>24,'keywords'=>25,
+					 'errors'=>26);
+	my $order=27;
 	foreach my $code (keys %TrapInfosForHTTPErrorCodes) { $allsections{"sider_$code"}=$order++; }
 	foreach my $extranum (1..@ExtraName-1) { $allsections{"extra_$extranum"}=$order++; }
 
@@ -1926,6 +1931,7 @@ sub Read_History_With_TmpUpdate {
 		if ($UpdateStats || $MigrateStats || ($HTMLOutput{'main'} && $ShowKeyphrasesStats) || $HTMLOutput{'keyphrases'} || $HTMLOutput{'keywords'}) { $SectionsToLoad{'searchwords'}=$order++; }
 		if (! $withupdate && $HTMLOutput{'main'} && $ShowKeywordsStats) { $SectionsToLoad{'keywords'}=$order++; }	# If we update, dont need to load
 		# Others
+		if ($UpdateStats || $MigrateStats || ($HTMLOutput{'main'} && $ShowClusterStats)) { $SectionsToLoad{'cluster'}=$order++; }
 		if ($UpdateStats || $MigrateStats || ($HTMLOutput{'main'} && $ShowMiscStats)) { $SectionsToLoad{'misc'}=$order++; }
 		if ($UpdateStats || $MigrateStats || ($HTMLOutput{'main'} && ($ShowHTTPErrorsStats || $ShowSMTPErrorsStats)) || $HTMLOutput{'errors'}) { $SectionsToLoad{'errors'}=$order++; }
 		foreach my $code (keys %TrapInfosForHTTPErrorCodes) {
@@ -2102,6 +2108,39 @@ sub Read_History_With_TmpUpdate {
 				if ($SectionsToSave{'misc'}) {
 					Save_History('misc',$year,$month); delete $SectionsToSave{'misc'};
 					if ($withpurge) { %_misc_p=(); %_misc_h=(); %_misc_k=(); }
+				}
+				if (! scalar %SectionsToLoad) { debug(" Stop reading history file. Got all we need."); last; }
+				next;
+			}
+
+			# BEGIN_CLUSTER
+			if ($field[0] eq 'BEGIN_CLUSTER')      {
+				if ($Debug) { debug(" Begin of CLUSTER section"); }
+				$_=<HISTORY>;
+				chomp $_; s/\r//;
+				if (! $_) { error("History file \"$filetoread\" is corrupted (in section CLUSTER). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost).","","",1); }
+				my @field=split(/\s+/,$_); $countlines++;
+				my $count=0;my $countloaded=0;
+				while ($field[0] ne 'END_CLUSTER') {
+					if ($field[0]) {
+						$count++;
+						if ($SectionsToLoad{'cluster'}) {
+							$countloaded++;
+							if ($field[1]) { $_cluster_p{$field[0]}+=int($field[1]); }
+							if ($field[2]) { $_cluster_h{$field[0]}+=int($field[2]); }
+							if ($field[3]) { $_cluster_k{$field[0]}+=int($field[3]); }
+						}
+					}
+					$_=<HISTORY>;
+					chomp $_; s/\r//;
+					if (! $_) { error("History file \"$filetoread\" is corrupted (in section CLUSTER). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost).","","",1); }
+					@field=split(/\s+/,$_); $countlines++;
+				}
+				if ($Debug) { debug(" End of CLUSTER section ($count entries, $countloaded loaded)"); }
+				delete $SectionsToLoad{'cluster'};
+				if ($SectionsToSave{'cluster'}) {
+					Save_History('cluster',$year,$month); delete $SectionsToSave{'cluster'};
+					if ($withpurge) { %_cluster_p=(); %_cluster_h=(); %_cluster_k=(); }
 				}
 				if (! scalar %SectionsToLoad) { debug(" Stop reading history file. Got all we need."); last; }
 				next;
@@ -3202,7 +3241,7 @@ sub Save_History {
 		print HISTORYTMP "# for direct I/O access. If you made changes somewhere in this file, you\n";
 		print HISTORYTMP "# should also remove completely the MAP section (AWStats will rewrite it\n";
 		print HISTORYTMP "# at next update).\n";
-		print HISTORYTMP "BEGIN_MAP ".(25+(scalar keys %TrapInfosForHTTPErrorCodes)+(scalar @ExtraName?scalar @ExtraName-1:0))."\n";
+		print HISTORYTMP "BEGIN_MAP ".(26+(scalar keys %TrapInfosForHTTPErrorCodes)+(scalar @ExtraName?scalar @ExtraName-1:0))."\n";
 		print HISTORYTMP "POS_GENERAL ";$PosInFile{"general"}=tell HISTORYTMP;print HISTORYTMP "$spacebar\n";
 		# When
 		print HISTORYTMP "POS_TIME ";$PosInFile{"time"}=tell HISTORYTMP;print HISTORYTMP "$spacebar\n";
@@ -3229,10 +3268,11 @@ sub Save_History {
 		print HISTORYTMP "POS_SEREFERRALS ";$PosInFile{"sereferrals"}=tell HISTORYTMP;print HISTORYTMP "$spacebar\n";
 		print HISTORYTMP "POS_PAGEREFS ";$PosInFile{"pagerefs"}=tell HISTORYTMP;print HISTORYTMP "$spacebar\n";
 		print HISTORYTMP "POS_SEARCHWORDS ";$PosInFile{"searchwords"}=tell HISTORYTMP;print HISTORYTMP "$spacebar\n";
-		print HISTORYTMP "POS_MISC ";$PosInFile{"misc"}=tell HISTORYTMP;print HISTORYTMP "$spacebar\n";
 		print HISTORYTMP "POS_KEYWORDS ";$PosInFile{"keywords"}=tell HISTORYTMP;print HISTORYTMP "$spacebar\n";
 		# Others
+		print HISTORYTMP "POS_MISC ";$PosInFile{"misc"}=tell HISTORYTMP;print HISTORYTMP "$spacebar\n";
 		print HISTORYTMP "POS_ERRORS ";$PosInFile{"errors"}=tell HISTORYTMP;print HISTORYTMP "$spacebar\n";
+		print HISTORYTMP "POS_CLUSTER ";$PosInFile{"cluster"}=tell HISTORYTMP;print HISTORYTMP "$spacebar\n";
 		foreach my $code (keys %TrapInfosForHTTPErrorCodes) {
 			print HISTORYTMP "POS_SIDER_$code ";$PosInFile{"sider_$code"}=tell HISTORYTMP;print HISTORYTMP "$spacebar\n";
 		}
@@ -3667,6 +3707,14 @@ sub Save_History {
 	}
 
 	# Other - Errors
+	if ($sectiontosave eq 'cluster') {
+		print HISTORYTMP "\n";
+		print HISTORYTMP "# Cluster ID - Pages - Hits - Bandwidth\n";
+		$ValueInFile{$sectiontosave}=tell HISTORYTMP;
+		print HISTORYTMP "BEGIN_CLUSTER ".(scalar keys %_cluster_h)."\n";
+		foreach my $key (keys %_cluster_h) { print HISTORYTMP "$key ".int($_cluster_p{$key}||0)." ".int($_cluster_h{$key}||0)." ".int($_cluster_k{$key}||0)."\n"; }
+		print HISTORYTMP "END_CLUSTER\n";
+	}
 	if ($sectiontosave eq 'misc') {
 		print HISTORYTMP "\n";
 		print HISTORYTMP "# Misc ID - Pages - Hits - Bandwidth\n";
@@ -5903,6 +5951,16 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 			$_login_l{$field[$pos_logname]}=$timerecord;
 		}
 
+		# Check cluster
+		#--------------
+		if ($pos_cluster>=0) {
+			if ($PageBool) {
+				$_cluster_p{$field[$pos_cluster]}++;							#Count accesses for page (page)
+			}
+			$_cluster_h{$field[$pos_cluster]}++;								#Count accesses for page (hit)
+			$_cluster_k{$field[$pos_cluster]}+=int($field[$pos_size]);			#Count accesses for page (kb)
+		}
+
 		# Do DNS lookup
 		#--------------
 		my $Host=$field[$pos_host];
@@ -6791,10 +6849,11 @@ if (scalar keys %HTMLOutput) {
 				if ($ShowKeywordsStats)	 	 { print ($frame?"<tr><td class=AWS> &nbsp; <img height=8 width=9 src=\"$DirIcons/other/page.png\" alt=\"...\"> ":""); print "<a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=keywords":"$PROG$StaticLinks.keywords.$StaticExt")."\"$NewLinkTarget>$Message[121]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
 				if ($linetitle) { print ($frame?"":"</td></tr>\n"); }
 				# Others
-				$linetitle=&AtLeastOneNotNull($ShowFileTypesStats=~/C/i,$ShowMiscStats,$ShowHTTPErrorsStats,$ShowSMTPErrorsStats);
+				$linetitle=&AtLeastOneNotNull($ShowFileTypesStats=~/C/i,$ShowClusterStats,$ShowMiscStats,$ShowHTTPErrorsStats,$ShowSMTPErrorsStats);
 				if ($linetitle) { print "<tr><th class=AWS".($frame?"":" valign=top").">".($menuicon?"<img src=\"$DirIcons/other/menu8.png\">&nbsp;":"")."$Message[2]: </th>\n"; }
 				if ($linetitle) { print ($frame?"</tr>\n":"<td class=AWS>"); }
 				if ($ShowFileTypesStats =~ /C/i)	 { print ($frame?"<tr><td class=AWS>":""); print "<a href=\"$linkanchor#FILETYPES\"$targetpage>$Message[98]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
+				if ($ShowClusterStats)	 	 { print ($frame?"<tr><td class=AWS>":""); print "<a href=\"$linkanchor#CLUSTER\"$targetpage>$Message[155]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
 				if ($ShowMiscStats)	 		 { print ($frame?"<tr><td class=AWS>":""); print "<a href=\"$linkanchor#MISC\"$targetpage>$Message[139]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
 				if ($ShowHTTPErrorsStats)	 { print ($frame?"<tr><td class=AWS>":""); print "<a href=\"$linkanchor#ERRORS\"$targetpage>$Message[32]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
 				foreach my $code (keys %TrapInfosForHTTPErrorCodes) {
@@ -9228,6 +9287,32 @@ if (scalar keys %HTMLOutput) {
 			&tab_end;
 		}
 	
+		# BY CLUSTER
+		#----------------------------
+		if ($ShowClusterStats) {
+			if ($Debug) { debug("ShowClusterStats",2); }
+			print "$Center<a name=\"CLUSTER\">&nbsp;</a><BR>\n";
+			my $title="$Message[155]";
+			&tab_head("$title",19);
+			print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH colspan=2>$Message[155]</TH><TH bgcolor=\"#$color_p\" width=80>$Message[56]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH bgcolor=\"#$color_k\" width=80>$Message[75]</TH></TR>\n";
+			$total_p=$total_h=$total_k=0;
+			my $count=0;
+			foreach my $key (keys %_cluster_h) {
+				my $p=int($_cluster_h{$key}/$TotalHits*1000)/10;
+				print "<TR>";
+				print "<TD>$key</TD>";
+				if ($ShowClusterStats =~ /P/i) { print "<TD>".($_cluster_p{$key}?$_cluster_p{$key}:"&nbsp;")."</TD>"; }
+				if ($ShowClusterStats =~ /H/i) { print "<TD>$_cluster_h{$key}</TD>"; }
+				if ($ShowClusterStats =~ /B/i) { print "<TD>".Format_Bytes($_cluster_k{$key})."</TD>"; }
+				print "</TR>\n";
+				$total_p+=$_cluster_p{$key};
+				$total_h+=$_cluster_h{$key};
+				$total_k+=$_cluster_h{$key};
+				$count++;
+			}
+			&tab_end;
+		}
+
 	 	# BY EXTRA SECTIONS
 	 	#----------------------------
 	 	foreach my $extranum (1..@ExtraName-1) {
