@@ -14,7 +14,7 @@
 #-------------------------------------------------------
 # Defines
 #-------------------------------------------------------
-$VERSION="2.24 (build 20)";
+$VERSION="2.24 (build 21)";
 $Lang=0;
 
 # Default value
@@ -808,6 +808,81 @@ $message[70][8]="Lis";
 $message[71][8]="Pro";
 $message[72][8]="Czech cz.png";
 
+# Portuguese
+$message[0][9]="Desconhecido";
+$message[1][9]="Desconhecido (ip não resolvido)";
+$message[2][9]="Outros visitantes";
+$message[3][9]="Ver detalhes";
+$message[4][9]="Dia";
+$message[5][9]="Mês";
+$message[6][9]="Ano";
+$message[9][9]="Estatísticas de";
+$message[8][9]="Primeira visita";
+$message[9][9]="Última visita";
+$message[10][9]="Numero de visitas";
+$message[11][9]="Visitantes únicos";
+$message[12][9]="Visita";
+$message[13][9]="Palavra chave";
+$message[14][9]="Pesquisa";
+$message[15][9]="Por cento";
+$message[16][9]="Resumo de Tráfego";
+$message[17][9]="Domínios/Países";
+$message[18][9]="Visitantes";
+$message[19][9]="Páginas/URL";
+$message[20][9]="Horas";
+$message[21][9]="Browsers";
+$message[22][9]="Erros HTTP";
+$message[23][9]="Referencias";
+$message[24][9]="Busca&nbsp;Palavras";
+$message[25][9]="Visitas domínios/países";
+$message[26][9]="hosts";
+$message[27][9]="páginas";
+$message[28][9]="paginas diferentes";
+$message[29][9]="Acesso";
+$message[30][9]="Outras palavras";
+$message[31][9]="Browsers usados";
+$message[32][9]="Erros HTTP";
+$message[33][9]="Versões Netscape";
+$message[34][9]="Versões MS Internet Explorer";
+$message[35][9]="SO Usados";
+$message[36][9]="Connectado a partir de";
+$message[37][9]="Origem";
+$message[38][9]="Endereço directo / Favoritos";
+$message[39][9]="Link de um  Newsgroup";
+$message[40][9]="Link de um Motor de Busca";
+$message[41][9]="Link de uma página externa (outros sites que não motores de busca)";
+$message[42][9]="Link de uma página interna (outras páginas no mesmo site)";
+$message[43][9]="palavras usadas em motores de busca";
+$message[44][9]="Kb";
+$message[45][9]="Endereço IP não resolvido";
+$message[46][9]="SO Desconhecido (Campo Referer)";
+$message[47][9]="URLs solicitadas e não encontradas (HTTP code 404)";
+$message[48][9]="Endereço IP";
+$message[49][9]="Erro&nbsp;Hits";
+$message[50][9]="Browsers Desconhecidos(Campo Referer)";
+$message[51][9]="Motores Visitantes";
+$message[52][9]="visitas/visitante";
+$message[53][9]="Motores/Spiders visitantes";
+$message[54][9]="Ferramenta de Análise de ficheiros de log em realtime para estatísticas avançadas";
+$message[55][9]="de";
+$message[56][9]="Páginas";
+$message[57][9]="Hits";
+$message[58][9]="Versões";
+$message[59][9]="SO";
+$message[60][9]="Jan";
+$message[61][9]="Fev";
+$message[62][9]="Mar";
+$message[63][9]="Abr";
+$message[64][9]="Mai";
+$message[65][9]="Jun";
+$message[66][9]="Jul";
+$message[67][9]="Ago";
+$message[68][9]="Set";
+$message[69][9]="Out";
+$message[70][9]="Nov";
+$message[71][9]="Dez";
+$message[72][9]="Portuguese pt.png";
+
 
 
 # ---------- Browser lists ----------------
@@ -1454,7 +1529,7 @@ sub Check_Config {
 	# Optional section
 	if (! ($PurgeLogFile =~ /[0-1]/))         { $PurgeLogFile=0; }
 	if (! ($ArchiveLogRecords =~ /[0-1]/))    { $ArchiveLogRecords=1; }
-	if (! ($Lang =~ /[0-8]/))                 { $Lang=0; }
+	if (! ($Lang =~ /[0-9]/))                 { $Lang=0; }
 	if ($DefaultFile eq "")                   { $DefaultFile="index.html"; }
 	if (! ($WarningMessages =~ /[0-1]/))      { $WarningMesages=1; }
 	if (! ($ShowLinksOnURL =~ /[0-1]/))       { $ShowLinksOnURL=1; }
