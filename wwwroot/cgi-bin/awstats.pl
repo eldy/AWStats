@@ -94,8 +94,8 @@ $BarImageHorizontal_h = "barrehh.png";
 $BarImageVertical_k   = "barrevk.png";
 $BarImageHorizontal_k = "barrehk.png";
 use vars qw/
-$DNSLookup $AllowAccessFromWebToAuthenticatedUsersOnly $BarHeight $BarWidth
-$CreateDirDataIfNotExists $KeepBackupOfHistoricFiles $MaxLengthOfURL
+$EnableLockForUpdate $DNSLookup $AllowAccessFromWebToAuthenticatedUsersOnly
+$BarHeight $BarWidth $CreateDirDataIfNotExists $KeepBackupOfHistoricFiles $MaxLengthOfURL
 $MaxNbOfDomain $MaxNbOfHostsShown $MaxNbOfKeyphrasesShown $MaxNbOfKeywordsShown
 $MaxNbOfLoginShown $MaxNbOfPageShown $MaxNbOfRefererShown $MaxNbOfRobotShown
 $MinHitFile $MinHitHost $MinHitKeyphrase $MinHitKeyword
@@ -105,10 +105,10 @@ $NbOfLinesShowsteps $NewLinePhase $NbOfLinesForCorruptedLog $PurgeLogFile
 $ShowAuthenticatedUsers $ShowCompressionStats $ShowFileSizesStats
 $ShowDropped $ShowCorrupted $ShowUnknownOrigin $ShowLinksToWhoIs
 $ShowEMailSenders $ShowEMailReceivers
-$Expires $UpdateStats $MigrateStats $URLWithQuery $UseFramesWhenCGI $Spec
+$Expires $UpdateStats $MigrateStats $URLWithQuery $UseFramesWhenCGI $DecodeUA
 /;
-($DNSLookup, $AllowAccessFromWebToAuthenticatedUsersOnly, $BarHeight, $BarWidth,
-$CreateDirDataIfNotExists, $KeepBackupOfHistoricFiles, $MaxLengthOfURL,
+($EnableLockForUpdate, $DNSLookup, $AllowAccessFromWebToAuthenticatedUsersOnly,
+$BarHeight, $BarWidth, $CreateDirDataIfNotExists, $KeepBackupOfHistoricFiles, $MaxLengthOfURL,
 $MaxNbOfDomain, $MaxNbOfHostsShown, $MaxNbOfKeyphrasesShown, $MaxNbOfKeywordsShown,
 $MaxNbOfLoginShown, $MaxNbOfPageShown, $MaxNbOfRefererShown, $MaxNbOfRobotShown,
 $MinHitFile, $MinHitHost, $MinHitKeyphrase, $MinHitKeyword,
@@ -118,8 +118,8 @@ $NbOfLinesShowsteps, $NewLinePhase, $NbOfLinesForCorruptedLog, $PurgeLogFile,
 $ShowAuthenticatedUsers, $ShowCompressionStats, $ShowFileSizesStats,
 $ShowDropped, $ShowCorrupted, $ShowUnknownOrigin, $ShowLinksToWhoIs,
 $ShowEMailSenders, $ShowEMailReceivers,
-$Expires, $UpdateStats, $MigrateStats, $URLWithQuery, $UseFramesWhenCGI, $Spec)=
-(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
+$Expires, $UpdateStats, $MigrateStats, $URLWithQuery, $UseFramesWhenCGI, $DecodeUA)=
+(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
 use vars qw/
 $AllowToUpdateStatsFromBrowser $ArchiveLogRecords $DetailedReportsOnNewWindows
 $FirstDayOfWeek $KeyWordsNotSensitive $SaveDatabaseFilesWithPermissionsForEveryone
@@ -565,8 +565,8 @@ sub error {
 		if ($HTMLOutput) { print "</b><br>\n"; }
 		print "See AWStats documentation in 'docs' directory for informations on how to setup $PROG.\n";
 	}
-	# Remove lock if set
-	if ($DirLock && $message !~ /lock file/) {
+	# Remove lock if not a lock message 
+	if ($EnableLockForUpdate && $message !~ /lock file/) {
 		&Lock_Update(0);
 	}
 	if ($HTMLOutput) { print "</BODY>\n</HTML>\n"; }
@@ -810,56 +810,57 @@ sub Read_Config {
 			}
 		if ($param =~ /^HostAliases/) {
 			$value =~ s/\\\./\./g; $value =~ s/([^\\])\./$1\\\./g; $value =~ s/^\./\\\./;	# Replace . into \.
-			foreach my $elem (split(/\s+/,$value))	  { push @HostAliases,$elem; }
+			foreach my $elem (split(/\s+/,$value))	{ push @HostAliases,$elem; }
 			next;
 			}
 		if ($param =~ /^AllowToUpdateStatsFromBrowser/)	{ $AllowToUpdateStatsFromBrowser=$value; next; }
 		# Read optional setup section
-		if ($param =~ /^DNSStaticCacheFile/)				  { $DNSStaticCacheFile=$value; next; }
-		if ($param =~ /^DNSLastUpdateCacheFile/)			  { $DNSLastUpdateCacheFile=$value; next; }
+		if ($param =~ /^EnableLockForUpdate/)		{ $EnableLockForUpdate=$value; next; }
+		if ($param =~ /^DNSStaticCacheFile/)		{ $DNSStaticCacheFile=$value; next; }
+		if ($param =~ /^DNSLastUpdateCacheFile/)	{ $DNSLastUpdateCacheFile=$value; next; }
 		if ($param =~ /^SkipDNSLookupFor/) {
 			$value =~ s/\\\./\./g; $value =~ s/([^\\])\./$1\\\./g; $value =~ s/^\./\\\./;	# Replace . into \.
-			foreach my $elem (split(/\s+/,$value))    { push @SkipDNSLookupFor,$elem; }
+			foreach my $elem (split(/\s+/,$value))	{ push @SkipDNSLookupFor,$elem; }
 			next;
 			}
 		if ($param =~ /^AllowAccessFromWebToAuthenticatedUsersOnly/)	{ $AllowAccessFromWebToAuthenticatedUsersOnly=$value; next; }
 		if ($param =~ /^AllowAccessFromWebToFollowingAuthenticatedUsers/) {
-			foreach my $elem (split(/\s+/,$value))	  { push @AllowAccessFromWebToFollowingAuthenticatedUsers,$elem; }
+			foreach my $elem (split(/\s+/,$value))	{ push @AllowAccessFromWebToFollowingAuthenticatedUsers,$elem; }
 			next;
 			}
 		if ($param =~ /^AllowAccessFromWebToFollowingIPAddresses/)		{ $AllowAccessFromWebToFollowingIPAddresses=$value; next; }
-		if ($param =~ /^CreateDirDataIfNotExists/)   { $CreateDirDataIfNotExists=$value; next; }
+		if ($param =~ /^CreateDirDataIfNotExists/)	{ $CreateDirDataIfNotExists=$value; next; }
 		if ($param =~ /^SaveDatabaseFilesWithPermissionsForEveryone/)   { $SaveDatabaseFilesWithPermissionsForEveryone=$value; next; }
 		if ($param =~ /^PurgeLogFile/)          { $PurgeLogFile=$value; next; }
 		if ($param =~ /^ArchiveLogRecords/)     { $ArchiveLogRecords=$value; next; }
-		if ($param =~ /^KeepBackupOfHistoricFiles/)     { $KeepBackupOfHistoricFiles=$value; next; }
+		if ($param =~ /^KeepBackupOfHistoricFiles/)	{ $KeepBackupOfHistoricFiles=$value; next; }
 		if ($param =~ /^DefaultFile/)           {
 			$value =~ s/\\\./\./g; $value =~ s/([^\\])\./$1\\\./g; $value =~ s/^\./\\\./;   # Replace . into \.
-			foreach my $elem (split(/\s+/,$value))    { push @DefaultFile,$elem; }
+			foreach my $elem (split(/\s+/,$value))	{ push @DefaultFile,$elem; }
 			next;
 			}
 		if ($param =~ /^SkipHosts/) {
 			$value =~ s/\\\./\./g; $value =~ s/([^\\])\./$1\\\./g; $value =~ s/^\./\\\./;	# Replace . into \.
-			foreach my $elem (split(/\s+/,$value))    { push @SkipHosts,$elem; }
+			foreach my $elem (split(/\s+/,$value))	{ push @SkipHosts,$elem; }
 			next;
 			}
 		if ($param =~ /^SkipFiles/) {
 			$value =~ s/\\\./\./g; $value =~ s/([^\\])\./$1\\\./g; $value =~ s/^\./\\\./;	# Replace . into \.
-			foreach my $elem (split(/\s+/,$value))    { push @SkipFiles,$elem; }
+			foreach my $elem (split(/\s+/,$value))	{ push @SkipFiles,$elem; }
 			next;
 			}
 		if ($param =~ /^OnlyFiles/) {
 			$value =~ s/\\\./\./g; $value =~ s/([^\\])\./$1\\\./g; $value =~ s/^\./\\\./;	# Replace . into \.
-			foreach my $elem (split(/\s+/,$value))    { push @OnlyFiles,$elem; }
+			foreach my $elem (split(/\s+/,$value))	{ push @OnlyFiles,$elem; }
 			next;
 			}
 		if ($param =~ /^NotPageList/) {
-			foreach my $elem (split(/\s+/,$value))    { $NotPageList{$elem}=1; }
+			foreach my $elem (split(/\s+/,$value))	{ $NotPageList{$elem}=1; }
 			$foundNotPageList=1;
 			next;
 			}
 		if ($param =~ /^ValidHTTPCodes/) {
-			foreach my $elem (split(/\s+/,$value))    { $ValidHTTPCodes{$elem}=1; }
+			foreach my $elem (split(/\s+/,$value))	{ $ValidHTTPCodes{$elem}=1; }
 			$foundValidHTTPCodes=1;
 			next;
 			}
@@ -868,6 +869,7 @@ sub Read_Config {
 		if ($param =~ /^NbOfLinesForCorruptedLog/) { $NbOfLinesForCorruptedLog=$value; next; }
 		if ($param =~ /^Expires/)               { $Expires=$value; next; }
 		if ($param =~ /^WrapperScript/)         { $WrapperScript=$value; next; }
+		if ($param =~ /^DecodeUA/)         		{ $DecodeUA=$value; next; }
 		# Read optional accuracy setup section
 		if ($param =~ /^LevelForRobotsDetection/)			{ $LevelForRobotsDetection=$value; next; }
 		if ($param =~ /^LevelForBrowsersDetection/)			{ $LevelForBrowsersDetection=$value; next; }
@@ -1193,6 +1195,7 @@ sub Check_Config {
 	if (! $SiteDomain)                              { error("Error: SiteDomain parameter not found in your config/domain file. You must add it for using this version."); }
 	if ($AllowToUpdateStatsFromBrowser !~ /[0-1]/) 	{ $AllowToUpdateStatsFromBrowser=0; }
 	# Optional setup section
+	if ($EnableLockForUpdate !~ /[0-1]/)           	{ $EnableLockForUpdate=0; }
 	if (! $DNSStaticCacheFile)                     	{ $DNSStaticCacheFile="dnscache.txt"; }
 	if (! $DNSLastUpdateCacheFile)                 	{ $DNSLastUpdateCacheFile="dnscachelastupdate.txt"; }
 	if ($AllowAccessFromWebToAuthenticatedUsersOnly !~ /[0-1]/)     { $AllowAccessFromWebToAuthenticatedUsersOnly=0; }
@@ -1206,6 +1209,7 @@ sub Check_Config {
 	if ($WarningMessages !~ /[0-1]/)              	{ $WarningMessages=1; }
 	if ($NbOfLinesForCorruptedLog !~ /^\d+/ || $NbOfLinesForCorruptedLog<1)	{ $NbOfLinesForCorruptedLog=50; }
 	if ($Expires !~ /^\d+/)                 		{ $Expires=0; }
+	if ($DecodeUA !~ /[0-1]/)						{ $DecodeUA=0; }
 	# Optional accuracy setup section
 	if ($LevelForRobotsDetection !~ /^\d+/)       	{ $LevelForRobotsDetection=2; }
 	if ($LevelForBrowsersDetection !~ /^\d+/)     	{ $LevelForBrowsersDetection=1; }
@@ -3491,33 +3495,32 @@ sub BuildKeyList {
 
 #--------------------------------------------------------------------
 # Function:     Lock or unlock update
-# Parameters:   1 to lock, 0 to unlock
-# Input:        $DirLock $PROG $FileSuffix
-# Output:       $DirLock
+# Parameters:   status (1 to lock, 0 to unlock)
+# Input:        $DirLock (if status=0) $PROG $FileSuffix
+# Output:       $DirLock (if status=1)
 # Return:       None
 #--------------------------------------------------------------------
 sub Lock_Update {
 	my $status=shift;
 	my $lock="$PROG$FileSuffix.lock";
-	# Define dir where to write lock file into
-	if (! $DirLock) {
-		if (-d $ENV{"TEMP"}) { $DirLock=$ENV{"TEMP"}; }
-		elsif (-d $ENV{"TMP"}) { $DirLock=$ENV{"TMP"}; }
-		elsif (-d "/tmp") { $DirLock="/tmp"; }
-		$DirLock =~ s/[\\\/]$//;
-	}
 	if ($status) {
 		# We stop if there is at least one lock file wherever it is
-		foreach my $key ($ENV{"TEMP"},$ENV{"TMP"},"/tmp","/") {
+		foreach my $key ($ENV{"TEMP"},$ENV{"TMP"},"/tmp","/",".") {
 			my $newkey =$key;
 			$newkey =~ s/[\\\/]$//;
 			if (-f "$newkey/$lock") { error("An AWStats update process seems to be already running for this config file. Try later.\nIf this is not true, remove manually lock file '$newkey/$lock'.","","",1); }
 		}
-		# Set lock
-		if ($Debug) { debug("Update lock file $DirLock/$lock is set"); }
-		open(LOCK,">$DirLock/$lock") || error("Error: Failed to create lock file $DirLock/$lock","","",1);
-		print LOCK "AWStats update started by process $$ at $nowyear-$nowmonth-$nowday $nowhour:$nowmin:$nowsec\n";
-		close(LOCK);
+		# Set lock where we can
+		foreach my $key ($ENV{"TEMP"},$ENV{"TMP"},"/tmp","/",".") {
+			if (! -d $key) { next; }
+			$DirLock=$key;
+			$DirLock =~ s/[\\\/]$//;
+			if ($Debug) { debug("Update lock file $DirLock/$lock is set"); }
+			open(LOCK,">$DirLock/$lock") || error("Error: Failed to create lock file $DirLock/$lock","","",1);
+			print LOCK "AWStats update started by process $$ at $nowyear-$nowmonth-$nowday $nowhour:$nowmin:$nowsec\n";
+			close(LOCK);
+			last;
+		}
 	}
 	else {
 		# Remove lock
@@ -3868,13 +3871,13 @@ if ($MigrateStats) {
 	$FileSuffix=$5;
 	print "Start migration for file '$MigrateStats'.\n";
 	if (! -s $MigrateStats) { error("Error: File to migrate '$MigrateStats' not found.","","",1); }
-	&Lock_Update(1);
+	if ($EnableLockForUpdate) {	&Lock_Update(1); }
 	my $newhistory=&Read_History_With_TmpUpdate($YearRequired,$MonthRequired,1,0,"all");
 	if (rename("$newhistory","$MigrateStats")==0) {
 		unlink "$newhistory";
 		error("Error: Failed to rename \"$newhistory\" into \"$MigrateStats\".\nWrite permissions on \"$MigrateStats\" might be wrong".($ENV{"GATEWAY_INTERFACE"}?" for a 'migration from web'":"")." or file might be opened.");
 	}
-	&Lock_Update(0);
+	if ($EnableLockForUpdate) {	&Lock_Update(0); }
 	print "Migration for file '$MigrateStats' successful.\n";
 	exit 0;
 }
@@ -4175,12 +4178,14 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {	# Updat
 	# Processing log
 	#------------------------------------------
 
-	# Trap signals to remove lock
-	$SIG{INT} = \&SigHandler;	# 2
-	#$SIG{KILL} = \&SigHandler;	# 9
-	#$SIG{TERM} = \&SigHandler;	# 15
-
-	&Lock_Update(1);
+	if ($EnableLockForUpdate) {
+		# Trap signals to remove lock
+		$SIG{INT} = \&SigHandler;	# 2
+		#$SIG{KILL} = \&SigHandler;	# 9
+		#$SIG{TERM} = \&SigHandler;	# 15
+		# Set AWStats update lock
+		&Lock_Update(1);
+	}
 
 	if ($Debug) { debug("Start Update process (lastprocessedmonth=$lastprocessedmonth, lastprocessedyear=$lastprocessedyear)"); }
 	$NbOfLinesRead=$NbOfLinesDropped=$NbOfLinesCorrupted=$NbOfOldLines=$NbOfNewLines=$NbOfLinesShowsteps=0;
@@ -4377,7 +4382,7 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {	# Updat
 		# Analyze: Robot
 		#---------------
 		if ($pos_agent >= 0) {
-			if ($Spec == 1) { $field[$pos_agent] =~ s/%20/_/g; }	# This is to support servers (like Roxen) that writes user agent with %20 in it
+			if ($DecodeUA) { $field[$pos_agent] =~ s/%20/_/g; }	# This is to support servers (like Roxen) that writes user agent with %20 in it
 			$UserAgent=$field[$pos_agent];
 
 			if ($LevelForRobotsDetection) {
@@ -4950,12 +4955,14 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {	# Updat
 		Save_DNS_Cache_File(\%TmpDNSLookup,"$DirData/$DNSLastUpdateCacheFile","$FileSuffix");	# Save into file using FileSuffix
 	}
 
-	&Lock_Update(0);
-
-	# Restore signals handler
-	$SIG{INT} = 'DEFAULT';	# 2
-	#$SIG{KILL} = 'DEFAULT';	# 9
-	#$SIG{TERM} = 'DEFAULT';	# 15
+	if ($EnableLockForUpdate) {
+		# Remove lock
+		&Lock_Update(0);
+		# Restore signals handler
+		$SIG{INT} = 'DEFAULT';	# 2
+		#$SIG{KILL} = 'DEFAULT';	# 9
+		#$SIG{TERM} = 'DEFAULT';	# 15
+	}
 
 }
 # End of log processing if ($UPdateStats)

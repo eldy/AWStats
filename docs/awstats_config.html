@@ -61,6 +61,7 @@ when reading it), follow the example:<br>
 
 <br><b>OPTIONAL SETUP SECTION (Not required but increase AWStats features)</b><br>
 <ul>
+<li><a href="#EnableLockForUpdate">EnableLockForUpdate</a>
 <li><a href="#DNSStaticCacheFile">DNSStaticCacheFile</a>
 <li><a href="#DNSLastUpdateCacheFile">DNSLastUpdateCacheFile</a>
 <li><a href="#SkipDNSLookupFor">SkipDNSLookupFor</a>
@@ -83,6 +84,7 @@ when reading it), follow the example:<br>
 <li><a href="#NbOfLinesForCorruptedLog">NbOfLinesForCorruptedLog</a>
 <li><a href="#SplitSearchString">SplitSearchString</a>
 <li><a href="#WrapperScript">WrapperScript</a>
+<li><a href="#DecodeUA">DecodeUA</a>
 </ul>
 
 <br><b>OPTIONAL ACCURACY SETUP SECTION (Not required but increase AWStats features)</b><br>
@@ -390,6 +392,23 @@ when reading it), follow the example:<br>
 <br># Default: 0
 <br>#
 <br>AllowToUpdateStatsFromBrowser=0
+
+<br><br><hr>
+
+<a name="EnableLockForUpdate"><b>EnableLockForUpdate</b></a><br>
+<b>Version : </b>5.0 +<br>
+<br># When the update process run, AWStats can set a lock file in TEMP or TMP
+<br># directory. This lock is to avoid to have 2 update processes running at the
+<br># same time to prevent unknown conflicts problems and avoid DoS attacks when
+<br># AllowToUpdateStatsFromBrowser is set to 1.
+<br># Because, when you use lock file, you can experience sometimes problems in
+<br># lock file not correctly removed (when process is killed for example that
+<br># require that you remove the file manualy), this option is not enabled by
+<br># default (Do not enable this option with no consol server access).
+<br># Possible values: 0 or 1
+<br># Default: 0
+<br>#
+<br>EnableLockForUpdate=0
 
 <br><br><hr>
 
@@ -770,18 +789,29 @@ AWStats 4.1+ supports both keywords AND keyphrases by default with no need of an
 
 <br><br><hr>
 
+<a name="DecodeUA"><b>DecodeUA</b></a><br>
+<b>Version : </b>5.0 +<br>
+<br># DecodeUA must be set to 1 if you use Roxen web server. This server converts
+<br># all spaces in user agent field into %20. This make the AWStats robots, os
+<br># and browsers detection fail in some cases. Just change it to 1 if and only
+<br># if your web server is Roxen.
+<br># Possible values: 0 or 1
+<br># Default: 0
+<br>#
+<br>DecodeUA=0
+
+<br><br><hr>
+
 <a name="LevelFor"><b>LevelFor</b></a><br>
 <b>Version : </b>4.0 +<br>
-<br># You can change value for following option to disable/enable AWStats capabilities.
-<br># Possible values: 0, 1
-<br># Possible values: 0, 1 or 2 for LevelForRobotsDetection
-<br># Default: 1
-<br># Default: 2 for LevelForRobotsDetection
+<br># Following values allows you to disable/enable some AWStats features.
+<br># Possible values: 0, 1 (or 2 for LevelForRobotsDetection)
+<br># Default: 1 (2 for LevelForRobotsDetection)
 <br>#
 <br>LevelForRobotsDetection=2			# 0 will increase AWStats speed by 1%.
 <br>LevelForBrowsersDetection=1			# 0 disables Browsers detection. No speed gain.
 <br>LevelForOSDetection=1				# 0 disables OS detection. No speed gain.
-<br>LevelForRefererAnalyze=1			# 0 will increase AWStats speed by 6%.
+<br>LevelForRefererAnalyze=1			# 0 will increase AWStats speed by 5%.
 
 <br><br><hr>
 
