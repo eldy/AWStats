@@ -14,6 +14,7 @@ use Time::Local;	# use Time::Local 'timelocal_nocheck' is faster but not support
 use Socket;
 
 
+
 #-----------------------------------------------------------------------------
 # Defines
 #-----------------------------------------------------------------------------
@@ -493,7 +494,7 @@ sub error {
 			$tagbold="<b>"; $tagunbold="</b>"; $tagbr="<br>"; $tagfontred="<font color=#880000>"; $tagunfont="</font>";
 			print "<br><br>\n";
 		}
-		if ($LogSeparator !~ $message) {
+		if ($message !~ $LogSeparator) {
 			# Bad LogSeparator parameter
 			if ($HTMLOutput) { print "${tagfontred}"; }
 			print "AWStats did not found the ${tagbold}LogSeparator${tagunbold} in your log records.${tagbr}\n";
@@ -1122,6 +1123,15 @@ sub Check_Config {
 	if (! $LogFormat) { error("Error: LogFormat parameter is not defined in config/domain file"); }
 	if ($LogFormat =~ /^\d$/ && $LogFormat !~ /[1-5]/)  { error("Error: LogFormat parameter is wrong in config/domain file. Value is '$LogFormat' (should be 1,2,3,4,5 or a 'personalized AWStats log format string')"); }
 	if (! $LogSeparator) { $LogSeparator="\\s"; }
+	if ($Debug) {
+		debug(" LogFile='$LogFile'",2);
+		debug(" LogFormat='$LogFormat'",2);
+		debug(" LogSeparator='$LogSeparator'",2);
+		debug(" DNSLookup='$DNSLookup'",2);
+		debug(" DirData='$DirData'",2);
+		debug(" DirCgi='$DirCgi'",2);
+		debug(" DirIcons='$DirIcons'",2);
+	}
 	if (! $DirData)   { $DirData="."; }
 	if (! $DirCgi)    { $DirCgi="/cgi-bin"; }
 	if (! $DirIcons)  { $DirIcons="/icon"; }
@@ -1246,8 +1256,8 @@ sub Check_Config {
 	if (! $Message[25])  { $Message[25]="Visitors domains/countries"; }
 	if (! $Message[26])  { $Message[26]="hosts"; }
 	if (! $Message[27])  { $Message[27]="pages"; }
-	if (! $Message[28])  { $Message[28]="different pages"; }
-	if (! $Message[29])  { $Message[29]="Viewed pages"; }
+	if (! $Message[28])  { $Message[28]="different pages-url"; }
+	if (! $Message[29])  { $Message[29]="Viewed"; }
 	if (! $Message[30])  { $Message[30]="Other words"; }
 	if (! $Message[31])  { $Message[31]="Pages not found"; }
 	if (! $Message[32])  { $Message[32]="HTTP Error codes"; }
@@ -1322,7 +1332,7 @@ sub Check_Config {
 	if (! $Message[101]) { $Message[101]="Compression result"; }
 	if (! $Message[102]) { $Message[102]="Total"; }
 	if (! $Message[103]) { $Message[103]="different keyphrases"; }
-	if (! $Message[104]) { $Message[104]="Entry pages"; }
+	if (! $Message[104]) { $Message[104]="Entry"; }
 	if (! $Message[105]) { $Message[105]="Code"; }
 	if (! $Message[106]) { $Message[106]="Average size"; }
 	if (! $Message[107]) { $Message[107]="Links from a NewsGroup"; }
@@ -1334,7 +1344,7 @@ sub Check_Config {
 	if (! $Message[113]) { $Message[113]="No"; }
 	if (! $Message[114]) { $Message[114]="WhoIs info"; }
 	if (! $Message[115]) { $Message[115]="OK"; }
-	if (! $Message[116]) { $Message[116]="Exit Pages"; }
+	if (! $Message[116]) { $Message[116]="Exit"; }
 	if (! $Message[117]) { $Message[117]="Visits duration"; }
 	if (! $Message[118]) { $Message[118]="Close window"; }
 	if (! $Message[119]) { $Message[119]="Bytes"; }
@@ -1497,6 +1507,32 @@ sub Read_History_With_Update {
 	if ($withupdate) {
 		print HISTORYTMP "AWSTATS DATA FILE $VERSION\n";
 		print HISTORYTMP "# If you remove this file, all statistics for date $year-$month will be lost/reset.\n";
+		print HISTORYTMP "\n";
+		print HISTORYTMP "# This section is not used yet\n";
+		print HISTORYTMP "BEGIN_MAP 22\n";
+		print HISTORYTMP "POS_GENERAL                                \n";
+		print HISTORYTMP "POS_TIME                                   \n";
+		print HISTORYTMP "POS_VISITOR                                \n";
+		print HISTORYTMP "POS_DAY                                    \n";
+		print HISTORYTMP "POS_LOGIN                                  \n";
+		print HISTORYTMP "POS_DOMAIN                                 \n";
+		print HISTORYTMP "POS_SESSION                                \n";
+		print HISTORYTMP "POS_MSIEVER                                \n";
+		print HISTORYTMP "POS_NSVER                                  \n";
+		print HISTORYTMP "POS_OS                                     \n";
+		print HISTORYTMP "POS_UNKNOWNREFERER                         \n";
+		print HISTORYTMP "POS_UNKNOWNREFERERBROWSER                  \n";
+		print HISTORYTMP "POS_ROBOT                                  \n";
+		print HISTORYTMP "POS_SIDER                                  \n";
+		print HISTORYTMP "POS_FILETYPES                              \n";
+		print HISTORYTMP "POS_ORIGIN                                 \n";
+		print HISTORYTMP "POS_SEREFERRALS                            \n";
+		print HISTORYTMP "POS_PAGEREFS                               \n";
+		print HISTORYTMP "POS_SEARCHWORDS                            \n";
+		print HISTORYTMP "POS_KEYWORDS                               \n";
+		print HISTORYTMP "POS_ERRORS                                 \n";
+		print HISTORYTMP "POS_SIDER_404                              \n";
+		print HISTORYTMP "END_MAP\n";
 	}
 
 	# Loop on read file
@@ -2857,7 +2893,6 @@ sub Read_DNS_Cache {
 	if (! scalar keys %$hashtoload) {
 		open(DNSFILE,"$filetoload") or error("Error: Couldn't open DNS Cache file \"$filetoload\": $!");
 		# This is the fastest way to load with regexp that I know
-		#%$hashtoload = map(/^\d+\s+(\d+\.\d+\.\d+\.\d+)\s+(.*)$/o, <DNSFILE>);
 	   	%$hashtoload = map(/^(\d+\.\d+\.\d+\.\d+)\s+([^\s]+)$/o, <DNSFILE>);
 	   	close DNSFILE;
 		if ($savetohash) {
@@ -3317,7 +3352,18 @@ sub Lock_Update {
 	return;
 }
 
-
+#--------------------------------------------------------------------
+# Function:     Signal handler to call Lock_Update to remove lock file
+# Parameters:   None
+# Input:        None
+# Output:       None
+# Return:       None
+#--------------------------------------------------------------------
+sub SigHandler {
+	#my $signame = shift;
+	&Lock_Update(0);
+	sleep 10;
+}
 
 
 #--------------------------------------------------------------------
@@ -3645,8 +3691,6 @@ for (my $ix=1; $ix<=12; $ix++) {
 if ($Debug) { debug("UpdateStats is $UpdateStats",2); }
 if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {	# Update only on index page or when not framed to avoid update twice
 
-	&Lock_Update(1);
-
 	my $lastprocessedyear=$lastyearbeforeupdate;
 	my $lastprocessedmonth=$ListOfYears{$lastyearbeforeupdate}||0;
 	my $lastprocessedyearmonth=sprintf("%04i%02i",$lastprocessedyear,$lastprocessedmonth);
@@ -3775,55 +3819,44 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {	# Updat
 				$PerlParsingFormat .= "([^$LogSeparator]+)";
 			}
 			elsif ($f =~ /%time1b$/) {
-				$pos_date = $i;
-				$i++;
+				$pos_date = $i; $i++;
 				$PerlParsingFormat .= "\\[([^$LogSeparator]+)\\]";
 			}
 			elsif ($f =~ /%time1$/) {
-				$pos_date = $i;
-				$i++;
+				$pos_date = $i;	$i++;
 				#$pos_zone = $i;
 				#$i++;
 				#$PerlParsingFormat .= "\\[([^$LogSeparator]+) ([^$LogSeparator]+)\\]";
 				$PerlParsingFormat .= "\\[([^$LogSeparator]+) [^$LogSeparator]+\\]";
 			}
 			elsif ($f =~ /%time2$/) {
-				$pos_date = $i;
-				$i++;
+				$pos_date = $i;	$i++;
 				$PerlParsingFormat .= "([^$LogSeparator]+ [^$LogSeparator]+)";
 			}
 			elsif ($f =~ /%methodurl$/) {
-				$pos_method = $i;
-				$i++;
-				$pos_url = $i;
-				$i++;
+				$pos_method = $i; $i++;
+				$pos_url = $i; $i++;
 				$PerlParsingFormat .= "\\\"([^$LogSeparator]+) ([^$LogSeparator]+) [^\\\"]+\\\"";
 			}
 			elsif ($f =~ /%methodurlnoprot$/) {
-				$pos_method = $i;
-				$i++;
-				$pos_url = $i;
-				$i++;
+				$pos_method = $i; $i++;
+				$pos_url = $i; $i++;
 				$PerlParsingFormat .= "\\\"([^$LogSeparator]+) ([^$LogSeparator]+)\\\"";
 			}
 			elsif ($f =~ /%method$/) {
-				$pos_method = $i;
-				$i++;
+				$pos_method = $i; $i++;
 				$PerlParsingFormat .= "([^$LogSeparator]+)";
 			}
 			elsif ($f =~ /%url$/) {
-				$pos_url = $i;
-				$i++;
+				$pos_url = $i; $i++;
 				$PerlParsingFormat .= "([^$LogSeparator]+)";
 			}
 			elsif ($f =~ /%query$/) {
-				$pos_query = $i;
-				$i++;
+				$pos_query = $i; $i++;
 				$PerlParsingFormat .= "([^$LogSeparator]+)";
 			}
 			elsif ($f =~ /%code$/) {
-				$pos_code = $i;
-				$i++;
+				$pos_code = $i; $i++;
 				$PerlParsingFormat .= "([\\d|-]+)";
 			}
 			elsif ($f =~ /%bytesd$/) {
@@ -3888,6 +3921,14 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {	# Updat
 
 	# Processing log
 	#------------------------------------------
+
+	# Trap signals to remove lock
+	$SIG{INT} = \&SigHandler;	# 2
+	#$SIG{KILL} = \&SigHandler;	# 9
+	#$SIG{TERM} = \&SigHandler;	# 15
+
+	&Lock_Update(1);
+
 	if ($Debug) { debug("Start Update process (lastprocessedmonth=$lastprocessedmonth, lastprocessedyear=$lastprocessedyear)"); }
 	$NbOfLinesRead=$NbOfLinesDropped=$NbOfLinesCorrupted=$NbOfOldLines=$NbOfNewLines=0;
 
@@ -3908,16 +3949,15 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {	# Updat
 		if ($ShowSteps && ($NbOfLinesRead % $NBOFLINESFORBENCHMARK == 0)) {
 			my $delay=GetDelaySinceStart(0);
 			print "$NbOfLinesRead lines processed ($delay ms, ".int(1000*$NbOfLinesRead/($delay>0?$delay:1))." lines/second)\n";
-#			if ($Debug) {
-#				print " _host_p:".(scalar keys %_host_p)." _host_h:".(scalar keys %_host_h)." _host_k:".(scalar keys %_host_k)." _host_l:".(scalar keys %_host_l)." _host_s:".(scalar keys %_host_s)." _host_u:".(scalar keys %_host_u)."\n";
-#				print " _url_p:".(scalar keys %_url_p)." _url_k:".(scalar keys %_url_k)." _url_e:".(scalar keys %_url_e)." _url_x:".(scalar keys %_url_x)."\n";
-#				print " _waithost_e:".(scalar keys %_waithost_e)." _waithost_l:".(scalar keys %_waithost_l)." _waithost_s:".(scalar keys %_waithost_s)." _waithost_u:".(scalar keys %_waithost_u)."\n";
-#			}
+			#if ($Debug) {
+			#	print " _host_p:".(scalar keys %_host_p)." _host_h:".(scalar keys %_host_h)." _host_k:".(scalar keys %_host_k)." _host_l:".(scalar keys %_host_l)." _host_s:".(scalar keys %_host_s)." _host_u:".(scalar keys %_host_u)."\n";
+			#	print " _url_p:".(scalar keys %_url_p)." _url_k:".(scalar keys %_url_k)." _url_e:".(scalar keys %_url_e)." _url_x:".(scalar keys %_url_x)."\n";
+			#	print " _waithost_e:".(scalar keys %_waithost_e)." _waithost_l:".(scalar keys %_waithost_l)." _waithost_s:".(scalar keys %_waithost_s)." _waithost_u:".(scalar keys %_waithost_u)."\n";
+			#}
 		}
 
 		# Parse line record to get all required fields
-		@field=map(/^$PerlParsingFormat/,$_);
-		if (! @field) {
+		if (! (@field=map(/^$PerlParsingFormat/,$_))) {
 			$NbOfLinesCorrupted++;
 			if ($ShowCorrupted) {
 				if ($_ =~ /^#/ || $_ =~ /^!/) {
@@ -3934,7 +3974,6 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {	# Updat
 			if ($_ =~ /^__end_of_file__/) { last; }	# For test purpose only
 			next;
 		}
-
 
 		if ($Debug) { debug(" Correct format line $NbOfLinesRead : host=\"$field[$pos_rc]\", logname=\"$field[$pos_logname]\", date=\"$field[$pos_date]\", method=\"$field[$pos_method]\", url=\"$field[$pos_url]\", code=\"$field[$pos_code]\", size=\"$field[$pos_size]\", referer=\"$field[$pos_referer]\", agent=\"$field[$pos_agent]\"",4); }
 		#if ($Debug) { debug("$field[$pos_vh] - $field[$pos_gzipin] - $field[$pos_gzipout] - $field[$pos_gzipratio]\n",4); }
@@ -3966,7 +4005,6 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {	# Updat
 		}
 
 		# Split DD/Month/YYYY:HH:MM:SS or YYYY-MM-DD HH:MM:SS or MM/DD/YY\tHH:MM:SS
-		#if ($LogFormat == 3) { $field[$pos_date] =~ tr/-\/ \t/::::/; }
 		$field[$pos_date] =~ tr/-\/ \t/::::/;			# " \t" is used instead of "\s" not known with tr
 		my @dateparts=split(/:/,$field[$pos_date]);		# tr and split faster than @dateparts=split(/[\/\-:\s]/,$field[$pos_date])
 		if ($dateparts[0] =~ /^....$/) { my $tmp=$dateparts[0]; $dateparts[0]=$dateparts[2]; $dateparts[2]=$tmp; }
@@ -4555,12 +4593,12 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {	# Updat
 		}
 
 
-		# Every 100,000 approved lines we test to clean too large hash arrays to free memory when possible
-		if ($counter++ > 100000) {
+		# Every 200,000 approved lines we test to clean too large hash arrays to free memory when possible
+		if ($counter++ > 200000) {
 			$counter=0;
 			if ($Debug) { debug("We clean some hash arrays",2); }
 			#%TmpDNSLookup=();	# Do we clean this one ?
-#			%TmpOS = %TmpRefererServer = %TmpRobot = %TmpBrowser =();
+			#%TmpOS = %TmpRefererServer = %TmpRobot = %TmpBrowser =();
 			# TODO Add a warning
 			# warning("Try to made AWStats update more frequently to process log files with less than 1 000 000 records.");
 		}
@@ -4672,6 +4710,11 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {	# Updat
 	}
 
 	&Lock_Update(0);
+
+	# Restore signals handler
+	$SIG{INT} = 'DEFAULT';	# 2
+	#$SIG{KILL} = 'DEFAULT';	# 9
+	#$SIG{TERM} = 'DEFAULT';	# 15
 
 }
 # End of log processing if ($UPdateStats)
@@ -5128,10 +5171,10 @@ EOF
 		}
 		else { print "$Message[102]: ".(scalar keys %_url_p)." $Message[28]"; }
 		print "</TH>";
-		print "<TH bgcolor=\"#$color_p\">&nbsp;$Message[29]&nbsp;</TH>";
-		print "<TH bgcolor=\"#$color_k\">&nbsp;$Message[106]&nbsp;</TH>";
-		print "<TH bgcolor=\"#$color_e\">&nbsp;$Message[104]&nbsp;</TH>";
-		print "<TH bgcolor=\"#$color_x\">&nbsp;$Message[116]&nbsp;</TH>";
+		print "<TH bgcolor=\"#$color_p\" width=80>&nbsp;$Message[29]&nbsp;</TH>";
+		print "<TH bgcolor=\"#$color_k\" width=80>&nbsp;$Message[106]&nbsp;</TH>";
+		print "<TH bgcolor=\"#$color_e\" width=80>&nbsp;$Message[104]&nbsp;</TH>";
+		print "<TH bgcolor=\"#$color_x\" width=80>&nbsp;$Message[116]&nbsp;</TH>";
 		if ($Plugin_etf1) { AddOn_ShowFields(""); }
 		print "<TH>&nbsp;</TH></TR>\n";
 		$total_p=$total_k=$total_e=$total_x=0;
@@ -5194,7 +5237,7 @@ EOF
 		$rest_x=$TotalExits-$total_x;
 		$rest_k=$TotalBytesPages-$total_k;
 		if ($rest_p > 0 || $rest_e > 0 || $rest_k) {
-			print "<TR><TD CLASS=AWL><font color=blue>$Message[2]</font></TD><TD>$rest_p</TD><TD>".($rest_k?Format_Bytes($rest_k/$rest_p||1):"&nbsp;")."<TD>".($rest_e?$rest_e:"&nbsp;")."</TD><TD>".($rest_x?$rest_x:"&nbsp;")."</TD><TD>&nbsp;</TD></TR>\n";
+			print "<TR><TD CLASS=AWL><font color=blue>$Message[2]</font></TD><TD>".($rest_p?$rest_p:"&nbsp;")."</TD><TD>".($rest_k?Format_Bytes($rest_k/$rest_p||1):"&nbsp;")."<TD>".($rest_e?$rest_e:"&nbsp;")."</TD><TD>".($rest_x?$rest_x:"&nbsp;")."</TD><TD>&nbsp;</TD></TR>\n";
 		}
 		&tab_end;
 		&html_end;
@@ -5832,11 +5875,11 @@ EOF
 			print "<TD>$_login_p{$key}</TD><TD>$_login_h{$key}</TD><TD>".Format_Bytes($_login_k{$key})."</TD>";
 			if ($_login_l{$key}) { print "<td>".Format_Date($_login_l{$key},1)."</td>"; }
 			else { print "<td>-</td>"; }
-#			print "<TD CLASS=AWL>";
-#			print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_p\" WIDTH=$bredde_p HEIGHT=6 ALT=\"$Message[56]: $_login_p{$key}\" title=\"$Message[56]: $_login_p{$key}\"><br>\n";
-#			print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_h\" WIDTH=$bredde_h HEIGHT=6 ALT=\"$Message[57]: $_login_h{$key}\" title=\"$Message[57]: $_login_h{$key}\"><br>\n";
-#			print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_k\" WIDTH=$bredde_k HEIGHT=6 ALT=\"$Message[75]: ".Format_Bytes($_login_k{$key})."\" title=\"$Message[75]: ".Format_Bytes($_login_k{$key})."\">";
-#			print "</TD>";
+			#print "<TD CLASS=AWL>";
+			#print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_p\" WIDTH=$bredde_p HEIGHT=6 ALT=\"$Message[56]: $_login_p{$key}\" title=\"$Message[56]: $_login_p{$key}\"><br>\n";
+			#print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_h\" WIDTH=$bredde_h HEIGHT=6 ALT=\"$Message[57]: $_login_h{$key}\" title=\"$Message[57]: $_login_h{$key}\"><br>\n";
+			#print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_k\" WIDTH=$bredde_k HEIGHT=6 ALT=\"$Message[75]: ".Format_Bytes($_login_k{$key})."\" title=\"$Message[75]: ".Format_Bytes($_login_k{$key})."\">";
+			#print "</TD>";
 			print "</TR>\n";
 			$total_p += $_login_p{$key};
 			$total_h += $_login_h{$key};
@@ -5999,7 +6042,7 @@ EOF
 					printf("<TD>%s</TD><TD>%s</TD><TD>%s</TD><TD>%s (%s%)</TD>",Format_Bytes($_filetypes_k{$key}),Format_Bytes($_filetypes_gz_in{$key}),Format_Bytes($_filetypes_gz_out{$key}),Format_Bytes($_filetypes_gz_in{$key}-$_filetypes_gz_out{$key}),$percent);
 				}
 				else {
-					printf("<TD>%s</TD><TD>&nbsp;</TD><TD>&nbsp;</TD>",Format_Bytes($_filetypes_k{$key}));
+					printf("<TD>%s</TD><TD>&nbsp;</TD><TD>&nbsp;</TD><TD>&nbsp;</TD>",Format_Bytes($_filetypes_k{$key}));
 				}
 			}
 			else {
