@@ -273,7 +273,7 @@
 "intergo","notavailable",
 "k-meleon","kmeleon",
 "linemodebrowser","notavailable",
-"lotus-notes","notavailable",
+"lotus-notes","lotusnotes",
 "macweb","notavailable",
 "multizilla","multizilla",
 "ncsa_mosaic","notavailable",
