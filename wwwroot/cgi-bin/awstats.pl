@@ -6541,13 +6541,13 @@ EOF
 		}
 		if ($Debug) { debug("Total real / shown : $TotalPages / $total_p - $TotalEntries / $total_e - $TotalExits / $total_x - $TotalBytesPages / $total_k",2); }
 		$rest_p=$TotalPages-$total_p;
+		$rest_k=$TotalBytesPages-$total_k;
 		$rest_e=$TotalEntries-$total_e;
 		$rest_x=$TotalExits-$total_x;
-		$rest_k=$TotalBytesPages-$total_k;
 		if ($rest_p > 0 || $rest_e > 0 || $rest_k > 0) {
 			print "<TR><TD CLASS=AWL><font color=\"#$color_other\">$Message[2]</font></TD>";
 			if ($ShowPagesStats =~ /P/i) { print "<TD>".($rest_p?$rest_p:"&nbsp;")."</TD>"; }
-			if ($ShowPagesStats =~ /B/i) { print "<TD>".($rest_k?Format_Bytes($rest_k/$rest_p||1):"&nbsp;")."</TD>"; }
+			if ($ShowPagesStats =~ /B/i) { print "<TD>".($rest_k?Format_Bytes($rest_k/($rest_p||1)):"&nbsp;")."</TD>"; }
 			if ($ShowPagesStats =~ /E/i) { print "<TD>".($rest_e?$rest_e:"&nbsp;")."</TD>"; }
 			if ($ShowPagesStats =~ /X/i) { print "<TD>".($rest_x?$rest_x:"&nbsp;")."</TD>"; }
 			# Call to plugin function ShowPagesAddField
