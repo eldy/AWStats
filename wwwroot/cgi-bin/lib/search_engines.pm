@@ -80,7 +80,7 @@
 # Minor finnish search engines
 'haku\.www\.fi',
 # Minor french search engines
-'recherche\.aol\.fr','ctrouve\.','francite\.','\.lbb\.org','rechercher\.libertysurf\.fr', 'search\w+\.free\.fr', 'recherche\.club-internet\.fr',
+'recherche\.aol\.fr','ctrouve\.','francite\.','\.lbb\.org','rechercher\.libertysurf\.fr', 'search[\w\-]+\.free\.fr', 'recherche\.club-internet\.fr',
 # Minor german search engines
 'sucheaol\.aol\.de',
 'fireball\.de','infoseek\.de','suche\d?\.web\.de','[a-z]serv\.rrzn\.uni-hannover\.de',
@@ -214,7 +214,7 @@
 'francite\.','francite',
 '\.lbb\.org','lbb',
 'rechercher\.libertysurf\.fr','libertysurf',
-'search\w+\.free\.fr','free',
+'search[\w\-]+\.free\.fr','free',
 'recherche\.club-internet\.fr','clubinternet',
 # Minor german search engines
 'sucheaol\.aol\.de','aolde',
