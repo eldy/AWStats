@@ -44,8 +44,8 @@
 	</DIV>
 	<DIV CLASS="CTooltip" ID="tt20">
 	Some <b>Visits durations</b> are 'unknown' because they can't always be calculated. This is the major reason for this:<br>
-	- Visit is not finished yet or when 'update' occured.<br>
-	- Visit started the last hour (after 23:00) of the last day (A technical reason prevent AWStats from calculating duration of such sessions)
+	- Visit was not finished when 'update' occured.<br>
+	- Visit started the last hour (after 23:00) of the last day (A technical reason prevent #PROG# from calculating duration of such sessions)
 	</DIV>
 
 	<DIV CLASS="CTooltip" ID="tt201"> No description for this error. </DIV>
