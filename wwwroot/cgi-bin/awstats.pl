@@ -72,7 +72,7 @@ $total_h, $total_k, $total_p) = ();
 %MonthBytes = %MonthHits = %MonthHostsKnown = %MonthHostsUnknown = %MonthPages = %MonthUnique = %MonthVisits =
 %listofyears = %monthlib = %monthnum = ();
 
-$VERSION="3.1 (build 21)";
+$VERSION="3.1 (build 22)";
 $Lang="en";
 
 # Default value
@@ -84,8 +84,9 @@ $MaxLengthOfURL= 70;		# Maximum length of URL shown on stats page. This affects 
 $MaxNbOfDays   = 31;
 $NbOfLinesForBenchmark=5000;
 $NbOfLinesForCorruptedLog=10;
-#$NbOfLinesForCorruptedLog=10000;	# ETF1
+#$NbOfLinesForCorruptedLog=10000;	# eTF1
 $ShowBackLink  = 1;
+#$ShowBackLink  = 0;				# eFT1
 $Sort          = "";
 $CENTER        = "";
 $WIDTH         = "600";
@@ -892,7 +893,7 @@ sub SkipDNSLookup {
 sub Read_Config_File {
 	$FileConfig="";
 	if (! $SiteConfig) { $SiteConfig=$ENV{"SERVER_NAME"}; }		# For backward compatibility
-	foreach my $dir ("$DIR","/etc/awstats","/etc") {
+	foreach my $dir ("$DIR","/etc/opt/awstats","/etc/awstats","/etc") {
 		my $searchdir=$dir;
 		if (($searchdir ne "") && (!($searchdir =~ /\/$/)) && (!($searchdir =~ /\\$/)) ) { $searchdir .= "/"; }
 		if ($FileConfig eq "") { if (open(CONFIG,"$searchdir$PROG.$SiteConfig.conf")) { $FileConfig="$searchdir$PROG.$SiteConfig.conf"; $FileSuffix=".$SiteConfig"; } }
@@ -1665,6 +1666,14 @@ sub Format_Date {
 	$dateformat =~ s/HH/$hour/g;
 	$dateformat =~ s/MM/$min/g;
 	return "$dateformat";
+}
+
+#------------------------------------------------------------------------------
+# Function:      This function do nothing. Can be filled by code to change URL list feature
+# Input:         $URLFilter $QueryString %_sider_p
+# Output:        Modified %_sider_p
+#------------------------------------------------------------------------------
+sub AddOn_Filter {
 }
 
 
@@ -2668,6 +2677,7 @@ EOF
 		exit(0);
 	}
 	if ($QueryString =~ /output=urldetail/i) {
+		AddOn_Filter();		# This function do nothing in standard version.
 		print "$CENTER<a name=\"URLDETAIL\">&nbsp;</a><BR>";
 		&tab_head($Message[19]);
 		if ($URLFilter) { print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[79]: <b>$URLFilter</b> - ".(scalar keys %_sider_p)." $Message[28]</TH><TH bgcolor=\"#$color_p\">&nbsp;$Message[29]&nbsp;</TH><TH>&nbsp;</TH></TR>\n"; }
