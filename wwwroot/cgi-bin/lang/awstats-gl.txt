@@ -168,3 +168,4 @@ message164=gusanos distintos
 message165=Mensaxes enviadas con &eacute;xito
 message166=Mensaxes fallidas/rexeitadas
 message167=obxectivos sensibles
+message168=Javascript deshabilitado
