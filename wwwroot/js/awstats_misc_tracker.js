@@ -14,7 +14,7 @@
 //
 // This allows AWStats to be enhanced with some miscellanous features:
 // - Screen size detection (TRKscreen)
-// - Window size detection (TRKwinsize)
+// - Browser size detection (TRKwinsize)
 // - Screen color depth detection (TRKcdi)
 // - Java enabled detection (TRKjava)
 // - Macromedia Director plugin detection (TRKshk)
@@ -25,7 +25,8 @@
 // - Acrobat PDF plugin detection (TRKpdf)
 //-------------------------------------------------------------------
 
-
+// If you use pslogger.php to generate your log, you can change this line with
+// var awstatsmisctrackerurl="pslogger.php?loc=/js/awstats_misc_tracker.js";
 var awstatsmisctrackerurl="/js/awstats_misc_tracker.js";
 
 function awstats_setCookie(TRKNameOfCookie, TRKvalue, TRKexpirehours) {
@@ -84,7 +85,7 @@ if (window.location.search == "") {
 	var TRKwin = ((TRKagt.indexOf("win")!=-1) || (TRKagt.indexOf("32bit")!=-1));
 	var TRKmac = (TRKagt.indexOf("mac")!=-1);
 
-    // Detect the window internal width and height
+    // Detect the browser internal width and height
     if (document.documentElement && document.documentElement.clientWidth)
         TRKwinsize = document.documentElement.clientWidth + 'x' + document.documentElement.clientHeight;
     else if (document.body)
