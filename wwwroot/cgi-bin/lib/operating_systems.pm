@@ -6,6 +6,8 @@
 # $Revision$ - $Author$ - $Date$
 
 
+#package AWSOS;
+
 
 # OSSearchIDOrder
 # This list is used to know in which order to search Operating System IDs

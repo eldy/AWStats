@@ -7,6 +7,9 @@
 # $Revision$ - $Author$ - $Date$
 
 
+#package AWSSE;
+
+
 # SearchEnginesSearchIDOrder
 # This list is used to know in which order to search Search Engines IDs (Most
 # frequent one are first in this list to increase detect speed).

@@ -6,6 +6,8 @@
 # $Revision$ - $Author$ - $Date$
 
 
+#package AWSUA;
+
 
 # BrowsersSearchIDOrder
 # This list is used to know in which order to search Browsers IDs (Most

@@ -6,6 +6,9 @@
 # $Revision$ - $Author$ - $Date$
 
 
+#package AWSROB;
+
+
 # Robots list was found at http://www.robotstxt.org/wc/active/all.txt
 # Other robots can be found at http://www.jafsoft.com/searchengines/webbots.html 
 # Rem: To avoid bad detection, some robots id were removed from this list:

@@ -6,6 +6,8 @@
 # $Revision$ - $Author$ - $Date$
 
 
+#package AWSDOM;
+
 
 # DomainsHashIDLib
 # List of domain with their name ("domain id", "Domain name")
