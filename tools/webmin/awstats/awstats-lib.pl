@@ -51,23 +51,38 @@ while(<FILE>) {
 	# Extract param and value
 	my ($param,$value)=split(/=/,$_,2);
 	$param =~ s/^\s+//; $param =~ s/\s+$//;
+	$value =~ s/#.*$//; 
+	$value =~ s/^[\s\'\"]+//; $value =~ s/[\s\'\"]+$//;
 
 	if ($param) {
 		# cleanparam is param without begining #
-		my $cleanparam=$param; $cleanparam =~ s/^#//;
-		if (defined($conf->{$cleanparam})) {
-			# Change line with new value
+		my $cleanparam=$param; my $wascleaned=0;
+		if ($cleanparam =~ s/^#//) { $wascleaned=1; }
+		if ($cleanparam !~ /LoadPlugin/i && defined($conf->{$cleanparam})) {
+			# Value was provided from submit form in %conf hash array so we change line with this new value
 			$savline = "$cleanparam=\"".($conf->{$cleanparam})."\"\n";
 			$confchanged{$cleanparam}=1;
 		}
+		if ($cleanparam =~ /^LoadPlugin/i && $conf->{"advanced"} == 4) {
+			# It's a plugin load directive
+			my ($pluginname,$pluginparam)=split(/\s/,$value,2);
+			if ($conf->{"plugin_$pluginname"}) {	# Plugin loaded is asked
+				$savline = "$cleanparam=\"$pluginname".($conf->{"plugin_param_$pluginname"}?" ".$conf->{"plugin_param_$pluginname"}:"")."\"\n";
+			} else {								# Plugin loaded is not asked
+				$savline = "#$cleanparam=\"$pluginname".($conf->{"plugin_param_$pluginname"}?" ".$conf->{"plugin_param_$pluginname"}:"")."\"\n";
+			}
+			$confchanged{"plugin_$pluginname"}=1;
+		}
 	}
-
+	# Write line
 	print FILETMP "$savline";	
 }
 
-# Now add values that were not present in old config file
+# Now add values for directives that were not present in old config file
 foreach my $key (keys %$conf) {
-	if ($confchanged{$key}) { next; }	# param already changed
+	if ($key eq 'advanced') { next; }		# param to know if plugin setup was loaded
+	if ($key =~ /^plugin_param_/) { next; }	# param of a plugin not an awstats directive
+	if ($confchanged{$key}) { next; }		# awstats directive already changed
 	print FILETMP "\n";
 	print FILETMP "# Param $key added by AWStats Webmin module\n";
 	print FILETMP "$key=\"$conf->{$key}\"\n";
@@ -183,8 +198,8 @@ local %rv;
 return \%rv;
 }
 
-# generate_report(file, handle, escape)
-sub generate_report
+# generate_report_as_pdf(file, handle, escape)
+sub generate_report_as_pdf
 {
 local $h = $_[1];
 local $lconf = &get_config($_[0]);

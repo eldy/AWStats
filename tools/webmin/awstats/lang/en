@@ -24,7 +24,10 @@ index_egetversion=Failed to get the version of AWStats. Command $1 returned : $2
 index_advanced1=View directives for OPTIONAL SETUP SECTION
 index_advanced2=View directives for OPTIONAL ACCURACY SETUP SECTION
 index_advanced3=View directives for OPTIONAL APPEARANCE SETUP SECTION
+index_advanced4=View directives for OPTIONAL PLUGINS SETUP SECTION
+index_advanced5=View directives for OPTIONAL EXTRA SETUP SECTION
 index_hideadvanced=Hide optional directives
+index_allowed=Your user is allowed to view/edit config files into (or that are links that point to) $1
 
 edit_title1=Add config File
 edit_title2=Edit config File
@@ -39,19 +42,12 @@ edit_efilecannot=The config file is not in an allowed directory
 save_err=Error in config file build
 save_efile=Config file name was not entered
 save_fileexists=Config file already exists
-save_ecfile=Missing or non-existant other config file
 save_edir=Config directory was not entered or does not exist
 save_ecannot=You are only allowed to view or generate reports for config under $1
 save_errLogFile=Error in LogFile parameter. Log file $1 does not exists or is not readable
 save_errLogFormat=Error in LogFormat parameter. Parameter is nto defined
 save_errSiteDomain=Error in SiteDomain parameter. Parameter is not defined
 save_errDirData=Error in DirData parameter. Parameter is not defined or directory does not exists
-
-view_efile=Invalid report filename
-view_elog=Invalid log file
-view_ecannot=You are not allowed to view this report
-view_eopen=Failed to open report file
-view_title=View Report
 
 update_title=Update statistics
 update_ecannot=You are not allowed to update statistics
@@ -75,4 +71,6 @@ acl_dir=Only allow viewing reports and editing config for config files under
 
 help_title=Help page
 help_subtitle=<b>Help for config file parameter $1</b>
+help_subtitleplugin=<b>Help for plugin $1</b>
 help_notfound=Parameter not found in your sample file $1.<br>May be your AWStats version does not support it, so no help is available.
+help_help=Help

@@ -10,19 +10,22 @@ require './awstats-lib.pl';
 print "<hr>\n";
 
 my $helpparam=$in{'param'};
+my $isplugin=0;
+if ($helpparam =~ s/^plugin_//) { $isplugin=1; }
 
-print &text('help_subtitle',$helpparam)."<br><br>\n";
+if ($isplugin) { print &text('help_subtitleplugin',$helpparam)."<br><br>\n"; }
+else { print &text('help_subtitle',$helpparam)."<br><br>\n"; }
 
-open(CONF, $config{'alt_conf'}) || &error("eee");
+open(CONF, $config{'alt_conf'}) || &error("Failed to open sample config file");
 my $output="";
 my $savoutput="";
 my $found=0;
 while(<CONF>) {
-        chomp $_; s/\r//;
+	chomp $_; s/\r//;
 
-	my $line="$_";	
+	my $line="$_";
 
-	if ($line =~ s/^#//) {
+	if ($line !~ /#LoadPlugin/i && $line =~ s/^#//) {
 		if ($line =~ /-----------------/) { 
 			if ($output) { $savoutput=$output; }
 			$output="";
@@ -35,13 +38,15 @@ while(<CONF>) {
 	else {
 		# Remove comments
 		$_ =~ s/\s#.*$//;
-		
 		# Extract param and value
 		my ($param,$value)=split(/=/,$_,2);
 		$param =~ s/^\s+//; $param =~ s/\s+$//;
 		
 		if (defined($param) && defined($value)) {
-			if ($param =~ /$helpparam/i) { $found=1; last; }
+			if ((! $isplugin && $param =~ /$helpparam/i) ||
+			     ($isplugin && $value =~ /$helpparam/i)) {
+				$found=1; last;
+			}
 			else {
 				if ($output) { $savoutput=$output; }
 				$output="";

@@ -26,6 +26,12 @@ elsif ($in{'delete'}) {
 	unlink($cfile);
 	&unlock_file($cfile);
 	&webmin_log("delete", "log", $in{'file'});
+
+	# Create or delete the cron job
+#		&lock_file($job->{'file'});
+#		&foreign_call("cron", "delete_cron_job", $job);
+#		&unlock_file($job->{'file'});
+
 	}
 else {
 	# Validate and store inputs
@@ -35,7 +41,6 @@ else {
 	if (! $dir) { $dir=$config{'awstats_conf'}; }
 
 	if (! -d $dir) { &error($text{'save_edir'}); }
-	$in{'cmode'} != 2 || -r $in{'cfile'} || &error($text{'save_ecfile'});
 
 	%conf=();
 	foreach my $key (keys %in) {
@@ -56,87 +61,9 @@ else {
 	if (! $conf{'SiteDomain'}) { &error(&text(save_errSiteDomain,$conf{'SiteDomain'})); }
 	if (! -d $conf{'DirData'}) { &error(&text(save_errDirData,$conf{'DirData'})); }
 
-#	if ($access{'user'} eq '*') {
-#		# Set the user to whatever was entered
-#		defined(getpwnam($in{'user'})) || &error($text{'save_euser'});
-#		$lconf->{'user'} = $in{'user'};
-#		}
-#	elsif (!$in{'new'} && $lconf->{'dir'}) {
-#		# This is not a new config, so the user cannot be changed
-#		}
-#	elsif ($access{'user'} eq '') {
-#		# This is a new log, or one that has not been saved for
-#		# the first time yet. Use the webmin user as the user
-#		defined(getpwnam($remote_user)) ||
-#			&error(&text('save_ewuser', $remote_user));
-#		$lconf->{'user'} = $remote_user;
-#		}
-#	else {
-#		# This is a new log, or one that has not been saved for
-#		# the first time yet. Use the user set in the ACL
-#		$lconf->{'user'} = $access{'user'};
-#		}
-#	$lconf->{'type'} = $in{'type'};
-#	$lconf->{'over'} = $in{'over'};
-#	&cron::parse_times_input($lconf, \%in);
-
-	# Create or delete the cron job
-#	local $oldjob = $job;
-#	if ($lconf->{'sched'}) {
-#		# Create cron job and script
-#		$job->{'user'} = 'root';
-#		$job->{'active'} = 1;
-#		$job->{'mins'} = $lconf->{'mins'};
-#		$job->{'hours'} = $lconf->{'hours'};
-#		$job->{'days'} = $lconf->{'days'};
-#		$job->{'months'} = $lconf->{'months'};
-#		$job->{'weekdays'} = $lconf->{'weekdays'};
-#		$job->{'command'} = "$cron_cmd $in{'file'}";
-#		open(PERL, "$config_directory/perl-path");
-#		chop($perl_path = <PERL>);
-#		close(PERL);
-#		&lock_file($cron_cmd);
-#		open(CMD, ">$cron_cmd");
-#		print CMD <<EOF;
-#!$perl_path
-#open(CONF, "$config_directory/miniserv.conf");
-#while(<CONF>) {
-#	\$root = \$1 if (/^root=(.*)/);
-#	}
-#close(CONF);
-#\$ENV{'WEBMIN_CONFIG'} = "$ENV{'WEBMIN_CONFIG'}";
-#\$ENV{'WEBMIN_VAR'} = "$ENV{'WEBMIN_VAR'}";
-#chdir("\$root/$module_name");
-#exec("\$root/$module_name/awstats.pl", \$ARGV[0]);
-#EOF
-#		close(CMD);
-#		chmod(0755, $cron_cmd);
-#		&unlock_file($cron_cmd);
-#		}
-#	if ($lconf->{'sched'} && !$oldjob) {
-#		# Create the cron job
-#		local %cconfig = &foreign_config("cron");
-#		local $ctab = "$cconfig{'cron_dir'}/root";
-#		&lock_file($ctab);
-#		&foreign_call("cron", "create_cron_job", $job); 
-#		&unlock_file($ctab);
-#		}
-#	elsif ($lconf->{'sched'} && $oldjob) {
-#		# Update the cron job
-#		&lock_file($job->{'file'});
-#		&foreign_call("cron", "change_cron_job", $job); 
-#		&unlock_file($job->{'file'});
-#		}
-#	elsif (!$lconf->{'sched'} && $oldjob) {
-#		# Delete the cron job
-#		&lock_file($job->{'file'});
-#		&foreign_call("cron", "delete_cron_job", $job);
-#		&unlock_file($job->{'file'});
-#		}
-
 	if ($in{'new'}) {
 		# Add a new config file to the configuration
-                &system_logged("cp '$config{'alt_conf'}' '$in{'new'}'");
+		&system_logged("cp '$config{'alt_conf'}' '$in{'new'}'");
 	}
 	
 	# Update the config file's options
@@ -146,5 +73,6 @@ else {
 	&unlock_file($cfile);
 	&webmin_log($in{'new'} ? "create" : "modify", "log", $in{'file'});
 	}
+
 &redirect("");
 

@@ -24,7 +24,10 @@ index_egetversion=Echec de la récupération de la varsion d'AWStats. La command $
 index_advanced1=Voir paramètres de la 'OPTIONAL SETUP SECTION'
 index_advanced2=Voir paramètres de la 'OPTIONAL ACCURACY SETUP SECTION'
 index_advanced3=Voir paramètres de la 'OPTIONAL APPEARANCE SETUP SECTION'
+index_advanced4=Voir paramètres de la 'OPTIONAL PLUGINS SETUP SECTION'
+index_advanced5=Voir paramètres de la 'OPTIONAL EXTRA SETUP SECTION'
 index_hideadvanced=Cacher paramètres optionnels
+index_allowed=Votre login est autorisé à voir/editer les fichiers de config dans (ou pointant vers) $1
 
 edit_title1=Ajout d'un fichier de config
 edit_title2=Edition d'un fichier de config
@@ -39,19 +42,12 @@ edit_efilecannot=Le fichier de configuration n'est pas dans un répertoire autori
 save_err=Erreur dans la construction du fichier de configuration
 save_efile=Le nom du fichier de configuration n'a pas été entré
 save_fileexists=Fichier de configuration déjà existant
-save_ecfile=Missing or non-existant other config file
 save_edir=Répertoire des fichiers de configuration non renseigné ou inexistant
 save_ecannot=Vous n'êtes autorisés à voir ou générer des rapports que pour des fichiers de config dans $1
 save_errLogFile=Erreur sur le paramètre LogFile. Le fichier de log $1 n'existe pas ou n'est pas lisible
 save_errLogFormat=Erreur sur le paramètre LogFormat. Paramètre non défini
 save_errSiteDomain=Erreur sur le paramètre SiteDomain. Paramètre non défini
 save_errDirData=Erreur sur le paramètre DirData. Paramètre non défini ou répertoire inexistant
-
-view_efile=Invalid report filename
-view_elog=Invalid log file
-view_ecannot=You are not allowed to view this report
-view_eopen=Failed to open report file
-view_title=View Report
 
 update_title=Mise à jour des statistiques
 update_ecannot=Vous n'êtes pas autorisé à mettre à jour les statistiques
@@ -75,4 +71,6 @@ acl_dir=Autorise la vue de stats et l'édition de fichier de config pour les fich
 
 help_title=Page d'aide
 help_subtitle=<b>Aide sur le paramètre de configuration $1</b>
+help_subtitleplugin=<b>Aide sur le plugin $1</b>
 help_notfound=Paramètre non trouvé dans votre fichier de configuration modèle $1.<br>Peut-être votre version d'AWStats ne le supporte pas, aussi aucune aide n'est disponible.
+help_help=Aide
