@@ -2,6 +2,17 @@ AWStats Changelog
 -----------------
 
 
+5.3
+
+- Added awstats_exportlib.pl tool.
+- Fixed: Bad documentation for use of ExtraSection.
+- Fixed: Bug in ValidSMTPCodes parameter.
+- Added a memory cache for GeoIP plugin resolution.
+- Added awstats_logo3.png
+- Fixed: Remove AWStats header on left frame if ShowHeader=0.
+- Added X11 as Unknown Unix OS, and Atari OS.
+
+
 5.2
 
 - Added urlalias plugin to replace URL values in URL reports by a text.
