@@ -41,7 +41,7 @@ AWStats speed depends on AWStats version and options/setup you use in configurat
 
 <br>
 <br>
-<b><u>This is benchmark results with AWStats version 5.0 and a common configuration:</u></b><br>
+<b><u>This is benchmark results with AWStats version 5.1 and a common configuration:</u></b><br>
 <br>
 HARDWARE: Athlon 1 GHz / 128Mb<br>
 SOFTWARE: Windows 2000 / Perl 5.8<br>
@@ -85,8 +85,8 @@ So, have a look at the following chart to:<br>
 <tr><td rowspan=2>50,000 -   250,000 visits/month</td><td>1</td><td>0</td><td>0 or 1</td><td>Every hour<br>Log Files are 1-4 MB<br>2700-14000 lines</td><td>16-64 MB</td><td>2-4mn</td></tr>
 <tr>                                                <td>0 (or 2)</td><td>0</td><td>0 or 1</td><td>Every 6 hours<br>Log Files are 5-25 MB<br>17000-80000 lines</td><td>16-64 MB</td><td>20-80s</td></tr>
 <tr><td>         250,000 - 1,000,000 visits/month</td><td>0 (or 2)</td><td>0</td><td>0</td><td>Every hour<br>Log Files are 4-16 MB<br>14000-56000 lines</td><td>64-256 MB</td><td>30-120s</td></tr>
-<tr><td>       1,000,000 - 5,000,000 visits/month</td><td>0 (or 2)</td><td colspan=5>AWStats is not a good choice for such web sites. Try a tool with less features but faster like <a href="http://www.analog.cx">Analog</a></td></tr>
-<tr><td>      +5,000,000 visits/month</td><td>0</td><td colspan=5>AWStats is not a good choice for such web sites. Try a tool with less features but faster like <a href="http://www.analog.cx">Analog</a></td></tr>
+<tr><td>       1,000,000 - 5,000,000 visits/month</td><td colspan=6>AWStats is not a good choice for such web sites. Try a tool with less features but faster like <a href="http://www.analog.cx">Analog</a> or <a href="http://www.mrunix.net/webalizer/">Webalizer</a></td></tr>
+<tr><td>      +5,000,000 visits/month</td><td colspan=6>AWStats is not a good choice for such web sites. Try a tool with less features but faster like <a href="http://www.analog.cx">Analog</a></td></tr>
 </table>
 * You should set <a href="awstats_config.html#DNSLookup">DNSLookup</a> parameter to 0 (or 2) if<br>
 &nbsp;&nbsp; &nbsp;&nbsp; - reverse DNS lookup is already done in your log file<br>
