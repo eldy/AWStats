@@ -4,19 +4,19 @@
 Wizyty ka¿dego <b>nowego go¶cia</b>, który ogl±da³ stronê i nie ³±czy³ siê z ni± przez ostatnie <b>#VisitTimeOut# mn</b>.
 </div>
 <div class="CTooltip" id="tt2">
-Adres numeryczny hosta klienta (<b>tzw. adres IP</b>) odwiedzaj±cego tê stronê.<br>
+Adres numeryczny hosta klienta (<b>tzw. adres IP</b>) odwiedzaj±cego tê stronê.<br />
 Ten numer mo¿e byæ identyczny dla <B>kilku ró¿nych Internautów</B> którzy odwiedzili stronê tego samego dnia.
 </div>
 <div class="CTooltip" id="tt3">
-¦rednia liczba obejrzanych <B>stron</B> przypadaj±ca na jednego Internautê. (Suma go¶ci, wszystkich wizyt).<br>
+¦rednia liczba obejrzanych <B>stron</B> przypadaj±ca na jednego Internautê. (Suma go¶ci, wszystkich wizyt).<br />
 Ten licznik ró¿ni siê od kolumny z prawej, gdy¿ zlicza on tylko strony html (bez obrazków i innych plików).
 </div>
 <div class="CTooltip" id="tt4">
-Liczba wszystkich <b>stron, obrazków, d¼wiêków, plików</b>, które zosta³y <b>obejrzane</b> lub <b>¶ci±gniête</b> przez kogo¶.<br>
+Liczba wszystkich <b>stron, obrazków, d¼wiêków, plików</b>, które zosta³y <b>obejrzane</b> lub <b>¶ci±gniête</b> przez kogo¶.<br />
 Warto¶æ jest jedynie orientacyjna, zaleca siê spogl±daæ na licznik "strony".
 </div>
 <div class="CTooltip" id="tt5">
-Liczba <b>kilobajtów</b> ¶ci±gniêtych przez Internautów.<br>
+Liczba <b>kilobajtów</b> ¶ci±gniêtych przez Internautów.<br />
 Jest to suma wszystkich ¶ci±gniêtych danych <B>(strony html, obrazki, d¼wiêki)</B>.
 </div>
 <div class="CTooltip" id="tt13">
@@ -30,11 +30,11 @@ Ta kolumna pokazuje listê najczê¶ciej u¿ywanych <b>s³ów kluczowych</b>, dziêki k
 (#PROG# rozró¿nia zapytania s³ów kluczowych z <b>#SearchEnginesArray#</b> najpopularniejszych wyszukiwarek, takich jak Yahoo, Altavista, Lycos, Google, Voila, etc...).
 </div>
 <div class="CTooltip" id="tt16">
-Roboty s± <b>programami sieciowymi</b> skanuj±cymi strony w celu zebrania/aktualizacji danych (np. s³owa kluczowe do wyszukiwarek), lub sprawdzaj±cymi czy strona nadal istnieje w sieci.<br>
+Roboty s± <b>programami sieciowymi</b> skanuj±cymi strony w celu zebrania/aktualizacji danych (np. s³owa kluczowe do wyszukiwarek), lub sprawdzaj±cymi czy strona nadal istnieje w sieci.<br />
 #PROG# rozró¿nia obecnie <b>#RobotArray#</b> robów.
 </div>
 <div class="CTooltip" id="tt17">
-Wszystkie statystyki bazuj± na czasie serwera.<br>
+Wszystkie statystyki bazuj± na czasie serwera.<br />
 </div>
 <div class="CTooltip" id="tt18">
 Here, reported data are: <b>average values</b> (calculated from all data between the first and last visit)
@@ -44,8 +44,8 @@ Here, reported data are: <b>cumulative sums</b> (calculated from all data betwee
 
 </div>
 <div class="CTooltip" id="tt20">
-Pewne <b>d³ugo¶ci wizyt</b> s± podane jako nieznae, gdy¿ nie zawsze mog± zostaæ obliczone. Najczê¶ciej wynika to z:<BR>
-- Wizyta jeszcze trwa³a podczas aktualizacji statystyki,<BR> 
+Pewne <b>d³ugo¶ci wizyt</b> s± podane jako nieznae, gdy¿ nie zawsze mog± zostaæ obliczone. Najczê¶ciej wynika to z:<br />
+- Wizyta jeszcze trwa³a podczas aktualizacji statystyki,<br /> 
 - Wizyta rozpoczê³a siê po 23:00 ostatniego dnia miesi±ca (ze wzglêdów technicznych #PROG# nie przelicza d³ugo¶ci takich sesji)
 </div>
 
@@ -55,8 +55,8 @@ Pewne <b>d³ugo¶ci wizyt</b> s± podane jako nieznae, gdy¿ nie zawsze mog± zostaæ 
 <div class="CTooltip" id="tt206"> Czê¶ciowa zawarto¶æ.</div>
 <div class="CTooltip" id="tt301"> Dokument zosta³ przeniesiony pod inny adres.</div>
 <div class="CTooltip" id="tt302"> Dokument zosta³ czasowo przeniesiony pod inny adres.</div>
-<div class="CTooltip" id="tt400"> Zlecenie by³o b³êdne, lub niemo¿liwe do zrealizowania przez serwer.<BR>B³±d powstaje wtedy, kiedy serwer WWW otrzymuje do wykonania instrukcjê, której nie rozumie.</div>
-<div class="CTooltip" id="tt401"> B³±d autoryzacji. Strona wymaga podania has³a i loginu - b³±d pokazuje siê wtedy, gdy które¶ z tych danych siê nie zgadza lub zosta³y podane niew³a¶ciwiwe.<BR>Je¶li liczba ta jest du¿a, jest to sygna³ dla webmastera, i¿ kto¶ próbuje z³amaæ has³o do strony nim zabezpieczonej.</div>
+<div class="CTooltip" id="tt400"> Zlecenie by³o b³êdne, lub niemo¿liwe do zrealizowania przez serwer.<br />B³±d powstaje wtedy, kiedy serwer WWW otrzymuje do wykonania instrukcjê, której nie rozumie.</div>
+<div class="CTooltip" id="tt401"> B³±d autoryzacji. Strona wymaga podania has³a i loginu - b³±d pokazuje siê wtedy, gdy które¶ z tych danych siê nie zgadza lub zosta³y podane niew³a¶ciwiwe.<br />Je¶li liczba ta jest du¿a, jest to sygna³ dla webmastera, i¿ kto¶ próbuje z³amaæ has³o do strony nim zabezpieczonej.</div>
 <div class="CTooltip" id="tt403"> B³±d wystêpuje wtedy, gdy katalog/strona do którego siê odwo³ywano nie ma ustawionych w³a¶ciwych praw dostêpu, lub prawa te nie pozwalaj± na obejrzenie zawarto¶ci katalogu/strony.</div>
 <div class="CTooltip" id="tt404"> Spróbuj wpisaæ <b>nie istniej±cy adres URL</b> (np. adres tej strony ze skasowan± jedn± literk±). Znaczy to, ¿e posiadasz gdzie¶ na swoich stronach b³êdny link, lub link odnosz±cy siê do nieistniej±cej strony.</div>
 <div class="CTooltip" id="tt408"> Przegl±darka nie wys³a³a ¿±dañ do serwera w czasie jego oczekiwania. Mo¿esz powtórzyæ ¿±danie bez jego modyfikacji w czasie pó¼niejszym. </div>

@@ -4,19 +4,19 @@
 Si considera una nuova visita per <b>ogni arrivo</b> di un visitatore che visualizza o consulta una pagina e non si &egrave; connesso negli ultimi <b>#VisitTimeOut# minuti</b>.
 </div>
 <div class="CTooltip" id="tt2">
-Numero di client hosts (<b>indirizzi IP</b>) utilizzati per accedere al sito (e visualizzare almeno una <b>pagina</b>).<br>
+Numero di client hosts (<b>indirizzi IP</b>) utilizzati per accedere al sito (e visualizzare almeno una <b>pagina</b>).<br />
 Questa cifra riflette il numero di <b>persone fisiche</b> differenti che un giorno hanno visitato il sito.
 </div>
 <div class="CTooltip" id="tt3">
-Numero di volte che una <b>pagina</b> del sito &egrave; stata <b>vista</b> (somma di tutti i visitatori, per tutte le visite).<br>
+Numero di volte che una <b>pagina</b> del sito &egrave; stata <b>vista</b> (somma di tutti i visitatori, per tutte le visite).<br />
 Questo valore &egrave; diverso dagli "hits" perch&egrave; considera solamente le pagine HTML e non le immagini o gli altri elementi.
 </div>
 <div class="CTooltip" id="tt4">
-Numero di volte che una <b>pagina, immagine o elemento</b> del sito &egrave; <b>visto</b> o <b>scaricato</b> da un visitatore.<br>
+Numero di volte che una <b>pagina, immagine o elemento</b> del sito &egrave; <b>visto</b> o <b>scaricato</b> da un visitatore.<br />
 Questo valore &egrave; indicativo, in quanto il contatore "pagine" a volte &egrave; pi&ugrave; significativo ai fini commerciali.
 </div>
 <div class="CTooltip" id="tt5">
-Numero totale di <b>kilobytes</b> scaricati dal sito durante le visite.<br>
+Numero totale di <b>kilobytes</b> scaricati dal sito durante le visite.<br />
 Indica il volume di traffico dovute alle richieste di caricamento delle <b>pagine</b>, delle <b>immagini</b> e degli altri <b>elementi</b> scaricati.
 </div>
 <div class="CTooltip" id="tt13">
@@ -28,15 +28,15 @@ I link risultanti da una ricerca di un motore conosciuto non appaiono qui, dato 
 </div>
 <div class="CTooltip" id="tt15">
 Questa tabella offre la lista delle <b>parole o frasi</b> pi&ugrave; frequentemente utilizzate per rintracciare e accedere al sito a partire da
-un motore di ricerca Internet (sono riconosciute le ricerche dei <b>#SearchEnginesArray#</b> motori di ricerca pi&ugrave; popolari, come Yahoo, Altavista, Lycos, Google, Voila, ecc...).<br>
+un motore di ricerca Internet (sono riconosciute le ricerche dei <b>#SearchEnginesArray#</b> motori di ricerca pi&ugrave; popolari, come Yahoo, Altavista, Lycos, Google, Voila, ecc...).<br />
 Notare che il numero di ricerche sulle parole potrebbe essere maggiore del numero riportato nelle frasi (il numero reale di ricerche) perchè quando la stessa parola compare più volte su diverse frasi, nell'elenco delle parole viene conteggiata più volte (una volta per frase).
 </div>
 <div class="CTooltip" id="tt16">
-I robots sono dei <b>visitatori automatici</b> che perlustrano il sito al fine di indicizzarlo, di ottenere delle statistiche sui siti Web Internet o di verificarne l'accessibilit&agrave;.<br>
+I robots sono dei <b>visitatori automatici</b> che perlustrano il sito al fine di indicizzarlo, di ottenere delle statistiche sui siti Web Internet o di verificarne l'accessibilit&agrave;.<br />
 #PROG# riconosce <b>#RobotArray#</b> robots.
 </div>
 <div class="CTooltip" id="tt17">
-Gli orari visualizzati sono basati sul fuso orario del server.<br>
+Gli orari visualizzati sono basati sul fuso orario del server.<br />
 </div>
 <div class="CTooltip" id="tt18">
 I valori riportati sono: <b>valori medi</b> (calcolati prendendo in considerazione tutti i dati tra la prima e l'ultima visita)
@@ -45,8 +45,8 @@ I valori riportati sono: <b>valori medi</b> (calcolati prendendo in considerazio
 I valori riportati sono: <b>cumulativi</b> (calcolati prendendo in considerazione tutti i dati tra la prima e l'ultima visita)
 </div>
 <div class="CTooltip" id="tt20">
-Alcune <b>durate delle visite</b> sono 'sconosciute' perchè non possono essere sempre calcolate. Questi sono i casi più ricorrenti:<br>
-- La visita non era ancora conclusa quando sono state aggiornate ('update' di awstats) le statistiche.<br>
+Alcune <b>durate delle visite</b> sono 'sconosciute' perchè non possono essere sempre calcolate. Questi sono i casi più ricorrenti:<br />
+- La visita non era ancora conclusa quando sono state aggiornate ('update' di awstats) le statistiche.<br />
 - La visita è iniziata durante l'ultima ora (dopo le 23:00) dell'ultimo giorno del mese (Una ragione tecnica impedisce ad #PROG# di calcolare la durata di queste sessioni)
 </div>
 
@@ -57,7 +57,7 @@ Alcune <b>durate delle visite</b> sono 'sconosciute' perchè non possono essere s
 <div class="CTooltip" id="tt301"> Il documento richiesto &egrave; stato spostato e si trova al momento a un altro indirizzo, indicato nella risposta. </div>
 <div class="CTooltip" id="tt302"> Il documento richiesto &egrave; stato spostato e si trova al momento a un altro indirizzo, indicato nella risposta. </div>
 <div class="CTooltip" id="tt400"> Errore di sintassi, il server non ha compreso la richiesta. </div>
-<div class="CTooltip" id="tt401"> Tentativo di accesso non autorizzato a un <b>URL che richiede un'autenticazione con un login o una parola di accesso</b>.<br>Un numero troppo elevato pu&ograve; evidenziare un tentativo di accesso mediante forza bruta al sito (a seguito di accesso ripetuto con differenti nomi di login o parole di accesso).</div>
+<div class="CTooltip" id="tt401"> Tentativo di accesso non autorizzato a un <b>URL che richiede un'autenticazione con un login o una parola di accesso</b>.<br />Un numero troppo elevato pu&ograve; evidenziare un tentativo di accesso mediante forza bruta al sito (a seguito di accesso ripetuto con differenti nomi di login o parole di accesso).</div>
 <div class="CTooltip" id="tt403"> Tentativo di accesso a un <b>URL non configurato per essere accessibile, anche se corretto</b> (ad esempio, un URL di una directory indicata come non "listabile"). </div>
 <div class="CTooltip" id="tt404"> Tentativo di accesso a una risorsa o <b>URL inesistente</b>. SI tratta dunque di un link non valido sul sito o di un errore di battitura del visitatore che ha indicato un URL non corretto. </div>
 <div class="CTooltip" id="tt408"> Il server ha impiegato un <b>tempo troppo lungo</b> per rispondere alla richiesta. Pu&ograve; trattarsi di uno script CGI troppo lento obbligato ad abbandonare la richiesta, o di un timeout dato dalla saturazione del sito. </div>

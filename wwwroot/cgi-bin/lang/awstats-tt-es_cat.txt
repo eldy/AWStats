@@ -4,19 +4,19 @@
 Es considera una nova visita per <b>cada nou visitant</b> que consulta una pàgina i que hagi accedit al lloc en els últims <b>#VisitTimeOut# mins.</b>.
 </div>
 <div class="CTooltip" id="tt2">
-Nombre de clients (<b>adreces IP</b>) que entren a un lloc (i que com a mínim visiten una <b>pàgina</b>).<br>
+Nombre de clients (<b>adreces IP</b>) que entren a un lloc (i que com a mínim visiten una <b>pàgina</b>).<br />
 Aquesta xifra reflecteix el nombre de <b>persones físiques diferents</b> que han accedit al lloc en un dia.
 </div>
 <div class="CTooltip" id="tt3">
-Nombre de vegades que una <b>pàgina</b> del lloc ha estat <b>visualitzada</b> (La suma de tots els visitants inclouen visites múltiples).<br>
+Nombre de vegades que una <b>pàgina</b> del lloc ha estat <b>visualitzada</b> (La suma de tots els visitants inclouen visites múltiples).<br />
 Aquest comptador es distingeix de "hits" perquè només conta les pàgines HTML, i no pas els gràfics o altres arxius o fitxers.
 </div>
 <div class="CTooltip" id="tt4">
-El nombre de vegades que una <b>pàgina, imatge, arxiu o fitxer</b> d'un lloc és <b>visualitzat</b> o <b>descarregat</b> per visitant.<br>
+El nombre de vegades que una <b>pàgina, imatge, arxiu o fitxer</b> d'un lloc és <b>visualitzat</b> o <b>descarregat</b> per visitant.<br />
 Aquest comptador serveix de referència, però el comptador de "pàgines" representa una dada mercadotécnica generalment més útil, i per tant, més recomanada.
 </div>
 <div class="CTooltip" id="tt5">
-El nombre de <b>kilo bytes</b> descagarregats pels visitants del lloc.<br>
+El nombre de <b>kilo bytes</b> descagarregats pels visitants del lloc.<br />
 Es refereix al volum de dades descarregades per totes les <b>pàgines</b>, <b>imatges</b> i <b>arxius o fitxers</b> mesurats en bytes.
 </div>
 <div class="CTooltip" id="tt13">
@@ -31,7 +31,7 @@ Aquesta taula mostra la llista de les <b>paraules clau</b> més utilitzades en el
 (El programa #PROG# reconeix paraules claus util.litzades en els <b>#SearchEnginesArray#</b> motors de cerca més populars, com Yahoo, Altavista, Lycos, Google, Voila, Terra etc...).
 </div>
 <div class="CTooltip" id="tt16">
-Els Robots son <b>visitants automàtics</b> que escanejan o viatgen pel seu lloc per a indexar-lo, o jerarquitzar-lo, per tal de recollir estadístiques de llocs Web, o per verificar si el seu lloc es troba connectat a la Xarxa.<br>
+Els Robots son <b>visitants automàtics</b> que escanejan o viatgen pel seu lloc per a indexar-lo, o jerarquitzar-lo, per tal de recollir estadístiques de llocs Web, o per verificar si el seu lloc es troba connectat a la Xarxa.<br />
 El programa #PROG# reconeix fins a <b>#RobotArray#</b> robots.
 </div>
 
@@ -42,7 +42,7 @@ El programa #PROG# reconeix fins a <b>#RobotArray#</b> robots.
 <div class="CTooltip" id="tt301"> El document sol·licitat ha estat reubicat i es troba en una URL proporcionada en la mateixa resposta. </div>
 <div class="CTooltip" id="tt302"> Error sense descripció. </div>
 <div class="CTooltip" id="tt400"> Error de sintaxis, el servidor no ha entès la seva petició. </div>
-<div class="CTooltip" id="tt401"> Nombre d'intents per accedir a una <b>URL que exigeix una combinació usuari/contrasenya que ha estat invàlida.</b>.<br>Un nombre d'intents molt elevat pot suggerir la possibilitat que un hacker (o pirata) ha intentat entrar a una zona restringida del lloc (p.e., intentant múltiples combinacions de usuari/contrasenya). </div>
+<div class="CTooltip" id="tt401"> Nombre d'intents per accedir a una <b>URL que exigeix una combinació usuari/contrasenya que ha estat invàlida.</b>.<br />Un nombre d'intents molt elevat pot suggerir la possibilitat que un hacker (o pirata) ha intentat entrar a una zona restringida del lloc (p.e., intentant múltiples combinacions de usuari/contrasenya). </div>
 <div class="CTooltip" id="tt403"> Nombre d'intents per accedir a una <b>URL configurada per a no ser accessible ni amb una combinació usuari/contrasenya</b> (p.e., una URL prèviament definida com a "no navegable"). </div>
 <div class="CTooltip" id="tt404"> Nombre d'intents per accedir a una <b>URL inexistent</b>. Sovint, aquests es refereixen a un enllaç (link) no vàlid o a un error mecanogràfic quan el visitant tecleja una URL errònia. </div>
 <div class="CTooltip" id="tt408"> El servidor ha trigat <b>massa temps</b> a respondre a una petició. Sovint, és degut a un programa CGI molt lent, el qual ha estat abandonat pel servidor, o bé per un servidor molt saturat. </div>

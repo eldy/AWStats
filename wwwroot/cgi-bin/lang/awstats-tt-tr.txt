@@ -40,7 +40,7 @@ Robotlar (basþka bir deyiþle Örümcekler) sitenizi (1) dizinlemek ve sýralamak, (
 <div class="CTooltip" id="tt301"> Ýstenilen belge cevapta verilen baþka bir adrese taþýnmýþtýr. </div>
 <div class="CTooltip" id="tt302"> Bu hatanýn açýklamasý yok. </div>
 <div class="CTooltip" id="tt400"> Sözdizimi hatasý, sunucu isteðinizi anlamadý. </div>
-<div class="CTooltip" id="tt401"> <b>Kulannýcý adý ve þifre gerektiren bir URL</b>e ulaþýldý.<br>Burada yüksek bir sayý bir korsanýn sitenize girmeye çalýþtýðýný belirtebilir. </div>
+<div class="CTooltip" id="tt401"> <b>Kulannýcý adý ve þifre gerektiren bir URL</b>e ulaþýldý.<br />Burada yüksek bir sayý bir korsanýn sitenize girmeye çalýþtýðýný belirtebilir. </div>
 <div class="CTooltip" id="tt403"> <b>Þifre kullanarak bile ulaþýlmasý yasaklanmýþ bir URL</b> (örneðýn, "bakýlabilir" olarak tanýnlanmamýþ bir klasör.). </div>
 <div class="CTooltip" id="tt404"> <b>Varolmayan bir URLL</b>e ulaþmaya çalýþýldý. Bu hata genellikle sitenizin bir yerinde geçersiz bir baðlantýý olduðunu veya ziyaretçinin URLi yanlýþ yazmasýndan kaynaklanýr. </div>
 <div class="CTooltip" id="tt408"> Sunucu iþleme cevap vermek için <b>çok fazla zaman</b> harcadý. Bu genellikle yavaþ bir CGI programýnýn kalabalýk bir veb sunucusunda durdurulmasýndan kaynaklanýr. </div>

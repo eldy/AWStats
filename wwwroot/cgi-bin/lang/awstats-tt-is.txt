@@ -4,19 +4,19 @@
 Nýtt innlit er skilgreint þannig: Gestur sem ekki hefur komið inn á síðustu <b>#VisitTimeOut# mínútum</b> (vafrandi eða lesandi). 
 </div>
 <div class="CTooltip" id="tt2">
-Fjöldi véla (</b>IP vistfanga</b>) sem litu inn á vefinn (Að lágmarki ein <b>vefsíða</b> sótt).<br>
+Fjöldi véla (</b>IP vistfanga</b>) sem litu inn á vefinn (Að lágmarki ein <b>vefsíða</b> sótt).<br />
 Gögnin gefa til kynna fjölda <b>einkvæmra gesta</b> sem litu inn á síðuna.
 </div>
 <div class="CTooltip" id="tt3">
-Hversu oft <b>síða</b> hefur verið <b>skoðuð</b> (Samtals allir gestir og öll innlit).<br>
+Hversu oft <b>síða</b> hefur verið <b>skoðuð</b> (Samtals allir gestir og öll innlit).<br />
 Munurinn á þessu gögnum og "skrár" liggur í því að eingöngu eru taldar HTML síður en ekki myndir eða annars konar skrár.
 </div>
 <div class="CTooltip" id="tt4">
-Hversu oft <b>síða, mynd eða skrá</b> á vefnum er <b>skoðuð</b> eða <b>sótt</b> af einhverju(m).<br>
+Hversu oft <b>síða, mynd eða skrá</b> á vefnum er <b>skoðuð</b> eða <b>sótt</b> af einhverju(m).<br />
 Þetta er einungis haft með til upplýsingar þar sem fjöldi "gesta" og fjöldi "innlita" eru betri markaðsgögn.
 </div>
 <div class="CTooltip" id="tt5">
-Gögnin gefa mynd af því gagnamagni sem sótt er af vefnum, <b>síðum</b>, <b>myndum</b> og <b>skrám</b>.<br>
+Gögnin gefa mynd af því gagnamagni sem sótt er af vefnum, <b>síðum</b>, <b>myndum</b> og <b>skrám</b>.<br />
 Einingar eru í KB, MB eða GB(Kílóbæti, Megabæti eða Gígabæti)
 </div>
 <div class="CTooltip" id="tt13">
@@ -28,15 +28,15 @@ Tilvísanir sem notaðar hafa verið við útreikninga í tengslum við innlit f
 </div>
 <div class="CTooltip" id="tt15">
 Taflan sýnir þau <b>leitarorð og setningar</b> sem oftast hefur verið leitað eftir á leitarvélum til að finna vefinn.
-Leitarorð frá <b>#SearchEnginesArray#</b> algengustu leitarvélunum sem #PROG# þekkir, svo sem Yahoo, Altavista, Lycos, Google, Voila, o.s.frv.).<br>
+Leitarorð frá <b>#SearchEnginesArray#</b> algengustu leitarvélunum sem #PROG# þekkir, svo sem Yahoo, Altavista, Lycos, Google, Voila, o.s.frv.).<br />
 Ath ber að samtala leita með leitarorðum getur verið hærra en samtala leita með setningum (réttur fjöldi leita) því að ef notuð eru tvö orð í leit er leitin talin tvisvar sem orðaleit en einu sinni sem setningaleit.
 </div>
 <div class="CTooltip" id="tt16">
-Leitarvélar(robots eða spiders) eru <b>'sjálfvirkir gestir'</b> notaðir af mörgum leitarvélum sem skoða, skrásetja og flokka innihald/gögn vefsins.  Safna tölulegum upplýsingum um tilvísannir og/eða hvort hægt er að sækja síðuna/vefinn.<br>
+Leitarvélar(robots eða spiders) eru <b>'sjálfvirkir gestir'</b> notaðir af mörgum leitarvélum sem skoða, skrásetja og flokka innihald/gögn vefsins.  Safna tölulegum upplýsingum um tilvísannir og/eða hvort hægt er að sækja síðuna/vefinn.<br />
 #PROG# þekkir <b>#RobotArray#</b> leitarvélar.
 </div>
 <div class="CTooltip" id="tt17">
-Allar tölulegar upplýsingar varðandi tíma eru tengdar tíma þjónustuvélar.<br>
+Allar tölulegar upplýsingar varðandi tíma eru tengdar tíma þjónustuvélar.<br />
 </div>
 <div class="CTooltip" id="tt18">
 Niðurstaða samantektar: <b>meðaltal</b> (Reiknað út frá öllum gögnum frá fyrsta innliti til þess síðasta)
@@ -45,8 +45,8 @@ Niðurstaða samantektar: <b>meðaltal</b> (Reiknað út frá öllum gögnum fr�
 Niðurstaða samantektar: <b>samanteknar samtöluri</b> (Reiknað út frá öllum gögnum frá fyrsta innliti til þess síðasta)
 </div>
 <div class="CTooltip" id="tt20">
-<b>Lengd innlita</b> er ekki alltaf hægt að reikna.  Helstu ástæður þess eru eftirfarandi:<br>
-- Innliti var ekki lokið þegar tölfræðin var reiknuð.<br>
+<b>Lengd innlita</b> er ekki alltaf hægt að reikna.  Helstu ástæður þess eru eftirfarandi:<br />
+- Innliti var ekki lokið þegar tölfræðin var reiknuð.<br />
 - Innlit byrjar á síðasta klukkutíma (eftir kl 23:00) sólarhrings síðasta dags mánaðar (Tæknileg ástæða innan #PROG# kemur í veg fyrir að slík innlit séu reiknuð)
 </div>
 
@@ -57,7 +57,7 @@ Niðurstaða samantektar: <b>samanteknar samtöluri</b> (Reiknað út frá öllu
 <div class="CTooltip" id="tt301">Umbeðin skrá hefur verið færð á nýtt veffang sem sent var með afgreiðslunni.</div>
 <div class="CTooltip" id="tt302">Lýsingu á villunni vantar.</div>
 <div class="CTooltip" id="tt400">Stílvilla, þjónninn skildi ekki beiðnina.</div>
-<div class="CTooltip" id="tt401">Beðið var um afgreiðslu á <b>síðu þar sem aðgangsstýringar er krafist</b>.<br>Ef mikið er um þetta getur það bent til þess að tilraunir séu gerðar til að brjótast inn á síðu/skrá með mörgum samsetningum af notendanöfnum og lykilorðum(til að fá aðgang að gögnum sem háð aðgangsstýringum).</div>
+<div class="CTooltip" id="tt401">Beðið var um afgreiðslu á <b>síðu þar sem aðgangsstýringar er krafist</b>.<br />Ef mikið er um þetta getur það bent til þess að tilraunir séu gerðar til að brjótast inn á síðu/skrá með mörgum samsetningum af notendanöfnum og lykilorðum(til að fá aðgang að gögnum sem háð aðgangsstýringum).</div>
 <div class="CTooltip" id="tt403">Beðið var um afgreiðslu á <b>síðu/skrá sem ekki á að vera aðgengilegt með eða án aðgangsstýringa(notendanafi og lykilorði)</b> (Gæti verið mappa sem ekki er merkt "vafranleg".).</div>
 <div class="CTooltip" id="tt404">Beðið var um <b>síðu/skrá sem ekki er hægt að afgreiða</b>. Villan kemur oft upp þegar hlekkur á vefsíðu inniheldur stílvillu eða gestur slær inn í vafrann sinn vitlausa slóð.</div>
 <div class="CTooltip" id="tt408">Þjónninn hefur tekið of langann tíma í beiðnina.  Þessi villa getur gefið til kynna mikið álag, hægann CGI hugbúnað, timeout villur á þjóni(stilla) eða illa skrifaðan hugbúnað.</div>

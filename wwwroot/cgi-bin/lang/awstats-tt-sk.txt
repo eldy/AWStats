@@ -32,7 +32,7 @@ Tato tabulka zobrazuje zoznam nejèastejsie zadavaných <b>výrazov</b>, ktoré boly
 (Výrazy od <b>#SearchEnginesArray#</b> najznámejších vyhladávaèov a zoznamov su #PROG# rozpoznany, ako je Yahoo, Altavista, Lycos, Google, Voila, atd...).
 </div>
 <div class="CTooltip" id="tt16">
-Roboti (niekedy oznaèováni ako pavuci alebo èmuchalové) su <b>poèítaèoví automat. návštevníci</b> pou¾ivaní vela vyhledávajucimi slu¾bami k (1) indexovániu a hodnoteniu, (2) zbieraniu statistik z webov a/alebo (3) k zistsniu, ci stránky stále existuju.<br>
+Roboti (niekedy oznaèováni ako pavuci alebo èmuchalové) su <b>poèítaèoví automat. návštevníci</b> pou¾ivaní vela vyhledávajucimi slu¾bami k (1) indexovániu a hodnoteniu, (2) zbieraniu statistik z webov a/alebo (3) k zistsniu, ci stránky stále existuju.<br />
 #PROG# je schopmy rozpoznat <b>#RobotArray#</b> robotov.
 </div>
 

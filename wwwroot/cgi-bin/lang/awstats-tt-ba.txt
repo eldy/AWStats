@@ -4,19 +4,19 @@
 Novi posjet se defini¹e kao svaki novi <b>dolazeæi posjetitelj</b> (koji pregleda stranicu) koji se nije konektovao na va¹ sajt u toku posljednjih <b>#VisitTimeOut# minuta</b>.
 </div>
 <div class="CTooltip" id="tt2">
-Broj korisnièkih raèunara (<b>IP adresa</b>) koji su posjeæivali sajt (i vidjeli najmanje jednu <b>stranicu</b>).<br>
+Broj korisnièkih raèunara (<b>IP adresa</b>) koji su posjeæivali sajt (i vidjeli najmanje jednu <b>stranicu</b>).<br />
 Ovaj podatak govori o broju <b>fizièki razlièitih osoba</b> koji su posjetili sajt tokom jednog dana.
 </div>
 <div class="CTooltip" id="tt3">
-Koliko puta je jedna <b>stranica</b> sajta bila <b>pregledana</b> (Suma za sve posjetitelje tokom svih posjeta).<br>
+Koliko puta je jedna <b>stranica</b> sajta bila <b>pregledana</b> (Suma za sve posjetitelje tokom svih posjeta).<br />
 Ovaj podatak se razlikuje od "pogodaka" po tome ¹to broji samo HTML stranice za razliku od slika i drugih datoteka.
 </div>
 <div class="CTooltip" id="tt4">
-Koliko puta je jedna <b>stranica, slika, datoteka</b> sajta bila <b>pregledana</b> ili <b>downloadovana</b> od strane nekoga.<br>
+Koliko puta je jedna <b>stranica, slika, datoteka</b> sajta bila <b>pregledana</b> ili <b>downloadovana</b> od strane nekoga.<br />
 Ovaj podatak slu¾i samo kao referenca, po¹to je broj "stranica" znatno korisniji za razne marketin¹ke potrebe.
 </div>
 <div class="CTooltip" id="tt5">
-Ova informacija govori o kolièini downloadiranih podataka za sve <b>stranice</b>, <b>slike</b> i <b>datoteke</b> u okviru va¹eg sajta.<br>
+Ova informacija govori o kolièini downloadiranih podataka za sve <b>stranice</b>, <b>slike</b> i <b>datoteke</b> u okviru va¹eg sajta.<br />
 Jedinice su Kb, Mb ili Gb (kilobajti, megabajti ili gigabajti). Ovaj podatak je koristan kako biste pratili ostvareni transfer sa va¹e stranice.
 </div>
 <div class="CTooltip" id="tt13">
@@ -31,7 +31,7 @@ Ova tabela prikazuje listu <b>kljuènih rijeèi</b> koje se najèe¹æe koriste za pr
 (#PROG# prepoznaje kljuène rijeèi <b>#SearchEnginesArray#</b> najèe¹æih pretra¾ivaèa i direktorija, meðu kojima su i Yahoo, Altavista, Lycos, Google, Voila, itd...).
 </div>
 <div class="CTooltip" id="tt16">
-Roboti (koji se ponekad nazivaju Spideri) su <b>raèunarski programi</b> koje koriste mnogi pretra¾ivaèi kako bi analizirali va¹u stranicu i time (1) indeksirali i rangirali va¹u stranicu, (2) prikupili statistike o Web stranicama i/ili (3) provjerili da li je va¹ sajt jo¹ uvijek online.<br>
+Roboti (koji se ponekad nazivaju Spideri) su <b>raèunarski programi</b> koje koriste mnogi pretra¾ivaèi kako bi analizirali va¹u stranicu i time (1) indeksirali i rangirali va¹u stranicu, (2) prikupili statistike o Web stranicama i/ili (3) provjerili da li je va¹ sajt jo¹ uvijek online.<br />
 #PROG# mo¾e prepoznati do <b>#RobotArray#</b> robota.
 </div>
 
@@ -42,7 +42,7 @@ Roboti (koji se ponekad nazivaju Spideri) su <b>raèunarski programi</b> koje kor
 <div class="CTooltip" id="tt301"> Tra¾eni dokument je premje¹ten na novo mjesto i nova adresa je data korisniku (redirekcija). </div>
 <div class="CTooltip" id="tt302"> Tra¾eni dokument je premje¹ten na novo mjesto i nova adresa je data korisniku (redirekcija). </div>
 <div class="CTooltip" id="tt400"> Sintaksna gre¹ka, server nije razumio zahtjev. </div>
-<div class="CTooltip" id="tt401"> Korisnik je poku¹ao otvoriti <b>URL za koji je potrebno dati login/¹ifru</b>.<br>Veliki broj pod ovom stavkom mo¾e znaèiti da neko (npr. hacker) poku¹ava provaliti u va¹ sajt (npr. isprobavajuæi razne kombinacije logina/¹ifre za ulazak). </div>
+<div class="CTooltip" id="tt401"> Korisnik je poku¹ao otvoriti <b>URL za koji je potrebno dati login/¹ifru</b>.<br />Veliki broj pod ovom stavkom mo¾e znaèiti da neko (npr. hacker) poku¹ava provaliti u va¹ sajt (npr. isprobavajuæi razne kombinacije logina/¹ifre za ulazak). </div>
 <div class="CTooltip" id="tt403"> Korisnik je poku¹ao otvoriti <b>URL koji je pode¹en da mu se ne mo¾e pristupiti, èak ni sa loginom/¹ifrom</b> (npr. URL unutar direktorija koji nije definisan kao pristupaèan.). </div>
 <div class="CTooltip" id="tt404"> Korisnik je poku¹ao pristupiti <b>nepostojeæem URLu</b>. Ova gre¹ka obièno znaèi da negdje na va¹em sajtu postoji neispravan link ili da je korisnik neispravno ukucao odreðeni URL. </div>
 <div class="CTooltip" id="tt408"> Serveru je trebalo <b>previ¹e vremena</b> da odgovori na zahtjev. Kod ove gre¹ke se obièno radi ili o sporoj CGI skripti koju je server morao prekinuti, o sporoj konekciji korisnika ili o ekstremnom zagu¹enju saobraæaja na web serveru. </div>

@@ -25,7 +25,7 @@
 这个表格显示使用者在搜寻网站中较常使用的关键词来登入网站。系统会记录最常使用的#SearchEnginesArray#个搜寻网站关键词。
 </div>
 <div class="CTooltip" id="tt16">
-搜寻网站的漫游器(Robots)会自动的找寻网站内的所有内容。<BR>
+搜寻网站的漫游器(Robots)会自动的找寻网站内的所有内容。<br />
 此字段记录较常使用的#RobotArray#个漫游器找寻网站的记录。
 </div>
 

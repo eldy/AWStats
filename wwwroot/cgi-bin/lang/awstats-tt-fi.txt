@@ -4,19 +4,19 @@
 T‰ss‰ uudeksi vierailuksi on laskettu sivustolle <b>saapunut vierailija</b> (sivuja selannut), joka ei ole ollut yhteydess‰ sivustoon viimeisen <b>#VisitTimeOut# minuutin aikana</b>.
 </div>
 <div class="CTooltip" id="tt2">
-Asiakaskoneiden (<b>IP-osoitteiden</b>) m‰‰r‰, jotka ovat k‰yneet sivustoilla (ja selanneet ainakin yht‰ <b>sivua</b>).<br>
+Asiakaskoneiden (<b>IP-osoitteiden</b>) m‰‰r‰, jotka ovat k‰yneet sivustoilla (ja selanneet ainakin yht‰ <b>sivua</b>).<br />
 T‰m‰ tieto viittaa <b>eri fyysisten henkilˆiden</b> m‰‰r‰‰n, jotka ovat k‰yneet sivustolla.
 </div>
 <div class="CTooltip" id="tt3">
-<b>N‰ytettyjen sivujen</b> m‰‰r‰. (kaikkien vierailujen aikana n‰ytettyjen sivujen yhteism‰‰r‰).<br>
+<b>N‰ytettyjen sivujen</b> m‰‰r‰. (kaikkien vierailujen aikana n‰ytettyjen sivujen yhteism‰‰r‰).<br />
 T‰m‰ tieto eroaa kohdasta "osumat" siin‰, ett‰ mukaan lasketaan ainoastaan HTML-sivut, ei kuvia tai muita tiedostoja.
 </div>
 <div class="CTooltip" id="tt4">
-<b>N‰ytettyjen</b> tai <b>ladattujen</b> <b>sivujen, kuvien ja tiedostojen</b> yhteism‰‰r‰.<br>
+<b>N‰ytettyjen</b> tai <b>ladattujen</b> <b>sivujen, kuvien ja tiedostojen</b> yhteism‰‰r‰.<br />
 T‰m‰ tieto tarjotaan ainoastaan viitteeksi, koska markkinointitarkoituksissa suositaan yleens‰ n‰ytettyjen "sivujen" m‰‰r‰‰.
 </div>
 <div class="CTooltip" id="tt5">
-T‰m‰ tieto viittaa sivustoltasi <b>sivujen</b>, <b>kuvien</b> ja <b>tiedostojen</b> muodossa ladatun datan m‰‰r‰‰n.<br>
+T‰m‰ tieto viittaa sivustoltasi <b>sivujen</b>, <b>kuvien</b> ja <b>tiedostojen</b> muodossa ladatun datan m‰‰r‰‰n.<br />
 Yksikkˆn‰ Kt, Mt tai Gt (Kilotavu, Megatavu tai Gigatavu)
 </div>
 <div class="CTooltip" id="tt13">
@@ -28,15 +28,15 @@ Hakukoneiden hakutuloksista lˆytyvi‰ linkkej‰ ei ole sis‰llytetty mukaan, koska 
 </div>
 <div class="CTooltip" id="tt15">
 T‰st‰ taulukosta n‰hd‰‰n luettelo yleisimmist‰ <b>hakulauseista tai hakusanoista</b>, joiden avulla sivustoillesi on lˆydetty Internetin hakukoneiden ja hakemistojen avulla.
-(#PROG# tunnistaa hakusanat <b>#SearchEnginesArray#</b>:sta suosituimmasta hakukoneesta ja hakemistosta, kuten Yahoo, Altavista, Lycos, Google, Voila, jne...).<br>
+(#PROG# tunnistaa hakusanat <b>#SearchEnginesArray#</b>:sta suosituimmasta hakukoneesta ja hakemistosta, kuten Yahoo, Altavista, Lycos, Google, Voila, jne...).<br />
 Huomaa, ett‰ hakusanojen kokonaism‰‰r‰ voi olla suurempi kuin hakulauseiden (todellinen hakujen m‰‰r‰), koska silloin kun kahta hakusanaa on k‰ytetty samassa haussa, lasketaan t‰m‰ hakusana-tilastossa kahdesti (jokainen hakusana erikseen).
 </div>
 <div class="CTooltip" id="tt16">
-Robotit (k‰ytet‰‰n joskus myˆs nimityst‰ "Spider") ovat <b>automaattisia tietokonevierailijoita</b>, joita useat hakukoneet k‰ytt‰v‰t indeksoidakseen, arvostellakseen ja ker‰t‰kseen tilastoa sivustoista ja/tai tutkiakseen viel‰kˆ sivustot ovat saatavilla.<br>
+Robotit (k‰ytet‰‰n joskus myˆs nimityst‰ "Spider") ovat <b>automaattisia tietokonevierailijoita</b>, joita useat hakukoneet k‰ytt‰v‰t indeksoidakseen, arvostellakseen ja ker‰t‰kseen tilastoa sivustoista ja/tai tutkiakseen viel‰kˆ sivustot ovat saatavilla.<br />
 #PROG# tunnistaa jopa <b>#RobotArray#</b> robottia.
 </div>
 <div class="CTooltip" id="tt17">
-Kaikki kelloaikoihin liittyv‰t tilastot perustuvat palvelimen kelloon.<br>
+Kaikki kelloaikoihin liittyv‰t tilastot perustuvat palvelimen kelloon.<br />
 </div>
 <div class="CTooltip" id="tt18">
 T‰ss‰ kerrotut tiedot ovat: <b>keskim‰‰r‰isi‰ arvoja</b> (laskettu kaikkien ensimm‰isen ja viimeisimm‰n vierailun v‰listen tietojen perusteella)
@@ -45,8 +45,8 @@ T‰ss‰ kerrotut tiedot ovat: <b>keskim‰‰r‰isi‰ arvoja</b> (laskettu kaikkien ensi
 T‰ss‰ kerrotut tiedot ovat: <b>kumulatiivisia summia</b> (laskettu kaikkien ensimm‰isen ja viimeisimm‰n vierailun v‰listen tietojen perusteella)
 </div>
 <div class="CTooltip" id="tt20">
-Jotkut <b>Vierailujen kestot</b> ovat 'tuntemattomia', koska niit‰ ei aina voida laskea. P‰‰asiallinen syy t‰lle on:<br>
-- Vierailu ei ollut loppunut 'p‰ivityksen' tapahtuessa.<br>
+Jotkut <b>Vierailujen kestot</b> ovat 'tuntemattomia', koska niit‰ ei aina voida laskea. P‰‰asiallinen syy t‰lle on:<br />
+- Vierailu ei ollut loppunut 'p‰ivityksen' tapahtuessa.<br />
 - Vierailu alkoi kuukauden viimeisen vuorokauden viimesen tunnin aikana (klo 23:00 j‰lkeen) (Tekniset syyt est‰v‰t laskutoimituksen t‰llaisessa tapauksessa)
 </div>
 
@@ -57,7 +57,7 @@ Jotkut <b>Vierailujen kestot</b> ovat 'tuntemattomia', koska niit‰ ei aina voida
 <div class="CTooltip" id="tt301"> Pyydetty tiedosto on siirretty toiseen, vastauksessa kerrottuun osoitteeseen. </div>
 <div class="CTooltip" id="tt302"> T‰lle virheelle ei ole kuvausta. </div>
 <div class="CTooltip" id="tt400"> Kielioppivirhe. Palvelin ei ymm‰rt‰nyt palvelupyyntˆ‰. </div>
-<div class="CTooltip" id="tt401"> Pyydetty <b>URL, johon tarvitaan tunnus/salasana -kaksikko</b>.<br> Suuri m‰‰r‰ n‰it‰ virheit‰ saattaa tarkoittaa sit‰, ett‰ joku (kuten hakkeri) yritt‰‰ murtautua, tai p‰‰st‰ sivustoille (toivoen p‰‰tyv‰ns‰ suojatulle alueelle kokeilemalla eri tunnus/salasana -pareja, esimerkiksi). </div>
+<div class="CTooltip" id="tt401"> Pyydetty <b>URL, johon tarvitaan tunnus/salasana -kaksikko</b>.<br /> Suuri m‰‰r‰ n‰it‰ virheit‰ saattaa tarkoittaa sit‰, ett‰ joku (kuten hakkeri) yritt‰‰ murtautua, tai p‰‰st‰ sivustoille (toivoen p‰‰tyv‰ns‰ suojatulle alueelle kokeilemalla eri tunnus/salasana -pareja, esimerkiksi). </div>
 <div class="CTooltip" id="tt403"> Tried to reach an <b>URL not configured to be reachable, even with an login/password pair</b> (for example, an URL within a directory not defined as "browsable".). </div>
 <div class="CTooltip" id="tt404"> Pyydetty <b>URL, jota ei ole olemassa</b>. T‰m‰ virhe tarkoittaa usein sit‰, ett‰ jossakin sivustollasi on virheellinen linkki, tai ett‰ vierailija on kirjoittanut URL:n v‰‰rin. </div>
 <div class="CTooltip" id="tt408"> Server has taken <b>too much time</b> to respond to a request. This error frequently involves either a slow CGI script which the server was required to kill or an extremely congested web server. </div>

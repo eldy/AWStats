@@ -25,7 +25,7 @@
 這個表格顯示使用者在搜尋網站中較常使用的關鍵字來登入網站。系統會記錄最常使用的#SearchEnginesArray#個搜尋網站關鍵字。
 </div>
 <div class="CTooltip" id="tt16">
-搜尋網站的漫遊器(Robots)會自動的找尋網站內的所有內容。<BR>
+搜尋網站的漫遊器(Robots)會自動的找尋網站內的所有內容。<br />
 此欄位記錄較常使用的#RobotArray#個漫游器找尋網站的記錄。
 </div>
 
