@@ -1,6 +1,6 @@
 # AWSTATS BROWSERS DATABASE
 #--------------------------
-# Last update: 2002-02-25
+# Last update: 2002-04-02
 
 # If you want to add a Browser to extend AWStats database detection capabilities,
 # you must add an entry in BrowsersSearchIDOrder and in BrowsersHashIDLib.
@@ -90,8 +90,8 @@
 "w3c_validator",
 "wdg_validator",
 "webzip",
-"libwww",				# Must be at end because some browser have both "browser id" and "libwww"
-"staroffice"
+"staroffice",
+"libwww"				# Must be at end because some browser have both "browser id" and "libwww"
 );
 
 # BrowsersHashAreGrabber
@@ -113,7 +113,7 @@
 "msie","msie",
 "netscape","netscape",
 "icab","icab",
-"go!zilla","notavailable",
+"go!zilla","gozilla",
 "konqueror","konqueror",
 "links","notavailable",
 "lynx","lynx",
@@ -122,7 +122,7 @@
 "wget","notavailable",
 "22acidownload","notavailable",
 "aol\\-iweng","notavailable",
-"amaya","notavailable",
+"amaya","amaya",
 "amigavoyager","notavailable",
 "antfresco","notavailable",
 "bpftp","notavailable",
@@ -132,7 +132,7 @@
 "ecatch","notavailable",
 "emailsiphon","notavailable",
 "friendlyspider","notavailable",
-"getright","notavailable",
+"getright","getright",
 "headdump","notavailable",
 "hotjava","notavailable",
 "ibrowse","notavailable",
@@ -186,16 +186,16 @@
 "w3c_css_validator","notavailable",
 "w3c_validator","notavailable",
 "wdg_validator","notavailable",
-"webzip","notavailable",
-"libwww","notavailable",			# Must be at end because some browser have both "browser id" and "libwww"
-"staroffice","staroffice"
+"webzip","webzip",
+"staroffice","staroffice",
+"libwww","notavailable"
 );
 
 
 # Browser name list ("browser id in lower case", "browser text")
 #---------------------------------------------------------------
 %BrowsersHashIDLib = (
-# Common web browsers (IE and Netscape must not be in this list)
+# Common web browsers text (IE and Netscape must not be in this list)
 "icab","iCab",
 "go!zilla","Go!Zilla",
 "konqueror","Konqueror",
@@ -271,8 +271,8 @@
 "w3c_validator","W3C HTML Validator",
 "wdg_validator","WDG HTML Validator",
 "webzip","WebZIP",
-"libwww","LibWWW",
-"staroffice","StarOffice"
+"staroffice","StarOffice",
+"libwww","LibWWW"
 );
 
 1;
