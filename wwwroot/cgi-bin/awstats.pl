@@ -5727,6 +5727,7 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 	my $sitewithoutwww=lc($SiteDomain); $sitewithoutwww =~ s/www\.//; $sitewithoutwww=quotemeta($sitewithoutwww);
 	# Define precompiled regex
 	my $regmisc=qr/^$miscquoted/;
+	my $regfavico=qr/\/favicon\.ico$/i;
 	my $regrobot=qr/^\/robots\.txt$/i;
 	my $regtruncanchor=qr/#(\w*)$/;
 	my $regtruncurl=qr/([$URLQuerySeparators])(.*)$/;
@@ -6116,9 +6117,9 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 			if ($foundparam) { $_misc_h{"TotalMisc"}++; }
 		}
 
-		# Analyze: favicon
-		#-----------------
-		if ($pos_referer >= 0 && $field[$pos_referer] && $urlwithnoquery =~ /\/favicon\.ico$/i) {
+		# Analyze: favicon (countedtraffic=>1)
+		#-------------------------------------
+		if ($pos_referer >= 0 && $field[$pos_referer] && $urlwithnoquery =~ /$regfavico/o) {
 			if (($field[$pos_code] != 404 || $urlwithnoquery !~ /\/.+\/favicon\.ico$/i) && ($field[$pos_agent] =~ /MSIE/)) {
 				# We don't count one hit if (not on root and error) and MSIE
 				# If error not on root, another hit will be made on root. If not MSIE, hit are made not only for "Adding".
@@ -6127,8 +6128,9 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 			$countedtraffic=1;	# favicon is the only case not counted anywhere
 		}
 
-		# Analyze: Worms
-		#---------------
+		# Analyze: Worms (countedtraffic=>1 if worm)
+		#-------------------------------------------
+		if (! $countedtraffic) {
 		if ($LevelForWormsDetection) {
 			foreach (@WormsSearchIDOrder) {
 				if ($field[$pos_url] =~ /$_/) {
@@ -6147,9 +6149,10 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 				}
 			}
 		}
-				
-		# Analyze: Status code
-		#---------------------
+        }
+    				
+		# Analyze: Status code (countedtraffic=>1 if error)
+		#--------------------------------------------------
 		if (! $countedtraffic) {
 		if ($LogType eq 'W' || $LogType eq 'S') {		# HTTP record or Stream record
 			if ($ValidHTTPCodes{$field[$pos_code]}) {	# Code is valid
@@ -6192,8 +6195,8 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 		}
 		}
 		
-		# Analyze: Robot from robot database
-		#-----------------------------------
+		# Analyze: Robot from robot database (countedtraffic=>1 if robot)
+		#----------------------------------------------------------------
 		if (! $countedtraffic) {
 		if ($pos_agent >= 0) {
 			if ($DecodeUA) { $field[$pos_agent] =~ s/%20/_/g; }	# This is to support servers (like Roxen) that writes user agent with %20 in it
@@ -6232,8 +6235,8 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 		}
 		}
 
-		# Analyze: Robot from "hit on robots.txt" file
-		# --------------------------------------------
+		# Analyze: Robot from "hit on robots.txt" file (countedtraffic=>1 if robot)
+		# -------------------------------------------------------------------------
 		if (! $countedtraffic) {
 		if ($urlwithnoquery =~ /$regrobot/o) {
 			if ($Debug) { debug("  It's an unknown robot",2); }
@@ -10181,22 +10184,22 @@ else {
 #     Define a clean Url and Query (set urlwithnoquery, tokenquery and standalonequery and $field[$pos_url])
 #     Define PageBool and extension
 #     Analyze: Misc tracker --> complete %misc
-#     Analyze: Add to favorites --> complete %_misc, next on loop
-#     Analyze: Worms --> complete %_worms, countedtraffic=1
+#     Analyze: Add to favorites --> complete %_misc, countedtraffic=1 (not counted anywhere)
+#     If (!countedtraffic) Analyze: Worms --> complete %_worms, countedtraffic=1
 #     If (!countedtraffic) Analyze: Status code --> complete %_error_, %_sider404, %_referrer404 --> countedtraffic=1
 #     If (!countedtraffic) Analyze: Robots known --> complete %_robot, countedtraffic=1
-#     If (!countedtraffic) Analyze: Robots unkown on robots.txt --> complete %_robot, countedtraffic=1
+#     If (!countedtraffic) Analyze: Robots unknown on robots.txt --> complete %_robot, countedtraffic=1
 #     If (!countedtraffic) Analyze: File types - Compression
 #     If (!countedtraffic) Analyze: Date - Hour - Pages - Hits - Kilo
 #     If (!countedtraffic) Analyze: Login
-#     If (!countedtraffic) Analyze: Lookup
+#     If (!countedtraffic) Do DNS Lookup
 #     If (!countedtraffic) Analyze: Country
 #     If (!countedtraffic) Analyze: Host - Url - Session
 #     If (!countedtraffic) Analyze: Browser - OS
 #     If (!countedtraffic) Analyze: Referer
 #     If (!countedtraffic) Analyze: EMail
 #     Analyze: Cluster
-#     Analyze: Extra (must be after 'Clean Url and Query')
+#     Analyze: Extra (must be after 'Define a clean Url and Query')
 #     If too many records, we flush data arrays with
 #       &Read_History_With_TmpUpdate($lastprocessedyear,$lastprocessedmonth,UPDATE,PURGE,"all",lastlinenb,lastlineoffset,CheckSum($_));
 #   End of loop
