@@ -2,7 +2,7 @@
 //-------------------------------------------------------------------
 // You can add this file onto some of your web pages (main home page
 // can be enough) by adding the following HTML code:
-// <script language=javascript src="/js/awstats_more_tracker.js"></script>
+// <script language=javascript src="/js/awstats_misc_tracker.js"></script>
 // This allows AWStats to be enhanced with some miscellanous features:
 // - Screen size detection (TRKscreen)
 // - Screen color depth detection (TRKcdi)
