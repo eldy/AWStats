@@ -126,7 +126,7 @@ $color_h, $color_k, $color_p, $color_s, $color_u, $color_v)=
 
 
 
-$VERSION="4.0 (build 23)";
+$VERSION="4.0 (build 24)";
 $Lang="en";
 
 # Default value
@@ -339,7 +339,7 @@ sub error {
 		if ($HTMLOutput) { print "<br><b>\n"; }
 		print "Setup (".($FileConfig?$FileConfig:"Config")." file, web server or permissions) may be wrong.\n";
 		if ($HTMLOutput) { print "</b><br>\n"; }
-		print "See README.TXT for informations on how to setup $PROG.\n";
+		print "See AWStats documentation in 'docs' directory for informations on how to setup $PROG.\n";
 	}
 	if ($HTMLOutput) { print "</BODY>\n</HTML>\n"; }
     exit 1;
@@ -645,27 +645,27 @@ sub Read_Config_File {
 # Output:		Arrays and Hash tables are defined 
 #------------------------------------------------------------------------------
 sub Read_Ref_Data {
+	my %FilePath=();
 	foreach my $file ("browsers.pl","domains.pl","operating_systems.pl","robots.pl","search_engines.pl") {
-		my $FileRef="";
 		foreach my $dir ("${DIR}db","./db") {
 			my $searchdir=$dir;
-			if (($searchdir ne "") && (!($searchdir =~ /\/$/)) && (!($searchdir =~ /\\$/)) ) { $searchdir .= "/"; }
-			if ($FileRef eq "") {
+			if ($searchdir && (!($searchdir =~ /\/$/)) && (!($searchdir =~ /\\$/)) ) { $searchdir .= "/"; }
+			if (! $FilePath{$file}) {
 				if (-s "${searchdir}${file}") {
-					$FileRef="${searchdir}${file}";
-					&debug("Call to Read_Ref_Data [FileRef=\"$FileRef\"]");
-					require "$FileRef";
+					$FilePath{$file}="${searchdir}${file}";
+					&debug("Call to Read_Ref_Data [FilePath{$file}=\"$FilePath{$file}\"]");
+					require "$FilePath{$file}";
 				}
 			}
 		}
-		if ($FileRef eq "") {
+		if (! $FilePath{$file}) {
 			my $filetext=$file; $filetext =~ s/\.pl$//; $filetext =~ s/_/ /g;
 			&warning("Warning: Can't read file \"$file\" ($filetext detection will not work correctly).\nCheck if file is in ${DIR}db directory and is readable.");
 		}
 	}
 	# Sanity check.
-	if (@OSArrayID != scalar keys %OSHashID) { error("Error: Not same number of records of OSArray (".(@OSArrayID).") and/or OSHashID (".(scalar keys %OSHashID).") in source file."); }
-	if (@BrowsersArrayID != scalar keys %BrowsersHashIDLib) { error("Error: Not same number of records of BrowsersArrayID (".(@BrowsersArrayID).") and/or BrowsersHashIDLib (".(scalar keys %BrowsersHashIDLib).") in source file."); }
+	if (@OSArrayID != scalar keys %OSHashID) { error("Error: Not same number of records of OSArray (".(@OSArrayID)." entries) and OSHashID (".(scalar keys %OSHashID)." entries) in OS database. Check your file ".$FilePath{"operating_systems.pl"}); }
+	if (@BrowsersArrayID != scalar keys %BrowsersHashIDLib) { error("Error: Not same number of records of BrowsersArrayID (".(@BrowsersArrayID)." entries) and BrowsersHashIDLib (".(scalar keys %BrowsersHashIDLib)." entries) in Browsers database. Check your file ".$FilePath{"browsers.pl"}); }
 }
 
 
