@@ -12,6 +12,9 @@ a:visited	{ font: 14px verdana,arial; color: #2200C0; font-family: sans-serif; t
 a:active	{ font: 14px verdana,arial; color: #2200C0; font-family: sans-serif; text-decoration: none; }
 a:hover		{ font: 14px verdana,arial; color: #2200C0; font-family: sans-serif; text-decoration: underline; }
 
+.CHead 			{ background-color: #9999CC; }
+.CTextAreaConf	{ font: 11px verdana,arial; color: #202020; font-family: sans-serif; text-decoration: none; }
+
 td.CFAQ		{ font: 14px verdana,arial; color: #000000; font-family: sans-serif; text-decoration: none; }
 .CProblem	{ font: 14px verdana,arial; color: #660000; font-family: sans-serif; text-decoration: none; }
 .CSolution	{ font: 14px verdana,arial; color: #448866; font-family: sans-serif; text-decoration: none; }
