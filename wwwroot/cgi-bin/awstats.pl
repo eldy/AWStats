@@ -37,7 +37,7 @@
 #use strict;
 # Uncomment following line and a line into GetDelaySinceStart function to get
 # miliseconds time in showsteps option
-use Time::HiRes qw( gettimeofday );		
+#use Time::HiRes qw( gettimeofday );		
 
 
 #-------------------------------------------------------
@@ -1675,7 +1675,7 @@ sub GetDelaySinceStart {
 	if ($option) { $StartSeconds=0;	}	# Reset counter
 	my ($newseconds, $newmicroseconds)=(0,0);
 	my $usedTimeHires=0;
-	($newseconds, $newmicroseconds) = gettimeofday; $usedTimeHires=1;	# Uncomment to use Time::HiRes function (provide milliseconds)
+#	($newseconds, $newmicroseconds) = gettimeofday; $usedTimeHires=1;	# Uncomment to use Time::HiRes function (provide milliseconds)
 	if ((! $usedTimeHires) || ($newseconds eq "gettimeofday")) { $newseconds=time(); }
 	if (! $StartSeconds) { $StartSeconds=$newseconds; $StartMicroseconds=$newmicroseconds; }
 	my $nbms=$newseconds*1000+int($newmicroseconds/1000)-$StartSeconds*1000-int($StartMicroseconds/1000);
