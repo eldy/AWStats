@@ -28,7 +28,8 @@ my $helpfound=0;my $nowfound=0;
 for (0..@ARGV-1) {
 	if ($ARGV[$_] =~ /^-*h/i)     		  	 { $helpfound=1; last; }
 	if ($ARGV[$_] =~ /^-*awstatsprog=(.*)/i) { $AWSTATSSCRIPT="$1"; next; }
-	if ($ARGV[$_] =~ /^-*confdir=(.*)/i)     { $DIRCONFIG="$1"; next; }
+	if ($ARGV[$_] =~ /^-*configdir=(.*)/i)   { $DIRCONFIG="$1"; next; }
+	if ($ARGV[$_] =~ /^-*confdir=(.*)/i)     { $DIRCONFIG="$1"; next; }	# For backward compatibility
 	if ($ARGV[$_] =~ /^now/i)     		  	 { $nowfound=1; next; }
 }
 
@@ -45,7 +46,7 @@ if (!$nowfound || $helpfound || ! @ARGV) {
 	print "\n";
 	print "Where options are:\n";
 	print "  -awstatsprog=pathtoawstatspl\n";
-	print "  -confdir=directorytoscan\n";
+	print "  -configdir=directorytoscan\n";
 	print "\n";
 	exit 0;
 }
