@@ -583,10 +583,10 @@ sub warning {
 	if ($WarningMessages) {
 		if ($HTMLOutput) {
 			$messagestring =~ s/\n/\<br\>/g;
-			print "\n$messagestring<br>\n";
+			print "$messagestring<br>\n";
 		}
 		else {
-			print "\n$messagestring\n";
+			print "$messagestring\n";
 		}
 	}
 }
@@ -1227,21 +1227,21 @@ sub Check_Config {
 	if ($ShowKeywordsStats !~ /[0-1]/)            	{ $ShowKeywordsStats=1; }
 	if ($ShowCompressionStats !~ /[0-1]/)         	{ $ShowCompressionStats=1; }
 	if ($ShowHTTPErrorsStats !~ /[0-1]/)          	{ $ShowHTTPErrorsStats=1; }
-	if ($MaxNbOfDomain !~ /^\d+/ || $MaxNbOfDomain<1)           		{ $MaxNbOfDomain=20; }
-	if ($MaxNbOfHostsShown !~ /^\d+/ || $MaxNbOfHostsShown<1)       	{ $MaxNbOfHostsShown=20; }
-	if ($MinHitHost !~ /^\d+/ || $MinHitHost<1)              			{ $MinHitHost=1; }
-	if ($MaxNbOfLoginShown !~ /^\d+/ || $MaxNbOfLoginShown<1)       	{ $MaxNbOfLoginShown=10; }
-	if ($MinHitLogin !~ /^\d+/ || $MinHitLogin<1)  		           		{ $MinHitLogin=1; }
-	if ($MaxNbOfRobotShown !~ /^\d+/ || $MaxNbOfRobotShown<1)       	{ $MaxNbOfRobotShown=10; }
-	if ($MinHitRobot !~ /^\d+/ || $MinHitRobot<1)           	  		{ $MinHitRobot=1; }
-	if ($MaxNbOfPageShown !~ /^\d+/ || $MaxNbOfPageShown<1)	        	{ $MaxNbOfPageShown=20; }
-	if ($MinHitFile !~ /^\d+/ || $MinHitFile<1)              			{ $MinHitFile=1; }
-	if ($MaxNbOfRefererShown !~ /^\d+/ || $MaxNbOfRefererShown<1)    	{ $MaxNbOfRefererShown=20; }
-	if ($MinHitRefer !~ /^\d+/ || $MinHitRefer<1)             			{ $MinHitRefer=1; }
-	if ($MaxNbOfKeyphrasesShown !~ /^\d+/ || $MaxNbOfKeyphrasesShown<1)	{ $MaxNbOfKeyphrasesShown=20; }
-	if ($MinHitKeyphrase !~ /^\d+/ || $MinHitKeyphrase<1)           	{ $MinHitKeyphrase=1; }
-	if ($MaxNbOfKeywordsShown !~ /^\d+/ || $MaxNbOfKeywordsShown<1)		{ $MaxNbOfKeywordsShown=20; }
-	if ($MinHitKeyword !~ /^\d+/ || $MinHitKeyword<1)           		{ $MinHitKeyword=1; }
+	if ($MaxNbOfDomain !~ /^\d+$/ || $MaxNbOfDomain<1)           		 { $MaxNbOfDomain=20; }
+	if ($MaxNbOfHostsShown !~ /^\d+$/ || $MaxNbOfHostsShown<1)       	 { $MaxNbOfHostsShown=20; }
+	if ($MinHitHost !~ /^\d+$/ || $MinHitHost<1)              			 { $MinHitHost=1; }
+	if ($MaxNbOfLoginShown !~ /^\d+$/ || $MaxNbOfLoginShown<1)       	 { $MaxNbOfLoginShown=10; }
+	if ($MinHitLogin !~ /^\d+$/ || $MinHitLogin<1)  		           	 { $MinHitLogin=1; }
+	if ($MaxNbOfRobotShown !~ /^\d+$/ || $MaxNbOfRobotShown<1)       	 { $MaxNbOfRobotShown=10; }
+	if ($MinHitRobot !~ /^\d+$/ || $MinHitRobot<1)           	  		 { $MinHitRobot=1; }
+	if ($MaxNbOfPageShown !~ /^\d+$/ || $MaxNbOfPageShown<1)	         { $MaxNbOfPageShown=20; }
+	if ($MinHitFile !~ /^\d+$/ || $MinHitFile<1)              			 { $MinHitFile=1; }
+	if ($MaxNbOfRefererShown !~ /^\d+$/ || $MaxNbOfRefererShown<1)    	 { $MaxNbOfRefererShown=20; }
+	if ($MinHitRefer !~ /^\d+$/ || $MinHitRefer<1)             			 { $MinHitRefer=1; }
+	if ($MaxNbOfKeyphrasesShown !~ /^\d+$/ || $MaxNbOfKeyphrasesShown<1) { $MaxNbOfKeyphrasesShown=20; }
+	if ($MinHitKeyphrase !~ /^\d+$/ || $MinHitKeyphrase<1)           	 { $MinHitKeyphrase=1; }
+	if ($MaxNbOfKeywordsShown !~ /^\d+$/ || $MaxNbOfKeywordsShown<1)	 { $MaxNbOfKeywordsShown=20; }
+	if ($MinHitKeyword !~ /^\d+$/ || $MinHitKeyword<1)           		 { $MinHitKeyword=1; }
 	if ($FirstDayOfWeek !~ /[0-1]/)               	{ $FirstDayOfWeek=1; }
 	if ($UseFramesWhenCGI !~ /[0-1]/)  				{ $UseFramesWhenCGI=0; }
 	if ($DetailedReportsOnNewWindows !~ /[0-2]/)  	{ $DetailedReportsOnNewWindows=1; }
@@ -1564,21 +1564,21 @@ sub Read_History_With_Update {
 		while (<HISTORY>) {
 			chomp $_; s/\r//; $countlines++;
 	
-			# Analyze config line
+			# Extract version for first line
 			if (! $versionnum && $_ =~ /^AWSTATS DATA FILE (\d+).(\d+)/i) {
 				$versionnum=($1*1000)+$2;
 				if ($Debug) { debug(" Data file version is $versionnum",1); }
+				# Show migrate warning
 				if ($versionnum < 5000 && ! $MigrateStats) {
-					warning("Warning: Data file '$historyfilename' is an old format history file. You should upgrade it running awstats.pl -migrate=\"$historyfilename\" from command line.");
+					warning("Warning: Data file '$historyfilename' is an old format history file. You should upgrade it running\n$PROG.$Extension -migrate=\"$historyfilename\" -config=$SiteConfig\nfrom command line.");
 				}
 				if (! ($versionnum < 5000) && $MigrateStats) {
-					close(HISTORYTMP); close(HISTORY);
-					unlink("$historytmpfilename");
-					error("Error: You try to migrate a file that is already a recent version.","","",1);
+					warning("Warning: You are migrating a file that is already a recent version (migrate not required for version $1.$2).","","",1);
 				}
 				next;
 			}
 
+			# Analyze fields
 			@field=split(/\s+/,$_);
 			if (! $field[0]) { next; }
 	
@@ -3335,12 +3335,14 @@ sub MinimumButNoZero {
 # Return:       @keylist response array
 #--------------------------------------------------------------------
 sub BuildKeyList {
+#	my $ArraySize=shift||error("Error: System error. Call to BuildKeyList function with incorrect value for first param","","",1);
+#	my $MinValue=shift||error("Error: System error. Call to BuildKeyList function with incorrect value for second param","","",1);
 	my $ArraySize=shift;
 	my $MinValue=shift;
 	my $hashforselect=shift;
 	my $hashfororder=shift;
 	if ($Debug) { debug(" BuildKeyList($ArraySize,$MinValue,$hashforselect with size=".(scalar keys %$hashforselect).",$hashfororder with size=".(scalar keys %$hashfororder).")",2); }
-	delete $hashforselect->{0};delete $hashforselect->{""};		# Those is to protect from infinite loop when hash array has incorrect keys
+	delete $hashforselect->{0};delete $hashforselect->{""};		# Those is to protect from infinite loop when hash array has an incorrect null key
 	my $count=0;
 	$lowerval=0;	# Global because used in AddInTree and Removelowerval
 	%val=(); %nextval=(); %egal=();
@@ -3506,29 +3508,6 @@ if ($QueryString =~ /urlfilter=([^\s&]+)/i) 		{ $URLFilter=&DecodeEncodedString(
 if ($Debug) {
 	debug("$PROG - $VERSION - Perl $^X $]",1);
 	debug("QUERY_STRING=$QueryString",2);
-}
-
-#------------------------------------------
-# MIGRATE PROCESS
-#------------------------------------------
-if ($MigrateStats) {
-	if ($Debug) { debug("MigrateStats is $MigrateStats",2); }
-	$MigrateStats =~ s/^(-|)migrate=//;
-	$MigrateStats =~ /^(.*)$PROG(\d{0,2})(\d\d)(\d\d\d\d)(.*)\.txt$/;
-	$DirData=$1;
-	$DayRequired=$2;
-	$MonthRequired=$3;
-	$YearRequired=$4;
-	$FileSuffix=$5;
-	print "Start migration for file '$MigrateStats'.\n";
-	if (! -s $MigrateStats) { error("Error: File to migrate '$MigrateStats' not found.","","",1); }
-	my $historytmpfilename=&Read_History_With_Update($YearRequired,$MonthRequired,1,0,"all");
-	if (rename($historytmpfilename,$MigrateStats)==0) {
-		unlink "$historytmpfilename";
-		error("Error: Failed to rename \"$historytmpfilename\" into \"$MigrateStats\".\nWrite permissions on \"$MigrateStats\" might be wrong".($ENV{"GATEWAY_INTERFACE"}?" for a 'migration from web'":"")." or file might be opened.");
-	}
-	print "Migration for file '$MigrateStats' done.\n";
-	exit 0;
 }
 
 # Force SiteConfig if AWSTATS_CONFIG is defined
@@ -3748,6 +3727,29 @@ if ($AllowAccessFromWebToFollowingIPAddresses && $ENV{"GATEWAY_INTERFACE"}) {
 }
 if (($UpdateStats || $MigrateStats) && (! $AllowToUpdateStatsFromBrowser) && $ENV{"GATEWAY_INTERFACE"}) {
 	error("Error: Update of statistics is not allowed from a browser.");
+}
+
+#------------------------------------------
+# MIGRATE PROCESS (Must be after reading config cause we need MaxNbOf... and Min...)
+#------------------------------------------
+if ($MigrateStats) {
+	if ($Debug) { debug("MigrateStats is $MigrateStats",2); }
+	$MigrateStats =~ s/^(-|)migrate=//;
+	$MigrateStats =~ /^(.*)$PROG(\d{0,2})(\d\d)(\d\d\d\d)(.*)\.txt$/;
+	$DirData=$1;
+	$DayRequired=$2;
+	$MonthRequired=$3;
+	$YearRequired=$4;
+	$FileSuffix=$5;
+	print "Start migration for file '$MigrateStats'.\n";
+	if (! -s $MigrateStats) { error("Error: File to migrate '$MigrateStats' not found.","","",1); }
+	my $historytmpfilename=&Read_History_With_Update($YearRequired,$MonthRequired,1,0,"all");
+	if (rename($historytmpfilename,$MigrateStats)==0) {
+		unlink "$historytmpfilename";
+		error("Error: Failed to rename \"$historytmpfilename\" into \"$MigrateStats\".\nWrite permissions on \"$MigrateStats\" might be wrong".($ENV{"GATEWAY_INTERFACE"}?" for a 'migration from web'":"")." or file might be opened.");
+	}
+	print "Migration for file '$MigrateStats' done.\n";
+	exit 0;
 }
 
 # Output main frame page and exit. This must be after the security check.
@@ -6324,7 +6326,6 @@ EOF
 	if ($ShowHostsStats) {
 		if ($Debug) { debug("ShowHostsStats",2); }
 		print "$Center<a name=\"VISITOR\">&nbsp;</a><BR>\n";
-		$MaxNbOfHostsShown = (scalar keys %_host_h) if $MaxNbOfHostsShown > (scalar keys %_host_h);
 		&tab_head("$Message[81] ($Message[77] $MaxNbOfHostsShown) &nbsp; - &nbsp; <a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=allhosts":"$PROG$StaticLinks.allhosts.html")."\"$NewLinkTarget>$Message[80]</a> &nbsp; - &nbsp; <a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=lasthosts":"$PROG$StaticLinks.lasthosts.html")."\"$NewLinkTarget>$Message[9]</a> &nbsp; - &nbsp; <a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=unknownip":"$PROG$StaticLinks.unknownip.html")."\"$NewLinkTarget>$Message[45]</a>",19);
 		if ($MonthRequired ne "year") { print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[81] : $TotalHostsKnown $Message[82], $TotalHostsUnknown $Message[1] - $TotalUnique $Message[11]</TH>"; }
 		else { print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[81] : ".(scalar keys %_host_h)."</TH>"; }
@@ -6455,7 +6456,6 @@ EOF
 	if ($ShowPagesStats) {
 		if ($Debug) { debug("ShowPagesStats (MaxNbOfPageShown=$MaxNbOfPageShown TotalDifferentPages=$TotalDifferentPages)",2); }
 		print "$Center<a name=\"PAGE\">&nbsp;</a><a name=\"ENTRY\">&nbsp;</a><a name=\"EXIT\">&nbsp;</a><BR>\n";
-		$MaxNbOfPageShown = $TotalDifferentPages if $MaxNbOfPageShown > $TotalDifferentPages;
 		&tab_head("$Message[19] ($Message[77] $MaxNbOfPageShown) &nbsp; - &nbsp; <a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=urldetail":"$PROG$StaticLinks.urldetail.html")."\"$NewLinkTarget>$Message[80]</a> &nbsp; - &nbsp; <a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=urlentry":"$PROG$StaticLinks.urlentry.html")."\"$NewLinkTarget>$Message[104]</a> &nbsp; - &nbsp; <a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=urlexit":"$PROG$StaticLinks.urlexit.html")."\"$NewLinkTarget>$Message[116]</a>",19);
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$TotalDifferentPages $Message[28]</TH>";
 		print "<TH bgcolor=\"#$color_p\" width=80>$Message[29]</TH>";
@@ -6721,7 +6721,6 @@ EOF
 		# By Keyphrases
 		if ($ShowKeyphrasesStats && $ShowKeywordsStats) { print "<td width=50% valign=top>\n";	}
 		if ($Debug) { debug("ShowKeyphrasesStats",2); }
-		$MaxNbOfKeyphrasesShown = $TotalDifferentKeyphrases if $MaxNbOfKeyphrasesShown > $TotalDifferentKeyphrases;
 		&tab_head("$Message[120] ($Message[77] $MaxNbOfKeyphrasesShown)<br><a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=keyphrases":"$PROG$StaticLinks.keyphrases.html")."\"$NewLinkTarget>$Message[80]</a>",19,($ShowKeyphrasesStats && $ShowKeywordsStats)?95:70);
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\" onmouseover=\"ShowTooltip(15);\" onmouseout=\"HideTooltip(15);\"><TH>$TotalDifferentKeyphrases $Message[103]</TH><TH bgcolor=\"#$color_s\" width=80>$Message[14]</TH><TH bgcolor=\"#$color_s\" width=80>$Message[15]</TH></TR>\n";
 		$total_s=0;
@@ -6749,7 +6748,6 @@ EOF
 		# By Keywords
 		if ($ShowKeyphrasesStats && $ShowKeywordsStats) { print "<td width=50% valign=top>\n";	}
 		if ($Debug) { debug("ShowKeywordsStats",2); }
-		$MaxNbOfKeywordsShown = $TotalDifferentKeywords if $MaxNbOfKeywordsShown > $TotalDifferentKeywords;
 		&tab_head("$Message[121] ($Message[77] $MaxNbOfKeywordsShown)<br><a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=keywords":"$PROG$StaticLinks.keywords.html")."\"$NewLinkTarget>$Message[80]</a>",19,($ShowKeyphrasesStats && $ShowKeywordsStats)?95:70);
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\" onmouseover=\"ShowTooltip(15);\" onmouseout=\"HideTooltip(15);\"><TH>$TotalDifferentKeywords $Message[13]</TH><TH bgcolor=\"#$color_s\" width=80>$Message[14]</TH><TH bgcolor=\"#$color_s\" width=80>$Message[15]</TH></TR>\n";
 		$total_s=0;
