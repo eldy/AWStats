@@ -94,6 +94,7 @@
 'rar','archive',
 'tar','archive',
 'tgz','archive',
+'tbz2','archive',
 'z','archive',
 'zip','archive',
 # Audio
@@ -179,6 +180,7 @@
 'rar','archive',
 'tar','archive',
 'tgz','archive',
+'tbz2','archive',
 'z','archive',
 'zip','archive',
 # Audio
