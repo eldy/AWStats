@@ -73,10 +73,10 @@ sub ReplaceURL_urlalias {
 		# Load urlalias file
 		open(URLALIASFILE,"$filetoload") or error("Error: Couldn't open UrlAlias file \"$filetoload\": $!");
 		# This is the fastest way to load with regexp that I know
-		%UrlAliases = map(/^([^\s]+)\s+([^\s]+)$/o,<URLALIASFILE>);
+		%UrlAliases = map(/^([^\t]+)\t+([^\t]+)$/o,<URLALIASFILE>);
 		close URLALIASFILE;
 		debug("UrlAlias file loaded: ".(scalar keys %UrlAliases)." aliases found.");
-		$urlaliasloaded=1;	
+		$urlaliasloaded=1;
 	}
 	my $urltoreplace="$_[0]";
 	if ($UrlAliases{$urltoreplace}) { print "<font style=\"color: #$color_link; font-weight: bold\">$UrlAliases{$urltoreplace}</font><br>"; }
