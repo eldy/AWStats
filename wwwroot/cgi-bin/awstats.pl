@@ -593,7 +593,16 @@ sub html_end {
 	if (scalar keys %HTMLOutput) {
 		if ($FrameName ne 'index' && $FrameName ne 'mainleft') {
 			print "$Center<br><br><br>\n";
-			print "<FONT COLOR=\"#$color_text\"><b>Advanced Web Statistics $VERSION</b> - <a href=\"http://awstats.sourceforge.net\" target=\"awstatshome\">Created by $PROG</a></font><br>\n";
+			print "<FONT COLOR=\"#$color_text\">";
+			print "<b>Advanced Web Statistics $VERSION</b> - <a href=\"http://awstats.sourceforge.net\" target=\"awstatshome\">Created by $PROG";
+			my $atleastoneplugin=0;
+			foreach my $pluginname (keys %{$PluginsLoaded{'init'}}) {
+				if (! $atleastoneplugin) { $atleastoneplugin=1; print " (with plugin "; }
+				else { print ","; }
+				print "$pluginname";
+			}
+			if ($atleastoneplugin) { print ")"; }
+			print "</a></font><br>\n";
 			print "<br>\n";
 			print "$HTMLEndSection\n";
 		}
@@ -5741,7 +5750,10 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
  			foreach my $rowkeynum (0..@{$ExtraFirstColumnValuesType[$extranum]}-1) {
  				my $rowkeytype=$ExtraFirstColumnValuesType[$extranum][$rowkeynum];
  				my $rowkeytypeval=$ExtraFirstColumnValuesTypeVal[$extranum][$rowkeynum];
- 				if ($rowkeytype eq 'QUERY_STRING') {
+				if ($rowkeytype eq 'URL') { 
+					if ($urlwithnoquery =~ m/$rowkeytypeval/) { $rowkeyval = "$1"; $rowkeyok = 1; last; }
+				} 
+ 				elsif ($rowkeytype eq 'QUERY_STRING') {
  					if ($standalonequery =~ m/$rowkeytypeval/) { $rowkeyval = "$1"; $rowkeyok = 1; last; }
  				}
  				elsif ($rowkeytype eq 'REFERER') {
