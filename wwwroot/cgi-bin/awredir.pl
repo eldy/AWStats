@@ -62,10 +62,10 @@ if ($DEBUG) {
 }
 
 if (! $ENV{'GATEWAY_INTERFACE'}) {	# Run from command line
-	print "----- $PROG $VERSION -----\n";
+	print "----- $PROG $VERSION (c) Laurent Destailleur -----\n";
 	print "This script is absolutely not required to use AWStats.\n";
-	print "It's a third tool that can enhance webmaster in their tracking tasks but is\n";
-	print "not used by AWStats core tool.\n";
+	print "It's a third tool that can help webmaster in their tracking tasks but is\n";
+	print "not used by AWStats engine.\n";
 	print "\n";
 	print "This tools must be used as a CGI script. When called as a CGI, it returns to\n";
 	print "browser a redirector to tell it to show the page provided in 'url' parameter.\n";
@@ -78,7 +78,9 @@ if (! $ENV{'GATEWAY_INTERFACE'}) {	# Run from command line
 	print "For your web visitor, there is no difference. However this allow you to track\n";
 	print "clicks done on links onto your web pages that point to external web sites,\n";
 	print "because an entry will be seen in your own server log to awredir.pl local script,\n";
-	print "even if links was pointing to another extern web server.\n";
+	print "with its parameter, even if link was pointing to another external web server.\n";
+	print "\n";
+	sleep 2;
 	exit 0;
 }
 
