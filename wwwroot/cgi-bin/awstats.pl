@@ -5053,7 +5053,7 @@ if ($QueryString =~ /(^|&)staticlinksext=([^&]+)/i) { $StaticExt="$2"; }
 if ($QueryString =~ /(^|&)framename=([^&]+)/i)		{ $FrameName="$2"; }
 if ($QueryString =~ /(^|&)debug=(\d+)/i)			{ $Debug=$2; }
 if ($QueryString =~ /(^|&)updatefor=(\d+)/i)		{ $UpdateFor=$2; }
-if ($QueryString =~ /(^|&)noloadplugin=([^&]+)/i)	{ foreach my $plugin (split(/,/,$2)) { $NoLoadPlugin{"$plugin"}=1; } }
+if ($QueryString =~ /(^|&)noloadplugin=([^&]+)/i)		{ foreach my $plugin (split(/,/,$2)) { $NoLoadPlugin{"$plugin"}=1; } }
 if ($QueryString =~ /(^|&)forceloadplugin=([^&]+)/i)	{ foreach my $plugin (split(/,/,$2)) { $NoLoadPlugin{"$plugin"}=-1; } }
 if ($QueryString =~ /(^|&)limitflush=(\d+)/i)		{ $LIMITFLUSH=$2; }
 # Get/Define output
