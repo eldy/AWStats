@@ -8885,7 +8885,7 @@ if (scalar keys %HTMLOutput) {
 			$rest_h=$TotalHits-$total_h;
 			$rest_k=$TotalBytes-$total_k;
 			if ($rest_p > 0 || $rest_h > 0 || $rest_k > 0) {	# All other logins
-				print "<tr><td class=\"aws\"><span style=\"color: #$color_other\">$Message[125]</span></td>";
+				print "<tr><td class=\"aws\"><span style=\"color: #$color_other\">".($PageDir eq 'rtl'?"<span dir=\"ltr\">":"")."$Message[125]".($PageDir eq 'rtl'?"</span>":"")."</span></td>";
 				&ShowUserInfo('');
 				if ($ShowAuthenticatedUsers =~ /P/i) { print "<td>".($rest_p?$rest_p:"&nbsp;")."</td>"; }
 				if ($ShowAuthenticatedUsers =~ /H/i) { print "<td>$rest_h</td>"; }
@@ -8911,7 +8911,7 @@ if (scalar keys %HTMLOutput) {
 			my $count=0;
 			&BuildKeyList($MaxNbOf{'RobotShown'},$MinHit{'Robot'},\%_robot_h,\%_robot_h);
 			foreach my $key (@keylist) {
-				print "<tr><td class=\"aws\">".($RobotsHashIDLib{$key}?$RobotsHashIDLib{$key}:$key)."</td>";
+				print "<tr><td class=\"aws\">".($PageDir eq 'rtl'?"<span dir=\"ltr\">":"").($RobotsHashIDLib{$key}?$RobotsHashIDLib{$key}:$key).($PageDir eq 'rtl'?"</span>":"")."</td>";
 				if ($ShowRobotsStats =~ /H/i) { print "<td>".($_robot_h{$key}-$_robot_r{$key}).($_robot_r{$key}?"+$_robot_r{$key}":"")."</td>"; }
 				if ($ShowRobotsStats =~ /B/i) { print "<td>".Format_Bytes($_robot_k{$key})."</td>"; }
 				if ($ShowRobotsStats =~ /L/i) { print "<td>".($_robot_l{$key}?Format_Date($_robot_l{$key},1):'-')."</td>"; }
@@ -9192,7 +9192,7 @@ if (scalar keys %HTMLOutput) {
 					my $libbrowser=$BrowsersHashIDLib{$keywithoutcumul}||$keywithoutcumul;
 					my $nameicon=$BrowsersHashIcon{$keywithoutcumul}||"notavailable";
 					if ($BrowsersFamily{$keywithoutcumul}) { $libbrowser="<b>$libbrowser</b>"; }
-					print "<tr><td".($count?"":" width=\"$WIDTHCOLICON\"")."><img src=\"$DirIcons\/browser\/$nameicon.png\"".AltTitle("")." /></td><td class=\"aws\">$libbrowser</td><td>".($BrowsersHereAreGrabbers{$key}?"<b>$Message[112]</b>":"$Message[113]")."</td><td>$new_browser_h{$key}</td><td>$p</td></tr>\n";
+					print "<tr><td".($count?"":" width=\"$WIDTHCOLICON\"")."><img src=\"$DirIcons\/browser\/$nameicon.png\"".AltTitle("")." /></td><td class=\"aws\">".($PageDir eq 'rtl'?"<span dir=\"ltr\">":"")."$libbrowser".($PageDir eq 'rtl'?"</span>":"")."</td><td>".($BrowsersHereAreGrabbers{$key}?"<b>$Message[112]</b>":"$Message[113]")."</td><td>$new_browser_h{$key}</td><td>$p</td></tr>\n";
 				}
 				$total_h += $new_browser_h{$key};
 				$count++;
@@ -9471,7 +9471,7 @@ if (scalar keys %HTMLOutput) {
 				if ($MiscListCalc{$key} eq 'hm') { $total=$_misc_h{'TotalMisc'}||0; }
 				if ($total) { $p=int($_misc_h{$key}/$total*1000)/10; }
 				print "<tr>";
-				print "<td class=\"aws\">".$label{$key}."</td>";
+				print "<td class=\"aws\">".($PageDir eq 'rtl'?"<span dir=\"ltr\">":"").$label{$key}.($PageDir eq 'rtl'?"</span>":"")."</td>";
 				if ($MiscListCalc{$key} eq 'v') { print "<td>".($_misc_h{$key}||0)." / $total $Message[12]</td>"; }
 				if ($MiscListCalc{$key} eq 'u') { print "<td>".($_misc_h{$key}||0)." / $total $Message[18]</td>"; }
 				if ($MiscListCalc{$key} eq 'hm') { print "<td>-</td>"; }
