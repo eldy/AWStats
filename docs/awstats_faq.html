@@ -31,7 +31,7 @@
 </table>
 
 
-<br><br><H1 style="font: 26px Times;">Frequently Asked Questions</H1>
+<br><br><H1 style="font: 26px Times;">Frequently Asked Questions + Troubleshooting</H1>
 
 
 <br>
@@ -49,7 +49,7 @@ Here, you can find the most common questions and answers users have to install/s
 <ul>
 FAQ-SET050 <a href="#MISSINGDOLLAR">Error "Missing $ on loop variable ..."</a><br>
 FAQ-SET100 <a href="#CGISOURCE">I see Perl script's source instead of its execution in my browser.</a><br>
-FAQ-SET150 <a href="#SPAWNERROR">Error "... couldn't spawn child process..." with Apache for windows.</a><br>
+FAQ-SET150 <a href="#SPAWNERROR">Error "...couldn't create/spawn child process..." with Apache for windows.</a><br>
 FAQ-SET200 <a href="#INTERNAL">"Internal Error" or "Error 500" in a browser connecting to Apache.</a><br>
 FAQ-SET210 <a href="#SPEED">"Internal Error" after a long time in my browser (See FAQ-COM100 "AWStats speed/timeout problems").</a><br>
 FAQ-SET250 <a href="#PERSONALIZEDLOG">Log format setup or errors.</a><br>
@@ -185,24 +185,23 @@ properties, with Apache you have to use the "ExecCGI" option in the directory "D
 <br>
 
 <a name="SPAWNERROR"></a><a name="INTERNAL"></a><br>
-<b><u>FAQ-SET150 & FAQ-SET200 : INTERNAL ERROR OR ERROR 500 IN MY BROWSER</u></b><br>
-<b><u>ERROR "... COULDN'T SPAWN CHILD PROCESS..." IN APACHE ERROR LOG</u></b><br>
+<b><u>FAQ-SET150 : INTERNAL ERROR 500 IN MY BROWSER</u></b><br>
+<b><u>FAQ-SET200 : ERROR "... COULDN'T CREATE/SPAWN CHILD PROCESS..."</u></b><br>
 <font class=CProblem>PROBLEM:</font>
-AWStats seems to run fine at the command prompt but when ran as a CGI from a browser, I get an<br>
-<i>"Internal Error"</i>.<br>
-Sometimes I get the following message in my error log file:<br>
-<i>[error] [client xx.xx.xx.xx] No such file or directory: couldn't spawn child process: c:/mywebroot/cgi-bin/awstats.pl</i><br>
+AWStats seems to run fine at the command prompt but when ran as a CGI from a browser, I get an <i>"Internal Error 500"</i>.<br>
+I also get the following message in my Apache error log file (or in browser with Apache 2.0+):<br>
+<i>...couldn't create/spawn child process: c:/mywebroot/cgi-bin/awstats.pl</i><br>
 <font class=CSolution>SOLUTION:</font>
 This problem occurs with Apache web server with no internal Perl interpreter (mod_perl not
-active). To solve this, you must tell Apache where is your Perl interpreter. For this, you have 2 solutions:<br>
-1) Change the first line of awstats.pl file with the full path of your Perl interpreter.<br>
-Example with Windows OS and ActivePerl Perl interpreter (installed in C:\Program Files\ActivePerl),
+active). To solve this, you must tell Apache where is your Perl interpreter.<br>
+<u>For this, you have 2 solutions:</u><br>
+1) Add the following directive in your Apache <b>httpd.conf</b> config (or remove the # to uncomment it if line is already available)<br>
+<b><i>ScriptInterpreterSource registry</i></b><br>
+Then restart Apache. This will tell Apache to look into the registry to find the program associated to .pl extension.<br>
+2) Other solution (not necessary if first works): Change the first line of awstats.pl file with the full path of your Perl interpreter.<br>
+Example with Windows OS and ActivePerl Perl interpreter (installed in C:\Program Files\ActiveState\ActivePerl),
 you must change the first line of awstats.pl file with:<br>
-<i>#!c:/program files/activeperl/bin/perl</i><br>
-2) Other solution: Uncomment in your Apache httpd.conf config the following line (remove the # at the beginning)<br>
-<i>ScriptInterpreterSource registry</i><br>
-Then restart Apache. This will tell Apache to use the program associated to .pl extension in windows registry,
-to find the Perl interpreter.<br>
+<i>#!c:/program files/activestate/activeperl/bin/perl</i><br>
 <br>
 
 <a name="PERSONALIZEDLOG"></a><br>
@@ -291,7 +290,8 @@ log file to replace 'space' char into '_'...<br>
 a message "Not same number of records of ...".<br>
 <font class=CSolution>SOLUTION:</font>
 This means your AWStats reference database files (operating systems, browsers, robots...) are not correct.
-Check in your disk that you have only ONE of those files (They should be in 'db' directory where awstats.pl is installed):<br>
+First try to update to 4.0. Then check in your disk that you have only ONE of those files. They should be
+in '<b>lib</b>' directory ('db' with 4.0) where awstats.pl is installed:<br>
 <i>browsers.pl</i><br>
 <i>operating_systems.pl</i><br>
 <i>robots.pl</i><br>
@@ -330,16 +330,16 @@ can have and reason is simple: Your log file format setup is wrong.<br>
 The best way of working is to use the <i>"combined"</i> log format (See the <a href="awstats_setup.html">Setup and Use</a> page
 to know the way to change your Apache server log from <i>"common"</i> log format into <i>"combined"</i>).
 Don't forget to stop Apache, reset your log file and restart Apache to make change into combined
-effective. Then you must setup your AWStats config file with value <i>LogFormat=1</i>.<br>
+effective. Then you must setup your AWStats config file with value <a href="awstats_config.html#LogFormat">LogFormat</a>=1.<br>
 If you want to use another format, read the next FAQ to have examples of LogFile value according
 to log files format.<br>
 <u>If you use IIS server or Windows built-in web server</u><br>
 The Internet Information Server default W3C Extended Log Format will not work correctly with AWStats.
 To make it work correctly, start the IIS Snap-in, select the web site and look at it's Properties.
 Choose W3C Extended Log Format, then Properties, then the Tab Extended Properties and uncheck everything
-under Extended Properties. Once they are all unchecked, check off the list in the ReadMe file in the
-IIS section, "With IIS Server".
-You can also read the next FAQ to have examples of LogFormat value according to log files format.<br>
+under Extended Properties. Once they are all unchecked, check off the list given in
+the <a href="awstats_setup.html">Setup and Use</a> page ("With IIS Server" chapter).<br>
+You can also read the next FAQ to have examples of <a href="awstats_config.html#LogFormat">LogFormat</a> value according to log files format.<br>
 <br>
 
 <a name="NO_ICON"></a><br>
@@ -404,11 +404,11 @@ To run update every hour, use :<br>
 <font class=CProblem>PROBLEM:</font> I don't want to see my own IP address in the stats or I want to exclude counting
 visits from a whole subnet.<br>
 <font class=CSolution>SOLUTION:</font><br>
-You must edit the config file to change the SkipHosts parameter.<br>
+You must edit the config file to change the <a href="awstats_config.html#SkipHosts">SkipHosts</a> parameter.<br>
 For example, to exclude:<br>
-- your own IP address 123.123.123.123, use SkipHosts="123.123.123.123"<br>
-- the whole subnet 123.123.123.xxx, use SkipHosts="123.123.123"<br>
-- all sub hosts xxx.myintranet.com, use SkipHosts=".myintranet.com" (This one works only if DNS lookup is already done in your
+- your own IP address 123.123.123.123, use <a href="awstats_config.html#SkipHosts">SkipHosts</a>="123.123.123.123"<br>
+- the whole subnet 123.123.123.xxx, use <a href="awstats_config.html#SkipHosts">SkipHosts</a>="123.123.123"<br>
+- all sub hosts xxx.myintranet.com, use <a href="awstats_config.html#SkipHosts">SkipHosts</a>=".myintranet.com" (This one works only if DNS lookup is already done in your
 log file).<br>
 <br> 
 
