@@ -6796,7 +6796,7 @@ if (scalar keys %HTMLOutput) {
 				print "<select class=\"aws_formfield\" name=\"month\">\n";
 				foreach my $ix (1..12) { my $monthix=sprintf("%02s",$ix); print "<option".($MonthRequired eq "$monthix"?" selected":"")." value=\"$monthix\">$MonthNumLib{$monthix}</option>\n"; }
 				if ($AllowFullYearView >= 2) {
-					print "<option".($MonthRequired eq 'all'?" selected":"")." value='all'>- Year -</option>\n";
+					print "<option".($MonthRequired eq 'all'?" selected":"")." value='all'>- $Message[6] -</option>\n";
 				}
 				print "</select>\n";
 				print "<select class=\"aws_formfield\" name=\"year\">\n";
