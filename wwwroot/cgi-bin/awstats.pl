@@ -35,7 +35,7 @@
 #-------------------------------------------------------
 #use diagnostics;
 #use strict;
- 
+
 
 #-------------------------------------------------------
 # Defines
@@ -54,7 +54,7 @@ $PROG, $PageBool, $PageCode,
 $PurgeLogFile, $QueryString, $RatioBytes, $RatioHits, $RatioHosts, $RatioPages,
 $ShowFlagLinks, $ShowLinksOnURL, $ShowLinksOnUrl, $TotalBytes,
 $TotalDifferentKeywords, $TotalDifferentPages, $TotalErrors, $TotalHits,
-$TotalHosts, $TotalKeywords, $TotalPages, $TotalUnique, $TotalVisits, $UserAgent,
+$TotalHostsKnown, $TotalHostsUnKnown, $TotalKeywords, $TotalPages, $TotalUnique, $TotalVisits, $UserAgent,
 $WarningMessages, $YearRequired,
 $allok, $beginmonth, $bredde, $bredde_h, $bredde_k, $bredde_p, $bredde_u,
 $bredde_v, $color_Background, $color_TableBG, $color_TableBGRowTitle,
@@ -79,10 +79,10 @@ $word, $yearcon, $yearmonth, $yeartoprocess) = ();
 # ---------- Init hash arrays --------
 %DayBytes = %DayHits = %DayPages = %DayUnique = %DayVisits =
 %FirstTime = %HistoryFileAlreadyRead = %LastTime = %LastUpdate =
-%MonthBytes = %MonthHits = %MonthPages = %MonthUnique = %MonthVisits =
+%MonthBytes = %MonthHits = %MonthHostsKnown = %MonthHostsUnknown = %MonthPages = %MonthUnique = %MonthVisits =
 %listofyears = %monthlib = %monthnum = ();
 
-$VERSION="3.1 (build 3)";
+$VERSION="3.1 (build 4)";
 $Lang="en";
 $Sort="";
 
@@ -91,7 +91,7 @@ $SortDir       = -1;		# -1 = Sort order from most to less, 1 = reverse order (De
 $VisitTimeOut  = 10000;		# Laps of time to consider a page load as a new visit. 10000 = one hour (Default = 10000)
 $FullHostName  = 1;			# 1 = Use name.domain.zone to refer host clients, 0 = all hosts in same domain.zone are one host (Default = 1, 0 never tested)
 $MaxLengthOfURL= 70;		# Maximum length of URL shown on stats page. This affects only URL visible text, link still work (Default = 70)
-$MaxNbOfDays   = 15;
+$MaxNbOfDays   = 30;
 $CENTER        = "";
 $WIDTH         = "600";
 # Images for graphics
@@ -1143,7 +1143,7 @@ sub Check_Config {
 	if ($message[73] eq "") { $message[73]="Day statistics"; }
 	if ($message[74] eq "") { $message[74]="Update now"; }
 	if ($message[75] eq "") { $message[75]="Bytes"; }
-	if ($message[76] eq "") { $message[76]="Last update"; }
+	if ($message[76] eq "") { $message[76]=""; }
 	if ($message[77] eq "") { $message[77]="Top"; }
 	if ($message[78] eq "") { $message[78]="dd mmm yyyy - HH:MM"; }
 }
@@ -1161,7 +1161,7 @@ sub Read_History_File {
 	# POSSIBLE CHANGE HERE	
 	
 	open(HISTORY,"$DirData/$PROG$_[1]$_[0]$FileSuffix.txt") || error("Error: Couldn't open for read file \"$DirData/$PROG$_[1]$_[0]$FileSuffix.txt\" : $!");	# Month before Year kept for backward compatibility
-	$MonthUnique{$_[0].$_[1]}=0; $MonthPages{$_[0].$_[1]}=0; $MonthHits{$_[0].$_[1]}=0; $MonthBytes{$_[0].$_[1]}=0;
+	$MonthUnique{$_[0].$_[1]}=0; $MonthPages{$_[0].$_[1]}=0; $MonthHits{$_[0].$_[1]}=0; $MonthBytes{$_[0].$_[1]}=0; $MonthHostsKnown{$_[0].$_[1]}=0; $MonthHostsUnKnown{$_[0].$_[1]}=0;
 	$readdomain=0;$readsider=0;$readtime=0;$readbrowser=0;$readnsver=0;$readmsiever=0;
 	$reados=0;$readrobot=0;$readunknownreferer=0;$readunknownrefererbrowser=0;$readse=0;
 	$readsearchwords=0;$readerrors=0;$readerrors404=0; $readday=0;
@@ -1191,7 +1191,7 @@ sub Read_History_File {
 			if ($_ eq "") { error("Error: History file \"$DirData/$PROG$_[1]$_[0]$FileSuffix.txt\" is corrupted. Restore a backup of this file, or remove it (data for this month will be lost)."); }
 			@field=split(/\s+/,$_);
 			while ($field[0] ne "END_VISITOR") {
-		    	if (($field[0] ne "Unknown") && ($field[1] > 0)) { $MonthUnique{$_[0].$_[1]}++; }
+		    	if ($field[0] ne "Unknown") { if ($field[1] > 0) { $MonthUnique{$_[0].$_[1]}++; } $MonthHostsKnown{$_[0].$_[1]}++; }
 #				if ($_[2]) {
 				if ($_[2] && ($QueryString !~ /action=/i)) {
 		        	$_hostmachine_p{$field[0]}+=$field[1];
@@ -1214,9 +1214,8 @@ sub Read_History_File {
 			if ($_ eq "") { error("Error: History file \"$DirData/$PROG$_[1]$_[0]$FileSuffix.txt\" is corrupted. Restore a backup of this file, or remove it (data for this month will be lost)."); }
 			@field=split(/\s+/,$_);
 			while ($field[0] ne "END_UNKNOWNIP") {
-		    	$MonthUnique{$_[0].$_[1]}++;
-#				if ($_[2]) {
-				if ($_[2] && ($QueryString =~ /action=unknownip/i || $QueryString !~ /action=/i)) {
+		    	$MonthUnique{$_[0].$_[1]}++; $MonthHostsUnknown{$_[0].$_[1]}++;
+				if ($_[2] && ($QueryString =~ /action=unknownip/i || $UpdateStats)) {	# Init of $_unknownip_l not needed in this case
 		        	if ($_unknownip_l{$field[0]} eq "") { $_unknownip_l{$field[0]}=$field[1]; }
 				}
 				$_=<HISTORY>;
@@ -1528,10 +1527,16 @@ sub Format_Date {
 #-------------------------------------------------------
 if ($ENV{"GATEWAY_INTERFACE"} ne "") {	# Run from a browser
 	print("Content-type: text/html\n\n\n");
-	$QueryString = $ENV{"QUERY_STRING"};
-	$QueryString =~ s/<script.*$//i;						# This is to avoid 'Cross Site Scripting attacks'
-	if ($QueryString =~ /site=/) { $SiteToAnalyze=$QueryString; $SiteToAnalyze =~ s/.*site=//; $SiteToAnalyze =~ s/&.*//; $SiteToAnalyze =~ s/ .*//; }
-	$UpdateStats=0;	if ($QueryString =~ /update=1/i) { $UpdateStats=1; }	# No update by default when run from a browser
+	if ($ENV{"QUERY_STRING"} ne "") {
+		$QueryString = $ENV{"QUERY_STRING"};
+		$QueryString =~ s/<script.*$//i;						# This is to avoid 'Cross Site Scripting attacks'
+		if ($QueryString =~ /site=/) { $SiteToAnalyze=$QueryString; $SiteToAnalyze =~ s/.*site=//; $SiteToAnalyze =~ s/&.*//; $SiteToAnalyze =~ s/ .*//; }
+		$UpdateStats=0;	if ($QueryString =~ /update=1/i) { $UpdateStats=1; }	# No update by default when run from a browser
+	}
+	if ($ENV{"CONTENT_LENGTH"} ne "") {
+		binmode STDIN;
+		$NbBytesRead=read(STDIN, $QueryString, $ENV{'CONTENT_LENGTH'});
+	}
 }
 else {									# Run from command line
 	if ($ARGV[0] eq "-h") { $SiteToAnalyze = $ARGV[1]; }	# Kept for backward compatibility but useless
@@ -1667,11 +1672,11 @@ $SiteToAnalyzeIsInHostAliases=0;
 foreach $elem (@HostAliases) { if ($elem eq $SiteToAnalyze) { $SiteToAnalyzeIsInHostAliases=1; last; } }
 if ($SiteToAnalyzeIsInHostAliases == 0) { $HostAliases[@HostAliases]=$SiteToAnalyze; }
 if (@SkipFiles == 0) { $SkipFiles[0]="\.css\$";$SkipFiles[1]="\.js\$";$SkipFiles[2]="\.class\$";$SkipFiles[3]="robots\.txt\$"; }
-$FirstTime=0;$LastTime=0;$LastUpdate=0;$TotalVisits=0;$TotalHosts=0;$TotalUnique=0;$TotalDifferentPages=0;$TotalDifferentKeywords=0;$TotalKeywords=0;
+$FirstTime=0;$LastTime=0;$LastUpdate=0;$TotalVisits=0;$TotalHostsKnown=0;$TotalHostsUnKnown=0;$TotalUnique=0;$TotalDifferentPages=0;$TotalDifferentKeywords=0;$TotalKeywords=0;
 for ($ix=1; $ix<=12; $ix++) {
 	my $monthix=$ix;if ($monthix < 10) { $monthix  = "0$monthix"; }
 	$FirstTime{$YearRequired.$monthix}=0;$LastTime{$YearRequired.$monthix}=0;$LastUpdate{$YearRequired.$monthix}=0;
-	$MonthVisits{$YearRequired.$monthix}=0;$MonthUnique{$YearRequired.$monthix}=0;$MonthPages{$YearRequired.$monthix}=0;$MonthHits{$YearRequired.$monthix}=0;$MonthBytes{$YearRequired.$monthix}=0;
+	$MonthVisits{$YearRequired.$monthix}=0;$MonthUnique{$YearRequired.$monthix}=0;$MonthPages{$YearRequired.$monthix}=0;$MonthHits{$YearRequired.$monthix}=0;$MonthBytes{$YearRequired.$monthix}=0;$MonthHostsKnown{$YearRequired.$monthix}=0;$MonthHostsUnKnown{$YearRequired.$monthix}=0;
 	}
 &Init_HashArray;	# Should be useless in perl (except with mod_perl that keep variables in memory).
 
@@ -2017,7 +2022,7 @@ if ($UpdateStats) {
 		    if (!$NewDNSLookup || $new eq "ip") {
 				  if ($PageBool) {
 				  		if (int($timeconnexion) > int($_unknownip_l{$Host}+$VisitTimeOut)) { $MonthVisits{$yeartoprocess.$monthtoprocess}++; }
-						if ($_unknownip_l{$Host} eq "") { $MonthUnique{$yeartoprocess.$monthtoprocess}++; }
+						if ($_unknownip_l{$Host} eq "") { $MonthUnique{$yeartoprocess.$monthtoprocess}++; $MonthHostsUnknown{$yeartoprocess.$monthtoprocess}++; }
 						$_unknownip_l{$Host}=$timeconnexion;		# Table of (all IP if !NewDNSLookup) or (all unknown IP) else
 						$_hostmachine_p{"Unknown"}++;
 						$_domener_p{"ip"}++;
@@ -2045,10 +2050,11 @@ if ($UpdateStats) {
 			if (!$FullHostName) { s/^[\w\-]+\.//; };
 			if ($PageBool) {
 				if (int($timeconnexion) > int($_hostmachine_l{$_}+$VisitTimeOut)) { $MonthVisits{$yeartoprocess.$monthtoprocess}++; }
-				if ($_hostmachine_l{$_} eq "") { $MonthUnique{$yeartoprocess.$monthtoprocess}++; }
+				if ($_hostmachine_l{$_} eq "") { $MonthUnique{$yeartoprocess.$monthtoprocess}++;  }
 				$_hostmachine_p{$_}++;
 				$_hostmachine_l{$_}=$timeconnexion;
 				}
+			if ($_hostmachine_l{$_} eq "") { $MonthHostsKnown{$yeartoprocess.$monthtoprocess}++;  }
 			$_hostmachine_h{$_}++;
 			$_hostmachine_k{$_}+=$field[$pos_size];
 
@@ -2302,13 +2308,20 @@ foreach $i (0..$#filearray) {
 }
 
 
-# Here, first part of data for all processed month (old and current) are still in memory
+# Here, first part of data for processed month (old and current) are still in memory
 # If a month was already processed, then $HistoryFileAlreadyRead{"MMYYYY"} value is 1
+
+
+# Define some filter used to limit URL 
 
 
 #-------------------------------------------------------------------------------
 # READING NOW ALL NOT ALREADY READ HISTORY FILES FOR ALL MONTHS OF REQUIRED YEAR
 #-------------------------------------------------------------------------------
+# A filter can be defined to reduce number of lies read and showed
+if ($QueryString =~ /urlfilter=/i) {
+	$URLFilter=$QueryString; $URLFilter =~ s/.*urlfilter=//; $URLFilter =~ s/&.*//; $URLFilter =~ s/ .*//;
+}
 
 # Loop on each month of year but only existing and not already read will be read by Read_History_File function
 for ($ix=12; $ix>=1; $ix--) {
@@ -2525,7 +2538,7 @@ print "$CENTER<a name=\"MENU\"></a><BR>";
 
 print "<table>";
 print "<tr><td class=LEFT><font style=\"font: 14px arial,verdana,helvetica; font-weight: bold\">$message[7]: </td><td class=LEFT><font style=\"font: 14px arial,verdana,helvetica; font-weight: normal\">$SiteToAnalyze</td></tr>";
-print "<tr><td class=LEFT><font style=\"font: 14px arial,verdana,helvetica; font-weight: bold\">$message[76]: </td><td class=LEFT><font style=\"font: 14px arial,verdana,helvetica; font-weight: normal\">";
+print "<tr><td class=LEFT><font style=\"font: 14px arial,verdana,helvetica; font-weight: bold\">$message[35]: </td><td class=LEFT><font style=\"font: 14px arial,verdana,helvetica; font-weight: normal\">";
 foreach $key (keys %LastUpdate) { if ($LastUpdate < $LastUpdate{$key}) { $choosedkey=$key; $LastUpdate = $LastUpdate{$key}; } }
 $yearcon=substr($LastUpdate,0,4);$monthcon=substr($LastUpdate,4,2);$daycon=substr($LastUpdate,6,2);$hourcon=substr($LastUpdate,8,2);$mincon=substr($LastUpdate,10,2);
 if ($LastUpdate != 0) { print "$daycon&nbsp;$monthlib{$monthcon}&nbsp;$yearcon&nbsp;-&nbsp;$hourcon:$mincon &nbsp;"; }
@@ -2561,7 +2574,7 @@ print "$CENTER<a name=\"SUMMARY\"></a><BR>";
 $tab_titre="$message[7] $SiteToAnalyze";
 &tab_head;
 
-# FirstTime LastTime TotalVisits
+# FirstTime LastTime TotalVisits TotalUnique TotalHostsKnown TotalHostsUnknown
 $beginmonth=$MonthRequired;$endmonth=$MonthRequired;
 if ($MonthRequired eq "year") { $beginmonth=1;$endmonth=12; }
 for (my $monthix=$beginmonth; $monthix<=$endmonth; $monthix++) {
@@ -2569,10 +2582,10 @@ for (my $monthix=$beginmonth; $monthix<=$endmonth; $monthix++) {
 	if ($FirstTime{$YearRequired.$monthix} > 0 && ($FirstTime == 0 || $FirstTime > $FirstTime{$YearRequired.$monthix})) { $FirstTime = $FirstTime{$YearRequired.$monthix}; }
 	if ($LastTime  < $LastTime{$YearRequired.$monthix}) { $LastTime = $LastTime{$YearRequired.$monthix}; }
 	$TotalVisits+=$MonthVisits{$YearRequired.$monthix};
+	$TotalUnique+=$MonthUnique{$YearRequired.$monthix};
+	$TotalHostsKnown+=$MonthHostsKnown{$YearRequired.$monthix};
+	$TotalHostsUnknown+=$MonthHostsUnknown{$YearRequired.$monthix};
 }
-# TotalUnique TotalHosts
-foreach $key (keys %_hostmachine_p) { if ($key ne "Unknown") { if ($_hostmachine_p{$key} > 0) { $TotalUnique++; }; $TotalHosts++; } }
-foreach $key (keys %_unknownip_l) { $TotalUnique++; $TotalHosts++; }		# TODO: Put + @xxx instead of foreach
 # TotalDifferentPages
 $TotalDifferentPages=@sortsiders;
 # TotalPages TotalHits TotalBytes
@@ -2692,11 +2705,14 @@ for ($ix=$MaxNbOfDays-1; $ix>=0; $ix--) {
 }
 print "</TR><TR>";
 for ($ix=$MaxNbOfDays-1; $ix>=0; $ix--) {
-	my ($oldsec,$oldmin,$oldhour,$oldday,$oldmonth,$oldyear) = localtime($lastdaytoshowtime-($ix*86400));
+	my ($oldsec,$oldmin,$oldhour,$oldday,$oldmonth,$oldyear,$oldwday) = localtime($lastdaytoshowtime-($ix*86400));
 	if ($oldyear < 100) { $oldyear+=2000; } else { $oldyear+=1900; }
 	if (++$oldmonth < 10) { $oldmonth="0$oldmonth"; }
 	if ($oldday < 10) { $oldday="0$oldday"; }
-	print "<TD valign=center>$oldday<br>".$monthlib{$oldmonth}."</TD>";
+	print "<TD valign=center".($oldwday==0||$oldwday==6?" bgcolor=#EAEAEA":"").">";
+	print ($oldday==$nowday && $oldmonth==$nowmonth?"<b>":"");
+	print "$oldday<br>".$monthlib{$oldmonth};
+	print ($oldday==$nowday && $oldmonth==$nowmonth?"</b></TD>":"</TD>");
 }
 print "</TR></TABLE><br>";
 
@@ -2761,15 +2777,15 @@ if ($rest_p > 0) { 	# All other domains (known or not)
 # BY HOST/VISITOR
 #--------------------------
 print "$CENTER<a name=\"VISITOR\"></a><BR>";
-$MaxNbOfHostsShown = $TotalHosts if $MaxNbOfHostsShown > $TotalHosts;
-$tab_titre="$Message[77] $MaxNbOfHostsShown $message[55] $TotalHosts $message[26] ($TotalUnique $message[11])";
+$MaxNbOfHostsShown = $TotalHostsKnown+($_hostmachine_h{"Unknown"}?1:0) if $MaxNbOfHostsShown > $TotalHostsKnown;
+$tab_titre="$message[77] $MaxNbOfHostsShown $message[55] ".($TotalHostsKnown+$TotalHostsUnknown)." $message[26] ($TotalUnique $message[11])";
 &tab_head;
 print "<TR bgcolor=#$color_TableBGRowTitle><TH>$message[18]</TH><TH bgcolor=#$color_p width=80>$message[56]</TH><TH bgcolor=#$color_h width=80>$message[57]</TH><TH bgcolor=#$color_k>$message[75]</TH><TH>$message[9]</TH></TR>\n";
 $count=0;$total_p=0;$total_h=0;$total_k=0;
 foreach $key (@sorthosts_p) {
 	if ($_hostmachine_h{$key}>=$MinHitHost) {
 		if ($key eq "Unknown") {
-			print "<TR><TD CLASS=LEFT><a href=\"$DirCgi$PROG.$Extension?action=unknownip&site=$SiteToAnalyze&year=$YearRequired&month=$MonthRequired&lang=$Lang\">$message[1]</a></TD><TD>$_hostmachine_p{$key}</TD><TD>$_hostmachine_h{$key}</TD><TD>".Format_Bytes($_hostmachine_k{$key})."</TD><TD><a href=\"$DirCgi$PROG.$Extension?action=unknownip&site=$SiteToAnalyze&year=$YearRequired&month=$MonthRequired&lang=$Lang\">$message[3]</a></TD></TR>\n";
+			print "<TR><TD CLASS=LEFT><a href=\"$DirCgi$PROG.$Extension?action=unknownip&site=$SiteToAnalyze&year=$YearRequired&month=$MonthRequired&lang=$Lang\">$message[1]</a> &nbsp; ($TotalHostsUnknown)</TD><TD>$_hostmachine_p{$key}</TD><TD>$_hostmachine_h{$key}</TD><TD>".Format_Bytes($_hostmachine_k{$key})."</TD><TD><a href=\"$DirCgi$PROG.$Extension?action=unknownip&site=$SiteToAnalyze&year=$YearRequired&month=$MonthRequired&lang=$Lang\">$message[3]</a></TD></TR>\n";
 			}
 		else {
 			$yearcon=substr($_hostmachine_l{$key},0,4);
@@ -2859,7 +2875,7 @@ print "</TR></TABLE></center></TD></TR>\n";
 #-------------------------
 print "$CENTER<a name=\"PAGE\"></a><BR>";
 $MaxNbOfPageShown = $TotalDifferentPages if $MaxNbOfPageShown > $TotalDifferentPages;
-$tab_titre="TOP $MaxNbOfPageShown $message[55] $TotalDifferentPages $message[27]";
+$tab_titre="$message[77] $MaxNbOfPageShown $message[55] $TotalDifferentPages $message[27] &nbsp; - &nbsp; <a href=\"$DirCgi$PROG.$Extension?action=urldetail&site=$SiteToAnalyze&year=$YearRequired&month=$MonthRequired&lang=$Lang\">Full list</a>";
 &tab_head;
 print "<TR bgcolor=#$color_TableBGRowTitle><TH>$message[19]</TH><TH bgcolor=#$color_p>&nbsp;$message[29]&nbsp;</TH><TH>&nbsp;</TH></TR>\n";
 if ($SortDir<0) { $max=$_sider_p{$sortsiders[0]}; }
@@ -2981,7 +2997,7 @@ print "<TR><TD CLASS=LEFT><b>$message[39]:</b></TD><TD>$_from_p[1]&nbsp;</TD><TD
 #----------------------------
 print "$CENTER<a name=\"SEARCHWORDS\"></a><BR>";
 $MaxNbOfKeywordsShown = $TotalDifferentKeywords if $MaxNbOfKeywordsShown > $TotalDifferentKeywords;
-$tab_titre="TOP $MaxNbOfKeywordsShown $message[55] $TotalDifferentKeywords $message[43]";
+$tab_titre="$message[77] $MaxNbOfKeywordsShown $message[55] $TotalDifferentKeywords $message[43]";
 &tab_head;
 print "<TR bgcolor=#$color_TableBGRowTitle onmouseover=\"ShowTooltip(15);\" onmouseout=\"HideTooltip(15);\"><TH>$message[13]</TH><TH bgcolor=#$color_s width=80>$message[14]</TH><TH bgcolor=#$color_s width=40>$message[15]</TH></TR>\n";
 $count=0;
