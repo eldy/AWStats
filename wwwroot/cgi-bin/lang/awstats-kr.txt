@@ -1,4 +1,5 @@
 # Korean message file
+# $Revision$ - $Date$
 PageCode=euc-kr
 message0=알수없음
 message1=알수없음(알수없는 ip)
@@ -99,7 +100,7 @@ message95=Min
 message96=Average
 message97=Max
 message98=Web compression
-message99=Bandwith saved
+message99=bandwidth saved
 message100=Before compression
 message101=After compression
 message102=Total

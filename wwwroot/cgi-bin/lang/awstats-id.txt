@@ -1,4 +1,5 @@
 # Indonesian message file
+# $Revision$ - $Date$
 message0=Tidak Diketahui
 message1=Ip Tidak Diketahui
 message2=Yang Lainnya
@@ -98,7 +99,7 @@ message95=Min
 message96=Average
 message97=Max
 message98=Web compression
-message99=Bandwith saved
+message99=bandwidth saved
 message100=Before compression
 message101=After compression
 message102=Total

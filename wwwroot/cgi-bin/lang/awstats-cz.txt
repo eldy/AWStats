@@ -1,4 +1,5 @@
 # Czech message file (js@fsid.cvut.cz)
+# $Revision$ - $Date$
 PageCode=iso-8859-2
 message0=Neznámý
 message1=Neznámý (nepøelo¾ená IP)
@@ -99,7 +100,7 @@ message95=Min
 message96=Average
 message97=Max
 message98=Web compression
-message99=Bandwith saved
+message99=bandwidth saved
 message100=Before compression
 message101=After compression
 message102=Total

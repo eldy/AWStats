@@ -150,10 +150,10 @@ $DirLock $DirCgi $DirData $DirIcons $DirLang $AWScript $ArchiveFileName
 $HTMLHeadSection $HTMLEndSection $LinksToWhoIs
 $LogFile $LogFormat $LogSeparator $Logo $LogoLink $StyleSheet $WrapperScript $SiteDomain
 /;
-($DirCgi, $DirData, $DirIcons, $DirLang, $AWScript, $ArchiveFileName,
+($DirLock, $DirCgi, $DirData, $DirIcons, $DirLang, $AWScript, $ArchiveFileName,
 $HTMLHeadSection, $HTMLEndSection, $LinksToWhoIs,
 $LogFile, $LogFormat, $LogSeparator, $Logo, $LogoLink, $StyleSheet, $WrapperScript, $SiteDomain)=
-("","","","","","","","","","","","","","","","","","","");
+("","","","","","","","","","","","","","","","","","");
 use vars qw/
 $color_Background $color_TableBG $color_TableBGRowTitle
 $color_TableBGTitle $color_TableBorder $color_TableRowTitle $color_TableTitle
@@ -555,6 +555,10 @@ sub error {
 		print "Setup (".($FileConfig?"'".$FileConfig."'":"Config")." file, web server or permissions) may be wrong.\n";
 		if ($HTMLOutput) { print "</b><br>\n"; }
 		print "See AWStats documentation in 'docs' directory for informations on how to setup $PROG.\n";
+	}
+	# Remove lock if set
+	if ($DirLock && $message !~ /lock file/) {
+		&Lock_Update(0);	
 	}
 	if ($HTMLOutput) { print "</BODY>\n</HTML>\n"; }
 	exit 1;
@@ -1285,7 +1289,7 @@ sub Check_Config {
 	if (! $Message[72])  { $Message[72]="Navigation"; }
 	if (! $Message[73])  { $Message[73]="Files type"; }
 	if (! $Message[74])  { $Message[74]="Update now"; }
-	if (! $Message[75])  { $Message[75]="Bandwith"; }
+	if (! $Message[75])  { $Message[75]="Bandwidth"; }
 	if (! $Message[76])  { $Message[76]="Back to main page"; }
 	if (! $Message[77])  { $Message[77]="Top"; }
 	if (! $Message[78])  { $Message[78]="dd mmm yyyy - HH:MM"; }
@@ -1309,7 +1313,7 @@ sub Check_Config {
 	if (! $Message[96])  { $Message[96]="Average"; }
 	if (! $Message[97])  { $Message[97]="Max"; }
 	if (! $Message[98])  { $Message[98]="Web compression"; }
-	if (! $Message[99])  { $Message[99]="Bandwith saved"; }
+	if (! $Message[99])  { $Message[99]="Bandwidth saved"; }
 	if (! $Message[100]) { $Message[100]="Compression on"; }
 	if (! $Message[101]) { $Message[101]="Compression result"; }
 	if (! $Message[102]) { $Message[102]="Total"; }
@@ -2478,7 +2482,7 @@ sub Save_History {
 	# When
 	if ($sectiontosave eq "day") {
 		print HISTORYTMP "\n";
-		print HISTORYTMP "# Date - Pages - Hits - Bandwith - Visits\n";
+		print HISTORYTMP "# Date - Pages - Hits - Bandwidth - Visits\n";
 		print HISTORYTMP "BEGIN_DAY ".(scalar keys %DayHits)."\n";
 		foreach my $key (sort keys %DayHits) {
 			if ($key =~ /^$year$month/i) {	# Found a day entry of the good month
@@ -2493,7 +2497,7 @@ sub Save_History {
 	}
 	if ($sectiontosave eq "time") {
 		print HISTORYTMP "\n";
-		print HISTORYTMP "# Hour - Pages - Hits - Bandwith\n";
+		print HISTORYTMP "# Hour - Pages - Hits - Bandwidth\n";
 		print HISTORYTMP "BEGIN_TIME 24\n";
 		for (my $ix=0; $ix<=23; $ix++) { print HISTORYTMP "$ix ".int($_time_p[$ix])." ".int($_time_h[$ix])." ".int($_time_k[$ix])."\n"; }
 		print HISTORYTMP "END_TIME\n";
@@ -2502,7 +2506,7 @@ sub Save_History {
 	# Who
 	if ($sectiontosave eq "domain") {
 		print HISTORYTMP "\n";
-		print HISTORYTMP "# Domain - Pages - Hits - Bandwith\n";
+		print HISTORYTMP "# Domain - Pages - Hits - Bandwidth\n";
 		print HISTORYTMP "BEGIN_DOMAIN ".(scalar keys %_domener_h)."\n";
 		foreach my $key (keys %_domener_h) {
 			my $page=$_domener_p{$key}||0;
@@ -2513,7 +2517,7 @@ sub Save_History {
 	}
 	if ($sectiontosave eq "visitor") {
 		print HISTORYTMP "\n";
-		print HISTORYTMP "# Host - Pages - Hits - Bandwith - Last visit date - [Start of last visit date] - [Last page of last visit]\n";
+		print HISTORYTMP "# Host - Pages - Hits - Bandwidth - Last visit date - [Start of last visit date] - [Last page of last visit]\n";
 		print HISTORYTMP "# [Start of last visit date] and [Last page of last visit] are saved only if session is not finished\n";
 		print HISTORYTMP "# The $MaxNbOfHostsShown first Hits must be first (order not required for others)\n";
 		print HISTORYTMP "BEGIN_VISITOR ".(scalar keys %_host_h)."\n";
@@ -2582,7 +2586,7 @@ sub Save_History {
 	}
 	if ($sectiontosave eq "login") {
 		print HISTORYTMP "\n";
-		print HISTORYTMP "# Login - Pages - Hits - Bandwith\n";
+		print HISTORYTMP "# Login - Pages - Hits - Bandwidth\n";
 		print HISTORYTMP "BEGIN_LOGIN ".(scalar keys %_login_h)."\n";
 		foreach my $key (keys %_login_h) { print HISTORYTMP "$key ".int($_login_p{$key})." ".int($_login_h{$key})." ".int($_login_k{$key})." $_login_l{$key}\n"; }
 		print HISTORYTMP "END_LOGIN\n";
@@ -2600,7 +2604,7 @@ sub Save_History {
 	# This section must be saved after VISITOR section
 	if ($sectiontosave eq "sider") {
 		print HISTORYTMP "\n";
-		print HISTORYTMP "# URL - Pages - Bandwith - Entry - Exit\n";
+		print HISTORYTMP "# URL - Pages - Bandwidth - Entry - Exit\n";
 		print HISTORYTMP "# The $MaxNbOfPageShown first Pages must be first (order not required for others)\n";
 		print HISTORYTMP "BEGIN_SIDER ".(scalar keys %_url_p)."\n";
 		&BuildKeyList($MaxNbOfPageShown,$MinHitFile,\%_url_p,\%_url_p);
@@ -2621,7 +2625,7 @@ sub Save_History {
 	}
 	if ($sectiontosave eq "filetypes") {
 		print HISTORYTMP "\n";
-		print HISTORYTMP "# Files type - Hits - Bandwith - Bandwith without compression - Bandwith after compression\n";
+		print HISTORYTMP "# Files type - Hits - Bandwidth - Bandwidth without compression - Bandwidth after compression\n";
 		print HISTORYTMP "BEGIN_FILETYPES ".(scalar keys %_filetypes_h)."\n";
 		foreach my $key (keys %_filetypes_h) {
 			my $hits=$_filetypes_h{$key}||0;

@@ -1,4 +1,5 @@
 # Bosnian message file (vljubovic@smartnet.ba)
+# $Revision$ - $Date$
 PageCode=iso-8859-2
 message0=Nepoznat
 message1=nepoznatih (IP adresa nije razrije¹ena)
@@ -99,7 +100,7 @@ message95=Min
 message96=Average
 message97=Max
 message98=Web compression
-message99=Bandwith saved
+message99=bandwidth saved
 message100=Before compression
 message101=After compression
 message102=Total
