@@ -1547,23 +1547,17 @@ if (($ENV{"GATEWAY_INTERFACE"} eq "") && ($ARGV[0] eq "" || $ARGV[0] ne "-h" || 
 	print " All HTTP errors\n";
 	print " and more...\n";
 	print "New versions and support at http://awstats.sourceforge.net\n";
-	exit 0
-	}
-
-# Print html header
-if ($ENV{"GATEWAY_INTERFACE"} ne "") { 
-	if ($QueryString =~ /lang=/) { $Lang=$QueryString; $Lang =~ s/.*lang=//; $Lang =~ s/&.*//; }
-	&html_head;
+	exit 0;
 	}
 
 # Read config file
 &Read_Config_File;
 
-# Correct some parameters
+# Print html header and correct some parameters
 if ($ENV{"GATEWAY_INTERFACE"} ne "") {
-	$DirCgi="";
-	$QueryString = $ENV{"QUERY_STRING"};
 	if ($QueryString =~ /lang=/) { $Lang=$QueryString; $Lang =~ s/.*lang=//; $Lang =~ s/&.*//; }
+	&html_head;
+	$DirCgi="";
 	}
 if (($DirCgi ne "") && !($DirCgi =~ /\/$/) && !($DirCgi =~ /\\$/)) { $DirCgi .= "/"; }
 if ($DirData eq "" || $DirData eq ".") { $DirData=$DIR; }	# If not defined or choosed to "." value then DirData is current dir
@@ -1615,7 +1609,9 @@ for ($ix=1; $ix<=12; $ix++) {
 for ($ix=0; $ix<5; $ix++) {	$_from_h[$ix]=0; }
 
 # Print html header
-if ($ENV{"GATEWAY_INTERFACE"} eq "") { &html_head; }
+if ($ENV{"GATEWAY_INTERFACE"} eq "") {
+	&html_head;
+	}
 print "<STYLE TYPE=text/css>
 <!--
 	BODY { font-family: arial, verdana, helvetica, sans-serif; font-size:12px; background-color:$color_Background; }
