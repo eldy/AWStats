@@ -582,11 +582,12 @@ when reading it), follow the example:<br>
 
 <a name="AllowAccessFromWebToAuthenticatedUsersOnly"><b>AllowAccessFromWebToAuthenticatedUsersOnly</b></a><br>
 <b>Version : </b>4.0+<br>
-<br># The following two parameters allow you to protect a config file to be used
-<br># by your AWStats program called from a browser only if web user has been
+<br># The following two parameters allow you to protect a config file from being
+<br># read by AWStats when called from a browser if web user has not been
 <br># authenticated. Your AWStats program must be in a web protected "realm" (With
 <br># Apache, you can use .htaccess files to do so. With other web servers, see
 <br># your server setup manual).
+<br># Change : Effective immediatly
 <br># Possible values: 0 or 1
 <br># Default: 0
 <br>#
@@ -599,6 +600,7 @@ when reading it), follow the example:<br>
 <br># This parameter gives the list of all authorized authenticated users to view
 <br># statistics for this domain/config file. This parameter is used only if
 <br># AllowAccessToAuthenticatedUsersOnly is set to 1.
+<br># Change : Effective immediatly
 <br># Example: "user1 user2"
 <br># Default: ""
 <br>#
@@ -608,10 +610,11 @@ when reading it), follow the example:<br>
 
 <a name="AllowAccessFromWebToFollowingIPAddresses"><b>AllowAccessFromWebToFollowingIPAddresses</b></a><br>
 <b>Version : </b>5.0+<br>
-<br># When this parameter is define to something, the IP address of the user that
+<br># When this parameter is defined to something, the IP address of the user that
 <br># read its statistics from a browser (when AWStats is used as a CGI) is
-<br># checked and must match the IP address range defined by this parameter.
-<br># Example: "123.123.123.10-123.123.123.255"
+<br># checked and must match one of the IP address values or ranges.
+<br># Change : Effective immediatly
+<br># Example: "127.0.0.1 123.123.123.1-123.123.123.255"
 <br># Default: ""
 <br>#
 <br>AllowAccessFromWebToFollowingIPAddresses=""
@@ -621,9 +624,11 @@ when reading it), follow the example:<br>
 <a name="CreateDirDataIfNotExists"><b>CreateDirDataIfNotExists</b></a><br>
 <b>Version : </b>4.0+<br>
 <br># If the "DirData" directory (see above) does not exists, AWStats return an
-<br># error. However, you can ask AWStats to create it. This option can be used by
-<br># some Web Hosting Providers that has defined a dynamic value for DirData (for
-<br># example DirData="/home/__REMOTE_USER__").
+<br># error. However, you can ask AWStats to create it.
+<br># This option can be used by some Web Hosting Providers that has defined a 
+<br># dynamic value for DirData (for example DirData="/home/__REMOTE_USER__") and
+<br># don't want to have to create a new directory each time they add a new user.
+<br># Change : Effective immediatly
 <br># Possible values: 0 or 1
 <br># Default: 0
 <br>#
