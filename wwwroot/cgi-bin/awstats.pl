@@ -82,7 +82,7 @@ $WarningMessages= 1;
 %MonthBytes = %MonthHits = %MonthHostsKnown = %MonthHostsUnknown = %MonthPages = %MonthUnique = %MonthVisits =
 %monthlib = %monthnum = ();
 
-$VERSION="3.2 (build 44)";
+$VERSION="3.2 (build 45)";
 $Lang="en";
 
 # Default value
@@ -1620,6 +1620,11 @@ if ($QueryString =~ /day=/i)	{ $DayRequired=$QueryString; $DayRequired =~ s/.*da
 
 # Print html header
 &html_head;
+
+# Security check
+if ($AllowToUpdateStatsFromBrowser==0 && $UpdateStats) {
+	error("Error: Update of statistics is not allowed from a browser.");
+}
 
 if ($DNSLookup) {
 #	eval { use Sockets; }; 
