@@ -66,7 +66,7 @@ $word, $yearcon, $yearfile, $yearmonthfile, $yeartoprocess) = ();
 @sortsearchwords = @sortsereferrals = @sortsider404 = @sortsiders = @sortunknownip =
 @sortunknownreferer = @sortunknownrefererbrowser = @wordlist = ();
 
-$VERSION="2.5 (build 7)";
+$VERSION="2.5 (build 8)";
 $Lang=0;
 
 # Default value
@@ -2134,7 +2134,7 @@ if ($UpdateStats) {
 
 		# Check parsed parameters
 		#----------------------------------------------------------------------
-		if ($field[$lastrequiredfield] eq "") {
+		if ($field[$pos_code] eq "") {
 			$corrupted++;
 			if ($NbOfLinesProcessed >= 10 && $corrupted == $NbOfLinesProcessed) {
 				# Files seems to have bad format
@@ -2164,16 +2164,17 @@ if ($UpdateStats) {
 		# Check filters
 		#----------------------------------------------------------------------
 		if ($field[$pos_method] ne 'GET' && $field[$pos_method] ne 'POST') { next; }	# Keep only GET, POST but not HEAD, OPTIONS
-		if ($field[$pos_url] =~ /^RC=/) { $_corrupted++; next; }	# A strange log record we need to forget
+		if ($field[$pos_url] =~ /^RC=/) { $_corrupted++; next; }						# A strange log record we need to forget
 
 		# Split DD/Month/YYYY:HH:MM:SS or YYYY-MM-DD HH:MM:SS
 		$field[$pos_date] =~ tr/-\/ /:::/;
 		@dateparts=split(/:/,$field[$pos_date]);
-		if ($dateparts[0] gt 1000) { $tmp=$dateparts[0]; $dateparts[0]=$dateparts[2]; $dateparts[2]=$tmp; }
+		if ($dateparts[0] > 1000) { $tmp=$dateparts[0]; $dateparts[0]=$dateparts[2]; $dateparts[2]=$tmp; }
 		if ( $monthnum{$dateparts[1]} ) { $dateparts[1]=$monthnum{$dateparts[1]}; }	# Change lib month in num month if necessary
 		# Create $timeconnexion like YYYYMMDDHHMMSS
 		$timeconnexion=$dateparts[2].$dateparts[1].$dateparts[0].$dateparts[3].$dateparts[4].$dateparts[5];
-		
+		if ($timeconnexion < 10000000000000) { $corrupted++; next; }
+
 		# Skip if not a new line
 		#-----------------------
 		if ($NowNewLinePhase) {
