@@ -12,8 +12,8 @@ server log files (and even syslog, ftp servers or mail logs) on all Operating
 Systems.
 
 License: GNU GPL (GNU General Public License. See LICENSE file)
-Version : 5.3
-Release date: January 2003
+Version : 5.6
+Release date: July 2003
 Platforms: All (Linux, NT, SCO, BSD, Solaris and other *NIX's, BeOS, OS/2...)
 Author: Laurent Destailleur <eldy@users.sourceforge.net>
 AWStats official web site and latest version: http://awstats.sourceforge.net
@@ -126,7 +126,7 @@ Tests and results are available in AWStats documentation, in docs/ directory.
 
 IV - ABOUT THE AUTHOR, LICENSE AND SUPPORT
 -----------------------------------------
-Copyright (C) 2000-2002 - Laurent Destailleur - eldy@users.sourceforge.net
+Copyright (C) 2000-2003 - Laurent Destailleur - eldy@users.sourceforge.net
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
