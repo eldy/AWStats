@@ -513,7 +513,7 @@ use vars qw/ @Message /;
 'Extra/Marketing',
 'Screen sizes',
 'Worm/Virus attacks',
-'Add to favourites',
+'Add to favorites (estimated)',
 'Days of month',
 'Miscellanous',
 'Browsers with Java support',
@@ -4844,7 +4844,7 @@ if ((! $ENV{'GATEWAY_INTERFACE'}) && (! $SiteConfig)) {
 	print "  Most viewed, entry and exit pages\n";
 	print "  Files type and Web compression\n";
 	print "  Screen size\n";
-	print "  Number of times site is 'added to favourites bookmarks'\n";
+	print "  Number of times site is 'added to favorites bookmarks'\n";
 	print "  Ratio of Browsers with support of: Java, Flash, RealG2 reader,\n";
 	print "                        Quicktime reader, WMA reader, PDF reader\n";
 	print "  Personalized reports\n";
