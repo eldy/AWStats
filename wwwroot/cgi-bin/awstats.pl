@@ -1,14 +1,10 @@
 #!/usr/bin/perl
-# With some other Unix Os, first line may be
-#!/usr/local/bin/perl
-# With Apache for Windows and ActiverPerl, first line may be
-#!C:/Program Files/ActiveState/ActivePerl/bin/perl
-#-Description-------------------------------------------
+#-----------------------------------------------------------------------------
 # Free realtime web server logfile analyzer to show advanced web statistics.
 # Works from command line or as a CGI. You must use this script as often as
 # necessary from your scheduler to update your statistics.
 # See AWStats documenation (in docs/ directory) for all setup instructions.
-#-------------------------------------------------------
+#-----------------------------------------------------------------------------
 # $Revision$ - $Author$ - $Date$
 
 #use warnings;		# Must be used in test mode only. This reduce a little process speed
@@ -16,14 +12,6 @@
 use strict;no strict "refs";
 use Socket;
 use Time::Local;	# use Time::Local 'timelocal_nocheck' is faster but not supported by all Time::Local modules
-
-use vars qw/ $UseHiRes $UseCompress /;
-# Next 'use' can be uncommented to get miliseconds time in showsteps option
-use Time::HiRes qw( gettimeofday ); $UseHiRes=1;
-# Next 'use' can be uncommented to allow read/write of gz compressed log or history files (not working yet)
-#use Compress::Zlib; $UseCompress=1;
-
-# TODO If PurgeLogFile is on, only one update process must be allowed
 
 
 #-------------------------------------------------------
@@ -41,6 +29,9 @@ $NBOFLINESFORBENCHMARK
 /;
 $DEBUGFORCED   = 0;				# Force debug level to log lesser level into debug.log file (Keep this value to 0)
 $NBOFLINESFORBENCHMARK=5000;	# Benchmark info are printing every NBOFLINESFORBENCHMARK lines
+# Plugins variable
+use vars qw/ $UseHiRes $UseCompress /;
+$UseHiRes=$UseCompress=0;
 # Running variables
 use vars qw/
 $DIR $PROG $Extension
@@ -200,8 +191,9 @@ use vars qw/
 @BrowsersSearchIDOrder @OSSearchIDOrder @SearchEnginesSearchIDOrder @WordsToCleanSearchUrl
 /;
 use vars qw/
-@SessionsRange @Message @HostAliases @AllowAccessFromWebToFollowingAuthenticatedUsers @OnlyFiles
-@SkipDNSLookupFor @SkipFiles @SkipHosts @DOWIndex @RobotsSearchIDOrder
+@SessionsRange @Message @HostAliases @AllowAccessFromWebToFollowingAuthenticatedUsers
+@OnlyFiles @SkipDNSLookupFor @SkipFiles @SkipHosts @PluginsToLoad
+@DOWIndex @RobotsSearchIDOrder
 @_msiever_h @_nsver_h @_from_p @_from_h @_time_p @_time_h @_time_k
 @keylist
 /;
@@ -209,9 +201,8 @@ use vars qw/
 @Message=();
 @HostAliases=();
 @AllowAccessFromWebToFollowingAuthenticatedUsers=();
-@OnlyFiles = @SkipDNSLookupFor = @SkipFiles = @SkipHosts = ();
-@DOWIndex=();
-@RobotsSearchIDOrder = ();
+@OnlyFiles = @SkipDNSLookupFor = @SkipFiles = @SkipHosts = @PluginsToLoad = ();
+@DOWIndex = @RobotsSearchIDOrder = ();
 @_msiever_h = @_nsver_h = ();
 @_from_p = @_from_h = ();
 @_time_p = @_time_h = @_time_k = ();
@@ -526,48 +517,65 @@ sub error {
 	my $thirdmessage=shift||"";
 	if ($Debug) { debug("$message $secondmessage $thirdmessage",1); }
 	if ($message =~ /^Format error$/) {
+		my $tagbold=""; my $tagunbold=""; my $tagbr=""; my $tagfontred=""; my $tagunfont="";
 		# Files seems to have bad format
-		if ($HTMLOutput) { print "<br><br>\n"; }
-		print "AWStats did not found any valid log lines that match your <b>LogFormat</b> parameter, in the ${NbOfLinesForCorruptedLog}th first non commented lines read of your log.<br>\n";
-		print "<font color=#880000>Your log file <b>$thirdmessage</b> must have a bad format or <b>LogFormat</b> parameter setup does not match this format.</font><br><br>\n";
-		print "Your <b>LogFormat</b> parameter is <b>$LogFormat</b>, this means each line in your log file need to have ";
-		if ($LogFormat == 1) {
-			print "<b>\"combined log format\"</b> like this:<br>\n";
-			print ($HTMLOutput?"<font color=#888888><i>":"");
-			print "111.22.33.44 - - [10/Jan/2001:02:14:14 +0200] \"GET / HTTP/1.1\" 200 1234 \"http://www.fromserver.com/from.htm\" \"Mozilla/4.0 (compatible; MSIE 5.01; Windows NT 5.0)\"\n";
-			print ($HTMLOutput?"</i></font><br><br>":"");
+		if ($HTMLOutput) {
+			$tagbold="<b>"; $tagunbold="</b>"; $tagbr="<br>"; $tagfontred="<font color=#880000>"; $tagunfont="</font>";
+			print "<br><br>\n";
 		}
-		if ($LogFormat == 2) {
-			print "<b>\"MSIE Extended W3C log format\"</b> like this:<br>\n";
-			print ($HTMLOutput?"<font color=#888888><i>":"");
-			print "date time c-ip c-username cs-method cs-uri-sterm sc-status sc-bytes cs-version cs(User-Agent) cs(Referer)\n";
-			print ($HTMLOutput?"</i></font><br><br>":"");
+		if ($LogSeparator !~ $message) {
+			# Bad LogSeparator parameter
+			if ($HTMLOutput) { print "${tagfontred}"; }
+			print "AWStats did not found the ${tagbold}LogSeparator${tagunbold} in your log records.${tagbr}\n";
+			if ($HTMLOutput) { print "${tagunfont}"; }
 		}
-		if ($LogFormat == 3) {
-			print "<b>\"WebStar native log format\"</b><br>\n";
+		else {
+			# Bad LogFormat parameter
+			print "AWStats did not found any valid log lines that match your ${tagbold}LogFormat${tagunbold} parameter, in the ${NbOfLinesForCorruptedLog}th first non commented lines read of your log.${tagbr}\n";
+			if ($HTMLOutput) { print "${tagfontred}"; }
+			print "Your log file ${tagbold}$thirdmessage${tagunbold} must have a bad format or ${tagbold}LogFormat${tagunbold} parameter setup does not match this format.${tagbr}${tagbr}\n";
+			if ($HTMLOutput) { print "${tagunfont}"; }
+			print "Your AWStats ${tagbold}LogFormat${tagunbold} parameter is:\n";
+			print "${tagbold}$LogFormat${tagunbold}${tagbr}\n";
+			print "This means each line in your web server log file need to have ";
+			if ($LogFormat == 1) {
+				print "${tagbold}\"combined log format\"${tagunbold} like this:${tagbr}\n";
+				print ($HTMLOutput?"<font color=#888888><i>":"");
+				print "111.22.33.44 - - [10/Jan/2001:02:14:14 +0200] \"GET / HTTP/1.1\" 200 1234 \"http://www.fromserver.com/from.htm\" \"Mozilla/4.0 (compatible; MSIE 5.01; Windows NT 5.0)\"\n";
+				print ($HTMLOutput?"</i></font>${tagbr}${tagbr}\n":"");
+			}
+			if ($LogFormat == 2) {
+				print "${tagbold}\"MSIE Extended W3C log format\"${tagunbold} like this:${tagbr}\n";
+				print ($HTMLOutput?"<font color=#888888><i>":"");
+				print "date time c-ip c-username cs-method cs-uri-sterm sc-status sc-bytes cs-version cs(User-Agent) cs(Referer)\n";
+				print ($HTMLOutput?"</i></font>${tagbr}${tagbr}\n":"");
+			}
+			if ($LogFormat == 3) {
+				print "${tagbold}\"WebStar native log format\"${tagunbold}${tagbr}\n";
+			}
+			if ($LogFormat == 4) {
+				print "${tagbold}\"common log format\"${tagunbold} like this:${tagbr}\n";
+				print ($HTMLOutput?"<font color=#888888><i>":"");
+				print "111.22.33.44 - - [10/Jan/2001:02:14:14 +0200] \"GET / HTTP/1.1\" 200 1234\n";
+				print ($HTMLOutput?"</i></font>${tagbr}${tagbr}\n":"");
+			}
+			if ($LogFormat == 5) {
+				print "${tagbold}\"ISA native log format\"${tagunbold}${tagbr}\n";
+			}
+			if ($LogFormat !~ /^[1-5]$/) {
+				print "the following personalized log format:${tagbr}\n";
+				print ($HTMLOutput?"<font color=#888888><i>":"");
+				print "$LogFormat\n";
+				print ($HTMLOutput?"</i></font>${tagbr}${tagbr}\n":"");
+			}
+			print "And this is a sample of records AWStats found in your log file (the record number $NbOfLinesForCorruptedLog in your log):\n";
+			print ($HTMLOutput?"<br><font color=#888888><i>":"");
+			print "$secondmessage";
+			print ($HTMLOutput?"</i></font>${tagbr}${tagbr}":"");
+			print "\n";
 		}
-		if ($LogFormat == 4) {
-			print "<b>\"common log format\"</b> like this:<br>\n";
-			print ($HTMLOutput?"<font color=#888888><i>":"");
-			print "111.22.33.44 - - [10/Jan/2001:02:14:14 +0200] \"GET / HTTP/1.1\" 200 1234\n";
-			print ($HTMLOutput?"</i></font><br><br>":"");
-		}
-		if ($LogFormat == 5) {
-			print "<b>\"ISA native log format\"</b><br>\n";
-		}
-		if ($LogFormat !~ /^[1-5]$/) {
-			print "the following personalized log format:<br>\n";
-			print ($HTMLOutput?"<font color=#888888><i>":"");
-			print "$LogFormat\n";
-			print ($HTMLOutput?"</i></font><br><br>":"");
-		}
-		print "And this is a sample of what AWStats found in your log (the record number $NbOfLinesForCorruptedLog in your log):\n";
-		print ($HTMLOutput?"<br><font color=#888888><i>":"");
-		print "$secondmessage";
-		print ($HTMLOutput?"</i></font><br><br>":"");
-		print "\n";
-		#print "Note: If your $NbOfLinesForCorruptedLog first lines in your log files are wrong because they are ";
-		#print "result of a worm virus attack, you can increase the NbOfLinesForCorruptedLog parameter in config file.\n";
+		#print "Note: If your $NbOfLinesForCorruptedLog first lines in your log files are wrong because of ";
+		#print "a worm virus attack, you can increase the NbOfLinesForCorruptedLog parameter in config file.\n";
 		#print "\n";
 	}
 	else {
@@ -912,6 +920,7 @@ sub Read_Config_File {
 		if ($param =~ /^color_s/)               { $color_s=$value; next; }
 		if ($param =~ /^color_e/)               { $color_e=$value; next; }
 		if ($param =~ /^color_x/)               { $color_x=$value; next; }
+		if ($param =~ /^LoadPlugin/)           	{ push @PluginsToLoad, $value; next; }
 	}
 	close CONFIG;
 	# If parameter NotPageList not found, init for backward compatibility
@@ -968,7 +977,6 @@ sub Read_Ref_Data {
 	if (@SearchEnginesSearchIDOrder != scalar keys %SearchEnginesHashIDLib) { error("Error: Not same number of records of SearchEnginesSearchIDOrder (".(@SearchEnginesSearchIDOrder)." entries) and SearchEnginesHashIDLib (".(scalar keys %SearchEnginesHashIDLib)." entries) in Search Engines database. Check your file ".$FilePath{"search_engines.pl"}); }
 	if ((@RobotsSearchIDOrder_list1+@RobotsSearchIDOrder_list2+@RobotsSearchIDOrder_list3) != scalar keys %RobotsHashIDLib) { error("Error: Not same number of records of RobotsSearchIDOrder_listx (total is ".(@RobotsSearchIDOrder_list1+@RobotsSearchIDOrder_list2+@RobotsSearchIDOrder_list3)." entries) and RobotsHashIDLib (".(scalar keys %RobotsHashIDLib)." entries) in Robots database. Check your file ".$FilePath{"robots.pl"}); }
 }
-
 
 
 #------------------------------------------------------------------------------
@@ -1361,6 +1369,37 @@ sub Check_Config {
 		}
 	}
 }
+
+
+#------------------------------------------------------------------------------
+# Function:     Load plugins files
+# Parameter:	None
+# Return value: None
+# Input:		$DIR
+# Output:		None
+#------------------------------------------------------------------------------
+sub Read_Plugins {
+	my %FilePath=();
+	if ($Debug) { debug("Call to Read_Plugins @PluginsToLoad"); }
+	foreach my $file (@PluginsToLoad) {
+		foreach my $dir ("${DIR}plugins","./plugins") {
+			my $searchdir=$dir;
+			if ($searchdir && (!($searchdir =~ /\/$/)) && (!($searchdir =~ /\\$/)) ) { $searchdir .= "/"; }
+			if (! $FilePath{$file}) {
+				if (-s "${searchdir}${file}") {
+					$FilePath{$file}="${searchdir}${file}";
+					if ($Debug) { debug("Call to Read_Plugins [FilePath{$file}=\"$FilePath{$file}\"]"); }
+					require "$FilePath{$file}";
+				}
+			}
+		}
+		if (! $FilePath{$file}) {
+			my $filetext=$file; $filetext =~ s/\.pm$//; $filetext =~ s/_/ /g;
+			&warning("Warning: Can't open plugin file \"$file\" for read.\nCheck if file is in ${DIR}plugins directory and is readable.");
+		}
+	}
+}
+
 
 #--------------------------------------------------------------------
 # Input: year,month,0|1		(0=read only 1st part, 1=read all file)
@@ -2903,6 +2942,9 @@ if ($Lang eq "10") { $Lang="kr"; }
 
 # Check and correct bad parameters
 &Check_Config;
+
+# Load plugins
+&Read_Plugins;
 
 # Here SiteDomain is always defined
 if ($Debug) { &debug("Site domain to analyze: $SiteDomain"); }
@@ -5430,6 +5472,9 @@ else {
 }
 
 0;	# Do not remove this line
+
+
+# TODO If PurgeLogFile is on, only one update process must be allowed
 
 
 #-------------------------------------------------------
