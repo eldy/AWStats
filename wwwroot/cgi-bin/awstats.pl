@@ -6291,7 +6291,7 @@ if (scalar keys %HTMLOutput) {
 			print "<table".($frame?" cellspacing=0 cellpadding=0 border=0":"").">\n";
 			# When
 			$linetitle=&AtLeastOneNotNull($ShowMonthStats,$ShowDaysOfMonthStats,$ShowDaysOfWeekStats,$ShowHoursStats);
-			if ($linetitle) { print "<tr><th class=AWS width=$WIDTHMENU1>$Message[93]: </th>\n"; }
+			if ($linetitle) { print "<tr><th class=AWS width=$WIDTHMENU1".($frame?"":" valign=top").">$Message[93]: </th>\n"; }
 			if ($linetitle) { print ($frame?"</tr>\n":"<td class=AWS>"); }
 			if ($ShowMonthStats)		 { print ($frame?"<tr><td class=AWS>":""); print "<a href=\"$linkanchor#TOP\"$targetpage>$Message[128]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
 			#if ($ShowMonthDayStats)	 { print ($frame?"<tr><td class=AWS> &nbsp; <img height=8 width=9 src=\"$DirIcons/other/page.png\" alt=\"...\"> ":""); print "<a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=alldays":"$PROG$StaticLinks.alldays.$StaticExt")."\"$NewLinkTarget>$Message[130]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
@@ -6301,7 +6301,7 @@ if (scalar keys %HTMLOutput) {
 			if ($linetitle) { print ($frame?"":"</td></tr>\n"); }
 			# Who
 			$linetitle=&AtLeastOneNotNull($ShowDomainsStats,$ShowHostsStats,$ShowAuthenticatedUsers,$ShowEMailSenders,$ShowEMailReceivers,$ShowRobotsStats,$ShowWormsStats);
-			if ($linetitle) { print "<tr><th class=AWS>$Message[92]: </th>\n"; }
+			if ($linetitle) { print "<tr><th class=AWS".($frame?"":" valign=top").">$Message[92]: </th>\n"; }
 			if ($linetitle) { print ($frame?"</tr>\n":"<td class=AWS>"); }
 			if ($ShowDomainsStats)		 { print ($frame?"<tr><td class=AWS>":""); print "<a href=\"$linkanchor#DOMAINS\"$targetpage>$Message[17]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
 			if ($ShowDomainsStats)		 { print ($frame?"<tr><td class=AWS> &nbsp; <img height=8 width=9 src=\"$DirIcons/other/page.png\" alt=\"...\"> ":""); print "<a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=alldomains":"$PROG$StaticLinks.alldomains.$StaticExt")."\"$NewLinkTarget>$Message[80]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
@@ -6327,7 +6327,7 @@ if (scalar keys %HTMLOutput) {
 			if ($linetitle) { print ($frame?"":"</td></tr>\n"); }
 			# Navigation
 			$linetitle=&AtLeastOneNotNull($ShowSessionsStats,$ShowPagesStats,$ShowFileTypesStats,$ShowFileSizesStats,$ShowOSStats,$ShowBrowsersStats,$ShowScreenSizeStats);
-			if ($linetitle) { print "<tr><th class=AWS>$Message[72]: </th>\n"; }
+			if ($linetitle) { print "<tr><th class=AWS".($frame?"":" valign=top").">$Message[72]: </th>\n"; }
 			if ($linetitle) { print ($frame?"</tr>\n":"<td class=AWS>"); }
 			if ($ShowSessionsStats)		 { print ($frame?"<tr><td class=AWS>":""); print "<a href=\"$linkanchor#SESSIONS\"$targetpage>$Message[117]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
 			if ($ShowFileTypesStats)	 { print ($frame?"<tr><td class=AWS>":""); print "<a href=\"$linkanchor#FILETYPES\"$targetpage>$Message[73]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
@@ -6345,7 +6345,7 @@ if (scalar keys %HTMLOutput) {
 			if ($linetitle) { print ($frame?"":"</td></tr>\n"); }
 			# Referers
 			$linetitle=&AtLeastOneNotNull($ShowOriginStats,$ShowKeyphrasesStats,$ShowKeywordsStats);
-			if ($linetitle) { print "<tr><th class=AWS>$Message[23]: </th>\n"; }
+			if ($linetitle) { print "<tr><th class=AWS".($frame?"":" valign=top").">$Message[23]: </th>\n"; }
 			if ($linetitle) { print ($frame?"</tr>\n":"<td class=AWS>"); }
 			if ($ShowOriginStats)		 { print ($frame?"<tr><td class=AWS>":""); print "<a href=\"$linkanchor#REFERER\"$targetpage>$Message[37]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
 			if ($ShowOriginStats)		 { print ($frame?"<tr><td class=AWS> &nbsp; <img height=8 width=9 src=\"$DirIcons/other/page.png\" alt=\"...\"> ":""); print "<a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=refererse":"$PROG$StaticLinks.refererse.$StaticExt")."\"$NewLinkTarget>$Message[126]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
@@ -6356,7 +6356,7 @@ if (scalar keys %HTMLOutput) {
 			if ($linetitle) { print ($frame?"":"</td></tr>\n"); }
 			# Others
 			$linetitle=&AtLeastOneNotNull($ShowFileTypesStats=~/C/i,$ShowMiscStats,$ShowHTTPErrorsStats);
-			if ($linetitle) { print "<tr><th class=AWS>$Message[2]: </th>\n"; }
+			if ($linetitle) { print "<tr><th class=AWS".($frame?"":" valign=top").">$Message[2]: </th>\n"; }
 			if ($linetitle) { print ($frame?"</tr>\n":"<td class=AWS>"); }
 			if ($ShowFileTypesStats =~ /C/i)	 { print ($frame?"<tr><td class=AWS>":""); print "<a href=\"$linkanchor#FILETYPES\"$targetpage>$Message[98]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
 			if ($ShowMiscStats)	 		 { print ($frame?"<tr><td class=AWS>":""); print "<a href=\"$linkanchor#MISC\"$targetpage>$Message[139]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
@@ -6367,7 +6367,7 @@ if (scalar keys %HTMLOutput) {
 			if ($linetitle) { print ($frame?"":"</td></tr>\n"); }
 			# Extra/Marketing
 		 	$linetitle=&AtLeastOneNotNull(@ExtraStatTypes);
-			if ($linetitle) { print "<tr><th class=AWS>$Message[134]: </th>\n"; }
+			if ($linetitle) { print "<tr><th class=AWS".($frame?"":" valign=top").">$Message[134]: </th>\n"; }
 			if ($linetitle) { print ($frame?"</tr>\n":"<td class=AWS>"); }
 			foreach my $extranum (1..@ExtraName-1) {
 				print ($frame?"<tr><td class=AWS>":""); print "<a href=\"$linkanchor#EXTRA$extranum\"$targetpage>$ExtraName[$extranum]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; ");
@@ -7827,7 +7827,7 @@ if (scalar keys %HTMLOutput) {
 				my $dayofweekcursor=DayOfWeek($day,$month,$year);
 				print "<TD".($dayofweekcursor=~/[06]/?" bgcolor=\"#$color_weekend\"":"").">";
 				print ($day==$nowday && $month==$nowmonth && $year==$nowyear?'<b>':'');
-				print "$day<br><font style=\"font-size: ".($FrameName ne 'mainright'?"10":"9")."px;\">".$MonthLib{$month}."</font>";
+				print "$day<br><font style=\"font-size: ".($FrameName ne 'mainright'?"9":"8")."px;\">".$MonthLib{$month}."</font>";
 				print ($day==$nowday && $month==$nowmonth && $year==$nowyear?'</b>':'');
 				print "</TD>\n";
 			}
