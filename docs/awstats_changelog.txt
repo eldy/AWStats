@@ -3,8 +3,16 @@ AWStats Changelog
 
 4.1
 
+- Fixed a bug of vampired memory and abnormal disk swapping when using
+  logresolvemerge.pl
 - New feature: Report exit pages
 - New feature: Report visits duration
+- New option: Added -dir option to choose destination directory 
+  for awstats_buildstaticpages.pl
+- Updated AWStats databases
+- Updated documentation
+
+
 
 
 4.0

@@ -21,7 +21,7 @@ use strict; no strict "refs";
 # Defines
 #-------------------------------------------------------
 my $REVISION='$Revision$'; $REVISION =~ /\s(.*)\s/; $REVISION=$1;
-my $VERSION="1.1 (build $REVISION)";
+my $VERSION="1.2 (build $REVISION)";
 
 # ---------- Init variables --------
 my $Debug=0;
