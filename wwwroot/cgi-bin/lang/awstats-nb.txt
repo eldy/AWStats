@@ -1,5 +1,5 @@
 # Norwegian message file, by Axel Wulff Sæther <axel@bigfoot.com>
-PageCode=iso-639-2
+PageCode=iso-8859-1
 message0=Ukjent
 message1=ukjente (fant ikke vertsnavn)
 message2=Andre

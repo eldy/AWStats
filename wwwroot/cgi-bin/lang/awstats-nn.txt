@@ -1,5 +1,5 @@
 # Norwegian Nynorsk message file, by Karl Ove Hufthammer <huftis@bigfoot.com>
-PageCode=iso-639-2
+PageCode=iso-8859-1
 message0=Ukjent
 message1=ukjente (fann ikkje vertsnamn)
 message2=Andre
