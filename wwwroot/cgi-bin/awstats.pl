@@ -46,7 +46,7 @@ $DIR, $DNSLookup, $DefaultFile, $DirCgi, $DirData,
 $DirIcons, $Extension, $FileConfig, $FileSuffix, $FirstTime,
 $HTMLEndSection, $Host, $HostAlias, $LastTime, $LastUpdate, $SiteToAnalyze,
 $SiteToAnalyzeIsInHostAliases, $SiteToAnalyzeWithoutwww, $LogFile,
-$LogFormat, $LogFormatString, $Logo, $MaxNbOfHostsShown, $MaxNbOfKeywordsShown,
+$LogFormat, $LogFormatString, $Logo, $MaxNbOfDays, $MaxNbOfHostsShown, $MaxNbOfKeywordsShown,
 $MaxNbOfPageShown, $MaxNbOfRefererShown, $MaxNbOfRobotShown, $MinHitFile,
 $MinHitHost, $MinHitKeyword, $MinHitRefer, $MinHitRobot, $MonthRequired,
 $NewDNSLookup, $NowNewLinePhase, $OpenFileError, $PROG, $PageBool, $PageCode,
@@ -70,7 +70,6 @@ $word, $yearcon, $yearfile, $yearmonthfile, $yeartoprocess) = ();
 @BrowserArray = @DomainsArray = @HostAliases =
 @OnlyFiles = @OSArray = @RobotArray =
 @SearchEnginesArray = @SkipFiles = @SkipHosts =
-@_from_h = @_from_p = @_msiever_h = @_nsver_h = @_time_h = @_time_k = @_time_p =
 @dateparts = @felter = @field = @filearray = @message =
 @paramlist = @refurl = @sortbrowsers = @sortdomains_h = @sortdomains_k =
 @sortdomains_p = @sorterrors = @sorthosts_p = @sortos = @sortpagerefs = @sortrobot =
@@ -82,7 +81,7 @@ $word, $yearcon, $yearfile, $yearmonthfile, $yeartoprocess) = ();
 %MonthBytes = %MonthHits = %MonthPages = %MonthUnique = %MonthVisits =
 %listofyears = %monthlib = %monthnum = ();
 
-$VERSION="2.5 (build 31)";
+$VERSION="2.5 (build 33)";
 $Lang=0;
 
 # Default value
@@ -90,6 +89,7 @@ $SortDir       = -1;		# -1 = Sort order from most to less, 1 = reverse order (De
 $VisitTimeOut  = 10000;		# Laps of time to consider a page load as a new visit. 10000 = one hour (Default = 10000)
 $FullHostName  = 1;			# 1 = Use name.domain.zone to refer host clients, 0 = all hosts in same domain.zone are one host (Default = 1, 0 never tested)
 $MaxLengthOfURL= 70;		# Maximum length of URL shown on stats page. This affects only URL visible text, link still work (Default = 70)
+$MaxNbOfDays   = 15;
 $CENTER        = "";
 $WIDTH         = "600";
 # Images for graphics
@@ -112,7 +112,7 @@ $BarImageHorizontal_k = "barrehk.png";
 #			"\\.mp3","\\.wma"
 			);
 
-# Those addresses are shown with those lib (First column is full relative URL, Second column is text to show instead of URL)
+# Those addresses are shown with those lib (First column is full exact relative URL, second column is text to show instead of URL)
 %Aliases    = (
 			"/",                                    "<b>HOME PAGE</b>",
 			"/cgi-bin/awstats.pl",					"<b>AWStats stats page</b>",
@@ -166,8 +166,6 @@ $BarImageHorizontal_k = "barrehk.png";
 "engine\.exe","Cade", "miner\.bol\.com\.br","Meta Miner",	# Minor brazilian search engine
 "search\..*com","Other search engines"
 );
-
-
 
 # Search engines known URLs database (update the 10th january 2001)
 # To add a search engine, add a new line:
@@ -1225,7 +1223,7 @@ sub Save_History_File {
 
 	print HISTORYTMP "FirstTime $FirstTime{$_[0].$_[1]}\n";
 	print HISTORYTMP "LastTime $LastTime{$_[0].$_[1]}\n";
-	if ($LastUpdate{$_[0].$_[1]} lt "$nowyear$nowmonth$nowday$nowhour$nowmin") { $LastUpdate{$_[0].$_[1]}="$nowyear$nowmonth$nowday$nowhour$nowmin"; }
+	if ($LastUpdate{$_[0].$_[1]} lt "$nowyear$nowmonth$nowday$nowhour$nowmin$nowsec") { $LastUpdate{$_[0].$_[1]}="$nowyear$nowmonth$nowday$nowhour$nowmin$nowsec"; }
 	print HISTORYTMP "LastUpdate $LastUpdate{$_[0].$_[1]}\n";
 	print HISTORYTMP "TotalVisits $MonthVisits{$_[0].$_[1]}\n";
 
@@ -1326,13 +1324,15 @@ sub Save_History_File {
 sub Init_HashArray {
 	# We purge data read for year $_[0] and month $_[1] so it's like we never read it
 	$HistoryFileAlreadyRead{"$_[0]$_[1]"}=0;
-	# Delete all hash arrays with name beginning by _
+	# Delete/Reinit all arrays with name beginning by _
+	@_msiever_h = @_nsver_h = ();
+	for ($ix=0; $ix<5; $ix++) {	$_from_p[$ix]=0; $_from_h[$ix]=0; }
+	for ($ix=0; $ix<=23; $ix++) { $_time_h[$ix]=0; $_time_k[$ix]=0; $_time_p[$ix]=0; }
+	# Delete/Reinit all hash arrays with name beginning by _
 	%_browser_h = %_domener_h = %_domener_k = %_domener_p = %_errors_h = 
 	%_hostmachine_h = %_hostmachine_k = %_hostmachine_l = %_hostmachine_p =
 	%_keywords = %_os_h = %_pagesrefs_h = %_robot_h = %_robot_l = %_se_referrals_h =
 	%_sider404_h = %_sider_h = %_sider_k = %_sider_p = %_unknownip_l = %_unknownreferer_l =	%_unknownrefererbrowser_l = ();
-	for ($ix=0; $ix<5; $ix++) {	$_from_p[$ix]=0; $_from_h[$ix]=0; }
-	for ($ix=0; $ix<=23; $ix++) { $_time_h[$ix]=0; $_time_k[$ix]=0; $_time_p[$ix]=0; }
 #	reset _;
 }
 
@@ -1423,7 +1423,7 @@ if (($ENV{"GATEWAY_INTERFACE"} eq "") && ($SiteToAnalyze eq "")) {
 	print "  Statistics by day/month/year\n";
 	print "New versions and FAQ at http://awstats.sourceforge.net\n";
 	exit 0;
-	}
+}
 
 # Get current time
 $nowtime=time;
@@ -2235,7 +2235,8 @@ if ($QueryString =~ /action=browserdetail/i) {
 	&tab_head;
 	print "<TR bgcolor=#$color_TableBGRowTitle><TH>$message[58]</TH><TH bgcolor=#$color_h width=40>$message[57]</TH><TH bgcolor=#$color_h width=40>$message[15]</TH></TR>\n";
 	for ($i=1; $i<=$#_nsver_h; $i++) {
-		if ($_nsver_h[$i] gt 0) {
+		$p="";
+		if ($_nsver_h[$i] > 0 && $_browser_h{"netscape"} > 0) {
 			$h=$_nsver_h[$i]; $p=int($_nsver_h[$i]/$_browser_h{"netscape"}*1000)/10; $p="$p&nbsp;%";
 		}
 		else {
@@ -2249,7 +2250,7 @@ if ($QueryString =~ /action=browserdetail/i) {
 	&tab_head;
 	print "<TR bgcolor=#$color_TableBGRowTitle><TH>$message[58]</TH><TH bgcolor=#$color_h width=40>$message[57]</TH><TH bgcolor=#$color_h width=40>$message[15]</TH></TR>\n";
 	for ($i=1; $i<=$#_msiever_h; $i++) {
-		if ($_msiever_h[$i] gt 0) {
+		if ($_msiever_h[$i] > 0 && $_browser_h{"msie"} > 0) {
 			$h=$_msiever_h[$i]; $p=int($_msiever_h[$i]/$_browser_h{"msie"}*1000)/10; $p="$p&nbsp;%";
 		}
 		else {
@@ -2455,8 +2456,21 @@ print "</TR></TABLE><br>";
 print "<TABLE>";
 print "<TR valign=bottom>";
 $max_v=1;$max_p=1;$max_h=1;$max_k=1;
-for ($ix=14; $ix>=0; $ix--) {
-	my ($oldsec,$oldmin,$oldhour,$oldday,$oldmonth,$oldyear) = localtime($nowtime-($ix*86400));
+if (($MonthRequired eq $nowmonth || $MonthRequired eq "year") && $YearRequired eq $nowyear) { 
+	$lastdaytoshowtime=$nowtime;	# Set day cursor to today
+}
+else {
+	if ($MonthRequired eq "year") {
+		# About 365.24 days a year = 31556736 seconds a year
+		$lastdaytoshowtime=($YearRequired-1970+1)*31556736-43200;	# Set day cursor to last day of the year
+	}
+	else {
+		# About 30.43 days a month = 2626728 seconds a month
+		$lastdaytoshowtime=($YearRequired-1970)*31556736+$MonthRequired*2629728+43200;
+	}
+}
+for ($ix=$MaxNbOfDays-1; $ix>=0; $ix--) {
+	my ($oldsec,$oldmin,$oldhour,$oldday,$oldmonth,$oldyear) = localtime($lastdaytoshowtime-($ix*86400));
 	if ($oldyear < 100) { $oldyear+=2000; } else { $oldyear+=1900; }
 	if (++$oldmonth < 10) { $oldmonth="0$oldmonth"; }
 	if ($oldday < 10) { $oldday="0$oldday"; }
@@ -2464,8 +2478,8 @@ for ($ix=14; $ix>=0; $ix--) {
 	if ($DayHits{$oldyear.$oldmonth.$oldday} > $max_h)   { $max_h=$DayHits{$oldyear.$oldmonth.$oldday}; }
 	if ($DayBytes{$oldyear.$oldmonth.$oldday} > $max_k)  { $max_k=$DayBytes{$oldyear.$oldmonth.$oldday}; }
 }
-for ($ix=14; $ix>=0; $ix--) {
-	my ($oldsec,$oldmin,$oldhour,$oldday,$oldmonth,$oldyear) = localtime($nowtime-($ix*86400));
+for ($ix=$MaxNbOfDays-1; $ix>=0; $ix--) {
+	my ($oldsec,$oldmin,$oldhour,$oldday,$oldmonth,$oldyear) = localtime($lastdaytoshowtime-($ix*86400));
 	if ($oldyear < 100) { $oldyear+=2000; } else { $oldyear+=1900; }
 	if (++$oldmonth < 10) { $oldmonth="0$oldmonth"; }
 	if ($oldday < 10) { $oldday="0$oldday"; }
@@ -2481,12 +2495,12 @@ for ($ix=14; $ix>=0; $ix--) {
 	print "</TD>\n";
 }
 print "</TR><TR>";
-for ($ix=14; $ix>=0; $ix--) {
-	my ($oldsec,$oldmin,$oldhour,$oldday,$oldmonth,$oldyear) = localtime($nowtime-($ix*86400));
+for ($ix=$MaxNbOfDays-1; $ix>=0; $ix--) {
+	my ($oldsec,$oldmin,$oldhour,$oldday,$oldmonth,$oldyear) = localtime($lastdaytoshowtime-($ix*86400));
 	if ($oldyear < 100) { $oldyear+=2000; } else { $oldyear+=1900; }
 	if (++$oldmonth < 10) { $oldmonth="0$oldmonth"; }
 	if ($oldday < 10) { $oldday="0$oldday"; }
-	print "<TD valign=center>$oldday ".$monthlib{$oldmonth}."</TD>";
+	print "<TD valign=center>$oldday<br>".$monthlib{$oldmonth}."</TD>";
 }
 print "</TR></TABLE><br>";
 
@@ -2794,7 +2808,7 @@ if ($rest >0) {
 	if ($TotalKeywords > 0) { $p=int($rest/$TotalKeywords*1000)/10; }
 	print "<TR><TD CLASS=LEFT><font color=blue>$message[30]</TD><TD>$rest</TD>";
 	print "<TD>$p&nbsp;%</TD></TR>\n";
-	}
+}
 &tab_end;
 
 
