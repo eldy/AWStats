@@ -5929,7 +5929,7 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 				$lastlinenb=$LastLineNumber;
 				$lastlineoffset=$LastLineOffset;
 				$lastlineoffsetnext=tell LOG;
-				#seek(LOG,$LastLineOffset,0);$lastlineoffsetnext=$LastLineOffset;	# Direct access succesful, we keep it.
+                $NewLinePhase=1;
 			}
 			else {
 				if (! scalar keys %HTMLOutput) { print "Direct access to last remembered record has fallen on another record.\nSo searching new records from beginning of log file...\n"; }
