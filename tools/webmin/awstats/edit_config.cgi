@@ -425,11 +425,13 @@ print "<tr> <td colspan=3><br></td> </tr>\n";
 
 print "<tr> <td colspan=3><br>PLUGINS SETUP SECTION (Not required but increase AWStats features)<br><hr></td> </tr>\n";
 if ($in{'advanced'} == 4) {
-	open(FILE, $filetoopen) || error("Failed to open $file for reading plugins' config");
 	my $conflinenb = 0;
 	my @pconfparam=();
 	my @pconfvalue=();
 	my @pconfvaluep=();
+	my %pluginlinefound=();
+	# Search the loadable plugins in edited config file
+	open(FILE, $filetoopen) || error("Failed to open $filetoopen for reading plugins' config");
 	while(<FILE>) {
 		my $savline=$_;
 		chomp $_; s/\r//;
@@ -444,12 +446,42 @@ if ($in{'advanced'} == 4) {
 			$value =~ s/#.*$//; 
 			$value =~ s/^[\s\'\"]+//g; $value =~ s/[\s\'\"]+$//g;
 			($value1,$value2)=split(/\s/,$value,2);
-			push @pconfparam, $value1;
-			push @pconfactive, $active;
-			push @pconfvaluep, $value2;
+			if (! $pluginlinefound{$value1}) {	# To avoid plugin to be shown twice
+				$pluginlinefound{$value1}=1;
+				push @pconfparam, $value1;
+				push @pconfactive, $active;
+				push @pconfvaluep, $value2;
+			}
 		}	
 	}
 	close FILE;
+	# Search the loadable plugins in sample config file (if not new)
+	if (! $in{'new'}) {
+		open(FILE, $config{'alt_conf'}) || error("Failed to open $config{'alt_conf'} for reading available plugins");
+		while(<FILE>) {
+			my $savline=$_;
+			chomp $_; s/\r//;
+			$conflinenb++;
+			if ($_ =~ /^#?LoadPlugin/i) {
+				# Extract param and value
+				my ($load,$value)=split(/=/,$_,2);
+				my $active=0;
+				# Remove comments not at beginning of line
+				if ($load !~ /#.*LoadPlugin/i) { $active=1; }
+				$param =~ s/^\s+//; $param =~ s/\s+$//;
+				$value =~ s/#.*$//; 
+				$value =~ s/^[\s\'\"]+//g; $value =~ s/[\s\'\"]+$//g;
+				($value1,$value2)=split(/\s/,$value,2);
+				if (! $pluginlinefound{$value1}) {	# To avoid plugin to be shown twice
+					push @pconfparam, $value1;
+					push @pconfactive, $active;
+					push @pconfvaluep, $value2;
+				}
+			}	
+		}
+		close FILE;
+	}
+
 	print "<tr> <td>Loaded plugins</td> <td>Plugin's parameters</td> <td> &nbsp; </td> </tr>\n";
 	foreach my $key (0..(@pconfparam-1)) {
 		print "<tr> <td> <input size=10 name=plugin_$pconfparam[$key] type=checkbox ".($pconfactive[$key]?" checked":"")."><b>$pconfparam[$key]</b></td> <td> <input size=30 name=plugin_param_$pconfparam[$key] type=text value='$pconfvaluep[$key]'> </td> <td> ";
