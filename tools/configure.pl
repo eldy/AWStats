@@ -237,7 +237,7 @@ for (0..@ARGV-1) {
 	if ($ARGV[$_] =~ /^-*awstatspath=([^\s\"]+)/i)  { $AWSTATS_PATH==$1; last; }
 }
 if (! $AWSTATS_PATH) {
-	$AWSTATS_PATH="$DIR";
+	$AWSTATS_PATH=$DIR||'..';
 	$AWSTATS_PATH=~s/tools[\\\/]?$//;
 	$AWSTATS_PATH=~s/[\\\/]$//;
 }
@@ -317,34 +317,40 @@ if ($OS eq 'windows') {
 }
 if (! scalar keys %ApacheConfPath) {
 	# Ask web server path
-	print "$PROG did not find your web server path.\n";
+	print "$PROG did not find your Apache web server path.\n";
 	
-	print "\nPlease, enter full path directory of you web server.\n";
+	print "\nPlease, enter directory full path of your Apache web server.\n";
 	print "Example: /usr/local/apache\n";
 	print "Example: d:\\Program files\\apache group\\apache\n";
 	my $bidon='';
-	while (! -d "$bidon") {
-		print "Web server path (CTRL+C to cancel): ";
+	while ($bidon ne 'none' && ! -d "$bidon") {
+		print "Apache Web server path (\"none\" to skip this step or CTRL+C to cancel): ";
 		$bidon=<STDIN>; chomp $bidon;
-		if (! -d "$bidon") { print " The directory '$bidon' does not exists.\n"; }
+		if ($bidon && ! -d "$bidon" && $bidon ne 'none') { print " The directory '$bidon' does not exists.\n"; }
 	}
-	$ApachePath{"$bidon"}=1;
+	if ($bidon ne 'none') {
+		$ApachePath{"$bidon"}=1;
 
-	print "\nNow, enter full config file path of you web server.\n";
-	print "Example: /etc/httpd/apache.conf\n";
-	print "Example: d:\\Program files\\apache group\\apache\\conf\\httpd.conf\n";
-	$bidon='';
-	while (! -f "$bidon") {
-		print "Config file path (CTRL+C to cancel): ";
-		$bidon=<STDIN>; chomp $bidon;
-		if (! -f "$bidon") { print " This file does not exists.\n"; }
+		print "\nNow, enter full config file path of you web server.\n";
+		print "Example: /etc/httpd/apache.conf\n";
+		print "Example: d:\\Program files\\apache group\\apache\\conf\\httpd.conf\n";
+		$bidon='';
+		while (! -f "$bidon") {
+			print "Config file path (CTRL+C to cancel): ";
+			$bidon=<STDIN>; chomp $bidon;
+			if (! -f "$bidon") { print " This file does not exists.\n"; }
+		}
+		$ApacheConfPath{"$bidon"}=1;
 	}
-	$ApacheConfPath{"$bidon"}=1;
 }
 
 if (! scalar keys %ApacheConfPath) {
-	error("Your web server config file(s) could not be found.\nIf you are not using Apache web server, you must setup AWStats manually.\nSee AWStats setup documentation (file docs/index.html)");
-	exit 1;
+	print "\n";
+	print "Your web server config file(s) could not be found.\n";
+	print "You will need to setup your web server manually to declare AWStats\n";
+	print "script as a CGI, if you want to build reports dynamically.\n";
+	print "See AWStats setup documentation (file docs/index.html)";
+	print "\n";
 }
 
 # Open Apache config file
@@ -528,7 +534,7 @@ if ($WebServerChanged) {
 # -------------------------------
 print "\n-----> Add update process inside a scheduler\n";
 if ($OS eq 'windows') {
-	print "Sorry, for windows users, if you want to have statisitics to be\n";
+	print "Sorry, for windows users, if you want to have statistics to be\n";
 	print "updated on a regular basis, you have to add the update process\n";
 	print "in a scheduler task manually (See AWStats docs/index.html).\n";
 	print "Press ENTER to continue... ";
