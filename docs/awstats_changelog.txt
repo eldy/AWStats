@@ -20,13 +20,15 @@ Fixes:
   estonian has lang code 'et' and country code 'ee').
 - Replaced Kb/visits to Kb/mails for mail log analysis.
 - Remove some warnings that appears when running perl -W 
-- Other minor bugs (814970,823064,823323,831438,836315 ).
+- Other minor bugs (814970,823064,823323,831438,836315).
 - Fixed bug in counting hits for miscellanous and clusters chart when
   a temporary flush was done on disk during a long update.
 - ExtraSections now works on all records whatever is the error code.
 
 New features/improvements:
 - Increased speed by 10 to 20%.
+- A lot of portion of codes have been rewritten to make code more easy to
+  understand and reduce unknown bugs.
 - Some changes to make AWStats to be XML compliant ready.
   Need to set the new parameter BuildReportFormat to 'xml' in config file.
 - A new search engine database to allow several "match id" for same
@@ -36,9 +38,9 @@ New features/improvements:
 - Support for right to left languages. Added 'he' language.
 - Added LevelForSearchEnginesDetection parameter to choose between 2 possible
   levels of detection for search engines (like LevelForRobotsDetection).
-- Added LevelForFileTypesDetection parameter (2 possible levels).
+  Also, added LevelForFileTypesDetection parameter (2 possible levels).
 - Added percent column for file types.
-- The robot chart now robots details between hits on robots.txt file and
+- The robot chart now shows details between hits on robots.txt file and
   other hits.
 - Added experimental graphapplet plugin (graph are built by applet).
 - Webmin module updated to 1.210 to integrate all new parameters.
@@ -54,12 +56,13 @@ New features/improvements:
   
 Other/Documentation:
 - A httpd.conf sample to configure AWStats is provided.
-- Added example for analyzing awredir.pl hits with ExtraSections.
+- Added example for analyzing awredir.pl hits by ExtraSections.
 - Updated database:
   wget is known as a "grabber" browser, no more as a robots.
   netcaptor and apt-get added in browser database.
-- asmx and aspx added in mime.pm file.
-- Microsoft URL Control added in robot list.
+  asmx and aspx added in mime.pm file.
+  Microsoft URL Control added in robot list.
+- Documentation seriously updated.
 - Debian icon and some missing country flags added.
 - Prepare code for decodeUTFkeys plugin.
 - Added Hebrew and Galician language.
