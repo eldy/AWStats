@@ -47,7 +47,8 @@ AWStats common use is made in 3 steps:<br>
 <a name="INSTALLAPACHE"><b>A) With Apache or compatible server (on Unix/Linux, Windows, MacOS...)</b></a><br>
 <br>
 <font style="color: #111155"><b>* Step 1-1</b>:</font><br>
-(in most cases, if Apache is correctly setup, this step is not required, just read it to know)<br>
+(if you use a package provided with a Linux distribution or windows installer, this might be
+already done and is not necessary)<br>
 <br>
 Configure your apache web server to have <b>NCSA combined/XLF/ELF</b> log format (you can use your own log format but
 this predefined logformat is often the best choice and make setup easier). You can do this by changing, in <b>httpd.conf</b>,
@@ -62,13 +63,27 @@ your homepage. This is an example of records you should get then in your new log
 <br>
 
 <font style="color: #111155"><b>* Step 1-2</b>:</font><br>
-(if you use a package provided with a Linux distribution, this might not be necessary)<br><br>
-Copy the contents of the provided cgi-bin folder from your hard drive to your server's cgi-bin
-directory (this includes <b>awstats.pl</b>, <b>awstats.model.conf</b>, and the <b>lang</b>, <b>lib</b> and <b>plugins</b> sub-directories).<br>
+(if you use a package provided with a Linux distribution or windows installer, this might be
+already done and is not necessary)<br>
+<br>
+Check that your Apache config file (httpd.conf) contains the following directives and add them
+if not (note that the "/usr/loca/awstats/wwwroot" path might differ according to your
+distribution or OS:<br>
+<br>
+<i>
+#<br>
+# Directives to add to your Apache conf file to allow use of AWStats as a CGI<br>
+#<br>
+Alias /awstatsjs "/usr/local/awstats/wwwroot/js/"<br>
+Alias /awstatsclasses "/usr/local/awstats/wwwroot/classes/"<br>
+Alias /awstatscss "/usr/local/awstats/wwwroot/css/"<br>
+Alias /awstatsicons "/usr/local/awstats/wwwroot/icon/"<br>
+ScriptAlias /awstats/ "/usr/local/awstats/wwwroot/cgi-bin/"<br>
+</i>
 <br>
 
 <font style="color: #111155"><b>* Step 1-3</b>:</font><br>
-(with most Perl interpreter, this step is not required)<br><br>
+(with most Perl interpreter correctly setup, this step is not required)<br><br>
 If necessary, edit the first (top-most) line of awstats.pl file that is<br>
 <i>#!/usr/bin/perl</i><br>
 to reflect the path were your Perl interpreter is installed. Default value works for most of Unix OS, but it also might be<br>
@@ -78,14 +93,17 @@ With Apache for Windows and ActivePerl interpreter, it might be<br>
 <br>
 
 <font style="color: #111155"><b>* Step 1-4</b>:</font><br>
-(if you use a package provided with a Linux distribution, this might not be necessary)<br><br>
+(if you use a package provided with a Linux distribution or windows installer, this might be
+already done and is not necessary)<br>
+<br>
 Move AWStats <b>icon sub-directories</b> and its content into a directory readable by your
 web server, for example /yourwwwroot/icon or /yourwwwroot/icons.<br>
 <br>
 
 <font style="color: #111155"><b>* Step 1-5</b>:</font><br>
 (if you use a package provided with a Linux distribution, your config file might
-have been already created under /etc/awstats directory)<br><br>
+have been already created under /etc/awstats directory)<br>
+<br>
 Create a config file by copying <b>awstats.model.conf</b> file into a new file named <b>awstats.myvirtualhostname.conf</b>.
 You can use the value of your choice instead of "myvirtualhostname". This new file must be stored in<br>
 - For Unix/Linux users: /etc/awstats or /usr/local/etc/awstats or /etc or same directory than awstats.pl (so cgi-bin).<br>
