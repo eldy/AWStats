@@ -938,7 +938,7 @@ sub Read_Config_File {
 
 #------------------------------------------------------------------------------
 # Function:     Get the reference databases
-# Parameter:	None
+# Parameters:	None
 # Return value: None
 # Input:		$DIR
 # Output:		Arrays and Hash tables are defined
@@ -980,7 +980,7 @@ sub Read_Ref_Data {
 
 #------------------------------------------------------------------------------
 # Function:     Get the messages for a specified language
-# Parameter:	Language ID
+# Parameters:	Language ID
 # Input:		$DirLang $DIR
 # Output:		$Message table is defined in memory
 # Return:		None
@@ -1032,7 +1032,7 @@ sub Read_Language_Data {
 
 #------------------------------------------------------------------------------
 # Function:     Get the tooltip texts for a specified language
-# Parameter:	Language id
+# Parameters:	Language id
 # Input:		None
 # Output:		Full tooltips text
 # Return:		None
@@ -1073,7 +1073,7 @@ sub Read_Language_Tooltip {
 
 #------------------------------------------------------------------------------
 # Function:     Get the tooltip texts for a specified language
-# Parameter:	None
+# Parameters:	None
 # Input:		All global variables
 # Output:		Change on some global variables
 # Return:		None
@@ -2566,34 +2566,39 @@ sub Save_History_File {
 }
 
 #------------------------------------------------------------------------------
-# Function:     Load into memory DNS Cache entries
-# Parameter:	None
-# Input:		$DNSCacheFile
-# Output:		%MyDNSTable is filled
-# Return:		None
+# Function:     Load DNS cache file entries into a memory hash array
+# Parameters:	Hash array ref to load into,
+#               File name with data to load from,
+#               Save to hash file if not up to date
+# Input:		None
+# Output:		Hash array is loaded
+# Return:		1 No DNS Cache file found, 0 OK
 #------------------------------------------------------------------------------
 sub Read_DNS_Cache_File {
+	my $hashtoload=shift;
+	my $dnscachefile=shift;
+	my $savetohash=shift;
 	my $filetoload="";
 	my $filehashtoload="";
 	my $timetoload = time();
 	my $hashfileuptodate=1;
 
-	if ($Debug) { debug("Call to Read_DNS_Cache_File [DNSCacheFile=\"$DNSCacheFile\"]"); }
+	if ($Debug) { debug("Call to Read_DNS_Cache_File [file=\"$dnscachefile\"]"); }
 	foreach my $dir ("$DirData",".","") {
 		my $searchdir=$dir;
 		if ($searchdir && (!($searchdir =~ /\/$/)) && (!($searchdir =~ /\\$/)) ) { $searchdir .= "/"; }
-		if (-f "${searchdir}$DNSCacheFile") { $filetoload="${searchdir}$DNSCacheFile"; }
+		if (-f "${searchdir}$dnscachefile") { $filetoload="${searchdir}$dnscachefile"; }
 		if ($Plugin_hashfiles) {
-			if (-f "${searchdir}$DNSCacheFile.hash") {
-				my ($tmp1a,$tmp2a,$tmp3a,$tmp4a,$tmp5a,$tmp6a,$tmp7a,$tmp8a,$tmp9a,$datesource,$tmp10a,$tmp11a,$tmp12a) = stat("${searchdir}$DNSCacheFile");
-				my ($tmp1b,$tmp2b,$tmp3b,$tmp4b,$tmp5b,$tmp6b,$tmp7b,$tmp8b,$tmp9b,$datehash,$tmp10b,$tmp11b,$tmp12b) = stat("${searchdir}$DNSCacheFile.hash");
+			if (-f "${searchdir}$dnscachefile.hash") {
+				my ($tmp1a,$tmp2a,$tmp3a,$tmp4a,$tmp5a,$tmp6a,$tmp7a,$tmp8a,$tmp9a,$datesource,$tmp10a,$tmp11a,$tmp12a) = stat("${searchdir}$dnscachefile");
+				my ($tmp1b,$tmp2b,$tmp3b,$tmp4b,$tmp5b,$tmp6b,$tmp7b,$tmp8b,$tmp9b,$datehash,$tmp10b,$tmp11b,$tmp12b) = stat("${searchdir}$dnscachefile.hash");
 				if ($datesource && $datehash < $datesource) {
 					$hashfileuptodate=0;
 					debug(" Hash file not up to date. Will use source file $filetoload instead.");
 				}
 				else {
 					# There is no source file or there is and hash file is up to date. We can just load hash file
-					$filehashtoload="${searchdir}$DNSCacheFile.hash";
+					$filehashtoload="${searchdir}$dnscachefile.hash";
 				}
 			}
 			elsif ($filetoload) {
@@ -2611,25 +2616,73 @@ sub Read_DNS_Cache_File {
 
 	if ($filehashtoload) {
 		# There is no source file or there is and hash file is up to date. We can just load hash file
-		eval('%MyDNSTable = %{ retrieve("$filehashtoload") };');
+		eval('%$hashtoload = %{ retrieve("$filehashtoload") };');
 	}
 	else {
 		open(DNSFILE,"$filetoload") or error("Error: Couldn't open DNS Cache file \"$filetoload\": $!");
 		# This is the fastest way to load with regexp that I know of
-		%MyDNSTable = map(/^\d+\s+(\d+\.\d+\.\d+\.\d+)\s+(.*)$/o, <DNSFILE>);
+		%$hashtoload = map(/^\d+\s+(\d+\.\d+\.\d+\.\d+)\s+(.*)$/o, <DNSFILE>);
 	   	close DNSFILE;
-		if ($Plugin_hashfiles && ! $hashfileuptodate) {
+		if ($Plugin_hashfiles && ! $hashfileuptodate && $savetohash) {
 			debug(" Save Hash file $filetoload.hash");
-			eval('store(\%MyDNSTable, "$filetoload.hash");');
+			eval('store(\%$hashtoload, "$filetoload.hash");');
 		}
 	}
-	if ($Debug) { debug(" Loaded ".(scalar keys %MyDNSTable)." items from ".($filehashtoload?$filehashtoload:"$filetoload")." in ".(time()-$timetoload)." seconds.",1); }
+	if ($Debug) { debug(" Loaded ".(scalar keys %$hashtoload)." items from ".($filehashtoload?$filehashtoload:"$filetoload")." in ".(time()-$timetoload)." seconds.",1); }
+	return 0;
+}
+
+#------------------------------------------------------------------------------
+# Function:     Save a memory hash array into a DNS cache file
+# Parameters:	Hash array ref to save,
+#               File name,
+# Input:		None
+# Output:		None
+# Return:		0 OK, 1 Error
+#------------------------------------------------------------------------------
+sub Save_DNS_Cache_File {
+	my $hashtosave=shift;
+	my $dnscachefile=shift;
+	my $filehashtosave="";
+	my $timetosave = time();
+	my $nbofelemsaved=0;
+
+	if ($Debug) { debug("Call to Save_DNS_Cache_File [file=\"$dnscachefile\"]"); }
+	if (! scalar keys %$hashtosave) {
+		if ($Debug) { debug(" No data to save"); }
+		return 0;	
+	}
+	if ($Plugin_hashfiles) {
+		# We try to save it as a hash file
+		debug(" Save Hash file $dnscachefile.hash");
+		# TODO Limit size of save
+		eval('store(\%$hashtosave, "$dnscachefile.hash");');
+		$filehashtosave="$dnscachefile.hash";
+		$nbofelemsaved=scalar keys %$hashtosave;
+	}
+	if (! $filehashtosave) {
+		$nbofelemsaved=0;
+		debug(" Save file $dnscachefile");
+		if (! open(DNSFILE,">$dnscachefile")) {
+			warning("Warning: Failed to open for writing last update DNS Cache file \"$dnscachefile\": $!");
+			return 1;
+		}
+		# TODO Limit size of save
+		foreach my $key (keys %$hashtosave) {
+#			if ($hashtosave->{$key} ne "ip") {
+				$nbofelemsaved++;
+				print DNSFILE "0\t$key\t$hashtosave->{$key}\n";
+#			}
+		}
+		close DNSFILE;
+	}
+	if ($Debug) { debug(" Saved $nbofelemsaved items into ".($filehashtosave?$filehashtosave:$dnscachefile)." in ".(time()-$timetosave)." seconds.",1); }
 	return 0;
 }
 
 #------------------------------------------------------------------------------
 # Function:     Return time elapsed since last call in miliseconds
-# Parameter:	0|1 (0 reset counter, 1 no reset)
+# Parameters:	0|1 (0 reset counter, 1 no reset)
 # Input:		None
 # Output:		None
 # Return:		Number of miliseconds elapsed since last call
@@ -2645,7 +2698,7 @@ sub GetDelaySinceStart {
 
 #------------------------------------------------------------------------------
 # Function:     Reset all variables whose name start with _ because a new month start
-# Parameter:	year, month
+# Parameters:	year, month
 # Input:        All variables whose name start with _
 # Output:       All variables whose name start with _
 # Return:		None
@@ -2672,7 +2725,7 @@ sub Init_HashArray {
 
 #------------------------------------------------------------------------------
 # Function:     Change word separators into space and remove bad coded chars
-# Parameter:	stringtodecode
+# Parameters:	stringtodecode
 # Input:        None
 # Output:       None
 # Return:		decodedstring
@@ -2823,7 +2876,7 @@ sub Format_Date {
 
 #--------------------------------------------------------------------
 # Function:     Write a HTML cell with a WhoIs link to parameter
-# Parameter:    Key to used as WhoIs target
+# Parameters:    Key to used as WhoIs target
 # Input:        $LinksToWhoIs
 # Output:       None
 # Return:       String YYYYMMDDHHMMSS
@@ -3518,9 +3571,12 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {
 	if ($pos_size < 0) { error("Error: Your personalized LogFormat does not include all fields required by AWStats (Add \%bytesd in your LogFormat string)."); }
 	if ($Debug) { debug("PerlParsingFormat is $PerlParsingFormat"); }
 
-	# Load DNS Cache File
+	# Load DNS Cache Files
 	#------------------------------------------
-	if ($DNSLookup) { &Read_DNS_Cache_File(); }
+	if ($DNSLookup) {
+		&Read_DNS_Cache_File(\%TmpDNSLookup,"${PROG}dnscachelastupdate$FileSuffix.txt",0);
+		&Read_DNS_Cache_File(\%MyDNSTable,"$DNSCacheFile",1);
+	}
 
 	if ($Debug) { debug("Start Update process"); }
 
@@ -4258,6 +4314,10 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {
 		}
 		close(LOG);
 	}
+
+	# Save hash
+	# TODO Save a file for ok and a file for ip
+	Save_DNS_Cache_File(\%TmpDNSLookup,"$DirData/${PROG}dnscachelastupdate.txt");
 }
 # End of log processing if ($UPdateStats)
 
