@@ -1594,7 +1594,7 @@ sub Check_Config {
 	# Optional accuracy setup section
 	if ($LevelForWormsDetection !~ /^\d+/)       	{ $LevelForWormsDetection=0; }
 	if ($LevelForRobotsDetection !~ /^\d+/)       	{ $LevelForRobotsDetection=2; }
-	if ($LevelForBrowsersDetection !~ /^\d+/)     	{ $LevelForBrowsersDetection=2; }
+	if ($LevelForBrowsersDetection !~ /^\w+/)     	{ $LevelForBrowsersDetection=2; }   # Can be 'allphones'
 	if ($LevelForOSDetection !~ /^\d+/)    			{ $LevelForOSDetection=2; }
 	if ($LevelForRefererAnalyze !~ /^\d+/)			{ $LevelForRefererAnalyze=2; }
 	if ($LevelForFileTypesDetection !~ /^\d+/)		{ $LevelForFileTypesDetection=2; }
@@ -5673,25 +5673,28 @@ if ($FrameName ne 'index') {
 	&Read_Language_Data($Lang);
 	if ($FrameName ne 'mainleft') {
 		my %datatoload=();
+		my ($filedomains,$filemime,$filerobots,$fileworms,$filebrowser,$fileos,$filese)=('domains','mime','robots','worms','browsers','operating_systems','search_engines');
+        my ($filestatushttp,$filestatussmtp)=('status_http','status_smtp');
+		if ($LevelForBrowsersDetection eq 'allphones') { $filebrowser='browsers_phone'; }
 		if ($UpdateStats) {				# If update
-			if ($LevelForFileTypesDetection<2)	{ $datatoload{'mime'}=1; }		# Only if need to filter on known extensions
-			if ($LevelForRobotsDetection) 		{ $datatoload{'robots'}=1; }	# ua
-			if ($LevelForWormsDetection) 		{ $datatoload{'worms'}=1; }		# url
-			if ($LevelForBrowsersDetection)		{ $datatoload{'browsers'}=1; }	# ua
-			if ($LevelForOSDetection)			{ $datatoload{'operating_systems'}=1; }	# ua
-			if ($LevelForRefererAnalyze)		{ $datatoload{'search_engines'}=1; }	# referer
+			if ($LevelForFileTypesDetection<2)	{ $datatoload{$filemime}=1; }		    # Only if need to filter on known extensions
+			if ($LevelForRobotsDetection) 		{ $datatoload{$filerobots}=1; }	        # ua
+			if ($LevelForWormsDetection) 		{ $datatoload{$fileworms}=1; }		    # url
+			if ($LevelForBrowsersDetection)		{ $datatoload{$filebrowser}=1; }	    # ua
+			if ($LevelForOSDetection)			{ $datatoload{$fileos}=1; }	            # ua
+			if ($LevelForRefererAnalyze)		{ $datatoload{$filese}=1; }	            # referer
 			# if (...) { $datatoload{'referer_spam'}=1; }
 		}
 		if (scalar keys %HTMLOutput) {	# If output
-			if ($ShowDomainsStats) 				{ $datatoload{'domains'}=1; }
-			if ($ShowFileTypesStats) 			{ $datatoload{'mime'}=1; }
-			if ($ShowRobotsStats) 				{ $datatoload{'robots'}=1; }
-			if ($ShowWormsStats) 				{ $datatoload{'worms'}=1; }
-			if ($ShowBrowsersStats) 			{ $datatoload{'browsers'}=1; }
-			if ($ShowOSStats) 					{ $datatoload{'operating_systems'}=1; }
-			if ($ShowOriginStats) 				{ $datatoload{'search_engines'}=1; }
-			if ($ShowHTTPErrorsStats) 			{ $datatoload{'status_http'}=1; }
-			if ($ShowSMTPErrorsStats) 			{ $datatoload{'status_smtp'}=1; }
+			if ($ShowDomainsStats) 				{ $datatoload{$filedomains}=1; }
+			if ($ShowFileTypesStats) 			{ $datatoload{$filemime}=1; }
+			if ($ShowRobotsStats) 				{ $datatoload{$filerobots}=1; }
+			if ($ShowWormsStats) 				{ $datatoload{$fileworms}=1; }
+			if ($ShowBrowsersStats) 			{ $datatoload{$filebrowser}=1; }
+			if ($ShowOSStats) 					{ $datatoload{$fileos}=1; }
+			if ($ShowOriginStats) 				{ $datatoload{$filese}=1; }
+			if ($ShowHTTPErrorsStats) 			{ $datatoload{$filestatushttp}=1; }
+			if ($ShowSMTPErrorsStats) 			{ $datatoload{$filestatussmtp}=1; }
 		}
 		&Read_Ref_Data(keys %datatoload);
 	}
