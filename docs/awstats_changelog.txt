@@ -27,7 +27,7 @@ AWStats Changelog
 - Fixed: Fix a bug when using IIS and %query or cs-query-string tag in
   LogFormat and URLWithQuery=1.
 - Fixed: #include now works correctly.
-- Added Albanian and Bulgarian language.
+- Added Albanian, Bulgarian and Welsh language.
 - Added Seychelles flag.
 
 
