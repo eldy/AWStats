@@ -135,3 +135,6 @@ message131=EMail Emetteur
 message132=EMail Destinataire
 message133=Période d'analyse
 message134=Extra/Marketing
+message135=Résolution écran
+message136=Attaques Worm/Virus
+message137=Ajout aux favoris
