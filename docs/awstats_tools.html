@@ -89,6 +89,34 @@ All those tools are available in <b>tools</b> directory of AWStats distribution.
 <br>
 
 <br>
+<br><a name="urlaliasbuilder"><H2 style="font: 22px arial,helvetica,sanserif color: #606060"><u>urlaliasbuilder.pl</u></H2></a>
+<br>Urlaliasbuilder generates an 'urlalias' file from an input file.
+<br>The input file must contain a list of URLs (It can be an AWStats history file).
+<br>For each of thoose URLs, the script get the corresponding HTML page and catch the
+<br>header information (title), then it writes an output file that contains one line
+<br>for each URLs and several fields:
+<br>- The first field is the URL,
+<br>- The second is title caught from web page.
+<br>This resulting file can be used by AWStats urlalias plugin.
+<br>
+<br>Usage:   urlaliasbuilder.pl -server=www.myserver.com [options]
+<br>
+<br>The server parameter contains the web server to get the page from.
+<br>Where options are:
+<br>  -urllistfile=Input urllist file
+<br>	If this file is an AWStats history file then urlaliasbuilder will use the
+<br>    SIDER section of this file as its input URL's list.
+<br>  -urlaliasfile=Output urlalias file to build
+<br>  -overwrite
+<br>
+<br>Example: urlaliasbuilder.pl -server=www.someotherhost.com
+<br>
+<br>New versions and FAQ at http://awstats.sourceforge.net
+<br>
+<br>This script was written from simonjw original works title-grabber.pl.
+<br>
+
+<br>
 <br><a name="logresolvemerge"><H2 style="font: 22px arial,helvetica,sanserif color: #606060"><u>logresolvemerge.pl</u></H2></a>
 <br>logresolvemerge allows you to merge several log files into one output,
 <br>sorted on date. It also makes a fast reverse DNS lookup to replace
