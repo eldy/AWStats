@@ -56,7 +56,7 @@
 #"tcl",
 "unlost_web_crawler",
 "voila",
-"voyager",
+"voyager\/",		# Add / to avoid to exclude voyager browser
 "webbase",
 "weblayers",
 #"webs",
@@ -576,7 +576,7 @@
 "valkyrie","Valkyrie",
 "victoria","Victoria",
 "visionsearch","vision-search",
-"voyager","Voyager",
+"voyager\/","Voyager",
 "vwbot","VWbot",
 "w3index","The NWI Robot",
 "w3m2","W3M2",
