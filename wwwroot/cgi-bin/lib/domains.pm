@@ -11,6 +11,7 @@
 
 # DomainsHashIDLib
 # List of domain with their name ("domain id", "Domain name")
+# Official list can be found at http://www.iana.org/cctld/cctld-whois.htm
 #-------------------------------------------------------
 %DomainsHashIDLib = (
 "localhost","localhost",
