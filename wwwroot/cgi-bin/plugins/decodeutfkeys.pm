@@ -63,7 +63,7 @@ sub DecodeKey_decodeutfkeys {
 	if (! $encoding) { error("Function DecodeKey from plugin decodeutfkeys was called but AWStats don't know language code required to output new value."); }
 	$string =~ s/\\x(\w\w)/%$1/gi;	# Change "\xc4\xbe\xd7\xd3\xc3\xc0" into "%c4%be%d7%d3%c3%c0"
 	$string=URI::Escape::uri_unescape($string);
-	if ( $string =~ m/^([\x00-\x7f]|[\xc2-\xdf][\x80-\xbf]|\xe0[\xa0-\xbf][\x80-\xbf]|[\xe1-\xef][\x80-\xbf][\x80-\xbf]|\xf0[\x90-\xbf][\x80-\xbf][\x80-\xbf]|[\xf1-\xf7][\x80-\xbf][\x80-\xbf][\x80-\xbf])*$/ )
+	if ( $string =~ m/^(?:[\x00-\x7f]|[\xc2-\xdf][\x80-\xbf]|\xe0[\xa0-\xbf][\x80-\xbf]|[\xe1-\xef][\x80-\xbf][\x80-\xbf]|\xf0[\x90-\xbf][\x80-\xbf][\x80-\xbf]|[\xf1-\xf7][\x80-\xbf][\x80-\xbf][\x80-\xbf])*$/ )
 	{
 		$string=Encode::encode($encoding, Encode::decode("utf-8", $string));
 	}

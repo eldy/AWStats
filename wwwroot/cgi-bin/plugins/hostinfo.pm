@@ -112,7 +112,7 @@ sub ShowInfoHost_hostinfo {
 			$linkforwhois=2;
 		}
 		else {	# Hostname
-			$param =~ /([-\w]+\.[-\w]+\.(au|uk|jp|nz))$/ or $param =~ /([-\w]+\.[-\w]+)$/;
+			$param =~ /([-\w]+\.[-\w]+\.(?:au|uk|jp|nz))$/ or $param =~ /([-\w]+\.[-\w]+)$/;
 			$keyforwhois=$1;
 			$linkforwhois=1;
 		}
