@@ -1,4 +1,8 @@
 #!/usr/bin/perl
+# With some other Unix Os, first line might be
+#!/usr/local/bin/perl
+# With Apache for Windows and ActiverPerl, first line might be
+#!c:/program files/activeperl/bin/perl
 # use diagnostics;
 # use strict;
 #-Description-------------------------------------------
@@ -61,7 +65,7 @@ $word, $yearcon, $yearfile, $yearmonthfile, $yeartoprocess) = ();
 @sortsearchwords = @sortsereferrals = @sortsider404 = @sortsiders = @sortunknownip =
 @sortunknownreferer = @sortunknownrefererbrowser = @wordlist = ();
 
-$VERSION="2.24 (build 30)";
+$VERSION="2.24 (build 31)";
 $Lang=0;
 
 # Default value
@@ -284,7 +288,7 @@ $BarImageHorizontal_k = "barrehk.png";
 # Rem: To avoid bad detection, some robots id were removed from this list:
 #      - Robots with ID of 2 letters only
 #      - Robot called "webs"
-# Rem: directhit is changed in direct_hit (it's real id)
+# Rem: directhit is changed in direct_hit (its real id)
 %RobotHash   = (
 "acme.spider", "Acme.Spider",
 "ahoythehomepagefinder", "Ahoy! The Homepage Finder",
@@ -353,7 +357,7 @@ $BarImageHorizontal_k = "barrehk.png";
 "golem", "Golem",
 "googlebot", "Googlebot",
 "grapnel", "Grapnel/0.01 Experiment",
-"griffon", "Griffon                                                               ",
+"griffon", "Griffon",
 "gromit", "Gromit",
 "gulliver", "Northern Light Gulliver",
 "hambot", "HamBot",
@@ -400,7 +404,7 @@ $BarImageHorizontal_k = "barrehk.png";
 "magpie", "Magpie",
 "mediafox", "MediaFox",
 "merzscope", "MerzScope",
-"meshexplorer", "		NEC-MeshExplorer",
+"meshexplorer", "NEC-MeshExplorer",
 "mindcrawler", "MindCrawler",
 "moget", "moget",
 "momspider", "MOMspider",
@@ -432,7 +436,7 @@ $BarImageHorizontal_k = "barrehk.png";
 "pitkow", "html_analyzer",
 "pjspider", "Portal Juice Spider",
 "pka", "PGP Key Agent",
-"plumtreewebaccessor", "PlumtreeWebAccessor ",
+"plumtreewebaccessor", "PlumtreeWebAccessor",
 "poppi", "Poppi",
 "portalb", "PortalB Spider",
 "puu", "GetterroboPlus Puu",
@@ -1873,10 +1877,10 @@ else {
 	$QueryString=""; for (0..@ARGV-1) { $QueryString .= "$ARGV[$_] "; }
 	if ($QueryString =~ /site=/) { $LocalSite=$QueryString; $LocalSite =~ s/.*site=//; $LocalSite =~ s/&.*//; $LocalSite =~ s/ .*//; }
 }
+$QueryString =~ s/<script.*$//i;						# This is to avoid 'Cross Site Scripting attacks'
 if ($QueryString =~ /debug=/) { $Debug=$QueryString; $Debug =~ s/.*debug=//; $Debug =~ s/&.*//; $Debug =~ s/ .*//; }
 ($DIR=$0) =~ s/([^\/\\]*)$//; ($PROG=$1) =~ s/\.([^\.]*)$//; $Extension=$1;
 $LocalSite =~ tr/A-Z/a-z/;
-$LocalSite =~ s/<//g; $LocalSite =~ s/%//g;				# This is to avoid 'Cross Site Scripting attacks'
 $LocalSiteWithoutwww = $LocalSite; $LocalSiteWithoutwww =~ s/www\.//;
 if (($ENV{"GATEWAY_INTERFACE"} eq "") && ($LocalSite eq "")) {
 	print "----- $PROG $VERSION (c) Laurent Destailleur -----\n";
@@ -1946,7 +1950,7 @@ $NewDNSLookup=$DNSLookup;
 # monthnum must be in english because it's used to translate log date in log files which are always in english
 %monthnum =  ( "Jan","01","Feb","02","Mar","03","Apr","04","May","05","Jun","06","Jul","07","Aug","08","Sep","09","Oct","10","Nov","11","Dec","12" );
 
-# Check year and month parameters (check is very restrictive to avoid 'Cross Site Scripting attacks')
+# Check year and month parameters
 if ($QueryString =~ /year=/) 	{ $YearRequired=$QueryString; $YearRequired =~ s/.*year=//; $YearRequired =~ s/&.*//;  $YearRequired =~ s/ .*//; }
 if ($YearRequired !~ /^[\d][\d][\d][\d]$/) { $YearRequired=$nowyear; }
 if ($QueryString =~ /month=/)	{ $MonthRequired=$QueryString; $MonthRequired =~ s/.*month=//; $MonthRequired =~ s/&.*//; $MonthRequired =~ s/ .*//; }
@@ -2543,7 +2547,7 @@ if ($QueryString =~ /action=unknownrefererbrowser/) {
 		$daycon=substr($_unknownrefererbrowser_l{$key},6,2);
 		$hourcon=substr($_unknownrefererbrowser_l{$key},8,2);
 		$mincon=substr($_unknownrefererbrowser_l{$key},10,2);
-		$key =~ s/<SCRIPT>.*<\/SCRIPT>//i;			# This is to avoid 'Cross Site Scripting attacks'
+		$key =~ s/<script.*$//gi;				# This is to avoid 'Cross Site Scripting attacks'
 		if ($Lang == 1) { print "<tr><td CLASS=LEFT>$key</td><td>$daycon/$monthcon/$yearcon - $hourcon:$mincon</td></tr>"; }
 		else { print "<tr><td CLASS=LEFT>$key</td><td>$daycon $monthlib{$monthcon} $yearcon - $hourcon:$mincon</td></tr>"; }
 	}
@@ -2563,7 +2567,7 @@ if ($QueryString =~ /action=unknownreferer/) {
 		$daycon=substr($_unknownreferer_l{$key},6,2);
 		$hourcon=substr($_unknownreferer_l{$key},8,2);
 		$mincon=substr($_unknownreferer_l{$key},10,2);
-		$key =~ s/<SCRIPT>.*<\/SCRIPT>//i;				# This is to avoid 'Cross Site Scripting attacks'
+		$key =~ s/<script.*$//gi;				# This is to avoid 'Cross Site Scripting attacks'
 		if ($Lang == 1) { print "<tr><td CLASS=LEFT>$key</td><td>$daycon/$monthcon/$yearcon - $hourcon:$mincon</td></tr>"; }
 		else { print "<tr><td CLASS=LEFT>$key</td><td>$daycon $monthlib{$monthcon} $yearcon - $hourcon:$mincon</td></tr>"; }
 	}
@@ -2578,8 +2582,8 @@ if ($QueryString =~ /action=notfounderror/) {
 	print "<TR bgcolor=$color_TableBGRowTitle><TH>URL</TH><TH bgcolor=$color_h>$message[49][$Lang]</TH><TH>$message[23][$Lang]</TH></TR>\n";
 	@sortsider404=sort { $SortDir*$_sider404_h{$a} <=> $SortDir*$_sider404_h{$b} } keys (%_sider404_h);
 	foreach $key (@sortsider404) {
-		$url=$key; $url =~ s/<SCRIPT>.*<\/SCRIPT>//i; 							# This is to avoid 'Cross Site Scripting attacks'
-		$referer=$_referer404_h{$key}; $referer =~ s/<SCRIPT>.*<\/SCRIPT>//i;	# This is to avoid 'Cross Site Scripting attacks'
+		$url=$key; $url =~ s/<script.*$//gi; 							# This is to avoid 'Cross Site Scripting attacks'
+		$referer=$_referer404_h{$key}; $referer =~ s/<script.*$//gi;	# This is to avoid 'Cross Site Scripting attacks'
 		print "<tr><td CLASS=LEFT>$url</td><td>$_sider404_h{$key}</td><td>$referer&nbsp;</td></tr>";
 	}
 	&tab_end;
