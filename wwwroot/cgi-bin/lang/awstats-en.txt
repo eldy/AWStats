@@ -75,6 +75,6 @@ message72=Navigation
 message73=Day statistics
 message74=Update now
 message75=Bytes
-message76=
+message76=Back to main page
 message77=Top
 message78=dd mmm yyyy - HH:MM
