@@ -21,7 +21,7 @@ use vars qw(%DomainsHashIDLib @RobotsSearchIDOrder_list1 @RobotsSearchIDOrder_li
 #-------------------------------------------------------
 # Defines
 #-------------------------------------------------------
-my $VERSION="4.0 (build 43)";
+my $VERSION="4.0 (build 44)";
 
 # ---------- Init variables -------
 my $Debug=0;
@@ -502,6 +502,7 @@ sub Read_Config_File {
 			}
 		# Read optional section
 		if ($param =~ /^CreateDirDataIfNotExists/)   { $CreateDirDataIfNotExists=$value; next; }
+		if ($param =~ /^SaveDatabaseFilesWithPermissionsForEveryone/)   { $SaveDatabaseFilesWithPermissionsForEveryone=$value; next; }
 		if ($param =~ /^PurgeLogFile/)          { $PurgeLogFile=$value; next; }
 		if ($param =~ /^ArchiveLogRecords/)     { $ArchiveLogRecords=$value; next; }
 		if ($param =~ /^KeepBackupOfHistoricFiles/)     { $KeepBackupOfHistoricFiles=$value; next; }
@@ -793,6 +794,7 @@ sub Check_Config {
 	if ($AllowToUpdateStatsFromBrowser !~ /[0-1]/) 	{ $AllowToUpdateStatsFromBrowser=0; }
 	# Optional section
 	if ($CreateDirDataIfNotExists !~ /[0-1]/)      	{ $CreateDirDataIfNotExists=0; }
+	if ($SaveDatabaseFilesWithPermissionsForEveryone !~ /[0-1]/)	{ $SaveDatabaseFilesWithPermissionsForEveryone=1; }
 	if ($PurgeLogFile !~ /[0-1]/)                 	{ $PurgeLogFile=0; }
 	if ($ArchiveLogRecords !~ /[0-1]/)            	{ $ArchiveLogRecords=1; }
 	if ($KeepBackupOfHistoricFiles !~ /[0-1]/)     	{ $KeepBackupOfHistoricFiles=0; }

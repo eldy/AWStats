@@ -32,38 +32,81 @@
 
 <br><br><font style="font: 26px Times;">Little tips about Security</font><br><br>
 
+<br>
 A lot of AWStats users have several web site to manage. This is particularly true for web hosting providers.
 The most common things you would like to do is to prevent user xxx (having a site www.xxx.com) to see
 statistics of user yyy (having a site www.yyy.com).<br>
-<br>
+<br><br>
 This is example of possible way of working:<br>
 <br>
-<u>1) HIGHLY SECURED</u><br>
-<b>Policy</b>:<br>
+<u>1) VERY HIGHLY SECURED</u><br>
+<font color=blue><b>Policy</b></font>:<br>
+You have several different config/domains owned by different users and you want to build statistics for each
+of them. You don't need that your customer have "real-time" statistics.<br>
+This is a very good choice for web hosting providers with few but very large web sites of important customers.<br>
+<font color=blue><b>Advantage</b></font>:<br>
+Very highly secured.<br>
+<font color=blue><b>Disavdantage</b></font>:<br>
+Statistics are static, no dynamic update/view.<br>
+<font color=blue><b>How</b></font>:<br>
 All statistics pages for a config/domain file are built in static html files using <b>-output -staticlinks</b> option.<br>
 There is no CGI use of AWStats and static built pages are stored in a web protected <b>realm</b> to
 be securely viewed by correct allowed users only (or sent by mails).<br>
-<b>+</b>: Highly secured.<br>
-<b>-</b>: Statistics are static, No way to have dynamic update/view.<br>
-<b>Note</b>: With this policy, AWStats database files can have their own permissions.
-So, set all AWStats database files built by the update process for config/domain1 to have read/write for <i>user1</i>
-(or an admin user) and NO read and/or NO write for any other users.
+If users have a command line access (telnet) on statistics server, you must set correct permissions on AWStats
+database files. Set all AWStats database files (built by the update process) for config/domain1 to have read/write
+for <i>user1</i> (or an admin user) and NO read and NO write permissions for any other users.<br>
+Then, check that the <i>SaveDatabaseFilesWithPermissionsForEveryone</i> is set 0 in your config/domain files.<br>
 If AWStats database files for config/domain1 are read protected, only allowed users can see statistics for config/domain1.<br>
 If AWStats database files for config/domain1 are write protected, only allowed users can update statistics for config/domain1.<br>
-This is a very good choice for web hosting providers with important customers.<br>
 <br>
-<u>2) MEDIUM SECURED</u><br>
-<b>Policy</b>: Statistics pages for a config/domain file can be read dynamically from a browser (with AWStats working as a CGI).<br>
-Use of <b>awstatsusers</b> file to list config/domain a particular user can see/update.<br>
-awstats.pl file must be saved in a web protected <b>realm</b> to allow awstats to get the username when running as CGI.<br>
-<b>+</b>: Statistics are dynamic.<br>
-<b>-</b>: AWStats database files must be readable by anonymous web server user, so if an experimented user can have an access to
-the server (telnet, ftp), he will be able to install and run a hacked version of AWStats that does not check permissions into the <b>awstatsusers</b>.<br>
-<b>Note</b>: With this policy, you must first create a text file called <b>awstatsusers</b>. This file is a text file
-with several records that contains two fields separated by a "<b>;</b>".
-First field is the user name allowed to read statistics from a browser.<br>
+
+<u>2) HIGHLY SECURED</u><br>
+<font color=blue><b>Policy</b></font>:<br>
+You have several different domains owned by different users and you want each owner of a domain
+to be able to see only his/her domain and to be able to update his/her statistics dynamically.<br>
+This might be a good choice for web hosting providers with several small private or public customers.<br>
+<font color=blue><b>Advantage</b></font>:<br>
+Statistics view is dynamic. A site owner can view its statistics dynamically. Update can also
+be made (if allowed) on-line.<br>
+<font color=blue><b>Disadvantage</b></font>:<br>
+No way to have 2 configurations files for 1 particular domain.<br>
+<font color=blue><b>How</b></font>:<br>
+First, AWStats must be placed in its own cgi-bin-awstats directory with no way for users to
+put in it a hacked verion of AWStats (a not writeable directory).<br>
+Then, you must add an environment variable called <b>AWSTATS_CONFIG</b> in the web server environment
+for each domain to say wich config file to use for a particular domain.<br>
+<u>With Apache web server, you must use the '<i>SetEnv</i>' directive. This is an example:</u><br><i>
+&lt;VirtualHost www.xxx.yyy.zzz&gt;<br>
+&nbsp; ServerAdmin  webmaster@mydomain.com<br>
+&nbsp; ServerName   mydomain.com<br>
+&nbsp; ScriptAlias  /cgi-bin-awstats/<br>
+&nbsp; DocumentRoot /usr/local/apache/html<br>
+&nbsp; SetEnv AWSTATS_CONFIG myconfigvalueformydomain<br>
+&lt;/VirtualHost&gt;<br>
+</i>
+When using AWStats as a CGI with the following URL '<i>http://mydomain.com/cgi-bin-awstats/awstats.pl</i>', AWStats
+will use the config file called <i>awstats.myconfigvalueformydomain.conf</i> to choose which statistics used,
+even if a visitor try to force the config file with the URL '<i>http://mydomain.com/cgi-bin-awstats/awstats.pl?config=xxx</i>'.<br>
+<br>
+
+<u>3) MEDIUM SECURED</u><br>
+!!! This policy is not possible yet as the use of file awstatsusers is not yet developped. !!!<br>
+<font color=blue><b>Policy</b></font>:<br>
+You have several config/domain and several users. You want to specify (using a <b>awstatsusers</b> file) wich user can see
+or update dinamically statistics for each config/domain.<br>
+<font color=blue><b>Advantage</b></font>:<br>
+Statistics are dynamic. High level of manageability.<br>
+<font color=blue><b>Disadvantage</b></font>:<br>
+AWStats database files must be readable by anonymous web server user, so if an experimented user can have an access to
+the server where AWStats database files are stored, he will be able to install and run a hacked version
+of AWStats that does not check permissions into the awstatsusers file and see/update from other config files.<br>
+<font color=blue><b>How</b></font>:<br>
+awstats.pl file must be saved in a web protected <b>realm</b> to allow awstats to get the username from
+when running as CGI.<br>
+Then you must create the text file awstatsusers. This file is a text file with several records that contains
+two fields separated by a "<b>;</b>". First field is the user name allowed to read statistics from a browser.
 Second field is a list (separated by comma "<b>,</b>") of all visible config/domain allowed for this user.<br>
-<u>Example of <b>awstatsusers</b> file:</u><br><i>
+<u>Example of awstatsusers file:</u><br><i>
 user1;*<br>
 user2;www.domain2.com<br>
 user3;www.domain3a.com,www.domain3b.com<br>
@@ -77,22 +120,21 @@ AuthType Basic<br>
 require valid-user<br>
 &lt;/Files&gt;
 </i><br>
-<br>
-Save the <b>awstatsusers</b> file in the <b>DirData</b> directory (directory where AWStats save its database) and put on this file "read only"
+And save the <b>awstatsusers</b> file in the <b>DirData</b> directory (directory where AWStats save its database) and put on this file "read only"
 permissions for everyone.<br>
 <br>
-<u>3) LOW SECURED</u><br>
-<b>Policy</b>: Same as 2 with no use of <b>awstatsusers</b>.<br>
-<b>+</b>: Setup is very easy (No need of particular setup). Statistics are dynamic.<br>
-<b>-</b>: No way to prevent stats for config/domain to be seen by a user that known the
+<u>4) LOW SECURED</u><br>
+<font color=blue><b>Policy</b></font>:<br>
+Same as 3 with no use of <b>awstatsusers</b>.<br>
+This is the most common way of working for all users that have only one hosts
+and don't want to have restricted accounts to manage.<br>
+<font color=blue><b>Advantage</b></font>:<br>
+Setup is very easy (No need of particular setup). Statistics are dynamic.<br>
+<font color=blue><b>Disadvantage</b></font>:<br>
+No way to prevent stats for config/domain to be seen by a user that known the
 config/domain name and the url syntax to see stats of a particular config/domain.<br>
-<b>Note</b>: This is the most common way of working for all users that have only one hosts
-and no restricted accounts to manage.<br>
-
-
-
-
-
+<font color=blue><b>How</b></font>:<br>
+No particular things to do.<br>
 <br>
 
 

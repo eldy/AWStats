@@ -60,6 +60,7 @@ it with its value when reading it), follow the example:<br>
 <br><b>OPTIONAL SETUP SECTION (Not required but increase AWStats features)</b><br>
 <ul>
 <li><a href="#CreateDirDataIfNotExists">CreateDirDataIfNotExists</a>
+<li><a href="#SaveDatabaseFilesWithPermissionsForEveryone">SaveDatabaseFilesWithPermissionsForEveryone</a>
 <li><a href="#PurgeLogFile">PurgeLogFile</a>
 <li><a href="#ArchiveLogRecords">ArchiveLogRecords</a>
 <li><a href="#KeepBackupOfHistoricFiles">KeepBackupOfHistoricFiles</a>
@@ -312,6 +313,7 @@ it with its value when reading it), follow the example:<br>
 
 <br><br><hr>
 
+<a name="CreateDirDataIfNotExists"><b>CreateDirDataIfNotExists</b></a><br>
 <br># If the "DirData" directory (see above) does not exists, AWStats return an
 <br># error. However, you can ask AWStats to create it. This option can be used by
 <br># some Web Hosting Providers that has defined a dynamic value for DirData (for
@@ -323,6 +325,21 @@ it with its value when reading it), follow the example:<br>
 
 <br><br><hr>
 
+<a name="SaveDatabaseFilesWithPermissionsForEveryone"><b>SaveDatabaseFilesWithPermissionsForEveryone</b></a><br>
+<br># In most case, AWStats is used as a cgi program. So AWStats process is runned
+<br># by default web server user (nobody for Unix, IUSR_xxx for IIS/Windows,...).
+<br># To avoid permission problems between update process often runned by an admin
+<br># user (root for Unix, Administrator for Windows,...), AWStats save its
+<br># database files by default with read and write for everyone. You can set this
+<br># parameter to 0, if you want AWStats to keep user process default permission.
+<br># Possible values: 1 or 0
+<br># Default: 1
+<br>#
+<br>SaveDatabaseFilesWithPermissionsForEveryone=1
+
+<br><br><hr>
+
+<a name="PurgeLogFile"><b>PurgeLogFile</b></a><br>
 <br># AWStats can purge log after processing it. By this way, the next time you
 <br># launch AWStats, log file will be smaller and processing time will be better.
 <br># IMPORTANT !!!
@@ -340,6 +357,7 @@ it with its value when reading it), follow the example:<br>
 
 <br><br><hr>
 
+<a name="ArchiveLogRecords"><b>ArchiveLogRecords</b></a><br>
 <br># When PurgeLogFile is setup to 1, AWStats will clean your log file after
 <br># processing it. You can however keep an archive file (saved in "DirData") of
 <br># all processed log records by setting this to 1 (For example if you want to
@@ -352,6 +370,7 @@ it with its value when reading it), follow the example:<br>
 
 <br><br><hr>
 
+<a name="KeepBackupOfHistoricFiles"><b>KeepBackupOfHistoricFiles</b></a><br>
 <br># Each time you run the update process, AWStats overwrite the 'historic file'
 <br># for the month (awstatsMMYYYY[.*].txt) with the updated one.
 <br># When write errors occurs (IO, disk full,...), this historic file can be
@@ -366,6 +385,7 @@ it with its value when reading it), follow the example:<br>
 
 <br><br><hr>
 
+<a name="Lang"><b>Lang</b></a><br>
 <br># Set your primary language.
 <br># Possible value:
 <br>#  Bosnian=ba, Chinese (Taiwan)=tw, Chinese (Traditional)=cn, Czech=cz,
@@ -380,6 +400,7 @@ it with its value when reading it), follow the example:<br>
 
 <br><br><hr>
 
+<a name="DirLang"><b>DirLang</b></a><br>
 <br># Set the location of language files.
 <br># Example: "/opt/awstats/lang"
 <br># Default: "./lang" (means lang directory is in same location than awstats.pl)
@@ -388,6 +409,7 @@ it with its value when reading it), follow the example:<br>
 
 <br><br><hr>
 
+<a name="DefaultFile"><b>DefaultFile</b></a><br>
 <br># Index page name for your web server.
 <br># Example: "default.htm"
 <br># Default: "index.html"
