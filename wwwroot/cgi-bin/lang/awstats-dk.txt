@@ -1,4 +1,4 @@
-# Danish message file
+# Danish message file by Ole Stanstrup
 # $Revision$ - $Date$
 message0=Ukendt
 message1=Ukendt (unresolved ip)
@@ -108,9 +108,9 @@ message104=Indgangssider
 message105=Kode
 message106=Gennemsnitsstørrelse
 message107=Links fra en nyhedsgruppe
-message108=KB
-message109=MB
-message110=GB
+message108=Kb
+message109=Mb
+message110=Gb
 message111=Grabber
 message112=Ja
 message113=Nej
@@ -134,3 +134,8 @@ message130=Ordnet liste
 message131=Afsenderens E-mail
 message132=Modtagerens E-mail
 message133=Rapporteret periode
+message134=Ekstra
+message135=Skærm opløsninger - <a href="aktiver.html">Aktiver</a>
+message136=Orm/Virus angreb
+message137=Tilføj til Forefrukne
+
