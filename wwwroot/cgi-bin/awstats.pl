@@ -21,7 +21,7 @@ use Socket;
 #------------------------------------------------------------------------------
 use vars qw/ $REVISION $VERSION /;
 $REVISION='$Revision$'; $REVISION =~ /\s(.*)\s/; $REVISION=$1;
-$VERSION="5.91 (build $REVISION)";
+$VERSION="6.0 (build $REVISION)";
 
 # ----- Constants -----
 use vars qw/
@@ -131,7 +131,7 @@ $ShowDropped $ShowCorrupted $ShowUnknownOrigin $ShowLinksToWhoIs
 $ShowEMailSenders $ShowEMailReceivers $ShowClusterStats
 $AuthenticatedUsersNotCaseSensitive
 $Expires $UpdateStats $MigrateStats $URLNotCaseSensitive $URLWithQuery $URLReferrerWithQuery
-$UseXMLForOutput $DecodeUA
+$UseXMLForOutput $UseXMLForHistory $DecodeUA
 /;
 ($EnableLockForUpdate, $DNSLookup, $AllowAccessFromWebToAuthenticatedUsersOnly,
 $BarHeight, $BarWidth, $CreateDirDataIfNotExists, $KeepBackupOfHistoricFiles,
@@ -142,8 +142,8 @@ $ShowDropped, $ShowCorrupted, $ShowUnknownOrigin, $ShowLinksToWhoIs,
 $ShowEMailSenders, $ShowEMailReceivers, $ShowClusterStats,
 $AuthenticatedUsersNotCaseSensitive,
 $Expires, $UpdateStats, $MigrateStats, $URLNotCaseSensitive, $URLWithQuery, $URLReferrerWithQuery,
-$UseXMLForOutput, $DecodeUA)=
-(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
+$UseXMLForOutput, $UseXMLForHistory, $DecodeUA)=
+(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
 use vars qw/
 $AllowToUpdateStatsFromBrowser
 $ArchiveLogRecords $DetailedReportsOnNewWindows
@@ -1362,6 +1362,7 @@ sub Check_Config {
 		debug(" ValidSMTPCodes ".(join(',',keys %ValidSMTPCodes)),2);
 		debug(" UseFramesWhenCGI=$UseFramesWhenCGI",2);
 		debug(" UseXMLForOutput=$UseXMLForOutput",2);
+		debug(" UseXMLForHistory=$UseXMLForHistory",2);
 	}
 
 	# Main section
@@ -1518,6 +1519,7 @@ sub Check_Config {
 	if ($FirstDayOfWeek !~ /[01]/)               	{ $FirstDayOfWeek=1; }
 	if ($UseFramesWhenCGI !~ /[01]/)  				{ $UseFramesWhenCGI=1; }
 	if ($UseXMLForOutput !~ /[01]/)  				{ $UseXMLForOutput=0; }
+	if ($UseXMLForHistory !~ /[01]/)  				{ $UseXMLForHistory=0; }
 	if ($DetailedReportsOnNewWindows !~ /[012]/)  	{ $DetailedReportsOnNewWindows=1; }
 	if ($ShowLinksOnUrl !~ /[01]/)               	{ $ShowLinksOnUrl=1; }
 	if ($MaxLengthOfURL !~ /^\d+/ || $MaxLengthOfURL<1) { $MaxLengthOfURL=72; }
@@ -1898,6 +1900,7 @@ sub Read_History_With_TmpUpdate {
 	}
 	if ($withupdate) {
 		open(HISTORYTMP,">$filetowrite") || error("Couldn't open file \"$filetowrite\" for write: $!");
+		binmode HISTORYTMP;
 		Save_History("header",$year,$month);
 	}
 
@@ -1909,6 +1912,9 @@ sub Read_History_With_TmpUpdate {
 		while (<HISTORY>) {
 			chomp $_; s/\r//;
 			$countlines++;
+			
+			# Ignore lines started by a XML tag
+			if ($_ =~ /^</) { next; }
 
 			# Extract version from first line
 			if (! $versionnum && $_ =~ /^AWSTATS DATA FILE (\d+).(\d+)/i) {
@@ -3174,10 +3180,10 @@ sub Save_History {
 		print HISTORYTMP "AWSTATS DATA FILE $VERSION\n";
 		print HISTORYTMP "# If you remove this file, all statistics for date $year-$month will be lost/reset.\n";
 		print HISTORYTMP "\n";
-		print HISTORYTMP "# Position (offset in bytes) in this file of beginning of each section\n";
-		print HISTORYTMP "# for direct I/O access. If you made changes somewhere in this file, you\n";
-		print HISTORYTMP "# should also remove completely the MAP section (AWStats will rewrite it\n";
-		print HISTORYTMP "# at next update).\n";
+		print HISTORYTMP "# Position (offset in bytes) in this file of beginning of each section for\n";
+		print HISTORYTMP "# direct I/O access. If you made changes somewhere in this file, you should\n";
+		print HISTORYTMP "# also remove completely the MAP section (AWStats will rewrite it at next\n";
+		print HISTORYTMP "# update).\n";
 		print HISTORYTMP "BEGIN_MAP ".(26+(scalar keys %TrapInfosForHTTPErrorCodes)+(scalar @ExtraName?scalar @ExtraName-1:0))."\n";
 		print HISTORYTMP "POS_GENERAL ";$PosInFile{"general"}=tell HISTORYTMP;print HISTORYTMP "$spacebar\n";
 		# When
@@ -3808,6 +3814,7 @@ sub Read_DNS_Cache {
 	if ($PluginsLoaded{'LoadCache'}{'hashfiles'}) { LoadCache_hashfiles($filetoload,$hashtoload); }
 	if (! scalar keys %$hashtoload) {
 		open(DNSFILE,"$filetoload") or error("Couldn't open DNS Cache file \"$filetoload\": $!");
+		binmode DNSFILE;
 		# This is the fastest way to load with regexp that I know
 		%$hashtoload = map(/^(?:\d{0,10}\s+)?([0-9A-F:\.]+)\s+([^\s]+)$/oi,<DNSFILE>);
 		close DNSFILE;
@@ -3856,6 +3863,7 @@ sub Save_DNS_Cache_File {
 			warning("Warning: Failed to open for writing last update DNS Cache file \"$filetosave\": $!");
 			return 1;
 		}
+		binmode DNSFILE;
 		my $starttimemin=int($starttime/60);
 		foreach my $key (keys %$hashtosave) {
 			#if ($hashtosave->{$key} ne '*') {
@@ -4033,6 +4041,8 @@ sub FileCopy {
 	if ($Debug) { debug("FileCopy($filesource,$filetarget)",1); }
 	open(FILESOURCE,"$filesource") || return 1;
 	open(FILETARGET,">$filetarget") || return 1;
+	binmode FILESOURCE;
+	binmode FILETARGET;
 	# ...
 	close(FILETARGET);
 	close(FILESOURCE);
@@ -6544,6 +6554,7 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 		else {
 			open(LOG,"+<$LogFile");
 		}
+		binmode LOG;
 	}
 
 	# Rename all HISTORYTMP files into HISTORYTXT
@@ -6555,6 +6566,7 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 		if ($ArchiveLogRecords == 1) {
 			if ($Debug) { debug("Start of archiving log file"); }
 			open(ARCHIVELOG,">>$ArchiveFileName") || error("Couldn't open file \"$ArchiveFileName\" to archive log: $!");
+			binmode ARCHIVELOG;
 			while (<LOG>) {
 				if (! print ARCHIVELOG $_) { $archiveok=0; last; }
 			}
