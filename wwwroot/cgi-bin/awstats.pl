@@ -563,7 +563,7 @@ sub html_head {
 			print <<EOF;
 <STYLE TYPE="text/css">
 <!--
-BODY { font: 12px arial, verdana, helvetica, sans-serif; background-color: #$color_Background; }
+BODY { font: 12px arial, verdana, helvetica, sans-serif; background-color: #$color_Background; margin-top: 0 }
 TH { font: 12px arial, verdana, helvetica, sans-serif; text-align:center; color: #$color_titletext; }
 TH.AWL { font-size: 14px; font-weight: bold; }
 TD { font: 12px arial, verdana, helvetica, sans-serif; text-align:center; color: #$color_text; }
@@ -579,10 +579,6 @@ A:hover   { color: #$color_hover; text-decoration: underline; }
 .TABLETITLEFULL  { font: 14px verdana, arial, helvetica, sans-serif; font-weight: bold; background-color: #$color_TableBGTitle; text-align: center; margin-bottom: 0; padding: 2px; }
 .TABLETITLEBLANK { font: 14px verdana, arial, helvetica, sans-serif; background-color: #$color_Background; }
 .CFormFields { font: 14px verdana, arial, helvetica; }
-.tablecontainer  { width: 100% }
-\@media projection {
-.tablecontainer { page-break-before: always; }
-}
 EOF
 		# Call to plugins' function AddHTMLStyles
 		foreach my $pluginname (keys %{$PluginsLoaded{'AddHTMLStyles'}})  {
@@ -598,9 +594,10 @@ EOF
 			}
 		}
 		print "</head>\n\n";
-		if ($FrameName ne 'index' && $FrameName ne 'mainleft') {
+		if ($FrameName ne 'index') { print "<body>\n"; }
+		if ($FrameName ne 'index' && $FrameName ne 'mainleft' && $ShowLinksToWhoIs) {
 print <<EOF;
-<SCRIPT Javascript>
+<SCRIPT type="javascript">
 function neww(a,b) {
 	var wfeatures="directories=0,menubar=1,status=0,resizable=1,scrollbars=1,toolbar=0,width=$WIDTHINFO,height=$HEIGHTINFO,left=" + eval("(screen.width - $WIDTHINFO)/2") + ",top=" + eval("(screen.height - $HEIGHTINFO)/2");
 	if (b==1) { fen=window.open('$LinksToWhoIs'+a,'whois',wfeatures); }
@@ -610,7 +607,6 @@ function neww(a,b) {
 
 EOF
 		}
-		if ($FrameName ne 'index') { print "<body>\n"; }
 	}
 }
 
@@ -655,7 +651,6 @@ sub tab_head {
 	my $title=shift;
 	my $tooltip=shift;
 	my $width=shift||70;
-	print "<div class=\"tablecontainer\">\n";
 	print "<TABLE CLASS=\"TABLEFRAME\" BORDER=0 CELLPADDING=2 CELLSPACING=0 WIDTH=\"100%\">\n";
 	if ($tooltip) {
 		print "<TR><TD class=\"TABLETITLEFULL\" width=\"$width%\"".($TOOLTIPON?" onmouseover=\"ShowTip($tooltip);\" onmouseout=\"HideTip($tooltip);\"":"").">$title </TD>";
@@ -676,7 +671,7 @@ sub tab_head {
 #------------------------------------------------------------------------------
 sub tab_end {
 	print "</TABLE></TD></TR></TABLE>";
-	print "</div><br>\n\n";
+	print "<br>\n\n";
 }
 
 #------------------------------------------------------------------------------
@@ -4827,7 +4822,7 @@ if ($AllowAccessFromWebToAuthenticatedUsersOnly && $ENV{'GATEWAY_INTERFACE'}) {
 			if ($ENV{"REMOTE_USER"} eq $key) { $userisinlist=1; last; }
 		}
 		if (! $userisinlist) {
-			error("User <b>".$ENV{"REMOTE_USER"}."</b> is not allowed to access statistics of this domain/config.");
+			error("User '".$ENV{"REMOTE_USER"}."' is not allowed to access statistics of this domain/config.");
 		}
 	}
 }
@@ -4885,9 +4880,13 @@ if ($FrameName eq 'index') {
 	if ($NewLinkParams) { $NewLinkParams="${NewLinkParams}&"; }
 	# Exit if main frame
 	print "<frameset cols=\"$FRAMEWIDTH,*\" border=0 framespacing=2 frameborder=0>\n";
-	print "<frame name=\"mainleft\"  src=\"$AWScript?${NewLinkParams}framename=mainleft\" noresize noborder>\n";
+	print "<frame name=\"mainleft\" src=\"$AWScript?${NewLinkParams}framename=mainleft\" noresize noborder>\n";
 	print "<frame name=\"mainright\" src=\"$AWScript?${NewLinkParams}framename=mainright\" noresize scrolling=\"YES\" noborder>\n";
-	print "<noframes><body>Your browser does not support frames. You must set AWStats UseFramesWhenCGI parameter to 0 to see your reports.</body></noframes>\n";
+	print "<noframes><body>";
+	print "Your browser does not support frames.<br>\n";
+	print "You must set AWStats UseFramesWhenCGI parameter to 0\n";
+	print "to see your reports.<br>\n";
+	print "</body></noframes>\n";
 	print "</frameset>\n";
 	&html_end;
 	exit 0;
@@ -6026,11 +6025,17 @@ if (scalar keys %HTMLOutput) {
 			print "<FORM name=\"FormDateFilter\" action=\"$AWScript?${NewLinkParams}\" style=\"padding: 0px 0px 0px 0px; margin-top: 0\"$NewLinkTarget>\n";
 		}
 
-		if ($FrameName ne 'mainright' && $FrameName ne 'mainleft') { print "<table width=\"100%\"".($frame?" cellspacing=0 cellpadding=0 border=0":"").">\n"; }
-		else { print "<table width=\"100%\" bgcolor=#$color_TableBGTitle".($frame?" cellspacing=0 cellpadding=0 border=0":"").">\n"; }
+		print "<TABLE CLASS=\"TABLEFRAME\" BORDER=0 CELLPADDING=2 CELLSPACING=0 WIDTH=\"100%\">\n";
+		print "<TR><TD>";
+		print "<TABLE CLASS=\"TABLEDATA\" BORDER=0 CELLPADDING=1 CELLSPACING=0 WIDTH=\"100%\">\n";
+
+#		if ($FrameName ne 'mainright' && $FrameName ne 'mainleft') { print "<table width=\"100%\"".($frame?" cellspacing=0 cellpadding=0 border=0":"").">\n"; }
+#		else { print "<table width=\"100%\" bgcolor=#$color_TableBGTitle".($frame?" cellspacing=0 cellpadding=0 border=0":"").">\n"; }
+
 		if ($FrameName ne 'mainright') {
 			# Print Statistics Of
-			print "<tr><th class=AWL>$Message[7]: </th><td class=AWL><font style=\"font-size: 14px;\">".($frame?"&nbsp; ":"")."$SiteDomain</font></td>";
+			if ($FrameName eq 'mainleft') { print "<tr><th class=AWL>$Message[7]:</th></tr><tr><td class=AWL><font style=\"font-size: 14px;\">$SiteDomain</font></td>"; }
+			else { print "<tr><th class=AWL>$Message[7]:&nbsp;</th><td class=AWL><font style=\"font-size: 14px;\">$SiteDomain</font></td>"; }
 
 			# Logo and flags
 			if ($FrameName ne 'mainleft') {
@@ -6048,13 +6053,13 @@ if (scalar keys %HTMLOutput) {
 		if ($FrameName ne 'mainleft') {
 
 			# Print Last Update
-			print "<tr><th class=AWL valign=middle width=$WIDTHMENU1>$Message[35]:</th>";
+			print "<tr><th class=AWL valign=middle width=$WIDTHMENU1>$Message[35]:&nbsp;</th>";
 			print "<td class=AWL valign=middle><font style=\"font-size: 14px;\">";
 			if ($LastUpdate) { print Format_Date($LastUpdate,0); }
 			else {
 				# Here NbOfOldLines = 0 (because LastUpdate is defined)
-				if (! $UpdateStats) { print " <font color=#880000>$Message[24]</font>"; }
-				else { print " <font color=#880000>No qualified records found in log ($NbOfLinesCorrupted corrupted, $NbOfLinesDropped dropped)</font>"; }
+				if (! $UpdateStats) { print "<font color=#880000>$Message[24]</font>"; }
+				else { print "<font color=#880000>No qualified records found in log ($NbOfLinesCorrupted corrupted, $NbOfLinesDropped dropped)</font>"; }
 				
 			}
 			print "</font>";
@@ -6113,9 +6118,11 @@ if (scalar keys %HTMLOutput) {
 			}
 			print "</td></tr>\n";
 		}
-		print "</table>\n";
+		print "</TABLE>\n";
 
-		if ($FrameName ne 'mainleft') { print "</FORM>\n"; if ($FrameName ne 'mainright') { print "<hr>"; } }
+		print "</TD></TR></TABLE>\n";
+
+		if ($FrameName ne 'mainleft') {	print "</FORM>\n"; }
 		else { print "<br>\n"; }
 		print "\n";
 
