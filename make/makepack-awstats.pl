@@ -87,7 +87,7 @@ if (! $TEMP || ! -d $TEMP) {
     sleep 2;
     exit 2;
 } 
-$BUILDROOT="$TEMP/buildroot";
+$BUILDROOT="$TEMP/$PROJET-buildroot";
 
 
 my $copyalreadydone=0;
@@ -193,9 +193,13 @@ if (! $copyalreadydone) {
 	print "Delete directory $BUILDROOT\n";
 	$ret=`rm -fr "$BUILDROOT"`;
 
+	print "Create directory $BUILDROOT\n";
 	mkdir "$BUILDROOT";
-	print "Recopie de $SOURCE dans $BUILDROOT/$PROJECT\n";
+
+	print "Create directory $BUILDROOT/$PROJECT\n";
 	mkdir "$BUILDROOT/$PROJECT";
+
+	print "Recopie de $SOURCE/README.TXT dans $BUILDROOT/$PROJECT\n";
 	$ret=`cp -p "$SOURCE/README.TXT" "$BUILDROOT/$PROJECT"`;
 
 	print "Recopie de $SOURCE/docs dans $BUILDROOT/$PROJECT/docs\n";
