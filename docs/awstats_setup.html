@@ -46,7 +46,7 @@ AWStats common use is made in 3 steps:<br>
 Before starting, check that your Perl version is at least 5.005_03 (or higher) by running the <i>perl -v</i> command.
 If not, you can install a recent Perl interpreter from <a href="http://www.activestate.com/ActivePerl/">ActivePerl</a> (<font color=#221188>Win32</font>) or <a href="http://www.perl.com/pub/language/info/software.html">Perl.com</a> (<font color=#221188>Unix/Linux/Other</font>).<br>
 -->
-<br><a name="INSTALL"><H2 style="font: 22px arial,helvetica,sanserif color: #606060"><u>Step 1 : Install and Setup with awstats_configure.pl</u></H2></a>
+<br><a name="INSTALL"><H2 style="font: 22px arial,helvetica,sanserif color: #606060"><u>Step 0 : Install and Setup with awstats_configure.pl</u></H2></a>
 <br>
 <a name="INSTALLAPACHE"><b>A) With Apache or compatible server (on Unix/Linux, Windows, MacOS...)</b></a><br>
 <br>
@@ -124,13 +124,13 @@ E) awstats_configure.pl ends.<br>
 </ul>
 
 <font style="color: #111155"><b>* Step 0-2</b>:</font><br>
-Once a config file has been automatically created (by awstats_configure.pl, by you package
+Once a config file has been automatically created (by awstats_configure.pl, by your package
 installer or just by a manual copy of awstats.model.conf), it's important to edit it manually and change the "MAIN PARAMETERS"
 to match all your needs:<br>
 <br>
 This is for example the parameters you should check seriously :<br>
-- Check/Change <a href="awstats_config.html#LogFile">LogFile</a> value with full path of your web server log file (You
-can also use a relative path from your awstats.pl directory).<br>
+- Check/Change <a href="awstats_config.html#LogFile">LogFile</a> value with full path of your server log file (You
+can also use a relative path from your awstats.pl directory, but full path avoid errors).<br>
 - Check/Change <a href="awstats_config.html#LogType">LogType</a> value with "W" for analyzing
 web server log files, "S" for a streaming server log file, "M" for mail log files, "F" for ftp log files.<br>
 - Check if <a href="awstats_config.html#LogFormat">LogFormat</a> has the value "1" (it means "NCSA apache combined/ELF/XLF log format")
@@ -306,7 +306,7 @@ like this (jump to second solution if you have ONLY CGI access):<br>
 <br>
 You can use all other output options (each of them give you another report).
 This is how to use all other possible output options(1) :<br>
-<i><b>perl awstats.pl -config=myvirtualhostname -output=alldomains -staticlinks > awstats.myvirtualhostname.allhosts.html</b></i><br>
+<i><b>perl awstats.pl -config=myvirtualhostname -output=alldomains -staticlinks > awstats.myvirtualhostname.alldomains.html</b></i><br>
 <i><b>perl awstats.pl -config=myvirtualhostname -output=allhosts -staticlinks > awstats.myvirtualhostname.allhosts.html</b></i><br>
 <i><b>perl awstats.pl -config=myvirtualhostname -output=lasthosts -staticlinks > awstats.myvirtualhostname.lasthosts.html</b></i><br>
 <i><b>perl awstats.pl -config=myvirtualhostname -output=unknownip -staticlinks > awstats.myvirtualhostname.unknownip.html</b></i><br>
@@ -319,7 +319,7 @@ This is how to use all other possible output options(1) :<br>
 <i><b>perl awstats.pl -config=myvirtualhostname -output=urlexit -staticlinks > awstats.myvirtualhostname.urlexit.html</b></i><br>
 <i><b>perl awstats.pl -config=myvirtualhostname -output=browserdetail -staticlinks > awstats.myvirtualhostname.browserdetail.html</b></i><br>
 <i><b>perl awstats.pl -config=myvirtualhostname -output=osdetail -staticlinks > awstats.myvirtualhostname.osdetail.html</b></i><br>
-<i><b>perl awstats.pl -config=myvirtualhostname -output=unknownbrowsers -staticlinks > awstats.myvirtualhostname.unknownbrowsers.html</b></i><br>
+<i><b>perl awstats.pl -config=myvirtualhostname -output=unknownbrowser -staticlinks > awstats.myvirtualhostname.unknownbrowser.html</b></i><br>
 <i><b>perl awstats.pl -config=myvirtualhostname -output=unknownos -staticlinks > awstats.myvirtualhostname.unknownos.html</b></i><br>
 <i><b>perl awstats.pl -config=myvirtualhostname -output=refererse -staticlinks > awstats.myvirtualhostname.refererse.html</b></i><br>
 <i><b>perl awstats.pl -config=myvirtualhostname -output=refererpages -staticlinks > awstats.myvirtualhostname.refererpages.html</b></i><br>
