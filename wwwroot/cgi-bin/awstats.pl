@@ -106,7 +106,7 @@ $BarImageVertical_k   = "barrevk.png";
 $BarImageHorizontal_k = "barrehk.png";
 
 $AddOn=0;
-require "${DIR}addon.pl"; $AddOn=1; 		# Keep this line commented in standard version
+#require "${DIR}addon.pl"; $AddOn=1; 		# Keep this line commented in standard version
 
 # URL with such end signature are kind of URL we only need to count as hits
 @NotPageList= (
