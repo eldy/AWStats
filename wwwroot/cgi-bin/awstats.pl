@@ -126,7 +126,7 @@ $color_h, $color_k, $color_p, $color_s, $color_u, $color_v)=
 
 
 
-$VERSION="4.0 (build 18)";
+$VERSION="4.0 (build 19)";
 $Lang="en";
 
 # Default value
@@ -3545,7 +3545,7 @@ EOF
 		$max_p=1; $max_k=1;
 		foreach my $key (@keylist) {
 			if ($_url_p{$key} > $max_p) { $max_p = $_url_p{$key}; }
-			if ($_url_k{$key} > $max_k) { $max_k = $_url_k{$key}; }
+			if ($_url_k{$key}/($_url_p{$key}||1) > $max_k) { $max_k = $_url_k{$key}/($_url_p{$key}||1); }
 		}
 		foreach my $key (@keylist) {
 	    	print "<TR><TD CLASS=AWL>";
@@ -3554,15 +3554,15 @@ EOF
 			if (length($nompage)>$MaxLengthOfURL) { $nompage=substr($nompage,0,$MaxLengthOfURL)."..."; }
 		    if ($ShowLinksOnUrl) { print "<A HREF=\"http://$SiteToAnalyze$key\">$nompage</A>"; }
 		    else              	 { print "$nompage"; }
-			my $bredde_p=0; my $bredde_k=0; my $bredde_e=0;
-			if ($max_p > 0) { $bredde_p=int($BarWidth*$_url_p{$key}/$max_p)+1; }
-			if ($_url_p{$key} && ($bredde_p==1)) { $bredde_p=2; }
-			if ($max_p > 0) { $bredde_e=int($BarWidth*$_url_e{$key}/$max_p)+1; }
-			if ($_url_e{$key} && ($bredde_e==1)) { $bredde_e=2; }
-			if ($max_k > 0) { $bredde_k=int($BarWidth*$_url_k{$key}/$max_k)+1; }
-			if ($_url_k{$key} && ($bredde_k==1)) { $bredde_k=2; }
-			print "</TD>";
-			print "<TD>$_url_p{$key}</TD><TD>".($_url_e{$key}?$_url_e{$key}:"&nbsp;")."</TD><TD>".($_url_k{$key}?Format_Bytes($_url_k{$key}/$_url_p{$key}||1):"&nbsp;")."</TD>";
+
+			my $bredde_p=0; my $bredde_e=0; my $bredde_k=0;
+			if ($max_p > 0) { $bredde_p=int($BarWidth*($_url_p{$key}||0)/$max_p)+1; }
+			if (($bredde_p==1) && $_url_p{$key}) { $bredde_p=2; }
+			if ($max_p > 0) { $bredde_e=int($BarWidth*($_url_e{$key}||0)/$max_p)+1; }
+			if (($bredde_e==1) && $_url_e{$key}) { $bredde_e=2; }
+			if ($max_k > 0) { $bredde_k=int($BarWidth*(($_url_k{$key}||0)/($_url_p{$key}||1))/$max_k)+1; }
+			if (($bredde_k==1) && $_url_k{$key}) { $bredde_k=2; }
+			print "</TD><TD>$_url_p{$key}</TD><TD>".($_url_e{$key}?$_url_e{$key}:"&nbsp;")."</TD><TD>".($_url_k{$key}?Format_Bytes($_url_k{$key}/($_url_p{$key}||1)):"&nbsp;")."</TD>";
 			if ($AddOn) { AddOn_ShowFields($key); }
 			print "<TD CLASS=AWL>";
 			print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_p\" WIDTH=$bredde_p HEIGHT=6><br>";
@@ -4146,7 +4146,7 @@ EOF
 		&BuildKeyList($MaxNbOfPageShown,$MinHitFile,\%_url_p,\%_url_p);
 		foreach my $key (@keylist) {
 			if ($_url_p{$key} > $max_p) { $max_p = $_url_p{$key}; }
-			if ($_url_k{$key} > $max_k) { $max_k = $_url_k{$key}; }
+			if ($_url_k{$key}/($_url_p{$key}||1) > $max_k) { $max_k = $_url_k{$key}/($_url_p{$key}||1); }
 		}
 		foreach my $key (@keylist) {
 		    print "<TR><TD CLASS=AWL>";
@@ -4170,7 +4170,7 @@ EOF
 			if (($bredde_p==1) && $_url_p{$key}) { $bredde_p=2; }
 			if ($max_p > 0) { $bredde_e=int($BarWidth*($_url_e{$key}||0)/$max_p)+1; }
 			if (($bredde_e==1) && $_url_e{$key}) { $bredde_e=2; }
-			if ($max_k > 0) { $bredde_k=int($BarWidth*($_url_k{$key}||0)/$max_k)+1; }
+			if ($max_k > 0) { $bredde_k=int($BarWidth*(($_url_k{$key}||0)/($_url_p{$key}||1))/$max_k)+1; }
 			if (($bredde_k==1) && $_url_k{$key}) { $bredde_k=2; }
 			print "</TD><TD>$_url_p{$key}</TD><TD>".($_url_e{$key}?$_url_e{$key}:"&nbsp;")."</TD><TD>".($_url_k{$key}?Format_Bytes($_url_k{$key}/($_url_p{$key}||1)):"&nbsp;")."</TD>";
 			print "<TD CLASS=AWL>";
