@@ -1,3 +1,4 @@
+<!-- Norwegian Nynorsk tooltips message file (by Karl Ove Hufthammer <karl@huftis.org>) -->
 <!-- $Revision$ - $Date$ -->
 <div class="CTooltip" id="tt1">
 Eit nytt besøk er ein ny <b>gjest</b> som ikkje har vore tilkopla nettstaden siste <b>#VisitTimeOut# minutt</b>.
@@ -37,10 +38,10 @@ Robotar blir brukt av mange søkjemotorar som besøkjer nettstaden din for å indek
 All tidsrelatert statistikk er basert på tenartida.<br>
 </div>
 <div class="CTooltip" id="tt18">
-Rapporterte tal er <b>gjennomsnittsverdiar</b> (rekna ut frå all data mellom første og siste besøk)
+Rapporterte tal er <b>gjennomsnittsverdiar</b> (rekna ut frå all data mellom første og siste besøk i analyseperioden)
 </div>
 <div class="CTooltip" id="tt19">
-Rapporterte tal er <b>kumulative summar</b> (rekna ut frå all data mellom første og siste besøk)
+Rapporterte tal er <b>kumulative summar</b> (rekna ut frå all data mellom første og siste besøk i analyseperioden)
 </div>
 <div class="CTooltip" id="tt20">
 Nokre <b>besøkslengder</b> er «ukjente» fordi dei ikkje kan reknast ut. Hovudgrunnane for dette er:<br>
