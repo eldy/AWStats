@@ -20,7 +20,7 @@
 "windows[_+ ]xp","windows[_+ ]nt[_+ ]5\.1",		# Must be before windows_nt_5
 "windows[_+ ]me","win[_+ ]9x",					# Must be before windows_98
 "windows[_+ ]?2000","windows[_+ ]nt[_+ ]5",
-"winnt","windows[_+ \-]nt","win32",
+"winnt","windows[_+ \-]?nt","win32",
 "win(.*)98",
 "win(.*)95",
 "win(.*)16","windows[_+ ]3",					# This works for windows_31 and windows_3.1
@@ -58,15 +58,15 @@
 
 
 # OSHashID
-# Each OS Search ID is associated to a string that is also the name of icon
-# file for this OS.
+# Each OS Search ID is associated to a string that is the AWStats id and
+# also the name of icon file for this OS.
 #--------------------------------------------------------------------------
 %OSHashID	= (
 # Windows OS family
 "windows[_+ ]xp","winxp","windows[_+ ]nt[_+ ]5\.1","winxp",
 "windows[_+ ]me","winme","win[_+ ]9x","winme",
 "windows[_+ ]?2000","win2000","windows[_+ ]nt[_+ ]5","win2000",
-"winnt","winnt","windows[_+ \-]nt","winnt","win32","winnt",
+"winnt","winnt","windows[_+ \-]?nt","winnt","win32","winnt",
 "win(.*)98","win98",
 "win(.*)95","win95",
 "win(.*)16","win16","windows[_+ ]3","win16",

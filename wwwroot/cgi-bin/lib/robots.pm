@@ -328,10 +328,13 @@
 "redalert",
 "shoutcast",
 "slysearch",
+"surveybot",
 "turnitinbot",
 "ultraseek",
+"webclipping\.com",
 "webcompass",
 "yandex",
+"zealbot",
 "zyborg"
 );
 @RobotsSearchIDOrder_list3 = (
@@ -642,14 +645,17 @@
 "redalert", "Red Alert",
 "shoutcast","Shoutcast Directory Service",
 "slysearch","SlySearch",
+"surveybot","SurveyBot",
 "turnitinbot","Turn It In",
 "ultraseek", "Ultraseek",
 "unlost_web_crawler", "Unlost Web Crawler",
 "voila", "Voila",
 "webbase", "WebBase",
 "webcompass", "webcompass",
+"webclipping\.com", "WebClipping.com",
 "wisenutbot","WISENutbot (Looksmart)",
 "yandex", "Yandex bot",
+"zealbot","ZealBot",
 "zyborg","Zyborg (Looksmart)",
 
 # Generic root ID
