@@ -639,12 +639,12 @@ $BarImageHorizontal_k = "barrehk.png";
 %DomainsHash = (
 "localhost","localhost",
 
-"ad","Andorra","ae","United Arab Emirates","aero","Aero/Travel domains","af","Afghanistan","ag",
-"Antigua and Barbuda","ai","Anguilla","al","Albania","am",
-"Armenia","an","Netherlands Antilles","ao","Angola","aq",
-"Antarctica","ar","Argentina","arpa","Old style Arpanet","as",
-"American Samoa","at","Austria","au","Australia","aw","Aruba","az",
-"Azerbaidjan","ba","Bosnia-Herzegovina","bb","Barbados","bd",
+"ad","Andorra","ae","United Arab Emirates","aero","Aero/Travel domains","af","Afghanistan",
+"ag","Antigua and Barbuda","ai","Anguilla","al","Albania",
+"am","Armenia","an","Netherlands Antilles","ao","Angola",
+"aq","Antarctica","ar","Argentina","arpa","Old style Arpanet",
+"as","American Samoa","at","Austria","au","Australia","aw","Aruba",
+"az","Azerbaidjan","ba","Bosnia-Herzegovina","bb","Barbados","bd",
 "Bangladesh","be","Belgium","bf","Burkina Faso","bg","Bulgaria",
 "bh","Bahrain","bi","Burundi","biz","Biz domains","bj","Benin","bm","Bermuda","bn",
 "Brunei Darussalam","bo","Bolivia","br","Brazil","bs","Bahamas",
@@ -727,8 +727,9 @@ sub html_head {
 <!--
 BODY { font: 12px arial, verdana, helvetica, sans-serif; background-color: #$color_Background; }
 TH { font: 12px arial, verdana, helvetica, sans-serif; text-align:center; color: #$color_titletext; }
+TH.AWL { font-size: 14px; font-weight: bold; }
 TD { font: 12px arial, verdana, helvetica, sans-serif; text-align:center; color: #$color_text; }
-TD.AWL { font: 12px arial, verdana, helvetica, sans-serif; text-align:left; color: #$color_text; }
+.AWL { font: 12px arial, verdana, helvetica, sans-serif; text-align:left; color: #$color_text; }
 A { font: normal 12px arial, verdana, helvetica, sans-serif; }
 A:link    { color: #$color_link; text-decoration: none; }
 A:visited { color: #$color_link; text-decoration: none; }
@@ -2561,9 +2562,9 @@ EOF
 	#---------------------------------------------------------------------
 	print "$CENTER<a name=\"MENU\">&nbsp;</a><BR>";
 	print "<table>";
-	print "<tr><td class=AWL><font style=\"font: 14px arial,verdana,helvetica; font-weight: bold\">$Message[7] : </font></td><td class=AWL><font style=\"font: 14px arial,verdana,helvetica; font-weight: normal\">$SiteToAnalyze</font></td></tr>";
-	print "<tr><td class=AWL valign=top><font style=\"font: 14px arial,verdana,helvetica; font-weight: bold\">$Message[35] : </font></td>";
-	print "<td class=AWL><font style=\"font: 14px arial,verdana,helvetica; font-weight: normal\">";
+	print "<tr><th class=AWL>$Message[7] : </th><td class=AWL><font style=\"font: 14px;\">$SiteToAnalyze</font></th></tr>";
+	print "<tr><th class=AWL valign=top>$Message[35] : </th>";
+	print "<td class=AWL><font style=\"font: 14px;\">";
 	foreach my $key (sort keys %LastUpdate) { if ($LastUpdate < $LastUpdate{$key}) { $LastUpdate = $LastUpdate{$key}; } }
 	if ($LastUpdate) { print Format_Date($LastUpdate); }
 	else { print "<font color=#880000>Never updated</font>"; }
@@ -2573,16 +2574,16 @@ EOF
 	if ($QueryString !~ /output=/i) {	# If main page asked
 		print "<tr><td>&nbsp;</td></tr>\n";
 		# Traffic
-		print "<tr><td class=AWL><font style=\"font: 14px arial,verdana,helvetica; font-weight: bold\">$Message[16] : </td>";
+		print "<tr><th class=AWL>$Message[16] : </th>";
 		print "<td class=AWL><a href=\"$DirCgi$PROG.$Extension?".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang#DOMAINS\">$Message[17]</a> &nbsp; <a href=\"$DirCgi$PROG.$Extension?".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang#VISITOR\">".ucfirst($Message[26])."</a> &nbsp; <a href=\"$DirCgi$PROG.$Extension?".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang#ROBOTS\">$Message[53]</a> &nbsp; <a href=\"$DirCgi$PROG.$Extension?".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang#HOUR\">$Message[20]</a> &nbsp; <a href=\"$DirCgi$PROG.$Extension?output=unknownip&".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang\">$Message[45]</a><br></td></tr>\n";
 		# Navigation
-		print "<tr><td class=AWL><font style=\"font: 14px arial,verdana,helvetica; font-weight: bold\">$Message[72] : </td>";
+		print "<tr><th class=AWL>$Message[72] : </th>";
 		print "<td class=AWL><a href=\"$DirCgi$PROG.$Extension?output=urldetail&".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang\">$Message[19]</a> &nbsp; <a href=\"$DirCgi$PROG.$Extension?".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang#BROWSER\">$Message[21]</a> &nbsp; <a href=\"$DirCgi$PROG.$Extension?".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang#OS\">$Message[59]</a> &nbsp; <a href=\"$DirCgi$PROG.$Extension?output=browserdetail&".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang\">$Message[33]</a> &nbsp; <a href=\"$DirCgi$PROG.$Extension?output=browserdetail&".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang\">$Message[34]</a><br></td></tr>\n";
 		# Referers
-		print "<tr><td class=AWL><font style=\"font: 14px arial,verdana,helvetica; font-weight: bold\">$Message[23] : </td>";
+		print "<tr><th class=AWL>$Message[23] : </th>";
 		print "<td class=AWL><a href=\"$DirCgi$PROG.$Extension?".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang#REFERER\">$Message[37]</a> &nbsp; <a href=\"$DirCgi$PROG.$Extension?".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang#SEARCHWORDS\">$Message[24]</a><br></td></tr>\n";
 		# Others
-		print "<tr><td class=AWL><font style=\"font: 14px arial,verdana,helvetica; font-weight: bold\">$Message[2] : </td>";
+		print "<tr><th class=AWL>$Message[2] : </th>";
 		print "<td class=AWL> <a href=\"$DirCgi$PROG.$Extension?".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang#ERRORS\">$Message[22]</a> &nbsp; <a href=\"$DirCgi$PROG.$Extension?output=notfounderror&".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang\">$Message[31]</a><br></td></tr>\n";
 	}
 	else {
@@ -3014,7 +3015,7 @@ EOF
 		$count++;
 	}
 	&tab_end;
-	
+
 	
 	# BY BROWSER
 	#----------------------------
