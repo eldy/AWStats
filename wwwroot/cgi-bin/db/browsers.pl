@@ -152,7 +152,7 @@
 "webvcr","notavailable",
 # Site grabbers
 "teleport","notavailable",
-"webcapture","notavailable",
+"webcapture","adobe",
 "webcopier","notavailable",
 # Music only browsers
 "real","mediaplayer",
@@ -188,7 +188,7 @@
 "wdg_validator","notavailable",
 "webzip","notavailable",
 "libwww","notavailable",			# Must be at end because some browser have both "browser id" and "libwww"
-"staroffice","notavailable"
+"staroffice","staroffice"
 );
 
 
