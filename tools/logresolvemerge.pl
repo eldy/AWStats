@@ -18,7 +18,7 @@ use strict; no strict "refs";
 #-------------------------------------------------------
 # Defines
 #-------------------------------------------------------
-my $VERSION="1.1 (build 2)";
+my $VERSION="1.1 (build 4)";
 
 # ---------- Init variables --------
 my $Debug=0;
@@ -132,15 +132,16 @@ for (0..@ARGV-1) {
 }
 if (scalar keys %ParamFile == 0) {
 	print "----- $PROG $VERSION (c) Laurent Destailleur -----\n";
-	print "$PROG allows you to merge several log files into one, sorting all\n";
-	print "records on date. It also makes a fast reverse DNS lookup to replace all IP\n";
-	print "addresses into host names in resulting log file.\n";
+	print "$PROG allows you to merge several log files into one output,\n";
+	print "sorted on date. It also makes a fast reverse DNS lookup to replace\n";
+	print "all IP addresses into host names in resulting log file.\n";
 	print "$PROG comes with ABSOLUTELY NO WARRANTY. It's a free software\n";
 	print "distributed with a GNU General Public License (See COPYING.txt file).\n";
-	print "$PROG is part of AWStats but can be used alone as a log merger before\n";
-	print "using any other log analyzer.\n";
+	print "$PROG is part of AWStats but can be used alone as a log merger\n";
+	print "or resolver before using any other log analyzer.\n";
 	print "\n";
 	print "Usage:\n";
+	print "  $PROG.$Extension [options] file\n";
 	print "  $PROG.$Extension [options] file1 ... filen\n";
 	print "  $PROG.$Extension [options] *.*\n";
 	print "Options:\n";
@@ -148,9 +149,17 @@ if (scalar keys %ParamFile == 0) {
 #	print "  -dnslookup:n  same with a n parallel threads instead of $QueuePoolSize by default\n";
 	print "  -showsteps    to add benchmark informations every $NbOfLinesForBenchmark lines processed\n";
 	print "\n";
-	print "This runs $PROG in command line to open one or several web server log\n";
-	print "files to merge them (sorted on date) and/or to make a reverse DNS lookup.\n";
-	print "The result log file is sent on standard output.\n";
+	print "This runs $PROG in command line to open one or several web\n";
+	print "server log files to merge them (sorted on date) and/or to make a reverse\n";
+	print "DNS lookup. The result log file is sent on standard output.\n";
+	print "Note: $PROG is not a 'sort' tool to sort one file. It's a\n";
+	print "software able to output sorted log records (with a reverse DNS lookup\n";
+	print "made if wanted) even if log records are shaked in several files.\n";
+	print "However each of thoose files must be already independently sorted itself\n";
+	print "(but that is the case in all web server log files).\n";
+	print "$PROG is particularly usefull when you want to merge large log\n";
+	print "files in a fast process and with a low use of memory getting records in a\n";
+	print "chronological order from a pipe (for use by a log analyzer).\n";
 	print "\n";
 	print "Now supports/detects:\n";
 	print "  Automatic detection of log format\n";
