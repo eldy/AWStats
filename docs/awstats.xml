@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="Windows-1252" ?>
+<?xml version="1.0" ?>
 <XML_DIZ_INFO>
 <MASTER_PAD_VERSION_INFO>
     <MASTER_PAD_VERSION>1.15</MASTER_PAD_VERSION>
@@ -33,9 +33,9 @@
 </Company_Info>
 <Program_Info>
         <Program_Name>AWStats</Program_Name>
-        <Program_Version>5.5</Program_Version>
-        <Program_Release_Month>05</Program_Release_Month>
-        <Program_Release_Day>25</Program_Release_Day>
+        <Program_Version>5.6</Program_Version>
+        <Program_Release_Month>06</Program_Release_Month>
+        <Program_Release_Day>21</Program_Release_Day>
         <Program_Release_Year>2003</Program_Release_Year>
         <Program_Cost_Dollars>0</Program_Cost_Dollars>
         <Program_Cost_Other_Code />
@@ -73,15 +73,17 @@
 </Program_Info>
 <Program_Descriptions>
 <English>
-        <Keywords>awstats, awstat, log, file, analyzer, analysis, web, logfile, free, advanced, real-time, tool, perl, cgi, software, statistics, stats, analyze, apache, IIS, reports, counter, graphical, analyse, statistiques, freeware, gnu, gpl, project, linux, beos</Keywords>
+        <Keywords>awstats, awstat, log, file, analyzer, analysis, web, mail, logfile, free, advanced, real-time, tool, perl, cgi, software, statistics, stats, analyze, apache, IIS, reports, counter, graphical, analyse, statistiques, freeware, gnu, gpl, project, linux</Keywords>
         <Char_Desc_45>AWStats - Free log file analyzer (GNU GPL)</Char_Desc_45>
         <Char_Desc_80>AWStats - Free web server log file analyzer for advanced web statistics (GPL)</Char_Desc_80>
-        <Char_Desc_250>Advanced Web Statistics (AWStats) is a free powerful web server logfile analyzer that shows you all your Web statistics including visits, unique visitors, pages, hits, rush hours, os, browser's versions, search engines, keywords, robots, errors...</Char_Desc_250>
-        <Char_Desc_450>Advanced Web Statistics (AWStats) is a free powerful and featureful web server logfile analyzer (Perl script) that shows you all your Web statistics including visits, unique visitors, pages, hits, rush hours, os, browser's versions, search engines, keywords, robots visits, broken links and more...
-Works with all major web servers (IIS 5.0+, Apache, ...) as a CGI and/or from command line.
+        <Char_Desc_250>Advanced Web Statistics (AWStats) is a free powerful web server logfile analyzer that shows you all your Web statistics including visits, unique visitors, pages, hits, rush hours, os, browsers, search engines, keywords, robots, errors, and more...</Char_Desc_250>
+        <Char_Desc_450>Advanced Web Statistics (AWStats) is a free powerful and featureful web server logfile analyzer that shows you all your Web statistics including visits, unique visitors, pages, hits, rush hours, os, browser's versions, search engines, keywords, robots visits, broken links, HTTP errors and more...
+Works with all major web (but also mail and FTP) log servers as a CGI and/or from command line.
 Distributed under GNU General Public License.</Char_Desc_450>
-        <Char_Desc_2000>Advanced Web Statistics (AWStats) is a free powerful and featureful web server logfile analyzer (Perl script) that shows you all your Web statistics including visits, unique visitors, pages, hits, rush hours, os, browser's versions, search engines, keywords, robots visits, broken links and more...
-Works with all major web servers (IIS 5.0+, Apache, ...) as a CGI and/or from command line.
+        <Char_Desc_2000>Advanced Web Statistics (AWStats) is a free powerful and featureful server logfile analyzer that shows you all your Web statistics including visits, unique visitors, pages, hits, rush hours, os, browsers and versions, search engines, keywords, robots visits, broken links, HTTP errors, mod_gzip or mod_deflate compression ratios, number of times your site is &quot;added to favourites&quot;, report browser support for PDF, Flash, Java, screen size, other personalized reports, and more...
+Many plugins, dynamic filters, and a very high level of parameters.
+Reports can be in serveral languages.
+Works with all major web (but also mail and FTP) log servers as a CGI and/or from command line.
 Distributed under GNU General Public License.</Char_Desc_2000>
 </English>
 </Program_Descriptions>
