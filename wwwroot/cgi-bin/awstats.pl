@@ -80,7 +80,7 @@ $WarningMessages= 1;
 %MonthBytes = %MonthHits = %MonthHostsKnown = %MonthHostsUnknown = %MonthPages = %MonthUnique = %MonthVisits =
 %monthlib = %monthnum = ();
 
-$VERSION="3.2 (build 16)";
+$VERSION="3.2 (build 17)";
 $Lang="en";
 
 # Default value
@@ -788,7 +788,7 @@ sub Check_Config {
 	if ($Message[70] eq "") { $Message[70]="Nov"; }
 	if ($Message[71] eq "") { $Message[71]="Dec"; }
 	if ($Message[72] eq "") { $Message[72]="Navigation"; }
-	if ($Message[73] eq "") { $Message[73]=""; }
+	if ($Message[73] eq "") { $Message[73]="Files type"; }
 	if ($Message[74] eq "") { $Message[74]="Update now"; }
 	if ($Message[75] eq "") { $Message[75]="Bytes"; }
 	if ($Message[76] eq "") { $Message[76]="Back to main page"; }
@@ -813,11 +813,11 @@ sub Check_Config {
 	if ($Message[95] eq "") { $Message[95]="Min"; }
 	if ($Message[96] eq "") { $Message[96]="Average"; }
 	if ($Message[97] eq "") { $Message[97]="Max"; }
-	if ($Message[98] eq "") { $Message[98]="Web compression web"; }
-	if ($Message[99] eq "") { $Message[99]="Total Bytes served"; }
-	if ($Message[100] eq "") { $Message[100]="Not&nbsp;compressed"; }
-	if ($Message[101] eq "") { $Message[101]="Compressed<br>(before/after)"; }
-	if ($Message[102] eq "") { $Message[102]="Compression rate"; }
+	if ($Message[98] eq "") { $Message[98]="Web compression"; }
+	if ($Message[99] eq "") { $Message[99]="Bandwith saved"; }
+	if ($Message[100] eq "") { $Message[100]="Before compression"; }
+	if ($Message[101] eq "") { $Message[101]="After compression"; }
+	if ($Message[102] eq "") { $Message[102]="Total"; }
 }
 
 #--------------------------------------------------------------------
@@ -1018,6 +1018,29 @@ sub Read_History_File {
 			&debug(" End of PAGEREFS section ($count entries)");
 			next;
     	}
+	    if ($field[0] eq "BEGIN_FILETYPES")   {
+			&debug(" Begin of FILETYPES section");
+			$_=<HISTORY>;
+			chomp $_; s/\r//;
+			if ($_ eq "") { error("Error: History file \"$DirData/$PROG$month$year$FileSuffix.txt\" is corrupted. Restore a recent backup of this file, or remove it (data for this month will be lost)."); }
+			my @field=split(/\s+/,$_);
+			my $count=0;
+			while ($field[0] ne "END_FILETYPES") {
+				$count++;
+				if ($part) {
+					$_filetypes_h{$field[0]}+=$field[1];
+					$_filetypes_k{$field[0]}+=$field[2];
+					$_filetypes_gz_in{$field[0]}+=$field[3];
+					$_filetypes_gz_out{$field[0]}+=$field[4];
+				}
+				$_=<HISTORY>;
+				chomp $_; s/\r//;
+				if ($_ eq "") { error("Error: History file \"$DirData/$PROG$month$year$FileSuffix.txt\" is corrupted. Restore a recent backup of this file, or remove it (data for this month will be lost)."); }
+				@field=split(/\s+/,$_);
+			}
+			&debug(" End of FILETYPES section ($count entries)");
+			next;
+    	}
 	    if ($field[0] eq "BEGIN_SIDER_404")   {
 			&debug(" Begin of SIDER_404 section");
 			$_=<HISTORY>;
@@ -1074,9 +1097,6 @@ sub Read_History_File {
 				$_domener_p{$field[0]}+=$field[1];
 				$_domener_h{$field[0]}+=$field[2];
 				$_domener_k{$field[0]}+=$field[3];
-				$_domener_gz_i{$field[0]}+=$field[6];
-				$_domener_gz_in{$field[0]}+=$field[4];
-				$_domener_gz_out{$field[0]}+=$field[5];
 				next;
 			}
 	        if ($readbrowser) { $_browser_h{$field[0]}+=$field[1]; next; }
@@ -1133,40 +1153,7 @@ sub Save_History_File {
 	print HISTORYTMP "LastUpdate $LastUpdate{$year.$month} $NbOfLinesRead $NbOfNewLinesProcessed $NbOfLinesCorrupted\n";
 	print HISTORYTMP "TotalVisits $MonthVisits{$year.$month}\n";
 
-	print HISTORYTMP "BEGIN_DOMAIN\n";
-	foreach my $key (keys %_domener_h) {
-		my $page=$_domener_p{$key}; if ($page == "") {$page=0;}
-		my $bytes=$_domener_k{$key}; if ($bytes == "") {$bytes=0;}
-#		print HISTORYTMP "$key $page $_domener_h{$key} $bytes\n"; next;
-		print HISTORYTMP "$key $page $_domener_h{$key} $bytes $_domener_gz_in{$key} $_domener_gz_out{$key} $_domener_gz_i{$key}\n"; next;
-	}
-	print HISTORYTMP "END_DOMAIN\n";
-
-	print HISTORYTMP "BEGIN_VISITOR\n";
-	foreach my $key (keys %_hostmachine_h) {
-		my $page=$_hostmachine_p{$key}; if ($page == "") {$page=0;}
-		my $bytes=$_hostmachine_k{$key}; if ($bytes == "") {$bytes=0;}
-		print HISTORYTMP "$key $page $_hostmachine_h{$key} $bytes $_hostmachine_l{$key}\n"; next;
-	}
-	print HISTORYTMP "END_VISITOR\n";
-
-	print HISTORYTMP "BEGIN_UNKNOWNIP\n";
-	foreach my $key (keys %_unknownip_l) { print HISTORYTMP "$key $_unknownip_l{$key}\n"; next; }
-	print HISTORYTMP "END_UNKNOWNIP\n";
-
-	print HISTORYTMP "BEGIN_LOGIN\n";
-	foreach my $key (keys %_login_h) { print HISTORYTMP "$key $_login_p{$key} $_login_h{$key} $_login_k{$key} $_login_l{$key}\n"; next; }
-	print HISTORYTMP "END_LOGIN\n";
-
-	# Save page list in score sorted order to allow to show reports faster and saving memory.
-	print HISTORYTMP "BEGIN_SIDER\n";
-	foreach my $key (sort {$SortDir*$_sider_p{$a} <=> $SortDir*$_sider_p{$b}} keys %_sider_p) { print HISTORYTMP "$key $_sider_p{$key}\n"; next; }
-	print HISTORYTMP "END_SIDER\n";
-
-	print HISTORYTMP "BEGIN_TIME\n";
-	for (my $ix=0; $ix<=23; $ix++) { print HISTORYTMP "$ix $_time_p[$ix] $_time_h[$ix] $_time_k[$ix]\n"; next; }
-	print HISTORYTMP "END_TIME\n";
-
+	# When
 	print HISTORYTMP "BEGIN_DAY\n";
     foreach my $key (keys %DayHits) {
     	 if ($key =~ /^$year$month/) {	# Found a day entry of the good month
@@ -1174,7 +1161,43 @@ sub Save_History_File {
     	 	}
     	 }
     print HISTORYTMP "END_DAY\n";
+	print HISTORYTMP "BEGIN_TIME\n";
+	for (my $ix=0; $ix<=23; $ix++) { print HISTORYTMP "$ix $_time_p[$ix] $_time_h[$ix] $_time_k[$ix]\n"; next; }
+	print HISTORYTMP "END_TIME\n";
 
+	# Who
+	print HISTORYTMP "BEGIN_DOMAIN\n";
+	foreach my $key (keys %_domener_h) {
+		my $page=$_domener_p{$key}; if ($page == "") {$page=0;}
+		my $bytes=$_domener_k{$key}; if ($bytes == "") {$bytes=0;}
+		print HISTORYTMP "$key $page $_domener_h{$key} $bytes\n"; next;
+	}
+	print HISTORYTMP "END_DOMAIN\n";
+	print HISTORYTMP "BEGIN_VISITOR\n";
+	foreach my $key (keys %_hostmachine_h) {
+		my $page=$_hostmachine_p{$key}; if ($page == "") {$page=0;}
+		my $bytes=$_hostmachine_k{$key}; if ($bytes == "") {$bytes=0;}
+		print HISTORYTMP "$key $page $_hostmachine_h{$key} $bytes $_hostmachine_l{$key}\n"; next;
+	}
+	print HISTORYTMP "END_VISITOR\n";
+	print HISTORYTMP "BEGIN_UNKNOWNIP\n";
+	foreach my $key (keys %_unknownip_l) { print HISTORYTMP "$key $_unknownip_l{$key}\n"; next; }
+	print HISTORYTMP "END_UNKNOWNIP\n";
+	print HISTORYTMP "BEGIN_LOGIN\n";
+	foreach my $key (keys %_login_h) { print HISTORYTMP "$key $_login_p{$key} $_login_h{$key} $_login_k{$key} $_login_l{$key}\n"; next; }
+	print HISTORYTMP "END_LOGIN\n";
+	print HISTORYTMP "BEGIN_ROBOT\n";
+	foreach my $key (keys %_robot_h) { print HISTORYTMP "$key $_robot_h{$key} $_robot_l{$key}\n"; next; }
+	print HISTORYTMP "END_ROBOT\n";
+
+	# Navigation
+	# Save page list in score sorted order to allow to show reports faster and saving memory.
+	print HISTORYTMP "BEGIN_SIDER\n";
+	foreach my $key (sort {$SortDir*$_sider_p{$a} <=> $SortDir*$_sider_p{$b}} keys %_sider_p) { print HISTORYTMP "$key $_sider_p{$key}\n"; next; }
+	print HISTORYTMP "END_SIDER\n";
+	print HISTORYTMP "BEGIN_FILETYPES\n";
+	foreach my $key (keys %_filetypes_h) { print HISTORYTMP "$key $_filetypes_h{$key} $_filetypes_k{$key} $_filetypes_gz_in{$key} $_filetypes_gz_out{$key}\n"; next; }
+	print HISTORYTMP "END_FILETYPES\n";
 	print HISTORYTMP "BEGIN_BROWSER\n";
 	foreach my $key (keys %_browser_h) { print HISTORYTMP "$key $_browser_h{$key}\n"; next; }
 	print HISTORYTMP "END_BROWSER\n";
@@ -1188,39 +1211,32 @@ sub Save_History_File {
 	foreach my $key (keys %_os_h) { print HISTORYTMP "$key $_os_h{$key}\n"; next; }
 	print HISTORYTMP "END_OS\n";
 
-	print HISTORYTMP "BEGIN_ROBOT\n";
-	foreach my $key (keys %_robot_h) { print HISTORYTMP "$key $_robot_h{$key} $_robot_l{$key}\n"; next; }
-	print HISTORYTMP "END_ROBOT\n";
-
+	# Referer
 	print HISTORYTMP "BEGIN_UNKNOWNREFERER\n";
 	foreach my $key (keys %_unknownreferer_l) { print HISTORYTMP "$key $_unknownreferer_l{$key}\n"; next; }
 	print HISTORYTMP "END_UNKNOWNREFERER\n";
 	print HISTORYTMP "BEGIN_UNKNOWNREFERERBROWSER\n";
 	foreach my $key (keys %_unknownrefererbrowser_l) { print HISTORYTMP "$key $_unknownrefererbrowser_l{$key}\n"; next; }
 	print HISTORYTMP "END_UNKNOWNREFERERBROWSER\n";
-
 	print HISTORYTMP "From0 $_from_p[0] $_from_h[0]\n";
 	print HISTORYTMP "From1 $_from_p[1] $_from_h[1]\n";
 	print HISTORYTMP "From2 $_from_p[2] $_from_h[2]\n";
 	print HISTORYTMP "From3 $_from_p[3] $_from_h[3]\n";
 	print HISTORYTMP "From4 $_from_p[4] $_from_h[4]\n";
-
 	print HISTORYTMP "BEGIN_SEREFERRALS\n";
 	foreach my $key (keys %_se_referrals_h) { print HISTORYTMP "$key $_se_referrals_h{$key}\n"; next; }
 	print HISTORYTMP "END_SEREFERRALS\n";
-
 	print HISTORYTMP "BEGIN_PAGEREFS\n";
 	foreach my $key (keys %_pagesrefs_h) { print HISTORYTMP "$key $_pagesrefs_h{$key}\n"; next; }
 	print HISTORYTMP "END_PAGEREFS\n";
-
 	print HISTORYTMP "BEGIN_SEARCHWORDS\n";
 	foreach my $key (keys %_keyphrases) { if ($_keyphrases{$key}) { print HISTORYTMP "$key $_keyphrases{$key}\n"; } next; }
 	print HISTORYTMP "END_SEARCHWORDS\n";
 
+	# Other
 	print HISTORYTMP "BEGIN_ERRORS\n";
 	foreach my $key (keys %_errors_h) { print HISTORYTMP "$key $_errors_h{$key}\n"; next; }
 	print HISTORYTMP "END_ERRORS\n";
-
 	print HISTORYTMP "BEGIN_SIDER_404\n";
 	foreach my $key (keys %_sider404_h) { print HISTORYTMP "$key $_sider404_h{$key} $_referer404_h{$key}\n"; next; }
 	print HISTORYTMP "END_SIDER_404\n";
@@ -1242,7 +1258,8 @@ sub Init_HashArray {
 	for (my $ix=0; $ix<5; $ix++) {	$_from_p[$ix]=0; $_from_h[$ix]=0; }
 	for (my $ix=0; $ix<=23; $ix++) { $_time_h[$ix]=0; $_time_k[$ix]=0; $_time_p[$ix]=0; }
 	# Delete/Reinit all hash arrays with name beginning by _
-	%_browser_h = %_domener_h = %_domener_k = %_domener_p = %_errors_h = 
+	%_browser_h = %_domener_h = %_domener_k = %_domener_p = %_errors_h =
+	%_filetypes_h = %_filetypes_k = %_filetypes_gz_in = %_filetypes_gz_out =
 	%_hostmachine_h = %_hostmachine_k = %_hostmachine_l = %_hostmachine_p =
 	%_keyphrases = %_os_h = %_pagesrefs_h = %_robot_h = %_robot_l = 
 	%_login_h = %_login_p = %_login_k = %_login_l =
@@ -1395,7 +1412,7 @@ if (($ENV{"GATEWAY_INTERFACE"} eq "") && ($SiteConfig eq "")) {
 	print "  ".(scalar keys %OSHashLib)." operating systems\n";
 	print "  ".(scalar keys %RobotHashIDLib)." robots\n";
 	print "  ".(scalar keys %SearchEnginesHashIDLib)." search engines (and keywords/keyphrases used from them)\n";
-	print "  HTTP errors statistics\n";
+	print "  All HTTP errors\n";
 	print "  Report by day/month/year\n";
 	print "  And a lot of other advanced options...\n";
 	print "New versions and FAQ at http://awstats.sourceforge.net\n";
@@ -1802,28 +1819,58 @@ if ($UpdateStats) {
 		}
 
 		# Canonize and clean target URL and referrer URL
+		my $urlwithnoquery;
 		if ($URLWithQuery) { 				
+			$urlwithnoquery=$field[$pos_url];
+			$urlwithnoquery =~ s/\?.*//;
 			# We combine the URL and query strings.
 			if ($field[$pos_query] && ($field[$pos_query] ne "-")) { $field[$pos_url] .= "?" . $field[$pos_query]; }
 		}
 		else {
 			# Trunc CGI parameters in URL
 			$field[$pos_url] =~ s/\?.*//;
+			$urlwithnoquery=$field[$pos_url];
 		}
 		$field[$pos_url] =~ s/\/$DefaultFile$/\//;	# Replace default page name with / only
 		$field[$pos_url] =~ s/\/\//\//g;			# Because some targeted url were taped with 2 / (Ex: //rep//file.htm)
 
-		# Check if page or not
+		# Analyze file type and compression
+		#----------------------------------
 		my $PageBool=1;
-		foreach $cursor (@NotPageList) { if ($field[$pos_url] =~ /$cursor$/i) { $PageBool=0; last; } }
+		my $extension;
+
+		# Extension
+		$found=0;
+		if ($urlwithnoquery =~ /\.(...)$/)     { $found=1; }
+		elsif ($urlwithnoquery =~ /\.(....)$/) { $found=1; }
+		elsif ($urlwithnoquery =~ /\.(..)$/)   { $found=1; }
+		elsif ($urlwithnoquery =~ /\.(.)$/)    { $found=1; }
+		if ($found) {
+			$extension=$1; $extension =~ tr/A-Z/a-z/;
+			# Check if not a page
+			foreach $cursor (@NotPageList) { if ($extension =~ /$cursor/i) { $PageBool=0; last; } }
+		} else {
+			$extension="Unknown";
+		}
+		$_filetypes_h{$extension}++;
+		$_filetypes_k{$extension}+=$field[$pos_size];
+		# Compression
+		if ($field[$gzipin]) {
+			my($a,$b)=split(":",$field[$gzipres]);
+			my(undef,$in)=split(":",$field[$gzipin]);
+			my(undef,$out,undef)=split(":",$field[$gzipout]);
+			if ($out) {
+				$_filetypes_gz_in{$extension}+=$in;
+				$_filetypes_gz_out{$extension}+=$out;
+			}
+		}
 
 		# Analyze: Date - Hour - Pages - Hits - Kilo
 		#-------------------------------------------
 		if ($PageBool) {
-			# FirstTime and LastTime were moved into PageBool if (a visitor is a human visitor if access to page)
+			# FirstTime and LastTime are First and Last human visits (so changed if access to a page)
 			if (! $FirstTime{$yearmonth}) { $FirstTime{$yearmonth}=$timeconnexion; }
 			$LastTime{$yearmonth} = $timeconnexion;
-
 			$DayPages{$dayconnexion}++;
 			$MonthPages{$yearmonth}++;
 			$_time_p[int($dateparts[3])]++;												#Count accesses for hour (page)
@@ -2107,19 +2154,6 @@ if ($UpdateStats) {
 			$_from_h[1]++;
 		}
 
-		# Compression
-		if ($field[$gzipin]) {
-			my($a,$b)=split(":",$field[$gzipres]);
-			my(undef,$in)=split(":",$field[$gzipin]);
-			my(undef,$out,$percent)=split(":",$field[$gzipout]);
-			$percent=~s/pct.//;
-			if ($out) {
-				$_domener_gz_in{ip}+=$in;
-				$_domener_gz_out{ip}+=$out;
-				$_domener_gz_i{ip}++;
-			}
-		}
-
 		# End of processing all new records.
 	}
 	&debug("End of processing log file(s)");
@@ -2283,36 +2317,39 @@ EOF
 			# When
 			print "<tr><th class=AWL>$Message[93] : </th>";
 			print "<td class=AWL>";
-			print "<a href=\"$DirCgi$PROG.$Extension?".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang#SUMMARY\">$Message[5]/$Message[4]</a> &nbsp; ";
-			print "<a href=\"$DirCgi$PROG.$Extension?".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang#HOUR\">$Message[20]</a> &nbsp; ";
-			print "<a href=\"$DirCgi$PROG.$Extension?".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang#DAYOFWEEK\">$Message[91]</a> &nbsp; ";
+			if ($ShowMonthDayStats) { print "<a href=\"$DirCgi$PROG.$Extension?".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang#SUMMARY\">$Message[5]/$Message[4]</a> &nbsp; "; }
+			if ($ShowDaysOfWeekStats) { print "<a href=\"$DirCgi$PROG.$Extension?".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang#DAYOFWEEK\">$Message[91]</a> &nbsp; "; }
+			if ($ShowHoursStats) { print "<a href=\"$DirCgi$PROG.$Extension?".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang#HOUR\">$Message[20]</a> &nbsp; "; }
 			# Who
 			print "<tr><th class=AWL>$Message[92] : </th>";
 			print "<td class=AWL>";
-			print "<a href=\"$DirCgi$PROG.$Extension?".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang#DOMAINS\">$Message[17]</a> &nbsp; ";
-			print "<a href=\"$DirCgi$PROG.$Extension?".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang#VISITOR\">".ucfirst($Message[26])."</a> &nbsp; ";
-			print "<a href=\"$DirCgi$PROG.$Extension?output=unknownip&".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang\">$Message[45]</a> &nbsp;\n";
-			print "<a href=\"$DirCgi$PROG.$Extension?".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang#ROBOTS\">$Message[53]</a> &nbsp; ";
+			if ($ShowDomainsStats) { print "<a href=\"$DirCgi$PROG.$Extension?".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang#DOMAINS\">$Message[17]</a> &nbsp; "; }
+			if ($ShowHostsStats) { print "<a href=\"$DirCgi$PROG.$Extension?".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang#VISITOR\">".ucfirst($Message[26])."</a> &nbsp; "; }
+			if ($ShowHostsStats) { print "<a href=\"$DirCgi$PROG.$Extension?output=unknownip&".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang\">$Message[45]</a> &nbsp;\n"; }
 			if ($ShowAuthenticatedUsers) { print "<a href=\"$DirCgi$PROG.$Extension?".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang#LOGIN\">$Message[94]</a> &nbsp; "; }
+			if ($ShowRobotsStats) { print "<a href=\"$DirCgi$PROG.$Extension?".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang#ROBOTS\">$Message[53]</a> &nbsp; "; }
 			print "<br></td></tr>";
 			# Navigation
 			print "<tr><th class=AWL>$Message[72] : </th>";
 			print "<td class=AWL>";
-			print "<a href=\"$DirCgi$PROG.$Extension?output=urldetail&".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang\">$Message[19]</a> &nbsp; ";
-			print "<a href=\"$DirCgi$PROG.$Extension?".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang#BROWSER\">$Message[21]</a> &nbsp; ";
-			print "<a href=\"$DirCgi$PROG.$Extension?".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang#OS\">$Message[59]</a> &nbsp; ";
-			print "<a href=\"$DirCgi$PROG.$Extension?output=browserdetail&".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang\">$Message[33]</a> &nbsp; ";
-			print "<a href=\"$DirCgi$PROG.$Extension?output=browserdetail&".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang\">$Message[34]</a><br></td></tr>\n";
+			if ($ShowPagesStats) { print "<a href=\"$DirCgi$PROG.$Extension?output=urldetail&".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang\">$Message[19]</a> &nbsp; "; }
+			if ($ShowFileTypesStats) { print "<a href=\"$DirCgi$PROG.$Extension?".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang#FILETYPES\">$Message[73]</a> &nbsp; "; }
+			if ($ShowFileSizesStats) {  }
+			if ($ShowOSStats) { print "<a href=\"$DirCgi$PROG.$Extension?".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang#OS\">$Message[59]</a> &nbsp; "; }
+			if ($ShowBrowsersStats) { print "<a href=\"$DirCgi$PROG.$Extension?".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang#BROWSER\">$Message[21]</a> &nbsp; "; }
+			if ($ShowBrowsersStats) { print "<a href=\"$DirCgi$PROG.$Extension?output=browserdetail&".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang\">$Message[33]</a> &nbsp; "; }
+			if ($ShowBrowsersStats) { print "<a href=\"$DirCgi$PROG.$Extension?output=browserdetail&".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang\">$Message[34]</a><br></td></tr>\n"; }
 			# Referers
 			print "<tr><th class=AWL>$Message[23] : </th>";
 			print "<td class=AWL>";
-			print "<a href=\"$DirCgi$PROG.$Extension?".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang#REFERER\">$Message[37]</a> &nbsp; ";
-			print "<a href=\"$DirCgi$PROG.$Extension?".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang#SEARCHWORDS\">$Message[24]</a><br></td></tr>\n";
+			if ($ShowOriginStats) { print "<a href=\"$DirCgi$PROG.$Extension?".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang#REFERER\">$Message[37]</a> &nbsp; "; }
+			if ($ShowKeyphrasesStats) { print "<a href=\"$DirCgi$PROG.$Extension?".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang#SEARCHWORDS\">$Message[24]</a><br></td></tr>\n"; }
 			# Others
 			print "<tr><th class=AWL>$Message[2] : </th>";
 			print "<td class=AWL>";
-			print "<a href=\"$DirCgi$PROG.$Extension?".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang#ERRORS\">$Message[22]</a> &nbsp; ";
-			print "<a href=\"$DirCgi$PROG.$Extension?output=notfounderror&".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang\">$Message[31]</a><br></td></tr>\n";
+			if ($ShowCompressionStats) { print "<a href=\"$DirCgi$PROG.$Extension?".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang#FILETYPES\">$Message[98]</a> &nbsp; "; }
+			if ($ShowHTTPErrorsStats) { print "<a href=\"$DirCgi$PROG.$Extension?".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang#ERRORS\">$Message[22]</a> &nbsp; "; }
+			if ($ShowHTTPErrorsStats) { print "<a href=\"$DirCgi$PROG.$Extension?output=notfounderror&".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang\">$Message[31]</a><br></td></tr>\n"; }
 		}
 		else {
 			if ($ShowBackLink) { print "<tr><td class=AWL><a href=\"$DirCgi$PROG.$Extension?".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang\">$Message[76]</a></td></tr>\n"; }
@@ -2910,27 +2947,65 @@ EOF
 		
 	# BY FILE TYPE
 	#-------------------------
-	if ($ShowFileTypesStats) {
-		
+	if ($ShowFileTypesStats || $ShowCompressionStats) {
+		my $Totalh=0; foreach my $key (keys %_filetypes_h) { $Totalh+=$_filetypes_h{$key}; }
+		my $Totalk=0; foreach my $key (keys %_filetypes_k) { $Totalk+=$_filetypes_k{$key}; }
+		print "$CENTER<a name=\"FILETYPES\">&nbsp;</a><BR>";
+		if ($ShowCompressionStats) { &tab_head("$Message[73] - $Message[98]</a>",19); }
+		else { &tab_head("$Message[73]</a>",19); }
+		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[73]</TH>";
+		print "<TH bgcolor=\"#$color_h\" width=80>&nbsp;$Message[57]&nbsp;</TH><TH bgcolor=\"#$color_h\" width=80>$Message[15]</TH>";
+		if ($ShowCompressionStats) {
+			print "<TH bgcolor=\"#$color_k\" width=120>$Message[100]</TH><TH bgcolor=\"#$color_k\" width=120>$Message[101]</TH><TH bgcolor=\"#$color_k\" width=120>$Message[99]</TH>";
+		}
+		else {
+			print "<TH bgcolor=\"#$color_k\" width=80>$Message[75]</TH>";
+		}
+		print "</TR>\n";
+		$count=0; 
+		foreach my $key (sort { $SortDir*$_filetypes_h{$a} <=> $SortDir*$_filetypes_h{$b} } keys (%_filetypes_h)) {
+			my $p=int($_filetypes_h{$key}/$Totalh*1000)/10;
+			if ($key eq "Unknown") {
+				print "<TR><TD CLASS=AWL>$Message[0]</a></TD>";
+			}
+			else {
+				print "<TR><TD CLASS=AWL>$key</TD>";
+			}
+			print "<TD>$_filetypes_h{$key}</TD><TD>$p&nbsp;%</TD>";
+			if ($ShowCompressionStats) {
+				if ($_filetypes_gz_in{$key}) {
+					my $percent=int(100*(1-$_filetypes_gz_out{$key}/$_filetypes_gz_in{$key})); 
+					printf("<TD>%s</TD><TD>%s</TD><TD>%s (%s%)</TD>",Format_Bytes($_filetypes_gz_in{$key}),Format_Bytes($_filetypes_k{$key}),Format_Bytes($_filetypes_gz_in{$key}-$_filetypes_gz_out{$key}),$percent);
+				}
+				else {
+					printf("<TD>%s</TD><TD>&nbsp;</TD><TD>&nbsp;</TD>",Format_Bytes($_filetypes_k{$key}));
+				}
+			}
+			else {
+				printf("<TD>%s</TD>",Format_Bytes($_filetypes_k{$key}));
+			}
+			print "</TR>\n";
+			$count++;
+		}
+		&tab_end;
 	}
-		
 		
 	# BY FILE SIZE
 	#-------------------------
 	if ($ShowFileSizesStats) {
 		
 	}
-
 	
 	# BY BROWSER
 	#----------------------------
 	if ($ShowBrowsersStats) {
+		my $Total=0; foreach my $key (keys %_browser_h) { $Total+=$_browser_h{$key}; }
 		print "$CENTER<a name=\"BROWSER\">&nbsp;</a><BR>";
 		&tab_head($Message[21],19);
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>Browser</TH><TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[15]</TH></TR>\n";
 		$count=0; 
 		foreach my $key (sort { $SortDir*$_browser_h{$a} <=> $SortDir*$_browser_h{$b} } keys (%_browser_h)) {
-			my $p=int($_browser_h{$key}/$TotalHits*1000)/10;
+			my $p=int($_browser_h{$key}/$Total*1000)/10;
 			if ($key eq "Unknown") {
 				print "<TR><TD CLASS=AWL><a href=\"$DirCgi$PROG.$Extension?output=unknownrefererbrowser&".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang\">$Message[0]</a></TD><TD>$_browser_h{$key}</TD><TD>$p&nbsp;%</TD></TR>\n";
 			}
@@ -2945,12 +3020,13 @@ EOF
 	# BY OS
 	#----------------------------
 	if ($ShowOSStats) {
+		my $Total=0; foreach my $key (keys %_os_h) { $Total+=$_os_h{$key}; }
 		print "$CENTER<a name=\"OS\">&nbsp;</a><BR>";
 		&tab_head($Message[59],19);
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH colspan=2>OS</TH><TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[15]</TH></TR>\n";
 		$count=0; 
 		foreach my $key (sort { $SortDir*$_os_h{$a} <=> $SortDir*$_os_h{$b} } keys (%_os_h)) {
-			my $p=int($_os_h{$key}/$TotalHits*1000)/10;
+			my $p=int($_os_h{$key}/$Total*1000)/10;
 			if ($key eq "Unknown") {
 				print "<TR><TD><IMG SRC=\"$DirIcons\/os\/unknown.png\"></TD><TD CLASS=AWL><a href=\"$DirCgi$PROG.$Extension?output=unknownreferer&".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang\">$Message[0]</a></TD><TD>$_os_h{$key}&nbsp;</TD>";
 				print "<TD>$p&nbsp;%</TD></TR>\n";
@@ -3050,31 +3126,6 @@ EOF
 		}
 		&tab_end;
 	}	
-
-	# BY COMPRESSION
-	#---------------------------
-	if ($ShowCompressionStats) {
-		$max_k=1; foreach my $key (values %_domener_k) { if ($key > $max_k) { $max_k = $key; } }
-		print "$CENTER<a name=\"COMPRESS\">&nbsp;</a><BR>";
-		&tab_head($Message[98],19);
-		print "<TR bgcolor=\"#$color_TableBGRowTitle\">";
-		print "<TH>&nbsp;</TH>";
-		print "<TH bgcolor=\"#$color_k\" width=100>$Message[75]</TH>";
-		print "<TH bgcolor=\"#$color_k\" width=100>$Message[100]</TH>";
-		print "<TH bgcolor=\"#$color_k\" width=100>$Message[101]</TH>";
-		print "<TH bgcolor=\"#$color_k\" width=80>$Message[102]</TH></TR>\n";
-		if ($_domener_gz_in{ip}) { $percent=int(100*(1-$_domener_gz_out{ip}/$_domener_gz_in{ip})); }
-		my $not_gz=$max_k-$_domener_gz_out{ip};
-        print "<TR><TD>$Message[99]</TD>";
-		printf("<TD>%s</td><TD>%s</td>",Format_Bytes($max_k),Format_Bytes($not_gz));
-		if ($_domener_gz_in{ip}) {
-			printf("<TD>%s / %s</td><TD>%0.0f %</td></tr>",Format_Bytes($_domener_gz_in{ip}),Format_Bytes($_domener_gz_out{ip}),$percent);
-		}
-		else {
-			printf("<TD>&nbsp;</td><TD>&nbsp</td></tr>",Format_Bytes($_domener_gz_in{ip}),Format_Bytes($_domener_gz_out{ip}),$percent);
-		}
-		&tab_end;
-	}
 
 	# BY ERRORS
 	#----------------------------
