@@ -579,7 +579,7 @@ if ($bidon =~ /^y/i) {
 # ----------------------------------
 if ($WebServerChanged) {
 	if ($OS eq 'linux') 	{
-		print "\n-----> Restart Apache with '/usr/bin/service httpd restart'\n";
+		print "\n-----> Restart Apache with '/sbin/service httpd restart'\n";
 	 	my $ret=`/sbin/service httpd restart`;
 	}
 	elsif ($OS eq 'windows')	{
