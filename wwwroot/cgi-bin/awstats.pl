@@ -1786,10 +1786,11 @@ sub Read_Plugins {
 							push @INC, "$dir";
 							$DirAddedInINC{"$dir"}=1;
 						}
-						#my $loadret=require "$pluginpath";	# Can fix pb with mod_perl2. Give other pb ?
-						#my $loadret=do "${pluginfile}.pm";	# Can fix pb with mod_perl2 but might slow since module is recompiled each time.
-						my $loadret=require "${pluginfile}.pm";
-
+						my $loadret=0;
+						my $modperl=$ENV{"MOD_PERL"}? eval { require mod_perl; $mod_perl::VERSION >= 1.99 ? 2 : 1 } : 0;
+						if ($modperl == 2) { $loadret=require "$pluginpath"; }
+						else { $loadret=require "$pluginfile.pm"; }
+	
 						if (! $loadret || $loadret =~ /^error/i) {
 							# Load failed, we stop here
 							error("Plugin load for plugin '$pluginname' failed with return code: $loadret");
@@ -5359,7 +5360,10 @@ if ($FrameName ne 'index') {
 $NBOFLINESFORBENCHMARK--;
 if ($ENV{'GATEWAY_INTERFACE'}) { $DirCgi=''; }
 if ($DirCgi && !($DirCgi =~ /\/$/) && !($DirCgi =~ /\\$/)) { $DirCgi .= '/'; }
-if (! $DirData || $DirData eq '.') { $DirData="$DIR"; }	# If not defined or chosen to '.' value then DirData is current dir
+if (! $DirData || $DirData =~ /^\./) {
+     if (! $DirData || $DirData eq '.') { $DirData="$DIR"; }      # If not defined or chosen to '.' value then DirData is current dir
+     elsif ($DIR && $DIR ne '.') { $DirData="$DIR/$DirData"; }
+}
 $DirData||='.';		# If current dir not defined then we put it to '.'
 $DirData =~ s/\/$//; $DirData =~ s/\\$//;
 # Define SiteToAnalyze and SiteToAnalyzeWithoutwww for regex operations
@@ -5402,13 +5406,22 @@ if ($AllowAccessFromWebToAuthenticatedUsersOnly && $ENV{'GATEWAY_INTERFACE'}) {
 	}
 }
 if ($AllowAccessFromWebToFollowingIPAddresses && $ENV{'GATEWAY_INTERFACE'}) {
-	if ($AllowAccessFromWebToFollowingIPAddresses	!~ /^(\d+\.\d+\.\d+\.\d+)-(\d+\.\d+\.\d+\.\d+)$/) {
-		error("AllowAccessFromWebToFollowingIPAddresses is defined to '$AllowAccessFromWebToFollowingIPAddresses' but does not match the correct syntax: IPAddressMin-IPAddressMax");
-	}
-	my $ipmin=&Convert_IP_To_Decimal($1);
-	my $ipmax=&Convert_IP_To_Decimal($2);
 	my $useripaddress=&Convert_IP_To_Decimal($ENV{"REMOTE_ADDR"});
-	if ($useripaddress < $ipmin || $useripaddress > $ipmax) {
+	my @allowaccessfromipaddresses = split (/[\s,]+/, $AllowAccessFromWebToFollowingIPAddresses);
+	my $allowaccess = 0;
+	foreach my $ipaddressrange (@allowaccessfromipaddresses) {
+	    if ($ipaddressrange !~ /^(\d+\.\d+\.\d+\.\d+)(?:-(\d+\.\d+\.\d+\.\d+))*$/) {
+			error("AllowAccessFromWebToFollowingIPAddresses is defined to '$AllowAccessFromWebToFollowingIPAddresses' but does not match the correct syntax: IPAddressMin[-IPAddressMax]");
+		}
+		my $ipmin=&Convert_IP_To_Decimal($1);
+		my $ipmax=$2?&Convert_IP_To_Decimal($2):$ipmin;
+		# Is it an authorized ip ?
+		if (($useripaddress >= $ipmin) && ($useripaddress <= $ipmax)) {
+			$allowaccess = 1;
+			last;
+		}
+	}
+    if (! $allowaccess) {
 		error("Access to statistics is not allowed from your IP Address ".$ENV{"REMOTE_ADDR"});
 	}
 }
