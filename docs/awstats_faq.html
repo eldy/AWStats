@@ -540,15 +540,16 @@ reset all your statistics (see next FAQ) and restart all the update process for 
 The best solution is to merge all split log files resulted from all your load balanced servers into one. For this, you can use
 the <a href="awstats_config.html#logresolvemerge">logresolvemerge</a> tool provided with AWStats :<br>
 <i>logresolvemerge.pl file1.log file2.log ... filen.log > newfiletoprocess.log</i><br>
-And setup the <i>LogFile</i> parameter in your config file to process the <i>newfiletoprocess.log</i> file.<br>
+And setup the <a href="awstats_config.html#LogFile">LogFile</a> parameter in your config file to process the <i>newfiletoprocess.log</i> file or use
+the <i>-logfile</i> command line option to overwrite <a href="awstats_config.html#LogFile">LogFile</a> value.<br>
 <br>
 
 <a name="RESET"></a><br>
 <b><u>FAQ-COM500 : HOW CAN I RESET ALL MY STATISTICS ?</u></b><br>
 <font class=CProblem>PROBLEM:</font> I want to reset all my statistics and restart my stats from now.<br>
 <font class=CSolution>SOLUTION:</font> 
-All analyzed data are stored by AWStats in files called awstatsMMYYYY.[site.]txt (one file each month).
-You will find those files in directory defined by "DirData" parameter (same directory than awstats.pl by default).<br>
+All analyzed data are stored by AWStats in files called <i>awstatsMMYYYY.[site.]txt</i> (one file each month).
+You will find those files in directory defined by <a href="awstats_config.html#DirData">DirData</a> parameter (same directory than awstats.pl by default).<br>
 To reset your stats for a month, you just have to delete the file for the required month/year.<br>
 To reset all your stats, delete all files awstats*.txt<br>
 Warning, if you delete those data files, you won't be able to recover your stats back, unless you kept old log files somewhere.
