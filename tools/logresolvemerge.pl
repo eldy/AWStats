@@ -163,7 +163,8 @@ if (scalar keys %ParamFile == 0) {
 	print "  -dnscache=file make DNS lookup from cache file first before network lookup\n";
 	print "  -showsteps     print on stderr benchmark information every $NBOFLINESFORBENCHMARK lines\n";
 	print "  -addfilenum    if used with several files, file number can be added in first\n";
-	print "                 field of output file.\n";
+	print "                 field of output file. This can be used to add a cluster id\n";
+	print "                 when log files comes from several load balanced computers.\n";
 	print "\n";
 	print "This runs $PROG in command line to open one or several web\n";
 	print "server log files to merge them (sorted on date) and/or to make a reverse\n";

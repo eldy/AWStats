@@ -1579,7 +1579,7 @@ sub Check_Config {
 	if ($ShowOriginStats !~ /[01PH]/)              	{ $ShowOriginStats='PH'; }
 	if ($ShowKeyphrasesStats !~ /[01]/)          	{ $ShowKeyphrasesStats=1; }
 	if ($ShowKeywordsStats !~ /[01]/)            	{ $ShowKeywordsStats=1; }
-	if ($ShowClusterStats !~ /[01]/)     	    	{ $ShowClusterStats=0; }
+	if ($ShowClusterStats !~ /[01PHB]/)    	    	{ $ShowClusterStats=0; }
 	if ($ShowMiscStats !~ /[01ajdfrqwp]/)     	    { $ShowMiscStats='a'; }
 	if ($ShowHTTPErrorsStats !~ /[01]/)          	{ $ShowHTTPErrorsStats=1; }
 	if ($ShowSMTPErrorsStats !~ /[01]/)          	{ $ShowSMTPErrorsStats=0; }
@@ -1603,7 +1603,7 @@ sub Check_Config {
 	if ($ShowLinksOnUrl !~ /[01]/)               	{ $ShowLinksOnUrl=1; }
 	if ($MaxLengthOfURL !~ /^\d+/ || $MaxLengthOfURL<1) { $MaxLengthOfURL=72; }
 	if ($ShowLinksToWhoIs !~ /[01]/)              	{ $ShowLinksToWhoIs=0; }
-	$Logo||='awstats_logo1.png';
+	$Logo||='awstats_logo6.png';
 	$LogoLink||='http://awstats.sourceforge.net';
 	if ($BarWidth !~ /^\d+/ || $BarWidth<1) 		{ $BarWidth=260; }
 	if ($BarHeight !~ /^\d+/ || $BarHeight<1)		{ $BarHeight=90; }
@@ -1931,12 +1931,12 @@ sub Read_History_With_TmpUpdate {
 		if ($UpdateStats || $MigrateStats || ($HTMLOutput{'main'} && $ShowKeyphrasesStats) || $HTMLOutput{'keyphrases'} || $HTMLOutput{'keywords'}) { $SectionsToLoad{'searchwords'}=$order++; }
 		if (! $withupdate && $HTMLOutput{'main'} && $ShowKeywordsStats) { $SectionsToLoad{'keywords'}=$order++; }	# If we update, dont need to load
 		# Others
-		if ($UpdateStats || $MigrateStats || ($HTMLOutput{'main'} && $ShowClusterStats)) { $SectionsToLoad{'cluster'}=$order++; }
 		if ($UpdateStats || $MigrateStats || ($HTMLOutput{'main'} && $ShowMiscStats)) { $SectionsToLoad{'misc'}=$order++; }
 		if ($UpdateStats || $MigrateStats || ($HTMLOutput{'main'} && ($ShowHTTPErrorsStats || $ShowSMTPErrorsStats)) || $HTMLOutput{'errors'}) { $SectionsToLoad{'errors'}=$order++; }
 		foreach my $code (keys %TrapInfosForHTTPErrorCodes) {
 			if ($UpdateStats || $MigrateStats || $HTMLOutput{"errors$code"}) { $SectionsToLoad{"sider_$code"}=$order++; }
 		}
+		if ($UpdateStats || $MigrateStats || ($HTMLOutput{'main'} && $ShowClusterStats)) { $SectionsToLoad{'cluster'}=$order++; }
 		foreach my $extranum (1..@ExtraName-1) {
 			if ($UpdateStats || $MigrateStats || ($HTMLOutput{'main'} && $ExtraStatTypes[$extranum]) || $HTMLOutput{"extra$extranum"}) { $SectionsToLoad{"extra_$extranum"}=$order++; }
 		}
@@ -4641,32 +4641,18 @@ sub DefinePerlParsingFormat {
 		$LogFormatString =~ s/protocol/%protocolmms/g;	# cs-method might not be available
 		$LogFormatString =~ s/c-status/%codemms/g;		# c-status used when sc-status not available
 		if ($Debug) { debug(" LogFormatString=$LogFormatString"); }
-		# Scan $LogFormatString to found all required fields and generate PerlParsingFormat
+		# $LogFormatString has an AWStats format, so we can generate PerlParsingFormat variable
 		my $i = 0;
 		my $LogSeparatorWithoutStar=$LogSeparator; $LogSeparatorWithoutStar =~ s/[\*\+]//g;
 		foreach my $f (split(/\s+/,$LogFormatString)) {
 			# Add separator for next field
 			if ($PerlParsingFormat) { $PerlParsingFormat.="$LogSeparator"; }
-			if ($f =~ /%virtualname$/) {
-				$pos_vh = $i; $i++; push @fieldlib, 'vhost';
-				$PerlParsingFormat .= "([^$LogSeparatorWithoutStar]+)";
-			}
-			elsif ($f =~ /%host_r$/) {
-				$pos_hostr = $i; $i++; push @fieldlib, 'hostr';
-				$PerlParsingFormat .= "([^$LogSeparatorWithoutStar]+)";
-			}
-			elsif ($f =~ /%host$/) {
-				$pos_host = $i; $i++; push @fieldlib, 'host';
-				$PerlParsingFormat .= "([^$LogSeparatorWithoutStar]+)";
-			}
-			elsif ($f =~ /%lognamequot$/) {
+			# Special for logname
+			if ($f =~ /%lognamequot$/) {
 				$pos_logname = $i; $i++; push @fieldlib, 'logname';
 				$PerlParsingFormat .= "\\\"?([^\\\"]*)\\\"?";			# logname can be "value", "" and - in same log (Lotus notes)
 			}
-			elsif ($f =~ /%logname$/) {
-				$pos_logname = $i; $i++; push @fieldlib, 'logname';
-				$PerlParsingFormat .= "([^$LogSeparatorWithoutStar]+)";
-			}
+			# Date format
 			elsif ($f =~ /%time1$/ || $f =~ /%time1b$/) {	# [dd/mmm/yyyy:hh:mm:ss +0000] ou [dd/mmm/yyyy:hh:mm:ss],  time1b kept for backward compatibility
 				$pos_date = $i;	$i++; push @fieldlib, 'date';
 				$pos_tz = $i; $i++; push @fieldlib, 'tz';
@@ -4679,6 +4665,7 @@ sub DefinePerlParsingFormat {
 			elsif ($f =~ /%syslog$/) {	# TODO Add a tag time3 for date 'Mon 2 10:20:05'
 				$PerlParsingFormat .= "\\w\\w\\w \\d+ \\d\\d:\\d\\d:\\d\\d [^$LogSeparatorWithoutStar]+";
 			}
+			# Special for methodurl and methodurlnoprot
 			elsif ($f =~ /%methodurl$/) {
 				$pos_method = $i; $i++; push @fieldlib, 'method';
 				$pos_url = $i; $i++; push @fieldlib, 'url';
@@ -4689,15 +4676,26 @@ sub DefinePerlParsingFormat {
 				$pos_url = $i; $i++; push @fieldlib, 'url';
 				$PerlParsingFormat .= "\\\"([^$LogSeparatorWithoutStar]+) ([^$LogSeparatorWithoutStar]+)\\\"";
 			}
+			# Common command tags
+			elsif ($f =~ /%virtualname$/) {
+				$pos_vh = $i; $i++; push @fieldlib, 'vhost';
+				$PerlParsingFormat .= "([^$LogSeparatorWithoutStar]+)";
+			}
+			elsif ($f =~ /%host_r$/) {
+				$pos_hostr = $i; $i++; push @fieldlib, 'hostr';
+				$PerlParsingFormat .= "([^$LogSeparatorWithoutStar]+)";
+			}
+			elsif ($f =~ /%host$/) {
+				$pos_host = $i; $i++; push @fieldlib, 'host';
+				$PerlParsingFormat .= "([^$LogSeparatorWithoutStar]+)";
+			}
+			elsif ($f =~ /%logname$/) {
+				$pos_logname = $i; $i++; push @fieldlib, 'logname';
+				$PerlParsingFormat .= "([^$LogSeparatorWithoutStar]+)";
+			}
 			elsif ($f =~ /%method$/) {
 				$pos_method = $i; $i++; push @fieldlib, 'method';
 				$PerlParsingFormat .= "([^$LogSeparatorWithoutStar]+)";
-			}
-			elsif ($f =~ /%protocolmms$/) {	# protocolmms is used for method if method not already found (for MMS)
-				if ($pos_method < 0) {
-					$pos_method = $i; $i++; push @fieldlib, 'method';
-					$PerlParsingFormat .= "([^$LogSeparatorWithoutStar]+)";
-				}
 			}
 			elsif ($f =~ /%url$/) {
 				$pos_url = $i; $i++; push @fieldlib, 'url';
@@ -4709,17 +4707,11 @@ sub DefinePerlParsingFormat {
 			}
 			elsif ($f =~ /%code$/) {
 				$pos_code = $i; $i++; push @fieldlib, 'code';
-				$PerlParsingFormat .= "([\\d|-]+)";
-			}
-			elsif ($f =~ /%codemms$/) {		# codemms is used for code only if code not already found (for MMS)
-				if ($pos_code < 0) {
-					$pos_code = $i; $i++; push @fieldlib, 'code';
-					$PerlParsingFormat .= "([\\d|-]+)";
-				}
+				$PerlParsingFormat .= "([^$LogSeparatorWithoutStar]+)";
 			}
 			elsif ($f =~ /%bytesd$/) {
 				$pos_size = $i; $i++; push @fieldlib, 'size';
-				$PerlParsingFormat .= "([\\d|-]+)";
+				$PerlParsingFormat .= "([^$LogSeparatorWithoutStar]+)";
 			}
 			elsif ($f =~ /%refererquot$/) {
 				$pos_referer = $i; $i++; push @fieldlib, 'referer';
@@ -4731,7 +4723,7 @@ sub DefinePerlParsingFormat {
 			}
 			elsif ($f =~ /%uaquot$/) {
 				$pos_agent = $i; $i++; push @fieldlib, 'ua';
-				$PerlParsingFormat .= "\\\"([^\\\"]*)\\\"";	# ua might be ""
+				$PerlParsingFormat .= "\\\"([^\\\"]*)\\\"";			# ua might be ""
 			}
 			elsif ($f =~ /%uabracket$/) {
 				$pos_agent = $i; $i++; push @fieldlib, 'ua';
@@ -4765,6 +4757,24 @@ sub DefinePerlParsingFormat {
 				$pos_emails = $i; $i++; push @fieldlib, 'email';
 				$PerlParsingFormat .= "([^$LogSeparatorWithoutStar]+)";
 			}
+			elsif ($f =~ /%cluster$/) {
+				$pos_cluster = $i; $i++; push @fieldlib, 'clusternb';
+				$PerlParsingFormat .= "([^$LogSeparatorWithoutStar]+)";
+			}
+			# Special for protocolmms, used for method if method not already found (for MMS)
+			elsif ($f =~ /%protocolmms$/) {
+				if ($pos_method < 0) {
+					$pos_method = $i; $i++; push @fieldlib, 'method';
+					$PerlParsingFormat .= "([^$LogSeparatorWithoutStar]+)";
+				}
+			}
+			# Special for codemms, used for code only if code not already found (for MMS)
+			elsif ($f =~ /%codemms$/) {
+				if ($pos_code < 0) {
+					$pos_code = $i; $i++; push @fieldlib, 'code';
+					$PerlParsingFormat .= "([^$LogSeparatorWithoutStar]+)";
+				}
+			}
 			# Other tag
 			elsif ($f =~ /%other$/) {
 				$PerlParsingFormat .= "[^$LogSeparatorWithoutStar]+";
@@ -4772,7 +4782,7 @@ sub DefinePerlParsingFormat {
 			elsif ($f =~ /%otherquot$/) {
 				$PerlParsingFormat .= "\\\"[^\\\"]*\\\"";
 			}
-			# Unknown tag
+			# Unknown tag (no parenthesis)
 			else {
 				$PerlParsingFormat .= "[^$LogSeparatorWithoutStar]+";
 			}
@@ -6849,17 +6859,17 @@ if (scalar keys %HTMLOutput) {
 				if ($ShowKeywordsStats)	 	 { print ($frame?"<tr><td class=AWS> &nbsp; <img height=8 width=9 src=\"$DirIcons/other/page.png\" alt=\"...\"> ":""); print "<a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=keywords":"$PROG$StaticLinks.keywords.$StaticExt")."\"$NewLinkTarget>$Message[121]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
 				if ($linetitle) { print ($frame?"":"</td></tr>\n"); }
 				# Others
-				$linetitle=&AtLeastOneNotNull($ShowFileTypesStats=~/C/i,$ShowClusterStats,$ShowMiscStats,$ShowHTTPErrorsStats,$ShowSMTPErrorsStats);
+				$linetitle=&AtLeastOneNotNull($ShowFileTypesStats=~/C/i,$ShowMiscStats,$ShowHTTPErrorsStats,$ShowSMTPErrorsStats,$ShowClusterStats);
 				if ($linetitle) { print "<tr><th class=AWS".($frame?"":" valign=top").">".($menuicon?"<img src=\"$DirIcons/other/menu8.png\">&nbsp;":"")."$Message[2]: </th>\n"; }
 				if ($linetitle) { print ($frame?"</tr>\n":"<td class=AWS>"); }
 				if ($ShowFileTypesStats =~ /C/i)	 { print ($frame?"<tr><td class=AWS>":""); print "<a href=\"$linkanchor#FILETYPES\"$targetpage>$Message[98]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
-				if ($ShowClusterStats)	 	 { print ($frame?"<tr><td class=AWS>":""); print "<a href=\"$linkanchor#CLUSTER\"$targetpage>$Message[155]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
 				if ($ShowMiscStats)	 		 { print ($frame?"<tr><td class=AWS>":""); print "<a href=\"$linkanchor#MISC\"$targetpage>$Message[139]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
 				if ($ShowHTTPErrorsStats)	 { print ($frame?"<tr><td class=AWS>":""); print "<a href=\"$linkanchor#ERRORS\"$targetpage>$Message[32]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
 				foreach my $code (keys %TrapInfosForHTTPErrorCodes) {
 					if ($ShowHTTPErrorsStats)	 { print ($frame?"<tr><td class=AWS> &nbsp; <img height=8 width=9 src=\"$DirIcons/other/page.png\" alt=\"...\"> ":""); print "<a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=errors$code":"$PROG$StaticLinks.errors$code.$StaticExt")."\"$NewLinkTarget>$Message[31]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
 				}
 				if ($ShowSMTPErrorsStats)	 { print ($frame?"<tr><td class=AWS>":""); print "<a href=\"$linkanchor#ERRORS\"$targetpage>$Message[147]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
+				if ($ShowClusterStats)	 	 { print ($frame?"<tr><td class=AWS>":""); print "<a href=\"$linkanchor#CLUSTER\"$targetpage>$Message[155]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
 				if ($linetitle) { print ($frame?"":"</td></tr>\n"); }
 				# Extra/Marketing
 			 	$linetitle=&AtLeastOneNotNull(@ExtraStatTypes);
@@ -9294,16 +9304,22 @@ if (scalar keys %HTMLOutput) {
 			print "$Center<a name=\"CLUSTER\">&nbsp;</a><BR>\n";
 			my $title="$Message[155]";
 			&tab_head("$title",19);
-			print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH colspan=2>$Message[155]</TH><TH bgcolor=\"#$color_p\" width=80>$Message[56]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH bgcolor=\"#$color_k\" width=80>$Message[75]</TH></TR>\n";
+			print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH colspan=2>$Message[155]</TH>";
+			if ($ShowClusterStats =~ /P/i) { print "<TH bgcolor=\"#$color_p\" width=80>$Message[56]</TH><TH bgcolor=\"#$color_p\" width=80>$Message[15]</TH>"; }
+			if ($ShowClusterStats =~ /H/i) { print "<TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[15]</TH>"; }
+			if ($ShowClusterStats =~ /B/i) { print "<TH bgcolor=\"#$color_k\" width=80>$Message[75]</TH><TH bgcolor=\"#$color_k\" width=80>$Message[15]</TH>"; }
+			print "</TR>\n";
 			$total_p=$total_h=$total_k=0;
 			my $count=0;
 			foreach my $key (keys %_cluster_h) {
-				my $p=int($_cluster_h{$key}/$TotalHits*1000)/10;
+				my $p_p=int($_cluster_p{$key}/$TotalPages*1000)/10;
+				my $p_h=int($_cluster_h{$key}/$TotalHits*1000)/10;
+				my $p_k=int($_cluster_k{$key}/$TotalBytes*1000)/10;
 				print "<TR>";
-				print "<TD>$key</TD>";
-				if ($ShowClusterStats =~ /P/i) { print "<TD>".($_cluster_p{$key}?$_cluster_p{$key}:"&nbsp;")."</TD>"; }
-				if ($ShowClusterStats =~ /H/i) { print "<TD>$_cluster_h{$key}</TD>"; }
-				if ($ShowClusterStats =~ /B/i) { print "<TD>".Format_Bytes($_cluster_k{$key})."</TD>"; }
+				print "<TD class=AWS colspan=2>Computer $key</TD>";
+				if ($ShowClusterStats =~ /P/i) { print "<TD>".($_cluster_p{$key}?$_cluster_p{$key}:"&nbsp;")."</TD><TD>$p_p %</TD>"; }
+				if ($ShowClusterStats =~ /H/i) { print "<TD>$_cluster_h{$key}</TD><TD>$p_h %</TD>"; }
+				if ($ShowClusterStats =~ /B/i) { print "<TD>".Format_Bytes($_cluster_k{$key})."</TD><TD>$p_k %</TD>"; }
 				print "</TR>\n";
 				$total_p+=$_cluster_p{$key};
 				$total_h+=$_cluster_h{$key};
