@@ -703,19 +703,20 @@ when reading it), follow the example:<br>
 <a name="SkipFiles"><b>SkipFiles</b></a><br>
 <b>Version : </b>1.0+ (5.6+ for REGEX syntax)<br>
 <br># Use SkipFiles to ignore access to URLs that match one of following entries.
-<br># You can, with this option, add a list of not important frame pages (like 
-<br># menus, etc...) to exclude them from statistics.
-<br># For example, to ignore a whole directory tree, just add "directorytoignore",
-<br># to ignore "users" web site pages in your stats, you can add "/~".
+<br># You can enter a list of not important URLs (like framed menus, hidden pages,
+<br># etc...) to exclude them from statistics. You must enter here exact relative
+<br># URL as found in log file or some REGEX values.
+<br># For example, to ignore /badpage.html, just add "/badpage.html", to ignore
+<br># all pages in a particular directory, add "REGEX[^\/directorytoexclude]".
 <br># The opposite parameter of "SkipFiles" is "OnlyFiles".
 <br># Note: This parameter is not case sensitive.
 <br># Note: Use space between each value and do not remove default values.
 <br># Note: You can use regular expression values writing value with REGEX[value].
 <br># Change : Effective for new updates only
-<br># Example: "REGEX[robots\.txt$] REGEX[favicon\.ico$] /badpage.html /~"
-<br># Default: "REGEX[robots\.txt$] REGEX[favicon\.ico$]"
+<br># Example: "/badpage.html REGEX[^\/excludedirecotry]"
+<br># Default: ""
 <br>#
-<br>SkipFiles="REGEX[robots\.txt$] REGEX[favicon\.ico$]"
+<br>SkipFiles=""
 
 <br><br><hr>
 
@@ -750,7 +751,7 @@ when reading it), follow the example:<br>
 <br># Note: Use space between each value and do not remove default values
 <br># Note: You can use regular expression values writing value with REGEX[value].
 <br># Change : Effective for new updates only
-<br># Example: "marketing_directory REGEX[office\/.*\.(csv|sxw)$]"
+<br># Example: "REGEX[marketing_directory] REGEX[office\/.*\.(csv|sxw)$]"
 <br># Default: ""
 <br>#
 <br>OnlyFiles=""
