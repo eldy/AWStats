@@ -530,7 +530,13 @@ sub error {
 			if ($LogFormat == 5) {
 				print "${tagbold}\"ISA native log format\"${tagunbold}${tagbr}\n";
 			}
-			if ($LogFormat !~ /^[1-5]$/) {
+ 			if ($LogFormat == 6) {
+ 				print "${tagbold}\"Lotus Notes/Lotus Domino\"${tagunbold}${tagbr}\n";
+ 				print ($HTMLOutput?"<font color=#888888><i>":"");
+ 				print "111.22.33.44 - Firstname Middlename Lastname [10/Jan/2001:02:14:14 +0200] \"GET / HTTP/1.1\" 200 1234 \"http://www.fromserver.com/from.htm\" \"Mozilla/4.0 (compatible; MSIE 5.01; Windows NT 5.0)\"\n";
+ 				print ($HTMLOutput?"</i></font>${tagbr}${tagbr}\n":"");
+ 			}
+			if ($LogFormat !~ /^[1-6]$/) {
 				print "the following personalized log format:${tagbr}\n";
 				print ($HTMLOutput?"<font color=#888888><i>":"");
 				print "$LogFormat\n";
@@ -1165,7 +1171,7 @@ sub Check_Config {
 	}
 	if (! $LogFile)   { error("Error: LogFile parameter is not defined in config/domain file"); }
 	if (! $LogFormat) { error("Error: LogFormat parameter is not defined in config/domain file"); }
-	if ($LogFormat =~ /^\d$/ && $LogFormat !~ /[1-5]/)  { error("Error: LogFormat parameter is wrong in config/domain file. Value is '$LogFormat' (should be 1,2,3,4,5 or a 'personalized AWStats log format string')"); }
+	if ($LogFormat =~ /^\d$/ && $LogFormat !~ /[1-6]/)  { error("Error: LogFormat parameter is wrong in config/domain file. Value is '$LogFormat' (should be 1,2,3,4,5 or a 'personalized AWStats log format string')"); }
 	if (! $LogSeparator) { $LogSeparator="\\s"; }
 	if ($Debug) {
 		debug(" LogFile='$LogFile'",2);
@@ -3775,7 +3781,7 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {	# Updat
 
 	if ($Debug) { debug("Generate PerlParsingFormat from LogFormat=$LogFormat"); }
 	$PerlParsingFormat="";
-	if ($LogFormat =~ /^[1-5]$/) {	# Pre-defined log format
+	if ($LogFormat =~ /^[1-6]$/) {	# Pre-defined log format
 		if ($LogFormat eq "1") {	# Same than "%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\""
 			$PerlParsingFormat="([^ ]+) [^ ]+ ([^ ]+) \\[([^ ]+) [^ ]+\\] \\\"([^ ]+) ([^ ]+) [^\\\"]+\\\" ([\\d|-]+) ([\\d|-]+) \\\"(.*)\\\" \\\"([^\\\"]*)\\\"";	# referer and ua might be ""
 			$pos_host=0;$pos_logname=1;$pos_date=2;$pos_method=3;$pos_url=4;$pos_code=5;$pos_size=6;$pos_referer=7;$pos_agent=8;
@@ -3796,6 +3802,10 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {	# Updat
 			$PerlParsingFormat="([^\\t]*)\\t([^\\t]*)\\t([^\\t]*)\\t[^\\t]*\\t([^\\t]*\\t[^\\t]*)\\t[^\\t]*\\t[^\\t]*\\t([^\\t]*)\\t[^\\t]*\\t[^\\t]*\\t[^\\t]*\\t[^\\t]*\\t[^\\t]*\\t([^\\t]*)\\t[^\\t]*\\t[^\\t]*\\t([^\\t]*)\\t([^\\t]*)\\t[^\\t]*\\t[^\\t]*\\t([^\\t]*)\\t[^\\t]*";
 			$pos_host=0;$pos_logname=1;$pos_agent=2;$pos_date=3;$pos_referer=4;$pos_size=5;$pos_method=6;$pos_url=7;$pos_code=8;
 		}
+ 		elsif ($LogFormat eq "6") {	# Lotus notes (allows spaces in the logname without quoting them)
+ 			$PerlParsingFormat="([^\\s]+) [^\\s]+ (.+) \\[([^\\s]+) [^\\s]+\\] \\\"([^\\s]+) ([^\\s]+) [^\\\"]+\\\" ([\\d|-]+) ([\\d|-]+) \\\"(.*)\\\" \\\"([^\\\"]*)\\\"";	# referer and ua might be ""
+ 			$pos_host=0;$pos_logname=1;$pos_date=2;$pos_method=3;$pos_url=4;$pos_code=5;$pos_size=6;$pos_referer=7;$pos_agent=8;
+ 		}
 	}
 	else {							# Personalized log format
 		my $LogFormatString=$LogFormat;
@@ -4021,7 +4031,7 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {	# Updat
 
 		if ($Debug) { debug(" Correct format line $NbOfLinesRead : host=\"$field[$pos_host]\", logname=\"$field[$pos_logname]\", date=\"$field[$pos_date]\", method=\"$field[$pos_method]\", url=\"$field[$pos_url]\", code=\"$field[$pos_code]\", size=\"$field[$pos_size]\", referer=\"$field[$pos_referer]\", agent=\"$field[$pos_agent]\"",4); }
 		#if ($Debug) { debug("$field[$pos_vh] - $field[$pos_gzipin] - $field[$pos_gzipout] - $field[$pos_gzipratio]\n",4); }
-		if ($Debug) { debug("$field[$pos_emails] - $field[$pos_emailr] - $field[$pos_hostr]\n",4); }
+		#if ($Debug) { debug("$field[$pos_emails] - $field[$pos_emailr] - $field[$pos_hostr]\n",4); }
 
 		# Check virtual host name
 		#----------------------------------------------------------------------
@@ -4265,6 +4275,8 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {	# Updat
 		# Analyze: Login
 		#---------------
 		if ($pos_logname>=0 && $field[$pos_logname] && $field[$pos_logname] ne "-") {
+	 		if ($LogFormat eq '6') { $field[$pos_logname] =~ s/ /\_/g; }			# Lotus notes allow space in logname field
+
 			# We found an authenticated user
 			if ($PageBool) {
 				$_login_p{$field[$pos_logname]}++;								#Count accesses for page (page)
