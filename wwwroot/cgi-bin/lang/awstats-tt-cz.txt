@@ -1,0 +1,53 @@
+	<!--CZ by js@fsid.cvut.cz (please contact if something wrong)-->
+	<DIV CLASS="CTooltip" ID="tt1">
+	Noví náv¹tìvníci jsou definováni jako ka¾dý <b>pøicházející</b> (prohlí¾ející si neboprocházející), kdo 
+	se na stránky nepøipojil posledních <b>#VisitTimeOut# min</b>.
+	</DIV>
+	<DIV CLASS="CTooltip" ID="tt2">
+	Poèet klientù (<b>IP address</b>), kteøí pøi¹li na stránky (a kteøí si prohlédli alespoò jednu <b>stránku</b>).
+	Toto èíslo odpovídá èíslu <b>rùzných fyzických osob</b>, kteøí nav¹tívili stránky kterýkoli <b>jeden</b> den.
+	</DIV>
+	<DIV CLASS="CTooltip" ID="tt3">
+	Poèet kolikrát byla <b>stránka</b> na tomto serveru <b>shlédnuta</b> (Souèet za v¹echny nav¹tìvující a jejich náv¹tìvy).
+	To se li¹í od <b>Hitù</b> tak, ¾e jsou zapoèítány jen stránky (ne obrázky a ostatní...).
+	</DIV>
+	<DIV CLASS="CTooltip" ID="tt4">
+	Poèet kolikrát byla <b>stránka, obrázek, soubor</b> na tomto serveru <b>stáhnuta</b> (Souèet za v¹echny nav¹tìvující a jejich náv¹tìvy).	
+	Toto èíslo je uvádìno kvùli porovnání se <b>Stránkami</b>.
+	</DIV>
+	<DIV CLASS="CTooltip" ID="tt5">
+	Velikost v¹ech <b>stránek, obrázkù a souborù</b> sta¾ených z tohoto serveru.		
+	</DIV>
+	<DIV CLASS="CTooltip" ID="tt13">
+	#PROG# rozpozná pøístup na server od <b>vyhledávání</b> z <b>#SearchEnginesArray# nejznámìj¹ích internetových vyhledávaèù a seznamù</b> (jako je Yahoo, Altavista, Lycos, Google, Voila, atd...).
+	</DIV>
+	<DIV CLASS="CTooltip" ID="tt14">
+	Seznam v¹ech <b>externích stránek</b> (mimo server), které byly pou¾ity jako odkaz na tento server (Je zobrazeno jen <b>#MaxNbOfRefererShown#</b> nejèastìj¹ích).
+	Odkazy pou¾ité z vyhledávaèù nejsou zaøazeny, nebo» je obsahuje jiný údaj.
+	</DIV>
+	<DIV CLASS="CTooltip" ID="tt15">
+	Tato tabulka zobrazuje seznam nejèastìji zadávaných <b>výrazù</b>, které byly zadávany ve vyhledávaèích k nalezení tohoto serveru.
+	(Výrazy od <b>#SearchEnginesArray#</b> mnejznámìj¹ích vyhledávaèù a seznamù jsou #PROG# rozpoznány, jako je Yahoo, Altavista, Lycos, Google, Voila, atd...).
+	</DIV>
+	<DIV CLASS="CTooltip" ID="tt16">
+	Roboti (nìkdy oznaèováni jako pavouci nebo èmuchalové) jsou <b>poèítaèoví automat. náv¹tìvníci</b> pou¾ivaní mnoha vyhledávacími slu¾bami k (1) indexování a hodnocení, (2) sbírání statistik z webù a/nebo (3) k zji¹tìní, zda stránky stále existují.<br>
+	#PROG# je schopen rozpoznat <b>#RobotArray#</b> robotù.
+	</DIV>
+
+	<DIV CLASS="CTooltip" ID="tt201"> Bylo vytvoøeno nové místo s daty a odesláno. </DIV>
+	<DIV CLASS="CTooltip" ID="tt202"> Po¾adavek byl rozeznán, ale bude vyøízen pozdìji. </DIV>
+	<DIV CLASS="CTooltip" ID="tt204"> Po¾adavek byl rozeznán, ale není co odeslat zpìt. </DIV>
+	<DIV CLASS="CTooltip" ID="tt206"> Dotaz byl zpracován jen èásteènì. </DIV>
+	<DIV CLASS="CTooltip" ID="tt301"> Po¾adovaný dokument byl pøesunut a adresa byla odeslána. </DIV>
+	<DIV CLASS="CTooltip" ID="tt302"> Dokument se doèasnì nachází na jiné adrese. </DIV>
+	<DIV CLASS="CTooltip" ID="tt400"> Syntaktická chyba, chybný po¾adavek. </DIV>
+	<DIV CLASS="CTooltip" ID="tt401"> Po¾adavek neobsahoval ¾ádanou autorizaci jméno/heslo pro vstup na stránky. Pokud se vyskytuje èasto pokou¹í se nìkdo o prùlom-hack. </DIV>
+	<DIV CLASS="CTooltip" ID="tt403"> Po¾adavek byl odmítnut serverem (nepøístupná data, neviditelný adresáø...). </DIV>
+	<DIV CLASS="CTooltip" ID="tt404"> Pokus o vstup na neexistující stránku nebo soubor. </DIV>
+	<DIV CLASS="CTooltip" ID="tt408"> Celý po¾adavek nebyl serveru od klienta zaslán v po¾adovaném èase (chyba klienta nebo serveru nebo skriptu). </DIV>
+	<DIV CLASS="CTooltip" ID="tt500"> Chyba serveru (èasto se vyskytuje pøi chybném zpracování skriptu). </DIV>
+	<DIV CLASS="CTooltip" ID="tt501"> Po¾adavek, který byl zaslán není mo¾no vyøídit, nebo» ho server neumí zpracovat. </DIV>
+	<DIV CLASS="CTooltip" ID="tt502"> Server pøijal ¹patný po¾adavek od jiného serveru (proxy nebo brány). </DIV>
+	<DIV CLASS="CTooltip" ID="tt503"> Chyba serveru, slu¾ba není k dispozici. </DIV>
+	<DIV CLASS="CTooltip" ID="tt504"> Vypr¹el èasový interval u proxy serveru nebo brány. </DIV>
+	<DIV CLASS="CTooltip" ID="tt505"> Nepodporovaná verze protokolu HTTP. </DIV>
