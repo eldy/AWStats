@@ -72,9 +72,9 @@ $DirLang="";
 $DNSLookupAlreadyDone=0;
 $Lang="en";
 $DEBUGFORCED   = 0;				# Force debug level to log lesser level into debug.log file (Keep this value to 0)
-$MaxRowsInHTMLOutput = 1000;		# Max number of rows for not limited HTML arrays
+$MaxRowsInHTMLOutput = 1000;	# Max number of rows for not limited HTML arrays
 $VisitTimeOut  = 10000;			# Laps of time to consider a page load as a new visit. 10000 = one hour (Default = 10000)
-$VisitTolerance= 100;			# Laps of time to accept a record if not in correct order. 100 = one minute (Default = 100)
+$VisitTolerance= 500;			# Laps of time to accept a record if not in correct order. 500 = five minute (Default = 500)
 $NbOfLinesForBenchmark=5000;
 $ShowBackLink  = 1;
 $WIDTH         = 600;
@@ -117,9 +117,9 @@ $nowsec = $nowmin = $nowhour = $nowday = $nowmonth = $nowyear = $nowwday = $nown
 use vars qw/
 $AllowAccessFromWebToAuthenticatedUsersOnly $BarHeight $BarWidth $DebugResetDone
 $Expires $CreateDirDataIfNotExists $KeepBackupOfHistoricFiles $MaxLengthOfURL
-$MaxNbOfDomain $MaxNbOfHostsShown $MaxNbOfKeywordsShown $MaxNbOfLoginShown
-$MaxNbOfPageShown $MaxNbOfRefererShown $MaxNbOfRobotShown
-$MinHitFile $MinHitHost $MinHitKeyword
+$MaxNbOfDomain $MaxNbOfHostsShown $MaxNbOfKeyphrasesShown $MaxNbOfKeywordsShown
+$MaxNbOfLoginShown $MaxNbOfPageShown $MaxNbOfRefererShown $MaxNbOfRobotShown
+$MinHitFile $MinHitHost $MinHitKeyphrase $MinHitKeyword
 $MinHitLogin $MinHitRefer $MinHitRobot
 $NbOfLinesRead $NbOfLinesDropped $NbOfLinesCorrupted $NbOfOldLines $NbOfNewLines
 $NewLinePhase $NbOfLinesForCorruptedLog $PurgeLogFile
@@ -130,9 +130,9 @@ $HTMLOutput $UpdateStats $URLWithQuery
 /;
 ($AllowAccessFromWebToAuthenticatedUsersOnly, $BarHeight, $BarWidth, $DebugResetDone,
 $Expires, $CreateDirDataIfNotExists, $KeepBackupOfHistoricFiles, $MaxLengthOfURL,
-$MaxNbOfDomain, $MaxNbOfHostsShown, $MaxNbOfKeywordsShown, $MaxNbOfLoginShown,
-$MaxNbOfPageShown, $MaxNbOfRefererShown, $MaxNbOfRobotShown,
-$MinHitFile, $MinHitHost, $MinHitKeyword,
+$MaxNbOfDomain, $MaxNbOfHostsShown, $MaxNbOfKeyphrasesShown, $MaxNbOfKeywordsShown,
+$MaxNbOfLoginShown, $MaxNbOfPageShown, $MaxNbOfRefererShown, $MaxNbOfRobotShown,
+$MinHitFile, $MinHitHost, $MinHitKeyphrase, $MinHitKeyword,
 $MinHitLogin, $MinHitRefer, $MinHitRobot,
 $NbOfLinesRead, $NbOfLinesDropped, $NbOfLinesCorrupted, $NbOfOldLines, $NbOfNewLines,
 $NewLinePhase, $NbOfLinesForCorruptedLog, $PurgeLogFile,
@@ -140,15 +140,16 @@ $ShowAuthenticatedUsers, $ShowCompressionStats, $ShowFileSizesStats,
 $ShowDropped, $ShowCorrupted, $ShowUnknownOrigin, $ShowLinksToWhoIs,
 $SplitSearchString, $StartSeconds, $StartMicroseconds,
 $HTMLOutput, $UpdateStats, $URLWithQuery)=
-(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
+(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
 use vars qw/
 $AllowToUpdateStatsFromBrowser $ArchiveLogRecords $DetailedReportsOnNewWindows
 $FirstDayOfWeek $SaveDatabaseFilesWithPermissionsForEveryone
 $ShowHeader $ShowMenu $ShowMonthDayStats $ShowDaysOfWeekStats
 $ShowHoursStats $ShowDomainsStats $ShowHostsStats
 $ShowRobotsStats $ShowSessionsStats $ShowPagesStats $ShowFileTypesStats
-$ShowBrowsersStats $ShowOSStats $ShowOriginStats $ShowKeyphrasesStats
-$ShowKeywordsStats  $ShowHTTPErrorsStats
+$ShowBrowsersStats $ShowOSStats $ShowOriginStats
+$ShowKeyphrasesStats $ShowKeywordsStats
+$ShowHTTPErrorsStats
 $ShowFlagLinks $ShowLinksOnUrl
 $WarningMessages
 /;
@@ -203,7 +204,7 @@ $lastrequiredfield $lowerval
 $FirstTime $LastTime
 $TotalUnique $TotalVisits $TotalHostsKnown $TotalHostsUnknown
 $TotalPages $TotalHits $TotalBytes $TotalEntries $TotalExits $TotalBytesPages
-$TotalKeyphrases $TotalDifferentPages $TotalDifferentKeyphrases
+$TotalKeyphrases $TotalKeywords $TotalDifferentPages $TotalDifferentKeyphrases $TotalDifferentKeywords
 /;
 $pos_vh = $pos_rc = $pos_logname = $pos_date = $pos_method = $pos_url = $pos_code = $pos_size = 0;
 $pos_referer = $pos_agent = $pos_query = $pos_gzipin = $pos_gzipout = $pos_gzipratio = 0;
@@ -211,7 +212,7 @@ $lastrequiredfield = $lowerval = 0;
 $FirstTime = $LastTime = 0;
 $TotalUnique = $TotalVisits = $TotalHostsKnown = $TotalHostsUnknown = 0;
 $TotalPages = $TotalHits = $TotalBytes = $TotalEntries = $TotalExits = $TotalBytesPages = 0;
-$TotalKeyphrases = $TotalDifferentPages = $TotalDifferentKeyphrases = 0;
+$TotalKeyphrases = $TotalKeywords = $TotalDifferentPages = $TotalDifferentKeyphrases = $TotalDifferentKeywords = 0;
 # ---------- Init arrays --------
 use vars qw/
 @RobotsSearchIDOrder_list1 @RobotsSearchIDOrder_list2 @RobotsSearchIDOrder_list3
@@ -250,7 +251,7 @@ use vars qw/
 %_session %_browser_h %_domener_h %_domener_k %_domener_p %_errors_h
 %_filetypes_h %_filetypes_k %_filetypes_gz_in %_filetypes_gz_out
 %_hostmachine_h %_hostmachine_k %_hostmachine_l %_hostmachine_p %_hostmachine_s %_hostmachine_u
-%_keyphrases %_os_h %_pagesrefs_h %_robot_h %_robot_l
+%_keyphrases %_keywords %_os_h %_pagesrefs_h %_robot_h %_robot_l
 %_login_h %_login_p %_login_k %_login_l
 %_se_referrals_h %_sider404_h %_referer404_h %_url_p %_url_k %_url_e %_url_x
 %_unknownreferer_l %_unknownrefererbrowser_l
@@ -268,7 +269,7 @@ use vars qw/
 %_session = %_browser_h = %_domener_h = %_domener_k = %_domener_p = %_errors_h = ();
 %_filetypes_h = %_filetypes_k = %_filetypes_gz_in = %_filetypes_gz_out = ();
 %_hostmachine_h = %_hostmachine_k = %_hostmachine_l = %_hostmachine_p = %_hostmachine_s = %_hostmachine_u = ();
-%_keyphrases = %_os_h = %_pagesrefs_h = %_robot_h = %_robot_l = ();
+%_keyphrases = %_keywords = %_os_h = %_pagesrefs_h = %_robot_h = %_robot_l = ();
 %_login_h = %_login_p = %_login_k = %_login_l = ();
 %_se_referrals_h = %_sider404_h = %_referer404_h = %_url_p = %_url_k = %_url_e = %_url_x = ();
 %_unknownreferer_l = %_unknownrefererbrowser_l = ();
@@ -297,6 +298,7 @@ use vars qw/
 #tie %_filetypes_gz_in, 'Tie::StdHash';
 #tie %_filetypes_gz_out, 'Tie::StdHash';
 #tie %_keyphrases, 'Tie::StdHash';
+#tie %_keywords, 'Tie::StdHash';
 #tie %_os_h, 'Tie::StdHash';
 #tie %_pagesrefs_h, 'Tie::StdHash';
 #tie %_robot_h, 'Tie::StdHash';
@@ -570,7 +572,7 @@ sub error {
 	}
 	if ($message && $message !~ /History file.*is corrupted/) {
 		if ($HTMLOutput) { print "<br><b>\n"; }
-		print "Setup ('".($FileConfig?$FileConfig:"Config")."' file, web server or permissions) may be wrong.\n";
+		print "Setup (".($FileConfig?"'".$FileConfig."'":"Config")." file, web server or permissions) may be wrong.\n";
 		if ($HTMLOutput) { print "</b><br>\n"; }
 		print "See AWStats documentation in 'docs' directory for informations on how to setup $PROG.\n";
 	}
@@ -835,6 +837,8 @@ sub Read_Config_File {
 		if ($param =~ /^MinHitFile/)            { $MinHitFile=$value; next; }
 		if ($param =~ /^MaxNbOfRefererShown/)   { $MaxNbOfRefererShown=$value; next; }
 		if ($param =~ /^MinHitRefer/)           { $MinHitRefer=$value; next; }
+		if ($param =~ /^MaxNbOfKeyphrasesShown/) { $MaxNbOfKeyphrasesShown=$value; next; }
+		if ($param =~ /^MinHitKeyphrase/)        { $MinHitKeyphrase=$value; next; }
 		if ($param =~ /^MaxNbOfKeywordsShown/)  { $MaxNbOfKeywordsShown=$value; next; }
 		if ($param =~ /^MinHitKeyword/)         { $MinHitKeyword=$value; next; }
 		if ($param =~ /^FirstDayOfWeek/)       	{ $FirstDayOfWeek=$value; next; }
@@ -1189,7 +1193,7 @@ sub Check_Config {
 	if (! $Message[21])  { $Message[21]="Browsers"; }
 	if (! $Message[22])  { $Message[22]="HTTP Errors"; }
 	if (! $Message[23])  { $Message[23]="Referers"; }
-	if (! $Message[24])  { $Message[24]="Search&nbsp;Keywords"; }
+	if (! $Message[24])  { $Message[24]=""; }
 	if (! $Message[25])  { $Message[25]="Visitors domains/countries"; }
 	if (! $Message[26])  { $Message[26]="hosts"; }
 	if (! $Message[27])  { $Message[27]="pages"; }
@@ -1208,8 +1212,8 @@ sub Check_Config {
 	if (! $Message[40])  { $Message[40]="Links from an Internet Search Engine"; }
 	if (! $Message[41])  { $Message[41]="Links from an external page (other web sites except search engines)"; }
 	if (! $Message[42])  { $Message[42]="Links from an internal page (other page on same site)"; }
-	if (! $Message[43])  { $Message[43]="Keywords used on search engines"; }
-	if (! $Message[44])  { $Message[44]=""; }
+	if (! $Message[43])  { $Message[43]="Keyphrases used on search engines"; }
+	if (! $Message[44])  { $Message[44]="Keywords used on search engines"; }
 	if (! $Message[45])  { $Message[45]="Unresolved IP Address"; }
 	if (! $Message[46])  { $Message[46]="Unknown OS (Referer field)"; }
 	if (! $Message[47])  { $Message[47]="Required but not found URLs (HTTP code 404)"; }
@@ -1285,6 +1289,8 @@ sub Check_Config {
 	if (! $Message[117]) { $Message[117]="Visits duration"; }
 	if (! $Message[118]) { $Message[118]="Close window"; }
 	if (! $Message[119]) { $Message[119]="Bytes"; }
+	if (! $Message[120]) { $Message[120]="Search&nbsp;Keyphrases"; }
+	if (! $Message[121]) { $Message[121]="Search&nbsp;Keywords"; }
 	# Refuse LogFile if contains a pipe and PurgeLogFile || ArchiveLogRecords set on
 	if (($PurgeLogFile || $ArchiveLogRecords) && $LogFile =~ /\|\s*$/) {
 		error("Error: A pipe in log file name is not allowed if PurgeLogFile and ArchiveLogRecords are not set to 0");
@@ -1872,7 +1878,7 @@ sub Read_History_File {
 			next;
 		}
 		if ($field[0] eq "BEGIN_SEARCHWORDS")   {
-			if ($Debug) { debug(" Begin of SEARCHWORDS section"); }
+			if ($Debug) { debug(" Begin of SEARCHWORDS section ($MaxNbOfKeyphrasesShown,$MinHitKeyphrase)"); }
 			$_=<HISTORY>;
 			chomp $_; s/\r//;
 			if (! $_) { error("Error: History file \"$DirData/$PROG$month$year$FileSuffix.txt\" is corrupted (in section SEARCHWORDS). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
@@ -1881,7 +1887,7 @@ sub Read_History_File {
 			while ($field[0] ne "END_SEARCHWORDS") {
 				if ($field[0]) {
 					$count++;
-					if ($part && ($UpdateStats || $QueryString !~ /output=/i || $QueryString =~ /output=allkeyphrases/i)) {
+					if ($part && ($UpdateStats || $QueryString !~ /output=/i || $QueryString =~ /output=allkeyphrases/i || $QueryString =~ /output=allkeywords/i)) {
 						my $loadrecord=0;
 						if ($UpdateStats) {
 							$loadrecord=1;
@@ -1890,24 +1896,34 @@ sub Read_History_File {
 							if ($QueryString !~ /output=/i) {
 								if ($MonthRequired eq "year") { $loadrecord=1; }
 								else {
-									if ($countloaded < $MaxNbOfKeywordsShown && $field[1] >= $MinHitKeyword) { $loadrecord=1; }
+									if ($countloaded < $MaxNbOfKeyphrasesShown && $field[1] >= $MinHitKeyphrase) { $loadrecord=1; }
 									$TotalDifferentKeyphrases++;
 									$TotalKeyphrases+=($field[1]||0);
 								}
 							}
-							if ($QueryString =~ /output=allkeyphrases/i) {
-								if ($MonthRequired eq "year" ) {
-									$loadrecord=1;
-								}
+							if ($QueryString =~ /output=allkeyphrases/i) {	# Load keyphrases for keyphrases chart
+								if ($MonthRequired eq "year" ) { $loadrecord=1; }
 								else {
-									if ($field[1] >= $MinHitKeyword) { $loadrecord=1; }
+									if ($field[1] >= $MinHitKeyphrase) { $loadrecord=1; }
 									$TotalDifferentKeyphrases++;
 									$TotalKeyphrases+=($field[1]||0);
 								}
+							}
+							if ($QueryString =~ /output=allkeywords/i) {	# Load keyphrases for keywords chart
+								$loadrecord=2;
+								$TotalDifferentKeywords++;
+								$TotalKeywords+=($field[1]||0);
 							}
 						}
 						if ($loadrecord) {
-							if ($field[1]) { $_keyphrases{$field[0]}+=$field[1]; }
+							if ($field[1]) {
+								if ($loadrecord==2) {
+									my @wordarray=split(/\+/,$field[0]); foreach my $word (@wordarray) { $_keywords{$word}+=$field[1]; }
+								}
+								else {
+									$_keyphrases{$field[0]}+=$field[1];
+								}
+							}
 							$countloaded++;
 						}
 					}
@@ -1918,6 +1934,45 @@ sub Read_History_File {
 				@field=split(/\s+/,$_); $countlines++;
 			}
 			if ($Debug) { debug(" End of SEARCHWORDS section ($count entries, $countloaded loaded)"); }
+			next;
+		}
+		if ($field[0] eq "BEGIN_KEYWORDS")   {
+			if ($Debug) { debug(" Begin of KEYWORDS section ($MaxNbOfKeywordsShown,$MinHitKeyword)"); }
+			$_=<HISTORY>;
+			chomp $_; s/\r//;
+			if (! $_) { error("Error: History file \"$DirData/$PROG$month$year$FileSuffix.txt\" is corrupted (in section KEYWORDS). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
+			my @field=split(/\s+/,$_); $countlines++;
+			my $count=0;my $countloaded=0;
+			while ($field[0] ne "END_KEYWORDS") {
+				if ($field[0]) {
+					$count++;
+					if ($part && ($QueryString !~ /output=/i)) {	# Required only for main page
+						my $loadrecord=0;
+						if ($UpdateStats) {
+							$loadrecord=1;
+						}
+						else {
+							if ($QueryString !~ /output=/i) {
+								if ($MonthRequired eq "year") { $loadrecord=1; }
+								else {
+									if ($countloaded < $MaxNbOfKeywordsShown && $field[1] >= $MinHitKeyword) { $loadrecord=1; }
+									$TotalDifferentKeywords++;
+									$TotalKeywords+=($field[1]||0);
+								}
+							}
+						}
+						if ($loadrecord) {
+							if ($field[1]) { $_keywords{$field[0]}+=$field[1]; }
+							$countloaded++;
+						}
+					}
+				}
+				$_=<HISTORY>;
+				chomp $_; s/\r//;
+				if (! $_) { error("Error: History file \"$DirData/$PROG$month$year$FileSuffix.txt\" is corrupted (in section KEYWORDS). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
+				@field=split(/\s+/,$_); $countlines++;
+			}
+			if ($Debug) { debug(" End of KEYWORDS section ($count entries, $countloaded loaded)"); }
 			next;
 		}
 		if ($field[0] eq "BEGIN_ERRORS")   {
@@ -2197,22 +2252,38 @@ sub Save_History_File {
 	}
 	print HISTORYTMP "END_PAGEREFS\n";
 	print HISTORYTMP "\n";
-	print HISTORYTMP "# Search phrases - Hits\n";
+	print HISTORYTMP "# Search keyphrases - Number of search\n";
+	print HISTORYTMP "# The $MaxNbOfKeyphrasesShown first number of search must be first (order not required for others)\n";
 	print HISTORYTMP "BEGIN_SEARCHWORDS\n";
-	print HISTORYTMP "# The $MaxNbOfKeywordsShown first Hits must be first (order not required for others)\n";
 	&BuildKeyList($MaxNbOfKeywordsShown,$MinHitKeyword,\%_keyphrases,\%_keyphrases);
 	%keysinkeylist=();
+	# We also build _keywords
+	%_keywords=();
 	foreach my $key (@keylist) {
 		$keysinkeylist{$key}=1;
 		my $keyphrase=$key;
 		print HISTORYTMP "$keyphrase $_keyphrases{$key}\n";
+		my @wordarray=split(/\+/,$key); foreach my $word (@wordarray) { $_keywords{$word}+=$_keyphrases{$key}; }
 	}
 	foreach my $key (keys %_keyphrases) {
 		if ($keysinkeylist{$key}) { next; }
 		my $keyphrase=$key;
 		print HISTORYTMP "$keyphrase $_keyphrases{$key}\n";
+		my @wordarray=split(/\+/,$key); foreach my $word (@wordarray) { $_keywords{$word}+=$_keyphrases{$key}; }
 	}
 	print HISTORYTMP "END_SEARCHWORDS\n";
+	print HISTORYTMP "\n";
+	print HISTORYTMP "# Search keywords - Number of search\n";
+	print HISTORYTMP "# Only the $MaxNbOfKeywordsShown first number of search are saved\n";
+	print HISTORYTMP "BEGIN_KEYWORDS\n";
+	&BuildKeyList($MaxNbOfKeywordsShown,$MinHitKeyword,\%_keywords,\%_keywords);
+	%keysinkeylist=();
+	foreach my $key (@keylist) {
+		$keysinkeylist{$key}=1;
+		my $keyword=$key;
+		print HISTORYTMP "$keyword $_keywords{$key}\n";
+	}
+	print HISTORYTMP "END_KEYWORDS\n";
 
 	# Other
 	print HISTORYTMP "\n";
@@ -2231,6 +2302,7 @@ sub Save_History_File {
 	}
 	print HISTORYTMP "END_SIDER_404\n";
 
+	%keysinkeylist=();
 	close(HISTORYTMP);
 }
 
@@ -2267,7 +2339,7 @@ sub Init_HashArray {
 	%_session = %_browser_h = %_domener_h = %_domener_k = %_domener_p = %_errors_h =
 	%_filetypes_h = %_filetypes_k = %_filetypes_gz_in = %_filetypes_gz_out =
 	%_hostmachine_h = %_hostmachine_k = %_hostmachine_p = %_hostmachine_l = %_hostmachine_s = %_hostmachine_u = 
-	%_keyphrases = %_os_h = %_pagesrefs_h = %_robot_h = %_robot_l =
+	%_keyphrases = %_keywords = %_os_h = %_pagesrefs_h = %_robot_h = %_robot_l =
 	%_login_h = %_login_p = %_login_k = %_login_l =
 	%_se_referrals_h = %_sider404_h = %_referer404_h = %_url_p = %_url_k = %_url_e = %_url_x =
 	%_unknownreferer_l = %_unknownrefererbrowser_l = ();
@@ -2593,7 +2665,7 @@ else {								# Run from command line
 	$UpdateStats=1; $HTMLOutput=0;                            								# Update with no report by default when run from command line
 	if ($QueryString =~ /output/i)		    	{ $UpdateStats=0; $HTMLOutput=1; }			# Report and no update if an output is required
 	if ($QueryString =~ /update/i)    			{ $UpdateStats=1; }							# Except if -update specified
-	$QueryString=~s/output&//; $QueryString=~s/output$//;
+	$QueryString=~s/output&//; $QueryString=~s/output$//;	# -output with no = is same than nothing
 	if ($QueryString =~ /showsteps/i) 			{ $ShowSteps=1; }
 	$QueryString=~s/showsteps[^&]*//;
 	if ($QueryString =~ /showcorrupted/i) 		{ $ShowCorrupted=1; }
@@ -2613,6 +2685,10 @@ if ($QueryString =~ /output=urldetail:([^\s&]+)/i)	{ $URLFilter=&DecodeEncodedSt
 if ($QueryString =~ /urlfilter=([^\s&]+)/i) 		{ $URLFilter=&DecodeEncodedString($1); }
 ($DIR=$0) =~ s/([^\/\\]*)$//; ($PROG=$1) =~ s/\.([^\.]*)$//; $Extension=$1;
 if ($Debug) { debug("QUERY_STRING=$QueryString",2); }
+
+if ($QueryString =~ /output=.*output=/i) {
+	error("Only 1 output option is allowed");	
+}
 
 # Force SiteConfig if AWSTATS_CONFIG is defined
 if ($ENV{"AWSTATS_CONFIG"}) {
@@ -3770,9 +3846,8 @@ if ($UpdateStats) {
 			if ($Debug) { debug("Start of archiving log file"); }
 			open(ARCHIVELOG,">>$ArchiveFileName") || error("Error: Couldn't open file \"$ArchiveFileName\" to archive log: $!");
 			while (<LOG>) {
-				# TODO Change archiveok to 0 if pb during writing
-#				if (! print ARCHIVELOG $_) { $archiveok=0; last; }
-				print ARCHIVELOG $_;
+#				print ARCHIVELOG $_;
+				if (! print ARCHIVELOG $_) { $archiveok=0; last; }
 			}
 			close(ARCHIVELOG) || error("Error: Archiving failed during closing archive: $!");
 			if ($SaveDatabaseFilesWithPermissionsForEveryone) {	chmod 0666,"$ArchiveFileName"; }
@@ -3914,10 +3989,14 @@ EOF
 	if (!$TotalBytesPages) { foreach my $key (keys %_url_k) { $TotalBytesPages+=$_url_k{$key}; } }
 	# TotalKeyphrases (if not already specifically counted, we init it from _keyphrases hash table)
 	if (!$TotalKeyphrases) { foreach my $key (keys %_keyphrases) { $TotalKeyphrases+=$_keyphrases{$key}; } }
+	# TotalKeywords (if not already specifically counted, we init it from _keywords hash table)
+	if (!$TotalKeywords) { foreach my $key (keys %_keywords) { $TotalKeywords+=$_keywords{$key}; } }
 	# TotalDifferentPages (if not already specifically counted, we init it from _url_p hash table)
 	if (!$TotalDifferentPages) { $TotalDifferentPages=scalar keys %_url_p; }
 	# TotalDifferentKeyphrases (if not already specifically counted, we init it from _keyphrases hash table)
 	if (!$TotalDifferentKeyphrases) { $TotalDifferentKeyphrases=scalar keys %_keyphrases; }
+	# TotalDifferentKeywords (if not already specifically counted, we init it from _keywords hash table)
+	if (!$TotalDifferentKeywords) { $TotalDifferentKeywords=scalar keys %_keywords; }
 	# Define firstdaytocountaverage, lastdaytocountaverage, firstdaytoshowtime, lastdaytoshowtime
 	my $firstdaytocountaverage=$nowyear.$nowmonth."01";				# Set day cursor to 1st day of month
 	my $firstdaytoshowtime=$nowyear.$nowmonth."01";					# Set day cursor to 1st day of month
@@ -3975,6 +4054,7 @@ EOF
 			if ($ShowMonthDayStats)		 { print "<a href=\"#SUMMARY\">$Message[5]/$Message[4]</a> &nbsp; "; }
 			if ($ShowDaysOfWeekStats)	 { print "<a href=\"#DAYOFWEEK\">$Message[91]</a> &nbsp; "; }
 			if ($ShowHoursStats)		 { print "<a href=\"#HOUR\">$Message[20]</a> &nbsp; "; }
+			print "<br></td></tr>";
 			# Who
 			print "<tr><th class=AWL>$Message[92] : </th>";
 			print "<td class=AWL>";
@@ -3990,26 +4070,30 @@ EOF
 			print "<tr><th class=AWL>$Message[72] : </th>";
 			print "<td class=AWL>";
 			if ($ShowSessionsStats)		 { print "<a href=\"#SESSIONS\">$Message[117]</a> &nbsp; "; }
-			if ($ShowPagesStats)		 { print "<a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=urldetail":"$PROG$StaticLinks.urldetail.html")."\"".($DetailedReportsOnNewWindows?" target=\"awstatsbis\"":"").">$Message[29]</a> &nbsp; "; }
+			if ($ShowPagesStats)		 { print "<a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=urldetail":"$PROG$StaticLinks.urldetail.html")."\"".($DetailedReportsOnNewWindows?" target=\"awstatsbis\"":"").">$Message[29]</a> &nbsp;\n"; }
 			if ($ShowPagesStats)		 { print "<a href=\"#ENTRY\">$Message[104]</a> &nbsp; "; }
 			if ($ShowPagesStats)		 { print "<a href=\"#EXIT\">$Message[116]</a> &nbsp; "; }
 			if ($ShowFileTypesStats)	 { print "<a href=\"#FILETYPES\">$Message[73]</a> &nbsp; "; }
 			if ($ShowFileSizesStats)	 {  }
 			if ($ShowOSStats)			 { print "<a href=\"#OS\">$Message[59]</a> &nbsp; "; }
 			if ($ShowBrowsersStats)		 { print "<a href=\"#BROWSER\">$Message[21]</a> &nbsp; "; }
-			if ($ShowBrowsersStats)		 { print "<a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=browserdetail":"$PROG$StaticLinks.browserdetail.html")."\"".($DetailedReportsOnNewWindows?" target=\"awstatsbis\"":"").">$Message[33]</a> &nbsp; "; }
-			if ($ShowBrowsersStats)		 { print "<a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=browserdetail":"$PROG$StaticLinks.browserdetail.html")."\"".($DetailedReportsOnNewWindows?" target=\"awstatsbis\"":"").">$Message[34]</a><br></td></tr>\n"; }
+			if ($ShowBrowsersStats)		 { print "<a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=browserdetail":"$PROG$StaticLinks.browserdetail.html")."\"".($DetailedReportsOnNewWindows?" target=\"awstatsbis\"":"").">$Message[33]</a> &nbsp;\n"; }
+			if ($ShowBrowsersStats)		 { print "<a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=browserdetail":"$PROG$StaticLinks.browserdetail.html")."\"".($DetailedReportsOnNewWindows?" target=\"awstatsbis\"":"").">$Message[34]</a> &nbsp;\n"; }
+			print "<br></td></tr>";
 			# Referers
 			print "<tr><th class=AWL>$Message[23] : </th>";
 			print "<td class=AWL>";
-			if ($ShowOriginStats)		 { print "<a href=\"#REFERER\">$Message[37]</a> &nbsp; "; }
-			if ($ShowKeyphrasesStats)	 { print "<a href=\"#SEARCHKEYS\">$Message[24]</a><br></td></tr>\n"; }
+			if ($ShowOriginStats)		 { print "<a href=\"#REFERER\">$Message[37]</a> &nbsp;\n"; }
+			if ($ShowKeyphrasesStats)	 { print "<a href=\"#SEARCHKEYS\">$Message[120]</a> &nbsp;\n"; }
+			if ($ShowKeywordsStats)	 	 { print "<a href=\"#SEARCHKEYS\">$Message[121]</a> &nbsp;\n"; }
+			print "<br></td></tr>";
 			# Others
 			print "<tr><th class=AWL>$Message[2] : </th>";
 			print "<td class=AWL>";
 			if ($ShowCompressionStats)	 { print "<a href=\"#FILETYPES\">$Message[98]</a> &nbsp; "; }
 			if ($ShowHTTPErrorsStats)	 { print "<a href=\"#ERRORS\">$Message[22]</a> &nbsp; "; }
-			if ($ShowHTTPErrorsStats)	 { print "<a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=errors404":"$PROG$StaticLinks.errors404.html")."\"".($DetailedReportsOnNewWindows?" target=\"awstatsbis\"":"").">$Message[31]</a><br></td></tr>\n"; }
+			if ($ShowHTTPErrorsStats)	 { print "<a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=errors404":"$PROG$StaticLinks.errors404.html")."\"".($DetailedReportsOnNewWindows?" target=\"awstatsbis\"":"").">$Message[31]</a>\n"; }
+			print "<br></td></tr>";
 		}
 		else {	# If not main page
 			$NewLinkParams =~ s/urlfilter[=]*[^ &]*//i;
@@ -4285,7 +4369,7 @@ EOF
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\" onmouseover=\"ShowTooltip(15);\" onmouseout=\"HideTooltip(15);\"><TH>$TotalDifferentKeyphrases $Message[103]</TH><TH bgcolor=\"#$color_s\" width=80>$Message[14]</TH><TH bgcolor=\"#$color_s\" width=80>$Message[15]</TH></TR>\n";
 		$total_s=0;
 		my $count=0;
-		&BuildKeyList($MaxRowsInHTMLOutput,$MinHitKeyword,\%_keyphrases,\%_keyphrases);
+		&BuildKeyList($MaxRowsInHTMLOutput,$MinHitKeyphrase,\%_keyphrases,\%_keyphrases);
 		foreach my $key (@keylist) {
 			my $mot = DecodeEncodedString(CleanFromCSSA($key));
 			my $p;
@@ -4299,6 +4383,33 @@ EOF
 		if ($rest_s > 0) {
 			my $p;
 			if ($TotalKeyphrases) { $p=int($rest_s/$TotalKeyphrases*1000)/10; }
+			print "<TR><TD CLASS=AWL><font color=blue>$Message[30]</TD><TD>$rest_s</TD>";
+			print "<TD>$p&nbsp;%</TD></TR>\n";
+		}
+		&tab_end;
+		&html_end;
+		exit(0);
+	}
+	if ($QueryString =~ /output=allkeywords/i) {
+		print "$CENTER<a name=\"KEYWORDS\">&nbsp;</a><BR>";
+		&tab_head($Message[44],19);
+		print "<TR bgcolor=\"#$color_TableBGRowTitle\" onmouseover=\"ShowTooltip(15);\" onmouseout=\"HideTooltip(15);\"><TH>$TotalDifferentKeywords $Message[13]</TH><TH bgcolor=\"#$color_s\" width=80>$Message[14]</TH><TH bgcolor=\"#$color_s\" width=80>$Message[15]</TH></TR>\n";
+		$total_s=0;
+		my $count=0;
+		&BuildKeyList($MaxRowsInHTMLOutput,$MinHitKeyword,\%_keywords,\%_keywords);
+		foreach my $key (@keylist) {
+			my $mot = DecodeEncodedString(CleanFromCSSA($key));
+			my $p;
+			if ($TotalKeywords) { $p=int($_keywords{$key}/$TotalKeywords*1000)/10; }
+			print "<TR><TD CLASS=AWL>$mot</TD><TD>$_keywords{$key}</TD><TD>$p&nbsp;%</TD></TR>\n";
+			$total_s += $_keywords{$key};
+			$count++;
+		}
+		if ($Debug) { debug("Total real / shown : $TotalKeywords / $total_s",2); }
+		$rest_s=$TotalKeywords-$total_s;
+		if ($rest_s > 0) {
+			my $p;
+			if ($TotalKeywords) { $p=int($rest_s/$TotalKeywords*1000)/10; }
 			print "<TR><TD CLASS=AWL><font color=blue>$Message[30]</TD><TD>$rest_s</TD>";
 			print "<TD>$p&nbsp;%</TD></TR>\n";
 		}
@@ -5053,17 +5164,20 @@ EOF
 		&tab_end;
 	}
 
-	# BY SEARCH PHRASES
-	#----------------------------
+	# BY SEARCH KEYWORDS AND/OR KEYPHRASES
+	#-------------------------------------
+	if ($ShowKeyphrasesStats && $ShowKeywordsStats) { print "<table width=100%><tr>"; }
 	if ($ShowKeyphrasesStats) {
+		# By Keyphrases
+		if ($ShowKeyphrasesStats && $ShowKeywordsStats) { print "<td width=50% valign=top>\n";	}
 		if ($Debug) { debug("ShowKeyphrasesStats",2); }
 		print "$CENTER<a name=\"SEARCHKEYS\">&nbsp;</a><BR>";
-		$MaxNbOfKeywordsShown = $TotalDifferentKeyphrases if $MaxNbOfKeywordsShown > $TotalDifferentKeyphrases;
-		&tab_head("$Message[43] ($Message[77] $MaxNbOfKeywordsShown) &nbsp; - &nbsp; <a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=allkeyphrases":"$PROG$StaticLinks.allkeyphrases.html")."\"".($DetailedReportsOnNewWindows?" target=\"awstatsbis\"":"").">$Message[80]</a>",19);
+		$MaxNbOfKeyphrasesShown = $TotalDifferentKeyphrases if $MaxNbOfKeyphrasesShown > $TotalDifferentKeyphrases;
+		&tab_head("$Message[43] ($Message[77] $MaxNbOfKeyphrasesShown)<br><a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=allkeyphrases":"$PROG$StaticLinks.allkeyphrases.html")."\"".($DetailedReportsOnNewWindows?" target=\"awstatsbis\"":"").">$Message[80]</a>",19);
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\" onmouseover=\"ShowTooltip(15);\" onmouseout=\"HideTooltip(15);\"><TH>$TotalDifferentKeyphrases $Message[103]</TH><TH bgcolor=\"#$color_s\" width=80>$Message[14]</TH><TH bgcolor=\"#$color_s\" width=80>$Message[15]</TH></TR>\n";
 		$total_s=0;
 		my $count=0;
-		&BuildKeyList($MaxNbOfKeywordsShown,$MinHitKeyword,\%_keyphrases,\%_keyphrases);
+		&BuildKeyList($MaxNbOfKeyphrasesShown,$MinHitKeyphrase,\%_keyphrases,\%_keyphrases);
 		foreach my $key (@keylist) {
 			my $mot = DecodeEncodedString(CleanFromCSSA($key));
 			my $p;
@@ -5080,7 +5194,38 @@ EOF
 			print "<TD>$p&nbsp;%</TD></TR>\n";
 		}
 		&tab_end;
+		if ($ShowKeyphrasesStats && $ShowKeywordsStats) { print "</td>\n";	}
 	}
+	if ($ShowKeywordsStats) {
+		# By Keywords
+		if ($ShowKeyphrasesStats && $ShowKeywordsStats) { print "<td width=50% valign=top>\n";	}
+		if ($Debug) { debug("ShowKeywordsStats",2); }
+		print "$CENTER<a name=\"SEARCHKEYS\">&nbsp;</a><BR>";
+		$MaxNbOfKeywordsShown = $TotalDifferentKeywords if $MaxNbOfKeywordsShown > $TotalDifferentKeywords;
+		&tab_head("$Message[44] ($Message[77] $MaxNbOfKeywordsShown)<br><a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=allkeywords":"$PROG$StaticLinks.allkeywords.html")."\"".($DetailedReportsOnNewWindows?" target=\"awstatsbis\"":"").">$Message[80]</a>",19);
+		print "<TR bgcolor=\"#$color_TableBGRowTitle\" onmouseover=\"ShowTooltip(15);\" onmouseout=\"HideTooltip(15);\"><TH>$TotalDifferentKeywords $Message[13]</TH><TH bgcolor=\"#$color_s\" width=80>$Message[14]</TH><TH bgcolor=\"#$color_s\" width=80>$Message[15]</TH></TR>\n";
+		$total_s=0;
+		my $count=0;
+		&BuildKeyList($MaxNbOfKeywordsShown,$MinHitKeyword,\%_keywords,\%_keywords);
+		foreach my $key (@keylist) {
+			my $mot = DecodeEncodedString(CleanFromCSSA($key));
+			my $p;
+			if ($TotalKeywords) { $p=int($_keywords{$key}/$TotalKeywords*1000)/10; }
+			print "<TR><TD CLASS=AWL>$mot</TD><TD>$_keywords{$key}</TD><TD>$p&nbsp;%</TD></TR>\n";
+			$total_s += $_keywords{$key};
+			$count++;
+		}
+		$rest_s=$TotalKeywords-$total_s;
+		if ($rest_s > 0) {
+			my $p;
+			if ($TotalKeywords) { $p=int($rest_s/$TotalKeywords*1000)/10; }
+			print "<TR><TD CLASS=AWL><font color=blue>$Message[30]</TD><TD>$rest_s</TD>";
+			print "<TD>$p&nbsp;%</TD></TR>\n";
+		}
+		&tab_end;
+		if ($ShowKeyphrasesStats && $ShowKeywordsStats) { print "</td>\n";	}
+	}
+	if ($ShowKeyphrasesStats && $ShowKeywordsStats) { print "</tr></table>"; }
 
 	# BY ERRORS
 	#----------------------------
