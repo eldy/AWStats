@@ -43,16 +43,18 @@
 
 # ---------- Init variables (Variable $TmpHashxxx are not initialized) --------
 ($ArchiveFileName, $ArchiveLogRecords, $BarHeight, $BarWidth,
-$DIR, $DNSLookup, $Debug, $DefaultFile, $DirCgi, $DirData,
-$DirIcons, $Extension, $FileConfig, $FileSuffix, $FirstTime,
-$HTMLEndSection, $Host, $HostAlias, $LastTime, $LastUpdate,
-$LogFile, $LogFormat, $LogFormatString, $Logo, $MaxNbOfDays, $MaxNbOfHostsShown, $MaxNbOfKeywordsShown,
-$MaxNbOfPageShown, $MaxNbOfRefererShown, $MaxNbOfRobotShown, $MinHitFile,
-$MinHitHost, $MinHitKeyword, $MinHitRefer, $MinHitRobot, $MonthRequired,
-$HTMLOutput, $PROG, $PageBool, $PageCode,
+$DIR, $DNSLookup, $Debug, $DefaultFile,
+$DirCgi, $DirData, $DirIcons, $DirLang,
+$Extension, $FileConfig, $FileSuffix,
+$FirstTime, $HTMLEndSection, $Host, $HostAlias, $LastTime, $LastUpdate,
+$LogFile, $LogFormat, $LogFormatString, $Logo,
+$MaxNbOfDays, $MaxNbOfHostsShown, $MaxNbOfKeywordsShown,
+$MaxNbOfPageShown, $MaxNbOfRefererShown, $MaxNbOfRobotShown,
+$MinHitFile, $MinHitHost, $MinHitKeyword, $MinHitRefer, $MinHitRobot,
+$MonthRequired, $HTMLOutput, $PROG, $PageBool, $PageCode,
 $PurgeLogFile, $QueryString, $RatioBytes, $RatioHits, $RatioHosts, $RatioPages,
 $ShowFlagLinks, $ShowLinksOnURL, $ShowLinksOnUrl, $ShowSteps,
-$SiteToAnalyze, $SiteToAnalyzeWithoutwww,
+$SiteConfig, $SiteDomain, $SiteToAnalyze, $SiteToAnalyzeWithoutwww,
 $TotalBytes, $TotalDifferentPages, $TotalErrors, $TotalHits,
 $TotalHostsKnown, $TotalHostsUnKnown, $TotalPages, $TotalUnique, $TotalVisits,
 $URLFilter, $UserAgent, $WarningMessages, $YearRequired, 
@@ -69,7 +71,7 @@ $total_h, $total_k, $total_p) = ();
 %MonthBytes = %MonthHits = %MonthHostsKnown = %MonthHostsUnknown = %MonthPages = %MonthUnique = %MonthVisits =
 %listofyears = %monthlib = %monthnum = ();
 
-$VERSION="3.1 (build 17)";
+$VERSION="3.1 (build 18)";
 $Lang="en";
 $Sort="";
 
@@ -878,12 +880,13 @@ sub SkipDNSLookup {
 #------------------------------------------------------------------------------
 sub Read_Config_File {
 	$FileConfig="";
-	my $Dir=$DIR; if (($Dir ne "") && (!($Dir =~ /\/$/)) && (!($Dir =~ /\\$/)) ) { $Dir .= "/"; }
-	foreach my $searchdir ("$Dir","/etc/awstats","/etc") {
-		if ($FileConfig eq "") { if (open(CONFIG,"$searchdir$PROG.$SiteToAnalyze.conf")) { $FileConfig="$searchdir$PROG.$SiteToAnalyze.conf"; $FileSuffix=".$SiteToAnalyze"; } }
+	foreach my $dir ("$DIR","/etc/awstats","/etc") {
+		my $searchdir=$dir;
+		if (($searchdir ne "") && (!($searchdir =~ /\/$/)) && (!($searchdir =~ /\\$/)) ) { $searchdir .= "/"; }
+		if ($FileConfig eq "") { if (open(CONFIG,"$searchdir$PROG.$SiteConfig.conf")) { $FileConfig="$searchdir$PROG.$SiteConfig.conf"; $FileSuffix=".$SiteConfig"; } }
 		if ($FileConfig eq "") { if (open(CONFIG,"$searchdir$PROG.conf"))  { $FileConfig="$searchdir$PROG.conf"; $FileSuffix=""; } }
 	}
-	if ($FileConfig eq "") { error("Error: Couldn't open config file \"$PROG.$SiteToAnalyze.conf\" nor \"$PROG.conf\" : $!"); }
+	if ($FileConfig eq "") { error("Error: Couldn't open config file \"$PROG.$SiteConfig.conf\" nor \"$PROG.conf\" : $!"); }
 	&debug("Call to Read_Config_File [FileConfig=\"$FileConfig\"]");
 	while (<CONFIG>) {
 		chomp $_; s/\r//;
@@ -940,7 +943,9 @@ sub Read_Config_File {
 		if ($param =~ /^PurgeLogFile/)          { $PurgeLogFile=$value; next; }
 		if ($param =~ /^ArchiveLogRecords/)     { $ArchiveLogRecords=$value; next; }
 		# Read optional section
+		if ($param =~ /^SiteDomain/)			{ $SiteDomain=$value; next; }
 		if ($param =~ /^Lang/)                  { $Lang=$value; next; }
+		if ($param =~ /^DirLang/)               { $DirLang=$value; next; }
 		if ($param =~ /^DefaultFile/)           { $DefaultFile=$value; next; }
 		if ($param =~ /^WarningMessages/)       { $WarningMessages=$value; next; }
 		if ($param =~ /^ShowLinksOnUrl/)        { $ShowLinksOnUrl=$value; next; }
@@ -992,9 +997,17 @@ sub Read_Config_File {
 #------------------------------------------------------------------------------
 sub Read_Language_Data {
 	my $FileLang="";
-	my $Dir=$DIR; if (($Dir ne "") && (!($Dir =~ /\/$/)) && (!($Dir =~ /\\$/)) ) { $Dir .= "/"; }
-	if (open(LANG,"${Dir}lang/awstats-$_[0].txt")) { $FileLang="${Dir}lang/awstats-$_[0].txt"; }
-	else { if (open(LANG,"${Dir}lang/awstats-en.txt")) { $FileLang="${Dir}lang/awstats-en.txt"; } }		# If file not found, we try english
+	foreach my $dir ("$DirLang","${DIR}lang","./lang") {
+		my $searchdir=$dir;
+		if (($searchdir ne "") && (!($searchdir =~ /\/$/)) && (!($searchdir =~ /\\$/)) ) { $searchdir .= "/"; }
+		if ($FileLang eq "") { if (open(LANG,"${searchdir}awstats-$_[0].txt")) { $FileLang="${searchdir}awstats-$_[0].txt"; } }
+	}
+	# If file not found, we try english
+	foreach my $dir ("$DirLang","${DIR}lang","./lang") {
+		my $searchdir=$dir;
+		if (($searchdir ne "") && (!($searchdir =~ /\/$/)) && (!($searchdir =~ /\\$/)) ) { $searchdir .= "/"; }
+		if ($FileLang eq "") { if (open(LANG,"${searchdir}awstats-en.txt")) { $FileLang="${searchdir}awstats-en.txt"; } }
+	}
 	&debug("Call to Read_Language_Data [FileLang=\"$FileLang\"]");
 	if ($FileLang ne "") {
 		$i = 0;
@@ -1031,9 +1044,17 @@ sub Read_Language_Data {
 #------------------------------------------------------------------------------
 sub Read_Language_Tooltip {
 	my $FileLang="";
-	my $Dir=$DIR; if (($Dir ne "") && (!($Dir =~ /\/$/)) && (!($Dir =~ /\\$/)) ) { $Dir .= "/"; }
-	if (open(LANG,"${Dir}lang/awstats-tt-$_[0].txt")) { $FileLang="${Dir}lang/awstats-tt-$_[0].txt"; }
-	else { if (open(LANG,"${Dir}lang/awstats-tt-en.txt")) { $FileLang="${Dir}lang/awstats-tt-en.txt"; } }		# If file not found, we try english
+	foreach my $dir ("$DirLang","${DIR}lang","./lang") {
+		my $searchdir=$dir;
+		if (($searchdir ne "") && (!($searchdir =~ /\/$/)) && (!($searchdir =~ /\\$/)) ) { $searchdir .= "/"; }
+		if ($FileLang eq "") { if (open(LANG,"${searchdir}awstats-tt-$_[0].txt")) { $FileLang="${searchdir}awstats-tt-$_[0].txt"; } }
+	}
+	# If file not found, we try english
+	foreach my $dir ("$DirLang","${DIR}lang","./lang") {
+		my $searchdir=$dir;
+		if (($searchdir ne "") && (!($searchdir =~ /\/$/)) && (!($searchdir =~ /\\$/)) ) { $searchdir .= "/"; }
+		if ($FileLang eq "") { if (open(LANG,"${searchdir}awstats-tt-en.txt")) { $FileLang="${searchdir}awstats-tt-en.txt"; } }
+	}
 	&debug("Call to Read_Language_Tooltip [FileLang=\"$FileLang\"]");
 	if ($FileLang ne "") {
 		my $aws_VisitTimeout = $VisitTimeOut/10000*60;
@@ -1587,7 +1608,7 @@ sub Show_Flag_Links {
 		print "<br>\n";
 		for (0..5) {		# Only flags for 5 major languages
 			my ($lng, $code) = split(/\s+/, $lngcode[$_]);
-			if ($Lang ne $code) { print "<a href=\"$DirCgi$PROG.$Extension?site=$SiteToAnalyze&year=$YearRequired&month=$MonthRequired&lang=$code\"><img src=\"$DirIcons\/flags\/$code.png\" height=14 border=0 alt=\"$lng\" title=\"$lng\"></a>&nbsp;\n"; }
+			if ($Lang ne $code) { print "<a href=\"$DirCgi$PROG.$Extension?".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$code\"><img src=\"$DirIcons\/flags\/$code.png\" height=14 border=0 alt=\"$lng\" title=\"$lng\"></a>&nbsp;\n"; }
 		}
 	}
 }
@@ -1641,21 +1662,23 @@ if ($ENV{"GATEWAY_INTERFACE"} ne "") {	# Run from a browser
 		$QueryString = $ENV{"QUERY_STRING"};
 	}
 	$QueryString =~ s/<script.*$//i;						# This is to avoid 'Cross Site Scripting attacks'
-	if ($QueryString =~ /site=/) { $SiteToAnalyze=$QueryString; $SiteToAnalyze =~ s/.*site=//; $SiteToAnalyze =~ s/&.*//; $SiteToAnalyze =~ s/ .*//; }
+	if ($QueryString =~ /site=/)   { $SiteConfig=$QueryString; $SiteConfig =~ s/.*site=//;   $SiteConfig =~ s/&.*//; $SiteConfig =~ s/ .*//; }	# For backward compatibility
+	if ($QueryString =~ /config=/) { $SiteConfig=$QueryString; $SiteConfig =~ s/.*config=//; $SiteConfig =~ s/&.*//; $SiteConfig =~ s/ .*//; }
 	$UpdateStats=0; $HTMLOutput=1;							# No update but report by default when run from a browser
-	if ($QueryString =~ /update=1/i) { $UpdateStats=1; }					# Update is required
+	if ($QueryString =~ /update=1/i)   { $UpdateStats=1; }					# Update is required
 }
 else {									# Run from command line
-	if ($ARGV[0] eq "-h") { $SiteToAnalyze = $ARGV[1]; }	# Kept for backward compatibility but useless
+	if ($ARGV[0] eq "-h") { $SiteConfig = $ARGV[1]; }		# Kept for backward compatibility but useless
 	$QueryString=""; for (0..@ARGV-1) { $QueryString .= "$ARGV[$_] "; }
 	$QueryString =~ s/<script.*$//i;						# This is to avoid 'Cross Site Scripting attacks'
-	if ($QueryString =~ /site=/) { $SiteToAnalyze=$QueryString; $SiteToAnalyze =~ s/.*site=//; $SiteToAnalyze =~ s/&.*//; $SiteToAnalyze =~ s/ .*//; }
+	if ($QueryString =~ /site=/)   { $SiteConfig=$QueryString; $SiteConfig =~ s/.*site=//;   $SiteConfig =~ s/&.*//; $SiteConfig =~ s/ .*//; }	# For backward compatibility
+	if ($QueryString =~ /config=/) { $SiteConfig=$QueryString; $SiteConfig =~ s/.*config=//; $SiteConfig =~ s/&.*//; $SiteConfig =~ s/ .*//; }
 	$UpdateStats=1;	$HTMLOutput=0;							# Update with no report by default when run from command line
-	if ($QueryString =~ /-output/i)  { $UpdateStats=0; $HTMLOutput=1; }	# Report and no update if an output is required
-	if ($QueryString =~ /-update/i)  { $UpdateStats=1; }					# Except if -update specified
+	if ($QueryString =~ /-output/i)    { $UpdateStats=0; $HTMLOutput=1; }	# Report and no update if an output is required
+	if ($QueryString =~ /-update/i)    { $UpdateStats=1; }					# Except if -update specified
 	if ($QueryString =~ /-showsteps/i) { $ShowSteps=1; } else { $ShowSteps=0; }
 }
-if ($QueryString =~ /sort=/i)  		{ $Sort=$QueryString; $Sort =~ s/.*sort=//i; $Sort =~ s/&.*//; $Sort =~ s/\s+//; }
+if ($QueryString =~ /sort=/i)  		{ $Sort=$QueryString;  $Sort =~ s/.*sort=//i;  $Sort =~ s/&.*//;  $Sort =~ s/ .*//; }
 if ($QueryString =~ /debug=/i) 		{ $Debug=$QueryString; $Debug =~ s/.*debug=//; $Debug =~ s/&.*//; $Debug =~ s/ .*//; }
 if ($QueryString =~ /output=urldetail:/i) 	{	
 	# A filter can be defined with output=urldetail to reduce number of lines read and showed
@@ -1663,21 +1686,19 @@ if ($QueryString =~ /output=urldetail:/i) 	{
 }
 
 ($DIR=$0) =~ s/([^\/\\]*)$//; ($PROG=$1) =~ s/\.([^\.]*)$//; $Extension=$1;
-if ($SiteToAnalyze eq "") { $SiteToAnalyze = $ENV{"SERVER_NAME"}; }
-$SiteToAnalyze =~ tr/A-Z/a-z/;
-$SiteToAnalyzeWithoutwww = $SiteToAnalyze; $SiteToAnalyzeWithoutwww =~ s/www\.//;
-if (($ENV{"GATEWAY_INTERFACE"} eq "") && ($SiteToAnalyze eq "")) {
+
+if (($ENV{"GATEWAY_INTERFACE"} eq "") && ($SiteConfig eq "")) {
 	print "----- $PROG $VERSION (c) Laurent Destailleur -----\n";
-	print "$PROG is a free web server logfile analyzer (in Perl) to show you advanced\n";
-	print "web statistics.\n";
+	print "$PROG is a free web server logfile analyzer to show you advanced web\n";
+	print "statistics.\n";
 	print "$PROG comes with ABSOLUTELY NO WARRANTY. It's a free software distributed\n";
 	print "with a GNU General Public License (See COPYING.txt file for details).\n";
 	print "\n";
-	print "Syntax: $PROG.$Extension -site=www.host.com [options]\n";
+	print "Syntax: $PROG.$Extension -config=virtualhostname [options]\n";
 	print "  This runs $PROG in command line to update statistics of a web site, from\n";
 	print "  the log file defined in config file, and/or returns a HTML report.\n";
-	print "  First, $PROG tries to read $PROG.www.host.com.conf as the config file,\n";
-	print "  if not found, it will read $PROG.conf\n";
+	print "  First, $PROG tries to read $PROG.virtualhostname.conf as the config file.\n";
+	print "  If not found, $PROG tries to read $PROG.conf\n";
 	print "  See README.TXT file to know how to create the config file.\n";
 	print "\n";
 	print "Options to update statistics:\n";
@@ -1735,7 +1756,7 @@ $timetomorrow=int($tomorrowyear.$tomorrowmonth.$tomorrowday.$tomorrowhour.$tomor
 
 # Read config file
 &Read_Config_File;
-if ($QueryString =~ /lang=/i) { $Lang=$QueryString; $Lang =~ s/.*lang=//i; $Lang =~ s/&.*//; $Lang =~ s/\s+//; }
+if ($QueryString =~ /lang=/i) { $Lang=$QueryString; $Lang =~ s/.*lang=//i; $Lang =~ s/&.*//; $Lang =~ s/ .*//; }
 if ($Lang eq "") { $Lang="en"; }
 
 # Change old values of Lang into new for compatibility
@@ -1763,6 +1784,10 @@ if (($DirCgi ne "") && !($DirCgi =~ /\/$/) && !($DirCgi =~ /\\$/)) { $DirCgi .= 
 if ($DirData eq "" || $DirData eq ".") { $DirData=$DIR; }	# If not defined or choosed to "." value then DirData is current dir
 if ($DirData eq "")  { $DirData="."; }						# If current dir not defined then we put it to "."
 $DirData =~ s/\/$//;
+$SiteToAnalyze=$SiteDomain;
+if ($SiteToAnalyze eq "") { $SiteToAnalyze=$SiteConfig; }
+$SiteToAnalyze =~ tr/A-Z/a-z/;
+$SiteToAnalyzeWithoutwww = $SiteToAnalyze; $SiteToAnalyzeWithoutwww =~ s/www\.//;
 
 # Print html header
 &html_head;
@@ -1773,31 +1798,30 @@ $NewDNSLookup=$DNSLookup;
 # monthnum must be in english because it's used to translate log date in apache log files which are always in english
 %monthnum =  ( "Jan","01","jan","01","Feb","02","feb","02","Mar","03","mar","03","Apr","04","apr","04","May","05","may","05","Jun","06","jun","06","Jul","07","jul","07","Aug","08","aug","08","Sep","09","sep","09","Oct","10","oct","10","Nov","11","nov","11","Dec","12","dec","12" );
 
-
 # Check year and month parameters
 if ($QueryString =~ /year=/i) 	{ $YearRequired=$QueryString; $YearRequired =~ s/.*year=//; $YearRequired =~ s/&.*//;  $YearRequired =~ s/ .*//; }
 if ($YearRequired !~ /^[\d][\d][\d][\d]$/) { $YearRequired=$nowyear; }
 if ($QueryString =~ /month=/i)	{ $MonthRequired=$QueryString; $MonthRequired =~ s/.*month=//; $MonthRequired =~ s/&.*//; $MonthRequired =~ s/ .*//; }
 if ($MonthRequired ne "year" && $MonthRequired !~ /^[\d][\d]$/) { $MonthRequired=$nowmonth; }
 
-$BrowsersHash{"netscape"}="<font color=blue>Netscape</font> <a href=\"$DirCgi$PROG.$Extension?output=browserdetail&site=$SiteToAnalyze&year=$YearRequired&month=$MonthRequired&lang=$Lang\">($Message[58])</a>";
-$BrowsersHash{"msie"}="<font color=blue>MS Internet Explorer</font> <a href=\"$DirCgi$PROG.$Extension?output=browserdetail&site=$SiteToAnalyze&year=$YearRequired&month=$MonthRequired&lang=$Lang\">($Message[58])</a>";
+$BrowsersHash{"netscape"}="<font color=blue>Netscape</font> <a href=\"$DirCgi$PROG.$Extension?output=browserdetail&".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang\">($Message[58])</a>";
+$BrowsersHash{"msie"}="<font color=blue>MS Internet Explorer</font> <a href=\"$DirCgi$PROG.$Extension?output=browserdetail&".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang\">($Message[58])</a>";
 
 # Init all global variables
-if (@HostAliases == 0) {
-	warning("Warning: HostAliases parameter is not defined, $PROG will choose \"$SiteToAnalyze localhost 127.0.0.1\".");
-	$HostAliases[0]=$SiteToAnalyze; $HostAliases[1]="localhost"; $HostAliases[2]="127.0.0.1";
-	}
+if (! @HostAliases) {
+	warning("Warning: HostAliases parameter is not defined, $PROG choose \"$SiteToAnalyze localhost 127.0.0.1\".");
+	$HostAliases[0]="$SiteToAnalyze"; $HostAliases[1]="localhost"; $HostAliases[2]="127.0.0.1";
+}
 my $SiteToAnalyzeIsInHostAliases=0;
-foreach $elem (@HostAliases) { if ($elem eq $SiteToAnalyze) { $SiteToAnalyzeIsInHostAliases=1; last; } }
+foreach my $elem (@HostAliases) { if ($elem eq $SiteToAnalyze) { $SiteToAnalyzeIsInHostAliases=1; last; } }
 if ($SiteToAnalyzeIsInHostAliases == 0) { $HostAliases[@HostAliases]=$SiteToAnalyze; }
-if (@SkipFiles == 0) { $SkipFiles[0]="\.css\$";$SkipFiles[1]="\.js\$";$SkipFiles[2]="\.class\$";$SkipFiles[3]="robots\.txt\$"; }
+if (! @SkipFiles) { $SkipFiles[0]="\.css\$";$SkipFiles[1]="\.js\$";$SkipFiles[2]="\.class\$";$SkipFiles[3]="robots\.txt\$"; }
 $FirstTime=0;$LastTime=0;$LastUpdate=0;$TotalVisits=0;$TotalHostsKnown=0;$TotalHostsUnKnown=0;$TotalUnique=0;$TotalDifferentPages=0;
-for ($ix=1; $ix<=12; $ix++) {
+for (my $ix=1; $ix<=12; $ix++) {
 	my $monthix=$ix;if ($monthix < 10) { $monthix  = "0$monthix"; }
 	$FirstTime{$YearRequired.$monthix}=0;$LastTime{$YearRequired.$monthix}=0;$LastUpdate{$YearRequired.$monthix}=0;
 	$MonthVisits{$YearRequired.$monthix}=0;$MonthUnique{$YearRequired.$monthix}=0;$MonthPages{$YearRequired.$monthix}=0;$MonthHits{$YearRequired.$monthix}=0;$MonthBytes{$YearRequired.$monthix}=0;$MonthHostsKnown{$YearRequired.$monthix}=0;$MonthHostsUnKnown{$YearRequired.$monthix}=0;
-	}
+}
 &Init_HashArray;	# Should be useless in perl (except with mod_perl that keep variables in memory).
 
 
@@ -2497,25 +2521,25 @@ EOF
 	if ($LastUpdate) { print Format_Date($LastUpdate); }
 	else { print "<font color=#880000>Never updated</font>"; }
 	print "</font>&nbsp; &nbsp; &nbsp; &nbsp;";
-	if ($AllowToUpdateStatsFromBrowser) { print "<a href=\"$DirCgi$PROG.$Extension?update=1&site=$SiteToAnalyze&year=$YearRequired&month=$MonthRequired&lang=$Lang\">$Message[74]</a>"; }
+	if ($AllowToUpdateStatsFromBrowser) { print "<a href=\"$DirCgi$PROG.$Extension?update=1&".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang\">$Message[74]</a>"; }
 	print "</td></tr>\n";
 	if ($QueryString !~ /output=/i) {	# If main page asked
 		print "<tr><td>&nbsp;</td></tr>\n";
 		# Traffic
 		print "<tr><td class=AWL><font style=\"font: 14px arial,verdana,helvetica; font-weight: bold\">$Message[16] : </td>";
-		print "<td class=AWL><a href=\"$DirCgi$PROG.$Extension?site=$SiteToAnalyze&year=$YearRequired&month=$MonthRequired&lang=$Lang#DOMAINS\">$Message[17]</a> &nbsp; <a href=\"$DirCgi$PROG.$Extension?site=$SiteToAnalyze&year=$YearRequired&month=$MonthRequired&lang=$Lang#VISITOR\">".ucfirst($Message[26])."</a> &nbsp; <a href=\"$DirCgi$PROG.$Extension?site=$SiteToAnalyze&year=$YearRequired&month=$MonthRequired&lang=$Lang#ROBOTS\">$Message[53]</a> &nbsp; <a href=\"$DirCgi$PROG.$Extension?site=$SiteToAnalyze&year=$YearRequired&month=$MonthRequired&lang=$Lang#HOUR\">$Message[20]</a> &nbsp; <a href=\"$DirCgi$PROG.$Extension?output=unknownip&site=$SiteToAnalyze&year=$YearRequired&month=$MonthRequired&lang=$Lang\">$Message[45]</a><br></td></tr>\n";
+		print "<td class=AWL><a href=\"$DirCgi$PROG.$Extension?".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang#DOMAINS\">$Message[17]</a> &nbsp; <a href=\"$DirCgi$PROG.$Extension?".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang#VISITOR\">".ucfirst($Message[26])."</a> &nbsp; <a href=\"$DirCgi$PROG.$Extension?".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang#ROBOTS\">$Message[53]</a> &nbsp; <a href=\"$DirCgi$PROG.$Extension?".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang#HOUR\">$Message[20]</a> &nbsp; <a href=\"$DirCgi$PROG.$Extension?output=unknownip&".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang\">$Message[45]</a><br></td></tr>\n";
 		# Navigation
 		print "<tr><td class=AWL><font style=\"font: 14px arial,verdana,helvetica; font-weight: bold\">$Message[72] : </td>";
-		print "<td class=AWL><a href=\"$DirCgi$PROG.$Extension?output=urldetail&site=$SiteToAnalyze&year=$YearRequired&month=$MonthRequired&lang=$Lang\">$Message[19]</a> &nbsp; <a href=\"$DirCgi$PROG.$Extension?site=$SiteToAnalyze&year=$YearRequired&month=$MonthRequired&lang=$Lang#BROWSER\">$Message[21]</a> &nbsp; <a href=\"$DirCgi$PROG.$Extension?site=$SiteToAnalyze&year=$YearRequired&month=$MonthRequired&lang=$Lang#OS\">$Message[59]</a> &nbsp; <a href=\"$DirCgi$PROG.$Extension?output=browserdetail&site=$SiteToAnalyze&year=$YearRequired&month=$MonthRequired&lang=$Lang\">$Message[33]</a> &nbsp; <a href=\"$DirCgi$PROG.$Extension?output=browserdetail&site=$SiteToAnalyze&year=$YearRequired&month=$MonthRequired&lang=$Lang\">$Message[34]</a><br></td></tr>\n";
+		print "<td class=AWL><a href=\"$DirCgi$PROG.$Extension?output=urldetail&".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang\">$Message[19]</a> &nbsp; <a href=\"$DirCgi$PROG.$Extension?".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang#BROWSER\">$Message[21]</a> &nbsp; <a href=\"$DirCgi$PROG.$Extension?".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang#OS\">$Message[59]</a> &nbsp; <a href=\"$DirCgi$PROG.$Extension?output=browserdetail&".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang\">$Message[33]</a> &nbsp; <a href=\"$DirCgi$PROG.$Extension?output=browserdetail&".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang\">$Message[34]</a><br></td></tr>\n";
 		# Referers
 		print "<tr><td class=AWL><font style=\"font: 14px arial,verdana,helvetica; font-weight: bold\">$Message[23] : </td>";
-		print "<td class=AWL><a href=\"$DirCgi$PROG.$Extension?site=$SiteToAnalyze&year=$YearRequired&month=$MonthRequired&lang=$Lang#REFERER\">$Message[37]</a> &nbsp; <a href=\"$DirCgi$PROG.$Extension?site=$SiteToAnalyze&year=$YearRequired&month=$MonthRequired&lang=$Lang#SEARCHWORDS\">$Message[24]</a><br></td></tr>\n";
+		print "<td class=AWL><a href=\"$DirCgi$PROG.$Extension?".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang#REFERER\">$Message[37]</a> &nbsp; <a href=\"$DirCgi$PROG.$Extension?".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang#SEARCHWORDS\">$Message[24]</a><br></td></tr>\n";
 		# Others
 		print "<tr><td class=AWL><font style=\"font: 14px arial,verdana,helvetica; font-weight: bold\">$Message[2] : </td>";
-		print "<td class=AWL> <a href=\"$DirCgi$PROG.$Extension?site=$SiteToAnalyze&year=$YearRequired&month=$MonthRequired&lang=$Lang#ERRORS\">$Message[22]</a> &nbsp; <a href=\"$DirCgi$PROG.$Extension?output=notfounderror&site=$SiteToAnalyze&year=$YearRequired&month=$MonthRequired&lang=$Lang\">$Message[31]</a><br></td></tr>\n";
+		print "<td class=AWL> <a href=\"$DirCgi$PROG.$Extension?".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang#ERRORS\">$Message[22]</a> &nbsp; <a href=\"$DirCgi$PROG.$Extension?output=notfounderror&".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang\">$Message[31]</a><br></td></tr>\n";
 	}
 	else {
-		print "<tr><td class=AWL><a href=\"$DirCgi$PROG.$Extension?site=$SiteToAnalyze&year=$YearRequired&month=$MonthRequired&lang=$Lang\">$Message[76]</a></td></tr>\n";
+		print "<tr><td class=AWL><a href=\"$DirCgi$PROG.$Extension?".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang\">$Message[76]</a></td></tr>\n";
 	}
 	print "</table>\n";
 	print "<br>\n\n";
@@ -2673,7 +2697,7 @@ EOF
 	else { print "<TD colspan=3 rowspan=2><font style=\"font: 18px arial,verdana,helvetica; font-weight: normal\">$Message[5] $monthlib{$MonthRequired} $YearRequired</font><br>"; }
 	# Show links for possible years
 	foreach my $key (keys %listofyears) {
-		print "<a href=\"$DirCgi$PROG.$Extension?site=$SiteToAnalyze&year=$key&month=year&lang=$Lang\">$Message[6] $key</a> &nbsp; ";
+		print "<a href=\"$DirCgi$PROG.$Extension?".($SiteConfig?"config=$SiteConfig&":"")."year=$key&month=year&lang=$Lang\">$Message[6] $key</a> &nbsp; ";
 	}
 	print "</TD>";
 	print "<TD><b>$Message[9]</b></TD></TR>";
@@ -2723,7 +2747,7 @@ EOF
 	print "</TR><TR>";
 	for (my $ix=1; $ix<=12; $ix++) {
 		my $monthix=$ix; if ($monthix < 10) { $monthix="0$monthix"; }
-		print "<TD valign=middle><a href=\"$DirCgi$PROG.$Extension?site=$SiteToAnalyze&year=$YearRequired&month=$monthix&lang=$Lang\">$monthlib{$monthix}</a></TD>";
+		print "<TD valign=middle><a href=\"$DirCgi$PROG.$Extension?".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$monthix&lang=$Lang\">$monthlib{$monthix}</a></TD>";
 	}
 	print "</TR></TABLE><br>";
 	# Show daily stats
@@ -2847,7 +2871,7 @@ EOF
 		if ($count>=$MaxNbOfPageShown) { last; }
 		if ($_hostmachine_h{$key}<$MinHitHost) { last; }
 		if ($key eq "Unknown") {
-			print "<TR><TD CLASS=AWL><a href=\"$DirCgi$PROG.$Extension?output=unknownip&site=$SiteToAnalyze&year=$YearRequired&month=$MonthRequired&lang=$Lang\">$Message[1]</a> &nbsp; ($TotalHostsUnknown)</TD><TD>$_hostmachine_p{$key}</TD><TD>$_hostmachine_h{$key}</TD><TD>".Format_Bytes($_hostmachine_k{$key})."</TD><TD><a href=\"$DirCgi$PROG.$Extension?output=unknownip&site=$SiteToAnalyze&year=$YearRequired&month=$MonthRequired&lang=$Lang\">$Message[3]</a></TD></TR>\n";
+			print "<TR><TD CLASS=AWL><a href=\"$DirCgi$PROG.$Extension?output=unknownip&".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang\">$Message[1]</a> &nbsp; ($TotalHostsUnknown)</TD><TD>$_hostmachine_p{$key}</TD><TD>$_hostmachine_h{$key}</TD><TD>".Format_Bytes($_hostmachine_k{$key})."</TD><TD><a href=\"$DirCgi$PROG.$Extension?output=unknownip&".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang\">$Message[3]</a></TD></TR>\n";
 			}
 		else {
 			print "<tr><td CLASS=AWL>$key</td><TD>$_hostmachine_p{$key}</TD><TD>$_hostmachine_h{$key}</TD><TD>".Format_Bytes($_hostmachine_k{$key})."</TD>";
@@ -2921,7 +2945,7 @@ EOF
 	#-------------------------
 	print "$CENTER<a name=\"PAGE\">&nbsp;</a><BR>";
 	$MaxNbOfPageShown = $TotalDifferentPages if $MaxNbOfPageShown > $TotalDifferentPages;
-	&tab_head("$Message[77] $MaxNbOfPageShown $Message[55] $TotalDifferentPages $Message[27] &nbsp; - &nbsp; <a href=\"$DirCgi$PROG.$Extension?output=urldetail&site=$SiteToAnalyze&year=$YearRequired&month=$MonthRequired&lang=$Lang\">Full list</a>");
+	&tab_head("$Message[77] $MaxNbOfPageShown $Message[55] $TotalDifferentPages $Message[27] &nbsp; - &nbsp; <a href=\"$DirCgi$PROG.$Extension?output=urldetail&".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang\">Full list</a>");
 	print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[19]</TH><TH bgcolor=\"#$color_p\">&nbsp;$Message[29]&nbsp;</TH><TH>&nbsp;</TH></TR>\n";
 	my $max_p=1; foreach my $key (values %_sider_p) { if ($key > $max_p) { $max_p = $key; } }
 	my $count=0; my $rest_p=0;
@@ -2950,7 +2974,7 @@ EOF
 	foreach my $key (sort { $SortDir*$_browser_h{$a} <=> $SortDir*$_browser_h{$b} } keys (%_browser_h)) {
 		my $p=int($_browser_h{$key}/$TotalHits*1000)/10;
 		if ($key eq "Unknown") {
-			print "<TR><TD CLASS=AWL><a href=\"$DirCgi$PROG.$Extension?output=unknownrefererbrowser&site=$SiteToAnalyze&year=$YearRequired&month=$MonthRequired&lang=$Lang\">$Message[0]</a></TD><TD>$_browser_h{$key}</TD><TD>$p&nbsp;%</TD></TR>\n";
+			print "<TR><TD CLASS=AWL><a href=\"$DirCgi$PROG.$Extension?output=unknownrefererbrowser&".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang\">$Message[0]</a></TD><TD>$_browser_h{$key}</TD><TD>$p&nbsp;%</TD></TR>\n";
 		}
 		else {
 			print "<TR><TD CLASS=AWL>$BrowsersHash{$key}</TD><TD>$_browser_h{$key}</TD><TD>$p&nbsp;%</TD></TR>\n";
@@ -2969,7 +2993,7 @@ EOF
 	foreach my $key (sort { $SortDir*$_os_h{$a} <=> $SortDir*$_os_h{$b} } keys (%_os_h)) {
 		my $p=int($_os_h{$key}/$TotalHits*1000)/10;
 		if ($key eq "Unknown") {
-			print "<TR><TD><IMG SRC=\"$DirIcons\/os\/unknown.png\"></TD><TD CLASS=AWL><a href=\"$DirCgi$PROG.$Extension?output=unknownreferer&site=$SiteToAnalyze&year=$YearRequired&month=$MonthRequired&lang=$Lang\">$Message[0]</a></TD><TD>$_os_h{$key}&nbsp;</TD>";
+			print "<TR><TD><IMG SRC=\"$DirIcons\/os\/unknown.png\"></TD><TD CLASS=AWL><a href=\"$DirCgi$PROG.$Extension?output=unknownreferer&".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang\">$Message[0]</a></TD><TD>$_os_h{$key}&nbsp;</TD>";
 			print "<TD>$p&nbsp;%</TD></TR>\n";
 			}
 		else {
@@ -3076,7 +3100,7 @@ EOF
 		my $p=int($_errors_h{$key}/$TotalErrors*1000)/10;
 		if ($httpcode{$key}) { print "<TR onmouseover=\"ShowTooltip($key);\" onmouseout=\"HideTooltip($key);\">"; }
 		else { print "<TR>"; }
-		if ($key == 404) { print "<TD><a href=\"$DirCgi$PROG.$Extension?output=notfounderror&site=$SiteToAnalyze&year=$YearRequired&month=$MonthRequired&lang=$Lang\">$key</a></TD>"; }
+		if ($key == 404) { print "<TD><a href=\"$DirCgi$PROG.$Extension?output=notfounderror&".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang\">$key</a></TD>"; }
 		else { print "<TD>$key</TD>"; }
 		if ($httpcode{$key}) { print "<TD CLASS=AWL>$httpcode{$key}</TD><TD>$_errors_h{$key}</TD><TD>$p&nbsp;%</TD></TR>\n"; }
 		else { print "<TD CLASS=AWL>Unknown error</TD><TD>$_errors_h{$key}</TD><TD>$p&nbsp;%</TD></TR>\n"; }
