@@ -105,13 +105,14 @@ x = Number of hits made by IE browsers for "/anydir/favicon.ico" with no 404 err
 y = Number of hits made by IE browsers for "/favicon.ico" (with or without 404 error)<br>
 r = Ratio of hits made by IE browsers compared to hits made by all browsers (r <= 1)<br>
 <br>
-As you can see in formula, only IE is used to count exact value, the "Add to favourites"
-for other browsers are estimated using ration of other browsers compared to ratio of
-IE. The reason is that only IE do a hit on favicon.ico ONLY when a user add the page
+As you can see in formula, only IE is used to count reliable "add", the "Add to favourites"
+for other browsers are estimated using ratio of other browsers usage compared to ratio of
+IE usage. The reason is that only IE do a hit on favicon.ico ONLY when a user add the page
 to its favourites. The other browsers make hits on this file also for other reasons so
 we can't count one "hit" as one "add" since it might be a hit for another reason.<br>
 AWStats differentiate also hits with error and not to avoid counting multiple hits
-made descending a path when favicon.ico file is not found at bottom of tree.<br>
+made recursively in upper path when favicon.ico file is not found in deeper directory
+of path.<br>
 <hr>
 
 
