@@ -1,0 +1,62 @@
+<!-- Norwegian Bokmål tooltips message file (by Axel Wulff Sæther <axel@bigfoot.com>) -->
+<!-- $Revision$ - $Date$ -->
+<div class="CTooltip" id="tt1">
+Ett nytt besøk er en ny <b>gjest</b> som ikke har vært tilkoplet nettstedet siste <b>#VisitTimeOut# min</b>.
+</div>
+<div class="CTooltip" id="tt2">
+Antall klientverter (<b>IP-adresser</b>) som har besøkt nettstedet, og har sett minst en <b>side</b>).<br />
+Denne informasjonen gjelder antallet <b>forskjellige personer</b> som har besøkt siden.
+</div>
+<div class="CTooltip" id="tt3">
+Antall ganger en <b>side</b> på nettstedet har blitt <b>vist</b>.<br />
+Denne informasjonen skiller seg fra «treff» ved å bare telle HTML-sider, og ikke bilder og andre filer.
+</div>
+<div class="CTooltip" id="tt4">
+Antall ganger en <b>side</b>, et <b>bilde</b> eller en <b>fil</b> på nettstedet har blitt <b>vist</b> eller <b>lastet ned</b>.
+</div>
+<div class="CTooltip" id="tt5">
+Denne informasjonen viser hvor mye data som har blitt lastet ned totalt (<b>sider</b>, <b>bilder</b> eller andre <b>filer</b>).<br />
+Enhetene er KB, MB eller GB (kilobyte, megabyte eller gigabyte)
+</div>
+<div class="CTooltip" id="tt13">
+#PROG# kan se når et besøk på nettstedet ditt kommer fra et <b>søk</b> på de <b>#SearchEnginesArray# mest populære søkemotorene og emnekatalogane</b> (f.eks.&nbsp;Yahoo, Altavista, Lycos, Google og Kvasir).
+</div>
+<div class="CTooltip" id="tt14">
+Liste over alle <b>eksterne sider</b> som har lenker til nettstedet ditt (bare de <b>#MaxNbOfRefererShown#</b> mest brukte eksterne sider blir vist).
+Lenker fra søkemotorer er ikke inkludert her, siden disse allerede er oppført i forrige del av denne tabellen.
+</div>
+<div class="CTooltip" id="tt15">
+Denne tabellen viser de mest brukte <b>søkeordene</b> brukt til å finna nettstedet ditt i søkemotorer og emnekataloger.
+(Søkeord fra de <b>#SearchEnginesArray#</b> mest populære søkemotorene og emnekatalogene kan leses av #PROG#, f.eks.&nbsp;Yahoo, Altavista, Lycos, Google, og Kvasir).
+</div>
+<div class="CTooltip" id="tt16">
+Roboter blir brukt av mange søkemotorer som besøker nettstedet ditt for å indeksere og rangere det, samle statistikk om nettsteder, og/eller se om nettstedet fremdeles er tilgjengelig.<br />
+#PROG# kjenner til <b>#RobotArray#</b> roboter.
+</div>
+<div class="CTooltip" id="tt17">
+All tidsrelatert statistikk er basert på tjenertid.<br />
+</div>
+<div class="CTooltip" id="tt18">
+Rapporterte tall er <b>gjennomsnittsverdier</b> (regnet ut fra alle data mellom første og siste besøk)
+</div>
+<div class="CTooltip" id="tt19">
+Rapporterte tall er <b>kumulative summer</b> (regnet ut fra alle data mellom første og siste besøk)
+</div>
+
+<div class="CTooltip" id="tt201"> Ingen beskrivelse av denne feilen. </div>
+<div class="CTooltip" id="tt202"> Forespørselen var forstått av tjeneren men vil bli prosessert senere. </div>
+<div class="CTooltip" id="tt204"> Tjeneren har prosessert forespørselen men har ikke noe innhold å sende. </div>
+<div class="CTooltip" id="tt206"> Delvis innhold. </div>
+<div class="CTooltip" id="tt301"> Det forespurte dokumentet er flyttet, og finnes nå på en annen side. Brukeren blir automatisk videresendt til den nye adressen. </div>
+<div class="CTooltip" id="tt302"> Ingen beskrivelse av denne feilen. </div>
+<div class="CTooltip" id="tt400"> Syntaksfeil. Tjeneren forsto ikke forespørselen. </div>
+<div class="CTooltip" id="tt401"> Prøvde å hente en <b>side som var passordbeskyttet</b>.<br />Mange slike feilmeldinger kan bety at noen prøver å bryte seg inn på nettstedet ditt. </div>
+<div class="CTooltip" id="tt403"> Prøvde å hente en <b>side som er utilgjengelig (selv med passord)</b> (for eksempel en katalog som er definert som ikke lesbar). </div>
+<div class="CTooltip" id="tt404"> Prøvde å hente en <b>ikke-eksisterende side</b>. Denne feilen betyr oftest at det er en lenke en eller annen plass på nettstedet ditt (eller på en ekstern side) som ikke fungerer, og som må oppdateres. </div>
+<div class="CTooltip" id="tt408"> Tjeneren har brukt <b>for mye tid</b> på å svare på en forespørsel. Denne feilen gjelder enten et tregt CGI-skript tjenaren måtte avslutte, eller tungt trafikkert tjenar. </div>
+<div class="CTooltip" id="tt500"> Intern feil. Denne feilen kommer ofte av CGI-skript som har blitt avsluttet unormalt. </div>
+<div class="CTooltip" id="tt501"> Ukjent forespørsel. </div>
+<div class="CTooltip" id="tt502"> Kode returnert av ein HTTP-tjener som fungerer som proxy eller systemport når en ekte tjener ikke svarer på forespørselen. </div>
+<div class="CTooltip" id="tt503"> Intern tjenerfeil. </div>
+<div class="CTooltip" id="tt504"> Systemport tidsavbrutt. </div>
+<div class="CTooltip" id="tt505"> Støtter ikke HTTP-versjonen. </div>

@@ -1,0 +1,70 @@
+<!-- $Revision$ - $Date$ -->
+<div class="CTooltip" id="tt1">
+Új látogatásnak számít minden olyan új <b>beérkezett látogató</b> aki megtekint egy oldalt és a legutolsó látogatása óta eltelt legalább <b>#VisitTimeOut# perc</b>.
+</div>
+<div class="CTooltip" id="tt2">
+Azon egyedi számítógépek száma (<b>IP címek</b>) akik az oldalon jártak (és legalább egy <b>oldalt</b> megnéztek).<br />
+Ez az adat a <b>fizikailag különbözõ gépekre</b> vonatkozik ahonnan az oldalt látogatták bármelyik nap.
+</div>
+<div class="CTooltip" id="tt3">
+Az <b>oldal</b> összesített <b>találatai</b> (Összes látogató összes látogatása).<br />
+Ez annyiban különbözik a "találatok"-tól, hogy csak a HTML oldalak találatait összesíti, a képeket és egyéb fájlokat nem.
+</div>
+<div class="CTooltip" id="tt4">
+<b>Oldalak, képek, fájlok</b> összesített <b>találatai</b> és <b>letöltései</b>.<br />
+Ez az összesítés csak referencia célokat szolgál, hiszen marketing szempontból az "oldalak találatai" adat az érdekesebb.
+</div>
+<div class="CTooltip" id="tt5">
+Ez az adat az összes letöltött adatmennyiséget jelzi beleértve az összes <b>oldalt</b>, <b>képet</b> és <b>fájlt</b>
+kilobájt, megabájt illetve gigabájt-ban (Kb, Mb, Gb).
+</div>
+<div class="CTooltip" id="tt13">
+Az #PROG# felismeri, ha az oldalakat a <b>#SearchEnginesArray# legismertebb keresõprogramok egyikén keresztül érték el</b> (például Yahoo, Altavista, Lycos, Google, Voila, stb...).
+</div>
+<div class="CTooltip" id="tt14">
+Az olyan <b>külsõ oldalak</b> listája, amely erre a honlapra mutat, vagy rajtuk keresztül érkezett a kérés (Csak a leggyakoribb <b>#MaxNbOfRefererShown#</b> külsõ oldal).
+A keresõkön keresztül érkezett találatok itt nincsenek listázva, azok az elõzõ részben találhatóak.
+</div>
+<div class="CTooltip" id="tt15">
+Ebben a táblázatban találhatóak a keresõprogramokban leggyakrabban használt <b>kulcsszavak és kifejezések</b> amelyeken keresztül ezen honlapot megtalálták.
+(Az #PROG# a <b>#SearchEnginesArray#</b> leggyakoribb keresõmotort ismeri. Például Yahoo, Altavista, Lycos, Google, Voila, stb...).<br />
+Az összes keresett kulcsszó száma nagyobb mint a keresett kifejezéseké (azaz az igazi keresések számáé) mert
+2 keresett kulcsszó esetén a keresés kétszer számít (egyszer-egyszer mindkét szóra).
+</div>
+<div class="CTooltip" id="tt16">
+A robot-ok (spider-nek vagy webcrawler-nek is mondják) <b>automatikus számítógép látogatók</b> melyet számos keresõprogram használ arra hogy az oldalt átnézze, index-elje és kategorizálja, statisztikát gyûjtsön a weboldalakról és/vagy megnézze, hogy a honlap még mindig elérhetõ-e.<br />
+Az #PROG# <b>#RobotArray#</b> különbözõ robotot ismer fel.
+</div>
+<div class="CTooltip" id="tt17">
+Minden itt feltûntetett idõnek a szerveridõ szolgált alapul.
+</div>
+<div class="CTooltip" id="tt18">
+Az itteni adat <b>átlagos érték</b> (az elsõ és az utolsó látogatás közötti idõszakra)
+</div>
+<div class="CTooltip" id="tt19">
+Az itteni adat <b>összegzett adat</b> (az elsõ és az utolsó látogatás közötti idõszakra)
+</div>
+<div class="CTooltip" id="tt20">
+Néha a <b>látogatási idõszak</b> "ismeretlen"-nek látszik, mert nem mindig kiszá
+mítható. Ennek fõ okai:<br />
+- A látogatás nem fejezõdött be a frissítéskor.<br />
+- A látogatás a hónap utolsó napjának utolsó órájában kezdõdött (23:00 után).
+</div>
+
+<div class="CTooltip" id="tt201"> Nincs hibaleírás. </div>
+<div class="CTooltip" id="tt202"> A kérést felismerte a szerver, de csak a késõbbiekben feldolgozva végre. </div>
+<div class="CTooltip" id="tt204"> A szerver feldolgozta a kérést, de az nem eredményezett kimeneti dokumentumot. </div>
+<div class="CTooltip" id="tt206"> Résztartalom. </div>
+<div class="CTooltip" id="tt301"> A kért dokumentum helye megváltozott, új cím a válaszban. </div>
+<div class="CTooltip" id="tt302"> Nincs hibaleírás. </div>
+<div class="CTooltip" id="tt400"> Szintaktikai hiba, a szerver nem értette a kérést. </div>
+<div class="CTooltip" id="tt401"> <b>Jelszóvédett tartalom sikertelen elérése</b>.<br />Nagyszámú ilyen hiba jelentheti azt, hogy valaki (egy hacker) megpróbál elérni egy jelszóvédett oldalt felhasználói nevek és jelszavak folyamatos próbálgatásával.</div>
+<div class="CTooltip" id="tt403"> <b>Nem tallózható könyvtár (még felhasználó azonosító és jelszó ismeretében sem)</b> (például egy könyvtáron belüli "tallózásra" nem engedélyezett link). </div>
+<div class="CTooltip" id="tt404"> <b>Nem létezõ oldal (URL)</b>. Érvénytelen link, mely lehet az oldalon belül, más külsõ oldalon, vagy csak a látogató vétett hibát a beírás közben. </div>
+<div class="CTooltip" id="tt408"> A szerver <b>túl sokáig</b> nem válaszolt. Általában lassú CGI program vagy nagyon leterhelt szerver esetén fordul elõ. </div>
+<div class="CTooltip" id="tt500"> Belsõ hiba. Általában CGI program abnormális futása után keletkezik (pl. coredump). </div>
+<div class="CTooltip" id="tt501"> Ismeretlen kéréstípus. </div>
+<div class="CTooltip" id="tt502"> Proxy szerver hibakód, melyet a távoli szerver sikeres válaszának hiányában küld a kérést küldõ kliensnek. </div>
+<div class="CTooltip" id="tt503"> Belsõ szerverhiba. </div>
+<div class="CTooltip" id="tt504"> Gateway idõtúllépés. </div>
+<div class="CTooltip" id="tt505"> Nem támogatott verziójú HTTP kérés. </div>

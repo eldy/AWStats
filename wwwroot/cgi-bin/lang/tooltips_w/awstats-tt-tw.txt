@@ -1,0 +1,48 @@
+<!-- $Revision$ - $Date$ -->
+<div class="CTooltip" id="tt1">
+此欄位為參觀網站的總次數，從相同位址來瀏灠本網站，時間間隔須至少#VisitTimeOut#分鐘才會再記錄一次。
+</div>
+<div class="CTooltip" id="tt2">
+此欄位為參觀網站的人數。以從不同的電腦瀏覽本網站的個數來計算網站的人數。
+</div>
+<div class="CTooltip" id="tt3">
+此欄位為網頁讀取的總次數。只記錄網頁(.html)的個數。
+</div>
+<div class="CTooltip" id="tt4">
+此欄位為網頁內容讀取的總次數，包含網頁檔，圖片檔，影像檔等。
+</div>
+<div class="CTooltip" id="tt5">
+此欄位為網頁內容讀取的總容量大小，包含網頁檔，圖片檔，影像檔等。
+</div>
+<div class="CTooltip" id="tt13">
+此欄位為記錄使用者從那些搜尋網站進入此網站。系統會自動分析最常使用的#SearchEnginesArray#的搜尋網站。
+</div>
+<div class="CTooltip" id="tt14">
+顯示其它網站的網頁有其內容連結至本站的網頁列表。
+系統會列出較常連結的前#MaxNbOfRefererShown#個網頁網址。
+</div>
+<div class="CTooltip" id="tt15">
+這個表格顯示使用者在搜尋網站中較常使用的關鍵字來登入網站。系統會記錄最常使用的#SearchEnginesArray#個搜尋網站關鍵字。
+</div>
+<div class="CTooltip" id="tt16">
+搜尋網站的漫遊器(Robots)會自動的找尋網站內的所有內容。<br />
+此欄位記錄較常使用的#RobotArray#個漫游器找尋網站的記錄。
+</div>
+
+<div class="CTooltip" id="tt201"> 沒有關於這項錯誤碼的描述</div>
+<div class="CTooltip" id="tt202"> 網頁伺服器不了解使用者的需求</div>
+<div class="CTooltip" id="tt204"> 網頁伺服器四處理完使用者的需求，但是卻沒有文件傳送出</div>
+<div class="CTooltip" id="tt206"> 網頁內容讀取不完全 </div>
+<div class="CTooltip" id="tt301"> 找尋的網頁已經移到其它地方，而且以已經找尋到了</div>
+<div class="CTooltip" id="tt302"> 網頁原先找不到，現在已經在別的地方找到了</div>
+<div class="CTooltip" id="tt400"> 語法錯誤，網頁伺服器不了解使用者的需求</div>
+<div class="CTooltip" id="tt401"> 嘗試連結至需輸入密碼的網頁網址而發生錯誤</div>
+<div class="CTooltip" id="tt403"> 嘗試連結至未開放瀏覽的網頁網址而發生錯誤</div>
+<div class="CTooltip" id="tt404"> 嘗試連結至不存在的網頁網址而發生錯誤</div>
+<div class="CTooltip" id="tt408"> 網頁伺服器花費太多時間處理這個需求</div>
+<div class="CTooltip" id="tt500"> 內部伺服器發生錯誤，一般是 CGI 程式發生問題</div>
+<div class="CTooltip" id="tt501"> 不了解需求</div>
+<div class="CTooltip" id="tt502"> 網頁伺服器因 proxy 而未能回應真正使用者的需求</div>
+<div class="CTooltip" id="tt503"> 內部伺服器發生錯誤 </div>
+<div class="CTooltip" id="tt504"> 通訊閘逾時 </div>
+<div class="CTooltip" id="tt505"> 這個 HTTP 的版本沒有支援 </div>

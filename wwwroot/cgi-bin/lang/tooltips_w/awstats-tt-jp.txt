@@ -1,0 +1,63 @@
+<!-- $Revision$ - $Date$ -->
+<!-- Japanese message file (info@kchosting.jp) -->
+<div class="CTooltip" id="tt1">
+<b>#VisitTimeOut# 分</b>前までの訪問数。
+</div>
+<div class="CTooltip" id="tt2">
+最低<b>１ページ</b>を訪問したクライアントホスト（<b>IPアドレス</b>)。<br />
+これは訪問者の実数です。
+<br />
+</div>
+<div class="CTooltip" id="tt3">
+ページが表示された回数（すべての訪問者と訪問の合計）。<br />
+このデータは「件数」とは違い、HTMLファイルのみが入っています。
+</div>
+<div class="CTooltip" id="tt4">
+<b>ページ、画像、ファイル</b>が表示された回数。<br />
+参照程度にお使いください。
+</div>
+<div class="CTooltip" id="tt5">
+すべての<b>ページ、画像、ファイル</b>のダウンロードによるデータ転送量。<br />
+単位は KB 、MB または GB 。
+</div>
+<div class="CTooltip" id="tt13">
+人気のある検索エンジン(Yahoo、Altavista、Lycos、Google、Voilaなど）での検索によるアクセス。
+</div>
+<div class="CTooltip" id="tt14">
+ユーザー(コンピュータ)がこのサイトについての情報を得た外部ページ。
+</div>
+<div class="CTooltip" id="tt15">
+このサイトにアクセスするために検索エンジンで入力された<b>キーワード</b>のリスト。
+</div>
+<div class="CTooltip" id="tt16">
+ロボット（別名スパイダー）とは、ウェブ中を動き回って全てのコンテンツを中央サーバー上に保存するコンピューター・プログラム。</div>
+<div class="CTooltip" id="tt17">
+これらのデータはサーバー時間に基づいています。<br />
+</div>
+<div class="CTooltip" id="tt18">
+最初から最後までの訪問で集めたデータによって計算した<b>平均数</b>。 
+</div>
+<div class="CTooltip" id="tt19">
+最初から最後までの訪問で集めたデータによって計算した<b>総数</b>。 
+</div>
+
+<div class="CTooltip" id="tt201"> POST が成功。またはPUT が新しいオブジェクトを作成。</div>
+<div class="CTooltip" id="tt202"> 要求は、受付たが、処理未完了。</div>
+<div class="CTooltip" id="tt204"> サーバーは要求を受付けたが、返す情報がない。</div>
+<div class="CTooltip" id="tt206"> サーバーは、情報の一部を得た。</div>
+<div class="CTooltip" id="tt301"> 要求された情報は、恒久的に移動した。</div>
+<div class="CTooltip" id="tt302"> 要求された情報は、一時的に移動した。</div>
+<div class="CTooltip" id="tt400"> 要求を実行できない。（構文が不正） </div>
+<div class="CTooltip" id="tt401"> 情報の要求に認証を必要とする。または、認証の拒否。</div>
+<div class="CTooltip" id="tt403"> 要求の拒否。認証が不完全。</div>
+<div class="CTooltip" id="tt404"> 要求された情報（ファイル）がない。</div>
+<div class="CTooltip" id="tt408"> サーバーが待機時間内にクライアントが要求を送れなかった。</div>
+<div class="CTooltip" id="tt500"> 予期しないサーバーエラーのため、要求を実行できなかった。</div>
+<div class="CTooltip" id="tt501"> サーバーは、要求された機能をサポートしていない。</div>
+<div class="CTooltip" id="tt502"> クライアントより見て、ゲートウエイまたはプロキシーサーバの接続先サーバの応答が妥当でないことを示す。</div>
+<div class="CTooltip" id="tt503"> サービス（サーバー）が高負荷。Retry-Afterヘッダに示す時間後には緩和される。応答文中にRetry-Afterヘッダがなければ、クライアントは応答を500番と同等に扱う必要がある。 </div>
+<div class="CTooltip" id="tt504"> ゲートウエイまたはプロキシの応答がゲートウエイの指定時間内に得られない。</div>
+<div class="CTooltip" id="tt505"> HTTP バージョンをサポートしていない。</div>
+
+
+

@@ -1,0 +1,68 @@
+<!-- Catalan tooltips message file (temujinnn@hotmail.com) -->
+<!-- $Revision$ - $Date$ -->
+<div class="CTooltip" id="tt1">
+Es considera una nova visita per <b>cada nou visitant</b> que consulta una pàgina i que hagi accedit al lloc en els últims <b>#VisitTimeOut# mins.</b>.
+</div>
+<div class="CTooltip" id="tt2">
+Nombre de clients (<b>adreces IP</b>) que entren a un lloc (i que com a mínim visiten una <b>pàgina</b>).<br />
+Aquesta xifra reflecteix el nombre de <b>persones físiques diferents</b> que han accedit al lloc en un dia.
+</div>
+<div class="CTooltip" id="tt3">
+Nombre de vegades que una <b>pàgina</b> del lloc ha estat <b>visualitzada</b> (La suma de tots els visitants inclouen visites múltiples).<br />
+Aquest comptador es distingeix de "hits" perquè només conta les pàgines HTML, i no pas els gràfics o altres arxius o fitxers.
+</div>
+<div class="CTooltip" id="tt4">
+El nombre de vegades que una <b>pàgina, imatge, arxiu o fitxer</b> d'un lloc és <b>visualitzat</b> o <b>descarregat</b> per visitant.<br />
+Aquest comptador serveix de referència, però el comptador de "pàgines" representa una dada mercadotécnica generalment més útil, i per tant, més recomanada.
+</div>
+<div class="CTooltip" id="tt5">
+El nombre de <b>kilo bytes</b> descagarregats pels visitants del lloc.<br />
+Es refereix al volum de dades descarregades per totes les <b>pàgines</b>, <b>imatges</b> i <b>arxius o fitxers</b> mesurats en bytes.
+</div>
+<div class="CTooltip" id="tt13">
+El programa #PROG# és capaç de reconèixer una visita a un lloc després de cadascuna de les <b>cerques</b> des de qualsevol dels <b>#SearchEnginesArray# motors de cerca i directoris Internet</b> més populars (Yahoo, Altavista, Lycos, Google, Terra, etc...).
+</div>
+<div class="CTooltip" id="tt14">
+Llista de <b>pàgines de llocs externs</b> utilitzades para accedir o enllaçar-se amb el seu lloc (Només les <b>#MaxNbOfRefererShown#</b> pàgines més utilitzades es troben numerades).
+Els enllaços emprats pels motors de cerca o directoris són exclosos perquè ja han estat comptabilitzats a l'anterior apartat.
+</div>
+<div class="CTooltip" id="tt15">
+Aquesta taula mostra la llista de les <b>paraules clau</b> més utilitzades en els motors de cerca i directoris Internet per trobar el seu lloc.
+(El programa #PROG# reconeix paraules claus util.litzades en els <b>#SearchEnginesArray#</b> motors de cerca més populars, com Yahoo, Altavista, Lycos, Google, Voila, Terra etc...).
+</div>
+<div class="CTooltip" id="tt16">
+Els Robots son <b>visitants automàtics</b> que escanejan o viatgen pel seu lloc per a indexar-lo, o jerarquitzar-lo, per tal de recollir estadístiques de llocs Web, o per verificar si el seu lloc es troba connectat a la Xarxa.<br />
+El programa #PROG# reconeix fins a <b>#RobotArray#</b> robots.
+</div>
+<div class="CTooltip" id="tt17">
+Els temps relacionats amb les estadístiques estan basats en temps de servidor.<br />
+</div>
+<div class="CTooltip" id="tt18">
+Aquí, les dates reportades son: <b>valors medis</b> (calculat desde totes les dates entre les primeres y les ultimes visites en la franja analitzada)
+</div>
+<div class="CTooltip" id="tt19">
+Aquí, les dates reportades son: <b>sumes acumulatives</b> (calculat desde totes les dates entre les primeres y les ultimes visites en la franja analitzada)
+</div>
+<div class="CTooltip" id="tt20">
+Algunes <b>Duracions de les visites</b> son 'desconegudes' perquè no poden ser calculades sempre. La raó principal d'axó es:<br />
+- La visita no va acabà quan es va fer 'l'actualizació'.<br />
+- La visita va començar en la hora anterior (després de les 23:00) del passat dia de un mes (la raó tècnica de prevenir a #PROG# de la duració calculada de tales sessions)
+</div>
+
+<div class="CTooltip" id="tt201"> Error sense descripció. </div>
+<div class="CTooltip" id="tt202"> La petició ha estat computada però el servidor la processarà més tard. </div>
+<div class="CTooltip" id="tt204"> El servidor ha processat la petició però no existeixen documents per enviar. </div>
+<div class="CTooltip" id="tt206"> Contingut parcial. </div>
+<div class="CTooltip" id="tt301"> El document sol·licitat ha estat reubicat i es troba en una URL proporcionada en la mateixa resposta. </div>
+<div class="CTooltip" id="tt302"> Error sense descripció. </div>
+<div class="CTooltip" id="tt400"> Error de sintaxis, el servidor no ha entès la seva petició. </div>
+<div class="CTooltip" id="tt401"> Nombre d'intents per accedir a una <b>URL que exigeix una combinació usuari/contrasenya que ha estat invàlida.</b>.<br />Un nombre d'intents molt elevat pot suggerir la possibilitat que un hacker (o pirata) ha intentat entrar a una zona restringida del lloc (p.e., intentant múltiples combinacions de usuari/contrasenya). </div>
+<div class="CTooltip" id="tt403"> Nombre d'intents per accedir a una <b>URL configurada per a no ser accessible ni amb una combinació usuari/contrasenya</b> (p.e., una URL prèviament definida com a "no navegable"). </div>
+<div class="CTooltip" id="tt404"> Nombre d'intents per accedir a una <b>URL inexistent</b>. Sovint, aquests es refereixen a un enllaç (link) no vàlid o a un error mecanogràfic quan el visitant tecleja una URL errònia. </div>
+<div class="CTooltip" id="tt408"> El servidor ha trigat <b>massa temps</b> a respondre a una petició. Sovint, és degut a un programa CGI molt lent, el qual ha estat abandonat pel servidor, o bé per un servidor molt saturat. </div>
+<div class="CTooltip" id="tt500"> Error intern. Aquest error generalment és provocat per una terminació anormal o prematura d'un programa CGI (p.e., un CGI corromput o malmès). </div>
+<div class="CTooltip" id="tt501"> Petició desconeguda pel servidor. </div>
+<div class="CTooltip" id="tt502"> Codi retornat per un servidor de protocol HTTP que funciona com a proxy o pont (gateway) quan el servidor objectiu no funciona o no interpreta correctament la petició del client (o visitant). </div>
+<div class="CTooltip" id="tt503"> Error intern del servidor. </div>
+<div class="CTooltip" id="tt504"> Passarel·la fora de línia. </div>
+<div class="CTooltip" id="tt505"> Versió de protocol HTTP no suportada. </div>

@@ -1,0 +1,53 @@
+<!-- $Revision$ - $Date$ -->
+<div class="CTooltip" id="tt1">
+Een nieuw bezoek is elke <b>binnenkomende bezoeker</b> (die een pagina bekijkt) die de laatste <b>#VisitTimeOut# mn</b> niet met uw site verbonden was.
+</div>
+<div class="CTooltip" id="tt2">
+Aantal client hosts (<b>IP adres</b>) die de site bezochten (en minimaal een <b>pagina</b> bekeken).<br />
+Dit geeft aan hoeveel <b>verschillende fysieke personen</b> de site op een bepaalde dag bezocht hebben.
+</div>
+<div class="CTooltip" id="tt3">
+Aantal malen dat een <b>pagina</b> van de site <b>bekeken</b> is (Som voor alle bezoekers voor alle bezoeken).<br />
+Dit onderdeel verschilt van "hits" in het feit dat het alleen HTML pagina's telt, in tegenstelling tot plaatjes en andere bestanden.
+</div>
+<div class="CTooltip" id="tt4">
+Aantal malen dat een <b>pagina</b>, <b>plaatje</b> of <b>bestand</b> op de site door iemand is <b>bekeken</b> of <b>gedownload</b>.<br />
+Dit onderdeel is alleen als referentie gegeven, omdat het aantal bekeken "pagina's" voor marketingdoeleinden de voorkeur heeft.
+</div>
+<div class="CTooltip" id="tt5">
+Aantal door uw bezoekers gedownloade <b>kibibytes</b>.<br />
+Dit onderdeel geeft de hoeveelheid gedownloade gegevens in alle <b>pagina's</b>, <b>plaatjes</b> en <b>bestanden</b> van uw site, gemeten in KiBs.
+</div>
+<div class="CTooltip" id="tt13">
+Dit programma, #PROG#, herkent elke benadering van uw site na een <b>zoekopdracht</b> van de <b>#SearchEnginesArray# meest populaire Internet zoekmachines</b> (zoals Yahoo, Altavista, Lycos, Google, Voila, etc...).
+</div>
+<div class="CTooltip" id="tt14">
+Lijst van alle <b>externe pagina's</b> die zijn gebruikt om naar uw site te linken (of deze te benaderen) (Alleen de <b>#MaxNbOfRefererShown#</b> meest gebruikte externe pagina's zijn getoond.
+Links gebruikt door de resultaten van zoekmachines worden hiet niet getoond omdat deze al zijn opgenomen in de vorige regel van deze tabel.
+</div>
+<div class="CTooltip" id="tt15">
+Deze tabel toont de lijst van <b>keywords</b> die het meest zijn gebruikt om uw site te vindein in Internet zoekmachines.
+(Keywords van de <b>#SearchEnginesArray#</b> meest populaire zoekmachines worden door #PROG# herkend, zoals Yahoo, Altavista, Lycos, Google, Voila, etc...).
+</div>
+<div class="CTooltip" id="tt16">
+Robots (soms Spiders genoemd) zijn <b>automatische bezoekcomputers</b> die door veel zoekmachines worden gebruikt om uw site te scannen om (1) deze te indexeren, (2) statistieken over Internet sites te verzamelen en/of (3) te kijken of site nog steeds on-line is.<br />
+Dit programma, #PROG#, is in staat maximaal <b>#RobotArray#</b> robots te herkennen</b>.
+</div>
+
+<div class="CTooltip" id="tt201"> Geen beschrijving voor deze foutmelding. </div>
+<div class="CTooltip" id="tt202"> De server heeft het verzoek begrepen, maar zal deze later behandelen. </div>
+<div class="CTooltip" id="tt204"> De server heeft het verzoek verwerkt, maar er is geen document om te verzenden. </div>
+<div class="CTooltip" id="tt206"> Gedeeltelijke inhoud. </div>
+<div class="CTooltip" id="tt301"> Het aangevraagde document is verplaatst en is nu op een andere locatie die in het antwoord gegeven is. </div>
+<div class="CTooltip" id="tt302"> Geen beschrijving voor deze foutmelding. </div>
+<div class="CTooltip" id="tt400"> "Taalfout", de server begreep het verzoek niet. </div>
+<div class="CTooltip" id="tt401"> Er is gepoogd een <b>URL waarvoor een usernaam/wachtwoord noodzakelijk is</b> te benaderen.<br />Een hoog aantal van deze meldingen kan betekenen dat iemand (zoals een hacker) probeert uw site te kraken, of uw site binnen te komen (pogend een beveiligd onderdeel van uw site te benaderen door verschillende usernamen/wachtwoorden te proberen, bijvoorbeeld). </div>
+<div class="CTooltip" id="tt403"> Er is gepoogd een <b>URL die is ingesteld om niet benaderbaar te zijn, zelfs met usernaam/wachtwoord</b> te benaderen (bijvoorbeeld, een URL in een directory die niet "doorbladerbaar" is). </div>
+<div class="CTooltip" id="tt404"> Er is gepoogd een <b>niet bestaande URL</b> te benaderen. Deze fout betekent vaak dat er een ongeldige link in uw site zit of dat een bezoeker een URL foutief heeft ingevoerd. </div>
+<div class="CTooltip" id="tt408"> De server heeft er <b>te lang</b> over gedaan om een antwoord op een aanvraag te geven. Het kan een CGI script zijn dat zo traag is dat de server hem heeft moeten afbreken of een overbelaste web server. </div>
+<div class="CTooltip" id="tt500"> Interne fout. Deze error wordt vaak veroorzaakt door een CGI programma dat abnormaal is beeindigd (een core dump, bijvoorbeeld). </div>
+<div class="CTooltip" id="tt501"> Onbekende actie aangevraagd. </div>
+<div class="CTooltip" id="tt502"> Melding die door een proxy of gateway HTTP server wordt gegeven als een echte doelserver niet succesvol op de aanvraag van een client antwoordt. </div>
+<div class="CTooltip" id="tt503"> Interne server fout. </div>
+<div class="CTooltip" id="tt504"> Gateway time-out. </div>
+<div class="CTooltip" id="tt505"> HTTP versie niet ondersteund. </div>

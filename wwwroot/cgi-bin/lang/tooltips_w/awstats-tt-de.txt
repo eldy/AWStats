@@ -1,0 +1,62 @@
+<!-- $Revision$ - $Date$ -->
+<div class="CTooltip" id="tt1">
+Ein neuer Besucher wird definiert als jeder neue <b>Besucher</b>, der eine Seite abgerufen hat und der auf Ihre Web Site in den letzten <b>#VisitTimeOut# min.</b> nicht zugegriffen hat.
+</div>
+<div class="CTooltip" id="tt2">
+Anzahl der Rechner (<b>IP-Adressen</b>), die Ihre Web Site besuchten und mindestens eine <b>Seite</b> aufgerufen haben.<br />
+Diese Anzahl entspricht der Zahl an <b>unterschiedlichen physikalischen Personen</b>, die Ihre Web Site an irgendeinem Tag besuchten.
+</div>
+<div class="CTooltip" id="tt3">
+Anzahl der insgesamt <b>angezeigten Seiten</b> Ihrer Web Site (Summe aller Zugriffe von allen Besuchern).<br />
+Diese Zahl unterscheidet sich von den &quot;Zugriffen&quot;, da nur HTML Seiten und keine Grafiken oder andere Dateien gez&auml;hlt werden.
+</div>
+<div class="CTooltip" id="tt4">
+Anzahl der insgesamt <b>angezeigten</b> oder <b>heruntergeladenen Seiten, Grafiken, Dateien</b> Ihrer Web Site.<br />
+Diese Zahl wird nur als Referenz angegeben, da meistens die Anzahl der angezeigten &quot;Seiten&quot; f&uuml;r Marketingzwecke bevorzugt wird.
+</div>
+<div class="CTooltip" id="tt5">
+Dieser Wert entspricht der Menge an Daten, die aufgrund aller <b>Seiten</b>, <b>Grafiken</b> und <b>Dateien</b> Ihrer Web Site &uuml;bertragen worden sind.<br />
+Einheiten sind in Kb, Mb oder Gb (KiloBytes, MegaBytes oder GigaBytes)
+</div>
+<div class="CTooltip" id="tt13">
+#PROG# erkennt jeden Zugriff auf Ihre Web Site aufgrund einer <b>Suche</b> von einer der <b>#SearchEnginesArray# beliebtesten Internet-Suchmaschinen und -Verzeichnisse</b> (wie z.B. Yahoo, Altavista, Lycos, Google, Voila, etc...).
+</div>
+<div class="CTooltip" id="tt14">
+Eine Liste aller <b>externen Seiten</b>, von denen ein Verweis auf Ihre Web Site erfolgte (nur die <b>#MaxNbOfRefererShown#</b> am h&auml;ufigsten aufgetretenen externen Seiten werden angezeigt).
+Verweise aufgrund eines Suchergebnisses einer Suchmaschine werden hier nicht aufgef&uuml;hrt, da diese bereits in der vorherigen Tabellenzeile angegeben worden sind.
+</div>
+<div class="CTooltip" id="tt15">
+Diese Tabelle zeigt die Liste der am h&auml;ufigsten verwendeten <b>Schl&uuml;sselw&ouml;rter</b>, um Ihre Web Site mit einer Internet-Suchmaschine bzw. -Verzeichnis zu finden.
+(#PROG# erkennt die Schl&uuml;sselw&ouml;rter der <b>#SearchEnginesArray#</b> beliebtesten Internet-Suchmaschinen und -Verzeichnisse, wie z.B. Yahoo, Altavista, Lycos, Google, Voila, etc...).
+</div>
+<div class="CTooltip" id="tt16">
+Robots (manchmal auch als Spider bezeichnet) sind <b>automatische Computerbesucher</b>, die von vielen Suchmaschinen eingesetzt werden, um Ihre Web Seite aufzunehmen und auszuwerten.<br />
+#PROG# ist in der Lage, bis zu <b>#RobotArray#</b> Robots zu erkennen.
+</div>
+<div class="CTooltip" id="tt17">
+Alle zeitbezogenen Statistiken basieren auf der Serverzeit.<br />
+</div>
+<div class="CTooltip" id="tt18">
+Die angezeigten Werte sind <b>Durchschnittswerte</b> (berechnet aus allen Werten zwischen dem ersten und letzten Besuch)
+</div>
+<div class="CTooltip" id="tt19">
+Die angezeigten Werte sind <b>Summenwerte</b> (berechnet aus allen Werten zwischen dem ersten und letzten Besuch)
+</div>
+
+<div class="CTooltip" id="tt201"> F&uuml;r diesen Fehler liegt keine Beschreibung vor. </div>
+<div class="CTooltip" id="tt202"> Die Anfrage wurde vom Server akzeptiert, aber sie wird erst sp&auml;ter verarbeitet. </div>
+<div class="CTooltip" id="tt204"> Der Server hat die Anfrage verarbeitet, aber es wurde kein Ergebnis &uuml;bertragen. </div>
+<div class="CTooltip" id="tt206"> Unvollst&auml;ndiger Inhalt. </div>
+<div class="CTooltip" id="tt301"> Das angeforderte Dokument wurde verschoben und ist nun unter der angegebenen Adresse erreichbar. </div>
+<div class="CTooltip" id="tt302"> F&uuml;r diesen Fehler liegt keine Beschreibung vor. </div>
+<div class="CTooltip" id="tt400"> Syntaxfehler, der Server kann die Anfrage nicht verarbeiten. </div>
+<div class="CTooltip" id="tt401"> Es wurde versucht, auf eine <b>URL zuzugreifen, f&uuml;r die eine Authentifizierung notwendig war</b>.<br />Eine hohe Anzahl kann darauf hindeuten, da&szlig; jemand (z.B. ein Hacker) vesucht, sich unerlaubten Zugang zu Ihrer Web Site zu verschaffen, indem er z.B. verschiedene Login/Passwort Kombinationen durchprobiert. </div>
+<div class="CTooltip" id="tt403"> Es wurde versucht, auf eine <b>unerreichbare URL zuzugreifen, f&uuml;r die selbst eine Authentifizierung nicht ausreicht</b> (z.B. eine URL innerhalb eines f&uuml;r Browserzugriffe gesperrten Verzeichnisses). </div>
+<div class="CTooltip" id="tt404"> Es wurde versucht, auf eine <b>ung&uuml;ltige URL zuzugreifen</b>. Dieser Fehler bedeutet meistens, da&szlig; es einen ung&uuml;ltigen Link irgendwo in Ihrer Web Site gibt oder da&szlig; ein Besucher einen Schreibfehler bei einer URL gemacht hat. </div>
+<div class="CTooltip" id="tt408"> Der Server ben&ouml;tigte <b>zu viel Zeit</b>, um auf eine Anfrage zu reagieren. Dieser Fehler bezieht sich meistens auf ein langsam arbeitendes CGI-Skript, welches durch den Server vorzeitig abgebrochen werden mu&szlig;te, oder einen &uuml;berlasteten Web Server. </div>
+<div class="CTooltip" id="tt500"> Interner Fehler. Dieser Fehler wird meist durch ein CGI-Skript verursacht, das z.B. durch einen Programmfehler unerwarteterweise beendet worden ist. </div>
+<div class="CTooltip" id="tt501"> Unbekannte Art der Anfrage. </div>
+<div class="CTooltip" id="tt502"> Dieser Fehler wird von einem HTTP-Server gemeldet, der als ein Proxy oder Gateway fungiert, wenn der eigentliche Zielserver auf die Anfrage nicht erfolgreich geantwortet hat. </div>
+<div class="CTooltip" id="tt503"> Interner Serverfehler. </div>
+<div class="CTooltip" id="tt504"> Gateway Zeit&uuml;berschreitung. </div>
+<div class="CTooltip" id="tt505"> HTTP-Version wird nicht unterst&uuml;tzt. </div>

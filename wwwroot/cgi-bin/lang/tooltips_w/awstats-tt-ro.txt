@@ -1,0 +1,86 @@
+<!-- Traducere in limba romana de Florin Radulescu: florin_ef309@yahoo.com -->
+<!-- $Revision$ - $Date$ -->
+<div class="CTooltip" id="tt1">
+    O noua vizita este definita ca fiind orice <b>acces al unui vizitator</b>
+    care nu a fost conectat la site in ultimele <b>#VisitTimeOut# mn</b>.
+</div>
+<div class="CTooltip" id="tt2">
+Numarul de masini client (<b>adresa IP</b>) care vin sa viziteze
+    site-ul (si care au vizionat cel putin o <b>pagina</b>).<br />
+Aceste date se refera la numarul de <b>persoane fizice diferite</b>
+    care au ajuns pe site in oricare din zile.
+</div>
+<div class="CTooltip" id="tt3">
+    De cate ori o <b>pagina</b> a site-ului este vizionata (suma pentru
+    toti vizitatorii si toate vizitele).<br /> Aceasta informatie difera de
+    "Accesari" deoarece numara doar paginile HTML si nu si imaginile sau alte
+    tipuri de fisiere.
+</div>
+<div class="CTooltip" id="tt4">
+    De cate ori o <b>pagina, imagine, fisier</b> de pe site a fost
+    <b>vizionata</b> sau <b>descarcata (download)</b> de catre
+    cineva.<br />
+    Aceasta informatie este furnizata doar ca referinta deoarece pentru
+    marketing este de multe ori preferat numarul de "pagini" vazute.
+</div>
+<div class="CTooltip" id="tt5">
+    Aceasta informatie contine traficul total de date pentru toate
+    <b>paginile</b>, <b>imaginile</b> si <b>fisierele</b> de pe site.<br />
+    Unitatea de masura este KB, MB sau GB (KiloBytes, MegaBytes sau GigaBytes)
+</div>
+<div class="CTooltip" id="tt13">
+    #PROG# recunoaste accesele la site rezultate dintr-o <b>cautare</b> efectuata cu ajutorul a <b>
+    #SearchEnginesArray# din cele mai cunoscute motoare de cautare si repertoare</b>
+(ca Yahoo, Altavista, Lycos, Google, Voila, etc...).
+</div>
+<div class="CTooltip" id="tt14">
+    Lista tuturor <b>paginilor externe</b> care au fost punctul de plecare (si de intrare)
+    in site (sunt listate doar primele <b>#MaxNbOfRefererShown#</b> in ordinea numarului de utilizari).
+    Intrarile pe site din rezultatul generat de motoarele de cautare sunt excluse aici deoarece
+    ele au fost deja incluse in precedenta linie a acestui tabel.
+</div>
+<div class="CTooltip" id="tt15">
+    Acest tabel contine lista celor mai frecvente <b>cuvinte cheie</b> care au fost 
+    utilizate de motoarele de cautare sau repertoare pentru a gasi acest site.
+    (Cuvintele cheie folosite de cele mai cunoscute <b>#SearchEnginesArray#</b> 
+    motoare de cautare sau repertoare - Yahoo, Altavista, Lycos, Google, Voila, etc... - 
+    sunt recunoscute de #PROG#).
+</div>
+<div class="CTooltip" id="tt16">
+    Robotii sunt <b>programe vizitator automate</b> utilizate de multe motoare de cautare
+    si care scaneaza situl web pentru a-l indexa si evalua, pentru a colecta statistici 
+    despre siturile web din Internet si/sau pentru a verifica daca situl este online.<br /> 
+#PROG# recunoaste <b>#RobotArray#</b> roboti.
+</div>
+<div class="CTooltip" id="tt17">
+    Toate statisticile referitoare la timp sunt bazate pe timpul din masina care gazduieste 
+    serverul web.<br />
+</div>
+<div class="CTooltip" id="tt18">
+    Aici, datele listate sunt: <b>valori medii</b> (calculate din toate datele intre prima 
+    si ultima vizita)
+</div>
+<div class="CTooltip" id="tt19">
+    Aici, datele listate sunt: <b>insumari cumulative</b> (calculate din toate datele intre 
+    prima si ultima vizita)
+</div>
+
+<div class="CTooltip" id="tt201"> Nici o descriere pentru aceasta eroare. </div>
+<div class="CTooltip" id="tt202"> Cererea a fost inteleasa de server dar va fi procesata mai tarziu. </div>
+<div class="CTooltip" id="tt204"> Serverul a procesat cererea dar nu exista nici un document de trimis. </div>
+<div class="CTooltip" id="tt206"> Continut partial. </div>
+<div class="CTooltip" id="tt301"> Documentul cerut a fost mutat si este acum la o alta adresa continuta in raspuns. </div>
+<div class="CTooltip" id="tt302"> Nici o descriere pentru aceasta eroare. </div>
+<div class="CTooltip" id="tt400"> Eroare de sintaxa, serverul nu a inteles cererea. </div>
+<div class="CTooltip" id="tt401"> Incercare de a accesa un <b>URL unde este necesara autentificarea cu user/parola</b>.<br />Un numar mare in acest loc poate insemna ca cineva (de exemplu un hacker) incearca sa sparga sau sa intre in site (sperand sa intre intr-o zona securizata incercand de exemplu diferite perechi user/parola). </div>
+<div class="CTooltip" id="tt403"> Incercare de a accesa un <b>URL care nu a fost configurat sa fie atins, nici macar cu o autentificare user/parola</b> (de exemplu un URL dintr-un director care nu este definit ca accesibil). </div>
+<div class="CTooltip" id="tt404"> Incercare de a accesa un <b>URL inexistent</b>. Aceasta eroare inseamna adesea ca exista o legatura invalida undeva pe site sau ca un vizitator a tastat gresit un URL. </div>
+<div class="CTooltip" id="tt408"> Serverul a consumat <b>prea mult timp</b> pentru a raspunde cererii. Aceasta eroare indica adesea un script CGI lent pe care serverul a incercat sa-l aborteze sau un server web extrem de incarcat. </div>
+<div class="CTooltip" id="tt500"> Eroare interna. Aceasta eroare este deseori cauzata de un program CGI care s-a terminat anormal (de exemplu prin coredump). </div>
+<div class="CTooltip" id="tt501"> Cerere de actiune necunoscuta. </div>
+<div class="CTooltip" id="tt502"> Cod returnat de un server HTTP care lucreaza ca un proxy sau gateway in cazul in care un server tinta real nu a raspuns cu succes cererii client. </div>
+<div class="CTooltip" id="tt503"> Eroare interna server. </div>
+<div class="CTooltip" id="tt504"> Depasire timp la Gateway. </div>
+<div class="CTooltip" id="tt505"> Versiune HTTP nesuportata. </div>
+
+

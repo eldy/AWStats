@@ -1,0 +1,54 @@
+<!--CZ by js@fsid.cvut.cz (please contact if something wrong)-->
+<!-- $Revision$ - $Date$ -->
+<div class="CTooltip" id="tt1">
+Noví náv¹tìvníci jsou definováni jako ka¾dý <b>pøicházející</b> (prohlí¾ející si neboprocházející), kdo 
+se na stránky nepøipojil posledních <b>#VisitTimeOut# min</b>.
+</div>
+<div class="CTooltip" id="tt2">
+Poèet klientù (<b>IP address</b>), kteøí pøi¹li na stránky (a kteøí si prohlédli alespoò jednu <b>stránku</b>).
+Toto èíslo odpovídá èíslu <b>rùzných fyzických osob</b>, kteøí nav¹tívili stránky kterýkoli <b>jeden</b> den.
+</div>
+<div class="CTooltip" id="tt3">
+Poèet kolikrát byla <b>stránka</b> na tomto serveru <b>shlédnuta</b> (Souèet za v¹echny nav¹tìvující a jejich náv¹tìvy).
+To se li¹í od <b>Hitù</b> tak, ¾e jsou zapoèítány jen stránky (ne obrázky a ostatní...).
+</div>
+<div class="CTooltip" id="tt4">
+Poèet kolikrát byla <b>stránka, obrázek, soubor</b> na tomto serveru <b>stáhnuta</b> (Souèet za v¹echny nav¹tìvující a jejich náv¹tìvy).	
+Toto èíslo je uvádìno kvùli porovnání se <b>Stránkami</b>.
+</div>
+<div class="CTooltip" id="tt5">
+Velikost v¹ech <b>stránek, obrázkù a souborù</b> sta¾ených z tohoto serveru.		
+</div>
+<div class="CTooltip" id="tt13">
+#PROG# rozpozná pøístup na server od <b>vyhledávání</b> z <b>#SearchEnginesArray# nejznámìj¹ích internetových vyhledávaèù a seznamù</b> (jako je Yahoo, Altavista, Lycos, Google, Voila, atd...).
+</div>
+<div class="CTooltip" id="tt14">
+Seznam v¹ech <b>externích stránek</b> (mimo server), které byly pou¾ity jako odkaz na tento server (Je zobrazeno jen <b>#MaxNbOfRefererShown#</b> nejèastìj¹ích).
+Odkazy pou¾ité z vyhledávaèù nejsou zaøazeny, nebo» je obsahuje jiný údaj.
+</div>
+<div class="CTooltip" id="tt15">
+Tato tabulka zobrazuje seznam nejèastìji zadávaných <b>výrazù</b>, které byly zadávany ve vyhledávaèích k nalezení tohoto serveru.
+(Výrazy od <b>#SearchEnginesArray#</b> mnejznámìj¹ích vyhledávaèù a seznamù jsou #PROG# rozpoznány, jako je Yahoo, Altavista, Lycos, Google, Voila, atd...).
+</div>
+<div class="CTooltip" id="tt16">
+Roboti (nìkdy oznaèováni jako pavouci nebo èmuchalové) jsou <b>poèítaèoví automat. náv¹tìvníci</b> pou¾ivaní mnoha vyhledávacími slu¾bami k (1) indexování a hodnocení, (2) sbírání statistik z webù a/nebo (3) k zji¹tìní, zda stránky stále existují.<br />
+#PROG# je schopen rozpoznat <b>#RobotArray#</b> robotù.
+</div>
+
+<div class="CTooltip" id="tt201"> Bylo vytvoøeno nové místo s daty a odesláno. </div>
+<div class="CTooltip" id="tt202"> Po¾adavek byl rozeznán, ale bude vyøízen pozdìji. </div>
+<div class="CTooltip" id="tt204"> Po¾adavek byl rozeznán, ale není co odeslat zpìt. </div>
+<div class="CTooltip" id="tt206"> Dotaz byl zpracován jen èásteènì. </div>
+<div class="CTooltip" id="tt301"> Po¾adovaný dokument byl pøesunut a adresa byla odeslána. </div>
+<div class="CTooltip" id="tt302"> Dokument se doèasnì nachází na jiné adrese. </div>
+<div class="CTooltip" id="tt400"> Syntaktická chyba, chybný po¾adavek. </div>
+<div class="CTooltip" id="tt401"> Po¾adavek neobsahoval ¾ádanou autorizaci jméno/heslo pro vstup na stránky. Pokud se vyskytuje èasto pokou¹í se nìkdo o prùlom-hack. </div>
+<div class="CTooltip" id="tt403"> Po¾adavek byl odmítnut serverem (nepøístupná data, neviditelný adresáø...). </div>
+<div class="CTooltip" id="tt404"> Pokus o vstup na neexistující stránku nebo soubor. </div>
+<div class="CTooltip" id="tt408"> Celý po¾adavek nebyl serveru od klienta zaslán v po¾adovaném èase (chyba klienta nebo serveru nebo skriptu). </div>
+<div class="CTooltip" id="tt500"> Chyba serveru (èasto se vyskytuje pøi chybném zpracování skriptu). </div>
+<div class="CTooltip" id="tt501"> Po¾adavek, který byl zaslán není mo¾no vyøídit, nebo» ho server neumí zpracovat. </div>
+<div class="CTooltip" id="tt502"> Server pøijal ¹patný po¾adavek od jiného serveru (proxy nebo brány). </div>
+<div class="CTooltip" id="tt503"> Chyba serveru, slu¾ba není k dispozici. </div>
+<div class="CTooltip" id="tt504"> Vypr¹el èasový interval u proxy serveru nebo brány. </div>
+<div class="CTooltip" id="tt505"> Nepodporovaná verze protokolu HTTP. </div>

@@ -1,0 +1,68 @@
+<!-- Spanish tooltips message file (temujinnn@hotmail.com) -->
+<!-- $Revision$ - $Date$ -->
+<div class="CTooltip" id="tt1">
+Se considera un nueva vista por <b>cada nuevo visitante</b> que consulta una página y que no haya accedido al sitio en los últimos <b>#VisitTimeOut# mins.</b>.
+</div>
+<div class="CTooltip" id="tt2">
+Número de Servidores (<b>direcciones IP</b>) que entran a un sitio (y que por lo menos visitan una <b>página</b>).<br />
+Esta cifra refleja el número de <b>personas físicas diferentes</b> que hayan accedido al sitio en un día.
+</div>
+<div class="CTooltip" id="tt3">
+Número de ocasiones que una <b>página</b> del sitio ha sido <b>vista</b> (La suma de todos los visitantes incluyendo múltiples visitas).<br />
+Este contador se distingue de "hits" porque cuenta sólo las páginas HTML y no los gráficos u otros archivos o ficheros.
+</div>
+<div class="CTooltip" id="tt4">
+El número de ocasiones que una <b>página, imagen, archivo o fichero</b> de un sitio es <b>visto</b> o <b>descargado</b> por un visitante.<br />
+Este contador sirve de referencia, pero el contador de "páginas" representa un dato mercadotécnico generalmente más útil y por lo tanto se recomienda.
+</div>
+<div class="CTooltip" id="tt5">
+El número de <b>kilo bytes</b> descargados por los visitantes del sitio.<br />
+Se refiere al volumen de datos descargados por todas las <b>páginas</b>, <b>imágenes</b> y <b>archivos o ficheros</b> medidos en kilo bytes.
+</div>
+<div class="CTooltip" id="tt13">
+El programa #PROG# es capaz de reconocer una visita a su sitio luego de cada <b>búsqueda</b> desde cualquiera de los <b>#SearchEnginesArray# motores de búsqueda y directorios Internet</b> más populares (Yahoo, Altavista, Lycos, Google, Terra, etc...).
+</div>
+<div class="CTooltip" id="tt14">
+Lista de <b>páginas de sitios externos</b> utilizadas para acceder o enlazarse con su sitio (Sólo las <b>#MaxNbOfRefererShown#</b> páginas más utilizadas se encuentras enumeradas).
+Los enlaces utilizados por los motores de búsqueda o directorios son excluidos porque ya han sido contabilizados en el rubro anterior.
+</div>
+<div class="CTooltip" id="tt15">
+Esta tabla muestra la lista de las <b>palabras clave</b> más utilizadas en los motores de búsqueda y directorios Internet para encontrar su sitio.
+(El programa #PROG# reconoce palabras clave usadas en los <b>#SearchEnginesArray#</b> motores de búsqueda más populares, tales como Yahoo, Altavista, Lycos, Google, Voila, Terra etc...).
+</div>
+<div class="CTooltip" id="tt16">
+Los Robots son <b>visitantes automáticos</b> que escanean o viajan por su sitio para indexarlo, o jerarquizarlo, para recopilar estadísticas de sitios Web, o para verificar si su sitio se encuentra conectado a la Red.<br />
+El programa #PROG# reconoce hasta <b>#RobotArray#</b> robots.
+</div>
+<div class="CTooltip" id="tt17">
+Todos los tiempos relacionados con las estad&iacute;sticas est&aacute;n	basados en tiempos de servidor.<br />
+</div>
+<div class="CTooltip" id="tt18">
+Aquí, las fechas reportadas son: <b>valores medios</b> (calculado desde todos los datos entre las primeras y los ultimas visitas en el rango analizado)
+</div>
+<div class="CTooltip" id="tt19">
+Aquí, las fechas reportadas son: <b>sumas acumulativas</b> (calculado desde todos los datos entre las primeras y los ultimas visitas en el rango analizado)
+</div>
+<div class="CTooltip" id="tt20">
+Algunas <b>Duraciones de las visitas</b> son 'desconocidas' porque no pueden ser calculadas siempre. La razón principal de esto es:<br />
+- La visita no fue acabada cuando ocurrió la 'actualización'.<br />
+- La visita comenzó en la hora anterior (después de las 23:00) del pasado día de un mes (la razón técnica de previene a #PROG# de la duración calculada de tales sesiones)
+</div>
+
+<div class="CTooltip" id="tt201"> Error sin descripción. </div>
+<div class="CTooltip" id="tt202"> La solicitud ha sido computada pero el servidor la procesará más tarde. </div>
+<div class="CTooltip" id="tt204"> El servidor ha procesado la solicitud pero no existen documentos para enviar. </div>
+<div class="CTooltip" id="tt206"> Contenido parcial. </div>
+<div class="CTooltip" id="tt301"> El documento solicitado ha sido reubicado y se encuentra en un URL proporcionado en la misma respuesta. </div>
+<div class="CTooltip" id="tt302"> Error sin descripción. </div>
+<div class="CTooltip" id="tt400"> Error de sintaxis, el servidor no ha comprendido su solicitud. </div>
+<div class="CTooltip" id="tt401"> Número de intentos por acceder un <b>URL que exige una combinación usuario/contraseña que ha sido invalida.</b>.<br />Un número de intentos muy elevado pudiera sugerir la posibilidad de que un hacker (o pirata) ha intentado entrar a una zona restringida del sitio (p.e., intentando múltiples combinaciones de usuario/contraseña). </div>
+<div class="CTooltip" id="tt403"> Número de intentos por acceder un <b>URL configurado para no ser accesible, aún con una combinación usuario/contraseña</b> (p.e., un URL previamente definido como "no navegable"). </div>
+<div class="CTooltip" id="tt404"> Número de intentos por acceder un <b>URL inexistente</b>. Frecuentemente, éstos se refieren ya sea a un enlace (link) inválido o a un error mecanográfico cuando el visitante tecleó el URL equivocado. </div>
+<div class="CTooltip" id="tt408"> El servidor ha tardado <b>demasiado tiempo</b> para responder a una solicitud. Frecuentemente se debe ya sea a un programa CGI muy lento, el cual tuvo que ser abandonado por el servidor, o bien por un servidor sobre-saturado. </div>
+<div class="CTooltip" id="tt500"> Error interno. Este error generalmente es causado por una terminación anormal o prematura de un programa CGI (p.e., un CGI corrompido o dañado). </div>
+<div class="CTooltip" id="tt501"> Solicitud desconocida por el servidor. </div>
+<div class="CTooltip" id="tt502"> Código retornado por un servidor de protocolo HTTP el cual funciona como proxy o puente (gateway) cuando el servidor objetivo no funciona o no interpreta adecuadamente la solicitud del cliente (o visitante). </div>
+<div class="CTooltip" id="tt503"> Error interno del servidor. </div>
+<div class="CTooltip" id="tt504"> Pasarela fuera de linea. </div>
+<div class="CTooltip" id="tt505"> Versión de protocolo HTTP no soportada. </div>

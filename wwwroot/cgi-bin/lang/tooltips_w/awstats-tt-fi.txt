@@ -1,0 +1,69 @@
+<!-- Finnish tooltips message file (zebi@kanetti.com) -->
+<!-- $Revision$ - $Date$ -->
+<div class="CTooltip" id="tt1">
+Tässä uudeksi vierailuksi on laskettu sivustolle <b>saapunut vierailija</b> (sivuja selannut), joka ei ole ollut yhteydessä sivustoon viimeisen <b>#VisitTimeOut# minuutin aikana</b>.
+</div>
+<div class="CTooltip" id="tt2">
+Asiakaskoneiden (<b>IP-osoitteiden</b>) määrä, jotka ovat käyneet sivustoilla (ja selanneet ainakin yhtä <b>sivua</b>).<br />
+Tämä tieto viittaa <b>eri fyysisten henkilöiden</b> määrään, jotka ovat käyneet sivustolla.
+</div>
+<div class="CTooltip" id="tt3">
+<b>Näytettyjen sivujen</b> määrä. (kaikkien vierailujen aikana näytettyjen sivujen yhteismäärä).<br />
+Tämä tieto eroaa kohdasta "osumat" siinä, että mukaan lasketaan ainoastaan HTML-sivut, ei kuvia tai muita tiedostoja.
+</div>
+<div class="CTooltip" id="tt4">
+<b>Näytettyjen</b> tai <b>ladattujen</b> <b>sivujen, kuvien ja tiedostojen</b> yhteismäärä.<br />
+Tämä tieto tarjotaan ainoastaan viitteeksi, koska markkinointitarkoituksissa suositaan yleensä näytettyjen "sivujen" määrää.
+</div>
+<div class="CTooltip" id="tt5">
+Tämä tieto viittaa sivustoltasi <b>sivujen</b>, <b>kuvien</b> ja <b>tiedostojen</b> muodossa ladatun datan määrään.<br />
+Yksikkönä Kt, Mt tai Gt (Kilotavu, Megatavu tai Gigatavu)
+</div>
+<div class="CTooltip" id="tt13">
+#PROG# tunnistaa <b>#SearchEnginesArray# suosituimman hakukoneen</b> (kuten Yahoo, Altavista, Lycos, Google, Voila, jne...) <b>hakutulosten</b> avulla sivustolle löytäneet.
+</div>
+<div class="CTooltip" id="tt14">
+Luettelo <b>ulkopuolisista sivuista</b>, joilta löytyy linkki (jota on seurattu) sivustollesi (Näkyvissä ainoastaan <b>#MaxNbOfRefererShown#</b> useimmin käytettyä ulkopuolista sivua).
+Hakukoneiden hakutuloksista löytyviä linkkejä ei ole sisällytetty mukaan, koska nämä näkyvät jo tämän taulukon edellisellä rivillä.
+</div>
+<div class="CTooltip" id="tt15">
+Tästä taulukosta nähdään luettelo yleisimmistä <b>hakulauseista tai hakusanoista</b>, joiden avulla sivustoillesi on löydetty Internetin hakukoneiden ja hakemistojen avulla.
+(#PROG# tunnistaa hakusanat <b>#SearchEnginesArray#</b>:sta suosituimmasta hakukoneesta ja hakemistosta, kuten Yahoo, Altavista, Lycos, Google, Voila, jne...).<br />
+Huomaa, että hakusanojen kokonaismäärä voi olla suurempi kuin hakulauseiden (todellinen hakujen määrä), koska silloin kun kahta hakusanaa on käytetty samassa haussa, lasketaan tämä hakusana-tilastossa kahdesti (jokainen hakusana erikseen).
+</div>
+<div class="CTooltip" id="tt16">
+Robotit (käytetään joskus myös nimitystä "Spider") ovat <b>automaattisia tietokonevierailijoita</b>, joita useat hakukoneet käyttävät indeksoidakseen, arvostellakseen ja kerätäkseen tilastoa sivustoista ja/tai tutkiakseen vieläkö sivustot ovat saatavilla.<br />
+#PROG# tunnistaa jopa <b>#RobotArray#</b> robottia.
+</div>
+<div class="CTooltip" id="tt17">
+Kaikki kelloaikoihin liittyvät tilastot perustuvat palvelimen kelloon.<br />
+</div>
+<div class="CTooltip" id="tt18">
+Tässä kerrotut tiedot ovat: <b>keskimääräisiä arvoja</b> (laskettu kaikkien ensimmäisen ja viimeisimmän vierailun välisten tietojen perusteella)
+</div>
+<div class="CTooltip" id="tt19">
+Tässä kerrotut tiedot ovat: <b>kumulatiivisia summia</b> (laskettu kaikkien ensimmäisen ja viimeisimmän vierailun välisten tietojen perusteella)
+</div>
+<div class="CTooltip" id="tt20">
+Jotkut <b>Vierailujen kestot</b> ovat 'tuntemattomia', koska niitä ei aina voida laskea. Pääasiallinen syy tälle on:<br />
+- Vierailu ei ollut loppunut 'päivityksen' tapahtuessa.<br />
+- Vierailu alkoi kuukauden viimeisen vuorokauden viimesen tunnin aikana (klo 23:00 jälkeen) (Tekniset syyt estävät laskutoimituksen tällaisessa tapauksessa)
+</div>
+
+<div class="CTooltip" id="tt201"> Tälle virheelle ei ole kuvausta. </div>
+<div class="CTooltip" id="tt202"> Palvelin on ymmärtänyt palvelupyynnön, mutta se käsitellään myöhemmin. </div>
+<div class="CTooltip" id="tt204"> Palvelin on käsitellyt pyynnön, mutta lähetettäväksi ei ole mitään tietoa. </div>
+<div class="CTooltip" id="tt206"> Osittainen sisältö. </div>
+<div class="CTooltip" id="tt301"> Pyydetty tiedosto on siirretty toiseen, vastauksessa kerrottuun osoitteeseen. </div>
+<div class="CTooltip" id="tt302"> Tälle virheelle ei ole kuvausta. </div>
+<div class="CTooltip" id="tt400"> Kielioppivirhe. Palvelin ei ymmärtänyt palvelupyyntöä. </div>
+<div class="CTooltip" id="tt401"> Pyydetty <b>URL, johon tarvitaan tunnus/salasana -kaksikko</b>.<br /> Suuri määrä näitä virheitä saattaa tarkoittaa sitä, että joku (kuten hakkeri) yrittää murtautua, tai päästä sivustoille (toivoen päätyvänsä suojatulle alueelle kokeilemalla eri tunnus/salasana -pareja, esimerkiksi). </div>
+<div class="CTooltip" id="tt403"> Tried to reach an <b>URL not configured to be reachable, even with an login/password pair</b> (for example, an URL within a directory not defined as "browsable".). </div>
+<div class="CTooltip" id="tt404"> Pyydetty <b>URL, jota ei ole olemassa</b>. Tämä virhe tarkoittaa usein sitä, että jossakin sivustollasi on virheellinen linkki, tai että vierailija on kirjoittanut URL:n väärin. </div>
+<div class="CTooltip" id="tt408"> Server has taken <b>too much time</b> to respond to a request. This error frequently involves either a slow CGI script which the server was required to kill or an extremely congested web server. </div>
+<div class="CTooltip" id="tt500"> Sisäinen virhe. Tämä virhe on usein epänormaalisti keskeytyneen CGI-ohjelman aiheuttama (tuloksena esim. coredump). </div>
+<div class="CTooltip" id="tt501"> Pyydetty toiminto tuntematon. </div>
+<div class="CTooltip" id="tt502"> Välityspalvelimena tai yhdyskäytävänä toimivan HTTP-palvelimen palauttama koodi, kun todellinen kohteena ollut palvelin ei vastannut palvelupyyntöön hyväksyttävästi.</div>
+<div class="CTooltip" id="tt503"> Palvelimen sisäinen virhe. </div>
+<div class="CTooltip" id="tt504"> Yhdyskäytävän aikaraja täyttynyt. </div>
+<div class="CTooltip" id="tt505"> HTTP-versio ei tuettu. </div>

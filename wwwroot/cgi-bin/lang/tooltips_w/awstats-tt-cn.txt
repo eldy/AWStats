@@ -1,0 +1,49 @@
+<!-- $Revision$ - $Date$ -->
+<div class="CTooltip" id="tt1">
+此字段为参观网站的总人次，从相同地址来浏览本网站，时间间隔须至少#VisitTimeOut#分钟才会再记录一次。
+</div>
+<div class="CTooltip" id="tt2">
+此字段为参观网站的人数。以从不同的计算机<b>IP</b>浏览本网站的个数来计算网站的人数。
+</div>
+<div class="CTooltip" id="tt3">
+此字段为所有参观者所有参观中<b>网页</b>访问的总次数。只记录网页(.html，不包括图片，CSS等文件)的访问次数。
+</div>
+<div class="CTooltip" id="tt4">
+此字段为请求读取的总次数，包含网页文件，图片文件，影像文件等。<br />
+这些数据仅用做参考，“网页访问量 Page View”更多用于商业评测
+</div>
+<div class="CTooltip" id="tt5">
+此字段为服务器文件内容的数据流量，包含网页文件，图片文件，影像文件等。
+</div>
+<div class="CTooltip" id="tt13">
+此字段为记录使用者从那些搜寻网站进入此网站。#PROG# 会自动分析最常使用的#SearchEnginesArray#个搜索引擎，如(Yahoo! Google...)。
+</div>
+<div class="CTooltip" id="tt14">
+显示其它网站的网页有其内容连结至本站的网页列表。
+系统会列出较常连结的前#MaxNbOfRefererShown#个网页网址。
+</div>
+<div class="CTooltip" id="tt15">
+这个表格显示使用者在搜寻网站中较常使用的关键词来登入网站。系统会记录最常使用的#SearchEnginesArray#个搜寻网站关键词。
+</div>
+<div class="CTooltip" id="tt16">
+搜寻网站的机器人(Robots)会自动的找寻网站内的所有内容。<br />
+#PROG#记录较常使用的#RobotArray#个机器人找寻网站的记录。
+</div>
+
+<div class="CTooltip" id="tt201"> 没有关于这项错误码的描述</div>
+<div class="CTooltip" id="tt202"> 网页服务器不了解使用者的需求</div>
+<div class="CTooltip" id="tt204"> 网页服务器四处理完使用者的需求，但是却没有文件传送出</div>
+<div class="CTooltip" id="tt206"> 网页内容读取不完全 </div>
+<div class="CTooltip" id="tt301"> 找寻的网页已经移到其它地方，而且以已经找寻到了</div>
+<div class="CTooltip" id="tt302"> 网页原先找不到，现在已经在别的地方找到了</div>
+<div class="CTooltip" id="tt400"> 语法错误，网页服务器不了解使用者的需求</div>
+<div class="CTooltip" id="tt401"> 尝试连结至需输入密码的网页网址而发生错误</div>
+<div class="CTooltip" id="tt403"> 尝试连结至未开放浏览的网页网址而发生错误</div>
+<div class="CTooltip" id="tt404"> 尝试连结至不存在的网页网址而发生错误</div>
+<div class="CTooltip" id="tt408"> 网页服务器花费太多时间处理这个需求</div>
+<div class="CTooltip" id="tt500"> 内部服务器发生错误，一般是 CGI 程序发生问题</div>
+<div class="CTooltip" id="tt501"> 不了解需求</div>
+<div class="CTooltip" id="tt502"> 发给代理服务器或网关服务器的页面请求没有成功返回给客户端</div>
+<div class="CTooltip" id="tt503"> 内部服务器发生错误 </div>
+<div class="CTooltip" id="tt504"> 通讯超时 </div>
+<div class="CTooltip" id="tt505"> 这个 HTTP 的版本没有支持 </div>

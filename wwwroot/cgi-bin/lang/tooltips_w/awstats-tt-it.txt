@@ -1,0 +1,69 @@
+<!-- Italian tooltips message file -->
+<!-- $Revision$ - $Date$ -->
+<div class="CTooltip" id="tt1">
+Si considera una nuova visita per <b>ogni arrivo</b> di un visitatore che visualizza o consulta una pagina e non si &egrave; connesso negli ultimi <b>#VisitTimeOut# minuti</b>.
+</div>
+<div class="CTooltip" id="tt2">
+Numero di client hosts (<b>indirizzi IP</b>) utilizzati per accedere al sito (e visualizzare almeno una <b>pagina</b>).<br />
+Questa cifra riflette il numero di <b>persone fisiche</b> differenti che un giorno hanno visitato il sito.
+</div>
+<div class="CTooltip" id="tt3">
+Numero di volte che una <b>pagina</b> del sito &egrave; stata <b>vista</b> (somma di tutti i visitatori, per tutte le visite).<br />
+Questo valore &egrave; diverso dagli "hits" perch&egrave; considera solamente le pagine HTML e non le immagini o gli altri elementi.
+</div>
+<div class="CTooltip" id="tt4">
+Numero di volte che una <b>pagina, immagine o elemento</b> del sito &egrave; <b>visto</b> o <b>scaricato</b> da un visitatore.<br />
+Questo valore &egrave; indicativo, in quanto il contatore "pagine" a volte &egrave; pi&ugrave; significativo ai fini commerciali.
+</div>
+<div class="CTooltip" id="tt5">
+Numero totale di <b>kilobytes</b> scaricati dal sito durante le visite.<br />
+Indica il volume di traffico dovute alle richieste di caricamento delle <b>pagine</b>, delle <b>immagini</b> e degli altri <b>elementi</b> scaricati.
+</div>
+<div class="CTooltip" id="tt13">
+#PROG# &egrave; capace di riconoscere gli accessi al sito provenienti dalle <b>ricerche</b> dei <b>#SearchEnginesArray# motori di ricerca Internet</b> pi&ugrave; conosciuti (Yahoo, Altavista, Lycos, Google, Voila, ecc...).
+</div>
+<div class="CTooltip" id="tt14">
+Elenco delle <b>pagine di siti esterni</b> contenenti un link che &egrave; stato seguito per accedere a questo sito (solo le <b>#MaxNbOfRefererShown#</b> pagine esterne pi&ugrave; utilizzate sono visualizzate).
+I link risultanti da una ricerca di un motore conosciuto non appaiono qui, dato che sono conteggiati a parte sulla linea subito sopra.
+</div>
+<div class="CTooltip" id="tt15">
+Questa tabella offre la lista delle <b>parole o frasi</b> pi&ugrave; frequentemente utilizzate per rintracciare e accedere al sito a partire da
+un motore di ricerca Internet (sono riconosciute le ricerche dei <b>#SearchEnginesArray#</b> motori di ricerca pi&ugrave; popolari, come Yahoo, Altavista, Lycos, Google, Voila, ecc...).<br />
+Notare che il numero di ricerche sulle parole potrebbe essere maggiore del numero riportato nelle frasi (il numero reale di ricerche) perchè quando la stessa parola compare più volte su diverse frasi, nell'elenco delle parole viene conteggiata più volte (una volta per frase).
+</div>
+<div class="CTooltip" id="tt16">
+I robots sono dei <b>visitatori automatici</b> che perlustrano il sito al fine di indicizzarlo, di ottenere delle statistiche sui siti Web Internet o di verificarne l'accessibilit&agrave;.<br />
+#PROG# riconosce <b>#RobotArray#</b> robots.
+</div>
+<div class="CTooltip" id="tt17">
+Gli orari visualizzati sono basati sul fuso orario del server.<br />
+</div>
+<div class="CTooltip" id="tt18">
+I valori riportati sono: <b>valori medi</b> (calcolati prendendo in considerazione tutti i dati tra la prima e l'ultima visita)
+</div>
+<div class="CTooltip" id="tt19">
+I valori riportati sono: <b>cumulativi</b> (calcolati prendendo in considerazione tutti i dati tra la prima e l'ultima visita)
+</div>
+<div class="CTooltip" id="tt20">
+Alcune <b>durate delle visite</b> sono 'sconosciute' perchè non possono essere sempre calcolate. Questi sono i casi più ricorrenti:<br />
+- La visita non era ancora conclusa quando sono state aggiornate ('update' di awstats) le statistiche.<br />
+- La visita è iniziata durante l'ultima ora (dopo le 23:00) dell'ultimo giorno del mese (Una ragione tecnica impedisce ad #PROG# di calcolare la durata di queste sessioni)
+</div>
+
+<div class="CTooltip" id="tt201"> Contenuto parziale restituito. </div>
+<div class="CTooltip" id="tt202"> La richiesta &egrave; stata registrata del server ma sar&agrave; eseguita pi&ugrave; tardi. </div>
+<div class="CTooltip" id="tt204"> Il server ha processato la richiesta ma non esiste alcun documento da ritornare. </div>
+<div class="CTooltip" id="tt206"> Contenuto parziale restituito. </div>
+<div class="CTooltip" id="tt301"> Il documento richiesto &egrave; stato spostato e si trova al momento a un altro indirizzo, indicato nella risposta. </div>
+<div class="CTooltip" id="tt302"> Il documento richiesto &egrave; stato spostato e si trova al momento a un altro indirizzo, indicato nella risposta. </div>
+<div class="CTooltip" id="tt400"> Errore di sintassi, il server non ha compreso la richiesta. </div>
+<div class="CTooltip" id="tt401"> Tentativo di accesso non autorizzato a un <b>URL che richiede un'autenticazione con un login o una parola di accesso</b>.<br />Un numero troppo elevato pu&ograve; evidenziare un tentativo di accesso mediante forza bruta al sito (a seguito di accesso ripetuto con differenti nomi di login o parole di accesso).</div>
+<div class="CTooltip" id="tt403"> Tentativo di accesso a un <b>URL non configurato per essere accessibile, anche se corretto</b> (ad esempio, un URL di una directory indicata come non "listabile"). </div>
+<div class="CTooltip" id="tt404"> Tentativo di accesso a una risorsa o <b>URL inesistente</b>. SI tratta dunque di un link non valido sul sito o di un errore di battitura del visitatore che ha indicato un URL non corretto. </div>
+<div class="CTooltip" id="tt408"> Il server ha impiegato un <b>tempo troppo lungo</b> per rispondere alla richiesta. Pu&ograve; trattarsi di uno script CGI troppo lento obbligato ad abbandonare la richiesta, o di un timeout dato dalla saturazione del sito. </div>
+<div class="CTooltip" id="tt500"> Errore interno del server. Questo errore &egrave; quello ritornato pi&ugrave; di frequente durante la terminazione anormale di uno script CGI (per esempio in seguito a un coredump del CGI). </div>
+<div class="CTooltip" id="tt501"> Il server non prende in carico l'azione richiesta. </div>
+<div class="CTooltip" id="tt502"> Codice ritornato da un server HTTP che funziona da proxy o gateway quando il server reale chiamato non risponde alla richiesta del client. </div>
+<div class="CTooltip" id="tt503"> Errore interno del server. </div>
+<div class="CTooltip" id="tt504"> Time-out del gateway. </div>
+<div class="CTooltip" id="tt505"> Versione HTTP non supportata. </div>

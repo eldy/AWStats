@@ -1,0 +1,53 @@
+<!-- $Revision$ - $Date$ -->
+<div class="CTooltip" id="tt1">
+Yeni ziyaretçi, geçmiþ <b>#VisitTimeOut# dakika</b> içinde sitenize baðlanmamýþ ve o anda sitenize bakan kullanýcýdýr.
+</div>
+<div class="CTooltip" id="tt2">
+Sitenizi ziyaret eden ve en az bir <b>sayfa</b> gören bilgisayar (<b>IP adresi</b>) sayýsý.
+Bu sayý sitenizi bir gün içinde ziyaret eden <b>farklý kiþi</b>leri temsil eder.
+</div>
+<div class="CTooltip" id="tt3">
+Sitedeki bir <b>sayfanýn</b> kaç kere <b>görüldüðü</b> (Tüm ziyaretçilerin tüm ziyatlerinin toplamý).
+Bu sayý "hits" sayýsýndan farklýdýr: sadece HTML dosyalarý sayýlýr, resim ve diðer dosyalar sayýlmaz.
+</div>
+<div class="CTooltip" id="tt4">
+Sitedeki  <b>sayfa, resim, ve dosya</b>larýn biri tarafýndan kaç kere indirlmiþ veya görülmüþ olmasý.
+Bu bilgi kaynak olarak verilmiþtir. Genelde pazarlama alanýnda görüntülenen <b>sayfa</b> sayýsý tercih edilir.
+</div>
+<div class="CTooltip" id="tt5">
+Bu sayý sitenizden tüm <b>resimler, sayfalar ve dosyalar</b> dahil indirilen toplam bilgi miktarýný belirtir.
+</div>
+<div class="CTooltip" id="tt13">
+#PROG# sitenize <b>en popüler #SearchEnginesArray# Ýnternet dizini ve arama motorundan</b> gelen eriþimleri anlar.
+</div>
+<div class="CTooltip" id="tt14">
+Sitenize baðlantý veren (ve giriþ yapmak için kullanýlan) <b>dýþ sayfalar</b> (Sadece en çok kullanýlan <b>#MaxNbOfRefererShown#</b> dýþ sayfa gösterilmiþtir.)
+Arama motorlarý tarafýndan kullanýlan arama sonuçlarý bu listeye dahil deð idir, çünkü bu tabloda bir üst satýrda bu bilgi verilmiþtir.
+</div>
+<div class="CTooltip" id="tt15">
+Bu tablo sitenizi Ýnternet dizinlerinden ve arama motorlarýndan bulmak için en çok kullanýlan <b>anahtar sözcük</b>leri gösterir.
+(#PROG# en popüler <b>#SearchEnginesArray#</b> Ýnternet dizini ve arama motorundan kullanýlan anahtar sözcükleri gösterir.
+</div>
+<div class="CTooltip" id="tt16">
+Robotlar (basþka bir deyiþle Örümcekler) sitenizi (1) dizinlemek ve sýralamak, (2) istatistik toplamak, ve/veya (3) sitenizin iþler durumda olduðunu kontol etmek amacýyla tarayan <b>otomatik bilgisayar programlarý</b>dýr.
+#PROG# <b>#RobotArray#</b>adet robotu tanýr.
+</div>
+
+<div class="CTooltip" id="tt201"> Bu hatanýn açýklamasý yok. </div>
+<div class="CTooltip" id="tt202"> Sunucu isteðinizi anladý fakat daha sonra iþlem görecek. </div>
+<div class="CTooltip" id="tt204"> Sunucu isteðinizi yerine getirdi fakat yollanacak dosya yok. </div>
+<div class="CTooltip" id="tt206"> Kýsmi içerik. </div>
+<div class="CTooltip" id="tt301"> Ýstenilen belge cevapta verilen baþka bir adrese taþýnmýþtýr. </div>
+<div class="CTooltip" id="tt302"> Bu hatanýn açýklamasý yok. </div>
+<div class="CTooltip" id="tt400"> Sözdizimi hatasý, sunucu isteðinizi anlamadý. </div>
+<div class="CTooltip" id="tt401"> <b>Kulannýcý adý ve þifre gerektiren bir URL</b>e ulaþýldý.<br />Burada yüksek bir sayý bir korsanýn sitenize girmeye çalýþtýðýný belirtebilir. </div>
+<div class="CTooltip" id="tt403"> <b>Þifre kullanarak bile ulaþýlmasý yasaklanmýþ bir URL</b> (örneðýn, "bakýlabilir" olarak tanýnlanmamýþ bir klasör.). </div>
+<div class="CTooltip" id="tt404"> <b>Varolmayan bir URLL</b>e ulaþmaya çalýþýldý. Bu hata genellikle sitenizin bir yerinde geçersiz bir baðlantýý olduðunu veya ziyaretçinin URLi yanlýþ yazmasýndan kaynaklanýr. </div>
+<div class="CTooltip" id="tt408"> Sunucu iþleme cevap vermek için <b>çok fazla zaman</b> harcadý. Bu genellikle yavaþ bir CGI programýnýn kalabalýk bir veb sunucusunda durdurulmasýndan kaynaklanýr. </div>
+<div class="CTooltip" id="tt500"> Dahiki hata. Bu hata genellikle bir CGI programýnýn beklenmeyen bir þekilde sonuþlanmasý (çekirdek bellek dökümü) ile oluþur. </div>
+<div class="CTooltip" id="tt501"> Ýstenilen iþlem bilinmiyor. </div>
+<div class="CTooltip" id="tt502"> Ulaþýlmaya çalýþýlan sunucu cevap vermeyince að geçidi olarak iþleyen bir HTTP sunucunun belirttiði hata. </div>
+<div class="CTooltip" id="tt503"> Dahili sunucu hatasý. </div>
+<div class="CTooltip" id="tt504"> Að geçidi zaman aþýmý. </div>
+<div class="CTooltip" id="tt505"> HTTPnin bu sürümü desteklenmiyor. </div>
+

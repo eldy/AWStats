@@ -1,0 +1,62 @@
+<!-- Korean tooltips message file -->
+<!-- $Revision$ - $Date$ -->
+<div class="CTooltip" id="tt1">
+새로운 방문은 이전에(<b>#VisitTimeOut# 분이내</b>)
+당신의 사이트에 접속하지 않은(보거나 브라우징 하지 않은) 새로운
+<b>방문자</b>를 나타냅니다.
+</div>
+<div class="CTooltip" id="tt2">
+클라이언트 호스트 수(<b>IP 주소</b>)는 방문한 사이트 수를 나타냅니다.(최소한 <b>한 페이지</b>라도 본 사이트)<br />
+이 자료는 일별 <b>물리적으로 다른 사용자</b>수를 나타냅니다.
+</div>
+<div class="CTooltip" id="tt3">
+사이트에서 <b>본(view) 페이지</b> 회수를 나타냅니다.
+(모든 방문자의 함)<br />
+    이 자료는 이미지, 파일과 달리 HTML 페이지에서의 "조회수(hit)"와는 다릅니다.
+</div>
+<div class="CTooltip" id="tt4">
+<b>페이지, 이미지, 파일</b>을 <b>보거나 다운로드</b>한 회수를 나타냅니다.<br />
+이 자료는 참조용으로만 제공됩니다. 왜냐하면 본 "페이지"는 종종 시장조사 목적으로 사용될 수 있기 때문입니다.
+</div>
+<div class="CTooltip" id="tt5">
+이 정보들은 다운로드한 모든 <b>페이지</b>, <b>이미지</b>, <b>파일</b> 들을 Kb단위로 나타냅니다.
+</div>
+<div class="CTooltip" id="tt13">
+#PROG# 는 <b>#SearchEnginesArray#</b>의 <b>검색</b>으로 당신의 사이트에 대한 접근을 식별할 수 있습니다.
+</div>
+<div class="CTooltip" id="tt14">
+당신의 사이트에 링크된 모든 <b>외부 페이지</b><br />
+(<b>#MaxNbOfRefererShown#</b>는 가장 자주 사용되는 외부 페이지를 나타냅니다.)
+    검색 엔진에 의한 결과페이지에 사용된 링크는 여기에서 제외됩니다.
+    (이 테이블의 이전에 이미 나와 있습니다.)
+</div>
+<div class="CTooltip" id="tt15">
+이 테이블은 당신의 사이트에서 가장 많이 사용되는 <b>키워드</b> 목록을 보여줍니다.
+    (가장 애호하는 검색엔진 Yahoo, Altavista, Lycos, Google, Voila등과 같은
+<b>#SearchEnginesArray#</b>의 키워드를 #PROG#는 식별할 수 있습니다.
+</div>
+<div class="CTooltip" id="tt16">
+로보트 (때로는 스파이더를 뜻함)는 많은 검색 엔진에서 사용되는
+<b>자동화된 웹접속 도구</b>입니다. 이 엔진은 (1) 웹사이트를 목록화하고
+순서를 부여하고 (2) 인터넷 웹 사이트의 통계를 수집하고 (3) 당신의
+사이트가 여전히 사용가능한지 조사합니다.<br />
+#PROG#는 <b>#RobotArray#</b> 로보트를 식별할 수 있습니다.
+</div>
+
+<div class="CTooltip" id="tt201"> 이 오류에 대한 설명이 없습니다. </div>
+<div class="CTooltip" id="tt202"> 요청이 서버에 의해 더이상 진행될 수 없습니다. </div>
+<div class="CTooltip" id="tt204"> 서버가 요청을 처리했지만 전송할 문서가 없습니다. </div>
+<div class="CTooltip" id="tt206"> 일부 내용. </div>
+<div class="CTooltip" id="tt301"> 요청된 문서는 옮겨져서 다른 주소를 사용합니다. </div>
+<div class="CTooltip" id="tt302"> 이 오류에 대한 설명이 없습니다. </div>
+<div class="CTooltip" id="tt400"> 구문 오류, 서버가 이 요청을 알 수 없습니다. </div>
+<div class="CTooltip" id="tt401"> <b>URL에 접속을 위해서는 로그인/패스워드 가 필요합니다.</b><br />이 항목의 최고값은 누군가 크랙을 시도하거나 당신의 사이트에 접속을 시도하고 있는 것(다른 로그인/패스워드를 사용하여 시도하는것) 을 의미합니다. </div>
+<div class="CTooltip" id="tt403"> <b>사용가능하게 설정되어 있지 않는 URL</b>에 대한 접속시도 오류 입니다. (예를 들어, 디렉토리에ㅤ대한 "브라우징"이 정의되지 않은 경우입니다.) </div>
+<div class="CTooltip" id="tt404"> <b>존재하지 않는 URL</b>에 대한 접속 시도 오류입니다. 이 오류는 종종 당신의 사이트 어딘가에서 잘못된 링크가 있어 방문자들이 잘못된 URL로 접속하는 경우에 발생합니다. </div>
+<div class="CTooltip" id="tt408"> 서버에게 요청된 것이 <b>너무 많은 응답 시간</b>을 요구합니다.	이 오류는 종종 느린 CGI 스크립트 문제이거나 웹서버 사용량이 많은 경우에 발생합니다. </div>
+<div class="CTooltip" id="tt500"> 내부 오류. 이 오류는 종종 CGI프로그램이 비정상적으로 종료되었을 때 발생합니다. </div>
+<div class="CTooltip" id="tt501"> 요청된 동작을 알수 없습니다. </div>
+<div class="CTooltip" id="tt502"> HTTP 서버에 의해 반송된 코드가 프락시나 게이트웨이로 동작합니다.  대상 서버가 클라이언트의 요청에 정확하게 응답을 하지 못합니다. </div>
+<div class="CTooltip" id="tt503"> 내부 서버 오류. </div>
+<div class="CTooltip" id="tt504"> 게이트웨이 시간초과. </div>
+<div class="CTooltip" id="tt505"> HTTP 버전이 지원하지 않습니다. </div>

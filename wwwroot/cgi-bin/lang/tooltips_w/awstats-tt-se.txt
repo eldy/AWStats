@@ -1,0 +1,62 @@
+<!-- $Revision$ - $Date$ -->
+<div class="CTooltip" id="tt1">
+Ett nytt besök är en <b>besökare</b> (som tittar på en <b>sida</b>) som inte varit inne på sajten på <b>#VisitTimeOut# minuter</b>.
+</div>
+<div class="CTooltip" id="tt2">
+Antal besökare (<b>IP-adresser</b>) som besökte sajten (och som tittade på minst en <b>sida</b>).<br />
+Detta värde anger antalet <b>olika fysiska personer</b> som nått siten på en dag.
+</div>
+<div class="CTooltip" id="tt3">
+Antal gånger en <b>sida</b> på sajten har besökts (Summa för alla besökare för alla besök).<br />
+Detta värde skiljer sig från "träffar" genom att det bara räknar HTML-sidor, ej bilder eller andra filer.
+</div>
+<div class="CTooltip" id="tt4">
+Antal gånger en <b>sida, bild eller fil</b> från sajten har <b>besökts</b> eller <b>laddats hem</b> av någon.<br />
+Detta värde finns bara med som referens eftersom antalet "sidor" som besökts oftast är bättre att titta på ur marknadsföringssynpunkt.
+</div>
+<div class="CTooltip" id="tt5">
+Detta värde visar hur mycket data som har laddats hem genom alla <b>sidor</b>, <b>bilder</b> och <b>filer</b> på hela sajten.<br />
+Enheterna är Kb, Mb or Gb (KiloByte, MegaByte eller GigaByte)
+</div>
+<div class="CTooltip" id="tt13">
+#PROG# känner igen när besökare hittar din sajt genom en <b>sökning</b> i de  <b>#SearchEnginesArray# populäraste sökmotorerna och katalogerna</b> (såsom Yahoo, Altavista, Lycos, Google, Voila, osv...).
+</div>
+<div class="CTooltip" id="tt14">
+En lista på alla <b>externa sidor</b> som länkar till (och besökare använt för att komma till) din sida (Bara de <b>#MaxNbOfRefererShown#</b> mest använda länkarna visas).
+Länkar i sökresultaten från sökmotorerna tas inte med här eftersom de redan räknats in i föregående rad i tabellen.
+</div>
+<div class="CTooltip" id="tt15">
+Denna tabell visar de vanligaste <b>nyckelorden</b> som använts för att hitta din sajt genom sökmotorer och kataloger.
+(#PROG# känner igen nyckelord från de <b>#SearchEnginesArray#</b> vanligaste sökmotorerna och katalogerna, såsom Yahoo, Altavista, Lycos, Google, Voila, osv...).
+</div>
+<div class="CTooltip" id="tt16">
+Robotar (kallas också Spindlar) är <b>automatiska datoriserade besökare</b> som används av många sökmotorer som söker av din webbsajt för att indexera och rangordna den, samla statistik för webbsajter och/eller se om din sajt fortfarande finns kvar.<br />
+#PROG# känner igen upp till <b>#RobotArray#</b> olika robotar.
+</div>
+<div class="CTooltip" id="tt17">
+All tidsrelaterad statistik baseras på klockan på webbservern.<br />
+</div>
+<div class="CTooltip" id="tt18">
+Här visas <b>medelvärden</b> (beräknade för alla besök från det första till det sista)
+</div>
+<div class="CTooltip" id="tt19">
+Här visas <b>ackumulerade summor</b> (beräknade för alla besök från det första till det sista)
+</div>
+
+<div class="CTooltip" id="tt201"> Ingen beskrivning finns för detta fel. </div>
+<div class="CTooltip" id="tt202"> Servern förstod begäran men kommer bearbeta den senare. </div>
+<div class="CTooltip" id="tt204"> Servern har bearbetat begäran men har inte genererat något svar. </div>
+<div class="CTooltip" id="tt206"> Endast en del av innehållet överfördes. </div>
+<div class="CTooltip" id="tt301"> Sidan har flyttats och ny adress finns i svaret. </div>
+<div class="CTooltip" id="tt302"> Ingen beskrivning finns för detta fel. </div>
+<div class="CTooltip" id="tt400"> Syntax fel, servern förstod inte begäran. </div>
+<div class="CTooltip" id="tt401"> Någon försökte komma åt en <b>URL där inloggning krävdes</b>.<br />Ett högt värde här skulle kunna innebära att någon (t.ex. en hacker) försöker bryta sig in i din sajt (t.ex. genom att pröva sig fram tills de hittar rätt lösenord). </div>
+<div class="CTooltip" id="tt403"> Någon försökte komma åt en <b>URL som är inställd så att man inte kommer åt den ens med rätt lösenord</b> (till exempel en katalog som är inställd att inte tillåta bläddring.). </div>
+<div class="CTooltip" id="tt404"> Någon försökte nå en <b>icke existerande URL</b>. Detta betyder ofta att det finns en felaktig länk på din sajt eller att någon stavade fel till en URL. </div>
+<div class="CTooltip" id="tt408"> Servern har tagit <b>för lång tid</b> på sig att besvara en begäran. Detta beror ofta på ett långsamt cgi-skript eller att servern är överbelastad. </div>
+<div class="CTooltip" id="tt500"> Internt fel. Detta fel orsakas ofta av att ett cgi-skript går fel (t.ex. gör en coredump). </div>
+<div class="CTooltip" id="tt501"> Okänd begäran. </div>
+<div class="CTooltip" id="tt502"> Felkod som genereras då en HTTP-server som arbetar som proxy eller gatewayt ine får svar från den verkliga servern som skulle ha svarat på klientens begäran. </div>
+<div class="CTooltip" id="tt503"> Internt serverfel. </div>
+<div class="CTooltip" id="tt504"> Timeout i gateway </div>
+<div class="CTooltip" id="tt505"> HTTP-versionen stöds ej. </div>
