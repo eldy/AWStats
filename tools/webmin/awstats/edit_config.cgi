@@ -453,6 +453,7 @@ if ($in{'advanced'} == 4) {
 			$value =~ s/#.*$//; 
 			$value =~ s/^[\s\'\"]+//g; $value =~ s/[\s\'\"]+$//g;
 			($value1,$value2)=split(/\s/,$value,2);
+			if ($value1 =~ /^graph3d$/i) { next; }
 			if (! $pluginlinefound{$value1}) {	# To avoid plugin to be shown twice
 				$pluginlinefound{$value1}=1;
 				push @pconfparam, $value1;
@@ -479,6 +480,7 @@ if ($in{'advanced'} == 4) {
 				$value =~ s/#.*$//; 
 				$value =~ s/^[\s\'\"]+//g; $value =~ s/[\s\'\"]+$//g;
 				($value1,$value2)=split(/\s/,$value,2);
+				if ($value1 =~ /^graph3d$/i) { next; }
 				if (! $pluginlinefound{$value1}) {	# To avoid plugin to be shown twice
 					push @pconfparam, $value1;
 					push @pconfactive, $active;
