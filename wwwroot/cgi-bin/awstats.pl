@@ -1329,8 +1329,8 @@ sub Read_Ref_Data {
 						push @INC, "$dir";
 						$DirAddedInINC{"$dir"}=1;
 					}
-					#my $loadret=require "$FilePath{$file}";
-					my $loadret=(require "$FilePath{$file}"||require "${file}");
+					my $loadret=require "$file";
+					#my $loadret=(require "$FilePath{$file}"||require "${file}");
 				}
 			}
 		}
@@ -1799,7 +1799,8 @@ sub Read_Plugins {
 							$DirAddedInINC{"$dir"}=1;
 						}
 						#my $loadret=require "$pluginpath";
-						my $loadret=(require "$pluginpath"||require "${pluginfile}.pm");
+						my $loadret=require "${pluginfile}.pm";
+						#my $loadret=(require "$pluginpath"||require "${pluginfile}.pm");
 
 						if (! $loadret || $loadret =~ /^error/i) {
 							# Load failed, we stop here
@@ -4094,9 +4095,9 @@ sub AltTitle {
 }
 
 #--------------------------------------------------------------------
-# Function:		Tell if an email is an local or external email
+# Function:		Tell if an email is a local or external email
 # Parameters:   email
-# Input:        $SiteDomain $HostAliases
+# Input:        $SiteDomain(exact string) $HostAliases(quoted regex string)
 # Output:       None
 # Return:       -1, 0 or 1
 #--------------------------------------------------------------------
@@ -4104,7 +4105,7 @@ sub IsLocalEMail {
 	my $email=shift||'unknown';
 	if ($email !~ /\@(.*)$/) { return 0; }
 	my $domain=$1;
-	if ($domain eq $SiteDomain) { return 1; }
+	if ($domain =~ /^$SiteDomain$/i) { return 1; }
 	foreach my $match (@HostAliases) { if ($domain =~ /$match/i) { return 1; } }
 	return -1;
 }
@@ -4467,7 +4468,7 @@ sub ShowURLInfo {
 				print "<A HREF=\"$newkey\" target=\"url\">$nompage</A>";
 			}
 			elsif ($newkey =~ /^\//) {		# URL seems to be an url extracted from a web or wap server log file
-				$newkey =~ s/^\/$SiteDomain//;
+				$newkey =~ s/^\/$SiteDomain//i;
 				# Define urlprot
 				my $urlprot='http';
 				if ($UseHTTPSLinkForUrl && $newkey =~ /^$UseHTTPSLinkForUrl/) { $urlprot='https'; }
@@ -5540,10 +5541,10 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 
 		# Check virtual host name
 		#----------------------------------------------------------------------
-		if ($pos_vh>=0 && $field[$pos_vh] ne $SiteDomain) {
+		if ($pos_vh>=0 && $field[$pos_vh] !~ /^$SiteDomain$/i) {
 			my $skip=1;
 			foreach my $key (@HostAliases) {
-				if ($field[$pos_vh] =~ m/^$key$/) { $skip=0; next; }
+				if ($field[$pos_vh] =~ m/$key$/i) { $skip=0; next; }
 			}
 			if ($skip) {
 				$NbOfLinesDropped++;
