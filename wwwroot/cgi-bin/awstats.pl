@@ -6547,7 +6547,11 @@ EOF
 		}
 		print "</TH>";
 		if ($ShowLinksToWhoIs && $LinksToWhoIs) { print "<TH width=80>$Message[114]</TH>"; }
-		print "<TH bgcolor=\"#$color_p\" width=80>$Message[56]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH bgcolor=\"#$color_k\" width=80>$Message[75]</TH><TH width=120>$Message[9]</TH></TR>\n";
+		if ($ShowHostsStats =~ /P/i) { print "<TH bgcolor=\"#$color_p\" width=80>$Message[56]</TH>"; }
+		if ($ShowHostsStats =~ /H/i) { print "<TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH>"; }
+		if ($ShowHostsStats =~ /B/i) { print "<TH bgcolor=\"#$color_k\" width=80>$Message[75]</TH>"; }
+		if ($ShowHostsStats =~ /L/i) { print "<TH width=120>$Message[9]</TH>"; }
+		print "</TR>\n";
 		$total_p=$total_h=$total_k=0;
 		my $count=0;
 		if ($HTMLOutput{'allhosts'})  { &BuildKeyList($MaxRowsInHTMLOutput,$MinHitHost,\%_host_h,\%_host_p); }
