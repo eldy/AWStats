@@ -10,6 +10,12 @@ Fixes:
   to count wrong "Add" done by browsers that hit the file even when no add is
   done. Value reported is the count for IE / ratio of IE among all other
   browsers.
+- Count for Browsers with WMA audio playing support now works.
+- Fix problem with default ShowFlagLinks defined to 1 instead of '' when not
+  included in config file.
+- Road runner browsers detection problems.
+- syslog tag can accept hostname with not only a-z chars.
+- "&nbsp" changed to "&nbsp;" in miscellanous chart.
 
 New features/improvments:
 - None

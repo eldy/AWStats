@@ -5310,7 +5310,7 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 				if ($param =~ /FLA=(\w+)/) 			{ $foundparam++; if ($1 eq "Y")    { $_misc_h{"FlashSupport"}++; } next; }
 				if ($param =~ /RP=(\w+)/) 			{ $foundparam++; if ($1 eq "Y")    { $_misc_h{"RealPlayerSupport"}++; } next; }
 				if ($param =~ /MOV=(\w+)/) 			{ $foundparam++; if ($1 eq "Y")    { $_misc_h{"QuickTimeSupport"}++; } next; }
-				if ($param =~ /WMA=(\w+)/) 			{ $foundparam++; if ($1 eq "Y")    { $_misc_h{"MediaPlayerSupport"}++; } next; }
+				if ($param =~ /WMA=(\w+)/) 			{ $foundparam++; if ($1 eq "Y")    { $_misc_h{"WindowsMediaPlayerSupport"}++; } next; }
 				if ($param =~ /PDF=(\w+)/) 			{ $foundparam++; if ($1 eq "Y")    { $_misc_h{"PDFSupport"}++; } next; }
 			}
 			if ($foundparam) { $_misc_h{"TotalMisc"}++; }
