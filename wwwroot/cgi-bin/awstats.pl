@@ -27,6 +27,7 @@ $VERSION="5.2 (build $REVISION)";
 use vars qw/
 $DEBUGFORCED $NBOFLINESFORBENCHMARK $FRAMEWIDTH $TOOLTIPWIDTH $NBOFLASTUPDATELOOKUPTOSAVE
 $LIMITFLUSH $VISITTIMEOUT $NOTSORTEDRECORDTOLERANCE $MAXDIFFEXTRA
+$WIDTHCOLICON
 /;
 $DEBUGFORCED=0;						# Force debug level to log lesser level into debug.log file (Keep this value to 0)
 $NBOFLINESFORBENCHMARK=5000;		# Benchmark info are printing every NBOFLINESFORBENCHMARK lines
@@ -37,6 +38,7 @@ $LIMITFLUSH=4000;					# Nb of records in data arrays after how we need to flush 
 $VISITTIMEOUT=10000;				# Laps of time to consider a page load as a new visit. 10000 = 1 hour (Default = 10000)
 $NOTSORTEDRECORDTOLERANCE=10000;	# Laps of time to accept a record if not in correct order. 10000 = 1 hour (Default = 10000)
 $MAXDIFFEXTRA=500;
+$WIDTHCOLICON=32;
 # Plugins variable
 use vars qw/ %PluginsLoaded /;
 %PluginsLoaded=();
@@ -245,7 +247,8 @@ use vars qw/
 @PluginsToLoad = ();
 # ---------- Init hash arrays --------
 use vars qw/
-%DomainsHashIDLib %BrowsersHereAreGrabbers %BrowsersHashIcon %BrowsersHashIDLib
+%DomainsHashIDLib
+%BrowsersHereAreGrabbers %BrowsersHashIcon %BrowsersHashIDLib
 %OSHashID %OSHashLib
 %RobotsHashIDLib
 %SearchEnginesHashIDLib %SearchEnginesKnownUrl
@@ -1298,7 +1301,7 @@ sub Read_Ref_Data {
 		}
 		if (! $FilePath{$file}) {
 			my $filetext=$file; $filetext =~ s/\.pm$//; $filetext =~ s/_/ /g;
-			&warning("Warning: Can't read file \"$file\" ($filetext detection will not work correctly).\nCheck if file is in ".($PossibleLibDir[0])." directory and is readable.");
+			&warning("Warning: Can't read file \"$file\" ($filetext detection will not work correctly).\nCheck if file is in \"".($PossibleLibDir[0])."\" directory and is readable.");
 		}
 	}
 	# Sanity check.
@@ -1691,24 +1694,24 @@ sub Read_Plugins {
 		$pluginfile =~ /([^\/\\]*)$/;
 		my $pluginname=$1;
 		if ($pluginname) {
-			if (! $PluginsLoaded{"init"}{"$pluginname"}) {		# Plugin already loaded
+			if (! $PluginsLoaded{'init'}{"$pluginname"}) {		# Plugin already loaded
 				foreach my $dir (@PossiblePluginsDir) {
 					my $searchdir=$dir;
 					if ($searchdir && (!($searchdir =~ /\/$/)) && (!($searchdir =~ /\\$/)) ) { $searchdir .= "/"; }
 					my $pluginpath="${searchdir}${pluginfile}.pm";
 					if (-s "$pluginpath") {
 						if ($Debug) { debug(" Try to init plugin '$pluginname' ($pluginpath) with param '$pluginparam'",1); }
-						my $initreq=require "$pluginpath";
-						if (! $initreq || $initreq =~ /^error/i) {
+						my $loadret=require "$pluginpath";
+						if (! $loadret || $loadret =~ /^error/i) {
 							# Load failed, we stop here
-							&error("Plugin load for plugin '$pluginname' failed with return code: $initreq");
+							&error("Plugin load for plugin '$pluginname' failed with return code: $loadret");
 						}
 						my $ret;	# To get init return
 						my $initfunction="\$ret=Init_$pluginname('$pluginparam')";
 						my $initret=eval("$initfunction");
 						if (! $initret || $initret =~ /^error/i) {
 							# Init function failed, we stop here
-							&error("Plugin init for plugin '$pluginname' failed with return code: $initret");
+							&error("Plugin init for plugin '$pluginname' failed with return code: ".($initret?"$initret":"$@ (A module required by plugin might be missing)."));
 						}
 						# Plugin load and init successfull
 						foreach my $elem (split(/\s+/,$initret)) {
@@ -1725,13 +1728,13 @@ sub Read_Plugins {
 							}
 							$PluginsLoaded{"$elem"}{"$pluginname"}=1;
 						}
-						$PluginsLoaded{"init"}{"$pluginname"}=1;
+						$PluginsLoaded{'init'}{"$pluginname"}=1;
 						if ($Debug) { debug(" Plugin '$pluginname' now hooks functions '$initret'",1); }
 						last;
 					}
 				}
-				if (! $PluginsLoaded{"init"}{"$pluginname"}) {
-					&error("Can't open plugin file \"$pluginfile.pm\" for read.\nCheck if file is in ".($PossiblePluginsDir[0])." directory and is readable.");
+				if (! $PluginsLoaded{'init'}{"$pluginname"}) {
+					&error("Can't open plugin file \"$pluginfile.pm\" for read.\nCheck if file is in \"".($PossiblePluginsDir[0])."\" directory and is readable.");
 				}
 			}
 			else {
@@ -3549,7 +3552,7 @@ sub Read_DNS_Cache {
 		if ($searchdir && (!($searchdir =~ /\/$/)) && (!($searchdir =~ /\\$/)) ) { $searchdir .= "/"; }
 		if (-f "${searchdir}$dnscachefile$filesuffix$dnscacheext") { $filetoload="${searchdir}$dnscachefile$filesuffix$dnscacheext"; }
 		# Plugin call : Change filetoload
-		if ($PluginsLoaded{"SearchFile"}{"hashfiles"}) { SearchFile_hashfiles($searchdir,$dnscachefile,$filesuffix,$dnscacheext,$filetoload); }
+		if ($PluginsLoaded{'SearchFile'}{'hashfiles'}) { SearchFile_hashfiles($searchdir,$dnscachefile,$filesuffix,$dnscacheext,$filetoload); }
 		if ($filetoload) { last; }	# We found a file to load
 	}
 
@@ -3559,7 +3562,7 @@ sub Read_DNS_Cache {
 	}
 
 	# Plugin call : Load hashtoload
-	if ($PluginsLoaded{"LoadCache"}{"hashfiles"}) { LoadCache_hashfiles($filetoload,$hashtoload); }
+	if ($PluginsLoaded{'LoadCache'}{'hashfiles'}) { LoadCache_hashfiles($filetoload,$hashtoload); }
 	if (! scalar keys %$hashtoload) {
 		open(DNSFILE,"$filetoload") or error("Error: Couldn't open DNS Cache file \"$filetoload\": $!");
 		# This is the fastest way to load with regexp that I know
@@ -3567,7 +3570,7 @@ sub Read_DNS_Cache {
 		close DNSFILE;
 		if ($savetohash) {
 			# Plugin call : Save hash file (all records) with test if up to date to save
-			if ($PluginsLoaded{"SaveHash"}{"hashfiles"}) { SaveHash_hashfiles($filetoload,$hashtoload,1,0); }
+			if ($PluginsLoaded{'SaveHash'}{'hashfiles'}) { SaveHash_hashfiles($filetoload,$hashtoload,1,0); }
 		}
 	}
 	if ($Debug) { debug(" Loaded ".(scalar keys %$hashtoload)." items from $filetoload in ".(time()-$timetoload)." seconds.",1); }
@@ -3602,7 +3605,7 @@ sub Save_DNS_Cache_File {
 	if ($dnscachefile =~ s/(\.\w+)$//) { $dnscacheext=$1; }
 	$filetosave="$dnscachefile$filesuffix$dnscacheext";
 	# Plugin call : Save hash file (only $NBOFLASTUPDATELOOKUPTOSAVE records) with no test if up to date
-	if ($PluginsLoaded{"SaveHash"}{"hashfiles"}) { SaveHash_hashfiles($filetosave,$hashtosave,0,$nbofelemtosave,$nbofelemsaved); }
+	if ($PluginsLoaded{'SaveHash'}{'hashfiles'}) { SaveHash_hashfiles($filetosave,$hashtosave,0,$nbofelemtosave,$nbofelemsaved); }
 	if (! $nbofelemsaved) {
 		$filetosave="$dnscachefile$filesuffix$dnscacheext";
 		debug(" Save data ".($nbofelemtosave?"($nbofelemtosave records max)":"(all records)")." into file $filetosave");
@@ -3640,7 +3643,7 @@ sub GetDelaySinceStart {
 	if (shift) { $StartSeconds=0; }	# Reset counter
 	my ($newseconds, $newmicroseconds)=(time(),0);
 	# Plugin call : Return seconds and milliseconds
-	if ($PluginsLoaded{"GetTime"}{"timehires"}) { GetTime_timehires($newseconds, $newmicroseconds); }
+	if ($PluginsLoaded{'GetTime'}{'timehires'}) { GetTime_timehires($newseconds, $newmicroseconds); }
 	if (! $StartSeconds) { $StartSeconds=$newseconds; $StartMicroseconds=$newmicroseconds; }
 	return (($newseconds-$StartSeconds)*1000+int(($newmicroseconds-$StartMicroseconds)/1000));
 }
@@ -4947,7 +4950,7 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 
 		# Create $timerecord like YYYYMMDDHHMMSS
 		# Plugin call : Convert a @datepart into another @datepart
-		if ($PluginsLoaded{"ChangeTime"}{"timezone"})  { @dateparts=ChangeTime_timezone(\@dateparts); }
+		if ($PluginsLoaded{'ChangeTime'}{'timezone'})  { @dateparts=ChangeTime_timezone(\@dateparts); }
 		my $yearmonthdayrecord=sprintf("$dateparts[2]%02i%02i",$dateparts[1],$dateparts[0]);
 		my $timerecord=((int("$yearmonthdayrecord")*100+$dateparts[3])*100+$dateparts[4])*100+$dateparts[5];
 		my $yearrecord=int($dateparts[2]);
@@ -5242,18 +5245,30 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 			if ($Debug) { debug(" No DNS lookup asked.",4); }
 		}
 
-		# Analyze: Top-level domain
-		#--------------------------
+		# Analyze: Country (Top-level domain)
+		#------------------------------------
 		my $Domain='ip';
+		# Resolve Domain from hostname
 		if ($HostResolved eq '*') {
 			# $Host is an IP address and is not resolved or resolution gives an IP address
 			$_ = $Host;
+			# Resolve Domain from plugin
+			if ($PluginsLoaded{'GetCountryCodeByAddr'}{'geoip'}) { 
+				$Domain=$_;		# We store hostname or ip to resolve it into country
+				GetCountryCodeByAddr_geoip($Domain);
+			}
 		}
 		else {
 			# $Host has been resolved or was already a host name
 			$_ = lc($HostResolved?$HostResolved:$Host);
-			if (/\.(\w+)$/) { $Domain=$1; }
+			# Resolve Domain from plugin
+			if ($PluginsLoaded{'GetCountryCodeByName'}{'geoip'}) { 
+				$Domain=$_;		# We store hostname or ip to resolve it into country
+				GetCountryCodeByName_geoip($Domain);
+			}
+			elsif (/\.(\w+)$/) { $Domain=$1; }
 		}
+		# Store country
 		if ($PageBool) { $_domener_p{$Domain}++; }
 		$_domener_h{$Domain}++;
 		$_domener_k{$Domain}+=int($field[$pos_size]);
@@ -6554,7 +6569,7 @@ EOF
 	}
 	if ($HTMLOutput eq 'urldetail' || $HTMLOutput eq 'urlentry' || $HTMLOutput eq 'urlexit') {
 		# Call to plugin function ShowPagesFilter
-		foreach my $pluginname (keys %{$PluginsLoaded{"ShowPagesFilter"}})  {
+		foreach my $pluginname (keys %{$PluginsLoaded{'ShowPagesFilter'}})  {
 			my $function="ShowPagesFilter_$pluginname()";
 			eval("$function");
 		}
@@ -6581,7 +6596,7 @@ EOF
 		if ($ShowPagesStats =~ /E/i) { print "<TH bgcolor=\"#$color_e\" width=80>$Message[104]</TH>"; }
 		if ($ShowPagesStats =~ /X/i) { print "<TH bgcolor=\"#$color_x\" width=80>$Message[116]</TH>"; }
 		# Call to plugin function ShowPagesAddField
-		foreach my $pluginname (keys %{$PluginsLoaded{"ShowPagesAddField"}})  {
+		foreach my $pluginname (keys %{$PluginsLoaded{'ShowPagesAddField'}})  {
 			my $function="ShowPagesAddField_$pluginname('title')";
 			eval("$function");
 		}
@@ -6614,7 +6629,7 @@ EOF
 			if ($ShowPagesStats =~ /E/i) { print "<TD>".($_url_e{$key}?$_url_e{$key}:"&nbsp;")."</TD>"; }
 			if ($ShowPagesStats =~ /X/i) { print "<TD>".($_url_x{$key}?$_url_x{$key}:"&nbsp;")."</TD>"; }
 			# Call to plugin function ShowPagesAddField
-			foreach my $pluginname (keys %{$PluginsLoaded{"ShowPagesAddField"}})  {
+			foreach my $pluginname (keys %{$PluginsLoaded{'ShowPagesAddField'}})  {
 				my $function="ShowPagesAddField_$pluginname('$key')"; 
 				eval("$function");
 			}
@@ -6642,7 +6657,7 @@ EOF
 			if ($ShowPagesStats =~ /E/i) { print "<TD>".($rest_e?$rest_e:"&nbsp;")."</TD>"; }
 			if ($ShowPagesStats =~ /X/i) { print "<TD>".($rest_x?$rest_x:"&nbsp;")."</TD>"; }
 			# Call to plugin function ShowPagesAddField
-			foreach my $pluginname (keys %{$PluginsLoaded{"ShowPagesAddField"}})  {
+			foreach my $pluginname (keys %{$PluginsLoaded{'ShowPagesAddField'}})  {
 				my $function="ShowPagesAddField_$pluginname('')";
 				eval("$function");
 			}
@@ -7259,7 +7274,7 @@ EOF
 		if ($Debug) { debug("ShowHoursStats",2); }
 		print "$Center<a name=\"HOUR\">&nbsp;</a><BR>\n";
 		my $title="$Message[20]";
-		if ($PluginsLoaded{"GetTimeZoneTitle"}{"timezone"}) { $title.=" (GMT ".(GetTimeZoneTitle_timezone()>=0?"+":"").int(GetTimeZoneTitle_timezone()).")"; }
+		if ($PluginsLoaded{'GetTimeZoneTitle'}{'timezone'}) { $title.=" (GMT ".(GetTimeZoneTitle_timezone()>=0?"+":"").int(GetTimeZoneTitle_timezone()).")"; }
 		&tab_head("$title",19);
 		print "<TR><TD align=center><center><TABLE>\n";
 		$max_h=$max_k=1;
@@ -7346,8 +7361,9 @@ EOF
 	if ($ShowDomainsStats) {
 		if ($Debug) { debug("ShowDomainsStats",2); }
 		print "$Center<a name=\"DOMAINS\">&nbsp;</a><BR>\n";
-		&tab_head("$Message[25]",19);
-		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH colspan=2>$Message[17]</TH><TH>$Message[105]</TH>";
+		my $title="$Message[25] ($Message[77] $MaxNbOfDomain)";
+		&tab_head("$title",19);
+		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH width=$WIDTHCOLICON>&nbsp;</TH><TH colspan=2>$Message[17]</TH>";
 		if ($ShowDomainsStats =~ /P/i) { print "<TH bgcolor=\"#$color_p\" width=80>$Message[56]</TH>"; }
 		if ($ShowDomainsStats =~ /H/i) { print "<TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH>"; }
 		if ($ShowDomainsStats =~ /B/i) { print "<TH bgcolor=\"#$color_k\" width=80>$Message[75]</TH>"; }
@@ -7366,11 +7382,12 @@ EOF
 			if ($_domener_h{$key} && $bredde_h==1) { $bredde_h=2; }
 			if ($max_k > 0) { $bredde_k=int($BarWidth*($_domener_k{$key}||0)/$max_k)+1; }
 			if ($_domener_k{$key} && $bredde_k==1) { $bredde_k=2; }
-			if ($key eq 'ip' || ! $DomainsHashIDLib{$key}) {
-				print "<TR><TD><IMG SRC=\"$DirIcons\/flags\/ip.png\" height=14 alt=\"$Message[0]\"></TD><TD CLASS=AWL>$Message[0]</TD><TD>$key</TD>";
+			my $newkey=lc($key);
+			if ($newkey eq 'ip' || ! $DomainsHashIDLib{$newkey}) {
+				print "<TR><TD width=$WIDTHCOLICON><IMG SRC=\"$DirIcons\/flags\/ip.png\" height=14 alt=\"$Message[0]\"></TD><TD CLASS=AWL>$Message[0]</TD><TD>$newkey</TD>";
 			}
 			else {
-				print "<TR><TD><IMG SRC=\"$DirIcons\/flags\/$key.png\" height=14 alt=\"$key\"></TD><TD CLASS=AWL>$DomainsHashIDLib{$key}</TD><TD>$key</TD>";
+				print "<TR><TD width=$WIDTHCOLICON><IMG SRC=\"$DirIcons\/flags\/$newkey.png\" height=14 alt=\"$newkey\"></TD><TD CLASS=AWL>$DomainsHashIDLib{$newkey}</TD><TD>$newkey</TD>";
 			}
 			if ($ShowDomainsStats =~ /P/i) { print "<TD>$_domener_p{$key}</TD>"; }
 			if ($ShowDomainsStats =~ /H/i) { print "<TD>$_domener_h{$key}</TD>"; }
@@ -7379,7 +7396,8 @@ EOF
 			if ($ShowDomainsStats =~ /P/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_p\" WIDTH=$bredde_p HEIGHT=6 ALT=\"$Message[56]: ".int($_domener_p{$key})."\" title=\"$Message[56]: ".int($_domener_p{$key})."\"><br>\n"; }
 			if ($ShowDomainsStats =~ /H/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_h\" WIDTH=$bredde_h HEIGHT=6 ALT=\"$Message[57]: ".int($_domener_h{$key})."\" title=\"$Message[57]: ".int($_domener_h{$key})."\"><br>\n"; }
 			if ($ShowDomainsStats =~ /B/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_k\" WIDTH=$bredde_k HEIGHT=6 ALT=\"$Message[75]: ".Format_Bytes($_domener_k{$key})."\" title=\"$Message[75]: ".Format_Bytes($_domener_k{$key})."\">"; }
-			print "</TD></TR>\n";
+			print "</TD>";
+			print "</TR>\n";
 			$total_p += $_domener_p{$key};
 			$total_h += $_domener_h{$key};
 			$total_k += $_domener_k{$key}||0;
@@ -7389,7 +7407,7 @@ EOF
 		$rest_h=$TotalHits-$total_h;
 		$rest_k=$TotalBytes-$total_k;
 		if ($rest_p > 0 || $rest_h > 0 || $rest_k > 0) { 	# All other domains (known or not)
-			print "<TR><TD colspan=3 CLASS=AWL><font color=\"#$color_other\">$Message[2]</font></TD>";
+			print "<TR><TD width=$WIDTHCOLICON>&nbsp;</TD><TD colspan=2 CLASS=AWL><font color=\"#$color_other\">$Message[2]</font></TD>";
 			if ($ShowDomainsStats =~ /P/i) { print "<TD>$rest_p</TD>"; }
 			if ($ShowDomainsStats =~ /H/i) { print "<TD>$rest_h</TD>"; }
 			if ($ShowDomainsStats =~ /B/i) { print "<TD>".Format_Bytes($rest_k)."</TD>"; }
@@ -7404,9 +7422,13 @@ EOF
 	if ($ShowHostsStats) {
 		if ($Debug) { debug("ShowHostsStats",2); }
 		print "$Center<a name=\"VISITOR\">&nbsp;</a><BR>\n";
-		&tab_head("$Message[81] ($Message[77] $MaxNbOfHostsShown) &nbsp; - &nbsp; <a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=allhosts":"$PROG$StaticLinks.allhosts.html")."\"$NewLinkTarget>$Message[80]</a> &nbsp; - &nbsp; <a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=lasthosts":"$PROG$StaticLinks.lasthosts.html")."\"$NewLinkTarget>$Message[9]</a> &nbsp; - &nbsp; <a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=unknownip":"$PROG$StaticLinks.unknownip.html")."\"$NewLinkTarget>$Message[45]</a>",19);
-		if ($MonthRequired ne 'year') { print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[81] : $TotalHostsKnown $Message[82], $TotalHostsUnknown $Message[1] - $TotalUnique $Message[11]</TH>"; }
-		else { print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[81] : ".(scalar keys %_host_h)."</TH>"; }
+		my $title="$Message[81] ($Message[77] $MaxNbOfHostsShown) &nbsp; - &nbsp; <a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=allhosts":"$PROG$StaticLinks.allhosts.html")."\"$NewLinkTarget>$Message[80]</a> &nbsp; - &nbsp; <a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=lasthosts":"$PROG$StaticLinks.lasthosts.html")."\"$NewLinkTarget>$Message[9]</a> &nbsp; - &nbsp; <a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=unknownip":"$PROG$StaticLinks.unknownip.html")."\"$NewLinkTarget>$Message[45]</a>";
+		&tab_head("$title",19);
+		print "<TR bgcolor=\"#$color_TableBGRowTitle\">";
+#		print "<TH".($PluginsLoaded{'GetCountryCodeByAddr'}{'geoip'}?" colspan=2":"").">";
+		print "<TH>";
+		if ($MonthRequired ne 'year') { print "$Message[81] : $TotalHostsKnown $Message[82], $TotalHostsUnknown $Message[1] - $TotalUnique $Message[11]</TH>"; }
+		else { print "$Message[81] : ".(scalar keys %_host_h)."</TH>"; }
 		if ($ShowLinksToWhoIs && $LinksToWhoIs) { print "<TH width=80>$Message[114]</TH>"; }
 		if ($ShowHostsStats =~ /P/i) { print "<TH bgcolor=\"#$color_p\" width=80>$Message[56]</TH>"; }
 		if ($ShowHostsStats =~ /H/i) { print "<TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH>"; }
@@ -7417,14 +7439,25 @@ EOF
 		my $count=0;
 		&BuildKeyList($MaxNbOfHostsShown,$MinHitHost,\%_host_h,\%_host_p);
 		foreach my $key (@keylist) {
-			print "<tr>";
-			print "<td CLASS=AWL>$key</td>";
+			print "<TR>";
+			# Add flag for IP if geoip plugin enabled
+#			if ($PluginsLoaded{'GetCountryCodeByAddr'}{'geoip'}) { 
+#				my $countrycode=$key;		# We store hostname or ip to resolve it into country
+#				GetCountryCodeByAddr_geoip($countrycode);
+#				if ($DomainsHashIDLib{$countrycode}) {
+#					print "<TD width=$WIDTHCOLICON><img src=\"$DirIcons\/flags\/$countrycode.png\" height=14 alt=\"".$DomainsHashIDLib{$countrycode}."\"></TD>";
+#				}
+#				else {
+#					print "<TD width=$WIDTHCOLICON> &nbsp; </TD>";
+#				}
+#			}
+			print "<TD CLASS=AWL>$key</TD>";
 			if ($ShowLinksToWhoIs && $LinksToWhoIs) { ShowWhoIsCell($key); }
 			if ($ShowHostsStats =~ /P/i) { print "<TD>".($_host_p{$key}||"&nbsp")."</TD>"; }
 			if ($ShowHostsStats =~ /H/i) { print "<TD>$_host_h{$key}</TD>"; }
 			if ($ShowHostsStats =~ /B/i) { print "<TD>".Format_Bytes($_host_k{$key})."</TD>"; }
 			if ($ShowHostsStats =~ /L/i) { print "<TD>".($_host_l{$key}?Format_Date($_host_l{$key},1):"-")."</TD>"; }
-			print "</tr>\n";
+			print "</TR>\n";
 			$total_p += $_host_p{$key};
 			$total_h += $_host_h{$key};
 			$total_k += $_host_k{$key}||0;
@@ -7434,7 +7467,8 @@ EOF
 		$rest_h=$TotalHits-$total_h;
 		$rest_k=$TotalBytes-$total_k;
 		if ($rest_p > 0 || $rest_h > 0 || $rest_k > 0) {	# All other visitors (known or not)
-			print "<TR><TD CLASS=AWL><font color=\"#$color_other\">$Message[2]</font></TD>";
+			print "<TR>";
+			print "<TD CLASS=AWL><font color=\"#$color_other\">$Message[2]</font></TD>";
 			if ($ShowLinksToWhoIs && $LinksToWhoIs) { print "<TD>&nbsp;</TD>"; }
 			if ($ShowHostsStats =~ /P/i) { print "<TD>$rest_p</TD>"; }
 			if ($ShowHostsStats =~ /H/i) { print "<TD>$rest_h</TD>"; }
@@ -7581,7 +7615,7 @@ EOF
 		if ($ShowPagesStats =~ /E/i) { print "<TH bgcolor=\"#$color_e\" width=80>$Message[104]</TH>"; }
 		if ($ShowPagesStats =~ /X/i) { print "<TH bgcolor=\"#$color_x\" width=80>$Message[116]</TH>"; }
 		# Call to plugin function ShowPagesAddField
-		foreach my $pluginname (keys %{$PluginsLoaded{"ShowPagesAddField"}})  {
+		foreach my $pluginname (keys %{$PluginsLoaded{'ShowPagesAddField'}})  {
 			my $function="ShowPagesAddField_$pluginname('title')";
 			eval("$function");
 		}
@@ -7612,7 +7646,7 @@ EOF
 			if ($ShowPagesStats =~ /E/i) { print "<TD>".($_url_e{$key}?$_url_e{$key}:"&nbsp;")."</TD>"; }
 			if ($ShowPagesStats =~ /X/i) { print "<TD>".($_url_x{$key}?$_url_x{$key}:"&nbsp;")."</TD>"; }
 			# Call to plugin function ShowPagesAddField
-			foreach my $pluginname (keys %{$PluginsLoaded{"ShowPagesAddField"}})  {
+			foreach my $pluginname (keys %{$PluginsLoaded{'ShowPagesAddField'}})  {
 				my $function="ShowPagesAddField_$pluginname('$key')";
 				eval("$function");
 			}
@@ -7639,7 +7673,7 @@ EOF
 			if ($ShowPagesStats =~ /E/i) { print "<TD>".($rest_e?$rest_e:"&nbsp;")."</TD>"; }
 			if ($ShowPagesStats =~ /X/i) { print "<TD>".($rest_x?$rest_x:"&nbsp;")."</TD>"; }
 			# Call to plugin function ShowPagesAddField
-			foreach my $pluginname (keys %{$PluginsLoaded{"ShowPagesAddField"}})  {
+			foreach my $pluginname (keys %{$PluginsLoaded{'ShowPagesAddField'}})  {
 				my $function="ShowPagesAddField_$pluginname('')";
 				eval("$function");
 			}
@@ -7709,13 +7743,13 @@ EOF
 		foreach my $key (@keylist) {
 			my $p=int($_os_h{$key}/$Total*1000)/10;
 			if ($key eq "Unknown") {
-				print "<TR><TD width=100><IMG SRC=\"$DirIcons\/os\/unknown.png\" alt=\"$Message[0]\"></TD><TD CLASS=AWL><a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=unknownos":"$PROG$StaticLinks.unknownos.html")."\"$NewLinkTarget>$Message[0]</a></TD><TD>$_os_h{$key}</TD>";
+				print "<TR><TD width=$WIDTHCOLICON><IMG SRC=\"$DirIcons\/os\/unknown.png\" alt=\"$Message[0]\"></TD><TD CLASS=AWL><a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=unknownos":"$PROG$StaticLinks.unknownos.html")."\"$NewLinkTarget>$Message[0]</a></TD><TD>$_os_h{$key}</TD>";
 				print "<TD>$p %</TD></TR>\n";
 				}
 			else {
 				my $newos=$OSHashLib{$key}||$key;
 				my $nameicon=lc($key); $nameicon =~ s/[^\w]+//g;
-				print "<TR><TD width=100><IMG SRC=\"$DirIcons\/os\/$nameicon.png\" alt=\"\"></TD><TD CLASS=AWL>$newos</TD><TD>$_os_h{$key}</TD>";
+				print "<TR><TD width=$WIDTHCOLICON><IMG SRC=\"$DirIcons\/os\/$nameicon.png\" alt=\"\"></TD><TD CLASS=AWL>$newos</TD><TD>$_os_h{$key}</TD>";
 				print "<TD>$p %</TD></TR>\n";
 			}
 			$count++;
@@ -7742,7 +7776,7 @@ EOF
 		foreach my $key (@keylist) {
 			my $p=int($new_browser_h{$key}/$Total*1000)/10;
 			if ($key eq "Unknown") {
-				print "<TR><TD width=100><IMG SRC=\"$DirIcons\/browser\/unknown.png\" alt=\"$Message[0]\"></TD><TD CLASS=AWL><a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=unknownbrowser":"$PROG$StaticLinks.unknownbrowser.html")."\"$NewLinkTarget>$Message[0]</a></TD><TD width=80>?</TD><TD>$_browser_h{$key}</TD><TD>$p%</TD></TR>\n";
+				print "<TR><TD width=$WIDTHCOLICON><IMG SRC=\"$DirIcons\/browser\/unknown.png\" alt=\"$Message[0]\"></TD><TD CLASS=AWL><a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=unknownbrowser":"$PROG$StaticLinks.unknownbrowser.html")."\"$NewLinkTarget>$Message[0]</a></TD><TD width=80>?</TD><TD>$_browser_h{$key}</TD><TD>$p%</TD></TR>\n";
 			}
 			else {
 				my $keywithoutcumul=$key; $keywithoutcumul =~ s/cumul$//i;
@@ -7750,7 +7784,7 @@ EOF
 				my $nameicon=$BrowsersHashIcon{$keywithoutcumul}||"notavailable";
 				if ($libbrowser eq "netscape") { $libbrowser="Netscape <a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=browserdetail":"$PROG$StaticLinks.browserdetail.html")."\"$NewLinkTarget>($Message[58])</a>"; }
 				if ($libbrowser eq "msie")     { $libbrowser="MS Internet Explorer <a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=browserdetail":"$PROG$StaticLinks.browserdetail.html")."\"$NewLinkTarget>($Message[58])</a>"; }
-				print "<TR><TD width=100><IMG SRC=\"$DirIcons\/browser\/$nameicon.png\" alt=\"\"></TD><TD CLASS=AWL>$libbrowser</TD><TD width=80>".($BrowsersHereAreGrabbers{$key}?"<b>$Message[112]</b>":"$Message[113]")."</TD><TD>$new_browser_h{$key}</TD><TD>$p %</TD></TR>\n";
+				print "<TR><TD width=$WIDTHCOLICON><IMG SRC=\"$DirIcons\/browser\/$nameicon.png\" alt=\"\"></TD><TD CLASS=AWL>$libbrowser</TD><TD width=80>".($BrowsersHereAreGrabbers{$key}?"<b>$Message[112]</b>":"$Message[113]")."</TD><TD>$new_browser_h{$key}</TD><TD>$p %</TD></TR>\n";
 			}
 			$count++;
 		}
