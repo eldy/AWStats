@@ -52,6 +52,7 @@ $ShowHoursStats $ShowDomainsStats $ShowHostsStats
 $ShowRobotsStats $ShowSessionsStats $ShowPagesStats $ShowFileTypesStats
 $ShowOSStats $ShowBrowsersStats $ShowOriginStats
 $ShowKeyphrasesStats $ShowKeywordsStats $ShowMiscStats $ShowHTTPErrorsStats
+$BuildReportFormat
 /;
 # ----- Time vars -----
 use vars qw/
@@ -277,7 +278,7 @@ if (! $SiteConfig) {
 	print "   -dir=outputdir               Output directory for generated pages\n";
 	print "   -diricons=icondir            Relative path to use as icon dir in <img> links\n";
 	print "   -builddate=%YY%MM%DD         Used to add build date in built pages filenames\n";
-	print "   -staticlinksext=xxx          For pages with .xxx extension instead of .html\n";
+	print "   -staticlinksext=xxx          Build pages with .xxx extension (default .html)\n";
 	print "   -buildpdf[=pathtohtmldoc]    Build a PDF file after building HTML pages.\n";
 	print "                                 Output directory must contains icon directory\n";
 	print "                                 when this option is used (need 'htmldoc')\n";
@@ -319,6 +320,13 @@ if ($BuildPDF) {
 
 # Read config file (SiteConfig must be defined)
 &Read_Config($DirConfig);
+
+if ($BuildReportFormat eq 'xhtml') {
+    $StaticExt="xml";    
+    if ($BuildPDF) {
+        error("Building PDF file is not compatible with building xml output files. Change your parameter BuildReportFormat to html in your config file");
+    }
+}
 
 # Define list of output files
 if ($ShowDomainsStats) { push @OutputList,'alldomains'; }
