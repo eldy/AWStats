@@ -19,13 +19,12 @@ use vars qw / $DIR $PROG $Extension $DEBUG $DEBUGFILE $REPLOG $DEBUGRESET $SITE 
 ($DIR=$0) =~ s/([^\/\\]*)$//; ($PROG=$1) =~ s/\.([^\.]*)$//; $Extension=$1;
 $DEBUG=0;					# Debug level
 $DEBUGFILE="$PROG.log";		# Debug output (A log file name or "screen" to have debug on screen)
+$REPLOG="$DIR";				# Debug directory
 
-$TRACEBASE=0;
-$TRACEFILE=0;
-$TXTDIR="$DIR/../../../logs"; $TXTFILE="awredir.trc";
-#$TRACEFILE=1; $TXTDIR="$DIR"; $TXTFILE="chiensderace_awredir.txt";
-$REPLOG="$DIR";
-
+$TRACEBASE=0;	# Set to 1 to track click on links that point to extern site into a database
+$TRACEFILE=0;	# Set to 1 to track click on links that point to extern site into a file
+$TXTDIR="$DIR/../../../logs";	# Directory where to write tracking file (if TRACEFILE=1)
+$TXTFILE="awredir.trc";			# Tracking file (if TRACEFILE=1)
 $EXCLUDEIP="127.0.0.1";
 
 
@@ -64,17 +63,22 @@ if ($DEBUG) {
 
 if (! $ENV{'GATEWAY_INTERFACE'}) {	# Run from command line
 	print "----- $PROG $VERSION -----\n";
-	print "This script is only usefull when used as a CGI script.\n";
-	print "When called as a CGI, this script return to browser a redirector to tell it\n";
-	print "to show the page provided in parameters.\n";
-	print "So, to use this script, you must replace HTML code for links in your HTML pages\n";
-	print "from\n";
-	print "<a href=\"http://sitelinked/pagelinked\">Link</a>\n";
+	print "This script is absolutely not required to use AWStats.\n";
+	print "It's a third tool that can enhance webmaster in their tracking tasks but is\n";
+	print "not used by AWStats core tool.\n";
+	print "\n";
+	print "This tools must be used as a CGI script. When called as a CGI, it returns to\n";
+	print "browser a redirector to tell it to show the page provided in 'url' parameter.\n";
+	print "So, to use this script, you must replace HTML code for external links onto your\n";
+	print "HTML pages from\n";
+	print "<a href=\"http://externalsite/pagelinked\">Link</a>\n";
 	print "to\n";
-	print "<a href=\"http://mysite/cgi-bin/awredir.pl?url=http://sitelinked/pagelinked\">Link</a>\n";
+	print "<a href=\"http://mysite/cgi-bin/awredir.pl?url=http://externalsite/pagelinked\">Link</a>\n";
 	print "\n";
 	print "For your web visitor, there is no difference. However this allow you to track\n";
-	print "clicks done on your site on external links.\n";
+	print "clicks done on links onto your web pages that point to external web sites,\n";
+	print "because an entry will be seen in your own server log to awredir.pl local script,\n";
+	print "even if links was pointing to another extern web server.\n";
 	exit 0;
 }
 
