@@ -10,10 +10,15 @@ Fixes:
 - Fixed: Remove AWStats header on left frame if ShowHeader=0.
 - Fixed: 29th february 2004 will be correctly handled.
 - Fixed: Another try to fix the #include not working correctly.
+- Fixed: Columns not aligned in unknownip view when not all fields are
+  choosed.
+- Fixed: Columns not aligned in allhosts and lasthosts view when not all
+  fields are choosed.
 
 New features/improvments
 - Added awstats_exportlib.pl tool.
-- Added 'Full List' view for Domains/Country report.
+- Added 'Full list' view for Domains/Country report.
+- Added 'Full list' and 'Last visits' for email senders/receivers chart.
 - Added a memory cache for GeoIP plugin resolution (geoip is faster).
 - New parameter: Added AuthenticatedUsersNotCaseSensitive.
 - Speed increased when ExtraSection is used.
@@ -22,6 +27,8 @@ Other/Documentation
 - Updates to AWStats robots, os, browsers, search_engines databases.
 - Added awstats_logo3.png
 - Added X11 as Unknown Unix OS, and Atari OS.
+- Change way of reading -output= parameter to prepare build of several output
+  with same running process.
 - Updated documentation.
 
 
