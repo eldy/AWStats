@@ -95,7 +95,7 @@ $color_h, $color_k, $color_p, $color_s, $color_u, $color_v)=
 %monthlib = %monthnum = ();
 
 
-$VERSION="3.2 (build 82)";
+$VERSION="3.2 (build 83)";
 $Lang="en";
 
 # Default value
@@ -434,7 +434,7 @@ sub Read_Config_File {
 		# Read main section
 		if ($param =~ /^LogFile/) {
 			$LogFile=$value;
-			if ($LogFile =~ /%([YMDH]+)-(\d*)/) {
+			if ($LogFile =~ /%([ymdhYMDH]+)-(\d*)/) {
 				my $timephase=$2;
 				debug(" Found a time phase of $timephase hour in log file name",1);
 				# Get older time
@@ -452,20 +452,20 @@ sub Read_Config_File {
 				if ($olderhour < 10) { $olderhour = "0$olderhour"; }
 				if ($oldermin < 10) { $oldermin = "0$oldermin"; }
 				if ($oldersec < 10) { $oldersec = "0$oldersec"; }
-				$LogFile =~ s/%YYYY-$timephase/$olderyear/g;
-				$LogFile =~ s/%YY-$timephase/$oldersmallyear/g;
-				$LogFile =~ s/%MM-$timephase/$oldermonth/g;
-				$LogFile =~ s/%DD-$timephase/$olderday/g;
-				$LogFile =~ s/%HH-$timephase/$olderhour/g;
-				$LogFile =~ s/%WM-$timephase/$olderweekofmonth/g;
+				$LogFile =~ s/%YYYY-$timephase/$olderyear/ig;
+				$LogFile =~ s/%YY-$timephase/$oldersmallyear/ig;
+				$LogFile =~ s/%MM-$timephase/$oldermonth/ig;
+				$LogFile =~ s/%DD-$timephase/$olderday/ig;
+				$LogFile =~ s/%HH-$timephase/$olderhour/ig;
+				$LogFile =~ s/%WM-$timephase/$olderweekofmonth/ig;
 			}
 			# Replace %YYYY %YY %MM %DD %HH with current value. Kept for backward compatibility.
-			$LogFile =~ s/%YYYY/$nowyear/g;
-			$LogFile =~ s/%YY/$nowsmallyear/g;
-			$LogFile =~ s/%MM/$nowmonth/g;
-			$LogFile =~ s/%DD/$nowday/g;
-			$LogFile =~ s/%HH/$nowhour/g;
-			$LogFile =~ s/%WM/$nowweekofmonth/g;
+			$LogFile =~ s/%YYYY/$nowyear/ig;
+			$LogFile =~ s/%YY/$nowsmallyear/ig;
+			$LogFile =~ s/%MM/$nowmonth/ig;
+			$LogFile =~ s/%DD/$nowday/ig;
+			$LogFile =~ s/%HH/$nowhour/ig;
+			$LogFile =~ s/%WM/$nowweekofmonth/ig;
 			debug(" LogFile=$LogFile",1);
 			next;
 			}
