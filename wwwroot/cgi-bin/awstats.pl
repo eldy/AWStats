@@ -3,15 +3,18 @@
 #!/usr/local/bin/perl
 # With Apache for Windows and ActiverPerl, first line may be
 #!C:/Program Files/ActiveState/ActivePerl/bin/perl
+
 #-Description-------------------------------------------
 # Free realtime web server logfile analyzer to show advanced web statistics.
 # Works from command line or as a CGI. You must use this script as often as
 # necessary from your scheduler to update your statistics.
 # See AWStats documenation (in docs/ directory) for all setup instructions.
 #-------------------------------------------------------
+# $Revision$ - $Author$ - $Date$
 use strict;no strict "refs";
 use vars qw(%DomainsHashIDLib @RobotsSearchIDOrder_list1 @RobotsSearchIDOrder_list2 @RobotsSearchIDOrder_list3 @BrowsersSearchIDOrder @OSSearchIDOrder @WordsToCleanSearchUrl %BrowsersHereAreGrabbers %BrowsersHashIcon %BrowsersHashIDLib %OSHashID %OSHashLib %RobotsHashIDLib %SearchEnginesHashIDLib %SearchEnginesKnownUrl %DomainsHashIDLib);
 #use diagnostics;
+
 # Uncomment following line and a line into GetDelaySinceStart function to get
 # miliseconds time in showsteps option
 #use Time::HiRes qw( gettimeofday );
@@ -20,9 +23,8 @@ use vars qw(%DomainsHashIDLib @RobotsSearchIDOrder_list1 @RobotsSearchIDOrder_li
 #-------------------------------------------------------
 # Defines
 #-------------------------------------------------------
-# Last change $Revision$ - $Author$ - $Date$
 my $REVISION='$Revision$'; $REVISION =~ /\s(.*)\s/; $REVISION=$1;
-my $VERSION="4.0 (build $REVISION)";
+my $VERSION="4.1 (build $REVISION)";
 
 # ---------- Init variables -------
 my $Debug=0;
@@ -810,6 +812,7 @@ sub Check_Config {
 		$LogFile =~ s/%DD-$timephase/$olderday/ig;
 		$LogFile =~ s/%HH-$timephase/$olderhour/ig;
 		$LogFile =~ s/%WM-$timephase/$olderweekofmonth/ig;
+		$LogFile =~ s/%DW-$timephase/$olderwday/ig;
 	}
 	# Replace %YYYY %YY %MM %DD %HH with current value. Kept for backward compatibility.
 	$LogFile =~ s/%YYYY/$nowyear/ig;
@@ -818,6 +821,7 @@ sub Check_Config {
 	$LogFile =~ s/%DD/$nowday/ig;
 	$LogFile =~ s/%HH/$nowhour/ig;
 	$LogFile =~ s/%WM/$nowweekofmonth/ig;
+	$LogFile =~ s/%DW/$nowwday/ig;
 	$LogFormat =~ s/\\//g;
 	if ($Debug) {
 		debug(" LogFile=$LogFile",1);

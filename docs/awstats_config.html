@@ -180,9 +180,12 @@ it with its value when reading it), follow the example:<br>
 <br>#  %DD-n    is replaced with day we were n hours ago
 <br>#  %HH-n    is replaced with hour we were n hours ago
 <br>#  %WM-n    is replaced with the week number in month (1-5)
+<br>#  %DW-n    is replaced with the day number in week (1-7, 1=sunday)
+<br>#                              use n=24 if you need (1-7, 1=monday)
 <br>#  You can use 0 for n if you need current year, month, day, hour...
 <br># Example: "/var/log/access_log.%YYYY-0%MM-0%DD-0.log"
 <br># Example: "C:/WINNT/system32/LogFiles/W3SVC1/ex%YY-24%MM-24%DD-24.log"
+<br # Example: "/var/mylog.%WN.%DW-24"
 <br>#
 <br>LogFile="/var/log/httpd/mylog.log"
 
@@ -217,9 +220,9 @@ it with its value when reading it), follow the example:<br>
 <br>#     %referer          Referer page with format: http://from.com/from.htm
 <br>#     %uaquot           User agent with format: "Mozilla/4.0 (compatible, ...)"
 <br>#     %ua               User agent with format: Mozilla/4.0_(compatible...)
-<br>#     %gzipres          Mod_gzip compression results: STATUS:STATUS
-<br>#     %gzipin           Mod_gzip compression input bytes: In:num_bytes        
-<br>#     %gzipout          Mod_gzip compression output bytes & percentage: Out:num_bytes:%
+<br>#     %gzipin           Mod_gzip compression input bytes: In:XXX
+<br>#     %gzipout          Mod_gzip compression output bytes & ratio: Out:YYY:ZZZpct.
+<br>#     %gzipratio        Mod_gzip compression ratio: ZZZpct.
 <br>#     %syslog           Syslog-specific time and host stamp with format: Mon ddhh:mm:ss hostname
 <br>#     If your log format has some fields not included in this list, use
 <br>#     %other            Means another field
