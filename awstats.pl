@@ -1649,7 +1649,7 @@ if (($YearRequired == $nowyear) && ($MonthRequired eq "year" || $MonthRequired =
 	$yearmonthchoosed=0;
 	foreach $i (0..$#filearray) {
 		if ("$filearray[$i]" =~ /^$PROG[\d][\d][\d][\d][\d][\d]$FileSuffix\.txt$/) {
-			$yearmonth=$filearray[$i]; $yearmonth =~ s/^.*$PROG//; $yearmonth =~ s/\..*//;
+			$yearmonth=$filearray[$i]; $yearmonth =~ s/^$PROG//; $yearmonth =~ s/\..*//;
 			# Reverse year and month
 			$yearfile=$yearmonth; $monthfile=$yearmonth; $yearfile =~ s/^..//; $monthfile =~ s/....$//; 
 			$yearmonth="$yearfile$monthfile";
@@ -2074,7 +2074,7 @@ opendir(DIR,"$DirData");
 close DIR;
 foreach $i (0..$#filearray) {
 	if ("$filearray[$i]" =~ /^$PROG[\d][\d][\d][\d][\d][\d]$FileSuffix\.txt$/) {
-		$yearmonth=$filearray[$i]; $yearmonth =~ s/^.*$PROG//; $yearmonth =~ s/\..*//;
+		$yearmonth=$filearray[$i]; $yearmonth =~ s/^$PROG//; $yearmonth =~ s/\..*//;
 		$yearfile=$yearmonth; $yearfile =~ s/^..//;
 		$listofyears{$yearfile}=1;
 	}
