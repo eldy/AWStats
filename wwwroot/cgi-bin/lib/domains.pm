@@ -72,7 +72,7 @@
 "sd","Sudan","se","Sweden","sg","Singapore","sh","Saint Helena","si","Slovenia",
 "sj","Svalbard and Jan Mayen Islands","sk","Slovak Republic","sl","Sierra Leone",
 "sm","San Marino","sn","Senegal","so","Somalia","sr","Suriname",
-"st","Saint Tome and Principe","su","Former USSR","sv","El Salvador","sy","Syria","sz","Swaziland",
+"st","Sao Tome and Principe","su","Former USSR","sv","El Salvador","sy","Syria","sz","Swaziland",
 "tc","Turks and Caicos Islands","td","Chad","tf","French Southern Territories","tg","Togo",
 "th","Thailand","tj","Tadjikistan","tk","Tokelau","tm","Turkmenistan","tn","Tunisia",
 "to","Tonga","tp","East Timor","tr","Turkey","tt","Trinidad and Tobago","tv","Tuvalu",
