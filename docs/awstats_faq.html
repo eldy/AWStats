@@ -370,19 +370,54 @@ Now you can use AWStats as usual (run the update process and read statistics).<b
 Despite the high number of possible log format provided with Exchange,
 none of them is built enough seriously to offer an interseting analyze (missing informations,
 messy data, no id to join multiple records for same mail, etc...).
-For this reason, an "interesting" log analysis is a joke with Exchange log files (No data is
-better than false data). So forget using AWStats or use a more serious mail server (sendmail,
-postfix, qmail, mdaemon, ...). Sorry.<br>
-<!--
-Your Exchange mail log file might looks like this:<br>
-<i>2002-9-29	0:3:2 GMT	-	-	-	S_EXCHANG01	-	/O=INVESTMENT SCORECARD INC/OU=MAIL/CN=RECIPIENTS/CN=KJOHNSON	1027	1640EF7202084243942C5EC620117D376B68AA@s_exchang01.investmentscorecard.com	0	0	1943	2	2002-9-29 0:3:2 GMT	0	-	c=US;a= ;p=Investment Score;l=S_EXCHANG01-020929000302Z-2583	Dev Request Late Notification: KS_CM00004271	EX:/O=INVESTMENT SCORECARD INC/OU=MAIL/CN=RECIPIENTS/CN=CLEARQUEST(KS_CM)	-</i><br>
+For this reason, an "exact" log analysis is a joke with Exchange log files.
+However a little support is provided. In order to analyze Exchange traffic, you have to
+enable "Message Tracking" (see article http://support.microsoft.com/default.aspx?scid=kb;EN-US;246856).<br>
 Copy config awstats.model.conf file to "awstats.mail.conf".<br>
 Modify this new config file:
+<table width="95%" border=1 cellpadding=0 cellspacing=0><tr class=CFAQ><td class=CFAQ>
 <i>
-<br>LogFile="yourmaillogfilename"
-<br>LogFormat="%time2 %other %host %other %other %other %email %method %other %url %code %bytesd %other %other %other %other %other %other %email_r"
-<br>LogSeparator="\t"
--->
+LogType=M
+<br>LogFormat="%time2 %email %email_r %host %host_r %method %url %code %bytesd"
+<br>LevelForBrowsersDetection=0
+<br>LevelForOSDetection=0
+<br>LevelForRefererAnalyze=0
+<br>LevelForRobotsDetection=0
+<br>LevelForWormsDetection=0
+<br>LevelForSearchEnginesDetection=0
+<br>LevelForFileTypesDetection=0
+<br>ShowMenu=1
+<br>ShowMonthStats=HB
+<br>ShowDaysOfMonthStats=HB
+<br>ShowDaysOfWeekStats=HB
+<br>ShowHoursStats=HB
+<br>ShowDomainsStats=0
+<br>ShowHostsStats=HBL
+<br>ShowAuthenticatedUsers=0
+<br>ShowRobotsStats=0
+<br>ShowEMailSenders=HBL
+<br>ShowEMailReceivers=HBL
+<br>ShowSessionsStats=0
+<br>ShowPagesStats=0
+<br>ShowFileTypesStats=0
+<br>ShowFileSizesStats=0
+<br>ShowBrowsersStats=0
+<br>ShowOSStats=0
+<br>ShowOriginStats=0
+<br>ShowKeyphrasesStats=0
+<br>ShowKeywordsStats=0
+<br>ShowMiscStats=0
+<br>ShowHTTPErrorsStats=0
+<br>ShowSMTPErrorsStats=1
+<br>
+</i>
+</td></tr></table>
+<br>
+Also don't forget that with Exchange, informations in a log analyses can't be exact.
+Do not send any questions or requests for using AWStats with Exchange, this is not a problem in
+AWStats and we have no time to support non opened products.<br>
+If you want to have complete and accurate information, forget using AWStats or use a more serious
+mail serveur (Postfix, Sendmail, QMail...)<br>
 <br>
 
 <a name="MEDIASERVER"></a><br>
