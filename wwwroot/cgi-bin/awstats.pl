@@ -2175,7 +2175,7 @@ if ($UpdateStats) {
 										&UnescapeURLParam($param);			# Change [ xxx=cache:www/zzz+aaa+bbb/ccc+ddd%20eee'fff ] into [ xxx=cache:www/zzz aaa bbb/ccc ddd eee fff ]
 										# Ok, "xxx=cache:www/zzz aaa bbb/ccc ddd eee fff" is a search parameter line
 										$param =~ s/.*=//;					# Cut "xxx="
-										$param =~ s/^cache:[^ +]* //;
+										$param =~ s/^cache:[^ ]* //;
 										$param =~ s/^related:[^ ]* //;
 										if ($SplitSearchString) {
 											@wordlist=split(/ /,$param);	# Split aaa bbb ccc ddd eee fff into a wordlist array
@@ -2193,13 +2193,13 @@ if ($UpdateStats) {
 							}
 							else {									# Search engine with unknown URL syntax
 								foreach $param (@paramlist) {
-									&UnescapeURLParam($param);		# Change [ xxx=cache:www+aaa+bbb/ccc+ddd%20eee'fff ] into [ xxx=cache:www aaa bbb ccc ddd eee fff ]
+									&UnescapeURLParam($param);			# Change [ xxx=cache:www/zzz+aaa+bbb/ccc+ddd%20eee'fff ] into [ xxx=cache:www/zzz aaa bbb/ccc ddd eee fff ]
 									$keep=1;
 									foreach $paramtoexclude (@WordsToCleanSearchUrl) {
 										if ($param =~ /.*$paramtoexclude.*/) { $keep=0; last; } # Not the param with search criteria
 									}
 									if ($keep == 0) { next; }			# Do not keep this URL parameter because is in exclude list
-									# Ok, "xxx=cache:www aaa bbb ccc ddd eee fff" is a search parameter line
+									# Ok, "xxx=cache:www/zzz aaa bbb/ccc ddd eee fff" is a search parameter line
 									$param =~ s/.*=//;					# Cut "xxx="
 									$param =~ s/^cache:[^ ]* //;
 									$param =~ s/^related:[^ ]* //;
@@ -2337,8 +2337,82 @@ for ($ix=12; $ix>=1; $ix--) {
 
 
 #---------------------------------------------------------------------
-# SHOW STATISTICS
+# SHOW REPORT
 #---------------------------------------------------------------------
+
+# Get the tooltips texts
+&Read_Language_Tooltip($Lang);
+
+# Position .style.pixelLeft/.pixelHeight/.pixelWidth/.pixelTop	IE OK	Opera OK
+#          .style.left/.height/.width/.top											Netscape OK
+# document.getElementById										IE OK	Opera OK	Netscape OK
+# document.body.offsetWidth|document.body.style.pixelWidth		IE OK	Opera OK	Netscape OK		Visible width of container
+# document.body.scrollTop                                       IE OK	Opera OK	Netscape OK		Visible width of container
+# tooltip.offsetWidth|tooltipOBJ.style.pixelWidth				IE OK	Opera OK	Netscape OK		Width of an object
+# event.clientXY												IE OK	Opera OK	Netscape KO		Return position of mouse
+print <<EOF;
+<script type="text/javascript" language="javascript">
+	function ShowTooltip(fArg)
+	{
+		var tooltipOBJ = (document.getElementById) ? document.getElementById('tt' + fArg) : eval("document.all['tt" + fArg + "']");
+		if (tooltipOBJ != null) {
+		    var tooltipLft = (document.body.offsetWidth?document.body.offsetWidth:document.body.style.pixelWidth) - (tooltipOBJ.offsetWidth?tooltipOBJ.offsetWidth:(tooltipOBJ.style.pixelWidth?tooltipOBJ.style.pixelWidth:300)) - 30;
+		    if (navigator.appName != 'Netscape') {
+				var tooltipTop = (document.body.scrollTop>=0?document.body.scrollTop+10:event.clientY+10);
+				if ((event.clientX > tooltipLft) && (event.clientY < (tooltipOBJ.scrollHeight?tooltipOBJ.scrollHeight:tooltipOBJ.style.pixelHeight) + 10)) {
+					tooltipTop = (document.body.scrollTop?document.body.scrollTop:document.body.offsetTop) + event.clientY + 20;
+				}
+				tooltipOBJ.style.pixelLeft = tooltipLft; tooltipOBJ.style.pixelTop = tooltipTop; 
+			}
+			else {
+				var tooltipTop = 10;
+				tooltipOBJ.style.left = tooltipLft; tooltipOBJ.style.top = tooltipTop; 
+			}
+		    tooltipOBJ.style.visibility = "visible";
+		}
+	}
+	function HideTooltip(fArg)
+	{
+		var tooltipOBJ = (document.getElementById) ? document.getElementById('tt' + fArg) : eval("document.all['tt" + fArg + "']");
+		if (tooltipOBJ != null) {
+		    tooltipOBJ.style.visibility = "hidden";
+		}
+	}
+</script>
+EOF
+
+
+# MENU
+#---------------------------------------------------------------------
+print "$CENTER<a name=\"MENU\"></a><BR>";
+print "<table>";
+print "<tr><td class=LEFT><font style=\"font: 14px arial,verdana,helvetica; font-weight: bold\">$message[7] : </td><td class=LEFT><font style=\"font: 14px arial,verdana,helvetica; font-weight: normal\">$SiteToAnalyze</td></tr>";
+print "<tr><td class=LEFT valign=top><font style=\"font: 14px arial,verdana,helvetica; font-weight: bold\">$message[35] : ";
+print "</td><td class=LEFT><font style=\"font: 14px arial,verdana,helvetica; font-weight: normal\">";
+my $choosedkey;
+foreach $key (sort keys %LastUpdate) { if ($LastUpdate < $LastUpdate{$key}) { $choosedkey=$key; $LastUpdate = $LastUpdate{$key}; } }
+$yearcon=substr($LastUpdate,0,4);$monthcon=substr($LastUpdate,4,2);$daycon=substr($LastUpdate,6,2);$hourcon=substr($LastUpdate,8,2);$mincon=substr($LastUpdate,10,2);
+if ($LastUpdate != 0) { print "$daycon&nbsp;$monthlib{$monthcon}&nbsp;$yearcon&nbsp;-&nbsp;$hourcon:$mincon &nbsp;"; }
+else { print "<font color=#880000>Never updated</font>"; }
+print "</font>&nbsp; &nbsp; &nbsp; &nbsp;";
+if ($AllowToUpdateStatsFromBrowser) { print "<a href=\"$DirCgi$PROG.$Extension?update=1&site=$SiteToAnalyze&year=$YearRequired&month=$MonthRequired&lang=$Lang\">$message[74]</a>"; }
+if ($UpdateStats) { print "<br>Lines in file: $NbOfLinesRead, found $NbOfNewLinesProcessed new records, $NbOfNewLinesCorrupted corrupted records"; }
+else { print "<br>Lines in file: $LastUpdateLinesRead{$choosedkey}, found $LastUpdateNewLinesRead{$choosedkey} new records, $LastUpdateNewLinesCorrupted{$choosedkey} corrupted records"; }
+print "</td></tr>\n";
+print "<tr><td>&nbsp;</td></tr>\n";
+print "<tr><td class=LEFT><font style=\"font: 14px arial,verdana,helvetica; font-weight: bold\">$message[16] : </td>";
+print "<td class=LEFT><a href=\"#DOMAINS\">$message[17]</a> &nbsp; <a href=\"#VISITOR\">".ucfirst($message[26])."</a> &nbsp; <a href=\"#ROBOTS\">$message[53]</a> &nbsp; <a href=\"#HOUR\">$message[20]</a> &nbsp; <a href=\"$DirCgi$PROG.$Extension?action=unknownip&site=$SiteToAnalyze&year=$YearRequired&month=$MonthRequired&lang=$Lang\">$message[45]</a><br></td></tr>\n";
+print "<tr><td class=LEFT><font style=\"font: 14px arial,verdana,helvetica; font-weight: bold\">$message[72] : </td>";
+print "<td class=LEFT><a href=\"#PAGE\">$message[19]</a> &nbsp; <a href=\"#BROWSER\">$message[21]</a> &nbsp; <a href=\"#OS\">$message[59]</a> &nbsp; <a href=\"$DirCgi$PROG.$Extension?action=browserdetail&site=$SiteToAnalyze&year=$YearRequired&month=$MonthRequired&lang=$Lang\">$message[33]</a> &nbsp; <a href=\"$DirCgi$PROG.$Extension?action=browserdetail&site=$SiteToAnalyze&year=$YearRequired&month=$MonthRequired&lang=$Lang\">$message[34]</a><br></td></tr>\n";
+print "<tr><td class=LEFT><font style=\"font: 14px arial,verdana,helvetica; font-weight: bold\">$message[23] : </td>";
+print "<td class=LEFT><a href=\"#REFERER\">$message[37]</a> &nbsp; <a href=\"#SEARCHWORDS\">$message[24]</a><br></td></tr>\n";
+print "<tr><td class=LEFT><font style=\"font: 14px arial,verdana,helvetica; font-weight: bold\">$message[2] : </td>";
+print "<td class=LEFT> <a href=\"#ERRORS\">$message[22]</a> &nbsp; <a href=\"$DirCgi$PROG.$Extension?action=notfounderror&site=$SiteToAnalyze&year=$YearRequired&month=$MonthRequired&lang=$Lang\">$message[31]</a><br></td></tr>\n";
+print "</table>\n";
+print "<br>\n\n";
+
+
+
 if ($QueryString =~ /action=unknownip/i) {
 	print "$CENTER<a name=\"UNKOWNIP\"></a><BR>";
 	$tab_titre=$message[45];
@@ -2488,84 +2562,6 @@ if ($QueryString =~ /action=info/i) {
 @sortsearchwords=sort { $SortDir*$_keywords{$a} <=> $SortDir*$_keywords{$b} } keys (%_keywords);
 @sorterrors=sort { $SortDir*$_errors_h{$a} <=> $SortDir*$_errors_h{$b} } keys (%_errors_h);
 &debug("End of sorting hash arrays");
-
-# Get the tooltips texts
-&Read_Language_Tooltip($Lang);
-
-# Position .style.pixelLeft/.pixelHeight/.pixelWidth/.pixelTop	IE OK	Opera OK
-#          .style.left/.height/.width/.top											Netscape OK
-# document.getElementById										IE OK	Opera OK	Netscape OK
-# document.body.offsetWidth|document.body.style.pixelWidth		IE OK	Opera OK	Netscape OK		Visible width of container
-# document.body.scrollTop                                       IE OK	Opera OK	Netscape OK		Visible width of container
-# tooltip.offsetWidth|tooltipOBJ.style.pixelWidth				IE OK	Opera OK	Netscape OK		Width of an object
-# event.clientXY												IE OK	Opera OK	Netscape KO		Return position of mouse
-print <<EOF;
-<script type="text/javascript" language="javascript">
-	function ShowTooltip(fArg)
-	{
-		var tooltipOBJ = (document.getElementById) ? document.getElementById('tt' + fArg) : eval("document.all['tt" + fArg + "']");
-		if (tooltipOBJ != null) {
-		    var tooltipLft = (document.body.offsetWidth?document.body.offsetWidth:document.body.style.pixelWidth) - (tooltipOBJ.offsetWidth?tooltipOBJ.offsetWidth:(tooltipOBJ.style.pixelWidth?tooltipOBJ.style.pixelWidth:300)) - 30;
-		    if (navigator.appName != 'Netscape') {
-				var tooltipTop = (document.body.scrollTop>=0?document.body.scrollTop+10:event.clientY+10);
-				if ((event.clientX > tooltipLft) && (event.clientY < (tooltipOBJ.scrollHeight?tooltipOBJ.scrollHeight:tooltipOBJ.style.pixelHeight) + 10)) {
-					tooltipTop = (document.body.scrollTop?document.body.scrollTop:document.body.offsetTop) + event.clientY + 20;
-				}
-				tooltipOBJ.style.pixelLeft = tooltipLft; tooltipOBJ.style.pixelTop = tooltipTop; 
-			}
-			else {
-				var tooltipTop = 10;
-				tooltipOBJ.style.left = tooltipLft; tooltipOBJ.style.top = tooltipTop; 
-			}
-		    tooltipOBJ.style.visibility = "visible";
-		}
-	}
-	function HideTooltip(fArg)
-	{
-		var tooltipOBJ = (document.getElementById) ? document.getElementById('tt' + fArg) : eval("document.all['tt" + fArg + "']");
-		if (tooltipOBJ != null) {
-		    tooltipOBJ.style.visibility = "hidden";
-		}
-	}
-</script>
-
-EOF
-
-
-# MENU
-#---------------------------------------------------------------------
-print "$CENTER<a name=\"MENU\"></a><BR>";
-
-print "<table>";
-print "<tr><td class=LEFT><font style=\"font: 14px arial,verdana,helvetica; font-weight: bold\">$message[7]: </td><td class=LEFT><font style=\"font: 14px arial,verdana,helvetica; font-weight: normal\">$SiteToAnalyze</td></tr>";
-print "<tr><td class=LEFT><font style=\"font: 14px arial,verdana,helvetica; font-weight: bold\">$message[35]: </td><td class=LEFT><font style=\"font: 14px arial,verdana,helvetica; font-weight: normal\">";
-foreach $key (keys %LastUpdate) { if ($LastUpdate < $LastUpdate{$key}) { $choosedkey=$key; $LastUpdate = $LastUpdate{$key}; } }
-$yearcon=substr($LastUpdate,0,4);$monthcon=substr($LastUpdate,4,2);$daycon=substr($LastUpdate,6,2);$hourcon=substr($LastUpdate,8,2);$mincon=substr($LastUpdate,10,2);
-if ($LastUpdate != 0) { print "$daycon&nbsp;$monthlib{$monthcon}&nbsp;$yearcon&nbsp;-&nbsp;$hourcon:$mincon &nbsp;"; }
-else { print "<font color=#880000>Never updated</font>"; }
-print "</font>&nbsp; &nbsp; &nbsp; &nbsp;";
-#if ($UpdateStats) {
-#	print " (New lines processed: $NbOfNewLinesProcessed, New lines corrupted: $NbOfNewLinesCorrupted)";
-#}
-#else {
-#	print " (New lines processed: $LastUpdateNewLinesRead{$choosedkey}, New lines corrupted: $LastUpdateNewLinesCorrupted{$choosedkey})";
-#}
-if ($AllowToUpdateStatsFromBrowser) {
-#	print "</td></tr><tr><td>&nbsp;</td><td class=LEFT>";
-	print "<a href=\"$DirCgi$PROG.$Extension?update=1&site=$SiteToAnalyze&year=$YearRequired&month=$MonthRequired&lang=$Lang\">$message[74]</a>";
-}
-print "</td></tr>\n";
-print "<tr><td>&nbsp;</td></tr>\n";
-print "<tr><td class=LEFT><font style=\"font: 14px arial,verdana,helvetica; font-weight: bold\">$message[16]:</td>";
-print "<td class=LEFT><a href=\"#DOMAINS\">$message[17]</a> &nbsp; <a href=\"#VISITOR\">".ucfirst($message[26])."</a> &nbsp; <a href=\"#ROBOTS\">$message[53]</a> &nbsp; <a href=\"#HOUR\">$message[20]</a> &nbsp; <a href=\"$DirCgi$PROG.$Extension?action=unknownip&site=$SiteToAnalyze&year=$YearRequired&month=$MonthRequired&lang=$Lang\">$message[45]</a><br></td></tr>\n";
-print "<tr><td class=LEFT><font style=\"font: 14px arial,verdana,helvetica; font-weight: bold\">$message[72]:</td>";
-print "<td class=LEFT><a href=\"#PAGE\">$message[19]</a> &nbsp; <a href=\"#BROWSER\">$message[21]</a> &nbsp; <a href=\"#OS\">$message[59]</a> &nbsp; <a href=\"$DirCgi$PROG.$Extension?action=browserdetail&site=$SiteToAnalyze&year=$YearRequired&month=$MonthRequired&lang=$Lang\">$message[33]</a> &nbsp; <a href=\"$DirCgi$PROG.$Extension?action=browserdetail&site=$SiteToAnalyze&year=$YearRequired&month=$MonthRequired&lang=$Lang\">$message[34]</a><br></td></tr>\n";
-print "<tr><td class=LEFT><font style=\"font: 14px arial,verdana,helvetica; font-weight: bold\">$message[23]:</td>";
-print "<td class=LEFT><a href=\"#REFERER\">$message[37]</a> &nbsp; <a href=\"#SEARCHWORDS\">$message[24]</a><br></td></tr>\n";
-print "<tr><td class=LEFT><font style=\"font: 14px arial,verdana,helvetica; font-weight: bold\">$message[2]:</td>";
-print "<td class=LEFT> <a href=\"#ERRORS\">$message[22]</a> &nbsp; <a href=\"$DirCgi$PROG.$Extension?action=notfounderror&site=$SiteToAnalyze&year=$YearRequired&month=$MonthRequired&lang=$Lang\">$message[31]</a><br></td></tr>\n";
-print "</table>\n";
-print "<br>\n\n";
 
 
 # SUMMARY
