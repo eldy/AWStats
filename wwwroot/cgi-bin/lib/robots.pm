@@ -14,10 +14,10 @@
 # Rem: To avoid bad detection, some robots id were removed from this list:
 #      - Robots with ID of 2 letters only
 #      - Robot called "webs" and "tcl"
-# Rem: directhit is changed into direct_hit (its real id)
-# Rem: calif is changed into calif[^r] to avoid confusion between Tiscalifreenet browser
-# Rem: fish is changed into [^a]fish to avoid confusion between Madsafish browser
-
+# Rem: directhit changed into direct_hit (its real id)
+# Rem: calif changed into calif[^r] to avoid confusion between Tiscalifreenet browser
+# Rem: fish changed into [^a]fish to avoid confusion between Madsafish browser
+# Rem: roadrunner changed into road_runner
 
 
 # RobotsSearchIDOrder
@@ -220,7 +220,7 @@
 "rbse",
 "resumerobot",
 "rhcs",
-"roadrunner",
+"road_runner",
 "robbie",
 "robi",
 "robofox",
@@ -522,7 +522,7 @@
 "rbse","RBSE Spider",
 "resumerobot","Resume Robot",
 "rhcs","RoadHouse Crawling System",
-"roadrunner","Road Runner: The ImageScape Robot",
+"road_runner","Road Runner: The ImageScape Robot",
 "robbie","Robbie the Robot",
 "robi","ComputingSite Robi/1.0",
 "robofox","RoboFox",
