@@ -30,10 +30,10 @@ $DEBUGFORCED=0;					# Force debug level to log lesser level into debug.log file 
 $NBOFLINESFORBENCHMARK=5000;	# Benchmark info are printing every NBOFLINESFORBENCHMARK lines
 $FRAMEWIDTH=260;
 # Plugins variable
-use vars qw/ $PluginCompress $PluginGraph3D $PluginHashFiles $PluginTimeHiRes $UseTimeZone $PluginETF1 /;
-$PluginCompress=$PluginGraph3D=$PluginHashFiles=$PluginTimeHiRes=$UseTimeZone=$PluginETF1=0;
-use vars qw/ $UseTimeZoneSeconds /;
-$UseTimeZoneSeconds=0;
+use vars qw/ $Plugin_readgz $Plugin_graph3d $Plugin_hashfiles $Plugin_timehires $Plugin_timezone $Plugin_etf1 /;
+$Plugin_readgz=$Plugin_graph3d=$Plugin_hashfiles=$Plugin_timehires=$Plugin_timezone=$Plugin_etf1=0;
+use vars qw/ $Plugin_timezoneSeconds /;
+$Plugin_timezoneSeconds=0;
 # Running variables
 use vars qw/
 $DIR $PROG $Extension
@@ -1393,21 +1393,39 @@ sub Check_Config {
 sub Read_Plugins {
 	my %FilePath=();
 	if ($Debug) { debug("Call to Read_Plugins with list: @PluginsToLoad"); }
-	foreach my $file (@PluginsToLoad) {
-		foreach my $dir ("${DIR}plugins","./plugins") {
-			my $searchdir=$dir;
-			if ($searchdir && (!($searchdir =~ /\/$/)) && (!($searchdir =~ /\\$/)) ) { $searchdir .= "/"; }
-			if (! $FilePath{$file}) {
-				if (-s "${searchdir}${file}") {
-					$FilePath{$file}="${searchdir}${file}";
-					if ($Debug) { debug("Call to Read_Plugins [FilePath{$file}=\"$FilePath{$file}\"]"); }
-					require "$FilePath{$file}";
+	foreach my $plugininfo (@PluginsToLoad) {
+		my @loadplugin=split(/\s+/,$plugininfo,2);
+		my $pluginfile=$loadplugin[0]; $pluginfile =~ s/\.pm$//i;
+		my $pluginparam=$loadplugin[1];
+		$pluginfile =~ /([^\/\\]*)$/;
+		my $pluginname=$1;
+		if ($pluginname) {
+			if (! $FilePath{$pluginname}) {		# Plugin already loaded
+				foreach my $dir ("${DIR}plugins","./plugins","") {
+					my $searchdir=$dir;
+					if ($searchdir && (!($searchdir =~ /\/$/)) && (!($searchdir =~ /\\$/)) ) { $searchdir .= "/"; }
+					my $pluginpath="${searchdir}${pluginfile}.pm";
+					if (-s "$pluginpath") {
+						require "$pluginpath";
+						my $ret;	# To get init return
+						my $initfunction="\$ret=Init_$pluginname($pluginparam)";
+						if (! eval("$initfunction")) { &error("Plugin init for plugin '$pluginname' fails."); }
+						# Plugin load and init successfull
+						if ($Debug) { debug(" Init of plugin '$pluginname' ($pluginpath) with param '$pluginparam' is OK"); }
+						$FilePath{$pluginname}=1;
+						last;
+					}
+				}
+				if (! $FilePath{$pluginname}) {
+					&error("Can't open plugin file \"$pluginfile\" for read.\nCheck if file is in ${DIR}plugins directory and is readable.");
 				}
 			}
+			else {
+				&warning("Tried to load plugin \"$pluginname\" twice. Fix config file.");
+			}
 		}
-		if (! $FilePath{$file}) {
-			my $filetext=$file; $filetext =~ s/\.pm$//; $filetext =~ s/_/ /g;
-			&warning("Warning: Can't open plugin file \"$file\" for read.\nCheck if file is in ${DIR}plugins directory and is readable.");
+		else {
+			&error("Plugin \"$pluginfile\" is not a valid plugin name.");
 		}
 	}
 }
@@ -1435,14 +1453,14 @@ sub Read_History_File {
 
 	# Define value for historyfilename
 	my $historyfilename="$DirData/$PROG$DayRequired$month$year$FileSuffix.txt";
-	if ($PluginCompress) { $historyfilename.="\.gz"; }
+	if ($Plugin_readgz) { $historyfilename.="\.gz"; }
 	if (! -s $historyfilename) {
 		# If file not exists, return
 		if ($Debug) { debug(" No history file $historyfilename"); }
 		$LastLine{$year.$month}=0;	# To avoid warning of undefinded value later (with 'use warnings')
 		return 0;
 	}
-	if ($PluginCompress) {	$historyfilename="gzip -d <\"$historyfilename\" |"; }
+	if ($Plugin_readgz) {	$historyfilename="gzip -d <\"$historyfilename\" |"; }
 	if ($Debug) { debug(" History file is '$historyfilename'",2); }
 
 	open(HISTORY,$historyfilename) || error("Error: Couldn't open file \"$historyfilename\" for read: $!");	# Month before Year kept for backward compatibility
@@ -1498,7 +1516,7 @@ sub Read_History_File {
 		# Analyze config line
 		if ($_ =~ /^AWSTATS DATA FILE (\d+).(\d+)/) {
 			$versionnum=($1*1000)+$2;
-			if ($Debug) { debug(" Data file version is $versionnum",2); }
+			if ($Debug) { debug(" Data file version is $versionnum",1); }
 			next;
 		}
 		my @field=split(/\s+/,$_);
@@ -2563,7 +2581,7 @@ sub Read_DNS_Cache_File {
 		my $searchdir=$dir;
 		if ($searchdir && (!($searchdir =~ /\/$/)) && (!($searchdir =~ /\\$/)) ) { $searchdir .= "/"; }
 		if (-s "${searchdir}$DNSCacheFile") { $filetoload="${searchdir}$DNSCacheFile"; last; }
-		if ($PluginHashFiles) { if (-r -s "${searchdir}$DNSCacheFile.hash") { $filetoload="${searchdir}$DNSCacheFile"; last; } }
+		if ($Plugin_hashfiles) { if (-r -s "${searchdir}$DNSCacheFile.hash") { $filetoload="${searchdir}$DNSCacheFile"; last; } }
 	}
 
 	if ($Debug) { debug("Call to Read_DNS_Cache_File [filetoload=\"$filetoload\"]"); }
@@ -2572,7 +2590,7 @@ sub Read_DNS_Cache_File {
 		return;
 	}
 
-	if ($PluginHashFiles) {
+	if ($Plugin_hashfiles) {
 		my ($tmp1a,$tmp2a,$tmp3a,$tmp4a,$tmp5a,$tmp6a,$tmp7a,$tmp8a,$tmp9a,$datesource,$tmp10a,$tmp11a,$tmp12a) = stat("$filetoload");
 		my ($tmp1b,$tmp2b,$tmp3b,$tmp4b,$tmp5b,$tmp6b,$tmp7b,$tmp8b,$tmp9b,$datehash,$tmp10b,$tmp11b,$tmp12b) = stat("$filetoload.hash");
 		if (! $datesource || $datehash >= $datesource) {
@@ -2586,7 +2604,7 @@ sub Read_DNS_Cache_File {
 		# This is the fastest way to load with regexp that I know of
 		%MyDNSTable = map(/^\d+\s+(\d+\.\d+\.\d+\.\d+)\s+(.*)$/o, <DNSFILE>);
 	   	close DNSFILE;
-		if ($PluginHashFiles) { eval('use Storable; store(\%MyDNSTable, "$filetoload.hash");'); }
+		if ($Plugin_hashfiles) { eval('use Storable; store(\%MyDNSTable, "$filetoload.hash");'); }
 	}
 	else  {
 		$filetoload="$filetoload.hash";
@@ -2605,7 +2623,7 @@ sub Read_DNS_Cache_File {
 sub GetDelaySinceStart {
 	if (shift) { $StartSeconds=0;	}	# Reset counter
 	my ($newseconds, $newmicroseconds)=(0,0);
-	if ($PluginTimeHiRes) { ($newseconds, $newmicroseconds) = &gettimeofday; }
+	if ($Plugin_timehires) { ($newseconds, $newmicroseconds) = &gettimeofday; }
 	else { $newseconds=time(); }
 	if (! $StartSeconds) { $StartSeconds=$newseconds; $StartMicroseconds=$newmicroseconds; }
 	return ($newseconds*1000+int($newmicroseconds/1000)-$StartSeconds*1000-int($StartMicroseconds/1000));
@@ -3589,8 +3607,8 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {
 		if ($monthnum{$dateparts[1]}) { $dateparts[1]=$monthnum{$dateparts[1]}; }	# Change lib month in num month if necessary
 
 		# Create $timerecord like YYYYMMDDHHMMSS
-		if ($UseTimeZone) {
-			my ($nsec,$nmin,$nhour,$nmday,$nmon,$nyear,$nwday) = localtime(Time::Local::timelocal($dateparts[5], $dateparts[4], $dateparts[3], $dateparts[0], $dateparts[1]-1, $dateparts[2]-1900) + $UseTimeZoneSeconds);
+		if ($Plugin_timezone) {
+			my ($nsec,$nmin,$nhour,$nmday,$nmon,$nyear,$nwday) = localtime(Time::Local::timelocal($dateparts[5], $dateparts[4], $dateparts[3], $dateparts[0], $dateparts[1]-1, $dateparts[2]-1900) + $Plugin_timezoneSeconds);
 			@dateparts = split(/:/, sprintf("%02u:%02u:%04u:%02u:%02u:%02u", $nmday, $nmon+1, $nyear+1900, $nhour, $nmin, $nsec));
 		}
 #		my $yearmonthdayrecord="$dateparts[2]$dateparts[1]$dateparts[0]";
@@ -3709,12 +3727,12 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {
 				foreach my $bot (@RobotsSearchIDOrder) {
 					if ($UserAgent =~ /$bot/) {
 						$foundrobot=1;
-						$TmpRobot{$UserAgent}="$bot";	# Last time, we won't search if robot or not. We know it's is.
+						$TmpRobot{$UserAgent}=$uarobot="$bot";	# Last time, we won't search if robot or not. We know it's is.
 						last;
 					}
 				}
-				if (! $foundrobot) {					# Last time, we won't search if robot or not. We know it's not.
-					$TmpRobot{$UserAgent}="-";
+				if (! $foundrobot) {							# Last time, we won't search if robot or not. We know it's not.
+					$TmpRobot{$UserAgent}=$uarobot="-";
 				}
 			}
 			# If robot, we stop here
@@ -4667,7 +4685,7 @@ EOF
 		exit(0);
 	}
 	if ($HTMLOutput eq "urldetail") {
-		if ($PluginETF1) { AddOn_Filter(); }
+		if ($Plugin_etf1) { AddOn_Filter(); }
 		print "$Center<a name=\"URLDETAIL\">&nbsp;</a><BR>\n";
 		# Show filter form
 		if (! $StaticLinks) {
@@ -4706,7 +4724,7 @@ EOF
 		print "<TH bgcolor=\"#$color_k\">&nbsp;$Message[106]&nbsp;</TH>";
 		print "<TH bgcolor=\"#$color_e\">&nbsp;$Message[104]&nbsp;</TH>";
 		print "<TH bgcolor=\"#$color_x\">&nbsp;$Message[116]&nbsp;</TH>";
-		if ($PluginETF1) { AddOn_ShowFields(""); }
+		if ($Plugin_etf1) { AddOn_ShowFields(""); }
 		print "<TH>&nbsp;</TH></TR>\n";
 		$total_p=$total_k=$total_e=$total_x=0;
 		my $count=0;
@@ -4749,7 +4767,7 @@ EOF
 			if ($max_k > 0) { $bredde_k=int($BarWidth*(($_url_k{$key}||0)/($_url_p{$key}||1))/$max_k)+1; }
 			if (($bredde_k==1) && $_url_k{$key}) { $bredde_k=2; }
 			print "</TD><TD>$_url_p{$key}</TD><TD>".($_url_k{$key}?Format_Bytes($_url_k{$key}/($_url_p{$key}||1)):"&nbsp;")."</TD><TD>".($_url_e{$key}?$_url_e{$key}:"&nbsp;")."</TD><TD>".($_url_x{$key}?$_url_x{$key}:"&nbsp;")."</TD>";
-			if ($PluginETF1) { AddOn_ShowFields($key); }
+			if ($Plugin_etf1) { AddOn_ShowFields($key); }
 			print "<TD CLASS=AWL>";
 			print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_p\" WIDTH=$bredde_p HEIGHT=6><br>";
 			print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_k\" WIDTH=$bredde_k HEIGHT=6><br>";

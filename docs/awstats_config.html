@@ -1048,23 +1048,24 @@ color_u,color_v,color_p,color_h,color_k,color_s<br>
 <br>color_s="8888DD"				# Background color for number of search (Default = "8888DD")
 <br>color_e="CEC2E8"				# Background color for number of entry pages (Default = "CEC2E8")
 <br>color_x="C1B2E2"				# Background color for number of exit pages (Default = "C1B2E2")
-<br>
 
 <br><br><hr>
 
 <a name="LoadPlugin"><b>LoadPlugin</b></a><br>
 <b>Version : </b>4.2 +<br>
-<br># Add here all plugins file you want to load
-<br># Plugin files must be stored in plugins directory
-<br># Example: "timehires.pl"
-<br>#
-<br>#LoadPlugin="timehires.pl"
+<br># Add here all plugins file you want to load.
+<br># Plugin files must be .pm files stored in 'plugins' directory.
+<br># Uncomment LoadPlugin lines to enable a plugin after checking that plugin
+<br># required perl modules are installed.
 <br>
-
+<br># Plugin MyPlugin:
+<br># MyPlugin description
+<br>#
+<br>LoadPlugin="pluginname"
 
 <!-- -------------------------------------------------------------------------------------- -->
 
-<br><hr>
+<br><br><hr>
 
 <script language=javascript>
 	var lastmod = new Date(document.lastModified);
