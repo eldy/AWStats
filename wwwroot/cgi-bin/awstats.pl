@@ -80,7 +80,7 @@ $WarningMessages= 1;
 %MonthBytes = %MonthHits = %MonthHostsKnown = %MonthHostsUnknown = %MonthPages = %MonthUnique = %MonthVisits =
 %monthlib = %monthnum = ();
 
-$VERSION="3.2 (build 18)";
+$VERSION="3.2 (build 19)";
 $Lang="en";
 
 # Default value
@@ -1538,7 +1538,7 @@ if ($UpdateStats) {
 	&debug("Generate PerlParsingFormat from LogFormatString=$LogFormatString");
 	$PerlParsingFormat="";
 	if ($LogFormat == 1) {
-		$PerlParsingFormat="([^\\s]*) ([^\\s]*) [^\\s]* \\[([^\\s]*) [^\\s]*\\] \\\"([^\\s]*) ([^\\s]*) [^\\\"]*\\\" ([\\d|-]*) ([\\d|-]*) \\\"([^\\\"]*)\\\" \\\"([^\\\"]*)\\\"";
+		$PerlParsingFormat="([^\\s]*) [^\\s]* ([^\\s]*) \\[([^\\s]*) [^\\s]*\\] \\\"([^\\s]*) ([^\\s]*) [^\\\"]*\\\" ([\\d|-]*) ([\\d|-]*) \\\"([^\\\"]*)\\\" \\\"([^\\\"]*)\\\"";
 		$pos_rc=1;$pos_logname=2;$pos_date=3;$pos_method=4;$pos_url=5;$pos_code=6;$pos_size=7;$pos_referer=8;$pos_agent=9;
 		$lastrequiredfield=9;
 	}
@@ -1553,7 +1553,7 @@ if ($UpdateStats) {
 		$lastrequiredfield=8;
 	}
 	if ($LogFormat == 4) {
-		$PerlParsingFormat="([^\\s]*) ([^\\s]*) [^\\s]* \\[([^\\s]*) [^\\s]*\\] \\\"([^\\s]*) ([^\\s]*) [^\\\"]*\\\" ([\\d|-]*) ([\\d|-]*)";
+		$PerlParsingFormat="([^\\s]*) [^\\s]* ([^\\s]*) \\[([^\\s]*) [^\\s]*\\] \\\"([^\\s]*) ([^\\s]*) [^\\\"]*\\\" ([\\d|-]*) ([\\d|-]*)";
 		$pos_rc=1;$pos_logname=2;$pos_date=3;$pos_method=4;$pos_url=5;$pos_code=6;$pos_size=7;
 		$lastrequiredfield=7;
 	}
@@ -1568,7 +1568,7 @@ if ($UpdateStats) {
 				$pos_rc = $i; $i++;
 				$PerlParsingFormat .= "([^\\s]*) ";
 			}
-			if ($f =~ /%logname$/ || $f =~ /%l$/ || $f =~ /cs-username$/) {
+			if ($f =~ /%logname$/ || $f =~ /%u$/ || $f =~ /cs-username$/) {
 				$found=1; 
 				$pos_logname = $i; $i++;
 				$PerlParsingFormat .= "([^\\s]*) ";
