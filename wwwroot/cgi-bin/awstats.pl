@@ -823,7 +823,7 @@ sub error {
 			print "${tagbr}\n";
 		}
 		else { print "${tagbr}${tagbold}Setup (".($FileConfig?"'".$FileConfig."'":"Config")." file, web server or permissions) may be wrong.${tagunbold}${tagbr}\n"; }
-		print "See AWStats documentation in 'docs' directory to know how to setup $PROG.\n";
+		print "Check config file, permissions and AWStats documentation (in 'docs' directory).\n";
 	}
 	# Remove lock if not a lock message 
 	if ($EnableLockForUpdate && $message !~ /lock file/) { &Lock_Update(0); }
