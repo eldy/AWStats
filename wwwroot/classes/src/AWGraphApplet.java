@@ -14,6 +14,7 @@ public class AWGraphApplet extends Applet
     public AWGraphApplet()
     {
         special = "Not yet defined";
+        textVertSpacing = 0;
         b_fontsize = 11;
         blockSpacing = 5;
         valSpacing = 0;
@@ -21,6 +22,7 @@ public class AWGraphApplet extends Applet
         maxLabelWidth = 0;
         background_color = Color.white;
         border_color = Color.white;
+        special_color = Color.gray;
         backgraph_colorl = Color.decode("#F6F6F6");
         backgraph_colorm = Color.decode("#EDEDED");
         backgraph_colorh = Color.decode("#E0E0E0");
@@ -64,12 +66,15 @@ public class AWGraphApplet extends Applet
         if (s != null) { background_color = Color.decode("#"+s); }
 		s = getParameter("border_color");
         if (s != null) { border_color = Color.decode("#"+s); }
+		s = getParameter("special_color");
+        if (s != null) { special_color = Color.decode("#"+s); }
 
         Log("bblocks "+nbblocks);
         Log("nbvalues "+nbvalues);
         Log("barsize "+barsize);
         
-		font = new Font("Verdana", 0, b_fontsize);
+		font  = new Font("Verdana,Arial,Helvetica", 0, b_fontsize);
+		fontb = new Font("Verdana,Arial,Helvetica", Font.BOLD, b_fontsize);
         fontmetrics = getFontMetrics(font);
         
         blabels = new String[nbblocks];
@@ -235,9 +240,9 @@ public class AWGraphApplet extends Applet
     {
 		// background and border
         bfr.setColor(background_color);
-        bfr.fillRect(0, 0, getSize().width - 1, getSize().height - 1);
+        bfr.fillRect(0, 0, getSize().width, getSize().height);
         bfr.setColor(border_color);
-        bfr.drawRect(0, 0, getSize().width - 1, getSize().height - 1);
+        bfr.drawRect(0, 0, getSize().width, getSize().height);
 
 		// draw the bars and their titles
 		if(orientation == HORIZONTAL) { paintHorizontal(bfr); }
@@ -288,16 +293,14 @@ public class AWGraphApplet extends Applet
 
     private synchronized void paintVertical(Graphics g)
     {
-		Font font1 = new java.awt.Font("Verdana", 0, b_fontsize);
-		FontMetrics fontmetrics = getFontMetrics(font1);
 		g.setColor(Color.black);
-		g.setFont(font1);
+		g.setFont(font);
 
 		int shift=10;
 		int allbarwidth=(((nbvalues*(valWidth+valSpacing))+blockSpacing)*nbblocks);
 		int allbarheight=barsize;
 		int axepointx=(getSize().width-allbarwidth)/2 - 2*shift;
-        int axepointy = getSize().height - (2*fontmetrics.getHeight()) - fontmetrics.getDescent();
+        int axepointy = getSize().height - (2*fontmetrics.getHeight()) - textVertSpacing;
 
 		int cx=axepointx;
 		int cy=axepointy;
@@ -338,25 +341,32 @@ public class AWGraphApplet extends Applet
 
             // Draw the block label
 //			Log("Write block j="+j+" with cx="+cx);
-            cy = getSize().height - fontmetrics.getHeight() - fontmetrics.getDescent();
+            cy = getSize().height - fontmetrics.getHeight() - textVertSpacing;
             g.setColor(Color.black);
 			// Check if bold or highlight
-			int bold=0; int highlight=0;
-			if (blabels[j].indexOf(":")>0) { bold=1; blabels[j]=remove(blabels[j],":"); }
-			if (blabels[j].indexOf("!")>0) { highlight=1; blabels[j]=remove(blabels[j],"!"); }
+			int bold=0; int highlight=0; String label=blabels[j];
+			if (blabels[j].indexOf(":")>0) { bold=1; label=remove(blabels[j],":"); }
+			if (blabels[j].indexOf("!")>0) { highlight=1; label=remove(blabels[j],"!"); }
 
-			String as[] = split(blabels[j], "\247", 0);
-            for (int i=0; i<as.length; i++) {
-	            int cxoffset=((nbvalues*(valWidth+valSpacing))-fontmetrics.stringWidth(as[i]))>>1;
-	            if (cxoffset<0) { cxoffset=0; }
-	            g.drawString(as[i], cx+cxoffset, cy);
-				cy+=fontmetrics.getHeight()-2;
+			if (bold==1) { g.setFont(fontb); }
+			String as[] = split(label, "\247", 0);
+			if (highlight==1) {
+				g.setColor(special_color);
+				g.fillRect(cx-Math.max(-1+blockSpacing>>1,0),cy-fontmetrics.getHeight(),(nbvalues*(valWidth+valSpacing))+Math.max(blockSpacing-2,0)+1,((fontmetrics.getHeight()+textVertSpacing)*as.length)+2);
+				g.setColor(Color.black);
 			}
+            for (int i=0; i<as.length; i++) {
+				int cxoffset=((nbvalues*(valWidth+valSpacing))-fontmetrics.stringWidth(as[i]))>>1;
+	            if (cxoffset<0) { cxoffset=0; }
+				g.drawString(as[i], cx+cxoffset, cy);
+				cy+=fontmetrics.getHeight()+textVertSpacing;
+			}
+			if (bold==1) { g.setFont(font); }
 
 			// Loop on each value
 	        for (int i = 0; i < nbvalues; i++) {
 	
-	            cy = getSize().height - fontmetrics.getHeight() - fontmetrics.getDescent() - 4;
+	            cy = getSize().height - fontmetrics.getHeight() - textVertSpacing - 4;
 	            cy -= fontmetrics.getHeight() - 4;
 	
 	            // draw the shadow and bar
@@ -378,7 +388,7 @@ public class AWGraphApplet extends Applet
     public synchronized String[][] getParameterInfo()
     {
         String[][] as = {
-            {"version", "string", "AWGraphApplet 1.0"},
+            {"version", "string", "AWGraphApplet "+VERSION},
             {"copyright", "string", "GPL"},
             {"title", "string", title}
         };
@@ -391,11 +401,12 @@ public class AWGraphApplet extends Applet
     private static final int STRIPED = 1;
 	private static final int DEBUG = 3;
 	private static final int SHIFTBAR = 3;
-	private static final String VERSION = "1.0";
+	private static final String VERSION = "1.1";
 
     private String title;
     private String special;
     private Font font;
+    private Font fontb;
     private FontMetrics fontmetrics;
     private int orientation;
     private int barsize;
@@ -404,6 +415,7 @@ public class AWGraphApplet extends Applet
     private String blabels[];
 	private int b_fontsize;
     private int blockSpacing;
+    private int textVertSpacing;
 	
     private int nbvalues;
     private Color colors[];
@@ -418,6 +430,7 @@ public class AWGraphApplet extends Applet
     private int maxLabelWidth;
 	private Color background_color;
 	private Color border_color;
+	private Color special_color;
 	private Color backgraph_colorl;
 	private Color backgraph_colorm;
 	private Color backgraph_colorh;

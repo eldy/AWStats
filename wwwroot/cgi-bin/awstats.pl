@@ -1757,12 +1757,13 @@ sub Read_Plugins {
 	foreach my $key (keys %NoLoadPlugin) { if ($NoLoadPlugin{$key} < 0) { push @PluginsToLoad, $key; } }
 	if ($Debug) { debug("Call to Read_Plugins with list: ".join(',',@PluginsToLoad)); }
 	foreach my $plugininfo (@PluginsToLoad) {
-		if ($NoLoadPlugin{$plugininfo} && $NoLoadPlugin{$plugininfo} > 0) {
-			if ($Debug) { debug(" Plugin load for '$plugininfo' has been disabled from command line"); }
-			next;	
-		}
 		my @loadplugin=split(/\s+/,$plugininfo,2);
 		my $pluginfile=$loadplugin[0]; $pluginfile =~ s/\.pm$//i;
+		# Check if we plugin is not disabled
+		if ($NoLoadPlugin{$pluginfile} && $NoLoadPlugin{$pluginfile} > 0) {
+			if ($Debug) { debug(" Plugin load for '$pluginfile' has been disabled from parameters"); }
+			next;	
+		}
 		my $pluginparam=$loadplugin[1]||'';
 		$pluginfile =~ /([^\/\\]*)$/;
 		my $pluginname=$1;
@@ -5027,7 +5028,7 @@ $tomorrowtime=int($tomorrowyear.$tomorrowmonth.$tomorrowday.$tomorrowhour.$tomor
 # Allowed option
 my @AllowedCLIArgs=('migrate','config',
 'logfile','output','runascli','update',
-'staticlinks','staticlinksext','noloadplugin','forceloadplugin',
+'staticlinks','staticlinksext','noloadplugin','loadplugin',
 'hostfilter','urlfilter','refererpagesfilter',
 'lang','month','year','framename','debug',
 'showsteps','showdropped','showcorrupted','showunknownorigin',
@@ -5129,8 +5130,8 @@ if ($QueryString =~ /(^|&)staticlinksext=([^&]+)/i) { $StaticExt="$2"; }
 if ($QueryString =~ /(^|&)framename=([^&]+)/i)		{ $FrameName="$2"; }
 if ($QueryString =~ /(^|&)debug=(\d+)/i)			{ $Debug=$2; }
 if ($QueryString =~ /(^|&)updatefor=(\d+)/i)		{ $UpdateFor=$2; }
-if ($QueryString =~ /(^|&)noloadplugin=([^&]+)/i)		{ foreach (split(/,/,$2)) { $NoLoadPlugin{"$_"}=1; } }
-if ($QueryString =~ /(^|&)forceloadplugin=([^&]+)/i)	{ foreach (split(/,/,$2)) { $NoLoadPlugin{"$_"}=-1; } }
+if ($QueryString =~ /(^|&)noloadplugin=([^&]+)/i)	{ foreach (split(/,/,$2)) { $NoLoadPlugin{"$_"}=1; } }
+if ($QueryString =~ /(^|&)loadplugin=([^&]+)/i)		{ foreach (split(/,/,$2)) { $NoLoadPlugin{"$_"}=-1; } }
 if ($QueryString =~ /(^|&)limitflush=(\d+)/i)		{ $LIMITFLUSH=$2; }
 # Get/Define output
 if ($QueryString =~ /(^|&)output(=[^&]*|)(.*)&output(=[^&]*|)(&|$)/i) { error("Only 1 output option is allowed","","",1); }
@@ -5169,6 +5170,7 @@ else { $DayRequired=''; }
 
 # Print AWStats and Perl version 
 if ($Debug) {
+	if ($ENV{'GATEWAY_INTERFACE'}) { print "\n"; }	# To end the HTTP header and see all debug
 	debug(ucfirst($PROG)." - $VERSION - Perl $^X $]",1);
 	debug("QUERY_STRING=$QueryString",2);
 	debug("HTMLOutput=".join(',',keys %HTMLOutput),1);

@@ -26,6 +26,12 @@ my $PluginNeedAWStatsVersion="6.0";
 my $PluginHooksFunctions="ShowGraph";
 # ----->
 
+# <-----
+# IF YOUR PLUGIN NEED GLOBAL VARIABLES, THEY MUST BE DECLARED HERE.
+use vars qw/
+$DirClasses
+/;
+# ----->
 
 
 #-----------------------------------------------------------------------------
@@ -37,6 +43,7 @@ sub Init_graphapplet {
 
 	# <-----
 	# ENTER HERE CODE TO DO INIT PLUGIN ACTIONS
+	$DirClasses=$InitParams;
 	# ----->
 
 	return ($checkversion?$checkversion:"$PluginHooksFunctions");
@@ -78,7 +85,7 @@ sub ShowGraph_graphapplet() {
 	else { error("Unknown type parameter in ShowGraph_graphapplet function"); }
 
 #	print "<applet code=\"AWGraphApplet.class\" codebase=\"/classes\" width=\"$graphwidth\" height=\"$graphheight\">\n";
-	print "<applet name=\"$type\" archive=\"awgraphapplet.jar\" code=\"AWGraphApplet.class\" codebase=\"/classes\" width=\"$graphwidth\" height=\"$graphheight\" alt= \"Your browser does not support Java correctly. Change browser or disable AWStats graphapplet plugin.\">\n";
+	print "<applet name=\"$type\" archive=\"awgraphapplet.jar\" code=\"AWGraphApplet.class\" codebase=\"$DirClasses\" width=\"$graphwidth\" height=\"$graphheight\" alt= \"Your browser does not support Java correctly. Change browser or disable AWStats graphapplet plugin.\">\n";
 print <<EOF;
 <param name="title" value="$title" />
 <param name="special" value="$type" />
@@ -86,6 +93,7 @@ print <<EOF;
 <param name="barsize" value="$barsize" />
 <param name="background_color" value="$color_Background" />
 <param name="border_color" value="$color_Background" />
+<param name="special_color" value="$color_weekend" />
 EOF
 	print "<param name=\"nbblocks\" value=\"".(scalar @$blocklabel)."\" />\n";
 	print "<param name=\"b_fontsize\" value=\"$blockfontsize\" />\n";
