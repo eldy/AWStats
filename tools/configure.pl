@@ -435,15 +435,17 @@ foreach my $key (keys %ApacheConfPath) {
 # Define model config file path
 # -----------------------------
 my $modelfile='';
-if ($OS eq 'linux') 	{ $modelfile="$AWSTATS_MODEL_CONFIG"; }
-if ($OS eq 'windows') 	{ $modelfile="$AWSTATS_PATH\\wwwroot\\cgi-bin\\awstats.model.conf"; }
+if ($OS eq 'linux') 		{ $modelfile="$AWSTATS_MODEL_CONFIG"; }
+elsif ($OS eq 'windows')	{ $modelfile="$AWSTATS_PATH\\wwwroot\\cgi-bin\\awstats.model.conf"; }
+else						{ $modelfile="$AWSTATS_PATH\\wwwroot\\cgi-bin\\awstats.model.conf"; }
 
 # Update model config file
 # ------------------------
 print "\n-----> Update model config file\n";
 %ConfToChange=();
-if ($OS eq 'linux') { $ConfToChange{'DirData'}="$AWSTATS_DIRDATA_PATH"; }
-if ($OS eq 'windows') { $ConfToChange{'DirData'}='.'; }
+if ($OS eq 'linux') 	 { $ConfToChange{'DirData'}="$AWSTATS_DIRDATA_PATH"; }
+elsif ($OS eq 'windows') { $ConfToChange{'DirData'}='.'; }
+else					 { $ConfToChange{'DirData'}='.'; }
 if ($UseAlias) {
 	$ConfToChange{'DirCgi'}='/awstats';
 	$ConfToChange{'DirIcons'}='/awstatsicons';
@@ -453,16 +455,16 @@ update_awstats_config("$modelfile");
 # Ask if we need to create a config file
 #---------------------------------------
 my $site='';
+my $configfile='';
 print "\n-----> Need to create a new config file ?\n";
 print "Do you want me to build a new AWStats config/profile\n";
 print "file (required if first install) [y/N] ? ";
 my $bidon='';
 while ($bidon !~ /^[yN]/i) { $bidon=<STDIN>; }
 if ($bidon =~ /^y/i) {
-		
+
 	# Ask value for web site name
 	#----------------------------
-	
 	print "\n-----> Define config file name to create\n";
 	print "What is the name of your web site or profile analysis ?\n";
 	print "Example: www.mysite.com\n";
@@ -478,9 +480,9 @@ if ($bidon =~ /^y/i) {
 
 	# Define config file path
 	# -----------------------
-	my $configfile='';
-	if ($OS eq 'linux') 	{ $configfile="/etc/awstats/awstats.$site.conf"; }
-	if ($OS eq 'windows') 	{ $configfile="$AWSTATS_PATH\\wwwroot\\cgi-bin\\awstats.$site.conf"; }
+	if ($OS eq 'linux') 		{ $configfile="/etc/awstats/awstats.$site.conf"; }
+	elsif ($OS eq 'windows') 	{ $configfile="$AWSTATS_PATH\\wwwroot\\cgi-bin\\awstats.$site.conf"; }
+	else 						{ $configfile="$AWSTATS_PATH\\wwwroot\\cgi-bin\\awstats.$site.conf"; }
 
 	if (-s "$configfile") {
 		print "Warning: A config file for this name already exists. Choose another one.\n";
@@ -515,7 +517,15 @@ if ($WebServerChanged) {
 		print "\n-----> Restart Apache with '/usr/bin/service httpd restart'\n";
 	 	my $ret=`/usr/bin/service httpd restart`;
 	}
-	if ($OS eq 'windows')	{
+	elsif ($OS eq 'windows')	{
+		foreach my $key (keys %ApachePath) {
+			if (-f "$key/bin/Apache.exe") {
+				print "\n-----> Restart Apache with '\"$key/bin/Apache.exe\" -k restart'\n";
+			 	my $ret=`"$key/bin/Apache.exe" -k restart`;
+			}
+		}
+	}
+	else {
 		foreach my $key (keys %ApachePath) {
 			if (-f "$key/bin/Apache.exe") {
 				print "\n-----> Restart Apache with '\"$key/bin/Apache.exe\" -k restart'\n";
@@ -538,13 +548,6 @@ if ($WebServerChanged) {
 # Schedule awstats update process
 # -------------------------------
 print "\n-----> Add update process inside a scheduler\n";
-if ($OS eq 'windows') {
-	print "Sorry, for windows users, if you want to have statistics to be\n";
-	print "updated on a regular basis, you have to add the update process\n";
-	print "in a scheduler task manually (See AWStats docs/index.html).\n";
-	print "Press ENTER to continue... ";
-	$bidon=<STDIN>;
-}
 if ($OS eq 'linux') {
 	print "Sorry, programming update is not supported yet.\n";
 	print "You can do it manually by adding the following line to your crontab\n";
@@ -554,12 +557,26 @@ if ($OS eq 'linux') {
 	print "Press ENTER to continue... ";
 	$bidon=<STDIN>;
 }
+elsif ($OS eq 'windows') {
+	print "Sorry, for windows users, if you want to have statistics to be\n";
+	print "updated on a regular basis, you have to add the update process\n";
+	print "in a scheduler task manually (See AWStats docs/index.html).\n";
+	print "Press ENTER to continue... ";
+	$bidon=<STDIN>;
+}
+else {
+	print "Sorry, if you want to have statistics to be\n";
+	print "updated on a regular basis, you have to add the update process\n";
+	print "in a scheduler task manually (See AWStats docs/index.html).\n";
+	print "Press ENTER to continue... ";
+	$bidon=<STDIN>;
+}
 
 #print "\n-----> End of configuration\n";
 print "\n\n";
 if ($site) {
-	print "A SIMPLE config file for '$site' has been created. You should have a look\n";
-	print "inside to check and change manually main parameters.\n";
+	print "A SIMPLE config file has been created: $configfile\n";
+	print "You should have a look inside to check and change manually main parameters.\n";
 	print "You can then manually update your statistics for '$site' with command:\n";
 	print "> perl awstats.pl -update -config=$site\n";
 	if (scalar keys %ApacheConfPath) {
