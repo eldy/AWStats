@@ -10,6 +10,8 @@ New features/improvements:
 - If Geoip plugin is enabled, add a column in Host report.
 - Other minor changes on geoip and hostinfo plugins to enhance look.
 - If LogFormat is 2, AWStats autodetect log format change.
+- Add a way to set ArchiveLogRecords with same tags than LogFile to
+  add suffix to archived log files.
 
 Fixes:
 - Fix security hole that allowed a user to read log file content even
