@@ -8530,9 +8530,6 @@ if (scalar keys %HTMLOutput) {
 				my @valaverage=($average_p,$average_h,$average_k);
 				my @valdata=();
 				my $xx=0;
-				$avg_dayofweek_p[$_]=sprintf("%.2f",$avg_dayofweek_p[$_]);
-				$avg_dayofweek_h[$_]=sprintf("%.2f",$avg_dayofweek_h[$_]);
-				$avg_dayofweek_k[$_]=sprintf("%.2f",$avg_dayofweek_k[$_]);
 				for (@DOWIndex) {
 					$valdata[$xx++]=$avg_dayofweek_p[$_]||0;
 					$valdata[$xx++]=$avg_dayofweek_h[$_]||0;
