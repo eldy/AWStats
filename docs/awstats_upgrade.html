@@ -4,8 +4,8 @@
 <meta name="description" content="AWStats Documentation - Upgrade setup">
 <meta name="keywords" content="awstats, awstat, udpate, upgrade">
 <meta name="robots" content="index,follow">
-<meta name="title" content="AWStats Documentation - Updgrade setup">
-<title>AWStats Documentation - Updraged setup</title>
+<meta name="title" content="AWStats Documentation - Upgrade setup">
+<title>AWStats Documentation - Upgrade setup</title>
 <link rel="stylesheet" href="styles.css" type="text/css">
 <!-- $Revision$ - $Author$ - $Date$ -->
 </head>
@@ -34,12 +34,12 @@
 
 To upgrade AWStats from an old version to a new one, all you have to do is:<br>
 <br>
-- <b>Replace AWStats runtime files</b> by new ones. For this you can:<br>
-<ul>- decompress new AWStats zip or tgz package to old install directory (AWStats
-old runtime files are replaced by new ones. This works whatever is the old and new version, 3.x, 4.x, 5.x, 6.x).</ul>
-<ul>- or just run your OS package tool (rpm, apt, or just .exe for windows).</ul>
+* <b>Replace AWStats runtime files</b> by new ones. For this you can:<br>
+&nbsp; &nbsp; &nbsp; &nbsp;- decompress new AWStats zip or tgz package to old install directory (AWStats
+old runtime files are replaced by new ones. This works whatever is the old and new version, 3.x, 4.x, 5.x, 6.x).<br>
+&nbsp; &nbsp; &nbsp; &nbsp;- or just run your OS package tool (rpm, apt, or just .exe for windows).<br>
 <br>
-- <b>Your setup files should not be lost</b> as AWStats default distribution should not overwite
+* <b>Your setup files should not be lost</b> as AWStats default distribution should not overwite
 config file (it provides only one example of config file(s) <i>awstats.model.conf</i>, however
 some packages are not official, so you can save and restore them if you prefer).<br>
 Sometimes, there is new parameter supported by the new version. Since thoose parameters would not 
@@ -51,7 +51,7 @@ feature.<br>
 you must check that the parameter(s) ExtraSectionConditionX use a full REGEX syntax (with 5.x series, this
 parameter could contain simple string values). If not, feature will be broken.<br>
 <br>
-- <b>Your old analyzed data should not be lost</b> since your 'history files' are saved in the
+* <b>Your old analyzed data should not be lost</b> since your 'history files' are saved in the
 directory defined in DirData parameter in your AWStats config file and 'history files' format is
 compatible with each new version of AWStats since 5.x series. If you upgrade from 3.x or 4.x
 series to 5.x, 6.x or higher, AWStats will still be able to 'read' your old history files but
