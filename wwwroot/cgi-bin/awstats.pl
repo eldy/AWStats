@@ -3916,7 +3916,7 @@ sub ShowWhoIsCell {
 		$linkforwhois=2;
 	}
 	else {	# Hostname
-		$keyurl =~ /(\w+\.\w+\.(au|uk|jp|nz))$/ or $keyurl =~ /(\w+\.\w+)$/;
+		$keyurl =~ /([-\w]+\.[-\w]+\.(au|uk|jp|nz))$/ or $keyurl =~ /([-\w]+\.[-\w]+)$/;
 		$keyforwhois=$1;
 		$linkforwhois=1;
 	}

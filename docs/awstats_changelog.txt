@@ -16,6 +16,7 @@ Fixes:
 - Value of title "Top x" for domains chart was not always correct.
 - Fixed bug 620040 that prevented to use "#" char in HTMLHeadSection.
 - Whois link did not work for jp, au, uk and nz domains.
+- WhoIs link did not work if host name contained a "-" char.
 
 New features/improvments:
 - Added urlaliasbuilder.pl tool.
@@ -36,6 +37,7 @@ Other/Documentation:
 - Added an error message if a -migrate is done on an history file with
   wrong file name.
 - GeoIP memory cache code is now stored inside plugin code.
+- All tooltips code has been moved into tooltip plugin.
 - Added list of loaded plugins in AWStats copyright string.
 - Minor cosmetic change (remove ShowHeader parameter).
 - Updated documentation.
