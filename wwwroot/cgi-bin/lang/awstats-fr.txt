@@ -79,3 +79,4 @@ message76=Retour page principale
 message77=Top
 message78=dd mmm yyyy - HH:MM
 message79=Filtre
+message80=Liste complète
