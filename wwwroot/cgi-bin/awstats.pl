@@ -3940,14 +3940,14 @@ sub Save_History {
 	 			my $page=${'_section_' . $extranum . '_p'}{$_}||0;
 	 			my $bytes=${'_section_' . $extranum . '_k'}{$_}||0;
 	 			my $lastaccess=${'_section_' . $extranum . '_l'}{$_}||'';
-	 			print HISTORYTMP "${xmlrb}$_${xmlrs}$page${xmlrs}", ${'_section_' . $extranum . '_h'}{$_}, "${xmlrs}$bytes${xmlrs}$lastaccess${xmlre}\n"; next;
+	 			print HISTORYTMP "${xmlrb}".XMLEncodeForHisto($_)."${xmlrs}$page${xmlrs}", ${'_section_' . $extranum . '_h'}{$_}, "${xmlrs}$bytes${xmlrs}$lastaccess${xmlre}\n"; next;
 	 		}
 	 		foreach (keys %{'_section_' . $extranum . '_h'}) {
 	 			if ($keysinkeylist{$_}) { next; }
 	 			my $page=${'_section_' . $extranum . '_p'}{$_}||0;
 	 			my $bytes=${'_section_' . $extranum . '_k'}{$_}||0;
 	 			my $lastaccess=${'_section_' . $extranum . '_l'}{$_}||'';
-	 			print HISTORYTMP "${xmlrb}$_${xmlrs}$page${xmlrs}", ${'_section_' . $extranum . '_h'}{$_}, "${xmlrs}$bytes${xmlrs}$lastaccess${xmlre}\n"; next;
+	 			print HISTORYTMP "${xmlrb}".XMLEncodeForHisto($_)."${xmlrs}$page${xmlrs}", ${'_section_' . $extranum . '_h'}{$_}, "${xmlrs}$bytes${xmlrs}$lastaccess${xmlre}\n"; next;
 	 		}
 	 		print HISTORYTMP "${xmleb}END_EXTRA_$extranum${xmlee}\n";
 		}
@@ -4204,7 +4204,7 @@ sub ChangeWordSeparatorsIntoSpace {
 }
 
 #------------------------------------------------------------------------------
-# Function:		Transforms & into &amp; as needed in XML/XHTML
+# Function:		Transforms special chars by entities as needed in XML/XHTML
 # Parameters:	stringtoencode
 # Return:		encodedstring
 #------------------------------------------------------------------------------
@@ -4212,11 +4212,15 @@ sub XMLEncode {
 	if ($BuildReportFormat ne 'xhtml' && $BuildReportFormat ne 'xml') { return shift; }
 	my $string = shift;
 	$string =~ s/&/&amp;/g;
+	$string =~ s/</&lt;/g;
+	$string =~ s/>/&gt;/g;
+	$string =~ s/\"/&aquot;/g;
+	$string =~ s/\'/&apos;/g;
 	return $string;
 }
 
 #------------------------------------------------------------------------------
-# Function:		Transforms & into &amp; as needed in XML/XHTML
+# Function:		Transforms spaces into %20 and special chars by entities as needed in XML/XHTML
 # Parameters:	stringtoencode
 # Return:		encodedstring
 #------------------------------------------------------------------------------
@@ -4227,6 +4231,8 @@ sub XMLEncodeForHisto {
 	$string =~ s/&/&amp;/g;
 	$string =~ s/</&lt;/g;
 	$string =~ s/>/&gt;/g;
+	$string =~ s/\"/&aquot;/g;
+	$string =~ s/\'/&apos;/g;
 	return $string;
 }
 
