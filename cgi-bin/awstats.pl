@@ -2539,7 +2539,7 @@ if ($UpdateStats) {
 
 		# IE ? (For higher speed, we start whith IE, the most often used. This avoid other tests if found)
 		if ($UserAgent =~ /msie/) {
-			if (($UserAgent !~ /webtv/) && ($UserAgent !~ /omniweb/)) {
+			if (($UserAgent !~ /webtv/) && ($UserAgent !~ /omniweb/) && ($UserAgent !~ /opera/)) {
 				$_browser_h{"msie"}++;
 				$UserAgent =~ /msie_(\d)\./;  # $1 now contains major version no
 				$_msiever_h[$1]++;
@@ -3335,35 +3335,41 @@ if ($Lang == 10) {
 	";
 }
 
-# document.body.scrollHeight = Height of full page
-# document.body.offsetHeight = Height of visible part of page
-# document.body.scrollTop || document.body.offsetTop = Pos of top of visible part in full page
-# event.clientX and event.clientY = Relative pos of mouse cursor
-# event.clientX and tooltipOBJ.style.pixelLeft doesn't work with Netscape
-print "
-<script type=\"text/javascript\">
+
+# Position .style.pixelLeft/.pixelHeight/.pixelWidth/.pixelTop	IE OK	Opera OK
+#          .style.left/.height/.width/.top											Netscape OK
+# document.getElementById										IE OK	Opera OK	Netscape OK
+# document.body.offsetWidth|document.body.style.pixelWidth		IE OK	Opera OK	Netscape OK		Visible width of container
+# document.body.scrollTop                                       IE OK	Opera OK	Netscape OK		Visible width of container
+# tooltip.offsetWidth|tooltipOBJ.style.pixelWidth				IE OK	Opera OK	Netscape OK		Width of an object
+# event.clientXY												IE OK	Opera OK	Netscape KO		Return position of mouse
+print <<EOF;
+<script type="text/javascript" language="javascript">
   function ShowTooltip(fArg)
   {
-    var tooltipOBJ = (document.getElementById) ? document.getElementById('tt' + fArg) : eval(\"document.all['tt\" + fArg + \"']\");
-    var tooltipLft = (document.body.offsetWidth - (tooltipOBJ.scrollWidth?tooltipOBJ.scrollWidth:(tooltipOBJ.style.pixelWidth?tooltipOBJ.style.pixelWidth:300)) - 30);
-    var tooltipTop = (document.body.scrollTop?document.body.scrollTop:document.body.offsetTop)+10;
-	if (navigator.appName != 'Netscape') {
+    var tooltipOBJ = (document.getElementById) ? document.getElementById('tt' + fArg) : eval("document.all['tt" + fArg + "']");
+    var tooltipLft = (document.body.offsetWidth?document.body.offsetWidth:document.body.style.pixelWidth) - (tooltipOBJ.offsetWidth?tooltipOBJ.offsetWidth:(tooltipOBJ.style.pixelWidth?tooltipOBJ.style.pixelWidth:300)) - 30;
+    if (navigator.appName != 'Netscape') {
+		var tooltipTop = (document.body.scrollTop>=0?document.body.scrollTop+10:event.clientY+10);
 		if ((event.clientX > tooltipLft) && (event.clientY < (tooltipOBJ.scrollHeight?tooltipOBJ.scrollHeight:tooltipOBJ.style.pixelHeight) + 10)) {
 			tooltipTop = (document.body.scrollTop?document.body.scrollTop:document.body.offsetTop) + event.clientY + 20;
 		}
+		tooltipOBJ.style.pixelLeft = tooltipLft; tooltipOBJ.style.pixelTop = tooltipTop; 
 	}
-    tooltipOBJ.style.pixelLeft = tooltipLft;
-    tooltipOBJ.style.pixelTop = tooltipTop;
-    tooltipOBJ.style.visibility = \"visible\";
+	else {
+		var tooltipTop = 10;
+		tooltipOBJ.style.left = tooltipLft; tooltipOBJ.style.top = tooltipTop; 
+	}
+    tooltipOBJ.style.visibility = "visible";
   }
   function HideTooltip(fArg)
   {
-    var tooltipOBJ = (document.getElementById) ? document.getElementById('tt' + fArg) : eval(\"document.all['tt\" + fArg + \"']\");
-    tooltipOBJ.style.visibility = \"hidden\";
+    var tooltipOBJ = (document.getElementById) ? document.getElementById('tt' + fArg) : eval("document.all['tt" + fArg + "']");
+    tooltipOBJ.style.visibility = "hidden";
   }
 </script>
 
-";
+EOF
 
 
 # MENU
