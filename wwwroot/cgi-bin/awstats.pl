@@ -82,7 +82,7 @@ $WarningMessages= 1;
 %MonthBytes = %MonthHits = %MonthHostsKnown = %MonthHostsUnknown = %MonthPages = %MonthUnique = %MonthVisits =
 %monthlib = %monthnum = ();
 
-$VERSION="3.2 (build 48)";
+$VERSION="3.2 (build 49)";
 $Lang="en";
 
 # Default value
@@ -1632,7 +1632,7 @@ else { @DOWIndex = (0,1,2,3,4,5,6); }
 
 # Check year and month parameters
 if ($QueryString =~ /year=/i) 	{ $YearRequired=$QueryString; $YearRequired =~ s/.*year=//; $YearRequired =~ s/&.*//;  $YearRequired =~ s/ .*//; }
-if ($YearRequired !~ /^[\d][\d][\d][\d]$/) { $YearRequired=$nowyear; }
+if ($YearRequired !~ /^\d\d\d\d$/) { $YearRequired=$nowyear; }
 if ($QueryString =~ /month=/i)	{ $MonthRequired=$QueryString; $MonthRequired =~ s/.*month=//; $MonthRequired =~ s/&.*//; $MonthRequired =~ s/ .*//; }
 if ($MonthRequired ne "year" && $MonthRequired !~ /^[\d][\d]$/) { $MonthRequired=$nowmonth; }
 # day is a hidden option. Must not be used (Make results not understandable). Available for users that rename historic files with day.
@@ -2032,9 +2032,9 @@ if ($UpdateStats) {
 		$_filetypes_k{$extension}+=$field[$pos_size];
 		# Compression
 		if ($field[$gzipin]) {
-			my($a,$b)=split(":",$field[$gzipres]);
-			my(undef,$in)=split(":",$field[$gzipin]);
-			my(undef,$out,undef)=split(":",$field[$gzipout]);
+			my ($a,$b)=split(":",$field[$gzipres]);
+			my ($notused,$in)=split(":",$field[$gzipin]);
+			my ($notused,$out,$notused)=split(":",$field[$gzipout]);
 			if ($out) {
 				$_filetypes_gz_in{$extension}+=$in;
 				$_filetypes_gz_out{$extension}+=$out;
