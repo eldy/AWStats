@@ -1784,12 +1784,12 @@ sub Read_History_With_TmpUpdate {
 	}
 	if ($Debug) { debug(" History file to read is '$filetoread'",2); }
 
-	# Is there an old data file to read
-	if (-s $filetoread) { $withread=1; }
+	# Is there an old data file to read or if migrate, we need to open for read the file
+	if (-s $filetoread || $MigrateStats) { $withread=1; }
 
 	# Open files
 	if ($withread) {
-		open(HISTORY,$filetoread) || error("Error: Couldn't open file \"$filetoread\" for read: $!");
+		open(HISTORY,$filetoread) || error("Error: Couldn't open file \"$filetoread\" for read: $!","","",$MigrateStats);
 	}
 	if ($withupdate) {
 		open(HISTORYTMP,">$filetowrite") || error("Error: Couldn't open file \"$filetowrite\" for write: $!");
@@ -4271,8 +4271,11 @@ if ($MigrateStats) {
 	$MonthRequired=$3;
 	$YearRequired=$4;
 	$FileSuffix=$5;
+	# Correct DirData
+	if (! $DirData || $DirData eq ".") { $DirData=$DIR; }	# If not defined or chosen to "." value then DirData is current dir
+	if (! $DirData)  { $DirData="."; }						# If current dir not defined then we put it to "."
+	$DirData =~ s/\/$//; $DirData =~ s/\\$//;
 	print "Start migration for file '$MigrateStats'."; print $ENV{"GATEWAY_INTERFACE"}?"<br>\n":"\n";
-	if (! -s $MigrateStats) { error("Error: File to migrate '$MigrateStats' not found.","","",1); }
 	if ($EnableLockForUpdate) {	&Lock_Update(1); }
 	my $newhistory=&Read_History_With_TmpUpdate($YearRequired,$MonthRequired,1,0,"all");
 	if (rename("$newhistory","$MigrateStats")==0) {
