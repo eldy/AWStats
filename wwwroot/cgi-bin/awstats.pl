@@ -82,7 +82,7 @@ $WarningMessages= 1;
 %MonthBytes = %MonthHits = %MonthHostsKnown = %MonthHostsUnknown = %MonthPages = %MonthUnique = %MonthVisits =
 %monthlib = %monthnum = ();
 
-$VERSION="3.2 (build 54)";
+$VERSION="3.2 (build 55)";
 $Lang="en";
 
 # Default value
@@ -436,6 +436,7 @@ sub Read_Config_File {
 			$LogFile =~ s/%MM/$nowmonth/g;
 			$LogFile =~ s/%DD/$nowday/g;
 			$LogFile =~ s/%HH/$nowhour/g;
+			$LogFile =~ s/%WM/$nowweekofmonth/g;
 			next;
 			}
 		if ($param =~ /^LogFormat/)            	{ $LogFormat=$value; next; }
@@ -1594,7 +1595,12 @@ if (($ENV{"GATEWAY_INTERFACE"} eq "") && ($SiteConfig eq "")) {
 
 # Get current time
 $nowtime=time;
-($nowsec,$nowmin,$nowhour,$nowday,$nowmonth,$nowyear) = localtime($nowtime);
+($nowsec,$nowmin,$nowhour,$nowday,$nowmonth,$nowyear,$nowwday) = localtime($nowtime);
+$nowweekofmonth=int($nowday/7);
+$nowdaymod=$nowday%7;
+$nowwday++;
+if ($nowdaymod <= $nowwday) { if (($nowwday != 7) || ($nowdaymod != 0)) { $nowweekofmonth=$nowweekofmonth+1; } }
+if ($nowdaymod >  $nowwday) { $nowweekofmonth=$nowweekofmonth+2; }
 if ($nowyear < 100) { $nowyear+=2000; } else { $nowyear+=1900; }
 $nowsmallyear=$nowyear;$nowsmallyear =~ s/^..//;
 if (++$nowmonth < 10) { $nowmonth = "0$nowmonth"; }
@@ -1602,6 +1608,7 @@ if ($nowday < 10) { $nowday = "0$nowday"; }
 if ($nowhour < 10) { $nowhour = "0$nowhour"; }
 if ($nowmin < 10) { $nowmin = "0$nowmin"; }
 if ($nowsec < 10) { $nowsec = "0$nowsec"; }
+if ($nowweek < 10) { $nowweek = "0$nowweek"; }
 # Get tomorrow time (will be used to discard some record with corrupted date (future date))
 ($tomorrowsec,$tomorrowmin,$tomorrowhour,$tomorrowday,$tomorrowmonth,$tomorrowyear) = localtime($nowtime+86400);
 if ($tomorrowyear < 100) { $tomorrowyear+=2000; } else { $tomorrowyear+=1900; }
