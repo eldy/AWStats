@@ -1426,7 +1426,7 @@ sub Read_History_File {
 			my @field=split(/\s+/,$_);
 			while ($field[0] ne "END_DAY" ) {
 				if ($QueryString !~ /output=/i) {
-					$DayPages{$field[0]}=int($field[1]); $DayHits{$field[0]}=int($field[2]); $DayBytes{$field[0]}=int($field[3]); $DayVisits{$field[0]}=$field[4]; $DayUnique{$field[0]}=int($field[5]);
+					$DayPages{$field[0]}=int($field[1]); $DayHits{$field[0]}=int($field[2]); $DayBytes{$field[0]}=int($field[3]); $DayVisits{$field[0]}=int($field[4]); $DayUnique{$field[0]}=int($field[5]);
 				}
 				$_=<HISTORY>;
 				chomp $_; s/\r//;
@@ -1629,7 +1629,7 @@ sub Save_History_File {
 	print HISTORYTMP "END_TIME\n";
 
 	print HISTORYTMP "BEGIN_DAY\n";
-    foreach my $key (keys %DayPages) {
+    foreach my $key (keys %DayHits) {
     	 if ($key =~ /^$year$month/) {	# Found a day entry of the good month
     	 	print HISTORYTMP "$key $DayPages{$key} $DayHits{$key} $DayBytes{$key} $DayVisits{$key} $DayUnique{$key}\n"; next;
     	 	}
