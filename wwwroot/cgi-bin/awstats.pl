@@ -43,17 +43,17 @@
 
 # ---------- Init variables (Variable $TmpHashxxx are not initialized) --------
 ($ArchiveFileName, $ArchiveLogRecords, $BarHeight, $BarWidth,
-$DIR, $DNSLookup, $DefaultFile, $DirCgi, $DirData,
+$DIR, $DNSLookup, $Debug, $DefaultFile, $DirCgi, $DirData,
 $DirIcons, $Extension, $FileConfig, $FileSuffix, $FirstTime,
-$HTMLEndSection, $Host, $HostAlias, $LastTime, $LastUpdate, $SiteToAnalyze,
-$SiteToAnalyzeIsInHostAliases, $SiteToAnalyzeWithoutwww, $LogFile,
-$LogFormat, $LogFormatString, $Logo, $MaxNbOfDays, $MaxNbOfHostsShown, $MaxNbOfKeywordsShown,
+$HTMLEndSection, $Host, $HostAlias, $LastTime, $LastUpdate,
+$LogFile, $LogFormat, $LogFormatString, $Logo, $MaxNbOfDays, $MaxNbOfHostsShown, $MaxNbOfKeywordsShown,
 $MaxNbOfPageShown, $MaxNbOfRefererShown, $MaxNbOfRobotShown, $MinHitFile,
 $MinHitHost, $MinHitKeyword, $MinHitRefer, $MinHitRobot, $MonthRequired,
-$PROG, $PageBool, $PageCode,
+$NoHTMLOutput, $PROG, $PageBool, $PageCode,
 $PurgeLogFile, $QueryString, $RatioBytes, $RatioHits, $RatioHosts, $RatioPages,
-$ShowFlagLinks, $ShowLinksOnURL, $ShowLinksOnUrl, $TotalBytes,
-$TotalDifferentKeywords, $TotalDifferentPages, $TotalErrors, $TotalHits,
+$ShowFlagLinks, $ShowLinksOnURL, $ShowLinksOnUrl, $ShowSteps,
+$SiteToAnalyze, $SiteToAnalyzeWithoutwww,
+$TotalBytes, $TotalDifferentKeywords, $TotalDifferentPages, $TotalErrors, $TotalHits,
 $TotalHostsKnown, $TotalHostsUnKnown, $TotalKeywords, $TotalPages, $TotalUnique, $TotalVisits, $UserAgent,
 $WarningMessages, $YearRequired,
 $allok, $beginmonth, $bredde, $bredde_h, $bredde_k, $bredde_p, $bredde_u,
@@ -82,7 +82,7 @@ $word, $yearcon, $yearmonth, $yeartoprocess) = ();
 %MonthBytes = %MonthHits = %MonthHostsKnown = %MonthHostsUnknown = %MonthPages = %MonthUnique = %MonthVisits =
 %listofyears = %monthlib = %monthnum = ();
 
-$VERSION="3.1 (build 4)";
+$VERSION="3.1 (build 5)";
 $Lang="en";
 $Sort="";
 
@@ -92,6 +92,7 @@ $VisitTimeOut  = 10000;		# Laps of time to consider a page load as a new visit. 
 $FullHostName  = 1;			# 1 = Use name.domain.zone to refer host clients, 0 = all hosts in same domain.zone are one host (Default = 1, 0 never tested)
 $MaxLengthOfURL= 70;		# Maximum length of URL shown on stats page. This affects only URL visible text, link still work (Default = 70)
 $MaxNbOfDays   = 30;
+$NbOfLinesForBenchmark=4000;
 $CENTER        = "";
 $WIDTH         = "600";
 # Images for graphics
@@ -1543,9 +1544,15 @@ else {									# Run from command line
 	$QueryString=""; for (0..@ARGV-1) { $QueryString .= "$ARGV[$_] "; }
 	$QueryString =~ s/<script.*$//i;						# This is to avoid 'Cross Site Scripting attacks'
 	if ($QueryString =~ /site=/) { $SiteToAnalyze=$QueryString; $SiteToAnalyze =~ s/.*site=//; $SiteToAnalyze =~ s/&.*//; $SiteToAnalyze =~ s/ .*//; }
-	$UpdateStats=1;	if ($QueryString =~ /update=0/i) { $UpdateStats=0; }	# Update by default when run from command line
+	$UpdateStats=1;
+	if ($QueryString =~ /noupdate/i) { $UpdateStats=0; }	# Update by default when run from command line
+	if ($QueryString =~ /update=0/i) { $UpdateStats=0; }	# Other option for no update kept for backward compatibility
 }
+if ($QueryString =~ /sort=/i)  { $Sort=$QueryString; $Sort =~ s/.*sort=//i; $Sort =~ s/&.*//; $Sort =~ s/\s+//; }
 if ($QueryString =~ /debug=/i) { $Debug=$QueryString; $Debug =~ s/.*debug=//; $Debug =~ s/&.*//; $Debug =~ s/ .*//; }
+if ($QueryString =~ /-nooutput/i)  { $NoHTMLOutput=1; }
+if ($QueryString =~ /-showsteps/i) { $ShowSteps=1; }
+
 ($DIR=$0) =~ s/([^\/\\]*)$//; ($PROG=$1) =~ s/\.([^\.]*)$//; $Extension=$1;
 if ($SiteToAnalyze eq "") { $SiteToAnalyze = $ENV{"SERVER_NAME"}; }
 $SiteToAnalyze =~ tr/A-Z/a-z/;
@@ -1557,17 +1564,20 @@ if (($ENV{"GATEWAY_INTERFACE"} eq "") && ($SiteToAnalyze eq "")) {
 	print "$PROG comes with ABSOLUTELY NO WARRANTY. It's a free software distributed\n";
 	print "with a GNU General Public License (See COPYING.txt file for details).\n";
 	print "\n";
-	print "Syntax: $PROG.$Extension site=www.host.com\n";
+	print "Syntax: $PROG.$Extension -site=www.host.com [options]\n";
 	print "  This runs $PROG in command line to update statistics of a web site, from\n";
 	print "  the log file defined in config file, and returns an HTML report.\n";
 	print "  First, $PROG tries to read $PROG.www.host.com.conf as the config file,\n";
 	print "  if not found, it will read $PROG.conf\n";
 	print "  See README.TXT file to know how to create the config file.\n";
 	print "\n";
-	print "Advanced options:\n";
-	print "  update=0            to only show a report, no update of statistics\n";
-	print "  lang=LL             to show a report page in language LL (en, fr, es, ...)\n";
-	print "  month=MM year=YYYY  to show a report for an old month=MM, year=YYYY\n";
+	print "Options:\n";
+	print "  -nooutput             to update statistics only with no HTML output report\n";
+	print "  -noupdate             to output a report with no update of statistics\n";
+#	print "  -showsteps            to add benchmark informations every $NbOfLinesForBenchmark lines processed\n";
+#	print "  -debug=X              to add debug informations lesser than level X\n";
+	print "  -lang=LL              to output a report page in language LL (en,fr,es,...)\n";
+	print "  -month=MM -year=YYYY  to output a report for an old month=MM, year=YYYY\n";
 	print "  Warning : Those 'date' options doesn't allow you to process old log file.\n";
 	print "  It only allows you to see a report for a choosed month/year period instead\n";
 	print "  of current month/year. To update stats from a log file, use standard syntax.\n";
@@ -1617,7 +1627,6 @@ $timetomorrow=$tomorrowyear.$tomorrowmonth.$tomorrowday.$tomorrowhour.$tomorrowm
 # Read config file
 &Read_Config_File;
 if ($QueryString =~ /lang=/i) { $Lang=$QueryString; $Lang =~ s/.*lang=//i; $Lang =~ s/&.*//; $Lang =~ s/\s+//; }
-if ($QueryString =~ /sort=/i) { $Sort=$QueryString; $Sort =~ s/.*sort=//i; $Sort =~ s/&.*//; $Sort =~ s/\s+//; }
 if ($Lang eq "") { $Lang="en"; }
 
 # Change old values of Lang into new for compatibility
@@ -1668,7 +1677,7 @@ if (@HostAliases == 0) {
 	warning("Warning: HostAliases parameter is not defined, $PROG will choose \"$SiteToAnalyze localhost 127.0.0.1\".");
 	$HostAliases[0]=$SiteToAnalyze; $HostAliases[1]="localhost"; $HostAliases[2]="127.0.0.1";
 	}
-$SiteToAnalyzeIsInHostAliases=0;
+my $SiteToAnalyzeIsInHostAliases=0;
 foreach $elem (@HostAliases) { if ($elem eq $SiteToAnalyze) { $SiteToAnalyzeIsInHostAliases=1; last; } }
 if ($SiteToAnalyzeIsInHostAliases == 0) { $HostAliases[@HostAliases]=$SiteToAnalyze; }
 if (@SkipFiles == 0) { $SkipFiles[0]="\.css\$";$SkipFiles[1]="\.js\$";$SkipFiles[2]="\.class\$";$SkipFiles[3]="robots\.txt\$"; }
@@ -1908,7 +1917,7 @@ if ($UpdateStats) {
 		else {
 			if ($timeconnexion <= $LastTime{$yeartoprocess.$monthtoprocess}) {
 				# NEXT LINE IS FOR TEST
-				if (($QueryString =~ /showstep=1/i) && ($NbOfLinesRead % 4000 == 0)) { print "$NbOfLinesRead lines read already processed (".(time()-$starttime)." seconds, ".($NbOfLinesRead/(time()-$starttime+1))." lines/seconds)\n"; }
+				if ($ShowSteps && ($NbOfLinesRead % $NbOfLinesForBenchmark == 0)) { print "$NbOfLinesRead lines read already processed (".(time()-$starttime)." seconds, ".($NbOfLinesRead/(time()-$starttime+1))." lines/seconds)\n"; }
 				next;
 			}	# Already processed
 			$NowNewLinePhase=1;	# This will stop comparison "<=" between timeconnexion and LastTime (we should have only new lines now)
@@ -1921,7 +1930,7 @@ if ($UpdateStats) {
 		#----------------------------------------
 		$NbOfNewLinesProcessed++;
 		# NEXT LINE IS FOR TEST
-		if (($QueryString =~ /showstep=1/i) && ($NbOfNewLinesProcessed % 4000 == 0)) { print "$NbOfNewLinesProcessed lines processed (".(time()-$starttime)." seconds, ".($NbOfNewLinesProcessed/(time()-$starttime+1))." lines/seconds)\n"; }
+		if ($ShowSteps && ($NbOfNewLinesProcessed % $NbOfLinesForBenchmark == 0)) { print "$NbOfNewLinesProcessed lines processed (".(time()-$starttime)." seconds, ".($NbOfNewLinesProcessed/(time()-$starttime+1))." lines/seconds)\n"; }
 
 		if (&SkipHost($field[$pos_rc])) { next; }		# Skip with some client host IP addresses
 		if (&SkipFile($field[$pos_url])) { next; }		# Skip with some URLs
@@ -2396,8 +2405,10 @@ if ($LastUpdate != 0) { print "$daycon&nbsp;$monthlib{$monthcon}&nbsp;$yearcon&n
 else { print "<font color=#880000>Never updated</font>"; }
 print "</font>&nbsp; &nbsp; &nbsp; &nbsp;";
 if ($AllowToUpdateStatsFromBrowser) { print "<a href=\"$DirCgi$PROG.$Extension?update=1&site=$SiteToAnalyze&year=$YearRequired&month=$MonthRequired&lang=$Lang\">$message[74]</a>"; }
-if ($UpdateStats) { print "<br>Lines in file: $NbOfLinesRead, found $NbOfNewLinesProcessed new records, $NbOfNewLinesCorrupted corrupted records"; }
-else { print "<br>Lines in file: $LastUpdateLinesRead{$choosedkey}, found $LastUpdateNewLinesRead{$choosedkey} new records, $LastUpdateNewLinesCorrupted{$choosedkey} corrupted records"; }
+if ($NoHTMLOutput) {
+	if ($UpdateStats) { print "<br>Lines in file: $NbOfLinesRead, found $NbOfNewLinesProcessed new records, $NbOfNewLinesCorrupted corrupted records"; }
+	else { print "<br>Lines in file: $LastUpdateLinesRead{$choosedkey}, found $LastUpdateNewLinesRead{$choosedkey} new records, $LastUpdateNewLinesCorrupted{$choosedkey} corrupted records"; }
+}
 print "</td></tr>\n";
 print "<tr><td>&nbsp;</td></tr>\n";
 print "<tr><td class=LEFT><font style=\"font: 14px arial,verdana,helvetica; font-weight: bold\">$message[16] : </td>";
