@@ -1424,7 +1424,7 @@ sub Check_Config {
 	if (! -d $DirData) {
 		if ($CreateDirDataIfNotExists) {
 			if ($Debug) { debug(" Make directory $DirData",2); }
-			my $mkdirok=mkdir "$DirData", 0666;
+			my $mkdirok=mkdir "$DirData", 0766;
 			if (! $mkdirok) { error("Error: $PROG failed to create directory DirData (DirData=\"$DirData\", CreateDirDataIfNotExists=$CreateDirDataIfNotExists)."); }
 		}
 		else {
