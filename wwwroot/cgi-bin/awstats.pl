@@ -3761,20 +3761,20 @@ sub Show_Flag_Links {
 
 #--------------------------------------------------------------------
 # Function:		Format value in bytes in a string (Bytes, Kb, Mb, Gb)
-# Parameters:   bytes
+# Parameters:   bytes (integer value or "0.00")
 # Input:        None
 # Output:       None
-# Return:       bytes formated
+# Return:       "x.yz MB" or "x.yy KB" or "x Bytes" or "0"
 #--------------------------------------------------------------------
 sub Format_Bytes {
 	my $bytes = shift||0;
 	my $fudge = 1;
 	# Do not use exp/log function to calculate 1024power, function make segfault on some unix/perl versions
-	if ($bytes >= $fudge * 1073741824) { return sprintf("%.2f", $bytes/1073741824)." $Message[110]"; }
-	if ($bytes >= $fudge * 1048576)    { return sprintf("%.2f", $bytes/1048576)." $Message[109]"; }
-	if ($bytes >= $fudge * 1024)       { return sprintf("%.2f", $bytes/1024)." $Message[108]"; }
+	if ($bytes >= ($fudge << 30)) { return sprintf("%.2f", $bytes/1073741824)." $Message[110]"; }
+	if ($bytes >= ($fudge << 20)) { return sprintf("%.2f", $bytes/1048576)." $Message[109]"; }
+	if ($bytes >= ($fudge << 10)) { return sprintf("%.2f", $bytes/1024)." $Message[108]"; }
 	if ($bytes < 0) { $bytes="?"; }
-	return int($bytes)." $Message[119]";
+	return int($bytes).(int($bytes)?" $Message[119]":"");
 }
 
 #--------------------------------------------------------------------
@@ -5649,8 +5649,10 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 if ($HTMLOutput) {
 
 	my $max_p; my $max_h; my $max_k; my $max_v;
-	my $rest_p; my $rest_h; my $rest_k; my $rest_e; my $rest_x; my $rest_s;
 	my $total_u; my $total_v; my $total_p; my $total_h; my $total_k; my $total_e; my $total_x; my $total_s;
+	my $average_u; my $average_v; my $average_p; my $average_h; my $average_k;
+	my $rest_p; my $rest_h; my $rest_k; my $rest_e; my $rest_x; my $rest_s;
+	my $average_nb;
 
 	# Define the NewLinkParams for main chart
 	my $NewLinkParams=${QueryString};
@@ -6118,32 +6120,32 @@ EOF
 #			if (($DayBytes{$year.$month.$day}||0) > $max_k)  { $max_k=$DayBytes{$year.$month.$day}; }
 #		}
 #		# Calculate average values
-#		my $avg_day_nb=0; my $avg_day_v=0; my $avg_day_p=0; my $avg_day_h=0; my $avg_day_k=0;
+#		my $average_nb=0; my $average_v=0; my $average_p=0; my $average_h=0; my $average_k=0;
 #		foreach my $daycursor ($firstdaytocountaverage..$lastdaytocountaverage) {
 #			$daycursor =~ /^(\d\d\d\d)(\d\d)(\d\d)/;
 #			my $year=$1; my $month=$2; my $day=$3;
 #			if (! DateIsValid($day,$month,$year)) { next; }			# If not an existing day, go to next
-#			$avg_day_nb++;											# Increase number of day used to count
-#			$avg_day_v+=($DayVisits{$daycursor}||0);
-#			$avg_day_p+=($DayPages{$daycursor}||0);
-#			$avg_day_h+=($DayHits{$daycursor}||0);
-#			$avg_day_k+=($DayBytes{$daycursor}||0);
+#			$average_nb++;											# Increase number of day used to count
+#			$average_v+=($DayVisits{$daycursor}||0);
+#			$average_p+=($DayPages{$daycursor}||0);
+#			$average_h+=($DayHits{$daycursor}||0);
+#			$average_k+=($DayBytes{$daycursor}||0);
 #		}
-#		if ($avg_day_nb) {
-#			$avg_day_v=$avg_day_v/$avg_day_nb;
-#			$avg_day_p=$avg_day_p/$avg_day_nb;
-#			$avg_day_h=$avg_day_h/$avg_day_nb;
-#			$avg_day_k=$avg_day_k/$avg_day_nb;
-#			if ($avg_day_v > $max_v) { $max_v=$avg_day_v; }
-#			#if ($avg_day_p > $max_p) { $max_p=$avg_day_p; }
-#			if ($avg_day_h > $max_h) { $max_h=$avg_day_h; }
-#			if ($avg_day_k > $max_k) { $max_k=$avg_day_k; }
+#		if ($average_nb) {
+#			$average_v=$average_v/$average_nb;
+#			$average_p=$average_p/$average_nb;
+#			$average_h=$average_h/$average_nb;
+#			$average_k=$average_k/$average_nb;
+#			if ($average_v > $max_v) { $max_v=$average_v; }
+#			#if ($average_p > $max_p) { $max_p=$average_p; }
+#			if ($average_h > $max_h) { $max_h=$average_h; }
+#			if ($average_k > $max_k) { $max_k=$average_k; }
 #		}
 #		else {
-#			$avg_day_v="?";
-#			$avg_day_p="?";
-#			$avg_day_h="?";
-#			$avg_day_k="?";
+#			$average_v="?";
+#			$average_p="?";
+#			$average_h="?";
+#			$average_k="?";
 #		}
 #		foreach my $daycursor ($firstdaytoshowtime..$lastdaytoshowtime) {
 #			$daycursor =~ /^(\d\d\d\d)(\d\d)(\d\d)/;
@@ -6164,18 +6166,18 @@ EOF
 #		print "<TD>&nbsp;</TD>";
 #		print "<TD>";	# Show average value cell
 #		my $bredde_v=0; my $bredde_p=0; my $bredde_h=0; my $bredde_k=0;
-#		if ($max_v > 0) { $bredde_v=int($avg_day_v/$max_v*$BarHeight)+1; }
-#		if ($max_h > 0) { $bredde_p=int($avg_day_p/$max_h*$BarHeight)+1; }
-#		if ($max_h > 0) { $bredde_h=int($avg_day_h/$max_h*$BarHeight)+1; }
-#		if ($max_k > 0) { $bredde_k=int($avg_day_k/$max_k*$BarHeight)+1; }
-#		$avg_day_v=sprintf("%.2f",$avg_day_v);
-#		$avg_day_p=sprintf("%.2f",$avg_day_p);
-#		$avg_day_h=sprintf("%.2f",$avg_day_h);
-#		$avg_day_k=sprintf("%.2f",$avg_day_k);
-#		if ($ShowMonthDayStats =~ /V/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_v\" HEIGHT=$bredde_v WIDTH=4 ALT=\"$Message[10]: $avg_day_v\" title=\"$Message[10]: $avg_day_v\">"; }
-#		if ($ShowMonthDayStats =~ /P/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_p\" HEIGHT=$bredde_p WIDTH=4 ALT=\"$Message[56]: $avg_day_p\" title=\"$Message[56]: $avg_day_p\">"; }
-#		if ($ShowMonthDayStats =~ /H/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_h\" HEIGHT=$bredde_h WIDTH=4 ALT=\"$Message[57]: $avg_day_h\" title=\"$Message[57]: $avg_day_h\">"; }
-#		if ($ShowMonthDayStats =~ /B/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_k\" HEIGHT=$bredde_k WIDTH=4 ALT=\"$Message[75]: ".Format_Bytes($avg_day_k)."\" title=\"$Message[75]: ".Format_Bytes($avg_day_k)."\">"; }
+#		if ($max_v > 0) { $bredde_v=int($average_v/$max_v*$BarHeight)+1; }
+#		if ($max_h > 0) { $bredde_p=int($average_p/$max_h*$BarHeight)+1; }
+#		if ($max_h > 0) { $bredde_h=int($average_h/$max_h*$BarHeight)+1; }
+#		if ($max_k > 0) { $bredde_k=int($average_k/$max_k*$BarHeight)+1; }
+#		$average_v=sprintf("%.2f",$average_v);
+#		$average_p=sprintf("%.2f",$average_p);
+#		$average_h=sprintf("%.2f",$average_h);
+#		$average_k=sprintf("%.2f",$average_k);
+#		if ($ShowMonthDayStats =~ /V/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_v\" HEIGHT=$bredde_v WIDTH=4 ALT=\"$Message[10]: $average_v\" title=\"$Message[10]: $average_v\">"; }
+#		if ($ShowMonthDayStats =~ /P/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_p\" HEIGHT=$bredde_p WIDTH=4 ALT=\"$Message[56]: $average_p\" title=\"$Message[56]: $average_p\">"; }
+#		if ($ShowMonthDayStats =~ /H/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_h\" HEIGHT=$bredde_h WIDTH=4 ALT=\"$Message[57]: $average_h\" title=\"$Message[57]: $average_h\">"; }
+#		if ($ShowMonthDayStats =~ /B/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_k\" HEIGHT=$bredde_k WIDTH=4 ALT=\"$Message[75]: ".Format_Bytes($average_k)."\" title=\"$Message[75]: ".Format_Bytes($average_k)."\">"; }
 #		print "</TD>";
 #		print "<TD></TD>\n";
 #		print "</TR>\n";
@@ -6798,28 +6800,33 @@ EOF
 		if ($ShowMonthDayStats =~ /B/i) { print "<TD><b>".Format_Bytes(int($TotalBytes))."</b><br>($RatioBytes&nbsp;$Message[108]/".lc($Message[12]).")</TD>"; } else { print "<TD>&nbsp;</TD>"; }
 		print "</TR>\n";
 
-		$total_u=$total_v=$total_p=$total_h=$total_k=0;
 		my $colspan=5;
 		print "<TR valign=bottom><TD align=center colspan=$colspan>";
 
 		# Show monthly stats
+		$average_nb=$average_u=$average_v=$average_p=$average_h=$average_k=0;
+		$total_u=$total_v=$total_p=$total_h=$total_k=0;
 		print "<CENTER>";
 		print "<TABLE>";
 		print "<TR valign=bottom><td>&nbsp;</td>";
 		$max_v=$max_p=$max_h=$max_k=1;
+		# Define total and max
 		for (my $ix=1; $ix<=12; $ix++) {
 			my $monthix=sprintf("%02s",$ix);
-			$total_u+=$MonthUnique{$YearRequired.$monthix};
-			$total_v+=$MonthVisits{$YearRequired.$monthix};
-			$total_p+=$MonthPages{$YearRequired.$monthix};
-			$total_h+=$MonthHits{$YearRequired.$monthix};
-			$total_k+=$MonthBytes{$YearRequired.$monthix};
+			$total_u+=$MonthUnique{$YearRequired.$monthix}||0;
+			$total_v+=$MonthVisits{$YearRequired.$monthix}||0;
+			$total_p+=$MonthPages{$YearRequired.$monthix}||0;
+			$total_h+=$MonthHits{$YearRequired.$monthix}||0;
+			$total_k+=$MonthBytes{$YearRequired.$monthix}||0;
 			#if ($MonthUnique{$YearRequired.$monthix} > $max_v) { $max_v=$MonthUnique{$YearRequired.$monthix}; }
 			if ($MonthVisits{$YearRequired.$monthix} > $max_v) { $max_v=$MonthVisits{$YearRequired.$monthix}; }
 			#if ($MonthPages{$YearRequired.$monthix} > $max_p)  { $max_p=$MonthPages{$YearRequired.$monthix}; }
 			if ($MonthHits{$YearRequired.$monthix} > $max_h)   { $max_h=$MonthHits{$YearRequired.$monthix}; }
 			if ($MonthBytes{$YearRequired.$monthix} > $max_k)  { $max_k=$MonthBytes{$YearRequired.$monthix}; }
 		}
+		# Define average
+		# TODO
+		# Show bars for month
 		for (my $ix=1; $ix<=12; $ix++) {
 			my $monthix=sprintf("%02s",$ix);
 			my $bredde_u=0; my $bredde_v=0;my $bredde_p=0;my $bredde_h=0;my $bredde_k=0;
@@ -6866,6 +6873,8 @@ EOF
 			if ($ShowMonthDayStats =~ /B/i) { print "<TD>",Format_Bytes(int($MonthBytes{$YearRequired.$monthix})),"</TD>"; }
 			print "</TR>\n";
 		}
+		# Average row
+		# TODO
 		# Total row
 		print "<TR><TD bgcolor=\"#$color_TableBGRowTitle\">$Message[102]</TD>";
 		if ($ShowMonthDayStats =~ /U/i) { print "<TD bgcolor=\"#$color_TableBGRowTitle\">$total_u</TD>"; }
@@ -6878,47 +6887,53 @@ EOF
 		print "</TABLE>\n<br>";
 
 		# Show daily stats
+		$average_nb=$average_u=$average_v=$average_p=$average_h=$average_k=0;
+		$total_u=$total_v=$total_p=$total_h=$total_k=0;
 		print "<TABLE>";
 		print "<TR valign=bottom>";
-		# Get max_v, max_h and max_k values
+		# Define total and max
 		$max_v=$max_h=$max_k=0;		# Start from 0 because can be lower than 1
 		foreach my $daycursor ($firstdaytoshowtime..$lastdaytoshowtime) {
 			$daycursor =~ /^(\d\d\d\d)(\d\d)(\d\d)/;
 			my $year=$1; my $month=$2; my $day=$3;
 			if (! DateIsValid($day,$month,$year)) { next; }			# If not an existing day, go to next
+			$total_v+=$DayVisits{$year.$month.$day}||0;
+			$total_p+=$DayPages{$year.$month.$day}||0;
+			$total_h+=$DayHits{$year.$month.$day}||0;
+			$total_k+=$DayBytes{$year.$month.$day}||0;
 			if (($DayVisits{$year.$month.$day}||0) > $max_v)  { $max_v=$DayVisits{$year.$month.$day}; }
 			#if (($DayPages{$year.$month.$day}||0) > $max_p)  { $max_p=$DayPages{$year.$month.$day}; }
 			if (($DayHits{$year.$month.$day}||0) > $max_h)   { $max_h=$DayHits{$year.$month.$day}; }
 			if (($DayBytes{$year.$month.$day}||0) > $max_k)  { $max_k=$DayBytes{$year.$month.$day}; }
 		}
-		# Calculate average values
-		my $avg_day_nb=0; my $avg_day_v=0; my $avg_day_p=0; my $avg_day_h=0; my $avg_day_k=0;
+		# Define average
 		foreach my $daycursor ($firstdaytocountaverage..$lastdaytocountaverage) {
 			$daycursor =~ /^(\d\d\d\d)(\d\d)(\d\d)/;
 			my $year=$1; my $month=$2; my $day=$3;
 			if (! DateIsValid($day,$month,$year)) { next; }			# If not an existing day, go to next
-			$avg_day_nb++;											# Increase number of day used to count
-			$avg_day_v+=($DayVisits{$daycursor}||0);
-			$avg_day_p+=($DayPages{$daycursor}||0);
-			$avg_day_h+=($DayHits{$daycursor}||0);
-			$avg_day_k+=($DayBytes{$daycursor}||0);
+			$average_nb++;											# Increase number of day used to count
+			$average_v+=($DayVisits{$daycursor}||0);
+			$average_p+=($DayPages{$daycursor}||0);
+			$average_h+=($DayHits{$daycursor}||0);
+			$average_k+=($DayBytes{$daycursor}||0);
 		}
-		if ($avg_day_nb) {
-			$avg_day_v=$avg_day_v/$avg_day_nb;
-			$avg_day_p=$avg_day_p/$avg_day_nb;
-			$avg_day_h=$avg_day_h/$avg_day_nb;
-			$avg_day_k=$avg_day_k/$avg_day_nb;
-			if ($avg_day_v > $max_v) { $max_v=$avg_day_v; }
-			#if ($avg_day_p > $max_p) { $max_p=$avg_day_p; }
-			if ($avg_day_h > $max_h) { $max_h=$avg_day_h; }
-			if ($avg_day_k > $max_k) { $max_k=$avg_day_k; }
+		if ($average_nb) {
+			$average_v=$average_v/$average_nb;
+			$average_p=$average_p/$average_nb;
+			$average_h=$average_h/$average_nb;
+			$average_k=$average_k/$average_nb;
+			if ($average_v > $max_v) { $max_v=$average_v; }
+			#if ($average_p > $max_p) { $max_p=$average_p; }
+			if ($average_h > $max_h) { $max_h=$average_h; }
+			if ($average_k > $max_k) { $max_k=$average_k; }
 		}
 		else {
-			$avg_day_v="?";
-			$avg_day_p="?";
-			$avg_day_h="?";
-			$avg_day_k="?";
+			$average_v="?";
+			$average_p="?";
+			$average_h="?";
+			$average_k="?";
 		}
+		# Show bars for day
 		foreach my $daycursor ($firstdaytoshowtime..$lastdaytoshowtime) {
 			$daycursor =~ /^(\d\d\d\d)(\d\d)(\d\d)/;
 			my $year=$1; my $month=$2; my $day=$3;
@@ -6939,18 +6954,18 @@ EOF
 		# Show average value cell
 		print "<TD>";
 		my $bredde_v=0; my $bredde_p=0; my $bredde_h=0; my $bredde_k=0;
-		if ($max_v > 0) { $bredde_v=int($avg_day_v/$max_v*$BarHeight)+1; }
-		if ($max_h > 0) { $bredde_p=int($avg_day_p/$max_h*$BarHeight)+1; }
-		if ($max_h > 0) { $bredde_h=int($avg_day_h/$max_h*$BarHeight)+1; }
-		if ($max_k > 0) { $bredde_k=int($avg_day_k/$max_k*$BarHeight)+1; }
-		$avg_day_v=sprintf("%.2f",$avg_day_v);
-		$avg_day_p=sprintf("%.2f",$avg_day_p);
-		$avg_day_h=sprintf("%.2f",$avg_day_h);
-		$avg_day_k=sprintf("%.2f",$avg_day_k);
-		if ($ShowMonthDayStats =~ /V/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_v\" HEIGHT=$bredde_v WIDTH=4 ALT=\"$Message[10]: $avg_day_v\" title=\"$Message[10]: $avg_day_v\">"; }
-		if ($ShowMonthDayStats =~ /P/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_p\" HEIGHT=$bredde_p WIDTH=4 ALT=\"$Message[56]: $avg_day_p\" title=\"$Message[56]: $avg_day_p\">"; }
-		if ($ShowMonthDayStats =~ /H/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_h\" HEIGHT=$bredde_h WIDTH=4 ALT=\"$Message[57]: $avg_day_h\" title=\"$Message[57]: $avg_day_h\">"; }
-		if ($ShowMonthDayStats =~ /B/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_k\" HEIGHT=$bredde_k WIDTH=4 ALT=\"$Message[75]: ".Format_Bytes($avg_day_k)."\" title=\"$Message[75]: ".Format_Bytes($avg_day_k)."\">"; }
+		if ($max_v > 0) { $bredde_v=int($average_v/$max_v*$BarHeight)+1; }
+		if ($max_h > 0) { $bredde_p=int($average_p/$max_h*$BarHeight)+1; }
+		if ($max_h > 0) { $bredde_h=int($average_h/$max_h*$BarHeight)+1; }
+		if ($max_k > 0) { $bredde_k=int($average_k/$max_k*$BarHeight)+1; }
+		$average_v=sprintf("%.2f",$average_v);
+		$average_p=sprintf("%.2f",$average_p);
+		$average_h=sprintf("%.2f",$average_h);
+		$average_k=(int($average_k)?Format_Bytes(sprintf("%.2f",$average_k)):"0.00");
+		if ($ShowMonthDayStats =~ /V/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_v\" HEIGHT=$bredde_v WIDTH=4 ALT=\"$Message[10]: $average_v\" title=\"$Message[10]: $average_v\">"; }
+		if ($ShowMonthDayStats =~ /P/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_p\" HEIGHT=$bredde_p WIDTH=4 ALT=\"$Message[56]: $average_p\" title=\"$Message[56]: $average_p\">"; }
+		if ($ShowMonthDayStats =~ /H/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_h\" HEIGHT=$bredde_h WIDTH=4 ALT=\"$Message[57]: $average_h\" title=\"$Message[57]: $average_h\">"; }
+		if ($ShowMonthDayStats =~ /B/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_k\" HEIGHT=$bredde_k WIDTH=4 ALT=\"$Message[75]: $average_k\" title=\"$Message[75]: $average_k\">"; }
 		print "</TD>\n";
 		print "</TR>\n";
 		# Show lib for day
@@ -6992,6 +7007,21 @@ EOF
 			if ($ShowMonthDayStats =~ /B/i) { print "<TD".($dayofweekcursor=~/[06]/?" bgcolor=\"#$color_weekend\"":"").">",Format_Bytes(int($DayBytes{$year.$month.$day})),"</TD>"; }
 			print "</TR>\n";
 		}
+		# Average row
+		print "<TR><TD bgcolor=\"#$color_TableBGRowTitle\">$Message[96]</TD>";
+		if ($ShowMonthDayStats =~ /V/i) { print "<TD bgcolor=\"#$color_TableBGRowTitle\">$average_v</TD>"; }
+		if ($ShowMonthDayStats =~ /P/i) { print "<TD bgcolor=\"#$color_TableBGRowTitle\">$average_p</TD>"; }
+		if ($ShowMonthDayStats =~ /H/i) { print "<TD bgcolor=\"#$color_TableBGRowTitle\">$average_h</TD>"; }
+		if ($ShowMonthDayStats =~ /B/i) { print "<TD bgcolor=\"#$color_TableBGRowTitle\">$average_k</TD>"; }
+		print "</TR>\n";		
+		# Total row
+		print "<TR><TD bgcolor=\"#$color_TableBGRowTitle\">$Message[102]</TD>";
+		if ($ShowMonthDayStats =~ /V/i) { print "<TD bgcolor=\"#$color_TableBGRowTitle\">$total_v</TD>"; }
+		if ($ShowMonthDayStats =~ /P/i) { print "<TD bgcolor=\"#$color_TableBGRowTitle\">$total_p</TD>"; }
+		if ($ShowMonthDayStats =~ /H/i) { print "<TD bgcolor=\"#$color_TableBGRowTitle\">$total_h</TD>"; }
+		if ($ShowMonthDayStats =~ /B/i) { print "<TD bgcolor=\"#$color_TableBGRowTitle\">".Format_Bytes($total_k)."</TD>"; }
+		print "</TR>\n";		
+
 		print "</TABLE>\n<br>";
 
 		# Show data arrays link
@@ -7122,17 +7152,17 @@ EOF
 			print "</TD>";
 		}
 		print "</TR>";
-		# Show clock icon
-		print "<TR>";
+		# Show hour lib
+		print "<TR onmouseover=\"ShowTip(17);\" onmouseout=\"HideTip(17);\">";
 		for (my $ix=0; $ix<=23; $ix++) {
-		  print "<TH width=19 onmouseover=\"ShowTip(17);\" onmouseout=\"HideTip(17);\">$ix</TH>\n";	# width=19 instead of 18 to avoid a MacOS browser bug.
+		  print "<TH width=19>$ix</TH>\n";	# width=19 instead of 18 to avoid a MacOS browser bug.
 		}
 		print "</TR>\n";
-		# Show hour lib
-		print "<TR>\n";
+		# Show clock icon
+		print "<TR onmouseover=\"ShowTip(17);\" onmouseout=\"HideTip(17);\">\n";
 		for (my $ix=0; $ix<=23; $ix++) {
 			my $hr=($ix+1); if ($hr>12) { $hr=$hr-12; }
-			print "<TD onmouseover=\"ShowTip(17);\" onmouseout=\"HideTip(17);\"><IMG alt='' SRC=\"$DirIcons\/clock\/hr$hr.png\" width=10 alt=\"$hr:00\"></TD>\n";
+			print "<TD><IMG alt='' SRC=\"$DirIcons\/clock\/hr$hr.png\" width=10 alt=\"$hr:00\"></TD>\n";
 		}
 		print "</TR>\n";
 
