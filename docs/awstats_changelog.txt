@@ -20,6 +20,7 @@ New features/improvments:
 - Optimized HTML output report size.
 
 Other/Documentation:
+- Added Isle of Man flag icon.
 - Updated documentation.
 
 
