@@ -1374,8 +1374,8 @@ sub Check_Config {
 	if ($Message[89] eq "") { $Message[89]="Fri"; }
 	if ($Message[90] eq "") { $Message[90]="Sat"; }
 	if ($Message[91] eq "") { $Message[91]="Days of week"; }
-	if ($Message[92] eq "") { $Message[91]="Who"; }
-	if ($Message[93] eq "") { $Message[91]="When"; }
+	if ($Message[92] eq "") { $Message[92]="Who"; }
+	if ($Message[93] eq "") { $Message[93]="When"; }
 }
 
 #--------------------------------------------------------------------
