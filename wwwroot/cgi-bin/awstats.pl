@@ -81,7 +81,7 @@ $word, $yearcon, $yearfile, $yearmonthfile, $yeartoprocess) = ();
 %MonthBytes = %MonthHits = %MonthPages = %MonthUnique = %MonthVisits =
 %listofyears = %monthlib = %monthnum = ();
 
-$VERSION="2.5 (build 33)";
+$VERSION="2.5 (build 34)";
 $Lang=0;
 
 # Default value
@@ -1443,6 +1443,7 @@ if (++$nowmonth < 10) { $nowmonth = "0$nowmonth"; }
 if ($nowday < 10) { $nowday = "0$nowday"; }
 if ($nowhour < 10) { $nowhour = "0$nowhour"; }
 if ($nowmin < 10) { $nowmin = "0$nowmin"; }
+if ($nowsec < 10) { $nowsec = "0$nowsec"; }
 # Get tomorrow time (will be used to discard some record with corrupted date (future date))
 ($tomorrowsec,$tomorrowmin,$tomorrowhour,$tomorrowday,$tomorrowmonth,$tomorrowyear) = localtime($nowtime+86400);
 if ($tomorrowyear < 100) { $tomorrowyear+=2000; } else { $tomorrowyear+=1900; }
@@ -1451,6 +1452,7 @@ if (++$tomorrowmonth < 10) { $tomorrowmonth = "0$tomorrowmonth"; }
 if ($tomorrowday < 10) { $tomorrowday = "0$tomorrowday"; }
 if ($tomorrowhour < 10) { $tomorrowhour = "0$tomorrowhour"; }
 if ($tomorrowmin < 10) { $tomorrowmin = "0$tomorrowmin"; }
+if ($tomorrowsec < 10) { $tomorrowsec = "0$tomorrowsec"; }
 $timetomorrow=$tomorrowyear.$tomorrowmonth.$tomorrowday.$tomorrowhour.$tomorrowmin.$tomorrowsec;	
 
 # Read config file
