@@ -69,7 +69,7 @@ $tab_titre, $total_h, $total_k, $total_p, $yearmonth, $yeartoprocess) = ();
 %MonthBytes = %MonthHits = %MonthHostsKnown = %MonthHostsUnknown = %MonthPages = %MonthUnique = %MonthVisits =
 %listofyears = %monthlib = %monthnum = ();
 
-$VERSION="3.1 (build 14)";
+$VERSION="3.1 (build 15)";
 $Lang="en";
 $Sort="";
 
@@ -272,20 +272,20 @@ $BarImageHorizontal_k = "barrehk.png";
 "webvcr","WebVCR",
 "libwww","LibWWW",				# Must be at end because some browser have both "browser id" and "libwww"
 # Music only browsers
-"real","RealAudio or compatible player",
-"winamp","WinAmp",				# Works for winampmpeg and winamp3httprdr
-"windows-media-player","Windows Media Player",
-"audion","Audion",
-"freeamp","FreeAmp",
-"itunes","Apple iTunes",
-"jetaudio","JetAudio",
-"mint_audio","Mint Audio",
-"mpg123","mpg123",
-"nsplayer","NetShow Player",
-"sonique","Sonique",
-"uplayer","Ultra Player",
-"xmms","XMMS",
-"xaudio","Some XAudio Engine based MPEG player",
+"real","RealAudio or compatible (media player)",
+"winamp","WinAmp (media player)",				# Works for winampmpeg and winamp3httprdr
+"windows-media-player","Windows Media Player (media player)",
+"audion","Audion (media player)",
+"freeamp","FreeAmp (media player)",
+"itunes","Apple iTunes (media player)",
+"jetaudio","JetAudio (media player)",
+"mint_audio","Mint Audio (media player)",
+"mpg123","mpg123 (media player)",
+"nsplayer","NetShow Player (media player)",
+"sonique","Sonique (media player)",
+"uplayer","Ultra Player (media player)",
+"xmms","XMMS (media player)",
+"xaudio","Some XAudio Engine based MPEG player (media player)",
 # Other kind of browsers
 "webzip","WebZIP",
 # PDA/Phonecell browsers
@@ -1413,11 +1413,11 @@ sub Read_History_File {
 	        if ($field[0] eq "From3") { $_from_p[3]+=$field[1]; $_from_h[3]+=$field[2]; next; }
 	        if ($field[0] eq "From4") { $_from_p[4]+=$field[1]; $_from_h[4]+=$field[2]; next; }
 			# Next 5 lines are to read old awstats history files ("Fromx" section was "HitFromx" in such files)
-	        if ($field[0] eq "HitFrom0") { $_from_p[0]=0; $_from_h[0]+=$field[1]; next; }
-	        if ($field[0] eq "HitFrom1") { $_from_p[1]=0; $_from_h[1]+=$field[1]; next; }
-	        if ($field[0] eq "HitFrom2") { $_from_p[2]=0; $_from_h[2]+=$field[1]; next; }
-	        if ($field[0] eq "HitFrom3") { $_from_p[3]=0; $_from_h[3]+=$field[1]; next; }
-	        if ($field[0] eq "HitFrom4") { $_from_p[4]=0; $_from_h[4]+=$field[1]; next; }
+	        if ($field[0] eq "HitFrom0") { $_from_p[0]+=0; $_from_h[0]+=$field[1]; next; }
+	        if ($field[0] eq "HitFrom1") { $_from_p[1]+=0; $_from_h[1]+=$field[1]; next; }
+	        if ($field[0] eq "HitFrom2") { $_from_p[2]+=0; $_from_h[2]+=$field[1]; next; }
+	        if ($field[0] eq "HitFrom3") { $_from_p[3]+=0; $_from_h[3]+=$field[1]; next; }
+	        if ($field[0] eq "HitFrom4") { $_from_p[4]+=0; $_from_h[4]+=$field[1]; next; }
 	        if ($readse) { $_se_referrals_h{$field[0]}+=$field[1]; next; }
 	        if ($readsearchwords) { $_keywords{$field[0]}+=$field[1]; next; }
 	        if ($readerrors) { $_errors_h{$field[0]}+=$field[1]; next; }
