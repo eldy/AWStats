@@ -233,6 +233,11 @@ if ($LibToExport =~ /browsers/) {
 }
 
 if ($LibToExport =~ /mime/) {
+	if ($ExportFormat eq 'analog') {
+		foreach my $key (sort keys %MimeHashFamily) {
+			if ($MimeHashFamily{$key} =~ /(text|page|script|document)/) { print "PAGEINCLUDE *.$key\n"; }
+		}
+	}
 	foreach my $key (sort keys %MimeHashFamily) {
 		if ($ExportFormat eq 'text') {
 			print "$key\t$MimeHashLib{$MimeHashFamily{$key}}\n";
