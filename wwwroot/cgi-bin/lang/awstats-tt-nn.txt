@@ -24,8 +24,9 @@
 	Lenkjer frå søkemotorar er ikkje inkludert her, sidan desse allereie er oppført i førre del av denne tabellen.
 	</div>
 	<div class="CTooltip" id="tt15">
-	Denne tabellen viser dei mest brukte <b>søkeorda</b> brukt til å finna nettstaden din i søkemotorar og emnekatalogar.
-	(Søkeord frå dei <b>#SearchEnginesArray#</b> mest populære søkemotorane og emnekatalogane kan lesast av #PROG#, f.eks.&nbsp;Yahoo, Altavista, Lycos, Google, og Kvasir).
+	Denne tabellen viser dei mest brukte <b>søkeorda og søkeuttrykka</b> brukt til å finna nettstaden din i søkemotorar og emnekatalogar.
+	(Søkeord frå dei <b>#SearchEnginesArray#</b> mest populære søkemotorane og emnekatalogane kan lesast av #PROG#, f.eks.&nbsp;Yahoo, Altavista, Lycos, Google, og Kvasir).<br>
+	Merk at talet på søkeord kan vera høgare enn talet på søkeuttrykk, for når to eller fleire søkeord blir brukt i same søk, vil kvart ord telja med i oversikta over søkeord.
 	</div>
 	<div class="CTooltip" id="tt16">
 	Robotar blir brukt av mange søkemotorar som besøker nettstaden din for å indeksera og rangera han, samla statistikk om nettstader, og/eller sjå om nettstaden framleis er tilgjengeleg.<br>
@@ -39,6 +40,11 @@
  	</div>
  	<div class="CTooltip" id="tt19">
  	Rapporterte tal er <b>kumulative summar</b> (rekna ut frå all data mellom første og siste besøk)
+ 	</div>
+ 	<div class="CTooltip" id="tt20">
+ 	Nokre <b>besøkslengder</b> er «ukjente» fordi dei ikkje kan reknast ut. Hovudgrunnane for dette er:<br>
+ 	- Besøket er ikkje ferdig når rapportoppdateringa skjer.<br>
+ 	- Besøket starta etter klokka 23:00 på den siste dagen i månaden. (Tekniske grunnar hindrar AWStats å rekna ut besøkslengda i desse tilfella.)
  	</div>
 
 	<div class="CTooltip" id="tt201"> Inga beskriving av denne feilen. </div>
