@@ -1,0 +1,9 @@
+make
+tools
+CVS
+*~
+awstats-*.tgz
+awstats-*.exe
+awstats-*.rpm
+awstats-*.deb
+awstats-*.zip
