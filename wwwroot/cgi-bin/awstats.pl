@@ -1746,7 +1746,7 @@ sub Read_History_With_TmpUpdate {
 		if ($UpdateStats || $MigrateStats || ($HTMLOutput eq 'main' && $ShowOriginStats) || $HTMLOutput eq 'refererse') { $SectionsToLoad{'sereferrals'}=$order++; }
 		if ($UpdateStats || $MigrateStats || ($HTMLOutput eq 'main' && $ShowOriginStats) || $HTMLOutput eq 'refererpages') { $SectionsToLoad{'pagerefs'}=$order++; }
 		if ($UpdateStats || $MigrateStats || ($HTMLOutput eq 'main' && $ShowKeyphrasesStats) || $HTMLOutput eq 'keyphrases' || $HTMLOutput eq 'keywords') { $SectionsToLoad{'searchwords'}=$order++; }
-		if ($HTMLOutput eq 'main' && $ShowKeywordsStats) { $SectionsToLoad{'keywords'}=$order++; }
+		if (! $withupdate && $HTMLOutput eq 'main' && $ShowKeywordsStats) { $SectionsToLoad{'keywords'}=$order++; }	# If we update, dont need to load
 		# Others
 		if ($UpdateStats || $MigrateStats || ($HTMLOutput eq 'main' && $ShowHTTPErrorsStats) || $HTMLOutput eq 'errors') { $SectionsToLoad{'errors'}=$order++; }
 		foreach my $code (keys %TrapInfosForHTTPErrorCodes) {
@@ -2881,6 +2881,7 @@ sub Read_History_With_TmpUpdate {
 		else {
 			$HistoryAlreadyFlushed{"$year$month"}=1;
 		}
+		if (! $ListOfYears{"$year"} || $ListOfYears{"$year"} lt "$month") { $ListOfYears{"$year"}="$month"; }
 	}
 
 	# For backward compatibility, if LastLine does not exist
@@ -5675,7 +5676,7 @@ EOF
 				print "</select>\n";
 				print "<select class=CFormFields name=\"year\">\n";
 				# Add YearRequired in list if not in ListOfYears
-				if (! $ListOfYears{$YearRequired}) { $ListOfYears{$YearRequired}=1; }
+				if (! $ListOfYears{$YearRequired}) { $ListOfYears{$YearRequired}=$MonthRequired; }
 				foreach my $key (reverse sort keys %ListOfYears) { print "<option".($YearRequired eq "$key"?" selected":"")." value=\"$key\">$key"; }
 				print "</select>\n";
 				print "<input type=hidden name=\"output\" value=\"$HTMLOutput\">\n";
@@ -6631,12 +6632,14 @@ EOF
 		if ($TotalVisits > 0) { $RatioHits=int($TotalHits/$TotalVisits*100)/100; }
 		if ($TotalVisits > 0) { $RatioBytes=int(($TotalBytes/1024)*100/$TotalVisits)/100; }
 
-
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TD><b>$Message[8]</b></TD>\n";
-		print "<TD colspan=3 rowspan=2>$Message[128]</TD>";
+		print "<TD colspan=3>$Message[128]</TD>";
 		print "<TD><b>$Message[9]</b></TD></TR>\n";
 		if ($FirstTime) { print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TD>".Format_Date($FirstTime,0)."</TD>"; }
 		else { print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TD>NA</TD>"; }
+		print "<TD colspan=3>";
+		print ($MonthRequired eq "year"?"$Message[6] $YearRequired":"$Message[5] ".$MonthLib{$MonthRequired}." $YearRequired");
+		print "</TD>";
 		if ($LastTime) { print "<TD>".Format_Date($LastTime,0)."</TD></TR>\n"; }
 		else { print "<TD>NA</TD></TR>\n"; }
 		# Show main indicators
@@ -7600,6 +7603,7 @@ EOF
 			$total_s += $_keyphrases{$key};
 			$count++;
 		}
+		if ($Debug) { debug("Total real / shown : $TotalKeyphrases / $total_s",2); }
 		$rest_s=$TotalKeyphrases-$total_s;
 		if ($rest_s > 0) {
 			my $p;
@@ -7627,6 +7631,7 @@ EOF
 			$total_s += $_keywords{$key};
 			$count++;
 		}
+		if ($Debug) { debug("Total real / shown : $TotalKeywords / $total_s",2); }
 		$rest_s=$TotalKeywords-$total_s;
 		if ($rest_s > 0) {
 			my $p;
