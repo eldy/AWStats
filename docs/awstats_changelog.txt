@@ -9,17 +9,18 @@ Fixes:
 - Fixed a problem of not working misc feature when using IIS and 
   when URLWithQuery was set to 0.
 - Now all non ISO-8859-1 languages are shown correctly even with 
-  Apache2 whatever is the value of the AddDefaultCharset 
-  directive.
-- maillogconvert.pl: Better management of error records with sendmail.
+  Apache2, whatever is the value of the AddDefaultCharset directive.
+- Some plugins broke the xhtml output.
+- Fixed old bug showing string "SCALAR(0x8badae4)" inside html reports
+  when using mod_perl.
+- maillogconvert.pl: Better management of error records with sendmail
   and postfix (some "reject" records were discarded).
 - maillogconvert.pl: Fixed important bug where records were discarded
-  when server name ws a FQDN.
+  when server name was a FQDN.
 - configure.pl: Now works also on Mac OS X
 - configure.pl: If /etc/awstats directory does not exist, try to
   create it. If /etc/awstats.model.conf not found on Linux, try to
-  find from it in cgi-bin directory.
-- Some plugins broke hte xhtml output.
+  find it in cgi-bin directory.
 
 New features/improvements:
 - Added Firefox to browser database.

@@ -4942,7 +4942,7 @@ sub ShowEmailSendersChart {
 		if ($ShowEMailSenders =~ /L/i) { print "<td>&nbsp;</td>"; }
 		print "</tr>\n";
 	}
-	&tab_end;
+	&tab_end();
 }
 
 
@@ -5015,7 +5015,7 @@ sub ShowEmailReceiversChart {
 		if ($ShowEMailReceivers =~ /L/i) { print "<td>&nbsp;</td>"; }
 		print "</tr>\n";
 	}
-	&tab_end;
+	&tab_end();
 }
 
 
@@ -7357,7 +7357,7 @@ if (scalar keys %HTMLOutput) {
 #
 #		print "</center>\n";
 #		print "</td></tr>\n";
-#		&tab_end;
+#		&tab_end();
 #
 #		print "<br />\n";
 #
@@ -7484,7 +7484,7 @@ if (scalar keys %HTMLOutput) {
 #
 #		print "</center>\n";
 #		print "</td></tr>\n";
-#		&tab_end;
+#		&tab_end();
 #		&html_end;
 #		exit(0);
 #	}
@@ -7545,7 +7545,7 @@ if (scalar keys %HTMLOutput) {
 			print "<td class=\"aws\">&nbsp;</td>";
 			print "</tr>\n";
 		}
-		&tab_end;
+		&tab_end();
 		&html_end(1);
 	}
 	if ($HTMLOutput{'allhosts'} || $HTMLOutput{'lasthosts'}) {
@@ -7610,7 +7610,7 @@ if (scalar keys %HTMLOutput) {
 			if ($ShowHostsStats =~ /L/i) { print "<td>&nbsp;</td>"; }
 			print "</tr>\n";
 		}
-		&tab_end;
+		&tab_end();
 		&html_end(1);
 	}
 	if ($HTMLOutput{'unknownip'}) {
@@ -7653,7 +7653,7 @@ if (scalar keys %HTMLOutput) {
 			if ($ShowHostsStats =~ /L/i) { print "<td>&nbsp;</td>"; }
 			print "</tr>\n";
 		}
-		&tab_end;
+		&tab_end();
 		&html_end(1);
 	}
 	if ($HTMLOutput{'allemails'} || $HTMLOutput{'lastemails'}) {
@@ -7707,7 +7707,7 @@ if (scalar keys %HTMLOutput) {
 			if ($ShowAuthenticatedUsers =~ /L/i) { print "<td>&nbsp;</td>"; }
 			print "</tr>\n";
 		}
-		&tab_end;
+		&tab_end();
 		&html_end(1);
 	}
 	if ($HTMLOutput{'allrobots'} || $HTMLOutput{'lastrobots'}) {
@@ -7858,7 +7858,7 @@ if (scalar keys %HTMLOutput) {
 			}
 			print "<td>&nbsp;</td></tr>\n";
 		}
-		&tab_end;
+		&tab_end();
 		&html_end(1);
 	}
 	if ($HTMLOutput{'unknownos'}) {
@@ -7883,7 +7883,7 @@ if (scalar keys %HTMLOutput) {
 			print "<td>-</td>";
 			print "</tr>\n";
 		}
-		&tab_end;
+		&tab_end();
 		&html_end(1);
 	}
 	if ($HTMLOutput{'unknownbrowser'}) {
@@ -7906,7 +7906,7 @@ if (scalar keys %HTMLOutput) {
 			print "<td>-</td>";
 			print "</tr>\n";
 		}
-		&tab_end;
+		&tab_end();
 		&html_end(1);
 	}
 	if ($HTMLOutput{'osdetail'}) {
@@ -7998,7 +7998,7 @@ if (scalar keys %HTMLOutput) {
 			print "</td>";
 			print "</tr>\n";
 		}
-		&tab_end;
+		&tab_end();
 		&html_end(1);
 	}
 	if ($HTMLOutput{'browserdetail'}) {
@@ -8091,7 +8091,7 @@ if (scalar keys %HTMLOutput) {
 			print "</td>";
 			print "</tr>\n";
 		}
-		&tab_end;
+		&tab_end();
 		&html_end(1);
 	}
 	if ($HTMLOutput{'refererse'}) {
@@ -8134,7 +8134,7 @@ if (scalar keys %HTMLOutput) {
 			print "<td>$p_h %</td>";
 			print "</tr>\n";
 		}
-		&tab_end;
+		&tab_end();
 		&html_end(1);
 	}
 	if ($HTMLOutput{'refererpages'}) {
@@ -8193,7 +8193,7 @@ if (scalar keys %HTMLOutput) {
 			print "<td>$p_h %</td>";
 			print "</tr>\n";
 		}
-		&tab_end;
+		&tab_end();
 		&html_end(1);
 	}
 	if ($HTMLOutput{'keyphrases'}) {
@@ -8222,7 +8222,7 @@ if (scalar keys %HTMLOutput) {
 			print "<tr><td class=\"aws\"><span style=\"color: #$color_other\">$Message[124]</span></td><td>$rest_s</td>";
 			print "<td>$p %</td></tr>\n";
 		}
-		&tab_end;
+		&tab_end();
 		&html_end(1);
 	}
 	if ($HTMLOutput{'keywords'}) {
@@ -8251,7 +8251,7 @@ if (scalar keys %HTMLOutput) {
 			print "<tr><td class=\"aws\"><span style=\"color: #$color_other\">$Message[30]</span></td><td>$rest_s</td>";
 			print "<td>$p %</td></tr>\n";
 		}
-		&tab_end;
+		&tab_end();
 		&html_end(1);
 	}
 	foreach my $code (keys %TrapInfosForHTTPErrorCodes) {
@@ -8284,7 +8284,7 @@ if (scalar keys %HTMLOutput) {
 #				print "<td>...</td>";
 #				print "</tr>\n";
 #			}
-			&tab_end;
+			&tab_end();
 			&html_end(1);
 		}
 	}
@@ -8526,7 +8526,7 @@ if (scalar keys %HTMLOutput) {
 				
 			print "</center>\n";
 			print "</td></tr>\n";
-			&tab_end;
+			&tab_end();
 		}
 		}
 
@@ -8729,7 +8729,7 @@ if (scalar keys %HTMLOutput) {
 				
 			print "</center>\n";
 			print "</td></tr>\n";
-			&tab_end;
+			&tab_end();
 		}
 
 		# BY DAY OF WEEK
@@ -8849,7 +8849,7 @@ if (scalar keys %HTMLOutput) {
 						
 			print "</center></td>";
 			print "</tr>\n";
-			&tab_end;
+			&tab_end();
 		}
 	
 		# BY HOUR
@@ -8969,7 +8969,7 @@ if (scalar keys %HTMLOutput) {
 			}
 					
 			print "</center></td></tr>\n";
-			&tab_end;
+			&tab_end();
 		}
 	
 		print "\n<a name=\"who\">&nbsp;</a>\n\n";
@@ -9032,7 +9032,7 @@ if (scalar keys %HTMLOutput) {
 				print "<td class=\"aws\">&nbsp;</td>";
 				print "</tr>\n";
 			}
-			&tab_end;
+			&tab_end();
 		}
 	
 		# BY HOST/VISITOR
@@ -9082,7 +9082,7 @@ if (scalar keys %HTMLOutput) {
 				if ($ShowHostsStats =~ /L/i) { print "<td>&nbsp;</td>"; }
 				print "</tr>\n";
 			}
-			&tab_end;
+			&tab_end();
 		}
 	
 		# BY SENDER EMAIL
@@ -9146,7 +9146,7 @@ if (scalar keys %HTMLOutput) {
 				if ($ShowAuthenticatedUsers =~ /L/i) { print "<td>&nbsp;</td>"; }
 				print "</tr>\n";
 			}
-			&tab_end;
+			&tab_end();
 		}
 	
 		# BY ROBOTS
@@ -9271,7 +9271,7 @@ if (scalar keys %HTMLOutput) {
 				print "<td>".($rest_s?"$p %":"&nbsp;")."</td>";
 				print "</tr>\n";
 			}
-			&tab_end;
+			&tab_end();
 		}
 	
 		# BY FILE TYPE
@@ -9339,7 +9339,7 @@ if (scalar keys %HTMLOutput) {
 	 			}
 	 			print "</tr>\n";
 			}
-			&tab_end;
+			&tab_end();
 		}
 	
 		# BY FILE SIZE
@@ -9427,7 +9427,7 @@ if (scalar keys %HTMLOutput) {
 				}
 				print "<td>&nbsp;</td></tr>\n";
 			}
-			&tab_end;
+			&tab_end();
 		}
 	
 		# BY OS
@@ -9475,7 +9475,7 @@ if (scalar keys %HTMLOutput) {
 				print "<td class=\"aws\"><span style=\"color: #$color_other\">$Message[2]</span></td><td>$rest_h</td>";
 				print "<td>$p %</td></tr>\n";
 			}
-			&tab_end;
+			&tab_end();
 		}
 		
 		# BY BROWSER
@@ -9521,7 +9521,7 @@ if (scalar keys %HTMLOutput) {
 				print "<td class=\"aws\"><span style=\"color: #$color_other\">$Message[2]</span></td><td>&nbsp;</td><td>$rest_h</td>";
 				print "<td>$p %</td></tr>\n";
 			}
-			&tab_end;
+			&tab_end();
 		}
 	
 		# BY SCREEN SIZE
@@ -9561,7 +9561,7 @@ if (scalar keys %HTMLOutput) {
 				print "<td>".($rest_h?"$p %":"&nbsp;")."</td>";
 				print "</tr>\n";
 			}
-			&tab_end;
+			&tab_end();
 		}
 
 		print "\n<a name=\"refering\">&nbsp;</a>\n\n";
@@ -9683,7 +9683,7 @@ if (scalar keys %HTMLOutput) {
 			if ($ShowOriginStats =~ /P/i) { print "<td>".($_from_p[1]?$_from_p[1]:"&nbsp;")."</td><td>".($_from_p[1]?"$p_p[1] %":"&nbsp;")."</td>"; }
 			if ($ShowOriginStats =~ /H/i) { print "<td>".($_from_h[1]?$_from_h[1]:"&nbsp;")."</td><td>".($_from_h[1]?"$p_h[1] %":"&nbsp;")."</td>"; }
 			print "</tr>\n";
-			&tab_end;
+			&tab_end();
 		}
 	
 		print "\n<a name=\"keys\">&nbsp;</a>\n\n";
@@ -9722,7 +9722,7 @@ if (scalar keys %HTMLOutput) {
 				print "<tr><td class=\"aws\"><span style=\"color: #$color_other\">$Message[124]</span></td><td>$rest_s</td>";
 				print "<td>$p&nbsp;%</td></tr>\n";
 			}
-			&tab_end;
+			&tab_end();
 			if ($ShowKeyphrasesStats && $ShowKeywordsStats) { print "</td>\n";	}
 		}
 		if ($ShowKeyphrasesStats && $ShowKeywordsStats) { print "<td> &nbsp; </td>"; }
@@ -9754,7 +9754,7 @@ if (scalar keys %HTMLOutput) {
 				print "<tr><td class=\"aws\"><span style=\"color: #$color_other\">$Message[30]</span></td><td>$rest_s</td>";
 				print "<td>$p %</td></tr>\n";
 			}
-			&tab_end;
+			&tab_end();
 			if ($ShowKeyphrasesStats && $ShowKeywordsStats) { print "</td>\n";	}
 		}
 		if ($ShowKeyphrasesStats && $ShowKeywordsStats) { print "</tr></table>\n"; }
@@ -9800,7 +9800,7 @@ if (scalar keys %HTMLOutput) {
 				print "<td>".($total?"$p %":"&nbsp;")."</td>";
 				print "</tr>\n";
 			}
-			&tab_end;
+			&tab_end();
 		}
 	
 		# BY HTTP STATUS
@@ -9847,7 +9847,7 @@ if (scalar keys %HTMLOutput) {
 				$total_h+=$_errors_h{$key};
 				$count++;
 			}
-			&tab_end;
+			&tab_end();
 		}
 	
 		# BY CLUSTER
@@ -9883,7 +9883,7 @@ if (scalar keys %HTMLOutput) {
 				print "</tr>\n";
 				$count++;
 			}
-			&tab_end;
+			&tab_end();
 		}
 
 	 	# BY EXTRA SECTIONS
@@ -9942,7 +9942,7 @@ if (scalar keys %HTMLOutput) {
 	 			if ($ExtraStatTypes[$extranum] =~ m/L/i) { print "<td>&nbsp;</td>"; }
 	 			print "</tr>\n";
 			}
-	 		&tab_end;
+	 		&tab_end();
 	 	}
 	
 		&html_end(1);
