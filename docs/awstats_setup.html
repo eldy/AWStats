@@ -44,7 +44,7 @@ AWStats common use is made in 3 steps:<br>
 <br><a name="INSTALL"><H2 style="font: 22px arial,helvetica,sanserif color: #606060"><u>Step 1 : Install and Setup</u></H2></a>
 
 <br>
-<b>A) With Apache Server (on Unix/Linux, Windows, MacOS...)</b><br>
+<b>A) With Apache or compatible server (on Unix/Linux, Windows, MacOS...)</b><br>
 <br>
 * Step 1-1<br>
 Configure your apache web server to have <b>NCSA combined/XLF/ELF</b> log format (you can use your own log format but
@@ -82,6 +82,8 @@ This new file must be stored in<br>
 <br>
 * Step 1-6<br>
 Edit this new config file with your own setup :<br>
+- Change <a href="awstats_config.html#LogType">LogType</a> value with "W" for analyzing
+web server log files, "M" for mail log files, "F" for ftp log files, "O" otherwise.<br>
 - Change <a href="awstats_config.html#LogFile">LogFile</a> value with full path of your web server log file (You
 can also use a relative path from your awstats.pl directory).<br>
 - Check if <a href="awstats_config.html#LogFormat">LogFormat</a> has the value "1" (it means "NCSA apache combined/ELF/XLF log format").<br>
@@ -95,7 +97,7 @@ Step 1 (Install and Setup) is finished. You can jump to the <a href="#BUILD_UPDA
 <br>
 <br>
 <br>
-<b>B) With IIS Server</b><br>
+<b>B) With IIS server</b><br>
 <br>
 * Step 1-1<br>
 Configure IIS to log in <b>"Extended W3C log format"</b> (You can still use
@@ -136,6 +138,8 @@ This new file must be stored in<br>
 <br>
 * Step 1-5<br>
 Edit this new config file with your own setup :<br>
+- Change <a href="awstats_config.html#LogType">LogType</a> value with "W" for analyzing
+web server log files, "M" for mail log files, "F" for ftp log files, "O" otherwise.<br>
 - Change <a href="awstats_config.html#LogFile">LogFile</a> value with full path of your web server log file (You
 can also use a relative path from your awstats.pl directory).<br>
 - Change <a href="awstats_config.html#LogFormat">LogFormat</a> to value "2" (it means "IIS Extended W3C log format").<br>
