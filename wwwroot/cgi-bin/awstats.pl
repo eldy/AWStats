@@ -98,6 +98,7 @@ tie %_hostmachine_h, 'Tie::StdHash';
 tie %_hostmachine_k, 'Tie::StdHash';
 tie %_hostmachine_l, 'Tie::StdHash';
 tie %_url_p, 'Tie::StdHash';
+tie %_url_k, 'Tie::StdHash';
 tie %_url_e, 'Tie::StdHash';
 
 #tie %_browser_h, 'Tie::StdHash';
@@ -125,7 +126,7 @@ tie %_url_e, 'Tie::StdHash';
 
 
 
-$VERSION="4.0 (build 1)";
+$VERSION="4.0 (build 3)";
 $Lang="en";
 
 # Default value
@@ -452,14 +453,18 @@ sub Read_Config_File {
 	my $foundNotPageList=0;
 	while (<CONFIG>) {
 		chomp $_; s/\r//;
-		$_ =~ s/#.*//;							# Remove comments
+		if ($_ =~ /^$/) { next; }
+		if ($_ =~ /^#/) { next; }					# Remove comments
+		$_ =~ s/^([^\"]*)#.*/$1/;					# Remove comments
+		$_ =~ s/^([^\"]*\"[^\"]*\"[^\"]*)#.*/$1/;	# Remove comments
+		#debug("$_",2);
 		my @felter=split(/=/,$_,2);						
-		my $param=$felter[0]||next;				# If not a param=value, try with next line
+		my $param=$felter[0]||next;					# If not a param=value, try with next line
 		my $value=$felter[1];
 		$param =~ s/^\s+//; $param =~ s/\s+$//;
 		$value =~ s/^\s+//; $value =~ s/\s+$//;
 		$value =~ s/^\"//; $value =~ s/\"$//;
-		$value =~ s/__SITE__/$SiteConfig/s;		# You can use __SITE__ in config file, if you want to have one generic config file for several config
+		$value =~ s/__SITE__/$SiteConfig/s;			# You can use __SITE__ in config file, if you want to have one generic config file for several config
 		# Read main section
 		if ($param =~ /^LogFile/) {
 			$LogFile=$value;
@@ -934,6 +939,7 @@ sub Check_Config {
 	if (! $Message[103]) { $Message[103]="different keyphrases"; }
 	if (! $Message[104]) { $Message[104]="Entry pages"; }
 	if (! $Message[105]) { $Message[105]="Code"; }
+	if (! $Message[106]) { $Message[106]="Average size"; }
 }
 
 #--------------------------------------------------------------------
@@ -961,11 +967,17 @@ sub Read_History_File {
 	open(HISTORY,"$DirData/$PROG$DayRequired$month$year$FileSuffix.txt") || error("Error: Couldn't open for read file \"$DirData/$PROG$DayRequired$month$year$FileSuffix.txt\" : $!");	# Month before Year kept for backward compatibility
 	$MonthUnique{$year.$month}=0; $MonthPages{$year.$month}=0; $MonthHits{$year.$month}=0; $MonthBytes{$year.$month}=0; $MonthHostsKnown{$year.$month}=0; $MonthHostsUnKnown{$year.$month}=0;
 	
+	my $versionmaj=$versionmin=0;
 	my $countlines=0;
 	while (<HISTORY>) {
 		chomp $_; s/\r//; $countlines++;
-		my @field=split(/\s+/,$_);
 		# Analyze config line
+		if ($_ =~ /^AWSTATS DATA FILE (\d+).(\d+)/) {
+			$versionmaj=$1; $versionmin=$2;
+			debug(" data file version is $versionmaj.$versionmin",2);
+		}
+		my @field=split(/\s+/,$_);
+		if ($field[0] eq "FirstTime")       { $FirstTime{$year.$month}=int($field[1]); next; }
 	    if ($field[0] eq "LastLine")        { if ($LastLine{$year.$month} < int($field[1])) { $LastLine{$year.$month}=int($field[1]); }; next; }
 		if ($field[0] eq "FirstTime")       { $FirstTime{$year.$month}=int($field[1]); next; }
 	    if ($field[0] eq "LastTime")        { if ($LastTime{$year.$month} < int($field[1])) { $LastTime{$year.$month}=int($field[1]); }; next; }
@@ -1326,7 +1338,14 @@ sub Read_History_File {
 					}
 					if ($loadrecord) {					
 						if ($field[1]) { $_url_p{$field[0]}+=$field[1]; }
-						if ($field[2]) { $_url_e{$field[0]}+=$field[2]; }
+						if ($versionmaj < 4) {
+							if ($field[2]) { $_url_e{$field[0]}+=$field[2]; }
+							$_url_k{$field[0]}=0;
+						}
+						else {
+							if ($field[2]) { $_url_k{$field[0]}+=$field[2]; } 
+							if ($field[3]) { $_url_e{$field[0]}+=$field[3]; } 
+						}
 						$countloaded++;
 					}
 				}
@@ -1485,6 +1504,9 @@ sub Save_History_File {
 	&debug("Call to Save_History_File [$year,$month]");
 	open(HISTORYTMP,">$DirData/$PROG$month$year$FileSuffix.tmp.$$") || error("Error: Couldn't open file \"$DirData/$PROG$month$year$FileSuffix.tmp.$$\" : $!");	# Month before Year kept for backward compatibility
 
+	print HISTORYTMP "AWSTATS DATA FILE $VERSION\n";
+	print HISTORYTMP "# If you remove this file, all statistics for date $year-$month will be lost/reset.\n";
+	print HISTORYTMP "\n";
 	print HISTORYTMP "LastLine $LastLine{$year.$month}\n";
 	print HISTORYTMP "FirstTime $FirstTime{$year.$month}\n";
 	print HISTORYTMP "LastTime $LastTime{$year.$month}\n";
@@ -1553,14 +1575,14 @@ sub Save_History_File {
 		$newkey=$key;
 		$newkey =~ s/([^:])\/\//$1\//g;		# Because some targeted url were taped with 2 / (Ex: //rep//file.htm). We must keep http://rep/file.htm
 		my $entry=$_url_e{$key}||"";
-		print HISTORYTMP "$newkey ".int($_url_p{$key})." $entry\n"; next;
+		print HISTORYTMP "$newkey ".int($_url_p{$key}||0)." ".int($_url_k{$key}||0)." $entry\n"; next;
 	}
 	foreach my $key (keys %_url_p) {
 		if ($keysinkeylist{$key}) { next; }
 		$newkey=$key;
 		$newkey =~ s/([^:])\/\//$1\//g;		# Because some targeted url were taped with 2 / (Ex: //rep//file.htm). We must keep http://rep/file.htm
 		my $entry=$_url_e{$key}||"";
-		print HISTORYTMP "$newkey ".int($_url_p{$key})." $entry\n"; next;
+		print HISTORYTMP "$newkey ".int($_url_p{$key}||0)." ".int($_url_k{$key}||0)." $entry\n"; next;
 	}
 	print HISTORYTMP "END_SIDER\n";
 	print HISTORYTMP "BEGIN_FILETYPES\n";
@@ -1678,7 +1700,7 @@ sub Init_HashArray {
 	%_hostmachine_h = %_hostmachine_k = %_hostmachine_l = %_hostmachine_p =
 	%_keyphrases = %_os_h = %_pagesrefs_h = %_robot_h = %_robot_l = 
 	%_login_h = %_login_p = %_login_k = %_login_l =
-	%_se_referrals_h = %_sider404_h = %_url_p = %_url_e =
+	%_se_referrals_h = %_sider404_h = %_url_p = %_url_k = %_url_e =
 	%_unknownreferer_l = %_unknownrefererbrowser_l = ();
 }
 
@@ -1918,7 +1940,7 @@ sub BuildKeyList {
 	my $MinValue=shift;
 	my $hashforselect=shift;
 	my $hashfororder=shift;
-	debug("BuildKeyList($ArraySize,$MinValue,$hashforselect,$hashfororder)",2);
+	debug("BuildKeyList($ArraySize,$MinValue,$hashforselect with size=".(scalar keys %$hashforselect).",$hashfororder with size=".(scalar keys %$hashfororder).")",2);
 	my $count=0;
 	$lowerval=0;	# Global because used in Removelowerval
 	%val=(); %egal=(); %nextval=();
@@ -2642,6 +2664,7 @@ if ($UpdateStats) {
 			$MonthPages{$yearmonth}++;
 			$_time_p[int($dateparts[3])]++;												#Count accesses for hour (page)
 			$_url_p{$field[$pos_url]}++; 												#Count accesses for page (page)
+			$_url_k{$field[$pos_url]}+=$field[$pos_size];
 			}
 		$_time_h[int($dateparts[3])]++; $MonthHits{$yearmonth}++; $DayHits{$dayconnexion}++;	#Count accesses for hour (hit)
 		$_time_k[int($dateparts[3])]+=$field[$pos_size]; $MonthBytes{$yearmonth}+=$field[$pos_size]; $DayBytes{$dayconnexion}+=$field[$pos_size];	#Count accesses for hour (kb)
@@ -2938,6 +2961,7 @@ if ($UpdateStats) {
 		}
 
 		# End of processing all new records.
+
 	}
 	&debug("End of processing log file(s)");
 
@@ -3127,6 +3151,12 @@ EOF
 	# TotalErrors
 	my $TotalErrors=0;
 	foreach my $key (keys %_errors_h) { $TotalErrors+=$_errors_h{$key}; }
+	# TotalEntries (if not already specifically counted, we init it from _url_e hash table)
+	my $TotalEntries=0;	# TODO Mettre init TotalEntries si tout tableau non chargé
+	if (!$TotalEntries) { foreach my $key (keys %_url_e) { $TotalEntries+=$_url_e{$key}; } }
+	# TotalBytesPages (if not already specifically counted, we init it from _url_k hash table)
+	my $TotalBytesPages=0;	# TODO Mettre init TotalBytesPages si tout tableau non chargé
+	if (!$TotalBytesPages) { foreach my $key (keys %_url_k) { $TotalBytesPages+=$_url_k{$key}; } }
 	# TotalDifferentPages (if not already specifically counted, we init it from _url_p hash table)
 	if (!$TotalDifferentPages) { $TotalDifferentPages=scalar keys %_url_p; }
 	# Define firstdaytocountaverage, lastdaytocountaverage, firstdaytoshowtime, lastdaytoshowtime
@@ -3232,12 +3262,17 @@ EOF
 		else { print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>".(scalar keys %_url_p)."&nbsp; $Message[28]</TH>"; }
 		print "<TH bgcolor=\"#$color_p\">&nbsp;$Message[29]&nbsp;</TH>";
 		print "<TH bgcolor=\"#$color_s\">&nbsp;$Message[104]&nbsp;</TH>";
+		print "<TH bgcolor=\"#$color_k\">&nbsp;$Message[106]&nbsp;</TH>";
 		if ($AddOn) { AddOn_ShowFields(""); }
 		print "<TH>&nbsp;</TH></TR>\n";
-		$total_p=$total_e=0;
+		$total_p=$total_k=$total_e=0;
 		my $count=0;
 		&BuildKeyList($MAXROWS,$MinHitFile,\%_url_p,\%_url_p);
-		$max_p=1; foreach my $key (@keylist) { if ($_url_p{$key} > $max_p) { $max_p = $_url_p{$key}; } }
+		$max_p=1; $max_k=1;
+		foreach my $key (@keylist) {
+			if ($_url_p{$key} > $max_p) { $max_p = $_url_p{$key}; }
+			if ($_url_k{$key} > $max_k) { $max_k = $_url_k{$key}; }
+		}
 		foreach my $key (@keylist) {
 	    	print "<TR><TD CLASS=AWL>";
 			my $nompage=$Aliases{$key};
@@ -3245,27 +3280,32 @@ EOF
 			if (length($nompage)>$MaxLengthOfURL) { $nompage=substr($nompage,0,$MaxLengthOfURL)."..."; }
 		    if ($ShowLinksOnUrl) { print "<A HREF=\"http://$SiteToAnalyze$key\">$nompage</A>"; }
 		    else              	 { print "$nompage"; }
-			my $bredde_p=0; my $bredde_e=0;
+			my $bredde_p=0; my $bredde_k=0; my $bredde_e=0;
 			if ($max_p > 0) { $bredde_p=int($BarWidth*$_url_p{$key}/$max_p)+1; }
 			if ($_url_p{$key} && ($bredde_p==1)) { $bredde_p=2; }
 			if ($max_p > 0) { $bredde_e=int($BarWidth*$_url_e{$key}/$max_p)+1; }
 			if ($_url_e{$key} && ($bredde_e==1)) { $bredde_e=2; }
+			if ($max_k > 0) { $bredde_k=int($BarWidth*$_url_k{$key}/$max_k)+1; }
+			if ($_url_k{$key} && ($bredde_k==1)) { $bredde_k=2; }
 			print "</TD>";
-			print "<TD>$_url_p{$key}</TD><TD>".($_url_e{$key}?$_url_e{$key}:"&nbsp;")."</TD>";
+			print "<TD>$_url_p{$key}</TD><TD>".($_url_e{$key}?$_url_e{$key}:"&nbsp;")."</TD><TD>".($_url_k{$key}?Format_Bytes($_url_k{$key}/$_url_p{$key}||1):"&nbsp;")."</TD>";
 			if ($AddOn) { AddOn_ShowFields($key); }
 			print "<TD CLASS=AWL>";
-			print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_p\" WIDTH=$bredde_p HEIGHT=8><br>";
-			print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_e\" WIDTH=$bredde_e HEIGHT=8>";
+			print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_p\" WIDTH=$bredde_p HEIGHT=6><br>";
+			print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_e\" WIDTH=$bredde_e HEIGHT=6><br>";
+			print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_k\" WIDTH=$bredde_k HEIGHT=6>";
 			print "</TD></TR>\n";
 			$total_p += $_url_p{$key};
 			$total_e += $_url_e{$key};
+			$total_k += $_url_k{$key};
 			$count++;
 		}
-		debug("$TotalPages / $total_p - $TotalEntry / $total_e",2);
+		debug("$TotalPages / $total_p - $TotalEntries / $total_e",2);
 		$rest_p=$TotalPages-$total_p;
-		$rest_e=""; #TODO  $rest_e=$TotalEntry-$total_e;
-		if ($rest_p > 0 || $rest_e > 0) {
-			print "<TR><TD CLASS=AWL><font color=blue>$Message[2]</font></TD><TD>$rest_p</TD><TD>$rest_e</TD><TD>&nbsp;</TD></TR>\n";
+		$rest_e=$TotalEntries-$total_e;
+		$rest_k=$TotalBytesPages-$total_k;
+		if ($rest_p > 0 || $rest_e > 0 || $rest_k) {
+			print "<TR><TD CLASS=AWL><font color=blue>$Message[2]</font></TD><TD>$rest_p</TD><TD>$rest_e</TD><TD>".($rest_k?Format_Bytes($rest_k):"&nbsp;")."<TD>&nbsp;</TD></TR>\n";
 		}
 		&tab_end;
 		&html_end;
@@ -3298,7 +3338,7 @@ EOF
 		$rest_p=$TotalPages-$total_p;
 		$rest_h=$TotalHits-$total_h;
 		$rest_k=$TotalBytes-$total_k;
-		if ($rest_p > 0) {	# All other visitors (known or not)
+		if ($rest_p > 0 || $rest_h > 0 || $rest_k > 0) {	# All other visitors (known or not)
 			print "<TR><TD CLASS=AWL><font color=blue>$Message[2]</font></TD><TD>$rest_p</TD><TD>$rest_h</TD><TD>".Format_Bytes($rest_k)."</TD><TD>&nbsp;</TD></TR>\n";
 		}
 		&tab_end;
@@ -3327,7 +3367,7 @@ EOF
 		$rest_p=$TotalPages-$total_p;
 		$rest_h=$TotalHits-$total_h;
 		$rest_k=$TotalBytes-$total_k;
-		if ($rest_p > 0) {	# All other visitors (known or not)
+		if ($rest_p > 0 || $rest_h > 0 || $rest_k > 0) {	# All other visitors (known or not)
 			print "<TR><TD CLASS=AWL><font color=blue>$Message[82]</font></TD><TD>$rest_p</TD><TD>$rest_h</TD><TD>".Format_Bytes($rest_k)."</TD><TD>&nbsp;</TD></TR>\n";
 		}
 		&tab_end;
@@ -3726,7 +3766,7 @@ EOF
 		$rest_p=$TotalPages-$total_p;
 		$rest_h=$TotalHits-$total_h;
 		$rest_k=$TotalBytes-$total_k;
-		if ($rest_p > 0) { 	# All other domains (known or not)
+		if ($rest_p > 0 || $rest_h > 0 || $rest_k > 0) { 	# All other domains (known or not)
 			my $bredde_p=0;my $bredde_h=0;my $bredde_k=0;
 			if ($max_h > 0) { $bredde_p=int($BarWidth*$rest_p/$max_h)+1; }	# use max_h to enable to compare pages with hits
 			if ($rest_p && $bredde_p==1) { $bredde_p=2; }
@@ -3769,7 +3809,7 @@ EOF
 		$rest_p=$TotalPages-$total_p;
 		$rest_h=$TotalHits-$total_h;
 		$rest_k=$TotalBytes-$total_k;
-		if ($rest_h > 0) {	# All other visitors (known or not)
+		if ($rest_p > 0 || $rest_h > 0 || $rest_k > 0) {	# All other visitors (known or not)
 			print "<TR><TD CLASS=AWL><font color=blue>$Message[2]</font></TD><TD>$rest_p</TD><TD>$rest_h</TD><TD>".Format_Bytes($rest_k)."</TD><TD>&nbsp;</TD></TR>\n";
 		}
 		&tab_end;
@@ -3810,7 +3850,7 @@ EOF
 		$rest_p=$TotalPages-$total_p;
 		$rest_h=$TotalHits-$total_h;
 		$rest_k=$TotalBytes-$total_k;
-		if ($rest_h > 0) {	# All other login
+		if ($rest_p > 0 || $rest_h > 0 || $rest_k > 0) {	# All other login
 			print "<TR><TD CLASS=AWL><font color=blue>$Message[2]</font></TD><TD>$rest_p</TD><TD>$rest_h</TD><TD>".Format_Bytes($rest_k)."</TD><TD>&nbsp;</TD></TR>\n";
 		}
 		&tab_end;
@@ -3838,10 +3878,19 @@ EOF
 		print "$CENTER<a name=\"PAGE\">&nbsp;</a><a name=\"ENTRY\">&nbsp;</a><BR>";
 		$MaxNbOfPageShown = $TotalDifferentPages if $MaxNbOfPageShown > $TotalDifferentPages;
 		&tab_head("$Message[19] ($Message[77] $MaxNbOfPageShown) &nbsp; - &nbsp; <a href=\"$DirCgi$PROG.$Extension?${LinkParamB}output=urldetail\">$Message[80]</a>",19);
-		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$TotalDifferentPages $Message[28]</TH><TH bgcolor=\"#$color_p\" width=80>$Message[29]</TH><TH bgcolor=\"#$color_s\" width=80>$Message[104]</TH><TH>&nbsp;</TH></TR>\n";
+		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$TotalDifferentPages $Message[28]</TH>";
+		print "<TH bgcolor=\"#$color_p\" width=80>$Message[29]</TH>";
+		print "<TH bgcolor=\"#$color_s\" width=80>$Message[104]</TH>";
+		print "<TH bgcolor=\"#$color_k\" width=80>$Message[106]</TH>";
+		print "<TH>&nbsp;</TH></TR>\n";
+		$total_p=$total_e=$total_k=0;
+		$max_p=1; $max_k=1;
 		$count=0;
 		&BuildKeyList($MaxNbOfPageShown,$MinHitFile,\%_url_p,\%_url_p);
-		$max_p=1; foreach my $key (@keylist) { if ($_url_p{$key} > $max_p) { $max_p = $_url_p{$key}; } }
+		foreach my $key (@keylist) {
+			if ($_url_p{$key} > $max_p) { $max_p = $_url_p{$key}; }
+			if ($_url_k{$key} > $max_k) { $max_k = $_url_k{$key}; }
+		}
 		foreach my $key (@keylist) {
 		    print "<TR><TD CLASS=AWL>";
 			my $nompage=$Aliases{$key}||$key;
@@ -3859,22 +3908,29 @@ EOF
 			else {
 				print "$nompage";
 			}
-			my $bredde_p=0; my $bredde_e=0;
+			my $bredde_p=0; my $bredde_e=0; my $bredde_k=0;
 			if ($max_p > 0) { $bredde_p=int($BarWidth*($_url_p{$key}||0)/$max_p)+1; }
 			if (($bredde_p==1) && $_url_p{$key}) { $bredde_p=2; }
 			if ($max_p > 0) { $bredde_e=int($BarWidth*($_url_e{$key}||0)/$max_p)+1; }
 			if (($bredde_e==1) && $_url_e{$key}) { $bredde_e=2; }
-			print "</TD><TD>$_url_p{$key}</TD><TD>".($_url_e{$key}?$_url_e{$key}:"&nbsp;")."</TD>";
+			if ($max_k > 0) { $bredde_k=int($BarWidth*($_url_k{$key}||0)/$max_k)+1; }
+			if (($bredde_k==1) && $_url_k{$key}) { $bredde_k=2; }
+			print "</TD><TD>$_url_p{$key}</TD><TD>".($_url_e{$key}?$_url_e{$key}:"&nbsp;")."</TD><TD>".($_url_k{$key}?Format_Bytes($_url_k{$key}/($_url_p{$key}||1)):"&nbsp;")."</TD>";
 			print "<TD CLASS=AWL>";
-			print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_p\" WIDTH=$bredde_p HEIGHT=8 ALT=\"$Message[56]: ".int($_url_p{$key}||0)."\" title=\"$Message[56]: ".int($_url_p{$key}||0)."\"><br>";
-			print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_e\" WIDTH=$bredde_e HEIGHT=8 ALT=\"$Message[104]: ".int($_url_e{$key}||0)."\" title=\"$Message[104]: ".int($_url_e{$key}||0)."\">";
+			print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_p\" WIDTH=$bredde_p HEIGHT=6 ALT=\"$Message[56]: ".int($_url_p{$key}||0)."\" title=\"$Message[56]: ".int($_url_p{$key}||0)."\"><br>";
+			print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_e\" WIDTH=$bredde_e HEIGHT=6 ALT=\"$Message[104]: ".int($_url_e{$key}||0)."\" title=\"$Message[104]: ".int($_url_e{$key}||0)."\"><br>";
+			print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_k\" WIDTH=$bredde_k HEIGHT=6 ALT=\"$Message[106]: ".($_url_k{$key}?Format_Bytes($_url_k{$key}/($_url_p{$key}||1)):"&nbsp;")."\" title=\"$Message[106]: ".($_url_k{$key}?Format_Bytes($_url_k{$key}/($_url_p{$key}||1)):"&nbsp;")."\">";
 			print "</TD></TR>\n";
+			$total_p += $_url_p{$key};
+			$total_e += $_url_e{$key};
+			$total_k += $_url_k{$key};
 			$count++;
 		}
 		$rest_p=$TotalPages-$total_p;
-		$rest_e=""; #TODO  $rest_e=$TotalEntry-$total_e;
-		if ($rest_p > 0 || $rest_e > 0) {	# All other urls
-			print "<TR><TD CLASS=AWL><font color=blue>$Message[2]</font></TD><TD>$rest_p</TD><TD>".($rest_e?$rest_e:"&nbsp;")."</TD><TD>&nbsp;</TD></TR>\n";
+		$rest_e=$TotalEntries-$total_e;
+		$rest_k=$TotalBytesPages-$total_k;
+		if ($rest_p > 0 || $rest_e > 0 || $rest_k > 0) {	# All other urls
+			print "<TR><TD CLASS=AWL><font color=blue>$Message[2]</font></TD><TD>$rest_p</TD><TD>".($rest_e?$rest_e:"&nbsp;")."</TD><TD>".($rest_k?Format_Bytes($rest_k/($rest_p||1)):"&nbsp;")."</TD><TD>&nbsp;</TD></TR>\n";
 		}
 		&tab_end;
 	}

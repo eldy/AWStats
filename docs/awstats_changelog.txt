@@ -1,6 +1,18 @@
 AWStats Changelog
 -----------------
 
+4.0
+
+  WARNING: 4.0 is not compatible with OLD history data files. If you use 4.0
+  to read statistics for old month, report for "visitors" will be wrong as all
+  old unresolved ip processed with AWStats 3.2 will not be counted when
+  viewed with 4.0.
+
+- Unresolved ip are now processed like resolved one.
+- New data loading adn sort algorithm to increase speed for large web sites.
+- Provided with the log format converter common2combined.pl
+
+
 3.2
 
 - Increased speed (19% faster than 3.1).
