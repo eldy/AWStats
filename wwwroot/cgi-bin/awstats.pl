@@ -3,7 +3,6 @@
 #!/usr/local/bin/perl
 # With Apache for Windows and ActiverPerl, first line may be
 #!C:/Program Files/ActiveState/ActivePerl/bin/perl
-
 #-Description-------------------------------------------
 # Free realtime web server logfile analyzer to show advanced web statistics.
 # Works from command line or as a CGI. You must use this script as often as
@@ -246,7 +245,7 @@ DIV { font: 12px arial,verdana,helvetica; text-align:justify; }
 .TABLETITLEFULL  { font: 14px verdana, arial, helvetica, sans-serif; font-weight: bold; background-color: #$color_TableBGTitle; text-align: center; width: 66%; margin-bottom: 0; padding: 2px; }
 .TABLETITLEBLANK { font: 14px verdana, arial, helvetica, sans-serif; background-color: #$color_Background; }
 .CTooltip { position:absolute; top:0px; left:0px; z-index:2; width:280; visibility:hidden; font: 8pt MS Comic Sans,arial,sans-serif; background-color: #FFFFE6; padding: 8px; border: 1px solid black; }
-
+.CField { font: 14px verdana, arial, helvetica; }
 .tablecontainer  { width: 100% }
 \@media projection {
 .tablecontainer { page-break-before: always; }
@@ -703,14 +702,14 @@ sub Read_Language_Data {
 	my $FileLang="";
 	foreach my $dir ("$DirLang","${DIR}lang","./lang") {
 		my $searchdir=$dir;
-		if (($searchdir ne "") && (!($searchdir =~ /\/$/)) && (!($searchdir =~ /\\$/)) ) { $searchdir .= "/"; }
-		if ($FileLang eq "") { if (open(LANG,"${searchdir}awstats-$_[0].txt")) { $FileLang="${searchdir}awstats-$_[0].txt"; } }
+		if ($searchdir && (!($searchdir =~ /\/$/)) && (!($searchdir =~ /\\$/)) ) { $searchdir .= "/"; }
+		if (! $FileLang) { if (open(LANG,"${searchdir}awstats-$_[0].txt")) { $FileLang="${searchdir}awstats-$_[0].txt"; } }
 	}
 	# If file not found, we try english
 	foreach my $dir ("$DirLang","${DIR}lang","./lang") {
 		my $searchdir=$dir;
-		if (($searchdir ne "") && (!($searchdir =~ /\/$/)) && (!($searchdir =~ /\\$/)) ) { $searchdir .= "/"; }
-		if ($FileLang eq "") { if (open(LANG,"${searchdir}awstats-en.txt")) { $FileLang="${searchdir}awstats-en.txt"; } }
+		if ($searchdir && (!($searchdir =~ /\/$/)) && (!($searchdir =~ /\\$/)) ) { $searchdir .= "/"; }
+		if (! $FileLang) { if (open(LANG,"${searchdir}awstats-en.txt")) { $FileLang="${searchdir}awstats-en.txt"; } }
 	}
 	if ($Debug) { debug("Call to Read_Language_Data [FileLang=\"$FileLang\"]"); }
 	if ($FileLang) {
@@ -1028,6 +1027,7 @@ sub Check_Config {
 	if (! $Message[112]) { $Message[112]="Yes"; }
 	if (! $Message[113]) { $Message[113]="No"; }
 	if (! $Message[114]) { $Message[114]="WhoIs info"; }
+	if (! $Message[115]) { $Message[115]="OK"; }
 	# Check if DirData is OK
 	if (! -d $DirData) {
 		if ($CreateDirDataIfNotExists) {
@@ -2176,9 +2176,12 @@ sub Minimum {
 }
 
 #--------------------------------------------------------------------
-# Function:     Build keylist array
-# Input:        Size of keylist array, min value in hash for select, hash for select, hash for order
-# Return:       keylist array
+# Function:     Build @keylist array
+# Input:        Size max for @keylist array,
+#               Min value in hash for select,
+#               Hash used for select,
+#               Hash used for order
+# Return:       @keylist response array
 #--------------------------------------------------------------------
 sub BuildKeyList {
 	my $ArraySize=shift;
@@ -2268,8 +2271,12 @@ if ($QueryString =~ /logfile=([^\s&]+)$/i) 	{ $LogFile=$1; }
 if ($QueryString =~ /staticlinks/i) 		{ $StaticLinks=1; }
 if ($QueryString =~ /debug=(\d+)/i)			{ $Debug=$1; }
 if ($QueryString =~ /output=urldetail:/i) 	{
-	# A filter can be defined with output=urldetail to reduce number of lines read and showed
-	$URLFilter=$QueryString; $URLFilter =~ s/.*output=urldetail://; $URLFilter =~ s/&.*//; $URLFilter =~ s/ .*//;
+	# A filter on URL list can be defined with output=urldetail:filter to reduce number of lines read and showed
+	$URLFilter=$QueryString; $URLFilter =~ s/.*output=urldetail://i; $URLFilter =~ s/&.*//; $URLFilter =~ s/ .*//;
+}
+if ($QueryString =~ /urlfilter=/i) 	{
+	# A filter on URL list can also be defined with urlfilter=filter
+	$URLFilter=$QueryString; $URLFilter =~ s/.*urlfilter=//i; $URLFilter =~ s/&.*//; $URLFilter =~ s/ .*//;
 }
 ($DIR=$0) =~ s/([^\/\\]*)$//; ($PROG=$1) =~ s/\.([^\.]*)$//; $Extension=$1;
 if ($Debug) { debug("QUERY_STRING=$QueryString",2); }
@@ -2422,13 +2429,12 @@ else { @DOWIndex = (0,1,2,3,4,5,6); }
 $AWScript=($WrapperScript?"$WrapperScript":"$DirCgi$PROG.$Extension");
 
 # Check year and month parameters
-if ($QueryString =~ /year=/i) 	{ $YearRequired=$QueryString; $YearRequired =~ s/.*year=//; $YearRequired =~ s/&.*//;  $YearRequired =~ s/ .*//; }
-if ((! $YearRequired) || ($YearRequired !~ /^\d\d\d\d$/)) { $YearRequired=$nowyear; }
-if ($QueryString =~ /month=/i)	{ $MonthRequired=$QueryString; $MonthRequired =~ s/.*month=//; $MonthRequired =~ s/&.*//; $MonthRequired =~ s/ .*//; }
-if ((! $MonthRequired) || ($MonthRequired ne "year" && $MonthRequired !~ /^[\d][\d]$/)) { $MonthRequired=$nowmonth; }
-# day is a hidden option. Must not be used (Make results not understandable). Available for users that rename historic files with day.
-if ($QueryString =~ /day=/i)	{ $DayRequired=$QueryString; $DayRequired =~ s/.*day=//; $DayRequired =~ s/&.*//; $DayRequired =~ s/ .*//; }
-if ((! $DayRequired) || ($DayRequired !~ /^[\d][\d]$/)) { $DayRequired=""; }
+if ($QueryString =~ /year=(\d\d\d\d)/i) { $YearRequired="$1"; }
+else { $YearRequired="$nowyear"; }
+if ($QueryString =~ /month=(\d\d)/i || $QueryString =~ /month=(year)/i) { $MonthRequired="$1"; }
+else { $MonthRequired="$nowmonth"; }
+if ($QueryString =~ /day=(\d\d)/i) { $DayRequired="$1"; }	# day is a hidden option. Must not be used (Make results not understandable). Available for users that rename historic files with day.
+else { $DayRequired=""; }
 if ($Debug) { debug("YearRequired=$YearRequired MonthRequired=$MonthRequired",2); }
 
 # Print html header
@@ -3753,6 +3759,30 @@ EOF
 	if ($QueryString =~ /output=urldetail/i) {
 		if ($AddOn) { AddOn_Filter(); }
 		print "$CENTER<a name=\"URLDETAIL\">&nbsp;</a><BR>";
+		# Show filter form
+		if (! $StaticLinks) {
+			my $NewLinkParams=${QueryString};
+			$NewLinkParams =~ s/update[=]*[^ &]*//;
+			$NewLinkParams =~ s/output[=]*[^ &]*//;
+			$NewLinkParams =~ s/staticlinks[=]*[^ &]*//;
+			$NewLinkParams =~ tr/&/&/s; $NewLinkParams =~ s/^&//; $NewLinkParams =~ s/&$//;
+			if ($NewLinkParams) { $NewLinkParams="${NewLinkParams}&"; }
+			print "<FORM name=\"FormUrlFilter\" action=\"$AWScript?${NewLinkParams}\" class=TABLEBORDER>\n";
+			print "<TABLE valign=center><TR>\n";
+			print "<TD>&nbsp; &nbsp; $Message[79] : &nbsp; &nbsp;\n";
+			print "<input type=hidden name=\"output\" value=\"urldetail\">\n";
+			if ($SiteConfig) { print "<input type=hidden name=\"config\" value=\"$SiteConfig\">\n"; }
+			if ($QueryString =~ /year=(\d\d\d\d)/i) { print "<input type=hidden name=\"year\" value=\"$1\">\n"; }
+			if ($QueryString =~ /month=(\d\d)/i || $QueryString =~ /month=(year)/i) { print "<input type=hidden name=\"month\" value=\"$1\">\n"; }
+			if ($QueryString =~ /lang=(\w+)/i) { print "<input type=hidden name=\"lang\" value=\"$1\">\n"; }
+			if ($QueryString =~ /debug=(\d+)/i) { print "<input type=hidden name=\"debug\" value=\"$1\">\n"; }
+			print "</TD>\n";
+			print "<TD><input type=text name=\"urlfilter\" value=\"$URLFilter\" class=\"CField\"></TD>\n";
+			print "<TD><input type=submit value=\"$Message[115]\" class=\"CField\">\n";
+			print "</TR></TABLE>\n";
+			print "</FORM>\n";
+		}
+		# Show URL list
 		&tab_head($Message[19],19);
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>";
 		if ($URLFilter) {
@@ -3805,7 +3835,7 @@ EOF
 		$rest_e=$TotalEntries-$total_e;
 		$rest_k=$TotalBytesPages-$total_k;
 		if ($rest_p > 0 || $rest_e > 0 || $rest_k) {
-			print "<TR><TD CLASS=AWL><font color=blue>$Message[2]</font></TD><TD>$rest_p</TD><TD>$rest_e</TD><TD>".($rest_k?Format_Bytes($rest_k/$rest_p||1):"&nbsp;")."<TD>&nbsp;</TD></TR>\n";
+			print "<TR><TD CLASS=AWL><font color=blue>$Message[2]</font></TD><TD>$rest_p</TD><TD>".($rest_e?$rest_e:"&nbsp;")."</TD><TD>".($rest_k?Format_Bytes($rest_k/$rest_p||1):"&nbsp;")."<TD>&nbsp;</TD></TR>\n";
 		}
 		&tab_end;
 		&html_end;
