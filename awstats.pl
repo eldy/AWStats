@@ -13,7 +13,7 @@
 #-------------------------------------------------------
 # Defines
 #-------------------------------------------------------
-$VERSION="2.23k";
+$VERSION="2.23m";
 $Lang=0;
 
 # Default value
@@ -93,7 +93,7 @@ $BarImageHorizontal_k = "barrehk.png";
 "mamma\.","query=",
 "northernlight\.","qr="
 );
-@WordsToCleanSearchUrl= ("act=","annuaire=","btng=","categoria=","cou=","dd=","domain=","dt=","dw=","exec=","geo=","hc=","height=","hl=","hs=","kl=","lang=","loc=","lr=","medor=","message=","meta=","mode=","order=","page=","par=","pays=","pg=","pos=","prg=","qc=","refer=","sa=","safe=","sc=","sort=","src=","start=","stype=","tag=","temp=","theme=","url=","user=","width=","what=","\\.x=","\\.y=");
+@WordsToCleanSearchUrl= ("act=","annuaire=","btng=","categoria=","cou=","dd=","domain=","dt=","dw=","exec=","geo=","hc=","height=","hl=","hs=","kl=","lang=","loc=","lr=","matchmode=","medor=","message=","meta=","mode=","order=","page=","par=","pays=","pg=","pos=","prg=","qc=","refer=","sa=","safe=","sc=","sort=","src=","start=","stype=","tag=","temp=","theme=","url=","user=","width=","what=","\\.x=","\\.y=");
 # Never put the following exclusion ("Claus=","kw=","keyword=","MT","p=","q=","qr=","qt=","query=","s=","search=","searchText=") because they are strings that contain keywords we're looking for.
 
 # ---------- HTTP Code with tooltip --------
@@ -842,7 +842,7 @@ $message[57][6]="Hits";
 "webcopy", "WebCopy",
 "webfetcher", "webfetcher",
 "webfoot", "The Webfoot Robot",
-"weblayers", "weblayers",
+"weblayers", "Weblayers",
 "weblinker", "WebLinker",
 "webmirror", "WebMirror",
 "webmoose", "The Web Moose",
@@ -867,14 +867,17 @@ $message[57][6]="Hits";
 "nederland.zoek", "Nederland.zoek",
 
 # Not declared robots
-"ezresult",	"Ezresult (Not referenced robot)",
-"fast-webcrawler", "Fast-Webcrawler (Not referenced robot)",
-"perman surfer", "Perman surfer (Not referenced robot)",
-"mercator", "Mercator (Not referenced robot)",
 "antibot", "Antibot (Not referenced robot)",
 "daviesbot", "DaviesBot (Not referenced robot)",
-"unlost_web_crawler", "Unlost_Web_Crawler (Not referenced robot)",
+"ezresult",	"Ezresult (Not referenced robot)",
+"fast-webcrawler", "Fast-Webcrawler (Not referenced robot)",
+"jennybot", "JennyBot (Not referenced robot)",
 "justview", "JustView (Not referenced robot)",
+"mercator", "Mercator (Not referenced robot)",
+#"msiecrawler", "MSIECrawler (Not referenced robot)",	MSIECrawler seems to be a grabber not a robot
+"perman surfer", "Perman surfer (Not referenced robot)",
+"unlost_web_crawler", "Unlost_Web_Crawler (Not referenced robot)",
+"webbase", "WebBase (Not referenced robot)",
 # Supposed to be robots
 "webcompass", "webcompass (Not referenced robot)",
 "digout4u", "digout4u (Not referenced robot)",
@@ -1011,6 +1014,7 @@ sub UnescapeURL {
 	$_[0] =~ s/%2b/ /gi;	#+
 	$_[0] =~ s/%2c/ /gi;	#,
 	$_[0] =~ s/%2d//gi;		#-
+	$_[0] =~ s/%2e/\./gi;	#.
 	$_[0] =~ s/%2f/ /gi;	#/
 	$_[0] =~ s/%3c/ /gi;	#<
 	$_[0] =~ s/%3d/ /gi;	#=
@@ -1390,12 +1394,16 @@ if ($ENV{"GATEWAY_INTERFACE"} ne "") {
 	$QueryString = $ENV{"QUERY_STRING"};
 	if ($QueryString =~ /site=/) { $LocalSite=$QueryString; $LocalSite =~ s/.*site=//; $LocalSite =~ s/&.*//; }
 	else { $LocalSite = $ENV{"SERVER_NAME"}; }
-	$PROG=$0; $PROG =~ s/.*\\//; $PROG =~ s/.*\///; $DIR=$0; $DIR =~ s/$PROG//; $PROG =~ s/\.pl$//;
+	$PROG=$0; $PROG =~ s/.*\\//; $PROG =~ s/.*\///; $DIR=$0; $DIR =~ s/$PROG//;
+	$Extension=$PROG; $Extension =~ s/.*\.pl?/pl/;
+	$PROG =~ s/\.$Extension$//;
 	print("Content-type: text/html\n\n\n");
 	}
 else {
 	$LocalSite = $ARGV[1];
-	$PROG=$0; $PROG =~ s/.*\\//; $PROG =~ s/.*\///; $DIR=$0; $DIR =~ s/$PROG//; $PROG =~ s/\.pl$//;
+	$PROG=$0; $PROG =~ s/.*\\//; $PROG =~ s/.*\///; $DIR=$0; $DIR =~ s/$PROG//;
+	$Extension=$PROG; $Extension =~ s/.*\.pl?/pl/;
+	$PROG =~ s/\.$Extension$//;
 	}
 $LocalSite =~ tr/A-Z/a-z/;
 $LocalSiteWithoutwww = $LocalSite; $LocalSiteWithoutwww =~ s/www\.//;
@@ -1403,7 +1411,7 @@ if (($ENV{"GATEWAY_INTERFACE"} eq "") && ($ARGV[0] eq "" || $ARGV[0] ne "-h" || 
 	print "----- $PROG $VERSION (c) Laurent Destailleur -----\n";
 	print "$PROG is a free web server logfile analyzer (in Perl) to show you advanced\n";
 	print "web statistics. Distributed under GNU General Public Licence.\n";
-	print "Syntax: $PROG.pl -h www.host.com\n";
+	print "Syntax: $PROG.$Extension -h www.host.com\n";
 	print " Runs $PROG from command line to have statistics of www.host.com web site.\n";
 	print " First, $PROG tries to use $PROG.www.host.com.conf as the config file, if\n";
 	print " not found, $PROG will use $PROG.conf.\n";
@@ -1461,8 +1469,8 @@ $smallyear=$year;$smallyear =~ s/^..//;
 $month++;if ($month < 10) { $month  = "0$month"; }
 if ($QueryString =~ /month=/) { $MonthOnly=$QueryString; $MonthOnly =~ s/.*month=//; $MonthOnly =~ s/&.*//; }
 if ($MonthOnly eq "") { $MonthOnly=$month; }
-$BrowsersHash{"netscape"}="<font color=blue>Netscape</font> <a href=\"$DirCgi$PROG.pl?action=browserdetail&month=$MonthOnly&lang=$Lang\">(Versions)</a>";
-$BrowsersHash{"msie"}="<font color=blue>MS Internet Explorer</font> <a href=\"$DirCgi$PROG.pl?action=browserdetail&month=$MonthOnly&lang=$Lang\">(Versions)</a>";
+$BrowsersHash{"netscape"}="<font color=blue>Netscape</font> <a href=\"$DirCgi$PROG.$Extension?action=browserdetail&month=$MonthOnly&lang=$Lang\">(Versions)</a>";
+$BrowsersHash{"msie"}="<font color=blue>MS Internet Explorer</font> <a href=\"$DirCgi$PROG.$Extension?action=browserdetail&month=$MonthOnly&lang=$Lang\">(Versions)</a>";
 if (@HostAliases == 0) {
 	warning("Warning: HostAliases parameter is not defined, $PROG will choose \"$LocalSite localhost 127.0.0.1\".");
 	$HostAliases[0]=$LocalSite; $HostAliases[1]="localhost"; $HostAliases[2]="127.0.0.1";
@@ -1500,12 +1508,12 @@ print "<STYLE TYPE=text/css>
 ";
 print "<a href=\"http://awstats.sourceforge.net\" target=_newawstats><img src=$DirIcons/other/$Logo border=0 alt=\"$PROG Official Web Site\"></a><br>\n";
 if ($ShowFlagLinks == 1) { 
-	if ($Lang != 0) { print "<a href=\"$DirCgi$PROG.pl?month=$MonthOnly&lang=0\"><img src=\"$DirIcons\/flags\/us.png\" height=14 border=0 alt=\"English\"></a>\n"; }
-	if ($Lang != 1) { print " &nbsp; <a href=\"$DirCgi$PROG.pl?month=$MonthOnly&lang=1\"><img src=\"$DirIcons\/flags\/fr.png\" height=14 border=0 alt=\"French\"></a>\n"; }
-	if ($Lang != 2) { print " &nbsp; <a href=\"$DirCgi$PROG.pl?month=$MonthOnly&lang=2\"><img src=\"$DirIcons\/flags\/nl.png\" height=14 border=0 alt=\"Dutch\"></a>\n"; }
-	if ($Lang != 3) { print " &nbsp; <a href=\"$DirCgi$PROG.pl?month=$MonthOnly&lang=3\"><img src=\"$DirIcons\/flags\/es.png\" height=14 border=0 alt=\"Spanish\"></a>\n"; }
-	if ($Lang != 4) { print " &nbsp; <a href=\"$DirCgi$PROG.pl?month=$MonthOnly&lang=4\"><img src=\"$DirIcons\/flags\/it.png\" height=14 border=0 alt=\"Italian\"></a>\n"; }
-	if ($Lang != 5) { print " &nbsp; <a href=\"$DirCgi$PROG.pl?month=$MonthOnly&lang=5\"><img src=\"$DirIcons\/flags\/de.png\" height=14 border=0 alt=\"German\"></a>\n"; }
+	if ($Lang != 0) { print "<a href=\"$DirCgi$PROG.$Extension?month=$MonthOnly&lang=0\"><img src=\"$DirIcons\/flags\/us.png\" height=14 border=0 alt=\"English\"></a>\n"; }
+	if ($Lang != 1) { print " &nbsp; <a href=\"$DirCgi$PROG.$Extension?month=$MonthOnly&lang=1\"><img src=\"$DirIcons\/flags\/fr.png\" height=14 border=0 alt=\"French\"></a>\n"; }
+	if ($Lang != 2) { print " &nbsp; <a href=\"$DirCgi$PROG.$Extension?month=$MonthOnly&lang=2\"><img src=\"$DirIcons\/flags\/nl.png\" height=14 border=0 alt=\"Dutch\"></a>\n"; }
+	if ($Lang != 3) { print " &nbsp; <a href=\"$DirCgi$PROG.$Extension?month=$MonthOnly&lang=3\"><img src=\"$DirIcons\/flags\/es.png\" height=14 border=0 alt=\"Spanish\"></a>\n"; }
+	if ($Lang != 4) { print " &nbsp; <a href=\"$DirCgi$PROG.$Extension?month=$MonthOnly&lang=4\"><img src=\"$DirIcons\/flags\/it.png\" height=14 border=0 alt=\"Italian\"></a>\n"; }
+	if ($Lang != 5) { print " &nbsp; <a href=\"$DirCgi$PROG.$Extension?month=$MonthOnly&lang=5\"><img src=\"$DirIcons\/flags\/de.png\" height=14 border=0 alt=\"German\"></a>\n"; }
 	print "<br>";
 	}
 print "<font size=1>$message[54][$Lang]</font><br>\n";
@@ -1875,7 +1883,9 @@ if ($MonthOnly eq "year" || $MonthOnly == $month) {
 	if ($DNSLookup && !$NewDNSLookup) { warning("Warning: <b>$PROG</b> has detected that hosts names are already resolved in your logfile <b>$LogFile</b>.<br>\nIf this is true, you should change your setup \$DNSLookup=1 into \$DNSLookup=0 to increase $PROG speed."); }
 
 	# Save for month $monthtoprocess
-	&Save_History_File($monthtoprocess,$year);
+	if ($monthtoprocess) {	# If monthtoprocess is 0, it means there was no history files and we found no valid lines in log file
+		&Save_History_File($monthtoprocess,$year);
+	}
 	
 	# Archive LOG file into ARCHIVELOG
 	if ($ArchiveLogRecords == 1) {
@@ -2483,7 +2493,7 @@ if ($TotalVisits > 0) { $RatioHits=int($TotalHits/$TotalVisits*100)/100; }
 if ($TotalVisits > 0) { $RatioBytes=int(($TotalBytes/1024)*100/$TotalVisits)/100; }
 
 if ($MonthOnly eq "year") { print "<TR><TD><b>$message[8][$Lang]</b></TD><TD colspan=3 rowspan=2><font style=\"font: 10pt arial,verdana,helvetica\"><b>$message[6][$Lang] $year</b></TD><TD><b>$message[9][$Lang]</b></TD></TR>"; }
-else {  print "<TR><TD><b>$message[8][$Lang]</b></TD><TD colspan=3 rowspan=2><font style=\"font: 10pt arial,verdana,helvetica\"><b>$message[5][$Lang] $monthlib{$MonthOnly} $year</b></font><br><a href=\"$DirCgi$PROG.pl?month=year&lang=$Lang\">$message[6][$Lang] $year</a></TD><TD><b>$message[9][$Lang]</b></TD></TR>"; }
+else {  print "<TR><TD><b>$message[8][$Lang]</b></TD><TD colspan=3 rowspan=2><font style=\"font: 10pt arial,verdana,helvetica\"><b>$message[5][$Lang] $monthlib{$MonthOnly} $year</b></font><br><a href=\"$DirCgi$PROG.$Extension?month=year&lang=$Lang\">$message[6][$Lang] $year</a></TD><TD><b>$message[9][$Lang]</b></TD></TR>"; }
 $yearcon=substr($FirstTime,0,4);$monthcon=substr($FirstTime,4,2);$daycon=substr($FirstTime,6,2);$hourcon=substr($FirstTime,8,2);$mincon=substr($FirstTime,10,2);
 if ($FirstTime != 0) { print "<TR><TD>$daycon&nbsp;$monthlib{$monthcon}&nbsp;$yearcon&nbsp;-&nbsp;$hourcon:$mincon</TD>"; }
 else { print "<TR><TD>NA</TD>"; }
@@ -2532,7 +2542,7 @@ for ($ix=1; $ix<=12; $ix++) {
 print "</TR><TR>";
 for ($ix=1; $ix<=12; $ix++) {
 	$monthix=$ix; if ($monthix < 10) { $monthix="0$monthix"; }
-	print "<TD valign=center><a href=\"$DirCgi$PROG.pl?month=$monthix&lang=$Lang\">$monthlib{$monthix}</a></TD>";
+	print "<TD valign=center><a href=\"$DirCgi$PROG.$Extension?month=$monthix&lang=$Lang\">$monthlib{$monthix}</a></TD>";
 }
 
 print "</TR></TABLE>";
@@ -2602,7 +2612,7 @@ foreach $key (@sorthosts_p)
   if ($_hostmachine_h{$key}>=$MinHitHost) {
     $kilo=int(($_hostmachine_k{$key}/1024)*100)/100;
 	if ($key eq "Unknown") {
-		print "<TR><TD CLASS=LEFT><a href=\"$DirCgi$PROG.pl?action=unknownip&month=$MonthOnly&lang=$Lang\">$message[1][$Lang]</a></TD><TD>$_hostmachine_p{$key}</TD><TD>$_hostmachine_h{$key}</TD><TD>$kilo</TD><TD><a href=\"$DirCgi$PROG.pl?action=unknownip&month=$MonthOnly&lang=$Lang\">$message[3][$Lang]</a></TD></TR>\n";
+		print "<TR><TD CLASS=LEFT><a href=\"$DirCgi$PROG.$Extension?action=unknownip&month=$MonthOnly&lang=$Lang\">$message[1][$Lang]</a></TD><TD>$_hostmachine_p{$key}</TD><TD>$_hostmachine_h{$key}</TD><TD>$kilo</TD><TD><a href=\"$DirCgi$PROG.$Extension?action=unknownip&month=$MonthOnly&lang=$Lang\">$message[3][$Lang]</a></TD></TR>\n";
 		}
 	else {
 		$yearcon=substr($_hostmachine_l{$key},0,4);
@@ -2728,7 +2738,7 @@ print "<TR BGCOLOR=$color_TableBGRowTitle><TH CLASS=LEFT>Browser</TH><TH bgcolor
 foreach $key (@sortbrowsers) {
 	$p=int($_browser_h{$key}/$TotalHits*1000)/10;
 	if ($key eq "Unknown") {
-		print "<TR><TD CLASS=LEFT><a href=\"$DirCgi$PROG.pl?action=unknownrefererbrowser&month=$MonthOnly&lang=$Lang\">$message[0][$Lang]</a></TD><TD>$_browser_h{$key}</TD><TD>$p&nbsp;%</TD></TR>\n";
+		print "<TR><TD CLASS=LEFT><a href=\"$DirCgi$PROG.$Extension?action=unknownrefererbrowser&month=$MonthOnly&lang=$Lang\">$message[0][$Lang]</a></TD><TD>$_browser_h{$key}</TD><TD>$p&nbsp;%</TD></TR>\n";
 	}
 	else {
 		print "<TR><TD CLASS=LEFT>$BrowsersHash{$key}</TD><TD>$_browser_h{$key}</TD><TD>$p&nbsp;%</TD></TR>\n";
@@ -2746,7 +2756,7 @@ print "<TR BGCOLOR=$color_TableBGRowTitle><TH CLASS=LEFT colspan=2>OS</TH><TH bg
 foreach $key (@sortos) {
 	$p=int($_os_h{$key}/$TotalHits*1000)/10;
 	if ($key eq "Unknown") {
-		print "<TR><TD><IMG SRC=\"$DirIcons\/os\/unknown.png\"></TD><TD CLASS=LEFT><a href=\"$DirCgi$PROG.pl?action=unknownreferer&month=$MonthOnly&lang=$Lang\">$message[0][$Lang]</a></TD><TD>$_os_h{$key}&nbsp;</TD>";
+		print "<TR><TD><IMG SRC=\"$DirIcons\/os\/unknown.png\"></TD><TD CLASS=LEFT><a href=\"$DirCgi$PROG.$Extension?action=unknownreferer&month=$MonthOnly&lang=$Lang\">$message[0][$Lang]</a></TD><TD>$_os_h{$key}&nbsp;</TD>";
 		print "<TD>$p&nbsp;%</TD></TR>\n";
 		}
 	else {
@@ -2844,7 +2854,7 @@ foreach $key (@sorterrors) {
 	$p=int($_errors_h{$key}/$TotalErrors*1000)/10;
 	if ($httpcode{$key}) { print "<TR onmouseover=\"ShowTooltip($key);\" onmouseout=\"HideTooltip($key);\">"; }
 	else { print "<TR>"; }
-	if ($key == 404) { print "<TD><a href=\"$DirCgi$PROG.pl?action=notfounderror&month=$MonthOnly&lang=$Lang\">$key</a></TD>"; }
+	if ($key == 404) { print "<TD><a href=\"$DirCgi$PROG.$Extension?action=notfounderror&month=$MonthOnly&lang=$Lang\">$key</a></TD>"; }
 	else { print "<TD>$key</TD>"; }
 	if ($httpcode{$key}) { print "<TD CLASS=LEFT>$httpcode{$key}</TD><TD>$_errors_h{$key}</TD><TD>$p&nbsp;%</TD></TR>\n"; }
 	else { print "<TD CLASS=LEFT>Unknown error</TD><TD>$_errors_h{$key}</TD><TD>$p&nbsp;%</TD></TR>\n"; }
