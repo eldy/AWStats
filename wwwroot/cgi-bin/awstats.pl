@@ -130,6 +130,7 @@ my @_time_p = my @_time_h = my @_time_k = ();
 my @keylist=();
 # ---------- Init hash arrays --------
 my %ValidHTTPCodes=();
+my %TrapInfosForHTTPCodes=(); $TrapInfosForHTTPCodes{404}=1;	# TODO Add this in config file
 my %NotPageList=();
 my %DayBytes = my %DayHits = my %DayPages = my %DayUnique = my %DayVisits = ();
 my %FirstTime = my %LastTime = my %LastLine = my %LastUpdate = ();
@@ -204,13 +205,74 @@ my %MyDNSTable = (
 #"256.256.256.2", "myworkstation2"
 );
 
-# HTTP codes with tooltip
-my %httpcode = (
-"201", "Partial Content", "202", "Request recorded, will be executed later", "204", "Request executed", "206", "Partial Content",
-"301", "Moved Permanently", "302", "Found",
-"400", "Bad Request", "401", "Unauthorized", "403", "Forbidden", "404", "Not Found", "408", "Request Timeout",
-"500", "Internal Error", "501", "Not implemented", "502", "Received bad response from real server", "503", "Server busy", "504", "Gateway Time-Out", "505", "HTTP version not supported",
-"200", "OK", "304", "Not Modified"	# 200 and 304 are not errors
+# PROTOCOL CODES
+
+# HTTP codes
+my %httpcodelib = (
+#[Miscellaneous successes]
+"2xx", "[Miscellaneous successes]",
+"200", "OK",								# HTTP request OK
+"201", "Created",
+"202", "Request recorded, will be executed later",
+"203", "Non-authoritative information",
+"204", "Request executed",
+"205", "Reset document",
+"206", "Partial Content",
+#[Miscellaneous redirections]
+"3xx", "[Miscellaneous redirections]",
+"300", "Multiple documents available",
+"301", "Moved Permanently",
+"302", "Found",
+"303", "See other document",
+"304", "Not Modified since last retrieval",	# HTTP request OK
+"305", "Use proxy",
+"306", "Switch proxy",
+"307", "Document moved temporarily",
+#[Miscellaneous client/user errors]
+"4xx", "[Miscellaneous client/user errors]",
+"400", "Bad Request",
+"401", "Unauthorized",
+"402", "Payment required",
+"403", "Forbidden",
+"404", "Document Not Found",
+"405", "Method not allowed",
+"406", "ocument not acceptable to client",
+"407", "Proxy authentication required",
+"408", "Request Timeout",
+"409", "Request conflicts with state of resource",
+"410", "Document gone permanently",
+"411", "Length required",
+"412", "Precondition failed",
+"413", "Request too long",
+"414", "Requested filename too long",
+"415", "Unsupported media type",
+"416", "Requested range not valid",
+"417", "Failed",
+#[Miscellaneous server errors]
+"5xx", "[Miscellaneous server errors]",
+"500", "Internal server Error",
+"501", "Not implemented",
+"502", "Received bad response from real server",
+"503", "Server busy",
+"504", "Gateway timeout",
+"505", "HTTP version not supported",
+"506", "Redirection failed",
+#[Unknown]
+"xxx" ,"[Unknown]"
+);
+
+# FTP codes
+my %ftpcodelib = (
+);
+
+# SMTP codes
+my %smtpcodelib = (
+);
+
+# HTTP codes with tooltips
+my %httpcodewithtooltips = (
+"201", 1, "202", 1, "204", 1, "206", 1, "301", 1, "302", 1, "400", 1, "401", 1, "403", 1, "404", 1, "408", 1,
+"500", 1, "501", 1, "502", 1, "503", 1, "504", 1, "505", 1, "200", 1, "304", 1
 );
 
 
@@ -4807,12 +4869,13 @@ EOF
 		my $count=0;
 		foreach my $key (sort { $_errors_h{$b} <=> $_errors_h{$a} } keys (%_errors_h)) {
 			my $p=int($_errors_h{$key}/$TotalErrors*1000)/10;
-			if ($httpcode{$key}) { print "<TR onmouseover=\"ShowTooltip($key);\" onmouseout=\"HideTooltip($key);\">"; }
-			else { print "<TR>"; }
-			if ($key == 404) { print "<TD><a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=errors404":"$PROG$StaticLinks.errors404.html")."\"".($DetailedReportsOnNewWindows?" target=\"awstatsbis\"":"").">$key</a></TD>"; }
+			#if ($httpcodewithtooltips{$key}) { print "<TR onmouseover=\"ShowTooltip($key);\" onmouseout=\"HideTooltip($key);\">"; }
+			#else { print "<TR>"; }
+			print "<TR onmouseover=\"ShowTooltip($key);\" onmouseout=\"HideTooltip($key);\">";
+			if ($TrapInfosForHTTPCodes{$key}) { print "<TD><a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=errors$key":"$PROG$StaticLinks.errors$key.html")."\"".($DetailedReportsOnNewWindows?" target=\"awstatsbis\"":"").">$key</a></TD>"; }
 			else { print "<TD>$key</TD>"; }
-			if ($httpcode{$key}) { print "<TD CLASS=AWL>$httpcode{$key}</TD><TD>$_errors_h{$key}</TD><TD>$p&nbsp;%</TD></TR>\n"; }
-			else { print "<TD CLASS=AWL>Unknown error</TD><TD>$_errors_h{$key}</TD><TD>$p&nbsp;%</TD></TR>\n"; }
+			print "<TD CLASS=AWL>".($httpcodelib{$key}?$httpcodelib{$key}:"Unknown error")."</TD><TD>$_errors_h{$key}</TD><TD>$p&nbsp;%</TD>";
+			print "</TR>\n";
 			$count++;
 		}
 		&tab_end;
