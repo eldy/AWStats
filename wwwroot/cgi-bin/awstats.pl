@@ -1787,9 +1787,9 @@ sub Read_Plugins {
 							push @INC, "$dir";
 							$DirAddedInINC{"$dir"}=1;
 						}
-						#my $loadret=require "$pluginpath";
+						#my $loadret=require "$pluginpath";	# Can fix pb with mod_perl2. Give other pb ?
+						#my $loadret=do "${pluginfile}.pm";	# Can fix pb with mod_perl2 but might slow since module is recompiled each time.
 						my $loadret=require "${pluginfile}.pm";
-						#my $loadret=(require "$pluginpath"||require "${pluginfile}.pm");
 
 						if (! $loadret || $loadret =~ /^error/i) {
 							# Load failed, we stop here
