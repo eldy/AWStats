@@ -54,13 +54,11 @@
 'petersnews',
 'scooter',
 'slurp',
-#'tcl',
 'unlost_web_crawler',
 'voila',
 'voyager\/',		# Add / to avoid to exclude voyager browser
 'webbase',
 'weblayers',
-#'webs',
 'wisenutbot'
 );
 @RobotsSearchIDOrder_list2 = (
@@ -322,6 +320,7 @@
 'internetseer',
 'justview',
 'linkbot',
+'metager-linkchecker',	# Must be before linkchecker
 'linkchecker',
 'microsoft_url_control',
 'msiecrawler',
@@ -572,7 +571,6 @@
 'tach_bw','TACH Black Widow',
 'tarantula','Tarantula',
 'tarspider','tarspider',
-#'tcl','Tcl W3 Robot',
 'techbot','TechBOT',
 'templeton','Templeton',
 'teoma_agent1','TeomaTechnologies',
@@ -606,7 +604,6 @@
 'webquest','WebQuest',
 'webreader','Digimarc MarcSpider',
 'webreaper','WebReaper',
-#'webs','Webs',
 'websnarf','Websnarf',
 'webspider','WebSpider',
 'webvac','WebVac',
@@ -648,6 +645,7 @@
 'justview', 'JustView',
 'linkbot','LinkBot',
 'linkchecker','LinkChecker',
+'metager-linkchecker','MetaGer LinkChecker',
 'microsoft_url_control','Microsoft URL Control',
 'mercator', 'Mercator',
 'msiecrawler','MSIECrawler',
