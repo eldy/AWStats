@@ -6665,10 +6665,15 @@ EOF
 				eval("$function");
 			}
 			print "<TD CLASS=AWL>";
+			# alt and title are not provided to reduce page size
 			if ($ShowPagesStats =~ /P/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_p\" WIDTH=$bredde_p HEIGHT=6><br>"; }
 			if ($ShowPagesStats =~ /B/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_k\" WIDTH=$bredde_k HEIGHT=6><br>"; }
 			if ($ShowPagesStats =~ /E/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_e\" WIDTH=$bredde_e HEIGHT=6><br>"; }
 			if ($ShowPagesStats =~ /X/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_x\" WIDTH=$bredde_x HEIGHT=6>"; }
+			#if ($ShowPagesStats =~ /P/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_p\" WIDTH=$bredde_p HEIGHT=6 ALT=\"$Message[29]: $_url_p{$key}\" TITLE=\"$Message[29]: $_url_p{$key}\" ><br>"; }
+			#if ($ShowPagesStats =~ /B/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_k\" WIDTH=$bredde_k HEIGHT=6 ALT=\"$Message[106]: ".Format_Bytes($_url_k{$key}/($_url_p{$key}||1))."\" TITLE=\"$Message[106]: ".Format_Bytes($_url_k{$key}/($_url_p{$key}||1))."\"><br>"; }
+			#if ($ShowPagesStats =~ /E/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_e\" WIDTH=$bredde_e HEIGHT=6 ALT=\"$Message[104]: $_url_e{$key}\" TITLE=\"$Message[104]: $_url_e{$key}\"><br>"; }
+			#if ($ShowPagesStats =~ /X/i) { print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_x\" WIDTH=$bredde_x HEIGHT=6 ALT=\"$Message[116]: $_url_x{$key}\" TITLE=\"$Message[116]: $_url_x{$key}\">"; }
 			print "</TD></TR>\n";
 			$total_p += $_url_p{$key};
 			$total_e += $_url_e{$key};
@@ -6739,7 +6744,7 @@ EOF
 		}
 		# Show msie and netscape arrays
 		print "$Center<a name=\"MSIE\">&nbsp;</a><BR>";
-		my $title="$Message[34]<br><img src=\"$DirIcons/browser/msie_large.png\">";
+		my $title="$Message[34]<br><img src=\"$DirIcons/browser/msie_large.png\" alt=\"Msie\">";
 		&tab_head("$title",19);
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[58]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[15]</TH></TR>\n";
 		foreach my $key (reverse sort keys %_browser_h) {
@@ -6751,7 +6756,8 @@ EOF
 		}
 		&tab_end;
 		print "<a name=\"NETSCAPE\">&nbsp;</a><BR>\n";
-		&tab_head("$Message[33]<br><img src=\"$DirIcons/browser/netscape_large.png\">",19);
+		my $title="$Message[33]<br><img src=\"$DirIcons/browser/netscape_large.png\" alt=\"Netscape\">";
+		&tab_head("$title",19);
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[58]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[15]</TH></TR>\n";
 		foreach my $key (reverse sort keys %_browser_h) {
 			if ($key =~ /^netscape(.*)/i) {
@@ -7021,7 +7027,7 @@ EOF
 		}
 		print "</TR>\n";
 		# Show lib for month
-		print "<TR valign=middle cellspacing=0 cellpadding=0><td>&nbsp;</td>";
+		print "<TR valign=middle><td>&nbsp;</td>";
 		for (my $ix=1; $ix<=12; $ix++) {
 			my $monthix=sprintf("%02s",$ix);
 			print "<TD>$MonthLib{$monthix}</TD>";
@@ -7337,7 +7343,7 @@ EOF
 		print "<TR onmouseover=\"ShowTip(17);\" onmouseout=\"HideTip(17);\">\n";
 		for (my $ix=0; $ix<=23; $ix++) {
 			my $hr=($ix+1); if ($hr>12) { $hr=$hr-12; }
-			print "<TD><IMG alt='' SRC=\"$DirIcons\/clock\/hr$hr.png\" width=10 alt=\"$hr:00\"></TD>\n";
+			print "<TD><IMG SRC=\"$DirIcons\/clock\/hr$hr.png\" width=10 alt=\"$hr:00\"></TD>\n";
 		}
 		print "</TR>\n";
 
@@ -7866,46 +7872,52 @@ EOF
 		print "</TR>\n";
 		#------- Referrals by search engine
 		print "<TR onmouseover=\"ShowTip(13);\" onmouseout=\"HideTip(13);\"><TD CLASS=AWL><b>$Message[40]</b> - <a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=refererse":"$PROG$StaticLinks.refererse.html")."\"$NewLinkTarget>$Message[80]</a><br>\n";
-		print "<TABLE>\n";
-		$total_h=0;
-		my $count=0;
-		&BuildKeyList($MaxNbOfRefererShown,$MinHitRefer,\%_se_referrals_h,\%_se_referrals_h);
-		foreach my $key (@keylist) {
-			my $newreferer=CleanFromCSSA($SearchEnginesHashIDLib{$key}||$key);
-			print "<TR><TD CLASS=AWL>- $newreferer</TD><TD align=right> $_se_referrals_h{$key} </TD></TR>\n";
-			$total_h += $_se_referrals_h{$key};
-			$count++;
+		if (scalar keys %_se_referrals_h) {
+			print "<TABLE>\n";
+			$total_h=0;
+			my $count=0;
+			&BuildKeyList($MaxNbOfRefererShown,$MinHitRefer,\%_se_referrals_h,\%_se_referrals_h);
+			foreach my $key (@keylist) {
+				my $newreferer=CleanFromCSSA($SearchEnginesHashIDLib{$key}||$key);
+				print "<TR><TD CLASS=AWL>- $newreferer</TD><TD align=right> $_se_referrals_h{$key} </TD></TR>\n";
+				$total_h += $_se_referrals_h{$key};
+				$count++;
+			}
+			if ($Debug) { debug("Total real / shown : $TotalDifferentSearchEngines / $total_h",2); }
+			$rest_h=$TotalSearchEngines-$total_h;
+			if ($rest_h > 0) {
+				print "<TR><TD CLASS=AWL><font color=\"#$color_other\">- $Message[2]</font></TD><TD>$rest_h</TD>";
+			}
+			print "</TABLE>";
 		}
-		if ($Debug) { debug("Total real / shown : $TotalDifferentSearchEngines / $total_h",2); }
-		$rest_h=$TotalSearchEngines-$total_h;
-		if ($rest_h > 0) {
-			print "<TR><TD CLASS=AWL><font color=\"#$color_other\">- $Message[2]</font></TD><TD>$rest_h</TD>";
-		}
-		print "</TABLE></TD>\n";
+		print "</TD>\n";
 		if ($ShowOriginStats =~ /P/i) { print "<TD valign=top>".($_from_p[2]?$_from_p[2]:"&nbsp;")."</TD><TD valign=top>".($_from_p[2]?"$p_p[2] %":"&nbsp;")."</TD>"; }
 		if ($ShowOriginStats =~ /H/i) { print "<TD valign=top>".($_from_h[2]?$_from_h[2]:"&nbsp;")."</TD><TD valign=top>".($_from_h[2]?"$p_h[2] %":"&nbsp;")."</TD>"; }
 		print "</TR>\n";
 		#------- Referrals by external HTML link
 		print "<TR onmouseover=\"ShowTip(14);\" onmouseout=\"HideTip(14);\"><TD CLASS=AWL><b>$Message[41]</b> - <a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=refererpages":"$PROG$StaticLinks.refererpages.html")."\"$NewLinkTarget>$Message[80]</a><br>\n";
-		print "<TABLE>\n";
-		$total_h=0;
-		$count=0;
-		&BuildKeyList($MaxNbOfRefererShown,$MinHitRefer,\%_pagesrefs_h,\%_pagesrefs_h);
-		foreach my $key (@keylist) {
-			print "<TR><TD CLASS=AWL>- ";
-			&ShowURL($key);
-			print "</TD>";
-			print "<TD>$_pagesrefs_h{$key}</TD>";
-			print "</TR>\n";
-			$total_h += $_pagesrefs_h{$key};
-			$count++;
+		if (scalar keys %_pagesrefs_h) {
+			print "<TABLE>\n";
+			$total_h=0;
+			my $count=0;
+			&BuildKeyList($MaxNbOfRefererShown,$MinHitRefer,\%_pagesrefs_h,\%_pagesrefs_h);
+			foreach my $key (@keylist) {
+				print "<TR><TD CLASS=AWL>- ";
+				&ShowURL($key);
+				print "</TD>";
+				print "<TD>$_pagesrefs_h{$key}</TD>";
+				print "</TR>\n";
+				$total_h += $_pagesrefs_h{$key};
+				$count++;
+			}
+			if ($Debug) { debug("Total real / shown : $TotalRefererPages / $total_h",2); }
+			$rest_h=$TotalRefererPages-$total_h;
+			if ($rest_h > 0) {
+				print "<TR><TD CLASS=AWL><font color=\"#$color_other\">- $Message[2]</font></TD><TD>$rest_h</TD>";
+			}
+			print "</TABLE>";
 		}
-		if ($Debug) { debug("Total real / shown : $TotalRefererPages / $total_h",2); }
-		$rest_h=$TotalRefererPages-$total_h;
-		if ($rest_h > 0) {
-			print "<TR><TD CLASS=AWL><font color=\"#$color_other\">- $Message[2]</font></TD><TD>$rest_h</TD>";
-		}
-		print "</TABLE></TD>\n";
+		print "</TD>\n";
 		if ($ShowOriginStats =~ /P/i) { print "<TD valign=top>".($_from_p[3]?$_from_p[3]:"&nbsp;")."</TD><TD valign=top>".($_from_p[3]?"$p_p[3] %":"&nbsp;")."</TD>"; }
 		if ($ShowOriginStats =~ /H/i) { print "<TD valign=top>".($_from_h[3]?$_from_h[3]:"&nbsp;")."</TD><TD valign=top>".($_from_h[3]?"$p_h[3] %":"&nbsp;")."</TD>"; }
 		print "</TR>\n";
