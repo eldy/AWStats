@@ -25,8 +25,10 @@
  A keresõkön keresztül érkezett találatok itt nincsenek listázva, azok az elõzõ részben találhatóak.
  </DIV>
  <DIV CLASS="CTooltip" ID="tt15">
- Ebben a táblázatban találhatóak a keresõprogramokban leggyakrabban használt <b>kulcsszavakat</b> amelyeken keresztül ezen honlapot megtalálták.
- (Az #PROG# a <b>#SearchEnginesArray#</b> leggyakoribb keresõmotort ismeri. Például Yahoo, Altavista, Lycos, Google, Voila, stb...).
+ Ebben a táblázatban találhatóak a keresõprogramokban leggyakrabban használt <b>kulcsszavak és kifejezések</b> amelyeken keresztül ezen honlapot megtalálták.
+ (Az #PROG# a <b>#SearchEnginesArray#</b> leggyakoribb keresõmotort ismeri. Például Yahoo, Altavista, Lycos, Google, Voila, stb...).<br>
+ Az összes keresett kulcsszó száma nagyobb mint a keresett kifejezéseké (azaz az igazi keresések számáé) mert
+ 2 keresett kulcsszó esetén a keresés kétszer számít (egyszer-egyszer mindkét szóra).
  </DIV>
  <DIV CLASS="CTooltip" ID="tt16">
  A robot-ok (spider-nek vagy webcrawler-nek is mondják) <b>automatikus számítógép látogatók</b> melyet számos keresõprogram használ arra hogy az oldalt átnézze, index-elje és kategorizálja, statisztikát gyûjtsön a weboldalakról és/vagy megnézze, hogy a honlap még mindig elérhetõ-e.<br>
@@ -40,6 +42,12 @@
  </DIV>
  <DIV CLASS="CTooltip" ID="tt19">
  Az itteni adat <b>összegzett adat</b> (az elsõ és az utolsó látogatás közötti idõszakra)
+ </DIV>
+ <DIV CLASS="CTooltip" ID="tt20">
+ Néha a <b>látogatási idõszak</b> "ismeretlen"-nek látszik, mert nem mindig kiszá
+ mítható. Ennek fõ okai:<br>
+ - A látogatás nem fejezõdött be a frissítéskor.<br>
+ - A látogatás a hónap utolsó napjának utolsó órájában kezdõdött (23:00 után).
  </DIV>
 
  <DIV CLASS="CTooltip" ID="tt201"> Nincs hibaleírás. </DIV>
