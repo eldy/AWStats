@@ -663,8 +663,8 @@ sub DateIsValid {
 #------------------------------------------------------------------------------
 sub SessionLastToSessionRange {
 	my $starttime = my $endtime;
-	if (shift =~ /(\d\d\d\d)(\d\d)(\d\d)(\d\d)(\d\d)(\d\d)/) { $endtime = Time::Local::timelocal($6,$5,$4,$3,$2,$1); }
-	if (shift =~ /(\d\d\d\d)(\d\d)(\d\d)(\d\d)(\d\d)(\d\d)/) { $starttime = Time::Local::timelocal($6,$5,$4,$3,$2,$1); }
+	if (shift =~ /(\d\d\d\d)(\d\d)(\d\d)(\d\d)(\d\d)(\d\d)/) { $endtime = Time::Local::timelocal($6,$5,$4,$3,$2-1,$1); }
+	if (shift =~ /(\d\d\d\d)(\d\d)(\d\d)(\d\d)(\d\d)(\d\d)/) { $starttime = Time::Local::timelocal($6,$5,$4,$3,$2-1,$1); }
 	my $delay=$endtime-$starttime;
 	debug("SessionLastToSessionRange $endtime - $starttime = $delay",4);
 	if ($delay <= 30) { return $SessionsRange[0]; }
@@ -3074,7 +3074,7 @@ if ($UpdateStats) {
 		# Create $timerecord like YYYYMMDDHHMMSS
 		#--- TZ START : Uncomment following 3 lines to made a timezone adjustment. Warning this reduce seriously AWStats speed.
 #		my $TZ=+2;
-#		my ($nsec,$nmin,$nhour,$nmday,$nmon,$nyear,$nwday) = localtime(Time::Local::timelocal($dateparts[5], $dateparts[4], $dateparts[3], $dateparts[0], $dateparts[1], $dateparts[2] + (3600*$TZ) ));
+#		my ($nsec,$nmin,$nhour,$nmday,$nmon,$nyear,$nwday) = localtime(Time::Local::timelocal($dateparts[5], $dateparts[4], $dateparts[3], $dateparts[0], $dateparts[1], $dateparts[2]) + (3600*$TZ));
 #		@dateparts = split(/:/, sprintf("%02u:%02u:%04u:%02u:%02u:%02u", $nmday, $nmon, $nyear+1900, $nhour, $nmin, $nsec)); 
 		#--- TZ END : Uncomment following three lines to made a timezone adjustement. Warning this reduce seriously AWStats speed.
 		my $timerecord=int($dateparts[2].$dateparts[1].$dateparts[0].$dateparts[3].$dateparts[4].$dateparts[5]);	# !!!
