@@ -4,10 +4,9 @@
 # With Apache for Windows and ActiverPerl, first line may be
 #!c:/program files/activeperl/bin/perl
 #-Description-------------------------------------------
-# Free realtime web server logfile analyzer (Perl script) to show advanced web
-# statistics. Works from command line or as a CGI.
-# You must use this script as often as necessary from your scheduler to update
-# your statistics.
+# Free realtime web server logfile analyzer to show advanced web statistics.
+# Works from command line or as a CGI. You must use this script as often as
+# necessary from your scheduler to update your statistics.
 # See README.TXT file for setup and benchmark informations.
 # See COPYING.TXT file about AWStats GNU General Public License.
 #-------------------------------------------------------
@@ -73,7 +72,7 @@ $total_h, $total_k, $total_p) = ();
 %MonthBytes = %MonthHits = %MonthHostsKnown = %MonthHostsUnknown = %MonthPages = %MonthUnique = %MonthVisits =
 %listofyears = %monthlib = %monthnum = ();
 
-$VERSION="3.1 (build 20)";
+$VERSION="3.1 (build 21)";
 $Lang="en";
 
 # Default value
@@ -850,7 +849,7 @@ sub error {
 sub warning {
 	if ($WarningMessages == 1) {
     	print "$_[0]<br>\n";
-#		print "You can now remove this warning by changing <b>\$WarningMessages=1</b> parameter into <b>\$WarningMessages=0</b> in $PROG config file (<b>$FileConfig</b>).<br><br>\n"; }
+		#print "You can now remove this warning by changing <b>\$WarningMessages=1</b> parameter into <b>\$WarningMessages=0</b> in $PROG config file (<b>$FileConfig</b>).<br><br>\n"; }
 	}
 }
 
@@ -2016,7 +2015,7 @@ if ($UpdateStats) {
 		$NbOfLinesRead++;
 		if (/^#/) { next; }									# Ignore comment lines (ISS writes such comments)
 		if (/^!/) { next; }									# Ignore comment lines (Webstar writes such comments)
-#		if (/^$/) { next; }									# Ignore blank lines (With ISS: happens sometimes, with Apache: possible when editing log file)
+		#if (/^$/) { next; }								# Ignore blank lines (With ISS: happens sometimes, with Apache: possible when editing log file)
 		chomp $_; s/\r//;
 
 		# Parse line record to get all required fields
@@ -2035,7 +2034,7 @@ if ($UpdateStats) {
 		# Check filters
 		#----------------------------------------------------------------------
 		if ($field[$pos_method] ne 'GET' && $field[$pos_method] ne 'POST' && $field[$pos_method] !~ /OK/) { next; }	# Keep only GET, POST (OK with Webstar) but not HEAD, OPTIONS
-#		if ($field[$pos_url] =~ /^RC=/) { $NbOfLinesCorrupted++; next; }			# A strange log record with IIS we need to forget
+		#if ($field[$pos_url] =~ /^RC=/) { $NbOfLinesCorrupted++; next; }			# A strange log record with IIS we need to forget
 		# Split DD/Month/YYYY:HH:MM:SS or YYYY-MM-DD HH:MM:SS or MM/DD/YY\tHH:MM:SS
 		$field[$pos_date] =~ tr/-\/ \t/::::/;
 		my @dateparts=split(/:/,$field[$pos_date]);
@@ -2464,7 +2463,8 @@ if ($UpdateStats) {
 	}
 	close(LOG);
 
-}	# End of log processing
+}
+# End of log processing
 
 
 
