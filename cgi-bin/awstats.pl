@@ -87,7 +87,7 @@ $word, $yearcon, $yearfile, $yearmonthfile, $yeartoprocess) = ();
 @sortsearchwords = @sortsereferrals = @sortsider404 = @sortsiders = @sortunknownip =
 @sortunknownreferer = @sortunknownrefererbrowser = @wordlist = ();
 
-$VERSION="2.5 (build 20)";
+$VERSION="2.5 (build 21)";
 $Lang=0;
 
 # Default value
@@ -127,6 +127,11 @@ $BarImageHorizontal_k = "barrehk.png";
 			"/YourRelativeUrl",						"<b>Your HTML text</b>"
 			);
 
+# These table is used to make fast reverse DNS lookup for particular IP adresses. You can add your own IP adresses resolutions.
+%MyDNSTable = (
+"256.256.256.1", "myworkstation1",
+"256.256.256.2", "myworkstation2"
+);
 
 # Search engines names database (update the 10th january 2001)
 %SearchEnginesHash=(
@@ -2471,18 +2476,23 @@ if ($UpdateStats) {
 			# Doing DNS lookup
 		    if ($NewDNSLookup) {
 				$new=$TmpHashDNSLookup{$Host};	# TmpHashDNSLookup is a temporary hash table to increase speed
-				if (!$new) {		# if $new undefined, $Host not yet resolved
+				if (!$new) {					# if $new undefined, $Host not yet resolved
 					&debug("Start of reverse DNS lookup for $Host",4);
-					$new=gethostbyaddr(pack("C4",split(/\./,$Host)),AF_INET);	# This is very slow may took 20 seconds
-					&debug("End of reverse DNS lookup for $Host",4);
-					if ($new eq "") {	$new="ip"; }
+					if ($MyTableDNS{$Host}) {
+						&debug("End of reverse DNS lookup, found resolution of $Host in local MyTableDNS",4);
+	  					$new = $MyTableDns{$Host};
+					}
+					else {
+						$new=gethostbyaddr(pack("C4",split(/\./,$Host)),AF_INET);	# This is very slow may took 20 seconds
+						&debug("End of reverse DNS lookup for $Host",4);
+					}
+					if ($new eq "") { $new="ip"; }
 					$TmpHashDNSLookup{$Host}=$new;
 				}
-
 				# Here $Host is still xxx.xxx.xxx.xxx and $new is name or "ip" if reverse failed)
 				if ($new ne "ip") { $Host=$new; }
 			}
-		    # If we're not doing lookup or if it failed, we still have an IP address in $Host
+		    # If we don't do lookup or if it failed, we still have an IP address in $Host
 		    if (!$NewDNSLookup || $new eq "ip") {
 				  if ($PageBool) {
 				  		if (int($timeconnexion) > int($_unknownip_l{$Host}+$VisitTimeOut)) { $MonthVisits{$yeartoprocess.$monthtoprocess}++; }
@@ -2498,7 +2508,12 @@ if ($UpdateStats) {
 				  $found=1;
 		      }
 	    }
-		else { if ($Host =~ /[a-z]/) { $NewDNSLookup=0; } }	# Hosts seems to be already resolved
+		else {
+			if ($Host =~ /[a-z]/) { 
+				&debug("The following hostname '$Host' seems to be already resolved.",3);
+				$NewDNSLookup=0;
+			}
+		}	# Hosts seems to be already resolved, make DNS lookup inactive
 
 		# Here, $Host = hostname or xxx.xxx.xxx.xxx
 		if (!$found) {				# If not processed yet ($Host = hostname)
@@ -2694,7 +2709,7 @@ if ($UpdateStats) {
 	&debug("End of processing log file");
 
 	# DNSLookup warning
-	if ($DNSLookup && !$NewDNSLookup) { warning("Warning: <b>$PROG</b> has detected that hosts names are already resolved in your logfile <b>$LogFile</b>.<br>\nIf this is true, you should change your setup DNSLookup=1 into DNSLookup=0 to increase $PROG speed."); }
+	if ($DNSLookup && !$NewDNSLookup) { warning("Warning: <b>$PROG</b> has detected that hosts names are already resolved in your logfile <b>$LogFile</b>.<br>\nIf this is always true, you should change your setup DNSLookup=1 into DNSLookup=0 to increase $PROG speed."); }
 
 	# Save current processed month $monthtoprocess
 	if ($UpdateStats && $monthtoprocess) {	# If monthtoprocess is still 0, it means there was no history files and we found no valid lines in log file
