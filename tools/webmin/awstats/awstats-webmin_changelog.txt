@@ -16,6 +16,7 @@ New features/improvements:
   LevelForFileTypesDetection
   URLWithQueryWithOnlyFollowingParameters
   ShowWormsStats
+- Removed LinkToIPWhoIs and LinkToWhoIs obsolete parameters.
 - Module setup parameter awstats_conf has been removed since now
   directories into wich you can scan/edit AWStats configuration files
   are defined in ACL users. Defined to /etc/awstats by default.
@@ -23,7 +24,7 @@ New features/improvements:
 - Added a streaming server log file type.
 
 Other/Documentation:
-- None
+- Added german translation.
 
 
 
