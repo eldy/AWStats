@@ -71,7 +71,7 @@ $found, $internal_link, $new) = ();
 %MonthBytes = %MonthHits = %MonthHostsKnown = %MonthHostsUnknown = %MonthPages = %MonthUnique = %MonthVisits =
 %monthlib = %monthnum = ();
 
-$VERSION="3.1 (build 40)";
+$VERSION="3.1 (build 41)";
 $Lang="en";
 
 # Default value
@@ -2299,11 +2299,11 @@ if ($UpdateStats) {
 			if (!$FullHostName) { s/^[\w\-]+\.//; };
 			if ($PageBool) {
 				if ($timeconnexion > ($_hostmachine_l{$_}+$VisitTimeOut)) { $MonthVisits{$yearmonth}++; }
-				if (! $_hostmachine_l{$_}) { $MonthUnique{$yearmonth}++;  }
+				if (! $_hostmachine_l{$_}) { $MonthUnique{$yearmonth}++; }
 				$_hostmachine_p{$_}++;
 				$_hostmachine_l{$_}=$timeconnexion;
 				}
-			if (! $_hostmachine_l{$_}) { $MonthHostsKnown{$yearmonth}++;  }
+			if (! $_hostmachine_h{$_}) { $MonthHostsKnown{$yearmonth}++; }
 			$_hostmachine_h{$_}++;
 			$_hostmachine_k{$_}+=$field[$pos_size];
 
