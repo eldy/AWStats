@@ -1443,12 +1443,12 @@ sub Read_History_With_Update {
 	my %SectionsToSave = my %SectionsToLoad = (); my %SectionsToLoadPartialy = ();
 	if ($withupdate) { %SectionsToSave=("general"=>1,"time"=>2,"visitor"=>3,"day"=>4,"login"=>5,"domain"=>6,"session"=>7,"browser"=>8,
 						"msiever"=>9,"nsver"=>10,"os"=>11,"unknownreferer"=>12,"unknownrefererbrowser"=>13,"robot"=>14,"sider"=>15,
-						"filetypes"=>16,"origin"=>17,"serefferals"=>18,"pagerefs"=>19,"searchwords"=>20,"keywords"=>21,"errors"=>22,"sider_404"=>23); }
+						"filetypes"=>16,"origin"=>17,"sereferrals"=>18,"pagerefs"=>19,"searchwords"=>20,"keywords"=>21,"errors"=>22,"sider_404"=>23); }
 	if ($part eq "all") {
-		# Load all sections
+		# Load all needed sections
 		$SectionsToLoad{"general"}=1;
 		$SectionsToLoad{"time"}=2;
-		if ($UpdateStats || $HTMLOutput eq "main" || $HTMLOutput eq "allhosts" || $HTMLOutput eq "lasthosts" || $HTMLOutput eq "unknownip") { $SectionsToLoad{"visitor"}=3; }	# before day session and sider
+		if ($UpdateStats || $HTMLOutput eq "main" || $HTMLOutput eq "allhosts" || $HTMLOutput eq "lasthosts" || $HTMLOutput eq "unknownip") { $SectionsToLoad{"visitor"}=3; }	# before day, sider and session section
 		if ($UpdateStats || $HTMLOutput eq "main" || $HTMLOutput eq "days")   { $SectionsToLoad{"day"}=4; }
 		if ($UpdateStats || $HTMLOutput eq "main" || $HTMLOutput eq "logins") { $SectionsToLoad{"login"}=5; }
 		if ($UpdateStats || $HTMLOutput eq "main" || $HTMLOutput eq "domains") { $SectionsToLoad{"domain"}=6; }
@@ -1548,37 +1548,6 @@ sub Read_History_With_Update {
 				if (! scalar %SectionsToLoad) { debug(" Stop reading history file. Got all we need."); last; }
 				if ($versionnum >= 5000) { next; }
 			}
-
-			# BEGIN_ORIGIN
-			if ($field[0] eq "BEGIN_ORIGIN")	{
-				if ($Debug) { debug(" Begin of ORIGIN section"); }
-				next;
-			}
-			if ($SectionsToLoad{"origin"}) {
-				if ($field[0] eq "From0") { $_from_p[0]+=$field[1]; $_from_h[0]+=$field[2]; next; }
-				if ($field[0] eq "From1") { $_from_p[1]+=$field[1]; $_from_h[1]+=$field[2]; next; }
-				if ($field[0] eq "From2") { $_from_p[2]+=$field[1]; $_from_h[2]+=$field[2]; next; }
-				if ($field[0] eq "From3") { $_from_p[3]+=$field[1]; $_from_h[3]+=$field[2]; next; }
-				if ($field[0] eq "From4") { $_from_p[4]+=$field[1]; $_from_h[4]+=$field[2]; next; }
-				if ($field[0] eq "From5") { $_from_p[5]+=$field[1]; $_from_h[5]+=$field[2]; next; }
-				# Next lines are to read old awstats history files ("Fromx" section was "HitFromx" in such files)
-				if ($field[0] eq "HitFrom0") { $_from_p[0]+=0; $_from_h[0]+=$field[1]; next; }
-				if ($field[0] eq "HitFrom1") { $_from_p[1]+=0; $_from_h[1]+=$field[1]; next; }
-				if ($field[0] eq "HitFrom2") { $_from_p[2]+=0; $_from_h[2]+=$field[1]; next; }
-				if ($field[0] eq "HitFrom3") { $_from_p[3]+=0; $_from_h[3]+=$field[1]; next; }
-				if ($field[0] eq "HitFrom4") { $_from_p[4]+=0; $_from_h[4]+=$field[1]; next; }
-				if ($field[0] eq "HitFrom5") { $_from_p[5]+=0; $_from_h[5]+=$field[1]; next; }
-			}
-			if ($field[0] eq "END_ORIGIN")      {
-				if ($Debug) { debug(" End of ORIGIN section"); }
-				delete $SectionsToLoad{"origin"};
-				if ($SectionsToSave{"origin"}) {
-					Save_History("origin",$year,$month); delete $SectionsToSave{"origin"};
-					if ($withpurge) { @_from_p=(); @_from_h=(); }
-				}
-				if (! scalar %SectionsToLoad) { debug(" Stop reading history file. Got all we need."); last; }
-				next;
-			}
 			# BEGIN_TIME
 			if ($field[0] eq "BEGIN_TIME")      {
 				if ($Debug) { debug(" Begin of TIME section"); }
@@ -1616,6 +1585,37 @@ sub Read_History_With_Update {
 				if ($SectionsToSave{"time"}) {
 					Save_History("time",$year,$month); delete $SectionsToSave{"time"};
 					if ($withpurge) { @_time_p=(); @_time_h=(); @_time_k=(); }
+				}
+				if (! scalar %SectionsToLoad) { debug(" Stop reading history file. Got all we need."); last; }
+				next;
+			}
+
+			# BEGIN_ORIGIN
+			if ($field[0] eq "BEGIN_ORIGIN")	{
+				if ($Debug) { debug(" Begin of ORIGIN section"); }
+				next;
+			}
+			if ($SectionsToLoad{"origin"}) {
+				if ($field[0] eq "From0") { $_from_p[0]+=$field[1]; $_from_h[0]+=$field[2]; next; }
+				if ($field[0] eq "From1") { $_from_p[1]+=$field[1]; $_from_h[1]+=$field[2]; next; }
+				if ($field[0] eq "From2") { $_from_p[2]+=$field[1]; $_from_h[2]+=$field[2]; next; }
+				if ($field[0] eq "From3") { $_from_p[3]+=$field[1]; $_from_h[3]+=$field[2]; next; }
+				if ($field[0] eq "From4") { $_from_p[4]+=$field[1]; $_from_h[4]+=$field[2]; next; }
+				if ($field[0] eq "From5") { $_from_p[5]+=$field[1]; $_from_h[5]+=$field[2]; next; }
+				# Next lines are to read old awstats history files ("Fromx" section was "HitFromx" in such files)
+				if ($field[0] eq "HitFrom0") { $_from_p[0]+=0; $_from_h[0]+=$field[1]; next; }
+				if ($field[0] eq "HitFrom1") { $_from_p[1]+=0; $_from_h[1]+=$field[1]; next; }
+				if ($field[0] eq "HitFrom2") { $_from_p[2]+=0; $_from_h[2]+=$field[1]; next; }
+				if ($field[0] eq "HitFrom3") { $_from_p[3]+=0; $_from_h[3]+=$field[1]; next; }
+				if ($field[0] eq "HitFrom4") { $_from_p[4]+=0; $_from_h[4]+=$field[1]; next; }
+				if ($field[0] eq "HitFrom5") { $_from_p[5]+=0; $_from_h[5]+=$field[1]; next; }
+			}
+			if ($field[0] eq "END_ORIGIN")      {
+				if ($Debug) { debug(" End of ORIGIN section"); }
+				delete $SectionsToLoad{"origin"};
+				if ($SectionsToSave{"origin"}) {
+					Save_History("origin",$year,$month); delete $SectionsToSave{"origin"};
+					if ($withpurge) { @_from_p=(); @_from_h=(); }
 				}
 				if (! scalar %SectionsToLoad) { debug(" Stop reading history file. Got all we need."); last; }
 				next;
@@ -1661,6 +1661,16 @@ sub Read_History_With_Update {
 			# BEGIN_VISITOR
 			if ($field[0] eq "BEGIN_VISITOR")   {
 				if ($Debug) { debug(" Begin of VISITOR section"); }
+
+				# If need to read partialy and $field[1] defined, we got all we need
+#				if ($SectionsToLoad{"visitor"} && $SectionsToLoadPartialy{"visitor"}) {
+#					if ($field[1]) {
+#						$MonthUnique{$year.$month}+=$field[1];
+#						delete $SectionsToLoad{"visitor"};
+#						if (! scalar %SectionsToLoad) { debug(" Stop reading history file. Got all we need."); last; }
+#					}
+#				}
+			
 				$_=<HISTORY>;
 				chomp $_; s/\r//;
 				if (! $_) { error("Error: History file \"$historyfilename\" is corrupted (in section VISITOR). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
@@ -1670,8 +1680,8 @@ sub Read_History_With_Update {
 				while ($field[0] ne "END_VISITOR") {
 					if ($field[0]) {
 						$count++;
-						# We always read this to build the month graph (MonthUnique, MonthHostsKnown, MonthHostsUnknown)
-						if (($field[1]||0) > 0) { $monthunique++; }
+
+						if ($field[1]) { $monthunique++; }
 						
 						# Process data saved in 'wait' arrays
 						if ($UpdateStats && $_waithost_e{$field[0]}){
@@ -1757,10 +1767,10 @@ sub Read_History_With_Update {
 
 				if ($Debug) { debug(" End of VISITOR section ($count entries, $countloaded loaded)"); }
 				delete $SectionsToLoad{"visitor"};
-				#if ($SectionsToSave{"visitor"}) {
-				#	Save_History("visitor",$year,$month); delete $SectionsToSave{"visitor"};
-				#	if ($withpurge) { %_host_p=(); %_host_h=(); %_host_k=(); %_host_l=(); %_host_s=(); %_host_u=(); }
-				#}
+				if ($SectionsToSave{"visitor"}) {
+					Save_History("visitor",$year,$month); delete $SectionsToSave{"visitor"};
+					if ($withpurge) { %_host_p=(); %_host_h=(); %_host_k=(); %_host_l=(); %_host_s=(); %_host_u=(); }
+				}
 				if (! scalar %SectionsToLoad) { debug(" Stop reading history file. Got all we need."); last; }
 				next;
 			}
@@ -2083,13 +2093,6 @@ sub Read_History_With_Update {
 					if ($field[0]) {
 						$count++;
 						if ($SectionsToLoad{"sider"}) {
-							# Data required:
-							# update 				need to load all pages - TotalDiffetentPages could be counted but is not
-							# noupdate+
-							#  main page for year	need to load all pages - TotalDiffetentPages could be counted but is not
-							#  main page for month	need to load MaxNbOfPageShown pages and >= MinHitFile - TotalDiffetentPages can be counted and is
-							#  urldetail for year	need to load all pages with filter ok - TotalDiffetentPages could be counted if no filter but is not
-							#  urldetail for month	need to load all pages with filter ok and >= MinHitFile - TotalDiffetentPages can be counted and is
 							my $loadrecord=0;
 							if ($UpdateStats) {
 								$loadrecord=1;
@@ -2304,8 +2307,8 @@ sub Read_History_With_Update {
 				if ($Debug) { debug(" End of SEARCHWORDS section ($count entries, $countloaded loaded)"); }
 				delete $SectionsToLoad{"searchwords"};
 				if ($SectionsToSave{"searchwords"}) {
-					Save_History("searchwords",$year,$month); delete $SectionsToSave{"searchwords"};
-					if ($withpurge) { %_keywords=(); %_keyphrases=(); }
+					Save_History("searchwords",$year,$month); delete $SectionsToSave{"searchwords"};	# This save searwords and keywords sections
+					if ($withpurge) { %_keyphrases=(); }
 				}
 				if (! scalar %SectionsToLoad) { debug(" Stop reading history file. Got all we need."); last; }
 				next;
@@ -2418,6 +2421,7 @@ sub Read_History_With_Update {
 	if ($withupdate) {
 
 		# Process rest of data saved in 'wait' arrays (data for hosts that are not in history file or no history file found)
+		# This can change some values for sider, day and session sections
 		if ($Debug) { debug(" Processing data in 'wait' arrays",3); }
 		foreach my $key (keys %_waithost_e) {
 			if ($Debug) { debug("  Visit in 'wait' arrays is a new visit",3); }
@@ -2426,7 +2430,7 @@ sub Read_History_With_Update {
 			$_url_e{$_waithost_e{$key}}++;
 			$newtimehosts =~ /^(\d\d\d\d\d\d\d\d)/; $DayVisits{$1}++;
 			if ($_waithost_s{$key}) {
-				# There was also a second session processed log
+				# There was also a second session in processed log
 				$_session{GetSessionRange($newtimehosts,$newtimehostl)}++;
 			}
 		}
@@ -2524,7 +2528,7 @@ sub Save_History {
 		print HISTORYTMP "# Host - Pages - Hits - Bandwidth - Last visit date - [Start of last visit date] - [Last page of last visit]\n";
 		print HISTORYTMP "# [Start of last visit date] and [Last page of last visit] are saved only if session is not finished\n";
 		print HISTORYTMP "# The $MaxNbOfHostsShown first Hits must be first (order not required for others)\n";
-		print HISTORYTMP "BEGIN_VISITOR ".(scalar keys %_host_h)."\n";
+		print HISTORYTMP "BEGIN_VISITOR ".(scalar keys %_host_h)." ".(scalar keys %_host_p)."\n";
 		&BuildKeyList($MaxNbOfHostsShown,$MinHitHost,\%_host_h,\%_host_p);
 		my %keysinkeylist=();
 		foreach my $key (@keylist) {
@@ -2743,8 +2747,8 @@ sub Save_History {
 			foreach my $word (split(/\+/,$key)) { $_keywords{$word}+=$_keyphrases{$key}; }	# To init %_keywords
 		}
 		print HISTORYTMP "END_SEARCHWORDS\n";
-	}
-	if ($sectiontosave eq "keywords") {
+
+		# Now save keywords section
 		print HISTORYTMP "\n";
 		print HISTORYTMP "# Search keywords - Number of search\n";
 		print HISTORYTMP "# The $MaxNbOfKeywordsShown first number of search must be first (order not required for others)\n";
@@ -5642,6 +5646,9 @@ EOF
 			$avg_dayofweek_p[$_]=sprintf("%.2f",$avg_dayofweek_p[$_]);
 			$avg_dayofweek_h[$_]=sprintf("%.2f",$avg_dayofweek_h[$_]);
 			$avg_dayofweek_k[$_]=sprintf("%.2f",$avg_dayofweek_k[$_]);
+			# Remove decimal part if 0
+			if ($avg_dayofweek_p[$_] == int($avg_dayofweek_p[$_])) { $avg_dayofweek_p[$_]=int($avg_dayofweek_p[$_]); }
+			if ($avg_dayofweek_h[$_] == int($avg_dayofweek_h[$_])) { $avg_dayofweek_h[$_]=int($avg_dayofweek_h[$_]); }
 			print "<TD valign=bottom>";
 			print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_p\" HEIGHT=$bredde_p WIDTH=6 ALT=\"$Message[56]: $avg_dayofweek_p[$_]\" title=\"$Message[56]: $avg_dayofweek_p[$_]\">";
 			print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_h\" HEIGHT=$bredde_h WIDTH=6 ALT=\"$Message[57]: $avg_dayofweek_h[$_]\" title=\"$Message[57]: $avg_dayofweek_h[$_]\">";
@@ -6137,7 +6144,7 @@ EOF
 		if ($ShowKeyphrasesStats && $ShowKeywordsStats) { print "<td width=50% valign=top>\n";	}
 		if ($Debug) { debug("ShowKeyphrasesStats",2); }
 		$MaxNbOfKeyphrasesShown = $TotalDifferentKeyphrases if $MaxNbOfKeyphrasesShown > $TotalDifferentKeyphrases;
-		&tab_head("$Message[121] ($Message[77] $MaxNbOfKeyphrasesShown)<br><a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=keyphrases":"$PROG$StaticLinks.keyphrases.html")."\"$NewLinkTarget>$Message[80]</a>",19,($ShowKeyphrasesStats && $ShowKeywordsStats)?95:70);
+		&tab_head("$Message[120] ($Message[77] $MaxNbOfKeyphrasesShown)<br><a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=keyphrases":"$PROG$StaticLinks.keyphrases.html")."\"$NewLinkTarget>$Message[80]</a>",19,($ShowKeyphrasesStats && $ShowKeywordsStats)?95:70);
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\" onmouseover=\"ShowTooltip(15);\" onmouseout=\"HideTooltip(15);\"><TH>$TotalDifferentKeyphrases $Message[103]</TH><TH bgcolor=\"#$color_s\" width=80>$Message[14]</TH><TH bgcolor=\"#$color_s\" width=80>$Message[15]</TH></TR>\n";
 		$total_s=0;
 		my $count=0;
@@ -6165,7 +6172,7 @@ EOF
 		if ($ShowKeyphrasesStats && $ShowKeywordsStats) { print "<td width=50% valign=top>\n";	}
 		if ($Debug) { debug("ShowKeywordsStats",2); }
 		$MaxNbOfKeywordsShown = $TotalDifferentKeywords if $MaxNbOfKeywordsShown > $TotalDifferentKeywords;
-		&tab_head("$Message[120] ($Message[77] $MaxNbOfKeywordsShown)<br><a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=keywords":"$PROG$StaticLinks.keywords.html")."\"$NewLinkTarget>$Message[80]</a>",19,($ShowKeyphrasesStats && $ShowKeywordsStats)?95:70);
+		&tab_head("$Message[121] ($Message[77] $MaxNbOfKeywordsShown)<br><a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=keywords":"$PROG$StaticLinks.keywords.html")."\"$NewLinkTarget>$Message[80]</a>",19,($ShowKeyphrasesStats && $ShowKeywordsStats)?95:70);
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\" onmouseover=\"ShowTooltip(15);\" onmouseout=\"HideTooltip(15);\"><TH>$TotalDifferentKeywords $Message[13]</TH><TH bgcolor=\"#$color_s\" width=80>$Message[14]</TH><TH bgcolor=\"#$color_s\" width=80>$Message[15]</TH></TR>\n";
 		$total_s=0;
 		my $count=0;
