@@ -18,7 +18,8 @@ use Socket;
 use Time::Local;	# use Time::Local 'timelocal_nocheck' is not supported by all Time::Local modules
 # Next 'use' can be uncommented (with its coupled line into GetDelaySinceStart function) to
 # get miliseconds time in showsteps option
-use Time::HiRes qw( gettimeofday );
+#use Time::HiRes qw( gettimeofday );
+
 
 
 #-------------------------------------------------------
@@ -46,6 +47,7 @@ $Lang
 $DEBUGFORCED
 $MaxRowsInHTMLOutput
 $VisitTimeOut
+$VisitTolerance
 $NbOfLinesForBenchmark
 $ShowBackLink
 $WIDTH
@@ -68,6 +70,7 @@ $Lang="en";
 $DEBUGFORCED   = 0;				# Force debug level to log lesser level into debug.log file (Keep this value to 0)
 $MaxRowsInHTMLOutput = 1000;		# Max number of rows for not limited HTML arrays
 $VisitTimeOut  = 10000;			# Laps of time to consider a page load as a new visit. 10000 = one hour (Default = 10000)
+$VisitTolerance= 100;			# Laps of time to accept a record if not in correct order. 100 = one minute (Default = 100)
 $NbOfLinesForBenchmark=5000;
 $ShowBackLink  = 1;
 $WIDTH         = 600;
@@ -115,7 +118,7 @@ $MaxNbOfPageShown $MaxNbOfRefererShown $MaxNbOfRobotShown
 $MinHitFile $MinHitHost $MinHitKeyword
 $MinHitLogin $MinHitRefer $MinHitRobot
 $NbOfLinesRead $NbOfLinesDropped $NbOfLinesCorrupted $NbOfOldLines $NbOfNewLines
-$NowNewLinePhase $NbOfLinesForCorruptedLog $PurgeLogFile
+$NewLinePhase $NbOfLinesForCorruptedLog $PurgeLogFile
 $ShowAuthenticatedUsers $ShowCompressionStats $ShowFileSizesStats
 $ShowDropped $ShowCorrupted $ShowUnknownOrigin $ShowLinksToWhoIs
 $SplitSearchString $StartSeconds $StartMicroseconds
@@ -128,7 +131,7 @@ $MaxNbOfPageShown, $MaxNbOfRefererShown, $MaxNbOfRobotShown,
 $MinHitFile, $MinHitHost, $MinHitKeyword,
 $MinHitLogin, $MinHitRefer, $MinHitRobot,
 $NbOfLinesRead, $NbOfLinesDropped, $NbOfLinesCorrupted, $NbOfOldLines, $NbOfNewLines,
-$NowNewLinePhase, $NbOfLinesForCorruptedLog, $PurgeLogFile,
+$NewLinePhase, $NbOfLinesForCorruptedLog, $PurgeLogFile,
 $ShowAuthenticatedUsers, $ShowCompressionStats, $ShowFileSizesStats,
 $ShowDropped, $ShowCorrupted, $ShowUnknownOrigin, $ShowLinksToWhoIs,
 $SplitSearchString, $StartSeconds, $StartMicroseconds,
@@ -1329,12 +1332,12 @@ sub Read_History_File {
 		my @field=split(/\s+/,$_);
 		if (! $field[0]) { next; }
 		if ($field[0] eq "FirstTime")       { $FirstTime{$year.$month}=int($field[1]); next; }
-		if ($field[0] eq "LastLine")        { if ($LastLine{$year.$month} < int($field[1])) { $LastLine{$year.$month}=int($field[1]); }; next; }
+		if ($field[0] eq "LastLine")        { if ($LastLine{$year.$month}||0 < int($field[1])) { $LastLine{$year.$month}=int($field[1]); }; next; }
 		if ($field[0] eq "FirstTime")       { $FirstTime{$year.$month}=int($field[1]); next; }
-		if ($field[0] eq "LastTime")        { if ($LastTime{$year.$month} < int($field[1])) { $LastTime{$year.$month}=int($field[1]); }; next; }
+		if ($field[0] eq "LastTime")        { if ($LastTime{$year.$month}||0 < int($field[1])) { $LastTime{$year.$month}=int($field[1]); }; next; }
 		if ($field[0] eq "TotalVisits")     { $MonthVisits{$year.$month}=int($field[1]); next; }
 		if ($field[0] eq "LastUpdate")      {
-			if ($LastUpdate{$year.$month} < $field[1]) {
+			if ($LastUpdate{$year.$month}||0 < $field[1]) {
 				$LastUpdate{$year.$month}=int($field[1]);
 				#$LastUpdateLinesRead{$year.$month}=int($field[2]);
 				#$LastUpdateNewLinesRead{$year.$month}=int($field[3]);
@@ -2176,7 +2179,7 @@ sub GetDelaySinceStart {
 	if ($option) { $StartSeconds=0;	}	# Reset counter
 	my ($newseconds, $newmicroseconds)=(0,0);
 	my $usedTimeHires=0;
-	($newseconds, $newmicroseconds) = gettimeofday; $usedTimeHires=1;	# Uncomment to use Time::HiRes function (provide milliseconds)
+#	($newseconds, $newmicroseconds) = gettimeofday; $usedTimeHires=1;	# Uncomment to use Time::HiRes function (provide milliseconds)
 	if ((! $usedTimeHires) || ($newseconds eq "gettimeofday")) { $newseconds=time(); }
 	if (! $StartSeconds) { $StartSeconds=$newseconds; $StartMicroseconds=$newmicroseconds; }
 	my $nbms=$newseconds*1000+int($newmicroseconds/1000)-$StartSeconds*1000-int($StartMicroseconds/1000);
@@ -2995,7 +2998,7 @@ if ($UpdateStats) {
 
 	# READING THE LAST PROCESSED HISTORY FILE
 	#------------------------------------------
-	my $monthtoprocess=0; my $yeartoprocess=0;
+	my $monthtoprocess=0; my $yeartoprocess=0; my $yearmonthtoprocess="";
 
 	# Search last history file $PROG(MM)(YYYY)$FileSuffix.txt
 	my $yearmonthmax=0;
@@ -3003,12 +3006,12 @@ if ($UpdateStats) {
 	my @filearray = sort readdir DIR;
 	close DIR;
 	foreach my $i (0..$#filearray) {
-		if ("$filearray[$i]" =~ /^$PROG([\d][\d])([\d][\d][\d][\d])$FileSuffix\.txt$/) {
+		if ("$filearray[$i]" =~ /^$PROG(\d\d)(\d\d\d\d)$FileSuffix\.txt$/) {
 			if (int("$2$1") > $yearmonthmax) { $yearmonthmax=int("$2$1"); }
 		}
 	}
 	# We read last history file if found
-	if ($yearmonthmax =~ /^([\d][\d][\d][\d])([\d][\d])$/) {
+	if ($yearmonthmax =~ /^(\d\d\d\d)(\d\d)$/) {
 		$monthtoprocess=int($2);$yeartoprocess=int($1);
 		# We read LastTime in this last history file.
 		&Read_History_File($yeartoprocess,$monthtoprocess,1);
@@ -3020,9 +3023,8 @@ if ($UpdateStats) {
 	# PROCESSING CURRENT LOG
 	#------------------------------------------
 	if ($Debug) { debug("Start of processing log file (monthtoprocess=$monthtoprocess, yeartoprocess=$yeartoprocess)"); }
-	my $yearmonthtoprocess=sprintf("%04i%02i",$yeartoprocess,$monthtoprocess);
+	$yearmonthtoprocess=sprintf("%04i%02i",$yeartoprocess,$monthtoprocess);
 	$NbOfLinesRead=$NbOfLinesDropped=$NbOfLinesCorrupted=$NbOfOldLines=$NbOfNewLines=0;
-	$NowNewLinePhase=0;
 
 	# Open log file
 	if ($Debug) { debug("Open log file \"$LogFile\""); }
@@ -3101,10 +3103,11 @@ if ($UpdateStats) {
 
 		# Skip if not a new line
 		#-----------------------
-		if ($NowNewLinePhase) {
-			if ($timerecord < $LastLine{$yearmonthtoprocess}) {
-				$NbOfLinesCorrupted++; if ($ShowCorrupted) { print "Corrupted record (not sorted record): $_\n"; } next;
-			}	# Should not happen, kept in case of parasite/corrupted old line
+		if ($NewLinePhase) {
+			if ($timerecord < $LastLine{$yearmonthtoprocess} - $VisitTolerance) {
+					# Should not happen, kept in case of parasite/corrupted old line
+					$NbOfLinesCorrupted++; if ($ShowCorrupted) { print "Corrupted record (not sorted record): $_\n"; } next;
+			}
 		}
 		else {
 			if ($timerecord <= $LastLine{$yearmonthtoprocess}) {
@@ -3112,7 +3115,7 @@ if ($UpdateStats) {
 				next;
 			}	# Already processed
 			# We found a new line. This will stop comparison "<=" between timerecord and LastLine (we should have only new lines now)
-			$NowNewLinePhase=1;
+			$NewLinePhase=1;
 			if ($ShowSteps) { print "Phase 2 : Now process new records\n"; }
 			#GetDelaySinceStart(1);
 		}
@@ -3129,8 +3132,8 @@ if ($UpdateStats) {
 		# Skip for some client host IP addresses, some URLs, other URLs		# !!!
 		my $qualifdrop="";
 		if (@SkipHosts && &SkipHost($field[$pos_rc]))    { $qualifdrop="Dropped record (host $field[$pos_rc] not qualified by SkipHosts)"; }
-		if (@SkipFiles && &SkipFile($field[$pos_url]))   { $qualifdrop="Dropped record (URL $field[$pos_url] not qualified by SkipFiles)"; }
-		if (@OnlyFiles && ! &OnlyFile($field[$pos_url])) { $qualifdrop="Dropped record (URL $field[$pos_url] not qualified by OnlyFiles)"; }
+		elsif (@SkipFiles && &SkipFile($field[$pos_url]))   { $qualifdrop="Dropped record (URL $field[$pos_url] not qualified by SkipFiles)"; }
+		elsif (@OnlyFiles && ! &OnlyFile($field[$pos_url])) { $qualifdrop="Dropped record (URL $field[$pos_url] not qualified by OnlyFiles)"; }
 		if ($qualifdrop) {
 			$NbOfLinesDropped++;
 			if ($ShowDropped) { print "$qualifdrop: $_\n"; }
@@ -3348,7 +3351,7 @@ if ($UpdateStats) {
 			if ($timerecord < $timehostl) {
 				# Record is before record already read for this host and used for start of visit
 				# This occurs when log file is 'nearly' sorted
-				print "xxxxxxxxxxxxxxxxxx";
+				# TODO change hostmachine_l and hostmachine_s and hotmachine_u
 				$_hostmachine_p{$_}++;
 				$_hostmachine_l{$_}=$timerecord;
 				$_hostmachine_u{$_}=$field[$pos_url];
