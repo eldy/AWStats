@@ -85,8 +85,6 @@ $UpdateStats, $URLWithQuery)=
 (0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
 my ($AllowToUpdateStatsFromBrowser, $ArchiveLogRecords, $DetailedReportsOnNewWindows,
 $FirstDayOfWeek, $SaveDatabaseFilesWithPermissionsForEveryone,
-$LevelForRobotsDetection, $LevelForBrowsersDetection, $LevelForOSDetection,
-$LevelForSearchEnginesDetection, $LevelForKeywordsDetection, $LevelForRefererAnalyze,
 $ShowHeader, $ShowMenu, $ShowMonthDayStats, $ShowDaysOfWeekStats,
 $ShowHoursStats, $ShowDomainsStats, $ShowHostsStats,
 $ShowRobotsStats, $ShowSessionsStats, $ShowPagesStats, $ShowFileTypesStats,
@@ -94,7 +92,10 @@ $ShowBrowsersStats, $ShowOSStats, $ShowOriginStats, $ShowKeyphrasesStats,
 $ShowKeywordsStats,  $ShowHTTPErrorsStats,
 $ShowFlagLinks, $ShowLinksOnUrl,
 $WarningMessages)=
-(1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1);
+(1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1);
+my ($LevelForRobotsDetection, $LevelForBrowsersDetection, $LevelForOSDetection, $LevelForRefererAnalyze,
+$LevelForSearchEnginesDetection, $LevelForKeywordsDetection)=
+(2,1,1,1,1,1);
 my ($ArchiveFileName, $DefaultFile, $HTMLHeadSection, $HTMLEndSection, $LinksToWhoIs,
 $LogFile, $LogFormat, $Logo, $LogoLink, $StyleSheet, $WrapperScript, $SiteDomain)=
 ("","","","","","","","","","","","");
@@ -121,7 +122,7 @@ my @HostAliases=();
 my @AllowAccessFromWebToFollowingAuthenticatedUsers=();
 my @OnlyFiles = my @SkipDNSLookupFor = my @SkipFiles = my @SkipHosts = ();
 my @DOWIndex=();
-my @RobotArrayList = my @RobotsSearchIDOrder = ();
+my @RobotsSearchIDOrder = ();
 #my @RobotsSearchIDOrder_list1=(); my @RobotsSearchIDOrder_list2=();  my @RobotsSearchIDOrder_list3=();
 #my @BrowsersSearchIDOrder = my @OSSearchIDOrder = my @SearchEnginesSearchIDOrder();
 #my @WordsToCleanSearchUrl=();
@@ -665,12 +666,12 @@ sub Read_Config_File {
 		if ($param =~ /^Expires/)               { $Expires=$value; next; }
 		if ($param =~ /^WrapperScript/)         { $WrapperScript=$value; next; }
 		# Read optional accuracy setup section
-		if ($param =~ /^LevelForRobotsDetection/)			{ $LevelForRobotsDetection=$value; next; }			# Not used yet
-		if ($param =~ /^LevelForBrowsersDetection/)			{ $LevelForBrowsersDetection=$value; next; }		# Not used yet
-		if ($param =~ /^LevelForOSDetection/)				{ $LevelForOSDetection=$value; next; }				# Not used yet
-		if ($param =~ /^LevelForSearchEnginesDetection/)	{ $LevelForSearchEnginesDetection=$value; next; }	# Not used yet
-		if ($param =~ /^LevelForRefererAnalyze/)			{ $LevelForRefererAnalyze=$value; next; }			# Not used yet
-		if ($param =~ /^LevelForKeywordsDetection/)			{ $LevelForKeywordsDetection=$value; next; }		# Not used yet
+		if ($param =~ /^LevelForRobotsDetection/)			{ $LevelForRobotsDetection=$value; next; }
+		if ($param =~ /^LevelForBrowsersDetection/)			{ $LevelForBrowsersDetection=$value; next; }
+		if ($param =~ /^LevelForOSDetection/)				{ $LevelForOSDetection=$value; next; }
+		if ($param =~ /^LevelForRefererAnalyze/)			{ $LevelForRefererAnalyze=$value; next; }
+		if ($param =~ /^LevelForSearchEnginesDetection/)	{ $LevelForSearchEnginesDetection=$value; next; }
+		if ($param =~ /^LevelForKeywordsDetection/)			{ $LevelForKeywordsDetection=$value; next; }
 		# Read optional appearance setup section
 		if ($param =~ /^Lang/)                  { $Lang=$value; next; }
 		if ($param =~ /^DirLang/)               { $DirLang=$value; next; }
@@ -947,11 +948,11 @@ sub Check_Config {
 	if ($SplitSearchString !~ /[0-1]/)          	{ $SplitSearchString=0; }
 	if ($Expires !~ /^[\d]+/)                 		{ $Expires=0; }
 	# Optional accuracy setup section
-	if ($LevelForRobotsDetection !~ /^[\d]+/)       	{ $LevelForRobotsDetection=1; }
+	if ($LevelForRobotsDetection !~ /^[\d]+/)       	{ $LevelForRobotsDetection=2; }
 	if ($LevelForBrowsersDetection !~ /^[\d]+/)     	{ $LevelForBrowsersDetection=1; }
 	if ($LevelForOSDetection !~ /^[\d]+/)      			{ $LevelForOSDetection=1; }
-	if ($LevelForSearchEnginesDetection !~ /^[\d]+/)	{ $LevelForSearchEnginesDetection=1; }
 	if ($LevelForRefererAnalyze !~ /^[\d]+/)			{ $LevelForRefererAnalyze=1; }
+	if ($LevelForSearchEnginesDetection !~ /^[\d]+/)	{ $LevelForSearchEnginesDetection=1; }
 	if ($LevelForKeywordsDetection !~ /^[\d]+/)    		{ $LevelForKeywordsDetection=1; }
 	# Optional appearance setup section
 	if ($MaxRowsInHTMLOutput !~ /^[\d]+/ || $MaxRowsInHTMLOutput<1)     { $MaxRowsInHTMLOutput=1000; }
@@ -2472,18 +2473,19 @@ if ((! $ENV{"GATEWAY_INTERFACE"}) && (! $SiteConfig)) {
 	print "\n";
 	print "Now supports/detects:\n";
 	print "  Reverse DNS lookup\n";
-	print "  Number of visits, unique visitors, list of last visits\n";
-	print "  Hosts list and unresolved IP addresses list\n";
-	print "  Days of week and rush hours\n";
+	print "  Number of visits, number of unique visitors\n";
+	print "  Visits duration and list of last visits\n";
 	print "  Authenticated users\n";
-	print "  Viewed and entry pages\n";
-	print "  Type of files and Web compression\n";
+	print "  Days of week and rush hours\n";
+	print "  Hosts list and unresolved IP addresses list\n";
+	print "  Most viewed, entry and exit pages\n";
+	print "  Files type and Web compression\n";
 	print "  ".(scalar keys %DomainsHashIDLib)." domains/countries\n";
 	print "  ".(scalar keys %BrowsersHashIDLib)." browsers\n";
 	print "  ".(scalar keys %OSHashLib)." operating systems\n";
 	print "  ".(scalar keys %RobotsHashIDLib)." robots\n";
 	print "  ".(scalar keys %SearchEnginesHashIDLib)." search engines (and keyphrases/keywords used from them)\n";
-	print "  All HTTP errors\n";
+	print "  All HTTP errors with last referrer\n";
 	print "  Report by day/month/year\n";
 	print "  And a lot of other advanced options...\n";
 	print "New versions and FAQ at http://awstats.sourceforge.net\n";
@@ -2610,9 +2612,10 @@ if ($Debug) { debug("UpdateStats is $UpdateStats",2); }
 if ($UpdateStats) {
 
 	# Init RobotsSearchIDOrder required for update process
-	push @RobotArrayList,"list1";
-	push @RobotArrayList,"list2";
-	push @RobotArrayList,"list3";
+	my @RobotArrayList;
+	if ($LevelForRobotsDetection >= 1) { push @RobotArrayList,"list1"; }
+	if ($LevelForRobotsDetection >= 2) { push @RobotArrayList,"list2"; }
+	if ($LevelForRobotsDetection >= 1) { push @RobotArrayList,"list3"; }	# Always added
 	foreach my $key (@RobotArrayList) {
 		push @RobotsSearchIDOrder,@{"RobotsSearchIDOrder_$key"};
 		if ($Debug) { debug("Add ".@{"RobotsSearchIDOrder_$key"}." elements from RobotsSearchIDOrder_$key into RobotsSearchIDOrder",2); }
