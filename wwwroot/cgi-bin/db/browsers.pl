@@ -1,6 +1,6 @@
 # AWSTATS BROWSERS DATABASE
 #--------------------------
-# Last update: 2002-04-02
+# Last update: 2002-04-03
 
 # If you want to add a Browser to extend AWStats database detection capabilities,
 # you must add an entry in BrowsersSearchIDOrder and in BrowsersHashIDLib.
@@ -151,9 +151,9 @@
 "webmirror","notavailable",
 "webvcr","notavailable",
 # Site grabbers
-"teleport","notavailable",
+"teleport","teleport",
 "webcapture","adobe",
-"webcopier","notavailable",
+"webcopier","webcopier",
 # Music only browsers
 "real","mediaplayer",
 "winamp","mediaplayer",				# Works for winampmpeg and winamp3httprdr
