@@ -422,26 +422,11 @@ foreach my $key (keys %ApacheConfPath) {
 	print "  AWStats directives added to Apache config file.\n";
 }
 
-# Ask value for web site name
-#----------------------------
-print "\n-----> Define config file name to create\n";
-print "What is the name of your web site or profile analysis ?\n";
-print "Example: www.mysite.com\n";
-print "Example: demo\n";
-my $bidon='';
-while (! $bidon) {
-	print "You web site, virtual server or profile name: ";
-	$bidon=<STDIN>; chomp $bidon;
-
-}
-my $site=$bidon;
-
-# Define config file path
-# -----------------------
-my $configfile='';
+# Define model config file path
+# -----------------------------
 my $modelfile='';
-if ($OS eq 'linux') 	{ $modelfile="$AWSTATS_MODEL_CONFIG"; $configfile="/etc/awstats/awstats.$site.conf"; }
-if ($OS eq 'windows') 	{ $modelfile="$AWSTATS_PATH\\wwwroot\\cgi-bin\\awstats.model.conf"; $configfile="$AWSTATS_PATH\\wwwroot\\cgi-bin\\awstats.$site.conf"; }
+if ($OS eq 'linux') 	{ $modelfile="$AWSTATS_MODEL_CONFIG"; }
+if ($OS eq 'windows') 	{ $modelfile="$AWSTATS_PATH\\wwwroot\\cgi-bin\\awstats.model.conf"; }
 
 # Update model config file
 # ------------------------
@@ -455,23 +440,57 @@ if ($UseAlias) {
 }
 update_awstats_config("$modelfile");
 
-# Create awstats.conf file
-# ------------------------
-print "\n-----> Create config file '$configfile'\n";
-if (-s $configfile) { print "  Config file already exists. No overwrite possible on existing config files.\n"; }
-else {
-	%ConfToChange=();
-	if ($OS eq 'linux') { $ConfToChange{'DirData'}="$AWSTATS_DIRDATA_PATH"; }
-	if ($OS eq 'windows') { $ConfToChange{'DirData'}='.'; }
-	if ($UseAlias) {
-		$ConfToChange{'DirCgi'}='/awstats';
-		$ConfToChange{'DirIcons'}='/awstatsicons';
+# Ask if we need to create a config file
+#---------------------------------------
+my $site='';
+print "\n-----> Need to create a new config file ?\n";
+print "Do you want me to build a new AWStats config/profile\n";
+print "file (required if first install) [y/N] ? ";
+my $bidon='';
+while ($bidon !~ /^[yN]/i) { $bidon=<STDIN>; }
+if ($bidon =~ /^y/i) {
+		
+	# Ask value for web site name
+	#----------------------------
+	
+	print "\n-----> Define config file name to create\n";
+	print "What is the name of your web site or profile analysis ?\n";
+	print "Example: www.mysite.com\n";
+	print "Example: demo\n";
+	my $bidon='';
+	while (! $bidon) {
+		print "Your web site, virtual server or profile name: ";
+		$bidon=<STDIN>; chomp $bidon;
+	
 	}
-	$ConfToChange{'SiteDomain'}="$site";
-	my $sitewithoutwww=lc($site); $sitewithoutwww =~ s/^www\.//i;
-	$ConfToChange{'HostAliases'}="$sitewithoutwww www.$sitewithoutwww 127.0.0.1 localhost";
-	update_awstats_config("$modelfile","$configfile");
+	$site=$bidon;
+
+	# Define config file path
+	# -----------------------
+	my $configfile='';
+	if ($OS eq 'linux') 	{ $configfile="/etc/awstats/awstats.$site.conf"; }
+	if ($OS eq 'windows') 	{ $configfile="$AWSTATS_PATH\\wwwroot\\cgi-bin\\awstats.$site.conf"; }
+	
+	# Create awstats.conf file
+	# ------------------------
+	print "\n-----> Create config file '$configfile'\n";
+	if (-s $configfile) { print "  Config file already exists. No overwrite possible on existing config files.\n"; }
+	else {
+		%ConfToChange=();
+		if ($OS eq 'linux') { $ConfToChange{'DirData'}="$AWSTATS_DIRDATA_PATH"; }
+		if ($OS eq 'windows') { $ConfToChange{'DirData'}='.'; }
+		if ($UseAlias) {
+			$ConfToChange{'DirCgi'}='/awstats';
+			$ConfToChange{'DirIcons'}='/awstatsicons';
+		}
+		$ConfToChange{'SiteDomain'}="$site";
+		my $sitewithoutwww=lc($site); $sitewithoutwww =~ s/^www\.//i;
+		$ConfToChange{'HostAliases'}="$sitewithoutwww www.$sitewithoutwww 127.0.0.1 localhost";
+		update_awstats_config("$modelfile","$configfile");
+	}
+
 }
+
 
 # Restart Apache if change were made
 # ----------------------------------
@@ -507,28 +526,31 @@ if ($OS eq 'windows') {
 	print "Sorry, for windows users, if you want to have statisitics to be\n";
 	print "updated on a regular basis, you have to add the update process\n";
 	print "in a scheduler task manually (See AWStats docs/index.html).\n";
-	print "Press a key to continue...\n";
+	print "Press ENTER to continue... ";
 	$bidon=<STDIN>;
 }
 if ($OS eq 'linux') {
 	print "Sorry, programming update is not supported yet.\n";
 	print "You can do it manually by adding the following line to your crontab\n";
-	print "$AWSTATS_CGI_PATH/awstats -update -config=$site\n";
+	print "$AWSTATS_CGI_PATH/awstats -update -config=".($site?$site:"myvirtualserver")."\n";
 	print "Or if you have several config files and prefer having only one command:\n";
 	print "$AWSTATS_TOOLS_PATH/awstats_updateall.pl now\n";
-	print "Press a key to continue...\n";
+	print "Press ENTER to continue... ";
 	$bidon=<STDIN>;
 }
 
 print "\n\n";
-print "A SIMPLE config file for '$site' has been created. You should have a look\n";
-print "inside to check and change manually main parameters.\n";
-print "You can then update your statistics for '$site' with command:\n";
-print "> awstats.pl -update -config=$site\n";
-print "You can also read your statistics for '$site' with URL:\n";
-print "> http://localhost/awstats/awstats.pl?config=$site\n";
-print "\n";
-print "Press a key to finish...\n";
+
+if ($site) {
+	print "A SIMPLE config file for '$site' has been created. You should have a look\n";
+	print "inside to check and change manually main parameters.\n";
+	print "You can then update your statistics for '$site' with command:\n";
+	print "> awstats.pl -update -config=$site\n";
+	print "You can also read your statistics for '$site' with URL:\n";
+	print "> http://localhost/awstats/awstats.pl?config=$site\n";
+	print "\n";
+}
+print "Press ENTER to finish...\n";
 $bidon=<STDIN>;
 
 
