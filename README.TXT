@@ -13,8 +13,8 @@ server log files (and even ftp servers or mail logs) on all Operating Systems.
 
 License: GNU GPL (GNU General Public License. See LICENSE file),
          OSI Certified Open Source Software license.
-Version: 6.1
-Release date: May 2004
+Version: 6.2
+Release date: July 2004
 Platforms: All (Linux, NT, BSD, Solaris and other *NIX's, BeOS, OS/2...)
 Author: Laurent Destailleur <eldy@users.sourceforge.net>
 AWStats official web site and latest version: http://awstats.sourceforge.net
@@ -121,9 +121,9 @@ I - 3) Files
 	wwwroot/css                         Samples of CSS files
 	wwwroot/js                          Javascript sources for "Misc" feature
 	tools/*                             Other provided tools
+	tools/webmin/awstats-x.x.wbm        A Webmin module for AWStats
 	tools/xslt/awstats61.xsd            AWStats XML database schema descriptor
 	tools/xslt/*                        Demo to manipulate AWStats XML database
-	tools/webmin/awstats-x.x.wbm        A Webmin module for AWStats
 
 
 

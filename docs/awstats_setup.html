@@ -20,7 +20,7 @@
 <td bgcolor=#9999cc align=center><a href="/"><img src="images/awstats_logo4.png" border=0></a></td>
 <td bgcolor=#9999cc align=center>
 <br>
-<font style="font: 16pt arial,helvetica,sanserif" color=#EEEEFF><b>AWStats logfile analyzer 6.1 Documentation</b></font><br>
+<font style="font: 16pt arial,helvetica,sanserif" color=#EEEEFF><b>AWStats logfile analyzer 6.2 Documentation</b></font><br>
 <br>
 </td>
 <td bgcolor=#9999cc align=center>
@@ -46,7 +46,7 @@ AWStats common use is made in 3 steps:<br>
 Before starting, check that your Perl version is at least 5.005_03 (or higher) by running the <i>perl -v</i> command.
 If not, you can install a recent Perl interpreter from <a href="http://www.activestate.com/ActivePerl/">ActivePerl</a> (<font color=#221188>Win32</font>) or <a href="http://www.perl.com/pub/language/info/software.html">Perl.com</a> (<font color=#221188>Unix/Linux/Other</font>).<br>
 -->
-<br><a name="INSTALL"><H2 style="font: 22px arial,helvetica,sanserif color: #606060"><u>Step 1 : Install and Setup with configure.pl</u></H2></a>
+<br><a name="INSTALL"><H2 style="font: 22px arial,helvetica,sanserif color: #606060"><u>Step 1 : Install and Setup with awstats_configure.pl</u></H2></a>
 <br>
 <a name="INSTALLAPACHE"><b>A) With Apache or compatible server (on Unix/Linux, Windows, MacOS...)</b></a><br>
 <br>
@@ -54,23 +54,23 @@ If not, you can install a recent Perl interpreter from <a href="http://www.activ
 (if you use a package provided with a Linux distribution or Windows installer, action done in step 1-1
 might have already be done, if you don't know you, do it again)<br>
 <br>
-After downloading and extracting the AWStats package, you should run the configure.pl script to do
+After downloading and extracting the AWStats package, you should run the awstats_configure.pl script to do
 several setup actions.
 You will find it in the AWStats <b>tools</b> directory (If using the windows installer, the script is
 automatically launched):<br>
-<b><i>perl configure.pl</i></b><br>
+<b><i>perl awstats_configure.pl</i></b><br>
 
 <ul>
 
-<u>This is what the script do/ask (you can do all those steps manually instead of running configure.pl if you prefer):</u><br>
+<u>This is what the script do/ask (you can do all those steps manually instead of running awstats_configure.pl if you prefer):</u><br>
 <br>
 
-A) configure.pl try to find your Apache web server config file (ask path if not found) and check
+A) awstats_configure.pl try to find your Apache web server config file (ask path if not found) and check
 inside your server log format configuration.
-If you use a <b>common</b> log, configure.pl will
+If you use a <b>common</b> log, awstats_configure.pl will
 suggest to change it to have <b>NCSA combined/XLF/ELF</b> log format (you can use your own log
 format but this predefined logformat is often the best choice and make setup easier).<br>
-If you answer yes, configure.pl will modify your <b>httpd.conf</b> to change all the
+If you answer yes, awstats_configure.pl will modify your <b>httpd.conf</b> to change all the
 following directives:<br>
 <i>CustomLog /yourlogpath/yourlogfile common</i><br>
 into<br>
@@ -83,7 +83,7 @@ should get then in your new log file:<br>
 <i>62.161.78.75 - - [dd/mmm/yyyy:hh:mm:ss +0000] "GET / HTTP/1.1" 200 1234 "http://www.from.com/from.html" "Mozilla/4.0 (compatible; MSIE 5.01; Windows NT 5.0)"</i><br>
 <br>
 
-B) Then, configure.pl will add, if not already present, the following directives to your Apache config file
+B) Then, awstats_configure.pl will add, if not already present, the following directives to your Apache config file
 (note that the "/usr/local/awstats/wwwroot" path might differ according to your distribution or OS:<br>
 <i>
 <br>#
@@ -107,24 +107,24 @@ B) Then, configure.pl will add, if not already present, the following directives
 <br>
 
 <br>
-C) configure.pl restart Apache to apply the changes made in A and B (if changes were made).<br>
+C) awstats_configure.pl restart Apache to apply the changes made in A and B (if changes were made).<br>
 <br>
 
-D) configure.pl will ask you a name for a config profile file. Enter here the name of your
+D) awstats_configure.pl will ask you a name for a config profile file. Enter here the name of your
 web server or any analysis profile name, for example <b>myvirtualhostname</b>.<br>
-So configure.pl will copy the file <b>awstats.model.conf</b> file into a new file
+So awstats_configure.pl will copy the file <b>awstats.model.conf</b> file into a new file
 named <b>awstats.myvirtualhostname.conf</b>.
 You can use the value of your choice instead of "myvirtualhostname". This new file is stored into:<br>
 - For Linux/BSD/Unix users: /etc/awstats.<br>
 - For Mac OS X, Windows and other OS: Same directory than awstats.pl (so cgi-bin).<br>
 <br>
 
-E) configure.pl ends.<br>
+E) awstats_configure.pl ends.<br>
 <br>
 </ul>
 
 <font style="color: #111155"><b>* Step 1-2</b>:</font><br>
-Once a config file has been automatically created (by configure.pl, by you package
+Once a config file has been automatically created (by awstats_configure.pl, by you package
 installer or just by a manual copy of awstats.model.conf), it's important to edit it manually and change the "MAIN PARAMETERS"
 to match all your needs:<br>
 <br>

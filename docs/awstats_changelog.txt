@@ -4,8 +4,16 @@ $Revision$ - $Author$ - $Date$
 
 6.2
 
+New features/improvements:
+- None
+
+Fixes:
+- Fix not recognized %time3 tag in LogFormat
+
 Other/Documentation:
-- Minor change on documentation.
+- Some changes to allow plugins to add new charts.
+- Updated documentation.
+- Renamed configure.pl into awstats_configure.pl.
 
 
 6.1

@@ -20,7 +20,7 @@
 <td bgcolor=#9999cc align=center><a href="/"><img src="images/awstats_logo4.png" border=0></a></td>
 <td bgcolor=#9999cc align=center>
 <br>
-<font style="font: 16pt arial,helvetica,sanserif" color=#EEEEFF><b>AWStats logfile analyzer 6.1 Documentation</b></font><br>
+<font style="font: 16pt arial,helvetica,sanserif" color=#EEEEFF><b>AWStats logfile analyzer 6.2 Documentation</b></font><br>
 <br>
 </td>
 <td bgcolor=#9999cc align=center>
@@ -307,10 +307,12 @@ when reading it), follow the example:<br>
 4.0+ for tags %gzipratio,%syslog<br>
 4.1+ for tag  %virtualname<br>
 5.6+ for tag  %deflateratio<br>
+6.1+ for tag  %time4<br>
+6.2+ for tag  %time3<br>
 <br># Enter here your log format (Must agree with your web server. See setup
 <br># instructions in README.txt to know how to configure your web server to have
 <br># the required log format).
-<br># Possible values: 1,2,3,4,5 or "your_own_personalized_log_format"
+<br># Possible values: 1,2,3,4 or "your_own_personalized_log_format"
 <br># 1 - Apache or Lotus Notes/Domino native combined log format (NCSA combined/XLF/ELF log format)
 <br># 2 - Old IIS log format (IIS W3C log format). See FAQ for IIS 6.x.
 <br># 3 - Webstar native log format.
@@ -322,10 +324,10 @@ when reading it), follow the example:<br>
 <br>#   %host             Host client name or IP address
 <br>#   %lognamequot      Authenticated login/user with format: "alex"
 <br>#   %logname          Authenticated login/user with format: alex
-<br>#   %time1            Date and time with format: [dd/mmm/yyyy:hh:mm:ss +0000] or [dd/mmm/yyyy:hh:mm:ss]
+<br>#   %time1            Date and time with format: [dd/mon/yyyy:hh:mm:ss +0000] or [dd/mon/yyyy:hh:mm:ss]
 <br>#   %time2            Date and time with format: yyyy-mm-dd hh-mm-ss
 <br>#   %time3            Date and time with format: Mon dd hh:mm:ss
-<br>#   %time4            Date and time with format: dddddddddd
+<br>#   %time4            Date and time with unix timestamp format: dddddddddd
 <br>#   %methodurl        Method and URL with format: "GET /index.html HTTP/x.x"
 <br>#   %methodurlnoprot  Method and URL with format: "GET /index.html"
 <br>#   %method           Method with format: GET
@@ -366,7 +368,7 @@ when reading it), follow the example:<br>
 <a name="LogSeparator"><b>LogSeparator</b></a><br>
 <b>Version : </b>5.0+<br>
 <br># If your log field's separator is not a space, you can change this parameter.
-<br># This parameter is not used if LogFormat is a predefined value (1,2,3,4,5,6)
+<br># This parameter is not used if LogFormat is a predefined value (1,2,3,4)
 <br># Example: " "
 <br># Example: "\t"
 <br># Example: "|"
