@@ -132,3 +132,7 @@ message127=Hivatkozó oldalak
 message128=Összesítés
 message129=Pontos érték nem áll rendelkezésre "éves" nézetben
 message130=Adat érték tömbök
+message131=Küldõ E-Mail címe
+message132=Fogadó E-Mail címe
+message133=Statisztikai idõszak
+message134=Extra/Marketing
