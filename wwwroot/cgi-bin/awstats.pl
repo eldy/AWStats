@@ -56,7 +56,7 @@ $TotalSearchEnginesPages $TotalSearchEnginesHits $TotalRefererPages $TotalRefere
 $FrameName $Center $FileConfig $FileSuffix $Host $DayRequired $MonthRequired $YearRequired
 $QueryString $SiteConfig $StaticLinks $PageCode $PerlParsingFormat
 $SiteToAnalyze $SiteToAnalyzeWithoutwww $UserAgent
-$pos_vh $pos_host $pos_logname $pos_date $pos_method $pos_url $pos_code $pos_size
+$pos_vh $pos_host $pos_logname $pos_date $pos_tz $pos_method $pos_url $pos_code $pos_size
 $pos_referer $pos_agent $pos_query $pos_gzipin $pos_gzipout $pos_compratio
 $pos_emails $pos_emailr $pos_hostr
 /;
@@ -76,7 +76,7 @@ $TotalSearchEnginesPages = $TotalSearchEnginesHits = $TotalRefererPages = $Total
 $QueryString, $SiteConfig, $StaticLinks, $PageCode, $PerlParsingFormat,
 $SiteToAnalyze, $SiteToAnalyzeWithoutwww, $UserAgent)=
 ('','','','','','','','','','','','','','','','');
-$pos_vh = $pos_host = $pos_logname = $pos_date = $pos_method = $pos_url = $pos_code = $pos_size = -1;
+$pos_vh = $pos_host = $pos_logname = $pos_date = $pos_tz = $pos_method = $pos_url = $pos_code = $pos_size = -1;
 $pos_referer = $pos_agent = $pos_query = $pos_gzipin = $pos_gzipout = $pos_compratio = -1;
 $pos_emails = $pos_emailr = $pos_hostr = -1;
 # ----- Plugins variable -----
@@ -4455,6 +4455,7 @@ sub DefinePerlParsingFormat {
 		$LogFormatString =~ s/%v(\s)/%virtualname$1/g; $LogFormatString =~ s/%v$/%virtualname/g;
 		$LogFormatString =~ s/%h(\s)/%host$1/g; $LogFormatString =~ s/%h$/%host/g;
 		$LogFormatString =~ s/%l(\s)/%other$1/g; $LogFormatString =~ s/%l$/%other/g;
+		$LogFormatString =~ s/\"%u\"/%lognamequot/g;
 		$LogFormatString =~ s/%u(\s)/%logname$1/g; $LogFormatString =~ s/%u$/%logname/g;
 		$LogFormatString =~ s/%t(\s)/%time1$1/g; $LogFormatString =~ s/%t$/%time1/g;
 		$LogFormatString =~ s/\"%r\"/%methodurl/g;
@@ -4514,17 +4515,18 @@ sub DefinePerlParsingFormat {
 				$pos_host = $i; $i++; push @fieldlib, 'host';
 				$PerlParsingFormat .= "([^$LogSeparatorWithoutStar]+)";
 			}
+			elsif ($f =~ /%lognamequot$/) {
+				$pos_logname = $i; $i++; push @fieldlib, 'logname';
+				$PerlParsingFormat .= "\\\"?([^\\\"]*)\\\"?";			# logname can be "value", "" and - in same log (Lotus notes)
+			}
 			elsif ($f =~ /%logname$/) {
 				$pos_logname = $i; $i++; push @fieldlib, 'logname';
 				$PerlParsingFormat .= "([^$LogSeparatorWithoutStar]+)";
 			}
-			elsif ($f =~ /%time1b$/) {
-				$pos_date = $i; $i++; push @fieldlib, 'date';
-				$PerlParsingFormat .= "\\[([^$LogSeparatorWithoutStar]+)\\]";
-			}
-			elsif ($f =~ /%time1$/) {	# [dd/mmm/yyyy:hh:mm:ss +0000]
+			elsif ($f =~ /%time1$/ || $f =~ /%time1b$/) {	# [dd/mmm/yyyy:hh:mm:ss +0000] ou [dd/mmm/yyyy:hh:mm:ss],  time1b kept for backward compatibility
 				$pos_date = $i;	$i++; push @fieldlib, 'date';
-				$PerlParsingFormat .= "\\[([^$LogSeparatorWithoutStar]+) [^$LogSeparatorWithoutStar]+\\]";
+				$pos_tz = $i; $i++; push @fieldlib, 'tz';
+				$PerlParsingFormat .= "\\[([^$LogSeparatorWithoutStar]+)( [^$LogSeparatorWithoutStar]+)?\\]";
 			}
 			elsif ($f =~ /%time2$/) {	# yyyy-mm-dd hh:mm:ss
 				$pos_date = $i;	$i++; push @fieldlib, 'date';
