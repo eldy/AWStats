@@ -597,7 +597,7 @@ EOF
 		if ($FrameName ne 'index') { print "<body>\n"; }
 		if ($FrameName ne 'index' && $FrameName ne 'mainleft' && $ShowLinksToWhoIs) {
 print <<EOF;
-<SCRIPT type="javascript">
+<SCRIPT language="JavaScript">
 function neww(a,b) {
 	var wfeatures="directories=0,menubar=1,status=0,resizable=1,scrollbars=1,toolbar=0,width=$WIDTHINFO,height=$HEIGHTINFO,left=" + eval("(screen.width - $WIDTHINFO)/2") + ",top=" + eval("(screen.height - $HEIGHTINFO)/2");
 	if (b==1) { fen=window.open('$LinksToWhoIs'+a,'whois',wfeatures); }
