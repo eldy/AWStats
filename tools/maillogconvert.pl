@@ -355,9 +355,10 @@ while (<>) {
 	# Matched incoming sendmail or postfix message
 	#
 	elsif (/: from=/) {
-		# sm-mta:  Jul 28 06:55:13 androneda sm-mta[28877]: h6SDtCtg028877: from=<4cmkh79eob@webtv.net>, size=2556, class=0, nrcpts=1, msgid=<w1$kqj-9-o2m45@0h2i38.4.m0.5u>, proto=ESMTP, daemon=MTA, relay=smtp.easydns.com [205.210.42.50]
+		# sm-mta:  Jul 28 06:55:13 androneda sm-mta[28877]: h6SDtCtg028877: from=<xxx@mysite.net>, size=2556, class=0, nrcpts=1, msgid=<w1$kqj-9-o2m45@0h2i38.4.m0.5u>, proto=ESMTP, daemon=MTA, relay=smtp.easydns.com [205.210.42.50]
 		# postfix: Jul  3 15:32:26 apollon postfix/qmgr[13860]: 08FB63B8A4: from=<nobody@ns3744.ovh.net>, size=3302, nrcpt=1 (queue active)
-		my ($id,$from,$size)=m/\w+\s+\d+\s+\d+:\d+:\d+\s+[\w\-]+\s+(?:sm-mta|sendmail(?:-in|)|postfix\/qmgr|postfix\/nqmgr)\[\d+\]:\s+(.*?):\s+from=(.*?),\s+size=(.*?),/;
+		# postfix: Sep 24 14:45:15 wideboy postfix/qmgr[22331]: 7E0E6196: from=<xxx@hotmail.com>, size=1141 (queue active)
+		my ($id,$from,$size)=m/\w+\s+\d+\s+\d+:\d+:\d+\s+[\w\-]+\s+(?:sm-mta|sendmail(?:-in|)|postfix\/qmgr|postfix\/nqmgr)\[\d+\]:\s+(.*?):\s+from=(.*?),\s+size=(\d+)/;
 		$mailid=$id;
 		if (! $mail{$id}{'code'}) { $mail{$id}{'code'}=1; }	# If not already defined, we define it
 		if (! $mail{$id}{'from'} || $mail{$id}{'from'} ne '<>') { $mail{$id}{'from'}=$from; }
