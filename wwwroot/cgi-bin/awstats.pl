@@ -82,7 +82,7 @@ $WarningMessages= 1;
 %MonthBytes = %MonthHits = %MonthHostsKnown = %MonthHostsUnknown = %MonthPages = %MonthUnique = %MonthVisits =
 %monthlib = %monthnum = ();
 
-$VERSION="3.2 (build 58)";
+$VERSION="3.2 (build 59)";
 $Lang="en";
 
 # Default value
@@ -338,7 +338,7 @@ sub debug {
 		if ($DEBUGFORCED >= $level) {
 			if ($DEBUGRESET == 0) {	open(DEBUGFORCEDFILE,"debug.log"); close DEBUGFORCEDFILE; chmod 0666,"debug.log"; $DEBUGRESET=1; }
 			open(DEBUGFORCEDFILE,">>debug.log");
-			print DEBUGFORCEDFILE localtime(time)." - $$ - $DEBUG $level - $debugstring\n";
+			print DEBUGFORCEDFILE localtime(time)." - $$ - DEBUG $level - $debugstring\n";
 			close DEBUGFORCEDFILE;
 		}
 	}
@@ -2053,7 +2053,7 @@ if ($UpdateStats) {
 		if ($field[$gzipin]) {
 			my ($a,$b)=split(":",$field[$gzipres]);
 			my ($notused,$in)=split(":",$field[$gzipin]);
-			my ($notused,$out,$notused)=split(":",$field[$gzipout]);
+			my ($notused1,$out,$notused2)=split(":",$field[$gzipout]);
 			if ($out) {
 				$_filetypes_gz_in{$extension}+=$in;
 				$_filetypes_gz_out{$extension}+=$out;
@@ -3105,11 +3105,11 @@ EOF
 		if ($rest_p > 0) { 	# All other domains (known or not)
 			my $bredde_p=0;my $bredde_h=0;my $bredde_k=0;
 			if ($max_h > 0) { $bredde_p=int($BarWidth*$rest_p/$max_h)+1; }	# use max_h to enable to compare pages with hits
-			if ($rest_p{$key} && $bredde_p==1) { $bredde_p=2; }
+			if ($rest_p && $bredde_p==1) { $bredde_p=2; }
 			if ($max_h > 0) { $bredde_h=int($BarWidth*$rest_h/$max_h)+1; }
-			if ($rest_h{$key} && $bredde_h==1) { $bredde_h=2; }
+			if ($rest_h && $bredde_h==1) { $bredde_h=2; }
 			if ($max_k > 0) { $bredde_k=int($BarWidth*$rest_k/$max_k)+1; }
-			if ($rest_k{$key} && $bredde_k==1) { $bredde_k=2; }
+			if ($rest_k && $bredde_k==1) { $bredde_k=2; }
 			print "<TR><TD colspan=3 CLASS=AWL><font color=blue>$Message[2]</font></TD><TD>$rest_p</TD><TD>$rest_h</TD><TD>".Format_Bytes($rest_k)."</TD>\n";
 			print "<TD CLASS=AWL>";
 			print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_p\" WIDTH=$bredde_p HEIGHT=6 ALT=\"$Message[56]: ".int($rest_p)."\" title=\"$Message[56]: ".int($rest_p)."\"><br>\n";
