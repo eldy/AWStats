@@ -40,12 +40,13 @@ old runtime files are replaced by new ones. This works whatever is the old and n
 &nbsp; &nbsp; &nbsp; &nbsp;- or just run your OS package tool (rpm, apt, or just .exe for windows).<br>
 <br>
 * <b>Your setup files should not be lost</b> as AWStats default distribution should not overwite
-config file (it provides only one example of config file(s) <i>awstats.model.conf</i>, however
-some packages are not official, so you can save and restore them if you prefer).<br>
-Sometimes, there is new parameter supported by the new version. Since thoose parameters would not 
-be in old config files, AWStats will use default values to work as it did when this parameter
-did not exists, so there is no way to add them, only if you want to use differently the new
-feature.<br>
+config file (it provides only one config file example called <i>awstats.model.conf</i>). However
+some packages are not official, so you can save and restore AWStats config files (awstats*.conf)
+if you prefer.<br>
+Sometimes, there is new parameter supported by the new version. Since those parameters are not 
+present in old config files, AWStats will use default values for them, to work as it did when
+those parameters did not exist, so there is no need to add them, except if you want to use
+differently the new feature.<br>
 <br>
 
 <u>Note 1:</u> When migrating to 6.x series, if you use the ExtraSections feature,
@@ -76,8 +77,8 @@ compatible with each new version of AWStats since 5.x series. If you upgrade fro
 series to 5.x, 6.x or higher, AWStats will still be able to 'read' your old history files but
 a warning will appear to ask you to run the 'migrate' process on your old data files.
 Just run the command that will appear in warning message.
-This warning will appear only after upgrade from 3.x or 4.x series to a 5.x, 6.x or higher version
-and only if 'migrate' is necessary.<br>
+This warning will appear only after upgrade from 3.x or 4.x series to a 5.x, 6.x or higher
+version and only if 'migrate' is necessary.<br>
 <br>
 
 <hr>
