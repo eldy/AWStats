@@ -170,6 +170,7 @@ when reading it), follow the example:<br>
 <li><a href="#ShowLinksOnUrl">ShowLinksOnUrl</a>
 <li><a href="#MaxLengthOfURL">MaxLengthOfURL</a>
 <li><a href="#ShowLinksToWhoIs">ShowLinksToWhoIs</a>
+<li><a href="#UseHTTPSLinksForUrl">UseHTTPSLinksForUrl</a>
 <li><a href="#LinksToWhoIs">LinksToWhoIs</a>
 <li><a href="#LinksToIPWhoIs">LinksToIPWhoIs</a>
 <li><a href="#HTMLHeadSection">HTMLHeadSection</a>
@@ -212,9 +213,12 @@ when reading it), follow the example:<br>
 <li><a href="#Extra">ExtraSectionConditionX</a>
 <li><a href="#Extra">ExtraSectionFirstColumnTitleX</a>
 <li><a href="#Extra">ExtraSectionFirstColumnValuesX</a>
+<li><a href="#Extra">ExtraSectionFirstColumnFormatX</a>
 <li><a href="#Extra">ExtraSectionStatTypesX</a>
-<li><a href="#Extra">MaxNbOfExtraX</a>        
-<li><a href="#Extra">MinHitExtraX</a>                 
+<li><a href="#Extra">ExtraSectionAddAverageRowX</a>
+<li><a href="#Extra">ExtraSectionAddSumRowX</a>
+<li><a href="#Extra">MaxNbOfExtraX</a>
+<li><a href="#Extra">MinHitExtraX</a>       
 </ul>
 
 <br><b>INCLUDES</b><br>
@@ -321,7 +325,6 @@ when reading it), follow the example:<br>
 <br>#   %deflateratio     mod_deflate compression ratio with format: (ZZ)
 <br>#   %email            EMail sender (for mail log)
 <br>#   %email_r          EMail receiver (for mail log)
-<br>#   %syslog           Syslog-specific time and host stamp with format: Mon dd hh:mm:ss hostname
 <br>#   %virtualname      Web sever virtual hostname. Use this tag when same log
 <br>#                     contains data of several virtual web servers. AWStats
 <br>#                     will discard records not in SiteDomain nor HostAliases
@@ -1382,6 +1385,21 @@ ShowOSStats,ShowOriginStats,ShowKeyphrasesStats,ShowKeywordsStats,ShowHTTPErrors
 <br># Default: 1
 <br>#
 <br>ShowLinksOnUrl=1
+
+<br><br><hr>
+
+<a name="UseHTTPSLinkForUrl"><b>UseHTTPSLinkForUrl</b></a><br>
+<b>Version : </b>4.0+<br>
+<br># When AWStats build HTML links in its report pages, it starts thoose link
+<br># with "http://". However some links might be HTTPS links, so you can enter
+<br># here the root of all your HTTPS links. If all your site is a SSL web site,
+<br># just enter "/".
+<br># This parameter is not used if ShowLinksOnUrl is 0.
+<br># Example: "/shopping"
+<br># Example: "/"
+<br># Default: ""
+<br>#
+<br>UseHTTPSLinkForUrl=""
 
 <br><br><hr>
 

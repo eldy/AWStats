@@ -29,6 +29,8 @@ New features/improvements:
   Also add a dedicated page in documentation.
 - Added %lognamequot tag for LogFormat parameter.
 - Added OnlyUserAgents parameter.
+- Selection of virtualhost records in a log is no more case sensitive on
+  SiteDomain nor HostAliases.
 - Added awredir.pl tool.
 
 Other/Documentation:
