@@ -114,7 +114,7 @@ This is for example the parameters you should check seriously :<br>
 - Check/Change <a href="awstats_config.html#LogFile">LogFile</a> value with full path of your web server log file (You
 can also use a relative path from your awstats.pl directory).<br>
 - Check/Change <a href="awstats_config.html#LogType">LogType</a> value with "W" for analyzing
-web server log files, "M" for mail log files, "F" for ftp log files.<br>
+web server log files, "S" for a streaming server log file, "M" for mail log files, "F" for ftp log files.<br>
 - Check if <a href="awstats_config.html#LogFormat">LogFormat</a> has the value "1" (it means "NCSA apache combined/ELF/XLF log format")
 or use a personalized log format if you don't use combined log format.<br>
 - Check/Change <a href="awstats_config.html#DirIcons">DirIcons</a> parameter to reflect relative URL of awstats icon directory.<br>
@@ -156,6 +156,7 @@ c-ip<br>
 cs-username<br>
 cs-method<br>
 cs-uri-stem<br>
+cs-uri-query<br>
 sc-status<br>
 sc-bytes<br>
 cs-version<br>
@@ -192,8 +193,9 @@ Edit this new config file with your own setup :<br>
 - Change <a href="awstats_config.html#LogFile">LogFile</a> value with full path of your web server log file (You
 can also use a relative path from your awstats.pl directory).<br>
 - Change <a href="awstats_config.html#LogType">LogType</a> value with "W" for analyzing
-web server log files, "M" for mail log files, "F" for ftp log files, "O" otherwise.<br>
-- Change <a href="awstats_config.html#LogFormat">LogFormat</a> to value "2" (it means the "IIS Extended W3C log format" defined in step 1-1).<br>
+web server log files, "S" for a streaming server log file, "M" for mail log files, "F" for ftp log files, "O" otherwise.<br>
+- Change <a href="awstats_config.html#LogFormat">LogFormat</a> to a value with same field's name defined in step 1-1:<br><i>
+LogFormat="date time c-ip cs-username cs-method cs-uri-stem cs-uri-query sc-status sc-bytes cs-version cs(User-Agent) cs(Referer)"</i><br>
 - Change <a href="awstats_config.html#DirIcons">DirIcons</a> parameter to reflect relative path of icon directory.<br>
 - Edit <a href="awstats_config.html#SiteDomain">SiteDomain</a> parameter with the main domain name or the intranet
 web server name used to reach the web site to analyze (Example: www.mydomain.com).<br>
