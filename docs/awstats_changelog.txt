@@ -1,6 +1,13 @@
 AWStats Changelog
 -----------------
 
+
+4.2
+
+- "Never updated" is now in language files.
+- Reduce number of global vars in code.
+
+
 4.1
 
 - Fixed: -logfile option can be anywhere on command line and accept space
@@ -20,8 +27,6 @@ AWStats Changelog
 - New option: Added AWStats common options to awstats_buildstaticpages.pl
 - Updated AWStats databases (renamed into .pm files and moved to lib dir).
 - Updated documentation.
-
-
 
 
 4.0
