@@ -8,19 +8,30 @@ $Revision$ - $Author$ - $Date$
 Fixes:
 - File name with space inside were not correctly reported when doing FTP log
   server analysis.
-- Problem in %Wy tag for ten first weeks of year (coded one 1 char instead
+- Problem in %Wy tag for ten first weeks of year (coded on 1 char instead
   of 2: First week should be "00" instead of "0").
 - Tooltips now works correctly with Netscape (>= 5.0).
+- Better parsing of parameters (Solved bug 635962).
 
 New features/improvments:
 - Added urlaliasbuilder.pl tool.
 - Added URL in possible values for ExtraSection first column.
-- New parameter: URLWithAnchor.
+- New parameter: URLWithAnchor (set to 0 by default).
 
 Other/Documentation:
+- Replaced -month=year option by -month=all.
+- Added an error message if a -migrate is done on an history file with
+  wrong file name.
 - GeoIP memory cache code is now stored inside plugin code.
 - Added list of loaded plugins in AWStats copyright string.
 - Updated documentation.
+
+Note 1:
+  Old deprecated values for -lang option (-lang=0, -lang=1...) has been
+  removed. Use -lang=code_language instead (-lang=en, -lang=fr, ...).
+Note 2:
+  Old deprecated -month=year option must be replaced by -month=all when
+  used on command line.
 
 
 5.3
