@@ -1,4 +1,5 @@
-# Hungarian message file (v1.7 - 2002.04.02 - gabor.funk@hunetkft.hu)
+# Hungarian message file (gabor.funk@hunetkft.hu)
+# $Revision$ - $Date$
 PageCode=iso-8859-2
 message0=Ismeretlen
 message1=ismeretlen (feloldatlan ip)
@@ -115,3 +116,7 @@ message111=Grabber
 message112=Igen
 message113=Nem
 message114=WhoIs információk
+message115=OK
+message116=Kilépõ oldalak
+message117=Látogatások hossza
+message118=Ablak bezárása

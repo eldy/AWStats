@@ -1,4 +1,5 @@
-# Norwegian message file, by Axel Wulff Sæther <axel@bigfoot.com>
+# Norwegian message file (by Axel Wulff Sæther <axel@bigfoot.com>)
+# $Revision$ - $Date$
 PageCode=iso-8859-1
 message0=Ukjent
 message1=ukjente (fant ikke vertsnavn)
