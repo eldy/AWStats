@@ -61,7 +61,7 @@ $word, $yearcon, $yearfile, $yearmonthfile, $yeartoprocess) = ();
 @sortsearchwords = @sortsereferrals = @sortsider404 = @sortsiders = @sortunknownip =
 @sortunknownreferer = @sortunknownrefererbrowser = @wordlist = ();
 
-$VERSION="2.24 (build 28)";
+$VERSION="2.24 (build 29)";
 $Lang=0;
 
 # Default value
@@ -213,7 +213,7 @@ $BarImageHorizontal_k = "barrehk.png";
 "konqueror","Konqueror",
 "linemodebrowser","W3C Line Mode Browser",
 "lotus-notes","Lotus Notes web client",
-"macweb","MacWeb",							#
+"macweb","MacWeb",
 "ncsa_mosaic","NCSA Mosaic",
 "netpositive","NetPositive",
 "nutscrape", "Nutscrape",
@@ -2316,8 +2316,8 @@ if (($YearRequired == $nowyear) && ($MonthRequired eq "year" || $MonthRequired =
 			$_os_h{$TmpHashOS{$UserAgent}}++;
 		}
 
-		# Analyze: Referrer
-		#------------------
+		# Analyze: Referer
+		#-----------------
 		$found=0;
 
 		# Direct ?
@@ -2404,6 +2404,7 @@ if (($YearRequired == $nowyear) && ($MonthRequired eq "year" || $MonthRequired =
 					if (!$found) {
 						# This hit came from a site other than a search engine
 						$_from_h[3]++;
+						if ($felter[10] =~ /http:\/\/[^\/]*\/$/) { $felter[10] =~ s/\/$//; }	# To make htpp://www.mysite.com and http://www.mysite.com/ as same referer
 						$_pagesrefs_h{$felter[10]}++;
 						$found=1;
 					}
