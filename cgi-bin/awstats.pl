@@ -65,7 +65,7 @@ $word, $yearcon, $yearfile, $yearmonthfile, $yeartoprocess) = ();
 @sortsearchwords = @sortsereferrals = @sortsider404 = @sortsiders = @sortunknownip =
 @sortunknownreferer = @sortunknownrefererbrowser = @wordlist = ();
 
-$VERSION="2.5 (build 1)";
+$VERSION="2.5 (build 2)";
 $Lang=0;
 
 # Default value
