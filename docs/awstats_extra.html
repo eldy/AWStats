@@ -58,8 +58,11 @@ user or agent, etc...<br>
 <br>  extract the value used for first column. Each different value found will
 <br>  be a different row. Be sure that list of different values is "limited" to
 <br>  avoid "not enough memory" problems !
+<br>ExtraSectionFirstColumnFormatX is the string used to write value.
 <br>ExtraSectionStatTypesX are things you want to count. You can use standard
 <br>  code letters (P for pages,H for hits,B for bandwidth,L for last access).
+<br>ExtraSectionAddAverageRowX add a row at bottom of chart with average values.
+<br>ExtraSectionAddSumRowX add a row at bottom of chart with sum values.
 <br>MaxNbOfExtraX is maximum number of rows shown in chart.
 <br>MinHitExtraX is minimum number of hits required to be shown in chart.
 
@@ -81,7 +84,10 @@ ExtraSectionName1="Product orders"<br>
 ExtraSectionCondition1="URL,/cgi-bin/order.cgi"<br>
 ExtraSectionFirstColumnTitle1="Product ID"<br>
 ExtraSectionFirstColumnValues1="QUERY_STRING,productid=([^&]+)"<br>
+ExtraSectionFirstColumnFormat1="%s"<br>
 ExtraSectionStatTypes1=PL<br>
+ExtraSectionAddAverageRow1=0<br>
+ExtraSectionAddSumRow1=1<br>
 MaxNbOfExtra1=100<br>
 MinHitExtra1=1<br>
 </i>
@@ -96,7 +102,10 @@ ExtraSectionName1="Bugzilla: Most frequently viewed bugs"<br>
 ExtraSectionCondition1="URL,/bugzilla/show_bug.cgi"<br>
 ExtraSectionFirstColumnTitle1="Bug ID"<br>
 ExtraSectionFirstColumnValues1="QUERY_STRING,id=([^&]+)"<br>
+ExtraSectionFirstColumnFormat1="<a href='/bugzilla/show_bug.cgi?id=%s' target=new>%s</a>"
 ExtraSectionStatTypes1=PL<br>
+ExtraSectionAddAverageRow=0<br>
+ExtraSectionAddSumRow=1<br>
 MaxNbOfExtra1=10<br>
 MinHitExtra1=1<br>
 </i>

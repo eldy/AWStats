@@ -216,9 +216,10 @@ use vars qw/
 @OnlyHosts @OnlyUserAgents @OnlyFiles 
 @URLWithQueryWithoutFollowingParameters
 @ExtraName @ExtraCondition @ExtraStatTypes @MaxNbOfExtra @MinHitExtra
-@ExtraFirstColumnTitle @ExtraFirstColumnValues
+@ExtraFirstColumnTitle @ExtraFirstColumnValues @ExtraFirstColumnFormat
 @ExtraConditionType @ExtraConditionTypeVal
 @ExtraFirstColumnValuesType @ExtraFirstColumnValuesTypeVal
+@ExtraAddAverageRow @ExtraAddSumRow
 @PluginsToLoad 
 /;
 @MiscListOrder=('AddToFavourites','JavaEnabled','DirectorSupport','FlashSupport','RealPlayerSupport','QuickTimeSupport','WindowsMediaPlayerSupport','PDFSupport');
@@ -239,9 +240,10 @@ use vars qw/
 @OnlyHosts = @OnlyUserAgents = @OnlyFiles = ();
 @URLWithQueryWithoutFollowingParameters = ();
 @ExtraName = @ExtraCondition = @ExtraStatTypes = @MaxNbOfExtra = @MinHitExtra = ();
-@ExtraFirstColumnTitle = @ExtraFirstColumnValues = ();
+@ExtraFirstColumnTitle = @ExtraFirstColumnValues = @ExtraFirstColumnFormat = ();
 @ExtraConditionType = @ExtraConditionTypeVal = ();
 @ExtraFirstColumnValuesType = @ExtraFirstColumnValuesTypeVal = ();
+@ExtraAddAverageRow = @ExtraAddSumRow = ();
 @PluginsToLoad = ();
 # ---------- Init hash arrays --------
 use vars qw/
@@ -1272,6 +1274,9 @@ sub Parse_Config {
  		if ($param =~ /^ExtraSectionStatTypes(\d+)/)    { $ExtraStatTypes[$1]=$value; next; }
  		if ($param =~ /^ExtraSectionFirstColumnTitle(\d+)/) 	{ $ExtraFirstColumnTitle[$1]=$value; next; }
  		if ($param =~ /^ExtraSectionFirstColumnValues(\d+)/) 	{ $ExtraFirstColumnValues[$1]=$value; next; }
+ 		if ($param =~ /^ExtraSectionFirstColumnFormat(\d+)/) 	{ $ExtraFirstColumnFormat[$1]=$value; next; }
+ 		if ($param =~ /^ExtraSectionAddAverageRow(\d+)/) 	{ $ExtraAddAverageRow[$1]=$value; next; }
+ 		if ($param =~ /^ExtraSectionAddSumRow(\d+)/) 	{ $ExtraAddSumRow[$1]=$value; next; }
  		if ($param =~ /^MaxNbOfExtra(\d+)/) 			{ $MaxNbOfExtra[$1]=$value; next; }
  		if ($param =~ /^MinHitExtra(\d+)/) 				{ $MinHitExtra[$1]=$value; next; }
 		# Special appearance parameters
@@ -1541,6 +1546,7 @@ sub Check_Config {
 		if ($MaxNbOfExtra[$extracpt] !~ /^\d+$/ || $MaxNbOfExtra[$extracpt]<1) { $MaxNbOfExtra[$extracpt]=20; }
 		if ($MinHitExtra[$extracpt] !~ /^\d+$/ || $MinHitExtra[$extracpt]<1) { $MinHitExtra[$extracpt]=1; }
 		if (! $ExtraFirstColumnValues[$extracpt]) { error("Extra section number $extracpt is defined without ExtraSectionFirstColumnValues$extracpt parameter"); }
+		if (! $ExtraFirstColumnFormat[$extracpt]) { $ExtraFirstColumnFormat[$extracpt] = '%s'; }
 	}
 	# Optional appearance setup section
 	if ($MaxRowsInHTMLOutput !~ /^\d+/ || $MaxRowsInHTMLOutput<1)     { $MaxRowsInHTMLOutput=1000; }
@@ -5816,7 +5822,6 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 		my $PageBool=1;
 		my $extension;
 		# Extension
-print "xxx $urlwithnoquery yyy $DefaultFile[0] zzz";
 		if ($urlwithnoquery =~ /\.(\w{1,6})$/ || ($urlwithnoquery =~ /[\\\/]$/ && $DefaultFile[0] =~ /\.(\w{1,6})$/)) {
 			$extension=lc($1);
 			if ($NotPageList{$extension}) { $PageBool=0; }
@@ -9209,7 +9214,8 @@ if (scalar keys %HTMLOutput) {
 	 		print "$Center<a name=\"EXTRA$extranum\">&nbsp;</a><BR>";
 			my $title=$ExtraName[$extranum];
 	 		&tab_head("$title",19);
-	 		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>".$ExtraFirstColumnTitle[$extranum]."</TH>";
+	 		print "<TR bgcolor=\"#$color_TableBGRowTitle\">";
+	 		print "<TH>".$ExtraFirstColumnTitle[$extranum]."</TH>";
 	 		if ($ExtraStatTypes[$extranum] =~ m/P/i) { print "<TH bgcolor=\"#$color_p\" width=80>$Message[56]</TH>"; }
 	 		if ($ExtraStatTypes[$extranum] =~ m/H/i) { print "<TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH>"; }
 	 		if ($ExtraStatTypes[$extranum] =~ m/B/i) { print "<TH bgcolor=\"#$color_k\" width=80>$Message[75]</TH>"; }
@@ -9227,13 +9233,35 @@ if (scalar keys %HTMLOutput) {
 	 		}
 			foreach my $key (@keylist) {
 	 			my $firstcol = CleanFromCSSA(DecodeEncodedString($key));
-	 			print "<TR><TD CLASS=AWS>$firstcol</TD>";
+	 			$total_p+=${'_section_' . $extranum . '_p'}{$key};
+	 			$total_h+=${'_section_' . $extranum . '_h'}{$key};
+	 			$total_k+=${'_section_' . $extranum . '_k'}{$key};
+	 			print "<TR>";
+	 			printf("<TD CLASS=AWS>$ExtraFirstColumnFormat[$extranum]</TD>", $firstcol, $firstcol, $firstcol, $firstcol, $firstcol);
 	 			if ($ExtraStatTypes[$extranum] =~ m/P/i) { print "<TD>" . ${'_section_' . $extranum . '_p'}{$key} . "</TD>"; }
 	 			if ($ExtraStatTypes[$extranum] =~ m/H/i) { print "<TD>" . ${'_section_' . $extranum . '_h'}{$key} . "</TD>"; }
 	 			if ($ExtraStatTypes[$extranum] =~ m/B/i) { print "<TD>" . Format_Bytes(${'_section_' . $extranum . '_k'}{$key}) . "</TD>"; }
 	 			if ($ExtraStatTypes[$extranum] =~ m/L/i) { print "<TD>" . (${'_section_' . $extranum . '_l'}{$key}?Format_Date(${'_section_' . $extranum . '_l'}{$key},1):'-') . "</TD>"; }
 	 			print "</TR>\n";
 	 			$count++;
+			}
+			if ($ExtraAddAverageRow[$extranum]) {
+	 			print "<TR>";
+	 			print "<TD CLASS=AWS><b>$Message[96]</b></TD>";
+	 			if ($ExtraStatTypes[$extranum] =~ m/P/i) { print "<TD>" . ($total_p/$count) . "</TD>"; }
+	 			if ($ExtraStatTypes[$extranum] =~ m/H/i) { print "<TD>" . ($total_h/$count) . "</TD>"; }
+	 			if ($ExtraStatTypes[$extranum] =~ m/B/i) { print "<TD>" . Format_Bytes(($total_k/$count)) . "</TD>"; }
+	 			if ($ExtraStatTypes[$extranum] =~ m/L/i) { print "<TD>&nbsp;</TD>"; }
+	 			print "</TR>\n";
+			}
+			if ($ExtraAddSumRow[$extranum]) {
+	 			print "<TR>";
+	 			print "<TD CLASS=AWS><b>$Message[102]</b></TD>";
+	 			if ($ExtraStatTypes[$extranum] =~ m/P/i) { print "<TD>" . ($total_p) . "</TD>"; }
+	 			if ($ExtraStatTypes[$extranum] =~ m/H/i) { print "<TD>" . ($total_h) . "</TD>"; }
+	 			if ($ExtraStatTypes[$extranum] =~ m/B/i) { print "<TD>" . Format_Bytes($total_k) . "</TD>"; }
+	 			if ($ExtraStatTypes[$extranum] =~ m/L/i) { print "<TD>&nbsp;</TD>"; }
+	 			print "</TR>\n";
 			}
 	 		&tab_end;
 	 	}
