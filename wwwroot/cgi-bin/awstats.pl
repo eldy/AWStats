@@ -113,7 +113,7 @@ $MaxLengthOfStoredUA
 $StaticExt='html';
 $DNSStaticCacheFile='dnscache.txt';
 $DNSLastUpdateCacheFile='dnscachelastupdate.txt';
-$MiscTrackerUrl=quotemeta('/js/awstats_misc_tracker.js');
+$MiscTrackerUrl=quotemeta('/awstatsjs/awstats_misc_tracker.js');
 $Lang='auto';
 $MaxRowsInHTMLOutput=1000;
 $MaxLengthOfURL=70;
@@ -733,15 +733,19 @@ sub error {
 		print "\n";
 	}
 	if (! $ErrorMessages && ! $donotshowsetupinfo) {
-		if (scalar keys %HTMLOutput) { print "<br /><b>\n"; }
-		print "Setup (".($FileConfig?"'".$FileConfig."'":"Config")." file, web server or permissions) may be wrong.\n";
-		if (scalar keys %HTMLOutput) { print "</b><br />\n"; }
+		if ($message =~ /Couldn.t open config file/i) {
+			my $dir=$DIR; $dir =~ s/[\\\/]?wwwroot[\/\\]cgi-bin[\\\/]?//;
+			print "${tagbr}${tagbold}Did you use the correct URL ?${tagunbold}${tagbr}\n";
+			print "Example: http://localhost/awstats/awstats.pl?config=mysite${tagbr}\n";
+			print "Example: http://127.0.0.1/cgi-bin/awstats.pl?config=mysite${tagbr}\n";
+			print "${tagbr}${tagbold}Did you create your config file ?${tagunbold}${tagbr}\n";
+			print "Try to run $dir/tools/configure.pl${tagbr}${tagbr}\n";
+		}
+		else { print "${tagbr}${tagbold}Setup (".($FileConfig?"'".$FileConfig."'":"Config")." file, web server or permissions) may be wrong.${tagunbold}${tagbr}\n"; }
 		print "See AWStats documentation in 'docs' directory for informations on how to setup $PROG.\n";
 	}
 	# Remove lock if not a lock message 
-	if ($EnableLockForUpdate && $message !~ /lock file/) {
-		&Lock_Update(0);
-	}
+	if ($EnableLockForUpdate && $message !~ /lock file/) { &Lock_Update(0); }
 	if (scalar keys %HTMLOutput) { print "</body>\n</html>\n"; }
 	exit 1;
 }
@@ -1452,7 +1456,7 @@ sub Check_Config {
 	if ($NbOfLinesForCorruptedLog !~ /^\d+/ || $NbOfLinesForCorruptedLog<1)	{ $NbOfLinesForCorruptedLog=50; }
 	if ($Expires !~ /^\d+/)                 		{ $Expires=0; }
 	if ($DecodeUA !~ /[0-1]/)						{ $DecodeUA=0; }
-	$MiscTrackerUrl||=quotemeta('/js/awstats_misc_tracker.js');
+	$MiscTrackerUrl||=quotemeta('/awstatsjs/awstats_misc_tracker.js');
 	# Optional accuracy setup section
 	if ($LevelForRobotsDetection !~ /^\d+/)       	{ $LevelForRobotsDetection=2; }
 	if ($LevelForBrowsersDetection !~ /^\d+/)     	{ $LevelForBrowsersDetection=2; }
