@@ -22,7 +22,7 @@ use Socket;
 #------------------------------------------------------------------------------
 use vars qw/ $REVISION $VERSION /;
 $REVISION='$Revision$'; $REVISION =~ /\s(.*)\s/; $REVISION=$1;
-$VERSION="6.1 (build $REVISION)";
+$VERSION="6.2 (build $REVISION)";
 
 # ----- Constants -----
 use vars qw/
@@ -82,9 +82,10 @@ $pos_vh = $pos_host = $pos_logname = $pos_date = $pos_tz = $pos_method = $pos_ur
 $pos_referer = $pos_agent = $pos_query = $pos_gzipin = $pos_gzipout = $pos_compratio = -1;
 $pos_cluster = $pos_emails = $pos_emailr = $pos_hostr = -1;
 # ----- Plugins variable -----
-use vars qw/ %PluginsLoaded $PluginDir /;
+use vars qw/ %PluginsLoaded $PluginDir $AtLeastOneSectionPlugin /;
 %PluginsLoaded=();
 $PluginDir='';
+$AtLeastOneSectionPlugin=0;
 # ----- Time vars -----
 use vars qw/
 $starttime
@@ -788,7 +789,7 @@ sub error {
 				print "$LogFormat\n";
 				print (scalar keys %HTMLOutput?"</i>$tagunfont${tagbr}${tagbr}\n":"");
 			}
-			print "And this is a sample of records AWStats found in your log file (the record number $NbOfLinesForCorruptedLog in your log):\n";
+			print "And this is an example of records AWStats found in your log file (the record number $NbOfLinesForCorruptedLog in your log):\n";
 			print (scalar keys %HTMLOutput?"<br />$tagfontgrey<i>":"");
 			print "$secondmessage";
 			print (scalar keys %HTMLOutput?"</i>$tagunfont${tagbr}${tagbr}":"");
@@ -1808,7 +1809,7 @@ sub Read_Plugins {
 	foreach my $plugininfo (@PluginsToLoad) {
 		my @loadplugin=split(/\s+/,$plugininfo,2);
 		my $pluginfile=$loadplugin[0]; $pluginfile =~ s/\.pm$//i;
-		# Check if we plugin is not disabled
+		# Check if plugin is not disabled
 		if ($NoLoadPlugin{$pluginfile} && $NoLoadPlugin{$pluginfile} > 0) {
 			if ($Debug) { debug(" Plugin load for '$pluginfile' has been disabled from parameters"); }
 			next;	
@@ -1859,9 +1860,9 @@ sub Read_Plugins {
 						# Plugin load and init successfull
 						foreach my $elem (split(/\s+/,$initret)) {
 							# Some functions can only be plugged once
-							my @UniquePluginsFunctions=('GetCountryCodeByName','GetCountryCodeByAddr','ChangeTime','GetTimeZoneTitle','GetTime','SearchFile','LoadCache','SaveHash','ShowMenu');
+							my @uniquefunc=('GetCountryCodeByName','GetCountryCodeByAddr','ChangeTime','GetTimeZoneTitle','GetTime','SearchFile','LoadCache','SaveHash','ShowMenu');
 							my $isuniquefunc=0;
-							foreach my $function (@UniquePluginsFunctions) {
+							foreach my $function (@uniquefunc) {
 								if ("$elem" eq "$function") {
 									# We try to load a 'unique' function, so we check and stop if already loaded
 									foreach my $otherpluginname (keys %{$PluginsLoaded{"$elem"}})  {
@@ -1876,6 +1877,7 @@ sub Read_Plugins {
 								$PluginsLoaded{"$elem"}{"$pluginname"}=1;
 							}
 							else { $PluginsLoaded{"$elem"}{"$pluginname"}=1; }
+						    if ("$elem" =~ /SectionInitHashArray/) { $AtLeastOneSectionPlugin=1; }
 						}
 						$PluginsLoaded{'init'}{"$pluginname"}=1;
 						if ($Debug) { debug(" Plugin '$pluginname' now hooks functions '$initret'",1); }
@@ -1894,7 +1896,7 @@ sub Read_Plugins {
 			error("Plugin \"$pluginfile\" is not a valid plugin name.");
 		}
 	}
-	# In output, geo ip plugins were not loaded, so message changes can't be done in plugin init function
+	# In output mode, geo ip plugins are not loaded, so message changes are done here (can't be done in plugin init function)
 	if ($PluginsLoaded{'init'}{'geoip'} || $PluginsLoaded{'init'}{'geoipfree'}) { $Message[17]=$Message[25]=$Message[148]; }
 }
 
@@ -1930,6 +1932,7 @@ sub Read_History_With_TmpUpdate {
 	my $order=(scalar keys %allsections)+1;
 	foreach (keys %TrapInfosForHTTPErrorCodes) { $allsections{"sider_$_"}=$order++; }
 	foreach (1..@ExtraName-1) { $allsections{"extra_$_"}=$order++; }
+   	foreach (keys %{$PluginsLoaded{'SectionInitHashArray'}}) { $allsections{"plugin_$_"}=$order++; }
 	my $withread=0;
 
 	# Variable used to read old format history files
@@ -1980,6 +1983,9 @@ sub Read_History_With_TmpUpdate {
 		foreach (1..@ExtraName-1) {
 			if ($UpdateStats || $MigrateStats || ($HTMLOutput{'main'} && $ExtraStatTypes[$_]) || $HTMLOutput{"extra$_"}) { $SectionsToLoad{"extra_$_"}=$order++; }
 		}
+       	foreach (keys %{$PluginsLoaded{'SectionInitHashArray'}}) {
+       	    if ($UpdateStats || $MigrateStats || $HTMLOutput{"plugin_$_"}) { $SectionsToLoad{"plugin_$_"}=$order++; }
+       	}
 	}
 	else {					# Load only required sections
 		my $order=1;
@@ -3202,9 +3208,45 @@ sub Read_History_With_TmpUpdate {
 				}
 			}
 
+			# BEGIN_PLUGINS
+           	if ($AtLeastOneSectionPlugin && $field[0] =~ /^BEGIN_PLUGIN_(\w)$/i)   {
+          	    my $pluginname=$1;
+          	    my $found=0;
+          	    foreach (keys %{$PluginsLoaded{'SectionInitHashArray'}})  {
+               		if ($pluginname eq $_) {
+                        # The plugin for this section was loaded
+               		    $found=1;
+               	        my $issectiontoload=$SectionsToLoad{"plugin_$pluginname"};
+               		    my $function="SectionReadHistory_$pluginname(\$issectiontoload,\$xmlold,\$xmleb,\\\@field)";
+               		    eval("$function");
+
+        				delete $SectionsToLoad{"plugin_$pluginname"};
+        				if ($SectionsToSave{"plugin_$pluginname"}) {
+        					Save_History("plugin_$pluginname",$year,$month); delete $SectionsToSave{"plugin_$pluginname"};
+        					if ($withpurge) {
+                           		my $function="SectionInitHashArray_$pluginname()";
+                           		eval("$function");
+        					}
+        				}
+                        last;
+               		}
+                }
+   				if (! scalar %SectionsToLoad) { debug(" Stop reading history file. Got all we need."); last; }
+                # The plugin for this section was not loaded
+   				if (! $found) {
+					do {
+						$_=<HISTORY>;
+						chomp $_; s/\r//;
+						@field=split(/\s+/,($xmlold?CleanFromTags($_):$_)); $countlines++;
+					}
+					until ($field[0] eq "END_PLUGIN_$pluginname" || $field[0] eq "${xmleb}END_PLUGIN_$pluginname" || ! $_);
+   				}
+   				next;
+            }
+
 			# For backward compatibility (ORIGIN section was "HitFromx" in old history files)
 			if ($SectionsToLoad{'origin'}) {
-				if ($field[0] eq 'HitFrom0' ) { $_from_p[0]+=0; $_from_h[0]+=$field[1]; next; }
+				if ($field[0] eq 'HitFrom0') { $_from_p[0]+=0; $_from_h[0]+=$field[1]; next; }
 				if ($field[0] eq 'HitFrom1') { $_from_p[1]+=0; $_from_h[1]+=$field[1]; next; }
 				if ($field[0] eq 'HitFrom2') { $_from_p[2]+=0; $_from_h[2]+=$field[1]; next; }
 				if ($field[0] eq 'HitFrom3') { $_from_p[3]+=0; $_from_h[3]+=$field[1]; next; }
@@ -3328,7 +3370,7 @@ sub Save_History {
 		print HISTORYTMP "# direct I/O access. If you made changes somewhere in this file, you should\n";
 		print HISTORYTMP "# also remove completely the MAP section (AWStats will rewrite it at next\n";
 		print HISTORYTMP "# update).\n";
-		print HISTORYTMP "${xmlbb}BEGIN_MAP${xmlbs}".(26+(scalar keys %TrapInfosForHTTPErrorCodes)+(scalar @ExtraName?scalar @ExtraName-1:0))."${xmlbe}\n";
+		print HISTORYTMP "${xmlbb}BEGIN_MAP${xmlbs}".(26+(scalar keys %TrapInfosForHTTPErrorCodes)+(scalar @ExtraName?scalar @ExtraName-1:0)+(scalar keys %{$PluginsLoaded{'SectionInitHashArray'}}))."${xmlbe}\n";
 		print HISTORYTMP "${xmlrb}POS_GENERAL${xmlrs}";$PosInFile{"general"}=tell HISTORYTMP;print HISTORYTMP "$spacebar${xmlre}\n";
 		# When
 		print HISTORYTMP "${xmlrb}POS_TIME${xmlrs}";$PosInFile{"time"}=tell HISTORYTMP;print HISTORYTMP "$spacebar${xmlre}\n";
@@ -3366,6 +3408,9 @@ sub Save_History {
 		foreach (1..@ExtraName-1) {
 			print HISTORYTMP "${xmlrb}POS_EXTRA_$_${xmlrs}";$PosInFile{"extra_$_"}=tell HISTORYTMP;print HISTORYTMP "$spacebar${xmlre}\n";
 		}
+       	foreach (keys %{$PluginsLoaded{'SectionInitHashArray'}})  {
+			print HISTORYTMP "${xmlrb}POS_PLUGIN_$_${xmlrs}";$PosInFile{"plugin_$_"}=tell HISTORYTMP;print HISTORYTMP "$spacebar${xmlre}\n";
+       	}
 		print HISTORYTMP "${xmleb}END_MAP${xmlee}\n";
 	}
 
@@ -3889,6 +3934,9 @@ sub Save_History {
 		}
  	}
 	
+	# TODO Save
+	
+
 	%keysinkeylist=();
 }
 
@@ -4108,6 +4156,10 @@ sub Init_HashArray {
  		%{'_section_' . $ix . '_h'} = %{'_section_' . $ix . '_o'} = %{'_section_' . $ix . '_k'}	=
  		%{'_section_' . $ix . '_l'} = %{'_section_' . $ix . '_p'} = ();
  	}
+   	foreach my $pluginname (keys %{$PluginsLoaded{'SectionInitHashArray'}})  {
+   		my $function="SectionInitHashArray_$pluginname()";
+   		eval("$function");
+    }
 }
 
 #------------------------------------------------------------------------------
@@ -7177,7 +7229,7 @@ if (scalar keys %HTMLOutput) {
 			}
 			print "</td></tr>\n";
 		}
-		if ($QueryString !~ /buidpdf/i) {
+		if ($QueryString !~ /buildpdf/i) {
 			print "</table>\n";
 			print "</td></tr></table>\n";
 		}
