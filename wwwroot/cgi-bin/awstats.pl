@@ -1053,7 +1053,7 @@ sub Parse_Config {
 			next;
 		}
 
-		if ($_ =~ /^$/) { next; }
+		if ($_ =~ /^\s*$/) { next; }
 
 		# Check includes
 		if ($_ =~ /^Include "([^\"]+)"/ || $_ =~ /^#include "([^\"]+)"/) {	# #include kept for backward compatibility
@@ -1086,8 +1086,8 @@ sub Parse_Config {
 		$param =~ s/^\s+//; $param =~ s/\s+$//;
 
 		# If not a param=value, try with next line
-		if (! $param) { warning("Warning: Syntax error in file '$configFile'. Config line is ignored: $_\n"); next; }
-		if (! defined $value) { warning("Warning: Syntax error in file '$configFile'. Config line is ignored: $_\n"); next; }
+		if (! $param) { warning("Warning: Syntax error line $conflinenb in file '$configFile'. Config line is ignored."); next; }
+		if (! defined $value) { warning("Warning: Syntax error line $conflinenb in file '$configFile'. Config line is ignored."); next; }
 
 		if ($value) {
 			$value =~ s/^\s+//; $value =~ s/\s+$//;
