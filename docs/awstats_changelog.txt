@@ -7,7 +7,7 @@ AWStats Changelog
 - Added total and average row at bottom of day data array.
 - Removed "Bytes" text when values is 0.
 - Reduced main page size.
-
+- New parameter: Added OnlyHosts parameter.
 
 
 

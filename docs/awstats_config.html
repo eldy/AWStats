@@ -77,6 +77,7 @@ when reading it), follow the example:<br>
 <li><a href="#SkipHosts">SkipHosts</a>
 <li><a href="#SkipUserAgents">SkipUserAgents</a>
 <li><a href="#SkipFiles">SkipFiles</a>
+<li><a href="#OnlyHosts">OnlyHosts</a>
 <li><a href="#OnlyFiles">OnlyFiles</a>
 <li><a href="#NotPageList">NotPageList</a>
 <li><a href="#ValidHTTPCodes">ValidHTTPCodes</a>
@@ -611,9 +612,12 @@ when reading it), follow the example:<br>
 <br># If your log file contains IP adresses in host field, you must enter here
 <br># matching IP adresses criteria.
 <br># If DNS lookup is already done in your log file, you must enter here hostname
-<br># criteria.
+<br># criteria, else enter ip address criteria.
+<br># The opposite parameter of "SkipHosts" is "OnlyHosts".
 <br># Note: Use space between each value.
-<br># Example: "127.0.0.1 163.84. 201.101.51.1"
+<br># Note: ^xxx means hosts starting with xxx.
+<br># Note: xxx$ means hosts ending with xxx.
+<br># Example: "^127.0.0.1$ ^163.84."
 <br># Example: "localhost abcxyz"
 <br># Default: ""
 <br>#
@@ -644,11 +648,32 @@ when reading it), follow the example:<br>
 <br># The opposite parameter of "SkipFiles" is "OnlyFiles".
 <br># Note: This parameter is not case sensitive.
 <br># Note: Use space between each value and do not remove default values.
-<br># Note: xxx$ means URL ending with xxx.
+<br># Note: ^xxx means url starting with xxx.
+<br># Note: xxx$ means url ending with xxx.
 <br># Example: "robots.txt$ favicon.ico$ badpage.html /~"
 <br># Default: "robots.txt$ favicon.ico$"
 <br>#
 <br>SkipFiles="robots.txt$ favicon.ico$"
+
+<br><br><hr>
+
+<a name="OnlyHosts"><b>OnlyHosts</b></a><br>
+<b>Version : </b>5.2 +<br>
+<br># Include in stats, only accesses from hosts that match one of following
+<br># entries. For example, if you want AWStats to filter access to keep only
+<br># stats for visits from particular hosts, you can add thoose hosts names
+<br># in this parameter.
+<br># If DNS lookup is already done in your log file, you must enter here hostname
+<br># criteria, else enter ip address criteria.
+<br># The opposite parameter of "OnlyHosts" is "SkipHosts".
+<br># Note: This parameter is not case sensitive.
+<br># Note: Use space between each value.
+<br># Note: ^xxx means hosts starting with xxx.
+<br># Note: xxx$ means hosts ending with xxx.
+<br># Example: "^123.123.123.123$ ^10.0."
+<br># Default: ""
+<br>#
+<br>OnlyHosts=""
 
 <br><br><hr>
 
@@ -661,7 +686,8 @@ when reading it), follow the example:<br>
 <br># The opposite parameter of "OnlyFiles" is "SkipFiles".
 <br># Note: This parameter is not case sensitive.
 <br># Note: Use space between each value and do not remove default values
-<br># Note: \. means . and xxx$ means URL ending by xxx.
+<br># Note: ^xxx means url starting with xxx.
+<br># Note: xxx$ means url ending with xxx.
 <br># Example: "marketing_directory"
 <br># Default: ""
 <br>#
