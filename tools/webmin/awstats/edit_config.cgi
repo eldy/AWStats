@@ -236,6 +236,8 @@ if ($in{'advanced'} == 2) {
 	print &hblink($text{'help_help'}, "help.cgi?param=LevelForRefererAnalyze")." </td> </tr>\n";
 	print "<tr> <td><b>LevelForFileTypesDetection</b></td> <td> <input size=10 type=text name=LevelForFileTypesDetection value='$lconf->{'LevelForFileTypesDetection'}'> </td> <td> ";
 	print &hblink($text{'help_help'}, "help.cgi?param=LevelForFileTypesDetection")." </td> </tr>\n";
+	print "<tr> <td><b>LevelForWormsDetection</b></td> <td> <input size=10 type=text name=LevelForWormsDetection value='$lconf->{'LevelForWormsDetection'}'> </td> <td> ";
+	print &hblink($text{'help_help'}, "help.cgi?param=LevelForWormsDetection")." </td> </tr>\n";
 	print "<tr> <td colspan=3 align=center><a href='edit_config.cgi?".($in{'new'}?"new=1&":"")."&file=$in{'file'}'>$text{'index_hideadvanced'}</a></td></tr>\n";
 } else {
 	print "<tr> <td colspan=3 align=center><a href='edit_config.cgi?".($in{'new'}?"new=1&":"")."advanced=2&file=$in{'file'}'>$text{'index_advanced2'}</a></td></tr>\n";

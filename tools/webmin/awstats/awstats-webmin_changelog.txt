@@ -14,6 +14,7 @@ New features/improvements:
   BuildHistoryFormat
   BuildReportFormat
   LevelForFileTypesDetection
+  LevelForWormsDetection
   URLWithQueryWithOnlyFollowingParameters
   ShowWormsStats
 - Removed LinkToIPWhoIs and LinkToWhoIs obsolete parameters.
