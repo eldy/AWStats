@@ -52,6 +52,7 @@ I - 1) Features
 	* Number of times your site is "added to favourites bookmarks",
 	* Ratio of Browsers that support: Java, Flash, RealG2 reader,
 	  Quicktime reader, WMA reader, PDF reader
+	* Cluster report for load balanced servers ratio.
 
 	It supports the following features as well:
 	* Can analyze all log formats.
