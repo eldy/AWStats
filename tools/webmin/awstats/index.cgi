@@ -59,8 +59,7 @@ if (!-r $config{'alt_conf'}) {
 my @configdirtoscan=split(/\s+/, $access{'dir'});
 	
 if (! @configdirtoscan) {
-	local $smart_user = $ENV{'REMOTE_USER'};
-	print &text('index_nodirallowed',"<b>$smart_user</b>")."<br>\n";
+	print &text('index_nodirallowed',"<b>$remote_user</b>")."<br>\n";
 	print &text('index_changeallowed',"Menu <a href=\"/acl/\">Webmin - Utilisateurs Webmin</a> puis clic sur $text{'index_title'}")."<br>\n";
 	print "<br>\n";
 #	print "<p>",&text('index_econfdir', "<tt>$config{'awstats_conf'}</tt>",
@@ -105,8 +104,7 @@ foreach my $dir (split(/\s+/, $access{'dir'})) {
 }
 
 # Write message for allowed directories
-local $smart_user = $ENV{'REMOTE_USER'};
-print &text('index_allowed',"<b>$smart_user</b>");
+print &text('index_allowed',"<b>$remote_user</b>");
 print ":<br>\n";
 foreach my $dir (split(/\s/,$access{'dir'})) {
 	print "$dir<br>"; 

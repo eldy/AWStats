@@ -46,7 +46,6 @@ else {
 	my $dir=$in{'file'}; $dir =~ s/[\\\/][^\\\/]+$//;
 	if (! $dir) { $dir="/etc/awstats"; }
 	if (! &can_edit_config($dir)) {
-		local $smart_user = $ENV{'REMOTE_USER'};
 		&error(&text('save_edir',"$dir")."<br>\n".&text('index_changeallowed',"Menu <a href=\"/acl/\">Webmin - Utilisateurs Webmin</a> puis clic sur $text{'index_title'}")."<br>\n");
 	}
 
