@@ -43,7 +43,7 @@ my @OutputList=(
 "alllogins","lastlogins",
 "allrobots","lastrobots",
 "urldetail","urlentry","urlexit",
-"unknownos","unknownbrowser","browserdetail",
+"unknownos","unknownbrowser","osdetail","browserdetail",
 "refererse","refererpages",
 #"referersites",
 "keyphrases","keywords",
