@@ -4985,8 +4985,8 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 		if (! (@field=map(/^$PerlParsingFormat/,$_))) {
 			$NbOfLinesCorrupted++;
 			if ($ShowCorrupted) {
-				if ($_ =~ /^#/ || $_ =~ /^!/) { print "Corrupted record (comment line) : $_\n"; }
-				elsif ($_ =~ /^\s*$/) { print "Corrupted record (blank line)\n"; }
+				if ($_ =~ /^#/ || $_ =~ /^!/) { print "Corrupted record line $NbOfLinesRead (comment line): $_\n"; }
+				elsif ($_ =~ /^\s*$/) { print "Corrupted record line $NbOfLinesRead (blank line)\n"; }
 				else { print "Corrupted record line $NbOfLinesRead (record format does not match LogFormat parameter): $_\n"; }
 			}
 			if ($NbOfLinesRead >= $NbOfLinesForCorruptedLog && $NbOfLinesCorrupted == $NbOfLinesRead) { error("Format error",$_,$LogFile); }	# Exit with format error
@@ -4997,7 +4997,7 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 		if ($Debug) {
 			my $string='';
 			foreach my $key (0..@field-1) {	$string.="$fieldlib[$key]=$field[$key] "; }
-			debug(" Correct format line $NbOfLinesRead : $string",4);
+			debug(" Correct format line $NbOfLinesRead: $string",4);
 		}
 
 		# Check virtual host name
