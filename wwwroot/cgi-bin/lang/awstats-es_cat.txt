@@ -1,4 +1,4 @@
-# Spanish (catalan) message file
+# Spanish (catalan) message file (Temu-BCN temujinnn@hotmail.com)
 # $Revision$ - $Date$
 message0=Desconegut
 message1=d'adreça IP desconeguda
@@ -106,7 +106,7 @@ message102=Total
 message103=diferents paraules clau
 message104=Pàgina d'entrada
 message105=Codi
-message106=Mida mitjà
+message106=Volum mitjà
 message107=Enllaços des d'un grup de notícies
 message108=KB
 message109=MB
@@ -139,3 +139,18 @@ message135=Mides de pantalla
 message136=Atacs de Cucs/Virus
 message137=Inclosos a favorits
 message138=Dies del mes
+message139=Miscel·lanis
+message140=Cercadors amb suport Java
+message141=Cercadors amb suport Macromedia Director
+message142=Cercadors amb suport Flash
+message143=Cercadors amb suport de reproducció Real audio
+message144=Cercadors amb suport de reproducció Quicktime audio
+message145=Cercadors amb suport de reproducció Windows Media audio
+message146=Cercadors amb suport PDF
+message147=Codis d'error SMTP
+message148=Països
+message149=Correus
+message150=Volum
+message151=Primer
+message152=Últim
+message153=Excloure filtre

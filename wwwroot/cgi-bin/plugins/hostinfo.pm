@@ -81,7 +81,10 @@ EOF
 #-----------------------------------------------------------------------------
 # PLUGIN FUNCTION: ShowInfoHost_pluginname
 # UNIQUE: NO (Several plugins using this function can be loaded)
-# Function called to add additionnal information for Users in users' report.
+# Function called to add additionnal columns to the Hosts report.
+# This function is called when building rows of the report (One call for each
+# row). So it allows you to add a column in report, for example with code :
+#   print "<TD>This is a new cell</TD>";
 # Parameters: Host name or ip
 #-----------------------------------------------------------------------------
 sub ShowInfoHost_hostinfo {

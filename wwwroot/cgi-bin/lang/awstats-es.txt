@@ -1,4 +1,4 @@
-# Spanish message file
+# Spanish message file (Temu-BCN temujinnn@hotmail.com)
 # $Revision$ - $Date$
 message0=Desconocido
 message1=de dirección IP desconocida
@@ -139,3 +139,18 @@ message135=Tamaños de pantalla
 message136=Ataques de Gusano/Virus
 message137=Añadido a favoritos
 message138=Días del mes
+message139=Misceláneos
+message140=Buscadores con soporte Java
+message141=Buscadores con soporte Macromedia Director
+message142=Buscadores con soporte Flash
+message143=Buscadores con soporte de reproductor Real audio
+message144=Buscadores con soporte de reproductor Quicktime audio
+message145=Buscadores con soporte de reproductor Windows Media audio
+message146=Buscadores con soporte PDF
+message147=Códigos de error SMTP
+message148=Países
+message149=Correos
+message150=Tamaño
+message151=Primero
+message152=Ultimo
+message153=Excluir Filtro

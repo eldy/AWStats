@@ -43,7 +43,7 @@ $PluginVariable1
 #-----------------------------------------------------------------------------
 # PLUGIN FUNCTION: Init_pluginname
 #-----------------------------------------------------------------------------
-sub Init_timezone {
+sub Init_example {
 	my $InitParams=shift;
 	my $checkversion=&Check_Plugin_Version($PluginNeedAWStatsVersion);
 
@@ -86,11 +86,26 @@ sub AddHTMLBodyHeader_example {
 }
 
 #-----------------------------------------------------------------------------
+# PLUGIN FUNCTION: ShowInfoHost_pluginname
+# UNIQUE: NO (Several plugins using this function can be loaded)
+# Function called to add additionnal columns to the Hosts report.
+# This function is called when building rows of the report (One call for each
+# row). So it allows you to add a column in report, for example with code :
+#   print "<TD>This is a new cell</TD>";
+# Parameters: Host name or ip
+#-----------------------------------------------------------------------------
+sub ShowInfoHost_hostinfo {
+	# <-----
+	# PERL CODE HERE
+	# ----->
+}
+
+#-----------------------------------------------------------------------------
 # PLUGIN FUNCTION: ShowPagesAddField_pluginname
 # UNIQUE: NO (Several plugins using this function can be loaded)
-# Function called when building the row of the output report
-# of TOP Pages-URL (One call for each row). So it allows you to add a column
-# in these report. For example with the code :
+# Function used to add additionnal columns to the Top Pages-URL report.
+# This function is called when building rows of the report (One call for each
+# row). So it allows you to add a column in report, for example with code :
 #   print "<TD>This is a new cell</TD>";
 #-----------------------------------------------------------------------------
 sub ShowPagesAddField_example {
@@ -103,6 +118,8 @@ sub ShowPagesAddField_example {
 # PLUGIN FUNCTION: ShowInfoURL_pluginname
 # UNIQUE: NO (Several plugins using this function can be loaded)
 # Function called to add additionnal information for URLs in URLs' report.
+# This function is called after writing the URL value in the URL cell of the
+# Top Pages-URL report.
 # Parameters: URL
 #-----------------------------------------------------------------------------
 sub ShowInfoURL_example {
@@ -114,7 +131,10 @@ sub ShowInfoURL_example {
 #-----------------------------------------------------------------------------
 # PLUGIN FUNCTION: ShowInfoUser_pluginname
 # UNIQUE: NO (Several plugins using this function can be loaded)
-# Function called to add additionnal information for Users in users' report.
+# Function called to add additionnal columns to Authenticated users report.
+# This function is called when building rows of the report (One call for each
+# row). So it allows you to add a column in report, for example with code :
+#   print "<TD>This is a new cell</TD>";
 # Parameters: User
 #-----------------------------------------------------------------------------
 sub ShowInfoUser_example {
