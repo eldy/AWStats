@@ -1402,12 +1402,46 @@ sub Read_Plugins {
 
 
 #--------------------------------------------------------------------
-# Input: year,month,0|1		(0=read only 1st part, 1=read all file)
+# Input: year,month,0|1		(0=read only some part of 3 sections, 1=read needed sections completely)
 #--------------------------------------------------------------------
 sub Read_History_File {
 	my $year=sprintf("%04i",shift);
 	my $month=sprintf("%02i",shift);
-	my $part=shift;	# If part=0 we need only LastUpdate, TotalVisits, TIME section and VISITOR section
+	my $part=shift;
+
+	# A section not defined means do not load, value of 1 means load all section, 2 means load part of it
+	my %SectionsToLoad=();
+	if (! $part) {
+		# If part=0 we need only GENERAL section (LastUpdate, TotalVisits), part of TIME section and part of VISITOR section
+		$SectionsToLoad{"general"}=1;
+		$SectionsToLoad{"time"}=2;
+		$SectionsToLoad{"visitor"}=2;
+	}
+	else {
+		$SectionsToLoad{"general"}=1;
+		$SectionsToLoad{"time"}=1;
+		if ($UpdateStats || $HTMLOutput eq "main" || $HTMLOutput eq "allhosts" || $HTMLOutput eq "lasthosts" || $HTMLOutput eq "unknownip") { $SectionsToLoad{"visitor"}=1; }
+		if ($UpdateStats || $HTMLOutput eq "main" || $HTMLOutput eq "origin") { $SectionsToLoad{"origin"}=1; }
+		if ($UpdateStats || $HTMLOutput eq "main" || $HTMLOutput eq "days")   { $SectionsToLoad{"day"}=1; }
+		if ($UpdateStats || $HTMLOutput eq "main" || $HTMLOutput eq "logins") { $SectionsToLoad{"login"}=1; }
+		if ($UpdateStats || $HTMLOutput eq "main" || $HTMLOutput eq "domains") { $SectionsToLoad{"domain"}=1; }
+		if ($UpdateStats || $HTMLOutput eq "main" || $HTMLOutput eq "sessions") { $SectionsToLoad{"session"}=1; }
+		if ($UpdateStats || $HTMLOutput eq "main" || $HTMLOutput eq "browserdetail") { $SectionsToLoad{"browser"}=1; }
+		if ($UpdateStats || $HTMLOutput eq "main" || $HTMLOutput eq "browserdetail") { $SectionsToLoad{"msiever"}=1; }
+		if ($UpdateStats || $HTMLOutput eq "main" || $HTMLOutput eq "browserdetail") { $SectionsToLoad{"nsver"}=1; }
+		if ($UpdateStats || $HTMLOutput eq "main" || $HTMLOutput eq "os") { $SectionsToLoad{"os"}=1; }
+		if ($UpdateStats || $HTMLOutput eq "main" || $HTMLOutput eq "unknownos")      { $SectionsToLoad{"unknownreferer"}=1; }
+		if ($UpdateStats || $HTMLOutput eq "main" || $HTMLOutput eq "unknownbrowser") { $SectionsToLoad{"unknownrefererbrowser"}=1; }
+		if ($UpdateStats || $HTMLOutput eq "main" || $HTMLOutput eq "robots") { $SectionsToLoad{"robot"}=1; }
+		if ($UpdateStats || $HTMLOutput eq "main" || $HTMLOutput eq "pages") { $SectionsToLoad{"sider"}=1; }
+		if ($UpdateStats || $HTMLOutput eq "main" || $HTMLOutput eq "filetypes") { $SectionsToLoad{"filetypes"}=1; }
+		if ($UpdateStats || $HTMLOutput eq "main" || $HTMLOutput eq "refererse") { $SectionsToLoad{"sereferrals"}=1; }
+		if ($UpdateStats || $HTMLOutput eq "main" || $HTMLOutput eq "refererpages") { $SectionsToLoad{"pagerefs"}=1; }
+		if ($UpdateStats || $HTMLOutput eq "main" || $HTMLOutput eq "keyphrases" || $HTMLOutput eq "keywords") { $SectionsToLoad{"searchwords"}=1; }
+		if ($HTMLOutput eq "main") { $SectionsToLoad{"keywords"}=1; }
+		if ($UpdateStats || $HTMLOutput eq "main" || $HTMLOutput eq "errors") { $SectionsToLoad{"errors"}=1; }
+		if ($UpdateStats || $HTMLOutput eq "main" || $HTMLOutput eq "errors404") { $SectionsToLoad{"sider_404"}=1; }
+	}
 
 	# In standard use of AWStats, the DayRequired variable is always empty
 	if ($DayRequired) { if ($Debug) { debug("Call to Read_History_File [$year,$month,$part] ($DayRequired)"); } }
@@ -1430,22 +1464,29 @@ sub Read_History_File {
 	if ($UseCompress) {	$historyfilename="gzip -d <\"$historyfilename\" |"; }
 	if ($Debug) { debug(" History file is '$historyfilename'",2); }
 
-	# TODO With particular option file reading can be stopped if section all read
 	open(HISTORY,$historyfilename) || error("Error: Couldn't open file \"$historyfilename\" for read: $!");	# Month before Year kept for backward compatibility
 	$MonthUnique{$year.$month}=0; $MonthPages{$year.$month}=0; $MonthHits{$year.$month}=0; $MonthBytes{$year.$month}=0; $MonthHostsKnown{$year.$month}=0; $MonthHostsUnknown{$year.$month}=0;
 
-	my $versionmaj = my $versionmin = 0;
-	my $countlines=0;
+	my $versionnum=0; my $countlines=0;
 	while (<HISTORY>) {
 		chomp $_; s/\r//; $countlines++;
 		# Analyze config line
 		if ($_ =~ /^AWSTATS DATA FILE (\d+).(\d+)/) {
-			$versionmaj=$1; $versionmin=$2;
-			if ($Debug) { debug(" data file version is $versionmaj.$versionmin",2); }
+			$versionnum=($1*1000)+$2;
+			if ($Debug) { debug(" data file version is $versionnum",2); }
 			next;
 		}
 		my @field=split(/\s+/,$_);
 		if (! $field[0]) { next; }
+
+		# Some sections are expected to be fully loaded (GENERAL), some partially (TIME and VISITOR) whatever is $part parameter
+		# Some other sections are or not loaded depending on $part parameter
+
+		# BEGIN_GENERAL
+		if ($field[0] eq "BEGIN_GENERAL")      {
+			if ($Debug) { debug(" Begin of GENERAL section"); }
+			next;
+		}
 		if ($field[0] eq "LastLine")        { if ($LastLine{$year.$month}||0 < int($field[1])) { $LastLine{$year.$month}=int($field[1]); }; next; }
 		if ($field[0] eq "FirstTime")       { $FirstTime{$year.$month}=int($field[1]); next; }
 		if ($field[0] eq "LastTime")        { if ($LastTime{$year.$month}||0 < int($field[1])) { $LastTime{$year.$month}=int($field[1]); }; next; }
@@ -1459,9 +1500,19 @@ sub Read_History_File {
 			};
 			next;
 		}
+		if ($field[0] eq "END_GENERAL")      {
+			if ($Debug) { debug(" End of GENERAL section"); }
+			delete $SectionsToLoad{"general"};
+			if (scalar keys %SectionsToLoad == 0) { debug(" Stop reading config file. Got all we need."); last; }
+			next;
+		}
 
-		# Following data are loaded or not depending on $part parameter
-		if ($part && ($UpdateStats || $HTMLOutput eq "main" || $HTMLOutput eq "origin")) {
+		# BEGIN_ORIGIN
+		if ($field[0] eq "BEGIN_ORIGIN")      {
+			if ($Debug) { debug(" Begin of ORIGIN section"); }
+			next;
+		}
+		if ($SectionsToLoad{"origin"}) {
 			if ($field[0] eq "From0") { $_from_p[0]+=$field[1]; $_from_h[0]+=$field[2]; next; }
 			if ($field[0] eq "From1") { $_from_p[1]+=$field[1]; $_from_h[1]+=$field[2]; next; }
 			if ($field[0] eq "From2") { $_from_p[2]+=$field[1]; $_from_h[2]+=$field[2]; next; }
@@ -1476,6 +1527,13 @@ sub Read_History_File {
 			if ($field[0] eq "HitFrom4") { $_from_p[4]+=0; $_from_h[4]+=$field[1]; next; }
 			if ($field[0] eq "HitFrom5") { $_from_p[5]+=0; $_from_h[5]+=$field[1]; next; }
 		}
+		if ($field[0] eq "END_ORIGIN")      {
+			if ($Debug) { debug(" End of ORIGIN section"); }
+			delete $SectionsToLoad{"origin"};
+			if (scalar keys %SectionsToLoad == 0) { debug(" Stop reading config file. Got all we need."); last; }
+			next;
+		}
+		# BEGIN_TIME
 		if ($field[0] eq "BEGIN_TIME")      {
 			if ($Debug) { debug(" Begin of TIME section"); }
 			$_=<HISTORY>;
@@ -1488,7 +1546,7 @@ sub Read_History_File {
 					$count++;
 					# We always read this to build the month graph (MonthPages, MonthHits, MonthBytes)
 					$MonthPages{$year.$month}+=int($field[1]); $MonthHits{$year.$month}+=int($field[2]); $MonthBytes{$year.$month}+=int($field[3]);
-					if ($part) {	# TODO ? used to build total
+					if ($SectionsToLoad{"time"}==1) {	# TODO ? used to build total
 						$countloaded++;
 						if ($field[1]) { $_time_p[$field[0]]+=int($field[1]); }
 						if ($field[2]) { $_time_h[$field[0]]+=int($field[2]); }
@@ -1501,8 +1559,11 @@ sub Read_History_File {
 				@field=split(/\s+/,$_); $countlines++;
 			}
 			if ($Debug) { debug(" End of TIME section ($count entries, $countloaded loaded)"); }
+			delete $SectionsToLoad{"time"};
+			if (scalar keys %SectionsToLoad == 0) { debug(" Stop reading config file. Got all we need."); last; }
 			next;
 		}
+		# BEGIN_DAY
 		if ($field[0] eq "BEGIN_DAY")      {
 			if ($Debug) { debug(" Begin of DAY section"); }
 			$_=<HISTORY>;
@@ -1513,7 +1574,7 @@ sub Read_History_File {
 			while ($field[0] ne "END_DAY" ) {
 				if ($field[0]) {
 					$count++;
-					if ($part && ($UpdateStats || $HTMLOutput eq "main" || $HTMLOutput eq "days")) {
+					if ($SectionsToLoad{"day"}) {
 						$countloaded++;
 						if ($field[1]) { $DayPages{$field[0]}=int($field[1]); }
 						if ($field[2]) { $DayHits{$field[0]}=int($field[2]); }
@@ -1528,8 +1589,11 @@ sub Read_History_File {
 				@field=split(/\s+/,$_); $countlines++;
 			}
 			if ($Debug) { debug(" End of DAY section ($count entries, $countloaded loaded)"); }
+			delete $SectionsToLoad{"day"};
+			if (scalar keys %SectionsToLoad == 0) { debug(" Stop reading config file. Got all we need."); last; }
 			next;
 		}
+		# BEGIN_VISITOR
 		if ($field[0] eq "BEGIN_VISITOR")   {
 			if ($Debug) { debug(" Begin of VISITOR section"); }
 			$_=<HISTORY>;
@@ -1541,16 +1605,10 @@ sub Read_History_File {
 				if ($field[0]) {
 					$count++;
 					# We always read this to build the month graph (MonthUnique, MonthHostsKnown, MonthHostsUnknown)
-					if ($field[0] ne "Unknown") {
-						if (($field[1]||0) > 0) { $MonthUnique{$year.$month}++; }
-						if ($field[0] !~ /^\d+\.\d+\.\d+\.\d+$/) { $MonthHostsKnown{$year.$month}++; }
-						else { $MonthHostsUnknown{$year.$month}++; }
-					}
-					else {		# "else" is kept for backward compatibility (should never be else)
-						$MonthUnique{$year.$month}++;
-						$MonthHostsUnknown{$year.$month}++;
-					}
-					if ($part && ($UpdateStats || $HTMLOutput eq "main" || $HTMLOutput eq "allhosts" || $HTMLOutput eq "lasthosts" || $HTMLOutput eq "unknownip")) {
+					if (($field[1]||0) > 0) { $MonthUnique{$year.$month}++; }
+					if ($field[0] !~ /^\d+\.\d+\.\d+\.\d+$/) { $MonthHostsKnown{$year.$month}++; }
+					else { $MonthHostsUnknown{$year.$month}++; }
+					if ($SectionsToLoad{"visitor"}==1) {
 						# Data required:
 						# update 				 need to load all
 						# noupdate+
@@ -1575,10 +1633,12 @@ sub Read_History_File {
 							if ($field[1]) { $_host_p{$field[0]}+=$field[1]; }
 							if ($field[2]) { $_host_h{$field[0]}+=$field[2]; }
 							if ($field[3]) { $_host_k{$field[0]}+=$field[3]; }
-							if (! $_host_l{$field[0]} && $field[4]) {	# We save last connexion params if not already catched
+							if ($field[4] && ! $_host_l{$field[0]}) {	# We save last connexion params if not already catched
 								$_host_l{$field[0]}=int($field[4]);
-								if ($field[5]) { $_host_s{$field[0]}=int($field[5]); }
-								if ($field[6]) { $_host_u{$field[0]}=$field[6]; }
+								if ($UpdateStats) {		# field[5] and field[6] are used only for update
+									if ($field[5]) { $_host_s{$field[0]}=int($field[5]); }
+									if ($field[6]) { $_host_u{$field[0]}=$field[6]; }
+								}
 							}
 							$countloaded++;
 						}
@@ -1590,8 +1650,11 @@ sub Read_History_File {
 				@field=split(/\s+/,$_); $countlines++;
 			}
 			if ($Debug) { debug(" End of VISITOR section ($count entries, $countloaded loaded)"); }
+			delete $SectionsToLoad{"visitor"};
+			if (scalar keys %SectionsToLoad == 0) { debug(" Stop reading config file. Got all we need."); last; }
 			next;
 		}
+		# BEGIN_LOGIN
 		if ($field[0] eq "BEGIN_LOGIN")   {
 			if ($Debug) { debug(" Begin of LOGIN section"); }
 			$_=<HISTORY>;
@@ -1602,7 +1665,7 @@ sub Read_History_File {
 			while ($field[0] ne "END_LOGIN") {
 				if ($field[0]) {
 					$count++;
-					if ($part && ($UpdateStats || $HTMLOutput eq "main" || $HTMLOutput eq "logins")) {
+					if ($SectionsToLoad{"login"}) {
 						$countloaded++;
 						if ($field[1]) { $_login_p{$field[0]}+=$field[1]; }
 						if ($field[2]) { $_login_h{$field[0]}+=$field[2]; }
@@ -1616,8 +1679,11 @@ sub Read_History_File {
 				@field=split(/\s+/,$_); $countlines++;
 			}
 			if ($Debug) { debug(" End of LOGIN section ($count entries, $countloaded loaded)"); }
+			delete $SectionsToLoad{"login"};
+			if (scalar keys %SectionsToLoad == 0) { debug(" Stop reading config file. Got all we need."); last; }
 			next;
 		}
+		# BEGIN_DOMAIN
 		if ($field[0] eq "BEGIN_DOMAIN")   {
 			if ($Debug) { debug(" Begin of DOMAIN section"); }
 			$_=<HISTORY>;
@@ -1628,7 +1694,7 @@ sub Read_History_File {
 			while ($field[0] ne "END_DOMAIN") {
 				if ($field[0]) {
 					$count++;
-					if ($part && ($UpdateStats || $HTMLOutput eq "main" || $HTMLOutput eq "domains")) {
+					if ($SectionsToLoad{"domain"}) {
 						$countloaded++;
 						if ($field[1]) { $_domener_p{$field[0]}+=$field[1]; }
 						if ($field[2]) { $_domener_h{$field[0]}+=$field[2]; }
@@ -1641,8 +1707,11 @@ sub Read_History_File {
 				@field=split(/\s+/,$_); $countlines++;
 			}
 			if ($Debug) { debug(" End of DOMAIN section ($count entries, $countloaded loaded)"); }
+			delete $SectionsToLoad{"domain"};
+			if (scalar keys %SectionsToLoad == 0) { debug(" Stop reading config file. Got all we need."); last; }
 			next;
 		}
+		# BEGIN_SESSION
 		if ($field[0] eq "BEGIN_SESSION")   {
 			if ($Debug) { debug(" Begin of SESSION section"); }
 			$_=<HISTORY>;
@@ -1653,7 +1722,7 @@ sub Read_History_File {
 			while ($field[0] ne "END_SESSION") {
 				if ($field[0]) {
 					$count++;
-					if ($part && ($UpdateStats || $HTMLOutput eq "main" || $HTMLOutput eq "sessions")) {
+					if ($SectionsToLoad{"session"}) {
 						$countloaded++;
 						if ($field[1]) { $_session{$field[0]}+=$field[1]; }
 					}
@@ -1664,8 +1733,11 @@ sub Read_History_File {
 				@field=split(/\s+/,$_); $countlines++;
 			}
 			if ($Debug) { debug(" End of SESSION section ($count entries, $countloaded loaded)"); }
+			delete $SectionsToLoad{"session"};
+			if (scalar keys %SectionsToLoad == 0) { debug(" Stop reading config file. Got all we need."); last; }
 			next;
 		}
+		# BEGIN_BROWSER
 		if ($field[0] eq "BEGIN_BROWSER")   {
 			if ($Debug) { debug(" Begin of BROWSER section"); }
 			$_=<HISTORY>;
@@ -1676,7 +1748,7 @@ sub Read_History_File {
 			while ($field[0] ne "END_BROWSER") {
 				if ($field[0]) {
 					$count++;
-					if ($part && ($UpdateStats || $HTMLOutput eq "main" || $HTMLOutput eq "browserdetail")) {
+					if ($SectionsToLoad{"browser"}) {
 						$countloaded++;
 						if ($field[1]) { $_browser_h{$field[0]}+=$field[1]; }
 					}
@@ -1687,8 +1759,11 @@ sub Read_History_File {
 				@field=split(/\s+/,$_); $countlines++;
 			}
 			if ($Debug) { debug(" End of BROWSER section ($count entries, $countloaded loaded)"); }
+			delete $SectionsToLoad{"browser"};
+			if (scalar keys %SectionsToLoad == 0) { debug(" Stop reading config file. Got all we need."); last; }
 			next;
 		}
+		# BEGIN_MSIEVER
 		if ($field[0] eq "BEGIN_MSIEVER")   {
 			if ($Debug) { debug(" Begin of MSIEVER section"); }
 			$_=<HISTORY>;
@@ -1699,7 +1774,7 @@ sub Read_History_File {
 			while ($field[0] ne "END_MSIEVER") {
 				if ($field[0]) {
 					$count++;
-					if ($part && ($UpdateStats || $HTMLOutput eq "main" || $HTMLOutput eq "browserdetail")) {
+					if ($SectionsToLoad{"msiever"}) {
 						$countloaded++;
 						if ($field[1]) { $_msiever_h[$field[0]]+=$field[1]; }
 					}
@@ -1710,8 +1785,11 @@ sub Read_History_File {
 				@field=split(/\s+/,$_); $countlines++;
 			}
 			if ($Debug) { debug(" End of MSIEVER section ($count entries, $countloaded loaded)"); }
+			delete $SectionsToLoad{"msiever"};
+			if (scalar keys %SectionsToLoad == 0) { debug(" Stop reading config file. Got all we need."); last; }
 			next;
 		}
+		# BEGIN_NSVER
 		if ($field[0] eq "BEGIN_NSVER")   {
 			if ($Debug) { debug(" Begin of NSVER section"); }
 			$_=<HISTORY>;
@@ -1722,7 +1800,7 @@ sub Read_History_File {
 			while ($field[0] ne "END_NSVER") {
 				if ($field[0]) {
 					$count++;
-					if ($part && ($UpdateStats || $HTMLOutput eq "main" || $HTMLOutput eq "browserdetail")) {
+					if ($SectionsToLoad{"nsver"}) {
 						$countloaded++;
 						if ($field[1]) { $_nsver_h[$field[0]]+=$field[1]; }
 					}
@@ -1733,8 +1811,11 @@ sub Read_History_File {
 				@field=split(/\s+/,$_); $countlines++;
 			}
 			if ($Debug) { debug(" End of NSVER section ($count entries, $countloaded loaded)"); }
+			delete $SectionsToLoad{"nsver"};
+			if (scalar keys %SectionsToLoad == 0) { debug(" Stop reading config file. Got all we need."); last; }
 			next;
 		}
+		# BEGIN_OS
 		if ($field[0] eq "BEGIN_OS")   {
 			if ($Debug) { debug(" Begin of OS section"); }
 			$_=<HISTORY>;
@@ -1745,7 +1826,7 @@ sub Read_History_File {
 			while ($field[0] ne "END_OS") {
 				if ($field[0]) {
 					$count++;
-					if ($part && ($UpdateStats || $HTMLOutput eq "main" || $HTMLOutput eq "os")) {
+					if ($SectionsToLoad{"os"}) {
 						$countloaded++;
 						if ($field[1]) { $_os_h{$field[0]}+=$field[1]; }
 					}
@@ -1756,8 +1837,11 @@ sub Read_History_File {
 				@field=split(/\s+/,$_); $countlines++;
 			}
 			if ($Debug) { debug(" End of OS section ($count entries, $countloaded loaded)"); }
+			delete $SectionsToLoad{"os"};
+			if (scalar keys %SectionsToLoad == 0) { debug(" Stop reading config file. Got all we need."); last; }
 			next;
 		}
+		# BEGIN_UNKNOWNREFERER
 		if ($field[0] eq "BEGIN_UNKNOWNREFERER")   {
 			if ($Debug) { debug(" Begin of UNKNOWNREFERER section"); }
 			$_=<HISTORY>;
@@ -1768,7 +1852,7 @@ sub Read_History_File {
 			while ($field[0] ne "END_UNKNOWNREFERER") {
 				if ($field[0]) {
 					$count++;
-					if ($part && ($UpdateStats || $HTMLOutput eq "main" || $HTMLOutput eq "unknownos")) {
+					if ($SectionsToLoad{"unknownreferer"}) {
 						$countloaded++;
 						if (! $_unknownreferer_l{$field[0]}) { $_unknownreferer_l{$field[0]}=int($field[1]); }
 					}
@@ -1779,8 +1863,11 @@ sub Read_History_File {
 				@field=split(/\s+/,$_); $countlines++;
 			}
 			if ($Debug) { debug(" End of UNKNOWNREFERER section ($count entries, $countloaded loaded)"); }
+			delete $SectionsToLoad{"unknowreferer"};
+			if (scalar keys %SectionsToLoad == 0) { debug(" Stop reading config file. Got all we need."); last; }
 			next;
 		}
+		# BEGIN_UNKNOWNREFERERBROWSER
 		if ($field[0] eq "BEGIN_UNKNOWNREFERERBROWSER")   {
 			if ($Debug) { debug(" Begin of UNKNOWNREFERERBROWSER section"); }
 			$_=<HISTORY>;
@@ -1791,7 +1878,7 @@ sub Read_History_File {
 			while ($field[0] ne "END_UNKNOWNREFERERBROWSER") {
 				if ($field[0]) {
 					$count++;
-					if ($part && ($UpdateStats || $HTMLOutput eq "main" || $HTMLOutput eq "unknownbrowser")) {
+					if ($SectionsToLoad{"unknownrefererbrowser"}) {
 						$countloaded++;
 						if (! $_unknownrefererbrowser_l{$field[0]}) { $_unknownrefererbrowser_l{$field[0]}=int($field[1]); }
 					}
@@ -1802,8 +1889,11 @@ sub Read_History_File {
 				@field=split(/\s+/,$_); $countlines++;
 			}
 			if ($Debug) { debug(" End of UNKNOWNREFERERBROWSER section ($count entries, $countloaded loaded)"); }
+			delete $SectionsToLoad{"unknownrefererbrowser"};
+			if (scalar keys %SectionsToLoad == 0) { debug(" Stop reading config file. Got all we need."); last; }
 			next;
 		}
+		# BEGIN_ROBOT
 		if ($field[0] eq "BEGIN_ROBOT")   {
 			if ($Debug) { debug(" Begin of ROBOT section"); }
 			$_=<HISTORY>;
@@ -1814,7 +1904,7 @@ sub Read_History_File {
 			while ($field[0] ne "END_ROBOT") {
 				if ($field[0]) {
 					$count++;
-					if ($part && ($UpdateStats || $HTMLOutput eq "main" || $HTMLOutput eq "robots")) {
+					if ($SectionsToLoad{"robot"}) {
 						$countloaded++;
 						if ($field[1]) { $_robot_h{$field[0]}+=$field[1]; }
 						if (! $_robot_l{$field[0]}) { $_robot_l{$field[0]}=int($field[2]); }
@@ -1826,8 +1916,11 @@ sub Read_History_File {
 				@field=split(/\s+/,$_); $countlines++;
 			}
 			if ($Debug) { debug(" End of ROBOT section ($count entries, $countloaded loaded)"); }
+			delete $SectionsToLoad{"robot"};
+			if (scalar keys %SectionsToLoad == 0) { debug(" Stop reading config file. Got all we need."); last; }
 			next;
 		}
+		# BEGIN_SIDER
 		if ($field[0] eq "BEGIN_SIDER")  {
 			if ($Debug) { debug(" Begin of SIDER section"); }
 			$_=<HISTORY>;
@@ -1838,7 +1931,7 @@ sub Read_History_File {
 			while ($field[0] ne "END_SIDER") {
 				if ($field[0]) {
 					$count++;
-					if ($part && ($UpdateStats || $HTMLOutput eq "main" || $HTMLOutput eq "urldetail")) {
+					if ($SectionsToLoad{"sider"}) {
 						# Data required:
 						# update 				need to load all pages - TotalDiffetentPages could be counted but is not
 						# noupdate+
@@ -1868,7 +1961,7 @@ sub Read_History_File {
 								}
 							}
 							# Posssibilite de mettre if ($URLFilter && $field[0] =~ /$URLFilter/) mais il faut gerer TotalPages de la meme maniere
-							if ($versionmaj < 4) {	# For old history files
+							if ($versionnum < 4000) {	# For old history files
 								$TotalEntries+=($field[2]||0);
 							}
 							else {
@@ -1879,7 +1972,7 @@ sub Read_History_File {
 						}
 						if ($loadrecord) {
 							if ($field[1]) { $_url_p{$field[0]}+=$field[1]; }
-							if ($versionmaj < 4) {	# For old history files
+							if ($versionnum < 4000) {	# For old history files
 								if ($field[2]) { $_url_e{$field[0]}+=$field[2]; }
 								$_url_k{$field[0]}=0;
 							}
@@ -1898,8 +1991,11 @@ sub Read_History_File {
 				@field=split(/\s+/,$_); $countlines++;
 			}
 			if ($Debug) { debug(" End of SIDER section ($count entries, $countloaded loaded)"); }
+			delete $SectionsToLoad{"sider"};
+			if (scalar keys %SectionsToLoad == 0) { debug(" Stop reading config file. Got all we need."); last; }
 			next;
 		}
+		# BEGIN_FILETYPES
 		if ($field[0] eq "BEGIN_FILETYPES")   {
 			if ($Debug) { debug(" Begin of FILETYPES section"); }
 			$_=<HISTORY>;
@@ -1910,7 +2006,7 @@ sub Read_History_File {
 			while ($field[0] ne "END_FILETYPES") {
 				if ($field[0]) {
 					$count++;
-					if ($part && ($UpdateStats || $HTMLOutput eq "main" || $HTMLOutput eq "filetypes")) {
+					if ($SectionsToLoad{"filetypes"}) {
 						$countloaded++;
 						if ($field[1]) { $_filetypes_h{$field[0]}+=$field[1]; }
 						if ($field[2]) { $_filetypes_k{$field[0]}+=$field[2]; }
@@ -1924,8 +2020,11 @@ sub Read_History_File {
 				@field=split(/\s+/,$_); $countlines++;
 			}
 			if ($Debug) { debug(" End of FILETYPES section ($count entries, $countloaded loaded)"); }
+			delete $SectionsToLoad{"filetypes"};
+			if (scalar keys %SectionsToLoad == 0) { debug(" Stop reading config file. Got all we need."); last; }
 			next;
-	}
+		}
+		# BEGIN_SEREFERRALS
 		if ($field[0] eq "BEGIN_SEREFERRALS")   {
 			if ($Debug) { debug(" Begin of SEREFERRALS section"); }
 			$_=<HISTORY>;
@@ -1936,7 +2035,7 @@ sub Read_History_File {
 			while ($field[0] ne "END_SEREFERRALS") {
 				if ($field[0]) {
 					$count++;
-					if ($part && ($UpdateStats || $HTMLOutput eq "main" || $HTMLOutput eq "refererse")) {
+					if ($SectionsToLoad{"sereferrals"}) {
 						$countloaded++;
 						if ($field[1]) { $_se_referrals_h{$field[0]}+=$field[1]; }
 					}
@@ -1947,8 +2046,11 @@ sub Read_History_File {
 				@field=split(/\s+/,$_); $countlines++;
 			}
 			if ($Debug) { debug(" End of SEREFERRALS section ($count entries, $countloaded loaded)"); }
+			delete $SectionsToLoad{"sereferrals"};
+			if (scalar keys %SectionsToLoad == 0) { debug(" Stop reading config file. Got all we need."); last; }
 			next;
 		}
+		# BEGIN_PAGEREFS
 		if ($field[0] eq "BEGIN_PAGEREFS")   {
 			if ($Debug) { debug(" Begin of PAGEREFS section"); }
 			$_=<HISTORY>;
@@ -1959,7 +2061,7 @@ sub Read_History_File {
 			while ($field[0] ne "END_PAGEREFS") {
 				if ($field[0]) {
 					$count++;
-					if ($part && ($UpdateStats || $HTMLOutput eq "main" || $HTMLOutput eq "refererpages")) {
+					if ($SectionsToLoad{"pagerefs"}) {
 						$countloaded++;
 						if ($field[1]) { $_pagesrefs_h{$field[0]}+=int($field[1]); }
 					}
@@ -1970,8 +2072,11 @@ sub Read_History_File {
 				@field=split(/\s+/,$_); $countlines++;
 			}
 			if ($Debug) { debug(" End of PAGEREFS section ($count entries, $countloaded loaded)"); }
+			delete $SectionsToLoad{"pagerefs"};
+			if (scalar keys %SectionsToLoad == 0) { debug(" Stop reading config file. Got all we need."); last; }
 			next;
 		}
+		# BEGIN_SEARCHWORDS
 		if ($field[0] eq "BEGIN_SEARCHWORDS")   {
 			if ($Debug) { debug(" Begin of SEARCHWORDS section ($MaxNbOfKeyphrasesShown,$MinHitKeyphrase)"); }
 			$_=<HISTORY>;
@@ -1982,7 +2087,7 @@ sub Read_History_File {
 			while ($field[0] ne "END_SEARCHWORDS") {
 				if ($field[0]) {
 					$count++;
-					if ($part && ($UpdateStats || $HTMLOutput eq "main" || $HTMLOutput eq "keyphrases" || $HTMLOutput eq "keywords")) {
+					if ($SectionsToLoad{"searchwords"}) {
 						my $loadrecord=0;
 						if ($UpdateStats) {
 							$loadrecord=1;
@@ -2029,8 +2134,11 @@ sub Read_History_File {
 				@field=split(/\s+/,$_); $countlines++;
 			}
 			if ($Debug) { debug(" End of SEARCHWORDS section ($count entries, $countloaded loaded)"); }
+			delete $SectionsToLoad{"searchwords"};
+			if (scalar keys %SectionsToLoad == 0) { debug(" Stop reading config file. Got all we need."); last; }
 			next;
 		}
+		# BEGIN_KEYWORDS
 		if ($field[0] eq "BEGIN_KEYWORDS")   {
 			if ($Debug) { debug(" Begin of KEYWORDS section ($MaxNbOfKeywordsShown,$MinHitKeyword)"); }
 			$_=<HISTORY>;
@@ -2041,20 +2149,13 @@ sub Read_History_File {
 			while ($field[0] ne "END_KEYWORDS") {
 				if ($field[0]) {
 					$count++;
-					if ($part && ($HTMLOutput eq "main")) {	# Required only for main page
+					if ($SectionsToLoad{"keywords"}) {
 						my $loadrecord=0;
-						if ($UpdateStats) {
-							$loadrecord=1;
-						}
+						if ($MonthRequired eq "year") { $loadrecord=1; }
 						else {
-							if ($HTMLOutput eq "main") {
-								if ($MonthRequired eq "year") { $loadrecord=1; }
-								else {
-									if ($countloaded < $MaxNbOfKeywordsShown && $field[1] >= $MinHitKeyword) { $loadrecord=1; }
-									$TotalDifferentKeywords++;
-									$TotalKeywords+=($field[1]||0);
-								}
-							}
+							if ($countloaded < $MaxNbOfKeywordsShown && $field[1] >= $MinHitKeyword) { $loadrecord=1; }
+							$TotalDifferentKeywords++;
+							$TotalKeywords+=($field[1]||0);
 						}
 						if ($loadrecord) {
 							if ($field[1]) { $_keywords{$field[0]}+=$field[1]; }
@@ -2068,8 +2169,11 @@ sub Read_History_File {
 				@field=split(/\s+/,$_); $countlines++;
 			}
 			if ($Debug) { debug(" End of KEYWORDS section ($count entries, $countloaded loaded)"); }
+			delete $SectionsToLoad{"keywords"};
+			if (scalar keys %SectionsToLoad == 0) { debug(" Stop reading config file. Got all we need."); last; }
 			next;
 		}
+		# BEGIN_ERRORS
 		if ($field[0] eq "BEGIN_ERRORS")   {
 			if ($Debug) { debug(" Begin of ERRORS section"); }
 			$_=<HISTORY>;
@@ -2080,7 +2184,7 @@ sub Read_History_File {
 			while ($field[0] ne "END_ERRORS") {
 				if ($field[0]) {
 					$count++;
-					if ($part && ($UpdateStats || $HTMLOutput eq "main" || $HTMLOutput eq "errors")) {
+					if ($SectionsToLoad{"errors"}) {
 						$countloaded++;
 						if ($field[1]) { $_errors_h{$field[0]}+=$field[1]; }
 					}
@@ -2091,8 +2195,11 @@ sub Read_History_File {
 				@field=split(/\s+/,$_); $countlines++;
 			}
 			if ($Debug) { debug(" End of ERRORS section ($count entries, $countloaded loaded)"); }
+			delete $SectionsToLoad{"errors"};
+			if (scalar keys %SectionsToLoad == 0) { debug(" Stop reading config file. Got all we need."); last; }
 			next;
 		}
+		# BEGIN_SIDER_404
 		if ($field[0] eq "BEGIN_SIDER_404")   {
 			if ($Debug) { debug(" Begin of SIDER_404 section"); }
 			$_=<HISTORY>;
@@ -2103,7 +2210,7 @@ sub Read_History_File {
 			while ($field[0] ne "END_SIDER_404") {
 				if ($field[0]) {
 					$count++;
-					if ($part && ($UpdateStats || $HTMLOutput eq "main" || $HTMLOutput eq "errors404")) {
+					if ($SectionsToLoad{"sider_404"}) {
 						$countloaded++;
 						if ($field[1]) { $_sider404_h{$field[0]}+=$field[1]; }
 						if ($UpdateStats || $HTMLOutput eq "errors404") {
@@ -2117,6 +2224,8 @@ sub Read_History_File {
 				@field=split(/\s+/,$_); $countlines++;
 			}
 			if ($Debug) { debug(" End of SIDER_404 section ($count entries, $countloaded loaded)"); }
+			delete $SectionsToLoad{"sider_404"};
+			if (scalar keys %SectionsToLoad == 0) { debug(" Stop reading config file. Got all we need."); last; }
 			next;
 		}
 	}
@@ -2145,12 +2254,14 @@ sub Save_History_File {
 	print HISTORYTMP "# LastTime    = Date of last visit for history file\n";
 	print HISTORYTMP "# LastUpdate  = Date of last update - Nb of lines read - Nb of old records - Nb of new records - Nb of corrupted - Nb of dropped\n";
 	print HISTORYTMP "# TotalVisits = Number of visits\n";
+	print HISTORYTMP "BEGIN_GENERAL\n";
 	print HISTORYTMP "LastLine $LastLine{$year.$month}\n";
 	print HISTORYTMP "FirstTime $FirstTime{$year.$month}\n";
 	print HISTORYTMP "LastTime $LastTime{$year.$month}\n";
 	if (! $LastUpdate{$year.$month} || $LastUpdate{$year.$month} < int("$nowyear$nowmonth$nowday$nowhour$nowmin$nowsec")) { $LastUpdate{$year.$month}=int("$nowyear$nowmonth$nowday$nowhour$nowmin$nowsec"); }
 	print HISTORYTMP "LastUpdate $LastUpdate{$year.$month} $NbOfLinesRead $NbOfOldLines $NbOfNewLines $NbOfLinesCorrupted $NbOfLinesDropped\n";
 	print HISTORYTMP "TotalVisits $MonthVisits{$year.$month}\n";
+	print HISTORYTMP "END_GENERAL\n";
 
 	# When
 	print HISTORYTMP "\n";
@@ -2325,12 +2436,14 @@ sub Save_History_File {
 	print HISTORYTMP "END_UNKNOWNREFERERBROWSER\n";
 	print HISTORYTMP "\n";
 	print HISTORYTMP "# Origin - Pages - Hits \n";
+	print HISTORYTMP "BEGIN_ORIGIN\n";
 	print HISTORYTMP "From0 ".int($_from_p[0])." ".int($_from_h[0])."\n";
 	print HISTORYTMP "From1 ".int($_from_p[1])." ".int($_from_h[1])."\n";
 	print HISTORYTMP "From2 ".int($_from_p[2])." ".int($_from_h[2])."\n";
 	print HISTORYTMP "From3 ".int($_from_p[3])." ".int($_from_h[3])."\n";
 	print HISTORYTMP "From4 ".int($_from_p[4])." ".int($_from_h[4])."\n";		# Same site
 	print HISTORYTMP "From5 ".int($_from_p[5])." ".int($_from_h[5])."\n";		# News
+	print HISTORYTMP "END_ORIGIN\n";
 	print HISTORYTMP "\n";
 	print HISTORYTMP "# Search engine referers ID - Hits\n";
 	print HISTORYTMP "BEGIN_SEREFERRALS\n";
