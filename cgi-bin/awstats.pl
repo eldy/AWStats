@@ -2743,7 +2743,7 @@ if ($QueryString =~ /action=browserdetail/i) {
 	print "$CENTER<a name=\"NETSCAPE\"></a><BR>";
 	$tab_titre=$message[33][$Lang]."<br><img src=\"$DirIcons/browser/netscape.png\">";
 	&tab_head;
-	print "<TR bgcolor=#$color_TableBGRowTitle><TH>Version</TH><TH bgcolor=#$color_h width=40>Hits</TH><TH bgcolor=#$color_h width=40>$message[15][$Lang]</TH></TR>\n";
+	print "<TR bgcolor=#$color_TableBGRowTitle><TH>$message[58][$Lang]</TH><TH bgcolor=#$color_h width=40>$message[57][$Lang]</TH><TH bgcolor=#$color_h width=40>$message[15][$Lang]</TH></TR>\n";
 	for ($i=1; $i<=$#_nsver_h; $i++) {
 		if ($_nsver_h[$i] gt 0) {
 			$h=$_nsver_h[$i]; $p=int($_nsver_h[$i]/$_browser_h{"netscape"}*1000)/10; $p="$p&nbsp;%";
@@ -2757,7 +2757,7 @@ if ($QueryString =~ /action=browserdetail/i) {
 	print "<a name=\"MSIE\"></a><BR>";
 	$tab_titre=$message[34][$Lang]."<br><img src=\"$DirIcons/browser/msie.png\">";
 	&tab_head;
-	print "<TR bgcolor=#$color_TableBGRowTitle><TH>Version</TH><TH bgcolor=#$color_h width=40>Hits</TH><TH bgcolor=#$color_h width=40>$message[15][$Lang]</TH></TR>\n";
+	print "<TR bgcolor=#$color_TableBGRowTitle><TH>$message[58][$Lang]</TH><TH bgcolor=#$color_h width=40>$message[57][$Lang]</TH><TH bgcolor=#$color_h width=40>$message[15][$Lang]</TH></TR>\n";
 	for ($i=1; $i<=$#_msiever_h; $i++) {
 		if ($_msiever_h[$i] gt 0) {
 			$h=$_msiever_h[$i]; $p=int($_msiever_h[$i]/$_browser_h{"msie"}*1000)/10; $p="$p&nbsp;%";
@@ -2820,7 +2820,7 @@ if (($Lang != 1) && ($Lang != 2) && ($Lang != 3) && ($Lang != 4) && ($Lang != 6)
 	$PROG recognizes each access to your site after a <b>search</b> from the <b>".(@SearchEnginesArray)." most popular Internet Search Engines and Directories</b> (such as Yahoo, Altavista, Lycos, Google, Voila, etc...).
 	</DIV>
 	<DIV CLASS=\"CTooltip\" ID=\"tt14\">
-	List of all <b>external pages</b> which were used to link (or eneter) to your site (Only the <b>$MaxNbOfRefererShown</b> most often used external pages are shown.\n
+	List of all <b>external pages</b> which were used to link (or enter) to your site (Only the <b>$MaxNbOfRefererShown</b> most often used external pages are shown.\n
 	Links used by the results of the search engines are excluded here because they have already been included on the previous line within this table.
 	</DIV>
 	<DIV CLASS=\"CTooltip\" ID=\"tt15\">
@@ -3467,7 +3467,7 @@ if ($rest_p > 0) { print "<TR><TD CLASS=LEFT><font color=blue>$message[2][$Lang]
 print "$CENTER<a name=\"ROBOTS\"></a><BR>";
 $tab_titre=$message[53][$Lang];
 &tab_head;
-print "<TR bgcolor=#$color_TableBGRowTitle onmouseover=\"ShowTooltip(16);\" onmouseout=\"HideTooltip(16);\"><TH>Robot</TH><TH bgcolor=#$color_h width=80>Hits</TH><TH>$message[9][$Lang]</TH></TR>\n";
+print "<TR bgcolor=#$color_TableBGRowTitle onmouseover=\"ShowTooltip(16);\" onmouseout=\"HideTooltip(16);\"><TH>Robot</TH><TH bgcolor=#$color_h width=80>$message[57][$Lang]</TH><TH>$message[9][$Lang]</TH></TR>\n";
 @sortrobot=sort { $SortDir*$_robot_h{$a} <=> $SortDir*$_robot_h{$b} } keys (%_robot_h);
 foreach $key (@sortrobot) {
 	$yearcon=substr($_robot_l{$key},0,4);
@@ -3548,7 +3548,7 @@ foreach $key (@sortsiders) {
 print "$CENTER<a name=\"BROWSER\"></a><BR>";
 $tab_titre="$message[21][$Lang]";
 &tab_head;
-print "<TR bgcolor=#$color_TableBGRowTitle><TH>Browser</TH><TH bgcolor=#$color_h width=40>Hits</TH><TH bgcolor=#$color_h width=40>$message[15][$Lang]</TH></TR>\n";
+print "<TR bgcolor=#$color_TableBGRowTitle><TH>Browser</TH><TH bgcolor=#$color_h width=40>$message[57][$Lang]</TH><TH bgcolor=#$color_h width=40>$message[15][$Lang]</TH></TR>\n";
 foreach $key (@sortbrowsers) {
 	$p=int($_browser_h{$key}/$TotalHits*1000)/10;
 	if ($key eq "Unknown") {
@@ -3566,7 +3566,7 @@ foreach $key (@sortbrowsers) {
 print "$CENTER<a name=\"OS\"></a><BR>";
 $tab_titre=$message[59][$Lang];
 &tab_head;
-print "<TR bgcolor=#$color_TableBGRowTitle><TH colspan=2>OS</TH><TH bgcolor=#$color_h width=40>Hits</TH><TH bgcolor=#$color_h width=40>$message[15][$Lang]</TH></TR>\n";
+print "<TR bgcolor=#$color_TableBGRowTitle><TH colspan=2>OS</TH><TH bgcolor=#$color_h width=40>$message[57][$Lang]</TH><TH bgcolor=#$color_h width=40>$message[15][$Lang]</TH></TR>\n";
 foreach $key (@sortos) {
 	$p=int($_os_h{$key}/$TotalHits*1000)/10;
 	if ($key eq "Unknown") {
@@ -3587,7 +3587,7 @@ foreach $key (@sortos) {
 print "$CENTER<a name=\"REFERER\"></a><BR>";
 $tab_titre="$message[36][$Lang]";
 &tab_head;
-print "<TR bgcolor=#$color_TableBGRowTitle><TH>$message[37][$Lang]</TH><TH bgcolor=#$color_h width=40>Hits</TH><TH bgcolor=#$color_h width=40>$message[15][$Lang]</TH></TR>\n";
+print "<TR bgcolor=#$color_TableBGRowTitle><TH>$message[37][$Lang]</TH><TH bgcolor=#$color_h width=40>$message[57][$Lang]</TH><TH bgcolor=#$color_h width=40>$message[15][$Lang]</TH></TR>\n";
 if ($TotalHits > 0) { $_=int($_from_h[0]/$TotalHits*1000)/10; }
 print "<TR><TD CLASS=LEFT><b>$message[38][$Lang]:</b></TD><TD>$_from_h[0]&nbsp;</TD><TD>$_&nbsp;%</TD></TR>\n";
 if ($TotalHits > 0) { $_=int($_from_h[1]/$TotalHits*1000)/10; }
@@ -3661,7 +3661,7 @@ if ($rest >0) {
 print "$CENTER<a name=\"ERRORS\"></a><BR>";
 $tab_titre=$message[32][$Lang];
 &tab_head;
-print "<TR bgcolor=#$color_TableBGRowTitle><TH colspan=2>$message[32][$Lang]</TH><TH bgcolor=#$color_h width=40>Hits</TH><TH bgcolor=#$color_h width=40>$message[15][$Lang]</TH></TR>\n";
+print "<TR bgcolor=#$color_TableBGRowTitle><TH colspan=2>$message[32][$Lang]</TH><TH bgcolor=#$color_h width=40>$message[57][$Lang]</TH><TH bgcolor=#$color_h width=40>$message[15][$Lang]</TH></TR>\n";
 foreach $key (@sorterrors) {
 	$p=int($_errors_h{$key}/$TotalErrors*1000)/10;
 	if ($httpcode{$key}) { print "<TR onmouseover=\"ShowTooltip($key);\" onmouseout=\"HideTooltip($key);\">"; }
