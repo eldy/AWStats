@@ -1,10 +1,12 @@
 # Italian message file
 # $Revision$ - $Date$
-# Based on Francesco Potorti's work.
-# Translated 01/10/2002 by iDave <idave@idave.it> and Salvo <salvo@scicli.com>
+# Based on Francesco Potort“'s work.
+# Revision 2002-01-10 by iDave <idave@idave.it> and Salvo <salvo@scicli.com>
+# Revision 2002-09-10 by CereS <ceres@divxmania.it>
 # Francesco Potorti' - pot@gnu.org
 # iDave - idave@idave.it
 # Salvo - salvo@scicli.com
+# CereS - ceres@divxmania.it
 message0=Sconosciuto
 message1=Sconosciuto (ip non risolto)
 message2=Altri
@@ -22,19 +24,19 @@ message13=Parole chiave
 message14=Ricerche
 message15=Peso relativo
 message16=Traffico
-message17=Domini/Paesi
+message17=Domini o paesi
 message18=Visitatori
 message19=Pagine e indirizzi
 message20=Ore (fuso orario del server)
 message21=Navigatori (browser)
 message22=Errori HTTP
-message23=Provenienza (Referers)
+message23=Provenienza
 message24=Ricerche per parole chiave
 message25=Domini o paesi dei visitatori
 message26=origini
 message27=pagine accedute
 message28=pagine diverse
-message29=Pagine visitate
+message29=Accessi
 message30=Altre parole
 message31=Pagine non trovate
 message32=Codici di errore HTTP
@@ -48,8 +50,8 @@ message39=Accessi di origine sconosciuta
 message40=Accessi da motore di ricerca
 message41=Accessi da pagina esterna (altri siti eccetto i motori di ricerca)
 message42=Accessi da pagina interna (altra pagina dello stesso sito)
-message43=parole chiave usati dai motori di ricerca
-message44=
+message43=Frasi usate nei motori di ricerca
+message44=Parole usate nei motori di ricerca
 message45=Indirizzi IP non risolti
 message46=Sistemi operativi sconosciuti (campo Provenienza)
 message47=URL richiesta ma non trovata (codice HTTP 404)
@@ -80,7 +82,7 @@ message71=Dic
 message72=Navigazione
 message73=Tipi di file
 message74=Aggiorna
-message75=Banda
+message75=Byte
 message76=Pagina principale
 message77=Prime
 message78=dd mmm yyyy / HH:MM
@@ -108,28 +110,28 @@ message99=Banda risparmiata
 message100=Prima della compressione
 message101=Dopo la compressione
 message102=Totale
-message103=parole chiave diverse
-message104=Pagine di entrata
+message103=Frasi chiave
+message104=Pagine iniziali
 message105=Codice
 message106=Dimensione media
-message107=Link da NewsGroup
+message107=Accessi da un NewsGroup
 message108=KB
 message109=MB
 message110=GB
 message111=Grabber
 message112=Si
 message113=No
-message114=WhoIs info
+message114=Informazioni WhoIs
 message115=OK
-message116=Pagine di uscita
-message117=Durata visite
-message118=Chiudi
+message116=Pagine d'uscita
+message117=Durata delle visite
+message118=Chiudi questa finestra
 message119=Bytes
-message120=Ricerche Frasi chiave
-message121=Ricerche Parole chiavi
-message122=Motori di ricerca diversi
-message123=Siti diversi
+message120=Frasi cercate
+message121=Parole cercate
+message122=differenti motori di ricerca
+message123=differenti siti 
 message124=Altre frasi
 message125=Utenti anonimi
-message126=Motori di ricerca 
+message126=Motori di ricerca
 message127=Siti

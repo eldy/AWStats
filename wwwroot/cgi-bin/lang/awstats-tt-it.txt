@@ -1,3 +1,4 @@
+<!-- Italian tooltips message file -->
 <!-- $Revision$ - $Date$ -->
 <DIV CLASS="CTooltip" ID="tt1">
 Si considera una nuova visita per <b>ogni arrivo</b> di un visitatore che visualizza o consulta una pagina e non si &egrave; connesso negli ultimi <b>#VisitTimeOut# minuti</b>.
@@ -26,13 +27,29 @@ Elenco delle <b>pagine di siti esterni</b> contenenti un link che &egrave; stato
 I link risultanti da una ricerca di un motore conosciuto non appaiono qui, dato che sono conteggiati a parte sulla linea subito sopra.
 </DIV>
 <DIV CLASS="CTooltip" ID="tt15">
-Questa tabella offre la lista delle <b>parole</b> pi&ugrave; frequentemente utilizzate per rintracciare e accedere al sito a partire da
-un motore di ricerca Internet (sono riconosciute le ricerche dei <b>#SearchEnginesArray#</b> motori di ricerca pi&ugrave; popolari, come Yahoo, Altavista, Lycos, Google, Voila, ecc...).
+Questa tabella offre la lista delle <b>parole o frasi</b> pi&ugrave; frequentemente utilizzate per rintracciare e accedere al sito a partire da
+un motore di ricerca Internet (sono riconosciute le ricerche dei <b>#SearchEnginesArray#</b> motori di ricerca pi&ugrave; popolari, come Yahoo, Altavista, Lycos, Google, Voila, ecc...).<br>
+Notare che il numero di ricerche sulle parole potrebbe essere maggiore del numero riportato nelle frasi (il numero reale di ricerche) perchè quando la stessa parola compare più volte su diverse frasi, nell'elenco delle parole viene conteggiata più volte (una volta per frase).
 </DIV>
 <DIV CLASS="CTooltip" ID="tt16">
 I robots sono dei <b>visitatori automatici</b> che perlustrano il sito al fine di indicizzarlo, di ottenere delle statistiche sui siti Web Internet o di verificarne l'accessibilit&agrave;.<br>
 #PROG# riconosce <b>#RobotArray#</b> robots.
 </DIV>
+<DIV CLASS="CTooltip" ID="tt17">
+Gli orari visualizzati sono basati sul fuso orario del server.<br>
+</DIV>
+<DIV CLASS="CTooltip" ID="tt18">
+I valori riportati sono: <b>valori medi</b> (calcolati prendendo in considerazione tutti i dati tra la prima e l'ultima visita)
+</DIV>
+<DIV CLASS="CTooltip" ID="tt19">
+I valori riportati sono: <b>cumulativi</b> (calcolati prendendo in considerazione tutti i dati tra la prima e l'ultima visita)
+</DIV>
+<DIV CLASS="CTooltip" ID="tt20">
+Alcune <b>durate delle visite</b> sono 'sconosciute' perchè non possono essere sempre calcolate. Questi sono i casi più ricorrenti:<br>
+- La visita non era ancora conclusa quando sono state aggiornate ('update' di awstats) le statistiche.<br>
+- La visita è iniziata durante l'ultima ora (dopo le 23:00) dell'ultimo giorno del mese (Una ragione tecnica impedisce ad #PROG# di calcolare la durata di queste sessioni)
+</DIV>
+
 <DIV CLASS="CTooltip" ID="tt201"> Contenuto parziale restituito. </DIV>
 <DIV CLASS="CTooltip" ID="tt202"> La richiesta &egrave; stata registrata del server ma sar&agrave; eseguita pi&ugrave; tardi. </DIV>
 <DIV CLASS="CTooltip" ID="tt204"> Il server ha processato la richiesta ma non esiste alcun documento da ritornare. </DIV>
