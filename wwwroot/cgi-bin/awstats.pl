@@ -1622,7 +1622,7 @@ if ($QueryString =~ /day=/i)	{ $DayRequired=$QueryString; $DayRequired =~ s/.*da
 &html_head;
 
 # Security check
-if ($AllowToUpdateStatsFromBrowser==0 && $UpdateStats) {
+if ($UpdateStats && ($AllowToUpdateStatsFromBrowser==0) && ($ENV{"GATEWAY_INTERFACE"} ne "")) {
 	error("Error: Update of statistics is not allowed from a browser.");
 }
 
