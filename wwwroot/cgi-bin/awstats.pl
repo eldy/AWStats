@@ -6416,31 +6416,29 @@ else {
 0;	# Do not remove this line
 
 
-# TODO If PurgeLogFile is on, only one update process must be allowed
-
-
 #-------------------------------------------------------
 # ALGORITHM SUMMARY
 # Read config file
 # Init variables
+# Get last history file name
+# Read general section of this last history file
 # If 'update'
-#   Get last history file name
-#   Read this last history file (LastLine, data arrays, ...)
 #   Loop on each new line in log file
 #     If line older than LastLine, skip
 #     If new line
-#        If other month/year, save data arrays, reset them
+#        If other month/year
+#          Read/update history file
+#          Reset data arrays
 #        Analyse record and complete data arrays
 #     End of new line
 #   End of loop
+#   Read/update history file
 # End of 'update'
-# Save data arrays
-# Reset data arrays if not required month/year
-# Loop for each month of current year
-#   If required month, read 1st and 2nd part of history file for this month
-#   If not required month, read 1st part of history file for this month
-# End of loop
 # If 'output'
+#   Loop for each month of current year
+#     If required month, read all need sections
+#     If not required month, read general and time section only
+#   End of loop
 #   Show data arrays in HTML page
 # End of 'output'
 #-------------------------------------------------------
