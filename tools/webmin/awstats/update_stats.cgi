@@ -23,7 +23,7 @@ print "\Please wait...<br>\n";
 print "<br>\n";
 
 &foreign_require("proc", "proc-lib.pl");
-proc::safe_process_exec_log($command,$config{'user'},undef, STDOUT,undef, 1, 1, 0);
+proc::safe_process_exec_logged($command,$config{'user'},undef, STDOUT,undef, 1, 1, 0);
 
 
 #$retour=`$command 2>&1`;
