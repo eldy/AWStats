@@ -82,7 +82,7 @@ $WarningMessages= 1;
 %MonthBytes = %MonthHits = %MonthHostsKnown = %MonthHostsUnknown = %MonthPages = %MonthUnique = %MonthVisits =
 %monthlib = %monthnum = ();
 
-$VERSION="3.2 (build 59)";
+$VERSION="3.2 (build 60)";
 $Lang="en";
 
 # Default value
@@ -2040,7 +2040,7 @@ if ($UpdateStats) {
 		my $extension;
 
 		# Extension
-		if ($urlwithnoquery =~ /\.(\w{1,4})$/) {
+		if ($urlwithnoquery =~ /\.(\w{1,5})$/) {
 			$extension=$1; $extension =~ tr/A-Z/a-z/;
 			# Check if not a page
 			foreach $cursor (@NotPageList) { if ($extension eq $cursor) { $PageBool=0; last; } }
