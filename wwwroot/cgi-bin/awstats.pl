@@ -160,7 +160,7 @@ use vars qw/
 $AllowToUpdateStatsFromBrowser $DetailedReportsOnNewWindows
 $FirstDayOfWeek $KeyWordsNotSensitive $SaveDatabaseFilesWithPermissionsForEveryone
 $WarningMessages $DebugMessages $ShowLinksOnUrl $UseFramesWhenCGI
-$ShowMenu $ShowMonthStats $ShowDaysOfMonthStats $ShowDaysOfWeekStats
+$ShowMenu $ShowSummary $ShowMonthStats $ShowDaysOfMonthStats $ShowDaysOfWeekStats
 $ShowHoursStats $ShowDomainsStats $ShowHostsStats
 $ShowRobotsStats $ShowSessionsStats $ShowPagesStats $ShowFileTypesStats
 $ShowOSStats $ShowBrowsersStats $ShowOriginStats
@@ -170,14 +170,14 @@ $AddDataArrayMonthStats $AddDataArrayShowDaysOfMonthStats $AddDataArrayShowDaysO
 ($AllowToUpdateStatsFromBrowser, $DetailedReportsOnNewWindows,
 $FirstDayOfWeek, $KeyWordsNotSensitive, $SaveDatabaseFilesWithPermissionsForEveryone,
 $WarningMessages, $DebugMessages, $ShowLinksOnUrl, $UseFramesWhenCGI,
-$ShowMenu, $ShowMonthStats, $ShowDaysOfMonthStats, $ShowDaysOfWeekStats,
+$ShowMenu, $ShowSummary, $ShowMonthStats, $ShowDaysOfMonthStats, $ShowDaysOfWeekStats,
 $ShowHoursStats, $ShowDomainsStats, $ShowHostsStats,
 $ShowRobotsStats, $ShowSessionsStats, $ShowPagesStats, $ShowFileTypesStats,
 $ShowOSStats, $ShowBrowsersStats, $ShowOriginStats,
 $ShowKeyphrasesStats, $ShowKeywordsStats, $ShowMiscStats, $ShowHTTPErrorsStats,
 $AddDataArrayMonthStats, $AddDataArrayShowDaysOfMonthStats, $AddDataArrayShowDaysOfWeekStats, $AddDataArrayShowHoursStats
 )=
-(1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1);
+(1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1);
 use vars qw/
 $AllowFullYearView 
 $LevelForRobotsDetection $LevelForWormsDetection $LevelForBrowsersDetection $LevelForOSDetection $LevelForRefererAnalyze
@@ -1602,6 +1602,7 @@ sub Check_Config {
 	# Optional appearance setup section
 	if ($MaxRowsInHTMLOutput !~ /^\d+/ || $MaxRowsInHTMLOutput<1)     { $MaxRowsInHTMLOutput=1000; }
 	if ($ShowMenu !~ /[01]/)                     	{ $ShowMenu=1; }
+	if ($ShowSummary !~ /[01UVPHB]/)           	{ $ShowSummary='UVPHB'; }
 	if ($ShowMonthStats !~ /[01UVPHB]/)         	{ $ShowMonthStats='UVPHB'; }
 	if ($ShowDaysOfMonthStats !~ /[01VPHB]/)    	{ $ShowDaysOfMonthStats='VPHB'; }
 	if ($ShowDaysOfWeekStats !~ /[01PHBL]/)        	{ $ShowDaysOfWeekStats='PHBL'; }
@@ -1675,6 +1676,7 @@ sub Check_Config {
 	$color_x =~ s/#//g; if ($color_x !~ /^[0-9|A-H]+$/i)                 			 { $color_x='C1B2E2'; }
 
 	# Correct param if default value is asked
+	if ($ShowSummary eq '1')       	{ $ShowSummary = 'UVPHB'; }
 	if ($ShowMonthStats eq '1')      	{ $ShowMonthStats = 'UVPHB'; }
 	if ($ShowDaysOfMonthStats eq '1') 	{ $ShowDaysOfMonthStats = 'VPHB'; }
 	if ($ShowDaysOfWeekStats eq '1')    { $ShowDaysOfWeekStats = 'PHBL'; }
@@ -8453,7 +8455,7 @@ if (scalar keys %HTMLOutput) {
 
 		# SUMMARY
 		#---------------------------------------------------------------------
-		if ($ShowMonthStats) {
+		if ($ShowSummary) {
 			if ($Debug) { debug("ShowSummary",2); }
 			#print "$Center<a name=\"summary\">&nbsp;</a><br />\n";
 			my $title="$Message[128]";
@@ -8498,11 +8500,11 @@ if (scalar keys %HTMLOutput) {
 			# Show main indicators title row
 			print "<tr>";
 			if ($LogType eq 'W' || $LogType eq 'S') { print "<td bgcolor=\"#$color_TableBGTitle\">&nbsp;</td>"; }
-			if ($ShowMonthStats =~ /U/i) { print "<td width=\"$w%\" bgcolor=\"#$color_u\"".Tooltip(2).">$Message[11]</td>"; } else { print "<td bgcolor=\"#$color_TableBGTitle\" width=\"20%\">&nbsp;</td>"; }
-			if ($ShowMonthStats =~ /V/i) { print "<td width=\"$w%\" bgcolor=\"#$color_v\"".Tooltip(1).">$Message[10]</td>"; } else { print "<td bgcolor=\"#$color_TableBGTitle\" width=\"20%\">&nbsp;</td>"; }
-			if ($ShowMonthStats =~ /P/i) { print "<td width=\"$w%\" bgcolor=\"#$color_p\"".Tooltip(3).">$Message[56]</td>"; } else { print "<td bgcolor=\"#$color_TableBGTitle\" width=\"20%\">&nbsp;</td>"; }
-			if ($ShowMonthStats =~ /H/i) { print "<td width=\"$w%\" bgcolor=\"#$color_h\"".Tooltip(4).">$Message[57]</td>"; } else { print "<td bgcolor=\"#$color_TableBGTitle\" width=\"20%\">&nbsp;</td>"; }
-			if ($ShowMonthStats =~ /B/i) { print "<td width=\"$w%\" bgcolor=\"#$color_k\"".Tooltip(5).">$Message[75]</td>"; } else { print "<td bgcolor=\"#$color_TableBGTitle\" width=\"20%\">&nbsp;</td>"; }
+			if ($ShowSummary =~ /U/i) { print "<td width=\"$w%\" bgcolor=\"#$color_u\"".Tooltip(2).">$Message[11]</td>"; } else { print "<td bgcolor=\"#$color_TableBGTitle\" width=\"20%\">&nbsp;</td>"; }
+			if ($ShowSummary =~ /V/i) { print "<td width=\"$w%\" bgcolor=\"#$color_v\"".Tooltip(1).">$Message[10]</td>"; } else { print "<td bgcolor=\"#$color_TableBGTitle\" width=\"20%\">&nbsp;</td>"; }
+			if ($ShowSummary =~ /P/i) { print "<td width=\"$w%\" bgcolor=\"#$color_p\"".Tooltip(3).">$Message[56]</td>"; } else { print "<td bgcolor=\"#$color_TableBGTitle\" width=\"20%\">&nbsp;</td>"; }
+			if ($ShowSummary =~ /H/i) { print "<td width=\"$w%\" bgcolor=\"#$color_h\"".Tooltip(4).">$Message[57]</td>"; } else { print "<td bgcolor=\"#$color_TableBGTitle\" width=\"20%\">&nbsp;</td>"; }
+			if ($ShowSummary =~ /B/i) { print "<td width=\"$w%\" bgcolor=\"#$color_k\"".Tooltip(5).">$Message[75]</td>"; } else { print "<td bgcolor=\"#$color_TableBGTitle\" width=\"20%\">&nbsp;</td>"; }
 			print "</tr>\n";
 			# Show main indicators values for viewed traffic
 			print "<tr>";
@@ -8510,16 +8512,16 @@ if (scalar keys %HTMLOutput) {
 				print "<td class=\"aws\">$Message[165]</td>";
 				print "<td>&nbsp;<br />&nbsp;</td>\n";
 				print "<td>&nbsp;<br />&nbsp;</td>\n";
-				if ($ShowMonthStats =~ /H/i) { print "<td><b>$TotalHits</b>".($LogType eq 'M'?"":"<br />($RatioHits&nbsp;".lc($Message[57]."/".$Message[12]).")</td>"); } else { print "<td>&nbsp;</td>"; }
-				if ($ShowMonthStats =~ /B/i) { print "<td><b>".Format_Bytes(int($TotalBytes))."</b><br />($RatioBytes&nbsp;$Message[108]/".lc($Message[($LogType eq 'M'?149:12)]).")</td>"; } else { print "<td>&nbsp;</td>"; }
+				if ($ShowSummary =~ /H/i) { print "<td><b>$TotalHits</b>".($LogType eq 'M'?"":"<br />($RatioHits&nbsp;".lc($Message[57]."/".$Message[12]).")</td>"); } else { print "<td>&nbsp;</td>"; }
+				if ($ShowSummary =~ /B/i) { print "<td><b>".Format_Bytes(int($TotalBytes))."</b><br />($RatioBytes&nbsp;$Message[108]/".lc($Message[($LogType eq 'M'?149:12)]).")</td>"; } else { print "<td>&nbsp;</td>"; }
 			}
 			else {
 				if ($LogType eq 'W' || $LogType eq 'S') { print "<td class=\"aws\">$Message[160]&nbsp;*</td>"; }
-				if ($ShowMonthStats =~ /U/i) { print "<td>".($MonthRequired eq 'all'?"<b>&lt;= $TotalUnique</b><br />$Message[129]":"<b>$TotalUnique</b><br />&nbsp;")."</td>"; } else { print "<td>&nbsp;</td>"; }
-				if ($ShowMonthStats =~ /V/i) { print "<td><b>$TotalVisits</b><br />($RatioVisits&nbsp;$Message[52])</td>"; } else { print "<td>&nbsp;</td>"; }
-				if ($ShowMonthStats =~ /P/i) { print "<td><b>$TotalPages</b><br />($RatioPages&nbsp;".lc($Message[56]."/".$Message[12]).")</td>"; } else { print "<td>&nbsp;</td>"; }
-				if ($ShowMonthStats =~ /H/i) { print "<td><b>$TotalHits</b>".($LogType eq 'M'?"":"<br />($RatioHits&nbsp;".lc($Message[57]."/".$Message[12]).")</td>"); } else { print "<td>&nbsp;</td>"; }
-				if ($ShowMonthStats =~ /B/i) { print "<td><b>".Format_Bytes(int($TotalBytes))."</b><br />($RatioBytes&nbsp;$Message[108]/".lc($Message[($LogType eq 'M'?149:12)]).")</td>"; } else { print "<td>&nbsp;</td>"; }
+				if ($ShowSummary =~ /U/i) { print "<td>".($MonthRequired eq 'all'?"<b>&lt;= $TotalUnique</b><br />$Message[129]":"<b>$TotalUnique</b><br />&nbsp;")."</td>"; } else { print "<td>&nbsp;</td>"; }
+				if ($ShowSummary =~ /V/i) { print "<td><b>$TotalVisits</b><br />($RatioVisits&nbsp;$Message[52])</td>"; } else { print "<td>&nbsp;</td>"; }
+				if ($ShowSummary =~ /P/i) { print "<td><b>$TotalPages</b><br />($RatioPages&nbsp;".lc($Message[56]."/".$Message[12]).")</td>"; } else { print "<td>&nbsp;</td>"; }
+				if ($ShowSummary =~ /H/i) { print "<td><b>$TotalHits</b>".($LogType eq 'M'?"":"<br />($RatioHits&nbsp;".lc($Message[57]."/".$Message[12]).")</td>"); } else { print "<td>&nbsp;</td>"; }
+				if ($ShowSummary =~ /B/i) { print "<td><b>".Format_Bytes(int($TotalBytes))."</b><br />($RatioBytes&nbsp;$Message[108]/".lc($Message[($LogType eq 'M'?149:12)]).")</td>"; } else { print "<td>&nbsp;</td>"; }
 			}
 			print "</tr>\n";
 			# Show main indicators values for not viewed traffic values
@@ -8529,15 +8531,15 @@ if (scalar keys %HTMLOutput) {
     				print "<td class=\"aws\">$Message[166]</td>";
     				print "<td>&nbsp;<br />&nbsp;</td>\n";
     				print "<td>&nbsp;<br />&nbsp;</td>\n";
-    				if ($ShowMonthStats =~ /H/i) { print "<td><b>$TotalNotViewedHits</b></td>"; } else { print "<td>&nbsp;</td>"; }
-    				if ($ShowMonthStats =~ /B/i) { print "<td><b>".Format_Bytes(int($TotalNotViewedBytes))."</b></td>"; } else { print "<td>&nbsp;</td>"; }
+    				if ($ShowSummary =~ /H/i) { print "<td><b>$TotalNotViewedHits</b></td>"; } else { print "<td>&nbsp;</td>"; }
+    				if ($ShowSummary =~ /B/i) { print "<td><b>".Format_Bytes(int($TotalNotViewedBytes))."</b></td>"; } else { print "<td>&nbsp;</td>"; }
     			}
     			else {
     				if ($LogType eq 'W' || $LogType eq 'S') { print "<td class=\"aws\">$Message[161]&nbsp;*</td>"; }
     				print "<td colspan=\"2\">&nbsp;<br />&nbsp;</td>\n";
-    				if ($ShowMonthStats =~ /P/i) { print "<td><b>$TotalNotViewedPages</b></td>"; } else { print "<td>&nbsp;</td>"; }
-    				if ($ShowMonthStats =~ /H/i) { print "<td><b>$TotalNotViewedHits</b></td>"; } else { print "<td>&nbsp;</td>"; }
-    				if ($ShowMonthStats =~ /B/i) { print "<td><b>".Format_Bytes(int($TotalNotViewedBytes))."</b></td>"; } else { print "<td>&nbsp;</td>"; }
+    				if ($ShowSummary =~ /P/i) { print "<td><b>$TotalNotViewedPages</b></td>"; } else { print "<td>&nbsp;</td>"; }
+    				if ($ShowSummary =~ /H/i) { print "<td><b>$TotalNotViewedHits</b></td>"; } else { print "<td>&nbsp;</td>"; }
+    				if ($ShowSummary =~ /B/i) { print "<td><b>".Format_Bytes(int($TotalNotViewedBytes))."</b></td>"; } else { print "<td>&nbsp;</td>"; }
     			}
     			print "</tr>\n";
             }
@@ -8616,7 +8618,6 @@ if (scalar keys %HTMLOutput) {
 					print "<td>";
 					if ($ShowMonthStats =~ /U/i) { print "<img align=\"bottom\" src=\"$DirIcons\/other\/$BarPng{'vu'}\" height=\"$bredde_u\" width=\"6\"".AltTitle("$Message[11]: ".($MonthUnique{$YearRequired.$monthix}||0))." />"; }
 					if ($ShowMonthStats =~ /V/i) { print "<img align=\"bottom\" src=\"$DirIcons\/other\/$BarPng{'vv'}\" height=\"$bredde_v\" width=\"6\"".AltTitle("$Message[10]: ".($MonthVisits{$YearRequired.$monthix}||0))." />"; }
-					if ($QueryString !~ /buildpdf/i) { print "&nbsp;"; }
 					if ($ShowMonthStats =~ /P/i) { print "<img align=\"bottom\" src=\"$DirIcons\/other\/$BarPng{'vp'}\" height=\"$bredde_p\" width=\"6\"".AltTitle("$Message[56]: ".($MonthPages{$YearRequired.$monthix}||0))." />"; }
 					if ($ShowMonthStats =~ /H/i) { print "<img align=\"bottom\" src=\"$DirIcons\/other\/$BarPng{'vh'}\" height=\"$bredde_h\" width=\"6\"".AltTitle("$Message[57]: ".($MonthHits{$YearRequired.$monthix}||0))." />"; }
 					if ($ShowMonthStats =~ /B/i) { print "<img align=\"bottom\" src=\"$DirIcons\/other\/$BarPng{'vk'}\" height=\"$bredde_k\" width=\"6\"".AltTitle("$Message[75]: ".Format_Bytes($MonthBytes{$YearRequired.$monthix}))." />"; }
