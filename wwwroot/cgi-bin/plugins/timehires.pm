@@ -9,6 +9,7 @@
 
 
 use Time::HiRes qw( gettimeofday );
+use strict;no strict "refs";
 $Plugin_timehires=1;
 
 

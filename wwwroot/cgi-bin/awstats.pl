@@ -41,13 +41,13 @@ $DIR $PROG $Extension
 $Debug $ShowSteps
 $DebugResetDone $DNSLookupAlreadyDone
 $VisitTimeOut
-$VisitTolerance
+$NotSortedRecordTolerance
 /;
 $DIR=$PROG=$Extension="";
 $Debug=$ShowSteps=0;
 $DebugResetDone=$DNSLookupAlreadyDone=0;
-$VisitTimeOut  = 10000;			# Laps of time to consider a page load as a new visit. 10000 = 1 hour (Default = 10000)
-$VisitTolerance= 10000;			# Laps of time to accept a record if not in correct order. 10000 = 1 hour (Default = 10000)
+$VisitTimeOut  = 10000;				# Laps of time to consider a page load as a new visit. 10000 = 1 hour (Default = 10000)
+$NotSortedRecordTolerance= 10000;	# Laps of time to accept a record if not in correct order. 10000 = 1 hour (Default = 10000)
 # Time vars
 use vars qw/
 $starttime
@@ -2611,12 +2611,13 @@ sub Read_DNS_Cache_File {
 	
 	if (! scalar keys %$hashtoload) {
 		open(DNSFILE,"$filetoload") or error("Error: Couldn't open DNS Cache file \"$filetoload\": $!");
-		# This is the fastest way to load with regexp that I know of
-		%$hashtoload = map(/^\d+\s+(\d+\.\d+\.\d+\.\d+)\s+(.*)$/o, <DNSFILE>);
+		# This is the fastest way to load with regexp that I know
+		#%$hashtoload = map(/^\d+\s+(\d+\.\d+\.\d+\.\d+)\s+(.*)$/o, <DNSFILE>);
+	   	%$hashtoload = map(/^(\d+\.\d+\.\d+\.\d+)\s+([^\s]+)$/o, <DNSFILE>);
 	   	close DNSFILE;
 		if ($savetohash) {
-			# Plugin call : Save hash file with test if up to date to save
-			if ($Plugin_hashfiles) { SaveHash_hashfiles($filetoload,$hashtoload,1); }
+			# Plugin call : Save hash file (all records) with test if up to date to save
+			if ($Plugin_hashfiles) { SaveHash_hashfiles($filetoload,$hashtoload,1,0); }
 		}
 	}
 	if ($Debug) { debug(" Loaded ".(scalar keys %$hashtoload)." items from $filetoload in ".(time()-$timetoload)." seconds.",1); }
@@ -2640,6 +2641,7 @@ sub Save_DNS_Cache_File {
 	my $dnscacheext="";
 	my $filetosave="";
 	my $timetosave = time();
+	my $nbofelemtosave=$NBOFLASTUPDATELOOKUPTOSAVE;
 	my $nbofelemsaved=0;
 
 	if ($Debug) { debug("Call to Save_DNS_Cache_File [file=\"$dnscachefile\"]"); }
@@ -2649,19 +2651,21 @@ sub Save_DNS_Cache_File {
 	}
 	if ($dnscachefile =~ s/(\.\w+)$//) { $dnscacheext=$1; }
 	$filetosave="$dnscachefile$filesuffix$dnscacheext";
-	# Plugin call : Save hash file with no test if up to date
-	if ($Plugin_hashfiles) { SaveHash_hashfiles($filetosave,$hashtosave,0,$nbofelemsaved); }
+	# Plugin call : Save hash file (only $NBOFLASTUPDATELOOKUPTOSAVE records) with no test if up to date
+	if ($Plugin_hashfiles) { SaveHash_hashfiles($filetosave,$hashtosave,0,$nbofelemtosave,$nbofelemsaved); }
 	if (! $nbofelemsaved) {
-		debug(" Save file $dnscachefile$filesuffix$dnscacheext");
-		if (! open(DNSFILE,">$dnscachefile$filesuffix$dnscacheext")) {
-			warning("Warning: Failed to open for writing last update DNS Cache file \"$dnscachefile$filesuffix$dnscacheext\": $!");
+		$filetosave="$dnscachefile$filesuffix$dnscacheext";
+		debug(" Save data ".($nbofelemtosave?"($nbofelemtosave records max)":"(all records)")." into file $filetosave");
+		if (! open(DNSFILE,">$filetosave")) {
+			warning("Warning: Failed to open for writing last update DNS Cache file \"$filetosave\": $!");
 			return 1;
 		}
 		# TODO Limit size of save
 		foreach my $key (keys %$hashtosave) {
 #			if ($hashtosave->{$key} ne "ip") {
-				$nbofelemsaved++;
-				print DNSFILE "0\t$key\t$hashtosave->{$key}\n";
+				#print DNSFILE "0\t$key\t$hashtosave->{$key}\n";
+				print DNSFILE "$key\t$hashtosave->{$key}\n";
+				if (++$nbofelemsaved >= $NBOFLASTUPDATELOOKUPTOSAVE) { last; }
 #			}
 		}
 		close DNSFILE;
@@ -2682,9 +2686,8 @@ sub GetDelaySinceStart {
 	my ($newseconds, $newmicroseconds)=(time(),0);
 	# Plugin call : Return seconds and milliseconds
 	if ($Plugin_timehires) { GetTime_timehires($newseconds, $newmicroseconds); }
-#	if ($Plugin_timehires) { ($newseconds, $newmicroseconds)=&gettimeofday; }
 	if (! $StartSeconds) { $StartSeconds=$newseconds; $StartMicroseconds=$newmicroseconds; }
-	return ($newseconds*1000+int($newmicroseconds/1000)-$StartSeconds*1000-int($StartMicroseconds/1000));
+	return (($newseconds-$StartSeconds)*1000+int(($newmicroseconds-$StartMicroseconds)/1000));
 }
 
 #------------------------------------------------------------------------------
@@ -3690,10 +3693,10 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {
 		# Skip if not a new line
 		#-----------------------
 		if ($NewLinePhase) {
-			if ($timerecord < ($LastLine{$yearmonthtoprocess} - $VisitTolerance)) {
+			if ($timerecord < ($LastLine{$yearmonthtoprocess} - $NotSortedRecordTolerance)) {
 					# Should not happen, kept in case of parasite/corrupted old line
 					$NbOfLinesCorrupted++;
-					if ($ShowCorrupted) { print "Corrupted record (date $timerecord lower than $LastLine{$yearmonthtoprocess}-$VisitTolerance): $_\n"; } next;
+					if ($ShowCorrupted) { print "Corrupted record (date $timerecord lower than $LastLine{$yearmonthtoprocess}-$NotSortedRecordTolerance): $_\n"; } next;
 			}
 		}
 		else {
@@ -3757,7 +3760,7 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {
 					next;
 				}
 				else {													# Bad format record (should not happen but when using MSIndex server), next
-					$NbOfLinesCorrupted++;
+					$NbOfLinesCorrupted++; $NbOfNewLines--;
 					if ($ShowCorrupted) { print "Corrupted record (HTTP code not on 3 digits): $_\n"; }
 					next;
 				}
@@ -4307,8 +4310,10 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {
 		close(LOG);
 	}
 
-	# Save hash
-	Save_DNS_Cache_File(\%TmpDNSLookup,"$DirData/$DNSLastUpdateCacheFile","$FileSuffix");	# Save into file using FileSuffix
+	if ($NbOfNewLines) {
+		# Save new DNS last update cache file
+		Save_DNS_Cache_File(\%TmpDNSLookup,"$DirData/$DNSLastUpdateCacheFile","$FileSuffix");	# Save into file using FileSuffix
+	}
 }
 # End of log processing if ($UPdateStats)
 
@@ -5912,7 +5917,7 @@ else {
 	print "Found $NbOfLinesDropped dropped records,\n";
 	print "Found $NbOfLinesCorrupted corrupted records,\n";
 	print "Found $NbOfOldLines old records,\n";
-	print "Found $NbOfNewLines new records.\n";
+	print "Found $NbOfNewLines new qualifed records.\n";
 }
 
 0;	# Do not remove this line
