@@ -18,7 +18,7 @@ use strict; no strict "refs";
 #-------------------------------------------------------
 # Defines
 #-------------------------------------------------------
-my $VERSION="1.1 (build 1)";
+my $VERSION="1.1 (build 2)";
 
 # ---------- Init variables --------
 my $Debug=0;
@@ -126,7 +126,7 @@ if ($QueryString =~ /showsteps/i) { $ShowSteps=1; }
 
 my $cpt=1;
 for (0..@ARGV-1) {
-	if ($ARGV[$_] =~ /^-/) { last; }
+	if ($ARGV[$_] =~ /^-/) { next; }
 	$ParamFile{$cpt}=$ARGV[$_];
 	$cpt++;
 }
@@ -311,7 +311,7 @@ while (1 == 1)
 	#--------------------
 	my $Host;
 	if ($DNSLookup) {
-		if ($_ =~ /(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})/) {
+		if ($linerecord{$logfilechosen} =~ /(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})/) {
 			$Host=$1;
 			if (! $TmpHashDNSLookup{$Host}) {		# if $Host has not been resolved yet
 				if ($MyDNSTable{$Host}) {
@@ -349,7 +349,7 @@ while (1 == 1)
 
 	# Put record in queue
 	debug("Add record $NbOfNewLinesProcessed in queue ($Host).",4);
-	$QueueRecord{$NbOfNewLinesProcessed}=$_;
+	$QueueRecord{$NbOfNewLinesProcessed}=$linerecord{$logfilechosen};
 	$QueueHosts{$NbOfNewLinesProcessed}=$Host;
 
 	# Print all records in queue that are ready
