@@ -1,0 +1,8 @@
+#
+# Directives to add to your Apache conf file to allow use of AWStats as a CGI.
+# Note that path "/usr/local/awstats/" must reflect your AWStats install path.
+#
+Alias /awstatsclasses "/usr/local/awstats/wwwroot/classes/"
+Alias /awstatscss "/usr/local/awstats/wwwroot/css/"
+Alias /awstatsicons "/usr/local/awstats/wwwroot/icon/"
+ScriptAlias /awstats/ "/usr/local/awstats/wwwroot/cgi-bin/"
