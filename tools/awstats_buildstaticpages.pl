@@ -230,14 +230,15 @@ if ($QueryString =~ /(^|-|&)month=(year)/i) { error("month=year is a deprecated 
 if ($QueryString =~ /(^|-|&)debug=(\d+)/i)			{ $Debug=$2; }
 if ($QueryString =~ /(^|-|&)config=([^&]+)/i)		{ $SiteConfig="$2"; }
 if ($QueryString =~ /(^|-|&)awstatsprog=([^&]+)/i)	{ $Awstats="$2"; }
-if ($QueryString =~ /(^|-|&)buildpdf=([^&]+)/i)		{ $HtmlDoc="$2"; $BuildPDF=1; }
+if ($QueryString =~ /(^|-|&)buildpdf/i) 			{ $BuildPDF=1; }
+if ($QueryString =~ /(^|-|&)buildpdf=([^&]+)/i)		{ $HtmlDoc="$2"; }
 if ($QueryString =~ /(^|-|&)staticlinksext=([^&]+)/i)	{ $StaticExt="$2"; }
 if ($QueryString =~ /(^|-|&)dir=([^&]+)/i)			{ $OutputDir="$2"; }
 if ($QueryString =~ /(^|-|&)diricons=([^&]+)/i)		{ $DirIcons="$2"; }
 if ($QueryString =~ /(^|-|&)update/i)				{ $Update=1; }
 if ($QueryString =~ /(^|-|&)date/i)					{ $Date=1; }
 if ($QueryString =~ /(^|-|&)year=(\d\d\d\d)/i) 		{ $YearRequired="$2"; }
-if ($QueryString =~ /(^|-|&)month=(\d\d)/i || $QueryString =~ /(^|-|&)month=(all)/i) { $MonthRequired="$2"; }
+if ($QueryString =~ /(^|-|&)month=(\d{1,2})/i || $QueryString =~ /(^|-|&)month=(all)/i) { $MonthRequired="$2"; }
 if ($QueryString =~ /(^|-|&)lang=([^&]+)/i)			{ $Lang="$2"; }
 
 if ($OutputDir) { if ($OutputDir !~ /[\\\/]$/) { $OutputDir.="/"; } }
@@ -260,11 +261,12 @@ if (! $SiteConfig) {
 	print "  and awstatsbuildstaticpages_options can be\n";
 	print "   -awstatsprog=pathtoawstatspl AWStats software (awstats.pl) path\n";
 	print "   -dir=outputdir               Output directory for generated pages\n";
+	print "   -diricons=icondir            Relative path to use as icon dir in <img> links\n";
 	print "   -date                        Used to add build date in built pages file name\n";
 	print "   -staticlinksext=xxx          For pages with .xxx extension instead of .html\n";
 	print "   -buildpdf[=pathtohtmldoc]    Build a PDF file after building HTML pages.\n";
 	print "                                 Output directory must contains icon directory\n";
-	print "                                 when this option is used (need 'htmldoc').\n";
+	print "                                 when this option is used (need 'htmldoc')\n";
 	print "\n";
 	print "New versions and FAQ at http://awstats.sourceforge.net\n";
 	exit 0;
@@ -290,8 +292,8 @@ debug("AwstatsDir=$AwstatsDir");
 # Check if HTMLDOC prog is found
 if ($BuildPDF) {
 	my $HtmlDocFound=0;
-	if (-s "$HtmlDoc") { $HtmlDocFound=1; }
-	elsif (-s "/usr/bin/htmldoc") {
+	if (-x "$HtmlDoc") { $HtmlDocFound=1; }
+	elsif (-x "/usr/bin/htmldoc") {
 		$HtmlDoc='/usr/bin/htmldoc';
 		$HtmlDocFound=1;
 	}
@@ -313,17 +315,19 @@ if ($ShowEMailSenders) { push @OutputList,'allemails'; push @OutputList,'lastema
 if ($ShowEMailReceivers) { push @OutputList,'allemailr'; push @OutputList,'lastemailr'; }
 if ($ShowSessionsStats) { push @OutputList,'session'; }
 if ($ShowPagesStats) { push @OutputList,'urldetail'; push @OutputList,'urlentry'; push @OutputList,'urlexit'; }
-if ($ShowFileTypesStats) { push @OutputList,'filetypes'; }
-#if ($ShowFileSizesStats) { push @OutputList,'filesize'; }
+#if ($ShowFileTypesStats) { push @OutputList,'filetypes'; }	# There is dedicated page for filetypes
 if ($ShowOSStats) { push @OutputList,'osdetail'; push @OutputList,'unknownos'; }
 if ($ShowBrowsersStats) { push @OutputList,'browserdetail'; push @OutputList,'unknownbrowser'; }
 if ($ShowScreenSizeStats) { push @OutputList,'screensize'; }
 if ($ShowOriginStats) { push @OutputList,'refererse'; push @OutputList,'refererpages'; }
 if ($ShowKeyphrasesStats) { push @OutputList,'keyphrases'; }
 if ($ShowKeywordsStats) { push @OutputList,'keywords'; }
-if ($ShowMiscStats) { push @OutputList,'misc'; }
-if ($ShowHTTPErrorsStats) { push @OutputList,'errors'; push @OutputList,'errors404'; }
-if ($ShowSMTPErrorsStats) { push @OutputList,'errors'; }
+#if ($ShowMiscStats) { push @OutputList,'misc'; }			# There is no dedicated page for misc
+if ($ShowHTTPErrorsStats) {
+	#push @OutputList,'errors'; 							# There is no dedicated page for errors					
+	push @OutputList,'errors404';		
+}
+#if ($ShowSMTPErrorsStats) { push @OutputList,'errors'; }
 
 # Launch awstats update
 if ($Update) {
@@ -343,7 +347,7 @@ if ($Date) {
 
 
 my $cpt=0;
-my $smallcommand="\"$Awstats\" -config=$SiteConfig".($BuildPDF?" -noloadplugin=tooltips":"")." -staticlinks".($OutputSuffix ne $SiteConfig?"=$OutputSuffix":"");
+my $smallcommand="\"$Awstats\" -config=$SiteConfig".($BuildPDF?" -buildpdf -noloadplugin=tooltips,rawlog,hostinfo":"")." -staticlinks".($OutputSuffix ne $SiteConfig?"=$OutputSuffix":"");
 if ($StaticExt && $StaticExt ne 'html')     { $smallcommand.=" -staticlinksext=$StaticExt"; }
 if ($DirIcons)      { $smallcommand.=" -diricons=$DirIcons"; }
 if ($Lang)          { $smallcommand.=" -lang=$Lang"; }
@@ -377,7 +381,7 @@ for my $output (@OutputList) {
 # Build pdf file
 if ($QueryString =~ /(^|-|&)buildpdf/i) {
 #	my $pdffile=$pages[0]; $pdffile=~s/\.\w+$/\.pdf/;
-	my $command="\"$HtmlDoc\" -t pdf --webpage --quiet --no-title --textfont helvetica --left 16 --bottom 8 --top 8 --browserwidth 800 --headfootsize 8.0 --fontsize 7.0 --outfile awstats.$OutputSuffix.pdf @pages\n";
+	my $command="\"$HtmlDoc\" -t pdf --webpage --quiet --no-title --textfont helvetica --left 16 --bottom 8 --top 8 --browserwidth 800 --headfootsize 8.0 --fontsize 7.0 --header xtx --footer xd/ --outfile awstats.$OutputSuffix.pdf @pages\n";
 	print "Build PDF file : $command\n";
 	$retour=`$command  2>&1`;
 	my $signal_num=$? & 127;
@@ -385,7 +389,7 @@ if ($QueryString =~ /(^|-|&)buildpdf/i) {
 	my $exit_value=$? >> 8;
 	if ($? || $retour =~ /error/) {
 		if ($retour) { error("Failed to build PDF file with following error: $retour"); }
-		else { error("Failed to launch htmldoc process with exit: Return code=$exit_value, Killer signal num=$signal_num, Core dump=$dumped_core"); }
+		else { error("Failed to run successfuly htmldoc process: Return code=$exit_value, Killer signal num=$signal_num, Core dump=$dumped_core"); }
 	}
 	$cpt++;
 }
