@@ -3655,15 +3655,17 @@ if ($ENV{"GATEWAY_INTERFACE"}) {	# Run from a browser
 	}
 	if ($ENV{"QUERY_STRING"}) { $QueryString = $ENV{"QUERY_STRING"}; }
 	$QueryString = CleanFromCSSA($QueryString);
-	if ($QueryString =~ /site=([^\s&]+)/i) 		{ $SiteConfig=&DecodeEncodedString($1); }	# For backward compatibility
-	if ($QueryString =~ /config=([^\s&]+)/i)	{ $SiteConfig=&DecodeEncodedString($1); }
+	if ($QueryString =~ /config=([^\s&]+)/i)	{ $SiteConfig=&DecodeEncodedString("$1"); }
 	$UpdateStats=0; $HTMLOutput="main";														# No update but report by default when run from a browser
 	if ($QueryString =~ /update=1/i)			{ $UpdateStats=1; }							# Update is required
 	if ($QueryString =~ /migrate=([^\s&]+)/i)	{ 
-		$MigrateStats=&DecodeEncodedString($1); 
+		$MigrateStats=&DecodeEncodedString("$1"); 
 		$MigrateStats =~ /^(.*)$PROG(\d{0,2})(\d\d)(\d\d\d\d)(.*)\.txt$/;
 		$SiteConfig=$5?$5:"xxx"; $SiteConfig =~ s/^\.//;
 	}
+	if ($QueryString =~ /logfile=([^\s&]+)/i )	{ $LogFile=&DecodeEncodedString("$1"); }
+	if ($QueryString =~ /output=urldetail:([^\s&]+)/i)	{ $URLFilter=&DecodeEncodedString("$1"); }	# Filter on URL list can be defined with output=urldetail:filter to reduce number of lines read and showed
+	if ($QueryString =~ /urlfilter=([^\s&]+)/i)	{ $URLFilter=&DecodeEncodedString("$1"); }			# Filter on URL list can also be defined with urlfilter=filter
 }
 else {								# Run from command line
 	if ($ARGV[0] && $ARGV[0] eq "-h")			{ $SiteConfig = $ARGV[1]; }					# For backward compatibility but useless
@@ -3681,8 +3683,7 @@ else {								# Run from command line
 		$QueryString .= "$NewLinkParams";
 	}
 	$QueryString = CleanFromCSSA($QueryString);
-	if ($QueryString =~ /site=([^\s&]+)/i) 		{ $SiteConfig=&DecodeEncodedString($1); }	# For backward compatibility
-	if ($QueryString =~ /config=([^\s&]+)/i)	{ $SiteConfig=&DecodeEncodedString($1); }
+	if ($QueryString =~ /config=([^\s&]+)/i)	{ $SiteConfig=$1; }
 	$UpdateStats=1; $HTMLOutput="";                           								# Update with no report by default when run from command line
 	if ($QueryString =~ /showsteps/i) 			{ $ShowSteps=1; }
 	$QueryString=~s/showsteps[^&]*//i;
@@ -3692,8 +3693,11 @@ else {								# Run from command line
 	$QueryString=~s/showdropped[^&]*//i;
 	if ($QueryString =~ /showunknownorigin/i)	{ $ShowUnknownOrigin=1; }
 	$QueryString=~s/showunknownorigin[^&]*//i;
+	if ($QueryString =~ /logfile=([^\s&]+)/i )	{ $LogFile="$1"; }
+	if ($QueryString =~ /output=urldetail:([^\s&]+)/i)	{ $URLFilter="$1"; }	# Filter on URL list can be defined with output=urldetail:filter to reduce number of lines read and showed
+	if ($QueryString =~ /urlfilter=([^\s&]+)/i)	{ $URLFilter="$1"; }			# Filter on URL list can also be defined with urlfilter=filter
 }
-if ($QueryString =~ /logfile=([^\s&]+)/i )      { $LogFile=&DecodeEncodedString($1); }
+
 if ($QueryString =~ /staticlinks/i) 			{ $StaticLinks=".$SiteConfig"; }
 if ($QueryString =~ /staticlinks=([^\s&]+)/i) 	{ $StaticLinks=".$1"; }		# When ran from awstatsbuildstaticpages.pl
 if ($QueryString =~ /framename=([^\s&]+)/i)		{ $FrameName=$1; }
@@ -3706,10 +3710,7 @@ if ($QueryString =~ /output/i) {
 	if ($QueryString =~ /output=([^\s&:]+)/i) { $HTMLOutput=lc($1); }
 }
 $QueryString=~s/output(&|$)//i;	$QueryString=~s/&$//;	# -output with no = is same than nothing
-# A filter on URL list can be defined with output=urldetail:filter to reduce number of lines read and showed
-if ($QueryString =~ /output=urldetail:([^\s&]+)/i)	{ $URLFilter=&DecodeEncodedString($1); }
-# A filter on URL list can also be defined with urlfilter=filter
-if ($QueryString =~ /urlfilter=([^\s&]+)/i) 		{ $URLFilter=&DecodeEncodedString($1); }
+
 ($DIR=$0) =~ s/([^\/\\]*)$//; ($PROG=$1) =~ s/\.([^\.]*)$//; $Extension=$1;
 if ($Debug) {
 	debug("$PROG - $VERSION - Perl $^X $]",1);
