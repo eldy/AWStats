@@ -27,7 +27,7 @@ New features/improvments:
 - month parameter can accept format -month=D, not only -month=DD
 - Optimized code size.
 - Optimized HTML output report size.
-- Better support for IPv6 in logresolvemerge.pl.
+- Added plugin ipv6 to fully support IPv6 (included reverse DNS lookup).
 - Split month summary chart and days of month chart in two different
   charts in main page. This also means that ShowDaysOfMonthStats and
   AddDataArrayShowDaysOfMonthStats parameters were added.
