@@ -56,6 +56,7 @@
 # Site grabbers
 "teleport",
 "webcapture",
+"webcopier",
 # Music only browsers
 "real",
 "winamp",				# Works for winampmpeg and winamp3httprdr
@@ -87,11 +88,20 @@
 "w3m",
 "w3c_css_validator",
 "w3c_validator",
-"webcopier",
 "wdg_validator",
 "webzip",
 "libwww",				# Must be at end because some browser have both "browser id" and "libwww"
 "staroffice"
+);
+
+# BrowsersHashAreGrabber
+# Put here an entry for each browser in BrowsersSearchIDOrder that are grabber
+# browsers.
+#---------------------------------------------------------------------------
+%BrowsersHereAreGrabbers = (
+"teleport","1",
+"webcapture","1",
+"webcopier","1",,
 );
 
 # BrowsersHashIcon

@@ -84,7 +84,7 @@ $color_h, $color_k, $color_p, $color_s, $color_u, $color_v)=
 ("","","","");
 # ---------- Init arrays --------
 @ValidHTTPCodes = @HostAliases = @Message = @OnlyFiles = @SkipDNSLookupFor = @SkipFiles = @SkipHosts = @DOWIndex = ();
-@RobotArrayID=();
+@RobotsSearchIDOrder=();
 @WordsToCleanSearchUrl = ();
 # ---------- Init hash arrays --------
 %DayBytes = %DayHits = %DayPages = %DayUnique = %DayVisits =
@@ -126,7 +126,7 @@ $color_h, $color_k, $color_p, $color_s, $color_u, $color_v)=
 
 
 
-$VERSION="4.0 (build 32)";
+$VERSION="4.0 (build 34)";
 $Lang="en";
 
 # Default value
@@ -672,8 +672,9 @@ sub Read_Ref_Data {
 		}
 	}
 	# Sanity check.
-	if (@OSArrayID != scalar keys %OSHashID) { error("Error: Not same number of records of OSArray (".(@OSArrayID)." entries) and OSHashID (".(scalar keys %OSHashID)." entries) in OS database. Check your file ".$FilePath{"operating_systems.pl"}); }
-	if (@BrowsersArrayID != scalar keys %BrowsersHashIDLib) { error("Error: Not same number of records of BrowsersArrayID (".(@BrowsersArrayID)." entries) and BrowsersHashIDLib (".(scalar keys %BrowsersHashIDLib)." entries) in Browsers database. Check your file ".$FilePath{"browsers.pl"}); }
+	if (@OSSearchIDOrder != scalar keys %OSHashID) { error("Error: Not same number of records of OSSearchIDOrder (".(@OSSearchIDOrder)." entries) and OSHashID (".(scalar keys %OSHashID)." entries) in OS database. Check your file ".$FilePath{"operating_systems.pl"}); }
+	if (@BrowsersSearchIDOrder != scalar keys %BrowsersHashIDLib) { error("Error: Not same number of records of BrowsersSearchIDOrder (".(@BrowsersSearchIDOrder)." entries) and BrowsersHashIDLib (".(scalar keys %BrowsersHashIDLib)." entries) in Browsers database. Check your file ".$FilePath{"browsers.pl"}); }
+	if ((@RobotsSearchIDOrder_list1+@RobotsSearchIDOrder_list2+@RobotsSearchIDOrder_list3) != scalar keys %RobotsHashIDLib) { error("Error: Not same number of records of RobotsSearchIDOrder_listx (total is ".(@RobotsSearchIDOrder_list1+@RobotsSearchIDOrder_list2+@RobotsSearchIDOrder_list3)." entries) and RobotsHashIDLib (".(scalar keys %RobotsHashIDLib)." entries) in Robots database. Check your file ".$FilePath{"robots.pl"}); }
 }
 
 
@@ -750,7 +751,7 @@ sub Read_Language_Tooltip {
 	&debug("Call to Read_Language_Tooltip [FileLang=\"$FileLang\"]");
 	if ($FileLang ne "") {
 		my $aws_VisitTimeout = $VisitTimeOut/10000*60;
-		my $aws_NbOfRobots = scalar keys %RobotHashIDLib;
+		my $aws_NbOfRobots = scalar keys %RobotsHashIDLib;
 		my $aws_NbOfSearchEngines = scalar keys %SearchEnginesHashIDLib;
 		while (<LANG>) {
 			# Search for replaceable parameters
@@ -891,7 +892,7 @@ sub Check_Config {
 	if (! $Message[41]) { $Message[41]="Links from an external page (other web sites except search engines)"; }
 	if (! $Message[42]) { $Message[42]="Links from an internal page (other page on same site)"; }
 	if (! $Message[43]) { $Message[43]="Keywords used on search engines"; }
-	if (! $Message[44]) { $Message[44]="Kb"; }
+	if (! $Message[44]) { $Message[44]=""; }
 	if (! $Message[45]) { $Message[45]="Unresolved IP Address"; }
 	if (! $Message[46]) { $Message[46]="Unknown OS (Referer field)"; }
 	if (! $Message[47]) { $Message[47]="Required but not found URLs (HTTP code 404)"; }
@@ -955,6 +956,12 @@ sub Check_Config {
 	if (! $Message[105]) { $Message[105]="Code"; }
 	if (! $Message[106]) { $Message[106]="Average size"; }
 	if (! $Message[107]) { $Message[107]="Links from a NewsGroup"; }
+	if (! $Message[108]) { $Message[108]="KB"; }
+	if (! $Message[109]) { $Message[109]="MB"; }
+	if (! $Message[110]) { $Message[110]="GB"; }
+	if (! $Message[111]) { $Message[111]="Grabber"; }
+	if (! $Message[112]) { $Message[112]="Yes"; }
+	if (! $Message[113]) { $Message[113]="No"; }
 	# Check if DirData is OK
 	if (! -d $DirData) {
 		if ($CreateDirDataIfNotExists) {
@@ -1925,9 +1932,9 @@ sub Show_Flag_Links {
 sub Format_Bytes {
 	my $bytes = shift||0;
 	my $fudge = 1;
-	if ($bytes >= $fudge * exp(3*log(1024))) { return sprintf("%.2f", $bytes/exp(3*log(1024)))." Gb"; }
-	if ($bytes >= $fudge * exp(2*log(1024))) { return sprintf("%.2f", $bytes/exp(2*log(1024)))." Mb"; }
-	if ($bytes >= $fudge * exp(1*log(1024))) { return sprintf("%.2f", $bytes/exp(1*log(1024)))." $Message[44]"; }
+	if ($bytes >= $fudge * exp(3*log(1024))) { return sprintf("%.2f", $bytes/exp(3*log(1024)))." $Message[110]"; }
+	if ($bytes >= $fudge * exp(2*log(1024))) { return sprintf("%.2f", $bytes/exp(2*log(1024)))." $Message[109]"; }
+	if ($bytes >= $fudge * exp(1*log(1024))) { return sprintf("%.2f", $bytes/exp(1*log(1024)))." $Message[108]"; }
 	if ($bytes < 0) { $bytes="?"; }
 	return int($bytes)." $Message[75]";
 }
@@ -2239,7 +2246,7 @@ if ((! $ENV{"GATEWAY_INTERFACE"}) && (! $SiteConfig)) {
 	print "  ".(scalar keys %DomainsHashIDLib)." domains/countries\n";
 	print "  ".(scalar keys %BrowsersHashIDLib)." browsers\n";
 	print "  ".(scalar keys %OSHashLib)." operating systems\n";
-	print "  ".(scalar keys %RobotHashIDLib)." robots\n";
+	print "  ".(scalar keys %RobotsHashIDLib)." robots\n";
 	print "  ".(scalar keys %SearchEnginesHashIDLib)." search engines (and keyphrases/keywords used from them)\n";
 	print "  All HTTP errors\n";
 	print "  Report by day/month/year\n";
@@ -2357,36 +2364,15 @@ if ($UpdateStats) {
 		use Socket;
 	}
 	
-	# Init RobotArrayID required for update process
-	push @RobotArrayList,"major";
-	push @RobotArrayList,"other";
-	push @RobotArrayList,"generic";
+	# Init RobotsSearchIDOrder required for update process
+	push @RobotArrayList,"list1";
+	push @RobotArrayList,"list2";
+	push @RobotArrayList,"list3";
 	foreach my $key (@RobotArrayList) {
-		if ($key ne "other") {
-			push @RobotArrayID,@{"RobotArrayID_$key"};
-			debug("Add ".@{"RobotArrayID_$key"}." elements from RobotArrayID_$key into RobotArrayID",2);
-		}
-		else {
-			my $added=0;
-			foreach my $robotid (keys %RobotHashIDLib) {
-				my $alreadyin=0;
-				# Check if robotid in RobotArrayID
-				foreach my $robotin (@RobotArrayID) {
-					if ($robotid eq $robotin) { $alreadyin=1; last; }
-				}
-				# Check if robotid in generic
-				foreach my $robotin (@{"RobotArrayID_generic"}) {
-					if ($robotid eq $robotin) { $alreadyin=1; last; }
-				}
-				if (! $alreadyin) {
-					push @RobotArrayID,$robotid;
-					$added++;
-				}
-			}	
-			debug("Add $added elements from RobotHashIDLib into RobotArrayID",2);
-		}
+		push @RobotsSearchIDOrder,@{"RobotsSearchIDOrder_$key"};
+		debug("Add ".@{"RobotsSearchIDOrder_$key"}." elements from RobotsSearchIDOrder_$key into RobotsSearchIDOrder",2);
 	}
-	debug("RobotArrayID has now ".@RobotArrayID." elements",2);
+	debug("RobotsSearchIDOrder has now ".@RobotsSearchIDOrder." elements",2);
 	# Init HostAliases array
 	if (! @HostAliases) {
 		warning("Warning: HostAliases parameter is not defined, $PROG choose \"$SiteToAnalyze localhost 127.0.0.1\".");
@@ -2778,7 +2764,7 @@ if ($UpdateStats) {
 			# If made on each record -> -1300 rows/seconds
 			my $foundrobot=0;
 			# study $UserAgent
-			foreach my $bot (@RobotArrayID) {
+			foreach my $bot (@RobotsSearchIDOrder) {
 				if ($UserAgent =~ /$bot/) {
 					$foundrobot=1;
 					$TmpHashRobot{$UserAgent}="$bot";	# Last time, we won't search if robot or not. We know it's is.
@@ -2926,7 +2912,6 @@ if ($UpdateStats) {
 		else {
 			# Here $TmpHashDNSLookup{$Host} is $Host resolved or undefined if $Host already resolved
 			$_ = ($TmpHashDNSLookup{$Host}?$TmpHashDNSLookup{$Host}:$Host);
-#			print "xxxxxxxxxxxxx $Host $TmpHashDNSLookup{$Host} - $_\n";
 			tr/A-Z/a-z/;
 			if (!$FullHostName) { s/^[\w\-]+\.//; };
 			if ($PageBool) {
@@ -2988,7 +2973,7 @@ if ($UpdateStats) {
 		
 				# Other ?
 				if (!$found) {
-					foreach my $key (@BrowsersArrayID) {
+					foreach my $key (@BrowsersSearchIDOrder) {
 				    	if ($UserAgent =~ /$key/) {
 				    		$_browser_h{$key}++;
 				    		$found=1;
@@ -3016,7 +3001,7 @@ if ($UpdateStats) {
 			if (!$TmpHashOS{$UserAgent}) {
 				my $found=0;
 				# in OSHashID list ?
-				foreach my $key (@OSArrayID) {	# Searchin ID in order of OSArrayID
+				foreach my $key (@OSSearchIDOrder) {	# Searchin ID in order of OSSearchIDOrder
 					if ($UserAgent =~ /$key/) {
 						$_os_h{$OSHashID{$key}}++;
 						$found=1;
@@ -3643,27 +3628,31 @@ EOF
 		&html_end;
 		exit(0);
 	}
-	if ($QueryString =~ /output=browserdetail/i) {
-		print "$CENTER<a name=\"NETSCAPE\">&nbsp;</a><BR>";
-		&tab_head("$Message[33]<br><img src=\"$DirIcons/browser/netscape.png\">",19);
-		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[58]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[15]</TH></TR>\n";
-		for (my $i=1; $i<=$#_nsver_h; $i++) {
-			my $h="&nbsp;"; my $p="&nbsp;";
-			if ($_nsver_h[$i] > 0 && $_browser_h{"netscape"} > 0) {
-				$h=$_nsver_h[$i]; $p=int($_nsver_h[$i]/$_browser_h{"netscape"}*1000)/10; $p="$p&nbsp;%";
-			}
-			print "<TR><TD CLASS=AWL>Mozilla/$i.xx</TD><TD>$h</TD><TD>$p</TD></TR>\n";
+	if ($QueryString =~ /output=unknownos/i) {
+		print "$CENTER<a name=\"UNKOWNOS\">&nbsp;</a><BR>";
+		&tab_head($Message[46],19);
+		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>Referer (".(scalar keys %_unknownreferer_l).")</TH><TH>$Message[9]</TH></TR>\n";
+		my $count=0;
+		foreach my $key (sort { $_unknownreferer_l{$b} <=> $_unknownreferer_l{$a} } keys (%_unknownreferer_l)) {
+			if ($count>=$MaxRowsInHTMLOutput) { next; }
+			my $useragent=CleanFromCSSA($key);
+			print "<tr><td CLASS=AWL>$useragent</td><td>".Format_Date($_unknownreferer_l{$key},1)."</td></tr>\n";
+			$count++;
 		}
 		&tab_end;
-		print "<a name=\"MSIE\">&nbsp;</a><BR>";
-		&tab_head("$Message[34]<br><img src=\"$DirIcons/browser/msie.png\">",19);
-		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[58]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[15]</TH></TR>\n";
-		for ($i=1; $i<=$#_msiever_h; $i++) {
-			my $h="&nbsp;"; my $p="&nbsp;";
-			if ($_msiever_h[$i] > 0 && $_browser_h{"msie"} > 0) {
-				$h=$_msiever_h[$i]; $p=int($_msiever_h[$i]/$_browser_h{"msie"}*1000)/10; $p="$p&nbsp;%";
-			}
-			print "<TR><TD CLASS=AWL>MSIE/$i.xx</TD><TD>$h</TD><TD>$p</TD></TR>\n";
+		&html_end;
+		exit(0);
+	}
+	if ($QueryString =~ /output=unknownbrowser/i) {
+		print "$CENTER<a name=\"UNKOWNBROWSER\">&nbsp;</a><BR>";
+		&tab_head($Message[50],19);
+		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>Referer (".(scalar keys %_unknownrefererbrowser_l).")</TH><TH>$Message[9]</TH></TR>\n";
+		my $count=0;
+		foreach my $key (sort { $_unknownrefererbrowser_l{$b} <=> $_unknownrefererbrowser_l{$a} } keys (%_unknownrefererbrowser_l)) {
+			if ($count>=$MaxRowsInHTMLOutput) { next; }
+			my $useragent=CleanFromCSSA($key);
+			print "<tr><td CLASS=AWL>$useragent</td><td>".Format_Date($_unknownrefererbrowser_l{$key},1)."</td></tr>\n";
+			$count++;
 		}
 		&tab_end;
 		&html_end;
@@ -3671,7 +3660,7 @@ EOF
 	}
 	if ($QueryString =~ /output=browserdetail/i) {
 		print "$CENTER<a name=\"NETSCAPE\">&nbsp;</a><BR>";
-		&tab_head("$Message[33]<br><img src=\"$DirIcons/browser/netscape.png\">",19);
+		&tab_head("$Message[33]<br><img src=\"$DirIcons/browser/netscape_large.png\">",19);
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[58]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[15]</TH></TR>\n";
 		for (my $i=1; $i<=$#_nsver_h; $i++) {
 			my $h="&nbsp;"; my $p="&nbsp;";
@@ -3682,7 +3671,7 @@ EOF
 		}
 		&tab_end;
 		print "<a name=\"MSIE\">&nbsp;</a><BR>";
-		&tab_head("$Message[34]<br><img src=\"$DirIcons/browser/msie.png\">",19);
+		&tab_head("$Message[34]<br><img src=\"$DirIcons/browser/msie_large.png\">",19);
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[58]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[15]</TH></TR>\n";
 		for ($i=1; $i<=$#_msiever_h; $i++) {
 			my $h="&nbsp;"; my $p="&nbsp;";
@@ -3722,36 +3711,6 @@ EOF
 		&html_end;
 		exit(0);
 	}
-	if ($QueryString =~ /output=unknownbrowser/i) {
-		print "$CENTER<a name=\"UNKOWNBROWSER\">&nbsp;</a><BR>";
-		&tab_head($Message[50],19);
-		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>Referer (".(scalar keys %_unknownrefererbrowser_l).")</TH><TH>$Message[9]</TH></TR>\n";
-		my $count=0;
-		foreach my $key (sort { $_unknownrefererbrowser_l{$b} <=> $_unknownrefererbrowser_l{$a} } keys (%_unknownrefererbrowser_l)) {
-			if ($count>=$MaxRowsInHTMLOutput) { next; }
-			my $useragent=CleanFromCSSA($key);
-			print "<tr><td CLASS=AWL>$useragent</td><td>".Format_Date($_unknownrefererbrowser_l{$key},1)."</td></tr>\n";
-			$count++;
-		}
-		&tab_end;
-		&html_end;
-		exit(0);
-	}
-	if ($QueryString =~ /output=unknownos/i) {
-		print "$CENTER<a name=\"UNKOWNOS\">&nbsp;</a><BR>";
-		&tab_head($Message[46],19);
-		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>Referer (".(scalar keys %_unknownreferer_l).")</TH><TH>$Message[9]</TH></TR>\n";
-		my $count=0;
-		foreach my $key (sort { $_unknownreferer_l{$b} <=> $_unknownreferer_l{$a} } keys (%_unknownreferer_l)) {
-			if ($count>=$MaxRowsInHTMLOutput) { next; }
-			my $useragent=CleanFromCSSA($key);
-			print "<tr><td CLASS=AWL>$useragent</td><td>".Format_Date($_unknownreferer_l{$key},1)."</td></tr>\n";
-			$count++;
-		}
-		&tab_end;
-		&html_end;
-		exit(0);
-	}
 	if ($QueryString =~ /output=errors404/i) {
 		print "$CENTER<a name=\"NOTFOUNDERROR\">&nbsp;</a><BR>";
 		&tab_head($Message[47],19);
@@ -3775,7 +3734,6 @@ EOF
 		&html_end;
 		exit(0);
 	}
-
 	
 	# SUMMARY
 	#---------------------------------------------------------------------
@@ -3825,7 +3783,7 @@ EOF
 		print "<TD><b>$TotalVisits</b><br>($RatioVisits&nbsp;$Message[52])</TD>";
 		print "<TD><b>$TotalPages</b><br>($RatioPages&nbsp;".lc($Message[56]."/".$Message[12]).")</TD>";
 		print "<TD><b>$TotalHits</b><br>($RatioHits&nbsp;".lc($Message[57]."/".$Message[12]).")</TD>";
-		print "<TD><b>".Format_Bytes(int($TotalBytes))."</b><br>($RatioBytes&nbsp;$Message[44]/".lc($Message[12]).")</TD>";
+		print "<TD><b>".Format_Bytes(int($TotalBytes))."</b><br>($RatioBytes&nbsp;$Message[108]/".lc($Message[12]).")</TD>";
 		print "</TR>\n";
 		print "<TR valign=bottom><TD colspan=5 align=center><center>";
 		# Show monthly stats
@@ -4194,7 +4152,7 @@ EOF
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\" onmouseover=\"ShowTooltip(16);\" onmouseout=\"HideTooltip(16);\"><TH>$Message[83]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH width=120>$Message[9]</TH></TR>\n";
 		my $count=0;
 		foreach my $key (sort { $_robot_h{$b} <=> $_robot_h{$a} } keys (%_robot_h)) {
-			print "<tr><td CLASS=AWL>".($RobotHashIDLib{$key}?$RobotHashIDLib{$key}:"Unknown robot")."</td><td>$_robot_h{$key}</td><td>".Format_Date($_robot_l{$key},1)."</td></tr>\n";
+			print "<tr><td CLASS=AWL>".($RobotsHashIDLib{$key}?$RobotsHashIDLib{$key}:"Unknown robot")."</td><td>$_robot_h{$key}</td><td>".Format_Date($_robot_l{$key},1)."</td></tr>\n";
 			$count++;
 			}
 		&tab_end;
@@ -4325,16 +4283,17 @@ EOF
 		$BrowsersHashIDLib{"msie"}="<font color=blue>MS Internet Explorer</font> <a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$DirCgi$PROG.$Extension?${NewLinkParams}output=browserdetail":"$PROG$FileSuffix.browserdetail.html")."\">($Message[58])</a>";
 		my $Total=0; foreach my $key (keys %_browser_h) { $Total+=$_browser_h{$key}; }
 		&tab_head($Message[21],19);
-		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>Browser</TH><TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[15]</TH></TR>\n";
+		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH colspan=2>Browser</TH><TH width=80>$Message[111]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[15]</TH></TR>\n";
 		$count=0; 
 		foreach my $key (sort { $_browser_h{$b} <=> $_browser_h{$a} } keys (%_browser_h)) {
 			my $p=int($_browser_h{$key}/$Total*1000)/10;
 			if ($key eq "Unknown") {
-				print "<TR><TD CLASS=AWL><a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$DirCgi$PROG.$Extension?${NewLinkParams}output=unknownbrowser":"$PROG$FileSuffix.unknownbrowser.html")."\">$Message[0]</a></TD><TD>$_browser_h{$key}</TD><TD>$p&nbsp;%</TD></TR>\n";
+				print "<TR><TD width=80><IMG SRC=\"$DirIcons\/browser\/unknown.png\"></TD><TD CLASS=AWL><a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$DirCgi$PROG.$Extension?${NewLinkParams}output=unknownbrowser":"$PROG$FileSuffix.unknownbrowser.html")."\">$Message[0]</a></TD><TD width=80>?</TD><TD>$_browser_h{$key}</TD><TD>$p&nbsp;%</TD></TR>\n";
 			}
 			else {
+				my $nameicon=$BrowsersHashIcon{$key}||"notavailable"; $nameicon =~ s/\s.*//; $nameicon =~ tr/A-Z/a-z/;
 				my $newbrowser=$BrowsersHashIDLib{$key}||$key;
-				print "<TR><TD CLASS=AWL>$newbrowser</TD><TD>$_browser_h{$key}</TD><TD>$p&nbsp;%</TD></TR>\n";
+				print "<TR><TD width=80><IMG SRC=\"$DirIcons\/browser\/$nameicon.png\"></TD><TD CLASS=AWL>$newbrowser</TD><TD width=80>".($BrowsersHereAreGrabbers{$key}?"<b>$Message[112]</b>":"$Message[113]")."<TD>$_browser_h{$key}</TD><TD>$p&nbsp;%</TD></TR>\n";
 			}
 			$count++;
 		}
@@ -4353,13 +4312,13 @@ EOF
 		foreach my $key (sort { $_os_h{$b} <=> $_os_h{$a} } keys (%_os_h)) {
 			my $p=int($_os_h{$key}/$Total*1000)/10;
 			if ($key eq "Unknown") {
-				print "<TR><TD><IMG SRC=\"$DirIcons\/os\/unknown.png\"></TD><TD CLASS=AWL><a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$DirCgi$PROG.$Extension?${NewLinkParams}output=unknownos":"$PROG$FileSuffix.unknownos.html")."\">$Message[0]</a></TD><TD>$_os_h{$key}</TD>";
+				print "<TR><TD width=80><IMG SRC=\"$DirIcons\/os\/unknown.png\"></TD><TD CLASS=AWL><a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$DirCgi$PROG.$Extension?${NewLinkParams}output=unknownos":"$PROG$FileSuffix.unknownos.html")."\">$Message[0]</a></TD><TD>$_os_h{$key}</TD>";
 				print "<TD>$p&nbsp;%</TD></TR>\n";
 				}
 			else {
 				my $newos=$OSHashLib{$key}||$key;
 				my $nameicon=$newos; $nameicon =~ s/\s.*//; $nameicon =~ tr/A-Z/a-z/;
-				print "<TR><TD><IMG SRC=\"$DirIcons\/os\/$nameicon.png\"></TD><TD CLASS=AWL>$newos</TD><TD>$_os_h{$key}</TD>";
+				print "<TR><TD width=80><IMG SRC=\"$DirIcons\/os\/$nameicon.png\"></TD><TD CLASS=AWL>$newos</TD><TD>$_os_h{$key}</TD>";
 				print "<TD>$p&nbsp;%</TD></TR>\n";
 			}
 			$count++;

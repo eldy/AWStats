@@ -110,3 +110,6 @@ message107=Lien depuis un NewsGroup
 message108=Ko
 message109=Mo
 message110=Go
+message111=Aspirateur
+message112=Oui
+message113=Non
