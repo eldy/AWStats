@@ -21,7 +21,7 @@ use vars qw(%DomainsHashIDLib @RobotsSearchIDOrder_list1 @RobotsSearchIDOrder_li
 #-------------------------------------------------------
 # Defines
 #-------------------------------------------------------
-my $VERSION="4.0 (build 59)";
+my $VERSION="4.0 (build 60)";
 
 # ---------- Init variables -------
 my $Debug=0;
@@ -62,7 +62,7 @@ my $nowtime = my $nowweekofmonth = my $nowdaymod = my $nowsmallyear = 0;
 my $nowsec = my $nowmin = my $nowhour = my $nowday = my $nowmonth = my $nowyear = my $nowwday = 0;
 my $tomorrowtime = my $tomorrowsmallyear = 0;
 my $tomorrowsec = my $tomorrowmin = my $tomorrowhour = my $tomorrowday = my $tomorrowmonth = my $tomorrowyear = my $tomorrowwday = 0;
-my ($BarHeight,$BarWidth,$DebugResetDone,$Expires,
+my ($AllowAccessFromWebToAuthenticatedUsersOnly,$BarHeight,$BarWidth,$DebugResetDone,$Expires,
 $CreateDirDataIfNotExists, $KeepBackupOfHistoricFiles, $MaxLengthOfURL,
 $MaxNbOfDomain, $MaxNbOfHostsShown, $MaxNbOfKeywordsShown, $MaxNbOfLoginShown,
 $MaxNbOfPageShown, $MaxNbOfRefererShown, $MaxNbOfRobotShown,
@@ -110,6 +110,7 @@ my $TotalPages = my $TotalHits = my $TotalBytes = 0;
 # ---------- Init arrays --------
 my @Message=();
 my @HostAliases=();
+my @AllowAccessFromWebToFollowingAuthenticatedUsers=();
 my @OnlyFiles = my @SkipDNSLookupFor = my @SkipFiles = my @SkipHosts = ();
 my @DOWIndex=();
 my @RobotArrayList = my @RobotsSearchIDOrder = ();
@@ -498,7 +499,6 @@ sub Read_Config_File {
 		if ($param =~ /^DirCgi/)                { $DirCgi=$value; next; }
 		if ($param =~ /^DirIcons/)              { $DirIcons=$value; next; }
 		if ($param =~ /^DNSLookup/)             { $DNSLookup=$value; next; }
-		if ($param =~ /^AllowToUpdateStatsFromBrowser/)	{ $AllowToUpdateStatsFromBrowser=$value; next; }
 		if ($param =~ /^SiteDomain/)			{
 			$value =~ s/\\\./\./g; $value =~ s/([^\\])\./$1\\\./g; $value =~ s/^\./\\\./;	# Replace . into \.
 			$SiteDomain=$value; next;
@@ -509,7 +509,14 @@ sub Read_Config_File {
 			foreach my $elem (@felter)	  { push @HostAliases,$elem; }
 			next;
 			}
+		if ($param =~ /^AllowToUpdateStatsFromBrowser/)	{ $AllowToUpdateStatsFromBrowser=$value; next; }
 		# Read optional setup section
+		if ($param =~ /^AllowAccessFromWebToAuthenticatedUsersOnly/)	{ $AllowAccessFromWebToAuthenticatedUsersOnly=$value; next; }
+		if ($param =~ /^AllowAccessFromWebToFollowingAuthenticatedUsers/) {
+			my @felter=split(/\s+/,$value);
+			foreach my $elem (@felter)	  { push @AllowAccessFromWebToFollowingAuthenticatedUsers,$elem; }
+			next;
+			}
 		if ($param =~ /^CreateDirDataIfNotExists/)   { $CreateDirDataIfNotExists=$value; next; }
 		if ($param =~ /^SaveDatabaseFilesWithPermissionsForEveryone/)   { $SaveDatabaseFilesWithPermissionsForEveryone=$value; next; }
 		if ($param =~ /^PurgeLogFile/)          { $PurgeLogFile=$value; next; }
@@ -819,6 +826,7 @@ sub Check_Config {
 	if ($DNSLookup !~ /[0-1]/)                            { error("Error: DNSLookup parameter is wrong. Value is '$DNSLookup' (should be 0 or 1)"); }
 	if ($AllowToUpdateStatsFromBrowser !~ /[0-1]/) 	{ $AllowToUpdateStatsFromBrowser=0; }
 	# Optional setup section
+	if ($AllowAccessFromWebToAuthenticatedUsersOnly !~ /[0-1]/)     { $AllowAccessFromWebToAuthenticatedUsersOnly=0; }
 	if ($CreateDirDataIfNotExists !~ /[0-1]/)      	{ $CreateDirDataIfNotExists=0; }
 	if ($SaveDatabaseFilesWithPermissionsForEveryone !~ /[0-1]/)	{ $SaveDatabaseFilesWithPermissionsForEveryone=1; }
 	if ($PurgeLogFile !~ /[0-1]/)                 	{ $PurgeLogFile=0; }
@@ -2421,7 +2429,22 @@ if ($Debug) { debug("YearRequired=$YearRequired MonthRequired=$MonthRequired",2)
 &html_head;
 
 # Security check
-if ($UpdateStats && (! $AllowToUpdateStatsFromBrowser) && ($ENV{"GATEWAY_INTERFACE"})) {
+if ($AllowAccessFromWebToAuthenticatedUsersOnly && $ENV{"GATEWAY_INTERFACE"}) {
+	debug("REMOTE_USER is ".$ENV{"REMOTE_USER"});
+	if (! $ENV{"REMOTE_USER"}) {
+		error("Error: Access to statistics is only allowed from an authenticated session to authenticated users.");
+	}
+	if (@AllowAccessFromWebToFollowingAuthenticatedUsers) {
+		my $userisinlist=0;
+		foreach my $key (@AllowAccessFromWebToFollowingAuthenticatedUsers) {
+			if ($ENV{"REMOTE_USER"} eq $key) { $userisinlist=1; last; }
+		}
+		if (! $userisinlist) {
+			error("Error: User <b>".$ENV{"REMOTE_USER"}."</b> is not allowed to access statistics of this domain/config.");
+		}
+	}
+}
+if ($UpdateStats && (! $AllowToUpdateStatsFromBrowser) && $ENV{"GATEWAY_INTERFACE"}) {
 	error("Error: Update of statistics is not allowed from a browser.");
 }
 
