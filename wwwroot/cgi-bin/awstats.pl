@@ -6074,7 +6074,7 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 		elsif ($LogType eq 'M') {						# Mail record
 			if (! $ValidSMTPCodes{$field[$pos_code]}) {	# Code is not valid
 				$_errors_h{$field[$pos_code]}++;
-				#$_errors_k{$field[$pos_code]}+=int($field[$pos_size]);	# Useless since pos_size is often 0 or ? when error
+				$_errors_k{$field[$pos_code]}+=int($field[$pos_size]);	# Size is often 0 when error
 				if ($Debug) { debug(" Record stored in the status code chart (status code=$field[$pos_code])",2); }
 				$countedtraffic=1;
 				if ($PageBool) { $_time_nv_p[$hourrecord]++; }
