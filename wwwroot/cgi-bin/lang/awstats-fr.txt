@@ -147,3 +147,4 @@ message143=Navigateurs avec support audio Real
 message144=Navigateurs avec support audio QuickTime
 message145=Navigateurs avec support audio Windows Media
 message146=Navigateurs avec support PDF
+message147=Codes Erreurs SMTP

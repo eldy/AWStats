@@ -127,7 +127,7 @@ $EnableLockForUpdate $DNSLookup $AllowAccessFromWebToAuthenticatedUsersOnly
 $BarHeight $BarWidth $CreateDirDataIfNotExists $KeepBackupOfHistoricFiles
 $NbOfLinesParsed $NbOfLinesDropped $NbOfLinesCorrupted $NbOfOldLines $NbOfNewLines
 $NbOfLinesShowsteps $NewLinePhase $NbOfLinesForCorruptedLog $PurgeLogFile
-$ShowAuthenticatedUsers $ShowFileSizesStats $ShowScreenSizeStats 
+$ShowAuthenticatedUsers $ShowFileSizesStats $ShowScreenSizeStats $ShowSMTPErrorsStats
 $ShowDropped $ShowCorrupted $ShowUnknownOrigin $ShowLinksToWhoIs
 $ShowEMailSenders $ShowEMailReceivers
 $AuthenticatedUsersNotCaseSensitive
@@ -138,13 +138,13 @@ $UseFramesWhenCGI $DecodeUA
 $BarHeight, $BarWidth, $CreateDirDataIfNotExists, $KeepBackupOfHistoricFiles, $MaxLengthOfURL,
 $NbOfLinesParsed, $NbOfLinesDropped, $NbOfLinesCorrupted, $NbOfOldLines, $NbOfNewLines,
 $NbOfLinesShowsteps, $NewLinePhase, $NbOfLinesForCorruptedLog, $PurgeLogFile,
-$ShowAuthenticatedUsers, $ShowFileSizesStats, $ShowScreenSizeStats,
+$ShowAuthenticatedUsers, $ShowFileSizesStats, $ShowScreenSizeStats, $ShowSMTPErrorsStats,
 $ShowDropped, $ShowCorrupted, $ShowUnknownOrigin, $ShowLinksToWhoIs,
 $ShowEMailSenders, $ShowEMailReceivers,
 $AuthenticatedUsersNotCaseSensitive,
 $Expires, $UpdateStats, $MigrateStats, $URLNotCaseSensitive, $URLWithQuery, $URLReferrerWithQuery,
 $UseFramesWhenCGI, $DecodeUA)=
-(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
+(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
 use vars qw/
 $AllowToUpdateStatsFromBrowser $ArchiveLogRecords $DetailedReportsOnNewWindows
 $FirstDayOfWeek $KeyWordsNotSensitive $SaveDatabaseFilesWithPermissionsForEveryone
@@ -374,6 +374,8 @@ use vars qw/ %ftpcodelib /;
 # SMTP codes
 use vars qw/ %smtpcodelib /;
 %smtpcodelib = (
+'450'=>'User unknown',
+'554'=>'Relay denied'
 );
 
 # DEFAULT MESSAGE
@@ -526,6 +528,7 @@ use vars qw/ @Message /;
 'Browsers with Quictime audio playing support',
 'Browsers with Windows Media audio playing support',
 'Browsers with PDF support',
+'SMTP Error codes'
 );
 
 
@@ -1460,6 +1463,7 @@ sub Check_Config {
 	if ($ShowKeywordsStats !~ /[0-1]/)            	{ $ShowKeywordsStats=1; }
 	if ($ShowMiscStats !~ /[0-1]/)             	    { $ShowMiscStats=1; }
 	if ($ShowHTTPErrorsStats !~ /[0-1]/)          	{ $ShowHTTPErrorsStats=1; }
+	if ($ShowSMTPErrorsStats !~ /[0-1]/)          	{ $ShowSMTPErrorsStats=0; }
 	if ($AddDataArrayMonthStats !~ /[0-1]/)        	{ $AddDataArrayMonthStats=1; }
 	if ($AddDataArrayShowDaysOfMonthStats !~ /[0-1]/)       { $AddDataArrayShowDaysOfMonthStats=1; }
 	if ($AddDataArrayShowDaysOfWeekStats !~ /[0-1]/)       	{ $AddDataArrayShowDaysOfWeekStats=1; }
@@ -1771,7 +1775,7 @@ sub Read_History_With_TmpUpdate {
 		if (! $withupdate && $HTMLOutput{'main'} && $ShowKeywordsStats) { $SectionsToLoad{'keywords'}=$order++; }	# If we update, dont need to load
 		# Others
 		if ($UpdateStats || $MigrateStats || ($HTMLOutput{'main'} && $ShowMiscStats)) { $SectionsToLoad{'misc'}=$order++; }
-		if ($UpdateStats || $MigrateStats || ($HTMLOutput{'main'} && $ShowHTTPErrorsStats) || $HTMLOutput{'errors'}) { $SectionsToLoad{'errors'}=$order++; }
+		if ($UpdateStats || $MigrateStats || ($HTMLOutput{'main'} && ($ShowHTTPErrorsStats || $ShowSMTPErrorsStats)) || $HTMLOutput{'errors'}) { $SectionsToLoad{'errors'}=$order++; }
 		foreach my $code (keys %TrapInfosForHTTPErrorCodes) {
 			if ($UpdateStats || $MigrateStats || $HTMLOutput{"errors$code"}) { $SectionsToLoad{"sider_$code"}=$order++; }
 		}
@@ -6362,12 +6366,12 @@ if (scalar keys %HTMLOutput) {
 			if ($ShowKeywordsStats)	 	 { print ($frame?"<tr><td class=AWS> &nbsp; <img height=8 width=9 src=\"$DirIcons/other/page.png\" alt=\"...\"> ":""); print "<a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=keywords":"$PROG$StaticLinks.keywords.$StaticExt")."\"$NewLinkTarget>$Message[121]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
 			if ($linetitle) { print ($frame?"":"</td></tr>\n"); }
 			# Others
-			$linetitle=&AtLeastOneNotNull($ShowFileTypesStats=~/C/i,$ShowMiscStats,$ShowHTTPErrorsStats);
+			$linetitle=&AtLeastOneNotNull($ShowFileTypesStats=~/C/i,$ShowMiscStats,$ShowHTTPErrorsStats,$ShowSMTPErrorsStats);
 			if ($linetitle) { print "<tr><th class=AWS".($frame?"":" valign=top").">$Message[2]: </th>\n"; }
 			if ($linetitle) { print ($frame?"</tr>\n":"<td class=AWS>"); }
 			if ($ShowFileTypesStats =~ /C/i)	 { print ($frame?"<tr><td class=AWS>":""); print "<a href=\"$linkanchor#FILETYPES\"$targetpage>$Message[98]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
 			if ($ShowMiscStats)	 		 { print ($frame?"<tr><td class=AWS>":""); print "<a href=\"$linkanchor#MISC\"$targetpage>$Message[139]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
-			if ($ShowHTTPErrorsStats)	 { print ($frame?"<tr><td class=AWS>":""); print "<a href=\"$linkanchor#ERRORS\"$targetpage>$Message[22]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
+			if ($ShowHTTPErrorsStats || $ShowSMTPErrorsStats)	 { print ($frame?"<tr><td class=AWS>":""); print "<a href=\"$linkanchor#ERRORS\"$targetpage>$Message[22]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
 			foreach my $code (keys %TrapInfosForHTTPErrorCodes) {
 				if ($ShowHTTPErrorsStats)	 { print ($frame?"<tr><td class=AWS> &nbsp; <img height=8 width=9 src=\"$DirIcons/other/page.png\" alt=\"...\"> ":""); print "<a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=errors$code":"$PROG$StaticLinks.errors$code.$StaticExt")."\"$NewLinkTarget>$Message[31]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
 			}
@@ -8875,7 +8879,7 @@ if (scalar keys %HTMLOutput) {
 			&tab_end;
 		}
 	
-		# BY ERRORS
+		# BY HTTP ERRORS
 		#----------------------------
 		if ($ShowHTTPErrorsStats) {
 			if ($Debug) { debug("ShowHTTPErrorsStats",2); }
@@ -8892,6 +8896,29 @@ if (scalar keys %HTMLOutput) {
 				if ($TrapInfosForHTTPErrorCodes{$key}) { print "<TD><a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=errors$key":"$PROG$StaticLinks.errors$key.$StaticExt")."\"$NewLinkTarget>$key</a></TD>"; }
 				else { print "<TD>$key</TD>"; }
 				print "<TD CLASS=AWS>".($httpcodelib{$key}?$httpcodelib{$key}:'Unknown error')."</TD><TD>$_errors_h{$key}</TD><TD>$p %</TD><TD>".Format_Bytes($_errors_k{$key})."</TD>";
+				print "</TR>\n";
+				$total_h+=$_errors_h{$key};
+				$count++;
+			}
+			&tab_end;
+		}
+
+		# BY SMTP ERRORS
+		#----------------------------
+		if ($ShowSMTPErrorsStats) {
+			if ($Debug) { debug("ShowSMTPErrorsStats",2); }
+			print "$Center<a name=\"ERRORS\">&nbsp;</a><BR>\n";
+			my $title="$Message[147]";
+			&tab_head("$title",19);
+			print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH colspan=2>$Message[147]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[15]</TH><TH bgcolor=\"#$color_k\" width=80>$Message[75]</TH></TR>\n";
+			$total_h=0;
+			my $count=0;
+			&BuildKeyList($MaxRowsInHTMLOutput,1,\%_errors_h,\%_errors_h);
+			foreach my $key (@keylist) {
+				my $p=int($_errors_h{$key}/$TotalHitsErrors*1000)/10;
+				print "<TR".($TOOLTIPON?" onmouseover=\"ShowTip($key);\" onmouseout=\"HideTip($key);\"":"").">";
+				print "<TD>$key</TD>";
+				print "<TD CLASS=AWS>".($smtpcodelib{$key}?$smtpcodelib{$key}:'Unknown error')."</TD><TD>$_errors_h{$key}</TD><TD>$p %</TD><TD>".Format_Bytes($_errors_k{$key})."</TD>";
 				print "</TR>\n";
 				$total_h+=$_errors_h{$key};
 				$count++;
