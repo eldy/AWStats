@@ -514,7 +514,9 @@ use vars qw/ @Message /;
 'Sensitive targets',
 'Javascript disabled',
 'Created by',
-'plugins'
+'plugins',
+'Regions',
+'Cities'
 );
 
 

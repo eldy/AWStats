@@ -171,3 +171,5 @@ message167=Cibles sensibles
 message168=Javascript désactivé
 message169=Généré par
 message170=plugins
+message171=Regions
+message172=Villes

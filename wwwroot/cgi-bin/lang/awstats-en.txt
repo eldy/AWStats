@@ -171,3 +171,5 @@ message167=Sensitive targets
 message168=Javascript disabled
 message169=Created by
 message170=plugins
+message171=Regions
+message172=Cities
