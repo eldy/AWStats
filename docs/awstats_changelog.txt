@@ -14,6 +14,7 @@ Fixes:
   When a mail is sent to 2 different receivers, report 2 records instead of 1.
   When a forward is active, report the original receiver, not the
   "forwarded to".
+- Fixed not working timezone plugin with 5.7.
 
 New features/improvements:
 - Added %lognamequot tag for LogFormat parameter.

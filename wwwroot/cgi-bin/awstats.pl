@@ -1700,7 +1700,7 @@ sub Read_Plugins {
 	# Other possible directories :        		"./plugins"
 	my @PossiblePluginsDir=("${DIR}plugins","./plugins","/usr/local/awstats/wwwroot/cgi-bin/plugins","/usr/share/awstats/plugins");
 
-	if ($Debug) { debug("Call to Read_Plugins with list: @PluginsToLoad"); }
+	if ($Debug) { debug("Call to Read_Plugins with list: ".join(',',@PluginsToLoad)); }
 	foreach my $plugininfo (@PluginsToLoad) {
 		if ($NoLoadPlugin{$plugininfo}) {
 			if ($Debug) { debug(" Plugin load for '$plugininfo' has been disabled from command line"); }
@@ -1714,7 +1714,7 @@ sub Read_Plugins {
 		if ($pluginname) {
 			if (! $PluginsLoaded{'init'}{"$pluginname"}) {		# Plugin not already loaded
 				my %pluginisfor=('tooltips'=>'o','ipv6'=>'u','hashfiles'=>'u','geoip'=>'u',
-				'geoipfree'=>'u','hostinfo'=>'o','userinfo'=>'o','urlalias'=>'o','timehires'=>'u','timezone'=>'o');
+				'geoipfree'=>'u','hostinfo'=>'o','userinfo'=>'o','urlalias'=>'o','timehires'=>'u','timezone'=>'ou');
 				if ($pluginisfor{$pluginname}) {
 					# Do not load "update plugins" if output only
 					if (! $UpdateStats && scalar keys %HTMLOutput && $pluginisfor{$pluginname} !~ /o/) { $PluginsLoaded{'init'}{"$pluginname"}=1; next; }
