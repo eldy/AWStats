@@ -1638,7 +1638,7 @@ sub Check_Config {
 		foreach my $rowkeycouple (split(/\s\|\s/, $ExtraFirstColumnValues[$extranum])) {
 	 		my ($rowkeytype, $rowkeytypeval)=split(/,/,$rowkeycouple,2);
 	 		$ExtraFirstColumnValuesType[$extranum][$part]=$rowkeytype;
-			if ($rowkeytype =~ /^REGEX\[(.*)\]$/i) { $rowkeytype=$1; }
+			if ($rowkeytypeval =~ /^REGEX\[(.*)\]$/i) { $rowkeytypeval=$1; }
 			#else { $rowkeytype=quotemeta($rowkeytype); }
 	 		$ExtraFirstColumnValuesTypeVal[$extranum][$part]=qr/$rowkeytypeval/i;
 			$part++;
