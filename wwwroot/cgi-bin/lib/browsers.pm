@@ -106,8 +106,9 @@
 "webtv",
 # Other kind of browsers
 "apt",
-"wget",
+"curl",
 "csscheck",
+"wget",
 "w3m",
 "w3c_css_validator",
 "w3c_validator",
@@ -211,8 +212,9 @@
 "webtv","WebTV browser",
 # Other kind of browsers
 "apt","Debian APT",
-"wget","Wget",
+"curl","Curl",
 "csscheck","WDG CSS Validator",
+"wget","Wget",
 "w3m","w3m",
 "w3c_css_validator","W3C CSS Validator",
 "w3c_validator","W3C HTML Validator",
@@ -232,7 +234,8 @@
 "teleport","1",
 "webcapture","1",
 "webcopier","1",
-"wget","1"
+"curl","1"
+"wget","1",
 );
 
 
