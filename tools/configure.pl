@@ -9,7 +9,10 @@
 # See COPYING.TXT file about AWStats GNU General Public License.
 #-------------------------------------------------------
 # $Revision$ - $Author$ - $Date$
+require 5.005;
+
 use strict;
+
 
 #-------------------------------------------------------
 # IF YOU ARE A PACKAGE BUILDER, CHANGE THIS TO MATCH YOUR PATH
@@ -71,7 +74,7 @@ $WebServerChanged=0;
 $UseAlias=0;
 %LogFormat=();
 %ConfToChange=();
-%OSLib=('linux'=>'Linux or Unix','macosx'=>'Mac OS','windows'=>'Windows');
+%OSLib=('linux'=>'Linux, BSD or Unix','macosx'=>'Mac OS','windows'=>'Windows');
 $Step=0;
 
 
@@ -274,17 +277,27 @@ if ($nowsec < 10) { $nowsec = "0$nowsec"; }
 print "\n";
 print "----- AWStats $PROG $VERSION (c) Laurent Destailleur -----\n";
 print "This tool will help you to configure AWStats to analyze statistics for\n";
-print "one web server. If you need to analyze load balanced servers log files, to\n";
-print "analyze downloaded log files without web server, to analyze mail or ftp log\n";
-print "files, or need to manage rotated logs, you will have to complete the config\n";
-print "file manually according to your needs.\n";
+print "one web server. You can try to use it to let it do all that is possible\n";
+print "in AWStats setup, however following the step by step manual setup\n";
+print "documentation (docs/index.html) is often a better idea. Above all if:\n";
+print "- You are not an administrator user,\n";
+print "- You want to analyze downloaded log files without web server,\n";
+print "- You want to analyze mail or ftp log files instead of web log files,\n";
+print "- You need to analyze load balanced servers log files,\n";
+print "- You want to 'understand' all possible ways to use AWStats...\n";
 print "Read the AWStats documentation (docs/index.html).\n";
 
 # Detect OS type
 # --------------
-if (-d "/etc" && -d "/home") { $OS='linux'; $CR=''; }
+if ("$^O" =~ /linux/i || (-d "/etc" && -d "/var" && "$^O" !~ /cygwin/i)) { $OS='linux'; $CR=''; }
 elsif (-d "/etc" && -d "/Users") { $OS='macosx'; $CR=''; }
-else { $OS='windows'; $CR="\r"; }
+elsif ("$^O" =~ /cygwin/i || "$^O" =~ /win32/i) { $OS='windows'; $CR="\r"; }
+if (! $OS) {
+    print "configure.pl was not able to detect your OS.\n";
+	print "configure.pl aborted.\n";
+	exit 1;
+}
+
 #print "Running OS detected: $OS (Perl $^[)\n";
 print "\n-----> Running OS detected: $OSLib{$OS}\n";
 
@@ -364,7 +377,7 @@ if ($OS eq 'linux' || $OS eq 'macosx') {
 		}
 	}
 }
-if ($OS eq 'windows') {
+if ($OS eq 'windows' && "$^O" !~ /cygwin/i) {
 	$reg->Delimiter("/");
 	if ($tips=$reg->{"LMachine/Software/Apache Group/Apache/"}) {
 		# If Apache registry call successfull
@@ -386,16 +399,15 @@ if (! scalar keys %ApacheConfPath) {
 	# Ask web server path
 	print "$PROG did not find your Apache web server path.\n";
 	
-	if ($OS eq 'windows') 	{
-		print "\nPlease, enter full directory path of your Apache web server or\n";
-		print "'none' to skip this step if you don't have local web server.\n";
-		print "Example: /usr/local/apache\n";
-		print "Example: d:\\Program files\\apache group\\apache\n";
-		while ($bidon ne 'none' && ! -d "$bidon") {
-			print "Apache Web server path (CTRL+C to cancel):\n> ";
-			$bidon=<STDIN>; chomp $bidon;
-			if ($bidon && ! -d "$bidon" && $bidon ne 'none') { print "  The directory '$bidon' does not exists.\n"; }
-		}
+	print "\nPlease, enter full directory path of your Apache web server or\n";
+	print "'none' to skip this step if you don't have local web server or\n";
+	print "don't have permission to change its setup.\n";
+	print "Example: /usr/local/apache\n";
+	print "Example: d:\\Program files\\apache group\\apache\n";
+	while ($bidon ne 'none' && ! -d "$bidon") {
+		print "Apache Web server path ('none' to skip):\n> ";
+		$bidon=<STDIN>; chomp $bidon;
+		if ($bidon && ! -d "$bidon" && $bidon ne 'none') { print "  The directory '$bidon' does not exists.\n"; }
 	}
 
 	if ($bidon ne 'none') {
@@ -675,7 +687,7 @@ if ($OS eq 'linux' || $OS eq "macosx") {
 	$bidon=<STDIN>;
 }
 elsif ($OS eq 'windows') {
-	print "Sorry, for windows users, if you want to have statistics to be\n";
+	print "Sorry, for Windows users, if you want to have statistics to be\n";
 	print "updated on a regular basis, you have to add the update process\n";
 	print "in a scheduler task manually (See AWStats docs/index.html).\n";
 	print "Press ENTER to continue... ";
@@ -702,7 +714,7 @@ if ($site) {
 	}
 	else {
 		print "You can also build static report pages for '$site' with command:\n";
-		print "> perl awstats.pl -output=pagename -config=$site\n";
+		print "> perl awstats.pl -output=pagetype -config=$site\n";
 	}
 	print "\n";
 }
@@ -718,7 +730,7 @@ else {
 	}
 	else {
 		print "You can also build static report pages for 'demo' with command:\n";
-		print "> perl awstats.pl -output=pagename -config=demo\n";
+		print "> perl awstats.pl -output=pagetype -config=demo\n";
 	}
 	print "\n";
 }
