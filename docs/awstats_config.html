@@ -128,6 +128,7 @@ when reading it), follow the example:<br>
 <li><a href="#DirLang">DirLang</a>
 <li><a href="#Show">ShowHeader</a>
 <li><a href="#Show">ShowMenu</a>
+<li><a href="#Show">ShowSummary</a>
 <li><a href="#Show">ShowMonthStats</a>
 <li><a href="#Show">ShowDaysOfMonthStats</a>
 <li><a href="#Show">ShowDaysOfWeekStats</a>
@@ -1302,24 +1303,25 @@ AWStats 4.1+ supports both keywords AND keyphrases by default with no need of an
 
 <a name="Show"><b>Show...</b></a><br>
 <b>Version : </b><br>
+<font color="#808080">3.2 - 5.0 for ShowCompressionStats (deprecated since 5.1, use code C with ShowFileTypesStats instead)</font><br>
 <font color="#808080">3.2 - 5.3 for ShowHeader (deprecated since 5.4)</font><br>
 3.2+ for ShowMenu,ShowMonthStats,ShowDaysOfWeekStats,ShowHoursStats,
 ShowDomainsStats,ShowHostsStats,ShowAuthenticatedUsers,ShowRobotsStats,
 ShowPagesStats,ShowFileTypesStats,ShowFileSizesStats,ShowBrowsersStats,
 ShowOSStats,ShowOriginStats,ShowKeyphrasesStats,ShowKeywordsStats,ShowHTTPErrorsStats<br>
-<font color="#808080">3.2 - 5.0 for ShowCompressionStats (deprecated since 5.1, use code C with ShowFileTypesStats instead)</font><br>
 4.1+ for ShowSessionsStats, ShowKeywordsStats<br>
 5.1+ for all letters codes<br>
 5.5+ for ShowDaysOfMonthStats<br>
 5.6+ for ShowMiscStats,ShowSTMPErrorsStats<br>
 5.8+ for ShowClusterStats<br>
 6.0+ for ShowWormsStats<br>
+6.4+ for ShowSummary<br>
 <br># You choose here which reports you want to see in the main page and what you
 <br># want to see in those reports.
 <br># Possible values:
-<br>#  0  - Topic is not shown at all
-<br>#  1  - Report is shown with default informations
-<br># XYZ - Report is shown with only informations defined by code X,Y,Z...
+<br>#  0  - Report is not shown at all
+<br>#  1  - Report is shown in main page with an entry in menu and default columns
+<br># XYZ - Report shows column informations defined by code X,Y,Z...
 <br>#       X,Y,Z... are code letters among the following:
 <br>#        U = Unique visitors
 <br>#        V = Visits
@@ -1332,83 +1334,141 @@ ShowOSStats,ShowOriginStats,ShowKeyphrasesStats,ShowKeywordsStats,ShowHTTPErrors
 <br>#        C = Web compression (mod_gzip,mod_deflate)
 <br>#        M = Average mail size (mail logs)
 <br>#
-<br># Show menu header with report links
-<br># Default: 1, Possible codes: None
+<br>
+<br># Show menu header with reports' links
+<br># Possible values: 0 or 1
+<br># Default: 1
+<br>#
 <br>ShowMenu=1					
+<br>
+<br># Show monthly summary
+<br># Context: Web, Streaming, Mail, Ftp
+<br># Default: UVPHB, Possible column codes: UVPHB
+<br>ShowSummary=UVPHB
+<br>
 <br># Show monthly chart
-<br># Default: UVPHB, Possible codes: UVPHB
+<br># Context: Web, Streaming, Mail, Ftp
+<br># Default: UVPHB, Possible column codes: UVPHB
 <br>ShowMonthStats=UVPHB
+<br>
 <br># Show days of month chart
-<br># Default: VPHB, Possible codes: VPHB
+<br># Context: Web, Streaming, Mail, Ftp
+<br># Default: VPHB, Possible column codes: VPHB
 <br>ShowDaysOfMonthStats=VPHB
+<br>
 <br># Show days of week chart
-<br># Default: PHB, Possible codes: PHB
+<br># Context: Web, Streaming, Mail, Ftp
+<br># Default: PHB, Possible column codes: PHB
 <br>ShowDaysOfWeekStats=PHB
+<br>
 <br># Show hourly chart
-<br># Default: PHB, Possible codes: PHB
+<br># Context: Web, Streaming, Mail, Ftp
+<br># Default: PHB, Possible column codes: PHB
 <br>ShowHoursStats=PHB
+<br>
 <br># Show domains/country chart
-<br># Default: PHB, Possible codes: PHB
+<br># Context: Web, Streaming, Mail, Ftp
+<br># Default: PHB, Possible column codes: PHB
 <br>ShowDomainsStats=PHB
+<br>
 <br># Show hosts chart
-<br># Default: PHBL, Possible codes: PHBL
+<br># Context: Web, Streaming, Mail, Ftp
+<br># Default: PHBL, Possible column codes: PHBL
 <br>ShowHostsStats=PHBL
+<br>
 <br># Show authenticated users chart
-<br># Default: 0, Possible codes: PHBL
+<br># Context: Web, Streaming, Ftp
+<br># Default: 0, Possible column codes: PHBL
 <br>ShowAuthenticatedUsers=0
+<br>
 <br># Show robots chart
-<br># Default: HBL, Possible codes: HBL
+<br># Context: Web, Streaming
+<br># Default: HBL, Possible column codes: HBL
 <br>ShowRobotsStats=HBL
+<br>
 <br># Show worms chart
-<br># Default: 0 (See also LevelForWormsDetection if set), Possible codes: HBL
+<br># Context: Web, Streaming
+<br># Default: 0 (If set to other than 0, see also LevelForWormsDetection), Possible column codes: HBL
 <br>ShowWormsStats=0
+<br>
 <br># Show email senders chart (For use when analyzing mail log files)
-<br># Default: 0, Possible codes: HBML
+<br># Context: Mail
+<br># Default: 0, Possible column codes: HBML
 <br>ShowEMailSenders=0
+<br>
 <br># Show email receivers chart (For use when analyzing mail log files)
-<br># Default: 0, Possible codes: HBML
+<br># Context: Mail
+<br># Default: 0, Possible column codes: HBML
 <br>ShowEMailReceivers=0
+<br>
 <br># Show session chart
-<br># Default: 1, Possible codes: None
+<br># Context: Web, Streaming, Ftp
+<br># Default: 1, Possible column codes: None
 <br>ShowSessionsStats=1
+<br>
 <br># Show pages-url chart.
-<br># Default: PBEX, Possible codes: PBEX
+<br># Context: Web, Streaming, Ftp
+<br># Default: PBEX, Possible column codes: PBEX
 <br>ShowPagesStats=PBEX
+<br>
 <br># Show file types chart.
-<br># Default: HB, Possible codes: HBC
+<br># Context: Web, Streaming, Ftp
+<br># Default: HB, Possible column codes: HBC
 <br>ShowFileTypesStats=HB
+<br>
 <br># Show file size chart (Not yet available)
-<br># Default: 1, Possible codes: None
+<br># Context: Web, Streaming, Mail, Ftp
+<br># Default: 1, Possible column codes: None
 <br>ShowFileSizesStats=0		
+<br>
 <br># Show operating systems chart
-<br># Default: 1, Possible codes: None
+<br># Context: Web, Streaming, Ftp
+<br># Default: 1, Possible column codes: None
 <br>ShowOSStats=1
+<br>
 <br># Show browsers chart
-<br># Default: 1, Possible codes: None
+<br># Context: Web, Streaming
+<br># Default: 1, Possible column codes: None
 <br>ShowBrowsersStats=1
+<br>
 <br># Show screen size chart
-<br># Default: 0 (See also MiscTrackerUrl if set to 1), Possible codes: None
+<br># Context: Web, Streaming
+<br># Default: 0 (If set to 1, see also MiscTrackerUrl), Possible column codes: None
 <br>ShowScreenSizeStats=0
+<br>
 <br># Show origin chart
-<br># Default: PH, Possible codes: HB
+<br># Context: Web, Streaming
+<br># Default: PH, Possible column codes: PH
 <br>ShowOriginStats=PH
+<br>
 <br># Show keyphrases chart
-<br># Default: 1, Possible codes: None
+<br># Context: Web, Streaming
+<br># Default: 1, Possible column codes: None
 <br>ShowKeyphrasesStats=1
+<br>
 <br># Show keywords chart
-<br># Default: 1, Possible codes: None
+<br># Context: Web, Streaming
+<br># Default: 1, Possible column codes: None
 <br>ShowKeywordsStats=1
+<br>
 <br># Show misc chart
-<br># Default: a (See also MiscTrackerUrl parameter), Possible codes: ajdfrqwp
+<br># Context: Web, Streaming
+<br># Default: a (See also MiscTrackerUrl parameter), Possible column codes: anjdfrqwp
 <br>ShowMiscStats=a
+<br>
 <br># Show http errors chart
-<br># Default: 1, Possible codes: None
+<br># Context: Web, Streaming
+<br># Default: 1, Possible column codes: None
 <br>ShowHTTPErrorsStats=1
+<br>
 <br># Show smtp errors chart (For use when analyzing mail log files)
-<br># Default: 0, Possible codes: None
+<br># Context: Mail
+<br># Default: 0, Possible column codes: None
 <br>ShowSMTPErrorsStats=0
+<br>
 <br># Show the cluster report (Your LogFormat must contains the %cluster tag)
-<br># Default: 0, Possible codes: PHB
+<br># Context: Web, Streaming, Ftp
+<br># Default: 0, Possible column codes: PHB
 <br>ShowClusterStats=0
 
 <br><br><hr>
