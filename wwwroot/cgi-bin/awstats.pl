@@ -174,16 +174,16 @@ $LevelForSearchEnginesDetection $LevelForKeywordsDetection
 $LevelForSearchEnginesDetection, $LevelForKeywordsDetection)=
 (2,2,2,2,2,2);
 use vars qw/
-$DirLock $DirCgi $DirData $DirIcons $DirLang $AWScript $ArchiveFileName
+$DirLock $DirCgi $DirConfig $DirData $DirIcons $DirLang $AWScript $ArchiveFileName
 $AllowAccessFromWebToFollowingIPAddresses $HTMLHeadSection $HTMLEndSection $LinksToWhoIs $LinksToIPWhoIs
 $LogFile $LogType $LogFormat $LogSeparator $Logo $LogoLink $StyleSheet $WrapperScript $SiteDomain
 $UseHTTPSLinkForUrl $URLQuerySeparators $URLWithAnchor $ErrorMessages $ShowFlagLinks
 /;
-($DirLock, $DirCgi, $DirData, $DirIcons, $DirLang, $AWScript, $ArchiveFileName,
+($DirLock, $DirCgi, $DirConfig, $DirData, $DirIcons, $DirLang, $AWScript, $ArchiveFileName,
 $AllowAccessFromWebToFollowingIPAddresses, $HTMLHeadSection, $HTMLEndSection, $LinksToWhoIs, $LinksToIPWhoIs,
 $LogFile, $LogType, $LogFormat, $LogSeparator, $Logo, $LogoLink, $StyleSheet, $WrapperScript, $SiteDomain,
 $UseHTTPSLinkForUrl, $URLQuerySeparators, $URLWithAnchor, $ErrorMessages, $ShowFlagLinks)=
-('','','','','','','','','','','','','','','','','','','','','','','','','','');
+('','','','','','','','','','','','','','','','','','','','','','','','','','','');
 use vars qw/
 $color_Background $color_TableBG $color_TableBGRowTitle
 $color_TableBGTitle $color_TableBorder $color_TableRowTitle $color_TableTitle
@@ -982,7 +982,7 @@ sub GetSessionRange {
 
 #------------------------------------------------------------------------------
 # Function:     Read config file
-# Parameters:	-
+# Parameters:	None or configdir to scan
 # Input:        $DIR $PROG $SiteConfig
 # Output:		Global variables
 # Return:		-
@@ -993,7 +993,11 @@ sub Read_Config {
 	# Mandrake and Debian package :	"/etc/awstats"
 	# FHS standard, Suse package : 	"/etc/opt/awstats"
 	# Other possible directories :	"/etc", "/usr/local/etc/awstats"
-	my @PossibleConfigDir=("$DIR","/etc/awstats","/etc/opt/awstats","/etc","/usr/local/etc/awstats");
+	my $configdir=shift;
+	my @PossibleConfigDir=();
+
+	if ($configdir) { @PossibleConfigDir=("$configdir"); }
+	else { @PossibleConfigDir=("$DIR","/etc/awstats","/etc/opt/awstats","/etc","/usr/local/etc/awstats"); }
 
 	# Open config file
 	$FileConfig=$FileSuffix='';
@@ -1003,7 +1007,7 @@ sub Read_Config {
 		if (open(CONFIG,"$searchdir$PROG.$SiteConfig.conf")) 	{ $FileConfig="$searchdir$PROG.$SiteConfig.conf"; $FileSuffix=".$SiteConfig"; last; }
 		if (open(CONFIG,"$searchdir$PROG.conf"))  				{ $FileConfig="$searchdir$PROG.conf"; $FileSuffix=''; last; }
 	}
-	if (! $FileConfig) { error("Couldn't open config file \"$PROG.$SiteConfig.conf\" nor \"$PROG.conf\" : $!"); }
+	if (! $FileConfig) { error("Couldn't open config file \"$PROG.$SiteConfig.conf\" nor \"$PROG.conf\" after searching in path \"".join(',',@PossibleConfigDir)."\": $!"); }
 
 	# Analyze config file content and close it
 	&Parse_Config( *CONFIG , 1 , $FileConfig);
@@ -4673,6 +4677,8 @@ if ($ENV{'GATEWAY_INTERFACE'}) {	# Run from a browser as CGI
 	if ($QueryString =~ /config=([^&]+)/i)				{ $SiteConfig=&DecodeEncodedString("$1"); }
 	if ($QueryString =~ /logfile=([^&]+)/i)				{ $LogFile=&DecodeEncodedString("$1"); }
 	if ($QueryString =~ /diricons=([^&]+)/i)			{ $DirIcons=&DecodeEncodedString("$1"); }
+	if ($QueryString =~ /pluginmode=([^&]+)/i)			{ $PluginMode=&DecodeEncodedString("$1"); }
+	if ($QueryString =~ /configdir=([^&]+)/i)			{ $DirConfig="$1"; }
 	# All filters
 	if ($QueryString =~ /hostfilter=([^&]+)/i)			{ $FilterIn{'host'}=&DecodeEncodedString("$1"); }			# Filter on host list can also be defined with hostfilter=filter
 	if ($QueryString =~ /hostfilterex=([^&]+)/i)		{ $FilterEx{'host'}=&DecodeEncodedString("$1"); }			#
@@ -4685,8 +4691,6 @@ if ($ENV{'GATEWAY_INTERFACE'}) {	# Run from a browser as CGI
 	if ($QueryString =~ /output=lasthosts:([^&]+)/i)	{ $FilterIn{'host'}=&DecodeEncodedString("$1"); }			# Filter on host list can be defined with output=lasthosts:filter to reduce number of lines read and showed
 	if ($QueryString =~ /output=urldetail:([^&]+)/i)	{ $FilterIn{'url'}=&DecodeEncodedString("$1"); }			# Filter on URL list can be defined with output=urldetail:filter to reduce number of lines read and showed
 	if ($QueryString =~ /output=refererpages:([^&]+)/i)	{ $FilterIn{'refererpages'}=&DecodeEncodedString("$1"); }	# Filter on referer list can be defined with output=refererpages:filter to reduce number of lines read and showed
-
-	if ($QueryString =~ /pluginmode=([^&]+)/i)			{ $PluginMode=&DecodeEncodedString("$1"); }
 
 	# If migrate
 	if ($QueryString =~ /(^|-|&)migrate=([^&]+)/i)	{
@@ -4718,6 +4722,8 @@ else {								# Run from command line
 	if ($QueryString =~ /config=([^&]+)/i)				{ $SiteConfig="$1"; }
 	if ($QueryString =~ /logfile=([^&]+)/i)				{ $LogFile="$1"; }
 	if ($QueryString =~ /diricons=([^&]+)/i)			{ $DirIcons="$1"; }
+	if ($QueryString =~ /pluginmode=([^&]+)/i)			{ $PluginMode="$1"; }
+	if ($QueryString =~ /configdir=([^&]+)/i)			{ $DirConfig="$1"; }
 	# All filters
 	if ($QueryString =~ /hostfilter=([^&]+)/i)			{ $FilterIn{'host'}="$1"; }			# Filter on host list can also be defined with hostfilter=filter
 	if ($QueryString =~ /hostfilterex=([^&]+)/i)		{ $FilterEx{'host'}="$1"; }			#
@@ -4788,6 +4794,7 @@ if ($Debug) {
 	debug("YearRequired=$YearRequired, MonthRequired=$MonthRequired",2);
 	debug("UpdateFor=$UpdateFor",2);
 	debug("PluginMode=$PluginMode",2);
+	debug("DirConfig=$DirConfig",2);
 }
 
 # Force SiteConfig if AWSTATS_FORCE_CONFIG is defined
@@ -4901,7 +4908,7 @@ $SiteConfig||=$ENV{'SERVER_NAME'};
 $ENV{'AWSTATS_CURRENT_CONFIG'}=$SiteConfig;
 
 # Read config file (here SiteConfig is defined)
-&Read_Config;
+&Read_Config($DirConfig);
 if ($QueryString =~ /(^|&)lang=([^&]+)/i)	{ $Lang="$2"; }
 if (! $Lang || $Lang eq 'auto') {	# If lang not defined or forced to auto
 	my $langlist=$ENV{'HTTP_ACCEPT_LANGUAGE'}||''; $langlist =~ s/;[^,]*//g;
@@ -4915,7 +4922,7 @@ if (! $Lang || $Lang eq 'auto') {	# If lang not defined or forced to auto
 if (! $Lang || $Lang eq 'auto') { debug(" No language defined or available. Will use Lang=en",1); $Lang='en'; }
 
 # Check and correct bad parameters
-&Check_Config;
+&Check_Config();
 # Now SiteDomain is defined
 
 # Define frame name and correct variable for frames
