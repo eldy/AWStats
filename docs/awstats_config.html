@@ -992,14 +992,8 @@ when reading it), follow the example:<br>
 <a name="SplitSearchString"><b>SplitSearchString</b></a><br>
 <font color="#808080">
 <b>Version : </b>2.24 - 4.0 (deprecated since 4.1)<br>
+This parameter has been removed since 4.1.<br>
 AWStats 4.1+ supports both keywords AND keyphrases by default with no need of any parameter.<br>
-<br># Search engines keywords reported are full search string or separate keywords
-<br># Possible values:
-<br># 0 - Search keywords reported are full search string (ie: "town maps")
-<br># 1 - Search keywords reported are separated words (ie: "town" and "maps")
-<br># Default: 0
-<br>#
-<br>SplitSearchString=0
 </font>
 
 <br><br><hr>
@@ -1366,23 +1360,19 @@ ShowOSStats,ShowOriginStats,ShowKeyphrasesStats,ShowKeywordsStats,ShowHTTPErrors
 <br><br><hr>
 
 <a name="ShowLinksToWhoIs"><b>ShowLinksToWhoIs</b></a><br>
-<b>Version : </b>4.0+<br>
-<br># AWStats can include a link to WhoIs database on all hostnames/ip. For this, you
-<br># must set ShowLinksToWhoIs to 1. Warning, a such feature depends on two next
-<br># parameter (LinksToWhoIs and LinksToIPWhoIs) and on WhoIs server
-<br># exhaustivity and availability.
-<br># For this reason, this feature can't be a reliable feature.
-<br># Possible values: 0 or 1
-<br># Default: 0
-<br>#
-<br>ShowLinksToWhoIs=0
+<font color="#808080">
+<b>Version : </b>4.0 - 5.6 (deprecated since 5.7, replaced by plugin 'hostinfo')<br>
+This parameter has been removed since 5.7.<br>
+You must enable the plugin 'hostinfo' to get the same result if you were using this
+parameter.
+</font>
 
 <br><br><hr>
 
 <a name="LinksToWhoIs"><b>LinksToWhoIs</b></a><br>
 <b>Version : </b>4.0+<br>
 <br># Set here the link used to point to Internet WhoIs database for hostnames.
-<br># This parameter is not used if ShowLinksToWhoIs is 0.
+<br># This parameter is not used if plugin hostinfo is not enabled.
 <br># Default: "http://www.whois.net/search.cgi2?str="
 <br># Example: "http://www.netsol.com/cgi-bin/whois/whois?SearchType=all&STRING="
 <br># Example: "http://www.ripe.net/perl/whois?form_type=simple&searchtext="
@@ -1395,7 +1385,7 @@ ShowOSStats,ShowOriginStats,ShowKeyphrasesStats,ShowKeywordsStats,ShowHTTPErrors
 <a name="LinksToIPWhoIs"><b>LinksToIPWhoIs</b></a><br>
 <b>Version : </b>5.0+<br>
 <br># Set here the link used to point to Internet WhoIs database for ip addresses.
-<br># This parameter is not used if ShowLinksToWhoIs is 0.
+<br># This parameter is not used if plugin hostinfo is not enabled.
 <br># Default: "http://ws.arin.net/cgi-bin/whois.pl?queryinput="
 <br># Example: "http://ws.arin.net/cgi-bin/whois.pl?queryinput="
 <br>#
