@@ -19,6 +19,7 @@ Fixes:
 - Other minor bugs (typo erros and other).
 
 New features/improvements:
+- Increased speed by 10 to 20%.
 - Some changes to make AWStats to be XML compliant ready.
   Need to set the new parameter UseXMLForOutput to 1 in config file.
 - Can use UA and HOST fields to build personalized ExtraSection reports.
