@@ -1003,7 +1003,7 @@ sub Read_Config {
 	}
 	# If parameter ValidSMTPCodes not found, init for backward compatibility
 	if (! $FoundValidSMTPCodes) {
-		$ValidHTTPCodes{"1"}=$ValidHTTPCodes{"250"}=1;
+		$ValidSMTPCodes{"1"}=$ValidSMTPCodes{"250"}=1;
 	}
 }
 
