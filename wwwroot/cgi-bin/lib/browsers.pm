@@ -33,6 +33,7 @@
 "aweb",
 "bpftp",
 "cyberdog",
+"dillo",
 "dreamcast",
 "downloadagent",
 "ecatch",
@@ -80,14 +81,15 @@
 "xmms",
 "xaudio",
 # PDA/Phonecell browsers
+"alcatel",
 "mmef",
+"mot-a",
 "mspie",
+"nokia",
 "up\.",					# Works for UP.Browser and UP.Link
 "wapalizer",
 "wapsilon",
 "webcollage",
-"alcatel",
-"nokia",
 # Others (TV)
 "webtv",
 # Other kind of browsers
@@ -121,6 +123,7 @@
 "aweb","AWeb",
 "bpftp","BPFTP",
 "cyberdog","Cyberdog",
+"dillo","Dillo",
 "dreamcast","Dreamcast",
 "downloadagent","DownloadAgent",
 "ecatch", "eCatch",
@@ -168,14 +171,15 @@
 "xmms","XMMS (media player)",
 "xaudio","Some XAudio Engine based MPEG player (media player)",
 # PDA/Phonecell browsers
+"alcatel","Alcatel Browser (PDA/Phone browser)",
 "mmef","Microsoft Mobile Explorer (PDA/Phone browser)",
+"mot-a","Motorola Browser (PDA/Phone browser)",
 "mspie","MS Pocket Internet Explorer (PDA/Phone browser)",
+"nokia","Nokia Browser (PDA/Phone browser)",
 "up\.","UP.Browser (PDA/Phone browser)",					# Works for UP.Browser and UP.Link
 "wapalizer","WAPalizer (PDA/Phone browser)",
 "wapsilon","WAPsilon (PDA/Phone browser)",
 "webcollage","WebCollage (PDA/Phone browser)",
-"alcatel","Alcatel Browser (PDA/Phone browser)",
-"nokia","Nokia Browser (PDA/Phone browser)",
 # Others (TV)
 "webtv","WebTV browser",
 # Other kind of browsers
@@ -209,6 +213,7 @@
 # Standard web browsers
 "msie","msie",
 "netscape","netscape",
+
 "icab","icab",
 "go!zilla","gozilla",
 "konqueror","konqueror",
@@ -224,6 +229,7 @@
 "aweb","notavailable",
 "bpftp","notavailable",
 "cyberdog","notavailable",
+"dillo","notavailable",
 "dreamcast","dreamcast",
 "downloadagent","notavailable",
 "ecatch","notavailable",
@@ -271,14 +277,15 @@
 "xmms","mediaplayer",
 "xaudio","mediaplayer",
 # PDA/Phonecell browsers
+"alcatel","pdaphone",
 "mmef","pdaphone",
+"mot-a","pdaphone",
 "mspie","pdaphone",
+"nokia","pdaphone",
 "up\.","pdaphone",					# Works for UP.Browser and UP.Link
 "wapalizer","pdaphone",
 "wapsilon","pdaphone",
 "webcollage","pdaphone",
-"alcatel","pdaphone",
-"nokia","pdaphone",
 # Others (TV)
 "webtv","webtv",
 # Other kind of browsers
