@@ -240,11 +240,8 @@ This is how to use all other possible output options(1) :<br>
 <i><b>perl awstats.pl -config=virtualhostname -output=allrobots -staticlinks > awstats.virtualhostname.allrobots.html</b></i><br>
 <i><b>perl awstats.pl -config=virtualhostname -output=lastrobots -staticlinks > awstats.virtualhostname.lastrobots.html</b></i><br>
 <i><b>perl awstats.pl -config=virtualhostname -output=urldetail -staticlinks > awstats.virtualhostname.urldetail.html</b></i><br>
-<i><b>perl awstats.pl -config=virtualhostname -output=urldetail:</b>filter(2)<b> -staticlinks > awstats.virtualhostname.urldetailfiltered.html</b></i><br>
 <i><b>perl awstats.pl -config=virtualhostname -output=urlentry -staticlinks > awstats.virtualhostname.urlentry.html</b></i><br>
-<i><b>perl awstats.pl -config=virtualhostname -output=urlentry:</b>filter(2)<b> -staticlinks > awstats.virtualhostname.urlentryfiltered.html</b></i><br>
 <i><b>perl awstats.pl -config=virtualhostname -output=urlexit -staticlinks > awstats.virtualhostname.urlexit.html</b></i><br>
-<i><b>perl awstats.pl -config=virtualhostname -output=urlexit:</b>filter(2)<b> -staticlinks > awstats.virtualhostname.urlexitfiltered.html</b></i><br>
 <i><b>perl awstats.pl -config=virtualhostname -output=browserdetail -staticlinks > awstats.virtualhostname.browserdetail.html</b></i><br>
 <i><b>perl awstats.pl -config=virtualhostname -output=unknownbrowsers -staticlinks > awstats.virtualhostname.unknownbrowsers.html</b></i><br>
 <i><b>perl awstats.pl -config=virtualhostname -output=unknownos -staticlinks > awstats.virtualhostname.unknownos.html</b></i><br>
@@ -257,7 +254,12 @@ This is how to use all other possible output options(1) :<br>
 Note (1): If you prefer, you can use <a href="awstats_tools.html#awstats_buildstaticpages">awstats_buildstaticpages</a> tool to
 build all those pages in one command.<br>
 <br>
-Note (2): <i>filter</i> can be a regexp on the full filenames you want awstats to present information about.<br>
+Note (2): You can also add a <i>filter</i> on the following output reports:<b>urldetail, urlentry, urlexit, allhosts, refererpages</b>.<br>
+<i>filter</i> can be a regexp on the full key you want awstats to present information about and you must use it after the output
+parameter separated by a ":".<br>
+For example, to output the urldetail report, with a filter on all pages that contains /news, you
+can use the following command line:<br>
+<i><b>perl awstats.pl -config=virtualhostname -output=urldetail:</b>/news<b> -staticlinks > awstats.virtualhostname.urldetailwithfilter.html</b></i><br>
 <br>
 Note (3): If you want to build a report for a particular month, add options <i><b>-month=MM -year=YYYY</b></i>.<br>
 To build a report for full year (warning: This may use a lot of memory and CPU), add options <i><b>-month=year -year=YYYY</b></i>.<br>
