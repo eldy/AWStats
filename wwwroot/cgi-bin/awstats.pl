@@ -102,7 +102,7 @@ $NbOfLinesRead $NbOfLinesDropped $NbOfLinesCorrupted $NbOfOldLines $NbOfNewLines
 $NewLinePhase $NbOfLinesForCorruptedLog $PurgeLogFile
 $ShowAuthenticatedUsers $ShowCompressionStats $ShowFileSizesStats
 $ShowDropped $ShowCorrupted $ShowUnknownOrigin $ShowLinksToWhoIs
-$Expires $UpdateStats $URLWithQuery
+$Expires $UpdateStats $URLWithQuery $UseFramesWhenCGI
 /;
 ($DNSLookup, $AllowAccessFromWebToAuthenticatedUsersOnly, $BarHeight, $BarWidth,
 $CreateDirDataIfNotExists, $KeepBackupOfHistoricFiles, $MaxLengthOfURL,
@@ -114,8 +114,8 @@ $NbOfLinesRead, $NbOfLinesDropped, $NbOfLinesCorrupted, $NbOfOldLines, $NbOfNewL
 $NewLinePhase, $NbOfLinesForCorruptedLog, $PurgeLogFile,
 $ShowAuthenticatedUsers, $ShowCompressionStats, $ShowFileSizesStats,
 $ShowDropped, $ShowCorrupted, $ShowUnknownOrigin, $ShowLinksToWhoIs,
-$Expires, $UpdateStats, $URLWithQuery)=
-(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
+$Expires, $UpdateStats, $URLWithQuery, $UseFramesWhenCGI)=
+(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
 use vars qw/
 $AllowToUpdateStatsFromBrowser $ArchiveLogRecords $DetailedReportsOnNewWindows
 $FirstDayOfWeek $KeyWordsNotSensitive $SaveDatabaseFilesWithPermissionsForEveryone
@@ -125,7 +125,7 @@ $ShowRobotsStats $ShowSessionsStats $ShowPagesStats $ShowFileTypesStats
 $ShowBrowsersStats $ShowOSStats $ShowOriginStats
 $ShowKeyphrasesStats $ShowKeywordsStats
 $ShowHTTPErrorsStats
-$ShowFlagLinks $ShowLinksOnUrl $UseFramesWhenCGI
+$ShowFlagLinks $ShowLinksOnUrl
 $WarningMessages
 /;
 ($AllowToUpdateStatsFromBrowser, $ArchiveLogRecords, $DetailedReportsOnNewWindows,
@@ -135,9 +135,9 @@ $ShowHoursStats, $ShowDomainsStats, $ShowHostsStats,
 $ShowRobotsStats, $ShowSessionsStats, $ShowPagesStats, $ShowFileTypesStats,
 $ShowBrowsersStats, $ShowOSStats, $ShowOriginStats, $ShowKeyphrasesStats,
 $ShowKeywordsStats,  $ShowHTTPErrorsStats,
-$ShowFlagLinks, $ShowLinksOnUrl, $UseFramesWhenCGI,
+$ShowFlagLinks, $ShowLinksOnUrl,
 $WarningMessages)=
-(1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1);
+(1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1);
 use vars qw/
 $LevelForRobotsDetection $LevelForBrowsersDetection $LevelForOSDetection $LevelForRefererAnalyze
 $LevelForSearchEnginesDetection $LevelForKeywordsDetection
@@ -1183,7 +1183,7 @@ sub Check_Config {
 	if ($MaxNbOfKeywordsShown !~ /^\d+/ || $MaxNbOfKeywordsShown<1)		{ $MaxNbOfKeywordsShown=25; }
 	if ($MinHitKeyword !~ /^\d+/ || $MinHitKeyword<1)           		{ $MinHitKeyword=1; }
 	if ($FirstDayOfWeek !~ /[0-1]/)               	{ $FirstDayOfWeek=1; }
-	if ($UseFramesWhenCGI !~ /[0-1]/)  				{ $UseFramesWhenCGI=1; }
+	if ($UseFramesWhenCGI !~ /[0-1]/)  				{ $UseFramesWhenCGI=0; }
 	if ($DetailedReportsOnNewWindows !~ /[0-2]/)  	{ $DetailedReportsOnNewWindows=1; }
 	if ($ShowLinksOnUrl !~ /[0-1]/)               	{ $ShowLinksOnUrl=1; }
 	if ($MaxLengthOfURL !~ /^\d+/ || $MaxLengthOfURL<1) { $MaxLengthOfURL=72; }
@@ -1587,13 +1587,14 @@ sub Read_History_With_Update {
 				if (! $_) { error("Error: History file \"$historyfilename\" is corrupted (in section TIME). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
 				my @field=split(/\s+/,$_); $countlines++;
 				my $count=0;my $countloaded=0;
+				my $monthpages=0;my $monthhits=0;my $monthbytes=0;
 				while ($field[0] ne "END_TIME") {
 					#if ($field[0]) {	# This test must not be here for TIME section (because field[0] is "0" for hour 0)
 						$count++;
 						# Always loaded
-						$MonthPages{$year.$month}+=int($field[1]);
-						$MonthHits{$year.$month}+=int($field[2]);
-						$MonthBytes{$year.$month}+=int($field[3]);
+						$monthpages+=int($field[1]);
+						$monthhits+=int($field[2]);
+						$monthbytes+=int($field[3]);
 
 						if ($SectionsToLoad{"time"} && ! $SectionsToLoadPartialy{"time"}) {
 							$countloaded++;
@@ -1607,6 +1608,9 @@ sub Read_History_With_Update {
 					if (! $_) { error("Error: History file \"$historyfilename\" is corrupted (in section TIME). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
 					@field=split(/\s+/,$_); $countlines++;
 				}
+				$MonthPages{$year.$month}+=$monthpages;
+				$MonthHits{$year.$month}+=$monthhits;
+				$MonthBytes{$year.$month}+=$monthbytes;
 				if ($Debug) { debug(" End of TIME section ($count entries, $countloaded loaded)"); }
 				delete $SectionsToLoad{"time"};
 				if ($SectionsToSave{"time"}) {
@@ -1624,11 +1628,12 @@ sub Read_History_With_Update {
 				if (! $_) { error("Error: History file \"$historyfilename\" is corrupted (in section DAY). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
 				my @field=split(/\s+/,$_); $countlines++;
 				my $count=0;my $countloaded=0;
+				my $monthvisits=0;
 				while ($field[0] ne "END_DAY" ) {
 					if ($field[0]) {
 						$count++;
 						# We always read this to build the month graph (MonthVisits)
-						if ($versionnum >= 4000 && ($field[4]||0) > 0) { $MonthVisits{$year.$month}+=$field[4]; }	# MonthVisits for >= 4.0
+						if ($versionnum >= 4000 && ($field[4]||0) > 0) { $monthvisits+=$field[4]; }	# MonthVisits for >= 4.0
 						if ($SectionsToLoad{"day"}) {
 							$countloaded++;
 							if ($field[1]) { $DayPages{$field[0]}+=int($field[1]); }
@@ -1642,6 +1647,7 @@ sub Read_History_With_Update {
 					if (! $_) { error("Error: History file \"$historyfilename\" is corrupted (in section DAY). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
 					@field=split(/\s+/,$_); $countlines++;
 				}
+				$MonthVisits{$year.$month}+=$monthvisits;
 				if ($Debug) { debug(" End of DAY section ($count entries, $countloaded loaded)"); }
 				delete $SectionsToLoad{"day"};
 				# WE DO NOT SAVE SECTION NOW BECAUSE VALUES CAN BE CHANGED AFTER READING VISITOR
@@ -1660,16 +1666,15 @@ sub Read_History_With_Update {
 				if (! $_) { error("Error: History file \"$historyfilename\" is corrupted (in section VISITOR). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
 				my @field=split(/\s+/,$_); $countlines++;
 				my $count=0;my $countloaded=0;
+				my $monthunique=0;my $monthhostsknown=0;my $monthhostsunknown=0;
 				while ($field[0] ne "END_VISITOR") {
 					if ($field[0]) {
 						$count++;
 						# We always read this to build the month graph (MonthUnique, MonthHostsKnown, MonthHostsUnknown)
-						if (($field[1]||0) > 0) { $MonthUnique{$year.$month}++; }
-						if ($field[0] !~ /^\d+\.\d+\.\d+\.\d+$/) { $MonthHostsKnown{$year.$month}++; }
-						else { $MonthHostsUnknown{$year.$month}++; }
-
+						if (($field[1]||0) > 0) { $monthunique++; }
+						
 						# Process data saved in 'wait' arrays
-						if ($_waithost_e{$field[0]}){
+						if ($UpdateStats && $_waithost_e{$field[0]}){
 							my $timehostl=int($field[4]||0);
 							my $timehosts=int($field[5]||0);
 							my $newtimehosts=($_waithost_s{$field[0]}?$_waithost_s{$field[0]}:$_host_s{$field[0]});
@@ -1708,18 +1713,12 @@ sub Read_History_With_Update {
 							delete $_waithost_l{$field[0]};
 							delete $_waithost_s{$field[0]};
 							delete $_waithost_u{$field[0]};
-						} 
+						}
 
 						if ($SectionsToLoad{"visitor"} && ! $SectionsToLoadPartialy{"visitor"}) {
-							# Data required:
-							# update 				 need to load all
-							# noupdate+
-							#  main page for year	 need to load all
-							#  main page for month	 need to load MaxNbOfHostsShown pages and >= MinHitHost
-							#  lastconnect for year  need to load all
-							#  lastconnect for month need to load all
-							#  unknownip for year	 need to load all ip
-							#  unknownip for month	 need to load ip with >= MinHitHost
+							if ($field[0] !~ /^\d+\.\d+\.\d+\.\d+$/) { $monthhostsknown++; }
+							else { $monthhostsunknown++; }
+
 							my $loadrecord=0;
 							if ($UpdateStats) {
 								$loadrecord=1;
@@ -1751,6 +1750,11 @@ sub Read_History_With_Update {
 					if (! $_) { error("Error: History file \"$historyfilename\" is corrupted (in section VISITOR). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost)."); }
 					@field=split(/\s+/,$_); $countlines++;
 				}
+
+				$MonthUnique{$year.$month}+=$monthunique;
+				$MonthHostsKnown{$year.$month}+=$monthhostsknown;
+				$MonthHostsUnknown{$year.$month}+=$monthhostsunknown;
+
 				if ($Debug) { debug(" End of VISITOR section ($count entries, $countloaded loaded)"); }
 				delete $SectionsToLoad{"visitor"};
 				#if ($SectionsToSave{"visitor"}) {
@@ -2280,7 +2284,7 @@ sub Read_History_With_Update {
 							if ($loadrecord) {
 								if ($field[1]) {
 									if ($loadrecord==2) {
-										foreach my $word (split(/\+/,$field[0])) {
+										foreach my $word (split(/\+/,$field[0])) {	# val1+val2
 											$_keywords{$word}+=$field[1];
 										}
 									}
