@@ -28,7 +28,6 @@ use vars qw/
 $DEBUGFORCED $NBOFLINESFORBENCHMARK $FRAMEWIDTH $NBOFLASTUPDATELOOKUPTOSAVE
 $LIMITFLUSH $NEWDAYVISITTIMEOUT $VISITTIMEOUT $NOTSORTEDRECORDTOLERANCE $MAXDIFFEXTRA
 $WIDTHCOLICON $TOOLTIPON
-$UseXml
 /;
 $DEBUGFORCED=0;						# Force debug level to log lesser level into debug.log file (Keep this value to 0)
 $NBOFLINESFORBENCHMARK=8192;		# Benchmark info are printing every NBOFLINESFORBENCHMARK lines (Must be a power of 2)
@@ -41,7 +40,6 @@ $NOTSORTEDRECORDTOLERANCE=10000;	# Laps of time to accept a record if not in cor
 $MAXDIFFEXTRA=500;
 $WIDTHCOLICON=32;
 $TOOLTIPON=0;						# Tooltips plugin loaded
-$UseXml=0;
 # ----- Running variables -----
 use vars qw/
 $DIR $PROG $Extension
@@ -133,7 +131,7 @@ $ShowDropped $ShowCorrupted $ShowUnknownOrigin $ShowLinksToWhoIs
 $ShowEMailSenders $ShowEMailReceivers $ShowClusterStats
 $AuthenticatedUsersNotCaseSensitive
 $Expires $UpdateStats $MigrateStats $URLNotCaseSensitive $URLWithQuery $URLReferrerWithQuery
-$UseFramesWhenCGI $DecodeUA
+$UseFramesWhenCGI $UseXMLForOutput $DecodeUA
 /;
 ($EnableLockForUpdate, $DNSLookup, $AllowAccessFromWebToAuthenticatedUsersOnly,
 $BarHeight, $BarWidth, $CreateDirDataIfNotExists, $KeepBackupOfHistoricFiles,
@@ -144,8 +142,8 @@ $ShowDropped, $ShowCorrupted, $ShowUnknownOrigin, $ShowLinksToWhoIs,
 $ShowEMailSenders, $ShowEMailReceivers, $ShowClusterStats,
 $AuthenticatedUsersNotCaseSensitive,
 $Expires, $UpdateStats, $MigrateStats, $URLNotCaseSensitive, $URLWithQuery, $URLReferrerWithQuery,
-$UseFramesWhenCGI, $DecodeUA)=
-(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
+$UseFramesWhenCGI, $UseXMLForOutput, $DecodeUA)=
+(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
 use vars qw/
 $AllowToUpdateStatsFromBrowser
 $ArchiveLogRecords $DetailedReportsOnNewWindows
@@ -497,7 +495,7 @@ sub html_head {
 	if (scalar keys %HTMLOutput || $PluginMode) {
 		my $AllowIndex=0;
 		# Write head section
-		if ($UseXml) {
+		if ($UseXMLForOutput) {
 			if ($PageCode) { print "<?xml version=\"1.0\" encoding=\"$PageCode\"?>\n"; }
 			else { print "<?xml version=\"1.0\" encoding=\"iso-8859-1\"?>\n"; };
             if ($FrameName ne 'index') { print "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">\n";  }
@@ -513,7 +511,7 @@ sub html_head {
 		else { print "<meta name=\"robots\" content=\"noindex,nofollow\" />\n"; }
 
 		# Affiche tag meta content-type
-		print ((! $UseXml || $ENV{'HTTP_USER_AGENT'}=~/MSIE|Googlebot/i)?"<meta http-equiv=\"content-type\" content=\"text/html; charset=".($PageCode?$PageCode:"iso-8859-1")."\" />\n":"<meta http-equiv=\"content-type\" content=\"text/xml; charset=".($PageCode?$PageCode:"iso-8859-1")."\" />\n");
+		print ((! $UseXMLForOutput || $ENV{'HTTP_USER_AGENT'}=~/MSIE|Googlebot/i)?"<meta http-equiv=\"content-type\" content=\"text/html; charset=".($PageCode?$PageCode:"iso-8859-1")."\" />\n":"<meta http-equiv=\"content-type\" content=\"text/xml; charset=".($PageCode?$PageCode:"iso-8859-1")."\" />\n");
 		
 		if ($Expires)  { print "<meta http-equiv=\"expires\" content=\"".(gmtime(time()+$Expires))."\" />\n"; }
 		print "<meta http-equiv=\"description\" content=\"".ucfirst($PROG)." - Advanced Web Statistics for $SiteDomain\" />\n";
@@ -523,9 +521,9 @@ sub html_head {
 
 			# A STYLE section must be in head section. Do not use " for number in a style section
 			print "<style type=\"text/css\">\n";
-			print !$UseXml?"<!--\n":"<![CDATA[\n";
+			print !$UseXMLForOutput?"<!--\n":"<![CDATA[\n";
 print "body { font: 11px verdana, arial, helvetica, sans-serif; background-color: #$color_Background; margin-top: 0; }\n";
-#print ".aws_bodyl  { ".(! $UseXml?"background-image: url($DirIcons/other/backleft.png);":"")."background-repeat: repeat-y; }\n";
+#print ".aws_bodyl  { ".(! $UseXMLForOutput?"background-image: url($DirIcons/other/backleft.png);":"")."background-repeat: repeat-y; }\n";
 print ".aws_bodyl  { }\n";
 print ".aws_border { background-color: #$color_TableBG; padding: 1px 1px 1px 1px; margin-top: 0 }\n";
 print ".aws_title  { font: 13px verdana, arial, helvetica, sans-serif; font-weight: bold; background-color: #$color_TableBGTitle; text-align: center; margin-bottom: 0; padding: 1px 1px 1px 1px; }\n";
@@ -555,7 +553,7 @@ EOF
 			eval("$function");
 		}
 
-			print !$UseXml?"//-->\n":"]]>\n";
+			print !$UseXMLForOutput?"//-->\n":"]]>\n";
 			print "</style>\n";
 
 			if ($StyleSheet) {
@@ -1360,6 +1358,7 @@ sub Check_Config {
 		debug(" ValidHTTPCodes ".(join(',',keys %ValidHTTPCodes)),2);
 		debug(" ValidSMTPCodes ".(join(',',keys %ValidSMTPCodes)),2);
 		debug(" UseFramesWhenCGI=$UseFramesWhenCGI",2);
+		debug(" UseXMLForOutput=$UseXMLForOutput",2);
 	}
 
 	# Main section
@@ -1515,6 +1514,7 @@ sub Check_Config {
 	}
 	if ($FirstDayOfWeek !~ /[01]/)               	{ $FirstDayOfWeek=1; }
 	if ($UseFramesWhenCGI !~ /[01]/)  				{ $UseFramesWhenCGI=0; }
+	if ($UseXMLForOutput !~ /[01]/)  				{ $UseXMLForOutput=0; }
 	if ($DetailedReportsOnNewWindows !~ /[012]/)  	{ $DetailedReportsOnNewWindows=1; }
 	if ($ShowLinksOnUrl !~ /[01]/)               	{ $ShowLinksOnUrl=1; }
 	if ($MaxLengthOfURL !~ /^\d+/ || $MaxLengthOfURL<1) { $MaxLengthOfURL=72; }
@@ -3951,7 +3951,7 @@ sub Utf8_To_Ascii {
 #------------------------------------------------------------------------------
 sub XMLEncode {
 	my $string = shift;
-	if (! $UseXml) { return $string; }
+	if (! $UseXMLForOutput) { return $string; }
 	$string =~ s/&/&amp;/g;
 	return $string;
 }
@@ -4084,7 +4084,7 @@ sub AltTitle {
 	my $string = shift||'';
 	return " alt='$string' title='$string'";
 #	return " alt=\"$string\" title=\"$string\"";
-#	return ($UseXml?"":" alt=\"$string\"")." title=\"$string\"";
+#	return ($UseXMLForOutput?"":" alt=\"$string\"")." title=\"$string\"";
 }
 
 #------------------------------------------------------------------------------
@@ -4455,14 +4455,14 @@ sub ShowURLInfo {
 		my $newkey=CleanFromCSSA($url);
 		if ($LogType eq 'W') {		# Web log file
 			if ($newkey =~ /^http(s|):/i) {	# URL seems to be extracted from a proxy log file
-				print "<A HREF=\"".XMLEncode("$newkey")."\" target=\"url\">".XMLEncode($nompage)."</A>";
+				print "<a href=\"".XMLEncode("$newkey")."\" target=\"url\">".XMLEncode($nompage)."</a>";
 			}
 			elsif ($newkey =~ /^\//) {		# URL seems to be an url extracted from a web or wap server log file
 				$newkey =~ s/^\/$SiteDomain//i;
 				# Define urlprot
 				my $urlprot='http';
 				if ($UseHTTPSLinkForUrl && $newkey =~ /^$UseHTTPSLinkForUrl/) { $urlprot='https'; }
-				print "<A HREF=\"".XMLEncode("$urlprot://$SiteDomain$newkey\"")." target=\"url\">".XMLEncode($nompage)."</A>";
+				print "<a href=\"".XMLEncode("$urlprot://$SiteDomain$newkey\"")." target=\"url\">".XMLEncode($nompage)."</a>";
 			}
 			else {
 				print XMLEncode($nompage);
@@ -4941,7 +4941,7 @@ $QueryString='';
 # be set to force AWStats to be ran as CLI even from a web page
 if ($ENV{'AWSTATS_DEL_GATEWAY_INTERFACE'}) { $ENV{'GATEWAY_INTERFACE'}=''; }
 if ($ENV{'GATEWAY_INTERFACE'}) {	# Run from a browser as CGI
-	if ($UseXml) { print ($ENV{'HTTP_USER_AGENT'}=~/MSIE|Googlebot/i?"Content-type: text/html\n":"Content-type: text/xml\n"); }
+	if ($UseXMLForOutput) { print ($ENV{'HTTP_USER_AGENT'}=~/MSIE|Googlebot/i?"Content-type: text/html\n":"Content-type: text/xml\n"); }
 	else { print "content-type: text/html\n"; }
     
 	# Expires must be GMT ANSI asctime and must be after Content-type to avoid pb with some servers (SAMBAR)
@@ -5271,6 +5271,7 @@ if ($PluginMode) {
 	my $function="BuildFullHTMLOutput_$PluginMode()";
 	eval("$function");
 	if ($? || $@) { error("$@"); }
+	&html_end;
 	exit 0;	
 }
 
