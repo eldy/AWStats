@@ -603,6 +603,7 @@ if ($bidon =~ /^y/i) {
 	if (-s $configfile) { print "  Config file already exists. No overwrite possible on existing config files.\n"; }
 	else {
 		%ConfToChange=();
+		# TODO Ask path of log file to change LogFile parameter
 		if ($OS eq 'linux' || $OS eq "macosx") { $ConfToChange{'DirData'}="$AWSTATS_DIRDATA_PATH"; }
 		if ($OS eq 'windows') { $ConfToChange{'DirData'}='.'; }
 		if ($UseAlias) {
