@@ -12,7 +12,7 @@ on all Operating Systems.
 
 License: GNU GPL (GNU General Public License. See LICENSE file)
 Version : 5.0
-Release date: August 2002
+Release date: September 2002
 Platforms: All (Linux, NT, SCO, BSD, Solaris and other *NIX's, BeOS, OS/2...)
 Author: Laurent Destailleur <eldy@users.sourceforge.net>
 AWStats official web site and latest version: http://awstats.sourceforge.net
@@ -34,53 +34,50 @@ I - 1) Features
 
 	A full log analysis enables AWStats to show you the following information:
 	* Number of VISITS and UNIQUE VISITORS,
-	* Visits duration and list of last visits,
-	* Authenticated users,
-	* Days of week and rush hours (pages, hits, kb for each day and hour),
-	* Hosts list and unresolved IP addresses list,
-	* Domains/countries of hosts visitors (pages, hits, kb),
+	* Visits duration and last visits,
+	* Authenticated users, and last authenticated visits,
+	* Days of week and rush hours (pages, hits, KB for each day and hour),
+	* Domains/countries of hosts visitors (pages, hits, KB),
+	* Hosts list, last visits and unresolved IP addresses list,
 	* Most viewed, entry and exit pages,
 	* File types,
 	* Web compression statistics (for mod_gzip),
 	* Browsers used (pages, hits, kb for each browser),
-	* OS used (pages, hits, kb for each OS),
-	* VISITS OF ROBOTS,
-	* SEARCH ENGINES, KEYPHRASES or KEYWORDS used to find your site,
+	* OS used (pages, hits, KB for each OS),
+	* Visits of robots,
+	* Search engines, keyphrases and keywords used to find your site,
 	* HTTP errors (Page not found with last referer, ...).
 
 	It supports the following features as well:
 	* Can analyze all log formats.
-	* Works from command line or as a CGI,
+	* Works from command line and from a browser as a CGI (with dynamic
+	  filters capabilities for some charts),
 	* Update of statistics can be made on demand from the web interface and
 	  not only from your scheduler,
-	* Unlimited log file size, support splited log files,
+	* Unlimited log file size, support split log files (load balancing system),
 	* Reverse DNS lookup before or during analysis, support DNS cache files,
+	* WhoIS Links,
 	* A lot of options/filters and plugins can be used,
 	* Multi-named web sites supported (virtual servers),
 	* Cross Site Scripting Attacks protection,
-	* Several languages. English, French, Dutch, Spanish, Italian, German,
-	  Polish, Greek, Czech, Portuguese, Chinese, Japanese, Korean...
-	* No need of extra perl libraries,
+	* Several languages,
+	* No need of rare perl libraries,
+	* Graphical and framed reports,
 	* Look and colors can match your site design,
-	* Help on how AWStats work, tooltips on HTML reporting page,
-	* Easy to install, easy to use (No compilation, no extern databases),
-	* Free (GNU GPL) and distributed with sources (perl script).
+	* Help and tooltips on HTML reported pages,
+	* Easy to use (No compilation, no extern databases),
+	* Free (GNU GPL),with sources (perl script).
 
 
 I - 2) Requirements
 
 	To use AWStats CGI script, you need the following requirements:
-	* Your Web server must be able to log web access in "NCSA combined logfile
-	  format" like Apache or in "Extended W3C logfile format" like IIS 5.0+
-	* You need to have read (better if read/write) access to your logfile
-	  server. If you can have only a read access, for example with IIS that
-	  doesn't allow write access on its lofgile, AWStats will automatically
-	  work differently, but slower than with read/write access).
-	* To run awstats, from command line, your operating system must be able to
-	  run perl scripts (.pl files). To run awstats as a CGI (for real-time
+	* Your server must log web access in a log file you can read.
+	* To run awstats, from command line, your operating system must be able
+	  to run perl scripts (.pl files). To run awstats as a CGI (for real-time
 	  statistics), your web server must also be able to run such scripts.
 	  If not, you can solve this by downloading last Perl version at:
-	  http://www.activestate.com/ActivePerl/ (Win32)
+	  http://www.activestate.com/ActivePerl/ (Windows)
 	  http://www.perl.com/pub/language/info/software.html (Unix/Linux/Other)
 
 
@@ -93,8 +90,9 @@ I - 3) Files
 	tools/*                             Ohter provided tools
 	wwwroot/cgi-bin/awstats.pl          The main command line/CGI program
 	wwwroot/cgi-bin/awstats.model.conf  An example of AWStats configure file
-	wwwroot/cgi-bin/db                  Directory with awstats reference info
 	wwwroot/cgi-bin/lang                Directory with languages files
+	wwwroot/cgi-bin/lib                 Directory with awstats reference info
+	wwwroot/cgi-bin/plugins             Directory with optional plugins
 	wwwroot/icon/browser                Directory with browsers icons
 	wwwroot/icon/clock                  Directory with clocks icons
 	wwwroot/icon/cpu                    Directory with cpu icons
