@@ -46,7 +46,7 @@ use vars qw/
 $DIR $PROG $Extension
 $Debug $ShowSteps
 $DebugResetDone $DNSLookupAlreadyDone
-$RunAsCli $UpdateFor $HeadShown
+$RunAsCli $UpdateFor $HeaderHTTPComplete $HeaderHTMLComplete
 $LastLine $LastLineNumber $LastLineOffset $LastLineChecksum $LastUpdate
 $lowerval
 $PluginMode
@@ -66,7 +66,7 @@ $pos_cluster $pos_emails $pos_emailr $pos_hostr
 $DIR=$PROG=$Extension='';
 $Debug = $ShowSteps = 0;
 $DebugResetDone = $DNSLookupAlreadyDone = 0;
-$RunAsCli = $UpdateFor = $HeadShown = 0;
+$RunAsCli = $UpdateFor = $HeaderHTTPComplete = $HeaderHTMLComplete = 0;
 $LastLine = $LastLineNumber = $LastLineOffset = $LastLineChecksum = $LastUpdate = 0;
 $lowerval = 0;
 $PluginMode = '';
@@ -506,14 +506,13 @@ use vars qw/ @Message /;
 # Function:		Write on ouput header of HTML page
 # Parameters:	None
 # Input:		%HTMLOutput $PluginMode $Expires $Lang $StyleSheet $HTMLHeadSection $PageCode $PageDir
-# Output:		None
+# Output:		$HeaderHTMLComplete=1
 # Return:		None
 #------------------------------------------------------------------------------
 sub html_head {
 	my $dir=$PageDir?'right':'left';
 	if (scalar keys %HTMLOutput || $PluginMode) {
 		my $MetaRobot=0;	# meta robots
-		$HeadShown=1;
 		# Write head section
 		if ($BuildReportFormat eq 'xml') {
 			if ($PageCode) { print "<?xml version=\"1.0\" encoding=\"$PageCode\"?>\n"; }
@@ -596,6 +595,7 @@ EOF
 		 	print ">\n";
 		}
 	}
+	$HeaderHTMLComplete=1;
 }
 
 #------------------------------------------------------------------------------
@@ -675,7 +675,7 @@ sub tab_end {
 #------------------------------------------------------------------------------
 # Function:		Write error message and exit
 # Parameters:	$message $secondmessage $thirdmessage $donotshowsetupinfo
-# Input:		%HTMLOutput $LogSeparator $LogFormat
+# Input:		$HeaderHTTPComplete $HeaderHTMLComplete %HTMLOutput $LogSeparator $LogFormat
 # Output:		None
 # Return:		None
 #------------------------------------------------------------------------------
@@ -685,7 +685,8 @@ sub error {
 	my $thirdmessage=shift||'';
 	my $donotshowsetupinfo=shift||0;
 
-	if (! $HeadShown && scalar keys %HTMLOutput) { print "<body><html>\n"; }
+	if (! $HeaderHTTPComplete && $ENV{'GATEWAY_INTERFACE'}) { print "\n"; $HeaderHTTPComplete=1; }
+	if (! $HeaderHTMLComplete && scalar keys %HTMLOutput) 	{ print "<html><body>\n"; $HeaderHTMLComplete=1; }
 	if ($Debug) { debug("$message $secondmessage $thirdmessage",1); }
 	my $tagbold=''; my $tagunbold=''; my $tagbr=''; my $tagfontred=''; my $tagfontgrey=''; my $tagunfont='';
 	if (scalar keys %HTMLOutput) {
@@ -786,12 +787,15 @@ sub error {
 #------------------------------------------------------------------------------
 # Function:		Write a warning message
 # Parameters:	$message
-# Input:		$WarningMessage %HTMLOutput
+# Input:		$HeaderHTTPComplete $HeaderHTMLComplete $WarningMessage %HTMLOutput
 # Output:		None
 # Return:		None
 #------------------------------------------------------------------------------
 sub warning {
 	my $messagestring=shift;
+
+	if (! $HeaderHTTPComplete && $ENV{'GATEWAY_INTERFACE'}) { print "\n"; $HeaderHTTPComplete=1; }
+	if (! $HeaderHTMLComplete) { html_head(); }
 	if ($Debug) { debug("$messagestring",1); }
 	if ($WarningMessages) {
 		if (scalar keys %HTMLOutput) {
@@ -822,7 +826,7 @@ sub debug {
 	}
 	if ($DebugMessages && $level <= $Debug) {
 		my $debugstring = $_[0];
-		if (scalar keys %HTMLOutput) { $debugstring =~ s/^ /&nbsp&nbsp /; $debugstring .= "<br />"; }
+		if (scalar keys %HTMLOutput) { $debugstring =~ s/^ /&nbsp;&nbsp; /; $debugstring .= "<br />"; }
 		print localtime(time)." - DEBUG $level - $debugstring\n";
 	}
 }
@@ -1465,7 +1469,7 @@ sub Check_Config {
 	$LogFile =~ s/%DW/$nowwday/g;
 	my $nowwday0=$nowwday-1; $LogFile =~ s/%Dw/$nowwday0/g;
 	if (! $LogFile)   { error("LogFile parameter is not defined in config/domain file"); }
-	if ($LogType !~ /[WMF]/i) { $LogType='W'; }
+	if ($LogType !~ /[WSMF]/i) { $LogType='W'; }
 	$LogFormat =~ s/\\//g;
 	if (! $LogFormat) { error("LogFormat parameter is not defined in config/domain file"); }
 	if ($LogFormat =~ /^\d$/ && $LogFormat !~ /[1-6]/)  { error("LogFormat parameter is wrong in config/domain file. Value is '$LogFormat' (should be 1,2,3,4,5 or a 'personalized AWStats log format string')"); }
@@ -3233,7 +3237,7 @@ sub Save_History {
 		$lastlinechecksum=$LastLineChecksum;
 	}
 	
-	if ($Debug) { debug(" Save_History [sectiontosave=$sectiontosave,year=$year,month=$month,lastlinenumber=$lastlinenumber,lastlineoffset=$lastlineoffset,lastlinechecksum=$lastlinechecksum]",3); }
+	if ($Debug) { debug(" Save_History [sectiontosave=$sectiontosave,year=$year,month=$month,lastlinenumber=$lastlinenumber,lastlineoffset=$lastlineoffset,lastlinechecksum=$lastlinechecksum]",1); }
 	my $spacebar="                    ";
 	my %keysinkeylist=();
 
@@ -4565,7 +4569,7 @@ sub ShowURLInfo {
 	if (length($nompage)>$MaxLengthOfShownURL) { $nompage=substr($nompage,0,$MaxLengthOfShownURL)."..."; }
 	if ($ShowLinksOnUrl) {
 		my $newkey=CleanFromCSSA($url);
-		if ($LogType eq 'W') {		# Web log file
+		if ($LogType eq 'W' || $LogType eq 'S') {		# Web or streaming log file
 			if ($newkey =~ /^http(s|):/i) {	# URL seems to be extracted from a proxy log file
 				print "<a href=\"".XMLEncode("$newkey")."\" target=\"url\">".XMLEncode($nompage)."</a>";
 			}
@@ -5052,19 +5056,11 @@ my @AllowedCLIArgs=('migrate','config',
 
 $QueryString='';
 # AWStats use GATEWAY_INTERFACE to known if ran as CLI or CGI. AWSTATS_DEL_GATEWAY_INTERFACE can
-# be set to force AWStats to be ran as CLI even from a web page
+# be set to force AWStats to be ran as CLI even from a web page.
 if ($ENV{'AWSTATS_DEL_GATEWAY_INTERFACE'}) { $ENV{'GATEWAY_INTERFACE'}=''; }
 if ($ENV{'GATEWAY_INTERFACE'}) {	# Run from a browser as CGI
 	if ($BuildReportFormat eq 'xml') { print ($ENV{'HTTP_USER_AGENT'}=~/MSIE|Googlebot/i?"Content-type: text/html\n":"Content-type: text/xml\n"); }
 	else { print "Content-type: text/html\n"; }
-
-	# Expires must be GMT ANSI asctime and must be after Content-type to avoid pb with some servers (SAMBAR)
-	if ($Expires) {
-	    print "Cache-Control: public\n";
-	    print "Last-Modified: ".gmtime($starttime)."\n";
-	    print "Expires: ".(gmtime($starttime+$Expires))."\n";
-	}
-	print "\n";
 
 	# Prepare QueryString
 	if ($ENV{'CONTENT_LENGTH'}) {
@@ -5312,8 +5308,23 @@ $SiteConfig||=$ENV{'SERVER_NAME'};
 #$ENV{'SERVER_NAME'}||=$SiteConfig;	# For thoose who use __SERVER_NAME__ in conf file and use CLI.
 $ENV{'AWSTATS_CURRENT_CONFIG'}=$SiteConfig;
 
-# Read config file (here SiteConfig is defined)
+# Read config file (SiteConfig must be defined)
 &Read_Config($DirConfig);
+
+if ($ENV{'GATEWAY_INTERFACE'}) {	# Run from a browser as CGI
+	# Expires must be GMT ANSI asctime and must be after Content-type to avoid pb with some servers (SAMBAR)
+	if (! $HeaderHTTPComplete) {
+		if ($Expires =~ /^\d+$/) {
+		    print "Cache-Control: public\n";
+		    print "Last-Modified: ".gmtime($starttime)."\n";
+		    print "Expires: ".(gmtime($starttime+$Expires))."\n";
+		}
+		print "\n";
+	}
+	$HeaderHTTPComplete=1;
+}
+
+# Check language
 if ($QueryString =~ /(^|&)lang=([^&]+)/i)	{ $Lang="$2"; }
 if (! $Lang || $Lang eq 'auto') {	# If lang not defined or forced to auto
 	my $langlist=$ENV{'HTTP_ACCEPT_LANGUAGE'}||''; $langlist =~ s/;[^,]*//g;
@@ -5383,7 +5394,7 @@ else { @DOWIndex = (0,1,2,3,4,5,6); }
 $AWScript=($WrapperScript?"$WrapperScript":"$DirCgi$PROG.$Extension");
 
 # Print html header (Need HTMLOutput,Expires,Lang,StyleSheet,HTMLHeadSectionExpires defined by Read_Config, PageCodes defined by Read_Language_Data)
-&html_head;
+if (! $HeaderHTMLComplete) { &html_head; }
 
 # AWStats output is replaced by a plugin output
 if ($PluginMode) {
@@ -8259,15 +8270,15 @@ if (scalar keys %HTMLOutput) {
 	
 			my $colspan=5;
 			my $w='20';
-			if ($LogType eq 'W') { $w='17'; $colspan=6; }
+			if ($LogType eq 'W' || $LogType eq 'S') { $w='17'; $colspan=6; }
 			
 			print "<tr bgcolor=\"#$color_TableBGRowTitle\">";
-			if ($LogType eq 'W') { print "<td>&nbsp;</td>"; }
+			if ($LogType eq 'W' || $LogType eq 'S') { print "<td>&nbsp;</td>"; }
 			print "<td><b>$Message[8]</b></td>\n";
 			print "<td colspan=\"3\">$Message[128]</td>";
 			print "<td><b>$Message[9]</b></td></tr>\n";
 			print "<tr bgcolor=\"#$color_TableBGRowTitle\">";
-			if ($LogType eq 'W') { print "<td>&nbsp;</td>"; }
+			if ($LogType eq 'W' || $LogType eq 'S') { print "<td>&nbsp;</td>"; }
 			if ($FirstTime) { print "<td>".Format_Date($FirstTime,0)."</td>"; }
 			else { print "<td>NA</td>"; }
 			print "<td colspan=\"3\"><b>";
@@ -8277,7 +8288,7 @@ if (scalar keys %HTMLOutput) {
 			else { print "<td>NA</td></tr>\n"; }
 			# Show main indicators
 			print "<tr>";
-			if ($LogType eq 'W') { print "<td bgcolor=\"#$color_TableBGRowTitle\">&nbsp;</td>"; }
+			if ($LogType eq 'W' || $LogType eq 'S') { print "<td bgcolor=\"#$color_TableBGRowTitle\">&nbsp;</td>"; }
 			if ($ShowMonthStats =~ /U/i) { print "<td width=\"$w%\" bgcolor=\"#$color_u\"".($TOOLTIPON?" onmouseover=\"ShowTip(2);\" onmouseout=\"HideTip(2);\"":"").">$Message[11]</td>"; } else { print "<td width=\"20%\">&nbsp;</td>"; }
 			if ($ShowMonthStats =~ /V/i) { print "<td width=\"$w%\" bgcolor=\"#$color_v\"".($TOOLTIPON?" onmouseover=\"ShowTip(1);\" onmouseout=\"HideTip(1);\"":"").">$Message[10]</td>"; } else { print "<td width=\"20%\">&nbsp;</td>"; }
 			if ($ShowMonthStats =~ /P/i) { print "<td width=\"$w%\" bgcolor=\"#$color_p\"".($TOOLTIPON?" onmouseover=\"ShowTip(3);\" onmouseout=\"HideTip(3);\"":"").">$Message[56]</td>"; } else { print "<td width=\"20%\">&nbsp;</td>"; }
@@ -8285,7 +8296,7 @@ if (scalar keys %HTMLOutput) {
 			if ($ShowMonthStats =~ /B/i) { print "<td width=\"$w%\" bgcolor=\"#$color_k\"".($TOOLTIPON?" onmouseover=\"ShowTip(5);\" onmouseout=\"HideTip(5);\"":"").">$Message[75]</td>"; } else { print "<td width=\"20%\">&nbsp;</td>"; }
 			print "</tr>\n";
 			print "<tr>";
-			if ($LogType eq 'W') { $w='17'; print "<td class=\"aws\">$Message[160] *</td>"; }
+			if ($LogType eq 'W' || $LogType eq 'S') { $w='17'; print "<td class=\"aws\">$Message[160] *</td>"; }
 			if ($ShowMonthStats =~ /U/i) { print "<td>".($MonthRequired eq 'all'?"<b><= $TotalUnique</b><br />$Message[129]":"<b>$TotalUnique</b><br />&nbsp;")."</td>"; } else { print "<td>&nbsp;</td>"; }
 			if ($ShowMonthStats =~ /V/i) { print "<td><b>$TotalVisits</b><br />($RatioVisits&nbsp;$Message[52])</td>"; } else { print "<td>&nbsp;</td>"; }
 			if ($ShowMonthStats =~ /P/i) { print "<td><b>$TotalPages</b><br />($RatioPages&nbsp;".lc($Message[56]."/".$Message[12]).")</td>"; } else { print "<td>&nbsp;</td>"; }
@@ -8293,7 +8304,7 @@ if (scalar keys %HTMLOutput) {
 			if ($ShowMonthStats =~ /B/i) { print "<td><b>".Format_Bytes(int($TotalBytes))."</b><br />($RatioBytes&nbsp;$Message[108]/".lc($Message[($LogType eq 'M'?149:12)]).")</td>"; } else { print "<td>&nbsp;</td>"; }
 			print "</tr>\n";
 			print "<tr>";
-			if ($LogType eq 'W') {
+			if ($LogType eq 'W' || $LogType eq 'S') {
 				print "<td class=\"aws\">$Message[161] *</td>";
 				print "<td colspan=2>&nbsp;<br>&nbsp;</td>\n";
 				if ($ShowMonthStats =~ /P/i) { print "<td><b>$TotalNotViewedPages</b></td>"; } else { print "<td>&nbsp;</td>"; }
@@ -8301,7 +8312,7 @@ if (scalar keys %HTMLOutput) {
 				if ($ShowMonthStats =~ /B/i) { print "<td><b>".Format_Bytes(int($TotalNotViewedBytes))."</b></td>"; } else { print "<td>&nbsp;</td>"; }
 			}
 			print "</tr>\n";
-			&tab_end($LogType eq 'W'?"* $Message[159]":"");
+			&tab_end($LogType eq 'W' || $LogType eq 'S'?"* $Message[159]":"");
 
 			# BY MONTH
 			#---------------------------------------------------------------------
