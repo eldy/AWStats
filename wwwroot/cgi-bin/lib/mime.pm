@@ -14,8 +14,8 @@
 #---------------------------------------------------------------
 %MimeHashLib = (
 'text','Text file',
-'page','HTML static page',
-'script','HTML dynamic page or Script file',
+'page','HTML or XML static page',
+'script','Dynamic Html page or Script file',
 'image','Image',
 'document','Document',
 'archive','Archive',
@@ -46,6 +46,7 @@
 'hdml','html',
 'wml','html',
 'wmlp','html',
+'xml','html',
 # HTML Dynamic pages or script
 'asp','script',
 'jsp','script',
@@ -122,6 +123,9 @@
 # HTML Static page
 'html','page',
 'htm','page',
+'wml','page',
+'wmlp','page',
+'xml','page',
 # HTML Dynamic pages or script
 'asp','script',
 'jsp','script',
