@@ -90,10 +90,15 @@
 'xaudio',
 # PDA/Phonecell browsers
 'alcatel',				# Alcatel
+'lg\-',					# LG
 'mot\-',				# Motorola
 'nokia',				# Nokia
 'panasonic',			# Panasonic
 'philips',				# Philips
+'sagem',				# Sagem
+'samsung',				# Samsung
+'sie\-',				# SIE
+'sec\-',				# SonyEricsson
 'sonyericsson',			# SonyEricsson
 'ericsson',				# Ericsson (must be after sonyericsson
 'mmef',
@@ -203,11 +208,16 @@
 'xaudio','Some XAudio Engine based MPEG player (media player)',
 # PDA/Phonecell browsers
 'alcatel','Alcatel Browser (PDA/Phone browser)',
+'lg\-','LG (PDA/Phone browser)',
 'ericsson','Ericsson Browser (PDA/Phone browser)',
 'mot\-','Motorola Browser (PDA/Phone browser)',
 'nokia','Nokia Browser (PDA/Phone browser)',
 'panasonic','Panasonic Browser (PDA/Phone browser)',
 'philips','Philips Browser (PDA/Phone browser)',
+'sagem','Sagem (PDA/Phone browser)',
+'samsung','Samsung (PDA/Phone browser)',
+'sie\-','SIE (PDA/Phone browser)',
+'sec\-','Sony/Ericsson (PDA/Phone browser)',
 'sonyericsson','Sony/Ericsson Browser (PDA/Phone browser)',
 'mmef','Microsoft Mobile Explorer (PDA/Phone browser)',
 'mspie','MS Pocket Internet Explorer (PDA/Phone browser)',
@@ -315,11 +325,16 @@
 'xaudio','mediaplayer',
 # PDA/Phonecell browsers
 'alcatel','pdaphone',				# Alcatel
+'lg\-','pdaphone',                  # LG
 'ericsson','pdaphone',				# Ericsson
 'mot\-','pdaphone',					# Motorola
 'nokia','pdaphone',					# Nokia
 'panasonic','pdaphone',				# Panasonic
 'philips','pdaphone',				# Philips
+'sagem','pdaphone',                 # Sagem
+'samsung','pdaphone',               # Samsung
+'sie\-','pdaphone',                 # SIE
+'sec\-','pdaphone',                 # Sony/Ericsson
 'sonyericsson','pdaphone',			# Sony/Ericsson
 'mmef','pdaphone',
 'mspie','pdaphone',
