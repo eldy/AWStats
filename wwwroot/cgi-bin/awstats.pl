@@ -24,11 +24,12 @@ my $VERSION="5.0 (build $REVISION)";
 # ---------- Init variables -------
 # Constants
 use vars qw/
-$DEBUGFORCED $NBOFLINESFORBENCHMARK $FRAMEWIDTH
+$DEBUGFORCED $NBOFLINESFORBENCHMARK $FRAMEWIDTH $NBOFLASTUPDATELOOKUPTOSAVE
 /;
 $DEBUGFORCED=0;					# Force debug level to log lesser level into debug.log file (Keep this value to 0)
 $NBOFLINESFORBENCHMARK=5000;	# Benchmark info are printing every NBOFLINESFORBENCHMARK lines
 $FRAMEWIDTH=260;
+$NBOFLASTUPDATELOOKUPTOSAVE=200;
 # Plugins variable
 use vars qw/ $Plugin_readgz $Plugin_graph3d $Plugin_hashfiles $Plugin_timehires $Plugin_timezone $Plugin_etf1 /;
 $Plugin_readgz=$Plugin_graph3d=$Plugin_hashfiles=$Plugin_timehires=$Plugin_timezone=$Plugin_etf1=0;
@@ -58,7 +59,8 @@ $StartSeconds $StartMicroseconds
 $StartSeconds=$StartMicroseconds=0;
 # Config vars
 use vars qw/
-$DNSCacheFile 
+$DNSStaticCacheFile 
+$DNSLastUpdateCacheFile 
 $Lang
 $MaxRowsInHTMLOutput
 $BarImageVertical_v
@@ -72,7 +74,8 @@ $BarImageHorizontal_h
 $BarImageVertical_k
 $BarImageHorizontal_k
 /;
-$DNSCacheFile="dnscachefile.txt";
+$DNSStaticCacheFile="dnscache.txt";
+$DNSLastUpdateCacheFile="dnscachelastupdate.txt";
 $Lang="en";
 $MaxRowsInHTMLOutput = 1000;
 $BarImageVertical_v   = "barrevv.png";
@@ -786,7 +789,8 @@ sub Read_Config_File {
 			}
 		if ($param =~ /^AllowToUpdateStatsFromBrowser/)	{ $AllowToUpdateStatsFromBrowser=$value; next; }
 		# Read optional setup section
-		if ($param =~ /^DNSCacheFile/)				  { $DNSCacheFile=$value; next; }
+		if ($param =~ /^DNSStaticCacheFile/)				  { $DNSStaticCacheFile=$value; next; }
+		if ($param =~ /^DNSLastUpdateCacheFile/)			  { $DNSLastUpdateCacheFile=$value; next; }
 		if ($param =~ /^SkipDNSLookupFor/) {
 			$value =~ s/\\\./\./g; $value =~ s/([^\\])\./$1\\\./g; $value =~ s/^\./\\\./;	# Replace . into \.
 			foreach my $elem (split(/\s+/,$value))    { push @SkipDNSLookupFor,$elem; }
@@ -1144,7 +1148,8 @@ sub Check_Config {
 	if (! $SiteDomain)                              { error("Error: SiteDomain parameter not found in your config/domain file. You must add it for using this version."); }
 	if ($AllowToUpdateStatsFromBrowser !~ /[0-1]/) 	{ $AllowToUpdateStatsFromBrowser=0; }
 	# Optional setup section
-    if (! $DNSCacheFile)                          	{ $DNSCacheFile="dnscachefile.txt"; }
+    if (! $DNSStaticCacheFile)                     	{ $DNSStaticCacheFile="dnscache.txt"; }
+    if (! $DNSLastUpdateCacheFile)                 	{ $DNSLastUpdateCacheFile="dnscachelastupdate.txt"; }
 	if ($AllowAccessFromWebToAuthenticatedUsersOnly !~ /[0-1]/)     { $AllowAccessFromWebToAuthenticatedUsersOnly=0; }
 	if ($CreateDirDataIfNotExists !~ /[0-1]/)      	{ $CreateDirDataIfNotExists=0; }
 	if ($SaveDatabaseFilesWithPermissionsForEveryone !~ /[0-1]/)	{ $SaveDatabaseFilesWithPermissionsForEveryone=1; }
@@ -2577,20 +2582,23 @@ sub Save_History_File {
 sub Read_DNS_Cache_File {
 	my $hashtoload=shift;
 	my $dnscachefile=shift;
+	my $dnscacheext="";
 	my $savetohash=shift;
+	my $usefilesuffix=shift;	# TODO Use filesuffix
 	my $filetoload="";
 	my $filehashtoload="";
 	my $timetoload = time();
 	my $hashfileuptodate=1;
 
 	if ($Debug) { debug("Call to Read_DNS_Cache_File [file=\"$dnscachefile\"]"); }
+	if ($dnscachefile =~ s/(\.\w+)$//) { $dnscacheext=$1; }
 	foreach my $dir ("$DirData",".","") {
 		my $searchdir=$dir;
 		if ($searchdir && (!($searchdir =~ /\/$/)) && (!($searchdir =~ /\\$/)) ) { $searchdir .= "/"; }
-		if (-f "${searchdir}$dnscachefile") { $filetoload="${searchdir}$dnscachefile"; }
+		if (-f "${searchdir}$dnscachefile$dnscacheext") { $filetoload="${searchdir}$dnscachefile$dnscacheext"; }
 		if ($Plugin_hashfiles) {
 			if (-f "${searchdir}$dnscachefile.hash") {
-				my ($tmp1a,$tmp2a,$tmp3a,$tmp4a,$tmp5a,$tmp6a,$tmp7a,$tmp8a,$tmp9a,$datesource,$tmp10a,$tmp11a,$tmp12a) = stat("${searchdir}$dnscachefile");
+				my ($tmp1a,$tmp2a,$tmp3a,$tmp4a,$tmp5a,$tmp6a,$tmp7a,$tmp8a,$tmp9a,$datesource,$tmp10a,$tmp11a,$tmp12a) = stat("${searchdir}$dnscachefile$dnscacheext");
 				my ($tmp1b,$tmp2b,$tmp3b,$tmp4b,$tmp5b,$tmp6b,$tmp7b,$tmp8b,$tmp9b,$datehash,$tmp10b,$tmp11b,$tmp12b) = stat("${searchdir}$dnscachefile.hash");
 				if ($datesource && $datehash < $datesource) {
 					$hashfileuptodate=0;
@@ -2624,8 +2632,10 @@ sub Read_DNS_Cache_File {
 		%$hashtoload = map(/^\d+\s+(\d+\.\d+\.\d+\.\d+)\s+(.*)$/o, <DNSFILE>);
 	   	close DNSFILE;
 		if ($Plugin_hashfiles && ! $hashfileuptodate && $savetohash) {
-			debug(" Save Hash file $filetoload.hash");
-			eval('store(\%$hashtoload, "$filetoload.hash");');
+			my $filehashtosave=$filetoload;
+			$filehashtosave =~ s/(\.\w+)$//;
+			debug(" Save hash file $filehashtosave.hash");
+			eval('store(\%$hashtoload, "$filehashtosave.hash");');
 		}
 	}
 	if ($Debug) { debug(" Loaded ".(scalar keys %$hashtoload)." items from ".($filehashtoload?$filehashtoload:"$filetoload")." in ".(time()-$timetoload)." seconds.",1); }
@@ -2643,6 +2653,8 @@ sub Read_DNS_Cache_File {
 sub Save_DNS_Cache_File {
 	my $hashtosave=shift;
 	my $dnscachefile=shift;
+	my $dnscacheext="";
+	my $usefilesuffix=shift;	# TODO Use filesuffix
 	my $filehashtosave="";
 	my $timetosave = time();
 	my $nbofelemsaved=0;
@@ -2652,9 +2664,10 @@ sub Save_DNS_Cache_File {
 		if ($Debug) { debug(" No data to save"); }
 		return 0;	
 	}
+	if ($dnscachefile =~ s/(\.\w+)$//) { $dnscacheext=$1; }
 	if ($Plugin_hashfiles) {
 		# We try to save it as a hash file
-		debug(" Save Hash file $dnscachefile.hash");
+		debug(" Save hash file $dnscachefile.hash");
 		# TODO Limit size of save
 		eval('store(\%$hashtosave, "$dnscachefile.hash");');
 		$filehashtosave="$dnscachefile.hash";
@@ -2662,9 +2675,9 @@ sub Save_DNS_Cache_File {
 	}
 	if (! $filehashtosave) {
 		$nbofelemsaved=0;
-		debug(" Save file $dnscachefile");
-		if (! open(DNSFILE,">$dnscachefile")) {
-			warning("Warning: Failed to open for writing last update DNS Cache file \"$dnscachefile\": $!");
+		debug(" Save file $dnscachefile$dnscacheext");
+		if (! open(DNSFILE,">$dnscachefile$dnscacheext")) {
+			warning("Warning: Failed to open for writing last update DNS Cache file \"$dnscachefile$dnscacheext\": $!");
 			return 1;
 		}
 		# TODO Limit size of save
@@ -2676,7 +2689,7 @@ sub Save_DNS_Cache_File {
 		}
 		close DNSFILE;
 	}
-	if ($Debug) { debug(" Saved $nbofelemsaved items into ".($filehashtosave?$filehashtosave:$dnscachefile)." in ".(time()-$timetosave)." seconds.",1); }
+	if ($Debug) { debug(" Saved $nbofelemsaved items into ".($filehashtosave?"$filehashtosave":"$dnscachefile$dnscacheext")." in ".(time()-$timetosave)." seconds.",1); }
 	return 0;
 }
 
@@ -3574,8 +3587,9 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {
 	# Load DNS Cache Files
 	#------------------------------------------
 	if ($DNSLookup) {
-		&Read_DNS_Cache_File(\%TmpDNSLookup,"${PROG}dnscachelastupdate$FileSuffix.txt",0);
-		&Read_DNS_Cache_File(\%MyDNSTable,"$DNSCacheFile",1);
+		# TODO Load DNSLastUpdateCacheFile for ok and ip
+		&Read_DNS_Cache_File(\%TmpDNSLookup,"$DNSLastUpdateCacheFile",0,1);		# Load with no save into hash file and with FileSuffix
+		&Read_DNS_Cache_File(\%MyDNSTable,"$DNSStaticCacheFile",1,0);			# Load with save into hash file if plugin enabled and hash not up to date and no use of FileSuffix
 	}
 
 	if ($Debug) { debug("Start Update process"); }
@@ -4317,7 +4331,7 @@ if ($UpdateStats && $FrameName ne "index" && $FrameName ne "mainleft") {
 
 	# Save hash
 	# TODO Save a file for ok and a file for ip
-	Save_DNS_Cache_File(\%TmpDNSLookup,"$DirData/${PROG}dnscachelastupdate.txt");
+	Save_DNS_Cache_File(\%TmpDNSLookup,"$DirData/$DNSLastUpdateCacheFile",1);	# Save into file using FileSuffix
 }
 # End of log processing if ($UPdateStats)
 
