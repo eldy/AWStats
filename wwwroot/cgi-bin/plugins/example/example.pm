@@ -14,9 +14,7 @@
 
 # <-----
 # ENTER HERE THE USE COMMAND FOR ALL REQUIRED PERL MODULES
-#use Time::Local
-#use Time::Local
-#use Time::Local
+#if (!eval ('require "Time/HiRes.pm"')) 	{ return "Error: Need Perl module Time::HiRes"; }
 # ----->
 use strict;no strict "refs";
 
@@ -29,7 +27,7 @@ use strict;no strict "refs";
 # ENTER HERE THE MINIMUM AWSTATS VERSION REQUIRED BY YOUR PLUGIN
 # AND THE NAME OF ALL FUNCTIONS THE PLUGIN MANAGE.
 # EACH POSSIBLE FUNCTION AND GOAL ARE DESCRIBE LATER.
-my $PluginNeedAWStatsVersion="5.1";
+my $PluginNeedAWStatsVersion="5.4";
 my $PluginHooksFunctions="xxx";
 # ----->
 
@@ -43,7 +41,7 @@ $PluginVariable1
 
 
 #-----------------------------------------------------------------------------
-# PLUGIN FUNTION Init_pluginname
+# PLUGIN FUNCTION: Init_pluginname
 #-----------------------------------------------------------------------------
 sub Init_timezone {
 	my $InitParams=shift;
