@@ -38,7 +38,34 @@ This is a list of other tools provided with AWStats.<br>
 All those tools are available in <b>tools</b> directory of AWStats distribution.<br>
 <br><br>
 
-<br><a name="awstats_buildstaticpages"><H2 style="font: 22px arial,helvetica,sanserif color: #606060"><u>awstats_buildstaticpages</u></H2></a>
+<br>
+<br><a name="configure"><H2 style="font: 22px arial,helvetica,sanserif color: #606060"><u>configure.pl</u></H2></a>
+<br>This script creates one config file for each web servers provided by Apache.
+<br>After running this tool, AWStats can immediatly be used.<br>
+<br>
+<br> This tool is not yet available...
+
+<br>
+<br>
+
+
+<br>
+<br><a name="awstats_updateall"><H2 style="font: 22px arial,helvetica,sanserif color: #606060"><u>awstats_updateall.pl</u></H2></a>
+<br>awstats_updateall launches update process for all AWStats config files found in
+<br>a particular directory, so you can easily setup a cron/scheduler job.
+<br>This directory is by default /etc/opt/awstats.
+<br>
+<br>Usage:  awstats_updateall.pl now [options]
+<br>
+<br>Where options are:
+<br>  -awstatsprog=pathtoawstatspl
+<br>  -confdir=confdirtoscan
+
+<br>
+<br>
+
+<br>
+<br><a name="awstats_buildstaticpages"><H2 style="font: 22px arial,helvetica,sanserif color: #606060"><u>awstats_buildstaticpages.pl</u></H2></a>
 <br>awstats_buildstaticpages allows you to launch AWStats with -staticlinks option
 <br>to build all possible pages allowed by AWStats -output option.
 <br>
@@ -61,7 +88,8 @@ All those tools are available in <b>tools</b> directory of AWStats distribution.
 <br>
 <br>
 
-<br><a name="logresolvemerge"><H2 style="font: 22px arial,helvetica,sanserif color: #606060"><u>logresolvemerge</u></H2></a>
+<br>
+<br><a name="logresolvemerge"><H2 style="font: 22px arial,helvetica,sanserif color: #606060"><u>logresolvemerge.pl</u></H2></a>
 <br>logresolvemerge allows you to merge several log files into one output,
 <br>sorted on date. It also makes a fast reverse DNS lookup to replace
 <br>all IP addresses into host names in resulting log file.
@@ -96,34 +124,6 @@ All those tools are available in <b>tools</b> directory of AWStats distribution.
 <br>New versions and FAQ at http://awstats.sourceforge.net
 <br>
 <br>
-
-<font color=red>Warning: logresolvemerge.pl provided with 4.0 has a memory bug that
-makes logresolvemerge.pl vampiring your memory and making swap (until process is finished)
-when used on large log files. Use at least logresolvemerge.pl 1.2 that fix that (provided
-with AWStats 4.1)</font><br>
-<br>
-
-
-<br><a name="1"><H2 style="font: 22px arial,helvetica,sanserif color: #606060"><u>common2combined</u></H2></a>
-<br>common2combined converts any Apache 'common' log file into a 'combined' file.
-<br>common2combined comes with ABSOLUTELY NO WARRANTY. It's a free software
-<br>distributed with a GNU General Public License (See COPYING.txt file).
-<br>common2combined is part of AWStats but can be used alone for any need.
-<br>
-<br>Value used for the 2 new fields added in conversion are :
-<br>New referer    : "-"
-<br>New user Agent : "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0)"
-<br>
-<br>Usage:
-<br>  common2combined.pl oldfile.log > newfile.log
-<br>
-<br>Options:
-<br>  -showsteps  to add benchmark informations every 5000 lines processed
-<br>
-<br>New versions and FAQ at http://awstats.sourceforge.net
-<br>
-<br>
-
 
 <br>
 <hr>

@@ -13,6 +13,11 @@
 my $REVISION='$Revision$'; $REVISION =~ /\s(.*)\s/; $REVISION=$1;
 my $VERSION="1.0 (build $REVISION)";
 
+# Default value of DIRCONFIG and AWSTATSSCRIPT
+my $DIRCONFIG = "/etc/opt/awstats";
+my $AWSTATSSCRIPT = "/opt/awstats/wwwroot/cgi-bin/awstats.pl";
+
+
 
 
 #-------------------------------------------------------

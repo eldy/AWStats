@@ -37,14 +37,15 @@ my $DIR; my $PROG; my $Extension;
 ($DIR=$0) =~ s/([^\/\\]*)$//; ($PROG=$1) =~ s/\.([^\.]*)$//; $Extension=$1;
 if (!$nowfound || $helpfound || ! @ARGV) {
 	print "----- $PROG $VERSION (c) Laurent Destailleur -----\n";
-	print "$PROG launch update process for each config file found\n";
-	print "in $DIRCONFIG directory (for fast cron/scheduler setup).\n";
+	print "awstats_updateall launches update process for all AWStats config files found in\n";
+	print "a particular directory, so you can easily setup a cron/scheduler job.\n";
+	print "This directory is by default $DIRCONFIG.\n";
 	print "\n";
 	print "Usage:  $PROG.$Extension now [options]\n";
 	print "\n";
 	print "Where options are:\n";
 	print "  -awstatsprog=pathtoawstatspl\n";
-	print "  -confdir=confdirtoscan\n";
+	print "  -confdir=directorytoscan\n";
 	print "\n";
 	exit 0;
 }
