@@ -31,53 +31,43 @@ use vars qw/ $UseHiRes $UseCompress /;
 #-------------------------------------------------------
 use vars qw/ $REVISION $VERSION /;
 my $REVISION='$Revision$'; $REVISION =~ /\s(.*)\s/; $REVISION=$1;
-my $VERSION="4.1 (build $REVISION)";
+my $VERSION="4.2 (build $REVISION)";
 
 # ---------- Init variables -------
+# Constants
+use vars qw/
+$DEBUGFORCED
+$NBOFLINESFORBENCHMARK
+/;
+$DEBUGFORCED   = 0;				# Force debug level to log lesser level into debug.log file (Keep this value to 0)
+$NBOFLINESFORBENCHMARK=5000;	# Benchmark info are printing every NBOFLINESFORBENCHMARK lines
+# Running variables
 use vars qw/
 $DIR $PROG $Extension
-$Debug
-$ShowSteps
-$Lang
-$AWScript
-$DirCgi
-$DirData
-$DirIcons
-$DirLang
-$LogSeparator
-$KeyWordsNotSensitive
-$DNSLookup
-$DNSLookupAlreadyDone
-$DEBUGFORCED
-$MaxRowsInHTMLOutput
+$Debug $ShowSteps
+$DebugResetDone $DNSLookupAlreadyDone
 $VisitTimeOut
 $VisitTolerance
-$NbOfLinesForBenchmark
-$WIDTH
-$CENTER
 /;
 $DIR=$PROG=$Extension="";
-$Debug=0;
-$ShowSteps=0;
-$Lang="en";
-$AWScript="";
-$DirCgi="";
-$DirData="";
-$DirIcons="";
-$DirLang="";
-$LogSeparator="\\s";
-$KeyWordsNotSensitive = 1;		# Keywords are not case sensitive
-$DNSLookup=0;
-$DNSLookupAlreadyDone=0;
-$DEBUGFORCED   = 0;				# Force debug level to log lesser level into debug.log file (Keep this value to 0)
-$MaxRowsInHTMLOutput = 1000;	# Max number of rows for not limited HTML arrays
+$Debug=$ShowSteps=0;
+$DebugResetDone=$DNSLookupAlreadyDone=0;
 $VisitTimeOut  = 10000;			# Laps of time to consider a page load as a new visit. 10000 = 1 hour (Default = 10000)
 $VisitTolerance= 10000;			# Laps of time to accept a record if not in correct order. 10000 = 1 hour (Default = 10000)
-$NbOfLinesForBenchmark=5000;
-$WIDTH         = 600;
-$CENTER        = "";
-# Images for graphics
+# Time vars
 use vars qw/
+$starttime
+$nowtime $tomorrowtime
+$nowweekofmonth $nowdaymod $nowsmallyear
+$nowsec $nowmin $nowhour $nowday $nowmonth $nowyear $nowwday $nowns
+$StartSeconds $StartMicroseconds
+/;
+$StartSeconds=$StartMicroseconds=0;
+# Config vars
+use vars qw/
+$Lang
+$LogSeparator
+$MaxRowsInHTMLOutput
 $BarImageVertical_v
 $BarImageVertical_u
 $BarImageVertical_p
@@ -89,6 +79,9 @@ $BarImageHorizontal_h
 $BarImageVertical_k
 $BarImageHorizontal_k
 /;
+$Lang="en";
+$LogSeparator="\\s";
+$MaxRowsInHTMLOutput = 1000;
 $BarImageVertical_v   = "barrevv.png";
 #$BarImageHorizontal_v = "barrehv.png";
 $BarImageVertical_u   = "barrevu.png";
@@ -103,13 +96,7 @@ $BarImageHorizontal_h = "barrehh.png";
 $BarImageVertical_k   = "barrevk.png";
 $BarImageHorizontal_k = "barrehk.png";
 use vars qw/
-$starttime
-$nowtime $tomorrowtime
-$nowweekofmonth $nowdaymod $nowsmallyear
-$nowsec $nowmin $nowhour $nowday $nowmonth $nowyear $nowwday $nowns
-/;
-use vars qw/
-$AllowAccessFromWebToAuthenticatedUsersOnly $BarHeight $BarWidth $DebugResetDone
+$DNSLookup $AllowAccessFromWebToAuthenticatedUsersOnly $BarHeight $BarWidth
 $Expires $CreateDirDataIfNotExists $KeepBackupOfHistoricFiles $MaxLengthOfURL
 $MaxNbOfDomain $MaxNbOfHostsShown $MaxNbOfKeyphrasesShown $MaxNbOfKeywordsShown
 $MaxNbOfLoginShown $MaxNbOfPageShown $MaxNbOfRefererShown $MaxNbOfRobotShown
@@ -119,10 +106,9 @@ $NbOfLinesRead $NbOfLinesDropped $NbOfLinesCorrupted $NbOfOldLines $NbOfNewLines
 $NewLinePhase $NbOfLinesForCorruptedLog $PurgeLogFile
 $ShowAuthenticatedUsers $ShowCompressionStats $ShowFileSizesStats
 $ShowDropped $ShowCorrupted $ShowUnknownOrigin $ShowLinksToWhoIs
-$StartSeconds $StartMicroseconds
 $UpdateStats $URLWithQuery
 /;
-($AllowAccessFromWebToAuthenticatedUsersOnly, $BarHeight, $BarWidth, $DebugResetDone,
+($DNSLookup, $AllowAccessFromWebToAuthenticatedUsersOnly, $BarHeight, $BarWidth,
 $Expires, $CreateDirDataIfNotExists, $KeepBackupOfHistoricFiles, $MaxLengthOfURL,
 $MaxNbOfDomain, $MaxNbOfHostsShown, $MaxNbOfKeyphrasesShown, $MaxNbOfKeywordsShown,
 $MaxNbOfLoginShown, $MaxNbOfPageShown, $MaxNbOfRefererShown, $MaxNbOfRobotShown,
@@ -132,12 +118,11 @@ $NbOfLinesRead, $NbOfLinesDropped, $NbOfLinesCorrupted, $NbOfOldLines, $NbOfNewL
 $NewLinePhase, $NbOfLinesForCorruptedLog, $PurgeLogFile,
 $ShowAuthenticatedUsers, $ShowCompressionStats, $ShowFileSizesStats,
 $ShowDropped, $ShowCorrupted, $ShowUnknownOrigin, $ShowLinksToWhoIs,
-$StartSeconds, $StartMicroseconds,
 $UpdateStats, $URLWithQuery)=
-(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
+(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
 use vars qw/
 $AllowToUpdateStatsFromBrowser $ArchiveLogRecords $DetailedReportsOnNewWindows
-$FirstDayOfWeek $SaveDatabaseFilesWithPermissionsForEveryone
+$FirstDayOfWeek $KeyWordsNotSensitive $SaveDatabaseFilesWithPermissionsForEveryone
 $ShowHeader $ShowMenu $ShowMonthDayStats $ShowDaysOfWeekStats
 $ShowHoursStats $ShowDomainsStats $ShowHostsStats
 $ShowRobotsStats $ShowSessionsStats $ShowPagesStats $ShowFileTypesStats
@@ -148,7 +133,7 @@ $ShowFlagLinks $ShowLinksOnUrl
 $WarningMessages
 /;
 ($AllowToUpdateStatsFromBrowser, $ArchiveLogRecords, $DetailedReportsOnNewWindows,
-$FirstDayOfWeek, $SaveDatabaseFilesWithPermissionsForEveryone,
+$FirstDayOfWeek, $KeyWordsNotSensitive, $SaveDatabaseFilesWithPermissionsForEveryone,
 $ShowHeader, $ShowMenu, $ShowMonthDayStats, $ShowDaysOfWeekStats,
 $ShowHoursStats, $ShowDomainsStats, $ShowHostsStats,
 $ShowRobotsStats, $ShowSessionsStats, $ShowPagesStats, $ShowFileTypesStats,
@@ -156,7 +141,7 @@ $ShowBrowsersStats, $ShowOSStats, $ShowOriginStats, $ShowKeyphrasesStats,
 $ShowKeywordsStats,  $ShowHTTPErrorsStats,
 $ShowFlagLinks, $ShowLinksOnUrl,
 $WarningMessages)=
-(1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1);
+(1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1);
 use vars qw/
 $LevelForRobotsDetection $LevelForBrowsersDetection $LevelForOSDetection $LevelForRefererAnalyze
 $LevelForSearchEnginesDetection $LevelForKeywordsDetection
@@ -165,12 +150,14 @@ $LevelForSearchEnginesDetection $LevelForKeywordsDetection
 $LevelForSearchEnginesDetection, $LevelForKeywordsDetection)=
 (2,1,1,1,1,1);
 use vars qw/
+$DirCgi $DirData $DirIcons $DirLang $AWScript
 $ArchiveFileName $DefaultFile $HTMLHeadSection $HTMLEndSection $LinksToWhoIs
 $LogFile $LogFormat $Logo $LogoLink $StyleSheet $WrapperScript $SiteDomain
 /;
-($ArchiveFileName, $DefaultFile, $HTMLHeadSection, $HTMLEndSection, $LinksToWhoIs,
+($DirCgi, $DirData, $DirIcons, $DirLang, $AWScript,
+$ArchiveFileName, $DefaultFile, $HTMLHeadSection, $HTMLEndSection, $LinksToWhoIs,
 $LogFile, $LogFormat, $Logo, $LogoLink, $StyleSheet, $WrapperScript, $SiteDomain)=
-("","","","","","","","","","","","");
+("","","","","","","","","","","","","","","","","");
 use vars qw/
 $color_Background $color_TableBG $color_TableBGRowTitle
 $color_TableBGTitle $color_TableBorder $color_TableRowTitle $color_TableTitle
@@ -183,14 +170,14 @@ $color_text, $color_textpercent, $color_titletext, $color_weekend, $color_link, 
 $color_h, $color_k, $color_p, $color_e, $color_x, $color_s, $color_u, $color_v)=
 ("","","","","","","","","","","","","","","","","","","","","");
 use vars qw/
-$HTMLOutput $FileConfig $FileSuffix $Host $DayRequired $MonthRequired $YearRequired
+$HTMLOutput $Center $FileConfig $FileSuffix $Host $DayRequired $MonthRequired $YearRequired
 $QueryString $SiteConfig $StaticLinks $URLFilter $PageCode $PerlParsingFormat
 $SiteToAnalyze $SiteToAnalyzeWithoutwww $UserAgent
 /;
-($HTMLOutput, $FileConfig, $FileSuffix, $Host, $DayRequired, $MonthRequired, $YearRequired,
-$QueryString, $SiteConfig, $StaticLinks, $URLFilter, $PageCode, $PerlParsingFormat,
-$SiteToAnalyze, $SiteToAnalyzeWithoutwww, $UserAgent)=
-("","","","","","","","","","","","","","","","");
+($HTMLOutput, $Center, $FileConfig, $FileSuffix, $Host, $DayRequired, $MonthRequired,
+$YearRequired, $QueryString, $SiteConfig, $StaticLinks, $URLFilter, $PageCode,
+$PerlParsingFormat, $SiteToAnalyze, $SiteToAnalyzeWithoutwww, $UserAgent)=
+("","","","","","","","", "","","","","","","","","");
 use vars qw/
 $pos_vh $pos_rc $pos_logname $pos_date $pos_method $pos_url $pos_code $pos_size
 $pos_referer $pos_agent $pos_query $pos_gzipin $pos_gzipout $pos_gzipratio
@@ -361,7 +348,7 @@ use vars qw/ %httpcodelib /;
 "403", "Forbidden",
 "404", "Document Not Found",
 "405", "Method not allowed",
-"406", "ocument not acceptable to client",
+"406", "Document not acceptable to client",
 "407", "Proxy authentication required",
 "408", "Request Timeout",
 "409", "Request conflicts with state of resource",
@@ -397,11 +384,11 @@ use vars qw/ %smtpcodelib /;
 );
 
 # HTTP codes with tooltips
-use vars qw/ %httpcodewithtooltips /;
-%httpcodewithtooltips = (
-"201", 1, "202", 1, "204", 1, "206", 1, "301", 1, "302", 1, "400", 1, "401", 1, "403", 1, "404", 1, "408", 1,
-"500", 1, "501", 1, "502", 1, "503", 1, "504", 1, "505", 1, "200", 1, "304", 1
-);
+#use vars qw/ %httpcodewithtooltips /;
+#%httpcodewithtooltips = (
+#"201", 1, "202", 1, "204", 1, "206", 1, "301", 1, "302", 1, "400", 1, "401", 1, "403", 1, "404", 1, "408", 1,
+#"500", 1, "501", 1, "502", 1, "503", 1, "504", 1, "505", 1, "200", 1, "304", 1
+#);
 
 
 
@@ -464,7 +451,7 @@ EOF
 		# Write logo, flags and product name
 		if ($ShowHeader) {
 			print "$HTMLHeadSection\n";
-			print "<table WIDTH=$WIDTH>\n";
+			print "<table>\n";
 			print "<tr valign=middle><td class=AWL width=150 style=\"font: 18px arial,verdana,helvetica; font-weight: bold\">AWStats\n";
 			if (! $StaticLinks) { Show_Flag_Links($Lang); }
 			print "</td>\n";
@@ -490,7 +477,7 @@ EOF
 #------------------------------------------------------------------------------
 sub html_end {
 	if ($HTMLOutput) {
-		print "$CENTER<br><br><br>\n";
+		print "$Center<br><br><br>\n";
 		print "<FONT COLOR=\"#$color_text\"><b>Advanced Web Statistics $VERSION</b> - <a href=\"http://awstats.sourceforge.net\" target=\"awstatshome\">Created by $PROG</a></font><br>\n";
 		print "<br>\n";
 		print "$HTMLEndSection\n";
@@ -1241,7 +1228,7 @@ sub Check_Config {
 	if (! $Message[21])  { $Message[21]="Browsers"; }
 	if (! $Message[22])  { $Message[22]="HTTP Errors"; }
 	if (! $Message[23])  { $Message[23]="Referers"; }
-	if (! $Message[24])  { $Message[24]=""; }
+	if (! $Message[24])  { $Message[24]="Never updated"; }
 	if (! $Message[25])  { $Message[25]="Visitors domains/countries"; }
 	if (! $Message[26])  { $Message[26]="hosts"; }
 	if (! $Message[27])  { $Message[27]="pages"; }
@@ -2792,7 +2779,7 @@ if ((! $ENV{"GATEWAY_INTERFACE"}) && (! $SiteConfig)) {
 	print "\n";
 	print "Options to update statistics:\n";
 	print "  -update        to update statistics (default)\n";
-	print "  -showsteps     to add benchmark information every $NbOfLinesForBenchmark lines processed\n";
+	print "  -showsteps     to add benchmark information every $NBOFLINESFORBENCHMARK lines processed\n";
 	print "  -showcorrupted to add output for each corrupted lines found, with reason\n";
 	print "  -showdropped   to add output for each dropped lines found, with reason\n";
 	print "  -logfile=x     to force log to analyze whatever is 'LogFile' in config file\n";
@@ -3246,7 +3233,7 @@ if ($UpdateStats) {
 		$NbOfLinesRead++;
 		chomp $_; s/\r$//;
 
-		if ($ShowSteps && ($NbOfLinesRead % $NbOfLinesForBenchmark == 0)) {
+		if ($ShowSteps && ($NbOfLinesRead % $NBOFLINESFORBENCHMARK == 0)) {
 			my $delay=GetDelaySinceStart(0);
 			print "$NbOfLinesRead lines processed ($delay ms, ".int(1000*$NbOfLinesRead/($delay>0?$delay:1))." lines/second)\n";
 		}
@@ -4096,7 +4083,7 @@ EOF
 	#---------------------------------------------------------------------
 	if ($ShowMenu) {
 		if ($Debug) { debug("ShowMenu",2); }
-		print "$CENTER<a name=\"MENU\">&nbsp;</a><BR>";
+		print "$Center<a name=\"MENU\">&nbsp;</a><BR>";
 		print "<table>";
 		print "<tr><th class=AWL>$Message[7] : </th><td class=AWL><font style=\"font-size: 14px;\">$SiteDomain</font></th></tr>";
 		print "<tr><th class=AWL valign=top>$Message[35] : </th>";
@@ -4105,7 +4092,7 @@ EOF
 		my $lastupdate=0;
 		foreach my $key (sort keys %LastUpdate) { if ($lastupdate < $LastUpdate{$key}) { $lastupdate = $LastUpdate{$key}; } }
 		if ($lastupdate) { print Format_Date($lastupdate,0); }
-		else { print "<font color=#880000>Never updated</font>"; }
+		else { print "<font color=#880000>$Message[24]</font>"; }
 		print "</font>&nbsp; &nbsp; &nbsp; &nbsp;";
 		if ($AllowToUpdateStatsFromBrowser && ! $StaticLinks) {
 			my $NewLinkParams=${QueryString};
@@ -4182,7 +4169,7 @@ EOF
 		print "<hr>\n\n";
 	}
 	if ($HTMLOutput eq "allhosts") {
-		print "$CENTER<a name=\"HOSTSLIST\">&nbsp;</a><BR>";
+		print "$Center<a name=\"HOSTSLIST\">&nbsp;</a><BR>";
 		&tab_head($Message[81],19);
 		if ($MonthRequired ne "year") { print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[81] : $TotalHostsKnown $Message[82], $TotalHostsUnknown $Message[1] - $TotalUnique $Message[11]</TH>"; }
 		else { print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[81] : ".(scalar keys %_hostmachine_h)."</TH>"; }
@@ -4218,7 +4205,7 @@ EOF
 		exit(0);
 	}
 	if ($HTMLOutput eq "lasthosts") {
-		print "$CENTER<a name=\"HOSTSLIST\">&nbsp;</a><BR>";
+		print "$Center<a name=\"HOSTSLIST\">&nbsp;</a><BR>";
 		&tab_head($Message[9],19);
 		if ($MonthRequired ne "year") { print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[81] : $TotalHostsKnown $Message[82], $TotalHostsUnknown $Message[1] - $TotalUnique $Message[11]</TH>"; }
 		else { print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[81] : ".(scalar keys %_hostmachine_h)."</TH>"; }
@@ -4254,7 +4241,7 @@ EOF
 		exit(0);
 	}
 	if ($HTMLOutput eq "unknownip") {
-		print "$CENTER<a name=\"UNKOWNIP\">&nbsp;</a><BR>";
+		print "$Center<a name=\"UNKOWNIP\">&nbsp;</a><BR>";
 		&tab_head($Message[45],19);
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>".(scalar keys %_hostmachine_h)." $Message[1]</TH>";
 		if ($ShowLinksToWhoIs && $LinksToWhoIs) { print "<TH width=80>$Message[114]</TH>"; }
@@ -4290,7 +4277,7 @@ EOF
 	}
 	if ($HTMLOutput eq "urldetail") {
 		if ($AddOn) { AddOn_Filter(); }
-		print "$CENTER<a name=\"URLDETAIL\">&nbsp;</a><BR>";
+		print "$Center<a name=\"URLDETAIL\">&nbsp;</a><BR>";
 		# Show filter form
 		if (! $StaticLinks) {
 			my $NewLinkParams=${QueryString};
@@ -4396,7 +4383,7 @@ EOF
 		exit(0);
 	}
 	if ($HTMLOutput eq "unknownos") {
-		print "$CENTER<a name=\"UNKOWNOS\">&nbsp;</a><BR>";
+		print "$Center<a name=\"UNKOWNOS\">&nbsp;</a><BR>";
 		&tab_head($Message[46],19);
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>Referer (".(scalar keys %_unknownreferer_l).")</TH><TH>$Message[9]</TH></TR>\n";
 		my $count=0;
@@ -4411,7 +4398,7 @@ EOF
 		exit(0);
 	}
 	if ($HTMLOutput eq "unknownbrowser") {
-		print "$CENTER<a name=\"UNKOWNBROWSER\">&nbsp;</a><BR>";
+		print "$Center<a name=\"UNKOWNBROWSER\">&nbsp;</a><BR>";
 		&tab_head($Message[50],19);
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>Referer (".(scalar keys %_unknownrefererbrowser_l).")</TH><TH>$Message[9]</TH></TR>\n";
 		my $count=0;
@@ -4426,7 +4413,7 @@ EOF
 		exit(0);
 	}
 	if ($HTMLOutput eq "browserdetail") {
-		print "$CENTER<a name=\"NETSCAPE\">&nbsp;</a><BR>";
+		print "$Center<a name=\"NETSCAPE\">&nbsp;</a><BR>";
 		&tab_head("$Message[33]<br><img src=\"$DirIcons/browser/netscape_large.png\">",19);
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[58]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[15]</TH></TR>\n";
 		for (my $i=1; $i<=$#_nsver_h; $i++) {
@@ -4452,7 +4439,7 @@ EOF
 		exit(0);
 	}
 	if ($HTMLOutput eq "refererse") {
-		print "$CENTER<a name=\"REFERERSE\">&nbsp;</a><BR>";
+		print "$Center<a name=\"REFERERSE\">&nbsp;</a><BR>";
 		&tab_head($Message[40],19);
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$TotalDifferentSearchEngines $Message[122]</TH>";
 		#print "<TH bgcolor=\"#$color_p\" width=80>$Message[56]</TH><TH bgcolor=\"#$color_p\" width=80>$Message[15]</TH>";
@@ -4481,7 +4468,7 @@ EOF
 		exit(0);
 	}
 	if ($HTMLOutput eq "refererpages") {
-		print "$CENTER<a name=\"REFERERPAGES\">&nbsp;</a><BR>";
+		print "$Center<a name=\"REFERERPAGES\">&nbsp;</a><BR>";
 		&tab_head($Message[41],19);
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$TotalDifferentRefererPages $Message[28]</TH>";
 		#print "<TH bgcolor=\"#$color_p\" width=80>$Message[56]</TH><TH bgcolor=\"#$color_p\" width=80>$Message[15]</TH>";
@@ -4516,7 +4503,7 @@ EOF
 		exit(0);
 	}
 	if ($HTMLOutput eq "keyphrases") {
-		print "$CENTER<a name=\"KEYPHRASES\">&nbsp;</a><BR>";
+		print "$Center<a name=\"KEYPHRASES\">&nbsp;</a><BR>";
 		&tab_head($Message[43],19);
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\" onmouseover=\"ShowTooltip(15);\" onmouseout=\"HideTooltip(15);\"><TH>$TotalDifferentKeyphrases $Message[103]</TH><TH bgcolor=\"#$color_s\" width=80>$Message[14]</TH><TH bgcolor=\"#$color_s\" width=80>$Message[15]</TH></TR>\n";
 		$total_s=0;
@@ -4543,7 +4530,7 @@ EOF
 		exit(0);
 	}
 	if ($HTMLOutput eq "keywords") {
-		print "$CENTER<a name=\"KEYWORDS\">&nbsp;</a><BR>";
+		print "$Center<a name=\"KEYWORDS\">&nbsp;</a><BR>";
 		&tab_head($Message[44],19);
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\" onmouseover=\"ShowTooltip(15);\" onmouseout=\"HideTooltip(15);\"><TH>$TotalDifferentKeywords $Message[13]</TH><TH bgcolor=\"#$color_s\" width=80>$Message[14]</TH><TH bgcolor=\"#$color_s\" width=80>$Message[15]</TH></TR>\n";
 		$total_s=0;
@@ -4570,7 +4557,7 @@ EOF
 		exit(0);
 	}
 	if ($HTMLOutput eq "errors404") {
-		print "$CENTER<a name=\"NOTFOUNDERROR\">&nbsp;</a><BR>";
+		print "$Center<a name=\"NOTFOUNDERROR\">&nbsp;</a><BR>";
 		&tab_head($Message[47],19);
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>URL (".(scalar keys %_sider404_h).")</TH><TH bgcolor=\"#$color_h\">$Message[49]</TH><TH>$Message[23]</TH></TR>\n";
 		my $count=0;
@@ -4588,7 +4575,7 @@ EOF
 	}
 	if ($HTMLOutput eq "info") {
 		# Not yet available
-		print "$CENTER<a name=\"INFO\">&nbsp;</a><BR>";
+		print "$Center<a name=\"INFO\">&nbsp;</a><BR>";
 		&html_end;
 		exit(0);
 	}
@@ -4597,7 +4584,7 @@ EOF
 	#---------------------------------------------------------------------
 	if ($ShowMonthDayStats) {
 		if ($Debug) { debug("ShowMonthDayStats",2); }
-		print "$CENTER<a name=\"SUMMARY\">&nbsp;</a><BR>";
+		print "$Center<a name=\"SUMMARY\">&nbsp;</a><BR>";
 		&tab_head("$Message[7] $SiteDomain",0);
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TD><b>$Message[8]</b></TD>";
 		if ($MonthRequired eq "year") { print "<TD colspan=3 rowspan=2><font style=\"font: 18px arial,verdana,helvetica; font-weight: normal\">$Message[6] $YearRequired</font><br>"; }
@@ -4804,7 +4791,7 @@ EOF
 	#-------------------------
 	if ($ShowDaysOfWeekStats) {
 		if ($Debug) { debug("ShowDaysOfWeekStats",2); }
-		print "$CENTER<a name=\"DAYOFWEEK\">&nbsp;</a><BR>";
+		print "$Center<a name=\"DAYOFWEEK\">&nbsp;</a><BR>";
 		&tab_head($Message[91],18);
 		print "<TR>";
 		print "<TD align=center><center><TABLE>";
@@ -4867,7 +4854,7 @@ EOF
 	#----------------------------
 	if ($ShowHoursStats) {
 		if ($Debug) { debug("ShowHoursStats",2); }
-		print "$CENTER<a name=\"HOUR\">&nbsp;</a><BR>";
+		print "$Center<a name=\"HOUR\">&nbsp;</a><BR>";
 		&tab_head($Message[20],19);
 		print "<TR><TD align=center><center><TABLE><TR>\n";
 		$max_h=$max_k=1;
@@ -4904,7 +4891,7 @@ EOF
 	#---------------------------
 	if ($ShowDomainsStats) {
 		if ($Debug) { debug("ShowDomainsStats",2); }
-		print "$CENTER<a name=\"DOMAINS\">&nbsp;</a><BR>";
+		print "$Center<a name=\"DOMAINS\">&nbsp;</a><BR>";
 		&tab_head($Message[25],19);
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH colspan=2>$Message[17]</TH><TH>$Message[105]</TH><TH bgcolor=\"#$color_p\" width=80>$Message[56]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH bgcolor=\"#$color_k\" width=80>$Message[75]</TH><TH>&nbsp;</TH></TR>\n";
 		$total_p=$total_h=$total_k=0;
@@ -4962,7 +4949,7 @@ EOF
 	#--------------------------
 	if ($ShowHostsStats) {
 		if ($Debug) { debug("ShowHostsStats",2); }
-		print "$CENTER<a name=\"VISITOR\">&nbsp;</a><BR>";
+		print "$Center<a name=\"VISITOR\">&nbsp;</a><BR>";
 		$MaxNbOfHostsShown = (scalar keys %_hostmachine_h) if $MaxNbOfHostsShown > (scalar keys %_hostmachine_h);
 		&tab_head("$Message[81] ($Message[77] $MaxNbOfHostsShown) &nbsp; - &nbsp; <a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=allhosts":"$PROG$StaticLinks.allhosts.html")."\"".($DetailedReportsOnNewWindows?" target=\"awstatsbis\"":"").">$Message[80]</a> &nbsp; - &nbsp; <a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=lasthosts":"$PROG$StaticLinks.lasthosts.html")."\"".($DetailedReportsOnNewWindows?" target=\"awstatsbis\"":"").">$Message[9]</a> &nbsp; - &nbsp; <a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=unknownip":"$PROG$StaticLinks.unknownip.html")."\"".($DetailedReportsOnNewWindows?" target=\"awstatsbis\"":"").">$Message[45]</a>",19);
 		if ($MonthRequired ne "year") { print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[81] : $TotalHostsKnown $Message[82], $TotalHostsUnknown $Message[1] - $TotalUnique $Message[11]</TH>"; }
@@ -4998,7 +4985,7 @@ EOF
 	#----------------------------
 	if ($ShowAuthenticatedUsers) {
 		if ($Debug) { debug("ShowAuthenticatedUsers",2); }
-		print "$CENTER<a name=\"LOGIN\">&nbsp;</a><BR>";
+		print "$Center<a name=\"LOGIN\">&nbsp;</a><BR>";
 		&tab_head($Message[94],19);
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[94]</TH><TH bgcolor=\"#$color_p\" width=80>$Message[56]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH bgcolor=\"#$color_k\" width=80>$Message[75]</TH><TH width=120>$Message[9]</TH></TR>\n";
 		$total_p=$total_h=$total_k=0;
@@ -5039,7 +5026,7 @@ EOF
 	#----------------------------
 	if ($ShowRobotsStats) {
 		if ($Debug) { debug("ShowRobotStats",2); }
-		print "$CENTER<a name=\"ROBOTS\">&nbsp;</a><BR>";
+		print "$Center<a name=\"ROBOTS\">&nbsp;</a><BR>";
 		&tab_head($Message[53],19);
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\" onmouseover=\"ShowTooltip(16);\" onmouseout=\"HideTooltip(16);\"><TH>$Message[83]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH width=120>$Message[9]</TH></TR>\n";
 		my $count=0;
@@ -5054,7 +5041,7 @@ EOF
 	#----------------------------
 	if ($ShowSessionsStats) {
 		if ($Debug) { debug("ShowSessionsStats",2); }
-		print "$CENTER<a name=\"SESSIONS\">&nbsp;</a><BR>";
+		print "$Center<a name=\"SESSIONS\">&nbsp;</a><BR>";
 		&tab_head($Message[117],19);
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\" onmouseover=\"ShowTooltip(1);\" onmouseout=\"HideTooltip(1);\"><TH>$Message[117]</TH><TH bgcolor=\"#$color_s\" width=80>$Message[10]</TH></TR>\n";
 		$total_s=0;
@@ -5074,7 +5061,7 @@ EOF
 	#-------------------------
 	if ($ShowPagesStats) {
 		if ($Debug) { debug("ShowPagesStats (MaxNbOfPageShown=$MaxNbOfPageShown TotalDifferentPages=$TotalDifferentPages)",2); }
-		print "$CENTER<a name=\"PAGE\">&nbsp;</a><a name=\"ENTRY\">&nbsp;</a><a name=\"EXIT\">&nbsp;</a><BR>";
+		print "$Center<a name=\"PAGE\">&nbsp;</a><a name=\"ENTRY\">&nbsp;</a><a name=\"EXIT\">&nbsp;</a><BR>";
 		$MaxNbOfPageShown = $TotalDifferentPages if $MaxNbOfPageShown > $TotalDifferentPages;
 		&tab_head("$Message[19] ($Message[77] $MaxNbOfPageShown) &nbsp; - &nbsp; <a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=urldetail":"$PROG$StaticLinks.urldetail.html")."\"".($DetailedReportsOnNewWindows?" target=\"awstatsbis\"":"").">$Message[80]</a>",19);
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$TotalDifferentPages $Message[28]</TH>";
@@ -5150,7 +5137,7 @@ EOF
 	#-------------------------
 	if ($ShowFileTypesStats || $ShowCompressionStats) {
 		if ($Debug) { debug("ShowFileTypesStatsCompressionStats",2); }
-		print "$CENTER<a name=\"FILETYPES\">&nbsp;</a><BR>";
+		print "$Center<a name=\"FILETYPES\">&nbsp;</a><BR>";
 		my $Totalh=0; foreach my $key (keys %_filetypes_h) { $Totalh+=$_filetypes_h{$key}; }
 		my $Totalk=0; foreach my $key (keys %_filetypes_k) { $Totalk+=$_filetypes_k{$key}; }
 		if ($ShowCompressionStats) { &tab_head("$Message[73] - $Message[98]</a>",19); }
@@ -5202,7 +5189,7 @@ EOF
 	#----------------------------
 	if ($ShowBrowsersStats) {
 		if ($Debug) { debug("ShowBrowsersStats",2); }
-		print "$CENTER<a name=\"BROWSER\">&nbsp;</a><BR>";
+		print "$Center<a name=\"BROWSER\">&nbsp;</a><BR>";
 		my $Total=0; foreach my $key (keys %_browser_h) { $Total+=$_browser_h{$key}; }
 		&tab_head($Message[21],19);
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH colspan=2>Browser</TH><TH width=80>$Message[111]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[15]</TH></TR>\n";
@@ -5228,7 +5215,7 @@ EOF
 	#----------------------------
 	if ($ShowOSStats) {
 		if ($Debug) { debug("ShowOSStats",2); }
-		print "$CENTER<a name=\"OS\">&nbsp;</a><BR>";
+		print "$Center<a name=\"OS\">&nbsp;</a><BR>";
 		my $Total=0; foreach my $key (keys %_os_h) { $Total+=$_os_h{$key}; }
 		&tab_head($Message[59],19);
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH colspan=2>OS</TH><TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[15]</TH></TR>\n";
@@ -5254,7 +5241,7 @@ EOF
 	#---------------------------
 	if ($ShowOriginStats) {
 		if ($Debug) { debug("ShowOriginStats",2); }
-		print "$CENTER<a name=\"REFERER\">&nbsp;</a><BR>";
+		print "$Center<a name=\"REFERER\">&nbsp;</a><BR>";
 		my $Totalp=0; foreach my $i (0..5) { $Totalp+=$_from_p[$i]; }
 		my $Totalh=0; foreach my $i (0..5) { $Totalh+=$_from_h[$i]; }
 		&tab_head($Message[36],19);
@@ -5334,7 +5321,7 @@ EOF
 		# By Keyphrases
 		if ($ShowKeyphrasesStats && $ShowKeywordsStats) { print "<td width=50% valign=top>\n";	}
 		if ($Debug) { debug("ShowKeyphrasesStats",2); }
-		print "$CENTER<a name=\"KEYPHRASES\">&nbsp;</a><BR>";
+		print "$Center<a name=\"KEYPHRASES\">&nbsp;</a><BR>";
 		$MaxNbOfKeyphrasesShown = $TotalDifferentKeyphrases if $MaxNbOfKeyphrasesShown > $TotalDifferentKeyphrases;
 		&tab_head("$Message[43] ($Message[77] $MaxNbOfKeyphrasesShown)<br><a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=keyphrases":"$PROG$StaticLinks.keyphrases.html")."\"".($DetailedReportsOnNewWindows?" target=\"awstatsbis\"":"").">$Message[80]</a>",19,($ShowKeyphrasesStats && $ShowKeywordsStats)?95:70);
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\" onmouseover=\"ShowTooltip(15);\" onmouseout=\"HideTooltip(15);\"><TH>$TotalDifferentKeyphrases $Message[103]</TH><TH bgcolor=\"#$color_s\" width=80>$Message[14]</TH><TH bgcolor=\"#$color_s\" width=80>$Message[15]</TH></TR>\n";
@@ -5363,7 +5350,7 @@ EOF
 		# By Keywords
 		if ($ShowKeyphrasesStats && $ShowKeywordsStats) { print "<td width=50% valign=top>\n";	}
 		if ($Debug) { debug("ShowKeywordsStats",2); }
-		print "$CENTER<a name=\"KEYWORDS\">&nbsp;</a><BR>";
+		print "$Center<a name=\"KEYWORDS\">&nbsp;</a><BR>";
 		$MaxNbOfKeywordsShown = $TotalDifferentKeywords if $MaxNbOfKeywordsShown > $TotalDifferentKeywords;
 		&tab_head("$Message[44] ($Message[77] $MaxNbOfKeywordsShown)<br><a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=keywords":"$PROG$StaticLinks.keywords.html")."\"".($DetailedReportsOnNewWindows?" target=\"awstatsbis\"":"").">$Message[80]</a>",19,($ShowKeyphrasesStats && $ShowKeywordsStats)?95:70);
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\" onmouseover=\"ShowTooltip(15);\" onmouseout=\"HideTooltip(15);\"><TH>$TotalDifferentKeywords $Message[13]</TH><TH bgcolor=\"#$color_s\" width=80>$Message[14]</TH><TH bgcolor=\"#$color_s\" width=80>$Message[15]</TH></TR>\n";
@@ -5394,7 +5381,7 @@ EOF
 	#----------------------------
 	if ($ShowHTTPErrorsStats) {
 		if ($Debug) { debug("ShowHTTPErrorsStats",2); }
-		print "$CENTER<a name=\"ERRORS\">&nbsp;</a><BR>";
+		print "$Center<a name=\"ERRORS\">&nbsp;</a><BR>";
 		&tab_head($Message[32],19);
 		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH colspan=2>$Message[32]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[15]</TH></TR>\n";
 		my $count=0;
