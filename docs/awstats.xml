@@ -34,8 +34,8 @@
 <Program_Info>
         <Program_Name>AWStats</Program_Name>
         <Program_Version>5.0</Program_Version>
-        <Program_Release_Month>01</Program_Release_Month>
-        <Program_Release_Day>09</Program_Release_Day>
+        <Program_Release_Month>10</Program_Release_Month>
+        <Program_Release_Day>01</Program_Release_Day>
         <Program_Release_Year>2002</Program_Release_Year>
         <Program_Cost_Dollars>0</Program_Cost_Dollars>
         <Program_Cost_Other_Code />
@@ -50,9 +50,9 @@
         <Filename_Previous>awstats.zip</Filename_Previous>
         <Filename_Generic>awstats.zip</Filename_Generic>
         <Filename_Long>awstats.zip</Filename_Long>
-        <File_Size_Bytes>650411</File_Size_Bytes>
-        <File_Size_K>635</File_Size_K>
-        <File_Size_MB>0.64</File_Size_MB>
+        <File_Size_Bytes>636198</File_Size_Bytes>
+        <File_Size_K>621</File_Size_K>
+        <File_Size_MB>0.62</File_Size_MB>
     </File_Info>
 <Expire_Info>
         <Has_Expire_Info>N</Has_Expire_Info>
@@ -105,7 +105,7 @@ Fonctionne avec les log de IIS 5.0+ et Apache. Gratuit (GNU General Public Licen
     </Application_URLs>
 <Download_URLs>
         <Primary_Download_URL>http://awstats.sourceforge.net/files/awstats.zip</Primary_Download_URL>
-        <Secondary_Download_URL>http://prdownloads.sourceforge.net/awstats/awstats50.zip</Secondary_Download_URL>
+        <Secondary_Download_URL>http://prdownloads.sourceforge.net/awstats/awstats-50.zip</Secondary_Download_URL>
         <Additional_Download_URL_1 />
         <Additional_Download_URL_2 />
     </Download_URLs>
