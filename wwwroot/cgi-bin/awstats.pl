@@ -44,7 +44,7 @@
 
 # ---------- Init variables (Variable $TmpHashxxx are not initialized) --------
 ($AddOn, $ArchiveFileName, $ArchiveLogRecords, $BarHeight, $BarWidth,
-$DIR, $DNSLookup, $Debug, $DefaultFile,
+$DIR, $DNSLookup, $DayRequired, $Debug, $DefaultFile,
 $DirCgi, $DirData, $DirIcons, $DirLang,
 $DetailedReportsOnNewWindows, $Expires, $Extension, $FileConfig, $FileSuffix, $FirstDayOfWeek,
 $FirstTime, $HTMLHeadSection, $HTMLEndSection, $Host, $HostAlias, $LastTime, $LastUpdate,
@@ -80,7 +80,7 @@ $WarningMessages= 1;
 %MonthBytes = %MonthHits = %MonthHostsKnown = %MonthHostsUnknown = %MonthPages = %MonthUnique = %MonthVisits =
 %monthlib = %monthnum = ();
 
-$VERSION="3.2 (build 19)";
+$VERSION="3.2 (build 21)";
 $Lang="en";
 
 # Default value
@@ -831,19 +831,18 @@ sub Read_History_File {
 	my $year=sprintf("%04i",shift);
 	my $month=sprintf("%02i",shift);
 	my $part=shift;
-	&debug("Call to Read_History_File [$year,$month,$part]");
-	if ($HistoryFileAlreadyRead{"$year$month"}) { return 0; }			# Protect code to invoke function only once for each month/year
-	$HistoryFileAlreadyRead{"$year$month"}=1;							# Protect code to invoke function only once for each month/year
-	if ($AddOn) { AddOn_Filename(); }
-	if (! -s "$DirData/$PROG$AddOnDay$month$year$FileSuffix.txt") {
+	&debug("Call to Read_History_File [$year,$month,$part] ($DayRequired)");	# In standard use of AWStats, the DayRequired variable is always empty
+	if ($HistoryFileAlreadyRead{"$year$month$DayRequired"}) { return 0; }	# Protect code to invoke function only once for each month/year
+	$HistoryFileAlreadyRead{"$year$month$DayRequired"}=1;					# Protect code to invoke function only once for each month/year
+	if (! -s "$DirData/$PROG$DayRequired$month$year$FileSuffix.txt") {
 		# If file not exists, return
 		&debug(" No history file");
 		return 0;
-	}	
+	}
 
 	# If session for read (no update), file can be open with share
 	# POSSIBLE CHANGE HERE	
-	open(HISTORY,"$DirData/$PROG$AddOnDay$month$year$FileSuffix.txt") || error("Error: Couldn't open for read file \"$DirData/$PROG$AddOnDay$month$year$FileSuffix.txt\" : $!");	# Month before Year kept for backward compatibility
+	open(HISTORY,"$DirData/$PROG$DayRequired$month$year$FileSuffix.txt") || error("Error: Couldn't open for read file \"$DirData/$PROG$DayRequired$month$year$FileSuffix.txt\" : $!");	# Month before Year kept for backward compatibility
 	$MonthUnique{$year.$month}=0; $MonthPages{$year.$month}=0; $MonthHits{$year.$month}=0; $MonthBytes{$year.$month}=0; $MonthHostsKnown{$year.$month}=0; $MonthHostsUnKnown{$year.$month}=0;
 	my $readdomain=0;my $readbrowser=0;my $readnsver=0;my $readmsiever=0;
 	my $reados=0;my $readrobot=0;my $readunknownreferer=0;my $readunknownrefererbrowser=0;
@@ -1495,6 +1494,8 @@ if ($QueryString =~ /year=/i) 	{ $YearRequired=$QueryString; $YearRequired =~ s/
 if ($YearRequired !~ /^[\d][\d][\d][\d]$/) { $YearRequired=$nowyear; }
 if ($QueryString =~ /month=/i)	{ $MonthRequired=$QueryString; $MonthRequired =~ s/.*month=//; $MonthRequired =~ s/&.*//; $MonthRequired =~ s/ .*//; }
 if ($MonthRequired ne "year" && $MonthRequired !~ /^[\d][\d]$/) { $MonthRequired=$nowmonth; }
+# day is a hidden option. Must not be used (Make results not understandable). Available for users that rename historic files with day.
+if ($QueryString =~ /day=/i)	{ $DayRequired=$QueryString; $DayRequired =~ s/.*day=//; $DayRequired =~ s/&.*//; $DayRequired =~ s/ .*//; }
 
 $BrowsersHashIDLib{"netscape"}="<font color=blue>Netscape</font> <a href=\"$DirCgi$PROG.$Extension?output=browserdetail&".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang\">($Message[58])</a>";
 $BrowsersHashIDLib{"msie"}="<font color=blue>MS Internet Explorer</font> <a href=\"$DirCgi$PROG.$Extension?output=browserdetail&".($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&lang=$Lang\">($Message[58])</a>";
