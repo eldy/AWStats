@@ -150,9 +150,9 @@ if (@config) {
 		print "</td>";
 
 		local @st=stat($l);
-		my ($sec,$min,$hour,$day,$month,$year,$wday,$yday) = localtime($st[10]);
+		my ($sec,$min,$hour,$day,$month,$year,$wday,$yday) = localtime($st[9]);
 		$year+=1900; $month++;
-		printf("<td align=center>%04s-%02s-%02s<br>%02s:%02s:%02s</td>",$year,$month,$day,$hour,$min,$sec);
+		printf("<td align=center>%04s-%02s-%02s %02s:%02s:%02s</td>",$year,$month,$day,$hour,$min,$sec);
 	
 		# Database size
 		#print "<td>NA</td>";
