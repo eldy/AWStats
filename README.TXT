@@ -9,8 +9,8 @@ pages, hits, hours, search engines, keywords used to find your site, broken
 links, robots and more. It works with IIS 5.0+ or Apache webserver log files.
 
 License: GNU GPL (GNU General Public License. See COPYING.TXT)
-Version : 2.23
-Release date: 25 November 2000
+Version : 2.24
+Release date: 20 January 2001
 Platforms: All (Linux, NT, SCO, BSD, Solaris and other *NIX's, BeOS, OS/2...)
 Author: Laurent Destailleur <eldy@users.sourceforge.net>
 AWStats web site: http://awstats.sourceforge.net
