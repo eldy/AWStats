@@ -50,6 +50,7 @@
 'hotjava',
 'ibrowse',
 'intergo',
+'javaws',
 'k\-meleon',
 'linemodebrowser',
 'lotus\-notes',
@@ -223,6 +224,7 @@
 'apt','Debian APT',
 'curl','Curl',
 'csscheck','WDG CSS Validator',
+'javaws','Java Web Start',
 'wget','Wget',
 'w3m','w3m',
 'w3c_css_validator','W3C CSS Validator',
@@ -332,6 +334,7 @@
 'webtv','webtv',
 # Other kind of browsers
 'apt','apt',
+'javaws','javaws',
 'webzip','webzip',
 'staroffice','staroffice',
 'mozilla','mozilla'
