@@ -43,8 +43,8 @@ sub Init_timezone {
 
 	# <-----
 	# YOU CAN ENTER HERE CODE TO INIT PLUGIN GLOBAL VARIABLES
-	if (! $InitParams) { return "Error: Disable plugin if TimeZone is 0 (Plugin useless)"; }	# We do not need this plugin if TZ=0
-	$PluginTimeZoneSeconds=($InitParams*3600);
+	if (! $InitParams || int($InitParams) == 0) { return "Error: Disable plugin if TimeZone is 0 (Plugin useless)"; }	# We do not need this plugin if TZ=0
+	$PluginTimeZoneSeconds=(int($InitParams)*3600);
 	# ----->
 
 	my $checkversion=&Check_Plugin_Version($PluginNeedAWStatsVersion);
