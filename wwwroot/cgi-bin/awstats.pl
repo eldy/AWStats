@@ -9187,7 +9187,7 @@ if (scalar keys %HTMLOutput) {
 			print "$Center<a name=\"ERRORS\">&nbsp;</a><BR>\n";
 			my $title="$Message[32]";
 			&tab_head("$title",19);
-			print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH colspan=2>$Message[32]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[15]</TH><TH bgcolor=\"#$color_k\" width=80>$Message[75]</TH></TR>\n";
+			print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH colspan=2>$Message[32]*</TH><TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[15]</TH><TH bgcolor=\"#$color_k\" width=80>$Message[75]</TH></TR>\n";
 			$total_h=0;
 			my $count=0;
 			&BuildKeyList($MaxRowsInHTMLOutput,1,\%_errors_h,\%_errors_h);
