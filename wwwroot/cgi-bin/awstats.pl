@@ -4222,7 +4222,7 @@ sub DefinePerlParsingFormat() {
 			@fieldlib=('host','logname','ua','date','referer','size','method','url','code');
 		}
 		elsif ($LogFormat eq '6') {	# Lotus notes (allows spaces in the logname without quoting them)
-			$PerlParsingFormat="(\\S+) \\S+ (.+) \\[(\\S+) \\S+\\] \\\"(\\S+) (\\S+) [^\\\"]+\\\" ([\\d|-]+) ([\\d|-]+) \\\"(.*)\\\" \\\"([^\\\"]*)\\\"";	# referer and ua might be ""
+			$PerlParsingFormat="([^ ]+) [^ ]+ (.*) \\[([^ ]+) [^ ]+\\] \\\"([^ ]+) ([^ ]+) [^\\\"]+\\\" ([\\d|-]+) ([\\d|-]+) \\\"(.*)\\\" \\\"([^\\\"]*)\\\"";	# referer and ua might be ""
 			$pos_host=0;$pos_logname=1;$pos_date=2;$pos_method=3;$pos_url=4;$pos_code=5;$pos_size=6;$pos_referer=7;$pos_agent=8;
 			@fieldlib=('host','logname','date','method','url','code','size','referer','agent');
 		}
@@ -5221,7 +5221,7 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 		# Analyze: Login
 		#---------------
 		if ($pos_logname>=0 && $field[$pos_logname] && $field[$pos_logname] ne '-') {
-			if ($LogFormat eq '6') { $field[$pos_logname] =~ s/ /\_/g; }			# Lotus notes allow space in logname field
+			if ($LogFormat eq '6') { $field[$pos_logname] =~ s/^\"//; $field[$pos_logname] =~ s/\"$//; $field[$pos_logname] =~ s/ /_/g; }	# Lotus notes allow space in logname field and are " with Domino 6+
 			if ($AuthenticatedUsersNotCaseSensitive) { $field[$pos_logname] =~ tr/A-Z/a-z/; }
 
 			# We found an authenticated user
@@ -7790,14 +7790,14 @@ EOF
 		$max_h=1; foreach my $key (values %_login_h) { if ($key > $max_h) { $max_h = $key; } }
 		$max_k=1; foreach my $key (values %_login_k) { if ($key > $max_k) { $max_k = $key; } }
 		my $count=0;
-		&BuildKeyList($MaxNbOfLoginShown,$MinHitLogin,\%_login_p,\%_login_h);
+		&BuildKeyList($MaxNbOfLoginShown,$MinHitLogin,\%_login_h,\%_login_p);
 		foreach my $key (@keylist) {
 			my $bredde_p=0;my $bredde_h=0;my $bredde_k=0;
 			if ($max_h > 0) { $bredde_p=int($BarWidth*$_login_p{$key}/$max_h)+1; }	# use max_h to enable to compare pages with hits
 			if ($max_h > 0) { $bredde_h=int($BarWidth*$_login_h{$key}/$max_h)+1; }
 			if ($max_k > 0) { $bredde_k=int($BarWidth*$_login_k{$key}/$max_k)+1; }
 			print "<TR><TD CLASS=AWL>$key</TD>";
-			if ($ShowAuthenticatedUsers =~ /P/i) { print "<TD>$_login_p{$key}</TD>"; }
+			if ($ShowAuthenticatedUsers =~ /P/i) { print "<TD>".($_login_p{$key}?$_login_p{$key}:"&nbsp;")."</TD>"; }
 			if ($ShowAuthenticatedUsers =~ /H/i) { print "<TD>$_login_h{$key}</TD>"; }
 			if ($ShowAuthenticatedUsers =~ /B/i) { print "<TD>".Format_Bytes($_login_k{$key})."</TD>"; }
 			if ($ShowAuthenticatedUsers =~ /L/i) { print "<TD>".($_login_l{$key}?Format_Date($_login_l{$key},1):'-')."</TD>"; }
@@ -7817,7 +7817,7 @@ EOF
 		$rest_k=$TotalBytes-$total_k;
 		if ($rest_p > 0 || $rest_h > 0 || $rest_k > 0) {	# All other logins
 			print "<TR><TD CLASS=AWL><font color=\"#$color_other\">$Message[125]</font></TD>";
-			if ($ShowAuthenticatedUsers =~ /P/i) { print "<TD>$rest_p</TD>"; }
+			if ($ShowAuthenticatedUsers =~ /P/i) { print "<TD>".($rest_p?$rest_p:"&nbsp;")."</TD>"; }
 			if ($ShowAuthenticatedUsers =~ /H/i) { print "<TD>$rest_h</TD>"; }
 			if ($ShowAuthenticatedUsers =~ /B/i) { print "<TD>".Format_Bytes($rest_k)."</TD>"; }
 			if ($ShowAuthenticatedUsers =~ /L/i) { print "<TD>&nbsp;</TD>"; }
