@@ -5,6 +5,8 @@ $Revision$ - $Author$ - $Date$
 5.91
 
 Fixes:
+- Fixed bug 816267.
+- Fixed minor typo errors.
 - Fixed value for ValueSMTPCodes if not defined in config file.
 
 New features/improvements:
@@ -13,13 +15,14 @@ New features/improvements:
 - maillogconvert.pl: Allow to process qmail log preprocessed by
   tai64nlocal tool.
 - wget is known as a "grabber" browser, no more as a robots.
-- Added netcaptor in browser database.
+- Added netcaptor and apt-get in browser database.
 - Add percent column for file types.
+- Some changes to make AWStats to be XML compliant ready.
+  Need to set the new parameter UseXMLForOutput to 1 in config file.
 
 Other/Documentation:
-- Some changes to make AWStats to be XML compliant ready (need to change the
-  UseXml=0 to UseXml=1 inside awstats.pl code). First step for future features.
 - Prepare code for decodeUTFkeys plugin.
+- Added debian icon.
 
 
 5.9
