@@ -370,7 +370,9 @@ user, used by web server process, can write into).<br>
 <font class=CProblem>PROBLEM:</font><br>
 AWStats seems to work but I'm not getting any results. i get a statistics page that looks like i have no hits.<br>
 <font class=CSolution>SOLUTION:</font><br>
-That's the one of the most common problem you can have and reason is simple: Your log file format setup is wrong.<br>
+That's one of the most common problem you can get and there is 2 possible reasons :<br>
+<br>
+1) Your log file format setup might be wrong.<br>
 <u>If you use Apache web server</u><br>
 The best way of working is to use the <i>"combined"</i> log format (See the <a href="awstats_setup.html">Setup and Use</a> page
 to know the way to change your Apache server log from <i>"common"</i> log format into <i>"combined"</i>).
@@ -385,6 +387,12 @@ Choose W3C Extended Log Format, then Properties, then the Tab Extended Propertie
 under Extended Properties. Once they are all unchecked, check off the list given in
 the <a href="awstats_setup.html">Setup and Use</a> page ("With IIS Server" chapter).<br>
 You can also read the next FAQ to have examples of <a href="awstats_config.html#LogFormat">LogFormat</a> value according to log files format.<br>
+<br>
+2) You are viewing stats for a year or month when no hits was made on your server.<br>
+When you run awstats, the reports is by default for the current month/year.<br>
+If you want to see data for another month/year you must:<br>
+Add -year=YYYY -month=MM on command line when building the html report page from command line.<br>
+Use an URL like http://myserver/cgi-bin/awstats.pl?config=xxx&year=YYYY&month=MM if viewing stats with AWStats used as a CGI.<br>
 <br>
 
 <a name="REDIRECT"></a><br>
