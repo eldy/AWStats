@@ -10,7 +10,7 @@ AWStats Changelog
 - Added choice of month and year in list boxes (when used as CGI).
 - The data values for month and days are reported in main page under the
   graph, no need to change page.
-- New feature: ShowxxxStats parmaters accept codes to decide which columns to
+- New feature: ShowxxxStats paramaters accept codes to decide which columns to
   show in chart.
 - New parameter: Added SkipUserAgents parameter to exclude some user agent
   from statistics.
