@@ -560,6 +560,7 @@ sub html_head {
 	my $dir=$PageDir?'right':'left';
 	if (scalar keys %HTMLOutput || $PluginMode) {
 		my $MetaRobot=0;	# meta robots
+        my $periodtitle=" ($YearRequired".($MonthRequired ne 'all'?"-$MonthRequired":"").")";
 		# Write head section
 		if ($BuildReportFormat eq 'xhtml' || $BuildReportFormat eq 'xml') {
 			if ($PageCode) { print "<?xml version=\"1.0\" encoding=\"$PageCode\"?>\n"; }
@@ -584,9 +585,9 @@ sub html_head {
 		else { print "<meta http-equiv=\"content-type\" content=\"text/html; charset=".($PageCode?$PageCode:"iso-8859-1")."\" />\n"; }
 
 		if ($Expires)  { print "<meta http-equiv=\"expires\" content=\"".(gmtime($starttime+$Expires))."\" />\n"; }
-		print "<meta http-equiv=\"description\" content=\"".ucfirst($PROG)." - Advanced Web Statistics for $SiteDomain\" />\n";
+		print "<meta http-equiv=\"description\" content=\"".ucfirst($PROG)." - Advanced Web Statistics for $SiteDomain$periodtitle\" />\n";
 		if ($MetaRobot && $FrameName ne 'mainleft') { print "<meta http-equiv=\"keywords\" content=\"$SiteDomain, free, advanced, realtime, web, server, logfile, log, analyzer, analysis, statistics, stats, perl, analyse, performance, hits, visits\" />\n"; }
-		print "<title>$Message[7] $SiteDomain</title>\n";
+		print "<title>$Message[7] $SiteDomain$periodtitle</title>\n";
 		if ($FrameName ne 'index') {
 
 			# A STYLE section must be in head section. Do not use " for number in a style section
