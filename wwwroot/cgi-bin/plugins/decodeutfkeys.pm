@@ -68,7 +68,7 @@ sub DecodeKey_decodeutfkeys {
 		$string=Encode::encode($encoding, Encode::decode("utf-8", $string));
 	}
 	#$string=HTML::Entities::encode_entities($string);
-	$string =~ s/;+/ /g;
+	$string =~ s/[;+]/ /g;
 	return $string;
 }
 
