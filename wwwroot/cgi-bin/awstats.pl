@@ -135,7 +135,7 @@ $UseFramesWhenCGI, $DecodeUA)=
 use vars qw/
 $AllowToUpdateStatsFromBrowser $ArchiveLogRecords $DetailedReportsOnNewWindows
 $FirstDayOfWeek $KeyWordsNotSensitive $SaveDatabaseFilesWithPermissionsForEveryone
-$ShowHeader $ShowMenu $ShowMonthDayStats $ShowDaysOfWeekStats
+$ShowMenu $ShowMonthDayStats $ShowDaysOfWeekStats
 $ShowHoursStats $ShowDomainsStats $ShowHostsStats
 $ShowRobotsStats $ShowSessionsStats $ShowPagesStats $ShowFileTypesStats
 $ShowBrowsersStats $ShowOSStats $ShowOriginStats
@@ -146,7 +146,7 @@ $WarningMessages $DebugMessages
 /;
 ($AllowToUpdateStatsFromBrowser, $ArchiveLogRecords, $DetailedReportsOnNewWindows,
 $FirstDayOfWeek, $KeyWordsNotSensitive, $SaveDatabaseFilesWithPermissionsForEveryone,
-$ShowHeader, $ShowMenu, $ShowMonthDayStats, $ShowDaysOfWeekStats,
+$ShowMenu, $ShowMonthDayStats, $ShowDaysOfWeekStats,
 $ShowHoursStats, $ShowDomainsStats, $ShowHostsStats,
 $ShowRobotsStats, $ShowSessionsStats, $ShowPagesStats, $ShowFileTypesStats,
 $ShowBrowsersStats, $ShowOSStats, $ShowOriginStats, $ShowKeyphrasesStats,
@@ -1177,7 +1177,6 @@ sub Parse_Config {
 		# Read optional appearance setup section
 		if ($param =~ /^Lang/)                 	{ $Lang=$value; next; }
 		if ($param =~ /^DirLang/)               { $DirLang=$value; next; }
-		if ($param =~ /^ShowHeader/)             { $ShowHeader=$value; next; }
 		if ($param =~ /^ShowMenu/)               { $ShowMenu=$value; next; }
 		if ($param =~ /^ShowMonthDayStats/)      { $ShowMonthDayStats=$value; next; }
 		if ($param =~ /^ShowDaysOfWeekStats/)    { $ShowDaysOfWeekStats=$value; next; }
@@ -1547,7 +1546,6 @@ sub Check_Config {
 	}
 	# Optional appearance setup section
 	if ($MaxRowsInHTMLOutput !~ /^\d+/ || $MaxRowsInHTMLOutput<1)     { $MaxRowsInHTMLOutput=1000; }
-	if ($ShowHeader !~ /[0-1]/)                   	{ $ShowHeader=1; }
 	if ($ShowMenu !~ /[0-1]/)                     	{ $ShowMenu=1; }
 	if ($ShowMonthDayStats !~ /[01UVPHB]/)         	{ $ShowMonthDayStats='UVPHB'; }
 	if ($ShowDaysOfWeekStats !~ /[01PHBL]/)        	{ $ShowDaysOfWeekStats='PHBL'; }
@@ -3822,16 +3820,15 @@ sub Show_Flag_Links {
 		$NewLinkParams =~ s/(^|&)staticlinks(=\w*|$)//i;
 		$NewLinkParams =~ s/(^|&)framename=[^&]*//i;
 		$NewLinkParams =~ s/(^|&)lang=[^&]*//i;
-		if ($FrameName eq 'mainleft') { $NewLinkTarget=" target=\"_parent\""; }
+		if ($FrameName eq 'mainright') { $NewLinkTarget=" target=\"_parent\""; }
 		$NewLinkParams =~ tr/&/&/s; $NewLinkParams =~ s/^&//; $NewLinkParams =~ s/&$//;
 		if ($NewLinkParams) { $NewLinkParams="${NewLinkParams}&"; }
 	}
 	else {
 		$NewLinkParams=($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&";
 	}
-	if ($FrameName eq 'mainleft') { $NewLinkParams.='framename=index&'; }
+	if ($FrameName eq 'mainright') { $NewLinkParams.='framename=index&'; }
 
-	print "<br>\n";
 	foreach my $flag (split(/\s+/,$ShowFlagLinks)) {
 		if ($flag ne $CurrentLang) {
 			my $lng=$flag;
@@ -5965,23 +5962,6 @@ EOF
 		print "\n";
 	}
 
-	# LOGO AND FLAGS
-	#---------------------------------------------------------------------
-	if ($ShowHeader && ($FrameName ne 'mainright' || $FrameName eq 'mainleft')) {
-		print "<table>\n";
-		print "<tr><td width=120 class=AWL style=\"font-size: 18px arial,verdana,helvetica; font-weight: bold\">AWStats\n";
-		if (! $StaticLinks) { Show_Flag_Links($Lang); }
-		print "</td>\n";
-		if ($LogoLink =~ "http://awstats.sourceforge.net") {
-			print "<td class=AWL><a href=\"$LogoLink\" target=\"awstatshome\"><img src=\"$DirIcons/other/$Logo\" border=0 alt=\"".ucfirst($PROG)." Web Site\" title=\"".ucfirst($PROG)." Web Site\"></a></td></tr>\n";
-		}
-		else {
-			print "<td class=AWL><a href=\"$LogoLink\" target=\"awstatshome\"><img src=\"$DirIcons/other/$Logo\" border=0></a></td></tr>\n";
-		}
-		if ($FrameName ne 'mainleft') { print "<tr><td class=AWL colspan=2>$Message[54]</td></tr>\n"; }
-		print "</table>\n";
-	}
-
 	# MENU
 	#---------------------------------------------------------------------
 	if ($ShowMenu || $FrameName eq 'mainleft') {
@@ -5999,20 +5979,32 @@ EOF
 			$NewLinkParams =~ tr/&/&/s; $NewLinkParams =~ s/^&//; $NewLinkParams =~ s/&$//;
 			my $NewLinkTarget='';
 			if ($FrameName eq 'mainright') { $NewLinkTarget=" target=_parent"; }
-			print "<FORM name=\"FormDateFilter\" action=\"$AWScript?${NewLinkParams}\" style=\"padding: 2px 2px 2px 2px; margin-top: 0\"$NewLinkTarget>";
+			print "<FORM name=\"FormDateFilter\" action=\"$AWScript?${NewLinkParams}\" style=\"padding: 0px 0px 0px 0px; margin-top: 0\"$NewLinkTarget>\n";
 		}
 
-		print "<table".($frame?" cellspacing=0 cellpadding=0 border=0":"").">\n";
-
+		print "<table width=\"100%\" bgcolor=#$color_TableBGTitle".($frame?" cellspacing=0 cellpadding=0 border=0":"").">\n";
 		if ($FrameName ne 'mainright') {
 			# Print site name
-			print "<tr><th class=AWL>$Message[7] : </th><td class=AWL><font style=\"font-size: 14px;\">".($frame?"&nbsp; ":"")."$SiteDomain</font></td></tr>\n";
+			print "<tr><th class=AWL>$Message[7] : </th><td class=AWL><font style=\"font-size: 14px;\">".($frame?"&nbsp; ":"")."$SiteDomain</font></td>";
+
+			# Logo and flags
+			if ($FrameName ne 'mainleft') {
+				if ($LogoLink =~ "http://awstats.sourceforge.net") {
+					print "<td align=right rowspan=3><a href=\"$LogoLink\" target=\"awstatshome\"><img src=\"$DirIcons/other/$Logo\" border=0 alt=\"".ucfirst($PROG)." Web Site\" title=\"".ucfirst($PROG)." Web Site\"></a>\n";
+				}
+				else {
+					print "<td align=right rowspan=3><a href=\"$LogoLink\" target=\"awstatshome\"><img src=\"$DirIcons/other/$Logo\" border=0></a>\n";
+				}
+				if (! $StaticLinks) { print "<br>"; Show_Flag_Links($Lang); }
+				print "</td>";
+			}
+			print  "</tr>\n";
 		}
 		if ($FrameName ne 'mainleft') {
 
 			# Print LastUpdate
-			print "<tr><th class=AWL valign=top>$Message[35] :</th>";
-			print "<td class=AWL><font style=\"font-size: 14px;\">";
+			print "<tr><th class=AWL valign=middle width=160>$Message[35] :</th>";
+			print "<td class=AWL valign=middle><font style=\"font-size: 14px;\">";
 			if ($LastUpdate) { print Format_Date($LastUpdate,0); }
 			else {
 				# Here NbOfOldLines = 0 (because LastUpdate is defined)
@@ -6033,10 +6025,24 @@ EOF
 				print "&nbsp; &nbsp; &nbsp; &nbsp;";
 				print "<a href=\"$AWScript?${NewLinkParams}update=1\">$Message[74]</a>";
 			}
-			print "</td></tr>\n";
+			print "</td>";
+
+			# Logo and flags
+			if ($FrameName eq 'mainright') {
+				if ($LogoLink =~ "http://awstats.sourceforge.net") {
+					print "<td align=right rowspan=2><a href=\"$LogoLink\" target=\"awstatshome\"><img src=\"$DirIcons/other/$Logo\" border=0 alt=\"".ucfirst($PROG)." Web Site\" title=\"".ucfirst($PROG)." Web Site\"></a>\n";
+				}
+				else {
+					print "<td align=right rowspan=2><a href=\"$LogoLink\" target=\"awstatshome\"><img src=\"$DirIcons/other/$Logo\" border=0></a>\n";
+				}
+				if (! $StaticLinks) { print "<br>"; Show_Flag_Links($Lang); }
+				print "</td>";
+			}
+
+			print "</tr>\n";
 			# Print selected period of analysis (month and year required)
 			print "<tr><th class=AWL valign=middle>$Message[133] :</th>";
-			print "<td class=AWL valign=top>";
+			print "<td class=AWL valign=middle>";
 			if ($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks) {
 				print "<select class=CFormFields name=\"month\">\n";
 				foreach my $ix (1..12) { my $monthix=sprintf("%02s",$ix); print "<option".($MonthRequired eq "$monthix"?" selected":"")." value=\"$monthix\">$MonthLib{$monthix}\n"; }
@@ -6062,8 +6068,8 @@ EOF
 			}
 			print "</td></tr>\n";
 		}
-
 		print "</table>\n";
+
 		if ($FrameName ne 'mainleft') { print "</FORM>\n"; }
 		else { print "<br>\n"; }
 		print "\n";
