@@ -40,13 +40,14 @@ use vars qw/
 );
 
 use vars qw/
-$WebServerChanged $UseAlias 
+$WebServerChanged $UseAlias $Step
 %LogFormat %ConfToChange
 /;
 $WebServerChanged=0;
 $UseAlias=0;
 %LogFormat=();
 %ConfToChange=();
+$Step=0;
 
 
 
@@ -188,7 +189,9 @@ if ($fileto eq "$file.tmp") {
 	# Remove .old file
 	unlink "$file.old";
 }
-
+else {
+	print " Config file $fileto created.\n";
+}
 return 0;
 }
 
@@ -220,9 +223,11 @@ if (! $AWSTATSPATH) {
 if ($helpfound) {
 	print "----- AWStats $PROG $VERSION (c) Laurent Destailleur -----\n";
 	print "$PROG is a tool to setup AWStats. It works with Apache only.\n";
-	print "- Get Apache config file from registry (ask if not found)\n";
+	print " - Get Apache config file from registry (ask if not found)\n";
+	print " - Change common log to combined (ask to confirm)\n";
 	print " - Add AWStats directives\n";
-	print " - Change common to combined (ask to confirm)\n";
+	print " - Restart web server\n";
+	print " - Create AWStats config file\n";
 	print "\n";
 	print "Usage:  $PROG.$Extension\n";
 	print "\n";
@@ -254,11 +259,11 @@ print "\n";
 if (-d "/etc" && -d "/home") { $OS='linux'; $CR=''; }
 else { $OS='windows'; $CR="\r"; }
 #print "Running OS detected: $OS (Perl $^[)\n";
-print "- Running OS detected: $OS\n";
+print "\n-----> Running OS detected: $OS\n";
 
 # Detect web server path
 # ----------------------
-print "- Check for web server install...\n";
+print "\n-----> Check for web server install...\n";
 my %ApachePath=();		# All Apache path found
 my %ApacheConfPath=();	# All Apache config found
 my $tips;
@@ -287,29 +292,31 @@ if ($OS eq 'windows') {
 		}
 	}
 }
-if ( scalar keys %ApacheConfPath) {
+if (! scalar keys %ApacheConfPath) {
 	# Ask web server path
-	print "configure.pl did not find your web server path.\n";
+	print "$PROG did not find your web server path.\n";
 	
-	print "Please, enter full path directory of you web server.\n";
+	print "\nPlease, enter full path directory of you web server.\n";
 	print "Example: /usr/local/apache\n";
 	print "Example: d:\\Program files\\apache group\\apache\n";
 	my $bidon='';
 	while (! -d "$bidon") {
-		print "Web server path (CTRL+C to cancel):";
-		read STDIN, $bidon, 1;
-		if (! -d "$bidon") { print "This directory does not exists.\n"; }
+		print "Web server path (CTRL+C to cancel): ";
+		$bidon=<STDIN>;
+		chomp $bidon;
+		if (! -d "$bidon") { print " The directory '$bidon' does not exists.\n"; }
 	}
 	$ApachePath{"$bidon"}=1;
 
-	print "Now, enter full config file path of you web server.\n";
+	print "\nNow, enter full config file path of you web server.\n";
 	print "Example: /etc/httpd/apache.conf\n";
 	print "Example: d:\\Program files\\apache group\\apache\\conf\\httpd.conf\n";
-	my $bidon='';
+	$bidon='';
 	while (! -f "$bidon") {
-		print "Config file path (CTRL+C to cancel):";
-		read STDIN, $bidon, 1;
-		if (! -f "$bidon") { print "This file does not exists.\n"; }
+		print "Config file path (CTRL+C to cancel): ";
+		$bidon=<STDIN>;
+		chomp $bidon;
+		if (! -f "$bidon") { print " This file does not exists.\n"; }
 	}
 	$ApacheConfPath{"$bidon"}=1;
 }
@@ -322,7 +329,7 @@ if (! scalar keys %ApacheConfPath) {
 # Open Apache config file
 # -----------------------
 foreach my $key (keys %ApacheConfPath) {
-	print "- Check and complete web server config file '$key'...\n";
+	print "\n-----> Check and complete web server config file '$key'...\n";
 	# Read config file to search for awstats directives
 	my $commonchangedtocombined=0;
 	READ:
@@ -340,7 +347,7 @@ foreach my $key (keys %ApacheConfPath) {
 			print "This means that some features can't work (os, browsers and keywords detection).\n";
 			print "Do you want me to setup Apache to write 'combined' log files [y/N] ?\n";
 			my $bidon='';
-			while ($bidon !~ /^[yN]/i) { read STDIN, $bidon, 1; }
+			while ($bidon !~ /^[yN]/i) { $bidon=<STDIN>; }
 			if ($bidon =~ /^y/i) {
 				close CONF;				
 				update_httpd_config("$key");
@@ -397,16 +404,28 @@ foreach my $key (keys %ApacheConfPath) {
 	$WebServerChanged=1;
 }
 
+# Ask value for web site name
+#----------------------------
+print "\n-----> Define config file name to create\n";
+print "What is the name of your web site or profile analysis ?\n";
+print "Example: www.mysite.com\n";
+print "Example: demo\n";
+print "You web site, virtual server or profile name: ";
+my $bidon='';
+while (! $bidon) { $bidon=<STDIN>; }
+chomp $bidon;
+my $site=$bidon;
+
 # Define config file path
 # -----------------------
 my $configfile='';
 my $modelfile='';
-if ($OS eq 'linux') 	{ $modelfile='/etc/awstats/awstats.model.conf'; $configfile='/etc/awstats/awstats.mysite.conf'; }
-if ($OS eq 'windows') 	{ $modelfile="$AWSTATSPATH\\wwwroot\\cgi-bin\\awstats.model.conf"; $configfile="$AWSTATSPATH\\wwwroot\\cgi-bin\\awstats.mysite.conf"; }
+if ($OS eq 'linux') 	{ $modelfile='/etc/awstats/awstats.model.conf'; $configfile='/etc/awstats/awstats.$site.conf'; }
+if ($OS eq 'windows') 	{ $modelfile="$AWSTATSPATH\\wwwroot\\cgi-bin\\awstats.model.conf"; $configfile="$AWSTATSPATH\\wwwroot\\cgi-bin\\awstats.$site.conf"; }
 
 # Update model config file
 # ------------------------
-print "- Update model config file...\n";
+print "\n-----> Update model config file...\n";
 %ConfToChange=();
 if ($OS eq 'linux') { $ConfToChange{'DirData'}='/var/lib/awstats'; }
 if ($OS eq 'windows') { $ConfToChange{'DirData'}='.'; }
@@ -419,7 +438,7 @@ update_awstats_config("$modelfile");
 
 # Create awstats.conf file
 # -----------------------
-print "- Create config file '$configfile' for main site...\n";
+print "\n-----> Create config file '$configfile' for main site...\n";
 if (-s $configfile) { print "  Main config file already exists. No change made.\n"; }
 else {
 	%ConfToChange=();
@@ -430,7 +449,9 @@ else {
 		$ConfToChange{'DirIcons'}='/awstatsicons';
 		$ConfToChange{'MiscTrackerUrl'}='/awstatsjs/awstats_misc_tracker.js';
 	}
-	$ConfToChange{'SiteDomain'}='localhost';
+	$ConfToChange{'SiteDomain'}="$site";
+	my $sitewithoutwww=lc($site); $sitewithoutwww =~ s/^www\.//i;
+	$ConfToChange{'HostAliases'}="$sitewithoutwww www.$sitewithoutwww 127.0.0.1 localhost";
 	update_awstats_config("$modelfile","$configfile");
 }
 
@@ -438,13 +459,13 @@ else {
 # ----------------------------------
 if ($WebServerChanged) {
 	if ($OS eq 'linux') 	{
-		print "- Restart Apache with '/usr/bin/service httpd restart'\n";
+		print "\n-----> Restart Apache with '/usr/bin/service httpd restart'\n";
 	 	my $ret=`/usr/bin/service httpd restart`;
 	}
 	if ($OS eq 'windows')	{
 		foreach my $key (keys %ApachePath) {
 			if (-f "$key/bin/Apache.exe") {
-				print "- Restart Apache with '\"$key/bin/Apache.exe\" -k restart'\n";
+				print "\n-----> Restart Apache with '\"$key/bin/Apache.exe\" -k restart'\n";
 			 	my $ret=`"$key/bin/Apache.exe" -k restart`;
 			}
 		}
@@ -465,13 +486,12 @@ if ($WebServerChanged) {
 # Ask to run awstats update process
 
 
-my $bidon;
-print "\n";
+print "\n\n";
 print "You should now be able to read your statistics with the following URL:\n";
-print "http://localhost/awstats/awstats.pl?config=mysite\n";
+print "http://localhost/awstats/awstats.pl?config=$site\n";
 print "\n";
 print "Press a key to finish...\n";
-read STDIN, $bidon, 1;
+$bidon=<STDIN>;
 
 
 0;	# Do not remove this line
