@@ -16,10 +16,9 @@ use strict;no strict "refs";
 #use diagnostics;	# Must be used in test mode only. This reduce a lot of process speed
 use Socket;
 use Time::Local;	# use Time::Local 'timelocal_nocheck' is not supported by all Time::Local modules
-# Next 'use' can be commented (with its coupled line into GetDelaySinceStart function) to
+# Next 'use' can be uncommented (with its coupled line into GetDelaySinceStart function) to
 # get miliseconds time in showsteps option
-#use Time::HiRes qw( gettimeofday );
-
+use Time::HiRes qw( gettimeofday );
 
 
 #-------------------------------------------------------
@@ -51,6 +50,7 @@ $NbOfLinesForBenchmark
 $ShowBackLink
 $WIDTH
 $CENTER
+$OldForhh
 /;
 $Debug=0;
 $ShowSteps=0;
@@ -104,7 +104,6 @@ $nowtime $tomorrowtime
 $nowweekofmonth $nowdaymod $nowsmallyear
 $nowsec $nowmin $nowhour $nowday $nowmonth $nowyear $nowwday $nowns
 /;
-$starttime;
 $nowtime = $tomorrowtime = 0;
 $nowweekofmonth = $nowdaymod = $nowsmallyear = 0;
 $nowsec = $nowmin = $nowhour = $nowday = $nowmonth = $nowyear = $nowwday = $nowns = 0;
@@ -613,7 +612,6 @@ sub SkipFile {
 }
 
 sub OnlyFile {
-	if (! $OnlyFiles[0]) { return 1; }
 	foreach my $match (@OnlyFiles) { if ($_[0] =~ /$match/i) { return 1; } }
 	0; # Not in @OnlyFiles
 }
@@ -667,7 +665,7 @@ sub SessionLastToSessionRange {
 	if (shift =~ /(\d\d\d\d)(\d\d)(\d\d)(\d\d)(\d\d)(\d\d)/) { $endtime = Time::Local::timelocal($6,$5,$4,$3,$2-1,$1); }
 	if (shift =~ /(\d\d\d\d)(\d\d)(\d\d)(\d\d)(\d\d)(\d\d)/) { $starttime = Time::Local::timelocal($6,$5,$4,$3,$2-1,$1); }
 	my $delay=$endtime-$starttime;
-	debug("SessionLastToSessionRange $endtime - $starttime = $delay",4);
+	if ($Debug) { debug("SessionLastToSessionRange $endtime - $starttime = $delay",4); }
 	if ($delay <= 30) { return $SessionsRange[0]; }
 	if ($delay > 30 && $delay <= 120) { return $SessionsRange[1]; }
 	if ($delay > 120 && $delay <= 300) { return $SessionsRange[2]; }
@@ -890,7 +888,13 @@ sub Read_Config_File {
 #------------------------------------------------------------------------------
 sub Read_Ref_Data {
 	my %FilePath=();
-	foreach my $file ("browsers.pl","domains.pl","operating_systems.pl","robots.pl","search_engines.pl") {
+	my @FileListToLoad=();
+	push @FileListToLoad, "browsers.pm";
+	if (! $HTMLOutput) { push @FileListToLoad, "domains.pm"; }				# Not required if no output asked
+	push @FileListToLoad, "operating_systems.pm";
+	push @FileListToLoad, "robots.pm";
+	push @FileListToLoad, "search_engines.pm";
+	foreach my $file (@FileListToLoad) {
 		foreach my $dir ("${DIR}lib","./lib") {
 			my $searchdir=$dir;
 			if ($searchdir && (!($searchdir =~ /\/$/)) && (!($searchdir =~ /\\$/)) ) { $searchdir .= "/"; }
@@ -898,6 +902,7 @@ sub Read_Ref_Data {
 				if (-s "${searchdir}${file}") {
 					$FilePath{$file}="${searchdir}${file}";
 					if ($Debug) { debug("Call to Read_Ref_Data [FilePath{$file}=\"$FilePath{$file}\"]"); }
+					# push @INC, "${searchdir}"; require "${file}";
 					require "$FilePath{$file}";
 				}
 			}
@@ -1971,7 +1976,7 @@ sub Save_History_File {
 	print HISTORYTMP "LastLine $LastLine{$year.$month}\n";
 	print HISTORYTMP "FirstTime $FirstTime{$year.$month}\n";
 	print HISTORYTMP "LastTime $LastTime{$year.$month}\n";
-	if ($LastUpdate{$year.$month} < int("$nowyear$nowmonth$nowday$nowhour$nowmin$nowsec")) { $LastUpdate{$year.$month}=int("$nowyear$nowmonth$nowday$nowhour$nowmin$nowsec"); }
+	if (! $LastUpdate{$year.$month} || $LastUpdate{$year.$month} < int("$nowyear$nowmonth$nowday$nowhour$nowmin$nowsec")) { $LastUpdate{$year.$month}=int("$nowyear$nowmonth$nowday$nowhour$nowmin$nowsec"); }
 	print HISTORYTMP "LastUpdate $LastUpdate{$year.$month} $NbOfLinesRead $NbOfOldLines $NbOfNewLines $NbOfLinesCorrupted $NbOfLinesDropped\n";
 	print HISTORYTMP "TotalVisits $MonthVisits{$year.$month}\n";
 
@@ -2044,7 +2049,8 @@ sub Save_History_File {
 			}
 		}
 		else {
-			print HISTORYTMP "$key $page $_hostmachine_h{$key} $bytes $_hostmachine_l{$key}\n";
+			my $hostl=$_hostmachine_l{$key}||"";
+			print HISTORYTMP "$key $page $_hostmachine_h{$key} $bytes $hostl\n";
 		}
 	}
 	print HISTORYTMP "END_VISITOR\n";
@@ -2170,7 +2176,7 @@ sub GetDelaySinceStart {
 	if ($option) { $StartSeconds=0;	}	# Reset counter
 	my ($newseconds, $newmicroseconds)=(0,0);
 	my $usedTimeHires=0;
-#	($newseconds, $newmicroseconds) = gettimeofday; $usedTimeHires=1;	# Uncomment to use Time::HiRes function (provide milliseconds)
+	($newseconds, $newmicroseconds) = gettimeofday; $usedTimeHires=1;	# Uncomment to use Time::HiRes function (provide milliseconds)
 	if ((! $usedTimeHires) || ($newseconds eq "gettimeofday")) { $newseconds=time(); }
 	if (! $StartSeconds) { $StartSeconds=$newseconds; $StartMicroseconds=$newmicroseconds; }
 	my $nbms=$newseconds*1000+int($newmicroseconds/1000)-$StartSeconds*1000-int($StartMicroseconds/1000);
@@ -2710,7 +2716,7 @@ if ($Debug) { debug("YearRequired=$YearRequired MonthRequired=$MonthRequired",2)
 
 # Security check
 if ($AllowAccessFromWebToAuthenticatedUsersOnly && $ENV{"GATEWAY_INTERFACE"}) {
-	debug("REMOTE_USER is ".$ENV{"REMOTE_USER"});
+	if ($Debug) { debug("REMOTE_USER is ".$ENV{"REMOTE_USER"}); }
 	if (! $ENV{"REMOTE_USER"}) {
 		error("Error: Access to statistics is only allowed from an authenticated session to authenticated users.");
 	}
@@ -2768,9 +2774,7 @@ if ($UpdateStats) {
 		unshift @HostAliases,"$SiteToAnalyze";	# Add SiteToAnalyze at beginning of HostAliases Array
 	}
 	if ($Debug) { debug("HostAliases is now @HostAliases",1); }
-	# Init SkipFiles array
-#	if (! @SkipFiles) { $SkipFiles[0]="robots\.txt\$"; $SkipFiles[1]="favicon\.ico\$"; }
-#	if ($Debug) { debug("SkipFiles is now @SkipFiles",1); }
+	if ($Debug) { debug("SkipFiles is now @SkipFiles",1); }
 
 	if ($Debug) { debug("Start Update process"); }
 
@@ -3016,7 +3020,7 @@ if ($UpdateStats) {
 	# PROCESSING CURRENT LOG
 	#------------------------------------------
 	if ($Debug) { debug("Start of processing log file (monthtoprocess=$monthtoprocess, yeartoprocess=$yeartoprocess)"); }
-	my $yearmonth=sprintf("%04i%02i",$yeartoprocess,$monthtoprocess);
+	my $yearmonthtoprocess=sprintf("%04i%02i",$yeartoprocess,$monthtoprocess);
 	$NbOfLinesRead=$NbOfLinesDropped=$NbOfLinesCorrupted=$NbOfOldLines=$NbOfNewLines=0;
 	$NowNewLinePhase=0;
 
@@ -3047,8 +3051,11 @@ if ($UpdateStats) {
 			next;
 		}
 		foreach my $i (1..$lastrequiredfield) { $field[$i]=$$i; }	# !!!!!
+
+#		@field=Parse($_);
+
 		if ($Debug) { debug(" Correct format line $NbOfLinesRead : host=\"$field[$pos_rc]\", logname=\"$field[$pos_logname]\", date=\"$field[$pos_date]\", method=\"$field[$pos_method]\", url=\"$field[$pos_url]\", code=\"$field[$pos_code]\", size=\"$field[$pos_size]\", referer=\"$field[$pos_referer]\", agent=\"$field[$pos_agent]\"",3); }
-		#debug("$field[$pos_gzipin] - $field[$pos_gzipout] - $field[$pos_gzipratio]\n");
+		#if ($Debug) { debug("$field[$pos_gzipin] - $field[$pos_gzipout] - $field[$pos_gzipratio]\n"); }
 		
 		# Check filters
 		#----------------------------------------------------------------------
@@ -3063,7 +3070,7 @@ if ($UpdateStats) {
 		}
 		if (! $protocol) {
 			$NbOfLinesDropped++;
-			if ($ShowDropped) { print "Dropped record (not qualified method): $_\n"; }
+			if ($ShowDropped) { print "Dropped record (method/protocol '$field[$pos_method]' not qualified): $_\n"; }
 			next;
 		}
 
@@ -3081,10 +3088,10 @@ if ($UpdateStats) {
 #		my ($nsec,$nmin,$nhour,$nmday,$nmon,$nyear,$nwday) = localtime(Time::Local::timelocal($dateparts[5], $dateparts[4], $dateparts[3], $dateparts[0], $dateparts[1], $dateparts[2]) + (3600*$TZ));
 #		@dateparts = split(/:/, sprintf("%02u:%02u:%04u:%02u:%02u:%02u", $nmday, $nmon, $nyear+1900, $nhour, $nmin, $nsec)); 
 		#--- TZ END : Uncomment following three lines to made a timezone adjustement. Warning this reduce seriously AWStats speed.
-		my $timerecord=int($dateparts[2].$dateparts[1].$dateparts[0].$dateparts[3].$dateparts[4].$dateparts[5]);	# !!!
+		my $yearmonthdayrecord="$dateparts[2]$dateparts[1]$dateparts[0]";
+		my $timerecord=int($yearmonthdayrecord.$dateparts[3].$dateparts[4].$dateparts[5]);	# !!!
 		my $yearrecord=int($dateparts[2]);
 		my $monthrecord=int($dateparts[1]);
-		my $yearmonthdayrecord="$dateparts[2]$dateparts[1]$dateparts[0]";
 
 		if ($timerecord < 10000000000000 || $timerecord > $tomorrowtime) {
 			$NbOfLinesCorrupted++;
@@ -3095,12 +3102,12 @@ if ($UpdateStats) {
 		# Skip if not a new line
 		#-----------------------
 		if ($NowNewLinePhase) {
-			if ($timerecord < $LastLine{$yearmonth}) {
+			if ($timerecord < $LastLine{$yearmonthtoprocess}) {
 				$NbOfLinesCorrupted++; if ($ShowCorrupted) { print "Corrupted record (not sorted record): $_\n"; } next;
 			}	# Should not happen, kept in case of parasite/corrupted old line
 		}
 		else {
-			if ($timerecord <= $LastLine{$yearmonth}) {
+			if ($timerecord <= $LastLine{$yearmonthtoprocess}) {
 				$NbOfOldLines++;
 				next;
 			}	# Already processed
@@ -3115,14 +3122,18 @@ if ($UpdateStats) {
 
 		# We found a new line
 		#----------------------------------------
-		$LastLine{$yearmonth} = $timerecord;	# !!
+		$LastLine{$yearmonthtoprocess} = $timerecord;	# !!
 
-		# TODO. Add robot if a list if URL is robots.txt (Note: robot referer value can be same than a normal browser)
+		# TODO. Add robot in a list if URL is robots.txt (Note: robot referer value can be same than a normal browser)
 
-		# Skip for some client host IP addresses, some URLs, other URLs
-		if ( &SkipFile($field[$pos_url]) || &SkipHost($field[$pos_rc]) || ! &OnlyFile($field[$pos_url]) ) {	# !!!!
+		# Skip for some client host IP addresses, some URLs, other URLs		# !!!
+		my $qualifdrop="";
+		if (@SkipHosts && &SkipHost($field[$pos_rc]))    { $qualifdrop="Dropped record (host $field[$pos_rc] not qualified by SkipHosts)"; }
+		if (@SkipFiles && &SkipFile($field[$pos_url]))   { $qualifdrop="Dropped record (URL $field[$pos_url] not qualified by SkipFiles)"; }
+		if (@OnlyFiles && ! &OnlyFile($field[$pos_url])) { $qualifdrop="Dropped record (URL $field[$pos_url] not qualified by OnlyFiles)"; }
+		if ($qualifdrop) {
 			$NbOfLinesDropped++;
-			if ($ShowDropped) { print "Dropped record (not qualified record): $_\n"; }
+			if ($ShowDropped) { print "$qualifdrop: $_\n"; }
 			next;
 		}
 
@@ -3139,7 +3150,7 @@ if ($UpdateStats) {
 				&Init_HashArray($yeartoprocess,$monthtoprocess);		# Start init for next one
 			}
 			$monthtoprocess=$monthrecord;$yeartoprocess=$yearrecord;
-			$yearmonth=sprintf("%04i%02i",$yeartoprocess,$monthtoprocess);
+			$yearmonthtoprocess=sprintf("%04i%02i",$yeartoprocess,$monthtoprocess);
 			&Read_History_File($yeartoprocess,$monthtoprocess,1);		# This should be useless (file must not exist)
 		}
 
@@ -3243,20 +3254,19 @@ if ($UpdateStats) {
 		#-------------------------------------------
 		my $hourrecord=int($dateparts[3]);
 		if ($PageBool) {
-
 			$field[$pos_url] =~ s/\/$DefaultFile$/\//;	# Replace default page name with / only
 
 			# FirstTime and LastTime are First and Last human visits (so changed if access to a page)
-			if (! $FirstTime{$yearmonth}) { $FirstTime{$yearmonth}=$timerecord; }
-			$LastTime{$yearmonth} = $timerecord;
+			if (! $FirstTime{$yearmonthtoprocess}) { $FirstTime{$yearmonthtoprocess}=$timerecord; }
+			$LastTime{$yearmonthtoprocess} = $timerecord;
 			$DayPages{$yearmonthdayrecord}++;
-			$MonthPages{$yearmonth}++;
+			$MonthPages{$yearmonthtoprocess}++;
 			$_time_p[$hourrecord]++;											#Count accesses for hour (page)
 			$_url_p{$field[$pos_url]}++; 										#Count accesses for page (page)
 			$_url_k{$field[$pos_url]}+=$field[$pos_size];
 		}
-		$_time_h[$hourrecord]++; $MonthHits{$yearmonth}++; $DayHits{$yearmonthdayrecord}++;	#Count accesses for hour (hit)
-		$_time_k[$hourrecord]+=$field[$pos_size]; $MonthBytes{$yearmonth}+=$field[$pos_size]; $DayBytes{$yearmonthdayrecord}+=$field[$pos_size];	#Count accesses for hour (kb)
+		$_time_h[$hourrecord]++; $MonthHits{$yearmonthtoprocess}++; $DayHits{$yearmonthdayrecord}++;	#Count accesses for hour (hit)
+		$_time_k[$hourrecord]+=$field[$pos_size]; $MonthBytes{$yearmonthtoprocess}+=$field[$pos_size]; $DayBytes{$yearmonthdayrecord}+=$field[$pos_size];	#Count accesses for hour (kb)
 
 		# Analyze login
 		#--------------
@@ -3273,7 +3283,7 @@ if ($UpdateStats) {
 		# Analyze: IP-address
 		#--------------------
 		my $Host=$field[$pos_rc];
-		my $HostIsIp;
+		my $HostIsIp=0;
 		if ($DNSLookup) {			# Doing DNS lookup
 			if ($Host =~ /^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/) {
 				$HostIsIp=1;
@@ -3289,25 +3299,23 @@ if ($UpdateStats) {
 						}
 						else {
 							my $lookupresult=gethostbyaddr(pack("C4",split(/\./,$Host)),AF_INET);	# This is very slow, may took 20 seconds
-							$TmpHashDNSLookup{$Host}=(IsAscii($lookupresult)?$lookupresult:"ip");
+							$TmpHashDNSLookup{$Host}=($lookupresult && IsAscii($lookupresult)?$lookupresult:"ip");
 							if ($Debug) { debug(" Reverse DNS lookup for $Host done: $TmpHashDNSLookup{$Host}",4); }
 						}
 					}
 				}
 			}
 			else {
-				$HostIsIp=0;
 				if ($Debug) { debug(" DNS lookup asked for $Host but this is not an IP address.",3); }
 				$DNSLookupAlreadyDone=$LogFile;
 			}
 		}
 		else {
 			if ($Host =~ /^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/) { $HostIsIp=1; }
-			else { $HostIsIp=0; }
 			if ($Debug) { debug(" No DNS lookup asked.",3); }
 		}
 
-		my $Domain;
+		my $Domain="ip";
 		if ($HostIsIp && ((! $TmpHashDNSLookup{$Host}) || ($TmpHashDNSLookup{$Host} eq "ip"))) {
 			# Here $Host = IP address not resolved
 			$_ = $Host;
@@ -3318,43 +3326,50 @@ if ($UpdateStats) {
 			tr/A-Z/a-z/;
 			if (/\.(\w+)$/) { $Domain=$1; }
 		}
-			
+
 		if ($PageBool) {
-			if ($timerecord > (($_hostmachine_l{$_}||0)+$VisitTimeOut)) {
+			my $timehostl=$_hostmachine_l{$_}||0;
+			if ($timerecord > ($timehostl+$VisitTimeOut)) {
 				# This is a new visit
-				if ($_hostmachine_l{$_} && $_hostmachine_s{$_} && $_hostmachine_u{$_}) {	# If there was a preceding session running
+				if ($_hostmachine_l{$_} && $_hostmachine_s{$_}) {	# If there was a preceding session running
 					# Session for $_ is expired so we close and count it
 					$_url_x{$_hostmachine_u{$_}}++;	# Increase exit page
-					$_session{SessionLastToSessionRange($_hostmachine_l{$_},$_hostmachine_s{$_})}++;
-					#delete $_hostmachine_s{$_};
-					#delete $_hostmachine_u{$_};
+					$_session{&SessionLastToSessionRange($_hostmachine_l{$_},$_hostmachine_s{$_})}++;
+					#delete $_hostmachine_s{$_};	# delete useless because set later
+					#delete $_hostmachine_u{$_};	# delete useless because set later
 				}
 
-				$MonthVisits{$yearmonth}++;
+				$MonthVisits{$yearmonthtoprocess}++;
 				$DayVisits{$yearmonthdayrecord}++;
-				if (! $_hostmachine_l{$_}) { $MonthUnique{$yearmonth}++; }
+				if (! $_hostmachine_l{$_}) { $MonthUnique{$yearmonthtoprocess}++; }
 				$_url_e{$field[$pos_url]}++; 		# Increase 'entry' page
 				$_hostmachine_s{$_}=$timerecord;	# Save start of first visit
 			}
-			$_hostmachine_p{$_}++;
-			$_hostmachine_l{$_}=$timerecord;
-			$_hostmachine_u{$_}=$field[$pos_url];
+			if ($timerecord < $timehostl) {
+				# Record is before record already read for this host and used for start of visit
+				# This occurs when log file is 'nearly' sorted
+				print "xxxxxxxxxxxxxxxxxx";
+				$_hostmachine_p{$_}++;
+				$_hostmachine_l{$_}=$timerecord;
+				$_hostmachine_u{$_}=$field[$pos_url];
+			}
+			else {
+				# Record is first for this host or after record used for start of visit
+				$_hostmachine_p{$_}++;
+				$_hostmachine_l{$_}=$timerecord;
+				$_hostmachine_u{$_}=$field[$pos_url];
+			}
 		}
-		if (! $_hostmachine_h{$_}) { $MonthHostsUnknown{$yearmonth}++; }
+#		if ($_ ne ${OldForhh} && ! $_hostmachine_h{$_}) { $MonthHostsUnknown{$yearmonthtoprocess}++; }
+		if (! $_hostmachine_h{$_}) { $MonthHostsUnknown{$yearmonthtoprocess}++; }
 		$_hostmachine_h{$_}++;
 		$_hostmachine_k{$_}+=$field[$pos_size];
+#		${OldForhh}=$_;
 
 		# Count top-level domain
-		if ($DomainsHashIDLib{$Domain}) {
-			 if ($PageBool) { $_domener_p{$Domain}++; }
-			 $_domener_h{$Domain}++;
-			 $_domener_k{$Domain}+=$field[$pos_size];
-			 }
-		else {
-			 if ($PageBool) { $_domener_p{"ip"}++; }
-			 $_domener_h{"ip"}++;
-			 $_domener_k{"ip"}+=$field[$pos_size];
-		}
+		if ($PageBool) { $_domener_p{$Domain}++; }
+		$_domener_h{$Domain}++;
+		$_domener_k{$Domain}+=$field[$pos_size];
 
 		if ($UserAgent) {	 # Made on each record -> -100 rows/seconds
 
@@ -3605,6 +3620,8 @@ if ($UpdateStats) {
 
 	if ($Debug) { debug("Close log file"); }
 	close LOG;
+
+	if ($Debug) { debug("Size of AWStats memory cache : TmpHashDNSLookup=".(scalar keys %TmpHashDNSLookup)." TmpHashBrowser=".(scalar keys %TmpHashBrowser)." TmpHashOS=".(scalar keys %TmpHashOS)." TmpHashRefererServer=".(scalar keys %TmpHashRefererServer)." TmpHashRobot=".(scalar keys %TmpHashRobot),1); }
 
 	# DNSLookup warning
 	if ($DNSLookup && $DNSLookupAlreadyDone) { warning("Warning: <b>$PROG</b> has detected that some hosts names were already resolved in your logfile <b>$DNSLookupAlreadyDone</b>.<br>\nIf DNS lookup was already made by the logger (web server), you should change your setup DNSLookup=1 into DNSLookup=0 to increase $PROG speed."); }
@@ -4552,8 +4569,8 @@ EOF
 			if ($_domener_h{$key} && $bredde_h==1) { $bredde_h=2; }
 			if ($max_k > 0) { $bredde_k=int($BarWidth*($_domener_k{$key}||0)/$max_k)+1; }
 			if ($_domener_k{$key} && $bredde_k==1) { $bredde_k=2; }
-			if ($key eq "ip") {
-				print "<TR><TD><IMG SRC=\"$DirIcons\/flags\/$key.png\" height=14></TD><TD CLASS=AWL>$Message[0]</TD><TD>$key</TD>";
+			if ($key eq "ip" || ! $DomainsHashIDLib{$key}) {
+				print "<TR><TD><IMG SRC=\"$DirIcons\/flags\/ip.png\" height=14></TD><TD CLASS=AWL>$Message[0]</TD><TD>$key</TD>";
 			}
 			else {
 				print "<TR><TD><IMG SRC=\"$DirIcons\/flags\/$key.png\" height=14></TD><TD CLASS=AWL>$DomainsHashIDLib{$key}</TD><TD>$key</TD>";
@@ -4697,7 +4714,7 @@ EOF
 			$count++;
 		}
 		if ($TotalVisits > $total_s) {
-			print "<tr><td CLASS=AWL>$Message[0]</td><td>".($TotalVisits-$total_s)."</td></tr>\n";
+			print "<tr onmouseover=\"ShowTooltip(20);\" onmouseout=\"HideTooltip(20);\"><td CLASS=AWL>$Message[0]</td><td>".($TotalVisits-$total_s)."</td></tr>\n";
 		}
 		&tab_end;
 	}
