@@ -35,64 +35,72 @@
 
 AWStats common use is made in 3 steps:<br>
 <ul>
-<li>The install and setup<br>
-<li>The build/update of statistics<br>
-<li>The reading of results<br>
+<li>Step 1 : The install and setup<br>
+<li>Step 2 : The build/update of statistics<br>
+<li>Step 3 : The reading of results<br>
 </ul>
 <br>
 
-<br><a name="INSTALL"><H2 style="font: 22px arial,helvetica,sanserif color: #606060"><u>Install and Setup</u></H2></a>
+<br><a name="INSTALL"><H2 style="font: 22px arial,helvetica,sanserif color: #606060"><u>Step 1 : Install and Setup</u></H2></a>
 
 <br>
-<b>1) With Apache Server (on Unix/Linux, Windows, MacOS...)</b><br>
+<b>A) With Apache Server (on Unix/Linux, Windows, MacOS...)</b><br>
 <br>
-* Configure your apache web server to have <b>NCSA combined/XLF/ELF</b> log format (you can use your own log format but
-this predefined logformat is often the best choice and made setup easier). You can do this by changing, in <b>httpd.conf</b>,
+* Step 1-1<br>
+Configure your apache web server to have <b>NCSA combined/XLF/ELF</b> log format (you can use your own log format but
+this predefined logformat is often the best choice and make setup easier). You can do this by changing, in <b>httpd.conf</b>,
 following directives (See your apache manual for more information):<br>
 <i>CustomLog /yourlogpath/yourlogfile common</i><br>
 into<br>
 <i>CustomLog /yourlogpath/yourlogfile combined</i><br>
 <br>
 To be sure the log format change is effective, you can stop Apache, remove all old log files, restart Apache and go to
-your homepage. This is an example of records you should get then in the new log file:<br>
+your homepage. This is an example of records you should get then in your new log file:<br>
 <i>62.161.78.75 - - [dd/mmm/yyyy:hh:mm:ss +0000] "GET / HTTP/1.1" 200 1234 "http://www.from.com/from.html" "Mozilla/4.0 (compatible; MSIE 5.01; Windows NT 5.0)"</i><br>
 <br>
-* Copy the contents of the uncompressed cgi-bin folder from your hard drive to your server's cgi-bin
-directory (this includes <b>awstats.pl</b>, <b>awstats.model.conf</b>, and the <b>lang</b>, <b>lib</b> and <b>plugins</b> sub-directories).
+* Step 1-2<br>
+Copy the contents of the uncompressed cgi-bin folder from your hard drive to your server's cgi-bin
+directory (this includes <b>awstats.pl</b>, <b>awstats.model.conf</b>, and the <b>lang</b>, <b>lib</b> and <b>plugins</b> sub-directories).<br>
 <br>
-* If necessary (should not with most Perl interpreter), edit the first (top-most) line of awstats.pl file that is<br>
+* Step 1-3<br>
+If necessary (should not with most Perl interpreter), edit the first (top-most) line of awstats.pl file that is<br>
 <i>#!/usr/bin/perl</i><br>
-to reflect the path were your perl interpreter is installed. Default value works for most of Unix OS, but it also might be<br>
+to reflect the path were your Perl interpreter is installed. Default value works for most of Unix OS, but it also might be<br>
 <i>#!/usr/local/bin/perl</i><br>
 With Apache for Windows and ActivePerl interpreter, it might be<br>
 <i>#!c:/program files/activeperl/bin/perl</i><br>
 <br>
-* Move AWStats <b>icon sub-directories</b> and its content into a directory readable by your
+* Step 1-4<br>
+Move AWStats <b>icon sub-directories</b> and its content into a directory readable by your
 web server, for example /yourwwwroot/icon or /yourwwwroot/icons.<br>
 <br>
-* Copy <b>awstats.model.conf</b> file into a new file named <b>awstats.virtualhostname.conf</b> (or awstats.conf).
+* Step 1-5<br>
+Copy <b>awstats.model.conf</b> file into a new file named <b>awstats.myvirtualhostname.conf</b>.
 Note: When you will run AWStats, it will first look for a config file named
-awstats.virtualhostname.conf, and, if not found, will look for awstats.conf.<br>
+awstats.myvirtualhostname.conf (if not found, will look for awstats.conf).<br>
 Whatever the name you choose, this new file must be stored in<br>
 - /etc/opt/awstats or /etc/awstats or /etc or same directory than awstats.pl (so cgi-bin) for Unix/Linux users.<br>
 - same directory than awstats.pl (so cgi-bin) for Windows and other OS.<br>
+<br>
+* Step 1-6<br>
 Edit this new config file with your own setup :<br>
 - Change <a href="awstats_config.html#LogFile">LogFile</a> value with full path of your web server log file (You
 can also use a relative path from your awstats.pl directory).<br>
 - Check if <a href="awstats_config.html#LogFormat">LogFormat</a> has the value "1" (it means "NCSA apache combined/ELF/XLF log format").<br>
-- Change <a href="awstats_config.html#DirIcons">DirIcons</a> parameter to reflect relative URL of icon directory.<br>
+- Change <a href="awstats_config.html#DirIcons">DirIcons</a> parameter to reflect relative path of icon directory.<br>
 - Edit <a href="awstats_config.html#SiteDomain">SiteDomain</a> parameter with the main domain name or the intranet 
-web server name used to reach the web site to analyze.<br>
+web server name used to reach the web site to analyze (Example: www.mydomain.com).<br>
 - You can change other parameters if you want.<br>
 <br>
-Install and Setup is finished. You can jump to the <a href="#BUILD_UPDATE">Build/Update Statistics</a> section.<br>
+Step 1 (Install and Setup) is finished. You can jump to the <a href="#BUILD_UPDATE">Build/Update Statistics</a> section.<br>
 
 <br>
 <br>
 <br>
-<b>2) With IIS Server</b><br>
+<b>B) With IIS Server</b><br>
 <br>
-* Configure IIS to log in <b>"Extended W3C log format"</b> (You can still use
+* Step 1-1<br>
+Configure IIS to log in <b>"Extended W3C log format"</b> (You can still use
 your own log format but setup is easier if made like suggested). So, for
 this, start the IIS Snap-in, select the web site and look at its
 Properties. Choose W3C Extended Log Format, then Properties, then the
@@ -113,49 +121,56 @@ cs(Referer)<br>
 </i>
 To be sure the log format change is effective, you must stop IIS, remove all old log files, restart IIS and go to
 your homepage. This is an example of records you should get then in the new log file:<br>
-<i>2000-07-19 14:14:14 62.161.78.73 - GET / 200 1234 HTTP/1.1 Mozilla/4.0+(compatible;+MSIE+5.01;+Windows+NT+5.0) http://www.from.com/from.htm</i>
+<i>2000-07-19 14:14:14 62.161.78.73 - GET / 200 1234 HTTP/1.1 Mozilla/4.0+(compatible;+MSIE+5.01;+Windows+NT+5.0) http://www.from.com/from.htm</i><br>
 <br>
-* Copy the contents of the uncompressed cgi-bin folder from your hard drive to your server's cgi-bin
-directory (this includes <b>awstats.pl</b>, <b>awstats.model.conf</b>, and the <b>lang</b>, <b>lib</b> and <b>plugins</b> sub-directories).
+* Step 1-2<br>
+Copy the contents of the uncompressed cgi-bin folder from your hard drive to your server's cgi-bin
+directory (this includes <b>awstats.pl</b>, <b>awstats.model.conf</b>, and the <b>lang</b>, <b>lib</b> and <b>plugins</b> sub-directories).<br>
 <br>	
-* Move AWStats <b>icon sub-directories</b> and its content into a directory readable by your
+* Step 1-3<br>
+Move AWStats <b>icon sub-directories</b> and its content into a directory readable by your
 web server, for example C:\yourwwwroot\icon.<br>
 <br>
-* Copy <b>awstats.model.conf</b> file into a new file named <b>awstats.virtualhostname.conf</b> (or awstats.conf).
+* Step 1-4<br>
+Copy <b>awstats.model.conf</b> file into a new file named <b>awstats.myvirtualhostname.conf</b>.
 Note: When you will run AWStats, it will first look for a config file named
-awstats.virtualhostname.conf, and, if not found, will look for awstats.conf.<br>
+awstats.myvirtualhostname.conf (if not found, will look for awstats.conf).<br>
 Whatever the name you choose, this new file must be stored in<br>
 - same directory than awstats.pl (so cgi-bin)<br>
+<br>
+* Step 1-5<br>
 Edit this new config file with your own setup :<br>
 - Change <a href="awstats_config.html#LogFile">LogFile</a> value with full path of your web server log file (You
 can also use a relative path from your awstats.pl directory).<br>
 - Change <a href="awstats_config.html#LogFormat">LogFormat</a> to value "2" (it means "IIS Extended W3C log format").<br>
-- Change <a href="awstats_config.html#DirIcons">DirIcons</a> parameter to reflect relative URL of icon directory.<br>
+- Change <a href="awstats_config.html#DirIcons">DirIcons</a> parameter to reflect relative path of icon directory.<br>
 - Edit <a href="awstats_config.html#SiteDomain">SiteDomain</a> parameter with the main domain name or the intranet
-web server name used to reach the web site to analyze.<br>
+web server name used to reach the web site to analyze (Example: www.mydomain.com).<br>
 - You can change other parameters if you want.<br>
 <br>
-Install and Setup is finished. You can jump to the <a href="#BUILD_UPDATE">Build/Update Statistics</a> section.<br>
-<br>
+Step 1 (Install and Setup) is finished. You can jump to the <a href="#BUILD_UPDATE">Build/Update Statistics</a> section.<br>
 
 <br>
-<b>3) With other web servers</b><br>
+<br>
+<br>
+<b>C) With other web servers</b><br>
 <br>
 Setup process is similar to setup for Apache or IIS.<br>
 Use <a href="awstats_config.html#LogFormat">LogFormat</a> to value "3" if you have WebStar native log format.<br>
 <br>
 
 
-<br><a name="BUILD_UPDATE"><H2 style="font: 22px arial,helvetica,sanserif color: #606060"><u>Build/Update Statistics</u></H2></a>
+<br>
+<br>
+<a name="BUILD_UPDATE"><H2 style="font: 22px arial,helvetica,sanserif color: #606060"><u>Step 2 : Build/Update Statistics</u></H2></a>
 
 <br>
-Even if AWStats allows "real-time" statistics with its "update from browser feature" (See next
-section <a href="#READ">Read Statistics</a>), you must run the update process from a scheduler frequently.<br>
-* The first update of statistics can be made the first time manually from the command line (the first time,
-process may be long :<br>
-<b><i>awstats.pl -config=virtualhostname -update</i></b><br>
+* Step 2-1<br>
+The first analyze/update of statistics can be made the first time manually from the command line (the first time,
+process may be long) :<br>
+<b><i>awstats.pl -config=myvirtualhostname -update</i></b><br>
 <br>
-AWStats will read the config file (awstats.virtualhostname.conf, or, if not found, awstats.conf)
+AWStats will read the config file awstats.myvirtualhostname.conf (or if not found, awstats.conf)
 and create/update its database with all summary information issued from analyzed log file.<br>
 AWStats database files are saved in directory defined by <a href="awstats_config.html#DirData">DirData</a> parameter in config file.<br>
 When update is finished, you should get a result like this:<br>
@@ -187,8 +202,11 @@ address in your logfile if <a href="awstats_config.html#DNSLookup">DNSLookup</a>
 See <a href="awstats_benchmark.html">Benchmark page</a> for more accurate information.<br>
 <br>
 
+* Step 2-2<br>
+Even if AWStats allows "real-time" statistics with its "update from browser feature" (See next
+section <a href="#READ">Read Statistics</a>), you should run an update process (command is same than
+first process) from a scheduler frequently.<br>
 <br>
-* Then, new updates should be made from an automatic process (command is same than first process).<br>
 You can add instructions in your <b>crontab</b> (Unix/Linux) or your <b>task scheduler</b> (for
 Windows), to launch frequently this Awstats update process.<br>
 For sites with:<br>
@@ -201,17 +219,18 @@ See AWStats <a href="awstats_benchmark.html">Benchmark page</a> for more accurat
 <br>
 !!! Warning, if you don't use (or can't use with IIS) the <a href="awstats_config.html#PurgeLogFile">PurgeLogFile</a> parameter,
 it's very important that you don't forget to purge/rotate your log file yourself (or setup your web server to do it)
-frequently. Even if AWStats never analyzes twice the same log record, the more often you clean your log file, the
+frequently (You can find help for this on <a href="awstats_faq.html#CRONTAB">FAQ-SET550</a>).
+Even if AWStats never analyzes twice the same log record, the more often you clean your log file, the
 faster AWStats will be.<br>
 <br>
 
-<br><a name="READ"><H2 style="font: 22px arial,helvetica,sanserif color: #606060"><u>Read Statistics</u></H2></a>
+<br><a name="READ"><H2 style="font: 22px arial,helvetica,sanserif color: #606060"><u>Step 3 : Read Statistics</u></H2></a>
 
 <br>
 To see results of analyze, you have several solutions depending on your <a href="awstats_security.html">security policy</a>.<br>
 <br>
 
-* You can build the main report, in a static HTML page, from the command line, like this :<br>
+* First solution is to build the main reports, in a static HTML page, from the command line, like this :<br>
 <b><i>perl awstats.pl -config=virtualhostname -output -staticlinks > awstats.virtualhostname.html</i></b><br>
 <br>
 You can also use all other output options (each of them give you another report).
