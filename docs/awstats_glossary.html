@@ -33,38 +33,64 @@
 
 <br><br><H1 style="font: 26px arial,helvetica,sanserif">Glossary</H1><br>
 
-<a name="Unique Visitor">Unique Visitor</a>: A unique visitor is a host that has made at least 1 hit
-on 1 page of a web site. If this host make several visits, it is counted only once.<br>
+<a name="Unique Visitor"><b>Unique Visitor</b></a>:<br>
+ A unique visitor is a host that has made at least 1 hit
+on 1 page of your web site during the current period shown by the report.
+If this host make several visits during this period, it is counted only once.<br>
+The period shown by AWStats reports is by default the current month.<br>
+However if you use AWStats as a CGI you can click on the "year" link to have a report for all the year.
+In a such report, period is full year, so Unique Visitors are number of hosts that have made at least 1 hit
+on 1 page of your web site during those year.<br>
 <br>
 
-<a name="Visits">Visits</a>: Number of visits made by all visitors.<br>
+<a name="Visits"><b>Visits</b></a>:<br>
+Number of visits made by all visitors.<br>
 Think "session" here, say a unique IP accesses a page, and then requests three others without an hour
 between any of the requests, all of the "pages" are included in the visit, therefore you should expect
 multiple pages per visit and multiple visits per unique visitor (assuming that some of the unique IPs are
 logged with more than an hour between requests)<br>
 <br>
 
-<a name="Pages">Pages</a>: The number of "pages" logged. Only files that don't match an entry in the
-NotPageList and match a file in the OnlyFiles directive are counted as "pages", usually pages are
-reserved for HTML files or CGI files, not images or supplementary files requested as a result of loading the "page"<br>
+<a name="Pages"><b>Pages</b></a>:<br>
+The number of "pages" logged. Only files that don't match an entry in the NotPageList config
+parameter (and match an entry of OnlyFiles config parameter if used) are counted as "Pages".
+Usually pages are reserved for HTML files or CGI files, not images nor other files requested as a result
+of loading a "Page" (like js,css... files).<br>
 <br>
 
-<a name="Hits">Hits</a>: any files requested from the server (including those qualifying as "pages") except those
-in the SkipFiles section. (NOTE: you've effectively skipped all files which would normally be considered hits and
-restricted AWStats to only reporting accesses to your Java Server Pages, which is why your "pages" count and
-hits are the same)<br>
+<a name="Hits"><b>Hits</b></a>:<br>
+Any files requested from the server (including files that are "Pages") except those that match
+the SkipFiles config parameter.<br>
 <br>
 
-<a name="Bandwith">Bandwith</a>: Total number of bytes downloaded.<br>
+<a name="Bandwith"><b>Bandwith</b></a>:<br>
+Total number of bytes downloaded.<br>
 <br>
 
-<a name="Entry Page">Entry Page</a>: First page loaded from a unique IP/address during their visit.<br>
+<a name="Entry Page"><b>Entry Page</b></a>:<br>
+First page viewed by a visitor during its visit.<br>
+Note: When a visit started at end of month to end at beginning of next month,
+you might have an Entry page for the month report and no Exit pages.<br>
+That's why Entry pages can be different than Exit pages.<br>
 <br>
 
-<a name="Exit Page">Exit Page</a>: Last page viewed by a visitor during its visit.<br>
+<a name="Exit Page"><b>Exit Page</b></a>:<br>
+Last page viewed by a visitor during its visit.<br>
+Note: When a visit started at end of month to end at beginning of next month,
+you might have an Entry page for the month report and no Exit pages.<br>
+That's why Entry pages can be different than Exit pages.<br>
 <br>
 
-<a name="Grabber">Grabber</a>: a browser that is used primarily for copying locally an entire site. These include
+<a name="Session Duration"><b>Session Duration</b></a>:<br>
+The time a visitor spent on your site for each visit.<br>
+Some Visits durations are 'unknown' because they can't always be calculated. This is the major reason for this:<br>
+- Visit was not finished when 'update' occured.<br>
+- Visit started the last hour (after 23:00) of the last day of a month (A technical reason prevents AWStats from
+calculating duration of such sessions).<br>
+<br>
+
+<a name="Grabber"><b>Grabber</b></a>:<br>
+A browser that is used primarily for copying locally an entire site. These include
 for example "teleport", "webcapture", "webcopier"...<br>
 <br>
 
