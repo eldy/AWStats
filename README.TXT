@@ -107,6 +107,7 @@ II - 1) With Apache Server
 	  62.161.78.73 - - [dd/mmm/yyyy:hh:mm:ss +0000] "GET / HTTP/1.1" 200 1234 "http://www.from.com/from.htm" "Mozilla/4.0 (compatible; MSIE 5.01; Windows NT 5.0)"
 	
 	* Put awstats.pl file in your cgi-bin directory (or other cgi directory).
+	  Check that this file has right permissions to be runned.
 
 	* If necessary (on some Unix OS), in awstats.pl file, edit the first line
 	  #!/usr/bin/perl
@@ -119,8 +120,9 @@ II - 1) With Apache Server
 	* Copy awstats.model.conf into awstats.www.myserver.mydomain.conf or
 	  awstats.conf (when you will run AWStats, it will first look for a config
 	  file called awstats.www.myserver.mydomain.conf, and, if not found, will
-	  look for awstats.conf). Whatever the name you choose, edit this new file
-	  with your own setup :
+	  look for awstats.conf). Whatever the name you choose, this new file must
+	  be stored in same directory than awstats.pl (so cgi-bin directory) and
+	  edit it with your own setup :
 	  - Change "LogFile" value with full path of your web server log file. You
 	    can use a relative path from your awstats.pl directory.
 	  - Check if "LogFormat" has the value "1" (it means "apache combined log
@@ -179,8 +181,9 @@ II - 2) With IIS Server
 	* Copy awstats.model.conf into awstats.www.myserver.mydomain.conf or
 	  awstats.conf (when you will run AWStats, it will first look for a config
 	  file called awstats.www.myserver.mydomain.conf, and, if not found, will
-	  look for awstats.conf). Whatever the name you choose, edit this new file
-	  with your own setup :
+	  look for awstats.conf). Whatever the name you choose, this new file must
+	  be stored in same directory than awstats.pl (so cgi-bin directory) and
+	  edit it with your own setup :
 	  - Change "LogFile" value with full path of your web server log file. You
 	    can use a relative path from your awstats.pl directory.
 	  - Change "LogFormat" to value "2" (it means "IIS log format").
