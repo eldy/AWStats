@@ -544,7 +544,10 @@ sub error {
 			print "111.22.33.44 - - [10/Jan/2001:02:14:14 +0200] \"GET / HTTP/1.1\" 200 1234\n";
 			print ($HTMLOutput?"</i></font><br><br>":"");
 		}
-		if ($LogFormat != 1 && $LogFormat != 2 && $LogFormat != 3 && $LogFormat != 4) {
+		if ($LogFormat == 5) {
+			print "<b>\"ISA native log format\"</b><br>\n";
+		}
+		if ($LogFormat !~ /^[1-5]$/) {
 			print "the following personalized log format:<br>\n";
 			print ($HTMLOutput?"<font color=#888888><i>":"");
 			print "$LogFormat\n";
@@ -2902,7 +2905,7 @@ if ($UpdateStats) {
 	if ($Debug) { debug("Generate PerlParsingFormat from LogFormatString=$LogFormatString"); }
 	$PerlParsingFormat="";
 	if ($LogFormat eq "1") {
-		$PerlParsingFormat="([^\\s]+) [^\\s]+ ([^\\s]+) \\[([^\\s]+) [^\\s]+\\] \\\"([^\\s]+) ([^\\s]+) [^\\\"]+\\\" ([\\d|-]+) ([\\d|-]+) \\\"(.*)\\\" \\\"([^\\\"]+)\\\"";
+		$PerlParsingFormat="([^\\s]+) [^\\s]+ ([^\\s]+) \\[([^\\s]+) [^\\s]+\\] \\\"([^\\s]+) ([^\\s]+) [^\\\"]+\\\" ([\\d|-]+) ([\\d|-]+) \\\"(.*)\\\" \\\"([^\\\"]*)\\\"";	# referer and ua might be ""
 		$pos_rc=1;$pos_logname=2;$pos_date=3;$pos_method=4;$pos_url=5;$pos_code=6;$pos_size=7;$pos_referer=8;$pos_agent=9;
 		$lastrequiredfield=9;
 	}
