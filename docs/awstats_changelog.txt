@@ -27,6 +27,8 @@ New features/improvements:
   sensitive.
 - Added new functions for plugins: AddHTMLMenuHeader, AddHTMLMenuFooter,
   AddHTMLContentHeader, AddHTMLContentFooter
+- Added detection of Camino web browser (old Chimera).
+- Full updated robots database.
 
 Fixes:
 - Fixed syntax error in Year view when xhtml output is selected.
@@ -51,6 +53,7 @@ Fixes:
 - Fixed some bugs when BuildReportOutput is set to xhtml (rawlog plugin)
   plugin.
 - Number of shown lines were one more than required (rawlog plugin).
+- xhtml output broken for some 404 reports.
 
 Other/Documentation:
 - BuildReportOutput=xml renamed into BuildReportOutput=xhtml
