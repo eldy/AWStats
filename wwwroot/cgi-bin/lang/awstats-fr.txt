@@ -113,3 +113,4 @@ message110=Go
 message111=Aspirateur
 message112=Oui
 message113=Non
+message114=WhoIs info

@@ -113,3 +113,4 @@ message110=GB
 message111=Grabber
 message112=Yes
 message113=No
+message114=WhoIs info
