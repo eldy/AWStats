@@ -5131,8 +5131,8 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 				&GetDelaySinceStart(1);	$NbOfLinesShowsteps=1;
 			}
 			if (! scalar keys %HTMLOutput) {
-				print "Phase 2 : Now process new records (Flush history on disk after ".($LIMITFLUSH<<2)." uniques)...\n";
-				#print "Phase 2 : Now process new records (Flush history on disk after ".($LIMITFLUSH<<2)." uniques or ".($LIMITFLUSH)." different URLs)...\n";
+				print "Phase 2 : Now process new records (Flush history on disk after ".($LIMITFLUSH<<2)." hosts)...\n";
+				#print "Phase 2 : Now process new records (Flush history on disk after ".($LIMITFLUSH<<2)." hosts or ".($LIMITFLUSH)." URLs)...\n";
 			}
 		}
 
@@ -5840,7 +5840,7 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 		# Every 20,000 approved lines we test to clean too large hash arrays to flush data in tmp file
 		if ($counter++ >= 20000) {
 			if ((scalar keys %_host_u) > ($LIMITFLUSH<<2) || (scalar keys %_url_p) > $LIMITFLUSH) {
-				# warning("Warning: Try to run AWStats update process more frequently to analyze smaller log files.");
+				# warning("Warning: Try to run AWStats update process more frequently to analyze smaler log files.");
 				if ($^X =~ /activestate/i || $^X =~ /activeperl/i) {
 					# We don't flush if perl is activestate to avoid slowing process because of memory hole
 				}
@@ -5849,7 +5849,10 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 					#%TmpDNSLookup = ();
 					%TmpOS = %TmpRefererServer = %TmpRobot = %TmpBrowser = ();
 					# We flush if perl is not activestate
-					print "Flush history file on disk\n";
+					print "Flush history file on disk";
+					if ((scalar keys %_host_u) > ($LIMITFLUSH<<2)) { print " (unique hosts reach flush limit of ".($LIMITFLUSH<<2).")"; }
+					if ((scalar keys %_url_p) > $LIMITFLUSH) { print " (unique url reach flush limit of ".($LIMITFLUSH).")"; }
+					print "\n";
 					if ($Debug) {
 						debug("End of set of ".($counter-1)." records: Some hash arrays are too large. We flush and clean some.",2);
 						print " _host_p:".(scalar keys %_host_p)." _host_h:".(scalar keys %_host_h)." _host_k:".(scalar keys %_host_k)." _host_l:".(scalar keys %_host_l)." _host_s:".(scalar keys %_host_s)." _host_u:".(scalar keys %_host_u)."\n";
