@@ -139,3 +139,4 @@ message135=Screen sizes
 message136=Worm/Virus attacks
 message137=Add to favourites
 message138=Days of month
+message139=Miscellanous
