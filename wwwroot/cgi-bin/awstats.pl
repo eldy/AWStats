@@ -4824,6 +4824,7 @@ if ((! $ENV{'GATEWAY_INTERFACE'}) && (! $SiteConfig)) {
 	print "with a GNU General Public License (See LICENSE file for details).\n";
 	print "\n";
 	print "Syntax: $PROG.$Extension -config=virtualhostname [options]\n";
+	print "\n";
 	print "  This runs $PROG in command line to update statistics of a web site, from\n";
 	print "  the log file defined in config file, and/or returns a HTML report.\n";
 	print "  First, $PROG tries to read $PROG.virtualhostname.conf as the config file.\n";
@@ -8333,7 +8334,7 @@ if (scalar keys %HTMLOutput) {
 			if ($rest_p > 0 || $rest_h > 0 || $rest_k > 0) {	# All other visitors (known or not)
 				print "<TR>";
 				print "<TD CLASS=AWS><font color=\"#$color_other\">$Message[2]</font></TD>";
-				if ($ShowLinksToWhoIs && $LinksToWhoIs) { print "<TD>&nbsp;</TD>"; }
+				&ShowHostInfo('');
 				if ($ShowHostsStats =~ /P/i) { print "<TD>$rest_p</TD>"; }
 				if ($ShowHostsStats =~ /H/i) { print "<TD>$rest_h</TD>"; }
 				if ($ShowHostsStats =~ /B/i) { print "<TD>".Format_Bytes($rest_k)."</TD>"; }
