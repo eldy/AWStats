@@ -5071,6 +5071,7 @@ EOF
 			if ($linetitle) { print "<tr><th class=AWL valign=top>$Message[93] : </th>\n"; }
 			if ($linetitle) { print ($frame?"</tr>\n":"<td class=AWL>"); }
 			if ($ShowMonthDayStats)		 { print ($frame?"<tr><td class=AWL>":""); print "<a href=\"$linkpage#SUMMARY\"$targetpage>$Message[5]/$Message[4]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
+			if ($ShowMonthDayStats)		 { print ($frame?"<tr><td class=AWL> &nbsp; <img height=8 width=9 src=\"$DirIcons/other/page.png\" alt=\"...\"> ":""); print "<a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=monthdayvalues":"$PROG$StaticLinks.monthdayvalues.html")."\"$NewLinkTarget>$Message[130]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
 			if ($ShowDaysOfWeekStats)	 { print ($frame?"<tr><td class=AWL>":""); print "<a href=\"$linkpage#DAYOFWEEK\"$targetpage>$Message[91]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
 			if ($ShowHoursStats)		 { print ($frame?"<tr><td class=AWL>":""); print "<a href=\"$linkpage#HOUR\"$targetpage>$Message[20]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
 			if ($linetitle) { print ($frame?"":"</td></tr>\n"); }
@@ -5278,9 +5279,9 @@ EOF
 		for (my $ix=1; $ix<=12; $ix++) {
 			my $monthix=($ix<10?"0$ix":"$ix");
 			print "<TD>";
-			if ($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks) { print "<a href=\"$AWScript?${NewLinkParams}year=$YearRequired&month=$monthix\"$NewLinkTarget>"; }
+			if (($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks) && $HTMLOutput ne "monthdayvalues") { print "<a href=\"$AWScript?${NewLinkParams}year=$YearRequired&month=$monthix\"$NewLinkTarget>"; }
 			print "$MonthLib{$monthix}";
-			if ($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks) { print "</a>"; }
+			if (($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks) && $HTMLOutput ne "monthdayvalues") { print "</a>"; }
 			print "</TD>\n";
 		}
 		print "</TR>\n";
@@ -6084,13 +6085,14 @@ EOF
 			print "</TD>\n";
 		}
 		print "</TR>\n";
+		# Show lib for month
 		print "<TR valign=middle cellspacing=0 cellpadding=0><td></td>";
 		for (my $ix=1; $ix<=12; $ix++) {
 			my $monthix=($ix<10?"0$ix":"$ix");
 			print "<TD>";
-			if ($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks) { print "<a href=\"$AWScript?${NewLinkParams}year=$YearRequired&month=$monthix\"$NewLinkTarget>"; }
+			if (($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks) && $HTMLOutput ne "monthdayvalues") { print "<a href=\"$AWScript?${NewLinkParams}year=$YearRequired&month=$monthix\"$NewLinkTarget>"; }
 			print "$MonthLib{$monthix}";
-			if ($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks) { print "</a>"; }
+			if (($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks) && $HTMLOutput ne "monthdayvalues") { print "</a>"; }
 			print "</TD>\n";
 		}
 		print "</TR>\n";
@@ -6155,7 +6157,7 @@ EOF
 			print "</TD>\n";
 		}
 		print "<TD> &nbsp; </TD>";
-		# Show average values
+		# Show average value cell
 		print "<TD>";
 		my $bredde_v=0; my $bredde_p=0; my $bredde_h=0; my $bredde_k=0;
 		if ($max_v > 0) { $bredde_v=int($avg_day_v/$max_v*$BarHeight/2)+1; }
@@ -6172,7 +6174,7 @@ EOF
 		print "<IMG SRC=\"$DirIcons\/other\/$BarImageVertical_k\" HEIGHT=$bredde_k WIDTH=4 ALT=\"$Message[75]: ".Format_Bytes($avg_day_k)."\" title=\"$Message[75]: ".Format_Bytes($avg_day_k)."\">";
 		print "</TD>\n";
 		print "</TR>\n";
-
+		# Show lib for day
 		print "<TR>";
 		foreach my $daycursor ($firstdaytoshowtime..$lastdaytoshowtime) {
 			$daycursor =~ /^(\d\d\d\d)(\d\d)(\d\d)/;
@@ -6191,8 +6193,15 @@ EOF
 		print "</TABLE>\n<br>\n";
 
 		# Show data arrays link
-		print "<a href=\"$AWScript?${NewLinkParams}output=monthdayvalues&year=$YearRequired&month=$MonthRequired\"$NewLinkTarget>$Message[130]</a>";
+		if ($DetailedReportsOnNewWindows) { $NewLinkTarget=" target=\"awstatsbis\""; }
+		if (($FrameName eq "mainleft" || $FrameName eq "mainright") && $DetailedReportsOnNewWindows < 2) {
+			$NewLinkParams.="&framename=mainright";
+			$NewLinkTarget=" target=\"mainright\"";
+		}
+		$NewLinkParams =~ tr/&/&/s; $NewLinkParams =~ s/^&//; $NewLinkParams =~ s/&$//;
+		if ($NewLinkParams) { $NewLinkParams="${NewLinkParams}&"; }
 
+		print "<a href=\"".($ENV{"GATEWAY_INTERFACE"} || !$StaticLinks?"$AWScript?${NewLinkParams}output=monthdayvalues&year=$YearRequired&month=$MonthRequired":"$PROG$StaticLinks.monthdayvalues.html")."\"$NewLinkTarget>$Message[130]</a>";
 		print "</CENTER>\n";
 		print "</TD></TR>\n";
 		&tab_end;
