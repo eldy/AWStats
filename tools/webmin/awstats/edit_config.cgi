@@ -329,6 +329,8 @@ if ($in{'advanced'} == 3) {
 	print &hblink($text{'help_help'}, "help.cgi?param=AddDataArrayShowDaysOfWeekStats")." </td> </tr>\n";
 	print "<tr> <td><b>AddDataArrayShowHoursStats</b></td> <td> <input size=10 name=AddDataArrayShowHoursStats type=text value='$lconf->{'AddDataArrayShowHoursStats'}'> </td> <td> ";
 	print &hblink($text{'help_help'}, "help.cgi?param=AddDataArrayShowHoursStats")." </td> </tr>\n";
+	print "<tr> <td><b>IncludeInternalLinksInOriginSection</b></td> <td> <input size=10 name=IncludeInternalLinksInOriginSection type=text value='$lconf->{'IncludeInternalLinksInOriginSection'}'> </td> <td> ";
+	print &hblink($text{'help_help'}, "help.cgi?param=IncludeInternalLinksInOriginSection")." </td> </tr>\n";
 	print "<tr> <td><b>MaxNbOfDomain </b></td> <td> <input size=10 name=MaxNbOfDomain type=text value='$lconf->{'MaxNbOfDomain '}'> </td> <td> ";
 	print &hblink($text{'help_help'}, "help.cgi?param=MaxNbOfDomain ")." </td> </tr>\n";
 	print "<tr> <td><b>MinHitDomain  </b></td> <td> <input size=10 name=MinHitDomain type=text value='$lconf->{'MinHitDomain  '}'> </td> <td> ";
