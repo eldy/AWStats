@@ -1,18 +1,18 @@
 #!/usr/bin/perl
 #-----------------------------------------------------------------------------
-# GeoIp AWStats plugin
+# GeoIpFree AWStats plugin
 # This plugin allow you to get AWStats country report with countries detected
 # from a Geographical database (GeoIP internal database) instead of domain
 # hostname suffix.
 #-----------------------------------------------------------------------------
-# Perl Required Modules: Geo::IP
+# Perl Required Modules: Geo::IPfree
 #-----------------------------------------------------------------------------
 # $Revision$ - $Author$ - $Date$
 
 
 # <-----
 # ENTER HERE THE USE COMMAND FOR ALL REQUIRED PERL MODULES
-if (!eval ('require "Geo/IP.pm";')) 	{ return "Error: Need Perl module Geo::IP"; }
+if (!eval ('require "Geo/IPfree.pm";')) { return "Error: Need Perl module Geo::IPfree"; }
 # ----->
 use strict;no strict "refs";
 
@@ -24,7 +24,7 @@ use strict;no strict "refs";
 # <-----
 # ENTER HERE THE MINIMUM AWSTATS VERSION REQUIRED BY YOUR PLUGIN
 # AND THE NAME OF ALL FUNCTIONS THE PLUGIN MANAGE.
-my $PluginNeedAWStatsVersion="5.4";
+my $PluginNeedAWStatsVersion="5.5";
 my $PluginHooksFunctions="GetCountryCodeByAddr GetCountryCodeByName";
 # ----->
 
@@ -37,22 +37,19 @@ $gi
 # ----->
 
 
+
 #-----------------------------------------------------------------------------
 # PLUGIN FUNCTION: Init_pluginname
 #-----------------------------------------------------------------------------
-sub Init_geoip {
+sub Init_geoipfree {
 	my $InitParams=shift;
 	my $checkversion=&Check_Plugin_Version($PluginNeedAWStatsVersion);
 
 	# <-----
 	# ENTER HERE CODE TO DO INIT PLUGIN ACTIONS
 	debug(" InitParams=$InitParams",1);
-	my $mode=$InitParams;
-	if ($mode eq '' || $mode eq 'GEOIP_MEMORY_CACHE')  { $mode=Geo::IP::GEOIP_MEMORY_CACHE(); }
-	else { $mode=Geo::IP::GEOIP_STANDARD(); }
 	%TmpDomainLookup=();
-	debug(" GeoIP working in mode $mode",1);
-	$gi = Geo::IP->new($mode);
+	$gi = Geo::IPfree::new();
 	# ----->
 
 	return ($checkversion?$checkversion:"$PluginHooksFunctions");
@@ -64,11 +61,11 @@ sub Init_geoip {
 # UNIQUE: YES (Only one plugin using this function can be loaded)
 # GetCountryCodeByName is called to translate a host name into a country name.
 #-----------------------------------------------------------------------------
-sub GetCountryCodeByName_geoip {
+sub GetCountryCodeByName_geoipfree {
 	# <-----
 	my $res=$TmpDomainLookup{$_[0]}||'';
 	if (! $res) {
-		$res=lc($gi->country_code_by_name($_[0]));
+		($res,undef)=$gi->LookUp($_[0]); if ($res !~ /\w\w/) { $res='ip'; }
 		$TmpDomainLookup{$_[0]}=$res;
 		if ($Debug) { debug(" GetCountryCodeByName for $_[0]: $res",5); }
 	}
@@ -82,11 +79,11 @@ sub GetCountryCodeByName_geoip {
 # UNIQUE: YES (Only one plugin using this function can be loaded)
 # GetCountryCodeByAddr is called to translate an ip into a country name.
 #-----------------------------------------------------------------------------
-sub GetCountryCodeByAddr_geoip {
+sub GetCountryCodeByAddr_geoipfree {
 	# <-----
 	my $res=$TmpDomainLookup{$_[0]}||'';
 	if (! $res) {
-		$res=lc($gi->country_code_by_addr($_[0]));
+		($res,undef)=$gi->LookUp($_[0]); if ($res !~ /\w\w/) { $res='ip'; }
 		$TmpDomainLookup{$_[0]}=$res;
 		if ($Debug) { debug(" GetCountryCodeByAddr for $_[0]: $res",5); }
 	}
