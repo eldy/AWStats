@@ -600,24 +600,27 @@ EOF
 
 #------------------------------------------------------------------------------
 # Function:		Write on ouput end of HTML page
-# Parameters:	None
-# Input:		%HTMLOutput $HTMLEndSection
+# Parameters:	0|1 (0=no list plugins,1=list plugins)
+# Input:		%HTMLOutput $HTMLEndSection $FrameName $BuildReportFormat
 # Output:		None
 # Return:		None
 #------------------------------------------------------------------------------
 sub html_end {
+	my $listplugins=shift||0;
 	if (scalar keys %HTMLOutput) {
 		if ($FrameName ne 'index' && $FrameName ne 'mainleft') {
 			print "$Center<br /><br />\n";
 			print "<span dir=\"ltr\" style=\"font: 11px verdana, arial, helvetica; color: #$color_text;\">";
 			print "<b>Advanced Web Statistics $VERSION</b> - <a href=\"http://awstats.sourceforge.net\" target=\"awstatshome\">Created by $PROG";
-			my $atleastoneplugin=0;
-			foreach my $pluginname (keys %{$PluginsLoaded{'init'}}) {
-				if (! $atleastoneplugin) { $atleastoneplugin=1; print " (with plugin "; }
-				else { print ", "; }
-				print "$pluginname";
+			if ($listplugins) {
+				my $atleastoneplugin=0;
+				foreach my $pluginname (keys %{$PluginsLoaded{'init'}}) {
+					if (! $atleastoneplugin) { $atleastoneplugin=1; print " (with plugin "; }
+					else { print ", "; }
+					print "$pluginname";
+				}
+				if ($atleastoneplugin) { print ")"; }
 			}
-			if ($atleastoneplugin) { print ")"; }
 			print "</a></span><br />\n";
 			if ($HTMLEndSection) { print "<br />\n$HTMLEndSection\n"; }
 		}
@@ -5383,7 +5386,7 @@ if ($PluginMode) {
 	my $function="BuildFullHTMLOutput_$PluginMode()";
 	eval("$function");
 	if ($? || $@) { error("$@"); }
-	&html_end;
+	&html_end(0);
 	exit 0;	
 }
 
@@ -5463,7 +5466,7 @@ if ($MigrateStats) {
 	}
 	if ($EnableLockForUpdate) {	&Lock_Update(0); }
 	print "Migration for file '$MigrateStats' successful."; print $ENV{'GATEWAY_INTERFACE'}?"<br />\n":"\n";
-	&html_end;
+	&html_end(1);
 	exit 0;
 }
 
@@ -5484,7 +5487,7 @@ if ($FrameName eq 'index') {
 	print "to see your reports.<br />\n";
 	print "</body></noframes>\n";
 	print "</frameset>\n";
-	&html_end;
+	&html_end(0);
 	exit 0;
 }
 
@@ -7130,7 +7133,7 @@ if (scalar keys %HTMLOutput) {
 
 	# Exit if left frame
 	if ($FrameName eq 'mainleft') {
-		&html_end;
+		&html_end(0);
 		exit 0;
 	}
 
@@ -7493,7 +7496,7 @@ if (scalar keys %HTMLOutput) {
 			print "</tr>\n";
 		}
 		&tab_end;
-		&html_end;
+		&html_end(1);
 	}
 	if ($HTMLOutput{'allhosts'} || $HTMLOutput{'lasthosts'}) {
 		print "$Center<a name=\"hosts\">&nbsp;</a><br />\n";
@@ -7558,7 +7561,7 @@ if (scalar keys %HTMLOutput) {
 			print "</tr>\n";
 		}
 		&tab_end;
-		&html_end;
+		&html_end(1);
 	}
 	if ($HTMLOutput{'unknownip'}) {
 		print "$Center<a name=\"unknownip\">&nbsp;</a><br />\n";
@@ -7601,15 +7604,15 @@ if (scalar keys %HTMLOutput) {
 			print "</tr>\n";
 		}
 		&tab_end;
-		&html_end;
+		&html_end(1);
 	}
 	if ($HTMLOutput{'allemails'} || $HTMLOutput{'lastemails'}) {
 		&ShowEmailSendersChart($NewLinkParams,$NewLinkTarget);
-		&html_end;
+		&html_end(1);
 	}
 	if ($HTMLOutput{'allemailr'} || $HTMLOutput{'lastemailr'}) {
 		&ShowEmailReceiversChart($NewLinkParams,$NewLinkTarget);
-		&html_end;
+		&html_end(1);
 	}
 	if ($HTMLOutput{'alllogins'} || $HTMLOutput{'lastlogins'}) {
 		print "$Center<a name=\"logins\">&nbsp;</a><br />\n";
@@ -7655,7 +7658,7 @@ if (scalar keys %HTMLOutput) {
 			print "</tr>\n";
 		}
 		&tab_end;
-		&html_end;
+		&html_end(1);
 	}
 	if ($HTMLOutput{'allrobots'} || $HTMLOutput{'lastrobots'}) {
 		print "$Center<a name=\"robots\">&nbsp;</a><br />\n";
@@ -7702,7 +7705,7 @@ if (scalar keys %HTMLOutput) {
 			print "</tr>\n";
 		}
 		&tab_end("* $Message[157]");
-		&html_end;
+		&html_end(1);
 	}
 	if ($HTMLOutput{'urldetail'} || $HTMLOutput{'urlentry'} || $HTMLOutput{'urlexit'}) {
 		# Call to plugins' function ShowPagesFilter
@@ -7806,7 +7809,7 @@ if (scalar keys %HTMLOutput) {
 			print "<td>&nbsp;</td></tr>\n";
 		}
 		&tab_end;
-		&html_end;
+		&html_end(1);
 	}
 	if ($HTMLOutput{'unknownos'}) {
 		print "$Center<a name=\"unknownos\">&nbsp;</a><br />\n";
@@ -7831,7 +7834,7 @@ if (scalar keys %HTMLOutput) {
 			print "</tr>\n";
 		}
 		&tab_end;
-		&html_end;
+		&html_end(1);
 	}
 	if ($HTMLOutput{'unknownbrowser'}) {
 		print "$Center<a name=\"unknownbrowser\">&nbsp;</a><br />\n";
@@ -7854,7 +7857,7 @@ if (scalar keys %HTMLOutput) {
 			print "</tr>\n";
 		}
 		&tab_end;
-		&html_end;
+		&html_end(1);
 	}
 	if ($HTMLOutput{'osdetail'}) {
 		# Show os versions
@@ -7946,7 +7949,7 @@ if (scalar keys %HTMLOutput) {
 			print "</tr>\n";
 		}
 		&tab_end;
-		&html_end;
+		&html_end(1);
 	}
 	if ($HTMLOutput{'browserdetail'}) {
 		# Show browsers versions
@@ -8039,7 +8042,7 @@ if (scalar keys %HTMLOutput) {
 			print "</tr>\n";
 		}
 		&tab_end;
-		&html_end;
+		&html_end(1);
 	}
 	if ($HTMLOutput{'refererse'}) {
 		print "$Center<a name=\"refererse\">&nbsp;</a><br />\n";
@@ -8082,7 +8085,7 @@ if (scalar keys %HTMLOutput) {
 			print "</tr>\n";
 		}
 		&tab_end;
-		&html_end;
+		&html_end(1);
 	}
 	if ($HTMLOutput{'refererpages'}) {
 		print "$Center<a name=\"refererpages\">&nbsp;</a><br />\n";
@@ -8141,7 +8144,7 @@ if (scalar keys %HTMLOutput) {
 			print "</tr>\n";
 		}
 		&tab_end;
-		&html_end;
+		&html_end(1);
 	}
 	if ($HTMLOutput{'keyphrases'}) {
 		print "$Center<a name=\"keyphrases\">&nbsp;</a><br />\n";
@@ -8170,7 +8173,7 @@ if (scalar keys %HTMLOutput) {
 			print "<td>$p %</td></tr>\n";
 		}
 		&tab_end;
-		&html_end;
+		&html_end(1);
 	}
 	if ($HTMLOutput{'keywords'}) {
 		print "$Center<a name=\"keywords\">&nbsp;</a><br />\n";
@@ -8199,7 +8202,7 @@ if (scalar keys %HTMLOutput) {
 			print "<td>$p %</td></tr>\n";
 		}
 		&tab_end;
-		&html_end;
+		&html_end(1);
 	}
 	foreach my $code (keys %TrapInfosForHTTPErrorCodes) {
 		if ($HTMLOutput{"errors$code"}) {
@@ -8232,13 +8235,13 @@ if (scalar keys %HTMLOutput) {
 #				print "</tr>\n";
 #			}
 			&tab_end;
-			&html_end;
+			&html_end(1);
 		}
 	}
 	if ($HTMLOutput{'info'}) {
 		# Not yet available
 		print "$Center<a name=\"info\">&nbsp;</a><br />";
-		&html_end;
+		&html_end(1);
 	}
 	if ($HTMLOutput{'main'}) {
 
@@ -9874,7 +9877,7 @@ if (scalar keys %HTMLOutput) {
 	 		&tab_end;
 	 	}
 	
-		&html_end;
+		&html_end(1);
 	}
 }
 else {
