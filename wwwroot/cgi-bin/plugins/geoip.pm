@@ -61,7 +61,7 @@ sub Init_geoip {
 		else { $mode=Geo::IP::GEOIP_STANDARD(); }
 	}
 	%TmpDomainLookup=();
-	debug(" GeoIP working in mode $mode",1);
+	debug(" GeoIP working in mode $type $mode",1);
 	if ($type eq 'geoippureperl') {
 		$gi = Geo::IP::PurePerl->new($mode);
 	} else {
@@ -84,9 +84,9 @@ sub GetCountryCodeByName_geoip {
 	if (! $res) {
 		$res=lc($gi->country_code_by_name($_[0]));
 		$TmpDomainLookup{$_[0]}=$res;
-		if ($Debug) { debug(" GetCountryCodeByName for $_[0]: $res",5); }
+		if ($Debug) { debug("  GetCountryCodeByName for $_[0]: [$res]",5); }
 	}
-	elsif ($Debug) { debug(" GetCountryCodeByName for $_[0]: Already resolved to $res",5); }
+	elsif ($Debug) { debug("  GetCountryCodeByName for $_[0]: Already resolved to $res",5); }
 	return $res;
 	# ----->
 }
@@ -102,9 +102,9 @@ sub GetCountryCodeByAddr_geoip {
 	if (! $res) {
 		$res=lc($gi->country_code_by_addr($_[0]));
 		$TmpDomainLookup{$_[0]}=$res;
-		if ($Debug) { debug(" GetCountryCodeByAddr for $_[0]: $res",5); }
+		if ($Debug) { debug("  GetCountryCodeByAddr for $_[0]: $res",5); }
 	}
-	elsif ($Debug) { debug(" GetCountryCodeByAddr for $_[0]: Already resolved to $res",5); }
+	elsif ($Debug) { debug("  GetCountryCodeByAddr for $_[0]: Already resolved to $res",5); }
 	return $res;
 	# ----->
 }

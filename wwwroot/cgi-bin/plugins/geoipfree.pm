@@ -69,9 +69,9 @@ sub GetCountryCodeByName_geoipfree {
 	if (! $res) {
 		($res,undef)=$gi->LookUp($_[0]); if ($res !~ /\w\w/) { $res='ip'; }
 		$TmpDomainLookup{$_[0]}=$res;
-		if ($Debug) { debug(" GetCountryCodeByName for $_[0]: $res",5); }
+		if ($Debug) { debug("  GetCountryCodeByName for $_[0]: $res",5); }
 	}
-	elsif ($Debug) { debug(" GetCountryCodeByName for $_[0]: Already resolved to $res",5); }
+	elsif ($Debug) { debug("  GetCountryCodeByName for $_[0]: Already resolved to $res",5); }
 	return $res;
 	# ----->
 }
@@ -87,9 +87,9 @@ sub GetCountryCodeByAddr_geoipfree {
 	if (! $res) {
 		($res,undef)=$gi->LookUp($_[0]); if ($res !~ /\w\w/) { $res='ip'; }
 		$TmpDomainLookup{$_[0]}=$res;
-		if ($Debug) { debug(" GetCountryCodeByAddr for $_[0]: $res",5); }
+		if ($Debug) { debug("  GetCountryCodeByAddr for $_[0]: $res",5); }
 	}
-	elsif ($Debug) { debug(" GetCountryCodeByAddr for $_[0]: Already resolved to $res",5); }
+	elsif ($Debug) { debug("  GetCountryCodeByAddr for $_[0]: Already resolved to $res",5); }
 	return $res;
 	# ----->
 }
