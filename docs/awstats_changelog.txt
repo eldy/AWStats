@@ -11,15 +11,19 @@ AWStats Changelog
 - Increased speed and reduce memory use for very large web sites.
 - Unresolved ip are now processed like resolved one.
 - Added icons in browsers chart.
+- Personalised log format can also have tab separator (not only space).
 - New feature: Added mark on "grabber browsers" in browsers chart.
 - New feature: Added average files size in Pages/URL report chart.
 - New feature: You can put dynamic environnement variables into config file.
 - New feature: Keyphrases list can be viewed entirely (not only most used).
 - New parameter: ValidHTTPCodes
+- New parameter: StyleSheet
+- New parameter: WrapperScript
+- New parameter: CreateDirDataIfNotExists
 - New tool: A log format converter common2combined.pl
 - New option: -staticlinks to build static links in report page (to use
   AWStats with no web servers).
-- New option: CreateDirDataIfNotExists
+- Fixed: wrong size of bar in "average" report when average value was < 1.
 - No more need to use \. to say . in config file.
 
 
