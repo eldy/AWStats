@@ -235,6 +235,7 @@ use vars qw/
 @_time_p = @_time_h = @_time_k = ();
 @fieldlib = @keylist = ();
 use vars qw/
+@BrowsersFamily
 @SessionsRange %SessionsAverage @HostAliases @AllowAccessFromWebToFollowingAuthenticatedUsers
 @DefaultFile @SkipDNSLookupFor
 @SkipHosts @SkipUserAgents @SkipFiles
@@ -246,6 +247,7 @@ use vars qw/
 @ExtraFirstColumnValuesType @ExtraFirstColumnValuesTypeVal
 @PluginsToLoad 
 /;
+@BrowsersFamily=('msie','netscape');
 @SessionsRange=('0s-30s','30s-2mn','2mn-5mn','5mn-15mn','15mn-30mn','30mn-1h','1h+');
 %SessionsAverage=('0s-30s',15,'30s-2mn',75,'2mn-5mn',210,'5mn-15mn',600,'15mn-30mn',1350,'30mn-1h',2700,'1h+',3600);
 @HostAliases=();
@@ -520,7 +522,8 @@ use vars qw/ @Message /;
 'Data value arrays',
 'Sender EMail',
 'Receiver EMail',
-'Reported period'
+'Reported period',
+'Extra/Marketing'
 );
 
 
@@ -6160,7 +6163,12 @@ EOF
 			foreach my $code (keys %TrapInfosForHTTPErrorCodes) {
 				if ($ShowHTTPErrorsStats)	 { print ($frame?"<tr><td class=AWL> &nbsp; <img height=8 width=9 src=\"$DirIcons/other/page.png\" alt=\"...\"> ":""); print "<a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=errors$code":"$PROG$StaticLinks.errors$code.html")."\"$NewLinkTarget>$Message[31]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
 			}
-		 	foreach my $extranum (1..@ExtraName-1) {
+			if ($linetitle) { print ($frame?"":"</td></tr>\n"); }
+			# Extra/Marketing
+		 	$linetitle=&AtLeastOneNotNull(@ExtraStatTypes);
+			if ($linetitle) { print "<tr><th class=AWL>$Message[134]: </th>\n"; }
+			if ($linetitle) { print ($frame?"</tr>\n":"<td class=AWL>"); }
+			foreach my $extranum (1..@ExtraName-1) {
 				print ($frame?"<tr><td class=AWL>":""); print "<a href=\"$linkanchor#EXTRA$extranum\"$targetpage>$ExtraName[$extranum]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; ");
 			}
 			if ($linetitle) { print ($frame?"":"</td></tr>\n"); }
@@ -6964,35 +6972,83 @@ EOF
 		&html_end;
 	}
 	if ($HTMLOutput{'browserdetail'}) {
-		# Count total of msie and netscape
-		my %total=();
-		foreach my $key (keys %_browser_h) {
-			if ($key =~ /^msie/i)     { $total{"msie"}+=$_browser_h{$key}; next; }
-			if ($key =~ /^netscape/i) { $total{"netscape"}+=$_browser_h{$key}; next; }
-		}
-		# Show msie and netscape arrays
-		print "$Center<a name=\"MSIE\">&nbsp;</a><BR>";
-		my $title="$Message[34]<br><img src=\"$DirIcons/browser/msie_large.png\" alt=\"Msie\">";
+		# Show browsers versions
+		print "$Center<a name=\"VERSIONS\">&nbsp;</a><BR>";
+		my $title="$Message[21]";
 		&tab_head("$title",19);
-		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[58]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[15]</TH></TR>\n";
-		foreach my $key (reverse sort keys %_browser_h) {
-			if ($key =~ /^msie(.*)/i) {
-				my $ver=$1;
-				my $p=int($_browser_h{$key}/$total{"msie"}*1000)/10; $p="$p";
-				print "<TR><TD CLASS=AWL>MSIE ".($ver?"$ver":"?")."</TD><TD>$_browser_h{$key}</TD><TD>$p%</TD></TR>\n";
+		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH colspan=2>$Message[58]</TH>";
+		print "<TH width=80>$Message[111]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[15]</TH>";
+		print "<TH>&nbsp;</TH>";
+		print "</TR>\n";
+		# Count Total by family
+		my %totalfamily_h=();
+		my $Total=0;
+		my $count=0;
+		&BuildKeyList($MaxRowsInHTMLOutput,1,\%_browser_h,\%_browser_h);
+		my %keysinkeylist=();
+		$max_h=1;
+		BROWSERLOOP: foreach my $key (@keylist) {
+			$Total+=$_browser_h{$key};
+			if ($_browser_h{$key} > $max_h) { $max_h = $_browser_h{$key}; }
+			foreach my $family (@BrowsersFamily) { if ($key =~ /^$family/i) { $totalfamily_h{$family}+=$_browser_h{$key}; next BROWSERLOOP; } }
+		}
+		# Write records grouped in a brwoser family
+		foreach my $family (@BrowsersFamily) {
+			my $p='&nbsp;';
+			if ($Total) { $p=int($totalfamily_h{$family}/$Total*1000)/10; $p="$p %"; }
+			print "<TR bgcolor=\"#F8F8F8\"><TD class=AWL colspan=2><b>".uc($family)."</b></TD>";
+			print "<TD>&nbsp;</TD><TD><b>$totalfamily_h{$family}</b></TD><TD><b>$p</b></TD><TD>&nbsp;</TD>";
+			print "</TR>\n";
+			foreach my $key (reverse sort keys %_browser_h) {
+				if ($key =~ /^$family(.*)/i) {
+					$keysinkeylist{$key}=1;
+					my $ver=$1;
+					my $p='&nbsp;';
+					if ($Total) { $p=int($_browser_h{$key}/$Total*1000)/10; $p="$p %"; }
+					print "<TR>";
+					print "<TD".($count?"":" width=$WIDTHCOLICON")."><IMG SRC=\"$DirIcons\/browser\/$family.png\" alt=\"\"></TD>";
+					print "<TD CLASS=AWL>".ucfirst($family)." ".($ver?"$ver":"?")."</TD>";
+					print "<TD>".($BrowsersHereAreGrabbers{$family}?"<b>$Message[112]</b>":"$Message[113]")."</TD>";
+					my $bredde_h=0;
+					if ($max_h > 0) { $bredde_h=int($BarWidth*($_browser_h{$key}||0)/$max_h)+1; }
+					if (($bredde_h==1) && $_browser_h{$key}) { $bredde_h=2; }
+					print "<TD>$_browser_h{$key}</TD><TD>$p</TD>";
+					print "<TD CLASS=AWL>";
+					# alt and title are not provided to reduce page size
+					if ($ShowBrowsersStats) { print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_h\" WIDTH=$bredde_h HEIGHT=6><br>"; }
+					print "</TD>";
+					print "</TR>\n";
+					$count++;
+				}
 			}
 		}
-		&tab_end;
-		print "<a name=\"NETSCAPE\">&nbsp;</a><BR>\n";
-		$title="$Message[33]<br><img src=\"$DirIcons/browser/netscape_large.png\" alt=\"Netscape\">";
-		&tab_head("$title",19);
-		print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[58]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[15]</TH></TR>\n";
-		foreach my $key (reverse sort keys %_browser_h) {
-			if ($key =~ /^netscape(.*)/i) {
-				my $ver=$1;
-				my $p=int($_browser_h{$key}/$total{"netscape"}*1000)/10; $p="$p";
-				print "<TR><TD CLASS=AWL>Netscape ".($ver?"$ver":"?")."</TD><TD>$_browser_h{$key}</TD><TD>$p%</TD></TR>\n";
+		# Write other records
+		print "<TR bgcolor=\"#F8F8F8\"><TD class=AWL colspan=2><b>".uc($Message[2])."</b></TD>";
+		print "<TD>&nbsp;</TD><TD>&nbsp;</TD><TD>&nbsp;</TD><TD>&nbsp;</TD>";
+		print "</TR>\n";
+		foreach my $key (@keylist) {
+			if ($keysinkeylist{$key}) { next; }
+			my $p='&nbsp;';
+			if ($Total) { $p=int($_browser_h{$key}/$Total*1000)/10; $p="$p %"; }
+			print "<TR>";
+			if ($key eq 'Unknown') {
+				print "<TD".($count?"":" width=$WIDTHCOLICON")."><IMG SRC=\"$DirIcons\/browser\/unknown.png\" alt=\"\"></TD><TD CLASS=AWL><font color=\"#$color_other\">$Message[0]</font></TD><TD width=80>?</TD>";
 			}
+			else {
+				my $keywithoutcumul=$key; $keywithoutcumul =~ s/cumul$//i;
+				my $libbrowser=$BrowsersHashIDLib{$keywithoutcumul}||$keywithoutcumul;
+				my $nameicon=$BrowsersHashIcon{$keywithoutcumul}||"notavailable";
+				print "<TD".($count?"":" width=$WIDTHCOLICON")."><IMG SRC=\"$DirIcons\/browser\/$nameicon.png\" alt=\"\"></TD><TD CLASS=AWL>$libbrowser</TD><TD>".($BrowsersHereAreGrabbers{$key}?"<b>$Message[112]</b>":"$Message[113]")."</TD>";
+			}
+			my $bredde_h=0;
+			if ($max_h > 0) { $bredde_h=int($BarWidth*($_browser_h{$key}||0)/$max_h)+1; }
+			if (($bredde_h==1) && $_browser_h{$key}) { $bredde_h=2; }
+			print "<TD>$_browser_h{$key}</TD><TD>$p</TD>";
+			print "<TD CLASS=AWL>";
+			# alt and title are not provided to reduce page size
+			if ($ShowBrowsersStats) { print "<IMG SRC=\"$DirIcons\/other\/$BarImageHorizontal_h\" WIDTH=$bredde_h HEIGHT=6><br>"; }
+			print "</TD>";
+			print "</TR>\n";
 		}
 		&tab_end;
 		&html_end;
@@ -8115,56 +8171,60 @@ EOF
 		if ($ShowOSStats) {
 			if ($Debug) { debug("ShowOSStats",2); }
 			print "$Center<a name=\"OS\">&nbsp;</a><BR>\n";
-			my $Total=0; foreach my $key (keys %_os_h) { $Total+=$_os_h{$key}; }
-			&tab_head("$Message[59]",19);
+			my $Totalh=0; foreach my $key (keys %_os_h) { $Totalh+=$_os_h{$key}; }
+			my $title="$Message[59] &nbsp; - &nbsp; <a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=unknownos":"$PROG$StaticLinks.unknownos.html")."\"$NewLinkTarget>$Message[0]</a>";
+			&tab_head("$title",19);
 			print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH colspan=2>OS</TH><TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[15]</TH></TR>\n";
 			my $count=0;
 			&BuildKeyList($MaxRowsInHTMLOutput,1,\%_os_h,\%_os_h);
 			foreach my $key (@keylist) {
-				my $p=int($_os_h{$key}/$Total*1000)/10;
+				my $p='&nbsp;';
+				if ($Totalh) { $p=int($_os_h{$key}/$Totalh*1000)/10; $p="$p %"; }
 				if ($key eq 'Unknown') {
-					print "<TR><TD".($count?"":" width=$WIDTHCOLICON")."><IMG SRC=\"$DirIcons\/os\/unknown.png\" alt=\"$Message[0]\"></TD><TD CLASS=AWL><a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=unknownos":"$PROG$StaticLinks.unknownos.html")."\"$NewLinkTarget>$Message[0]</a></TD><TD>$_os_h{$key}</TD>";
-					print "<TD>$p %</TD></TR>\n";
+					print "<TR><TD".($count?"":" width=$WIDTHCOLICON")."><IMG SRC=\"$DirIcons\/os\/unknown.png\" alt=\"\"></TD><TD CLASS=AWL><font color=\"#$color_other\">$Message[0]</font></TD><TD>$_os_h{$key}</TD>";
+					print "<TD>$p</TD></TR>\n";
 					}
 				else {
 					my $newos=$OSHashLib{$key}||$key;
 					my $nameicon=lc($key); $nameicon =~ s/[^\w]+//g;
 					print "<TR><TD".($count?"":" width=$WIDTHCOLICON")."><IMG SRC=\"$DirIcons\/os\/$nameicon.png\" alt=\"\"></TD><TD CLASS=AWL>$newos</TD><TD>$_os_h{$key}</TD>";
-					print "<TD>$p %</TD></TR>\n";
+					print "<TD>$p</TD></TR>\n";
 				}
 				$count++;
 			}
 			&tab_end;
 		}
-	
+
 		# BY BROWSER
 		#----------------------------
 		if ($ShowBrowsersStats) {
 			if ($Debug) { debug("ShowBrowsersStats",2); }
 			print "$Center<a name=\"BROWSER\">&nbsp;</a><BR>\n";
-			my $Total=0; my %new_browser_h=();
-			foreach my $key (keys %_browser_h) {
-				$Total+=$_browser_h{$key};
-				if ($key =~ /^msie/i)     { $new_browser_h{"msiecumul"}+=$_browser_h{$key}; next; }
-				if ($key =~ /^netscape/i) { $new_browser_h{"netscapecumul"}+=$_browser_h{$key}; next; }
+			my $Totalh=0; my %new_browser_h=();
+			BROWSERLOOP: foreach my $key (keys %_browser_h) {
+				$Totalh+=$_browser_h{$key};
+				foreach my $family (@BrowsersFamily) { if ($key =~ /^$family/i) { $new_browser_h{"${family}cumul"}+=$_browser_h{$key}; next BROWSERLOOP; } }
 				$new_browser_h{$key}+=$_browser_h{$key};
 			}
-			&tab_head("$Message[21]",19);
+			my $title="$Message[21] &nbsp; - &nbsp; <a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=browserdetail":"$PROG$StaticLinks.browserdetail.html")."\"$NewLinkTarget>$Message[58]</a> &nbsp; - &nbsp; <a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=unknownbrowser":"$PROG$StaticLinks.unknownbrowser.html")."\"$NewLinkTarget>$Message[0]</a>";
+			&tab_head("$title",19);
 			print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH colspan=2>$Message[21]</TH><TH width=80>$Message[111]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[57]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[15]</TH></TR>\n";
 			my $count=0;
 			&BuildKeyList($MaxRowsInHTMLOutput,1,\%new_browser_h,\%new_browser_h);
 			foreach my $key (@keylist) {
-				my $p=int($new_browser_h{$key}/$Total*1000)/10;
+				my $p='&nbsp;';
+				if ($Totalh) { $p=int($new_browser_h{$key}/$Totalh*1000)/10; $p="$p %"; }
 				if ($key eq 'Unknown') {
-					print "<TR><TD".($count?"":" width=$WIDTHCOLICON")."><IMG SRC=\"$DirIcons\/browser\/unknown.png\" alt=\"$Message[0]\"></TD><TD CLASS=AWL><a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=unknownbrowser":"$PROG$StaticLinks.unknownbrowser.html")."\"$NewLinkTarget>$Message[0]</a></TD><TD width=80>?</TD><TD>$_browser_h{$key}</TD><TD>$p%</TD></TR>\n";
+					print "<TR><TD".($count?"":" width=$WIDTHCOLICON")."><IMG SRC=\"$DirIcons\/browser\/unknown.png\" alt=\"\"></TD><TD CLASS=AWL><font color=\"#$color_other\">$Message[0]</font></TD><TD width=80>?</TD><TD>$_browser_h{$key}</TD><TD>$p</TD></TR>\n";
 				}
 				else {
 					my $keywithoutcumul=$key; $keywithoutcumul =~ s/cumul$//i;
 					my $libbrowser=$BrowsersHashIDLib{$keywithoutcumul}||$keywithoutcumul;
 					my $nameicon=$BrowsersHashIcon{$keywithoutcumul}||"notavailable";
-					if ($libbrowser eq 'netscape') { $libbrowser="Netscape <a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=browserdetail":"$PROG$StaticLinks.browserdetail.html")."\"$NewLinkTarget>($Message[58])</a>"; }
-					if ($libbrowser eq 'msie')     { $libbrowser="MS Internet Explorer <a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=browserdetail":"$PROG$StaticLinks.browserdetail.html")."\"$NewLinkTarget>($Message[58])</a>"; }
-					print "<TR><TD".($count?"":" width=$WIDTHCOLICON")."><IMG SRC=\"$DirIcons\/browser\/$nameicon.png\" alt=\"\"></TD><TD CLASS=AWL>$libbrowser</TD><TD>".($BrowsersHereAreGrabbers{$key}?"<b>$Message[112]</b>":"$Message[113]")."</TD><TD>$new_browser_h{$key}</TD><TD>$p %</TD></TR>\n";
+					# TODO Use BrowsrsFamily
+					if ($libbrowser eq 'netscape') { $libbrowser="<b>Netscape</b>"; }
+					if ($libbrowser eq 'msie')     { $libbrowser="<b>MS Internet Explorer</b>"; }
+					print "<TR><TD".($count?"":" width=$WIDTHCOLICON")."><IMG SRC=\"$DirIcons\/browser\/$nameicon.png\" alt=\"\"></TD><TD CLASS=AWL>$libbrowser</TD><TD>".($BrowsersHereAreGrabbers{$key}?"<b>$Message[112]</b>":"$Message[113]")."</TD><TD>$new_browser_h{$key}</TD><TD>$p</TD></TR>\n";
 				}
 				$count++;
 			}
