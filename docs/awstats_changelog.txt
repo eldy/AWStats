@@ -11,6 +11,7 @@ New features/improvements:
 Fixes:
 - The geoip_city_maxmind plugin was sometimes bind.
 - Removed an unknown security hole.
+- Removed an other unknown security hole (found by iDEFENSE).
 
 Other/Documentation:
 - Updated documentation
