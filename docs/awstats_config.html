@@ -393,7 +393,7 @@ when reading it), follow the example:<br>
 <br># browser errors if you don't launch AWStats enough frequently.
 <br># When set to 0, update is only made when AWStats is ran from the command
 <br># line interface (or a task scheduler).
-<br># Possible values: 1 or 0
+<br># Possible values: 0 or 1
 <br># Default: 0
 <br>#
 <br>AllowToUpdateStatsFromBrowser=0
@@ -467,7 +467,7 @@ when reading it), follow the example:<br>
 <br># authenticated. Your AWStats program must be in a web protected "realm" (With
 <br># Apache, you can use .htaccess files to do so. With other web servers, see
 <br># your server setup manual).
-<br># Possible values: 1 or 0
+<br># Possible values: 0 or 1
 <br># Default: 0
 <br>#
 <br>AllowAccessFromWebToAuthenticatedUsersOnly=0
@@ -504,7 +504,7 @@ when reading it), follow the example:<br>
 <br># error. However, you can ask AWStats to create it. This option can be used by
 <br># some Web Hosting Providers that has defined a dynamic value for DirData (for
 <br># example DirData="/home/__REMOTE_USER__").
-<br># Possible values: 1 or 0
+<br># Possible values: 0 or 1
 <br># Default: 0
 <br>#
 <br>CreateDirDataIfNotExists=1
@@ -521,7 +521,7 @@ when reading it), follow the example:<br>
 <br># If you have experience on managing security policies (Web Hosting Provider),
 <br># you should set this parameter to 0. AWStats will keep default process user
 <br># permissions on its files.
-<br># Possible values: 1 or 0
+<br># Possible values: 0 or 1
 <br># Default: 1
 <br>#
 <br>SaveDatabaseFilesWithPermissionsForEveryone=1
@@ -540,7 +540,7 @@ when reading it), follow the example:<br>
 <br># With 1, the purge of the log file is made each time AWStats is ran.
 <br># This parameter doesn't work with IIS (This web server doesn't let its log
 <br># file to be purged).
-<br># Possible values: 1 or 0
+<br># Possible values: 0 or 1
 <br># Default: 0
 <br>#
 <br>PurgeLogFile=0
@@ -554,7 +554,7 @@ when reading it), follow the example:<br>
 <br># all processed log records by setting this to 1 (For example if you want to
 <br># use another log analyzer).
 <br># This parameter is not used if PurgeLogFile=0
-<br># Possible values: 1 or 0
+<br># Possible values: 0 or 1
 <br># Default: 0
 <br>#
 <br>ArchiveLogRecords=0
@@ -570,7 +570,7 @@ when reading it), follow the example:<br>
 <br># past processed log files, you will loose old stats if removed. So you can
 <br># ask AWStats to save last non corrupted file in a .bak file. This file is
 <br># stored in "DirData" directory with other 'historic files'.
-<br># Possible values: 1 or 0
+<br># Possible values: 0 or 1
 <br># Default: 1
 <br>#
 <br>KeepBackupOfHistoricFiles=0
@@ -745,7 +745,7 @@ when reading it), follow the example:<br>
 <b>Version : </b>1.0 +<br>
 <br># AWStats can detect setup problems or show you important informations to have
 <br># a better use. Keep this to 1, except if AWStats says you can change it.
-<br># Possible values: 1 or 0
+<br># Possible values: 0 or 1
 <br># Default: 1
 <br>#
 <br>WarningMessages=1
@@ -825,7 +825,7 @@ AWStats 4.1+ supports both keywords AND keyphrases by default with no need of an
 <br># When you use AWStats as a CGI, you can have the reports shown in HTML views.
 <br># Frames are only available for report viewed dynamically. When you build
 <br># pages from command line, this option is not used and no frames are built.
-<br># Possible values: 1 or 0
+<br># Possible values: 0 or 1
 <br># Default: 1
 <br>#
 <br>UseFramesWhenCGI=1
@@ -905,7 +905,7 @@ ShowOSStats,ShowOriginStats,ShowKeyphrasesStats,ShowKeywordsStats,ShowHTTPErrors
 <br># Whatever is your setup here, all detailed reports are still available.
 <br># So if you setup to 1 only ShowHeader, ShowMenu and ShowMonthDayStats, all
 <br># links in menu will point to detailed views.
-<br># Possible values: 1 or 0
+<br># Possible values: 0 or 1
 <br>#
 <br>ShowHeader=1				# Show AWStats head title and icon
 <br>ShowMenu=1					# Show menu header with links on detailed reports
@@ -986,7 +986,7 @@ ShowOSStats,ShowOriginStats,ShowKeyphrasesStats,ShowKeywordsStats,ShowHTTPErrors
 <a name="ShowLinksOnUrl"><b>ShowLinksOnUrl</b></a><br>
 <b>Version : </b>3.1 +<br>
 <br># Each URL shown in stats report views are links you can click.
-<br># Possible values: 1 or 0
+<br># Possible values: 0 or 1
 <br># Default: 1
 <br>#
 <br>ShowLinksOnUrl=1
@@ -1010,7 +1010,7 @@ ShowOSStats,ShowOriginStats,ShowKeyphrasesStats,ShowKeywordsStats,ShowHTTPErrors
 <br># parameter (LinksToWhoIs and LinksToIPWhoIs) and on WhoIs server
 <br># exhaustivity and availability.
 <br># For this reason, this feature can't be a reliable feature.
-<br># Possible values: 1 or 0
+<br># Possible values: 0 or 1
 <br># Default: 0
 <br>#
 <br>ShowLinksToWhoIs=0
@@ -1100,6 +1100,7 @@ color_TableRowTitle,color_TableBGRowTitle,color_TableBorder,color_text,
 color_textpercent,color_titletext,color_weekend,color_link,color_hover,
 color_u,color_v,color_p,color_h,color_k,color_s<br>
 4.1 for color_e,color_x<br>
+5.0 for color_other<br>
 <br># Those colors parameters can be used (if StyleSheet parameter is not used)
 <br># to change AWStats look.
 <br># Example: color_name="RRGGBB"	# RRGGBB is Red Green Blue components in Hex
@@ -1117,6 +1118,7 @@ color_u,color_v,color_p,color_h,color_k,color_s<br>
 <br>color_weekend="EAEAEA"			# Color for week-end days (Default = "EAEAEA")
 <br>color_link="0011BB"				# Color of HTML links (Default = "0011BB")
 <br>color_hover="605040"			# Color of HTML on-mouseover links (Default = "605040") 
+<br>color_other="666688"			# Color of text for 'other' record in charts (Default = "666688") 
 <br>color_u="FFB055"				# Background color for number of unique visitors (Default = "FFB055")
 <br>color_v="F8E880"				# Background color for number of visites (Default = "F8E880")
 <br>color_p="4477DD"				# Background color for number of pages (Default = "4477DD")
