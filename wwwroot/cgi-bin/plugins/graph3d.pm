@@ -9,51 +9,27 @@
 
 
 use GD::Graph3d;
+use strict;no strict "refs";
 
 
 
 #-----------------------------------------------------------------------------
-# PLUGIN GLOBAL VARIABLES
+# PLUGIN VARIABLES
 #-----------------------------------------------------------------------------
-my $Plugin_need_awstats_version=5001;
-#...
+my $PluginNeedAWStatsVersion="5.1";
+my $PluginHooksFunctions="";
 
-
-#-----------------------------------------------------------------------------
-# PLUGIN Init_check_Version FUNCTION
-#-----------------------------------------------------------------------------
-sub Init_graph3d_Check_Version {
-	if (! $Plugin_need_awstats_version) { return 0; }
-	$VERSION =~ /^(\d+)\.(\d+)/;
-	my $versionnum=($1*1000)+$2;
-	if 	($Plugin_need_awstats_version < $versionnum) {
-		return "Error: AWStats version $Plugin_need_awstats_version or higher is required.";
-	}
-	return 0;
-}
 
 
 #-----------------------------------------------------------------------------
-# PLUGIN Init_pluginname FUNCTION
+# PLUGIN FUNTION Init_pluginname
 #-----------------------------------------------------------------------------
 sub Init_graph3d {
-	my $checkversion=Init_timehires_Check_Version();
-	return ($checkversion?$checkversion:1);
+	my $AWStatsVersion=shift;
+	$hashfileuptodate=1;
+	my $checkversion=&Check_Plugin_Version($PluginNeedAWStatsVersion);
+	return ($checkversion?$checkversion:"$PluginHooksFunctions");
 }
-
-
-#-----------------------------------------------------------------------------
-# PLUGIN ShowField_pluginname FUNCTION
-#-----------------------------------------------------------------------------
-#...
-
-
-
-#-----------------------------------------------------------------------------
-# PLUGIN Filter_pluginname FUNCTION
-#-----------------------------------------------------------------------------
-#...
-
 
 
 1;	# Do not remove this line
