@@ -14,7 +14,7 @@
 #-------------------------------------------------------
 # Defines
 #-------------------------------------------------------
-$VERSION="2.24 (build 17)";
+$VERSION="2.24 (build 18)";
 $Lang=0;
 
 # Default value
@@ -732,6 +732,82 @@ $message[70][7]="ÍďÝ";
 $message[71][7]="Äĺę";
 $message[72][7]="Greek gr.png";
 
+# Czech (js@fsid.cvut.cz)
+$PageCode[8]="<META HTTP-EQUIV=\"content-type\" CONTENT=\"text/html; charset=ISO-8859-2\">";
+$message[0][8]="Neznámý";
+$message[1][8]="Neznámý (nepřeloená IP)";
+$message[2][8]="Ostatní";
+$message[3][8]="Prohlédnout detaily";
+$message[4][8]="Den";
+$message[5][8]="Měsíc";
+$message[6][8]="Rok";
+$message[8][8]="Statistika pro";
+$message[8][8]="První návtěva";
+$message[9][8]="Poslední návtěva";
+$message[10][8]="Počet návtěv";
+$message[11][8]="Unikátní návtěvy";
+$message[12][8]="Návtěva";
+$message[13][8]="Výrazy";
+$message[14][8]="Hledání";
+$message[15][8]="Procenta";
+$message[16][8]="Provoz celkem";
+$message[17][8]="Domény / země";
+$message[18][8]="Návtěvy";
+$message[19][8]="Stránky/URL";
+$message[20][8]="Hodiny";
+$message[21][8]="Browsery (prohlíeče)";
+$message[22][8]="HTTP Chyby";
+$message[23][8]="Reference";
+$message[24][8]="Hledané výrazy";
+$message[25][8]="Návtěvy domény/země";
+$message[26][8]="hosts";
+$message[27][8]="stránek";
+$message[28][8]="r;zné stránky";
+$message[29][8]="Přistup";
+$message[30][8]="Jiná slova";
+$message[31][8]="Pouité browsery (prohlíeče)";
+$message[32][8]="Chybové kódy HTTP ";
+$message[33][8]="Verze Netscape";
+$message[34][8]="Verze MS Internet Explorer";
+$message[35][8]="Pouitý OS";
+$message[36][8]="Konekce z";
+$message[37][8]="Původ";
+$message[38][8]="Přímá adresa / Oblíbené (Bookmark)";
+$message[39][8]="Odkaz z Newsgroup";
+$message[40][8]="Odkaz z Internetového vyhledávače";
+$message[41][8]="Odkaz z jiné stránky (jiné stránky ne vyhledávače)";
+$message[42][8]="Odkaz z vlastní stránky (jiná stránka na serveru)";
+$message[43][8]="výrazy pouité ve vyhledávači";
+$message[44][8]="Kb";
+$message[45][8]="NepřeloenáIP adresa";
+$message[46][8]="Neznámy OS (poloka Referer)";
+$message[47][8]="Poadované, ale nenalezené URL (HTTP 404)";
+$message[48][8]="IP Addresa";
+$message[49][8]="Chyba&nbsp;Dotazů";
+$message[50][8]="neznámý browser (prohlíeč) č (poloka Referer)";
+$message[51][8]="Návtěvnost robotů";
+$message[52][8]="návtěv/návtěvníka";
+$message[53][8]="Roboti";
+$message[54][8]="Volně iřitelný nástroj pro analýzu web statistik";
+$message[55][8]="z";
+$message[56][8]="Stránek";
+$message[57][8]="Dotazů";
+$message[58][8]="Verze";
+$message[59][8]="OS";
+$message[60][8]="Leden";
+$message[61][8]="Únor";
+$message[62][8]="Březen";
+$message[63][8]="Duben";
+$message[64][8]="Kveten";
+$message[65][8]="Červen";
+$message[66][8]="Červenec";
+$message[67][8]="Srpen";
+$message[68][8]="Září";
+$message[69][8]="Říjen";
+$message[70][8]="Listopad";
+$message[71][8]="Prosinec";
+$message[72][8]="Czech cz.png";
+
 
 # ---------- Browser lists ----------------
 # ("browser id in lower case", "browser text")
@@ -1376,7 +1452,7 @@ sub Check_Config {
 	# Optional section
 	if (! ($PurgeLogFile =~ /[0-1]/))         { $PurgeLogFile=0; }
 	if (! ($ArchiveLogRecords =~ /[0-1]/))    { $ArchiveLogRecords=1; }
-	if (! ($Lang =~ /[0-7]/))                 { $Lang=0; }
+	if (! ($Lang =~ /[0-8]/))                 { $Lang=0; }
 	if ($DefaultFile eq "")                   { $DefaultFile="index.html"; }
 	if (! ($WarningMessages =~ /[0-1]/))      { $WarningMesages=1; }
 	if (! ($ShowLinksOnURL =~ /[0-1]/))       { $ShowLinksOnURL=1; }
