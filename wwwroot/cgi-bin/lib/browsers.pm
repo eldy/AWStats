@@ -323,12 +323,17 @@
 
 
 # Browsers example
-# Netscape 4.05		Mozilla/4.05 [fr]C-SYMPA  (Win95; I)
-# Netscape 4.7      Mozilla/4.7 [fr] (Win95; I)
-# Netscape 6.0		Mozilla/5.0 (Macintosh; N; PPC; fr-FR; m18) Gecko/20001108 Netscape6/6.0
-# MSIE     4.0  	Mozilla/4.0 (compatible; MSIE 5.0; Windows 98; DigExt; KITV4 Wanadoo; KITV5 Wanadoo)
+# Netscape	4.05	Mozilla/4.05 [fr]C-SYMPA  (Win95; I)
+# Netscape	4.7     Mozilla/4.7 [fr] (Win95; I)
+# Netscape	6.0		Mozilla/5.0 (Macintosh; N; PPC; fr-FR; m18) Gecko/20001108 Netscape6/6.0
+#
+# Mozilla	1.3		Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.3) Gecko/20030312
+#
+# MSIE		4.0  	Mozilla/4.0 (compatible; MSIE 5.0; Windows 98; DigExt; KITV4 Wanadoo; KITV5 Wanadoo)
+#
+# Opera		6.03	Mozilla/3.0 (Windows 98; U) Opera 6.03  [en]
+# Opera		5.12    Mozilla/3.0 (Windows 98; U) Opera 5.12  [en]
+# Opera		3.21    Opera 3.21, Windows:
+#
 # Autre             Mozilla/3.01 (compatible;)
-# Opera    6.03		Mozilla/3.0 (Windows 98; U) Opera 6.03  [en]
-# Opera    5.12     Mozilla/3.0 (Windows 98; U) Opera 5.12  [en]
-# Opera    3.21     Opera 3.21, Windows:
 
