@@ -20,7 +20,7 @@ use Socket;
 #-----------------------------------------------------------------------------
 use vars qw/ $REVISION $VERSION /;
 $REVISION='$Revision$'; $REVISION =~ /\s(.*)\s/; $REVISION=$1;
-$VERSION="5.4 (build $REVISION)";
+$VERSION="5.5 (build $REVISION)";
 
 # ---------- Init variables -------
 # Constants
@@ -74,6 +74,7 @@ use vars qw/
 $DNSStaticCacheFile
 $DNSLastUpdateCacheFile
 $Lang
+$LogScreenSizeUrl
 $MaxRowsInHTMLOutput
 $BarImageVertical_v
 $BarImageVertical_u
@@ -89,6 +90,7 @@ $BarImageHorizontal_k
 $DNSStaticCacheFile='dnscache.txt';
 $DNSLastUpdateCacheFile='dnscachelastupdate.txt';
 $Lang='auto';
+$LogScreenSizeUrl='logscreensizeurl';
 $MaxRowsInHTMLOutput = 1000;
 $BarImageVertical_v   = 'vv.png';
 #$BarImageHorizontal_v = 'hv.png';
@@ -107,8 +109,8 @@ use vars qw/
 $EnableLockForUpdate $DNSLookup $AllowAccessFromWebToAuthenticatedUsersOnly
 $BarHeight $BarWidth $CreateDirDataIfNotExists $KeepBackupOfHistoricFiles $MaxLengthOfURL
 $MaxNbOfDomain $MaxNbOfHostsShown $MaxNbOfKeyphrasesShown $MaxNbOfKeywordsShown
-$MaxNbOfLoginShown $MaxNbOfPageShown $MaxNbOfRefererShown $MaxNbOfRobotShown $MaxNbOfEMailsShown
-$NbOfLinesRead $NbOfLinesDropped $NbOfLinesCorrupted $NbOfOldLines $NbOfNewLines
+$MaxNbOfLoginShown $MaxNbOfPageShown $MaxNbOfRefererShown $MaxNbOfRobotShown $MaxNbOfWormsShown 
+$MaxNbOfEMailsShown $NbOfLinesRead $NbOfLinesDropped $NbOfLinesCorrupted $NbOfOldLines $NbOfNewLines
 $NbOfLinesShowsteps $NewLinePhase $NbOfLinesForCorruptedLog $PurgeLogFile
 $ShowAuthenticatedUsers $ShowFileSizesStats
 $ShowDropped $ShowCorrupted $ShowUnknownOrigin $ShowLinksToWhoIs
@@ -120,8 +122,8 @@ $UseFramesWhenCGI $DecodeUA
 ($EnableLockForUpdate, $DNSLookup, $AllowAccessFromWebToAuthenticatedUsersOnly,
 $BarHeight, $BarWidth, $CreateDirDataIfNotExists, $KeepBackupOfHistoricFiles, $MaxLengthOfURL,
 $MaxNbOfDomain, $MaxNbOfHostsShown, $MaxNbOfKeyphrasesShown, $MaxNbOfKeywordsShown,
-$MaxNbOfLoginShown, $MaxNbOfPageShown, $MaxNbOfRefererShown, $MaxNbOfRobotShown, $MaxNbOfEMailsShown,
-$NbOfLinesRead, $NbOfLinesDropped, $NbOfLinesCorrupted, $NbOfOldLines, $NbOfNewLines,
+$MaxNbOfLoginShown, $MaxNbOfPageShown, $MaxNbOfRefererShown, $MaxNbOfRobotShown, $MaxNbOfWormsShown,
+$MaxNbOfEMailsShown, $NbOfLinesRead, $NbOfLinesDropped, $NbOfLinesCorrupted, $NbOfOldLines, $NbOfNewLines,
 $NbOfLinesShowsteps, $NewLinePhase, $NbOfLinesForCorruptedLog, $PurgeLogFile,
 $ShowAuthenticatedUsers, $ShowFileSizesStats,
 $ShowDropped, $ShowCorrupted, $ShowUnknownOrigin, $ShowLinksToWhoIs,
@@ -129,35 +131,34 @@ $ShowEMailSenders, $ShowEMailReceivers,
 $AuthenticatedUsersNotCaseSensitive,
 $Expires, $UpdateStats, $MigrateStats, $URLNotCaseSensitive, $URLWithQuery, $URLReferrerWithQuery,
 $UseFramesWhenCGI, $DecodeUA)=
-(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
+(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
 use vars qw/
 $AllowToUpdateStatsFromBrowser $ArchiveLogRecords $DetailedReportsOnNewWindows
 $FirstDayOfWeek $KeyWordsNotSensitive $SaveDatabaseFilesWithPermissionsForEveryone
 $WarningMessages $DebugMessages
 $ShowMenu $ShowMonthDayStats $ShowDaysOfWeekStats
 $ShowHoursStats $ShowDomainsStats $ShowHostsStats
-$ShowRobotsStats $ShowSessionsStats $ShowPagesStats $ShowFileTypesStats
-$ShowBrowsersStats $ShowOSStats $ShowOriginStats
-$ShowKeyphrasesStats $ShowKeywordsStats
-$ShowHTTPErrorsStats
+$ShowRobotsStats $ShowWormsStats $ShowSessionsStats $ShowPagesStats $ShowFileTypesStats
+$ShowOSStats $ShowBrowsersStats $ShowScreenSizeStats $ShowOriginStats
+$ShowKeyphrasesStats $ShowKeywordsStats $ShowHTTPErrorsStats
 $ShowFlagLinks $ShowLinksOnUrl
 $AddDataArrayMonthDayStats $AddDataArrayShowDaysOfWeekStats $AddDataArrayShowHoursStats
 $MinHitFile $MinHitDomain $MinHitHost $MinHitKeyphrase $MinHitKeyword
-$MinHitLogin $MinHitRefer $MinHitRobot $MinHitEMail
+$MinHitLogin $MinHitRefer $MinHitRobot $MinHitWorm $MinHitEMail
 /;
 ($AllowToUpdateStatsFromBrowser, $ArchiveLogRecords, $DetailedReportsOnNewWindows,
 $FirstDayOfWeek, $KeyWordsNotSensitive, $SaveDatabaseFilesWithPermissionsForEveryone,
 $WarningMessages, $DebugMessages,
 $ShowMenu, $ShowMonthDayStats, $ShowDaysOfWeekStats,
 $ShowHoursStats, $ShowDomainsStats, $ShowHostsStats,
-$ShowRobotsStats, $ShowSessionsStats, $ShowPagesStats, $ShowFileTypesStats,
-$ShowBrowsersStats, $ShowOSStats, $ShowOriginStats, $ShowKeyphrasesStats,
-$ShowKeywordsStats,  $ShowHTTPErrorsStats,
+$ShowRobotsStats, $ShowWormsStats, $ShowSessionsStats, $ShowPagesStats, $ShowFileTypesStats,
+$ShowOSStats, $ShowBrowsersStats, $ShowScreenSizeStats, $ShowOriginStats,
+$ShowKeyphrasesStats, $ShowKeywordsStats, $ShowHTTPErrorsStats,
 $ShowFlagLinks, $ShowLinksOnUrl,
 $AddDataArrayMonthDayStats, $AddDataArrayShowDaysOfWeekStats, $AddDataArrayShowHoursStats,
 $MinHitFile, $MinHitDomain, $MinHitHost, $MinHitKeyphrase, $MinHitKeyword,
-$MinHitLogin, $MinHitRefer, $MinHitRobot, $MinHitEMail)=
-(1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1);
+$MinHitLogin, $MinHitRefer, $MinHitRobot, $MinHitWorm, $MinHitEMail)=
+(1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1);
 use vars qw/
 $LevelForRobotsDetection $LevelForBrowsersDetection $LevelForOSDetection $LevelForRefererAnalyze
 $LevelForSearchEnginesDetection $LevelForKeywordsDetection
@@ -287,7 +288,7 @@ use vars qw/
 %_host_p %_host_h %_host_k %_host_l %_host_s %_host_u
 %_waithost_e %_waithost_l %_waithost_s %_waithost_u
 %_keyphrases %_keywords %_os_h %_pagesrefs_p %_pagesrefs_h %_robot_h %_robot_k %_robot_l
-%_login_h %_login_p %_login_k %_login_l
+%_worm_h %_worm_l %_login_h %_login_p %_login_k %_login_l %_screensize_h
 %_se_referrals_p %_se_referrals_h %_sider404_h %_referer404_h %_url_p %_url_k %_url_e %_url_x
 %_unknownreferer_l %_unknownrefererbrowser_l
 %_emails_h %_emails_k %_emails_l %_emailr_h %_emailr_k %_emailr_l
@@ -310,7 +311,7 @@ use vars qw/
 %_host_p = %_host_h = %_host_k = %_host_l = %_host_s = %_host_u = ();
 %_waithost_e = %_waithost_l = %_waithost_s = %_waithost_u = ();
 %_keyphrases = %_keywords = %_os_h = %_pagesrefs_p = %_pagesrefs_h = %_robot_h = %_robot_k = %_robot_l = ();
-%_login_h = %_login_p = %_login_k = %_login_l = ();
+%_worm_h = %_worm_l = %_login_h = %_login_p = %_login_k = %_login_l = %_screensize_h = ();
 %_se_referrals_p = %_se_referrals_h = %_sider404_h = %_referer404_h = %_url_p = %_url_k = %_url_e = %_url_x = ();
 %_unknownreferer_l = %_unknownrefererbrowser_l = ();
 %_emails_h = %_emails_k = %_emails_l = %_emailr_h = %_emailr_k = %_emailr_l = ();
@@ -1083,13 +1084,14 @@ sub Parse_Config {
 			$value =~ s/^\s+//; $value =~ s/\s+$//;
 			$value =~ s/^\"//; $value =~ s/\";?$//;
 			# Replace __MONENV__ with value of environnement variable MONENV
-			while ($value =~ /__(\w+)__/) {
-				my $var=$1;
-				$value =~ s/__${var}__/$ENV{$var}/g;
-			}
+			while ($value =~ /__(\w+)__/) {	my $var=$1;	$value =~ s/__${var}__/$ENV{$var}/g; }
 		}
+		# Initialize parameter for (param,value)
 		# Read main section
-		if ($param =~ /^LogFile/ && $QueryString !~ /logfile=([^\s&]+)/i)	{ $LogFile=$value; next; }
+		if ($param =~ /^LogFile/) {
+			if ($QueryString !~ /logfile=([^\s&]+)/i) { $LogFile=$value; }
+			next;
+			}
 		if ($param =~ /^LogFormat/)            	{ $LogFormat=$value; next; }
 		if ($param =~ /^LogSeparator/)         	{ $LogSeparator=$value; next; }
 		if ($param =~ /^DirData/) 				{ $DirData=$value; next; }
@@ -1098,7 +1100,8 @@ sub Parse_Config {
 		if ($param =~ /^DNSLookup/)             { $DNSLookup=$value; next; }
 		if ($param =~ /^SiteDomain/)			{
 			#$value =~ s/\\\./\./g; $value =~ s/([^\\])\./$1\\\./g; $value =~ s/^\./\\\./;	# SiteDomain is not used in regex. Must not replace . into \.
-			$SiteDomain=$value; next;
+			$SiteDomain=$value;
+			next;
 			}
 		if ($param =~ /^HostAliases/) {
 			$value =~ s/\\\./\./g; $value =~ s/([^\\])\./$1\\\./g; $value =~ s/^\./\\\./;	# Replace . into \.
@@ -1174,7 +1177,7 @@ sub Parse_Config {
 		if ($param =~ /^AuthenticatedUsersNotCaseSensitive$/)		{ $AuthenticatedUsersNotCaseSensitive=$value; next; }
 		if ($param =~ /^URLNotCaseSensitive$/)		{ $URLNotCaseSensitive=$value; next; }
 		if ($param =~ /^URLWithAnchor$/)			{ $URLWithAnchor=$value; next; }
-		if ($param =~ /^URLQuerySeparators$/)		{ $URLQuerySeparators=$value; $URLQuerySeparators =~ s/\s//g; next; }
+		if ($param =~ /^URLQuerySeparators$/)		{ $URLQuerySeparators=$value; next; }
 		if ($param =~ /^URLWithQuery$/)				{ $URLWithQuery=$value; next; }
 		if ($param =~ /^URLWithQueryWithoutFollowingParameters$/)	{
 			foreach my $elem (split(/\s+/,$value))	{ push @URLWithQueryWithoutFollowingParameters,$elem; }
@@ -1188,6 +1191,7 @@ sub Parse_Config {
 		if ($param =~ /^Expires/)               	{ $Expires=$value; next; }
 		if ($param =~ /^WrapperScript/)         	{ $WrapperScript=$value; next; }
 		if ($param =~ /^DecodeUA/)         			{ $DecodeUA=$value; next; }
+		if ($param =~ /^LogScreenSizeUrl/)			{ $LogScreenSizeUrl=$value; next; }
 		# Read optional accuracy setup section
 		if ($param =~ /^LevelForRobotsDetection/)			{ $LevelForRobotsDetection=$value; next; }
 		if ($param =~ /^LevelForBrowsersDetection/)			{ $LevelForBrowsersDetection=$value; next; }
@@ -1215,12 +1219,14 @@ sub Parse_Config {
 		if ($param =~ /^ShowHostsStats/)         { $ShowHostsStats=$value; next; }
 		if ($param =~ /^ShowAuthenticatedUsers/) { $ShowAuthenticatedUsers=$value; next; }
 		if ($param =~ /^ShowRobotsStats/)        { $ShowRobotsStats=$value; next; }
+		if ($param =~ /^ShowWormsStats/)         { $ShowWormsStats=$value; next; }
 		if ($param =~ /^ShowSessionsStats/)      { $ShowSessionsStats=$value; next; }
 		if ($param =~ /^ShowPagesStats/)         { $ShowPagesStats=$value; next; }
 		if ($param =~ /^ShowFileTypesStats/)     { $ShowFileTypesStats=$value; next; }
 		if ($param =~ /^ShowFileSizesStats/)     { $ShowFileSizesStats=$value; next; }
-		if ($param =~ /^ShowBrowsersStats/)      { $ShowBrowsersStats=$value; next; }
 		if ($param =~ /^ShowOSStats/)            { $ShowOSStats=$value; next; }
+		if ($param =~ /^ShowBrowsersStats/)      { $ShowBrowsersStats=$value; next; }
+		if ($param =~ /^ShowScreenSizeStats/)    { $ShowScreenSizeStats=$value; next; }
 		if ($param =~ /^ShowOriginStats/)        { $ShowOriginStats=$value; next; }
 		if ($param =~ /^ShowKeyphrasesStats/)    { $ShowKeyphrasesStats=$value; next; }
 		if ($param =~ /^ShowKeywordsStats/)      { $ShowKeywordsStats=$value; next; }
@@ -1235,6 +1241,7 @@ sub Parse_Config {
 		if ($param =~ /^MaxNbOfHostsShown/)     { $MaxNbOfHostsShown=$value; next; }
 		if ($param =~ /^MinHitHost/)            { $MinHitHost=$value; next; }
 		if ($param =~ /^MaxNbOfRobotShown/)     { $MaxNbOfRobotShown=$value; next; }
+		if ($param =~ /^MaxNbOfWormsShown/)     { $MaxNbOfWormsShown=$value; next; }
 		if ($param =~ /^MinHitRobot/)           { $MinHitRobot=$value; next; }
 		if ($param =~ /^MaxNbOfLoginShown/)     { $MaxNbOfLoginShown=$value; next; }
 		if ($param =~ /^MinHitLogin/)           { $MinHitLogin=$value; next; }
@@ -1499,10 +1506,11 @@ sub Check_Config {
 	if ($PurgeLogFile !~ /[0-1]/)                 	{ $PurgeLogFile=0; }
 	if ($ArchiveLogRecords !~ /[0-1]/)            	{ $ArchiveLogRecords=1; }
 	if ($KeepBackupOfHistoricFiles !~ /[0-1]/)     	{ $KeepBackupOfHistoricFiles=0; }
-	if (! $DefaultFile[0])                          { $DefaultFile[0]="index.html"; }
+	if (! $DefaultFile[0])                          { $DefaultFile[0]='index.html'; }
 	if ($AuthenticatedUsersNotCaseSensitive !~ /[0-1]/)       { $AuthenticatedUsersNotCaseSensitive=0; }
 	if ($URLNotCaseSensitive !~ /[0-1]/)           	{ $URLNotCaseSensitive=0; }
 	if ($URLWithAnchor !~ /[0-1]/)                 	{ $URLWithAnchor=0; }
+	$URLQuerySeparators =~ s/\s//g; 
 	if (! $URLQuerySeparators)                 		{ $URLQuerySeparators='?;'; }
 	if ($URLWithQuery !~ /[0-1]/)                 	{ $URLWithQuery=0; }
 	if ($URLReferrerWithQuery !~ /[0-1]/)          	{ $URLReferrerWithQuery=0; }
@@ -1511,6 +1519,7 @@ sub Check_Config {
 	if ($NbOfLinesForCorruptedLog !~ /^\d+/ || $NbOfLinesForCorruptedLog<1)	{ $NbOfLinesForCorruptedLog=50; }
 	if ($Expires !~ /^\d+/)                 		{ $Expires=0; }
 	if ($DecodeUA !~ /[0-1]/)						{ $DecodeUA=0; }
+	if (! $LogScreenSizeUrl)						{ $LogScreenSizeUrl='logscreensizeurl'; }
 	# Optional accuracy setup section
 	if ($LevelForRobotsDetection !~ /^\d+/)       	{ $LevelForRobotsDetection=2; }
 	if ($LevelForBrowsersDetection !~ /^\d+/)     	{ $LevelForBrowsersDetection=2; }
@@ -1535,14 +1544,16 @@ sub Check_Config {
 	if ($ShowHostsStats !~ /[01PHBL]/)             	{ $ShowHostsStats='PHBL'; }
 	if ($ShowAuthenticatedUsers !~ /[01PHBL]/)     	{ $ShowAuthenticatedUsers=0; }
 	if ($ShowRobotsStats !~ /[01HBL]/)            	{ $ShowRobotsStats='HBL'; }
+	if ($ShowWormsStats !~ /[01HL]/)            	{ $ShowWormsStats='HL'; }
 	if ($ShowEMailSenders !~ /[01HBML]/)       		{ $ShowEMailSenders=0; }
 	if ($ShowEMailReceivers !~ /[01HBML]/)         	{ $ShowEMailReceivers=0; }
 	if ($ShowSessionsStats !~ /[0-1]/)             	{ $ShowSessionsStats=1; }
 	if ($ShowPagesStats !~ /[01PBEX]/i)           	{ $ShowPagesStats='PBEX'; }
 	if ($ShowFileTypesStats !~ /[01HBC]/)         	{ $ShowFileTypesStats='HB'; }
 	if ($ShowFileSizesStats !~ /[0-1]/)           	{ $ShowFileSizesStats=1; }
-	if ($ShowBrowsersStats !~ /[0-1]/)            	{ $ShowBrowsersStats=1; }
 	if ($ShowOSStats !~ /[0-1]/)                  	{ $ShowOSStats=1; }
+	if ($ShowBrowsersStats !~ /[0-1]/)            	{ $ShowBrowsersStats=1; }
+	if ($ShowScreenSizeStats !~ /[0-1]/)           	{ $ShowScreenSizeStats=1; }
 	if ($ShowOriginStats !~ /[01PH]/)              	{ $ShowOriginStats='PH'; }
 	if ($ShowKeyphrasesStats !~ /[0-1]/)          	{ $ShowKeyphrasesStats=1; }
 	if ($ShowKeywordsStats !~ /[0-1]/)            	{ $ShowKeywordsStats=1; }
@@ -1558,6 +1569,8 @@ sub Check_Config {
 	if ($MinHitLogin !~ /^\d+$/ || $MinHitLogin<1)  		           	 { $MinHitLogin=1; }
 	if ($MaxNbOfRobotShown !~ /^\d+$/ || $MaxNbOfRobotShown<1)       	 { $MaxNbOfRobotShown=10; }
 	if ($MinHitRobot !~ /^\d+$/ || $MinHitRobot<1)           	  		 { $MinHitRobot=1; }
+	if ($MaxNbOfWormsShown !~ /^\d+$/ || $MaxNbOfWormsShown<1)       	 { $MaxNbOfWormsShown=10; }
+	if ($MinHitWorm !~ /^\d+$/ || $MinHitWorm<1)           	  		 	 { $MinHitWorm=1; }
 	if ($MaxNbOfPageShown !~ /^\d+$/ || $MaxNbOfPageShown<1)	         { $MaxNbOfPageShown=20; }
 	if ($MinHitFile !~ /^\d+$/ || $MinHitFile<1)              			 { $MinHitFile=1; }
 	if ($MaxNbOfRefererShown !~ /^\d+$/ || $MaxNbOfRefererShown<1)    	 { $MaxNbOfRefererShown=10; }
@@ -1611,6 +1624,7 @@ sub Check_Config {
 	if ($ShowEMailReceivers eq '1')     { $ShowEMailReceivers = 'HBML'; }
 	if ($ShowAuthenticatedUsers eq '1') { $ShowAuthenticatedUsers = 'PHBL'; }
 	if ($ShowRobotsStats eq '1') 		{ $ShowRobotsStats = 'HBL'; }
+	if ($ShowWormsStats eq '1') 		{ $ShowWormsStats = 'HL'; }
 	if ($ShowPagesStats eq '1') 		{ $ShowPagesStats = 'PBEX'; }
 	if ($ShowFileTypesStats eq '1') 	{ $ShowFileTypesStats = 'HB'; }
 	if ($ShowOriginStats eq '1') 		{ $ShowOriginStats = 'PH'; }
@@ -1808,13 +1822,13 @@ sub Read_History_With_TmpUpdate {
 	my $lastlinechecksum=shift||'';
 
 	my %allsections=('general'=>1,'time'=>2,'visitor'=>3,'day'=>4,
-					 'domain'=>5,'login'=>6,'robot'=>7,'emailsender'=>8,'emailreceiver'=>9,
-					 'session'=>10,'sider'=>11,'filetypes'=>12,
-					 'browser'=>13,'os'=>14,'unknownreferer'=>15,'unknownrefererbrowser'=>16,
-					 'origin'=>17,'sereferrals'=>18,'pagerefs'=>19,
-					 'searchwords'=>20,'keywords'=>21,
-					 'errors'=>22);
-	my $order=23;
+					 'domain'=>5,'login'=>6,'robot'=>7,'worms'=>8,'emailsender'=>9,'emailreceiver'=>10,
+					 'session'=>11,'sider'=>12,'filetypes'=>13,
+					 'os'=>14,'browser'=>15,'screensize'=>16,'unknownreferer'=>17,'unknownrefererbrowser'=>18,
+					 'origin'=>19,'sereferrals'=>20,'pagerefs'=>21,
+					 'searchwords'=>22,'keywords'=>23,
+					 'errors'=>24);
+	my $order=25;
 	foreach my $code (keys %TrapInfosForHTTPErrorCodes) { $allsections{"sider_$code"}=$order++; }
 	foreach my $extranum (1..@ExtraName-1) { $allsections{"extra_$extranum"}=$order++; }
 
@@ -1840,14 +1854,16 @@ sub Read_History_With_TmpUpdate {
 		if ($UpdateStats || $MigrateStats || ($HTMLOutput{'main'} && $ShowDomainsStats) || $HTMLOutput{'alldomains'}) { $SectionsToLoad{'domain'}=$order++; }
 		if ($UpdateStats || $MigrateStats || ($HTMLOutput{'main'} && $ShowAuthenticatedUsers) || $HTMLOutput{'alllogins'} || $HTMLOutput{'lastlogins'}) { $SectionsToLoad{'login'}=$order++; }
 		if ($UpdateStats || $MigrateStats || ($HTMLOutput{'main'} && $ShowRobotsStats) || $HTMLOutput{'allrobots'} || $HTMLOutput{'lastrobots'}) { $SectionsToLoad{'robot'}=$order++; }
+		if ($UpdateStats || $MigrateStats || ($HTMLOutput{'main'} && $ShowWormsStats) || $HTMLOutput{'allworms'} || $HTMLOutput{'lastworms'}) { $SectionsToLoad{'worms'}=$order++; }
 		if ($UpdateStats || $MigrateStats || ($HTMLOutput{'main'} && $ShowEMailSenders) || $HTMLOutput{'allemails'} || $HTMLOutput{'lastemails'}) { $SectionsToLoad{'emailsender'}=$order++; }
 		if ($UpdateStats || $MigrateStats || ($HTMLOutput{'main'} && $ShowEMailReceivers) || $HTMLOutput{'allemailr'} || $HTMLOutput{'lastemailr'}) { $SectionsToLoad{'emailreceiver'}=$order++; }
 		# Navigation
 		if ($UpdateStats || $MigrateStats || ($HTMLOutput{'main'} && $ShowSessionsStats) || $HTMLOutput{'sessions'}) { $SectionsToLoad{'session'}=$order++; }
 		if ($UpdateStats || $MigrateStats || ($HTMLOutput{'main'} && $ShowPagesStats) || $HTMLOutput{'urldetail'} || $HTMLOutput{'urlentry'} || $HTMLOutput{'urlexit'}) { $SectionsToLoad{'sider'}=$order++; }
 		if ($UpdateStats || $MigrateStats || ($HTMLOutput{'main'} && $ShowFileTypesStats) || $HTMLOutput{'filetypes'}) { $SectionsToLoad{'filetypes'}=$order++; }
-		if ($UpdateStats || $MigrateStats || ($HTMLOutput{'main'} && $ShowBrowsersStats) || $HTMLOutput{'browserdetail'}) { $SectionsToLoad{'browser'}=$order++; }
 		if ($UpdateStats || $MigrateStats || ($HTMLOutput{'main'} && $ShowOSStats) || $HTMLOutput{'os'}) { $SectionsToLoad{'os'}=$order++; }
+		if ($UpdateStats || $MigrateStats || ($HTMLOutput{'main'} && $ShowBrowsersStats) || $HTMLOutput{'browserdetail'}) { $SectionsToLoad{'browser'}=$order++; }
+		if ($UpdateStats || $MigrateStats || ($HTMLOutput{'main'} && $ShowScreenSizeStats)) { $SectionsToLoad{'screensize'}=$order++; }
 		if ($UpdateStats || $MigrateStats || $HTMLOutput{'unknownos'})      { $SectionsToLoad{'unknownreferer'}=$order++; }
 		if ($UpdateStats || $MigrateStats || $HTMLOutput{'unknownbrowser'}) { $SectionsToLoad{'unknownrefererbrowser'}=$order++; }
 		# Referers
@@ -2350,36 +2366,6 @@ sub Read_History_With_TmpUpdate {
 				if (! scalar %SectionsToLoad) { debug(" Stop reading history file. Got all we need."); last; }
 				next;
 			}
-			# BEGIN_BROWSER
-			if ($field[0] eq 'BEGIN_BROWSER')   {
-				if ($Debug) { debug(" Begin of BROWSER section"); }
-				$_=<HISTORY>;
-				chomp $_; s/\r//;
-				if (! $_) { error("History file \"$filetoread\" is corrupted (in section BROWSER). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost).","","",1); }
-				my @field=split(/\s+/,$_); $countlines++;
-				my $count=0;my $countloaded=0;
-				while ($field[0] ne 'END_BROWSER') {
-					if ($field[0]) {
-						$count++;
-						if ($SectionsToLoad{'browser'}) {
-							$countloaded++;
-							if ($field[1]) { $_browser_h{$field[0]}+=$field[1]; }
-						}
-					}
-					$_=<HISTORY>;
-					chomp $_; s/\r//;
-					if (! $_) { error("History file \"$filetoread\" is corrupted (in section BROWSER). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost).","","",1); }
-					@field=split(/\s+/,$_); $countlines++;
-				}
-				if ($Debug) { debug(" End of BROWSER section ($count entries, $countloaded loaded)"); }
-				delete $SectionsToLoad{'browser'};
-				if ($SectionsToSave{'browser'}) {
-					Save_History('browser',$year,$month); delete $SectionsToSave{'browser'};
-					if ($withpurge) { %_browser_h=(); }
-				}
-				if (! scalar %SectionsToLoad) { debug(" Stop reading history file. Got all we need."); last; }
-				next;
-			}
 			# BEGIN_OS
 			if ($field[0] eq 'BEGIN_OS')   {
 				if ($Debug) { debug(" Begin of OS section"); }
@@ -2406,6 +2392,36 @@ sub Read_History_With_TmpUpdate {
 				if ($SectionsToSave{'os'}) {
 					Save_History('os',$year,$month); delete $SectionsToSave{'os'};
 					if ($withpurge) { %_os_h=(); }
+				}
+				if (! scalar %SectionsToLoad) { debug(" Stop reading history file. Got all we need."); last; }
+				next;
+			}
+			# BEGIN_BROWSER
+			if ($field[0] eq 'BEGIN_BROWSER')   {
+				if ($Debug) { debug(" Begin of BROWSER section"); }
+				$_=<HISTORY>;
+				chomp $_; s/\r//;
+				if (! $_) { error("History file \"$filetoread\" is corrupted (in section BROWSER). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost).","","",1); }
+				my @field=split(/\s+/,$_); $countlines++;
+				my $count=0;my $countloaded=0;
+				while ($field[0] ne 'END_BROWSER') {
+					if ($field[0]) {
+						$count++;
+						if ($SectionsToLoad{'browser'}) {
+							$countloaded++;
+							if ($field[1]) { $_browser_h{$field[0]}+=$field[1]; }
+						}
+					}
+					$_=<HISTORY>;
+					chomp $_; s/\r//;
+					if (! $_) { error("History file \"$filetoread\" is corrupted (in section BROWSER). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost).","","",1); }
+					@field=split(/\s+/,$_); $countlines++;
+				}
+				if ($Debug) { debug(" End of BROWSER section ($count entries, $countloaded loaded)"); }
+				delete $SectionsToLoad{'browser'};
+				if ($SectionsToSave{'browser'}) {
+					Save_History('browser',$year,$month); delete $SectionsToSave{'browser'};
+					if ($withpurge) { %_browser_h=(); }
 				}
 				if (! scalar %SectionsToLoad) { debug(" Stop reading history file. Got all we need."); last; }
 				next;
@@ -2466,6 +2482,36 @@ sub Read_History_With_TmpUpdate {
 				if ($SectionsToSave{'unknownrefererbrowser'}) {
 					Save_History('unknownrefererbrowser',$year,$month); delete $SectionsToSave{'unknownrefererbrowser'};
 					if ($withpurge) { %_unknownrefererbrowser_l=(); }
+				}
+				if (! scalar %SectionsToLoad) { debug(" Stop reading history file. Got all we need."); last; }
+				next;
+			}
+			# BEGIN_SCREENSIZE
+			if ($field[0] eq 'BEGIN_SCREENSIZE')   {
+				if ($Debug) { debug(" Begin of SCREENSIZE section"); }
+				$_=<HISTORY>;
+				chomp $_; s/\r//;
+				if (! $_) { error("History file \"$filetoread\" is corrupted (in section SCREENSIZE). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost).","","",1); }
+				my @field=split(/\s+/,$_); $countlines++;
+				my $count=0;my $countloaded=0;
+				while ($field[0] ne 'END_SCREENSIZE') {
+					if ($field[0]) {
+						$count++;
+						if ($SectionsToLoad{'screensize'}) {
+							$countloaded++;
+							if ($field[1]) { $_screensize_h{$field[0]}+=$field[1]; }
+						}
+					}
+					$_=<HISTORY>;
+					chomp $_; s/\r//;
+					if (! $_) { error("History file \"$filetoread\" is corrupted (in section SCREENSIZE). Last line read is number $countlines.\nCorrect the line, restore a recent backup of this file, or remove it (data for this month will be lost).","","",1); }
+					@field=split(/\s+/,$_); $countlines++;
+				}
+				if ($Debug) { debug(" End of SCREENSIZE section ($count entries, $countloaded loaded)"); }
+				delete $SectionsToLoad{'screensize'};
+				if ($SectionsToSave{'screensize'}) {
+					Save_History('screensize',$year,$month); delete $SectionsToSave{'screensize'};
+					if ($withpurge) { %_screensize_h=(); }
 				}
 				if (! scalar %SectionsToLoad) { debug(" Stop reading history file. Got all we need."); last; }
 				next;
@@ -3056,7 +3102,7 @@ sub Save_History {
 		print HISTORYTMP "# for direct I/O access. If you made changes somewhere in this file, you\n";
 		print HISTORYTMP "# should also remove completely the MAP section (AWStats will rewrite it\n";
 		print HISTORYTMP "# at next update).\n";
-		print HISTORYTMP "BEGIN_MAP ".(22+(scalar keys %TrapInfosForHTTPErrorCodes)+(scalar @ExtraName?scalar @ExtraName-1:0))."\n";
+		print HISTORYTMP "BEGIN_MAP ".(24+(scalar keys %TrapInfosForHTTPErrorCodes)+(scalar @ExtraName?scalar @ExtraName-1:0))."\n";
 		print HISTORYTMP "POS_GENERAL ";$PosInFile{"general"}=tell HISTORYTMP;print HISTORYTMP "$spacebar\n";
 		# When
 		print HISTORYTMP "POS_TIME ";$PosInFile{"time"}=tell HISTORYTMP;print HISTORYTMP "$spacebar\n";
@@ -3066,14 +3112,16 @@ sub Save_History {
 		print HISTORYTMP "POS_DOMAIN ";$PosInFile{"domain"}=tell HISTORYTMP;print HISTORYTMP "$spacebar\n";
 		print HISTORYTMP "POS_LOGIN ";$PosInFile{"login"}=tell HISTORYTMP;print HISTORYTMP "$spacebar\n";
 		print HISTORYTMP "POS_ROBOT ";$PosInFile{"robot"}=tell HISTORYTMP;print HISTORYTMP "$spacebar\n";
+		print HISTORYTMP "POS_WORMS ";$PosInFile{"worms"}=tell HISTORYTMP;print HISTORYTMP "$spacebar\n";
 		print HISTORYTMP "POS_EMAILSENDER ";$PosInFile{"emailsender"}=tell HISTORYTMP;print HISTORYTMP "$spacebar\n";
 		print HISTORYTMP "POS_EMAILRECEIVER ";$PosInFile{"emailreceiver"}=tell HISTORYTMP;print HISTORYTMP "$spacebar\n";
 		# Navigation
 		print HISTORYTMP "POS_SESSION ";$PosInFile{"session"}=tell HISTORYTMP;print HISTORYTMP "$spacebar\n";
 		print HISTORYTMP "POS_SIDER ";$PosInFile{"sider"}=tell HISTORYTMP;print HISTORYTMP "$spacebar\n";
 		print HISTORYTMP "POS_FILETYPES ";$PosInFile{"filetypes"}=tell HISTORYTMP;print HISTORYTMP "$spacebar\n";
-		print HISTORYTMP "POS_BROWSER ";$PosInFile{"browser"}=tell HISTORYTMP;print HISTORYTMP "$spacebar\n";
 		print HISTORYTMP "POS_OS ";$PosInFile{"os"}=tell HISTORYTMP;print HISTORYTMP "$spacebar\n";
+		print HISTORYTMP "POS_BROWSER ";$PosInFile{"browser"}=tell HISTORYTMP;print HISTORYTMP "$spacebar\n";
+		print HISTORYTMP "POS_SCREENSIZE ";$PosInFile{"screensize"}=tell HISTORYTMP;print HISTORYTMP "$spacebar\n";
 		print HISTORYTMP "POS_UNKNOWNREFERER ";$PosInFile{'unknownreferer'}=tell HISTORYTMP;print HISTORYTMP "$spacebar\n";
 		print HISTORYTMP "POS_UNKNOWNREFERERBROWSER ";$PosInFile{'unknownrefererbrowser'}=tell HISTORYTMP;print HISTORYTMP "$spacebar\n";
 		# Referers
@@ -3267,7 +3315,7 @@ sub Save_History {
 		$ValueInFile{$sectiontosave}=tell HISTORYTMP;
 		print HISTORYTMP "BEGIN_ROBOT ".(scalar keys %_robot_h)."\n";
 		# We save robot list in score sorted order to get a -output faster and with less use of memory.
-		&BuildKeyList($MaxNbOfLoginShown,$MinHitLogin,\%_robot_h,\%_robot_h);
+		&BuildKeyList($MaxNbOfRobotShown,$MinHitRobot,\%_robot_h,\%_robot_h);
 		my %keysinkeylist=();
 		foreach my $key (@keylist) {
 			$keysinkeylist{$key}=1;
@@ -3278,6 +3326,25 @@ sub Save_History {
 			print HISTORYTMP "$key ".int($_robot_h{$key})." ".int($_robot_k{$key})." $_robot_l{$key}\n";
 		}
 		print HISTORYTMP "END_ROBOT\n";
+	}
+	if ($sectiontosave eq 'worms') {
+		print HISTORYTMP "\n";
+		print HISTORYTMP "# Worm ID - Hits - Last visit\n";
+		print HISTORYTMP "# The $MaxNbOfWormsShown first Hits must be first (order not required for others)\n";
+		$ValueInFile{$sectiontosave}=tell HISTORYTMP;
+		print HISTORYTMP "BEGIN_WORMS ".(scalar keys %_worm_h)."\n";
+		# We save robot list in score sorted order to get a -output faster and with less use of memory.
+		&BuildKeyList($MaxNbOfWormsShown,$MinHitWorm,\%_worm_h,\%_worm_h);
+		my %keysinkeylist=();
+		foreach my $key (@keylist) {
+			$keysinkeylist{$key}=1;
+			print HISTORYTMP "$key ".int($_worm_h{$key})." $_worm_l{$key}\n";
+		}
+		foreach my $key (keys %_worm_h) {
+			if ($keysinkeylist{$key}) { next; }
+			print HISTORYTMP "$key ".int($_worm_h{$key})." $_worm_l{$key}\n";
+		}
+		print HISTORYTMP "END_WORMS\n";
 	}
 	if ($sectiontosave eq 'emailsender') {
 		print HISTORYTMP "\n";
@@ -3364,6 +3431,14 @@ sub Save_History {
 		}
 		print HISTORYTMP "END_FILETYPES\n";
 	}
+	if ($sectiontosave eq 'os') {
+		print HISTORYTMP "\n";
+		print HISTORYTMP "# OS ID - Hits\n";
+		$ValueInFile{$sectiontosave}=tell HISTORYTMP;
+		print HISTORYTMP "BEGIN_OS ".(scalar keys %_os_h)."\n";
+		foreach my $key (keys %_os_h) { print HISTORYTMP "$key $_os_h{$key}\n"; }
+		print HISTORYTMP "END_OS\n";
+	}
 	if ($sectiontosave eq 'browser') {
 		print HISTORYTMP "\n";
 		print HISTORYTMP "# Browser ID - Hits\n";
@@ -3372,13 +3447,13 @@ sub Save_History {
 		foreach my $key (keys %_browser_h) { print HISTORYTMP "$key $_browser_h{$key}\n"; }
 		print HISTORYTMP "END_BROWSER\n";
 	}
-	if ($sectiontosave eq 'os') {
+	if ($sectiontosave eq 'screensize') {
 		print HISTORYTMP "\n";
-		print HISTORYTMP "# OS ID - Hits\n";
+		print HISTORYTMP "# Screen size - Hits\n";
 		$ValueInFile{$sectiontosave}=tell HISTORYTMP;
-		print HISTORYTMP "BEGIN_OS ".(scalar keys %_os_h)."\n";
-		foreach my $key (keys %_os_h) { print HISTORYTMP "$key $_os_h{$key}\n"; }
-		print HISTORYTMP "END_OS\n";
+		print HISTORYTMP "BEGIN_SCREENSIZE ".(scalar keys %_screensize_h)."\n";
+		foreach my $key (keys %_screensize_h) { print HISTORYTMP "$key $_screensize_h{$key}\n"; }
+		print HISTORYTMP "END_SCREENSIZE\n";
 	}
 
 	# Referer
@@ -3748,7 +3823,7 @@ sub Init_HashArray {
 	%_host_p = %_host_h = %_host_k = %_host_l = %_host_s = %_host_u = ();
 	%_waithost_e = %_waithost_l = %_waithost_s = %_waithost_u = ();
 	%_keyphrases = %_keywords = %_os_h = %_pagesrefs_p = %_pagesrefs_h = %_robot_h = %_robot_k = %_robot_l = ();
-	%_login_p = %_login_h = %_login_k = %_login_l = ();
+	%_worm_h = %_worm_l = %_login_p = %_login_h = %_login_k = %_login_l = %_screensize_h = ();
 	%_se_referrals_p = %_se_referrals_h = %_sider404_h = %_referer404_h = %_url_p = %_url_k = %_url_e = %_url_x = ();
 	%_unknownreferer_l = %_unknownrefererbrowser_l = ();
 	%_emails_h = %_emails_k = %_emails_l = %_emailr_h = %_emailr_k = %_emailr_l = ();
@@ -5179,6 +5254,10 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 
 		# Convert $field[$pos_size]
 		# if ($field[$pos_size] eq '-') { $field[$pos_size]=0; }
+
+		# Check screen size
+		#------------------
+		if ($field[$pos_url] =~ /$LogScreenSizeUrl#w=(\d+)&h=(\d+)/) { $_screensize_h{"$1x$2"}++; next; }
 		
 		# Check return status code
 		#-------------------------
@@ -6147,7 +6226,7 @@ if (scalar keys %HTMLOutput) {
 			if ($ShowHoursStats)		 { print ($frame?"<tr><td class=AWL>":""); print "<a href=\"$linkanchor#HOUR\"$targetpage>$Message[20]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
 			if ($linetitle) { print ($frame?"":"</td></tr>\n"); }
 			# Who
-			$linetitle=&AtLeastOneNotNull($ShowDomainsStats,$ShowHostsStats,$ShowAuthenticatedUsers,$ShowEMailSenders,$ShowEMailReceivers,$ShowRobotsStats);
+			$linetitle=&AtLeastOneNotNull($ShowDomainsStats,$ShowHostsStats,$ShowAuthenticatedUsers,$ShowEMailSenders,$ShowEMailReceivers,$ShowRobotsStats,$ShowWormsStats);
 			if ($linetitle) { print "<tr><th class=AWL>$Message[92]: </th>\n"; }
 			if ($linetitle) { print ($frame?"</tr>\n":"<td class=AWL>"); }
 			if ($ShowDomainsStats)		 { print ($frame?"<tr><td class=AWL>":""); print "<a href=\"$linkanchor#DOMAINS\"$targetpage>$Message[17]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
@@ -6168,9 +6247,12 @@ if (scalar keys %HTMLOutput) {
 			if ($ShowRobotsStats)		 { print ($frame?"<tr><td class=AWL>":""); print "<a href=\"$linkanchor#ROBOTS\"$targetpage>$Message[53]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
 			if ($ShowRobotsStats) 		 { print ($frame?"<tr><td class=AWL> &nbsp; <img height=8 width=9 src=\"$DirIcons/other/page.png\" alt=\"...\"> ":""); print "<a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=allrobots":"$PROG$StaticLinks.allrobots.html")."\"$NewLinkTarget>$Message[80]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
 			if ($ShowRobotsStats =~ /L/i)	{ print ($frame?"<tr><td class=AWL> &nbsp; <img height=8 width=9 src=\"$DirIcons/other/page.png\" alt=\"...\"> ":""); print "<a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=lastrobots":"$PROG$StaticLinks.lastrobots.html")."\"$NewLinkTarget>$Message[9]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
+			if ($ShowWormsStats)		 { print ($frame?"<tr><td class=AWL>":""); print "<a href=\"$linkanchor#WORMS\"$targetpage>$Message[136]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
+			if ($ShowWormsStats) 		 { print ($frame?"<tr><td class=AWL> &nbsp; <img height=8 width=9 src=\"$DirIcons/other/page.png\" alt=\"...\"> ":""); print "<a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=allworms":"$PROG$StaticLinks.allworms.html")."\"$NewLinkTarget>$Message[80]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
+			if ($ShowWormsStats =~ /L/i)	{ print ($frame?"<tr><td class=AWL> &nbsp; <img height=8 width=9 src=\"$DirIcons/other/page.png\" alt=\"...\"> ":""); print "<a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=lastworms":"$PROG$StaticLinks.lastworms.html")."\"$NewLinkTarget>$Message[9]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
 			if ($linetitle) { print ($frame?"":"</td></tr>\n"); }
 			# Navigation
-			$linetitle=&AtLeastOneNotNull($ShowSessionsStats,$ShowPagesStats,$ShowFileTypesStats,$ShowFileSizesStats,$ShowOSStats+$ShowBrowsersStats);
+			$linetitle=&AtLeastOneNotNull($ShowSessionsStats,$ShowPagesStats,$ShowFileTypesStats,$ShowFileSizesStats,$ShowOSStats,$ShowBrowsersStats,$ShowScreenSizeStats);
 			if ($linetitle) { print "<tr><th class=AWL>$Message[72]: </th>\n"; }
 			if ($linetitle) { print ($frame?"</tr>\n":"<td class=AWL>"); }
 			if ($ShowSessionsStats)		 { print ($frame?"<tr><td class=AWL>":""); print "<a href=\"$linkanchor#SESSIONS\"$targetpage>$Message[117]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
@@ -6185,6 +6267,7 @@ if (scalar keys %HTMLOutput) {
 			if ($ShowBrowsersStats)		 { print ($frame?"<tr><td class=AWL>":""); print "<a href=\"$linkanchor#BROWSER\"$targetpage>$Message[21]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
 			if ($ShowBrowsersStats)		 { print ($frame?"<tr><td class=AWL> &nbsp; <img height=8 width=9 src=\"$DirIcons/other/page.png\" alt=\"...\"> ":""); print "<a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=browserdetail":"$PROG$StaticLinks.browserdetail.html")."\"$NewLinkTarget>$Message[58]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
 			if ($ShowBrowsersStats && $FrameName eq 'mainleft')	{ print ($frame?"<tr><td class=AWL> &nbsp; <img height=8 width=9 src=\"$DirIcons/other/page.png\" alt=\"...\"> ":""); print "<a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?"$AWScript?${NewLinkParams}output=unknownbrowser":"$PROG$StaticLinks.unknownbrowser.html")."\"$NewLinkTarget>$Message[0]</a>\n"; print ($frame?"</td></tr>\n":" &nbsp; "); }
+			if ($ShowScreenSizeStats)	 { print ($frame?"<tr><td class=AWL>":""); print "<a href=\"$linkanchor#SCREENSIZE\"$targetpage>$Message[135]</a>"; print ($frame?"</td></tr>\n":" &nbsp; "); }
 			if ($linetitle) { print ($frame?"":"</td></tr>\n"); }
 			# Referers
 			$linetitle=&AtLeastOneNotNull($ShowOriginStats,$ShowKeyphrasesStats,$ShowKeywordsStats);
@@ -8295,6 +8378,36 @@ if (scalar keys %HTMLOutput) {
 			&tab_end;
 		}
 	
+		# BY SCREEN SIZE
+		#----------------------------
+		if ($ShowScreenSizeStats) {
+			if ($Debug) { debug("ShowScreenSizeStats",2); }
+			print "$Center<a name=\"SCREENSIZE\">&nbsp;</a><BR>\n";
+			my $Totalh=0; foreach my $key (keys %_screensize_h) { $Totalh+=$_screensize_h{$key}; }
+			my $title="$Message[135]";
+			&tab_head("$title",19);
+			print "<TR bgcolor=\"#$color_TableBGRowTitle\"><TH>$Message[135]</TH><TH bgcolor=\"#$color_h\" width=80>$Message[15]</TH></TR>\n";
+			my $count=0;
+			&BuildKeyList($MaxRowsInHTMLOutput,1,\%_screensize_h,\%_screensize_h);
+			foreach my $key (@keylist) {
+				my $p='&nbsp;';
+				if ($Totalh) { $p=int($_screensize_h{$key}/$Totalh*1000)/10; $p="$p %"; }
+				print "<TR>";
+				if ($key eq 'Unknown') {
+					print "<TD CLASS=AWL><font color=\"#$color_other\">$Message[0]</font></TD>";
+					print "<TD>$p</TD>";
+					}
+				else {
+					my $screensize=$key;
+					print "<TD CLASS=AWL>$screensize</TD>";
+					print "<TD>$p</TD>";
+				}
+				print "</TR>\n";
+				$count++;
+			}
+			&tab_end;
+		}
+
 		print "\n<a name=\"REFERING\">&nbsp;</a>\n\n";
 	
 		# BY REFERENCE

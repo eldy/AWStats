@@ -96,6 +96,7 @@ when reading it), follow the example:<br>
 <li><a href="#SplitSearchString">SplitSearchString</a>
 <li><a href="#WrapperScript">WrapperScript</a>
 <li><a href="#DecodeUA">DecodeUA</a>
+<li><a href="#LogScreenSizeUrl">LogScreenSizeUrl</a>
 </ul>
 
 <br><b>OPTIONAL ACCURACY SETUP SECTION (Not required but increase AWStats features)</b><br>
@@ -128,8 +129,9 @@ when reading it), follow the example:<br>
 <li><a href="#Show">ShowCompressionStats</a>
 <li><a href="#Show">ShowFileTypesStats</a>
 <li><a href="#Show">ShowFileSizesStats</a>
-<li><a href="#Show">ShowBrowsersStats</a>
 <li><a href="#Show">ShowOSStats</a>
+<li><a href="#Show">ShowBrowsersStats</a>
+<li><a href="#Show">ShowScreenSizeStats</a>
 <li><a href="#Show">ShowOriginStats</a>
 <li><a href="#Show">ShowKeyphrasesStats</a>
 <li><a href="#Show">ShowKeywordsStats</a>
@@ -1007,6 +1009,27 @@ AWStats 4.1+ supports both keywords AND keyphrases by default with no need of an
 
 <br><br><hr>
 
+<a name="LogScreenSizeUrl"><b>LogScreenSizeUrl</b></a><br>
+<b>Version : </b>5.5 +<br>
+<br># LogScreenSizeUrl can be used to make screen size report working.
+<br># You must define a string value for LogScreenSizeUrl parameter. Then add
+<br># the following HTML code at the end of your index page (before &lt;/BODY&gt;)
+<br># replacing value of 'logscreensizeurl' with string choosed:
+<br>#   &lt;script language="javascript"&gt;
+<br>#   var awstatsscreenlogger="logscreensizeurl";
+<br>#   document.write('&lt;img src="/'+awstatsscreenlogger+'#w='+screen.width+'&h='+screen.height+'" border=0 width=0 height=0&gt;');
+<br>#   &lt;/script&gt;
+<br># If this code is not added in index page, or if value of "logscreensizeurl"
+<br># in the code does not match value defined in this LogScreenSizeUrl parameter,
+<br># screen size detection won't work, so you should set ShowScreenSize to 0.
+<br># Change : Effective for new updates only.
+<br># Possible value: Any string but same than the one used in added HTML code.
+<br># Default: "logscreensizeurl"
+<br>#
+<br>LogScreenSizeUrl="logscreensizeurl"
+
+<br><br><hr>
+
 <a name="LevelFor"><b>LevelFor</b></a><br>
 <b>Version : </b>4.0 +<br>
 <br># Following values allows you to define accuracy of AWStats entities (robots,
@@ -1132,7 +1155,7 @@ ShowOSStats,ShowOriginStats,ShowKeyphrasesStats,ShowKeywordsStats,ShowHTTPErrors
 <br>#        C = Web compression (mod_gzip,mod_deflate)
 <br>#        M = Average mail size (mail logs)
 <br>#
-<br># Show menu header with links on detailed reports
+<br># Show menu header with report links
 <br># Default: 1, Possible codes: None
 <br>ShowMenu=1					
 <br># Show monthly and daily chart
@@ -1156,10 +1179,10 @@ ShowOSStats,ShowOriginStats,ShowKeyphrasesStats,ShowKeywordsStats,ShowHTTPErrors
 <br># Show robots chart
 <br># Default: HBL, Possible codes: HBL
 <br>ShowRobotsStats=HBL
-<br># Show EMail senders chart (For use when analyzing mail log files)
+<br># Show email senders chart (For use when analyzing mail log files)
 <br># Default: 0, Possible codes: HBML
 <br>ShowEMailSenders=0
-<br># Show EMail receiver chart (For use when analyzing mail log files)
+<br># Show email receivers chart (For use when analyzing mail log files)
 <br># Default: 0, Possible codes: HBML
 <br>ShowEMailReceivers=0
 <br># Show session chart
@@ -1174,13 +1197,16 @@ ShowOSStats,ShowOriginStats,ShowKeyphrasesStats,ShowKeywordsStats,ShowHTTPErrors
 <br># Show file size chart (Not yet available)
 <br># Default: 1, Possible codes: None
 <br>ShowFileSizesStats=0		
+<br># Show operating systems chart
+<br># Default: 1, Possible codes: None
+<br>ShowOSStats=1
 <br># Show browsers chart
 <br># Default: 1, Possible codes: None
 <br>ShowBrowsersStats=1
-<br># Show Operating systems chart
+<br># Show screen size chart
 <br># Default: 1, Possible codes: None
-<br>ShowOSStats=1
-<br># Show Origin chart
+<br>ShowScreenSizeStats=1
+<br># Show origin chart
 <br># Default: PH, Possible codes: HB
 <br>ShowOriginStats=PH
 <br># Show keyphrases chart
@@ -1189,7 +1215,7 @@ ShowOSStats,ShowOriginStats,ShowKeyphrasesStats,ShowKeywordsStats,ShowHTTPErrors
 <br># Show keywords chart
 <br># Default: 1, Possible codes: None
 <br>ShowKeywordsStats=1
-<br># Show HTTP errors chart
+<br># Show http errors chart
 <br># Default: 1, Possible codes: None
 <br>ShowHTTPErrorsStats=1
 

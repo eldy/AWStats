@@ -135,3 +135,6 @@ message131=Sender EMail
 message132=Receiver EMail
 message133=Reported period
 message134=Extra/Marketing
+message135=Screen sizes
+message136=Worm/Virus attacks
+message137=Add to favourites

@@ -3,6 +3,19 @@ AWStats Changelog
 $Revision$ - $Author$ - $Date$ 
 
 
+5.5
+
+Fixes:
+- Summary robots list was limited to MaxNbOfLoginShown instead of
+  being limited to MaxNbOfRobotShown value.
+
+New features/improvments:
+- Added a screen size report.
+
+Other/Documentation:
+- Updated documentation.
+
+
 5.4
 
 Fixes:
