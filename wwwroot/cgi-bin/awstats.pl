@@ -2697,6 +2697,10 @@ if ($UpdateStats) {
 				$pos_gzipratio=$i;$i++;
 				$PerlParsingFormat .= "([^\\s]*)";
 			}
+			elsif ($f =~ /%syslog$/) { # Added for syslog time and host stamp, fields are skipped and not analyzed
+				 $found=1;
+				 $PerlParsingFormat .= "[A-Z][a-z][a-z] .[0-9] ..:..:.. [A-Za-z]+";
+			}
 			if (! $found) { $found=1; $PerlParsingFormat .= "[^\\s]*"; }
 			$PerlParsingFormat.="\\s";
 		}
