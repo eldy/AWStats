@@ -2,7 +2,7 @@
 # With some other Unix Os, first line may be
 #!/usr/local/bin/perl
 # With Apache for Windows and ActiverPerl, first line may be
-#!C:/Program Files/ActiveState/bin/perl
+#!C:/Program Files/ActiveState/ActivePerl/bin/perl
 #-Description-------------------------------------------
 # Free realtime web server logfile analyzer to show advanced web statistics.
 # Works from command line or as a CGI. You must use this script as often as
@@ -21,7 +21,9 @@ use vars qw(%DomainsHashIDLib @RobotsSearchIDOrder_list1 @RobotsSearchIDOrder_li
 #-------------------------------------------------------
 # Defines
 #-------------------------------------------------------
-my $VERSION="4.0 (build 62)";
+# Last change made by $Author$ on $Date$
+my $REVISION='$Revision$'; $REVISION =~ /\s(.*)\s/; $REVISION=$1;
+my $VERSION="4.0 (build $REVISION)";
 
 # ---------- Init variables -------
 my $Debug=0;
