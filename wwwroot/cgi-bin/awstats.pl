@@ -548,8 +548,8 @@ print <<EOF;
 	border: 1px solid #ccd7e0;
 	background-image : url($DirIcons/other/button.gif);
 }
-th		{ border-color: #$color_TableBorder; border-left-width: 0px; border-right-width: 1px; border-top-width: 0px; border-bottom-width: 0px; padding: 1px 1px 1px 1px; font: 11px verdana, arial, helvetica, sans-serif; text-align:center; color: #$color_titletext; }
-th.aws	{ border-color: #$color_TableBorder; border-left-width: 0px; border-right-width: 1px; border-top-width: 0px; border-bottom-width: 0px; padding: 1px 1px 1px 1px; font-size: 13px; font-weight: bold; }
+th		{ border-color: #$color_TableBorder; border-left-width: 0px; border-right-width: 1px; border-top-width: 0px; border-bottom-width: 1px; padding: 1px 2px 1px 1px; font: 11px verdana, arial, helvetica, sans-serif; text-align:center; color: #$color_titletext; }
+th.aws	{ border-color: #$color_TableBorder; border-left-width: 0px; border-right-width: 1px; border-top-width: 0px; border-bottom-width: 1px; padding: 1px 2px 1px 1px; font-size: 13px; font-weight: bold; }
 td		{ border-color: #$color_TableBorder; border-left-width: 0px; border-right-width: 1px; border-top-width: 0px; border-bottom-width: 1px; padding: 1px 1px 1px 1px; font: 11px verdana, arial, helvetica, sans-serif; text-align:center; color: #$color_text; }
 td.aws	{ border-color: #$color_TableBorder; border-left-width: 0px; border-right-width: 1px; border-top-width: 0px; border-bottom-width: 1px; padding: 1px 1px 1px 1px; font: 11px verdana, arial, helvetica, sans-serif; text-align:$dir; color: #$color_text; }
 td.awsm	{ border-left-width: 0px; border-right-width: 0px; border-top-width: 0px; border-bottom-width: 0px; padding: 0px 0px 0px 0px; font: 11px verdana, arial, helvetica, sans-serif; text-align:$dir; color: #$color_text; }
@@ -635,8 +635,8 @@ sub tab_head {
 	}
 	print "<td class=\"aws_blank\">&nbsp;</td></tr>\n";
 	print "<tr><td colspan=\"2\">\n";
-	if ($width == 70 && $QueryString =~ /buildpdf/i) { print "<table class=\"aws_data $class\" border=\"1\" bordercolor=\"#$color_TableBorder\" cellpadding=\"2\" cellspacing=\"0\" width=\"796\">\n"; }
-	else { print "<table class=\"aws_data $class\" border=\"1\" bordercolor=\"#$color_TableBorder\" cellpadding=\"2\" cellspacing=\"0\" width=\"100%\">\n"; }
+	if ($width == 70 && $QueryString =~ /buildpdf/i) { print "<table class=\"aws_data $class\" border=\"2\" bordercolor=\"#$color_TableBorder\" cellpadding=\"2\" cellspacing=\"0\" width=\"796\">\n"; }
+	else { print "<table class=\"aws_data $class\" border=\"2\" bordercolor=\"#$color_TableBorder\" cellpadding=\"2\" cellspacing=\"0\" width=\"100%\">\n"; }
 }
 
 #------------------------------------------------------------------------------
@@ -7784,11 +7784,15 @@ if (scalar keys %HTMLOutput) {
 		foreach my $family (@OSFamily) {
 			my $p='&nbsp;';
 			if ($Total) { $p=int($totalfamily_h{$family}/$Total*1000)/10; $p="$p %"; }
-			print "<tr bgcolor=\"#F8F8F8\"><td class=\"aws\" colspan=\"2\"><b>".uc($family)."</b></td>";
-			print "<td><b>".int($totalfamily_h{$family})."</b></td><td><b>$p</b></td><td>&nbsp;</td>";
-			print "</tr>\n";
+			my $familyheadershown=0;
 			foreach my $key (reverse sort keys %_os_h) {
 				if ($key =~ /^$family(.*)/i) {
+					if (! $familyheadershown) {
+						print "<tr bgcolor=\"#F6F6F6\"><td class=\"aws\" colspan=\"2\"><b>".uc($family)."</b></td>";
+						print "<td><b>".int($totalfamily_h{$family})."</b></td><td><b>$p</b></td><td>&nbsp;</td>";
+						print "</tr>\n";
+						$familyheadershown=1;
+					}
 					$keysinkeylist{$key}=1;
 					my $ver=$1;
 					my $p='&nbsp;';
@@ -7810,11 +7814,15 @@ if (scalar keys %HTMLOutput) {
 			}
 		}
 		# Write other records
-		print "<tr bgcolor=\"#F8F8F8\"><td class=\"aws\" colspan=\"2\"><b>".uc($Message[2])."</b></td>";
-		print "<td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>";
-		print "</tr>\n";
+		my $familyheadershown=0;
 		foreach my $key (@keylist) {
 			if ($keysinkeylist{$key}) { next; }
+			if (! $familyheadershown) {
+				print "<tr bgcolor=\"#F6F6F6\"><td class=\"aws\" colspan=\"2\"><b>".uc($Message[2])."</b></td>";
+				print "<td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>";
+				print "</tr>\n";
+				$familyheadershown=1;
+			}
 			my $p='&nbsp;';
 			if ($Total) { $p=int($_os_h{$key}/$Total*1000)/10; $p="$p %"; }
 			print "<tr>";
@@ -7866,11 +7874,15 @@ if (scalar keys %HTMLOutput) {
 		foreach my $family (sort { $BrowsersFamily{$a} <=> $BrowsersFamily{$b} } keys %BrowsersFamily) {
 			my $p='&nbsp;';
 			if ($Total) { $p=int($totalfamily_h{$family}/$Total*1000)/10; $p="$p %"; }
-			print "<tr bgcolor=\"#F8F8F8\"><td class=\"aws\" colspan=\"2\"><b>".uc($family)."</b></td>";
-			print "<td>&nbsp;</td><td><b>".int($totalfamily_h{$family})."</b></td><td><b>$p</b></td><td>&nbsp;</td>";
-			print "</tr>\n";
+			my $familyheadershown=0;
 			foreach my $key (reverse sort keys %_browser_h) {
 				if ($key =~ /^$family(.*)/i) {
+					if (! $familyheadershown) {
+						print "<tr bgcolor=\"#F6F6F6\"><td class=\"aws\" colspan=\"2\"><b>".uc($family)."</b></td>";
+						print "<td>&nbsp;</td><td><b>".int($totalfamily_h{$family})."</b></td><td><b>$p</b></td><td>&nbsp;</td>";
+						print "</tr>\n";
+						$familyheadershown=1;
+					}
 					$keysinkeylist{$key}=1;
 					my $ver=$1;
 					my $p='&nbsp;';
@@ -7893,11 +7905,15 @@ if (scalar keys %HTMLOutput) {
 			}
 		}
 		# Write other records
-		print "<tr bgcolor=\"#F8F8F8\"><td class=\"aws\" colspan=\"2\"><b>".uc($Message[2])."</b></td>";
-		print "<td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>";
-		print "</tr>\n";
+		my $familyheadershown=0;
 		foreach my $key (@keylist) {
 			if ($keysinkeylist{$key}) { next; }
+			if (! $familyheadershown) {
+				print "<tr bgcolor=\"#F6F6F6\"><td class=\"aws\" colspan=\"2\"><b>".uc($Message[2])."</b></td>";
+				print "<td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>";
+				print "</tr>\n";
+				$familyheadershown=1;
+			}
 			my $p='&nbsp;';
 			if ($Total) { $p=int($_browser_h{$key}/$Total*1000)/10; $p="$p %"; }
 			print "<tr>";
