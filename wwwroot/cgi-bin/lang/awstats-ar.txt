@@ -1,4 +1,4 @@
-<div class="moz-text-flowed" style="font-family: -moz-fixed"># Arabic message file (SanDan u2canbe@hotmail.com)
+# Arabic message file (SanDan u2canbe@hotmail.com)
 # $Revision$ - $Date$
 PageCode=windows-1256
 PageDir=rtl
@@ -33,7 +33,7 @@ message27=ÕİÍÇÊ
 message28=æÕáÇÊ ÕİÍÇÊ ãÎÊáİÉ
 message29=ÔæåÏÊ
 message30=ßáãÇÊ ÃÎÑì
-message31=ÕİÍÇÊ ÚíÑ ãæÌæÏÉ
+message31=ÕİÍÇÊ ÛíÑ ãæÌæÏÉ
 message32=ÑãÒ ÍÇáÉ HTTP
 message33=ÇÕÏÇÑ äÊÓßíÈ
 message34=ÇÕÏÇÑ ÇßÓÈáæÑÑ
@@ -128,7 +128,7 @@ message122=ãÍÑßÇÊ ÈÍË ãÍæáÉ ãÎÊáİÉ
 message123=ãæÇŞÚ ãÍæáÉ ãÎÊáİÉ
 message124=Ìãá ÃÎÑì
 message125=ÍÇáÇÊ ÊÓÌíá ÏÎæá ÃÎÑì
-message126=ãÍÑÇßÊ ÈÍË ãÍæáÉ
+message126=ãÍÑßÇÊ ÈÍË ãÍæáÉ
 message127=ãæÇŞÚ ãÍæáÉ
 message128=ÇáÎáÇÕÉ
 message129=ÇáŞíãÉ ÇáİÚáíÉ ÛíÑ ãÊæİÑÉ İí ÚÑÖ ÇáÓäÉ
@@ -138,7 +138,7 @@ message132=ÈÑíÏ ÇáãÓÊŞÈá
 message133=ÇáãÏÉ ÇáãĞßæÑÉ
 message134=ÇßËÑ\ÊÓæíŞ
 message135=ÍÌã ÇáÔÇÔÉ
-message136=åÌæã ãä İíÑæÓ\ÏæÏÉ
+message136=åÌæã ãä İíÑæÓ\ææÑã
 message137=ÇÖÇİÉ Çáì ÇáãİÖáÉ (ÊŞÑíÈí)
 message138=ÇíÇã ÇáÔåÑ
 message139=ÛíÑ ãÕäİÉ
@@ -161,12 +161,9 @@ message155=ãÌãæÚÉ
 message156=ÇáÑæÈæÊÇÊ ÇáæÇÑÏ ĞßÑåÇ åäÇ ÇÚØÊ ÑÏæÏ ÛíÑ ãÑÆíÉ ãä ŞÈá ÇáÒÇÆÑ
 message157=ÇáÃÑŞÇã ÈÚÏ + åí ØáÈÇÊ ãæİŞÉ áãáİ 'robots.txt'
 message158=İíÑæÓÇÊ ÇáÏæÏ ÇáæÇÑÏ ĞßÑåÇ åäÇ ÇÚØÊ ÑÏæÏ ÛíÑ ãÑÆíÉ ãä ŞÈá ÇáÒÇÆÑ
-message159=ÇáÍÑßÉ ÛíÑ ÇáãÔÇåÏÉ åí ÇáÊí ÇÍÏËÊåÇ ÇáÑæÈæÊÇÊ Çæ İíÑæÓÇÊ ÇáÏæÏ Çæ 
-ÑãæÒ ÍÇáÉ Çá HTTP
+message159=ÇáÍÑßÉ ÛíÑ ÇáãÔÇåÏÉ åí ÇáÊí ÇÍÏËÊåÇ ÇáÑæÈæÊÇÊ Çæ İíÑæÓÇÊ ÇáÏæÏ Çæ ÑãæÒ ÍÇáÉ Çá HTTP
 message160=ÇáÍÑßÉ ÇáãÔÇåÏÉ
 message161=ÇáÍÑßÉ ÛíÑ ÇáãÔÇåÏÉ
-message162=ÇáÊÇÑíÎ ÇáÔåÑí
+message162=ÇáÇÌãÇáí ÇáÔåÑí
 message163=İíÑæÓÇÊ ÇáÏæÏ
 message164=İíÑæÓÇÊ ÏæÏ ãÎÊáİÉ
-
-</div>
