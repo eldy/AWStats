@@ -156,6 +156,7 @@ if (scalar keys %ParamFile == 0) {
 	print "  $PROG.$Extension [options] file\n";
 	print "  $PROG.$Extension [options] file1 ... filen\n";
 	print "  $PROG.$Extension [options] *.*\n";
+	print "  perl $PROG.$Extension [options] *.* > newfile\n";
 	print "Options:\n";
 	print "  -dnslookup     make a reverse DNS lookup on IP adresses\n";
 #	print "  -dnslookup:n   same with a n parallel threads instead of $QueuePoolSize by default\n";
