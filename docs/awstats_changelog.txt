@@ -17,6 +17,7 @@ Fixes:
 - Fixed bug 620040 that prevented to use "#" char in HTMLHeadSection.
 - Whois link did not work for jp, au, uk and nz domains.
 - WhoIs link did not work if host name contained a "-" char.
+- Fixed a bug in mod_gzip stats when only ratio was given in log.
 
 New features/improvments:
 - Lang parameter accepts 'auto' value (Choose first available language
@@ -43,6 +44,7 @@ New features/improvments:
   file like other environment variables).
 - Added offset of last log line read and a signature of line into the
   history file after the LastLine date.
+- Better error report in load of plugins.
 
 Other/Documentation:
 - AWSTATS_CONFIG environment variable renamed into AWSTATS_FORCE_CONFIG.
@@ -58,6 +60,7 @@ Other/Documentation:
 Note 1:
   Old deprecated values for -lang option (-lang=0, -lang=1...) has been
   removed. Use -lang=code_language instead (-lang=en, -lang=fr, ...).
+
 Note 2:
   Old deprecated -month=year option must be replaced by -month=all when
   used on command line.
