@@ -102,13 +102,13 @@ to complete correctly <a href="awstats_config.html#URLQuerySeparators">URLQueryS
 <a name="ADVICES"></a><b><u>SOME IMPORTANT ADVICES FOR A GOOD USE OF AWSTATS:</u></b><br>
 <br>
 <img src="images/star.png"><img src="images/star.png"><img src="images/star.png"><img src="images/star.png"><img src="images/star.png">
-- You can disable <a href="awstats_config.html#DNSLookup">DNSLookup</a> in AWStats (set DNSLookup=0 or use only a DNS file resolver with DNSLookup=2).
+- You can disable <a href="awstats_config.html#DNSLookup">DNSLookup</a> in AWStats (set DNSLookup=0 or DNSlookup=2 to only use DNS file resolver).
 Note that with DNSLookup disabled if you still want to have the 'country/domain' report, this requires that hosts addresses
 in your log file are already resolved (need to setup your web server to do so, your web server will be slowed).
 Without DNSLookup, log analyze speed can be increased by 10 to 100 times.<br>
 <img src="images/star.png"><img src="images/star.png"><img src="images/star.png"><img src="images/star.png">
 - Use carefully parameters <a href="awstats_config.html#URLWithQuery">URLWithQuery</a> and <a href="awstats_config.html#URLReferrerWithQuery">URLReferrerWithQuery</a>
-(Let them set to 0 if you don't know what they means) and check your web site URLs' syntax to known if you need to complete parameter <a href="awstats_config.html#URLQuerySeparators">URLQuerySeparators</a>.<br>
+(Let them set to 0 if you don't know what they means) and check your web site URLs' syntax to know if you need to complete parameter <a href="awstats_config.html#URLQuerySeparators">URLQuerySeparators</a>.<br>
 <img src="images/star.png"><img src="images/star.png"><img src="images/star.png"><img src="images/star.png">
 - Be sure that your <a href="awstats_config.html#HostAliases">HostAliases</a> parameter list is complete.<br>
 <img src="images/star.png"><img src="images/star.png"><img src="images/star.png"><img src="images/star.png">
@@ -121,7 +121,7 @@ have an important memory problem making speed of analysis slower and slower when
 <img src="images/star.png"><img src="images/star.png">
 - Use last AWStats version.<br>
 <img src="images/star.png"><img src="images/star.png">
-- Use last Perl version. For example Perl 5.8 is 15% faster than Perl 5.6<br>
+- Use last Perl version. For example Perl 5.8 is 5% faster than Perl 5.6<br>
 <img src="images/star.png">
 - If you use Apache and don't rotate your logs (not the best way of working), set <a href="awstats_config.html#PurgeLogFile">PurgeLogFile</a> to 1 (By default, to avoid bad surprise,
 <a href="awstats_config.html#PurgeLogFile">PurgeLogFile</a> is 0 in configure file, but you can set it to 1 to ask AWStats
