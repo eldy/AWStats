@@ -23,7 +23,7 @@ New features/improvments:
 - Added urlaliasbuilder.pl tool.
 - Added URL in possible values for ExtraSection first column.
 - New parameter: URLWithAnchor (set to 0 by default).
-- Export tooltip features in a plugin (plugin tooltips disabled by default).
+- Export tooltips features in a plugin (plugin tooltips disabled by default).
 - Added average session length in Visit Duration report.
 - Added percentage in Visit Duration report.
 - logresolvemerge.pl can read .gz or .bz2 files.
@@ -36,13 +36,16 @@ New features/improvments:
 - Other minor cosmetic change (remove ShowHeader parameter).
 - Authenticated user field in log file can contain space with LogFormat=1,
   and they are purged of " with Logformat=6 (Lotus Notes/Domino).
+- The AWSTATS_CURRENT_CONFIG environment variable is now always defined
+  into AWStats environment with value of config (Can be used inside config
+  file like other environment variables).
 
 Other/Documentation:
+- AWSTATS_CONFIG environment variable renamed into AWSTATS_FORCE_CONFIG.
 - Replaced -month=year option by -month=all.
 - Added an error message if a -migrate is done on an history file with
   wrong file name.
 - GeoIP memory cache code is now stored inside plugin code.
-- All tooltips code has been moved into tooltip plugin.
 - Added list of loaded plugins in AWStats copyright string.
 - Added European and Sao Tome And Principe country flag.
 - Added Safari browser icon.
