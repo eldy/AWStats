@@ -1351,7 +1351,7 @@ sub Check_Config {
 		my $olderweekofyear=int(($olderyday-1+6-($olderwday==0?6:$olderwday-1))/7)+1; if ($olderweekofyear > 52) { $olderweekofyear = 1; }
 		my $olderdaymod=$olderday%7;
 		$olderwday++;
-		my $olderns=Time::Local::timelocal(0,0,0,$olderday,$oldermonth,$olderyear);
+		my $olderns=Time::Local::timegm(0,0,0,$olderday,$oldermonth,$olderyear);
 		if ($olderdaymod <= $olderwday) { if (($olderwday != 7) || ($olderdaymod != 0)) { $olderweekofmonth=$olderweekofmonth+1; } }
 		if ($olderdaymod >  $olderwday) { $olderweekofmonth=$olderweekofmonth+2; }
 		# Change format of time variables
@@ -4352,7 +4352,7 @@ sub DefinePerlParsingFormat {
 	@fieldlib=();
 	if ($LogFormat =~ /^[1-6]$/) {	# Pre-defined log format
 		if ($LogFormat eq '1' || $LogFormat eq '6') {	# Same than "%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\"".
-			# %u (user) is "(.+)" instead of "[^ ]+" because can contain space (Lotus Notes). referer and ua might be "".
+			# %u (user) is "([^\\[]+)" instead of "[^ ]+" because can contain space (Lotus Notes). referer and ua might be "".
 			$PerlParsingFormat="([^ ]+) [^ ]+ ([^\\[]+) \\[([^ ]+) [^ ]+\\] \\\"([^ ]+) ([^ ]+) [^\\\"]+\\\" ([\\d|-]+) ([\\d|-]+) \\\"(.*)\\\" \\\"([^\\\"]*)\\\"";
 			$pos_host=0;$pos_logname=1;$pos_date=2;$pos_method=3;$pos_url=4;$pos_code=5;$pos_size=6;$pos_referer=7;$pos_agent=8;
 			@fieldlib=('host','logname','date','method','url','code','size','referer','ua');
@@ -4382,6 +4382,8 @@ sub DefinePerlParsingFormat {
 	}
 	else {							# Personalized log format
 		my $LogFormatString=$LogFormat;
+		# Replacement for Notes format string that are not Apache
+		$LogFormatString =~ s/%vh/%virtualname/g;
 		# Replacement for Apache format string
 		$LogFormatString =~ s/%v(\s)/%virtualname$1/g; $LogFormatString =~ s/%v$/%virtualname/g;
 		$LogFormatString =~ s/%h(\s)/%host$1/g; $LogFormatString =~ s/%h$/%host/g;
@@ -4580,7 +4582,7 @@ $nowweekofmonth=int($nowday/7);
 $nowweekofyear=int(($nowyday-1+6-($nowwday==0?6:$nowwday-1))/7)+1; if ($nowweekofyear > 52) { $nowweekofyear = 1; }
 $nowdaymod=$nowday%7;
 $nowwday++;
-$nowns=Time::Local::timelocal(0,0,0,$nowday,$nowmonth,$nowyear);
+$nowns=Time::Local::timegm(0,0,0,$nowday,$nowmonth,$nowyear);
 if ($nowdaymod <= $nowwday) { if (($nowwday != 7) || ($nowdaymod != 0)) { $nowweekofmonth=$nowweekofmonth+1; } }
 if ($nowdaymod >  $nowwday) { $nowweekofmonth=$nowweekofmonth+2; }
 # Change format of time variables
