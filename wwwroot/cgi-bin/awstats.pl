@@ -59,8 +59,8 @@ $allok, $beginmonth, $bredde, $bredde_h, $bredde_k, $bredde_p, $bredde_u,
 $bredde_v, $color_Background, $color_TableBG, $color_TableBGRowTitle,
 $color_TableBGTitle, $color_TableBorder, $color_TableRowTitle,
 $color_TableTitle, $color_h, $color_k, $color_link, $color_p, $color_s, $color_v,
-$color_w, $count, $date, $daycon, $endmonth, $found, $foundrobot,
-$h, $hourcon, $hr, $internal_link, $ix, $keep, $key, $lien, $line,
+$color_w, $count, $daycon, $endmonth, $found, $foundrobot,
+$h, $hourcon, $hr, $internal_link, $ix, $keep, $key, $lien,
 $max, $max_h, $max_k, $max_p, $max_v, $mincon, $monthcon, $monthfile, $monthix,
 $monthtoprocess, $nameicon, $new, $nompage, $p, $param,
 $paramtoexclude, $rest, $rest_h, $rest_k, $rest_p,
@@ -81,7 +81,7 @@ $word, $yearcon, $yearfile, $yearmonthfile, $yeartoprocess) = ();
 %MonthBytes = %MonthHits = %MonthPages = %MonthUnique = %MonthVisits =
 %listofyears = %monthlib = %monthnum = ();
 
-$VERSION="3.0 (build 3)";
+$VERSION="3.0 (build 4)";
 $Lang="en";
 
 # Default value
@@ -162,10 +162,12 @@ $BarImageHorizontal_k = "barrehk.png";
 "mamma\.","Mamma",
 "dejanews\.","DejaNews",
 "search\.dogpile\.com","Dogpile",
+"wisenut\.com","WISENut",
 "engine\.exe","Cade", "miner\.bol\.com\.br","Meta Miner",		# Minor brazilian search engine
 "ilse\.","Ilse","vindex\.","Vindex\.nl",						# Minor dutch search engines
 "nomade\.fr/","Nomade", "ctrouve\.","C'est trouvé", "francite\.","Francité", "\.lbb\.org", "LBB", "rechercher\.libertysurf\.fr", "Libertysurf",	# Minor french search engines
 "fireball\.de","Fireball", "infoseek\.de","Infoseek", "suche\.web\.de","Web.de", "meta\.ger","MetaGer",	# Minor german search engines
+"virgilio\.it","Virgilio",										# Minor italian search engine
 "kvasir\.sol\.no","Kvasir", "sok\.start\.no","start.no",		# Minor norvegian search engine
 "evreka\.passagen\.se","Evreka",								# Minor swedish search engine
 "search\..*com","Other search engines"
@@ -198,10 +200,12 @@ $BarImageHorizontal_k = "barrehk.png";
 "askjeeves\.","ask=",
 "mamma\.","query=",
 "search\.dogpile\.com", "q=",
+"wisenut\.com","query=",
 "engine\.exe","p1=", "miner\.bol\.com\.br","q=",
 "ilse\.","search_for=", "vindex\.","in=",
 "nomade\.fr/","s=", "francite\.","name=",
 "fireball\.de","q=", "infoseek\.de","qt=", "suche\.web\.de","su=",
+"virgilio\.it","qs=",
 "kvasir\.sol\.no", "q=", "sok\.start\.no", "q=",
 "evreka\.passagen\.se","q="
 );
@@ -599,6 +603,7 @@ $BarImageHorizontal_k = "barrehk.png";
 "shoutcast","Shoutcast Directory Service (Not referenced robot)",
 "unlost_web_crawler", "Unlost_Web_Crawler (Not referenced robot)",
 "webbase", "WebBase (Not referenced robot)",
+"wisenutbot","WISENutbot (Not referenced robot)",
 "yandex", "Yandex bot (Not referenced robot)",
 # Supposed to be robots
 "webcompass", "webcompass (Not referenced robot)",
@@ -1736,7 +1741,6 @@ if ($UpdateStats) {
 	$NowNewLinePhase=0;
 	while (<LOG>)
 	{
-		$savedline=$_;
 		chomp $_; s/\r//;
 		if (/^$/) { next; }									# Ignore blank lines (With ISS: happens sometimes, with Apache: possible when editing log file)
 		if (/^#/) { next; }									# Ignore comment lines (ISS writes such comments)
@@ -1770,7 +1774,7 @@ if ($UpdateStats) {
 					print "<font color=#888888><i>$LogFormat</i></font><br>\n";
 				}
 				print "<br>";
-				print "And this is a sample of what AWStats found (the 10th non commented line):<br>\n";
+				print "And this is a sample of what AWStats found in your log (the 10th non commented line):<br>\n";
 				print "<font color=#888888><i>$_</i></font><br>\n";
 
 				error("");	# Exit with format error
@@ -2144,7 +2148,7 @@ if ($UpdateStats) {
 		open(ARCHIVELOG,">>$ArchiveFileName") || error("Error: Couldn't open file \"$ArchiveFileName\" to archive current log: $!");
 		while (<LOG>) {	print ARCHIVELOG $_; }
 		close(ARCHIVELOG);
-		chmod 438,"$ArchiveFileName";
+		chmod 0666,"$ArchiveFileName";
 		&debug("End of archiving log file");
 	}
 	else {
@@ -2164,7 +2168,7 @@ if ($UpdateStats) {
 					$allok=0;	# At least one error in renaming working files
 					last;
 				}
-				chmod 438,"$DirData/$PROG$yearmonthfile$FileSuffix.txt";
+				chmod 0666,"$DirData/$PROG$yearmonthfile$FileSuffix.txt";
 			}
 		}
 	}
