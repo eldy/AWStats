@@ -1647,6 +1647,7 @@ sub Check_Config {
 		debug(" DirData='$DirData'",2);
 		debug(" DirCgi='$DirCgi'",2);
 		debug(" DirIcons='$DirIcons'",2);
+		debug(" SiteDomain=$SiteDomain",2);
 	}
 	foreach my $extranum (1..@ExtraName-1) {
 		debug(" ExtraConditionType[$extranum] is array ".join(',',@{$ExtraConditionType[$extranum]}),2);
@@ -4657,7 +4658,6 @@ if ($Debug) {
 	debug("QUERY_STRING=$QueryString",2);
 	debug("HTMLOutput=".join(',',keys %HTMLOutput),1);
 	debug("YearRequired=$YearRequired, MonthRequired=$MonthRequired",2);
-	debug("Site domain to analyze=$SiteDomain",1);
 }
 
 # Force SiteConfig if AWSTATS_FORCE_CONFIG is defined
@@ -5429,7 +5429,7 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 			$HostResolved = lc($HostResolved?$HostResolved:$Host);
 			# Resolve Domain
 			if ($PluginsLoaded{'GetCountryCodeByName'}{'geoip'}) { $Domain=GetCountryCodeByName_geoip($HostResolved); }
-			elsif (/\.(\w+)$/) { $Domain=$1; }
+			elsif ($HostResolved =~ /\.(\w+)$/) { $Domain=$1; }
 		}
 		# Store country
 		if ($PageBool) { $_domener_p{$Domain}++; }
