@@ -12,10 +12,10 @@
 
 # <-----
 # ENTER HERE THE USE COMMAND FOR ALL REQUIRED PERL MODULES
-use Geo::IP;				# For GeoIP
-#use Geo::IPfree;			# For GeoIPfree
+if (!eval ('require "Geo/IP.pm";')) 	{ return "Error: Need Perl module Geo::IP"; }		# For GeoIP
+#if (!eval ('require "Geo/IPfree.pm";')) { return "Error: Need Perl module Geo::IPfree"; }	# For GeoIPfree
 # ----->
-use strict;no strict "refs";
+#use strict;no strict "refs";
 
 
 
