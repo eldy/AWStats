@@ -4396,6 +4396,21 @@ sub Format_Bytes {
 }
 
 #------------------------------------------------------------------------------
+# Function:		Format a number
+# Parameters:   number
+# Input:        None
+# Output:       None
+# Return:       "999 999 999 999"
+#------------------------------------------------------------------------------
+sub Format_Number {
+	my $number = shift||0;
+	$number=~s/(\d)(\d\d\d)$/$1 $2/;
+	$number=~s/(\d)(\d\d\d\s\d\d\d)$/$1 $2/;
+	$number=~s/(\d)(\d\d\d\s\d\d\d\s\d\d\d)$/$1 $2/;
+	return $number;
+}
+
+#------------------------------------------------------------------------------
 # Function:		Return " alt=string title=string"
 # Parameters:   string
 # Input:        None
