@@ -18,6 +18,7 @@ Fixes:
 - Fixed not working timezone plugin with 5.7.
 - Fixed missing propagated configdir parameter when changing month/year.
 - Error when loading database pm file with some cygwin perl version.
+- Fixed not working file type detection for default pages.
 
 New features/improvements:
 - Added %lognamequot tag for LogFormat parameter.

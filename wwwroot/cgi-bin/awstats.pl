@@ -1191,9 +1191,10 @@ sub Parse_Config {
 			next;
 			}
 		if ($param =~ /^DefaultFile/)           {
-			foreach my $elem (split(/\s+/,$value))	{	# No REGEX for this option
-				if ($elem =~ /^REGEX\[(.*)\]$/i) { $elem=$1; }
-				else { $elem='^'.quotemeta($elem).'$'; }
+			foreach my $elem (split(/\s+/,$value))	{	
+				# No REGEX for this option
+				#if ($elem =~ /^REGEX\[(.*)\]$/i) { $elem=$1; }
+				#else { $elem='^'.quotemeta($elem).'$'; }
 				if ($elem) { push @DefaultFile,$elem; }
 			}
 			next;
@@ -5815,6 +5816,7 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 		my $PageBool=1;
 		my $extension;
 		# Extension
+print "xxx $urlwithnoquery yyy $DefaultFile[0] zzz";
 		if ($urlwithnoquery =~ /\.(\w{1,6})$/ || ($urlwithnoquery =~ /[\\\/]$/ && $DefaultFile[0] =~ /\.(\w{1,6})$/)) {
 			$extension=lc($1);
 			if ($NotPageList{$extension}) { $PageBool=0; }
