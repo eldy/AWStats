@@ -79,18 +79,28 @@ should get then in your new log file:<br>
 <br>
 
 B) configure.pl will add, if not already done, the following directives to your Apache config file
-(note that the "/usr/loca/awstats/wwwroot" path might differ according to your distribution or OS:<br>
-<br>
+(note that the "/usr/local/awstats/wwwroot" path might differ according to your distribution or OS:<br>
 <i>
-#<br>
-# Directives to add to your Apache conf file to allow use of AWStats as a CGI<br>
-#<br>
-Alias /awstatsjs "/usr/local/awstats/wwwroot/js/"<br>
-Alias /awstatsclasses "/usr/local/awstats/wwwroot/classes/"<br>
-Alias /awstatscss "/usr/local/awstats/wwwroot/css/"<br>
-Alias /awstatsicons "/usr/local/awstats/wwwroot/icon/"<br>
-ScriptAlias /awstats/ "/usr/local/awstats/wwwroot/cgi-bin/"<br>
+<br>#
+<br># Directives to add to your Apache conf file to allow use of AWStats as a CGI.
+<br># Note that path "/usr/local/awstats/" must reflect your AWStats install path.
+<br>#
+<br>Alias /awstatsclasses "/usr/local/awstats/wwwroot/classes/"
+<br>Alias /awstatscss "/usr/local/awstats/wwwroot/css/"
+<br>Alias /awstatsicons "/usr/local/awstats/wwwroot/icon/"
+<br>ScriptAlias /awstats/ "/usr/local/awstats/wwwroot/cgi-bin/"
+<br>#
+<br># This is to permit URL access to scripts/files in AWStats directory.
+<br>#
+<br>&lt;Directory "/usr/local/awstats/wwwroot"&gt;
+<br>    Options None
+<br>    AllowOverride None
+<br>    Order allow,deny
+<br>    Allow from all
+<br>&lt;/Directory&gt;
 </i>
+<br>
+
 <br>
 C) configure.pl restart Apache to apply the changes made in A and B.<br>
 <br>
@@ -105,7 +115,7 @@ be stored in<br>
 - For Windows and other OS: Same directory than awstats.pl (so cgi-bin).<br>
 <br>
 
-E) configure.pl finish.<br>
+E) configure.pl ends.<br>
 <br>
 
 
