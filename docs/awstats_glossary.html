@@ -65,7 +65,13 @@ the SkipFiles config parameter.<br>
 
 
 <a name="Bandwidth"><b>Bandwidth</b></a>:<br>
-Total number of bytes downloaded.<br>
+Total number of bytes for pages, images and files downloaded by web browsing.<br>
+Note 1: Of course, this number includes only traffic for web only (or mail only, or ftp only
+depending on value of LogType).<br>
+Note 2: This number does not include technical header data size used inside the HTTP or HTTPS protocol or by
+protocols at a lower level (TCP, IP...).<br>
+Because of two previous notes, this number is often lower than bandwith reported by your provider (your
+provider counts in most cases bandwitdh at a lower level and includes all IP and UDP traffic).<br>
 <hr>
 
 <a name="Entry Page"><b>Entry Page</b></a>:<br>
@@ -95,9 +101,20 @@ A browser that is used primarily for copying locally an entire site. These inclu
 for example "teleport", "webcapture", "webcopier"...<br>
 <hr>
 
+<a name="Direct"><b>Direct access / Bookmark</b></a>:<br>
+This number represent the number of hits or ratio of hits when a visit to your site comes
+from a direct access. This means the first page of your web site was called:<br>
+- By typing your URL on the web browser address bar<br>
+- By clicking on your URL stored by a visitor inside its favorites<br>
+- By clicking on your URL found everywhere but not another internet web pages (a link in a document,
+an application, etc...)<br>
+- Clicking an URL of your site inside a mail is often counted here.<br>
+<hr>
+
 <a name="AddToFavourites"><b>Add To Favourites</b></a>:<br>
-This value, available in the "miscellanous chart", reports an estimated value of the number
-of times a visitor has added your web site into its favourite bookmarks.<br>
+This value, available in the "miscellanous chart", reports an estimated indicator
+that can be used to have an idea of the number of times a visitor has added your web
+site into its favourite bookmarks.<br>
 The technical rules for that is the following formula:<br>
 <i>Number of Add to Favourites = round((x+y) / r)</i><br>
 where<br>
@@ -107,12 +124,15 @@ r = Ratio of hits made by IE browsers compared to hits made by all browsers (r <
 <br>
 As you can see in formula, only IE is used to count reliable "add", the "Add to favourites"
 for other browsers are estimated using ratio of other browsers usage compared to ratio of
-IE usage. The reason is that only IE do a hit on favicon.ico ONLY when a user add the page
-to its favourites. The other browsers make hits on this file also for other reasons so
-we can't count one "hit" as one "add" since it might be a hit for another reason.<br>
+IE usage. The reason is that only IE do a hit on favicon.ico nearly ONLY when a user add the
+page to its favourites. The other browsers make often hits on this file also for other reasons
+so we can't count one "hit" as one "add" since it might be a hit for another reason.<br>
 AWStats differentiate also hits with error and not to avoid counting multiple hits
 made recursively in upper path when favicon.ico file is not found in deeper directory
 of path.<br>
+Note that this number is just an indicator that is in most case higher than true value.
+The reason is that even IE browser sometimes make hit on favicon without an "Add to favourites"
+action by a user.
 <hr>
 
 
