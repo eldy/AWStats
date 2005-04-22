@@ -91,8 +91,8 @@ sub warning {
 	debug("$messagestring",1);
 #	if ($WarningMessages) {
 #    	if ($HTMLOutput) {
-#    		$messagestring =~ s/\n/\<br\>/g;
-#    		print "$messagestring<br>\n";
+#    		$messagestring =~ s/\n/\<br \/\>/g;
+#    		print "$messagestring<br />\n";
 #    	}
 #    	else {
 	    	print "$messagestring\n";
