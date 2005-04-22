@@ -29,7 +29,7 @@ use vars qw/
 $DEBUGFORCED $NBOFLINESFORBENCHMARK $FRAMEWIDTH $NBOFLASTUPDATELOOKUPTOSAVE
 $LIMITFLUSH $NEWDAYVISITTIMEOUT $VISITTIMEOUT $NOTSORTEDRECORDTOLERANCE
 $WIDTHCOLICON $TOOLTIPON
-$lastyearbeforeupdate
+$lastyearbeforeupdate $lastmonthbeforeupdate $lastdaybeforeupdate $lasthourbeforeupdate $lastdatebeforeupdate
 /;
 $DEBUGFORCED=0;						# Force debug level to log lesser level into debug.log file (Keep this value to 0)
 $NBOFLINESFORBENCHMARK=8192;		# Benchmark info are printing every NBOFLINESFORBENCHMARK lines (Must be a power of 2)
@@ -56,7 +56,7 @@ $TotalNotViewedPages $TotalNotViewedHits $TotalNotViewedBytes
 $TotalEntries $TotalExits $TotalBytesPages $TotalDifferentPages
 $TotalKeyphrases $TotalKeywords $TotalDifferentKeyphrases $TotalDifferentKeywords
 $TotalSearchEnginesPages $TotalSearchEnginesHits $TotalRefererPages $TotalRefererHits $TotalDifferentSearchEngines $TotalDifferentReferer
-$FrameName $Center $FileConfig $FileSuffix $Host $DayRequired $MonthRequired $YearRequired
+$FrameName $Center $FileConfig $FileSuffix $Host $YearRequired $MonthRequired $DayRequired $HourRequired
 $QueryString $SiteConfig $StaticLinks $PageCode $PageDir $PerlParsingFormat $UserAgent
 $pos_vh $pos_host $pos_logname $pos_date $pos_tz $pos_method $pos_url $pos_code $pos_size
 $pos_referer $pos_agent $pos_query $pos_gzipin $pos_gzipout $pos_compratio $pos_timetaken
@@ -75,9 +75,9 @@ $TotalNotViewedPages = $TotalNotViewedHits = $TotalNotViewedBytes = 0;
 $TotalEntries = $TotalExits = $TotalBytesPages = $TotalDifferentPages = 0;
 $TotalKeyphrases = $TotalKeywords = $TotalDifferentKeyphrases = $TotalDifferentKeywords = 0;
 $TotalSearchEnginesPages = $TotalSearchEnginesHits = $TotalRefererPages = $TotalRefererHits = $TotalDifferentSearchEngines = $TotalDifferentReferer = 0;
-($FrameName, $Center, $FileConfig, $FileSuffix, $Host, $DayRequired, $MonthRequired, $YearRequired,
+($FrameName, $Center, $FileConfig, $FileSuffix, $Host, $YearRequired, $MonthRequired, $DayRequired, $HourRequired,
 $QueryString, $SiteConfig, $StaticLinks, $PageCode, $PageDir, $PerlParsingFormat, $UserAgent)=
-('','','','','','','','','','','','','','','');
+('','','','','','','','','','','','','','','','');
 # ----- Plugins variable -----
 use vars qw/ %PluginsLoaded $PluginDir $AtLeastOneSectionPlugin /;
 %PluginsLoaded=();
@@ -112,6 +112,7 @@ $MaxLengthOfStoredUA
 $BuildReportFormat
 $BuildHistoryFormat
 $ExtraTrackedRowsLimit
+$DatabaseBreak
 /;
 $StaticExt='html';
 $DNSStaticCacheFile='dnscache.txt';
@@ -127,6 +128,7 @@ $MaxLengthOfStoredUA=256;
 $BuildReportFormat='html';
 $BuildHistoryFormat='text';
 $ExtraTrackedRowsLimit=500;
+$DatabaseBreak='month';
 use vars qw/
 $DebugMessages $AllowToUpdateStatsFromBrowser $EnableLockForUpdate $DNSLookup $AllowAccessFromWebToAuthenticatedUsersOnly
 $BarHeight $BarWidth $CreateDirDataIfNotExists $KeepBackupOfHistoricFiles
@@ -559,7 +561,11 @@ sub html_head {
 	my $dir=$PageDir?'right':'left';
 	if (scalar keys %HTMLOutput || $PluginMode) {
 		my $MetaRobot=0;	# meta robots
-        my $periodtitle=" ($YearRequired".($MonthRequired ne 'all'?"-$MonthRequired":"").")";
+        my $periodtitle=" ($YearRequired";
+        $periodtitle.=($MonthRequired ne 'all'?"-$MonthRequired":"");
+        $periodtitle.=($DayRequired ne ''?"-$DayRequired":"");
+        $periodtitle.=($HourRequired ne ''?"-$HourRequired":"");
+        $periodtitle.=")";
 		# Write head section
 		if ($BuildReportFormat eq 'xhtml' || $BuildReportFormat eq 'xml') {
 			if ($PageCode) { print "<?xml version=\"1.0\" encoding=\"$PageCode\"?>\n"; }
@@ -1942,8 +1948,8 @@ sub Read_Plugins {
 
 #------------------------------------------------------------------------------
 # Function:		Read history file and create/update tmp history file
-# Parameters:	year,month,withupdate,withpurge,part_to_load[,lastlinenb,lastlineoffset,lastlinechecksum]
-# Input:		$DirData $PROG $FileSuffix $LastLine
+# Parameters:	year,month,day,hour,withupdate,withpurge,part_to_load[,lastlinenb,lastlineoffset,lastlinechecksum]
+# Input:		$DirData $PROG $FileSuffix $LastLine $DatabaseBreak
 # Output:		None
 # Return:		Tmp history file name created/updated or '' if withupdate is 0
 #------------------------------------------------------------------------------
@@ -1951,9 +1957,17 @@ sub Read_History_With_TmpUpdate {
 
 	my $year=sprintf("%04i",shift||0);
 	my $month=sprintf("%02i",shift||0);
+	my $day=shift; if ($day ne '')  { $day=sprintf("%02i",$day); }
+	my $hour=shift; if ($hour ne '') { $hour=sprintf("%02i",$hour); }
 	my $withupdate=shift||0;
 	my $withpurge=shift||0;
 	my $part=shift||'';
+
+	my ($date,$filedate)=('','');
+	if    ($DatabaseBreak eq 'month') { $date=sprintf("%04i%02i",$year,$month); $filedate=sprintf("%02i%04i",$month,$year); }
+	elsif ($DatabaseBreak eq 'year')  { $date=sprintf("%04i%",$year); $filedate=sprintf("%04i",$year); }
+	elsif ($DatabaseBreak eq 'day')   { $date=sprintf("%04i%02i%02i",$year,$month,$day); $filedate=sprintf("%02i%04i%02i",$month,$year,$day); }
+	elsif ($DatabaseBreak eq 'hour')  { $date=sprintf("%04i%02i%02i%02i",$year,$month,$day,$hour); $filedate=sprintf("%02i%04i%02i%02i",$month,$year,$day,$hour); }
 
 	my $xml=($BuildHistoryFormat eq 'xml'?1:0);
 	my $xmleb='</table><nu>'; my $xmlrb='<tr><td>';
@@ -1978,9 +1992,8 @@ sub Read_History_With_TmpUpdate {
 	# Variable used to read old format history files
 	my $readvisitorforbackward=0;
 
-	# In standard use of AWStats, the DayRequired variable is always empty
-	if ($DayRequired) { if ($Debug) { debug("Call to Read_History_With_TmpUpdate [$year,$month,withupdate=$withupdate,withpurge=$withpurge,part=$part,lastlinenb=$lastlinenb,lastlineoffset=$lastlineoffset,lastlinechecksum=$lastlinechecksum] ($DayRequired)"); } }
-	else { if ($Debug) { debug("Call to Read_History_With_TmpUpdate [$year,$month,withupdate=$withupdate,withpurge=$withpurge,part=$part,lastlinenb=$lastlinenb,lastlineoffset=$lastlineoffset,lastlinechecksum=$lastlinechecksum]"); } }
+	if ($Debug) { debug("Call to Read_History_With_TmpUpdate [$year,$month,$day,$hour,withupdate=$withupdate,withpurge=$withpurge,part=$part,lastlinenb=$lastlinenb,lastlineoffset=$lastlineoffset,lastlinechecksum=$lastlinechecksum]"); }
+	if ($Debug) { debug("date=$date"); }
 
 	# Define SectionsToLoad (which sections to load)
 	my %SectionsToLoad = ();
@@ -2044,14 +2057,14 @@ sub Read_History_With_TmpUpdate {
 	# Define value for filetowrite and filetoread (Month before Year kept for backward compatibility)
 	my $filetowrite='';
 	my $filetoread='';
-	if ($HistoryAlreadyFlushed{"$year$month"} && -s "$DirData/$PROG$month$year$FileSuffix.tmp.$$") {
+	if ($HistoryAlreadyFlushed{"$year$month$day$hour"} && -s "$DirData/$PROG$filedate$FileSuffix.tmp.$$") {
 		# tmp history file was already flushed
-		$filetoread="$DirData/$PROG$month$year$FileSuffix.tmp.$$";
-		$filetowrite="$DirData/$PROG$month$year$FileSuffix.tmp.$$.bis";
+		$filetoread="$DirData/$PROG$filedate$FileSuffix.tmp.$$";
+		$filetowrite="$DirData/$PROG$filedate$FileSuffix.tmp.$$.bis";
 	}
 	else {
-		$filetoread="$DirData/$PROG$DayRequired$month$year$FileSuffix.txt";
-		$filetowrite="$DirData/$PROG$month$year$FileSuffix.tmp.$$";
+		$filetoread="$DirData/$PROG$filedate$FileSuffix.txt";
+		$filetowrite="$DirData/$PROG$filedate$FileSuffix.tmp.$$";
 	}
 	if ($Debug) { debug(" History file to read is '$filetoread'",2); }
 
@@ -2067,7 +2080,7 @@ sub Read_History_With_TmpUpdate {
 		open(HISTORYTMP,">$filetowrite") || error("Couldn't open file \"$filetowrite\" for write: $!");
 		binmode HISTORYTMP;
 		if ($xml) { print HISTORYTMP "<xml>\n\n"; }
-		Save_History("header",$year,$month);
+		Save_History("header",$year,$month,$date);
 	}
 
 	# Loop on read file
@@ -2113,9 +2126,9 @@ sub Read_History_With_TmpUpdate {
 				if ($field[4]) { $LastLineChecksum=int($field[4]); }
 				next;
 			}
-			if ($field[0] eq 'FirstTime' || $field[0] eq "${xmlrb}FirstTime")       { if (! $FirstTime{$year.$month} || $FirstTime{$year.$month} > int($field[1])) { $FirstTime{$year.$month}=int($field[1]); }; next; }
-			if ($field[0] eq 'LastTime' || $field[0] eq "${xmlrb}LastTime")        { if (! $LastTime{$year.$month} || $LastTime{$year.$month} < int($field[1])) { $LastTime{$year.$month}=int($field[1]); }; next; }
-			if ($field[0] eq 'LastUpdate' || $field[0] eq "${xmlrb}LastUpdate")      {
+			if ($field[0] eq 'FirstTime' || $field[0] eq "${xmlrb}FirstTime")      { if (! $FirstTime{$date} || $FirstTime{$date} > int($field[1])) { $FirstTime{$date}=int($field[1]); }; next; }
+			if ($field[0] eq 'LastTime' || $field[0] eq "${xmlrb}LastTime")        { if (! $LastTime{$date} || $LastTime{$date} < int($field[1])) { $LastTime{$date}=int($field[1]); }; next; }
+			if ($field[0] eq 'LastUpdate' || $field[0] eq "${xmlrb}LastUpdate") {
 				if ($LastUpdate < $field[1]) {
 					$LastUpdate=int($field[1]);
 					#$LastUpdateLinesRead=int($field[2]);
@@ -2138,7 +2151,7 @@ sub Read_History_With_TmpUpdate {
 			if ($field[0] eq 'MonthHostsKnown' || $field[0] eq "${xmlrb}MonthHostsKnown")   { if (! $withupdate) { $MonthHostsKnown{$year.$month}+=int($field[1]); } next; }
 			if ($field[0] eq 'MonthHostsUnknown' || $field[0] eq "${xmlrb}MonthHostsUnknown") { if (! $withupdate) { $MonthHostsUnknown{$year.$month}+=int($field[1]); } next; }
 			if (($field[0] eq 'END_GENERAL' || $field[0] eq "${xmleb}END_GENERAL")	# END_GENERAL didn't exist for history files < 5.0
-			 || ($versionnum < 5000 && $SectionsToLoad{"general"} && $FirstTime{$year.$month} && $LastTime{$year.$month}) )		{
+			 || ($versionnum < 5000 && $SectionsToLoad{"general"} && $FirstTime{$date} && $LastTime{$date}) )		{
 				if ($Debug) { debug(" End of GENERAL section"); }
 				# Show migrate warning for backward compatibility
 				if ($versionnum < 5000 && ! $MigrateStats && ! $BadFormatWarning{$year.$month}) {
@@ -2160,7 +2173,7 @@ sub Read_History_With_TmpUpdate {
 				}
 
 				delete $SectionsToLoad{'general'};
-				if ($SectionsToSave{'general'}) { Save_History('general',$year,$month,$lastlinenb,$lastlineoffset,$lastlinechecksum); delete $SectionsToSave{'general'}; }
+				if ($SectionsToSave{'general'}) { Save_History('general',$year,$month,$date,$lastlinenb,$lastlineoffset,$lastlinechecksum); delete $SectionsToSave{'general'}; }
 
 				# Test for backward compatibility
 				if ($versionnum < 5000 && ! $withupdate) {
@@ -2202,7 +2215,7 @@ sub Read_History_With_TmpUpdate {
 				if ($Debug) { debug(" End of MISC section ($count entries, $countloaded loaded)"); }
 				delete $SectionsToLoad{'misc'};
 				if ($SectionsToSave{'misc'}) {
-					Save_History('misc',$year,$month); delete $SectionsToSave{'misc'};
+					Save_History('misc',$year,$month,$date); delete $SectionsToSave{'misc'};
 					if ($withpurge) { %_misc_p=(); %_misc_h=(); %_misc_k=(); }
 				}
 				if (! scalar %SectionsToLoad) { debug(" Stop reading history file. Got all we need."); last; }
@@ -2233,7 +2246,7 @@ sub Read_History_With_TmpUpdate {
 				if ($Debug) { debug(" End of CLUSTER section ($count entries, $countloaded loaded)"); }
 				delete $SectionsToLoad{'cluster'};
 				if ($SectionsToSave{'cluster'}) {
-					Save_History('cluster',$year,$month); delete $SectionsToSave{'cluster'};
+					Save_History('cluster',$year,$month,$date); delete $SectionsToSave{'cluster'};
 					if ($withpurge) { %_cluster_p=(); %_cluster_h=(); %_cluster_k=(); }
 				}
 				if (! scalar %SectionsToLoad) { debug(" Stop reading history file. Got all we need."); last; }
@@ -2283,7 +2296,7 @@ sub Read_History_With_TmpUpdate {
 				$MonthNotViewedBytes{$year.$month}+=$monthnotviewedbytes;
 				delete $SectionsToLoad{'time'};
 				if ($SectionsToSave{'time'}) {
-					Save_History('time',$year,$month); delete $SectionsToSave{'time'};
+					Save_History('time',$year,$month,$date); delete $SectionsToSave{'time'};
 					if ($withpurge) { @_time_p=(); @_time_h=(); @_time_k=(); @_time_nv_p=(); @_time_nv_h=(); @_time_nv_k=(); }
 				}
 				if (! scalar %SectionsToLoad) { debug(" Stop reading history file. Got all we need."); last; }
@@ -2316,7 +2329,7 @@ sub Read_History_With_TmpUpdate {
 				if ($Debug) { debug(" End of ORIGIN section ($count entries, $countloaded loaded)"); }
 				delete $SectionsToLoad{'origin'};
 				if ($SectionsToSave{'origin'}) {
-					Save_History('origin',$year,$month); delete $SectionsToSave{'origin'};
+					Save_History('origin',$year,$month,$date); delete $SectionsToSave{'origin'};
 					if ($withpurge) { @_from_p=(); @_from_h=(); }
 				}
 				if (! scalar %SectionsToLoad) { debug(" Stop reading history file. Got all we need."); last; }
@@ -2348,7 +2361,7 @@ sub Read_History_With_TmpUpdate {
 				delete $SectionsToLoad{'day'};
 				# WE DO NOT SAVE SECTION NOW BECAUSE VALUES CAN BE CHANGED AFTER READING VISITOR
 				#if ($SectionsToSave{'day'}) {	# Must be made after read of visitor
-				#	Save_History('day',$year,$month); delete $SectionsToSave{'day'};
+				#	Save_History('day',$year,$month,$date); delete $SectionsToSave{'day'};
 				#	if ($withpurge) { %DayPages=(); %DayHits=(); %DayBytes=(); %DayVisits=(); }
 				#}
 				if (! scalar %SectionsToLoad) { debug(" Stop reading history file. Got all we need."); last; }
@@ -2455,7 +2468,7 @@ sub Read_History_With_TmpUpdate {
 				delete $SectionsToLoad{'visitor'};
 				# WE DO NOT SAVE SECTION NOW TO BE SURE TO HAVE THIS LARGE SECTION NOT AT THE BEGINNING OF FILE
 				#if ($SectionsToSave{'visitor'}) {
-				#	Save_History('visitor',$year,$month); delete $SectionsToSave{'visitor'};
+				#	Save_History('visitor',$year,$month,$date); delete $SectionsToSave{'visitor'};
 				#	if ($withpurge) { %_host_p=(); %_host_h=(); %_host_k=(); %_host_l=(); %_host_s=(); %_host_u=(); }
 				#}
 				if (! scalar %SectionsToLoad) { debug(" Stop reading history file. Got all we need."); last; }
@@ -2522,7 +2535,7 @@ sub Read_History_With_TmpUpdate {
 				if ($Debug) { debug(" End of LOGIN section ($count entries, $countloaded loaded)"); }
 				delete $SectionsToLoad{'login'};
 				if ($SectionsToSave{'login'}) {
-					Save_History('login',$year,$month); delete $SectionsToSave{'login'};
+					Save_History('login',$year,$month,$date); delete $SectionsToSave{'login'};
 					if ($withpurge) { %_login_p=(); %_login_h=(); %_login_k=(); %_login_l=(); }
 				}
 				if (! scalar %SectionsToLoad) { debug(" Stop reading history file. Got all we need."); last; }
@@ -2552,7 +2565,7 @@ sub Read_History_With_TmpUpdate {
 				if ($Debug) { debug(" End of DOMAIN section ($count entries, $countloaded loaded)"); }
 				delete $SectionsToLoad{'domain'};
 				if ($SectionsToSave{'domain'}) {
-					Save_History('domain',$year,$month); delete $SectionsToSave{'domain'};
+					Save_History('domain',$year,$month,$date); delete $SectionsToSave{'domain'};
 					if ($withpurge) { %_domener_p=(); %_domener_h=(); %_domener_k=(); }
 				}
 				if (! scalar %SectionsToLoad) { debug(" Stop reading history file. Got all we need."); last; }
@@ -2581,7 +2594,7 @@ sub Read_History_With_TmpUpdate {
 				delete $SectionsToLoad{'session'};
 				# WE DO NOT SAVE SECTION NOW BECAUSE VALUES CAN BE CHANGED AFTER READING VISITOR
 				#if ($SectionsToSave{'session'}) {
-				#	Save_History('session',$year,$month); delete $SectionsToSave{'session'}; }
+				#	Save_History('session',$year,$month,$date); delete $SectionsToSave{'session'}; }
 				#	if ($withpurge) { %_session=(); }
 				#}
 				if (! scalar %SectionsToLoad) { debug(" Stop reading history file. Got all we need."); last; }
@@ -2609,7 +2622,7 @@ sub Read_History_With_TmpUpdate {
 				if ($Debug) { debug(" End of OS section ($count entries, $countloaded loaded)"); }
 				delete $SectionsToLoad{'os'};
 				if ($SectionsToSave{'os'}) {
-					Save_History('os',$year,$month); delete $SectionsToSave{'os'};
+					Save_History('os',$year,$month,$date); delete $SectionsToSave{'os'};
 					if ($withpurge) { %_os_h=(); }
 				}
 				if (! scalar %SectionsToLoad) { debug(" Stop reading history file. Got all we need."); last; }
@@ -2637,7 +2650,7 @@ sub Read_History_With_TmpUpdate {
 				if ($Debug) { debug(" End of BROWSER section ($count entries, $countloaded loaded)"); }
 				delete $SectionsToLoad{'browser'};
 				if ($SectionsToSave{'browser'}) {
-					Save_History('browser',$year,$month); delete $SectionsToSave{'browser'};
+					Save_History('browser',$year,$month,$date); delete $SectionsToSave{'browser'};
 					if ($withpurge) { %_browser_h=(); }
 				}
 				if (! scalar %SectionsToLoad) { debug(" Stop reading history file. Got all we need."); last; }
@@ -2665,7 +2678,7 @@ sub Read_History_With_TmpUpdate {
 				if ($Debug) { debug(" End of UNKNOWNREFERER section ($count entries, $countloaded loaded)"); }
 				delete $SectionsToLoad{'unknownreferer'};
 				if ($SectionsToSave{'unknownreferer'}) {
-					Save_History('unknownreferer',$year,$month); delete $SectionsToSave{'unknownreferer'};
+					Save_History('unknownreferer',$year,$month,$date); delete $SectionsToSave{'unknownreferer'};
 					if ($withpurge) { %_unknownreferer_l=(); }
 				}
 				if (! scalar %SectionsToLoad) { debug(" Stop reading history file. Got all we need."); last; }
@@ -2693,7 +2706,7 @@ sub Read_History_With_TmpUpdate {
 				if ($Debug) { debug(" End of UNKNOWNREFERERBROWSER section ($count entries, $countloaded loaded)"); }
 				delete $SectionsToLoad{'unknownrefererbrowser'};
 				if ($SectionsToSave{'unknownrefererbrowser'}) {
-					Save_History('unknownrefererbrowser',$year,$month); delete $SectionsToSave{'unknownrefererbrowser'};
+					Save_History('unknownrefererbrowser',$year,$month,$date); delete $SectionsToSave{'unknownrefererbrowser'};
 					if ($withpurge) { %_unknownrefererbrowser_l=(); }
 				}
 				if (! scalar %SectionsToLoad) { debug(" Stop reading history file. Got all we need."); last; }
@@ -2721,7 +2734,7 @@ sub Read_History_With_TmpUpdate {
 				if ($Debug) { debug(" End of SCREENSIZE section ($count entries, $countloaded loaded)"); }
 				delete $SectionsToLoad{'screensize'};
 				if ($SectionsToSave{'screensize'}) {
-					Save_History('screensize',$year,$month); delete $SectionsToSave{'screensize'};
+					Save_History('screensize',$year,$month,$date); delete $SectionsToSave{'screensize'};
 					if ($withpurge) { %_screensize_h=(); }
 				}
 				if (! scalar %SectionsToLoad) { debug(" Stop reading history file. Got all we need."); last; }
@@ -2757,7 +2770,7 @@ sub Read_History_With_TmpUpdate {
 				if ($Debug) { debug(" End of ROBOT section ($count entries, $countloaded loaded)"); }
 				delete $SectionsToLoad{'robot'};
 				if ($SectionsToSave{'robot'}) {
-					Save_History('robot',$year,$month); delete $SectionsToSave{'robot'};
+					Save_History('robot',$year,$month,$date); delete $SectionsToSave{'robot'};
 					if ($withpurge) { %_robot_h=(); %_robot_k=(); %_robot_l=(); %_robot_r=(); }
 				}
 				if (! scalar %SectionsToLoad) { debug(" Stop reading history file. Got all we need."); last; }
@@ -2787,7 +2800,7 @@ sub Read_History_With_TmpUpdate {
 				if ($Debug) { debug(" End of WORMS section ($count entries, $countloaded loaded)"); }
 				delete $SectionsToLoad{'worms'};
 				if ($SectionsToSave{'worms'}) {
-					Save_History('worms',$year,$month); delete $SectionsToSave{'worms'};
+					Save_History('worms',$year,$month,$date); delete $SectionsToSave{'worms'};
 					if ($withpurge) { %_worm_h=(); %_worm_k=(); %_worm_l=(); }
 				}
 				if (! scalar %SectionsToLoad) { debug(" Stop reading history file. Got all we need."); last; }
@@ -2817,7 +2830,7 @@ sub Read_History_With_TmpUpdate {
 				if ($Debug) { debug(" End of EMAILSENDER section ($count entries, $countloaded loaded)"); }
 				delete $SectionsToLoad{'emailsender'};
 				if ($SectionsToSave{'emailsender'}) {
-					Save_History('emailsender',$year,$month); delete $SectionsToSave{'emailsender'};
+					Save_History('emailsender',$year,$month,$date); delete $SectionsToSave{'emailsender'};
 					if ($withpurge) { %_emails_h=(); %_emails_k=(); %_emails_l=(); }
 				}
 				if (! scalar %SectionsToLoad) { debug(" Stop reading history file. Got all we need."); last; }
@@ -2847,7 +2860,7 @@ sub Read_History_With_TmpUpdate {
 				if ($Debug) { debug(" End of EMAILRECEIVER section ($count entries, $countloaded loaded)"); }
 				delete $SectionsToLoad{'emailreceiver'};
 				if ($SectionsToSave{'emailreceiver'}) {
-					Save_History('emailreceiver',$year,$month); delete $SectionsToSave{'emailreceiver'};
+					Save_History('emailreceiver',$year,$month,$date); delete $SectionsToSave{'emailreceiver'};
 					if ($withpurge) { %_emailr_h=(); %_emailr_k=(); %_emailr_l=(); }
 				}
 				if (! scalar %SectionsToLoad) { debug(" Stop reading history file. Got all we need."); last; }
@@ -2921,7 +2934,7 @@ sub Read_History_With_TmpUpdate {
 				delete $SectionsToLoad{'sider'};
 				# WE DO NOT SAVE SECTION NOW BECAUSE VALUES CAN BE CHANGED AFTER READING VISITOR
 				#if ($SectionsToSave{'sider'}) {
-				#	Save_History('sider',$year,$month); delete $SectionsToSave{'sider'};
+				#	Save_History('sider',$year,$month,$date); delete $SectionsToSave{'sider'};
 				#	if ($withpurge) { %_url_p=(); %_url_k=(); %_url_e=(); %_url_x=(); }
 				#}
 				if (! scalar %SectionsToLoad) { debug(" Stop reading history file. Got all we need."); last; }
@@ -2952,7 +2965,7 @@ sub Read_History_With_TmpUpdate {
 				if ($Debug) { debug(" End of FILETYPES section ($count entries, $countloaded loaded)"); }
 				delete $SectionsToLoad{'filetypes'};
 				if ($SectionsToSave{'filetypes'}) {
-					Save_History('filetypes',$year,$month); delete $SectionsToSave{'filetypes'};
+					Save_History('filetypes',$year,$month,$date); delete $SectionsToSave{'filetypes'};
 					if ($withpurge) { %_filetypes_h=(); %_filetypes_k=(); %_filetypes_gz_in=(); %_filetypes_gz_out=(); }
 				}
 				if (! scalar %SectionsToLoad) { debug(" Stop reading history file. Got all we need."); last; }
@@ -3002,7 +3015,7 @@ sub Read_History_With_TmpUpdate {
 				if ($Debug) { debug(" End of SEREFERRALS section ($count entries, $countloaded loaded)"); }
 				delete $SectionsToLoad{'sereferrals'};
 				if ($SectionsToSave{'sereferrals'}) {
-					Save_History('sereferrals',$year,$month); delete $SectionsToSave{'sereferrals'};
+					Save_History('sereferrals',$year,$month,$date); delete $SectionsToSave{'sereferrals'};
 					if ($withpurge) { %_se_referrals_p=(); %_se_referrals_h=(); }
 				}
 				if (! scalar %SectionsToLoad) { debug(" Stop reading history file. Got all we need."); last; }
@@ -3045,7 +3058,7 @@ sub Read_History_With_TmpUpdate {
 				if ($Debug) { debug(" End of PAGEREFS section ($count entries, $countloaded loaded)"); }
 				delete $SectionsToLoad{'pagerefs'};
 				if ($SectionsToSave{'pagerefs'}) {
-					Save_History('pagerefs',$year,$month); delete $SectionsToSave{'pagerefs'};
+					Save_History('pagerefs',$year,$month,$date); delete $SectionsToSave{'pagerefs'};
 					if ($withpurge) { %_pagesrefs_p=(); %_pagesrefs_h=(); }
 				}
 				if (! scalar %SectionsToLoad) { debug(" Stop reading history file. Got all we need."); last; }
@@ -3109,7 +3122,7 @@ sub Read_History_With_TmpUpdate {
 				if ($Debug) { debug(" End of SEARCHWORDS section ($count entries, $countloaded loaded)"); }
 				delete $SectionsToLoad{'searchwords'};
 				if ($SectionsToSave{'searchwords'}) {
-					Save_History('searchwords',$year,$month); delete $SectionsToSave{'searchwords'};	# This save searwords and keywords sections
+					Save_History('searchwords',$year,$month,$date); delete $SectionsToSave{'searchwords'};	# This save searwords and keywords sections
 					if ($withpurge) { %_keyphrases=(); }
 				}
 				if (! scalar %SectionsToLoad) { debug(" Stop reading history file. Got all we need."); last; }
@@ -3146,7 +3159,7 @@ sub Read_History_With_TmpUpdate {
 				if ($Debug) { debug(" End of KEYWORDS section ($count entries, $countloaded loaded)"); }
 				delete $SectionsToLoad{'keywords'};
 				if ($SectionsToSave{'keywords'}) {
-					Save_History('keywords',$year,$month); delete $SectionsToSave{'keywords'};
+					Save_History('keywords',$year,$month,$date); delete $SectionsToSave{'keywords'};
 					if ($withpurge) { %_keywords=(); }
 				}
 				if (! scalar %SectionsToLoad) { debug(" Stop reading history file. Got all we need."); last; }
@@ -3175,7 +3188,7 @@ sub Read_History_With_TmpUpdate {
 				if ($Debug) { debug(" End of ERRORS section ($count entries, $countloaded loaded)"); }
 				delete $SectionsToLoad{'errors'};
 				if ($SectionsToSave{'errors'}) {
-					Save_History('errors',$year,$month); delete $SectionsToSave{'errors'};
+					Save_History('errors',$year,$month,$date); delete $SectionsToSave{'errors'};
 					if ($withpurge) { %_errors_h=(); %_errors_k=(); }
 				}
 				if (! scalar %SectionsToLoad) { debug(" Stop reading history file. Got all we need."); last; }
@@ -3207,7 +3220,7 @@ sub Read_History_With_TmpUpdate {
 					if ($Debug) { debug(" End of SIDER_$code section ($count entries, $countloaded loaded)"); }
 					delete $SectionsToLoad{"sider_$code"};
 					if ($SectionsToSave{"sider_$code"}) {
-						Save_History("sider_$code",$year,$month); delete $SectionsToSave{"sider_$code"};
+						Save_History("sider_$code",$year,$month,$date); delete $SectionsToSave{"sider_$code"};
 						if ($withpurge) { %_sider404_h=(); %_referer404_h=(); }
 					}
 					if (! scalar %SectionsToLoad) { debug(" Stop reading history file. Got all we need."); last; }
@@ -3240,7 +3253,7 @@ sub Read_History_With_TmpUpdate {
 					if ($Debug) { debug(" End of EXTRA_$extranum section ($count entries, $countloaded loaded)"); }
 					delete $SectionsToLoad{"extra_$extranum"};
 					if ($SectionsToSave{"extra_$extranum"}) {
-						Save_History("extra_$extranum",$year,$month); delete $SectionsToSave{"extra_$extranum"};
+						Save_History("extra_$extranum",$year,$month,$date); delete $SectionsToSave{"extra_$extranum"};
 						if ($withpurge) { %{'_section_' . $extranum . '_p'}=(); %{'_section_' . $extranum . '_h'}=(); %{'_section_' . $extranum . '_b'}=(); %{'_section_' . $extranum . '_l'}=(); }
 					}
 					if (! scalar %SectionsToLoad) { debug(" Stop reading history file. Got all we need."); last; }
@@ -3263,7 +3276,7 @@ sub Read_History_With_TmpUpdate {
                		    &$function($issectiontoload,$readxml,$xmleb,$countlines);
         				delete $SectionsToLoad{"plugin_$pluginname"};
         				if ($SectionsToSave{"plugin_$pluginname"}) {
-        					Save_History("plugin_$pluginname",$year,$month);
+        					Save_History("plugin_$pluginname",$year,$month,$date);
         					delete $SectionsToSave{"plugin_$pluginname"};
         					if ($withpurge) {
 #                           		my $function="SectionInitHashArray_$pluginname()";
@@ -3320,7 +3333,7 @@ sub Read_History_With_TmpUpdate {
 	# Write all unwrote sections in section order ('general','time', 'day','sider','session' and other...)
 	if ($Debug) { debug(" Check and write all unwrote sections: ".join(',',keys %SectionsToSave),2); }
 	foreach my $key (sort { $SectionsToSave{$a} <=> $SectionsToSave{$b} } keys %SectionsToSave) {
-		Save_History("$key",$year,$month,$lastlinenb,$lastlineoffset,$lastlinechecksum);
+		Save_History("$key",$year,$month,$date,$lastlinenb,$lastlineoffset,$lastlinechecksum);
 	}
 	%SectionsToSave=();
 
@@ -3355,27 +3368,28 @@ sub Read_History_With_TmpUpdate {
 
 	# If update, rename tmp file bis into tmp file or set HistoryAlreadyFlushed
 	if ($withupdate) {
-		if ($HistoryAlreadyFlushed{"$year$month"}) {
+		if ($HistoryAlreadyFlushed{"$year$month$day$hour"}) {
 			debug("Rename tmp history file bis '$filetoread' to '$filetowrite'");
 			if (rename($filetowrite,$filetoread)==0) {
 				error("Failed to update tmp history file $filetoread");
 			}
 		}
 		else {
-			$HistoryAlreadyFlushed{"$year$month"}=1;
+			$HistoryAlreadyFlushed{"$year$month$day$hour"}=1;
 		}
+
 		if (! $ListOfYears{"$year"} || $ListOfYears{"$year"} lt "$month") { $ListOfYears{"$year"}="$month"; }
 	}
 
 	# For backward compatibility, if LastLine does not exist, set to LastTime
-	$LastLine||=$LastTime{$year.$month};
+	$LastLine||=$LastTime{$date};
 
 	return ($withupdate?"$filetowrite":"");
 }
 
 #------------------------------------------------------------------------------
 # Function:		Save a part of history file
-# Parameters:	sectiontosave,year,month[,lastlinenb,lastlineoffset,lastlinechecksum]
+# Parameters:	sectiontosave,year,month,breakdate[,lastlinenb,lastlineoffset,lastlinechecksum]
 # Input:		$VERSION HISTORYTMP $nowyear $nowmonth $nowday $nowhour $nowmin $nowsec $LastLineNumber $LastLineOffset $LastLineChecksum
 # Output:		None
 # Return:		None
@@ -3384,6 +3398,7 @@ sub Save_History {
 	my $sectiontosave=shift||'';
 	my $year=shift||'';
 	my $month=shift||'';
+	my $breakdate=shift||'';
 
 	my $xml=($BuildHistoryFormat eq 'xml'?1:0);
 	my ($xmlbb,$xmlbs,$xmlbe,$xmlhb,$xmlhs,$xmlhe,$xmlrb,$xmlrs,$xmlre,$xmleb,$xmlee)=('','','','','','','','','','','');
@@ -3408,7 +3423,7 @@ sub Save_History {
 		if ($xml) { print HISTORYTMP "<version><lib>\n"; }
 		print HISTORYTMP "AWSTATS DATA FILE $VERSION\n";
 		if ($xml) { print HISTORYTMP "</lib><comment>\n"; }
-		print HISTORYTMP "# If you remove this file, all statistics for date $year-$month will be lost/reset.\n";
+		print HISTORYTMP "# If you remove this file, all statistics for date $breakdate will be lost/reset.\n";
 		if ($xml) { print HISTORYTMP "</comment></version>\n"; }
 		print HISTORYTMP "\n";
 		if ($xml) { print HISTORYTMP "<section id='$sectiontosave'><comment>\n"; }
@@ -3475,9 +3490,9 @@ sub Save_History {
 		print HISTORYTMP "# MonthHostsUnKnown = Number of hosts unknown\n";
 		$ValueInFile{$sectiontosave}=tell HISTORYTMP;
 		print HISTORYTMP "${xmlbb}BEGIN_GENERAL${xmlbs}8${xmlbe}\n";
-		print HISTORYTMP "${xmlrb}LastLine${xmlrs}".($LastLine>0?$LastLine:$LastTime{$year.$month})." $lastlinenb $lastlineoffset $lastlinechecksum${xmlre}\n";
-		print HISTORYTMP "${xmlrb}FirstTime${xmlrs}$FirstTime{$year.$month}${xmlre}\n";
-		print HISTORYTMP "${xmlrb}LastTime${xmlrs}$LastTime{$year.$month}${xmlre}\n";
+		print HISTORYTMP "${xmlrb}LastLine${xmlrs}".($LastLine>0?$LastLine:$LastTime{$breakdate})." $lastlinenb $lastlineoffset $lastlinechecksum${xmlre}\n";
+		print HISTORYTMP "${xmlrb}FirstTime${xmlrs}".$FirstTime{$breakdate}."${xmlre}\n";
+		print HISTORYTMP "${xmlrb}LastTime${xmlrs}".$LastTime{$breakdate}."${xmlre}\n";
 		print HISTORYTMP "${xmlrb}LastUpdate${xmlrs}$LastUpdate $NbOfLinesParsed $NbOfOldLines $NbOfNewLines $NbOfLinesCorrupted $NbOfLinesDropped${xmlre}\n";
 		print HISTORYTMP "${xmlrb}TotalVisits${xmlrs}";$PosInFile{"TotalVisits"}=tell HISTORYTMP;print HISTORYTMP "$spacebar${xmlre}\n";
 		print HISTORYTMP "${xmlrb}TotalUnique${xmlrs}";$PosInFile{"TotalUnique"}=tell HISTORYTMP;print HISTORYTMP "$spacebar${xmlre}\n";
@@ -4009,9 +4024,17 @@ sub Rename_All_Tmp_History {
 	if ($Debug) { debug("Call to Rename_All_Tmp_History (FileSuffix=$FileSuffix)"); }
 
 	opendir(DIR,"$DirData");
+
+	my $datemask;
+	if    ($DatabaseBreak eq 'month') { $datemask='\d\d\d\d\d\d'; }
+	elsif ($DatabaseBreak eq 'year')  { $datemask='\d\d\d\d'; }
+	elsif ($DatabaseBreak eq 'day')   { $datemask='\d\d\d\d\d\d\d\d'; }
+	elsif ($DatabaseBreak eq 'hour')  { $datemask='\d\d\d\d\d\d\d\d\d\d'; }
+	if ($Debug) { debug("Scan for temp history files to rename into DirData='$DirData' with mask='$datemask'"); }
+
 	my $regfilesuffix=quotemeta($FileSuffix);
-	foreach (grep /^$PROG(\d\d\d\d\d\d)$regfilesuffix\.tmp\.$pid$/, sort readdir DIR) {
-		/^$PROG(\d\d\d\d\d\d)$regfilesuffix\.tmp\.$pid$/;
+	foreach (grep /^$PROG($datemask)$regfilesuffix\.tmp\.$pid$/, sort readdir DIR) {
+		/^$PROG($datemask)$regfilesuffix\.tmp\.$pid$/;
 		if ($renameok) {	# No rename error yet
 			if ($Debug) { debug(" Rename new tmp history file $PROG$1$FileSuffix.tmp.$$ into $PROG$1$FileSuffix.txt",1); }
 			if (-s "$DirData/$PROG$1$FileSuffix.tmp.$$") {		# Rename tmp files if size > 0
@@ -4400,6 +4423,7 @@ sub Show_Flag_Links {
 	else {
 		$NewLinkParams=($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&";
 	}
+	if ($NewLinkParams !~ /output=/) { $NewLinkParams.='ouput=main&'; }
 	if ($FrameName eq 'mainright') { $NewLinkParams.='framename=index&'; }
 
 	foreach my $lng (split(/\s+/,$ShowFlagLinks)) {
@@ -5180,7 +5204,7 @@ sub ShowMenuCateg {
 		my $function="AddHTMLMenuLink_$pluginname";
 		&$function($categ,$menu,$menulink,$menutext);
 	}
-    foreach my $key (%$menu) { if ($menu->{$key}>0) { $linetitle++; last; } }
+    foreach my $key (%$menu) { if ($menu->{$key} && $menu->{$key} > 0) { $linetitle++; last; } }
 	if (! $linetitle) { return; }
     # At least one entry in menu for this category, we can show categpry and entries
 	my $WIDTHMENU1=($FrameName eq 'mainleft'?$FRAMEWIDTH:150);
@@ -5492,6 +5516,7 @@ if ($QueryString =~ /(^|&)staticlinks=([^&]+)/i) 	{ $StaticLinks=".$2"; }		# Whe
 if ($QueryString =~ /(^|&)staticlinksext=([^&]+)/i) { $StaticExt="$2"; }
 if ($QueryString =~ /(^|&)framename=([^&]+)/i)		{ $FrameName="$2"; }
 if ($QueryString =~ /(^|&)debug=(\d+)/i)			{ $Debug=$2; }
+if ($QueryString =~ /(^|&)databasebreak=(\w+)/i)	{ $DatabaseBreak=$2; }
 if ($QueryString =~ /(^|&)updatefor=(\d+)/i)		{ $UpdateFor=$2; }
 if ($QueryString =~ /(^|&)noloadplugin=([^&]+)/i)	{ foreach (split(/,/,$2)) { $NoLoadPlugin{&Sanitize("$_",1)}=1; } }
 #Removed for security reasons
@@ -5519,15 +5544,17 @@ if ($ENV{'GATEWAY_INTERFACE'} && ! scalar keys %HTMLOutput) { $HTMLOutput{'main'
 # Remove -output option with no = from QueryString
 $QueryString=~s/(^|&)output(&|$)/$1/i; $QueryString=~s/&+$//;
 
-# Check year and month parameters
+# Check year, month, day, hour parameters
 if ($QueryString =~ /(^|&)month=(year)/i) { error("month=year is a deprecated option. Use month=all instead."); }
 if ($QueryString =~ /(^|&)year=(\d\d\d\d)/i) { $YearRequired=sprintf("%04d",$2); }
 else { $YearRequired="$nowyear"; }
 if ($QueryString =~ /(^|&)month=(\d{1,2})/i) { $MonthRequired=sprintf("%02d",$2); }
-elsif ($QueryString =~ /(^|&)month=(all)/i) { $MonthRequired='all'; }
+elsif ($QueryString =~ /(^|&)month=(all)/i)  { $MonthRequired='all'; }
 else { $MonthRequired="$nowmonth"; }
-if ($QueryString =~ /(^|&)day=(\d{1,2})/i) { $DayRequired=sprintf("%02d",$2); }	# day is a hidden option. Must not be used (Make results not understandable). Available for users that rename history files with day.
+if ($QueryString =~ /(^|&)day=(\d{1,2})/i)   { $DayRequired=sprintf("%02d",$2); }	# day is a hidden option. Must not be used (Make results not understandable). Available for users that rename history files with day.
 else { $DayRequired=''; }
+if ($QueryString =~ /(^|&)hour=(\d{1,2})/i)  { $HourRequired=sprintf("%02d",$2); }	# hour is a hidden option. Must not be used (Make results not understandable). Available for users that rename history files with day.
+else { $HourRequired=''; }
 
 # Check parameter validity
 # TODO
@@ -5539,6 +5566,7 @@ if ($Debug) {
 	debug("QUERY_STRING=$QueryString",2);
 	debug("HTMLOutput=".join(',',keys %HTMLOutput),1);
 	debug("YearRequired=$YearRequired, MonthRequired=$MonthRequired",2);
+	debug("DayRequired=$DayRequired, HourRequired=$HourRequired",2);
 	debug("UpdateFor=$UpdateFor",2);
 	debug("PluginMode=$PluginMode",2);
 	debug("DirConfig=$DirConfig",2);
@@ -5810,14 +5838,15 @@ if (scalar keys %HTMLOutput && $MonthRequired eq 'all') {
 #------------------------------------------
 if ($MigrateStats) {
 	if ($Debug) { debug("MigrateStats is $MigrateStats",2); }
-	if ($MigrateStats !~ /^(.*)$PROG(\d{0,2})(\d\d)(\d\d\d\d)(.*)\.txt$/) {
+	if ($MigrateStats !~ /^(.*)$PROG(\d\d)(\d\d\d\d)(\d{0,2})(\d{0,2})(.*)\.txt$/) {
 		error("AWStats history file name must match following syntax: ${PROG}MMYYYY[.config].txt","","",1);
 	}
 	$DirData="$1";
-	$DayRequired="$2";
-	$MonthRequired="$3";
-	$YearRequired="$4";
-	$FileSuffix="$5";
+	$MonthRequired="$2";
+	$YearRequired="$3";
+	$DayRequired="$4";
+	$HourRequired="$5";
+	$FileSuffix="$6";
 	# Correct DirData
 	if (! $DirData || $DirData =~ /^\./) {
 	     if (! $DirData || $DirData eq '.') { $DirData="$DIR"; }      # If not defined or chosen to '.' value then DirData is current dir
@@ -5827,7 +5856,7 @@ if ($MigrateStats) {
 	$DirData =~ s/[\\\/]+$//;
 	print "Start migration for file '$MigrateStats'."; print $ENV{'GATEWAY_INTERFACE'}?"<br />\n":"\n";
 	if ($EnableLockForUpdate) {	&Lock_Update(1); }
-	my $newhistory=&Read_History_With_TmpUpdate($YearRequired,$MonthRequired,1,0,'all');
+	my $newhistory=&Read_History_With_TmpUpdate($YearRequired,$MonthRequired,$DayRequired,$HourRequired,1,0,'all');
 	if (rename("$newhistory","$MigrateStats")==0) {
 		unlink "$newhistory";
 		error("Failed to rename \"$newhistory\" into \"$MigrateStats\".\nWrite permissions on \"$MigrateStats\" might be wrong".($ENV{'GATEWAY_INTERFACE'}?" for a 'migration from web'":"")." or file might be opened.");
@@ -5862,25 +5891,40 @@ if ($FrameName eq 'index') {
 %MonthNumLib = ("01","$Message[60]","02","$Message[61]","03","$Message[62]","04","$Message[63]","05","$Message[64]","06","$Message[65]","07","$Message[66]","08","$Message[67]","09","$Message[68]","10","$Message[69]","11","$Message[70]","12","$Message[71]");
 
 # Build ListOfYears list with all existing years
-if ($Debug) { debug("Scan for last history files into DirData='$DirData'"); }
-$lastyearbeforeupdate=0;
+($lastyearbeforeupdate,$lastmonthbeforeupdate,$lastdaybeforeupdate,$lasthourbeforeupdate,$lastdatebeforeupdate)=(0,0,0,0,0);
+my $datemask='';
+if    ($DatabaseBreak eq 'month') { $datemask='(\d\d)(\d\d\d\d)'; }
+elsif ($DatabaseBreak eq 'year')  { $datemask='(\d\d\d\d)'; }
+elsif ($DatabaseBreak eq 'day')   { $datemask='(\d\d)(\d\d\d\d)(\d\d)'; }
+elsif ($DatabaseBreak eq 'hour')  { $datemask='(\d\d)(\d\d\d\d)(\d\d)(\d\d)'; }
+if ($Debug) { debug("Scan for last history files into DirData='$DirData' with mask='$datemask'"); }
 opendir(DIR,"$DirData");
-foreach (grep /^$PROG(\d\d)(\d\d\d\d)$FileSuffix\.txt(|\.gz)$/i, sort readdir DIR) {
-	/^$PROG(\d\d)(\d\d\d\d)$FileSuffix\.txt(|\.gz)$/i;
+my $regfilesuffix=quotemeta($FileSuffix);
+foreach (grep /^$PROG$datemask$regfilesuffix\.txt(|\.gz)$/i, sort readdir DIR) {
+	/^$PROG$datemask$regfilesuffix\.txt(|\.gz)$/i;
 	if (! $ListOfYears{"$2"} || "$1" gt $ListOfYears{"$2"}) {
-		$ListOfYears{"$2"}="$1";	# ListOfYears contains max month found
-		if ("$2" gt $lastyearbeforeupdate) { $lastyearbeforeupdate="$2"; }
+		# ListOfYears contains max month found
+		$ListOfYears{"$2"}="$1";
+	}
+	if ("$2$1$3$4" gt $lastdatebeforeupdate) {
+		# We are on a new max for mask
+		$lastyearbeforeupdate="$2";
+		$lastmonthbeforeupdate="$1";
+		$lastdaybeforeupdate="$3";
+		$lasthourbeforeupdate="$4";
+		$lastdatebeforeupdate="$2$1$3$4";
 	}
 }
 close DIR;
 
-# Get value for LastLine
+# If at least one file found, get value for LastLine
 if ($lastyearbeforeupdate) {
 	# Read 'general' section of last history file for LastLine
-	&Read_History_With_TmpUpdate($lastyearbeforeupdate,$ListOfYears{$lastyearbeforeupdate},0,0,"general");
+	&Read_History_With_TmpUpdate($lastyearbeforeupdate,$lastmonthbeforeupdate,$lastdaybeforeupdate,$lasthourbeforeupdate,0,0,"general");
 }
 if ($Debug) {
-	debug("Last year=$lastyearbeforeupdate - Last month=$ListOfYears{$lastyearbeforeupdate}");
+	debug("Last year=$lastyearbeforeupdate - Last month=$lastmonthbeforeupdate");
+	debug("Last day=$lastdaybeforeupdate - Last hour=$lasthourbeforeupdate");
 	debug("LastLine=$LastLine");
 	debug("LastLineNumber=$LastLineNumber");
 	debug("LastLineOffset=$LastLineOffset");
@@ -5906,9 +5950,16 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 		print "With data in log file \"$LogFile\"...\n";
 	}
 
-	my $lastprocessedyear=$lastyearbeforeupdate;
-	my $lastprocessedmonth=$ListOfYears{$lastyearbeforeupdate}||0;
-	my $lastprocessedyearmonth=sprintf("%04i%02i",$lastprocessedyear,$lastprocessedmonth);
+	my $lastprocessedyear=$lastyearbeforeupdate||0;
+	my $lastprocessedmonth=$lastmonthbeforeupdate||0;
+	my $lastprocessedday=$lastdaybeforeupdate||0;
+	my $lastprocessedhour=$lasthourbeforeupdate||0;
+	my $lastprocesseddate='';
+	if    ($DatabaseBreak eq 'month') { $lastprocesseddate=sprintf("%04i%02i",$lastprocessedyear,$lastprocessedmonth); }
+	elsif ($DatabaseBreak eq 'year')  { $lastprocesseddate=sprintf("%04i%",$lastprocessedyear); }
+	elsif ($DatabaseBreak eq 'day')   { $lastprocesseddate=sprintf("%04i%02i%02i",$lastprocessedyear,$lastprocessedmonth,$lastprocessedday); }
+	elsif ($DatabaseBreak eq 'hour')  { $lastprocesseddate=sprintf("%04i%02i%02i%02i",$lastprocessedyear,$lastprocessedmonth,$lastprocessedday,$lastprocessedhour); }
+	
 
 	my @list;
 	# Init RobotsSearchIDOrder required for update process
@@ -6011,7 +6062,7 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 		&Lock_Update(1);
 	}
 
-	if ($Debug) { debug("Start Update process (lastprocessedmonth=$lastprocessedmonth, lastprocessedyear=$lastprocessedyear)"); }
+	if ($Debug) { debug("Start Update process (lastprocesseddate=$lastprocesseddate)"); }
 
 	# Open log file
 	if ($Debug) { debug("Open log file \"$LogFile\""); }
@@ -6167,11 +6218,18 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 		if ($MonthNum{$dateparts[1]}) { $dateparts[1]=$MonthNum{$dateparts[1]}; }	# Change lib month in num month if necessary
 
 		# Now @dateparts is (DD,MM,YYYY,HH,MM,SS) and we're going to create $timerecord=YYYYMMDDHHMMSS
-		# Plugin call : Convert a @datepart into another @datepart
+		# TODO Plugin call : Convert a @datepart into another @datepart
 		if ($PluginsLoaded{'ChangeTime'}{'timezone'})  { @dateparts=ChangeTime_timezone(\@dateparts); }
 		my $yearrecord=int($dateparts[2]);
 		my $monthrecord=int($dateparts[1]);
+		my $dayrecord=int($dateparts[0]);
 		my $hourrecord=int($dateparts[3]);
+		my $daterecord='';
+		if    ($DatabaseBreak eq 'month') { $daterecord=sprintf("%04i%02i",$yearrecord,$monthrecord); }
+		elsif ($DatabaseBreak eq 'year')  { $daterecord=sprintf("%04i%",$yearrecord); }
+		elsif ($DatabaseBreak eq 'day')   { $daterecord=sprintf("%04i%02i%02i",$yearrecord,$monthrecord,$dayrecord); }
+		elsif ($DatabaseBreak eq 'hour')  { $daterecord=sprintf("%04i%02i%02i%02i",$yearrecord,$monthrecord,$dayrecord,$hourrecord); }
+		# TODO essayer de virer yearmonthrecord
 		my $yearmonthdayrecord=sprintf("$dateparts[2]%02i%02i",$dateparts[1],$dateparts[0]);
 		my $timerecord=((int("$yearmonthdayrecord")*100+$dateparts[3])*100+$dateparts[4])*100+$dateparts[5];
 
@@ -6180,6 +6238,11 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 		if ($LogType eq 'M' && $timerecord > $tomorrowtime) {
 			# Postfix/Sendmail does not store year, so we assume that year is year-1 if record is in future
 			$yearrecord--;
+			if    ($DatabaseBreak eq 'month') { $daterecord=sprintf("%04i%02i",$yearrecord,$monthrecord); }
+			elsif ($DatabaseBreak eq 'year')  { $daterecord=sprintf("%04i%",$yearrecord); }
+			elsif ($DatabaseBreak eq 'day')   { $daterecord=sprintf("%04i%02i%02i",$yearrecord,$monthrecord,$dayrecord); }
+			elsif ($DatabaseBreak eq 'hour')  { $daterecord=sprintf("%04i%02i%02i%02i",$yearrecord,$monthrecord,$dayrecord,$hourrecord); }
+			# TODO essayer de virer yearmonthrecord
 			$yearmonthdayrecord=sprintf("$yearrecord%02i%02i",$dateparts[1],$dateparts[0]);
 			$timerecord=((int("$yearmonthdayrecord")*100+$dateparts[3])*100+$dateparts[4])*100+$dateparts[5];
 		}
@@ -6247,16 +6310,23 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 		# Record is approved
 		#-------------------
 
-		# Is it in a new month section ?
+		# Is it in a new break section ?
 		#-------------------------------
-		if ((($monthrecord > $lastprocessedmonth) && ($yearrecord >= $lastprocessedyear)) || ($yearrecord > $lastprocessedyear)) {
-			# A new month to process
-			if ($lastprocessedmonth) {
-				# We save data of processed month
-				&Read_History_With_TmpUpdate($lastprocessedyear,$lastprocessedmonth,1,1,"all",($lastlinenb+$NbOfLinesParsed),$lastlineoffset,&CheckSum($line));
+		if ($daterecord > $lastprocesseddate) {
+			# A new break to process
+			if ($lastprocesseddate > 0) {
+				# We save data of previous break
+				&Read_History_With_TmpUpdate($lastprocessedyear,$lastprocessedmonth,$lastprocessedday,$lastprocessedhour,1,1,"all",($lastlinenb+$NbOfLinesParsed),$lastlineoffset,&CheckSum($line));
 				$counterforflushtest=0;	# We reset counterforflushtest
 			}
-			$lastprocessedyearmonth=sprintf("%04i%02i",$lastprocessedyear=$yearrecord,$lastprocessedmonth=$monthrecord);
+			$lastprocessedyear=$yearrecord;
+			$lastprocessedmonth=$monthrecord;
+			$lastprocessedday=$dayrecord;
+			$lastprocessedhour=$hourrecord;
+			if    ($DatabaseBreak eq 'month') { $lastprocesseddate=sprintf("%04i%02i",$yearrecord,$monthrecord); }
+			elsif ($DatabaseBreak eq 'year')  { $lastprocesseddate=sprintf("%04i%",$yearrecord); }
+			elsif ($DatabaseBreak eq 'day')   { $lastprocesseddate=sprintf("%04i%02i%02i",$yearrecord,$monthrecord,$dayrecord); }
+			elsif ($DatabaseBreak eq 'hour')  { $lastprocesseddate=sprintf("%04i%02i%02i%02i",$yearrecord,$monthrecord,$dayrecord,$hourrecord); }
 		}
 
 		$countedtraffic=0;
@@ -6426,7 +6496,7 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
     					}
 					}
 				}
-				if ($Debug) { debug(" Record stored in the status code chart (status code=$field[$pos_code])",2); }
+				if ($Debug) { debug(" Record stored in the status code chart (status code=$field[$pos_code])",3); }
 				$countedtraffic=1;
 				if ($PageBool) { $_time_nv_p[$hourrecord]++; }
 				$_time_nv_h[$hourrecord]++;
@@ -6437,7 +6507,7 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 			if (! $ValidSMTPCodes{$field[$pos_code]}) {	# Code is not valid
 				$_errors_h{$field[$pos_code]}++;
 				$_errors_k{$field[$pos_code]}+=int($field[$pos_size]);	# Size is often 0 when error
-				if ($Debug) { debug(" Record stored in the status code chart (status code=$field[$pos_code])",2); }
+				if ($Debug) { debug(" Record stored in the status code chart (status code=$field[$pos_code])",3); }
 				$countedtraffic=1;
 				if ($PageBool) { $_time_nv_p[$hourrecord]++; }
 				$_time_nv_h[$hourrecord]++;
@@ -6538,8 +6608,8 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 			if (@DefaultFile > 1) { foreach my $elem (@DefaultFile) { if ($field[$pos_url] =~ s/\/$elem$/\//o) { last; } } }
 			else { $field[$pos_url] =~ s/$regdefault/\//o; }
 			# FirstTime and LastTime are First and Last human visits (so changed if access to a page)
-			$FirstTime{$lastprocessedyearmonth}||=$timerecord;
-			$LastTime{$lastprocessedyearmonth}=$timerecord;
+			$FirstTime{$lastprocesseddate}||=$timerecord;
+			$LastTime{$lastprocesseddate}=$timerecord;
 			$DayPages{$yearmonthdayrecord}++;
 			$_url_p{$field[$pos_url]}++; 										#Count accesses for page (page)
 			$_url_k{$field[$pos_url]}+=int($field[$pos_size]);
@@ -7189,7 +7259,7 @@ END_ERROR_TEXT
 						print " _url_p:".(scalar keys %_url_p)." _url_k:".(scalar keys %_url_k)." _url_e:".(scalar keys %_url_e)." _url_x:".(scalar keys %_url_x)."\n";
 						print " _waithost_e:".(scalar keys %_waithost_e)." _waithost_l:".(scalar keys %_waithost_l)." _waithost_s:".(scalar keys %_waithost_s)." _waithost_u:".(scalar keys %_waithost_u)."\n";
 					}
-					&Read_History_With_TmpUpdate($lastprocessedyear,$lastprocessedmonth,1,1,"all",($lastlinenb+$NbOfLinesParsed),$lastlineoffset,&CheckSum($_));
+					&Read_History_With_TmpUpdate($lastprocessedyear,$lastprocessedmonth,$lastprocessedday,$lastprocessedhour,1,1,"all",($lastlinenb+$NbOfLinesParsed),$lastlineoffset,&CheckSum($_));
 					&GetDelaySinceStart(1);	$NbOfLinesShowsteps=1;
 				}
 			}
@@ -7205,19 +7275,19 @@ END_ERROR_TEXT
 		debug("End of processing log file (AWStats memory cache is TmpDNSLookup=".(scalar keys %TmpDNSLookup)." TmpBrowser=".(scalar keys %TmpBrowser)." TmpOS=".(scalar keys %TmpOS)." TmpRefererServer=".(scalar keys %TmpRefererServer)." TmpRobot=".(scalar keys %TmpRobot).")",1);
 	}
 
-	# Save current processed month $lastprocessedmonth
-	# If lastprocessedmonth > 0 means there is at least one approved new record in log or at least one existing history file
-	if ($lastprocessedmonth) {	# TODO: Do not save if we are sure a flush was just already done
+	# Save current processed break section
+	# If lastprocesseddate > 0 means there is at least one approved new record in log or at least one existing history file
+	if ($lastprocesseddate > 0) {	# TODO: Do not save if we are sure a flush was just already done
 		# Get last line
 		seek(LOG,$lastlineoffset,0);
 		my $line=<LOG>;
  		chomp $line; $line =~ s/\r$//;
 		if (! $NbOfLinesParsed) {
 			# TODO If there was no lines parsed (log was empty), we only update LastUpdate line with YYYYMMDDHHMMSS 0 0 0 0 0
-			&Read_History_With_TmpUpdate($lastprocessedyear,$lastprocessedmonth,1,1,"all",($lastlinenb+$NbOfLinesParsed),$lastlineoffset,&CheckSum($line));
+			&Read_History_With_TmpUpdate($lastprocessedyear,$lastprocessedmonth,$lastprocessedday,$lastprocessedhour,1,1,"all",($lastlinenb+$NbOfLinesParsed),$lastlineoffset,&CheckSum($line));
 		}
 		else {
-			&Read_History_With_TmpUpdate($lastprocessedyear,$lastprocessedmonth,1,1,"all",($lastlinenb+$NbOfLinesParsed),$lastlineoffset,&CheckSum($line));
+			&Read_History_With_TmpUpdate($lastprocessedyear,$lastprocessedmonth,$lastprocessedday,$lastprocessedhour,1,1,"all",($lastlinenb+$NbOfLinesParsed),$lastlineoffset,&CheckSum($line));
 		}
 	}
 
@@ -7245,7 +7315,7 @@ END_ERROR_TEXT
 	}
 
 	# Rename all HISTORYTMP files into HISTORYTXT
-	&Rename_All_Tmp_History;
+	&Rename_All_Tmp_History();
 
 	# Purge Log file if option is on and all renaming are ok
 	if ($PurgeLogFile) {
@@ -7303,6 +7373,9 @@ END_ERROR_TEXT
 
 if (scalar keys %HTMLOutput) {
 
+	debug("YearRequired=$YearRequired, MonthRequired=$MonthRequired",2);
+	debug("DayRequired=$DayRequired, HourRequired=$HourRequired",2);
+
 	my $max_p; my $max_h; my $max_k; my $max_v;
 	my $total_u; my $total_v; my $total_p; my $total_h; my $total_k; my $total_e; my $total_x; my $total_s; my $total_l; my $total_r;
 	my $average_u; my $average_v; my $average_p; my $average_h; my $average_k; my $average_s;
@@ -7330,16 +7403,37 @@ if (scalar keys %HTMLOutput) {
 		#-------------
 		&Init_HashArray();
 
-		# Loop on each month of year
-		for (my $ix=12; $ix>=1; $ix--) {
-			my $monthix=sprintf("%02s",$ix);
-			if ($MonthRequired eq 'all' || $monthix eq $MonthRequired) {
-				&Read_History_With_TmpUpdate($YearRequired,$monthix,0,0,"all");				# Read full history file
-			}
-			elsif (($HTMLOutput{'main'} && $ShowMonthStats) || $HTMLOutput{'alldays'}) {
-				&Read_History_With_TmpUpdate($YearRequired,$monthix,0,0,"general time");	# Read general and time sections.
-			}
-		}
+        # Lecture des fichiers history
+		my $stringforload='';
+		if ($DatabaseBreak eq 'month') {
+    		for (my $ix=12; $ix>=1; $ix--) {
+    			my $monthix=sprintf("%02s",$ix);
+    			if ($MonthRequired eq 'all' || $monthix eq $MonthRequired) {
+    				$stringforload='all';			# Read full history file
+    			}
+    			elsif (($HTMLOutput{'main'} && $ShowMonthStats) || $HTMLOutput{'alldays'}) {
+    				$stringforload='general time';	# Read general and time sections.
+    			}
+    			if ($stringforload) {
+    				# On charge fichier
+   					&Read_History_With_TmpUpdate($YearRequired,$monthix,'','',0,0,$stringforload);
+   				}
+   			}
+        }
+		if ($DatabaseBreak eq 'day') {
+			$stringforload='all';
+   			my $monthix=sprintf("%02s",$MonthRequired);
+   			my $dayix=sprintf("%02s",$DayRequired);
+			&Read_History_With_TmpUpdate($YearRequired,$monthix,$dayix,'',0,0,$stringforload);
+        }
+		if ($DatabaseBreak eq 'hour') {
+			$stringforload='all';
+   			my $monthix=sprintf("%02s",$MonthRequired);
+   			my $dayix=sprintf("%02s",$DayRequired);
+   			my $hourix=sprintf("%02s",$HourRequired);
+			&Read_History_With_TmpUpdate($YearRequired,$monthix,$dayix,$hourix,0,0,$stringforload);
+        }
+
 	}
 
 	# HTMLHeadSection
@@ -7620,9 +7714,15 @@ if (scalar keys %HTMLOutput) {
 		exit 0;
 	}
 
-	# FirstTime LastTime TotalVisits TotalUnique TotalPages TotalHits TotalBytes TotalHostsKnown TotalHostsUnknown
+	# FirstTime LastTime
 	my $FirstTime=0;
 	my $LastTime=0;
+	foreach my $key (keys %FirstTime) {
+		if ($FirstTime{$key} && ($FirstTime == 0 || $FirstTime > $FirstTime{$key})) { $FirstTime = $FirstTime{$key}; }
+		if ($LastTime < ($LastTime{$key}||0)) { $LastTime = $LastTime{$key}; }
+	}
+	
+	# TotalVisits TotalUnique TotalPages TotalHits TotalBytes TotalHostsKnown TotalHostsUnknown
 	$TotalUnique=$TotalVisits=$TotalPages=$TotalHits=$TotalBytes=0;
 	$TotalNotViewedPages=$TotalNotViewedHits=$TotalNotViewedBytes=0;
 	$TotalHostsKnown=$TotalHostsUnknown=0;
@@ -7630,12 +7730,10 @@ if (scalar keys %HTMLOutput) {
 	if ($MonthRequired eq 'all') { $beginmonth=1;$endmonth=12; }
 	for (my $month=$beginmonth; $month<=$endmonth; $month++) {
 		my $monthix=sprintf("%02s",$month);
-		if ($FirstTime{$YearRequired.$monthix} && ($FirstTime == 0 || $FirstTime > $FirstTime{$YearRequired.$monthix})) { $FirstTime = $FirstTime{$YearRequired.$monthix}; }
-		if ($LastTime < ($LastTime{$YearRequired.$monthix}||0)) { $LastTime = $LastTime{$YearRequired.$monthix}; }
 		$TotalHostsKnown+=$MonthHostsKnown{$YearRequired.$monthix}||0;		# Wrong in year view
 		$TotalHostsUnknown+=$MonthHostsUnknown{$YearRequired.$monthix}||0;	# Wrong in year view
 		$TotalUnique+=$MonthUnique{$YearRequired.$monthix}||0;				# Wrong in year view
-		$TotalVisits+=$MonthVisits{$YearRequired.$monthix}||0;
+		$TotalVisits+=$MonthVisits{$YearRequired.$monthix}||0;				# Not completely true
 		$TotalPages+=$MonthPages{$YearRequired.$monthix}||0;
 		$TotalHits+=$MonthHits{$YearRequired.$monthix}||0;
 		$TotalBytes+=$MonthBytes{$YearRequired.$monthix}||0;
@@ -9070,12 +9168,12 @@ if (scalar keys %HTMLOutput) {
 				print "<tr valign=\"bottom\">\n";
 				for (@DOWIndex) {
 					my $bredde_p=0; my $bredde_h=0; my $bredde_k=0;
-					if ($max_h > 0) { $bredde_p=int($avg_dayofweek_p[$_]/$max_h*$BarHeight)+1; }
-					if ($max_h > 0) { $bredde_h=int($avg_dayofweek_h[$_]/$max_h*$BarHeight)+1; }
-					if ($max_k > 0) { $bredde_k=int($avg_dayofweek_k[$_]/$max_k*$BarHeight)+1; }
-					$avg_dayofweek_p[$_]=sprintf("%.2f",$avg_dayofweek_p[$_]);
-					$avg_dayofweek_h[$_]=sprintf("%.2f",$avg_dayofweek_h[$_]);
-					$avg_dayofweek_k[$_]=sprintf("%.2f",$avg_dayofweek_k[$_]);
+					if ($max_h > 0) { $bredde_p=int(($avg_dayofweek_p[$_]ne'?'?$avg_dayofweek_p[$_]:0)/$max_h*$BarHeight)+1; }
+					if ($max_h > 0) { $bredde_h=int(($avg_dayofweek_h[$_]ne'?'?$avg_dayofweek_h[$_]:0)/$max_h*$BarHeight)+1; }
+					if ($max_k > 0) { $bredde_k=int(($avg_dayofweek_k[$_]ne'?'?$avg_dayofweek_k[$_]:0)/$max_k*$BarHeight)+1; }
+					$avg_dayofweek_p[$_]=sprintf("%.2f",($avg_dayofweek_p[$_]ne'?'?$avg_dayofweek_p[$_]:0));
+					$avg_dayofweek_h[$_]=sprintf("%.2f",($avg_dayofweek_h[$_]ne'?'?$avg_dayofweek_h[$_]:0));
+					$avg_dayofweek_k[$_]=sprintf("%.2f",($avg_dayofweek_k[$_]ne'?'?$avg_dayofweek_k[$_]:0));
 					# Remove decimal part that are .0
 					if ($avg_dayofweek_p[$_] == int($avg_dayofweek_p[$_])) { $avg_dayofweek_p[$_]=int($avg_dayofweek_p[$_]); }
 					if ($avg_dayofweek_h[$_] == int($avg_dayofweek_h[$_])) { $avg_dayofweek_h[$_]=int($avg_dayofweek_h[$_]); }
@@ -9688,10 +9786,10 @@ if (scalar keys %HTMLOutput) {
 				if ($ShowPagesStats =~ /E/i) { print "<img src=\"$DirIcons\/other\/$BarPng{'he'}\" width=\"$bredde_e\" height=\"4\"".AltTitle("")." /><br />"; }
 				if ($ShowPagesStats =~ /X/i) { print "<img src=\"$DirIcons\/other\/$BarPng{'hx'}\" width=\"$bredde_x\" height=\"4\"".AltTitle("")." />"; }
 				print "</td></tr>\n";
-				$total_p += $_url_p{$key};
-				$total_e += $_url_e{$key};
-				$total_x += $_url_x{$key};
-				$total_k += $_url_k{$key};
+				$total_p += $_url_p{$key}||0;
+				$total_e += $_url_e{$key}||0;
+				$total_x += $_url_x{$key}||0;
+				$total_k += $_url_k{$key}||0;
 				$count++;
 			}
 			$rest_p=$TotalPages-$total_p;
@@ -10078,7 +10176,7 @@ if (scalar keys %HTMLOutput) {
 				if ($MiscListCalc{$key} eq 'v') { $total=$TotalVisits; }
 				if ($MiscListCalc{$key} eq 'u') { $total=$TotalUnique; }
 				if ($MiscListCalc{$key} eq 'hm') { $total=$_misc_h{'TotalMisc'}||0; }
-				if ($total) { $p=int($_misc_h{$key}/$total*1000)/10; }
+				if ($total) { $p=int(($_misc_h{$key}?$_misc_h{$key}:0)/$total*1000)/10; }
 				print "<tr>";
 				print "<td class=\"aws\">".($PageDir eq 'rtl'?"<span dir=\"ltr\">":"").$label{$key}.($PageDir eq 'rtl'?"</span>":"")."</td>";
 				if ($MiscListCalc{$key} eq 'v') { print "<td>".($_misc_h{$key}||0)." / $total $Message[12]</td>"; }
@@ -10266,7 +10364,7 @@ else {
 #
 # If 'migrate'
 #   We create/update tmp file with
-#     &Read_History_With_TmpUpdate(year,month,UPDATE,NOPURGE,"all");
+#     &Read_History_With_TmpUpdate(year,month,day,hour,UPDATE,NOPURGE,"all");
 #   Rename the tmp file
 #   html_end
 #   Exit
@@ -10274,7 +10372,7 @@ else {
 #
 # Get last history file name
 # Get value for $LastLine $LastLineNumber $LastLineOffset $LastLineChecksum with
-#	&Read_History_With_TmpUpdate(lastyear,lastmonth,NOUPDATE,NOPURGE,"general");
+#	&Read_History_With_TmpUpdate(lastyearbeforeupdate,lastmonthbeforeupdate,lastdaybeforeupdate,lasthourbeforeupdate,NOUPDATE,NOPURGE,"general");
 #
 # &Init_HashArray()
 #
@@ -10297,7 +10395,7 @@ else {
 #     Skip line for not @OnlyUserAgent --> next on loop
 #     So it's new line approved
 #     If other month/year, create/update tmp file and purge data arrays with
-#       &Read_History_With_TmpUpdate(lastprocessedyear,lastprocessedmonth,UPDATE,PURGE,"all",lastlinenb,lastlineoffset,CheckSum($_));
+#       &Read_History_With_TmpUpdate(lastprocessedyear,lastprocessedmonth,lastprocessedday,lastprocessedhour,UPDATE,PURGE,"all",lastlinenb,lastlineoffset,CheckSum($_));
 #     Define a clean Url and Query (set urlwithnoquery, tokenquery and standalonequery and $field[$pos_url])
 #     Define PageBool and extension
 #     Analyze: Misc tracker --> complete %misc
@@ -10318,19 +10416,20 @@ else {
 #     Analyze: Cluster
 #     Analyze: Extra (must be after 'Define a clean Url and Query')
 #     If too many records, we flush data arrays with
-#       &Read_History_With_TmpUpdate($lastprocessedyear,$lastprocessedmonth,UPDATE,PURGE,"all",lastlinenb,lastlineoffset,CheckSum($_));
+#       &Read_History_With_TmpUpdate(lastprocessedyear,lastprocessedmonth,lastprocessedday,lastprocessedhour,UPDATE,PURGE,"all",lastlinenb,lastlineoffset,CheckSum($_));
 #   End of loop
+#
 #   Create/update tmp file
-#	  Seek to lastlineoffset to read and get last line into $_ 
-#	  &Read_History_With_TmpUpdate($lastprocessedyear,$lastprocessedmonth,UPDATE,PURGE,"all",lastlinenb,lastlineoffset,CheckSum($_))
-#   Rename all tmp files
+#	  Seek to lastlineoffset in logfile to read and get last line into $_
+#	  &Read_History_With_TmpUpdate(lastprocessedyear,lastprocessedmonth,lastprocessedday,lastprocessedhour,UPDATE,PURGE,"all",lastlinenb,lastlineoffset,CheckSum($_))
+#   Rename all created tmp files
 # End of 'update'
 #
 # &Init_HashArray()
 #
 # If 'output'
 #   Loop for each month of required year
-#     &Read_History_With_TmpUpdate($YearRequired,monthloop,NOUPDATE,NOPURGE,"all" or "general time" if not required month)
+#     &Read_History_With_TmpUpdate($YearRequired,$monthloop,'','',NOUPDATE,NOPURGE,'all' or 'general time' if not required month)
 #   End of loop
 #   Show data arrays in HTML page
 #   html_end
