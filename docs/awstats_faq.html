@@ -789,7 +789,7 @@ The best way to do that on 'Linux like' OS is to use the linux built-in logrotat
 edit the logrotate config file used for your web server log file (usually stored in /etc/logrotate.d
 directory) by adding the AWStats update process as a preprocessor command, like this example (bold
 lines are lines to add for having a prerotate process):<br>
-<table width="100%" border=1 cellpadding=0 cellspacing=0 bgcolor=#F4F4F4 class=CFAQ><tr class=CFAQ><td class=CFAQ>
+<table width="95%" border=1 cellpadding=0 cellspacing=0 bgcolor=#F4F4F4 class=CFAQ><tr class=CFAQ><td class=CFAQ>
 /usr/local/apache/logs/*log<br>
 {<br>
 notifempty<br>
@@ -809,7 +809,7 @@ endscript<br>
 </td></tr></table>
 <br>
 If using a such solution, this is sequential steps that happens:<br>
-<table border=1 cellpadding=1 cellspacing=0 bgcolor=#F4F4F4 width="100%" class=CFAQ>
+<table border=1 cellpadding=1 cellspacing=0 bgcolor=#F4F4F4 width="95%" class=CFAQ>
 <tr><td<b>Step</b></td><td><b>Description</b></td><td><b>Step name</b></td><td><b>Date/Time example</b></td></tr>
 <tr valign=top><td>A</td><td>logrotate is started (by cron)</td><td>Start of logrotate</td><td>04:02:00</td></tr>
 <tr valign=top><td>B</td><td><ul>awstats -update is launched by logrotate</td><td>Start of awstats</td><td>04:02:01</td><tr>
@@ -941,7 +941,7 @@ a js directory stored in your web root.<br>
 Once this is done, load your home page with your browser and go to check that inside your log file
 if you can see a line that looks like that:<br>
 <table border=1 cellpadding=1 cellspacing=0 bgcolor=#F4F4F4 width="95%" class=CFAQ><tr><td>
-123.123.123.123 - - [24/Apr/2005:16:09:38 +0200] "GET /js/awstats_misc_tracker.js?screen=800x600&win=724x517&cdi=32&java=true&shk=n&fla=y&rp=n&mov=n&wma=y&pdf=y&uid=awsuser_id123&sid=awssession_id123 HTTP/1.1" 200 6237 "http://therefererwebsite.com/index.php" "Mozilla/5.0 (Windows; U; Windows NT 5.1; fr-FR; rv:1.7.7) Gecko/20050414 Firefox/1.0.3" (-)
+123.123.123.123 - - [24/Apr/2005:16:09:38 +0200] "GET /js/awstats_misc_tracker.js?screen=800x600&win=724x517&cdi=32&java=true&shk=n&fla=y&rp=n&mov=n&wma=y&pdf=y&uid=awsuser_id123&sid=awssession_id123 HTTP/1.1" 200 6237 "http://therefererwebsite.com/index.php" "Mozilla/5.0 (Linux) Gecko/20050414 Firefox/1.0.3"
 </td></tr></table>
 <br>
 If yes, you can then run the AWStats update process. Screen sizes information will be analyzed. All you have to do 
