@@ -20,7 +20,7 @@
 <td bgcolor=#9999cc align=center><a href="/"><img src="images/awstats_logo4.png" border=0></a></td>
 <td bgcolor=#9999cc align=center>
 <br>
-<font style="font: 16pt arial,helvetica,sans-serif" color=#EEEEFF><b>AWStats logfile analyzer 6.4 Documentation</b></font><br>
+<font style="font: 16pt arial,helvetica,sans-serif" color=#EEEEFF><b>AWStats logfile analyzer 6.5 Documentation</b></font><br>
 <br>
 </td>
 <td bgcolor=#9999cc align=center>
@@ -56,6 +56,7 @@ FAQ-COM115 <a href="#PERSONALIZEDLOG">Setup/Examples for LogFormat parameter.</a
 FAQ-COM120 <a href="#ROTATE">How to rotate my logs without loosing data.</a><br>
 FAQ-COM130 <a href="#CRONTAB">How to run AWStats frequently ?</a><br>
 FAQ-COM140 <a href="#EXCLUDEHOSTS">How to exclude my IP address (or whole subnet mask) from stats ?</a><br>
+FAQ-COM142 <a href="#SCREENSIZE">How to get the screen size and browser capabilities report working ?</a><br>
 FAQ-COM145 <a href="#EXTRA">How to use the Extra Sections features ?</a><br>
 FAQ-COM150 <a href="#BENCHMARK">Benchmark question.</a><br>
 FAQ-COM200 <a href="#DNS">How reverse DNS Lookup works, unresolved IP Addresses ?</a><br>
@@ -115,8 +116,9 @@ or any other log format that contains all information AWStats expect to find.<br
 <li> Most of all others Web/Wap/Proxy/Streaming servers.<br>
 <li> Some FTP, Syslog or Mail log files.<br>
 Because AWStats is in Perl, it can works on all Operating Systems.<br>
+<br>
 Examples of used platforms (bold means 'tested by author', others were reported by AWStats users to work correctly) :<br>
-<table bgcolor=#F4F4F4 width="100%" class=CFAQ><tr class=CFAQ><td class=CFAQ>
+<table width="95%" border=1 cellpadding=0 cellspacing=0 bgcolor=#F4F4F4 class=CFAQ><tr class=CFAQ><td class=CFAQ>
 <u>OS:</u><br>
 <b>Windows 2000</b>, <b>Windows NT 4.0</b>, Windows Me, <b>Linux (RedHat, Mandrake, Debian, Suse...)</b>, Macintosh, <b>Solaris</b>, <b>Aix</b>, BeOS, FreeBSD, ...<br>
 <u>Web/Wap/Proxy/Streaming servers</u><br>
@@ -137,9 +139,9 @@ AWStats setup knows predefined log format you can use to make AWStats config eas
 you can define your own log format, that's the reason why AWStats can analyze nearly all web, wap
 and proxy server log files. Some FTP servers log files, Syslog or mail logs can also be analyzed.<br>
 The only requirement is "Your log file must contain required information".<br>
-This is very short examples of possible log format:<br>
 <br>
-<i>
+This is very short examples of possible log format:<br>
+<table width="95%" border=1 cellpadding=0 cellspacing=0 bgcolor=#F4F4F4 class=CFAQ><tr class=CFAQ><td class=CFAQ>
 Apache common log format (see Note*),<br>
 Apache combined log format (known as NCSA combined log format or XLF or ELF format),<br>
 Any other personalized Apache log format,<br>
@@ -149,14 +151,15 @@ Realmedia server, Windows Media Server, Darwin streaming server,<br>
 ProFTPd server, vsFTPd server,<br>
 Postfix, Sendmail, QMail, Mdaemon<br>
 A lot of web/wap/proxy/streaming servers log format<br>
+</td></tr></table>
 <br>
-Note*: Apache common log format (AWStats can now analyze such log files but such log files does not
+*Note: Apache common log format (AWStats can now analyze such log files but such log files does not
 contain all information AWStats is looking for. The problem is in the content, not in the
 format). I think analyzing common log files is not interesting because there is a lot of
 missing information: no way to filter robots, find search engines, keywords, os, browser.
 But a lot of users asked me for it, so AWStats support it.
 However, a lot of interesting advanced features can't work: browsers, os's, keywords, robot detection...).
-</i><br>
+<br>
 See also <a href="#PERSONALIZEDLOG">F.A.Q.: LOG FORMAT SETUP OR ERRORS </a>.<br>
 <br>
 
@@ -167,7 +170,7 @@ alphabetical order (The code you can use for <a href="awstats_config.html#Lang">
 and <a href="awstats_config.html#ShowFlagLinks">ShowFlagLinks</a> parameter are 
 the ISO-639-1 language codes):<br>
 <i>
-<table bgcolor=#F4F4F4 width="100%" class=CFAQ><tr class=CFAQ><td class=CFAQ>
+<table width="95%" border=1 cellpadding=0 cellspacing=0 bgcolor=#F4F4F4 class=CFAQ><tr class=CFAQ><td class=CFAQ>
 Albanian=al, Bosnian=ba, Bulgarian=bg, Catalan=ca,
 Chinese (Taiwan)=tw, Chinese (Simpliefied)=cn, Czech=cz, Danish=dk,
 Dutch=nl, English=en, Estonian=et, Euskara=eu, Finnish=fi,
@@ -210,7 +213,7 @@ However, this is a trick that you can use to have a log file be build. You must 
 a tag to call a CGI script like pslogger into each of your web pages. This will
 allow you to have an artificial log file that can be analyzed by AWStats.<br>
 You can find a Perl version of CGI pslogger enhanced by AWStats author <a href="/files/pslogger.pl">here</a>
-or a php version of CGI pslogger made by Florent CHANTRET <a href="/files/pslogger.phps">here</a>.
+or a php version of CGI pslogger made by Florent CHANTRET <a href="/files/pslogger.phps">here</a>.<br>
 <br>
 
 <a name="LIMITLOG"></a><br>
@@ -242,7 +245,7 @@ AWStats can be used with some FTP server log files.<br>
 1- Setup your server log file format:<br>
 <br>
 Modify the proftpd.conf file to add the following two lines :
-<table width="95%" border=1 cellpadding=0 cellspacing=0><tr class=CFAQ><td class=CFAQ>
+<table width="95%" border=1 cellpadding=0 cellspacing=0 bgcolor=#F4F4F4 class=CFAQ><tr class=CFAQ><td class=CFAQ>
 <!--<br>With ProFTPd 1.2.2:-->
 <i>LogFormat awstats "%t %h %u %m %f %s %b"</i> &nbsp; &nbsp; # WARNING: You must use a tab char between % tags and not a space !
 <i><br>ExtendedLog /var/log/xferlog read,write awstats</i> &nbsp; &nbsp; # WARNING: ExtendedLog directive might need to be placed inside a virtual host context if you use them.
@@ -251,8 +254,9 @@ Modify the proftpd.conf file to add the following two lines :
 <i><br>ExtendedLog /var/log/xferlog read,write awstats</i> &nbsp; &nbsp; # WARNING: ExtendedLog directive might need to be placed inside a virtual host context if you use them.
 -->
 </td></tr></table>
+<br>
 Then turn off old format Transfer log:
-<table width="95%" border=1 cellpadding=0 cellspacing=0><tr class=CFAQ><td class=CFAQ>
+<table width="95%" border=1 cellpadding=0 cellspacing=0 bgcolor=#F4F4F4 class=CFAQ><tr class=CFAQ><td class=CFAQ>
 <i>TransferLog none</i> &nbsp; &nbsp; # WARNING: TransferLog directive might need to be placed inside a virtual host context if you use them.
 </td></tr></table>
 <br>
@@ -264,7 +268,7 @@ Download a file by FTP and check that your new log file looks like this:<br>
 <br>
 Copy config file "awstats.model.conf" to "awstats.ftp.conf".<br>
 Modify this new config file:
-<table width="95%" border=1 cellpadding=0 cellspacing=0><tr class=CFAQ><td class=CFAQ>
+<table width="95%" border=1 cellpadding=0 cellspacing=0 bgcolor=#F4F4F4 class=CFAQ><tr class=CFAQ><td class=CFAQ>
 <i>
 LogFile="/var/log/xferlog"
 <br>LogType=F
@@ -313,7 +317,7 @@ Now you can use AWStats as usual (run the update process and read statistics).<b
 <br>
 Take a look at your FTP server log file. You must have a format that match the following example to
 use this FAQ :<br>
-<table width="95%" border=1 cellpadding=0 cellspacing=0><tr class=CFAQ><td class=CFAQ>
+<table width="95%" border=1 cellpadding=0 cellspacing=0 bgcolor=#F4F4F4 class=CFAQ><tr class=CFAQ><td class=CFAQ>
 <i>Wed Jan 01 19:29:35 2001 1 192.168.1.1 102 /home/file1.txt b _ o r username ftp 0 * c</i>
 </td></tr></table>
 <br>
@@ -321,7 +325,7 @@ use this FAQ :<br>
 <br>
 If your FTP log file format looks good, copy config file "awstats.model.conf" to "awstats.ftp.conf".<br>
 Modify this new config file:
-<table width="95%" border=1 cellpadding=0 cellspacing=0><tr class=CFAQ><td class=CFAQ>
+<table width="95%" border=1 cellpadding=0 cellspacing=0 bgcolor=#F4F4F4 class=CFAQ><tr class=CFAQ><td class=CFAQ>
 <i>
 LogFile="/var/log/xferlog"
 <br>LogType=F
@@ -379,7 +383,7 @@ You must setup AWStats to use a mail log file preprocessor (<i>maillogconvert.pl
 into AWStats <i>tools</i> directory, but you can use the one of your choice):<br>
 For this, copy config <i>"awstats.model.conf"</i> file to <i>"awstats.mail.conf"</i>.<br>
 Modify this new config file:
-<table width="95%" border=1 cellpadding=0 cellspacing=0><tr class=CFAQ><td class=CFAQ>
+<table width="95%" border=1 cellpadding=0 cellspacing=0 bgcolor=#F4F4F4 class=CFAQ><tr class=CFAQ><td class=CFAQ>
 For standard Postfix, Sendmail, MDaemon and standard QMail logfiles, set<br>
 <i>
 LogFile="perl /path/to/maillogconvert.pl standard &lt; /pathtomaillog/maillog |"<br>
@@ -446,7 +450,7 @@ However a little support is provided. In order to analyze Exchange traffic, you 
 enable "Message Tracking" (see article http://support.microsoft.com/default.aspx?scid=kb;EN-US;246856).<br>
 Then copy config awstats.model.conf file to "awstats.mail.conf".<br>
 Modify this new config file:
-<table width="95%" border=1 cellpadding=0 cellspacing=0><tr class=CFAQ><td class=CFAQ>
+<table width="95%" border=1 cellpadding=0 cellspacing=0 bgcolor=#F4F4F4 class=CFAQ><tr class=CFAQ><td class=CFAQ>
 <i>
 LogType=M
 <br>LogFormat="%time2 %email %email_r %host %host_r %method %url %code %bytesd"
@@ -507,7 +511,7 @@ Your log file will probably looks like this:<br>
 <br>
 Copy config awstats.model.conf file to "awstats.mediaserver.conf".
 Modify this new config file:
-<table width="95%" border=1 cellpadding=0 cellspacing=0><tr class=CFAQ><td class=CFAQ>
+<table width="95%" border=1 cellpadding=0 cellspacing=0 bgcolor=#F4F4F4 class=CFAQ><tr class=CFAQ><td class=CFAQ>
 <i>
 LogFile="/pathtomediaserverlog/mediaserverlog"
 <br>LogType=S
@@ -604,7 +608,7 @@ Windows Media Server tags.<br>
 2- Then setup AWStats to analyze your Media Server log:<br>
 Copy config awstats.model.conf file to "awstats.mediaserver.conf".<br>
 Modify this new config file:
-<table width="95%" border=1 cellpadding=0 cellspacing=0><tr class=CFAQ><td class=CFAQ>
+<table width="95%" border=1 cellpadding=0 cellspacing=0 bgcolor=#F4F4F4 class=CFAQ><tr class=CFAQ><td class=CFAQ>
 <i>
 LogFile="/pathtomediaserver/mediaserverlog"
 <br>LogType=S
@@ -649,95 +653,95 @@ file format ?<br>
 The AWStats config file give you all possible values for LogFormat parameter.
 To help you, this is some common cases of log file format, and
 the corresponding value for LogFormat you must use in your AWStats config file:<br>
-
+<hr>
 <table bgcolor=#F4F4F4 width="100%" class=CFAQ><tr class=CFAQ><td class=CFAQ>
 <u>If your log records are EXACTLY like this (<b>NCSA combined/XLF/ELF</b> log format):</u><br>
 <i>62.161.78.73 - - [dd/mmm/yyyy:hh:mm:ss +0x00] "GET /page.html HTTP/1.1" 200 1234 "http://www.from.com/from.htm" "Mozilla/4.0 (compatible; MSIE 5.01; Windows NT 5.0)"</i><br>
 You must use : <i>LogFormat=1</i><br>
 This is same than: <i>LogFormat="%host %other %logname %time1 %methodurl %code %bytesd %refererquot %uaquot"</i><br>
 </td></tr></table>
-
+<hr>
 <u>If your log records are EXACTLY like this (<b>NCSA combined with several virtualhostname</b> sharing same log file).</u><br>
 <i>virtualserver1 62.161.78.73 - - [dd/mmm/yyyy:hh:mm:ss +0x00] "GET /page.html HTTP/1.1" 200 1234 "http://www.from.com/from.htm" "Mozilla/4.0 (compatible; MSIE 5.01; Windows NT 5.0)"</i><br>
 You must use : <i>LogFormat="%virtualname %host %other %logname %time1 %methodurl %code %bytesd %refererquot %uaquot"</i><br>
-
+<hr>
 <table bgcolor=#F4F4F4 width="100%" class=CFAQ><tr class=CFAQ><td class=CFAQ>
 <u>If your log records are EXACTLY like this (<b>NCSA combined and mod_gzip format 1</b> with <b>Apache 1.x</b>):</u><br>
 <i>62.161.78.73 - - [dd/mmm/yyyy:hh:mm:ss +0x00] "GET /page.html HTTP/1.1" 200 3904 "http://www.from.com/from.htm" "Mozilla/4.0 (compatible; MSIE 5.01; Windows NT 5.0)" mod_gzip: 66pct.</i><br>
 You must use : <i>LogFormat="%host %other %logname %time1 %methodurl %code %bytesd %refererquot %uaquot %other %gzipratio"</i><br>
 </td></tr></table>
-
+<hr>
 <u>If your log records are EXACTLY like this (<b>NCSA combined and mod_gzip format 2</b> with <b>Apache 1.x</b>):</u><br>
 <i>62.161.78.73 - - [dd/mmm/yyyy:hh:mm:ss +0x00] "GET /page.html HTTP/1.1" 200 3904 "http://www.from.com/from.htm" "Mozilla/4.0 (compatible; MSIE 5.01; Windows NT 5.0)" mod_gzip: DECHUNK:OK In:11393 Out:3904:66pct.</i><br>
 You must use : <i>LogFormat="%host %other %logname %time1 %methodurl %code %bytesd %refererquot %uaquot %other %other %gzipin %gzipout"</i><br>
-
+<hr>
 <table bgcolor=#F4F4F4 width="100%" class=CFAQ><tr class=CFAQ><td class=CFAQ>
 <u>If your log records are EXACTLY like this (<b>NCSA combined and mod_deflate</b> with <b>Apache 2</b>):</u><br>
 <i>62.161.78.73 - - [dd/mmm/yyyy:hh:mm:ss +0x00] "GET /page.html HTTP/1.1" 200 3904 "http://www.from.com/from.htm" "Mozilla/4.0 (compatible; MSIE 5.01; Windows NT 5.0)" (45)</i><br>
 You must use : <i>LogFormat="%host %other %logname %time1 %methodurl %code %bytesd %refererquot %uaquot %deflateratio"</i><br>
 </td></tr></table>
-
+<hr>
 <u>If your log records are EXACTLY like this (<b>NCSA combined with 2 spaces between some fields</b> with <b>Zope</b>):</u><br>
 <i>62.161.78.73 &nbsp;- - [dd/mmm/yyyy:hh:mm:ss +0x00] "GET /page.html HTTP/1.1" 200 3904 "http://www.from.com/from.htm" "Mozilla/4.0 (compatible; MSIE 5.01; Windows NT 5.0)" (45)</i><br>
 You must use : <i><br>
 LogFormat="%host %other %logname %time1 %methodurl %code %bytesd %refererquot %uaquot"<br>
 LogSeparator=" *"<br>
 </i>
-
+<hr>
 <table bgcolor=#F4F4F4 width="100%" class=CFAQ><tr class=CFAQ><td class=CFAQ>
 <u>If your log records are EXACTLY like this (<b>NCSA common CLF</b> log format):</u><br>
 <i>62.161.78.73 - - [dd/mmm/yyyy:hh:mm:ss +0x00] "GET /page.html HTTP/1.1" 200 1234</i><br>
 You must use : <i>LogFormat=4</i><br>
 Note: Browsers, OS's, Keywords and Referers features are not available with a such format.<br>
 </td></tr></table>
-
+<hr>
 <u>If your log records are EXACTLY like this (With some <b>Squid</b> versions, after setting <i>emulate_http_log</i> to on):</u><br>
 <i>200.135.30.181 - - [dd/mmm/yyyy:hh:mm:ss +0x00] "GET http://www.mydomain.com/page.html HTTP/1.0" 200 456 TCP_CLIENT_REFRESH_MISS:DIRECT</i><br>
 You must use : <i>LogFormat="%host %other %logname %time1 %methodurl %code %bytesd %other"</i><br>
-
+<hr>
 <table bgcolor=#F4F4F4 width="100%" class=CFAQ><tr class=CFAQ><td class=CFAQ>
 <u>If your log records are EXACTLY like this (Some old <b>IIS</b> W3C log format):</u><br>
 <i>yyyy-mm-dd hh:mm:ss 62.161.78.73 - GET /page.html 200 1234 HTTP/1.1 Mozilla/4.0+(compatible;+MSIE+5.01;+Windows+NT+5.0) http://www.from.com/from.html</i><br>
 You must use : <i>LogFormat=2</i><br>
 </td></tr></table>
-
+<hr>
 <u>If your log records are EXACTLY like this (Some <b>IIS</b> W3C log format with some <b>.net</b> servers):</u><br>
 <i>yyyy-mm-dd hh:mm:ss GET /page.html - 62.161.78.73 - Mozilla/4.0+(compatible;+MSIE+5.01;+Windows+NT+5.0) http://www.from.com/from.html 200 1234 HTTP/1.1</i><br>
 You must use : <i>LogFormat=2 (or LogFormat="%time2 %method %url %logname %host %other %ua %referer %code %bytesd %other")</i><br> 
-
+<hr>
 <table bgcolor=#F4F4F4 width="100%" class=CFAQ><tr class=CFAQ><td class=CFAQ>
 <u>If your log records are EXACTLY like this (Some <b>IIS 6+</b> W3C log format):</u><br>
 <i>yyyy-mm-dd hh:mm:ss GET /page.html - 62.161.78.73 - Mozilla/4.0+(compatible;+MSIE+5.01;+Windows+NT+5.0) http://www.from.com/from.html 200 1234</i><br>
 You must use : <i>LogFormat=2 (or LogFormat="date time cs-method cs-uri-stem cs-username c-ip cs-version cs(User-Agent) cs(Referer) sc-status sc-bytes")</i><br>
 </td></tr></table>
-
+<hr>
 <u>If your log records are EXACTLY like this (Some <b>ISA</b> W3C log format):</u><br>
 <i>62.161.78.73, anonymous, Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1), N, 1/1/2001, 0:00:16, W3ReverseProxy, HCSERV2, -, www.host.be, 192.168.141.101, 80, 266, 406, 10042, http, TCP, GET, http://192.168.141.101/, text/html, Inet, 200, 0x42330010, -, -</i><br>
 You must use :<br>
 <i>LogFile="sed -e 's/, /\t/g' "/yourlogpath/yourlogfile.log" |"</i><br>
 <i>LogFormat=2</i><br>
 <i>LogSeparator=" "</i><br>
-
+<hr>
 <table bgcolor=#F4F4F4 width="100%" class=CFAQ><tr class=CFAQ><td class=CFAQ>
 <u>If your log records are EXACTLY like this (With some <b>WebSite</b> versions):</u><br>
 <i>yyyy-mm-dd hh:mm:ss 62.161.78.73 - 192.168.1.1 80 GET /page.html - 200 11205 0 0 HTTP/1.1 mydomain.com Mozilla/4.0+(compatible;+MSIE+5.5;+Windows+98) - http://www.from.com/from.html</i><br>
 You must use : <i>LogFormat="%time2 %host %logname %other %other %method %url %other %code %bytesd %other %other %other %other %ua %other %referer"</i><br>
 </td></tr></table>
-
+<hr>
 <u>If your log records are EXACTLY like this (<b>Webstar</b> native log format):</u><br>
 <i>05/21/00	00:17:31	OK  	200	212.242.30.6	Mozilla/4.0 (compatible; MSIE 5.0; Windows 98; DigExt)	http://www.cover.dk/	"www.cover.dk"	:Documentation:graphics:starninelogo.white.gif	1133</i><br>
 You must use : <i>LogFormat=3</i><br>
-
+<hr>
 <table bgcolor=#F4F4F4 width="100%" class=CFAQ><tr class=CFAQ><td class=CFAQ>
 <u>If your log records are EXACTLY like this (With some <b>Lotus Notes/Domino</b> versions):</u><br>
 <i>62.161.78.73 - Name Surname Service [dd/mmm/yyyy:hh:mm:ss +0x00] "GET /page.html HTTP/1.1" 200 1234 "http://www.from.com/from.htm" "Mozilla/4.0 (compatible; MSIE 5.01; Windows NT 5.0)"</i><br>
 You must use : <i>LogFormat=6</i><br>
 </td></tr></table>
-
+<hr>
 <u>If your log records are EXACTLY like this (<b>Lotus Notes/Domino 6.x</b> log format):</u><br>
 <i>62.161.78.73 - "Name Surname" Service [dd/mmm/yyyy:hh:mm:ss +0x00] "GET /page.html HTTP/1.1" 200 1234 "http://www.from.com/from.htm" "Mozilla/4.0 (compatible; MSIE 5.01; Windows NT 5.0)"</i><br>
 You must use : <i>LogFormat="%host %other %lognamequot %time1 %methodurl %code %bytesd %refererquot %uaquot"</i><br>
-
+<hr>
 <table bgcolor=#F4F4F4 width="100%" class=CFAQ><tr class=CFAQ><td class=CFAQ>
 <u>If your log records are EXACTLY like this (With <b>Oracle9iAS</b>):</u><br>
 <i>62.161.78.73 - [dd/mmm/yyyy:hh:mm:ss +0x00] GET /page.html HTTP/1.1 200 1234 - "Mozilla/4.0 (compatible; MSIE 5.01; Windows NT 5.0)"</i><br>
@@ -745,25 +749,25 @@ Where separators are <tab> chars or several spaces,
 You must use : <i>LogFormat="%host %logname %time1 %method %url %other %code %bytesd %referer %uaquot"</i>
 and <i>LogSeparator="\s+"</i><br>
 </td></tr></table>
-
+<hr>
 <u>If you use a FTP server like <b>ProFTPd</b>:</u><br>
 See <a href="#FTP">FAQ-COM090</a>.<br>
-
+<hr>
 <table bgcolor=#F4F4F4 width="100%" class=CFAQ><tr class=CFAQ><td class=CFAQ>
 <u>If you want to analyze a mail log file (<b>Postfix</b>, <b>Sendmail</b>, <b>QMail</b>, <b>MDaemon</b>, <b>Exchange</b>):</u><br>
 See <a href="#MAIL">FAQ-COM100</a>.<br>
 </td></tr></table>
-
+<hr>
 <u>If you use a Media Server (<b>Realmedia</b>, <b>Windows Media Server</b>):</u><br>
 See <a href="#MEDIASERVER">FAQ-COM110</a>.<br>
-
+<hr>
 <table bgcolor=#F4F4F4 width="100%" class=CFAQ><tr class=CFAQ><td class=CFAQ>
 <u>If your log records are EXACTLY like this (With some providers):</u><br>
 <i>62.161.78.73 - - [dd/Month/yyyy:hh:mm:ss +0x00] "GET /page.html HTTP/1.1" "-" 200 1234</i><br>
 You must use : <i>LogFormat="%host %other %logname %time1 %methodurl %other %code %bytesd"</i><br>
 Note: Browsers, OS's, Keywords and Referers features are not available with a such format.<br>
 </td></tr></table>
-
+<hr>
 <u>There is a lot of other possible log formats.</u><br>
 You must use a personalized log format LogFormat ="..." as described in config file to
 support other various log formats.<br>
@@ -784,7 +788,8 @@ process, you must run the AWStats update JUST BEFORE the rotate process is done.
 The best way to do that on 'Linux like' OS is to use the linux built-in logrotate feature. You must
 edit the logrotate config file used for your web server log file (usually stored in /etc/logrotate.d
 directory) by adding the AWStats update process as a preprocessor command, like this example (bold
-lines are lines to add for having a prerotate process):<br><i>
+lines are lines to add for having a prerotate process):<br>
+<table width="100%" border=1 cellpadding=0 cellspacing=0 bgcolor=#F4F4F4 class=CFAQ><tr class=CFAQ><td class=CFAQ>
 /usr/local/apache/logs/*log<br>
 {<br>
 notifempty<br>
@@ -801,7 +806,7 @@ postrotate<br>
 /usr/bin/killall -HUP httpd<br>
 endscript<br>
 }<br>
-</i>
+</td></tr></table>
 <br>
 If using a such solution, this is sequential steps that happens:<br>
 <table border=1 cellpadding=1 cellspacing=0 bgcolor=#F4F4F4 width="100%" class=CFAQ>
@@ -887,14 +892,18 @@ experience problem of failing task. Try this instead<br>
 <i>"C:\WINNT\system32\CMD.EXE /C C:\[awstats_path]\awstats.pl -config=mysite -update"</i><br>
 or<br>
 <i>"C:\[perl_path]\perl.exe C:\[awstats_path]\awstats.pl -config=mysite -update"</i><br>
-A lot of other scheduler (sharewares/freewares) are very good.<br>
+A lot of other open source schedulers are often better (otherwise there is also good sharewares or freewares).<br>
 <br>
 <u>With unix-like operating systems</u>, you can use the "<b>crontab</b>".<br>
 This is examples of lines you can add in the cron file (see your unix reference manual for cron) :<br>
 To run update every day at 03:50, use :<br>
-<i>50 3 * * * /usr/local/awstats/wwwroot/cgi-bin/awstats.pl -config=mysite -update >/dev/null</i><br>
+<table border=1 cellpadding=1 cellspacing=0 bgcolor=#F4F4F4 width="95%" class=CFAQ><tr><td>
+50 3 * * * /usr/local/awstats/wwwroot/cgi-bin/awstats.pl -config=mysite -update >/dev/null<br>
+</td></tr></table>
 To run update every hour, use :<br>
-<i>0 * * * * /usr/local/awstats/wwwroot/cgi-bin/awstats.pl -config=mysite -update >/dev/null</i><br>
+<table border=1 cellpadding=1 cellspacing=0 bgcolor=#F4F4F4 width="95%" class=CFAQ><tr><td>
+0 * * * * /usr/local/awstats/wwwroot/cgi-bin/awstats.pl -config=mysite -update >/dev/null<br>
+</td></tr></table>
 <br>
 
 <a name="EXCLUDEHOSTS"></a><br>
@@ -908,6 +917,38 @@ For example, to exclude:<br>
 <li> the whole subnet 123.123.123.xxx, use <a href="awstats_config.html#SkipHosts">SkipHosts</a>="REGEX[^123\.123\.123\.]"<br>
 <li> all sub hosts xxx.myintranet.com, use <a href="awstats_config.html#SkipHosts">SkipHosts</a>="REGEX[\.myintranet\.com$]" (This one works only if DNS lookup is already done in your
 log file).<br>
+<br> 
+
+<a name="SCREENSIZE"></a><br>
+<b><u>FAQ-COM142 : HOW TO GET THE SCREEN SIZE AND BROWSER CAPABILITIES REPORT WORKING ?</u></b><br>
+<font class=CProblem>PROBLEM:</font><br>
+I see in the AWStats features list that it can report the screen size used by visitors and also if its browser
+support Flash, java, etc... How can I do that ?<br>
+<font class=CSolution>SOLUTION:</font><br>
+AWStats is a log analyzer, so to report the screen size of your visitor, we need to have information inside the log file.
+For this, the only way to do that is to add some HTML tags inside some of your pages (the home page is enoough to
+get screen size use ratios). This tag will add call to a javascript that ask your browser to call of an URL that
+includes in its parameters, the screen size resolution and other informations about browser capabilities.<br>
+<br>
+This is the code you must add (at bottom of your home page for example) :<br>
+<table border=1 cellpadding=1 cellspacing=0 bgcolor=#F4F4F4 width="95%" class=CFAQ><tr><td>
+&lt;script language="javascript" type="text/javascript" src="/js/awstats_misc_tracker.js" &gt;&lt;/script&gt;<br>
+&lt;noscript&gt;&lt;img src="/js/awstats_misc_tracker.js?nojs=y" height="0" width="0" border="0" style="display: none"&gt;&lt;/noscript&gt;<br>
+</td></tr></table>
+<br>
+Note that you must also place the <i>awstats_misc_tracker.js</i> script (provided in /js directory with AWStats) inside 
+a js directory stored in your web root.<br>
+Once this is done, load your home page with your browser and go to check that inside your log file
+if you can see a line that looks like that:<br>
+<table border=1 cellpadding=1 cellspacing=0 bgcolor=#F4F4F4 width="95%" class=CFAQ><tr><td>
+123.123.123.123 - - [24/Apr/2005:16:09:38 +0200] "GET /js/awstats_misc_tracker.js?screen=800x600&win=724x517&cdi=32&java=true&shk=n&fla=y&rp=n&mov=n&wma=y&pdf=y&uid=awsuser_id123&sid=awssession_id123 HTTP/1.1" 200 6237 "http://therefererwebsite.com/index.php" "Mozilla/5.0 (Windows; U; Windows NT 5.1; fr-FR; rv:1.7.7) Gecko/20050414 Firefox/1.0.3" (-)
+</td></tr></table>
+<br>
+If you change directory where <i>awstats_misc_tracker.js</i> is stored (somewhere else than /js directory in your web root),
+you must modify, according to your change:<br>
+- the html tags added<br>
+- the line: <i>var awstatsmisctrackerurl="/js/awstats_misc_tracker.js";</i> inside the awstats_misc_tracker.js script<br>
+- the parameter <a href="awstats_config.html#MiscTrackerUrl">MiscTrackerUrl</a> inside AWStats configuration file.<br>
 <br> 
 
 <a name="EXTRA"></a><br>
@@ -935,7 +976,7 @@ the <a href="awstats_benchmark.html">Benchmark page</a>.<br>
 The reported page AWStats shows me has no hostnames, only IP addresses, countries reported are all "unknown".<br>
 <font class=CSolution>SOLUTION:</font><br>
 When AWStats find an IP address in your log file, it tries a reverse DNS lookup to find
-the hostname and domain if the <a href="awstats_tools.html#DNSLookup">DNSLookup</a> parameter, in your AWStats config file, is <a href="awstats_config.html#DNSLookup">DNSLookup</a>=1
+the hostname and domain if the <a href="awstats_config.html#DNSLookup">DNSLookup</a> parameter, in your AWStats config file, is <a href="awstats_config.html#DNSLookup">DNSLookup</a>=1
 (Default value). So, first, check if you have the good value. The <a href="awstats_config.html#DNSLookup">DNSLookup</a>=0 
 must be used only if your log file contains already resolved IP address. For example, 
 when you set up Apache with the <i>HostNameLookups=on</i> directive. When you 
@@ -1035,6 +1076,10 @@ all commercial products):<br>
 <br># 80.8.55.9     not a visit (but a worm attack)
 <br># 80.8.55.10    1 visit that come from a web page that is not a search engine
 <br>
+<br>#
+<br># TOTAL YOU MUST GET:   6 visits made by 5 different human visitors that viewed 21 pages and
+<br>#                       15 not pages (36 hits). Others 7 pages/hits are "not viewed" traffic.
+<br>
 <br>80.8.55.1 - - [01/Jan/2001:00:00:10 +0100] "GET /page1.html HTTP/1.0" 200 7009 "-" "Mozilla/4.0 (compatible; MSIE 5.5; Windows NT 5.0)"
 <br>80.8.55.1 - - [01/Jan/2001:00:00:00 +0100] "GET / HTTP/1.0" 200 7009 "http://www.sitereferer/cgi-bin/search.pl?q=a" "Mozilla/4.0 (compatible; MSIE 5.5; Windows NT 5.0)"
 <br>80.8.55.1 - - [01/Jan/2001:00:00:20 +0100] "GET /page2.cgi HTTP/1.0" 200 7009 "http://localhost/page1.html" "Mozilla/4.0 (compatible; MSIE 5.5; Windows NT 5.0)"
@@ -1043,6 +1088,7 @@ all commercial products):<br>
 <br>80.8.55.1 - - [01/Jan/2001:00:00:35 +0100] "GET /image2.png HTTP/1.0" 200 7009 "-" "Mozilla/4.0 (compatible; MSIE 5.5; Windows NT 5.0)"
 <br>80.8.55.1 - - [01/Jan/2001:00:00:40 +0100] "GET /dir/favicon.ico HTTP/1.0" 404 299 "-" "Mozilla/4.0 (compatible; MSIE 5.5; Windows NT 5.0)"
 <br>80.8.55.1 - - [01/Jan/2001:00:00:40 +0100] "GET /favicon.ico HTTP/1.0" 200 299 "-" "Mozilla/4.0 (compatible; MSIE 5.5; Windows NT 5.0)"
+<br>
 <br>80.8.55.1 - - [01/Jan/2001:12:00:00 +0100] "GET / HTTP/1.0" 200 7009 "http://WWW.SiteRefereR:80/cgi-bin/azerty.pl?q=a" "Mozilla/4.7 [fr] (Win95; I)"
 <br>80.8.55.1 - - [01/Jan/2001:12:00:10 +0100] "GET /page1.html HTTP/1.0" 200 7009 "-" "Mozilla/4.7 [fr] (Win95; I)"
 <br>80.8.55.1 - - [01/Jan/2001:12:00:20 +0100] "GET /page2.cgi HTTP/1.0" 200 7009 "-" "Mozilla/4.7 [fr] (Win95; I)"
@@ -1050,9 +1096,9 @@ all commercial products):<br>
 <br>80.8.55.1 - - [01/Jan/2001:12:00:30 +0100] "GET /image.gif HTTP/1.0" 200 7009 "-" "Mozilla/4.7 [fr] (Win95; I)"
 <br>80.8.55.1 - - [01/Jan/2001:12:00:35 +0100] "GET /image2.png HTTP/1.0" 200 7009 "-" "Mozilla/4.7 [fr] (Win95; I)"
 <br>80.8.55.1 - - [01/Jan/2001:12:00:40 +0100] "GET /js/awstats_misc_tracker.js HTTP/1.1" 200 4998 "-" "Mozilla/4.7 [fr] (Win95; I)"
-<br>80.8.55.1 - - [01/Jan/2001:12:00:45 +0100] "GET /js/awstats_misc_tracker.js?SCREEN=1024x768&CDI=32&JAVA=true&UC=UserCode1056710428488r6832&SC=SessionCode1056710428488r6832&SHK=N&FLA=Y&RP=N&MOV=N&WMA=Y&PDF=Y HTTP/1.1" 200 4998 "-" "Mozilla/4.7 [fr] (Win95; I)"
+<br>80.8.55.1 - - [01/Jan/2001:12:00:45 +0100] "GET /js/awstats_misc_tracker.js?screen=1024x768&cdi=32&java=true&shk=n&fla=y&rp=y&mov=n&wma=y&pdf=y&uid=awsuser_id1073036758306r9417&sid=awssession_id1073036758306r9417 HTTP/1.1" 200 4998 "-" "Mozilla/4.7 [fr] (Win95; I)"
 <br>
-<br>80.8.55.2 - - [01/Jan/2001:12:01:00 +0100] "GET /hitfromothersitetoimage.gif HTTP/1.0" 200 7009 "-" "Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.3) Gecko/20030312"
+<br>80.8.55.2 - - [01/Jan/2001:12:01:00 +0100] "GET /hitfromothersitetoimage.gif HTTP/1.0" 200 7009 "-" "Mozilla/5.0+(Macintosh;+U;+PPC+Mac+OS+X+Mach-O;+en-US;+rv:1.4)+Gecko/20030624+Netscape/7.1"
 <br>
 <br>80.8.55.3 - - [01/Jan/2001:12:01:10 +0100] "GET / HTTP/1.0" 200 7009 "http://www.sitereferer:81/cgi-bin/azerty.pl" "Mozilla/5.0 (Windows; U; Windows NT 5.0; en-US; rv:1.5a) Gecko/20030728 Mozilla Firebird/0.6.1"
 <br>80.8.55.3 - - [01/Jan/2001:12:01:15 +0100] "GET /page1.html HTTP/1.0" 200 7009 "-" "Mozilla/5.0 (Windows; U; Windows NT 5.0; en-US; rv:1.5a) Gecko/20030728 Mozilla Firebird/0.6.1"
@@ -1063,22 +1109,34 @@ all commercial products):<br>
 <br>
 <br>80.8.55.4 - - [01/Jan/2001:12:01:45 +0100] "GET /samevisitorthan80.8.55.3usingaolproxy.gif HTTP/1.0" 200 7009 "-" "Mozilla/3.0 (Windows 98; U) Opera 6.03"
 <br>
+<br>80.8.55.5 - - [01/Jan/2001:12:02:00 +0200] "GET /robots.txt HTTP/1.0" 200 299 "-" "Unknown bot"
 <br>80.8.55.5 - - [01/Jan/2001:12:02:00 +0200] "GET /robots.txt HTTP/1.0" 200 299 "-" "GoogleBot"
-<br>80.8.55.5 - - [01/Jan/2001:12:02:05 +0200] "GET / HTTP/1.0" 200 7009 "-" "GoogleBot"
+<br>80.8.55.5 - - [01/Jan/2001:12:02:05 +0200] "GET /page2.cgi HTTP/1.0" 200 7009 "-" "GoogleBot"
 <br>
-<br>80.8.55.6 - john [01/Jan/2001:13:00:00 +0100] "GET /cgi-bin/order.cgi?x=a&family=a&productId=998&titi=i&y=b&y=b HTTP/1.0" 200 7009 "http://www.google.com/search?sourceid=navclient&ie=utf-8&oe=utf-8&q=ma%C3%AEtre" "SAGEM-myX-5m/1.0_UP.Browser/6.1.0.6.1.103_(GUI)_MMP/1.0_(Google_WAP_Proxy/1.0)"
-<br>80.8.55.6 - john [01/Jan/2001:13:00:00 +0100] "GET /cgi-bin/order.cgi?x=a&family=a&productId=998&titi=i&y=b&y=b HTTP/1.0" 200 7009 "http://www.google.com/search?sourceid=navclient&ie=utf-8&oe=utf-8&q=élève" "SAGEM-myX-5m/1.0_UP.Browser/6.1.0.6.1.103_(GUI)_MMP/1.0_(Google_WAP_Proxy/1.0)"
+<br>80.8.55.6 - john [01/Jan/2001:13:00:00 +0100] "GET /cgi-bin/order.cgi?x=a&family=a&productId=998&titi=i&y=b&y=b HTTP/1.0" 200 7009 "http://www.google.com/search?sourceid=navclient&ie=utf-8&oe=utf-8&q=ma%C3%AEtre+élève" "SAGEM-myX-5m/1.0_UP.Browser/6.1.0.6.1.103_(GUI)_MMP/1.0_(Google_WAP_Proxy/1.0)"
+<br>80.8.55.6 - john [01/Jan/2001:13:00:00 +0100] "GET /images/image1.gif HTTP/1.0" 200 364 "http://www.google.fr/search?q=cache:dccTQ_Zn4isJ:www.chiensderace.com/cgi-bin/liste_annonces.pl%3FTYPE%3D5%26ORIGINE%3Dchiensderace+labrador+chiensderace&hl=en&lr=lang_en|lang_fr&ie=UTF-8" "SAGEM-myX-5m/1.0_UP.Browser/6.1.0.6.1.103_(GUI)_MMP/1.0_(Google_WAP_Proxy/1.0)"
+<br>80.8.55.6 - john [01/Jan/2001:13:00:00 +0100] "GET /images/image2.gif HTTP/1.0" 200 364 "http://www.google.fr/search?q=cache:dccTQ_Zn4isJ:www.chiensderace.com/cgi-bin/liste_annonces.pl%3FTYPE%3D5%26ORIGINE%3Dchiensderace+labrador+chiensderace&hl=en&lr=lang_en|lang_fr&ie=UTF-8" "SAGEM-myX-5m/1.0_UP.Browser/6.1.0.6.1.103_(GUI)_MMP/1.0_(Google_WAP_Proxy/1.0)"
+<br>80.8.55.6 - john [01/Jan/2001:13:00:00 +0100] "GET /images/image3.gif HTTP/1.0" 200 364 "http://www.google.fr/search?q=cache:dccTQ_Zn4isJ:www.chiensderace.com/cgi-bin/liste_annonces.pl%3FTYPE%3D5%26ORIGINE%3Dchiensderace+labrador+chiensderace&hl=en&lr=lang_en|lang_fr&ie=UTF-8" "SAGEM-myX-5m/1.0_UP.Browser/6.1.0.6.1.103_(GUI)_MMP/1.0_(Google_WAP_Proxy/1.0)"
+<br>80.8.55.6 - john [01/Jan/2001:13:00:00 +0100] "GET /images/image4.gif HTTP/1.0" 200 364 "http://www.google.fr/search?q=cache:dccTQ_Zn4isJ:www.chiensderace.com/cgi-bin/liste_annonces.pl%3FTYPE%3D5%26ORIGINE%3Dchiensderace+labrador+chiensderace&hl=en&lr=lang_en|lang_fr&ie=UTF-8" "SAGEM-myX-5m/1.0_UP.Browser/6.1.0.6.1.103_(GUI)_MMP/1.0_(Google_WAP_Proxy/1.0)"
+<br>80.8.55.6 - john [01/Jan/2001:13:00:00 +0100] "GET /images/image5.gif HTTP/1.0" 200 364 "http://www.google.fr/search?q=cache:dccTQ_Zn4isJ:www.chiensderace.com/cgi-bin/liste_annonces.pl%3FTYPE%3D5%26ORIGINE%3Dchiensderace+labrador+chiensderace&hl=en&lr=lang_en|lang_fr&ie=UTF-8" "SAGEM-myX-5m/1.0_UP.Browser/6.1.0.6.1.103_(GUI)_MMP/1.0_(Google_WAP_Proxy/1.0)"
 <br>
-<br>80.8.55.7 - John Begood [01/Jan/2001:13:01:00 +0100] "GET /cgi-bin/order.cgi;family=f&type=t&productId=999&titi=i#BIS HTTP/1.0" 200 7009 "-" "Mozilla/3.01 (compatible;)"
+<br>80.8.55.7 - John Begood [01/Jan/2001:13:01:00 +0100] "GET /cgi-bin/order.cgi;family=f&type=t&productId=999&titi=i#BIS HTTP/1.0" 200 7009 "http://www.a9.com/searchkeyfroma9" "Mozilla/3.01 (compatible;)"
+<br>80.8.55.7 - John Begood [01/Jan/2001:13:01:00 +0100] "GET /do/Show;jsessionid=6BEF030AB1677BEC333FFCC7BF4DF564?param=1477 HTTP/1.0" 200 7009 "-" "Mozilla/3.01 (compatible;)"
 <br>
 <br>80.8.55.8 - - [01/Jan/2001:14:01:20 +0100] "GET /404notfoundpage.html?paramnotpagefound=valparamnotpagefound HTTP/1.0" 404 0 "http://refererto404nofoundpage/pageswithbadlink.html?paramrefnotpagefound=valparamrefnotpagefound" "Mozilla/4.0 (compatible; MSIE 5.5; Windows NT 5.0)"
 <br>80.8.55.8 - - [01/Jan/2001:14:01:20 +0100] "GET /405error.html HTTP/1.0" 405 0 "http://refererto405error/pagesfrom405.html" "Mozilla/4.0 (compatible; MSIE 5.5; Windows NT 5.0)"
 <br>
-<br>80.8.55.9 - - [01/Jan/2001:15:00:00 +0200] "GET /default.ida?XXXXXXXXXXXXXXXXXX%u6858%ucbd3%u7801%u9090%u9090%u8190%u00c3%u0003%u8b00%u531b%u53ff%u0078%u0000%u00=a  HTTP/1.0" 404 299 "-" "-"
+<br>80.8.55.9 - - [01/Jan/2001:15:00:00 +0200] "GET /default.ida?XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX%u9090%u6858%ucbd3%u7801%u9090%u6858%ucbd3%u7801%u9090%u6858%ucbd3%u7801%u9090%u9090%u8190%u00c3%u0003%u8b00%u531b%u53ff%u0078%u0000%u00=a HTTP/1.0" 404 299 "-" "-"
+<br>80.8.55.9 - - [01/Jan/2001:15:00:00 +0200] "SEARCH / -" 411 - "-" "-"
 <br>
-<br>80.8.55.10 - - [01/Jan/2001:16:00:00 -0300] "GET / HTTP/1.1" 200 70476 "http://us.f109.mail.yahoo.com/ym/ShowLetter?box=Inbox&MoreYahooParams..." "Mozilla/4.0 (compatible; MSIE 5.5; Windows 98; Win 9x 4.90; Hotbar 4.2.8.0)"
-<br>80.8.55.10 - - [01/Jan/2001:17:00:00 -0300] "GET /page1.html HTTP/1.1" 200 70476 "http://www.freeweb.hu/icecat/filmek/film04.html" "Mozilla/4.0 (compatible; MSIE 5.5; Windows 98; Win 9x 4.90; Hotbar 4.2.8.0)"
-<br>80.8.55.10 - - [01/Jan/2001:18:00:00 -0300] "GET /cgi-bin/awredir.pl?url=http://xxx.com/aa.html HTTP/1.1" 302 70476 "http://us.f109.mail.yahoo.com/ym/ShowLetter?box=Inbox&MoreYahooParams..." "Mozilla/4.0 (compatible; MSIE 5.5; Windows 98; Win 9x 4.90; Hotbar 4.2.8.0)"
+<br>80.8.55.10 - - [01/Jan/2001:16:00:00 -0300] "GET / HTTP/1.1" 200 70476 "http://us.f109.mail.yahoo.com/ym/ShowLetter?box=Inbox&MoreYahooParams..." "Mozilla/5.0 (Windows; U; Windows NT 5.0; fr-FR; rv:1.7.5) Gecko/20041108 Firefox/1.0"
+<br>80.8.55.10 - - [01/Jan/2001:16:00:00 -0300] "GET / HTTP/1.1" 200 70476 "http://us.f109.mail.yahoo.com/ym/ShowLetter?box=Inbox&MoreYahooParams..." "Mozilla/5.0 (Windows; U; Windows NT 5.0; fr-FR; rv:1.7.5) Gecko/20041108 Firefox/1.0"
+<br>80.8.55.10 - - [01/Jan/2001:16:00:00 -0300] "GET / HTTP/1.1" 200 70476 "http://us.f109.mail.yahoo.com/ym/ShowLetter?box=Inbox&MoreYahooParams..." "Mozilla/5.0 (Windows; U; Windows NT 5.0; fr-FR; rv:1.7.5) Gecko/20041108 Firefox/1.0"
+<br>80.8.55.10 - - [01/Jan/2001:16:00:00 -0300] "GET / HTTP/1.1" 200 70476 "http://us.f109.mail.yahoo.com/ym/ShowLetter?box=Inbox&MoreYahooParams..." "Mozilla/5.0 (Windows; U; Windows NT 5.0; fr-FR; rv:1.7.5) Gecko/20041108 Firefox/1.0"
+<br>
+<br>80.8.55.10 - - [01/Jan/2001:16:00:00 -0300] "GET / HTTP/1.1" 200 70476 "http://us.f109.mail.yahoo.com/ym/ShowLetter?box=Inbox&MoreYahooParams..." "Mozilla/5.0 (Windows; U; Windows NT 5.0; fr-FR; rv:1.7.5) Gecko/20041108 Firefox/1.0"
+<br>80.8.55.10 - - [01/Jan/2001:16:30:00 -0300] "GET /page1.html HTTP/1.1" 200 70476 "http://www.freeweb.hu/icecat/filmek/film04.html" "Mozilla/5.0 (Windows; U; Windows NT 5.0; fr-FR; rv:1.7.5) Gecko/20041108 Firefox/1.0"
+<br>80.8.55.10 - - [01/Jan/2001:17:00:00 -0300] "GET /cgi-bin/awredir.pl?url=http://xxx.com/aa.html HTTP/1.1" 302 70476 "http://us.f109.mail.yahoo.com/ym/ShowLetter?box=Inbox&MoreYahooParams..." "Mozilla/5.0 (Windows; U; Windows NT 5.0; fr-FR; rv:1.7.5) Gecko/20041108 Firefox/1.0"
 </i>
 </td></tr></table><br>
 <u>This is what you should find:</u><br>
@@ -1112,7 +1170,9 @@ is by design.</i><br>
 So this means this way of working might never be changed, so another chance is to use the AWStats plugin 'timezone'.
 Warning, this plugin need the perl module Time::Local and it reduces seriously AWStats speed.<br>
 To enable the plugin, uncomment the following line in your config file.<br>
+<table border=1 cellpadding=1 cellspacing=0 bgcolor=#F4F4F4 width="95%" class=CFAQ><tr><td>
 <i>LoadPlugin="timezone TZ"</i><br>
+</td></tr></table>
 where TZ is value of your signed timezone (+2 for Paris, -8 for ...)<br>
 <br>
 
@@ -1153,10 +1213,12 @@ A solution should be to setup your config file with something like:<br>
 <i>LogFile=mylog*.log</i><br>
 However, with such a syntax, AWStats can't know in wich order processing log files (wich log file is the first, next or last). So
 to work like this you must use the following syntax:<br>
+<table border=1 cellpadding=1 cellspacing=0 bgcolor=#F4F4F4 width="95%" class=CFAQ><tr><td>
 <i>LogFile="/pathto/logresolvemerge.pl mylog*.log |"</i><br>
+</td></tr></table>
 <a href="awstats_tools.html#logresolvemerge">Logresolvemerge</a> is a tool provided with
-AWStats (in tools directory) that merge several log files on the fly sending line by line always the older record
-from a list of several log files. Using such a tool as a pipe source for AWStats <a href="awstats_config.html#LogFile">LogFile</a>
+AWStats (in tools directory) that merge several log files on the fly. It opens pointer on each files
+and sends, line by line, the oldest record from this. Using such a tool as a pipe source for AWStats <a href="awstats_config.html#LogFile">LogFile</a>
 parameter is a very good solution because, it allows you to merge log files whatever their size
 with no memory use, no hard disk use (no temporary files built), it is fast, it prevents
 you from a bad order if your log files are not correctly ordered, etc...<br>
@@ -1175,7 +1237,9 @@ And setup the <a href="awstats_config.html#LogFile">LogFile</a> parameter in you
 the <i>-LogFile</i> command line option to overwrite <a href="awstats_config.html#LogFile">LogFile</a> value.<br>
 As an other solution, if you miss disk space, or to save time, you can ask <a href="awstats_tools.html#logresolvemerge">logresolvemerge</a>
 to merge log files on the fly during the AWStats update process. For this, you can use the following syntax in your AWStats config file:<br>
+<table border=1 cellpadding=1 cellspacing=0 bgcolor=#F4F4F4 width="95%" class=CFAQ><tr><td>
 <i>LogFile="/pathto/logresolvemerge.pl file*.log |"</i><br>
+</td></tr></table>
 See also <a href="awstats_faq.html#MULTILOG">FAQ-COM360</a> for explanation on logresolvemerge use.<br>
 <br>
 
@@ -1278,7 +1342,9 @@ servers with no internal Perl interpreter (mod_perl not active). To solve this, 
 tell Apache where is your external Perl interpreter.<br>
 <u>For this, you have 2 solutions:</u><br>
 1) Add the following directive in your Apache <b>httpd.conf</b> config (or remove the # to uncomment it if line is already available)<br>
-<b><i>ScriptInterpreterSource registry</i></b><br>
+<table border=1 cellpadding=1 cellspacing=0 bgcolor=#F4F4F4 width="95%" class=CFAQ><tr><td>
+ScriptInterpreterSource registry<br>
+</td></tr></table>
 Then restart Apache. This will tell Apache to look into the registry to find the program associated to .pl extension.<br>
 2) Other solution (not necessary if first solution works): Change the first line of awstats.pl file with the full path of your Perl interpreter.<br>
 Example with Windows OS and ActivePerl Perl interpreter (installed in C:\Program Files\ActiveState\ActivePerl),
@@ -1356,6 +1422,7 @@ This means your AWStats reference database files (operating systems, browsers, r
 First try to update to last version. Then check in your disk that you have only ONE of those files. They should be
 in '<b>lib</b>' directory ('db' with 4.0) where awstats.pl is installed:<br>
 <i>browsers.pm</i><br>
+<i>browsers_phone.pm</i><br>
 <i>domains.pm</i><br>
 <i>operating_systems.pm</i><br>
 <i>robots.pm</i><br>
@@ -1576,7 +1643,9 @@ However, this feature reduce seriously AWStats speed and the worms database (lib
 all worms signatures. So if you still have rubish hits, you can modify the worms.pm file yourself or
 edit your config file to add in the <a href="awstats_config.html#SkipFiles">SkipFiles</a> parameter some
 values to discard the not required records, using a regex syntax like example :<br>
-<i>SkipFiles="REGEX[^\/default\.ida] REGEX[\/winnt\/system32\/cmd\.exe]"</i><br>
+<table border=1 cellpadding=1 cellspacing=0 bgcolor=#F4F4F4 width="95%" class=CFAQ><tr><td>
+SkipFiles="REGEX[^\/default\.ida] REGEX[\/winnt\/system32\/cmd\.exe]"<br>
+</td></tr></table>
 <br>
 
 <hr>
