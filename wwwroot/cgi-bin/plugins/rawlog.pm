@@ -83,7 +83,7 @@ sub BuildFullHTMLOutput_rawlog {
 
     # A security check
 	if ($QueryString =~ /logfile=/i) { 
-	    print "<br>Option logfile is not allowed while building rawlog output.<br>";
+	    print "<br />Option logfile is not allowed while building rawlog output.<br />";
         return 0;
 	}
 
