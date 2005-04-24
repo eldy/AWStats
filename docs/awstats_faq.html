@@ -944,7 +944,14 @@ if you can see a line that looks like that:<br>
 123.123.123.123 - - [24/Apr/2005:16:09:38 +0200] "GET /js/awstats_misc_tracker.js?screen=800x600&win=724x517&cdi=32&java=true&shk=n&fla=y&rp=n&mov=n&wma=y&pdf=y&uid=awsuser_id123&sid=awssession_id123 HTTP/1.1" 200 6237 "http://therefererwebsite.com/index.php" "Mozilla/5.0 (Windows; U; Windows NT 5.1; fr-FR; rv:1.7.7) Gecko/20050414 Firefox/1.0.3" (-)
 </td></tr></table>
 <br>
-If you change directory where <i>awstats_misc_tracker.js</i> is stored (somewhere else than /js directory in your web root),
+If yes, you can then run the AWStats update process. Screen sizes information will be analyzed. All you have to do 
+now is to edit your config file to tell AWStats to add the report on html output. For this, change
+the <a href="awstats_config.html#Show">ShowMiscStats</a> parameter.<br>
+<table border=1 cellpadding=1 cellspacing=0 bgcolor=#F4F4F4 width="95%" class=CFAQ><tr><td>
+ShowMiscStats=anjdfrqwp
+</td></tr></table>
+<br>
+Note: If you change directory where <i>awstats_misc_tracker.js</i> is stored (somewhere else than the /js directory),
 you must modify, according to your change:<br>
 - the html tags added<br>
 - the line: <i>var awstatsmisctrackerurl="/js/awstats_misc_tracker.js";</i> inside the awstats_misc_tracker.js script<br>
