@@ -5738,7 +5738,7 @@ if ($FrameName ne 'index') {
 			# if (...) { $datatoload{'referer_spam'}=1; }
 		}
 		if (scalar keys %HTMLOutput) {	# If output
-			if ($ShowDomainsStats) 				{ $datatoload{$filedomains}=1; }
+			if ($ShowDomainsStats || $ShowHostsStats) { $datatoload{$filedomains}=1; }   # TODO Replace by test if ($ShowDomainsStats) when plugins geoip can force load of domains datafile.
 			if ($ShowFileTypesStats) 			{ $datatoload{$filemime}=1; }
 			if ($ShowRobotsStats) 				{ $datatoload{$filerobots}=1; }
 			if ($ShowWormsStats) 				{ $datatoload{$fileworms}=1; }
@@ -7404,9 +7404,9 @@ if (scalar keys %HTMLOutput) {
 		&Init_HashArray();
 
         # Lecture des fichiers history
-		my $stringforload='';
 		if ($DatabaseBreak eq 'month') {
     		for (my $ix=12; $ix>=1; $ix--) {
+        		my $stringforload='';
     			my $monthix=sprintf("%02s",$ix);
     			if ($MonthRequired eq 'all' || $monthix eq $MonthRequired) {
     				$stringforload='all';			# Read full history file
@@ -7421,13 +7421,13 @@ if (scalar keys %HTMLOutput) {
    			}
         }
 		if ($DatabaseBreak eq 'day') {
-			$stringforload='all';
+			my $stringforload='all';
    			my $monthix=sprintf("%02s",$MonthRequired);
    			my $dayix=sprintf("%02s",$DayRequired);
 			&Read_History_With_TmpUpdate($YearRequired,$monthix,$dayix,'',0,0,$stringforload);
         }
 		if ($DatabaseBreak eq 'hour') {
-			$stringforload='all';
+			my $stringforload='all';
    			my $monthix=sprintf("%02s",$MonthRequired);
    			my $dayix=sprintf("%02s",$DayRequired);
    			my $hourix=sprintf("%02s",$HourRequired);
