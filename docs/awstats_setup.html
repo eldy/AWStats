@@ -2,42 +2,48 @@
 <html>
 <head>
 <meta name="description" content="AWStats Documentation - Setup page">
-<meta name="keywords" content="awstats, awstat, setup, config, install">
+  <meta name="keywords"
+ content="awstats, awstat, setup, config, install">
 <meta name="robots" content="index,follow">
 <meta name="title" content="AWStats Documentation - Setup page">
 <title>AWStats Documentation - Setup page</title>
 <link rel="stylesheet" href="styles.css" type="text/css">
 <!-- $Revision$ - $Author$ - $Date$ -->
 </head>
-
-<body topmargin=10 leftmargin=5>
-
-
-<table style="font: 10pt arial,helvetica,verdana" cellpadding=0 cellspacing=0 border=0 bgcolor=#FFFFFF width=100%>
-
-<!-- Large -->
-<tr style="font: 10pt arial,helvetica,verdana">
-<td bgcolor=#9999cc align=center><a href="/"><img src="images/awstats_logo4.png" border=0></a></td>
-<td bgcolor=#9999cc align=center>
-<br>
-<font style="font: 16pt arial,helvetica,sans-serif" color=#EEEEFF><b>AWStats logfile analyzer 6.4 Documentation</b></font><br>
+<body topmargin="10" leftmargin="5">
+<table
+ style="font-family: arial,helvetica,verdana; font-style: normal; font-variant: normal; font-weight: normal; font-size: 10pt; line-height: normal; font-size-adjust: none; font-stretch: normal;"
+ bgcolor="#ffffff" border="0" cellpadding="0" cellspacing="0"
+ width="100%">
+<!-- Large --> <tbody>
+    <tr
+ style="font-family: arial,helvetica,verdana; font-style: normal; font-variant: normal; font-weight: normal; font-size: 10pt; line-height: normal; font-size-adjust: none; font-stretch: normal;">
+      <td align="center" bgcolor="#9999cc"><a href="/"><img
+ src="images/awstats_logo4.png" border="0"></a></td>
+      <td align="center" bgcolor="#9999cc"> <br>
+      <font
+ style="font-family: arial,helvetica,sans-serif; font-style: normal; font-variant: normal; font-weight: normal; font-size: 16pt; line-height: normal; font-size-adjust: none; font-stretch: normal;"
+ color="#eeeeff"><b>AWStats logfile analyzer 6.5 Documentation</b></font><br>
 <br>
 </td>
-<td bgcolor=#9999cc align=center>
-&nbsp;
-</td>
+      <td align="center" bgcolor="#9999cc">&nbsp; </td>
 </tr>
-
+  </tbody>
 </table>
-
-
-<br><br><H1 style="font: 26px arial,helvetica,sans-serif">Install, Setup and Use AWStats</H1>
-
-AWStats common use is made in 3 phases:<br>
+<br>
+<br>
+<h1
+ style="font-family: arial,helvetica,sans-serif; font-style: normal; font-variant: normal; font-weight: normal; font-size: 26px; line-height: normal; font-size-adjust: none; font-stretch: normal;">AWStats
+Installation, Configuration and Reporting</h1>
+There are 3 steps to begin using AWStats:<br>
 <ul>
-<li><a href="#INSTALL">Setup: Install and Setup</a><br>
-<li><a href="#BUILD_UPDATE">Statistics update: Building/Updating statistics database</a><br>
-<li><a href="#READ">Reports build: Building and reading reports</a><br>
+  <li><a href="#INSTALL">I. Setup: Installation and configuration</a><br>
+  </li>
+  <li><a href="#BUILD_UPDATE">II. Process logs: Building/updating
+statistics database</a><br>
+  </li>
+  <li><a href="#READ">III. Run Reports: Building and reading reports</a><br>
+  </li>
 </ul>
 <br>
 
@@ -46,120 +52,165 @@ AWStats common use is made in 3 phases:<br>
 Before starting, check that your Perl version is at least 5.005_03 (or higher) by running the <i>perl -v</i> command.
 If not, you can install a recent Perl interpreter from <a href="http://www.activestate.com/ActivePerl/">ActivePerl</a> (<font color=#221188>Win32</font>) or <a href="http://www.perl.com/pub/language/info/software.html">Perl.com</a> (<font color=#221188>Unix/Linux/Other</font>).<br>
 -->
-<br><a name="INSTALL"><H2 style="font: 22px arial,helvetica,sans-serif color: #606060"><u>Setup : Install and Setup with awstats_configure.pl</u></H2></a>
 <br>
-<a name="INSTALLAPACHE"><b>A) Setup with Apache or compatible server (on Unix/Linux, Windows, MacOS...)</b></a><br>
+<a name="INSTALL">
+<h2 style=""><u>I. Setup: Installation and configuration using
+awstats_configure.pl</u></h2>
+</a><br>
+<a name="INSTALLAPACHE"><b>A) Setup for an Apache or compatible web
+server (on Unix/Linux, Windows, MacOS...)</b></a><br>
 <br>
-<font style="color: #111155"><b>* Step 1</b>:</font><br>
+<font style="color: rgb(17, 17, 85);"><b>* Step 1</b>:</font><br>
 <br>
-(if you use a package provided with a Linux distribution or Windows installer, action done in step 1
-might have already be done, if you don't know, you can run this step again)<br>
+(if you use a package provided with a Linux distribution or Windows
+installer, step 1
+might have already been done; if you don't know, you can run this step
+again)<br>
 <br>
-After downloading and extracting the AWStats package, you should run the awstats_configure.pl script to do
+After downloading and extracting the AWStats package, you should run
+the awstats_configure.pl script to do
 several setup actions.
-You will find it in the AWStats <b>tools</b> directory (If using the Windows installer, the script is
+You will find it in the AWStats <b>tools</b> directory (If using the
+Windows installer, the script is
 automatically launched):<br>
-<b><i>perl awstats_configure.pl</i></b><br>
-
-<ul>
-
-<u>This is what the script do/ask (you can do all those steps manually instead of running awstats_configure.pl if you prefer):</u><br>
+<table border=1 cellpadding=1 cellspacing=0 bgcolor=#F4F4F4 width="95%" class=CFAQ><tr class=CFAQ><td class=CFAQ>
+perl awstats_configure.pl
+</td></tr></table>
 <br>
-
-A) awstats_configure.pl try to find your Apache web server config file (ask path if not found) and check
-inside your server log format configuration.
+<ul>
+  <u>This is what the script does/asks (you can do all these steps
+manually instead of running awstats_configure.pl if you prefer):</u><br>
+<br>
+A) awstats_configure.pl tries to determine your current log format from
+your Apache web server
+configuration file httpd.conf (it asks for the path if not found).
 If you use a <b>common</b> log, awstats_configure.pl will
-suggest to change it to have <b>NCSA combined/XLF/ELF</b> log format (you can use your own log
-format but this predefined logformat is often the best choice and make setup easier).<br>
-If you answer yes, awstats_configure.pl will modify your <b>httpd.conf</b> to change all the
-following directives:<br>
-<i>CustomLog /yourlogpath/yourlogfile common</i><br>
-into<br>
+suggest changing it to the <b>NCSA combined/XLF/ELF</b> format (you
+can use your own custom log
+format but this predefined log format is often the best choice and
+makes setup easier).<br>
+If you answer yes, awstats_configure.pl will modify your <b>httpd.conf</b>,
+changing the
+following directive:<br>
+  <i>from<br>
+CustomLog /yourlogpath/yourlogfile common</i><br>
+to<br>
 <i>CustomLog /yourlogpath/yourlogfile combined</i><br>
 <br>
-See your Apache manual for more information on this directive.<br>
-To be sure the log format change is effective, later you can stop Apache, remove all old
-log files, restart Apache and go to your homepage. This is an example of records you
-should get then in your new log file:<br>
-<i>62.161.78.75 - - [dd/mmm/yyyy:hh:mm:ss +0000] "GET / HTTP/1.1" 200 1234 "http://www.from.com/from.html" "Mozilla/4.0 (compatible; MSIE 5.01; Windows NT 5.0)"</i><br>
-<br>
-
-B) Then, awstats_configure.pl will add, if not already present, the following directives to your Apache config file
-(note that the "/usr/local/awstats/wwwroot" path might differ according to your distribution or OS:<br>
-<i>
-<br>#
-<br># Directives to add to your Apache conf file to allow use of AWStats as a CGI.
-<br># Note that path "/usr/local/awstats/" must reflect your AWStats install path.
-<br>#
-<br>Alias /awstatsclasses "/usr/local/awstats/wwwroot/classes/"
-<br>Alias /awstatscss "/usr/local/awstats/wwwroot/css/"
-<br>Alias /awstatsicons "/usr/local/awstats/wwwroot/icon/"
-<br>ScriptAlias /awstats/ "/usr/local/awstats/wwwroot/cgi-bin/"
-<br>#
-<br># This is to permit URL access to scripts/files in AWStats directory.
-<br>#
-<br>&lt;Directory "/usr/local/awstats/wwwroot"&gt;
-<br>    Options None
-<br>    AllowOverride None
-<br>    Order allow,deny
-<br>    Allow from all
-<br>&lt;/Directory&gt;
-</i>
-<br>
-
-<br>
-C) awstats_configure.pl restart Apache to apply the changes made in A and B (if changes were made).<br>
-<br>
-
-D) awstats_configure.pl will ask you a name for a config profile file. Enter here the name of your
-web server or any analysis profile name, for example <b>myvirtualhostname</b>.<br>
-So awstats_configure.pl will copy the file <b>awstats.model.conf</b> file into a new file
-named <b>awstats.myvirtualhostname.conf</b>.
-You can use the value of your choice instead of "myvirtualhostname". This new file is stored into:<br>
+See the Apache manual for more information on this directive (possibly
+installed on your server as www.mysite.com/manual).<br>
+  <br>
+B) awstats_configure.pl will then add, if not already present, the
+following directives to your Apache configuration file
+(note that the "/usr/local/awstats/wwwroot" path might differ according
+to your distribution or OS:<br>
+  <i> <br>
+# <br>
+# Directives to add to your Apache conf file to allow use of AWStats as
+a CGI. <br>
+# Note that path "/usr/local/awstats/" must reflect your AWStats
+Installation path. <br>
+# <br>
+Alias /awstatsclasses "/usr/local/awstats/wwwroot/classes/" <br>
+Alias /awstatscss "/usr/local/awstats/wwwroot/css/" <br>
+Alias /awstatsicons "/usr/local/awstats/wwwroot/icon/" <br>
+ScriptAlias /awstats/ "/usr/local/awstats/wwwroot/cgi-bin/" <br>
+# <br>
+# This is to permit URL access to scripts/files in AWStats directory. <br>
+# <br>
+&lt;Directory "/usr/local/awstats/wwwroot"&gt; <br>
+Options None <br>
+AllowOverride None <br>
+Order allow,deny <br>
+Allow from all <br>
+&lt;/Directory&gt; </i><br>
+  <br>
+C) if changes were made as indicated in parts A and B,
+awstats_configure.pl restarts Apache to apply the changes.&nbsp; To be
+sure the log format change is effective, go to your homepage. This is
+an example of the type of records you should see inserted in your new
+log file after Apache
+was restarted:<br>
+  <br>
+62.161.78.75 - - [dd/mmm/yyyy:hh:mm:ss +0000] "GET / HTTP/1.1" 200 1234
+"http://www.from.com/from.html" "Mozilla/4.0 (compatible; MSIE 5.01;
+Windows NT 5.0)"<br>
+  <br>
+D) awstats_configure.pl will ask you for a name for the configuration
+profile file. Enter an appropriate name such as that of your
+web server or the virtual domain to be analyzed, i.e. <b
+ style="font-style: italic;">mysite</b>.<br>
+  <br>
+awstats_configure.pl will create a new file called <b>awstats.<span
+ style="font-style: italic;">mysite</span>.conf</b>
+by copying the template file <b>awstats.model.conf</b>.
+The new file location is:<br>
 - For Linux/BSD/Unix users: /etc/awstats.<br>
-- For Mac OS X, Windows and other OS: Same directory than awstats.pl (so cgi-bin).<br>
+- For Mac OS X, Windows and other operating systems: the same directory
+as awstats.pl
+(cgi-bin).<br>
 <br>
 
 E) awstats_configure.pl ends.<br>
 <br>
 </ul>
-
-<font style="color: #111155"><b>* Step 2</b>:</font><br>
+<font style="color: rgb(17, 17, 85);"><b>* Step 2</b>:</font><br>
 <br>
-Once a config file has been automatically created (by awstats_configure.pl, by your package
-installer or just by a manual copy of awstats.model.conf), it's important to edit it manually and change the "MAIN PARAMETERS"
-to match all your needs:<br>
+Once a configuration file has been created (by
+awstats_configure.pl, by your package
+installer or just by a manual copy of awstats.model.conf), it's
+important to verify that the "MAIN PARAMETERS"
+match your needs.&nbsp; Open awstats.<span
+ style="font-style: italic; font-weight: bold;">mysite</span>.conf in
+your favorite text editor (i.e. notepad.exe, vi, gedit, etc) -
+don&acute;t use a word processor - and make changes as required.<br>
 <br>
-This is for example the parameters you should check seriously :<br>
-- Check/Change <a href="awstats_config.html#LogFile">LogFile</a> value with full path of your server log file (You
-can also use a relative path from your awstats.pl directory, but full path avoid errors).<br>
-- Check/Change <a href="awstats_config.html#LogType">LogType</a> value with "W" for analyzing
-web server log files, "S" for a streaming server log file, "M" for mail log files, "F" for ftp log files.<br>
-- Check if <a href="awstats_config.html#LogFormat">LogFormat</a> has the value "1" (it means "NCSA apache combined/ELF/XLF log format")
-or use a personalized log format if you don't use combined log format.<br>
-- Edit <a href="awstats_config.html#SiteDomain">SiteDomain</a> parameter with the main domain name or the intranet 
-web server name used to reach the web site to analyze (Example: www.mydomain.com). If you have several
-possible name for same site, use the main domain name and add list of others in <a href="awstats_config.html#HostAlias">HostAlias</a> parameter.<br>
-- You can also change other parameters if you want. Full list is available in <a href="awstats_config.html">Configurations/Directives options</a> page.<br>
+Particular attention should be given to these parameters:<br>
+- Verify the <a href="awstats_config.html#LogFile">LogFile</a>
+value.&nbsp; It should be the full path of your server log file (You
+can also use a relative path from your awstats.pl directory, but a full
+path avoids errors).<br>
+- Verify the <a href="awstats_config.html#LogType">LogType</a>
+value.&nbsp; It should be "W" for analyzing
+web log files.<br>
+- Check if <a href="awstats_config.html#LogFormat">LogFormat</a> is
+set to "1" (for "NCSA apache combined/ELF/XLF log format")
+or use a custom log format if you don't use the combined log format.<br>
+- Set the <a href="awstats_config.html#SiteDomain">SiteDomain</a>
+parameter to the main domain name or the intranet web server name
+used to reach the web site to analyze (Example: www.mysite.com). If
+you have several
+possible names for same site, use the main domain name and add the
+others to the list in the <a href="awstats_config.html#HostAlias">HostAlias</a>
+parameter.<br>
+- You can also change other parameters if you want. The full list is
+described in <a href="awstats_config.html">Configurations/Directives
+options</a> page.<br>
 <br>
-
-Install and Setup is finished. You can jump to the <a href="#BUILD_UPDATE">Building/Updating statistics database</a> section.<br>
+Installation and configuration is finished. You can jump to the <a
+ href="#BUILD_UPDATE">Process logs: Building/updating statistics
+database</a> section.<br>
 <br>
+<br>	
 <br>
-
-
+<a name="INSTALLIIS"><b>B) Setup for Microsoft's IIS server</b></a><br>
 <br>
-<a name="INSTALLIIS"><b>B) Setup with IIS server</b></a><br>
+<font style="color: rgb(17, 17, 85);"><b>* Step 1</b>:</font><br>
 <br>
-<font style="color: #111155"><b>* Step 1</b>:</font><br>
-<br>
-Configure IIS to log in <b>"Extended W3C log format"</b> (You can still use
-your own log format but setup is easier if made like suggested). So, for
-this, start the IIS Snap-in, select the web site and look at its
-Properties. Choose W3C Extended Log Format, then Properties, then the
-Tab Extended Properties and uncheck everything under Extended Properties.
-Once they are all unchecked, check all following fields:<br>
-<i>
+Configure IIS to log in the <b>"Extended W3C log format"</b> (You can
+still use
+your own custom log format but setup is easier if you use the standard
+extended format). To do so, start the IIS management console snap-in,
+select the
+appropriate web site and open its
+<span style="font-weight: bold;">Properties</span>. Choose "<span
+ style="font-weight: bold;">W3C Extended Log Format</span>", then <span
+ style="font-weight: bold;">Properties</span>, then the
+Tab "<span style="font-weight: bold;">Extended Properties</span>" and
+uncheck everything under Extended
+Properties.
+Once they are all cleared, check just the following fields:<br>
+<table width="95%" border=1 cellpadding=0 cellspacing=0 bgcolor=#F4F4F4 class=CFAQ><tr class=CFAQ><td class=CFAQ>
 date<br>
 time<br>
 c-ip<br>
@@ -172,194 +223,359 @@ sc-bytes<br>
 cs-version<br>
 cs(User-Agent)<br>
 cs(Referer)<br>
-</i>
-To be sure the log format change is effective, you must stop IIS, remove all old log files, restart IIS and go to
-your homepage. This is an example of records you should get then in the new log file:<br>
-<i>2000-07-19 14:14:14 62.161.78.73 - GET / 200 1234 HTTP/1.1 Mozilla/4.0+(compatible;+MSIE+5.01;+Windows+NT+5.0) http://www.from.com/from.htm</i><br>
+</td></tr></table>
+<br>
+To be sure the log format change is effective, you must stop IIS,
+backup (if desired) and remove all old log files, restart IIS and go to
+your homepage. This is an example of the type of records you should
+find in the
+new log file:<br>
+<table width="95%" border=1 cellpadding=0 cellspacing=0 bgcolor=#F4F4F4 class=CFAQ><tr class=CFAQ><td class=CFAQ>
+2000-07-19 14:14:14 62.161.78.73 - GET / 200 1234 HTTP/1.1
+Mozilla/4.0+(compatible;+MSIE+5.01;+Windows+NT+5.0)
+http://www.from.com/from.htm
+</td></tr></table>
 <br>
 
-<font style="color: #111155"><b>* Step 2</b>:</font><br>
+<font style="color: rgb(17, 17, 85);"><b>* Step 2</b>:</font><br>
 <br>
-Copy the contents of the provided cgi-bin folder from your hard drive to your server's cgi-bin
-directory (this includes <b>awstats.pl</b>, <b>awstats.model.conf</b>, and the <b>lang</b>, <b>lib</b> and <b>plugins</b> sub-directories).<br>
-<br>	
-
-<font style="color: #111155"><b>* Step 3</b>:</font><br>
+Copy the contents of the AWStats provided cgi-bin folder from where
+your AWStats package put it on your local hard
+drive
+to your server's cgi-bin
+directory (this includes <b>awstats.pl</b>, <b>awstats.model.conf</b>,
+and the <b>lang</b>, <b>lib</b> and <b>plugins</b> sub-directories).<br>
 <br>
-Move AWStats <b>icon sub-directories</b> and its content into a directory readable by your
+<font style="color: rgb(17, 17, 85);"><b>* Step 3</b>:</font><br>
+<br>
+Move AWStats <b>icon sub-directories</b> and its content into a
+directory readable by your
 web server, for example C:\yourwwwroot\icon.<br>
 <br>
+<font style="color: rgb(17, 17, 85);"><b>* Step 4</b>:</font><br>
+<br>
+Create a configuration file by copying <b>awstats.model.conf</b> to a
+new file named <b>awstats.<span style="font-style: italic;">mysite</span>.conf</b>
+where "<span style="font-style: italic;">mysite</span>" is a
+value of your choice but usually is the domain or virtual host name.
+This new file must be saved in the same directory as awstats.pl (i.e.
+cgi-bin).<br>
+<br>
+<font style="color: rgb(17, 17, 85);"><b>* Step 5</b>:</font><br>
+<br>
+Edit your new <b>awstats.<span style="font-style: italic;">mysite</span>.conf</b>
+file to match your specific environment:<br>
+- Change the <a href="awstats_config.html#LogFile">LogFile</a> value
+to the
+full path of your web server log file (You
+can also use a relative path from your awstats.pl (cgi-bin) directory).<br>
+- Change the <a href="awstats_config.html#LogType">LogType</a> value
+to
+"W" for analyzing
+web log files.<br>
+- Change the <a href="awstats_config.html#LogFormat">LogFormat</a> to
+2 if you are using the <b>"Extended W3C log format"</b> described in
+step 1; in the case of a custom format, list the IIS fields
+being logged, for example:<br>
+<i>LogFormat="date time c-ip cs-username cs-method cs-uri-stem
+cs-uri-query sc-status sc-bytes cs-version cs(User-Agent) cs(Referer)"</i><br>
+- Change the <a href="awstats_config.html#DirIcons">DirIcons</a>
+parameter
+to reflect relative path of icon directory.<br>
+- Set the <a href="awstats_config.html#SiteDomain">SiteDomain</a>
+parameter to the main domain name or the intranet
+web server name used to reach the web site being analyzed (Example:
+www.mydomain.com).<br>
+- Set the <a href="awstats_config.html#AllowToUpdateStatsFromBrowser">AllowToUpdateStatsFromBrowser</a>
+parameter to 1 if you don't have command line access and have only cgi
+access.<br>
+- Review and change other parameters if appropriate.<br>
+<br>
+Installation and configuration is finished. You can jump to the <a
+ href="#BUILD_UPDATE">Process logs: Building/Updating statistics
+database</a> section.<br>
+<br>
+<b>C) Setup for other web servers</b><br>
+<br>
+The setup process is similar to the setup for Apache or IIS.<br>
+Use <a href="awstats_config.html#LogFormat">LogFormat</a> to value "3"
+if you have WebStar native log format, use
+a personalized <a href="awstats_config.html#LogFormat">LogFormat</a>
+if your log format is other.<br>
+<br>
+<b>D) Setup for other Internet servers, i.e. FTP, Mail, Streaming media</b><br>
+<br>
+The setup process for other file formats is described in the relevant
+FAQ topics:&nbsp;
+<a href="awstats_faq.html#FTP">FAQ-COM090: FTP</a>&nbsp;
+<a href="awstats_faq.html#MAIL">FAQ-COM100: Mail</a> and <a
+ href="awstats_faq.html#MEDIASERVER">FAQ-COM110: Streaming media</a>.<br>
+<br>
 
-<font style="color: #111155"><b>* Step 4</b>:</font><br>
 <br>
-Create a config file by copying <b>awstats.model.conf</b> file into a new file named <b>awstats.myvirtualhostname.conf</b>.
-You can use the value of your choice instead of "myvirtualhostname". This new file must be stored in<br>
-- Same directory than awstats.pl (so cgi-bin)<br>
+<a name="BUILD_UPDATE">
+<h2 style=""><u>II. Process logs: Building/updating statistics database</u></h2>
+</a><br>
+<font style="color: rgb(17, 17, 85);"><b>* Update from command line (recommanded)</b>:</font><br>
 <br>
-
-<font style="color: #111155"><b>* Step 5</b>:</font><br>
+The first log analysis should be done
+manually from the command line since the
+process may be long and it's easier to solve problems when you can see
+the
+command output (if you don't
+have Command Line access, skip to Step 2). The
+AWStats create (and update) statistics database command is:<br>
 <br>
-Edit this new config file with your own setup :<br>
-- Change <a href="awstats_config.html#LogFile">LogFile</a> value with full path of your web server log file (You
-can also use a relative path from your awstats.pl directory).<br>
-- Change <a href="awstats_config.html#LogType">LogType</a> value with "W" for analyzing
-web server log files, "S" for a streaming server log file, "M" for mail log files, "F" for ftp log files, "O" otherwise.<br>
-- Change <a href="awstats_config.html#LogFormat">LogFormat</a> to a value with same field's name defined in step 1:<br><i>
-LogFormat="date time c-ip cs-username cs-method cs-uri-stem cs-uri-query sc-status sc-bytes cs-version cs(User-Agent) cs(Referer)"</i><br>
-- Change <a href="awstats_config.html#DirIcons">DirIcons</a> parameter to reflect relative path of icon directory.<br>
-- Edit <a href="awstats_config.html#SiteDomain">SiteDomain</a> parameter with the main domain name or the intranet
-web server name used to reach the web site to analyze (Example: www.mydomain.com).<br>
-- Set <a href="awstats_config.html#AllowToUpdateStatsFromBrowser">AllowToUpdateStatsFromBrowser</a> parameter to 1 if you don't have command line access and have only cgi access.<br>
-- You can change other parameters if you want.<br>
+<table border=1 cellpadding=1 cellspacing=0 bgcolor=#F4F4F4 width="95%" class=CFAQ><tr class=CFAQ><td class=CFAQ>
+perl awstats.pl -config=mysite -update
+</td></tr></table>
 <br>
-Install and Setup is finished. You can jump to the <a href="#BUILD_UPDATE">Building/Updating statistics database</a> section.<br>
+where <span style="font-style: italic;">mysite</span> must
+be substituted with the domain/virtual host name you selected earlier
+during AWStats configuration.<br>
 <br>
+AWStats will read the configuration file awstats.mysite.conf
+(or if
+not found, awstats.conf)
+and create/update its database with all summary information issued from
+analyzed log file.<br>
 <br>
-
+AWStats statistics database files are saved in directory defined by the
+<a href="awstats_config.html#DirData">DirData</a> parameter in
+configuration file.<br>
+When the create/update is finished, you should see a similar result on
+your screen:<br>
 <br>
-<b>C) Setup with other web servers</b><br>
-<br>
-Setup process is similar to setup for Apache or IIS.<br>
-Use <a href="awstats_config.html#LogFormat">LogFormat</a> to value "3" if you have WebStar native log format, use
-a personalized <a href="awstats_config.html#LogFormat">LogFormat</a> if your log format is other.<br>
-<br>
-
-
-<br>
-<br>
-<a name="BUILD_UPDATE"><H2 style="font: 22px arial,helvetica,sans-serif color: #606060"><u>Statistics update: Building/Updating statistics database</u></H2></a>
-
-<br>
-<font style="color: #111155"><b>* Step 1</b>:</font><br>
-<br>
-The first analyze/update of statistics should be made the first time manually from the command line since first time,
-process may be long and it's easier to solve problems (if you don't have Command Line access, just go to Step 2). The
-AWStats update command line is:<br>
-<b><i>awstats.pl -config=myvirtualhostname -update</i></b><br>
-<br>
-AWStats will read the config file awstats.myvirtualhostname.conf (or if not found, awstats.conf)
-and create/update its database with all summary information issued from analyzed log file.<br>
-AWStats database files are saved in directory defined in config file by <a href="awstats_config.html#DirData">DirData</a> parameter.<br>
-When update is finished, you should get on screen a result like this:<br>
-<br><i>
-Update for config "/etc/awstats/awstats.myvirtualhostname.conf"<br>
+<table width="95%" border=1 cellpadding=0 cellspacing=0 bgcolor=#F4F4F4 class=CFAQ><tr class=CFAQ><td class=CFAQ>
+Update for config "/etc/awstats/awstats.mysite.conf"<br>
 With data in log file "/pathtoyourlog/yourlog.log"...<br>
 Phase 1 : First bypass old records, searching new record...<br>
 Searching new records from beginning of log file...<br>
-Phase 2 : Now process new records (Flush history on disk after 20000 hosts)...<br>
+Phase 2 : Now process new records (Flush history on disk after 20000
+hosts)...<br>
 Jumped lines in file: 0<br>
 Parsed lines in file: 225730<br>
 &nbsp;Found 122 dropped records,<br>
 &nbsp;Found 87 corrupted records,<br>
 &nbsp;Found 0 old records,<br>
-&nbsp;Found 225521 new qualifed records.<br>
-</i><br>
-<b>Dropped records</b> are records discarded because they were not "user HTTP requests" or requests were not qualified
-by AWStats filters (See <a href="awstats_config.html#SkipHosts">SkipHosts</a>, <a href="awstats_config.html#SkipUserAgents">SkipUserAgents</a>,
-<a href="awstats_config.html#SkipFiles">SkipFiles</a>, <a href="awstats_config.html#OnlyHosts">OnlyHosts</a>,
-<a href="awstats_config.html#OnlyUserAgents">OnlyUserAgents</a> and <a href="awstats_config.html#OnlyFiles">OnlyFiles</a> parameters).
-If you want to see which lines were dropped, you can add the <b>-showdropped</b> option on command line.<br>
-<b>Corrupted records</b> are records that does not match log format defined by "LogFormat" parameter in AWStats config/domain file.
-With all webservers you can experience a little bit corrupted records (<5%) even when everythings work correctly.
-This can be the result of several reasons: Web server internal bugs, bad requests made by buggy browsers, web server brutal stop...<br>
-If all your lines are corrupted and <a href="awstats_config.html#LogFormat">LogFormat</a> parameter in AWStats config/domain file is
-correct, it may be the log format setup in your web server that is wrong. Don't forget that
-your <a href="awstats_config.html#OnlyFiles">LogFormat</a> parameter in AWStats config/domain file MUST match
-the log file format you analyze.<br>
-If you want to see which lines are corrupted, you can add the <b>-showcorrupted</b> option on command line.<br>
-<b>Old records</b> are simply records that were already processed by a previous update process.
-You understood that it's not necessary to purge your log file after each update process even
-if it's highly recommended to do it as often as possible.<br>
-<b>New records</b> are records in your log file that were successfully used to build/update statistics.<br>
+&nbsp;Found 225521 new qualified records.<br>
+</td></tr></table>
 <br>
-Note : A log analysis process might be slow (one second for each 4500 lines of your
-logfile with Athlon 1Ghz, plus DNS resolution time for each different IP
-address in your logfile if <a href="awstats_config.html#DNSLookup">DNSLookup</a> is set to 1 and not already done in your log file).<br>
-See <a href="awstats_benchmark.html">Benchmark page</a> for more accurate information.<br>
+<b>Dropped records</b> are records discarded because they were not
+"user HTTP requests" or were requests matching AWStats filters (See the
+<a href="awstats_config.html#SkipHosts">SkipHosts</a>,
+<a href="awstats_config.html#SkipUserAgents">SkipUserAgents</a>,
+<a href="awstats_config.html#SkipFiles">SkipFiles</a>, <a
+ href="awstats_config.html#OnlyHosts">OnlyHosts</a>,
+<a href="awstats_config.html#OnlyUserAgents">OnlyUserAgents</a> and <a
+ href="awstats_config.html#OnlyFiles">OnlyFiles</a> parameters).
+If you want to see which lines were dropped, you can add the <b>-showdropped</b>
+option on the command line.<br>
 <br>
+<b>Corrupted records</b> are records that does not match log format
+defined by "LogFormat" parameter in AWStats configuration file.
+All web servers will typically have a few corrupted records
+(&lt;5%) even when everything works correctly.
+This can result for several reasons: 1) Web server internal bugs,
+2) bad requests made by buggy browsers, 3) a dirty web server shutdown,
+such as unplugging the server...&nbsp; <br>
+<br>
+If all your lines are corrupted and the <a
+ href="awstats_config.html#LogFormat">LogFormat</a> parameter in
+AWStats configuration file is
+correct, there may be a setup problem with your web server log format.
+Don't forget that
+your <a href="awstats_config.html#OnlyFiles">LogFormat</a> parameter
+in the AWStats configuration file MUST match
+the log file format you analyze.&nbsp; If you want to see which lines
+are corrupted, you can add the <b>-showcorrupted</b>
+option on the command line.<br>
+<br>
+<b>Old records</b> are simply records that were already processed by a
+previous update session.
+Although it is not necessary to purge your log file after
+each update process, it is highly recommended that you do so as often
+as possible.<br>
+<br>
+<b>New records</b> are records in your log file that were successfully
+used to build/update the statistics database.<br>
+<br>
+Note: A log analysis process might be slow (one second for each 4500
+lines of your
+logfile with an Athlon 1Ghz, plus DNS resolution time for each
+different
+IP
+address in your logfile if <a href="awstats_config.html#DNSLookup">DNSLookup</a>
+is set to 1 and not already done in your log file).&nbsp; See the <a
+ href="awstats_benchmark.html">Benchmarks page</a> for more detailed
+information.<br>
+<br>
+<!-- <span style="font-weight: bold;">Flush history </span>messages referer
+to ...&nbsp; (Flush history on disk after 20000 hosts). Flush history
+file on disk (unique url reach flush limit of 5000 -->
 
-<font style="color: #111155"><b>* Step 2</b>:</font><br>
 <br>
-AWStats statistics can also be updated from a browser, to provide real-time statistics, by clicking
-the "Update now" link that appears when AWStats is used as a CGI (Next section '<a href="#READ">Reports build: Building and reading reports</a>
-dynamically' gives you URL to use for that).<br>
+<font style="color: rgb(17, 17, 85);"><b>* Update from a browser</b>:</font><br>
+<br>
+AWStats statistics can also be updated from a browser, providing
+real-time statistics, by clicking
+the "Update now" link that appears when AWStats is used as a CGI (The
+URL is described in the next
+section '<a href="#READ">Run reports: Building and reading reports</a>').<br>
 <br>
 <b>Warning</b>!!<br>
-To enable this link, your parameter <a href="awstats_config.html#AllowToUpdateStatsFromBrowser">AllowToUpdateStatsFromBrowser</a>
-must be set to 1 in your config file (Link is not enabled by default).<br>
-Then, using on-line update does not prevent you from running the update process from a scheduler
-frequently (command is same than update of first update process).<br>
+To enable this link, the configuration file parameter <a
+ href="awstats_config.html#AllowToUpdateStatsFromBrowser">AllowToUpdateStatsFromBrowser</a>
+must be set to 1 (The link is not enabled by
+default).<br>
+Using the on-line update does not prevent you from running the update
+process automatically on a scheduled basis (the command is same as that
+of the first update process above).<br>
 For this, you have two choices:<br>
-- Include the update command in your <b>logrotate</b> process. See <a href="awstats_faq.html#ROTATE">FAQ-COM120</a> for this.<br>
-- Or add instructions in your <b>crontab</b> (Unix/Linux) or your <b>task scheduler</b> (for
-Windows), to launch frequently the Awstats update process. See <a href="awstats_faq.html#CRONTAB">FAQ-COM130</a> for this.<br><br>
-See AWStats <a href="awstats_benchmark.html">Benchmark page</a> for recommanded update/logrotate frequency.<br>
+- Include the update command in your <b>logrotate</b> process. See <a
+ href="awstats_faq.html#ROTATE">FAQ-COM120</a> for details.<br>
+- Or add instructions in your <b>crontab</b> (Unix/Linux) or your <b>task
+scheduler</b> (Windows), to regularly launch the Awstats update
+process. See <a href="awstats_faq.html#CRONTAB">FAQ-COM130</a> for
+details.<br>
+<br>
+See the AWStats <a href="awstats_benchmark.html">Benchmarks page</a>
+for
+the recommended update/logrotate frequency.<br>
 <br>
 
-
-
 <br>
-<br><a name="READ"><H2 style="font: 22px arial,helvetica,sans-serif color: #606060"><u>Reports build: Building and reading reports</u></H2></a>
-
+<a name="READ">
+<h2 style=""><u>III. Run reports: Building and reading reports</u></h2>
+</a><br>
+To see the analysis results, you have several options depending on your
+<a href="awstats_security.html">security policy</a>.<br>
 <br>
-To see results of analyze, you have several solutions depending on your <a href="awstats_security.html">security policy</a>.<br>
+Note: you must have created a statistics data base for the analysis
+period by processing your
+log files before you try to create reports.&nbsp; See the previous
+section.<br>
 <br>
-
-* First solution is to build the main reports, in a static HTML page, from the command line,
-like this (jump to second solution if you have ONLY CGI access):<br>
-<b><i>perl awstats.pl -config=myvirtualhostname -output -staticlinks > awstats.myvirtualhostname.html</i></b><br>
+1. The first option is to build the main reports, in a static HTML
+page,
+from the command line,
+using the following syntax (skip to the second option if you only have
+CGI access):<br>
 <br>
-You can use all other output options (each of them give you another report).
-This is how to use all other possible output options(1) :<br>
-<i><b>perl awstats.pl -config=myvirtualhostname -output=alldomains -staticlinks > awstats.myvirtualhostname.alldomains.html</b></i><br>
-<i><b>perl awstats.pl -config=myvirtualhostname -output=allhosts -staticlinks > awstats.myvirtualhostname.allhosts.html</b></i><br>
-<i><b>perl awstats.pl -config=myvirtualhostname -output=lasthosts -staticlinks > awstats.myvirtualhostname.lasthosts.html</b></i><br>
-<i><b>perl awstats.pl -config=myvirtualhostname -output=unknownip -staticlinks > awstats.myvirtualhostname.unknownip.html</b></i><br>
-<i><b>perl awstats.pl -config=myvirtualhostname -output=alllogins -staticlinks > awstats.myvirtualhostname.alllogins.html</b></i><br>
-<i><b>perl awstats.pl -config=myvirtualhostname -output=lastlogins -staticlinks > awstats.myvirtualhostname.lastlogins.html</b></i><br>
-<i><b>perl awstats.pl -config=myvirtualhostname -output=allrobots -staticlinks > awstats.myvirtualhostname.allrobots.html</b></i><br>
-<i><b>perl awstats.pl -config=myvirtualhostname -output=lastrobots -staticlinks > awstats.myvirtualhostname.lastrobots.html</b></i><br>
-<i><b>perl awstats.pl -config=myvirtualhostname -output=urldetail -staticlinks > awstats.myvirtualhostname.urldetail.html</b></i><br>
-<i><b>perl awstats.pl -config=myvirtualhostname -output=urlentry -staticlinks > awstats.myvirtualhostname.urlentry.html</b></i><br>
-<i><b>perl awstats.pl -config=myvirtualhostname -output=urlexit -staticlinks > awstats.myvirtualhostname.urlexit.html</b></i><br>
-<i><b>perl awstats.pl -config=myvirtualhostname -output=browserdetail -staticlinks > awstats.myvirtualhostname.browserdetail.html</b></i><br>
-<i><b>perl awstats.pl -config=myvirtualhostname -output=osdetail -staticlinks > awstats.myvirtualhostname.osdetail.html</b></i><br>
-<i><b>perl awstats.pl -config=myvirtualhostname -output=unknownbrowser -staticlinks > awstats.myvirtualhostname.unknownbrowser.html</b></i><br>
-<i><b>perl awstats.pl -config=myvirtualhostname -output=unknownos -staticlinks > awstats.myvirtualhostname.unknownos.html</b></i><br>
-<i><b>perl awstats.pl -config=myvirtualhostname -output=refererse -staticlinks > awstats.myvirtualhostname.refererse.html</b></i><br>
-<i><b>perl awstats.pl -config=myvirtualhostname -output=refererpages -staticlinks > awstats.myvirtualhostname.refererpages.html</b></i><br>
-<i><b>perl awstats.pl -config=myvirtualhostname -output=keyphrases -staticlinks > awstats.myvirtualhostname.keyphrases.html</b></i><br>
-<i><b>perl awstats.pl -config=myvirtualhostname -output=keywords -staticlinks > awstats.myvirtualhostname.keywords.html</b></i><br>
-<i><b>perl awstats.pl -config=myvirtualhostname -output=errors404 -staticlinks > awstats.myvirtualhostname.errors404.html</b></i><br>
+<table border=1 cellpadding=1 cellspacing=0 bgcolor=#F4F4F4 width="95%" class=CFAQ><tr class=CFAQ><td class=CFAQ>
+perl awstats.pl -config=mysite -output -staticlinks
+&gt; awstats.mysite.html
+</td></tr></table>
 <br>
-Note (1): If you prefer, you can use <a href="awstats_tools.html#awstats_buildstaticpages">awstats_buildstaticpages</a> tool to
-build all those pages in one command, or to generate PDF files.<br>
+where <span style="font-style: italic;">mysite</span> must
+be substituted with the domain/virtual host name you selected earlier
+during AWStats configuration.<br>
 <br>
-Note (2): You can also add a <i>filter</i> on the following output reports:<b>urldetail, urlentry, urlexit, allhosts, refererpages</b>.<br>
-<i>filter</i> can be a regexp on the full key you want awstats to present information about and you must use it after the output
+To create specific individual reports, specify the report name on the
+command
+line as follows&sup1;:<br>
+<table border=1 cellpadding=1 cellspacing=0 bgcolor=#F4F4F4 width="95%" class=CFAQ><tr class=CFAQ><td class=CFAQ>
+perl awstats.pl -config=mysite -output=alldomains
+-staticlinks &gt; awstats.mysite.alldomains.html<br>
+perl awstats.pl -config=mysite -output=allhosts
+-staticlinks &gt; awstats.mysite.allhosts.html<br>
+perl awstats.pl -config=mysite -output=lasthosts
+-staticlinks &gt; awstats.mysite.lasthosts.html<br>
+perl awstats.pl -config=mysite -output=unknownip
+-staticlinks &gt; awstats.mysite.unknownip.html<br>
+perl awstats.pl -config=mysite -output=alllogins
+-staticlinks &gt; awstats.mysite.alllogins.html<br>
+perl awstats.pl -config=mysite -output=lastlogins
+-staticlinks &gt; awstats.mysite.lastlogins.html<br>
+perl awstats.pl -config=mysite -output=allrobots
+-staticlinks &gt; awstats.mysite.allrobots.html<br>
+perl awstats.pl -config=mysite -output=lastrobots
+-staticlinks &gt; awstats.mysite.lastrobots.html<br>
+perl awstats.pl -config=mysite -output=urldetail
+-staticlinks &gt; awstats.mysite.urldetail.html<br>
+perl awstats.pl -config=mysite -output=urlentry
+-staticlinks &gt; awstats.mysite.urlentry.html<br>
+perl awstats.pl -config=mysite -output=urlexit
+-staticlinks &gt; awstats.mysite.urlexit.html<br>
+perl awstats.pl -config=mysite -output=browserdetail
+-staticlinks &gt; awstats.mysite.browserdetail.html<br>
+perl awstats.pl -config=mysite -output=osdetail
+-staticlinks &gt; awstats.mysite.osdetail.html<br>
+perl awstats.pl -config=mysite -output=unknownbrowser
+-staticlinks &gt; awstats.mysite.unknownbrowser.html<br>
+perl awstats.pl -config=mysite -output=unknownos
+-staticlinks &gt; awstats.mysite.unknownos.html<br>
+perl awstats.pl -config=mysite -output=refererse
+-staticlinks &gt; awstats.mysite.refererse.html<br>
+perl awstats.pl -config=mysite -output=refererpages
+-staticlinks &gt; awstats.mysite.refererpages.html<br>
+perl awstats.pl -config=mysite -output=keyphrases
+-staticlinks &gt; awstats.mysite.keyphrases.html<br>
+perl awstats.pl -config=mysite -output=keywords
+-staticlinks &gt; awstats.mysite.keywords.html<br>
+perl awstats.pl -config=mysite -output=errors404
+-staticlinks &gt; awstats.mysite.errors404.html<br>
+</td></tr></table>
+<br>
+&sup1;If you prefer, you can use the <a
+ href="awstats_tools.html#awstats_buildstaticpages">awstats_buildstaticpages</a>
+tool to
+build all these pages in one command, or to generate PDF files.<br>
+<br>
+Notes:<br>
+<br>
+a) You can also add a <i>filter</i> on the following reports: <b>urldetail,
+urlentry, urlexit, allhosts, refererpages</b>.&nbsp; The <i>filter</i>
+can be a regexp (regular expression) on the full key you want AWStats
+to report on and is appended to the output
 parameter separated by a ":".<br>
-For example, to output the urldetail report, with a filter on all pages that contains /news, you
+<br>
+For example, to output the urldetail report, including only pages which
+contain /news in their URL, you
 can use the following command line:<br>
-<i><b>perl awstats.pl -config=myvirtualhostname -output=urldetail:</b>/news<b> -staticlinks > awstats.myvirtualhostname.urldetailwithfilter.html</b></i><br>
+<table border=1 cellpadding=1 cellspacing=0 bgcolor=#F4F4F4 width="95%" class=CFAQ><tr class=CFAQ><td class=CFAQ>
+perl awstats.pl -config=mysite -output=urldetail:</b>/news<b>
+-staticlinks &gt; awstats.mysite.urldetailwithfilter.html</b>
+</td></tr></table>
 <br>
-Note (3): If you want to build a report for a particular month, add options <i><b>-month=MM -year=YYYY</b></i>.<br>
-To build a report for full year (warning: This may use a lot of memory and CPU), add options <i><b>-month=all -year=YYYY</b></i>.<br>
-
-<br><br>
-* Second solution is to view dynamically your statistics from a browser. For this, use URL:<br>
-<b><i>http://www.myserver.mydomain/awstats/awstats.pl?config=myvirtualhostname</i></b><br>
-where <i>myvirtualhostname</i> is used to know which config file to use (AWStats will use awstats.<i>myvirtualhostname</i>.conf file).<br>
+b) If you want to build a report for a particular month, add
+the options <i><b>-month=MM -year=YYYY</b></i> where MM is the month
+expressed as two digits, i.e. 03, and year is the four digit
+year.&nbsp; To build a
+report for a full year, add the options <i><b>-month=all -year=YYYY</b></i>
+(warning: this is often resource intensive and might use a lot of
+memory
+and CPU.&nbsp; Unix/Linux like operating systems might benefit from use
+of the "nice" command.)<br>
 <br>
-Note (1): All output command line options (except -staticlinks) are still available when using AWStats as a browser.<br>
-Just use them as URL parameters like this example <b><i>http://www.myserver.mydomain/awstats/awstats.pl?month=MM&year=YYYY&output=unknownos</i></b><br>
 <br>
-Note (2): If <a href="awstats_config.html#AllowToUpdateStatsFromBrowser">AllowToUpdateStatsFromBrowser</a> parameter is set to 1 in AWStats config/domain file,
-you will also be able to run the update process from your browser. Just click on link "Update now".<br>
-<br><br>
-
+2) The second option is to dynamically view your statistics from a
+browser.&nbsp; To do this, use the URL:<br>
+<table border=1 cellpadding=1 cellspacing=0 bgcolor=#F4F4F4 width="95%" class=CFAQ><tr class=CFAQ><td class=CFAQ>
+http://www.myserver.mydomain/awstats/awstats.pl?config=mysite
+</td></tr></table>
+<br>
+where <i>mysite</i> specifies the configuration
+file to
+use (AWStats will use the file awstats.<i>mysite</i>.conf).<br>
+<br>
+All output command line options (except -staticlinks) are
+also available when using AWStats with a browser. Just use them as URL
+parameters: change "-option" to
+"&amp;option", i.e.&nbsp; <b><i>http://www.myserver.mydomain/awstats/awstats.pl?month=MM&amp;year=YYYY&amp;output=unknownos</i></b><br>
+<br>
+Reports are generated in real time from the statistics data
+base.&nbsp; If this is slow, or putting too much load on your server,
+consider generating static reports instead.<br>
+<br>
+If the <a href="awstats_config.html#AllowToUpdateStatsFromBrowser">AllowToUpdateStatsFromBrowser</a>
+parameter is set to 1 in AWStats configuration file,
+you will also be able to run the update process from your browser. Just
+click on the link "Update now".<br>
+<br>
+<br>
 <hr>
-
-<script language=javascript>
+<script language="javascript">
 	var date='$Date$';
 	document.writeln("Last revision: "+date);
 </script>

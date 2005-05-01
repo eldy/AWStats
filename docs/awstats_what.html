@@ -1,7 +1,8 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
 <head>
-<meta name="description" content="AWStats Documentation - What is AWStats, features">
+  <meta name="description"
+ content="AWStats Documentation - What is AWStats, features">
 <meta name="keywords" content="awstats, awstat, features, function">
 <meta name="robots" content="index,follow">
 <meta name="title" content="AWStats Documentation - What is AWStats">
@@ -9,115 +10,200 @@
 <link rel="stylesheet" href="styles.css" type="text/css">
 <!-- $Revision$ - $Author$ - $Date$ -->
 </head>
-
-<body topmargin=10 leftmargin=5>
-
-
-<table style="font: 10pt arial,helvetica,verdana" cellpadding=0 cellspacing=0 border=0 bgcolor=#FFFFFF width=100%>
-
-<!-- Large -->
-<tr style="font: 10pt arial,helvetica,verdana">
-<td bgcolor=#9999cc align=center><a href="/"><img src="images/awstats_logo4.png" border=0></a></td>
-<td bgcolor=#9999cc align=center>
-<br>
-<font style="font: 16pt arial,helvetica,sans-serif" color=#EEEEFF><b>AWStats logfile analyzer 6.4 Documentation</b></font><br>
+<body topmargin="10" leftmargin="5">
+<table
+ style="font-family: arial,helvetica,verdana; font-style: normal; font-variant: normal; font-weight: normal; font-size: 10pt; line-height: normal; font-size-adjust: none; font-stretch: normal;"
+ bgcolor="#ffffff" border="0" cellpadding="0" cellspacing="0"
+ width="100%">
+<!-- Large --> <tbody>
+    <tr
+ style="font-family: arial,helvetica,verdana; font-style: normal; font-variant: normal; font-weight: normal; font-size: 10pt; line-height: normal; font-size-adjust: none; font-stretch: normal;">
+      <td align="center" bgcolor="#9999cc"><a href="/"><img
+ src="images/awstats_logo4.png" border="0"></a></td>
+      <td align="center" bgcolor="#9999cc"> <br>
+      <font
+ style="font-family: arial,helvetica,sans-serif; font-style: normal; font-variant: normal; font-weight: normal; font-size: 16pt; line-height: normal; font-size-adjust: none; font-stretch: normal;"
+ color="#eeeeff"><b>AWStats logfile analyzer 6.5 Documentation</b></font><br>
 <br>
 </td>
-<td bgcolor=#9999cc align=center>
-&nbsp;&nbsp;
-</td>
+      <td align="center" bgcolor="#9999cc">&nbsp;&nbsp; </td>
 </tr>
-
+  </tbody>
 </table>
-
-
-<br><br><H1 style="font: 26px arial,helvetica,sans-serif">What is AWStats / Features</H1>
-
-<br><br>
-AWStats is a short for Advanced Web Statistics. It's a <b>free powerful and featureful tool that generates advanced web (but also ftp or mail) server statistics, graphically</b>.
-This <b>log analyzer</b> works as a <b>CGI or from command line</b>
-and shows you all possible information your log contains, in <b>few graphical web pages</b>.
-It uses a partial information file to be able to process large log files, often and quickly.
-It can analyze log files from IIS (W3C log format), Apache log files (NCSA combined/XLF/ELF log format or common/CLF log format),
-WebStar and most of all web, proxy, wap, streaming servers (and ftp servers or mail logs).<br>
-Take a look at this <a href="awstats_compare.html#COMPARISON">comparison table</a> for an idea on differences between most famous statistics tools for each features (AWStats, Analog, Webalizer,...).<br>
-AWStats is a free software distributed under the <a href="http://www.gnu.org/copyleft/gpl.html" target=_gnugpl>GNU General Public License</a>. You can have a look at this <a href="docs/awstats_license.html">license chart</a> to know what you can/can't do.<br>
-As AWStats works from the command line but also as a CGI, it can work with major <a href="awstats_whp.html">web hosting provider that allows CGI and log access</a>.<br>
 <br>
-
-
-<br><a name="FEATURES"></a><br>
-<font size=3 color=#665544><b>Features</b></font><br>
-<hr>
-	<b>A full log analysis enables AWStats to show you the following information</b>:<br>
-	* Number of <u>visits</u>, and number of <u>unique visitors</u>,<br>
-	* <u>Visits duration</u> and last visits,<br>
-	* <u>Authenticated users</u>, and last authenticated visits,<br>
-	* <u>Days of week</u> and <u>rush hours</u> (pages, hits, KB for each hour and day of week),<br>
-	* <u>Domains/countries</u> of hosts visitors (pages, hits, KB, <font color=#221188>269 domains/countries detected</font>),<br>
-	* <u>Hosts list</u>, last visits and unresolved IP addresses list,<br>
-	* <u>Most viewed</u>, <u>entry</u> and <u>exit</u> pages,<br>
-	* <u>Files type</u>,<br>
-	* <u>Web compression statistics</u> (for mod_gzip or mod_deflate),<br>
-	* <u>Browsers</u> used (pages, hits, KB for each browser, each version, <font color=#221188>89 browsers</font>: Web, Wap, Media browsers...),<br>
-	* <u>OS used</u> (pages, hits, KB for each OS, <font color=#221188>34 OS detected</font>),<br>
-	* <u>Visits of robots</u> (<font color=#221188>310 robots detected</font>),<br>
-	* <u>Search engines</u>, <u>keyphrases</u> and <u>keywords</u> used to find your site (<font color=#221188>The 109 most famous search engines are detected like yahoo, google, altavista, etc...</font>),<br>
-	* <u>HTTP errors</u> (Page Not Found with last referrer, ...),<br>
-	* <u>Other personalized reports</u> based on url, url parameters, referer field for miscellanous/marketing purpose,<br>
-	* <u>Screen size</u> (need to add some HTML tags in index page).<br>
-	* Number of times your site is "added to favourites bookmarks".<br>
-	* Ratio of Browsers with support of: <u>Java, Flash, RealG2 reader, Quicktime reader, WMA reader, PDF reader</u> (need to add some HTML tags in index page).<br>
-	* Cluster report for load balanced servers ratio.<br>
 <br>
-	<b>AWStats also supports the following features</b>:<br>
-	* Can analyze a lot of log formats: Apache NCSA combined log files (XLF/ELF) or common (CLF), IIS log files (W3C),
-	  WebStar native log files and other web, proxy, wap or streaming servers log files (but also ftp or mail log files). See <a href="awstats_faq.html#LOGFORMAT">AWStats F.A.Q.</a> for examples.<br>
-	* Works from command line and from a browser as a CGI (with dynamic filters capabilities for some charts),<br>
-	* Update of statistics can be made from a web browser and not only from your scheduler,<br>
-	* Unlimited log file size, support split log files (load balancing system),<br>
-	* Support 'nearly sorted' log files even for entry and exit pages,<br>
-	* Reverse DNS lookup before or during analysis, support DNS cache files,<br>
-	* Country detection from IP location (geoip) or domain name.<br>
-	* WhoIS links,<br>
-	* A lot of options/filters and plugins can be used,<br>
-	* Multi-named web sites supported (virtual servers, great for web-hosting providers),<br>
-<!--	* Yearly, monthly and daily statistics,<br> -->
-	* Cross Site Scripting Attacks protection,<br>
-	* Several languages. See <a href="awstats_faq.html#LANG">AWStats F.A.Q.</a> for full list.<br>
-	* No need of rare perl libraries. All basic perl interpreters can make AWStats working,<br>
-	* Dynamic reports as CGI output.<br>
-	* Static reports in one or framed HTML/XHTML pages, experimental PDF export,<br>
-	* Look and colors can match your site design, can use CSS,<br>
-	* Help and tooltips on HTML reported pages,<br>
-	* Easy to use (Just one configuration file to edit),<br>
-	* Analysis database can be stored in XML format for XSLT processing,<br>
-	* A Webmin module,<br>
-    * Absolutely free (even for web hosting providers), with sources (<a href="docs/awstats_license.html">GNU General Public License</a>),<br>
-	* Available on all platforms,<br>
-	* AWStats has a <a href="docs/pad_awstats.xml" target=_newawstats>XML Portable Application Description</a>.<br>
+<h1
+ style="font-family: arial,helvetica,sans-serif; font-style: normal; font-variant: normal; font-weight: normal; font-size: 26px; line-height: normal; font-size-adjust: none; font-stretch: normal;">What
+is AWStats / Features Overview<br>
+</h1>
+<br>
+<br>
+AWStats is short for <span style="text-decoration: underline;">A</span>dvanced
+<span style="text-decoration: underline;">W</span>eb <span
+ style="text-decoration: underline;">Stat</span>istic<span
+ style="text-decoration: underline;">s</span>. <b>AWStats is </b><b>powerful
+log analyzer which creates advanced web, ftp and mail
+server statistics reports</b>&nbsp; based on the rich data contained in
+server logs.&nbsp; Data is graphically presented in <b>easy to read
+web pages</b>.
+&nbsp;
+<br>
+<br>
+Designed with flexibility in mind, AWStats can be run through a web
+browser <b>CGI (</b>common
+gateway interface) or directly from the operating system<b> command line</b>.
+Through the use of intermediary data base files, AWStats is able to
+quickly process large log files, as often desired.&nbsp;
+With support for both standard and custom log format definitions,
+AWStats can analyze log files from Apache (NCSA combined/XLF/ELF or
+common/CLF log
+format),
+Microsoft's IIS (W3C log format),
+WebStar and most web, proxy, wap and streaming media servers as well as
+ftp and mail server logs.<br>
+<br>
+See how the most famous open source statistics tools (AWStats, Analog,
+Webalizer) stack up feature by feature in this <a
+ href="awstats_compare.html#COMPARISON">comparison
+table</a>.<br>
+<br>
+AWStats is free software distributed under the <a
+ href="http://www.gnu.org/copyleft/gpl.html" target="_gnugpl">GNU
+General Public License</a>. The <a href="docs/awstats_license.html">license
+chart</a> illustrates what you
+can and cannot do.<br>
+As AWStats works from the command line as well as a CGI, it is
+compatible with <a href="awstats_whp.html">web hosting providers
+which allow CGI and log access</a>.<br>
+<br>
+<br>
+<a name="FEATURES"></a><br>
+<font color="#665544" size="3"><b>Features</b></font><br>
+<hr> AWStats' reports include a wide range of information on your
+web site usage:<br>
+* Number of <u>Visits</u>, and number
+of <u>Unique visitors</u>.<br>
+* <u>Visit duration</u> and
+latest visits.<br>
+* <u>Authenticated Users</u>, and
+latest authenticated visits.<br>
+* Usage by <u>Months</u>, <u>Days</u> of week and <u>Hours</u> of the day (pages, hits, KB).<br>
+* <u>Domains/countries</u> (and regions, cities and ISP with <a href="http://www.maxmind.com/app/perl?rId=awstats">Maxmind proprietary geo databases</a>) of
+visitor's hosts (pages, hits, KB, <font color="#221188">269
+domains/countries detected</font>).<br>
+* <u>Hosts list</u>, latest visits
+and unresolved IP addresses list.<br>
+* <u>Most viewed</u>, <u>Entry</u> and <u>Exit</u> pages.<br>
+* Most commonly requested <u>File</u>
+types.<br>
+* <u>Web Compression statistics</u>
+(for Apache servers using mod_gzip or
+mod_deflate modules).<br>
+* Visitor's <u>Browsers</u> (pages,
+hits, KB for each browser, each
+version, <font color="#221188">121 browsers</font> detected: Web, Wap,
+Streaming Media browsers..., around <font color="#221188">500</font> with the "phone browsers" database).<br>
+* Visitor's <u>Operating Systems</u>
+(pages, hits, KB for each OS, <font color="#221188">35
+OS detected</font>).<br>
+* <u>Robots</u> visits, including
+search engine crawlers (<font color="#221188">351 robots detected</font>).<br>
+* <u>Search engines</u>, <u>Keywords</u> and <u>Phrases</u> used to
+find your site (<font color="#221188">The 116 most famous search
+engines are detected like Yahoo, Google, Altavista, etc...</font>)<br>
+* <u>HTTP Errors</u> (Page Not Found
+with latest referrer, ...).<br>
+* <u>User defined reports</u> based
+on url, url parameters,
+referrer (referer) fields extend AWStats' capabilities to provide even
+greater technical and marketing information.<br>
+* Number of times your site is added to <u>Bookmarks / Favorites</u>.<br>
+* <u>Screen size</u> (to capture
+this, some HTML tags must be added to
+a site's home page).<br>
+* Ratio of integrated <u>Browser Support
+</u>for: Java, Flash, Real G2 player,
+Quicktime reader, PDF reader, WMA reader (as above, requires insertion
+of HTML tags in site's home page).<br>
+* <u>Cluster distribution</u> for
+load balanced servers.<br>
+<br>
+<b>In addition, AWStats provides the following</b>:<br>
+* Wide range of log formats.&nbsp; AWStats can analyze: Apache NCSA
+combined
+(XLF/ELF) or common (CLF) log
+files, Microsoft IIS log files (W3C), WebStar
+native log files and other web, proxy, wap, streaming media, ftp and
+mail server log files. See <a href="awstats_faq.html#LOGFORMAT">AWStats
+F.A.Q.</a> for examples.<br>
+* Reports can be run from the operating system command line and from a
+web browser as a
+CGI (common gateway interface).&nbsp; In CGI mode, dynamic filter
+capabilities are available for many charts.<br>
+* Statistics update can be run from a web browser as well as
+scheduled for automatic processing.<br>
+* Unlimited log file size<br>
+* Load balancing system split log files.<br>
+* Support 'nearly sorted' log files, even for entry and exit pages.<br>
+* Reverse DNS lookup before or during analysis; supports DNS cache
+files.<br>
+* Country detection from IP location (geoip) or domain name.<br>
+* Plugins for US/Canadian Regions, Cities and major countries regions, ISP and/or Organizations reports
+(require non free third product <a href="http://www.maxmind.com/app/perl?rId=awstats">geoipregion</a>, <a href="http://www.maxmind.com/app/perl?rId=awstats">geoipcity</a>, <a href="http://www.maxmind.com/app/perl?rId=awstats">geoipisp</a> and/or <a href="http://www.maxmind.com/app/perl?rId=awstats">geoiporg</a> database).<br>
+* WhoIS lookup links.<br>
+* Vast array of configurable options/filters and plugins supported.<br>
+* Modular design supports inclusion of addition features via plugins.<br>
+* Multi-named web sites supported (virtual servers, great for
+web-hosting providers).<br>
+<!--	* Yearly, monthly and daily statistics,<br> --> * Cross Site
+Scripting Attacks protection.<br>
+* Reports available in many international languages. See <a
+ href="awstats_faq.html#LANG">AWStats F.A.Q.</a> for full list.&nbsp;
+Users can provide files for additional languages not yet available.<br>
+* No need for esoteric perl libraries. AWStats works with all basic
+perl interpreters.<br>
+* Dynamic reports through a CGI interface.<br>
+* Static reports in one or framed HTML or XHTML pages; experimental PDF
+export through 3rd party "htmldoc" software.<br>
+* Customize look and color scheme to match your site design; with or
+without CSS (cascading style sheets).<br>
+* Help and HTML tooltips available in reports.<br>
+* Easy to use - all configuration directives are confined to one file
+for each site.<br>
+* Analysis database can be stored in XML format for use with external
+applications through XSLT processing.<br>
+* A Webmin module is supplied.<br>
+* Absolutely free (even for web hosting providers); source code is
+included (<a href="docs/awstats_license.html">GNU General Public License</a>).<br>
+* Works on all platforms with Perl support.<br>
+* AWStats has a <a href="docs/pad_awstats.xml" target="_newawstats">XML
+Portable Application Description</a>.<br>
 <br>
 	<b>Requirements</b>:<br>
-	To use AWStats, you need the following requirements:<br>
-	* Your server must log web access in a log file you can read.<br>
-	* You must be able to run perl scripts (.pl files) from command line and/or as CGI.<br>
-	If not, you can solve this by downloading last Perl version at <a href="http://www.activestate.com/ActivePerl/">ActivePerl</a> (<font color=#221188>Win32</font>) or <a href="http://www.perl.com/pub/language/info/software.html">Perl.com</a> (<font color=#221188>Unix/Linux/Other</font>).<br>
-	See <a href="awstats_faq.html#SERVERSOS">AWStats F.A.Q.</a> to have examples of supported OS and Web servers.<br>
+AWStats usage has the following requirements:<br>
+* You must have access to the server logs for the reporting you want to
+perform
+(web/ftp/mail).<br>
+* You must be able to run perl scripts (.pl files) from command line
+and/or as a CGI.&nbsp; If not, you can solve this by downloading latest
+Perl version at <a href="http://www.activestate.com/ActivePerl/">ActivePerl</a>
+(<font color="#221188">Win32</font>) or <a
+ href="http://www.perl.com/pub/language/info/software.html">Perl.com</a>
+(<font color="#221188">Unix/Linux/Other</font>).<br>
+See <a href="awstats_faq.html#SERVERSOS">AWStats F.A.Q.</a> for
+examples of supported OS and Web servers.<br>
 <br>
 
 
 <hr>
-
-<script language=javascript>
+<script language="javascript">
 	var date='$Date$';
 	document.writeln("Last revision: "+date);
-</script>
-
-<!--
+</script><!--
 First version of this tool was designed to analyze folowing web sites:
 -->
 <a href="http://www.chiensderace.com">&nbsp;</a>
-<a href="http://www.chatsderace.net">&nbsp;</a>
+<a href="http://www.chatsderace.com">&nbsp;</a>
 
 
 </body>
