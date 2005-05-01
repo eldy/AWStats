@@ -230,11 +230,11 @@ experience size limit errors on files larger than 2 or 4 GB.
 If limit is Perl only, try to use a Perl version compiled with "large file" option.<br>
 If you can't find it nor build it, you can try to use a LogFile parameter that looks like this
 <table width="95%" border=1 cellpadding=0 cellspacing=0 bgcolor=#F4F4F4 class=CFAQ><tr class=CFAQ><td class=CFAQ>
-<i>LogFile="cat /yourlogfilepath/yourlogfile |"</i>
+LogFile="cat /yourlogfilepath/yourlogfile |"
 </td></tr></table>
 instead of
 <table width="95%" border=1 cellpadding=0 cellspacing=0 bgcolor=#F4F4F4 class=CFAQ><tr class=CFAQ><td class=CFAQ>
-<i>LogFile="/yourlogfilepath/yourlogfile"</i>
+LogFile="/yourlogfilepath/yourlogfile"
 </td></tr></table>
 <br>
 
@@ -252,8 +252,8 @@ AWStats can be used with some FTP server log files.<br>
 Modify the proftpd.conf file to add the following two lines :
 <table width="95%" border=1 cellpadding=0 cellspacing=0 bgcolor=#F4F4F4 class=CFAQ><tr class=CFAQ><td class=CFAQ>
 <!--<br>With ProFTPd 1.2.2:-->
-<i>LogFormat awstats "%t %h %u %m %f %s %b"</i> &nbsp; &nbsp; # WARNING: You must use a tab char between % tags and not a space !
-<i><br>ExtendedLog /var/log/xferlog read,write awstats</i> &nbsp; &nbsp; # WARNING: ExtendedLog directive might need to be placed inside a virtual host context if you use them.
+LogFormat awstats "%t %h %u %m %f %s %b"</i> &nbsp; &nbsp; # WARNING: You must use a tab char between % tags and not a space !
+<br>ExtendedLog /var/log/xferlog read,write awstats</i> &nbsp; &nbsp; # WARNING: ExtendedLog directive might need to be placed inside a virtual host context if you use them.
 <!--<br>With ProFTPd 1.2.6:
 <i><br>LogFormat awstats ""${%F %H-%M-%S}t %h %u %m %F %s %b"</i> &nbsp; &nbsp; # WARNING: You must use a tab char between % tags and not a space !
 <i><br>ExtendedLog /var/log/xferlog read,write awstats</i> &nbsp; &nbsp; # WARNING: ExtendedLog directive might need to be placed inside a virtual host context if you use them.
@@ -262,13 +262,13 @@ Modify the proftpd.conf file to add the following two lines :
 <br>
 Then turn off old format Transfer log:
 <table width="95%" border=1 cellpadding=0 cellspacing=0 bgcolor=#F4F4F4 class=CFAQ><tr class=CFAQ><td class=CFAQ>
-<i>TransferLog none</i> &nbsp; &nbsp; # WARNING: TransferLog directive might need to be placed inside a virtual host context if you use them.
+TransferLog none &nbsp; &nbsp; # WARNING: TransferLog directive might need to be placed inside a virtual host context if you use them.
 </td></tr></table>
 <br>
 To have the change effective, stop your server, remove old log file /var/log/xferlog and restart the server.<br>
 Download a file by FTP and check that your new log file looks like this:<br>
 <table width="95%" border=1 cellpadding=0 cellspacing=0 bgcolor=#F4F4F4 class=CFAQ><tr class=CFAQ><td class=CFAQ>
-<i>[01/Jan/2001:21:49:57 +0200]	ftp.server.com	user	RETR	/home/fileiget.txt	226	1499</i><br>
+[01/Jan/2001:21:49:57 +0200]	ftp.server.com	user	RETR	/home/fileiget.txt	226	1499
 </td></tr></table>
 <br>
 2- Then setup AWStats to analyze the FTP log file:<br>
@@ -276,7 +276,6 @@ Download a file by FTP and check that your new log file looks like this:<br>
 Copy config file "awstats.model.conf" to "awstats.ftp.conf".<br>
 Modify this new config file:
 <table width="95%" border=1 cellpadding=0 cellspacing=0 bgcolor=#F4F4F4 class=CFAQ><tr class=CFAQ><td class=CFAQ>
-<i>
 LogFile="/var/log/xferlog"
 <br>LogType=F
 <br>LogFormat="%time1 %host %logname %method %url %code %bytesd"
@@ -313,7 +312,7 @@ LogFile="/var/log/xferlog"
 <br>ShowMiscStats=0
 <br>ShowHTTPErrorsStats=0
 <br>ShowSMTPErrorsStats=0
-</i></td></tr></table>
+</td></tr></table>
 <br>
 Now you can use AWStats as usual (run the update process and read statistics).<br>
 <br>
@@ -325,7 +324,7 @@ Now you can use AWStats as usual (run the update process and read statistics).<b
 Take a look at your FTP server log file. You must have a format that match the following example to
 use this FAQ :<br>
 <table width="95%" border=1 cellpadding=0 cellspacing=0 bgcolor=#F4F4F4 class=CFAQ><tr class=CFAQ><td class=CFAQ>
-<i>Wed Jan 01 19:29:35 2001 1 192.168.1.1 102 /home/file1.txt b _ o r username ftp 0 * c</i>
+Wed Jan 01 19:29:35 2001 1 192.168.1.1 102 /home/file1.txt b _ o r username ftp 0 * c
 </td></tr></table>
 <br>
 2- Then setup AWStats to analyze the FTP log file:<br>
@@ -333,7 +332,6 @@ use this FAQ :<br>
 If your FTP log file format looks good, copy config file "awstats.model.conf" to "awstats.ftp.conf".<br>
 Modify this new config file:
 <table width="95%" border=1 cellpadding=0 cellspacing=0 bgcolor=#F4F4F4 class=CFAQ><tr class=CFAQ><td class=CFAQ>
-<i>
 LogFile="/var/log/xferlog"
 <br>LogType=F
 <br>LogFormat="%time3 %other %host %bytesd %url %other %other %method %other %logname %other %code %other %other"
@@ -370,7 +368,7 @@ LogFile="/var/log/xferlog"
 <br>ShowMiscStats=0
 <br>ShowHTTPErrorsStats=0
 <br>ShowSMTPErrorsStats=0
-</i></td></tr></table>
+</td></tr></table>
 <br>
 Now you can use AWStats as usual (run the update process and read statistics).<br>
 <br>
@@ -390,75 +388,21 @@ You must setup AWStats to use a mail log file preprocessor (<i>maillogconvert.pl
 into AWStats <i>tools</i> directory, but you can use the one of your choice):<br>
 For this, copy config <i>"awstats.model.conf"</i> file to <i>"awstats.mail.conf"</i>.<br>
 Modify this new config file:
-<table width="95%" border=1 cellpadding=0 cellspacing=0 bgcolor=#F4F4F4 class=CFAQ><tr class=CFAQ><td class=CFAQ>
 For standard Postfix, Sendmail, MDaemon and standard QMail logfiles, set<br>
-<i>
-LogFile="perl /path/to/maillogconvert.pl standard &lt; /pathtomaillog/maillog |"<br>
-</i>
-If the logfiles are compressed, they can be processed this way<br>
-<i>
-LogFile="gzip -cd /var/log/maillog.0.gz | /path/to/maillogconvert.pl standard |"<br>
-</i>
-And for VAdmin QMail logfiles (multi-host/virtualhost mail servers running vadmin software), set<br>
-<i>
-LogFile="perl /path/to/maillogconvert.pl vadmin &lt; /pathtomaillog/maillog |"<br>
-</i>
-Then, whatever is you mail server, you must also change:
-<i>
-<br>LogType=M
-<br>LogFormat="%time2 %email %email_r %host %host_r %method %url %code %bytesd"
-<br>LevelForBrowsersDetection=0
-<br>LevelForOSDetection=0
-<br>LevelForRefererAnalyze=0
-<br>LevelForRobotsDetection=0
-<br>LevelForWormsDetection=0
-<br>LevelForSearchEnginesDetection=0
-<br>LevelForFileTypesDetection=0
-<br>ShowMenu=1
-<br>ShowSummary=HB
-<br>ShowMonthStats=HB
-<br>ShowDaysOfMonthStats=HB
-<br>ShowDaysOfWeekStats=HB
-<br>ShowHoursStats=HB
-<br>ShowDomainsStats=0
-<br>ShowHostsStats=HBL
-<br>ShowAuthenticatedUsers=0
-<br>ShowRobotsStats=0
-<br>ShowEMailSenders=HBML
-<br>ShowEMailReceivers=HBML
-<br>ShowSessionsStats=0
-<br>ShowPagesStats=0
-<br>ShowFileTypesStats=0
-<br>ShowFileSizesStats=0
-<br>ShowBrowsersStats=0
-<br>ShowOSStats=0
-<br>ShowOriginStats=0
-<br>ShowKeyphrasesStats=0
-<br>ShowKeywordsStats=0
-<br>ShowMiscStats=0
-<br>ShowHTTPErrorsStats=0
-<br>ShowSMTPErrorsStats=1
-<br>
-</i>
-</td></tr></table>
-Warning: For MDaemon mail server, you must use the new MDaemon log file that ends
-with "-Statistics.log".<br>
-<br>
-Now you can use AWStats as usual (run the update process and read statistics).<br>
-<br>
-
-<u>For Exchange log files</u><br>
-<br>
-Despite the high number of possible log format provided with Exchange,
-none of them is built enough seriously to offer an interseting analyze (missing informations,
-messy data, no id to join multiple records for same mail, etc...).
-For this reason, an "exact" log analysis is a joke with Exchange log files.
-However a little support is provided. In order to analyze Exchange traffic, you have to
-enable "Message Tracking" (see article http://support.microsoft.com/default.aspx?scid=kb;EN-US;246856).<br>
-Then copy config awstats.model.conf file to "awstats.mail.conf".<br>
-Modify this new config file:
 <table width="95%" border=1 cellpadding=0 cellspacing=0 bgcolor=#F4F4F4 class=CFAQ><tr class=CFAQ><td class=CFAQ>
-<i>
+LogFile="perl /path/to/maillogconvert.pl standard &lt; /pathtomaillog/maillog |"
+</td></tr></table>
+If the logfiles are compressed, they can be processed this way<br>
+<table width="95%" border=1 cellpadding=0 cellspacing=0 bgcolor=#F4F4F4 class=CFAQ><tr class=CFAQ><td class=CFAQ>
+LogFile="gzip -cd /var/log/maillog.0.gz | /path/to/maillogconvert.pl standard |"<br>
+</td></tr></table>
+And for VAdmin QMail logfiles (multi-host/virtualhost mail servers running vadmin software), set<br>
+<table width="95%" border=1 cellpadding=0 cellspacing=0 bgcolor=#F4F4F4 class=CFAQ><tr class=CFAQ><td class=CFAQ>
+LogFile="perl /path/to/maillogconvert.pl vadmin &lt; /pathtomaillog/maillog |"<br>
+</td></tr></table>
+<br>
+Then, whatever is you mail server, you must also change:
+<table width="95%" border=1 cellpadding=0 cellspacing=0 bgcolor=#F4F4F4 class=CFAQ><tr class=CFAQ><td class=CFAQ>
 LogType=M
 <br>LogFormat="%time2 %email %email_r %host %host_r %method %url %code %bytesd"
 <br>LevelForBrowsersDetection=0
@@ -492,8 +436,57 @@ LogType=M
 <br>ShowMiscStats=0
 <br>ShowHTTPErrorsStats=0
 <br>ShowSMTPErrorsStats=1
+</td></tr></table>
+Warning: For MDaemon mail server, you must use the new MDaemon log file that ends
+with "-Statistics.log".<br>
 <br>
-</i>
+Now you can use AWStats as usual (run the update process and read statistics).<br>
+<br>
+
+<u>For Exchange log files</u><br>
+<br>
+Despite the high number of possible log format provided with Exchange,
+none of them is built enough seriously to offer an interseting analyze (missing informations,
+messy data, no id to join multiple records for same mail, etc...).
+For this reason, an "exact" log analysis is a joke with Exchange log files.
+However a little support is provided. In order to analyze Exchange traffic, you have to
+enable "Message Tracking" (see article http://support.microsoft.com/default.aspx?scid=kb;EN-US;246856).<br>
+Then copy config awstats.model.conf file to "awstats.mail.conf".<br>
+Modify this new config file:
+<table width="95%" border=1 cellpadding=0 cellspacing=0 bgcolor=#F4F4F4 class=CFAQ><tr class=CFAQ><td class=CFAQ>
+LogType=M
+<br>LogFormat="%time2 %email %email_r %host %host_r %method %url %code %bytesd"
+<br>LevelForBrowsersDetection=0
+<br>LevelForOSDetection=0
+<br>LevelForRefererAnalyze=0
+<br>LevelForRobotsDetection=0
+<br>LevelForWormsDetection=0
+<br>LevelForSearchEnginesDetection=0
+<br>LevelForFileTypesDetection=0
+<br>ShowMenu=1
+<br>ShowSummary=HB
+<br>ShowMonthStats=HB
+<br>ShowDaysOfMonthStats=HB
+<br>ShowDaysOfWeekStats=HB
+<br>ShowHoursStats=HB
+<br>ShowDomainsStats=0
+<br>ShowHostsStats=HBL
+<br>ShowAuthenticatedUsers=0
+<br>ShowRobotsStats=0
+<br>ShowEMailSenders=HBML
+<br>ShowEMailReceivers=HBML
+<br>ShowSessionsStats=0
+<br>ShowPagesStats=0
+<br>ShowFileTypesStats=0
+<br>ShowFileSizesStats=0
+<br>ShowBrowsersStats=0
+<br>ShowOSStats=0
+<br>ShowOriginStats=0
+<br>ShowKeyphrasesStats=0
+<br>ShowKeywordsStats=0
+<br>ShowMiscStats=0
+<br>ShowHTTPErrorsStats=0
+<br>ShowSMTPErrorsStats=1
 </td></tr></table>
 <br>
 Also don't forget that with Exchange, informations in a log analyses can't be exact.
@@ -513,15 +506,12 @@ What do I have to do to use AWStats to analyze my Media Server log files.<br>
 <br>
 Your log file will probably looks like this:<br>
 <table width="95%" border=1 cellpadding=0 cellspacing=0 bgcolor=#F4F4F4 class=CFAQ><tr class=CFAQ><td class=CFAQ>
-<i>
 216.125.146.50 - - [16/Sep/2002:14:57:21 -0500]  "GET cme/rhythmcity/rcitycaddy.rm?cloakport=8080,554,7070 RTSP/1.0" 200 6672 [Win95_4.0_6.0.9.374_play32_NS80_en-US_586] [80d280e1-c9ae-11d6-fa53-d52aaed98681] [UNKNOWN] 281712 141 3 0 0 494<br>
-</i>
 </td></tr></table>
 <br>
 Copy config awstats.model.conf file to "awstats.mediaserver.conf".
 Modify this new config file:
 <table width="95%" border=1 cellpadding=0 cellspacing=0 bgcolor=#F4F4F4 class=CFAQ><tr class=CFAQ><td class=CFAQ>
-<i>
 LogFile="/pathtomediaserverlog/mediaserverlog"
 <br>LogType=S
 <br>LogFormat="%host %other %logname %time1 %methodurl %code %bytesd %uabracket %other %other %other %other %other %other %other %other"
@@ -550,7 +540,6 @@ LogFile="/pathtomediaserverlog/mediaserverlog"
 <br>ShowMiscStats=0
 <br>ShowHTTPErrorsStats=1
 <br>ShowSMTPErrorsStats=0
-</i>
 </td></tr></table>
 <br>
 Now you can use AWStats as usual (run the update process and read statistics).<br>
@@ -560,7 +549,6 @@ Now you can use AWStats as usual (run the update process and read statistics).<b
 <br>
 1- If your Windows Media / Darwin streaming Server version allows it, setup your log format to write the following fields:
 <table width="95%" border=1 cellpadding=0 cellspacing=0 bgcolor=#F4F4F4 class=CFAQ><tr class=CFAQ><td class=CFAQ>
-<i>
 c-ip
 <br>date
 <br>time
@@ -588,15 +576,12 @@ c-ip
 <br>videocodec
 <br>channelURL
 <br>sc-bytes
-</i>
 </td></tr></table>
 <br>
 To have the change effective, stop your server, remove old log files and restart the server.<br>
 Listen to streaming files and check that your new log file looks like this:<br>
 <table width="95%" border=1 cellpadding=0 cellspacing=0 bgcolor=#F4F4F4 class=CFAQ><tr class=CFAQ><td class=CFAQ>
-<i>
 80.223.91.37 2002-10-08 14:18:58 mmst://mydomain.com/mystream 0 106 1 200 {F4A826EE-FA46-480F-A49B-76786320FC6B} 8.0.0.4477 fi-FI - - wmplayer.exe 8.0.0.4477 Windows_2000 5.1.0.2600 Pentium 0 0 20702 mms TCP Windows_Media_Audio_9 - - 277721
-</i>
 </td></tr></table>
 <br>
 <br>
@@ -605,7 +590,6 @@ Just follow instructions in step 2 directly but use the log format string found 
 of your log files (Just after the "<i>#Fields:</i>" string) as value for AWStats LogFormat
 parameter. For example, you could have a LogFormat defined like this:<br>
 <table width="95%" border=1 cellpadding=0 cellspacing=0 bgcolor=#F4F4F4 class=CFAQ><tr class=CFAQ><td class=CFAQ>
-<i>
 LogFormat="c-ip date time c-dns cs-uri-stem c-starttime x-duration c-rate
 c-status c-playerid c-playerversion c-playerlanguage cs(User-Agent)
 cs(Referer) c-hostexe c-hostexever c-os c-osversion c-cpu filelength
@@ -614,7 +598,6 @@ sc-bytes c-bytes s-pkts-sent c-pkts-received c-pkts-lost-client
 c-pkts-lost-net c-pkts-lost-cont-net c-resendreqs c-pkts-recovered-ECC
 c-pkts-recovered-resent c-buffercount c-totalbuffertime c-quality s-ip s-dns
 s-totalclients s-cpu-util"
-</i>
 </td></tr></table>
 <br>This means you don't use the AWStats tags but AWStats can often also understand all the IIS and/or
 Windows Media Server tags.<br>
@@ -624,7 +607,6 @@ Windows Media Server tags.<br>
 Copy config awstats.model.conf file to "awstats.mediaserver.conf".<br>
 Modify this new config file:
 <table width="95%" border=1 cellpadding=0 cellspacing=0 bgcolor=#F4F4F4 class=CFAQ><tr class=CFAQ><td class=CFAQ>
-<i>
 LogFile="/pathtomediaserver/mediaserverlog"
 <br>LogType=S
 <br>LogFormat="c-ip date time cs-uri-stem c-starttime x-duration c-rate c-status c-playerid c-playerversion c-playerlanguage cs(User-Agent) cs(Referer) c-hostexe c-hostexever c-os c-osversion c-cpu filelength filesize avgbandwidth protocol transport audiocodec videocodec channelURL sc-bytes"
@@ -653,7 +635,6 @@ LogFile="/pathtomediaserver/mediaserverlog"
 <br>ShowMiscStats=0
 <br>ShowHTTPErrorsStats=1
 <br>ShowSMTPErrorsStats=0
-</i>
 </td></tr></table>
 <br>
 Now you can use AWStats as usual (run the update process and read statistics).<br>
@@ -671,6 +652,7 @@ the corresponding value for LogFormat you must use in your AWStats config file:<
 <hr>
 <u>If your log records are EXACTLY like this (<b>NCSA combined/XLF/ELF</b> log format):</u><br>
 <i>62.161.78.73 - - [dd/mmm/yyyy:hh:mm:ss +0x00] "GET /page.html HTTP/1.1" 200 1234 "http://www.from.com/from.htm" "Mozilla/4.0 (compatible; MSIE 5.01; Windows NT 5.0)"</i><br>
+</td></tr></table>
 You must use : <i>LogFormat=1</i><br>
 This is same than: <i>LogFormat="%host %other %logname %time1 %methodurl %code %bytesd %refererquot %uaquot"</i><br>
 
@@ -814,18 +796,18 @@ endscript<br>
 <br>
 If using a such solution, this is sequential steps that happens:<br>
 <table border=1 cellpadding=1 cellspacing=0 bgcolor=#F4F4F4 width="95%" class=CFAQ>
-<tr><td<b>Step</b></td><td><b>Description</b></td><td><b>Step name</b></td><td><b>Date/Time example</b></td></tr>
-<tr valign=top><td>A</td><td>logrotate is started (by cron)</td><td>Start of logrotate</td><td>04:02:00</td></tr>
-<tr valign=top><td>B</td><td><ul>awstats -update is launched by logrotate</td><td>Start of awstats</td><td>04:02:01</td><tr>
-<tr valign=top><td>C</td><td><ul><ul>awstats start to read the log file <i>file.log</i></td><td>&nbsp;</td><td>04:02:02</td><tr>
-<tr valign=top><td>D</td><td><ul>awstats has reached the end of log file so now it starts to save its database on disk.</td><td>&nbsp;</td><td>04:05:00</td><tr>
-<tr valign=top><td>E</td><td><ul>awstats has finished to save its new database, so it stops</td><td>End of awstats</td><td>04:06:00</td><tr>
-<tr valign=top><td>F</td><td>logrotate moves old log file <i>file.log</i> to a new name <i>file.log.sav</i>. Apache now logs in this file <i>file.log.sav</i> since log file handle has not been changed (only log file name has been renamed).</td><td>Log move</td><td>04:06:01</td><tr>
-<tr valign=top><td>G</td><td>logrotate sends the -HUP or -USR1 signal to Apache.<br>With -HUP, Apache immediatly kills all its child process/thread, close log file <i>file.log.sav</i>, and reopen file <i>file.log</i>. So now, ALL hits are written to new file.<br>With -USR1, Apache only ask its child process/thread to stop only when HTTP request will be completely served. However it closes immediatly log file <i>file.log.sav</i>, and reopen file <i>file.log</i>. So only NEW hits are written to new log file. HTTP requests that are still running will write in old one.</td><td>Apache restart</td><td>04:06:02</td><tr>
-<tr valign=top><td>H</td><td>logrotate starts compress the old log file <i>file.log.sav</i> into <i>file.log.gz</i></td><td>Start compress</td><td>04:06:03</td><tr>
-<tr valign=top><td>I</td><td><ul>If some apache threads/processes are still running (because the kill sent was -USR1, so child process are waiting end of request before to stop), then those threads/processes are still writing to <i>file.log.sav</i>.<br>If kill -HUP was used, all process are already restarted so all writes in new <i>file.log</i>.</td><td>&nbsp;</td><td>&nbsp;</td><tr>
-<tr valign=top><td>J</td><td>logrotate has finished to compress log file into <i>file.log.gz</i>. File <i>file.log.sav</i> is deleted.</td><td>End&nbsp;of&nbsp;compress<br>End&nbsp;of&nbsp;logrotate</td><td>04:07:03</td><tr>
-<tr valign=top><td>K</td><td><ul>If signal was -USR1, some old childs can still run (when serving a very long request for example). So the log writing, still done in same file handle are going to a file that has been removed. So log writing are lost nowhere (this is only if -USR1 was used and if request was very long).</td><td>&nbsp;</td><td>&nbsp;</td><tr>
+<tr class=CFAQ><td class=CFAQ><b>Step</b></td><td class=CFAQ><b>Description</b></td><td class=CFAQ><b>Step name</b></td><td class=CFAQ><b>Date/Time example</b></td></tr>
+<tr class=CFAQ valign=top><td class=CFAQ>A</td><td class=CFAQ>logrotate is started (by cron)</td><td class=CFAQ>Start of logrotate</td><td class=CFAQ>04:02:00</td></tr>
+<tr valign=top><td class=CFAQ>B</td><td class=CFAQ><ul>awstats -update is launched by logrotate</td><td class=CFAQ>Start of awstats</td><td class=CFAQ>04:02:01</td><tr>
+<tr valign=top><td class=CFAQ>C</td><td class=CFAQ><ul><ul>awstats start to read the log file <i>file.log</i></td><td class=CFAQ>&nbsp;</td><td class=CFAQ>04:02:02</td><tr>
+<tr valign=top><td class=CFAQ>D</td><td class=CFAQ><ul>awstats has reached the end of log file so now it starts to save its database on disk.</td><td class=CFAQ>&nbsp;</td><td class=CFAQ>04:05:00</td><tr>
+<tr valign=top><td class=CFAQ>E</td><td class=CFAQ><ul>awstats has finished to save its new database, so it stops</td><td class=CFAQ>End of awstats</td><td class=CFAQ>04:06:00</td><tr>
+<tr valign=top><td class=CFAQ>F</td><td class=CFAQ>logrotate moves old log file <i>file.log</i> to a new name <i>file.log.sav</i>. Apache now logs in this file <i>file.log.sav</i> since log file handle has not been changed (only log file name has been renamed).</td><td class=CFAQ>Log move</td><td class=CFAQ>04:06:01</td><tr>
+<tr valign=top><td class=CFAQ>G</td><td class=CFAQ>logrotate sends the -HUP or -USR1 signal to Apache.<br>With -HUP, Apache immediatly kills all its child process/thread, close log file <i>file.log.sav</i>, and reopen file <i>file.log</i>. So now, ALL hits are written to new file.<br>With -USR1, Apache only ask its child process/thread to stop only when HTTP request will be completely served. However it closes immediatly log file <i>file.log.sav</i>, and reopen file <i>file.log</i>. So only NEW hits are written to new log file. HTTP requests that are still running will write in old one.</td><td class=CFAQ>Apache restart</td><td class=CFAQ>04:06:02</td><tr>
+<tr valign=top><td class=CFAQ>H</td><td class=CFAQ>logrotate starts compress the old log file <i>file.log.sav</i> into <i>file.log.gz</i></td><td class=CFAQ>Start compress</td><td class=CFAQ>04:06:03</td><tr>
+<tr valign=top><td class=CFAQ>I</td><td class=CFAQ><ul>If some apache threads/processes are still running (because the kill sent was -USR1, so child process are waiting end of request before to stop), then those threads/processes are still writing to <i>file.log.sav</i>.<br>If kill -HUP was used, all process are already restarted so all writes in new <i>file.log</i>.</td><td class=CFAQ>&nbsp;</td><td class=CFAQ>&nbsp;</td><tr>
+<tr valign=top><td class=CFAQ>J</td><td class=CFAQ>logrotate has finished to compress log file into <i>file.log.gz</i>. File <i>file.log.sav</i> is deleted.</td><td class=CFAQ>End&nbsp;of&nbsp;compress<br>End&nbsp;of&nbsp;logrotate</td><td class=CFAQ>04:07:03</td><tr>
+<tr valign=top><td class=CFAQ>K</td><td class=CFAQ><ul>If signal was -USR1, some old childs can still run (when serving a very long request for example). So the log writing, still done in same file handle are going to a file that has been removed. So log writing are lost nowhere (this is only if -USR1 was used and if request was very long).</td><td class=CFAQ>&nbsp;</td><td class=CFAQ>&nbsp;</td><tr>
 </table>
 <br>
 The advantage of this solution is that it is a very common way of working, used by a lot of
@@ -858,7 +840,9 @@ This is required for example if you use the <a href="http://cronolog.org" target
 or rotatelog tools to rotate your log files. For example, Apache users can setup their Apache
 httpd config file to write log file through a pipe to cronolog or rotatelog using
 Apache <i>CustomLog</i> directive:<br>
-<i>CustomLog "|/usr/sbin/cronolog [cronolog_options] /var/logs/access.%Y%m%d.log" combined</i><br>
+<table border=1 cellpadding=1 cellspacing=0 bgcolor=#F4F4F4 width="95%" class=CFAQ><tr class=CFAQ><td class=CFAQ>
+CustomLog "|/usr/sbin/cronolog [cronolog_options] /var/logs/access.%Y%m%d.log" combined
+</td></tr></table>
 If you use a such feature, you can't trigger AWStats update process to be ran just BEFORE the
 rotate is done, so you must run it AFTER the rotate process, so on the archived log file.<br>
 To setup awstats to always point to last archive log file, you can use the 'tags' available for
@@ -1186,7 +1170,7 @@ So this means this way of working might never be changed, so another chance is t
 Warning, this plugin need the perl module Time::Local and it reduces seriously AWStats speed.<br>
 To enable the plugin, uncomment the following line in your config file.<br>
 <table border=1 cellpadding=1 cellspacing=0 bgcolor=#F4F4F4 width="95%" class=CFAQ><tr class=CFAQ><td class=CFAQ>
-<i>LoadPlugin="timezone TZ"</i><br>
+LoadPlugin="timezone TZ"<br>
 </td></tr></table>
 where TZ is value of your signed timezone (+2 for Paris, -8 for ...)<br>
 <br>
@@ -1229,8 +1213,9 @@ A solution should be to setup your config file with something like:<br>
 However, with such a syntax, AWStats can't know in wich order processing log files (wich log file is the first, next or last). So
 to work like this you must use the following syntax:<br>
 <table border=1 cellpadding=1 cellspacing=0 bgcolor=#F4F4F4 width="95%" class=CFAQ><tr class=CFAQ><td class=CFAQ>
-<i>LogFile="/pathto/logresolvemerge.pl mylog*.log |"</i><br>
+LogFile="/pathto/logresolvemerge.pl mylog*.log |"<br>
 </td></tr></table>
+<br>
 <a href="awstats_tools.html#logresolvemerge">Logresolvemerge</a> is a tool provided with
 AWStats (in tools directory) that merge several log files on the fly. It opens pointer on each files
 and sends, line by line, the oldest record from this. Using such a tool as a pipe source for AWStats <a href="awstats_config.html#LogFile">LogFile</a>
@@ -1247,14 +1232,18 @@ How can I update my statistics when i use a load balancing system that split my 
 <font class=CSolution>SOLUTION:</font><br>
 First solution is to merge all split log files resulted from all your load balanced servers into one. For this, you can use
 the <a href="awstats_tools.html#logresolvemerge">logresolvemerge</a> tool provided with AWStats :<br>
-<i>logresolvemerge.pl file1.log file2.log ... filen.log > newfiletoprocess.log</i><br>
+<table border=1 cellpadding=1 cellspacing=0 bgcolor=#F4F4F4 width="95%" class=CFAQ><tr class=CFAQ><td class=CFAQ>
+logresolvemerge.pl file1.log file2.log ... filen.log &gt; newfiletoprocess.log
+</td></tr></table>
 And setup the <a href="awstats_config.html#LogFile">LogFile</a> parameter in your config file to process the <i>newfiletoprocess.log</i> file or use
 the <i>-LogFile</i> command line option to overwrite <a href="awstats_config.html#LogFile">LogFile</a> value.<br>
+<br>
 As an other solution, if you miss disk space, or to save time, you can ask <a href="awstats_tools.html#logresolvemerge">logresolvemerge</a>
 to merge log files on the fly during the AWStats update process. For this, you can use the following syntax in your AWStats config file:<br>
 <table border=1 cellpadding=1 cellspacing=0 bgcolor=#F4F4F4 width="95%" class=CFAQ><tr class=CFAQ><td class=CFAQ>
-<i>LogFile="/pathto/logresolvemerge.pl file*.log |"</i><br>
+LogFile="/pathto/logresolvemerge.pl file*.log |"<br>
 </td></tr></table>
+<br>
 See also <a href="awstats_faq.html#MULTILOG">FAQ-COM360</a> for explanation on logresolvemerge use.<br>
 <br>
 
@@ -1358,13 +1347,15 @@ tell Apache where is your external Perl interpreter.<br>
 <u>For this, you have 2 solutions:</u><br>
 1) Add the following directive in your Apache <b>httpd.conf</b> config (or remove the # to uncomment it if line is already available)<br>
 <table border=1 cellpadding=1 cellspacing=0 bgcolor=#F4F4F4 width="95%" class=CFAQ><tr class=CFAQ><td class=CFAQ>
-ScriptInterpreterSource registry<br>
+ScriptInterpreterSource registry
 </td></tr></table>
 Then restart Apache. This will tell Apache to look into the registry to find the program associated to .pl extension.<br>
 2) Other solution (not necessary if first solution works): Change the first line of awstats.pl file with the full path of your Perl interpreter.<br>
 Example with Windows OS and ActivePerl Perl interpreter (installed in C:\Program Files\ActiveState\ActivePerl),
 you must change the first line of awstats.pl file with:<br>
-<i>#!c:/program files/activestate/activeperl/bin/perl</i><br>
+<table border=1 cellpadding=1 cellspacing=0 bgcolor=#F4F4F4 width="95%" class=CFAQ><tr class=CFAQ><td class=CFAQ>
+#!c:/program files/activestate/activeperl/bin/perl
+</td></tr></table>
 <br>
 
 <a name="CRASH"></a><a name="CRASH"></a><br>
@@ -1540,12 +1531,14 @@ AWStats config file.<br>
 <b><u>FAQ-SET400 : PIPE REDIRECTION TO A FILE GIVE ME AN EMPTY FILE</u></b><br>
 <font class=CProblem>PROBLEM:</font><br>
 I want to redirect awstats.pl output to a file with the following command :<br>
-<i>> awstats.pl -config=... [other_options] > myfile.html</i><br>
+&gt;awstats.pl -config=... [other_options] > myfile.html<br>
 But myfile.html is empty (size is 0). If i remove the redirection, everythings works correctly.<br>
 <font class=CSolution>SOLUTION:</font><br>
-This is not an AWStats bug but a problem between perl and Windows.<br>
+This is not an AWStats bug but a problem between Perl and Windows.<br>
 You can easily solve this running the following command instead:<br>
-<i>> perl awstats.pl -config=... [other_options] > myfile.html</i><br>
+<table border=1 cellpadding=1 cellspacing=0 bgcolor=#F4F4F4 width="95%" class=CFAQ><tr class=CFAQ><td class=CFAQ>
+perl awstats.pl -config=... [other_options] > myfile.html
+</td></tr></table>
 <br>
 
 <a name="NO_ICON"></a><br>
@@ -1573,7 +1566,7 @@ in history file that looks like this<br>
 <i>YYYYMM00 999 999 999 999</i><br>
 where YYYY and MM are year and month of config file and 999 are numerical values.<br>
 <br>
-<u>So if your OS is Unix/Linux</u><br>
+<b>So if your OS is Unix/Linux</b><br>
 <i>
 <table border=1 cellpadding=1 cellspacing=0 bgcolor=#F4F4F4 width="95%" class=CFAQ><tr class=CFAQ><td class=CFAQ>
 grep -vE '^[0-9]{6}00' oldhistoryfile > newhistoryfile<br>
@@ -1582,13 +1575,13 @@ mv newhistoryfile oldhistoryfile<br>
 </i>
 And then run the migrate process again on the file.<br>
 <br>
-<u>If your OS is windows and got cygwin</u><br>
+<b>If your OS is windows and got cygwin</b><br>
 You must follow same instructions than if OS is Unix/Linux BUT
 you must do this from a cygwin 'sh' shell and not from the DOS
 prompt (because the ^ is not understanded by DOS).<br>
 And then run the migrate process again on the file.<br>
 <br>
-<u>In any other case (in fact works for every OS)</u><br>
+<b>In any other case (in fact works for every OS)</b><br>
 You must remove manually the line <i>YYYYMM00 999 999 999 999</i> (must find one and only
 one such line) and then run the migrate process again on the file.<br>
 <br>
