@@ -5796,8 +5796,9 @@ if ($AllowAccessFromWebToAuthenticatedUsersOnly && $ENV{'GATEWAY_INTERFACE'}) {
 	}
 	if (@AllowAccessFromWebToFollowingAuthenticatedUsers) {
 		my $userisinlist=0;
-		my $currentuser=qr/^$ENV{"REMOTE_USER"}$/i;
-		$currentuser =~ s/\s/%20/g;	# Allow authenticated user with space in name to be compared to allowed user list
+        my $remoteuser=quotemeta($ENV{"REMOTE_USER"});
+		$remoteuser =~ s/\s/%20/g;	        # Allow authenticated user with space in name to be compared to allowed user list
+		my $currentuser=qr/^$remoteuser$/i; # Set precompiled regex
 		foreach (@AllowAccessFromWebToFollowingAuthenticatedUsers) {
 			if (/$currentuser/o) { $userisinlist=1; last; }
 		}
