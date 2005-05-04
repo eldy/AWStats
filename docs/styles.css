@@ -4,8 +4,8 @@ body {
 	font-family: sans-serif;
 	margin-top: 4;
 	margin-bottom: 4;
-	margin-right: 4;
-	margin-left: 4;
+	margin-right: 6;
+	margin-left: 6;
 }
 a:link   	{ font: 14px verdana,arial; color: #2200C0; font-family: sans-serif; text-decoration: none; }
 a:visited	{ font: 14px verdana,arial; color: #2200C0; font-family: sans-serif; text-decoration: none; }
@@ -19,4 +19,10 @@ td.CFAQ		{ font: 14px verdana,arial; color: #000000; font-family: sans-serif; te
 .CProblem	{ font: 14px verdana,arial; color: #660000; font-family: sans-serif; text-decoration: none; }
 .CSolution	{ font: 14px verdana,arial; color: #448866; font-family: sans-serif; text-decoration: none; }
 
-input     { font: 12px verdana,arial; font-family: sans-serif; }
+input     {
+	font-family: arial,verdana,helvetica, sans-serif;
+	font-weight: normal;
+	border: 1px solid #AAAACC;
+	background-position : bottom;
+    font: 12px verdana,arial;
+}
