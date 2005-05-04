@@ -14,7 +14,7 @@
 # Rem: To avoid bad detection, some robots id were removed from this list:
 #      - Robots with ID of 3 letters only
 #      - Robot called 'webs' and 'tcl'
-# Rem: Some robot most used for download are also remode: wget
+# Rem: Some robot most used for download are also removed: wget
 # Rem: directhit changed into direct_hit (its real id)
 # Rem: calif changed into calif[^r] to avoid confusion between Tiscalifreenet browser
 # Rem: fish changed into [^a]fish to avoid confusion between Madsafish browser
@@ -388,7 +388,8 @@
 # Generic robot
 'robot',
 'crawl',
-'spider'
+'spider',
+'\wbot[\/\-]',
 );
 
 
@@ -753,7 +754,7 @@
 'robot', 'Unknown robot (identified by \'robot\')',
 'crawl', 'Unknown robot (identified by \'crawl\')',
 'spider', 'Unknown robot (identified by \'spider\')',
-
+'\wbot[\/\-]', 'Unknown robot (identified by \'bot/\' or \'bot-\')',
 # Unknown robots identified by hit on robots.txt
 'unknown', 'Unknown robot (identified by hit on \'robots.txt\')'
 );
