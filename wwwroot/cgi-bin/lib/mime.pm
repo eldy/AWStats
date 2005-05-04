@@ -48,6 +48,7 @@
 'hdml','html',
 'wml','html',
 'wmlp','html',
+'xhtml','html',
 'xml','html',
 # HTML Dynamic pages or script
 'asp','script',
@@ -137,6 +138,7 @@
 'htm','page',
 'wml','page',
 'wmlp','page',
+'xhtml','page',
 'xml','page',
 # HTML Dynamic pages or script
 'asp','script',
