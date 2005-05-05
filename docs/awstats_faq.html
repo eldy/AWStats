@@ -62,6 +62,7 @@ FAQ-COM150 <a href="#BENCHMARK">Benchmark question.</a><br>
 FAQ-COM200 <a href="#DNS">How reverse DNS Lookup works, unresolved IP Addresses ?</a><br>
 FAQ-COM250 <a href="#DIFFERENT_RESULTS">Different results than other log analyzers (Analog, Webalizer, WUsage, wwwStats...).</a><br>
 FAQ-COM300 <a href="#DIFFERENCE_HOURS">Difference between local hour and AWStats reported hour.</a><br>
+FAQ-COM320 <a href="#GEOIPEU">What does mean "eu (European country)" in GeoIP country reports.</a><br>
 FAQ-COM350 <a href="#OLDLOG">How can I process old log file ?</a><br>
 FAQ-COM360 <a href="#MULTILOG">How can I process several log files in one run ?</a><br>
 FAQ-COM400 <a href="#LOADLOG">How can I update my statistics when I use a load balancing system that splits my logs ?</a><br>
@@ -1173,6 +1174,22 @@ To enable the plugin, uncomment the following line in your config file.<br>
 LoadPlugin="timezone TZ"<br>
 </td></tr></table>
 where TZ is value of your signed timezone (+2 for Paris, -8 for ...)<br>
+<br>
+
+<a name="GEOIPEU"></a><br>
+<b><u>FAQ-COM320 : WHAT DOES MEAN "EU" (EUROPEAN UNION)" IN GEOIP COUNTRY REPORTS ?</u></b><br>
+<font class=CProblem>PROBLEM:</font><br>
+I use the <a href="awstats_contrib.html#geoip">AWStats GeoIp country plugins</a> to report countries according
+to geolocalisation of IP address.
+In country report, I have some visitors said to come from "eu (European country)". If this visitor
+come from France, does this means it is reported twice ?<br>
+<font class=CSolution>SOLUTION:</font><br>
+No.<br>
+"eu (European country)" means we are sure that visitor come from an european country but we can't tell
+wich one. It might be a major country like France, Great Britain, Spain, Germany... like a very small one.<br>
+So, in the country report, each visitor is in one and only one group. If reported in "eu (European country)",
+it is not counted in another country, and if reported in a particular country, it is not counted in "eu (European country)",
+even if this country is in Europe.<br>
 <br>
 
 <a name="OLDLOG"></a><br>
