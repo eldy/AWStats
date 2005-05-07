@@ -7721,8 +7721,13 @@ if (scalar keys %HTMLOutput) {
 	my $FirstTime=0;
 	my $LastTime=0;
 	foreach my $key (keys %FirstTime) {
-		if ($FirstTime{$key} && ($FirstTime == 0 || $FirstTime > $FirstTime{$key})) { $FirstTime = $FirstTime{$key}; }
-		if ($LastTime < ($LastTime{$key}||0)) { $LastTime = $LastTime{$key}; }
+	    my $keyqualified=0;
+		if ($MonthRequired eq 'all')                    { $keyqualified=1; }
+		if ($key =~ /^$YearRequired$MonthRequired/)    { $keyqualified=1; }
+		if ($keyqualified) {
+		    if ($FirstTime{$key} && ($FirstTime == 0 || $FirstTime > $FirstTime{$key})) { $FirstTime = $FirstTime{$key}; }
+		    if ($LastTime < ($LastTime{$key}||0)) { $LastTime = $LastTime{$key}; }
+		}
 	}
 	
 	# TotalVisits TotalUnique TotalPages TotalHits TotalBytes TotalHostsKnown TotalHostsUnknown
