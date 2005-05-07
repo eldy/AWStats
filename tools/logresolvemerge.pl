@@ -400,8 +400,8 @@ my $starttime=time();
 $cpt=1;
 foreach my $key (0..(@ParamFile-1)) {
 	if ($ParamFile[$key] !~ /\*/ && $ParamFile[$key] !~ /\?/) {
-		if ($Debug) { debug("Log file $ParamFile[$key] is added to LogFileToDo with number $cpt."); }
 
+		if ($Debug) { debug("DBG1 Log file $ParamFile[$key] is added to LogFileToDo with number $cpt."); }
 		# Check for supported compression 
 		if ($ParamFile[$key] =~ /$zcat_file/) {
 			if ($Debug) { debug("GZIP compression detected for Log file $ParamFile[$key]."); }
@@ -416,26 +416,42 @@ foreach my $key (0..(@ParamFile-1)) {
 
 		$LogFileToDo{$cpt}=@ParamFile[$key];
 		$cpt++;
+		
 	}
-	else {
-		my $DirFile=$ParamFile[$key]; $DirFile =~ s/([^\/\\]*)$//;
-		$ParamFile[$key] = $1;
-		if ($DirFile eq '') { $DirFile = '.'; }
-		$ParamFile[$key] =~ s/\./\\\./g;
-		$ParamFile[$key] =~ s/\*/\.\*/g;
-		$ParamFile[$key] =~ s/\?/\./g;
-		if ($Debug) { debug("Search for file \"$ParamFile[$key]\" into \"$DirFile\""); }
-		opendir(DIR,"$DirFile");
-		my @filearray = sort readdir DIR;
-		close DIR;
-		foreach my $i (0..$#filearray) {
-			if ("$filearray[$i]" =~ /^$ParamFile[$key]$/ && "$filearray[$i]" ne "." && "$filearray[$i]" ne "..") {
-				if ($Debug) { debug("Log file $filearray[$i] is added to LogFileToDo with number $cpt."); }
-				$LogFileToDo{$cpt}="$DirFile/$filearray[$i]";
-				$cpt++;
-			}
-		}
-	}
+    else {
+        my $DirFile=$ParamFile[$key]; $DirFile =~ s/([^\/\\]*)$//;
+        $ParamFile[$key] = $1;
+        if ($DirFile eq '') { $DirFile = '.'; }
+        $ParamFile[$key] =~ s/\./\\\./g;
+        $ParamFile[$key] =~ s/\*/\.\*/g;
+        $ParamFile[$key] =~ s/\?/\./g;
+        if ($Debug) { debug("Search for file \"$ParamFile[$key]\" into \"$DirFile\""); }
+        opendir(DIR,"$DirFile");
+        my @filearray = sort readdir DIR;
+        close DIR;
+        foreach my $i (0..$#filearray) {
+            if ("$filearray[$i]" =~ /^$ParamFile[$key]$/ && "$filearray[$i]" ne "." && "$filearray[$i]" ne "..") {
+
+                if ($Debug) { debug("DBG2 Log file $filearray[$i] is added to LogFileToDo with number $cpt."); }
+                # Check for supported compression
+                if ($filearray[$i] =~ /$zcat_file/) {
+                    if ($Debug) { debug("GZIP compression detected for Log file $filearray[$i]."); }
+                    # Modify the name to include the zcat command
+                    $LogFileToDo{$cpt}=$zcat . ' ' . "$DirFile/$filearray[$i]" . ' |';
+                }
+                elsif ($filearray[$i] =~ /$bzcat_file/) {
+                    if ($Debug) { debug("BZ2 compression detected for Log file $filearray[$i]."); }
+                    # Modify the name to include the bzcat command
+                    $LogFileToDo{$cpt}=$bzcat . ' ' . "$DirFile/$filearray[$i]" . ' |';
+                }
+                else {
+                    $LogFileToDo{$cpt}="$DirFile/$filearray[$i]";
+                }
+                $cpt++;
+                
+            }
+        }
+    }
 }
 
 # If no files to process
