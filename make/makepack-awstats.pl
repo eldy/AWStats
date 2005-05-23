@@ -266,7 +266,7 @@ rename("$BUILDROOT/$PROJECT","$BUILDROOT/$FILENAMETGZ");
     	if ($target eq 'TGZ') {
     		unlink $FILENAMETGZ.tgz;
     		print "Compress $FILENAMETGZ into $FILENAMETGZ.tar.gz\n";
-    		$ret=`tar --directory="$BUILDROOT" -czvf $FILENAMETGZ.tar.gz $FILENAMETGZ`;
+    		$ret=`tar --directory="$BUILDROOT" --mode=go-w -czvf $FILENAMETGZ.tar.gz $FILENAMETGZ`;
     		print "Move $FILENAMETGZ.tar.gz to $DESTI\n";
     		rename("$FILENAMETGZ.tar.gz","$DESTI/$FILENAMETGZ.tar.gz");
     		next;
