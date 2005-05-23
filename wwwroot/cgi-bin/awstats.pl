@@ -7168,6 +7168,10 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 					if ($Debug) { debug("  Check condition '$conditiontype' must contain '$conditiontypeval' in '$standalonequery'",5); }
  					if ($standalonequery =~ /$conditiontypeval/) {	$conditionok=1; last; }
  				}
+                elsif ($conditiontype eq 'URLWITHQUERY') {
+                    if ($Debug) { debug("  Check condition '$conditiontype' must contain '$conditiontypeval' in '$urlwithnoquery$tokenquery$standalonequery'",5); }
+                    if ("$urlwithnoquery$tokenquery$standalonequery" =~ /$conditiontypeval/) { $conditionok=1; last; }
+                }
  				elsif ($conditiontype eq 'REFERER') {
 					if ($Debug) { debug("  Check condition '$conditiontype' must contain '$conditiontypeval' in '$field[$pos_referer]'",5); }
  					if ($field[$pos_referer] =~ /$conditiontypeval/) { $conditionok=1; last; }
@@ -7202,6 +7206,9 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 					if ($Debug) { debug("  Extract value from '$standalonequery' with regex '$rowkeytypeval'.",5); }
  					if ($standalonequery =~ /$rowkeytypeval/) { $rowkeyval = "$1"; $rowkeyok = 1; last; }
  				}
+                elsif ($rowkeytype eq 'URLWITHQUERY') {
+                    if ("$urlwithnoquery$tokenquery$standalonequery" =~ /$rowkeytypeval/) { $rowkeyval = "$1"; $rowkeyok = 1; last; }
+                }
  				elsif ($rowkeytype eq 'REFERER') {
  					if ($field[$pos_referer] =~ /$rowkeytypeval/) { $rowkeyval = "$1"; $rowkeyok = 1; last; }
  				}
