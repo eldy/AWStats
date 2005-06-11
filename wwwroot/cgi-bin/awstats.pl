@@ -528,7 +528,7 @@ use vars qw/ @Message /;
 #------------------------------------------------------------------------------
 
 #------------------------------------------------------------------------------
-# Function:		Write on ouput header of HTTP answer
+# Function:		Write on output header of HTTP answer
 # Parameters:	None
 # Input:		$HeaderHTTPSent $BuildReportFormat $PageCode $Expires
 # Output:		$HeaderHTTPSent=1
@@ -551,7 +551,7 @@ sub http_head {
 }
 
 #------------------------------------------------------------------------------
-# Function:		Write on ouput header of HTML page
+# Function:		Write on output header of HTML page
 # Parameters:	None
 # Input:		%HTMLOutput $PluginMode $Expires $Lang $StyleSheet $HTMLHeadSection $PageCode $PageDir
 # Output:		$HeaderHTMLSent=1
@@ -580,18 +580,23 @@ sub html_head {
 		}
 		print "<head>\n";
  
-        print "<meta name=\"generator\" content=\"AWStats $VERSION from config file awstats.$SiteConfig.conf (http://awstats.sourceforge.net)\" />\n";
- 
-		if ($MetaRobot) { print "<meta name=\"robots\" content=\"".($FrameName eq 'mainleft'?'no':'')."index,nofollow\" />\n"; }
-		else { print "<meta name=\"robots\" content=\"noindex,nofollow\" />\n"; }
+        my $endtag='>';
+        if ($BuildReportFormat eq 'xhtml' || $BuildReportFormat eq 'xml') { $endtag=' />'; }
+
+		# Affiche tag meta generator
+        print "<meta name=\"generator\" content=\"AWStats $VERSION from config file awstats.$SiteConfig.conf (http://awstats.sourceforge.net)\"$endtag\n";
+        
+		# Affiche tag meta robots
+		if ($MetaRobot) { print "<meta name=\"robots\" content=\"".($FrameName eq 'mainleft'?'no':'')."index,nofollow\"$endtag\n"; }
+		else { print "<meta name=\"robots\" content=\"noindex,nofollow\"$endtag\n"; }
 
 		# Affiche tag meta content-type
-		if ($BuildReportFormat eq 'xhtml' || $BuildReportFormat eq 'xml') { print ($ENV{'HTTP_USER_AGENT'}=~/MSIE|Googlebot/i?"<meta http-equiv=\"content-type\" content=\"text/html; charset=".($PageCode?$PageCode:"iso-8859-1")."\" />\n":"<meta http-equiv=\"content-type\" content=\"text/xml; charset=".($PageCode?$PageCode:"iso-8859-1")."\" />\n"); }
-		else { print "<meta http-equiv=\"content-type\" content=\"text/html; charset=".($PageCode?$PageCode:"iso-8859-1")."\" />\n"; }
+		if ($BuildReportFormat eq 'xhtml' || $BuildReportFormat eq 'xml') { print ($ENV{'HTTP_USER_AGENT'}=~/MSIE|Googlebot/i?"<meta http-equiv=\"content-type\" content=\"text/html; charset=".($PageCode?$PageCode:"iso-8859-1")."\" />\n":"<meta http-equiv=\"content-type\" content=\"text/xml; charset=".($PageCode?$PageCode:"iso-8859-1")."\"$endtag\n"); }
+		else { print "<meta http-equiv=\"content-type\" content=\"text/html; charset=".($PageCode?$PageCode:"iso-8859-1")."\"$endtag\n"; }
 
-		if ($Expires)  { print "<meta http-equiv=\"expires\" content=\"".(gmtime($starttime+$Expires))."\" />\n"; }
-		print "<meta http-equiv=\"description\" content=\"".ucfirst($PROG)." - Advanced Web Statistics for $SiteDomain$periodtitle\" />\n";
-		if ($MetaRobot && $FrameName ne 'mainleft') { print "<meta http-equiv=\"keywords\" content=\"$SiteDomain, free, advanced, realtime, web, server, logfile, log, analyzer, analysis, statistics, stats, perl, analyse, performance, hits, visits\" />\n"; }
+		if ($Expires)  { print "<meta http-equiv=\"expires\" content=\"".(gmtime($starttime+$Expires))."\"$endtag\n"; }
+		print "<meta http-equiv=\"description\" content=\"".ucfirst($PROG)." - Advanced Web Statistics for $SiteDomain$periodtitle\"$endtag\n";
+		if ($MetaRobot && $FrameName ne 'mainleft') { print "<meta http-equiv=\"keywords\" content=\"$SiteDomain, free, advanced, realtime, web, server, logfile, log, analyzer, analysis, statistics, stats, perl, analyse, performance, hits, visits\"$endtag\n"; }
 		print "<title>$Message[7] $SiteDomain$periodtitle</title>\n";
 		if ($FrameName ne 'index') {
 
@@ -658,7 +663,7 @@ EOF
 }
 
 #------------------------------------------------------------------------------
-# Function:		Write on ouput end of HTML page
+# Function:		Write on output end of HTML page
 # Parameters:	0|1 (0=no list plugins,1=list plugins)
 # Input:		%HTMLOutput $HTMLEndSection $FrameName $BuildReportFormat
 # Output:		None
@@ -4398,6 +4403,18 @@ sub FileCopy {
 	return 0;
 }
 
+
+# TODO Appeller cette fonction partout ou il y a des NewLinkParams
+sub CleanNewLinkParamsFrom {
+    my $NewLinkParams=shift;
+    my $param;
+    while ($param = shift) {
+		$NewLinkParams =~ s/(^|&|&amp;)$param(=[^&]*|$)//i;
+    }
+	$NewLinkParams =~ tr/&/&/s; $NewLinkParams =~ s/^&//; $NewLinkParams =~ s/&$//;
+    return $NewLinkParams;    
+}
+
 #------------------------------------------------------------------------------
 # Function:     Show flags for other language translations
 # Parameters:   Current languade id (en, fr, ...)
@@ -4412,19 +4429,20 @@ sub Show_Flag_Links {
 	my $NewLinkParams=$QueryString;
 	my $NewLinkTarget='';
 	if ($ENV{'GATEWAY_INTERFACE'}) {
-		$NewLinkParams =~ s/(^|&)update(=\w*|$)//i;
-		$NewLinkParams =~ s/(^|&)staticlinks(=\w*|$)//i;
-		$NewLinkParams =~ s/(^|&)framename=[^&]*//i;
-		$NewLinkParams =~ s/(^|&)lang=[^&]*//i;
-		if ($FrameName eq 'mainright') { $NewLinkTarget=" target=\"_parent\""; }
+        $NewLinkParams=CleanNewLinkParamsFrom($NewLinkParams,('update','staticlinks','framename','lang'));
+		$NewLinkParams =~ s/(^|&|&amp;)update(=\w*|$)//i;
+		$NewLinkParams =~ s/(^|&|&amp;)staticlinks(=\w*|$)//i;
+		$NewLinkParams =~ s/(^|&|&amp;)framename=[^&]*//i;
+		$NewLinkParams =~ s/(^|&|&amp;)lang=[^&]*//i;
 		$NewLinkParams =~ tr/&/&/s; $NewLinkParams =~ s/^&//; $NewLinkParams =~ s/&$//;
-		if ($NewLinkParams) { $NewLinkParams="${NewLinkParams}&"; }
+		if ($NewLinkParams) { $NewLinkParams="${NewLinkParams}&amp;"; }
+		if ($FrameName eq 'mainright') { $NewLinkTarget=" target=\"_parent\""; }
 	}
 	else {
-		$NewLinkParams=($SiteConfig?"config=$SiteConfig&":"")."year=$YearRequired&month=$MonthRequired&";
+		$NewLinkParams=($SiteConfig?"config=$SiteConfig&amp;":"")."year=$YearRequired&amp;month=$MonthRequired&amp;";
 	}
-	if ($NewLinkParams !~ /output=/) { $NewLinkParams.='ouput=main&'; }
-	if ($FrameName eq 'mainright') { $NewLinkParams.='framename=index&'; }
+	if ($NewLinkParams !~ /output=/) { $NewLinkParams.='output=main&amp;'; }
+	if ($FrameName eq 'mainright') { $NewLinkParams.='framename=index&amp;'; }
 
 	foreach my $lng (split(/\s+/,$ShowFlagLinks)) {
         $lng=$LangBrowserToLangAwstats{$lng}?$LangBrowserToLangAwstats{$lng}:$lng;
@@ -4782,11 +4800,11 @@ sub ShowFormFilter {
 	my $fieldfilterexvalue=shift;
 	if (! $StaticLinks) {
 		my $NewLinkParams=${QueryString};
-		$NewLinkParams =~ s/(^|&)update(=\w*|$)//i;
-		$NewLinkParams =~ s/(^|&)output(=\w*|$)//i;
-		$NewLinkParams =~ s/(^|&)staticlinks(=\w*|$)//i;
+		$NewLinkParams =~ s/(^|&|&amp;)update(=\w*|$)//i;
+		$NewLinkParams =~ s/(^|&|&amp;)output(=\w*|$)//i;
+		$NewLinkParams =~ s/(^|&|&amp;)staticlinks(=\w*|$)//i;
 		$NewLinkParams =~ tr/&/&/s; $NewLinkParams =~ s/^&//; $NewLinkParams =~ s/&$//;
-		if ($NewLinkParams) { $NewLinkParams="${NewLinkParams}&"; }
+		if ($NewLinkParams) { $NewLinkParams="${NewLinkParams}&amp;"; }
 		print "\n<form name=\"FormFilter\" action=\"".XMLEncode("$AWScript?${NewLinkParams}")."\" class=\"aws_border\">\n";
 		print "<table valign=\"middle\" width=\"99%\" border=\"0\" cellspacing=\"0\" cellpadding=\"2\"><tr>\n";
 		print "<td align=\"left\" width=\"50\">$Message[79]&nbsp;:</td>\n";
@@ -4798,11 +4816,11 @@ sub ShowFormFilter {
 		print "<input type=\"hidden\" name=\"output\" value=\"".join(',',keys %HTMLOutput)."\" />\n";
 		if ($SiteConfig) { print "<input type=\"hidden\" name=\"config\" value=\"$SiteConfig\" />\n"; }
  		if ($DirConfig)  { print "<input type=\"hidden\" name=\"configdir\" value=\"$DirConfig\" />\n"; }
-		if ($QueryString =~ /(^|&)year=(\d\d\d\d)/i) { print "<input type=\"hidden\" name=\"year\" value=\"$2\" />\n"; }
-		if ($QueryString =~ /(^|&)month=(\d\d)/i || $QueryString =~ /(^|&)month=(all)/i) { print "<input type=\"hidden\" name=\"month\" value=\"$2\" />\n"; }
-		if ($QueryString =~ /(^|&)lang=(\w+)/i) { print "<input type=\"hidden\" name=\"lang\" value=\"$2\" />\n"; }
-		if ($QueryString =~ /(^|&)debug=(\d+)/i) { print "<input type=\"hidden\" name=\"debug\" value=\"$2\" />\n"; }
-		if ($QueryString =~ /(^|&)framename=(\w+)/i) { print "<input type=\"hidden\" name=\"framename\" value=\"$2\" />\n"; }
+		if ($QueryString =~ /(^|&|&amp;)year=(\d\d\d\d)/i) { print "<input type=\"hidden\" name=\"year\" value=\"$2\" />\n"; }
+		if ($QueryString =~ /(^|&|&amp;)month=(\d\d)/i || $QueryString =~ /(^|&|&amp;)month=(all)/i) { print "<input type=\"hidden\" name=\"month\" value=\"$2\" />\n"; }
+		if ($QueryString =~ /(^|&|&amp;)lang=(\w+)/i) { print "<input type=\"hidden\" name=\"lang\" value=\"$2\" />\n"; }
+		if ($QueryString =~ /(^|&|&amp;)debug=(\d+)/i) { print "<input type=\"hidden\" name=\"debug\" value=\"$2\" />\n"; }
+		if ($QueryString =~ /(^|&|&amp;)framename=(\w+)/i) { print "<input type=\"hidden\" name=\"framename\" value=\"$2\" />\n"; }
 		print "<input type=\"submit\" value=\" $Message[115] \" class=\"aws_button\" /></td>\n";
 		print "<td> &nbsp; </td>";
 		print "</tr></table>\n";
@@ -5426,7 +5444,12 @@ if ($ENV{'GATEWAY_INTERFACE'}) {	# Run from a browser as CGI
 		binmode STDIN;
 		read(STDIN, $QueryString, $ENV{'CONTENT_LENGTH'});
 	}
-	if ($ENV{'QUERY_STRING'}) { $QueryString = $ENV{'QUERY_STRING'}; }
+	if ($ENV{'QUERY_STRING'}) {
+	    $QueryString = $ENV{'QUERY_STRING'};
+	    # Set & and &amp; to &amp;
+	    $QueryString =~ s/&amp;/&/g;
+	    $QueryString =~ s/&/&amp;/g;
+	}
 
 	$QueryString = CleanFromCSSA($QueryString);
 
@@ -5454,7 +5477,7 @@ if ($ENV{'GATEWAY_INTERFACE'}) {	# Run from a browser as CGI
 	if ($QueryString =~ /output=refererpages:([^&]+)/i)	{ $FilterIn{'refererpages'}=&DecodeEncodedString("$1"); }	# Filter on referer list can be defined with output=refererpages:filter to reduce number of lines read and showed
 
 	# If migrate
-	if ($QueryString =~ /(^|-|&)migrate=([^&]+)/i)	{
+	if ($QueryString =~ /(^|-|&|&amp;)migrate=([^&]+)/i)	{
 		$MigrateStats=&DecodeEncodedString("$2"); 
 		$MigrateStats =~ /^(.*)$PROG(\d{0,2})(\d\d)(\d\d\d\d)(.*)\.txt$/;
 		$SiteConfig=$5?$5:'xxx'; $SiteConfig =~ s/^\.//;		# SiteConfig is used to find config file
@@ -5465,14 +5488,14 @@ else {								# Run from command line
 	# Prepare QueryString
 	for (0..@ARGV-1) {
 		# If migrate
-		if ($ARGV[$_] =~ /(^|-|&)migrate=([^&]+)/i) {
+		if ($ARGV[$_] =~ /(^|-|&|&amp;)migrate=([^&]+)/i) {
 			$MigrateStats="$2";
 			$MigrateStats =~ /^(.*)$PROG(\d{0,2})(\d\d)(\d\d\d\d)(.*)\.txt$/;
 			$SiteConfig=$5?$5:'xxx'; $SiteConfig =~ s/^\.//;	# SiteConfig is used to find config file
 			next;
 		}
 		# TODO Check if ARGV is in @AllowedArg
-		if ($QueryString) { $QueryString .= '&'; }
+		if ($QueryString) { $QueryString .= '&amp;'; }
 		my $NewLinkParams=$ARGV[$_]; $NewLinkParams =~ s/^-+//;
 		$QueryString .= "$NewLinkParams";
 	}
@@ -5511,20 +5534,20 @@ else {								# Run from command line
 	if ($QueryString =~ /showunknownorigin/i)			{ $ShowUnknownOrigin=1; $QueryString=~s/showunknownorigin[^&]*//i; }
 
 }
-if ($QueryString =~ /(^|&)staticlinks/i) 			{ $StaticLinks=".$SiteConfig"; }
-if ($QueryString =~ /(^|&)staticlinks=([^&]+)/i) 	{ $StaticLinks=".$2"; }		# When ran from awstatsbuildstaticpages.pl
-if ($QueryString =~ /(^|&)staticlinksext=([^&]+)/i) { $StaticExt="$2"; }
-if ($QueryString =~ /(^|&)framename=([^&]+)/i)		{ $FrameName="$2"; }
-if ($QueryString =~ /(^|&)debug=(\d+)/i)			{ $Debug=$2; }
-if ($QueryString =~ /(^|&)databasebreak=(\w+)/i)	{ $DatabaseBreak=$2; }
-if ($QueryString =~ /(^|&)updatefor=(\d+)/i)		{ $UpdateFor=$2; }
-if ($QueryString =~ /(^|&)noloadplugin=([^&]+)/i)	{ foreach (split(/,/,$2)) { $NoLoadPlugin{&Sanitize("$_",1)}=1; } }
+if ($QueryString =~ /(^|&|&amp;)staticlinks/i) 			{ $StaticLinks=".$SiteConfig"; }
+if ($QueryString =~ /(^|&|&amp;)staticlinks=([^&]+)/i) 	{ $StaticLinks=".$2"; }		# When ran from awstatsbuildstaticpages.pl
+if ($QueryString =~ /(^|&|&amp;)staticlinksext=([^&]+)/i) { $StaticExt="$2"; }
+if ($QueryString =~ /(^|&|&amp;)framename=([^&]+)/i)		{ $FrameName="$2"; }
+if ($QueryString =~ /(^|&|&amp;)debug=(\d+)/i)			{ $Debug=$2; }
+if ($QueryString =~ /(^|&|&amp;)databasebreak=(\w+)/i)	{ $DatabaseBreak=$2; }
+if ($QueryString =~ /(^|&|&amp;)updatefor=(\d+)/i)		{ $UpdateFor=$2; }
+if ($QueryString =~ /(^|&|&amp;)noloadplugin=([^&]+)/i)	{ foreach (split(/,/,$2)) { $NoLoadPlugin{&Sanitize("$_",1)}=1; } }
 #Removed for security reasons
-#if ($QueryString =~ /(^|&)loadplugin=([^&]+)/i)		{ foreach (split(/,/,$2)) { $NoLoadPlugin{&Sanitize("$_",1)}=-1; } }
-if ($QueryString =~ /(^|&)limitflush=(\d+)/i)		{ $LIMITFLUSH=$2; }
+#if ($QueryString =~ /(^|&|&amp;)loadplugin=([^&]+)/i)		{ foreach (split(/,/,$2)) { $NoLoadPlugin{&Sanitize("$_",1)}=-1; } }
+if ($QueryString =~ /(^|&|&amp;)limitflush=(\d+)/i)		{ $LIMITFLUSH=$2; }
 # Get/Define output
-if ($QueryString =~ /(^|&)output(=[^&]*|)(.*)&output(=[^&]*|)(&|$)/i) { error("Only 1 output option is allowed","","",1); }
-if ($QueryString =~ /(^|&)output(=[^&]*|)(&|$)/i) {
+if ($QueryString =~ /(^|&|&amp;)output(=[^&]*|)(.*)(&|&amp;)output(=[^&]*|)(&|$)/i) { error("Only 1 output option is allowed","","",1); }
+if ($QueryString =~ /(^|&|&amp;)output(=[^&]*|)(&|$)/i) {
 	# At least one output expected. We define %HTMLOutput
 	my $outputlist="$2";
 	if ($outputlist) {
@@ -5542,18 +5565,18 @@ if ($QueryString =~ /(^|&)output(=[^&]*|)(&|$)/i) {
 if ($ENV{'GATEWAY_INTERFACE'} && ! scalar keys %HTMLOutput) { $HTMLOutput{'main'}=1; }
 	
 # Remove -output option with no = from QueryString
-$QueryString=~s/(^|&)output(&|$)/$1/i; $QueryString=~s/&+$//;
+$QueryString=~s/(^|&|&amp;)output(&|$)/$1/i; $QueryString=~s/&+$//;
 
 # Check year, month, day, hour parameters
-if ($QueryString =~ /(^|&)month=(year)/i) { error("month=year is a deprecated option. Use month=all instead."); }
-if ($QueryString =~ /(^|&)year=(\d\d\d\d)/i) { $YearRequired=sprintf("%04d",$2); }
+if ($QueryString =~ /(^|&|&amp;)month=(year)/i) { error("month=year is a deprecated option. Use month=all instead."); }
+if ($QueryString =~ /(^|&|&amp;)year=(\d\d\d\d)/i) { $YearRequired=sprintf("%04d",$2); }
 else { $YearRequired="$nowyear"; }
-if ($QueryString =~ /(^|&)month=(\d{1,2})/i) { $MonthRequired=sprintf("%02d",$2); }
-elsif ($QueryString =~ /(^|&)month=(all)/i)  { $MonthRequired='all'; }
+if ($QueryString =~ /(^|&|&amp;)month=(\d{1,2})/i) { $MonthRequired=sprintf("%02d",$2); }
+elsif ($QueryString =~ /(^|&|&amp;)month=(all)/i)  { $MonthRequired='all'; }
 else { $MonthRequired="$nowmonth"; }
-if ($QueryString =~ /(^|&)day=(\d{1,2})/i)   { $DayRequired=sprintf("%02d",$2); }	# day is a hidden option. Must not be used (Make results not understandable). Available for users that rename history files with day.
+if ($QueryString =~ /(^|&|&amp;)day=(\d{1,2})/i)   { $DayRequired=sprintf("%02d",$2); }	# day is a hidden option. Must not be used (Make results not understandable). Available for users that rename history files with day.
 else { $DayRequired=''; }
-if ($QueryString =~ /(^|&)hour=(\d{1,2})/i)  { $HourRequired=sprintf("%02d",$2); }	# hour is a hidden option. Must not be used (Make results not understandable). Available for users that rename history files with day.
+if ($QueryString =~ /(^|&|&amp;)hour=(\d{1,2})/i)  { $HourRequired=sprintf("%02d",$2); }	# hour is a hidden option. Must not be used (Make results not understandable). Available for users that rename history files with day.
 else { $HourRequired=''; }
 
 # Check parameter validity
@@ -5692,7 +5715,7 @@ $ENV{'AWSTATS_CURRENT_CONFIG'}=$SiteConfig;
 &Read_Config($DirConfig);
 
 # Check language
-if ($QueryString =~ /(^|&)lang=([^&]+)/i)	{ $Lang="$2"; }
+if ($QueryString =~ /(^|&|&amp;)lang=([^&]+)/i)	{ $Lang="$2"; }
 if (! $Lang || $Lang eq 'auto') {	# If lang not defined or forced to auto
 	my $langlist=$ENV{'HTTP_ACCEPT_LANGUAGE'}||''; $langlist =~ s/;[^,]*//g;
 	if ($Debug) { debug("Search an available language among HTTP_ACCEPT_LANGUAGE=$langlist",1); }
@@ -5874,9 +5897,9 @@ if ($MigrateStats) {
 if ($FrameName eq 'index') {
 	# Define the NewLinkParams for main chart
 	my $NewLinkParams=${QueryString};
-	$NewLinkParams =~ s/(^|&)framename=[^&]*//i;
+	$NewLinkParams =~ s/(^|&|&amp;)framename=[^&]*//i;
 	$NewLinkParams =~ tr/&/&/s; $NewLinkParams =~ s/^&//; $NewLinkParams =~ s/&$//;
-	if ($NewLinkParams) { $NewLinkParams="${NewLinkParams}&"; }
+	if ($NewLinkParams) { $NewLinkParams="${NewLinkParams}&amp;"; }
 	# Exit if main frame
 	print "<frameset cols=\"$FRAMEWIDTH,*\" border=\"0\" framespacing=\"2\" frameborder=\"0\">\n";
 	print "<frame name=\"mainleft\" src=\"".XMLEncode("$AWScript?${NewLinkParams}framename=mainleft")."\" noresize=\"0\" frameborder=\"0\" />\n";
@@ -7394,18 +7417,18 @@ if (scalar keys %HTMLOutput) {
 
 	# Define the NewLinkParams for main chart
 	my $NewLinkParams=${QueryString};
-	$NewLinkParams =~ s/(^|&)update(=\w*|$)//i;
-	$NewLinkParams =~ s/(^|&)output(=\w*|$)//i;
-	$NewLinkParams =~ s/(^|&)staticlinks(=\w*|$)//i;
-	$NewLinkParams =~ s/(^|&)framename=[^&]*//i;
+	$NewLinkParams =~ s/(^|&|&amp;)update(=\w*|$)//i;
+	$NewLinkParams =~ s/(^|&|&amp;)output(=\w*|$)//i;
+	$NewLinkParams =~ s/(^|&|&amp;)staticlinks(=\w*|$)//i;
+	$NewLinkParams =~ s/(^|&|&amp;)framename=[^&]*//i;
 	my $NewLinkTarget='';
 	if ($DetailedReportsOnNewWindows) { $NewLinkTarget=" target=\"awstatsbis\""; }
 	if (($FrameName eq 'mainleft' || $FrameName eq 'mainright') && $DetailedReportsOnNewWindows < 2) {
-		$NewLinkParams.="&framename=mainright";
+		$NewLinkParams.="&amp;framename=mainright";
 		$NewLinkTarget=" target=\"mainright\"";
 	}
 	$NewLinkParams =~ tr/&/&/s; $NewLinkParams =~ s/^&//; $NewLinkParams =~ s/&$//;
-	if ($NewLinkParams) { $NewLinkParams="${NewLinkParams}&"; }
+	if ($NewLinkParams) { $NewLinkParams="${NewLinkParams}&amp;"; }
 
 	if ($FrameName ne 'mainleft') {
 
@@ -7473,11 +7496,11 @@ if (scalar keys %HTMLOutput) {
 		
 		if ($FrameName ne 'mainleft') {
 			my $NewLinkParams=${QueryString};
-			$NewLinkParams =~ s/(^|&)update(=\w*|$)//i;
-			$NewLinkParams =~ s/(^|&)staticlinks(=\w*|$)//i;
-			$NewLinkParams =~ s/(^|&)year=[^&]*//i;
-			$NewLinkParams =~ s/(^|&)month=[^&]*//i;
-			$NewLinkParams =~ s/(^|&)framename=[^&]*//i;
+			$NewLinkParams =~ s/(^|&|&amp;)update(=\w*|$)//i;
+			$NewLinkParams =~ s/(^|&|&amp;)staticlinks(=\w*|$)//i;
+			$NewLinkParams =~ s/(^|&|&amp;)year=[^&]*//i;
+			$NewLinkParams =~ s/(^|&|&amp;)month=[^&]*//i;
+			$NewLinkParams =~ s/(^|&|&amp;)framename=[^&]*//i;
 			$NewLinkParams =~ tr/&/&/s; $NewLinkParams =~ s/^&//; $NewLinkParams =~ s/&$//;
 			my $NewLinkTarget='';
 			if ($FrameName eq 'mainright') { $NewLinkTarget=" target=\"_parent\""; }
@@ -7530,12 +7553,12 @@ if (scalar keys %HTMLOutput) {
 			# Print Update Now link
 			if ($AllowToUpdateStatsFromBrowser && ! $StaticLinks) {
 				my $NewLinkParams=${QueryString};
-				$NewLinkParams =~ s/(^|&)update(=\w*|$)//i;
-				$NewLinkParams =~ s/(^|&)staticlinks(=\w*|$)//i;
-				$NewLinkParams =~ s/(^|&)framename=[^&]*//i;
-				if ($FrameName eq 'mainright') { $NewLinkParams.="&framename=mainright"; }
+				$NewLinkParams =~ s/(^|&|&amp;)update(=\w*|$)//i;
+				$NewLinkParams =~ s/(^|&|&amp;)staticlinks(=\w*|$)//i;
+				$NewLinkParams =~ s/(^|&|&amp;)framename=[^&]*//i;
+				if ($FrameName eq 'mainright') { $NewLinkParams.="&amp;framename=mainright"; }
 				$NewLinkParams =~ tr/&/&/s; $NewLinkParams =~ s/^&//; $NewLinkParams =~ s/&$//;
-				if ($NewLinkParams) { $NewLinkParams="${NewLinkParams}&"; }
+				if ($NewLinkParams) { $NewLinkParams="${NewLinkParams}&amp;"; }
 				print "&nbsp; &nbsp; &nbsp; &nbsp;";
 				print "<a href=\"".XMLEncode("$AWScript?${NewLinkParams}update=1")."\">$Message[74]</a>";
 			}
@@ -7618,7 +7641,7 @@ if (scalar keys %HTMLOutput) {
 			# Define link anchor			
 			my $linkanchor=($FrameName eq 'mainleft'?"$AWScript?${NewLinkParams}":"");
 			if ($linkanchor && ($linkanchor !~ /framename=mainright/)) { $linkanchor.="framename=mainright"; }
-			$linkanchor =~ s/&$//; $linkanchor=XMLEncode("$linkanchor");
+			$linkanchor =~ s/(&|&amp;)$//; $linkanchor=XMLEncode("$linkanchor");
 			# Define target
 			my $targetpage=($FrameName eq 'mainleft'?" target=\"mainright\"":"");
 			# Print Menu
@@ -7695,9 +7718,9 @@ if (scalar keys %HTMLOutput) {
 		# Print Back link
 		elsif (! $HTMLOutput{'main'}) {
 			print "<table>\n";
-			$NewLinkParams =~ s/(^|&)hostfilter=[^&]*//i;
-			$NewLinkParams =~ s/(^|&)urlfilter=[^&]*//i;
-			$NewLinkParams =~ s/(^|&)refererpagesfilter=[^&]*//i;
+			$NewLinkParams =~ s/(^|&|&amp;)hostfilter=[^&]*//i;
+			$NewLinkParams =~ s/(^|&|&amp;)urlfilter=[^&]*//i;
+			$NewLinkParams =~ s/(^|&|&amp;)refererpagesfilter=[^&]*//i;
 			$NewLinkParams =~ tr/&/&/s; $NewLinkParams =~ s/&$//;
 			if (! $DetailedReportsOnNewWindows || $FrameName eq 'mainright' || $QueryString =~ /buildpdf/i) {
 				print "<tr><td class=\"aws\"><a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?XMLEncode("$AWScript".(${NewLinkParams}?"?${NewLinkParams}":"")):"$PROG$StaticLinks.$StaticExt")."\">$Message[76]</a></td></tr>\n";
@@ -8668,13 +8691,13 @@ if (scalar keys %HTMLOutput) {
 			&tab_head("$title",0,0,'month');
 
 			my $NewLinkParams=${QueryString};
-			$NewLinkParams =~ s/(^|&)update(=\w*|$)//i;
-			$NewLinkParams =~ s/(^|&)staticlinks(=\w*|$)//i;
-			$NewLinkParams =~ s/(^|&)year=[^&]*//i;
-			$NewLinkParams =~ s/(^|&)month=[^&]*//i;
-			$NewLinkParams =~ s/(^|&)framename=[^&]*//i;
+			$NewLinkParams =~ s/(^|&|&amp;)update(=\w*|$)//i;
+			$NewLinkParams =~ s/(^|&|&amp;)staticlinks(=\w*|$)//i;
+			$NewLinkParams =~ s/(^|&|&amp;)year=[^&]*//i;
+			$NewLinkParams =~ s/(^|&|&amp;)month=[^&]*//i;
+			$NewLinkParams =~ s/(^|&|&amp;)framename=[^&]*//i;
 			$NewLinkParams =~ tr/&/&/s; $NewLinkParams =~ s/^&//; $NewLinkParams =~ s/&$//;
-			if ($NewLinkParams) { $NewLinkParams="${NewLinkParams}&"; }
+			if ($NewLinkParams) { $NewLinkParams="${NewLinkParams}&amp;"; }
 			my $NewLinkTarget='';
 			if ($FrameName eq 'mainright') { $NewLinkTarget=" target=\"_parent\""; }
 	
@@ -8918,13 +8941,13 @@ if (scalar keys %HTMLOutput) {
 			print "<center>\n";
 			
 			my $NewLinkParams=${QueryString};
-			$NewLinkParams =~ s/(^|&)update(=\w*|$)//i;
-			$NewLinkParams =~ s/(^|&)staticlinks(=\w*|$)//i;
-			$NewLinkParams =~ s/(^|&)year=[^&]*//i;
-			$NewLinkParams =~ s/(^|&)month=[^&]*//i;
-			$NewLinkParams =~ s/(^|&)framename=[^&]*//i;
+			$NewLinkParams =~ s/(^|&|&amp;)update(=\w*|$)//i;
+			$NewLinkParams =~ s/(^|&|&amp;)staticlinks(=\w*|$)//i;
+			$NewLinkParams =~ s/(^|&|&amp;)year=[^&]*//i;
+			$NewLinkParams =~ s/(^|&|&amp;)month=[^&]*//i;
+			$NewLinkParams =~ s/(^|&|&amp;)framename=[^&]*//i;
 			$NewLinkParams =~ tr/&/&/s; $NewLinkParams =~ s/^&//; $NewLinkParams =~ s/&$//;
-			if ($NewLinkParams) { $NewLinkParams="${NewLinkParams}&"; }
+			if ($NewLinkParams) { $NewLinkParams="${NewLinkParams}&amp;"; }
 			my $NewLinkTarget='';
 			if ($FrameName eq 'mainright') { $NewLinkTarget=" target=\"_parent\""; }
 				
