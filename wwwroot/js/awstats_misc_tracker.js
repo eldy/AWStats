@@ -131,7 +131,7 @@ if (window.location.search == "" || window.location.search == "?") {
         l.setAttribute("border", "0");
         document.getElementsByTagName("body")[0].appendChild(l);
 	} else {
-		document.write('<img src="'+ imgsrc +'" height=\"0\" width=\"0\" border=\"0\" />')
+		document.write('<img style="display:none;" src="'+ imgsrc +'" height="0" width="0" border="0" />')
 	}
 
 }
