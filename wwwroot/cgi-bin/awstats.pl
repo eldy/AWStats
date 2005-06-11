@@ -5918,9 +5918,9 @@ if ($FrameName eq 'index') {
 	$NewLinkParams =~ tr/&/&/s; $NewLinkParams =~ s/^&//; $NewLinkParams =~ s/&$//;
 	if ($NewLinkParams) { $NewLinkParams="${NewLinkParams}&amp;"; }
 	# Exit if main frame
-	print "<frameset cols=\"$FRAMEWIDTH,*\" border=\"0\" framespacing=\"2\" frameborder=\"0\">\n";
-	print "<frame name=\"mainleft\" src=\"".XMLEncode("$AWScript?${NewLinkParams}framename=mainleft")."\" noresize=\"0\" frameborder=\"0\" />\n";
-	print "<frame name=\"mainright\" src=\"".XMLEncode("$AWScript?${NewLinkParams}framename=mainright")."\" noresize=\"0\" scrolling=\"YES\" frameborder=\"0\" />\n";
+	print "<frameset cols=\"$FRAMEWIDTH,*\">\n";
+	print "<frame name=\"mainleft\" src=\"".XMLEncode("$AWScript?${NewLinkParams}framename=mainleft")."\" noresize=\"noresize\" frameborder=\"0\" />\n";
+	print "<frame name=\"mainright\" src=\"".XMLEncode("$AWScript?${NewLinkParams}framename=mainright")."\" noresize=\"noresize\" scrolling=\"yes\" frameborder=\"0\" />\n";
 	print "<noframes><body>";
 	print "Your browser does not support frames.<br />\n";
 	print "You must set AWStats UseFramesWhenCGI parameter to 0\n";
