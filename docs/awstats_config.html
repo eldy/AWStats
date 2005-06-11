@@ -322,7 +322,8 @@ when reading it), follow the example:<br>
 <br># "your_own_personalized_log_format" = If your log is ftp, mail or other format,
 <br>#     you must use following keys to define the log format string (See FAQ for
 <br>#     ftp, mail or exotic web log format examples):
-<br>#   %host             Host client name or IP address
+<br>#   %host             Client hostname or IP address (or Sender host for mail log)
+<br>#   %host_r           Receiver hostname or IP address (for mail log)
 <br>#   %lognamequot      Authenticated login/user with format: "alex"
 <br>#   %logname          Authenticated login/user with format: alex
 <br>#   %time1            Date and time with format: [dd/mon/yyyy:hh:mm:ss +0000] or [dd/mon/yyyy:hh:mm:ss]
