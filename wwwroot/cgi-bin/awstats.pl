@@ -4341,7 +4341,7 @@ sub UnCompileRegex {
 
 #------------------------------------------------------------------------------
 # Function:     Clean a string of all chars that are not char or _ - \ / . \s
-# Parameters:   stringtoclean
+# Parameters:   stringtoclean, full
 # Input:        None
 # Output:       None
 # Return:		cleanedstring
