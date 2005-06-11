@@ -1160,6 +1160,10 @@ sub Parse_Config {
 		# Check includes
 		if ($_ =~ /^Include "([^\"]+)"/ || $_ =~ /^#include "([^\"]+)"/) {	# #include kept for backward compatibility
 		    my $includeFile = $1;
+		    # Expand __var__ by values
+		    while ($includeFile =~ /__([^\s_]+(?:_[^\s_]+)*)__/) {
+		        my $var=$1; $includeFile =~ s/__${var}__/$ENV{$var}/g;
+		    }
 			if ($Debug) { debug("Found an include : $includeFile",2); }
 		    if ( $includeFile !~ /^[\\\/]/ ) {
 			    # Correct relative include files
