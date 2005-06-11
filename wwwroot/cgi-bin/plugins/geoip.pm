@@ -141,7 +141,7 @@ sub ShowInfoHost_geoip {
     	if ($NewLinkParams) { $NewLinkParams="${NewLinkParams}&"; }
 
 		print "<th width=\"80\">";
-        print "<a href=\"#countries\">GeoIP<br>Country</a>";
+        print "<a href=\"#countries\">GeoIP<br />Country</a>";
         print "</th>";
 	}
 	elsif ($param) {
