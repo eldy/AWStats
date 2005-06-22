@@ -8174,7 +8174,7 @@ if (scalar keys %HTMLOutput) {
     		foreach my $pluginname (keys %{$PluginsLoaded{'ShowPagesAddField'}})  {
 #    			my $function="ShowPagesAddField_$pluginname('title')";
 #    			eval("$function");
-    			my $function="ShowPagesAddField_$pluginname()";
+    			my $function="ShowPagesAddField_$pluginname";
     			&$function('title');
     		}
     		print "<th>&nbsp;</th></tr>\n";
