@@ -113,12 +113,14 @@ $BuildReportFormat
 $BuildHistoryFormat
 $ExtraTrackedRowsLimit
 $DatabaseBreak
+$SectionsToBeSaved
 /;
 $StaticExt='html';
 $DNSStaticCacheFile='dnscache.txt';
 $DNSLastUpdateCacheFile='dnscachelastupdate.txt';
 $MiscTrackerUrl='/js/awstats_misc_tracker.js';
 $Lang='auto';
+$SectionsToBeSaved='all';
 $MaxRowsInHTMLOutput=1000;
 $MaxLengthOfShownURL=64;
 $MaxLengthOfStoredURL=256;			# Note: Apache LimitRequestLine is default to 8190
@@ -1600,6 +1602,7 @@ sub Check_Config {
 	if ($AllowToUpdateStatsFromBrowser !~ /[0-1]/) 	{ $AllowToUpdateStatsFromBrowser=0; }
 	if ($AllowFullYearView !~ /[0-3]/) 				{ $AllowFullYearView=2; }
 	# Optional setup section
+	if (! $SectionsToBeSaved) 						{ $SectionsToBeSaved='all'; }
 	if ($EnableLockForUpdate !~ /[0-1]/)           	{ $EnableLockForUpdate=0; }
 	$DNSStaticCacheFile||='dnscache.txt';
 	$DNSLastUpdateCacheFile||='dnscachelastupdate.txt';
@@ -1969,7 +1972,7 @@ sub Read_Plugins {
 }
 
 #------------------------------------------------------------------------------
-# Function:		Read history file and create/update tmp history file
+# Function:		Read history file and create or update tmp history file
 # Parameters:	year,month,day,hour,withupdate,withpurge,part_to_load[,lastlinenb,lastlineoffset,lastlinechecksum]
 # Input:		$DirData $PROG $FileSuffix $LastLine $DatabaseBreak
 # Output:		None
@@ -2005,6 +2008,7 @@ sub Read_History_With_TmpUpdate {
 					 'origin'=>21,'sereferrals'=>22,'pagerefs'=>23,
 					 'searchwords'=>24,'keywords'=>25,
 					 'errors'=>26);
+
 	my $order=(scalar keys %allsections)+1;
 	foreach (keys %TrapInfosForHTTPErrorCodes) { $allsections{"sider_$_"}=$order++; }
 	foreach (1..@ExtraName-1) { $allsections{"extra_$_"}=$order++; }
@@ -2069,7 +2073,14 @@ sub Read_History_With_TmpUpdate {
 
 	# Define SectionsToSave (which sections to save)
 	my %SectionsToSave = ();
-	if ($withupdate) { %SectionsToSave=%allsections; }
+	if ($withupdate) {
+		if ($SectionsToBeSaved eq 'all') {
+			%SectionsToSave=%allsections;
+		} else {
+			my $order=1;
+			foreach (split(/\s+/,$SectionsToBeSaved)) { $SectionsToSave{$_}=$order++; }
+		}
+	}
 
 	if ($Debug) {
         debug(" List of sections marked for load : ".join(' ',(sort { $SectionsToLoad{$a} <=> $SectionsToLoad{$b} } keys %SectionsToLoad)),2);
