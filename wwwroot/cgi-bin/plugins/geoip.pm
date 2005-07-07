@@ -53,7 +53,8 @@ sub Init_geoip {
 	# <-----
 	# ENTER HERE CODE TO DO INIT PLUGIN ACTIONS
 	debug(" Plugin geoip: InitParams=$InitParams",1);
-	my $mode=$InitParams;
+   	my ($mode,$datafile)=split(/\s+/,$InitParams,2);
+   	if (! $datafile) { $datafile="GeoIP.dat"; }
 	if ($type eq 'geoippureperl') {
 		if ($mode eq '' || $mode eq 'GEOIP_MEMORY_CACHE')  { $mode=Geo::IP::PurePerl::GEOIP_MEMORY_CACHE(); }
 		else { $mode=Geo::IP::PurePerl::GEOIP_STANDARD(); }
@@ -64,9 +65,9 @@ sub Init_geoip {
 	%TmpDomainLookup=();
 	debug(" Plugin geoip: GeoIP initialized in mode $type $mode",1);
 	if ($type eq 'geoippureperl') {
-		$gi = Geo::IP::PurePerl->new($mode);
+		$gi = Geo::IP::PurePerl->open($datafile, $mode);
 	} else {
-		$gi = Geo::IP->new($mode);
+		$gi = Geo::IP->open($datafile, $mode);
 	}
 	# ----->
 
