@@ -3,6 +3,57 @@ AWStats Changelog
 $Revision$ - $Author$ - $Date$
 
 
+***** 6.5 *****
+
+New features/improvements:
+- New: RSS catcher/readers in robot database
+- New: Add option databasebreak to force awstats to use a different database
+  history file for eache day or hour instead of month.
+- New: geoip_cities plugin report the region when available.
+- New: LevelForBrowsersDetection can accept value 'allphones' to use file
+  browsers_phone.pm instead of browsers.pm file for AWStats database. This
+  file is specialized in phone/pda browsers.
+- Qual: geoip plugin now uses open instead of new to allow use of different
+  path for datafiles instead of default. This allow use of personalised path
+  for database file.
+- New: LogFormat=2 can now change its value dynamically if logformat change.
+- New: Add way to set ArchiveLogRecords with same tags than LogFile to add
+  suffix to archive log files.
+- New: Add option SectionsToBeSaved (to ask AWStats to save only particular
+  sections).
+  
+Fixes:
+- Fixed: referer changes to referrer
+- Fixed: [ 1111530 ] Missing description for %host_r in config file
+- Fixed: [ 1124711 ] env __AWSTATS_CURRENT_CONFIG__ not expanded for include
+- Fixed: [ 1172485 ] Invalid header characters for DOCTYPE
+- Fixed: [ 1172494 ] Invalid XHTML in awstats.pl
+- Fixed: [ 1173816 ] Config file mis-feature
+- Fixed: [ 1218832 ] XML Strict error (with GeoIP plugin)
+- Fixed: keyword detection for "advanced" search on google
+- Added style="display:none;" to image link for misc tracker.
+- Changed stored permission in tar.gz file
+- Fixed: Better support for gz and bz2 files
+- Fixed: Added xhtml in mime types.
+- Fixed [ 1163590 ] XML parsing error
+- Fixed: [ 1174728 ] version 6.4: XML parsing error
+- Fixed: [ 1186582 ] Authentication problem in Windows NT/AD Domains
+- Fixed: [ 1191805 ] Missing Bot: Add generic detection for user agent
+  bot bot/ and bot-
+- Avoid bad cells if geoip country does not exists.
+- Better compatibility of misc_tracker with firefox.
+- Fixed: Dying process with geoip_city plugin when IP is unknown by plugin.
+- Fixed: Add error message if option buildpdf option is used with parameter
+  BuildReportFormat=xhtml.
+
+Other/Documentation:
+- Added Spanish translation for webmin module by Patricio Martínez Ros.
+- Added croatian language.
+- Update russian language file.
+- Renamed european union by european country.
+- Review of AWStats documentation.
+
+
 ***** 6.4 *****
 
 New features/improvements:
