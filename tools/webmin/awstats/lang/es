@@ -1,0 +1,117 @@
+all_gb=GB
+all_mb=MB
+all_kb=KB
+all_b=Bytes
+
+index_title=AWStats Logfile Analyzer
+index_version=AWStats versión $1
+index_eawstats=La orden de análisis $1 no se encontró en su sistema. Puede que AWStats no esté instalado, o que su <a href='$2'>Configuración de módulo</a> sea incorrecta.
+index_econfdir=El directorio de configuración de AWStats $1 no se encontró en su sistema. Puede que AWStats no esté instalado, o que su <a href='$2'>Configuración de módulo</a> sea incorrecta.
+index_econf=El fichero de configuración de ejemplo de AWStats $1 no se encontró en su sistema. Puede que AWStats no esté instalado, o que su <a href='$2'>Configuración de módulo</a> sea incorrecta.
+index_cgi=<a href='$1'>Ruta del CGI no configurada</a>
+index_add=Añadir un nuevo fichero de configuración para analizar.
+index_path=Fichero de configuración
+index_type=Tipo
+index_size=Tamaño
+index_create=Creado/Modificado
+index_databasesize=Tamaño de la base de datos
+index_noconfig=Ningún fichero de configuración se ha encontrado o ha sido añadido para analizar.
+index_edit=Editar/Borrar configuración
+index_del=Borrar configuración
+index_scheduled=Planificado
+index_sched2=Planificador
+index_now=Ahora
+index_update=Actualizar estadísticas
+index_update2=Actualizar
+index_view=Ver estadísticas
+index_view2=Ver
+index_return=Lista de ficheros de configuración
+index_eversion=La orden de AWStats $1 en su sistema tiene la versión $2, pero este módulo sólo acepta versiones $3 y superiores.
+index_egetversion=Fallo al obtener la versión de AWStats. La orden $1 devolvió : $2.<br>Puede que su <a href='$3'>Configuración de módulo</a> sea incorrecta.
+index_advanced1=Ver directivas para 'OPTIONAL SETUP SECTION'
+index_advanced2=Ver directivas para 'OPTIONAL ACCURACY SETUP SECTION'
+index_advanced3=Ver directivas para 'OPTIONAL APPEARANCE SETUP SECTION'
+index_advanced4=Ver directivas para 'OPTIONAL PLUGINS SETUP SECTION'
+index_advanced5=Ver directivas para 'OPTIONAL EXTRA SETUP SECTION'
+index_hideadvanced=Ocultar directivas opcionales
+index_nodirallowed=Su usuario $1 no tiene permisos para leer/escribir los ficheros de configuración de AWStats.
+index_allowed=Su cuenta $1 tiene permisos para leer/editar los ficheros de configuración (o sus enlaces)
+index_changeallowed=Los permisos de los directorios donde usted puede buscan/editar los ficheros de configuración de AWStats le pueden otorgados por un administrador de Webmin desde el editor de ACL de Webmin (Menú $1 y luego haga clic en $2)
+index_viewall=Ver un resumen de todas las configuraciones disponibles
+
+edit_title1=Añadir un fichero de configuración
+edit_title2=Editar un fichero de configuración
+edit_header=Asistente de edición del fichero de configuración $1
+edit_headernew=Asistente de creación de un nuevo fichero de configuración
+edit_file=Contenido del fichero
+edit_add=Nombre del fichero de configuración a crear
+edit_create_by_copy=Crear un nuevo fichero de configuración copiando uno existente
+edit_create_from_scratch=Crear un nuevo fichero de configuración con los siguientes parámetros
+edit_config_to_copy=Fichero de configuración a copiar
+edit_user=Ejecutar AWStats como usuario
+edit_ecannot=No tiene permisos para editar este fichero de configuración
+edit_efilecannot=El fichero de configuración '$1' no está en un directorio permitido
+
+save_err=Error en la construcción del fichero de configuración
+save_efile=No se ha introducido el nombre del fichero de configuración
+save_fileexists=El fichero de configuración ya existe
+save_edir=El directorio '$1' elegido para escribir su fichero de configuración no tiene permisos de Webmin.
+save_ecannot=Sólo tiene permisos para ver o generar informes para la configuraición en $1
+save_errLogFile=Error en el parámetro LogFile. El fichero de log $1 no existe o no se puede leer
+save_errLogFormat=Error en el parámetro LogFile. El parámetro no está definido
+save_errSiteDomain=Error en el parámetro SiteDomain. El parámetro no está definido
+save_errDirData=Error en el parámetro DirData. El parámetro no está definido o el directorio no existe
+save_dirnotexists=El directorio no existe
+
+update_title=Actualizar estadísticas
+update_ecannot=No está autorizado para actualizar estadísticas
+update_run=Ejecutar el poceso actualización con la orden
+update_finished=Porceso de actualización finalizado
+update_wait=Por favor, espere
+
+schedule_title=Planificar actualizaciones de las estadísticas
+schedule_ecannot=No está autorizado para actualizar o planificar el proceso de actualización
+
+log_create_log=Fichero de configuración de AWStats $1 creado
+log_modify_log=Fichero de configuración de AWStats $1 modificado
+log_delete_log=Fichero de configuración de AWStats $1 borrado
+log_generate_log=Actualizar estadísticas AWStats para $1
+
+acl_view=¿Puede ver los informes para los ficheros de configuración?
+acl_global=¿Puede editar los ficheros de configuración de AWStats?
+acl_add=¿Puede añadir y borrar ficheros de configuración?
+acl_update=¿Puede actualizar las estadísticas para los ficheros de configuración existentes?
+acl_user=Ejecutar AWStats como usuario Unix
+acl_this=Usuario actual de Webmin
+acl_any=Cualquier usuario
+acl_dir=Sólo permitir ver informes y editar ficheros de configuración en (rutas reales de directorios, no enlaces)
+
+help_title=Pagina de ayuda
+help_subtitle=<b>Ayuda sobre los parámetros del fichero de configuración $1</b>
+help_subtitleplugin=<b>Ayuda sobre el plugin $1</b>
+help_notfound=Parámetro no encontrado en su fichero de ejemplo $1.<br>Puede que su versión de AWStata no lo soporte, así que no hay ayuda disponible.
+help_help=Ayuda
+help_starrequired=parametros requeridos sin valor por defecto. No pueden estar vacíos.
+
+viewall_title=Summary for all configurations files
+viewall_notallowed=You don't have rights to see statisitics
+viewall_allowed=This page presents a summary of all configurations files found in directories allowed to user $1
+viewall_period=Period
+viewall_u=Visitantes distintos
+viewall_v=Visitas
+viewall_p=Páginas
+viewall_h=Solicitudes
+viewall_k=Ancho de banda
+
+month01=Enero
+month02=Febrero
+month03=Marzo
+month04=Abril
+month05=Mayo
+month06=Junio
+month07=Julio
+month08=Agosto
+month09=Septiembre
+month10=Octubre
+month11=Noviembre
+month12=Diciembre
