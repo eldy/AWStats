@@ -529,6 +529,16 @@ use vars qw/ @Message /;
 # Functions
 #------------------------------------------------------------------------------
 
+# Function to solve pb with openvms
+sub file_filt (@) { 
+    my @retval; 
+    foreach my $fl (@_) { 
+        $fl =~ tr/^//d; 
+        push @retval, $fl;
+    } 
+    return sort @retval; 
+} 
+
 #------------------------------------------------------------------------------
 # Function:		Write on output header of HTTP answer
 # Parameters:	None
@@ -4066,7 +4076,7 @@ sub Rename_All_Tmp_History {
 	if ($Debug) { debug("Scan for temp history files to rename into DirData='$DirData' with mask='$datemask'"); }
 
 	my $regfilesuffix=quotemeta($FileSuffix);
-	foreach (grep /^$PROG($datemask)$regfilesuffix\.tmp\.$pid$/, sort readdir DIR) {
+	foreach (grep /^$PROG($datemask)$regfilesuffix\.tmp\.$pid$/, file_filt sort readdir DIR) {
 		/^$PROG($datemask)$regfilesuffix\.tmp\.$pid$/;
 		if ($renameok) {	# No rename error yet
 			if ($Debug) { debug(" Rename new tmp history file $PROG$1$FileSuffix.tmp.$$ into $PROG$1$FileSuffix.txt",1); }
@@ -4431,12 +4441,17 @@ sub FileCopy {
 	return 0;
 }
 
-
+#------------------------------------------------------------------------------
+# Function:     Format a QUERY_STRING
+# Parameters:   query
+# Input:        None
+# Output:       None
+# Return:		formated query
+#------------------------------------------------------------------------------
 # TODO Appeller cette fonction partout ou il y a des NewLinkParams
 sub CleanNewLinkParamsFrom {
     my $NewLinkParams=shift;
-    my $param;
-    while ($param = shift) {
+    while (my $param = shift) {
 		$NewLinkParams =~ s/(^|&|&amp;)$param(=[^&]*|$)//i;
     }
 	$NewLinkParams =~ s/(&amp;|&)+/&amp;/i;
@@ -5958,7 +5973,7 @@ elsif ($DatabaseBreak eq 'hour')  { $datemask='(\d\d)(\d\d\d\d)(\d\d)(\d\d)'; }
 if ($Debug) { debug("Scan for last history files into DirData='$DirData' with mask='$datemask'"); }
 opendir(DIR,"$DirData");
 my $regfilesuffix=quotemeta($FileSuffix);
-foreach (grep /^$PROG$datemask$regfilesuffix\.txt(|\.gz)$/i, sort readdir DIR) {
+foreach (grep /^$PROG$datemask$regfilesuffix\.txt(|\.gz)$/i, file_filt sort readdir DIR) {
 	/^$PROG$datemask$regfilesuffix\.txt(|\.gz)$/i;
 	if (! $ListOfYears{"$2"} || "$1" gt $ListOfYears{"$2"}) {
 		# ListOfYears contains max month found
