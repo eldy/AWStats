@@ -4439,7 +4439,8 @@ sub CleanNewLinkParamsFrom {
     while ($param = shift) {
 		$NewLinkParams =~ s/(^|&|&amp;)$param(=[^&]*|$)//i;
     }
-	$NewLinkParams =~ tr/&/&/s; $NewLinkParams =~ s/^&//; $NewLinkParams =~ s/&$//;
+	$NewLinkParams =~ s/(&amp;|&)+/&amp;/i;
+	$NewLinkParams =~ s/^&amp;//; $NewLinkParams =~ s/&amp;$//;
     return $NewLinkParams;    
 }
 
@@ -4462,7 +4463,8 @@ sub Show_Flag_Links {
 		$NewLinkParams =~ s/(^|&|&amp;)staticlinks(=\w*|$)//i;
 		$NewLinkParams =~ s/(^|&|&amp;)framename=[^&]*//i;
 		$NewLinkParams =~ s/(^|&|&amp;)lang=[^&]*//i;
-		$NewLinkParams =~ tr/&/&/s; $NewLinkParams =~ s/^&//; $NewLinkParams =~ s/&$//;
+    	$NewLinkParams =~ s/(&amp;|&)+/&amp;/i;
+    	$NewLinkParams =~ s/^&amp;//; $NewLinkParams =~ s/&amp;$//;
 		if ($NewLinkParams) { $NewLinkParams="${NewLinkParams}&amp;"; }
 		if ($FrameName eq 'mainright') { $NewLinkTarget=" target=\"_parent\""; }
 	}
@@ -4831,7 +4833,8 @@ sub ShowFormFilter {
 		$NewLinkParams =~ s/(^|&|&amp;)update(=\w*|$)//i;
 		$NewLinkParams =~ s/(^|&|&amp;)output(=\w*|$)//i;
 		$NewLinkParams =~ s/(^|&|&amp;)staticlinks(=\w*|$)//i;
-		$NewLinkParams =~ tr/&/&/s; $NewLinkParams =~ s/^&//; $NewLinkParams =~ s/&$//;
+    	$NewLinkParams =~ s/(&amp;|&)+/&amp;/i;
+    	$NewLinkParams =~ s/^&amp;//; $NewLinkParams =~ s/&amp;$//;
 		if ($NewLinkParams) { $NewLinkParams="${NewLinkParams}&amp;"; }
 		print "\n<form name=\"FormFilter\" action=\"".XMLEncode("$AWScript?${NewLinkParams}")."\" class=\"aws_border\">\n";
 		print "<table valign=\"middle\" width=\"99%\" border=\"0\" cellspacing=\"0\" cellpadding=\"2\"><tr>\n";
@@ -5926,7 +5929,8 @@ if ($FrameName eq 'index') {
 	# Define the NewLinkParams for main chart
 	my $NewLinkParams=${QueryString};
 	$NewLinkParams =~ s/(^|&|&amp;)framename=[^&]*//i;
-	$NewLinkParams =~ tr/&/&/s; $NewLinkParams =~ s/^&//; $NewLinkParams =~ s/&$//;
+	$NewLinkParams =~ s/(&amp;|&)+/&amp;/i;
+	$NewLinkParams =~ s/^&amp;//; $NewLinkParams =~ s/&amp;$//;
 	if ($NewLinkParams) { $NewLinkParams="${NewLinkParams}&amp;"; }
 	# Exit if main frame
 	print "<frameset cols=\"$FRAMEWIDTH,*\">\n";
@@ -7455,7 +7459,8 @@ if (scalar keys %HTMLOutput) {
 		$NewLinkParams.="&amp;framename=mainright";
 		$NewLinkTarget=" target=\"mainright\"";
 	}
-	$NewLinkParams =~ tr/&/&/s; $NewLinkParams =~ s/^&//; $NewLinkParams =~ s/&$//;
+	$NewLinkParams =~ s/(&amp;|&)+/&amp;/i;
+	$NewLinkParams =~ s/^&amp;//; $NewLinkParams =~ s/&amp;$//;
 	if ($NewLinkParams) { $NewLinkParams="${NewLinkParams}&amp;"; }
 
 	if ($FrameName ne 'mainleft') {
@@ -7529,7 +7534,8 @@ if (scalar keys %HTMLOutput) {
 			$NewLinkParams =~ s/(^|&|&amp;)year=[^&]*//i;
 			$NewLinkParams =~ s/(^|&|&amp;)month=[^&]*//i;
 			$NewLinkParams =~ s/(^|&|&amp;)framename=[^&]*//i;
-			$NewLinkParams =~ tr/&/&/s; $NewLinkParams =~ s/^&//; $NewLinkParams =~ s/&$//;
+        	$NewLinkParams =~ s/(&amp;|&)+/&amp;/i;
+        	$NewLinkParams =~ s/^&amp;//; $NewLinkParams =~ s/&amp;$//;
 			my $NewLinkTarget='';
 			if ($FrameName eq 'mainright') { $NewLinkTarget=" target=\"_parent\""; }
 			print "<form name=\"FormDateFilter\" action=\"".XMLEncode("$AWScript?${NewLinkParams}")."\" style=\"padding: 0px 0px 0px 0px; margin-top: 0\"$NewLinkTarget>\n";
@@ -7585,7 +7591,8 @@ if (scalar keys %HTMLOutput) {
 				$NewLinkParams =~ s/(^|&|&amp;)staticlinks(=\w*|$)//i;
 				$NewLinkParams =~ s/(^|&|&amp;)framename=[^&]*//i;
 				if ($FrameName eq 'mainright') { $NewLinkParams.="&amp;framename=mainright"; }
-				$NewLinkParams =~ tr/&/&/s; $NewLinkParams =~ s/^&//; $NewLinkParams =~ s/&$//;
+            	$NewLinkParams =~ s/(&amp;|&)+/&amp;/i;
+            	$NewLinkParams =~ s/^&amp;//; $NewLinkParams =~ s/&amp;$//;
 				if ($NewLinkParams) { $NewLinkParams="${NewLinkParams}&amp;"; }
 				print "&nbsp; &nbsp; &nbsp; &nbsp;";
 				print "<a href=\"".XMLEncode("$AWScript?${NewLinkParams}update=1")."\">$Message[74]</a>";
@@ -7749,7 +7756,8 @@ if (scalar keys %HTMLOutput) {
 			$NewLinkParams =~ s/(^|&|&amp;)hostfilter=[^&]*//i;
 			$NewLinkParams =~ s/(^|&|&amp;)urlfilter=[^&]*//i;
 			$NewLinkParams =~ s/(^|&|&amp;)refererpagesfilter=[^&]*//i;
-			$NewLinkParams =~ tr/&/&/s; $NewLinkParams =~ s/&$//;
+        	$NewLinkParams =~ s/(&amp;|&)+/&amp;/i;
+        	$NewLinkParams =~ s/^&amp;//; $NewLinkParams =~ s/&amp;$//;
 			if (! $DetailedReportsOnNewWindows || $FrameName eq 'mainright' || $QueryString =~ /buildpdf/i) {
 				print "<tr><td class=\"aws\"><a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?XMLEncode("$AWScript".(${NewLinkParams}?"?${NewLinkParams}":"")):"$PROG$StaticLinks.$StaticExt")."\">$Message[76]</a></td></tr>\n";
 			}
@@ -8724,7 +8732,8 @@ if (scalar keys %HTMLOutput) {
 			$NewLinkParams =~ s/(^|&|&amp;)year=[^&]*//i;
 			$NewLinkParams =~ s/(^|&|&amp;)month=[^&]*//i;
 			$NewLinkParams =~ s/(^|&|&amp;)framename=[^&]*//i;
-			$NewLinkParams =~ tr/&/&/s; $NewLinkParams =~ s/^&//; $NewLinkParams =~ s/&$//;
+        	$NewLinkParams =~ s/(&amp;|&)+/&amp;/i;
+        	$NewLinkParams =~ s/^&amp;//; $NewLinkParams =~ s/&amp;$//;
 			if ($NewLinkParams) { $NewLinkParams="${NewLinkParams}&amp;"; }
 			my $NewLinkTarget='';
 			if ($FrameName eq 'mainright') { $NewLinkTarget=" target=\"_parent\""; }
@@ -8974,7 +8983,8 @@ if (scalar keys %HTMLOutput) {
 			$NewLinkParams =~ s/(^|&|&amp;)year=[^&]*//i;
 			$NewLinkParams =~ s/(^|&|&amp;)month=[^&]*//i;
 			$NewLinkParams =~ s/(^|&|&amp;)framename=[^&]*//i;
-			$NewLinkParams =~ tr/&/&/s; $NewLinkParams =~ s/^&//; $NewLinkParams =~ s/&$//;
+        	$NewLinkParams =~ s/(&amp;|&)+/&amp;/i;
+        	$NewLinkParams =~ s/^&amp;//; $NewLinkParams =~ s/&amp;$//;
 			if ($NewLinkParams) { $NewLinkParams="${NewLinkParams}&amp;"; }
 			my $NewLinkTarget='';
 			if ($FrameName eq 'mainright') { $NewLinkTarget=" target=\"_parent\""; }
