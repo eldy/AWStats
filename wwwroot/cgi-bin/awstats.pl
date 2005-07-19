@@ -5723,7 +5723,7 @@ if ((! $ENV{'GATEWAY_INTERFACE'}) && (! $SiteConfig)) {
 	print "  -debug=X     to add debug informations lesser than level X (speed reduced)\n";
 	print "\n";
 	print "Now supports/detects:\n";
-	print "  Web/Ftp/Mail log analyze (and load balanced log files)\n";
+	print "  Web/Ftp/Mail/streaming server log analyzis (and load balanced log files)\n";
 	print "  Reverse DNS lookup (IPv4 and IPv6) and GeoIP lookup\n";
 	print "  Number of visits, number of unique visitors\n";
 	print "  Visits duration and list of last visits\n";
