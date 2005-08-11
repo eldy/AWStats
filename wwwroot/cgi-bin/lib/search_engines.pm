@@ -82,6 +82,7 @@
 'haku\.www\.fi',
 # Minor french search engines
 'recherche\.aol\.fr','ctrouve\.','francite\.','\.lbb\.org','rechercher\.libertysurf\.fr', 'search[\w\-]+\.free\.fr', 'recherche\.club-internet\.fr',
+'toile\.com', 
 # Minor german search engines
 'sucheaol\.aol\.de',
 'fireball\.de','infoseek\.de','suche\d?\.web\.de','[a-z]serv\.rrzn\.uni-hannover\.de',
@@ -219,6 +220,7 @@
 'rechercher\.libertysurf\.fr','libertysurf',
 'search[\w\-]+\.free\.fr','free',
 'recherche\.club-internet\.fr','clubinternet',
+'toile\.com','toile',
 # Minor german search engines
 'sucheaol\.aol\.de','aolde',
 'fireball\.de','fireball',
@@ -333,6 +335,7 @@
 'haku','w=',
 # Minor french search engines
 'francite','name=', 'clubinternet', 'q=',
+'toile', 'q=',
 # Minor german search engines
 'aolde','q=',
 'fireball','q=', 'infoseek','qt=', 'webde','su=',
@@ -443,6 +446,7 @@
 'haku','Ihmemaa',										
 # Minor french search engines
 'aolfr','AOL (fr)', 'ctrouve','C\'est trouvé', 'francite','Francité', 'lbb', 'LBB', 'libertysurf', 'Libertysurf', 'free', 'Free.fr', 'clubinternet', 'Club-internet',
+'toile', 'Toile du Québec',
 # Minor german search engines
 'aolde','AOL (de)',
 'fireball','Fireball', 'infoseek','Infoseek', 'webde','Web.de',
