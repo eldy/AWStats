@@ -7893,6 +7893,10 @@ if (scalar keys %HTMLOutput) {
 	foreach my $pluginname (keys %{$PluginsLoaded{'AddHTMLContentHeader'}})  {
 #		my $function="AddHTMLContentHeader_$pluginname()";
 #		eval("$function");
+            # to add unique visitors & number of visits, by J Ruano @ CAPSiDE
+	 		if ($ShowDomainsStats =~ /U/i) { print "<th bgcolor=\"#$color_u\" width=\"80\">$Message[11]</th>"; }
+	 		if ($ShowDomainsStats =~ /V/i) { print "<th bgcolor=\"#$color_v\" width=\"80\">$Message[10]</th>"; }
+
 		my $function="AddHTMLContentHeader_$pluginname";
 		&$function();
 	}
@@ -7913,12 +7917,13 @@ if (scalar keys %HTMLOutput) {
     		if ($ShowDomainsStats =~ /B/i) { print "<th bgcolor=\"#$color_k\" width=\"80\">$Message[75]</th>"; }
     		print "<th>&nbsp;</th>";
     		print "</tr>\n";
-    		$total_p=$total_h=$total_k=0;
+    		$total_u=$total_v=$total_p=$total_h=$total_k=0;
     		$max_h=1; foreach (values %_domener_h) { if ($_ > $max_h) { $max_h = $_; } }
     		$max_k=1; foreach (values %_domener_k) { if ($_ > $max_k) { $max_k = $_; } }
     		my $count=0;
     		&BuildKeyList($MaxRowsInHTMLOutput,1,\%_domener_h,\%_domener_p);
     		foreach my $key (@keylist) {
+    		    my ($_domener_u, $_domener_v);
     			my $bredde_p=0;my $bredde_h=0;my $bredde_k=0;
     			if ($max_h > 0) { $bredde_p=int($BarWidth*$_domener_p{$key}/$max_h)+1; }	# use max_h to enable to compare pages with hits
     			if ($_domener_p{$key} && $bredde_p==1) { $bredde_p=2; }
@@ -7933,6 +7938,19 @@ if (scalar keys %HTMLOutput) {
     			else {
     				print "<tr><td width=\"$WIDTHCOLICON\"><img src=\"$DirIcons\/flags\/$newkey.png\" height=\"14\"".AltTitle("$newkey")." /></td><td class=\"aws\">$DomainsHashIDLib{$newkey}</td><td>$newkey</td>";
     			}
+				## to add unique visitors and number of visits, by Josep Ruano @ CAPSiDE
+				if ($ShowDomainsStats =~ /U/i) { 
+				    $_domener_u = ($_domener_p{$key} ? $_domener_p{$key}/$TotalPages : 0);
+				    $_domener_u += ($_domener_h{$key}/$TotalHits);
+				    $_domener_u = sprintf("%.0f", ($_domener_u * $TotalUnique) / 2);
+				    print "<td>$_domener_u (" . sprintf("%.1f%", 100*$_domener_u/$TotalUnique) . ")</td>";
+				}
+				if ($ShowDomainsStats =~ /V/i) { 
+				    $_domener_v = ($_domener_p{$key} ? $_domener_p{$key}/$TotalPages : 0);
+				    $_domener_v += ($_domener_h{$key}/$TotalHits);
+				    $_domener_v = sprintf("%.0f", ($_domener_v * $TotalVisits) / 2);
+				    print "<td>$_domener_v (" . sprintf("%.1f%", 100*$_domener_v/$TotalVisits) . ")</td>";
+				}
     			if ($ShowDomainsStats =~ /P/i) { print "<td>$_domener_p{$key}</td>"; }
     			if ($ShowDomainsStats =~ /H/i) { print "<td>$_domener_h{$key}</td>"; }
     			if ($ShowDomainsStats =~ /B/i) { print "<td>".Format_Bytes($_domener_k{$key})."</td>"; }
@@ -7942,16 +7960,22 @@ if (scalar keys %HTMLOutput) {
     			if ($ShowDomainsStats =~ /B/i) { print "<img src=\"$DirIcons\/other\/$BarPng{'hk'}\" width=\"$bredde_k\" height=\"5\"".AltTitle("$Message[75]: ".Format_Bytes($_domener_k{$key}))." />"; }
     			print "</td>";
     			print "</tr>\n";
+    			$total_u += $_domener_u;
+    			$total_v += $_domener_v;
     			$total_p += $_domener_p{$key};
     			$total_h += $_domener_h{$key};
     			$total_k += $_domener_k{$key}||0;
     			$count++;
     		}
+    		my $rest_u = $TotalUnique - $total_u;
+    		my $rest_v = $TotalVisits - $total_v;
     		$rest_p=$TotalPages-$total_p;
     		$rest_h=$TotalHits-$total_h;
     		$rest_k=$TotalBytes-$total_k;
-    		if ($rest_p > 0 || $rest_h > 0 || $rest_k > 0) { 	# All other domains (known or not)
+    		if ($rest_u > 0 || $rest_v > 0 || $rest_p > 0 || $rest_h > 0 || $rest_k > 0) { 	# All other domains (known or not)
     			print "<tr><td width=\"$WIDTHCOLICON\">&nbsp;</td><td colspan=\"2\" class=\"aws\"><span style=\"color: #$color_other\">$Message[2]</span></td>";
+				if ($ShowDomainsStats =~ /U/i) { print "<td>$rest_u</td>"; }
+				if ($ShowDomainsStats =~ /V/i) { print "<td>$rest_v</td>"; }
     			if ($ShowDomainsStats =~ /P/i) { print "<td>$rest_p</td>"; }
     			if ($ShowDomainsStats =~ /H/i) { print "<td>$rest_h</td>"; }
     			if ($ShowDomainsStats =~ /B/i) { print "<td>".Format_Bytes($rest_k)."</td>"; }
@@ -9442,18 +9466,25 @@ if (scalar keys %HTMLOutput) {
 			my $title="$Message[25] ($Message[77] $MaxNbOf{'Domain'}) &nbsp; - &nbsp; <a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?XMLEncode("$AWScript?${NewLinkParams}output=alldomains"):"$PROG$StaticLinks.alldomains.$StaticExt")."\"$NewLinkTarget>$Message[80]</a>";
 			&tab_head("$title",19,0,'countries');
 			print "<tr bgcolor=\"#$color_TableBGRowTitle\"><th width=\"$WIDTHCOLICON\">&nbsp;</th><th colspan=\"2\">$Message[17]</th>";
+	 		
+	 		## to add unique visitors and number of visits by calculation of average of the relation with total 
+	 		## pages and total hits, and total visits and total unique
+	 		## by Josep Ruano @ CAPSiDE 
+	 		if ($ShowDomainsStats =~ /U/i) { print "<th bgcolor=\"#$color_u\" width=\"80\"".Tooltip(2).">$Message[11]</th>"; }
+	 		if ($ShowDomainsStats =~ /V/i) { print "<th bgcolor=\"#$color_v\" width=\"80\"".Tooltip(1).">$Message[10]</th>"; }
 			if ($ShowDomainsStats =~ /P/i) { print "<th bgcolor=\"#$color_p\" width=\"80\"".Tooltip(3).">$Message[56]</th>"; }
 			if ($ShowDomainsStats =~ /H/i) { print "<th bgcolor=\"#$color_h\" width=\"80\"".Tooltip(4).">$Message[57]</th>"; }
 			if ($ShowDomainsStats =~ /B/i) { print "<th bgcolor=\"#$color_k\" width=\"80\"".Tooltip(5).">$Message[75]</th>"; }
 			print "<th>&nbsp;</th>";
 			print "</tr>\n";
-			$total_p=$total_h=$total_k=0;
+			$total_u=$total_v=$total_p=$total_h=$total_k=0;
 			$max_h=1; foreach (values %_domener_h) { if ($_ > $max_h) { $max_h = $_; } }
 			$max_k=1; foreach (values %_domener_k) { if ($_ > $max_k) { $max_k = $_; } }
 			my $count=0;
 			&BuildKeyList($MaxNbOf{'Domain'},$MinHit{'Domain'},\%_domener_h,\%_domener_p);
 			foreach my $key (@keylist) {
-				my $bredde_p=0;my $bredde_h=0;my $bredde_k=0;
+			    my ($_domener_u, $_domener_v);
+				my $bredde_p=0;my $bredde_h=0;my $bredde_k=0;my $bredde_u=0; my $bredde_v=0;
 				if ($max_h > 0) { $bredde_p=int($BarWidth*$_domener_p{$key}/$max_h)+1; }	# use max_h to enable to compare pages with hits
 				if ($_domener_p{$key} && $bredde_p==1) { $bredde_p=2; }
 				if ($max_h > 0) { $bredde_h=int($BarWidth*$_domener_h{$key}/$max_h)+1; }
@@ -9467,25 +9498,47 @@ if (scalar keys %HTMLOutput) {
 				else {
 					print "<tr><td width=\"$WIDTHCOLICON\"><img src=\"$DirIcons\/flags\/$newkey.png\" height=\"14\"".AltTitle("$newkey")." /></td><td class=\"aws\">$DomainsHashIDLib{$newkey}</td><td>$newkey</td>";
 				}
+				## to add unique visitors and number of visits, by Josep Ruano @ CAPSiDE
+				if ($ShowDomainsStats =~ /U/i) { 
+				    $_domener_u = ($_domener_p{$key} ? $_domener_p{$key}/$TotalPages : 0);
+				    $_domener_u += ($_domener_h{$key}/$TotalHits);
+				    $_domener_u = sprintf("%.0f", ($_domener_u * $TotalUnique) / 2);
+				    print "<td>$_domener_u (" . sprintf("%.1f%", 100*$_domener_u/$TotalUnique) . ")</td>";
+				}
+				if ($ShowDomainsStats =~ /V/i) { 
+				    $_domener_v = ($_domener_p{$key} ? $_domener_p{$key}/$TotalPages : 0);
+				    $_domener_v += ($_domener_h{$key}/$TotalHits);
+				    $_domener_v = sprintf("%.0f", ($_domener_v * $TotalVisits) / 2);
+				    print "<td>$_domener_v (" . sprintf("%.1f%", 100*$_domener_v/$TotalVisits) . ")</td>";		    
+				}
+				
 				if ($ShowDomainsStats =~ /P/i) { print "<td>".($_domener_p{$key}?$_domener_p{$key}:'&nbsp;')."</td>"; }
 				if ($ShowDomainsStats =~ /H/i) { print "<td>$_domener_h{$key}</td>"; }
 				if ($ShowDomainsStats =~ /B/i) { print "<td>".Format_Bytes($_domener_k{$key})."</td>"; }
 				print "<td class=\"aws\">";
+				
 				if ($ShowDomainsStats =~ /P/i) { print "<img src=\"$DirIcons\/other\/$BarPng{'hp'}\" width=\"$bredde_p\" height=\"5\"".AltTitle("")." /><br />\n"; }
 				if ($ShowDomainsStats =~ /H/i) { print "<img src=\"$DirIcons\/other\/$BarPng{'hh'}\" width=\"$bredde_h\" height=\"5\"".AltTitle("")." /><br />\n"; }
 				if ($ShowDomainsStats =~ /B/i) { print "<img src=\"$DirIcons\/other\/$BarPng{'hk'}\" width=\"$bredde_k\" height=\"5\"".AltTitle("")." />"; }
 				print "</td>";
 				print "</tr>\n";
+				
+				$total_u += $_domener_u;
+				$total_v += $_domener_v;
 				$total_p += $_domener_p{$key};
 				$total_h += $_domener_h{$key};
 				$total_k += $_domener_k{$key}||0;
 				$count++;
 			}
+			my $rest_u = $TotalUnique - $total_u;
+			my $rest_v = $TotalVisits - $total_v;
 			$rest_p=$TotalPages-$total_p;
 			$rest_h=$TotalHits-$total_h;
 			$rest_k=$TotalBytes-$total_k;
-			if ($rest_p > 0 || $rest_h > 0 || $rest_k > 0) { 	# All other domains (known or not)
+			if ($rest_u > 0 || $rest_v > 0 || $rest_p > 0 || $rest_h > 0 || $rest_k > 0) { 	# All other domains (known or not)
 				print "<tr><td width=\"$WIDTHCOLICON\">&nbsp;</td><td colspan=\"2\" class=\"aws\"><span style=\"color: #$color_other\">$Message[2]</span></td>";
+				if ($ShowDomainsStats =~ /U/i) { print "<td>$rest_u</td>"; }
+				if ($ShowDomainsStats =~ /V/i) { print "<td>$rest_v</td>"; }
 				if ($ShowDomainsStats =~ /P/i) { print "<td>$rest_p</td>"; }
 				if ($ShowDomainsStats =~ /H/i) { print "<td>$rest_h</td>"; }
 				if ($ShowDomainsStats =~ /B/i) { print "<td>".Format_Bytes($rest_k)."</td>"; }
@@ -10373,6 +10426,7 @@ if (scalar keys %HTMLOutput) {
 	 		&tab_head("$title",19,0,"extra$extranum");
 	 		print "<tr bgcolor=\"#$color_TableBGRowTitle\">";
 	 		print "<th>".$ExtraFirstColumnTitle[$extranum]."</th>";
+
 	 		if ($ExtraStatTypes[$extranum] =~ m/P/i) { print "<th bgcolor=\"#$color_p\" width=\"80\">$Message[56]</th>"; }
 	 		if ($ExtraStatTypes[$extranum] =~ m/H/i) { print "<th bgcolor=\"#$color_h\" width=\"80\">$Message[57]</th>"; }
 	 		if ($ExtraStatTypes[$extranum] =~ m/B/i) { print "<th bgcolor=\"#$color_k\" width=\"80\">$Message[75]</th>"; }
