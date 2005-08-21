@@ -11,7 +11,6 @@
 #		supported before attempting to retrieve via it.
 #-------------------------------------------------------
 use LWP::UserAgent;
-use HTML::TokeParser;
 
 use strict;no strict "refs";
 
@@ -307,10 +306,7 @@ sub Generate_Alias_List_Entry {
 
 	# Parse returned document for page title
 	if ($res->is_success()) {
-		my $htmldoc = $res->content;
-		my $p = HTML::Parser->new(api_version => 3);
-		$p->handler( start => \&title_handler, "tagname,self");
-		$p->parse($htmldoc);
+		$pageTitle = $res->title;
 	} else {
 		print "Failed to get page: ".$res->status_line."\n";
 		$pageTitle = "Unknown Title";
@@ -319,12 +315,4 @@ sub Generate_Alias_List_Entry {
 		$pageTitle = "Unknown Title";
 	}
 	return $AliasLine . $pageTitle;
-}
-
-# Handler routine for HTML::Parser
-sub title_handler {
-	return if shift ne "title";
-	my $self = shift;
-	$self->handler(text => sub { $pageTitle = shift }, "dtext");
-	$self->handler(end  => sub { shift->eof if shift eq "title"; },"tagname,self");
 }
