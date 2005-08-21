@@ -5,7 +5,8 @@
 - Regénérer PDF
 - Tagger CVS
 
-- makepack
+- makepack sur webmin
+- makepack sur awstats
 - Déplacer fichiers dans files
 - Uploader fichiers
 - Envoyer mail sur mailing list
