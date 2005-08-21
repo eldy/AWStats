@@ -326,6 +326,7 @@
 'xget',
 # Other robots reported by users
 'aport',
+'asterias',
 'awbot',
 'baiduspider',
 'becomebot',
@@ -692,6 +693,7 @@
 'xget','XGET',
 # Other robots reported by users
 'aport', 'Aport',
+'asterias', 'Asterias',
 'awbot', 'AWBot',
 'baiduspider','BaiDuSpider',
 'becomebot', 'BecomeBot',
