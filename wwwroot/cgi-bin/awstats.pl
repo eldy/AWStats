@@ -4311,8 +4311,8 @@ sub XMLEncode {
 	$string =~ s/&/&amp;/g;
 	$string =~ s/</&lt;/g;
 	$string =~ s/>/&gt;/g;
-	$string =~ s/\"/&quot;/g;
-	$string =~ s/\'/&apos;/g;
+    $string =~ s/\"/&quot;/g;
+    $string =~ s/\'/&apos;/g;
 	return $string;
 }
 
@@ -4328,8 +4328,8 @@ sub XMLEncodeForHisto {
 	$string =~ s/&/&amp;/g;
 	$string =~ s/</&lt;/g;
 	$string =~ s/>/&gt;/g;
-	$string =~ s/\"/&aquot;/g;
-	$string =~ s/\'/&apos;/g;
+    $string =~ s/\"/&quot;/g;
+    $string =~ s/\'/&apos;/g;
 	return $string;
 }
 
