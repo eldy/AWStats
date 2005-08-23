@@ -435,10 +435,11 @@ for my $output (@OutputList) {
 # Build pdf file
 if ($QueryString =~ /(^|-|&)buildpdf/i) {
 #	my $pdffile=$pages[0]; $pdffile=~s/\.\w+$/\.pdf/;
-	my $command="\"$HtmlDoc\" -t pdf --webpage --quiet --no-title --textfont helvetica --left 16 --bottom 8 --top 8 --browserwidth 800 --headfootsize 8.0 --fontsize 7.0 --header xtx --footer xd/ --outfile awstats.$OutputSuffix.pdf @pages\n";
+	$OutputFile=($OutputDir?$OutputDir:"")."awstats.$OutputSuffix.pdf";
+	my $command="\"$HtmlDoc\" -t pdf --webpage --quiet --no-title --textfont helvetica --left 16 --bottom 8 --top 8 --browserwidth 800 --headfootsize 8.0 --fontsize 7.0 --header xtx --footer xd/ --outfile $OutputFile @pages\n";
 	print "Build PDF file : $command\n";
 	$retour=`$command  2>&1`;
-	my $signal_num=$? & 127;
+    my $signal_num=$? & 127;
 	my $dumped_core=$? & 128;
 	my $exit_value=$? >> 8;
 	if ($? || $retour =~ /error/) {
