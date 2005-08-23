@@ -9575,7 +9575,7 @@ if (scalar keys %HTMLOutput) {
 				if ($ShowHostsStats =~ /P/i) { print "<td>".($_host_p{$key}||"&nbsp;")."</td>"; }
 				if ($ShowHostsStats =~ /H/i) { print "<td>$_host_h{$key}</td>"; }
 				if ($ShowHostsStats =~ /B/i) { print "<td>".Format_Bytes($_host_k{$key})."</td>"; }
-				if ($ShowHostsStats =~ /L/i) { print "<td>".($_host_l{$key}?Format_Date($_host_l{$key},1):'-')."</td>"; }
+				if ($ShowHostsStats =~ /L/i) { print "<td nowrap>".($_host_l{$key}?Format_Date($_host_l{$key},1):'-')."</td>"; }
 				print "</tr>\n";
 				$total_p += $_host_p{$key};
 				$total_h += $_host_h{$key};
@@ -9825,7 +9825,7 @@ if (scalar keys %HTMLOutput) {
 					print "<td class=\"aws\">$nametype</td>";
 				}
 				if ($ShowFileTypesStats =~ /H/i) { print "<td>$_filetypes_h{$key}</td><td>$p_h</td>"; }
-				if ($ShowFileTypesStats =~ /B/i) { print "<td>".Format_Bytes($_filetypes_k{$key})."</td><td>$p_k</td>"; }
+				if ($ShowFileTypesStats =~ /B/i) { print "<td nowrap>".Format_Bytes($_filetypes_k{$key})."</td><td>$p_k</td>"; }
 				if ($ShowFileTypesStats =~ /C/i) {
 					if ($_filetypes_gz_in{$key}) {
 						my $percent=int(100*(1-$_filetypes_gz_out{$key}/$_filetypes_gz_in{$key}));
