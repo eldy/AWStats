@@ -86,7 +86,7 @@ sub GetCountryCodeByName_geoip {
 	my $res=$TmpDomainLookup{$param}||'';
 	if (! $res) {
 		$res=lc($gi->country_code_by_name($param));
-		$TmpDomainLookup{$param}=$res;
+		$TmpDomainLookup{$param}=$res || 'unknown';
 		if ($Debug) { debug("  Plugin geoip: GetCountryCodeByName for $param: [$res]",5); }
 	}
 	elsif ($Debug) { debug("  Plugin geoip: GetCountryCodeByName for $param: Already resolved to $res",5); }
@@ -105,7 +105,7 @@ sub GetCountryCodeByAddr_geoip {
 	my $res=$TmpDomainLookup{$param}||'';
 	if (! $res) {
 		$res=lc($gi->country_code_by_addr($param));
-		$TmpDomainLookup{$param}=$res;
+		$TmpDomainLookup{$param}=$res || 'unknown';
 		if ($Debug) { debug("  Plugin geoip: GetCountryCodeByAddr for $param: $res",5); }
 	}
 	elsif ($Debug) { debug("  Plugin geoip: GetCountryCodeByAddr for $param: Already resolved to $res",5); }
