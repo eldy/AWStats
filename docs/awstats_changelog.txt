@@ -5,6 +5,13 @@ $Revision$ - $Author$ - $Date$
 
 ***** 6.5 *****
 
+Note:
+If you used the geoip plugin, you must edit your AWStats config file
+to change the line
+ LoadPlugin="geoip GEOIP_STANDARD"
+into
+ LoadPlugin="geoip GEOIP_STANDARD /pathto/GeoIP.dat"
+
 New features/improvements:
 - New: RSS catcher/readers in robot database
 - New: Add option databasebreak to force awstats to use a different database
