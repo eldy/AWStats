@@ -230,7 +230,7 @@ use vars qw/
 %LangBrowserToLangAwstats %LangAWStatsToFlagAwstats
 @HostAliases @AllowAccessFromWebToFollowingAuthenticatedUsers
 @DefaultFile @SkipDNSLookupFor
-@SkipHosts @SkipUserAgents @SkipFiles @SkipReferers
+@SkipHosts @SkipUserAgents @SkipFiles @SkipReferrers
 @OnlyHosts @OnlyUserAgents @OnlyFiles 
 @URLWithQueryWithOnly @URLWithQueryWithout
 @ExtraName @ExtraCondition @ExtraStatTypes @MaxNbOfExtra @MinHitExtra
@@ -268,7 +268,7 @@ use vars qw/
 );
 @HostAliases = @AllowAccessFromWebToFollowingAuthenticatedUsers=();
 @DefaultFile = @SkipDNSLookupFor = ();
-@SkipHosts = @SkipUserAgents = @SkipFiles = @SkipReferers = ();
+@SkipHosts = @SkipUserAgents = @SkipFiles = @SkipReferrers = ();
 @OnlyHosts = @OnlyUserAgents = @OnlyFiles = ();
 @URLWithQueryWithOnly = @URLWithQueryWithout = ();
 @ExtraName = @ExtraCondition = @ExtraStatTypes = @MaxNbOfExtra = @MinHitExtra = ();
@@ -987,13 +987,13 @@ sub SkipHost {
 }
 
 #------------------------------------------------------------------------------
-# Function:     Check if parameter is in SkipReferers array
-# Parameters:	host @SkipReferers (a NOT case sensitive precompiled regex array)
+# Function:     Check if parameter is in SkipReferrers array
+# Parameters:	host @SkipReferrers (a NOT case sensitive precompiled regex array)
 # Return:		0 Not found, 1 Found
 #------------------------------------------------------------------------------
-sub SkipReferer {
-	foreach (@SkipReferers) { if ($_[0] =~ /$_/) { return 1; } }
-	0; # Not in @SkipReferers
+sub SkipReferrer {
+	foreach (@SkipReferrers) { if ($_[0] =~ /$_/) { return 1; } }
+	0; # Not in @SkipReferrers
 }
 
 #------------------------------------------------------------------------------
@@ -1290,14 +1290,14 @@ sub Parse_Config {
 			}
 			next;
 			}
-		if ($param =~ /^RefererBlacklist/) {
+		if ($param =~ /^SkipReferrerBlackList/) {
 			open (BLACKLIST, "<$value") || die "Failed to open blacklist: $!\n";
 			while (<BLACKLIST>) {
 				chomp;
 				my $elem = $_;
 				$elem =~ s/ //;
 				$elem =~ s/\#.*//;
-				if ($elem) { push @SkipReferers, qr/$elem/i; }
+				if ($elem) { push @SkipReferrers, qr/$elem/i; }
 			}
 			next;
 			close (BLACKLIST);
@@ -6092,7 +6092,7 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 	@HostAliases=&OptimizeArray(\@HostAliases,1); if ($Debug) { debug("HostAliases precompiled regex list is now @HostAliases",1); }
 	@SkipDNSLookupFor=&OptimizeArray(\@SkipDNSLookupFor,1); if ($Debug) { debug("SkipDNSLookupFor precompiled regex list is now @SkipDNSLookupFor",1); }
 	@SkipHosts=&OptimizeArray(\@SkipHosts,1); if ($Debug) { debug("SkipHosts precompiled regex list is now @SkipHosts",1); }
-	@SkipReferers=&OptimizeArray(\@SkipReferers,1); if ($Debug) { debug("SkipReferers precompiled regex list is now @SkipReferers",1); }
+	@SkipReferrers=&OptimizeArray(\@SkipReferrers,1); if ($Debug) { debug("SkipReferrers precompiled regex list is now @SkipReferrers",1); }
 	@SkipUserAgents=&OptimizeArray(\@SkipUserAgents,1); if ($Debug) { debug("SkipUserAgents precompiled regex list is now @SkipUserAgents",1); }
 	@SkipFiles=&OptimizeArray(\@SkipFiles,$URLNotCaseSensitive); if ($Debug) { debug("SkipFiles precompiled regex list is now @SkipFiles",1); }
 	@OnlyHosts=&OptimizeArray(\@OnlyHosts,1); if ($Debug) { debug("OnlyHosts precompiled regex list is now @OnlyHosts",1); }
@@ -6391,7 +6391,7 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 		# Skip for some client host IP addresses, some URLs, other URLs
 		if    (@SkipHosts && (&SkipHost($field[$pos_host]) || ($pos_hostr && &SkipHost($field[$pos_hostr]))))   { $qualifdrop="Dropped record (host $field[$pos_host]".($pos_hostr?" and $field[$pos_hostr]":"")." not qualified by SkipHosts)"; }
 		elsif (@SkipFiles && &SkipFile($field[$pos_url]))    { $qualifdrop="Dropped record (URL $field[$pos_url] not qualified by SkipFiles)"; }
-		elsif (@SkipReferers && $pos_referer >= 0 && &SkipReferer($field[$pos_referer]))    { $qualifdrop="Dropped record (URL $field[$pos_referer] not qualified by SkipReferers)"; }
+		elsif (@SkipReferrers && $pos_referer >= 0 && &SkipReferrer($field[$pos_referer]))    { $qualifdrop="Dropped record (URL $field[$pos_referer] not qualified by SkipReferrers)"; }
 		elsif (@SkipUserAgents && $pos_agent >= 0 && &SkipUserAgent($field[$pos_agent]))	{ $qualifdrop="Dropped record (user agent '$field[$pos_agent]' not qualified by SkipUserAgents)"; }
 		elsif (@OnlyHosts && ! &OnlyHost($field[$pos_host]) && (! $pos_hostr || ! &OnlyHost($field[$pos_hostr]))) { $qualifdrop="Dropped record (host $field[$pos_host]".($pos_hostr?" and $field[$pos_hostr]":"")." not qualified by OnlyHosts)"; } 
 		elsif (@OnlyFiles && ! &OnlyFile($field[$pos_url]))  { $qualifdrop="Dropped record (URL $field[$pos_url] not qualified by OnlyFiles)"; }

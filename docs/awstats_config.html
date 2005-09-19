@@ -809,6 +809,21 @@ when reading it), follow the example:<br>
 
 <br><br><hr>
 
+<a name="SkipReferrerBlackList"><b>SkipReferrerBlackList</b></a><br>
+<b>Version : </b>6.5+<br>
+<br># Use SkipReferrerBlackList if you want to exclude records coming from a SPAM
+<br># referrer. Parameter must receive a local file name containing rules applied
+<br># on referrer field. If parameter is empty, no filter is applied.
+<br># An example of such a file is available in lib/blacklist.txt
+<br># You can download updated version at http://www.jayallen.org/comment_spam/
+<br># Change : Effective for new updates only
+<br># Example: "/mylibpath/blacklist.txt"
+<br># Default: ""
+<br>#
+<br>SkipReferrerBlackList=""
+
+<br><br><hr>
+
 <a name="OnlyHosts"><b>OnlyHosts</b></a><br>
 <b>Version : </b>5.2+ (5.6+ for REGEX syntax)<br>
 <br># Include in stats, only accesses from hosts that match one of following

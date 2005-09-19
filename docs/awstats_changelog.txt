@@ -13,6 +13,7 @@ into
  LoadPlugin="geoip GEOIP_STANDARD /pathto/GeoIP.dat"
 
 New features/improvements:
+- Added option SkipReferrersBlackList to exlude records from SPAM referrers.
 - New: RSS catcher/readers in robot database
 - New: Add option databasebreak to force awstats to use a different database
   history file for eache day or hour instead of month.
