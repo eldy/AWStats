@@ -53,7 +53,7 @@ FAQ-COM090 <a href="#FTP">Setup for FTP server log files (proftpd, vsftpd, ...).
 FAQ-COM100 <a href="#MAIL">Setup for MAIL log files (Postfix, Sendmail, QMail, MDaemon, Exchange).</a><br>
 FAQ-COM110 <a href="#MEDIASERVER">Setup for MEDIA SERVER log files (Realmedia, Windows media, Darwin streaming server).</a><br>
 FAQ-COM115 <a href="#PERSONALIZEDLOG">Setup/Examples for LogFormat parameter.</a><br>
-FAQ-COM120 <a href="#ROTATE">How to rotate my logs without loosing data.</a><br>
+FAQ-COM120 <a href="#ROTATE">How to rotate my logs without losing data.</a><br>
 FAQ-COM130 <a href="#CRONTAB">How to run AWStats frequently ?</a><br>
 FAQ-COM140 <a href="#EXCLUDEHOSTS">How to exclude my IP address (or whole subnet mask) from stats ?</a><br>
 FAQ-COM142 <a href="#SCREENSIZE">How to get the screen size and browser capabilities report working ?</a><br>
@@ -761,7 +761,7 @@ support other various log formats.<br>
 <br><br>
 
 <a name="ROTATE"></a><br>
-<b><u>FAQ-COM120 : HOW TO ROTATE MY LOGS WITHOUT LOOSING DATA</u></b><br>
+<b><u>FAQ-COM120 : HOW TO ROTATE MY LOGS WITHOUT LOSING DATA</u></b><br>
 <font class=CProblem>PROBLEM:</font><br>
 I want to archive/rotate my logs using my server system (for example logrotate) options or a third
 software (rotatelog, cronolog) but I don't want to lose any visits information during the rotate
@@ -770,7 +770,7 @@ process.<br>
 <li> If your config file is setup with a <a href="awstats_config.html#LogFile">LogFile</a> parameter
 that point to your current running log file (required if you want to use the
 <a href="awstats_config.html#AllowToUpdateStatsFromBrowser">AllowToUpdateStatsFromBrowser</a>
-option to have "real-time" statistics), to avoid loosing too much records during the rotate
+option to have "real-time" statistics), to avoid losing too much records during the rotate
 process, you must run the AWStats update JUST BEFORE the rotate process is done.<br>
 The best way to do that on 'Linux like' OS is to use the linux built-in logrotate feature. You must
 edit the logrotate config file used for your web server log file (usually stored in /etc/logrotate.d
