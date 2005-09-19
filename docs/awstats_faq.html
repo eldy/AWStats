@@ -734,7 +734,7 @@ You must use : <i>LogFormat="%host %other %lognamequot %time1 %methodurl %code %
 <hr>
 <u>If your log records are EXACTLY like this (With <b>Oracle9iAS</b>):</u><br>
 <i>62.161.78.73 - [dd/mmm/yyyy:hh:mm:ss +0x00] GET /page.html HTTP/1.1 200 1234 - "Mozilla/4.0 (compatible; MSIE 5.01; Windows NT 5.0)"</i><br>
-Where separators are <tab> chars or several spaces,
+Where separators are "tab" characters or several "spaces",
 You must use : <i>LogFormat="%host %logname %time1 %method %url %other %code %bytesd %referer %uaquot"</i>
 and <i>LogSeparator="\s+"</i><br>
 
