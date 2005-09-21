@@ -809,9 +809,9 @@ when reading it), follow the example:<br>
 
 <br><br><hr>
 
-<a name="SkipReferrerBlackList"><b>SkipReferrerBlackList</b></a><br>
+<a name="SkipReferrersBlackList"><b>SkipReferrersBlackList</b></a><br>
 <b>Version : </b>6.5+<br>
-<br># Use SkipReferrerBlackList if you want to exclude records coming from a SPAM
+<br># Use SkipReferrersBlackList if you want to exclude records coming from a SPAM
 <br># referrer. Parameter must receive a local file name containing rules applied
 <br># on referrer field. If parameter is empty, no filter is applied.
 <br># An example of such a file is available in lib/blacklist.txt
@@ -819,8 +819,11 @@ when reading it), follow the example:<br>
 <br># Change : Effective for new updates only
 <br># Example: "/mylibpath/blacklist.txt"
 <br># Default: ""
+<br>
+<br># WARNING!! Using this feature make AWStats running very slower (5 times slower
+<br># with black list file provided with AWStats !
 <br>#
-<br>SkipReferrerBlackList=""
+<br>SkipReferrersBlackList=""
 
 <br><br><hr>
 
