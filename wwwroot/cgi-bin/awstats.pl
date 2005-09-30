@@ -254,7 +254,7 @@ use vars qw/
 'en'=>'en','et'=>'et','fi'=>'fi','fr'=>'fr','gl'=>'gl',
 'es'=>'es','eu'=>'eu','ca'=>'ca',
 'el'=>'gr','hu'=>'hu','is'=>'is','in'=>'id','it'=>'it',
-'ja'=>'jp','ko'=>'kr','lv'=>'lv','nl'=>'nl','no'=>'nb','nb'=>'nb','nn'=>'nn',
+'ja'=>'jp','kr'=>'ko','lv'=>'lv','nl'=>'nl','no'=>'nb','nb'=>'nb','nn'=>'nn',
 'pl'=>'pl','pt'=>'pt','pt-br'=>'br','ro'=>'ro','ru'=>'ru','sr'=>'sr','sk'=>'sk',
 'sv'=>'se','th'=>'th','tr'=>'tr','uk'=>'ua','cy'=>'cy','wlk'=>'cy'
 );
