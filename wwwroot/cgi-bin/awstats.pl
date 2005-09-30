@@ -263,6 +263,7 @@ use vars qw/
 'cy'=>'wlk',
 'gl'=>'glg',
 'he'=>'il',
+'ko'=>'kr',
 'ar'=>'sa',
 'sr'=>'cs'
 );
