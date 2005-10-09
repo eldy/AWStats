@@ -587,8 +587,8 @@ sub html_head {
 			else { print "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Frameset//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd\">\n"; }
 			print "<html xmlns=\"http://www.w3.org/1999/xhtml\" xml:lang=\"$Lang\">\n";
 		} else {
-			if ($FrameName ne 'index') { print "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">\n\n";  }
-			else { print "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Frameset//EN\">\n\n"; }
+			if ($FrameName ne 'index') { print "<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">\n";  }
+			else { print "<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01 Frameset//EN\">\n"; }
 			print "<html lang='$Lang'".($PageDir?" dir='rtl'":"").">\n";
 		}
 		print "<head>\n";
@@ -611,18 +611,26 @@ sub html_head {
 		print "<meta http-equiv=\"description\" content=\"".ucfirst($PROG)." - Advanced Web Statistics for $SiteDomain$periodtitle\"$endtag\n";
 		if ($MetaRobot && $FrameName ne 'mainleft') { print "<meta http-equiv=\"keywords\" content=\"$SiteDomain, free, advanced, realtime, web, server, logfile, log, analyzer, analysis, statistics, stats, perl, analyse, performance, hits, visits\"$endtag\n"; }
 		print "<title>$Message[7] $SiteDomain$periodtitle</title>\n";
-		if ($FrameName ne 'index') {
+		if ($FrameName ne 'index')
+		{
+
+			if ($StyleSheet) {
+				print "<link rel=\"stylesheet\" href=\"$StyleSheet\" />\n";
+			}
 
 			# A STYLE section must be in head section. Do not use " for number in a style section
 			print "<style type=\"text/css\">\n";
 			if ($BuildReportFormat eq 'xhtml' || $BuildReportFormat eq 'xml') { print ($ENV{'HTTP_USER_AGENT'}=~/Firebird/i?"<!--\n":"<![CDATA[\n"); }
 			else { print "<!--\n"; }
-print "body { font: 11px verdana, arial, helvetica, sans-serif; background-color: #$color_Background; margin-top: 0; margin-bottom: 0; }\n";
-print ".aws_bodyl  { }\n";
-print ".aws_border { background-color: #$color_TableBG; padding: 1px 1px ".($BuildReportFormat eq 'xhtml' || $BuildReportFormat eq 'xml'?"2px":"1px")." 1px; margin-top: 0; margin-bottom: 0; }\n";
-print ".aws_title  { font: 13px verdana, arial, helvetica, sans-serif; font-weight: bold; background-color: #$color_TableBGTitle; text-align: center; margin-top: 0; margin-bottom: 0; padding: 1px 1px 1px 1px; color: #$color_TableTitle; }\n";
-print ".aws_blank  { font: 13px verdana, arial, helvetica, sans-serif; background-color: #".($ENV{'HTTP_USER_AGENT'} && $ENV{'HTTP_USER_AGENT'}=~/MSIE/i?$color_Background:$color_TableBG)."; text-align: center; margin-bottom: 0; padding: 1px 1px 1px 1px; }\n";
-print <<EOF;
+
+            if (! $StyleSheet)
+            {
+                print "body { font: 11px verdana, arial, helvetica, sans-serif; background-color: #$color_Background; margin-top: 0; margin-bottom: 0; }\n";
+                print ".aws_bodyl  { }\n";
+                print ".aws_border { border-collapse: collapse; background-color: #$color_TableBG; padding: 1px 1px ".($BuildReportFormat eq 'xhtml' || $BuildReportFormat eq 'xml'?"2px":"1px")." 1px; margin-top: 0px; margin-bottom: 0px; }\n";
+                print ".aws_title  { font: 13px verdana, arial, helvetica, sans-serif; font-weight: bold; background-color: #$color_TableBGTitle; text-align: center; margin-top: 0; margin-bottom: 0; padding: 1px 1px 1px 1px; color: #$color_TableTitle; }\n";
+                print ".aws_blank  { font: 13px verdana, arial, helvetica, sans-serif; background-color: #$color_Background; text-align: center; margin-bottom: 0; padding: 1px 1px 1px 1px; }\n";
+                print <<EOF;
 .aws_data {
 	background-color: #$color_Background;
 	border-top-width: 1px;   
@@ -649,10 +657,12 @@ a:visited { color: #$color_link; text-decoration: none; }
 a:hover   { color: #$color_hover; text-decoration: underline; }
 .currentday { font-weight: bold; }
 EOF
+            }
+                
 			# Call to plugins' function AddHTMLStyles
 			foreach my $pluginname (keys %{$PluginsLoaded{'AddHTMLStyles'}})  {
-#				my $function="AddHTMLStyles_$pluginname()";
-#				eval("$function");
+#   				my $function="AddHTMLStyles_$pluginname()";
+#	    			eval("$function");
 				my $function="AddHTMLStyles_$pluginname";
                 &$function();
 			}
@@ -660,11 +670,8 @@ EOF
 			if ($BuildReportFormat eq 'xhtml' || $BuildReportFormat eq 'xml') { print ($ENV{'HTTP_USER_AGENT'}=~/Firebird/i?"//-->\n":"]]>\n"); }
 			else { print "//-->\n"; }
 			print "</style>\n";
-
-			if ($StyleSheet) {
-				print "<link rel=\"stylesheet\" href=\"$StyleSheet\" />\n";
-			}
 		}
+
 		print "</head>\n\n";
 		if ($FrameName ne 'index') {
 			print "<body style=\"margin-top: 0px\"";
@@ -744,8 +751,8 @@ sub tab_head {
 	}
 	print "<td class=\"aws_blank\">&nbsp;</td></tr>\n";
 	print "<tr><td colspan=\"2\">\n";
-	if ($width == 70 && $QueryString =~ /buildpdf/i) { print "<table class=\"aws_data\" border=\"1\" bordercolor=\"#$color_TableBorder\" cellpadding=\"2\" cellspacing=\"0\" width=\"796\">\n"; }
-	else { print "<table class=\"aws_data\" border=\"1\" bordercolor=\"#$color_TableBorder\" cellpadding=\"2\" cellspacing=\"0\" width=\"100%\">\n"; }
+	if ($width == 70 && $QueryString =~ /buildpdf/i) { print "<table class=\"aws_data\" border=\"1\" cellpadding=\"2\" cellspacing=\"0\" width=\"796\">\n"; }
+	else { print "<table class=\"aws_data\" border=\"1\" cellpadding=\"2\" cellspacing=\"0\" width=\"100%\">\n"; }
 }
 
 #------------------------------------------------------------------------------
