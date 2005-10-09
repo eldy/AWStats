@@ -143,8 +143,8 @@ if (window.location.search == "" || window.location.search == "?") {
 
 	var imgsrc1 = awstatsmisctrackerurl+'?screen='+TRKscreen+'&win='+TRKwinsize+'&cdi='+TRKcdi+'&java='+TRKjava;
 	var imgsrc2 = '&shk='+TRKshk+'&svg='+TRKsvg+'&fla='+TRKfla+'&rp='+TRKrp+'&mov='+TRKmov+'&wma='+TRKwma+'&pdf='+TRKpdf+'&uid='+TRKuserid+'&sid='+TRKsessionid;
-    alert(imgsrc1);
-    alert(imgsrc2);
+    //alert(imgsrc1);
+    //alert(imgsrc2);
     var imgsrc=imgsrc1+imgsrc2;
 	if( document.createElementNS ) {
     	var l=document.createElementNS("http://www.w3.org/1999/xhtml","img");
