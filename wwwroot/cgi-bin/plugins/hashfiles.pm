@@ -88,7 +88,7 @@ sub LoadCache_hashfiles {
 	my ($filetoload,$hashtoload)=@_;
 	if ($filetoload =~ /\.hash$/) {
 		# There is no source file or there is and hash file is up to date. We can just load hash file
-		eval('%$hashtoload = %{ retrieve("$filetoload") };');
+		eval('%$hashtoload = %{ Storable::retrieve("$filetoload") };') || warning("Warning: Error while retrieving hashfile: $@");
 	}
 }
 
@@ -104,8 +104,13 @@ sub SaveHash_hashfiles {
 		debug(" Plugin hashfiles: Save data ".($nbmaxofelemtosave?"($nbmaxofelemtosave records max)":"(all records)")." into hash file $filetosave");
 		if (! $nbmaxofelemtosave || (scalar keys %$hashtosave <= $nbmaxofelemtosave)) {
 			# Save all hash array
-			eval('store(\%$hashtosave, "$filetosave");');
+			unless ( eval('Storable::store(\%$hashtosave, "$filetosave");') ) {
+			    $_[4] = 0;
+			    warning("Warning: Error while storing hashfile: $@");
+			    return;
+			}
 			$_[4]=scalar keys %$hashtosave;
+			
 		}
 		else {
 			debug(" Plugin hashfiles: We need to resize hash to save from ".(scalar keys %$hashtosave)." to $nbmaxofelemtosave");
@@ -116,7 +121,12 @@ sub SaveHash_hashfiles {
 				$newhashtosave{$key}=$hashtosave->{$key};
 				if (++$counter >= $nbmaxofelemtosave) { last; }
 			}
-			eval('store(\%newhashtosave, "$filetosave");');
+			
+			unless ( eval('Storable::store(\%newhashtosave, "$filetosave");') ) {
+			    $_[4] = 0;
+			    warning("Warning: Error while storing hashfile: $@");
+			    return;
+			}
 			$_[4]=scalar keys %newhashtosave;
 		}
 		$_[0]=$filetosave;
