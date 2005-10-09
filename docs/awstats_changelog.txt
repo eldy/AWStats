@@ -31,6 +31,16 @@ New features/improvements:
   sections).
   
 Fixes:
+- Fixed: [ 1193698 ] Flash detection wrong ?
+- Fixed: [ 1225425 ] Shiira gets recognized as Safari
+- Fixed: [ 1232317 ] Missing javaws png file
+- Fixed: [ 1236547 ] Acrobat 7 PDF detection
+- Fixed: [ 1239677 ] Incorrect XML output
+- Fixed: [ 1280667 ] Custom StyleSheet not used
+- Fixed: [ 1301317 ] Patch for hashfiles plugin to work
+- Fixed: [ 1305959 ] awstats-6.5 : awstats.pl parsing conf
+- Fixed: [ 1306075 ] GNUTLS from Lynx mistaken for GNU Hurd
+- Fixed: [ 1315969 ] German: message153
 - Fixed: referer changes to referrer
 - Fixed: [ 1111530 ] Missing description for %host_r in config file
 - Fixed: [ 1124711 ] env __AWSTATS_CURRENT_CONFIG__ not expanded for include
@@ -43,7 +53,7 @@ Fixes:
 - Changed stored permission in tar.gz file
 - Fixed: Better support for gz and bz2 files
 - Fixed: Added xhtml in mime types.
-- Fixed [ 1163590 ] XML parsing error
+- Fixed: [ 1163590 ] XML parsing error
 - Fixed: [ 1174728 ] version 6.4: XML parsing error
 - Fixed: [ 1186582 ] Authentication problem in Windows NT/AD Domains
 - Fixed: [ 1191805 ] Missing Bot: Add generic detection for user agent
