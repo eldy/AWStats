@@ -5363,9 +5363,9 @@ sub ShowEmailSendersChart {
 		if ($max_k > 0) { $bredde_k=int($BarWidth*$_emails_k{$key}/$max_k)+1; }
 		print "<tr>";
 		my $direction=IsLocalEMail($key);
-		if ($direction > 0) { print "<td class=\"aws\">$newkey</td><td>-></td><td>&nbsp;</td>"; }
+		if ($direction > 0) { print "<td class=\"aws\">$newkey</td><td>-&gt;</td><td>&nbsp;</td>"; }
 		if ($direction == 0) { print "<td colspan=\"3\"><span style=\"color: #$color_other\">$newkey</span></td>"; }
-		if ($direction < 0) { print "<td class=\"aws\">&nbsp;</td><td><-</td><td>$newkey</td>"; }
+		if ($direction < 0) { print "<td class=\"aws\">&nbsp;</td><td>&lt;-</td><td>$newkey</td>"; }
 		if ($ShowEMailSenders =~ /H/i) { print "<td>$_emails_h{$key}</td>"; }
 		if ($ShowEMailSenders =~ /B/i) { print "<td>".Format_Bytes($_emails_k{$key})."</td>"; }
 		if ($ShowEMailSenders =~ /M/i) { print "<td>".Format_Bytes($_emails_k{$key}/($_emails_h{$key}||1))."</td>"; }
@@ -5436,9 +5436,9 @@ sub ShowEmailReceiversChart {
 		if ($max_k > 0) { $bredde_k=int($BarWidth*$_emailr_k{$key}/$max_k)+1; }
 		print "<tr>";
 		my $direction=IsLocalEMail($key);
-		if ($direction > 0) { print "<td class=\"aws\">$newkey</td><td><-</td><td>&nbsp;</td>"; }
+		if ($direction > 0) { print "<td class=\"aws\">$newkey</td><td>&lt;-</td><td>&nbsp;</td>"; }
 		if ($direction == 0) { print "<td colspan=\"3\"><span style=\"color: #$color_other\">$newkey</span></td>"; }
-		if ($direction < 0) { print "<td class=\"aws\">&nbsp;</td><td>-></td><td>$newkey</td>"; }
+		if ($direction < 0) { print "<td class=\"aws\">&nbsp;</td><td>-&gt;</td><td>$newkey</td>"; }
 		if ($ShowEMailReceivers =~ /H/i) { print "<td>$_emailr_h{$key}</td>"; }
 		if ($ShowEMailReceivers =~ /B/i) { print "<td>".Format_Bytes($_emailr_k{$key})."</td>"; }
 		if ($ShowEMailReceivers =~ /M/i) { print "<td>".Format_Bytes($_emailr_k{$key}/($_emailr_h{$key}||1))."</td>"; }
