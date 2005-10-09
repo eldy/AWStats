@@ -1291,7 +1291,7 @@ sub Parse_Config {
 			}
 			next;
 			}
-		if ($param =~ /^SkipReferrersBlackList/) {
+		if ($param =~ /^SkipReferrersBlackList/ && $value) {
 			open (BLACKLIST, "<$value") || die "Failed to open blacklist: $!\n";
 			while (<BLACKLIST>) {
 				chomp;
