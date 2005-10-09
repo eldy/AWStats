@@ -35,9 +35,18 @@ function awstats_setCookie(TRKNameOfCookie, TRKvalue, TRKexpirehours) {
   	document.cookie = TRKNameOfCookie + "=" + escape(TRKvalue) + "; path=/" + ((TRKexpirehours == null) ? "" : "; expires=" + TRKExpireDate.toGMTString());
 }
 
+//function awstats_runvbscript() {
+//	TRKresult = false;
+//	p=false;
+//	document.write('<SCRIPT LANGUAGE="VBScript">\non error resume next \n p = IsObject(CreateObject("PDF.PdfCtrl.5")) \n if (p) then \n msgbox("5") \n return true \n end if</SCRIPT>\n');
+//    alert(p);
+//	if (TRKresult) return 'y';
+//	else return 'n';
+//}
+
 function awstats_detectIE(TRKClassID) {
-	var TRKresult = false;
-	document.write('<SCR' + 'IPT LANGUAGE=VBScript>\n on error resume next \n TRKresult = IsObject(CreateObject("' + TRKClassID + '"))</SCR' + 'IPT>\n');
+	TRKresult = false;  // !!! Adding var in front of TRKresult break detection !!!
+	document.write('<SCR' + 'IPT LANGUAGE="VBScript">\n on error resume next \n TRKresult = IsObject(CreateObject("' + TRKClassID + '")) \n </SCR' + 'IPT>\n');
 	if (TRKresult) return 'y';
 	else return 'n';
 }
@@ -79,11 +88,16 @@ if (window.location.search == "" || window.location.search == "?") {
 	TRKuserid=""; TRKuserid=awstats_getCookie("AWSUSER_ID");
 	TRKsessionid=""; TRKsessionid=awstats_getCookie("AWSSESSION_ID");
 	
-	var TRKagt=navigator.userAgent.toLowerCase();
-	var TRKie  = (TRKagt.indexOf("msie") != -1);
-	var TRKns  = (navigator.appName.indexOf("Netscape") != -1);
-	var TRKwin = ((TRKagt.indexOf("win")!=-1) || (TRKagt.indexOf("32bit")!=-1));
-	var TRKmac = (TRKagt.indexOf("mac")!=-1);
+	var TRKnav=navigator.appName.toLowerCase();     // "internet explorer" or "netscape"
+	var TRKagt=navigator.userAgent.toLowerCase();   // "msie...", "mozilla...", "firefox..."
+    //alert(TRKnav); alert(TRKagt);
+
+	var TRKwin  = ((TRKagt.indexOf("win")!=-1) || (TRKagt.indexOf("32bit")!=-1));
+	var TRKmac  = (TRKagt.indexOf("mac")!=-1);
+
+	var TRKns   = (TRKnav.indexOf("netscape") != -1);
+	var TRKopera= (TRKnav.indexOf("opera") != -1);
+	var TRKie   = (TRKagt.indexOf("msie") != -1);
 
     // Detect the browser internal width and height
     var TRKwinsize;
@@ -100,30 +114,35 @@ if (window.location.search == "" || window.location.search == "?") {
 	var TRKmov;
 	var TRKwma;
 	var TRKpdf;
+	var TRKpdfver;
 
 	if (TRKie && TRKwin) {
-		TRKshk = awstats_detectIE("SWCtl.SWCtl.1")
-		TRKfla = awstats_detectIE("ShockwaveFlash.ShockwaveFlash.1")
-		TRKrp  = awstats_detectIE("rmocx.RealPlayer G2 Control.1")
-		TRKmov = awstats_detectIE("QuickTimeCheckObject.QuickTimeCheck.1")
-		TRKwma = awstats_detectIE("MediaPlayer.MediaPlayer.1")
-		TRKpdf = 'n'; 
-        if (awstats_detectIE("PDF.PdfCtrl.1") == 'y') { TRKpdf = 'y'; } // Acrobat 4
-	    if (awstats_detectIE('PDF.PdfCtrl.5') == 'y') { TRKpdf = 'y'; } // Acrobat 5
-		if (awstats_detectIE('PDF.PdfCtrl.6') == 'y') { TRKpdf = 'y'; } // Acrobat 6
-		if (awstats_detectIE('AcroPDF.PDF.1') == 'y') { TRKpdf = 'y'; } // Acrobat 7
+		TRKsvg = awstats_detectIE("Adobe.SVGCtl");
+		TRKshk = awstats_detectIE("SWCtl.SWCtl.1");
+		TRKfla = awstats_detectIE("ShockwaveFlash.ShockwaveFlash.1");
+		TRKrp  = awstats_detectIE("rmocx.RealPlayer G2 Control.1");
+		TRKmov = awstats_detectIE("QuickTimeCheckObject.QuickTimeCheck.1");
+		TRKwma = awstats_detectIE("MediaPlayer.MediaPlayer.1");
+		TRKpdf = 'n'; TRKpdfver='';
+        if (awstats_detectIE("PDF.PdfCtrl.1") == 'y') { TRKpdf = 'y'; TRKpdfver='4'; } // Acrobat 4
+	    if (awstats_detectIE('PDF.PdfCtrl.5') == 'y') { TRKpdf = 'y'; TRKpdfver='5'; } // Acrobat 5
+		if (awstats_detectIE('PDF.PdfCtrl.6') == 'y') { TRKpdf = 'y'; TRKpdfver='6'; } // Acrobat 6
+		if (awstats_detectIE('AcroPDF.PDF.1') == 'y') { TRKpdf = 'y'; TRKpdfver='7'; } // Acrobat 7
 	}
 	if (TRKns || !TRKwin) {
 		var TRKnse = ""; for (var TRKi=0;TRKi<navigator.mimeTypes.length;TRKi++) TRKnse += navigator.mimeTypes[TRKi].type.toLowerCase();
-		TRKshk = awstats_detectNS("application/x-director")
-		TRKfla = awstats_detectNS("application/x-shockwave-flash")
-		TRKrp  = awstats_detectNS("audio/x-pn-realaudio-plugin")
-		TRKmov = awstats_detectNS("video/quicktime")
-		TRKwma = awstats_detectNS("application/x-mplayer2")
+  		TRKsvg = awstats_detectNS("image/svg-xml","");
+		TRKshk = awstats_detectNS("application/x-director","");
+		TRKfla = awstats_detectNS("application/x-shockwave-flash"); // ou lire dans naviagtor.plugins si on trouve "Shockwave Flash" ou "Shockwav Flash 2.0"
+		TRKrp  = awstats_detectNS("audio/x-pn-realaudio-plugin");
+		TRKmov = awstats_detectNS("video/quicktime");
+		TRKwma = awstats_detectNS("application/x-mplayer2");
 		TRKpdf = awstats_detectNS("application/pdf");
-	}
+        TRKpdfver='';
+    }
 
-	var imgsrc = awstatsmisctrackerurl+'?screen='+TRKscreen+'&win='+TRKwinsize+'&cdi='+TRKcdi+'&java='+TRKjava+'&shk='+TRKshk+'&fla='+TRKfla+'&rp='+TRKrp+'&mov='+TRKmov+'&wma='+TRKwma+'&pdf='+TRKpdf+'&uid='+TRKuserid+'&sid='+TRKsessionid;
+	var imgsrc = awstatsmisctrackerurl+'?screen='+TRKscreen+'&win='+TRKwinsize+'&cdi='+TRKcdi+'&java='+TRKjava+'&shk='+TRKshk+'&svg='+TRKsvg+'&fla='+TRKfla+'&rp='+TRKrp+'&mov='+TRKmov+'&wma='+TRKwma+'&pdf='+TRKpdf+'&uid='+TRKuserid+'&sid='+TRKsessionid;
+    alert(imgsrc);
 	if( document.createElementNS ) {
     	var l=document.createElementNS("http://www.w3.org/1999/xhtml","img");
         l.setAttribute("src", imgsrc );
