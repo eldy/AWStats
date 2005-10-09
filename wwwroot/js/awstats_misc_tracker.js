@@ -108,9 +108,10 @@ if (window.location.search == "" || window.location.search == "?") {
 		TRKmov = awstats_detectIE("QuickTimeCheckObject.QuickTimeCheck.1")
 		TRKwma = awstats_detectIE("MediaPlayer.MediaPlayer.1")
 		TRKpdf = 'n'; 
-        if (awstats_detectIE("PDF.PdfCtrl.1") == 'y') { TRKpdf = 'y'; }
-	    if (awstats_detectIE('PDF.PdfCtrl.5') == 'y') { TRKpdf = 'y'; }
-		if (awstats_detectIE('PDF.PdfCtrl.6') == 'y') { TRKpdf = 'y'; }
+        if (awstats_detectIE("PDF.PdfCtrl.1") == 'y') { TRKpdf = 'y'; } // Acrobat 4
+	    if (awstats_detectIE('PDF.PdfCtrl.5') == 'y') { TRKpdf = 'y'; } // Acrobat 5
+		if (awstats_detectIE('PDF.PdfCtrl.6') == 'y') { TRKpdf = 'y'; } // Acrobat 6
+		if (awstats_detectIE('AcroPDF.PDF.1') == 'y') { TRKpdf = 'y'; } // Acrobat 7
 	}
 	if (TRKns || !TRKwin) {
 		var TRKnse = ""; for (var TRKi=0;TRKi<navigator.mimeTypes.length;TRKi++) TRKnse += navigator.mimeTypes[TRKi].type.toLowerCase();
