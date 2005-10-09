@@ -61,6 +61,7 @@
 'nutscrape',
 'msfrontpageexpress',
 'phoenix',
+'shiira',               # Must be before safari
 'safari',
 'tzgeturl',
 'viking',
@@ -197,6 +198,7 @@
 'nutscrape', 'Nutscrape',
 'msfrontpageexpress','MS FrontPage Express',
 'phoenix','Phoenix',
+'shiira','Shiira',
 'safari','Safari',
 'tzgeturl','TzGetURL',
 'viking','Viking',
