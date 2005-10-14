@@ -29,8 +29,14 @@
 // var awstatsmisctrackerurl="pslogger.php?loc=/js/awstats_misc_tracker.js";
 var awstatsmisctrackerurl="/js/awstats_misc_tracker.js";
 
+var TRKresult;
+var TRKscreen, TRKwinsize, TRKcdi, TRKjava, TRKshk, TRKsvg, TRKfla;
+var TRKrp, TRKmov, TRKwma, TRKpdf, TRKpdfver, TRKuserid, TRKsessionid;
+var TRKnow, TRKbegin, TRKend;
+var TRKnse, TRKn;
+
 function awstats_setCookie(TRKNameOfCookie, TRKvalue, TRKexpirehours) {
-	var TRKExpireDate = new Date ();
+	TRKExpireDate = new Date ();
   	TRKExpireDate.setTime(TRKExpireDate.getTime() + (TRKexpirehours * 3600 * 1000));
   	document.cookie = TRKNameOfCookie + "=" + escape(TRKvalue) + "; path=/" + ((TRKexpirehours == null) ? "" : "; expires=" + TRKExpireDate.toGMTString());
 }
@@ -52,14 +58,14 @@ function awstats_detectIE(TRKClassID) {
 }
 
 function awstats_detectNS(TRKClassID) {
-	var TRKn = "n";
+	TRKn = "n";
 	if (TRKnse.indexOf(TRKClassID) != -1) if (navigator.mimeTypes[TRKClassID].enabledPlugin != null) TRKn = "y";
 	return TRKn;
 }
 
 function awstats_getCookie(TRKNameOfCookie){
 	if (document.cookie.length > 0){
-		var TRKbegin = document.cookie.indexOf(TRKNameOfCookie+"=");
+		TRKbegin = document.cookie.indexOf(TRKNameOfCookie+"=");
 	    if (TRKbegin != -1) {
 			TRKbegin += TRKNameOfCookie.length+1; 
 			TRKend = document.cookie.indexOf(";", TRKbegin);
@@ -73,13 +79,13 @@ function awstats_getCookie(TRKNameOfCookie){
 
 if (window.location.search == "" || window.location.search == "?") {
     // If no query string
-	var TRKnow = new Date();
-	var TRKscreen=screen.width+"x"+screen.height;
+	TRKnow = new Date();
+	TRKscreen=screen.width+"x"+screen.height;
 	if (navigator.appName != "Netscape") { TRKcdi=screen.colorDepth; }
 	else {TRKcdi=screen.pixelDepth};
-	var TRKjava=navigator.javaEnabled();
-	var TRKuserid=awstats_getCookie("AWSUSER_ID");
-	var TRKsessionid=awstats_getCookie("AWSSESSION_ID");
+	TRKjava=navigator.javaEnabled();
+	TRKuserid=awstats_getCookie("AWSUSER_ID");
+	TRKsessionid=awstats_getCookie("AWSSESSION_ID");
 	var TRKrandomnumber=Math.floor(Math.random()*10000);
 	if (TRKuserid == null || (TRKuserid=="")) { TRKuserid = "awsuser_id" + TRKnow.getTime() +"r"+ TRKrandomnumber; }
 	if (TRKsessionid == null || (TRKsessionid=="")) { TRKsessionid = "awssession_id" + TRKnow.getTime() +"r"+ TRKrandomnumber; }
@@ -108,17 +114,9 @@ if (window.location.search == "" || window.location.search == "?") {
     else
         TRKwinsize = window.innerWidth + 'x' + window.innerHeight;
 	
-	var TRKshk;
-	var TRKfla;
-	var TRKrp;
-	var TRKmov;
-	var TRKwma;
-	var TRKpdf;
-	var TRKpdfver;
-
 	if (TRKie && TRKwin) {
-		TRKsvg = awstats_detectIE("Adobe.SVGCtl");
 		TRKshk = awstats_detectIE("SWCtl.SWCtl.1");
+		TRKsvg = awstats_detectIE("Adobe.SVGCtl");
 		TRKfla = awstats_detectIE("ShockwaveFlash.ShockwaveFlash.1");
 		TRKrp  = awstats_detectIE("rmocx.RealPlayer G2 Control.1");
 		TRKmov = awstats_detectIE("QuickTimeCheckObject.QuickTimeCheck.1");
@@ -130,9 +128,11 @@ if (window.location.search == "" || window.location.search == "?") {
 		if (awstats_detectIE('AcroPDF.PDF.1') == 'y') { TRKpdf = 'y'; TRKpdfver='7'; } // Acrobat 7
 	}
 	if (TRKns || !TRKwin) {
-		var TRKnse = ""; for (var TRKi=0;TRKi<navigator.mimeTypes.length;TRKi++) TRKnse += navigator.mimeTypes[TRKi].type.toLowerCase();
-  		TRKsvg = awstats_detectNS("image/svg-xml","");
+		TRKnse = "";
+		for (var TRKi=0;TRKi<navigator.mimeTypes.length;TRKi++) TRKnse += navigator.mimeTypes[TRKi].type.toLowerCase();
 		TRKshk = awstats_detectNS("application/x-director","");
+  		TRKsvg = awstats_detectNS("image/svg+xml","");
+		if (document.implementation.hasFeature("org.w3c.dom.svg", "")) {TRKsvg = "y"; }
 		TRKfla = awstats_detectNS("application/x-shockwave-flash"); // ou lire dans naviagtor.plugins si on trouve "Shockwave Flash" ou "Shockwav Flash 2.0"
 		TRKrp  = awstats_detectNS("audio/x-pn-realaudio-plugin");
 		TRKmov = awstats_detectNS("video/quicktime");
