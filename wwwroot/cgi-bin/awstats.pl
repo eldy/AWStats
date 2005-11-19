@@ -6141,9 +6141,8 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 	my $regreferer=qr/^(\w+):\/\/([^\/:]+)(:\d+|)/;
 	my $regreferernoquery=qr/^([^$URLQuerySeparators]+)/;
 	my $reglocal=qr/^(www\.|)$sitewithoutwww/i;
-	my $regget=qr/get/i;
-	my $regsent=qr/sent/i;
-	my $regput=qr/put/i;
+	my $regget=qr/get|out/i;
+	my $regsent=qr/sent|put|in/i;
     
 	# Define value of $pos_xxx, @fieldlib, $PerlParsingFormat
 	&DefinePerlParsingFormat($LogFormat);
@@ -6304,7 +6303,7 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 		elsif ($LogType eq 'F' && ($field[$pos_method] eq 'RETR' || $field[$pos_method] eq 'o' || $field[$pos_method] =~ /$regget/o)) {
 			# FTP GET request
 		}
-		elsif ($LogType eq 'F' && ($field[$pos_method] eq 'STOR' || $field[$pos_method] eq 'i' || $field[$pos_method] =~ /$regsent/o || $field[$pos_method] =~ /$regput/o)) {
+		elsif ($LogType eq 'F' && ($field[$pos_method] eq 'STOR' || $field[$pos_method] eq 'i' || $field[$pos_method] =~ /$regsent/o)) {
 			# FTP SENT request
 		}
 		else {
