@@ -93,7 +93,7 @@ $Url=$ENV{QUERY_STRING};
 if ($Url =~ /url=\"([^\"]+)\"/) { $Url=$1; }
 elsif ($Url =~ /url=(.+)$/) { $Url=$1; }
 
-if ($Url !~ /^http/i) { $Url = "http://".$Url; }
+if ($Url !~ /^\w+:/i) { $Url = "http://".$Url; }
 if (! $Url) {
 	error("Error: Bad use of $PROG. To redirect an URL with $PROG, use the following syntax:<br><i>/cgi-bin/$PROG.pl?url=http://urltogo</i>");
 }
