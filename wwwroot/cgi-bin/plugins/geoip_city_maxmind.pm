@@ -4430,7 +4430,7 @@ sub ShowInfoHost_geoip_city_maxmind {
     	if ($NewLinkParams) { $NewLinkParams="${NewLinkParams}&"; }
 
 		print "<th width=\"80\">";
-        print "<a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?XMLEncode("$AWScript?${NewLinkParams}output=plugin_geoip_city_maxmind"):"$PROG$StaticLinks.plugin_geoip_city_maxmind.$StaticExt")."\"$NewLinkTarget>GeoIP<br>City</a>";
+        print "<a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?XMLEncode("$AWScript?${NewLinkParams}output=plugin_geoip_city_maxmind"):"$PROG$StaticLinks.plugin_geoip_city_maxmind.$StaticExt")."\"$NewLinkTarget>GeoIP<br/>City</a>";
         print "</th>";
 	}
 	elsif ($param) {
