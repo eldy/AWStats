@@ -226,7 +226,7 @@ use vars qw/
 @DOWIndex = @fieldlib = @keylist = ();
 use vars qw/
 @MiscListOrder %MiscListCalc
-@OSFamily %BrowsersFamily @SessionsRange %SessionsAverage
+%OSFamily %BrowsersFamily @SessionsRange %SessionsAverage
 %LangBrowserToLangAwstats %LangAWStatsToFlagAwstats
 @HostAliases @AllowAccessFromWebToFollowingAuthenticatedUsers
 @DefaultFile @SkipDNSLookupFor
@@ -242,7 +242,7 @@ use vars qw/
 /;
 @MiscListOrder=('AddToFavourites','JavascriptDisabled','JavaEnabled','DirectorSupport','FlashSupport','RealPlayerSupport','QuickTimeSupport','WindowsMediaPlayerSupport','PDFSupport');
 %MiscListCalc=('TotalMisc'=>'','AddToFavourites'=>'u','JavascriptDisabled'=>'hm','JavaEnabled'=>'hm','DirectorSupport'=>'hm','FlashSupport'=>'hm','RealPlayerSupport'=>'hm','QuickTimeSupport'=>'hm','WindowsMediaPlayerSupport'=>'hm','PDFSupport'=>'hm');
-@OSFamily=('win','mac');
+%OSFamily=('win'=>'Windows','mac'=>'Macintosh','linux'=>'Linux','bsd'=>'BSD');
 %BrowsersFamily=('msie'=>1,'firefox'=>2,'netscape'=>3);
 @SessionsRange=('0s-30s','30s-2mn','2mn-5mn','5mn-15mn','15mn-30mn','30mn-1h','1h+');
 %SessionsAverage=('0s-30s',15,'30s-2mn',75,'2mn-5mn',210,'5mn-15mn',600,'15mn-30mn',1350,'30mn-1h',2700,'1h+',3600);
@@ -8410,17 +8410,20 @@ if (scalar keys %HTMLOutput) {
     		OSLOOP: foreach my $key (@keylist) {
     			$total_h+=$_os_h{$key};
     			if ($_os_h{$key} > $max_h) { $max_h = $_os_h{$key}; }
-    			foreach my $family (@OSFamily) { if ($key =~ /^$family/i) { $totalfamily_h{$family}+=$_os_h{$key}; $TotalFamily+=$_os_h{$key}; next OSLOOP; } }
+    			foreach my $family (keys %OSFamily) { if ($key =~ /^$family/i) { $totalfamily_h{$family}+=$_os_h{$key}; $TotalFamily+=$_os_h{$key}; next OSLOOP; } }
     		}
     		# Write records grouped in a browser family
-    		foreach my $family (@OSFamily) {
+    		foreach my $family (keys %OSFamily) {
     			my $p='&nbsp;';
     			if ($total_h) { $p=int($totalfamily_h{$family}/$total_h*1000)/10; $p="$p %"; }
     			my $familyheadershown=0;
     			foreach my $key (reverse sort keys %_os_h) {
     				if ($key =~ /^$family(.*)/i) {
-    					if (! $familyheadershown) {
-    						print "<tr bgcolor=\"#F6F6F6\"><td class=\"aws\" colspan=\"2\"><b>".uc($family)."</b></td>";
+    					if (! $familyheadershown)
+    					{
+					        my $family_name='';
+                            if ($OSFamily{$family}) { $family_name=$OSFamily{$family}; }
+                            print "<tr bgcolor=\"#F6F6F6\"><td class=\"aws\" colspan=\"2\"><b>$family_name</b></td>";
     						print "<td><b>".int($totalfamily_h{$family})."</b></td><td><b>$p</b></td><td>&nbsp;</td>";
     						print "</tr>\n";
     						$familyheadershown=1;
@@ -8431,6 +8434,8 @@ if (scalar keys %HTMLOutput) {
     					if ($total_h) { $p=int($_os_h{$key}/$total_h*1000)/10; $p="$p %"; }
     					print "<tr>";
     					print "<td".($count?"":" width=\"$WIDTHCOLICON\"")."><img src=\"$DirIcons\/os\/$key.png\"".AltTitle("")." /></td>";
+    					
+    					
     					print "<td class=\"aws\">$OSHashLib{$key}</td>";
     					my $bredde_h=0;
     					if ($max_h > 0) { $bredde_h=int($BarWidth*($_os_h{$key}||0)/$max_h)+1; }
@@ -10003,7 +10008,7 @@ if (scalar keys %HTMLOutput) {
 			my $Totalh=0; my %new_os_h=();
 			OSLOOP: foreach my $key (keys %_os_h) {
 				$Totalh+=$_os_h{$key};
-				foreach my $family (@OSFamily) { if ($key =~ /^$family/i) { $new_os_h{"${family}cumul"}+=$_os_h{$key}; next OSLOOP; } }
+				foreach my $family (keys %OSFamily) { if ($key =~ /^$family/i) { $new_os_h{"${family}cumul"}+=$_os_h{$key}; next OSLOOP; } }
 				$new_os_h{$key}+=$_os_h{$key};
 			}
 			my $title="$Message[59] ($Message[77] $MaxNbOf{'OsShown'}) &nbsp; - &nbsp; <a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?XMLEncode("$AWScript?${NewLinkParams}output=osdetail"):"$PROG$StaticLinks.osdetail.$StaticExt")."\"$NewLinkTarget>$Message[80]/$Message[58]</a> &nbsp; - &nbsp; <a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?XMLEncode("$AWScript?${NewLinkParams}output=unknownos"):"$PROG$StaticLinks.unknownos.$StaticExt")."\"$NewLinkTarget>$Message[0]</a>";
@@ -10022,9 +10027,7 @@ if (scalar keys %HTMLOutput) {
 					my $keywithoutcumul=$key; $keywithoutcumul =~ s/cumul$//i;
 					my $libos=$OSHashLib{$keywithoutcumul}||$keywithoutcumul;
 					my $nameicon=$keywithoutcumul; $nameicon =~ s/[^\w]//g;
-					# TODO Use OSFamilyLib
-					if ($libos eq 'win') { $libos="<b>Windows</b>"; }
-					if ($libos eq 'mac') { $libos="<b>Macintosh</b>"; }
+					if ($OSFamily{$keywithoutcumul}) { $libos="<b>".$OSFamily{$keywithoutcumul}."</b>"; }
 					print "<tr><td".($count?"":" width=\"$WIDTHCOLICON\"")."><img src=\"$DirIcons\/os\/$nameicon.png\"".AltTitle("")." /></td><td class=\"aws\">$libos</td><td>$new_os_h{$key}</td><td>$p</td></tr>\n";
 				}
 				$total_h += $new_os_h{$key};
