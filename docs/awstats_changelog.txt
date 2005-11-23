@@ -13,6 +13,8 @@ into
  LoadPlugin="geoip GEOIP_STANDARD /pathto/GeoIP.dat"
 
 New features/improvements:
+- Added detection of linux and bsd distributions (redhat, mandriva, ...)
+  Thanks for idea to Sean Carlos.
 - Added option SkipReferrersBlackList to exlude records from SPAM referrers.
 - New: RSS catcher/readers in robot database
 - New: Add option databasebreak to force awstats to use a different database
@@ -29,8 +31,12 @@ New features/improvements:
   suffix to archive log files.
 - New: Add option SectionsToBeSaved (to ask AWStats to save only particular
   sections).
+- Added detection of epiphany and a lot of other new search engines and
+  robots (Thanks to http://www.antezeta.com/awstats-contact.html)
   
 Fixes:
+- Fixed: No more increase of Google search engine count when click came
+  from Gmail.
 - Fixed: [ 1193698 ] Flash detection wrong ?
 - Fixed: [ 1225425 ] Shiira gets recognized as Safari
 - Fixed: [ 1232317 ] Missing javaws png file
