@@ -5,16 +5,59 @@
 #-------------------------------------------------------
 # $Revision$ - $Author$ - $Date$
 
+# 2005-08-19 Sean Carlos http://www.antezeta.com/awstats.html:
+#              added dipsie (not tested with real data).
+#              added DomainsDB.net http://domainsdb.net/
+#              added ia_archiver-web.archive.org (was inadvertently grouped with Alexa traffic)
+#              added Nutch (used by looksmart (furl?))
+#              added rssImagesBot
+#              added Sqworm
+#              added t\-h\-u\-n\-d\-e\-r\-s\-t\-o\-n\-e
+#              added w3c css-validator
+#              added documentation link to bot home pages for above and selected major bots.
+#                    In the case of international bots, choose .com page.
+#                    Included tool tip (html "title").
+#                    To do: parameterize to match both AWStats language and tooltips settings.
+#                    To do: add html links for all bots based on current documentation in source
+#                           files referenced below.
+#              changed '\wbot[\/\-]', to '\wbot[\/\-]' (removed comma)
+#              made minor grammar corrections to notes below
+# 2005-08-24	added YahooSeeker-Testing
+#              	added w3c-checklink
+#              	updated url for ask.com
+# 2005-08-24   	added Girafabot http://www.girafa.com/
+# 2005-08-30   	added PluckFeedCrawler http://www.pluck.com/
+#		added Gaisbot/3.0 (robot05@gais.cs.ccu.edu.tw; )
+#		dded geniebot (wgao@genieknows.com)
+#		added BecomeBot link http://www.become.com/site_owners.html
+#		added topicblogs http://www.topicblogs.com/
+#		added Powermarks; seen used by referrer spam
+#		added YahooSeeker
+#		added NG/2. http://www.exabot.com/
+# 2005-09-15	added link for Walhello appie
+#		added bender focused_crawler
+#		updated YahooSeeker description (blog crawler)
+# 2005-09-16	added link for http://linkchecker.sourceforge.net
+# 		added ConveraCrawler/0.9d ( http://www.authoritativeweb.com/crawl)
+#		added Blogslive  info@blogslive.com intelliseek.com 
+#		added BlogPulse (ISSpider-3.0) intelliseek.com
+# 2005-09-26	added Feedfetcher-Google (http://www.google.com/feedfetcher.html)
+#		added EverbeeCrawler	
+#		added Yahoo-Blogs http://help.yahoo.com/help/us/ysearch/crawling/crawling-02.html
+#		added link for Bloglines http://www.bloglines.com
+# 2005-10-19	fixed Feedfetcher-Google (http://www.google.com/feedfetcher.html)
+# 		added Blogshares Spiders (Synchronized V1.5.1)
+#		added yacy
 
 #package AWSROB;
 
 
 # Robots list was found at http://www.robotstxt.org/wc/active/all.txt
 # Other robots can be found at http://www.jafsoft.com/searchengines/webbots.html 
-# Rem: To avoid bad detection, some robots id were removed from this list:
+# Rem: To avoid bad detection, some robot's ids were removed from this list:
 #      - Robots with ID of 3 letters only
-#      - Robot called 'webs' and 'tcl'
-# Rem: Some robot most used for download are also removed: wget
+#      - Robots called 'webs' and 'tcl'
+# Rem: Some robots mostly used for downloading have also been removed, i.e. wget
 # Rem: directhit changed into direct_hit (its real id)
 # Rem: calif changed into calif[^r] to avoid confusion between Tiscalifreenet browser
 # Rem: fish changed into [^a]fish to avoid confusion between Madsafish browser
@@ -25,7 +68,7 @@
 # RobotsSearchIDOrder
 # It contains all matching criteria to search for in log fields. This list is
 # used to know in which order to search Robot IDs.
-# Most frequent one are in list1, used when LevelForRobotsDetection is 1 or more
+# Most frequent ones are in list1, used when LevelForRobotsDetection is 1 or more
 # Minor robots are in list2, used when LevelForRobotsDetection is 2 or more
 # Note: Robots IDs are in lower case, ' ' and '+' are changed into '_' and are quoted.
 #-------------------------------------------------------
@@ -55,6 +98,7 @@
 'digout4u',
 'echo',
 'fast\-webcrawler',
+'ia_archiver\-web\.archive\.org', # Must be before ia_archiver to avoid confusion with alexa
 'ia_archiver',
 'jennybot',
 'mercator',
@@ -79,6 +123,7 @@
 'araneo',
 'aretha',
 'ariadne',
+'powermarks',
 'arks',
 'aspider',
 'atn\.txt',
@@ -269,6 +314,7 @@
 'spiderman',
 'spiderview',
 'spry',
+'sqworm',
 'ssearcher',
 'suke',
 'suntek',
@@ -330,18 +376,30 @@
 'awbot',
 'baiduspider',
 'becomebot',
+'bender',
 'bloglines',
+'blogpulse',
+'blogshares',
+'blogslive',
 'bobby',
 'boris',
 'bumblebee',
+'converacrawler',
 'cscrawler',
 'daviesbot',
 'daypopbot',
+'dipsie\.bot',
+'domainsdb\.net',
 'exactseek',
+'everbeecrawler',
 'ezresult',
 'feedburner',
+'feedfetcher\-google',
 'feedster',
+'gaisbot',
+'geniebot',
 'gigabot',
+'girafabot',
 'gnodspider',
 'grub',
 'henrythemiragorobot',
@@ -360,37 +418,50 @@
 'msiecrawler',
 'nagios',
 'newsgatoronline',
+'nutch',
 'perman',
+'pluckfeedcrawler',
 'pompos',
 'popdexter',
 'rambler',
 'redalert',
 'rojo',
+'rssimagesbot',
 'shoutcast',
 'slysearch',
 'surveybot',
 'syndic8',
 'technoratibot',
+'t\-h\-u\-n\-d\-e\-r\-s\-t\-o\-n\-e',
+'topicblogs',
 'turnitinbot',
 'turtlescanner',		# Must be before turtle
 'turtle',
 'ultraseek',
+'w3c\-checklink',
+'w3c_css_validator_jfouffa',
 'w3c_validator',
 'webclipping\.com',
 'webcompass',
 'wonderer',
+'yacy',
+'yahoo\-blogs',
 'yahoo\-verticalcrawler',
 'yahoofeedseeker',
+'yahooseeker\-testing',
+'yahooseeker',
 'yandex',
 'zealbot',
-'zyborg'
+'zyborg',
+'ng\/1\.', # put at end to avoid false positive
+'ng\/2\.' # put at end to avoid false positive
 );
 @RobotsSearchIDOrder_listgen = (
 # Generic robot
 'robot',
 'crawl',
 'spider',
-'\wbot[\/\-]',
+'\wbot[\/\-]'
 );
 
 
@@ -400,12 +471,12 @@
 #-------------------------------------------------------
 %RobotsHashIDLib   = (
 # Common robots (In robot file)
-'appie','Walhello appie',
+'appie','<a href="http://www.walhello.com/" title="Bot home page [new window]" target="_blank">Walhello appie</a>',
 'architext','ArchitextSpider',
-'jeeves','AskJeeves',
+'jeeves','<a href="http://sp.ask.com/docs/about/tech_crawling.html" title="Bot home page [new window]" target="_blank">AskJeeves</a>',
 'bjaaland','Bjaaland',
 'ferret','Wild Ferret Web Hopper #1, #2, #3',
-'googlebot','Googlebot',
+'googlebot','<a href="http://www.google.com/bot.html" title="Bot home page [new window]" target="_blank">Googlebot</a>',
 'gulliver','Northern Light Gulliver',
 'harvest','Harvest',
 'htdig','ht://Dig',
@@ -416,7 +487,7 @@
 'myweb','Internet Shinchakubin',
 'nomad','Nomad',
 'scooter','Scooter',
-'slurp','Yahoo Slurp',
+'slurp','<a href="http://help.yahoo.com/help/us/ysearch/slurp/" title="Bot home page [new window]" target="_blank">Yahoo Slurp</a>',
 '^voyager\/','Voyager',
 'weblayers','weblayers',
 # Common robots (Not in robot file)
@@ -424,11 +495,12 @@
 'digout4u','Digout4u',
 'echo','EchO!',
 'fast\-webcrawler','Fast-Webcrawler',
-'ia_archiver','Alexa (IA Archiver)',
+'ia_archiver\-web\.archive\.org','<a href="http://web.archive.org/" title="Bot home page [new window]" target="_blank">The web archive (IA Archiver)</a>',
+'ia_archiver','<a href="http://www.alexa.com/" title="Bot home page [new window]" target="_blank">Alexa (IA Archiver)</a>',
 'jennybot','JennyBot',
 'mercator','Mercator',
-'msnbot','MSNBot',
-'netcraft','Netcraft',
+'msnbot','<a href="http://search.msn.com/msnbot.htm" title="Bot home page [new window]" target="_blank">MSNBot</a>',
+'netcraft','<a href="http://www.netcraft.com/survey/" title="Bot home page [new window]" target="_blank">Netcraft</a>',
 'petersnews','Petersnews',
 'unlost_web_crawler','Unlost Web Crawler',
 'voila','Voila',
@@ -446,6 +518,7 @@
 'araneo','Araneo',
 'aretha','Aretha',
 'ariadne','ARIADNE',
+'powermarks','<a href="http://www.kaylon.com/power.html" title="Bot home page [new window]" target="_blank">Powermarks</a>', # must come before Arks; seen used by referrer spam
 'arks','arks',
 'aspider','ASpider (Associative Spider)',
 'atn\.txt','ATN Worldwide',
@@ -499,7 +572,7 @@
 'felix','Felix IDE',
 'fetchrover','FetchRover',
 'fido','fido',
-'finnish','Hämähäkki',
+'finnish','Hï¿½ï¿½ï¿½ki',
 'fireball','KIT-Fireball',
 'fouineur','Fouineur',
 'francoroute','Robot Francoroute',
@@ -547,7 +620,7 @@
 'kilroy','Kilroy',
 'ko_yappo_robot','KO_Yappo_Robot',
 'labelgrabber\.txt','LabelGrabber',
-'larbin','larbin',
+'larbin','<a href="http://para.inria.fr/~ailleret/larbin/index-eng.html" title="Bot home page [new window]" target="_blank">larbin</a>',
 'legs','legs',
 'linkidator','Link Validator',
 'linkscan','LinkScan',
@@ -570,7 +643,7 @@
 'ndspider','NDSpider',
 'nederland\.zoek','Nederland.zoek',
 'netcarta','NetCarta WebMap Engine',
-'netmechanic','NetMechanic',
+'netmechanic','<a href="http://www.netmechanic.com/" title="Bot home page [new window]" target="_blank">NetMechanic</a>',
 'netscoop','NetScoop',
 'newscan\-online','newscan-online',
 'nhse','NHSE Web Forager',
@@ -598,8 +671,8 @@
 'plumtreewebaccessor','PlumtreeWebAccessor',
 'poppi','Poppi',
 'portalb','PortalB Spider',
-'psbot','psbot',
-'python','The Python Robot',
+'psbot','<a href="http://www.picsearch.com/bot.html" title="Bot home page. [new window]" target="_blank">psbot</a>',
+'python','<a href="http://www.lib.uchicago.edu/keith/courses/python/class/7/" title="Bot home page. Used by many. [new window]" target="_blank">Python-urllib</a>',
 'raven','Raven Search',
 'rbse','RBSE Spider',
 'resumerobot','Resume Robot',
@@ -637,6 +710,7 @@
 'spiderview','SpiderView(tm)',
 'spry','Spry Wizard Robot',
 'ssearcher','Site Searcher',
+'sqworm','<a href="http://www.websense.com/" title="Bot home page (source: http://www.pgts.com.au/) [new window]" target="_blank">Sqworm</a>',
 'suke','Suke',
 'suntek','suntek search engine',
 'sven','Sven',
@@ -696,19 +770,31 @@
 'asterias', 'Asterias',
 'awbot', 'AWBot',
 'baiduspider','BaiDuSpider',
-'becomebot', 'BecomeBot',
-'bloglines','Bloglines',
+'becomebot', '<a href="http://www.become.com/site_owners.html" title="Bot home page [new window]" target="_blank">BecomeBot</a>',
+'bender','<a href="http://bender.ucr.edu/" title="Bot home page [new window]" target="_blank">bender</a> <a href="http://ivia.ucr.edu/manuals/NiFC/current/index.shtml" title="Bot home page [new window]" target="_blank">focused_crawler</a>',
+'bloglines','<a href="http://www.bloglines.com/" title="Bot home page [new window]" target="_blank">Bloglines</a>',
+'blogpulse','<a href="http://www.intelliseek.com/" title="Bot home page [new window]" target="_blank">BlogPulse ISSpider intelliseek.com</a>',
+'blogshares','Blogshares Spiders',
+'blogslive','<a href="http://www.blogslive.com/" title="info@blogslive.com Bot home page [new window]" target="_blank">Blogslive</a>',
 'bobby', 'Bobby', 
 'boris', 'Boris',
 'bumblebee', 'Bumblebee (relevare.com)',
+'converacrawler','<a href="http://www.authoritativeweb.com/crawl" title="Bot home page [new window]" target="_blank">ConveraCrawler</a>',
 'cscrawler','CsCrawler',
 'daviesbot', 'DaviesBot',
 'daypopbot', 'DayPop',
+'dipsie\.bot','<a href="http://www.dipsie.com/bot/" title="Bot home page [new window]" target="_blank">Dipsie</a>',
+'domainsdb\.net','<a href="http://domainsdb.net/" title="Bot home page [new window]" target="_blank">DomainsDB.net</a>',
 'exactseek','ExactSeek Crawler',
-'ezresult',	'Ezresult',
+'everbeecrawler','EverbeeCrawler',
+'ezresult', 'Ezresult',
 'feedburner', 'Feedburner',
-'feedster', 'Feedster',
+'feedfetcher\-google','<a href="http://www.google.com/feedfetcher.html" title="Bot home page [new window]" target="_blank">Feedfetcher-Google</a>',
+'feedster', '<a href="http://www.feedster.com/" title="Bot home page [new window]" target="_blank">Feedster</a>',
+'geniebot','<a href="http://www.genieknows.com/" title="Bot home page [new window]" target="_blank">geniebot</a>',
+'gaisbot','<a href="http://gais.cs.ccu.edu.tw/robot.php" title="Bot home page [new window]" target="_blank">Gaisbot</a>',
 'gigabot','GigaBot',
+'girafabot','<a href="http://www.girafa.com/" title="Bot home page [new window]" target="_blank">Girafabot</a>',
 'gnodspider','GNOD Spider',
 'grub','Grub.org',
 'henrythemiragorobot', 'Mirago',
@@ -718,40 +804,52 @@
 'kinjabot', 'Kinjabot',
 'kinja\-imagebot', 'Kinja Imagebot',
 'linkbot','LinkBot',
-'linkchecker','LinkChecker',
+'linkchecker','<a href="http://linkchecker.sourceforge.net" title="Bot home page [new window]" target="_blank">LinkChecker</a>',
 'livejournal\.com', 'LiveJournal.com',
 'magpierss', 'MagpieRSS',
-'mediapartners\-google','Google AdSense',
+'mediapartners\-google','<a href="https://adwords.google.com/" title="Bot home page [new window]" target="_blank">Google AdSense</a>',
 'metager\-linkchecker','MetaGer LinkChecker',
 'microsoft_url_control','Microsoft URL Control',
 'nagios','Nagios',
 'newsgatoronline', 'NewsGator Online',
+'nutch','<a href="http://lucene.apache.org/nutch/" title="Bot home page. Used by many, including Looksmart. [new window]" target="_blank">Nutch</a>',
 'msiecrawler','MSIECrawler',
 'perman', 'Perman surfer',
+'pluckfeedcrawler','<a href="http://www.pluck.com/" title="Bot home page. [new window]" target="_blank">PluckFeedCrawler</a>',
 'pompos','Pompos',
 'popdexter','Popdexter',
 'rambler', 'StackRambler',
 'redalert', 'Red Alert',
-'rojo', 'RoJo',
+'rojo', '<a href="http://rojo.com/" title="Bot home page [new window]" target="_blank">RoJo</a> aggregator',
+'rssimagesbot','<a href="http://herbert.groot.jebbink.nl/?app=rssImages" title="Bot home page [new window]" target="_blank">rssImagesBot</a>',
 'shoutcast','Shoutcast Directory Service',
 'slysearch','SlySearch',
 'surveybot','SurveyBot',
 'syndic8','Syndic8',
 'technoratibot', 'Technoratibot',
+'t\-h\-u\-n\-d\-e\-r\-s\-t\-o\-n\-e','<a href="http://www.thunderstone.com/" title="Bot home page. Used by many. [new window]" target="_blank">T-H-U-N-D-E-R-S-T-O-N-E</a>',
+'topicblogs', '<a href="http://www.topicblogs.com/" title="Bot home page [new window]" target="_blank">topicblogs</a>',
 'turnitinbot','Turn It In',
 'turtle', 'Turtle',
 'turtlescanner', 'Turtle',
 'ultraseek', 'Ultraseek',
-'w3c_validator', 'W3C Validator',
+'w3c\-checklink','<a href="http://validator.w3.org/checklink/" title="Bot home page [new window]" target="_blank">W3C Link Checker</a>',
+'w3c_css_validator_jfouffa', '<a href="http://jigsaw.w3.org/css-validator/" title="Bot home page [new window]" target="_blank">W3C jigsaw CSS Validator</a>',
+'w3c_validator', '<a href="http://validator.w3.org/" title="Bot home page [new window]" target="_blank">W3C Validator</a>',
 'webclipping\.com', 'WebClipping.com',
 'webcompass', 'webcompass',
 'wonderer', 'Web Wombat Redback Spider',
+'yacy','<a href="http://www.yacy.net/yacy" title="Bot home page [new window]" target="_blank">yacy</a>',
+'yahoo\-blogs','<a href="http://help.yahoo.com/help/us/ysearch/crawling/crawling-02.html" title="Bot home page [new window]" target="_blank">Yahoo-Blogs</a>',
 'yahoo\-verticalcrawler', 'Yahoo Vertical Crawler',
-'yahoofeedseeker', 'Yahoo Feed Seeker',
+'yahoofeedseeker', '<a href="http://publisher.yahoo.com/rssguide" title="Bot home page [new window]" target="_blank">Yahoo Feed Seeker</a>',
+'yahooseeker\-testing', '<a href="http://search.yahoo.com/" title="Bot home page [new window]" target="_blank">YahooSeeker-Testing</a>',
+'yahooseeker', '<a href="http://help.yahoo.com/help/us/ysearch/crawling/crawling-02.html" title="Bot home page [new window]" target="_blank">YahooSeeker Yahoo! Blog crawler</a>',
 'yandex', 'Yandex bot',
 'zealbot','ZealBot',
 'zyborg','Zyborg',
-
+'ng\/1\.','<a href="http://www.exabot.com/" title="Bot home page [new window]" target="_blank">NG 1.x (Exalead)</a>', # put at end to avoid false positive
+'ng\/2\.','<a href="http://www.exabot.com/" title="Bot home page [new window]" target="_blank">NG 2.x (Exalead)</a>', # put at end to avoid false positive
 # Generic root ID
 'robot', 'Unknown robot (identified by \'robot\')',
 'crawl', 'Unknown robot (identified by \'crawl\')',
@@ -769,12 +867,11 @@
 'fast\-webcrawler'=>'AllTheWeb',
 'googlebot'=>'Google',
 'msnbot'=>'MSN',
+'nutch'=>'Looksmart',
 'scooter'=>'AltaVista',
 'wisenutbot'=>'Looksmart',
 'yahoo\-verticalcrawler'=>'Yahoo',
 'zyborg'=>'Looksmart'
 );
-
-
 
 1;

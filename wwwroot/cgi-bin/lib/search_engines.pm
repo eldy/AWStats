@@ -7,6 +7,26 @@
 #------------------------------------------------------------------------------
 # $Revision$ - $Author$ - $Date$
 
+# 2005-08-19 Sean Carlos http://www.antezeta.com/awstats.html:
+#            added minor italian search engines
+#                  arianna http://arianna.libero.it/
+#                  supereva http://search.supereva.com/
+#                  kataweb http://kataweb.it/
+#            corrected uk looksmart
+#                  'askuk','ask=', 'bbc','q=', 'freeserve','q=', 'looksmart','key=',
+#            to 
+#                  'askuk','ask=', 'bbc','q=', 'freeserve','q=', 'looksmartuk','key=',
+#            corrected spelling
+#                     internationnal -> international
+#            added 'google\.'=>'mail\.google\.', to NotSearchEnginesKeys in order to
+#            avoid counting gmail referrals as search engine traffic
+# 2005-08-21 Sean Carlos http://www.antezeta.com/awstats.html:
+#            avoid counting babelfish.altavista referrals as search engine traffic
+#            avoid counting translate.google referrals as search engine traffic
+# 2005-11-20 Sean Carlos
+# 	     added missing 'tiscali','key=', entry.  Check order
+# 2005-11-22 Sean Carlos
+# 	     added Google Base & Froogle.  Froogle not tested.
 
 #package AWSSE;
 
@@ -19,7 +39,9 @@
 # Note: Regex IDs are in lower case and ' ' and '+' are changed into '_'
 #------------------------------------------------------------------------------
 @SearchEnginesSearchIDOrder_list1=(
-# Major internationnal search engines
+# Major international search engines
+'base\.google\.',
+'froogle\.google\.',
 'images\.google\.',
 'google\.','216\.239\.(35\.101|37\.101|39\.100|39\.101|51\.100|51\.101|35\.100)',
 'msn\.',
@@ -41,7 +63,7 @@
 );
 
 @SearchEnginesSearchIDOrder_list2=(
-# Minor internationnal search engines
+# Minor international search engines
 'northernlight\.',
 'hotbot\.',
 'kvasir\.',
@@ -92,7 +114,7 @@
 # Minor hungarian search engines
 'heureka\.hu','vizsla\.origo\.hu','lapkereso\.hu','goliat\.hu','index\.hu','wahoo\.hu','webmania\.hu','search\.internetto\.hu',
 # Minor italian search engines
-'virgilio\.it',
+'virgilio\.it','arianna\.libero\.it','supereva\.com','kataweb\.it',
 # Minor norvegian search engines
 'sok\.start\.no',
 # Minor polish search engines
@@ -115,6 +137,9 @@
 # really a search engine
 #------------------------------------------------------------------------------
 %NotSearchEnginesKeys=(
+'altavista\.'=>'babelfish\.altavista\.',
+'google\.'=>'mail\.google\.',
+'google\.'=>'translate\.google\.',
 'msn\.'=>'hotmail\.msn\.',
 'yahoo\.'=>'mail\.yahoo\.'
 );
@@ -124,7 +149,9 @@
 # Each Search Engine Search ID is associated to an AWStats id string
 #------------------------------------------------------------------------------
 %SearchEnginesHashID = (
-# Major internationnal search engines
+# Major international search engines
+'base\.google\.','google_base',
+'froogle\.google\.','google_froogle',
 'images\.google\.','google_image',
 'google\.','google','216\.239\.(35\.101|37\.101|39\.100|39\.101|51\.100|51\.101|35\.100)','google',
 'msn\.','msn',
@@ -143,7 +170,7 @@
 'search\.aol\.co','aol',
 'search\.sli\.sympatico\.ca','sympatico',
 'excite\.','excite',
-# Minor internationnal search engines
+# Minor international search engines
 'northernlight\.','northernlight',
 'hotbot\.','hotbot',
 'kvasir\.','kvasir',
@@ -244,6 +271,9 @@
 'search\.internetto\.hu','internetto',
 # Minor italian search engines
 'virgilio\.it','virgilio',
+'arianna\.libero\.it','arianna',
+'supereva\.com','supereva',
+'kataweb\.it','kataweb',
 # Minor norvegian search engines
 'sok\.start\.no','start',
 # Minor polish search engines
@@ -281,11 +311,14 @@
 'altavista','q=',
 'a9','a9\.com\/', 
 'dmoz','search=',
-'google','(p|q|as_p|as_q)=',
+'google_base','(p|q|as_p|as_q)=',
+'google_froogle','(p|q|as_p|as_q)=',
 'google_image','(p|q|as_p|as_q)=',
+'google','(p|q|as_p|as_q)=',
 'lycos','query=',
 'msn','q=',
 'netscape','search=',
+'tiscali','key=',
 'aol','query=',
 'terra','query=',
 'voila','kw=',
@@ -293,7 +326,7 @@
 'yahoo','p=',
 'sympatico', 'query=', 
 'excite','search=',
-# Minor internationnal search engines
+# Minor international search engines
 'go','qt=',
 'ask','ask=',
 'atomz','sp-q=',
@@ -313,6 +346,9 @@
 'spray','string=',
 'teoma','q=',
 'virgilio','qs=',
+'arianna','query=',
+'supereva','q=',
+'kataweb','q=',
 'webcrawler','searchText=',
 'wisenut','query=', 
 'ixquick', 'query=',
@@ -329,7 +365,7 @@
 # Minor dutch search engines
 'ilse','search_for=', 'vindex','in=',
 # Minor english search engines
-'askuk','ask=', 'bbc','q=', 'freeserve','q=', 'looksmart','key=',
+'askuk','ask=', 'bbc','q=', 'freeserve','q=', 'looksmartuk','key=',
 'mirago','txtsearch=', 'splut','pattern=', 'spotjockey','Search_Keyword=', 'ukindex', 'stext=', 'ukdirectory','k=', 'ukplus','search=', 'searchy', 'search_term=',
 # Minor finnish search engines
 'haku','w=',
@@ -385,14 +421,16 @@
 # 'search_engine_id', 'search_engine_name',
 #------------------------------------------------------------------------------
 %SearchEnginesHashLib=(
-# Major internationnal search engines
+# Major international search engines
 'alexa','Alexa',
 'alltheweb','AllTheWeb',
 'altavista','AltaVista',
 'a9', 'A9.com',
 'dmoz','DMOZ',
-'google','Google',
+'google_base','Google (Base)',
+'google_froogle','Froogle (Google)',
 'google_image','Google (Images)',
+'google','Google',
 'lycos','Lycos',
 'msn','MSN',
 'netscape','Netscape',
@@ -404,7 +442,7 @@
 'yahoo','Yahoo',
 'sympatico', 'Sympatico',
 'excite','Excite',
-# Minor internationnal search engines
+# Minor international search engines
 'go','Go.com',
 'ask','Ask Jeeves',
 'atomz','Atomz',
@@ -457,7 +495,7 @@
 # Minor hungarian search engines
 'heureka','Heureka', 'origo','Origo-Vizsla', 'lapkereso','Startlapkeresõ', 'goliat','Góliát', 'indexhu','Index', 'wahoo','Wahoo', 'webmania','webmania.hu', 'internetto','Internetto Keresõ',
 # Minor italian search engines
-'virgilio','Virgilio',										
+'virgilio','Virgilio', 'arianna','Arianna', 'supereva','Supereva', 'kataweb','Kataweb',
 # Minor norvegian search engines
 'start','start.no',								
 # Minor polish search engines

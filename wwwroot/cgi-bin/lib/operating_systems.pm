@@ -5,6 +5,12 @@
 #-------------------------------------------------------
 # $Revision$ - $Author$ - $Date$
 
+# 2005-08-19 Sean Carlos http://www.antezeta.com/awstats.html:
+#              - added specific Linux distributions in addition to 
+#              the generic Linux.  Requires modifications to awstats.pl
+#              if you want to see Linux as a Group in the main report.
+#              Included documentation link to Distribution home pages.
+#              - added links for each operating systems.
 
 #package AWSOS;
 
@@ -33,19 +39,30 @@
 'mac[_+ ]68',									# This works for mac_6800 and mac_68k
 'macweb',
 'macintosh',
-# Unix like OS
+# Linux family
+'linux(.*)centos',
+'linux(.*)debian',
+'linux(.*)fedora',
+'linux(.*)mandr',
+'linux(.*)red[_+ ]hat',
+'linux(.*)suse',
+'linux(.*)ubuntu',
 'linux',
+# Hurd family
+'gnu.hurd',
+# BSDs family
+'bsdi',
+'freebsd',
+'openbsd',
+'netbsd',
+# Other Unix, Unix-like
 'aix',
 'sunos',
 'irix',
 'osf',
-'hp-ux',
-'netbsd',
-'bsdi',
-'freebsd',
-'openbsd',
-'gnu.hurd',
-'unix','x11',
+'hp\-ux',
+'unix',
+'x11',
 # Other famous OS
 'beos',
 'os/2',
@@ -81,19 +98,30 @@
 # Macintosh OS family
 'mac[_+ ]os[_+ ]x','macosx',
 'mac[_+ ]?p','macintosh','mac[_+ ]68','macintosh','macweb','macintosh','macintosh','macintosh',
-# Unix like OS
+# Linux family (linuxyyy)
+'linux(.*)centos','linuxcentos',
+'linux(.*)debian','linuxdebian',
+'linux(.*)fedora','linuxfedora',
+'linux(.*)mandr','linuxmandr',
+'linux(.*)red[_+ ]hat','linuxredhat',
+'linux(.*)suse','linuxsuse',
+'linux(.*)ubuntu','linuxubuntu',
 'linux','linux',
+# Hurd family
+'gnu.hurd','gnu',
+# BSDs family (bsdyyy)
+'netbsd','bsdnetbsd',
+'bsdi','bsdi',
+'freebsd','bsdfreebsd',
+'openbsd','bsdopenbsd',
+# Other Unix, Unix-like
 'aix','aix',
 'sunos','sunos',
 'irix','irix',
 'osf','osf',
-'hp-ux','hp-ux',
-'netbsd','netbsd',
-'bsdi','bsdi',
-'freebsd','freebsd',
-'openbsd','openbsd',
-'gnu.hurd','gnu',
-'unix','unix','x11','unix',
+'hp\-ux','hp\-ux',
+'unix','unix',
+'x11','unix',
 # Other famous OS
 'beos','beos',
 'os/2','os/2',
@@ -127,18 +155,31 @@
 # Macintosh OS
 'macosx','Mac OS X',
 'macintosh','Mac OS',
-# Unix like OS
-'linux','GNU Linux',
+# Linux
+'linuxcentos','Centos',
+'linuxdebian','Debian',
+'linuxfedora','Fedora',
+'linuxmandr','Mandriva (or Mandrake)',
+'linuxredhat','Red Hat',
+'linuxsuse','Suse',
+'linuxubuntu','Ubuntu',
+'linux','GNU Linux (Unknown or unspecified distribution)',
+# Hurd
+'gnu','GNU Hurd',
+# BSDs
+'netbsd','NetBSD',      # For backard compatibility
+'bsdnetbsd','NetBSD',
+'bsdi','BSDi',          
+'freebsd','FreeBSD',    # For backard compatibility
+'bsdfreebsd','FreeBSD',
+'openbsd','OpenBSD',    # For backard compatibility
+'bsdopenbsd','OpenBSD',
+# Other Unix, Unix-like
 'aix','Aix',
 'sunos','Sun Solaris',
 'irix','Irix',
 'osf','OSF Unix',
-'hp-ux','HP Unix',
-'netbsd','NetBSD',
-'bsdi','BSDi',
-'freebsd','FreeBSD',
-'openbsd','OpenBSD',
-'gnu','GNU Hurd',
+'hp\-ux','HP Unix',
 'unix','Unknown Unix system',
 # Other famous OS
 'beos','BeOS',
