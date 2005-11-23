@@ -33,7 +33,9 @@ New features/improvements:
   sections).
 - Added detection of epiphany and a lot of other new search engines and
   robots (Thanks to http://www.antezeta.com/awstats-contact.html)
-  
+- awredir support any protocols (ftp, https...) not only http.
+- Support in/out method in ftp detection.
+
 Fixes:
 - Fixed: No more increase of Google search engine count when click came
   from Gmail.
