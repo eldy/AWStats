@@ -1284,6 +1284,17 @@ to get your statistics back.<br>
 How can I compile and build statistics on a daily basis. I mean i want to have a full report
 with all charts with data for a particular day only and want one report for each day of month.<br>
 <font class=CSolution>SOLUTION:</font><br>
+<b>If you use version 6.5 or higher:</b><br>
+What you can do is rerun the update process by adding the parameter -databasebreak=hour or -databasebreak=day.
+No option is same than -databasebreak=month, the default and old behaviour of AWStats.<br>
+Using this hidden option will ask AWStats to build a different database file for each break,
+this means that several reports are done for each hour or day.<br>
+To call a report add same option -databasebreak=hour or -databasebreak=day with option -output
+when AWStats report is staticaly built from command line or add &amp;databasebreak=hour or
+&amp;databasebreak=day if AWStats is called as a CGI.<br>
+This feature is recent so may have results not completely reliable, that's why it is not yet
+fully documented.<br>
+<b>If you use version 6.4 or older:</b><br>
 This is an non documented and not supported trick, as this is not the standard way of working:<br>
 First, run the update process at midnight (or on a log file that was rotated at midnight so that
 it contains only data for this particular day (you can choose another hour in night if you want
