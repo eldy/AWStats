@@ -234,7 +234,7 @@ use vars qw/
 @OnlyHosts @OnlyUserAgents @OnlyFiles 
 @URLWithQueryWithOnly @URLWithQueryWithout
 @ExtraName @ExtraCondition @ExtraStatTypes @MaxNbOfExtra @MinHitExtra
-@ExtraFirstColumnTitle @ExtraFirstColumnValues @ExtraFirstColumnFormat
+@ExtraFirstColumnTitle @ExtraFirstColumnValues @ExtraFirstColumnFunction @ExtraFirstColumnFormat
 @ExtraCodeFilter @ExtraConditionType @ExtraConditionTypeVal
 @ExtraFirstColumnValuesType @ExtraFirstColumnValuesTypeVal
 @ExtraAddAverageRow @ExtraAddSumRow
@@ -273,7 +273,7 @@ use vars qw/
 @OnlyHosts = @OnlyUserAgents = @OnlyFiles = ();
 @URLWithQueryWithOnly = @URLWithQueryWithout = ();
 @ExtraName = @ExtraCondition = @ExtraStatTypes = @MaxNbOfExtra = @MinHitExtra = ();
-@ExtraFirstColumnTitle = @ExtraFirstColumnValues = @ExtraFirstColumnFormat = ();
+@ExtraFirstColumnTitle = @ExtraFirstColumnValues = @ExtraFirstColumnFunction = @ExtraFirstColumnFormat = ();
 @ExtraCodeFilter = @ExtraConditionType = @ExtraConditionTypeVal = ();
 @ExtraFirstColumnValuesType = @ExtraFirstColumnValuesTypeVal = ();
 @ExtraAddAverageRow = @ExtraAddSumRow = ();
@@ -1387,6 +1387,7 @@ sub Parse_Config {
  		if ($param =~ /^ExtraSectionStatTypes(\d+)/)    { $ExtraStatTypes[$1]=$value; next; }
  		if ($param =~ /^ExtraSectionFirstColumnTitle(\d+)/) 	{ $ExtraFirstColumnTitle[$1]=$value; next; }
  		if ($param =~ /^ExtraSectionFirstColumnValues(\d+)/) 	{ $ExtraFirstColumnValues[$1]=$value; next; }
+ 		if ($param =~ /^ExtraSectionFirstColumnFunction(\d+)/) 	{ $ExtraFirstColumnFunction[$1]=$value; next; }
  		if ($param =~ /^ExtraSectionFirstColumnFormat(\d+)/) 	{ $ExtraFirstColumnFormat[$1]=$value; next; }
  		if ($param =~ /^ExtraSectionAddAverageRow(\d+)/) 	{ $ExtraAddAverageRow[$1]=$value; next; }
  		if ($param =~ /^ExtraSectionAddSumRow(\d+)/) 	{ $ExtraAddSumRow[$1]=$value; next; }
@@ -1819,6 +1820,7 @@ sub Check_Config {
 			debug(" ExtraCodeFilter[$extranum] is array ".join(',',@{$ExtraCodeFilter[$extranum]}),2);
 			debug(" ExtraConditionType[$extranum] is array ".join(',',@{$ExtraConditionType[$extranum]}),2);
 			debug(" ExtraConditionTypeVal[$extranum] is array ".join(',',@{$ExtraConditionTypeVal[$extranum]}),2);
+			debug(" ExtraFirstColumnFunction[$extranum] is array ".join(',',@{$ExtraFirstColumnFunction[$extranum]}),2);
 			debug(" ExtraFirstColumnValuesType[$extranum] is array ".join(',',@{$ExtraFirstColumnValuesType[$extranum]}),2);
 			debug(" ExtraFirstColumnValuesTypeVal[$extranum] is array ".join(',',@{$ExtraFirstColumnValuesTypeVal[$extranum]}),2);
 		}
@@ -7332,6 +7334,12 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 			if (! $rowkeyok) { next; }	# End for this section
 			if ($Debug) { debug("  Key val was found: $rowkeyval",5); }
 
+ 			# Apply function on $rowkeyval
+ 			if ($ExtraFirstColumnFunction[$extranum])
+ 			{
+ 			    # Todo call function on string $rowkeyval
+            }
+ 			
  			# Here we got all values to increase counters
  			if ($PageBool && $ExtraStatTypes[$extranum] =~ /P/i) { ${'_section_' . $extranum . '_p'}{$rowkeyval}++; }
  			${'_section_' . $extranum . '_h'}{$rowkeyval}++;	# Must be set
