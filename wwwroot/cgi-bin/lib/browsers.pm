@@ -409,6 +409,7 @@
 'syndirella', 'rss',
 # Other kind of browsers
 'apt','apt',
+'javaws','java',
 'webzip','webzip',
 'staroffice','staroffice',
 'mozilla','mozilla'

@@ -37,6 +37,7 @@ New features/improvements:
 - Support in/out method in ftp detection.
 - Update xsd files and fix xml support to have now a full support of xslt
   transformations and xml validations.
+- Added javabestart to browsers.
 
 Fixes:
 - Fixed: No more increase of Google search engine count when click came
