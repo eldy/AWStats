@@ -35,6 +35,8 @@ New features/improvements:
   robots (Thanks to http://www.antezeta.com/awstats-contact.html)
 - awredir support any protocols (ftp, https...) not only http.
 - Support in/out method in ftp detection.
+- Update xsd files and fix xml support to have now a full support of xslt
+  transformations and xml validations.
 
 Fixes:
 - Fixed: No more increase of Google search engine count when click came

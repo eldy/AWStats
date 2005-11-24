@@ -2154,7 +2154,7 @@ sub Read_History_With_TmpUpdate {
 	if ($withupdate) {
 		open(HISTORYTMP,">$filetowrite") || error("Couldn't open file \"$filetowrite\" for write: $!");
 		binmode HISTORYTMP;
-		if ($xml) { print HISTORYTMP "<xml>\n\n"; }
+		if ($xml) { print HISTORYTMP '<xml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://awstats.sourceforge.net/files/awstats.xsd">'."\n\n"; }
 		Save_History("header",$year,$month,$date);
 	}
 
