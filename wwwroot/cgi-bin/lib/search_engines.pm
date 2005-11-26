@@ -7,7 +7,7 @@
 #------------------------------------------------------------------------------
 # $Revision$ - $Author$ - $Date$
 
-# 2005-08-19 Sean Carlos http://www.antezeta.com/awstats.html:
+# 2005-08-19 Sean Carlos http://www.antezeta.com/awstats.html
 #            added minor italian search engines
 #                  arianna http://arianna.libero.it/
 #                  supereva http://search.supereva.com/

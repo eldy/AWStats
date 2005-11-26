@@ -5,7 +5,7 @@
 #-------------------------------------------------------
 # $Revision$ - $Author$ - $Date$
 
-# 2005-08-19 Sean Carlos http://www.antezeta.com/awstats.html:
+# 2005-08-19 Sean Carlos http://www.antezeta.com/awstats.html
 #              added dipsie (not tested with real data).
 #              added DomainsDB.net http://domainsdb.net/
 #              added ia_archiver-web.archive.org (was inadvertently grouped with Alexa traffic)
@@ -48,7 +48,19 @@
 # 2005-10-19	fixed Feedfetcher-Google (http://www.google.com/feedfetcher.html)
 # 		added Blogshares Spiders (Synchronized V1.5.1)
 #		added yacy
-
+# 2005-11-21	added Argus www.simpy.com
+#		added BlogsSay :: RSS Search Crawler (http://www.blogssay.com/)
+#		added MJ12bot http://majestic12.co.uk/bot.php
+#		added OpenTaggerBot (http://www.opentagger.com/opentaggerbot.htm)
+#		added OutfoxBot/0.3 (For internet experiments; outfox.agent@gmail.com)
+#		added RufusBot Rufus Web Miner http://64.124.122.252.webaroo.com/feedback.html
+#		added Seekbot (http://www.seekbot.net/bot.html)
+#		added Yahoo-MMCrawler/3.x (mms-mmcrawler-support@yahoo-inc.com)
+#               added link for BaiDuSpider
+#		added link for Blogshares Spider
+#		added link for StackRambler http://www.rambler.ru/doc/faq.shtml
+#		added link for WISENutbot
+#		added link for ZyBorg/1.0 (wn-14.zyborg@looksmart.net; http://www.WISEnutbot.com.  Moved location to above wisenut to avoid classification as wisenut
 #package AWSROB;
 
 
@@ -108,6 +120,7 @@
 'unlost_web_crawler',
 'voila',
 'webbase',
+'zyborg',	# Must be before wisenut 
 'wisenutbot'
 );
 @RobotsSearchIDOrder_list2 = (
@@ -372,6 +385,7 @@
 'xget',
 # Other robots reported by users
 'aport',
+'argus', 		# Must be before nutch
 'asterias',
 'awbot',
 'baiduspider',
@@ -381,6 +395,7 @@
 'blogpulse',
 'blogshares',
 'blogslive',
+'blogssay',
 'bobby',
 'boris',
 'bumblebee',
@@ -415,10 +430,13 @@
 'magpierss',
 'mediapartners\-google',
 'microsoft_url_control',
+'mj12bot',
 'msiecrawler',
 'nagios',
 'newsgatoronline',
 'nutch',
+'opentaggerbot',
+'outfoxbot',
 'perman',
 'pluckfeedcrawler',
 'pompos',
@@ -427,6 +445,8 @@
 'redalert',
 'rojo',
 'rssimagesbot',
+'rufusbot',
+'seekbot',
 'shoutcast',
 'slysearch',
 'surveybot',
@@ -450,9 +470,9 @@
 'yahoofeedseeker',
 'yahooseeker\-testing',
 'yahooseeker',
+'yahoo\-mmcrawler',
 'yandex',
 'zealbot',
-'zyborg',
 'ng\/1\.', # put at end to avoid false positive
 'ng\/2\.' # put at end to avoid false positive
 );
@@ -505,7 +525,8 @@
 'unlost_web_crawler','Unlost Web Crawler',
 'voila','Voila',
 'webbase', 'WebBase',
-'wisenutbot','WISENutbot',
+'zyborg','<a href="http://www.WISEnutbot.com/" title="wn-14.zyborg@looksmart.net Bot home page [new window]" target="_blank">ZyBorg</a>',
+'wisenutbot','<a href="http://www.WISEnutbot.com/" title="Bot home page [new window]" target="_blank">WISENutbot</a>',
 # Less common robots (In robot file)
 '[^a]fish','Fish search',
 'abcdatos','ABCdatos BotLink',
@@ -767,15 +788,17 @@
 'xget','XGET',
 # Other robots reported by users
 'aport', 'Aport',
+'argus','<a href="http://www.simpy.com/bot.html" title="feedback@simpy.com Bot home page [new window]" target="_blank">Argus</a>',
 'asterias', 'Asterias',
 'awbot', 'AWBot',
-'baiduspider','BaiDuSpider',
+'baiduspider','<a href="http://www.baidu.com/search/spider.html" title="Bot home page [new window]" target="_blank">BaiDuSpider</a>',
 'becomebot', '<a href="http://www.become.com/site_owners.html" title="Bot home page [new window]" target="_blank">BecomeBot</a>',
 'bender','<a href="http://bender.ucr.edu/" title="Bot home page [new window]" target="_blank">bender</a> <a href="http://ivia.ucr.edu/manuals/NiFC/current/index.shtml" title="Bot home page [new window]" target="_blank">focused_crawler</a>',
 'bloglines','<a href="http://www.bloglines.com/" title="Bot home page [new window]" target="_blank">Bloglines</a>',
 'blogpulse','<a href="http://www.intelliseek.com/" title="Bot home page [new window]" target="_blank">BlogPulse ISSpider intelliseek.com</a>',
-'blogshares','Blogshares Spiders',
+'blogshares','<a href="http://blogshares.com/help.php?node=7" title="Bot home page [new window]" target="_blank">Blogshares Spiders</a>',
 'blogslive','<a href="http://www.blogslive.com/" title="info@blogslive.com Bot home page [new window]" target="_blank">Blogslive</a>',
+'blogssay','<a href="http://www.blogssay.com/" title="Bot home page [new window]" target="_blank">BlogsSay :: RSS Search Crawler</a>',
 'bobby', 'Bobby', 
 'boris', 'Boris',
 'bumblebee', 'Bumblebee (relevare.com)',
@@ -813,15 +836,20 @@
 'nagios','Nagios',
 'newsgatoronline', 'NewsGator Online',
 'nutch','<a href="http://lucene.apache.org/nutch/" title="Bot home page. Used by many, including Looksmart. [new window]" target="_blank">Nutch</a>',
+'mj12bot','<a href="http://majestic12.co.uk/bot.php" title="Bot home page. [new window]" target="_blank">MJ12bot</a>',
 'msiecrawler','MSIECrawler',
+'opentaggerbot','<a href="http://www.opentagger.com/opentaggerbot.htm" title="Bot home page [new window]">OpenTaggerBot</a>',
+'outfoxbot','<a href="mailto:outfox.agent@gmail.com?subject=Outfox Bot Information" title="Bot e-mail.">OutfoxBot</a>',
 'perman', 'Perman surfer',
 'pluckfeedcrawler','<a href="http://www.pluck.com/" title="Bot home page. [new window]" target="_blank">PluckFeedCrawler</a>',
 'pompos','Pompos',
 'popdexter','Popdexter',
-'rambler', 'StackRambler',
-'redalert', 'Red Alert',
-'rojo', '<a href="http://rojo.com/" title="Bot home page [new window]" target="_blank">RoJo</a> aggregator',
+'rambler','<a href="http://www.rambler.ru/doc/faq.shtml" title="Bot home page [new window]">StackRambler</a>',
+'redalert','Red Alert',
+'rojo','<a href="http://rojo.com/" title="Bot home page [new window]" target="_blank">RoJo</a> aggregator',
 'rssimagesbot','<a href="http://herbert.groot.jebbink.nl/?app=rssImages" title="Bot home page [new window]" target="_blank">rssImagesBot</a>',
+'rufusbot','<a href="http://64.124.122.252.webaroo.com/feedback.html" title="Bot home page [new window]" target="_blank">RufusBot Rufus Web Miner</a>',
+'seekbot','<a href="http://www.seekbot.net/bot.html" title="Bot home page [new window]">Seekbot</a>',
 'shoutcast','Shoutcast Directory Service',
 'slysearch','SlySearch',
 'surveybot','SurveyBot',
@@ -845,9 +873,9 @@
 'yahoofeedseeker', '<a href="http://publisher.yahoo.com/rssguide" title="Bot home page [new window]" target="_blank">Yahoo Feed Seeker</a>',
 'yahooseeker\-testing', '<a href="http://search.yahoo.com/" title="Bot home page [new window]" target="_blank">YahooSeeker-Testing</a>',
 'yahooseeker', '<a href="http://help.yahoo.com/help/us/ysearch/crawling/crawling-02.html" title="Bot home page [new window]" target="_blank">YahooSeeker Yahoo! Blog crawler</a>',
+'yahoo\-mmcrawler', '<a href="mailto:mms-mmcrawler-support@yahoo-inc.com?subject=Yahoo-MMCrawler Information" title="E-mail Bot">Yahoo-MMCrawler</a>',
 'yandex', 'Yandex bot',
 'zealbot','ZealBot',
-'zyborg','Zyborg',
 'ng\/1\.','<a href="http://www.exabot.com/" title="Bot home page [new window]" target="_blank">NG 1.x (Exalead)</a>', # put at end to avoid false positive
 'ng\/2\.','<a href="http://www.exabot.com/" title="Bot home page [new window]" target="_blank">NG 2.x (Exalead)</a>', # put at end to avoid false positive
 # Generic root ID
