@@ -14,6 +14,7 @@ index_path=Fichier configuration
 index_type=Type
 index_size=Taille
 index_create=Créé/Modifié
+index_databasesize=Taille des fichiers de la base
 index_noconfig=Aucun fichier de configuration n'a été trouvé ou ajouté pour analyse, dans le ou les répertoires autorisés.
 index_edit=Edition/Suppression
 index_del=Suppression config
