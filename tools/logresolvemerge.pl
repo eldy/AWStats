@@ -42,7 +42,7 @@ $NBOFLINESFORBENCHMARK=8192;
 
 use vars qw/
 $DIR $PROG $Extension
-$Debug $ShowSteps $AddFileNum
+$Debug $ShowSteps $AddFileNum $AddFileName
 $MaxNbOfThread $DNSLookup $DNSCache $DirCgi $DirData $DNSLookupAlreadyDone
 $NbOfLinesShowsteps $AFINET $QueueCursor
 /;
@@ -52,6 +52,7 @@ $Extension='';
 $Debug=0;
 $ShowSteps=0;
 $AddFileNum=0;
+$AddFileName=0;
 $MaxNbOfThread=0;
 $DNSLookup=0;
 $DNSCache='';
@@ -68,11 +69,18 @@ use vars qw/
 /;
 # ---------- Init hash arrays --------
 use vars qw/
-%linerecord %timerecord %corrupted
+%LogFileToDo %linerecord %timerecord %corrupted
 %QueueHostsToResolve %QueueRecords
 /;
-%linerecord = %timerecord = %corrupted = ();
+%LogFileToDo = %linerecord = %timerecord = %corrupted = ();
 %QueueHostsToResolve = %QueueRecords = ();
+
+# DRA2: the order of timerecords are kept here, each index in the array is the filerecordnumber, which
+# DRA2: is used as the key for the other hashes
+use vars qw/
+@timerecordorder
+/;
+@timerecordorder = ();
 
 # ---------- External Program variables ----------
 # For gzip compression
@@ -145,7 +153,7 @@ sub IsAscii {
 }
 
 #-----------------------------------------------------------------------------
-# Function:     Return 1 if string contains only ascii chars
+# DRA Function:     Return 1 if DNS lookup should be skipped
 # Input:        String
 # Return:       0 or 1
 #-----------------------------------------------------------------------------
@@ -206,8 +214,9 @@ sub WriteRecordsReadyInQueue {
 			}
 		}
 		# Record is ready, we output it.
-		if ($AddFileNum) { print "$logfilechosen $QueueRecords{$QueueCursor}\n"; }
-		else { print "$QueueRecords{$QueueCursor}\n"; }
+		if ($AddFileNum)  { print "$logfilechosen "; }
+		if ($AddFileName) { print "$LogFileToDo{$logfilechosen} "; }
+		print "$QueueRecords{$QueueCursor}\n";
 		delete $QueueRecords{$QueueCursor};
 		delete $QueueHostsToResolve{$QueueCursor};
 		$QueueCursor++;
@@ -247,6 +256,7 @@ for (0..@ARGV-1) {
 		elsif ($ARGV[$_] =~ /dnslookup/i) { $DNSLookup||=1; }
 		elsif ($ARGV[$_] =~ /showsteps/i) { $ShowSteps=1; }
 		elsif ($ARGV[$_] =~ /addfilenum/i) { $AddFileNum=1; }
+		elsif ($ARGV[$_] =~ /addfilename/i) { $AddFileName=1; }
 		else { print "Unknown argument $ARGV[$_] ignored\n"; }
 	}
 	else {
@@ -298,6 +308,7 @@ if (scalar @ParamFile == 0) {
 	print "  -dnscache=file make DNS lookup from cache file first before network lookup\n";
 	print "  -showsteps     print on stderr benchmark information every $NBOFLINESFORBENCHMARK lines\n";
 	print "  -addfilenum    if used with several files, file number can be added in first\n";
+	print "  -addfilename   if used with several files, file name can be added in first\n";
 	print "                 field of output file. This can be used to add a cluster id\n";
 	print "                 when log files come from several load balanced computers.\n";
 	print "\n";
@@ -390,7 +401,6 @@ if ($DNSCache) {
 #-----------------------------------------------------------------------------
 # PROCESSING CURRENT LOG(s)
 #-----------------------------------------------------------------------------
-my %LogFileToDo=();
 my $NbOfLinesRead=0;
 my $NbOfLinesParsed=0;
 my $logfilechosen=0;
@@ -470,65 +480,92 @@ foreach my $logfilenb (keys %LogFileToDo) {
 $QueueCursor=1;
 while (1 == 1)
 {
-	# BEGIN Read new record (for each log file or only for log file with record just processed)
-	#------------------------------------------------------------------------------------------
-	foreach my $logfilenb (keys %LogFileToDo) {
-		if (($logfilechosen == 0) || ($logfilechosen == $logfilenb)) {
-			if ($Debug) { debug("Search next record in file number $logfilenb",3); }
-			# Read chosen log file until we found a record with good date or reaching end of file
-			while (1 == 1) {
-				my $LOG="LOG$logfilenb";
-				$_=<$LOG>;	# Read new line
-				if (! $_) {							# No more records in log file number $logfilenb
-					if ($Debug) { debug(" No more records in file number $logfilenb",2); }
-					delete $LogFileToDo{$logfilenb};
-					last;
-				}
-
-				$NbOfLinesRead++;
-				chomp $_; s/\r$//;
-
-				if (/^#/) { next; }									# Ignore comment lines (ISS writes such comments)
-				if (/^!!/) { next; }								# Ignore comment lines (Webstar writes such comments)
-				if (/^$/) { next; }									# Ignore blank lines (With ISS: happens sometimes, with Apache: possible when editing log file)
-
-				$linerecord{$logfilenb}=$_; 
-
-				# Check filters
-				#----------------------------------------------------------------------
-
-				# Split DD/Month/YYYY:HH:MM:SS or YYYY-MM-DD HH:MM:SS or MM/DD/YY\tHH:MM:SS
-				my $year=0; my $month=0; my $day=0; my $hour=0; my $minute=0; my $second=0;
-				if ($_ =~ /(\d\d\d\d)-(\d\d)-(\d\d)\s(\d\d):(\d\d):(\d\d)/) { $year=$1; $month=$2; $day=$3; $hour=$4; $minute=$5; $second=$6; }
-				elsif ($_ =~ /\[(\d\d)[\/:\s](\w+)[\/:\s](\d\d\d\d)[\/:\s](\d\d)[\/:\s](\d\d)[\/:\s](\d\d) /) { $year=$3; $month=$2; $day=$1; $hour=$4; $minute=$5; $second=$6; }
-				elsif ($_ =~ /\[\w+ (\w+) (\d\d) (\d\d)[\/:\s](\d\d)[\/:\s](\d\d) (\d\d\d\d)\]/) { $year=$6; $month=$1; $day=$2; $hour=$3; $minute=$4; $second=$5; }
-
-				if ($monthnum{$month}) { $month=$monthnum{$month}; }	# Change lib month in num month if necessary
-
-				# Create $timerecord like YYYYMMDDHHMMSS
-		 		$timerecord{$logfilenb}=int("$year$month$day$hour$minute$second");
-				if ($timerecord{$logfilenb}<10000000000000) {
-					if ($Debug) { debug(" This record is corrupted (no date found)",3); }
-					$corrupted{$logfilenb}++;
-					next;
-				}
-				if ($Debug) { debug(" This is next record for file $logfilenb : timerecord=$timerecord{$logfilenb}",3); }
+	# BEGIN Read new record
+	# For each log file if logfilechosen is 0
+	# If not, we go directly to log file instead of iterating over all keys for a match
+	#----------------------------------------------------------------------------------
+    my @readlist;
+	if($logfilechosen == 0) {
+	    @readlist = keys %LogFileToDo;
+	} else {
+	    @readlist = ($logfilechosen);
+	}
+	foreach my $logfilenb (@readlist)
+	{
+		if ($Debug) { debug("Search next record in file number $logfilenb",3); }
+		# Read chosen log file until we found a record with good date or reaching end of file
+		while (1 == 1) {
+			my $LOG="LOG$logfilenb";
+			$_=<$LOG>;	# Read new line
+			if (! $_) {							# No more records in log file number $logfilenb
+				if ($Debug) { debug(" No more records in file number $logfilenb",2); }
+				delete $LogFileToDo{$logfilenb};
 				last;
 			}
+
+			$NbOfLinesRead++;
+			chomp $_; s/\r$//;
+
+			if (/^#/) { next; }									# Ignore comment lines (ISS writes such comments)
+			if (/^!!/) { next; }								# Ignore comment lines (Webstar writes such comments)
+			if (/^$/) { next; }									# Ignore blank lines (With ISS: happens sometimes, with Apache: possible when editing log file)
+
+			$linerecord{$logfilenb}=$_; 
+
+			# Check filters
+			#----------------------------------------------------------------------
+
+			# Split DD/Month/YYYY:HH:MM:SS or YYYY-MM-DD HH:MM:SS or MM/DD/YY\tHH:MM:SS
+			my $year=0; my $month=0; my $day=0; my $hour=0; my $minute=0; my $second=0;
+			if ($_ =~ /(\d\d\d\d)-(\d\d)-(\d\d)\s(\d\d):(\d\d):(\d\d)/) { $year=$1; $month=$2; $day=$3; $hour=$4; $minute=$5; $second=$6; }
+			elsif ($_ =~ /\[(\d\d)[\/:\s](\w+)[\/:\s](\d\d\d\d)[\/:\s](\d\d)[\/:\s](\d\d)[\/:\s](\d\d) /) { $year=$3; $month=$2; $day=$1; $hour=$4; $minute=$5; $second=$6; }
+			elsif ($_ =~ /\[\w+ (\w+) (\d\d) (\d\d)[\/:\s](\d\d)[\/:\s](\d\d) (\d\d\d\d)\]/) { $year=$6; $month=$1; $day=$2; $hour=$3; $minute=$4; $second=$5; }
+
+			if ($monthnum{$month}) { $month=$monthnum{$month}; }	# Change lib month in num month if necessary
+
+			# Create $timerecord like YYYYMMDDHHMMSS
+	 		$timerecord{$logfilenb}=int("$year$month$day$hour$minute$second");
+			if ($timerecord{$logfilenb}<10000000000000) {
+				if ($Debug) { debug(" This record is corrupted (no date found)",3); }
+				$corrupted{$logfilenb}++;
+				next;
+			}
+			if ($Debug) { debug(" This is next record for file $logfilenb : timerecord=$timerecord{$logfilenb}",3); }
+			
+			# Sort and insert into timerecordorder, oldest at end/back of array
+			# At the beginning, timerecordorder is empty. Then beceause the first pass is
+			# a loop on each file to read each first line, the timerecordorder size is
+			# number of input files.
+			# After, each new loop, read only one new line, so timerecordorder size increase
+			# by one but decrease just after by the pop command later.
+			my $inserted=0;
+			for(my $c=$#timerecordorder; $c>=0 ; $c--) {
+			    if($timerecord{$logfilenb} <= $timerecord{$timerecordorder[$c]})
+			    {
+    				# Is older or equal than index at $c, add after
+				    $timerecordorder[$c + 1]=$logfilenb;
+				    $inserted = 1;
+				    last;
+			    } else {
+				    $timerecordorder[$c + 1]=$timerecordorder[$c];
+			    }
+			}
+			if(! $inserted) {
+			    $timerecordorder[0] = $logfilenb;
+			}
+
+			last;
 		}
 	}
 	# END Read new lines for each log file. After this, following var are filled
 	# $timerecord{$logfilenb}
+	# @timerecordorder array
 
 	# We choose which record of which log file to process
 	if ($Debug) { debug("Choose which record of which log file to process",3); }
-	$logfilechosen=-1;
-	my $timeref="99999999999999";
-	foreach my $logfilenb (keys %LogFileToDo) {
-		if ($Debug) { debug(" timerecord for file $logfilenb is $timerecord{$logfilenb}",4); }
-		if ($timerecord{$logfilenb} < $timeref) { $logfilechosen=$logfilenb; $timeref=$timerecord{$logfilenb} }
-	}
-	if ($logfilechosen <= 0) { last; }								# No more record to process
+	$logfilechosen=pop(@timerecordorder);
+	if(!defined($logfilechosen)) { last; }              # No more record to process 
+	
 	# Record is chosen
 	if ($Debug) { debug(" We choosed to qualify record of file number $logfilechosen",3); }
 	if ($Debug) { debug("  Record is $linerecord{$logfilechosen}",3); }

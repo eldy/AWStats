@@ -13,6 +13,8 @@ into
  LoadPlugin="geoip GEOIP_STANDARD /pathto/GeoIP.dat"
 
 New features/improvements:
+- Tuning: logresolvemerge.pl is 30 times faster when merging a lot of log
+  files (1000) at same time (Thanks to Dan Armstrong).
 - Added detection of linux and bsd distributions (redhat, mandriva, ...)
   Thanks for idea to Sean Carlos.
 - Added option SkipReferrersBlackList to exlude records from SPAM referrers.
