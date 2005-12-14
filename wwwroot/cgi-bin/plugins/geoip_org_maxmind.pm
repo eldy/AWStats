@@ -188,17 +188,18 @@ sub ShowInfoHost_geoip_org_maxmind {
 	# <-----
 	if ($param eq '__title__') {
     	my $NewLinkParams=${QueryString};
-    	$NewLinkParams =~ s/(^|&)update(=\w*|$)//i;
-    	$NewLinkParams =~ s/(^|&)output(=\w*|$)//i;
-    	$NewLinkParams =~ s/(^|&)staticlinks(=\w*|$)//i;
-    	$NewLinkParams =~ s/(^|&)framename=[^&]*//i;
+    	$NewLinkParams =~ s/(^|&|&amp;)update(=\w*|$)//i;
+    	$NewLinkParams =~ s/(^|&|&amp;)output(=\w*|$)//i;
+    	$NewLinkParams =~ s/(^|&|&amp;)staticlinks(=\w*|$)//i;
+    	$NewLinkParams =~ s/(^|&|&amp;)framename=[^&]*//i;
     	my $NewLinkTarget='';
     	if ($DetailedReportsOnNewWindows) { $NewLinkTarget=" target=\"awstatsbis\""; }
     	if (($FrameName eq 'mainleft' || $FrameName eq 'mainright') && $DetailedReportsOnNewWindows < 2) {
     		$NewLinkParams.="&framename=mainright";
     		$NewLinkTarget=" target=\"mainright\"";
     	}
-    	$NewLinkParams =~ tr/&/&/s; $NewLinkParams =~ s/^&//; $NewLinkParams =~ s/&$//;
+    	$NewLinkParams =~ s/(&amp;|&)+/&amp;/i;
+    	$NewLinkParams =~ s/^&amp;//; $NewLinkParams =~ s/&amp;$//;
     	if ($NewLinkParams) { $NewLinkParams="${NewLinkParams}&"; }
 
 		print "<th width=\"80\">";
