@@ -1,5 +1,5 @@
 # Hungarian message file (gabor.funk@hunetkft.hu)
-# $Revision$ - $Date$
+# based on $Revision$ - $Date$
 PageCode=iso-8859-2
 message0=Ismeretlen
 message1=Ismeretlen (feloldatlan ip)
@@ -172,3 +172,5 @@ message167=Érzékeny tartalom
 message168=Javascript kikapcsolva
 message169=Készítette az
 message170=beépülõ modulok
+message171=Régiók
+message172=Városok
