@@ -89,6 +89,25 @@
 'uplayer',
 'xmms',
 'xaudio',
+# RSS Readers
+'aggrevator', 
+'feeddemon', 
+'feedreader', 
+'jetbrains_omea_reader', 
+'netnewswire', 
+'newsfire', 
+'newsgator', 
+'newzcrawler',
+'pluck', 
+'pulpfiction', 
+'rssbandit', 
+'rssreader',
+'rssowl', 
+'sage', 
+'sharpreader', 
+'shrook', 
+'straw', 
+'syndirella', 
 # PDA/Phonecell browsers
 'alcatel',				# Alcatel
 'lg\-',					# LG
@@ -113,25 +132,6 @@
 'portalmmm',
 # Others (TV)
 'webtv',
-# RSS Readers
-'aggrevator', 
-'feeddemon', 
-'feedreader', 
-'jetbrains_omea_reader', 
-'netnewswire', 
-'newsfire', 
-'newsgator', 
-'newzcrawler',
-'pluck', 
-'pulpfiction', 
-'rssbandit', 
-'rssreader',
-'rssowl', 
-'sage', 
-'sharpreader', 
-'shrook', 
-'straw', 
-'syndirella', 
 # Other kind of browsers
 'apt',
 'curl',
@@ -210,7 +210,7 @@
 'webvcr','WebVCR',
 # Site grabbers
 'teleport','TelePort Pro',
-'webcapture','Acrobat',
+'webcapture','Acrobat Webcapture',
 'webcopier', 'WebCopier',
 # Media only browsers
 'real','Real player or compatible (media player)',
@@ -227,6 +227,25 @@
 'uplayer','Ultra Player (media player)',
 'xmms','XMMS (media player)',
 'xaudio','Some XAudio Engine based MPEG player (media player)',
+# RSS Readers
+'aggrevator', 'Aggrevator (RSS Reader)',
+'feeddemon', 'FeedDemon (RSS Reader)',
+'feedreader', 'FeedReader (RSS Reader)',
+'jetbrains_omea_reader', 'Omea Reader (RSS Reader)',
+'netnewswire', 'NetNewsWire (RSS Reader)',
+'newsfire', 'NewsFire (RSS Reader)',
+'newsgator', 'NewsGator (RSS Reader)',
+'newzcrawler', 'NewzCrawler (RSS Reader)',
+'pluck', 'Pluck (RSS Reader)',
+'pulpfiction', 'PulpFiction (RSS Reader)',
+'rssbandit', 'RSS Bandit (RSS Reader)',
+'rssreader', 'RssReader (RSS Reader)',
+'rssowl', 'RSSOwl (RSS Reader)',
+'sage', 'Sage (RSS Reader)',
+'sharpreader', 'SharpReader (RSS Reader)',
+'shrook', 'Shrook (RSS Reader)',
+'straw', 'Straw (RSS Reader)',
+'syndirella', 'Syndirella (RSS Reader)',
 # PDA/Phonecell browsers
 'alcatel','Alcatel Browser (PDA/Phone browser)',
 'lg\-','LG (PDA/Phone browser)',
@@ -251,25 +270,6 @@
 'portalmmm','I-Mode phone (PDA/Phone browser)',
 # Others (TV)
 'webtv','WebTV browser',
-# RSS Readers
-'aggrevator', 'Aggrevator (RSS Reader)',
-'feeddemon', 'FeedDemon (RSS Reader)',
-'feedreader', 'FeedReader (RSS Reader)',
-'jetbrains_omea_reader', 'Omea Reader (RSS Reader)',
-'netnewswire', 'NetNewsWire (RSS Reader)',
-'newsfire', 'NewsFire (RSS Reader)',
-'newsgator', 'NewsGator (RSS Reader)',
-'newzcrawler', 'NewzCrawler (RSS Reader)',
-'pluck', 'Pluck (RSS Reader)',
-'pulpfiction', 'PulpFiction (RSS Reader)',
-'rssbandit', 'RSS Bandit (RSS Reader)',
-'rssreader', 'RssReader (RSS Reader)',
-'rssowl', 'RSSOwl (RSS Reader)',
-'sage', 'Sage (RSS Reader)',
-'sharpreader', 'SharpReader (RSS Reader)',
-'shrook', 'Shrook (RSS Reader)',
-'straw', 'Straw (RSS Reader)',
-'syndirella', 'Syndirella (RSS Reader)',
 # Other kind of browsers
 'apt','Debian APT',
 'curl','Curl',
@@ -296,7 +296,8 @@
 'webcapture','1',
 'webcopier','1',
 'curl','1',
-'wget','1'
+'wget','1',
+'webzip','1'
 );
 
 
@@ -350,16 +351,16 @@
 'webcapture','adobe',
 'webcopier','webcopier',
 # Media only browsers
-'real','mediaplayer',
-'winamp','mediaplayer',				# Works for winampmpeg and winamp3httprdr
-'windows\-media\-player','mediaplayer',
+'real','real',
+'winamp','winamp',				# Works for winampmpeg and winamp3httprdr
+'windows\-media\-player','mplayer',
 'audion','mediaplayer',
 'freeamp','mediaplayer',
 'itunes','mediaplayer',
 'jetaudio','mediaplayer',
 'mint_audio','mediaplayer',
 'mpg123','mediaplayer',
-'nsplayer','mediaplayer',
+'nsplayer','netshow',
 'sonique','mediaplayer',
 'uplayer','mediaplayer',
 'xmms','mediaplayer',
@@ -410,6 +411,8 @@
 # Other kind of browsers
 'apt','apt',
 'javaws','java',
+'w3c_css_validator','w3c',
+'w3c_validator','w3c',
 'webzip','webzip',
 'staroffice','staroffice',
 'mozilla','mozilla'
