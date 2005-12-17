@@ -61,6 +61,26 @@
 #		added link for StackRambler http://www.rambler.ru/doc/faq.shtml
 #		added link for WISENutbot
 #		added link for ZyBorg/1.0 (wn-14.zyborg@looksmart.net; http://www.WISEnutbot.com.  Moved location to above wisenut to avoid classification as wisenut
+# 2005-12-15
+#		added FAST Enteprise Crawler/6 (www dot fastsearch dot com). Note spelling Enteprise not Enterprise.
+#		added findlinks http://wortschatz.uni-leipzig.de/findlinks/
+#		added IBM Almaden Research Center WebFountain™ http://www.almaden.ibm.com/cs/crawler [hc3]
+#		added INFOMINE/8.0 VLCrawler (http://infomine.ucr.edu/useragents)
+#		added lmspider (lmspider@scansoft.com) http://www.nuance.com/
+#		added noxtrumbot http://www.noxtrum.com/
+#		added SandCrawler (Microsoft)
+#		added SBIder http://www.sitesell.com/sbider.html
+#		added SeznamBot http://fulltext.seznam.cz/
+#		added sohu-search http://corp.sohu.com/ (looked for //robots.txt not /robots.txt)
+#		added the ruffle SemanticWeb crawler v0.5 - http://www.unreach.net
+#		added WebVulnCrawl/1.0 libwww-perl/5.803 (looked for //robots.txt not /robots.txt)
+#		added Yahoo! Japan keyoshid http://www.yahoo.co.jp/
+#		added Y!J http://help.yahoo.co.jp/help/jp/search/indexing/indexing-15.html
+#		added link for GigaBot
+#		added link for MagpieRSS
+#		added link for MSIECrawler
+
+
 #package AWSROB;
 
 
@@ -384,6 +404,7 @@
 'wz101',
 'xget',
 # Other robots reported by users
+'almaden',
 'aport',
 'argus', 		# Must be before nutch
 'asterias',
@@ -408,9 +429,11 @@
 'exactseek',
 'everbeecrawler',
 'ezresult',
+'enteprise',
 'feedburner',
 'feedfetcher\-google',
 'feedster',
+'findlinks',
 'gaisbot',
 'geniebot',
 'gigabot',
@@ -419,14 +442,17 @@
 'grub',
 'henrythemiragorobot',
 'holmes',
+'infomine',
 'internetseer',
 'justview',
+'keyoshid', # Must come before Y!J
 'kinjabot',
 'kinja\-imagebot',
 'linkbot',
 'metager\-linkchecker',	# Must be before linkchecker
 'linkchecker',
 'livejournal\.com',
+'lmspider',
 'magpierss',
 'mediapartners\-google',
 'microsoft_url_control',
@@ -434,6 +460,7 @@
 'msiecrawler',
 'nagios',
 'newsgatoronline',
+'noxtrumbot',
 'nutch',
 'opentaggerbot',
 'outfoxbot',
@@ -445,10 +472,15 @@
 'redalert',
 'rojo',
 'rssimagesbot',
+'ruffle',
 'rufusbot',
+'sandcrawler',
+'sbider',
 'seekbot',
+'seznambot',
 'shoutcast',
 'slysearch',
+'sohu-search',
 'surveybot',
 'syndic8',
 'technoratibot',
@@ -463,7 +495,9 @@
 'w3c_validator',
 'webclipping\.com',
 'webcompass',
+'webvulncrawl',
 'wonderer',
+'y!j', # Must come after keyoshid Y!J
 'yacy',
 'yahoo\-blogs',
 'yahoo\-verticalcrawler',
@@ -648,7 +682,8 @@
 'lockon','Lockon',
 'logo_gif','logo.gif Crawler',
 'macworm','Mac WWWWorm',
-'magpie','Magpie',
+'lmspider','<a href="http://www.nuance.com/" title="Bot home page lmspider@scansoft.com [new window]" target="_blank">lmspider</a>',
+'magpie','<a href="http://magpierss.sf.net/" title="Bot home page [new window]" target="_blank">MagpieRSS</a>',
 'marvin','marvin/infoseek',
 'mattie','Mattie',
 'mediafox','MediaFox',
@@ -787,6 +822,7 @@
 'wz101','WebZinger',
 'xget','XGET',
 # Other robots reported by users
+'almaden','<a href="http://www.almaden.ibm.com/cs/crawler" title="IBM Almaden Research Center WebFountain&trade; Bot home page [new window]" target="_blank">IBM Almaden</a> Research Center WebFountain&trade;',
 'aport', 'Aport',
 'argus','<a href="http://www.simpy.com/bot.html" title="feedback@simpy.com Bot home page [new window]" target="_blank">Argus</a>',
 'asterias', 'Asterias',
@@ -811,20 +847,23 @@
 'exactseek','ExactSeek Crawler',
 'everbeecrawler','EverbeeCrawler',
 'ezresult', 'Ezresult',
+'enteprise','<a href="http://www.fastsearch.com/" title="Bot home page [new window]" target="_blank">Fast Enteprise Crawler</a>',
 'feedburner', 'Feedburner',
 'feedfetcher\-google','<a href="http://www.google.com/feedfetcher.html" title="Bot home page [new window]" target="_blank">Feedfetcher-Google</a>',
 'feedster', '<a href="http://www.feedster.com/" title="Bot home page [new window]" target="_blank">Feedster</a>',
 'geniebot','<a href="http://www.genieknows.com/" title="Bot home page [new window]" target="_blank">geniebot</a>',
+'findlinks','<a href="http://wortschatz.uni-leipzig.de/findlinks/" title="Bot home page [new window]" target="_blank">findlinks</a>',
 'gaisbot','<a href="http://gais.cs.ccu.edu.tw/robot.php" title="Bot home page [new window]" target="_blank">Gaisbot</a>',
-'gigabot','GigaBot',
+'gigabot','<a href="http://www.gigablast.com/spider.html" title="Bot home page [new window]" target="_blank">GigaBot</a>',
 'girafabot','<a href="http://www.girafa.com/" title="Bot home page [new window]" target="_blank">Girafabot</a>',
 'gnodspider','GNOD Spider',
 'grub','Grub.org',
 'henrythemiragorobot', 'Mirago',
 'holmes', 'Holmes',
+'infomine','<a href="http://infomine.ucr.edu/useragents" title="Bot home page [new window]" target="_blank">INFOMINE VLCrawler</a>',
 'internetseer', 'InternetSeer',
 'justview', 'JustView',
-'kinjabot', 'Kinjabot',
+'keyoshid','<a href="http://www.yahoo.co.jp/" title="Bot home page [new window]" target="_blank">Yahoo! Japan keyoshid robot study</a>','kinjabot', 'Kinjabot',
 'kinja\-imagebot', 'Kinja Imagebot',
 'linkbot','LinkBot',
 'linkchecker','<a href="http://linkchecker.sourceforge.net" title="Bot home page [new window]" target="_blank">LinkChecker</a>',
@@ -835,9 +874,10 @@
 'microsoft_url_control','Microsoft URL Control',
 'nagios','Nagios',
 'newsgatoronline', 'NewsGator Online',
+'noxtrumbot','<a href="http://www.noxtrum.com/" title="Bot home page [new window]" target="_blank">noxtrumbot</a>',
 'nutch','<a href="http://lucene.apache.org/nutch/" title="Bot home page. Used by many, including Looksmart. [new window]" target="_blank">Nutch</a>',
 'mj12bot','<a href="http://majestic12.co.uk/bot.php" title="Bot home page. [new window]" target="_blank">MJ12bot</a>',
-'msiecrawler','MSIECrawler',
+'msiecrawler','<a href="http://msdn.microsoft.com/workshop/delivery/offline/linkrel.asp" title="Bot home page. [new window]" target="_blank">MSIECrawler</a>',
 'opentaggerbot','<a href="http://www.opentagger.com/opentaggerbot.htm" title="Bot home page [new window]">OpenTaggerBot</a>',
 'outfoxbot','<a href="mailto:outfox.agent@gmail.com?subject=Outfox Bot Information" title="Bot e-mail.">OutfoxBot</a>',
 'perman', 'Perman surfer',
@@ -848,10 +888,15 @@
 'redalert','Red Alert',
 'rojo','<a href="http://rojo.com/" title="Bot home page [new window]" target="_blank">RoJo</a> aggregator',
 'rssimagesbot','<a href="http://herbert.groot.jebbink.nl/?app=rssImages" title="Bot home page [new window]" target="_blank">rssImagesBot</a>',
+'ruffle','<a href="http://www.unreach.net/" title="Bot home page [new window]" target="_blank">ruffle SemanticWeb crawler</a>',
 'rufusbot','<a href="http://64.124.122.252.webaroo.com/feedback.html" title="Bot home page [new window]" target="_blank">RufusBot Rufus Web Miner</a>',
+'sandcrawler','<a href="http://www.microsoft.com/" title="Bot home page [new window]" target="_blank">SandCrawler (Microsoft)</a>',
+'sbider','<a href="http://www.sitesell.com/sbider.html" title="Bot home page [new window]" target="_blank">SBIder</a>',
 'seekbot','<a href="http://www.seekbot.net/bot.html" title="Bot home page [new window]">Seekbot</a>',
+'seznambot','<a href="http://fulltext.seznam.cz/" title="Bot home page [new window]" target="_blank">SeznamBot</a>',
 'shoutcast','Shoutcast Directory Service',
 'slysearch','SlySearch',
+'sohu-search','<a href="http://corp.sohu.com/" title="Bot home page [new window]" target="_blank">sohu-search</a>',
 'surveybot','SurveyBot',
 'syndic8','Syndic8',
 'technoratibot', 'Technoratibot',
@@ -866,7 +911,9 @@
 'w3c_validator', '<a href="http://validator.w3.org/" title="Bot home page [new window]" target="_blank">W3C Validator</a>',
 'webclipping\.com', 'WebClipping.com',
 'webcompass', 'webcompass',
+'webvulncrawl', 'WebVulnCrawl',
 'wonderer', 'Web Wombat Redback Spider',
+'y!j', '<a href="http://help.yahoo.co.jp/help/jp/search/indexing/indexing-15.html" title="Bot home page [new window]" target="_blank">Y!J Yahoo Japan</a>',
 'yacy','<a href="http://www.yacy.net/yacy" title="Bot home page [new window]" target="_blank">yacy</a>',
 'yahoo\-blogs','<a href="http://help.yahoo.com/help/us/ysearch/crawling/crawling-02.html" title="Bot home page [new window]" target="_blank">Yahoo-Blogs</a>',
 'yahoo\-verticalcrawler', 'Yahoo Vertical Crawler',
