@@ -516,8 +516,6 @@
 'csscheck',
 'wget',
 'w3m',
-'w3c_css_validator',
-'w3c_validator',
 'wdg_validator',
 'webzip',
 'staroffice',
@@ -1032,8 +1030,6 @@
 'javaws','Java Web Start',
 'wget','Wget',
 'w3m','w3m',
-'w3c_css_validator','W3C CSS Validator',
-'w3c_validator','W3C HTML Validator',
 'wdg_validator','WDG HTML Validator',
 'webzip','WebZIP',
 'staroffice','StarOffice',
@@ -1543,8 +1539,6 @@
 # Other kind of browsers
 'apt','apt',
 'javaws','java',
-'w3c_css_validator','w3c',
-'w3c_validator','w3c',
 'webzip','webzip',
 'staroffice','staroffice',
 'mozilla','mozilla'
