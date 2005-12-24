@@ -35,7 +35,7 @@
 	<Program_Info>
 		<Program_Name>AWStats</Program_Name>
 		<Program_Version>6.5</Program_Version>
-		<Program_Release_Month>08</Program_Release_Month>
+		<Program_Release_Month>12</Program_Release_Month>
 		<Program_Release_Day>21</Program_Release_Day>
 		<Program_Release_Year>2005</Program_Release_Year>
 		<Program_Cost_Dollars />
@@ -44,7 +44,7 @@
 		<Program_Type>Freeware</Program_Type>
 		<Program_Release_Status>Minor Update</Program_Release_Status>
 		<Program_Install_Support>No Install Support</Program_Install_Support>
-		<Program_OS_Support>Windows2000,WinXP,Windows2003,Unix,Linux,MS-DOS,OS/2 Warp 4,Mac PPC,Mac OS X,Mac Other,OpenVMS</Program_OS_Support>
+		<Program_OS_Support>Windows2000,WinXP,Windows2003,Unix,Linux,MS-DOS,OS/2,OS/2 Warp,OS/2 Warp 4,Mac PPC,Mac OS X,Mac Other,OpenVMS</Program_OS_Support>
 		<Program_Language>English,Arabic,ChineseSimplified,ChineseTraditional,Czech,Danish,Finnish,French,German,Greek,Hungarian,Italian,Japanese,Korean,Other,Polish,Portuguese,Russian,Spanish,Swedish</Program_Language>
 		<Program_Change_Info />
 		<Program_Specific_Category>Utilities</Program_Specific_Category>
@@ -59,9 +59,9 @@
 			<Filename_Previous>awstats-6.4.zip</Filename_Previous>
 			<Filename_Generic>awstats.zip</Filename_Generic>
 			<Filename_Long>awstats.zip</Filename_Long>
-			<File_Size_Bytes>1102224</File_Size_Bytes>
-			<File_Size_K>1076</File_Size_K>
-			<File_Size_MB>1.05</File_Size_MB>
+			<File_Size_Bytes>1159219</File_Size_Bytes>
+			<File_Size_K>1132</File_Size_K>
+			<File_Size_MB>1.11</File_Size_MB>
 		</File_Info>
 		<Expire_Info>
 			<Has_Expire_Info>N</Has_Expire_Info>
