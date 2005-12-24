@@ -6318,17 +6318,21 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 		my @dateparts=split(/:/,$field[$pos_date]);		# tr and split faster than @dateparts=split(/[\/\-:\s]/,$field[$pos_date])
 		# Detected date format: dddddddddd, YYYY-MM-DD HH:MM:SS (IIS), MM/DD/YY\tHH:MM:SS,
 		# DD/Month/YYYY:HH:MM:SS (Apache), DD/MM/YYYY HH:MM:SS, Mon DD HH:MM:SS
-		if (! $dateparts[1]) {	# Unix timestamp
+		if (! $dateparts[1]) {	    # Unix timestamp
 			($dateparts[5],$dateparts[4],$dateparts[3],$dateparts[0],$dateparts[1],$dateparts[2]) = localtime(int($field[$pos_date]));
 			$dateparts[1]++;$dateparts[2]+=1900;
 		}
 		elsif ($dateparts[0] =~ /^....$/) { my $tmp=$dateparts[0]; $dateparts[0]=$dateparts[2]; $dateparts[2]=$tmp; }
 		elsif ($field[$pos_date] =~ /^..:..:..:/) { $dateparts[2]+=2000; my $tmp=$dateparts[0]; $dateparts[0]=$dateparts[1]; $dateparts[1]=$tmp; }
 		elsif ($dateparts[0] =~ /^...$/)  { my $tmp=$dateparts[0]; $dateparts[0]=$dateparts[1]; $dateparts[1]=$tmp; $tmp=$dateparts[5]; $dateparts[5]=$dateparts[4]; $dateparts[4]=$dateparts[3]; $dateparts[3]=$dateparts[2]; $dateparts[2]=$tmp||$nowyear; }
-		if ($MonthNum{$dateparts[1]}) { $dateparts[1]=$MonthNum{$dateparts[1]}; }	# Change lib month in num month if necessary
-
+		if (exists($MonthNum{$dateparts[1]})) { $dateparts[1]=$MonthNum{$dateparts[1]}; }	# Change lib month in num month if necessary
+        if ($dateparts[1] <= 0) {    # Date corrupted (for example $dateparts[1]='dic' for december month in a spanish log file)
+			$NbOfLinesCorrupted++;
+			if ($ShowCorrupted) { print "Corrupted record line ".($lastlinenb+$NbOfLinesParsed)." (bad date format for month, may be month are not in english ?): $line\n"; }
+            next;
+        }
+        
 		# Now @dateparts is (DD,MM,YYYY,HH,MM,SS) and we're going to create $timerecord=YYYYMMDDHHMMSS
-		# TODO Plugin call : Convert a @datepart into another @datepart
 		if ($PluginsLoaded{'ChangeTime'}{'timezone'})  { @dateparts=ChangeTime_timezone(\@dateparts); }
 		my $yearrecord=int($dateparts[2]);
 		my $monthrecord=int($dateparts[1]);
