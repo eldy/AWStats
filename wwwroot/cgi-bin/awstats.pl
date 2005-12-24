@@ -249,7 +249,7 @@ use vars qw/
 # HTTP-Accept or Lang parameter => AWStats code to use for lang
 # ISO-639-1 or 2 or other       => awstats-xx.txt where xx is ISO-639-1
 %LangBrowserToLangAwstats=(
-'sq'=>'al','ar'=>'ar','ba'=>'ba','bg'=>'bg','zh-tw'=>'tw','zh'=>'cn','cz'=>'cz',
+'sq'=>'al','ar'=>'ar','ba'=>'ba','bg'=>'bg','zh-tw'=>'tw','zh'=>'cn','cs'=>'cz',
 'de'=>'de','da'=>'dk',
 'en'=>'en','et'=>'et','fi'=>'fi','fr'=>'fr','gl'=>'gl',
 'es'=>'es','eu'=>'eu','ca'=>'ca',
