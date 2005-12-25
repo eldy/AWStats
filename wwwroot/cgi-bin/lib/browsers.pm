@@ -348,7 +348,7 @@
 'webcopier','webcopier',
 # Media only browsers
 'real','real',
-'winamp','winamp',				# Works for winampmpeg and winamp3httprdr
+'winamp','mediaplayer',				# Works for winampmpeg and winamp3httprdr
 'windows\-media\-player','mplayer',
 'audion','mediaplayer',
 'freeamp','mediaplayer',
