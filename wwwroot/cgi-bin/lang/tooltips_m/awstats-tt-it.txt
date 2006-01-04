@@ -1,0 +1,68 @@
+<!-- Italian tooltips message file (starknight@starkingdom.it) -->
+<!-- $Revision$ - $Date$ -->
+<div class="CTooltip" id="tt1">
+</div>
+<div class="CTooltip" id="tt2">
+Numero di client host diversi (<b>indirizzi IP</b>) che hanno inviato email.
+</div>
+<div class="CTooltip" id="tt3">
+</div>
+<div class="CTooltip" id="tt4">
+Numero di volte che una <b>email</b> è stata inviata con successo.<br />
+</div>
+<div class="CTooltip" id="tt5">
+Questo valore indica la quantità totale di dati trasferita dalle email.<br />
+Le unità di misura sono espresse in KB, MB o GB (KiloByte, MegaByte o GigaByte)
+</div>
+<div class="CTooltip" id="tt13">
+</div>
+<div class="CTooltip" id="tt14">
+</div>
+<div class="CTooltip" id="tt15">
+</div>
+<div class="CTooltip" id="tt16">
+</div>
+<div class="CTooltip" id="tt17">
+Gli orari visualizzati sono basati sul fuso orario del server.<br />
+</div>
+<div class="CTooltip" id="tt18">
+I dati qui riportati sono <b>valori medi</b> (calcolati su tutti i dati tra la prima e l'ultima email nel periodo di tempo analizzato)
+</div>
+<div class="CTooltip" id="tt19">
+I dati qui riportati sono <b>somme cumulative</b> (calcolate su tutti i dati tra la prima e l'ultima email nel periodo di tempo analizzato)
+</div>
+<div class="CTooltip" id="tt20">
+</div>
+
+<div class="CTooltip" id="tt200"><b>Operazione riuscita:</b> Risposta di tipo non standard</div>
+<div class="CTooltip" id="tt211"><b>Operazione riuscita:</b> Stato del sistema o risposta d'aiuto del sistema</div>
+<div class="CTooltip" id="tt214"><b>Operazione riuscita:</b> Messaggio d'aiuto</div>
+<div class="CTooltip" id="tt220"><b>Operazione riuscita:</b> <domain> Servizio pronto</div>
+<div class="CTooltip" id="tt221"><b>Operazione riuscita:</b> <domain> Il servizio sta chiudendo il canale di trasmissione</div>
+<div class="CTooltip" id="tt250"><b>Operazione riuscita:</b> Il server mail del vostro ISP ha eseguito con successo un comando ed il DNS riporta una consegna effettuata</div>
+<div class="CTooltip" id="tt251"><b>Operazione riuscita:</b> Il messaggio contiene un indirizzo email non locale ma il server l'ha accettato e provvederà ad inoltrarlo verso un altro indirizzo di destinazione</div>
+<div class="CTooltip" id="tt252"><b>Operazione riuscita:</b> Il destinatario non può essere verificato ma il server l'ha accettato e proverà a recapitarlo</div>
+
+<div class="CTooltip" id="tt354"><b>Operazione riuscita:</b> Significa che il server mail è pronto a ricevere il messaggio oppure invita il vostro client ad inviare il corpo del messaggio dopo aver ricevuto l'intestazione.</div>
+
+<div class="CTooltip" id="tt421"><b>Errore temporaneo:</b> Potrebbe essere la risposta a qualsiasi comando se il servizio sta per essere disattivato.</div>
+<div class="CTooltip" id="tt450"><b>Errore temporaneo:</b> Il server mail del vostro ISP indica che un indirizzo di email non esiste, la casella è occupata oppure la email è stata temporaneamente rifiutata. E' possibile che la connessione sia caduta durante l'invio oppure che il server remoto non voglia accettare la email per qualche ragione (es. indirizzo IP, indirizzo mittente, destinatario, ecc.)</div>
+<div class="CTooltip" id="tt451"><b>Errore temporaneo:</b> Il server mail del vostro ISP indica che l'invio è stato interrotto, solitamente a causa di un sovraccarico dovuto a troppi messaggi, oppure che il messaggio è valido ma alcuni eventi transitori ne impediscono l'invio. Si consiglia di ripetere l'operazione in un secondo momento</div>
+<div class="CTooltip" id="tt452"><b>Errore temporaneo:</b> Il server mail del vostro ISP indica un probabile sovraccarico dovuto a troppi messaggi. Si consiglia di ripetere l'operazione in un secondo momento</div>
+<div class="CTooltip" id="tt453"><b>Errore temporaneo:</b> Alcuni server mail hanno l'opzione di ridurre il numero di connessioni contemporanee ed anche il numero di messaggi inviati per connessione. Se avete troppi messaggi in coda questi potrebbero superare il numero massimo per connessione. Per verificarlo provate ad inviare pochi messaggi per volta verso quel dominio aumentando il numero ad ogni invio fino a scoprire il valore massimo accettato dal server</div>
+
+<div class="CTooltip" id="tt500"><b>Errore permanente:</b> Errore di sintassi, comando non riconosciuto o linea di comando troppo lunga</div>
+<div class="CTooltip" id="tt501"><b>Errore permanente:</b> Errore di sintassi sui parametri o sugli argomenti</div>
+<div class="CTooltip" id="tt502"><b>Errore permanente:</b> Comando non implementato</div>
+<div class="CTooltip" id="tt503"><b>Errore permanente:</b> Il server ha incontrato una sequenza errata di comandi</div>
+<div class="CTooltip" id="tt504"><b>Errore permanente:</b> Parametro del comando non implementato</div>
+<div class="CTooltip" id="tt521"><b>Errore permanente:</b> Per usare questo server SMTP dovete autenticarvi tramite protocollo POP e specificare il vostro indirizzo email nel campo Sender/From (mittente)</div>
+<div class="CTooltip" id="tt530"><b>Errore permanente:</b> Accesso negato. Un sendmailismo ?</div>
+<div class="CTooltip" id="tt550"><b>Errore permanente:</b> L'invio di email a destinatari che non appartengono al proprio dominio non è consentito oppure è richiesta l'autenticazione per far sapere al server che siete autorizzati a farlo. Per evitare lo SPAM alcuni server non consentono l'invio di email verso qualsiasi indirizzo (relay) usando i computer e la rete di un'altra azienda.</div>
+<div class="CTooltip" id="tt551"><b>Errore permanente:</b> Utente non locale: provare con <forward-path> oppure Indirizzo Invalido: richiesta di relay negata</div>
+<div class="CTooltip" id="tt552"><b>Errore permanente:</b> Invio email interrotto: spazio su disco esaurito. Il server mail dell'ISP segnala un probabile sovraccarico dovuto all'invio di troppi messaggi.</div>
+<div class="CTooltip" id="tt553"><b>Errore permanente:</b> Invio email non iniziato: nome della casella di posta non consentito. Alcuni server mail hanno l'opzione di ridurre il numero di connessioni contemporanee ed anche il numero di messaggi inviati per connessione. Se avete troppi messaggi in coda per un dominio questi potrebbero superare il numero massimo per connessione e richiedere alcune modifiche al testo e/o al destinatario per poter essere inviati.</div>
+<div class="CTooltip" id="tt554"><b>Errore permanente:</b> Invio email rifiutato: accesso negato</div>
+<div class="CTooltip" id="tt557"><b>Errore permanente:</b> Troppi messaggi duplicati. Se la risorsa non è momentaneamente disponibile è possibile che sul server mail sia installato un sistema anti-spam.</div>
+
+<div class="CTooltip" id="tt999">Errore ti tipo sconosciuto. Questo errore non viene segnalato dal server mail ma dal tool maillogconvert.pl quando rileva nel file di log che l'invio non è andato a buon fine ma non sono presenti spiegazioni sull'errore.</div>

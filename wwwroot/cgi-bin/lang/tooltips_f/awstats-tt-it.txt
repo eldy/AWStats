@@ -1,0 +1,34 @@
+<!-- Italian tooltips message file (starknight@starkingdom.it) -->
+<!-- $Revision$ - $Date$ -->
+<div class="CTooltip" id="tt1">
+</div>
+<div class="CTooltip" id="tt2">
+Numero di client host diversi (<b>indirizzi IP</b>) che si sono connessi.
+</div>
+<div class="CTooltip" id="tt3">
+</div>
+<div class="CTooltip" id="tt4">
+</div>
+<div class="CTooltip" id="tt5">
+Questo valore indica la quantità totale di dati trasferita dai download ftp.<br />
+Le unità di misura sono espresse in KB, MB o GB (KiloByte, MegaByte o GigaByte)
+</div>
+<div class="CTooltip" id="tt13">
+</div>
+<div class="CTooltip" id="tt14">
+</div>
+<div class="CTooltip" id="tt15">
+</div>
+<div class="CTooltip" id="tt16">
+</div>
+<div class="CTooltip" id="tt17">
+Gli orari visualizzati sono basati sul fuso orario del server.<br />
+</div>
+<div class="CTooltip" id="tt18">
+I dati qui riportati sono <b>valori medi</b> (calcolati su tutti i dati tra il primo e l'ultimo accesso nel periodo di tempo analizzato)
+</div>
+<div class="CTooltip" id="tt19">
+I dati qui riportati sono <b>somme cumulative</b> (calcolate su tutti i dati tra il primo e l'ultimo accesso nel periodo di tempo analizzato)
+</div>
+<div class="CTooltip" id="tt20">
+</div>
