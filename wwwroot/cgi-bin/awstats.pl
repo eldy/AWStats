@@ -8871,15 +8871,15 @@ if (scalar keys %HTMLOutput) {
 				print "<td>&nbsp;<br />&nbsp;</td>\n";
 				print "<td>&nbsp;<br />&nbsp;</td>\n";
 				if ($ShowSummary =~ /H/i) { print "<td><b>$TotalHits</b>".($LogType eq 'M'?"":"<br />($RatioHits&nbsp;".lc($Message[57]."/".$Message[12]).")")."</td>"; } else { print "<td>&nbsp;</td>"; }
-				if ($ShowSummary =~ /B/i) { print "<td><b>".Format_Bytes(int($TotalBytes))."</b><br />($RatioBytes&nbsp;$Message[108]/".lc($Message[($LogType eq 'M'?149:12)]).")</td>"; } else { print "<td>&nbsp;</td>"; }
+				if ($ShowSummary =~ /B/i) { print "<td><b>".Format_Bytes(int($TotalBytes))."</b><br />($RatioBytes&nbsp;$Message[108]/".$Message[($LogType eq 'M'?149:12)].")</td>"; } else { print "<td>&nbsp;</td>"; }
 			}
 			else {
 				if ($LogType eq 'W' || $LogType eq 'S') { print "<td class=\"aws\">$Message[160]&nbsp;*</td>"; }
 				if ($ShowSummary =~ /U/i) { print "<td>".($MonthRequired eq 'all'?"<b>&lt;= $TotalUnique</b><br />$Message[129]":"<b>$TotalUnique</b><br />&nbsp;")."</td>"; } else { print "<td>&nbsp;</td>"; }
 				if ($ShowSummary =~ /V/i) { print "<td><b>$TotalVisits</b><br />($RatioVisits&nbsp;$Message[52])</td>"; } else { print "<td>&nbsp;</td>"; }
-				if ($ShowSummary =~ /P/i) { print "<td><b>$TotalPages</b><br />($RatioPages&nbsp;".lc($Message[56]."/".$Message[12]).")</td>"; } else { print "<td>&nbsp;</td>"; }
-				if ($ShowSummary =~ /H/i) { print "<td><b>$TotalHits</b>".($LogType eq 'M'?"":"<br />($RatioHits&nbsp;".lc($Message[57]."/".$Message[12]).")")."</td>"; } else { print "<td>&nbsp;</td>"; }
-				if ($ShowSummary =~ /B/i) { print "<td><b>".Format_Bytes(int($TotalBytes))."</b><br />($RatioBytes&nbsp;$Message[108]/".lc($Message[($LogType eq 'M'?149:12)]).")</td>"; } else { print "<td>&nbsp;</td>"; }
+				if ($ShowSummary =~ /P/i) { print "<td><b>$TotalPages</b><br />($RatioPages&nbsp;".$Message[56]."/".$Message[12].")</td>"; } else { print "<td>&nbsp;</td>"; }
+				if ($ShowSummary =~ /H/i) { print "<td><b>$TotalHits</b>".($LogType eq 'M'?"":"<br />($RatioHits&nbsp;".$Message[57]."/".$Message[12].")")."</td>"; } else { print "<td>&nbsp;</td>"; }
+				if ($ShowSummary =~ /B/i) { print "<td><b>".Format_Bytes(int($TotalBytes))."</b><br />($RatioBytes&nbsp;$Message[108]/".$Message[($LogType eq 'M'?149:12)].")</td>"; } else { print "<td>&nbsp;</td>"; }
 			}
 			print "</tr>\n";
 			# Show main indicators values for not viewed traffic values
