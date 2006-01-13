@@ -915,13 +915,13 @@ log file).<br>
 <a name="SCREENSIZE"></a><br>
 <b><u>FAQ-COM142 : HOW TO GET THE SCREEN SIZE AND BROWSER CAPABILITIES REPORT WORKING ?</u></b><br>
 <font class=CProblem>PROBLEM:</font><br>
-I see in the AWStats features list that it can report the screen size used by visitors and also if its browser
-support Flash, java, etc... How can I do that ?<br>
+I see in the AWStats features list that it can report the screen size used by visitors and other browsers' informations,
+(like if browser support Flash, Java, Javascript, PDF, MAcromedia, Audio plugins, etc...). How can I do that ?<br>
 <font class=CSolution>SOLUTION:</font><br>
-AWStats is a log analyzer, so to report the screen size of your visitor, we need to have information inside the log file.
-For this, the only way to do that is to add some HTML tags inside some of your pages (the home page is enoough to
-get screen size use ratios). This tag will add call to a javascript that ask your browser to call of an URL that
-includes in its parameters, the screen size resolution and other informations about browser capabilities.<br>
+AWStats is a log analyzer, so to report the screen size of your visitor, we need to have information inside the log file itself.
+For this, the only way to do that, is to add some HTML tags inside some of your pages (the home page is enough to
+get use ratios). This tag will add call to a javascript that ask your browser to get a virtual URL that
+includes, in its parameters, the screen size resolution and all other informations about browser capabilities (Flash, Java, Javascript, PDF, Macromedia, Audio plgins...).<br>
 <br>
 This is the code you must add (at bottom of your home page for example) :<br>
 <table border=1 cellpadding=1 cellspacing=0 bgcolor=#F4F4F4 width="95%" class=CFAQ><tr class=CFAQ><td class=CFAQ>
