@@ -63,19 +63,23 @@
 'hp\-ux',
 'unix',
 'x11',
+'gnome\-vfs',
 # Other famous OS
 'beos',
 'os/2',
 'amiga',
 'atari',
 'vms',
+'commodore',
 # Miscellanous OS
 'cp/m',
 'crayos',
 'dreamcast',
 'risc[_+ ]?os',
 'symbian',
-'webtv'
+'webtv',
+'playstation_portable',
+'xbox'
 );
 
 
@@ -123,19 +127,23 @@
 'hp\-ux','hp\-ux',
 'unix','unix',
 'x11','unix',
+'gnome\-vfs','unix',
 # Other famous OS
 'beos','beos',
 'os/2','os/2',
 'amiga','amigaos',
 'atari','atari',
 'vms','vms',
+'commodore','commodore',
 # Miscellanous OS
 'cp/m','cp/m',
 'crayos','crayos',
 'dreamcast','dreamcast',
 'risc[_+ ]?os','riscos',
 'symbian','symbian',
-'webtv','webtv'
+'webtv','webtv',
+'playstation_portable', 'psp',
+'xbox', 'winxbox',
 );
 
 # OS name list ('os unique id in lower case','os clear text')
@@ -153,6 +161,7 @@
 'win95','<a href="http://www.microsoft.com/windows95/" title="Windows 95 home page [new window]" target="_blank">Windows 95</a>',
 'win16','<a href="http://www.microsoft.com/" title="Windows 3.xx home page [new window]" target="_blank">Windows 3.xx</a>',
 'wince','<a href="http://www.microsoft.com/windowsmobile/" title="Windows CE home page [new window]" target="_blank">Windows CE</a>',
+'winxbox','<a href="http://www.xbox.com/en-US/hardware/xbox/" title="Microsoft XBOX home page [new window]" target="_blank">Microsoft XBOX</a>',
 # Macintosh OS
 'macosx','<a href="http://www.apple.com/macosx/" title="Mac OS X home page [new window]" target="_blank">Mac OS X</a>',
 'macintosh','<a href="http://www.apple.com/" title="Mac OS home page [new window]" target="_blank">Mac OS</a>',
@@ -190,6 +199,7 @@
 'amigaos','<a href="http://www.amiga.com/amigaos/" title="AmigaOS home page [new window]" target="_blank">AmigaOS</a>',
 'atari','<a href="http://www.atarimuseum.com/computers/computers.html" title="Atari home page [new window]" target="_blank">Atari</a>',
 'vms','<a href="http://h71000.www7.hp.com/" title="VMS home page [new window]" target="_blank">VMS</a>',
+'commodore','<a href="http://en.wikipedia.org/wiki/Commodore_64" title="Commodore 64 wikipedia page [new window]" target="_blank">Commodore 64</a>',
 # Miscellanous OS
 'cp/m','<a href="http://www.digitalresearch.biz/CPM.HTM" title="CPM home page [new window]" target="_blank">CPM</a>',
 'crayos','<a href="http://www.cray.com/" title="CrayOS home page [new window]" target="_blank">CrayOS</a>',
@@ -197,6 +207,7 @@
 'riscos','<a href="http://www.riscos.com/" title="RISC OS home page [new window]" target="_blank">RISC OS</a>',
 'symbian','<a href="http://www.symbian.com/" title="Symbian OS home page [new window]" target="_blank">Symbian OS</a>',
 'webtv','<a href="http://www.webtv.com/" title="WebTV home page [new window]" target="_blank">WebTV</a>',
+'psp', '<a href="http://www.playstation.jp/psp/" title="Sony PlayStation Portable home page [new window]" target="_blank">Sony PlayStation Portable</a>',
 );
 
 

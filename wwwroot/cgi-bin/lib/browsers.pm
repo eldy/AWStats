@@ -37,6 +37,7 @@
 'cyberdog',
 'dillo',
 'dreamcast',
+'xbox',
 'downloadagent',
 'ecatch',
 'emailsiphon',
@@ -46,6 +47,7 @@
 'fresco',
 'galeon',
 'getright',
+'netants',
 'headdump',
 'hotjava',
 'ibrowse',
@@ -84,11 +86,14 @@
 'jetaudio',
 'mint_audio',
 'mpg123',
+'mplayer',
 'nsplayer',
+'qts',
 'sonique',
 'uplayer',
-'xmms',
 'xaudio',
+'xine',
+'xmms',
 # RSS Readers
 'aggrevator', 
 'feeddemon', 
@@ -127,22 +132,29 @@
 'wapsilon',
 'webcollage',
 'up\.',					# Works for UP.Browser and UP.Link
-# PDA/Phonecell I-Mode browsers
 'docomo',
-'portalmmm',
 # Others (TV)
 'webtv',
 # Other kind of browsers
+'gnome\-vfs',
+'neon',
 'apt',
 'curl',
 'csscheck',
 'wget',
+'chilkat',
+'webdownloader_for_x',
 'w3m',
 'wdg_validator',
 'webzip',
 'staroffice',
+'gnus',
+'liferea',
+'nikto',
+'microsoft\-webdav\-miniredir',
 'mozilla',				# Must be at end because a lot of browsers contains mozilla in string
-'libwww'				# Must be at end because some browser have both 'browser id' and 'libwww'
+'libwww',				# Must be at end because some browser have both 'browser id' and 'libwww'
+'lwp',
 );
 
 # BrowsersHashIDLib
@@ -174,6 +186,7 @@
 'cyberdog','Cyberdog',
 'dillo','Dillo',
 'dreamcast','Dreamcast',
+'xbox', 'XBoX',
 'downloadagent','DownloadAgent',
 'ecatch', 'eCatch',
 'emailsiphon','EmailSiphon',
@@ -183,6 +196,7 @@
 'fresco','ANT Fresco',
 'galeon','Galeon',
 'getright','GetRight',
+'netants','NetAnts',
 'headdump','HeadDump',
 'hotjava','Sun HotJava',
 'ibrowse','iBrowse',
@@ -220,11 +234,14 @@
 'jetaudio','JetAudio (media player)',
 'mint_audio','Mint Audio (media player)',
 'mpg123','mpg123 (media player)',
+'mplayer','The Movie Player (media player)',
 'nsplayer','NetShow Player (media player)',
+'qts','Quicktime',
 'sonique','Sonique (media player)',
 'uplayer','Ultra Player (media player)',
-'xmms','XMMS (media player)',
 'xaudio','Some XAudio Engine based MPEG player (media player)',
+'xine','Xine, a free multimedia player (media player)',
+'xmms','XMMS (media player)',
 # RSS Readers
 'aggrevator', 'Aggrevator (RSS Reader)',
 'feeddemon', 'FeedDemon (RSS Reader)',
@@ -263,23 +280,31 @@
 'wapsilon','WAPsilon (PDA/Phone browser)',
 'webcollage','WebCollage (PDA/Phone browser)',
 'up\.','UP.Browser (PDA/Phone browser)',					# Works for UP.Browser and UP.Link
-# PDA/Phonecell I-Mode browsers
 'docomo','I-Mode phone (PDA/Phone browser)',
-'portalmmm','I-Mode phone (PDA/Phone browser)',
 # Others (TV)
 'webtv','WebTV browser',
 # Other kind of browsers
 'apt','Debian APT',
+'svn', 'Subversion client',
+'gnome\-vfs', 'Gnome FileSystem Abstraction library', 
+'neon', 'Neon HTTP and WebDAV client library',
 'curl','Curl',
 'csscheck','WDG CSS Validator',
 'javaws','Java Web Start',
 'wget','Wget',
+'chilkat', 'Chilkat',
+'webdownloader_for_x','Downloader for X',
 'w3m','w3m',
 'wdg_validator','WDG HTML Validator',
 'webzip','WebZIP',
 'staroffice','StarOffice',
+'nikto', 'Nikto Web Scanner',
+'microsoft\-webdav\-miniredir', 'Microsoft Data Access Component Internet Publishing Provider',
+'gnus', 'Gnus Network User Services',
+'liferea', 'LInux FEed REAder',
 'mozilla','Mozilla',
 'libwww','LibWWW',
+'lwp','LibWWW-perl',
 );
 
 
@@ -293,6 +318,7 @@
 'webcopier','1',
 'curl','1',
 'wget','1',
+'webdownloader_for_x','1',
 'webzip','1'
 );
 
@@ -325,6 +351,7 @@
 'cyberdog','cyberdog',
 'dillo','dillo',
 'dreamcast','dreamcast',
+'xbox', 'winxbox',
 'ecatch','ecatch',
 'encompass','encompass',
 'epiphany','epiphany',
@@ -356,9 +383,13 @@
 'jetaudio','mediaplayer',
 'mint_audio','mediaplayer',
 'mpg123','mediaplayer',
+'mplayer','mediaplayer',
 'nsplayer','netshow',
+'qts','mediaplayer',
 'sonique','mediaplayer',
 'uplayer','mediaplayer',
+'xaudio','mediaplayer',
+'xine','mediaplayer',
 'xmms','mediaplayer',
 'xaudio','mediaplayer',
 # PDA/Phonecell browsers
@@ -380,9 +411,7 @@
 'wapsilon','pdaphone',
 'webcollage','pdaphone',
 'up\.','pdaphone',					# Works for UP.Browser and UP.Link
-# PDA/Phonecell I-Mode browsers
 'docomo','pdaphone',
-'portalmmm','pdaphone',
 # Others (TV)
 'webtv','webtv',
 # RSS Readers
@@ -406,9 +435,13 @@
 'syndirella', 'rss',
 # Other kind of browsers
 'apt','apt',
+'svn','subversion',
+'gnome\-vfs', 'gnome',
+'neon','neon',
 'javaws','java',
 'webzip','webzip',
 'staroffice','staroffice',
+'gnus', 'gnus',
 'mozilla','mozilla'
 );
 

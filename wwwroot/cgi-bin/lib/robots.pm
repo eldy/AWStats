@@ -127,6 +127,7 @@
 'weblayers',
 # Common robots (Not in robot file)
 'antibot',
+'bruinbot',
 'digout4u',
 'echo',
 'fast\-webcrawler',
@@ -140,6 +141,8 @@
 'unlost_web_crawler',
 'voila',
 'webbase',
+'webcollage',
+'cfetch',
 'zyborg',	# Must be before wisenut 
 'wisenutbot'
 );
@@ -546,6 +549,7 @@
 'weblayers','weblayers',
 # Common robots (Not in robot file)
 'antibot','Antibot',
+'bruinbot','<a href="http://web.archive.org/" title="BruinBot home page [new window]" target="_blank">The web archive</a>',
 'digout4u','Digout4u',
 'echo','EchO!',
 'fast\-webcrawler','Fast-Webcrawler',
@@ -561,6 +565,8 @@
 'webbase', 'WebBase',
 'zyborg','<a href="http://www.WISEnutbot.com/" title="wn-14.zyborg@looksmart.net Bot home page [new window]" target="_blank">ZyBorg</a>',
 'wisenutbot','<a href="http://www.WISEnutbot.com/" title="Bot home page [new window]" target="_blank">WISENutbot</a>',
+'webcollage','<a href="http://www.jwz.org/webcollage/" title="WebCollage home page [new window]" target="_blank">WebCollage</a>',
+'cfetch','<a href="http://www.kosmix.com/crawler.html" title="kosmix home page [new window]" target="_blank">cfetch</a>',
 # Less common robots (In robot file)
 '[^a]fish','Fish search',
 'abcdatos','ABCdatos BotLink',
@@ -946,7 +952,9 @@
 'scooter'=>'AltaVista',
 'wisenutbot'=>'Looksmart',
 'yahoo\-verticalcrawler'=>'Yahoo',
-'zyborg'=>'Looksmart'
+'zyborg'=>'Looksmart',
+'cfetch'=>'Kosmix',
+'^voyager\/'=>'Kosmix'
 );
 
 1;
