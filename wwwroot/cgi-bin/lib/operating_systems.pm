@@ -78,7 +78,7 @@
 'risc[_+ ]?os',
 'symbian',
 'webtv',
-'playstation_portable',
+'playstation\sportable',
 'xbox'
 );
 
@@ -142,7 +142,7 @@
 'risc[_+ ]?os','riscos',
 'symbian','symbian',
 'webtv','webtv',
-'playstation_portable', 'psp',
+'playstation\sportable', 'psp',
 'xbox', 'winxbox',
 );
 
@@ -162,7 +162,7 @@
 'win16','<a href="http://www.microsoft.com/" title="Windows 3.xx home page [new window]" target="_blank">Windows 3.xx</a>',
 'wince','<a href="http://www.microsoft.com/windowsmobile/" title="Windows CE home page [new window]" target="_blank">Windows CE</a>',
 'winxbox','<a href="http://www.xbox.com/en-US/hardware/xbox/" title="Microsoft XBOX home page [new window]" target="_blank">Microsoft XBOX</a>',
-# Macintosh OS
+ # Macintosh OS
 'macosx','<a href="http://www.apple.com/macosx/" title="Mac OS X home page [new window]" target="_blank">Mac OS X</a>',
 'macintosh','<a href="http://www.apple.com/" title="Mac OS home page [new window]" target="_blank">Mac OS</a>',
 # Linux

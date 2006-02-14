@@ -60,6 +60,7 @@
 'wmlp','html',
 'xhtml','html',
 'xml','html',
+'vak','glasses',
 'sgm','html',
 'sgml','html',
 # HTML Dynamic pages or script
@@ -167,6 +168,7 @@
 'wmlp','page',
 'xhtml','page',
 'xml','page',
+'vak','page',
 'sgm','page',
 'sgml','page',
 # HTML Dynamic pages or script
