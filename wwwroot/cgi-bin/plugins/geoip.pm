@@ -15,9 +15,15 @@
 # ENTER HERE THE USE COMMAND FOR ALL REQUIRED PERL MODULES
 use vars qw/ $type /;
 $type='geoip';
-if (!eval ('require "Geo/IP.pm";')) 	{
+if (!eval ('require "Geo/IP.pm";')) {
+	$error1=$@;
 	$type='geoippureperl';
-	if (!eval ('require "Geo/IP/PurePerl.pm";')) { return $@?"Error: $@":"Error: Need Perl module Geo::IP or Geo::IP::PurePerl"; }
+	if (!eval ('require "Geo/IP/PurePerl.pm";')) {
+		$error2=$@;
+		$ret=($error1||$error2)?"Error:\n$error1$error2":"";
+		$ret.="Error: Need Perl module Geo::IP or Geo::IP::PurePerl";
+		return $ret;
+	}
 }
 # ----->
 use strict;no strict "refs";
@@ -76,39 +82,40 @@ sub Init_geoip {
 
 
 #-----------------------------------------------------------------------------
-# PLUGIN FUNCTION: GetCountryCodeByName_pluginname
-# UNIQUE: YES (Only one plugin using this function can be loaded)
-# GetCountryCodeByName is called to translate a host name into a country name.
-#-----------------------------------------------------------------------------
-sub GetCountryCodeByName_geoip {
-    my $param="$_[0]";
-	# <-----
-	my $res=$TmpDomainLookup{$param}||'';
-	if (! $res) {
-		$res=lc($gi->country_code_by_name($param));
-		$TmpDomainLookup{$param}=$res || 'unknown';
-		if ($Debug) { debug("  Plugin geoip: GetCountryCodeByName for $param: [$res]",5); }
-	}
-	elsif ($Debug) { debug("  Plugin geoip: GetCountryCodeByName for $param: Already resolved to $res",5); }
-	# ----->
-	return $res;
-}
-
-#-----------------------------------------------------------------------------
 # PLUGIN FUNCTION: GetCountryCodeByAddr_pluginname
 # UNIQUE: YES (Only one plugin using this function can be loaded)
-# GetCountryCodeByAddr is called to translate an ip into a country name.
+# GetCountryCodeByAddr is called to translate an ip into a country code in lower case.
 #-----------------------------------------------------------------------------
 sub GetCountryCodeByAddr_geoip {
     my $param="$_[0]";
 	# <-----
 	my $res=$TmpDomainLookup{$param}||'';
 	if (! $res) {
-		$res=lc($gi->country_code_by_addr($param));
-		$TmpDomainLookup{$param}=$res || 'unknown';
-		if ($Debug) { debug("  Plugin geoip: GetCountryCodeByAddr for $param: $res",5); }
+		$res=lc($gi->country_code_by_addr($param)) || 'unknown';
+		$TmpDomainLookup{$param}=$res;
+		if ($Debug) { debug("  Plugin geoip: GetCountryCodeByAddr for $param: [$res]",5); }
 	}
-	elsif ($Debug) { debug("  Plugin geoip: GetCountryCodeByAddr for $param: Already resolved to $res",5); }
+	elsif ($Debug) { debug("  Plugin geoip: GetCountryCodeByAddr for $param: Already resolved to [$res]",5); }
+	# ----->
+	return $res;
+}
+
+
+#-----------------------------------------------------------------------------
+# PLUGIN FUNCTION: GetCountryCodeByName_pluginname
+# UNIQUE: YES (Only one plugin using this function can be loaded)
+# GetCountryCodeByName is called to translate a host name into a country code in lower case.
+#-----------------------------------------------------------------------------
+sub GetCountryCodeByName_geoip {
+    my $param="$_[0]";
+	# <-----
+	my $res=$TmpDomainLookup{$param}||'';
+	if (! $res) {
+		$res=lc($gi->country_code_by_name($param)) || 'unknown';
+		$TmpDomainLookup{$param}=$res;
+		if ($Debug) { debug("  Plugin geoip: GetCountryCodeByName for $param: [$res]",5); }
+	}
+	elsif ($Debug) { debug("  Plugin geoip: GetCountryCodeByName for $param: Already resolved to [$res]",5); }
 	# ----->
 	return $res;
 }

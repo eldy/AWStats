@@ -2010,7 +2010,7 @@ sub Read_Plugins {
 		}
 	}
 	# In output mode, geo ip plugins are not loaded, so message changes are done here (can't be done in plugin init function)
-	if ($PluginsLoaded{'init'}{'geoip'} || $PluginsLoaded{'init'}{'geoipfree'}) { $Message[17]=$Message[25]=$Message[148]; }
+	if ($PluginsLoaded{'init'}{'geoip'} || $PluginsLoaded{'init'}{'geoip_region_maxmind'} || $PluginsLoaded{'init'}{'geoipfree'}) { $Message[17]=$Message[25]=$Message[148]; }
 }
 
 #------------------------------------------------------------------------------
@@ -6848,8 +6848,9 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 			# $Host is an IP address and is not resolved (failed or not asked) or resolution gives an IP address
 			$HostResolved = $Host;
 			# Resolve Domain
-			if ($PluginsLoaded{'GetCountryCodeByAddr'}{'geoipfree'}) { $Domain=GetCountryCodeByAddr_geoipfree($HostResolved); }
-			elsif ($PluginsLoaded{'GetCountryCodeByAddr'}{'geoip'}) { $Domain=GetCountryCodeByAddr_geoip($HostResolved); }
+			if ($PluginsLoaded{'GetCountryCodeByAddr'}{'geoip'})                   { $Domain=GetCountryCodeByAddr_geoip($HostResolved); }
+			elsif ($PluginsLoaded{'GetCountryCodeByAddr'}{'geoip_region_maxmind'}) { $Domain=GetCountryCodeByAddr_geoip_region_maxmind($HostResolved); }
+			elsif ($PluginsLoaded{'GetCountryCodeByAddr'}{'geoipfree'})            { $Domain=GetCountryCodeByAddr_geoipfree($HostResolved); }
             if ($AtLeastOneSectionPlugin) {
                	foreach my $pluginname (keys %{$PluginsLoaded{'SectionProcessIp'}})  {
 #               		my $function="SectionProcessIp_$pluginname(\$HostResolved)";
@@ -6864,8 +6865,9 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 			$HostResolved = lc($HostResolved?$HostResolved:$Host);
 			# Resolve Domain
 			if ($ip) {  # If we have ip, we use it in priority instead of hostname
-				if ($PluginsLoaded{'GetCountryCodeByAddr'}{'geoipfree'}) { $Domain=GetCountryCodeByAddr_geoipfree($Host); }
-				elsif ($PluginsLoaded{'GetCountryCodeByAddr'}{'geoip'}) { $Domain=GetCountryCodeByAddr_geoip($Host); }
+				if ($PluginsLoaded{'GetCountryCodeByAddr'}{'geoip'})                   { $Domain=GetCountryCodeByAddr_geoip($Host); }
+				elsif ($PluginsLoaded{'GetCountryCodeByAddr'}{'geoip_region_maxmind'}) { $Domain=GetCountryCodeByAddr_geoip_region_maxmind($Host); }
+				elsif ($PluginsLoaded{'GetCountryCodeByAddr'}{'geoipfree'})            { $Domain=GetCountryCodeByAddr_geoipfree($Host); }
 				elsif ($HostResolved =~ /\.(\w+)$/) { $Domain=$1; }
                 if ($AtLeastOneSectionPlugin) {
                    	foreach my $pluginname (keys %{$PluginsLoaded{'SectionProcessIp'}})  {
@@ -6877,8 +6879,9 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
                 }
 			}
 			else {
-				if ($PluginsLoaded{'GetCountryCodeByName'}{'geoipfree'}) { $Domain=GetCountryCodeByName_geoipfree($HostResolved); }
-				elsif ($PluginsLoaded{'GetCountryCodeByName'}{'geoip'}) { $Domain=GetCountryCodeByName_geoip($HostResolved); }
+				if ($PluginsLoaded{'GetCountryCodeByName'}{'geoip'})                   { $Domain=GetCountryCodeByName_geoip($HostResolved); }
+				elsif ($PluginsLoaded{'GetCountryCodeByName'}{'geoip_region_maxmind'}) { $Domain=GetCountryCodeByName_geoip_region_maxmind($HostResolved); }
+				elsif ($PluginsLoaded{'GetCountryCodeByName'}{'geoipfree'})            { $Domain=GetCountryCodeByName_geoipfree($HostResolved); }
 				elsif ($HostResolved =~ /\.(\w+)$/) { $Domain=$1; }
                 if ($AtLeastOneSectionPlugin) {
                    	foreach my $pluginname (keys %{$PluginsLoaded{'SectionProcessHostname'}})  {
