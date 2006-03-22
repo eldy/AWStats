@@ -37,7 +37,7 @@ foreach my $key (keys %$lconf) {
 # Put in @conflist, list of all existing config
 my @conflist=();
 foreach my $dir (split(/\s+/, $access{'dir'})) {
-	push(@conflist, map { $_->{'custom'} = 1; $_ } &scan_config_dir($dir));
+	push(@conflist, map { $_->{'custom'} = 1; ($_ !~ /^[\/\\]/ ? $dir.'/':'').$_ } &scan_config_dir($dir));
 }
 
 
