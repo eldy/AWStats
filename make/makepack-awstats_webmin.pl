@@ -10,7 +10,7 @@ use Cwd;
 
 $PROJECT="awstats";
 $MAJOR="1";
-$MINOR="6";
+$MINOR="7";
 @LISTETARGET=("WBM");   # Possible packages
 %REQUIREMENTTARGET=(                            # Tool requirement for each package
 "WBM"=>"tar",
