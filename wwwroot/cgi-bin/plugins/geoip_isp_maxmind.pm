@@ -278,7 +278,7 @@ sub SectionInitHashArray_geoip_isp_maxmind {
 sub SectionProcessIp_geoip_isp_maxmind {
     my $param="$_[0]";      # Param must be an IP
 	# <-----
-	my $isp = $geoip_isp_maxmind->org_by_addr($param) if $geoip_isp_maxmind;
+	my $isp = $geoip_isp_maxmind->isp_by_addr($param) if $geoip_isp_maxmind;
 	if ($Debug) { debug("  Plugin geoip_isp_maxmind: GetIspByIp for $param: [$isp]",5); }
     if ($isp) {
         $isp =~ s/\s/_/g;
@@ -299,7 +299,7 @@ sub SectionProcessIp_geoip_isp_maxmind {
 sub SectionProcessHostname_geoip_isp_maxmind {
     my $param="$_[0]";      # Param must be an IP
 	# <-----
-	my $isp = $geoip_isp_maxmind->org_by_name($param) if $geoip_isp_maxmind;
+	my $isp = $geoip_isp_maxmind->isp_by_name($param) if $geoip_isp_maxmind;
 	if ($Debug) { debug("  Plugin geoip_isp_maxmind: GetIspByHostname for $param: [$isp]",5); }
     if ($isp) {
         $isp =~ s/\s/_/g;

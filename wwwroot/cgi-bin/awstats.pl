@@ -22,7 +22,7 @@ use Socket;
 #------------------------------------------------------------------------------
 use vars qw/ $REVISION $VERSION /;
 $REVISION='$Revision$'; $REVISION =~ /\s(.*)\s/; $REVISION=$1;
-$VERSION="6.5 (build $REVISION)";
+$VERSION="6.6 (build $REVISION)";
 
 # ----- Constants -----
 use vars qw/
@@ -2010,7 +2010,7 @@ sub Read_Plugins {
 		}
 	}
 	# In output mode, geo ip plugins are not loaded, so message changes are done here (can't be done in plugin init function)
-	if ($PluginsLoaded{'init'}{'geoip'} || $PluginsLoaded{'init'}{'geoip_region_maxmind'} || $PluginsLoaded{'init'}{'geoipfree'}) { $Message[17]=$Message[25]=$Message[148]; }
+	if ($PluginsLoaded{'init'}{'geoip'} || $PluginsLoaded{'init'}{'geoipfree'}) { $Message[17]=$Message[25]=$Message[148]; }
 }
 
 #------------------------------------------------------------------------------
@@ -6849,13 +6849,13 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 			$HostResolved = $Host;
 			# Resolve Domain
 			if ($PluginsLoaded{'GetCountryCodeByAddr'}{'geoip'})                   { $Domain=GetCountryCodeByAddr_geoip($HostResolved); }
-			elsif ($PluginsLoaded{'GetCountryCodeByAddr'}{'geoip_region_maxmind'}) { $Domain=GetCountryCodeByAddr_geoip_region_maxmind($HostResolved); }
+#			elsif ($PluginsLoaded{'GetCountryCodeByAddr'}{'geoip_region_maxmind'}) { $Domain=GetCountryCodeByAddr_geoip_region_maxmind($HostResolved); }
+#			elsif ($PluginsLoaded{'GetCountryCodeByAddr'}{'geoip_city_maxmind'})   { $Domain=GetCountryCodeByAddr_geoip_city_maxmind($HostResolved); }
 			elsif ($PluginsLoaded{'GetCountryCodeByAddr'}{'geoipfree'})            { $Domain=GetCountryCodeByAddr_geoipfree($HostResolved); }
             if ($AtLeastOneSectionPlugin) {
                	foreach my $pluginname (keys %{$PluginsLoaded{'SectionProcessIp'}})  {
-#               		my $function="SectionProcessIp_$pluginname(\$HostResolved)";
-#               		eval("$function");
                		my $function="SectionProcessIp_$pluginname";
+					if ($Debug) { debug("  Call to plugin function $function",5); }
                		&$function($HostResolved);
                 }
    		    }
@@ -6866,28 +6866,28 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 			# Resolve Domain
 			if ($ip) {  # If we have ip, we use it in priority instead of hostname
 				if ($PluginsLoaded{'GetCountryCodeByAddr'}{'geoip'})                   { $Domain=GetCountryCodeByAddr_geoip($Host); }
-				elsif ($PluginsLoaded{'GetCountryCodeByAddr'}{'geoip_region_maxmind'}) { $Domain=GetCountryCodeByAddr_geoip_region_maxmind($Host); }
+#				elsif ($PluginsLoaded{'GetCountryCodeByAddr'}{'geoip_region_maxmind'}) { $Domain=GetCountryCodeByAddr_geoip_region_maxmind($Host); }
+#				elsif ($PluginsLoaded{'GetCountryCodeByAddr'}{'geoip_city_maxmind'})   { $Domain=GetCountryCodeByAddr_geoip_city_maxmind($Host); }
 				elsif ($PluginsLoaded{'GetCountryCodeByAddr'}{'geoipfree'})            { $Domain=GetCountryCodeByAddr_geoipfree($Host); }
 				elsif ($HostResolved =~ /\.(\w+)$/) { $Domain=$1; }
                 if ($AtLeastOneSectionPlugin) {
                    	foreach my $pluginname (keys %{$PluginsLoaded{'SectionProcessIp'}})  {
-#                   		my $function="SectionProcessIp_$pluginname(\$Host)";
-#                   		eval("$function");
                    		my $function="SectionProcessIp_$pluginname";
+						if ($Debug) { debug("  Call to plugin function $function",5); }
                    		&$function($Host);
                     }
                 }
 			}
 			else {
 				if ($PluginsLoaded{'GetCountryCodeByName'}{'geoip'})                   { $Domain=GetCountryCodeByName_geoip($HostResolved); }
-				elsif ($PluginsLoaded{'GetCountryCodeByName'}{'geoip_region_maxmind'}) { $Domain=GetCountryCodeByName_geoip_region_maxmind($HostResolved); }
+#				elsif ($PluginsLoaded{'GetCountryCodeByName'}{'geoip_region_maxmind'}) { $Domain=GetCountryCodeByName_geoip_region_maxmind($HostResolved); }
+#				elsif ($PluginsLoaded{'GetCountryCodeByName'}{'geoip_city_maxmind'})   { $Domain=GetCountryCodeByName_geoip_city_maxmind($HostResolved); }
 				elsif ($PluginsLoaded{'GetCountryCodeByName'}{'geoipfree'})            { $Domain=GetCountryCodeByName_geoipfree($HostResolved); }
 				elsif ($HostResolved =~ /\.(\w+)$/) { $Domain=$1; }
                 if ($AtLeastOneSectionPlugin) {
                    	foreach my $pluginname (keys %{$PluginsLoaded{'SectionProcessHostname'}})  {
-#                   		my $function="SectionProcessHostname_$pluginname(\$HostResolved)";
-#                   		eval("$function");
                    		my $function="SectionProcessHostname_$pluginname";
+						if ($Debug) { debug("  Call to plugin function $function",5); }
                    		&$function($HostResolved);
                     }
                 }
