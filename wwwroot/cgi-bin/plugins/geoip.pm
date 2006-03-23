@@ -69,12 +69,13 @@ sub Init_geoip {
 		else { $mode=Geo::IP::GEOIP_STANDARD(); }
 	}
 	%TmpDomainLookup=();
-	debug(" Plugin geoip: GeoIP initialized in mode $type $mode",1);
+	debug(" Plugin geoip: GeoIP initialized type=$type mode=$mode",1);
 	if ($type eq 'geoippureperl') {
 		$gi = Geo::IP::PurePerl->open($datafile, $mode);
 	} else {
 		$gi = Geo::IP->open($datafile, $mode);
 	}
+ 	debug(" Plugin geoip: GeoIP initialized database_info=".$gi->database_info());
 	# ----->
 
 	return ($checkversion?$checkversion:"$PluginHooksFunctions");

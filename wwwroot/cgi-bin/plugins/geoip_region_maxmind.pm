@@ -5,7 +5,7 @@
 # from a Geographical database (US and Canada).
 # Need the licensed region database from Maxmind.
 #-----------------------------------------------------------------------------
-# Perl Required Modules: Geo::IP (Geo::IP::PurePerl is not yet supported)
+# Perl Required Modules: Geo::IP or Geo::IP::PurePerl
 #-----------------------------------------------------------------------------
 # $Revision$ - $Author$ - $Date$
 
@@ -35,8 +35,8 @@ use strict;no strict "refs";
 # <-----
 # ENTER HERE THE MINIMUM AWSTATS VERSION REQUIRED BY YOUR PLUGIN
 # AND THE NAME OF ALL FUNCTIONS THE PLUGIN MANAGE.
-my $PluginNeedAWStatsVersion="6.2";
-my $PluginHooksFunctions="GetCountryCodeByAddr GetCountryCodeByName AddHTMLMenuLink AddHTMLGraph ShowInfoHost SectionInitHashArray SectionProcessIp SectionProcessHostname SectionReadHistory SectionWriteHistory";
+my $PluginNeedAWStatsVersion="6.5";
+my $PluginHooksFunctions="AddHTMLMenuLink AddHTMLGraph ShowInfoHost SectionInitHashArray SectionProcessIp SectionProcessHostname SectionReadHistory SectionWriteHistory";
 # ----->
 
 # <-----
@@ -149,7 +149,7 @@ sub Init_geoip_region_maxmind {
     
 	# <-----
 	# ENTER HERE CODE TO DO INIT PLUGIN ACTIONS
-	debug(" Plugin geoip: InitParams=$InitParams",1);
+	debug(" Plugin geoip_region_maxmind: InitParams=$InitParams",1);
    	my ($mode,$datafile)=split(/\s+/,$InitParams,2);
    	if (! $datafile) { $datafile="GeoIPRegion.dat"; }
 	if ($type eq 'geoippureperl') {
@@ -160,13 +160,14 @@ sub Init_geoip_region_maxmind {
 		else { $mode=Geo::IP::GEOIP_STANDARD(); }
 	}
 	%TmpDomainLookup=();
-	debug(" Plugin geoip: GeoIP initialized in mode $type $mode",1);
+	debug(" Plugin geoip_region_maxmind: GeoIP initialized type=$type mode=$mode",1);
 	if ($type eq 'geoippureperl') {
 		$geoip_region_maxmind = Geo::IP::PurePerl->open($datafile, $mode);
 	} else {
 		$geoip_region_maxmind = Geo::IP->open($datafile, $mode);
 	}
-	# ----->
+ 	debug(" Plugin geoip_region_maxmind: GeoIP initialized database_info=".$gi->database_info());
+ 	# ----->
 
 	return ($checkversion?$checkversion:"$PluginHooksFunctions");
 }
@@ -184,7 +185,7 @@ sub AddHTMLMenuLink_geoip_region_maxmind {
 	# <-----
 	if ($Debug) { debug(" Plugin geoip_region_maxmind: AddHTMLMenuLink"); }
     if ($categ eq 'who') {
-        $menu->{'plugin_geoip_region_maxmind'}=2.1;               # Pos
+        $menu->{'plugin_geoip_region_maxmind'}=2.1;             # Pos
         $menulink->{'plugin_geoip_region_maxmind'}=2;           # Type of link
         $menutext->{'plugin_geoip_region_maxmind'}="Regions";   # Text
     }
@@ -292,6 +293,7 @@ sub AddHTMLGraph_geoip_region_maxmind {
 # UNIQUE: YES (Only one plugin using this function can be loaded)
 # GetCountryCodeByAddr is called to translate an ip into a country code in lower case.
 #-----------------------------------------------------------------------------
+# Rem: Not used
 sub GetCountryCodeByAddr_geoip_region_maxmind {
     my $param="$_[0]";
 	# <-----
@@ -314,6 +316,7 @@ sub GetCountryCodeByAddr_geoip_region_maxmind {
 # UNIQUE: YES (Only one plugin using this function can be loaded)
 # GetCountryCodeByName is called to translate a host name into a country code in lower case.
 #-----------------------------------------------------------------------------
+# Rem: Not used
 sub GetCountryCodeByName_geoip_region_maxmind {
     my $param="$_[0]";
 	# <-----
@@ -476,7 +479,7 @@ sub SectionProcessHostname_geoip_region_maxmind {
 	# <-----
 	my ($res1,$res2,$countryregion)=();
 	($res1,$res2)=$geoip_region_maxmind->region_by_name($param) if $geoip_region_maxmind;
-	if ($Debug) { debug("  Plugin geoip_region_maxmind: GetRegionByName for $param: [{$res1}_{$res2}]",5); }
+	if ($Debug) { debug("  Plugin geoip_region_maxmind: GetRegionByName for $param: [${res1}_${res2}]",5); }
     if ($res2 =~ /\w\w/) { $countryregion=lc("${res1}_${res2}"); }
     else { $countryregion='unknown'; }
 #	if ($PageBool) { $_region_p{$countryregion}++; }

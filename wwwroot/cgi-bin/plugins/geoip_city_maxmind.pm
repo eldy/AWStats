@@ -4,15 +4,24 @@
 # This plugin allow you to add a city report.
 # Need the licensed city database from Maxmind.
 #-----------------------------------------------------------------------------
-# Perl Required Modules: Geo::IP (Geo::IP::PurePerl is not yet supported)
+# Perl Required Modules: Geo::IP or Geo::IP::PurePerl
 #-----------------------------------------------------------------------------
 # $Revision$ - $Author$ - $Date$
 
 
 # <-----
 # ENTER HERE THE USE COMMAND FOR ALL REQUIRED PERL MODULES
-if (!eval ('require "Geo/IP.pm";')) 	{
-    return $@?"Error: $@":"Error: Need Perl module Geo::IP (Geo::IP::PurePerl is not yet supported)";
+use vars qw/ $type /;
+$type='geoip';
+if (!eval ('require "Geo/IP.pm";')) {
+	$error1=$@;
+	$type='geoippureperl';
+	if (!eval ('require "Geo/IP/PurePerl.pm";')) {
+		$error2=$@;
+		$ret=($error1||$error2)?"Error:\n$error1$error2":"";
+		$ret.="Error: Need Perl module Geo::IP or Geo::IP::PurePerl";
+		return $ret;
+	}
 }
 # ----->
 use strict;no strict "refs";
@@ -25,13 +34,14 @@ use strict;no strict "refs";
 # <-----
 # ENTER HERE THE MINIMUM AWSTATS VERSION REQUIRED BY YOUR PLUGIN
 # AND THE NAME OF ALL FUNCTIONS THE PLUGIN MANAGE.
-my $PluginNeedAWStatsVersion="6.2";
+my $PluginNeedAWStatsVersion="6.5";
 my $PluginHooksFunctions="AddHTMLMenuLink AddHTMLGraph ShowInfoHost SectionInitHashArray SectionProcessIp SectionProcessHostname SectionReadHistory SectionWriteHistory";
 # ----->
 
 # <-----
 # IF YOUR PLUGIN NEED GLOBAL VARIABLES, THEY MUST BE DECLARED HERE.
 use vars qw/
+%TmpDomainLookup
 $geoip_city_maxmind
 %_city_p
 %_city_h
@@ -4263,14 +4273,23 @@ sub Init_geoip_city_maxmind {
 	# <-----
 	# ENTER HERE CODE TO DO INIT PLUGIN ACTIONS
 	debug(" Plugin geoip_city_maxmind: InitParams=$InitParams",1);
-#    if ($UpdateStats) {
-    	my ($mode,$datafile)=split(/\s+/,$InitParams,2);
-    	if (! $datafile) { $datafile="GeoIPCity.dat"; }
-    	if ($mode eq '' || $mode eq 'GEOIP_MEMORY_CACHE')  { $mode=Geo::IP::GEOIP_MEMORY_CACHE(); }
-    	else { $mode=Geo::IP::GEOIP_STANDARD(); }
-    	debug(" Plugin geoip_city_maxmind: GeoIP initialized in mode $mode",1);
-        $geoip_city_maxmind = Geo::IP->open($datafile, $mode);
-#    }
+   	my ($mode,$datafile)=split(/\s+/,$InitParams,2);
+   	if (! $datafile) { $datafile="GeoIPCity.dat"; }
+	if ($type eq 'geoippureperl') {
+		if ($mode eq '' || $mode eq 'GEOIP_MEMORY_CACHE')  { $mode=Geo::IP::PurePerl::GEOIP_MEMORY_CACHE(); }
+		else { $mode=Geo::IP::PurePerl::GEOIP_STANDARD(); }
+	} else {
+		if ($mode eq '' || $mode eq 'GEOIP_MEMORY_CACHE')  { $mode=Geo::IP::GEOIP_MEMORY_CACHE(); }
+		else { $mode=Geo::IP::GEOIP_STANDARD(); }
+	}
+	%TmpDomainLookup=();
+	debug(" Plugin geoip_city_maxmind: GeoIP initialized type=$type mode=$mode",1);
+	if ($type eq 'geoippureperl') {
+		$geoip_city_maxmind = Geo::IP::PurePerl->open($datafile, $mode);
+	} else {
+		$geoip_city_maxmind = Geo::IP->open($datafile, $mode);
+	}
+ 	debug(" Plugin geoip_city_maxmind: GeoIP initialized database_info=".$gi->database_info());
 	# ----->
 
 	return ($checkversion?$checkversion:"$PluginHooksFunctions");
@@ -4403,6 +4422,86 @@ sub AddHTMLGraph_geoip_city_maxmind {
 
 
 #-----------------------------------------------------------------------------
+# PLUGIN FUNCTION: GetCountryCodeByAddr_pluginname
+# UNIQUE: YES (Only one plugin using this function can be loaded)
+# GetCountryCodeByAddr is called to translate an ip into a country code in lower case.
+#-----------------------------------------------------------------------------
+# Rem: not used
+sub GetCountryCodeByAddr_geoip_city_maxmind {
+    my $param="$_[0]";
+	# <-----
+	my $res=$TmpDomainLookup{$param}||'';
+	if ($type eq 'geoippureperl') {
+		if (! $res) {
+			my @record = ();
+			@record=$geoip_city_maxmind->get_city_record($param) if $geoip_city_maxmind;
+	        my $country;
+	        $country=$record[0] if @record;
+	    	$res=lc($country) || 'unknown';
+			$TmpDomainLookup{$param}=$res;
+	    	if ($Debug) { debug("  Plugin geoip_region_maxmind: GetCountryCodeByAddr for $param: [$res]",5); }
+		}
+		elsif ($Debug) { debug("  Plugin geoip_region_maxmind: GetCountryCodeByAddr for $param: Already resolved to [$res]",5); }
+	}
+	else
+	{
+		if (! $res) {
+	    	my $record=();
+	    	$record=$geoip_city_maxmind->record_by_addr($param) if $geoip_city_maxmind;
+	        my $country;
+	        $country=$record->country if $record;
+	    	$res=lc($country) || 'unknown';
+			$TmpDomainLookup{$param}=$res;
+	    	if ($Debug) { debug("  Plugin geoip_region_maxmind: GetCountryCodeByAddr for $param: [$res]",5); }
+		}
+		elsif ($Debug) { debug("  Plugin geoip_region_maxmind: GetCountryCodeByAddr for $param: Already resolved to [$res]",5); }
+	}
+	# ----->
+	return $res;
+}
+
+
+#-----------------------------------------------------------------------------
+# PLUGIN FUNCTION: GetCountryCodeByName_pluginname
+# UNIQUE: YES (Only one plugin using this function can be loaded)
+# GetCountryCodeByName is called to translate a host name into a country code in lower case.
+#-----------------------------------------------------------------------------
+# Rem: not used
+sub GetCountryCodeByName_geoip_city_maxmind {
+    my $param="$_[0]";
+	# <-----
+	my $res=$TmpDomainLookup{$param}||'';
+	if ($type eq 'geoippureperl') {
+		if (! $res) {
+			my @record = ();
+			@record=$geoip_city_maxmind->get_city_record($param) if $geoip_city_maxmind;
+	        my $country;
+	        $country=$record[0] if @record;
+	    	$res=lc($country) || 'unknown';
+			$TmpDomainLookup{$param}=$res;
+	    	if ($Debug) { debug("  Plugin geoip_region_maxmind: GetCountryCodeByName for $param: [$res]",5); }
+		}
+		elsif ($Debug) { debug("  Plugin geoip_region_maxmind: GetCountryCodeByName for $param: Already resolved to [$res]",5); }
+	}
+	else
+	{
+		if (! $res) {
+	    	my $record=();
+	    	$record=$geoip_city_maxmind->record_by_name($param) if $geoip_city_maxmind;
+	        my $country;
+	        $country=$record->country if $record;
+	    	$res=lc($country) || 'unknown';
+			$TmpDomainLookup{$param}=$res;
+	    	if ($Debug) { debug("  Plugin geoip_region_maxmind: GetCountryCodeByName for $param: [$res]",5); }
+		}
+		elsif ($Debug) { debug("  Plugin geoip_region_maxmind: GetCountryCodeByName for $param: Already resolved to [$res]",5); }
+	}
+	# ----->
+	return $res;
+}
+
+
+#-----------------------------------------------------------------------------
 # PLUGIN FUNCTION: ShowInfoHost_pluginname
 # UNIQUE: NO (Several plugins using this function can be loaded)
 # Function called to add additionnal columns to the Hosts report.
@@ -4430,6 +4529,9 @@ sub ShowInfoHost_geoip_city_maxmind {
     	$NewLinkParams =~ s/^&amp;//; $NewLinkParams =~ s/&amp;$//;
     	if ($NewLinkParams) { $NewLinkParams="${NewLinkParams}&"; }
 
+#		print "<th width=\"80\">";
+#        print "<a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?XMLEncode("$AWScript?${NewLinkParams}output=plugin_geoip_city_maxmind&amp;suboutput=country"):"$PROG$StaticLinks.plugin_geoip_city_maxmind.country.$StaticExt")."\"$NewLinkTarget>GeoIP<br/>Country</a>";
+#        print "</th>";
 		print "<th width=\"80\">";
         print "<a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?XMLEncode("$AWScript?${NewLinkParams}output=plugin_geoip_city_maxmind"):"$PROG$StaticLinks.plugin_geoip_city_maxmind.$StaticExt")."\"$NewLinkTarget>GeoIP<br/>City</a>";
         print "</th>";
@@ -4445,31 +4547,73 @@ sub ShowInfoHost_geoip_city_maxmind {
 		    $ip=6;
 			$key=$param;
 		}
-		print "<td>";
 		if ($key && $ip==4) {
-        	my $record=();
-        	$record=$geoip_city_maxmind->record_by_addr($param) if $geoip_city_maxmind;
-        	if ($Debug) { debug("  Plugin geoip_city_maxmind: GetCityByIp for $param: [$record]",5); }
-            my $city;
-            $city=$record->city if $record;
+	        my $country;
+	        my $city;
+			if ($type eq 'geoippureperl')
+			{
+				my @record = ();
+				@record=$geoip_city_maxmind->get_city_record($param) if $geoip_city_maxmind;
+	        	if ($Debug) { debug("  Plugin geoip_city_maxmind: GetCityByIp for $param: [@record]",5); }
+	            $country=$record[0] if @record;
+	            $city=$record[4] if @record;
+			}
+			else
+			{
+	        	my $record=();
+	        	$record=$geoip_city_maxmind->record_by_addr($param) if $geoip_city_maxmind;
+	        	if ($Debug) { debug("  Plugin geoip_city_maxmind: GetCityByIp for $param: [$record]",5); }
+	            $country=$record->country_code if $record;
+	            $city=$record->city if $record;
+			}
+#			print "<td>";
+#		    if ($country) { print $DomainsHashIDLib{$country}?$DomainsHashIDLib{$country}:"<span style=\"color: #$color_other\">$Message[0]</span>"; }
+#		    else { print "<span style=\"color: #$color_other\">$Message[0]</span>"; }
+#		    print "</td>";
+			print "<td>";
 		    if ($city) { print "$city"; }
 		    else { print "<span style=\"color: #$color_other\">$Message[0]</span>"; }
+		    print "</td>";
 		}
 		if ($key && $ip==6) {
+#			print "<td>";
+#		    print "<span style=\"color: #$color_other\">$Message[0]</span>";
+#			print "</td>";
+			print "<td>";
 		    print "<span style=\"color: #$color_other\">$Message[0]</span>";
+			print "</td>";
 		}
 		if (! $key) {
-        	my $record=();
-        	$record=$geoip_city_maxmind->record_by_name($param) if $geoip_city_maxmind;
-        	if ($Debug) { debug("  Plugin geoip_city_maxmind: GetCityByHostname for $param: [$record]",5); }
-            my $city;
-            $city=$record->city if $record;
+	        my $country;
+	        my $city;
+			if ($type eq 'geoippureperl')
+			{
+				my @record = ();
+				@record=$geoip_city_maxmind->get_city_record($param) if $geoip_city_maxmind;
+	        	if ($Debug) { debug("  Plugin geoip_city_maxmind: GetCityByHostname for $param: [@record]",5); }
+	            $country=$record[0] if @record;
+	            $city=$record[4] if @record;
+			}
+			else
+			{
+	        	my $record=();
+	        	$record=$geoip_city_maxmind->record_by_name($param) if $geoip_city_maxmind;
+	        	if ($Debug) { debug("  Plugin geoip_city_maxmind: GetCityByHostname for $param: [$record]",5); }
+	            $country=$record->country_code if $record;
+	            $city=$record->city if $record;
+			}
+			print "<td>";
+		    if ($country) { print $DomainsHashIDLib{$country}?$DomainsHashIDLib{$country}:"<span style=\"color: #$color_other\">$Message[0]</span>"; }
+		    else { print "<span style=\"color: #$color_other\">$Message[0]</span>"; }
+		    print "</td>";
+			print "<td>";
 		    if ($city) { print "$city"; }
 		    else { print "<span style=\"color: #$color_other\">$Message[0]</span>"; }
+			print "</td>";
 		}
-		print "</td>";
 	}
 	else {
+		print "<td>&nbsp;</td>";
 		print "<td>&nbsp;</td>";
 	}
 	return 1;
@@ -4498,24 +4642,45 @@ sub SectionInitHashArray_geoip_city_maxmind {
 sub SectionProcessIp_geoip_city_maxmind {
     my $param="$_[0]";      # Param must be an IP
 	# <-----
-	my $record=();
-	$record=$geoip_city_maxmind->record_by_addr($param) if $geoip_city_maxmind;
-	if ($Debug) { debug("  Plugin geoip_city_maxmind: GetCityByIp for $param: [$record]",5); }
-    if ($record) {
-        my $city=$record->city;
-#   	if ($PageBool) { $_city_p{$city}++; }
-        if ($city) {
-            my $countrycity=($record->country_code).'_'.$city;
-            $countrycity=~s/ /%20/g;
-            if ($record->region) { $countrycity.='_'.$record->region; }
-            $_city_h{lc($countrycity)}++;
-        } else {
-            $_city_h{'unknown'}++;
-        }
-#   	if ($timerecord > $_city_l{$city}) { $_city_l{$city}=$timerecord; }
-    } else {
-        $_city_h{'unknown'}++;
-    }
+	if ($type eq 'geoippureperl') {
+		my @record = ();
+		@record=$geoip_city_maxmind->get_city_record($param) if $geoip_city_maxmind;
+		if ($Debug) { debug("  Plugin geoip_city_maxmind: GetCityByName for $param: [@record]",5); }
+	    if (@record) {
+			my $city=$record[4];
+			if ($city) {
+	            my $countrycity=$record[0].'_'.$city;
+	            $countrycity=~s/ /%20/g;
+	            if ($record[3]) { $countrycity.='_'.$record[3]; }
+	            $_city_h{lc($countrycity)}++;
+	        } else {
+	            $_city_h{'unknown'}++;
+	        }
+	    } else {
+	        $_city_h{'unknown'}++;
+	    }
+	}
+	else
+	{
+		my $record=();
+		$record=$geoip_city_maxmind->record_by_addr($param) if $geoip_city_maxmind;
+		if ($Debug) { debug("  Plugin geoip_city_maxmind: GetCityByIp for $param: [$record]",5); }
+	    if ($record) {
+	        my $city=$record->city;
+	#   	if ($PageBool) { $_city_p{$city}++; }
+	        if ($city) {
+	            my $countrycity=($record->country_code).'_'.$city;
+	            $countrycity=~s/ /%20/g;
+	            if ($record->region) { $countrycity.='_'.$record->region; }
+	            $_city_h{lc($countrycity)}++;
+	        } else {
+	            $_city_h{'unknown'}++;
+	        }
+	#   	if ($timerecord > $_city_l{$city}) { $_city_l{$city}=$timerecord; }
+	    } else {
+	        $_city_h{'unknown'}++;
+	    }
+	}
 	# ----->
 	return;
 }
@@ -4528,24 +4693,45 @@ sub SectionProcessIp_geoip_city_maxmind {
 sub SectionProcessHostname_geoip_city_maxmind {
     my $param="$_[0]";      # Param must be an IP
 	# <-----
-	my $record=();
-	$record=$geoip_city_maxmind->record_by_name($param) if $geoip_city_maxmind;
-	if ($Debug) { debug("  Plugin geoip_city_maxmind: GetCityByName for $param: [$record]",5); }
-    if ($record) {
-        my $city=$record->city;
-#	    if ($PageBool) { $_city_p{$city}++; }
-        if ($city) {
-            my $countrycity=($record->country_code).'_'.$city;
-            $countrycity=~s/ /%20/g;
-            if ($record->region) { $countrycity.='_'.$record->region; }
-            $_city_h{lc($countrycity)}++;
-        } else {
-            $_city_h{'unknown'}++;
-        }
-#	    if ($timerecord > $_city_l{$city}) { $_city_l{$city}=$timerecord; }
-    } else {
-        $_city_h{'unknown'}++;
-    }
+	if ($type eq 'geoippureperl') {
+		my @record = ();
+		@record=$geoip_city_maxmind->get_city_record($param) if $geoip_city_maxmind;
+		if ($Debug) { debug("  Plugin geoip_city_maxmind: GetCityByName for $param: [@record]",5); }
+	    if (@record) {
+			my $city=$record[4];
+			if ($city) {
+	            my $countrycity=$record[0].'_'.$city;
+	            $countrycity=~s/ /%20/g;
+	            if ($record[3]) { $countrycity.='_'.$record[3]; }
+	            $_city_h{lc($countrycity)}++;
+	        } else {
+	            $_city_h{'unknown'}++;
+	        }
+	    } else {
+	        $_city_h{'unknown'}++;
+	    }
+	}
+	else
+	{
+		my $record=();
+		$record=$geoip_city_maxmind->record_by_name($param) if $geoip_city_maxmind;
+		if ($Debug) { debug("  Plugin geoip_city_maxmind: GetCityByName for $param: [$record]",5); }
+	    if ($record) {
+	        my $city=$record->city;
+	#	    if ($PageBool) { $_city_p{$city}++; }
+	        if ($city) {
+	            my $countrycity=($record->country_code).'_'.$city;
+	            $countrycity=~s/ /%20/g;
+	            if ($record->region) { $countrycity.='_'.$record->region; }
+	            $_city_h{lc($countrycity)}++;
+	        } else {
+	            $_city_h{'unknown'}++;
+	        }
+	#	    if ($timerecord > $_city_l{$city}) { $_city_l{$city}=$timerecord; }
+	    } else {
+	        $_city_h{'unknown'}++;
+	    }
+	}
 	# ----->
 	return;
 }
