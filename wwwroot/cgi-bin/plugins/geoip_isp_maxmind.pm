@@ -4,15 +4,24 @@
 # This plugin allow you to add a city report.
 # Need the licensed ISP database from Maxmind.
 #-----------------------------------------------------------------------------
-# Perl Required Modules: Geo::IP (Geo::IP::PurePerl is not yet supported)
+# Perl Required Modules: Geo::IP or Geo::IP::PurePerl
 #-----------------------------------------------------------------------------
 # $Revision$ - $Author$ - $Date$
 
 
 # <-----
 # ENTER HERE THE USE COMMAND FOR ALL REQUIRED PERL MODULES
-if (!eval ('require "Geo/IP.pm";')) 	{
-    return $@?"Error: $@":"Error: Need Perl module Geo::IP (Geo::IP::PurePerl is not yet supported)";
+use vars qw/ $type /;
+$type='geoip';
+if (!eval ('require "Geo/IP.pm";')) {
+	$error1=$@;
+	$type='geoippureperl';
+	if (!eval ('require "Geo/IP/PurePerl.pm";')) {
+		$error2=$@;
+		$ret=($error1||$error2)?"Error:\n$error1$error2":"";
+		$ret.="Error: Need Perl module Geo::IP or Geo::IP::PurePerl";
+		return $ret;
+	}
 }
 # ----->
 use strict;no strict "refs";
@@ -51,18 +60,27 @@ sub Init_geoip_isp_maxmind {
 	my $checkversion=&Check_Plugin_Version($PluginNeedAWStatsVersion);
     $MAXNBOFSECTIONGIR=10;
     $MAXLENGTH=20;
-    
+
 	# <-----
 	# ENTER HERE CODE TO DO INIT PLUGIN ACTIONS
 	debug(" Plugin geoip_isp_maxmind: InitParams=$InitParams",1);
-#    if ($UpdateStats) {
-    	my ($mode,$datafile)=split(/\s+/,$InitParams,2);
-    	if (! $datafile) { $datafile="GeoIPISP.dat"; }
-    	if ($mode eq '' || $mode eq 'GEOIP_MEMORY_CACHE')  { $mode=Geo::IP::GEOIP_MEMORY_CACHE(); }
-    	else { $mode=Geo::IP::GEOIP_STANDARD(); }
-    	debug(" Plugin geoip_isp_maxmind: GeoIP initialized in mode $mode",1);
-        $geoip_isp_maxmind = Geo::IP->open($datafile, $mode);
-#    }
+   	my ($mode,$datafile)=split(/\s+/,$InitParams,2);
+   	if (! $datafile) { $datafile="GeoIPIsp.dat"; }
+	if ($type eq 'geoippureperl') {
+		if ($mode eq '' || $mode eq 'GEOIP_MEMORY_CACHE')  { $mode=Geo::IP::PurePerl::GEOIP_MEMORY_CACHE(); }
+		else { $mode=Geo::IP::PurePerl::GEOIP_STANDARD(); }
+	} else {
+		if ($mode eq '' || $mode eq 'GEOIP_MEMORY_CACHE')  { $mode=Geo::IP::GEOIP_MEMORY_CACHE(); }
+		else { $mode=Geo::IP::GEOIP_STANDARD(); }
+	}
+	%TmpDomainLookup=();
+	debug(" Plugin geoip_isp_maxmind: GeoIP initialized type=$type mode=$mode",1);
+	if ($type eq 'geoippureperl') {
+		$geoip_isp_maxmind = Geo::IP::PurePerl->open($datafile, $mode);
+	} else {
+		$geoip_isp_maxmind = Geo::IP->open($datafile, $mode);
+	}
+ 	debug(" Plugin geoip_isp_maxmind: GeoIP initialized database_info=".$geoip_isp_maxmind->database_info());
 	# ----->
 
 	return ($checkversion?$checkversion:"$PluginHooksFunctions");
@@ -219,7 +237,16 @@ sub ShowInfoHost_geoip_isp_maxmind {
 		}
 		print "<td>";
 		if ($key && $ip==4) {
-        	my $isp=$geoip_isp_maxmind->org_by_addr($param) if $geoip_isp_maxmind;
+        	my $isp;
+        	if ($type eq 'geoippureperl')
+			{
+        		# Function isp_by_addr does not exists in PurePerl but isp_by_name do same
+        		$isp=$geoip_isp_maxmind->isp_by_name($param) if $geoip_isp_maxmind;
+        	}
+        	else
+        	{
+        		$isp=$geoip_isp_maxmind->isp_by_addr($param) if $geoip_isp_maxmind;
+        	}
         	if ($Debug) { debug("  Plugin geoip_isp_maxmind: GetIspByIp for $param: [$isp]",5); }
 		    if ($isp) {
 		        if (length($isp) <= $MAXLENGTH) {
@@ -235,7 +262,15 @@ sub ShowInfoHost_geoip_isp_maxmind {
 		    print "<span style=\"color: #$color_other\">$Message[0]</span>";
 		}
 		if (! $key) {
-        	my $isp=$geoip_isp_maxmind->org_by_name($param) if $geoip_isp_maxmind;
+        	my $isp;
+        	if ($type eq 'geoippureperl')
+			{
+        		$isp=$geoip_isp_maxmind->isp_by_name($param) if $geoip_isp_maxmind;
+        	}
+        	else
+        	{
+        		$isp=$geoip_isp_maxmind->isp_by_name($param) if $geoip_isp_maxmind;
+        	}
         	if ($Debug) { debug("  Plugin geoip_isp_maxmind: GetIspByHostname for $param: [$isp]",5); }
 		    if ($isp) {
 		        if (length($isp) <= $MAXLENGTH) {
@@ -278,7 +313,16 @@ sub SectionInitHashArray_geoip_isp_maxmind {
 sub SectionProcessIp_geoip_isp_maxmind {
     my $param="$_[0]";      # Param must be an IP
 	# <-----
-	my $isp = $geoip_isp_maxmind->isp_by_addr($param) if $geoip_isp_maxmind;
+	my $isp;
+	if ($type eq 'geoippureperl')
+	{
+		# Function isp_by_addr does not exists in PurePerl but isp_by_name do same
+		$isp=$geoip_isp_maxmind->isp_by_name($param) if $geoip_isp_maxmind;
+	}
+	else
+	{
+		$isp=$geoip_isp_maxmind->isp_by_addr($param) if $geoip_isp_maxmind;
+	}
 	if ($Debug) { debug("  Plugin geoip_isp_maxmind: GetIspByIp for $param: [$isp]",5); }
     if ($isp) {
         $isp =~ s/\s/_/g;
@@ -299,7 +343,15 @@ sub SectionProcessIp_geoip_isp_maxmind {
 sub SectionProcessHostname_geoip_isp_maxmind {
     my $param="$_[0]";      # Param must be an IP
 	# <-----
-	my $isp = $geoip_isp_maxmind->isp_by_name($param) if $geoip_isp_maxmind;
+	my $isp;
+	if ($type eq 'geoippureperl')
+	{
+		$isp=$geoip_isp_maxmind->isp_by_name($param) if $geoip_isp_maxmind;
+	}
+	else
+	{
+		$isp=$geoip_isp_maxmind->isp_by_name($param) if $geoip_isp_maxmind;
+	}
 	if ($Debug) { debug("  Plugin geoip_isp_maxmind: GetIspByHostname for $param: [$isp]",5); }
     if ($isp) {
         $isp =~ s/\s/_/g;

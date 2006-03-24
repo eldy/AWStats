@@ -166,7 +166,7 @@ sub Init_geoip_region_maxmind {
 	} else {
 		$geoip_region_maxmind = Geo::IP->open($datafile, $mode);
 	}
- 	debug(" Plugin geoip_region_maxmind: GeoIP initialized database_info=".$gi->database_info());
+ 	debug(" Plugin geoip_region_maxmind: GeoIP initialized database_info=".$geoip_region_maxmind->database_info());
  	# ----->
 
 	return ($checkversion?$checkversion:"$PluginHooksFunctions");

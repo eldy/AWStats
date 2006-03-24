@@ -4,15 +4,24 @@
 # This plugin allow you to add a city report.
 # Need the licensed ISP database from Maxmind.
 #-----------------------------------------------------------------------------
-# Perl Required Modules: Geo::IP (Geo::IP::PurePerl is not yet supported)
+# Perl Required Modules: Geo::IP or Geo::IP::PurePerl
 #-----------------------------------------------------------------------------
 # $Revision$ - $Author$ - $Date$
 
 
 # <-----
 # ENTER HERE THE USE COMMAND FOR ALL REQUIRED PERL MODULES
-if (!eval ('require "Geo/IP.pm";')) 	{
-    return $@?"Error: $@":"Error: Need Perl module Geo::IP (Geo::IP::PurePerl is not yet supported)";
+use vars qw/ $type /;
+$type='geoip';
+if (!eval ('require "Geo/IP.pm";')) {
+	$error1=$@;
+	$type='geoippureperl';
+	if (!eval ('require "Geo/IP/PurePerl.pm";')) {
+		$error2=$@;
+		$ret=($error1||$error2)?"Error:\n$error1$error2":"";
+		$ret.="Error: Need Perl module Geo::IP or Geo::IP::PurePerl";
+		return $ret;
+	}
 }
 # ----->
 use strict;no strict "refs";
@@ -55,14 +64,23 @@ sub Init_geoip_org_maxmind {
 	# <-----
 	# ENTER HERE CODE TO DO INIT PLUGIN ACTIONS
 	debug(" Plugin geoip_org_maxmind: InitParams=$InitParams",1);
-#    if ($UpdateStats) {
-    	my ($mode,$datafile)=split(/\s+/,$InitParams,2);
-    	if (! $datafile) { $datafile="GeoIPOrg.dat"; }
-    	if ($mode eq '' || $mode eq 'GEOIP_MEMORY_CACHE')  { $mode=Geo::IP::GEOIP_MEMORY_CACHE(); }
-    	else { $mode=Geo::IP::GEOIP_STANDARD(); }
-    	debug(" Plugin geoip_org_maxmind: GeoIP initialized in mode $mode",1);
-        $geoip_org_maxmind = Geo::IP->open($datafile, $mode);
-#    }
+   	my ($mode,$datafile)=split(/\s+/,$InitParams,2);
+   	if (! $datafile) { $datafile="GeoIPOrg.dat"; }
+	if ($type eq 'geoippureperl') {
+		if ($mode eq '' || $mode eq 'GEOIP_MEMORY_CACHE')  { $mode=Geo::IP::PurePerl::GEOIP_MEMORY_CACHE(); }
+		else { $mode=Geo::IP::PurePerl::GEOIP_STANDARD(); }
+	} else {
+		if ($mode eq '' || $mode eq 'GEOIP_MEMORY_CACHE')  { $mode=Geo::IP::GEOIP_MEMORY_CACHE(); }
+		else { $mode=Geo::IP::GEOIP_STANDARD(); }
+	}
+	%TmpDomainLookup=();
+	debug(" Plugin geoip_org_maxmind: GeoIP initialized type=$type mode=$mode",1);
+	if ($type eq 'geoippureperl') {
+		$geoip_org_maxmind = Geo::IP::PurePerl->open($datafile, $mode);
+	} else {
+		$geoip_org_maxmind = Geo::IP->open($datafile, $mode);
+	}
+ 	debug(" Plugin geoip_org_maxmind: GeoIP initialized database_info=".$geoip_org_maxmind->database_info());
 	# ----->
 
 	return ($checkversion?$checkversion:"$PluginHooksFunctions");
@@ -219,7 +237,16 @@ sub ShowInfoHost_geoip_org_maxmind {
 		}
 		print "<td>";
 		if ($key && $ip==4) {
-        	my $org=$geoip_org_maxmind->org_by_addr($param) if $geoip_org_maxmind;
+        	my $org;
+        	if ($type eq 'geoippureperl')
+			{
+        		# Function org_by_addr does not exists in PurePerl but org_by_name do same
+        		$org=$geoip_org_maxmind->org_by_name($param) if $geoip_org_maxmind;
+        	}
+        	else
+        	{
+        		$org=$geoip_org_maxmind->org_by_addr($param) if $geoip_org_maxmind;
+        	}
         	if ($Debug) { debug("  Plugin geoip_org_maxmind: GetOrgByIp for $param: [$org]",5); }
 		    if ($org) {
 		        if (length($org) <= $MAXLENGTH) {
@@ -235,7 +262,15 @@ sub ShowInfoHost_geoip_org_maxmind {
 		    print "<span style=\"color: #$color_other\">$Message[0]</span>";
 		}
 		if (! $key) {
-        	my $org=$geoip_org_maxmind->org_by_name($param) if $geoip_org_maxmind;
+        	my $org;
+        	if ($type eq 'geoippureperl')
+			{
+        		$org=$geoip_org_maxmind->org_by_name($param) if $geoip_org_maxmind;
+        	}
+        	else
+        	{
+        		$org=$geoip_org_maxmind->org_by_name($param) if $geoip_org_maxmind;
+        	}
         	if ($Debug) { debug("  Plugin geoip_org_maxmind: GetOrgByHostname for $param: [$org]",5); }
 		    if ($org) {
 		        if (length($org) <= $MAXLENGTH) {
@@ -278,7 +313,16 @@ sub SectionInitHashArray_geoip_org_maxmind {
 sub SectionProcessIp_geoip_org_maxmind {
     my $param="$_[0]";      # Param must be an IP
 	# <-----
-	my $org = $geoip_org_maxmind->org_by_addr($param) if $geoip_org_maxmind;
+	my $org;
+	if ($type eq 'geoippureperl')
+	{
+		# Function org_by_addr does not exists in PurePerl but org_by_name do same
+		$org=$geoip_org_maxmind->org_by_name($param) if $geoip_org_maxmind;
+	}
+	else
+	{
+		$org=$geoip_org_maxmind->org_by_addr($param) if $geoip_org_maxmind;
+	}
 	if ($Debug) { debug("  Plugin geoip_org_maxmind: GetOrgByIp for $param: [$org]",5); }
     if ($org) {
         $org =~ s/\s/_/g;
@@ -299,7 +343,15 @@ sub SectionProcessIp_geoip_org_maxmind {
 sub SectionProcessHostname_geoip_org_maxmind {
     my $param="$_[0]";      # Param must be an IP
 	# <-----
-	my $org = $geoip_org_maxmind->org_by_name($param) if $geoip_org_maxmind;
+	my $org;
+	if ($type eq 'geoippureperl')
+	{
+		$org=$geoip_org_maxmind->org_by_name($param) if $geoip_org_maxmind;
+	}
+	else
+	{
+		$org=$geoip_org_maxmind->org_by_name($param) if $geoip_org_maxmind;
+	}
 	if ($Debug) { debug("  Plugin geoip_org_maxmind: GetOrgByHostname for $param: [$org]",5); }
     if ($org) {
         $org =~ s/\s/_/g;
