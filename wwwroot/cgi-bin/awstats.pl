@@ -5106,6 +5106,7 @@ sub DefinePerlParsingFormat {
 		$LogFormatString =~ s/s-svcname/%other/g;
 		$LogFormatString =~ s/s-computername/%other/g;
 		$LogFormatString =~ s/r-host/%virtualname/g;
+		$LogFormatString =~ s/cs-host/%virtualname/g;
 		$LogFormatString =~ s/r-ip/%other/g;
 		$LogFormatString =~ s/r-port/%other/g;
 		$LogFormatString =~ s/time-taken/%other/g;
@@ -7322,6 +7323,10 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 					if ($Debug) { debug("  Check condition '$conditiontype' must contain '$conditiontypeval' in '$field[$pos_host]'",5); }
  					if ($HostResolved =~ /$conditiontypeval/) { $conditionok=1; last; }
  				}
+				elsif ($conditiontype eq 'VHOST') {
+					if ($Debug) { debug("  Check condision '$conditiontype' must contain '$conditiontypeval' in '$field[$pos_vh]'",5); }
+ 					if ($field[$pos_vh] =~ /$conditiontypeval/) { $conditionok=1; last; }
+				}
  				elsif ($conditiontype =~ /extra(\d+)/i) {
 					if ($Debug) { debug("  Check condition '$conditiontype' must contain '$conditiontypeval' in '$field[$pos_extra[$1]]'",5); }
  					if ($field[$pos_extra[$1]] =~ /$conditiontypeval/) { $conditionok=1; last; }
@@ -7355,6 +7360,9 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
  				}
  				elsif ($rowkeytype eq 'HOST') {
  					if ($HostResolved =~ /$rowkeytypeval/) { $rowkeyval = "$1"; $rowkeyok = 1; last; }
+ 				}
+ 				elsif ($rowkeytype eq 'VHOST') {
+ 					if ($field[$pos_vh] =~ /$rowkeytypeval/) { $rowkeyval = "$1"; $rowkeyok = 1; last; }
  				}
  				elsif ($rowkeytype =~ /extra(\d+)/i) {
  					if ($field[$pos_extra[$1]] =~ /$rowkeytypeval/) { $rowkeyval = "$1"; $rowkeyok = 1; last; }
