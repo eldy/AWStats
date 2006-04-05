@@ -10,8 +10,8 @@
 require 5.005;
 
 #$|=1;
-#use warnings;		# Must be used in test mode only. This reduce a little process speed
-#use diagnostics;	# Must be used in test mode only. This reduce a lot of process speed
+use warnings;		# Must be used in test mode only. This reduce a little process speed
+use diagnostics;	# Must be used in test mode only. This reduce a lot of process speed
 use strict;no strict "refs";
 use Time::Local;	# use Time::Local 'timelocal_nocheck' is faster but not supported by all Time::Local modules
 use Socket;
@@ -1919,6 +1919,7 @@ sub Read_Plugins {
 	if ($Debug) { debug("Call to Read_Plugins with list: ".join(',',@PluginsToLoad)); }
 	foreach my $plugininfo (@PluginsToLoad) {
 		my ($pluginfile,$pluginparam)=split(/\s+/,$plugininfo,2);
+		$pluginparam||="";	# If split has only on part, pluginparam is not initialized
 		$pluginfile =~ s/\.pm$//i; 
 		$pluginfile =~ /([^\/\\]+)$/;
 		my $pluginname=$1;  # pluginname is pluginfile without any path
@@ -3735,11 +3736,11 @@ sub Save_History {
 		my %keysinkeylist=();
 		foreach (@keylist) {
 			$keysinkeylist{$_}=1;
-			print HISTORYTMP "${xmlrb}$_${xmlrs}".int($_robot_h{$_})."${xmlrs}".int($_robot_k{$_})."${xmlrs}$_robot_l{$_}${xmlrs}".int($_robot_r{$_})."${xmlre}\n";
+			print HISTORYTMP "${xmlrb}$_${xmlrs}".int($_robot_h{$_})."${xmlrs}".int($_robot_k{$_})."${xmlrs}$_robot_l{$_}${xmlrs}".int($_robot_r{$_}||0)."${xmlre}\n";
 		}
 		foreach (keys %_robot_h) {
 			if ($keysinkeylist{$_}) { next; }
-			print HISTORYTMP "${xmlrb}$_${xmlrs}".int($_robot_h{$_})."${xmlrs}".int($_robot_k{$_})."${xmlrs}$_robot_l{$_}${xmlrs}".int($_robot_r{$_})."${xmlre}\n";
+			print HISTORYTMP "${xmlrb}$_${xmlrs}".int($_robot_h{$_})."${xmlrs}".int($_robot_k{$_})."${xmlrs}$_robot_l{$_}${xmlrs}".int($_robot_r{$_}||0)."${xmlre}\n";
 		}
 		print HISTORYTMP "${xmleb}END_ROBOT${xmlee}\n";
 	}
@@ -6042,13 +6043,13 @@ foreach (grep /^$PROG$datemask$regfilesuffix\.txt(|\.gz)$/i, file_filt sort read
 		# ListOfYears contains max month found
 		$ListOfYears{"$2"}="$1";
 	}
-	if ("$2$1$3$4" gt $lastdatebeforeupdate) {
+	if ("$2$1$3$4" gt $lastdatebeforeupdate) {	# TODO can cause warning
 		# We are on a new max for mask
-		$lastyearbeforeupdate="$2";
+		$lastyearbeforeupdate="$2";				# TODO can cause warning
 		$lastmonthbeforeupdate="$1";
-		$lastdaybeforeupdate="$3";
-		$lasthourbeforeupdate="$4";
-		$lastdatebeforeupdate="$2$1$3$4";
+		$lastdaybeforeupdate="$3";				# TODO can cause warning
+		$lasthourbeforeupdate="$4";				# TODO can cause warning
+		$lastdatebeforeupdate="$2$1$3$4";		# TODO can cause warning
 	}
 }
 close DIR;
@@ -6082,8 +6083,9 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 	my %MonthNum = ("Jan","01","jan","01","Feb","02","feb","02","Mar","03","mar","03","Apr","04","apr","04","May","05","may","05","Jun","06","jun","06","Jul","07","jul","07","Aug","08","aug","08","Sep","09","sep","09","Oct","10","oct","10","Nov","11","nov","11","Dec","12","dec","12");	# MonthNum must be in english because used to translate log date in apache log files
 
 	if (! scalar keys %HTMLOutput) {
-		print "Update for config \"$FileConfig\"\n";
-		print "With data in log file \"$LogFile\"...\n";
+		print "Create/Update database for config \"$FileConfig\"\n";
+		print "By AWStats version $VERSION\n";
+		print "From data in log file \"$LogFile\"...\n";
 	}
 
 	my $lastprocessedyear=$lastyearbeforeupdate||0;
