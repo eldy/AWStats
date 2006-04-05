@@ -5914,20 +5914,45 @@ if ($AllowAccessFromWebToAuthenticatedUsersOnly && $ENV{'GATEWAY_INTERFACE'}) {
 		}
 	}
 }
-if ($AllowAccessFromWebToFollowingIPAddresses && $ENV{'GATEWAY_INTERFACE'}) {
-	my $useripaddress=&Convert_IP_To_Decimal($ENV{"REMOTE_ADDR"});
+if ($AllowAccessFromWebToFollowingIPAddresses && $ENV{'GATEWAY_INTERFACE'})
+{
+	my $IPAddress=$ENV{"REMOTE_ADDR"};	# IPv4 or IPv6
+	my $useripaddress=&Convert_IP_To_Decimal($IPAddress);
 	my @allowaccessfromipaddresses = split (/[\s,]+/, $AllowAccessFromWebToFollowingIPAddresses);
 	my $allowaccess = 0;
-	foreach my $ipaddressrange (@allowaccessfromipaddresses) {
-	    if ($ipaddressrange !~ /^(\d+\.\d+\.\d+\.\d+)(?:-(\d+\.\d+\.\d+\.\d+))*$/) {
-			error("AllowAccessFromWebToFollowingIPAddresses is defined to '$AllowAccessFromWebToFollowingIPAddresses' but does not match the correct syntax: IPAddressMin[-IPAddressMax]");
+	foreach my $ipaddressrange (@allowaccessfromipaddresses)
+	{
+	    if ($ipaddressrange !~ /^(\d+\.\d+\.\d+\.\d+)(?:-(\d+\.\d+\.\d+\.\d+))*$/
+		&&  $ipaddressrange !~ /^([0-9A-Fa-f]{1,4}:){1,7}(:|)([0-9A-Fa-f]{1,4}|\/\d)/)
+		{
+			error("AllowAccessFromWebToFollowingIPAddresses is defined to '$AllowAccessFromWebToFollowingIPAddresses' but part of value does not match the correct syntax: IPv4AddressMin[-IPv4AddressMax] or IPv6Address[\/prefix] in \"$ipaddressrange\"");
 		}
-		my $ipmin=&Convert_IP_To_Decimal($1);
-		my $ipmax=$2?&Convert_IP_To_Decimal($2):$ipmin;
-		# Is it an authorized ip ?
-		if (($useripaddress >= $ipmin) && ($useripaddress <= $ipmax)) {
-			$allowaccess = 1;
-			last;
+
+		# Test ip v4
+	    if ($ipaddressrange =~ /^(\d+\.\d+\.\d+\.\d+)(?:-(\d+\.\d+\.\d+\.\d+))*$/)
+	    {
+			my $ipmin=&Convert_IP_To_Decimal($1);
+			my $ipmax=$2?&Convert_IP_To_Decimal($2):$ipmin;
+			# Is it an authorized ip ?
+			if (($useripaddress >= $ipmin) && ($useripaddress <= $ipmax)) {
+				$allowaccess = 1;
+				last;
+			}
+		}
+
+		# Test ip v6
+		if ($ipaddressrange =~ /^([0-9A-Fa-f]{1,4}:){1,7}(:|)([0-9A-Fa-f]{1,4}|\/\d)/)
+		{
+			if ($ipaddressrange =~ /::\//) {
+			    my @IPv6split = split (/::/, $ipaddressrange);
+			    if ($IPAddress =~ /^$IPv6split[0]/) {
+				$allowaccess = 1;
+				last;
+			    }
+			} elsif ($ipaddressrange == $IPAddress) {
+				$allowaccess = 1;
+				last;
+			} 
 		}
 	}
     if (! $allowaccess) {
