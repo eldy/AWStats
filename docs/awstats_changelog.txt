@@ -3,6 +3,25 @@ AWStats Changelog
 $Revision$ - $Author$ - $Date$
 
 
+***** 6.6 *****
+
+New features/improvements:
+- All geoip plugins support the PurePerl version.
+- Possible use of vhost in extra section.
+- Support IPv6 in AllowAccessFromWebToFollowingIPAddresses parameter.
+- Added svn family to browsers detection.
+
+Fixes:
+- Remove some Perl warnings.
+- Remove lc() on translation strings.
+
+Other/Documentation:
+- Added AWStats version in stdout outputs.
+- Updated some language files.
+- Updated browsers database.
+
+
+
 ***** 6.5 *****
 
 Note:
