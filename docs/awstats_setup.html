@@ -197,7 +197,7 @@ database</a> section.<br>
 <br>
 <font style="color: rgb(17, 17, 85);"><b>* Step 1</b>:</font><br>
 <br>
-Configure IIS to log in the <b>"Extended W3C log format"</b> (You can
+Configure IIS to create logs in the <b>"Extended W3C log format"</b> (You can
 still use
 your own custom log format but setup is easier if you use the standard
 extended format). To do so, start the IIS management console snap-in,
@@ -226,7 +226,7 @@ cs(Referer)<br>
 </td></tr></table>
 <br>
 To be sure the log format change is effective, you must stop IIS,
-backup (if desired) and remove all old log files, restart IIS and go to
+backup it up (if you desire) and remove all of the old log files, restart IIS and go to
 your homepage. This is an example of the type of records you should
 find in the
 new log file:<br>
@@ -239,9 +239,9 @@ http://www.from.com/from.htm
 
 <font style="color: rgb(17, 17, 85);"><b>* Step 2</b>:</font><br>
 <br>
-Copy the contents of the AWStats provided cgi-bin folder from where
-your AWStats package put it on your local hard
-drive
+Copy the contents of the AWStats provided cgi-bin folder, from where
+the AWStats package put it on your local hard
+drive,
 to your server's cgi-bin
 directory (this includes <b>awstats.pl</b>, <b>awstats.model.conf</b>,
 and the <b>lang</b>, <b>lib</b> and <b>plugins</b> sub-directories).<br>
@@ -299,8 +299,8 @@ database</a> section.<br>
 <br>
 The setup process is similar to the setup for Apache or IIS.<br>
 Use <a href="awstats_config.html#LogFormat">LogFormat</a> to value "3"
-if you have WebStar native log format, use
-a personalized <a href="awstats_config.html#LogFormat">LogFormat</a>
+if you have WebStar native log format.
+Use a personalized <a href="awstats_config.html#LogFormat">LogFormat</a>
 if your log format is other.<br>
 <br>
 <b>D) Setup for other Internet servers, i.e. FTP, Mail, Streaming media</b><br>
@@ -372,18 +372,18 @@ Parsed lines in file: 225730<br>
 If you want to see which lines were dropped, you can add the <b>-showdropped</b>
 option on the command line.<br>
 <br>
-<b>Corrupted records</b> are records that does not match log format
-defined by "LogFormat" parameter in AWStats configuration file.
+<b>Corrupted records</b> are records that do not match the log format
+defined by the "LogFormat" parameter in the AWStats configuration file.
 All web servers will typically have a few corrupted records
 (&lt;5%) even when everything works correctly.
 This can result for several reasons: 1) Web server internal bugs,
 2) bad requests made by buggy browsers, 3) a dirty web server shutdown,
 such as unplugging the server...&nbsp; <br>
 <br>
-If all your lines are corrupted and the <a
+If all of your lines are corrupted and the <a
  href="awstats_config.html#LogFormat">LogFormat</a> parameter in
 AWStats configuration file is
-correct, there may be a setup problem with your web server log format.
+correct, then there may be a setup problem with your web server log format.
 Don't forget that
 your <a href="awstats_config.html#OnlyFiles">LogFormat</a> parameter
 in the AWStats configuration file MUST match
