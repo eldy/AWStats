@@ -1404,9 +1404,6 @@ sub Parse_Config {
 		$$param=$value;
 	}
 
-	# For backward compatibility
-	if ($versionnum < 5001) { $BarHeight=$BarHeight>>1; }
-
 	if ($Debug) { debug("Config file read was \"$configFile\" (level $level)"); }
 }
 
@@ -2187,10 +2184,13 @@ sub Read_History_With_TmpUpdate {
 			@field=split(/\s+/,($readxml?CleanFromTags($_):$_));
 			if (! $field[0]) { next; }
 
-			# Here version MUST be defined, or file will be processed as an old data file
+			# Here version MUST be defined
+			if ($versionnum < 5000) {
+				error("History file '$filetoread' is to old (version '$versionnum'). This version of AWStats is not compatible with very old history files. Remove this history file or use first a previous AWStats version to migrate it from command line with command: $PROG.$Extension -migrate=\"$filetoread\".","","",1); 
+			}
 
 			# BEGIN_GENERAL
-			# TODO Manage GENERAL in a loop like other sections. Need to return error if data file version < 5000 (no END_GENERAL) to say that history files < 5.0 can't be used
+			# TODO Manage GENERAL in a loop like other sections.
 			if ($field[0] eq 'BEGIN_GENERAL')      {
 				if ($Debug) { debug(" Begin of GENERAL section"); }
 				next;
@@ -2215,56 +2215,24 @@ sub Read_History_With_TmpUpdate {
 			}
 			if ($field[0] eq 'TotalVisits' || $field[0] eq "${xmlrb}TotalVisits")       {
 				if (! $withupdate) { $MonthVisits{$year.$month}+=int($field[1]); }
-				# Save in MonthVisits also if migrate from a file < 4.x for backward compatibility
-				if ($MigrateStats && $versionnum < 4000 && ! $MonthVisits{$year.$month}) {
-					if ($Debug) { debug("File is version < 4000. We save ".int($field[1])." visits in DayXxx arrays",1); }
-					$DayHits{$year.$month."00"}+=0;
-					$DayVisits{$year.$month."00"}+=int($field[1]);
-				}
 				next;
 			}
 			if ($field[0] eq 'TotalUnique' || $field[0] eq "${xmlrb}TotalUnique")       { if (! $withupdate) { $MonthUnique{$year.$month}+=int($field[1]); } next; }
 			if ($field[0] eq 'MonthHostsKnown' || $field[0] eq "${xmlrb}MonthHostsKnown")   { if (! $withupdate) { $MonthHostsKnown{$year.$month}+=int($field[1]); } next; }
 			if ($field[0] eq 'MonthHostsUnknown' || $field[0] eq "${xmlrb}MonthHostsUnknown") { if (! $withupdate) { $MonthHostsUnknown{$year.$month}+=int($field[1]); } next; }
-			if (($field[0] eq 'END_GENERAL' || $field[0] eq "${xmleb}END_GENERAL")	# END_GENERAL didn't exist for history files < 5.0
-			 || ($versionnum < 5000 && $SectionsToLoad{"general"} && $FirstTime{$date} && $LastTime{$date}) )		{
+			if (($field[0] eq 'END_GENERAL' || $field[0] eq "${xmleb}END_GENERAL")) {
 				if ($Debug) { debug(" End of GENERAL section"); }
-				# Show migrate warning for backward compatibility
-				if ($versionnum < 5000 && ! $MigrateStats && ! $BadFormatWarning{$year.$month}) {
-					if ($FrameName ne 'mainleft') {
-						$BadFormatWarning{$year.$month}=1;
-						my $message="Warning: Data file '$filetoread' has an old history file format (version $versionnum). You should upgrade it...\nFrom command line: $PROG.$Extension -migrate=\"$filetoread\"";
-						if ($ENV{'GATEWAY_INTERFACE'} && $AllowToUpdateStatsFromBrowser) { $message.="\nFrom your browser with URL: <a href=\"http://".$ENV{"SERVER_NAME"}.$ENV{"SCRIPT_NAME"}."?migrate=$filetoread\">http://".$ENV{"SERVER_NAME"}.$ENV{"SCRIPT_NAME"}."?migrate=$filetoread</a>"; }
-						warning("$message");
-					}
-				}
-				if (! ($versionnum < 5000) && $MigrateStats && ! $BadFormatWarning{$year.$month}) {
+				if ($MigrateStats && ! $BadFormatWarning{$year.$month}) {
 					$BadFormatWarning{$year.$month}=1;
 					warning("Warning: You are migrating a file that is already a recent version (migrate not required for files version $versionnum).","","",1);
 				}
-				# If migrate and version < 4.x we need to include BEGIN_UNKNOWNIP into BEGIN_VISITOR for backward compatibility
-				if ($MigrateStats && $versionnum < 4000) {
-					if ($Debug) { debug("File is version < 4000. We add UNKNOWNIP in sections to load",1); }
-					$SectionsToLoad{'unknownip'}=99;
-				}
 
 				delete $SectionsToLoad{'general'};
-				if ($SectionsToSave{'general'}) { Save_History('general',$year,$month,$date,$lastlinenb,$lastlineoffset,$lastlinechecksum); delete $SectionsToSave{'general'}; }
-
-				# Test for backward compatibility
-				if ($versionnum < 5000 && ! $withupdate) {
-					# We must find another way to init MonthUnique MonthHostsKnown and MonthHostsUnknown
-					if ($Debug) { debug(" We ask to count MonthUnique, MonthHostsKnown and MonthHostsUnknown in visitor section because they are not stored in general section for this data file (version $versionnum)."); }
-					$readvisitorforbackward=($SectionsToLoad{"visitor"}?1:2);
-					$SectionsToLoad{"visitor"}=4;
+				if ($SectionsToSave{'general'}) {
+					Save_History('general',$year,$month,$date,$lastlinenb,$lastlineoffset,$lastlinechecksum); delete $SectionsToSave{'general'};
 				}
-				else {
-					if (! scalar %SectionsToLoad) {
-						if ($Debug) { debug(" Stop reading history file. Got all we need."); }
-						last;
-					}
-				}
-				if ($versionnum >= 5000) { next; }	# We can forget 'END_GENERAL' line and read next one
+				if (! scalar %SectionsToLoad) { debug(" Stop reading history file. Got all we need."); last; }
+				next;
 			}
 
 			# BEGIN_MISC
@@ -2827,13 +2795,8 @@ sub Read_History_With_TmpUpdate {
 						if ($SectionsToLoad{'robot'}) {
 							$countloaded++;
 							if ($field[1]) { $_robot_h{$field[0]}+=$field[1]; }
-							if ($versionnum < 5000 || ! $field[3]) {		# For backward compatibility
-								if (! $_robot_l{$field[0]}) { $_robot_l{$field[0]}=int($field[2]); }
-							}
-							else {
-								$_robot_k{$field[0]}+=$field[2];
-								if (! $_robot_l{$field[0]}) { $_robot_l{$field[0]}=int($field[3]); }
-							}
+							$_robot_k{$field[0]}+=$field[2];
+							if (! $_robot_l{$field[0]}) { $_robot_l{$field[0]}=int($field[3]); }
 							if ($field[4]) { $_robot_r{$field[0]}+=$field[4]; }
 						}
 					}
@@ -2976,26 +2939,15 @@ sub Read_History_With_TmpUpdate {
 									}
 								}
 								# Posssibilite de mettre if ($FilterIn{'url'} && $field[0] =~ /$FilterIn{'url'}/) mais il faut gerer TotalPages de la meme maniere
-								if ($versionnum < 4000) {	# For history files < 4.0
-									$TotalEntries+=($field[2]||0);
-								}
-								else {
-									$TotalBytesPages+=($field[2]||0);
-									$TotalEntries+=($field[3]||0);
-									$TotalExits+=($field[4]||0);
-								}
+								$TotalBytesPages+=($field[2]||0);
+								$TotalEntries+=($field[3]||0);
+								$TotalExits+=($field[4]||0);
 							}
 							if ($loadrecord) {
 								if ($field[1]) { $_url_p{$field[0]}+=$field[1]; }
-								if ($versionnum < 4000) {	# For history files < 4.0
-									if ($field[2]) { $_url_e{$field[0]}+=$field[2]; }
-									$_url_k{$field[0]}=0;
-								}
-								else {
-									if ($field[2]) { $_url_k{$field[0]}+=$field[2]; }
-									if ($field[3]) { $_url_e{$field[0]}+=$field[3]; }
-									if ($field[4]) { $_url_x{$field[0]}+=$field[4]; }
-								}
+								if ($field[2]) { $_url_k{$field[0]}+=$field[2]; }
+								if ($field[3]) { $_url_e{$field[0]}+=$field[3]; }
+								if ($field[4]) { $_url_x{$field[0]}+=$field[4]; }
 								$countloaded++;
 							}
 						}
@@ -6043,13 +5995,14 @@ foreach (grep /^$PROG$datemask$regfilesuffix\.txt(|\.gz)$/i, file_filt sort read
 		# ListOfYears contains max month found
 		$ListOfYears{"$2"}="$1";
 	}
-	if ("$2$1$3$4" gt $lastdatebeforeupdate) {	# TODO can cause warning
+	my $rangestring=($2||"").($1||"").($3||"").($4||"");
+	if ($rangestring gt $lastdatebeforeupdate) {
 		# We are on a new max for mask
-		$lastyearbeforeupdate="$2";				# TODO can cause warning
-		$lastmonthbeforeupdate="$1";
-		$lastdaybeforeupdate="$3";				# TODO can cause warning
-		$lasthourbeforeupdate="$4";				# TODO can cause warning
-		$lastdatebeforeupdate="$2$1$3$4";		# TODO can cause warning
+		$lastyearbeforeupdate=($2||"");
+		$lastmonthbeforeupdate=($1||"");
+		$lastdaybeforeupdate=($3||"");
+		$lasthourbeforeupdate=($4||"");
+		$lastdatebeforeupdate=$rangestring;
 	}
 }
 close DIR;
@@ -6083,8 +6036,7 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 	my %MonthNum = ("Jan","01","jan","01","Feb","02","feb","02","Mar","03","mar","03","Apr","04","apr","04","May","05","may","05","Jun","06","jun","06","Jul","07","jul","07","Aug","08","aug","08","Sep","09","sep","09","Oct","10","oct","10","Nov","11","nov","11","Dec","12","dec","12");	# MonthNum must be in english because used to translate log date in apache log files
 
 	if (! scalar keys %HTMLOutput) {
-		print "Create/Update database for config \"$FileConfig\"\n";
-		print "By AWStats version $VERSION\n";
+		print "Create/Update database for config \"$FileConfig\" by AWStats version $VERSION\n";
 		print "From data in log file \"$LogFile\"...\n";
 	}
 
@@ -6264,6 +6216,9 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 		$lastlineoffsetnext=0;
 	}
 
+	#
+	# Loop on each log line
+	#
 	while ($line=<LOG>) {
 		chomp $line; $line =~ s/\r$//;
 		if ($UpdateFor && $NbOfLinesParsed >= $UpdateFor) { last; }
@@ -6606,196 +6561,196 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 				# If error not on root, another hit will be made on root. If not MSIE, hit are made not only for "Adding".
 				$_misc_h{'AddToFavourites'}++;	# Hit on favicon on root or without error, we count it
 			}
-			$countedtraffic=1;	# favicon is the only case not counted anywhere
+			$countedtraffic=1;	# favicon is a case that must not be counted anywhere else
 		}
 
 		# Analyze: Worms (countedtraffic=>1 if worm)
 		#-------------------------------------------
 		if (! $countedtraffic) {
-		if ($LevelForWormsDetection) {
-			foreach (@WormsSearchIDOrder) {
-				if ($field[$pos_url] =~ /$_/) {
-					# It's a worm
-					my $worm=&UnCompileRegex($_);
-					if ($Debug) { debug(" Record is a hit from a worm identified by '$worm'",2); }
-					$worm=$WormsHashID{$worm}||'unknown';
-					$_worm_h{$worm}++;
-					$_worm_k{$worm}+=int($field[$pos_size]);
-					$_worm_l{$worm}=$timerecord;
-					$countedtraffic=1;
-					if ($PageBool) { $_time_nv_p[$hourrecord]++; }
-					$_time_nv_h[$hourrecord]++;
-					$_time_nv_k[$hourrecord]+=int($field[$pos_size]);
-					last;
+			if ($LevelForWormsDetection) {
+				foreach (@WormsSearchIDOrder) {
+					if ($field[$pos_url] =~ /$_/) {
+						# It's a worm
+						my $worm=&UnCompileRegex($_);
+						if ($Debug) { debug(" Record is a hit from a worm identified by '$worm'",2); }
+						$worm=$WormsHashID{$worm}||'unknown';
+						$_worm_h{$worm}++;
+						$_worm_k{$worm}+=int($field[$pos_size]);
+						$_worm_l{$worm}=$timerecord;
+						$countedtraffic=1;
+						if ($PageBool) { $_time_nv_p[$hourrecord]++; }
+						$_time_nv_h[$hourrecord]++;
+						$_time_nv_k[$hourrecord]+=int($field[$pos_size]);
+						last;
+					}
 				}
 			}
-		}
         }
     				
 		# Analyze: Status code (countedtraffic=>1 if error)
 		#--------------------------------------------------
 		if (! $countedtraffic) {
-		if ($LogType eq 'W' || $LogType eq 'S') {		# HTTP record or Stream record
-			if ($ValidHTTPCodes{$field[$pos_code]}) {	# Code is valid
-				if ($field[$pos_code] == 304) { $field[$pos_size]=0; }
-			}
-			else {										# Code is not valid
-				if ($field[$pos_code] !~ /^\d\d\d$/) { $field[$pos_code]=999; }
-				$_errors_h{$field[$pos_code]}++;
-				$_errors_k{$field[$pos_code]}+=int($field[$pos_size]);
-				foreach my $code (keys %TrapInfosForHTTPErrorCodes) {
-					if ($field[$pos_code] == $code) {
-						# This is an error code which referrer need to be tracked
-						my $newurl=substr($field[$pos_url],0,$MaxLengthOfStoredURL);
-						$newurl =~ s/[$URLQuerySeparators].*$//;
-						$_sider404_h{$newurl}++;
-						if ($pos_referer >= 0) {
-    						my $newreferer=$field[$pos_referer];
-    						if (! $URLReferrerWithQuery) { $newreferer =~ s/[$URLQuerySeparators].*$//; }
-    						$_referer404_h{$newurl}=$newreferer;
-    						last;
-    					}
-					}
+			if ($LogType eq 'W' || $LogType eq 'S') {		# HTTP record or Stream record
+				if ($ValidHTTPCodes{$field[$pos_code]}) {	# Code is valid
+					if ($field[$pos_code] == 304) { $field[$pos_size]=0; }
 				}
-				if ($Debug) { debug(" Record stored in the status code chart (status code=$field[$pos_code])",3); }
-				$countedtraffic=1;
-				if ($PageBool) { $_time_nv_p[$hourrecord]++; }
-				$_time_nv_h[$hourrecord]++;
-				$_time_nv_k[$hourrecord]+=int($field[$pos_size]);
-			}
-		}
-		elsif ($LogType eq 'M') {						# Mail record
-			if (! $ValidSMTPCodes{$field[$pos_code]}) {	# Code is not valid
-				$_errors_h{$field[$pos_code]}++;
-				$_errors_k{$field[$pos_code]}+=int($field[$pos_size]);	# Size is often 0 when error
-				if ($Debug) { debug(" Record stored in the status code chart (status code=$field[$pos_code])",3); }
-				$countedtraffic=1;
-				if ($PageBool) { $_time_nv_p[$hourrecord]++; }
-				$_time_nv_h[$hourrecord]++;
-				$_time_nv_k[$hourrecord]+=int($field[$pos_size]);
-			}
-		}
-		elsif ($LogType eq 'F') {						# FTP record
-		}
-		}
-		
-		# Analyze: Robot from robot database (countedtraffic=>1 if robot)
-		#----------------------------------------------------------------
-		if (! $countedtraffic) {
-		if ($pos_agent >= 0) {
-			if ($DecodeUA) { $field[$pos_agent] =~ s/%20/_/g; }	# This is to support servers (like Roxen) that writes user agent with %20 in it
-			$UserAgent=$field[$pos_agent];
-
-			if ($LevelForRobotsDetection) {
-
-				my $uarobot=$TmpRobot{$UserAgent};
-				if (! $uarobot) {
-					#study $UserAgent;		Does not increase speed
-					foreach (@RobotsSearchIDOrder) {
-						if ($UserAgent =~ /$_/) {
-							my $bot=&UnCompileRegex($_);
-							$TmpRobot{$UserAgent}=$uarobot="$bot";	# Last time, we won't search if robot or not. We know it is.
-							if ($Debug) { debug("  UserAgent '$UserAgent' is added to TmpRobot with value '$bot'",2); }
-							last;
+				else {										# Code is not valid
+					if ($field[$pos_code] !~ /^\d\d\d$/) { $field[$pos_code]=999; }
+					$_errors_h{$field[$pos_code]}++;
+					$_errors_k{$field[$pos_code]}+=int($field[$pos_size]);
+					foreach my $code (keys %TrapInfosForHTTPErrorCodes) {
+						if ($field[$pos_code] == $code) {
+							# This is an error code which referrer need to be tracked
+							my $newurl=substr($field[$pos_url],0,$MaxLengthOfStoredURL);
+							$newurl =~ s/[$URLQuerySeparators].*$//;
+							$_sider404_h{$newurl}++;
+							if ($pos_referer >= 0) {
+	    						my $newreferer=$field[$pos_referer];
+	    						if (! $URLReferrerWithQuery) { $newreferer =~ s/[$URLQuerySeparators].*$//; }
+	    						$_referer404_h{$newurl}=$newreferer;
+	    						last;
+	    					}
 						}
 					}
-					if (! $uarobot) {								# Last time, we won't search if robot or not. We know it's not.
-						$TmpRobot{$UserAgent}=$uarobot='-';
-					}
-				}
-				if ($uarobot ne '-') {
-					# If robot, we stop here
-					if ($Debug) { debug("  UserAgent '$UserAgent' contains robot ID '$uarobot'",2); }
-					$_robot_h{$uarobot}++;
-					$_robot_k{$uarobot}+=int($field[$pos_size]);
-					$_robot_l{$uarobot}=$timerecord;
-					if ($urlwithnoquery =~ /$regrobot/o) { $_robot_r{$uarobot}++; }
+					if ($Debug) { debug(" Record stored in the status code chart (status code=$field[$pos_code])",3); }
 					$countedtraffic=1;
 					if ($PageBool) { $_time_nv_p[$hourrecord]++; }
 					$_time_nv_h[$hourrecord]++;
 					$_time_nv_k[$hourrecord]+=int($field[$pos_size]);
 				}
 			}
+			elsif ($LogType eq 'M') {						# Mail record
+				if (! $ValidSMTPCodes{$field[$pos_code]}) {	# Code is not valid
+					$_errors_h{$field[$pos_code]}++;
+					$_errors_k{$field[$pos_code]}+=int($field[$pos_size]);	# Size is often 0 when error
+					if ($Debug) { debug(" Record stored in the status code chart (status code=$field[$pos_code])",3); }
+					$countedtraffic=1;
+					if ($PageBool) { $_time_nv_p[$hourrecord]++; }
+					$_time_nv_h[$hourrecord]++;
+					$_time_nv_k[$hourrecord]+=int($field[$pos_size]);
+				}
+			}
+			elsif ($LogType eq 'F') {						# FTP record
+			}
 		}
+		
+		# Analyze: Robot from robot database (countedtraffic=>1 if robot)
+		#----------------------------------------------------------------
+		if (! $countedtraffic) {
+			if ($pos_agent >= 0) {
+				if ($DecodeUA) { $field[$pos_agent] =~ s/%20/_/g; }	# This is to support servers (like Roxen) that writes user agent with %20 in it
+				$UserAgent=$field[$pos_agent];
+	
+				if ($LevelForRobotsDetection) {
+	
+					my $uarobot=$TmpRobot{$UserAgent};
+					if (! $uarobot) {
+						#study $UserAgent;		Does not increase speed
+						foreach (@RobotsSearchIDOrder) {
+							if ($UserAgent =~ /$_/) {
+								my $bot=&UnCompileRegex($_);
+								$TmpRobot{$UserAgent}=$uarobot="$bot";	# Last time, we won't search if robot or not. We know it is.
+								if ($Debug) { debug("  UserAgent '$UserAgent' is added to TmpRobot with value '$bot'",2); }
+								last;
+							}
+						}
+						if (! $uarobot) {								# Last time, we won't search if robot or not. We know it's not.
+							$TmpRobot{$UserAgent}=$uarobot='-';
+						}
+					}
+					if ($uarobot ne '-') {
+						# If robot, we stop here
+						if ($Debug) { debug("  UserAgent '$UserAgent' contains robot ID '$uarobot'",2); }
+						$_robot_h{$uarobot}++;
+						$_robot_k{$uarobot}+=int($field[$pos_size]);
+						$_robot_l{$uarobot}=$timerecord;
+						if ($urlwithnoquery =~ /$regrobot/o) { $_robot_r{$uarobot}++; }
+						$countedtraffic=1;
+						if ($PageBool) { $_time_nv_p[$hourrecord]++; }
+						$_time_nv_h[$hourrecord]++;
+						$_time_nv_k[$hourrecord]+=int($field[$pos_size]);
+					}
+				}
+			}
 		}
 
 		# Analyze: Robot from "hit on robots.txt" file (countedtraffic=>1 if robot)
 		# -------------------------------------------------------------------------
 		if (! $countedtraffic) {
-		if ($urlwithnoquery =~ /$regrobot/o) {
-			if ($Debug) { debug("  It's an unknown robot",2); }
-			$_robot_h{'unknown'}++;
-			$_robot_k{'unknown'}+=int($field[$pos_size]);
-			$_robot_l{'unknown'}=$timerecord;
-			$_robot_r{'unknown'}++;
-			$countedtraffic=1;
-			if ($PageBool) { $_time_nv_p[$hourrecord]++; }
-			$_time_nv_h[$hourrecord]++;
-			$_time_nv_k[$hourrecord]+=int($field[$pos_size]);
-		}
+			if ($urlwithnoquery =~ /$regrobot/o) {
+				if ($Debug) { debug("  It's an unknown robot",2); }
+				$_robot_h{'unknown'}++;
+				$_robot_k{'unknown'}+=int($field[$pos_size]);
+				$_robot_l{'unknown'}=$timerecord;
+				$_robot_r{'unknown'}++;
+				$countedtraffic=1;	# Must not be counted somewhere else
+				if ($PageBool) { $_time_nv_p[$hourrecord]++; }
+				$_time_nv_h[$hourrecord]++;
+				$_time_nv_k[$hourrecord]+=int($field[$pos_size]);
+			}
 		}
 		
 		# Analyze: File type - Compression
 		#---------------------------------
 		if (! $countedtraffic) {
-		if ($LevelForFileTypesDetection) {
-			$_filetypes_h{$extension}++;
-			$_filetypes_k{$extension}+=int($field[$pos_size]);	# TODO can cause a warning
-			# Compression
-			if ($pos_gzipin>=0 && $field[$pos_gzipin]) {						# If in and out in log
-				my ($notused,$in)=split(/:/,$field[$pos_gzipin]);
-				my ($notused1,$out,$notused2)=split(/:/,$field[$pos_gzipout]);
-				if ($out) {
-					$_filetypes_gz_in{$extension}+=$in;
-					$_filetypes_gz_out{$extension}+=$out;
+			if ($LevelForFileTypesDetection) {
+				$_filetypes_h{$extension}++;
+				$_filetypes_k{$extension}+=int($field[$pos_size]);	# TODO can cause a warning
+				# Compression
+				if ($pos_gzipin>=0 && $field[$pos_gzipin]) {						# If in and out in log
+					my ($notused,$in)=split(/:/,$field[$pos_gzipin]);
+					my ($notused1,$out,$notused2)=split(/:/,$field[$pos_gzipout]);
+					if ($out) {
+						$_filetypes_gz_in{$extension}+=$in;
+						$_filetypes_gz_out{$extension}+=$out;
+					}
+				}
+				elsif ($pos_compratio>=0 && ($field[$pos_compratio] =~ /(\d+)/)) { 	# Calculate in/out size from percentage
+					if ($fieldlib[$pos_compratio] eq 'gzipratio') {
+						# with mod_gzip:    % is size (before-after)/before (low for jpg) ??????????
+						$_filetypes_gz_in{$extension}+=int($field[$pos_size]*100/((100-$1)||1));
+					} else {
+						# with mod_deflate: % is size after/before (high for jpg)
+						$_filetypes_gz_in{$extension}+=int($field[$pos_size]*100/($1||1));
+					}
+					$_filetypes_gz_out{$extension}+=int($field[$pos_size]);
 				}
 			}
-			elsif ($pos_compratio>=0 && ($field[$pos_compratio] =~ /(\d+)/)) { 	# Calculate in/out size from percentage
-				if ($fieldlib[$pos_compratio] eq 'gzipratio') {
-					# with mod_gzip:    % is size (before-after)/before (low for jpg) ??????????
-					$_filetypes_gz_in{$extension}+=int($field[$pos_size]*100/((100-$1)||1));
-				} else {
-					# with mod_deflate: % is size after/before (high for jpg)
-					$_filetypes_gz_in{$extension}+=int($field[$pos_size]*100/($1||1));
-				}
-				$_filetypes_gz_out{$extension}+=int($field[$pos_size]);
+	
+			# Analyze: Date - Hour - Pages - Hits - Kilo
+			#-------------------------------------------
+			if ($PageBool) {
+				# Replace default page name with / only ('if' is to increase speed when only 1 value in @DefaultFile)
+				if (@DefaultFile > 1) { foreach my $elem (@DefaultFile) { if ($field[$pos_url] =~ s/\/$elem$/\//o) { last; } } }
+				else { $field[$pos_url] =~ s/$regdefault/\//o; }
+				# FirstTime and LastTime are First and Last human visits (so changed if access to a page)
+				$FirstTime{$lastprocesseddate}||=$timerecord;
+				$LastTime{$lastprocesseddate}=$timerecord;
+				$DayPages{$yearmonthdayrecord}++;
+				$_url_p{$field[$pos_url]}++; 										#Count accesses for page (page)
+				$_url_k{$field[$pos_url]}+=int($field[$pos_size]);
+				$_time_p[$hourrecord]++;											#Count accesses for hour (page)
+	            # TODO Use an id for hash key of url
+	            # $_url_t{$_url_id}
 			}
-		}
-
-		# Analyze: Date - Hour - Pages - Hits - Kilo
-		#-------------------------------------------
-		if ($PageBool) {
-			# Replace default page name with / only ('if' is to increase speed when only 1 value in @DefaultFile)
-			if (@DefaultFile > 1) { foreach my $elem (@DefaultFile) { if ($field[$pos_url] =~ s/\/$elem$/\//o) { last; } } }
-			else { $field[$pos_url] =~ s/$regdefault/\//o; }
-			# FirstTime and LastTime are First and Last human visits (so changed if access to a page)
-			$FirstTime{$lastprocesseddate}||=$timerecord;
-			$LastTime{$lastprocesseddate}=$timerecord;
-			$DayPages{$yearmonthdayrecord}++;
-			$_url_p{$field[$pos_url]}++; 										#Count accesses for page (page)
-			$_url_k{$field[$pos_url]}+=int($field[$pos_size]);
-			$_time_p[$hourrecord]++;											#Count accesses for hour (page)
-            # TODO Use an id for hash key of url
-            # $_url_t{$_url_id}
-		}
-		$_time_h[$hourrecord]++;
-		$_time_k[$hourrecord]+=int($field[$pos_size]);
- 		$DayHits{$yearmonthdayrecord}++;						#Count accesses for hour (hit)
- 		$DayBytes{$yearmonthdayrecord}+=int($field[$pos_size]);	#Count accesses for hour (kb)
- 
-		# Analyze: Login
-		#---------------
-		if ($pos_logname>=0 && $field[$pos_logname] && $field[$pos_logname] ne '-') {
-			$field[$pos_logname] =~ s/ /_/g; # This is to allow space in logname
-			if ($LogFormat eq '6') { $field[$pos_logname] =~ s/^\"//; $field[$pos_logname] =~ s/\"$//;}	# logname field has " with Domino 6+
-			if ($AuthenticatedUsersNotCaseSensitive) { $field[$pos_logname]=lc($field[$pos_logname]); }
-
-			# We found an authenticated user
-			if ($PageBool) { $_login_p{$field[$pos_logname]}++; }				#Count accesses for page (page)
-			$_login_h{$field[$pos_logname]}++;									#Count accesses for page (hit)
-			$_login_k{$field[$pos_logname]}+=int($field[$pos_size]);			#Count accesses for page (kb)
-			$_login_l{$field[$pos_logname]}=$timerecord;
-		}
+			$_time_h[$hourrecord]++;
+			$_time_k[$hourrecord]+=int($field[$pos_size]);
+	 		$DayHits{$yearmonthdayrecord}++;						#Count accesses for hour (hit)
+	 		$DayBytes{$yearmonthdayrecord}+=int($field[$pos_size]);	#Count accesses for hour (kb)
+	 
+			# Analyze: Login
+			#---------------
+			if ($pos_logname>=0 && $field[$pos_logname] && $field[$pos_logname] ne '-') {
+				$field[$pos_logname] =~ s/ /_/g; # This is to allow space in logname
+				if ($LogFormat eq '6') { $field[$pos_logname] =~ s/^\"//; $field[$pos_logname] =~ s/\"$//;}	# logname field has " with Domino 6+
+				if ($AuthenticatedUsersNotCaseSensitive) { $field[$pos_logname]=lc($field[$pos_logname]); }
+	
+				# We found an authenticated user
+				if ($PageBool) { $_login_p{$field[$pos_logname]}++; }				#Count accesses for page (page)
+				$_login_h{$field[$pos_logname]}++;									#Count accesses for page (hit)
+				$_login_k{$field[$pos_logname]}+=int($field[$pos_size]);			#Count accesses for page (kb)
+				$_login_l{$field[$pos_logname]}=$timerecord;
+			}
 		}
 		
 		# Do DNS lookup
@@ -6804,499 +6759,499 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 		my $HostResolved='';
 
 		if (! $countedtraffic) {
-		my $ip=0;
-		if ($DNSLookup) {			# DNS lookup is 1 or 2
-			if ($Host =~ /$regipv4/o) { $ip=4; }	# IPv4
-			elsif ($Host =~ /$regipv6/o) { $ip=6; }						# IPv6
-			if ($ip) {
-				# Check in static DNS cache file
-				$HostResolved=$MyDNSTable{$Host};
-				if ($HostResolved) {
-					if ($Debug) { debug("  DNS lookup asked for $Host and found in static DNS cache file: $HostResolved",4); }
-				}
-				elsif ($DNSLookup==1) {
-					# Check in session cache (dynamic DNS cache file + session DNS cache)
-					$HostResolved=$TmpDNSLookup{$Host};
-					if (! $HostResolved) {
-						if (@SkipDNSLookupFor && &SkipDNSLookup($Host)) {
-							$HostResolved=$TmpDNSLookup{$Host}='*';
-							if ($Debug) { debug("  No need of reverse DNS lookup for $Host, skipped at user request.",4); }
-						}
-						else {
-							if ($ip == 4) {
-								my $lookupresult=gethostbyaddr(pack("C4",split(/\./,$Host)),AF_INET);	# This is very slow, may spend 20 seconds
-								if (! $lookupresult || $lookupresult =~ /$regipv4/o || ! IsAscii($lookupresult)) {
-									$TmpDNSLookup{$Host}=$HostResolved='*';
-								}
-								else {
-									$TmpDNSLookup{$Host}=$HostResolved=$lookupresult;
-								}
-								if ($Debug) { debug("  Reverse DNS lookup for $Host done: $HostResolved",4); }
+			my $ip=0;
+			if ($DNSLookup) {			# DNS lookup is 1 or 2
+				if ($Host =~ /$regipv4/o) { $ip=4; }	# IPv4
+				elsif ($Host =~ /$regipv6/o) { $ip=6; }						# IPv6
+				if ($ip) {
+					# Check in static DNS cache file
+					$HostResolved=$MyDNSTable{$Host};
+					if ($HostResolved) {
+						if ($Debug) { debug("  DNS lookup asked for $Host and found in static DNS cache file: $HostResolved",4); }
+					}
+					elsif ($DNSLookup==1) {
+						# Check in session cache (dynamic DNS cache file + session DNS cache)
+						$HostResolved=$TmpDNSLookup{$Host};
+						if (! $HostResolved) {
+							if (@SkipDNSLookupFor && &SkipDNSLookup($Host)) {
+								$HostResolved=$TmpDNSLookup{$Host}='*';
+								if ($Debug) { debug("  No need of reverse DNS lookup for $Host, skipped at user request.",4); }
 							}
-							elsif ($ip == 6) {
-								if ($PluginsLoaded{'GetResolvedIP'}{'ipv6'}) {
-									my $lookupresult=GetResolvedIP_ipv6($Host);
-									if (! $lookupresult || ! IsAscii($lookupresult)) {
+							else {
+								if ($ip == 4) {
+									my $lookupresult=gethostbyaddr(pack("C4",split(/\./,$Host)),AF_INET);	# This is very slow, may spend 20 seconds
+									if (! $lookupresult || $lookupresult =~ /$regipv4/o || ! IsAscii($lookupresult)) {
 										$TmpDNSLookup{$Host}=$HostResolved='*';
 									}
 									else {
 										$TmpDNSLookup{$Host}=$HostResolved=$lookupresult;
 									}
-								} else {
-									$TmpDNSLookup{$Host}=$HostResolved='*';
-									warning("Reverse DNS lookup for $Host not available without ipv6 plugin enabled.");
+									if ($Debug) { debug("  Reverse DNS lookup for $Host done: $HostResolved",4); }
 								}
+								elsif ($ip == 6) {
+									if ($PluginsLoaded{'GetResolvedIP'}{'ipv6'}) {
+										my $lookupresult=GetResolvedIP_ipv6($Host);
+										if (! $lookupresult || ! IsAscii($lookupresult)) {
+											$TmpDNSLookup{$Host}=$HostResolved='*';
+										}
+										else {
+											$TmpDNSLookup{$Host}=$HostResolved=$lookupresult;
+										}
+									} else {
+										$TmpDNSLookup{$Host}=$HostResolved='*';
+										warning("Reverse DNS lookup for $Host not available without ipv6 plugin enabled.");
+									}
+								}
+								else { error("Bad value vor ip"); }
 							}
-							else { error("Bad value vor ip"); }
 						}
+					}
+					else {
+						$HostResolved='*';
+						if ($Debug) { debug("  DNS lookup by static DNS cache file asked for $Host but not found.",4); }
 					}
 				}
 				else {
-					$HostResolved='*';
-					if ($Debug) { debug("  DNS lookup by static DNS cache file asked for $Host but not found.",4); }
+					if ($Debug) { debug("  DNS lookup asked for $Host but this is not an IP address.",4); }
+					$DNSLookupAlreadyDone=$LogFile;
 				}
 			}
 			else {
-				if ($Debug) { debug("  DNS lookup asked for $Host but this is not an IP address.",4); }
-				$DNSLookupAlreadyDone=$LogFile;
+				if ($Host =~ /$regipv4/o) { $HostResolved='*'; $ip=4; }	# IPv4
+				elsif ($Host =~ /$regipv6/o) { $HostResolved='*'; $ip=6; }						# IPv6
+				if ($Debug) { debug("  No DNS lookup asked.",4); }
 			}
-		}
-		else {
-			if ($Host =~ /$regipv4/o) { $HostResolved='*'; $ip=4; }	# IPv4
-			elsif ($Host =~ /$regipv6/o) { $HostResolved='*'; $ip=6; }						# IPv6
-			if ($Debug) { debug("  No DNS lookup asked.",4); }
-		}
-
-		# Analyze: Country (Top-level domain)
-		#------------------------------------
-		if ($Debug) { debug("  Search country (Host=$Host HostResolved=$HostResolved ip=$ip)",4); }
-		my $Domain='ip';
-		# Set $HostResolved to host and resolve domain
-		if ($HostResolved eq '*') {
-			# $Host is an IP address and is not resolved (failed or not asked) or resolution gives an IP address
-			$HostResolved = $Host;
-			# Resolve Domain
-			if ($PluginsLoaded{'GetCountryCodeByAddr'}{'geoip'})                   { $Domain=GetCountryCodeByAddr_geoip($HostResolved); }
-#			elsif ($PluginsLoaded{'GetCountryCodeByAddr'}{'geoip_region_maxmind'}) { $Domain=GetCountryCodeByAddr_geoip_region_maxmind($HostResolved); }
-#			elsif ($PluginsLoaded{'GetCountryCodeByAddr'}{'geoip_city_maxmind'})   { $Domain=GetCountryCodeByAddr_geoip_city_maxmind($HostResolved); }
-			elsif ($PluginsLoaded{'GetCountryCodeByAddr'}{'geoipfree'})            { $Domain=GetCountryCodeByAddr_geoipfree($HostResolved); }
-            if ($AtLeastOneSectionPlugin) {
-               	foreach my $pluginname (keys %{$PluginsLoaded{'SectionProcessIp'}})  {
-               		my $function="SectionProcessIp_$pluginname";
-					if ($Debug) { debug("  Call to plugin function $function",5); }
-               		&$function($HostResolved);
-                }
-   		    }
-		}
-		else {
-			# $Host was already a host name ($ip=0, $Host=name, $HostResolved='') or has been resolved ($ip>0, $Host=ip, $HostResolved defined)
-			$HostResolved = lc($HostResolved?$HostResolved:$Host);
-			# Resolve Domain
-			if ($ip) {  # If we have ip, we use it in priority instead of hostname
-				if ($PluginsLoaded{'GetCountryCodeByAddr'}{'geoip'})                   { $Domain=GetCountryCodeByAddr_geoip($Host); }
-#				elsif ($PluginsLoaded{'GetCountryCodeByAddr'}{'geoip_region_maxmind'}) { $Domain=GetCountryCodeByAddr_geoip_region_maxmind($Host); }
-#				elsif ($PluginsLoaded{'GetCountryCodeByAddr'}{'geoip_city_maxmind'})   { $Domain=GetCountryCodeByAddr_geoip_city_maxmind($Host); }
-				elsif ($PluginsLoaded{'GetCountryCodeByAddr'}{'geoipfree'})            { $Domain=GetCountryCodeByAddr_geoipfree($Host); }
-				elsif ($HostResolved =~ /\.(\w+)$/) { $Domain=$1; }
-                if ($AtLeastOneSectionPlugin) {
-                   	foreach my $pluginname (keys %{$PluginsLoaded{'SectionProcessIp'}})  {
-                   		my $function="SectionProcessIp_$pluginname";
+	
+			# Analyze: Country (Top-level domain)
+			#------------------------------------
+			if ($Debug) { debug("  Search country (Host=$Host HostResolved=$HostResolved ip=$ip)",4); }
+			my $Domain='ip';
+			# Set $HostResolved to host and resolve domain
+			if ($HostResolved eq '*') {
+				# $Host is an IP address and is not resolved (failed or not asked) or resolution gives an IP address
+				$HostResolved = $Host;
+				# Resolve Domain
+				if ($PluginsLoaded{'GetCountryCodeByAddr'}{'geoip'})                   { $Domain=GetCountryCodeByAddr_geoip($HostResolved); }
+	#			elsif ($PluginsLoaded{'GetCountryCodeByAddr'}{'geoip_region_maxmind'}) { $Domain=GetCountryCodeByAddr_geoip_region_maxmind($HostResolved); }
+	#			elsif ($PluginsLoaded{'GetCountryCodeByAddr'}{'geoip_city_maxmind'})   { $Domain=GetCountryCodeByAddr_geoip_city_maxmind($HostResolved); }
+				elsif ($PluginsLoaded{'GetCountryCodeByAddr'}{'geoipfree'})            { $Domain=GetCountryCodeByAddr_geoipfree($HostResolved); }
+	            if ($AtLeastOneSectionPlugin) {
+	               	foreach my $pluginname (keys %{$PluginsLoaded{'SectionProcessIp'}})  {
+	               		my $function="SectionProcessIp_$pluginname";
 						if ($Debug) { debug("  Call to plugin function $function",5); }
-                   		&$function($Host);
-                    }
-                }
+	               		&$function($HostResolved);
+	                }
+	   		    }
 			}
 			else {
-				if ($PluginsLoaded{'GetCountryCodeByName'}{'geoip'})                   { $Domain=GetCountryCodeByName_geoip($HostResolved); }
-#				elsif ($PluginsLoaded{'GetCountryCodeByName'}{'geoip_region_maxmind'}) { $Domain=GetCountryCodeByName_geoip_region_maxmind($HostResolved); }
-#				elsif ($PluginsLoaded{'GetCountryCodeByName'}{'geoip_city_maxmind'})   { $Domain=GetCountryCodeByName_geoip_city_maxmind($HostResolved); }
-				elsif ($PluginsLoaded{'GetCountryCodeByName'}{'geoipfree'})            { $Domain=GetCountryCodeByName_geoipfree($HostResolved); }
-				elsif ($HostResolved =~ /\.(\w+)$/) { $Domain=$1; }
-                if ($AtLeastOneSectionPlugin) {
-                   	foreach my $pluginname (keys %{$PluginsLoaded{'SectionProcessHostname'}})  {
-                   		my $function="SectionProcessHostname_$pluginname";
-						if ($Debug) { debug("  Call to plugin function $function",5); }
-                   		&$function($HostResolved);
-                    }
-                }
+				# $Host was already a host name ($ip=0, $Host=name, $HostResolved='') or has been resolved ($ip>0, $Host=ip, $HostResolved defined)
+				$HostResolved = lc($HostResolved?$HostResolved:$Host);
+				# Resolve Domain
+				if ($ip) {  # If we have ip, we use it in priority instead of hostname
+					if ($PluginsLoaded{'GetCountryCodeByAddr'}{'geoip'})                   { $Domain=GetCountryCodeByAddr_geoip($Host); }
+	#				elsif ($PluginsLoaded{'GetCountryCodeByAddr'}{'geoip_region_maxmind'}) { $Domain=GetCountryCodeByAddr_geoip_region_maxmind($Host); }
+	#				elsif ($PluginsLoaded{'GetCountryCodeByAddr'}{'geoip_city_maxmind'})   { $Domain=GetCountryCodeByAddr_geoip_city_maxmind($Host); }
+					elsif ($PluginsLoaded{'GetCountryCodeByAddr'}{'geoipfree'})            { $Domain=GetCountryCodeByAddr_geoipfree($Host); }
+					elsif ($HostResolved =~ /\.(\w+)$/) { $Domain=$1; }
+	                if ($AtLeastOneSectionPlugin) {
+	                   	foreach my $pluginname (keys %{$PluginsLoaded{'SectionProcessIp'}})  {
+	                   		my $function="SectionProcessIp_$pluginname";
+							if ($Debug) { debug("  Call to plugin function $function",5); }
+	                   		&$function($Host);
+	                    }
+	                }
+				}
+				else {
+					if ($PluginsLoaded{'GetCountryCodeByName'}{'geoip'})                   { $Domain=GetCountryCodeByName_geoip($HostResolved); }
+	#				elsif ($PluginsLoaded{'GetCountryCodeByName'}{'geoip_region_maxmind'}) { $Domain=GetCountryCodeByName_geoip_region_maxmind($HostResolved); }
+	#				elsif ($PluginsLoaded{'GetCountryCodeByName'}{'geoip_city_maxmind'})   { $Domain=GetCountryCodeByName_geoip_city_maxmind($HostResolved); }
+					elsif ($PluginsLoaded{'GetCountryCodeByName'}{'geoipfree'})            { $Domain=GetCountryCodeByName_geoipfree($HostResolved); }
+					elsif ($HostResolved =~ /\.(\w+)$/) { $Domain=$1; }
+	                if ($AtLeastOneSectionPlugin) {
+	                   	foreach my $pluginname (keys %{$PluginsLoaded{'SectionProcessHostname'}})  {
+	                   		my $function="SectionProcessHostname_$pluginname";
+							if ($Debug) { debug("  Call to plugin function $function",5); }
+	                   		&$function($HostResolved);
+	                    }
+	                }
+				}
 			}
-		}
-		# Store country
-		if ($PageBool) { $_domener_p{$Domain}++; }
-		$_domener_h{$Domain}++;
-		$_domener_k{$Domain}+=int($field[$pos_size]);
-
-		# Analyze: Host, URL entry+exit and Session
-		#------------------------------------------
-		if ($PageBool) {
-			my $timehostl=$_host_l{$HostResolved};
-			if ($timehostl) {
-				# A visit for this host was already detected
-# TODO everywhere there is $VISITTIMEOUT
-#				$timehostl =~ /^\d\d\d\d\d\d(\d\d)/; my $daytimehostl=$1;
-#				if ($timerecord > ($timehostl+$VISITTIMEOUT+($dateparts[3]>$daytimehostl?$NEWDAYVISITTIMEOUT:0))) {
-				if ($timerecord > ($timehostl+$VISITTIMEOUT)) {
-					# This is a second visit or more
-					if (! $_waithost_s{$HostResolved}) {
+			# Store country
+			if ($PageBool) { $_domener_p{$Domain}++; }
+			$_domener_h{$Domain}++;
+			$_domener_k{$Domain}+=int($field[$pos_size]);
+	
+			# Analyze: Host, URL entry+exit and Session
+			#------------------------------------------
+			if ($PageBool) {
+				my $timehostl=$_host_l{$HostResolved};
+				if ($timehostl) {
+					# A visit for this host was already detected
+	# TODO everywhere there is $VISITTIMEOUT
+	#				$timehostl =~ /^\d\d\d\d\d\d(\d\d)/; my $daytimehostl=$1;
+	#				if ($timerecord > ($timehostl+$VISITTIMEOUT+($dateparts[3]>$daytimehostl?$NEWDAYVISITTIMEOUT:0))) {
+					if ($timerecord > ($timehostl+$VISITTIMEOUT)) {
 						# This is a second visit or more
-						# We count 'visit','exit','entry','DayVisits'
-						if ($Debug) { debug("  This is a second visit for $HostResolved.",4); }
-						my $timehosts=$_host_s{$HostResolved};
-						my $page=$_host_u{$HostResolved};
-						if ($page) { $_url_x{$page}++; }
-						$_url_e{$field[$pos_url]}++;
-						$DayVisits{$yearmonthdayrecord}++;
-						# We can't count session yet because we don't have the start so
-						# we save params of first 'wait' session
-						$_waithost_l{$HostResolved}=$timehostl;
-						$_waithost_s{$HostResolved}=$timehosts;
-						$_waithost_u{$HostResolved}=$page;
-					}
-					else {
-						# This is third visit or more
-						# We count 'session','visit','exit','entry','DayVisits'
-						if ($Debug) { debug("  This is a third visit or more for $HostResolved.",4); }
-						my $timehosts=$_host_s{$HostResolved};
-						my $page=$_host_u{$HostResolved};
-						if ($page) { $_url_x{$page}++; }
-						$_url_e{$field[$pos_url]}++;
-						$DayVisits{$yearmonthdayrecord}++;
-						if ($timehosts) { $_session{GetSessionRange($timehosts,$timehostl)}++; }
-					}
-					# Save new session properties
-					$_host_s{$HostResolved}=$timerecord;
-					$_host_l{$HostResolved}=$timerecord;
-					$_host_u{$HostResolved}=$field[$pos_url];
-				}
-				elsif ($timerecord > $timehostl) {
-					# This is a same visit we can count
-					if ($Debug) { debug("  This is same visit still running for $HostResolved. host_l/host_u changed to $timerecord/$field[$pos_url]",4); }
-					$_host_l{$HostResolved}=$timerecord;
-					$_host_u{$HostResolved}=$field[$pos_url];
-				}
-				elsif ($timerecord == $timehostl) {
-					# This is a same visit we can count
-					if ($Debug) { debug("  This is same visit still running for $HostResolved. host_l/host_u changed to $timerecord/$field[$pos_url]",4); }
-					$_host_u{$HostResolved}=$field[$pos_url];
-				}
-				elsif ($timerecord < $_host_s{$HostResolved}) {
-					# Should happens only with not correctly sorted log files
-					if ($Debug) { debug("  This is same visit still running for $HostResolved with start not in order. host_s changed to $timerecord (entry page also changed if first visit)",4); }
-					if (! $_waithost_s{$HostResolved}) {
-						# We can reorder entry page only if it's the first visit found in this update run (The saved entry page was $_waithost_e if $_waithost_s{$HostResolved} is not defined. If second visit or more, entry was directly counted and not saved)
-						$_waithost_e{$HostResolved}=$field[$pos_url];
-					}
-					else {
-						# We can't change entry counted as we dont't know what was the url counted as entry
-					}
-					$_host_s{$HostResolved}=$timerecord;
-				}
-				else {
-					if ($Debug) { debug("  This is same visit still running for $HostResolved with hit between start and last hits. No change",4); }
-				}
-			}
-			else {
-				# This is a new visit (may be). First new visit found for this host. We save in wait array the entry page to count later
-				if ($Debug) { debug("  New session (may be) for $HostResolved. Save in wait array to see later",4); }
-				$_waithost_e{$HostResolved}=$field[$pos_url];
-				# Save new session properties
-				$_host_u{$HostResolved}=$field[$pos_url];
-				$_host_s{$HostResolved}=$timerecord;
-				$_host_l{$HostResolved}=$timerecord;
-			}
-			$_host_p{$HostResolved}++;
-		}
-		$_host_h{$HostResolved}++;
-		$_host_k{$HostResolved}+=int($field[$pos_size]);
-
-		# Analyze: Browser - OS
-		#----------------------
-		if ($pos_agent >= 0 && $UserAgent) {
-
-			if ($LevelForBrowsersDetection) {
-
-				# Analyze: Browser
-				#-----------------
-				my $uabrowser=$TmpBrowser{$UserAgent};
-				if (! $uabrowser) {
-					my $found=1;
-					# IE ?
-					if ($UserAgent =~ /$regvermsie/o && $UserAgent !~ /$regnotie/o) {
-						$_browser_h{"msie$2"}++;
-						$TmpBrowser{$UserAgent}="msie$2";
-					}
-					# Firefox ?
-					elsif ($UserAgent =~ /$regverfirefox/o) {
-						$_browser_h{"firefox$1"}++;
-						$TmpBrowser{$UserAgent}="firefox$1";
-					}
-					# Subversion ?
-					elsif ($UserAgent =~ /$regversvn/o) {
-						$_browser_h{"svn$1"}++;
-						$TmpBrowser{$UserAgent}="svn$1";
-					}
-					# Netscape 6.x, 7.x ... ?
-					elsif ($UserAgent =~ /$regvernetscape/o) {
-						$_browser_h{"netscape$1"}++;
-						$TmpBrowser{$UserAgent}="netscape$1";
-					}
-					# Netscape 3.x, 4.x ... ?
-					elsif ($UserAgent =~ /$regvermozilla/o && $UserAgent !~ /$regnotnetscape/o) {
-						$_browser_h{"netscape$2"}++;
-						$TmpBrowser{$UserAgent}="netscape$2";
-					}
-					# Other known browsers ?
-					else {
-						$found=0;
-						foreach (@BrowsersSearchIDOrder) {	# Search ID in order of BrowsersSearchIDOrder
-							if ($UserAgent =~ /$_/) {
-								my $browser=&UnCompileRegex($_);
-								# TODO If browser is in a family, use version
-								$_browser_h{"$browser"}++;
-								$TmpBrowser{$UserAgent}="$browser";
-								$found=1;
-								last;
-							}
-						}
-					}
-					# Unknown browser ?
-					if (!$found) {
-						$_browser_h{'Unknown'}++;
-						$TmpBrowser{$UserAgent}='Unknown';
-						my $newua=$UserAgent; $newua =~ tr/\+ /__/;
-						$_unknownrefererbrowser_l{$newua}=$timerecord;
-					}
-				}
-				else {
-					$_browser_h{$uabrowser}++;
-					if ($uabrowser eq 'Unknown') {
-						my $newua=$UserAgent; $newua =~ tr/\+ /__/;
-						$_unknownrefererbrowser_l{$newua}=$timerecord;
-					}
-				}
-
-			}
-
-			if ($LevelForOSDetection) {
-
-				# Analyze: OS
-				#------------
-				my $uaos=$TmpOS{$UserAgent};
-				if (! $uaos) {
-					my $found=0;
-					# in OSHashID list ?
-					foreach (@OSSearchIDOrder) {	# Search ID in order of OSSearchIDOrder
-						if ($UserAgent =~ /$_/) {
-							my $osid=$OSHashID{&UnCompileRegex($_)};
-							$_os_h{"$osid"}++;
-							$TmpOS{$UserAgent}="$osid";
-							$found=1;
-							last;
-						}
-					}
-					# Unknown OS ?
-					if (!$found) {
-						$_os_h{'Unknown'}++;
-						$TmpOS{$UserAgent}='Unknown';
-						my $newua=$UserAgent; $newua =~ tr/\+ /__/;
-						$_unknownreferer_l{$newua}=$timerecord;
-					}
-				}
-				else {
-					$_os_h{$uaos}++;
-					if ($uaos eq 'Unknown') {
-						my $newua=$UserAgent; $newua =~ tr/\+ /__/;
-						$_unknownreferer_l{$newua}=$timerecord;
-					}
-				}
-
-			}
-
-		}
-		else {
-			$_browser_h{'Unknown'}++;
-			$_os_h{'Unknown'}++;
-		}
-
-		# Analyze: Referer
-		#-----------------
-		my $found=0;
-		if ($pos_referer >= 0 && $LevelForRefererAnalyze && $field[$pos_referer]) {
-
-			# Direct ?
-			if ($field[$pos_referer] eq '-' || $field[$pos_referer] eq 'bookmarks') {	# "bookmarks" is sent by Netscape, '-' by all others browsers
-				# Direct access
-				if ($PageBool) { $_from_p[0]++; }
-				$_from_h[0]++;
-				$found=1;
-			}
-			else {
-				$field[$pos_referer] =~ /$regreferer/o;
-				my $refererprot=$1;
-				my $refererserver=($2||'').(! $3 || $3 eq ':80'?'':$3);	# refererserver is www.xxx.com or www.xxx.com:81 but not www.xxx.com:80
-				# HTML link ?
-				if ($refererprot =~ /^http/i) {
-					#if ($Debug) { debug("  Analyze referer refererprot=$refererprot refererserver=$refererserver",5); }
-
-					# Kind of origin
-					if (!$TmpRefererServer{$refererserver}) {	# is "=" if same site, "search egine key" if search engine, not defined otherwise
-						if ($refererserver =~ /$reglocal/o) {
-							# Intern (This hit came from another page of the site)
-							if ($Debug) { debug("  Server '$refererserver' is added to TmpRefererServer with value '='",2); }
-							$TmpRefererServer{$refererserver}='=';
-							$found=1;
+						if (! $_waithost_s{$HostResolved}) {
+							# This is a second visit or more
+							# We count 'visit','exit','entry','DayVisits'
+							if ($Debug) { debug("  This is a second visit for $HostResolved.",4); }
+							my $timehosts=$_host_s{$HostResolved};
+							my $page=$_host_u{$HostResolved};
+							if ($page) { $_url_x{$page}++; }
+							$_url_e{$field[$pos_url]}++;
+							$DayVisits{$yearmonthdayrecord}++;
+							# We can't count session yet because we don't have the start so
+							# we save params of first 'wait' session
+							$_waithost_l{$HostResolved}=$timehostl;
+							$_waithost_s{$HostResolved}=$timehosts;
+							$_waithost_u{$HostResolved}=$page;
 						}
 						else {
-							foreach (@HostAliases) {
-								if ($refererserver =~ /$_/) {
-									# Intern (This hit came from another page of the site)
-									if ($Debug) { debug("  Server '$refererserver' is added to TmpRefererServer with value '='",2); }
-									$TmpRefererServer{$refererserver}='=';
+							# This is third visit or more
+							# We count 'session','visit','exit','entry','DayVisits'
+							if ($Debug) { debug("  This is a third visit or more for $HostResolved.",4); }
+							my $timehosts=$_host_s{$HostResolved};
+							my $page=$_host_u{$HostResolved};
+							if ($page) { $_url_x{$page}++; }
+							$_url_e{$field[$pos_url]}++;
+							$DayVisits{$yearmonthdayrecord}++;
+							if ($timehosts) { $_session{GetSessionRange($timehosts,$timehostl)}++; }
+						}
+						# Save new session properties
+						$_host_s{$HostResolved}=$timerecord;
+						$_host_l{$HostResolved}=$timerecord;
+						$_host_u{$HostResolved}=$field[$pos_url];
+					}
+					elsif ($timerecord > $timehostl) {
+						# This is a same visit we can count
+						if ($Debug) { debug("  This is same visit still running for $HostResolved. host_l/host_u changed to $timerecord/$field[$pos_url]",4); }
+						$_host_l{$HostResolved}=$timerecord;
+						$_host_u{$HostResolved}=$field[$pos_url];
+					}
+					elsif ($timerecord == $timehostl) {
+						# This is a same visit we can count
+						if ($Debug) { debug("  This is same visit still running for $HostResolved. host_l/host_u changed to $timerecord/$field[$pos_url]",4); }
+						$_host_u{$HostResolved}=$field[$pos_url];
+					}
+					elsif ($timerecord < $_host_s{$HostResolved}) {
+						# Should happens only with not correctly sorted log files
+						if ($Debug) { debug("  This is same visit still running for $HostResolved with start not in order. host_s changed to $timerecord (entry page also changed if first visit)",4); }
+						if (! $_waithost_s{$HostResolved}) {
+							# We can reorder entry page only if it's the first visit found in this update run (The saved entry page was $_waithost_e if $_waithost_s{$HostResolved} is not defined. If second visit or more, entry was directly counted and not saved)
+							$_waithost_e{$HostResolved}=$field[$pos_url];
+						}
+						else {
+							# We can't change entry counted as we dont't know what was the url counted as entry
+						}
+						$_host_s{$HostResolved}=$timerecord;
+					}
+					else {
+						if ($Debug) { debug("  This is same visit still running for $HostResolved with hit between start and last hits. No change",4); }
+					}
+				}
+				else {
+					# This is a new visit (may be). First new visit found for this host. We save in wait array the entry page to count later
+					if ($Debug) { debug("  New session (may be) for $HostResolved. Save in wait array to see later",4); }
+					$_waithost_e{$HostResolved}=$field[$pos_url];
+					# Save new session properties
+					$_host_u{$HostResolved}=$field[$pos_url];
+					$_host_s{$HostResolved}=$timerecord;
+					$_host_l{$HostResolved}=$timerecord;
+				}
+				$_host_p{$HostResolved}++;
+			}
+			$_host_h{$HostResolved}++;
+			$_host_k{$HostResolved}+=int($field[$pos_size]);
+	
+			# Analyze: Browser - OS
+			#----------------------
+			if ($pos_agent >= 0 && $UserAgent) {
+	
+				if ($LevelForBrowsersDetection) {
+	
+					# Analyze: Browser
+					#-----------------
+					my $uabrowser=$TmpBrowser{$UserAgent};
+					if (! $uabrowser) {
+						my $found=1;
+						# IE ?
+						if ($UserAgent =~ /$regvermsie/o && $UserAgent !~ /$regnotie/o) {
+							$_browser_h{"msie$2"}++;
+							$TmpBrowser{$UserAgent}="msie$2";
+						}
+						# Firefox ?
+						elsif ($UserAgent =~ /$regverfirefox/o) {
+							$_browser_h{"firefox$1"}++;
+							$TmpBrowser{$UserAgent}="firefox$1";
+						}
+						# Subversion ?
+						elsif ($UserAgent =~ /$regversvn/o) {
+							$_browser_h{"svn$1"}++;
+							$TmpBrowser{$UserAgent}="svn$1";
+						}
+						# Netscape 6.x, 7.x ... ?
+						elsif ($UserAgent =~ /$regvernetscape/o) {
+							$_browser_h{"netscape$1"}++;
+							$TmpBrowser{$UserAgent}="netscape$1";
+						}
+						# Netscape 3.x, 4.x ... ?
+						elsif ($UserAgent =~ /$regvermozilla/o && $UserAgent !~ /$regnotnetscape/o) {
+							$_browser_h{"netscape$2"}++;
+							$TmpBrowser{$UserAgent}="netscape$2";
+						}
+						# Other known browsers ?
+						else {
+							$found=0;
+							foreach (@BrowsersSearchIDOrder) {	# Search ID in order of BrowsersSearchIDOrder
+								if ($UserAgent =~ /$_/) {
+									my $browser=&UnCompileRegex($_);
+									# TODO If browser is in a family, use version
+									$_browser_h{"$browser"}++;
+									$TmpBrowser{$UserAgent}="$browser";
 									$found=1;
 									last;
 								}
 							}
-							if (! $found) {
-								# Extern (This hit came from an external web site).
-	
-								if ($LevelForSearchEnginesDetection) {
-	
-									foreach (@SearchEnginesSearchIDOrder) {		# Search ID in order of SearchEnginesSearchIDOrder
-										if ($refererserver =~ /$_/) {
-											my $key=&UnCompileRegex($_);
-											if (! $NotSearchEnginesKeys{$key} || $refererserver !~ /$NotSearchEnginesKeys{$key}/i) {
-												# This hit came from the search engine $key
-												if ($Debug) { debug("  Server '$refererserver' is added to TmpRefererServer with value '$key'",2); }
-												$TmpRefererServer{$refererserver}=$SearchEnginesHashID{$key};
-												$found=1;
-											}
-											last;
-										}
-									}
-
-								}
-							}
+						}
+						# Unknown browser ?
+						if (!$found) {
+							$_browser_h{'Unknown'}++;
+							$TmpBrowser{$UserAgent}='Unknown';
+							my $newua=$UserAgent; $newua =~ tr/\+ /__/;
+							$_unknownrefererbrowser_l{$newua}=$timerecord;
 						}
 					}
-
-					my $tmprefererserver=$TmpRefererServer{$refererserver};
-					if ($tmprefererserver) {
-						if ($tmprefererserver eq '=') {
-							# Intern (This hit came from another page of the site)
-							if ($PageBool) { $_from_p[4]++; }
-							$_from_h[4]++;
-							$found=1;
+					else {
+						$_browser_h{$uabrowser}++;
+						if ($uabrowser eq 'Unknown') {
+							my $newua=$UserAgent; $newua =~ tr/\+ /__/;
+							$_unknownrefererbrowser_l{$newua}=$timerecord;
 						}
-						else {
-							# This hit came from a search engine
-							if ($PageBool) { $_from_p[2]++; $_se_referrals_p{$tmprefererserver}++; }
-							$_from_h[2]++;
-							$_se_referrals_h{$tmprefererserver}++;
-							$found=1;
-							if ($PageBool && $LevelForKeywordsDetection) {
-								# we will complete %_keyphrases hash array
-								my @refurl=split(/\?/,$field[$pos_referer],2);	# TODO Use \? or [$URLQuerySeparators] ?
-								if ($refurl[1]) {
-									# Extract params of referer query string (q=cache:mmm:www/zzz+aaa+bbb q=aaa+bbb/ccc key=ddd%20eee lang_en ie=UTF-8 ...)
-									if ($SearchEnginesKnownUrl{$tmprefererserver}) {	# Search engine with known URL syntax
-										foreach my $param (split(/&/,$KeyWordsNotSensitive?lc($refurl[1]):$refurl[1])) {
-											if ($param =~ s/^$SearchEnginesKnownUrl{$tmprefererserver}//) {
-												# We found good parameter
-												# Now param is keyphrase: "cache:mmm:www/zzz+aaa+bbb/ccc+ddd%20eee'fff,ggg"
-												$param =~ s/^(cache|related):[^\+]+//;	# Should be useless since this is for hit on 'not pages'
-												&ChangeWordSeparatorsIntoSpace($param);	# Change [ aaa+bbb/ccc+ddd%20eee'fff,ggg ] into [ aaa bbb/ccc ddd eee fff ggg]
-												$param =~ s/^ +//; $param =~ s/ +$//; $param =~ tr/ /\+/s;
-												if ((length $param) > 0) { $_keyphrases{$param}++; }
+					}
+	
+				}
+	
+				if ($LevelForOSDetection) {
+	
+					# Analyze: OS
+					#------------
+					my $uaos=$TmpOS{$UserAgent};
+					if (! $uaos) {
+						my $found=0;
+						# in OSHashID list ?
+						foreach (@OSSearchIDOrder) {	# Search ID in order of OSSearchIDOrder
+							if ($UserAgent =~ /$_/) {
+								my $osid=$OSHashID{&UnCompileRegex($_)};
+								$_os_h{"$osid"}++;
+								$TmpOS{$UserAgent}="$osid";
+								$found=1;
+								last;
+							}
+						}
+						# Unknown OS ?
+						if (!$found) {
+							$_os_h{'Unknown'}++;
+							$TmpOS{$UserAgent}='Unknown';
+							my $newua=$UserAgent; $newua =~ tr/\+ /__/;
+							$_unknownreferer_l{$newua}=$timerecord;
+						}
+					}
+					else {
+						$_os_h{$uaos}++;
+						if ($uaos eq 'Unknown') {
+							my $newua=$UserAgent; $newua =~ tr/\+ /__/;
+							$_unknownreferer_l{$newua}=$timerecord;
+						}
+					}
+	
+				}
+	
+			}
+			else {
+				$_browser_h{'Unknown'}++;
+				$_os_h{'Unknown'}++;
+			}
+	
+			# Analyze: Referer
+			#-----------------
+			my $found=0;
+			if ($pos_referer >= 0 && $LevelForRefererAnalyze && $field[$pos_referer]) {
+	
+				# Direct ?
+				if ($field[$pos_referer] eq '-' || $field[$pos_referer] eq 'bookmarks') {	# "bookmarks" is sent by Netscape, '-' by all others browsers
+					# Direct access
+					if ($PageBool) { $_from_p[0]++; }
+					$_from_h[0]++;
+					$found=1;
+				}
+				else {
+					$field[$pos_referer] =~ /$regreferer/o;
+					my $refererprot=$1;
+					my $refererserver=($2||'').(! $3 || $3 eq ':80'?'':$3);	# refererserver is www.xxx.com or www.xxx.com:81 but not www.xxx.com:80
+					# HTML link ?
+					if ($refererprot =~ /^http/i) {
+						#if ($Debug) { debug("  Analyze referer refererprot=$refererprot refererserver=$refererserver",5); }
+	
+						# Kind of origin
+						if (!$TmpRefererServer{$refererserver}) {	# is "=" if same site, "search egine key" if search engine, not defined otherwise
+							if ($refererserver =~ /$reglocal/o) {
+								# Intern (This hit came from another page of the site)
+								if ($Debug) { debug("  Server '$refererserver' is added to TmpRefererServer with value '='",2); }
+								$TmpRefererServer{$refererserver}='=';
+								$found=1;
+							}
+							else {
+								foreach (@HostAliases) {
+									if ($refererserver =~ /$_/) {
+										# Intern (This hit came from another page of the site)
+										if ($Debug) { debug("  Server '$refererserver' is added to TmpRefererServer with value '='",2); }
+										$TmpRefererServer{$refererserver}='=';
+										$found=1;
+										last;
+									}
+								}
+								if (! $found) {
+									# Extern (This hit came from an external web site).
+		
+									if ($LevelForSearchEnginesDetection) {
+		
+										foreach (@SearchEnginesSearchIDOrder) {		# Search ID in order of SearchEnginesSearchIDOrder
+											if ($refererserver =~ /$_/) {
+												my $key=&UnCompileRegex($_);
+												if (! $NotSearchEnginesKeys{$key} || $refererserver !~ /$NotSearchEnginesKeys{$key}/i) {
+													# This hit came from the search engine $key
+													if ($Debug) { debug("  Server '$refererserver' is added to TmpRefererServer with value '$key'",2); }
+													$TmpRefererServer{$refererserver}=$SearchEnginesHashID{$key};
+													$found=1;
+												}
 												last;
 											}
 										}
+	
 									}
-									elsif ($LevelForKeywordsDetection >= 2) {			# Search engine with unknown URL syntax
-										foreach my $param (split(/&/,$KeyWordsNotSensitive?lc($refurl[1]):$refurl[1])) {
-											my $foundexcludeparam=0;
-											foreach my $paramtoexclude (@WordsToCleanSearchUrl) {
-												if ($param =~ /$paramtoexclude/i) { $foundexcludeparam=1; last; } # Not the param with search criteria
-											}
-											if ($foundexcludeparam) { next; }
-											# We found good parameter
-											$param =~ s/.*=//;
-											# Now param is keyphrase: "aaa+bbb/ccc+ddd%20eee'fff,ggg"
-											$param =~ s/^(cache|related):[^\+]+//;		# Should be useless since this is for hit on 'not pages'
-											&ChangeWordSeparatorsIntoSpace($param);		# Change [ aaa+bbb/ccc+ddd%20eee'fff,ggg ] into [ aaa bbb/ccc ddd eee fff ggg ]
-											$param =~ s/^ +//; $param =~ s/ +$//; $param =~ tr/ /\+/s;
-											if ((length $param) > 2) { $_keyphrases{$param}++; last; }
-										}
-									}
-								}	# End of elsif refurl[1]
-								elsif ($SearchEnginesWithKeysNotInQuery{$tmprefererserver}) {
-								    # If search engine with key inside page url like a9 (www.a9.com/searchkey1%20searchkey2)
-                                    if ($refurl[0] =~ /$SearchEnginesKnownUrl{$tmprefererserver}(.*)$/) {
-                                        my $param=$1;
-                                        &ChangeWordSeparatorsIntoSpace($param);
-  										if ((length $param) > 0) { $_keyphrases{$param}++; }
-                                    }
 								}
-
 							}
 						}
-					}	# End of if ($TmpRefererServer)
-					else {
-						# This hit came from a site other than a search engine
-						if ($PageBool) { $_from_p[3]++; }
-						$_from_h[3]++;
-						# http://www.mysite.com/ must be same referer than http://www.mysite.com but .../mypage/ differs of .../mypage
-						#if ($refurl[0] =~ /^[^\/]+\/$/) { $field[$pos_referer] =~ s/\/$//; }	# Code moved in Save_History
-						# TODO: lowercase the value for referer server to have refering server not case sensitive
-						if ($URLReferrerWithQuery) {
-							if ($PageBool) { $_pagesrefs_p{$field[$pos_referer]}++; }
-							$_pagesrefs_h{$field[$pos_referer]}++;
-						}
-						else {
-							# We discard query for referer
-							if ($field[$pos_referer]=~/$regreferernoquery/o) {
-								if ($PageBool) { $_pagesrefs_p{"$1"}++; }
-								$_pagesrefs_h{"$1"}++;
+	
+						my $tmprefererserver=$TmpRefererServer{$refererserver};
+						if ($tmprefererserver) {
+							if ($tmprefererserver eq '=') {
+								# Intern (This hit came from another page of the site)
+								if ($PageBool) { $_from_p[4]++; }
+								$_from_h[4]++;
+								$found=1;
 							}
 							else {
+								# This hit came from a search engine
+								if ($PageBool) { $_from_p[2]++; $_se_referrals_p{$tmprefererserver}++; }
+								$_from_h[2]++;
+								$_se_referrals_h{$tmprefererserver}++;
+								$found=1;
+								if ($PageBool && $LevelForKeywordsDetection) {
+									# we will complete %_keyphrases hash array
+									my @refurl=split(/\?/,$field[$pos_referer],2);	# TODO Use \? or [$URLQuerySeparators] ?
+									if ($refurl[1]) {
+										# Extract params of referer query string (q=cache:mmm:www/zzz+aaa+bbb q=aaa+bbb/ccc key=ddd%20eee lang_en ie=UTF-8 ...)
+										if ($SearchEnginesKnownUrl{$tmprefererserver}) {	# Search engine with known URL syntax
+											foreach my $param (split(/&/,$KeyWordsNotSensitive?lc($refurl[1]):$refurl[1])) {
+												if ($param =~ s/^$SearchEnginesKnownUrl{$tmprefererserver}//) {
+													# We found good parameter
+													# Now param is keyphrase: "cache:mmm:www/zzz+aaa+bbb/ccc+ddd%20eee'fff,ggg"
+													$param =~ s/^(cache|related):[^\+]+//;	# Should be useless since this is for hit on 'not pages'
+													&ChangeWordSeparatorsIntoSpace($param);	# Change [ aaa+bbb/ccc+ddd%20eee'fff,ggg ] into [ aaa bbb/ccc ddd eee fff ggg]
+													$param =~ s/^ +//; $param =~ s/ +$//; $param =~ tr/ /\+/s;
+													if ((length $param) > 0) { $_keyphrases{$param}++; }
+													last;
+												}
+											}
+										}
+										elsif ($LevelForKeywordsDetection >= 2) {			# Search engine with unknown URL syntax
+											foreach my $param (split(/&/,$KeyWordsNotSensitive?lc($refurl[1]):$refurl[1])) {
+												my $foundexcludeparam=0;
+												foreach my $paramtoexclude (@WordsToCleanSearchUrl) {
+													if ($param =~ /$paramtoexclude/i) { $foundexcludeparam=1; last; } # Not the param with search criteria
+												}
+												if ($foundexcludeparam) { next; }
+												# We found good parameter
+												$param =~ s/.*=//;
+												# Now param is keyphrase: "aaa+bbb/ccc+ddd%20eee'fff,ggg"
+												$param =~ s/^(cache|related):[^\+]+//;		# Should be useless since this is for hit on 'not pages'
+												&ChangeWordSeparatorsIntoSpace($param);		# Change [ aaa+bbb/ccc+ddd%20eee'fff,ggg ] into [ aaa bbb/ccc ddd eee fff ggg ]
+												$param =~ s/^ +//; $param =~ s/ +$//; $param =~ tr/ /\+/s;
+												if ((length $param) > 2) { $_keyphrases{$param}++; last; }
+											}
+										}
+									}	# End of elsif refurl[1]
+									elsif ($SearchEnginesWithKeysNotInQuery{$tmprefererserver}) {
+									    # If search engine with key inside page url like a9 (www.a9.com/searchkey1%20searchkey2)
+	                                    if ($refurl[0] =~ /$SearchEnginesKnownUrl{$tmprefererserver}(.*)$/) {
+	                                        my $param=$1;
+	                                        &ChangeWordSeparatorsIntoSpace($param);
+	  										if ((length $param) > 0) { $_keyphrases{$param}++; }
+	                                    }
+									}
+	
+								}
+							}
+						}	# End of if ($TmpRefererServer)
+						else {
+							# This hit came from a site other than a search engine
+							if ($PageBool) { $_from_p[3]++; }
+							$_from_h[3]++;
+							# http://www.mysite.com/ must be same referer than http://www.mysite.com but .../mypage/ differs of .../mypage
+							#if ($refurl[0] =~ /^[^\/]+\/$/) { $field[$pos_referer] =~ s/\/$//; }	# Code moved in Save_History
+							# TODO: lowercase the value for referer server to have refering server not case sensitive
+							if ($URLReferrerWithQuery) {
 								if ($PageBool) { $_pagesrefs_p{$field[$pos_referer]}++; }
 								$_pagesrefs_h{$field[$pos_referer]}++;
 							}
+							else {
+								# We discard query for referer
+								if ($field[$pos_referer]=~/$regreferernoquery/o) {
+									if ($PageBool) { $_pagesrefs_p{"$1"}++; }
+									$_pagesrefs_h{"$1"}++;
+								}
+								else {
+									if ($PageBool) { $_pagesrefs_p{$field[$pos_referer]}++; }
+									$_pagesrefs_h{$field[$pos_referer]}++;
+								}
+							}
+							$found=1;
 						}
+					}
+	
+					# News Link ?
+					if (! $found && $refererprot =~ /^news/i) {
 						$found=1;
+						if ($PageBool) { $_from_p[5]++; }
+						$_from_h[5]++;
 					}
 				}
-
-				# News Link ?
-				if (! $found && $refererprot =~ /^news/i) {
-					$found=1;
-					if ($PageBool) { $_from_p[5]++; }
-					$_from_h[5]++;
-				}
 			}
-		}
-
-		# Origin not found
-		if (!$found) {
-			if ($ShowUnknownOrigin) { print "Unknown origin: $field[$pos_referer]\n"; }
-			if ($PageBool) { $_from_p[1]++; }
-			$_from_h[1]++;
-		}
-
-		# Analyze: EMail
-		#---------------
-		if ($pos_emails>=0 && $field[$pos_emails]) {
-			if ($field[$pos_emails] eq '<>') { $field[$pos_emails]='Unknown'; }
-			elsif ($field[$pos_emails] !~ /\@/) { $field[$pos_emails].="\@$SiteDomain"; }
-			$_emails_h{lc($field[$pos_emails])}++;									#Count accesses for sender email (hit)
-			$_emails_k{lc($field[$pos_emails])}+=int($field[$pos_size]);			#Count accesses for sender email (kb)
-			$_emails_l{lc($field[$pos_emails])}=$timerecord;
-		}
-		if ($pos_emailr>=0 && $field[$pos_emailr]) {
-			if ($field[$pos_emailr] !~ /\@/) { $field[$pos_emailr].="\@$SiteDomain"; }
-			$_emailr_h{lc($field[$pos_emailr])}++;									#Count accesses for receiver email (hit)
-			$_emailr_k{lc($field[$pos_emailr])}+=int($field[$pos_size]);			#Count accesses for receiver email (kb)
-			$_emailr_l{lc($field[$pos_emailr])}=$timerecord;
-		}
+	
+			# Origin not found
+			if (!$found) {
+				if ($ShowUnknownOrigin) { print "Unknown origin: $field[$pos_referer]\n"; }
+				if ($PageBool) { $_from_p[1]++; }
+				$_from_h[1]++;
+			}
+	
+			# Analyze: EMail
+			#---------------
+			if ($pos_emails>=0 && $field[$pos_emails]) {
+				if ($field[$pos_emails] eq '<>') { $field[$pos_emails]='Unknown'; }
+				elsif ($field[$pos_emails] !~ /\@/) { $field[$pos_emails].="\@$SiteDomain"; }
+				$_emails_h{lc($field[$pos_emails])}++;									#Count accesses for sender email (hit)
+				$_emails_k{lc($field[$pos_emails])}+=int($field[$pos_size]);			#Count accesses for sender email (kb)
+				$_emails_l{lc($field[$pos_emails])}=$timerecord;
+			}
+			if ($pos_emailr>=0 && $field[$pos_emailr]) {
+				if ($field[$pos_emailr] !~ /\@/) { $field[$pos_emailr].="\@$SiteDomain"; }
+				$_emailr_h{lc($field[$pos_emailr])}++;									#Count accesses for receiver email (hit)
+				$_emailr_k{lc($field[$pos_emailr])}+=int($field[$pos_size]);			#Count accesses for receiver email (kb)
+				$_emailr_l{lc($field[$pos_emailr])}=$timerecord;
+			}
 		}
 
 		# Check cluster
@@ -7314,13 +7269,16 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 
  			# Check code
  			my $conditionok=0;
- 			foreach my $condnum (0..@{$ExtraCodeFilter[$extranum]}-1) {
-				if ($Debug) { debug("  Check code '$field[$pos_code]' must be '$ExtraCodeFilter[$extranum][$condnum]'",5); }
-				if ($field[$pos_code] eq "$ExtraCodeFilter[$extranum][$condnum]") { $conditionok=1; last; }
+ 			if ($ExtraCodeFilter[$extranum])
+ 			{
+	 			foreach my $condnum (0..@{$ExtraCodeFilter[$extranum]}-1) {
+					if ($Debug) { debug("  Check code '$field[$pos_code]' must be '$ExtraCodeFilter[$extranum][$condnum]'",5); }
+					if ($field[$pos_code] eq "$ExtraCodeFilter[$extranum][$condnum]") { $conditionok=1; last; }
+				}
+				if (! $conditionok && @{$ExtraCodeFilter[$extranum]}) { next; }	# End for this section
+				if ($Debug) { debug("  No check on code or code is OK. Now we check other conditions.",5); }
 			}
-			if (! $conditionok && @{$ExtraCodeFilter[$extranum]}) { next; }	# End for this section
-			if ($Debug) { debug("  No check on code or code is OK. Now we check other conditions.",5); }
-
+			
  			# Check conditions
  			$conditionok=0;
  			foreach my $condnum (0..@{$ExtraConditionType[$extranum]}-1) {
@@ -7941,7 +7899,11 @@ if (scalar keys %HTMLOutput) {
 	}
 	# TotalHitsErrors TotalBytesErrors
 	my $TotalHitsErrors=0; my $TotalBytesErrors=0;
-	foreach (keys %_errors_h) { $TotalHitsErrors+=$_errors_h{$_}; $TotalBytesErrors+=$_errors_k{$_}; }
+	foreach (keys %_errors_h) { 
+#		print "xxxx".$_." zzz".$_errors_h{$_};
+		$TotalHitsErrors+=$_errors_h{$_};
+		$TotalBytesErrors+=$_errors_k{$_};
+	}
 	# TotalEntries (if not already specifically counted, we init it from _url_e hash table)
 	if (!$TotalEntries) { foreach (keys %_url_e) { $TotalEntries+=$_url_e{$_}; } }
 	# TotalExits (if not already specifically counted, we init it from _url_x hash table)
