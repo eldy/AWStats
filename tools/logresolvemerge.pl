@@ -84,7 +84,7 @@ use vars qw/
 
 # ---------- External Program variables ----------
 # For gzip compression
-my $zcat = 'zcat';
+my $zcat = 'gzip -cd';
 my $zcat_file = '\.gz$';
 # For bz2 compression
 my $bzcat = 'bzcat';
