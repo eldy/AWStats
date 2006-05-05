@@ -4383,6 +4383,7 @@ sub Sanitize {
 
 #------------------------------------------------------------------------------
 # Function:     Clean a string of HTML tags to avoid 'Cross Site Scripting attacks'
+#               and clean | char.
 # Parameters:   stringtoclean
 # Input:        None
 # Output:       None
@@ -4392,6 +4393,7 @@ sub CleanFromCSSA {
 	my $stringtoclean=shift;
 	$stringtoclean =~ s/</&lt;/g;
 	$stringtoclean =~ s/>/&gt;/g;
+	$stringtoclean =~ s/|//g;
 	return $stringtoclean;
 }
 
@@ -5470,6 +5472,7 @@ my @AllowedCLIArgs=('migrate','config',
 'hostfilter','hostfilterex','urlfilter','urlfilterex','refererpagesfilter','refererpagesfilterex',
 'pluginmode','filterrawlog');
 
+# Parse input parameters and sanitize them for security reasons
 $QueryString='';
 # AWStats use GATEWAY_INTERFACE to known if ran as CLI or CGI. AWSTATS_DEL_GATEWAY_INTERFACE can
 # be set to force AWStats to be ran as CLI even from a web page.
@@ -5488,7 +5491,7 @@ if ($ENV{'GATEWAY_INTERFACE'}) {	# Run from a browser as CGI
 	    $QueryString =~ s/&/&amp;/g;
 	}
 
-	$QueryString = CleanFromCSSA($QueryString);
+	$QueryString = CleanFromCSSA(&DecodeEncodedString($QueryString));
 
     # Security test
 	if ($QueryString =~ /LogFile=([^&]+)/i)				{ error("Logfile parameter can't be overwritten when AWStats is used from a CGI"); }
@@ -5496,26 +5499,26 @@ if ($ENV{'GATEWAY_INTERFACE'}) {	# Run from a browser as CGI
 	# No update but report by default when run from a browser
 	$UpdateStats=($QueryString=~/update=1/i?1:0);
 
-	if ($QueryString =~ /config=([^&]+)/i)				{ $SiteConfig=&Sanitize(&DecodeEncodedString("$1")); }
-	if ($QueryString =~ /diricons=([^&]+)/i)			{ $DirIcons=&DecodeEncodedString("$1"); }
-	if ($QueryString =~ /pluginmode=([^&]+)/i)			{ $PluginMode=&Sanitize(&DecodeEncodedString("$1"),1); }
-	if ($QueryString =~ /configdir=([^&]+)/i)			{ $DirConfig=&Sanitize(&DecodeEncodedString("$1")); }
+	if ($QueryString =~ /config=([^&]+)/i)				{ $SiteConfig=&Sanitize("$1"); }
+	if ($QueryString =~ /diricons=([^&]+)/i)			{ $DirIcons="$1"; }
+	if ($QueryString =~ /pluginmode=([^&]+)/i)			{ $PluginMode=&Sanitize("$1",1); }
+	if ($QueryString =~ /configdir=([^&]+)/i)			{ $DirConfig=&Sanitize("$1"); }
 	# All filters
-	if ($QueryString =~ /hostfilter=([^&]+)/i)			{ $FilterIn{'host'}=&DecodeEncodedString("$1"); }			# Filter on host list can also be defined with hostfilter=filter
-	if ($QueryString =~ /hostfilterex=([^&]+)/i)		{ $FilterEx{'host'}=&DecodeEncodedString("$1"); }			#
-	if ($QueryString =~ /urlfilter=([^&]+)/i)			{ $FilterIn{'url'}=&DecodeEncodedString("$1"); }			# Filter on URL list can also be defined with urlfilter=filter
-	if ($QueryString =~ /urlfilterex=([^&]+)/i)			{ $FilterEx{'url'}=&DecodeEncodedString("$1"); }			#
-	if ($QueryString =~ /refererpagesfilter=([^&]+)/i)	{ $FilterIn{'refererpages'}=&DecodeEncodedString("$1"); }	# Filter on referer list can also be defined with refererpagesfilter=filter
-	if ($QueryString =~ /refererpagesfilterex=([^&]+)/i) { $FilterEx{'refererpages'}=&DecodeEncodedString("$1"); }	#
+	if ($QueryString =~ /hostfilter=([^&]+)/i)			{ $FilterIn{'host'}="$1"; }			# Filter on host list can also be defined with hostfilter=filter
+	if ($QueryString =~ /hostfilterex=([^&]+)/i)		{ $FilterEx{'host'}="$1"; }			#
+	if ($QueryString =~ /urlfilter=([^&]+)/i)			{ $FilterIn{'url'}="$1"; }			# Filter on URL list can also be defined with urlfilter=filter
+	if ($QueryString =~ /urlfilterex=([^&]+)/i)			{ $FilterEx{'url'}="$1"; }			#
+	if ($QueryString =~ /refererpagesfilter=([^&]+)/i)	{ $FilterIn{'refererpages'}="$1"; }	# Filter on referer list can also be defined with refererpagesfilter=filter
+	if ($QueryString =~ /refererpagesfilterex=([^&]+)/i) { $FilterEx{'refererpages'}="$1"; }	#
 	# All output
-	if ($QueryString =~ /output=allhosts:([^&]+)/i)		{ $FilterIn{'host'}=&DecodeEncodedString("$1"); }			# Filter on host list can be defined with output=allhosts:filter to reduce number of lines read and showed
-	if ($QueryString =~ /output=lasthosts:([^&]+)/i)	{ $FilterIn{'host'}=&DecodeEncodedString("$1"); }			# Filter on host list can be defined with output=lasthosts:filter to reduce number of lines read and showed
-	if ($QueryString =~ /output=urldetail:([^&]+)/i)	{ $FilterIn{'url'}=&DecodeEncodedString("$1"); }			# Filter on URL list can be defined with output=urldetail:filter to reduce number of lines read and showed
-	if ($QueryString =~ /output=refererpages:([^&]+)/i)	{ $FilterIn{'refererpages'}=&DecodeEncodedString("$1"); }	# Filter on referer list can be defined with output=refererpages:filter to reduce number of lines read and showed
+	if ($QueryString =~ /output=allhosts:([^&]+)/i)		{ $FilterIn{'host'}="$1"; }			# Filter on host list can be defined with output=allhosts:filter to reduce number of lines read and showed
+	if ($QueryString =~ /output=lasthosts:([^&]+)/i)	{ $FilterIn{'host'}="$1"; }			# Filter on host list can be defined with output=lasthosts:filter to reduce number of lines read and showed
+	if ($QueryString =~ /output=urldetail:([^&]+)/i)	{ $FilterIn{'url'}="$1"; }			# Filter on URL list can be defined with output=urldetail:filter to reduce number of lines read and showed
+	if ($QueryString =~ /output=refererpages:([^&]+)/i)	{ $FilterIn{'refererpages'}="$1"; }	# Filter on referer list can be defined with output=refererpages:filter to reduce number of lines read and showed
 
 	# If migrate
 	if ($QueryString =~ /(^|-|&|&amp;)migrate=([^&]+)/i)	{
-		$MigrateStats=&DecodeEncodedString("$2"); 
+		$MigrateStats=&Sanitize("$2");
 		$MigrateStats =~ /^(.*)$PROG(\d{0,2})(\d\d)(\d\d\d\d)(.*)\.txt$/;
 		$SiteConfig=$5?$5:'xxx'; $SiteConfig =~ s/^\.//;		# SiteConfig is used to find config file
 	}
@@ -5579,8 +5582,6 @@ if ($QueryString =~ /(^|&|&amp;)debug=(\d+)/i)			{ $Debug=$2; }
 if ($QueryString =~ /(^|&|&amp;)databasebreak=(\w+)/i)	{ $DatabaseBreak=$2; }
 if ($QueryString =~ /(^|&|&amp;)updatefor=(\d+)/i)		{ $UpdateFor=$2; }
 if ($QueryString =~ /(^|&|&amp;)noloadplugin=([^&]+)/i)	{ foreach (split(/,/,$2)) { $NoLoadPlugin{&Sanitize("$_",1)}=1; } }
-#Removed for security reasons
-#if ($QueryString =~ /(^|&|&amp;)loadplugin=([^&]+)/i)		{ foreach (split(/,/,$2)) { $NoLoadPlugin{&Sanitize("$_",1)}=-1; } }
 if ($QueryString =~ /(^|&|&amp;)limitflush=(\d+)/i)		{ $LIMITFLUSH=$2; }
 # Get/Define output
 if ($QueryString =~ /(^|&|&amp;)output(=[^&]*|)(.*)(&|&amp;)output(=[^&]*|)(&|$)/i) { error("Only 1 output option is allowed","","",1); }
