@@ -14,6 +14,7 @@ New features/improvements:
 Fixes:
 - Remove some Perl warnings.
 - Remove lc() on translation strings.
+- Not sanitized migrate parameter.
 
 Other/Documentation:
 - Added AWStats version in stdout outputs.
