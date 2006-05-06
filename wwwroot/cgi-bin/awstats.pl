@@ -1974,7 +1974,7 @@ sub Read_Plugins {
 						my $ret;	# To get init return
 						my $initfunction="\$ret=Init_$pluginname('$pluginparam')";
 						my $initret=eval("$initfunction");
-						if ($initret eq 'xxx') { $initret='Error: The PluginHooksFunctions variable defined in plugin file does not contain list of hooked functions'; }
+						if ($initret && $initret eq 'xxx') { $initret='Error: The PluginHooksFunctions variable defined in plugin file does not contain list of hooked functions'; }
 						if (! $initret || $initret =~ /^error/i) {
 							# Init function failed, we stop here
 							error("Plugin init for plugin '$pluginname' failed with return code: ".($initret?"$initret":"$@ (A module required by plugin might be missing)."));

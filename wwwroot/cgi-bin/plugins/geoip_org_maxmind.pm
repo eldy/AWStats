@@ -298,7 +298,7 @@ sub ShowInfoHost_geoip_org_maxmind {
 # UNIQUE: NO (Several plugins using this function can be loaded)
 #-----------------------------------------------------------------------------
 sub SectionInitHashArray_geoip_org_maxmind {
-    my $param="$_[0]";
+#    my $param="$_[0]";
 	# <-----
 	if ($Debug) { debug(" Plugin geoip_org_maxmind: Init_HashArray"); }
 	%_org_p = %_org_h = %_org_k = %_org_l =();
