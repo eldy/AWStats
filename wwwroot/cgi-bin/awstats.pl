@@ -10,8 +10,8 @@
 require 5.005;
 
 #$|=1;
-use warnings;		# Must be used in test mode only. This reduce a little process speed
-use diagnostics;	# Must be used in test mode only. This reduce a lot of process speed
+#use warnings;		# Must be used in test mode only. This reduce a little process speed
+#use diagnostics;	# Must be used in test mode only. This reduce a lot of process speed
 use strict;no strict "refs";
 use Time::Local;	# use Time::Local 'timelocal_nocheck' is faster but not supported by all Time::Local modules
 use Socket;
