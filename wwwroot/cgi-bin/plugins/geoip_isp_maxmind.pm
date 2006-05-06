@@ -80,7 +80,8 @@ sub Init_geoip_isp_maxmind {
 	} else {
 		$geoip_isp_maxmind = Geo::IP->open($datafile, $mode);
 	}
- 	debug(" Plugin geoip_isp_maxmind: GeoIP initialized database_info=".$geoip_isp_maxmind->database_info());
+# Fails on some GeoIP version
+# 	debug(" Plugin geoip_isp_maxmind: GeoIP initialized database_info=".$geoip_isp_maxmind->database_info());
 	# ----->
 
 	return ($checkversion?$checkversion:"$PluginHooksFunctions");

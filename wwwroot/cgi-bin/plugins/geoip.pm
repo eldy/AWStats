@@ -75,7 +75,8 @@ sub Init_geoip {
 	} else {
 		$gi = Geo::IP->open($datafile, $mode);
 	}
- 	debug(" Plugin geoip: GeoIP initialized database_info=".$gi->database_info());
+# Fails on some GeoIP version
+# 	debug(" Plugin geoip: GeoIP initialized database_info=".$gi->database_info());
 	# ----->
 
 	return ($checkversion?$checkversion:"$PluginHooksFunctions");
