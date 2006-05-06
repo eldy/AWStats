@@ -1131,7 +1131,15 @@ sub Read_Config {
 	my $configdir=shift;
 	my @PossibleConfigDir=();
 
-	if ($configdir) { @PossibleConfigDir=("$configdir"); }
+	if ($configdir)
+	{
+		# If from CGI, overwriting of configdir is only possible if AWSTATS_ENABLE_CONFIG_DIR defined
+		if ($ENV{'GATEWAY_INTERFACE'} && ! $ENV{"AWSTATS_ENABLE_CONFIG_DIR"})
+		{
+			error("Sorry, to allow overwriting of configdir parameter from an AWStats CGI usage, environment variable AWSTATS_ENABLE_CONFIG_DIR must be set to 1");
+		}
+		else { @PossibleConfigDir=("$configdir"); }
+	}
 	else { @PossibleConfigDir=("$DIR","/etc/awstats","/usr/local/etc/awstats","/etc","/etc/opt/awstats"); }
 
 	# Open config file
