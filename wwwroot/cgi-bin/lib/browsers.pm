@@ -5,7 +5,24 @@
 #-------------------------------------------------------
 # $Revision$ - $Author$ - $Date$
 
+# 2006-05-15 Sean Carlos http://www.antezeta.com/awstats.html 
+# 				akregator (rss)
+#				AppleSyndication  (rss)
+#				BlogBridge http://www.blogbridge.com/ (rss)
+#				BonEcho (Firefox 2.0 alpha)
+#				FeedTools http://sporkmonger.com/projects/feedtools/ (rss)
+#				gnome\-vfs.*neon http://www.webdav.org/neon/
+#				GreatNews  http://www.curiostudio.com/ (rss)
+#				Gregarius devlog.gregarius.net/docs/ua (rss)
+#				hatena rss http://r.hatena.ne.jp/ (rss)
+#				Liferea http://liferea.sourceforge.net/ (rss)
+#				lilina http://lilina.sourceforge.net/ (rss)
+#				PubSub-RSS-Reader http://www.pubsub.com/ (rss)
+# 2006-05-20 Sean Carlos http://www.antezeta.com/awstats.html
+#				Potu Rss-Reader http://www.potu.com/
+#				OSSProxy http://www.marketscore.com/FAQ.Aspx
 
+#				
 #package AWSUA;
 
 
@@ -13,7 +30,7 @@
 # This list is used to know in which order to search Browsers IDs (Most
 # frequent one are first in this list to increase detect speed).
 # It contains all matching criteria to search for in log fields.
-# Note: Regex IDs are in lower case and ' ' and '+' are changed into '\s'
+# Note: Regex IDs are in lower case and ' ' and '+' are changed into '_'
 #-------------------------------------------------------
 @BrowsersSearchIDOrder = (
 # Most frequent standard web browsers are first in this list (except msie, netscape and firefox)
@@ -31,6 +48,7 @@
 'amaya',
 'amigavoyager',
 'aweb',
+'bonecho',
 'bpftp',
 'camino',
 'chimera',
@@ -56,13 +74,12 @@
 'hotjava',
 'ibrowse',
 'intergo',
-'javaws',
 'k\-meleon',
 'linemodebrowser',
 'lotus\-notes',
 'macweb',
 'multizilla',
-'ncsa\smosaic',
+'ncsa_mosaic',
 'netcaptor',
 'netpositive',
 'nutscrape',
@@ -88,7 +105,7 @@
 'freeamp',
 'itunes',
 'jetaudio',
-'mint\saudio',
+'mint_audio',
 'mpg123',
 'mplayer',
 'nsplayer',
@@ -102,16 +119,25 @@
 'abilon',
 'aggrevator',
 'akregator',
-'betanews\sreader',
+'applesyndication',
+'betanews_reader',
+'blogbridge',
 'feeddemon', 
 'feedreader', 
-'jetbrains\somea\sreader', 
-'jetbrains\somea\spro', 
+'feedtools',
+'greatnews',
+'gregarius',
+'hatena_rss', 
+'jetbrains_omea', 
+'liferea',
+'lilina',
 'netnewswire', 
 'newsfire', 
 'newsgator', 
 'newzcrawler',
 'pluck', 
+'potu_rss\-reader',
+'pubsub\-rss\-reader',
 'pulpfiction', 
 'rssbandit', 
 'rssreader',
@@ -136,7 +162,7 @@
 'sie\-',				# SIE
 'sec\-',				# SonyEricsson
 'sonyericsson',			# SonyEricsson
-'ericsson',				# Ericsson (must be after sonyericsson
+'ericsson',				# Ericsson (must be after sonyericsson)
 'mmef',
 'mspie',
 'wapalizer',
@@ -148,24 +174,28 @@
 'portalmmm',
 # Others (TV)
 'webtv',
+# Anonymous Proxy Browsers (can be used as grabbers as well...)
+'cjb\.net',
+'ossproxy',
 # Other kind of browsers
+'apt',
+'analogx_proxy',
 'gnome\-vfs',
 'neon',
-'apt',
-'analogx\sproxy',
 'curl',
 'csscheck',
 'httrack',
-'webreaper',
+'fdm',
+'javaws',
 'wget',
 'chilkat',
 'webdownloader\sfor\sx',
 'w3m',
-'wdg\svalidator',
+'wdg_validator',
+'webreaper',
 'webzip',
 'staroffice',
 'gnus', 
-'liferea', 
 'nikto', 
 'microsoft\-webdav\-miniredir', 
 'microsoft\sdata\saccess\sinternet\spublishing\sprovider\scache\smanager',
@@ -174,7 +204,7 @@
 'POE\-Component\-Client\-HTTP',
 'mozilla',				# Must be at end because a lot of browsers contains mozilla in string
 'libwww',				# Must be at end because some browser have both 'browser id' and 'libwww'
-'lwp',
+'lwp'
 );
 
 # BrowsersHashIDLib
@@ -185,6 +215,7 @@
 'msie','MS Internet Explorer',
 'netscape','Netscape',
 'firefox','Firefox',
+'svn', 'Subversion client', 
 
 'firebird','Firebird (Old Firefox)',
 'go!zilla','Go!Zilla',
@@ -200,6 +231,7 @@
 'amaya','Amaya',
 'amigavoyager','AmigaVoyager',
 'aweb','AWeb',
+'bonecho','<a href="http://www.mozilla.org/projects/bonecho/" title="Browser home page [new window]" target="_blank">BonEcho (Firefox 2.0 development)</a>',
 'bpftp','BPFTP',
 'camino','Camino',
 'chimera','Chimera (Old Camino)',
@@ -230,7 +262,7 @@
 'lotus\-notes','Lotus Notes web client',
 'macweb','MacWeb',
 'multizilla','MultiZilla',
-'ncsa\smosaic','NCSA Mosaic',
+'ncsa_mosaic','NCSA Mosaic',
 'netcaptor','NetCaptor',
 'netpositive','NetPositive',
 'nutscrape', 'Nutscrape',
@@ -256,7 +288,7 @@
 'freeamp','FreeAmp (media player)',
 'itunes','Apple iTunes (media player)',
 'jetaudio','JetAudio (media player)',
-'mint\saudio','Mint Audio (media player)',
+'mint_audio','Mint Audio (media player)',
 'mpg123','mpg123 (media player)',
 'mplayer','The Movie Player (media player)',
 'nsplayer','NetShow Player (media player)',
@@ -269,17 +301,26 @@
 # RSS Readers
 'abilon','Abilon (RSS Reader)',
 'aggrevator', 'Aggrevator (RSS Reader)',
-'akregator', 'Akregator (RSS Reader for KDE)',
-'betanews\sreader','Betanews Reader (RSS Reader)',
+'akregator','<a href="http://akregator.sourceforge.net/" title="Browser home page [new window]" target="_blank">Akregator (RSS Reader)</a>',  
+'applesyndication','<a href="http://www.apple.com/macosx/features/safari/" title="Browser home page [new window]" target="_blank">AppleSyndication (RSS Reader)</a>',
+'betanews_reader','Betanews Reader (RSS Reader)',
+'blogbridge','<a href="http://www.blogbridge.com/" title="Browser home page [new window]" target="_blank">BlogBridge (RSS Reader)</a>',
 'feeddemon', 'FeedDemon (RSS Reader)',
 'feedreader', 'FeedReader (RSS Reader)',
-'jetbrains\somea\sreader', 'Omea Reader (RSS Reader)',
-'jetbrains\somea\spro', 'Omea Reader Pro (RSS Reader)',
+'feedtools','<a href="http://sporkmonger.com/projects/feedtools/" title="Browser home page [new window]" target="_blank">FeedTools (RSS Reader)</a>',
+'greatnews','<a href="http://www.curiostudio.com/" title="Browser home page [new window]" target="_blank">GreatNews (RSS Reader)</a>',
+'gregarius','<a href="http://devlog.gregarius.net/docs/ua" title="Browser home page [new window]" target="_blank">Gregarius (RSS Reader)</a>',
+'hatena_rss','<a href="http://r.hatena.ne.jp/" title="Browser home page [new window]" target="_blank">Hatena (RSS Reader)</a>',
+'jetbrains_omea', 'Omea (RSS Reader)',
+'liferea','<a href="http://liferea.sourceforge.net/" title="Browser home page [new window]" target="_blank">Liferea (RSS Reader)</a>',
+'lilina','<a href="http://lilina.sourceforge.net/" title="Browser home page [new window]" target="_blank">lilina (RSS Reader)</a>',
 'netnewswire', 'NetNewsWire (RSS Reader)',
 'newsfire', 'NewsFire (RSS Reader)',
 'newsgator', 'NewsGator (RSS Reader)',
 'newzcrawler', 'NewzCrawler (RSS Reader)',
 'pluck', 'Pluck (RSS Reader)',
+'potu_rss\-reader','<a href="http://www.potu.com/" title="Potu Rss-Reader home page [new window]" target="_blank">Potu (RSS Reader)</a>',
+'pubsub\-rss\-reader','<a href="http://www.pubsub.com/" title="Browser home page [new window]" target="_blank">PubSub (RSS Reader)</a>',
 'pulpfiction', 'PulpFiction (RSS Reader)',
 'rssbandit', 'RSS Bandit (RSS Reader)',
 'rssreader', 'RssReader (RSS Reader)',
@@ -295,7 +336,6 @@
 # PDA/Phonecell browsers
 'alcatel','Alcatel Browser (PDA/Phone browser)',
 'lg\-','LG (PDA/Phone browser)',
-'ericsson','Ericsson Browser (PDA/Phone browser)',
 'mot\-','Motorola Browser (PDA/Phone browser)',
 'nokia','Nokia Browser (PDA/Phone browser)',
 'panasonic','Panasonic Browser (PDA/Phone browser)',
@@ -305,6 +345,7 @@
 'sie\-','SIE (PDA/Phone browser)',
 'sec\-','Sony/Ericsson (PDA/Phone browser)',
 'sonyericsson','Sony/Ericsson Browser (PDA/Phone browser)',
+'ericsson','Ericsson Browser (PDA/Phone browser)',			# Must be after SonyEricsson
 'mmef','Microsoft Mobile Explorer (PDA/Phone browser)',
 'mspie','MS Pocket Internet Explorer (PDA/Phone browser)',
 'wapalizer','WAPalizer (PDA/Phone browser)',
@@ -316,35 +357,37 @@
 'portalmmm','I-Mode phone (PDA/Phone browser)',
 # Others (TV)
 'webtv','WebTV browser',
+# Anonymous Proxy Browsers (can be used as grabbers as well...)
+'cjb\.net','<a href="http://proxy.cjb.net/" title="Browser home page [new window]" target="_blank">CJB.NET Proxy</a>',
+'ossproxy','<a href="http://www.marketscore.com/FAQ.Aspx" title="OSSProxy home page [new window]" target="_blank">OSSProxy</a>',
 # Other kind of browsers
 'apt','Debian APT',
-'analogx\sproxy','AnalogX Proxy',
-'svn', 'Subversion client', 
+'analogx_proxy','AnalogX Proxy',
 'gnome\-vfs', 'Gnome FileSystem Abstraction library', 
 'neon', 'Neon HTTP and WebDAV client library', 
 'curl','Curl',
 'csscheck','WDG CSS Validator',
+'httrack','HTTrack',
+'fdm','<a href="http://www.freedownloadmanager.org/" title="Browser home page [new window]" target="_blank">FDM Free Download Manager</a>',
 'javaws','Java Web Start',
 'wget','Wget',
 'chilkat', 'Chilkat',
 'webdownloader\sfor\sx','Downloader for X',
-'httrack','HTTrack',
 'w3m','w3m',
-'wdg\svalidator','WDG HTML Validator',
-'webzip','WebZIP',
+'wdg_validator','WDG HTML Validator',
 'webreaper','WebReaper',
+'webzip','WebZIP',
 'staroffice','StarOffice',
+'gnus', 'Gnus Network User Services',
 'nikto', 'Nikto Web Scanner', 
 'microsoft\-webdav\-miniredir', 'Microsoft Data Access Component Internet Publishing Provider',
 'microsoft\sdata\saccess\sinternet\spublishing\sprovider\scache\smanager', 'Microsoft Data Access Component Internet Publishing Provider Cache Manager',
 'microsoft\sdata\saccess\sinternet\spublishing\sprovider\sdav', 'Microsoft Data Access Component Internet Publishing Provider DAV',
 'microsoft\sdata\saccess\sinternet\spublishing\sprovider\sprotocol\sdiscovery', 'Microsoft Data Access Component Internet Publishing Provider Protocol Discovery (Server probe for data access operations using MS Frontpage with OPTION header)',
 'POE\-Component\-Client\-HTTP','HTTP user-agent for POE (portable networking framework for Perl)',
-'gnus', 'Gnus Network User Services',
-'liferea', 'LInux FEed REAder',
 'mozilla','Mozilla',
 'libwww','LibWWW',
-'lwp','LibWWW-perl',
+'lwp','LibWWW-perl'
 );
 
 
@@ -357,6 +400,7 @@
 'webcapture','1',
 'webcopier','1',
 'curl','1',
+'fdm','1',
 'httrack','1',
 'webreaper','1',
 'wget','1',
@@ -374,7 +418,7 @@
 'msie','msie',
 'netscape','netscape',
 'firefox','firefox',
-
+'svn','subversion', 
 'firebird','phoenix',
 'go!zilla','gozilla',
 'icab','icab',
@@ -387,6 +431,7 @@
 'amigavoyager','amigavoyager',
 'avantbrowser','avant',
 'aweb','aweb',
+'bonecho','firefox',
 'bpftp','bpftp',
 'camino','chimera',
 'chimera','chimera',
@@ -411,7 +456,7 @@
 'macweb','macweb',
 'multizilla','multizilla',
 'msfrontpageexpress','fpexpress',
-'ncsa\smosaic','ncsa\smosaic',
+'ncsa_mosaic','ncsa_mosaic',
 'netpositive','netpositive',
 'phoenix','phoenix',
 'safari','safari',
@@ -421,13 +466,13 @@
 'webcopier','webcopier',
 # Media only browsers
 'real','real',
-'winamp','winamp',				# Works for winampmpeg and winamp3httprdr
+'winamp','mediaplayer',				# Works for winampmpeg and winamp3httprdr
 'windows\-media\-player','mplayer',
 'audion','mediaplayer',
 'freeamp','mediaplayer',
 'itunes','mediaplayer',
 'jetaudio','mediaplayer',
-'mint\saudio','mediaplayer',
+'mint_audio','mediaplayer',
 'mpg123','mediaplayer',
 'mplayer','mediaplayer',
 'nsplayer','netshow',
@@ -461,20 +506,32 @@
 'portalmmm','pdaphone',
 # Others (TV)
 'webtv','webtv',
+# Anonymous Proxy Browsers (can be used as grabbers as well...)
+'cjb\.net','cjbnet',
+'ossproxy','ossproxy',
 # RSS Readers
-'aggrevator', 'rss',
-'akregator', 'akregator',
 'abilon', 'abilon',
-'betanews\sreader','rss',
+'aggrevator', 'rss',
+'akregator', 'rss',
+'applesyndication', 'rss',
+'betanews_reader','rss',
+'blogbridge','rss',
 'feeddemon', 'rss',
 'feedreader', 'rss',
-'jetbrains\somea\sreader', 'rss',
-'jetbrains\somea\spro', 'rss',
+'feedtools', 'rss',
+'greatnews', 'rss',
+'gregarius', 'rss',
+'hatena_rss', 'rss',
+'jetbrains_omea', 'rss',
+'liferea', 'rss',
+'lilina', 'rss',
 'netnewswire', 'rss',
 'newsfire', 'rss',
 'newsgator', 'rss',
 'newzcrawler', 'rss',
 'pluck', 'rss',
+'potu_rss\-reader', 'rss',
+'pubsub\-rss\-reader', 'rss',
 'pulpfiction', 'rss',
 'rssbandit', 'rss',
 'rssreader', 'rss',
@@ -489,8 +546,7 @@
 'wizz\srss\snews\sreader','wizz',
 # Other kind of browsers
 'apt','apt',
-'analogx\sproxy','analogx',
-'svn','subversion', 
+'analogx_proxy','analogx',
 'microsoft\-webdav\-miniredir','frontpage',
 'microsoft\sdata\saccess\sinternet\spublishing\sprovider\scache\smanager','frontpage',
 'microsoft\sdata\saccess\sinternet\spublishing\sprovider\sdav','frontpage',
