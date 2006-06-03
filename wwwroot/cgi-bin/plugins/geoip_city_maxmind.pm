@@ -4262,6 +4262,18 @@ my %regall=(
 # ----->
 
 
+sub RegionName($$)
+{
+	my $countrycode = shift || "";
+	my $regioncode = shift || "";
+
+	if ($countrycode eq "us") { return $regus{uc $regioncode} || ""; }
+	if ($countrycode eq "ca") { return $regca{uc $regioncode} || ""; }
+
+	return $regall{uc($countrycode."_".$regioncode)} || "";
+}
+
+
 #-----------------------------------------------------------------------------
 # PLUGIN FUNCTION: Init_pluginname
 #-----------------------------------------------------------------------------
@@ -4368,11 +4380,11 @@ sub AddHTMLGraph_geoip_city_maxmind {
             $city=~s/%20/ /g;
 #            if ($countrycode ne $country) { next; }
    			my $p_p; my $p_h;
-   			if ($TotalPages) { $p_p=int($_city_p{$key}/$TotalPages*1000)/10; }
+			if ($TotalPages) { $p_p=int(($_city_p{$key}||0)/$TotalPages*1000)/10; }
    			if ($TotalHits)  { $p_h=int($_city_h{$key}/$TotalHits*1000)/10; }
    		    print "<tr>";
    		    print "<td class=\"aws\">".$DomainsHashIDLib{$countrycode}."</td>";
-   		    print "<td class=\"aws\">".($regall{uc($countrycode."_".$regioncode)}?$regall{uc($countrycode."_".$regioncode)}:"&nbsp;")."</td>";
+   		    print "<td class=\"aws\">".RegionName($countrycode, $regioncode)."</td>";
    		    print "<td class=\"aws\">".ucfirst($city)."</td>";
     		if ($ShowCities =~ /P/i) { print "<td>".($_city_p{$key}?$_city_p{$key}:"&nbsp;")."</td>"; }
     		if ($ShowCities =~ /P/i) { print "<td>".($_city_p{$key}?"$p_p %":'&nbsp;')."</td>"; }
