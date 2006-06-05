@@ -375,19 +375,19 @@ if (scalar @config) {
 		    print "</td>";
 		}
         else {
-    		print "<td align=\"right\">";
+    		print "<td align=\"right\" nowrap=\"1\">";
     		print Format_Number($view_u{$l});
     		print "</td>";
-    		print "<td align=\"right\">";
+    		print "<td align=\"right\" nowrap=\"1\">";
     		print Format_Number($view_v{$l});
     		print "</td>";
-    		print "<td align=\"right\">";
+    		print "<td align=\"right\" nowrap=\"1\">";
     		print Format_Number($view_p{$l});
     		print "</td>";
-    		print "<td align=\"right\">";
+    		print "<td align=\"right\" nowrap=\"1\">";
     		print Format_Number($view_h{$l});
     		print "</td>";
-    		print "<td align=\"right\">";
+    		print "<td align=\"right\" nowrap=\"1\">";
     		print Format_Bytes($view_k{$l});
     		print "</td>";
             # Print bargraph
