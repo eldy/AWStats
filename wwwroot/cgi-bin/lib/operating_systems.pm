@@ -78,7 +78,7 @@
 'risc[_+ ]?os',
 'symbian',
 'webtv',
-'playstation\sportable',
+'playstation[_+ ]portable',
 'xbox'
 );
 
@@ -142,7 +142,7 @@
 'risc[_+ ]?os','riscos',
 'symbian','symbian',
 'webtv','webtv',
-'playstation\sportable', 'psp',
+'playstation[_+ ]portable', 'psp',
 'xbox', 'winxbox',
 );
 
