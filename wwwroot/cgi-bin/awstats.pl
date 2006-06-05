@@ -8639,7 +8639,7 @@ if (scalar keys %HTMLOutput) {
     		my $count=0;
     		&BuildKeyList($MaxRowsInHTMLOutput,$MinHit{'Refer'},\%_se_referrals_h,((scalar keys %_se_referrals_p)?\%_se_referrals_p:\%_se_referrals_h));	# before 5.4 only hits were recorded
     		foreach my $key (@keylist) {
-    			my $newreferer=CleanFromCSSA($SearchEnginesHashLib{$key}||$key);
+    			my $newreferer=$SearchEnginesHashLib{$key}||CleanFromCSSA($key);
     			my $p_p; my $p_h;
     			if ($TotalSearchEnginesPages) { $p_p=int($_se_referrals_p{$key}/$TotalSearchEnginesPages*1000)/10; }
     			if ($TotalSearchEnginesHits) { $p_h=int($_se_referrals_h{$key}/$TotalSearchEnginesHits*1000)/10; }
@@ -10229,7 +10229,7 @@ if (scalar keys %HTMLOutput) {
 				my $count=0;
 				&BuildKeyList($MaxNbOf{'RefererShown'},$MinHit{'Refer'},\%_se_referrals_h,((scalar keys %_se_referrals_p)?\%_se_referrals_p:\%_se_referrals_h));
 				foreach my $key (@keylist) {
-					my $newreferer=CleanFromCSSA($SearchEnginesHashLib{$key}||$key);
+					my $newreferer=$SearchEnginesHashLib{$key}||CleanFromCSSA($key);
 					print "<tr><td class=\"aws\">- $newreferer</td>";
 					print "<td>".($_se_referrals_p{$key}?$_se_referrals_p{$key}:'0')."</td>";
 					print "<td>$_se_referrals_h{$key}</td>";
