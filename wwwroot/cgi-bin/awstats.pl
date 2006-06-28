@@ -6565,8 +6565,8 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 			if ($foundparam) { $_misc_h{"TotalMisc"}++; }
 		}
 
-		# Analyze: favicon (countedtraffic=>1)
-		#-------------------------------------
+		# Analyze: favicon (countedtraffic=>1 if favicon)
+		#------------------------------------------------
 		if ($pos_referer >= 0 && $field[$pos_referer] && $urlwithnoquery =~ /$regfavico/o) {
 			if (($field[$pos_code] != 404 || $urlwithnoquery !~ /\/.+\/favicon\.ico$/i) && ($field[$pos_agent] =~ /MSIE/)) {
 				# We don't count one hit if (not on root and error) and MSIE
@@ -6576,7 +6576,7 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 			$countedtraffic=1;	# favicon is a case that must not be counted anywhere else
 		}
 
-		# Analyze: Worms (countedtraffic=>1 if worm)
+		# Analyze: Worms (countedtraffic=>2 if worm)
 		#-------------------------------------------
 		if (! $countedtraffic) {
 			if ($LevelForWormsDetection) {
@@ -6589,7 +6589,7 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 						$_worm_h{$worm}++;
 						$_worm_k{$worm}+=int($field[$pos_size]);
 						$_worm_l{$worm}=$timerecord;
-						$countedtraffic=1;
+						$countedtraffic=2;
 						if ($PageBool) { $_time_nv_p[$hourrecord]++; }
 						$_time_nv_h[$hourrecord]++;
 						$_time_nv_k[$hourrecord]+=int($field[$pos_size]);
@@ -6599,7 +6599,7 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 			}
         }
     				
-		# Analyze: Status code (countedtraffic=>1 if error)
+		# Analyze: Status code (countedtraffic=>3 if error)
 		#--------------------------------------------------
 		if (! $countedtraffic) {
 			if ($LogType eq 'W' || $LogType eq 'S') {		# HTTP record or Stream record
@@ -6625,7 +6625,7 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 						}
 					}
 					if ($Debug) { debug(" Record stored in the status code chart (status code=$field[$pos_code])",3); }
-					$countedtraffic=1;
+					$countedtraffic=3;
 					if ($PageBool) { $_time_nv_p[$hourrecord]++; }
 					$_time_nv_h[$hourrecord]++;
 					$_time_nv_k[$hourrecord]+=int($field[$pos_size]);
@@ -6636,7 +6636,7 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 					$_errors_h{$field[$pos_code]}++;
 					$_errors_k{$field[$pos_code]}+=int($field[$pos_size]);	# Size is often 0 when error
 					if ($Debug) { debug(" Record stored in the status code chart (status code=$field[$pos_code])",3); }
-					$countedtraffic=1;
+					$countedtraffic=3;
 					if ($PageBool) { $_time_nv_p[$hourrecord]++; }
 					$_time_nv_h[$hourrecord]++;
 					$_time_nv_k[$hourrecord]+=int($field[$pos_size]);
@@ -6646,7 +6646,7 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 			}
 		}
 		
-		# Analyze: Robot from robot database (countedtraffic=>1 if robot)
+		# Analyze: Robot from robot database (countedtraffic=>4 if robot)
 		#----------------------------------------------------------------
 		if (! $countedtraffic) {
 			if ($pos_agent >= 0) {
@@ -6677,7 +6677,7 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 						$_robot_k{$uarobot}+=int($field[$pos_size]);
 						$_robot_l{$uarobot}=$timerecord;
 						if ($urlwithnoquery =~ /$regrobot/o) { $_robot_r{$uarobot}++; }
-						$countedtraffic=1;
+						$countedtraffic=4;
 						if ($PageBool) { $_time_nv_p[$hourrecord]++; }
 						$_time_nv_h[$hourrecord]++;
 						$_time_nv_k[$hourrecord]+=int($field[$pos_size]);
@@ -6686,7 +6686,7 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 			}
 		}
 
-		# Analyze: Robot from "hit on robots.txt" file (countedtraffic=>1 if robot)
+		# Analyze: Robot from "hit on robots.txt" file (countedtraffic=>5 if robot)
 		# -------------------------------------------------------------------------
 		if (! $countedtraffic) {
 			if ($urlwithnoquery =~ /$regrobot/o) {
@@ -6695,7 +6695,7 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 				$_robot_k{'unknown'}+=int($field[$pos_size]);
 				$_robot_l{'unknown'}=$timerecord;
 				$_robot_r{'unknown'}++;
-				$countedtraffic=1;	# Must not be counted somewhere else
+				$countedtraffic=5;	# Must not be counted somewhere else
 				if ($PageBool) { $_time_nv_p[$hourrecord]++; }
 				$_time_nv_h[$hourrecord]++;
 				$_time_nv_k[$hourrecord]+=int($field[$pos_size]);
@@ -10631,10 +10631,10 @@ else {
 #     Define PageBool and extension
 #     Analyze: Misc tracker --> complete %misc
 #     Analyze: Add to favorites --> complete %_misc, countedtraffic=1 (not counted anywhere)
-#     If (!countedtraffic) Analyze: Worms --> complete %_worms, countedtraffic=1
-#     If (!countedtraffic) Analyze: Status code --> complete %_error_, %_sider404, %_referrer404 --> countedtraffic=1
-#     If (!countedtraffic) Analyze: Robots known --> complete %_robot, countedtraffic=1
-#     If (!countedtraffic) Analyze: Robots unknown on robots.txt --> complete %_robot, countedtraffic=1
+#     If (!countedtraffic) Analyze: Worms --> complete %_worms, countedtraffic=2
+#     If (!countedtraffic) Analyze: Status code --> complete %_error_, %_sider404, %_referrer404 --> countedtraffic=3
+#     If (!countedtraffic) Analyze: Robots known --> complete %_robot, countedtraffic=4
+#     If (!countedtraffic) Analyze: Robots unknown on robots.txt --> complete %_robot, countedtraffic=5
 #     If (!countedtraffic) Analyze: File types - Compression
 #     If (!countedtraffic) Analyze: Date - Hour - Pages - Hits - Kilo
 #     If (!countedtraffic) Analyze: Login
