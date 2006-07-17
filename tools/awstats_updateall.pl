@@ -21,6 +21,7 @@ my $Awstats='awstats.pl';
 
 my $AwstatsDir='';
 my $AwstatsProg='';
+my $LastLine='';
 
 
 
@@ -78,6 +79,7 @@ for (0..@ARGV-1) {
 			next; 
 	}
 	if ($ARGV[$_] =~ /^-*debug=(\d+)/i)  	 { $Debug=$1; next; }
+	if ($ARGV[$_] =~ /^-*lastline=(\d+)/i)   { $LastLine=$1; next; }
 	if ($ARGV[$_] =~ /^now/i)     		  	 { $nowfound=1; next; }
 }
 
