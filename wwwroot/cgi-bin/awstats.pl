@@ -6033,6 +6033,12 @@ if ($Debug) {
 	debug("LastLineChecksum=$LastLineChecksum");
 }
 
+# Warning if lastline in future 
+if ($LastLine > ($nowtime + 20000))
+{
+	warning("WARNING: LastLine parameter in history file is in future. May be you need to correct manually the line LastLine in some awstats*.$SiteConfig files.");
+}
+
 # Init vars
 &Init_HashArray();
 
@@ -6183,7 +6189,8 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 
 	# Can we try a direct seek access in log ?
 	my $line;
-	if ($LastLine && $LastLineNumber && $LastLineOffset && $LastLineChecksum) {
+	if ($LastLine && $LastLineNumber && $LastLineOffset && $LastLineChecksum)
+	{
 		# Try a direct seek access to save time
 		if ($Debug) { debug("Try a direct access to LastLine=$LastLine, LastLineNumber=$LastLineNumber, LastLineOffset=$LastLineOffset, LastLineChecksum=$LastLineChecksum"); }
 		seek(LOG,$LastLineOffset,0);
@@ -6362,7 +6369,8 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 
 		# Check date
 		#-----------------------
-		if ($LogType eq 'M' && $timerecord > $tomorrowtime) {
+		if ($LogType eq 'M' && $timerecord > $tomorrowtime)
+		{
 			# Postfix/Sendmail does not store year, so we assume that year is year-1 if record is in future
 			$yearrecord--;
 			if    ($DatabaseBreak eq 'month') { $daterecord=sprintf("%04i%02i",$yearrecord,$monthrecord); }
