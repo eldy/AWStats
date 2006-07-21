@@ -3,7 +3,7 @@
 - Mettre à jour numero version docs
 - Mettre a jour PAD
 - Regénérer PDF
-- Tagger CVS
+- Comiter et Tagger CVS
 
 - makepack sur webmin
 - makepack sur awstats

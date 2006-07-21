@@ -431,7 +431,7 @@ if (scalar @config) {
 		print "</tr>\n";
 	}
 
-	if ($nbofallowedconffound > 0)
+	if ($nbofallowedconffound > 0 && 1==2)
 	{
 		print "<tr $cb>\n";
 
@@ -456,9 +456,9 @@ if (scalar @config) {
         # Print bargraph
         print '<td colspan="2">&nbsp;</td>';
 		print "</tr>\n";		
-		
-		print "</table><br>\n";
 	}
+
+	print "</table><br>\n";
 }
 
 if (! $nbofallowedconffound) {
