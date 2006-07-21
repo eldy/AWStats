@@ -15,6 +15,7 @@ Fixes:
 - Remove some Perl warnings.
 - Remove lc() on translation strings.
 - Not sanitized migrate parameter.
+- Not sanitized urlxxx parameters that could be used for XSS attacks.
 
 Other/Documentation:
 - Added AWStats version in stdout outputs.

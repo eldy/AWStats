@@ -8,5 +8,6 @@
 - makepack sur webmin
 - makepack sur awstats
 - Déplacer fichiers dans files
+- Mise a jour page index.php du site web
 - Uploader fichiers
 - Envoyer mail sur mailing list
