@@ -5091,6 +5091,7 @@ sub DefinePerlParsingFormat {
 		$LogFormatString =~ s/cs-mime-type/%other/g;
 		$LogFormatString =~ s/s-object-source/%other/g;
 		$LogFormatString =~ s/s-cache-info/%other/g;
+		$LogFormatString =~ s/cluster-node/%cluster/g;
 		# Added for MMS
 		$LogFormatString =~ s/protocol/%protocolmms/g;	# cs-method might not be available
 		$LogFormatString =~ s/c-status/%codemms/g;		# c-status used when sc-status not available
