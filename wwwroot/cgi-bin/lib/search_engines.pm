@@ -239,7 +239,8 @@
 'google\.'=>'translate\.google\.',
 'msn\.'=>'hotmail\.msn\.',
 'tiscali\.'=>'mail\.tiscali\.',
-'yahoo\.'=>'mail\.yahoo\.'
+'yahoo\.'=>'mail\.yahoo\.',
+'yahoo\.'=>'groups\.yahoo\.'
 );
 
 
