@@ -6038,7 +6038,7 @@ if ($lastyearbeforeupdate) {
 # Warning if lastline in future 
 if ($LastLine > ($nowtime + 20000))
 {
-	warning("WARNING: LastLine parameter in history file is '$LastLine' so in future. May be you need to correct manually the line LastLine in some awstats*.$SiteConfig files.");
+	warning("WARNING: LastLine parameter in history file is '$LastLine' so in future. May be you need to correct manually the line LastLine in some awstats*.$SiteConfig.conf files.");
 }
 # Force LastLine
 if ($QueryString =~ /lastline=(\d{14})/i)

@@ -150,6 +150,10 @@ if (@files) {
 			# Define command line
 			my $command="\"$AwstatsDir/$AwstatsProg\" -update -config=$domain";
 			$command.=" -configdir=\"$DIRCONFIG\"";
+			if ($LastLine) 
+			{
+				$command.=" -lastline=$LastLine";
+			}
 			# Run command line
 			print "Running '$command' to update config $domain\n";
 			my $output = `$command 2>&1`;
