@@ -94,7 +94,7 @@ sub AddHTMLBodyHeader_tooltips {
 		# window.innerHeight											IE OK					Netscape OK					Height of container
 
 		# window.pageYOffset																								?
-		# document.body.scrollTop                                       IE OK		Opera OK	Netscape ?		XHTML KO	?
+		# document.body.scrollTop                                       IE OK		Opera OK	Netscape OK		XHTML KO	Vertical position of scrollbar
 
 		my $docwidth="document.body.offsetWidth";
 		my $doctop="document.body.scrollTop";
