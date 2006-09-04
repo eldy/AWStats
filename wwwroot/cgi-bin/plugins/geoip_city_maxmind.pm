@@ -4527,7 +4527,8 @@ sub GetCountryCodeByName_geoip_city_maxmind {
 sub ShowInfoHost_geoip_city_maxmind {
     my $param="$_[0]";
 	# <-----
-	if ($param eq '__title__') {
+	if ($param eq '__title__')
+	{
     	my $NewLinkParams=${QueryString};
     	$NewLinkParams =~ s/(^|&|&amp;)update(=\w*|$)//i;
     	$NewLinkParams =~ s/(^|&|&amp;)output(=\w*|$)//i;
@@ -4550,7 +4551,8 @@ sub ShowInfoHost_geoip_city_maxmind {
         print "<a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?XMLEncode("$AWScript?${NewLinkParams}output=plugin_geoip_city_maxmind"):"$PROG$StaticLinks.plugin_geoip_city_maxmind.$StaticExt")."\"$NewLinkTarget>GeoIP<br/>City</a>";
         print "</th>";
 	}
-	elsif ($param) {
+	elsif ($param)
+	{
         my $ip=0;
 		my $key;
 		if ($param =~ /^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/) {	# IPv4 address
@@ -4616,18 +4618,19 @@ sub ShowInfoHost_geoip_city_maxmind {
 	            $country=$record->country_code if $record;
 	            $city=$record->city if $record;
 			}
-			print "<td>";
-		    if ($country) { print $DomainsHashIDLib{$country}?$DomainsHashIDLib{$country}:"<span style=\"color: #$color_other\">$Message[0]</span>"; }
-		    else { print "<span style=\"color: #$color_other\">$Message[0]</span>"; }
-		    print "</td>";
+#			print "<td>";
+#		    if ($country) { print $DomainsHashIDLib{$country}?$DomainsHashIDLib{$country}:"<span style=\"color: #$color_other\">$Message[0]</span>"; }
+#		    else { print "<span style=\"color: #$color_other\">$Message[0]</span>"; }
+#		    print "</td>";
 			print "<td>";
 		    if ($city) { print "$city"; }
 		    else { print "<span style=\"color: #$color_other\">$Message[0]</span>"; }
 			print "</td>";
 		}
 	}
-	else {
-		print "<td>&nbsp;</td>";
+	else
+	{
+#		print "<td>&nbsp;</td>";
 		print "<td>&nbsp;</td>";
 	}
 	return 1;
