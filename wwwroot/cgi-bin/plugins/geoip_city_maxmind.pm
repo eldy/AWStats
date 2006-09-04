@@ -4384,7 +4384,8 @@ sub AddHTMLGraph_geoip_city_maxmind {
    			if ($TotalHits)  { $p_h=int($_city_h{$key}/$TotalHits*1000)/10; }
    		    print "<tr>";
    		    print "<td class=\"aws\">".$DomainsHashIDLib{$countrycode}."</td>";
-   		    print "<td class=\"aws\">".RegionName($countrycode, $regioncode)."</td>";
+   		    my $regionlib=RegionName($countrycode, $regioncode);
+   		    print "<td class=\"aws\">".($regionlib?$regionlib:'&nbsp;')."</td>";
    		    print "<td class=\"aws\">".ucfirst($city)."</td>";
     		if ($ShowCities =~ /P/i) { print "<td>".($_city_p{$key}?$_city_p{$key}:"&nbsp;")."</td>"; }
     		if ($ShowCities =~ /P/i) { print "<td>".($_city_p{$key}?"$p_p %":'&nbsp;')."</td>"; }
