@@ -3139,7 +3139,6 @@ sub Read_History_With_TmpUpdate {
 							}
 							if ($loadrecord) {
 								if ($field[1]) {
-									$field[0]=DecodeEncodedString($field[0]);
 									if ($loadrecord==2) {
 										foreach (split(/\+/,$field[0])) {	# field[0] is "val1+val2+..."
 											$_keywords{$_}+=$field[1];
@@ -3928,12 +3927,14 @@ sub Save_History {
 		foreach my $key (@keylist) {
 			$keysinkeylist{$key}=1;
 			my $keyphrase=$key;
+			$keyphrase =~ tr/ /\+/s;
 			print HISTORYTMP "${xmlrb}".XMLEncodeForHisto($keyphrase)."${xmlrs}".$_keyphrases{$key}."${xmlre}\n";
 			foreach (split(/\+/,$key)) { $_keywords{$_}+=$_keyphrases{$key}; }	# To init %_keywords
 		}
 		foreach my $key (keys %_keyphrases) {
 			if ($keysinkeylist{$key}) { next; }
 			my $keyphrase=$key;
+			$keyphrase =~ tr/ /\+/s;
 			print HISTORYTMP "${xmlrb}".XMLEncodeForHisto($keyphrase)."${xmlrs}".$_keyphrases{$key}."${xmlre}\n";
 			foreach (split(/\+/,$key)) { $_keywords{$_}+=$_keyphrases{$key}; }	# To init %_keywords
 		}
@@ -7200,7 +7201,8 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 													# Now param is keyphrase: "cache:mmm:www/zzz+aaa+bbb/ccc+ddd%20eee'fff,ggg"
 													$param =~ s/^(cache|related):[^\+]+//;	# Should be useless since this is for hit on 'not pages'
 													&ChangeWordSeparatorsIntoSpace($param);	# Change [ aaa+bbb/ccc+ddd%20eee'fff,ggg ] into [ aaa bbb/ccc ddd eee fff ggg]
-													$param =~ s/^ +//; $param =~ s/ +$//; $param =~ tr/ /\+/s;
+													$param =~ s/^ +//; $param =~ s/ +$//;	# Trim
+													$param =~ tr/ /\+/s;
 													if ((length $param) > 0) { $_keyphrases{$param}++; }
 													last;
 												}
@@ -7218,18 +7220,20 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 												# Now param is keyphrase: "aaa+bbb/ccc+ddd%20eee'fff,ggg"
 												$param =~ s/^(cache|related):[^\+]+//;		# Should be useless since this is for hit on 'not pages'
 												&ChangeWordSeparatorsIntoSpace($param);		# Change [ aaa+bbb/ccc+ddd%20eee'fff,ggg ] into [ aaa bbb/ccc ddd eee fff ggg ]
-												$param =~ s/^ +//; $param =~ s/ +$//; $param =~ tr/ /\+/s;
+												$param =~ s/^ +//; $param =~ s/ +$//;		# Trim
+												$param =~ tr/ /\+/s;
 												if ((length $param) > 2) { $_keyphrases{$param}++; last; }
 											}
 										}
 									}	# End of elsif refurl[1]
 									elsif ($SearchEnginesWithKeysNotInQuery{$tmprefererserver})
 									{
-										debug("xxx".$refurl[0]);
+#										debug("xxx".$refurl[0]);
 									    # If search engine with key inside page url like a9 (www.a9.com/searchkey1%20searchkey2)
 	                                    if ($refurl[0] =~ /$SearchEnginesKnownUrl{$tmprefererserver}(.*)$/) {
 	                                        my $param=$1;
 	                                        &ChangeWordSeparatorsIntoSpace($param);
+											$param =~ tr/ /\+/s;
 	  										if ((length $param) > 0) { $_keyphrases{$param}++; }
 	                                    }
 									}
