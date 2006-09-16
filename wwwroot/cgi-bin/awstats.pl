@@ -3139,6 +3139,7 @@ sub Read_History_With_TmpUpdate {
 							}
 							if ($loadrecord) {
 								if ($field[1]) {
+									$field[0]=DecodeEncodedString($field[0]);
 									if ($loadrecord==2) {
 										foreach (split(/\+/,$field[0])) {	# field[0] is "val1+val2+..."
 											$_keywords{$_}+=$field[1];
@@ -3912,6 +3913,7 @@ sub Save_History {
 		print HISTORYTMP "${xmleb}END_PAGEREFS${xmlee}\n";
 	}
 	if ($sectiontosave eq 'searchwords') {
+		# Save phrases section
 		print HISTORYTMP "\n";
 		if ($xml) { print HISTORYTMP "<section id='$sectiontosave'><sortfor>$MaxNbOf{'KeyphrasesShown'}</sortfor><comment>\n"; }
 		print HISTORYTMP "# Search keyphrases - Number of search\n";
@@ -3926,13 +3928,13 @@ sub Save_History {
 		foreach my $key (@keylist) {
 			$keysinkeylist{$key}=1;
 			my $keyphrase=$key;
-			print HISTORYTMP "${xmlrb}$keyphrase${xmlrs}$_keyphrases{$key}${xmlre}\n";
+			print HISTORYTMP "${xmlrb}".XMLEncodeForHisto($keyphrase)."${xmlrs}".$_keyphrases{$key}."${xmlre}\n";
 			foreach (split(/\+/,$key)) { $_keywords{$_}+=$_keyphrases{$key}; }	# To init %_keywords
 		}
 		foreach my $key (keys %_keyphrases) {
 			if ($keysinkeylist{$key}) { next; }
 			my $keyphrase=$key;
-			print HISTORYTMP "${xmlrb}$keyphrase${xmlrs}$_keyphrases{$key}${xmlre}\n";
+			print HISTORYTMP "${xmlrb}".XMLEncodeForHisto($keyphrase)."${xmlrs}".$_keyphrases{$key}."${xmlre}\n";
 			foreach (split(/\+/,$key)) { $_keywords{$_}+=$_keyphrases{$key}; }	# To init %_keywords
 		}
 		print HISTORYTMP "${xmleb}END_SEARCHWORDS${xmlee}\n";
@@ -3950,12 +3952,12 @@ sub Save_History {
 		foreach (@keylist) {
 			$keysinkeylist{$_}=1;
 			my $keyword=$_;
-			print HISTORYTMP "${xmlrb}$keyword${xmlrs}$_keywords{$_}${xmlre}\n";
+			print HISTORYTMP "${xmlrb}".XMLEncodeForHisto($keyword)."${xmlrs}".$_keywords{$_}."${xmlre}\n";
 		}
 		foreach (keys %_keywords) {
 			if ($keysinkeylist{$_}) { next; }
 			my $keyword=$_;
-			print HISTORYTMP "${xmlrb}$keyword${xmlrs}$_keywords{$_}${xmlre}\n";
+			print HISTORYTMP "${xmlrb}".XMLEncodeForHisto($keyword)."${xmlrs}".$_keywords{$_}."${xmlre}\n";
 		}
 		print HISTORYTMP "${xmleb}END_KEYWORDS${xmlee}\n";
 
@@ -6404,7 +6406,7 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 			next;		# Should not happen, kept in case of parasite/corrupted line
 		}
 		if ($NewLinePhase) {
-# TODO NOTSORTEDRECORDTOLERANCE does not work around midnight
+			# TODO NOTSORTEDRECORDTOLERANCE does not work around midnight
 			if ($timerecord < ($LastLine - $NOTSORTEDRECORDTOLERANCE)) {
 				# Should not happen, kept in case of parasite/corrupted old line
 				$NbOfLinesCorrupted++;
@@ -7188,7 +7190,8 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 								if ($PageBool && $LevelForKeywordsDetection) {
 									# we will complete %_keyphrases hash array
 									my @refurl=split(/\?/,$field[$pos_referer],2);	# TODO Use \? or [$URLQuerySeparators] ?
-									if ($refurl[1]) {
+									if ($refurl[1])
+									{
 										# Extract params of referer query string (q=cache:mmm:www/zzz+aaa+bbb q=aaa+bbb/ccc key=ddd%20eee lang_en ie=UTF-8 ...)
 										if ($SearchEnginesKnownUrl{$tmprefererserver}) {	# Search engine with known URL syntax
 											foreach my $param (split(/&/,$KeyWordsNotSensitive?lc($refurl[1]):$refurl[1])) {
@@ -7220,7 +7223,9 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 											}
 										}
 									}	# End of elsif refurl[1]
-									elsif ($SearchEnginesWithKeysNotInQuery{$tmprefererserver}) {
+									elsif ($SearchEnginesWithKeysNotInQuery{$tmprefererserver})
+									{
+										debug("xxx".$refurl[0]);
 									    # If search engine with key inside page url like a9 (www.a9.com/searchkey1%20searchkey2)
 	                                    if ($refurl[0] =~ /$SearchEnginesKnownUrl{$tmprefererserver}(.*)$/) {
 	                                        my $param=$1;
