@@ -62,15 +62,88 @@
 #	     added wwweasel.de http://wwweasel.de
 #	     added Yahoo Mindset! http://mindset.research.yahoo.com/
 #            updated Mirago query parameter recognition (qry=); added breakout for each country (France, Germany, Spain, Italy, Norway, Sweden, Denmark, Netherlands, Belgium, Switzerland)
-# 2006-05-13 
+# 2006-05-13 Sean Carlos http://www.antezeta.com/awstats.html 
 #	     added Google cache IPs 64.233.183.104 & 66.102.7.104
-# 2006-05-20 
+# 2006-05-20 Sean Carlos http://www.antezeta.com/awstats.html 
 #		anzwers.com.au
 #		schoenerbrausen.de http://www.schoenerbrausen.de/
-#		216.239.59.104
-#		answerbus http://www.answerbus.com/
+#		added Google cache IP 216.239.59.104
+#		answerbus http://www.answerbus.com/ (does not provide keywords)
+# 2006-05-23 Sean Carlos http://www.antezeta.com/awstats.html
+#		added Google cache IP 66.102.9.104, 64.233.161.104
+# 2006-06-23 Sean Carlos http://www.antezeta.com/awstats.html 
+#	     	added Alice Search search.alice.it
+#		added GoodSearch http://www.goodsearch.com/ (does not provide keywords) "a Yahoo-powered search engine that donates money to your favorite charity or school each time you search the web"
+#		added googlee.com, variant of Google
+#		added gotuneed http://www.gotuneed.com/ Italian search engine, in beta
+#		added icq.com
+#		added logic to parse Google Cache search keywords. Seems to work for alpha but not numeric cache IDs, i.e. search?q=cache:lWVLmnuGJswJ: is recognized but q=cache:Yv5qxeJNuhgJ: is not recognized. The URL triggering the keywords will also appear.  The URLs are probably too varied to parse out?
+#		added Nusearch http://www.nusearch.com/
+#		added Polymeta www.polymeta.hu (does not provide keywords)
+#		added scroogle http://www.scroogle.org/ (does not always provide keywords)
+#		added Tango http://tango.hu/search.php?st=0&q=jeles+napok
+#		Changed Google Cache notation 64\.233\.(161|167|179|183|187)\.104 to 64\.233\.1[0-9]{2}\.104
+#		 			      72\.14\.(203|205|207|209|221)\.104 to 72\.14\.2[0-9]{2}\.104
+#					      216\.239\.(51|59)\.104 to 216\.239\.5[0-9]\.104
+#					      66\.102\.(7|9)\.104 to 66\.102\.[1-9]\.104
+# 2006-06-27 Sean Carlos http://www.antezeta.com/awstats.html
+#		added Onet.pl http://szukaj.onet.pl/ 
+#		corrected name "Wirtualna Polska" from "Szukaj" (search); added link http://szukaj.wp.pl/ 
+# 2006-06-30 Sean Carlos http://www.antezeta.com/awstats.html
+#	Additional Polish Search Engines:
+#	added Dodaj.pl http://www.dodaj.pl/
+#	added Gazeta.pl http://szukaj.gazeta.pl/
+#	added Gery.pl http://szukaj.gery.pl/
+#	added Hoga.pl http://www.hoga.pl/
+#	added Interia.pl http://www.google.interia.pl/
+#	added Katalog.Onet.pl http://katalog.onet.pl/
+#	added NetSprint.pl http://www.netsprint.pl/
+#	added o2.pl http://szukaj2.o2.pl/
+#	added Polska http://szukaj.polska.pl/
+#	added Szukacz http://www.szukacz.pl/
+#	added Wow.pl http://szukaj.wow.pl/
+#	added Sagool http://sagool.jp/
+
+# 2006-08-25 Social Bookmarks
+#	International
+#	added del.icio.us/search - for now, just search referrer. To do: consider /tag/(tagname) referrer?
+# 	added stumbleupon.com - No keywords supplied.
+#	added swik.net
+#       added digg. Keywords sometimes supplied.
+#	Italy
+# 	added segnalo.alice.it - No keywords supplied.
+#	added ineffabile.it - No keywords supplied.
+
+#       added filter for google groups.  Attempt to parse group name as keyword.
+
+# 2006-09-14 
+#	added Eniro Sverige http://www.eniro.se/
+#	added MyWebSearch http://search.mywebsearch.com/ 
+#	added Teecno http://www.teecno.it/ Italian Open Source Search Engine
 
 #package AWSSE;
+
+# 2006-09-25 (Gabor Moizes)
+# added 4-counter (Google alternative) http://4-counter.com/
+# added Googlecom (Google alternative) http://googlecom.com/
+# added Goggle (Google alternative) http://goggle.co.hu/
+# added Comet toolbar http://as.starware.com
+# added new IP for Yahoo: 216.109.125.130
+# added Ledix http://ledix.net/
+# added AT&T search (powered by Google) http://www.att.net/
+# added Keresolap (Hungarian search engine) http://www.keresolap.hu/
+# added Mozbot (French search engine) http://www.mozbot.fr/
+# added Zoznam (Slovak search engine) http://www.zoznam.sk/
+# added sapo.pt (Portuguese search engine) http://www.sapo.pt/
+# added shaw.ca (powered by Google) http://start.shaw.ca/
+# added Searchalot http://www.searchalot.com/
+# added Copernic http://www.copernic.com/
+# added 216.109.125.130 to Yahoo
+# added 66.218.69.11 to Yahoo
+# added Avantfind http://www.avantfind.com/
+# added Steadysearch http://www.steadysearch.com/
+# added Steadysearch http://www.steady-search.com/
+# modified 216\.239\.5[0-9]\.104/search to 216\.239\.5[0-9]\.104
 
 
 # SearchEnginesSearchIDOrder
@@ -84,17 +157,24 @@
 # Major international search engines
 'base\.google\.',
 'froogle\.google\.',
+'groups\.google\.',
 'images\.google\.',
-'google\.','216\.239\.(35\.101|37\.101|39\.100|39\.101|51\.100|51\.101|35\.100|59\.104)',
-'64\.233\.183\.104',
-'66\.102\.7\.104',
+'google\.',
+'googlee\.',
+'googlecom\.com',
+'goggle\.co\.hu',
+'216\.239\.(35|37|39|51)\.100',
+'216\.239\.(35|37|39|51)\.101', 
+'216\.239\.5[0-9]\.104', 
+'64\.233\.1[0-9]{2}\.104',
+'66\.102\.[1-9]\.104',
 '66\.249\.93\.104',
-'72\.14\.(203\.104|207\.104)',
+'72\.14\.2[0-9]{2}\.104',
 'msn\.',
 'live\.com',
 'voila\.',
 'mindset\.research\.yahoo',
-'yahoo\.','(66\.218\.71\.225|216\.109\.117\.135)',
+'yahoo\.','(66\.218\.71\.225|216\.109\.117\.135|216\.109\.125\.130|66\.218\.69\.11)',
 'search\.aol\.co',
 'tiscali\.',
 'lycos\.',
@@ -112,6 +192,8 @@
 
 @SearchEnginesSearchIDOrder_list2=(
 # Minor international search engines
+'4\-counter\.com',
+'att\.net',
 'northernlight\.',
 'hotbot\.',
 'kvasir\.',
@@ -150,6 +232,13 @@
 'kartoo\.com',
 'icerocket\.com',
 'sphere\.com',
+'ledix\.net',
+'start\.shaw\.ca',
+'searchalot\.com',
+'copernic\.com',
+'avantfind\.com',
+'steadysearch\.com',
+'steady-search\.com',
 # Chello Portals
 'chello\.at',
 'chello\.be',
@@ -176,6 +265,20 @@
 'mirago\.co\.uk',
 'mirago', # required as catchall for new countries not yet known
 'answerbus\.com',
+'icq\.com\/search',
+'nusearch\.com',
+'goodsearch\.com',
+'scroogle\.org',
+'questionanswering\.com',
+'mywebsearch\.com',
+'as\.starware\.com',
+# Social Bookmarking Services
+'del\.icio\.us',
+'digg\.com',
+'stumbleupon\.com',
+'swik\.net',
+'segnalo\.alice\.it',
+'ineffabile\.it',
 # Minor Australian search engines
 'anzwers\.com\.au',
 # Minor brazilian search engines
@@ -195,6 +298,7 @@
 # Minor french search engines
 'recherche\.aol\.fr','ctrouve\.','francite\.','\.lbb\.org','rechercher\.libertysurf\.fr', 'search[\w\-]+\.free\.fr', 'recherche\.club-internet\.fr',
 'toile\.com', 'biglotron\.com', 
+'mozbot\.fr', 
 # Minor german search engines
 'sucheaol\.aol\.de',
 'fireball\.de','infoseek\.de','suche\d?\.web\.de','[a-z]serv\.rrzn\.uni-hannover\.de',
@@ -204,22 +308,30 @@
 'wwweasel\.de',
 'netluchs\.de',
 'schoenerbrausen\.de',
-# Minor hungarian search engines
+# Minor Hungarian search engines
 'heureka\.hu','vizsla\.origo\.hu','lapkereso\.hu','goliat\.hu','index\.hu','wahoo\.hu','webmania\.hu','search\.internetto\.hu',
+'tango\.hu',
+'keresolap\.hu',
+'polymeta\.hu',
 # Minor Indian search engines
 'sify\.com',
-# Minor italian search engines
-'virgilio\.it','arianna\.libero\.it','supereva\.com','kataweb\.it','search\.alice\.it\.master',
+# Minor Italian search engines
+'virgilio\.it','arianna\.libero\.it','supereva\.com','kataweb\.it','search\.alice\.it\.master','search\.alice\.it','gotuneed\.com',
+'godado','jumpy\.it','shinyseek\.it','teecno\.it',
 # Minor Japanese search engines
-'ask\.jp',
+'ask\.jp','sagool\.jp',
 # Minor Norwegian search engines
 'sok\.start\.no', 'eniro\.no',
-# Minor polish search engines
-'szukaj\.wp\.pl',
+# Minor Polish search engines
+'szukaj\.wp\.pl','szukaj\.onet\.pl','dodaj\.pl','gazeta\.pl','gery\.pl','hoga\.pl','netsprint\.pl','interia\.pl','katalog\.onet\.pl','o2\.pl','polska\.pl','szukacz\.pl','wow\.pl',
 # Minor russian search engines
 'ya(ndex)?\.ru', 'aport\.ru', 'rambler\.ru', 'turtle\.ru', 'metabot\.ru',
-# Minor swedish search engines
-'evreka\.passagen\.se',
+# Minor Swedish search engines
+'evreka\.passagen\.se','eniro\.se',
+# Minor Slovak search engines
+'zoznam\.sk',
+# Minor Portuguese search engines
+'sapo\.pt',
 # Minor swiss search engines
 'search\.ch', 'search\.bluewin\.ch'
 );
@@ -239,8 +351,7 @@
 'google\.'=>'translate\.google\.',
 'msn\.'=>'hotmail\.msn\.',
 'tiscali\.'=>'mail\.tiscali\.',
-'yahoo\.'=>'mail\.yahoo\.',
-'yahoo\.'=>'groups\.yahoo\.'
+'yahoo\.'=>'mail\.yahoo\.'
 );
 
 
@@ -251,17 +362,24 @@
 # Major international search engines
 'base\.google\.','google_base',
 'froogle\.google\.','google_froogle',
+'groups\.google\.','google_groups',
 'images\.google\.','google_image',
-'google\.','google','216\.239\.(35\.101|37\.101|39\.100|39\.101|51\.100|51\.101|35\.100|59\.104)','google',
-'64\.233\.183\.104','google_cache',
-'66\.102\.7\.104','google_cache',
+'google\.','google',
+'googlee\.','google',
+'googlecom\.com','google',
+'goggle\.co\.hu','google',
+'216\.239\.(35|37|39|51)\.100','google_cache',
+'216\.239\.(35|37|39|51)\.101','google_cache',
+'216\.239\.5[0-9]\.104','google_cache',
+'64\.233\.1[0-9]{2}\.104','google_cache',
+'66\.102\.[1-9]\.104','google_cache',
 '66\.249\.93\.104','google_cache',
-'72\.14\.(203\.104|207\.104)','google_cache',
+'72\.14\.2[0-9]{2}\.104','google_cache',
 'msn\.','msn',
 'live\.com','live',
 'voila\.','voila',
 'mindset\.research\.yahoo','yahoo_mindset',
-'yahoo\.','yahoo','(66\.218\.71\.225|216\.109\.117\.135)','yahoo',
+'yahoo\.','yahoo','(66\.218\.71\.225|216\.109\.117\.135|216\.109\.125\.130|66\.218\.69\.11)','yahoo',
 'lycos\.','lycos',
 'alexa\.com','alexa',
 'alltheweb\.com','alltheweb',
@@ -276,6 +394,8 @@
 'search\.sli\.sympatico\.ca','sympatico',
 'excite\.','excite',
 # Minor international search engines
+'4\-counter\.com','google4counter',
+'att\.net','att',
 'northernlight\.','northernlight',
 'hotbot\.','hotbot',
 'kvasir\.','kvasir',
@@ -315,6 +435,13 @@
 'kartoo\.com','kartoo',
 'icerocket\.com','icerocket',
 'sphere\.com','sphere',
+'ledix\.net','ledix',
+'start\.shaw\.ca','shawca',
+'searchalot\.com','searchalot',
+'copernic\.com','copernic',
+'avantfind\.com','avantfind',
+'steadysearch\.com','steadysearch',
+'steady-search\.com','steadysearch',
 # Chello Portals
 'chello\.at','chelloat',
 'chello\.be','chellobe',
@@ -341,6 +468,20 @@
 'mirago\.co\.uk','miragocouk',
 'mirago','mirago', # required as catchall for new countries not yet known
 'answerbus\.com','answerbus',
+'icq\.com\/search','icq',
+'nusearch\.com','nusearch',
+'goodsearch\.com','goodsearch',
+'scroogle\.org','scroogle',
+'questionanswering\.com','questionanswering',
+'mywebsearch\.com','mywebsearch',
+'as\.starware\.com','comettoolbar',
+# Social Bookmarking Services
+'del\.icio\.us','delicious',
+'digg\.com','digg',
+'stumbleupon\.com','stumbleupon',
+'swik\.net','swik',
+'segnalo\.alice\.it','segnalo',
+'ineffabile\.it','ineffabile',
 # Minor Australian search engines
 'anzwers\.com\.au','anzwers',
 # Minor brazilian search engines
@@ -396,6 +537,7 @@
 'recherche\.club-internet\.fr','clubinternet',
 'toile\.com','toile',
 'biglotron\.com', 'biglotron',
+'mozbot\.fr', 'mozbot',
 # Minor german search engines
 'sucheaol\.aol\.de','aolde',
 'fireball\.de','fireball',
@@ -411,7 +553,7 @@
 'wwweasel\.de','wwweasel',
 'netluchs\.de','netluchs',
 'schoenerbrausen\.de','schoenerbrausen',
-# Minor hungarian search engines
+# Minor Hungarian search engines
 'heureka\.hu','heureka',
 'vizsla\.origo\.hu','origo',
 'lapkereso\.hu','lapkereso',
@@ -420,28 +562,55 @@
 'wahoo\.hu','wahoo',
 'webmania\.hu','webmania',
 'search\.internetto\.hu','internetto',
+'tango\.hu','tango_hu',
+'keresolap\.hu','keresolap_hu',
+'polymeta\.hu','polymeta_hu',
 # Minor Indian search engines
 'sify\.com','sify',
-# Minor italian search engines
+# Minor Italian search engines
 'virgilio\.it','virgilio',
 'arianna\.libero\.it','arianna',
 'supereva\.com','supereva',
 'kataweb\.it','kataweb',
 'search\.alice\.it\.master','aliceitmaster',
+'search\.alice\.it','aliceit',
+'gotuneed\.com','gotuneed',
+'godado','godado',
+'jumpy\.it','jumpy\.it',
+'shinyseek\.it','shinyseek\.it',
+'teecno\.it','teecnoit',
 # Minor Japanese search engines
 'ask\.jp','askjp',
+'sagool\.jp','sagool',
 # Minor Norwegian search engines
 'sok\.start\.no','start', 'eniro\.no','eniro',
-# Minor polish search engines
+# Minor Polish search engines
 'szukaj\.wp\.pl','wp',
+'szukaj\.onet\.pl','onetpl',
+'dodaj\.pl','dodajpl',
+'gazeta\.pl','gazetapl',
+'gery\.pl','gerypl',
+'netsprint\.pl\/hoga\-search','hogapl',
+'netsprint\.pl','netsprintpl',
+'interia\.pl','interiapl',
+'katalog\.onet\.pl','katalogonetpl',
+'o2\.pl','o2pl',
+'polska\.pl','polskapl',
+'szukacz\.pl','szukaczpl',
+'wow\.pl','wowpl',
 # Minor russian search engines
 'ya(ndex)?\.ru','yandex',
 'aport\.ru','aport',
 'rambler\.ru','rambler',
 'turtle\.ru','turtle',
 'metabot\.ru','metabot',
-# Minor swedish search engines
+# Minor Swedish search engines
 'evreka\.passagen\.se','passagen',
+'eniro\.se','enirose',
+# Minor Slovak search engines
+'zoznam\.sk','zoznam',
+# Minor Portuguese search engines
+'sapo\.pt','sapo',
 # Minor swiss search engines
 'search\.ch','searchch',
 'search\.bluewin\.ch','bluewin',
@@ -469,8 +638,9 @@
 'dmoz','search=',
 'google_base','(p|q|as_p|as_q)=',
 'google_froogle','(p|q|as_p|as_q)=',
+'google_groups','group\/', # does not work
 'google_image','(p|q|as_p|as_q)=',
-'google_cache','(p|q|as_p|as_q)=cache:*.(?=\+)',
+'google_cache','(p|q|as_p|as_q)=cache:[0-9A-Za-z]{12}:',
 'google','(p|q|as_p|as_q)=',
 'lycos','query=',
 'msn','q=',
@@ -486,6 +656,8 @@
 'sympatico', 'query=', 
 'excite','search=',
 # Minor international search engines
+'google4counter','(p|q|as_p|as_q)=',
+'att','qry=',
 'go','qt=',
 'askde','(ask|q)=', # break out Ask country specific engines.
 'askes','(ask|q)=',
@@ -523,6 +695,12 @@
 'kartoo',,
 'icerocket','q=',
 'sphere','q=',
+'ledix','q=',
+'shawca','q=',
+'searchalot','q=',
+'copernic','web\/',
+'avantfind','keywords=',
+'steadysearch','w=',
 # Chello Portals
 'chelloat','q1=',
 'chellobe','q1=',
@@ -549,6 +727,20 @@
 'miragocouk','(txtsearch|qry)=',
 'mirago','(txtsearch|qry)=',
 'answerbus','', # Does not provide query parameters
+'icq','q=',
+'nusearch','nusearch_terms=',
+'goodsearch','Keywords=',
+'scroogle','Gw=', # Does not always provide query parameters
+'questionanswering','',
+'mywebsearch','searchfor=',
+'comettoolbar','qry=',
+# Social Bookmarking Services
+'delicious','all=',
+'digg','s=',
+'stumbleupon','',
+'swik','swik\.net/', # does not work. Keywords follow domain, e.g. http://swik.net/awstats+analytics
+'segnalo','',
+'ineffabile','',
 # Minor Australian search engines
 'anzwers','search=',
 # Minor brazilian search engines
@@ -570,6 +762,7 @@
 'francite','name=', 'clubinternet', 'q=',
 'toile', 'q=',
 'biglotron','question=',
+'mozbot','q=',
 # Minor german search engines
 'aolde','q=',
 'fireball','q=', 'infoseek','qt=', 'webde','su=',
@@ -579,8 +772,11 @@
 'wwweasel','q=',
 'netluchs','query=',
 'schoenerbrausen','q=',
-# Minor hungarian search engines
+# Minor Hungarian search engines
 'heureka','heureka=', 'origo','(q|search)=', 'goliat','KERESES=', 'wahoo','q=', 'internetto','searchstr=',
+'keresolap_hu','q=',
+'tango_hu','q=',
+'polymeta_hu','',
 # Minor Indian search engines
 'sify','keyword=',
 # Minor Italian search engines
@@ -589,16 +785,36 @@
 'supereva','q=',
 'kataweb','q=',
 'aliceitmaster','qs=',
+'aliceit','qs=',
+'gotuneed','', # Not yet known
+'godado','Keywords=',
+'jumpy\.it','searchWord=',
+'shinyseek\.it','KEY=',
+'teecnoit','q=',
 # Minor Japanese search engines
 'askjp','(ask|q)=',
+'sagool','q=',
 # Minor Norwegian search engines
 'start','q=', 'eniro','q=',
-# Minor polish search engines
+# Minor Polish search engines
 'wp','szukaj=',
+'onetpl','qt=',
+'dodajpl','keyword=',
+'gazetapl','slowo=',
+'gerypl','q=',
+'hogapl','qt=',
+'netsprintpl','q=',
+'interiapl','q=',
+'katalogonetpl','qt=',
+'o2pl','qt=',
+'polskapl','qt=',
+'szukaczpl','q=',
+'wowpl','q=',
 # Minor russian search engines
 'yandex', 'text=', 'rambler','words=', 'aport', 'r=', 'metabot', 'st=',
 # Minor swedish search engines
 'passagen','q=',
+'enirose','q=',
 # Minor swiss search engines
 'searchch', 'q=', 'bluewin', 'qry='
 );
@@ -640,6 +856,7 @@
 'dmoz','<a href="http://dmoz.org/" title="Search Engine Home Page [new window]" target="_blank">DMOZ</a>',
 'google_base','<a href="http://base.google.com/" title="Search Engine Home Page [new window]" target="_blank">Google (Base)</a>',
 'google_froogle','<a href="http://froogle.google.com/" title="Search Engine Home Page [new window]" target="_blank">Froogle (Google)</a>',
+'google_groups','<a href="http://groups.google.com/" title="Search Engine Home Page [new window]" target="_blank">Google (Groups)</a>',
 'google_image','<a href="http://images.google.com/" title="Search Engine Home Page [new window]" target="_blank">Google (Images)</a>',
 'google_cache','<a href="http://www.google.com/help/features.html#cached" title="Search Engine Home Page [new window]" target="_blank">Google (cache)</a>',
 'google','<a href="http://www.google.com/" title="Search Engine Home Page [new window]" target="_blank">Google</a>',
@@ -657,6 +874,8 @@
 'sympatico','<a href="http://sympatico.msn.ca/" title="Search Engine Home Page [new window]" target="_blank">Sympatico</a>',
 'excite','<a href="http://www.excite.com/" title="Search Engine Home Page [new window]" target="_blank">Excite</a>',
 # Minor international search engines
+'google4counter','<a href="http://www.4-counter.com/" title="Search Engine Home Page [new window]" target="_blank">4-counter (Google)</a>',
+'att','<a href="http://www.att.net/" title="Search Engine Home Page [new window]" target="_blank">AT&T search (powered by Google)</a>',
 'go','Go.com',
 'askde','<a href="http://de.ask.com/" title="Search Engine Home Page [new window]" target="_blank">Ask Deutschland</a>',
 'askes','<a href="http://es.ask.com/" title="Search Engine Home Page [new window]" target="_blank">Ask Espa&ntilde;a</a>', # break out Ask country specific engines.
@@ -694,6 +913,12 @@
 'kartoo','<a href="http://www.kartoo.com/" title="Search Engine Home Page [new window]" target="_blank">Kartoo</a>',
 'icerocket','<a href="http://www.icerocket.com/" title="Search Engine Home Page [new window]" target="_blank">Icerocket (Blog)</a>',
 'sphere','<a href="http://www.sphere.com/" title="Search Engine Home Page [new window]" target="_blank">Sphere (Blog)</a>',
+'ledix','<a href="http://www.ledix.net/" title="Search Engine Home Page [new window]" target="_blank">Ledix</a>',
+'shawca','<a href="http://start.shaw.ca/" title="Search Engine Home Page [new window]" target="_blank">Shaw.ca</a>',
+'searchalot','<http://www.searchalot.com/" title="Search Engine Home Page [new window]" target="_blank">Searchalot</a>',
+'copernic','<http://www.copernic.com/" title="Search Engine Home Page [new window]" target="_blank">Copernic</a>',
+'avantfind','<http://www.avantfind.com/" title="Search Engine Home Page [new window]" target="_blank">Avantfind</a>',
+'steadysearch','<http://www.avantfind.com/" title="Search Engine Home Page [new window]" target="_blank">Avantfind</a>',
 # Chello Portals
 'chelloat','<a href="http://www.chello.at/" title="Search Engine Home Page [new window]" target="_blank">Chello Austria</a>',
 'chellobe','<a href="http://www.chello.be/" title="Search Engine Home Page [new window]" target="_blank">Chello Belgium</a>',
@@ -719,6 +944,23 @@
 'miragose','<a href="http://www.mirago.se/" title="Search Engine Home Page [new window]" target="_blank">Mirago Sweden</a>',
 'miragocouk','<a href="http://zone.mirago.co.uk/" title="Search Engine Home Page [new window]" target="_blank">Mirago UK</a>',
 'mirago','<a href="http://www.mirago.com/" title="Search Engine Home Page [new window]" target="_blank">Mirago (country unknown)</a>',
+'answerbus','<a href="http://www.answerbus.com/" title="Search Engine Home Page [new window]" target="_blank">Answerbus</a>',
+'icq','<a href="http://www.icq.com/" title="Search Engine Home Page [new window]" target="_blank">icq</a>',
+'nusearch','<a href="http://www.nusearch.com/" title="Search Engine Home Page [new window]" target="_blank">Nusearch</a>',
+'goodsearch','<a href="http://www.goodsearch.com/" title="Search Engine Home Page [new window]" target="_blank">GoodSearch</a>',
+'scroogle','<a href="http://www.scroogle.org/" title="Search Engine Home Page [new window]" target="_blank">Scroogle</a>',
+'questionanswering','<a href="http://www.questionanswering.com/" title="Questionanswering home page [new window]" target="_blank">Questionanswering</a>',
+'mywebsearch','<a href="http://search.mywebsearch.com/" title="MyWebSearch home page [new window]" target="_blank">MyWebSearch</a>',
+'comettoolbar','<a href="http://as.starware.com/dp/search" title="Comet toolbar search home page [new window]" target="_blank">Comet toolbar search</a>',
+# Social Bookmarking Services
+'delicious','<a href="http://del.icio.us/" title="del.icio.us home page [new window]" target="_blank">del.icio.us</a> (Social Bookmark)',
+'digg','<a href="http://www.digg.com/" title="Digg home page [new window]" target="_blank">Digg</a> (Social Bookmark)',
+'stumbleupon','<a href="http://www.stumbleupon.com/" title="Stumbleupon home page [new window]" target="_blank">Stumbleupon</a> (Social Bookmark)',
+'swik','<a href="http://swik.net/" title="Swik home page [new window]" target="_blank">Swik</a> (Social Bookmark)',
+'segnalo','<a href="http://segnalo.alice.it/" title="Segnalo home page [new window]" target="_blank">Segnalo</a> (Social Bookmark)',
+'ineffabile','<a href="http://www.ineffabile.it/" title="Ineffabile.it home page [new window]" target="_blank">Ineffabile.it</a> (Social Bookmark)',
+# Minor Australian search engines
+'anzwers','<a href="http://anzwers.com.au/" title="anzwers.com.au home page [new window]" target="_blank">anzwers.com.au</a>',
 # Minor brazilian search engines
 'engine','Cade', 'miner','Meta Miner',
 # Minor chinese search engines
@@ -739,6 +981,7 @@
 'aolfr','AOL (fr)', 'ctrouve','C\'est trouvé', 'francite','Francité', 'lbb', 'LBB', 'libertysurf', 'Libertysurf', 'free', 'Free.fr', 'clubinternet', 'Club-internet',
 'toile', 'Toile du Québec',
 'biglotron','<a href="http://www.biglotron.com/" title="Search Engine Home Page [new window]" target="_blank">Biglotron</a>',
+'mozbot','<a href="http://www.mozbot.fr/" title="Search Engine Home Page [new window]" target="_blank">Mozbot</a>',
 # Minor German search engines
 'aolde','AOL (de)',
 'fireball','Fireball', 'infoseek','Infoseek', 'webde','Web.de',
@@ -751,24 +994,51 @@
 'schoenerbrausen','<a href="http://www.schoenerbrausen.de/" title="Search Engine Home Page [new window]" target="_blank">Schoenerbrausen/</a>',
 # Minor hungarian search engines
 'heureka','Heureka', 'origo','Origo-Vizsla', 'lapkereso','Startlapkeresõ', 'goliat','Góliát', 'indexhu','Index', 'wahoo','Wahoo', 'webmania','webmania.hu', 'internetto','Internetto Keresõ',
+'tango_hu','<a href="http://tango.hu/" title="Search Engine Home Page [new window]" target="_blank">Tango</a>',
+'keresolap_hu','<a href="http://keresolap.hu/" title="Search Engine Home Page [new window]" target="_blank">Tango keresolap</a>',
+'polymeta_hu','<a href="http://www.polymeta.hu/" title="Search Engine Home Page [new window]" target="_blank">Polymeta</a>',
 # Minor Indian search engines
 'sify','<a href="http://search.sify.com/" title="Search Engine Home Page [new window]" target="_blank">Sify</a>',
-# Minor italian search engines
+# Minor Italian search engines
 'virgilio','<a href="http://www.virgilio.it/" title="Search Engine Home Page [new window]" target="_blank">Virgilio</a>',
 'arianna','<a href="http://arianna.libero.it/" title="Search Engine Home Page [new window]" target="_blank">Arianna</a>',
 'supereva','<a href="http://search.supereva.com/" title="Search Engine Home Page [new window]" target="_blank">Supereva</a>',
 'kataweb','<a href="http://www.kataweb.it/ricerca/" title="Search Engine Home Page [new window]" target="_blank">Kataweb</a>',
 'aliceitmaster','<a href="http://www.alice.it/" title="Search Engine Home Page [new window]" target="_blank">search.alice.it.master</a>',
+'aliceit','<a href="http://www.alice.it/" title="Search Engine Home Page [new window]" target="_blank">alice.it</a>',
+'gotuneed','<a href="http://www.gotuneed.com/" title="Search Engine Home Page [new window]" target="_blank">got u need</a>',
+'godado','Godado.it',
+'jumpy\.it','Jumpy.it',
+'shinyseek\.it','Shinyseek.it',
+'teecnoit','<a href="http://www.teecno.it/" title="Teecno home page [new window]" target="_blank">Teecno</a>',
 # Minor Japanese search engines
-'askjp','<a href="http://www.ask.jp/" title="Search Engine Home Page [new window]" target="_blank">Ask Japan</a>',
+'askjp','<a href="http://www.ask.jp/" title="Search E@SearchEngngine Home Page [new window]" target="_blank">Ask Japan</a>',
+'sagool','<a href="http://sagool.jp/" title="Sagool home page [new window]" target="_blank">Sagool</a>',
 # Minor Norwegian search engines
 'start','start.no', 'eniro','<a href="http://www.eniro.no/" title="Search Engine Home Page [new window]" target="_blank">Eniro</a>',	
 # Minor polish search engines
-'wp','Szukaj',
+'wp','<a href="http://szukaj.wp.pl/" title="Wirtualna Polska home page [new window]" target="_blank">Wirtualna Polska</a>',
+'onetpl','<a href="http://szukaj.onet.pl/" title="Onet.pl home page [new window]" target="_blank">Onet.pl</a>',
+'dodajpl','<a href="http://www.dodaj.pl/" title="Dodaj.pl home page [new window]" target="_blank">Dodaj.pl</a>',
+'gazetapl','<a href="http://szukaj.gazeta.pl/" title="Gazeta.pl home page [new window]" target="_blank">Gazeta.pl</a>',
+'gerypl','<a href="http://szukaj.gery.pl/" title="Gery.pl home page [new window]" target="_blank">Gery.pl</a>',
+'hogapl','<a href="http://www.hoga.pl/" title="Hoga.pl home page [new window]" target="_blank">Hoga.pl</a>',
+'netsprintpl','<a href="http://www.netsprint.pl/" title="NetSprint.pl home page [new window]" target="_blank">NetSprint.pl</a>',
+'interiapl','<a href="http://www.google.interia.pl/" title="Interia.pl home page [new window]" target="_blank">Interia.pl</a>',
+'katalogonetpl','<a href="http://katalog.onet.pl/" ti@SearchEngtle="Katalog.Onet.pl home page [new window]" target="_blank">Katalog.Onet.pl</a>',
+'o2pl','<a href="http://szukaj2.o2.pl/" title="o2.pl home page [new window]" target="_blank">o2.pl</a>',
+'polskapl','<a href="http://szukaj.polska.pl/" title="Polska home page [new window]" target="_blank">Polska</a>',
+'szukaczpl','<a href="http://www.szukacz.pl/" title="Szukacz home page [new window]" target="_blank">Szukacz</a>',
+'wowpl','<a href="http://szukaj.wow.pl/" title="Wow.pl home page [new window]" target="_blank">Wow.pl</a>',
 # Minor russian search engines
 'yandex', 'Yandex', 'aport', 'Aport', 'rambler', 'Rambler', 'turtle', 'Turtle', 'metabot', 'MetaBot',
-# Minor swedish search engines
+# Minor Swedish search engines
 'passagen','Evreka',
+'enirose','<a href="http://www.eniro.se/" title="Eniro Sverige home page [new window]" target="_blank">Eniro Sverige</a>',
+# Minor Slovak search engines
+'zoznam','<a href="http://www.zoznam.sk/" Searc Engine home page [new window]" target="_blank">Zoznam</a>',
+# Minor Portuguese search engines
+'sapo','<a href="http://www.sapo.pt/" Searc Engine home page [new window]" target="_blank">Sapo</a>',
 # Minor Swiss search engines
 'searchch', 'search.ch', 'bluewin', 'search.bluewin.ch',								
 # Generic search engines
