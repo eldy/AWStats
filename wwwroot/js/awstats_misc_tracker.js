@@ -119,8 +119,8 @@ if (window.location.search == "" || window.location.search == "?") {
 		TRKsvg = awstats_detectIE("Adobe.SVGCtl");
 		TRKfla = awstats_detectIE("ShockwaveFlash.ShockwaveFlash.1");
 		TRKrp  = awstats_detectIE("rmocx.RealPlayer G2 Control.1");
-		TRKmov = awstats_detectIE("QuickTimeCheckObject.QuickTimeCheck.1");
-		TRKwma = awstats_detectIE("MediaPlayer.MediaPlayer.1");
+		TRKmov = awstats_detectIE("Quicktime.Quicktime");
+		TRKwma = awstats_detectIE("wmplayer.ocx");
 		TRKpdf = 'n'; TRKpdfver='';
         if (awstats_detectIE("PDF.PdfCtrl.1") == 'y') { TRKpdf = 'y'; TRKpdfver='4'; } // Acrobat 4
 	    if (awstats_detectIE('PDF.PdfCtrl.5') == 'y') { TRKpdf = 'y'; TRKpdfver='5'; } // Acrobat 5
