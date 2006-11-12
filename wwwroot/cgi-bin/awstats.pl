@@ -5667,7 +5667,7 @@ if ($ENV{'AWSTATS_FORCE_CONFIG'}) {
 
 if ((! $ENV{'GATEWAY_INTERFACE'}) && (! $SiteConfig)) {
 	&Read_Ref_Data('browsers','domains','operating_systems','robots','search_engines','worms');
-	print "----- $PROG $VERSION (c) 2000-2005 Laurent Destailleur -----\n";
+	print "----- $PROG $VERSION (c) 2000-2006 Laurent Destailleur -----\n";
 	print "AWStats is a free web server logfile analyzer to show you advanced web\n";
 	print "statistics.\n";
 	print "AWStats comes with ABSOLUTELY NO WARRANTY. It's a free software distributed\n";
