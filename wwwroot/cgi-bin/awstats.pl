@@ -892,10 +892,10 @@ sub error {
 sub warning {
 	my $messagestring=shift;
 
-	if (! $HeaderHTTPSent && $ENV{'GATEWAY_INTERFACE'}) { http_head(); }
-	if (! $HeaderHTMLSent) { html_head(); }
 	if ($Debug) { debug("$messagestring",1); }
 	if ($WarningMessages) {
+		if (! $HeaderHTTPSent && $ENV{'GATEWAY_INTERFACE'}) { http_head(); }
+		if (! $HeaderHTMLSent) { html_head(); }
 		if (scalar keys %HTMLOutput) {
 			$messagestring =~ s/\n/\<br\>/g;
 			print "$messagestring<br />\n";
