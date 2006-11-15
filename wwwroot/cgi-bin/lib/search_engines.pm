@@ -692,7 +692,7 @@
 'mysearch','searchfor=',
 'vivisimo','query=',
 # kartoo: No keywords passed in referring URL.
-'kartoo',,
+'kartoo','',
 'icerocket','q=',
 'sphere','q=',
 'ledix','q=',
