@@ -370,7 +370,7 @@ while (<>) {
 		$mail{$id}{'mon'}=$mon;
 		$mail{$id}{'day'}=$day;
 		$mail{$id}{'time'}=$time;
-		if (&trim($to)=~/^|/) {
+		if (&trim($to)=~/^\|/) {
 			# In particular case of mails are sent to a pipe, the ctladdr contains the to
 			$mail{$id}{'to'}=&trim($fromorto);
 		} else {
