@@ -1,0 +1,325 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<meta name="description" content="AWStats Documentation - How to get web statisctics">
+<meta name="keywords" content="awstats, awstat, log, analysis, paper, how, paper, web, statistics">
+<meta name="robots" content="index,follow">
+<meta name="title" content="AWStats Documentation - Log Analysis Paper">
+<title>AWStats Documentation - Log Analysis Paper</title>
+<link rel="stylesheet" href="styles.css" type="text/css">
+<!-- $Revision$ - $Author$ - $Date$ -->
+</head>
+
+<body topmargin=10 leftmargin=5>
+
+
+<table style="font: 10pt arial,helvetica,verdana" cellpadding=0 cellspacing=0 border=0 bgcolor=#FFFFFF width=100%>
+
+<!-- Large -->
+<tr style="font: 10pt arial,helvetica,verdana">
+<td bgcolor=#9999cc align=center><a href="/"><img src="images/awstats_logo4.png" border=0></a></td>
+<td bgcolor=#9999cc align=center>
+<br>
+<font style="font: 16pt arial,helvetica,sanserif" color=#EEEEFF><b>AWStats Log Analysis Paper</b></font><br>
+<br>
+</td>
+<td bgcolor=#9999cc align=center>
+&nbsp;
+</td>
+</tr>
+
+</table>
+
+<br><br>
+This is all you need to know to get statistics of your web sites:<br>
+<b>The different ways to have them, the differences, their acuracy, etc...</b><br>
+
+
+<br><br><H1 style="font: 20x arial,helvetica,sanserif">How getting statistics for a website</H1>
+
+<br>
+<b>HTML Tag counter</b><br>
+<br>
+
+The goal of this way of working is to add a tag on web page, hosted by web site <i>www.mydomain</i>,
+that point to a page (may be a CGI script) hosted on a server called <i>tagserver</i> (may be the
+same), so that each time a visitor download a page the browser then make a query to server
+<i>tagserver</i>. When the server send answer to this tag, it increase a value by one in a database.<br>
+<u>What's good:</u><br>
+- Easy to do for newbie hosted by free web hosting provider.<br>
+- No need to have access to web server log file.<br>
+- This is the only way to get some kind of information like <b>screen size</b>, technologies
+supported by browsers like <b>Java</b>, <b>Flash</b>, <b>PDF</b> or file format reading capabilities
+of visitor computer (<b>Real</b>, <b>QuickTime</b>, or <b>Windows Media</b> files playing capabilities).<br>
+<u>What's wrong:</u><br>
+- If the browser use a cache or not, the page and counter link can be asked or not by browser
+so hit can be counted or not.<br>
+- You need to put the tag on each of your page (not only the home page) because a visitor can come
+into your site directly to a secondary page with no path on home page. According to web site size, popularity
+and content, visits path use the home page between 5% to 95% of times. Adding tags on all pages
+can be a very hard work.<br>
+- You can't detect robots as a lot of them does not download sub-links detected as CGI counter.<br>
+- You miss a lot of informations like keywords, referrers, search engines, ... <br>
+- When page is downloaded several times by same user when getting back on previous page, the
+referring link can be or not downloaded again.<br>
+<u>Summary:</u><br>
+Using a counter count something but nothing clear (not visits, nor visitors, nor page views).
+Because we don't know what a such tools count it's even not possible to make a study to have an
+average error rate for using a such way to get web statistics !<br>
+<br>
+
+<b>Log analysis</b><br>
+<br>
+
+Because there is so rubbish things that was said and are still said about log analysis, instead of
+telling why log analysis can be good, I prefer to tell first all what is said about log analysis
+and then tell if it's true or wrong.<br>
+You will see that a lot of people speaking about log
+analysis (authors of commercial products but also of old free log analyzers) are still living
+in a prehistorical time.<br>
+
+...Still in working progress...<br>
+
+<!--
+<HR noShade SIZE=2>
+This section is about what happens when somebody connects to your web site, and 
+what statistics you can and can't calculate. There is a lot of confusion about 
+this. It's not helped by statistics programs which claim to calculate things 
+which cannot really be calculated, only estimated. The simple fact is that 
+certain data which we would like to know and which we expect to know are simply 
+not available. And the estimates used by other programs are not just a bit off, 
+but can be very, very wrong. For example (you'll see why below), <EM>if your 
+home page has 10 graphics on, and an AOL user visits it, most programs will 
+count that as 11 different visitors!</EM> 
+<P>This section is fairly long, but it's worth reading carefully. If you 
+understand the basics of how the web works, you will understand what your web 
+statistics are really telling you. 
+<HR noShade SIZE=1>
+<B>1. The basic model.</B> Let's suppose I visit your web site. I follow a link 
+from somewhere else to your front page, read some pages, and then follow one of 
+your links out of your site. 
+<P>So, what do you know about it? First, I make one request for your front page. 
+You know the date and time of the request and which page I asked for (of 
+course), and the internet address of my computer (my <I>host</I>). I also 
+usually tell you which page referred me to your site, and the make and model of 
+my browser. I do not tell you my username or my email address. 
+<P>Next, I look at the page (or rather my browser does) to see if it's got any 
+graphics on it. If so, and if I've got image loading turned on in my browser, I 
+make a separate connection to retrieve each of these graphics. I never log into 
+your site: I just make a sequence of requests, one for each new file I want to 
+download. The referring page for each of these graphics is your front page. 
+Maybe there are 10 graphics on your front page. Then so far I've made 11 
+requests to your server. 
+<P>After that, I go and visit some of your other pages, making a new request for 
+each page and graphic that I want. Finally, I follow a link out of your site. 
+You never know about that at all. I just connect to the next site without 
+telling you. 
+
+
+
+<HR noShade SIZE=1>
+<B>2. Caches.</B> It's not always quite as simple as that. One major problem is 
+caching. There are two major types of caching. First, my browser automatically 
+caches files when I download them. This means that if I visit them again, the 
+next day say, I don't need to download the whole page again. Depending on the 
+settings on my browser, I might check with you that the page hasn't changed: in 
+that case, you do know about it, and analog will count it as a new request for 
+the page. But I might set my browser not to check with you: then I will read the 
+page again without you ever knowing about it. 
+<P>The other sort of cache is on a larger scale. Almost all ISP's now have their 
+own cache. This means that if I try to look at one of your pages and <EM>anyone 
+else from the same ISP</EM> has looked at that page recently, the cache will 
+have saved it, and will give it out to me without ever telling you about it. 
+(This applies whatever my browser settings.) So hundreds of people could read 
+your pages, even though you'd only sent it out once. 
+
+
+<HR noShade SIZE=1>
+<B>3. What you can know.</B> The only things you can know for certain are the 
+number of requests made to your server, when they were made, which files were 
+asked for, and which host asked you for them. 
+<P>You can also know what people told you their browsers were, and what the 
+referring pages were. You should be aware, though, that many browsers lie 
+deliberately about what sort of browser they are, or even let users configure 
+the browser name. Also, a few browsers send incorrect referrers, telling you the 
+last page that the user was on even if they weren't referred by that page. And 
+some people use "anonymizers" which deliberately send false browsers and 
+referrers. 
+
+
+<HR noShade SIZE=1>
+<B>4. What you can't know.</B> 
+<OL type=i>
+  <LI><I>You can't tell the identity of your readers</I>. Unless you explicitly 
+  require users to provide a password, you don't know who connected or what 
+  their email addresses are. 
+  <LI><I>You can't tell how many visitors you've had</I>. You can guess by 
+  looking at the number of distinct hosts that have requested things from you. 
+  Indeed this is what many programs mean when they report "visitors". But this 
+  is not always a good estimate for three reasons. First, if users get your 
+  pages from a local cache server, you will never know about it. Secondly, 
+  sometimes many users appear to connect from the same host: either users from 
+  the same company or ISP, or users using the same cache server. Finally, 
+  sometimes one user appears to connect from many different hosts. AOL now 
+  allocates users a <A 
+  href="http://webmaster.info.aol.com/network.html">different hostname for 
+  <I>every request</I></A>. So <EM>if your home page has 10 graphics on, and an 
+  AOL user visits it, most programs will count that as 11 different 
+  visitors!</EM> 
+  <LI><I>You can't tell how many visits you've had</I>. Many programs, under 
+  pressure from advertisers' organisations, define a "visit" (or "session") as a 
+  sequence of requests from the same host until there is a half-hour gap. This 
+  is an unsound method for several reasons. First, it assumes that each host 
+  corresponds to a separate person and vice versa. This is simply not true in 
+  the real world, as discussed in the last paragraph. Secondly, it assumes that 
+  there is never a half-hour gap in a genuine visit. This is also untrue. I 
+  quite often follow a link out of a site, then step back in my browser and 
+  continue with the first site from where I left off. Should it really matter 
+  whether I do this 29 or 31 minutes later? Finally, to make the computation 
+  tractable, such programs also need to assume that your logfile is in 
+  chronological order: it isn't always, and analog will produce the same results 
+  however you jumble the lines up. 
+  <LI><I>Cookies don't solve these problems</I>. Some sites try to count their 
+  visitors by using cookies. This reduces the errors. But it can't solve the 
+  problem unless you refuse to let people read your pages who can't or won't 
+  take a cookie. And you still have to assume that your visitors will use the 
+  same cookie for their next request. 
+  <LI><I>You can't follow a person's path through your site</I>. Even if you 
+  assume that each person corresponds one-to-one to a host, you don't know their 
+  path through your site. It's very common for people to go back to pages 
+  they've downloaded before. You never know about these subsequent visits to 
+  that page, because their browser has cached them. So you can't track their 
+  path through your site accurately. 
+  <LI><I>You often can't tell where they entered your site, or where they found 
+  out about you from</I>. If they are using a cache server, they will often be 
+  able to retrieve your home page from their cache, but not all of the 
+  subsequent pages they want to read. Then the first page you know about them 
+  requesting will be one in the middle of their true visit. 
+  <LI><I>You can't tell how they left your site, or where they went next</I>. 
+  They never tell you about their connection to another site, so there's no way 
+  for you to know about it. 
+  <LI><I>You can't tell how long people spent reading each page</I>. Once again, 
+  you can't tell which pages they are reading between successive requests for 
+  pages. They might be reading some pages they downloaded earlier. They might 
+  have followed a link out of your site, and then come back later. They might 
+  have interrupted their reading for a quick game of Minesweeper. You just don't 
+  know. 
+  <LI><I>You can't tell how long people spent on your site</I>. Apart from the 
+  problems in the previous point, there is one other complete show-stopper. 
+  Programs which report the time on the site count the time between the first 
+  and the last request. But they don't count the time spent on the final page, 
+  and this is often the majority of the whole visit. </LI></OL>
+<HR noShade SIZE=1>
+<B>5. Real data.</B> Of course, the important question is how much difference 
+these theoretical difficulties make. In a recent paper (<CITE>World Wide 
+Web</CITE>, <B>2</B>, 29-45 (1999): <A 
+href="http://www.parc.xerox.com/istl/projects/uir/pubs/pdf/UIR-R-1999-02-Pirolli-WebJournal-Paths.pdf">PDF 
+228kb</A>), Peter Pirolli and James Pitkow of Xerox Palo Alto Research Center 
+examined this question using a ten day long logfile from the 
+<KBD>xerox.com</KBD> web site. One of their most striking conclusions is that 
+different commonly-used methods can give very different results. For example, 
+when trying to measure the median length of a visit, they got results from 137 
+seconds to 629 seconds, depending exactly what you count as a new visitor or a 
+new visit. As they were looking at a fixed logfile, they didn't consider the 
+effect of server configuration changes such as refusing caching, which would 
+change the results still more. 
+<HR noShade SIZE=1>
+<B>6. Conclusion.</B> The bottom line is that HTTP is a stateless protocol. That 
+means that people don't log in and retrieve several documents: they make a 
+separate connection for each file they want. And <EM>a lot of the time they 
+don't even behave as if they were logged into one site</EM>. The world is a lot 
+messier than this naïve view implies. That's why analog reports requests, i.e. 
+what is going on at your server, which you know, rather than guessing what the 
+users are doing. 
+<P>Defenders of counting visits etc. claim that these are just small 
+approximations. I disagree. For example, almost everyone is now accessing the 
+web through a cache. If the proportion of requests retrieved from the cache is 
+50% (a not unrealistic figure) then half of the users' requests aren't being 
+seen by the servers. 
+<P>Other defenders of these methods claim that they're still useful because they 
+measure <EM>something</EM> which you can use to compare sites. But this assumes 
+that the approximations involved are comparable for different sites, and there's 
+no reason to suppose that this is true. Pirolli &amp; Pitkow's results show that 
+the figures you get depend very much on how you count them, as well as on your 
+server configuration. And even once you've agreed on methodology, different 
+users on different sites have different patterns of behaviour, which affect the 
+approximations in different ways: for example, Pirolli &amp; Pitkow found 
+different characteristics of weekday and weekend users at their site. 
+<P>Still other people say that at least the trend over time of these numbers 
+tells you something. But even that may not be true, because you may not be 
+comparing like with like. Consider what would happen if a large ISP decided to 
+change its proxy server configuration. It could substantially change your 
+apparent number of visits, even if there was no actual change in the traffic 
+levels at your site. 
+<P>I've presented a somewhat negative view here, emphasising what you can't find 
+out. Web statistics are still informative: it's just important not to slip from 
+"this page has received 30,000 requests" to "30,000 people have read this page." 
+In some sense these problems are not really new to the web -- they are present 
+just as much in print media too. For example, you only know how many magazines 
+you've sold, not how many people have read them. In print media we have learnt 
+to live with these issues, using the data which are available, and it would be 
+better if we did on the web too, rather than making up spurious numbers. 
+<HR noShade SIZE=1>
+<B>7. Acknowledgements and further reading.</B> Many other people have made 
+these points too. While originally writing this section, I benefited from three 
+earlier expositions: <CITE><A 
+href="http://www.ario.ch/etc/webstats.html">Interpreting WWW 
+Statistics</A></CITE> by Doug Linder; <CITE>Getting Real about Usage 
+Statistics</CITE> by Tim Stehle; and <CITE>Making Sense of Web Usage 
+Statistics</CITE> by Dana Noonan. (The last two don't seem to be available on 
+the web any more.) 
+-->
+
+<br>
+
+
+<b>Applicative tracking (cookies or session ...)</b><br>
+<br>
+
+...Still in working progress...
+<br>
+
+
+
+<br><br><H1 style="font: 20x arial,helvetica,sanserif">So How AWStats works ?</H1>
+
+<br>
+As we have seen previously, there is different ways to get and compute data.
+AWStats was built with one goal : Being more accurate than any other tool and use the most
+accurate technology to compute its statistics.
+That's the reason why AWStats simply uses all thoose methods. The default setup (also called
+the 'easy setup for newbies') is only <b>log analysis</b> (enhanced with all clever trips
+suggested in this paper to avoid errors made by most log analyzers), but it's highly recommanded
+to activate all AWStats feature if you are an experienced user to also use the other
+methods (<b>HTML tag counting</b> and <b>Applicative tracking</b>) to benefit of all
+advantage of them.<br>
+<br>
+
+<u>The conclusion is that :</u><br>
+<br>
+A log analyzer that does not include a very high level of intelligency in computing log files
+will give you very bad results. So most of authors of Commercial Products are wrong when
+they  say that a log analysis is a very good way to have statistics. IT IS, BUT ONLY
+if the product uses complex rules to reduce errors, and that's not the case for
+their product (I study 2 of them, among the two most popular, and both of them were so
+simple in their "algorithm" that the error rate was between 40% to 250%.
+A log analysis is more than just counting lines in a file !).<br>
+<br>
+On the other hand, people that say a log analyzer can't give accurate results are also
+wrong, because when saying that, THEY FORGET THERE IS NOWDAYS NEW TECHNICS (like thoose developped
+in AWStats) TO EXCLUDE OR REDUCE SERIOUSLY CACHE BROWSERS, PROXY, IP LOCATION, WORMS, ROBOTS
+AND LOG WRITING BUFFERING PROBLEMS. Of course using thoose technics consumes a lot of
+time and reduces log analyzer speed by 2 or 3, but this give you very precise results.<br>
+<br>
+
+
+<br><br><H1 style="font: 20px arial,helvetica,sanserif">Other articles</H1>
+
+<br>
+<CITE>Measuring Web Site Usage: Log File Analysis</CITE> by Susan Haigh and Janette Megarity. 
+Being on a Canadian government site, it's available in both <A href="http://www.nlc-bnc.ca/publications/1/p1-256-e.html">English</A>
+and <A href="http://www.nlc-bnc.ca/publications/1/p1-256-f.html">French</A>.<br>
+
+
+</body>
+</html>
