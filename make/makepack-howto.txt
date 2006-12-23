@@ -1,13 +1,15 @@
-***** Liste des actions à faire lors d'une release *****
-- Mettre a jour fichier README.txt
-- Mettre à jour numero version docs
-- Mettre a jour PAD
-- Regénérer PDF
-- Comiter et Tagger CVS
+***** Actions to do to release *****
+- Check all files are commited
+- Update file README.txt
+- Update version number in doc files
+- Build PAD files
+- Build PDF
+- Tagger CVS
 
 - makepack sur webmin
 - makepack sur awstats
-- Déplacer fichiers dans files
-- Mise a jour page index.php du site web
-- Uploader fichiers
-- Envoyer mail sur mailing list
+- Move build files into files
+- Update web site page index.php
+- Upload files and web site on web server
+- Upload files on sourceforge
+- Send mail on mailing-list
