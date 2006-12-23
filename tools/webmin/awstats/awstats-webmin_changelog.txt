@@ -2,6 +2,10 @@ AWStats-Webmin module Changelog
 -------------------------------
 $Revision$ - $Author$ - $Date$ 
 
+1.700
+
+Just minor bug fixes.
+
 
 1.600
 

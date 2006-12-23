@@ -10,6 +10,7 @@ New features/improvements:
 - Possible use of vhost in extra section.
 - Support IPv6 in AllowAccessFromWebToFollowingIPAddresses parameter.
 - Added svn family to browsers detection.
+- Support for IE7.
 
 Fixes:
 - Remove some Perl warnings.
