@@ -5140,6 +5140,10 @@ sub DefinePerlParsingFormat {
 				$PerlParsingFormat .= "\\\"([^$LogSeparatorWithoutStar]+) ([^$LogSeparatorWithoutStar]+)\\\"";
 			}
 			# Common command tags
+			elsif ($f =~ /%virtualnamequot$/) {
+				$pos_vh = $i; $i++; push @fieldlib, 'vhost';
+				$PerlParsingFormat .= "\\\"([^$LogSeparatorWithoutStar]+)\\\"";
+			}
 			elsif ($f =~ /%virtualname$/) {
 				$pos_vh = $i; $i++; push @fieldlib, 'vhost';
 				$PerlParsingFormat .= "([^$LogSeparatorWithoutStar]+)";
