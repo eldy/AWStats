@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <XML_DIZ_INFO>
 	<MASTER_PAD_VERSION_INFO>
-		<MASTER_PAD_VERSION>2.02</MASTER_PAD_VERSION>
-		<MASTER_PAD_EDITOR>PADGen 2.0.2.30 http://www.padgen.org</MASTER_PAD_EDITOR>
+		<MASTER_PAD_VERSION>3.01</MASTER_PAD_VERSION>
+		<MASTER_PAD_EDITOR>PADGen 3.0.1.35 http://www.padgen.org</MASTER_PAD_EDITOR>
 		<MASTER_PAD_INFO>Portable Application Description, or PAD for short, is a data set that is used by shareware authors to disseminate information to anyone interested in their software products. To find out more go to http://www.asp-shareware.org/pad</MASTER_PAD_INFO>
 	</MASTER_PAD_VERSION_INFO>
 	<Company_Info>
@@ -41,7 +41,7 @@
 		<Program_Cost_Dollars />
 		<Program_Cost_Other_Code />
 		<Program_Cost_Other />
-		<Program_Type>Shareware</Program_Type>
+		<Program_Type>Freeware</Program_Type>
 		<Program_Release_Status>Minor Update</Program_Release_Status>
 		<Program_Install_Support>No Install Support</Program_Install_Support>
 		<Program_OS_Support>Windows2000,WinXP,Windows2003,Unix,Linux,Linux Open Source,MS-DOS,OS/2,OS/2 Warp,OS/2 Warp 4,Mac PPC,Mac OS X,Mac Other,OpenVMS</Program_OS_Support>
