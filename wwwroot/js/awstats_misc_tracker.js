@@ -3,8 +3,9 @@
 // You can add this file onto some of your web pages (main home page can
 // be enough) by adding the following HTML code to your page body:
 //
-// <script language="javascript" type="text/javascript" src="/js/awstats_misc_tracker.js"></script>
-// <noscript><img src="/js/awstats_misc_tracker.js?nojs=y" height="0" width="0" border="0" style="display: none"></noscript>
+// <script type="text/javascript" src="/js/awstats_misc_tracker.js"></script>
+// <noscript><p><img src="/js/awstats_misc_tracker.js?nojs=y" alt="" height="0" width="0" style="display: none" /></p></noscript>
+
 //
 // * This must be added after the <body> tag, not placed within the
 //   <head> tags, or the resulting tracking <img> tag will not be handled
