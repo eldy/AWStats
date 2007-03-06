@@ -230,7 +230,7 @@ use vars qw/
 %LangBrowserToLangAwstats %LangAWStatsToFlagAwstats
 @HostAliases @AllowAccessFromWebToFollowingAuthenticatedUsers
 @DefaultFile @SkipDNSLookupFor
-@SkipHosts @SkipUserAgents @SkipFiles @SkipReferrers
+@SkipHosts @SkipUserAgents @SkipFiles @SkipReferrers @NotPageFiles
 @OnlyHosts @OnlyUserAgents @OnlyFiles 
 @URLWithQueryWithOnly @URLWithQueryWithout
 @ExtraName @ExtraCondition @ExtraStatTypes @MaxNbOfExtra @MinHitExtra
@@ -269,7 +269,7 @@ use vars qw/
 );
 @HostAliases = @AllowAccessFromWebToFollowingAuthenticatedUsers=();
 @DefaultFile = @SkipDNSLookupFor = ();
-@SkipHosts = @SkipUserAgents = @SkipFiles = @SkipReferrers = ();
+@SkipHosts = @SkipUserAgents = @NotPageFiles = @SkipFiles = @SkipReferrers = ();
 @OnlyHosts = @OnlyUserAgents = @OnlyFiles = ();
 @URLWithQueryWithOnly = @URLWithQueryWithout = ();
 @ExtraName = @ExtraCondition = @ExtraStatTypes = @MaxNbOfExtra = @MinHitExtra = ();
@@ -1045,6 +1045,16 @@ sub OnlyUserAgent {
 }
 
 #------------------------------------------------------------------------------
+# Function:     Check if parameter is in NotPageFiles array
+# Parameters:	url @NotPageFiles (a NOT case sensitive precompiled regex array)
+# Return:		0 Not found, 1 Found
+#------------------------------------------------------------------------------
+sub NotPageFile {
+	foreach (@NotPageFiles) { if ($_[0] =~ /$_/) { return 1; } }
+	0; # Not in @NotPageFiles
+}
+
+#------------------------------------------------------------------------------
 # Function:     Check if parameter is in OnlyFiles array
 # Parameters:	url @OnlyFiles (a NOT case sensitive precompiled regex array)
 # Return:		0 Not found, 1 Found
@@ -1363,6 +1373,15 @@ sub Parse_Config {
 				if ($elem =~ /^REGEX\[(.*)\]$/i) { $elem=$1; }
 				else { $elem='^'.quotemeta($elem).'$'; }
 				if ($elem) { push @OnlyFiles, qr/$elem/i; }
+			}
+			next;
+			}
+		if ($param =~ /^NotPageFiles/) {
+		    @NotPageFiles=();
+			foreach my $elem (split(/\s+/,$value))	{
+				if ($elem =~ /^REGEX\[(.*)\]$/i) { $elem=$1; }
+				else { $elem='^'.quotemeta($elem).'$'; }
+				if ($elem) { push @NotPageFiles, qr/$elem/i; }
 			}
 			next;
 			}
@@ -6135,6 +6154,7 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 	@OnlyHosts=&OptimizeArray(\@OnlyHosts,1); if ($Debug) { debug("OnlyHosts precompiled regex list is now @OnlyHosts",1); }
 	@OnlyUserAgents=&OptimizeArray(\@OnlyUserAgents,1); if ($Debug) { debug("OnlyUserAgents precompiled regex list is now @OnlyUserAgents",1); }
 	@OnlyFiles=&OptimizeArray(\@OnlyFiles,$URLNotCaseSensitive); if ($Debug) { debug("OnlyFiles precompiled regex list is now @OnlyFiles",1); }
+	@NotPageFiles=&OptimizeArray(\@NotPageFiles,$URLNotCaseSensitive); if ($Debug) { debug("NotPageFiles precompiled regex list is now @NotPageFiles",1); }
 	# Precompile the regex search strings with qr
 	@RobotsSearchIDOrder=map{qr/$_/i} @RobotsSearchIDOrder;
 	@WormsSearchIDOrder=map{qr/$_/i} @WormsSearchIDOrder;
@@ -6576,6 +6596,8 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 		else {
 			$extension='Unknown';
 		}
+
+		if (@NotPageFiles && &NotPageFile($field[$pos_url])) { $PageBool=0; }
 
 		# Analyze: misc tracker (must be before return code)
 		#---------------------------------------------------
