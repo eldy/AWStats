@@ -60,9 +60,10 @@ use vars qw/
 @WEBCONF=(
 'C:/Program Files/Apache Group/Apache2/conf/httpd.conf',
 'C:/Program Files/Apache Group/Apache/conf/httpd.conf',
+'/Applications/MAMP/conf/apache/httpd.conf',
 '/etc/httpd/httpd.conf',
 '/usr/local/apache/conf/httpd.conf',
-'/usr/local/apache2/conf/httpd.conf'
+'/usr/local/apache2/conf/httpd.conf',
 );
 
 use vars qw/
@@ -374,7 +375,7 @@ my $tips;
 if ($OS eq 'linux' || $OS eq 'macosx') {
 	my $found=0;
 	foreach my $conf (@WEBCONF) {
-		if (-s "$conf") {
+        if (-s "$conf") {
 			print "  Found Web server Apache config file '$conf'\n";
 			$ApacheConfPath{"$conf"}=++$found;
 		}
@@ -481,7 +482,7 @@ foreach my $key (keys %ApacheConfPath) {
 		if ($_ =~ /ScriptAlias \/awstats\//)		{ $awstatscgifound=1; }
 		my $awstats_path_quoted=quotemeta($AWSTATS_PATH);
 		if ($_ =~ /Directory "$awstats_path_quoted\/wwwroot"/)	{ $awstatsdirectoryfound=1; }
-	}	
+    }	
 	close CONF;
 
 	if ($awstatsclassesfound && $awstatscssfound && $awstatsiconsfound && $awstatscgifound && $awstatsdirectoryfound) {
@@ -489,7 +490,9 @@ foreach my $key (keys %ApacheConfPath) {
 		if ($commonchangedtocombined) { print "  Common log files changed to combined.\n"; }
 		print "  AWStats directives already present.\n";
 		next;
-	}
+	} elsif (!$commonchangedtocombined) {
+        next;
+    }
 
 	# Add awstats directives
 	open(CONF,">>$key") || error("Failed to open config file '$key' for adding AWStats directives");

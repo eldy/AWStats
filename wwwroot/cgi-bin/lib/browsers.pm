@@ -135,6 +135,7 @@
 'newsfire', 
 'newsgator', 
 'newzcrawler',
+'plagger',
 'pluck', 
 'potu_rss\-reader',
 'pubsub\-rss\-reader',
@@ -149,6 +150,7 @@
 'shrook', 
 'straw', 
 'syndirella', 
+'vienna',
 'wizz\srss\snews\sreader',
 # PDA/Phonecell browsers
 'alcatel',				# Alcatel
@@ -318,6 +320,7 @@
 'newsfire', 'NewsFire (RSS Reader)',
 'newsgator', 'NewsGator (RSS Reader)',
 'newzcrawler', 'NewzCrawler (RSS Reader)',
+'plagger', 'Plagger (RSS Reader)',
 'pluck', 'Pluck (RSS Reader)',
 'potu_rss\-reader','<a href="http://www.potu.com/" title="Potu Rss-Reader home page [new window]" target="_blank">Potu (RSS Reader)</a>',
 'pubsub\-rss\-reader','<a href="http://www.pubsub.com/" title="Browser home page [new window]" target="_blank">PubSub (RSS Reader)</a>',
@@ -332,6 +335,7 @@
 'shrook', 'Shrook (RSS Reader)',
 'straw', 'Straw (RSS Reader)',
 'syndirella', 'Syndirella (RSS Reader)',
+'vienna', '<a href="http://www.opencommunity.co.uk/vienna2.php" title="Vienna RSS-Reader [new window]" target="_blank">Vienna (RSS Reader)</a>',
 'wizz\srss\snews\sreader','Wizz RSS News Reader (RSS Reader)',
 # PDA/Phonecell browsers
 'alcatel','Alcatel Browser (PDA/Phone browser)',
@@ -529,6 +533,7 @@
 'newsfire', 'rss',
 'newsgator', 'rss',
 'newzcrawler', 'rss',
+'plagger', 'rss',
 'pluck', 'rss',
 'potu_rss\-reader', 'rss',
 'pubsub\-rss\-reader', 'rss',
@@ -543,6 +548,7 @@
 'shrook', 'rss',
 'straw', 'rss',
 'syndirella', 'rss',
+'vienna', 'rss',
 'wizz\srss\snews\sreader','wizz',
 # Other kind of browsers
 'apt','apt',

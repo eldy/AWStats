@@ -79,7 +79,13 @@
 'symbian',
 'webtv',
 'playstation[_+ ]portable',
-'xbox'
+'xbox',
+'vienna',
+'newsfire',
+'applesyndication',
+'akregator',
+'plagger',
+'syndirella'
 );
 
 
@@ -91,7 +97,7 @@
 # Windows OS family
 'windows[_+ ]?2005','winlong','windows[_+ ]nt[_+ ]6\.0','winlong',
 'windows[_+ ]?2003','win2003','windows[_+ ]nt[_+ ]5\.2','win2003',
-'windows[_+ ]xp','winxp','windows[_+ ]nt[_+ ]5\.1','winxp',
+'windows[_+ ]xp','winxp','windows[_+ ]nt[_+ ]5\.1','winxp', 'syndirella', 'winxp',
 'windows[_+ ]me','winme','win[_+ ]9x','winme',
 'windows[_+ ]?2000','win2000','windows[_+ ]nt[_+ ]5','win2000',
 'winnt','winnt','windows[_+ \-]?nt','winnt','win32','winnt',
@@ -100,7 +106,7 @@
 'win(.*)16','win16','windows[_+ ]3','win16',
 'win(.*)ce','wince',
 # Macintosh OS family
-'mac[_+ ]os[_+ ]x','macosx',
+'mac[_+ ]os[_+ ]x','macosx', 'vienna', 'macosx', 'newsfire', 'macosx', 'applesyndication', 'macosx',
 'mac[_+ ]?p','macintosh','mac[_+ ]68','macintosh','macweb','macintosh','macintosh','macintosh',
 # Linux family (linuxyyy)
 'linux(.*)centos','linuxcentos',
@@ -110,7 +116,7 @@
 'linux(.*)red[_+ ]hat','linuxredhat',
 'linux(.*)suse','linuxsuse',
 'linux(.*)ubuntu','linuxubuntu',
-'linux','linux',
+'linux','linux', 'akregator', 'linux',
 # Hurd family
 'gnu.hurd','gnu',
 # BSDs family (bsdyyy)
@@ -128,6 +134,7 @@
 'unix','unix',
 'x11','unix',
 'gnome\-vfs','unix',
+'plagger', 'unix',
 # Other famous OS
 'beos','beos',
 'os/2','os/2',
@@ -151,7 +158,7 @@
 #-----------------------------------------------------------
 %OSHashLib      = (
 # Windows family OS
-'winlong','<a href="http://www.microsoft.com/windows/" title="Windows Vista home page [new window]" target="_blank">Windows Vista (Longhorn)</a>',
+'winlong','<a href="http://www.microsoft.com/windows/" title="Windows Vista home page [new window]" target="_blank">Windows Vista</a>',
 'win2003','<a href="http://www.microsoft.com/windowsserver2003/" title="Windows 2003 home page [new window]" target="_blank">Windows 2003</a>',
 'winxp','<a href="http://www.microsoft.com/windowsxp/" title="Windows XP home page [new window]" target="_blank">Windows XP</a>',
 'winme','<a href="http://www.microsoft.com/windowsme/" title="Windows Me home page [new window]" target="_blank">Windows Me</a>',
