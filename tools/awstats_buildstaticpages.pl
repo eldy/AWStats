@@ -30,6 +30,7 @@ my $BuildDate=0;
 my $Lang;
 my $YearRequired;
 my $MonthRequired;
+my $DayRequired;
 my $Awstats='awstats.pl';
 my $AwstatsDir='';
 my $HtmlDoc='htmldoc';		# ghtmldoc.exe
@@ -44,6 +45,7 @@ my @OutputList=();
 my $FileConfig;
 my $FileSuffix;
 my $SiteConfig;
+my $DatabaseBreak;
 use vars qw/
 $ShowAuthenticatedUsers $ShowFileSizesStats $ShowScreenSizeStats $ShowSMTPErrorsStats
 $ShowEMailSenders $ShowEMailReceivers $ShowWormsStats $ShowClusterStats
@@ -243,6 +245,7 @@ if ($QueryString =~ /(^|-|&)month=(year)/i) { error("month=year is a deprecated 
 if ($QueryString =~ /(^|-|&)debug=(\d+)/i)			{ $Debug=$2; }
 if ($QueryString =~ /(^|-|&)configdir=([^&]+)/i)	{ $DirConfig="$2"; }
 if ($QueryString =~ /(^|-|&)config=([^&]+)/i)		{ $SiteConfig="$2"; }
+if ($QueryString =~ /(^|-|&)databasebreak=([^&]+)/i)	{ $DatabaseBreak="$2"; }
 if ($QueryString =~ /(^|-|&)awstatsprog=([^&]+)/i)	{ $Awstats="$2"; }
 if ($QueryString =~ /(^|-|&)buildpdf/i) 			{ $BuildPDF=1; }
 if ($QueryString =~ /(^|-|&)buildpdf=([^&]+)/i)		{ $HtmlDoc="$2"; }
@@ -254,6 +257,8 @@ if ($QueryString =~ /(^|-|&)date/i)					{ $BuildDate='%YY%MM%DD'; }		# For backw
 if ($QueryString =~ /(^|-|&)builddate=?([^&]*)/i)	{ $BuildDate=$2||'%YY%MM%DD'; }
 if ($QueryString =~ /(^|-|&)year=(\d\d\d\d)/i) 		{ $YearRequired="$2"; }
 if ($QueryString =~ /(^|-|&)month=(\d{1,2})/i || $QueryString =~ /(^|-|&)month=(all)/i) { $MonthRequired="$2"; }
+if ($QueryString =~ /(^|-|&)day=(\d{1,2})/i)        { $DayRequired="$2"; }
+
 if ($QueryString =~ /(^|-|&)lang=([^&]+)/i)			{ $Lang="$2"; }
 
 if ($OutputDir) { if ($OutputDir !~ /[\\\/]$/) { $OutputDir.="/"; } }
@@ -355,6 +360,7 @@ if ($ShowHTTPErrorsStats) {
 if ($Update) {
 	my $command="\"$Awstats\" -config=$SiteConfig -update";
 	$command .= " -configdir=$DirConfig" if defined $DirConfig;
+	$command .= " -databasebreak=$DatabaseBreak" if defined $DatabaseBreak;
 	print "Launch update process : $command\n";
 	$retour=`$command  2>&1`;
 }
@@ -403,8 +409,9 @@ if ($BuildPDF) { $NoLoadPlugin.="tooltips,rawlog,hostinfo"; }
 my $smallcommand="\"$Awstats\" -config=$SiteConfig".($BuildPDF?" -buildpdf":"").($NoLoadPlugin?" -noloadplugin=$NoLoadPlugin":"")." -staticlinks".($OutputSuffix ne $SiteConfig?"=$OutputSuffix":"");
 if ($StaticExt && $StaticExt ne 'html')     { $smallcommand.=" -staticlinksext=$StaticExt"; }
 if ($DirIcons)      { $smallcommand.=" -diricons=$DirIcons"; }
-if ($DirConfig)   	{ $smallcommand.=" -configdir=$DirConfig"; }
+if ($DirConfig)     { $smallcommand.=" -configdir=$DirConfig"; }
 if ($Lang)          { $smallcommand.=" -lang=$Lang"; }
+if ($DayRequired)   { $smallcommand.=" -day=$DayRequired"; }
 if ($MonthRequired) { $smallcommand.=" -month=$MonthRequired"; }
 if ($YearRequired)  { $smallcommand.=" -year=$YearRequired"; }
 
