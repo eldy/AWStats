@@ -194,6 +194,7 @@
 # Minor international search engines
 '4\-counter\.com',
 'att\.net',
+'bungeebonesdotcom',
 'northernlight\.',
 'hotbot\.',
 'kvasir\.',
@@ -397,6 +398,7 @@
 # Minor international search engines
 '4\-counter\.com','google4counter',
 'att\.net','att',
+'bungeebonesdotcom','bungeebonesdotcom',
 'northernlight\.','northernlight',
 'hotbot\.','hotbot',
 'kvasir\.','kvasir',
@@ -659,6 +661,7 @@
 # Minor international search engines
 'google4counter','(p|q|as_p|as_q)=',
 'att','qry=',
+'bungeebonesdotcom','query=',
 'go','qt=',
 'askde','(ask|q)=', # break out Ask country specific engines.
 'askes','(ask|q)=',
@@ -877,6 +880,7 @@
 # Minor international search engines
 'google4counter','<a href="http://www.4-counter.com/" title="Search Engine Home Page [new window]" target="_blank">4-counter (Google)</a>',
 'att','<a href="http://www.att.net/" title="Search Engine Home Page [new window]" target="_blank">AT&T search (powered by Google)</a>',
+'bungeebonesdotcom','<a href="http://BungeeBones.com/search.php/" title="Search Engine Home Page [new window]" target="_blank">BungeeBones</a>',
 'go','Go.com',
 'askde','<a href="http://de.ask.com/" title="Search Engine Home Page [new window]" target="_blank">Ask Deutschland</a>',
 'askes','<a href="http://es.ask.com/" title="Search Engine Home Page [new window]" target="_blank">Ask Espa&ntilde;a</a>', # break out Ask country specific engines.
