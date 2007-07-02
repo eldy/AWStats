@@ -2,6 +2,7 @@
 - Check all files are commited
 - Update file README.txt
 - Update version number in doc files
+- Update version number in makepack files
 - Build PAD files
 - Build PDF
 - Tagger CVS
