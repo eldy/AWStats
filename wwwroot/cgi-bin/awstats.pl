@@ -7791,7 +7791,6 @@ if (scalar keys %HTMLOutput) {
 			}
 			else {
 				print "<span style=\"font-size: 14px;\">";
-				if ($DayRequired) { print "$Message[4] $DayRequired - "; }	
 				if ($MonthRequired eq 'all') { print "$Message[6] $YearRequired"; }
 				else { print "$Message[5] $MonthNumLib{$MonthRequired} $YearRequired"; }
 				print "</span>";
