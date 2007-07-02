@@ -3,6 +3,21 @@ AWStats Changelog
 $Revision$ - $Author$ - $Date$
 
 
+***** 6.7 *****
+
+New features/improvements:
+- Full support for -day option. To build different report for each day
+- Added virtualenamequot tag
+- Added option NotPageList
+
+Fixes:
+- Minor bug in awstats_configure.pl
+
+Other/Documentation:
+- Updated some language files.
+- Updated browsers database.
+
+
 ***** 6.6 *****
 
 New features/improvements:

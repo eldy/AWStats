@@ -13,7 +13,7 @@ server log files (and even ftp servers or mail logs) on all Operating Systems.
 
 License: GNU GPL (GNU General Public License. See LICENSE file),
          OSI Certified Open Source Software license.
-Version: 6.65
+Version: 6.7
 Release date: July 2007
 Platforms: All (Linux, NT, BSD, Solaris and other *NIX's, BeOS, OS/2...)
 Author: Laurent Destailleur <eldy@users.sourceforge.net>
