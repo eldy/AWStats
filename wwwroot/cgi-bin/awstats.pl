@@ -22,7 +22,7 @@ use Socket;
 #------------------------------------------------------------------------------
 use vars qw/ $REVISION $VERSION /;
 $REVISION='$Revision$'; $REVISION =~ /\s(.*)\s/; $REVISION=$1;
-$VERSION="6.6 (build $REVISION)";
+$VERSION="6.7 (build $REVISION)";
 
 # ----- Constants -----
 use vars qw/

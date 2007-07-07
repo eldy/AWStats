@@ -3,6 +3,7 @@
 - Update file README.txt
 - Update version number in doc files
 - Update version number in makepack files
+- Update version number in awstats.pl file
 - Build PAD files
 - Build PDF
 - Tagger CVS
