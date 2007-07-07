@@ -9,6 +9,7 @@ New features/improvements:
 - Full support for -day option. To build different report for each day
 - Added virtualenamequot tag
 - Added option NotPageList
+- Addes .jobs and .mobi domains
 
 Fixes:
 - Minor bug in awstats_configure.pl
