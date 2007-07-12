@@ -3,6 +3,13 @@ AWStats Changelog
 $Revision$ - $Author$ - $Date$
 
 
+***** 6.8 *****
+
+Fixes:
+- Fixed pb in xml output for history files
+
+
+
 ***** 6.7 *****
 
 New features/improvements:
