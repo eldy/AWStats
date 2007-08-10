@@ -97,7 +97,6 @@
 #		added nicebot http://www.egghelp.org/setup.htm ?
 #		added Snappy http://www.urltrends.com/faq.php 
 #		added sohu agent
-#		added TencentTraveler
 #		added VORTEX http://marty.anstey.ca/robots/vortex/ [matthys70 users.sourceforge.net]
 #		added zspider http://feedback.redkolibri.com/
 # 2006-01-13
@@ -177,8 +176,6 @@
 #		added oBot http://www.webmasterworld.com/forum11/1616.htm
 #		added Onfolio http://www.onfolio.com/  (IE Toolbar plugin) - hit rss feeds.
 #		added ping.blo.gs http://blo.gs/ping.php blog bot
-#		added sogou spider http://corp.sohu.com/20051130/n240842344.shtml
-#		added sogou test http://corp.sohu.com/20051130/n240842344.shtml
 #		added Sphere Scout http://www.sphere.com/
 #		added sproose crawler http://www.sproose.com/bot.html
 #		added SyndicAPI http://syndicapi.com/bot.html
@@ -342,6 +339,7 @@
 'architext',
 'jeeves',
 'bjaaland',
+'contentmatch',
 'ferret',
 'googlebot',
 'google-sitemaps',
@@ -350,6 +348,7 @@
 'harvest',
 'htdig',
 'linkwalker',
+'lilina',
 'lycos_',
 'moget',
 'muscatferret',
@@ -446,6 +445,7 @@
 'esther',
 'evliyacelebi',
 'fastcrawler',
+'feedcrawl',
 'fdse',
 'felix',
 'fetchrover',
@@ -462,6 +462,7 @@
 'getbot',
 'geturl',
 'golem',
+'gougou',
 'grapnel',
 'griffon',
 'gromit',
@@ -472,6 +473,9 @@
 'htmlgobble',
 'hyperdecontextualizer',
 'iajabot',
+'iaskspider',
+'hl_ftien_spider',
+'sogou',
 'iconoclast',
 'ilse',
 'imagelock',
@@ -596,6 +600,7 @@
 'sven',
 'tach_bw',
 'tagyu\sagent',
+'tailrank',
 'tarantula',
 'tarspider',
 'techbot',
@@ -756,6 +761,7 @@
 'feedfetcher\-google',
 'feedflow',
 'feedster',
+'feedsky',
 'feedvalidator',
 'filmkamerabot',
 'findlinks',
@@ -834,7 +840,6 @@
 'mizzu\slabs',
 'mj12bot',
 'mojeekbot',
-'tencenttraveler', # Must be before msiecrawler
 'msiecrawler',
 'ms\ssearch\s4\.0\srobot',
 'msrabot',
@@ -862,7 +867,8 @@
 'openwebspider',
 'oracle\sultra\ssearch',
 'orbiter',
-'outfoxbot',
+'yodaobot',
+'qihoobot',
 'passwordmaker\.org',
 'pear\shttp\srequest\sclass',
 'peerbot',
@@ -898,8 +904,6 @@
 'shoutcast',
 'slysearch',
 'snap\.com\sbeta\scrawler',
-'sogou\sspider',
-'sogou\stest',
 'sohu\-search',
 'sohu', # "sohu agent"
 'snappy',
@@ -925,6 +929,7 @@
 'turtlescanner',		# Must be before turtle
 'turtle',
 'tutorgigbot',
+'twiceler',
 'ubicrawler',
 'ultraseek',
 'unchaos\sbot\shybrid\sweb\ssearch\sengine',
@@ -973,6 +978,7 @@
 'yooglifetchagent',
 'z\-add\slink\schecker',
 'zealbot',
+'zhuaxia',
 'zspider',
 'zeus',
 'ng\/1\.', # put at end to avoid false positive
@@ -1000,6 +1006,7 @@
 'jeeves','<a href="http://sp.ask.com/docs/about/tech_crawling.html" title="Bot home page [new window]" target="_blank">Ask</a>',
 'bjaaland','Bjaaland',
 'ferret','Wild Ferret Web Hopper #1, #2, #3',
+'contentmatch','<a href="http://p4p.cn.yahoo.com">Yahoo!China ContentMatch Crawler</a>',
 'googlebot','<a href="http://www.google.com/bot.html" title="Bot home page [new window]" target="_blank">Googlebot</a>',
 'google-sitemaps', 'Google Sitemaps',
 'gulliver','Northern Light Gulliver',
@@ -1007,6 +1014,7 @@
 'harvest','Harvest',
 'htdig','ht://Dig',
 'linkwalker','LinkWalker',
+'lilina','Lilina',
 'lycos_','Lycos',
 'moget','moget',
 'muscatferret','Muscat Ferret',
@@ -1100,6 +1108,7 @@
 'esther','Esther',
 'evliyacelebi','Evliya Celebi',
 'fastcrawler','FastCrawler',
+'feedcrawl','FeedCrawl by feed@aobo.com',
 'fdse','Fluid Dynamics Search Engine robot',
 'felix','Felix IDE',
 'fetchrover','FetchRover',
@@ -1116,6 +1125,7 @@
 'getbot','GetBot',
 'geturl','GetURL',
 'golem','Golem',
+'gougou','GouGou',
 'grapnel','Grapnel/0.01 Experiment',
 'griffon','Griffon',
 'gromit','Gromit',
@@ -1126,6 +1136,9 @@
 'htmlgobble','HTMLgobble',
 'hyperdecontextualizer','Hyper-Decontextualizer',
 'iajabot','iajaBot',
+'iaskspider','<a href="http://www.iask.com/" target="_blank">Sina Iask Spider</a>',
+'hl_ftien_spider','<a href="http://www.hylanda.com/" target="_blank">Hylanda</a>',
+'sogou','<a href="http://www.sogou.com/" target="_blank">Sogou Spider</a>',
 'iconoclast','Popular Iconoclast',
 'ilse','Ingrid',
 'imagelock','Imagelock',
@@ -1238,11 +1251,11 @@
 'smartspider','Smart Spider',
 'snooper','Snooper',
 'solbot','Solbot',
-'speedy','Speedy Spider',
+'speedy','<a href="http://www.entireweb.com/about/search_tech/speedyspider/" title="Speedy Spider home page [new window]" target="_blank">Speedy Spider</a>',
 'spider_monkey','spider_monkey',
 'spiderbot','SpiderBot',
 'spiderline','Spiderline Crawler',
-'spiderman','SpiderMan',
+'spiderman','<a href="http://www.iscrawling.com" title="Spiderman home page [new window]" target="_blank">Spiderman</a>',
 'spiderview','SpiderView(tm)',
 'spry','Spry Wizard Robot',
 'ssearcher','Site Searcher',
@@ -1255,6 +1268,7 @@
 'tagyu\sagent','<a href="http://www.tagyu.com/" title="Bot home page [new window]" target="_blank">Tagyu Agent</a>',
 'tarantula','Tarantula',
 'tarspider','tarspider',
+'tailrank','<a href="http://tailrank.com/robot">TailRank</a>',
 'techbot','TechBOT',
 'templeton','Templeton',
 'titan','TITAN',
@@ -1388,6 +1402,7 @@
 'feedfetcher\-google','<a href="http://www.google.com/feedfetcher.html" title="Bot home page [new window]" target="_blank">Feedfetcher-Google</a>',
 'feedflow','<a href="http://feedflow.com/about" title="Bot home page [new window]" target="_blank">FeedFlow</a>',
 'feedster','<a href="http://www.feedster.com/" title="Bot home page [new window]" target="_blank">Feedster</a>',
+'feedsky','<a href="http://www.feedsky.com/" title="Bot home page [new window]" target="_blank">FeedSky</a>',
 'feedvalidator','<a href="http://feedvalidator.org/" title="FeedValidator home page [new window]" target="_blank">FeedValidator</a>',
 'filmkamerabot','<a href="http://www.filmkamera.at/bot.html" title="FilmkameraBot home page [new window]" target="_blank">FilmkameraBot</a>',
 'findexa\scrawler','<a href="http://www.findexa.no/gulesider/article26548.ece " title="Findexa Crawler home page [new window]" target="_blank">Findexa Crawler</a>',
@@ -1463,7 +1478,6 @@
 'mizzu\slabs','<a href="http://www.psychedelix.com/cgi-bin/csv2html.pl?data=allagents.csv&amp;template=detail.html&amp;match=\bid_m_141105_2\b " title="Mizzu Labs home page [new window]" target="_blank">Mizzu Labs</a>',
 'mj12bot','<a href="http://majestic12.co.uk/bot.php" title="Bot home page. [new window]" target="_blank">MJ12bot</a>',
 'mojeekbot','<a href="http://www.mojeek.com/bot.html" title="Bot home page. [new window]" target="_blank">MojeekBot</a>',
-'tencenttraveler','TencentTraveler', 	# Must be before msiecrawler.
 'msiecrawler','<a href="http://msdn.microsoft.com/workshop/delivery/offline/linkrel.asp" title="Bot home page. [new window]" target="_blank">MSIECrawler</a>',
 'ms\ssearch\s4\.0\srobot','<a href="http://support.microsoft.com/default.aspx?scid=kb;en-us;284022" title="Bot home page. [new window]" target="_blank">MS SharePoint Portal Server - MS Search 4.0 Robot</a>',
 'msrabot','msrabot',
@@ -1491,7 +1505,8 @@
 'openwebspider','<a href="http://www.openwebspider.org/" title="OpenWebSpider home page [new window]" target="_blank">OpenWebSpider</a>',
 'oracle\sultra\ssearch','<a href="http://www.oracle.com/technology/products/ultrasearch/index.html" title="Oracle Ultra Search home page [new window]" target="_blank">Oracle Ultra Search</a>',
 'orbiter','<a href="http://www.dailyorbit.com/bot.htm" title="Orbiter home page [new window]" target="_blank">Orbiter</a>',
-'outfoxbot','<a href="mailto:outfox.agent@gmail.com?subject=Outfox Bot Information" title="Bot e-mail.">OutfoxBot</a>',
+'yodaobot','<a href="http://www.yodao.com/help/webmaster/spider/" title="YodaoBot">OutfoxBot/YodaoBot</a>',
+'qihoobot','<a href="http://www.qihoo.com/" title="QihooBot">QihooBot</a>',
 'passwordmaker\.org','<a href="http://passwordmaker.org/" title="passwordmaker.org home page [new window]" target="_blank">passwordmaker.org</a>',
 'pear\shttp\srequest\sclass','<a href="http://pear.php.net/" title="PEAR HTTP Request class home page [new window]" target="_blank">PEAR HTTP Request class</a>',
 'peerbot','<a href="http://www.peerbot.com/" title="PEERbot home page [new window]" target="_blank">PEERbot</a>',
@@ -1528,8 +1543,6 @@
 'shoutcast','Shoutcast Directory Service',
 'slysearch','SlySearch',
 'snap\.com\sbeta\scrawler','<a href="http://www.snap.com/" title="snap.com beta crawler home page [new window]" target="_blank">snap.com beta crawler</a>',
-'sogou\sspider','<a href="http://corp.sohu.com/20051130/n240842344.shtml" title="Bot home page [new window]" target="_blank">sogou spider</a>',
-'sogou\stest','<a href="http://corp.sohu.com/20051130/n240842344.shtml" title="Bot home page [new window]" target="_blank">sogou test</a>',
 'sohu\-search','<a href="http://corp.sohu.com/" title="Bot home page [new window]" target="_blank">sohu-search</a>',
 'sohu','<a href="http://corp.sohu.com/" title="Bot home page [new window]" target="_blank">sohu agent</a>', 
 'snappy','<a href="http://www.urltrends.com/faq.php" title="Bot home page [new window]" target="_blank">Snappy</a>',
@@ -1555,6 +1568,7 @@
 'turtle', 'Turtle',
 'turtlescanner', 'Turtle',
 'tutorgigbot','<a href="http://www.tutorgig.info/" title="TutorGigBot home page [new window]" target="_blank">TutorGigBot</a>',
+'twiceler','<a href="http://www.cuill.com/twiceler/robot.html" title="Twiceler home page [new window]" target="_blank">twiceler</a>',
 'ubicrawler','<a href="http://law.dsi.unimi.it/ubicrawler/" title="Bot home page [new window]" target="_blank">UbiCrawler</a>',
 'ultraseek', 'Ultraseek',
 'unchaos\sbot\shybrid\sweb\ssearch\sengine','<a href="http://www.unchaos.com/" title="UnChaos Bot Hybrid Web Search Engine home page [new window]" target="_blank">UnChaos Bot Hybrid Web Search Engine</a>',
@@ -1603,6 +1617,7 @@
 'yooglifetchagent','<a href="http://www.yoogli.com/" title="yoogliFetchAgent home page [new window]" target="_blank">yoogliFetchAgent</a>',
 'z\-add\slink\schecker','<a href="http://w3.z-add.co.uk/linkcheck/" title="Z-Add Link Checker home page [new window]" target="_blank">Z-Add Link Checker</a>',
 'zealbot','ZealBot',
+'zhuaxia','<a href="http://www.zhuaxia.com/"  target="_blank">ZhuaXia</a>',
 'zspider','<a href="http://feedback.redkolibri.com/" title="Bot home page [new window]" target="_blank">zspider</a>',
 'zeus','<a href="http://www.webmasterworld.com/forum11/1840.htm" title="Bot documentation [new window]" target="_blank">Zeus Webster Pro</a>',
 'ng\/1\.','<a href="http://www.exabot.com/" title="Bot home page [new window]" target="_blank">NG 1.x (Exalead)</a>', # put at end to avoid false positive

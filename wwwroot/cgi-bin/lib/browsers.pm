@@ -16,7 +16,6 @@
 #				Gregarius devlog.gregarius.net/docs/ua (rss)
 #				hatena rss http://r.hatena.ne.jp/ (rss)
 #				Liferea http://liferea.sourceforge.net/ (rss)
-#				lilina http://lilina.sourceforge.net/ (rss)
 #				PubSub-RSS-Reader http://www.pubsub.com/ (rss)
 # 2006-05-20 Sean Carlos http://www.antezeta.com/awstats.html
 #				Potu Rss-Reader http://www.potu.com/
@@ -130,14 +129,13 @@
 'hatena_rss', 
 'jetbrains_omea', 
 'liferea',
-'lilina',
 'netnewswire', 
 'newsfire', 
 'newsgator', 
 'newzcrawler',
 'plagger',
 'pluck', 
-'potu_rss\-reader',
+'potu',
 'pubsub\-rss\-reader',
 'pulpfiction', 
 'rssbandit', 
@@ -315,14 +313,13 @@
 'hatena_rss','<a href="http://r.hatena.ne.jp/" title="Browser home page [new window]" target="_blank">Hatena (RSS Reader)</a>',
 'jetbrains_omea', 'Omea (RSS Reader)',
 'liferea','<a href="http://liferea.sourceforge.net/" title="Browser home page [new window]" target="_blank">Liferea (RSS Reader)</a>',
-'lilina','<a href="http://lilina.sourceforge.net/" title="Browser home page [new window]" target="_blank">lilina (RSS Reader)</a>',
 'netnewswire', 'NetNewsWire (RSS Reader)',
 'newsfire', 'NewsFire (RSS Reader)',
 'newsgator', 'NewsGator (RSS Reader)',
 'newzcrawler', 'NewzCrawler (RSS Reader)',
 'plagger', 'Plagger (RSS Reader)',
 'pluck', 'Pluck (RSS Reader)',
-'potu_rss\-reader','<a href="http://www.potu.com/" title="Potu Rss-Reader home page [new window]" target="_blank">Potu (RSS Reader)</a>',
+'potu','<a href="http://www.potu.com/" title="Potu Rss-Reader home page [new window]" target="_blank">Potu (RSS Reader)</a>',
 'pubsub\-rss\-reader','<a href="http://www.pubsub.com/" title="Browser home page [new window]" target="_blank">PubSub (RSS Reader)</a>',
 'pulpfiction', 'PulpFiction (RSS Reader)',
 'rssbandit', 'RSS Bandit (RSS Reader)',
@@ -528,14 +525,13 @@
 'hatena_rss', 'rss',
 'jetbrains_omea', 'rss',
 'liferea', 'rss',
-'lilina', 'rss',
 'netnewswire', 'rss',
 'newsfire', 'rss',
 'newsgator', 'rss',
 'newzcrawler', 'rss',
 'plagger', 'rss',
 'pluck', 'rss',
-'potu_rss\-reader', 'rss',
+'potu', 'rss',
 'pubsub\-rss\-reader', 'rss',
 'pulpfiction', 'rss',
 'rssbandit', 'rss',

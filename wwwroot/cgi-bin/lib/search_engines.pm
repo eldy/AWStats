@@ -285,7 +285,15 @@
 # Minor brazilian search engines
 'engine\.exe', 'miner\.bol\.com\.br',
 # Minor chinese search engines
-'baidu\.com','search\.sina\.com','search\.sohu\.com', 'sogou\.com',
+'\.baidu\.com',     # baidu search portal
+'\.vnet\.cn',       # powered by MSN
+'\.soso\.com',      # powered by Google
+'\.sogou\.com',     # powered by Sohu
+'\.3721\.com',      # powered by Yahoo!
+'iask\.com',        # powered by Sina
+'\.accoona\.com',   # Accoona
+'\.163\.com',       # powered by Google
+'\.zhongsou\.com',  # zhongsou search portal
 # Minor czech search engines
 'atlas\.cz','seznam\.cz','quick\.cz','centrum\.cz','jyxo\.(cz|com)','najdi\.to','redbox\.cz',
 # Minor danish search-engines 
@@ -491,10 +499,15 @@
 'engine\.exe','engine',
 'miner\.bol\.com\.br','miner',
 # Minor chinese search engines
-'baidu\.com','baidu',
-'search\.sina\.com','sina',
-'search\.sohu\.com','sohu',
-'sogou\.com','sogou',
+'\.baidu\.com','baidu',
+'iask\.com','iask',
+'\.accoona\.com','accoona',
+'\.3721\.com','3721',
+'\.163\.com','netease',
+'\.soso\.com','soso',
+'\.zhongsou\.com','zhongsou',
+'\.vnet\.cn','vnet',
+'\.sogou\.com','sogou',
 # Minor czech search engines
 'atlas\.cz','atlas',
 'seznam\.cz','seznam',
@@ -750,7 +763,15 @@
 # Minor brazilian search engines
 'engine','p1=', 'miner','q=',
 # Minor chinese search engines
-'baidu','word=', 'sina', 'word=', 'sohu','word=', 'sogou', 'query=',
+'baidu','(wd|word)=',
+'iask','(w|k)=',
+'accoona','qt=',
+'3721','(p|name)=',
+'netease','q=',
+'soso','q=',
+'zhongsou','(word|w)=',
+'sogou', 'query=',
+'vnet','kw=',
 # Minor czech search engines
 'atlas','searchtext=', 'seznam','w=', 'quick','query=', 'centrum','q=', 'jyxo','s=', 'najdi','dotaz=', 'redbox','srch=',
 # Minor danish search engines
@@ -834,7 +855,7 @@
 # If no rules are known, WordsToExtractSearchUrl will be used to search keyword parameter
 # If no rules are known and search in WordsToExtractSearchUrl failed, this will be used to clean URL of not keyword parameters.
 #------------------------------------------------------------------------------
-@WordsToExtractSearchUrl= ('ask=','claus=','general=','key=','kw=','keyword=','keywords=','MT=','p=','q=','qr=','qt=','query=','s=','search=','searchText=','string=','su=','txtsearch=','w=');
+@WordsToExtractSearchUrl= ('tn=','ie=','ask=','claus=','general=','key=','kw=','keyword=','keywords=','MT=','p=','q=','qr=','qt=','query=','s=','search=','searchText=','string=','su=','txtsearch=','w=');
 @WordsToCleanSearchUrl= ('act=','annuaire=','btng=','cat=','categoria=','cfg=','cof=','cou=','count=','cp=','dd=','domain=','dt=','dw=','enc=','exec=','geo=','hc=','height=','hits=','hl=','hq=','hs=','id=','kl=','lang=','loc=','lr=','matchmode=','medor=','message=','meta=','mode=','order=','page=','par=','pays=','pg=','pos=','prg=','qc=','refer=','sa=','safe=','sc=','sort=','src=','start=','style=','stype=','sum=','tag=','temp=','theme=','type=','url=','user=','width=','what=','\\.x=','\\.y=','y=','look=');
 
 # SearchEnginesKnownUTFCoding
@@ -969,7 +990,15 @@
 # Minor brazilian search engines
 'engine','Cade', 'miner','Meta Miner',
 # Minor chinese search engines
-'baidu','Baidu', 'sina','Sina', 'sohu','Sohu', 'sogou','<a href="http://www.sogou.com/" title="Search Engine Home Page [new window]" target="_blank">Sogou</a>',
+'baidu','<a href="http://www.baidu.com/" target="_blank">Baidu</a>',
+'iask','<a href="http://www.iask.com/" target="_blank">Iask</a>',
+'accoona','<a href="http://cn.accoona.com">Accoona</a>',
+'3721','<a href="http://www.3721.com/" target="_blank">3721</a>',
+'netease', '<a href="http://www.163.com/" target="_blank">NetEase</a>',
+'soso','<a href="http://www.soso.com/" target="_blank">SoSo</a>',
+'zhongsou','<a href="http://www.zhongsou.com/" target="_blank">ZhongSou</a>',
+'sogou', '<a href="http://www.sogou.com/" target="_blank">SoGou</a>',
+'vnet','<a href="http://114.vnet.cn/" target="_blank">VNet</a>',
 # Minor czech search engines
 'atlas','Atlas.cz',	'seznam','Seznam', 'quick','Quick.cz', 'centrum','Centrum.cz', 'jyxo','Jyxo.cz', 'najdi','Najdi.to', 'redbox','RedBox.cz',
 # Minor danish search-engines
