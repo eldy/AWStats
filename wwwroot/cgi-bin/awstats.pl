@@ -6364,6 +6364,8 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 			|| $field[$pos_method] eq 'REPORT'
 			|| $field[$pos_method] eq 'MKCOL'
 			|| $field[$pos_method] eq 'COPY'
+			|| $field[$pos_method] eq 'RPC_IN_DATA'
+			|| $field[$pos_method] eq 'RPC_OUT_DATA'
 			|| $field[$pos_method] =~ /OK/i
 			|| $field[$pos_method] =~ /ERR\!/i)) {
 			# HTTP request.	Keep only GET, POST, HEAD, *OK* and ERR! for Webstar. Do not keep OPTIONS, TRACE
