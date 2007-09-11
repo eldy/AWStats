@@ -101,7 +101,7 @@ Ce programme supporte de plus les serveurs virtuels, des plugins et de nombreuse
 			<Application_Info_URL>http://awstats.sourceforge.net</Application_Info_URL>
 			<Application_Order_URL>http://awstats.sourceforge.net</Application_Order_URL>
 			<Application_Screenshot_URL>http://awstats.sourceforge.net/docs/images/screen_shot_1.png</Application_Screenshot_URL>
-			<Application_Icon_URL>http://awstats.sourceforge.net/docs/images/awstats_logo1.png</Application_Icon_URL>
+			<Application_Icon_URL>http://awstats.sourceforge.net/docs/images/awstats.gif</Application_Icon_URL>
 			<Application_XML_File_URL>http://awstats.sourceforge.net/docs/pad_awstats.xml</Application_XML_File_URL>
 		</Application_URLs>
 		<Download_URLs>
