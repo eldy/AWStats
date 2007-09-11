@@ -1070,9 +1070,9 @@
 'passagen','Evreka',
 'enirose','<a href="http://www.eniro.se/" title="Eniro Sverige home page [new window]" target="_blank">Eniro Sverige</a>',
 # Minor Slovak search engines
-'zoznam','<a href="http://www.zoznam.sk/" Searc Engine home page [new window]" target="_blank">Zoznam</a>',
+'zoznam','<a href="http://www.zoznam.sk/" title="Zoznam search engine home page [new window]" target="_blank">Zoznam</a>',
 # Minor Portuguese search engines
-'sapo','<a href="http://www.sapo.pt/" Searc Engine home page [new window]" target="_blank">Sapo</a>',
+'sapo','<a href="http://www.sapo.pt/" title="Sapo search engine home page [new window]" target="_blank">Sapo</a>',
 # Minor Swiss search engines
 'searchch', 'search.ch', 'bluewin', 'search.bluewin.ch',								
 # Generic search engines
