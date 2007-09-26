@@ -5039,21 +5039,23 @@ sub DefinePerlParsingFormat {
 	@fieldlib=();
     $PerlParsingFormat='';
 	# Log records examples:
-	# Apache combined: 62.161.78.73 user - [dd/mmm/yyyy:hh:mm:ss +0000] "GET / HTTP/1.1" 200 1234 "http://www.from.com/from.htm" "Mozilla/4.0 (compatible; MSIE 5.01; Windows NT 5.0)"
+	# Apache combined:             62.161.78.73 user - [dd/mmm/yyyy:hh:mm:ss +0000] "GET / HTTP/1.1" 200 1234 "http://www.from.com/from.htm" "Mozilla/4.0 (compatible; MSIE 5.01; Windows NT 5.0)"
 	# Apache combined (408 error): my.domain.com - user [09/Jan/2001:11:38:51 -0600] "OPTIONS /mime-tmp/xxx file.doc HTTP/1.1" 408 - "-" "-"
 	# Apache combined (408 error): 62.161.78.73 user - [dd/mmm/yyyy:hh:mm:ss +0000] "-" 408 - "-" "-"
+	# Apache combined (400 error): 80.8.55.11 - - [28/Apr/2007:03:20:02 +0200] "GET /" 400 584 "-" "-"
+	# IIS:                         2000-07-19 14:14:14 62.161.78.73 - GET / 200 1234 HTTP/1.1 Mozilla/4.0+(compatible;+MSIE+5.01;+Windows+NT+5.0) http://www.from.com/from.htm
+	# WebStar:                     05/21/00	00:17:31	OK  	200	212.242.30.6	Mozilla/4.0 (compatible; MSIE 5.0; Windows 98; DigExt)	http://www.cover.dk/	"www.cover.dk"	:Documentation:graphics:starninelogo.white.gif	1133
+	# Squid extended:              12.229.91.170 - - [27/Jun/2002:03:30:50 -0700] "GET http://www.callistocms.com/images/printable.gif HTTP/1.1" 304 354 "-" "Mozilla/5.0 Galeon/1.0.3 (X11; Linux i686; U;) Gecko/0" TCP_REFRESH_HIT:DIRECT
+	# Log formats:
 	# Apache common_with_mod_gzip_info1: %h %l %u %t \"%r\" %>s %b mod_gzip: %{mod_gzip_compression_ratio}npct.
 	# Apache common_with_mod_gzip_info2: %h %l %u %t \"%r\" %>s %b mod_gzip: %{mod_gzip_result}n In:%{mod_gzip_input_size}n Out:%{mod_gzip_output_size}n:%{mod_gzip_compression_ratio}npct.
 	# Apache deflate: %h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\" (%{ratio}n)
-	# IIS: 2000-07-19 14:14:14 62.161.78.73 - GET / 200 1234 HTTP/1.1 Mozilla/4.0+(compatible;+MSIE+5.01;+Windows+NT+5.0) http://www.from.com/from.htm
-	# WebStar: 05/21/00	00:17:31	OK  	200	212.242.30.6	Mozilla/4.0 (compatible; MSIE 5.0; Windows 98; DigExt)	http://www.cover.dk/	"www.cover.dk"	:Documentation:graphics:starninelogo.white.gif	1133
-	# Squid extended: 12.229.91.170 - - [27/Jun/2002:03:30:50 -0700] "GET http://www.callistocms.com/images/printable.gif HTTP/1.1" 304 354 "-" "Mozilla/5.0 Galeon/1.0.3 (X11; Linux i686; U;) Gecko/0" TCP_REFRESH_HIT:DIRECT
 	if ($Debug) { debug("Call To DefinePerlParsingFormat (LogType='$LogType', LogFormat='$LogFormat')"); }
 	if ($LogFormat =~ /^[1-6]$/) {	# Pre-defined log format
 		if ($LogFormat eq '1' || $LogFormat eq '6') {	# Same than "%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\"".
 			# %u (user) is "([^\\[]+)" instead of "[^ ]+" because can contain space (Lotus Notes). referer and ua might be "".
 #			$PerlParsingFormat="([^ ]+) [^ ]+ ([^\\[]+) \\[([^ ]+) [^ ]+\\] \\\"([^ ]+) (.+) [^\\\"]+\\\" ([\\d|-]+) ([\\d|-]+) \\\"(.*?)\\\" \\\"([^\\\"]*)\\\"";
-			$PerlParsingFormat="([^ ]+) [^ ]+ ([^\\[]+) \\[([^ ]+) [^ ]+\\] \\\"([^ ]+) ([^ ]+) [^\\\"]+\\\" ([\\d|-]+) ([\\d|-]+) \\\"(.*?)\\\" \\\"([^\\\"]*)\\\"";
+			$PerlParsingFormat="([^ ]+) [^ ]+ ([^\\[]+) \\[([^ ]+) [^ ]+\\] \\\"([^ ]+) ([^ ]+)(?: [^\\\"]+|)\\\" ([\\d|-]+) ([\\d|-]+) \\\"(.*?)\\\" \\\"([^\\\"]*)\\\"";
 			$pos_host=0;$pos_logname=1;$pos_date=2;$pos_method=3;$pos_url=4;$pos_code=5;$pos_size=6;$pos_referer=7;$pos_agent=8;
 			@fieldlib=('host','logname','date','method','url','code','size','referer','ua');
 		}
@@ -5069,7 +5071,7 @@ sub DefinePerlParsingFormat {
 		}
 		elsif ($LogFormat eq '4') {	# Same than "%h %l %u %t \"%r\" %>s %b"
 			# %u (user) is "(.+)" instead of "[^ ]+" because can contain space (Lotus Notes).
-			$PerlParsingFormat="([^ ]+) [^ ]+ (.+) \\[([^ ]+) [^ ]+\\] \\\"([^ ]+) ([^ ]+) [^\\\"]+\\\" ([\\d|-]+) ([\\d|-]+)";
+			$PerlParsingFormat="([^ ]+) [^ ]+ (.+) \\[([^ ]+) [^ ]+\\] \\\"([^ ]+) ([^ ]+)(?: [^\\\"]+|)\\\" ([\\d|-]+) ([\\d|-]+)";
 			$pos_host=0;$pos_logname=1;$pos_date=2;$pos_method=3;$pos_url=4;$pos_code=5;$pos_size=6;
 			@fieldlib=('host','logname','date','method','url','code','size');
 		}
@@ -5659,7 +5661,7 @@ if ($QueryString =~ /(^|&|&amp;)output(=[^&]*|)(&|$)/i) {
 if ($ENV{'GATEWAY_INTERFACE'} && ! scalar keys %HTMLOutput) { $HTMLOutput{'main'}=1; }
 	
 # Remove -output option with no = from QueryString
-$QueryString=~s/(^|&|&amp;)output(&|$)/$1/i; $QueryString=~s/&+$//;
+$QueryString=~s/(^|&|&amp;)output(&|$)/$1$2/i; $QueryString=~s/&+$//;
 
 # Check year, month, day, hour parameters
 if ($QueryString =~ /(^|&|&amp;)month=(year)/i) { error("month=year is a deprecated option. Use month=all instead."); }
@@ -6366,8 +6368,10 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 			|| $field[$pos_method] eq 'COPY'
 			|| $field[$pos_method] eq 'RPC_IN_DATA'
 			|| $field[$pos_method] eq 'RPC_OUT_DATA'
-			|| $field[$pos_method] =~ /OK/i
-			|| $field[$pos_method] =~ /ERR\!/i)) {
+			|| $field[$pos_method] eq 'OK'				# Webstar
+			|| $field[$pos_method] eq 'ERR!'			# Webstar
+			|| $field[$pos_method] eq 'PRIV'			# Webstar
+			)) {
 			# HTTP request.	Keep only GET, POST, HEAD, *OK* and ERR! for Webstar. Do not keep OPTIONS, TRACE
 		}
 		elsif (($LogType eq 'W' || $LogType eq 'S') && ($field[$pos_method] eq 'GET' || $field[$pos_method] eq 'mms' || $field[$pos_method] eq 'rtsp' || $field[$pos_method] eq 'http' || $field[$pos_method] eq 'RTP')) {
@@ -7781,7 +7785,10 @@ if (scalar keys %HTMLOutput) {
 			print "<td class=\"aws\" valign=\"middle\">";
 			if ($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks) {
 				print "<select class=\"aws_formfield\" name=\"month\">\n";
-				foreach (1..12) { my $monthix=sprintf("%02s",$_); print "<option".($MonthRequired eq "$monthix"?" selected=\"true\"":"")." value=\"$monthix\">$MonthNumLib{$monthix}</option>\n"; }
+				foreach (1..12) {
+					my $monthix=sprintf("%02s",$_);
+					print "<option".("$MonthRequired" eq "$monthix"?" selected=\"true\"":"")." value=\"$monthix\">$MonthNumLib{$monthix}</option>\n";
+				}
 				if ($AllowFullYearView >= 2) {
 					print "<option".($MonthRequired eq 'all'?" selected=\"true\"":"")." value=\"all\">- $Message[6] -</option>\n";
 				}

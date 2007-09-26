@@ -130,7 +130,6 @@
 #		added SynooBot	http://www.synoo.de/bot.html	webmaster@synoo.com
 #		added TestBot	http://www.agbrain.com/	
 #		added TutorGigBot	http://www.tutorgig.info/	
-#		added UP.Browser	http://developer.openwave.com/dvl/support/faqs/faq_mag_browser.htm	
 #		added WebIndexer	mailto://webindexerv1@yahoo.com	
 #		added WebMiner	http://64.124.122.252/feedback.html
 # 2006-02-01    
@@ -677,7 +676,8 @@
 'biz360\sspider',
 'blogbridge\sservice',
 'bloglines',
-'blogpulse',#		added OpenWebSpider http://www.openwebspider.org/
+'blogpulse',
+#		added OpenWebSpider http://www.openwebspider.org/
 #		added NimbleCrawler http://www.healthline.com/
 #		added Mydoyouhike http://www.doyouhike.net/my
 #		added PHP version tracker http://www.nexen.net/phpversion/bot.php
@@ -934,7 +934,6 @@
 'ultraseek',
 'unchaos\sbot\shybrid\sweb\ssearch\sengine',
 'unido\-bot',
-'up\.browser',
 'updated',
 'ustc\-semantic\-group',
 'vagabondo\-wap',
@@ -1573,7 +1572,6 @@
 'ultraseek', 'Ultraseek',
 'unchaos\sbot\shybrid\sweb\ssearch\sengine','<a href="http://www.unchaos.com/" title="UnChaos Bot Hybrid Web Search Engine home page [new window]" target="_blank">UnChaos Bot Hybrid Web Search Engine</a>',
 'unido\-bot','<a href="http://www.unchina.org/unido/unido/our_projects/3_3.html" title="unido-bot home page [new window]" target="_blank">unido-bot</a>',
-'up\.browser','<a href="http://developer.openwave.com/dvl/support/faqs/faq_mag_browser.htm" title="UP.Browser home page [new window]" target="_blank">UP.Browser</a>',
 'updated','<a href="http://www.updated.com/" title="updated home page [new window]" target="_blank">updated</a>',
 'ustc\-semantic\-group','<a href="http://ai.ustc.edu.cn/mas/en/research/index.php" title="Bot home page [new window]" target="_blank">USTC-Semantic-Group</a>',  
 'vagabondo\-wap','<a href="http://www.wise-guys.nl/Contact/index.php?botselected=webagents&amp;lang=uk" title="Bot home page [new window]" target="_blank">Vagabondo-WAP</a>',
