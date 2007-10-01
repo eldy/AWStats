@@ -1,5 +1,6 @@
 # Danish message file by Ole Stanstrup (revised and amended by soren@dacafe.com)
 # $Revision$ - $Date$
+# Danish message file Update by Michael Andreassen (revised michael@the-exterminator.dk)
 message0=Ukendt
 message1=Ukendt (uopl&oslash;st IP-adresse)
 message2=Andre
@@ -169,3 +170,7 @@ message165=Antal succesfuldt afsendte e-mails
 message166=Antal fejlede/afviste e-mails
 message167=S&aring;rbare systemer
 message168=Browsere med Javascript sl&aring;et fra
+message169=Lavet af
+message170=plugins
+message171=Regioner
+message172=Byer
