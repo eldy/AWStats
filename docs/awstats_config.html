@@ -82,6 +82,7 @@ when reading it), follow the example:<br>
 <li><a href="#SkipFiles">SkipFiles</a>
 <li><a href="#OnlyHosts">OnlyHosts</a>
 <li><a href="#OnlyUserAgents">OnlyUserAgents</a>
+<li><a href="#OnlyUsers">OnlyUsers</a>
 <li><a href="#OnlyFiles">OnlyFiles</a>
 <li><a href="#NotPageList">NotPageList</a>
 <li><a href="#ValidHTTPCodes">ValidHTTPCodes</a>
@@ -860,6 +861,22 @@ when reading it), follow the example:<br>
 <br># Default: ""
 <br>#
 <br>OnlyUserAgents=""
+
+<br><br><hr>
+
+<a name="OnlyUsers"><b>OnlyUsers</b></a><br>
+<b>Version : </b>6.8+<br>
+<br># Include in stats, only accesses from authenticated users that match one of
+<br># following entries. For example, if you want AWStats to filter access to keep
+<br># only stats for authenticated users, you can add those users names in
+<br># this parameter. Useful for statistics for per user ftp logs.
+<br># Note: Use space between each value. This parameter is not case sensitive.
+<br># Note: You can use regular expression values writing value with REGEX[value].
+<br># Change : Effective for new updates only
+<br># Example: "john bob REGEX[^testusers]"
+<br># Default: ""
+<br>#
+<br>OnlyUsers=”"
 
 <br><br><hr>
 

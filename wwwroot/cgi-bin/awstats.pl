@@ -231,7 +231,7 @@ use vars qw/
 @HostAliases @AllowAccessFromWebToFollowingAuthenticatedUsers
 @DefaultFile @SkipDNSLookupFor
 @SkipHosts @SkipUserAgents @SkipFiles @SkipReferrers @NotPageFiles
-@OnlyHosts @OnlyUserAgents @OnlyFiles 
+@OnlyHosts @OnlyUserAgents @OnlyFiles @OnlyUsers 
 @URLWithQueryWithOnly @URLWithQueryWithout
 @ExtraName @ExtraCondition @ExtraStatTypes @MaxNbOfExtra @MinHitExtra
 @ExtraFirstColumnTitle @ExtraFirstColumnValues @ExtraFirstColumnFunction @ExtraFirstColumnFormat
@@ -270,7 +270,7 @@ use vars qw/
 @HostAliases = @AllowAccessFromWebToFollowingAuthenticatedUsers=();
 @DefaultFile = @SkipDNSLookupFor = ();
 @SkipHosts = @SkipUserAgents = @NotPageFiles = @SkipFiles = @SkipReferrers = ();
-@OnlyHosts = @OnlyUserAgents = @OnlyFiles = ();
+@OnlyHosts = @OnlyUserAgents = @OnlyFiles = @OnlyUsers = ();
 @URLWithQueryWithOnly = @URLWithQueryWithout = ();
 @ExtraName = @ExtraCondition = @ExtraStatTypes = @MaxNbOfExtra = @MinHitExtra = ();
 @ExtraFirstColumnTitle = @ExtraFirstColumnValues = @ExtraFirstColumnFunction = @ExtraFirstColumnFormat = ();
@@ -1035,13 +1035,23 @@ sub OnlyHost {
 }
 
 #------------------------------------------------------------------------------
+# Function:     Check if parameter is in OnlyUsers array
+# Parameters:	host @OnlyUsers (a NOT case sensitive precompiled regex array)
+# Return:		0 Not found, 1 Found
+#------------------------------------------------------------------------------
+sub OnlyUser{
+	foreach (@OnlyUsers) { if ($_[0] =~ /$_/) { return 1; } }
+	0; # Not in @OnlyUsers
+}
+
+#------------------------------------------------------------------------------
 # Function:     Check if parameter is in OnlyUserAgents array
 # Parameters:	useragent @OnlyUserAgents (a NOT case sensitive precompiled regex array)
 # Return:		0 Not found, 1 Found
 #------------------------------------------------------------------------------
 sub OnlyUserAgent {
 	foreach (@OnlyUserAgents) { if ($_[0] =~ /$_/) { return 1; } }
-	0; # Not in @OnlyHosts
+	0; # Not in @OnlyUserAgents
 }
 
 #------------------------------------------------------------------------------
@@ -1355,6 +1365,15 @@ sub Parse_Config {
 				if ($elem =~ /^REGEX\[(.*)\]$/i) { $elem=$1; }
 				else { $elem='^'.quotemeta($elem).'$'; }
 				if ($elem) { push @OnlyHosts, qr/$elem/i; }
+			}
+			next;
+			}
+		if ($param =~ /^OnlyUsers/) {
+		    @OnlyUsers=();
+			foreach my $elem (split(/\s+/,$value))	{
+				if ($elem =~ /^REGEX\[(.*)\]$/i) { $elem=$1; }
+				else { $elem='^'.quotemeta($elem).'$'; }
+				if ($elem) { push @OnlyUsers, qr/$elem/i; }
 			}
 			next;
 			}
@@ -6162,6 +6181,7 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 	@SkipUserAgents=&OptimizeArray(\@SkipUserAgents,1); if ($Debug) { debug("SkipUserAgents precompiled regex list is now @SkipUserAgents",1); }
 	@SkipFiles=&OptimizeArray(\@SkipFiles,$URLNotCaseSensitive); if ($Debug) { debug("SkipFiles precompiled regex list is now @SkipFiles",1); }
 	@OnlyHosts=&OptimizeArray(\@OnlyHosts,1); if ($Debug) { debug("OnlyHosts precompiled regex list is now @OnlyHosts",1); }
+	@OnlyUsers=&OptimizeArray(\@OnlyUsers,1); if ($Debug) { debug("OnlyUsers precompiled regex list is now @OnlyUsers",1); }
 	@OnlyUserAgents=&OptimizeArray(\@OnlyUserAgents,1); if ($Debug) { debug("OnlyUserAgents precompiled regex list is now @OnlyUserAgents",1); }
 	@OnlyFiles=&OptimizeArray(\@OnlyFiles,$URLNotCaseSensitive); if ($Debug) { debug("OnlyFiles precompiled regex list is now @OnlyFiles",1); }
 	@NotPageFiles=&OptimizeArray(\@NotPageFiles,$URLNotCaseSensitive); if ($Debug) { debug("NotPageFiles precompiled regex list is now @NotPageFiles",1); }
@@ -6491,6 +6511,7 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 		elsif (@SkipUserAgents && $pos_agent >= 0 && &SkipUserAgent($field[$pos_agent]))	{ $qualifdrop="Dropped record (user agent '$field[$pos_agent]' not qualified by SkipUserAgents)"; }
 		elsif (@SkipReferrers && $pos_referer >= 0 && &SkipReferrer($field[$pos_referer]))    { $qualifdrop="Dropped record (URL $field[$pos_referer] not qualified by SkipReferrers)"; }
 		elsif (@OnlyHosts && ! &OnlyHost($field[$pos_host]) && (! $pos_hostr || ! &OnlyHost($field[$pos_hostr]))) { $qualifdrop="Dropped record (host $field[$pos_host]".($pos_hostr?" and $field[$pos_hostr]":"")." not qualified by OnlyHosts)"; } 
+		elsif (@OnlyUsers && ! &OnlyUser($field[$pos_logname]))  { $qualifdrop="Dropped record (URL $field[$pos_logname] not qualified by OnlyUsers)"; }
 		elsif (@OnlyFiles && ! &OnlyFile($field[$pos_url]))  { $qualifdrop="Dropped record (URL $field[$pos_url] not qualified by OnlyFiles)"; }
 		elsif (@OnlyUserAgents && ! &OnlyUserAgent($field[$pos_agent]))  { $qualifdrop="Dropped record (user agent '$field[$pos_agent]' not qualified by OnlyUserAgents)"; }
 		if ($qualifdrop) {
@@ -10804,6 +10825,7 @@ else {
 #     Skip line for @SkipFiles --> next on loop
 #     Skip line for @SkipUserAgent --> next on loop
 #     Skip line for not @OnlyHosts --> next on loop
+#     Skip line for not @OnlyUsers --> next on loop
 #     Skip line for not @OnlyFiles --> next on loop
 #     Skip line for not @OnlyUserAgent --> next on loop
 #     So it's new line approved
