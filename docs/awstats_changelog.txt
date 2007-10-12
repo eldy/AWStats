@@ -5,9 +5,33 @@ $Revision$ - $Author$ - $Date$
 
 ***** 6.8 *****
 
+New features/improvements:
+- Added OnlyUsers option.
+- Can show a full list for extrasection.
+- Can track RPC request.
+
 Fixes:
 - Fixed pb in xml output for history files
+- Fixed following bugs:
 
+Other/Documentation:
+- Updated some language files.
+- Updated documentation.
+- Updated browsers database and added following patches:
+  775988 The lastest: minor Chinese search engine patch
+  1735647 Chinese search engines for awstats 6.6
+  1735646 robots patch: feedsky, contentmatch crawler, twiceler, yodao
+  1735639 Browser patch for Lilina/potu reader
+  1735637 Chinese translation file for awstats 6.6
+  1533028 WordToCleanSearchUrl for baidu.com
+  1384243 minor Chinese spider and search engine patch
+  1569151 TOP 8 Chinese local search engines
+  745359 Chinese(Simp) update: 6.5 awstats-cn.txt
+  1569201 top Chinese browser and robot update: TT is not a robot
+  1569229 Simplified Chinese language file update
+  1569208 Browser update on potu rss reader and lilina rss reader
+- Added a more complete xslt example.
+- Remove some deprecated code.
 
 
 ***** 6.7 *****
