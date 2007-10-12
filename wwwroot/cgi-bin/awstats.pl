@@ -1708,8 +1708,8 @@ sub Check_Config {
 	# Optional extra setup section
 	foreach my $extracpt (1..@ExtraName-1) {
 		if ($ExtraStatTypes[$extracpt] !~ /[PHBL]/)  { $ExtraStatTypes[$extracpt]='PHBL'; }
-		if ($MaxNbOfExtra[$extracpt] !~ /^\d+$/ || $MaxNbOfExtra[$extracpt]<1) { $MaxNbOfExtra[$extracpt]=20; }
-		if ($MinHitExtra[$extracpt] !~ /^\d+$/ || $MinHitExtra[$extracpt]<1) { $MinHitExtra[$extracpt]=1; }
+		if ($MaxNbOfExtra[$extracpt] !~ /^\d+$/ || $MaxNbOfExtra[$extracpt] < 0) { $MaxNbOfExtra[$extracpt]=20; }
+		if ($MinHitExtra[$extracpt] !~ /^\d+$/ || $MinHitExtra[$extracpt] < 1) { $MinHitExtra[$extracpt]=1; }
 		if (! $ExtraFirstColumnValues[$extracpt]) { error("Extra section number $extracpt is defined without ExtraSectionFirstColumnValues$extracpt parameter"); }
 		if (! $ExtraFirstColumnFormat[$extracpt]) { $ExtraFirstColumnFormat[$extracpt] = '%s'; }
 	}
@@ -2130,7 +2130,7 @@ sub Read_History_With_TmpUpdate {
 		}
 		if ($UpdateStats || $MigrateStats || ($HTMLOutput{'main'} && $ShowClusterStats)) { $SectionsToLoad{'cluster'}=$order++; }
 		foreach (1..@ExtraName-1) {
-			if ($UpdateStats || $MigrateStats || ($HTMLOutput{'main'} && $ExtraStatTypes[$_]) || $HTMLOutput{"extra$_"}) { $SectionsToLoad{"extra_$_"}=$order++; }
+			if ($UpdateStats || $MigrateStats || ($HTMLOutput{'main'} && $ExtraStatTypes[$_]) || $HTMLOutput{"allextra$_"}) { $SectionsToLoad{"extra_$_"}=$order++; }
 		}
        	foreach (keys %{$PluginsLoaded{'SectionInitHashArray'}}) {
        	    if ($UpdateStats || $MigrateStats || $HTMLOutput{"plugin_$_"}) { $SectionsToLoad{"plugin_$_"}=$order++; }
@@ -7910,6 +7910,9 @@ if (scalar keys %HTMLOutput) {
 					$menu{"extra$_"}=1;
 					$menulink{"extra$_"}=1;
 					$menutext{"extra$_"}=$ExtraName[$_];
+					$menu{"allextra$_"}=2;
+					$menulink{"allextra$_"}=2;
+					$menutext{"allextra$_"}=$Message[80];
 				}
                 ShowMenuCateg('extra',$Message[134],'',$frame,$targetpage,$linkanchor,$NewLinkParams,$NewLinkTarget,\%menu,\%menulink,\%menutext);
 				print "</table>\n";
@@ -8899,6 +8902,82 @@ if (scalar keys %HTMLOutput) {
     			&html_end(1);
     		}
     	}
+	 	# BY EXTRA SECTIONS
+	 	#----------------------------
+	 	foreach my $extranum (1..@ExtraName-1) {
+			if ($HTMLOutput{"allextra$extranum"}) {
+				if ($Debug) { debug("ExtraName$extranum",2); }
+		 		print "$Center<a name=\"extra$extranum\">&nbsp;</a><br />";
+				my $title=$ExtraName[$extranum];
+		 		&tab_head("$title",19,0,"extra$extranum");
+		 		print "<tr bgcolor=\"#$color_TableBGRowTitle\">";
+		 		print "<th>".$ExtraFirstColumnTitle[$extranum]."</th>";
+
+		 		if ($ExtraStatTypes[$extranum] =~ m/P/i) { print "<th bgcolor=\"#$color_p\" width=\"80\">$Message[56]</th>"; }
+		 		if ($ExtraStatTypes[$extranum] =~ m/H/i) { print "<th bgcolor=\"#$color_h\" width=\"80\">$Message[57]</th>"; }
+		 		if ($ExtraStatTypes[$extranum] =~ m/B/i) { print "<th bgcolor=\"#$color_k\" width=\"80\">$Message[75]</th>"; }
+		 		if ($ExtraStatTypes[$extranum] =~ m/L/i) { print "<th width=\"120\">$Message[9]</th>"; }
+		 		print "</tr>\n";
+		 		$total_p=$total_h=$total_k=0;
+		 		#$max_h=1; foreach (values %_login_h) { if ($_ > $max_h) { $max_h = $_; } }
+		 		#$max_k=1; foreach (values %_login_k) { if ($_ > $max_k) { $max_k = $_; } }
+		 		my $count=0;
+				if ($ExtraStatTypes[$extranum] =~ m/P/i) { 
+		 			&BuildKeyList($MaxRowsInHTMLOutput,$MinHitExtra[$extranum],\%{'_section_' . $extranum . '_h'},\%{'_section_' . $extranum . '_p'});
+		 		}
+		 		else {
+		 			&BuildKeyList($MaxRowsInHTMLOutput,$MinHitExtra[$extranum],\%{'_section_' . $extranum . '_h'},\%{'_section_' . $extranum . '_h'});
+		 		}
+				my %keysinkeylist=();
+				foreach my $key (@keylist) {
+					$keysinkeylist{$key}=1;
+		 			my $firstcol = CleanXSS(DecodeEncodedString($key));
+		 			$total_p+=${'_section_' . $extranum . '_p'}{$key};
+		 			$total_h+=${'_section_' . $extranum . '_h'}{$key};
+		 			$total_k+=${'_section_' . $extranum . '_k'}{$key};
+		 			print "<tr>";
+		 			printf("<td class=\"aws\">$ExtraFirstColumnFormat[$extranum]</td>", $firstcol, $firstcol, $firstcol, $firstcol, $firstcol);
+		 			if ($ExtraStatTypes[$extranum] =~ m/P/i) { print "<td>" . ${'_section_' . $extranum . '_p'}{$key} . "</td>"; }
+		 			if ($ExtraStatTypes[$extranum] =~ m/H/i) { print "<td>" . ${'_section_' . $extranum . '_h'}{$key} . "</td>"; }
+		 			if ($ExtraStatTypes[$extranum] =~ m/B/i) { print "<td>" . Format_Bytes(${'_section_' . $extranum . '_k'}{$key}) . "</td>"; }
+		 			if ($ExtraStatTypes[$extranum] =~ m/L/i) { print "<td>" . (${'_section_' . $extranum . '_l'}{$key}?Format_Date(${'_section_' . $extranum . '_l'}{$key},1):'-') . "</td>"; }
+		 			print "</tr>\n";
+		 			$count++;
+				}
+				# If we ask average or sum, we loop on all other records
+				if ($ExtraAddAverageRow[$extranum] || $ExtraAddSumRow[$extranum])
+				{
+			 		foreach (keys %{'_section_' . $extranum . '_h'}) {
+			 			if ($keysinkeylist{$_}) { next; }
+			 			$total_p+=${'_section_' . $extranum . '_p'}{$_};
+			 			$total_h+=${'_section_' . $extranum . '_h'}{$_};
+			 			$total_k+=${'_section_' . $extranum . '_k'}{$_};
+						$count++;
+			 		}
+				}
+				# Add average row
+				if ($ExtraAddAverageRow[$extranum]) {
+		 			print "<tr>";
+		 			print "<td class=\"aws\"><b>$Message[96]</b></td>";
+		 			if ($ExtraStatTypes[$extranum] =~ m/P/i) { print "<td>" . ($count?($total_p/$count):"&nbsp;") . "</td>"; }
+		 			if ($ExtraStatTypes[$extranum] =~ m/H/i) { print "<td>" . ($count?($total_h/$count):"&nbsp;") . "</td>"; }
+		 			if ($ExtraStatTypes[$extranum] =~ m/B/i) { print "<td>" . ($count?Format_Bytes($total_k/$count):"&nbsp;") . "</td>"; }
+		 			if ($ExtraStatTypes[$extranum] =~ m/L/i) { print "<td>&nbsp;</td>"; }
+		 			print "</tr>\n";
+				}
+				# Add sum row
+				if ($ExtraAddSumRow[$extranum]) {
+		 			print "<tr>";
+		 			print "<td class=\"aws\"><b>$Message[102]</b></td>";
+		 			if ($ExtraStatTypes[$extranum] =~ m/P/i) { print "<td>" . ($total_p) . "</td>"; }
+		 			if ($ExtraStatTypes[$extranum] =~ m/H/i) { print "<td>" . ($total_h) . "</td>"; }
+		 			if ($ExtraStatTypes[$extranum] =~ m/B/i) { print "<td>" . Format_Bytes($total_k) . "</td>"; }
+		 			if ($ExtraStatTypes[$extranum] =~ m/L/i) { print "<td>&nbsp;</td>"; }
+		 			print "</tr>\n";
+				}
+		 		&tab_end();
+			}
+	 	}
     	if ($HTMLOutput{'info'}) {
     		# Not yet available
     		print "$Center<a name=\"info\">&nbsp;</a><br />";
@@ -8918,6 +8997,7 @@ if (scalar keys %HTMLOutput) {
     	}
     }
 
+	
 	# Output main page
     #-----------------
     
@@ -10589,7 +10669,9 @@ if (scalar keys %HTMLOutput) {
 			my $title=$ExtraName[$extranum];
 	 		&tab_head("$title",19,0,"extra$extranum");
 	 		print "<tr bgcolor=\"#$color_TableBGRowTitle\">";
-	 		print "<th>".$ExtraFirstColumnTitle[$extranum]."</th>";
+	 		print "<th>".$ExtraFirstColumnTitle[$extranum];
+			print "&nbsp; - &nbsp; <a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?XMLEncode("$AWScript?${NewLinkParams}output=allextra$extranum"):"$PROG$StaticLinks.allextra$extranum.$StaticExt")."\"$NewLinkTarget>$Message[80]</a>";
+			print "</th>";
 
 	 		if ($ExtraStatTypes[$extranum] =~ m/P/i) { print "<th bgcolor=\"#$color_p\" width=\"80\">$Message[56]</th>"; }
 	 		if ($ExtraStatTypes[$extranum] =~ m/H/i) { print "<th bgcolor=\"#$color_h\" width=\"80\">$Message[57]</th>"; }
@@ -10600,13 +10682,22 @@ if (scalar keys %HTMLOutput) {
 	 		#$max_h=1; foreach (values %_login_h) { if ($_ > $max_h) { $max_h = $_; } }
 	 		#$max_k=1; foreach (values %_login_k) { if ($_ > $max_k) { $max_k = $_; } }
 	 		my $count=0;
-	 		if ($ExtraStatTypes[$extranum] =~ m/P/i) { 
-	 			&BuildKeyList($MaxNbOfExtra[$extranum],$MinHitExtra[$extranum],\%{'_section_' . $extranum . '_h'},\%{'_section_' . $extranum . '_p'});
-	 		}
-	 		else {
-	 			&BuildKeyList($MaxNbOfExtra[$extranum],$MinHitExtra[$extranum],\%{'_section_' . $extranum . '_h'},\%{'_section_' . $extranum . '_h'});
-	 		}
+	 		if ($MaxNbOfExtra[$extranum])
+			{
+				if ($ExtraStatTypes[$extranum] =~ m/P/i) { 
+		 			&BuildKeyList($MaxNbOfExtra[$extranum],$MinHitExtra[$extranum],\%{'_section_' . $extranum . '_h'},\%{'_section_' . $extranum . '_p'});
+		 		}
+		 		else {
+		 			&BuildKeyList($MaxNbOfExtra[$extranum],$MinHitExtra[$extranum],\%{'_section_' . $extranum . '_h'},\%{'_section_' . $extranum . '_h'});
+		 		}
+			}
+			else
+			{
+				@keylist=();
+			}
+			my %keysinkeylist=();
 			foreach my $key (@keylist) {
+				$keysinkeylist{$key}=1;
 	 			my $firstcol = CleanXSS(DecodeEncodedString($key));
 	 			$total_p+=${'_section_' . $extranum . '_p'}{$key};
 	 			$total_h+=${'_section_' . $extranum . '_h'}{$key};
@@ -10620,6 +10711,18 @@ if (scalar keys %HTMLOutput) {
 	 			print "</tr>\n";
 	 			$count++;
 			}
+			# If we ask average or sum, we loop on all other records
+			if ($ExtraAddAverageRow[$extranum] || $ExtraAddSumRow[$extranum])
+			{
+		 		foreach (keys %{'_section_' . $extranum . '_h'}) {
+		 			if ($keysinkeylist{$_}) { next; }
+		 			$total_p+=${'_section_' . $extranum . '_p'}{$_};
+		 			$total_h+=${'_section_' . $extranum . '_h'}{$_};
+		 			$total_k+=${'_section_' . $extranum . '_k'}{$_};
+					$count++;
+		 		}
+			}
+			# Add average row
 			if ($ExtraAddAverageRow[$extranum]) {
 	 			print "<tr>";
 	 			print "<td class=\"aws\"><b>$Message[96]</b></td>";
@@ -10629,6 +10732,7 @@ if (scalar keys %HTMLOutput) {
 	 			if ($ExtraStatTypes[$extranum] =~ m/L/i) { print "<td>&nbsp;</td>"; }
 	 			print "</tr>\n";
 			}
+			# Add sum row
 			if ($ExtraAddSumRow[$extranum]) {
 	 			print "<tr>";
 	 			print "<td class=\"aws\"><b>$Message[102]</b></td>";
