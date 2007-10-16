@@ -511,7 +511,6 @@
 'webtv','webtv',
 # Anonymous Proxy Browsers (can be used as grabbers as well...)
 'cjb\.net','cjbnet',
-'ossproxy','ossproxy',
 # RSS Readers
 'abilon', 'abilon',
 'aggrevator', 'rss',
