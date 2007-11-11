@@ -55,7 +55,9 @@ $ShowRobotsStats $ShowSessionsStats $ShowPagesStats $ShowFileTypesStats
 $ShowOSStats $ShowBrowsersStats $ShowOriginStats
 $ShowKeyphrasesStats $ShowKeywordsStats $ShowMiscStats $ShowHTTPErrorsStats
 $BuildReportFormat
+@ExtraName
 /;
+@ExtraName = ();
 # ----- Time vars -----
 use vars qw/
 $starttime
@@ -223,6 +225,9 @@ sub Parse_Config {
 			while ($value =~ /__([^\s_]+(?:_[^\s_]+)*)__/) { my $var=$1; $value =~ s/__${var}__/$ENV{$var}/g; }
 		}
 
+		# Extra parameters
+ 		if ($param =~ /^ExtraSectionName(\d+)/)			{ $ExtraName[$1]=$value; next; }
+
 		# If parameters was not found previously, defined variable with name of param to value
 		$$param=$value;
 	}
@@ -354,6 +359,9 @@ if ($ShowHTTPErrorsStats) {
 	push @OutputList,'errors404';		
 }
 #if ($ShowSMTPErrorsStats) { push @OutputList,'errors'; }
+foreach my $extranum (1..@ExtraName-1) {
+	push @OutputList,'allextra'.$extranum;
+}
 
 # Launch awstats update
 if ($Update) {
