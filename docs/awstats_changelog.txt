@@ -32,6 +32,8 @@ Other/Documentation:
   1569208 Browser update on potu rss reader and lilina rss reader
 - Added a more complete xslt example.
 - Remove some deprecated code.
+- Update status of GeoIP City plugin database. A free version is
+  now available like GeoIP Country database.
 
 
 ***** 6.7 *****
