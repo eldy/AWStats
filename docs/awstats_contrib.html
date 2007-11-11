@@ -115,9 +115,15 @@ graphapplet</b><br>
 <br>#
 <br>#LoadPlugin="geoip GEOIP_STANDARD /pathto/GeoIP.dat"
 
-<br>Plugin provided with AWStats (5.2+).
+<br><u>Install:</u>
+<br>This plugin need AWStats 5.2 or higher and need Geo::IP Perl Module AND the Country database.
 <br>You can find Geo::IP Perl Module and get the free Country database or purchase the
 <br>Country licensed database, including updates, on <a href="http://www.maxmind.com/app/perl?rId=awstats" target=_new>Maxmind web site</a>.
+<br>This plugin is provided since AWStats 5.2 standard distribution. If requirements
+are ok, just add the following line to your AWStats configuration file:<br>
+<i>LoadPlugin="geoip GEOIP_STANDARD /pathto/GeoIP.dat"</i><br>
+Where <i>/pathto/GeoIP.dat</i> is the full path where you stored your Country Database file.
+<br><u>Note:</u>
 <br>Plugins for Maxmind <a href="#geoipcity">GeoIP City</a> is also available (with free database).
 <br>Plugins for Maxmind <a href="#geoipregion">GeoIP Region</a>, <a href="#geoipisp">GeoIP ISP</a> and <a href="#geoiporg">GeoIP Organization</a> are
 also available (but databases are not free).
@@ -149,6 +155,34 @@ This is a fast tip to install Geo-IPfree perl module to be used by AWStats geoip
 the <a href="#geoip">geoip</a> plugin (using the Geo::IP Perl module, now free for countries) is highly recommanded.
 <br>You can use the following tool to test your geoipfree setup: <a href="/files/testgeoipfree.pl">testgeoipfree.pl</a>. Just
 put this file into your plugins directory and run it.
+
+<br>
+
+<a name="geoipcity">&nbsp;</a>
+<br># Plugin: GeoIP_City_Maxmind
+<br># Perl modules required: Geo::IP (from Maxmind)
+<br># This plugin add a chart of hits by cities (with country and regions
+<br># informations for major countries).
+<br># Note: This plugin need Maxmind GeoIP Perl module AND the city database.
+<br># Note: I get some problem with Maxmind Geo::IP Perl module with ActiveState
+<br># on Windows but it works great on Linux with default Perl.
+<br># You can get a free version or purchase a license from Maxmind to get/use the
+<br># full version including updates.
+<br># This plugin reduces AWStats speed.
+<br>#
+<br>#LoadPlugin="geoip_city_maxmind GEOIP_STANDARD /pathto/GeoIPCity.dat"
+
+<br><u>Install:</u>
+<br>This plugin need AWStats 6.2 or higher and need Geo::IP Perl Module AND the City database.
+<br>You can find Geo::IP Perl Module and get the free City database or purchase the
+<br>City licensed database, including updates, on <a href="http://www.maxmind.com/app/perl?rId=awstats" target=_new>Maxmind web site</a>.
+<br>This plugin is provided since AWStats 6.2 standard distribution. If requirements
+are ok, just add the following line to your AWStats configuration file:<br>
+<i>LoadPlugin="geoip_city_maxmind GEOIP_STANDARD /pathto/GeoIPCity.dat"</i><br>
+Where <i>/pathto/GeoIPCity.dat</i> is the full path where you stored your City Database file.
+By enabled this plugin, you will see a new link called 'Cities' on reports menu. For
+the moment this link works only when AWStats reports are build as CGI (static built not yet
+supported).
 
 <br>
 
@@ -263,33 +297,6 @@ are ok, just add the following line to your AWStats configuration file:<br>
 <i>LoadPlugin="geoip_region_maxmind GEOIP_STANDARD /pathto/GeoIPRegion.dat"</i><br>
 Where <i>/pathto/GeoIPRegion.dat</i> is the full path where you stored your Region Database file.
 By enabled this plugin, you will see a new link called 'Regions' on reports menu. For
-the moment this link works only when AWStats reports are build as CGI (static built not yet
-supported).
-<br>
-
-<a name="geoipcity">&nbsp;</a>
-<br># Plugin: GeoIP_City_Maxmind
-<br># Perl modules required: Geo::IP (from Maxmind)
-<br># This plugin add a chart of hits by cities (with country and regions
-<br># informations for major countries).
-<br># Note: This plugin need Maxmind GeoIP Perl module AND the city database.
-<br># Note: I get some problem with Maxmind Geo::IP Perl module with ActiveState
-<br># on Windows but it works great on Linux with default Perl.
-<br># You can get a free version or purchase a license from Maxmind to get/use the
-<br># full version including updates.
-<br># This plugin reduces AWStats speed.
-<br>#
-<br>#LoadPlugin="geoip_city_maxmind GEOIP_STANDARD /pathto/GeoIPCity.dat"
-
-<br><u>Install:</u>
-<br>This plugin need AWStats 6.2 or higher and need Geo::IP Perl Module AND the City database.
-<br>You can find Geo::IP Perl Module and get the free City database or purchase the
-<br>City licensed database, including updates, on <a href="http://www.maxmind.com/app/perl?rId=awstats" target=_new>Maxmind web site</a>.
-<br>This plugin is provided since AWStats 6.2 standard distribution. If requirements
-are ok, just add the following line to your AWStats configuration file:<br>
-<i>LoadPlugin="geoip_city_maxmind GEOIP_STANDARD /pathto/GeoIPCity.dat"</i><br>
-Where <i>/pathto/GeoIPCity.dat</i> is the full path where you stored your City Database file.
-By enabled this plugin, you will see a new link called 'Cities' on reports menu. For
 the moment this link works only when AWStats reports are build as CGI (static built not yet
 supported).
 <br>
