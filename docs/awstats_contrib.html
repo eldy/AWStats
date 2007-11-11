@@ -20,7 +20,7 @@
 <td bgcolor=#9999cc align=center><a href="/"><img src="images/awstats_logo1.png" border=0></a></td>
 <td bgcolor=#9999cc align=center>
 <br>
-<font style="font: 16pt arial,helvetica,sans-serif" color=#EEEEFF><b>AWStats logfile analyzer 6.7 Documentation</b></font><br>
+<font style="font: 16pt arial,helvetica,sans-serif" color=#EEEEFF><b>AWStats logfile analyzer 6.8 Documentation</b></font><br>
 <br>
 </td>
 <td bgcolor=#9999cc align=center>
@@ -50,7 +50,7 @@ it works (See <a href="awstats_config.html#LoadPlugin">LoadPlugin</a> parameter)
 <br>
 
 <a href="#plugin_standards">Standard plugins</a> : <b>tooltips, decodeutfkeys, ipv6, hashfiles,
-geoip, geoipfree, userinfo, hostinfo, clusterinfo, urlalias, timehires, timezone, rawlog,
+geoip, userinfo, hostinfo, clusterinfo, urlalias, timehires, timezone, rawlog,
 graphapplet</b><br>
 <a href="#plugin_others">Other plugins</a> (require other licensed product to work) :
 <b>geoip_region_maxmind</b>,
@@ -110,16 +110,17 @@ graphapplet</b><br>
 <br># Country chart is built from an Internet IP-Country database.
 <br># This plugin is useless for intranet only log files.
 <br># Note: You must choose between using this plugin (need Perl Geo::IP module 
-<br># from Maxmind, database more up to date) or the GeoIPfree plugin (need
-<br># Perl Geo::IPfree module, database less up to date).
+<br># from Maxmind, database is free and up to date) or the GeoIPfree plugin
+<br># (need Perl Geo::IPfree module, database is free but not up to date).
 <br># This plugin reduces AWStats speed of 8% !
 <br>#
 <br>#LoadPlugin="geoip GEOIP_STANDARD /pathto/GeoIP.dat"
 
 <br>Plugin provided with AWStats (5.2+).
-<br>You can find Geo::IP Perl Module from <a href="http://www.maxmind.com/app/perl?rId=awstats" target=_new>Maxmind</a>.
-<br>Plugins for Maxmind <a href="#geoipregion">GeoIP Region</a>, <a href="#geoipcity">GeoIP City</a>,
-<a href="#geoipisp">GeoIP ISP</a> and <a href="#geoiporg">GeoIP Organization</a> are
+<br>You can find Geo::IP Perl Module and get the free Country database or purchase the
+<br>Country licensed database, including updates, on <a href="http://www.maxmind.com/app/perl?rId=awstats" target=_new>Maxmind web site</a>.
+<br>Plugins for Maxmind <a href="#geoipcity">GeoIP City</a> is also available (with free database).
+<br>Plugins for Maxmind <a href="#geoipregion">GeoIP Region</a>, <a href="#geoipisp">GeoIP ISP</a> and <a href="#geoiporg">GeoIP Organization</a> are
 also available (but databases are not free).
 
 <br>
@@ -129,8 +130,8 @@ also available (but databases are not free).
 <br># Country chart is built from an Internet IP-Country database.
 <br># This plugin is useless for intranet only log files.
 <br># Note: You must choose between using this plugin (need Perl Geo::IPfree
-<br># module, database less up to date) or the GeoIP plugin (need Perl Geo::IP
-<br># module from Maxmind, database more up to date).
+<br># module, database is free but not up to date) or the GeoIP plugin (need
+<br># Perl Geo::IP module from Maxmind, database is also free and up to date).
 <br># Note: Activestate provide a corrupted version of Geo::IPfree 0.2 Perl
 <br># module, so install it from elsewhere (from www.cpan.org for example).
 <br># This plugin reduces AWStats speed of 10% !
@@ -256,8 +257,8 @@ need a not free third product to work)
 
 <br><u>Install:</u>
 <br>This plugin need AWStats 6.2 or higher and need Geo::IP Perl Module AND the Region database.
-<br>You can purchase the Region licensed database and updates
-from <a href="http://www.maxmind.com/app/perl?rId=awstats" target=_new>Maxmind</a>.
+<br>You can find Geo::IP Perl Module and purchase the Region licensed database and updates
+<br>on <a href="http://www.maxmind.com/app/perl?rId=awstats" target=_new>Maxmind web site</a>.
 <br>This plugin is provided with AWStats 6.2 standard distribution. If requirements
 are ok, just add the following line to your AWStats configuration file:<br>
 <i>LoadPlugin="geoip_region_maxmind GEOIP_STANDARD /pathto/GeoIPRegion.dat"</i><br>
@@ -275,16 +276,17 @@ supported).
 <br># Note: This plugin need Maxmind GeoIP Perl module AND the city database.
 <br># Note: I get some problem with Maxmind Geo::IP Perl module with ActiveState
 <br># on Windows but it works great on Linux with default Perl.
-<br># You need to purchase a license from Maxmind to get/use the City database.
+<br># You can get a free version or purchase a license from Maxmind to get/use the
+<br># full version including updates.
 <br># This plugin reduces AWStats speed.
 <br>#
 <br>#LoadPlugin="geoip_city_maxmind GEOIP_STANDARD /pathto/GeoIPCity.dat"
 
 <br><u>Install:</u>
 <br>This plugin need AWStats 6.2 or higher and need Geo::IP Perl Module AND the City database.
-<br>You can purchase the City licensed database and updates
-from <a href="http://www.maxmind.com/app/perl?rId=awstats" target=_new>Maxmind</a>.
-<br>This plugin is provided with AWStats 6.2 standard distribution. If requirements
+<br>You can find Geo::IP Perl Module and get the free City database or purchase the
+<br>City licensed database, including updates, on <a href="http://www.maxmind.com/app/perl?rId=awstats" target=_new>Maxmind web site</a>.
+<br>This plugin is provided since AWStats 6.2 standard distribution. If requirements
 are ok, just add the following line to your AWStats configuration file:<br>
 <i>LoadPlugin="geoip_city_maxmind GEOIP_STANDARD /pathto/GeoIPCity.dat"</i><br>
 Where <i>/pathto/GeoIPCity.dat</i> is the full path where you stored your City Database file.
@@ -307,8 +309,8 @@ supported).
 
 <br><u>Install:</u>
 <br>This plugin need AWStats 6.3 or higher and need Geo::IP Perl Module AND the ISP database.
-<br>You can purchase the ISP licensed database and updates
-from <a href="http://www.maxmind.com/app/perl?rId=awstats" target=_new>Maxmind</a>.
+<br>You can find Geo::IP Perl Module and purchase the ISP licensed database and updates
+<br>on <a href="http://www.maxmind.com/app/perl?rId=awstats" target=_new>Maxmind web site</a>.
 <br>This plugin is provided with AWStats 6.3 standard distribution. If requirements
 are ok, just add the following line to your AWStats configuration file:<br>
 <i>LoadPlugin="geoip_isp_maxmind GEOIP_STANDARD /pathto/GeoIPISP.dat"</i><br>
@@ -332,8 +334,8 @@ supported).
 
 <br><u>Install:</u>
 <br>This plugin need AWStats 6.3 or higher and need Geo::IP Perl Module AND the Org database.
-<br>You can purchase the Org licensed database and updates
-from <a href="http://www.maxmind.com/app/perl?rId=awstats" target=_new>Maxmind</a>.
+<br>You can find Geo::IP Perl Module and purchase Org licensed database and updates
+<br>on <a href="http://www.maxmind.com/app/perl?rId=awstats" target=_new>Maxmind web site</a>.
 <br>This plugin is provided with AWStats 6.3 standard distribution. If requirements
 are ok, just add the following line to your AWStats configuration file:<br>
 <i>LoadPlugin="geoip_org_maxmind GEOIP_STANDARD /pathto/GeoIPOrg.dat"</i><br>
