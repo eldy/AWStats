@@ -3494,7 +3494,7 @@ sub Save_History {
 		$lastlinechecksum=$LastLineChecksum;
 	}
 	
-	if ($Debug) { debug(" Save_History [sectiontosave=$sectiontosave,year=$year,month=$month,lastlinenb=$lastlinenb,lastlineoffset=$lastlineoffset,lastlinechecksum=$lastlinechecksum]",1); }
+	if ($Debug) { debug(" Save_History [sectiontosave=$sectiontosave,year=$year,month=$month,breakdate=$breakdate,lastlinenb=$lastlinenb,lastlineoffset=$lastlineoffset,lastlinechecksum=$lastlinechecksum]",1); }
 	my $spacebar="                    ";
 	my %keysinkeylist=();
 
@@ -6861,7 +6861,7 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 		# Do DNS lookup
 		#--------------
 		my $Host=$field[$pos_host];
-		my $HostResolved='';
+		my $HostResolved='';	# HostResolved will be defined in next paragraf if countedtraffic is true
 
 		if (! $countedtraffic) {
 			my $ip=0;
@@ -7373,6 +7373,7 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 			$_cluster_k{$field[$pos_cluster]}+=int($field[$pos_size]);			#Count accesses for page (kb)
 		}
 
+
 		# Analyze: Extra
 		#---------------
  		foreach my $extranum (1..@ExtraName-1) {
@@ -7415,9 +7416,14 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 					if ($Debug) { debug("  Check condition '$conditiontype' must contain '$conditiontypeval' in '$field[$pos_agent]'",5); }
  					if ($field[$pos_agent] =~ /$conditiontypeval/) { $conditionok=1; last; }
  				}
- 				elsif ($conditiontype eq 'HOST') {
+ 				elsif ($conditiontype eq 'HOSTINLOG') {
 					if ($Debug) { debug("  Check condition '$conditiontype' must contain '$conditiontypeval' in '$field[$pos_host]'",5); }
- 					if ($HostResolved =~ /$conditiontypeval/) { $conditionok=1; last; }
+ 					if ($field[$pos_host] =~ /$conditiontypeval/) { $conditionok=1; last; }
+ 				}
+ 				elsif ($conditiontype eq 'HOST') {
+					my $hosttouse=($HostResolved?$HostResolved:$Host);
+					if ($Debug) { debug("  Check condition '$conditiontype' must contain '$conditiontypeval' in '$hosttouse'",5); }
+ 					if ($hosttouse =~ /$conditiontypeval/) { $conditionok=1; last; }
  				}
 				elsif ($conditiontype eq 'VHOST') {
 					if ($Debug) { debug("  Check condision '$conditiontype' must contain '$conditiontypeval' in '$field[$pos_vh]'",5); }
@@ -7454,8 +7460,12 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
  				elsif ($rowkeytype eq 'UA') {
  					if ($field[$pos_agent] =~ /$rowkeytypeval/) { $rowkeyval = "$1"; $rowkeyok = 1; last; }
  				}
+ 				elsif ($rowkeytype eq 'HOSTINLOG') {
+ 					if ($field[$pos_host] =~ /$rowkeytypeval/) { $rowkeyval = "$1"; $rowkeyok = 1; last; }
+ 				}
  				elsif ($rowkeytype eq 'HOST') {
- 					if ($HostResolved =~ /$rowkeytypeval/) { $rowkeyval = "$1"; $rowkeyok = 1; last; }
+					my $hosttouse=($HostResolved?$HostResolved:$Host);
+ 					if ($hosttouse =~ /$rowkeytypeval/) { $rowkeyval = "$1"; $rowkeyok = 1; last; }
  				}
  				elsif ($rowkeytype eq 'VHOST') {
  					if ($field[$pos_vh] =~ /$rowkeytypeval/) { $rowkeyval = "$1"; $rowkeyok = 1; last; }
@@ -7465,8 +7475,9 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
  				}
  				else { error("Wrong value of parameter ExtraSectionFirstColumnValues$extranum"); }
  			}
-			if (! $rowkeyok) { next; }	# End for this section
-			if ($Debug) { debug("  Key val was found: $rowkeyval",5); }
+			if (! $rowkeyok)  { next; }									# End for this section
+			if (! $rowkeyval) { $rowkeyval='Failed to extract key'; }
+			if ($Debug) { debug("  Key val found: $rowkeyval",5); }
 
  			# Apply function on $rowkeyval
  			if ($ExtraFirstColumnFunction[$extranum])

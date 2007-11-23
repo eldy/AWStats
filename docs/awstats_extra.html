@@ -314,11 +314,13 @@ There is a lot of other possible use for Extra Sections ...<br>
 <br># ExtraSectionCodeFilterX is list of codes the record code field must match.
 <br>#   Put an empty string for no test on code.
 <br># ExtraSectionConditionX are conditions you can use to count or not the hit,
-<br>#   Use one of the field condition (URL,URLWITHQUERY,QUERY_STRING,REFERER,UA,
-<br>#   HOST,extraX) and a regex to match, after a coma. Use "||" for "OR".
+<br>#   Use one of the field condition
+<br>#   (URL,URLWITHQUERY,QUERY_STRING,REFERER,UA,HOSTINLOG,HOST,VHOST,extraX)
+<br>#   and a regex to match, after a coma. Use "||" for "OR".
 <br># ExtraSectionFirstColumnTitleX is the first column title of the chart.
 <br># ExtraSectionFirstColumnValuesX is a string to tell AWStats which field to
-<br>#   extract value from (URL,URLWITHQUERY,QUERY_STRING,REFERER,UA,HOST,extraX)
+<br>#   extract value from
+<br>#   (URL,URLWITHQUERY,QUERY_STRING,REFERER,UA,HOSTINLOG,HOST,VHOST,extraX)
 <br>#   and how to extract the value (using regex syntax). Each different value
 <br>#   found will appear in first column of report on a different row. Be sure
 <br>#   that list of different possible values will not grow indefinitely.
