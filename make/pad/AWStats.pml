@@ -4,9 +4,9 @@
 	<CompanyName />
 	<Program_Info>
 		<Program_Name>AWStats</Program_Name>
-		<Program_Version>6.7</Program_Version>
-		<Program_Release_Month>07</Program_Release_Month>
-		<Program_Release_Day>03</Program_Release_Day>
+		<Program_Version>6.8</Program_Version>
+		<Program_Release_Month>12</Program_Release_Month>
+		<Program_Release_Day>01</Program_Release_Day>
 		<Program_Release_Year>2007</Program_Release_Year>
 		<Program_Cost_Dollars />
 		<Program_Cost_Other_Code />
