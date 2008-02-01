@@ -18,7 +18,7 @@
 # This list is used to know in which order to search Operating System IDs
 # (Most frequent one are first in this list to increase detect speed).
 # It contains all matching criteria to search for in log fields.
-# Note: OS IDs are in lower case and ' ' and '+' are changed into '_'
+# Note: OS IDs are in lower case and '_', ' ' and '+' are changed into '[_+ ]'
 #-------------------------------------------------------------------------
 @OSSearchIDOrder	= (
 # Windows OS family
@@ -34,6 +34,7 @@
 'win(.*)ce',
 'microsoft',
 'msie[_+ ]',
+'ms[_+ ]frontpage',
 # Macintosh OS family
 'mac[_+ ]os[_+ ]x',
 'mac[_+ ]?p',									# This works for macppc and mac_ppc and mac_powerpc
@@ -109,6 +110,7 @@
 'win(.*)ce','wince',
 'microsoft','winunknown',
 'msie[_+ ]','winunknown',
+'ms[_+ ]frontpage','winunknown',
 # Macintosh OS family
 'mac[_+ ]os[_+ ]x','macosx', 'vienna', 'macosx', 'newsfire', 'macosx', 'applesyndication', 'macosx',
 'mac[_+ ]?p','macintosh','mac[_+ ]68','macintosh','macweb','macintosh','macintosh','macintosh',
