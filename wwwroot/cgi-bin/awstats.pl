@@ -6658,8 +6658,8 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 			if ($foundparam) { $_misc_h{"TotalMisc"}++; }
 		}
 
-		# Analyze: favicon (countedtraffic=>1 if favicon)
-		#------------------------------------------------
+		# Analyze: favicon (=> countedtraffic=1 if favicon)
+		#--------------------------------------------------
 		if ($pos_referer >= 0 && $field[$pos_referer] && $urlwithnoquery =~ /$regfavico/o) {
 			if (($field[$pos_code] != 404 || $urlwithnoquery !~ /\/.+\/favicon\.ico$/i) && ($field[$pos_agent] =~ /MSIE/)) {
 				# We don't count one hit if (not on root and error) and MSIE
@@ -6669,8 +6669,8 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 			$countedtraffic=1;	# favicon is a case that must not be counted anywhere else
 		}
 
-		# Analyze: Worms (countedtraffic=>2 if worm)
-		#-------------------------------------------
+		# Analyze: Worms (=> countedtraffic=2 if worm)
+		#---------------------------------------------
 		if (! $countedtraffic) {
 			if ($LevelForWormsDetection) {
 				foreach (@WormsSearchIDOrder) {
@@ -6692,7 +6692,7 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 			}
         }
     				
-		# Analyze: Status code (countedtraffic=>3 if error)
+		# Analyze: Status code (=> countedtraffic=3 if error)
 		#--------------------------------------------------
 		if (! $countedtraffic) {
 			if ($LogType eq 'W' || $LogType eq 'S') {		# HTTP record or Stream record
@@ -6739,7 +6739,7 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 			}
 		}
 		
-		# Analyze: Robot from robot database (countedtraffic=>4 if robot)
+		# Analyze: Robot from robot database (=> countedtraffic=4 if robot)
 		#----------------------------------------------------------------
 		if (! $countedtraffic) {
 			if ($pos_agent >= 0) {
@@ -6779,7 +6779,7 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 			}
 		}
 
-		# Analyze: Robot from "hit on robots.txt" file (countedtraffic=>5 if robot)
+		# Analyze: Robot from "hit on robots.txt" file (=> countedtraffic=5 if robot)
 		# -------------------------------------------------------------------------
 		if (! $countedtraffic) {
 			if ($urlwithnoquery =~ /$regrobot/o) {
@@ -7199,7 +7199,7 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 						#if ($Debug) { debug("  Analyze referer refererprot=$refererprot refererserver=$refererserver",5); }
 	
 						# Kind of origin
-						if (!$TmpRefererServer{$refererserver}) {	# is "=" if same site, "search egine key" if search engine, not defined otherwise
+						if (!$TmpRefererServer{$refererserver}) {	# TmpRefererServer{$refererserver} is "=" if same site, "search egine key" if search engine, not defined otherwise
 							if ($refererserver =~ /$reglocal/o) {
 								# Intern (This hit came from another page of the site)
 								if ($Debug) { debug("  Server '$refererserver' is added to TmpRefererServer with value '='",2); }
@@ -7333,11 +7333,11 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 					}
 	
 					# News Link ?
-					if (! $found && $refererprot =~ /^news/i) {
-						$found=1;
-						if ($PageBool) { $_from_p[5]++; }
-						$_from_h[5]++;
-					}
+					#if (! $found && $refererprot =~ /^news/i) {
+					#	$found=1;
+					#	if ($PageBool) { $_from_p[5]++; }
+					#	$_from_h[5]++;
+					#}
 				}
 			}
 	
@@ -10405,15 +10405,10 @@ if (scalar keys %HTMLOutput) {
 			if ($ShowOriginStats =~ /P/i) { print "<th bgcolor=\"#$color_p\" width=\"80\">$Message[56]</th><th bgcolor=\"#$color_p\" width=\"80\">$Message[15]</th>"; }
 			if ($ShowOriginStats =~ /H/i) { print "<th bgcolor=\"#$color_h\" width=\"80\">$Message[57]</th><th bgcolor=\"#$color_h\" width=\"80\">$Message[15]</th>"; }
 			print "</tr>\n";
-			#------- Referrals by direct address/bookmarks
+			#------- Referrals by direct address/bookmark/link in email/etc...
 			print "<tr><td class=\"aws\"><b>$Message[38]</b></td>";
 			if ($ShowOriginStats =~ /P/i) { print "<td>".($_from_p[0]?$_from_p[0]:"&nbsp;")."</td><td>".($_from_p[0]?"$p_p[0] %":"&nbsp;")."</td>"; }
 			if ($ShowOriginStats =~ /H/i) { print "<td>".($_from_h[0]?$_from_h[0]:"&nbsp;")."</td><td>".($_from_h[0]?"$p_h[0] %":"&nbsp;")."</td>"; }
-			print "</tr>\n";
-			#------- Referrals by news group
-			print "<tr><td class=\"aws\"><b>$Message[107]</b></td>";
-			if ($ShowOriginStats =~ /P/i) { print "<td>".($_from_p[5]?$_from_p[5]:"&nbsp;")."</td><td>".($_from_p[5]?"$p_p[5] %":"&nbsp;")."</td>"; }
-			if ($ShowOriginStats =~ /H/i) { print "<td>".($_from_h[5]?$_from_h[5]:"&nbsp;")."</td><td>".($_from_h[5]?"$p_h[5] %":"&nbsp;")."</td>"; }
 			print "</tr>\n";
 			#------- Referrals by search engines
 			print "<tr".Tooltip(13)."><td class=\"aws\"><b>$Message[40]</b> - <a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?XMLEncode("$AWScript?${NewLinkParams}output=refererse"):"$PROG$StaticLinks.refererse.$StaticExt")."\"$NewLinkTarget>$Message[80]</a><br />\n";
@@ -10487,12 +10482,23 @@ if (scalar keys %HTMLOutput) {
 				if ($ShowOriginStats =~ /H/i) { print "<td>".($_from_h[4]?$_from_h[4]:"&nbsp;")."</td><td>".($_from_h[4]?"$p_h[4] %":"&nbsp;")."</td>"; }
 				print "</tr>\n";
 			}
+			#------- Referrals by news group
+			#print "<tr><td class=\"aws\"><b>$Message[107]</b></td>";
+			#if ($ShowOriginStats =~ /P/i) { print "<td>".($_from_p[5]?$_from_p[5]:"&nbsp;")."</td><td>".($_from_p[5]?"$p_p[5] %":"&nbsp;")."</td>"; }
+			#if ($ShowOriginStats =~ /H/i) { print "<td>".($_from_h[5]?$_from_h[5]:"&nbsp;")."</td><td>".($_from_h[5]?"$p_h[5] %":"&nbsp;")."</td>"; }
+			#print "</tr>\n";
 			#------- Unknown origin
 			print "<tr><td class=\"aws\"><b>$Message[39]</b></td>";
 			if ($ShowOriginStats =~ /P/i) { print "<td>".($_from_p[1]?$_from_p[1]:"&nbsp;")."</td><td>".($_from_p[1]?"$p_p[1] %":"&nbsp;")."</td>"; }
 			if ($ShowOriginStats =~ /H/i) { print "<td>".($_from_h[1]?$_from_h[1]:"&nbsp;")."</td><td>".($_from_h[1]?"$p_h[1] %":"&nbsp;")."</td>"; }
 			print "</tr>\n";
 			&tab_end();
+			# 0: Direct
+			# 1: Unknown
+			# 2: SE
+			# 3: External link
+			# 4: Internal link
+			# 5: Newsgroup (deprecated)
 		}
 	
 		print "\n<a name=\"keys\">&nbsp;</a>\n\n";

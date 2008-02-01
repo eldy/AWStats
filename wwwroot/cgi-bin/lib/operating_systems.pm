@@ -32,6 +32,8 @@
 'win(.*)95',
 'win(.*)16','windows[_+ ]3',					# This works for windows_31 and windows_3.1
 'win(.*)ce',
+'microsoft',
+'msie[_+ ]',
 # Macintosh OS family
 'mac[_+ ]os[_+ ]x',
 'mac[_+ ]?p',									# This works for macppc and mac_ppc and mac_powerpc
@@ -105,6 +107,8 @@
 'win(.*)95','win95',
 'win(.*)16','win16','windows[_+ ]3','win16',
 'win(.*)ce','wince',
+'microsoft','winunknown',
+'msie[_+ ]','winunknown',
 # Macintosh OS family
 'mac[_+ ]os[_+ ]x','macosx', 'vienna', 'macosx', 'newsfire', 'macosx', 'applesyndication', 'macosx',
 'mac[_+ ]?p','macintosh','mac[_+ ]68','macintosh','macweb','macintosh','macintosh','macintosh',
@@ -168,8 +172,9 @@
 'win95','<a href="http://www.microsoft.com/windows95/" title="Windows 95 home page [new window]" target="_blank">Windows 95</a>',
 'win16','<a href="http://www.microsoft.com/" title="Windows 3.xx home page [new window]" target="_blank">Windows 3.xx</a>',
 'wince','<a href="http://www.microsoft.com/windowsmobile/" title="Windows CE home page [new window]" target="_blank">Windows CE</a>',
+'winunknown','Windows (unknown version)',
 'winxbox','<a href="http://www.xbox.com/en-US/hardware/xbox/" title="Microsoft XBOX home page [new window]" target="_blank">Microsoft XBOX</a>',
- # Macintosh OS
+# Macintosh OS
 'macosx','<a href="http://www.apple.com/macosx/" title="Mac OS X home page [new window]" target="_blank">Mac OS X</a>',
 'macintosh','<a href="http://www.apple.com/" title="Mac OS home page [new window]" target="_blank">Mac OS</a>',
 # Linux
