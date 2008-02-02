@@ -848,7 +848,6 @@
 'peerbot',
 'perman',
 'php[_+ ]version[_+ ]tracker',
-'php_version_tracker',
 'pictureofinternet',
 'ping\.blo\.gs',
 'plinki',
@@ -964,7 +963,7 @@
 'robot',
 'crawl',
 'spider',
-'\wbot[\/\-]'
+'bot[\.\;\/\-]'
 );
 
 
@@ -1483,8 +1482,7 @@
 'pear_http_request_class','<a href="http://pear.php.net/" title="PEAR HTTP Request class home page [new window]" target="_blank">PEAR HTTP Request class</a>',
 'peerbot','<a href="http://www.peerbot.com/" title="PEERbot home page [new window]" target="_blank">PEERbot</a>',
 'perman', 'Perman surfer',
-'php[_+ ]version[_+ ]tracker','<a href="http://www.nexen.net/phpversion/bot.php" title="PHP_version_tracker home page [new window]" target="_blank">PHP_version_tracker</a>',
-'php_version_tracker','<a href="http://www.nexen.net/phpversion/bot.php" title="PHP version tracker home page [new window]" target="_blank">PHP version tracker</a>',
+'php[_+ ]version[_+ ]tracker','<a href="http://www.nexen.net/phpversion/bot.php" title="PHP Version Tracker home page [new window]" target="_blank">PHP version tracker</a>',
 'pictureofinternet','<a href="http://malfunction.org/poi/" title="PictureOfInternet home page [new window]" target="_blank">PictureOfInternet</a>',
 'ping\.blo\.gs','<a href="http://blo.gs/ping.php" title="Bot home page. [new window]" target="_blank">ping.blo.gs</a>',
 'plinki','<a href="http://www.plinki.com/" title="plinki home page [new window]" target="_blank">plinki</a>',
@@ -1599,7 +1597,7 @@
 'robot', 'Unknown robot (identified by \'robot\')',
 'crawl', 'Unknown robot (identified by \'crawl\')',
 'spider', 'Unknown robot (identified by \'spider\')',
-'\wbot[\/\-]', 'Unknown robot (identified by \'bot/\' or \'bot-\')',
+'bot[\.\;\/\-]', 'Unknown robot (identified by \'bot.\', \'bot;\', \'bot/\' or \'bot-\')',
 # Unknown robots identified by hit on robots.txt
 'unknown', 'Unknown robot (identified by hit on \'robots.txt\')'
 );
