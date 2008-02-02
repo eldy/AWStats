@@ -676,31 +676,6 @@
 'blogbridge[_+ ]service',
 'bloglines',
 'blogpulse',
-#		added OpenWebSpider http://www.openwebspider.org/
-#		added NimbleCrawler http://www.healthline.com/
-#		added Mydoyouhike http://www.doyouhike.net/my
-#		added PHP version tracker http://www.nexen.net/phpversion/bot.php
-#		added kamano.de NewsFeedVerzeichnis http://www.kamano.de/
-#		added yoogliFetchAgent http://www.yoogli.com/
-#		added ETS v http://www.freetranslation.com/help/
-#		added HPPrint 
-#		added CFNetwork http://www.cocoadev.com/index.pl?CFNetwork
-#		added STEROID  Download http://faqs.org.ru/progr/pascal/delphi_internet2.htm
-#		added OSSProxy http://www.marketscore.com/FAQ.Aspx
-#		added Oracle Ultra Search http://www.oracle.com/technology/products/ultrasearch/index.html
-#		added Web Downloader http://www.krasu.ru/soft/chuchelo/
-#		added lwp-request http://search.cpan.org/~gaas/libwww-perl-5.69/bin/lwp-request
-#		added Sunrise http://www.sunrisexp.com/
-#		added WordPress http://wordpress.org/
-#		added Global Fetch http://www.wesonet.com/
-#		added NASA Search http://www.psychedelix.com/cgi-bin/csv2html.pl?data=allagents.csv&template=detail.html&match=\bid_n_s_140506_2\b
-#		added NetSprint http://www.netsprint.pl/serwis/
-#		added Webdup http://www.webdup.com/en/index.html
-#		added Megite http://www.megite.com/
-#		added Mini-reptile 
-#		added lwp-trivial http://search.cpan.org/src/GAAS/libwww-perl-5.805/lib/LWP/Simple.pm
-#		added HTMLParser http://htmlparser.sourceforge.net/
-
 'blogsearch',
 'blogshares',
 'blogslive',
@@ -1636,11 +1611,18 @@
 %RobotsAffiliateLib = (
 'fast\-webcrawler'=>'AllTheWeb',
 'googlebot'=>'Google',
+'google\-sitemap'=>'Google',
 'msnbot'=>'MSN',
 'nutch'=>'Looksmart',
 'scooter'=>'AltaVista',
 'wisenutbot'=>'Looksmart',
+'yahoo\-blogs'=>'Yahoo',
 'yahoo\-verticalcrawler'=>'Yahoo',
+'yahoofeedseeker'=>'Yahoo',
+'yahooseeker\-testing'=>'Yahoo',
+'yahooseeker'=>'Yahoo',
+'yahoo\-mmcrawler'=>'Yahoo',
+'yahoo!_mindset'=>'Yahoo',
 'zyborg'=>'Looksmart',
 'cfetch'=>'Kosmix',
 '^voyager\/'=>'Kosmix'
