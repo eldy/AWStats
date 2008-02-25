@@ -9,7 +9,7 @@
 - Tagger CVS
 
 - makepack sur webmin
-- makepack sur awstats
+- makepack sur awstats (If on linux copy awstats_logo1.gif into $RPMDIR/SOURCES)
 - Move build files into files
 - Update web site page index.php
 - Upload files and web site on web server

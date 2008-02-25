@@ -40,6 +40,10 @@ if (-d "/usr/src/RPM") {
     # mandrake
     $RPMDIR="/usr/src/RPM";
 }
+if (-d "/usr/src/rpm") {
+    # ubuntu
+    $RPMDIR="/usr/src/rpm";
+}
 use vars qw/ $REVISION $VERSION /;
 $REVISION='$Revision$'; $REVISION =~ /\s(.*)\s/; $REVISION=$1;
 $VERSION="1.0 (build $REVISION)";
@@ -305,8 +309,8 @@ rename("$BUILDROOT/$PROJECT","$BUILDROOT/$FILENAMETGZ");
             close SPECFROM;
             close SPECTO;
 
-    		print "Launch RPM build (rpm --clean -ba $TEMP/${BUILDFIC})\n";
-    		$ret=`rpm --clean -ba $TEMP/${BUILDFIC}`;
+    		print "Launch RPM build (rpmbuild --clean -ba $TEMP/${BUILDFIC})\n";
+    		$ret=`rpmbuild --clean -ba $TEMP/${BUILDFIC}`;
 
    		    print "Move $RPMDIR/RPMS/noarch/${FILENAMERPM}.noarch.rpm into $DESTI/${FILENAMERPM}.noarch.rpm\n";
    		    $cmd="mv \"$RPMDIR/RPMS/noarch/${FILENAMERPM}.noarch.rpm\" \"$DESTI/${FILENAMERPM}.noarch.rpm\"";
