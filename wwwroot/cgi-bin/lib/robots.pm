@@ -963,7 +963,9 @@
 'robot',
 'crawl',
 'spider',
-'bot[\.\;\/\-]'
+'bot[+:,\.\;\/\\\-]',
+'[+:,\.\;\/\\\-]bot',
+'no_user_agent'
 );
 
 
@@ -1597,7 +1599,9 @@
 'robot', 'Unknown robot (identified by \'robot\')',
 'crawl', 'Unknown robot (identified by \'crawl\')',
 'spider', 'Unknown robot (identified by \'spider\')',
-'bot[\.\;\/\-]', 'Unknown robot (identified by \'bot.\', \'bot;\', \'bot/\' or \'bot-\')',
+'bot[+:,\.\;\/\\\-]','Unknown robot (identified by \'bot*\')',
+'[+:,\.\;\/\\\-]bot','Unknown robot (identified by \'*bot\')',
+'no_user_agent','Unknown robot (identified by empty user agent string)',
 # Unknown robots identified by hit on robots.txt
 'unknown', 'Unknown robot (identified by hit on \'robots.txt\')'
 );

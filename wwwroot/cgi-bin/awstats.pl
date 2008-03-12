@@ -136,7 +136,7 @@ $DebugMessages $AllowToUpdateStatsFromBrowser $EnableLockForUpdate $DNSLookup $A
 $BarHeight $BarWidth $CreateDirDataIfNotExists $KeepBackupOfHistoricFiles
 $NbOfLinesParsed $NbOfLinesDropped $NbOfLinesCorrupted $NbOfOldLines $NbOfNewLines
 $NbOfLinesShowsteps $NewLinePhase $NbOfLinesForCorruptedLog $PurgeLogFile $ArchiveLogRecords
-$ShowDropped $ShowCorrupted $ShowUnknownOrigin $ShowLinksToWhoIs
+$ShowDropped $ShowCorrupted $ShowUnknownOrigin $ShowDirectOrigin $ShowLinksToWhoIs
 $ShowAuthenticatedUsers $ShowFileSizesStats $ShowScreenSizeStats $ShowSMTPErrorsStats
 $ShowEMailSenders $ShowEMailReceivers $ShowWormsStats $ShowClusterStats
 $IncludeInternalLinksInOriginSection
@@ -148,7 +148,7 @@ $DecodeUA
 $BarHeight, $BarWidth, $CreateDirDataIfNotExists, $KeepBackupOfHistoricFiles,
 $NbOfLinesParsed, $NbOfLinesDropped, $NbOfLinesCorrupted, $NbOfOldLines, $NbOfNewLines,
 $NbOfLinesShowsteps, $NewLinePhase, $NbOfLinesForCorruptedLog, $PurgeLogFile, $ArchiveLogRecords,
-$ShowDropped, $ShowCorrupted, $ShowUnknownOrigin, $ShowLinksToWhoIs,
+$ShowDropped, $ShowCorrupted, $ShowUnknownOrigin, $ShowDirectOrigin, $ShowLinksToWhoIs,
 $ShowAuthenticatedUsers, $ShowFileSizesStats, $ShowScreenSizeStats, $ShowSMTPErrorsStats,
 $ShowEMailSenders, $ShowEMailReceivers, $ShowWormsStats, $ShowClusterStats,
 $IncludeInternalLinksInOriginSection,
@@ -5545,7 +5545,7 @@ my @AllowedCLIArgs=('migrate','config',
 'staticlinks','staticlinksext','noloadplugin','loadplugin',
 'hostfilter','urlfilter','refererpagesfilter',
 'lang','month','year','framename','debug',
-'showsteps','showdropped','showcorrupted','showunknownorigin',
+'showsteps','showdropped','showcorrupted','showunknownorigin','showdirectorigin',
 'limitflush','confdir','updatefor',
 'hostfilter','hostfilterex','urlfilter','urlfilterex','refererpagesfilter','refererpagesfilterex',
 'pluginmode','filterrawlog');
@@ -5652,7 +5652,7 @@ else {								# Run from command line
 	if ($QueryString =~ /showcorrupted/i) 				{ $ShowCorrupted=1; $QueryString=~s/showcorrupted[^&]*//i; }
 	if ($QueryString =~ /showdropped/i)					{ $ShowDropped=1; $QueryString=~s/showdropped[^&]*//i; }
 	if ($QueryString =~ /showunknownorigin/i)			{ $ShowUnknownOrigin=1; $QueryString=~s/showunknownorigin[^&]*//i; }
-
+	if ($QueryString =~ /showdirectorigin/i)			{ $ShowDirectOrigin=1; $QueryString=~s/showdirectorigin[^&]*//i; }
 }
 if ($QueryString =~ /(^|&|&amp;)staticlinks/i) 			{ $StaticLinks=".$SiteConfig"; }
 if ($QueryString =~ /(^|&|&amp;)staticlinks=([^&]+)/i) 	{ $StaticLinks=".$2"; }		# When ran from awstatsbuildstaticpages.pl
@@ -5747,6 +5747,8 @@ if ((! $ENV{'GATEWAY_INTERFACE'}) && (! $SiteConfig)) {
 	print "  -showsteps     to add benchmark information every $NBOFLINESFORBENCHMARK lines processed\n";
 	print "  -showcorrupted to add output for each corrupted lines found, with reason\n";
 	print "  -showdropped   to add output for each dropped lines found, with reason\n";
+	print "  -showunknownorigin  to output referer when it can't be parsed\n";
+	print "  -showdirectorigin   to output log line when origin is a direct access\n";
 	print "  -updatefor=n   to stop the update process after parsing n lines\n";
 	print "  -LogFile=x     to change log to analyze whatever is 'LogFile' in config file\n";
 	print "  Be care to process log files in chronological order when updating statistics.\n";
@@ -6693,7 +6695,7 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
         }
     				
 		# Analyze: Status code (=> countedtraffic=3 if error)
-		#--------------------------------------------------
+		#----------------------------------------------------
 		if (! $countedtraffic) {
 			if ($LogType eq 'W' || $LogType eq 'S') {		# HTTP record or Stream record
 				if ($ValidHTTPCodes{$field[$pos_code]}) {	# Code is valid
@@ -6740,32 +6742,50 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 		}
 		
 		# Analyze: Robot from robot database (=> countedtraffic=4 if robot)
-		#----------------------------------------------------------------
+		#------------------------------------------------------------------
 		if (! $countedtraffic) {
 			if ($pos_agent >= 0) {
 				if ($DecodeUA) { $field[$pos_agent] =~ s/%20/_/g; }	# This is to support servers (like Roxen) that writes user agent with %20 in it
 				$UserAgent=$field[$pos_agent];
-	
+				if ($UserAgent && $UserAgent eq '-') { $UserAgent=''; }
+				
 				if ($LevelForRobotsDetection) {
-	
-					my $uarobot=$TmpRobot{$UserAgent};
-					if (! $uarobot) {
-						#study $UserAgent;		Does not increase speed
-						foreach (@RobotsSearchIDOrder) {
-							if ($UserAgent =~ /$_/) {
-								my $bot=&UnCompileRegex($_);
-								$TmpRobot{$UserAgent}=$uarobot="$bot";	# Last time, we won't search if robot or not. We know it is.
-								if ($Debug) { debug("  UserAgent '$UserAgent' is added to TmpRobot with value '$bot'",2); }
-								last;
+					
+					if ($UserAgent)
+					{
+						my $uarobot=$TmpRobot{$UserAgent};
+						if (! $uarobot) {
+							#study $UserAgent;		Does not increase speed
+							foreach (@RobotsSearchIDOrder) {
+								if ($UserAgent =~ /$_/) {
+									my $bot=&UnCompileRegex($_);
+									$TmpRobot{$UserAgent}=$uarobot="$bot";	# Last time, we won't search if robot or not. We know it is.
+									if ($Debug) { debug("  UserAgent '$UserAgent' is added to TmpRobot with value '$bot'",2); }
+									last;
+								}
+							}
+							if (! $uarobot) {								# Last time, we won't search if robot or not. We know it's not.
+								$TmpRobot{$UserAgent}=$uarobot='-';
 							}
 						}
-						if (! $uarobot) {								# Last time, we won't search if robot or not. We know it's not.
-							$TmpRobot{$UserAgent}=$uarobot='-';
+						if ($uarobot ne '-') {
+							# If robot, we stop here
+							if ($Debug) { debug("  UserAgent '$UserAgent' contains robot ID '$uarobot'",2); }
+							$_robot_h{$uarobot}++;
+							$_robot_k{$uarobot}+=int($field[$pos_size]);
+							$_robot_l{$uarobot}=$timerecord;
+							if ($urlwithnoquery =~ /$regrobot/o) { $_robot_r{$uarobot}++; }
+							$countedtraffic=4;
+							if ($PageBool) { $_time_nv_p[$hourrecord]++; }
+							$_time_nv_h[$hourrecord]++;
+							$_time_nv_k[$hourrecord]+=int($field[$pos_size]);
 						}
 					}
-					if ($uarobot ne '-') {
-						# If robot, we stop here
-						if ($Debug) { debug("  UserAgent '$UserAgent' contains robot ID '$uarobot'",2); }
+					else
+					{
+						my $uarobot='no_user_agent';
+						# It's a robot or at least a bad browser, we stop here
+						if ($Debug) { debug("  UserAgent not defined so it should be a robot, saved as robot 'no_user_agent'",2); }
 						$_robot_h{$uarobot}++;
 						$_robot_k{$uarobot}+=int($field[$pos_size]);
 						$_robot_l{$uarobot}=$timerecord;
@@ -6794,7 +6814,7 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 				$_time_nv_k[$hourrecord]+=int($field[$pos_size]);
 			}
 		}
-		
+
 		# Analyze: File type - Compression
 		#---------------------------------
 		if (! $countedtraffic) {
@@ -7071,7 +7091,7 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 	
 			# Analyze: Browser - OS
 			#----------------------
-			if ($pos_agent >= 0 && $UserAgent) {
+			if ($pos_agent >= 0) {
 	
 				if ($LevelForBrowsersDetection) {
 	
@@ -7186,7 +7206,10 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 				# Direct ?
 				if ($field[$pos_referer] eq '-' || $field[$pos_referer] eq 'bookmarks') {	# "bookmarks" is sent by Netscape, '-' by all others browsers
 					# Direct access
-					if ($PageBool) { $_from_p[0]++; }
+					if ($PageBool) {
+						if ($ShowDirectOrigin) { print "Direct access for line $line\n"; }
+						$_from_p[0]++;
+					}
 					$_from_h[0]++;
 					$found=1;
 				}
