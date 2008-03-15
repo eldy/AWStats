@@ -4777,7 +4777,7 @@ sub SectionReadHistory_geoip_city_maxmind {
 		}
 		$_=<HISTORY>;
 		chomp $_; s/\r//;
-		@field=split(/\s+/,($xmlold?CleanFromTags($_):$_));
+		@field=split(/\s+/,($xmlold?XMLDecodeFromHisto($_):$_));
 		$countlines++;
 	}
 	until ($field[0] eq 'END_PLUGIN_geoip_city_maxmind' || $field[0] eq "${xmleb}END_PLUGIN_geoip_city_maxmind" || ! $_);
