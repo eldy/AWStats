@@ -9703,7 +9703,7 @@ if (scalar keys %HTMLOutput) {
 					my $hrs=($ix>=12?$ix-12:$ix);
 					my $hre=($ix>=12?$ix-11:$ix+1);
 					my $apm=($ix>=12?"pm":"am");
-					print "<td><img src=\"$DirIcons\/clock\/hr$hre.png\" width=\"10\" alt=\"$hrs:00 - $hre:00 $apm\" /></td>\n";
+					print "<td><img src=\"$DirIcons\/clock\/hr$hre.png\" width=\"12\" alt=\"$hrs:00 - $hre:00 $apm\" /></td>\n";
 				}
 				print "</tr>\n";
 				print "</table>\n";
