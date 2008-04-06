@@ -132,7 +132,7 @@ sub update_httpd_config
 		$_ =~ s/\s#.*$//;
 	
 		# Change line
-		if ($_ =~ /^CustomLog\s(.*)\scommon$/i)	{ $savline="CustomLog $1 combined"; }
+		if ($_ =~ /^(\s*)CustomLog\s(.*)\scommon$/i)	{ $savline="$1CustomLog $2 combined"; }
 		
 		# Write line
 		print FILETMP "$savline";	
@@ -460,8 +460,10 @@ foreach my $key (keys %ApacheConfPath) {
 	my $awstatsiconsfound=0;
 	my $awstatscgifound=0;
 	my $awstatsdirectoryfound=0;
-	while(<CONF>) {
-		if ($_ =~ /^CustomLog\s(.*)\scommon$/i)	{
+	while(<CONF>)
+	{
+		if ($_ =~ /^\s*CustomLog\s(.*)\scommon$/i)
+		{
 			print "Warning: You Apache config file contains directives to write 'common' log files\n";
 			print "This means that some features can't work (os, browsers and keywords detection).\n";
 			print "Do you want me to setup Apache to write 'combined' log files [y/N] ? ";
@@ -475,7 +477,7 @@ foreach my $key (keys %ApacheConfPath) {
 				goto READ;
 			}
 		}
-		if ($_ =~ /^CustomLog\s(.*)\scombined$/i)	{ $LogFormat{$key}=1; }
+		if ($_ =~ /^\s*CustomLog\s(.*)\scombined$/i)	{ $LogFormat{$key}=1; }
 		if ($_ =~ /Alias \/awstatsclasses/) 		{ $awstatsclassesfound=1; }
 		if ($_ =~ /Alias \/awstatscss/) 			{ $awstatscssfound=1; }
 		if ($_ =~ /Alias \/awstatsicons/) 			{ $awstatsiconsfound=1; }
@@ -485,43 +487,42 @@ foreach my $key (keys %ApacheConfPath) {
     }	
 	close CONF;
 
-	if ($awstatsclassesfound && $awstatscssfound && $awstatsiconsfound && $awstatscgifound && $awstatsdirectoryfound) {
+	if ($awstatsclassesfound && $awstatscssfound && $awstatsiconsfound && $awstatscgifound && $awstatsdirectoryfound)
+	{
 		$UseAlias=1;
 		if ($commonchangedtocombined) { print "  Common log files changed to combined.\n"; }
-		print "  AWStats directives already present.\n";
+		print "  All AWStats directives are already present.\n";
 		next;
-	} elsif (!$commonchangedtocombined) {
-        next;
-    }
+	}
 
 	# Add awstats directives
 	open(CONF,">>$key") || error("Failed to open config file '$key' for adding AWStats directives");
-		binmode CONF;
-		if (! $awstatsclassesfound || ! $awstatscssfound || ! $awstatsiconsfound || ! $awstatscgifound) {
-			print CONF "$CR\n";
-			print CONF "#$CR\n";
-			print CONF "# Directives to allow use of AWStats as a CGI$CR\n";
-			print CONF "#$CR\n";
-		}
-		if (! $awstatsclassesfound) {
-			print "  Add 'Alias \/awstatsclasses \"$AWSTATS_CLASSES_PATH\/\"'\n";
-			print CONF "Alias \/awstatsclasses \"$AWSTATS_CLASSES_PATH\/\"$CR\n";
-		}
-		if (! $awstatscssfound) {
-			print "  Add 'Alias \/awstatscss \"$AWSTATS_CSS_PATH\/\"'\n";
-			print CONF "Alias \/awstatscss \"$AWSTATS_CSS_PATH\/\"$CR\n";
-		}
-		if (! $awstatsiconsfound) {
-			print "  Add 'Alias \/awstatsicons \"$AWSTATS_ICON_PATH\/\"'\n";
-			print CONF "Alias \/awstatsicons \"$AWSTATS_ICON_PATH\/\"$CR\n";
-		}
-		if (! $awstatscgifound) {
-			print "  Add 'ScriptAlias \/awstats\/ \"$AWSTATS_CGI_PATH\/\"'\n";
-			print CONF "ScriptAlias \/awstats\/ \"$AWSTATS_CGI_PATH\/\"$CR\n";
-		}
-		if (! $awstatsdirectoryfound) {
-			print "  Add '<Directory>' directive\n";
-			print CONF "$CR\n";
+	binmode CONF;
+	if (! $awstatsclassesfound || ! $awstatscssfound || ! $awstatsiconsfound || ! $awstatscgifound) {
+		print CONF "$CR\n";
+		print CONF "#$CR\n";
+		print CONF "# Directives to allow use of AWStats as a CGI$CR\n";
+		print CONF "#$CR\n";
+	}
+	if (! $awstatsclassesfound) {
+		print "  Add 'Alias \/awstatsclasses \"$AWSTATS_CLASSES_PATH\/\"'\n";
+		print CONF "Alias \/awstatsclasses \"$AWSTATS_CLASSES_PATH\/\"$CR\n";
+	}
+	if (! $awstatscssfound) {
+		print "  Add 'Alias \/awstatscss \"$AWSTATS_CSS_PATH\/\"'\n";
+		print CONF "Alias \/awstatscss \"$AWSTATS_CSS_PATH\/\"$CR\n";
+	}
+	if (! $awstatsiconsfound) {
+		print "  Add 'Alias \/awstatsicons \"$AWSTATS_ICON_PATH\/\"'\n";
+		print CONF "Alias \/awstatsicons \"$AWSTATS_ICON_PATH\/\"$CR\n";
+	}
+	if (! $awstatscgifound) {
+		print "  Add 'ScriptAlias \/awstats\/ \"$AWSTATS_CGI_PATH\/\"'\n";
+		print CONF "ScriptAlias \/awstats\/ \"$AWSTATS_CGI_PATH\/\"$CR\n";
+	}
+	if (! $awstatsdirectoryfound) {
+		print "  Add '<Directory>' directive\n";
+		print CONF "$CR\n";
 print CONF <<EOF;
 #
 # This is to permit URL access to scripts/files in AWStats directory.
@@ -534,7 +535,7 @@ print CONF <<EOF;
 </Directory>
 
 EOF
-		}
+	}
 	close CONF;
 	$UseAlias=1;
 	$WebServerChanged=1;
