@@ -70,7 +70,7 @@ $RunAsCli = $UpdateFor = $HeaderHTTPSent = $HeaderHTMLSent = 0;
 $LastLine = $LastLineNumber = $LastLineOffset = $LastLineChecksum = $LastUpdate = 0;
 $lowerval = 0;
 $PluginMode = '';
-$MetaRobot = 1;
+$MetaRobot = 0;
 $TotalUnique = $TotalVisits = $TotalHostsKnown = $TotalHostsUnknown = 0;
 $TotalPages = $TotalHits = $TotalBytes = 0;
 $TotalNotViewedPages = $TotalNotViewedHits = $TotalNotViewedBytes = 0;
