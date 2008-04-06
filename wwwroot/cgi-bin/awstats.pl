@@ -50,6 +50,7 @@ $RunAsCli $UpdateFor $HeaderHTTPSent $HeaderHTMLSent
 $LastLine $LastLineNumber $LastLineOffset $LastLineChecksum $LastUpdate
 $lowerval
 $PluginMode
+$MetaRobot
 $TotalUnique $TotalVisits $TotalHostsKnown $TotalHostsUnknown
 $TotalPages $TotalHits $TotalBytes
 $TotalNotViewedPages $TotalNotViewedHits $TotalNotViewedBytes
@@ -69,6 +70,7 @@ $RunAsCli = $UpdateFor = $HeaderHTTPSent = $HeaderHTMLSent = 0;
 $LastLine = $LastLineNumber = $LastLineOffset = $LastLineChecksum = $LastUpdate = 0;
 $lowerval = 0;
 $PluginMode = '';
+$MetaRobot = 1;
 $TotalUnique = $TotalVisits = $TotalHostsKnown = $TotalHostsUnknown = 0;
 $TotalPages = $TotalHits = $TotalBytes = 0;
 $TotalNotViewedPages = $TotalNotViewedHits = $TotalNotViewedBytes = 0;
@@ -573,7 +575,6 @@ sub http_head {
 sub html_head {
 	my $dir=$PageDir?'right':'left';
 	if (scalar keys %HTMLOutput || $PluginMode) {
-		my $MetaRobot=0;	# meta robots
         my $periodtitle=" ($YearRequired";
         $periodtitle.=($MonthRequired ne 'all'?"-$MonthRequired":"");
         $periodtitle.=($DayRequired ne ''?"-$DayRequired":"");
@@ -600,7 +601,7 @@ sub html_head {
         print "<meta name=\"generator\" content=\"AWStats $VERSION from config file awstats.$SiteConfig.conf (http://awstats.sourceforge.net)\"$endtag\n";
         
 		# Affiche tag meta robots
-		if ($MetaRobot) { print "<meta name=\"robots\" content=\"".($FrameName eq 'mainleft'?'no':'')."index,nofollow\"$endtag\n"; }
+		if ($MetaRobot) { print "<meta name=\"robots\" content=\"".($FrameName eq 'mainleft'?'no':'')."index,".($FrameName eq 'mainleft' || $FrameName eq 'index'?'':'no')."follow\"$endtag\n"; }
 		else { print "<meta name=\"robots\" content=\"noindex,nofollow\"$endtag\n"; }
 
 		# Affiche tag meta content-type
