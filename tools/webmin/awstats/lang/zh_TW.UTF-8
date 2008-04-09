@@ -1,0 +1,117 @@
+all_gb=GB
+all_mb=MB
+all_kb=KB
+all_b=Bytes
+
+index_title=AWStats 記錄檔分析器
+index_version=AWStats 版本 $1
+index_eawstats=記錄檔分析指令 $1 在您的系統中找不到. 也許 AWStats 尚未安裝, 或者您的 <a href='$2'>模組組態</a> 有問題.
+index_econfdir=AWStats 設定目錄 $1 在您的系統中找不到. 也許 AWStats 尚未安裝, 或者您的 <a href='$2'>模組組態</a> 有問題.
+index_econf=AWStats 設定檔範本 $1 在您的系統中找不到. 也許 AWStats 尚未安裝, 或者您的 <a href='$2'>模組組態</a> 有問題.
+index_cgi=<a href='$1'>CGI 路徑沒有設定</a>
+index_add=新增一個分析設定檔.
+index_path=設定檔
+index_type=類型
+index_size=大小
+index_create=建立/修改日期
+index_databasesize=資料庫檔案大小
+index_noconfig=找不到設定檔或已分析檔.
+index_edit=編輯/刪除設定
+index_del=刪除設定
+index_scheduled=已排程更新
+index_sched2=排程
+index_now=現在
+index_update=更新狀態
+index_update2=立即更新
+index_view=檢視狀態
+index_view2=檢視
+index_return=設定檔列表
+index_eversion=AWStats 指令 $1 在您的系統中的版本是 $2, 但是這個模組僅支援版本 $3 或以上版本.
+index_egetversion=AWStats 版本取得失敗. 指令 $1 傳回 : $2.<br>也許您的 <a href='$3'>模組組態</a> 有問題.
+index_advanced1=檢視 OPTIONAL SETUP SECTION 下的選項 
+index_advanced2=檢視 OPTIONAL ACCURACY SETUP SECTION 下的選項 
+index_advanced3=檢視 OPTIONAL APPEARANCE SETUP SECTION 下的選項 
+index_advanced4=檢視 OPTIONAL PLUGINS SETUP SECTION 下的選項 
+index_advanced5=檢視 OPTIONAL EXTRA SETUP SECTION 下的選項 
+index_hideadvanced=隱藏非必要選項
+index_nodirallowed=您的使用者 $1 不允許存取 AWStats 設定檔.
+index_allowed=您的帳號 $1 允許您檢視和修改紀錄檔到 (或者是連結到)
+index_changeallowed=在 AWStats 設定檔中可存取的路徑，您可在 webmin 內關於 Webmin 使用者的相關權限中設定 (選單 $1 然後選擇 $2)
+index_viewall=檢視全部有效的設定檔
+
+edit_title1=新增設定檔
+edit_title2=編輯設定檔
+edit_header=設定檔 $1 輔助編輯器
+edit_headernew=設定檔產生助手
+edit_file=檔案內容
+edit_add=要新增的設定檔名
+edit_create_by_copy=從已有的設定檔複製到另外一個新的設定檔
+edit_create_from_scratch=建立一個新的設定檔如以下參數和設定
+edit_config_to_copy=要複製的設定檔名稱
+edit_user=執行 AWStats 的使用者
+edit_ecannot=您不可以編輯這個設定檔
+edit_efilecannot=設定檔名 '$1' 不在您可以存取的目錄中
+
+save_err=產生設定檔失敗
+save_efile=設定檔名沒有輸入
+save_fileexists=設定檔已存在
+save_edir=在您的 Webmin 權限控制中不允許 '$1' 目錄寫入您的設定檔.
+save_ecannot=您僅可以檢視或產生報表在 $1 之下
+save_errLogFile=LogFile 參數設定有問題. 記錄檔 $1 不存在或無法讀取.
+save_errLogFormat=LogFormat 參數設定有問題. 參數沒有定義.
+save_errSiteDomain=SiteDomain 參數設定有問題. 參數沒有定義.
+save_errDirData=DirData 參數設定有問題. 參數沒有定義或目錄不存在.
+save_dirnotexists=路徑不存在
+
+update_title=更新狀態
+update_ecannot=您不可以更新狀態
+update_run=透過指令執行更新作業
+update_finished=更新作業完成
+update_wait=請稍候
+
+schedule_title=排程狀態更新
+schedule_ecannot=您無法更新或排程更新
+
+log_create_log=建立 AWStats 設定檔 $1
+log_modify_log=修改 AWStats 設定檔 $1
+log_delete_log=刪除 AWStats 設定檔 $1
+log_generate_log=更新 AWStats 狀態給 $1
+
+acl_view=已存在的設定檔可以檢視報表?
+acl_global=可以編輯 awstats 設定檔?
+acl_add=可以新增和刪除設定檔?
+acl_update=目前已存在的設定檔可以變更狀態?
+acl_user=執行 AWStats 為 Unix 用戶
+acl_this=目前 webmin 用戶
+acl_any=任何用戶
+acl_dir=僅允許檢視報表和編輯設定在 (目錄路徑，不可為連結)
+
+help_title=說明頁面
+help_subtitle=<b>設定檔參數說明 $1</b>
+help_subtitleplugin=<b>外掛套件說明 $1</b>
+help_notfound=參數在您的範本檔 $1 內沒有找到.<br>也許您的 AWStats 版本不支援, 所以沒有辦法提供相關說明協助.
+help_help=說明
+help_starrequired=預設值並沒有任何設定，且該選項必須設定參數. 不能是空白.
+
+viewall_title=檢視全部設定檔
+viewall_notallowed=您沒有權限看這個狀態
+viewall_allowed=以下資料夾中，找到使用者 $1 可存取的設定檔
+viewall_period=區間
+viewall_u=唯一訪客數
+viewall_v=訪客數
+viewall_p=頁面
+viewall_h=點擊
+viewall_k=頻寬
+
+month01=一月
+month02=二月
+month03=三月
+month04=四月
+month05=五月
+month06=六月
+month07=七月
+month08=八月
+month09=九月
+month10=十月
+month11=十一月
+month12=十二月
