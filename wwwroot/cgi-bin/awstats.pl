@@ -7733,7 +7733,9 @@ if (scalar keys %HTMLOutput) {
 	# HTMLHeadSection
 	if ($FrameName ne 'index' && $FrameName ne 'mainleft') {
 		print "<a name=\"top\">&nbsp;</a>\n\n";
-		print "$HTMLHeadSection\n";
+		my $newhead=$HTMLHeadSection;
+		$newhead =~ s/\\n/\n/g;
+		print "$newhead\n";
 		print "\n";
 	}
 
