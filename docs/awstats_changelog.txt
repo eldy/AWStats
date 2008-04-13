@@ -7,12 +7,17 @@ $Revision$ - $Author$ - $Date$
 
 New features/improvements:
 - Added OnlyUsers option.
-- Can show a full list for extrasection.
 - Can track RPC request.
+- HTMLHeadSection can accept \n in string.
+- Add option MetaRobot.
+- Increase seriously bot detection.
+- Better detection of windows OS.
+- Add condition HOSTINLOG in extra sections.
+- Can show a full list for extrasection.
 
 Fixes:
-- Fixed pb in xml output for history files
-- Fixed following bugs:
+- Fixed pb in xml output for history files.
+- Fixed a bug in awstats_configure.pl script.
 
 Other/Documentation:
 - Updated some language files.
