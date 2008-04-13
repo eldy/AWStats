@@ -1,5 +1,5 @@
 ***** Actions to do to release *****
-- Check all files are commited
+- Check all files are commited.
 - Update file README.txt
 - Update version number in doc files
 - Update version number in makepack files
@@ -10,7 +10,8 @@
 
 - makepack sur webmin
 - makepack sur awstats (If on linux copy awstats_logo1.gif into $RPMDIR/SOURCES)
-- Move build files into files
+- Check content of built packages.
+- Move build files into "files" directory
 - Update web site page index.php
 - Upload files and web site on web server
 - Upload files on sourceforge
