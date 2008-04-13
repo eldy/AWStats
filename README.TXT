@@ -14,7 +14,7 @@ server log files (and even ftp servers or mail logs) on all Operating Systems.
 License: GNU GPL (GNU General Public License. See LICENSE file),
          OSI Certified Open Source Software license.
 Version: 6.8
-Release date: February 2008
+Release date: April 2008
 Platforms: All (Linux, NT, BSD, Solaris and other *NIX's, BeOS, OS/2...)
 Author: Laurent Destailleur <eldy@users.sourceforge.net>
 AWStats official web site and latest version: http://awstats.sourceforge.net
