@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <PADGEN_PML>
-	<AppVerInfo>PADGen 3.0.1.35</AppVerInfo>
+	<AppVerInfo>PADGen 3.0.1.37</AppVerInfo>
 	<CompanyName />
 	<Program_Info>
 		<Program_Name>AWStats</Program_Name>
 		<Program_Version>6.8</Program_Version>
-		<Program_Release_Month>12</Program_Release_Month>
-		<Program_Release_Day>01</Program_Release_Day>
-		<Program_Release_Year>2007</Program_Release_Year>
+		<Program_Release_Month>04</Program_Release_Month>
+		<Program_Release_Day>13</Program_Release_Day>
+		<Program_Release_Year>2008</Program_Release_Year>
 		<Program_Cost_Dollars />
 		<Program_Cost_Other_Code />
 		<Program_Cost_Other />
 		<Program_Type>Freeware</Program_Type>
 		<Program_Release_Status>Minor Update</Program_Release_Status>
 		<Program_Install_Support>No Install Support</Program_Install_Support>
-		<Program_OS_Support>Windows2000,WinXP,Windows2003,Windows Vista Starter,Windows Vista Home Basic,Windows Vista Home Premium,Windows Vista Business,Windows Vista Enterprise,Windows Vista Ultimate,Windows Vista Home Basic x64,Windows Vista Home Premium x64,Windows Vista Business x64,Windows Vista Enterprise x64,Windows Vista Ultimate x64,Unix,Linux,Linux Open Source,MS-DOS,OS/2,OS/2 Warp,OS/2 Warp 4,Mac PPC,Mac OS X,Mac Other,OpenVMS</Program_OS_Support>
+		<Program_OS_Support>Windows2000,WinXP,Windows2003,Windows Vista Starter,Windows Vista Home Basic,Windows Vista Home Premium,Windows Vista Business,Windows Vista Enterprise,Windows Vista Ultimate,Windows Vista Home Basic x64,Windows Vista Home Premium x64,Windows Vista Business x64,Windows Vista Enterprise x64,Windows Vista Ultimate x64,Unix,Linux,Linux GPL,Linux Open Source,MS-DOS,OS/2,OS/2 Warp,OS/2 Warp 4,Mac PPC,Mac OS X,Mac Other,OpenVMS</Program_OS_Support>
 		<Program_Language>English,Arabic,Armenian,Bulgarian,Catalan,Chinese,ChineseSimplified,ChineseTraditional,Croatian,Czech,Danish,Dutch,Estonian,Finnish,French,Galician,German,Greek,Hebrew,Hungarian,Icelandic,Indonesian,Italian,Japanese,Korean,Latvian,Norwegian,Other,Polish,Portuguese,Romanian,Russian,Serbian,Slovak,Slovenian,Spanish,Swedish,Thai,Turkish,Ukrainian,Welsh</Program_Language>
 		<Program_Change_Info />
 		<Program_Specific_Category>Development Tools</Program_Specific_Category>
@@ -76,7 +76,7 @@ Ce programme supporte de plus les serveurs virtuels, des plugins et de nombreuse
 		</Application_URLs>
 		<Download_URLs>
 			<Primary_Download_URL>http://awstats.sourceforge.net/files/awstats.zip</Primary_Download_URL>
-			<Secondary_Download_URL>http://downloads.sourceforge.net/awstats/awstats-6.7.tar.gz</Secondary_Download_URL>
+			<Secondary_Download_URL>http://downloads.sourceforge.net/awstats/awstats-6.8.tar.gz</Secondary_Download_URL>
 			<Additional_Download_URL_1 />
 			<Additional_Download_URL_2 />
 		</Download_URLs>
@@ -92,7 +92,7 @@ Ce programme supporte de plus les serveurs virtuels, des plugins et de nombreuse
 	</ASP>
 	<Affiliates>
 		<Affiliates_FORM>Y</Affiliates_FORM>
-		<Affiliates_VERSION>1.2</Affiliates_VERSION>
+		<Affiliates_VERSION>1.4</Affiliates_VERSION>
 		<Affiliates_URL>http://www.asp-shareware.org/pad/extensions/Affiliates.htm</Affiliates_URL>
 		<Affiliates_Information_Page />
 		<Affiliates_Avangate_Order_Page />
@@ -103,6 +103,10 @@ Ce programme supporte de plus les serveurs virtuels, des plugins et de nombreuse
 		<Affiliates_BMTMicro_Vendor_ID />
 		<Affiliates_BMTMicro_Product_ID />
 		<Affiliates_BMTMicro_Maximum_Commission_Rate />
+		<Affiliates_Cleverbridge_Order_Page />
+		<Affiliates_Cleverbridge_Vendor_ID />
+		<Affiliates_Cleverbridge_Product_ID />
+		<Affiliates_Cleverbridge_Maximum_Commission_Rate />
 		<Affiliates_clixGalore_Order_Page />
 		<Affiliates_clixGalore_Vendor_ID />
 		<Affiliates_clixGalore_Product_ID />
@@ -139,6 +143,10 @@ Ce programme supporte de plus les serveurs virtuels, des plugins et de nombreuse
 		<Affiliates_NorthStarSol_Vendor_ID />
 		<Affiliates_NorthStarSol_Product_ID />
 		<Affiliates_NorthStarSol_Maximum_Commission_Rate />
+		<Affiliates_OneNetworkDirect_Order_Page />
+		<Affiliates_OneNetworkDirect_Vendor_ID />
+		<Affiliates_OneNetworkDirect_Product_ID />
+		<Affiliates_OneNetworkDirect_Maximum_Commission_Rate />
 		<Affiliates_Order1_Order_Page />
 		<Affiliates_Order1_Vendor_ID />
 		<Affiliates_Order1_Product_ID />
