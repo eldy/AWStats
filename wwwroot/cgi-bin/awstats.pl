@@ -609,9 +609,10 @@ sub html_head {
 		else { print "<meta http-equiv=\"content-type\" content=\"text/html; charset=".($PageCode?$PageCode:"iso-8859-1")."\"$endtag\n"; }
 
 		if ($Expires)  { print "<meta http-equiv=\"expires\" content=\"".(gmtime($starttime+$Expires))."\"$endtag\n"; }
-		print "<meta http-equiv=\"description\" content=\"".ucfirst($PROG)." - Advanced Web Statistics for $SiteDomain$periodtitle\"$endtag\n";
+		my @k = keys %HTMLOutput;	# This is to have a unique title and description page
+		print "<meta http-equiv=\"description\" content=\"".ucfirst($PROG)." - Advanced Web Statistics for $SiteDomain$periodtitle".($k[0]?" - ".$k[0]:"")."\"$endtag\n";
 		if ($MetaRobot && $FrameName ne 'mainleft') { print "<meta http-equiv=\"keywords\" content=\"$SiteDomain, free, advanced, realtime, web, server, logfile, log, analyzer, analysis, statistics, stats, perl, analyse, performance, hits, visits\"$endtag\n"; }
-		print "<title>$Message[7] $SiteDomain$periodtitle</title>\n";
+		print "<title>$Message[7] $SiteDomain$periodtitle".($k[0]?" - ".$k[0]:"")."</title>\n";
 		if ($FrameName ne 'index')
 		{
 
