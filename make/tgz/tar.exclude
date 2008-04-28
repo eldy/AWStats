@@ -6,3 +6,4 @@ awstats-*.exe
 awstats-*.rpm
 awstats-*.deb
 awstats-*.zip
+.cvsignore
