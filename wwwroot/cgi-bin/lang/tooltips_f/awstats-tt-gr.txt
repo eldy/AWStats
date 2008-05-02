@@ -1,0 +1,33 @@
+
+<div class="CTooltip" id="tt1">
+</div>
+<div class="CTooltip" id="tt2">
+Αριθμός από διαφορετικούς πελάτες (<b>IP διευθύνσεις</b>) που χρησιμοποιήθηκαν για σύνδεση.
+</div>
+<div class="CTooltip" id="tt3">
+</div>
+<div class="CTooltip" id="tt4">
+</div>
+<div class="CTooltip" id="tt5">
+Αυτό είναι το συνολικό μέγεθος δεδομένων που μεταφέρθηκαν μέσω ftp.<br />
+Οι μονάδες είναι σε KB, MB ή GB (KiloBytes, MegaBytes ή GigaBytes)
+</div>
+<div class="CTooltip" id="tt13">
+</div>
+<div class="CTooltip" id="tt14">
+</div>
+<div class="CTooltip" id="tt15">
+</div>
+<div class="CTooltip" id="tt16">
+</div>
+<div class="CTooltip" id="tt17">
+Όλα τα στατιστικά που συσχετίζονται με χρόνο είναι βάση της ώρας του διακομιστή.<br />
+</div>
+<div class="CTooltip" id="tt18">
+Εδώ, τα δεδομένα που αναφέρονται είναι: <b>μέσος όρος τιμών</b> (έχουν υπολογιστεί από όλα τα δεδομένα μεταξύ του πρώτου και του τελευταίου e-mail στο εύρος της ανάλυσης)
+</div>
+<div class="CTooltip" id="tt19">
+Εδώ, τα δεδομένα που αναφέρονται είναι: <b>συγκεντρωτικά σύνολα</b> (έχουν υπολογιστεί από όλα τα δεδομένα μεταξύ του πρώτου και του τελευταίου e-mail στο εύρος της ανάλυσης)
+</div>
+<div class="CTooltip" id="tt20">
+</div>
