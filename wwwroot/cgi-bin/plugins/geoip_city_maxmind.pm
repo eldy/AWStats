@@ -1156,7 +1156,7 @@ my %regall=(
 "ET_52","Sumale",
 "ET_53","Tigray",
 "ET_54","YeDebub Biheroch Bihereseboch na Hizboch",
-"FI_01","Åland",
+"FI_01","ï¿½land",
 "FI_06","Lapland",
 "FI_08","Oulu",
 "FI_13","Southern Finland",
@@ -2123,7 +2123,7 @@ my %regall=(
 "KZ_01","Almaty",
 "KZ_02","Almaty City",
 "KZ_03","Aqmola",
-"KZ_04","Aqtöbe",
+"KZ_04","Aqtï¿½be",
 "KZ_05","Astana",
 "KZ_06","Atyrau",
 "KZ_07","West Kazakhstan",
@@ -2239,26 +2239,26 @@ my %regall=(
 "LV_02","Aluksnes",
 "LV_03","Balvu",
 "LV_04","Bauskas",
-"LV_05","Césu",
+"LV_05","Cï¿½su",
 "LV_06","Daugavpils",
 "LV_07","Daugavpils",
 "LV_08","Dobeles",
 "LV_09","Gulbenes",
-"LV_10","Jékabpils",
+"LV_10","Jï¿½kabpils",
 "LV_11","Jelgava",
 "LV_12","Jelgavas",
 "LV_13","Jurmala",
-"LV_14","Kráslavas",
+"LV_14","Krï¿½slavas",
 "LV_15","Kuldigas",
-"LV_16","Liepája",
-"LV_17","Liepájas",
+"LV_16","Liepï¿½ja",
+"LV_17","Liepï¿½jas",
 "LV_18","Limbazu",
 "LV_19","Ludzas",
 "LV_20","Madonas",
 "LV_21","Ogres",
 "LV_22","Preilu",
-"LV_23","Rézekne",
-"LV_24","Rézeknes",
+"LV_23","Rï¿½zekne",
+"LV_24","Rï¿½zeknes",
 "LV_25","Riga",
 "LV_26","Rigas",
 "LV_27","Saldus",
@@ -4453,9 +4453,9 @@ sub GetCountryCodeByAddr_geoip_city_maxmind {
 	        $country=$record[0] if @record;
 	    	$res=lc($country) || 'unknown';
 			$TmpDomainLookup{$param}=$res;
-	    	if ($Debug) { debug("  Plugin geoip_region_maxmind: GetCountryCodeByAddr for $param: [$res]",5); }
+	    	if ($Debug) { debug("  Plugin geoip_city_maxmind: GetCountryCodeByAddr for $param: [$res]",5); }
 		}
-		elsif ($Debug) { debug("  Plugin geoip_region_maxmind: GetCountryCodeByAddr for $param: Already resolved to [$res]",5); }
+		elsif ($Debug) { debug("  Plugin geoip_city_maxmind: GetCountryCodeByAddr for $param: Already resolved to [$res]",5); }
 	}
 	else
 	{
@@ -4466,9 +4466,9 @@ sub GetCountryCodeByAddr_geoip_city_maxmind {
 	        $country=$record->country if $record;
 	    	$res=lc($country) || 'unknown';
 			$TmpDomainLookup{$param}=$res;
-	    	if ($Debug) { debug("  Plugin geoip_region_maxmind: GetCountryCodeByAddr for $param: [$res]",5); }
+	    	if ($Debug) { debug("  Plugin geoip_city_maxmind: GetCountryCodeByAddr for $param: [$res]",5); }
 		}
-		elsif ($Debug) { debug("  Plugin geoip_region_maxmind: GetCountryCodeByAddr for $param: Already resolved to [$res]",5); }
+		elsif ($Debug) { debug("  Plugin geoip_city_maxmind: GetCountryCodeByAddr for $param: Already resolved to [$res]",5); }
 	}
 	# ----->
 	return $res;
@@ -4493,9 +4493,9 @@ sub GetCountryCodeByName_geoip_city_maxmind {
 	        $country=$record[0] if @record;
 	    	$res=lc($country) || 'unknown';
 			$TmpDomainLookup{$param}=$res;
-	    	if ($Debug) { debug("  Plugin geoip_region_maxmind: GetCountryCodeByName for $param: [$res]",5); }
+	    	if ($Debug) { debug("  Plugin geoip_city_maxmind: GetCountryCodeByName for $param: [$res]",5); }
 		}
-		elsif ($Debug) { debug("  Plugin geoip_region_maxmind: GetCountryCodeByName for $param: Already resolved to [$res]",5); }
+		elsif ($Debug) { debug("  Plugin geoip_city_maxmind: GetCountryCodeByName for $param: Already resolved to [$res]",5); }
 	}
 	else
 	{
@@ -4506,9 +4506,9 @@ sub GetCountryCodeByName_geoip_city_maxmind {
 	        $country=$record->country if $record;
 	    	$res=lc($country) || 'unknown';
 			$TmpDomainLookup{$param}=$res;
-	    	if ($Debug) { debug("  Plugin geoip_region_maxmind: GetCountryCodeByName for $param: [$res]",5); }
+	    	if ($Debug) { debug("  Plugin geoip_city_maxmind: GetCountryCodeByName for $param: [$res]",5); }
 		}
-		elsif ($Debug) { debug("  Plugin geoip_region_maxmind: GetCountryCodeByName for $param: Already resolved to [$res]",5); }
+		elsif ($Debug) { debug("  Plugin geoip_city_maxmind: GetCountryCodeByName for $param: Already resolved to [$res]",5); }
 	}
 	# ----->
 	return $res;
