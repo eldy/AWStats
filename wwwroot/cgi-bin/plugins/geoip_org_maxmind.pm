@@ -73,7 +73,6 @@ sub Init_geoip_org_maxmind {
 		if ($mode eq '' || $mode eq 'GEOIP_MEMORY_CACHE')  { $mode=Geo::IP::GEOIP_MEMORY_CACHE(); }
 		else { $mode=Geo::IP::GEOIP_STANDARD(); }
 	}
-	%TmpDomainLookup=();
 	debug(" Plugin geoip_org_maxmind: GeoIP initialized type=$type mode=$mode",1);
 	if ($type eq 'geoippureperl') {
 		$geoip_org_maxmind = Geo::IP::PurePerl->open($datafile, $mode);
