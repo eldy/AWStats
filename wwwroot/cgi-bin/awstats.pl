@@ -23,7 +23,7 @@ use Socket;
 use vars qw/ $REVISION $VERSION /;
 $REVISION='$Revision$'; $REVISION =~ /\s(.*)\s/; $REVISION=$1;
 $VERSION="6.9 (build $REVISION)";
-
+ 
 # ----- Constants -----
 use vars qw/
 $DEBUGFORCED $NBOFLINESFORBENCHMARK $FRAMEWIDTH $NBOFLASTUPDATELOOKUPTOSAVE
@@ -344,7 +344,7 @@ $regdate=qr/(\d\d\d\d)(\d\d)(\d\d)(\d\d)(\d\d)(\d\d)/;
 #use Tie::Cache::LRU;
 #tie %_host_p, 'Tie::StdHash';
 #tie %TmpOS, 'Tie::Cache::LRU';
-
+ 
 # PROTOCOL CODES
 use vars qw/ %httpcodelib %ftpcodelib %smtpcodelib /;
 
