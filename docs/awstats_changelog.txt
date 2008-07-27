@@ -2,6 +2,17 @@ AWStats Changelog
 -----------------
 $Revision$ - $Author$ - $Date$
 
+***** 6.9 *****
+
+New features/improvements:
+- None
+
+Fixes:
+- Fixed broken maxmind citi and org plugins.
+
+Other/Documentation:
+- None
+
 
 ***** 6.8 *****
 
