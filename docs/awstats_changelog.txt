@@ -9,7 +9,7 @@ New features/improvements:
 
 Fixes:
 - Fixed broken maxmind citi and org plugins.
-
+- Fix: Security fix 2001151.
 Other/Documentation:
 - None
 
