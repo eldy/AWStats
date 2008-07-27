@@ -4406,6 +4406,7 @@ sub EncodeString {
 sub DecodeEncodedString {
 	my $stringtodecode=shift;
 	$stringtodecode =~ tr/\+/ /s;
+	$stringtodecode =~ s/%22//g;
 	$stringtodecode =~ s/%([A-F0-9][A-F0-9])/pack("C", hex($1))/ieg;
 	return $stringtodecode;
 }
@@ -4458,9 +4459,12 @@ sub Sanitize {
 #------------------------------------------------------------------------------
 sub CleanXSS {
 	my $stringtoclean=shift;
+	# To avoid html tags and javascript
 	$stringtoclean =~ s/</&lt;/g;
 	$stringtoclean =~ s/>/&gt;/g;
 	$stringtoclean =~ s/|//g;
+	# To avoid onload="
+	$stringtoclean =~ s/onload//g;
 	return $stringtoclean;
 }
 
