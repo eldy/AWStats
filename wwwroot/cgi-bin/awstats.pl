@@ -7496,7 +7496,7 @@ if ($UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft') {	# Updat
 					my $hosttouse=($HostResolved?$HostResolved:$Host);
  					if ($hosttouse =~ /$rowkeytypeval/) { $rowkeyval = "$1"; $rowkeyok = 1; last; }
  				}
- 				elsif ($rowkeytype eq 'VHOST') {
+				elsif ($rowkeytype eq 'VHOST') {
  					if ($field[$pos_vh] =~ /$rowkeytypeval/) { $rowkeyval = "$1"; $rowkeyok = 1; last; }
  				}
  				elsif ($rowkeytype =~ /extra(\d+)/i) {
