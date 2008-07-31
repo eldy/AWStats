@@ -199,9 +199,9 @@ Section "Uninstall"
   Delete "$INSTDIR\Uninstall.exe"
   Delete "$INSTDIR\README.TXT"
 
-  RMDir /r "$INSTDIR/docs"
-  RMDir /r "$INSTDIR/tools"
-  RMDir /r "$INSTDIR/wwwroot"
+  RMDir /r "$INSTDIR\docs"
+  RMDir /r "$INSTDIR\tools"
+  RMDir /r "$INSTDIR\wwwroot"
   RMDir "$INSTDIR"
   
 SectionEnd
