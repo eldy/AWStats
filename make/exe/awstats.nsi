@@ -197,8 +197,11 @@ Section "Uninstall"
   DeleteRegKey /ifempty HKCU "Software\${MUI_PROD}"
 
   Delete "$INSTDIR\Uninstall.exe"
+  Delete "$INSTDIR\README.TXT"
 
-  RMDir /r "$INSTDIR"
+  RMDir /r "$INSTDIR/docs"
+  RMDir /r "$INSTDIR/tools"
+  RMDir /r "$INSTDIR/wwwroot"
 
 SectionEnd
 
