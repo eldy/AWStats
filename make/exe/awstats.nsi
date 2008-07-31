@@ -202,7 +202,8 @@ Section "Uninstall"
   RMDir /r "$INSTDIR/docs"
   RMDir /r "$INSTDIR/tools"
   RMDir /r "$INSTDIR/wwwroot"
-
+  RMDir "$INSTDIR"
+  
 SectionEnd
 
 
