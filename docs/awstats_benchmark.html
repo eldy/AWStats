@@ -134,8 +134,8 @@ Swap:   522104k total,    12752k used,   509352k free,   188820k cached
 <br>
 <img src="images/star.png"><img src="images/star.png"><img src="images/star.png"><img src="images/star.png">
 - Check that <a href="awstats_config.html#DNSLookup">DNSLookup</a> is disabled in AWStats (DNSLookup should not
-be set to 1). <b>If you need a 'Country' report, you should prefer using the 'geoip' or 'geoipfree' plugin
-instead of DNS lookup</b>. Those plugins allow you to have more accurate results, faster with no network queries (With
+be set to 1). If you need a 'Country' report, you should prefer <b>using the 'geoip' plugin
+using <a href="http://www.maxmind.com/app/perl?rId=awstats">Maxmind database</a> instead of a DNS lookup</b>. Those plugins allow you to have more accurate results, faster with no network queries (With
 DNSLookup enabled, log analyze speed is decreased by 40 to 100 times, so use it only if required).
 Note that without DNS lookup and without the 'geoip' plugins, 'Country' report might work but results will be
 less accurate than the 'geoip' usage and it works only if hosts addresses in your log file are already resolved
