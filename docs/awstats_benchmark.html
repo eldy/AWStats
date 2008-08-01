@@ -20,7 +20,7 @@
 <td bgcolor=#9999cc align=center><a href="/"><img src="images/awstats_logo4.png" border=0></a></td>
 <td bgcolor=#9999cc align=center>
 <br>
-<font style="font: 16pt arial,helvetica,sans-serif" color=#EEEEFF><b>AWStats logfile analyzer 6.8 Documentation</b></font><br>
+<font style="font: 16pt arial,helvetica,sans-serif" color=#EEEEFF><b>AWStats logfile analyzer 6.9 Documentation</b></font><br>
 <br>
 </td>
 <td bgcolor=#9999cc align=center>
@@ -88,7 +88,7 @@ Take a look at the following chart to:<br>
 <tr>                                                                                 <td>1</td><td>0</td><td>0 or 1</td><td>Every 6 hours<br>Log Files are 24-96 MB<br>50000-300000 lines</td><td>16-92 MB free</td><td>15mn-60mn</td></tr>
 <tr><td>         500,000 - 2,000,000 visits/month</td><td>See next section on pb with ActiveState</td><td>0 (or 2)</td><td>0</td><td>0</td><td>Every 6 hours<br>Log Files are 96-384 MB<br>300000-1200000 lines</td><td>64-256 MB free</td><td>3mn-12mn</td></tr>
 <tr><td>       2,000,000 - 4,000,000 visits/month</td><td>See next section on pb with ActiveState</td><td>0 (or 2)</td><td>0</td><td>0</td><td>Every 6 hours<br>Log Files are 384-768 MB<br>1200000-2400000 lines</td><td>256-512 MB free</td><td>12mn-24mn</td></tr>
-<tr><td>      +4,000,000 visits/month</td><td>See next section on pb with ActiveState</td><td colspan=6>AWStats is not a good choice for such web sites. Try a tool with less features but faster like "row counter log analyzers" like <a href="http://www.analog.cx">Analog</a> (Can try also <a href="http://www.mrunix.net/webalizer/">Webalizer</a>)</td></tr>
+<tr><td>      +4,000,000 visits/month</td><td>See next section on pb with ActiveState</td><td colspan=6>AWStats is a good choice for such web sites only if you use a dedicated server with a large amount of memory. Try a tool with less features but faster like "row counter log analyzers" like <a href="http://www.analog.cx">Analog</a> if not.</td></tr>
 </table>
 * You should set <a href="awstats_config.html#DNSLookup">DNSLookup</a> parameter to 0 (or 2) if<br>
 &nbsp;&nbsp; &nbsp;&nbsp; - reverse DNS lookup is already done in your log file,<br>
