@@ -67,7 +67,9 @@ sub Init_geoip_isp_maxmind {
    	my ($mode,$datafile)=split(/\s+/,$InitParams,2);
    	if (! $datafile) { $datafile="GeoIPIsp.dat"; }
 	if ($type eq 'geoippureperl') {
-		if ($mode eq '' || $mode eq 'GEOIP_MEMORY_CACHE')  { $mode=Geo::IP::PurePerl::GEOIP_MEMORY_CACHE(); }
+		# With pureperl with always use GEOIP_STANDARD.
+		# GEOIP_MEMORY_CACHE seems to fail with ActiveState
+		if ($mode eq '' || $mode eq 'GEOIP_MEMORY_CACHE')  { $mode=Geo::IP::PurePerl::GEOIP_STANDARD(); }
 		else { $mode=Geo::IP::PurePerl::GEOIP_STANDARD(); }
 	} else {
 		if ($mode eq '' || $mode eq 'GEOIP_MEMORY_CACHE')  { $mode=Geo::IP::GEOIP_MEMORY_CACHE(); }
@@ -245,7 +247,8 @@ sub ShowInfoHost_geoip_isp_maxmind {
         	}
         	else
         	{
-        		$isp=$geoip_isp_maxmind->isp_by_addr($param) if $geoip_isp_maxmind;
+        		# Function isp_by_addr does not exits, so we use org_by_addr
+        		$isp=$geoip_isp_maxmind->org_by_addr($param) if $geoip_isp_maxmind;
         	}
         	if ($Debug) { debug("  Plugin geoip_isp_maxmind: GetIspByIp for $param: [$isp]",5); }
 		    if ($isp) {
@@ -321,7 +324,8 @@ sub SectionProcessIp_geoip_isp_maxmind {
 	}
 	else
 	{
-		$isp=$geoip_isp_maxmind->isp_by_addr($param) if $geoip_isp_maxmind;
+        # Function isp_by_addr does not exits, so we use org_by_addr
+		$isp=$geoip_isp_maxmind->org_by_addr($param) if $geoip_isp_maxmind;
 	}
 	if ($Debug) { debug("  Plugin geoip_isp_maxmind: GetIspByIp for $param: [$isp]",5); }
     if ($isp) {

@@ -8,7 +8,7 @@ New features/improvements:
 - None
 
 Fixes:
-- Fixed broken maxmind citi and org plugins.
+- Fixed broken maxmind citi, org and isp plugins.
 - Fix: Security fix 2001151.
 Other/Documentation:
 - None
