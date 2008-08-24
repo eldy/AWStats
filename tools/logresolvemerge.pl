@@ -46,7 +46,7 @@ use vars qw/
 $DIR $PROG $Extension
 $Debug $ShowSteps $AddFileNum $AddFileName
 $MaxNbOfThread $DNSLookup $DNSCache $DirCgi $DirData $DNSLookupAlreadyDone
-$NbOfLinesShowsteps $AFINET $QueueCursor
+$NbOfLinesShowsteps $AFINET $QueueCursor $StopOnFirstEof
 /;
 $DIR='';
 $PROG='';
@@ -63,6 +63,7 @@ $DirData='';
 $DNSLookupAlreadyDone=0;
 $NbOfLinesShowsteps=0;
 $AFINET='';
+$StopOnFirstEof=0;
 
 # ---------- Init arrays --------
 use vars qw/
@@ -259,6 +260,7 @@ for (0..@ARGV-1) {
 		elsif ($ARGV[$_] =~ /showsteps/i) { $ShowSteps=1; }
 		elsif ($ARGV[$_] =~ /addfilenum/i) { $AddFileNum=1; }
 		elsif ($ARGV[$_] =~ /addfilename/i) { $AddFileName=1; }
+		elsif ($ARGV[$_] =~ /stoponfirsteof/i) { $StopOnFirstEof=1; }
 		else { print "Unknown argument $ARGV[$_] ignored\n"; }
 	}
 	else {
@@ -305,14 +307,15 @@ if (scalar @ParamFile == 0) {
 	print "  $PROG.$Extension [options] *.*\n";
 	print "  perl $PROG.$Extension [options] *.* > newfile\n";
 	print "Options:\n";
-	print "  -dnslookup     make a reverse DNS lookup on IP adresses\n";
-	print "  -dnslookup=n   same with a n parallel threads instead of serial requests\n";
-	print "  -dnscache=file make DNS lookup from cache file first before network lookup\n";
-	print "  -showsteps     print on stderr benchmark information every $NBOFLINESFORBENCHMARK lines\n";
-	print "  -addfilenum    if used with several files, file number can be added in first\n";
-	print "  -addfilename   if used with several files, file name can be added in first\n";
-	print "                 field of output file. This can be used to add a cluster id\n";
-	print "                 when log files come from several load balanced computers.\n";
+	print "  -dnslookup      make a reverse DNS lookup on IP adresses\n";
+	print "  -dnslookup=n    same with a n parallel threads instead of serial requests\n";
+	print "  -dnscache=file  make DNS lookup from cache file first before network lookup\n";
+	print "  -showsteps      print on stderr benchmark information every $NBOFLINESFORBENCHMARK lines\n";
+	print "  -addfilenum     if used with several files, file number can be added in first\n";
+	print "  -addfilename    if used with several files, file name can be added in first\n";
+	print "                  field of output file. This can be used to add a cluster id\n";
+	print "                  when log files come from several load balanced computers.\n";
+	print "  -stoponfirsteof Stop processing when any logfile reaches end-of-file.\n";
 	print "\n";
 	
 	print "This runs $PROG in command line to open one or several\n";
@@ -480,7 +483,7 @@ foreach my $logfilenb (keys %LogFileToDo) {
 }
 
 $QueueCursor=1;
-while (1 == 1)
+STOPONFIRSTEOF: while (1 == 1)
 {
 	# BEGIN Read new record
 	# For each log file if logfilechosen is 0
@@ -499,9 +502,15 @@ while (1 == 1)
 		while (1 == 1) {
 			my $LOG="LOG$logfilenb";
 			$_=<$LOG>;	# Read new line
-			if (! $_) {							# No more records in log file number $logfilenb
+			if (! $_) 
+			{							# No more records in log file number $logfilenb
 				if ($Debug) { debug(" No more records in file number $logfilenb",2); }
 				delete $LogFileToDo{$logfilenb};
+				if ($StopOnFirstEof) 
+				{
+					if ($Debug) { debug("Exiting loop due to EOF of logfile $logfilenb",1); }
+					last STOPONFIRSTEOF;
+				}
 				last;
 			}
 
