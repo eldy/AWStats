@@ -5213,6 +5213,10 @@ sub DefinePerlParsingFormat {
 				$pos_host = $i; $i++; push @fieldlib, 'host';
 				$PerlParsingFormat .= "([^$LogSeparatorWithoutStar]+)";
 			}
+			elsif ($f =~ /%host_proxy$/) {	# if host_proxy tag used, host tag must not be used
+				$pos_host = $i; $i++; push @fieldlib, 'host';
+				$PerlParsingFormat .= "(.+?)(?:, .*)*";
+			}
 			elsif ($f =~ /%logname$/) {
 				$pos_logname = $i; $i++; push @fieldlib, 'logname';
 				$PerlParsingFormat .= "([^$LogSeparatorWithoutStar]+)";
