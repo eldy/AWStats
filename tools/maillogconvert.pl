@@ -494,7 +494,15 @@ while (<>) {
 			# If 'forwarded as idnewmail' is found, we discard this mail to avoid counting it twice
 			debug("For id=$id, mail was forwarded to other id, we discard it");
 			delete $mail{$id};
-		}
+		} 
+		###########################################
+		elsif (m/\s*dsn=2.6.0\s*/) {
+            # if the DSN is not 2.0.0, we discard this mail to avoid counting it twice
+            # postfix: Aug 29 19:22:38 example postfix/smtp[1347]: D989FD6C302: to=<webmaster@example.com>, relay=127.0.0.1[127.0.0.1]:10024, delay=2.9, delays=0.31/0.01/0/2.6, dsn=2.6.0, status=sent (250 2.6.0 Ok, id=01182-01, from MTA([127.0.0.1]:10025): 250 2.0.0 Ok: queued as 995DCD6C315)
+            debug("For id=$id, mail DSN is not 2.0.0, we discard it");
+            delete $mail{$id};
+        }
+        ###########################################
 		else {
 			if (m/\s+orig_to=([^\s,]*)[\s,]/) {
 				# If we have a orig_to, we used it as receiver

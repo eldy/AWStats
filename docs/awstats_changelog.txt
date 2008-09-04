@@ -5,11 +5,13 @@ $Revision$ - $Author$ - $Date$
 ***** 6.9 *****
 
 New features/improvements:
-- None
+- With postfix that support DSN (Delivery Status Notifications) we exclude some
+  lines to avoid counting mails twice in maillogconvert.pl script.
 
 Fixes:
 - Fixed broken maxmind citi, org and isp plugins.
 - Fix: Security fix 2001151.
+
 Other/Documentation:
 - None
 
