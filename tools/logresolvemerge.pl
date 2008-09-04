@@ -530,7 +530,7 @@ STOPONFIRSTEOF: while (1 == 1)
 			my $year=0; my $month=0; my $day=0; my $hour=0; my $minute=0; my $second=0;
 			if ($_ =~ /(\d\d\d\d)-(\d\d)-(\d\d)\s(\d\d):(\d\d):(\d\d)/) { $year=$1; $month=$2; $day=$3; $hour=$4; $minute=$5; $second=$6; }
 			elsif ($_ =~ /\[(\d?\d)[\/:\s](\w+)[\/:\s](\d\d\d\d)[\/:\s](\d\d)[\/:\s](\d\d)[\/:\s](\d\d) /) { $year=$3; $month=$2; $day=$1; $hour=$4; $minute=$5; $second=$6; }
-			elsif ($_ =~ /\[\w+ (\w+) (\d?\d) (\d\d)[\/:\s](\d\d)[\/:\s](\d\d) (\d\d\d\d)\]/) { $year=$6; $month=$1; $day=$2; $hour=$3; $minute=$4; $second=$5; }
+			elsif ($_ =~ /\w+ (\w+) {1,2}(\d?\d) (\d\d)[\/:\s](\d\d)[\/:\s](\d\d) (\d\d\d\d)/) { $year=$6; $month=$1; $day=$2; $hour=$3; $minute=$4; $second=$5; }
 			elsif ($_ =~ /^(\d\d\d\d+\.\d\d\d) /)
 			{
 				my $timetime = strftime('%Y-%m-%d-%T', gmtime($1));

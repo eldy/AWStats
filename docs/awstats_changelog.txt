@@ -5,12 +5,18 @@ $Revision$ - $Author$ - $Date$
 ***** 6.9 *****
 
 New features/improvements:
-- With postfix that support DSN (Delivery Status Notifications) we exclude some
-  lines to avoid counting mails twice in maillogconvert.pl script.
+- With postfix that support DSN (Delivery Status Notifications) we exclude 
+  some lines to avoid counting mails twice in maillogconvert.pl script.
+- Logresolvemerge.pl support FreeRADIUS logs or anything else using (the
+  fixed length!) ctime format timestamp.
+- Add option stoponfirsteof in logresolvemerge tool.
+- Add patch to support host_proxy tag in LogFormat (for Apache LogFormat
+  containing %{X-Forwarded-For}i)
 
 Fixes:
 - Fixed broken maxmind citi, org and isp plugins.
 - Fix: Security fix 2001151.
+- Remove &nbsp; in name html tag to have HtmlHeadSection first
 
 Other/Documentation:
 - None
