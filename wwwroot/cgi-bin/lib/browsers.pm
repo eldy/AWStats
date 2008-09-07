@@ -21,7 +21,7 @@
 #				Potu Rss-Reader http://www.potu.com/
 #				OSSProxy http://www.marketscore.com/FAQ.Aspx
 
-#				
+		
 #package AWSUA;
 
 
