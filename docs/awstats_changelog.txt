@@ -12,6 +12,7 @@ New features/improvements:
 - Add option stoponfirsteof in logresolvemerge tool.
 - Add patch to support host_proxy tag in LogFormat (for Apache LogFormat
   containing %{X-Forwarded-For}i)
+- Added Google Chrome browser in browsers database.
 
 Fixes:
 - Fixed broken maxmind citi, org and isp plugins.
