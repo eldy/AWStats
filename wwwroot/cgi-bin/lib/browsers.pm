@@ -33,6 +33,7 @@
 #-------------------------------------------------------
 @BrowsersSearchIDOrder = (
 # Most frequent standard web browsers are first in this list (except msie, netscape and firefox)
+'chrome',
 'firebird',
 'go!zilla',
 'icab',
@@ -85,7 +86,7 @@
 'msfrontpageexpress',
 'phoenix',
 'shiira',               # Must be before safari
-'safari',
+'safari',				# Must be after a lot of others (shiira, chrome)
 'tzgeturl',
 'viking',
 'webfetcher',
@@ -218,6 +219,7 @@
 'firefox','Firefox',
 'svn', 'Subversion client', 
 
+'chrome','Google Chrome',
 'firebird','Firebird (Old Firefox)',
 'go!zilla','Go!Zilla',
 'icab','iCab',
@@ -421,7 +423,8 @@
 'msie','msie',
 'netscape','netscape',
 'firefox','firefox',
-'svn','subversion', 
+'svn','subversion',
+'chrome','chrome', 
 'firebird','phoenix',
 'go!zilla','gozilla',
 'icab','icab',
