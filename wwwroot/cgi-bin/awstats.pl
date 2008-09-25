@@ -9048,6 +9048,7 @@ if (scalar keys %HTMLOutput) {
 		 			print "</tr>\n";
 				}
 		 		&tab_end();
+	   			&html_end(1);
 			}
 	 	}
     	if ($HTMLOutput{'info'}) {
