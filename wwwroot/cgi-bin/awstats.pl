@@ -551,8 +551,9 @@ sub file_filt (@) {
 #------------------------------------------------------------------------------
 sub http_head {
 	if (! $HeaderHTTPSent) {
-		if ($BuildReportFormat eq 'xhtml' || $BuildReportFormat eq 'xml') { print ($ENV{'HTTP_USER_AGENT'}=~/MSIE|Googlebot/i?"Content-type: text/html; charset=$PageCode\n":"Content-type: text/xml; charset=$PageCode\n"); }
-		else { print "Content-type: text/html; charset=$PageCode\n"; }
+		my $newpagecode = $PageCode?$PageCode:"utf-8";
+		if ($BuildReportFormat eq 'xhtml' || $BuildReportFormat eq 'xml') { print ($ENV{'HTTP_USER_AGENT'}=~/MSIE|Googlebot/i?"Content-type:text/html; charset=$newpagecode\n":"Content-type: text/xml; charset=$newpagecode\n"); }
+		else { print "Content-type: text/html; charset=$pagecode\n"; }
 
 		# Expires must be GMT ANSI asctime and must be after Content-type to avoid pb with some servers (SAMBAR)
 		if ($Expires =~ /^\d+$/) {
