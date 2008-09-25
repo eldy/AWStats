@@ -21,6 +21,7 @@ Fixes:
 - Fix: [ 2038681 ] missing <br _/_> in plugins/geoip_org_maxmind.pm
 - Fix: [ 1921942 ] html footer is missing from the allextraN report.
 - Fix: [ 1943466 ] error geoip_city_maxmind Can't locate object method "record_
+- Fix: [ 1808277 ] Incorrect function call in geoip_isp_maxmind.pm
 
 Other/Documentation:
 - None
