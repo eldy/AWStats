@@ -16,9 +16,11 @@ New features/improvements:
 
 Fixes:
 - Fixed broken maxmind citi, org and isp plugins.
-- Fix: Security fix 2001151.
-- Remove &nbsp; in name html tag to have HtmlHeadSection first
+- Remove &nbsp; in name html tag to have HtmlHeadSection first.
+- Fix: [ 2001151 ] Security fix.
 - Fix: [ 2038681 ] missing <br _/_> in plugins/geoip_org_maxmind.pm
+- Fix: [ 1921942 ] html footer is missing from the allextraN report.
+- Fix: [ 1943466 ] error geoip_city_maxmind Can't locate object method "record_
 
 Other/Documentation:
 - None
