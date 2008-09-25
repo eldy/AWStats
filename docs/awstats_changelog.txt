@@ -18,6 +18,7 @@ Fixes:
 - Fixed broken maxmind citi, org and isp plugins.
 - Fix: Security fix 2001151.
 - Remove &nbsp; in name html tag to have HtmlHeadSection first
+- Fix: [ 2038681 ] missing <br _/_> in plugins/geoip_org_maxmind.pm
 
 Other/Documentation:
 - None

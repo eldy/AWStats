@@ -366,7 +366,7 @@ sub ShowInfoHost_geoip_region_maxmind {
     	if ($NewLinkParams) { $NewLinkParams="${NewLinkParams}&"; }
 
 		print "<th width=\"80\">";
-        print "<a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?XMLEncode("$AWScript?${NewLinkParams}output=plugin_geoip_region_maxmind"):"$PROG$StaticLinks.plugin_geoip_region_maxmind.$StaticExt")."\"$NewLinkTarget>GeoIP<br>Region</a>";
+        print "<a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?XMLEncode("$AWScript?${NewLinkParams}output=plugin_geoip_region_maxmind"):"$PROG$StaticLinks.plugin_geoip_region_maxmind.$StaticExt")."\"$NewLinkTarget>GeoIP<br />Region</a>";
         print "</th>";
 	}
 	elsif ($param) {

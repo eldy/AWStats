@@ -223,7 +223,7 @@ sub ShowInfoHost_geoip_isp_maxmind {
     	if ($NewLinkParams) { $NewLinkParams="${NewLinkParams}&"; }
 
 		print "<th width=\"80\">";
-        print "<a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?XMLEncode("$AWScript?${NewLinkParams}output=plugin_geoip_isp_maxmind"):"$PROG$StaticLinks.plugin_geoip_isp_maxmind.$StaticExt")."\"$NewLinkTarget>GeoIP<br>ISP</a>";
+        print "<a href=\"".($ENV{'GATEWAY_INTERFACE'} || !$StaticLinks?XMLEncode("$AWScript?${NewLinkParams}output=plugin_geoip_isp_maxmind"):"$PROG$StaticLinks.plugin_geoip_isp_maxmind.$StaticExt")."\"$NewLinkTarget>GeoIP<br />ISP</a>";
         print "</th>";
 	}
 	elsif ($param) {

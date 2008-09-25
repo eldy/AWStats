@@ -143,7 +143,7 @@ sub AddHTMLContentHeader_example {
 #-----------------------------------------------------------------------------
 sub BuildFullHTMLOutput_example {
 	# <-----
-	print "This is an output for plugin example<br>\n";
+	print "This is an output for plugin example<br />\n";
 	return 1;
 	# ----->
 }
