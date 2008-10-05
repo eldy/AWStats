@@ -62,8 +62,8 @@
 <tr align=center bgcolor=#EEEEEE><td align=left>Works with Apache combined (XLF/ELF)</td><td><font color=#4444cc>Yes</font></td><td><font color=#4444cc>Yes</font></td><td><font color=#4444cc>Yes</font></td><td>NA</td>
   <td><font color=#4444cc>Yes</font></td>
 </tr>
-<tr align=center><td align=left>Works with Apache common (CLF) log format</td><td><font color=#660000>Just some features</font></td><td><font color=#660000>Just some features</font></td><td><font color=#660000>Just some features</font></td><td>NA</td>
-  <td><font color=#660000>Just some features</font></td>
+<tr align=center><td align=left>Works with Apache common (CLF) log format</td><td><font color=#660000>Just some features (b)</font></td><td><font color=#660000>Just some features (b)</font></td><td><font color=#660000>Just some features (b)</font></td><td>NA</td>
+  <td><font color=#660000>Just some features (b)</font></td>
 </tr>
 <tr align=center bgcolor=#EEEEEE><td align=left>Works with IIS (W3C) log format</td><td><font color=#4444cc>Yes</font></td><td><font color=#4444cc>Yes</font></td><td><font color=#660000>Need a patch</font></td><td>NA</td>
   <td><font color=#4444cc>Yes</font></td>
@@ -308,7 +308,10 @@
       So AWStats, considers only HTML pages to count unique visitors. This decrease the error (not totally, because
 it's always possible that a proxy server download one HTML frame and another one download another frame).</font><font style="font: 8pt arial,helvetica,verdana"> Sawmill Analytics allows you to choose what you define as a visitor - by default the client IP is used, but you can use a cookie (persistant or session) or any custom string, or combination of string from teh log data. <br>
   <br>
-    (a) Data were provided by Sawmill company (Graham Smith)
+    (a) Data were provided by Sawmill company (Graham Smith).<br>
+  <br>
+    (b) With such log format, there is no user agent information in log file, so some reports are broken. For example, it's not possible
+    to make reports on browser or os for (information is not stored in log file). To solve this, use another log format (like the combined format).    
 </font>
 <hr>
 
