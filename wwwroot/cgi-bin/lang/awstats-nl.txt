@@ -1,6 +1,7 @@
 # Dutch message file (door Amedee Van Gasse - amedee.be)
 # Addon by Marcel Huijkman - marcel.huijkman@raketnet.nl
 # $Revision$ - $Date$
+PageCode=iso-8859-1
 message0=Onbekend
 message1=Onbekend (Onbekend ip)
 message2=Andere

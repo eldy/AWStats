@@ -1,5 +1,6 @@
 # Vargjet e mesazheve në Shqip. Ju lutem më kontaktoni për korrigjime (artonberisha@radiokosova.net, http://www.radiokosova.net)
 # $Revision$ - $Date$
+PageCode=iso-8859-1
 message0=Panjohur
 message1=Panjohur (IP e Pazgjidhur)
 message2=Tjera

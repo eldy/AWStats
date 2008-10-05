@@ -2,6 +2,7 @@
 # by giray@pultar.org 2002/08/29
 # by Hakan A. 2007/05/18
 # $Revision$ - $Date$
+PageCode=iso-8859-1
 message0=Bilinmeyen
 message1=Bilinmeyen (çözülemeyen IP)
 message2=Diðerleri

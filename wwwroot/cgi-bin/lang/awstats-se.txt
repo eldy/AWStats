@@ -1,5 +1,6 @@
 # Swedish message file
 # $Revision$ - $Date$
+PageCode=iso-8859-1
 message0=Ok&auml;nd
 message1=Ok&auml;nda (ip-adress ej uppslagen)
 message2=&Ouml;vriga

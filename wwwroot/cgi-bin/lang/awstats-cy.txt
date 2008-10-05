@@ -1,6 +1,7 @@
 # Welsh message file (jim@hebffinia.com)
 # Cyfieithiad gan Maredudd ap Rheinallt
 # $Revision$ - $Date$
+PageCode=iso-8859-1
 message0=Anhysbys
 message1=Anhysbys (cyfeiriad IP heb ei ganfod)
 message2=Eraill

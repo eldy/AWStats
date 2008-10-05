@@ -1,5 +1,6 @@
 # Portuguese message file
 # $Revision$ - $Date$
+PageCode=iso-8859-1
 message0=Desconhecido
 message1=Desconhecido (ip não resolvido)
 message2=Outros visitantes

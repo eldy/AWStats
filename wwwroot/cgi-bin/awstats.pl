@@ -553,7 +553,7 @@ sub http_head {
 	if (! $HeaderHTTPSent) {
 		my $newpagecode = $PageCode?$PageCode:"utf-8";
 		if ($BuildReportFormat eq 'xhtml' || $BuildReportFormat eq 'xml') { print ($ENV{'HTTP_USER_AGENT'}=~/MSIE|Googlebot/i?"Content-type:text/html; charset=$newpagecode\n":"Content-type: text/xml; charset=$newpagecode\n"); }
-		else { print "Content-type: text/html; charset=$pagecode\n"; }
+		else { print "Content-type: text/html; charset=$newpagecode\n"; }
 
 		# Expires must be GMT ANSI asctime and must be after Content-type to avoid pb with some servers (SAMBAR)
 		if ($Expires =~ /^\d+$/) {
@@ -591,7 +591,7 @@ sub html_head {
 		} else {
 			if ($FrameName ne 'index') { print "<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">\n";  }
 			else { print "<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01 Frameset//EN\">\n"; }
-			print "<html lang='$Lang'".($PageDir?" dir='rtl'":"").">\n";
+			print '<html lang="'.$Lang.'"'.($PageDir?' dir="rtl"':'').">\n";
 		}
 		print "<head>\n";
  

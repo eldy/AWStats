@@ -1,5 +1,6 @@
 # Spanish message file (Temu-BCN temujinnn@hotmail.com, Sergio Bayarri Gausi euimail@aiind.upv.es)
 # $Revision$ - $Date$
+PageCode=iso-8859-1
 message0=Desconocido
 message1=Desconocidos (Dirección IP desconocida)
 message2=Otros

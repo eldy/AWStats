@@ -6,6 +6,7 @@
 # Salvo - salvo@scicli.com
 # CereS - ceres@divxmania.it
 # StarKnight - starknight@starkingdom.it
+PageCode=iso-8859-1
 message0=Sconosciuti
 message1=Sconosciuti (ip non risolto)
 message2=Altri

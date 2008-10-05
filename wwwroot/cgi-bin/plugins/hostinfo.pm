@@ -69,7 +69,7 @@ sub AddHTMLBodyHeader_hostinfo {
 	
 	print <<EOF;
 
-<script language="javascript" type="text/javascript">
+<script type="text/javascript">
 function neww(a,b) {
 var wfeatures="directories=0,menubar=1,status=0,resizable=1,scrollbars=1,toolbar=0,width=$WIDTHINFO,height=$HEIGHTINFO,left=" + eval("(screen.width - $WIDTHINFO)/2") + ",top=" + eval("(screen.height - $HEIGHTINFO)/2");
 EOF

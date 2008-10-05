@@ -1,5 +1,6 @@
 # Brazilian Portuguese message file (urban@ite.net.br)
 # $Revision$ - $Date$
+PageCode=iso-8859-1
 message0=Desconhecido
 message1=Desconhecido (ip n&atilde;o resolvido)
 message2=Outros visitantes

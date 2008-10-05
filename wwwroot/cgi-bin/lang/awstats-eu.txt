@@ -2,6 +2,7 @@
 # $Revision$ - $Date$
 # aktor - aktor@aktornet.ath.cx
 # agonirena - agonirena@gmail.com
+PageCode=iso-8859-1
 message0=Ezezaguna
 message1=IP helbide ezezagunekoa
 message2=Beste batzuk

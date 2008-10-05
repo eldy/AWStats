@@ -105,7 +105,7 @@ sub AddHTMLBodyHeader_tooltips {
 
 		print <<EOF;
 
-<script language="javascript" type="text/javascript">
+<script type="text/javascript">
 function ShowTip(fArg)
 {
 	var tooltipOBJ = (document.getElementById) ? document.getElementById('tt' + fArg) : eval("document.all['tt" + fArg + "']");

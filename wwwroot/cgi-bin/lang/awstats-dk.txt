@@ -1,6 +1,7 @@
 # Danish message file by Ole Stanstrup (revised and amended by soren@dacafe.com)
 # $Revision$ - $Date$
 # Danish message file Update by Michael Andreassen (revised michael@the-exterminator.dk)
+PageCode=iso-8859-1
 message0=Ukendt
 message1=Ukendt (uopl&oslash;st IP-adresse)
 message2=Andre

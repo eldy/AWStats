@@ -1,5 +1,6 @@
 # Indonesian message file (oleh Steven Haryanto)
 # $Revision$ - $Date$
+PageCode=iso-8859-1
 message0=Tidak Diketahui
 message1=Tidak Diketahui (IP tidak teresolve)
 message2=Lainnya

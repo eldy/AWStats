@@ -1,5 +1,6 @@
 # Icelandic message file (throstur@bylur.net)
 # $Revision$ - $Date$
+PageCode=iso-8859-1
 message0=Óþekkt
 message1=óþekktar (ekki tókst að fletta upp IP-vistfangi)
 message2=Annað
