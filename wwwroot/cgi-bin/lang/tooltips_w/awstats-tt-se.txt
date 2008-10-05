@@ -34,7 +34,7 @@ Robotar (kallas också Spindlar) är <b>automatiska datoriserade besökare</b> som 
 #PROG# känner igen upp till <b>#RobotArray#</b> olika robotar.
 </div>
 <div class="CTooltip" id="tt17">
-All tidsrelaterad statistik baseras på klockan på webbservern.<br />
+All tidsrelaterad statistik baseras på klockan på webbservern.
 </div>
 <div class="CTooltip" id="tt18">
 Här visas <b>medelvärden</b> (beräknade för alla besök från det första till det sista)

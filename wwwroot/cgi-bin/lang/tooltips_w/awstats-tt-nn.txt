@@ -35,7 +35,7 @@ Robotar blir brukt av mange søkjemotorar som besøkjer nettstaden din for å indek
 #PROG# kjenner til <b>#RobotArray#</b> robotar.
 </div>
 <div class="CTooltip" id="tt17">
-All tidsrelatert statistikk er basert på tenartida.<br />
+All tidsrelatert statistikk er basert på tenartida.
 </div>
 <div class="CTooltip" id="tt18">
 Rapporterte tal er <b>gjennomsnittsverdiar</b> (rekna ut frå all data mellom første og siste besøk i analyseperioden)

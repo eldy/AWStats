@@ -36,7 +36,7 @@ I robot (noti anche col nome di spider) sono dei <b>visitatori automatici</b> ut
 #PROG# è in grado di riconoscere <b>#RobotArray#</b> robot.
 </div>
 <div class="CTooltip" id="tt17">
-Gli orari visualizzati sono basati sul fuso orario del server.<br />
+Gli orari visualizzati sono basati sul fuso orario del server.
 </div>
 <div class="CTooltip" id="tt18">
 I dati qui riportati sono <b>valori medi</b> (calcolati su tutti i dati tra la prima e l'ultima visita nel periodo di tempo analizzato)

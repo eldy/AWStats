@@ -34,7 +34,7 @@ Roboter blir brukt av mange søkemotorer som besøker nettstedet ditt for å indeks
 #PROG# kjenner til <b>#RobotArray#</b> roboter.
 </div>
 <div class="CTooltip" id="tt17">
-All tidsrelatert statistikk er basert på tjenertid.<br />
+All tidsrelatert statistikk er basert på tjenertid.
 </div>
 <div class="CTooltip" id="tt18">
 Rapporterte tall er <b>gjennomsnittsverdier</b> (regnet ut fra alle data mellom første og siste besøk)

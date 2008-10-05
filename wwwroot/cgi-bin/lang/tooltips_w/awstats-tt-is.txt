@@ -37,7 +37,7 @@ Leitarormar ("robots" og "spiders") eru <b>'sjálfvirkir gestir'</b> notaðir af m
 #PROG# þekkir allt að <b>#RobotArray#</b> leitarorma.
 </div>
 <div class="CTooltip" id="tt17">
-Öll tímatengd tölfræði er byggð á klukku netþjóns.<br />
+Öll tímatengd tölfræði er byggð á klukku netþjóns.
 </div>
 <div class="CTooltip" id="tt18">
 Gögn í þessari skýrslu eru: <b>meðalgildi</b> (reiknuð út frá öllum gögnum milli fyrsta og síðasta innlits á greindu tímabili)

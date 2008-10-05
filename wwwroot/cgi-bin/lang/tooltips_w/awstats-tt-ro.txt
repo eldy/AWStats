@@ -54,7 +54,7 @@ Aceste date se refera la numarul de <b>persoane fizice diferite</b>
 </div>
 <div class="CTooltip" id="tt17">
     Toate statisticile referitoare la timp sunt bazate pe timpul din masina care gazduieste 
-    serverul web.<br />
+    serverul web.
 </div>
 <div class="CTooltip" id="tt18">
     Aici, datele listate sunt: <b>valori medii</b> (calculate din toate datele intre prima 

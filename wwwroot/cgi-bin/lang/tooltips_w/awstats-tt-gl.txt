@@ -36,7 +36,7 @@ Os Robots (&aacute;s veces ref&iacute;rese a Ara&ntilde;as) son <b> ordenadores 
 #PROG# &eacute; capaz de reco&ntilde;ecer ata <b>#RobotArray#</b> robots.
 </div>
 <div class="CTooltip" id="tt17">
-T&oacute;dalas estad&iacute;sticas feitas en relaci&oacute;n &oacute; tempo est&aacute;n baseadas na hora do servidor.<br />
+T&oacute;dalas estad&iacute;sticas feitas en relaci&oacute;n &oacute; tempo est&aacute;n baseadas na hora do servidor.
 </div>
 <div class="CTooltip" id="tt18">
 Aqu&iacute;, os datos expostos son <b>valores medios</b> (calculados a partir de t&oacute;dolos datos entre a primeira e &uacute;ltima visita no rango analizado)

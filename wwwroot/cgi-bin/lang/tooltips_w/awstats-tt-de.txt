@@ -37,10 +37,10 @@ Robots (manchmal auch als Spider bezeichnet) sind <b>automatische Computerbesuch
 Alle zeitbezogenen Statistiken basieren auf der Serverzeit.
 </div>
 <div class="CTooltip" id="tt18">
-Die angezeigten Werte sind <b>Durchschnittswerte</b> (berechnet aus allen Werten zwischen dem ersten und letzten Besuch)
+Die angezeigten Werte sind <b>Durchschnittswerte</b> (berechnet aus allen Werten zwischen dem ersten und letzten Besuch).
 </div>
 <div class="CTooltip" id="tt19">
-Die angezeigten Werte sind <b>Summenwerte</b> (berechnet aus allen Werten zwischen dem ersten und letzten Besuch)
+Die angezeigten Werte sind <b>Summenwerte</b> (berechnet aus allen Werten zwischen dem ersten und letzten Besuch).
 </div>
 
 <div class="CTooltip" id="tt201"> F&uuml;r diesen Fehler liegt keine Beschreibung vor. </div>

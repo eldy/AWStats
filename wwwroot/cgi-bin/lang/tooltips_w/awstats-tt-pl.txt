@@ -34,7 +34,7 @@ Roboty s± <b>programami sieciowymi</b> skanuj±cymi strony w celu zebrania/aktual
 #PROG# rozró¿nia obecnie <b>#RobotArray#</b> robów.
 </div>
 <div class="CTooltip" id="tt17">
-Wszystkie statystyki bazuj± na czasie serwera.<br />
+Wszystkie statystyki bazuj± na czasie serwera.
 </div>
 <div class="CTooltip" id="tt18">
 Here, reported data are: <b>average values</b> (calculated from all data between the first and last visit)
