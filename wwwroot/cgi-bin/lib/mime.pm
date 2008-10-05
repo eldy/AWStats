@@ -144,7 +144,7 @@
 # Config
 'cf','other',
 'conf','other',
-'css','other',
+'css','css',
 'ini','other',
 'dtd','other',
 # Program
