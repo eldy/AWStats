@@ -43,20 +43,20 @@ Die angezeigten Werte sind <b>Durchschnittswerte</b> (berechnet aus allen Werten
 Die angezeigten Werte sind <b>Summenwerte</b> (berechnet aus allen Werten zwischen dem ersten und letzten Besuch).
 </div>
 
-<div class="CTooltip" id="tt201"> F&uuml;r diesen Fehler liegt keine Beschreibung vor. </div>
-<div class="CTooltip" id="tt202"> Die Anfrage wurde vom Server akzeptiert, aber sie wird erst sp&auml;ter verarbeitet. </div>
-<div class="CTooltip" id="tt204"> Der Server hat die Anfrage verarbeitet, aber es wurde kein Ergebnis &uuml;bertragen. </div>
-<div class="CTooltip" id="tt206"> Unvollst&auml;ndiger Inhalt. </div>
-<div class="CTooltip" id="tt301"> Das angeforderte Dokument wurde verschoben und ist nun unter der angegebenen Adresse erreichbar. </div>
-<div class="CTooltip" id="tt302"> F&uuml;r diesen Fehler liegt keine Beschreibung vor. </div>
-<div class="CTooltip" id="tt400"> Syntaxfehler, der Server kann die Anfrage nicht verarbeiten. </div>
-<div class="CTooltip" id="tt401"> Es wurde versucht, auf eine <b>URL zuzugreifen, f&uuml;r die eine Authentifizierung notwendig war</b>.<br />Eine hohe Anzahl kann darauf hindeuten, da&szlig; jemand (z.B. ein Hacker) vesucht, sich unerlaubten Zugang zu Ihrer Web Site zu verschaffen, indem er z.B. verschiedene Login/Passwort Kombinationen durchprobiert. </div>
-<div class="CTooltip" id="tt403"> Es wurde versucht, auf eine <b>unerreichbare URL zuzugreifen, f&uuml;r die selbst eine Authentifizierung nicht ausreicht</b> (z.B. eine URL innerhalb eines f&uuml;r Browserzugriffe gesperrten Verzeichnisses). </div>
-<div class="CTooltip" id="tt404"> Es wurde versucht, auf eine <b>ung&uuml;ltige URL zuzugreifen</b>. Dieser Fehler bedeutet meistens, da&szlig; es einen ung&uuml;ltigen Link irgendwo in Ihrer Web Site gibt oder da&szlig; ein Besucher einen Schreibfehler bei einer URL gemacht hat. </div>
-<div class="CTooltip" id="tt408"> Der Server ben&ouml;tigte <b>zu viel Zeit</b>, um auf eine Anfrage zu reagieren. Dieser Fehler bezieht sich meistens auf ein langsam arbeitendes CGI-Skript, welches durch den Server vorzeitig abgebrochen werden mu&szlig;te, oder einen &uuml;berlasteten Web Server. </div>
-<div class="CTooltip" id="tt500"> Interner Fehler. Dieser Fehler wird meist durch ein CGI-Skript verursacht, das z.B. durch einen Programmfehler unerwarteterweise beendet worden ist. </div>
-<div class="CTooltip" id="tt501"> Unbekannte Art der Anfrage. </div>
-<div class="CTooltip" id="tt502"> Dieser Fehler wird von einem HTTP-Server gemeldet, der als ein Proxy oder Gateway fungiert, wenn der eigentliche Zielserver auf die Anfrage nicht erfolgreich geantwortet hat. </div>
-<div class="CTooltip" id="tt503"> Interner Serverfehler. </div>
-<div class="CTooltip" id="tt504"> Gateway Zeit&uuml;berschreitung. </div>
-<div class="CTooltip" id="tt505"> HTTP-Version wird nicht unterst&uuml;tzt. </div>
+<div class="CTooltip" id="tt201">F&uuml;r diesen Fehler liegt keine Beschreibung vor.</div>
+<div class="CTooltip" id="tt202">Die Anfrage wurde vom Server akzeptiert, aber sie wird erst sp&auml;ter verarbeitet.</div>
+<div class="CTooltip" id="tt204">Der Server hat die Anfrage verarbeitet, aber es wurde kein Ergebnis &uuml;bertragen.</div>
+<div class="CTooltip" id="tt206">Unvollst&auml;ndiger Inhalt.</div>
+<div class="CTooltip" id="tt301">Das angeforderte Dokument wurde verschoben und ist nun unter der angegebenen Adresse erreichbar.</div>
+<div class="CTooltip" id="tt302">Die angeforderten Daten wurden vor&uuml;bergehend zu einem anderen URI verschoben.</div>
+<div class="CTooltip" id="tt400">Syntaxfehler, der Server kann die Anfrage nicht verarbeiten.</div>
+<div class="CTooltip" id="tt401">Es wurde versucht, auf eine <b>URL zuzugreifen, f&uuml;r die eine Authentifizierung notwendig war</b>.<br />Eine hohe Anzahl kann darauf hindeuten, da&szlig; jemand (z.B. ein Hacker) vesucht, sich unerlaubten Zugang zu Ihrer Web Site zu verschaffen, indem er z.B. verschiedene Login/Passwort Kombinationen durchprobiert.</div>
+<div class="CTooltip" id="tt403">Es wurde versucht, auf eine <b>unerreichbare URL zuzugreifen, f&uuml;r die selbst eine Authentifizierung nicht ausreicht</b><br />(z.B. eine URL innerhalb eines f&uuml;r Browserzugriffe gesperrten Verzeichnisses).</div>
+<div class="CTooltip" id="tt404">Es wurde versucht, auf eine <b>ung&uuml;ltige URL zuzugreifen</b>. Dieser Fehler bedeutet meistens, da&szlig; es einen<br />ung&uuml;ltigen Link irgendwo in Ihrer Web Site gibt oder da&szlig; ein Besucher einen Schreibfehler bei einer URL gemacht hat.</div>
+<div class="CTooltip" id="tt408">Der Server ben&ouml;tigte <b>zu viel Zeit</b>, um auf eine Anfrage zu reagieren. Dieser Fehler bezieht sich meistens auf ein<br />langsam arbeitendes CGI-Skript, welches durch den Server vorzeitig abgebrochen werden mu&szlig;te, oder einen &uuml;berlasteten Web Server.</div>
+<div class="CTooltip" id="tt500">Interner Fehler. Dieser Fehler wird meist durch ein CGI-Skript verursacht, das z.B. durch einen Programmfehler unerwarteterweise beendet worden ist.</div>
+<div class="CTooltip" id="tt501">Unbekannte Art der Anfrage.</div>
+<div class="CTooltip" id="tt502">Dieser Fehler wird von einem HTTP-Server gemeldet, der als ein Proxy oder Gateway fungiert, wenn der eigentliche Zielserver auf<br />die Anfrage nicht erfolgreich geantwortet hat.</div>
+<div class="CTooltip" id="tt503">Interner Serverfehler.</div>
+<div class="CTooltip" id="tt504">Gateway Zeit&uuml;berschreitung.</div>
+<div class="CTooltip" id="tt505">HTTP-Version wird nicht unterst&uuml;tzt.</div>
