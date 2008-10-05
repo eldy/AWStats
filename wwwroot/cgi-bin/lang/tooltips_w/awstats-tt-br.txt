@@ -66,7 +66,7 @@ verificar se seu site ainda est&aacute; dispon&iacute;vel.<br />
 </div>
 <div class="CTooltip" id="tt17">
 Todas as estat&iacute;ticas de tempo relatadas s&atilde;o baseadas no
-hor&aacute;rio do servidor.<br />
+hor&aacute;rio do servidor.
 </div>
 <div class="CTooltip" id="tt18">
 Aqui os dados reportados s&atilde;o: <b>valores m&eacute;dios</b> (calculados

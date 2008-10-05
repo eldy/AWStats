@@ -36,7 +36,7 @@ Robotit (käytetään joskus myös nimitystä "Spider") ovat <b>automaattisia tietoko
 #PROG# tunnistaa jopa <b>#RobotArray#</b> robottia.
 </div>
 <div class="CTooltip" id="tt17">
-Kaikki kelloaikoihin liittyvät tilastot perustuvat palvelimen kelloon.<br />
+Kaikki kelloaikoihin liittyvät tilastot perustuvat palvelimen kelloon.
 </div>
 <div class="CTooltip" id="tt18">
 Tässä kerrotut tiedot ovat: <b>keskimääräisiä arvoja</b> (laskettu kaikkien ensimmäisen ja viimeisimmän vierailun välisten tietojen perusteella)

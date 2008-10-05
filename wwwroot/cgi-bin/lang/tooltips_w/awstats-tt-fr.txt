@@ -36,7 +36,7 @@ Les robots sont des <b>automates visiteurs</b> scannant le site dans le but de l
 #PROG# reconnait <b>#RobotArray#</b> robots.
 </div>
 <div class="CTooltip" id="tt17">
-Toutes les statistiques en rapport avec le temps sont basées sur les heures du serveur.<br />
+Toutes les statistiques en rapport avec le temps sont basées sur les heures du serveur.
 </div>
 <div class="CTooltip" id="tt18">
 Ici les données rapportées sont des: <b>valeurs moyennes</b> (calculées à partir des données entre la première et dernière visite de la période analysée)

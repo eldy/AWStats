@@ -36,7 +36,7 @@ Robots (sometimes refer to Spiders) are <b>automatic computer visitors</b> used 
 #PROG# is able to recognize up to <b>#RobotArray#</b> robots.
 </div>
 <div class="CTooltip" id="tt17">
-All time related statistics are based on server time.<br />
+All time related statistics are based on server time.
 </div>
 <div class="CTooltip" id="tt18">
 Here, reported data are: <b>average values</b> (calculated from all data between the first and last visit in analyzed range)

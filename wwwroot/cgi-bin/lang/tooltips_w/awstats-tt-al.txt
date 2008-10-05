@@ -36,7 +36,7 @@ Robotat (rrallë emruar si Marimanga) janë <b>vizita automatike kompjuterike</b> 
 #PROG# Ka mundësi që t'i njohë <b>#RobotArray#</b> robota.
 </div>
 <div class="CTooltip" id="tt17">
-Të gjitha vizitat janë bazuar nga koha reale e Shërbyesit.<br />
+Të gjitha vizitat janë bazuar nga koha reale e Shërbyesit.
 </div>
 <div class="CTooltip" id="tt18">
 Këtu, t'dhënat e raportuara janë: <b>valutat mesatare</b> (llogaritur nga t'dhëant ndërmjet vizites së parë dhe të fundit)

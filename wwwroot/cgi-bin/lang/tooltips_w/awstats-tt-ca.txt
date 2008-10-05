@@ -35,7 +35,7 @@ Els Robots son <b>visitants automàtics</b> que escanejan o viatgen pel seu lloc 
 El programa #PROG# reconeix fins a <b>#RobotArray#</b> robots.
 </div>
 <div class="CTooltip" id="tt17">
-Els temps relacionats amb les estadístiques estan basats en temps de servidor.<br />
+Els temps relacionats amb les estadístiques estan basats en temps de servidor.
 </div>
 <div class="CTooltip" id="tt18">
 Aquí, les dates reportades son: <b>valors medis</b> (calculat desde totes les dates entre les primeres y les ultimes visites en la franja analitzada)
