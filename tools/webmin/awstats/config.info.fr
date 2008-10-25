@@ -1,7 +1,7 @@
 awstats=Chemin absolu du programme AWStats de mise a jour des statistiques (Exemple:/usr/local/awstats/wwwroot/cgi-bin/awstats.pl),0
 awstats_cgi=URL absolue ou relative d'AWStats en CGI (Exemple:/awstats/awstats.pl),0
 alt_conf=Fichier modèle de configuration AWStats,3,/etc/awstats/awstats.model.conf
-plugin_1_geoip=Chemin du fichier de la base Maxmind GeoIP country<br><small>(pour plugin AWStats geoip)</small>,3,/usr/local/share/GeoIP/GeoIP.dat
+plugin_1_geoip=Chemin du fichier de la base <a href="http://www.maxmind.com/app/perl?rId=awstats">Maxmind GeoIP country</a><br><small>(pour plugin AWStats geoip)</small>,3,/usr/local/share/GeoIP/GeoIP.dat
 plugin_2_geoip_region_maxmind=Chemin du fichier de la base <a href="http://www.maxmind.com/app/perl?rId=awstats">Maxmind GeoIP region</a><br><small>(pour plugin geoip_region_maxmind)</small>,3,/usr/local/share/GeoIP/GeoIPRegion.dat
 plugin_3_geoip_city_maxmind=Chemin du fichier de la base <a href="http://www.maxmind.com/app/perl?rId=awstats">Maxmind GeoIP city</a><br><small>(pour plugin geoip_city_maxmind)</small>,3,/usr/local/share/GeoIP/GeoIPCity.dat
 plugin_4_geoip_isp_maxmind=Chemin du fichier de la base <a href="http://www.maxmind.com/app/perl?rId=awstats">Maxmind GeoIP isp</a><br><small>(pour plugin geoip_isp_maxmind)</small>,3,/usr/local/share/GeoIP/GeoIPISP.dat
