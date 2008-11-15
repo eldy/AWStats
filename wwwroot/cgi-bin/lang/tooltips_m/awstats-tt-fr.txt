@@ -1,18 +1,18 @@
-<!-- French tooltips message file (eldy@users.sourceforge.net) -->
+ï»¿<!-- French tooltips message file (eldy@users.sourceforge.net) -->
 <!-- $Revision$ - $Date$ -->
 <div class="CTooltip" id="tt1">
 </div>
 <div class="CTooltip" id="tt2">
-Nombre de hotes (<b>adresses IP</b>) utilisés pour envoyés un mail.<br />
+Nombre de hotes (<b>adresses IP</b>) utilisÃ©s pour envoyÃ©s un mail.<br />
 </div>
 <div class="CTooltip" id="tt3">
 </div>
 <div class="CTooltip" id="tt4">
-Nombre de fois qu'un <b>email</b> a été <b>transféré</b> avec succès.<br />
+Nombre de fois qu'un <b>email</b> a Ã©tÃ© <b>transfÃ©rÃ©</b> avec succÃ¨s.<br />
 </div>
 <div class="CTooltip" id="tt5">
-Nombre d'<b>octets</b> représentant le volume des mails transférés.<br />
-Les unités sont en Ko, Mo ou Go (Kilooctets, Megaoctets or Gigaoctets)
+Nombre d'<b>octets</b> reprÃ©sentant le volume des mails transfÃ©rÃ©s.<br />
+Les unitÃ©s sont en Ko, Mo ou Go (Kilooctets, Megaoctets or Gigaoctets)
 </div>
 <div class="CTooltip" id="tt13">
 </div>
@@ -23,13 +23,13 @@ Les unités sont en Ko, Mo ou Go (Kilooctets, Megaoctets or Gigaoctets)
 <div class="CTooltip" id="tt16">
 </div>
 <div class="CTooltip" id="tt17">
-Toutes les statistiques en rapport avec le temps sont basées sur les heures du serveur.<br />
+Toutes les statistiques en rapport avec le temps sont basÃ©es sur les heures du serveur.<br />
 </div>
 <div class="CTooltip" id="tt18">
-Ici les données rapportées sont des: <b>valeurs moyennes</b> (calculées à partir des données entre le premier et dernier email de la période analysée)
+Ici les donnÃ©es rapportÃ©es sont des: <b>valeurs moyennes</b> (calculÃ©es Ã  partir des donnÃ©es entre le premier et dernier email de la pÃ©riode analysÃ©e)
 </div>
 <div class="CTooltip" id="tt19">
-Ici les données rapportées sont des: <b>sommes cumulées</b> (calculées à partir des données entre le premier et dernier email de la période analysée)
+Ici les donnÃ©es rapportÃ©es sont des: <b>sommes cumulÃ©es</b> (calculÃ©es Ã  partir des donnÃ©es entre le premier et dernier email de la pÃ©riode analysÃ©e)
 </div>
 <div class="CTooltip" id="tt20">
 </div>
@@ -58,7 +58,7 @@ Ici les données rapportées sont des: <b>sommes cumulées</b> (calculées à partir 
 <div class="CTooltip" id="tt504"><b>Permanent error:</b> Command parameter not implemented</div>
 <div class="CTooltip" id="tt521"><b>Permanent error:</b> You must be pop-authenticated before you can use this SMTP server and you must use your mail address for the Sender/From field.</div>
 <div class="CTooltip" id="tt530"><b>Permanent error:</b> Access denied. A sendmailism ?</div>
-<div class="CTooltip" id="tt550"><b>Permanent error:</b> Sending an email to recipients outside of your domain are not allowed or your mail server does not know that you have access to use it for relaying messages and authentication is required. Or to prevent the sending of SPAM some mail servers will not allow (relay) send mail to any e-mail using another company’s network and computer resources.</div>
+<div class="CTooltip" id="tt550"><b>Permanent error:</b> Sending an email to recipients outside of your domain are not allowed or your mail server does not know that you have access to use it for relaying messages and authentication is required. Or to prevent the sending of SPAM some mail servers will not allow (relay) send mail to any e-mail using another companyâ€™s network and computer resources.</div>
 <div class="CTooltip" id="tt551"><b>Permanent error:</b> User not local: please try <forward-path> or Invalid Address: Relay request denied</div>
 <div class="CTooltip" id="tt552"><b>Permanent error:</b> Requested mail action aborted: exceeded storage allocation. ISP mail server indicates, probable overloading from too many messages.</div>
 <div class="CTooltip" id="tt553"><b>Permanent error:</b> Requested mail action not taken: mailbox name not allowed. Some mail servers have the option to reduce the number of concurrent connection and also the number of messages sent per connection. If you have a lot of messages queued up (being sent) for a domain, it could go over the maximum number of messages per connection and/or some change to the message and/or destination must be made for successful delivery.</div>

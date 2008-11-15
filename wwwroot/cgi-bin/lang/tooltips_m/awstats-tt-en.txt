@@ -1,4 +1,4 @@
-<!-- English tooltips message file (eldy@users.sourceforge.net) -->
+﻿<!-- English tooltips message file (eldy@users.sourceforge.net) -->
 <!-- $Revision$ - $Date$ -->
 <div class="CTooltip" id="tt1">
 </div>
@@ -58,7 +58,7 @@ Here, reported data are: <b>cumulative sums</b> (calculated from all data betwee
 <div class="CTooltip" id="tt504"><b>Permanent error:</b> Command parameter not implemented</div>
 <div class="CTooltip" id="tt521"><b>Permanent error:</b> You must be pop-authenticated before you can use this SMTP server and you must use your mail address for the Sender/From field.</div>
 <div class="CTooltip" id="tt530"><b>Permanent error:</b> Access denied. A sendmailism ?</div>
-<div class="CTooltip" id="tt550"><b>Permanent error:</b> Sending an email to recipients outside of your domain are not allowed or your mail server does not know that you have access to use it for relaying messages and authentication is required. Or to prevent the sending of SPAM some mail servers will not allow (relay) send mail to any e-mail using another company�s network and computer resources.</div>
+<div class="CTooltip" id="tt550"><b>Permanent error:</b> Sending an email to recipients outside of your domain are not allowed or your mail server does not know that you have access to use it for relaying messages and authentication is required. Or to prevent the sending of SPAM some mail servers will not allow (relay) send mail to any e-mail using another company’s network and computer resources.</div>
 <div class="CTooltip" id="tt551"><b>Permanent error:</b> User not local: please try <forward-path> or Invalid Address: Relay request denied</div>
 <div class="CTooltip" id="tt552"><b>Permanent error:</b> Requested mail action aborted: exceeded storage allocation. ISP mail server indicates, probable overloading from too many messages.</div>
 <div class="CTooltip" id="tt553"><b>Permanent error:</b> Requested mail action not taken: mailbox name not allowed. Some mail servers have the option to reduce the number of concurrent connection and also the number of messages sent per connection. If you have a lot of messages queued up (being sent) for a domain, it could go over the maximum number of messages per connection and/or some change to the message and/or destination must be made for successful delivery.</div>

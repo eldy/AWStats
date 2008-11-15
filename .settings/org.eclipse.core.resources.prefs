@@ -1,7 +1,9 @@
-#Wed Jun 04 19:29:10 CEST 2008
+#Sat Nov 15 16:19:41 CET 2008
 eclipse.preferences.version=1
 encoding//wwwroot/cgi-bin/lang/awstats-be.txt=UTF-8
+encoding//wwwroot/cgi-bin/lang/awstats-bg.txt=UTF-8
 encoding//wwwroot/cgi-bin/lang/awstats-gr.txt=UTF-8
+encoding//wwwroot/cgi-bin/lang/awstats-sk.txt=UTF-8
 encoding//wwwroot/cgi-bin/lang/tooltips_f/awstats-tt-gr.txt=UTF-8
 encoding//wwwroot/cgi-bin/lang/tooltips_m/awstats-tt-gr.txt=UTF-8
 encoding//wwwroot/cgi-bin/lang/tooltips_w/awstats-tt-gr.txt=UTF-8

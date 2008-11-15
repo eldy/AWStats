@@ -1,55 +1,55 @@
-<!--SK by lecram@lecram.sk (please contact if something wrong)-->
+ï»¿<!--SK by lecram@lecram.sk (please contact if something wrong)-->
 <!-- $Revision$ - $Date$ -->
 
 <div class="CTooltip" id="tt1">
-Noví návštevníci su definovaní ako ka¾dı <b>prichádzajuci</b> (prehliadajúci si alebo prechádzajúci), kto
-sa na stránky nepripojil posledních <b>#VisitTimeOut# min</b>.
+NovÃ­ nÃ¡vÅ¡tevnÃ­ci su definovanÃ­ ako kaÂ¾dÃ½ <b>prichÃ¡dzajuci</b> (prehliadajÃºci si alebo prechÃ¡dzajÃºci), kto
+sa na strÃ¡nky nepripojil poslednÃ­ch <b>#VisitTimeOut# min</b>.
 </div>
 <div class="CTooltip" id="tt2">
-Poèet klientov (<b>IP address</b>), ktorí pri¹li na stránky (a ktori si prehliadli aspoò jednu <b>stránku</b>).
-Toto èíslo prislucha èíslu <b>roznych fyzickıch osob</b>, ktori navštívili stránky ktorıkolvek <b>jeden</b> den.
+PoÃ¨et klientov (<b>IP address</b>), ktorÃ­ priÂ¹li na strÃ¡nky (a ktori si prehliadli aspoÃ² jednu <b>strÃ¡nku</b>).
+Toto Ã¨Ã­slo prislucha Ã¨Ã­slu <b>roznych fyzickÃ½ch osob</b>, ktori navÅ¡tÃ­vili strÃ¡nky ktorÃ½kolvek <b>jeden</b> den.
 </div>
 <div class="CTooltip" id="tt3">
-Poèet kolkokrát bola <b>stránka</b> na tomto servery <b>pozreta</b> (Suèet za všetky navštevujucí a ich návštevy).
-To se liši od <b>Hitov</b> tak, ¾e su zapoèítane iba stránky (nie obrázky a ostatne...).
+PoÃ¨et kolkokrÃ¡t bola <b>strÃ¡nka</b> na tomto servery <b>pozreta</b> (SuÃ¨et za vÅ¡etky navÅ¡tevujucÃ­ a ich nÃ¡vÅ¡tevy).
+To se liÅ¡i od <b>Hitov</b> tak, Â¾e su zapoÃ¨Ã­tane iba strÃ¡nky (nie obrÃ¡zky a ostatne...).
 </div>
 <div class="CTooltip" id="tt4">
-Poèet kolkokrát bola <b>stránka, obrázok, subor</b> na tomto servery <b>stiahnuta</b> (Suèet za všetky navštevující a jejich návštevy).
-Toto èíslo je uvedene kvoli porovnániu zo <b>Stránkami</b>.
+PoÃ¨et kolkokrÃ¡t bola <b>strÃ¡nka, obrÃ¡zok, subor</b> na tomto servery <b>stiahnuta</b> (SuÃ¨et za vÅ¡etky navÅ¡tevujÃ­cÃ­ a jejich nÃ¡vÅ¡tevy).
+Toto Ã¨Ã­slo je uvedene kvoli porovnÃ¡niu zo <b>StrÃ¡nkami</b>.
 </div>
 <div class="CTooltip" id="tt5">
-Velkost všetkych <b>stránok, obrázkov a suborov</b> stiahnutych z tohoto serveru.
+Velkost vÅ¡etkych <b>strÃ¡nok, obrÃ¡zkov a suborov</b> stiahnutych z tohoto serveru.
 </div>
 <div class="CTooltip" id="tt13">
-#PROG# rozpozná prístup na server od <b>vyhladávanie</b> z <b>#SearchEnginesArray# najznámejších internetovıch vyhledávaèov a zoznamov</b> (ako je Yahoo, Altavista, Lycos, Google, Voila, atd...).
+#PROG# rozpoznÃ¡ prÃ­stup na server od <b>vyhladÃ¡vanie</b> z <b>#SearchEnginesArray# najznÃ¡mejÅ¡Ã­ch internetovÃ½ch vyhledÃ¡vaÃ¨ov a zoznamov</b> (ako je Yahoo, Altavista, Lycos, Google, Voila, atd...).
 </div>
 <div class="CTooltip" id="tt14">
-Seznam všech <b>externích stránek</b> (mimo server), které byly pou¾ity jako odkaz na tento server (Je zobrazeno jen <b>#MaxNbOfRefererShown#</b> nejèastìjších).
-Odkazy pou¾ité z vyhledávaèù nejsou zaøazeny, nebo» je obsahuje jinı údaj.
+Seznam vÅ¡ech <b>externÃ­ch strÃ¡nek</b> (mimo server), kterÃ© byly pouÂ¾ity jako odkaz na tento server (Je zobrazeno jen <b>#MaxNbOfRefererShown#</b> nejÃ¨astÃ¬jÅ¡Ã­ch).
+Odkazy pouÂ¾itÃ© z vyhledÃ¡vaÃ¨Ã¹ nejsou zaÃ¸azeny, neboÂ» je obsahuje jinÃ½ Ãºdaj.
 </div>
 <div class="CTooltip" id="tt15">
-Tato tabulka zobrazuje zoznam nejèastejsie zadavanıch <b>vırazov</b>, ktoré boly zadávane vo vyhladávaèoch k najdeniu tohoto serveru.
-(Vırazy od <b>#SearchEnginesArray#</b> najznámejších vyhladávaèov a zoznamov su #PROG# rozpoznany, ako je Yahoo, Altavista, Lycos, Google, Voila, atd...).
+Tato tabulka zobrazuje zoznam nejÃ¨astejsie zadavanÃ½ch <b>vÃ½razov</b>, ktorÃ© boly zadÃ¡vane vo vyhladÃ¡vaÃ¨och k najdeniu tohoto serveru.
+(VÃ½razy od <b>#SearchEnginesArray#</b> najznÃ¡mejÅ¡Ã­ch vyhladÃ¡vaÃ¨ov a zoznamov su #PROG# rozpoznany, ako je Yahoo, Altavista, Lycos, Google, Voila, atd...).
 </div>
 <div class="CTooltip" id="tt16">
-Roboti (niekedy oznaèováni ako pavuci alebo èmuchalové) su <b>poèítaèoví automat. návštevníci</b> pou¾ivaní vela vyhledávajucimi slu¾bami k (1) indexovániu a hodnoteniu, (2) zbieraniu statistik z webov a/alebo (3) k zistsniu, ci stránky stále existuju.<br />
+Roboti (niekedy oznaÃ¨ovÃ¡ni ako pavuci alebo Ã¨muchalovÃ©) su <b>poÃ¨Ã­taÃ¨ovÃ­ automat. nÃ¡vÅ¡tevnÃ­ci</b> pouÂ¾ivanÃ­ vela vyhledÃ¡vajucimi sluÂ¾bami k (1) indexovÃ¡niu a hodnoteniu, (2) zbieraniu statistik z webov a/alebo (3) k zistsniu, ci strÃ¡nky stÃ¡le existuju.<br />
 #PROG# je schopmy rozpoznat <b>#RobotArray#</b> robotov.
 </div>
 
-<div class="CTooltip" id="tt201"> Bolo vytvoreno nové miesto s datami a odeslane. </div>
-<div class="CTooltip" id="tt202"> Po¾adavka bola rozeznana, ale bude vybaveny neskor. </div>
-<div class="CTooltip" id="tt204"> Po¾iadavka bola rozeznana, ale nieje co odoslat spet. </div>
-<div class="CTooltip" id="tt206"> Poziadavka bol zpracovany iba èiastoène. </div>
-<div class="CTooltip" id="tt301"> Po¾adovanı dokument bol presunuty a adresa bola odoslana. </div>
-<div class="CTooltip" id="tt302"> Dokument sa doèasne nachádza na inej adrese. </div>
-<div class="CTooltip" id="tt400"> Syntaktická chyba, chybnı po¾iadavok. </div>
-<div class="CTooltip" id="tt401"> Po¾iadavka neobsahovala ¾iadanu autorizaciu meno/heslo pre vstup na stránku. Ak se vyskytujeèasto,pokuša sa niekdo o prielom-hack. </div>
-<div class="CTooltip" id="tt403"> Po¾iadavka bola odmietnuta serverom (neprístupne data, neviditelnı adresár...). </div>
-<div class="CTooltip" id="tt404"> Pokus o vstup na neexistujuci stránku alebo soubor. </div>
-<div class="CTooltip" id="tt408"> Cela po¾iadavka nebola serveru od klienta odoslana v po¾adovanom èase (chyba klienta alebo serveru alebo skriptu). </div>
-<div class="CTooltip" id="tt500"> Chyba serveru (èasto sa vyskytuje pri chybnom zpracovaní skriptu). </div>
-<div class="CTooltip" id="tt501"> Po¾iadavku, ktora bola zaslana nieje mo¾no vyriedit, pretoze ho server nevie zpracovat. </div>
-<div class="CTooltip" id="tt502"> Server prijal chybnu po¾iadavku od iného serveru (proxy nebo brány). </div>
-<div class="CTooltip" id="tt503"> Chyba serveru, slu¾ba nieje k dispozicii. </div>
-<div class="CTooltip" id="tt504"> Vypršal èasovı interval u proxy serveru alebo brány. </div>
-<div class="CTooltip" id="tt505"> Nepodporovaná verzia protokolu HTTP. </div>
+<div class="CTooltip" id="tt201"> Bolo vytvoreno novÃ© miesto s datami a odeslane. </div>
+<div class="CTooltip" id="tt202"> PoÂ¾adavka bola rozeznana, ale bude vybaveny neskor. </div>
+<div class="CTooltip" id="tt204"> PoÂ¾iadavka bola rozeznana, ale nieje co odoslat spet. </div>
+<div class="CTooltip" id="tt206"> Poziadavka bol zpracovany iba Ã¨iastoÃ¨ne. </div>
+<div class="CTooltip" id="tt301"> PoÂ¾adovanÃ½ dokument bol presunuty a adresa bola odoslana. </div>
+<div class="CTooltip" id="tt302"> Dokument sa doÃ¨asne nachÃ¡dza na inej adrese. </div>
+<div class="CTooltip" id="tt400"> SyntaktickÃ¡ chyba, chybnÃ½ poÂ¾iadavok. </div>
+<div class="CTooltip" id="tt401"> PoÂ¾iadavka neobsahovala Â¾iadanu autorizaciu meno/heslo pre vstup na strÃ¡nku. Ak se vyskytujeÃ¨asto,pokuÅ¡a sa niekdo o prielom-hack. </div>
+<div class="CTooltip" id="tt403"> PoÂ¾iadavka bola odmietnuta serverom (neprÃ­stupne data, neviditelnÃ½ adresÃ¡r...). </div>
+<div class="CTooltip" id="tt404"> Pokus o vstup na neexistujuci strÃ¡nku alebo soubor. </div>
+<div class="CTooltip" id="tt408"> Cela poÂ¾iadavka nebola serveru od klienta odoslana v poÂ¾adovanom Ã¨ase (chyba klienta alebo serveru alebo skriptu). </div>
+<div class="CTooltip" id="tt500"> Chyba serveru (Ã¨asto sa vyskytuje pri chybnom zpracovanÃ­ skriptu). </div>
+<div class="CTooltip" id="tt501"> PoÂ¾iadavku, ktora bola zaslana nieje moÂ¾no vyriedit, pretoze ho server nevie zpracovat. </div>
+<div class="CTooltip" id="tt502"> Server prijal chybnu poÂ¾iadavku od inÃ©ho serveru (proxy nebo brÃ¡ny). </div>
+<div class="CTooltip" id="tt503"> Chyba serveru, sluÂ¾ba nieje k dispozicii. </div>
+<div class="CTooltip" id="tt504"> VyprÅ¡al Ã¨asovÃ½ interval u proxy serveru alebo brÃ¡ny. </div>
+<div class="CTooltip" id="tt505"> NepodporovanÃ¡ verzia protokolu HTTP. </div>

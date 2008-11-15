@@ -1,9 +1,12 @@
 # Greek message file
-# Giannis Stoilis <i18ngr@hellug.gr>
-# Thomas Venieris <mot@mediaweb.gr>
+# Current maintainer: "Giannis Stoilis" <i18ngr@hellug.gr>
 # $Revision$ - $Date$
 #
-PageCode=utf-8
+# Revision: 1.8 - Date: 2004/09/02 21:26:00
+# By: Thomas Venieris <mot@mediaweb.gr>
+# Updated for awstats version 6.1
+# Also, changed some characters from the Windows-1253 encoding to the correct ISO-8859-7 (Specifically: Ά)
+pagecode=utf-8
 message0=Άγνωστο
 message1=Άγνωστο (μη αναγνωρισμένη ip)
 message2=Άλλοι

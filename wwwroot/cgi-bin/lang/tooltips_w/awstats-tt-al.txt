@@ -1,69 +1,69 @@
-<!-- Shpjeguesi Shqip. Ju lutem më kontaktoni për korrigjime (artonberisha@radiokosova.net, http://www.radiokosova.net) -->
+ï»¿<!-- Shpjeguesi Shqip. Ju lutem mÃ« kontaktoni pÃ«r korrigjime (artonberisha@radiokosova.net, http://www.radiokosova.net) -->
 <!-- $Revision$ - $Date$ -->
 <div class="CTooltip" id="tt1">
-Vizita është përkufizuar si <b>vizitor</b> risi (Shfletimin apo Shiqimin e faqes) të cilët nuk e kan vizituar faqen që nga <b>#VisitTimeOut# min</b>.
+Vizita Ã«shtÃ« pÃ«rkufizuar si <b>vizitor</b> risi (Shfletimin apo Shiqimin e faqes) tÃ« cilÃ«t nuk e kan vizituar faqen qÃ« nga <b>#VisitTimeOut# min</b>.
 </div>
 <div class="CTooltip" id="tt2">
-Numri i klientëve strehues (<b>IP adresa</b>) të cilët erdhën ta vizitojnë faqen (dhe që shfletuan se paku një <b>faqe</b>).<br />
-Këto t'dhëna tregojnë numrin e <b>personave të ndryshëm fizikë</b> të cilët arritën faqen në çdo ditë.
+Numri i klientÃ«ve strehues (<b>IP adresa</b>) tÃ« cilÃ«t erdhÃ«n ta vizitojnÃ« faqen (dhe qÃ« shfletuan se paku njÃ« <b>faqe</b>).<br />
+KÃ«to t'dhÃ«na tregojnÃ« numrin e <b>personave tÃ« ndryshÃ«m fizikÃ«</b> tÃ« cilÃ«t arritÃ«n faqen nÃ« Ã§do ditÃ«.
 </div>
 <div class="CTooltip" id="tt3">
-Hera e <b>faqeve</b> që është <b>shiquar</b> (Shuma e të gjitha vizitave).<br />
-Kjo pjes e t'dhënave ndryshon nga "Hyrjet" në atë mënyr i numron vetëm faqet HTML kundër atyre për figur dhe të tjera.
+Hera e <b>faqeve</b> qÃ« Ã«shtÃ« <b>shiquar</b> (Shuma e tÃ« gjitha vizitave).<br />
+Kjo pjes e t'dhÃ«nave ndryshon nga "Hyrjet" nÃ« atÃ« mÃ«nyr i numron vetÃ«m faqet HTML kundÃ«r atyre pÃ«r figur dhe tÃ« tjera.
 </div>
 <div class="CTooltip" id="tt4">
-Hera e <b>faqes, figurës, vargut</b> që është <b>shiquar</b> ose <b>shkarkuar</b> nga dikush.<br />
-Këto t'dhëna janë ofruar vetëm si referencë, pasi që numri i shiqimeve "Faqe" është menduar për qëllime tregtie.
+Hera e <b>faqes, figurÃ«s, vargut</b> qÃ« Ã«shtÃ« <b>shiquar</b> ose <b>shkarkuar</b> nga dikush.<br />
+KÃ«to t'dhÃ«na janÃ« ofruar vetÃ«m si referencÃ«, pasi qÃ« numri i shiqimeve "Faqe" Ã«shtÃ« menduar pÃ«r qÃ«llime tregtie.
 </div>
 <div class="CTooltip" id="tt5">
-Kjo informatë trtegon sasinë e t'dhënave shkarkuar nga të gjitha <b>faqet</b>, <b>figurat</b> dhe <b>vargjet</b> mbrenda një Faqësie.<br />
-Njesitë janë në KB, MB ose GB (KiloBajt, MegaBajta or GigaBajta)
+Kjo informatÃ« trtegon sasinÃ« e t'dhÃ«nave shkarkuar nga tÃ« gjitha <b>faqet</b>, <b>figurat</b> dhe <b>vargjet</b> mbrenda njÃ« FaqÃ«sie.<br />
+NjesitÃ« janÃ« nÃ« KB, MB ose GB (KiloBajt, MegaBajta or GigaBajta)
 </div>
 <div class="CTooltip" id="tt13">
-#PROG# e njeh çdo lidhje në faqe <b>search</b> nga <b>#SearchEnginesArray# Makinat Kërkuese në Internet më të popullarizuara si dhe Tregues</b> (si Yahoo, Altavista, Lycos, Google, Voila, etj...).
+#PROG# e njeh Ã§do lidhje nÃ« faqe <b>search</b> nga <b>#SearchEnginesArray# Makinat KÃ«rkuese nÃ« Internet mÃ« tÃ« popullarizuara si dhe Tregues</b> (si Yahoo, Altavista, Lycos, Google, Voila, etj...).
 </div>
 <div class="CTooltip" id="tt14">
-Lista e të gjitha <b>faqeve jashta faqës</b> që nyjëzuan (dhe hyrje) te faqja e juaj (Vetëm <b>#MaxNbOfRefererShown#</b> faqe më të shpeshta).
-Nyjet që janë përdor nga rezultatet e makinave kërkuese janë përjashtu këtu sepse ato përfshi në rreshtat e tabelave.
+Lista e tÃ« gjitha <b>faqeve jashta faqÃ«s</b> qÃ« nyjÃ«zuan (dhe hyrje) te faqja e juaj (VetÃ«m <b>#MaxNbOfRefererShown#</b> faqe mÃ« tÃ« shpeshta).
+Nyjet qÃ« janÃ« pÃ«rdor nga rezultatet e makinave kÃ«rkuese janÃ« pÃ«rjashtu kÃ«tu sepse ato pÃ«rfshi nÃ« rreshtat e tabelave.
 </div>
 <div class="CTooltip" id="tt15">
-Kjo tabelë tregon <b>kryefrazat dhe kryefjalitë</b> më të shpeshta që janë përdorur ta gjejnë faqen tënde nga Makinat Kërkuese dhe tregues në Internet.
-(kryefjalë nga <b>#SearchEnginesArray#</b> Makinat Kërkuese dhe Treguest më të popullarizuar janë njohur nga #PROG#, si Yahoo, Altavista, Lycos, Google, Voila, etj...).<br />
-Vështri se shuma e kryefalive mund të jet më i madh se sa shume për kryefraza (numri real i kërkesave) sepse ndoshta dy fjali janë përdor në të njejtin Kërkues, kërkuese është numruar dy herë për fjali (një herë për çdo fjalë).
+Kjo tabelÃ« tregon <b>kryefrazat dhe kryefjalitÃ«</b> mÃ« tÃ« shpeshta qÃ« janÃ« pÃ«rdorur ta gjejnÃ« faqen tÃ«nde nga Makinat KÃ«rkuese dhe tregues nÃ« Internet.
+(kryefjalÃ« nga <b>#SearchEnginesArray#</b> Makinat KÃ«rkuese dhe Treguest mÃ« tÃ« popullarizuar janÃ« njohur nga #PROG#, si Yahoo, Altavista, Lycos, Google, Voila, etj...).<br />
+VÃ«shtri se shuma e kryefalive mund tÃ« jet mÃ« i madh se sa shume pÃ«r kryefraza (numri real i kÃ«rkesave) sepse ndoshta dy fjali janÃ« pÃ«rdor nÃ« tÃ« njejtin KÃ«rkues, kÃ«rkuese Ã«shtÃ« numruar dy herÃ« pÃ«r fjali (njÃ« herÃ« pÃ«r Ã§do fjalÃ«).
 </div>
 <div class="CTooltip" id="tt16">
-Robotat (rrallë emruar si Marimanga) janë <b>vizita automatike kompjuterike</b> përdorur nga shumë Makina Kërkuese që e Shiqon faqen tënga për tregues dhe radhitje, grumbullon statistika në Faqet e Internetit dhe/ose shiqon nëse faqja e juajështë ende në linje.<br />
-#PROG# Ka mundësi që t'i njohë <b>#RobotArray#</b> robota.
+Robotat (rrallÃ« emruar si Marimanga) janÃ« <b>vizita automatike kompjuterike</b> pÃ«rdorur nga shumÃ« Makina KÃ«rkuese qÃ« e Shiqon faqen tÃ«nga pÃ«r tregues dhe radhitje, grumbullon statistika nÃ« Faqet e Internetit dhe/ose shiqon nÃ«se faqja e juajÃ«shtÃ« ende nÃ« linje.<br />
+#PROG# Ka mundÃ«si qÃ« t'i njohÃ« <b>#RobotArray#</b> robota.
 </div>
 <div class="CTooltip" id="tt17">
-Të gjitha vizitat janë bazuar nga koha reale e Shërbyesit.
+TÃ« gjitha vizitat janÃ« bazuar nga koha reale e ShÃ«rbyesit.
 </div>
 <div class="CTooltip" id="tt18">
-Këtu, t'dhënat e raportuara janë: <b>valutat mesatare</b> (llogaritur nga t'dhëant ndërmjet vizites së parë dhe të fundit)
+KÃ«tu, t'dhÃ«nat e raportuara janÃ«: <b>valutat mesatare</b> (llogaritur nga t'dhÃ«ant ndÃ«rmjet vizites sÃ« parÃ« dhe tÃ« fundit)
 </div>
 <div class="CTooltip" id="tt19">
-Këtu, t'dhënat e raportuara janë: <b>Shuma grumbulluese</b> (llogaritur nga t'dhëant ndërmjet vizites së parë dhe të fundit)
+KÃ«tu, t'dhÃ«nat e raportuara janÃ«: <b>Shuma grumbulluese</b> (llogaritur nga t'dhÃ«ant ndÃ«rmjet vizites sÃ« parÃ« dhe tÃ« fundit)
 </div>
 <div class="CTooltip" id="tt20">
-Disa <b>zgjatje të vizitave</b> janë 'panjohur' sepse gjithmonë ato nuk mund të llogariten. Kjo është arsya kryesore për këtë:<br />
-- vizita nuk ishte përfundur kur 'freskimi' ndodhi.<br />
-- vizita filloi në orën e fundit (pas 23:00) te fundi i ditës së muajit (Një arsye teknike parandalon  #PROG# për llogaritjen e një zgjatje të një mbledhje të tillë)
+Disa <b>zgjatje tÃ« vizitave</b> janÃ« 'panjohur' sepse gjithmonÃ« ato nuk mund tÃ« llogariten. Kjo Ã«shtÃ« arsya kryesore pÃ«r kÃ«tÃ«:<br />
+- vizita nuk ishte pÃ«rfundur kur 'freskimi' ndodhi.<br />
+- vizita filloi nÃ« orÃ«n e fundit (pas 23:00) te fundi i ditÃ«s sÃ« muajit (NjÃ« arsye teknike parandalon  #PROG# pÃ«r llogaritjen e njÃ« zgjatje tÃ« njÃ« mbledhje tÃ« tillÃ«)
 </div>
 
-<div class="CTooltip" id="tt201"> Nuk ka përshkrim për këtë gabim. </div>
-<div class="CTooltip" id="tt202"> Kërkesa është kuptuar nga shërbyesi por do të kryesohet më vonë. </div>
-<div class="CTooltip" id="tt204"> Shërbyesi ka kryesuar mirpo atje nuk ka dokument për ta dërguar. </div>
-<div class="CTooltip" id="tt206"> Përmbajtje gjysore. </div>
-<div class="CTooltip" id="tt301"> Dokumenti i kërkuar ishte larguar dhe tani një adres tjetër është përgjigj. </div>
-<div class="CTooltip" id="tt302"> Nuk ka përshkrim për këtë gabim. </div>
-<div class="CTooltip" id="tt400"> Gabim sintaksor, shërbyesi nuk e ka kuptuar kërkesen. </div>
-<div class="CTooltip" id="tt401"> Provoi që ta arrij një <b>URL ku një hyrje/parullë është nevojitur</b>.<br />Numri i madh në këtë gjë d.m.th. se (si psh. Grepi) është duke provuar që ta then, ose për të hyr në faqen tënde të siguruar (si shembull, duke shpresuar se duke provu parulla të ndryshme mund të hynë në hapsiren e siguruar). </div>
-<div class="CTooltip" id="tt403"> Provoi që ta arrij një <b>URL pa trajtur për arritje, edhe me parullë</b> (për shembull, një URL mbrenda Treguesit jo e përkufizuar si "shfletuese".). </div>
-<div class="CTooltip" id="tt404"> Provoi që ta arrij një <b>URL joekzistuese</b>. Ky gabim shpesh dmth një nyje pavlerë diku në faqen tënde ekziston ose vizitori e ka gabuar një URL të caktuar. </div>
-<div class="CTooltip" id="tt408"> Shërbyesi shfrytëzoi <b>shumë kohë</b> ti përgjigjet kërkesës. Ky gabim shpesh përfshin skriptat (CGI, PHP) e ngadalshëm që shërbyesi është detyru që ta zhduk Faqe shërbyesin jashtëzakonisht të dyndur. </div>
-<div class="CTooltip" id="tt500"> Gabim i mbrendshëm. Ky gabim shpesh shkaktohet nga një program CGI që përfundoi parregull (psh trajtim i keq). </div>
-<div class="CTooltip" id="tt501"> Kërkes e panjohur. </div>
-<div class="CTooltip" id="tt502"> Kodi i kthyer nga një shërbyes HTTP që punon si portë prokurie kur realisht, shërbyesi shenjuar nuk përgjigjet sukseshëm te kërkesat e klientëve. </div>
-<div class="CTooltip" id="tt503"> Gabim mbrenda shërbyesit. </div>
-<div class="CTooltip" id="tt504"> Parta tejkaloi kohën. </div>
-<div class="CTooltip" id="tt505"> Botimi i HTTP Nuk është i Përkrahur </div>
+<div class="CTooltip" id="tt201"> Nuk ka pÃ«rshkrim pÃ«r kÃ«tÃ« gabim. </div>
+<div class="CTooltip" id="tt202"> KÃ«rkesa Ã«shtÃ« kuptuar nga shÃ«rbyesi por do tÃ« kryesohet mÃ« vonÃ«. </div>
+<div class="CTooltip" id="tt204"> ShÃ«rbyesi ka kryesuar mirpo atje nuk ka dokument pÃ«r ta dÃ«rguar. </div>
+<div class="CTooltip" id="tt206"> PÃ«rmbajtje gjysore. </div>
+<div class="CTooltip" id="tt301"> Dokumenti i kÃ«rkuar ishte larguar dhe tani njÃ« adres tjetÃ«r Ã«shtÃ« pÃ«rgjigj. </div>
+<div class="CTooltip" id="tt302"> Nuk ka pÃ«rshkrim pÃ«r kÃ«tÃ« gabim. </div>
+<div class="CTooltip" id="tt400"> Gabim sintaksor, shÃ«rbyesi nuk e ka kuptuar kÃ«rkesen. </div>
+<div class="CTooltip" id="tt401"> Provoi qÃ« ta arrij njÃ« <b>URL ku njÃ« hyrje/parullÃ« Ã«shtÃ« nevojitur</b>.<br />Numri i madh nÃ« kÃ«tÃ« gjÃ« d.m.th. se (si psh. Grepi) Ã«shtÃ« duke provuar qÃ« ta then, ose pÃ«r tÃ« hyr nÃ« faqen tÃ«nde tÃ« siguruar (si shembull, duke shpresuar se duke provu parulla tÃ« ndryshme mund tÃ« hynÃ« nÃ« hapsiren e siguruar). </div>
+<div class="CTooltip" id="tt403"> Provoi qÃ« ta arrij njÃ« <b>URL pa trajtur pÃ«r arritje, edhe me parullÃ«</b> (pÃ«r shembull, njÃ« URL mbrenda Treguesit jo e pÃ«rkufizuar si "shfletuese".). </div>
+<div class="CTooltip" id="tt404"> Provoi qÃ« ta arrij njÃ« <b>URL joekzistuese</b>. Ky gabim shpesh dmth njÃ« nyje pavlerÃ« diku nÃ« faqen tÃ«nde ekziston ose vizitori e ka gabuar njÃ« URL tÃ« caktuar. </div>
+<div class="CTooltip" id="tt408"> ShÃ«rbyesi shfrytÃ«zoi <b>shumÃ« kohÃ«</b> ti pÃ«rgjigjet kÃ«rkesÃ«s. Ky gabim shpesh pÃ«rfshin skriptat (CGI, PHP) e ngadalshÃ«m qÃ« shÃ«rbyesi Ã«shtÃ« detyru qÃ« ta zhduk Faqe shÃ«rbyesin jashtÃ«zakonisht tÃ« dyndur. </div>
+<div class="CTooltip" id="tt500"> Gabim i mbrendshÃ«m. Ky gabim shpesh shkaktohet nga njÃ« program CGI qÃ« pÃ«rfundoi parregull (psh trajtim i keq). </div>
+<div class="CTooltip" id="tt501"> KÃ«rkes e panjohur. </div>
+<div class="CTooltip" id="tt502"> Kodi i kthyer nga njÃ« shÃ«rbyes HTTP qÃ« punon si portÃ« prokurie kur realisht, shÃ«rbyesi shenjuar nuk pÃ«rgjigjet sukseshÃ«m te kÃ«rkesat e klientÃ«ve. </div>
+<div class="CTooltip" id="tt503"> Gabim mbrenda shÃ«rbyesit. </div>
+<div class="CTooltip" id="tt504"> Parta tejkaloi kohÃ«n. </div>
+<div class="CTooltip" id="tt505"> Botimi i HTTP Nuk Ã«shtÃ« i PÃ«rkrahur </div>
