@@ -13,7 +13,8 @@
 # <-----
 # ENTER HERE THE USE COMMAND FOR ALL REQUIRED PERL MODULES.
 # ----->
-use strict;no strict "refs";
+#use strict;
+no strict "refs";
 
 
 

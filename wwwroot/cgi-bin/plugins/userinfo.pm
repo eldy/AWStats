@@ -17,7 +17,8 @@
 # ENTER HERE THE USE COMMAND FOR ALL REQUIRED PERL MODULES
 #if (!eval ('require "TheModule.pm";')) { return $@?"Error: $@":"Error: Need Perl module TheModule"; }
 # ----->
-use strict;no strict "refs";
+#use strict;
+no strict "refs";
 
 
 

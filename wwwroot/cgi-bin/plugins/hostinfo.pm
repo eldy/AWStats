@@ -14,7 +14,8 @@ push @INC, "${DIR}/plugins";
 if (!eval ('require "Net/XWhois.pm";')) { return $@?"Error: $@":"Error: Need Perl module Net::XWhois"; }
 if (!eval ('require "Digest/MD5.pm";')) { return $@?"Error: $@":"Error: Need Perl module Digest::MD5"; }
 # ----->
-use strict;no strict "refs";
+#use strict;
+no strict "refs";
 
 
 
