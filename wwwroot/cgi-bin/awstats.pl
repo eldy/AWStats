@@ -14,8 +14,7 @@ require 5.005;
 #use diagnostics;	# Must be used in test mode only. This reduce a lot of process speed
 use strict;
 no strict "refs";
-use Time::Local
-  ; # use Time::Local 'timelocal_nocheck' is faster but not supported by all Time::Local modules
+use Time::Local;	# use Time::Local 'timelocal_nocheck' is faster but not supported by all Time::Local modules
 use Socket;
 
 #------------------------------------------------------------------------------
@@ -8869,8 +8868,8 @@ sub ShowMenuCateg {
 	# Call to plugins' function AddHTMLMenuLink
 	foreach my $pluginname ( keys %{ $PluginsLoaded{'AddHTMLMenuLink'} } ) {
 
-#		my $function="AddHTMLMenuLink_$pluginname('$categ',\$menu,\$menulink,\$menutext)";
-#		eval("$function");
+		# my $function="AddHTMLMenuLink_$pluginname('$categ',\$menu,\$menulink,\$menutext)";
+		# eval("$function");
 		my $function = "AddHTMLMenuLink_$pluginname";
 		&$function( $categ, $menu, $menulink, $menutext );
 	}
@@ -8879,7 +8878,7 @@ sub ShowMenuCateg {
 	}
 	if ( !$linetitle ) { return; }
 
-# At least one entry in menu for this category, we can show categpry and entries
+	# At least one entry in menu for this category, we can show category and entries
 	my $WIDTHMENU1 = ( $FrameName eq 'mainleft' ? $FRAMEWIDTH : 150 );
 	print "<tr><td class=\"awsm\" width=\"$WIDTHMENU1\""
 	  . ( $frame ? "" : " valign=\"top\"" ) . ">"
@@ -13253,7 +13252,7 @@ if ( scalar keys %HTMLOutput ) {
 		&$function();
 	}
 
-	# MENU
+	# MENU (ON LEFT IF FRAME OR TOP)
 	#---------------------------------------------------------------------
 	if ( $ShowMenu || $FrameName eq 'mainleft' ) {
 		my $frame = ( $FrameName eq 'mainleft' );
@@ -13629,11 +13628,12 @@ if ( scalar keys %HTMLOutput ) {
 				%menu     = ();
 				%menulink = ();
 				%menutext = ();
+				my $i=1;
 				foreach ( 1 .. @ExtraName - 1 ) {
-					$menu{"extra$_"}        = 1;
+					$menu{"extra$_"}        = $i++;
 					$menulink{"extra$_"}    = 1;
 					$menutext{"extra$_"}    = $ExtraName[$_];
-					$menu{"allextra$_"}     = 2;
+					$menu{"allextra$_"}     = $i++;
 					$menulink{"allextra$_"} = 2;
 					$menutext{"allextra$_"} = $Message[80];
 				}

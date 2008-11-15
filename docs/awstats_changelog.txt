@@ -26,6 +26,7 @@ Fixes:
 - Fix: [ 1921942 ] html footer is missing from the allextraN report.
 - Fix: [ 1943466 ] error geoip_city_maxmind Can't locate object method "record_
 - Fix: [ 1808277 ] Incorrect function call in geoip_isp_maxmind.pm
+- Fix: Full list of extrasections was not ordered correctly
 - A lot of other fixes.
 - Added missing icons
 
