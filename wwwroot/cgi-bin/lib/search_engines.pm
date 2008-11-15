@@ -155,6 +155,7 @@
 #------------------------------------------------------------------------------
 @SearchEnginesSearchIDOrder_list1=(
 # Major international search engines
+'google\.[\w.]+/products',
 'base\.google\.',
 'froogle\.google\.',
 'groups\.google\.',
@@ -370,6 +371,7 @@
 #------------------------------------------------------------------------------
 %SearchEnginesHashID = (
 # Major international search engines
+'google\.[\w.]+/products','google_products',
 'base\.google\.','google_base',
 'froogle\.google\.','google_froogle',
 'groups\.google\.','google_groups',
@@ -652,6 +654,7 @@
 'altavista','q=',
 'a9','a9\.com\/', 
 'dmoz','search=',
+'google_products','(p|q|as_p|as_q)=',
 'google_base','(p|q|as_p|as_q)=',
 'google_froogle','(p|q|as_p|as_q)=',
 'google_groups','group\/', # does not work
@@ -879,6 +882,7 @@
 'altavista','<a href="http://www.altavista.com/" title="Search Engine Home Page [new window]" target="_blank">AltaVista</a>',
 'a9', '<a href="http://www.a9.com/" title="Search Engine Home Page [new window]" target="_blank">A9</a>',
 'dmoz','<a href="http://dmoz.org/" title="Search Engine Home Page [new window]" target="_blank">DMOZ</a>',
+'google_products','<a href="http://www.google.com/products" title="Search Engine Home Page [new window]" target="_blank">Google (Products)</a>',
 'google_base','<a href="http://base.google.com/" title="Search Engine Home Page [new window]" target="_blank">Google (Base)</a>',
 'google_froogle','<a href="http://froogle.google.com/" title="Search Engine Home Page [new window]" target="_blank">Froogle (Google)</a>',
 'google_groups','<a href="http://groups.google.com/" title="Search Engine Home Page [new window]" target="_blank">Google (Groups)</a>',

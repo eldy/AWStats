@@ -12,7 +12,11 @@ New features/improvements:
 - Add option stoponfirsteof in logresolvemerge tool.
 - Add patch to support host_proxy tag in LogFormat (for Apache LogFormat
   containing %{X-Forwarded-For}i)
-- Added Google Chrome browser in browsers database.
+- Renamed Add to favourites on "Hit on favicon".
+- Increase robots, search engines database (Added Google Chrome browser,
+  better Vista, WII, detection, ...)
+- Update languages files.
+- Added a lot of patch from sourceforge.
 
 Fixes:
 - Fixed broken maxmind citi, org and isp plugins.
@@ -22,6 +26,8 @@ Fixes:
 - Fix: [ 1921942 ] html footer is missing from the allextraN report.
 - Fix: [ 1943466 ] error geoip_city_maxmind Can't locate object method "record_
 - Fix: [ 1808277 ] Incorrect function call in geoip_isp_maxmind.pm
+- A lot of other fixes.
+- Added missing icons
 
 Other/Documentation:
 - None

@@ -526,7 +526,11 @@ STOPONFIRSTEOF: while (1 == 1)
 			# Check filters
 			#----------------------------------------------------------------------
 
-			# Split DD/Month/YYYY:HH:MM:SS or YYYY-MM-DD HH:MM:SS or MM/DD/YY\tHH:MM:SS
+			# Split YYYY-MM-DD HH:MM:SS
+			#    or DD/Month/YYYY:HH:MM:SS
+			#    or MM/DD/YY\tHH:MM:SS
+			#    or 9999.999
+ 			#    or Month DD HH:MM:SS
 			my $year=0; my $month=0; my $day=0; my $hour=0; my $minute=0; my $second=0;
 			if ($_ =~ /(\d\d\d\d)-(\d\d)-(\d\d)\s(\d\d):(\d\d):(\d\d)/) { $year=$1; $month=$2; $day=$3; $hour=$4; $minute=$5; $second=$6; }
 			elsif ($_ =~ /\[(\d?\d)[\/:\s](\w+)[\/:\s](\d\d\d\d)[\/:\s](\d\d)[\/:\s](\d\d)[\/:\s](\d\d) /) { $year=$3; $month=$2; $day=$1; $hour=$4; $minute=$5; $second=$6; }
@@ -537,6 +541,13 @@ STOPONFIRSTEOF: while (1 == 1)
 				$timetime =~ /(\d\d\d\d)-(\d\d)-(\d\d)-(\d\d):(\d\d):(\d\d)/;
 				$year=$1; $month=$2; $day=$3; $hour=$4; $minute=$5; $second=$6;
 			}
+ 			elsif ($_ =~ /(\w+)\s\s?(\d?\d) (\d\d):(\d\d):(\d\d) /) {	# Month DD HH:MM:SS
+ 				$month=$1; $day=$2; $hour=$3; $minute=$4; $second=$5;
+ 				if (($monthnum{$month}>$monthnum{$nowmonth}) || ($monthnum{$month}==$monthnum{$nowmonth} &&  $day>$nowday)) {
+ 					$year=$nowyear-1;
+ 				}
+                else { $year=$nowyear; }
+ 			}
 			if (length $day == 1) { $day = "0".$day; }
 
 			if ($monthnum{$month}) { $month=$monthnum{$month}; }	# Change lib month in num month if necessary

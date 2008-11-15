@@ -23,6 +23,8 @@
 @OSSearchIDOrder	= (
 # Windows OS family
 'windows[_+ ]?2005', 'windows[_+ ]nt[_+ ]6\.0',
+'windows[_+ ]?2008', 'windows[_+ ]nt[_+ ]6\.1', # Must be before windows_nt_6
+'windows[_+ ]?vista', 'windows[_+ ]nt[_+ ]6',
 'windows[_+ ]?2003','windows[_+ ]nt[_+ ]5\.2',	# Must be before windows_nt_5
 'windows[_+ ]xp','windows[_+ ]nt[_+ ]5\.1',		# Must be before windows_nt_5
 'windows[_+ ]me','win[_+ ]9x',					# Must be before windows_98
@@ -45,6 +47,7 @@
 'linux(.*)centos',
 'linux(.*)debian',
 'linux(.*)fedora',
+'linux(.*)gentoo',
 'linux(.*)mandr',
 'linux(.*)red[_+ ]hat',
 'linux(.*)suse',
@@ -83,6 +86,7 @@
 'webtv',
 'playstation[_+ ]portable',
 'xbox',
+'wii',
 'vienna',
 'newsfire',
 'applesyndication',
@@ -99,6 +103,8 @@
 %OSHashID	= (
 # Windows OS family
 'windows[_+ ]?2005','winlong','windows[_+ ]nt[_+ ]6\.0','winlong',
+'windows[_+ ]?2008','win2008','windows[_+ ]nt[_+ ]6\.1','win2008',
+'windows[_+ ]?vista','winvista','windows[_+ ]nt[_+ ]6','winvista',
 'windows[_+ ]?2003','win2003','windows[_+ ]nt[_+ ]5\.2','win2003',
 'windows[_+ ]xp','winxp','windows[_+ ]nt[_+ ]5\.1','winxp', 'syndirella', 'winxp',
 'windows[_+ ]me','winme','win[_+ ]9x','winme',
@@ -118,6 +124,7 @@
 'linux(.*)centos','linuxcentos',
 'linux(.*)debian','linuxdebian',
 'linux(.*)fedora','linuxfedora',
+'linux(.*)gentoo','linuxgentoo',
 'linux(.*)mandr','linuxmandr',
 'linux(.*)red[_+ ]hat','linuxredhat',
 'linux(.*)suse','linuxsuse',
@@ -157,6 +164,7 @@
 'webtv','webtv',
 'playstation[_+ ]portable', 'psp',
 'xbox', 'winxbox',
+'wii', 'wii',
 );
 
 # OS name list ('os unique id in lower case','os clear text')
@@ -164,18 +172,20 @@
 #-----------------------------------------------------------
 %OSHashLib      = (
 # Windows family OS
-'winlong','<a href="http://www.microsoft.com/windows/" title="Windows Vista home page [new window]" target="_blank">Windows Vista</a>',
+'winlong','<a href="http://www.microsoft.com/windows/" title="Windows Vista home page [new window]" target="_blank">Windows Vista (LongHorn)</a>',
+'win2008','<a href="http://www.microsoft.com/windowsserver2008/" title="Windows 2008 home page [new window]" target="_blank">Windows 2008</a>',
+'winvista','<a href="http://www.microsoft.com/windowsvista/" title="Windows Vista home page [new window]" target="_blank">Windows Vista</a>',
 'win2003','<a href="http://www.microsoft.com/windowsserver2003/" title="Windows 2003 home page [new window]" target="_blank">Windows 2003</a>',
 'winxp','<a href="http://www.microsoft.com/windowsxp/" title="Windows XP home page [new window]" target="_blank">Windows XP</a>',
-'winme','<a href="http://www.microsoft.com/windowsme/" title="Windows Me home page [new window]" target="_blank">Windows Me</a>',
-'win2000','<a href="http://www.microsoft.com/windows2000/" title="Windows 2000 home page [new window]" target="_blank">Windows 2000</a>',
-'winnt','<a href="http://www.microsoft.com/ntworkstation/" title="Windows NT home page [new window]" target="_blank">Windows NT</a>',
-'win98','<a href="http://www.microsoft.com/windows98/" title="Windows 98 home page [new window]" target="_blank">Windows 98</a>',
-'win95','<a href="http://www.microsoft.com/windows95/" title="Windows 95 home page [new window]" target="_blank">Windows 95</a>',
-'win16','<a href="http://www.microsoft.com/" title="Windows 3.xx home page [new window]" target="_blank">Windows 3.xx</a>',
-'wince','<a href="http://www.microsoft.com/windowsmobile/" title="Windows CE home page [new window]" target="_blank">Windows CE</a>',
+'winme','<a href="http://support.microsoft.com/ph/6519/" title="Windows ME support page [new window]" target="_blank">Windows ME</a>',
+'win2000','<a href="http://support.microsoft.com/ph/1131" title="Windows 2000 support page [new window]" target="_blank">Windows 2000</a>',
+'winnt','<a href="http://support.microsoft.com/default.aspx?pr=ntw40" title="Windows NT support page [new window]" target="_blank">Windows NT</a>',
+'win98','<a href="http://support.microsoft.com/w98" title="Windows 98 support page [new window]" target="_blank">Windows 98</a>',
+'win95','<a href="http://support.microsoft.com/ph/7864" title="Windows 95 support page [new window]" target="_blank">Windows 95</a>',
+'win16','<a href="http://www.microsoft.com/windows/WinHistoryDesktop.mspx#E1B" title="Windows 3.xx history page [new window]" target="_blank">Windows 3.xx</a>',
+'wince','<a href="http://www.microsoft.com/windowsmobile/" title="Windows Mobile home page [new window]" target="_blank">Windows Mobile</a>',
 'winunknown','Windows (unknown version)',
-'winxbox','<a href="http://www.xbox.com/en-US/hardware/xbox/" title="Microsoft XBOX home page [new window]" target="_blank">Microsoft XBOX</a>',
+'winxbox','<a href="http://www.xbox.com/" title="Microsoft XBOX home page [new window]" target="_blank">Microsoft XBOX</a>',
 # Macintosh OS
 'macosx','<a href="http://www.apple.com/macosx/" title="Mac OS X home page [new window]" target="_blank">Mac OS X</a>',
 'macintosh','<a href="http://www.apple.com/" title="Mac OS home page [new window]" target="_blank">Mac OS</a>',
@@ -183,6 +193,7 @@
 'linuxcentos','<a href="http://www.centos.org/" title="Centos home page [new window]" target="_blank">Centos</a>',
 'linuxdebian','<a href="http://www.debian.org/" title="Debian home page [new window]" target="_blank">Debian</a>',
 'linuxfedora','<a href="http://fedora.redhat.com/" title="Fedora home page [new window]" target="_blank">Fedora</a>',
+'linuxgentoo','<a href="http://www.gentoo.org/" title="Gentoo home page [new window]" target="_blank">Gentoo</a>',
 'linuxmandr','<a href="http://www.mandriva.com/" title="Mandriva (former Mandrake) home page [new window]" target="_blank">Mandriva (or Mandrake)</a>',
 'linuxredhat','<a href="http://www.redhat.com/" title="Red Hat home page [new window]" target="_blank">Red Hat</a>',
 'linuxsuse','<a href="http://www.novell.com/linux/suse/" title="Suse home page [new window]" target="_blank">Suse</a>',
@@ -193,7 +204,7 @@
 'gnu','<a href="www.gnu.org/software/hurd/hurd.html" title="GNU Hurd home page [new window]" target="_blank">GNU Hurd</a>',
 # BSDs
 'bsdi','<a href="http://en.wikipedia.org/wiki/BSDi" title="BSDi home page [new window]" target="_blank">BSDi</a>',
-'bsdkfreebsd','GNU/kFreeBSD',
+'bsdkfreebsd','<a href="http://www.debian.org/ports/kfreebsd-gnu/" title="Debian GNU/kFreeBSD" target="_blank">GNU/kFreeBSD</a>',
 'freebsd','<a href="http://www.freebsd.org/" title="FreeBSD home page [new window]" target="_blank">FreeBSD</a>',    # For backard compatibility
 'bsdfreebsd','<a href="http://www.freebsd.org/" title="FreeBSD home page [new window]" target="_blank">FreeBSD</a>',
 'openbsd','<a href="http://www.openbsd.org/" title="OpenBSD home page [new window]" target="_blank">OpenBSD</a>',    # For backard compatibility
@@ -221,7 +232,8 @@
 'riscos','<a href="http://www.riscos.com/" title="RISC OS home page [new window]" target="_blank">RISC OS</a>',
 'symbian','<a href="http://www.symbian.com/" title="Symbian OS home page [new window]" target="_blank">Symbian OS</a>',
 'webtv','<a href="http://www.webtv.com/" title="WebTV home page [new window]" target="_blank">WebTV</a>',
-'psp', '<a href="http://www.playstation.jp/psp/" title="Sony PlayStation Portable home page [new window]" target="_blank">Sony PlayStation Portable</a>',
+'psp', '<a href="http://www.us.playstation.com/psp" title="Sony PlayStation Portable home page [new window]" target="_blank">Sony PlayStation Portable</a>',
+'wii', '<a href="http://wii.opera.com/" title="Opera for Nintendo Wii home page [new window]" target="_blank">Nintendo Wii</a>'
 );
 
 
