@@ -3587,16 +3587,10 @@ sub Read_History_With_TmpUpdate {
 				}
 				next;
 			}
-			if (    $field[0] eq 'LastUpdate'
-				 || $field[0] eq "${xmlrb}LastUpdate" )
+			if ($field[0] eq 'LastUpdate'
+				 || $field[0] eq "${xmlrb}LastUpdate")
 			{
-				if ( $LastUpdate < $field[1] ) {
-					$LastUpdate = int( $field[1] );
-
-					#$LastUpdateLinesRead=int($field[2]);
-					#$LastUpdateNewLinesRead=int($field[3]);
-					#$LastUpdateLinesCorrupted=int($field[4]);
-				}
+				if (! $LastUpdate) { $LastUpdate=int($field[1]); }; 
 				next;
 			}
 			if (    $field[0] eq 'TotalVisits'
@@ -6114,12 +6108,8 @@ sub Save_History {
 	}
 
 	# General
-	if ( $sectiontosave eq 'general' ) {
-		if ( $LastUpdate <
-			 int("$nowyear$nowmonth$nowday$nowhour$nowmin$nowsec") )
-		{
-			$LastUpdate = int("$nowyear$nowmonth$nowday$nowhour$nowmin$nowsec");
-		}
+	if ($sectiontosave eq 'general') {
+		$LastUpdate=int("$nowyear$nowmonth$nowday$nowhour$nowmin$nowsec");
 		print HISTORYTMP "\n";
 		if ($xml) {
 			print HISTORYTMP "<section id='$sectiontosave'><comment>\n";
