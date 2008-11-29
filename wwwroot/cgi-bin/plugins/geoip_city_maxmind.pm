@@ -2240,26 +2240,26 @@ my %regall=(
 "LV_02","Aluksnes",
 "LV_03","Balvu",
 "LV_04","Bauskas",
-"LV_05","Cïsu",
+"LV_05","Cï¿½su",
 "LV_06","Daugavpils",
 "LV_07","Daugavpils",
 "LV_08","Dobeles",
 "LV_09","Gulbenes",
-"LV_10","Jïkabpils",
+"LV_10","Jekabpils",
 "LV_11","Jelgava",
 "LV_12","Jelgavas",
 "LV_13","Jurmala",
-"LV_14","Krïlavas",
+"LV_14","Krelavas",
 "LV_15","Kuldigas",
-"LV_16","Liepïja",
-"LV_17","Liepïjas",
+"LV_16","Liepeja",
+"LV_17","Liepejas",
 "LV_18","Limbazu",
 "LV_19","Ludzas",
 "LV_20","Madonas",
 "LV_21","Ogres",
 "LV_22","Preilu",
-"LV_23","Rïzekne",
-"LV_24","Rïzeknes",
+"LV_23","Rezekne",
+"LV_24","Rezeknes",
 "LV_25","Riga",
 "LV_26","Rigas",
 "LV_27","Saldus",
@@ -4389,7 +4389,7 @@ sub AddHTMLGraph_geoip_city_maxmind {
    		    print "<td class=\"aws\">".$DomainsHashIDLib{$countrycode}."</td>";
    		    my $regionlib=RegionName($countrycode, $regioncode);
    		    print "<td class=\"aws\">".($regionlib?$regionlib:'&nbsp;')."</td>";
-   		    print "<td class=\"aws\">".ucfirst($city)."</td>";
+   		    print "<td class=\"aws\">".ucfirst(EncodeToPageCode($city))."</td>";
     		if ($ShowCities =~ /P/i) { print "<td>".($_city_p{$key}?$_city_p{$key}:"&nbsp;")."</td>"; }
     		if ($ShowCities =~ /P/i) { print "<td>".($_city_p{$key}?"$p_p %":'&nbsp;')."</td>"; }
     		if ($ShowCities =~ /H/i) { print "<td>".($_city_h{$key}?$_city_h{$key}:"&nbsp;")."</td>"; }
@@ -4590,7 +4590,7 @@ sub ShowInfoHost_geoip_city_maxmind {
 #		    else { print "<span style=\"color: #$color_other\">$Message[0]</span>"; }
 #		    print "</td>";
 			print "<td>";
-		    if ($city) { print "$city"; }
+		    if ($city) { print EncodeToPageCode($city); }
 		    else { print "<span style=\"color: #$color_other\">$Message[0]</span>"; }
 		    print "</td>";
 		}
@@ -4626,7 +4626,7 @@ sub ShowInfoHost_geoip_city_maxmind {
 #		    else { print "<span style=\"color: #$color_other\">$Message[0]</span>"; }
 #		    print "</td>";
 			print "<td>";
-		    if ($city) { print "$city"; }
+		    if ($city) { print EncodeToPageCode($city); }
 		    else { print "<span style=\"color: #$color_other\">$Message[0]</span>"; }
 			print "</td>";
 		}
@@ -4811,14 +4811,14 @@ sub SectionWriteHistory_geoip_city_maxmind {
 		#my $page=$_city_p{$_}||0;
 		#my $bytes=$_city_k{$_}||0;
 		#my $lastaccess=$_city_l{$_}||'';
-		print HISTORYTMP "${xmlrb}$_${xmlrs}0${xmlrs}", $_city_h{$_}, "${xmlrs}0${xmlrs}0${xmlre}\n"; next;
+		print HISTORYTMP "${xmlrb}".XMLEncodeForHisto($_)."${xmlrs}0${xmlrs}", $_city_h{$_}, "${xmlrs}0${xmlrs}0${xmlre}\n"; next;
 	}
 	foreach (keys %_city_h) {
 		if ($keysinkeylist{$_}) { next; }
 		#my $page=$_city_p{$_}||0;
 		#my $bytes=$_city_k{$_}||0;
 		#my $lastaccess=$_city_l{$_}||'';
-		print HISTORYTMP "${xmlrb}$_${xmlrs}0${xmlrs}", $_city_h{$_}, "${xmlrs}0${xmlrs}0${xmlre}\n"; next;
+		print HISTORYTMP "${xmlrb}".XMLEncodeForHisto($_)."${xmlrs}0${xmlrs}", $_city_h{$_}, "${xmlrs}0${xmlrs}0${xmlre}\n"; next;
 	}
 	print HISTORYTMP "${xmleb}END_PLUGIN_geoip_city_maxmind${xmlee}\n";
 	# ----->
