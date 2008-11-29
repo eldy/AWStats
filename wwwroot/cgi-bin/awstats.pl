@@ -7483,6 +7483,17 @@ sub XMLEncodeForHisto {
 }
 
 #------------------------------------------------------------------------------
+# Function:     Encode an ISO string to PageCode output
+# Parameters:	stringtoencode
+# Return:		encodedstring
+#------------------------------------------------------------------------------
+sub EncodeToPageCode {
+	my $string = shift;
+
+	return $string;
+}
+
+#------------------------------------------------------------------------------
 # Function:     Encode a binary string into an ASCII string
 # Parameters:	stringtoencode
 # Return:		encodedstring
