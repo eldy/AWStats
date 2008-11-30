@@ -14,7 +14,7 @@ server log files (and even ftp servers or mail logs) on all Operating Systems.
 License: GNU GPL (GNU General Public License. See LICENSE file),
          OSI Certified Open Source Software license.
 Version: 6.9
-Release date: August 2008
+Release date: November 2008
 Platforms: All (Linux, NT, BSD, Solaris and other *NIX's, BeOS, OS/2...)
 Author: Laurent Destailleur <eldy@users.sourceforge.net>
 AWStats official web site and latest version: http://awstats.sourceforge.net
@@ -91,6 +91,7 @@ I - 2) Requirements
 	* Your server must log web access in a log file you can read.
 	* To run awstats, from command line, your operating system must be able
 	  to run perl scripts (.pl files).
+	* Perl module "Encode" must be available.
 	  
 	To run awstats as a CGI (for real-time
 	  statistics), your web server must also be able to run such scripts.

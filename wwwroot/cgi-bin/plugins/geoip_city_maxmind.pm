@@ -1157,7 +1157,7 @@ my %regall=(
 "ET_52","Sumale",
 "ET_53","Tigray",
 "ET_54","YeDebub Biheroch Bihereseboch na Hizboch",
-"FI_01","�land",
+"FI_01","Iland",
 "FI_06","Lapland",
 "FI_08","Oulu",
 "FI_13","Southern Finland",
@@ -2124,7 +2124,7 @@ my %regall=(
 "KZ_01","Almaty",
 "KZ_02","Almaty City",
 "KZ_03","Aqmola",
-"KZ_04","Aqt�be",
+"KZ_04","Aqtebe",
 "KZ_05","Astana",
 "KZ_06","Atyrau",
 "KZ_07","West Kazakhstan",
@@ -2245,21 +2245,21 @@ my %regall=(
 "LV_07","Daugavpils",
 "LV_08","Dobeles",
 "LV_09","Gulbenes",
-"LV_10","J�kabpils",
+"LV_10","Jekabpils",
 "LV_11","Jelgava",
 "LV_12","Jelgavas",
 "LV_13","Jurmala",
-"LV_14","Kr�slavas",
+"LV_14","Krelavas",
 "LV_15","Kuldigas",
-"LV_16","Liep�ja",
-"LV_17","Liep�jas",
+"LV_16","Liepeja",
+"LV_17","Liepejas",
 "LV_18","Limbazu",
 "LV_19","Ludzas",
 "LV_20","Madonas",
 "LV_21","Ogres",
 "LV_22","Preilu",
-"LV_23","R�zekne",
-"LV_24","R�zeknes",
+"LV_23","Rezekne",
+"LV_24","Rezeknes",
 "LV_25","Riga",
 "LV_26","Rigas",
 "LV_27","Saldus",
@@ -4389,7 +4389,7 @@ sub AddHTMLGraph_geoip_city_maxmind {
    		    print "<td class=\"aws\">".$DomainsHashIDLib{$countrycode}."</td>";
    		    my $regionlib=RegionName($countrycode, $regioncode);
    		    print "<td class=\"aws\">".($regionlib?$regionlib:'&nbsp;')."</td>";
-   		    print "<td class=\"aws\">".ucfirst($city)."</td>";
+   		    print "<td class=\"aws\">".ucfirst(EncodeToPageCode($city))."</td>";
     		if ($ShowCities =~ /P/i) { print "<td>".($_city_p{$key}?$_city_p{$key}:"&nbsp;")."</td>"; }
     		if ($ShowCities =~ /P/i) { print "<td>".($_city_p{$key}?"$p_p %":'&nbsp;')."</td>"; }
     		if ($ShowCities =~ /H/i) { print "<td>".($_city_h{$key}?$_city_h{$key}:"&nbsp;")."</td>"; }
@@ -4590,7 +4590,7 @@ sub ShowInfoHost_geoip_city_maxmind {
 #		    else { print "<span style=\"color: #$color_other\">$Message[0]</span>"; }
 #		    print "</td>";
 			print "<td>";
-		    if ($city) { print "$city"; }
+		    if ($city) { print EncodeToPageCode($city); }
 		    else { print "<span style=\"color: #$color_other\">$Message[0]</span>"; }
 		    print "</td>";
 		}
@@ -4626,7 +4626,7 @@ sub ShowInfoHost_geoip_city_maxmind {
 #		    else { print "<span style=\"color: #$color_other\">$Message[0]</span>"; }
 #		    print "</td>";
 			print "<td>";
-		    if ($city) { print "$city"; }
+		    if ($city) { print EncodeToPageCode($city); }
 		    else { print "<span style=\"color: #$color_other\">$Message[0]</span>"; }
 			print "</td>";
 		}
@@ -4811,14 +4811,14 @@ sub SectionWriteHistory_geoip_city_maxmind {
 		#my $page=$_city_p{$_}||0;
 		#my $bytes=$_city_k{$_}||0;
 		#my $lastaccess=$_city_l{$_}||'';
-		print HISTORYTMP "${xmlrb}$_${xmlrs}0${xmlrs}", $_city_h{$_}, "${xmlrs}0${xmlrs}0${xmlre}\n"; next;
+		print HISTORYTMP "${xmlrb}".XMLEncodeForHisto($_)."${xmlrs}0${xmlrs}", $_city_h{$_}, "${xmlrs}0${xmlrs}0${xmlre}\n"; next;
 	}
 	foreach (keys %_city_h) {
 		if ($keysinkeylist{$_}) { next; }
 		#my $page=$_city_p{$_}||0;
 		#my $bytes=$_city_k{$_}||0;
 		#my $lastaccess=$_city_l{$_}||'';
-		print HISTORYTMP "${xmlrb}$_${xmlrs}0${xmlrs}", $_city_h{$_}, "${xmlrs}0${xmlrs}0${xmlre}\n"; next;
+		print HISTORYTMP "${xmlrb}".XMLEncodeForHisto($_)."${xmlrs}0${xmlrs}", $_city_h{$_}, "${xmlrs}0${xmlrs}0${xmlre}\n"; next;
 	}
 	print HISTORYTMP "${xmleb}END_PLUGIN_geoip_city_maxmind${xmlee}\n";
 	# ----->

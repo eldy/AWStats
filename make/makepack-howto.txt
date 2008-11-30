@@ -1,4 +1,4 @@
-***** Actions to do to release *****
+***** Actions to build a beta or release *****
 - Check all files are commited.
 - Update file README.txt
 - Update version number in doc files
@@ -6,7 +6,7 @@
 - Update version number and copyright year in awstats.pl file
 - Build PAD files
 - Build PDF
-- Tagger CVS
+- Tagger CVS  (AWSTATS_x_x_BETA or AWSTATS_x_x)
 
 - makepack sur webmin
 - makepack sur awstats (If on linux copy awstats_logo1.gif into $RPMDIR/SOURCES)
@@ -14,5 +14,5 @@
 - Move build files into "files" directory
 - Update web site page index.php
 - Upload files and web site on web server
-- Upload files on sourceforge
+- Upload files on sourceforge (release only)
 - Send mail on mailing-list
