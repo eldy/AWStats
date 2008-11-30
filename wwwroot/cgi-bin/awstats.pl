@@ -16,6 +16,7 @@ use strict;
 no strict "refs";
 use Time::Local;	# use Time::Local 'timelocal_nocheck' is faster but not supported by all Time::Local modules
 use Socket;
+use Encode;
 
 #------------------------------------------------------------------------------
 # Defines
@@ -7465,7 +7466,8 @@ sub XMLEncode {
 
 #------------------------------------------------------------------------------
 # Function:		Transforms spaces into %20 and special chars by HTML entities as needed in XML/XHTML
-#				Decoding is done by XMLDecodeFromHisto
+#				Decoding is done by XMLDecodeFromHisto.
+#				AWStats data files are stored in ISO-8859-1. 
 # Parameters:	stringtoencode
 # Return:		encodedstring
 #------------------------------------------------------------------------------
@@ -7489,7 +7491,7 @@ sub XMLEncodeForHisto {
 #------------------------------------------------------------------------------
 sub EncodeToPageCode {
 	my $string = shift;
-
+	if ($PageCode eq 'utf-8') { $string=encode("utf8", $string); }
 	return $string;
 }
 
@@ -7586,6 +7588,7 @@ sub CleanXSS {
 
 #------------------------------------------------------------------------------
 # Function:     Clean tags in a string
+#				AWStats data files are stored in ISO-8859-1. 
 # Parameters:   stringtodecode
 # Input:        None
 # Output:       None
