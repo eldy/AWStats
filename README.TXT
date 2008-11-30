@@ -91,6 +91,7 @@ I - 2) Requirements
 	* Your server must log web access in a log file you can read.
 	* To run awstats, from command line, your operating system must be able
 	  to run perl scripts (.pl files).
+	* Perl module "Encode" must be available.
 	  
 	To run awstats as a CGI (for real-time
 	  statistics), your web server must also be able to run such scripts.
