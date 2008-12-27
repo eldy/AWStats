@@ -17,3 +17,14 @@
 - Upload files on Sourceforge (release only)
 - Send mail on mailing-list
 - Add a Sourceforge news
+
+
+Exemple of content for an email news:
+
+AWStats x.x beta is ready for tests 
+----------------------------------- 
+ 
+This new version is not ready for a production use. It is just a beta release. 
+AWStats x.x beta contains bug and security fixes and new features:  
+
+Put here content of changelog.
