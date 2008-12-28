@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <PADGEN_PML>
-	<AppVerInfo>PADGen 3.0.1.37</AppVerInfo>
+	<AppVerInfo>PADGen 3.0.1.38</AppVerInfo>
 	<CompanyName />
 	<Program_Info>
 		<Program_Name>AWStats</Program_Name>
-		<Program_Version>6.8</Program_Version>
-		<Program_Release_Month>04</Program_Release_Month>
-		<Program_Release_Day>13</Program_Release_Day>
+		<Program_Version>6.9</Program_Version>
+		<Program_Release_Month>12</Program_Release_Month>
+		<Program_Release_Day>28</Program_Release_Day>
 		<Program_Release_Year>2008</Program_Release_Year>
 		<Program_Cost_Dollars />
 		<Program_Cost_Other_Code />
@@ -76,7 +76,7 @@ Ce programme supporte de plus les serveurs virtuels, des plugins et de nombreuse
 		</Application_URLs>
 		<Download_URLs>
 			<Primary_Download_URL>http://awstats.sourceforge.net/files/awstats.zip</Primary_Download_URL>
-			<Secondary_Download_URL>http://downloads.sourceforge.net/awstats/awstats-6.8.tar.gz</Secondary_Download_URL>
+			<Secondary_Download_URL>http://downloads.sourceforge.net/awstats/awstats-6.9.tar.gz</Secondary_Download_URL>
 			<Additional_Download_URL_1 />
 			<Additional_Download_URL_2 />
 		</Download_URLs>
