@@ -14,7 +14,8 @@
 - Move build files into "files" directory
 - Update web site page index.php
 - Upload files and web site on web server
-- Upload files on Sourceforge (release only)
+
+- Upload files on Sourceforge (release only, eldy@web.sourceforge.net:/incoming/e/el/eldy/uploads)
 - Send mail on mailing-list
 - Add a Sourceforge news
 
