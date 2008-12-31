@@ -113,19 +113,19 @@ if ($ENV{QUERY_STRING} =~ /key=\"?([^\"&]+)\"?/) { $Key=$1; }
 $Url=$ENV{QUERY_STRING};
 if ($Url =~ /url=\"([^\"]+)\"/) { $Url=$1; }
 elsif ($Url =~ /url=(.+)$/) { $Url=$1; }
+$Url = DecodeEncodedString($Url);
+$UrlParam=$Url;
 
-if ($Url !~ /^\w+:/i) { $Url = "http://".$Url; }
-if (! $Url) {
-	error("Error: Bad use of $PROG. To redirect an URL with $PROG, use the following syntax:<br><i>/cgi-bin/$PROG.pl?url=http://urltogo</i>");
+if (! $UrlParam) {
+        error("Error: Bad use of $PROG. To redirect an URL with $PROG, use the following syntax:<br><i>/cgi-bin/$PROG.pl?url=http://urltogo</i>");
 }
-$Url=DecodeEncodedString($Url);
+
+if ($Url !~ /^http/i) { $Url = "http://".$Url; }
 if ($DEBUG) { print LOGFILE "Url=$Url\n"; }
 
-if ($KEYFORMD5 eq 'YOURKEYFORMD5') {
-        error("Error: You must change value of constant KEYFORMD5");
-}
-if ($Key ne md5($KEYFORMD5.$Url)) {
-        error("Error: Bad value for key= parameter");
+if ($Key ne md5_hex($KEYFORMD5.$UrlParam)) {
+#       error("Error: Bad value key=".$Key." to have a redirect to ".$UrlParam." - ".$KEYFORMD5." - ".md5_hex($KEYFORMD5.$UrlParam) );
+        error("Error: Bad value key=".$Key." to have a redirect to ".$UrlParam);
 }
 
 
