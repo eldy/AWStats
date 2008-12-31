@@ -102,6 +102,10 @@ if (! $ENV{'GATEWAY_INTERFACE'}) {	# Run from command line
 	exit 0;
 }
 
+if ($KEYFORMD5 eq 'YOURKEYFORMD5') {
+        error("Error: You must change value of constant KEYFORMD5");
+}
+
 # Extract tag
 $Tag='NOTAG';
 if ($ENV{QUERY_STRING} =~ /tag=\"?([^\"&]+)\"?/) { $Tag=$1; }
