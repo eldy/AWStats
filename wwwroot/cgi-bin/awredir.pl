@@ -2,10 +2,12 @@
 #-------------------------------------------------------
 # Save the click done on managed hits into a trace file
 # and return to browser a redirector to tell browser to visit this URL.
-# Ex: <a href="http://athena/cgi-bin/awredir/awredir.pl?tag=TAGFORLOG&url=http://212.43.217.240/%7Eforumgp/forum/list.php3?f=11">XXX</a>
+# Ex: <a href="http://athena/cgi-bin/awredir/awredir.pl?tag=TAGFORLOG&key=ABCDEFGH&url=http://212.43.217.240/%7Eforumgp/forum/list.php3?f=11">XXX</a>
+# Where ABCDEFGH is md5(YOURKEYFORMD5.url)
 #-------------------------------------------------------
 
 #use DBD::mysql;
+use Digest::MD5 qw(md5 md5_hex md5_base64);
 
 
 #-------------------------------------------------------
@@ -27,6 +29,7 @@ $TXTDIR="$DIR/../../../logs";	# Directory where to write tracking file (if TRACE
 $TXTFILE="awredir.trc";			# Tracking file (if TRACEFILE=1)
 $EXCLUDEIP="127.0.0.1";
 
+$MD5KEY='YOURKEYFORMD5';
 
 #-------------------------------------------------------
 # Functions
@@ -52,6 +55,21 @@ sub error {
     die;
 }
 
+#------------------------------------------------------------------------------
+# Function:     Decode an URL encoded string
+# Parameters:	stringtodecode
+# Input:        None
+# Output:		None
+# Return:		decodedstring
+#--------------------------------------------------------------------
+sub DecodeEncodedString {
+	my $stringtodecode=shift;
+	$stringtodecode =~ s/\+/ /g;
+	$stringtodecode =~ s/%([a-fA-F0-9][a-fA-F0-9])/pack("C", hex($1))/eg;		# Decode encoded URL
+	return $stringtodecode;
+}
+
+
 #-------------------------------------------------------
 # MAIN
 #-------------------------------------------------------
@@ -73,7 +91,7 @@ if (! $ENV{'GATEWAY_INTERFACE'}) {	# Run from command line
 	print "HTML pages from\n";
 	print "<a href=\"http://externalsite/pagelinked\">Link</a>\n";
 	print "to\n";
-	print "<a href=\"http://mysite/cgi-bin/awredir.pl?url=http://externalsite/pagelinked\">Link</a>\n";
+	print "<a href=\"http://mysite/cgi-bin/awredir.pl?key=ABCDEFGH&url=http://externalsite/pagelinked\">Link</a>\n";
 	print "\n";
 	print "For your web visitor, there is no difference. However this allow you to track\n";
 	print "clicks done on links onto your web pages that point to external web sites,\n";
@@ -88,6 +106,9 @@ if (! $ENV{'GATEWAY_INTERFACE'}) {	# Run from command line
 $Tag='NOTAG';
 if ($ENV{QUERY_STRING} =~ /tag=\"?([^\"&]+)\"?/) { $Tag=$1; }
 
+$Key='NOKEY';
+if ($ENV{QUERY_STRING} =~ /key=\"?([^\"&]+)\"?/) { $Key=$1; }
+
 # Extract url to redirect to
 $Url=$ENV{QUERY_STRING};
 if ($Url =~ /url=\"([^\"]+)\"/) { $Url=$1; }
@@ -97,7 +118,13 @@ if ($Url !~ /^\w+:/i) { $Url = "http://".$Url; }
 if (! $Url) {
 	error("Error: Bad use of $PROG. To redirect an URL with $PROG, use the following syntax:<br><i>/cgi-bin/$PROG.pl?url=http://urltogo</i>");
 }
+$Url=DecodeEncodedString($Url);
 if ($DEBUG) { print LOGFILE "Url=$Url\n"; }
+
+if ($Key ne md5($KEYFORMD5.$Url)) {
+        error("Error: Bad value for key= parameter");
+}
+
 
 # Get date
 ($nowsec,$nowmin,$nowhour,$nowday,$nowmonth,$nowyear,$nowwday,$nowyday,$nowisdst) = localtime(time);
