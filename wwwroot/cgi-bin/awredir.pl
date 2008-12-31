@@ -29,7 +29,7 @@ $TXTDIR="$DIR/../../../logs";	# Directory where to write tracking file (if TRACE
 $TXTFILE="awredir.trc";			# Tracking file (if TRACEFILE=1)
 $EXCLUDEIP="127.0.0.1";
 
-$MD5KEY='YOURKEYFORMD5';
+$KEYFORMD5='YOURKEYFORMD5';
 
 #-------------------------------------------------------
 # Functions
@@ -121,6 +121,9 @@ if (! $Url) {
 $Url=DecodeEncodedString($Url);
 if ($DEBUG) { print LOGFILE "Url=$Url\n"; }
 
+if ($KEYFORMD5 eq 'YOURKEYFORMD5') {
+        error("Error: You must change value of constant KEYFORMD5");
+}
 if ($Key ne md5($KEYFORMD5.$Url)) {
         error("Error: Bad value for key= parameter");
 }
