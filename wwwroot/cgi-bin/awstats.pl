@@ -7512,17 +7512,18 @@ sub EncodeString {
 }
 
 #------------------------------------------------------------------------------
-# Function:     Decode an only text string into a binary string
+# Function:     Decode an url encoded text string into a binary string
 # Parameters:   stringtodecode
 # Input:        None
 # Output:       None
-# Return:		decodedstring
+# Return:       decodedstring
 #------------------------------------------------------------------------------
 sub DecodeEncodedString {
 	my $stringtodecode = shift;
 	$stringtodecode =~ tr/\+/ /s;
-	$stringtodecode =~ s/%22//g;
 	$stringtodecode =~ s/%([A-F0-9][A-F0-9])/pack("C", hex($1))/ieg;
+	$stringtodecode =~ s/["']//g;
+
 	return $stringtodecode;
 }
 

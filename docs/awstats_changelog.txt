@@ -2,6 +2,16 @@ AWStats Changelog
 -----------------
 $Revision$ - $Author$ - $Date$
 
+
+***** 7.0 *****
+
+New features/improvements:
+- Enhance security of awredir.pl script with a security key required by
+  default.
+- Enhance security of parameter sanitizing function.
+
+
+
 ***** 6.9 *****
 
 New features/improvements:
@@ -185,7 +195,7 @@ Fixes:
   BuildReportFormat=xhtml.
 
 Other/Documentation:
-- Added Spanish translation for webmin module by Patricio Martínez Ros.
+- Added Spanish translation for webmin module by Patricio Martï¿½nez Ros.
 - Added croatian language.
 - Update russian language file.
 - Renamed european union by european country.
@@ -243,7 +253,7 @@ Fixes:
   space in names are reported correctly.
 - Restart of apache on debian failed in awstats_configure.pl
 - Better look for file types tables.
-- Fix: [ 1066468 ] Translated word gets corupted (&OUML instead of Ö)
+- Fix: [ 1066468 ] Translated word gets corupted (&OUML instead of ï¿½)
 - Fix: [ 1074810 ] XML Parsing Error
 - Fix: [ 991768 ] "Created by awstats" not localized
 - Fix: [ 1092048 ] flash(.swf) in NotPageList(default)
