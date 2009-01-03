@@ -29,6 +29,10 @@ $TXTDIR="$DIR/../../../logs";	# Directory where to write tracking file (if TRACE
 $TXTFILE="awredir.trc";			# Tracking file (if TRACEFILE=1)
 $EXCLUDEIP="127.0.0.1";
 
+# Put here a personalised value.
+# If you dont want to use the security key in link to avoid use of awredir by an external web
+# site you can set this to empty string, but warning this is a security hole as everybody
+# can use awredir on your site to redirect to any web site (even non legal web sites). 
 $KEYFORMD5='YOURKEYFORMD5';
 
 #-------------------------------------------------------
@@ -103,7 +107,7 @@ if (! $ENV{'GATEWAY_INTERFACE'}) {	# Run from command line
 }
 
 if ($KEYFORMD5 eq 'YOURKEYFORMD5') {
-        error("Error: You must change value of constant KEYFORMD5");
+        error("Error: You must change value of constant KEYFORMD5 in awredir.pl script.");
 }
 
 # Extract tag
@@ -127,9 +131,9 @@ if (! $UrlParam) {
 if ($Url !~ /^http/i) { $Url = "http://".$Url; }
 if ($DEBUG) { print LOGFILE "Url=$Url\n"; }
 
-if ($Key ne md5_hex($KEYFORMD5.$UrlParam)) {
-#       error("Error: Bad value key=".$Key." to have a redirect to ".$UrlParam." - ".$KEYFORMD5." - ".md5_hex($KEYFORMD5.$UrlParam) );
-        error("Error: Bad value key=".$Key." to have a redirect to ".$UrlParam);
+if ($KEYFORMD5 && ($Key ne md5_hex($KEYFORMD5.$UrlParam))) {
+#       error("Error: Bad value for parameter key=".$Key." to allow a redirect to ".$UrlParam." - ".$KEYFORMD5." - ".md5_hex($KEYFORMD5.$UrlParam) );
+        error("Error: Bad value for parameter key=".$Key." to allow a redirect to ".$UrlParam.". Key must be hexadecimal md5(KEYFORMD5.".$UrlParam.") where KEYFORMD5 is value hardcoded into awredir.pl. Note: You can remove use of key by setting KEYFORMD5 to empty string in script awredir.pl");
 }
 
 
