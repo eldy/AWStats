@@ -11460,7 +11460,7 @@ if ( $UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft' )
 # Replace default page name with / only ('if' is to increase speed when only 1 value in @DefaultFile)
 				if ( @DefaultFile > 1 ) {
 					foreach my $elem (@DefaultFile) {
-						if ( $field[$pos_url] =~ s/\/$elem$/\//o ) { last; }
+						if ( $field[$pos_url] =~ s/\/$elem$/\// ) { last; }
 					}
 				}
 				else { $field[$pos_url] =~ s/$regdefault/\//o; }
