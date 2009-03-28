@@ -957,7 +957,7 @@
 'ng\/1\.', # put at end to avoid false positive
 'ng\/2\.', # put at end to avoid false positive
 'exabot',  # put at end to avoid false positive
-'java'   # put at end to avoid false positive
+'java\/[0-9]'   # put at end to avoid false positive
 );
 @RobotsSearchIDOrder_listgen = (
 # Generic robot
@@ -1596,7 +1596,7 @@
 'ng\/1\.','<a href="http://www.exabot.com/" title="Bot home page [new window]" target="_blank">NG 1.x (Exalead)</a>', # put at end to avoid false positive
 'ng\/2\.','<a href="http://www.exabot.com/" title="Bot home page [new window]" target="_blank">NG 2.x (Exalead)</a>', # put at end to avoid false positive
 'exabot','<a href="http://www.exabot.com/" title="Bot home page [new window]" target="_blank">Exabot</a>', # put at end to avoid false positive
-'java','<a href="http://www.projecthoneypot.org/harvester_useragents.php" title="Bot home page [new window]" target="_blank">Java (Often spam bot)</a>', # put at end to avoid false positive
+'java\/[0-9]','<a href="http://www.projecthoneypot.org/harvester_useragents.php" title="Bot home page [new window]" target="_blank">Java (Often spam bot)</a>', # put at end to avoid false positive
 # Generic root ID
 'robot', 'Unknown robot (identified by \'robot\')',
 'crawl', 'Unknown robot (identified by \'crawl\')',
