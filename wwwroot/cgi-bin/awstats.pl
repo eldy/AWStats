@@ -5984,13 +5984,15 @@ sub Save_History {
 		if ($xml) { print HISTORYTMP "</lib><comment>\n"; }
 		print HISTORYTMP
 "# If you remove this file, all statistics for date $breakdate will be lost/reset.\n";
+		print HISTORYTMP 
+"# Last config file used to build this data file was $FileConfig.\n";
 		if ($xml) { print HISTORYTMP "</comment></version>\n"; }
 		print HISTORYTMP "\n";
 		if ($xml) {
 			print HISTORYTMP "<section id='$sectiontosave'><comment>\n";
 		}
 		print HISTORYTMP
-"# Position (offset in bytes) in this file of beginning of each section for\n";
+"# Position (offset in bytes) in this file for beginning of each section for\n";
 		print HISTORYTMP
 "# direct I/O access. If you made changes somewhere in this file, you should\n";
 		print HISTORYTMP

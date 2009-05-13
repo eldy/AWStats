@@ -9,7 +9,7 @@ New features/improvements:
 - Enhance security of awredir.pl script with a security key required by
   default.
 - Enhance security of parameter sanitizing function.
-
+- Add name of config file used to build data files inside data files header.
 
 
 ***** 6.9 *****
