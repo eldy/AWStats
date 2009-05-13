@@ -3,7 +3,7 @@ AWStats Changelog
 $Revision$ - $Author$ - $Date$
 
 
-***** 7.0 *****
+***** 6.95 *****
 
 New features/improvements:
 - Enhance security of awredir.pl script with a security key required by
