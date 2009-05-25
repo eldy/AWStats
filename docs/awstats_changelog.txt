@@ -13,7 +13,7 @@ New features/improvements:
 
 Fixes:
 - awstats emmits ton of warnings with new geoipfree - ID: 2794728
-
+- fix: can detect robots with robots.txt url even if file is not root.
 
 
 ***** 6.9 *****

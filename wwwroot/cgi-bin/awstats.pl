@@ -1578,12 +1578,24 @@ sub GetSessionRange {
 # Return:		-1, 0, 1
 #------------------------------------------------------------------------------
 sub SortBrowsers {
-	$a =~ m/^(\w+?)([\d\.]+)?$/;
-	my $a_family = $1;
-	my @a_ver = split(/\./, $2);
-	$b =~ m/^(\w+?)([\d\.]+)?$/;
-	my $b_family = $1;
-	my @b_ver    = split(/\./, $2);
+	my $a_family = $a;
+	my @a_ver = ();
+	foreach my $family ( keys %BrowsersFamily ) {
+		if ( $a =~ /^$family/i ) {
+			$a =~ m/^(\D+)([\d\.]+)?$/;
+			$a_family = $1;
+			@a_ver = split(/\./, $2);
+		}
+	}
+	my $b_family = $b;
+	my @b_ver = ();
+	foreach my $family ( keys %BrowsersFamily ) {
+		if ( $b =~ /^$family/i ) {
+			$b =~ m/^(\D+)([\d\.]+)?$/;
+			$b_family = $1;
+			@b_ver = split(/\./, $2);
+		}
+	}
 
 	my $compare = 0;
 	my $done    = 0;
@@ -10384,7 +10396,7 @@ if ( $UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft' )
 	# Define precompiled regex
 	my $regmisc        = qr/^$miscquoted/;
 	my $regfavico      = qr/\/favicon\.ico$/i;
-	my $regrobot       = qr/^\/robots\.txt$/i;
+	my $regrobot       = qr/\/robots\.txt$/i;
 	my $regtruncanchor = qr/#(\w*)$/;
 	my $regtruncurl    = qr/([$URLQuerySeparators])(.*)$/;
 	my $regext         = qr/\.(\w{1,6})$/;
