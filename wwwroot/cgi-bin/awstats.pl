@@ -11312,8 +11312,9 @@ if ( $UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft' )
 				if ( !$ValidSMTPCodes{ $field[$pos_code] } )
 				{                          # Code is not valid
 					$_errors_h{ $field[$pos_code] }++;
-					$_errors_k{ $field[$pos_code] } +=
-					  int( $field[$pos_size] );    # Size is often 0 when error
+					if ($field[$pos_size] ne '-') {
+						$_errors_k{$field[$pos_code]}+=int($field[$pos_size]);
+					}
 					if ($Debug) {
 						debug(
 " Record stored in the status code chart (status code=$field[$pos_code])",
@@ -11323,7 +11324,9 @@ if ( $UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft' )
 					$countedtraffic = 3;
 					if ($PageBool) { $_time_nv_p[$hourrecord]++; }
 					$_time_nv_h[$hourrecord]++;
-					$_time_nv_k[$hourrecord] += int( $field[$pos_size] );
+					if ($field[$pos_size] ne '-') {
+						$_time_nv_k[$hourrecord]+=int($field[$pos_size]);
+					}
 				}
 			}
 			elsif ( $LogType eq 'F' ) {    # FTP record
@@ -11376,7 +11379,9 @@ if ( $UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft' )
 								);
 							}
 							$_robot_h{$uarobot}++;
-							$_robot_k{$uarobot} += int( $field[$pos_size] );
+							if ($field[$pos_size] ne '-') {
+								$_robot_k{$uarobot}+=int($field[$pos_size]);
+							}
 							$_robot_l{$uarobot} = $timerecord;
 							if ( $urlwithnoquery =~ /$regrobot/o ) {
 								$_robot_r{$uarobot}++;
@@ -11384,8 +11389,9 @@ if ( $UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft' )
 							$countedtraffic = 4;
 							if ($PageBool) { $_time_nv_p[$hourrecord]++; }
 							$_time_nv_h[$hourrecord]++;
-							$_time_nv_k[$hourrecord] +=
-							  int( $field[$pos_size] );
+							if ($field[$pos_size] ne '-') {
+								$_time_nv_k[$hourrecord]+=int($field[$pos_size]);
+							}
 						}
 					}
 					else {
@@ -11434,8 +11440,9 @@ if ( $UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft' )
 		if ( !$countedtraffic ) {
 			if ($LevelForFileTypesDetection) {
 				$_filetypes_h{$extension}++;
-				$_filetypes_k{$extension} +=
-				  int( $field[$pos_size] );    # TODO can cause a warning
+				if ($field[$pos_size] ne '-') {
+					$_filetypes_k{$extension}+=int($field[$pos_size]);
+				}
 				                               # Compression
 				if ( $pos_gzipin >= 0 && $field[$pos_gzipin] )
 				{                              # If in and out in log
@@ -11484,16 +11491,19 @@ if ( $UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft' )
 				$LastTime{$lastprocesseddate} = $timerecord;
 				$DayPages{$yearmonthdayrecord}++;
 				$_url_p{ $field[$pos_url] }++;   #Count accesses for page (page)
-				$_url_k{ $field[$pos_url] } += int( $field[$pos_size] );
+				if ($field[$pos_size] ne '-') {
+					$_url_k{$field[$pos_url]}+=int($field[$pos_size]);
+				}
 				$_time_p[$hourrecord]++;    #Count accesses for hour (page)
 				                            # TODO Use an id for hash key of url
 				                            # $_url_t{$_url_id}
 			}
 			$_time_h[$hourrecord]++;
-			$_time_k[$hourrecord] += int( $field[$pos_size] );
 			$DayHits{$yearmonthdayrecord}++;    #Count accesses for hour (hit)
-			$DayBytes{$yearmonthdayrecord} +=
-			  int( $field[$pos_size] );         #Count accesses for hour (kb)
+			if ($field[$pos_size] ne '-') {
+				$_time_k[$hourrecord]+=int($field[$pos_size]);
+	 			$DayBytes{$yearmonthdayrecord}+=int($field[$pos_size]);	#Count accesses for hour (kb)
+			}
 
 			# Analyze: Login
 			#---------------
@@ -11749,7 +11759,9 @@ if ( $UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft' )
 			# Store country
 			if ($PageBool) { $_domener_p{$Domain}++; }
 			$_domener_h{$Domain}++;
-			$_domener_k{$Domain} += int( $field[$pos_size] );
+			if ($field[$pos_size] ne '-') {
+				$_domener_k{$Domain}+=int($field[$pos_size]);
+			}
 
 			# Analyze: Host, URL entry+exit and Session
 			#------------------------------------------
@@ -11883,7 +11895,9 @@ if ( $UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft' )
 				$_host_p{$HostResolved}++;
 			}
 			$_host_h{$HostResolved}++;
-			$_host_k{$HostResolved} += int( $field[$pos_size] );
+			if ($field[$pos_size] ne '-') {
+				$_host_k{$HostResolved}+=int($field[$pos_size]);
+			}
 
 			# Analyze: Browser - OS
 			#----------------------
