@@ -11,6 +11,10 @@ New features/improvements:
 - Enhance security of parameter sanitizing function.
 - Add name of config file used to build data files inside data files header.
 
+Fixes:
+- awstats emmits ton of warnings with new geoipfree - ID: 2794728
+
+
 
 ***** 6.9 *****
 

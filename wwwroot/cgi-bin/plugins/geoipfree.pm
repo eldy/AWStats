@@ -51,7 +51,7 @@ sub Init_geoipfree {
 	# ENTER HERE CODE TO DO INIT PLUGIN ACTIONS
 	debug(" Plugin geoipfree: InitParams=$InitParams",1);
 	%TmpDomainLookup=();
-	$gi = Geo::IPfree::new();
+	$gi = Geo::IPfree->new();
 #	$gi->Faster; 	# Do not enable Faster as the Memoize module is rarely available
 	# ----->
 
