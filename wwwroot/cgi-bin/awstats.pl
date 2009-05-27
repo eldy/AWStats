@@ -352,7 +352,7 @@ use vars qw/
 use vars qw/
   @MiscListOrder %MiscListCalc
   %OSFamily %BrowsersFamily @SessionsRange %SessionsAverage
-  %LangBrowserToLangAwstats %LangAWStatsToFlagAwstats
+  %LangBrowserToLangAwstats %LangAWStatsToFlagAwstats %SafariBuildToVersion
   @HostAliases @AllowAccessFromWebToFollowingAuthenticatedUsers
   @DefaultFile @SkipDNSLookupFor
   @SkipHosts @SkipUserAgents @SkipFiles @SkipReferrers @NotPageFiles
@@ -390,7 +390,7 @@ use vars qw/
 			  'linux' => 'Linux',
 			  'bsd'   => 'BSD'
 );
-%BrowsersFamily = ( 'msie' => 1, 'firefox' => 2, 'netscape' => 3, 'svn' => 4 );
+%BrowsersFamily=('msie'=>1,'firefox'=>2,'netscape'=>3,'svn'=>4,'opera'=>5,'safari'=>6,'chrome'=>7,'konqueror'=>8);
 @SessionsRange =
   ( '0s-30s', '30s-2mn', '2mn-5mn', '5mn-15mn', '15mn-30mn', '30mn-1h', '1h+' );
 %SessionsAverage = (
@@ -457,6 +457,53 @@ use vars qw/
 							  'ar' => 'sa',
 							  'sr' => 'cs'
   );
+%SafariBuildToVersion=(
+'85'=>'1.0',
+'85.5'=>'1.0',
+'85.7'=>'1.0.2',
+'85.8'=>'1.0.3',
+'85.8.1'=>'1.0.3',
+'100'=>'1.1',
+'100.1'=>'1.1.1',
+'125.7'=>'1.2.2',
+'125.8'=>'1.2.2',
+'125.9'=>'1.2.3',
+'125.11'=>'1.2.4',
+'125.12'=>'1.2.4',
+'312'=>'1.3',
+'312.3'=>'1.3.1',
+'312.3.1'=>'1.3.1',
+'312.5'=>'1.3.2',
+'312.6'=>'1.3.2',
+'412'=>'2.0',
+'412.2'=>'2.0',
+'412.2.2'=>'2.0',
+'412.5'=>'2.0.1',
+'413'=>'2.0.1',
+'416.12'=>'2.0.2',
+'416.13'=>'2.0.2',
+'417.8'=>'2.0.3',
+'417.9.2'=>'2.0.3',
+'417.9.3'=>'2.0.3',
+'419.3'=>'2.0.4',
+'522.11.3'=>'3.0',
+'522.12'=>'3.0.2',
+'523.10'=>'3.0.4',
+'523.12'=>'3.0.4',
+'525.13'=>'3.1',
+'525.17'=>'3.1.1',
+'525.20'=>'3.1.1',
+'525.20.1'=>'3.1.2',
+'525.21'=>'3.1.2',
+'525.22'=>'3.1.2',
+'525.26'=>'3.2',
+'525.26.13'=>'3.2',
+'525.27'=>'3.2.1',
+'525.27.1'=>'3.2.1',
+'526.11.2'=>'4.0',
+'528.1'=>'4.0',
+'528.16'=>'4.0'
+);  
 @HostAliases = @AllowAccessFromWebToFollowingAuthenticatedUsers = ();
 @DefaultFile = @SkipDNSLookupFor = ();
 @SkipHosts = @SkipUserAgents = @NotPageFiles = @SkipFiles = @SkipReferrers = ();
@@ -717,7 +764,11 @@ use vars qw/ @Message /;
 	'Created by',
 	'plugins',
 	'Regions',
-	'Cities'
+	'Cities',
+	'Opera versions',
+	'Safari versions',
+	'Chrome versions',
+	'Konqueror versions'	
 );
 
 #------------------------------------------------------------------------------
@@ -2151,17 +2202,7 @@ sub Read_Ref_Data {
 			  . " is up to date."
 		);
 	}
-	if ( ( scalar keys %BrowsersHashIDLib )
-		 && @BrowsersSearchIDOrder != ( scalar keys %BrowsersHashIDLib ) - 4 )
-	{
-		error("Not same number of records of BrowsersSearchIDOrder ("
-			. (@BrowsersSearchIDOrder)
-			. " entries) and BrowsersHashIDLib ("
-			. ( ( scalar keys %BrowsersHashIDLib ) - 4 )
-			. " entries without msie,netscape,firefox,svn) in Browsers database. May be you updated AWStats without updating browsers.pm file or you made changed into browsers.pm not correctly. Check your file "
-			. $FilePath{"browsers.pm"}
-			. " is up to date." );
-	}
+	if ((scalar keys %BrowsersHashIDLib) && @BrowsersSearchIDOrder != (scalar keys %BrowsersHashIDLib) - 4) { error("Not same number of records of BrowsersSearchIDOrder (".(@BrowsersSearchIDOrder)." entries) and BrowsersHashIDLib (".((scalar keys %BrowsersHashIDLib) - 4)." entries without msie,netscape,firefox,svn,opera,safari,chrome,konqueror) in Browsers database. May be you updated AWStats without updating browsers.pm file or you made changed into browsers.pm not correctly. Check your file ".$FilePath{"browsers.pm"}." is up to date."); }
 	if (
 		 ( scalar keys %RobotsHashIDLib )
 		 && ( @RobotsSearchIDOrder_list1 + @RobotsSearchIDOrder_list2 +
@@ -10409,10 +10450,16 @@ if ( $UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft' )
 	my $regvermsie        = qr/msie([+_ ]|)([\d\.]*)/i;
 	my $regvernetscape    = qr/netscape.?\/([\d\.]*)/i;
 	my $regverfirefox     = qr/firefox\/([\d\.]*)/i;
+	my $regveropera       = qr/opera\/([\d\.]*)/i;	
+	my $regversafari      = qr/safari\/([\d\.]*)/i;	
+	my $regverchrome      = qr/chrome\/([\d\.]*)/i;
+    my $regverkonqueror   = qr/konqueror\/([\d\.]*)/i;
 	my $regversvn         = qr/svn\/([\d\.]*)/i;
 	my $regvermozilla     = qr/mozilla(\/|)([\d\.]*)/i;
 	my $regnotie          = qr/webtv|omniweb|opera/i;
-	my $regnotnetscape    = qr/gecko|compatible|opera|galeon|safari/i;
+	my $regnotnetscape    = qr/gecko|compatible|opera|galeon|safari|charon/i;
+    my $regnotfirefox     = qr/flock/i;
+	my $regnotsafari      = qr/arora|chrome|shiira/i;
 	my $regreferer        = qr/^(\w+):\/\/([^\/:]+)(:\d+|)/;
 	my $regreferernoquery = qr/^([^$URLQuerySeparators]+)/;
 	my $reglocal          = qr/^(www\.|)$sitewithoutwww/i;
@@ -11911,8 +11958,29 @@ if ( $UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft' )
 					if ( !$uabrowser ) {
 						my $found = 1;
 
+						# Opera ?
+						if ($UserAgent =~ /$regveropera/o) {
+							$_browser_h{"opera$1"}++;
+							$TmpBrowser{$UserAgent}="opera$1";
+						}
+						# Chrome ?
+						elsif ($UserAgent =~ /$regverchrome/o) {
+							$_browser_h{"chrome$1"}++;
+							$TmpBrowser{$UserAgent}="chrome$1";
+						}
+						# Safari ?
+						elsif ($UserAgent =~ /$regversafari/o && $UserAgent !~ /$regnotsafari/o) {
+							my $safariver = $SafariBuildToVersion{$1};
+							$_browser_h{"safari$safariver"}++;
+							$TmpBrowser{$UserAgent}="safari$safariver";
+						}
+						# Konqueror ?
+						elsif ($UserAgent =~ /$regverkonqueror/o) {
+							$_browser_h{"konqueror$1"}++;
+							$TmpBrowser{$UserAgent}="konqueror$1";
+						}
 						# IE ?
-						if (    $UserAgent =~ /$regvermsie/o
+						elsif (    $UserAgent =~ /$regvermsie/o
 							 && $UserAgent !~ /$regnotie/o )
 						{
 							$_browser_h{"msie$2"}++;
@@ -11920,7 +11988,7 @@ if ( $UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft' )
 						}
 
 						# Firefox ?
-						elsif ( $UserAgent =~ /$regverfirefox/o ) {
+						elsif ( $UserAgent =~ /$regverfirefox/o && $UserAgent !~ /$regnotfirefox/o) {
 							$_browser_h{"firefox$1"}++;
 							$TmpBrowser{$UserAgent} = "firefox$1";
 						}

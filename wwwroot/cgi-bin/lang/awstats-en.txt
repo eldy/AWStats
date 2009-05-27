@@ -174,3 +174,7 @@ message169=Created by
 message170=plugins
 message171=Regions
 message172=Cities
+message173=Opera versions
+message174=Safari versions
+message175=Chrome versions
+message176=Konqueror versions

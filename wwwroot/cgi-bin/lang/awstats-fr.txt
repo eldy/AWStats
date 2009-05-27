@@ -174,3 +174,8 @@ message169=Généré par
 message170=plugins
 message171=Regions
 message172=Villes
+message173=Versions Opera
+message174=Versions Safari
+message175=Versions Chrome
+message176=Versions Konqueror	
+
