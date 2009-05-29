@@ -10,7 +10,7 @@ use Cwd;
 
 $PROJECT="awstats";
 $MAJOR="6";
-$MINOR="9";
+$MINOR="95";
 $RPMSUBVERSION="1";
 
 @LISTETARGET=("TGZ","ZIP","RPM","DEB","EXE");   # Possible packages
