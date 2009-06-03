@@ -38,7 +38,7 @@
 '401'=>'Unauthorized',
 '402'=>'Payment required',
 '403'=>'Forbidden',
-'404'=>'Document Not Found',
+'404'=>'Document Not Found (hits on favicon excluded)',
 '405'=>'Method not allowed',
 '406'=>'Document not acceptable to client',
 '407'=>'Proxy authentication required',
