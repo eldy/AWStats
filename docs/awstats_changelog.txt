@@ -13,6 +13,7 @@ New features/improvements:
 - Added details of version for Chrome, Opera, Safari and Konqueror browsers.
 - Update of browsers, robots and search_engines databases (among them, the
   bing search engine).
+- Added Brezhoneg language.
  
 Fixes:
 - awstats emmits ton of warnings with new geoipfree - ID: 2794728
