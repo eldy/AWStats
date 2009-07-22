@@ -467,6 +467,7 @@ use vars qw/
 	'ar' => 'sa',
 	'sr' => 'cs'
   );
+# TODO Remove this old array for an old way to detect Safari version 
 %SafariBuildToVersion = (
 	'85'        => '1.0',
 	'85.5'      => '1.0',
@@ -10564,6 +10565,7 @@ if ( $UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft' )
 	my $regverfirefox     = qr/firefox\/([\d\.]*)/i;
 	my $regveropera       = qr/opera\/([\d\.]*)/i;
 	my $regversafari      = qr/safari\/([\d\.]*)/i;
+	my $regversafariver   = qr/version\/([\d\.]*)/i; 
 	my $regverchrome      = qr/chrome\/([\d\.]*)/i;
 	my $regverkonqueror   = qr/konqueror\/([\d\.]*)/i;
 	my $regversvn         = qr/svn\/([\d\.]*)/i;
@@ -12066,8 +12068,16 @@ if ( $UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft' )
 					if ( !$uabrowser ) {
 						my $found = 1;
 
+						# Firefox ?
+						if ($UserAgent =~ /$regverfirefox/o
+							&& $UserAgent !~ /$regnotfirefox/o )
+						{
+							$_browser_h{"firefox$1"}++;
+							$TmpBrowser{$UserAgent} = "firefox$1";
+						}
+
 						# Opera ?
-						if ( $UserAgent =~ /$regveropera/o ) {
+						elsif ( $UserAgent =~ /$regveropera/o ) {
 							$_browser_h{"opera$1"}++;
 							$TmpBrowser{$UserAgent} = "opera$1";
 						}
@@ -12079,34 +12089,20 @@ if ( $UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft' )
 						}
 
 						# Safari ?
-						elsif ($UserAgent =~ /$regversafari/o
-							&& $UserAgent !~ /$regnotsafari/o )
-						{
-							my $safariver = $SafariBuildToVersion{$1};
-							$_browser_h{"safari$safariver"}++;
-							$TmpBrowser{$UserAgent} = "safari$safariver";
-						}
+						elsif ($UserAgent =~ /$regversafari/o && $UserAgent !~ /$regnotsafari/o) {
+                            my $safariver=$SafariBuildToVersion{$1};
+                            if ($UserAgent =~ /$regversafariver/o)
+                            {
+                            	$safariver = $1;
+                            }
+                            $_browser_h{"safari$safariver"}++;
+                            $TmpBrowser{$UserAgent}="safari$safariver";
+                        } 
 
 						# Konqueror ?
 						elsif ( $UserAgent =~ /$regverkonqueror/o ) {
 							$_browser_h{"konqueror$1"}++;
 							$TmpBrowser{$UserAgent} = "konqueror$1";
-						}
-
-						# IE ?
-						elsif ($UserAgent =~ /$regvermsie/o
-							&& $UserAgent !~ /$regnotie/o )
-						{
-							$_browser_h{"msie$2"}++;
-							$TmpBrowser{$UserAgent} = "msie$2";
-						}
-
-						# Firefox ?
-						elsif ($UserAgent =~ /$regverfirefox/o
-							&& $UserAgent !~ /$regnotfirefox/o )
-						{
-							$_browser_h{"firefox$1"}++;
-							$TmpBrowser{$UserAgent} = "firefox$1";
 						}
 
 						# Subversion ?
@@ -12115,13 +12111,21 @@ if ( $UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft' )
 							$TmpBrowser{$UserAgent} = "svn$1";
 						}
 
-						# Netscape 6.x, 7.x ... ?
+						# IE ? (must be at end of test)
+						elsif ($UserAgent =~ /$regvermsie/o
+							&& $UserAgent !~ /$regnotie/o )
+						{
+							$_browser_h{"msie$2"}++;
+							$TmpBrowser{$UserAgent} = "msie$2";
+						}
+
+						# Netscape 6.x, 7.x ... ? (must be at end of test)
 						elsif ( $UserAgent =~ /$regvernetscape/o ) {
 							$_browser_h{"netscape$1"}++;
 							$TmpBrowser{$UserAgent} = "netscape$1";
 						}
 
-						# Netscape 3.x, 4.x ... ?
+						# Netscape 3.x, 4.x ... ? (must be at end of test)
 						elsif ($UserAgent =~ /$regvermozilla/o
 							&& $UserAgent !~ /$regnotnetscape/o )
 						{
