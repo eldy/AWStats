@@ -14994,7 +14994,7 @@ if ( scalar keys %HTMLOutput ) {
 			foreach my $key (@keylist) {
 				my $useragent = XMLEncode( CleanXSS($key) );
 				print "<tr><td class=\"aws\">$useragent</td>";
-				print "<td>"
+				print "<td nowrap=\"nowrap\">"
 				  . Format_Date( $_unknownreferer_l{$key}, 1 ) . "</td>";
 				print "</tr>\n";
 				$total_l += 1;
@@ -15023,7 +15023,7 @@ if ( scalar keys %HTMLOutput ) {
 				\%_unknownrefererbrowser_l );
 			foreach my $key (@keylist) {
 				my $useragent = XMLEncode( CleanXSS($key) );
-				print "<tr><td class=\"aws\">$useragent</td><td>"
+				print "<tr><td class=\"aws\">$useragent</td><td nowrap=\"nowrap\">"
 				  . Format_Date( $_unknownrefererbrowser_l{$key}, 1 )
 				  . "</td></tr>\n";
 				$total_l += 1;
