@@ -143,6 +143,7 @@
 # RSS Readers
 'abilon',
 'aggrevator',
+'aiderss',
 'akregator',
 'applesyndication',
 'betanews_reader',
@@ -192,13 +193,16 @@
 'ericsson',				# Ericsson (must be after sonyericsson)
 'mmef',
 'mspie',
+'vodafone',
 'wapalizer',
 'wapsilon',
+'wap',					# Generic WAP phone (must be after 'wap*')
 'webcollage',
 'up\.',					# Works for UP.Browser and UP.Link
+# PDA/Phonecell browsers
 'blackberry',
-# PDA/Phonecell I-Mode browsers
 'docomo',
+'iphone',
 'portalmmm',
 # Others (TV)
 'webtv',
@@ -234,9 +238,6 @@
 'microsoft\-webdav\-miniredir', 
 'microsoft\sdata\saccess\sinternet\spublishing\sprovider\scache\smanager',
 'microsoft\sdata\saccess\sinternet\spublishing\sprovider\sdav',
-'microsoft\sdata\saccess\sinternet\spublishing\sprovider\sprotocol\sdiscovery',
-'microsoft\soffice\sprotocol\sdiscovery',
-'microsoft\soffice\sexistence\sdiscovery',
 'POE\-Component\-Client\-HTTP',
 'mozilla',				# Must be at end because a lot of browsers contains mozilla in string
 'libwww',				# Must be at end because some browser have both 'browser id' and 'libwww'
@@ -363,6 +364,7 @@
 # RSS Readers
 'abilon','Abilon (RSS Reader)',
 'aggrevator', 'Aggrevator (RSS Reader)',
+'aiderss', 'AideRSS (RSS Reader)',
 'akregator','<a href="http://akregator.sourceforge.net/" title="Browser home page [new window]" target="_blank">Akregator (RSS Reader)</a>',  
 'applesyndication','<a href="http://www.apple.com/macosx/features/safari/" title="Browser home page [new window]" target="_blank">AppleSyndication (RSS Reader)</a>',
 'betanews_reader','Betanews Reader (RSS Reader)',
@@ -412,13 +414,16 @@
 'ericsson','Ericsson Browser (PDA/Phone browser)',			# Must be after SonyEricsson
 'mmef','Microsoft Mobile Explorer (PDA/Phone browser)',
 'mspie','MS Pocket Internet Explorer (PDA/Phone browser)',
+'vodafone','Vodaphone browser (PDA/Phone browser)',
 'wapalizer','WAPalizer (PDA/Phone browser)',
 'wapsilon','WAPsilon (PDA/Phone browser)',
+'wap','Unknown WAP browser (PDA/Phone browser)',			# Generic WAP phone (must be after 'wap*')
 'webcollage','WebCollage (PDA/Phone browser)',
 'up\.','UP.Browser (PDA/Phone browser)',					# Works for UP.Browser and UP.Link
+# PDA/Phonecell browsers
 'blackberry','BlackBerry (PDA/Phone browser)',
-# PDA/Phonecell I-Mode browsers
 'docomo','I-Mode phone (PDA/Phone browser)',
+'iphone','IPhone (PDA/Phone browser)',
 'portalmmm','I-Mode phone (PDA/Phone browser)',
 # Others (TV)
 'webtv','WebTV browser',
@@ -454,9 +459,6 @@
 'microsoft\-webdav\-miniredir', 'Microsoft Data Access Component Internet Publishing Provider',
 'microsoft\sdata\saccess\sinternet\spublishing\sprovider\scache\smanager', 'Microsoft Data Access Component Internet Publishing Provider Cache Manager',
 'microsoft\sdata\saccess\sinternet\spublishing\sprovider\sdav', 'Microsoft Data Access Component Internet Publishing Provider DAV',
-'microsoft\sdata\saccess\sinternet\spublishing\sprovider\sprotocol\sdiscovery', 'Microsoft Data Access Component Internet Publishing Provider Protocol Discovery',
-'microsoft\soffice\sprotocol\sdiscovery','Microsoft Office Protocol Discovery',
-'microsoft\soffice\sexistence\sdiscovery','Microsoft Office Existence Discovery',
 'POE\-Component\-Client\-HTTP','HTTP user-agent for POE (portable networking framework for Perl)',
 'mozilla','Mozilla',
 'libwww','LibWWW',
@@ -572,36 +574,10 @@
 'xaudio','mediaplayer',
 'xine','mediaplayer',
 'xmms','mediaplayer',
-# PDA/Phonecell browsers
-'alcatel','pdaphone',				# Alcatel
-'lg\-','pdaphone',                  # LG
-'ericsson','pdaphone',				# Ericsson
-'mot\-','pdaphone',					# Motorola
-'nokia','pdaphone',					# Nokia
-'panasonic','pdaphone',				# Panasonic
-'philips','pdaphone',				# Philips
-'sagem','pdaphone',                 # Sagem
-'samsung','pdaphone',               # Samsung
-'sie\-','pdaphone',                 # SIE
-'sec\-','pdaphone',                 # Sony/Ericsson
-'sonyericsson','pdaphone',			# Sony/Ericsson
-'mmef','pdaphone',
-'mspie','pdaphone',
-'wapalizer','pdaphone',
-'wapsilon','pdaphone',
-'webcollage','pdaphone',
-'up\.','pdaphone',					# Works for UP.Browser and UP.Link
-'blackberry','pdaphone',
-# PDA/Phonecell I-Mode browsers
-'docomo','pdaphone',
-'portalmmm','pdaphone',
-# Others (TV)
-'webtv','webtv',
-# Anonymous Proxy Browsers (can be used as grabbers as well...)
-'cjb\.net','cjbnet',
 # RSS Readers
 'abilon', 'abilon',
 'aggrevator', 'rss',
+'aiderss', 'rss',
 'akregator', 'rss',
 'applesyndication', 'rss',
 'betanews_reader','rss',
@@ -635,6 +611,36 @@
 'syndirella', 'rss',
 'vienna', 'rss',
 'wizz\srss\snews\sreader','wizz',
+# PDA/Phonecell browsers
+'alcatel','pdaphone',				# Alcatel
+'lg\-','pdaphone',                  # LG
+'ericsson','pdaphone',				# Ericsson
+'mot\-','pdaphone',					# Motorola
+'nokia','pdaphone',					# Nokia
+'panasonic','pdaphone',				# Panasonic
+'philips','pdaphone',				# Philips
+'sagem','pdaphone',                 # Sagem
+'samsung','pdaphone',               # Samsung
+'sie\-','pdaphone',                 # SIE
+'sec\-','pdaphone',                 # Sony/Ericsson
+'sonyericsson','pdaphone',			# Sony/Ericsson
+'mmef','pdaphone',
+'mspie','pdaphone',
+'vodafone','pdaphone',
+'wapalizer','pdaphone',
+'wapsilon','pdaphone',
+'wap','pdaphone',					# Generic WAP phone (must be after 'wap*')
+'webcollage','pdaphone',
+'up\.','pdaphone',					# Works for UP.Browser and UP.Link
+# PDA/Phonecell browsers
+'blackberry','pdaphone',
+'docomo','pdaphone',
+'iphone','pdaphone',
+'portalmmm','pdaphone',
+# Others (TV)
+'webtv','webtv',
+# Anonymous Proxy Browsers (can be used as grabbers as well...)
+'cjb\.net','cjbnet',
 # Other kind of browsers
 'apt','apt',
 'analogx_proxy','analogx',

@@ -88,13 +88,14 @@
 'palmos',
 'syllable',
 # Miscellanous OS
+'blackberry',
 'cp/m',
 'crayos',
 'dreamcast',
 'risc[_+ ]?os',
 'symbian',
 'webtv',
-'playstation[_+ ]portable',
+'playstation',
 'xbox',
 'wii',
 'vienna',
@@ -186,13 +187,14 @@
 'palmos','palmos',
 'syllable','syllable',
 # Miscellanous OS
+'blackberry','blackberry',
 'cp/m','cp/m',
 'crayos','crayos',
 'dreamcast','dreamcast',
 'risc[_+ ]?os','riscos',
 'symbian','symbian',
 'webtv','webtv',
-'playstation[_+ ]portable', 'psp',
+'playstation', 'psp',
 'xbox', 'winxbox',
 'wii', 'wii'
 );
@@ -271,13 +273,14 @@
 'palmos','<a href="http://www.palm.com/" title="Palm OS home page [new window]" target="_blank">Palm OS</a>',
 'syllable','<a href="http://www.syllable.org/" title="Syllable home page [new window]" target="_blank">Syllable</a>',
 # Miscellanous OS
+'blackberry','BlackBerry',
 'cp/m','<a href="http://www.digitalresearch.biz/CPM.HTM" title="CP/M home page [new window]" target="_blank">CP/M</a>',
 'crayos','<a href="http://www.cray.com/" title="CrayOS home page [new window]" target="_blank">CrayOS</a>',
 'dreamcast','<a href="http://www.sega.com/" title="Dreamcast home page [new window]" target="_blank">Dreamcast</a>',
 'riscos','<a href="http://www.riscos.com/" title="RISC OS home page [new window]" target="_blank">RISC OS</a>',
 'symbian','<a href="http://www.symbian.com/" title="Symbian OS home page [new window]" target="_blank">Symbian OS</a>',
 'webtv','<a href="http://www.webtv.com/" title="WebTV home page [new window]" target="_blank">WebTV</a>',
-'psp', '<a href="http://www.us.playstation.com/psp" title="Sony PlayStation Portable home page [new window]" target="_blank">Sony PlayStation Portable</a>',
+'psp', '<a href="http://www.playstation.com/" title="Sony PlayStation home page [new window]" target="_blank">Sony PlayStation</a>',
 'wii', '<a href="http://wii.opera.com/" title="Opera for Nintendo Wii home page [new window]" target="_blank">Nintendo Wii</a>'
 );
 

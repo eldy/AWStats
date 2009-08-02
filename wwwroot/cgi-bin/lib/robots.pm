@@ -317,7 +317,6 @@
 # Rem: To avoid bad detection, some robot's ids were removed from this list:
 #      - Robots with ID of 3 letters only
 #      - Robots called 'webs' and 'tcl'
-# Rem: Some robots mostly used for downloading have also been removed, i.e. wget
 # Rem: directhit changed into direct_hit (its real id)
 # Rem: calif changed into calif[^r] to avoid confusion between Tiscalifreenet browser
 # Rem: fish changed into [^a]fish to avoid confusion between Madsafish browser
@@ -648,6 +647,7 @@
 'wombat',
 'wordpress',
 'worm',
+'woozweb',
 'wwwc',
 'wz101',
 'xget',
@@ -660,6 +660,7 @@
 'aipbot',
 'aleadsoftbot',
 'alpha_search_agent',
+'allrati',
 'aport',
 'archive\.org_bot',
 'argus', 		# Must be before nutch
@@ -670,6 +671,7 @@
 'baiduspider',
 'becomebot',
 'bender',
+'betabot',
 'biglotron',
 'bittorrent_bot',
 'biz360[_+ ]spider',
@@ -724,11 +726,13 @@
 'everest\-vulcan',
 'ezresult',
 'enteprise',
+'facebook',
 'fast_enterprise_crawler.*crawleradmin\.t\-info@telekom\.de',
 'fast_enterprise_crawler.*t\-info_bi_cluster_crawleradmin\.t\-info@telekom\.de',
 'matrix_s\.p\.a\._\-_fast_enterprise_crawler', # must come before fast enterprise crawler
 'fast_enterprise_crawler',
 'fast\-search\-engine',
+'favicon',
 'favorg',
 'favorites_sweeper',
 'feedburner',
@@ -882,6 +886,7 @@
 'sohu', # "sohu agent"
 'snappy',
 'sphere_scout',
+'spip',
 'sproose_crawler',
 'steeler',
 'steroid__download',
@@ -959,15 +964,23 @@
 'ng\/1\.', # put at end to avoid false positive
 'ng\/2\.', # put at end to avoid false positive
 'exabot',  # put at end to avoid false positive
+# Other id that are 99% of robots
+'wget',
+'libwww',
 'java\/[0-9]'   # put at end to avoid false positive
 );
 @RobotsSearchIDOrder_listgen = (
 # Generic robot
 'robot',
+'checker',
 'crawl',
+'discovery',
+'hunter',
+'scanner',
 'spider',
-'bot[+:,\.\;\/\\\-]',
-'[+:,\.\;\/\\\-]bot',
+'sucker',
+'bot[\s_+:,\.\;\/\\\-]',
+'[\s_+:,\.\;\/\\\-]bot',
 'no_user_agent'
 );
 
@@ -1292,6 +1305,7 @@
 'wombat','The Web Wombat',
 'wordpress','<a href="http://wordpress.org/" title="WordPress home page [new window]" target="_blank">WordPress</a>',
 'worm','The World Wide Web Worm',
+'woozweb','Woozweb Monitoring',
 'wwwc','WWWC Ver 0.2.5',
 'wz101','WebZinger',
 'xget','XGET',
@@ -1304,6 +1318,7 @@
 'aipbot','<a href="http://www.aipbot.com/" title="aipbot@aipbot.com Bot home page [new window]" target="_blank">aipbot</a>',  
 'aleadsoftbot','<a href="http://www.aleadsoft.com/bot.htm" title="ALeadSoftbot home page [new window]" target="_blank">ALeadSoftbot</a>',
 'alpha_search_agent','Alpha Search Agent',
+'allrati','Allrati',
 'aport', 'Aport',
 'archive\.org_bot','<a href="http://crawls.archive.org/collections/bncf/crawl.html" title="Bot home page [new window]" target="_blank">archive.org bot</a>',
 'argus','<a href="http://www.simpy.com/bot.html" title="feedback@simpy.com Bot home page [new window]" target="_blank">Argus</a>',
@@ -1314,6 +1329,7 @@
 'baiduspider','<a href="http://www.baidu.com/search/spider.html" title="Bot home page [new window]" target="_blank">BaiDuSpider</a>',
 'becomebot', '<a href="http://www.become.com/site_owners.html" title="Bot home page [new window]" target="_blank">BecomeBot</a>',
 'bender','<a href="http://bender.ucr.edu/" title="Bot home page [new window]" target="_blank">bender</a> <a href="http://ivia.ucr.edu/manuals/NiFC/current/index.shtml" title="Bot home page [new window]" target="_blank">focused_crawler</a>',
+'betabot','BetaBot',
 'biglotron','<a href="http://www.biglotron.com/robot.html" title="Bot home page [new window]" target="_blank">Biglotron</a>',
 'bittorrent_bot','<a href="http://www.bittorrent.com/" title="Bot home page [new window]" target="_blank">BitTorrent Bot</a>',
 'biz360[_+ ]spider','<a href="http://www.biz360.com/" title="blogsmanager@biz360.com Bot home page [new window]" target="_blank">Biz360 spider</a>',
@@ -1367,11 +1383,13 @@
 'everest\-vulcan','<a href="http://everest.vulcan.com/crawlerhelp" title="Bot home page [new window]" target="_blank">Everest-Vulcan</a>',
 'ezresult', 'Ezresult',
 'enteprise','<a href="http://www.fastsearch.com/" title="Bot home page [new window]" target="_blank">Fast Enteprise Crawler</a>',
+'facebook','FaceBook bot',
 'fast\-search\-engine','<a href="http://www.fast-search-engine.com/" title="Bot home page [new window]" target="_blank">Fast-Search-Engine</a> (not fastsearch.com)',
 'fast_enterprise_crawler','<a href="http://www.fast.no/" title="FAST Enterprise Crawler home page [new window]" target="_blank">FAST Enterprise Crawler</a>',
 'fast_enterprise_crawler.*scrawleradmin\.t\-info@telekom\.de','<a href="http://www.telekom.de/" title="FAST Enterprise Crawler * crawleradmin.t-info@telekom.de home page [new window]" target="_blank">FAST Enterprise Crawler * crawleradmin.t-info@telekom.de</a>',
 'matrix_s\.p\.a\._\-_fast_enterprise_crawler','<a href="http://tin.virgilio.it/" title="Matrix S.p.A. - FAST Enterprise Crawler home page [new window]" target="_blank">Matrix S.p.A. - FAST Enterprise Crawler</a>',
 'fast_enterprise_crawler.*t\-info_bi_cluster_crawleradmin\.t\-info@telekom\.de','<a href="http://www.telekom.de/" title="FAST Enterprise Crawler * T-Info_BI_cluster crawleradmin.t-info@telekom.de home page [new window]" target="_blank">FAST Enterprise Crawler * T-Info_BI_cluster crawleradmin.t-info@telekom.de</a>',
+'favicon','FavIconizer',
 'favorg','<a href="http://www.pcmag.com/article2/0,4149,108438,00.asp" title="FavOrg home page [new window]" target="_blank">FavOrg</a>',
 'favorites_sweeper','<a href="http://www.manitools.com/favsweep/" title="Favorites_Sweeper home page [new window]" target="_blank">Favorites Sweeper</a>',
 'feedburner', 'Feedburner',
@@ -1523,6 +1541,7 @@
 'sohu','<a href="http://corp.sohu.com/" title="Bot home page [new window]" target="_blank">sohu agent</a>', 
 'snappy','<a href="http://www.urltrends.com/faq.php" title="Bot home page [new window]" target="_blank">Snappy</a>',
 'sphere_scout','<a href="http://www.sphere.com/" title="Bot home page [new window]" target="_blank">Sphere Scout</a>',
+'spip','<a href="http://www.spip.net" title="SPIP home page [new window]" target="_blank">SPIP</a>',
 'sproose_crawler','<a href="http://www.sproose.com/bot.html" title="Bot home page [new window]" target="_blank">sproose crawler</a>',
 'steroid__download','<a href="http://faqs.org.ru/progr/pascal/delphi_internet2.htm" title="STEROID  Download home page [new window]" target="_blank">STEROID  Download</a>',
 'steeler','<a href="http://www.tkl.iis.u-tokyo.ac.jp/~crawler/ " title="Steeler home page [new window]" target="_blank">Steeler</a>',
@@ -1600,13 +1619,21 @@
 'ng\/1\.','<a href="http://www.exabot.com/" title="Bot home page [new window]" target="_blank">NG 1.x (Exalead)</a>', # put at end to avoid false positive
 'ng\/2\.','<a href="http://www.exabot.com/" title="Bot home page [new window]" target="_blank">NG 2.x (Exalead)</a>', # put at end to avoid false positive
 'exabot','<a href="http://www.exabot.com/" title="Bot home page [new window]" target="_blank">Exabot</a>', # put at end to avoid false positive
+# Other id that are 99% of robots
+'wget','WGet tools',
+'libwww','Perl tool',
 'java\/[0-9]','<a href="http://www.projecthoneypot.org/harvester_useragents.php" title="Bot home page [new window]" target="_blank">Java (Often spam bot)</a>', # put at end to avoid false positive
-# Generic root ID
+# Generic robot
 'robot', 'Unknown robot (identified by \'robot\')',
+'checker', 'Unknown robot (identified by \'checker\')',
 'crawl', 'Unknown robot (identified by \'crawl\')',
+'discovery', 'Unknown robot (identified by \'discovery\')',
+'hunter', 'Unknown robot (identified by \'hunter\')',
+'scanner', 'Unknown robot (identified by \'scanner\')',
 'spider', 'Unknown robot (identified by \'spider\')',
-'bot[+:,\.\;\/\\\-]','Unknown robot (identified by \'bot*\')',
-'[+:,\.\;\/\\\-]bot','Unknown robot (identified by \'*bot\')',
+'sucker', 'Unknown robot (identified by \'sucker\')',
+'bot[\s_+:,\.\;\/\\\-]','Unknown robot (identified by \'bot*\')',
+'[\s_+:,\.\;\/\\\-]bot','Unknown robot (identified by \'*bot\')',
 'no_user_agent','Unknown robot (identified by empty user agent string)',
 # Unknown robots identified by hit on robots.txt
 'unknown', 'Unknown robot (identified by hit on \'robots.txt\')'
