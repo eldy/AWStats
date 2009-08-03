@@ -3,25 +3,21 @@
 # analyzer.
 # ----------------------------------------------------------------------------
 # This sample log file contains 10 differents IPs that are :
-# Viewed traffic: 6 human visits, done by 5 different true human visitors
+# Viewed traffic: 5 different true human visitors making 6 human visits
 # 21 hits on pages and 15 hits not pages (36 hits)
-# Viewed traffic: 7 pages, 9 hits
+# Not viewed traffic: 13 pages, 15 hits
 # ----------------------------------------------------------------------------
 # 80.8.55.1  2 visits (start at 00:00:00 and at 12:00:00 with both entry page on /)
 #            And 2 hits to add favourites but first is non root hit with error meaning it's same "add"
 # 80.8.55.2  Not a visit, only an image included into a page of an other site
 # 80.8.55.3  1 visit (and add home page to favourites)
 # 80.8.55.4  same visitor than 80.8.55.3 using aol proxy
-# 80.8.55.5  Not a visit (but a bot indexing)
+# 80.8.55.5  Not a visit (but bot indexing)
 # 80.8.55.6  1 visit (authenticated visitor)
 # 80.8.55.7  1 visit (authenticated visitor with space in name)
 # 80.8.55.8  Not a visit (try but failed twice with 404 and 405 error)
 # 80.8.55.9  Not a visit (but a worm attack)
 # 80.8.55.10 1 visit that come from a web page that is not a search engine
-
-#
-# TOTAL YOU MUST GET: 6 visits made by 5 different human visitors that viewed 21 pages and
-# 15 not pages (36 hits). Others 7 pages/hits are "not viewed" traffic.
 
 80.8.55.1 - - [01/Jan/2001:00:00:10 +0100] "GET /page1.html HTTP/1.0" 200 7009 "-" "Mozilla/4.0 (compatible; MSIE 5.5; Windows NT 5.0)"
 80.8.55.1 - - [01/Jan/2001:00:00:00 +0100] "GET / HTTP/1.0" 200 7009 "http://www.sitereferer/cgi-bin/search.pl?q=a" "Mozilla/4.0 (compatible; MSIE 5.5; Windows NT 5.0)"
@@ -52,9 +48,15 @@
 
 80.8.55.4 - - [01/Jan/2001:12:01:45 +0100] "GET /samevisitorthan80.8.55.3usingaolproxy.gif HTTP/1.0" 200 7009 "-" "Mozilla/3.0 (Windows 98; U) Opera 6.03"
 
-80.8.55.5 - - [01/Jan/2001:12:02:00 +0200] "GET /robots.txt HTTP/1.0" 200 299 "-" "Unknown bot"
-80.8.55.5 - - [01/Jan/2001:12:02:00 +0200] "GET /mydir/robots.txt HTTP/1.0" 200 299 "-" "GoogleBot"
-80.8.55.5 - - [01/Jan/2001:12:02:05 +0200] "GET /page2.cgi HTTP/1.0" 200 7009 "-" "GoogleBot"
+80.8.55.5 - - [01/Jan/2001:12:02:00 +0200] "GET /robots.txt HTTP/1.0" 200 299 "-" "This is an unkown user agent"
+80.8.55.5 - - [01/Jan/2001:12:02:00 +0200] "GET /mydir/robots.txt HTTP/1.0" 200 299 "-" "This is an unkown user agent"
+80.8.55.5 - - [01/Jan/2001:12:02:05 +0200] "GET /pagefromabot1.html HTTP/1.0" 200 7009 "-" "GoogleBot"
+80.8.55.5 - - [01/Jan/2001:12:02:05 +0200] "GET /pagefromabot2a.html HTTP/1.0" 200 7009 "-" "This is bot xxx"
+80.8.55.5 - - [01/Jan/2001:12:02:05 +0200] "GET /pagefromabot2b.html HTTP/1.0" 200 7009 "-" "This_is_bot_xxx"
+80.8.55.5 - - [01/Jan/2001:12:02:05 +0200] "GET /pagefromabot3.html HTTP/1.0" 200 7009 "-" "This is sucker xxx"
+80.8.55.5 - - [01/Jan/2001:12:02:05 +0200] "GET /pagefromabot4.html HTTP/1.0" 200 7009 "-" "woozweb-monitoring"
+80.8.55.5 - - [01/Jan/2001:12:02:05 +0200] "GET /pagefromabot5.html HTTP/1.0" 200 7009 "-" "wget"
+80.8.55.5 - - [01/Jan/2001:12:02:05 +0200] "GET /pagefromabot6.html HTTP/1.0" 200 7009 "-" "libwww"
 
 80.8.55.6 - john [01/Jan/2001:13:00:00 +0100] "GET /cgi-bin/order.cgi?x=a&family=a&productId=998&titi=i&y=b&y=b HTTP/1.0" 200 7009 "http://www.google.com/search?sourceid=navclient&ie=utf-8&oe=utf-8&q=ma%C3%AEtre+élève" "SAGEM-myX-5m/1.0_UP.Browser/6.1.0.6.1.103_(GUI)_MMP/1.0_(Google_WAP_Proxy/1.0)"
 80.8.55.6 - john [01/Jan/2001:13:00:00 +0100] "GET /images/image1.gif HTTP/1.0" 200 364 "http://www.google.fr/search?q=cache:dccTQ_Zn4isJ:www.chiensderace.com/cgi-bin/liste_annonces.pl%3FTYPE%3D5%26ORIGINE%3Dchiensderace+labrador+chiensderace&hl=en&lr=lang_en|lang_fr&ie=UTF-8" "SAGEM-myX-5m/1.0_UP.Browser/6.1.0.6.1.103_(GUI)_MMP/1.0_(Google_WAP_Proxy/1.0)"
