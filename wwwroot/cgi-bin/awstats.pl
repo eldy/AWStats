@@ -1012,6 +1012,11 @@ EOF
 			print "</style>\n";
 		}
 
+		# les scripts nécessaires pour trier avec Tablekit
+		#	print "<script type=\"text\/javascript\" src=\"/js/prototype.js\"><\/script>";
+		#	print "<script type=\"text\/javascript\" src=\"/js/fabtabulous.js\"><\/script>";
+		#	print "<script type=\"text\/javascript\" src=\"/js/mytablekit.js\"><\/script>";
+		
 		print "</head>\n\n";
 		if ( $FrameName ne 'index' ) {
 			print "<body style=\"margin-top: 0px\"";
@@ -1100,11 +1105,11 @@ sub tab_head {
 
 	if ( $width == 70 && $QueryString =~ /buildpdf/i ) {
 		print
-"<table class=\"aws_border\" border=\"0\" cellpadding=\"2\" cellspacing=\"0\" width=\"800\">\n";
+"<table class=\"aws_border sortable\" border=\"0\" cellpadding=\"2\" cellspacing=\"0\" width=\"800\">\n";
 	}
 	else {
 		print
-"<table class=\"aws_border\" border=\"0\" cellpadding=\"2\" cellspacing=\"0\" width=\"100%\">\n";
+"<table class=\"aws_border sortable\" border=\"0\" cellpadding=\"2\" cellspacing=\"0\" width=\"100%\">\n";
 	}
 
 	if ($tooltipnb) {
@@ -9134,7 +9139,7 @@ sub ShowEmailSendersChart {
 		  . ">$Message[57]</th>";
 	}
 	if ( $ShowEMailSenders =~ /B/i ) {
-		print "<th rowspan=\"2\" bgcolor=\"#$color_k\" width=\"80\""
+		print "<th class=\"datasize\" rowspan=\"2\" bgcolor=\"#$color_k\" width=\"80\""
 		  . Tooltip(5)
 		  . ">$Message[75]</th>";
 	}
@@ -9293,7 +9298,7 @@ sub ShowEmailReceiversChart {
 		  . ">$Message[57]</th>";
 	}
 	if ( $ShowEMailReceivers =~ /B/i ) {
-		print "<th rowspan=\"2\" bgcolor=\"#$color_k\" width=\"80\""
+		print "<th class=\"datasize\" rowspan=\"2\" bgcolor=\"#$color_k\" width=\"80\""
 		  . Tooltip(5)
 		  . ">$Message[75]</th>";
 	}
@@ -13278,7 +13283,7 @@ if ( scalar keys %HTMLOutput ) {
 "<table class=\"aws_border\" border=\"0\" cellpadding=\"2\" cellspacing=\"0\" width=\"100%\">\n";
 			print "<tr><td>\n";
 			print
-"<table class=\"aws_data\" border=\"0\" cellpadding=\"1\" cellspacing=\"0\" width=\"100%\">\n";
+"<table class=\"aws_data sortable\" border=\"0\" cellpadding=\"1\" cellspacing=\"0\" width=\"100%\">\n";
 		}
 		else {
 			print "<table width=\"100%\">\n";
@@ -14182,7 +14187,7 @@ if ( scalar keys %HTMLOutput ) {
 			}
 			if ( $ShowDomainsStats =~ /B/i ) {
 				print
-				  "<th bgcolor=\"#$color_k\" width=\"80\">$Message[75]</th>";
+				  "<th class=\"datasize\" bgcolor=\"#$color_k\" width=\"80\">$Message[75]</th>";
 			}
 			print "<th>&nbsp;</th>";
 			print "</tr>\n";
@@ -14379,7 +14384,7 @@ if ( scalar keys %HTMLOutput ) {
 			}
 			if ( $ShowHostsStats =~ /B/i ) {
 				print
-				  "<th bgcolor=\"#$color_k\" width=\"80\">$Message[75]</th>";
+				  "<th class=\"datasize\" bgcolor=\"#$color_k\" width=\"80\">$Message[75]</th>";
 			}
 			if ( $ShowHostsStats =~ /L/i ) {
 				print "<th width=\"120\">$Message[9]</th>";
@@ -14471,7 +14476,7 @@ if ( scalar keys %HTMLOutput ) {
 			}
 			if ( $ShowHostsStats =~ /B/i ) {
 				print
-				  "<th bgcolor=\"#$color_k\" width=\"80\">$Message[75]</th>";
+				  "<th class=\"datasize\" bgcolor=\"#$color_k\" width=\"80\">$Message[75]</th>";
 			}
 			if ( $ShowHostsStats =~ /L/i ) {
 				print "<th width=\"120\">$Message[9]</th>";
@@ -14565,7 +14570,7 @@ if ( scalar keys %HTMLOutput ) {
 			}
 			if ( $ShowAuthenticatedUsers =~ /B/i ) {
 				print
-				  "<th bgcolor=\"#$color_k\" width=\"80\">$Message[75]</th>";
+				  "<th class=\"datasize\" bgcolor=\"#$color_k\" width=\"80\">$Message[75]</th>";
 			}
 			if ( $ShowAuthenticatedUsers =~ /L/i ) {
 				print "<th width=\"120\">$Message[9]</th>";
@@ -14656,7 +14661,7 @@ if ( scalar keys %HTMLOutput ) {
 			}
 			if ( $ShowRobotsStats =~ /B/i ) {
 				print
-				  "<th bgcolor=\"#$color_k\" width=\"80\">$Message[75]</th>";
+				  "<th class=\"datasize\" bgcolor=\"#$color_k\" width=\"80\">$Message[75]</th>";
 			}
 			if ( $ShowRobotsStats =~ /L/i ) {
 				print "<th width=\"120\">$Message[9]</th>";
@@ -14799,7 +14804,7 @@ if ( scalar keys %HTMLOutput ) {
 			}
 			if ( $ShowPagesStats =~ /B/i ) {
 				print
-				  "<th bgcolor=\"#$color_k\" width=\"80\">$Message[106]</th>";
+				  "<th class=\"datasize\" bgcolor=\"#$color_k\" width=\"80\">$Message[106]</th>";
 			}
 			if ( $ShowPagesStats =~ /E/i ) {
 				print
@@ -15744,7 +15749,7 @@ if ( scalar keys %HTMLOutput ) {
 				}
 				if ( $ExtraStatTypes[$extranum] =~ m/B/i ) {
 					print
-"<th bgcolor=\"#$color_k\" width=\"80\">$Message[75]</th>";
+"<th class=\"datasize\" bgcolor=\"#$color_k\" width=\"80\">$Message[75]</th>";
 				}
 				if ( $ExtraStatTypes[$extranum] =~ m/L/i ) {
 					print "<th width=\"120\">$Message[9]</th>";
