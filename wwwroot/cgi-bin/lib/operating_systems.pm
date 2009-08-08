@@ -108,7 +108,8 @@
 'java',
 'microsoft',									# Pushed down to prevent mis-identification
 'msie[_+ ]',									# by other OS spoofers.
-'ms[_+ ]frontpage'
+'ms[_+ ]frontpage',
+'windows'
 );
 
 
@@ -196,7 +197,8 @@
 'webtv','webtv',
 'playstation', 'psp',
 'xbox', 'winxbox',
-'wii', 'wii'
+'wii', 'wii',
+'windows','winunknown'
 );
 
 # OS name list ('os unique id in lower case','os clear text')

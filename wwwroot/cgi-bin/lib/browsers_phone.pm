@@ -572,6 +572,7 @@
 'cjb\.net',
 'ossproxy',
 # Other kind of browsers
+'adobeair',
 'apt',
 'analogx_proxy',
 'gnome\-vfs',
@@ -1150,6 +1151,7 @@
 'cjb\.net','<a href="http://proxy.cjb.net/" title="Browser home page [new window]" target="_blank">CJB.NET Proxy</a>',
 'ossproxy','<a href="http://www.marketscore.com/FAQ.Aspx" title="OSSProxy home page [new window]" target="_blank">OSSProxy</a>',
 # Other kind of browsers
+'adobeair','AdobeAir',
 'apt','Debian APT',
 'analogx_proxy','AnalogX Proxy',
 'gnome\-vfs', 'Gnome FileSystem Abstraction library', 
@@ -1337,6 +1339,7 @@
 # Anonymous Proxy Browsers (can be used as grabbers as well...)
 'cjb\.net','cjbnet',
 # Other kind of browsers
+'adobeair','adobe',
 'apt','apt',
 'analogx_proxy','analogx',
 'microsoft\-webdav\-miniredir','frontpage',
