@@ -167,13 +167,13 @@ See also <a href="#PERSONALIZEDLOG">F.A.Q.: LOG FORMAT SETUP OR ERRORS </a>.<br>
 
 <a name="LANG"></a><br>
 <b><u>FAQ-ABO200 : WHICH LANGUAGES ARE AVAILABLE ?</u></b><br>
-AWStats can make reports in 41 languages. This is a list of all of them, for last version, in
+AWStats can make reports in 43 languages. This is a list of all of them, for last version, in
 alphabetical order (The code you can use for <a href="awstats_config.html#Lang">Lang</a>
 and <a href="awstats_config.html#ShowFlagLinks">ShowFlagLinks</a> parameter are 
 the ISO-639-1 language codes):<br>
 <i>
 <table width="95%" border=1 cellpadding=0 cellspacing=0 bgcolor=#F4F4F4 class=CFAQ><tr class=CFAQ><td class=CFAQ>
-Albanian=al, Bosnian=ba, Bulgarian=bg, Catalan=ca,
+Albanian=al, Bosnian=ba, Brezhoneg=bzg, Bulgarian=bg, Catalan=ca,
 Chinese (Taiwan)=tw, Chinese (Simpliefied)=cn, Croatian=hr, Czech=cz,
 Danish=dk, Dutch=nl, English=en, Estonian=et, Euskara=eu, Finnish=fi,
 French=fr, Galician=gl, German=de, Greek=gr, Hebrew=he, Hungarian=hu,
@@ -268,8 +268,8 @@ AWStats can be used with some FTP server log files.<br>
 Modify the proftpd.conf file to add the following two lines :
 <table width="95%" border=1 cellpadding=0 cellspacing=0 bgcolor=#F4F4F4 class=CFAQ><tr class=CFAQ><td class=CFAQ>
 <!--<br>With ProFTPd 1.2.2:-->
-LogFormat awstats "%t %h %u %m %f %s %b"</i> &nbsp; &nbsp; # WARNING: You must use a tab char between % tags and not a space !
-<br>ExtendedLog /var/log/xferlog read,write awstats</i> &nbsp; &nbsp; # WARNING: ExtendedLog directive might need to be placed inside a virtual host context if you use them.
+LogFormat awstats "%t %h %u %m %f %s %b" &nbsp; &nbsp; # WARNING: You must use a tab char between % tags and not a space !
+<br>ExtendedLog /var/log/xferlog read,write awstats &nbsp; &nbsp; # WARNING: ExtendedLog directive might need to be placed inside a virtual host context if you use them.
 <!--<br>With ProFTPd 1.2.6:
 <i><br>LogFormat awstats ""${%F %H-%M-%S}t %h %u %m %F %s %b"</i> &nbsp; &nbsp; # WARNING: You must use a tab char between % tags and not a space !
 <i><br>ExtendedLog /var/log/xferlog read,write awstats</i> &nbsp; &nbsp; # WARNING: ExtendedLog directive might need to be placed inside a virtual host context if you use them.
@@ -668,7 +668,7 @@ the corresponding value of LogFormat you must use in your AWStats config file:<b
 <hr>
 <u>If your log records are EXACTLY like this (<b>NCSA combined/XLF/ELF</b> log format):</u><br>
 <i>62.161.78.73 - - [dd/mmm/yyyy:hh:mm:ss +0x00] "GET /page.html HTTP/1.1" 200 1234 "http://www.from.com/from.htm" "Mozilla/4.0 (compatible; MSIE 5.01; Windows NT 5.0)"</i><br>
-</td></tr></table>
+
 You must use : <i>LogFormat=1</i><br>
 This is same than: <i>LogFormat="%host %other %logname %time1 %methodurl %code %bytesd %refererquot %uaquot"</i><br>
 
@@ -1067,92 +1067,92 @@ If you want to check how serious your log analyzer is, try to parse the followin
 It's a very common log file but results will show you how bad most log analyzers are (above
 all commercial products):<br>
 <table width="95%" border=1 cellpadding=0 cellspacing=0><tr class=CFAQ><td class=CFAQ>
-<i><font style="font: 8px verdana,arial,helvetica">
-<br># This is a sample of log file that contains a lot of various data we can find
-<br># in a log file. Great sample to test reliability and accuracy of any log
-<br># analyzer.
-<br># ----------------------------------------------------------------------------
-<br># This sample log file contains 10 differents IPs that are :
-<br># 6 human visits, done by 5 different true visitors
-<br># 1 proxy visit, done by one of the 5 true visitors
-<br># 1 try of a 6th human visit failed because of wrong url (He saw nothing)
-<br># 1 bot visit to index your site
-<br># 1 worm attack
-<br># 1 add to favourites (two hits but first is non root hit with error meaning it's same "add")
-<br># ----------------------------------------------------------------------------
-<br># 80.8.55.1     2 visits (start at 00:00:00 and at 12:00:00 with both entry page on /)
-<br># 80.8.55.2     this is not a visit, only an image included into a page of an other site
-<br># 80.8.55.3     1 visit (and add home page to favourites)
-<br># 80.8.55.4     same visitor than 80.8.55.3 using aol proxy
-<br># 80.8.55.5     not a visit (but a bot indexing)
-<br># 80.8.55.6     1 visit (authenticated visitor)
-<br># 80.8.55.7     1 visit (authenticated visitor with space in name)
-<br># 80.8.55.8     not a visit (try but failed twice with 404 and 405 error)
-<br># 80.8.55.9     not a visit (but a worm attack)
-<br># 80.8.55.10    1 visit that come from a web page that is not a search engine
-<br>
-<br>#
-<br># TOTAL YOU MUST GET:   6 visits made by 5 different human visitors that viewed 21 pages and
-<br>#                       15 not pages (36 hits). Others 7 pages/hits are "not viewed" traffic.
-<br>
-<br>80.8.55.1 - - [01/Jan/2001:00:00:10 +0100] "GET /page1.html HTTP/1.0" 200 7009 "-" "Mozilla/4.0 (compatible; MSIE 5.5; Windows NT 5.0)"
-<br>80.8.55.1 - - [01/Jan/2001:00:00:00 +0100] "GET / HTTP/1.0" 200 7009 "http://www.sitereferer/cgi-bin/search.pl?q=a" "Mozilla/4.0 (compatible; MSIE 5.5; Windows NT 5.0)"
-<br>80.8.55.1 - - [01/Jan/2001:00:00:20 +0100] "GET /page2.cgi HTTP/1.0" 200 7009 "http://localhost/page1.html" "Mozilla/4.0 (compatible; MSIE 5.5; Windows NT 5.0)"
-<br>80.8.55.1 - - [01/Jan/2001:00:00:25 +0100] "GET /page3 HTTP/1.0" 200 7009 "-" "Mozilla/4.0 (compatible; MSIE 5.5; Windows NT 5.0)"
-<br>80.8.55.1 - - [01/Jan/2001:00:00:30 +0100] "GET /image.gif HTTP/1.0" 200 7009 "-" "Mozilla/4.0 (compatible; MSIE 5.5; Windows NT 5.0)"
-<br>80.8.55.1 - - [01/Jan/2001:00:00:35 +0100] "GET /image2.png HTTP/1.0" 200 7009 "-" "Mozilla/4.0 (compatible; MSIE 5.5; Windows NT 5.0)"
-<br>80.8.55.1 - - [01/Jan/2001:00:00:40 +0100] "GET /dir/favicon.ico HTTP/1.0" 404 299 "-" "Mozilla/4.0 (compatible; MSIE 5.5; Windows NT 5.0)"
-<br>80.8.55.1 - - [01/Jan/2001:00:00:40 +0100] "GET /favicon.ico HTTP/1.0" 200 299 "-" "Mozilla/4.0 (compatible; MSIE 5.5; Windows NT 5.0)"
-<br>
-<br>80.8.55.1 - - [01/Jan/2001:12:00:00 +0100] "GET / HTTP/1.0" 200 7009 "http://WWW.SiteRefereR:80/cgi-bin/azerty.pl?q=a" "Mozilla/4.7 [fr] (Win95; I)"
-<br>80.8.55.1 - - [01/Jan/2001:12:00:10 +0100] "GET /page1.html HTTP/1.0" 200 7009 "-" "Mozilla/4.7 [fr] (Win95; I)"
-<br>80.8.55.1 - - [01/Jan/2001:12:00:20 +0100] "GET /page2.cgi HTTP/1.0" 200 7009 "-" "Mozilla/4.7 [fr] (Win95; I)"
-<br>80.8.55.1 - - [01/Jan/2001:12:00:25 +0100] "GET /page3 HTTP/1.0" 200 7009 "-" "Mozilla/4.7 [fr] (Win95; I)"
-<br>80.8.55.1 - - [01/Jan/2001:12:00:30 +0100] "GET /image.gif HTTP/1.0" 200 7009 "-" "Mozilla/4.7 [fr] (Win95; I)"
-<br>80.8.55.1 - - [01/Jan/2001:12:00:35 +0100] "GET /image2.png HTTP/1.0" 200 7009 "-" "Mozilla/4.7 [fr] (Win95; I)"
-<br>80.8.55.1 - - [01/Jan/2001:12:00:40 +0100] "GET /js/awstats_misc_tracker.js HTTP/1.1" 200 4998 "-" "Mozilla/4.7 [fr] (Win95; I)"
-<br>80.8.55.1 - - [01/Jan/2001:12:00:45 +0100] "GET /js/awstats_misc_tracker.js?screen=1024x768&cdi=32&java=true&shk=n&fla=y&rp=y&mov=n&wma=y&pdf=y&uid=awsuser_id1073036758306r9417&sid=awssession_id1073036758306r9417 HTTP/1.1" 200 4998 "-" "Mozilla/4.7 [fr] (Win95; I)"
-<br>
-<br>80.8.55.2 - - [01/Jan/2001:12:01:00 +0100] "GET /hitfromothersitetoimage.gif HTTP/1.0" 200 7009 "-" "Mozilla/5.0+(Macintosh;+U;+PPC+Mac+OS+X+Mach-O;+en-US;+rv:1.4)+Gecko/20030624+Netscape/7.1"
-<br>
-<br>80.8.55.3 - - [01/Jan/2001:12:01:10 +0100] "GET / HTTP/1.0" 200 7009 "http://www.sitereferer:81/cgi-bin/azerty.pl" "Mozilla/5.0 (Windows; U; Windows NT 5.0; en-US; rv:1.5a) Gecko/20030728 Mozilla Firebird/0.6.1"
-<br>80.8.55.3 - - [01/Jan/2001:12:01:15 +0100] "GET /page1.html HTTP/1.0" 200 7009 "-" "Mozilla/5.0 (Windows; U; Windows NT 5.0; en-US; rv:1.5a) Gecko/20030728 Mozilla Firebird/0.6.1"
-<br>80.8.55.3 - - [01/Jan/2001:12:01:20 +0100] "GET /page2.cgi?x=a&family=a&y=b&familx=x HTTP/1.0" 200 7009 "-" "Mozilla/5.0 (Windows; U; Windows NT 5.0; en-US; rv:1.5a) Gecko/20030728 Mozilla Firebird/0.6.1"
-<br>80.8.55.3 - - [01/Jan/2001:12:01:25 +0100] "GET /page3 HTTP/1.0" 200 7009 "-" "Mozilla/5.0 (Windows; U; Windows NT 5.0; en-US; rv:1.5a) Gecko/20030728 Mozilla Firebird/0.6.1"
-<br>80.8.55.3 - - [01/Jan/2001:12:01:30 +0100] "GET /image.gif HTTP/1.0" 200 7009 "-" "Mozilla/5.0 (Windows; U; Windows NT 5.0; en-US; rv:1.5a) Gecko/20030728 Mozilla Firebird/0.6.1"
-<br>80.8.55.3 - - [01/Jan/2001:12:01:35 +0100] "GET /image2.png HTTP/1.0" 200 7009 "-" "Mozilla/5.0 (Windows; U; Windows NT 5.0; en-US; rv:1.5a) Gecko/20030728 Mozilla Firebird/0.6.1"
-<br>
-<br>80.8.55.4 - - [01/Jan/2001:12:01:45 +0100] "GET /samevisitorthan80.8.55.3usingaolproxy.gif HTTP/1.0" 200 7009 "-" "Mozilla/3.0 (Windows 98; U) Opera 6.03"
-<br>
-<br>80.8.55.5 - - [01/Jan/2001:12:02:00 +0200] "GET /robots.txt HTTP/1.0" 200 299 "-" "Unknown bot"
-<br>80.8.55.5 - - [01/Jan/2001:12:02:00 +0200] "GET /robots.txt HTTP/1.0" 200 299 "-" "GoogleBot"
-<br>80.8.55.5 - - [01/Jan/2001:12:02:05 +0200] "GET /page2.cgi HTTP/1.0" 200 7009 "-" "GoogleBot"
-<br>
-<br>80.8.55.6 - john [01/Jan/2001:13:00:00 +0100] "GET /cgi-bin/order.cgi?x=a&family=a&productId=998&titi=i&y=b&y=b HTTP/1.0" 200 7009 "http://www.google.com/search?sourceid=navclient&ie=utf-8&oe=utf-8&q=ma%C3%AEtre+ï¿½lï¿½ve" "SAGEM-myX-5m/1.0_UP.Browser/6.1.0.6.1.103_(GUI)_MMP/1.0_(Google_WAP_Proxy/1.0)"
-<br>80.8.55.6 - john [01/Jan/2001:13:00:00 +0100] "GET /images/image1.gif HTTP/1.0" 200 364 "http://www.google.fr/search?q=cache:dccTQ_Zn4isJ:www.chiensderace.com/cgi-bin/liste_annonces.pl%3FTYPE%3D5%26ORIGINE%3Dchiensderace+labrador+chiensderace&hl=en&lr=lang_en|lang_fr&ie=UTF-8" "SAGEM-myX-5m/1.0_UP.Browser/6.1.0.6.1.103_(GUI)_MMP/1.0_(Google_WAP_Proxy/1.0)"
-<br>80.8.55.6 - john [01/Jan/2001:13:00:00 +0100] "GET /images/image2.gif HTTP/1.0" 200 364 "http://www.google.fr/search?q=cache:dccTQ_Zn4isJ:www.chiensderace.com/cgi-bin/liste_annonces.pl%3FTYPE%3D5%26ORIGINE%3Dchiensderace+labrador+chiensderace&hl=en&lr=lang_en|lang_fr&ie=UTF-8" "SAGEM-myX-5m/1.0_UP.Browser/6.1.0.6.1.103_(GUI)_MMP/1.0_(Google_WAP_Proxy/1.0)"
-<br>80.8.55.6 - john [01/Jan/2001:13:00:00 +0100] "GET /images/image3.gif HTTP/1.0" 200 364 "http://www.google.fr/search?q=cache:dccTQ_Zn4isJ:www.chiensderace.com/cgi-bin/liste_annonces.pl%3FTYPE%3D5%26ORIGINE%3Dchiensderace+labrador+chiensderace&hl=en&lr=lang_en|lang_fr&ie=UTF-8" "SAGEM-myX-5m/1.0_UP.Browser/6.1.0.6.1.103_(GUI)_MMP/1.0_(Google_WAP_Proxy/1.0)"
-<br>80.8.55.6 - john [01/Jan/2001:13:00:00 +0100] "GET /images/image4.gif HTTP/1.0" 200 364 "http://www.google.fr/search?q=cache:dccTQ_Zn4isJ:www.chiensderace.com/cgi-bin/liste_annonces.pl%3FTYPE%3D5%26ORIGINE%3Dchiensderace+labrador+chiensderace&hl=en&lr=lang_en|lang_fr&ie=UTF-8" "SAGEM-myX-5m/1.0_UP.Browser/6.1.0.6.1.103_(GUI)_MMP/1.0_(Google_WAP_Proxy/1.0)"
-<br>80.8.55.6 - john [01/Jan/2001:13:00:00 +0100] "GET /images/image5.gif HTTP/1.0" 200 364 "http://www.google.fr/search?q=cache:dccTQ_Zn4isJ:www.chiensderace.com/cgi-bin/liste_annonces.pl%3FTYPE%3D5%26ORIGINE%3Dchiensderace+labrador+chiensderace&hl=en&lr=lang_en|lang_fr&ie=UTF-8" "SAGEM-myX-5m/1.0_UP.Browser/6.1.0.6.1.103_(GUI)_MMP/1.0_(Google_WAP_Proxy/1.0)"
-<br>
-<br>80.8.55.7 - John Begood [01/Jan/2001:13:01:00 +0100] "GET /cgi-bin/order.cgi;family=f&type=t&productId=999&titi=i#BIS HTTP/1.0" 200 7009 "http://www.a9.com/searchkeyfroma9" "Mozilla/3.01 (compatible;)"
-<br>80.8.55.7 - John Begood [01/Jan/2001:13:01:00 +0100] "GET /do/Show;jsessionid=6BEF030AB1677BEC333FFCC7BF4DF564?param=1477 HTTP/1.0" 200 7009 "-" "Mozilla/3.01 (compatible;)"
-<br>
-<br>80.8.55.8 - - [01/Jan/2001:14:01:20 +0100] "GET /404notfoundpage.html?paramnotpagefound=valparamnotpagefound HTTP/1.0" 404 0 "http://refererto404nofoundpage/pageswithbadlink.html?paramrefnotpagefound=valparamrefnotpagefound" "Mozilla/4.0 (compatible; MSIE 5.5; Windows NT 5.0)"
-<br>80.8.55.8 - - [01/Jan/2001:14:01:20 +0100] "GET /405error.html HTTP/1.0" 405 0 "http://refererto405error/pagesfrom405.html" "Mozilla/4.0 (compatible; MSIE 5.5; Windows NT 5.0)"
-<br>
-<br>80.8.55.9 - - [01/Jan/2001:15:00:00 +0200] "GET /default.ida?XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX%u9090%u6858%ucbd3%u7801%u9090%u6858%ucbd3%u7801%u9090%u6858%ucbd3%u7801%u9090%u9090%u8190%u00c3%u0003%u8b00%u531b%u53ff%u0078%u0000%u00=a HTTP/1.0" 404 299 "-" "-"
-<br>80.8.55.9 - - [01/Jan/2001:15:00:00 +0200] "SEARCH / -" 411 - "-" "-"
-<br>
-<br>80.8.55.10 - - [01/Jan/2001:16:00:00 -0300] "GET / HTTP/1.1" 200 70476 "http://us.f109.mail.yahoo.com/ym/ShowLetter?box=Inbox&MoreYahooParams..." "Mozilla/5.0 (Windows; U; Windows NT 5.0; fr-FR; rv:1.7.5) Gecko/20041108 Firefox/1.0"
-<br>80.8.55.10 - - [01/Jan/2001:16:00:00 -0300] "GET / HTTP/1.1" 200 70476 "http://us.f109.mail.yahoo.com/ym/ShowLetter?box=Inbox&MoreYahooParams..." "Mozilla/5.0 (Windows; U; Windows NT 5.0; fr-FR; rv:1.7.5) Gecko/20041108 Firefox/1.0"
-<br>80.8.55.10 - - [01/Jan/2001:16:00:00 -0300] "GET / HTTP/1.1" 200 70476 "http://us.f109.mail.yahoo.com/ym/ShowLetter?box=Inbox&MoreYahooParams..." "Mozilla/5.0 (Windows; U; Windows NT 5.0; fr-FR; rv:1.7.5) Gecko/20041108 Firefox/1.0"
-<br>80.8.55.10 - - [01/Jan/2001:16:00:00 -0300] "GET / HTTP/1.1" 200 70476 "http://us.f109.mail.yahoo.com/ym/ShowLetter?box=Inbox&MoreYahooParams..." "Mozilla/5.0 (Windows; U; Windows NT 5.0; fr-FR; rv:1.7.5) Gecko/20041108 Firefox/1.0"
-<br>
-<br>80.8.55.10 - - [01/Jan/2001:16:00:00 -0300] "GET / HTTP/1.1" 200 70476 "http://us.f109.mail.yahoo.com/ym/ShowLetter?box=Inbox&MoreYahooParams..." "Mozilla/5.0 (Windows; U; Windows NT 5.0; fr-FR; rv:1.7.5) Gecko/20041108 Firefox/1.0"
-<br>80.8.55.10 - - [01/Jan/2001:16:30:00 -0300] "GET /page1.html HTTP/1.1" 200 70476 "http://www.freeweb.hu/icecat/filmek/film04.html" "Mozilla/5.0 (Windows; U; Windows NT 5.0; fr-FR; rv:1.7.5) Gecko/20041108 Firefox/1.0"
-<br>80.8.55.10 - - [01/Jan/2001:17:00:00 -0300] "GET /cgi-bin/awredir.pl?url=http://xxx.com/aa.html HTTP/1.1" 302 70476 "http://us.f109.mail.yahoo.com/ym/ShowLetter?box=Inbox&MoreYahooParams..." "Mozilla/5.0 (Windows; U; Windows NT 5.0; fr-FR; rv:1.7.5) Gecko/20041108 Firefox/1.0"
-</i>
+<i><font style="font: 8px verdana,arial,helvetica"><pre>
+# This is a sample of log file that contains a lot of various data we can find
+# in a log file. Great sample to test reliability and accuracy of any log
+# analyzer.
+# ----------------------------------------------------------------------------
+# This sample log file contains 10 differents IPs that are :
+# Viewed traffic: 5 different true human visitors making 6 human visits
+# 21 hits on pages and 15 hits not pages (36 hits)
+# Not viewed traffic: 13 pages, 15 hits
+# ----------------------------------------------------------------------------
+# 80.8.55.1  2 visits (start at 00:00:00 and at 12:00:00 with both entry page on /)
+#            And 2 hits to add favourites but first is non root hit with error meaning it's same "add"
+# 80.8.55.2  Not a visit, only an image included into a page of an other site
+# 80.8.55.3  1 visit (and add home page to favourites)
+# 80.8.55.4  same visitor than 80.8.55.3 using aol proxy
+# 80.8.55.5  Not a visit (but bot indexing)
+# 80.8.55.6  1 visit (authenticated visitor)
+# 80.8.55.7  1 visit (authenticated visitor with space in name)
+# 80.8.55.8  Not a visit (try but failed twice with 404 and 405 error)
+# 80.8.55.9  Not a visit (but a worm attack)
+# 80.8.55.10 1 visit that come from a web page that is not a search engine
+
+80.8.55.1 - - [01/Jan/2001:00:00:10 +0100] "GET /page1.html HTTP/1.0" 200 7009 "-" "Mozilla/4.0 (compatible; MSIE 5.5; Windows NT 5.0)"
+80.8.55.1 - - [01/Jan/2001:00:00:00 +0100] "GET / HTTP/1.0" 200 7009 "http://www.sitereferer/cgi-bin/search.pl?q=a" "Mozilla/4.0 (compatible; MSIE 5.5; Windows NT 5.0)"
+80.8.55.1 - - [01/Jan/2001:00:00:20 +0100] "GET /page2.cgi HTTP/1.0" 200 7009 "http://localhost/page1.html" "Mozilla/4.0 (compatible; MSIE 5.5; Windows NT 5.0)"
+80.8.55.1 - - [01/Jan/2001:00:00:25 +0100] "GET /page3 HTTP/1.0" 200 7009 "-" "Mozilla/4.0 (compatible; MSIE 5.5; Windows NT 5.0)"
+80.8.55.1 - - [01/Jan/2001:00:00:30 +0100] "GET /image.gif HTTP/1.0" 200 7009 "-" "Mozilla/4.0 (compatible; MSIE 5.5; Windows NT 5.0)"
+80.8.55.1 - - [01/Jan/2001:00:00:35 +0100] "GET /image2.png HTTP/1.0" 200 7009 "-" "Mozilla/4.0 (compatible; MSIE 5.5; Windows NT 5.0)"
+80.8.55.1 - - [01/Jan/2001:00:00:40 +0100] "GET /dir/favicon.ico HTTP/1.0" 404 299 "-" "Mozilla/4.0 (compatible; MSIE 5.5; Windows NT 5.0)"
+80.8.55.1 - - [01/Jan/2001:00:00:40 +0100] "GET /favicon.ico HTTP/1.0" 200 299 "-" "Mozilla/4.0 (compatible; MSIE 5.5; Windows NT 5.0)"
+
+80.8.55.1 - - [01/Jan/2001:12:00:00 +0100] "GET / HTTP/1.0" 200 7009 "http://WWW.SiteRefereR:80/cgi-bin/azerty.pl?q=a" "Mozilla/4.7 [fr] (Win95; I)"
+80.8.55.1 - - [01/Jan/2001:12:00:10 +0100] "GET /page1.html HTTP/1.0" 200 7009 "-" "Mozilla/4.7 [fr] (Win95; I)"
+80.8.55.1 - - [01/Jan/2001:12:00:20 +0100] "GET /page2.cgi HTTP/1.0" 200 7009 "-" "Mozilla/4.7 [fr] (Win95; I)"
+80.8.55.1 - - [01/Jan/2001:12:00:25 +0100] "GET /page3 HTTP/1.0" 200 7009 "-" "Mozilla/4.7 [fr] (Win95; I)"
+80.8.55.1 - - [01/Jan/2001:12:00:30 +0100] "GET /image.gif HTTP/1.0" 200 7009 "-" "Mozilla/4.7 [fr] (Win95; I)"
+80.8.55.1 - - [01/Jan/2001:12:00:35 +0100] "GET /image2.png HTTP/1.0" 200 7009 "-" "Mozilla/4.7 [fr] (Win95; I)"
+80.8.55.1 - - [01/Jan/2001:12:00:40 +0100] "GET /js/awstats_misc_tracker.js HTTP/1.1" 200 4998 "-" "Mozilla/4.7 [fr] (Win95; I)"
+80.8.55.1 - - [01/Jan/2001:12:00:45 +0100] "GET /js/awstats_misc_tracker.js?screen=1024x768&cdi=32&java=true&shk=n&fla=y&rp=y&mov=n&wma=y&pdf=y&uid=awsuser_id1073036758306r9417&sid=awssession_id1073036758306r9417 HTTP/1.1" 200 4998 "-" "Mozilla/4.7 [fr] (Win95; I)"
+
+80.8.55.2 - - [01/Jan/2001:12:01:00 +0100] "GET /hitfromothersitetoimage.gif HTTP/1.0" 200 7009 "-" "Mozilla/5.0+(Macintosh;+U;+PPC+Mac+OS+X+Mach-O;+en-US;+rv:1.4)+Gecko/20030624+Netscape/7.1"
+
+80.8.55.3 - - [01/Jan/2001:12:01:10 +0100] "GET / HTTP/1.0" 200 7009 "http://www.sitereferer:81/cgi-bin/azerty.pl" "Mozilla/5.0 (Windows; U; Windows NT 5.0; en-US; rv:1.5a) Gecko/20030728 Mozilla Firebird/0.6.1"
+80.8.55.3 - - [01/Jan/2001:12:01:15 +0100] "GET /page1.html HTTP/1.0" 200 7009 "-" "Mozilla/5.0 (Windows; U; Windows NT 5.0; en-US; rv:1.5a) Gecko/20030728 Mozilla Firebird/0.6.1"
+80.8.55.3 - - [01/Jan/2001:12:01:20 +0100] "GET /page2.cgi?x=a&family=a&y=b&familx=x HTTP/1.0" 200 7009 "-" "Mozilla/5.0 (Windows; U; Windows NT 5.0; en-US; rv:1.5a) Gecko/20030728 Mozilla Firebird/0.6.1"
+80.8.55.3 - - [01/Jan/2001:12:01:25 +0100] "GET /page3 HTTP/1.0" 200 7009 "-" "Mozilla/5.0 (Windows; U; Windows NT 5.0; en-US; rv:1.5a) Gecko/20030728 Mozilla Firebird/0.6.1"
+80.8.55.3 - - [01/Jan/2001:12:01:30 +0100] "GET /image.gif HTTP/1.0" 200 7009 "-" "Mozilla/5.0 (Windows; U; Windows NT 5.0; en-US; rv:1.5a) Gecko/20030728 Mozilla Firebird/0.6.1"
+80.8.55.3 - - [01/Jan/2001:12:01:35 +0100] "GET /image2.png HTTP/1.0" 200 7009 "-" "Mozilla/5.0 (Windows; U; Windows NT 5.0; en-US; rv:1.5a) Gecko/20030728 Mozilla Firebird/0.6.1"
+
+80.8.55.4 - - [01/Jan/2001:12:01:45 +0100] "GET /samevisitorthan80.8.55.3usingaolproxy.gif HTTP/1.0" 200 7009 "-" "Mozilla/3.0 (Windows 98; U) Opera 6.03"
+
+80.8.55.5 - - [01/Jan/2001:12:02:00 +0200] "GET /robots.txt HTTP/1.0" 200 299 "-" "This is an unkown user agent"
+80.8.55.5 - - [01/Jan/2001:12:02:00 +0200] "GET /mydir/robots.txt HTTP/1.0" 200 299 "-" "This is an unkown user agent"
+80.8.55.5 - - [01/Jan/2001:12:02:05 +0200] "GET /pagefromabot1.html HTTP/1.0" 200 7009 "-" "GoogleBot"
+80.8.55.5 - - [01/Jan/2001:12:02:05 +0200] "GET /pagefromabot2a.html HTTP/1.0" 200 7009 "-" "This is bot xxx"
+80.8.55.5 - - [01/Jan/2001:12:02:05 +0200] "GET /pagefromabot2b.html HTTP/1.0" 200 7009 "-" "This_is_bot_xxx"
+80.8.55.5 - - [01/Jan/2001:12:02:05 +0200] "GET /pagefromabot3.html HTTP/1.0" 200 7009 "-" "This is sucker xxx"
+80.8.55.5 - - [01/Jan/2001:12:02:05 +0200] "GET /pagefromabot4.html HTTP/1.0" 200 7009 "-" "woozweb-monitoring"
+80.8.55.5 - - [01/Jan/2001:12:02:05 +0200] "GET /pagefromabot5.html HTTP/1.0" 200 7009 "-" "wget"
+80.8.55.5 - - [01/Jan/2001:12:02:05 +0200] "GET /pagefromabot6.html HTTP/1.0" 200 7009 "-" "libwww"
+
+80.8.55.6 - john [01/Jan/2001:13:00:00 +0100] "GET /cgi-bin/order.cgi?x=a&family=a&productId=998&titi=i&y=b&y=b HTTP/1.0" 200 7009 "http://www.google.com/search?sourceid=navclient&ie=utf-8&oe=utf-8&q=ma%C3%AEtre+élève" "SAGEM-myX-5m/1.0_UP.Browser/6.1.0.6.1.103_(GUI)_MMP/1.0_(Google_WAP_Proxy/1.0)"
+80.8.55.6 - john [01/Jan/2001:13:00:00 +0100] "GET /images/image1.gif HTTP/1.0" 200 364 "http://www.google.fr/search?q=cache:dccTQ_Zn4isJ:www.chiensderace.com/cgi-bin/liste_annonces.pl%3FTYPE%3D5%26ORIGINE%3Dchiensderace+labrador+chiensderace&hl=en&lr=lang_en|lang_fr&ie=UTF-8" "SAGEM-myX-5m/1.0_UP.Browser/6.1.0.6.1.103_(GUI)_MMP/1.0_(Google_WAP_Proxy/1.0)"
+80.8.55.6 - john [01/Jan/2001:13:00:00 +0100] "GET /images/image2.gif HTTP/1.0" 200 364 "http://www.google.fr/search?q=cache:dccTQ_Zn4isJ:www.chiensderace.com/cgi-bin/liste_annonces.pl%3FTYPE%3D5%26ORIGINE%3Dchiensderace+labrador+chiensderace&hl=en&lr=lang_en|lang_fr&ie=UTF-8" "SAGEM-myX-5m/1.0_UP.Browser/6.1.0.6.1.103_(GUI)_MMP/1.0_(Google_WAP_Proxy/1.0)"
+80.8.55.6 - john [01/Jan/2001:13:00:00 +0100] "GET /images/image3.gif HTTP/1.0" 200 364 "http://www.google.fr/search?q=cache:dccTQ_Zn4isJ:www.chiensderace.com/cgi-bin/liste_annonces.pl%3FTYPE%3D5%26ORIGINE%3Dchiensderace+labrador+chiensderace&hl=en&lr=lang_en|lang_fr&ie=UTF-8" "SAGEM-myX-5m/1.0_UP.Browser/6.1.0.6.1.103_(GUI)_MMP/1.0_(Google_WAP_Proxy/1.0)"
+80.8.55.6 - john [01/Jan/2001:13:00:00 +0100] "GET /images/image4.gif HTTP/1.0" 200 364 "http://www.google.fr/search?q=cache:dccTQ_Zn4isJ:www.chiensderace.com/cgi-bin/liste_annonces.pl%3FTYPE%3D5%26ORIGINE%3Dchiensderace+labrador+chiensderace&hl=en&lr=lang_en|lang_fr&ie=UTF-8" "SAGEM-myX-5m/1.0_UP.Browser/6.1.0.6.1.103_(GUI)_MMP/1.0_(Google_WAP_Proxy/1.0)"
+80.8.55.6 - john [01/Jan/2001:13:00:00 +0100] "GET /images/image5.gif HTTP/1.0" 200 364 "http://www.google.fr/search?q=cache:dccTQ_Zn4isJ:www.chiensderace.com/cgi-bin/liste_annonces.pl%3FTYPE%3D5%26ORIGINE%3Dchiensderace+labrador+chiensderace&hl=en&lr=lang_en|lang_fr&ie=UTF-8" "SAGEM-myX-5m/1.0_UP.Browser/6.1.0.6.1.103_(GUI)_MMP/1.0_(Google_WAP_Proxy/1.0)"
+
+80.8.55.7 - John Begood [01/Jan/2001:13:01:00 +0100] "GET /cgi-bin/order.cgi;family=f&type=t&productId=999&titi=i#BIS HTTP/1.0" 200 7009 "http://www.a9.com/searchkeyfroma9" "Mozilla/3.01 (compatible;)"
+80.8.55.7 - John Begood [01/Jan/2001:13:01:00 +0100] "GET /do/Show;jsessionid=6BEF030AB1677BEC333FFCC7BF4DF564?param=1477 HTTP/1.0" 200 7009 "-" "Mozilla/3.01 (compatible;)"
+
+80.8.55.8 - - [01/Jan/2001:14:01:20 +0100] "GET /404notfoundpage.html?paramnotpagefound=valparamnotpagefound HTTP/1.0" 404 0 "http://refererto404nofoundpage/pageswithbadlink.html?paramrefnotpagefound=valparamrefnotpagefound" "Mozilla/4.0 (compatible; MSIE 5.5; Windows NT 5.0)"
+80.8.55.8 - - [01/Jan/2001:14:01:20 +0100] "GET /405error.html HTTP/1.0" 405 0 "http://refererto405error/pagesfrom405.html" "Mozilla/4.0 (compatible; MSIE 5.5; Windows NT 5.0)"
+
+80.8.55.9 - - [01/Jan/2001:15:00:00 +0200] "GET /default.ida?XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX HTTP/1.0" 404 299 "-" "-"
+80.8.55.9 - - [01/Jan/2001:15:00:00 +0200] "SEARCH / -" 411 - "-" "-"
+
+80.8.55.10 - - [01/Jan/2001:16:00:00 -0300] "GET / HTTP/1.1" 200 70476 "http://us.f109.mail.yahoo.com/ym/ShowLetter?box=Inbox&MoreYahooParams..." "Mozilla/5.0 (Windows; U; Windows NT 5.0; fr-FR; rv:1.7.5) Gecko/20041108 Firefox/1.0"
+80.8.55.10 - - [01/Jan/2001:16:00:00 -0300] "GET /index.html HTTP/1.1" 200 70476 "http://us.f109.mail.yahoo.com/ym/ShowLetter?box=Inbox&MoreYahooParams..." "Mozilla/5.0 (Windows; U; Windows NT 5.0; fr-FR; rv:1.7.5) Gecko/20041108 Firefox/1.0"
+80.8.55.10 - - [01/Jan/2001:16:00:00 -0300] "GET /index.php HTTP/1.1" 200 70476 "http://us.f109.mail.yahoo.com/ym/ShowLetter?box=Inbox&MoreYahooParams..." "Mozilla/5.0 (Windows; U; Windows NT 5.0; fr-FR; rv:1.7.5) Gecko/20041108 Firefox/1.0"
+80.8.55.10 - - [01/Jan/2001:16:00:00 -0300] "GET / HTTP/1.1" 200 70476 "http://us.f109.mail.yahoo.com/ym/ShowLetter?box=Inbox&MoreYahooParams..." "Mozilla/5.0 (Windows; U; Windows NT 5.0; fr-FR; rv:1.7.5) Gecko/20041108 Firefox/1.0"
+
+80.8.55.10 - - [01/Jan/2001:16:00:00 -0300] "GET / HTTP/1.1" 200 70476 "http://us.f109.mail.yahoo.com/ym/ShowLetter?box=Inbox&MoreYahooParams..." "Mozilla/5.0 (Windows; U; Windows NT 5.0; fr-FR; rv:1.7.5) Gecko/20041108 Firefox/1.0"
+80.8.55.10 - - [01/Jan/2001:16:30:00 -0300] "GET /page1.html HTTP/1.1" 200 70476 "http://www.freeweb.hu/icecat/filmek/film04.html" "Mozilla/5.0 (Windows; U; en-US) AppleWebKit/526.9+ (KHTML, like Gecko) AdobeAIR/1.5"
+80.8.55.10 - - [01/Jan/2001:17:00:00 -0300] "GET /cgi-bin/awredir.pl?url=http://xxx.com/aa.html HTTP/1.1" 302 70476 "http://us.f109.mail.yahoo.com/ym/ShowLetter?box=Inbox&MoreYahooParams..." "Mozilla/5.0 (Windows; U; Windows NT 5.0; fr-FR; rv:1.7.5) Gecko/20041108 Firefox/1.0"
+</pre></i>
 </td></tr></table><br>
 <u>This is what you should find:</u><br>
 6 true human visits<br>
