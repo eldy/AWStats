@@ -80,5 +80,5 @@
 80.8.55.10 - - [01/Jan/2001:16:00:00 -0300] "GET / HTTP/1.1" 200 70476 "http://us.f109.mail.yahoo.com/ym/ShowLetter?box=Inbox&MoreYahooParams..." "Mozilla/5.0 (Windows; U; Windows NT 5.0; fr-FR; rv:1.7.5) Gecko/20041108 Firefox/1.0"
 
 80.8.55.10 - - [01/Jan/2001:16:00:00 -0300] "GET / HTTP/1.1" 200 70476 "http://us.f109.mail.yahoo.com/ym/ShowLetter?box=Inbox&MoreYahooParams..." "Mozilla/5.0 (Windows; U; Windows NT 5.0; fr-FR; rv:1.7.5) Gecko/20041108 Firefox/1.0"
-80.8.55.10 - - [01/Jan/2001:16:30:00 -0300] "GET /page1.html HTTP/1.1" 200 70476 "http://www.freeweb.hu/icecat/filmek/film04.html" "Mozilla/5.0 (Windows; U; Windows NT 5.0; fr-FR; rv:1.7.5) Gecko/20041108 Firefox/1.0"
-80.8.55.10 - - [01/Jan/2001:17:00:00 -0300] "GET /cgi-bin/awredir.pl?url=http://xxx.com/aa.html HTTP/1.1" 302 70476 "http://us.f109.mail.yahoo.com/ym/ShowLetter?box=Inbox&MoreYahooParams..." "Mozilla/5.0 (Windows; U; Windows NT 5.0; fr-FR; rv:1.7.5) Gecko/20041108 Firefox/1.0" 
+80.8.55.10 - - [01/Jan/2001:16:30:00 -0300] "GET /page1.html HTTP/1.1" 200 70476 "http://www.freeweb.hu/icecat/filmek/film04.html" "Mozilla/5.0 (Windows; U; en-US) AppleWebKit/526.9+ (KHTML, like Gecko) AdobeAIR/1.5"
+80.8.55.10 - - [01/Jan/2001:17:00:00 -0300] "GET /cgi-bin/awredir.pl?url=http://xxx.com/aa.html HTTP/1.1" 302 70476 "http://us.f109.mail.yahoo.com/ym/ShowLetter?box=Inbox&MoreYahooParams..." "Mozilla/5.0 (Windows; U; Windows NT 5.0; fr-FR; rv:1.7.5) Gecko/20041108 Firefox/1.0"
