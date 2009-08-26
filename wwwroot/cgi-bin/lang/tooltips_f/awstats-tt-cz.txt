@@ -1,17 +1,17 @@
-<!-- Czech tooltips message file (js@cvut.cz) -->
-<!-- REVISON 1.0 -->
+<!-- Czech tooltips message file (David Jurenka <awstats-translation.box NO SP@M imx.jurenka D.O.T cz>) -->
+<!-- $Revision$ - $Date$ -->
 <div class="CTooltip" id="tt1">
 </div>
 <div class="CTooltip" id="tt2">
-Poèet rùynıch hostù (<b>IP addresa</b>), kteøí se pøipojili.
+PoÄet rÅ¯znÃ½ch poÄÃ­taÄÅ¯ (<b>IP adres</b>), ze kterÃ½ch bylo zaznamenÃ¡no pÅ™ipojenÃ­.
 </div>
 <div class="CTooltip" id="tt3">
 </div>
 <div class="CTooltip" id="tt4">
 </div>
 <div class="CTooltip" id="tt5">
-Celkovı souèet dat pøenesenıch po ftp.<br />
-Jednotky jsou v KB, MB or GB (KiloBytes, MegaBytes or GigaBytes)
+CelkovÃ½ objem dat pÅ™enesenÃ½ch pÅ™es FTP.<br />
+UdÃ¡vÃ¡no v KB, MB nebo GB (kilobajtech, megabajtech nebo gigabajtech).
 </div>
 <div class="CTooltip" id="tt13">
 </div>
@@ -22,13 +22,13 @@ Jednotky jsou v KB, MB or GB (KiloBytes, MegaBytes or GigaBytes)
 <div class="CTooltip" id="tt16">
 </div>
 <div class="CTooltip" id="tt17">
-V¹echny èasové statistiky vycházejí z èasu na serveru.<br />
+VÅ¡echny ÄasovÃ© statistiky vychÃ¡zejÃ­ z Äasu na serveru.<br />
 </div>
 <div class="CTooltip" id="tt18">
-Tato data jsou: <b>prùmìrné hodnoty</b> (vychází z dat mezi prvním a posledním emailem).
+Zde zobrazenÃ© Ãºdaje jsou <b>prÅ¯mÄ›rnÃ© hodnoty</b> (poÄÃ­tanÃ© ze vÅ¡ech pÅ™enosÅ¯ ve sledovanÃ©m obdobÃ­).
 </div>
 <div class="CTooltip" id="tt19">
-Tato data jsou: <b>souèty</b> (vychází z dat mezi prvním a posledním emailem)
+Zde zobrazenÃ© Ãºdaje jsou <b>celkovÃ© souÄty</b> (poÄÃ­tanÃ© ze vÅ¡ech pÅ™enosÅ¯ ve sledovanÃ©m obdobÃ­).
 </div>
 <div class="CTooltip" id="tt20">
 </div>

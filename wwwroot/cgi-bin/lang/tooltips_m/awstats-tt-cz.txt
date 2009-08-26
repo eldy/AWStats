@@ -1,0 +1,68 @@
+<!-- Czech tooltips message file (David Jurenka <awstats-translation.box NO SP@M imx.jurenka D.O.T cz>) -->
+<!-- $Revision$ - $Date$ -->
+<div class="CTooltip" id="tt1">
+</div>
+<div class="CTooltip" id="tt2">
+Počet různých počítačů (<b>IP adres</b>), co odeslaly email.
+</div>
+<div class="CTooltip" id="tt3">
+</div>
+<div class="CTooltip" id="tt4">
+Počet úspěšných <b>emailových</b> přenosů.<br />
+</div>
+<div class="CTooltip" id="tt5">
+Celkový objem přenesených emailů.<br />
+Udáváno v KB, MB nebo GB (kilobajtech, megabajtech nebo gigabajtech).
+</div>
+<div class="CTooltip" id="tt13">
+</div>
+<div class="CTooltip" id="tt14">
+</div>
+<div class="CTooltip" id="tt15">
+</div>
+<div class="CTooltip" id="tt16">
+</div>
+<div class="CTooltip" id="tt17">
+Všechny časové statistiky vycházejí z času na serveru.<br />
+</div>
+<div class="CTooltip" id="tt18">
+Zde zobrazené údaje jsou <b>průměrné hodnoty</b> (počítané ze všech emailů ve sledovaném období).
+</div>
+<div class="CTooltip" id="tt19">
+Zde zobrazené údaje jsou <b>celkové součty</b> (počítané ze všech emailů ve sledovaném období).
+</div>
+<div class="CTooltip" id="tt20">
+</div>
+
+<div class="CTooltip" id="tt200"><b>Provedeno:</b> Nestandardní kladná odpověď</div>
+<div class="CTooltip" id="tt211"><b>Provedeno:</b> Systémový status nebo nápověda</div>
+<div class="CTooltip" id="tt214"><b>Provedeno:</b> Nápověda</div>
+<div class="CTooltip" id="tt220"><b>Provedeno:</b> Služba připravena</div>
+<div class="CTooltip" id="tt221"><b>Provedeno:</b> Spojení ukončeno</div>
+<div class="CTooltip" id="tt250"><b>Provedeno:</b> Požadovaná emailová operace úspěšná provedena</div>
+<div class="CTooltip" id="tt251"><b>Provedeno:</b> Adresát zprávy není místní; zpráva bude přesměrována na jinou adresu</div>
+<div class="CTooltip" id="tt252"><b>Provedeno:</b> Adresáta nelze VRFYkovat, nicméně systém zprávu převezme a pokusí se o její doručení</div>
+
+<div class="CTooltip" id="tt354">Výzva serveru k zadání těla zprávy</div>
+
+<div class="CTooltip" id="tt421"><b>Dočasná chyba:</b> Služba nedostupná, spojení ukončeno (toto může být odpovědí na jakýkoli příkaz, pokud služba ví, že musí být ukončena)</div>
+<div class="CTooltip" id="tt450"><b>Dočasná chyba:</b> Požadovaná akce byla stornována, neboť schránka není dostupná. Schránka může být zaneprázdněna, není k ní přístup, anebo server dočasně blokuje vaše emaily (např. na základě IP adresy či odesílatele).</div>
+<div class="CTooltip" id="tt451"><b>Dočasná chyba:</b> Požadovaná akce byla stornována z důvodu vnitřní chyby při zpracování. Toto bývá způsobeno přetížením serveru nebo nějakým jeho dočasným problémem. Zkuste zopakovat požadavek později.</div>
+<div class="CTooltip" id="tt452"><b>Dočasná chyba:</b> Požadovaná akce byla stornována z důvodu nedostatku úložního prostoru. Zkuste zopakovat požadavek později.</div>
+<div class="CTooltip" id="tt453"><b>Dočasná chyba:</b> Některé poštovní servery umožňují omezit maximální počet simultánních spojení a počet zpráv odeslaných v rámci jednoho spojení. Pokud máte hodně zpráv čekajících na odeslání, zkuste snížit počet zpráv předávaných v rámci jednoho spojení a následně jejich počet zvyšovat, až zjistíte přesné omezení serveru.</div>
+
+<div class="CTooltip" id="tt500"><b>Trvalá chyba:</b> Syntaktická chyba; příkaz nerozpoznán nebo příliš dlouhý</div>
+<div class="CTooltip" id="tt501"><b>Trvalá chyba:</b> Syntaktická chyba v parametrech či argumentech</div>
+<div class="CTooltip" id="tt502"><b>Trvalá chyba:</b> Příkaz není implementován.</div>
+<div class="CTooltip" id="tt503"><b>Trvalá chyba:</b> Chybná posloupnost příkazů</div>
+<div class="CTooltip" id="tt504"><b>Trvalá chyba:</b> Parametr příkazu není implementován.</div>
+<div class="CTooltip" id="tt521"><b>Trvalá chyba:</b> Server nepřijímá poštu, anebo vyžaduje autorizaci POP before SMTP.</div>
+<div class="CTooltip" id="tt530"><b>Trvalá chyba:</b> Pro předávání pošty je vyžadována autorizace.</div>
+<div class="CTooltip" id="tt550"><b>Trvalá chyba:</b> Požadovaná akce nebyla provedena, neboť schránka není dostupná. Schránka buď neexistuje, není k ní přístup, anebo došlo k odmítnutí příkazu z důvodu vnitřního nastavení serveru.</div>
+<div class="CTooltip" id="tt551"><b>Trvalá chyba:</b> Adresát není místní, zkuste použít nabízenou jinou adresu.</div>
+<div class="CTooltip" id="tt552"><b>Trvalá chyba:</b> Požadovaná akce byla stornována z důvodu nedostatku úložního prostoru.</div>
+<div class="CTooltip" id="tt553"><b>Trvalá chyba:</b> Požadovaná akce nebyla provedena; nepovolený název schránky (např. špatná syntax)</div>
+<div class="CTooltip" id="tt554"><b>Trvalá chyba:</b> Transakce selhala.</div>
+<div class="CTooltip" id="tt557"><b>Trvalá chyba:</b> Příliš mnoho duplicitních zpráv, anebo odmítnutí na základě nějakého antispamového filtru</div>
+
+<div class="CTooltip" id="tt999">Toto je neznámá chyba. Tento chybový kód zaznamenává skript maillogconvert.pl, když při analyzování logu narazí na odeslání, které nebylo úspěšné, a log přitom neobsahuje žádné další vysvětlení této chyby.</div>

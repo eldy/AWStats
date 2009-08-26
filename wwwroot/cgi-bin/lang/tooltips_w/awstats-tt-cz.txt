@@ -1,54 +1,75 @@
-<!--CZ by js@fsid.cvut.cz (please contact if something wrong)-->
+<!-- Czech tooltips message file (David Jurenka <awstats-translation.box NO SP@M imx.jurenka D.O.T cz>) -->
 <!-- $Revision$ - $Date$ -->
 <div class="CTooltip" id="tt1">
-Nov� n�v�t�vn�ci jsou definov�ni jako ka�d� <b>p�ich�zej�c�</b> (prohl��ej�c� si neboproch�zej�c�), kdo 
-se na str�nky nep�ipojil posledn�ch <b>#VisitTimeOut# min</b>.
+Za novou návštěvu se považuje každý <b>přístup návštěvníka</b>, který nebyl připojen na serveru v průběhu předchozích <b>#VisitTimeOut# minut</b>.
 </div>
 <div class="CTooltip" id="tt2">
-Po�et klient� (<b>IP address</b>), kte�� p�i�li na str�nky (a kte�� si prohl�dli alespo� jednu <b>str�nku</b>).
-Toto ��slo odpov�d� ��slu <b>r�zn�ch fyzick�ch osob</b>, kte�� nav�t�vili str�nky kter�koli <b>jeden</b> den.
+Počet počítačů (<b>IP adres</b>), které se připojily na server (a stáhly alespoň jednu <b>stránku</b>).<br />
+To zhruba odpovídá počtu <b>různých osob</b>, které navštívily stránky.
 </div>
 <div class="CTooltip" id="tt3">
-Po�et kolikr�t byla <b>str�nka</b> na tomto serveru <b>shl�dnuta</b> (Sou�et za v�echny nav�t�vuj�c� a jejich n�v�t�vy).
-To se li�� od <b>Hit�</b> tak, �e jsou zapo��t�ny jen str�nky (ne obr�zky a ostatn�...).
+Celkový počet <b>zhlédnutí</b> jednotlivých <b>stránek</b> (součet za všechny návštěvy všech návštěvníků).<br />
+Toto číslo se liší od „hitů“ tím, že sem jsou započítávány pouze stažení HTML stránek, a nikoli obrázků a jiných souborů.
 </div>
 <div class="CTooltip" id="tt4">
-Po�et kolikr�t byla <b>str�nka, obr�zek, soubor</b> na tomto serveru <b>st�hnuta</b> (Sou�et za v�echny nav�t�vuj�c� a jejich n�v�t�vy).	
-Toto ��slo je uv�d�no kv�li porovn�n� se <b>Str�nkami</b>.
+Celkový počet <b>zhlédnutí</b> nebo <b>stažení</b> jednotlivých <b>stránek, obrázků, či souborů</b>.<br />
+Tento údaj je udáván spíše pro zajímavost, neboť počet zhlédnutých „stránek“ má obecně větší vypovídací hodnotu pro marketingové účely.
 </div>
 <div class="CTooltip" id="tt5">
-Velikost v�ech <b>str�nek, obr�zk� a soubor�</b> sta�en�ch z tohoto serveru.		
+Celkový objem dat přenesených při návštěvách vašich stránek.<br />
+Tento údaj zahrnuje jak zobrazené <b>stránky</b>, tak stažené <b>obrázky</b> a <b>soubory</b>.
 </div>
 <div class="CTooltip" id="tt13">
-#PROG# rozpozn� p��stup na server od <b>vyhled�v�n�</b> z <b>#SearchEnginesArray# nejzn�m�j��ch internetov�ch vyhled�va�� a seznam�</b> (jako je Yahoo, Altavista, Lycos, Google, Voila, atd...).
+#PROG# umí rozpoznat přístupy na server z <b>#SearchEnginesArray# nejznámějších internetových vyhledávačů a adresářů</b> (např. Yahoo, Altavista, Lycos, Google, Voila).
 </div>
 <div class="CTooltip" id="tt14">
-Seznam v�ech <b>extern�ch str�nek</b> (mimo server), kter� byly pou�ity jako odkaz na tento server (Je zobrazeno jen <b>#MaxNbOfRefererShown#</b> nej�ast�j��ch).
-Odkazy pou�it� z vyhled�va�� nejsou za�azeny, nebo� je obsahuje jin� �daj.
+Seznam <b>externích stránek</b> obsahujících odkazy na vaše stránky, přes které přišli někteří návštěvníci. (Zobrazuje se pouze <b>#MaxNbOfRefererShown#</b> nejčastěji použitých).
+Odkazy z internetových vyhledávačů jsou uvedeny v samostatné tabulce, a proto zde nejsou zahrnuty.
 </div>
 <div class="CTooltip" id="tt15">
-Tato tabulka zobrazuje seznam nej�ast�ji zad�van�ch <b>v�raz�</b>, kter� byly zad�vany ve vyhled�va��ch k nalezen� tohoto serveru.
-(V�razy od <b>#SearchEnginesArray#</b> mnejzn�m�j��ch vyhled�va�� a seznam� jsou #PROG# rozpozn�ny, jako je Yahoo, Altavista, Lycos, Google, Voila, atd...).
+Tato tabulka obsahuje nejčastější <b>výrazy a slovní spojení</b> použité ve vyhledávačích a internetových adresářích pro vyhledání těchto stránek.
+(#PROG# podporuje <b>#SearchEnginesArray#</b> nejpopulárnějších vyhledávačů a adresářů, jako Yahoo, Altavista, Lycos, Google, Voila a další.)<br />
+Všimněte si, že celkový počet vyhledání všech výrazů může být vyšší než součet vyhledání slovních spojení, neboť každé víceslovné vyhledávání je započítáno právě jednou do slovních spojení, ale vícenásobně do výrazů (jednou pro každé obsažené slovo).
 </div>
 <div class="CTooltip" id="tt16">
-Roboti (n�kdy ozna�ov�ni jako pavouci nebo �muchalov�) jsou <b>po��ta�ov� automat. n�v�t�vn�ci</b> pou�ivan� mnoha vyhled�vac�mi slu�bami k (1) indexov�n� a hodnocen�, (2) sb�r�n� statistik z web� a/nebo (3) k zji�t�n�, zda str�nky st�le existuj�.<br />
-#PROG# je schopen rozpoznat <b>#RobotArray#</b> robot�.
+Roboty jsou <b>automatizovaní počítačoví návštěvníci</b> používaní pro skenování a indexování obsahu World Wide Webu a pro kontrolu, zda jsou jednotlivé stránky stále dostupné.<br />
+#PROG# dokáže rozpoznat <b>#RobotArray#</b> robotů.
+</div>
+<div class="CTooltip" id="tt17">
+Všechny časové statistiky vycházejí z času na serveru.
+</div>
+<div class="CTooltip" id="tt18">
+Zde zobrazené údaje jsou <b>průměrné hodnoty</b> (počítané ze všech návštěv ve sledovaném období).
+</div>
+<div class="CTooltip" id="tt19">
+Zde zobrazené údaje jsou <b>celkové součty</b> (počítané ze všech návštěv ve sledovaném období).
+</div>
+<div class="CTooltip" id="tt20">
+Některé <b>délky návštěv</b> jsou uvedeny jako „neznámé“, neboť je nelze vždy přesně určit. Hlavními důvody k tomu jsou:<br />
+• Návštěva nebyla dokončena v okamžiku, kdy probíhala aktualizace statistik. (Délka bude doplněna při následné aktualizaci.)<br />
+• Návštěva začala v poslední hodině (po 23:00) posledního dne v měsíci. (Z technických důvodů #PROG# nedokáže určit délku takovýchto návštěv.)
+</div>
+<div class="CTooltip" id="tt21">
+Červy jsou <b>počítačové programy</b> napadající počítače na síti, které pak dále využívají pro své další šíření. Ve většině případů se červy snaží využít chyb
+v neaktualizovaných komerčních aplikacích. Pokud váš systém není mezi <b>zranitelnými cíly</b> červu, můžete takovou zátěž jednoduše ignorovat.<br />
+Existuje jen velice málo internetových červů; přesto ale bývají ve své době velice rozšíření.
+#PROG# umí rozlišit stopy <b>#WormsArray#</b> známých červů (Nimda, Code Red aj.).
 </div>
 
-<div class="CTooltip" id="tt201"> Bylo vytvo�eno nov� m�sto s daty a odesl�no. </div>
-<div class="CTooltip" id="tt202"> Po�adavek byl rozezn�n, ale bude vy��zen pozd�ji. </div>
-<div class="CTooltip" id="tt204"> Po�adavek byl rozezn�n, ale nen� co odeslat zp�t. </div>
-<div class="CTooltip" id="tt206"> Dotaz byl zpracov�n jen ��ste�n�. </div>
-<div class="CTooltip" id="tt301"> Po�adovan� dokument byl p�esunut a adresa byla odesl�na. </div>
-<div class="CTooltip" id="tt302"> Dokument se do�asn� nach�z� na jin� adrese. </div>
-<div class="CTooltip" id="tt400"> Syntaktick� chyba, chybn� po�adavek. </div>
-<div class="CTooltip" id="tt401"> Po�adavek neobsahoval ��danou autorizaci jm�no/heslo pro vstup na str�nky. Pokud se vyskytuje �asto pokou�� se n�kdo o pr�lom-hack. </div>
-<div class="CTooltip" id="tt403"> Po�adavek byl odm�tnut serverem (nep��stupn� data, neviditeln� adres��...). </div>
-<div class="CTooltip" id="tt404"> Pokus o vstup na neexistuj�c� str�nku nebo soubor. </div>
-<div class="CTooltip" id="tt408"> Cel� po�adavek nebyl serveru od klienta zasl�n v po�adovan�m �ase (chyba klienta nebo serveru nebo skriptu). </div>
-<div class="CTooltip" id="tt500"> Chyba serveru (�asto se vyskytuje p�i chybn�m zpracov�n� skriptu). </div>
-<div class="CTooltip" id="tt501"> Po�adavek, kter� byl zasl�n nen� mo�no vy��dit, nebo� ho server neum� zpracovat. </div>
-<div class="CTooltip" id="tt502"> Server p�ijal �patn� po�adavek od jin�ho serveru (proxy nebo br�ny). </div>
-<div class="CTooltip" id="tt503"> Chyba serveru, slu�ba nen� k dispozici. </div>
-<div class="CTooltip" id="tt504"> Vypr�el �asov� interval u proxy serveru nebo br�ny. </div>
-<div class="CTooltip" id="tt505"> Nepodporovan� verze protokolu HTTP. </div>
+<div class="CTooltip" id="tt201">Požadavek byl splněn a nový objekt byl vytvořen.</div>
+<div class="CTooltip" id="tt202">Požadavek byl přijat, ale bude zpracován později.</div>
+<div class="CTooltip" id="tt204">Server úspěšně zpracoval požadavek, nicméně nebylo třeba vrátit žádný obsah.</div>
+<div class="CTooltip" id="tt206">Server na přání klienta vrátil pouze část obsahu.</div>
+<div class="CTooltip" id="tt301">Požadovaný dokument byl trvale přemístěn na jiné URI.</div>
+<div class="CTooltip" id="tt302">Požadovaný dokument byl dočasně přemístěn na jiné URI.</div>
+<div class="CTooltip" id="tt400">Požadavek je syntakticky chybný.</div>
+<div class="CTooltip" id="tt401">Neúspěšná autentikace pro <b>URL vyžadující jméno a heslo</b>.<br />Vysoký počet těchto chyb značí, že se někdo opakovaně pokoušel uhodnout správné jméno a heslo.</div>
+<div class="CTooltip" id="tt403">Požadavek na <b>URL, které nelze zobrazit</b> (např. v URL v rámci adresáře, jehož obsah není určen k prohlížení).</div>
+<div class="CTooltip" id="tt404">Požadavek na <b>neexistující URL</b>. Tato chyba zpravidla značí, že se někde vyskytuje neplatný odkaz, anebo uživatel špatně napsal požadované URL.</div>
+<div class="CTooltip" id="tt408">Klient neodeslal svůj požadavek serveru ve stanoveném čase (chyba klienta, přetíženého serveru, anebo pomalého CGI skriptu).</div>
+<div class="CTooltip" id="tt500">Vnitřní chyba serveru (často způsobena chybným zpracováním skriptu).</div>
+<div class="CTooltip" id="tt501">Server nepodporuje funkce potřebné k vyřízení požadavku.</div>
+<div class="CTooltip" id="tt502">Chyba vracená serverem HTTP, který funguje jako brána nebo proxy, když cílový server vrací chybovou odpověď na klientův požadavek.</div>
+<div class="CTooltip" id="tt503">Služba je momentálně nedostupná z důvodu přetížení, či probíhající údržby serveru.</div>
+<div class="CTooltip" id="tt504">Chyba vracená serverem HTTP, který funguje jako brána nebo proxy, když cílový server neodpoví ve stanoveném časovém limitu.</div>
+<div class="CTooltip" id="tt505">Nepodporovaná verze protokolu HTTP.</div>
