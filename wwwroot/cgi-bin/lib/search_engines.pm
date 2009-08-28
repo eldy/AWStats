@@ -779,7 +779,7 @@
 'sogou', 'query=',
 'vnet','kw=',
 # Minor czech search engines
-'atlas','searchtext=', 'seznam','w=', 'quick','query=', 'centrum','q=', 'jyxo','s=', 'najdi','dotaz=', 'redbox','srch=',
+'atlas','(searchtext|q)=', 'seznam','(w|q)=', 'quick','query=', 'centrum','q=', 'jyxo','(s|q)=', 'najdi','dotaz=', 'redbox','srch=',
 # Minor danish search engines
 'opasia','q=', 'danielsen','q=', 'sol','q=', 'jubii','soegeord=', 'finddk','words=', 'edderkoppen','query=', 'orbis','search_field=', '1klik','query=', 'ofir','querytext=',
 # Minor dutch search engines
