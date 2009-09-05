@@ -6,7 +6,7 @@ $Revision$ - $Author$ - $Date$
 ***** 6.95 *****
 
 New features/improvements:
-- Enhance security of awredir.pl script with a security key required by
+- Fix security in awredir.pl script by adding a security key required by
   default.
 - Enhance security of parameter sanitizing function.
 - Add name of config file used to build data files inside data files header.
@@ -17,11 +17,13 @@ New features/improvements:
 - Increase seriously bot detection.
 - Add Brezhoneg language.
 - Add a better way to detect Safari versions.
-
+- Added subpages for geoip maxmind modules in awstats_buildstaticpages.
+ 
 Fixes:
 - Fix typo in polish language file
 - awstats emmits ton of warnings with new geoipfree - ID: 2794728
-- fix: can detect robots with robots.txt url even if file is not root.
+- Fix: can detect robots with robots.txt url even if file is not root.
+- Other minor fixes.
 
 
 ***** 6.9 *****

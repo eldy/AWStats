@@ -56,8 +56,10 @@ $ShowOSStats $ShowBrowsersStats $ShowOriginStats
 $ShowKeyphrasesStats $ShowKeywordsStats $ShowMiscStats $ShowHTTPErrorsStats
 $BuildReportFormat
 @ExtraName
+@PluginsToLoad
 /;
 @ExtraName = ();
+@PluginsToLoad = ();
 # ----- Time vars -----
 use vars qw/
 $starttime
@@ -228,6 +230,9 @@ sub Parse_Config {
 		# Extra parameters
  		if ($param =~ /^ExtraSectionName(\d+)/)			{ $ExtraName[$1]=$value; next; }
 
+		# Plugins
+		if ( $param =~ /^LoadPlugin/ ) { push @PluginsToLoad, $value; next; }
+
 		# If parameters was not found previously, defined variable with name of param to value
 		$$param=$value;
 	}
@@ -362,6 +367,11 @@ if ($ShowHTTPErrorsStats) {
 foreach my $extranum (1..@ExtraName-1) {
 	push @OutputList,'allextra'.$extranum;
 }
+#Add plugins
+foreach ( @PluginsToLoad ) {
+	if ($_ =~ /^(geoip_[_a-z]+)\s/) { push @OutputList,'plugin_'.$1; }	# Add geoip maxmind subpages
+}
+
 
 # Launch awstats update
 if ($Update) {
