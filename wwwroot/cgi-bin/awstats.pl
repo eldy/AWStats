@@ -808,7 +808,7 @@ sub http_head {
 		my $newpagecode = $PageCode ? $PageCode : "utf-8";
 		if ( $BuildReportFormat eq 'xhtml' || $BuildReportFormat eq 'xml' ) {
 			print( $ENV{'HTTP_USER_AGENT'} =~ /MSIE|Googlebot/i
-				? "Content-type:text/html; charset=$newpagecode\n"
+				? "Content-type: text/html; charset=$newpagecode\n"
 				: "Content-type: text/xml; charset=$newpagecode\n"
 			);
 		}
