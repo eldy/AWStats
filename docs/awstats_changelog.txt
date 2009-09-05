@@ -496,7 +496,7 @@ Other/Documentation:
 - FAQ updated.
 
 
-Note 0: Perl 5.005_03 or higher is a requirement to use AWStats 6.0 or higher.
+Note 0: Perl 5.007 or higher is a requirement to use AWStats 6.9 or higher.
 
 Note 1: When migrating to 6.x series, if you use the ExtraSections feature,
   you must check that the parameter(s) ExtraSectionConditionX use a full
