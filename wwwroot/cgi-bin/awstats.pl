@@ -7,7 +7,7 @@
 # See AWStats documentation (in docs/ directory) for all setup instructions.
 #------------------------------------------------------------------------------
 # $Revision$ - $Author$ - $Date$
-require 5.005;
+require 5.007;
 
 #$|=1;
 #use warnings;		# Must be used in test mode only. This reduce a little process speed
@@ -2402,7 +2402,7 @@ sub Substitute_Tags {
 		  int(
 			( $olderyday - 1 + 6 - ( $olderwday == 0 ? 6 : $olderwday - 1 ) ) /
 			  7 ) + 1;
-		if ( $olderweekofyear > 52 ) { $olderweekofyear = 1; }
+		if ( $olderweekofyear > 53 ) { $olderweekofyear = 1; }
 		my $olderdaymod = $olderday % 7;
 		$olderwday++;
 		my $olderns =
