@@ -467,7 +467,8 @@ use vars qw/
 	'ar' => 'sa',
 	'sr' => 'cs'
   );
-# TODO Remove this old array for an old way to detect Safari version 
+
+# TODO Remove this old array for an old way to detect Safari version
 %SafariBuildToVersion = (
 	'85'        => '1.0',
 	'85.5'      => '1.0',
@@ -1012,11 +1013,11 @@ EOF
 			print "</style>\n";
 		}
 
-		# les scripts nécessaires pour trier avec Tablekit
-		#	print "<script type=\"text\/javascript\" src=\"/js/prototype.js\"><\/script>";
-		#	print "<script type=\"text\/javascript\" src=\"/js/fabtabulous.js\"><\/script>";
-		#	print "<script type=\"text\/javascript\" src=\"/js/mytablekit.js\"><\/script>";
-		
+# les scripts nécessaires pour trier avec Tablekit
+#	print "<script type=\"text\/javascript\" src=\"/js/prototype.js\"><\/script>";
+#	print "<script type=\"text\/javascript\" src=\"/js/fabtabulous.js\"><\/script>";
+#	print "<script type=\"text\/javascript\" src=\"/js/mytablekit.js\"><\/script>";
+
 		print "</head>\n\n";
 		if ( $FrameName ne 'index' ) {
 			print "<body style=\"margin-top: 0px\"";
@@ -8224,9 +8225,10 @@ sub BuildKeyList {
 	foreach my $key ( values %val )  { $notsortedkeylist{$key} = 1; }
 	foreach my $key ( values %egal ) { $notsortedkeylist{$key} = 1; }
 	@keylist = ();
-	@keylist =
-	  ( sort { ( $hashfororder->{$b} || 0 ) <=> ( $hashfororder->{$a} || 0 ) }
-		  keys %notsortedkeylist );
+	@keylist = (
+		sort { ( $hashfororder->{$b} || 0 ) <=> ( $hashfororder->{$a} || 0 ) }
+		  keys %notsortedkeylist
+	);
 	if ($Debug) {
 		debug( "  BuildKeyList End (keylist size=" . (@keylist) . ")", 3 );
 	}
@@ -9139,7 +9141,8 @@ sub ShowEmailSendersChart {
 		  . ">$Message[57]</th>";
 	}
 	if ( $ShowEMailSenders =~ /B/i ) {
-		print "<th class=\"datasize\" rowspan=\"2\" bgcolor=\"#$color_k\" width=\"80\""
+		print
+"<th class=\"datasize\" rowspan=\"2\" bgcolor=\"#$color_k\" width=\"80\""
 		  . Tooltip(5)
 		  . ">$Message[75]</th>";
 	}
@@ -9298,7 +9301,8 @@ sub ShowEmailReceiversChart {
 		  . ">$Message[57]</th>";
 	}
 	if ( $ShowEMailReceivers =~ /B/i ) {
-		print "<th class=\"datasize\" rowspan=\"2\" bgcolor=\"#$color_k\" width=\"80\""
+		print
+"<th class=\"datasize\" rowspan=\"2\" bgcolor=\"#$color_k\" width=\"80\""
 		  . Tooltip(5)
 		  . ">$Message[75]</th>";
 	}
@@ -10570,7 +10574,7 @@ if ( $UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft' )
 	my $regverfirefox     = qr/firefox\/([\d\.]*)/i;
 	my $regveropera       = qr/opera\/([\d\.]*)/i;
 	my $regversafari      = qr/safari\/([\d\.]*)/i;
-	my $regversafariver   = qr/version\/([\d\.]*)/i; 
+	my $regversafariver   = qr/version\/([\d\.]*)/i;
 	my $regverchrome      = qr/chrome\/([\d\.]*)/i;
 	my $regverkonqueror   = qr/konqueror\/([\d\.]*)/i;
 	my $regversvn         = qr/svn\/([\d\.]*)/i;
@@ -10717,6 +10721,26 @@ if ( $UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft' )
 	# Loop on each log line
 	#
 	while ( $line = <LOG> ) {
+		
+		# 20080525 BEGIN Patch to test if first char of $line = hex "00" then conclude corrupted with binary code
+		my $FirstHexChar;
+		$FirstHexChar = sprintf( "%02X", ord( substr( $line, 0, 1 ) ) );
+		if ( $FirstHexChar eq '00' ) {
+			$NbOfLinesCorrupted++;
+			if ($ShowCorrupted) {
+				print "Corrupted record line "
+				  . ( $lastlinenb + $NbOfLinesParsed )
+				  . " (record starts with hex 00; binary code): $line\n";
+			}
+			if (   $NbOfLinesParsed >= $NbOfLinesForCorruptedLog
+				&& $NbOfLinesParsed == $NbOfLinesCorrupted )
+			{
+				error( "Format error", $line, $LogFile );
+			}    # Exit with format error
+			next;
+		}
+		# 20080525 END
+
 		chomp $line;
 		$line =~ s/\r$//;
 		if ( $UpdateFor && $NbOfLinesParsed >= $UpdateFor ) { last; }
@@ -11371,15 +11395,14 @@ if ( $UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft' )
 
 		# Analyze: successful favicon (=> countedtraffic=1 if favicon)
 		#--------------------------------------------------
-		if ($urlwithnoquery =~ /$regfavico/o)
-		{
-			if ($field[$pos_code] != 404) {
+		if ( $urlwithnoquery =~ /$regfavico/o ) {
+			if ( $field[$pos_code] != 404 ) {
 				$_misc_h{'AddToFavourites'}++;
 			}
 			$countedtraffic =
 			  1;    # favicon is a case that must not be counted anywhere else
 			$_time_nv_h[$hourrecord]++;
-			if ($field[$pos_code] != 404) {
+			if ( $field[$pos_code] != 404 ) {
 				$_time_nv_k[$hourrecord] += int( $field[$pos_size] );
 			}
 		}
@@ -11571,8 +11594,8 @@ if ( $UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft' )
 			}
 		}
 
-		# Analyze: Robot from "hit on robots.txt" file (=> countedtraffic=5 if robot)
-		# -------------------------------------------------------------------------
+   # Analyze: Robot from "hit on robots.txt" file (=> countedtraffic=5 if robot)
+   # -------------------------------------------------------------------------
 		if ( !$countedtraffic ) {
 			if ( $urlwithnoquery =~ /$regrobot/o ) {
 				if ($Debug) { debug( "  It's an unknown robot", 2 ); }
@@ -11690,7 +11713,8 @@ if ( $UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft' )
 		# Do DNS lookup
 		#--------------
 		my $Host         = $field[$pos_host];
-		my $HostResolved = '';	# HostResolved will be defined in next paragraf if countedtraffic is true
+		my $HostResolved = ''
+		  ; # HostResolved will be defined in next paragraf if countedtraffic is true
 
 		if ( !$countedtraffic ) {
 			my $ip = 0;
@@ -11715,7 +11739,7 @@ if ( $UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft' )
 					}
 					elsif ( $DNSLookup == 1 ) {
 
-						# Check in session cache (dynamic DNS cache file + session DNS cache)
+		   # Check in session cache (dynamic DNS cache file + session DNS cache)
 						$HostResolved = $TmpDNSLookup{$Host};
 						if ( !$HostResolved ) {
 							if ( @SkipDNSLookupFor && &SkipDNSLookup($Host) ) {
@@ -12073,7 +12097,7 @@ if ( $UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft' )
 						my $found = 1;
 
 						# Firefox ?
-						if ($UserAgent =~ /$regverfirefox/o
+						if (   $UserAgent =~ /$regverfirefox/o
 							&& $UserAgent !~ /$regnotfirefox/o )
 						{
 							$_browser_h{"firefox$1"}++;
@@ -12093,15 +12117,16 @@ if ( $UpdateStats && $FrameName ne 'index' && $FrameName ne 'mainleft' )
 						}
 
 						# Safari ?
-						elsif ($UserAgent =~ /$regversafari/o && $UserAgent !~ /$regnotsafari/o) {
-                            my $safariver=$SafariBuildToVersion{$1};
-                            if ($UserAgent =~ /$regversafariver/o)
-                            {
-                            	$safariver = $1;
-                            }
-                            $_browser_h{"safari$safariver"}++;
-                            $TmpBrowser{$UserAgent}="safari$safariver";
-                        } 
+						elsif ($UserAgent =~ /$regversafari/o
+							&& $UserAgent !~ /$regnotsafari/o )
+						{
+							my $safariver = $SafariBuildToVersion{$1};
+							if ( $UserAgent =~ /$regversafariver/o ) {
+								$safariver = $1;
+							}
+							$_browser_h{"safari$safariver"}++;
+							$TmpBrowser{$UserAgent} = "safari$safariver";
+						}
 
 						# Konqueror ?
 						elsif ( $UserAgent =~ /$regverkonqueror/o ) {
@@ -14187,7 +14212,7 @@ if ( scalar keys %HTMLOutput ) {
 			}
 			if ( $ShowDomainsStats =~ /B/i ) {
 				print
-				  "<th class=\"datasize\" bgcolor=\"#$color_k\" width=\"80\">$Message[75]</th>";
+"<th class=\"datasize\" bgcolor=\"#$color_k\" width=\"80\">$Message[75]</th>";
 			}
 			print "<th>&nbsp;</th>";
 			print "</tr>\n";
@@ -14384,7 +14409,7 @@ if ( scalar keys %HTMLOutput ) {
 			}
 			if ( $ShowHostsStats =~ /B/i ) {
 				print
-				  "<th class=\"datasize\" bgcolor=\"#$color_k\" width=\"80\">$Message[75]</th>";
+"<th class=\"datasize\" bgcolor=\"#$color_k\" width=\"80\">$Message[75]</th>";
 			}
 			if ( $ShowHostsStats =~ /L/i ) {
 				print "<th width=\"120\">$Message[9]</th>";
@@ -14476,7 +14501,7 @@ if ( scalar keys %HTMLOutput ) {
 			}
 			if ( $ShowHostsStats =~ /B/i ) {
 				print
-				  "<th class=\"datasize\" bgcolor=\"#$color_k\" width=\"80\">$Message[75]</th>";
+"<th class=\"datasize\" bgcolor=\"#$color_k\" width=\"80\">$Message[75]</th>";
 			}
 			if ( $ShowHostsStats =~ /L/i ) {
 				print "<th width=\"120\">$Message[9]</th>";
@@ -14570,7 +14595,7 @@ if ( scalar keys %HTMLOutput ) {
 			}
 			if ( $ShowAuthenticatedUsers =~ /B/i ) {
 				print
-				  "<th class=\"datasize\" bgcolor=\"#$color_k\" width=\"80\">$Message[75]</th>";
+"<th class=\"datasize\" bgcolor=\"#$color_k\" width=\"80\">$Message[75]</th>";
 			}
 			if ( $ShowAuthenticatedUsers =~ /L/i ) {
 				print "<th width=\"120\">$Message[9]</th>";
@@ -14661,7 +14686,7 @@ if ( scalar keys %HTMLOutput ) {
 			}
 			if ( $ShowRobotsStats =~ /B/i ) {
 				print
-				  "<th class=\"datasize\" bgcolor=\"#$color_k\" width=\"80\">$Message[75]</th>";
+"<th class=\"datasize\" bgcolor=\"#$color_k\" width=\"80\">$Message[75]</th>";
 			}
 			if ( $ShowRobotsStats =~ /L/i ) {
 				print "<th width=\"120\">$Message[9]</th>";
@@ -14804,7 +14829,7 @@ if ( scalar keys %HTMLOutput ) {
 			}
 			if ( $ShowPagesStats =~ /B/i ) {
 				print
-				  "<th class=\"datasize\" bgcolor=\"#$color_k\" width=\"80\">$Message[106]</th>";
+"<th class=\"datasize\" bgcolor=\"#$color_k\" width=\"80\">$Message[106]</th>";
 			}
 			if ( $ShowPagesStats =~ /E/i ) {
 				print
@@ -15027,7 +15052,8 @@ if ( scalar keys %HTMLOutput ) {
 				\%_unknownrefererbrowser_l );
 			foreach my $key (@keylist) {
 				my $useragent = XMLEncode( CleanXSS($key) );
-				print "<tr><td class=\"aws\">$useragent</td><td nowrap=\"nowrap\">"
+				print
+				  "<tr><td class=\"aws\">$useragent</td><td nowrap=\"nowrap\">"
 				  . Format_Date( $_unknownrefererbrowser_l{$key}, 1 )
 				  . "</td></tr>\n";
 				$total_l += 1;
@@ -15242,9 +15268,10 @@ if ( scalar keys %HTMLOutput ) {
 			}
 
 			# Write records grouped in a browser family
-			foreach
-			  my $family ( sort { $BrowsersFamily{$a} <=> $BrowsersFamily{$b} }
-				keys %BrowsersFamily )
+			foreach my $family (
+				sort { $BrowsersFamily{$a} <=> $BrowsersFamily{$b} }
+				keys %BrowsersFamily
+			  )
 			{
 				my $p = '&nbsp;';
 				if ($total_h) {
