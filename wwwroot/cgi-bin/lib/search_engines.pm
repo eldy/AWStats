@@ -1054,7 +1054,7 @@
 'shinyseek\.it','Shinyseek.it',
 'teecnoit','<a href="http://www.teecno.it/" title="Teecno home page [new window]" target="_blank">Teecno</a>',
 # Minor Japanese search engines
-'askjp','<a href="http://www.ask.jp/" title="Search E@SearchEngngine Home Page [new window]" target="_blank">Ask Japan</a>',
+'askjp','<a href="http://www.ask.jp/" title="Search Engine Home Page [new window]" target="_blank">Ask Japan</a>',
 'sagool','<a href="http://sagool.jp/" title="Sagool home page [new window]" target="_blank">Sagool</a>',
 # Minor Norwegian search engines
 'start','start.no', 'eniro','<a href="http://www.eniro.no/" title="Search Engine Home Page [new window]" target="_blank">Eniro</a>',	
@@ -1067,7 +1067,7 @@
 'hogapl','<a href="http://www.hoga.pl/" title="Hoga.pl home page [new window]" target="_blank">Hoga.pl</a>',
 'netsprintpl','<a href="http://www.netsprint.pl/" title="NetSprint.pl home page [new window]" target="_blank">NetSprint.pl</a>',
 'interiapl','<a href="http://www.google.interia.pl/" title="Interia.pl home page [new window]" target="_blank">Interia.pl</a>',
-'katalogonetpl','<a href="http://katalog.onet.pl/" ti@SearchEngtle="Katalog.Onet.pl home page [new window]" target="_blank">Katalog.Onet.pl</a>',
+'katalogonetpl','<a href="http://katalog.onet.pl/" title="Katalog.Onet.pl home page [new window]" target="_blank">Katalog.Onet.pl</a>',
 'o2pl','<a href="http://szukaj2.o2.pl/" title="o2.pl home page [new window]" target="_blank">o2.pl</a>',
 'polskapl','<a href="http://szukaj.polska.pl/" title="Polska home page [new window]" target="_blank">Polska</a>',
 'szukaczpl','<a href="http://www.szukacz.pl/" title="Szukacz home page [new window]" target="_blank">Szukacz</a>',
