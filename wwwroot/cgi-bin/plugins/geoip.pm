@@ -92,6 +92,7 @@ sub Init_geoip {
 sub GetCountryCodeByAddr_geoip {
     my $param="$_[0]";
 	# <-----
+	if (! $param) { return ''; }
 	my $res=$TmpDomainLookup{$param}||'';
 	if (! $res) {
 		$res=lc($gi->country_code_by_addr($param)) || 'unknown';
@@ -112,6 +113,7 @@ sub GetCountryCodeByAddr_geoip {
 sub GetCountryCodeByName_geoip {
     my $param="$_[0]";
 	# <-----
+	if (! $param) { return ''; }
 	my $res=$TmpDomainLookup{$param}||'';
 	if (! $res) {
 		$res=lc($gi->country_code_by_name($param)) || 'unknown';
