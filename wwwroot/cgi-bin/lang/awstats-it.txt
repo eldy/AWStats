@@ -6,7 +6,7 @@
 # Salvo - salvo@scicli.com
 # CereS - ceres@divxmania.it
 # StarKnight - starknight@starkingdom.it
-PageCode=iso-8859-1
+PageCode=utf-8
 message0=Sconosciuti
 message1=Sconosciuti (ip non risolto)
 message2=Altri
@@ -45,7 +45,7 @@ message34=Versioni di Internet Explorer
 message35=Ultimo Aggiornamento
 message36=Provenienza delle connessioni
 message37=Provenienza
-message38=Accessi diretti o via segnalibro
+message38=Accessi diretti, via segnalibro o link nelle email
 message39=Accessi di origine sconosciuta
 message40=Accessi da motore di ricerca
 message41=Accessi da pagina esterna (altri siti eccetto i motori di ricerca)
@@ -144,7 +144,7 @@ message133=Periodo di riferimento
 message134=Extra/Marketing
 message135=Risoluzione video
 message136=Worm/Attacchi di virus 
-message137=Aggiungi a preferiti (stimato)
+message137=Accessi riusciti a favicon.ico
 message138=Giorni del mese
 message139=Informazioni varie
 message140=Browser con supporto per Java
@@ -166,7 +166,7 @@ message155=Raggruppato
 message156=I robot elencati hanno generato accessi o traffico "non visualizzato" dai visitatori, pertanto non vengono inclusi negli altri grafici.
 message157=I numeri dopo il + rappresentano gli accessi effettuati verso i file "robot.txt".
 message158=I worm elencati hanno generato accessi o traffico "non visualizzato" dai visitatori, pertanto non vengono inclusi negli altri grafici.
-message159=Il traffico "non visualizzato" Ë il traffico generato da robot, worm oppure da risposte con codici di errore HTTP speciali.
+message159=Il traffico "non visualizzato" √® il traffico generato da robot, worm oppure da risposte con codici di errore HTTP speciali.
 message160=Traffico visualizzato
 message161=Traffico non visualizzato
 message162=Riepilogo mensile
@@ -179,4 +179,8 @@ message168=Javascript disabilitato
 message169=Creato da
 message170=plugin
 message171=Regioni
-message172=Citt‡
+message172=Citt√†
+message173=Versioni di Opera
+message174=Versioni di Safari
+message175=Versioni di Chrome
+message176=Versioni di Konqueror
