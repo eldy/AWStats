@@ -32,17 +32,15 @@
 # Note: Regex IDs are in lower case and ' ' and '+' are changed into '_'
 #-------------------------------------------------------
 @BrowsersSearchIDOrder = (
-# Most frequent standard web browsers are first in this list (except msie, netscape and firefox)
-'chrome',
+# Most frequent standard web browsers are first in this list except the ones hardcoded in awstats.pl:
+# firefox, opera, chrome, safari, konqueror, svn, msie, netscape
+'elinks',
 'firebird',
 'go!zilla',
 'icab',
-'konqueror',
-'elinks',
 'links',
 'lynx',
 'omniweb',
-'opera',
 # Other standard web browsers
 '22acidownload',
 'abrowse',
@@ -108,7 +106,6 @@
 'emacs\-w3',
 'phoenix',
 'shiira',               # Must be before safari
-'safari',				# Must be after a lot of others (shiira, chrome)
 'tzgeturl',
 'viking',
 'webfetcher',
@@ -200,8 +197,11 @@
 'webcollage',
 'up\.',					# Works for UP.Browser and UP.Link
 # PDA/Phonecell browsers
+'android',
 'blackberry',
+'cnf2',
 'docomo',
+'ipcheck',
 'iphone',
 'portalmmm',
 # Others (TV)
@@ -249,22 +249,24 @@
 # List of browser's name ('browser id in lower case', 'browser text')
 #---------------------------------------------------------------
 %BrowsersHashIDLib = (
-# Common web browsers text
+# Common web browsers text, included the ones hard coded in awstats.pl
+# firefox, opera, chrome, safari, konqueror, svn, msie, netscape
+'firefox','Firefox',
+'opera','Opera',
+'chrome','Google Chrome',
+'safari','Safari',
+'konqueror','Konqueror',
+'svn', 'Subversion client', 
 'msie','MS Internet Explorer',
 'netscape','Netscape',
-'firefox','Firefox',
-'svn', 'Subversion client', 
 
-'chrome','Google Chrome',
+'elinks','ELinks',
 'firebird','Firebird (Old Firefox)',
 'go!zilla','Go!Zilla',
 'icab','iCab',
-'konqueror','Konqueror',
-'elinks','ELinks',
 'links','Links',
 'lynx','Lynx',
 'omniweb','OmniWeb',
-'opera','Opera',
 # Other standard web browsers
 '22acidownload','22AciDownload',
 'abrowse','ABrowse',
@@ -330,7 +332,6 @@
 'contiki','Contiki',
 'emacs\-w3','Emacs/w3s',
 'shiira','Shiira',
-'safari','Safari',
 'tzgeturl','TzGetURL',
 'viking','Viking',
 'webfetcher','WebFetcher',
@@ -422,8 +423,11 @@
 'webcollage','WebCollage (PDA/Phone browser)',
 'up\.','UP.Browser (PDA/Phone browser)',					# Works for UP.Browser and UP.Link
 # PDA/Phonecell browsers
+'android','Android browser (PDA/Phone browser)',
 'blackberry','BlackBerry (PDA/Phone browser)',
+'cnf2','Supervision I-Mode ByTel (phone)',
 'docomo','I-Mode phone (PDA/Phone browser)',
+'ipcheck','Supervision IP Check (phone)',
 'iphone','IPhone (PDA/Phone browser)',
 'portalmmm','I-Mode phone (PDA/Phone browser)',
 # Others (TV)
@@ -493,20 +497,22 @@
 # file for this browser.
 #---------------------------------------------------------------------------
 %BrowsersHashIcon = (
-# Standard web browsers
+# Common web browsers text, included the ones hard coded in awstats.pl
+# firefox, opera, chrome, safari, konqueror, svn, msie, netscape
+'firefox','firefox',
+'opera','opera',
+'chrome','chrome', 
+'safari','safari',
+'konqueror','konqueror',
+'svn','subversion',
 'msie','msie',
 'netscape','netscape',
-'firefox','firefox',
-'svn','subversion',
 
-'chrome','chrome', 
 'firebird','phoenix',
 'go!zilla','gozilla',
 'icab','icab',
-'konqueror','konqueror',
 'lynx','lynx',
 'omniweb','omniweb',
-'opera','opera',
 # Other standard web browsers
 'amaya','amaya',
 'amigavoyager','amigavoyager',
@@ -553,7 +559,6 @@
 'ncsa_mosaic','ncsa_mosaic',
 'netpositive','netpositive',
 'phoenix','phoenix',
-'safari','safari',
 # Site grabbers
 'teleport','teleport',
 'webcapture','adobe',
@@ -635,6 +640,7 @@
 'webcollage','pdaphone',
 'up\.','pdaphone',					# Works for UP.Browser and UP.Link
 # PDA/Phonecell browsers
+'android','android',
 'blackberry','pdaphone',
 'docomo','pdaphone',
 'iphone','pdaphone',
