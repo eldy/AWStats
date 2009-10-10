@@ -2,9 +2,9 @@
 # in a log file. Great sample to test reliability and accuracy of any log
 # analyzer.
 # ----------------------------------------------------------------------------
-# This sample log file contains 10 differents IPs that are :
-# Viewed traffic: 5 different true human visitors making 6 human visits
-# 21 hits on pages and 15 hits not pages (36 hits)
+# This sample log file contains 12 differents IPs that are :
+# Viewed traffic: 7 different true human visitors making 8 human visits
+# 23 hits on pages and 15 hits not pages (38 hits)
 # Not viewed traffic: 13 pages, 15 hits
 # ----------------------------------------------------------------------------
 # 80.8.55.1  2 visits (start at 00:00:00 and at 12:00:00 with both entry page on /)
@@ -18,6 +18,8 @@
 # 80.8.55.8  Not a visit (try but failed twice with 404 and 405 error)
 # 80.8.55.9  Not a visit (but a worm attack)
 # 80.8.55.10 1 visit that come from a web page that is not a search engine
+# 80.8.55.11 1 visit that come from android phone
+# 80.8.55.12 1 visit that come from air
 
 80.8.55.1 - - [01/Jan/2001:00:00:10 +0100] "GET /page1.html HTTP/1.0" 200 7009 "-" "Mozilla/4.0 (compatible; MSIE 5.5; Windows NT 5.0)"
 80.8.55.1 - - [01/Jan/2001:00:00:00 +0100] "GET / HTTP/1.0" 200 7009 "http://www.sitereferer/cgi-bin/search.pl?q=a" "Mozilla/4.0 (compatible; MSIE 5.5; Windows NT 5.0)"
@@ -80,5 +82,9 @@
 80.8.55.10 - - [01/Jan/2001:16:00:00 -0300] "GET / HTTP/1.1" 200 70476 "http://us.f109.mail.yahoo.com/ym/ShowLetter?box=Inbox&MoreYahooParams..." "Mozilla/5.0 (Windows; U; Windows NT 5.0; fr-FR; rv:1.7.5) Gecko/20041108 Firefox/1.0"
 
 80.8.55.10 - - [01/Jan/2001:16:00:00 -0300] "GET / HTTP/1.1" 200 70476 "http://us.f109.mail.yahoo.com/ym/ShowLetter?box=Inbox&MoreYahooParams..." "Mozilla/5.0 (Windows; U; Windows NT 5.0; fr-FR; rv:1.7.5) Gecko/20041108 Firefox/1.0"
-80.8.55.10 - - [01/Jan/2001:16:30:00 -0300] "GET /page1.html HTTP/1.1" 200 70476 "http://www.freeweb.hu/icecat/filmek/film04.html" "Mozilla/5.0 (Windows; U; en-US) AppleWebKit/526.9+ (KHTML, like Gecko) AdobeAIR/1.5"
+80.8.55.10 - - [01/Jan/2001:16:30:00 -0300] "GET /page1.html HTTP/1.1" 200 70476 "http://www.freeweb.hu/icecat/filmek/film04.html" "Mozilla/5.0 (Windows; U; Windows NT 5.0; fr-FR; rv:1.7.5) Gecko/20041108 Firefox/1.0"
 80.8.55.10 - - [01/Jan/2001:17:00:00 -0300] "GET /cgi-bin/awredir.pl?url=http://xxx.com/aa.html HTTP/1.1" 302 70476 "http://us.f109.mail.yahoo.com/ym/ShowLetter?box=Inbox&MoreYahooParams..." "Mozilla/5.0 (Windows; U; Windows NT 5.0; fr-FR; rv:1.7.5) Gecko/20041108 Firefox/1.0"
+
+80.8.55.11 - - [01/Jan/2001:16:30:00 -0300] "GET /page1.html HTTP/1.1" 200 70476 "-" "Mozilla/5.0 (Linux; U; Android 1.5; en-us; sdk Build/CUPCAKE) AppleWebKit/528.5+ (KHTML, like Gecko) Version/3.1.2 Mobile Safari/525.20.1"
+
+80.8.55.12 - - [01/Jan/2001:16:30:00 -0300] "GET /page1.html HTTP/1.1" 200 70476 "-" "Mozilla/5.0 (Windows; U; en-US) AppleWebKit/526.9+ (KHTML, like Gecko) AdobeAIR/1.5"
