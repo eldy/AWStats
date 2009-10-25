@@ -4,26 +4,26 @@
 	<CompanyName />
 	<Program_Info>
 		<Program_Name>AWStats</Program_Name>
-		<Program_Version>6.9</Program_Version>
-		<Program_Release_Month>12</Program_Release_Month>
-		<Program_Release_Day>28</Program_Release_Day>
-		<Program_Release_Year>2008</Program_Release_Year>
+		<Program_Version>6.95</Program_Version>
+		<Program_Release_Month>10</Program_Release_Month>
+		<Program_Release_Day>25</Program_Release_Day>
+		<Program_Release_Year>2009</Program_Release_Year>
 		<Program_Cost_Dollars />
 		<Program_Cost_Other_Code />
 		<Program_Cost_Other />
 		<Program_Type>Freeware</Program_Type>
 		<Program_Release_Status>Minor Update</Program_Release_Status>
 		<Program_Install_Support>No Install Support</Program_Install_Support>
-		<Program_OS_Support>Windows2000,WinXP,Windows2003,Windows Vista Starter,Windows Vista Home Basic,Windows Vista Home Premium,Windows Vista Business,Windows Vista Enterprise,Windows Vista Ultimate,Windows Vista Home Basic x64,Windows Vista Home Premium x64,Windows Vista Business x64,Windows Vista Enterprise x64,Windows Vista Ultimate x64,Unix,Linux,Linux GPL,Linux Open Source,MS-DOS,OS/2,OS/2 Warp,OS/2 Warp 4,Mac PPC,Mac OS X,Mac Other,OpenVMS</Program_OS_Support>
+		<Program_OS_Support>Windows2000,WinXP,Windows2003,Windows Vista Starter,Windows Vista Home Basic,Windows Vista Home Premium,Windows Vista Business,Windows Vista Enterprise,Windows Vista Ultimate,Windows Vista Home Basic x64,Windows Vista Home Premium x64,Windows Vista Business x64,Windows Vista Enterprise x64,Windows Vista Ultimate x64,Unix,Linux,Linux GPL,Linux Open Source,OS/2,OS/2 Warp,OS/2 Warp 4,Mac PPC,Mac OS X,Mac Other,OpenVMS</Program_OS_Support>
 		<Program_Language>English,Arabic,Armenian,Bulgarian,Catalan,Chinese,ChineseSimplified,ChineseTraditional,Croatian,Czech,Danish,Dutch,Estonian,Finnish,French,Galician,German,Greek,Hebrew,Hungarian,Icelandic,Indonesian,Italian,Japanese,Korean,Latvian,Norwegian,Other,Polish,Portuguese,Romanian,Russian,Serbian,Slovak,Slovenian,Spanish,Swedish,Thai,Turkish,Ukrainian,Welsh</Program_Language>
 		<Program_Change_Info />
 		<Program_Specific_Category>Development Tools</Program_Specific_Category>
 		<Program_Category_Class>Web Development::Log Analysers</Program_Category_Class>
 		<Program_System_Requirements />
 		<File_Info>
-			<File_Size_Bytes>1076321</File_Size_Bytes>
-			<File_Size_K>1051</File_Size_K>
-			<File_Size_MB>1.03</File_Size_MB>
+			<File_Size_Bytes>1347670</File_Size_Bytes>
+			<File_Size_K>1316</File_Size_K>
+			<File_Size_MB>1.29</File_Size_MB>
 		</File_Info>
 		<Expire_Info>
 			<Has_Expire_Info>N</Has_Expire_Info>
@@ -65,6 +65,14 @@ AWStats génère un fichier d'informations consolidés pour pouvoir traiter de l
 Il peut analyser des logs IIS (W3C log format), fichier log Apache (format NCSA combined/XLF/ELF ou format common/CLF), WebStar et la plupart des logs de serveur web, proxy, wap, streaming serveurs (et aussi serveurs ftp et de mails).
 Ce programme supporte de plus les serveurs virtuels, des plugins et de nombreuses fonctionalités.</Char_Desc_2000>
 		</French>
+		<Spanish>
+			<Keywords />
+			<Char_Desc_45 />
+			<Char_Desc_80 />
+			<Char_Desc_250 />
+			<Char_Desc_450 />
+			<Char_Desc_2000 />
+		</Spanish>
 	</Program_Descriptions>
 	<Web_Info>
 		<Application_URLs>
@@ -76,7 +84,7 @@ Ce programme supporte de plus les serveurs virtuels, des plugins et de nombreuse
 		</Application_URLs>
 		<Download_URLs>
 			<Primary_Download_URL>http://awstats.sourceforge.net/files/awstats.zip</Primary_Download_URL>
-			<Secondary_Download_URL>http://downloads.sourceforge.net/awstats/awstats-6.9.tar.gz</Secondary_Download_URL>
+			<Secondary_Download_URL>http://downloads.sourceforge.net/awstats/awstats-6.95.tar.gz</Secondary_Download_URL>
 			<Additional_Download_URL_1 />
 			<Additional_Download_URL_2 />
 		</Download_URLs>
