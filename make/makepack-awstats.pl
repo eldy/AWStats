@@ -222,6 +222,10 @@ if (! $copyalreadydone) {
 
 print "Nettoyage de $BUILDROOT\n";
 $ret=`rm -f $BUILDROOT/$PROJECT/ChangeLog`;
+$ret=`rm -f $BUILDROOT/$PROJECT/*/.cvsignore`;
+$ret=`rm -f $BUILDROOT/$PROJECT/*/*/.cvsignore`;
+$ret=`rm -f $BUILDROOT/$PROJECT/*/*/*/.cvsignore`;
+$ret=`rm -f $BUILDROOT/$PROJECT/*/*/*/*/.cvsignore`;
 $ret=`rm -f $BUILDROOT/$PROJECT/docs/awstats_loganalysispaper.html`;
 $ret=`rm -f $BUILDROOT/$PROJECT/tools/urlalias.txt`;
 $ret=`rm -f $BUILDROOT/$PROJECT/tools/xferlogconvert.pl`;
