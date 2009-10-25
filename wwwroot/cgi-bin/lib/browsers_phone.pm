@@ -784,7 +784,7 @@
 'shrook', 'Shrook (RSS Reader)',
 'straw', 'Straw (RSS Reader)',
 'syndirella', 'Syndirella (RSS Reader)',
-'vienna', '<a href="http://www.opencommunity.co.uk/vienna2.php" title="Vienna RSS-Reader [new window]" target="_blank">Vienna (RSS Reader)</a>',
+'vienna', '<a href="http://www.vienna-rss.org/" title="Vienna RSS-Reader [new window]" target="_blank">Vienna (RSS Reader)</a>',
 'wizz\srss\snews\sreader','Wizz RSS News Reader (RSS Reader)',
 # PDA/Phonecell browsers
 'alcatel\-be4','Alcatel BE4 (phone)',
