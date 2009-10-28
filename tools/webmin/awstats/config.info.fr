@@ -1,4 +1,4 @@
-awstats=Chemin absolu du programme AWStats de mise a jour des statistiques (Exemple:/usr/local/awstats/wwwroot/cgi-bin/awstats.pl),0
+awstats=Chemin absolu du programme AWStats de mise a jour des statistiques<br>(Exemple:/usr/local/awstats/wwwroot/cgi-bin/awstats.pl),0
 awstats_cgi=URL absolue ou relative d'AWStats en CGI (Exemple:/awstats/awstats.pl),0
 alt_conf=Fichier modèle de configuration AWStats,3,/etc/awstats/awstats.model.conf
 plugin_1_geoip=Chemin du fichier de la base <a href="http://www.maxmind.com/app/perl?rId=awstats">Maxmind GeoIP country</a><br><small>(pour plugin AWStats geoip)</small>,3,/usr/local/share/GeoIP/GeoIP.dat
