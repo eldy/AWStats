@@ -111,7 +111,7 @@ while (! $found) {
 		printf(" %d - %3s    (%s)\n",$cpt,$target,"Need ".$REQUIREMENTTARGET{$target});
 	}
 
-	# On demande de choisir le fichier ï¿½ passer
+	# On demande de choisir le fichier à passer
 	print "Choose one package number or several separated with space: ";
 	$NUM_SCRIPT=<STDIN>; 
 	chomp($NUM_SCRIPT);
@@ -211,9 +211,9 @@ if ($nboftargetok) {
     
     	if ($target eq 'WBM') {
     		unlink $FILENAMEWBM.wbm;
-    		print "Creation archive $FILENAMEWBM.wbm of $PROJECT\n";
+    		print "Creation archive $FILENAMEWBM.wbm de $PROJECT\n";
     		$ret=`tar --directory="$BUILDROOT" -cvf $FILENAMEWBM.wbm $PROJECT`;
-    		print "Move file $FILENAMEWBM.wbm into $SOURCE/$FILENAMEWBM.wbm\n";
+    		print "Déplacement de $FILENAMEWBM.wbm dans $SOURCE/$FILENAMEWBM.wbm\n";
     		rename("$FILENAMEWBM.wbm","$SOURCE/$FILENAMEWBM.wbm");
     		$ret=`cp -pr "$SOURCE/$FILENAMEWBM.wbm" "$DESTI/$FILENAMEWBM.wbm"`;
 #    		$ret=`cp -pr "$SOURCE/$FILENAMEWBM.wbm" "$DESTI/$FILENAMEWBM.wbm"`;
