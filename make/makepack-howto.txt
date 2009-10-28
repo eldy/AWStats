@@ -21,7 +21,7 @@
 - Add a Sourceforge news
 
 
-Exemple of content for an email news:
+Example of content for an email news:
 
 AWStats x.x beta is ready for tests 
 ----------------------------------- 
