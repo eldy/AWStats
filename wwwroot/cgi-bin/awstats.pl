@@ -26,7 +26,7 @@ use vars qw/ $REVISION $VERSION /;
 $REVISION = '$Revision$';
 $REVISION =~ /\s(.*)\s/;
 $REVISION = $1;
-$VERSION  = "6.95 (build $REVISION)";
+$VERSION  = "6.96 (build $REVISION)";
 
 # ----- Constants -----
 use vars qw/
@@ -9797,7 +9797,7 @@ if ( ( !$ENV{'GATEWAY_INTERFACE'} ) && ( !$SiteConfig ) ) {
 		'browsers',       'domains', 'operating_systems', 'robots',
 		'search_engines', 'worms'
 	);
-	print "----- $PROG $VERSION (c) 2000-2009 Laurent Destailleur -----\n";
+	print "----- $PROG $VERSION (c) 2000-2010 Laurent Destailleur -----\n";
 	print
 "AWStats is a free web server logfile analyzer to show you advanced web\n";
 	print "statistics.\n";

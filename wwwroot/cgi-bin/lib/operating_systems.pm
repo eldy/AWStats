@@ -121,7 +121,7 @@
 %OSHashID	= (
 # Windows OS family
 'windows[_+ ]?2005','winlong','windows[_+ ]nt[_+ ]6\.0','winlong',
-'windows[_+ ]?2008','win2008','windows[_+ ]nt[_+ ]6\.1','win2008',
+'windows[_+ ]?2008','win2008','windows[_+ ]nt[_+ ]6\.1','win7',
 'windows[_+ ]?vista','winvista','windows[_+ ]nt[_+ ]6','winvista',
 'windows[_+ ]?2003','win2003','windows[_+ ]nt[_+ ]5\.2','win2003',
 'windows[_+ ]xp','winxp','windows[_+ ]nt[_+ ]5\.1','winxp', 'syndirella', 'winxp',
@@ -208,6 +208,7 @@
 #-----------------------------------------------------------
 %OSHashLib      = (
 # Windows family OS
+'win7','<a href="http://www.microsoft.com/windows/" title="Windows 7 home page [new window]" target="_blank">Windows 7</a>',
 'winlong','<a href="http://www.microsoft.com/windows/" title="Windows Vista home page [new window]" target="_blank">Windows Vista (LongHorn)</a>',
 'win2008','<a href="http://www.microsoft.com/windowsserver2008/" title="Windows 2008 home page [new window]" target="_blank">Windows 2008</a>',
 'winvista','<a href="http://www.microsoft.com/windowsvista/" title="Windows Vista home page [new window]" target="_blank">Windows Vista</a>',
