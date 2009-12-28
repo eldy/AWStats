@@ -203,7 +203,6 @@ my @AllowedArgs=('-lib','-exportformat','-debug');
 
 $QueryString="";
 for (0..@ARGV-1) {
-	# TODO Check if ARGV is an AllowedArg
 	if ($_ > 0) { $QueryString .= "&"; }
 	my $NewLinkParams=$ARGV[$_]; $NewLinkParams =~ s/^-+//; $NewLinkParams =~ s/\s/%20/g;
 	$QueryString .= "$NewLinkParams";
