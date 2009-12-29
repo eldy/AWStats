@@ -313,7 +313,7 @@
 # Minor german search engines
 'sucheaol\.aol\.de',
 'fireball\.de','infoseek\.de','suche\d?\.web\.de','[a-z]serv\.rrzn\.uni-hannover\.de',
-'suchen\.abacho\.de','brisbane\.t-online\.de','allesklar\.de','meinestadt\.de',
+'suchen\.abacho\.de','(brisbane|suche)\.t-online\.de','allesklar\.de','meinestadt\.de',
 '212\.227\.33\.241',
 '(161\.58\.227\.204|161\.58\.247\.101|212\.40\.165\.90|213\.133\.108\.202|217\.160\.108\.151|217\.160\.111\.99|217\.160\.131\.108|217\.160\.142\.227|217\.160\.176\.42)',
 'wwweasel\.de',
@@ -567,7 +567,7 @@
 'suche\d?\.web\.de','webde',
 '[a-z]serv\.rrzn\.uni-hannover\.de','meta',
 'suchen\.abacho\.de','abacho',
-'brisbane\.t-online\.de','t-online',
+'(brisbane|suche)\.t-online\.de','t-online',
 'allesklar\.de','allesklar',
 'meinestadt\.de','meinestadt',
 '212\.227\.33\.241','metaspinner',
