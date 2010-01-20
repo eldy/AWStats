@@ -28,7 +28,7 @@ else {
 $lconf = &get_config($filetoopen);
 foreach my $key (keys %$lconf) {
 	$lconf->{$key}=~s/^\s*//g;
-	$lconf->{$key}=~s/^*[\"\']//;
+	$lconf->{$key}=~s/^\s*[\"\']//;
 	$lconf->{$key}=~s/#.*$//;
 	$lconf->{$key}=~s/\s*$//g;
 	$lconf->{$key}=~s/[\"\']\s*$//;

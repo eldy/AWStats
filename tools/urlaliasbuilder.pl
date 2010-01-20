@@ -242,7 +242,7 @@ if(!($ua->is_protocol_supported('https')) && $useHTTPS) {
 	exit();
 }
 
-my $fileOutput = "";
+$fileOutput = "";
 
 # Now lets build the contents to write (or append) to urlalias file
 foreach my $newAlias (@addToAliasFile) {

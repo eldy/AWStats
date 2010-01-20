@@ -341,7 +341,7 @@ if ($LibToExport =~ /search_engines/) {
 		}
 		if ($ExportFormat eq 'webalizer') {
 			my $urlkeywordsyntax=$SearchEnginesKnownUrl{$SearchEnginesHashID{$key}};
-			my $urlkeywordsyntax=&unregexkeywordcode($urlkeywordsyntax,1);
+			$urlkeywordsyntax=&unregexkeywordcode($urlkeywordsyntax,1);
 			if (! $urlkeywordsyntax) { next; }				# This has no keywordextractcode
 			my $newkey=&unregex($key);
 			if ($newkey =~ /[\[\]\(\)\|\?\*\+]/) { next; }	# This was a regex value that i can't clean

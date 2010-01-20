@@ -108,7 +108,7 @@ while(1==1)
 	
 	# Option output
 	print "Choose output option (browserdetail)...\n";
-	my $bidon='';
+	$bidon='';
 	print "Your choice : ";
 	$bidon=<STDIN>;
 	chomp $bidon;

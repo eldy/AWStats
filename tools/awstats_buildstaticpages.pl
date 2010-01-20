@@ -44,7 +44,6 @@ my @pages=();
 my @OutputList=();
 my $FileConfig;
 my $FileSuffix;
-my $SiteConfig;
 my $DatabaseBreak;
 use vars qw/
 $ShowAuthenticatedUsers $ShowFileSizesStats $ShowScreenSizeStats $ShowSMTPErrorsStats
