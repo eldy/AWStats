@@ -1754,6 +1754,12 @@ sub Read_Config {
 			$FileSuffix = '';
 			last;
 		}
+		#CL - Added to open config if full path is passed to awstats 
+		if ( open( CONFIG, "$SiteConfig" ) ) {
+			$FileConfig = "$SiteConfig";
+			$FileSuffix = '';
+			last;
+		}
 	}
 	if ( !$FileConfig ) {
 		error(
@@ -9814,7 +9820,7 @@ if ( ( !$ENV{'GATEWAY_INTERFACE'} ) && ( !$SiteConfig ) ) {
 	print "   report (-output option).\n";
 	print
 "  First, $PROG tries to read $PROG.virtualhostname.conf as the config file.\n";
-	print "  If not found, $PROG tries to read $PROG.conf\n";
+	print "  If not found, $PROG tries to read $PROG.conf, and finally the full path passed to -config=\n";
 	print
 "  Note 1: Config files ($PROG.virtualhostname.conf or $PROG.conf) must be\n";
 	print
@@ -9899,15 +9905,14 @@ if ( ( !$ENV{'GATEWAY_INTERFACE'} ) && ( !$SiteConfig ) ) {
 	print "               errors404        to list 'Referers' for 404 errors\n";
 	print
 "               allextraX        to build page of all values for ExtraSection X\n";
-	print "  -staticlinks to have static links in HTML report page\n";
-	print
-"  -staticlinksext=xxx to have static links with .xxx extension instead of .html\n";
+	print "  -staticlinks           to have static links in HTML report page\n";
+	print "  -staticlinksext=xxx    to have static links with .xxx extension instead of .html\n";
 	print
 "  -lang=LL     to output a HTML report in language LL (en,de,es,fr,it,nl,...)\n";
 	print "  -month=MM    to output a HTML report for an old month MM\n";
 	print "  -year=YYYY   to output a HTML report for an old year YYYY\n";
 	print
-"  Those 'date' options doesn't allow you to process old log file. They only\n";
+"  The 'date' options doesn't allow you to process old log file. They only\n";
 	print
 "  allow you to see a past report for a chosen month/year period instead of\n";
 	print "  current month/year.\n";
