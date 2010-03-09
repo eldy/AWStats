@@ -9091,7 +9091,7 @@ sub ShowMenuCateg {
 				$ENV{'GATEWAY_INTERFACE'}
 				  || !$StaticLinks
 				? XMLEncode("$AWScript?${NewLinkParams}output=$key")
-				: "$PROG$StaticLinks.$key.$StaticExt"
+				: "$StaticLinks.$key.$StaticExt"
 			  )
 			  . "\"$NewLinkTarget>$menutext->{$key}</a>\n";
 			print( $frame? "</td></tr>\n" : " &nbsp; " );
@@ -9131,7 +9131,7 @@ sub ShowEmailSendersChart {
 			$ENV{'GATEWAY_INTERFACE'}
 			  || !$StaticLinks
 			? XMLEncode("$AWScript?${NewLinkParams}output=allemails")
-			: "$PROG$StaticLinks.allemails.$StaticExt"
+			: "$StaticLinks.allemails.$StaticExt"
 		  )
 		  . "\"$NewLinkTarget>$Message[80]</a>";
 		if ( $ShowEMailSenders =~ /L/i ) {
@@ -9140,7 +9140,7 @@ sub ShowEmailSendersChart {
 				$ENV{'GATEWAY_INTERFACE'}
 				  || !$StaticLinks
 				? XMLEncode("$AWScript?${NewLinkParams}output=lastemails")
-				: "$PROG$StaticLinks.lastemails.$StaticExt"
+				: "$StaticLinks.lastemails.$StaticExt"
 			  )
 			  . "\"$NewLinkTarget>$Message[9]</a>";
 		}
@@ -9291,7 +9291,7 @@ sub ShowEmailReceiversChart {
 			$ENV{'GATEWAY_INTERFACE'}
 			  || !$StaticLinks
 			? XMLEncode("$AWScript?${NewLinkParams}output=allemailr")
-			: "$PROG$StaticLinks.allemailr.$StaticExt"
+			: "$StaticLinks.allemailr.$StaticExt"
 		  )
 		  . "\"$NewLinkTarget>$Message[80]</a>";
 		if ( $ShowEMailReceivers =~ /L/i ) {
@@ -9300,7 +9300,7 @@ sub ShowEmailReceiversChart {
 				$ENV{'GATEWAY_INTERFACE'}
 				  || !$StaticLinks
 				? XMLEncode("$AWScript?${NewLinkParams}output=lastemailr")
-				: "$PROG$StaticLinks.lastemailr.$StaticExt"
+				: "$StaticLinks.lastemailr.$StaticExt"
 			  )
 			  . "\"$NewLinkTarget>$Message[9]</a>";
 		}
@@ -9693,10 +9693,10 @@ else {                             # Run from command line
 	}
 }
 if ( $QueryString =~ /(^|&|&amp;)staticlinks/i ) {
-	$StaticLinks = ".$SiteConfig";
+	$StaticLinks = "$PROG.$SiteConfig";
 }
 if ( $QueryString =~ /(^|&|&amp;)staticlinks=([^&]+)/i ) {
-	$StaticLinks = ".$2";
+	$StaticLinks = "$2";
 }    # When ran from awstatsbuildstaticpages.pl
 if ( $QueryString =~ /(^|&|&amp;)staticlinksext=([^&]+)/i ) {
 	$StaticExt = "$2";
@@ -13716,7 +13716,7 @@ if ( scalar keys %HTMLOutput ) {
 						$ENV{'GATEWAY_INTERFACE'} || !$StaticLinks
 						? XMLEncode(
 							"$AWScript?${NewLinkParams}output=urldetail")
-						: "$PROG$StaticLinks.urldetail.$StaticExt"
+						: "$StaticLinks.urldetail.$StaticExt"
 					  )
 					  . "\"$NewLinkTarget>$Message[80]</a>\n";
 					print( $frame? "</td></tr>\n" : " &nbsp; " );
@@ -13731,7 +13731,7 @@ if ( scalar keys %HTMLOutput ) {
 						$ENV{'GATEWAY_INTERFACE'} || !$StaticLinks
 						? XMLEncode(
 							"$AWScript?${NewLinkParams}output=urlentry")
-						: "$PROG$StaticLinks.urlentry.$StaticExt"
+						: "$StaticLinks.urlentry.$StaticExt"
 					  )
 					  . "\"$NewLinkTarget>$Message[104]</a>\n";
 					print( $frame? "</td></tr>\n" : " &nbsp; " );
@@ -13746,7 +13746,7 @@ if ( scalar keys %HTMLOutput ) {
 						$ENV{'GATEWAY_INTERFACE'}
 						  || !$StaticLinks
 						? XMLEncode("$AWScript?${NewLinkParams}output=urlexit")
-						: "$PROG$StaticLinks.urlexit.$StaticExt"
+						: "$StaticLinks.urlexit.$StaticExt"
 					  )
 					  . "\"$NewLinkTarget>$Message[116]</a>\n";
 					print( $frame? "</td></tr>\n" : " &nbsp; " );
@@ -13767,7 +13767,7 @@ if ( scalar keys %HTMLOutput ) {
 						$ENV{'GATEWAY_INTERFACE'} || !$StaticLinks
 						? XMLEncode(
 							"$AWScript?${NewLinkParams}output=osdetail")
-						: "$PROG$StaticLinks.osdetail.$StaticExt"
+						: "$StaticLinks.osdetail.$StaticExt"
 					  )
 					  . "\"$NewLinkTarget>$Message[58]</a>\n";
 					print( $frame? "</td></tr>\n" : " &nbsp; " );
@@ -13782,7 +13782,7 @@ if ( scalar keys %HTMLOutput ) {
 						$ENV{'GATEWAY_INTERFACE'} || !$StaticLinks
 						? XMLEncode(
 							"$AWScript?${NewLinkParams}output=unknownos")
-						: "$PROG$StaticLinks.unknownos.$StaticExt"
+						: "$StaticLinks.unknownos.$StaticExt"
 					  )
 					  . "\"$NewLinkTarget>$Message[0]</a>\n";
 					print( $frame? "</td></tr>\n" : " &nbsp; " );
@@ -13803,7 +13803,7 @@ if ( scalar keys %HTMLOutput ) {
 						$ENV{'GATEWAY_INTERFACE'} || !$StaticLinks
 						? XMLEncode(
 							"$AWScript?${NewLinkParams}output=browserdetail")
-						: "$PROG$StaticLinks.browserdetail.$StaticExt"
+						: "$StaticLinks.browserdetail.$StaticExt"
 					  )
 					  . "\"$NewLinkTarget>$Message[58]</a>\n";
 					print( $frame? "</td></tr>\n" : " &nbsp; " );
@@ -13818,7 +13818,7 @@ if ( scalar keys %HTMLOutput ) {
 						$ENV{'GATEWAY_INTERFACE'} || !$StaticLinks
 						? XMLEncode(
 							"$AWScript?${NewLinkParams}output=unknownbrowser")
-						: "$PROG$StaticLinks.unknownbrowser.$StaticExt"
+						: "$StaticLinks.unknownbrowser.$StaticExt"
 					  )
 					  . "\"$NewLinkTarget>$Message[0]</a>\n";
 					print( $frame? "</td></tr>\n" : " &nbsp; " );
@@ -13957,7 +13957,7 @@ if ( scalar keys %HTMLOutput ) {
 						"$AWScript"
 						  . ( ${NewLinkParams} ? "?${NewLinkParams}" : "" )
 					  )
-					: "$PROG$StaticLinks.$StaticExt"
+					: "$StaticLinks.$StaticExt"
 				  )
 				  . "\">$Message[76]</a></td></tr>\n";
 			}
@@ -17523,7 +17523,7 @@ if ( scalar keys %HTMLOutput ) {
 				$ENV{'GATEWAY_INTERFACE'}
 				  || !$StaticLinks
 				? XMLEncode("$AWScript?${NewLinkParams}output=alldomains")
-				: "$PROG$StaticLinks.alldomains.$StaticExt"
+				: "$StaticLinks.alldomains.$StaticExt"
 			  )
 			  . "\"$NewLinkTarget>$Message[80]</a>";
 			&tab_head( "$title", 19, 0, 'countries' );
@@ -17715,21 +17715,21 @@ if ( scalar keys %HTMLOutput ) {
 				$ENV{'GATEWAY_INTERFACE'}
 				  || !$StaticLinks
 				? XMLEncode("$AWScript?${NewLinkParams}output=allhosts")
-				: "$PROG$StaticLinks.allhosts.$StaticExt"
+				: "$StaticLinks.allhosts.$StaticExt"
 			  )
 			  . "\"$NewLinkTarget>$Message[80]</a> &nbsp; - &nbsp; <a href=\""
 			  . (
 				$ENV{'GATEWAY_INTERFACE'}
 				  || !$StaticLinks
 				? XMLEncode("$AWScript?${NewLinkParams}output=lasthosts")
-				: "$PROG$StaticLinks.lasthosts.$StaticExt"
+				: "$StaticLinks.lasthosts.$StaticExt"
 			  )
 			  . "\"$NewLinkTarget>$Message[9]</a> &nbsp; - &nbsp; <a href=\""
 			  . (
 				$ENV{'GATEWAY_INTERFACE'}
 				  || !$StaticLinks
 				? XMLEncode("$AWScript?${NewLinkParams}output=unknownip")
-				: "$PROG$StaticLinks.unknownip.$StaticExt"
+				: "$StaticLinks.unknownip.$StaticExt"
 			  )
 			  . "\"$NewLinkTarget>$Message[45]</a>";
 			&tab_head( "$title", 19, 0, 'visitors' );
@@ -17837,7 +17837,7 @@ if ( scalar keys %HTMLOutput ) {
 				$ENV{'GATEWAY_INTERFACE'}
 				  || !$StaticLinks
 				? XMLEncode("$AWScript?${NewLinkParams}output=alllogins")
-				: "$PROG$StaticLinks.alllogins.$StaticExt"
+				: "$StaticLinks.alllogins.$StaticExt"
 			  )
 			  . "\"$NewLinkTarget>$Message[80]</a>";
 			if ( $ShowAuthenticatedUsers =~ /L/i ) {
@@ -17846,7 +17846,7 @@ if ( scalar keys %HTMLOutput ) {
 					$ENV{'GATEWAY_INTERFACE'}
 					  || !$StaticLinks
 					? XMLEncode("$AWScript?${NewLinkParams}output=lastlogins")
-					: "$PROG$StaticLinks.lastlogins.$StaticExt"
+					: "$StaticLinks.lastlogins.$StaticExt"
 				  )
 				  . "\"$NewLinkTarget>$Message[9]</a>";
 			}
@@ -17966,14 +17966,14 @@ if ( scalar keys %HTMLOutput ) {
 					$ENV{'GATEWAY_INTERFACE'}
 					  || !$StaticLinks
 					? XMLEncode("$AWScript?${NewLinkParams}output=allrobots")
-					: "$PROG$StaticLinks.allrobots.$StaticExt"
+					: "$StaticLinks.allrobots.$StaticExt"
 				  )
 				  . "\"$NewLinkTarget>$Message[80]</a> &nbsp; - &nbsp; <a href=\""
 				  . (
 					$ENV{'GATEWAY_INTERFACE'}
 					  || !$StaticLinks
 					? XMLEncode("$AWScript?${NewLinkParams}output=lastrobots")
-					: "$PROG$StaticLinks.lastrobots.$StaticExt"
+					: "$StaticLinks.lastrobots.$StaticExt"
 				  )
 				  . "\"$NewLinkTarget>$Message[9]</a>",
 				19, 0, 'robots'
@@ -18354,7 +18354,7 @@ if ( scalar keys %HTMLOutput ) {
 				$ENV{'GATEWAY_INTERFACE'}
 				  || !$StaticLinks
 				? XMLEncode("$AWScript?${NewLinkParams}output=urldetail")
-				: "$PROG$StaticLinks.urldetail.$StaticExt"
+				: "$StaticLinks.urldetail.$StaticExt"
 			  )
 			  . "\"$NewLinkTarget>$Message[80]</a>";
 			if ( $ShowPagesStats =~ /E/i ) {
@@ -18363,7 +18363,7 @@ if ( scalar keys %HTMLOutput ) {
 					$ENV{'GATEWAY_INTERFACE'}
 					  || !$StaticLinks
 					? XMLEncode("$AWScript?${NewLinkParams}output=urlentry")
-					: "$PROG$StaticLinks.urlentry.$StaticExt"
+					: "$StaticLinks.urlentry.$StaticExt"
 				  )
 				  . "\"$NewLinkTarget>$Message[104]</a>";
 			}
@@ -18373,7 +18373,7 @@ if ( scalar keys %HTMLOutput ) {
 					$ENV{'GATEWAY_INTERFACE'}
 					  || !$StaticLinks
 					? XMLEncode("$AWScript?${NewLinkParams}output=urlexit")
-					: "$PROG$StaticLinks.urlexit.$StaticExt"
+					: "$StaticLinks.urlexit.$StaticExt"
 				  )
 				  . "\"$NewLinkTarget>$Message[116]</a>";
 			}
@@ -18595,14 +18595,14 @@ if ( scalar keys %HTMLOutput ) {
 				$ENV{'GATEWAY_INTERFACE'}
 				  || !$StaticLinks
 				? XMLEncode("$AWScript?${NewLinkParams}output=osdetail")
-				: "$PROG$StaticLinks.osdetail.$StaticExt"
+				: "$StaticLinks.osdetail.$StaticExt"
 			  )
 			  . "\"$NewLinkTarget>$Message[80]/$Message[58]</a> &nbsp; - &nbsp; <a href=\""
 			  . (
 				$ENV{'GATEWAY_INTERFACE'}
 				  || !$StaticLinks
 				? XMLEncode("$AWScript?${NewLinkParams}output=unknownos")
-				: "$PROG$StaticLinks.unknownos.$StaticExt"
+				: "$StaticLinks.unknownos.$StaticExt"
 			  )
 			  . "\"$NewLinkTarget>$Message[0]</a>";
 			&tab_head( "$title", 19, 0, 'os' );
@@ -18683,14 +18683,14 @@ if ( scalar keys %HTMLOutput ) {
 				$ENV{'GATEWAY_INTERFACE'}
 				  || !$StaticLinks
 				? XMLEncode("$AWScript?${NewLinkParams}output=browserdetail")
-				: "$PROG$StaticLinks.browserdetail.$StaticExt"
+				: "$StaticLinks.browserdetail.$StaticExt"
 			  )
 			  . "\"$NewLinkTarget>$Message[80]/$Message[58]</a> &nbsp; - &nbsp; <a href=\""
 			  . (
 				$ENV{'GATEWAY_INTERFACE'}
 				  || !$StaticLinks
 				? XMLEncode("$AWScript?${NewLinkParams}output=unknownbrowser")
-				: "$PROG$StaticLinks.unknownbrowser.$StaticExt"
+				: "$StaticLinks.unknownbrowser.$StaticExt"
 			  )
 			  . "\"$NewLinkTarget>$Message[0]</a>";
 			&tab_head( "$title", 19, 0, 'browsers' );
@@ -18886,7 +18886,7 @@ if ( scalar keys %HTMLOutput ) {
 				$ENV{'GATEWAY_INTERFACE'}
 				  || !$StaticLinks
 				? XMLEncode("$AWScript?${NewLinkParams}output=refererse")
-				: "$PROG$StaticLinks.refererse.$StaticExt"
+				: "$StaticLinks.refererse.$StaticExt"
 			  )
 			  . "\"$NewLinkTarget>$Message[80]</a><br />\n";
 			if ( scalar keys %_se_referrals_h ) {
@@ -18958,7 +18958,7 @@ if ( scalar keys %HTMLOutput ) {
 				$ENV{'GATEWAY_INTERFACE'}
 				  || !$StaticLinks
 				? XMLEncode("$AWScript?${NewLinkParams}output=refererpages")
-				: "$PROG$StaticLinks.refererpages.$StaticExt"
+				: "$StaticLinks.refererpages.$StaticExt"
 			  )
 			  . "\"$NewLinkTarget>$Message[80]</a><br />\n";
 			if ( scalar keys %_pagesrefs_h ) {
@@ -19097,7 +19097,7 @@ if ( scalar keys %HTMLOutput ) {
 					$ENV{'GATEWAY_INTERFACE'}
 					  || !$StaticLinks
 					? XMLEncode("$AWScript?${NewLinkParams}output=keyphrases")
-					: "$PROG$StaticLinks.keyphrases.$StaticExt"
+					: "$StaticLinks.keyphrases.$StaticExt"
 				  )
 				  . "\"$NewLinkTarget>$Message[80]</a>",
 				19,
@@ -19168,7 +19168,7 @@ if ( scalar keys %HTMLOutput ) {
 					$ENV{'GATEWAY_INTERFACE'}
 					  || !$StaticLinks
 					? XMLEncode("$AWScript?${NewLinkParams}output=keywords")
-					: "$PROG$StaticLinks.keywords.$StaticExt"
+					: "$StaticLinks.keywords.$StaticExt"
 				  )
 				  . "\"$NewLinkTarget>$Message[80]</a>",
 				19,
@@ -19311,7 +19311,7 @@ if ( scalar keys %HTMLOutput ) {
 						$ENV{'GATEWAY_INTERFACE'} || !$StaticLinks
 						? XMLEncode(
 							"$AWScript?${NewLinkParams}output=errors$key")
-						: "$PROG$StaticLinks.errors$key.$StaticExt"
+						: "$StaticLinks.errors$key.$StaticExt"
 					  )
 					  . "\"$NewLinkTarget>$key</a></td>";
 				}
@@ -19430,7 +19430,7 @@ if ( scalar keys %HTMLOutput ) {
 				$ENV{'GATEWAY_INTERFACE'} || !$StaticLinks
 				? XMLEncode(
 					"$AWScript?${NewLinkParams}output=allextra$extranum")
-				: "$PROG$StaticLinks.allextra$extranum.$StaticExt"
+				: "$StaticLinks.allextra$extranum.$StaticExt"
 			  )
 			  . "\"$NewLinkTarget>$Message[80]</a>";
 			print "</th>";
