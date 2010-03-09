@@ -44,7 +44,7 @@ $NBOFLINESFORBENCHMARK=8192;
 
 use vars qw/
 $DIR $PROG $Extension
-$Debug $ShowSteps $AddFileNum $AddFileName
+$Debug $ShowSteps $AddFileNum $AddFileName $LastLogNum $PrintFields
 $MaxNbOfThread $DNSLookup $DNSCache $DirCgi $DirData $DNSLookupAlreadyDone
 $NbOfLinesShowsteps $AFINET $QueueCursor $StopOnFirstEof
 /;
@@ -55,6 +55,8 @@ $Debug=0;
 $ShowSteps=0;
 $AddFileNum=0;
 $AddFileName=0;
+$LastLogNum=0;
+$PrintFields=0;
 $MaxNbOfThread=0;
 $DNSLookup=0;
 $DNSCache='';
@@ -69,6 +71,7 @@ $StopOnFirstEof=0;
 use vars qw/
 @SkipDNSLookupFor
 @ParamFile
+@Fields
 /;
 # ---------- Init hash arrays --------
 use vars qw/
@@ -219,6 +222,11 @@ sub WriteRecordsReadyInQueue {
 		# Record is ready, we output it.
 		if ($AddFileNum)  { print "$logfilechosen "; }
 		if ($AddFileName) { print "$LogFileToDo{$logfilechosen} "; }
+		# see if we need to dump fields
+		if ($PrintFields && $LastLogNum != $logfilechosen){
+			print($Fields[$logfilechosen]."\n");
+			$LastLogNum = $logfilechosen;
+		}
 		print "$QueueRecords{$QueueCursor}\n";
 		delete $QueueRecords{$QueueCursor};
 		delete $QueueHostsToResolve{$QueueCursor};
@@ -261,6 +269,7 @@ for (0..@ARGV-1) {
 		elsif ($ARGV[$_] =~ /addfilenum/i) { $AddFileNum=1; }
 		elsif ($ARGV[$_] =~ /addfilename/i) { $AddFileName=1; }
 		elsif ($ARGV[$_] =~ /stoponfirsteof/i) { $StopOnFirstEof=1; }
+		elsif ($ARGV[$_] =~ /printfields/i) { $PrintFields=1; }
 		else { print "Unknown argument $ARGV[$_] ignored\n"; }
 	}
 	else {
@@ -316,6 +325,10 @@ if (scalar @ParamFile == 0) {
 	print "                  field of output file. This can be used to add a cluster id\n";
 	print "                  when log files come from several load balanced computers.\n";
 	print "  -stoponfirsteof Stop processing when any logfile reaches end-of-file.\n";
+	print "  -printfields    For IIS or W3C logs, prints the latest field header for\n";
+	print "                  the currentlog file when switching between log file entries\n";
+	print "                  so that the parsercan automatically determine which fields\n";
+	print "                  are avaiable.\n";
 	print "\n";
 	
 	print "This runs $PROG in command line to open one or several\n";
@@ -513,7 +526,18 @@ STOPONFIRSTEOF: while (1 == 1)
 				}
 				last;
 			}
-
+		
+			# Get the latest Fields header for printing IIS and W3C logs
+			if ($PrintFields && $_ =~ m/#Fields:/){
+				my $field = $_;
+				# strip whitespace
+				$field =~ s/^\s+|\s+$//g;
+				if (!$Fields[$logfilenb] || $field != $Fields[$logfilenb]){
+					$Fields[$logfilenb] = $field;
+					debug("Found new fields in $logfilenb: $Fields[$logfilenb]");
+				}
+			}
+			
 			$NbOfLinesRead++;
 			chomp $_; s/\r$//;
 

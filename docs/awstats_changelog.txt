@@ -6,7 +6,9 @@ $Revision$ - $Author$ - $Date$
 ***** 6.96 *****
 
 New features/improvements:
-- Detect Windows 7
+- Detect Windows 7.
+- Can format numbers according to language.
+- More mime types.
 
 
 ***** 6.95 *****
