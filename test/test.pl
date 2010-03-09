@@ -4,9 +4,9 @@
 #-----------------------------------------------------------------------------
 
 
-$DIRAWSTATS="e:/Mes Developpements/awstats/wwwroot/cgi-bin";
-$DIRCONF="e:/Mes Developpements/awstats/test/awstats/conf";
-$DIRRESULT="e:/Mes Developpements/awstats/test/awstats/result";
+$DIRAWSTATS="d:/Mes Developpements/awstats/wwwroot/cgi-bin";
+$DIRCONF="d:/Mes Developpements/awstats/test/awstats/conf";
+$DIRRESULT="d:/Mes Developpements/awstats/test/awstats/result";
 $TEMP="c:/temp";
 #$PERL="\"c:\\Program files\\cygwin\\bin\\perl.exe\"";
 $PERL="perl.exe";
