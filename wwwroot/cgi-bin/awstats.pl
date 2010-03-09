@@ -780,7 +780,8 @@ use vars qw/ @Message /;
 	'Opera versions',
 	'Safari versions',
 	'Chrome versions',
-	'Konqueror versions'
+	'Konqueror versions',
+	' '
 );
 
 #------------------------------------------------------------------------------
@@ -7920,17 +7921,21 @@ sub Format_Bytes {
 }
 
 #------------------------------------------------------------------------------
-# Function:		Format a number
+# Function:		Format a number with commas or any other separator
+#				CL: courtesy of http://www.perlmonks.org/?node_id=2145
 # Parameters:   number
 # Input:        None
 # Output:       None
-# Return:       "999 999 999 999"
+# Return:       "999,999,999,999"
 #------------------------------------------------------------------------------
 sub Format_Number {
 	my $number = shift || 0;
 	$number =~ s/(\d)(\d\d\d)$/$1 $2/;
 	$number =~ s/(\d)(\d\d\d\s\d\d\d)$/$1 $2/;
 	$number =~ s/(\d)(\d\d\d\s\d\d\d\s\d\d\d)$/$1 $2/;
+	my $separator = $Message[177];
+	if ($separator == '') { $separator=' '; }	# For backward compatibility
+	$number =~ s/ /$separator/g;
 	return $number;
 }
 
@@ -14284,7 +14289,7 @@ if ( scalar keys %HTMLOutput ) {
 					$_domener_u += ( $_domener_h{$key} / $TotalHits );
 					$_domener_u =
 					  sprintf( "%.0f", ( $_domener_u * $TotalUnique ) / 2 );
-					print "<td>$_domener_u ("
+					print "<td>".Format_Number($_domener_u)." ("
 					  . sprintf( "%.1f%", 100 * $_domener_u / $TotalUnique )
 					  . ")</td>";
 				}
@@ -14297,15 +14302,15 @@ if ( scalar keys %HTMLOutput ) {
 					$_domener_v += ( $_domener_h{$key} / $TotalHits );
 					$_domener_v =
 					  sprintf( "%.0f", ( $_domener_v * $TotalVisits ) / 2 );
-					print "<td>$_domener_v ("
+					print "<td>".Format_Number($_domener_v)." ("
 					  . sprintf( "%.1f%", 100 * $_domener_v / $TotalVisits )
 					  . ")</td>";
 				}
 				if ( $ShowDomainsStats =~ /P/i ) {
-					print "<td>$_domener_p{$key}</td>";
+					print "<td>".Format_Number($_domener_p{$key})."</td>";
 				}
 				if ( $ShowDomainsStats =~ /H/i ) {
-					print "<td>$_domener_h{$key}</td>";
+					print "<td>".Format_Number($_domener_h{$key})."</td>";
 				}
 				if ( $ShowDomainsStats =~ /B/i ) {
 					print "<td>" . Format_Bytes( $_domener_k{$key} ) . "</td>";
@@ -14398,16 +14403,16 @@ if ( scalar keys %HTMLOutput ) {
 				if ( $MonthRequired ne 'all' ) {
 					if ( $HTMLOutput{'allhosts'} || $HTMLOutput{'lasthosts'} ) {
 						print
-"<br />$Message[102]: $TotalHostsKnown $Message[82], $TotalHostsUnknown $Message[1] - $TotalUnique $Message[11]";
+"<br />$Message[102]: ".Format_Number($TotalHostsKnown)." $Message[82], ".Format_Number($TotalHostsUnknown)." $Message[1] - ".Format_Number($TotalUnique)." $Message[11]";
 					}
 				}
 			}
 			else {    # Without filter
 				if ( $MonthRequired ne 'all' ) {
 					print
-"$Message[102] : $TotalHostsKnown $Message[82], $TotalHostsUnknown $Message[1] - $TotalUnique $Message[11]";
+"$Message[102] : ".Format_Number($TotalHostsKnown)." $Message[82], ".Format_Number($TotalHostsUnknown)." $Message[1] - ".Format_Number($TotalUnique)." $Message[11]";
 				}
-				else { print "$Message[102] : " . ( scalar keys %_host_h ); }
+				else { print "$Message[102] : " . Format_Number(( scalar keys %_host_h )); }
 			}
 			print "</th>";
 			&ShowHostInfo('__title__');
@@ -14445,11 +14450,11 @@ if ( scalar keys %HTMLOutput ) {
 				&ShowHostInfo($key);
 				if ( $ShowHostsStats =~ /P/i ) {
 					print "<td>"
-					  . ( $_host_p{$key} ? $_host_p{$key} : "&nbsp;" )
+					  . ( $_host_p{$key} ? Format_Number($_host_p{$key}) : "&nbsp;" )
 					  . "</td>";
 				}
 				if ( $ShowHostsStats =~ /H/i ) {
-					print "<td>$_host_h{$key}</td>";
+					print "<td>".Format_Number($_host_h{$key})."</td>";
 				}
 				if ( $ShowHostsStats =~ /B/i ) {
 					print "<td>" . Format_Bytes( $_host_k{$key} ) . "</td>";
@@ -14484,9 +14489,9 @@ if ( scalar keys %HTMLOutput ) {
 "<tr><td class=\"aws\"><span style=\"color: #$color_other\">$Message[2]</span></td>";
 				&ShowHostInfo('');
 				if ( $ShowHostsStats =~ /P/i ) {
-					print "<td>" . ( $rest_p ? $rest_p : "&nbsp;" ) . "</td>";
+					print "<td>" . ( $rest_p ? Format_Number($rest_p) : "&nbsp;" ) . "</td>";
 				}
-				if ( $ShowHostsStats =~ /H/i ) { print "<td>$rest_h</td>"; }
+				if ( $ShowHostsStats =~ /H/i ) { print "<td>".Format_Number($rest_h)."</td>"; }
 				if ( $ShowHostsStats =~ /B/i ) {
 					print "<td>" . Format_Bytes($rest_k) . "</td>";
 				}
@@ -14500,7 +14505,7 @@ if ( scalar keys %HTMLOutput ) {
 			print "$Center<a name=\"unknownip\">&nbsp;</a><br />\n";
 			&tab_head( "$Message[45]", 19, 0, 'unknownwip' );
 			print "<tr bgcolor=\"#$color_TableBGRowTitle\"><th>"
-			  . ( scalar keys %_host_h )
+			  . Format_Number(( scalar keys %_host_h ))
 			  . " $Message[1]</th>";
 			&ShowHostInfo('__title__');
 			if ( $ShowHostsStats =~ /P/i ) {
@@ -14529,11 +14534,11 @@ if ( scalar keys %HTMLOutput ) {
 				&ShowHostInfo($key);
 				if ( $ShowHostsStats =~ /P/i ) {
 					print "<td>"
-					  . ( $_host_p{$key} ? $_host_p{$key} : "&nbsp;" )
+					  . ( $_host_p{$key} ? Format_Number($_host_p{$key}) : "&nbsp;" )
 					  . "</td>";
 				}
 				if ( $ShowHostsStats =~ /H/i ) {
-					print "<td>$_host_h{$key}</td>";
+					print "<td>".Format_Number($_host_h{$key})."</td>";
 				}
 				if ( $ShowHostsStats =~ /B/i ) {
 					print "<td>" . Format_Bytes( $_host_k{$key} ) . "</td>";
@@ -14568,9 +14573,9 @@ if ( scalar keys %HTMLOutput ) {
 "<tr><td class=\"aws\"><span style=\"color: #$color_other\">$Message[82]</span></td>";
 				&ShowHostInfo('');
 				if ( $ShowHostsStats =~ /P/i ) {
-					print "<td>" . ( $rest_p ? $rest_p : "&nbsp;" ) . "</td>";
+					print "<td>" . ( $rest_p ? Format_Number($rest_p) : "&nbsp;" ) . "</td>";
 				}
-				if ( $ShowHostsStats =~ /H/i ) { print "<td>$rest_h</td>"; }
+				if ( $ShowHostsStats =~ /H/i ) { print "<td>".Format_Number($rest_h)."</td>"; }
 				if ( $ShowHostsStats =~ /B/i ) {
 					print "<td>" . Format_Bytes($rest_k) . "</td>";
 				}
@@ -14595,7 +14600,7 @@ if ( scalar keys %HTMLOutput ) {
 			if ( $HTMLOutput{'lastlogins'} ) { $title .= "$Message[9]"; }
 			&tab_head( "$title", 19, 0, 'logins' );
 			print "<tr bgcolor=\"#$color_TableBGRowTitle\"><th>$Message[94] : "
-			  . ( scalar keys %_login_h ) . "</th>";
+			  . Format_Number(( scalar keys %_login_h )) . "</th>";
 			&ShowUserInfo('__title__');
 			if ( $ShowAuthenticatedUsers =~ /P/i ) {
 				print
@@ -14628,11 +14633,11 @@ if ( scalar keys %HTMLOutput ) {
 				&ShowUserInfo($key);
 				if ( $ShowAuthenticatedUsers =~ /P/i ) {
 					print "<td>"
-					  . ( $_login_p{$key} ? $_login_p{$key} : "&nbsp;" )
+					  . ( $_login_p{$key} ? Format_Number($_login_p{$key}) : "&nbsp;" )
 					  . "</td>";
 				}
 				if ( $ShowAuthenticatedUsers =~ /H/i ) {
-					print "<td>$_login_h{$key}</td>";
+					print "<td>".Format_Number($_login_h{$key})."</td>";
 				}
 				if ( $ShowAuthenticatedUsers =~ /B/i ) {
 					print "<td>" . Format_Bytes( $_login_k{$key} ) . "</td>";
@@ -14667,10 +14672,10 @@ if ( scalar keys %HTMLOutput ) {
 "<tr><td class=\"aws\"><span style=\"color: #$color_other\">$Message[125]</span></td>";
 				&ShowUserInfo('');
 				if ( $ShowAuthenticatedUsers =~ /P/i ) {
-					print "<td>" . ( $rest_p ? $rest_p : "&nbsp;" ) . "</td>";
+					print "<td>" . ( $rest_p ? Format_Number($rest_p) : "&nbsp;" ) . "</td>";
 				}
 				if ( $ShowAuthenticatedUsers =~ /H/i ) {
-					print "<td>$rest_h</td>";
+					print "<td>".Format_Number($rest_h)."</td>";
 				}
 				if ( $ShowAuthenticatedUsers =~ /B/i ) {
 					print "<td>" . Format_Bytes($rest_k) . "</td>";
@@ -14690,7 +14695,7 @@ if ( scalar keys %HTMLOutput ) {
 			if ( $HTMLOutput{'lastrobots'} ) { $title .= "$Message[9]"; }
 			&tab_head( "$title", 19, 0, 'robots' );
 			print "<tr bgcolor=\"#$color_TableBGRowTitle\"><th>"
-			  . ( scalar keys %_robot_h )
+			  . Format_Number(( scalar keys %_robot_h ))
 			  . " $Message[51]</th>";
 			if ( $ShowRobotsStats =~ /H/i ) {
 				print
@@ -14720,7 +14725,7 @@ if ( scalar keys %HTMLOutput ) {
 				  . "</td>";
 				if ( $ShowRobotsStats =~ /H/i ) {
 					print "<td>"
-					  . ( $_robot_h{$key} - $_robot_r{$key} )
+					  . Format_Number(( $_robot_h{$key} - $_robot_r{$key} ))
 					  . ( $_robot_r{$key} ? "+$_robot_r{$key}" : "" ) . "</td>";
 				}
 				if ( $ShowRobotsStats =~ /B/i ) {
@@ -14768,7 +14773,7 @@ if ( scalar keys %HTMLOutput ) {
 			{               # All other robots
 				print
 "<tr><td class=\"aws\"><span style=\"color: #$color_other\">$Message[2]</span></td>";
-				if ( $ShowRobotsStats =~ /H/i ) { print "<td>$rest_h</td>"; }
+				if ( $ShowRobotsStats =~ /H/i ) { print "<td>".Format_Number($rest_h)."</td>"; }
 				if ( $ShowRobotsStats =~ /B/i ) {
 					print "<td>" . ( Format_Bytes($rest_k) ) . "</td>";
 				}
@@ -14825,15 +14830,15 @@ if ( scalar keys %HTMLOutput ) {
 					print "Exclude $Message[79] <b>$FilterEx{'url'}</b>";
 				}
 				if ( $FilterIn{'url'} || $FilterEx{'url'} ) { print ": "; }
-				print "$cpt $Message[28]";
+				print Format_Number($cpt)." $Message[28]";
 				if ( $MonthRequired ne 'all' ) {
 					if ( $HTMLOutput{'urldetail'} ) {
 						print
-"<br />$Message[102]: $TotalDifferentPages $Message[28]";
+"<br />$Message[102]: ".Format_Number($TotalDifferentPages)." $Message[28]";
 					}
 				}
 			}
-			else { print "$Message[102]: $cpt $Message[28]"; }
+			else { print "$Message[102]: ".Format_Number($cpt)." $Message[28]"; }
 			print "</th>";
 			if ( $ShowPagesStats =~ /P/i ) {
 				print
@@ -14916,7 +14921,7 @@ if ( scalar keys %HTMLOutput ) {
 				}
 				if ( ( $bredde_k == 1 ) && $_url_k{$key} ) { $bredde_k = 2; }
 				if ( $ShowPagesStats =~ /P/i ) {
-					print "<td>$_url_p{$key}</td>";
+					print "<td>".Format_Number($_url_p{$key})."</td>";
 				}
 				if ( $ShowPagesStats =~ /B/i ) {
 					print "<td>"
@@ -14931,11 +14936,11 @@ if ( scalar keys %HTMLOutput ) {
 				}
 				if ( $ShowPagesStats =~ /E/i ) {
 					print "<td>"
-					  . ( $_url_e{$key} ? $_url_e{$key} : "&nbsp;" ) . "</td>";
+					  . ( $_url_e{$key} ? Format_Number($_url_e{$key}) : "&nbsp;" ) . "</td>";
 				}
 				if ( $ShowPagesStats =~ /X/i ) {
 					print "<td>"
-					  . ( $_url_x{$key} ? $_url_x{$key} : "&nbsp;" ) . "</td>";
+					  . ( $_url_x{$key} ? Format_Number($_url_x{$key}) : "&nbsp;" ) . "</td>";
 				}
 
 				# Call to plugins' function ShowPagesAddField
@@ -14988,7 +14993,7 @@ if ( scalar keys %HTMLOutput ) {
 				print
 "<tr><td class=\"aws\"><span style=\"color: #$color_other\">$Message[2]</span></td>";
 				if ( $ShowPagesStats =~ /P/i ) {
-					print "<td>" . ( $rest_p ? $rest_p : "&nbsp;" ) . "</td>";
+					print "<td>" . ( $rest_p ? Format_Number($rest_p) : "&nbsp;" ) . "</td>";
 				}
 				if ( $ShowPagesStats =~ /B/i ) {
 					print "<td>"
@@ -15000,10 +15005,10 @@ if ( scalar keys %HTMLOutput ) {
 					  . "</td>";
 				}
 				if ( $ShowPagesStats =~ /E/i ) {
-					print "<td>" . ( $rest_e ? $rest_e : "&nbsp;" ) . "</td>";
+					print "<td>" . ( $rest_e ? Format_Number($rest_e) : "&nbsp;" ) . "</td>";
 				}
 				if ( $ShowPagesStats =~ /X/i ) {
-					print "<td>" . ( $rest_x ? $rest_x : "&nbsp;" ) . "</td>";
+					print "<td>" . ( $rest_x ? Format_Number($rest_x) : "&nbsp;" ) . "</td>";
 				}
 
 				# Call to plugins' function ShowPagesAddField
@@ -15129,7 +15134,7 @@ if ( scalar keys %HTMLOutput ) {
 							print
 "<tr bgcolor=\"#F6F6F6\"><td class=\"aws\" colspan=\"2\"><b>$family_name</b></td>";
 							print "<td><b>"
-							  . int( $totalfamily_h{$family} )
+							  . Format_Number(int( $totalfamily_h{$family} ))
 							  . "</b></td><td><b>$p</b></td><td>&nbsp;</td>";
 							print "</tr>\n";
 							$familyheadershown = 1;
@@ -15158,7 +15163,7 @@ if ( scalar keys %HTMLOutput ) {
 						if ( ( $bredde_h == 1 ) && $_os_h{$key} ) {
 							$bredde_h = 2;
 						}
-						print "<td>$_os_h{$key}</td><td>$p</td>";
+						print "<td>".Format_Number($_os_h{$key})."</td><td>$p</td>";
 						print "<td class=\"aws\">";
 
 						# alt and title are not provided to reduce page size
@@ -15188,7 +15193,7 @@ if ( scalar keys %HTMLOutput ) {
 					print
 "<tr bgcolor=\"#F6F6F6\"><td class=\"aws\" colspan=\"2\"><b>$Message[2]</b></td>";
 					print "<td><b>"
-					  . ( $total_h - $TotalFamily )
+					  . Format_Number(( $total_h - $TotalFamily ))
 					  . "</b></td><td><b>$p</b></td><td>&nbsp;</td>";
 					print "</tr>\n";
 					$familyheadershown = 1;
@@ -15225,7 +15230,7 @@ if ( scalar keys %HTMLOutput ) {
 					  int( $BarWidth * ( $_os_h{$key} || 0 ) / $max_h ) + 1;
 				}
 				if ( ( $bredde_h == 1 ) && $_os_h{$key} ) { $bredde_h = 2; }
-				print "<td>$_os_h{$key}</td><td>$p</td>";
+				print "<td>".Format_Number($_os_h{$key})."</td><td>$p</td>";
 				print "<td class=\"aws\">";
 
 				# alt and title are not provided to reduce page size
@@ -15297,7 +15302,7 @@ if ( scalar keys %HTMLOutput ) {
 							  . uc($family)
 							  . "</b></td>";
 							print "<td>&nbsp;</td><td><b>"
-							  . int( $totalfamily_h{$family} )
+							  . Format_Number(int( $totalfamily_h{$family} ))
 							  . "</b></td><td><b>$p</b></td><td>&nbsp;</td>";
 							print "</tr>\n";
 							$familyheadershown = 1;
@@ -15335,7 +15340,7 @@ if ( scalar keys %HTMLOutput ) {
 						if ( ( $bredde_h == 1 ) && $_browser_h{$key} ) {
 							$bredde_h = 2;
 						}
-						print "<td>$_browser_h{$key}</td><td>$p</td>";
+						print "<td>".Format_Number($_browser_h{$key})."</td><td>$p</td>";
 						print "<td class=\"aws\">";
 
 						# alt and title are not provided to reduce page size
@@ -15365,7 +15370,7 @@ if ( scalar keys %HTMLOutput ) {
 					print
 "<tr bgcolor=\"#F6F6F6\"><td class=\"aws\" colspan=\"2\"><b>$Message[2]</b></td>";
 					print "<td>&nbsp;</td><td><b>"
-					  . ( $total_h - $TotalFamily )
+					  . Format_Number(( $total_h - $TotalFamily ))
 					  . "</b></td><td><b>$p</b></td><td>&nbsp;</td>";
 					print "</tr>\n";
 					$familyheadershown = 1;
@@ -15411,7 +15416,7 @@ if ( scalar keys %HTMLOutput ) {
 				if ( ( $bredde_h == 1 ) && $_browser_h{$key} ) {
 					$bredde_h = 2;
 				}
-				print "<td>$_browser_h{$key}</td><td>$p</td>";
+				print "<td>".Format_Number($_browser_h{$key})."</td><td>$p</td>";
 				print "<td class=\"aws\">";
 
 				# alt and title are not provided to reduce page size
@@ -15430,7 +15435,7 @@ if ( scalar keys %HTMLOutput ) {
 			my $title = "$Message[40]";
 			&tab_head( "$title", 19, 0, 'refererse' );
 			print
-"<tr bgcolor=\"#$color_TableBGRowTitle\"><th>$TotalDifferentSearchEngines $Message[122]</th>";
+"<tr bgcolor=\"#$color_TableBGRowTitle\"><th>".Format_Number($TotalDifferentSearchEngines)." $Message[122]</th>";
 			print
 "<th bgcolor=\"#$color_p\" width=\"80\">$Message[56]</th><th bgcolor=\"#$color_p\" width=\"80\">$Message[15]</th>";
 			print
@@ -15470,7 +15475,7 @@ if ( scalar keys %HTMLOutput ) {
 				  . "</td>";
 				print "<td>"
 				  . ( $_se_referrals_p{$key} ? "$p_p %" : '&nbsp;' ) . "</td>";
-				print "<td>$_se_referrals_h{$key}</td>";
+				print "<td>".Format_Number($_se_referrals_h{$key})."</td>";
 				print "<td>$p_h %</td>";
 				print "</tr>\n";
 				$total_p += $_se_referrals_p{$key};
@@ -15497,9 +15502,9 @@ if ( scalar keys %HTMLOutput ) {
 				}
 				print
 "<tr><td class=\"aws\"><span style=\"color: #$color_other\">$Message[2]</span></td>";
-				print "<td>" . ( $rest_p ? $rest_p  : '&nbsp;' ) . "</td>";
+				print "<td>" . ( $rest_p ? Format_Number($rest_p)  : '&nbsp;' ) . "</td>";
 				print "<td>" . ( $rest_p ? "$p_p %" : '&nbsp;' ) . "</td>";
-				print "<td>$rest_h</td>";
+				print "<td>".Format_Number($rest_h)."</td>";
 				print "<td>$p_h %</td>";
 				print "</tr>\n";
 			}
@@ -15541,7 +15546,7 @@ if ( scalar keys %HTMLOutput ) {
 #	if ($HTMLOutput{'refererpages'}) { print "<br />$Message[102]: $TotalDifferentPages $Message[28]"; }
 #}
 			}
-			else { print "$Message[102]: $cpt $Message[28]"; }
+			else { print "$Message[102]: ".Format_Number($cpt)." $Message[28]"; }
 			print "</th>";
 			print
 "<th bgcolor=\"#$color_p\" width=\"80\">$Message[56]</th><th bgcolor=\"#$color_p\" width=\"80\">$Message[15]</th>";
@@ -15583,11 +15588,11 @@ if ( scalar keys %HTMLOutput ) {
 				&ShowURLInfo($key);
 				print "</td>";
 				print "<td>"
-				  . ( $_pagesrefs_p{$key} ? $_pagesrefs_p{$key} : '&nbsp;' )
+				  . ( $_pagesrefs_p{$key} ? Format_Number($_pagesrefs_p{$key}) : '&nbsp;' )
 				  . "</td><td>"
 				  . ( $_pagesrefs_p{$key} ? "$p_p %" : '&nbsp;' ) . "</td>";
 				print "<td>"
-				  . ( $_pagesrefs_h{$key} ? $_pagesrefs_h{$key} : '&nbsp;' )
+				  . ( $_pagesrefs_h{$key} ? Format_Number($_pagesrefs_h{$key}) : '&nbsp;' )
 				  . "</td><td>"
 				  . ( $_pagesrefs_h{$key} ? "$p_h %" : '&nbsp;' ) . "</td>";
 				print "</tr>\n";
@@ -15614,9 +15619,9 @@ if ( scalar keys %HTMLOutput ) {
 				}
 				print
 "<tr><td class=\"aws\"><span style=\"color: #$color_other\">$Message[2]</span></td>";
-				print "<td>" . ( $rest_p ? $rest_p  : '&nbsp;' ) . "</td>";
+				print "<td>" . ( $rest_p ? Format_Number($rest_p)  : '&nbsp;' ) . "</td>";
 				print "<td>" . ( $rest_p ? "$p_p %" : '&nbsp;' ) . "</td>";
-				print "<td>$rest_h</td>";
+				print "<td>".Format_Number($rest_h)."</td>";
 				print "<td>$p_h %</td>";
 				print "</tr>\n";
 			}
@@ -15628,7 +15633,7 @@ if ( scalar keys %HTMLOutput ) {
 			&tab_head( $Message[43], 19, 0, 'keyphrases' );
 			print "<tr bgcolor=\"#$color_TableBGRowTitle\""
 			  . Tooltip(15)
-			  . "><th>$TotalDifferentKeyphrases $Message[103]</th><th bgcolor=\"#$color_s\" width=\"80\">$Message[14]</th><th bgcolor=\"#$color_s\" width=\"80\">$Message[15]</th></tr>\n";
+			  . "><th>".Format_Number($TotalDifferentKeyphrases)." $Message[103]</th><th bgcolor=\"#$color_s\" width=\"80\">$Message[14]</th><th bgcolor=\"#$color_s\" width=\"80\">$Message[15]</th></tr>\n";
 			$total_s = 0;
 			my $count = 0;
 			&BuildKeyList(
@@ -15668,7 +15673,7 @@ if ( scalar keys %HTMLOutput ) {
 					$p = int( $rest_s / $TotalKeyphrases * 1000 ) / 10;
 				}
 				print
-"<tr><td class=\"aws\"><span style=\"color: #$color_other\">$Message[124]</span></td><td>$rest_s</td>";
+"<tr><td class=\"aws\"><span style=\"color: #$color_other\">$Message[124]</span></td><td>".Format_Number($rest_s)."</td>";
 				print "<td>$p %</td></tr>\n";
 			}
 			&tab_end();
@@ -15679,7 +15684,7 @@ if ( scalar keys %HTMLOutput ) {
 			&tab_head( $Message[44], 19, 0, 'keywords' );
 			print "<tr bgcolor=\"#$color_TableBGRowTitle\""
 			  . Tooltip(15)
-			  . "><th>$TotalDifferentKeywords $Message[13]</th><th bgcolor=\"#$color_s\" width=\"80\">$Message[14]</th><th bgcolor=\"#$color_s\" width=\"80\">$Message[15]</th></tr>\n";
+			  . "><th>".Format_Number($TotalDifferentKeywords)." $Message[13]</th><th bgcolor=\"#$color_s\" width=\"80\">$Message[14]</th><th bgcolor=\"#$color_s\" width=\"80\">$Message[15]</th></tr>\n";
 			$total_s = 0;
 			my $count = 0;
 			&BuildKeyList( $MaxRowsInHTMLOutput, $MinHit{'Keyword'},
@@ -15716,7 +15721,7 @@ if ( scalar keys %HTMLOutput ) {
 					$p = int( $rest_s / $TotalKeywords * 1000 ) / 10;
 				}
 				print
-"<tr><td class=\"aws\"><span style=\"color: #$color_other\">$Message[30]</span></td><td>$rest_s</td>";
+"<tr><td class=\"aws\"><span style=\"color: #$color_other\">$Message[30]</span></td><td>".Format_Number($rest_s)."</td>";
 				print "<td>$p %</td></tr>\n";
 			}
 			&tab_end();
@@ -15727,7 +15732,7 @@ if ( scalar keys %HTMLOutput ) {
 				print "$Center<a name=\"errors$code\">&nbsp;</a><br />\n";
 				&tab_head( $Message[47], 19, 0, "errors$code" );
 				print "<tr bgcolor=\"#$color_TableBGRowTitle\"><th>URL ("
-				  . ( scalar keys %_sider404_h )
+				  . Format_Number(( scalar keys %_sider404_h ))
 				  . ")</th><th bgcolor=\"#$color_h\">$Message[49]</th><th>$Message[23]</th></tr>\n";
 				$total_h = 0;
 				my $count = 0;
@@ -15739,7 +15744,7 @@ if ( scalar keys %HTMLOutput ) {
 #if (length($nompage)>$MaxLengthOfShownURL) { $nompage=substr($nompage,0,$MaxLengthOfShownURL)."..."; }
 					my $referer = XMLEncode( CleanXSS( $_referer404_h{$key} ) );
 					print "<tr><td class=\"aws\">$nompage</td>";
-					print "<td>$_sider404_h{$key}</td>";
+					print "<td>".Format_Number($_sider404_h{$key})."</td>";
 					print "<td class=\"aws\">"
 					  . ( $referer ? "$referer" : "&nbsp;" ) . "</td>";
 					print "</tr>\n";
@@ -15869,12 +15874,12 @@ if ( scalar keys %HTMLOutput ) {
 					print "<td class=\"aws\"><b>$Message[96]</b></td>";
 					if ( $ExtraStatTypes[$extranum] =~ m/P/i ) {
 						print "<td>"
-						  . ( $count ? ( $total_p / $count ) : "&nbsp;" )
+						  . ( $count ? Format_Number(( $total_p / $count )) : "&nbsp;" )
 						  . "</td>";
 					}
 					if ( $ExtraStatTypes[$extranum] =~ m/H/i ) {
 						print "<td>"
-						  . ( $count ? ( $total_h / $count ) : "&nbsp;" )
+						  . ( $count ? Format_Number(( $total_h / $count )) : "&nbsp;" )
 						  . "</td>";
 					}
 					if ( $ExtraStatTypes[$extranum] =~ m/B/i ) {
@@ -16077,7 +16082,7 @@ if ( scalar keys %HTMLOutput ) {
 				print "<td>&nbsp;<br />&nbsp;</td>\n";
 				print "<td>&nbsp;<br />&nbsp;</td>\n";
 				if ( $ShowSummary =~ /H/i ) {
-					print "<td><b>$TotalHits</b>"
+					print "<td><b>".Format_Number($TotalHits)."</b>"
 					  . (
 						$LogType eq 'M'
 						? ""
@@ -16104,26 +16109,26 @@ if ( scalar keys %HTMLOutput ) {
 					print "<td>"
 					  . (
 						$MonthRequired eq 'all'
-						? "<b>&lt;= $TotalUnique</b><br />$Message[129]"
-						: "<b>$TotalUnique</b><br />&nbsp;"
+						? "<b>&lt;= ".Format_Number($TotalUnique)."</b><br />$Message[129]"
+						: "<b>".Format_Number($TotalUnique)."</b><br />&nbsp;"
 					  )
 					  . "</td>";
 				}
 				else { print "<td>&nbsp;</td>"; }
 				if ( $ShowSummary =~ /V/i ) {
 					print
-"<td><b>$TotalVisits</b><br />($RatioVisits&nbsp;$Message[52])</td>";
+"<td><b>".Format_Number($TotalVisits)."</b><br />($RatioVisits&nbsp;$Message[52])</td>";
 				}
 				else { print "<td>&nbsp;</td>"; }
 				if ( $ShowSummary =~ /P/i ) {
-					print "<td><b>$TotalPages</b><br />($RatioPages&nbsp;"
+					print "<td><b>".Format_Number($TotalPages)."</b><br />($RatioPages&nbsp;"
 					  . $Message[56] . "/"
 					  . $Message[12]
 					  . ")</td>";
 				}
 				else { print "<td>&nbsp;</td>"; }
 				if ( $ShowSummary =~ /H/i ) {
-					print "<td><b>$TotalHits</b>"
+					print "<td><b>".Format_Number($TotalHits)."</b>"
 					  . (
 						$LogType eq 'M'
 						? ""
@@ -16153,7 +16158,7 @@ if ( scalar keys %HTMLOutput ) {
 					print "<td>&nbsp;<br />&nbsp;</td>\n";
 					print "<td>&nbsp;<br />&nbsp;</td>\n";
 					if ( $ShowSummary =~ /H/i ) {
-						print "<td><b>$TotalNotViewedHits</b></td>";
+						print "<td><b>".Format_Number($TotalNotViewedHits)."</b></td>";
 					}
 					else { print "<td>&nbsp;</td>"; }
 					if ( $ShowSummary =~ /B/i ) {
@@ -16169,11 +16174,11 @@ if ( scalar keys %HTMLOutput ) {
 					}
 					print "<td colspan=\"2\">&nbsp;<br />&nbsp;</td>\n";
 					if ( $ShowSummary =~ /P/i ) {
-						print "<td><b>$TotalNotViewedPages</b></td>";
+						print "<td><b>".Format_Number($TotalNotViewedPages)."</b></td>";
 					}
 					else { print "<td>&nbsp;</td>"; }
 					if ( $ShowSummary =~ /H/i ) {
-						print "<td><b>$TotalNotViewedHits</b></td>";
+						print "<td><b>".Format_Number($TotalNotViewedHits)."</b></td>";
 					}
 					else { print "<td>&nbsp;</td>"; }
 					if ( $ShowSummary =~ /B/i ) {
@@ -16471,27 +16476,27 @@ if ( scalar keys %HTMLOutput ) {
 					print "</td>";
 					if ( $ShowMonthStats =~ /U/i ) {
 						print "<td>",
-						  $MonthUnique{ $YearRequired . $monthix }
+						  Format_Number($MonthUnique{ $YearRequired . $monthix }
 						  ? $MonthUnique{ $YearRequired . $monthix }
-						  : "0", "</td>";
+						  : "0"), "</td>";
 					}
 					if ( $ShowMonthStats =~ /V/i ) {
 						print "<td>",
-						  $MonthVisits{ $YearRequired . $monthix }
+						  Format_Number($MonthVisits{ $YearRequired . $monthix }
 						  ? $MonthVisits{ $YearRequired . $monthix }
-						  : "0", "</td>";
+						  : "0"), "</td>";
 					}
 					if ( $ShowMonthStats =~ /P/i ) {
 						print "<td>",
-						  $MonthPages{ $YearRequired . $monthix }
+						  Format_Number($MonthPages{ $YearRequired . $monthix }
 						  ? $MonthPages{ $YearRequired . $monthix }
-						  : "0", "</td>";
+						  : "0"), "</td>";
 					}
 					if ( $ShowMonthStats =~ /H/i ) {
 						print "<td>",
-						  $MonthHits{ $YearRequired . $monthix }
+						  Format_Number($MonthHits{ $YearRequired . $monthix }
 						  ? $MonthHits{ $YearRequired . $monthix }
-						  : "0", "</td>";
+						  : "0"), "</td>";
 					}
 					if ( $ShowMonthStats =~ /B/i ) {
 						print "<td>",
@@ -16509,19 +16514,19 @@ if ( scalar keys %HTMLOutput ) {
 "<tr><td bgcolor=\"#$color_TableBGRowTitle\">$Message[102]</td>";
 				if ( $ShowMonthStats =~ /U/i ) {
 					print
-					  "<td bgcolor=\"#$color_TableBGRowTitle\">$total_u</td>";
+					  "<td bgcolor=\"#$color_TableBGRowTitle\">".Format_Number($total_u)."</td>";
 				}
 				if ( $ShowMonthStats =~ /V/i ) {
 					print
-					  "<td bgcolor=\"#$color_TableBGRowTitle\">$total_v</td>";
+					  "<td bgcolor=\"#$color_TableBGRowTitle\">".Format_Number($total_v)."</td>";
 				}
 				if ( $ShowMonthStats =~ /P/i ) {
 					print
-					  "<td bgcolor=\"#$color_TableBGRowTitle\">$total_p</td>";
+					  "<td bgcolor=\"#$color_TableBGRowTitle\">".Format_Number($total_p)."</td>";
 				}
 				if ( $ShowMonthStats =~ /H/i ) {
 					print
-					  "<td bgcolor=\"#$color_TableBGRowTitle\">$total_h</td>";
+					  "<td bgcolor=\"#$color_TableBGRowTitle\">".Format_Number($total_h)."</td>";
 				}
 				if ( $ShowMonthStats =~ /B/i ) {
 					print "<td bgcolor=\"#$color_TableBGRowTitle\">"
@@ -16938,21 +16943,21 @@ if ( scalar keys %HTMLOutput ) {
 					print "</td>";
 					if ( $ShowDaysOfMonthStats =~ /V/i ) {
 						print "<td>",
-						  $DayVisits{ $year . $month . $day }
+						  Format_Number($DayVisits{ $year . $month . $day }
 						  ? $DayVisits{ $year . $month . $day }
-						  : "0", "</td>";
+						  : "0"), "</td>";
 					}
 					if ( $ShowDaysOfMonthStats =~ /P/i ) {
 						print "<td>",
-						  $DayPages{ $year . $month . $day }
+						  Format_Number($DayPages{ $year . $month . $day }
 						  ? $DayPages{ $year . $month . $day }
-						  : "0", "</td>";
+						  : "0"), "</td>";
 					}
 					if ( $ShowDaysOfMonthStats =~ /H/i ) {
 						print "<td>",
-						  $DayHits{ $year . $month . $day }
+						  Format_Number($DayHits{ $year . $month . $day }
 						  ? $DayHits{ $year . $month . $day }
-						  : "0", "</td>";
+						  : "0"), "</td>";
 					}
 					if ( $ShowDaysOfMonthStats =~ /B/i ) {
 						print "<td>",
@@ -16967,16 +16972,16 @@ if ( scalar keys %HTMLOutput ) {
 				print
 "<tr bgcolor=\"#$color_TableBGRowTitle\"><td>$Message[96]</td>";
 				if ( $ShowDaysOfMonthStats =~ /V/i ) {
-					print "<td>$average_v</td>";
+					print "<td>".Format_Number($average_v)."</td>";
 				}
 				if ( $ShowDaysOfMonthStats =~ /P/i ) {
-					print "<td>$average_p</td>";
+					print "<td>".Format_Number($average_p)."</td>";
 				}
 				if ( $ShowDaysOfMonthStats =~ /H/i ) {
-					print "<td>$average_h</td>";
+					print "<td>".Format_Number($average_h)."</td>";
 				}
 				if ( $ShowDaysOfMonthStats =~ /B/i ) {
-					print "<td>$average_k</td>";
+					print "<td>".Format_Number($average_k)."</td>";
 				}
 				print "</tr>\n";
 
@@ -16984,13 +16989,13 @@ if ( scalar keys %HTMLOutput ) {
 				print
 "<tr bgcolor=\"#$color_TableBGRowTitle\"><td>$Message[102]</td>";
 				if ( $ShowDaysOfMonthStats =~ /V/i ) {
-					print "<td>$total_v</td>";
+					print "<td>".Format_Number($total_v)."</td>";
 				}
 				if ( $ShowDaysOfMonthStats =~ /P/i ) {
-					print "<td>$total_p</td>";
+					print "<td>".Format_Number($total_p)."</td>";
 				}
 				if ( $ShowDaysOfMonthStats =~ /H/i ) {
-					print "<td>$total_h</td>";
+					print "<td>".Format_Number($total_h)."</td>";
 				}
 				if ( $ShowDaysOfMonthStats =~ /B/i ) {
 					print "<td>" . Format_Bytes($total_k) . "</td>";
@@ -17275,10 +17280,10 @@ if ( scalar keys %HTMLOutput ) {
 						  && $YearRequired == $nowyear ? '</font>' : '' );
 					print "</td>";
 					if ( $ShowDaysOfWeekStats =~ /P/i ) {
-						print "<td>", $avg_dayofweek_p[$_], "</td>";
+						print "<td>", Format_Number($avg_dayofweek_p[$_]), "</td>";
 					}
 					if ( $ShowDaysOfWeekStats =~ /H/i ) {
-						print "<td>", $avg_dayofweek_h[$_], "</td>";
+						print "<td>", Format_Number($avg_dayofweek_h[$_]), "</td>";
 					}
 					if ( $ShowDaysOfWeekStats =~ /B/i ) {
 						print "<td>", Format_Bytes( $avg_dayofweek_k[$_] ),
@@ -17441,12 +17446,12 @@ if ( scalar keys %HTMLOutput ) {
 					print "<td>$monthix</td>";
 					if ( $ShowHoursStats =~ /P/i ) {
 						print "<td>",
-						  $_time_p[$monthix] ? $_time_p[$monthix] : "0",
+						  Format_Number($_time_p[$monthix] ? $_time_p[$monthix] : "0"),
 						  "</td>";
 					}
 					if ( $ShowHoursStats =~ /H/i ) {
 						print "<td>",
-						  $_time_h[$monthix] ? $_time_h[$monthix] : "0",
+						  Format_Number($_time_h[$monthix] ? $_time_h[$monthix] : "0"),
 						  "</td>";
 					}
 					if ( $ShowHoursStats =~ /B/i ) {
@@ -17486,12 +17491,12 @@ if ( scalar keys %HTMLOutput ) {
 					print "<td>$monthix</td>";
 					if ( $ShowHoursStats =~ /P/i ) {
 						print "<td>",
-						  $_time_p[$monthix] ? $_time_p[$monthix] : "0",
+						  Format_Number($_time_p[$monthix] ? $_time_p[$monthix] : "0"),
 						  "</td>";
 					}
 					if ( $ShowHoursStats =~ /H/i ) {
 						print "<td>",
-						  $_time_h[$monthix] ? $_time_h[$monthix] : "0",
+						  Format_Number($_time_h[$monthix] ? $_time_h[$monthix] : "0"),
 						  "</td>";
 					}
 					if ( $ShowHoursStats =~ /B/i ) {
@@ -17620,7 +17625,7 @@ if ( scalar keys %HTMLOutput ) {
 					$_domener_u += ( $_domener_h{$key} / $TotalHits );
 					$_domener_u =
 					  sprintf( "%.0f", ( $_domener_u * $TotalUnique ) / 2 );
-					print "<td>$_domener_u ("
+					print "<td>".Format_Number($_domener_u)." ("
 					  . sprintf( "%.1f%", 100 * $_domener_u / $TotalUnique )
 					  . ")</td>";
 				}
@@ -17633,18 +17638,18 @@ if ( scalar keys %HTMLOutput ) {
 					$_domener_v += ( $_domener_h{$key} / $TotalHits );
 					$_domener_v =
 					  sprintf( "%.0f", ( $_domener_v * $TotalVisits ) / 2 );
-					print "<td>$_domener_v ("
+					print "<td>".Format_Number($_domener_v)." ("
 					  . sprintf( "%.1f%", 100 * $_domener_v / $TotalVisits )
 					  . ")</td>";
 				}
 
 				if ( $ShowDomainsStats =~ /P/i ) {
 					print "<td>"
-					  . ( $_domener_p{$key} ? $_domener_p{$key} : '&nbsp;' )
+					  . ( $_domener_p{$key} ? Format_Number($_domener_p{$key}) : '&nbsp;' )
 					  . "</td>";
 				}
 				if ( $ShowDomainsStats =~ /H/i ) {
-					print "<td>$_domener_h{$key}</td>";
+					print "<td>".Format_Number($_domener_h{$key})."</td>";
 				}
 				if ( $ShowDomainsStats =~ /B/i ) {
 					print "<td>" . Format_Bytes( $_domener_k{$key} ) . "</td>";
@@ -17737,7 +17742,7 @@ if ( scalar keys %HTMLOutput ) {
 			print "<th>";
 			if ( $MonthRequired ne 'all' ) {
 				print
-"$Message[81] : $TotalHostsKnown $Message[82], $TotalHostsUnknown $Message[1]<br />$TotalUnique $Message[11]</th>";
+"$Message[81] : ".Format_Number($TotalHostsKnown)." $Message[82], ".Format_Number($TotalHostsUnknown)." $Message[1]<br />".Format_Number($TotalUnique)." $Message[11]</th>";
 			}
 			else {
 				print "$Message[81] : " . ( scalar keys %_host_h ) . "</th>";
@@ -17771,10 +17776,10 @@ if ( scalar keys %HTMLOutput ) {
 				print "<td class=\"aws\">$key</td>";
 				&ShowHostInfo($key);
 				if ( $ShowHostsStats =~ /P/i ) {
-					print '<td>' . ( $_host_p{$key} || "&nbsp;" ) . '</td>';
+					print '<td>' . ( Format_Number($_host_p{$key}) || "&nbsp;" ) . '</td>';
 				}
 				if ( $ShowHostsStats =~ /H/i ) {
-					print "<td>$_host_h{$key}</td>";
+					print "<td>".Format_Number($_host_h{$key})."</td>";
 				}
 				if ( $ShowHostsStats =~ /B/i ) {
 					print '<td>' . Format_Bytes( $_host_k{$key} ) . '</td>';
@@ -17803,8 +17808,8 @@ if ( scalar keys %HTMLOutput ) {
 				print
 "<td class=\"aws\"><span style=\"color: #$color_other\">$Message[2]</span></td>";
 				&ShowHostInfo('');
-				if ( $ShowHostsStats =~ /P/i ) { print "<td>$rest_p</td>"; }
-				if ( $ShowHostsStats =~ /H/i ) { print "<td>$rest_h</td>"; }
+				if ( $ShowHostsStats =~ /P/i ) { print "<td>".Format_Number($rest_p)."</td>"; }
+				if ( $ShowHostsStats =~ /H/i ) { print "<td>".Format_Number($rest_h)."</td>"; }
 				if ( $ShowHostsStats =~ /B/i ) {
 					print "<td>" . Format_Bytes($rest_k) . "</td>";
 				}
@@ -17852,7 +17857,7 @@ if ( scalar keys %HTMLOutput ) {
 			}
 			&tab_head( "$title", 19, 0, 'logins' );
 			print "<tr bgcolor=\"#$color_TableBGRowTitle\"><th>$Message[94] : "
-			  . ( scalar keys %_login_h ) . "</th>";
+			  . Format_Number(( scalar keys %_login_h )) . "</th>";
 			&ShowUserInfo('__title__');
 			if ( $ShowAuthenticatedUsers =~ /P/i ) {
 				print "<th bgcolor=\"#$color_p\" width=\"80\""
@@ -17902,11 +17907,11 @@ if ( scalar keys %HTMLOutput ) {
 				&ShowUserInfo($key);
 				if ( $ShowAuthenticatedUsers =~ /P/i ) {
 					print "<td>"
-					  . ( $_login_p{$key} ? $_login_p{$key} : "&nbsp;" )
+					  . ( $_login_p{$key} ? Format_Number($_login_p{$key}) : "&nbsp;" )
 					  . "</td>";
 				}
 				if ( $ShowAuthenticatedUsers =~ /H/i ) {
-					print "<td>$_login_h{$key}</td>";
+					print "<td>".Format_Number($_login_h{$key})."</td>";
 				}
 				if ( $ShowAuthenticatedUsers =~ /B/i ) {
 					print "<td>" . Format_Bytes( $_login_k{$key} ) . "</td>";
@@ -17939,10 +17944,10 @@ if ( scalar keys %HTMLOutput ) {
 				  . "</span></td>";
 				&ShowUserInfo('');
 				if ( $ShowAuthenticatedUsers =~ /P/i ) {
-					print "<td>" . ( $rest_p ? $rest_p : "&nbsp;" ) . "</td>";
+					print "<td>" . ( $rest_p ? Format_Number($rest_p) : "&nbsp;" ) . "</td>";
 				}
 				if ( $ShowAuthenticatedUsers =~ /H/i ) {
-					print "<td>$rest_h</td>";
+					print "<td>".Format_Number($rest_h)."</td>";
 				}
 				if ( $ShowAuthenticatedUsers =~ /B/i ) {
 					print "<td>" . Format_Bytes($rest_k) . "</td>";
@@ -17980,7 +17985,7 @@ if ( scalar keys %HTMLOutput ) {
 			);
 			print "<tr bgcolor=\"#$color_TableBGRowTitle\""
 			  . Tooltip(16) . "><th>"
-			  . ( scalar keys %_robot_h )
+			  . Format_Number(( scalar keys %_robot_h ))
 			  . " $Message[51]*</th>";
 			if ( $ShowRobotsStats =~ /H/i ) {
 				print
@@ -18005,7 +18010,7 @@ if ( scalar keys %HTMLOutput ) {
 				  . ( $PageDir eq 'rtl' ? "</span>" : "" ) . "</td>";
 				if ( $ShowRobotsStats =~ /H/i ) {
 					print "<td>"
-					  . ( $_robot_h{$key} - $_robot_r{$key} )
+					  . Format_Number(( $_robot_h{$key} - $_robot_r{$key} ))
 					  . ( $_robot_r{$key} ? "+$_robot_r{$key}" : "" ) . "</td>";
 				}
 				if ( $ShowRobotsStats =~ /B/i ) {
@@ -18049,7 +18054,7 @@ if ( scalar keys %HTMLOutput ) {
 "<tr><td class=\"aws\"><span style=\"color: #$color_other\">$Message[2]</span></td>";
 				if ( $ShowRobotsStats =~ /H/i ) {
 					print "<td>"
-					  . ( $rest_h - $rest_r )
+					  . Format_Number(( $rest_h - $rest_r ))
 					  . ( $rest_r ? "+$rest_r" : "" ) . "</td>";
 				}
 				if ( $ShowRobotsStats =~ /B/i ) {
@@ -18070,7 +18075,7 @@ if ( scalar keys %HTMLOutput ) {
 			&tab_head( "$Message[163] ($Message[77] $MaxNbOf{'WormsShown'})",
 				19, 0, 'worms' );
 			print "<tr bgcolor=\"#$color_TableBGRowTitle\"" . Tooltip(21) . ">";
-			print "<th>" . ( scalar keys %_worm_h ) . " $Message[164]*</th>";
+			print "<th>" . Format_Number(( scalar keys %_worm_h )) . " $Message[164]*</th>";
 			print "<th>$Message[167]</th>";
 			if ( $ShowWormsStats =~ /H/i ) {
 				print
@@ -18099,7 +18104,7 @@ if ( scalar keys %HTMLOutput ) {
 				  . ( $WormsHashTarget{$key} ? $WormsHashTarget{$key} : $key )
 				  . ( $PageDir eq 'rtl' ? "</span>" : "" ) . "</td>";
 				if ( $ShowWormsStats =~ /H/i ) {
-					print "<td>" . $_worm_h{$key} . "</td>";
+					print "<td>" . Format_Number($_worm_h{$key}) . "</td>";
 				}
 				if ( $ShowWormsStats =~ /B/i ) {
 					print "<td>" . Format_Bytes( $_worm_k{$key} ) . "</td>";
@@ -18138,7 +18143,7 @@ if ( scalar keys %HTMLOutput ) {
 "<td class=\"aws\"><span style=\"color: #$color_other\">$Message[2]</span></td>";
 				print "<td class=\"aws\">-</td>";
 				if ( $ShowWormsStats =~ /H/i ) {
-					print "<td>" . ($rest_h) . "</td>";
+					print "<td>" . Format_Number(($rest_h)) . "</td>";
 				}
 				if ( $ShowWormsStats =~ /B/i ) {
 					print "<td>" . ( Format_Bytes($rest_k) ) . "</td>";
@@ -18167,7 +18172,7 @@ if ( scalar keys %HTMLOutput ) {
 			else { $average_s = '?'; }
 			print "<tr bgcolor=\"#$color_TableBGRowTitle\""
 			  . Tooltip(1)
-			  . "><th>$Message[10]: $TotalVisits - $Message[96]: $average_s s</th><th bgcolor=\"#$color_s\" width=\"80\">$Message[10]</th><th bgcolor=\"#$color_s\" width=\"80\">$Message[15]</th></tr>\n";
+			  . "><th>$Message[10]: ".Format_Number($TotalVisits)." - $Message[96]: ".Format_Number($average_s)." s</th><th bgcolor=\"#$color_s\" width=\"80\">$Message[10]</th><th bgcolor=\"#$color_s\" width=\"80\">$Message[15]</th></tr>\n";
 			$average_s = 0;
 			$total_s   = 0;
 			my $count = 0;
@@ -18179,7 +18184,7 @@ if ( scalar keys %HTMLOutput ) {
 				$total_s += $_session{$key} || 0;
 				print "<tr><td class=\"aws\">$key</td>";
 				print "<td>"
-				  . ( $_session{$key} ? $_session{$key} : "&nbsp;" ) . "</td>";
+				  . ( $_session{$key} ? Format_Number($_session{$key}) : "&nbsp;" ) . "</td>";
 				print "<td>"
 				  . ( $_session{$key} ? "$p %" : "&nbsp;" ) . "</td>";
 				print "</tr>\n";
@@ -18194,7 +18199,7 @@ if ( scalar keys %HTMLOutput ) {
 				print "<tr"
 				  . Tooltip(20)
 				  . "><td class=\"aws\"><span style=\"color: #$color_other\">$Message[0]</span></td>";
-				print "<td>$rest_s</td>";
+				print "<td>".Format_Number($rest_s)."</td>";
 				print "<td>" . ( $rest_s ? "$p %" : "&nbsp;" ) . "</td>";
 				print "</tr>\n";
 			}
@@ -18266,7 +18271,7 @@ if ( scalar keys %HTMLOutput ) {
 					print "<td class=\"aws\">$nametype</td>";
 				}
 				if ( $ShowFileTypesStats =~ /H/i ) {
-					print "<td>$_filetypes_h{$key}</td><td>$p_h</td>";
+					print "<td>".Format_Number($_filetypes_h{$key})."</td><td>$p_h</td>";
 				}
 				if ( $ShowFileTypesStats =~ /B/i ) {
 					print '<td nowrap="nowrap">'
@@ -18379,7 +18384,7 @@ if ( scalar keys %HTMLOutput ) {
 			}
 			&tab_head( "$title", 19, 0, 'urls' );
 			print
-"<tr bgcolor=\"#$color_TableBGRowTitle\"><th>$TotalDifferentPages $Message[28]</th>";
+"<tr bgcolor=\"#$color_TableBGRowTitle\"><th>".Format_Number($TotalDifferentPages)." $Message[28]</th>";
 			if ( $ShowPagesStats =~ /P/i && $LogType ne 'F' ) {
 				print
 				  "<th bgcolor=\"#$color_p\" width=\"80\">$Message[29]</th>";
@@ -18455,10 +18460,10 @@ if ( scalar keys %HTMLOutput ) {
 				}
 				if ( ( $bredde_k == 1 ) && $_url_k{$key} ) { $bredde_k = 2; }
 				if ( $ShowPagesStats =~ /P/i && $LogType ne 'F' ) {
-					print "<td>$_url_p{$key}</td>";
+					print "<td>".Format_Number($_url_p{$key})."</td>";
 				}
 				if ( $ShowPagesStats =~ /[PH]/i && $LogType eq 'F' ) {
-					print "<td>$_url_p{$key}</td>";
+					print "<td>".Format_Number($_url_p{$key})."</td>";
 				}
 				if ( $ShowPagesStats =~ /B/i ) {
 					print "<td>"
@@ -18473,11 +18478,11 @@ if ( scalar keys %HTMLOutput ) {
 				}
 				if ( $ShowPagesStats =~ /E/i ) {
 					print "<td>"
-					  . ( $_url_e{$key} ? $_url_e{$key} : "&nbsp;" ) . "</td>";
+					  . ( $_url_e{$key} ? Format_Number($_url_e{$key}) : "&nbsp;" ) . "</td>";
 				}
 				if ( $ShowPagesStats =~ /X/i ) {
 					print "<td>"
-					  . ( $_url_x{$key} ? $_url_x{$key} : "&nbsp;" ) . "</td>";
+					  . ( $_url_x{$key} ? Format_Number($_url_x{$key}) : "&nbsp;" ) . "</td>";
 				}
 
 				# Call to plugins' function ShowPagesAddField
@@ -18536,10 +18541,10 @@ if ( scalar keys %HTMLOutput ) {
 				print
 "<tr><td class=\"aws\"><span style=\"color: #$color_other\">$Message[2]</span></td>";
 				if ( $ShowPagesStats =~ /P/i && $LogType ne 'F' ) {
-					print "<td>$rest_p</td>";
+					print "<td>".Format_Number($rest_p)."</td>";
 				}
 				if ( $ShowPagesStats =~ /[PH]/i && $LogType eq 'F' ) {
-					print "<td>$rest_p</td>";
+					print "<td>".Format_Number($rest_p)."</td>";
 				}
 				if ( $ShowPagesStats =~ /B/i ) {
 					print "<td>"
@@ -18551,10 +18556,10 @@ if ( scalar keys %HTMLOutput ) {
 					  . "</td>";
 				}
 				if ( $ShowPagesStats =~ /E/i ) {
-					print "<td>" . ( $rest_e ? $rest_e : "&nbsp;" ) . "</td>";
+					print "<td>" . ( $rest_e ? Format_Number($rest_e) : "&nbsp;" ) . "</td>";
 				}
 				if ( $ShowPagesStats =~ /X/i ) {
-					print "<td>" . ( $rest_x ? $rest_x : "&nbsp;" ) . "</td>";
+					print "<td>" . ( $rest_x ? Format_Number($rest_x) : "&nbsp;" ) . "</td>";
 				}
 
 				# Call to plugins' function ShowPagesAddField
@@ -18623,7 +18628,7 @@ if ( scalar keys %HTMLOutput ) {
 					  . ( $count ? "" : " width=\"$WIDTHCOLICON\"" )
 					  . "><img src=\"$DirIcons\/os\/unknown.png\""
 					  . AltTitle("")
-					  . " /></td><td class=\"aws\"><span style=\"color: #$color_other\">$Message[0]</span></td><td>$_os_h{$key}</td><td>$p</td></tr>\n";
+					  . " /></td><td class=\"aws\"><span style=\"color: #$color_other\">$Message[0]</span></td><td>".Format_Number($_os_h{$key})."</td><td>$p</td></tr>\n";
 				}
 				else {
 					my $keywithoutcumul = $key;
@@ -18639,7 +18644,7 @@ if ( scalar keys %HTMLOutput ) {
 					  . ( $count ? "" : " width=\"$WIDTHCOLICON\"" )
 					  . "><img src=\"$DirIcons\/os\/$nameicon.png\""
 					  . AltTitle("")
-					  . " /></td><td class=\"aws\">$libos</td><td>$new_os_h{$key}</td><td>$p</td></tr>\n";
+					  . " /></td><td class=\"aws\">$libos</td><td>".Format_Number($new_os_h{$key})."</td><td>$p</td></tr>\n";
 				}
 				$total_h += $new_os_h{$key};
 				$count++;
@@ -18654,7 +18659,7 @@ if ( scalar keys %HTMLOutput ) {
 				print "<tr>";
 				print "<td>&nbsp;</td>";
 				print
-"<td class=\"aws\"><span style=\"color: #$color_other\">$Message[2]</span></td><td>$rest_h</td>";
+"<td class=\"aws\"><span style=\"color: #$color_other\">$Message[2]</span></td><td>".Format_Number($rest_h)."</td>";
 				print "<td>$p %</td></tr>\n";
 			}
 			&tab_end();
@@ -18713,7 +18718,7 @@ if ( scalar keys %HTMLOutput ) {
 					  . ( $count ? "" : " width=\"$WIDTHCOLICON\"" )
 					  . "><img src=\"$DirIcons\/browser\/unknown.png\""
 					  . AltTitle("")
-					  . " /></td><td class=\"aws\"><span style=\"color: #$color_other\">$Message[0]</span></td><td width=\"80\">?</td><td>$_browser_h{$key}</td><td>$p</td></tr>\n";
+					  . " /></td><td class=\"aws\"><span style=\"color: #$color_other\">$Message[0]</span></td><td width=\"80\">?</td><td>".Format_Number($_browser_h{$key})."</td><td>$p</td></tr>\n";
 				}
 				else {
 					my $keywithoutcumul = $key;
@@ -18739,7 +18744,7 @@ if ( scalar keys %HTMLOutput ) {
 						? "<b>$Message[112]</b>"
 						: "$Message[113]"
 					  )
-					  . "</td><td>$new_browser_h{$key}</td><td>$p</td></tr>\n";
+					  . "</td><td>".Format_Number($new_browser_h{$key})."</td><td>$p</td></tr>\n";
 				}
 				$total_h += $new_browser_h{$key};
 				$count++;
@@ -18866,13 +18871,13 @@ if ( scalar keys %HTMLOutput ) {
 			print "<tr><td class=\"aws\"><b>$Message[38]</b></td>";
 			if ( $ShowOriginStats =~ /P/i ) {
 				print "<td>"
-				  . ( $_from_p[0] ? $_from_p[0] : "&nbsp;" )
+				  . ( $_from_p[0] ? Format_Number($_from_p[0]) : "&nbsp;" )
 				  . "</td><td>"
 				  . ( $_from_p[0] ? "$p_p[0] %" : "&nbsp;" ) . "</td>";
 			}
 			if ( $ShowOriginStats =~ /H/i ) {
 				print "<td>"
-				  . ( $_from_h[0] ? $_from_h[0] : "&nbsp;" )
+				  . ( $_from_h[0] ? Format_Number($_from_h[0]) : "&nbsp;" )
 				  . "</td><td>"
 				  . ( $_from_h[0] ? "$p_h[0] %" : "&nbsp;" ) . "</td>";
 			}
@@ -18910,9 +18915,9 @@ if ( scalar keys %HTMLOutput ) {
 					print "<tr><td class=\"aws\">- $newreferer</td>";
 					print "<td>"
 					  . (
-						$_se_referrals_p{$key} ? $_se_referrals_p{$key} : '0' )
+						Format_Number($_se_referrals_p{$key} ? $_se_referrals_p{$key} : '0' ))
 					  . "</td>";
-					print "<td>$_se_referrals_h{$key}</td>";
+					print "<td> / ".Format_Number($_se_referrals_h{$key})."</td>";
 					print "</tr>\n";
 					$total_p += $_se_referrals_p{$key};
 					$total_h += $_se_referrals_h{$key};
@@ -18929,8 +18934,8 @@ if ( scalar keys %HTMLOutput ) {
 				if ( $rest_p > 0 || $rest_h > 0 ) {
 					print
 "<tr><td class=\"aws\"><span style=\"color: #$color_other\">- $Message[2]</span></td>";
-					print "<td>$rest_p</td>";
-					print "<td>$rest_h</td>";
+					print "<td>".Format_Number($rest_p)."</td>";
+					print "<td> / ".Format_Number($rest_h)."</td>";
 					print "</tr>\n";
 				}
 				print "</table>";
@@ -18938,13 +18943,13 @@ if ( scalar keys %HTMLOutput ) {
 			print "</td>\n";
 			if ( $ShowOriginStats =~ /P/i ) {
 				print "<td valign=\"top\">"
-				  . ( $_from_p[2] ? $_from_p[2] : "&nbsp;" )
+				  . ( $_from_p[2] ? Format_Number($_from_p[2]) : "&nbsp;" )
 				  . "</td><td valign=\"top\">"
 				  . ( $_from_p[2] ? "$p_p[2] %" : "&nbsp;" ) . "</td>";
 			}
 			if ( $ShowOriginStats =~ /H/i ) {
 				print "<td valign=\"top\">"
-				  . ( $_from_h[2] ? $_from_h[2] : "&nbsp;" )
+				  . ( $_from_h[2] ? Format_Number($_from_h[2]) : "&nbsp;" )
 				  . "</td><td valign=\"top\">"
 				  . ( $_from_h[2] ? "$p_h[2] %" : "&nbsp;" ) . "</td>";
 			}
@@ -18981,9 +18986,9 @@ if ( scalar keys %HTMLOutput ) {
 					&ShowURLInfo($key);
 					print "</td>";
 					print "<td>"
-					  . ( $_pagesrefs_p{$key} ? $_pagesrefs_p{$key} : '0' )
+					  . Format_Number(( $_pagesrefs_p{$key} ? $_pagesrefs_p{$key} : '0' ))
 					  . "</td>";
-					print "<td>$_pagesrefs_h{$key}</td>";
+					print "<td>".Format_Number($_pagesrefs_h{$key})."</td>";
 					print "</tr>\n";
 					$total_p += $_pagesrefs_p{$key};
 					$total_h += $_pagesrefs_h{$key};
@@ -19000,8 +19005,8 @@ if ( scalar keys %HTMLOutput ) {
 				if ( $rest_p > 0 || $rest_h > 0 ) {
 					print
 "<tr><td class=\"aws\"><span style=\"color: #$color_other\">- $Message[2]</span></td>";
-					print "<td>$rest_p</td>";
-					print "<td>$rest_h</td>";
+					print "<td>".Format_Number($rest_p)."</td>";
+					print "<td>".Format_Number($rest_h)."</td>";
 					print "</tr>\n";
 				}
 				print "</table>";
@@ -19009,13 +19014,13 @@ if ( scalar keys %HTMLOutput ) {
 			print "</td>\n";
 			if ( $ShowOriginStats =~ /P/i ) {
 				print "<td valign=\"top\">"
-				  . ( $_from_p[3] ? $_from_p[3] : "&nbsp;" )
+				  . ( $_from_p[3] ? Format_Number($_from_p[3]) : "&nbsp;" )
 				  . "</td><td valign=\"top\">"
 				  . ( $_from_p[3] ? "$p_p[3] %" : "&nbsp;" ) . "</td>";
 			}
 			if ( $ShowOriginStats =~ /H/i ) {
 				print "<td valign=\"top\">"
-				  . ( $_from_h[3] ? $_from_h[3] : "&nbsp;" )
+				  . ( $_from_h[3] ? Format_Number($_from_h[3]) : "&nbsp;" )
 				  . "</td><td valign=\"top\">"
 				  . ( $_from_h[3] ? "$p_h[3] %" : "&nbsp;" ) . "</td>";
 			}
@@ -19026,13 +19031,13 @@ if ( scalar keys %HTMLOutput ) {
 				print "<tr><td class=\"aws\"><b>$Message[42]</b></td>";
 				if ( $ShowOriginStats =~ /P/i ) {
 					print "<td>"
-					  . ( $_from_p[4] ? $_from_p[4] : "&nbsp;" )
+					  . ( $_from_p[4] ? Format_Number($_from_p[4]) : "&nbsp;" )
 					  . "</td><td>"
 					  . ( $_from_p[4] ? "$p_p[4] %" : "&nbsp;" ) . "</td>";
 				}
 				if ( $ShowOriginStats =~ /H/i ) {
 					print "<td>"
-					  . ( $_from_h[4] ? $_from_h[4] : "&nbsp;" )
+					  . ( $_from_h[4] ? Format_Number($_from_h[4]) : "&nbsp;" )
 					  . "</td><td>"
 					  . ( $_from_h[4] ? "$p_h[4] %" : "&nbsp;" ) . "</td>";
 				}
@@ -19048,13 +19053,13 @@ if ( scalar keys %HTMLOutput ) {
 			print "<tr><td class=\"aws\"><b>$Message[39]</b></td>";
 			if ( $ShowOriginStats =~ /P/i ) {
 				print "<td>"
-				  . ( $_from_p[1] ? $_from_p[1] : "&nbsp;" )
+				  . ( $_from_p[1] ? Format_Number($_from_p[1]) : "&nbsp;" )
 				  . "</td><td>"
 				  . ( $_from_p[1] ? "$p_p[1] %" : "&nbsp;" ) . "</td>";
 			}
 			if ( $ShowOriginStats =~ /H/i ) {
 				print "<td>"
-				  . ( $_from_h[1] ? $_from_h[1] : "&nbsp;" )
+				  . ( $_from_h[1] ? Format_Number($_from_h[1]) : "&nbsp;" )
 				  . "</td><td>"
 				  . ( $_from_h[1] ? "$p_h[1] %" : "&nbsp;" ) . "</td>";
 			}
@@ -19274,13 +19279,13 @@ if ( scalar keys %HTMLOutput ) {
 				  . ( $PageDir eq 'rtl' ? "</span>" : "" ) . "</td>";
 				if ( $MiscListCalc{$key} eq 'v' ) {
 					print "<td>"
-					  . ( $_misc_h{$key} || 0 )
-					  . " / $total $Message[12]</td>";
+					  . Format_Number(( $_misc_h{$key} || 0 ))
+					  . " / ".Format_Number($total)." $Message[12]</td>";
 				}
 				if ( $MiscListCalc{$key} eq 'u' ) {
 					print "<td>"
-					  . ( $_misc_h{$key} || 0 )
-					  . " / $total $Message[18]</td>";
+					  . Format_Number(( $_misc_h{$key} || 0 ))
+					  . " / ".Format_Number($total)." $Message[18]</td>";
 				}
 				if ( $MiscListCalc{$key} eq 'hm' ) { print "<td>-</td>"; }
 				print "<td>" . ( $total ? "$p %" : "&nbsp;" ) . "</td>";
@@ -19319,7 +19324,7 @@ if ( scalar keys %HTMLOutput ) {
 				print "<td class=\"aws\">"
 				  . (
 					$httpcodelib{$key} ? $httpcodelib{$key} : 'Unknown error' )
-				  . "</td><td>$_errors_h{$key}</td><td>$p %</td><td>"
+				  . "</td><td>".Format_Number($_errors_h{$key})."</td><td>$p %</td><td>"
 				  . Format_Bytes( $_errors_k{$key} ) . "</td>";
 				print "</tr>\n";
 				$total_h += $_errors_h{$key};
@@ -19348,7 +19353,7 @@ if ( scalar keys %HTMLOutput ) {
 				print "<td class=\"aws\">"
 				  . (
 					$smtpcodelib{$key} ? $smtpcodelib{$key} : 'Unknown error' )
-				  . "</td><td>$_errors_h{$key}</td><td>$p %</td><td>"
+				  . "</td><td>".Format_Number($_errors_h{$key})."</td><td>$p %</td><td>"
 				  . Format_Bytes( $_errors_k{$key} ) . "</td>";
 				print "</tr>\n";
 				$total_h += $_errors_h{$key};
@@ -19399,11 +19404,11 @@ if ( scalar keys %HTMLOutput ) {
 				&ShowClusterInfo($key);
 				if ( $ShowClusterStats =~ /P/i ) {
 					print "<td>"
-					  . ( $_cluster_p{$key} ? $_cluster_p{$key} : "&nbsp;" )
+					  . ( $_cluster_p{$key} ? Format_Number($_cluster_p{$key}) : "&nbsp;" )
 					  . "</td><td>$p_p %</td>";
 				}
 				if ( $ShowClusterStats =~ /H/i ) {
-					print "<td>$_cluster_h{$key}</td><td>$p_h %</td>";
+					print "<td>".Format_Number($_cluster_h{$key})."</td><td>$p_h %</td>";
 				}
 				if ( $ShowClusterStats =~ /B/i ) {
 					print "<td>"
@@ -19534,11 +19539,11 @@ if ( scalar keys %HTMLOutput ) {
 				print "<td class=\"aws\"><b>$Message[96]</b></td>";
 				if ( $ExtraStatTypes[$extranum] =~ m/P/i ) {
 					print "<td>"
-					  . ( $count ? ( $total_p / $count ) : "&nbsp;" ) . "</td>";
+					  . ( $count ? Format_Number(( $total_p / $count )) : "&nbsp;" ) . "</td>";
 				}
 				if ( $ExtraStatTypes[$extranum] =~ m/H/i ) {
 					print "<td>"
-					  . ( $count ? ( $total_h / $count ) : "&nbsp;" ) . "</td>";
+					  . ( $count ? Format_Number(( $total_h / $count )) : "&nbsp;" ) . "</td>";
 				}
 				if ( $ExtraStatTypes[$extranum] =~ m/B/i ) {
 					print "<td>"
@@ -19557,10 +19562,10 @@ if ( scalar keys %HTMLOutput ) {
 				print "<tr>";
 				print "<td class=\"aws\"><b>$Message[102]</b></td>";
 				if ( $ExtraStatTypes[$extranum] =~ m/P/i ) {
-					print "<td>" . ($total_p) . "</td>";
+					print "<td>" . Format_Number(($total_p)) . "</td>";
 				}
 				if ( $ExtraStatTypes[$extranum] =~ m/H/i ) {
-					print "<td>" . ($total_h) . "</td>";
+					print "<td>" . Format_Number(($total_h)) . "</td>";
 				}
 				if ( $ExtraStatTypes[$extranum] =~ m/B/i ) {
 					print "<td>" . Format_Bytes($total_k) . "</td>";
@@ -19585,6 +19590,7 @@ else {
 	print " Found $NbOfOldLines old records,\n";
 	print " Found $NbOfNewLines new qualified records.\n";
 }
+
 
 #sleep 10;
 
