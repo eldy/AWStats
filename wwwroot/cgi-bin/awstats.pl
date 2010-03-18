@@ -1014,7 +1014,7 @@ EOF
 			print "</style>\n";
 		}
 
-# les scripts nécessaires pour trier avec Tablekit
+# les scripts nï¿½cessaires pour trier avec Tablekit
 #	print "<script type=\"text\/javascript\" src=\"/js/prototype.js\"><\/script>";
 #	print "<script type=\"text\/javascript\" src=\"/js/fabtabulous.js\"><\/script>";
 #	print "<script type=\"text\/javascript\" src=\"/js/mytablekit.js\"><\/script>";
@@ -7934,7 +7934,7 @@ sub Format_Number {
 	$number =~ s/(\d)(\d\d\d\s\d\d\d)$/$1 $2/;
 	$number =~ s/(\d)(\d\d\d\s\d\d\d\s\d\d\d)$/$1 $2/;
 	my $separator = $Message[177];
-	if ($separator == '') { $separator=' '; }	# For backward compatibility
+	if ($separator eq '') { $separator=' '; }	# For backward compatibility
 	$number =~ s/ /$separator/g;
 	return $number;
 }
