@@ -13989,7 +13989,7 @@ sub HTMLMainCountries{
 				$cnt++;
 				if ($cnt > 99) { last; }
 			}
-			print "<tr><td colspan=\"7\">";
+			print "<tr><td colspan=\"7\" align=\"center\">";
 			my $function = "ShowGraph_$pluginname";
 			&$function(
 				"AWStatsCountryMap",              "countries_map",
